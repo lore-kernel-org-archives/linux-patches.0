@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C32F1E6321;
-	Tue, 15 Oct 2024 11:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA601E7C02;
+	Tue, 15 Oct 2024 11:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992317; cv=none; b=I/3FnyQ8zEeQE1o+ifvQPdY/D1A/nKEtu3/An/FJBqzDn5ooyHy3eSoktLlIr5PRtuHWY47ZeUZduk8rusPMwjMCMijQz2wCj0dU8Dgv8Q2u23QlQormqpe77vtVMS8uUy9dlv+q8HFUn5MlITjMjbJRR7MrV3s5QLAYFx1IhTw=
+	t=1728992321; cv=none; b=EfFDYoV5cmA35IN2wvdS1UG6K4/KN9RfuHf9a3kOx6W0+lDmvZIKpig2XhdBQguhQK83eqh5qLxJU0jSpxrNeVumsDRgsOjLe+MnrdTH/Vm9Sa8Ddu55WsP+xAIxAcxT8ZU52ofbhT2Kl7dBRljwengmtkJb7ffMvRMKVYG/bmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992317; c=relaxed/simple;
-	bh=SoeOo6jDA/NNJvi+DNF7ZBUbhJxUUU23r8pECOspYZE=;
+	s=arc-20240116; t=1728992321; c=relaxed/simple;
+	bh=qH0eMBKuYseWzEDrxGeoCDW5D2DZBRA7ns/BYkwQ6GE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MY4b87cZCk5xBJOUdZ+xHQZFaMZB9ugzm7KY5HnHv5bgkKMfcKI0txwEqZ2FvjgwOOrwxewmnsymYW38lNGWIAlap/QogQ8mkeeH5eQUQoEO7H5R9PbJVetZ5+WjK0B1Tsc3404Vr6vsxd2ic6nbt8JfGfCb1dFBqC5I3EKmd50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OE3Mn4FQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uy/KJRnto5Hz5c+Artv8/IMTy5BgaqusbdXUs19YY9E5RzF/OWLfTJ1g88m8nHMu/qUki0kaK5z9iaz+k2EmdRIt18QpU8TWyj9bm/FOfPEXjKAe6+iJdcPH9Yt8Hcut5njIcXPndCbfLy2kRFORswe/L5X+kDg7TeKQ0kZsG7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNxI2hI1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OE3Mn4FQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF26C4CEC6;
-	Tue, 15 Oct 2024 11:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNxI2hI1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F521C4CEC6;
+	Tue, 15 Oct 2024 11:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992317;
-	bh=SoeOo6jDA/NNJvi+DNF7ZBUbhJxUUU23r8pECOspYZE=;
+	s=korg; t=1728992320;
+	bh=qH0eMBKuYseWzEDrxGeoCDW5D2DZBRA7ns/BYkwQ6GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OE3Mn4FQ2bIjd2Clvdo9ZUSHi0fK35hG56/rQwpZDnJxD9L+31L6+3LuAcRkFBGfZ
-	 /R/mk41p9mC+RhtOL1iTzshAh1ziZqOKq8uFcabexE3SIMk4R3/SUWstQmeZEEQkwP
-	 fjjo0QFNKi6zcMNuw6rOv8ZAoBQmLupnJ2juTtSo=
+	b=vNxI2hI1ULSiUKi7TuIwH05yGsx7VV/TWQ+N1RexRJeIQ9nmHlRbtRoC8etfTuJNM
+	 WYjrOSNEC9DHU9jxaMAnecu2myUtaO+iHwsy32ghXCN0vuCmFa29NljWJHtwYyTtnj
+	 gFIHW4UJ3QXM6nQjEdHFXVNCA77SXGh6Y3dNFQX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen Mamindlapalli <naveenm@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Patryk Biel <pbiel7@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 050/691] octeontx2-af: Set XOFF on other child transmit schedulers during SMQ flush
-Date: Tue, 15 Oct 2024 13:19:58 +0200
-Message-ID: <20241015112442.331893738@linuxfoundation.org>
+Subject: [PATCH 5.15 041/691] hwmon: (pmbus) Conditionally clear individual status bits for pmbus rev >= 1.2
+Date: Tue, 15 Oct 2024 13:19:49 +0200
+Message-ID: <20241015112441.974422413@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,212 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen Mamindlapalli <naveenm@marvell.com>
+From: Patryk Biel <pbiel7@gmail.com>
 
-[ Upstream commit e18aab0470d8f6259be82282ffb3fdcfeaeff6c3 ]
+[ Upstream commit 20471071f198c8626dbe3951ac9834055b387844 ]
 
-When multiple transmit scheduler queues feed a TL1 transmit link, the
-SMQ flush initiated on a low priority queue might get stuck when a high
-priority queue fully subscribes the transmit link. This inturn effects
-interface teardown. To avoid this, temporarily XOFF all TL1's other
-immediate child transmit scheduler queues and also clear any rate limit
-configuration on all the scheduler queues in SMQ(flush) hierarchy.
+The current implementation of pmbus_show_boolean assumes that all devices
+support write-back operation of status register to clear pending warnings
+or faults. Since clearing individual bits in the status registers was only
+introduced in PMBus specification 1.2, this operation may not be supported
+by some older devices. This can result in an error while reading boolean
+attributes such as temp1_max_alarm.
 
-Signed-off-by: Naveen Mamindlapalli <naveenm@marvell.com>
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 019aba04f08c ("octeontx2-af: Modify SMQ flush sequence to drop packets")
+Fetch PMBus revision supported by the device and modify pmbus_show_boolean
+so that it only tries to clear individual status bits if the device is
+compliant with PMBus specs >= 1.2. Otherwise clear all fault indicators
+on the current page after a fault status was reported.
+
+Fixes: 35f165f08950a ("hwmon: (pmbus) Clear pmbus fault/warning bits after read")
+Signed-off-by: Patryk Biel <pbiel7@gmail.com>
+Message-ID: <20240909-pmbus-status-reg-clearing-v1-1-f1c0d68c6408@gmail.com>
+[groeck:
+ Rewrote description
+ Moved revision detection code ahead of clear faults command
+ Assigned revision if return value from PMBUS_REVISION command is 0
+ Improved return value check from calling _pmbus_write_byte_data()]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/rvu.h   |  16 +++
- .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 130 +++++++++++++++++-
- 2 files changed, 144 insertions(+), 2 deletions(-)
+ drivers/hwmon/pmbus/pmbus.h      |  6 ++++++
+ drivers/hwmon/pmbus/pmbus_core.c | 17 ++++++++++++++---
+ 2 files changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-index b4be1b597f33..db02fae7b831 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
-@@ -277,6 +277,22 @@ struct nix_mark_format {
- 	u32 *cfg;
- };
+diff --git a/drivers/hwmon/pmbus/pmbus.h b/drivers/hwmon/pmbus/pmbus.h
+index e2a570930bd7..62260553f483 100644
+--- a/drivers/hwmon/pmbus/pmbus.h
++++ b/drivers/hwmon/pmbus/pmbus.h
+@@ -409,6 +409,12 @@ enum pmbus_sensor_classes {
+ enum pmbus_data_format { linear = 0, direct, vid };
+ enum vrm_version { vr11 = 0, vr12, vr13, imvp9, amd625mv };
  
-+/* smq(flush) to tl1 cir/pir info */
-+struct nix_smq_tree_ctx {
-+	u64 cir_off;
-+	u64 cir_val;
-+	u64 pir_off;
-+	u64 pir_val;
-+};
++/* PMBus revision identifiers */
++#define PMBUS_REV_10 0x00	/* PMBus revision 1.0 */
++#define PMBUS_REV_11 0x11	/* PMBus revision 1.1 */
++#define PMBUS_REV_12 0x22	/* PMBus revision 1.2 */
++#define PMBUS_REV_13 0x33	/* PMBus revision 1.3 */
 +
-+/* smq flush context */
-+struct nix_smq_flush_ctx {
-+	int smq;
-+	u16 tl1_schq;
-+	u16 tl2_schq;
-+	struct nix_smq_tree_ctx smq_tree_ctx[NIX_TXSCH_LVL_CNT];
-+};
-+
- struct npc_pkind {
- 	struct rsrc_bmap rsrc;
- 	u32	*pfchan_map;
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 641f1d969bb7..e6b368ec4a3b 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -2081,9 +2081,121 @@ int rvu_mbox_handler_nix_txsch_alloc(struct rvu *rvu,
- 	return rc;
- }
+ struct pmbus_driver_info {
+ 	int pages;		/* Total number of pages */
+ 	u8 phases[PMBUS_PAGES];	/* Number of phases per page */
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index cc9ce5b2f0f2..1ef214a8a01b 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -82,6 +82,8 @@ struct pmbus_data {
  
-+static void nix_smq_flush_fill_ctx(struct rvu *rvu, int blkaddr, int smq,
-+				   struct nix_smq_flush_ctx *smq_flush_ctx)
-+{
-+	struct nix_smq_tree_ctx *smq_tree_ctx;
-+	u64 parent_off, regval;
-+	u16 schq;
-+	int lvl;
+ 	u32 flags;		/* from platform data */
+ 
++	u8 revision;	/* The PMBus revision the device is compliant with */
 +
-+	smq_flush_ctx->smq = smq;
-+
-+	schq = smq;
-+	for (lvl = NIX_TXSCH_LVL_SMQ; lvl <= NIX_TXSCH_LVL_TL1; lvl++) {
-+		smq_tree_ctx = &smq_flush_ctx->smq_tree_ctx[lvl];
-+		if (lvl == NIX_TXSCH_LVL_TL1) {
-+			smq_flush_ctx->tl1_schq = schq;
-+			smq_tree_ctx->cir_off = NIX_AF_TL1X_CIR(schq);
-+			smq_tree_ctx->pir_off = 0;
-+			smq_tree_ctx->pir_val = 0;
-+			parent_off = 0;
-+		} else if (lvl == NIX_TXSCH_LVL_TL2) {
-+			smq_flush_ctx->tl2_schq = schq;
-+			smq_tree_ctx->cir_off = NIX_AF_TL2X_CIR(schq);
-+			smq_tree_ctx->pir_off = NIX_AF_TL2X_PIR(schq);
-+			parent_off = NIX_AF_TL2X_PARENT(schq);
-+		} else if (lvl == NIX_TXSCH_LVL_TL3) {
-+			smq_tree_ctx->cir_off = NIX_AF_TL3X_CIR(schq);
-+			smq_tree_ctx->pir_off = NIX_AF_TL3X_PIR(schq);
-+			parent_off = NIX_AF_TL3X_PARENT(schq);
-+		} else if (lvl == NIX_TXSCH_LVL_TL4) {
-+			smq_tree_ctx->cir_off = NIX_AF_TL4X_CIR(schq);
-+			smq_tree_ctx->pir_off = NIX_AF_TL4X_PIR(schq);
-+			parent_off = NIX_AF_TL4X_PARENT(schq);
-+		} else if (lvl == NIX_TXSCH_LVL_MDQ) {
-+			smq_tree_ctx->cir_off = NIX_AF_MDQX_CIR(schq);
-+			smq_tree_ctx->pir_off = NIX_AF_MDQX_PIR(schq);
-+			parent_off = NIX_AF_MDQX_PARENT(schq);
-+		}
-+		/* save cir/pir register values */
-+		smq_tree_ctx->cir_val = rvu_read64(rvu, blkaddr, smq_tree_ctx->cir_off);
-+		if (smq_tree_ctx->pir_off)
-+			smq_tree_ctx->pir_val = rvu_read64(rvu, blkaddr, smq_tree_ctx->pir_off);
-+
-+		/* get parent txsch node */
-+		if (parent_off) {
-+			regval = rvu_read64(rvu, blkaddr, parent_off);
-+			schq = (regval >> 16) & 0x1FF;
-+		}
-+	}
-+}
-+
-+static void nix_smq_flush_enadis_xoff(struct rvu *rvu, int blkaddr,
-+				      struct nix_smq_flush_ctx *smq_flush_ctx, bool enable)
-+{
-+	struct nix_txsch *txsch;
-+	struct nix_hw *nix_hw;
-+	u64 regoff;
-+	int tl2;
-+
-+	nix_hw = get_nix_hw(rvu->hw, blkaddr);
-+	if (!nix_hw)
-+		return;
-+
-+	/* loop through all TL2s with matching PF_FUNC */
-+	txsch = &nix_hw->txsch[NIX_TXSCH_LVL_TL2];
-+	for (tl2 = 0; tl2 < txsch->schq.max; tl2++) {
-+		/* skip the smq(flush) TL2 */
-+		if (tl2 == smq_flush_ctx->tl2_schq)
-+			continue;
-+		/* skip unused TL2s */
-+		if (TXSCH_MAP_FLAGS(txsch->pfvf_map[tl2]) & NIX_TXSCHQ_FREE)
-+			continue;
-+		/* skip if PF_FUNC doesn't match */
-+		if ((TXSCH_MAP_FUNC(txsch->pfvf_map[tl2]) & ~RVU_PFVF_FUNC_MASK) !=
-+		    (TXSCH_MAP_FUNC(txsch->pfvf_map[smq_flush_ctx->tl2_schq] &
-+				    ~RVU_PFVF_FUNC_MASK)))
-+			continue;
-+		/* enable/disable XOFF */
-+		regoff = NIX_AF_TL2X_SW_XOFF(tl2);
-+		if (enable)
-+			rvu_write64(rvu, blkaddr, regoff, 0x1);
-+		else
-+			rvu_write64(rvu, blkaddr, regoff, 0x0);
-+	}
-+}
-+
-+static void nix_smq_flush_enadis_rate(struct rvu *rvu, int blkaddr,
-+				      struct nix_smq_flush_ctx *smq_flush_ctx, bool enable)
-+{
-+	u64 cir_off, pir_off, cir_val, pir_val;
-+	struct nix_smq_tree_ctx *smq_tree_ctx;
-+	int lvl;
-+
-+	for (lvl = NIX_TXSCH_LVL_SMQ; lvl <= NIX_TXSCH_LVL_TL1; lvl++) {
-+		smq_tree_ctx = &smq_flush_ctx->smq_tree_ctx[lvl];
-+		cir_off = smq_tree_ctx->cir_off;
-+		cir_val = smq_tree_ctx->cir_val;
-+		pir_off = smq_tree_ctx->pir_off;
-+		pir_val = smq_tree_ctx->pir_val;
-+
-+		if (enable) {
-+			rvu_write64(rvu, blkaddr, cir_off, cir_val);
-+			if (lvl != NIX_TXSCH_LVL_TL1)
-+				rvu_write64(rvu, blkaddr, pir_off, pir_val);
+ 	int exponent[PMBUS_PAGES];
+ 				/* linear mode: exponent for output voltages */
+ 
+@@ -930,9 +932,14 @@ static int pmbus_get_boolean(struct i2c_client *client, struct pmbus_boolean *b,
+ 
+ 	regval = status & mask;
+ 	if (regval) {
+-		ret = _pmbus_write_byte_data(client, page, reg, regval);
+-		if (ret)
+-			goto unlock;
++		if (data->revision >= PMBUS_REV_12) {
++			ret = _pmbus_write_byte_data(client, page, reg, regval);
++			if (ret)
++				goto unlock;
 +		} else {
-+			rvu_write64(rvu, blkaddr, cir_off, 0x0);
-+			if (lvl != NIX_TXSCH_LVL_TL1)
-+				rvu_write64(rvu, blkaddr, pir_off, 0x0);
++			pmbus_clear_fault_page(client, page);
 +		}
-+	}
-+}
 +
- static int nix_smq_flush(struct rvu *rvu, int blkaddr,
- 			 int smq, u16 pcifunc, int nixlf)
- {
-+	struct nix_smq_flush_ctx *smq_flush_ctx;
- 	int pf = rvu_get_pf(pcifunc);
- 	u8 cgx_id = 0, lmac_id = 0;
- 	int err, restore_tx_en = 0;
-@@ -2096,6 +2208,14 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
- 						   lmac_id, true);
+ 	}
+ 	if (s1 && s2) {
+ 		s64 v1, v2;
+@@ -2370,6 +2377,10 @@ static int pmbus_init_common(struct i2c_client *client, struct pmbus_data *data,
+ 			data->flags |= PMBUS_WRITE_PROTECTED | PMBUS_SKIP_STATUS_CHECK;
  	}
  
-+	/* XOFF all TL2s whose parent TL1 matches SMQ tree TL1 */
-+	smq_flush_ctx = kzalloc(sizeof(*smq_flush_ctx), GFP_KERNEL);
-+	if (!smq_flush_ctx)
-+		return -ENOMEM;
-+	nix_smq_flush_fill_ctx(rvu, blkaddr, smq, smq_flush_ctx);
-+	nix_smq_flush_enadis_xoff(rvu, blkaddr, smq_flush_ctx, true);
-+	nix_smq_flush_enadis_rate(rvu, blkaddr, smq_flush_ctx, false);
++	ret = i2c_smbus_read_byte_data(client, PMBUS_REVISION);
++	if (ret >= 0)
++		data->revision = ret;
 +
- 	cfg = rvu_read64(rvu, blkaddr, NIX_AF_SMQX_CFG(smq));
- 	/* Do SMQ flush and set enqueue xoff */
- 	cfg |= BIT_ULL(50) | BIT_ULL(49);
-@@ -2110,8 +2230,14 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
- 	err = rvu_poll_reg(rvu, blkaddr,
- 			   NIX_AF_SMQX_CFG(smq), BIT_ULL(49), true);
- 	if (err)
--		dev_err(rvu->dev,
--			"NIXLF%d: SMQ%d flush failed\n", nixlf, smq);
-+		dev_info(rvu->dev,
-+			 "NIXLF%d: SMQ%d flush failed, txlink might be busy\n",
-+			 nixlf, smq);
-+
-+	/* clear XOFF on TL2s */
-+	nix_smq_flush_enadis_rate(rvu, blkaddr, smq_flush_ctx, true);
-+	nix_smq_flush_enadis_xoff(rvu, blkaddr, smq_flush_ctx, false);
-+	kfree(smq_flush_ctx);
- 
- 	rvu_cgx_enadis_rx_bp(rvu, pf, true);
- 	/* restore cgx tx state */
+ 	if (data->info->pages)
+ 		pmbus_clear_faults(client);
+ 	else
 -- 
 2.43.0
 
