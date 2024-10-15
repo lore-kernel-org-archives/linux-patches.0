@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5211EABAB;
-	Tue, 15 Oct 2024 12:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7107C1E7669;
+	Tue, 15 Oct 2024 12:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993977; cv=none; b=j1ENnZ07Muop4FxK3bmUqRjZE/soF6kZvYAqLg+c93MttEc30QVmcdInMBl1l7NOjnrxi5DUbSScm8YHJRCF/igSY3Onh9x0e8lEjhtBc7WKtSCt+LO65v0IrCKvHPpVuFoBBViAxDj7VdR2FHNrj+Pd+wf8X89fFD5fNo07BVw=
+	t=1728993980; cv=none; b=R8efxCzuxoSQGBQDXIV7DQt+SJB4XWZjlkTTXONvDRa/KEVi9elgd537SDm2ez8wGv4dZsD0N+llrZdI1hKzuOjBDMl+ej3U5DvP5qiyrHbCX9P7eZL6motMn2zC0xy9jTjtRsQsVO7bEAvziHq54JiIvPG0zSUAh5B1uFyIwgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993977; c=relaxed/simple;
-	bh=RFGBZufIsIXXF2/CJmlRdgp1tpbHLSHIVMi3v42nYgQ=;
+	s=arc-20240116; t=1728993980; c=relaxed/simple;
+	bh=V1O49nzr9aAcHHRZMCArq8HSSBn9t59P2Iq2Qw8KRr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AJDKYd+klRCLrvO4J43LbFylFN67gQLzBCcnhKHLuAO8dnsGpb0YpyW3ZZA0j37g4o4i2bkzDCXXL1xA2gRjCp5EePHKrdsYIca7XGtIKQiKIIlSS2cjCIk/p5wzreEmwJE7PDRjQcO8f0hGfYz+EvyH6pvSQtTCgewAd5qPWFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWZiUAr4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RzuEDucnw2ylprpC75/Mcu0r91XgzZiY084G3eO6i0fvp5dtyWP6OKB3MIBcSDbbzd096C+awIiogJfz3uU/9Yj02HsmYUAYBv7U3FqJiAkUAbAXSgMtdoAV4g7TS9vLdDy43ZLU2PVVTQ2SI/q5CD/+95GRHGNe3JDMKDXmGb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IaCDf1k7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWZiUAr4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA840C4CEC6;
-	Tue, 15 Oct 2024 12:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IaCDf1k7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BD5C4CEC6;
+	Tue, 15 Oct 2024 12:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993977;
-	bh=RFGBZufIsIXXF2/CJmlRdgp1tpbHLSHIVMi3v42nYgQ=;
+	s=korg; t=1728993980;
+	bh=V1O49nzr9aAcHHRZMCArq8HSSBn9t59P2Iq2Qw8KRr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWZiUAr45N45M5uDjxXMICBluzl+etSm9S1UEJsaqsgEQCRitn7mrxwz92/6FowlK
-	 /akMYeL7afcq/ChISWYJtZoYkEViz6Gfv7X5o8WzdhzH6LnWOelmcuKacWUIKfbxYQ
-	 GCY1lh2xnTO9NQQPn/Nnw28GMdozb9Jn9Srhh07E=
+	b=IaCDf1k7hkUjynpiKSd6Bq8Qi/TklQ7k2C3ZZ+0PHCosPo0HrGQe9SHlLPgHSa354
+	 uqmPCzXX6WdvxQJoIr1hN+a09u8FBCluILWVRuH+5CtB8ASjpRYhtyvRfcfT5dfaWy
+	 G86QxsTobSY7cyruw4XHvVQJ9seSovn06MiSeLxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Umang Jain <umang.jain@ideasonboard.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 570/691] media: i2c: imx335: Enable regulator supplies
-Date: Tue, 15 Oct 2024 13:28:38 +0200
-Message-ID: <20241015112502.967067604@linuxfoundation.org>
+Subject: [PATCH 5.15 571/691] media: imx335: Fix reset-gpio handling
+Date: Tue, 15 Oct 2024 13:28:39 +0200
+Message-ID: <20241015112503.006703885@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,120 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kieran Bingham <kieran.bingham@ideasonboard.com>
+From: Umang Jain <umang.jain@ideasonboard.com>
 
-[ Upstream commit fea91ee73b7cd19f08017221923d789f984abc54 ]
+[ Upstream commit 99d30e2fdea4086be4e66e2deb10de854b547ab8 ]
 
-Provide support for enabling and disabling regulator supplies to control
-power to the camera sensor.
+Rectify the logical value of reset-gpio so that it is set to
+0 (disabled) during power-on and to 1 (enabled) during power-off.
 
-While updating the power on function, document that a sleep is
-represented as 'T4' in the datasheet power on sequence.
+Set the reset-gpio to GPIO_OUT_HIGH at initialization time to make
+sure it starts off in reset. Also drop the "Set XCLR" comment which
+is not-so-informative.
 
-Signed-off-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+The existing usage of imx335 had reset-gpios polarity inverted
+(GPIO_ACTIVE_HIGH) in their device-tree sources. With this patch
+included, those DTS will not be able to stream imx335 anymore. The
+reset-gpio polarity will need to be rectified in the device-tree
+sources as shown in [1] example, in order to get imx335 functional
+again (as it remains in reset prior to this fix).
+
+Cc: stable@vger.kernel.org
+Fixes: 45d19b5fb9ae ("media: i2c: Add imx335 camera sensor driver")
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/linux-media/20240729110437.199428-1-umang.jain@ideasonboard.com/
+Signed-off-by: Umang Jain <umang.jain@ideasonboard.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: 99d30e2fdea4 ("media: imx335: Fix reset-gpio handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/imx335.c | 36 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 34 insertions(+), 2 deletions(-)
+ drivers/media/i2c/imx335.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/media/i2c/imx335.c b/drivers/media/i2c/imx335.c
-index 780eb68b1894c..b5f912e0ee08e 100644
+index b5f912e0ee08e..2692547791f91 100644
 --- a/drivers/media/i2c/imx335.c
 +++ b/drivers/media/i2c/imx335.c
-@@ -75,6 +75,12 @@ struct imx335_reg_list {
- 	const struct imx335_reg *regs;
- };
+@@ -792,7 +792,7 @@ static int imx335_parse_hw_config(struct imx335 *imx335)
  
-+static const char * const imx335_supply_name[] = {
-+	"avdd", /* Analog (2.9V) supply */
-+	"ovdd", /* Digital I/O (1.8V) supply */
-+	"dvdd", /* Digital Core (1.2V) supply */
-+};
-+
- /**
-  * struct imx335_mode - imx335 sensor mode structure
-  * @width: Frame width
-@@ -108,6 +114,7 @@ struct imx335_mode {
-  * @sd: V4L2 sub-device
-  * @pad: Media pad. Only one pad supported
-  * @reset_gpio: Sensor reset gpio
-+ * @supplies: Regulator supplies to handle power control
-  * @inclk: Sensor input clock
-  * @ctrl_handler: V4L2 control handler
-  * @link_freq_ctrl: Pointer to link frequency control
-@@ -127,6 +134,8 @@ struct imx335 {
- 	struct v4l2_subdev sd;
- 	struct media_pad pad;
- 	struct gpio_desc *reset_gpio;
-+	struct regulator_bulk_data supplies[ARRAY_SIZE(imx335_supply_name)];
-+
- 	struct clk *inclk;
- 	struct v4l2_ctrl_handler ctrl_handler;
- 	struct v4l2_ctrl *link_freq_ctrl;
-@@ -790,6 +799,17 @@ static int imx335_parse_hw_config(struct imx335 *imx335)
- 		return PTR_ERR(imx335->reset_gpio);
- 	}
+ 	/* Request optional reset pin */
+ 	imx335->reset_gpio = devm_gpiod_get_optional(imx335->dev, "reset",
+-						     GPIOD_OUT_LOW);
++						     GPIOD_OUT_HIGH);
+ 	if (IS_ERR(imx335->reset_gpio)) {
+ 		dev_err(imx335->dev, "failed to get reset gpio %ld",
+ 			PTR_ERR(imx335->reset_gpio));
+@@ -898,8 +898,7 @@ static int imx335_power_on(struct device *dev)
  
-+	for (i = 0; i < ARRAY_SIZE(imx335_supply_name); i++)
-+		imx335->supplies[i].supply = imx335_supply_name[i];
-+
-+	ret = devm_regulator_bulk_get(imx335->dev,
-+				      ARRAY_SIZE(imx335_supply_name),
-+				      imx335->supplies);
-+	if (ret) {
-+		dev_err(imx335->dev, "Failed to get regulators\n");
-+		return ret;
-+	}
-+
- 	/* Get sensor input clock */
- 	imx335->inclk = devm_clk_get(imx335->dev, NULL);
- 	if (IS_ERR(imx335->inclk)) {
-@@ -868,6 +888,17 @@ static int imx335_power_on(struct device *dev)
- 	struct imx335 *imx335 = to_imx335(sd);
- 	int ret;
+ 	usleep_range(500, 550); /* Tlow */
  
-+	ret = regulator_bulk_enable(ARRAY_SIZE(imx335_supply_name),
-+				    imx335->supplies);
-+	if (ret) {
-+		dev_err(dev, "%s: failed to enable regulators\n",
-+			__func__);
-+		return ret;
-+	}
-+
-+	usleep_range(500, 550); /* Tlow */
-+
-+	/* Set XCLR */
- 	gpiod_set_value_cansleep(imx335->reset_gpio, 1);
+-	/* Set XCLR */
+-	gpiod_set_value_cansleep(imx335->reset_gpio, 1);
++	gpiod_set_value_cansleep(imx335->reset_gpio, 0);
  
  	ret = clk_prepare_enable(imx335->inclk);
-@@ -876,12 +907,13 @@ static int imx335_power_on(struct device *dev)
- 		goto error_reset;
- 	}
- 
--	usleep_range(20, 22);
-+	usleep_range(20, 22); /* T4 */
- 
+ 	if (ret) {
+@@ -912,7 +911,7 @@ static int imx335_power_on(struct device *dev)
  	return 0;
  
  error_reset:
- 	gpiod_set_value_cansleep(imx335->reset_gpio, 0);
-+	regulator_bulk_disable(ARRAY_SIZE(imx335_supply_name), imx335->supplies);
+-	gpiod_set_value_cansleep(imx335->reset_gpio, 0);
++	gpiod_set_value_cansleep(imx335->reset_gpio, 1);
+ 	regulator_bulk_disable(ARRAY_SIZE(imx335_supply_name), imx335->supplies);
  
  	return ret;
- }
-@@ -898,8 +930,8 @@ static int imx335_power_off(struct device *dev)
+@@ -929,7 +928,7 @@ static int imx335_power_off(struct device *dev)
+ 	struct v4l2_subdev *sd = dev_get_drvdata(dev);
  	struct imx335 *imx335 = to_imx335(sd);
  
- 	gpiod_set_value_cansleep(imx335->reset_gpio, 0);
--
+-	gpiod_set_value_cansleep(imx335->reset_gpio, 0);
++	gpiod_set_value_cansleep(imx335->reset_gpio, 1);
  	clk_disable_unprepare(imx335->inclk);
-+	regulator_bulk_disable(ARRAY_SIZE(imx335_supply_name), imx335->supplies);
+ 	regulator_bulk_disable(ARRAY_SIZE(imx335_supply_name), imx335->supplies);
  
- 	return 0;
- }
 -- 
 2.43.0
 
