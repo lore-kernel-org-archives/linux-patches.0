@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0805E1C07DB;
-	Tue, 15 Oct 2024 13:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606661C07DC;
+	Tue, 15 Oct 2024 13:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997526; cv=none; b=PW0KC+2Vif6TTg7GT5aX5nOFVF8PT+f7RvAgSseS9dD2QFyes/DmJqYuZ/Qrh2bestWN7M4azdaTEnsM5tQy0/q482opAlGXqiaYFsTiUKbuuK0h8IYYTkS0x4lcDFdCNHaKxQyqrjOo5jSbc4RIr7iQZBl0hevPYr0IMVtY8MI=
+	t=1728997529; cv=none; b=cLKxlrgiwHDt9OZ665hYVnfszQh11CvENYv6BSqmUQbclDMiuAzYzjuj2cG0jdZBrMhMZ0my9SAxwWRnOA1URTm/9+LUQox3LL+l7PdW8tJkr21e6wFwGJcboqMsZfsmcYYZ7LJizSRMQNbZaE3kQLWpI8Ig6iDQrKvc643Q60o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997526; c=relaxed/simple;
-	bh=IVjrxskALrJh07NIhL2Um4fxbzLC9U8y/DhZfGwkpQk=;
+	s=arc-20240116; t=1728997529; c=relaxed/simple;
+	bh=scOn0k+7kKqkwCho8BTI90zo2zvgRGZRgMiX1Fqg1D8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jtkFS4oLfCvV8mwruaTX8MNmEzaqjlokg2whmkUGQWehNfpqWoX5mzaOs0JuPS6IliieC5+3YaoVnbxCI2t4paNwqPoYq3xAlvhhn/AgN+RkEXN7l+IsplTzk4ZIq4VN3sbxwyB8D49p+MjpyBp1dGRQ2hHHJqdbz6iKHSXcH0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKENEE3D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b/dkrrGF8KVsgTluqJNaDXnGX63/zhRsEQV3fr3mkV1l0DsTXOT7JtUA0v0+2pTlEryoYpysGpD7+wBpRjPbIAyEN/GTArW7ayUFP7blXqHQjlkLeoP0GifP0cb0wVGvkRgI/fgGwYhSycQd5NRFhOpkFx+YgXzCxO2QjrOBLok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPl2XUrd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKENEE3D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C73C4CEC6;
-	Tue, 15 Oct 2024 13:05:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPl2XUrd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FC2C4CEC6;
+	Tue, 15 Oct 2024 13:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997525;
-	bh=IVjrxskALrJh07NIhL2Um4fxbzLC9U8y/DhZfGwkpQk=;
+	s=korg; t=1728997529;
+	bh=scOn0k+7kKqkwCho8BTI90zo2zvgRGZRgMiX1Fqg1D8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AKENEE3DpcumoWfyYGOmrJpjMy/r56Hzn+Dv/I0ggZTkwE2U74Yk3jnFucvDXZLWz
-	 K4OsveHG+gR8TqXc4ubSmRkSkEBFm3V+U1Vh9H+mvQZVcHgmTUaVQup/Z2zcnIpQyZ
-	 UkFozJlZKB1dDhTWOQxcOQYJVB+l2EqV6bNGtknI=
+	b=VPl2XUrd0evOOLcCYHYsCUrXknGRimp6uA56hBKfINa7vjMRRHzDbq2EZCu3Xo7Z0
+	 RSxYJ32JlVdqobPN+8iTb5zUeIN/JSCuJYi9BEVCslmN1REXdEY3F2ZFUPV3ERnOsN
+	 B0mJ+2cT8YHyM3673Vutl6J/onxQOID2rdFkxH5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Dave Hansen <dave.hansen@intel.com>,
+	Sumeet Pawnikar <sumeet.r.pawnikar@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Subject: [PATCH 5.10 209/518] Input: goodix - use the new soc_intel_is_byt() helper
-Date: Tue, 15 Oct 2024 14:41:53 +0200
-Message-ID: <20241015123925.060062261@linuxfoundation.org>
+Subject: [PATCH 5.10 210/518] powercap: RAPL: fix invalid initialization for pl4_supported field
+Date: Tue, 15 Oct 2024 14:41:54 +0200
+Message-ID: <20241015123925.098503384@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,64 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Sumeet Pawnikar <sumeet.r.pawnikar@intel.com>
 
-commit d176708ffc20332d1c730098d2b111e0b77ece82 upstream.
+commit d05b5e0baf424c8c4b4709ac11f66ab726c8deaf upstream.
 
-Use the new soc_intel_is_byt() helper from linux/platform_data/x86/soc.h.
+The current initialization of the struct x86_cpu_id via
+pl4_support_ids[] is partial and wrong. It is initializing
+"stepping" field with "X86_FEATURE_ANY" instead of "feature" field.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20220131143539.109142-5-hdegoede@redhat.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-[Ricardo: Resolved minor cherry-pick conflict. The file linux/regulator/
- consumer.h is not #included in the upstream version but it is in
- v5.10.y. ]
+Use X86_MATCH_INTEL_FAM6_MODEL macro instead of initializing
+each field of the struct x86_cpu_id for pl4_supported list of CPUs.
+This X86_MATCH_INTEL_FAM6_MODEL macro internally uses another macro
+X86_MATCH_VENDOR_FAM_MODEL_FEATURE for X86 based CPU matching with
+appropriate initialized values.
+
+Reported-by: Dave Hansen <dave.hansen@intel.com>
+Link: https://lore.kernel.org/lkml/28ead36b-2d9e-1a36-6f4e-04684e420260@intel.com
+Fixes: eb52bc2ae5b8 ("powercap: RAPL: Add Power Limit4 support for Meteor Lake SoC")
+Fixes: b08b95cf30f5 ("powercap: RAPL: Add Power Limit4 support for Alder Lake-N and Raptor Lake-P")
+Fixes: 515755906921 ("powercap: RAPL: Add Power Limit4 support for RaptorLake")
+Fixes: 1cc5b9a411e4 ("powercap: Add Power Limit4 support for Alder Lake SoC")
+Fixes: 8365a898fe53 ("powercap: Add Power Limit4 support")
+Signed-off-by: Sumeet Pawnikar <sumeet.r.pawnikar@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[ Ricardo: I only kept TIGERLAKE in pl4_support_ids as only this model is
+  enumerated before this changeset. ]
 Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/goodix.c |   18 ++----------------
- 1 file changed, 2 insertions(+), 16 deletions(-)
+ drivers/powercap/intel_rapl_msr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/touchscreen/goodix.c
-+++ b/drivers/input/touchscreen/goodix.c
-@@ -23,6 +23,7 @@
- #include <linux/delay.h>
- #include <linux/irq.h>
- #include <linux/interrupt.h>
-+#include <linux/platform_data/x86/soc.h>
- #include <linux/regulator/consumer.h>
- #include <linux/slab.h>
- #include <linux/acpi.h>
-@@ -718,21 +719,6 @@ static int goodix_reset(struct goodix_ts
- }
+--- a/drivers/powercap/intel_rapl_msr.c
++++ b/drivers/powercap/intel_rapl_msr.c
+@@ -126,7 +126,7 @@ static int rapl_msr_write_raw(int cpu, s
  
- #ifdef ACPI_GPIO_SUPPORT
--#include <asm/cpu_device_id.h>
--#include <asm/intel-family.h>
--
--static const struct x86_cpu_id baytrail_cpu_ids[] = {
--	{ X86_VENDOR_INTEL, 6, INTEL_FAM6_ATOM_SILVERMONT, X86_FEATURE_ANY, },
--	{}
--};
--
--static inline bool is_byt(void)
--{
--	const struct x86_cpu_id *id = x86_match_cpu(baytrail_cpu_ids);
--
--	return !!id;
--}
--
- static const struct acpi_gpio_params first_gpio = { 0, 0, false };
- static const struct acpi_gpio_params second_gpio = { 1, 0, false };
+ /* List of verified CPUs. */
+ static const struct x86_cpu_id pl4_support_ids[] = {
+-	{ X86_VENDOR_INTEL, 6, INTEL_FAM6_TIGERLAKE_L, X86_FEATURE_ANY },
++	X86_MATCH_INTEL_FAM6_MODEL(TIGERLAKE_L, NULL),
+ 	{}
+ };
  
-@@ -816,7 +802,7 @@ static int goodix_add_acpi_gpio_mappings
- 		dev_info(dev, "Using ACPI INTI and INTO methods for IRQ pin access\n");
- 		ts->irq_pin_access_method = IRQ_PIN_ACCESS_ACPI_METHOD;
- 		gpio_mapping = acpi_goodix_reset_only_gpios;
--	} else if (is_byt() && ts->gpio_count == 2 && ts->gpio_int_idx == -1) {
-+	} else if (soc_intel_is_byt() && ts->gpio_count == 2 && ts->gpio_int_idx == -1) {
- 		dev_info(dev, "No ACPI GpioInt resource, assuming that the GPIO order is reset, int\n");
- 		ts->irq_pin_access_method = IRQ_PIN_ACCESS_ACPI_GPIO;
- 		gpio_mapping = acpi_goodix_int_last_gpios;
 
 
