@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB9E1D5161;
-	Tue, 15 Oct 2024 13:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB2D1AF0CE;
+	Tue, 15 Oct 2024 13:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998411; cv=none; b=VpVob4cc3IHLAtgDxOCiY4Noo4jeLdBaJdCaaCADVLPVtCnqsFrdivLRKTXrRps9BE5uY6+b+P8fWYtw5SqqR2ekmy1ZnzWoGTVPUVa+W0qNdWM9Zz8Y6rSCN7pSiFHvdTm+sjhKZ86WuJZZewQ1FpGnP9eXQswA9hpBh4pmNn0=
+	t=1728998415; cv=none; b=pPT3b5TIEcQuGqcW0Odo2CihvjAi4V0ifiPRhB/xTk6CzulKuDcoRZQ8LSbjphMnh3tjaTL3BUV/94P6kCq+qkBWAAyhYIgTAZmAxyuctLxoW/aXMtQQQ2WxiPTr7ytj5S0ZFh89Xz4w1Jac7sL73nKW/WfPRBAl9mh68KPxRoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998411; c=relaxed/simple;
-	bh=hvtClij2oyGF+LPeqSOMqVSbNRshvraBt84e8Q9wauI=;
+	s=arc-20240116; t=1728998415; c=relaxed/simple;
+	bh=GWR45q1zeh9J5xViJYo0wvPNj0sMGbdTR5WQt6Q9fls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNs85zzBI5V3a4blAnEBuavg3eNr/vqA7vjeVHrK8mBCaGE8fKBrpWmPhRzFTy+U1UBBoM3hKIQ5A/CGHcBC8JczexQkcfPXC+WPc7iL3yH4xaT2zC4XM/neIUNxSum175YwGpw+bBBMUYhR/UTuqCZPOJdGOYCwAkrIjyGCJyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ne1l/PAL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G/9mm21MuBzjp5oP+vyXA5hNqaK/Vk9K6LlOc02RgTdWNsJfb67N9UBK2IeqlQmbb4Dy0wm8tvEIix2giMHtv7tm+Wjt8WSkkTFjGlVAdPs3Xo5XPzt25KV8u5omeIbu3Ud6ITVqPsyPQmSCZ2KcVvfVlnjDpxS5aS9QD0bBOxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ektwNJ2J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ne1l/PAL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B12C4CEC6;
-	Tue, 15 Oct 2024 13:20:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ektwNJ2J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BB8C4CEC6;
+	Tue, 15 Oct 2024 13:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998411;
-	bh=hvtClij2oyGF+LPeqSOMqVSbNRshvraBt84e8Q9wauI=;
+	s=korg; t=1728998414;
+	bh=GWR45q1zeh9J5xViJYo0wvPNj0sMGbdTR5WQt6Q9fls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ne1l/PALuqbE7iPB5nAqI3u2gt2aMqeMOLVXjiTsAEmvBb0bacmdgimMwzZV7eXKg
-	 jbcDLTuhqFFQQ3pnEHL/X/b53lpHLin3HiSJzr9iTUspftpREh5GSG/zCd25ZTMg8s
-	 6JM45u9fOixQhfP914tixHX+jHUqR8o7uc0xrb4w=
+	b=ektwNJ2JXcNHVUmIz2OMN/67BqDCYFSsI4YUdUc5G9YF5VjWYFnyZPVGIQM+grBqu
+	 B3WikVEBUOMATVzJsspDpt3vPO6dKJhgLzV68g5ZAP2zEZCItxVz3WtmOQqpTfyYW1
+	 d1UYf2rcKM+RwJFk2nNnJ6UJ8fCozTQ6IFswYm/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 468/518] driver core: bus: Return -EIO instead of 0 when show/store invalid bus attribute
-Date: Tue, 15 Oct 2024 14:46:12 +0200
-Message-ID: <20241015123935.068575567@linuxfoundation.org>
+Subject: [PATCH 5.10 469/518] drm/amd/display: Check null pointer before dereferencing se
+Date: Tue, 15 Oct 2024 14:46:13 +0200
+Message-ID: <20241015123935.106802642@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -50,46 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit c0fd973c108cdc22a384854bc4b3e288a9717bb2 ]
+[ Upstream commit ff599ef6970ee000fa5bc38d02fa5ff5f3fc7575 ]
 
-Return -EIO instead of 0 for below erroneous bus attribute operations:
- - read a bus attribute without show().
- - write a bus attribute without store().
+[WHAT & HOW]
+se is null checked previously in the same function, indicating
+it might be null; therefore, it must be checked when used again.
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20240724-bus_fix-v2-1-5adbafc698fb@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This fixes 1 FORWARD_NULL issue reported by Coverity.
+
+Acked-by: Alex Hung <alex.hung@amd.com>
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/bus.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/bus.c b/drivers/base/bus.c
-index df85e928b97f2..47ab755aee949 100644
---- a/drivers/base/bus.c
-+++ b/drivers/base/bus.c
-@@ -104,7 +104,8 @@ static ssize_t bus_attr_show(struct kobject *kobj, struct attribute *attr,
- {
- 	struct bus_attribute *bus_attr = to_bus_attr(attr);
- 	struct subsys_private *subsys_priv = to_subsys_private(kobj);
--	ssize_t ret = 0;
-+	/* return -EIO for reading a bus attribute without show() */
-+	ssize_t ret = -EIO;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 661907e8a7dec..84fb1377ec934 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -1258,7 +1258,7 @@ bool dc_validate_seamless_boot_timing(const struct dc *dc,
+ 		if (crtc_timing->pix_clk_100hz != pix_clk_100hz)
+ 			return false;
  
- 	if (bus_attr->show)
- 		ret = bus_attr->show(subsys_priv->bus, buf);
-@@ -116,7 +117,8 @@ static ssize_t bus_attr_store(struct kobject *kobj, struct attribute *attr,
- {
- 	struct bus_attribute *bus_attr = to_bus_attr(attr);
- 	struct subsys_private *subsys_priv = to_subsys_private(kobj);
--	ssize_t ret = 0;
-+	/* return -EIO for writing a bus attribute without store() */
-+	ssize_t ret = -EIO;
+-		if (!se->funcs->dp_get_pixel_format)
++		if (!se || !se->funcs->dp_get_pixel_format)
+ 			return false;
  
- 	if (bus_attr->store)
- 		ret = bus_attr->store(subsys_priv->bus, buf, count);
+ 		if (!se->funcs->dp_get_pixel_format(
 -- 
 2.43.0
 
