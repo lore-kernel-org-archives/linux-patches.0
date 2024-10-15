@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3502F1EABC3;
-	Tue, 15 Oct 2024 11:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1071EBA09;
+	Tue, 15 Oct 2024 11:41:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992486; cv=none; b=XQExs5peh+SZqEEhfmOp/Mtf5po0KJcMdEUb+Oyj9LrElNcsBqX0P9oYNCwJ1nZBkRRQrWdDjlbrgSMUTrlTIeCE8rBEi4vDnO2JfSBS6KH20vrFq/srBj7jOd7yybbWLIJb3LyxoK0XKidRc4zxDblqLavvVErQnQKCEr740AY=
+	t=1728992490; cv=none; b=lDc7SfiPL44WFeCmIlVxZI/zKI3iArZpx9aC10Qo7xVyGMxwi1JvtU6a+wfPdiB8XP/tlb+WeRav5SFUaLfv+NZJpzvkeJs2qeTzcDFtY8c/C10el1LCoQVejZ1j2YmnAX5V0Suo7UMSLOrfgNib2UvOuuSb/AL8YrSyUqekCd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992486; c=relaxed/simple;
-	bh=NQZjipq9waB/FQoJCJTumu80oH+djOV8/LNBUdEQKL8=;
+	s=arc-20240116; t=1728992490; c=relaxed/simple;
+	bh=fu/ODt8V25wiGugm5YNQyiLLmOuMD8giuWS9VUBNrB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aHomsFuGJzRdjkkEe98QKU4vByeQMalLtgygijzjiJNwfJXdIKhUb6kahGlD5GxujcGjQ9l8S1myJ5lGjOufyl7DorfnU+CJ6t/ztjX+srx5An6J9chflMzg5s0Io2ZfmyO7y38BLR+lm40s52CPs5OzyBrROUUh2IU4gxsA0YE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yh4jHEIC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mnezotdLAxQNYiJLKXCawPc+n8tD45q4sRmKkhX88ExjmQpbEg6hCccSvAQIad8+J7PCzkIwWr9V9MSafw4MyufTKikmoTHRPlIm6ykLcZ/VxgubcrqSk7/bSd7d9wAuFozWRIQnI+c5B3N0ep6bbObgD7A2DOU8MVnCGL9ufXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XCVKOg6C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yh4jHEIC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987C7C4CED3;
-	Tue, 15 Oct 2024 11:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCVKOg6C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3154C4CECF;
+	Tue, 15 Oct 2024 11:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992486;
-	bh=NQZjipq9waB/FQoJCJTumu80oH+djOV8/LNBUdEQKL8=;
+	s=korg; t=1728992490;
+	bh=fu/ODt8V25wiGugm5YNQyiLLmOuMD8giuWS9VUBNrB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yh4jHEIC3PPZqmJPAUxHgTbO17roHQKtF4FTuuf5iOPOwew8jxxAab+IoeHE/JAot
-	 R9uEpI7zX7eN3crY7jjdcuzYvDh+d2w9wLmX164ghKvXEjxsIDxCKmxRu28vr9Tw1D
-	 bTiBKEZnkd7TW7Td7HiJLyQzBRrJBLt8rpn7uyiI=
+	b=XCVKOg6CZWpsEJaw5XJgc/Bme547/LrOVXAEqy00jFR2Vj4/BUtQJQMA56xw9HNmK
+	 xu0LPNFadj2iLqH6c0ioZogTFaAzObQmRY+tNCMVLg768MUQ56fLc6DMgKSceIJ0L7
+	 emccJozJ2QtlfYsryudZtYbxq15wt9Io6HzWUvkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 129/691] bareudp: Pull inner IP header on xmit.
-Date: Tue, 15 Oct 2024 13:21:17 +0200
-Message-ID: <20241015112445.475908551@linuxfoundation.org>
+Subject: [PATCH 5.15 130/691] net: enetc: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Tue, 15 Oct 2024 13:21:18 +0200
+Message-ID: <20241015112445.516418749@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,49 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit c471236b2359e6b27388475dd04fff0a5e2bf922 ]
+[ Upstream commit 799a9225997799f7b1b579bc50a93b78b4fb2a01 ]
 
-Both bareudp_xmit_skb() and bareudp6_xmit_skb() read their skb's inner
-IP header to get its ECN value (with ip_tunnel_ecn_encap()). Therefore
-we need to ensure that the inner IP header is part of the skb's linear
-data.
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
-Fixes: 571912c69f0e ("net: UDP tunnel encapsulation module for tunnelling different protocols like MPLS, IP, NSH etc.")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/267328222f0a11519c6de04c640a4f87a38ea9ed.1726046181.git.gnault@redhat.com
+Fixes: bbb96dc7fa1a ("enetc: Factor out the traffic start/stop procedures")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://patch.msgid.link/20240911094445.1922476-3-ruanjinjie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bareudp.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/bareudp.c b/drivers/net/bareudp.c
-index 3fcd3b84a066e..bec8a2c8656c0 100644
---- a/drivers/net/bareudp.c
-+++ b/drivers/net/bareudp.c
-@@ -312,6 +312,9 @@ static int bareudp_xmit_skb(struct sk_buff *skb, struct net_device *dev,
- 	__be32 saddr;
- 	int err;
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index e16bd2b7692f3..9e063eb17f527 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -1883,12 +1883,11 @@ static int enetc_setup_irqs(struct enetc_ndev_priv *priv)
  
-+	if (!skb_vlan_inet_prepare(skb, skb->protocol != htons(ETH_P_TEB)))
-+		return -EINVAL;
-+
- 	if (!sock)
- 		return -ESHUTDOWN;
+ 		snprintf(v->name, sizeof(v->name), "%s-rxtx%d",
+ 			 priv->ndev->name, i);
+-		err = request_irq(irq, enetc_msix, 0, v->name, v);
++		err = request_irq(irq, enetc_msix, IRQF_NO_AUTOEN, v->name, v);
+ 		if (err) {
+ 			dev_err(priv->dev, "request_irq() failed!\n");
+ 			goto irq_err;
+ 		}
+-		disable_irq(irq);
  
-@@ -375,6 +378,9 @@ static int bareudp6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
- 	__be16 sport;
- 	int err;
- 
-+	if (!skb_vlan_inet_prepare(skb, skb->protocol != htons(ETH_P_TEB)))
-+		return -EINVAL;
-+
- 	if (!sock)
- 		return -ESHUTDOWN;
- 
+ 		v->tbier_base = hw->reg + ENETC_BDR(TX, 0, ENETC_TBIER);
+ 		v->rbier = hw->reg + ENETC_BDR(RX, i, ENETC_RBIER);
 -- 
 2.43.0
 
