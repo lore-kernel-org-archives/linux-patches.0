@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615561AF0AE;
-	Tue, 15 Oct 2024 13:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1FE1AF0B1;
+	Tue, 15 Oct 2024 13:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997422; cv=none; b=LDhJMm35GXQgKsHXh6VVeO3dGgEGiXneUnqKJqFFz53RQVJfFMYmz1M3E2FnQJytrjcigGKpbudX3ztKZc7hW/iLxaF6Y5hH50FufRuATkubu1YkDUMINZOAwU1C9cseENgXG+2yrlqKXW42wWLsQNfM+BwMjoSlEpY/plK4O7E=
+	t=1728997425; cv=none; b=TBWeWYgGNTddeBvqg4HVFoju5GaqmqreqrPdh58ECrUd6s7AxbcLpmpYnctYkDW8DFbeDtEFEiVzNQLBEDp93uS7huLA1rhTfvVJlIavpM2L7FzYp+AaNIMQjt7uRF+ZHcYY9PPEO+8x9VgNXgmdbjz3Dy2WE4JpIDQjzQeXAs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997422; c=relaxed/simple;
-	bh=1B1YdO7GQkW5Y4RR79pnm0AOFwBk6cecWDwl4+/SRZU=;
+	s=arc-20240116; t=1728997425; c=relaxed/simple;
+	bh=D4imY7HFfV3fyFkIRkhKItgCpQXZt4C9iD9pqVqttIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9VZqSDCH8Q7fiMZS8pTHuGpLjELuNzhdeg/eNfalhPHwFe9klCJ6kYm4ygU0iwokBIqBCAk635uFM9Jzqo1PtZEZzfkY2tlhXzgkcsPZGyt583O6HNuX+d27+2NisTVwiQd0XCplljj4s7CNG2/CJTCVZtu7LAyEHgbenCEa08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=suTGNNWk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XwgJUJ9WEH/e5I8IghBFZC+q0VxMK9hftha1GBuOvEf21do26kwZvdm7KywfuAxLDya7iwwXQd8PH14+IqZMWPiAMZf5bjCAiIkYlJXmrovJRSEOmysZc5vlWmgMxNkEZsNOfBGDFk+g4ftc+dYPHg3VdvKVBM1AzePfGXgeWQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mv76WCry; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suTGNNWk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1095C4CEC6;
-	Tue, 15 Oct 2024 13:03:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mv76WCry"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E532EC4CEC6;
+	Tue, 15 Oct 2024 13:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997422;
-	bh=1B1YdO7GQkW5Y4RR79pnm0AOFwBk6cecWDwl4+/SRZU=;
+	s=korg; t=1728997425;
+	bh=D4imY7HFfV3fyFkIRkhKItgCpQXZt4C9iD9pqVqttIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=suTGNNWkaMZtpd8Vz4bqHH3Hx5hxi2zpQdNoi3pw7hTCFUhhzyZ+F97RE8eCV0j5s
-	 HYbH5sIMA1pDi0PHndnO7RdJX+xo5Z1VHd3fmHm5z8sW/WFxKtCnE6dND3ecUdN+pM
-	 evWn0moGEgzUTfPFaaAKcMyylg2PdEICe/slY5ww=
+	b=Mv76WCry851GmKTYZyOaSXVZsJz6RXMPGYwFE7h7KKgpt47Dp9B+fxp27pCMqeRGH
+	 4WhRACQmzZXRN1G6uAjA2N+y0JRTclwBQwA7wZlvg0JfWDeMs+79VlzD4DjalW9TQZ
+	 a1OdLw3R1wC+PpZ1e6onDFO756AKT072qLOZhuyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
 	Junxian Huang <huangjunxian6@hisilicon.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 178/518] RDMA/hns: Fix spin_unlock_irqrestore() called with IRQs enabled
-Date: Tue, 15 Oct 2024 14:41:22 +0200
-Message-ID: <20241015123923.862578089@linuxfoundation.org>
+Subject: [PATCH 5.10 179/518] RDMA/hns: Optimize hem allocation performance
+Date: Tue, 15 Oct 2024 14:41:23 +0200
+Message-ID: <20241015123923.900345037@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,95 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit 74d315b5af180220d561684d15897730135733a6 ]
+[ Upstream commit fe51f6254d81f5a69c31df16353d6539b2b51630 ]
 
-Fix missuse of spin_lock_irq()/spin_unlock_irq() when
-spin_lock_irqsave()/spin_lock_irqrestore() was hold.
+When allocating MTT hem, for each hop level of each hem that is being
+allocated, the driver iterates the hem list to find out whether the
+bt page has been allocated in this hop level. If not, allocate a new
+one and splice it to the list. The time complexity is O(n^2) in worst
+cases.
 
-This was discovered through the lock debugging, and the corresponding
-log is as follows:
+Currently the allocation for-loop uses 'unit' as the step size. This
+actually has taken into account the reuse of last-hop-level MTT bt
+pages by multiple buffer pages. Thus pages of last hop level will
+never have been allocated, so there is no need to iterate the hem list
+in last hop level.
 
-raw_local_irq_restore() called with IRQs enabled
-WARNING: CPU: 96 PID: 2074 at kernel/locking/irqflag-debug.c:10 warn_bogus_irq_restore+0x30/0x40
-...
-Call trace:
- warn_bogus_irq_restore+0x30/0x40
- _raw_spin_unlock_irqrestore+0x84/0xc8
- add_qp_to_list+0x11c/0x148 [hns_roce_hw_v2]
- hns_roce_create_qp_common.constprop.0+0x240/0x780 [hns_roce_hw_v2]
- hns_roce_create_qp+0x98/0x160 [hns_roce_hw_v2]
- create_qp+0x138/0x258
- ib_create_qp_kernel+0x50/0xe8
- create_mad_qp+0xa8/0x128
- ib_mad_port_open+0x218/0x448
- ib_mad_init_device+0x70/0x1f8
- add_client_context+0xfc/0x220
- enable_device_and_get+0xd0/0x140
- ib_register_device.part.0+0xf4/0x1c8
- ib_register_device+0x34/0x50
- hns_roce_register_device+0x174/0x3d0 [hns_roce_hw_v2]
- hns_roce_init+0xfc/0x2c0 [hns_roce_hw_v2]
- __hns_roce_hw_v2_init_instance+0x7c/0x1d0 [hns_roce_hw_v2]
- hns_roce_hw_v2_init_instance+0x9c/0x180 [hns_roce_hw_v2]
+Removing this unnecessary iteration can reduce the time complexity to
+O(n).
 
-Fixes: 9a4435375cd1 ("IB/hns: Add driver files for hns RoCE driver")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Fixes: 38389eaa4db1 ("RDMA/hns: Add mtr support for mixed multihop addressing")
 Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20240906093444.3571619-6-huangjunxian6@hisilicon.com
+Link: https://patch.msgid.link/20240906093444.3571619-9-huangjunxian6@hisilicon.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_qp.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hem.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
-index 1a6de9a9e57c1..0cd2f778cdffc 100644
---- a/drivers/infiniband/hw/hns/hns_roce_qp.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
-@@ -1287,19 +1287,19 @@ void hns_roce_lock_cqs(struct hns_roce_cq *send_cq, struct hns_roce_cq *recv_cq)
- 		__acquire(&send_cq->lock);
- 		__acquire(&recv_cq->lock);
- 	} else if (unlikely(send_cq != NULL && recv_cq == NULL)) {
--		spin_lock_irq(&send_cq->lock);
-+		spin_lock(&send_cq->lock);
- 		__acquire(&recv_cq->lock);
- 	} else if (unlikely(send_cq == NULL && recv_cq != NULL)) {
--		spin_lock_irq(&recv_cq->lock);
-+		spin_lock(&recv_cq->lock);
- 		__acquire(&send_cq->lock);
- 	} else if (send_cq == recv_cq) {
--		spin_lock_irq(&send_cq->lock);
-+		spin_lock(&send_cq->lock);
- 		__acquire(&recv_cq->lock);
- 	} else if (send_cq->cqn < recv_cq->cqn) {
--		spin_lock_irq(&send_cq->lock);
-+		spin_lock(&send_cq->lock);
- 		spin_lock_nested(&recv_cq->lock, SINGLE_DEPTH_NESTING);
- 	} else {
--		spin_lock_irq(&recv_cq->lock);
-+		spin_lock(&recv_cq->lock);
- 		spin_lock_nested(&send_cq->lock, SINGLE_DEPTH_NESTING);
- 	}
- }
-@@ -1319,13 +1319,13 @@ void hns_roce_unlock_cqs(struct hns_roce_cq *send_cq,
- 		spin_unlock(&recv_cq->lock);
- 	} else if (send_cq == recv_cq) {
- 		__release(&recv_cq->lock);
--		spin_unlock_irq(&send_cq->lock);
-+		spin_unlock(&send_cq->lock);
- 	} else if (send_cq->cqn < recv_cq->cqn) {
- 		spin_unlock(&recv_cq->lock);
--		spin_unlock_irq(&send_cq->lock);
-+		spin_unlock(&send_cq->lock);
- 	} else {
- 		spin_unlock(&send_cq->lock);
--		spin_unlock_irq(&recv_cq->lock);
-+		spin_unlock(&recv_cq->lock);
- 	}
- }
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
+index 6c875ffed83ac..61ec96b3a89d5 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
+@@ -1172,10 +1172,12 @@ static int hem_list_alloc_mid_bt(struct hns_roce_dev *hr_dev,
  
+ 	/* config L1 bt to last bt and link them to corresponding parent */
+ 	for (level = 1; level < hopnum; level++) {
+-		cur = hem_list_search_item(&mid_bt[level], offset);
+-		if (cur) {
+-			hem_ptrs[level] = cur;
+-			continue;
++		if (!hem_list_is_bottom_bt(hopnum, level)) {
++			cur = hem_list_search_item(&mid_bt[level], offset);
++			if (cur) {
++				hem_ptrs[level] = cur;
++				continue;
++			}
+ 		}
+ 
+ 		step = hem_list_calc_ba_range(hopnum, level, unit);
 -- 
 2.43.0
 
