@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79EF81E907D;
-	Tue, 15 Oct 2024 11:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325681D9674;
+	Tue, 15 Oct 2024 11:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992671; cv=none; b=DJwdLqsKB8aizrPPMwbL9M5zAPPyT4/eRXFGehSqoPU1MiJzROuPT5vEmh0YQDzGLAoJDG1eo80UwkAGK/5Quc2mIpLMYuC3HKrb5SqXgvusMnswXwMA0b5aOLC4rbVja/CjlNFrfvrafVl9uEJ5NhPmcIG0zEejX2iN4E8+TX0=
+	t=1728992675; cv=none; b=rn5zqf/dEyaqxmM0zWyPcPFgR1RYGRdgsep2O8M/Hh96woByJ819wTgS0e3dB9I/lPy78o7l1XQFNbOaoMXMSjS5CEXLT3gHl89DywoSbLnxMh0wTyESCm235Ih5jFyXsnFCmCmCGAv+GVQbyD5Ney0441E8c1qdi4nXRgU2uTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992671; c=relaxed/simple;
-	bh=eDImqEvNAH0jV1UlvKxQhJxRFi2H738nioGuMDXvYIE=;
+	s=arc-20240116; t=1728992675; c=relaxed/simple;
+	bh=ouSp1kzB0KP7L17AVYA3hpeDzFeB7P/O/MSFL6HhCsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i5A9na/s0Xnp3CAl9CBZiFx8kYYNhFz2+nl3FVvQCtwj5d6iL9DrWJhq5JEHJctxgxjyL1/X1iAh5siFTU+EdAn1kCGu0VwR7+OEd80qmqTwjhEPYh8AwPiqM7VabPV3iP0rqfVFM9BPn4AdGVRjm7+Oj76kdANfKHHlZBtAA64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKvi/ul9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bmrl1dy8CUJ9jCHRfDwvj3CZO0+2OnYWInB3DVDImZ97jb1RnwBWemaZOU9KZzAisZjtlCFv2U/dwZ4pN8IQPOsKgRwP4rJ68fvQwHiFuxblHb6yL4stjzi++M6b4UEdK0YbodU2yehHVqpTXe/2qa53fBgrNsv/sRvaW4rgIok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U//+kmF7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKvi/ul9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6722C4CEC6;
-	Tue, 15 Oct 2024 11:44:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U//+kmF7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5956AC4CEC6;
+	Tue, 15 Oct 2024 11:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992671;
-	bh=eDImqEvNAH0jV1UlvKxQhJxRFi2H738nioGuMDXvYIE=;
+	s=korg; t=1728992674;
+	bh=ouSp1kzB0KP7L17AVYA3hpeDzFeB7P/O/MSFL6HhCsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yKvi/ul9uohNrCp6PDZx8jGL1frHdlATs/EzZUKecv4Rw8DGucKIqZ1Hfc5WvDPh3
-	 IhdvtmklJiKw12t/jbxf3UGexA+4Ho5TanSp1sTsTN9DwIV+yE/F3YbOBNdJ+Tl8BR
-	 XGW6XeyrVaOPT5W2MmnPvDC+8nMOnZkGIVNiLmzI=
+	b=U//+kmF7HhtnmaSLQ+rk3esBjWKxegbPpmojUo9XaBmPz8QgoUJPI8Ky4e9hWDhAL
+	 FGsUD8jyqMcHSwTJdUF4+KSlOijzUXpECbS/9D3Tml+2a47+pQ67TuoofUjHMrnBqS
+	 I3QnGp+G+vlmPfVqohFXp2z0epkd9nfk2CiIfOQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 143/691] ARM: dts: imx7d-zii-rmu2: fix Ethernet PHY pinctrl property
-Date: Tue, 15 Oct 2024 13:21:31 +0200
-Message-ID: <20241015112446.031444109@linuxfoundation.org>
+Subject: [PATCH 5.15 178/691] powerpc/8xx: Fix kernel vs user address comparison
+Date: Tue, 15 Oct 2024 13:22:06 +0200
+Message-ID: <20241015112447.428240142@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,36 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 0e49cfe364dea4345551516eb2fe53135a10432b ]
+[ Upstream commit 65a82e117ffeeab0baf6f871a1cab11a28ace183 ]
 
-There is no "fsl,phy" property in pin controller pincfg nodes:
+Since commit 9132a2e82adc ("powerpc/8xx: Define a MODULE area below
+kernel text"), module exec space is below PAGE_OFFSET so not only
+space above PAGE_OFFSET, but space above TASK_SIZE need to be seen
+as kernel space.
 
-  imx7d-zii-rmu2.dtb: pinctrl@302c0000: enet1phyinterruptgrp: 'fsl,pins' is a required property
-  imx7d-zii-rmu2.dtb: pinctrl@302c0000: enet1phyinterruptgrp: 'fsl,phy' does not match any of the regexes: 'pinctrl-[0-9]+'
+Until now the problem went undetected because by default TASK_SIZE
+is 0x8000000 which means address space is determined by just
+checking upper address bit. But when TASK_SIZE is over 0x80000000,
+PAGE_OFFSET is used for comparison, leading to thinking module
+addresses are part of user space.
 
-Fixes: f496e6750083 ("ARM: dts: Add ZII support for ZII i.MX7 RMU2 board")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fix it by using TASK_SIZE instead of PAGE_OFFSET for address
+comparison.
+
+Fixes: 9132a2e82adc ("powerpc/8xx: Define a MODULE area below kernel text")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/3f574c9845ff0a023b46cb4f38d2c45aecd769bd.1724173828.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx7d-zii-rmu2.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kernel/head_8xx.S | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx7d-zii-rmu2.dts b/arch/arm/boot/dts/imx7d-zii-rmu2.dts
-index 1065941807e83..ce59342e55aae 100644
---- a/arch/arm/boot/dts/imx7d-zii-rmu2.dts
-+++ b/arch/arm/boot/dts/imx7d-zii-rmu2.dts
-@@ -350,7 +350,7 @@ MX7D_PAD_SD3_RESET_B__SD3_RESET_B	0x59
+diff --git a/arch/powerpc/kernel/head_8xx.S b/arch/powerpc/kernel/head_8xx.S
+index 0d073b9fd52c5..4e409eee42b10 100644
+--- a/arch/powerpc/kernel/head_8xx.S
++++ b/arch/powerpc/kernel/head_8xx.S
+@@ -40,12 +40,12 @@
+ #include "head_32.h"
  
- &iomuxc_lpsr {
- 	pinctrl_enet1_phy_interrupt: enet1phyinterruptgrp {
--		fsl,phy = <
-+		fsl,pins = <
- 			MX7D_PAD_LPSR_GPIO1_IO02__GPIO1_IO2	0x08
- 		>;
- 	};
+ .macro compare_to_kernel_boundary scratch, addr
+-#if CONFIG_TASK_SIZE <= 0x80000000 && CONFIG_PAGE_OFFSET >= 0x80000000
++#if CONFIG_TASK_SIZE <= 0x80000000 && MODULES_VADDR >= 0x80000000
+ /* By simply checking Address >= 0x80000000, we know if its a kernel address */
+ 	not.	\scratch, \addr
+ #else
+ 	rlwinm	\scratch, \addr, 16, 0xfff8
+-	cmpli	cr0, \scratch, PAGE_OFFSET@h
++	cmpli	cr0, \scratch, TASK_SIZE@h
+ #endif
+ .endm
+ 
+@@ -403,7 +403,7 @@ FixupDAR:/* Entry point for dcbx workaround. */
+ 	mfspr	r10, SPRN_SRR0
+ 	mtspr	SPRN_MD_EPN, r10
+ 	rlwinm	r11, r10, 16, 0xfff8
+-	cmpli	cr1, r11, PAGE_OFFSET@h
++	cmpli	cr1, r11, TASK_SIZE@h
+ 	mfspr	r11, SPRN_M_TWB	/* Get level 1 table */
+ 	blt+	cr1, 3f
+ 
 -- 
 2.43.0
 
