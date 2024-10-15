@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790091EABD1;
-	Tue, 15 Oct 2024 12:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52821EABC6;
+	Tue, 15 Oct 2024 12:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993970; cv=none; b=cMWHek+ocgkvButhdRXloGeO/HL2aEthQx8k86pQQ0AoFQJPtZezHe1BNh3YGfafS8AtkMx2hi1KP92a1cHeO94VOWdLx82NMRo2tN5ut5IiuvRJ2PNRuFR+Zxlz+wQg9efHXLc+DrDvcVqcaDTazVh4gy1lH7t0hIA9Q2N51IM=
+	t=1728993973; cv=none; b=MPW6IwWeiz2LSRprFxb1SjGqTurxqwTZsvS/u/5sFAOOimSc6pmKMB2y3YPMwV+dBvsrQFr4nxa7k6AaF9CxeAGEOKUtCla0Rdr8JrQ6yQO3edGBDuBtkxM28N9Z1PCuOpYBa78ZhwxsgI4BAm+Ws7/6CMT1R66XoHuE2+JucVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993970; c=relaxed/simple;
-	bh=qW6PPshGWkhpT9q9N4oTGOeZLv7XhbJgHMNamp8dcW4=;
+	s=arc-20240116; t=1728993973; c=relaxed/simple;
+	bh=dFWwbTCUhjpcbcY/b5RN2BR4z3ckaYY3GiYEPn4b8SU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BogWovgKqeE6W8i4qWx8ijOLbb/Ervcn9Sasr2kdifRN0EG1m4YfaTO3D1wye+tNEnmaaODIlCJKgiO3PTk7WLEJUcnT0tU/DSb4K3OlU7BBDBQjLbzMWenaywr2FRV3zSV6EwBddJxLvNHY01og6Fdko/vyFukmJY9U2xPg4lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fskWQB12; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M4yTnhYJXhf0FFdg/txQV9aM5OgijOIU9sxhLUOfGUZy7QAFcobhjzbIIxBtUoW7+x1DB0iSrg9Etj8JHxPIutuo/1i/wFHSDTkimjSY2Cf/hx3+UAGlHTJy5wmv6M8K1F59+6CpnUoSLrCIdqFM/k3jlpz2QQmggb9jdraGBAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pq5Zwnnx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fskWQB12"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF5EC4CEC6;
-	Tue, 15 Oct 2024 12:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pq5Zwnnx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 355B0C4CED0;
+	Tue, 15 Oct 2024 12:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993970;
-	bh=qW6PPshGWkhpT9q9N4oTGOeZLv7XhbJgHMNamp8dcW4=;
+	s=korg; t=1728993973;
+	bh=dFWwbTCUhjpcbcY/b5RN2BR4z3ckaYY3GiYEPn4b8SU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fskWQB126LXtItQdl3v1VVLLEq8/cWd6fOOJWdSdQKK/PdfSvZ+aGT/QNsJzGfYBx
-	 Qa7ZQJX3o/HyHAsCYCg1PSiKt102LT7FXiO+4VtDgi227Yb+MRK4RL1bPzotb5sZlP
-	 xeJskkZpc945L3ossU00HDSLUpNTPGBAzBILsk44=
+	b=pq5ZwnnxiosVzH+Iq3BJcAsRlX8GWhOViAUOPJGtIR3+u+KtQpQcbREhFDKVg2m76
+	 TEqMuJ0tfleTMHa50Gc9uu92X2H7kgfUl8q9DMiPPeAimlf1G5XLDxeWXPh5aCKXk4
+	 FBqW4Ppn7UaS7bfAH8F/PDdH7y0BDQ99CUiiSz1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil R <akhilrajeev@nvidia.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Val Packett <val@packett.cool>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 551/691] device property: Add fwnode_irq_get_byname
-Date: Tue, 15 Oct 2024 13:28:19 +0200
-Message-ID: <20241015112502.211332147@linuxfoundation.org>
+Subject: [PATCH 5.15 569/691] drm/rockchip: vop: clear DMA stop bit on RK3066
+Date: Tue, 15 Oct 2024 13:28:37 +0200
+Message-ID: <20241015112502.926495118@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,81 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil R <akhilrajeev@nvidia.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit ca0acb511c21738b32386ce0f85c284b351d919e ]
+[ Upstream commit 6b44aa559d6c7f4ea591ef9d2352a7250138d62a ]
 
-Add fwnode_irq_get_byname() to get an interrupt by name from either
-ACPI table or Device Tree, whichever is used for enumeration.
+The RK3066 VOP sets a dma_stop bit when it's done scanning out a frame
+and needs the driver to acknowledge that by clearing the bit.
 
-In the ACPI case, this allow us to use 'interrupt-names' in
-_DSD which can be mapped to Interrupt() resource by index.
-The implementation is similar to 'interrupt-names' in the
-Device Tree.
+Unless we clear it "between" frames, the RGB output only shows noise
+instead of the picture. atomic_flush is the place for it that least
+affects other code (doing it on vblank would require converting all
+other usages of the reg_lock to spin_(un)lock_irq, which would affect
+performance for everyone).
 
-Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Stable-dep-of: 8d3cefaf6592 ("i2c: core: Lock address during client device instantiation")
+This seems to be a redundant synchronization mechanism that was removed
+in later iterations of the VOP hardware block.
+
+Fixes: f4a6de855eae ("drm: rockchip: vop: add rk3066 vop definitions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Val Packett <val@packett.cool>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240624204054.5524-2-val@packett.cool
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/property.c  | 29 +++++++++++++++++++++++++++++
- include/linux/property.h |  1 +
- 2 files changed, 30 insertions(+)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 4 ++++
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.h | 1 +
+ drivers/gpu/drm/rockchip/rockchip_vop_reg.c | 1 +
+ 3 files changed, 6 insertions(+)
 
-diff --git a/drivers/base/property.c b/drivers/base/property.c
-index 87bb97e12749e..ff1be3e311eeb 100644
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -1066,6 +1066,35 @@ void __iomem *fwnode_iomap(struct fwnode_handle *fwnode, int index)
- }
- EXPORT_SYMBOL(fwnode_iomap);
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+index 3d5e463757f55..40e733fd8862a 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+@@ -1544,6 +1544,10 @@ static void vop_crtc_atomic_flush(struct drm_crtc *crtc,
+ 	VOP_AFBC_SET(vop, enable, s->enable_afbc);
+ 	vop_cfg_done(vop);
  
-+/**
-+ * fwnode_irq_get_byname - Get IRQ from a fwnode using its name
-+ * @fwnode:	Pointer to the firmware node
-+ * @name:	IRQ name
-+ *
-+ * Description:
-+ * Find a match to the string @name in the 'interrupt-names' string array
-+ * in _DSD for ACPI, or of_node for Device Tree. Then get the Linux IRQ
-+ * number of the IRQ resource corresponding to the index of the matched
-+ * string.
-+ *
-+ * Return:
-+ * Linux IRQ number on success, or negative errno otherwise.
-+ */
-+int fwnode_irq_get_byname(const struct fwnode_handle *fwnode, const char *name)
-+{
-+	int index;
++	/* Ack the DMA transfer of the previous frame (RK3066). */
++	if (VOP_HAS_REG(vop, common, dma_stop))
++		VOP_REG_SET(vop, common, dma_stop, 0);
 +
-+	if (!name)
-+		return -EINVAL;
-+
-+	index = fwnode_property_match_string(fwnode, "interrupt-names",  name);
-+	if (index < 0)
-+		return index;
-+
-+	return fwnode_irq_get(fwnode, index);
-+}
-+EXPORT_SYMBOL(fwnode_irq_get_byname);
-+
- /**
-  * fwnode_graph_get_next_endpoint - Get next endpoint firmware node
-  * @fwnode: Pointer to the parent firmware node
-diff --git a/include/linux/property.h b/include/linux/property.h
-index 032262e3d9991..840f0545d4f9d 100644
---- a/include/linux/property.h
-+++ b/include/linux/property.h
-@@ -125,6 +125,7 @@ struct fwnode_handle *fwnode_handle_get(struct fwnode_handle *fwnode);
- void fwnode_handle_put(struct fwnode_handle *fwnode);
+ 	spin_unlock(&vop->reg_lock);
  
- int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index);
-+int fwnode_irq_get_byname(const struct fwnode_handle *fwnode, const char *name);
+ 	/*
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
+index 14179e89bd215..32d1783be01d3 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
+@@ -103,6 +103,7 @@ struct vop_common {
+ 	struct vop_reg lut_buffer_index;
+ 	struct vop_reg gate_en;
+ 	struct vop_reg mmu_en;
++	struct vop_reg dma_stop;
+ 	struct vop_reg out_mode;
+ 	struct vop_reg standby;
+ };
+diff --git a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
+index de7eb2fda4833..3bcc3d614ee1d 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
++++ b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
+@@ -424,6 +424,7 @@ static const struct vop_output rk3066_output = {
+ };
  
- void __iomem *fwnode_iomap(struct fwnode_handle *fwnode, int index);
- 
+ static const struct vop_common rk3066_common = {
++	.dma_stop = VOP_REG(RK3066_SYS_CTRL0, 0x1, 0),
+ 	.standby = VOP_REG(RK3066_SYS_CTRL0, 0x1, 1),
+ 	.out_mode = VOP_REG(RK3066_DSP_CTRL0, 0xf, 0),
+ 	.cfg_done = VOP_REG(RK3066_REG_CFG_DONE, 0x1, 0),
 -- 
 2.43.0
 
