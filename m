@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5751C57B1;
-	Tue, 15 Oct 2024 12:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5EF91CFEA9;
+	Tue, 15 Oct 2024 12:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993777; cv=none; b=Q8avqFvRpiJUCJS7PByrb2CP66sWgf5x0sTjktxDEMMaUozAanrSGu7Pw49OMwzZDNA9CaMsRlyTDDuElYSZ/Jhos7G4Y1GTcSWWFrWH1TcbeOlFkBevHPOkJ5pBusxjIc1bRY+w9FkjPT0K853Q+chxXhA7y9zHk+Nh9F+i9+k=
+	t=1728993780; cv=none; b=j76EKABu4DFKuP/QbS8HY2BIECktrgvJonFqMczzICXKCnQUipbB+/T9eGaQJ5oAhFKFFyg9CvphhSZcbpCSAkZei0K0jpKQloCi/As7QFqKU3T3n5m+HjB9VKdJjkyxX2ov2GzmeIVbZdq+h8yNHsIWb1z2eWOjkKcTjpBoe/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993777; c=relaxed/simple;
-	bh=NqLZZmAG6PbRREanTgAkI3b4o9mYcC28rlPHKBjlefE=;
+	s=arc-20240116; t=1728993780; c=relaxed/simple;
+	bh=8Gml2jdVqVNppTCy13P3oJ4qGKS0vj7FLCDcyBwSOOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m0okWYizkLH6o/OdSbllgR9BvfsVFE+HPrCNfZ7ff+LXq2/xjRd5NJZRAUj2bK9yWaZkIDdsZIX/Wh1+O7S1dqNstpKq3uxKVmUIFVl/l5PzvbXU2AGtZslHWSpsmLCH2eP17e1b08izQ0bGWodkCb9ybnylt/iBmtttVh/YZFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BhYhxx7J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RNvco66An9qu8mBIBf+kdqnOonEMimxtigruPyynI2fXzg7WwLfcOCzRyzDsE8VAyTcfOFYP0INOz3vwhGbUxX1TkXR2HIYavvPB+jcXZOHk9Br7utVuD2XIaltTne0rCD0mgKDhLta8u1ORiQjmjiYRjxL0QZ6KKcn+J0fG4Bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8zbqzva; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BhYhxx7J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71E2C4CEC6;
-	Tue, 15 Oct 2024 12:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8zbqzva"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289BAC4CEC6;
+	Tue, 15 Oct 2024 12:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993777;
-	bh=NqLZZmAG6PbRREanTgAkI3b4o9mYcC28rlPHKBjlefE=;
+	s=korg; t=1728993780;
+	bh=8Gml2jdVqVNppTCy13P3oJ4qGKS0vj7FLCDcyBwSOOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BhYhxx7JXOEi2wuJHFz94NGUXDukR2iwsNVJoHYtdCRKQe0ftS7isWl4yqVuhf0rD
-	 xKlN9mjmGwkaYOiXC1wwACZJQVaTfElHmO9FZFd5yPqakvP/mSjIf15spnIfWlVm52
-	 K9CpQEremOfFRJZBxkKgf4lx5Oe4NZuOnpU3zzrg=
+	b=A8zbqzva55ZfK6N91dvDPCldyx0E/i//HQmbgKBu4t7Nrym8hj4ZaEJ/fjYhjE/f5
+	 APLyuUC0pkuj5oqoxvpdspey4jhoII+e3M9CtHqbpv48jQqiVvexPMLFaNcdwtTKRm
+	 ReNn0oIkOtWZB2aFWMYgBBwpyffxzE8wPiwCpUjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Mario Casquero <mcasquer@redhat.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 485/691] selftests/mm: fix charge_reserved_hugetlb.sh test
-Date: Tue, 15 Oct 2024 13:27:13 +0200
-Message-ID: <20241015112459.589030644@linuxfoundation.org>
+	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.15 512/691] ext4: fix incorrect tid assumption in ext4_wait_for_tail_page_commit()
+Date: Tue, 15 Oct 2024 13:27:40 +0200
+Message-ID: <20241015112500.667049588@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -55,123 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 
-[ Upstream commit c41a701d18efe6b8aa402efab16edbaba50c9548 ]
+commit dd589b0f1445e1ea1085b98edca6e4d5dedb98d0 upstream.
 
-Currently, running the charge_reserved_hugetlb.sh selftest we can
-sometimes observe something like:
+Function ext4_wait_for_tail_page_commit() assumes that '0' is not a valid
+value for transaction IDs, which is incorrect.  Don't assume that and invoke
+jbd2_log_wait_commit() if the journal had a committing transaction instead.
 
-  $ ./charge_reserved_hugetlb.sh -cgroup-v2
-  ...
-  write_result is 0
-  After write:
-  hugetlb_usage=0
-  reserved_usage=10485760
-  killing write_to_hugetlbfs
-  Received 2.
-  Deleting the memory
-  Detach failure: Invalid argument
-  umount: /mnt/huge: target is busy.
-
-Both cases are issues in the test.
-
-While the unmount error seems to be racy, it will make the test fail:
-	$ ./run_vmtests.sh -t hugetlb
-	...
-	# [FAIL]
-	not ok 10 charge_reserved_hugetlb.sh -cgroup-v2 # exit=32
-
-The issue is that we are not waiting for the write_to_hugetlbfs process to
-quit.  So it might still have a hugetlbfs file open, about which umount is
-not happy.  Fix that by making "killall" wait for the process to quit.
-
-The other error ("Detach failure: Invalid argument") does not seem to
-result in a test error, but is misleading.  Turns out write_to_hugetlbfs.c
-unconditionally tries to cleanup using shmdt(), even when we only
-mmap()'ed a hugetlb file.  Even worse, shmaddr is never even set for the
-SHM case.  Fix that as well.
-
-With this change it seems to work as expected.
-
-Link: https://lkml.kernel.org/r/20240821123115.2068812-1-david@redhat.com
-Fixes: 29750f71a9b4 ("hugetlb_cgroup: add hugetlb_cgroup reservation tests")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reported-by: Mario Casquero <mcasquer@redhat.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Tested-by: Mario Casquero <mcasquer@redhat.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240724161119.13448-2-luis.henriques@linux.dev
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../selftests/vm/charge_reserved_hugetlb.sh   |  2 +-
- .../testing/selftests/vm/write_to_hugetlbfs.c | 21 +++++++++++--------
- 2 files changed, 13 insertions(+), 10 deletions(-)
+ fs/ext4/inode.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/vm/charge_reserved_hugetlb.sh b/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
-index e14bdd4455f2d..8e00276b4e69b 100644
---- a/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
-+++ b/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
-@@ -252,7 +252,7 @@ function cleanup_hugetlb_memory() {
-   local cgroup="$1"
-   if [[ "$(pgrep -f write_to_hugetlbfs)" != "" ]]; then
-     echo killing write_to_hugetlbfs
--    killall -2 write_to_hugetlbfs
-+    killall -2 --wait write_to_hugetlbfs
-     wait_for_hugetlb_memory_to_get_depleted $cgroup
-   fi
-   set -e
-diff --git a/tools/testing/selftests/vm/write_to_hugetlbfs.c b/tools/testing/selftests/vm/write_to_hugetlbfs.c
-index 6a2caba19ee1d..1289d311efd70 100644
---- a/tools/testing/selftests/vm/write_to_hugetlbfs.c
-+++ b/tools/testing/selftests/vm/write_to_hugetlbfs.c
-@@ -28,7 +28,7 @@ enum method {
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5301,8 +5301,9 @@ static void ext4_wait_for_tail_page_comm
+ 	struct page *page;
+ 	unsigned offset;
+ 	journal_t *journal = EXT4_SB(inode->i_sb)->s_journal;
+-	tid_t commit_tid = 0;
++	tid_t commit_tid;
+ 	int ret;
++	bool has_transaction;
  
- /* Global variables. */
- static const char *self;
--static char *shmaddr;
-+static int *shmaddr;
- static int shmid;
- 
- /*
-@@ -47,15 +47,17 @@ void sig_handler(int signo)
- {
- 	printf("Received %d.\n", signo);
- 	if (signo == SIGINT) {
--		printf("Deleting the memory\n");
--		if (shmdt((const void *)shmaddr) != 0) {
--			perror("Detach failure");
-+		if (shmaddr) {
-+			printf("Deleting the memory\n");
-+			if (shmdt((const void *)shmaddr) != 0) {
-+				perror("Detach failure");
-+				shmctl(shmid, IPC_RMID, NULL);
-+				exit(4);
-+			}
-+
- 			shmctl(shmid, IPC_RMID, NULL);
--			exit(4);
-+			printf("Done deleting the memory\n");
- 		}
--
--		shmctl(shmid, IPC_RMID, NULL);
--		printf("Done deleting the memory\n");
+ 	offset = inode->i_size & (PAGE_SIZE - 1);
+ 	/*
+@@ -5327,12 +5328,14 @@ static void ext4_wait_for_tail_page_comm
+ 		put_page(page);
+ 		if (ret != -EBUSY)
+ 			return;
+-		commit_tid = 0;
++		has_transaction = false;
+ 		read_lock(&journal->j_state_lock);
+-		if (journal->j_committing_transaction)
++		if (journal->j_committing_transaction) {
+ 			commit_tid = journal->j_committing_transaction->t_tid;
++			has_transaction = true;
++		}
+ 		read_unlock(&journal->j_state_lock);
+-		if (commit_tid)
++		if (has_transaction)
+ 			jbd2_log_wait_commit(journal, commit_tid);
  	}
- 	exit(2);
  }
-@@ -211,7 +213,8 @@ int main(int argc, char **argv)
- 			shmctl(shmid, IPC_RMID, NULL);
- 			exit(2);
- 		}
--		printf("shmaddr: %p\n", ptr);
-+		shmaddr = ptr;
-+		printf("shmaddr: %p\n", shmaddr);
- 
- 		break;
- 	default:
--- 
-2.43.0
-
 
 
