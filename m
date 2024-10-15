@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98EF1EF926;
-	Tue, 15 Oct 2024 11:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2841B1D9A42;
+	Tue, 15 Oct 2024 11:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992633; cv=none; b=rCtBcdqR7dIwOEaQ+QiXhZfEYE4gRZodkyTRUWzz9URHueHoNGyhAM0Q2Ue3tm6wNzERYrHs1yXXmtU7rI7s/kLV7tC7Y6ypYAqLZfC6qQJS3hQv+D+YqELcV/Hi6R0xobYKjhytJdjSMcXRbOTLziAAHpaLxJcTaLYoIzeEHxQ=
+	t=1728992637; cv=none; b=oiwnrPyM4ByMseLn7WUv3AuCUD0MRCsTxQzKFi0z6sqKV8XfNFD/nWDCDr84RVJgiWteoM/i5ycikrTYUd4gN9fChjK1J/qeQX5kxkMImouA1GyTxkM7W402SoYJ9w/fLli2ccdHp3FITHJmdlWMvdt0Ib88hCLLNWlF8H+20HA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992633; c=relaxed/simple;
-	bh=sRLsCKJanEN/IvLF8BvmZNKIpwC/HoCQ+dHps0JMYjk=;
+	s=arc-20240116; t=1728992637; c=relaxed/simple;
+	bh=9aZCCdqIATW/4oowozvTaqTVf1WwfCKKI7lpVJbXI5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CM59aOArhhMgI3Fouh2JO0EPZdk28RxzzsIUXlF2EpVxbEZuyR9C1ZUt65XMEPMg1M9k2m9UgC81EliFRh08OrVIoMn/3EfOYtcnAdzNwCxC10oho1pWqmZ5qf5EGyB047ITYquHetD5JSd/+bFwRw+px5OOX3JvRpEJQcikcMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OiDLxmLJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nbXPyEszzf5F64HiVoPXqFKKTO1eZLfBXcMJ+ON73zklYsryu7v3Cs0M8G+tasAyT6jI7q7lK8JU4vrYiqL4YCn0MtmMadTiR2JBM1XBNylUm62GLACk97UjIP88HKHG6R+W6zeNf9KECZXMLrpOMqGc0GFEIeeZQp0KUH1h2Hk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfW5mNX0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OiDLxmLJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17540C4CED0;
-	Tue, 15 Oct 2024 11:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfW5mNX0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D491C4CEC6;
+	Tue, 15 Oct 2024 11:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992633;
-	bh=sRLsCKJanEN/IvLF8BvmZNKIpwC/HoCQ+dHps0JMYjk=;
+	s=korg; t=1728992637;
+	bh=9aZCCdqIATW/4oowozvTaqTVf1WwfCKKI7lpVJbXI5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OiDLxmLJWQPTqzTT6rGZb3BLvnYUvZC6oMomaXCsxek3grO4uzOq2aKiP/+SzgJqM
-	 4aO30tLes3nFaP2DlTOtdpgv8eRCZpRKYDWGRAWqNfwchWobcA0dCkZiF/hibsxQOz
-	 NQks4AZtRtlpNNiCy9pwggcC+s6IB5DgwdCtHw9w=
+	b=jfW5mNX0RlZ9Af3p48DRdKBcPQgrMg+ydzSEi71v97igFlc+h2euObxjsm4/VZLj6
+	 nCkGkf/oNOV1T0lafmIEC5WsAMCKaG6ijLrtYDWbHNK3sLKxq2C/OeyZtRN6xQGYx9
+	 76UCrRHYUXNBEzHMPVgFDbsGUh1kt0RtGXyFr+44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Jeongjun Park <aha310510@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 146/691] reset: k210: fix OF node leak in probe() error path
-Date: Tue, 15 Oct 2024 13:21:34 +0200
-Message-ID: <20241015112446.149232044@linuxfoundation.org>
+Subject: [PATCH 5.15 173/691] jfs: fix out-of-bounds in dbNextAG() and diAlloc()
+Date: Tue, 15 Oct 2024 13:22:01 +0200
+Message-ID: <20241015112447.232203476@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,45 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit b14e40f5dc7cd0dd7e958010e6ca9ad32ff2ddad ]
+[ Upstream commit e63866a475562810500ea7f784099bfe341e761a ]
 
-Driver is leaking OF node reference on memory allocation failure.
-Acquire the OF node reference after memory allocation to fix this and
-keep it simple.
+In dbNextAG() , there is no check for the case where bmp->db_numag is
+greater or same than MAXAG due to a polluted image, which causes an
+out-of-bounds. Therefore, a bounds check should be added in dbMount().
 
-Fixes: 5a2308da9f60 ("riscv: Add Canaan Kendryte K210 reset controller")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20240825-reset-cleanup-scoped-v1-2-03f6d834f8c0@linaro.org
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+And in dbNextAG(), a check for the case where agpref is greater than
+bmp->db_numag should be added, so an out-of-bounds exception should be
+prevented.
+
+Additionally, a check for the case where agno is greater or same than
+MAXAG should be added in diAlloc() to prevent out-of-bounds.
+
+Reported-by: Jeongjun Park <aha310510@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/reset/reset-k210.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/jfs/jfs_dmap.c | 4 ++--
+ fs/jfs/jfs_imap.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/reset/reset-k210.c b/drivers/reset/reset-k210.c
-index 1b6e03522b40d..b0f4546b2b1e5 100644
---- a/drivers/reset/reset-k210.c
-+++ b/drivers/reset/reset-k210.c
-@@ -91,7 +91,7 @@ static const struct reset_control_ops k210_rst_ops = {
- static int k210_rst_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	struct device_node *parent_np = of_get_parent(dev->of_node);
-+	struct device_node *parent_np;
- 	struct k210_rst *ksr;
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 3f5c14315719b..625457e94b30a 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -187,7 +187,7 @@ int dbMount(struct inode *ipbmap)
+ 	}
  
- 	dev_info(dev, "K210 reset controller\n");
-@@ -100,6 +100,7 @@ static int k210_rst_probe(struct platform_device *pdev)
- 	if (!ksr)
- 		return -ENOMEM;
+ 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
+-	if (!bmp->db_numag) {
++	if (!bmp->db_numag || bmp->db_numag >= MAXAG) {
+ 		err = -EINVAL;
+ 		goto err_release_metapage;
+ 	}
+@@ -652,7 +652,7 @@ int dbNextAG(struct inode *ipbmap)
+ 	 * average free space.
+ 	 */
+ 	for (i = 0 ; i < bmp->db_numag; i++, agpref++) {
+-		if (agpref == bmp->db_numag)
++		if (agpref >= bmp->db_numag)
+ 			agpref = 0;
  
-+	parent_np = of_get_parent(dev->of_node);
- 	ksr->map = syscon_node_to_regmap(parent_np);
- 	of_node_put(parent_np);
- 	if (IS_ERR(ksr->map))
+ 		if (atomic_read(&bmp->db_active[agpref]))
+diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
+index ba6f28521360b..c72e97f065798 100644
+--- a/fs/jfs/jfs_imap.c
++++ b/fs/jfs/jfs_imap.c
+@@ -1360,7 +1360,7 @@ int diAlloc(struct inode *pip, bool dir, struct inode *ip)
+ 	/* get the ag number of this iag */
+ 	agno = BLKTOAG(JFS_IP(pip)->agstart, JFS_SBI(pip->i_sb));
+ 	dn_numag = JFS_SBI(pip->i_sb)->bmap->db_numag;
+-	if (agno < 0 || agno > dn_numag)
++	if (agno < 0 || agno > dn_numag || agno >= MAXAG)
+ 		return -EIO;
+ 
+ 	if (atomic_read(&JFS_SBI(pip->i_sb)->bmap->db_active[agno])) {
 -- 
 2.43.0
 
