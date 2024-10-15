@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4BE13F435;
-	Tue, 15 Oct 2024 13:15:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882C31B21B7;
+	Tue, 15 Oct 2024 13:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998109; cv=none; b=rUwF774ToYKblLmEhR4qnTDT2xaILa+M/I/+uI5OLpb/JfB6vLo64DWX8QUmgYdWy2izlCYSdSSfr6HTiBrdd+BM5L0QLvn6906ZkOkeN1QDnvFytf9RaSKw8+JM9ibKxJH0DhP/waneHixR5zWkTF0OwV1oyPpwgwVftpAQWOY=
+	t=1728998112; cv=none; b=Cjje9GDIKPdvCBunBTdwYNswELrBbLsTEUpoQas6++63NJ7I4kPMG9ETiAEAkzZ9+wmn22J8MLc2fmNrtPkA2URyStavkAoFz0lVGkwq69ao5aqIrvFrYIe8PozZaV9U/xci/OQ86Msi6WBwFiLZNUPGRqHNs/0tNqOcTBTxG8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998109; c=relaxed/simple;
-	bh=qVlvmx+shsuB+uIheQh9O937LDNmQchpJ30jRBhDHGs=;
+	s=arc-20240116; t=1728998112; c=relaxed/simple;
+	bh=gOc6aAOrK51HOxKOI/KF2Xe9BC8QJjPgAJiyhTYyijk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GOO3iMAHySLdHM76bj7sWiMtYBtBALG1cfqLlDsxb2JzTLvEFoBGSuke4oM20FnF6ZvrfEx6UWhtUyMy5+TuMZuQozysH4xYm8kAXQ1HFl2/5M9Hhmw0sbItxsECR+JuGp8T2tK/eTfGestEfa7AgOPJwQsBwx9ezwkNiSJ1564=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8xNUYoy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYqGi8QCHGsfQmqmig/PJUrgnyjiXBUytvuQUtzrSk1KSJ1VqiG+dNkgRNRd5oAOrkXFojl13Ljj2nNiBcu1tUqUEdaBG6glG4513DXlPxMuwD+Ln1lIVFMPaziCvdzbKYLKJZW/z+vrskpRtsQqvVtJJknJmiZbj4NPrPWE60g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIwqq4x5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8xNUYoy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913B5C4CEC6;
-	Tue, 15 Oct 2024 13:15:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIwqq4x5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE596C4CEC6;
+	Tue, 15 Oct 2024 13:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998109;
-	bh=qVlvmx+shsuB+uIheQh9O937LDNmQchpJ30jRBhDHGs=;
+	s=korg; t=1728998112;
+	bh=gOc6aAOrK51HOxKOI/KF2Xe9BC8QJjPgAJiyhTYyijk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v8xNUYoySPzeQCtmnvw0rjCw5jxbc6z/ixj3gvD3tfbL+YSbRj0ibpe3oJtpBliOl
-	 iD8f5ezhyGtVrDT2HQvj0MKTtL2XHIXOf+GYQLo3F/50q0m5pB0j2UMcPddnSw6v9R
-	 GrP07n9BdTQhp0V5/5OTWxmeNsam09tXhTOK2c38=
+	b=hIwqq4x5+nVWemecRG4XTp8fxqefYigvNH5hbklunkg77nQQ16myH1X7zKK+XDDj2
+	 r8hHnwlRTmVxHmtcibblZa4ujQToFeqnH4jjkbRdC8XTVkE/DKp+qBgBNrdEMTx11A
+	 ZejH7NV6xiUiPicnGuR708JUMigohFJErRSfAzxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Subject: [PATCH 5.10 382/518] drm: omapdrm: Add missing check for alloc_ordered_workqueue
-Date: Tue, 15 Oct 2024 14:44:46 +0200
-Message-ID: <20241015123931.714509353@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 383/518] jbd2: stop waiting for space when jbd2_cleanup_journal_tail() returns error
+Date: Tue, 15 Oct 2024 14:44:47 +0200
+Message-ID: <20241015123931.752842457@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -50,43 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit e794b7b9b92977365c693760a259f8eef940c536 upstream.
+commit f5cacdc6f2bb2a9bf214469dd7112b43dd2dd68a upstream.
 
-As it may return NULL pointer and cause NULL pointer dereference. Add check
-for the return value of alloc_ordered_workqueue.
+In __jbd2_log_wait_for_space(), we might call jbd2_cleanup_journal_tail()
+to recover some journal space. But if an error occurs while executing
+jbd2_cleanup_journal_tail() (e.g., an EIO), we don't stop waiting for free
+space right away, we try other branches, and if j_committing_transaction
+is NULL (i.e., the tid is 0), we will get the following complain:
 
-Cc: stable@vger.kernel.org
-Fixes: 2f95bc6d324a ("drm: omapdrm: Perform initialization/cleanup at probe/remove time")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240808061336.2796729-1-make24@iscas.ac.cn
+============================================
+JBD2: I/O error when updating journal superblock for sdd-8.
+__jbd2_log_wait_for_space: needed 256 blocks and only had 217 space available
+__jbd2_log_wait_for_space: no way to get more journal space in sdd-8
+------------[ cut here ]------------
+WARNING: CPU: 2 PID: 139804 at fs/jbd2/checkpoint.c:109 __jbd2_log_wait_for_space+0x251/0x2e0
+Modules linked in:
+CPU: 2 PID: 139804 Comm: kworker/u8:3 Not tainted 6.6.0+ #1
+RIP: 0010:__jbd2_log_wait_for_space+0x251/0x2e0
+Call Trace:
+ <TASK>
+ add_transaction_credits+0x5d1/0x5e0
+ start_this_handle+0x1ef/0x6a0
+ jbd2__journal_start+0x18b/0x340
+ ext4_dirty_inode+0x5d/0xb0
+ __mark_inode_dirty+0xe4/0x5d0
+ generic_update_time+0x60/0x70
+[...]
+============================================
+
+So only if jbd2_cleanup_journal_tail() returns 1, i.e., there is nothing to
+clean up at the moment, continue to try to reclaim free space in other ways.
+
+Note that this fix relies on commit 6f6a6fda2945 ("jbd2: fix ocfs2 corrupt
+when updating journal superblock fails") to make jbd2_cleanup_journal_tail
+return the correct error code.
+
+Fixes: 8c3f25d8950c ("jbd2: don't give up looking for space so easily in __jbd2_log_wait_for_space")
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240718115336.2554501-1-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/omapdrm/omap_drv.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/jbd2/checkpoint.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/omapdrm/omap_drv.c
-+++ b/drivers/gpu/drm/omapdrm/omap_drv.c
-@@ -600,6 +600,10 @@ static int omapdrm_init(struct omap_drm_
- 	soc = soc_device_match(omapdrm_soc_devices);
- 	priv->omaprev = soc ? (unsigned int)soc->data : 0;
- 	priv->wq = alloc_ordered_workqueue("omapdrm", 0);
-+	if (!priv->wq) {
-+		ret = -ENOMEM;
-+		goto err_alloc_workqueue;
-+	}
- 
- 	mutex_init(&priv->list_lock);
- 	INIT_LIST_HEAD(&priv->obj_list);
-@@ -649,6 +653,7 @@ err_cleanup_modeset:
- err_gem_deinit:
- 	omap_gem_deinit(ddev);
- 	destroy_workqueue(priv->wq);
-+err_alloc_workqueue:
- 	omap_disconnect_pipelines(ddev);
- 	omap_crtc_pre_uninit(priv);
- 	drm_dev_put(ddev);
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -125,8 +125,11 @@ __releases(&journal->j_state_lock)
+ 			write_unlock(&journal->j_state_lock);
+ 			if (chkpt) {
+ 				jbd2_log_do_checkpoint(journal);
+-			} else if (jbd2_cleanup_journal_tail(journal) == 0) {
+-				/* We were able to recover space; yay! */
++			} else if (jbd2_cleanup_journal_tail(journal) <= 0) {
++				/*
++				 * We were able to recover space or the
++				 * journal was aborted due to an error.
++				 */
+ 				;
+ 			} else if (has_transaction) {
+ 				/*
 
 
