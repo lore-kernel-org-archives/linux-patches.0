@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CED21F130E;
-	Tue, 15 Oct 2024 12:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF201EBFED;
+	Tue, 15 Oct 2024 12:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994308; cv=none; b=cPypyhF8hOcnXlcER7Qm43kyPxoFJMwsljkIo5GLLQv8RG6eeqiUG/MVoWQ0D6q1pd5s3ObM4Kf9mC5mDs8SviCNe0X2knecR3Lkg9o4Ip5qvqJ9kM3dpa/5RUEjCQOwhZ0g9p22cooCO5lS1uBtf6Q8qnP4Ve6f9gxnsjXJaZM=
+	t=1728994311; cv=none; b=XCkUNBHl3k4bE0SETjTVVhgSMt3kAgmC3ER51LGRUizxQxe/ePPAc2pSzP/cG9kQKIRr6zg/i/3/U3Gqj13oUHbEu3i/o5Bl/M69td4ToNmfAx6EMk1gufiVAyZfE6oQIjBPcvCGxGjRsonDP/S6j3Lu2rf2FHJHRPy3+6cmQz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994308; c=relaxed/simple;
-	bh=aD/UEuv4Ew1OZ5l/KlNFhCR+HJEiduGA0Nr1aE0m56g=;
+	s=arc-20240116; t=1728994311; c=relaxed/simple;
+	bh=OFvfC9am2XCZmHTAkX9BEnU/5/aWeICjKMgU0KNtNOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ek56AuUUBdvfF5c6Or1KXLnhY+crzcGa/YRCA64m5Sd1yJMukKiGDAsEISNP5jY36lbHtOdIw/9ie71HcO2CqimXKc7FM3cTWCY9xbwlcvnF62KfOohzGg39+a2v9t1dVtbDmvND1VkMNUQcPHPrz223xuuKCole5sf34CLwBsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=curGLtoF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hd9X0HfyJNOK0+H38dd7+95HP2uTNa8JD43uZOCbxZjrKX16hiqarwDtUJNy77Z7xAZ1S8dKfMM9Jt4mIpqgHQSPgvv1mQATbwlbZgvbdUI9/MUcNeGDzV4MbTQtpvKPTaqAsv+ei0xcqgBHqvzJ5PGP8ogg+O5nJdiN6p7aulQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrGt0HWM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="curGLtoF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7962C4CEC6;
-	Tue, 15 Oct 2024 12:11:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrGt0HWM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D459C4CEC6;
+	Tue, 15 Oct 2024 12:11:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994308;
-	bh=aD/UEuv4Ew1OZ5l/KlNFhCR+HJEiduGA0Nr1aE0m56g=;
+	s=korg; t=1728994311;
+	bh=OFvfC9am2XCZmHTAkX9BEnU/5/aWeICjKMgU0KNtNOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=curGLtoFl50aIvRp1sX3qMCK4zTQQIwUUsVC/qG3Wie0/YqcGLdLhwjhrS/T1ZuB3
-	 4rhNGJHlRQZBvDQyEz7zSi7RcYtLdWG9Id3ERg5KrVTboT+ERr37FLdf2spcMdO3Kk
-	 XENiYWnts34jxdkgynPbW/dCcP+9ogMiHfb1zUlk=
+	b=BrGt0HWM0ZElYYUjPRPJz3C/oSyfPtZ7eXDY28wOgz5GYWBEOEBWGD4Sm2wbIu3WV
+	 dX5wNJKsoADyTaiWTrE9zC3x/21bb2LWJmiYxX17Eg6ouWd0QQspN6x+1joI9FBnu5
+	 TIoYnuF1aYfWJspNqWmVuzazmThxnsnfRcvGUA8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Selvarasu Ganesan <selvarasu.g@samsung.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.15 668/691] usb: dwc3: core: Stop processing of pending events if controller is halted
-Date: Tue, 15 Oct 2024 13:30:16 +0200
-Message-ID: <20241015112506.836937381@linuxfoundation.org>
+	Jose Alberto Reguero <jose.alberto.reguero@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 669/691] usb: xhci: Fix problem with xhci resume from suspend
+Date: Tue, 15 Oct 2024 13:30:17 +0200
+Message-ID: <20241015112506.875980945@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,124 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvarasu Ganesan <selvarasu.g@samsung.com>
+From: Jose Alberto Reguero <jose.alberto.reguero@gmail.com>
 
-commit 0d410e8913f5cffebcca79ffdd596009d4a13a28 upstream.
+commit d44238d8254a36249d576c96473269dbe500f5e4 upstream.
 
-This commit addresses an issue where events were being processed when
-the controller was in a halted state. To fix this issue by stop
-processing the events as the event count was considered stale or
-invalid when the controller was halted.
+I have a ASUS PN51 S mini pc that has two xhci devices. One from AMD,
+and other from ASMEDIA. The one from ASMEDIA have problems when resume
+from suspend, and keep broken until unplug the  power cord. I use this
+kernel parameter: xhci-hcd.quirks=128 and then it works ok. I make a
+path to reset only the ASMEDIA xhci.
 
-Fixes: fc8bb91bc83e ("usb: dwc3: implement runtime PM")
-Cc: stable@kernel.org
-Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
-Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20240916231813.206-1-selvarasu.g@samsung.com
+Signed-off-by: Jose Alberto Reguero <jose.alberto.reguero@gmail.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20240919184202.22249-1-jose.alberto.reguero@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c   |   22 +++++++++++++++++++---
- drivers/usb/dwc3/core.h   |    4 ----
- drivers/usb/dwc3/gadget.c |   11 -----------
- 3 files changed, 19 insertions(+), 18 deletions(-)
+ drivers/usb/host/xhci-pci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -457,6 +457,7 @@ static int dwc3_alloc_event_buffers(stru
- int dwc3_event_buffers_setup(struct dwc3 *dwc)
- {
- 	struct dwc3_event_buffer	*evt;
-+	u32				reg;
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -73,6 +73,7 @@
+ #define PCI_DEVICE_ID_ASMEDIA_1042A_XHCI		0x1142
+ #define PCI_DEVICE_ID_ASMEDIA_1142_XHCI			0x1242
+ #define PCI_DEVICE_ID_ASMEDIA_2142_XHCI			0x2142
++#define PCI_DEVICE_ID_ASMEDIA_3042_XHCI			0x3042
+ #define PCI_DEVICE_ID_ASMEDIA_3242_XHCI			0x3242
  
- 	if (!dwc->ev_buf)
- 		return 0;
-@@ -469,8 +470,10 @@ int dwc3_event_buffers_setup(struct dwc3
- 			upper_32_bits(evt->dma));
- 	dwc3_writel(dwc->regs, DWC3_GEVNTSIZ(0),
- 			DWC3_GEVNTSIZ_SIZE(evt->length));
--	dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), 0);
+ #define PCI_DEVICE_ID_CADENCE				0x17CD
+@@ -331,6 +332,10 @@ static void xhci_pci_quirks(struct devic
+ 		pdev->device == PCI_DEVICE_ID_ASMEDIA_1042A_XHCI)
+ 		xhci->quirks |= XHCI_ASMEDIA_MODIFY_FLOWCONTROL;
  
-+	/* Clear any stale event */
-+	reg = dwc3_readl(dwc->regs, DWC3_GEVNTCOUNT(0));
-+	dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), reg);
- 	return 0;
- }
- 
-@@ -497,7 +500,10 @@ void dwc3_event_buffers_cleanup(struct d
- 	dwc3_writel(dwc->regs, DWC3_GEVNTADRHI(0), 0);
- 	dwc3_writel(dwc->regs, DWC3_GEVNTSIZ(0), DWC3_GEVNTSIZ_INTMASK
- 			| DWC3_GEVNTSIZ_SIZE(0));
--	dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), 0);
++	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
++	    pdev->device == PCI_DEVICE_ID_ASMEDIA_3042_XHCI)
++		xhci->quirks |= XHCI_RESET_ON_RESUME;
 +
-+	/* Clear any stale event */
-+	reg = dwc3_readl(dwc->regs, DWC3_GEVNTCOUNT(0));
-+	dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), reg);
- }
+ 	if (pdev->vendor == PCI_VENDOR_ID_TI && pdev->device == 0x8241)
+ 		xhci->quirks |= XHCI_LIMIT_ENDPOINT_INTERVAL_7;
  
- static int dwc3_alloc_scratch_buffers(struct dwc3 *dwc)
-@@ -1948,7 +1954,11 @@ static int dwc3_runtime_resume(struct de
- 
- 	switch (dwc->current_dr_role) {
- 	case DWC3_GCTL_PRTCAP_DEVICE:
--		dwc3_gadget_process_pending_events(dwc);
-+		if (dwc->pending_events) {
-+			pm_runtime_put(dwc->dev);
-+			dwc->pending_events = false;
-+			enable_irq(dwc->irq_gadget);
-+		}
- 		break;
- 	case DWC3_GCTL_PRTCAP_HOST:
- 	default:
-@@ -2035,6 +2045,12 @@ static void dwc3_complete(struct device
- static const struct dev_pm_ops dwc3_dev_pm_ops = {
- 	SET_SYSTEM_SLEEP_PM_OPS(dwc3_suspend, dwc3_resume)
- 	.complete = dwc3_complete,
-+
-+	/*
-+	 * Runtime suspend halts the controller on disconnection. It relies on
-+	 * platforms with custom connection notification to start the controller
-+	 * again.
-+	 */
- 	SET_RUNTIME_PM_OPS(dwc3_runtime_suspend, dwc3_runtime_resume,
- 			dwc3_runtime_idle)
- };
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -1591,7 +1591,6 @@ static inline void dwc3_otg_host_init(st
- #if !IS_ENABLED(CONFIG_USB_DWC3_HOST)
- int dwc3_gadget_suspend(struct dwc3 *dwc);
- int dwc3_gadget_resume(struct dwc3 *dwc);
--void dwc3_gadget_process_pending_events(struct dwc3 *dwc);
- #else
- static inline int dwc3_gadget_suspend(struct dwc3 *dwc)
- {
-@@ -1603,9 +1602,6 @@ static inline int dwc3_gadget_resume(str
- 	return 0;
- }
- 
--static inline void dwc3_gadget_process_pending_events(struct dwc3 *dwc)
--{
--}
- #endif /* !IS_ENABLED(CONFIG_USB_DWC3_HOST) */
- 
- #if IS_ENABLED(CONFIG_USB_DWC3_ULPI)
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -4559,14 +4559,3 @@ int dwc3_gadget_resume(struct dwc3 *dwc)
- 
- 	return dwc3_gadget_soft_connect(dwc);
- }
--
--void dwc3_gadget_process_pending_events(struct dwc3 *dwc)
--{
--	if (dwc->pending_events) {
--		dwc3_interrupt(dwc->irq_gadget, dwc->ev_buf);
--		dwc3_thread_interrupt(dwc->irq_gadget, dwc->ev_buf);
--		pm_runtime_put(dwc->dev);
--		dwc->pending_events = false;
--		enable_irq(dwc->irq_gadget);
--	}
--}
 
 
