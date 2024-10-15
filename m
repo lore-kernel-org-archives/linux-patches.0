@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4611AF0AC;
-	Tue, 15 Oct 2024 13:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CCD1C07FF;
+	Tue, 15 Oct 2024 13:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997915; cv=none; b=A+Xdr5Msslvez9TOkWMSLAD7polLOnWZAe66WpJEBZXwxRNsaTgYTj3QdfLMKfZCeEes/lucz9K/SdFZrr9p6nQdF9I6hhubUYy9WMpyr38ehNkQESHHiC53/J/7zffnthildpWH4tWZzySTfmwPAENQVe/wpeDoGWJpMC0r4yY=
+	t=1728997919; cv=none; b=LAIJZRG2wur6AMzrtXR+AO40EHYn1VtdYHchzhvX3lEHsvDXWKfX+OKkomoBXcEA0mN8vlwTO+wbVganWp8fc5icfew2c5WhEr5TbtrI7GqHJVOl+HrIR5sGaq1UYz0ZKX/gRIBydYFM7199mjm2VeYiEPUfnRNZnVxwO2wOv6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997915; c=relaxed/simple;
-	bh=huQbxFcvRzIj5oVzEJBvGG91Dof576Gz6+pKZkMHJBM=;
+	s=arc-20240116; t=1728997919; c=relaxed/simple;
+	bh=UjqbBCNC0Qa+4fNF8ZIGFnCIdvfu1URxP1L8SKepnP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MqL5BdqE4VM6Oimop/JNNFyuNELkg6nIyJx2TmZY921NnaJGB0kN7qfpKO4Z43AxHLmN/Q53HgwVlswc9FKjAmyI2jWhisSvsXCmRiMu0UH6L8J50s60NScAbr28BbZ3+KMaoDIvL6uasdvNrcghFZat6qsZjvfg3srPvXpvOXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dDYZTfUO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SVQYXJ4REPehVYO8YAMe2hBF5dYw2JhuCUrmkdu7+EJRE3cArEWeHOPAp6r5T3BcCA/xwwjwE2oV3OI1bYjsVKfBZXzd1UBrbm+4CXvPSc/WLtyb3Ic+++m55l7XLKsW5Tnr7SjPUwP/l079rdyV9lNo/IpC17dDcGZm9k4Zn10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYhZWM1N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dDYZTfUO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26274C4CEC6;
-	Tue, 15 Oct 2024 13:11:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYhZWM1N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBE3C4CECE;
+	Tue, 15 Oct 2024 13:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997915;
-	bh=huQbxFcvRzIj5oVzEJBvGG91Dof576Gz6+pKZkMHJBM=;
+	s=korg; t=1728997919;
+	bh=UjqbBCNC0Qa+4fNF8ZIGFnCIdvfu1URxP1L8SKepnP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dDYZTfUOVV9zrkjlUuDNzACd2vLB4HT+eAVANy/09zKN4XAc2ldtSHW5sWCZ1TDiR
-	 leltLqLcQ6tOIOANJ0f4oi6FYJJTLrtLxHC9JAWx7b0lgPziQ6sLf2zgSXmT0r9Xgy
-	 +Fta6nPo68wtze5hc+zJw/if6zdNA9QHNfeEiIBs=
+	b=AYhZWM1NbXc9bMskmBE3PdbITdI/GJWnTCqoHdEebMlh+M+d/vpMvjCjM5NhS80TX
+	 DwLjynGqVGlecaplYFvyWxcBnGLD+yDAYf8hUd41BIWMsB5xAfqiXIA4ZR3B3mGJYz
+	 OBUcxwfbKhaJ8WKN5ZEI0st7nXMkwAH2tkrWidWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaixin Wang <kxwang23@m.fudan.edu.cn>,
-	Helge Deller <deller@gmx.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 325/518] fbdev: pxafb: Fix possible use after free in pxafb_task()
-Date: Tue, 15 Oct 2024 14:43:49 +0200
-Message-ID: <20241015123929.522921162@linuxfoundation.org>
+Subject: [PATCH 5.10 326/518] rcuscale: Provide clear error when async specified without primitives
+Date: Tue, 15 Oct 2024 14:43:50 +0200
+Message-ID: <20241015123929.561803833@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,57 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixin Wang <kxwang23@m.fudan.edu.cn>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit 4a6921095eb04a900e0000da83d9475eb958e61e ]
+[ Upstream commit 11377947b5861fa59bf77c827e1dd7c081842cc9 ]
 
-In the pxafb_probe function, it calls the pxafb_init_fbinfo function,
-after which &fbi->task is associated with pxafb_task. Moreover,
-within this pxafb_init_fbinfo function, the pxafb_blank function
-within the &pxafb_ops struct is capable of scheduling work.
+Currently, if the rcuscale module's async module parameter is specified
+for RCU implementations that do not have async primitives such as RCU
+Tasks Rude (which now lacks a call_rcu_tasks_rude() function), there
+will be a series of splats due to calls to a NULL pointer.  This commit
+therefore warns of this situation, but switches to non-async testing.
 
-If we remove the module which will call pxafb_remove to make cleanup,
-it will call unregister_framebuffer function which can call
-do_unregister_framebuffer to free fbi->fb through
-put_fb_info(fb_info), while the work mentioned above will be used.
-The sequence of operations that may lead to a UAF bug is as follows:
-
-CPU0                                                CPU1
-
-                                   | pxafb_task
-pxafb_remove                       |
-unregister_framebuffer(info)       |
-do_unregister_framebuffer(fb_info) |
-put_fb_info(fb_info)               |
-// free fbi->fb                    | set_ctrlr_state(fbi, state)
-                                   | __pxafb_lcd_power(fbi, 0)
-                                   | fbi->lcd_power(on, &fbi->fb.var)
-                                   | //use fbi->fb
-
-Fix it by ensuring that the work is canceled before proceeding
-with the cleanup in pxafb_remove.
-
-Note that only root user can remove the driver at runtime.
-
-Signed-off-by: Kaixin Wang <kxwang23@m.fudan.edu.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: "Paul E. McKenney" <paulmck@kernel.org>
+Signed-off-by: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/pxafb.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/rcu/rcuscale.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/pxafb.c b/drivers/video/fbdev/pxafb.c
-index f1551e00eb12f..a0db2b3d07368 100644
---- a/drivers/video/fbdev/pxafb.c
-+++ b/drivers/video/fbdev/pxafb.c
-@@ -2408,6 +2408,7 @@ static int pxafb_remove(struct platform_device *dev)
- 	info = &fbi->fb;
- 
- 	pxafb_overlay_exit(fbi);
-+	cancel_work_sync(&fbi->task);
- 	unregister_framebuffer(info);
- 
- 	pxafb_disable_controller(fbi);
+diff --git a/kernel/rcu/rcuscale.c b/kernel/rcu/rcuscale.c
+index 3b9783eda6796..cfe861bac1bd4 100644
+--- a/kernel/rcu/rcuscale.c
++++ b/kernel/rcu/rcuscale.c
+@@ -398,7 +398,7 @@ rcu_scale_writer(void *arg)
+ 			udelay(writer_holdoff);
+ 		wdp = &wdpp[i];
+ 		*wdp = ktime_get_mono_fast_ns();
+-		if (gp_async) {
++		if (gp_async && !WARN_ON_ONCE(!cur_ops->async)) {
+ retry:
+ 			if (!rhp)
+ 				rhp = kmalloc(sizeof(*rhp), GFP_KERNEL);
+@@ -454,7 +454,7 @@ rcu_scale_writer(void *arg)
+ 			i++;
+ 		rcu_scale_wait_shutdown();
+ 	} while (!torture_must_stop());
+-	if (gp_async) {
++	if (gp_async && cur_ops->async) {
+ 		cur_ops->gp_barrier();
+ 	}
+ 	writer_n_durations[me] = i_max + 1;
 -- 
 2.43.0
 
