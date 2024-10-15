@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B0A19B3FF;
-	Tue, 15 Oct 2024 11:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA2D1D95AB;
+	Tue, 15 Oct 2024 11:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993540; cv=none; b=XWq/5+1bIQ69N3r1NwC9alSsHGi3iUWoEuO1GXWFTEm2+mXDIbfxY3eiElSHe3BON1P4svvE/9wdA1ESXzy8pnmugxYp+17CVJclNSr/03sUMr8TDt7Pm3E/HmkgPtwACFIOFgA6CHr/RFhFZWo11iAN1NWe2e8cWA02jjf9e28=
+	t=1728993543; cv=none; b=uWuA59DZ+3qSaLZQYIVrqc7+KCw32wCsw+uLSDRDjB3PUeXxUsiuxjWzpIxcjifiRiadPzhJd/XIu0ZpTmYJNS1jDBS4ocP2eJNGqWPTp9ZaOgc+1pNEOaDfh8UvzxVwd9N+ryOOM7d4LLeJy9TDWGemiso6jjLsNqBZGPpT9gI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993540; c=relaxed/simple;
-	bh=f5w79q+tHDOcToQ3ZHdfyLsnJkEAon36hsuVbiBUxAk=;
+	s=arc-20240116; t=1728993543; c=relaxed/simple;
+	bh=YP7lO5sGrGZKlBhpQWSldTDqYGCMSmxN4bySH516a3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sx9ShkBeblfAfHWrah/WPDMAUNuzxXAoxT6p0bybTt/LpzN51o6Ek9nnuBH2Vza9pLpxL/FlGxBuAPuJVOUJQQP/IOLyoOjk7JjJHXrHjfrpFsZCOzhiUrodts4q3FpzHchVn4I4dqMw0qLWb5eEjwrZkvWY1MT/4pkMfbVFGbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Prn1k14I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Xgh/6WTLKCPMKjJcQL4YijaevoMWG8lHYfPk8Ne/xRhwpfhLwtJXrIPUxkgo5hsvfgLdRYJEFUWt9ng8FHgB3jlY3CkqVMECvOcMHx/hslxl9da6a+cc/6/f3eqmkDdwxwHRyrMX7AB4OOigKYwtEt0Qvf0nM2s+6eErTTk1ZNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1e43lfFn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Prn1k14I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B6CC4CEC6;
-	Tue, 15 Oct 2024 11:58:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1e43lfFn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40CB3C4CEC6;
+	Tue, 15 Oct 2024 11:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993540;
-	bh=f5w79q+tHDOcToQ3ZHdfyLsnJkEAon36hsuVbiBUxAk=;
+	s=korg; t=1728993543;
+	bh=YP7lO5sGrGZKlBhpQWSldTDqYGCMSmxN4bySH516a3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Prn1k14I8O8yiTbN5WfTgOkw54556fGBPifvOfQabBEJh5HTuRIYpUaItwk2yABmh
-	 ya59dALBjmbhdac7qbGh2+sr8klMEbZbcve5SrL4csWzHuZuD1yvqIAH6647a4cuAm
-	 GGphUupSWcbJ9MSb8gpBp/9NQX02lmz29magQPNs=
+	b=1e43lfFnHDfsDlRU4QrpmJL+scgbmWuFEn3ZbjA3RtdJ48XBOZs6k/SYPR1/aJcph
+	 4r9KsSp3meeFZsS60+1q4/ifHC+heFmCD0UmZPL1I7ekHkyHlXUiBcCzxYb9j/GJeS
+	 OpxPwokoRn1XV1HUsQQ8TFE6b9QCiym3VC+rUgcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Mirsad Todorovac <mtodorovac69@gmail.com>,
+	Kees Cook <kees@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 442/691] ALSA: hdsp: Break infinite MIDI input flush loop
-Date: Tue, 15 Oct 2024 13:26:30 +0200
-Message-ID: <20241015112457.891815536@linuxfoundation.org>
+Subject: [PATCH 5.15 443/691] x86/syscall: Avoid memcpy() for ia32 syscall_get_arguments()
+Date: Tue, 15 Oct 2024 13:26:31 +0200
+Message-ID: <20241015112457.930713341@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -44,64 +47,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit c01f3815453e2d5f699ccd8c8c1f93a5b8669e59 ]
+[ Upstream commit d19d638b1e6cf746263ef60b7d0dee0204d8216a ]
 
-The current MIDI input flush on HDSP and HDSPM drivers relies on the
-hardware reporting the right value.  If the hardware doesn't give the
-proper value but returns -1, it may be stuck at an infinite loop.
+Modern (fortified) memcpy() prefers to avoid writing (or reading) beyond
+the end of the addressed destination (or source) struct member:
 
-Add a counter and break if the loop is unexpectedly too long.
+In function ‘fortify_memcpy_chk’,
+    inlined from ‘syscall_get_arguments’ at ./arch/x86/include/asm/syscall.h:85:2,
+    inlined from ‘populate_seccomp_data’ at kernel/seccomp.c:258:2,
+    inlined from ‘__seccomp_filter’ at kernel/seccomp.c:1231:3:
+./include/linux/fortify-string.h:580:25: error: call to ‘__read_overflow2_field’ declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+  580 |                         __read_overflow2_field(q_size_field, size);
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Link: https://patch.msgid.link/20240808091513.31380-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+As already done for x86_64 and compat mode, do not use memcpy() to
+extract syscall arguments from struct pt_regs but rather just perform
+direct assignments. Binary output differences are negligible, and actually
+ends up using less stack space:
+
+-       sub    $0x84,%esp
++       sub    $0x6c,%esp
+
+and less text size:
+
+   text    data     bss     dec     hex filename
+  10794     252       0   11046    2b26 gcc-32b/kernel/seccomp.o.stock
+  10714     252       0   10966    2ad6 gcc-32b/kernel/seccomp.o.after
+
+Closes: https://lore.kernel.org/lkml/9b69fb14-df89-4677-9c82-056ea9e706f5@gmail.com/
+Reported-by: Mirsad Todorovac <mtodorovac69@gmail.com>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Mirsad Todorovac <mtodorovac69@gmail.com>
+Link: https://lore.kernel.org/all/20240708202202.work.477-kees%40kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/rme9652/hdsp.c  | 6 ++++--
- sound/pci/rme9652/hdspm.c | 6 ++++--
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ arch/x86/include/asm/syscall.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/rme9652/hdsp.c b/sound/pci/rme9652/hdsp.c
-index 82c72e6c13754..18d595d8f588c 100644
---- a/sound/pci/rme9652/hdsp.c
-+++ b/sound/pci/rme9652/hdsp.c
-@@ -1298,8 +1298,10 @@ static int snd_hdsp_midi_output_possible (struct hdsp *hdsp, int id)
- 
- static void snd_hdsp_flush_midi_input (struct hdsp *hdsp, int id)
+diff --git a/arch/x86/include/asm/syscall.h b/arch/x86/include/asm/syscall.h
+index 825528bf0daf5..df434204ad01d 100644
+--- a/arch/x86/include/asm/syscall.h
++++ b/arch/x86/include/asm/syscall.h
+@@ -82,7 +82,12 @@ static inline void syscall_get_arguments(struct task_struct *task,
+ 					 struct pt_regs *regs,
+ 					 unsigned long *args)
  {
--	while (snd_hdsp_midi_input_available (hdsp, id))
--		snd_hdsp_midi_read_byte (hdsp, id);
-+	int count = 256;
-+
-+	while (snd_hdsp_midi_input_available(hdsp, id) && --count)
-+		snd_hdsp_midi_read_byte(hdsp, id);
+-	memcpy(args, &regs->bx, 6 * sizeof(args[0]));
++	args[0] = regs->bx;
++	args[1] = regs->cx;
++	args[2] = regs->dx;
++	args[3] = regs->si;
++	args[4] = regs->di;
++	args[5] = regs->bp;
  }
  
- static int snd_hdsp_midi_output_write (struct hdsp_midi *hmidi)
-diff --git a/sound/pci/rme9652/hdspm.c b/sound/pci/rme9652/hdspm.c
-index fa1812e7a49dc..247f5c52fb090 100644
---- a/sound/pci/rme9652/hdspm.c
-+++ b/sound/pci/rme9652/hdspm.c
-@@ -1838,8 +1838,10 @@ static inline int snd_hdspm_midi_output_possible (struct hdspm *hdspm, int id)
- 
- static void snd_hdspm_flush_midi_input(struct hdspm *hdspm, int id)
- {
--	while (snd_hdspm_midi_input_available (hdspm, id))
--		snd_hdspm_midi_read_byte (hdspm, id);
-+	int count = 256;
-+
-+	while (snd_hdspm_midi_input_available(hdspm, id) && --count)
-+		snd_hdspm_midi_read_byte(hdspm, id);
- }
- 
- static int snd_hdspm_midi_output_write (struct hdspm_midi *hmidi)
+ static inline void syscall_set_arguments(struct task_struct *task,
 -- 
 2.43.0
 
