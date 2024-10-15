@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EF91C07C2;
-	Tue, 15 Oct 2024 12:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B611C07C2;
+	Tue, 15 Oct 2024 12:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997176; cv=none; b=rDkTrxbavV0AVjk/KWmjNRWY0VKQ+wBUA8hceLiVdkQqTxe4vcZC3c3DSa323tbIm4jaPBJWRF2i2YGkEcMeMM0qnTl3nIsW5BKIjzDfZytli4NHB3KLqhjW7UTeB5cXmC6cijcTHiZ5ume87EYJhgOSL5brkcaibU/poaG3o2k=
+	t=1728997180; cv=none; b=gUrdVOZIw///wHdd3Zb1K/hSizcnrB+BRXi6W132QN4LdBcSCjuw4cDeR2ZF/bBPwk06SmwEO49iFMtZBFIpDVdpoh7DjpId6Ifgmbn7m1GzqOPARf5NN1g1K1cW29aaX1sFivUvBMxwB1+/64VgyZSRElVZF4LSm+a5Z7Tsakk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997176; c=relaxed/simple;
-	bh=NmZ1tICs++Hz6S33NcsAeBjTo3Ty4tEXGAaKLDMwSgI=;
+	s=arc-20240116; t=1728997180; c=relaxed/simple;
+	bh=t1Ypd8N3rlUwtDvlUCZ9raBPQLwTRKXS8NOwlV/7eOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uhF/nwPqGUMWeBY3mcNCXr5bjSZygO9g+9BW1SkjI20MF9ix1b0Sskq/zytJcKgDNPZyebSJeSHc6dghMSO0LMwR4y7BOMzJKziaLVxzL2BOv3jl5vSyo0GUhevgK8TVvDgiQz5ZnW0WdrjzKs/6KiIpX+kuh31Hz5B4U8jvZHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzO9ZCJE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fQc43FqJnvCSxE2ePMwg0WyVwbjqDoepkPDvHJlOXL32OIs0ZRDKZt3GqsL4ac8yT2rFd58dFN+56Tl/Yq257SWPJX7SHlMZcJWP4AmRfb6JCe98b98qhNOOs+7ZKlhPsTdK4N5bKD0/98fEAyJRK3Orp6VBwXcTLRThqYGW1pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLiUDfcY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzO9ZCJE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398C2C4CEC6;
-	Tue, 15 Oct 2024 12:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLiUDfcY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73ECCC4CEC6;
+	Tue, 15 Oct 2024 12:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997176;
-	bh=NmZ1tICs++Hz6S33NcsAeBjTo3Ty4tEXGAaKLDMwSgI=;
+	s=korg; t=1728997179;
+	bh=t1Ypd8N3rlUwtDvlUCZ9raBPQLwTRKXS8NOwlV/7eOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MzO9ZCJEGvNKyyuURcc4HQEn1ty2ae39mZFKVn0VGfazFthVothuyUP3lcvJasYcP
-	 MTmyz2QdMwYctgezk374cwaPjwT+FYNbIGcnbshb4EeihO5J/anfC5txl6lYlXddri
-	 cJlxpilyxW6GQG95A4NJOOGOP9VG7q4MoazpnLw0=
+	b=YLiUDfcY+4FGKDBx0g2skHgVaGDpyR+d8z/V2V90jFMozT7tCgBEMhi4rhZsVk0Co
+	 SKUmt1VMQ2bQH+AqleMVY+W4SjJxZpFbCNpDt078yvnyeI2n+e/v/q33DzqxfM1sxW
+	 GHrwAFchRwuPKQ8Hrbwh6ruNaBCxMk1/UkVQ9QhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hermann.Lauer@uni-heidelberg.de,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 109/518] power: supply: axp20x_battery: allow disabling battery charging
-Date: Tue, 15 Oct 2024 14:40:13 +0200
-Message-ID: <20241015123921.207201168@linuxfoundation.org>
+Subject: [PATCH 5.10 110/518] power: supply: axp20x_battery: Remove design from min and max voltage
+Date: Tue, 15 Oct 2024 14:40:14 +0200
+Message-ID: <20241015123921.245261744@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,67 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hermann Lauer <Hermann.Lauer@iwr.uni-heidelberg.de>
+From: Chris Morgan <macromorgan@hotmail.com>
 
-[ Upstream commit 6a0fcc87c9e35191d37a8819fdab9d30e523515b ]
+[ Upstream commit 61978807b00f8a1817b0e5580981af1cd2f428a5 ]
 
-Allow disabling and re-enabling battery charging of an axp209 PMIC
-through a writable status property. With the current driver code
-charging is always on.
+The POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN and
+POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN values should be immutable
+properties of the battery, but for this driver they are writable values
+and used as the minimum and maximum values for charging. Remove the
+DESIGN designation from these values.
 
-This works on the axp209 of Banana {Pi M1+,Pro} and should work on all
-AXP chips.
-
-Signed-off-by: Hermann.Lauer@uni-heidelberg.de
+Fixes: 46c202b5f25f ("power: supply: add battery driver for AXP20X and AXP22X PMICs")
+Suggested-by: Chen-Yu Tsai <wens@kernel.org>
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240821215456.962564-3-macroalpha82@gmail.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: 61978807b00f ("power: supply: axp20x_battery: Remove design from min and max voltage")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/axp20x_battery.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/power/supply/axp20x_battery.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/power/supply/axp20x_battery.c b/drivers/power/supply/axp20x_battery.c
-index 9fda98b950bab..335e12cc5e2f9 100644
+index 335e12cc5e2f9..d62a249f65da0 100644
 --- a/drivers/power/supply/axp20x_battery.c
 +++ b/drivers/power/supply/axp20x_battery.c
-@@ -40,6 +40,7 @@
- #define AXP209_FG_PERCENT		GENMASK(6, 0)
- #define AXP22X_FG_VALID			BIT(7)
+@@ -304,11 +304,11 @@ static int axp20x_battery_get_prop(struct power_supply *psy,
+ 		val->intval = reg & AXP209_FG_PERCENT;
+ 		break;
  
-+#define AXP20X_CHRG_CTRL1_ENABLE	BIT(7)
- #define AXP20X_CHRG_CTRL1_TGT_VOLT	GENMASK(6, 5)
- #define AXP20X_CHRG_CTRL1_TGT_4_1V	(0 << 5)
- #define AXP20X_CHRG_CTRL1_TGT_4_15V	(1 << 5)
-@@ -467,7 +468,18 @@ static int axp20x_battery_set_prop(struct power_supply *psy,
- 	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX:
- 		return axp20x_set_max_constant_charge_current(axp20x_batt,
- 							      val->intval);
--
-+	case POWER_SUPPLY_PROP_STATUS:
-+		switch (val->intval) {
-+		case POWER_SUPPLY_STATUS_CHARGING:
-+			return regmap_update_bits(axp20x_batt->regmap, AXP20X_CHRG_CTRL1,
-+				AXP20X_CHRG_CTRL1_ENABLE, AXP20X_CHRG_CTRL1_ENABLE);
-+
-+		case POWER_SUPPLY_STATUS_DISCHARGING:
-+		case POWER_SUPPLY_STATUS_NOT_CHARGING:
-+			return regmap_update_bits(axp20x_batt->regmap, AXP20X_CHRG_CTRL1,
-+				AXP20X_CHRG_CTRL1_ENABLE, 0);
-+		}
-+		fallthrough;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -490,7 +502,8 @@ static enum power_supply_property axp20x_battery_props[] = {
- static int axp20x_battery_prop_writeable(struct power_supply *psy,
+-	case POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN:
++	case POWER_SUPPLY_PROP_VOLTAGE_MAX:
+ 		return axp20x_batt->data->get_max_voltage(axp20x_batt,
+ 							  &val->intval);
+ 
+-	case POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN:
++	case POWER_SUPPLY_PROP_VOLTAGE_MIN:
+ 		ret = regmap_read(axp20x_batt->regmap, AXP20X_V_OFF, &reg);
+ 		if (ret)
+ 			return ret;
+@@ -456,10 +456,10 @@ static int axp20x_battery_set_prop(struct power_supply *psy,
+ 	struct axp20x_batt_ps *axp20x_batt = power_supply_get_drvdata(psy);
+ 
+ 	switch (psp) {
+-	case POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN:
++	case POWER_SUPPLY_PROP_VOLTAGE_MIN:
+ 		return axp20x_set_voltage_min_design(axp20x_batt, val->intval);
+ 
+-	case POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN:
++	case POWER_SUPPLY_PROP_VOLTAGE_MAX:
+ 		return axp20x_batt->data->set_max_voltage(axp20x_batt, val->intval);
+ 
+ 	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT:
+@@ -494,8 +494,8 @@ static enum power_supply_property axp20x_battery_props[] = {
+ 	POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT,
+ 	POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX,
+ 	POWER_SUPPLY_PROP_HEALTH,
+-	POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN,
+-	POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN,
++	POWER_SUPPLY_PROP_VOLTAGE_MAX,
++	POWER_SUPPLY_PROP_VOLTAGE_MIN,
+ 	POWER_SUPPLY_PROP_CAPACITY,
+ };
+ 
+@@ -503,8 +503,8 @@ static int axp20x_battery_prop_writeable(struct power_supply *psy,
  					 enum power_supply_property psp)
  {
--	return psp == POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN ||
-+	return psp == POWER_SUPPLY_PROP_STATUS ||
-+	       psp == POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN ||
- 	       psp == POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN ||
+ 	return psp == POWER_SUPPLY_PROP_STATUS ||
+-	       psp == POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN ||
+-	       psp == POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN ||
++	       psp == POWER_SUPPLY_PROP_VOLTAGE_MIN ||
++	       psp == POWER_SUPPLY_PROP_VOLTAGE_MAX ||
  	       psp == POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT ||
  	       psp == POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX;
+ }
 -- 
 2.43.0
 
