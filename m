@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D3A1EBA0A;
-	Tue, 15 Oct 2024 12:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FCF1EBA0A;
+	Tue, 15 Oct 2024 12:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994348; cv=none; b=b4jAr+0dZVKmq2F4yySTk3fVG6/4UdxnJCt+X11O6QtTKGUGZVBZEzUVll9OKqzFMNSx8+4ApDrswQ0BjLMhbG0eP0TPXqr6QqTD33gzzakt5ewfXo4U2+TFHIDeER9LGoLPSO7F0tvzlXaktYtjVVVqH/K7vRqlnRhKmB/Rc5A=
+	t=1728994351; cv=none; b=rjmB+V0AWGuuPDrzXeB6Hg3F7BbyhkoFJXg/JpMCfEspumXfzMJSoSvK8xW3xlpRvA8Kaqw/A9ga6U3k7hsFnK5KIdUWruooiGLOJiMTBpETrpOtnsSWre3BgRIHU/e4QRVd1vkJJT8Zjot5TT5D1hE7mr1I72J5vkvH1RhnrvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994348; c=relaxed/simple;
-	bh=zcgAUocq4r0n2kQmhELcvhW8B3oXc9bvEa+LA5t7LEU=;
+	s=arc-20240116; t=1728994351; c=relaxed/simple;
+	bh=tCUt+Ia1YQxZOMHsge08nIN0cmurYjnsrtrmC6Vj0oE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uDfYD8eRcIu1nCW9hocStwMZZoHY5tOKG5FDlSnEeCvdu7r7nF/AtuosKxudlrYwvp2NuKkbAgMkZId4/JUu8ETAy5maTS2Ce12wHYT/GerHDO+3yKV21Zlu2azThV2LJ5OC3b0uqM03bhI2bQ/vidNNPdN+kicXLlMDjR5fLeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7pbu+zc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VOGY0toRWtIwZelpZF/P82XpRY0SFhJmHHY0EL/Inz5WWXhrFW3cF5p8JoqS33BqH1WZcpWC0Jp9+OvNxpUTgetnNIzLUCjcboSIGKPeqOJRmsx1LgZ+f/GZc+DWxDYWMrrwK3Z3xRCU9ycJ0/NEjBp8D/Xb4V/ikgWssPXsM2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZ+E3DPB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7pbu+zc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9353BC4CEC6;
-	Tue, 15 Oct 2024 12:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZ+E3DPB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA2FC4CEC6;
+	Tue, 15 Oct 2024 12:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994348;
-	bh=zcgAUocq4r0n2kQmhELcvhW8B3oXc9bvEa+LA5t7LEU=;
+	s=korg; t=1728994351;
+	bh=tCUt+Ia1YQxZOMHsge08nIN0cmurYjnsrtrmC6Vj0oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z7pbu+zcxk+dNkoYH47dTQUvajgUO1iUTTvHBuhFU1i07HP+HDa3Tpnd5a3R32Bjx
-	 TyQSuwQ0KY2Tq4tAgKZr8NSqoUQC13RJNQDXkSihU/yy80lv5CtRhRrFwXE7m6T5MY
-	 1CdnFqaheyfhMmcHTNNahpSnkYS+JloH5jAA2/6g=
+	b=zZ+E3DPBzCggbCu5DEGexEakhWwhu25eccfr46oaQPxq1BZxypyx9FN/HOdL3QDPM
+	 OgYX5yKls5iLbPE53/clE8NP6HeoXnhl8CRr2j5ISA6kFvXPKkqwfodz/fW6K1rK3H
+	 qiciW4znucOvfY6uXzsrOJd1v7brX12Qa8G6V1NM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 655/691] rtnetlink: Add bulk registration helpers for rtnetlink message handlers.
-Date: Tue, 15 Oct 2024 13:30:03 +0200
-Message-ID: <20241015112506.322833044@linuxfoundation.org>
+Subject: [PATCH 5.15 656/691] mctp: Handle error of rtnl_register_module().
+Date: Tue, 15 Oct 2024 13:30:04 +0200
+Message-ID: <20241015112506.362072427@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,105 +54,213 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 07cc7b0b942bf55ef1a471470ecda8d2a6a6541f ]
+[ Upstream commit d51705614f668254cc5def7490df76f9680b4659 ]
 
-Before commit addf9b90de22 ("net: rtnetlink: use rcu to free rtnl message
-handlers"), once rtnl_msg_handlers[protocol] was allocated, the following
-rtnl_register_module() for the same protocol never failed.
+Since introduced, mctp has been ignoring the returned value of
+rtnl_register_module(), which could fail silently.
 
-However, after the commit, rtnl_msg_handler[protocol][msgtype] needs to
-be allocated in each rtnl_register_module(), so each call could fail.
+Handling the error allows users to view a module as an all-or-nothing
+thing in terms of the rtnetlink functionality.  This prevents syzkaller
+from reporting spurious errors from its tests, where OOM often occurs
+and module is automatically loaded.
 
-Many callers of rtnl_register_module() do not handle the returned error,
-and we need to add many error handlings.
+Let's handle the errors by rtnl_register_many().
 
-To handle that easily, let's add wrapper functions for bulk registration
-of rtnetlink message handlers.
-
+Fixes: 583be982d934 ("mctp: Add device handling and netlink interface")
+Fixes: 831119f88781 ("mctp: Add neighbour netlink interface")
+Fixes: 06d2f4c583a7 ("mctp: Add netlink route management")
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Jeremy Kerr <jk@codeconstruct.com.au>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: d51705614f66 ("mctp: Handle error of rtnl_register_module().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/rtnetlink.h | 17 +++++++++++++++++
- net/core/rtnetlink.c    | 29 +++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
+ include/net/mctp.h |  2 +-
+ net/mctp/af_mctp.c |  6 +++++-
+ net/mctp/device.c  | 30 ++++++++++++++++++------------
+ net/mctp/neigh.c   | 31 +++++++++++++++++++------------
+ net/mctp/route.c   | 33 +++++++++++++++++++++++----------
+ 5 files changed, 66 insertions(+), 36 deletions(-)
 
-diff --git a/include/net/rtnetlink.h b/include/net/rtnetlink.h
-index c9d3ae92c9321..dcb1c92e69879 100644
---- a/include/net/rtnetlink.h
-+++ b/include/net/rtnetlink.h
-@@ -20,6 +20,15 @@ enum rtnl_kinds {
- 	RTNL_KIND_SET
+diff --git a/include/net/mctp.h b/include/net/mctp.h
+index ffd2c23bd76d5..8c225091e46cf 100644
+--- a/include/net/mctp.h
++++ b/include/net/mctp.h
+@@ -226,7 +226,7 @@ void mctp_neigh_remove_dev(struct mctp_dev *mdev);
+ int mctp_routes_init(void);
+ void mctp_routes_exit(void);
+ 
+-void mctp_device_init(void);
++int mctp_device_init(void);
+ void mctp_device_exit(void);
+ 
+ #endif /* __NET_MCTP_H */
+diff --git a/net/mctp/af_mctp.c b/net/mctp/af_mctp.c
+index 77137a8627d06..0ca031866ce1a 100644
+--- a/net/mctp/af_mctp.c
++++ b/net/mctp/af_mctp.c
+@@ -384,10 +384,14 @@ static __init int mctp_init(void)
+ 	if (rc)
+ 		goto err_unreg_routes;
+ 
+-	mctp_device_init();
++	rc = mctp_device_init();
++	if (rc)
++		goto err_unreg_neigh;
+ 
+ 	return 0;
+ 
++err_unreg_neigh:
++	mctp_neigh_exit();
+ err_unreg_routes:
+ 	mctp_routes_exit();
+ err_unreg_proto:
+diff --git a/net/mctp/device.c b/net/mctp/device.c
+index b9f38e765f619..c00a2550e2e0e 100644
+--- a/net/mctp/device.c
++++ b/net/mctp/device.c
+@@ -399,25 +399,31 @@ static struct notifier_block mctp_dev_nb = {
+ 	.priority = ADDRCONF_NOTIFY_PRIORITY,
  };
  
-+struct rtnl_msg_handler {
-+	struct module *owner;
-+	int protocol;
-+	int msgtype;
-+	rtnl_doit_func doit;
-+	rtnl_dumpit_func dumpit;
-+	int flags;
+-void __init mctp_device_init(void)
++static const struct rtnl_msg_handler mctp_device_rtnl_msg_handlers[] = {
++	{THIS_MODULE, PF_MCTP, RTM_NEWADDR, mctp_rtm_newaddr, NULL, 0},
++	{THIS_MODULE, PF_MCTP, RTM_DELADDR, mctp_rtm_deladdr, NULL, 0},
++	{THIS_MODULE, PF_MCTP, RTM_GETADDR, NULL, mctp_dump_addrinfo, 0},
 +};
 +
- void rtnl_register(int protocol, int msgtype,
- 		   rtnl_doit_func, rtnl_dumpit_func, unsigned int flags);
- int rtnl_register_module(struct module *owner, int protocol, int msgtype,
-@@ -27,6 +36,14 @@ int rtnl_register_module(struct module *owner, int protocol, int msgtype,
- int rtnl_unregister(int protocol, int msgtype);
- void rtnl_unregister_all(int protocol);
- 
-+int __rtnl_register_many(const struct rtnl_msg_handler *handlers, int n);
-+void __rtnl_unregister_many(const struct rtnl_msg_handler *handlers, int n);
-+
-+#define rtnl_register_many(handlers)				\
-+	__rtnl_register_many(handlers, ARRAY_SIZE(handlers))
-+#define rtnl_unregister_many(handlers)				\
-+	__rtnl_unregister_many(handlers, ARRAY_SIZE(handlers))
-+
- static inline int rtnl_msg_family(const struct nlmsghdr *nlh)
++int __init mctp_device_init(void)
  {
- 	if (nlmsg_len(nlh) >= sizeof(struct rtgenmsg))
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 8fc86d1edf561..24795110b2ff3 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -348,6 +348,35 @@ void rtnl_unregister_all(int protocol)
- }
- EXPORT_SYMBOL_GPL(rtnl_unregister_all);
+-	register_netdevice_notifier(&mctp_dev_nb);
++	int err;
  
-+int __rtnl_register_many(const struct rtnl_msg_handler *handlers, int n)
-+{
-+	const struct rtnl_msg_handler *handler;
-+	int i, err;
+-	rtnl_register_module(THIS_MODULE, PF_MCTP, RTM_GETADDR,
+-			     NULL, mctp_dump_addrinfo, 0);
+-	rtnl_register_module(THIS_MODULE, PF_MCTP, RTM_NEWADDR,
+-			     mctp_rtm_newaddr, NULL, 0);
+-	rtnl_register_module(THIS_MODULE, PF_MCTP, RTM_DELADDR,
+-			     mctp_rtm_deladdr, NULL, 0);
++	register_netdevice_notifier(&mctp_dev_nb);
+ 	rtnl_af_register(&mctp_af_ops);
 +
-+	for (i = 0, handler = handlers; i < n; i++, handler++) {
-+		err = rtnl_register_internal(handler->owner, handler->protocol,
-+					     handler->msgtype, handler->doit,
-+					     handler->dumpit, handler->flags);
-+		if (err) {
-+			__rtnl_unregister_many(handlers, i);
-+			break;
-+		}
++	err = rtnl_register_many(mctp_device_rtnl_msg_handlers);
++	if (err) {
++		rtnl_af_unregister(&mctp_af_ops);
++		unregister_netdevice_notifier(&mctp_dev_nb);
 +	}
 +
 +	return err;
-+}
-+EXPORT_SYMBOL_GPL(__rtnl_register_many);
-+
-+void __rtnl_unregister_many(const struct rtnl_msg_handler *handlers, int n)
-+{
-+	const struct rtnl_msg_handler *handler;
-+	int i;
-+
-+	for (i = n - 1, handler = handlers + n - 1; i >= 0; i--, handler--)
-+		rtnl_unregister(handler->protocol, handler->msgtype);
-+}
-+EXPORT_SYMBOL_GPL(__rtnl_unregister_many);
-+
- static LIST_HEAD(link_ops);
+ }
  
- static const struct rtnl_link_ops *rtnl_link_ops_get(const char *kind)
+ void __exit mctp_device_exit(void)
+ {
++	rtnl_unregister_many(mctp_device_rtnl_msg_handlers);
+ 	rtnl_af_unregister(&mctp_af_ops);
+-	rtnl_unregister(PF_MCTP, RTM_DELADDR);
+-	rtnl_unregister(PF_MCTP, RTM_NEWADDR);
+-	rtnl_unregister(PF_MCTP, RTM_GETADDR);
+-
+ 	unregister_netdevice_notifier(&mctp_dev_nb);
+ }
+diff --git a/net/mctp/neigh.c b/net/mctp/neigh.c
+index 90ed2f02d1fb0..bc75a263719c7 100644
+--- a/net/mctp/neigh.c
++++ b/net/mctp/neigh.c
+@@ -321,22 +321,29 @@ static struct pernet_operations mctp_net_ops = {
+ 	.exit = mctp_neigh_net_exit,
+ };
+ 
++static const struct rtnl_msg_handler mctp_neigh_rtnl_msg_handlers[] = {
++	{THIS_MODULE, PF_MCTP, RTM_NEWNEIGH, mctp_rtm_newneigh, NULL, 0},
++	{THIS_MODULE, PF_MCTP, RTM_DELNEIGH, mctp_rtm_delneigh, NULL, 0},
++	{THIS_MODULE, PF_MCTP, RTM_GETNEIGH, NULL, mctp_rtm_getneigh, 0},
++};
++
+ int __init mctp_neigh_init(void)
+ {
+-	rtnl_register_module(THIS_MODULE, PF_MCTP, RTM_NEWNEIGH,
+-			     mctp_rtm_newneigh, NULL, 0);
+-	rtnl_register_module(THIS_MODULE, PF_MCTP, RTM_DELNEIGH,
+-			     mctp_rtm_delneigh, NULL, 0);
+-	rtnl_register_module(THIS_MODULE, PF_MCTP, RTM_GETNEIGH,
+-			     NULL, mctp_rtm_getneigh, 0);
+-
+-	return register_pernet_subsys(&mctp_net_ops);
++	int err;
++
++	err = register_pernet_subsys(&mctp_net_ops);
++	if (err)
++		return err;
++
++	err = rtnl_register_many(mctp_neigh_rtnl_msg_handlers);
++	if (err)
++		unregister_pernet_subsys(&mctp_net_ops);
++
++	return err;
+ }
+ 
+-void __exit mctp_neigh_exit(void)
++void mctp_neigh_exit(void)
+ {
++	rtnl_unregister_many(mctp_neigh_rtnl_msg_handlers);
+ 	unregister_pernet_subsys(&mctp_net_ops);
+-	rtnl_unregister(PF_MCTP, RTM_GETNEIGH);
+-	rtnl_unregister(PF_MCTP, RTM_DELNEIGH);
+-	rtnl_unregister(PF_MCTP, RTM_NEWNEIGH);
+ }
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index 5ef6b3b0a3d99..48d32bfd38636 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -1134,25 +1134,38 @@ static struct pernet_operations mctp_net_ops = {
+ 	.exit = mctp_routes_net_exit,
+ };
+ 
++static const struct rtnl_msg_handler mctp_route_rtnl_msg_handlers[] = {
++	{THIS_MODULE, PF_MCTP, RTM_NEWROUTE, mctp_newroute, NULL, 0},
++	{THIS_MODULE, PF_MCTP, RTM_DELROUTE, mctp_delroute, NULL, 0},
++	{THIS_MODULE, PF_MCTP, RTM_GETROUTE, NULL, mctp_dump_rtinfo, 0},
++};
++
+ int __init mctp_routes_init(void)
+ {
++	int err;
++
+ 	dev_add_pack(&mctp_packet_type);
+ 
+-	rtnl_register_module(THIS_MODULE, PF_MCTP, RTM_GETROUTE,
+-			     NULL, mctp_dump_rtinfo, 0);
+-	rtnl_register_module(THIS_MODULE, PF_MCTP, RTM_NEWROUTE,
+-			     mctp_newroute, NULL, 0);
+-	rtnl_register_module(THIS_MODULE, PF_MCTP, RTM_DELROUTE,
+-			     mctp_delroute, NULL, 0);
++	err = register_pernet_subsys(&mctp_net_ops);
++	if (err)
++		goto err_pernet;
++
++	err = rtnl_register_many(mctp_route_rtnl_msg_handlers);
++	if (err)
++		goto err_rtnl;
+ 
+-	return register_pernet_subsys(&mctp_net_ops);
++	return 0;
++
++err_rtnl:
++	unregister_pernet_subsys(&mctp_net_ops);
++err_pernet:
++	dev_remove_pack(&mctp_packet_type);
++	return err;
+ }
+ 
+ void mctp_routes_exit(void)
+ {
++	rtnl_unregister_many(mctp_route_rtnl_msg_handlers);
+ 	unregister_pernet_subsys(&mctp_net_ops);
+-	rtnl_unregister(PF_MCTP, RTM_DELROUTE);
+-	rtnl_unregister(PF_MCTP, RTM_NEWROUTE);
+-	rtnl_unregister(PF_MCTP, RTM_GETROUTE);
+ 	dev_remove_pack(&mctp_packet_type);
+ }
 -- 
 2.43.0
 
