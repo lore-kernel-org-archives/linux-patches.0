@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 325681D9674;
-	Tue, 15 Oct 2024 11:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BD61C7274;
+	Tue, 15 Oct 2024 11:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992675; cv=none; b=rn5zqf/dEyaqxmM0zWyPcPFgR1RYGRdgsep2O8M/Hh96woByJ819wTgS0e3dB9I/lPy78o7l1XQFNbOaoMXMSjS5CEXLT3gHl89DywoSbLnxMh0wTyESCm235Ih5jFyXsnFCmCmCGAv+GVQbyD5Ney0441E8c1qdi4nXRgU2uTo=
+	t=1728992678; cv=none; b=QKpedjoGhWwU7U3zRD5XHRsYkF4uU2dru5WHfWkKbKiGkIqeMuCDCYISIWFXKAb0YhCVLJna5e/3kGeGzj5b2jn8jhf83+AqAICqmiHA5b3ZOr0/G4S8nTMDIF4C2pZbWS/oQ/rZTdSZgQM+itdXlvyyubRyitbK+naCyixouDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992675; c=relaxed/simple;
-	bh=ouSp1kzB0KP7L17AVYA3hpeDzFeB7P/O/MSFL6HhCsw=;
+	s=arc-20240116; t=1728992678; c=relaxed/simple;
+	bh=qZngwuzmvZifCA78IbPy5Zm/WxCpYuLELkWWDVelE0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bmrl1dy8CUJ9jCHRfDwvj3CZO0+2OnYWInB3DVDImZ97jb1RnwBWemaZOU9KZzAisZjtlCFv2U/dwZ4pN8IQPOsKgRwP4rJ68fvQwHiFuxblHb6yL4stjzi++M6b4UEdK0YbodU2yehHVqpTXe/2qa53fBgrNsv/sRvaW4rgIok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U//+kmF7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J1sSBIVC9SegM9fKRoMp9PQnUImFMjUwkM2shd45ZCz1O0DSwkv9kDsV5Q0eClJjm/9j7b6NtFfSHHIzTs8B4+OSeHhgcYx4ADx3y/uvDL6x70eT4Daz8POgyOVaTj4GzmqabXfmFmCQY8kC9Q/P00pipyESeGSVlPtZHbfnDf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1iCWoyf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U//+kmF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5956AC4CEC6;
-	Tue, 15 Oct 2024 11:44:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1iCWoyf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED49C4CEC6;
+	Tue, 15 Oct 2024 11:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992674;
-	bh=ouSp1kzB0KP7L17AVYA3hpeDzFeB7P/O/MSFL6HhCsw=;
+	s=korg; t=1728992678;
+	bh=qZngwuzmvZifCA78IbPy5Zm/WxCpYuLELkWWDVelE0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U//+kmF7HhtnmaSLQ+rk3esBjWKxegbPpmojUo9XaBmPz8QgoUJPI8Ky4e9hWDhAL
-	 FGsUD8jyqMcHSwTJdUF4+KSlOijzUXpECbS/9D3Tml+2a47+pQ67TuoofUjHMrnBqS
-	 I3QnGp+G+vlmPfVqohFXp2z0epkd9nfk2CiIfOQw=
+	b=X1iCWoyffU+t6e07k+Zth4ea8Si2au8ZOdDJKb4nNqcQaizoU2rJFGW9ruqBQR0sc
+	 cMozGcDoLU5ytO95l9TKsIeoapZRcNZheBhH1oTfrye+Of34AVKkjmPofBLoQ5o1jw
+	 pe6xFvRjqPWtmA3648L2iBFhGGQ7y3bkcsSWEGqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Yuesong Li <liyuesong@vivo.com>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 178/691] powerpc/8xx: Fix kernel vs user address comparison
-Date: Tue, 15 Oct 2024 13:22:06 +0200
-Message-ID: <20241015112447.428240142@linuxfoundation.org>
+Subject: [PATCH 5.15 187/691] drivers:drm:exynos_drm_gsc:Fix wrong assignment in gsc_bind()
+Date: Tue, 15 Oct 2024 13:22:15 +0200
+Message-ID: <20241015112447.781947755@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,61 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Yuesong Li <liyuesong@vivo.com>
 
-[ Upstream commit 65a82e117ffeeab0baf6f871a1cab11a28ace183 ]
+[ Upstream commit 94ebc3d3235c5c516f67315059ce657e5090e94b ]
 
-Since commit 9132a2e82adc ("powerpc/8xx: Define a MODULE area below
-kernel text"), module exec space is below PAGE_OFFSET so not only
-space above PAGE_OFFSET, but space above TASK_SIZE need to be seen
-as kernel space.
+cocci reported a double assignment problem. Upon reviewing previous
+commits, it appears this may actually be an incorrect assignment.
 
-Until now the problem went undetected because by default TASK_SIZE
-is 0x8000000 which means address space is determined by just
-checking upper address bit. But when TASK_SIZE is over 0x80000000,
-PAGE_OFFSET is used for comparison, leading to thinking module
-addresses are part of user space.
-
-Fix it by using TASK_SIZE instead of PAGE_OFFSET for address
-comparison.
-
-Fixes: 9132a2e82adc ("powerpc/8xx: Define a MODULE area below kernel text")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/3f574c9845ff0a023b46cb4f38d2c45aecd769bd.1724173828.git.christophe.leroy@csgroup.eu
+Fixes: 8b9550344d39 ("drm/ipp: clean up debug messages")
+Signed-off-by: Yuesong Li <liyuesong@vivo.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/head_8xx.S | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_gsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/head_8xx.S b/arch/powerpc/kernel/head_8xx.S
-index 0d073b9fd52c5..4e409eee42b10 100644
---- a/arch/powerpc/kernel/head_8xx.S
-+++ b/arch/powerpc/kernel/head_8xx.S
-@@ -40,12 +40,12 @@
- #include "head_32.h"
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_gsc.c b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
+index 8c090354fd8a5..d7e0d19c0c025 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_gsc.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
+@@ -1173,7 +1173,7 @@ static int gsc_bind(struct device *dev, struct device *master, void *data)
+ 	struct exynos_drm_ipp *ipp = &ctx->ipp;
  
- .macro compare_to_kernel_boundary scratch, addr
--#if CONFIG_TASK_SIZE <= 0x80000000 && CONFIG_PAGE_OFFSET >= 0x80000000
-+#if CONFIG_TASK_SIZE <= 0x80000000 && MODULES_VADDR >= 0x80000000
- /* By simply checking Address >= 0x80000000, we know if its a kernel address */
- 	not.	\scratch, \addr
- #else
- 	rlwinm	\scratch, \addr, 16, 0xfff8
--	cmpli	cr0, \scratch, PAGE_OFFSET@h
-+	cmpli	cr0, \scratch, TASK_SIZE@h
- #endif
- .endm
+ 	ctx->drm_dev = drm_dev;
+-	ctx->drm_dev = drm_dev;
++	ipp->drm_dev = drm_dev;
+ 	exynos_drm_register_dma(drm_dev, dev, &ctx->dma_priv);
  
-@@ -403,7 +403,7 @@ FixupDAR:/* Entry point for dcbx workaround. */
- 	mfspr	r10, SPRN_SRR0
- 	mtspr	SPRN_MD_EPN, r10
- 	rlwinm	r11, r10, 16, 0xfff8
--	cmpli	cr1, r11, PAGE_OFFSET@h
-+	cmpli	cr1, r11, TASK_SIZE@h
- 	mfspr	r11, SPRN_M_TWB	/* Get level 1 table */
- 	blt+	cr1, 3f
- 
+ 	exynos_drm_ipp_register(dev, ipp, &ipp_funcs,
 -- 
 2.43.0
 
