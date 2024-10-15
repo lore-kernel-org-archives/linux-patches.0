@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30351AF0B2;
-	Tue, 15 Oct 2024 13:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA881C07E0;
+	Tue, 15 Oct 2024 13:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997474; cv=none; b=M1pEJEcyX9aEX2VuFsaJtCWf7s47Ql7E5HuIw9VeiVlGTFHt7y7OWOHQwEjml0Hg3V3wIn3dSlT4gYNjZoRQ1AdSSeMXTQxaDh4qf5y6RSeCE9RpV8k/aJs3Bbf0h+bfjAcGOoKS47sRJGTb4GWvi2HZBoPIrLwwGq95KyFeOeg=
+	t=1728997478; cv=none; b=HVUwkORLeDLQTPio/aJoiHfgBlryfuIgqUKqOBmOUooMOZcv8i0L2IYNGw3UjnJPK8w/5T6PypppugrHx7rAJYrRjd+Q3eg+7mMG+owbbMJpGWGPNwV0i+mGNM84p334Ff3IPX2ffvT7Pn0jLsXeN9nbfiAiwRshYBoPGnONFeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997474; c=relaxed/simple;
-	bh=PyZNc9dSmrPMHlk5NNjBuxk1IjlyoYMK2s+i4rXoe0E=;
+	s=arc-20240116; t=1728997478; c=relaxed/simple;
+	bh=dDUnrbnroriOKP4a2QssemmCuyVyIMUT3++tDl0KFRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sLvXasiS3T2KD08hrXOsyBU98FKK8hig68CNzwdgwD4PEv8omvtUJjURljl3Po3KMq35S+2KejujaOZyYcBbvB26KGKES7GbYSJ/K2xFfAeuqbggEQO1ijw90zosrdfweilUGQycl0GAY0rDp/oWFsGWxYEvRvplT08ZhzOMfzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lL/iegq8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ghnK6IBrSs9OyB7w925jZZH6T91wZl5NKAqWwdxyfMViraj0g1QNMF+RPNY6/wcg/YLXUiudxwwPEhyiTNeH74vwKsYa58r2796VJiDKLMl2LPMA64fYiyXKL1dJx6Nq/7wBdq2YUnp0WfLGs8d9eqC6GIvvrKZ6rfaVwRPTwD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jFM955i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lL/iegq8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BEFC4CEC6;
-	Tue, 15 Oct 2024 13:04:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jFM955i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79362C4CEC6;
+	Tue, 15 Oct 2024 13:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997474;
-	bh=PyZNc9dSmrPMHlk5NNjBuxk1IjlyoYMK2s+i4rXoe0E=;
+	s=korg; t=1728997478;
+	bh=dDUnrbnroriOKP4a2QssemmCuyVyIMUT3++tDl0KFRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lL/iegq8P4hvR6w4dvd9+HHOYZMe95UHBEem1O26wMnUkKmHRbb2LINpyxRFYrreT
-	 1oePwD/kqtepJMjCE4VXuhzkN+raunZWz9EAdVRNXAijS0oAYIv756h+86xZDIRFqa
-	 UYtRyWNCCOO/hRdEkTEzxhuIuU1U4SpPrQGcgvNw=
+	b=2jFM955iDxFDq6oUREOXyRH/Kl6lNJVEbCxkt1Hc3CIFNpCZBWejIrr6mU8fjclQK
+	 stPwrTM/HUwWbExblpekSjVYegUBRHNbS87RvcDUKZlxQWKE58cCaOOw2TVN3eHLhJ
+	 JbRdrSBl43UCs8tJLkN75thU2kIHb18YGkp9aBQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Guillaume Stols <gstols@baylibre.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 193/518] spi: spi-fsl-lpspi: Undo runtime PM changes at driver exit time
-Date: Tue, 15 Oct 2024 14:41:37 +0200
-Message-ID: <20241015123924.431785664@linuxfoundation.org>
+Subject: [PATCH 5.10 194/518] iio: adc: ad7606: fix oversampling gpio array
+Date: Tue, 15 Oct 2024 14:41:38 +0200
+Message-ID: <20241015123924.469868220@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,39 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Guillaume Stols <gstols@baylibre.com>
 
-[ Upstream commit 3b577de206d52dbde9428664b6d823d35a803d75 ]
+[ Upstream commit 8dc4594b54dbaaba40dc8884ad3d42083de39434 ]
 
-It's important to undo pm_runtime_use_autosuspend() with
-pm_runtime_dont_use_autosuspend() at driver exit time unless driver
-initially enabled pm_runtime with devm_pm_runtime_enable()
-(which handles it for you).
+gpiod_set_array_value was misused here: the implementation relied on the
+assumption that an unsigned long was required for each gpio, while the
+function expects a bit array stored in "as much unsigned long as needed
+for storing one bit per GPIO", i.e it is using a bit field.
 
-Hence, call pm_runtime_dont_use_autosuspend() at driver exit time
-to fix it.
+This leaded to incorrect parameter passed to gpiod_set_array_value, that
+would set 1 value instead of 3.
+It also prevents to select the software mode correctly for the AD7606B.
 
-Fixes: 944c01a889d9 ("spi: lpspi: enable runtime pm for lpspi")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20240906021251.610462-1-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d2a415c86c6b ("iio: adc: ad7606: Add support for AD7606B ADC")
+Fixes: 41f71e5e7daf ("staging: iio: adc: ad7606: Use find_closest() macro")
+Signed-off-by: Guillaume Stols <gstols@baylibre.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/adc/ad7606.c     | 4 ++--
+ drivers/iio/adc/ad7606_spi.c | 5 +++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index 314629b172281..b6674fb6c1d67 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -948,6 +948,7 @@ static int fsl_lpspi_remove(struct platform_device *pdev)
+diff --git a/drivers/iio/adc/ad7606.c b/drivers/iio/adc/ad7606.c
+index ee7b108688b33..d1223cfd8fb41 100644
+--- a/drivers/iio/adc/ad7606.c
++++ b/drivers/iio/adc/ad7606.c
+@@ -238,9 +238,9 @@ static int ad7606_write_os_hw(struct iio_dev *indio_dev, int val)
+ 	struct ad7606_state *st = iio_priv(indio_dev);
+ 	DECLARE_BITMAP(values, 3);
  
- 	fsl_lpspi_dma_exit(controller);
+-	values[0] = val;
++	values[0] = val & GENMASK(2, 0);
  
-+	pm_runtime_dont_use_autosuspend(fsl_lpspi->dev);
- 	pm_runtime_disable(fsl_lpspi->dev);
- 	return 0;
- }
+-	gpiod_set_array_value(ARRAY_SIZE(values), st->gpio_os->desc,
++	gpiod_set_array_value(st->gpio_os->ndescs, st->gpio_os->desc,
+ 			      st->gpio_os->info, values);
+ 
+ 	/* AD7616 requires a reset to update value */
+diff --git a/drivers/iio/adc/ad7606_spi.c b/drivers/iio/adc/ad7606_spi.c
+index 29945ad07dca8..e1ad2cd61b7f9 100644
+--- a/drivers/iio/adc/ad7606_spi.c
++++ b/drivers/iio/adc/ad7606_spi.c
+@@ -249,8 +249,9 @@ static int ad7616_sw_mode_config(struct iio_dev *indio_dev)
+ static int ad7606B_sw_mode_config(struct iio_dev *indio_dev)
+ {
+ 	struct ad7606_state *st = iio_priv(indio_dev);
+-	unsigned long os[3] = {1};
++	DECLARE_BITMAP(os, 3);
+ 
++	bitmap_fill(os, 3);
+ 	/*
+ 	 * Software mode is enabled when all three oversampling
+ 	 * pins are set to high. If oversampling gpios are defined
+@@ -258,7 +259,7 @@ static int ad7606B_sw_mode_config(struct iio_dev *indio_dev)
+ 	 * otherwise, they must be hardwired to VDD
+ 	 */
+ 	if (st->gpio_os) {
+-		gpiod_set_array_value(ARRAY_SIZE(os),
++		gpiod_set_array_value(st->gpio_os->ndescs,
+ 				      st->gpio_os->desc, st->gpio_os->info, os);
+ 	}
+ 	/* OS of 128 and 256 are available only in software mode */
 -- 
 2.43.0
 
