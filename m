@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9441C07C2;
-	Tue, 15 Oct 2024 12:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342C31C07C8;
+	Tue, 15 Oct 2024 12:59:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997157; cv=none; b=ZFN5cODg5hJKUOMSqQ745ENF1TF+3I9gRfTPlo5aciZR90bLgrRJTbzpaSKtN5g5Su4aEDaNMlXg+xl8xr2FcIJWXap6J02VPxBkg2lfOjRNKj0Azmirpeol7eVE3DaaYWC9S8v/nMhRrRSIp/Oy5/DG7BmbipW4C7tn3AaXmv8=
+	t=1728997160; cv=none; b=ZYmA2X4APgmfhbIfN6muA/LIAT29q0lnJmxUAWJyKbFPsaaJDK5joTHDIeUB5NsDbuhgIBvSrCjvUS6oJfxg0lK78V0ZkiBg/BuZK0Jz3IYeXqZVL9V2TRI+uV08pvqndd5vaI6vMntFN+7vEFq5uqX8MOm08mh1GHsZhMrSN2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997157; c=relaxed/simple;
-	bh=cuy9EezCO3kg0oQCyRI0rsTUTs9cPZ5zq2+Bz7f3bks=;
+	s=arc-20240116; t=1728997160; c=relaxed/simple;
+	bh=oJ0dLRDS3Wwx9DRLk1jT5nMI7RyjmjA4IQHFiE1nuEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EVTbmiClqC5ZxJWHd4fwC9H8+P4yI6KLDVdeBu1qqJie9hKT2wPPgj3+yyaKdBRbwSWAG0xVmb7rg++ds79bPfEOOy1+U4TXKUxRRr5vCaEq8zoupXFEwRXMWcdxf43R9fKEJrxEER5eMPE3Dubf8M4VeKnpvxmQN6Cr0qbYRNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQgFgPoM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CtHPQzKBe0eOiKboUiNKJ5IWwHecoM2CG+DyC36xFJBkH2N8SwCNKZy3dLNAfUvcalMbp6aSSdJOPEal0csAyrXHAghjlBvWTFHEVrxggR1YdHchZ7kZ3JdE2a7E0XyoNMsZl86iFvr867LHsJ9EB78Z3xPWNrCo6/AzXTzyouQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQZGoMsm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQgFgPoM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59877C4CEC6;
-	Tue, 15 Oct 2024 12:59:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQZGoMsm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B047EC4CEC6;
+	Tue, 15 Oct 2024 12:59:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997156;
-	bh=cuy9EezCO3kg0oQCyRI0rsTUTs9cPZ5zq2+Bz7f3bks=;
+	s=korg; t=1728997160;
+	bh=oJ0dLRDS3Wwx9DRLk1jT5nMI7RyjmjA4IQHFiE1nuEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zQgFgPoMG5OuNbmRr9HKAM4wEsp0A5dH8PPiZD8aVkcXASUQseghI3plET0T3P+Eh
-	 PboEVmunh7rR0m+nm1x51jExO9UqsUFiwAMSzDqvlMg8fuxvzBE0L2BXBRxMoNRmci
-	 vjlJ+xrlxex80XqTW8yxpFG5Yc3ernbRPLT78nmc=
+	b=UQZGoMsmU0BQYkXI++aOOyzxumlaVyn57wRfmzEnwEf9/rRyay8edlyCojWNMiQtF
+	 J5PAKY3WGRUFGKrrN4eTAbZ3Ex0DWBwRAHBrW1X20jKLiSqpqIDFqRYuFlB9YmLhbI
+	 c3UAalcXTnk9qlYByAdQy7p8c8hCFsYCxM26Mgd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Kees Cook <kees@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Anthony Iliopoulos <ailiop@suse.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <christian.brauner@ubuntu.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Deepa Dinamani <deepa.kernel@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 071/518] wifi: cfg80211: fix UBSAN noise in cfg80211_wext_siwscan()
-Date: Tue, 15 Oct 2024 14:39:35 +0200
-Message-ID: <20241015123919.744139085@linuxfoundation.org>
+Subject: [PATCH 5.10 062/518] mount: warn only once about timestamp range expiration
+Date: Tue, 15 Oct 2024 14:39:26 +0200
+Message-ID: <20241015123919.401418010@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,67 +57,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Anthony Iliopoulos <ailiop@suse.com>
 
-[ Upstream commit a26a5107bc52922cf5f67361e307ad66547b51c7 ]
+[ Upstream commit a128b054ce029554a4a52fc3abb8c1df8bafcaef ]
 
-Looking at https://syzkaller.appspot.com/bug?extid=1a3986bbd3169c307819
-and running reproducer with CONFIG_UBSAN_BOUNDS, I've noticed the
-following:
+Commit f8b92ba67c5d ("mount: Add mount warning for impending timestamp
+expiry") introduced a mount warning regarding filesystem timestamp
+limits, that is printed upon each writable mount or remount.
 
-[ T4985] UBSAN: array-index-out-of-bounds in net/wireless/scan.c:3479:25
-[ T4985] index 164 is out of range for type 'struct ieee80211_channel *[]'
-<...skipped...>
-[ T4985] Call Trace:
-[ T4985]  <TASK>
-[ T4985]  dump_stack_lvl+0x1c2/0x2a0
-[ T4985]  ? __pfx_dump_stack_lvl+0x10/0x10
-[ T4985]  ? __pfx__printk+0x10/0x10
-[ T4985]  __ubsan_handle_out_of_bounds+0x127/0x150
-[ T4985]  cfg80211_wext_siwscan+0x11a4/0x1260
-<...the rest is not too useful...>
+This can result in a lot of unnecessary messages in the kernel log in
+setups where filesystems are being frequently remounted (or mounted
+multiple times).
 
-Even if we do 'creq->n_channels = n_channels' before 'creq->ssids =
-(void *)&creq->channels[n_channels]', UBSAN treats the latter as
-off-by-one error. Fix this by using pointer arithmetic rather than
-an expression with explicit array indexing and use convenient
-'struct_size()' to simplify the math here and in 'kzalloc()' above.
+Avoid this by setting a superblock flag which indicates that the warning
+has been emitted at least once for any particular mount, as suggested in
+[1].
 
-Fixes: 5ba63533bbf6 ("cfg80211: fix alignment problem in scan request")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Reviewed-by: Kees Cook <kees@kernel.org>
-Link: https://patch.msgid.link/20240905150400.126386-1-dmantipov@yandex.ru
-[fix coding style for multi-line calculation]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lore.kernel.org/CAHk-=wim6VGnxQmjfK_tDg6fbHYKL4EFkmnTjVr9QnRqjDBAeA@mail.gmail.com/ [1]
+Link: https://lkml.kernel.org/r/20220119202934.26495-1-ailiop@suse.com
+Signed-off-by: Anthony Iliopoulos <ailiop@suse.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Acked-by: Christian Brauner <christian.brauner@ubuntu.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Deepa Dinamani <deepa.kernel@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 4bcda1eaf184 ("mount: handle OOM on mnt_warn_timestamp_expiry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/namespace.c     | 2 ++
+ include/linux/fs.h | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index e8a9ce0392957..f6307061aac49 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2803,8 +2803,8 @@ int cfg80211_wext_siwscan(struct net_device *dev,
- 		n_channels = ieee80211_get_num_supported_channels(wiphy);
- 	}
+diff --git a/fs/namespace.c b/fs/namespace.c
+index b020a12c53a2a..1665315e08e9a 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2553,6 +2553,7 @@ static void mnt_warn_timestamp_expiry(struct path *mountpoint, struct vfsmount *
+ 	struct super_block *sb = mnt->mnt_sb;
  
--	creq = kzalloc(sizeof(*creq) + sizeof(struct cfg80211_ssid) +
--		       n_channels * sizeof(void *),
-+	creq = kzalloc(struct_size(creq, channels, n_channels) +
-+		       sizeof(struct cfg80211_ssid),
- 		       GFP_ATOMIC);
- 	if (!creq) {
- 		err = -ENOMEM;
-@@ -2814,7 +2814,7 @@ int cfg80211_wext_siwscan(struct net_device *dev,
- 	creq->wiphy = wiphy;
- 	creq->wdev = dev->ieee80211_ptr;
- 	/* SSIDs come after channels */
--	creq->ssids = (void *)&creq->channels[n_channels];
-+	creq->ssids = (void *)creq + struct_size(creq, channels, n_channels);
- 	creq->n_channels = n_channels;
- 	creq->n_ssids = 1;
- 	creq->scan_start = jiffies;
+ 	if (!__mnt_is_readonly(mnt) &&
++	   (!(sb->s_iflags & SB_I_TS_EXPIRY_WARNED)) &&
+ 	   (ktime_get_real_seconds() + TIME_UPTIME_SEC_MAX > sb->s_time_max)) {
+ 		char *buf = (char *)__get_free_page(GFP_KERNEL);
+ 		char *mntpath = buf ? d_path(mountpoint, buf, PAGE_SIZE) : ERR_PTR(-ENOMEM);
+@@ -2567,6 +2568,7 @@ static void mnt_warn_timestamp_expiry(struct path *mountpoint, struct vfsmount *
+ 			tm.tm_year+1900, (unsigned long long)sb->s_time_max);
+ 
+ 		free_page((unsigned long)buf);
++		sb->s_iflags |= SB_I_TS_EXPIRY_WARNED;
+ 	}
+ }
+ 
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index e92acc55fbd1d..a7d839b196069 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1428,6 +1428,7 @@ extern int send_sigurg(struct fown_struct *fown);
+ 
+ #define SB_I_SKIP_SYNC	0x00000100	/* Skip superblock at global sync */
+ #define SB_I_PERSB_BDI	0x00000200	/* has a per-sb bdi */
++#define SB_I_TS_EXPIRY_WARNED 0x00000400 /* warned about timestamp range expiry */
+ 
+ /* Possible states of 'frozen' field */
+ enum {
 -- 
 2.43.0
 
