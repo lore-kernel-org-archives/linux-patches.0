@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30001EC01B;
-	Tue, 15 Oct 2024 12:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9BF1F4FDC;
+	Tue, 15 Oct 2024 12:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994116; cv=none; b=cSMF+Qy1eKWcJwOez01V8Naugg9XCsrQl41SELyRPq/FqyhpOsDrRq2jBCj8g74OqrokFETsbnvkbxz4ImXLINLqEnQVNABQeWXtxK27dIa/9WzQayAMDFJOxqwp/JaDZ9zN8Q/GNvgQ5/K2pk9i+qx6nzSdUK7d+s0I806g9mQ=
+	t=1728994120; cv=none; b=VNXrQ8Or1NlN3+nbVonOOrtpXQekA++CRDYPVFvDG1poG8v6f0IumvvafHbJZ2RzBwZBtepSTnEGcOFCNtOgdl+LMrAioeEQ39nLkj6tlhdGjHKsfeN2EfIIhak2GctwEppBWTp6JQVxIqAw0RYIkHEZxdPPPiBWkgo9NLQgKGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994116; c=relaxed/simple;
-	bh=7B7q+np9OHyMXnB5roor3bC/f/ElRlKmZXVML+LJoBI=;
+	s=arc-20240116; t=1728994120; c=relaxed/simple;
+	bh=LGMPO67fgTt8t6pOLDeItbIrmKbusSS1+we7lAVfmBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/9mvFoLa5GiOFpHfjA4hWC77theMree50pvEI0wbsqr5vT0J51OfEWC7twLubxVbxeuPFARmYb5/X9pw8XEp4+NrPD/JSZe2zBTNeAo93+dSZeoiY41NbWSeupleTtn07v7BOf1e90ljWmxFA4cgsbebnKwYi5TJirDaaNWj5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ICcvh6rM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=loCY9OaopO89L3xab+Fe19M6MaN2dciv6cFNXwZXAPRifrhHvhJBsYx0vo/kXSUJjY1ijmhI1P7oDQYUOSAGcjkqxXtIH7WJN+EEjxsd87XOwwCKi+YHGshg6CyO3bKPsxI7LdUp9Md9MYw/meiLKMCX7b4SE7cXlHiaG5ByBlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZO0pmzgl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ICcvh6rM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B23DC4CEC6;
-	Tue, 15 Oct 2024 12:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZO0pmzgl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1747C4CED3;
+	Tue, 15 Oct 2024 12:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994116;
-	bh=7B7q+np9OHyMXnB5roor3bC/f/ElRlKmZXVML+LJoBI=;
+	s=korg; t=1728994120;
+	bh=LGMPO67fgTt8t6pOLDeItbIrmKbusSS1+we7lAVfmBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ICcvh6rMuT1hwWoYt6DPcBbGjW+CmtYsRKC7QMvltm32D4He1Bf30evYrJYMV5/vp
-	 rKnDEWnhByVPBTGZf+cUUqB/vyrVzZdJhbgY7npBZsfdk/STzAfcc6bRQQsOLvpjRf
-	 hABr3F2pkVafJt06ArRpLGjfOUG2o6UVtNRMW64k=
+	b=ZO0pmzglojQvlgPXo5RPRYRCvahUzrl/aXOak6k47ogOM+OeUdQzuDjcepiKmYjFc
+	 8uAryVqQfaKEfI+O9F0y1v6QufBQ+q4AaVflOJ1PhGIQMmmMGtYmjpXvZ7vvBRJ98+
+	 6REEJQwb+luOU3KZgOt/65jgOfHNN4ilX+bE0rf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaixin Wang <kxwang23@m.fudan.edu.cn>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Jon Mason <jdmason@kudzu.us>,
+	Yunke Cao <yunkec@chromium.org>,
+	Tomasz Figa <tfiga@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 611/691] ntb: ntb_hw_switchtec: Fix use after free vulnerability in switchtec_ntb_remove due to race condition
-Date: Tue, 15 Oct 2024 13:29:19 +0200
-Message-ID: <20241015112504.588400839@linuxfoundation.org>
+Subject: [PATCH 5.15 612/691] media: videobuf2-core: clear memory related fields in __vb2_plane_dmabuf_put()
+Date: Tue, 15 Oct 2024 13:29:20 +0200
+Message-ID: <20241015112504.626930816@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,51 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixin Wang <kxwang23@m.fudan.edu.cn>
+From: Yunke Cao <yunkec@chromium.org>
 
-[ Upstream commit e51aded92d42784313ba16c12f4f88cc4f973bbb ]
+[ Upstream commit 6a9c97ab6b7e85697e0b74e86062192a5ffffd99 ]
 
-In the switchtec_ntb_add function, it can call switchtec_ntb_init_sndev
-function, then &sndev->check_link_status_work is bound with
-check_link_status_work. switchtec_ntb_link_notification may be called
-to start the work.
+Clear vb2_plane's memory related fields in __vb2_plane_dmabuf_put(),
+including bytesused, length, fd and data_offset.
 
-If we remove the module which will call switchtec_ntb_remove to make
-cleanup, it will free sndev through kfree(sndev), while the work
-mentioned above will be used. The sequence of operations that may lead
-to a UAF bug is as follows:
+Remove the duplicated code in __prepare_dmabuf().
 
-CPU0                                 CPU1
-
-                        | check_link_status_work
-switchtec_ntb_remove    |
-kfree(sndev);           |
-                        | if (sndev->link_force_down)
-                        | // use sndev
-
-Fix it by ensuring that the work is canceled before proceeding with
-the cleanup in switchtec_ntb_remove.
-
-Signed-off-by: Kaixin Wang <kxwang23@m.fudan.edu.cn>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Signed-off-by: Yunke Cao <yunkec@chromium.org>
+Acked-by: Tomasz Figa <tfiga@chromium.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/hw/mscc/ntb_hw_switchtec.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/common/videobuf2/videobuf2-core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ntb/hw/mscc/ntb_hw_switchtec.c b/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
-index ec9cb6c81edae..759248415b5c2 100644
---- a/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
-+++ b/drivers/ntb/hw/mscc/ntb_hw_switchtec.c
-@@ -1556,6 +1556,7 @@ static void switchtec_ntb_remove(struct device *dev,
- 	switchtec_ntb_deinit_db_msg_irq(sndev);
- 	switchtec_ntb_deinit_shared_mw(sndev);
- 	switchtec_ntb_deinit_crosslink(sndev);
-+	cancel_work_sync(&sndev->check_link_status_work);
- 	kfree(sndev);
- 	dev_info(dev, "ntb device unregistered\n");
+diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+index 30c8497f7c118..b66e80e6924e5 100644
+--- a/drivers/media/common/videobuf2/videobuf2-core.c
++++ b/drivers/media/common/videobuf2/videobuf2-core.c
+@@ -302,6 +302,10 @@ static void __vb2_plane_dmabuf_put(struct vb2_buffer *vb, struct vb2_plane *p)
+ 	p->mem_priv = NULL;
+ 	p->dbuf = NULL;
+ 	p->dbuf_mapped = 0;
++	p->bytesused = 0;
++	p->length = 0;
++	p->m.fd = 0;
++	p->data_offset = 0;
  }
+ 
+ /*
+@@ -1280,10 +1284,6 @@ static int __prepare_dmabuf(struct vb2_buffer *vb)
+ 
+ 		/* Release previously acquired memory if present */
+ 		__vb2_plane_dmabuf_put(vb, &vb->planes[plane]);
+-		vb->planes[plane].bytesused = 0;
+-		vb->planes[plane].length = 0;
+-		vb->planes[plane].m.fd = 0;
+-		vb->planes[plane].data_offset = 0;
+ 
+ 		/* Acquire each plane's memory */
+ 		mem_priv = call_ptr_memop(attach_dmabuf,
 -- 
 2.43.0
 
