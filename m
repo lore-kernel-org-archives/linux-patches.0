@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2051D5AA5;
-	Tue, 15 Oct 2024 11:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8AB1E7C02;
+	Tue, 15 Oct 2024 11:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992713; cv=none; b=UgbMaZikvZessbX3uqBnsE2BFrpZB75GaN1o5dfiP+acgtxFHNH0vdVlwlmq88MfsuobObKWPpqrTcT1HK0p0fNCHl2rePeZ/Vza8mXRR0lcLuRVTBfW7XDrmR5Xr4TlTgZ65EsnvG/N0VSNFNYZMSX2iGMeYYnLpyKEVAnnUxI=
+	t=1728992716; cv=none; b=ct+7aJ9qBPo9vrzUmvpIUk4rDsXgMOQSiRWf23DU4e2pe3IjcKoZWJZ8exe80H5YueNt1HvK5MC85SM/gpXr3SNCqULxNaleyQ/WwD7LRNNqcXtLdbl0Wbn7V25G6C5embg2/OgZEzeUSHE61tQyyuxNNva7inVygAPJHK3XDDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992713; c=relaxed/simple;
-	bh=oGf14xe506rsLE0NCads2R75/dvpBN2YT6EVe8ykN1M=;
+	s=arc-20240116; t=1728992716; c=relaxed/simple;
+	bh=mRmaQZwqTMec33Q+Pb87XivbgF892mM0zIDE6CTdX7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EkEQcepwiPg46LKY/5iXLXrajoP/urtu9Eo/1LByE4n1P5DUonjFNVmNVmte70LXZ9gZ9WMRvhAFvaP/emBQGjreTO8fXxh4SfIRo+0WPBHivVYHeakTLm+/lxWBoCFTNNyeFqdYWqhWTL/oy4U1idRWGaVeo0phTVyeulNyCQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpWIrh7F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u2nPX0qJY+NmLOkYX0+LlRNvQwH8Q6q743S7FqS4zlpvCl5/lp2TtVqy0wj27QXVQWNSVY6Q22F6eE+XoVDMAmXxREOyUnoiCN6pZvSqyLi4PP6CuYdwtxsWyg55atEpcMzBkiUCaCsCzvaeDOErieFDh/i2ulJ/jAtPZU7LcaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XwZpGPU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpWIrh7F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD20C4CEC6;
-	Tue, 15 Oct 2024 11:45:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XwZpGPU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801C3C4CECE;
+	Tue, 15 Oct 2024 11:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992712;
-	bh=oGf14xe506rsLE0NCads2R75/dvpBN2YT6EVe8ykN1M=;
+	s=korg; t=1728992716;
+	bh=mRmaQZwqTMec33Q+Pb87XivbgF892mM0zIDE6CTdX7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JpWIrh7F5cJbJSaEmKR6V0BhVukDSEhkh3OZqwJzQZIEWS1POTk6JrC1g6cwlCdit
-	 PGMUZyrw+Vd1W9pyYtBW4HM8kCBgG7EoFaF1H32s5FL77MU7SBTTzkEmCrLJVZexNm
-	 PTnfvDB7sya2G36NI8flS4DnMCUgSFfb35Lu8Zj0=
+	b=1XwZpGPUqwLH3MMgocyIai/iRAtZkFFnyrPHHNCF2zIe5tk6bykPfzd82KHrOu+sF
+	 5hm5TFkdq0gC9ECZi63Bruip+meyL+Xzkoydegj+6nmwPpLLN5NF+eD/+nUp0lwI8z
+	 aCb2fbx5u0dXMyF34s5afBM3jejnNTjfrmemseRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Rob Clark <robdclark@chromium.org>,
+	Tony Ambardar <tony.ambardar@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 179/691] drm/msm: Fix incorrect file name output in adreno_request_fw()
-Date: Tue, 15 Oct 2024 13:22:07 +0200
-Message-ID: <20241015112447.467549137@linuxfoundation.org>
+Subject: [PATCH 5.15 197/691] selftests/bpf: Fix compiling core_reloc.c with musl-libc
+Date: Tue, 15 Oct 2024 13:22:25 +0200
+Message-ID: <20241015112448.175725346@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,42 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit e19366911340c2313a1abbb09c54eaf9bdea4f58 ]
+[ Upstream commit debfa4f628f271f72933bf38d581cc53cfe1def5 ]
 
-In adreno_request_fw() when debugging information is printed to the log
-after firmware load, an incorrect filename is printed. 'newname' is used
-instead of 'fwname', so prefix "qcom/" is being added to filename.
-Looks like "copy-paste" mistake.
+The type 'loff_t' is a GNU extension and not exposed by the musl 'fcntl.h'
+header unless _GNU_SOURCE is defined. Add this definition to fix errors
+seen compiling for mips64el/musl-libc:
 
-Fix this mistake by replacing 'newname' with 'fwname'.
+  In file included from tools/testing/selftests/bpf/prog_tests/core_reloc.c:4:
+  ./bpf_testmod/bpf_testmod.h:10:9: error: unknown type name 'loff_t'
+     10 |         loff_t off;
+        |         ^~~~~~
+  ./bpf_testmod/bpf_testmod.h:16:9: error: unknown type name 'loff_t'
+     16 |         loff_t off;
+        |         ^~~~~~
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 2c41ef1b6f7d ("drm/msm/adreno: deal with linux-firmware fw paths")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/602382/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Fixes: 6bcd39d366b6 ("selftests/bpf: Add CO-RE relocs selftest relying on kernel module BTF")
+Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/11c3af75a7eb6bcb7ad9acfae6a6f470c572eb82.1721713597.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/prog_tests/core_reloc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 4c61f99068083..2377a1bbbb800 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -321,7 +321,7 @@ adreno_request_fw(struct adreno_gpu *adreno_gpu, const char *fwname)
- 		ret = request_firmware_direct(&fw, fwname, drm->dev);
- 		if (!ret) {
- 			DRM_DEV_INFO(drm->dev, "loaded %s from legacy location\n",
--				newname);
-+				fwname);
- 			adreno_gpu->fwloc = FW_LOCATION_LEGACY;
- 			goto out;
- 		} else if (adreno_gpu->fwloc != FW_LOCATION_UNKNOWN) {
+diff --git a/tools/testing/selftests/bpf/prog_tests/core_reloc.c b/tools/testing/selftests/bpf/prog_tests/core_reloc.c
+index 4739b15b2a979..ae2c7e8fb6600 100644
+--- a/tools/testing/selftests/bpf/prog_tests/core_reloc.c
++++ b/tools/testing/selftests/bpf/prog_tests/core_reloc.c
+@@ -1,4 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
++#define _GNU_SOURCE
+ #include <test_progs.h>
+ #include "progs/core_reloc_types.h"
+ #include "bpf_testmod/bpf_testmod.h"
 -- 
 2.43.0
 
