@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0351C07C2;
-	Tue, 15 Oct 2024 12:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AFD1C07C2;
+	Tue, 15 Oct 2024 12:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997009; cv=none; b=Q3NxZLnwYt0Ula4djN5ha5FuNPvoJv+OatwRxUfqcxEw3uMVOvzi2D9Cx1BOVvdIoMvC49f64enF4wrVL9xPv3I8XLk666YzcRjmPasCu4Z5cvxO8LX0E7uZBtdYIAgG+x7ii8OU3TNUdZicd9kUpGsJpUb0OkEjptQPh+JEq74=
+	t=1728997017; cv=none; b=e+1hGcpAxZpAaoS8XgaAk0/hUoaOzw4rN9lgJ9J/OU6SgsDNJgdHNhDKxmhFqJVpUnWzWZRE8jOCom/yASq9IaJUDWvsF5k1IRfeiXGpD6nRacYGwLq5hVD3Fnv1H9qund2HPRHLHt9cISQvAITAGq+uznRJDcmFMgFr74P1pBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997009; c=relaxed/simple;
-	bh=pxEnMqOj+PlsNrWPasw/FwRan+Kwrh9AmGrHU9sln0c=;
+	s=arc-20240116; t=1728997017; c=relaxed/simple;
+	bh=BBwwlLPGKuQQf8nB3I8AAhGE0VmZqfux/W4Vy50RigQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PllMKyowhBXmrwMc1udbWYLWTl6jG3r1tyxRFbSvagvDbo8SQNoH04yBXKW3VCzAfSSf4ifbGehsTussP06SizaAhIMmOYKuDyaMXKeOqE9m0imMojwGUv1fnsxsUUo2XS5I9vsdEKa9I5dX/dTuBeIDicUXztQv8XyxXcxxEK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNstbORk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tL0fO19iZn3XZv0EVO7ZtP3RyrahhTGA5fl9vmPlDMw1272m5WWti5irAVXckdcwWdudhqpPsp/0gPodxXJMMOtQzf0I4AFsIwqBfav78LG8ORWuxkZRxbs58+WbAe4iBQAlJREm0DgZcPRl7eK1oxjbL4ygFYFHBcvoPHTzlAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGX6fYEj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNstbORk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1BACC4CEC6;
-	Tue, 15 Oct 2024 12:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGX6fYEj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DE1C4CEC6;
+	Tue, 15 Oct 2024 12:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997009;
-	bh=pxEnMqOj+PlsNrWPasw/FwRan+Kwrh9AmGrHU9sln0c=;
+	s=korg; t=1728997017;
+	bh=BBwwlLPGKuQQf8nB3I8AAhGE0VmZqfux/W4Vy50RigQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNstbORkQOzF7tqtRnXZQZExa1H0Z3/YVUw8VSLpBsOzbKYQ1PmGGtmsbWEg0tJK+
-	 +HN5Nol2wcJC461KVuzju+r21unaxOMc/8zL1NITt15RRuiCqop+guwQWC+TWAZLtz
-	 Kx2lhXe/axHn7oRqsrGC8xvbYJZ7qpL5BMg/GHNI=
+	b=eGX6fYEj+bY/xtqRgN1kU0y8Gct1bBKkywi9JbihH/jfF2KE7OL7X/vAEbfqLAUWa
+	 85XvHbax133Hso1GDKMhDpaL3pSdOmAwIjYaW0Uw0urz6ioqFKAvawEJWQDeFdHAjB
+	 3Mz6jXoeL6IHtiF84oAmPpx3OJJZaXZsWewKlJRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jan Kara <jack@suse.cz>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Thomas Blocher <thomas.blocher@ek-dev.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 061/518] fs: explicitly unregister per-superblock BDIs
-Date: Tue, 15 Oct 2024 14:39:25 +0200
-Message-ID: <20241015123919.363486173@linuxfoundation.org>
+Subject: [PATCH 5.10 032/518] pinctrl: at91: make it work with current gpiolib
+Date: Tue, 15 Oct 2024 14:38:56 +0200
+Message-ID: <20241015123918.244232267@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -56,62 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Thomas Blocher <thomas.blocher@ek-dev.de>
 
-[ Upstream commit 0b3ea0926afb8dde70cfab00316ae0a70b93a7cc ]
+[ Upstream commit 752f387faaae0ae2e84d3f496922524785e77d60 ]
 
-Add a new SB_I_ flag to mark superblocks that have an ephemeral bdi
-associated with them, and unregister it when the superblock is shut
-down.
+pinctrl-at91 currently does not support the gpio-groups devicetree
+property and has no pin-range.
+Because of this at91 gpios stopped working since patch
+commit 2ab73c6d8323fa1e ("gpio: Support GPIO controllers without pin-ranges")
+This was discussed in the patches
+commit fc328a7d1fcce263 ("gpio: Revert regression in sysfs-gpio (gpiolib.c)")
+commit 56e337f2cf132632 ("Revert "gpio: Revert regression in sysfs-gpio (gpiolib.c)"")
 
-Link: https://lkml.kernel.org/r/20211021124441.668816-4-hch@lst.de
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Cc: Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: Vignesh Raghavendra <vigneshr@ti.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Stable-dep-of: 4bcda1eaf184 ("mount: handle OOM on mnt_warn_timestamp_expiry")
+As a workaround manually set pin-range via gpiochip_add_pin_range() until
+a) pinctrl-at91 is reworked to support devicetree gpio-groups
+b) another solution as mentioned in
+commit 56e337f2cf132632 ("Revert "gpio: Revert regression in sysfs-gpio (gpiolib.c)"")
+is found
+
+Signed-off-by: Thomas Blocher <thomas.blocher@ek-dev.de>
+Link: https://lore.kernel.org/5b992862-355d-f0de-cd3d-ff99e67a4ff1@ek-dev.de
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/super.c         | 3 +++
- include/linux/fs.h | 1 +
- 2 files changed, 4 insertions(+)
+ drivers/pinctrl/pinctrl-at91.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/super.c b/fs/super.c
-index 282aa36901eb1..3d040c09f723f 100644
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -476,6 +476,8 @@ void generic_shutdown_super(struct super_block *sb)
- 	spin_unlock(&sb_lock);
- 	up_write(&sb->s_umount);
- 	if (sb->s_bdi != &noop_backing_dev_info) {
-+		if (sb->s_iflags & SB_I_PERSB_BDI)
-+			bdi_unregister(sb->s_bdi);
- 		bdi_put(sb->s_bdi);
- 		sb->s_bdi = &noop_backing_dev_info;
- 	}
-@@ -1634,6 +1636,7 @@ int super_setup_bdi_name(struct super_block *sb, char *fmt, ...)
- 	}
- 	WARN_ON(sb->s_bdi != &noop_backing_dev_info);
- 	sb->s_bdi = bdi;
-+	sb->s_iflags |= SB_I_PERSB_BDI;
+diff --git a/drivers/pinctrl/pinctrl-at91.c b/drivers/pinctrl/pinctrl-at91.c
+index 52ecd47c18e2d..bb9348f14b1ba 100644
+--- a/drivers/pinctrl/pinctrl-at91.c
++++ b/drivers/pinctrl/pinctrl-at91.c
+@@ -1401,8 +1401,11 @@ static int at91_pinctrl_probe(struct platform_device *pdev)
  
- 	return 0;
- }
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 2e202f01c38d0..e92acc55fbd1d 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -1427,6 +1427,7 @@ extern int send_sigurg(struct fown_struct *fown);
- #define SB_I_UNTRUSTED_MOUNTER		0x00000040
+ 	/* We will handle a range of GPIO pins */
+ 	for (i = 0; i < gpio_banks; i++)
+-		if (gpio_chips[i])
++		if (gpio_chips[i]) {
+ 			pinctrl_add_gpio_range(info->pctl, &gpio_chips[i]->range);
++			gpiochip_add_pin_range(&gpio_chips[i]->chip, dev_name(info->pctl->dev), 0,
++				gpio_chips[i]->range.pin_base, gpio_chips[i]->range.npins);
++		}
  
- #define SB_I_SKIP_SYNC	0x00000100	/* Skip superblock at global sync */
-+#define SB_I_PERSB_BDI	0x00000200	/* has a per-sb bdi */
+ 	dev_info(&pdev->dev, "initialized AT91 pinctrl driver\n");
  
- /* Possible states of 'frozen' field */
- enum {
 -- 
 2.43.0
 
