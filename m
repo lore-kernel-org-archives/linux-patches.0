@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270D71D042D;
-	Tue, 15 Oct 2024 12:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4619F1C07DF;
+	Tue, 15 Oct 2024 12:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996882; cv=none; b=cTHH07JdHWcUsRe45u/dvAn1WFkIpcdCFuCkZph9A8i/SAjf24uS3NpcX54eizolLSkeRDJkGpAl8v8p48CeEaD10Q6TEYkBuxehdy+nm37Q5E/u0VjWgadIyryMCS+pmHd49UzVscJVbsVX9ty+G3/7kqDytKCQvdBhhkHQ7mk=
+	t=1728996885; cv=none; b=O1OCOz845o3rEmLPXQbc+zrWHCjGjEY4w8B1iGXQTANz9Mz7JRlc2s+eu3NUftTKcas1jJP86Fj2Nf9izzlqz2Tis3h8M1c8C3ujOAGmCmc5pg9KMO0Y3ay91R2ncB0/wM+A96AFdf4hllZA6h9seuWQ4ifX7eGaWcuXTK0wQh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996882; c=relaxed/simple;
-	bh=ZqKWxMfT9gmuwM8MUmtJ4sTK0xAI1LZ3AzN3JiZ57Ac=;
+	s=arc-20240116; t=1728996885; c=relaxed/simple;
+	bh=8j5YgHDLpfk8DKRlik2OwFxKFWz1kNSWR5bTZh3VpeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2UMCgp20r9iq65dryJ3hs8No0LWmCDzNR2T/XPz28nUWd4y4nghTr+2FXTI9y3XUG7P0YVWPAT0M07pyA5yKSj+fdD9eU3Ogsw3afuuYQ0I0QdxoNna5Mob1PT4CTDhjsoa85aEB8jlK13i877FbEUwi4PyyxKfjludB93/gts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=faZcVw5S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mDRovp+6qkwNs1RbSkZlOWBmAr6X2S/QB8zaRgKV5iEZ/z86WBYeSHRqEqnjCmS6Z/9AyelmlUSQX300UzgxM1tMTBzyPeQNLuejZW6TSL6vupDgewVrZnBu+eo5Y6soqiKmJgOZAzCDsgFq3Rg4TXI6zdBk92KUZ0JNO0qErPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwNYsmie; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faZcVw5S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F5CC4CEC6;
-	Tue, 15 Oct 2024 12:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwNYsmie"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94A8C4CEC6;
+	Tue, 15 Oct 2024 12:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728996881;
-	bh=ZqKWxMfT9gmuwM8MUmtJ4sTK0xAI1LZ3AzN3JiZ57Ac=;
+	s=korg; t=1728996885;
+	bh=8j5YgHDLpfk8DKRlik2OwFxKFWz1kNSWR5bTZh3VpeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=faZcVw5S4GOs541ZGDEYnHRP93HT3FoxQ5A7j+EEvJx3YMqYOSpq5zKeOXPHaVIT+
-	 wzv7Fuf8goo9mbctJX6wjms7XcmYl5p1uXTG3QwRD6e91Y825um0rm+9sE6KTt5vBu
-	 2c94L+rkiBDq3opFBOwShSUytvgnd1P5Fd/CdV90=
+	b=wwNYsmieJ/4G3lZc3WpwGNVDR5cUx+T+IMldkBnfjEu557yV0+sDr74wbhWNs8WqY
+	 hs0XRskba5OZ7IxXeVxEBMcS07l9O9QPUde0IRHICVFOaCQpoT4XTsnTpeHpi6K403
+	 Jzk10HUX5CcgmfET6n8T0+8SBAUQzHTIAfMXTdOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.10 026/518] soundwire: stream: Revert "soundwire: stream: fix programming slave ports for non-continous port maps"
-Date: Tue, 15 Oct 2024 14:38:50 +0200
-Message-ID: <20241015123918.015215944@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 027/518] ASoC: meson: axg-card: fix use-after-free
+Date: Tue, 15 Oct 2024 14:38:51 +0200
+Message-ID: <20241015123918.054452163@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,58 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-commit 233a95fd574fde1c375c486540a90304a2d2d49f upstream.
+commit 4f9a71435953f941969a4f017e2357db62d85a86 upstream.
 
-This reverts commit ab8d66d132bc8f1992d3eb6cab8d32dda6733c84 because it
-breaks codecs using non-continuous masks in source and sink ports.  The
-commit missed the point that port numbers are not used as indices for
-iterating over prop.sink_ports or prop.source_ports.
+Buffer 'card->dai_link' is reallocated in 'meson_card_reallocate_links()',
+so move 'pad' pointer initialization after this function when memory is
+already reallocated.
 
-Soundwire core and existing codecs expect that the array passed as
-prop.sink_ports and prop.source_ports is continuous.  The port mask still
-might be non-continuous, but that's unrelated.
+Kasan bug report:
 
-Reported-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Closes: https://lore.kernel.org/all/b6c75eee-761d-44c8-8413-2a5b34ee2f98@linux.intel.com/
-Fixes: ab8d66d132bc ("soundwire: stream: fix programming slave ports for non-continous port maps")
-Acked-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20240909164746.136629-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+==================================================================
+BUG: KASAN: slab-use-after-free in axg_card_add_link+0x76c/0x9bc
+Read of size 8 at addr ffff000000e8b260 by task modprobe/356
+
+CPU: 0 PID: 356 Comm: modprobe Tainted: G O 6.9.12-sdkernel #1
+Call trace:
+ dump_backtrace+0x94/0xec
+ show_stack+0x18/0x24
+ dump_stack_lvl+0x78/0x90
+ print_report+0xfc/0x5c0
+ kasan_report+0xb8/0xfc
+ __asan_load8+0x9c/0xb8
+ axg_card_add_link+0x76c/0x9bc [snd_soc_meson_axg_sound_card]
+ meson_card_probe+0x344/0x3b8 [snd_soc_meson_card_utils]
+ platform_probe+0x8c/0xf4
+ really_probe+0x110/0x39c
+ __driver_probe_device+0xb8/0x18c
+ driver_probe_device+0x108/0x1d8
+ __driver_attach+0xd0/0x25c
+ bus_for_each_dev+0xe0/0x154
+ driver_attach+0x34/0x44
+ bus_add_driver+0x134/0x294
+ driver_register+0xa8/0x1e8
+ __platform_driver_register+0x44/0x54
+ axg_card_pdrv_init+0x20/0x1000 [snd_soc_meson_axg_sound_card]
+ do_one_initcall+0xdc/0x25c
+ do_init_module+0x10c/0x334
+ load_module+0x24c4/0x26cc
+ init_module_from_file+0xd4/0x128
+ __arm64_sys_finit_module+0x1f4/0x41c
+ invoke_syscall+0x60/0x188
+ el0_svc_common.constprop.0+0x78/0x13c
+ do_el0_svc+0x30/0x40
+ el0_svc+0x38/0x78
+ el0t_64_sync_handler+0x100/0x12c
+ el0t_64_sync+0x190/0x194
+
+Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://patch.msgid.link/20240911142425.598631-1-avkrasnov@salutedevices.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soundwire/stream.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/meson/axg-card.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/soundwire/stream.c
-+++ b/drivers/soundwire/stream.c
-@@ -1425,18 +1425,18 @@ struct sdw_dpn_prop *sdw_get_slave_dpn_p
- 					    unsigned int port_num)
+--- a/sound/soc/meson/axg-card.c
++++ b/sound/soc/meson/axg-card.c
+@@ -104,7 +104,7 @@ static int axg_card_add_tdm_loopback(str
+ 				     int *index)
  {
- 	struct sdw_dpn_prop *dpn_prop;
--	unsigned long mask;
-+	u8 num_ports;
- 	int i;
+ 	struct meson_card *priv = snd_soc_card_get_drvdata(card);
+-	struct snd_soc_dai_link *pad = &card->dai_link[*index];
++	struct snd_soc_dai_link *pad;
+ 	struct snd_soc_dai_link *lb;
+ 	struct snd_soc_dai_link_component *dlc;
+ 	int ret;
+@@ -114,6 +114,7 @@ static int axg_card_add_tdm_loopback(str
+ 	if (ret)
+ 		return ret;
  
- 	if (direction == SDW_DATA_DIR_TX) {
--		mask = slave->prop.source_ports;
-+		num_ports = hweight32(slave->prop.source_ports);
- 		dpn_prop = slave->prop.src_dpn_prop;
- 	} else {
--		mask = slave->prop.sink_ports;
-+		num_ports = hweight32(slave->prop.sink_ports);
- 		dpn_prop = slave->prop.sink_dpn_prop;
- 	}
++	pad = &card->dai_link[*index];
+ 	lb = &card->dai_link[*index + 1];
  
--	for_each_set_bit(i, &mask, 32) {
-+	for (i = 0; i < num_ports; i++) {
- 		if (dpn_prop[i].num == port_num)
- 			return &dpn_prop[i];
- 	}
+ 	lb->name = devm_kasprintf(card->dev, GFP_KERNEL, "%s-lb", pad->name);
 
 
