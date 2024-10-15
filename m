@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3128D1B2184;
-	Tue, 15 Oct 2024 13:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AECB1B2181;
+	Tue, 15 Oct 2024 13:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998590; cv=none; b=F1YqiGSRbvmqVYGwY3WC0PoXeEN7zfbAkpyTzguIBBo3Ds1len1OxOciY/JxQXnh9HAl4F1AAokjKosuY2loHyrtIx8PtKgAFP5dpcghfB4t0Ip4PbJCuRb14Vq7b1XobCySAyfZ6xjM0VPDuilOAEbq0dMu9PxcUt5ZYtzJL/4=
+	t=1728998594; cv=none; b=dKWEGDW6+wLKTowz1MOmbFs7pN/xK9hSrXGCmNfREdxE26sBBdEJ9y89HqEzuR6yGrskEYT1PQcseswgMa4ufQZ2b6S/jeTfxgPNmRfCa3qrx/feg9MfAPPQ/JRmWQ9ac1eVPJmE0ya6nNNiJ7x/H68TYIKPz8BRMWH51X0Echs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998590; c=relaxed/simple;
-	bh=Z/S83SOo40FSFuC7nhMcJmwhSrtxwGTH1PNtsRKjPzo=;
+	s=arc-20240116; t=1728998594; c=relaxed/simple;
+	bh=qvGJjLlsaZJQMBgrUJhYv6j81sf58sGRKO8wFuD3BtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F96gprL9ZlM1Zn3moi173auAioSYXQugZ8nrDAcuHohNBFqrcbRKwkYe9Ht6lB9mnsNY+Aq3xjDH5AjL/QSihLglIeD5K3xrWlFIZ1xIJcrEYMeJ83/iUcIR77NjXefsEbFyFp+7LbjtXp3Cu28YesOa4/7OVQOs0Y7PXj7ufUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Foa+kerx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VL6UOKmXodXjfZj/bazmkf+HlkaQiFAMdwqUtCQyE2rKxSuXd80wcsCnsy9fiJO4GxYyZAQVo6ZHWW23PeJjO0yXN9hyMdqzy7dfT/AnGCuDiv8aTjlW5jhGGTy0kUudr1ck64tfiVddFeK3yWbGCjGBZtirv/sCCQx7rv09m78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMuqlZ+o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Foa+kerx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91ED2C4CEC6;
-	Tue, 15 Oct 2024 13:23:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMuqlZ+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6773C4CEC6;
+	Tue, 15 Oct 2024 13:23:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998590;
-	bh=Z/S83SOo40FSFuC7nhMcJmwhSrtxwGTH1PNtsRKjPzo=;
+	s=korg; t=1728998594;
+	bh=qvGJjLlsaZJQMBgrUJhYv6j81sf58sGRKO8wFuD3BtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Foa+kerx/ladxb8zaiKgb7di7eU0uWp41mCuCzjau1TzbVJX4hJ4FpKpCH/dZPXEr
-	 34uVnDJscf9cYDW61/RJ5nSOlhidUagqzqcbDK4WdlMYmo6LA5CopJu5l667ntiWRq
-	 R1wEDQMGfwV+1KvqXl1oRBy7Jb+mREme0u/h279M=
+	b=JMuqlZ+oF0YlTPA6iYRM7Imc2vGJHIzVEPtfk64LXHbXADGKFI0YCPNrUhUfTVYhR
+	 a1Eo4NkdXsB1fTzXSagHXAxoNfz3zRxQ/wr6rhjxvhWCaHv3Gf6FvT6PhWTs9tUIPO
+	 x0CAABiSemU9a+9BaoMuUrsVgQKNOtJXXLFkd1vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anatolij Gustschin <agust@denx.de>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 509/518] net: dsa: lan9303: ensure chip reset and wait for READY status
-Date: Tue, 15 Oct 2024 14:46:53 +0200
-Message-ID: <20241015123936.635298707@linuxfoundation.org>
+	Yonatan Maman <Ymaman@Nvidia.com>,
+	Gal Shalom <GalShalom@Nvidia.com>,
+	Ben Skeggs <bskeggs@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 5.10 510/518] nouveau/dmem: Fix vulnerability in migrate_to_ram upon copy error
+Date: Tue, 15 Oct 2024 14:46:54 +0200
+Message-ID: <20241015123936.673992078@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,83 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anatolij Gustschin <agust@denx.de>
+From: Yonatan Maman <Ymaman@Nvidia.com>
 
-commit 5c14e51d2d7df49fe0d4e64a12c58d2542f452ff upstream.
+commit 835745a377a4519decd1a36d6b926e369b3033e2 upstream.
 
-Accessing device registers seems to be not reliable, the chip
-revision is sometimes detected wrongly (0 instead of expected 1).
+The `nouveau_dmem_copy_one` function ensures that the copy push command is
+sent to the device firmware but does not track whether it was executed
+successfully.
 
-Ensure that the chip reset is performed via reset GPIO and then
-wait for 'Device Ready' status in HW_CFG register before doing
-any register initializations.
+In the case of a copy error (e.g., firmware or hardware failure), the
+copy push command will be sent via the firmware channel, and
+`nouveau_dmem_copy_one` will likely report success, leading to the
+`migrate_to_ram` function returning a dirty HIGH_USER page to the user.
 
+This can result in a security vulnerability, as a HIGH_USER page that may
+contain sensitive or corrupted data could be returned to the user.
+
+To prevent this vulnerability, we allocate a zero page. Thus, in case of
+an error, a non-dirty (zero) page will be returned to the user.
+
+Fixes: 5be73b690875 ("drm/nouveau/dmem: device memory helpers for SVM")
+Signed-off-by: Yonatan Maman <Ymaman@Nvidia.com>
+Co-developed-by: Gal Shalom <GalShalom@Nvidia.com>
+Signed-off-by: Gal Shalom <GalShalom@Nvidia.com>
+Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
 Cc: stable@vger.kernel.org
-Fixes: a1292595e006 ("net: dsa: add new DSA switch driver for the SMSC-LAN9303")
-Signed-off-by: Anatolij Gustschin <agust@denx.de>
-[alex: reworked using read_poll_timeout()]
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20241004113655.3436296-1-alexander.sverdlin@siemens.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241008115943.990286-3-ymaman@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/lan9303-core.c |   29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_dmem.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/dsa/lan9303-core.c
-+++ b/drivers/net/dsa/lan9303-core.c
-@@ -6,6 +6,7 @@
- #include <linux/module.h>
- #include <linux/gpio/consumer.h>
- #include <linux/regmap.h>
-+#include <linux/iopoll.h>
- #include <linux/mutex.h>
- #include <linux/mii.h>
- #include <linux/phy.h>
-@@ -819,6 +820,8 @@ static void lan9303_handle_reset(struct
- 	if (!chip->reset_gpio)
- 		return;
+--- a/drivers/gpu/drm/nouveau/nouveau_dmem.c
++++ b/drivers/gpu/drm/nouveau/nouveau_dmem.c
+@@ -149,7 +149,7 @@ static vm_fault_t nouveau_dmem_fault_cop
+ 	if (!spage || !(args->src[0] & MIGRATE_PFN_MIGRATE))
+ 		return 0;
  
-+	gpiod_set_value_cansleep(chip->reset_gpio, 1);
-+
- 	if (chip->reset_duration != 0)
- 		msleep(chip->reset_duration);
- 
-@@ -844,8 +847,34 @@ static int lan9303_disable_processing(st
- static int lan9303_check_device(struct lan9303 *chip)
- {
- 	int ret;
-+	int err;
- 	u32 reg;
- 
-+	/* In I2C-managed configurations this polling loop will clash with
-+	 * switch's reading of EEPROM right after reset and this behaviour is
-+	 * not configurable. While lan9303_read() already has quite long retry
-+	 * timeout, seems not all cases are being detected as arbitration error.
-+	 *
-+	 * According to datasheet, EEPROM loader has 30ms timeout (in case of
-+	 * missing EEPROM).
-+	 *
-+	 * Loading of the largest supported EEPROM is expected to take at least
-+	 * 5.9s.
-+	 */
-+	err = read_poll_timeout(lan9303_read, ret,
-+				!ret && reg & LAN9303_HW_CFG_READY,
-+				20000, 6000000, false,
-+				chip->regmap, LAN9303_HW_CFG, &reg);
-+	if (ret) {
-+		dev_err(chip->dev, "failed to read HW_CFG reg: %pe\n",
-+			ERR_PTR(ret));
-+		return ret;
-+	}
-+	if (err) {
-+		dev_err(chip->dev, "HW_CFG not ready: 0x%08x\n", reg);
-+		return err;
-+	}
-+
- 	ret = lan9303_read(chip->regmap, LAN9303_CHIP_REV, &reg);
- 	if (ret) {
- 		dev_err(chip->dev, "failed to read chip revision register: %d\n",
+-	dpage = alloc_page_vma(GFP_HIGHUSER, vmf->vma, vmf->address);
++	dpage = alloc_page_vma(GFP_HIGHUSER | __GFP_ZERO, vmf->vma, vmf->address);
+ 	if (!dpage)
+ 		return VM_FAULT_SIGBUS;
+ 	lock_page(dpage);
 
 
