@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD891C07F0;
-	Tue, 15 Oct 2024 12:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E970C1C07F8;
+	Tue, 15 Oct 2024 12:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996865; cv=none; b=KEyvQohV+nqW++jfy0t+lkIKTPlLsLv9HyVZ6C8GDhSeykfe1tnp2LUsBYea+291pxr3ci/STlMg2Uqzt1zhUlHcszCv3M0i6GoEWJ7pjPoWUKmtSuGYF/l2Tulw0W5/clHs+WwPrfLnYb78lqOZfGz2yq+1PGyOIROoioS67TQ=
+	t=1728996869; cv=none; b=hV8oP56s4/2Uu6GC8e6Sn8YP5rlmknw/aT3L4MarNWQD4WAsHFt6YqM/Nk9BSEOxc/SZmmz0uPd1zZ82e/Z7CpneXcbLgnpereSK/FiuCVuAIfNtC/d2KJdVR4Ia1GqQoUHQ/Uhfq9sgKNUYpVLGDgW5uyg48LPnS2Z3MQe66Y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996865; c=relaxed/simple;
-	bh=NuXCWjD+svSxOGb7MXNqa7ub96L6zvAqhjzb6TDMN8w=;
+	s=arc-20240116; t=1728996869; c=relaxed/simple;
+	bh=QmakVhObr0dZZhF7cE/CSQS0oNEtSXtuUzdS5gvzj8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=az8/WLisk3IxgynSvGaU6mMDvkaYns1LrV12KBMhRdCxASO2JDJEBOgnO0SKY+DZVwkazCbLTBNqeg4NLU2VxQD+hknR9Kt/iU/UxhmohF/wI729RN+3Z+214u/9Jelu6BbNtqwhh03m+JSTH8F1mGzzRISSrBpaIawXHyyegYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtKTYtdb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s7Caab5FC2J5q5W8cR2920Uo9pqbpYoulzacUE6/j1AWqsuLvixg0/lVKKbiUFfGHr/T2S2PWhIj6zLTmmRDK4fU61sJtn5Wne2f++iQFDS7+L5XLm4mut2v6WJnqYlvI3CRd2/V+pN6x8v+Vo6qANGP/Ur7WFoIAD2cAl3xVUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e15yUpgh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtKTYtdb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7B7CC4CEC6;
-	Tue, 15 Oct 2024 12:54:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e15yUpgh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32708C4CED0;
+	Tue, 15 Oct 2024 12:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728996865;
-	bh=NuXCWjD+svSxOGb7MXNqa7ub96L6zvAqhjzb6TDMN8w=;
+	s=korg; t=1728996868;
+	bh=QmakVhObr0dZZhF7cE/CSQS0oNEtSXtuUzdS5gvzj8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rtKTYtdbfCZd34Cp4XWY7f9q3l0IuyP4G3KU/r96xa2yJQI/U929Jfqsh8jxj+snX
-	 wSBOrCBYUnvT8XlfnIiL5DCgXGZthH/vFOWlqraglFBeVpJiHGQKNWVIUz5t7RGs7N
-	 9O1RA+0ArSfI1coRpwmjo7wnY+WVBoL7Z5rmYZko=
+	b=e15yUpghLR+YF+VelVNwBNM+9+USfnBSbqPLJGT2WdlEPnW9BpdwIkxI8aUbWGBrY
+	 Ur6mPmBEVPV7VSIuN0FJqAH6y/hetX6Ot116UPQkhWkrpBiSe6Js8CiDQCH9VH5Hfp
+	 dDT7s3SQqOG3eZBStnZM+F/EC0UT8YaZj6DBmxgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/518] net/mlx5e: Add missing link modes to ptys2ethtool_map
-Date: Tue, 15 Oct 2024 14:38:45 +0200
-Message-ID: <20241015123917.815441318@linuxfoundation.org>
+Subject: [PATCH 5.10 022/518] fou: fix initialization of grc
+Date: Tue, 15 Oct 2024 14:38:46 +0200
+Message-ID: <20241015123917.855795529@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,38 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-[ Upstream commit 7617d62cba4a8a3ff3ed3fda0171c43f135c142e ]
+[ Upstream commit 4c8002277167125078e6b9b90137bdf443ebaa08 ]
 
-Add MLX5E_1000BASE_T and MLX5E_100BASE_TX to the legacy
-modes in ptys2legacy_ethtool_table, since they were missing.
+The grc must be initialize first. There can be a condition where if
+fou is NULL, goto out will be executed and grc would be used
+uninitialized.
 
-Fixes: 665bc53969d7 ("net/mlx5e: Use new ethtool get/set link ksettings API")
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 7e4196935069 ("fou: Fix null-ptr-deref in GRO.")
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20240906102839.202798-1-usama.anjum@collabora.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/fou.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index 1fdb42899a9f..1e61f31a689a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -127,6 +127,10 @@ void mlx5e_build_ptys2ethtool_map(void)
- 				       ETHTOOL_LINK_MODE_100000baseKR4_Full_BIT);
- 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_100GBASE_LR4, legacy,
- 				       ETHTOOL_LINK_MODE_100000baseLR4_ER4_Full_BIT);
-+	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_100BASE_TX, legacy,
-+				       ETHTOOL_LINK_MODE_100baseT_Full_BIT);
-+	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_1000BASE_T, legacy,
-+				       ETHTOOL_LINK_MODE_1000baseT_Full_BIT);
- 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_10GBASE_T, legacy,
- 				       ETHTOOL_LINK_MODE_10000baseT_Full_BIT);
- 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_25GBASE_CR, legacy,
+diff --git a/net/ipv4/fou.c b/net/ipv4/fou.c
+index 135da756dd5a..1d67df4d8ed6 100644
+--- a/net/ipv4/fou.c
++++ b/net/ipv4/fou.c
+@@ -334,11 +334,11 @@ static struct sk_buff *gue_gro_receive(struct sock *sk,
+ 	struct gro_remcsum grc;
+ 	u8 proto;
+ 
++	skb_gro_remcsum_init(&grc);
++
+ 	if (!fou)
+ 		goto out;
+ 
+-	skb_gro_remcsum_init(&grc);
+-
+ 	off = skb_gro_offset(skb);
+ 	len = off + sizeof(*guehdr);
+ 
 -- 
 2.43.0
 
