@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC261C07DD;
-	Tue, 15 Oct 2024 12:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164FE1C07DC;
+	Tue, 15 Oct 2024 12:55:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996950; cv=none; b=rTs/NhJDs7/KNNd1obFJ8s0/DEcEHiZxNXLnQQfsuN0O3wuEoKEv31PZT1afykiobU+dz+DTLPJRhUFfdQxNan9ttDsjPbOneJcZvsvoqtzz2D7K9Ubml1gQpIqaRwieWFweQAF3bRh0D4bHPmUnAmHZWqlZwNdgh2K5h4WbKI4=
+	t=1728996954; cv=none; b=jaL1ZFadHgvDMgHBP8nrpzoK87URdFx84PuwsIGLDqnnHO5RQYnBm84rwZCu1kohXSCqZ3e3rANweAlreJ9nZWGW8ALXX1WU41bwN0ZsFYQmOBN6Z3G/H0TO8ppEhppSw2ZNYd9BYRWlZvmMNF7EsYbgmPFZqrD3J+4VlGq9XAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996950; c=relaxed/simple;
-	bh=RNJhTlxW8NvWGpNTKsu0NKr75zZ2pMeCGhE3398aLEw=;
+	s=arc-20240116; t=1728996954; c=relaxed/simple;
+	bh=4ndoeBP3Ko4HtA3Axm8X6VCGEcgwHz2SecE6TCJHQZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GEG6f33UWOs397TBPy2IrKq0txA5ILFmtGDFjS8AqQ5mJSJR7t5MsKJqSYCr0aSAYe3JKwNAMYLOBoM/UOdZ4UTpHfGirlPQ6CePzSCi3lyhN2YsUYgkean6epaOJIKj5ZuHZmGIVkIXvFQ7N8Nw6NASiQ/5XbZoY1iqki25vWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEHx59If; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iHl4ZclKY+Y/XKI9u7BAhYhP58fQ1y/5PzE65YG6JfvV1roEs9Es6xfh/2xr0gGUVhPwI3jCwAb5q/AeluflVFP2BZxqSTkIRHh7zr6nn71B9izbnpyLQtxS8qgpDHEjvW9TTvOcWNAMyB1gYacqghnd/WQye6TcQAX+HnsLxiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtWfv+cl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEHx59If"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B0AC4CEC6;
-	Tue, 15 Oct 2024 12:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtWfv+cl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA64C4CEC6;
+	Tue, 15 Oct 2024 12:55:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728996950;
-	bh=RNJhTlxW8NvWGpNTKsu0NKr75zZ2pMeCGhE3398aLEw=;
+	s=korg; t=1728996954;
+	bh=4ndoeBP3Ko4HtA3Axm8X6VCGEcgwHz2SecE6TCJHQZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oEHx59IfPPNWS63bQk5uN2jEn2UOfIgNLTl28gc5hsDXIBeYaeCorjkedr4SETPBn
-	 eStYDWehix8p5i/mlZ4SOvSe3+shWBRPxbD7eMxnQnqt/OSCPko6jV8JIQWiHT/nmd
-	 sf9IitQPqAgANnMI0jdc4k0l3Lgra35/5KAFc2vs=
+	b=gtWfv+cl2/foDq3pMfsEJ45LZCBcHxzMeLSAPP2Djr+l49K1uz6RZCtKDv2J5fRZo
+	 Qp7ENuwGOwQlre3T0T0jP9kemcaVaJ0/onoK82lmg2r9jVEZM3kx43AI8I0oAOAfiR
+	 D4DrbQFP/BEJ9dY7LwrEVUHMNYg2qsHvBTbH8N2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hagar Hemdan <hagarhem@amazon.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
-Subject: [PATCH 5.10 047/518] gpio: prevent potential speculation leaks in gpio_device_get_desc()
-Date: Tue, 15 Oct 2024 14:39:11 +0200
-Message-ID: <20241015123918.826484633@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 030/518] ALSA: hda/realtek - Fixed ALC256 headphone no sound
+Date: Tue, 15 Oct 2024 14:38:54 +0200
+Message-ID: <20241015123918.168791781@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,50 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hagar Hemdan <hagarhem@amazon.com>
+From: Kailang Yang <kailang@realtek.com>
 
-commit d795848ecce24a75dfd46481aee066ae6fe39775 upstream.
+[ Upstream commit 9b82ff1362f50914c8292902e07be98a9f59d33d ]
 
-Userspace may trigger a speculative read of an address outside the gpio
-descriptor array.
-Users can do that by calling gpio_ioctl() with an offset out of range.
-Offset is copied from user and then used as an array index to get
-the gpio descriptor without sanitization in gpio_device_get_desc().
+Dell platform, plug headphone or headset, it had a chance to get no
+sound from headphone.
+Replace depop procedure will solve this issue.
 
-This change ensures that the offset is sanitized by using
-array_index_nospec() to mitigate any possibility of speculative
-information leaks.
-
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
-
-Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
-Link: https://lore.kernel.org/r/20240523085332.1801-1-hagarhem@amazon.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/bb8e2de30d294dc287944efa0667685a@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 50 ++++++++++++++++++++++++++---------
+ 1 file changed, 37 insertions(+), 13 deletions(-)
 
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -4,6 +4,7 @@
- #include <linux/module.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
-+#include <linux/nospec.h>
- #include <linux/spinlock.h>
- #include <linux/list.h>
- #include <linux/device.h>
-@@ -143,7 +144,7 @@ struct gpio_desc *gpiochip_get_desc(stru
- 	if (hwnum >= gdev->ngpio)
- 		return ERR_PTR(-EINVAL);
- 
--	return &gdev->descs[hwnum];
-+	return &gdev->descs[array_index_nospec(hwnum, gdev->ngpio)];
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index c104a33b3e8fa..a952888b5b8af 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -4846,6 +4846,30 @@ static void alc269_fixup_hp_line1_mic1_led(struct hda_codec *codec,
+ 	}
  }
- EXPORT_SYMBOL_GPL(gpiochip_get_desc);
  
++static void alc_hp_mute_disable(struct hda_codec *codec, unsigned int delay)
++{
++	if (delay <= 0)
++		delay = 75;
++	snd_hda_codec_write(codec, 0x21, 0,
++		    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
++	msleep(delay);
++	snd_hda_codec_write(codec, 0x21, 0,
++		    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
++	msleep(delay);
++}
++
++static void alc_hp_enable_unmute(struct hda_codec *codec, unsigned int delay)
++{
++	if (delay <= 0)
++		delay = 75;
++	snd_hda_codec_write(codec, 0x21, 0,
++		    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
++	msleep(delay);
++	snd_hda_codec_write(codec, 0x21, 0,
++		    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
++	msleep(delay);
++}
++
+ static const struct coef_fw alc225_pre_hsmode[] = {
+ 	UPDATE_COEF(0x4a, 1<<8, 0),
+ 	UPDATE_COEFEX(0x57, 0x05, 1<<14, 0),
+@@ -4947,6 +4971,7 @@ static void alc_headset_mode_unplugged(struct hda_codec *codec)
+ 	case 0x10ec0236:
+ 	case 0x10ec0256:
+ 	case 0x19e58326:
++		alc_hp_mute_disable(codec, 75);
+ 		alc_process_coef_fw(codec, coef0256);
+ 		break;
+ 	case 0x10ec0234:
+@@ -5218,6 +5243,7 @@ static void alc_headset_mode_default(struct hda_codec *codec)
+ 		alc_write_coef_idx(codec, 0x45, 0xc089);
+ 		msleep(50);
+ 		alc_process_coef_fw(codec, coef0256);
++		alc_hp_enable_unmute(codec, 75);
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
+@@ -5315,6 +5341,7 @@ static void alc_headset_mode_ctia(struct hda_codec *codec)
+ 	case 0x10ec0256:
+ 	case 0x19e58326:
+ 		alc_process_coef_fw(codec, coef0256);
++		alc_hp_enable_unmute(codec, 75);
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
+@@ -5430,6 +5457,7 @@ static void alc_headset_mode_omtp(struct hda_codec *codec)
+ 	case 0x10ec0256:
+ 	case 0x19e58326:
+ 		alc_process_coef_fw(codec, coef0256);
++		alc_hp_enable_unmute(codec, 75);
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
+@@ -5535,25 +5563,21 @@ static void alc_determine_headset_type(struct hda_codec *codec)
+ 		alc_write_coef_idx(codec, 0x06, 0x6104);
+ 		alc_write_coefex_idx(codec, 0x57, 0x3, 0x09a3);
+ 
+-		snd_hda_codec_write(codec, 0x21, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+-		msleep(80);
+-		snd_hda_codec_write(codec, 0x21, 0,
+-			    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
+-
+ 		alc_process_coef_fw(codec, coef0255);
+ 		msleep(300);
+ 		val = alc_read_coef_idx(codec, 0x46);
+ 		is_ctia = (val & 0x0070) == 0x0070;
+-
++		if (!is_ctia) {
++			alc_write_coef_idx(codec, 0x45, 0xe089);
++			msleep(100);
++			val = alc_read_coef_idx(codec, 0x46);
++			if ((val & 0x0070) == 0x0070)
++				is_ctia = false;
++			else
++				is_ctia = true;
++		}
+ 		alc_write_coefex_idx(codec, 0x57, 0x3, 0x0da3);
+ 		alc_update_coefex_idx(codec, 0x57, 0x5, 1<<14, 0);
+-
+-		snd_hda_codec_write(codec, 0x21, 0,
+-			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
+-		msleep(80);
+-		snd_hda_codec_write(codec, 0x21, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
+-- 
+2.43.0
+
 
 
