@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEDA41C57B1;
-	Tue, 15 Oct 2024 12:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9031C57B1;
+	Tue, 15 Oct 2024 12:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993660; cv=none; b=bHTavQ0Ik5VAquT2Ea6gTovDD+K1qyuweew/ay4Db37pdX1epFYbTnAvgFJr7iiR4+vT/g1BSbjn35M7C4avsqn6vcHDuVfKhm+P7M2/sbyNTfF0pdbRcbnUUnvMxunoqaJos/Do+toIU0DrYn9d9CjFSBe32bhNLxl1E/b/+dk=
+	t=1728993664; cv=none; b=CkAufm1zjE/FOj82rz2vA4ojr4610O48WRO6z+3rObe4r5yjH7CfD80SOwVSK5RbQu0xpKVgs3+MohCCJ2U7ZBIM8ypmSxATJjWi4+NEDXowiaHUVrDgv56uLfDPj6PRYC5rx+9x7fbSBwF4pDTagn5fj3TOII/aiorqFk4O3DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993660; c=relaxed/simple;
-	bh=Eekeen3/SdWX7YhhlxR+EV0i44eEX+eepWYf55wcW4Y=;
+	s=arc-20240116; t=1728993664; c=relaxed/simple;
+	bh=PTFqHDwZhSA1FZwNcOzaTKL92nVeyNvtAsRPlO/VpWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Emj/YyGfWWZLrAXGyEf3ljSytLn0ol/9OriuJAyicLisnqm9GBJ7MTMIdgaEXHWkT08ocktiiHjUpqxrLTWr6lURaEORG5cwveJmd9Y6i3MFLaqpiNLXC2J+AbIbU/u5fKuhjNvXWwnDjTKWZWX3RWtw8dIlueC7en3v8kKXPTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jx4IFVYL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=in/ONOXOkQ3hko2KbuPahQEm9pny7inqP7k6pfs8reZ/QCQrlMpXDFwUl6NHJzjTE7O0dJtdB599WZ3k5YhHq+aKAqvDd7yVGvLg3BTJMlrCVP0ZN1rnjd9HsDsmj/p25dIxgUf6e8JygXnLkLqSZLJQE5k44qipWqusqMY/o+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+ePt+mf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jx4IFVYL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D527EC4CEC6;
-	Tue, 15 Oct 2024 12:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+ePt+mf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58011C4CEC6;
+	Tue, 15 Oct 2024 12:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993660;
-	bh=Eekeen3/SdWX7YhhlxR+EV0i44eEX+eepWYf55wcW4Y=;
+	s=korg; t=1728993663;
+	bh=PTFqHDwZhSA1FZwNcOzaTKL92nVeyNvtAsRPlO/VpWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jx4IFVYLzb5t8vWoKmmXfiJrR2yP2UA7J+LoI4zjtKQ1Ngs0l6mT9u4rTzDdDZcUT
-	 jLHM8G2pEWtwDaTyGtjEssfJLWV3qk+XFnng/FQ/b0YHzRAG6PbYRc9ynca3ZWdSmD
-	 IB9yhnwoJ14xc89tMzx7qRKuGeCFVPjbxAT0/1BI=
+	b=o+ePt+mfvwcnQyS9kKsuKWUb6vVGfQmOoiqisgpQa6o9KFnRiDQMF5y5YZABvvCl+
+	 ZyFoTkenmYp5QJOljbK9fsDqdUH72zD1Fzbu1bJvXRJCy+r9MIn37QQIY86nJ6KsUg
+	 eJSzoYr4yQ7xMm/ENGoUIiBN77/d/YIX5Qq4v9WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@infradead.org>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Igor Pylypiv <ipylypiv@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 477/691] blk-integrity: register sysfs attributes on struct device
-Date: Tue, 15 Oct 2024 13:27:05 +0200
-Message-ID: <20241015112459.274975225@linuxfoundation.org>
+Subject: [PATCH 5.15 451/691] ata: sata_sil: Rename sil_blacklist to sil_quirks
+Date: Tue, 15 Oct 2024 13:26:39 +0200
+Message-ID: <20241015112458.247864244@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -49,211 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-Upstream commit ff53cd52d9bdbf4074d2bbe9b591729997780bd3.
+[ Upstream commit 93b0f9e11ce511353c65b7f924cf5f95bd9c3aba ]
 
-The "integrity" kobject only acted as a holder for static sysfs entries.
-It also was embedded into struct gendisk without managing it, violating
-assumptions of the driver core.
+Rename the array sil_blacklist to sil_quirks as this name is more
+neutral and is also consistent with how this driver define quirks with
+the SIL_QUIRK_XXX flags.
 
-Instead register the sysfs entries directly onto the struct device.
-
-Also drop the now unused member integrity_kobj from struct gendisk.
-
-Suggested-by: Christoph Hellwig <hch@infradead.org>
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Link: https://lore.kernel.org/r/20230309-kobj_release-gendisk_integrity-v3-3-ceccb4493c46@weissschuh.net
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[cascardo: conflict because of constification of integrity_ktype]
-[cascardo: struct gendisk is defined at include/linux/genhd.h]
-[cascardo: there is no blk_trace_attr_group]
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-integrity.c | 55 +++----------------------------------------
- block/blk.h           | 10 +-------
- block/genhd.c         | 12 ++++------
- include/linux/genhd.h |  3 ---
- 4 files changed, 8 insertions(+), 72 deletions(-)
+ drivers/ata/sata_sil.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/block/blk-integrity.c b/block/blk-integrity.c
-index 8868b1e01d58b..fbbb38cc9e8aa 100644
---- a/block/blk-integrity.c
-+++ b/block/blk-integrity.c
-@@ -212,31 +212,6 @@ bool blk_integrity_merge_bio(struct request_queue *q, struct request *req,
- 	return true;
- }
+diff --git a/drivers/ata/sata_sil.c b/drivers/ata/sata_sil.c
+index 75321f1ceba52..fc438c4518fb7 100644
+--- a/drivers/ata/sata_sil.c
++++ b/drivers/ata/sata_sil.c
+@@ -128,7 +128,7 @@ static const struct pci_device_id sil_pci_tbl[] = {
+ static const struct sil_drivelist {
+ 	const char *product;
+ 	unsigned int quirk;
+-} sil_blacklist [] = {
++} sil_quirks[] = {
+ 	{ "ST320012AS",		SIL_QUIRK_MOD15WRITE },
+ 	{ "ST330013AS",		SIL_QUIRK_MOD15WRITE },
+ 	{ "ST340017AS",		SIL_QUIRK_MOD15WRITE },
+@@ -601,8 +601,8 @@ static void sil_thaw(struct ata_port *ap)
+  *	list, and apply the fixups to only the specific
+  *	devices/hosts/firmwares that need it.
+  *
+- *	20040111 - Seagate drives affected by the Mod15Write bug are blacklisted
+- *	The Maxtor quirk is in the blacklist, but I'm keeping the original
++ *	20040111 - Seagate drives affected by the Mod15Write bug are quirked
++ *	The Maxtor quirk is in sil_quirks, but I'm keeping the original
+  *	pessimistic fix for the following reasons...
+  *	- There seems to be less info on it, only one device gleaned off the
+  *	Windows	driver, maybe only one is affected.  More info would be greatly
+@@ -621,9 +621,9 @@ static void sil_dev_config(struct ata_device *dev)
  
--static ssize_t integrity_attr_show(struct kobject *kobj, struct attribute *attr,
--				   char *page)
--{
--	struct gendisk *disk = container_of(kobj, struct gendisk, integrity_kobj);
--	struct device *dev = disk_to_dev(disk);
--	struct device_attribute *dev_attr =
--		container_of(attr, struct device_attribute, attr);
--
--	return dev_attr->show(dev, dev_attr, page);
--}
--
--static ssize_t integrity_attr_store(struct kobject *kobj,
--				    struct attribute *attr, const char *page,
--				    size_t count)
--{
--	struct gendisk *disk = container_of(kobj, struct gendisk, integrity_kobj);
--	struct device *dev = disk_to_dev(disk);
--	struct device_attribute *dev_attr =
--		container_of(attr, struct device_attribute, attr);
--
--	if (!dev_attr->store)
--		return 0;
--	return dev_attr->store(dev, dev_attr, page, count);
--}
--
- static inline struct blk_integrity *dev_to_bi(struct device *dev)
- {
- 	return &dev_to_disk(dev)->queue->integrity;
-@@ -345,16 +320,10 @@ static struct attribute *integrity_attrs[] = {
- 	&dev_attr_device_is_integrity_capable.attr,
- 	NULL
- };
--ATTRIBUTE_GROUPS(integrity);
+ 	ata_id_c_string(dev->id, model_num, ATA_ID_PROD, sizeof(model_num));
  
--static const struct sysfs_ops integrity_ops = {
--	.show	= &integrity_attr_show,
--	.store	= &integrity_attr_store,
--};
--
--static struct kobj_type integrity_ktype = {
--	.default_groups = integrity_groups,
--	.sysfs_ops	= &integrity_ops,
-+const struct attribute_group blk_integrity_attr_group = {
-+	.name = "integrity",
-+	.attrs = integrity_attrs,
- };
+-	for (n = 0; sil_blacklist[n].product; n++)
+-		if (!strcmp(sil_blacklist[n].product, model_num)) {
+-			quirks = sil_blacklist[n].quirk;
++	for (n = 0; sil_quirks[n].product; n++)
++		if (!strcmp(sil_quirks[n].product, model_num)) {
++			quirks = sil_quirks[n].quirk;
+ 			break;
+ 		}
  
- static blk_status_t blk_integrity_nop_fn(struct blk_integrity_iter *iter)
-@@ -431,21 +400,3 @@ void blk_integrity_unregister(struct gendisk *disk)
- 	memset(bi, 0, sizeof(*bi));
- }
- EXPORT_SYMBOL(blk_integrity_unregister);
--
--int blk_integrity_add(struct gendisk *disk)
--{
--	int ret;
--
--	ret = kobject_init_and_add(&disk->integrity_kobj, &integrity_ktype,
--				   &disk_to_dev(disk)->kobj, "%s", "integrity");
--	if (!ret)
--		kobject_uevent(&disk->integrity_kobj, KOBJ_ADD);
--	return ret;
--}
--
--void blk_integrity_del(struct gendisk *disk)
--{
--	kobject_uevent(&disk->integrity_kobj, KOBJ_REMOVE);
--	kobject_del(&disk->integrity_kobj);
--	kobject_put(&disk->integrity_kobj);
--}
-diff --git a/block/blk.h b/block/blk.h
-index aab72194d2266..e90a5e3485128 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -130,8 +130,7 @@ static inline bool integrity_req_gap_front_merge(struct request *req,
- 				bip_next->bip_vec[0].bv_offset);
- }
- 
--int blk_integrity_add(struct gendisk *disk);
--void blk_integrity_del(struct gendisk *);
-+extern const struct attribute_group blk_integrity_attr_group;
- #else /* CONFIG_BLK_DEV_INTEGRITY */
- static inline bool blk_integrity_merge_rq(struct request_queue *rq,
- 		struct request *r1, struct request *r2)
-@@ -164,13 +163,6 @@ static inline bool bio_integrity_endio(struct bio *bio)
- static inline void bio_integrity_free(struct bio *bio)
- {
- }
--static inline int blk_integrity_add(struct gendisk *disk)
--{
--	return 0;
--}
--static inline void blk_integrity_del(struct gendisk *disk)
--{
--}
- #endif /* CONFIG_BLK_DEV_INTEGRITY */
- 
- unsigned long blk_rq_timeout(unsigned long timeout);
-diff --git a/block/genhd.c b/block/genhd.c
-index 4d28f1d5f9b0e..88d1a6385a242 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -467,15 +467,11 @@ int device_add_disk(struct device *parent, struct gendisk *disk,
- 	 */
- 	pm_runtime_set_memalloc_noio(ddev, true);
- 
--	ret = blk_integrity_add(disk);
--	if (ret)
--		goto out_del_block_link;
--
- 	disk->part0->bd_holder_dir =
- 		kobject_create_and_add("holders", &ddev->kobj);
- 	if (!disk->part0->bd_holder_dir) {
- 		ret = -ENOMEM;
--		goto out_del_integrity;
-+		goto out_del_block_link;
- 	}
- 	disk->slave_dir = kobject_create_and_add("slaves", &ddev->kobj);
- 	if (!disk->slave_dir) {
-@@ -535,8 +531,6 @@ int device_add_disk(struct device *parent, struct gendisk *disk,
- 	disk->slave_dir = NULL;
- out_put_holder_dir:
- 	kobject_put(disk->part0->bd_holder_dir);
--out_del_integrity:
--	blk_integrity_del(disk);
- out_del_block_link:
- 	if (!sysfs_deprecated)
- 		sysfs_remove_link(block_depr, dev_name(ddev));
-@@ -592,7 +586,6 @@ void del_gendisk(struct gendisk *disk)
- 	if (WARN_ON_ONCE(!disk_live(disk) && !(disk->flags & GENHD_FL_HIDDEN)))
- 		return;
- 
--	blk_integrity_del(disk);
- 	disk_del_events(disk);
- 
- 	mutex_lock(&disk->open_mutex);
-@@ -1084,6 +1077,9 @@ static struct attribute_group disk_attr_group = {
- 
- static const struct attribute_group *disk_attr_groups[] = {
- 	&disk_attr_group,
-+#ifdef CONFIG_BLK_DEV_INTEGRITY
-+	&blk_integrity_attr_group,
-+#endif
- 	NULL
- };
- 
-diff --git a/include/linux/genhd.h b/include/linux/genhd.h
-index 690b7f7996d15..3f49a3a30e9bc 100644
---- a/include/linux/genhd.h
-+++ b/include/linux/genhd.h
-@@ -144,9 +144,6 @@ struct gendisk {
- 	struct timer_rand_state *random;
- 	atomic_t sync_io;		/* RAID */
- 	struct disk_events *ev;
--#ifdef  CONFIG_BLK_DEV_INTEGRITY
--	struct kobject integrity_kobj;
--#endif	/* CONFIG_BLK_DEV_INTEGRITY */
- #if IS_ENABLED(CONFIG_CDROM)
- 	struct cdrom_device_info *cdi;
- #endif
 -- 
 2.43.0
 
