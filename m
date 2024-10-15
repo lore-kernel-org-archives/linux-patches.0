@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E791DD0D4;
-	Tue, 15 Oct 2024 13:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D841DD0F6;
+	Tue, 15 Oct 2024 13:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998092; cv=none; b=PPKw5V2NYvgasqnV5eUeRSNE/auagUzMIlfT5SZmmqWiydLgEv1kKorG56QrlcnDK1xnIgwZoITBpb6XbFV/xRjvoqKIKSpJLASVYfAwA86LZEhVVr9fSOukSPaOjBpsJrgbdaYixqnrpUgb8TrqdLWWEWdFRWSwwyvXeHHbONA=
+	t=1728998095; cv=none; b=Qyq2tMPFf3z0qai76C4Qrrb+Lew0uG11Z2GqyCFWPBDbh7N4w3nfz7wGmnZDEOuNSney1caMq+X204NXC+1gTTF0TVPQ+BFjSnPMmdGS+jLnLgLhvaddcB4GiLOFfzXtTh/ee2yUtTU79cHc3uj9Gl4qS2VM81UleTy+OUXC1U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998092; c=relaxed/simple;
-	bh=I6RFI1bzSjCwoO+mlyS3y50QMnhFY8V6g7lZK9lvqvY=;
+	s=arc-20240116; t=1728998095; c=relaxed/simple;
+	bh=HmZkGp9qmhAx+MhTBlJ3OHaxoTMPsNMiR7AIyeHrl4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tGNIFExI8bsBHGnUoFoozg2PrG0KmMhXTzQx555QLqbnTT82WvtmOQuPJiRP6goQjPDTl1PXqf+AZHc1QuvQf9WdYswCRGLyo1+J+7C8n/ssG4UUZLUXQ4uy79ZfPMpYdGVeOLp5FWpEYzPjBXyKHl0jqJO14/wb8ly2lHgn88E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w6CcAZFs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RkZvIRz1jbn67ceS8VlW6SIL9isd6ajS+akkRntk5rIuiLdmL5Ftm5GObJgFwLNKD4n+Ayb8/15X5D2OyjRHNS40vpG/YKiTYfH2DqducK32/Y7qZ8DijnF2eTPhjXrnlmaDJTSSVI3QW21X4yLQS+Hz1MZxAOmzor62KotuwNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oG2IqydB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w6CcAZFs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF91C4CED2;
-	Tue, 15 Oct 2024 13:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oG2IqydB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8ACC4CEC6;
+	Tue, 15 Oct 2024 13:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998091;
-	bh=I6RFI1bzSjCwoO+mlyS3y50QMnhFY8V6g7lZK9lvqvY=;
+	s=korg; t=1728998095;
+	bh=HmZkGp9qmhAx+MhTBlJ3OHaxoTMPsNMiR7AIyeHrl4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w6CcAZFsDlNRquRdIqmohdZYBxKAzyRVsYBsVABeiVth463/9GvnnViv1POhUxPEP
-	 RVMt5K2QjUTZU+JI59ybrd9SWaxAUQ3Lp8FbmkkIR3xG0wwnrsAVxmwPhaKpnHVVG3
-	 rAKB7A/PY/EvC2AW9LYkac4HHCfYuEwf5r/ga8yE=
+	b=oG2IqydB/MDNn6+LI5ke3gihkzr8spmT1ypduRWSv5NsyialW99R53qa/+MBNq4+w
+	 TfFxSt4YhDHBzj2/3yiSCDttRCQ/OG+su7kcpYV830cHaWlE97iS7iYhYIW1j3wHDe
+	 viMptwfR5V5FVFCGmcAURNLspYZMiVX/1Fl7wm1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com,
 	Edward Adam Davis <eadavis@qq.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+3c010e21296f33a5dc16@syzkaller.appspotmail.com
-Subject: [PATCH 5.10 335/518] jfs: Fix uaf in dbFreeBits
-Date: Tue, 15 Oct 2024 14:43:59 +0200
-Message-ID: <20241015123929.902915809@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.10 370/518] ext4: no need to continue when the number of entries is 1
+Date: Tue, 15 Oct 2024 14:44:34 +0200
+Message-ID: <20241015123931.254316333@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -54,115 +54,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit d6c1b3599b2feb5c7291f5ac3a36e5fa7cedb234 ]
+commit 1a00a393d6a7fb1e745a41edd09019bd6a0ad64c upstream.
 
-[syzbot reported]
-==================================================================
-BUG: KASAN: slab-use-after-free in __mutex_lock_common kernel/locking/mutex.c:587 [inline]
-BUG: KASAN: slab-use-after-free in __mutex_lock+0xfe/0xd70 kernel/locking/mutex.c:752
-Read of size 8 at addr ffff8880229254b0 by task syz-executor357/5216
-
-CPU: 0 UID: 0 PID: 5216 Comm: syz-executor357 Not tainted 6.11.0-rc3-syzkaller-00156-gd7a5aa4b3c00 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 06/27/2024
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:93 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:119
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:488
- kasan_report+0x143/0x180 mm/kasan/report.c:601
- __mutex_lock_common kernel/locking/mutex.c:587 [inline]
- __mutex_lock+0xfe/0xd70 kernel/locking/mutex.c:752
- dbFreeBits+0x7ea/0xd90 fs/jfs/jfs_dmap.c:2390
- dbFreeDmap fs/jfs/jfs_dmap.c:2089 [inline]
- dbFree+0x35b/0x680 fs/jfs/jfs_dmap.c:409
- dbDiscardAG+0x8a9/0xa20 fs/jfs/jfs_dmap.c:1650
- jfs_ioc_trim+0x433/0x670 fs/jfs/jfs_discard.c:100
- jfs_ioctl+0x2d0/0x3e0 fs/jfs/ioctl.c:131
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:907 [inline]
- __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:893
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
-
-Freed by task 5218:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
- kasan_save_free_info+0x40/0x50 mm/kasan/generic.c:579
- poison_slab_object+0xe0/0x150 mm/kasan/common.c:240
- __kasan_slab_free+0x37/0x60 mm/kasan/common.c:256
- kasan_slab_free include/linux/kasan.h:184 [inline]
- slab_free_hook mm/slub.c:2252 [inline]
- slab_free mm/slub.c:4473 [inline]
- kfree+0x149/0x360 mm/slub.c:4594
- dbUnmount+0x11d/0x190 fs/jfs/jfs_dmap.c:278
- jfs_mount_rw+0x4ac/0x6a0 fs/jfs/jfs_mount.c:247
- jfs_remount+0x3d1/0x6b0 fs/jfs/super.c:454
- reconfigure_super+0x445/0x880 fs/super.c:1083
- vfs_cmd_reconfigure fs/fsopen.c:263 [inline]
- vfs_fsconfig_locked fs/fsopen.c:292 [inline]
- __do_sys_fsconfig fs/fsopen.c:473 [inline]
- __se_sys_fsconfig+0xb6e/0xf80 fs/fsopen.c:345
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-[Analysis]
-There are two paths (dbUnmount and jfs_ioc_trim) that generate race
-condition when accessing bmap, which leads to the occurrence of uaf.
-
-Use the lock s_umount to synchronize them, in order to avoid uaf caused
-by race condition.
-
-Reported-and-tested-by: syzbot+3c010e21296f33a5dc16@syzkaller.appspotmail.com
+Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
+Reported-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ae688d469e36fb5138d0
 Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-and-tested-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/tencent_BE7AEE6C7C2D216CB8949CE8E6EE7ECC2C0A@qq.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/jfs_discard.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/ext4/namei.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_discard.c b/fs/jfs/jfs_discard.c
-index 575cb2ba74fc8..5f4b305030ad5 100644
---- a/fs/jfs/jfs_discard.c
-+++ b/fs/jfs/jfs_discard.c
-@@ -65,7 +65,7 @@ void jfs_issue_discard(struct inode *ip, u64 blkno, u64 nblocks)
- int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
- {
- 	struct inode *ipbmap = JFS_SBI(ip->i_sb)->ipbmap;
--	struct bmap *bmp = JFS_SBI(ip->i_sb)->bmap;
-+	struct bmap *bmp;
- 	struct super_block *sb = ipbmap->i_sb;
- 	int agno, agno_end;
- 	u64 start, end, minlen;
-@@ -83,10 +83,15 @@ int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
- 	if (minlen == 0)
- 		minlen = 1;
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -1936,7 +1936,7 @@ static struct ext4_dir_entry_2 *do_split
+ 		split = count/2;
  
-+	down_read(&sb->s_umount);
-+	bmp = JFS_SBI(ip->i_sb)->bmap;
-+
- 	if (minlen > bmp->db_agsize ||
- 	    start >= bmp->db_mapsize ||
--	    range->len < sb->s_blocksize)
-+	    range->len < sb->s_blocksize) {
-+		up_read(&sb->s_umount);
- 		return -EINVAL;
-+	}
- 
- 	if (end >= bmp->db_mapsize)
- 		end = bmp->db_mapsize - 1;
-@@ -100,6 +105,8 @@ int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
- 		trimmed += dbDiscardAG(ip, agno, minlen);
- 		agno++;
- 	}
-+
-+	up_read(&sb->s_umount);
- 	range->len = trimmed << sb->s_blocksize_bits;
- 
- 	return 0;
--- 
-2.43.0
-
+ 	hash2 = map[split].hash;
+-	continued = hash2 == map[split - 1].hash;
++	continued = split > 0 ? hash2 == map[split - 1].hash : 0;
+ 	dxtrace(printk(KERN_INFO "Split block %lu at %x, %i/%i\n",
+ 			(unsigned long)dx_get_block(frame->at),
+ 					hash2, split, count-split));
 
 
