@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C561D517F;
-	Tue, 15 Oct 2024 13:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279121FAEF5;
+	Tue, 15 Oct 2024 13:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998130; cv=none; b=AbJ7zy9ZLskdkaj4Lv+Fm/5+8Nb7F05u4P9hdEOc4B4w45P553LrtrgGBP3oSg44F0RBixlKJT8f+VKhsxy4750ix89r4WeYVxBW9VguqzfZQzqST1/V6pPL2IGsmie/u8TBYjGzqrsmpkf73r0/lWVv3cnWlWSc3Fi47h0ac6E=
+	t=1728998134; cv=none; b=KZ4ht/6imxaLw52FMUtAEsQdQKyxJZg0fk1vz3N0Ehc3TiyREljUKg1BAuxMIvv42kY4PtKpRvVRgYDMSQTZycppSE0TxLJG4zcsAgTTj0gMhf29cvUoLCizVM1h48uF7FCDGBD0DGlk2/OVq0bVzozZM39lf23uHBDjUEG36F0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998130; c=relaxed/simple;
-	bh=H3/9wPxXrrCQilRsgnt3DyzP1UBYMc/mo3p6my8FLmg=;
+	s=arc-20240116; t=1728998134; c=relaxed/simple;
+	bh=l/VvIMQqxgvOktuLOO81NX3gimjmiIaX0Kv9/xACTYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kvdqIRQ1mJnUQ9Pt0ApQwywk7rCdHzYfsi9RPQvSf6aeuyKd6LtQeOKi6VJ870j7gPtrZfpqBv5LG7nqyDE6BtEnC+0Pnq8CpIATdPTwC8068QujnAjAyGiGZRT1HWTKJxqIrOrvSqnlTdD0p+viyqooPy/EnFxX3Oqdwn/qhkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07JbnXXh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YpK1lZQEzXLlDvPnw3zilmWv3e9MaUK9455F09Vnq3NyJtOBnm13niSN1d9awS5P05uLJxGg3LHQUj5XYKanoht8VFHlxJXnnqW8EaoowBa8UsZTeSkkIwuMH0kxh84W6j3NkKdW+k0OKi0COGs9cR9lWnK2umRARBwZf2C+LSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KVT1JS+U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07JbnXXh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D950C4CEDC;
-	Tue, 15 Oct 2024 13:15:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KVT1JS+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0B7CC4CECF;
+	Tue, 15 Oct 2024 13:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998129;
-	bh=H3/9wPxXrrCQilRsgnt3DyzP1UBYMc/mo3p6my8FLmg=;
+	s=korg; t=1728998133;
+	bh=l/VvIMQqxgvOktuLOO81NX3gimjmiIaX0Kv9/xACTYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=07JbnXXhEqhkdyKSEsprOA6044jdY+3IqkvhLW5pE/ZvV+KyhH23vZto9tpPuSLQF
-	 3eyg4Uhcs5c/DTtgjT7oOA1i1JTMgRfE7P7NrMJBoQFRe6PZ7d94Vj/tGmnZbxpKFE
-	 F81K2AD7zStX/3F17uIDGXWaydLttGMRHBTGn5Rs=
+	b=KVT1JS+UeQ51jQUiRgg4ge6rhXXsVx9cw3yuMESFlW1+6CFkPC3q/ji0ax3C6VDvk
+	 t0LOHJsIYitiABaF6SznW39pixbvRHVAD19Pbx0hfm8AJktD7xry6XNkH8C+cOU/dW
+	 oYGdoDudWLbvfCladwVM7wtGG94kirY+JC0m9oiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gautham Ananthakrishna <gautham.ananthakrishna@oracle.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 388/518] ocfs2: reserve space for inline xattr before attaching reflink tree
-Date: Tue, 15 Oct 2024 14:44:52 +0200
-Message-ID: <20241015123931.946723114@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 371/518] ext4: fix slab-use-after-free in ext4_split_extent_at()
+Date: Tue, 15 Oct 2024 14:44:35 +0200
+Message-ID: <20241015123931.292379529@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -57,154 +53,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautham Ananthakrishna <gautham.ananthakrishna@oracle.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 5ca60b86f57a4d9648f68418a725b3a7de2816b0 upstream.
+commit c26ab35702f8cd0cdc78f96aa5856bfb77be798f upstream.
 
-One of our customers reported a crash and a corrupted ocfs2 filesystem.
-The crash was due to the detection of corruption.  Upon troubleshooting,
-the fsck -fn output showed the below corruption
+We hit the following use-after-free:
 
-[EXTENT_LIST_FREE] Extent list in owner 33080590 claims 230 as the next free chain record,
-but fsck believes the largest valid value is 227.  Clamp the next record value? n
+==================================================================
+BUG: KASAN: slab-use-after-free in ext4_split_extent_at+0xba8/0xcc0
+Read of size 2 at addr ffff88810548ed08 by task kworker/u20:0/40
+CPU: 0 PID: 40 Comm: kworker/u20:0 Not tainted 6.9.0-dirty #724
+Call Trace:
+ <TASK>
+ kasan_report+0x93/0xc0
+ ext4_split_extent_at+0xba8/0xcc0
+ ext4_split_extent.isra.0+0x18f/0x500
+ ext4_split_convert_extents+0x275/0x750
+ ext4_ext_handle_unwritten_extents+0x73e/0x1580
+ ext4_ext_map_blocks+0xe20/0x2dc0
+ ext4_map_blocks+0x724/0x1700
+ ext4_do_writepages+0x12d6/0x2a70
+[...]
 
-The stat output from the debugfs.ocfs2 showed the following corruption
-where the "Next Free Rec:" had overshot the "Count:" in the root metadata
-block.
+Allocated by task 40:
+ __kmalloc_noprof+0x1ac/0x480
+ ext4_find_extent+0xf3b/0x1e70
+ ext4_ext_map_blocks+0x188/0x2dc0
+ ext4_map_blocks+0x724/0x1700
+ ext4_do_writepages+0x12d6/0x2a70
+[...]
 
-        Inode: 33080590   Mode: 0640   Generation: 2619713622 (0x9c25a856)
-        FS Generation: 904309833 (0x35e6ac49)
-        CRC32: 00000000   ECC: 0000
-        Type: Regular   Attr: 0x0   Flags: Valid
-        Dynamic Features: (0x16) HasXattr InlineXattr Refcounted
-        Extended Attributes Block: 0  Extended Attributes Inline Size: 256
-        User: 0 (root)   Group: 0 (root)   Size: 281320357888
-        Links: 1   Clusters: 141738
-        ctime: 0x66911b56 0x316edcb8 -- Fri Jul 12 06:02:30.829349048 2024
-        atime: 0x66911d6b 0x7f7a28d -- Fri Jul 12 06:11:23.133669517 2024
-        mtime: 0x66911b56 0x12ed75d7 -- Fri Jul 12 06:02:30.317552087 2024
-        dtime: 0x0 -- Wed Dec 31 17:00:00 1969
-        Refcount Block: 2777346
-        Last Extblk: 2886943   Orphan Slot: 0
-        Sub Alloc Slot: 0   Sub Alloc Bit: 14
-        Tree Depth: 1   Count: 227   Next Free Rec: 230
-        ## Offset        Clusters       Block#
-        0  0             2310           2776351
-        1  2310          2139           2777375
-        2  4449          1221           2778399
-        3  5670          731            2779423
-        4  6401          566            2780447
-        .......          ....           .......
-        .......          ....           .......
+Freed by task 40:
+ kfree+0xf1/0x2b0
+ ext4_find_extent+0xa71/0x1e70
+ ext4_ext_insert_extent+0xa22/0x3260
+ ext4_split_extent_at+0x3ef/0xcc0
+ ext4_split_extent.isra.0+0x18f/0x500
+ ext4_split_convert_extents+0x275/0x750
+ ext4_ext_handle_unwritten_extents+0x73e/0x1580
+ ext4_ext_map_blocks+0xe20/0x2dc0
+ ext4_map_blocks+0x724/0x1700
+ ext4_do_writepages+0x12d6/0x2a70
+[...]
+==================================================================
 
-The issue was in the reflink workfow while reserving space for inline
-xattr.  The problematic function is ocfs2_reflink_xattr_inline().  By the
-time this function is called the reflink tree is already recreated at the
-destination inode from the source inode.  At this point, this function
-reserves space for inline xattrs at the destination inode without even
-checking if there is space at the root metadata block.  It simply reduces
-the l_count from 243 to 227 thereby making space of 256 bytes for inline
-xattr whereas the inode already has extents beyond this index (in this
-case up to 230), thereby causing corruption.
+The flow of issue triggering is as follows:
 
-The fix for this is to reserve space for inline metadata at the destination
-inode before the reflink tree gets recreated. The customer has verified the
-fix.
+ext4_split_extent_at
+  path = *ppath
+  ext4_ext_insert_extent(ppath)
+    ext4_ext_create_new_leaf(ppath)
+      ext4_find_extent(orig_path)
+        path = *orig_path
+        read_extent_tree_block
+          // return -ENOMEM or -EIO
+        ext4_free_ext_path(path)
+          kfree(path)
+        *orig_path = NULL
+  a. If err is -ENOMEM:
+  ext4_ext_dirty(path + path->p_depth)
+  // path use-after-free !!!
+  b. If err is -EIO and we have EXT_DEBUG defined:
+  ext4_ext_show_leaf(path)
+    eh = path[depth].p_hdr
+    // path also use-after-free !!!
 
-Link: https://lkml.kernel.org/r/20240918063844.1830332-1-gautham.ananthakrishna@oracle.com
-Fixes: ef962df057aa ("ocfs2: xattr: fix inlined xattr reflink")
-Signed-off-by: Gautham Ananthakrishna <gautham.ananthakrishna@oracle.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+So when trying to zeroout or fix the extent length, call ext4_find_extent()
+to update the path.
+
+In addition we use *ppath directly as an ext4_ext_show_leaf() input to
+avoid possible use-after-free when EXT_DEBUG is defined, and to avoid
+unnecessary path updates.
+
+Fixes: dfe5080939ea ("ext4: drop EXT4_EX_NOFREE_ON_ERR from rest of extents handling code")
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/20240822023545.1994557-4-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/refcounttree.c |   26 ++++++++++++++++++++++++--
- fs/ocfs2/xattr.c        |   11 +----------
- 2 files changed, 25 insertions(+), 12 deletions(-)
+ fs/ext4/extents.c |   21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
---- a/fs/ocfs2/refcounttree.c
-+++ b/fs/ocfs2/refcounttree.c
-@@ -27,6 +27,7 @@
- #include "namei.h"
- #include "ocfs2_trace.h"
- #include "file.h"
-+#include "symlink.h"
- 
- #include <linux/bio.h>
- #include <linux/blkdev.h>
-@@ -4184,8 +4185,9 @@ static int __ocfs2_reflink(struct dentry
- 	int ret;
- 	struct inode *inode = d_inode(old_dentry);
- 	struct buffer_head *new_bh = NULL;
-+	struct ocfs2_inode_info *oi = OCFS2_I(inode);
- 
--	if (OCFS2_I(inode)->ip_flags & OCFS2_INODE_SYSTEM_FILE) {
-+	if (oi->ip_flags & OCFS2_INODE_SYSTEM_FILE) {
- 		ret = -EINVAL;
- 		mlog_errno(ret);
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -3226,6 +3226,25 @@ static int ext4_split_extent_at(handle_t
+ 	if (err != -ENOSPC && err != -EDQUOT)
  		goto out;
-@@ -4211,6 +4213,26 @@ static int __ocfs2_reflink(struct dentry
- 		goto out_unlock;
- 	}
  
-+	if ((oi->ip_dyn_features & OCFS2_HAS_XATTR_FL) &&
-+	    (oi->ip_dyn_features & OCFS2_INLINE_XATTR_FL)) {
-+		/*
-+		 * Adjust extent record count to reserve space for extended attribute.
-+		 * Inline data count had been adjusted in ocfs2_duplicate_inline_data().
-+		 */
-+		struct ocfs2_inode_info *new_oi = OCFS2_I(new_inode);
-+
-+		if (!(new_oi->ip_dyn_features & OCFS2_INLINE_DATA_FL) &&
-+		    !(ocfs2_inode_is_fast_symlink(new_inode))) {
-+			struct ocfs2_dinode *new_di = (struct ocfs2_dinode *)new_bh->b_data;
-+			struct ocfs2_dinode *old_di = (struct ocfs2_dinode *)old_bh->b_data;
-+			struct ocfs2_extent_list *el = &new_di->id2.i_list;
-+			int inline_size = le16_to_cpu(old_di->i_xattr_inline_size);
-+
-+			le16_add_cpu(&el->l_count, -(inline_size /
-+					sizeof(struct ocfs2_extent_rec)));
-+		}
++	/*
++	 * Update path is required because previous ext4_ext_insert_extent()
++	 * may have freed or reallocated the path. Using EXT4_EX_NOFAIL
++	 * guarantees that ext4_find_extent() will not return -ENOMEM,
++	 * otherwise -ENOMEM will cause a retry in do_writepages(), and a
++	 * WARN_ON may be triggered in ext4_da_update_reserve_space() due to
++	 * an incorrect ee_len causing the i_reserved_data_blocks exception.
++	 */
++	path = ext4_find_extent(inode, ee_block, ppath,
++				flags | EXT4_EX_NOFAIL);
++	if (IS_ERR(path)) {
++		EXT4_ERROR_INODE(inode, "Failed split extent on %u, err %ld",
++				 split, PTR_ERR(path));
++		return PTR_ERR(path);
 +	}
++	depth = ext_depth(inode);
++	ex = path[depth].p_ext;
++	*ppath = path;
 +
- 	ret = ocfs2_create_reflink_node(inode, old_bh,
- 					new_inode, new_bh, preserve);
- 	if (ret) {
-@@ -4218,7 +4240,7 @@ static int __ocfs2_reflink(struct dentry
- 		goto inode_unlock;
- 	}
+ 	if (EXT4_EXT_MAY_ZEROOUT & split_flag) {
+ 		if (split_flag & (EXT4_EXT_DATA_VALID1|EXT4_EXT_DATA_VALID2)) {
+ 			if (split_flag & EXT4_EXT_DATA_VALID1) {
+@@ -3278,7 +3297,7 @@ fix_extent_len:
+ 	ext4_ext_dirty(handle, inode, path + path->p_depth);
+ 	return err;
+ out:
+-	ext4_ext_show_leaf(inode, path);
++	ext4_ext_show_leaf(inode, *ppath);
+ 	return err;
+ }
  
--	if (OCFS2_I(inode)->ip_dyn_features & OCFS2_HAS_XATTR_FL) {
-+	if (oi->ip_dyn_features & OCFS2_HAS_XATTR_FL) {
- 		ret = ocfs2_reflink_xattrs(inode, old_bh,
- 					   new_inode, new_bh,
- 					   preserve);
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -6526,16 +6526,7 @@ static int ocfs2_reflink_xattr_inline(st
- 	}
- 
- 	new_oi = OCFS2_I(args->new_inode);
--	/*
--	 * Adjust extent record count to reserve space for extended attribute.
--	 * Inline data count had been adjusted in ocfs2_duplicate_inline_data().
--	 */
--	if (!(new_oi->ip_dyn_features & OCFS2_INLINE_DATA_FL) &&
--	    !(ocfs2_inode_is_fast_symlink(args->new_inode))) {
--		struct ocfs2_extent_list *el = &new_di->id2.i_list;
--		le16_add_cpu(&el->l_count, -(inline_size /
--					sizeof(struct ocfs2_extent_rec)));
--	}
-+
- 	spin_lock(&new_oi->ip_lock);
- 	new_oi->ip_dyn_features |= OCFS2_HAS_XATTR_FL | OCFS2_INLINE_XATTR_FL;
- 	new_di->i_dyn_features = cpu_to_le16(new_oi->ip_dyn_features);
 
 
