@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D541C07DF;
-	Tue, 15 Oct 2024 13:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070B1207A37;
+	Tue, 15 Oct 2024 13:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998178; cv=none; b=hXVsIchgbmz4e5TrED4o7QsOKttgOsbHM73cK6QQE0uaMloXtZeKI4gtNeMJ1voZA2k3oDfMs2WhijT4UhGCOBKspnCgquOUN7+K9bob5q3rJhpqs2jkPE7bLAPWM9EeTYWTqVWseQXqUrNSEhHucI8QtqQ6j1J8u+Nod7nbkoc=
+	t=1728998182; cv=none; b=L41tTT9sxtNwEj1WBzrF4jpDdnDw1LogozHyms2ILmPvtBtQJXOtjq/PCQN2k4cb8zlXNDXZbjXZwfCFvIVnckBaHWceBBlWcEzIEjpk2MoWDY8VBLfMP+cDUNu42ryu5MAXZzYdgVqVWFHlVcWbp+uOb/gAghr8IBMFkHJlDRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998178; c=relaxed/simple;
-	bh=nKrCdw9v3O++rln0SKIacLGG0WVHbekrFDmb6WH4Ngk=;
+	s=arc-20240116; t=1728998182; c=relaxed/simple;
+	bh=3oZMkL4XYy0ohhlHh7HkRssE0B2V7QTYApjwAvaXr/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KoQQ1Me5oiYWSnUmpQNdAyNqiWdHYnq3K/Ls/Seu9uVVCDa39ZF5pDyGRKEhtqk7cdMPe5pKzqfDbUY9spmheGlZLvmzZuiJv50nP1FuIP0CyTBrOk8sZEw/ROCbiD/RAhVaN1QNpUeeSbiAddX9TnOrh+NTKQWHtmtQ1Rz/z/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zD5fT5aj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oKD23oI9FzvTMTaNpQ3dszyoi4i3PkZHoCDoxungAZaezAF/eIacCE+mHjG8dUb7bDGUxQBrjqmPpDPnZa1s6yH6QE/pHuIaSQFWswbFYdPzr4fJX1FqWPYq1W2m8ZehP1E6fqAwANfQgBCyJJjzSUeaTRv3P1yJ2hhTSjc10wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bI/9H+5a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zD5fT5aj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0660EC4CEC6;
-	Tue, 15 Oct 2024 13:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bI/9H+5a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629EFC4CECF;
+	Tue, 15 Oct 2024 13:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998178;
-	bh=nKrCdw9v3O++rln0SKIacLGG0WVHbekrFDmb6WH4Ngk=;
+	s=korg; t=1728998181;
+	bh=3oZMkL4XYy0ohhlHh7HkRssE0B2V7QTYApjwAvaXr/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zD5fT5ajjJx0/Z9IHaIS2VBQYQ+qPdfP5IewB1bZ3fDfmRClrhYI3BUCQKFnOK2X+
-	 VpWj/i7NoZd4INDFlAvlygBNLAxSUE72SEqQdXoW3KIHi6Q3dw/UEE15NyUiiYKzLM
-	 jGDykSE6srPS4dHogKs1S8EjDjjnS4dBLDUUMGmQ=
+	b=bI/9H+5asAl/YCLukl5pqLOSZCYhxrDLi3vPosnZ2/4AI6iSqgN7fEDDdkWWwput9
+	 BecXb2Yp2QmVZDiCuuW4USqUls8eI78Qk4K8HnIFMyb4DJh8zIMgsZqO2QnbIRy2xO
+	 8YVvyRdwVHWw7KlX2w1I/bDTaG9cBRL0jrxpuaiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 5.10 400/518] media: sun4i_csi: Implement link validate for sun4i_csi subdev
-Date: Tue, 15 Oct 2024 14:45:04 +0200
-Message-ID: <20241015123932.412567596@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 5.10 401/518] media: uapi/linux/cec.h: cec_msg_set_reply_to: zero flags
+Date: Tue, 15 Oct 2024 14:45:05 +0200
+Message-ID: <20241015123932.451564285@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,45 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit 2dc5d5d401f5c6cecd97800ffef82e8d17d228f0 upstream.
+commit 599f6899051cb70c4e0aa9fd591b9ee220cb6f14 upstream.
 
-The sun4i_csi driver doesn't implement link validation for the subdev it
-registers, leaving the link between the subdev and its source
-unvalidated. Fix it, using the v4l2_subdev_link_validate() helper.
+The cec_msg_set_reply_to() helper function never zeroed the
+struct cec_msg flags field, this can cause unexpected behavior
+if flags was uninitialized to begin with.
 
-Fixes: 577bbf23b758 ("media: sunxi: Add A10 CSI driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Acked-by: Chen-Yu Tsai <wens@csie.org>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 0dbacebede1e ("[media] cec: move the CEC framework out of staging and to media")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ include/uapi/linux/cec.h |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c
-+++ b/drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c
-@@ -40,6 +40,10 @@ static const struct media_entity_operati
- 	.link_validate = v4l2_subdev_link_validate,
- };
+--- a/include/uapi/linux/cec.h
++++ b/include/uapi/linux/cec.h
+@@ -132,6 +132,8 @@ static inline void cec_msg_init(struct c
+  * Set the msg destination to the orig initiator and the msg initiator to the
+  * orig destination. Note that msg and orig may be the same pointer, in which
+  * case the change is done in place.
++ *
++ * It also zeroes the reply, timeout and flags fields.
+  */
+ static inline void cec_msg_set_reply_to(struct cec_msg *msg,
+ 					struct cec_msg *orig)
+@@ -139,7 +141,9 @@ static inline void cec_msg_set_reply_to(
+ 	/* The destination becomes the initiator and vice versa */
+ 	msg->msg[0] = (cec_msg_destination(orig) << 4) |
+ 		      cec_msg_initiator(orig);
+-	msg->reply = msg->timeout = 0;
++	msg->reply = 0;
++	msg->timeout = 0;
++	msg->flags = 0;
+ }
  
-+static const struct media_entity_operations sun4i_csi_subdev_entity_ops = {
-+	.link_validate = v4l2_subdev_link_validate,
-+};
-+
- static int sun4i_csi_notify_bound(struct v4l2_async_notifier *notifier,
- 				  struct v4l2_subdev *subdev,
- 				  struct v4l2_async_subdev *asd)
-@@ -245,6 +249,7 @@ static int sun4i_csi_probe(struct platfo
- 	v4l2_subdev_init(subdev, &sun4i_csi_subdev_ops);
- 	subdev->flags = V4L2_SUBDEV_FL_HAS_DEVNODE | V4L2_SUBDEV_FL_HAS_EVENTS;
- 	subdev->entity.function = MEDIA_ENT_F_VID_IF_BRIDGE;
-+	subdev->entity.ops = &sun4i_csi_subdev_entity_ops;
- 	subdev->owner = THIS_MODULE;
- 	snprintf(subdev->name, sizeof(subdev->name), "sun4i-csi-0");
- 	v4l2_set_subdevdata(subdev, csi);
+ /* cec_msg flags field */
 
 
