@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FBE1C57B1;
-	Tue, 15 Oct 2024 12:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAAA1C57B1;
+	Tue, 15 Oct 2024 12:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993933; cv=none; b=hCcgWz+fYIwdwaV0ZFOWwvEuCalM1YITuFV1FVrn3h/b9+95epIut/HOdA41zd3f/vi1ny/qUdwcuK5lVtGjfmHmjZ96Kgc3uUktPg5yeDAZKHp9iEjceoWvXv/043+AJmmue83NEGkGYjYyzsNiVxNH6tkWPbIknJ4pYEMRnkc=
+	t=1728993936; cv=none; b=SPrRRX1vqgg6y81f+Ghdy4D41d5fzL0Hv63uNMev/ZTJqcVbrfN8ZnEDxt/EHC/jeb2dILOV79SXNz2VghcKdJOCIEAWPDZ4oQ8cDaLP9s6ZxO3cyqR0WutdxjLfEr7ystM82rscSUp/qqTwG9lZsCsm7RxfAcRFEqe35bfODGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993933; c=relaxed/simple;
-	bh=QckrsCEl35rfwqJoBCvNCV/zVdHBTbMvgkHffWtDDCY=;
+	s=arc-20240116; t=1728993936; c=relaxed/simple;
+	bh=AfNdka/AeAZQyiDD6MEnTxky4cRGqbT9//4srGp9BDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m3SafdQ0TxpTePj+nRQ2c69H+qRVK7/9/AQI0bN6Nwgj0QyoeORJABzaVg4k8nnN24pWRkfY1LGfPyFqk1vQ7CjxiJhegwDbDrLl79z7qLehDQRCIqU4FuwGFcaSZJhbb30F/t0Vp5ixsvDKIQTtdmwYVRQB7uK7tjeahwksNFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vt9nUGoo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G2YNG7CER2lp0ne4COM8nDtkYRuMiO6oQOL+qLZ6x/4v8AcOavlsMZn3qCFjt9JfBNtMaqCOha9tMt1PqulReJ21Lx9oaooMBy/J7IAKxN3UU/AIzRdx4xx9n01SuDmMdc1f0e9zZ8yfTWdvcnGbUt6c6uMQA1Ydokp79mHT5bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SI/AFdtT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vt9nUGoo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5395C4CEC6;
-	Tue, 15 Oct 2024 12:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SI/AFdtT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18822C4CEC6;
+	Tue, 15 Oct 2024 12:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993933;
-	bh=QckrsCEl35rfwqJoBCvNCV/zVdHBTbMvgkHffWtDDCY=;
+	s=korg; t=1728993936;
+	bh=AfNdka/AeAZQyiDD6MEnTxky4cRGqbT9//4srGp9BDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vt9nUGoo8FcJnBNQICYsxPiziybLjOc7yQrOTxVfidX35bQKcgts8sUl9I9L2w0Iy
-	 HGxZ2p0Pvn+SiBrRY2q/IHs9bwRZLe4mcCclFdpE4FEb4vho6ovxE3luSgtFDdJ5gO
-	 Inw1B9n5YshB8FBwtXSYPNRpMcgn/Cf2G69Lu83M=
+	b=SI/AFdtTfwbPArvAezcKTKHbFHG/q8e4PVAFn3kxJcx/MxJt/9jW0iWPTF4RPwuJl
+	 NF5Ri1z9QVomksVbNpQZdXoThjtlvGNmYsi+lKuuCFpy+YG9MZg1K63ROXLCSdlz4I
+	 4UU5KHnKyYw28yupkBMYNdDxMyRIQK7LiXT7pUyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 550/691] device property: Add fwnode_iomap()
-Date: Tue, 15 Oct 2024 13:28:18 +0200
-Message-ID: <20241015112502.170230814@linuxfoundation.org>
+Subject: [PATCH 5.15 559/691] ext4: dax: fix overflowing extents beyond inode size when partially writing
+Date: Tue, 15 Oct 2024 13:28:27 +0200
+Message-ID: <20241015112502.533009360@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,70 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit eca6e2d4a4a4b824f055eeaaa24f1c2327fb91a2 ]
+[ Upstream commit dda898d7ffe85931f9cca6d702a51f33717c501e ]
 
-This patch introduces a new helper routine - fwnode_iomap(), which
-allows to map the memory mapped IO for a given device node.
+The dax_iomap_rw() does two things in each iteration: map written blocks
+and copy user data to blocks. If the process is killed by user(See signal
+handling in dax_iomap_iter()), the copied data will be returned and added
+on inode size, which means that the length of written extents may exceed
+the inode size, then fsck will fail. An example is given as:
 
-This implementation does not cover the ACPI case and may be expanded
-in the future. The main purpose here is to be able to develop resource
-provider agnostic drivers.
+dd if=/dev/urandom of=file bs=4M count=1
+ dax_iomap_rw
+  iomap_iter // round 1
+   ext4_iomap_begin
+    ext4_iomap_alloc // allocate 0~2M extents(written flag)
+  dax_iomap_iter // copy 2M data
+  iomap_iter // round 2
+   iomap_iter_advance
+    iter->pos += iter->processed // iter->pos = 2M
+   ext4_iomap_begin
+    ext4_iomap_alloc // allocate 2~4M extents(written flag)
+  dax_iomap_iter
+   fatal_signal_pending
+  done = iter->pos - iocb->ki_pos // done = 2M
+ ext4_handle_inode_extension
+  ext4_update_inode_size // inode size = 2M
 
-Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://lore.kernel.org/r/20211203212358.31444-2-anand.ashok.dumbre@xilinx.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 8d3cefaf6592 ("i2c: core: Lock address during client device instantiation")
+fsck reports: Inode 13, i_size is 2097152, should be 4194304.  Fix?
+
+Fix the problem by truncating extents if the written length is smaller
+than expected.
+
+Fixes: 776722e85d3b ("ext4: DAX iomap write support")
+CC: stable@vger.kernel.org
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219136
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Link: https://patch.msgid.link/20240809121532.2105494-1-chengzhihao@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/property.c  | 16 ++++++++++++++++
- include/linux/property.h |  2 ++
- 2 files changed, 18 insertions(+)
+ fs/ext4/file.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/base/property.c b/drivers/base/property.c
-index 21f4184db42fc..87bb97e12749e 100644
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -1050,6 +1050,22 @@ int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index)
- }
- EXPORT_SYMBOL(fwnode_irq_get);
+diff --git a/fs/ext4/file.c b/fs/ext4/file.c
+index 94ce73fadcba6..4791ba35ca193 100644
+--- a/fs/ext4/file.c
++++ b/fs/ext4/file.c
+@@ -307,10 +307,10 @@ static ssize_t ext4_handle_inode_extension(struct inode *inode, loff_t offset,
+  * Clean up the inode after DIO or DAX extending write has completed and the
+  * inode size has been updated using ext4_handle_inode_extension().
+  */
+-static void ext4_inode_extension_cleanup(struct inode *inode, ssize_t count)
++static void ext4_inode_extension_cleanup(struct inode *inode, bool need_trunc)
+ {
+ 	lockdep_assert_held_write(&inode->i_rwsem);
+-	if (count < 0) {
++	if (need_trunc) {
+ 		ext4_truncate_failed_write(inode);
+ 		/*
+ 		 * If the truncate operation failed early, then the inode may
+@@ -548,7 +548,7 @@ static ssize_t ext4_dio_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 		 * writeback of delalloc blocks.
+ 		 */
+ 		WARN_ON_ONCE(ret == -EIOCBQUEUED);
+-		ext4_inode_extension_cleanup(inode, ret);
++		ext4_inode_extension_cleanup(inode, ret < 0);
+ 	}
  
-+/**
-+ * fwnode_iomap - Maps the memory mapped IO for a given fwnode
-+ * @fwnode:	Pointer to the firmware node
-+ * @index:	Index of the IO range
-+ *
-+ * Returns a pointer to the mapped memory.
-+ */
-+void __iomem *fwnode_iomap(struct fwnode_handle *fwnode, int index)
-+{
-+	if (IS_ENABLED(CONFIG_OF_ADDRESS) && is_of_node(fwnode))
-+		return of_iomap(to_of_node(fwnode), index);
-+
-+	return NULL;
-+}
-+EXPORT_SYMBOL(fwnode_iomap);
-+
- /**
-  * fwnode_graph_get_next_endpoint - Get next endpoint firmware node
-  * @fwnode: Pointer to the parent firmware node
-diff --git a/include/linux/property.h b/include/linux/property.h
-index fe2092e39aedb..032262e3d9991 100644
---- a/include/linux/property.h
-+++ b/include/linux/property.h
-@@ -126,6 +126,8 @@ void fwnode_handle_put(struct fwnode_handle *fwnode);
+ out:
+@@ -632,7 +632,7 @@ ext4_dax_write_iter(struct kiocb *iocb, struct iov_iter *from)
  
- int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index);
- 
-+void __iomem *fwnode_iomap(struct fwnode_handle *fwnode, int index);
-+
- unsigned int device_get_child_node_count(struct device *dev);
- 
- static inline bool device_property_read_bool(struct device *dev,
+ 	if (extend) {
+ 		ret = ext4_handle_inode_extension(inode, offset, ret);
+-		ext4_inode_extension_cleanup(inode, ret);
++		ext4_inode_extension_cleanup(inode, ret < (ssize_t)count);
+ 	}
+ out:
+ 	inode_unlock(inode);
 -- 
 2.43.0
 
