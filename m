@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA5D1C7274;
-	Tue, 15 Oct 2024 12:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983001D1512;
+	Tue, 15 Oct 2024 12:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993632; cv=none; b=qlGTdn0ZYKv/hrZDPJ3i8L0gPi3m+RbVVQxoIzthUBnLTqC3ngVKaGRlEPkcKprAbgN9WeBaDob/cqvR1IFWDtMhz2iKTzs7Yic7gt3n++5JEIYrz/Jrc6SZybMXnRPDBfiXyM5TGcl7VcB4IEAZ0eOXEtN3Zz8WUA4l++6AIoU=
+	t=1728993636; cv=none; b=DO5NSp5bzYXfcuIsTnkzt8uwPKdm1N+ltZXHNrL9vZqOOAnT4uCh1GVHCNR4TLlG00a17SJgTaTg0vWTWCSaTc/YG/20WDj0j93gKPa2axigEk2lcB1YUu7BqaXRGr34xCAssVBjQvuDFkWqgKAL43oCKDz8Qvo9fsiBFQUCFYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993632; c=relaxed/simple;
-	bh=sl1ZW9CaiC8fDCpRU/cQTvUepQEzQHdPQ2JwH6mJq5k=;
+	s=arc-20240116; t=1728993636; c=relaxed/simple;
+	bh=CdFr9FvN1g9+lEc/IzIR+cwKR5tImDBa2D6tWyf7W1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ch8NtdZ/V21ZTrfdrL8r9RYo1AXFLyiDWKYLzPBH4Y6bWpihpSOww3fEmJV+ScREY7ccitUJvji1MXc9F8IcwPHxfPv/R6kyzj6eYsoDWf4Z4gB3RvcgftrcZXVZkJTvpXEHLG8jIZmWq399ZSpR8ka6J5GcQSWrGiZcEd3s5q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAag1+lG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uYssNWD4tb/8XoPvCOJdG4Uk57fzzK0oby3amv201dF6HsrSUN93Tk3MU1c52kTjd6M8EUddNvsVoh2VWViQPgFN6jZBiM4FU0FHdQylpZIPM2PuoiKSsWU++FVqjjB4VhO6UN59ANN7SDZi+o9RveMW3PCM+Av2xJwaGiY2J6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJe9StIy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAag1+lG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F6CC4CEC6;
-	Tue, 15 Oct 2024 12:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJe9StIy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC224C4CEC6;
+	Tue, 15 Oct 2024 12:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993632;
-	bh=sl1ZW9CaiC8fDCpRU/cQTvUepQEzQHdPQ2JwH6mJq5k=;
+	s=korg; t=1728993636;
+	bh=CdFr9FvN1g9+lEc/IzIR+cwKR5tImDBa2D6tWyf7W1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qAag1+lGs7vGdnIdiN6ivkexYXgYYFWWsnhLfi7E4bt/diTodLRaE8zMCR1fvzzmn
-	 6rkIqMH7k2+xGjU9UPErZU9YdcttCq18D96Ue4pJMBVs2xxHzREpyL8XyR/XWKj+ZL
-	 nzCMPoa2mCYufJ/jhqdY+75ZWAkXUHZdIoTCTopM=
+	b=hJe9StIyVOHXw3OFiDVYSL2rTPbENdNuJ7Fcj/ebfpyDET6v1pWavX+igNF1+ofCa
+	 e20p9g+r4hd4U9+YZmfogZdO/KflYir5E1lFOCKmxN43DE1rUhYrFhPXPm+QhqBrG8
+	 XD1I+mcdjwIWPSA7OcWotNEDZVmv3iCR+wNsiK+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Tim Huang <tim.huang@amd.com>,
+	Jesse Zhang <jesse.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 469/691] drm/radeon/r100: Handle unknown family in r100_cp_init_microcode()
-Date: Tue, 15 Oct 2024 13:26:57 +0200
-Message-ID: <20241015112458.958430090@linuxfoundation.org>
+Subject: [PATCH 5.15 470/691] drm/amd/pm: ensure the fw_info is not null before using it
+Date: Tue, 15 Oct 2024 13:26:58 +0200
+Message-ID: <20241015112458.998824656@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -45,142 +46,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Tim Huang <tim.huang@amd.com>
 
-[ Upstream commit c6dbab46324b1742b50dc2fb5c1fee2c28129439 ]
+[ Upstream commit 186fb12e7a7b038c2710ceb2fb74068f1b5d55a4 ]
 
-With -Werror:
+This resolves the dereference null return value warning
+reported by Coverity.
 
-    In function ‘r100_cp_init_microcode’,
-	inlined from ‘r100_cp_init’ at drivers/gpu/drm/radeon/r100.c:1136:7:
-    include/linux/printk.h:465:44: error: ‘%s’ directive argument is null [-Werror=format-overflow=]
-      465 | #define printk(fmt, ...) printk_index_wrap(_printk, fmt, ##__VA_ARGS__)
-	  |                                            ^
-    include/linux/printk.h:437:17: note: in definition of macro ‘printk_index_wrap’
-      437 |                 _p_func(_fmt, ##__VA_ARGS__);                           \
-	  |                 ^~~~~~~
-    include/linux/printk.h:508:9: note: in expansion of macro ‘printk’
-      508 |         printk(KERN_ERR pr_fmt(fmt), ##__VA_ARGS__)
-	  |         ^~~~~~
-    drivers/gpu/drm/radeon/r100.c:1062:17: note: in expansion of macro ‘pr_err’
-     1062 |                 pr_err("radeon_cp: Failed to load firmware \"%s\"\n", fw_name);
-	  |                 ^~~~~~
-
-Fix this by converting the if/else if/... construct into a proper
-switch() statement with a default to handle the error case.
-
-As a bonus, the generated code is ca. 100 bytes smaller (with gcc 11.4.0
-targeting arm32).
-
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Tim Huang <tim.huang@amd.com>
+Reviewed-by: Jesse Zhang <jesse.zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/r100.c | 70 ++++++++++++++++++++++-------------
- 1 file changed, 45 insertions(+), 25 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/processpptables.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/radeon/r100.c b/drivers/gpu/drm/radeon/r100.c
-index d3ad98bd25907..d7256d1a1f482 100644
---- a/drivers/gpu/drm/radeon/r100.c
-+++ b/drivers/gpu/drm/radeon/r100.c
-@@ -1014,45 +1014,65 @@ static int r100_cp_init_microcode(struct radeon_device *rdev)
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/processpptables.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/processpptables.c
+index 182118e3fd5f3..2ca93a1f0b8e1 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/processpptables.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/processpptables.c
+@@ -1185,6 +1185,8 @@ static int init_overdrive_limits(struct pp_hwmgr *hwmgr,
+ 	fw_info = smu_atom_get_data_table(hwmgr->adev,
+ 			 GetIndexIntoMasterTable(DATA, FirmwareInfo),
+ 			 &size, &frev, &crev);
++	PP_ASSERT_WITH_CODE(fw_info != NULL,
++			    "Missing firmware info!", return -EINVAL);
  
- 	DRM_DEBUG_KMS("\n");
- 
--	if ((rdev->family == CHIP_R100) || (rdev->family == CHIP_RV100) ||
--	    (rdev->family == CHIP_RV200) || (rdev->family == CHIP_RS100) ||
--	    (rdev->family == CHIP_RS200)) {
-+	switch (rdev->family) {
-+	case CHIP_R100:
-+	case CHIP_RV100:
-+	case CHIP_RV200:
-+	case CHIP_RS100:
-+	case CHIP_RS200:
- 		DRM_INFO("Loading R100 Microcode\n");
- 		fw_name = FIRMWARE_R100;
--	} else if ((rdev->family == CHIP_R200) ||
--		   (rdev->family == CHIP_RV250) ||
--		   (rdev->family == CHIP_RV280) ||
--		   (rdev->family == CHIP_RS300)) {
-+		break;
-+
-+	case CHIP_R200:
-+	case CHIP_RV250:
-+	case CHIP_RV280:
-+	case CHIP_RS300:
- 		DRM_INFO("Loading R200 Microcode\n");
- 		fw_name = FIRMWARE_R200;
--	} else if ((rdev->family == CHIP_R300) ||
--		   (rdev->family == CHIP_R350) ||
--		   (rdev->family == CHIP_RV350) ||
--		   (rdev->family == CHIP_RV380) ||
--		   (rdev->family == CHIP_RS400) ||
--		   (rdev->family == CHIP_RS480)) {
-+		break;
-+
-+	case CHIP_R300:
-+	case CHIP_R350:
-+	case CHIP_RV350:
-+	case CHIP_RV380:
-+	case CHIP_RS400:
-+	case CHIP_RS480:
- 		DRM_INFO("Loading R300 Microcode\n");
- 		fw_name = FIRMWARE_R300;
--	} else if ((rdev->family == CHIP_R420) ||
--		   (rdev->family == CHIP_R423) ||
--		   (rdev->family == CHIP_RV410)) {
-+		break;
-+
-+	case CHIP_R420:
-+	case CHIP_R423:
-+	case CHIP_RV410:
- 		DRM_INFO("Loading R400 Microcode\n");
- 		fw_name = FIRMWARE_R420;
--	} else if ((rdev->family == CHIP_RS690) ||
--		   (rdev->family == CHIP_RS740)) {
-+		break;
-+
-+	case CHIP_RS690:
-+	case CHIP_RS740:
- 		DRM_INFO("Loading RS690/RS740 Microcode\n");
- 		fw_name = FIRMWARE_RS690;
--	} else if (rdev->family == CHIP_RS600) {
-+		break;
-+
-+	case CHIP_RS600:
- 		DRM_INFO("Loading RS600 Microcode\n");
- 		fw_name = FIRMWARE_RS600;
--	} else if ((rdev->family == CHIP_RV515) ||
--		   (rdev->family == CHIP_R520) ||
--		   (rdev->family == CHIP_RV530) ||
--		   (rdev->family == CHIP_R580) ||
--		   (rdev->family == CHIP_RV560) ||
--		   (rdev->family == CHIP_RV570)) {
-+		break;
-+
-+	case CHIP_RV515:
-+	case CHIP_R520:
-+	case CHIP_RV530:
-+	case CHIP_R580:
-+	case CHIP_RV560:
-+	case CHIP_RV570:
- 		DRM_INFO("Loading R500 Microcode\n");
- 		fw_name = FIRMWARE_R520;
-+		break;
-+
-+	default:
-+		DRM_ERROR("Unsupported Radeon family %u\n", rdev->family);
-+		return -EINVAL;
- 	}
- 
- 	err = request_firmware(&rdev->me_fw, fw_name, rdev->dev);
+ 	if ((fw_info->ucTableFormatRevision == 1)
+ 	    && (le16_to_cpu(fw_info->usStructureSize) >= sizeof(ATOM_FIRMWARE_INFO_V1_4)))
 -- 
 2.43.0
 
