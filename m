@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097CE1EABAB;
-	Tue, 15 Oct 2024 11:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620E01D4154;
+	Tue, 15 Oct 2024 11:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992912; cv=none; b=I7UleNn2AY8mySBEysOOp20K5psewazQJKBXN4OsqNfit6z6vC77F+8wsrUqA+flk6eTgIosMW47F67NBOqlCOn3XNQBEEuUQ/Ab5S5Hcw3LKbAp76OswMcZSmAfitH6blCw7lul2KuP8f52CwpcAXKntVdMWn07pV2h01FECio=
+	t=1728992915; cv=none; b=Ga4UdMvGTUGh+koCCbcdPHLuTCh206OsQHu+pxJaPhfXL828FOYba1jW6sWF3lZDXMA4J//NFOPkZU9dQ2JOT8SDCK3G+zR9HUsSjzv+UwaxAS6z8+hI2k8hjs5/272jRusqe/CY9dnqY6lEMdh0gtGz+psyQ+krFmUmpk5f9sI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992912; c=relaxed/simple;
-	bh=KVHyR/DP5RBhCcq0YX6krS35vL3sy6WZun9UcUKMc+Y=;
+	s=arc-20240116; t=1728992915; c=relaxed/simple;
+	bh=nyTwTPYiLaGISJhWvp3C4jNisZD0Kkk8cX8n1LLVqlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o7zAv916bWTeITpTH2ZitN3kEf0THbH6jNkgZqfk4Ww12drFjNKegCaNtioFf8EKF7ue7pWlnnm8lQ1frE1108BT2K/ffXUHrXEVo5+CskxgUzsaOYtxqcH6rWpSGb0eTuuV5JqUGcHiSESVtavfjXdqJl2gBvrIL2Y+K9/Z2Ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ti0ywYvo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EZQrVIdfFZRqTaPzlMdhYOGll+RJN6mZl+0Kfq1ZsBsPlkrM0sl31p/SEuHG4SlOsnPdzkfh7QOpIrBo2VpOKkDpToPXV7t+SgUb3T5CpMhSPiMMf8ndET5fsweSFWLi35KTAX90VbmL8QB8popGj7mGKRKWwOip/RUQ/SHYdkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mi5Vwcam; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ti0ywYvo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BA6C4CECE;
-	Tue, 15 Oct 2024 11:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mi5Vwcam"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C347CC4CEC6;
+	Tue, 15 Oct 2024 11:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992911;
-	bh=KVHyR/DP5RBhCcq0YX6krS35vL3sy6WZun9UcUKMc+Y=;
+	s=korg; t=1728992915;
+	bh=nyTwTPYiLaGISJhWvp3C4jNisZD0Kkk8cX8n1LLVqlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ti0ywYvoo/yxlQqeJbqq8r7+3O1UbWh69M4EF3VwOUBsq0emqXjgqNXWpTuArg1JZ
-	 pVEA4VZmZwsIEgnzOca2/EnenGs6Ew0+1Cql2+dEGqH6iIzpNggYXzN36BJc9jF9DX
-	 XyAGZMZreqtKUVcKgCM386IHTIpfDwZiWaXSWxOo=
+	b=Mi5Vwcam66zaT9BKXEh5pc0b1a602J0vTDMBzEkgLXPR/fd6Pt1CKmx1lMk0757on
+	 7YnIAApMDtzeI3F6CHsZPzH6raZxJX6o40Wc7EEZ9y1tfwGfRN1U1e9TjNReor/lda
+	 rCyP2hYul7QQYD7eGmxi2dgzgEu4anW0UHROtK58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Lobanov <m.lobanov@rosalinux.ru>,
+	Vitaliy Shevtsov <v.shevtsov@maxima.ru>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 256/691] RDMA/cxgb4: Added NULL check for lookup_atid
-Date: Tue, 15 Oct 2024 13:23:24 +0200
-Message-ID: <20241015112450.511709311@linuxfoundation.org>
+Subject: [PATCH 5.15 257/691] RDMA/irdma: fix error message in irdma_modify_qp_roce()
+Date: Tue, 15 Oct 2024 13:23:25 +0200
+Message-ID: <20241015112450.551030845@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,50 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Lobanov <m.lobanov@rosalinux.ru>
+From: Vitaliy Shevtsov <v.shevtsov@maxima.ru>
 
-[ Upstream commit e766e6a92410ca269161de059fff0843b8ddd65f ]
+[ Upstream commit 9f0eafe86ea0a589676209d0cff1a1ed49a037d3 ]
 
-The lookup_atid() function can return NULL if the ATID is
-invalid or does not exist in the identifier table, which
-could lead to dereferencing a null pointer without a
-check in the `act_establish()` and `act_open_rpl()` functions.
-Add a NULL check to prevent null pointer dereferencing.
+Use a correct field max_dest_rd_atomic instead of max_rd_atomic for the
+error output.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Found by Linux Verification Center (linuxtesting.org) with Svace.
 
-Fixes: cfdda9d76436 ("RDMA/cxgb4: Add driver for Chelsio T4 RNIC")
-Signed-off-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
-Link: https://patch.msgid.link/20240912145844.77516-1-m.lobanov@rosalinux.ru
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Signed-off-by: Vitaliy Shevtsov <v.shevtsov@maxima.ru>
+Link: https://lore.kernel.org/stable/20240916165817.14691-1-v.shevtsov%40maxima.ru
+Link: https://patch.msgid.link/20240916165817.14691-1-v.shevtsov@maxima.ru
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/cxgb4/cm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/hw/irdma/verbs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
-index f159cbb6bb3ea..e6343c89c892e 100644
---- a/drivers/infiniband/hw/cxgb4/cm.c
-+++ b/drivers/infiniband/hw/cxgb4/cm.c
-@@ -1222,6 +1222,8 @@ static int act_establish(struct c4iw_dev *dev, struct sk_buff *skb)
- 	int ret;
- 
- 	ep = lookup_atid(t, atid);
-+	if (!ep)
-+		return -EINVAL;
- 
- 	pr_debug("ep %p tid %u snd_isn %u rcv_isn %u\n", ep, tid,
- 		 be32_to_cpu(req->snd_isn), be32_to_cpu(req->rcv_isn));
-@@ -2279,6 +2281,9 @@ static int act_open_rpl(struct c4iw_dev *dev, struct sk_buff *skb)
- 	int ret = 0;
- 
- 	ep = lookup_atid(t, atid);
-+	if (!ep)
-+		return -EINVAL;
-+
- 	la = (struct sockaddr_in *)&ep->com.local_addr;
- 	ra = (struct sockaddr_in *)&ep->com.remote_addr;
- 	la6 = (struct sockaddr_in6 *)&ep->com.local_addr;
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index d43833e141a02..b2bf147883edb 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -1258,7 +1258,7 @@ int irdma_modify_qp_roce(struct ib_qp *ibqp, struct ib_qp_attr *attr,
+ 		if (attr->max_dest_rd_atomic > dev->hw_attrs.max_hw_ird) {
+ 			ibdev_err(&iwdev->ibdev,
+ 				  "rd_atomic = %d, above max_hw_ird=%d\n",
+-				   attr->max_rd_atomic,
++				   attr->max_dest_rd_atomic,
+ 				   dev->hw_attrs.max_hw_ird);
+ 			return -EINVAL;
+ 		}
 -- 
 2.43.0
 
