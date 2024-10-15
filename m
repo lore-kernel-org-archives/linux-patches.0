@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DF01C07C2;
-	Tue, 15 Oct 2024 12:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061991C07F6;
+	Tue, 15 Oct 2024 12:59:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997190; cv=none; b=Co6qI6eGLqUmjsBHtJ7bChn7SmhSgwDphx5j4c0aW/NcazHFvZbjJDdNzHl9W+42Hukf7Okzud05HAAgZ//H7COCSfhjOzv/eOdx+1u+Uuu2TEl5rnZn6TbuEeK9goMOJZCspY51X+jDyETGgOhgWY2kQQOziGhHPoptSpE4mIs=
+	t=1728997194; cv=none; b=hKT/2corFXd+v59qlxmEuk7G/xdF1hKrePDbDlpMG+4nqmC84qyrCjJP9ZNFX1fwIHmYmpJjGc8eOLvT+FYJMuE/rfsbI91f/jEls/kv1DtyzH3H5naicOeVXfyLJ8F16KqGcj/sflmhxnJJ3G9Fkj7ElqKa9UEalnWY8qQlWXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997190; c=relaxed/simple;
-	bh=HChRqMU6XAK00BYI/k3ynuclXi6UsZRbyAlzco3hH14=;
+	s=arc-20240116; t=1728997194; c=relaxed/simple;
+	bh=xHbsyrhtw8OK6+3EUpsxkwwlG3RhpWjT9V4GTzMNeho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCZNHprWE1YXQqomXCEvKhee1NDBixADG5ACjrWhmTfXhfCq4yrApx2hlNzpOrGdrkmY/SG4YLwDTGIj5jKACVZh/MmItjvhKjpz9mrFS+0XQSms5OtMdnj5+vsvuYsUAEnnlzf75DK0FVBkgU+LVc3inuGOm3lisNJ1se0pvsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BW4LQZ/p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eg16ysLYWEznhn9M0xs4xfhhbOsbHXv+nj+F475i+qZV2BQcHqb+7s9khT9slC4T5DH/iOSuEtuIRiCXnOBcyih6keCe0lqlflXB6A1hNskWYi4lWlAU4O4p5aK+5il3NW8aGwPBXqWw6LiWv/0gwon7SVUycuyT0JTsHr+bAHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sgxt0vLr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BW4LQZ/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65A2C4CEC6;
-	Tue, 15 Oct 2024 12:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sgxt0vLr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A541C4CEC6;
+	Tue, 15 Oct 2024 12:59:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997190;
-	bh=HChRqMU6XAK00BYI/k3ynuclXi6UsZRbyAlzco3hH14=;
+	s=korg; t=1728997193;
+	bh=xHbsyrhtw8OK6+3EUpsxkwwlG3RhpWjT9V4GTzMNeho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BW4LQZ/pJf35yRXl0F0e8Ea+iqcE7NxBbqqcxjEHbLVFqXwL2S4S1d2ZWB5GmKcnW
-	 dfAvEjmmahx8nJYyfDrn1F4mCnI5z7y2+IfDJ5o+rv03Gd0bVvO+csGhsukufwcSTw
-	 n2jEctc+LtxydEPx3u33liHz+IYFjHkhcMRgGX2M=
+	b=sgxt0vLrKwFDdwbWeGDU34OKEj2jm+ANPzVmhwXt9vI6LsvcCA52Tt2wwpvkyyz/e
+	 W/1qShBL7J2FN3Lv2qngCVSeSzvUgwlKTy/tS0lXmLh0owU+8VZ0Bc2BE0eUJS4b9H
+	 Fc2tQuPgwoKEPGRJOb5B6x2CMOZb4Np9WoiwLzUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 113/518] mtd: powernv: Add check devm_kasprintf() returned value
-Date: Tue, 15 Oct 2024 14:40:17 +0200
-Message-ID: <20241015123921.360909233@linuxfoundation.org>
+Subject: [PATCH 5.10 114/518] drm/stm: Fix an error handling path in stm_drm_platform_probe()
+Date: Tue, 15 Oct 2024 14:40:18 +0200
+Message-ID: <20241015123921.398984639@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,36 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 395999829880a106bb95f0ce34e6e4c2b43c6a5d ]
+[ Upstream commit ce7c90bfda2656418c69ba0dd8f8a7536b8928d4 ]
 
-devm_kasprintf() can return a NULL pointer on failure but this
-returned value is not checked.
+If drm_dev_register() fails, a call to drv_load() must be undone, as
+already done in the remove function.
 
-Fixes: acfe63ec1c59 ("mtd: Convert to using %pOFn instead of device_node.name")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240828092427.128177-1-hanchunchao@inspur.com
+Fixes: b759012c5fa7 ("drm/stm: Add STM32 LTDC driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20fff7f853f20a48a96db8ff186124470ec4d976.1704560028.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/devices/powernv_flash.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/stm/drv.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/devices/powernv_flash.c b/drivers/mtd/devices/powernv_flash.c
-index 0b757d9ba2f6b..0ab64a1cec09e 100644
---- a/drivers/mtd/devices/powernv_flash.c
-+++ b/drivers/mtd/devices/powernv_flash.c
-@@ -204,6 +204,9 @@ static int powernv_flash_set_driver_info(struct device *dev,
- 	 * get them
- 	 */
- 	mtd->name = devm_kasprintf(dev, GFP_KERNEL, "%pOFP", dev->of_node);
-+	if (!mtd->name)
-+		return -ENOMEM;
-+
- 	mtd->type = MTD_NORFLASH;
- 	mtd->flags = MTD_WRITEABLE;
- 	mtd->size = size;
+diff --git a/drivers/gpu/drm/stm/drv.c b/drivers/gpu/drm/stm/drv.c
+index 411103f013e25..08c50e68cfca6 100644
+--- a/drivers/gpu/drm/stm/drv.c
++++ b/drivers/gpu/drm/stm/drv.c
+@@ -195,12 +195,14 @@ static int stm_drm_platform_probe(struct platform_device *pdev)
+ 
+ 	ret = drm_dev_register(ddev, 0);
+ 	if (ret)
+-		goto err_put;
++		goto err_unload;
+ 
+ 	drm_fbdev_generic_setup(ddev, 16);
+ 
+ 	return 0;
+ 
++err_unload:
++	drv_unload(ddev);
+ err_put:
+ 	drm_dev_put(ddev);
+ 
 -- 
 2.43.0
 
