@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27861D5ACD;
-	Tue, 15 Oct 2024 11:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEC619B3FF;
+	Tue, 15 Oct 2024 11:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992379; cv=none; b=Xiar0lYu7Ql/X+RMmiLA7i+4dn77B1p6q3CS8MopK3mOPS1pZ/jtx1KFAoGIf6E6BcLQuDAWy1CNBaPAyU0suFexAbBKecsHcn8rueJyN9LNtPfOguJaWI5Q/fDuRycbDodImpvAsZxMNpzKJd9g+MDpynYWTw1R7KW67KjdwDI=
+	t=1728992383; cv=none; b=nKR9C/UG5Nw8oCq2H/gxaFIWSF4g5E4M7AE1FKm7A9Xbpcnfcw7/t71XM2mcii7KeLQgF5JhcfMg8dGp+/BrcM+4b2T492TLjg/Z4wxWOM4MsyviRhNZ12dkNQOw7jcSvVkhfv4QpGOOxXozbAnzsa/T6sP2mAMLc37NtpQZ1IE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992379; c=relaxed/simple;
-	bh=8nDnNDeuy3LEcUWD9DvFqdUrirqBcG6cn8RHN3Ssg2c=;
+	s=arc-20240116; t=1728992383; c=relaxed/simple;
+	bh=ybXjkPg5W1NBf48tCocQqTY58FDFudjSXWpEUndXZKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pKCLh1vHoOGVo5LrVSr6XK7SRs30Isnh+UiYE9CQmShWUaDmIXYUodu7lw2MOxXCQVjE4t6ZsK598EE0DBGR4szcbIFoN4fpSubjYRJt6PO/SNmzOk9rQQAaLhF/gAmy1Vy8tSYhHzgUczPDqOB39h4anSCN6ZiFO1TyBrwe7wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHBHhGgc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gmsuzPTmmlYa9bSIFXtOj8uz+i74ndztAgKd+hVJTg7RmeZgYBPBdOSBO/25VwVGw6iSRXwbQqM8mUsLiqlJO/i++7mY8+cxO0MDeHRMpepWaInF0bdGpaZ5wWvDYUVnGPIw8mFKhr1cB32b8i9+enGtBmoabxuCDM8E4rocqX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UA4TMNqI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHBHhGgc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8CAC4CEC6;
-	Tue, 15 Oct 2024 11:39:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UA4TMNqI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D336C4CEC6;
+	Tue, 15 Oct 2024 11:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992379;
-	bh=8nDnNDeuy3LEcUWD9DvFqdUrirqBcG6cn8RHN3Ssg2c=;
+	s=korg; t=1728992382;
+	bh=ybXjkPg5W1NBf48tCocQqTY58FDFudjSXWpEUndXZKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vHBHhGgcRz/kow0Dg9GUNb/XD68+dPLgTf72JfqmUvWdS3ZPPYXNPq08uIygjzLif
-	 1bLTiJrfljAUdhNHrIucPGEs25l38xQmyfZcd8XUVkUTec2sYclYv1nRJ1RracpAF6
-	 jZ0UCwoULEukGB7NeWQhZVXop7H9+1EHR7/41Q7E=
+	b=UA4TMNqI3DNfqvblXsBCpfgGSSwuhFEoTVp7hmlaOMYL2T3yZlMCFouwGZ+2EbwIq
+	 UA3iZA2H1pfrrlEKwc05fDxeuYFE7b6ZlvaCEblwBqjC4rHZ4NrLMVQExDsu92qpb0
+	 h2PCa4pzk5jQVmkJwpFPQ97URSAX5lEXs4RnPhhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Tobias <dan.g.tob@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Feiyang Chen <chenfeiyang@loongson.cn>,
+	Yinggang Gu <guyinggang@loongson.cn>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Yanteng Si <siyanteng@loongson.cn>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 099/691] wifi: ath9k: Remove error checks when creating debugfs entries
-Date: Tue, 15 Oct 2024 13:20:47 +0200
-Message-ID: <20241015112444.290913257@linuxfoundation.org>
+Subject: [PATCH 5.15 100/691] net: stmmac: dwmac-loongson: Init ref and PTP clocks rate
+Date: Tue, 15 Oct 2024 13:20:48 +0200
+Message-ID: <20241015112444.331127027@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -46,69 +49,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Yanteng Si <siyanteng@loongson.cn>
 
-[ Upstream commit f6ffe7f0184792c2f99aca6ae5b916683973d7d3 ]
+[ Upstream commit c70f3163681381c15686bdd2fe56bf4af9b8aaaa ]
 
-We should not be checking the return values from debugfs creation at all: the
-debugfs functions are designed to handle errors of previously called functions
-and just transparently abort the creation of debugfs entries when debugfs is
-disabled. If we check the return value and abort driver initialisation, we break
-the driver if debugfs is disabled (such as when booting with debugfs=off).
+Reference and PTP clocks rate of the Loongson GMAC devices is 125MHz.
+(So is in the GNET devices which support is about to be added.) Set
+the respective plat_stmmacenet_data field up in accordance with that
+so to have the coalesce command and timestamping work correctly.
 
-Earlier versions of ath9k accidentally did the right thing by checking the
-return value, but only for NULL, not for IS_ERR(). This was "fixed" by the two
-commits referenced below, breaking ath9k with debugfs=off starting from the 6.6
-kernel (as reported in the Bugzilla linked below).
-
-Restore functionality by just getting rid of the return value check entirely.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219122
-Fixes: 1e4134610d93 ("wifi: ath9k: use IS_ERR() with debugfs_create_dir()")
-Fixes: 6edb4ba6fb5b ("wifi: ath9k: fix parameter check in ath9k_init_debug()")
-Reported-by: Daniel Tobias <dan.g.tob@gmail.com>
-Tested-by: Daniel Tobias <dan.g.tob@gmail.com>
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://patch.msgid.link/20240805110225.19690-1-toke@toke.dk
+Fixes: 30bba69d7db4 ("stmmac: pci: Add dwmac support for Loongson")
+Signed-off-by: Feiyang Chen <chenfeiyang@loongson.cn>
+Signed-off-by: Yinggang Gu <guyinggang@loongson.cn>
+Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
+Acked-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Yanteng Si <siyanteng@loongson.cn>
+Tested-by: Serge Semin <fancer.lancer@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/debug.c         | 2 --
- drivers/net/wireless/ath/ath9k/htc_drv_debug.c | 2 --
- 2 files changed, 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath9k/debug.c b/drivers/net/wireless/ath/ath9k/debug.c
-index 4badc4c453f3a..f6f63923966af 100644
---- a/drivers/net/wireless/ath/ath9k/debug.c
-+++ b/drivers/net/wireless/ath/ath9k/debug.c
-@@ -1371,8 +1371,6 @@ int ath9k_init_debug(struct ath_hw *ah)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
+index da7b5d26a5897..da2e68d616225 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
+@@ -35,6 +35,9 @@ static int loongson_default_data(struct plat_stmmacenet_data *plat)
+ 	/* Disable RX queues routing by default */
+ 	plat->rx_queues_cfg[0].pkt_route = 0x0;
  
- 	sc->debug.debugfs_phy = debugfs_create_dir("ath9k",
- 						   sc->hw->wiphy->debugfsdir);
--	if (IS_ERR(sc->debug.debugfs_phy))
--		return -ENOMEM;
- 
- #ifdef CONFIG_ATH_DEBUG
- 	debugfs_create_file("debug", 0600, sc->debug.debugfs_phy,
-diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-index e79bbcd3279af..81332086e2899 100644
---- a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-@@ -491,8 +491,6 @@ int ath9k_htc_init_debug(struct ath_hw *ah)
- 
- 	priv->debug.debugfs_phy = debugfs_create_dir(KBUILD_MODNAME,
- 					     priv->hw->wiphy->debugfsdir);
--	if (IS_ERR(priv->debug.debugfs_phy))
--		return -ENOMEM;
- 
- 	ath9k_cmn_spectral_init_debug(&priv->spec_priv, priv->debug.debugfs_phy);
++	plat->clk_ref_rate = 125000000;
++	plat->clk_ptp_rate = 125000000;
++
+ 	/* Default to phy auto-detection */
+ 	plat->phy_addr = -1;
  
 -- 
 2.43.0
