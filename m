@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BB41AB534;
-	Tue, 15 Oct 2024 11:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212C219B3FF;
+	Tue, 15 Oct 2024 11:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992842; cv=none; b=fOudl0DUZgmXlS0/6qU1dnIQAP/1CmTKYzK3L8QEgXU2hs7ns4BgwgpoCrdeUtSJGf7iq4E2RXbPP20iOoKSKvuu6Xw6n5ea3X1gd/6N0Vk+bdch3sTblMlK3w/1u/iNtKNagZW/ZNyLpyLzDoqaBHuCltdibRfQDX8sha//K8E=
+	t=1728992848; cv=none; b=XUgWNvQxg67VQTr2ZES/HVcl1xbYD/Pse0azQ5nVt9zheP38VWCTEmheDSIQLDKEVDCpB+ABaN1qAbk833HuYT3oRN+AotbP+Kj7x+KVgtR9MfKSwDAWhTeVO2mtY7gwRMRWijmq1WCu/mSwiWJk+WPx1XnTFkJTa6FZ7rodhDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992842; c=relaxed/simple;
-	bh=KkimE9/4u9tC+5zVou75JIODmK5UvRR42SYENH/cq1w=;
+	s=arc-20240116; t=1728992848; c=relaxed/simple;
+	bh=1BBd6EJ42SrOvOJsQskzihVmZGoPYIOV7RIjdU0P+ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lccGXHQQpgS1+UraP3101shIHrXZXmx0GkqO3rZJVDdde2Hsqrd2cDjmE6T154EAi1qamiXrnwNlMQadjLeeNdwNgWr8skacng1oY0cac1UXJd8vPzjJr68F8KeIpZVV+4omHdtBdSndp2E8TKKwxHOhjeMu7mIthRm1ZAi+yWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcpDo/US; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nTDAJUhPhIO55NPPCRRHo6Y0yGUvUrUCLngh64u5cfygV6IDsNvwLPj7lalXY/1AxBFm9cchjtuNrSw8O5WOAwlrQGjESxDwswDBq3ijm8LT6S9m62uQA797HX10vehLRoMfDtZQBwvs7FLuqB3KlDCTlAZwl6MjfgoE705qj7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcBoftkD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcpDo/US"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E8CC4CECE;
-	Tue, 15 Oct 2024 11:47:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcBoftkD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 295BEC4CECF;
+	Tue, 15 Oct 2024 11:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992842;
-	bh=KkimE9/4u9tC+5zVou75JIODmK5UvRR42SYENH/cq1w=;
+	s=korg; t=1728992845;
+	bh=1BBd6EJ42SrOvOJsQskzihVmZGoPYIOV7RIjdU0P+ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NcpDo/USdjclq41mxW8xlZX1OxyTkGLztMdP36prdAHOg51fMVcYbH7uYngoSITlb
-	 ulDuMzFdaRn7SpuLlZ1TsEjbLD60QDzKIxC/lLtJj20k677DnebyGxQ3Qgr7qcV4Uq
-	 3/xX9DqZI+lzAqzy81vHsbXrxh4oBYopTMJAN2ik=
+	b=UcBoftkDkiE7MQHjNxEfV16OhW+5i2SDr9jChl2QQozGR09aHHopAzlQNFE+A04KR
+	 wS7iSJ9mjGhNfUPmnACIOUY2eaD5heqqeIKSh7x17LIO2FAEUBCkPKO3pzLfGe1/bz
+	 5etyVrYR+TRM3ShP/AouDpepfxvAFHJep/wud1/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sean Anderson <sean.anderson@linux.dev>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 234/691] PCI: xilinx-nwl: Fix register misspelling
-Date: Tue, 15 Oct 2024 13:23:02 +0200
-Message-ID: <20241015112449.645226605@linuxfoundation.org>
+Subject: [PATCH 5.15 235/691] PCI: xilinx-nwl: Clean up clock on probe failure/removal
+Date: Tue, 15 Oct 2024 13:23:03 +0200
+Message-ID: <20241015112449.684284630@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,58 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit a437027ae1730b8dc379c75fa0dd7d3036917400 ]
+[ Upstream commit cfd67903977b13f63340a4eb5a1cc890994f2c62 ]
 
-MSIC -> MISC
+Make sure we turn off the clock on probe failure and device removal.
 
-Fixes: c2a7ff18edcd ("PCI: xilinx-nwl: Expand error logging")
-Link: https://lore.kernel.org/r/20240531161337.864994-4-sean.anderson@linux.dev
+Fixes: de0a01f52966 ("PCI: xilinx-nwl: Enable the clock through CCF")
+Link: https://lore.kernel.org/r/20240531161337.864994-6-sean.anderson@linux.dev
 Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-xilinx-nwl.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/pci/controller/pcie-xilinx-nwl.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/pci/controller/pcie-xilinx-nwl.c b/drivers/pci/controller/pcie-xilinx-nwl.c
-index a72b4f9a2b001..e1bcdd2e46484 100644
+index e1bcdd2e46484..280c569c5dcb0 100644
 --- a/drivers/pci/controller/pcie-xilinx-nwl.c
 +++ b/drivers/pci/controller/pcie-xilinx-nwl.c
-@@ -81,8 +81,8 @@
- #define MSGF_MISC_SR_NON_FATAL_DEV	BIT(22)
- #define MSGF_MISC_SR_FATAL_DEV		BIT(23)
- #define MSGF_MISC_SR_LINK_DOWN		BIT(24)
--#define MSGF_MSIC_SR_LINK_AUTO_BWIDTH	BIT(25)
--#define MSGF_MSIC_SR_LINK_BWIDTH	BIT(26)
-+#define MSGF_MISC_SR_LINK_AUTO_BWIDTH	BIT(25)
-+#define MSGF_MISC_SR_LINK_BWIDTH	BIT(26)
+@@ -808,6 +808,7 @@ static int nwl_pcie_probe(struct platform_device *pdev)
+ 		return -ENODEV;
  
- #define MSGF_MISC_SR_MASKALL		(MSGF_MISC_SR_RXMSG_AVAIL | \
- 					MSGF_MISC_SR_RXMSG_OVER | \
-@@ -97,8 +97,8 @@
- 					MSGF_MISC_SR_NON_FATAL_DEV | \
- 					MSGF_MISC_SR_FATAL_DEV | \
- 					MSGF_MISC_SR_LINK_DOWN | \
--					MSGF_MSIC_SR_LINK_AUTO_BWIDTH | \
--					MSGF_MSIC_SR_LINK_BWIDTH)
-+					MSGF_MISC_SR_LINK_AUTO_BWIDTH | \
-+					MSGF_MISC_SR_LINK_BWIDTH)
+ 	pcie = pci_host_bridge_priv(bridge);
++	platform_set_drvdata(pdev, pcie);
  
- /* Legacy interrupt status mask bits */
- #define MSGF_LEG_SR_INTA		BIT(0)
-@@ -302,10 +302,10 @@ static irqreturn_t nwl_pcie_misc_handler(int irq, void *data)
- 	if (misc_stat & MSGF_MISC_SR_FATAL_DEV)
- 		dev_err(dev, "Fatal Error Detected\n");
+ 	pcie->dev = dev;
+ 	pcie->ecam_value = NWL_ECAM_VALUE_DEFAULT;
+@@ -831,13 +832,13 @@ static int nwl_pcie_probe(struct platform_device *pdev)
+ 	err = nwl_pcie_bridge_init(pcie);
+ 	if (err) {
+ 		dev_err(dev, "HW Initialization failed\n");
+-		return err;
++		goto err_clk;
+ 	}
  
--	if (misc_stat & MSGF_MSIC_SR_LINK_AUTO_BWIDTH)
-+	if (misc_stat & MSGF_MISC_SR_LINK_AUTO_BWIDTH)
- 		dev_info(dev, "Link Autonomous Bandwidth Management Status bit set\n");
+ 	err = nwl_pcie_init_irq_domain(pcie);
+ 	if (err) {
+ 		dev_err(dev, "Failed creating IRQ Domain\n");
+-		return err;
++		goto err_clk;
+ 	}
  
--	if (misc_stat & MSGF_MSIC_SR_LINK_BWIDTH)
-+	if (misc_stat & MSGF_MISC_SR_LINK_BWIDTH)
- 		dev_info(dev, "Link Bandwidth Management Status bit set\n");
+ 	bridge->sysdata = pcie;
+@@ -847,11 +848,24 @@ static int nwl_pcie_probe(struct platform_device *pdev)
+ 		err = nwl_pcie_enable_msi(pcie);
+ 		if (err < 0) {
+ 			dev_err(dev, "failed to enable MSI support: %d\n", err);
+-			return err;
++			goto err_clk;
+ 		}
+ 	}
  
- 	/* Clear misc interrupt status */
+-	return pci_host_probe(bridge);
++	err = pci_host_probe(bridge);
++	if (!err)
++		return 0;
++
++err_clk:
++	clk_disable_unprepare(pcie->clk);
++	return err;
++}
++
++static void nwl_pcie_remove(struct platform_device *pdev)
++{
++	struct nwl_pcie *pcie = platform_get_drvdata(pdev);
++
++	clk_disable_unprepare(pcie->clk);
+ }
+ 
+ static struct platform_driver nwl_pcie_driver = {
+@@ -861,5 +875,6 @@ static struct platform_driver nwl_pcie_driver = {
+ 		.of_match_table = nwl_pcie_of_match,
+ 	},
+ 	.probe = nwl_pcie_probe,
++	.remove_new = nwl_pcie_remove,
+ };
+ builtin_platform_driver(nwl_pcie_driver);
 -- 
 2.43.0
 
