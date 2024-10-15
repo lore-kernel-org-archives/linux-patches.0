@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6587B1EBFF2;
-	Tue, 15 Oct 2024 12:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346731EABCC;
+	Tue, 15 Oct 2024 12:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994396; cv=none; b=E1tgSMakgxZOoFEnvY/jV31zgMMOygZT32prXbT9gIAirZuNBUK68pb4UPP0BEYcBM2SXJZsQOLpSLq7+TcY6bPFJA4+UKatN2NGKnE4b4b/bM7xdQLV+Gsf4BhE0P69k4tXDHK90/kSKRTmcDkHy8udAtosV/Y2aMZO+5ATHKY=
+	t=1728994400; cv=none; b=PogRqOIfA+rvXnx668ygnHs1AO3fByw0302irpK7SwIa6CiE6EOhujBo31gcH0qfVLpw2NgDaA514BVc+4Uty5OME6G3apuVmvZmxgofyotApnacillcd8qkzxTus6QHSRn9wwgEUx8lBIwkmgNasxLGVrateDjmHC02CYTEhJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994396; c=relaxed/simple;
-	bh=x959NdzhK7Ip50wcrzC3S1AAmzYvy4+VU71iXkAPYVA=;
+	s=arc-20240116; t=1728994400; c=relaxed/simple;
+	bh=mqsOVb0QbKYhUPa2ZsKo5XROwq407AOupFyhWJEMLOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bNsRA5+p7lyee4a62GKeW7lfGGG89RL4wiJnX5WN8Q3hlbIt91z6zEqZkrbDxt44D4B3DxdnSw33oP88gbslG4zMbaXGnlcKSxrJ6NaVI5ca9KM6eZUtbW38pCxK0+3e8x9I8rhI8o6ory5rkTIuY+g9y3qVN8gDWz1WLq5txcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMGme+tj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pXgOChU7X2x0U+FIz5IA51U9qdJbVSV/JGB5SKU2Kl4Bmcq+b4waquQaTYuTT9+rcxj0Q/4BRHjqG2xC4g+ly5C2SkbRpeCABnNmJVjqU1usmcM7DLELpPY7u1LsXMi0DojY+eSHIRulPxMoCSgsDGyTz/bB98OKlHn8n1yNI2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBAssxHv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMGme+tj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB335C4CEC6;
-	Tue, 15 Oct 2024 12:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBAssxHv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5F0C4CEC6;
+	Tue, 15 Oct 2024 12:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994396;
-	bh=x959NdzhK7Ip50wcrzC3S1AAmzYvy4+VU71iXkAPYVA=;
+	s=korg; t=1728994399;
+	bh=mqsOVb0QbKYhUPa2ZsKo5XROwq407AOupFyhWJEMLOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMGme+tjHLsYgb8HjjCXJxXgH/jn5izCXJzklH1JowT5+jBv7bYRppU9i/gr3I4K4
-	 Bt+p5ygkTjF3HDnW3oPnnxTviGIc7gBfi7kPE68T08fuMBm0t/Ge3wfZ/UlXjNsFu+
-	 WFUv4yH61Kmgbwd86ddGMn0irc54tdNo0d5c5ahw=
+	b=zBAssxHvnvh/QsiGIyY0usXuuWfZb6dXxZTkqab6HOVfVVfvDWeg3qKBqr/oGKwBx
+	 hAmm4Msf2lgI7QIJ9N4KOYHwlNMnu0EJKqi9YReFSTIoVAQGjbFegcV1q6/bbrqcpP
+	 wAfAC/vrIl/BRqcT++nD6K3u/BojGMqSAkKeetk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0591ccf54ee05344e4eb@syzkaller.appspotmail.com,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 5.15 681/691] i2c: smbus: Check for parent device before dereference
-Date: Tue, 15 Oct 2024 13:30:29 +0200
-Message-ID: <20241015112507.350639168@linuxfoundation.org>
+	Eyal Birger <eyal.birger@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 682/691] net: geneve: add missing netlink policy and size for IFLA_GENEVE_INNER_PROTO_INHERIT
+Date: Tue, 15 Oct 2024 13:30:30 +0200
+Message-ID: <20241015112507.390835796@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -45,48 +44,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Eyal Birger <eyal.birger@gmail.com>
 
-commit 8302532f47bb6c3aa1ed2043d30187ca307f176a upstream.
+commit 36c2e31ad25bd087756b8db9584994d1d80c236b upstream.
 
-An I²C adapter might be instantiated without parent. In such case
-there is no property can be retrieved. Skip SMBus alert setup when
-this happens.
+Add missing netlink attribute policy and size calculation.
+Also enable strict validation from this new attribute onwards.
 
-Fixes: a263a84088f6 ("i2c: smbus: Use device_*() functions instead of of_*()")
-Reported-by: syzbot+0591ccf54ee05344e4eb@syzkaller.appspotmail.com
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fixes: 435fe1c0c1f7 ("net: geneve: support IPv4/IPv6 as inner protocol")
+Signed-off-by: Eyal Birger <eyal.birger@gmail.com>
+Link: https://lore.kernel.org/r/20220322043954.3042468-1-eyal.birger@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-smbus.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/geneve.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/i2c/i2c-core-smbus.c
-+++ b/drivers/i2c/i2c-core-smbus.c
-@@ -705,10 +705,14 @@ EXPORT_SYMBOL_GPL(i2c_new_smbus_alert_de
- #if IS_ENABLED(CONFIG_I2C_SMBUS)
- int i2c_setup_smbus_alert(struct i2c_adapter *adapter)
- {
-+	struct device *parent = adapter->dev.parent;
- 	int irq;
+--- a/drivers/net/geneve.c
++++ b/drivers/net/geneve.c
+@@ -1280,6 +1280,7 @@ static void geneve_setup(struct net_devi
+ }
  
--	irq = device_property_match_string(adapter->dev.parent, "interrupt-names",
--					   "smbus_alert");
-+	/* Adapter instantiated without parent, skip the SMBus alert setup */
-+	if (!parent)
-+		return 0;
-+
-+	irq = device_property_match_string(parent, "interrupt-names", "smbus_alert");
- 	if (irq == -EINVAL || irq == -ENODATA)
- 		return 0;
- 	else if (irq < 0)
+ static const struct nla_policy geneve_policy[IFLA_GENEVE_MAX + 1] = {
++	[IFLA_GENEVE_UNSPEC]		= { .strict_start_type = IFLA_GENEVE_INNER_PROTO_INHERIT },
+ 	[IFLA_GENEVE_ID]		= { .type = NLA_U32 },
+ 	[IFLA_GENEVE_REMOTE]		= { .len = sizeof_field(struct iphdr, daddr) },
+ 	[IFLA_GENEVE_REMOTE6]		= { .len = sizeof(struct in6_addr) },
+@@ -1293,6 +1294,7 @@ static const struct nla_policy geneve_po
+ 	[IFLA_GENEVE_UDP_ZERO_CSUM6_RX]	= { .type = NLA_U8 },
+ 	[IFLA_GENEVE_TTL_INHERIT]	= { .type = NLA_U8 },
+ 	[IFLA_GENEVE_DF]		= { .type = NLA_U8 },
++	[IFLA_GENEVE_INNER_PROTO_INHERIT]	= { .type = NLA_FLAG },
+ };
+ 
+ static int geneve_validate(struct nlattr *tb[], struct nlattr *data[],
+@@ -1798,6 +1800,7 @@ static size_t geneve_get_size(const stru
+ 		nla_total_size(sizeof(__u8)) + /* IFLA_GENEVE_UDP_ZERO_CSUM6_TX */
+ 		nla_total_size(sizeof(__u8)) + /* IFLA_GENEVE_UDP_ZERO_CSUM6_RX */
+ 		nla_total_size(sizeof(__u8)) + /* IFLA_GENEVE_TTL_INHERIT */
++		nla_total_size(0) +	 /* IFLA_GENEVE_INNER_PROTO_INHERIT */
+ 		0;
+ }
+ 
 
 
