@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CEF1C07FF;
-	Tue, 15 Oct 2024 13:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F721C07FF;
+	Tue, 15 Oct 2024 13:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997764; cv=none; b=G2BywNl+hziq/iLVOiUqiteQOdq9Y2r+d/xZPpc1A9R0/2I9a89QY5fbtzDQi5dafs+A//VBZhfjTWZyDMz7LZBoWETmNsi4VeuJJPFxHX4oAvSQExO0tG59VH5U7KSNTX9mgvV60Re/L9zTcnh8NmmFSytJbdcXm5w5iZgU/VU=
+	t=1728997767; cv=none; b=RpVWVzaAgtUKxY2pOhtuHO8s2UUCt8CWv4gMOnDoiO1QuiJ9k0NVK9jwyFtDJRoaJJRJdDcST8q4LKxQA+GZo7ygHlOeJqPJhwAzJr1bFk5UGwaz3+67IB+7PdiuAKkB/DW73UN+Z0VkasPQ6A7czENxCjuztrB7RWtX8KsAZBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997764; c=relaxed/simple;
-	bh=chwPUUbhdy9YI5s7McPcLdCqC/FrFoVwIMFtGe9dBFM=;
+	s=arc-20240116; t=1728997767; c=relaxed/simple;
+	bh=y6M5wzo5V3fRnK+ipfht1sACM64hivcu+e+jUYDL3NQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WITJbztx5RTVEhIk+AISj3ELnD6JA6yWrXYSUeoD82gzDHeg5cIjsayS3wSJa7Y8ATmowFOjgP8yZp+DX+o0gHS1qNI4mhyG8g1/DQtUdhO+MODTnsFZDR8YEVIFwN8ZOaedqE2dCKNlmtyjl4UeArhJAEAy2GlwJ99z3hNXIZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PpW2cy0T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kNCb/MW0FusE8SWPnxOvU+KZv7bjJ+ZA49bX9OuuMF/xvifcO7zZ8KKjIJJcRGuLVN19rqIE99PK//jLyeoghojdmaE3fQeObU/QWH+zasXqdJJ8dKkgYK72K+JIG4LIw0VsKrX/FKfFYrRD3TsU1h9RErPuVCMJ+MIu3HjSFEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jqqjit0V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpW2cy0T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D39AC4CEC6;
-	Tue, 15 Oct 2024 13:09:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jqqjit0V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1784DC4CECF;
+	Tue, 15 Oct 2024 13:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997764;
-	bh=chwPUUbhdy9YI5s7McPcLdCqC/FrFoVwIMFtGe9dBFM=;
+	s=korg; t=1728997767;
+	bh=y6M5wzo5V3fRnK+ipfht1sACM64hivcu+e+jUYDL3NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PpW2cy0TocbyQcIFe4jCp2fWx4pddPIKYx/8GMJfdwy2XdYWxr5PmHZtJYkGDIXeT
-	 i8wZffc1CKoiGiAh5Pa/VUVqxvHORnDvmEitduVjnqo5P7Plijgt8baCeNON1cj75Z
-	 cv/kcOPrxWkTv2C7GwmH85CtZDJ0hajSY6SjnDk4=
+	b=jqqjit0VYKusLN8em4dPkTYdepN32/bpipKqSVWxRL6BqMqXPor+uDQxHKEqplCuE
+	 gVmaKs033GA+iazgfYfkceVXREObAUN5J3xBDsrwccNIA/S5nIE4X5pP3hT9+mdON+
+	 NhlaSeG9dAfQKNjKbWL3e2/B3fi41hMQS5jax7EQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f4e0f821e3a3b7cee51d@syzkaller.appspotmail.com,
-	Xin Long <lucien.xin@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Marek Vasut <marex@denx.de>,
+	Michal Simek <michal.simek@xilinx.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 280/518] sctp: set sk_state back to CLOSED if autobind fails in sctp_listen_start
-Date: Tue, 15 Oct 2024 14:43:04 +0200
-Message-ID: <20241015123927.799732305@linuxfoundation.org>
+Subject: [PATCH 5.10 281/518] i2c: xiic: Fix broken locking on tx_msg
+Date: Tue, 15 Oct 2024 14:43:05 +0200
+Message-ID: <20241015123927.837323365@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,53 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 8beee4d8dee76b67c75dc91fd8185d91e845c160 ]
+[ Upstream commit c119e7d00c916881913011e6f4c6ac349a41e4e2 ]
 
-In sctp_listen_start() invoked by sctp_inet_listen(), it should set the
-sk_state back to CLOSED if sctp_autobind() fails due to whatever reason.
+The tx_msg is set from multiple places, sometimes without locking,
+which fall apart on any SMP system. Only ever access tx_msg inside
+the driver mutex.
 
-Otherwise, next time when calling sctp_inet_listen(), if sctp_sk(sk)->reuse
-is already set via setsockopt(SCTP_REUSE_PORT), sctp_sk(sk)->bind_hash will
-be dereferenced as sk_state is LISTENING, which causes a crash as bind_hash
-is NULL.
-
-  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-  RIP: 0010:sctp_inet_listen+0x7f0/0xa20 net/sctp/socket.c:8617
-  Call Trace:
-   <TASK>
-   __sys_listen_socket net/socket.c:1883 [inline]
-   __sys_listen+0x1b7/0x230 net/socket.c:1894
-   __do_sys_listen net/socket.c:1902 [inline]
-
-Fixes: 5e8f3f703ae4 ("sctp: simplify sctp listening code")
-Reported-by: syzbot+f4e0f821e3a3b7cee51d@syzkaller.appspotmail.com
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://patch.msgid.link/a93e655b3c153dc8945d7a812e6d8ab0d52b7aa0.1727729391.git.lucien.xin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Acked-by: Michal Simek <michal.simek@xilinx.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: 1d4a1adbed25 ("i2c: xiic: Try re-initialization on bus busy timeout")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-xiic.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 5053d813e91cf..c1b713a260602 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -8299,8 +8299,10 @@ static int sctp_listen_start(struct sock *sk, int backlog)
- 	 */
- 	inet_sk_set_state(sk, SCTP_SS_LISTENING);
- 	if (!ep->base.bind_addr.port) {
--		if (sctp_autobind(sk))
-+		if (sctp_autobind(sk)) {
-+			inet_sk_set_state(sk, SCTP_SS_CLOSED);
- 			return -EAGAIN;
-+		}
+diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
+index 568e97c3896d1..ae9ef3f7220e6 100644
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -170,7 +170,7 @@ struct xiic_i2c {
+ #define xiic_tx_space(i2c) ((i2c)->tx_msg->len - (i2c)->tx_pos)
+ #define xiic_rx_space(i2c) ((i2c)->rx_msg->len - (i2c)->rx_pos)
+ 
+-static int xiic_start_xfer(struct xiic_i2c *i2c);
++static int xiic_start_xfer(struct xiic_i2c *i2c, struct i2c_msg *msgs, int num);
+ static void __xiic_start_xfer(struct xiic_i2c *i2c);
+ 
+ /*
+@@ -701,15 +701,25 @@ static void __xiic_start_xfer(struct xiic_i2c *i2c)
+ 
+ }
+ 
+-static int xiic_start_xfer(struct xiic_i2c *i2c)
++static int xiic_start_xfer(struct xiic_i2c *i2c, struct i2c_msg *msgs, int num)
+ {
+ 	int ret;
++
+ 	mutex_lock(&i2c->lock);
+ 
++	ret = xiic_busy(i2c);
++	if (ret)
++		goto out;
++
++	i2c->tx_msg = msgs;
++	i2c->rx_msg = NULL;
++	i2c->nmsgs = num;
++
+ 	ret = xiic_reinit(i2c);
+ 	if (!ret)
+ 		__xiic_start_xfer(i2c);
+ 
++out:
+ 	mutex_unlock(&i2c->lock);
+ 
+ 	return ret;
+@@ -727,14 +737,7 @@ static int xiic_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 	if (err < 0)
+ 		return err;
+ 
+-	err = xiic_busy(i2c);
+-	if (err)
+-		goto out;
+-
+-	i2c->tx_msg = msgs;
+-	i2c->nmsgs = num;
+-
+-	err = xiic_start_xfer(i2c);
++	err = xiic_start_xfer(i2c, msgs, num);
+ 	if (err < 0) {
+ 		dev_err(adap->dev.parent, "Error xiic_start_xfer\n");
+ 		goto out;
+@@ -742,9 +745,11 @@ static int xiic_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 
+ 	if (wait_event_timeout(i2c->wait, (i2c->state == STATE_ERROR) ||
+ 		(i2c->state == STATE_DONE), HZ)) {
++		mutex_lock(&i2c->lock);
+ 		err = (i2c->state == STATE_DONE) ? num : -EIO;
+ 		goto out;
  	} else {
- 		if (sctp_get_port(sk, inet_sk(sk)->inet_num)) {
- 			inet_sk_set_state(sk, SCTP_SS_CLOSED);
++		mutex_lock(&i2c->lock);
+ 		i2c->tx_msg = NULL;
+ 		i2c->rx_msg = NULL;
+ 		i2c->nmsgs = 0;
+@@ -752,6 +757,7 @@ static int xiic_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 		goto out;
+ 	}
+ out:
++	mutex_unlock(&i2c->lock);
+ 	pm_runtime_mark_last_busy(i2c->dev);
+ 	pm_runtime_put_autosuspend(i2c->dev);
+ 	return err;
 -- 
 2.43.0
 
