@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12FC1C07C2;
-	Tue, 15 Oct 2024 12:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0806C1C07C2;
+	Tue, 15 Oct 2024 12:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997002; cv=none; b=KjEyIpARNjLuJY9Kx/REXCVwKvRzqS11CJdaE3gJ4U2PrkbrXhWzNRwdkW+z91KbvbgLRvhqV9NY1vHlvxqgy4AgzhGr4nGEK9hSUTLkkSaAUZ//cp8jK1rGtkwVV2Kt2MxeqT+PutpifdwftXMl+0bxKv1+Ec7cKjXOs7ZnJZk=
+	t=1728997006; cv=none; b=CNtJN+RJi8E6YOnrGa0pfHJSHHCiKMpsMTxNcmWGyGtEaDDdxwk5pllGQIwiGs+cUKq6saRf7wGcKEGc6IGigRm6WhHT81r/OxbK3CiStV28miNoG3x8ws64P0Tlj4sKy8Edep3TwkR+/n8uxHXuANyFDslNhJquJqBOmTOmXuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997002; c=relaxed/simple;
-	bh=CiUlOniYWyo4165gNUJ6kZvVERzy+J7tY7NvaVENtco=;
+	s=arc-20240116; t=1728997006; c=relaxed/simple;
+	bh=4bGlVJ0ttJ3/W71y9gkpP2OSAQNN1/BR5LV5shIzpPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fiBQA92yjLCMM/CX5TY3foyOtXP0faLMIyZSDia9nHdXdpPI4dmuT8vdwagkqLsAC3ZeKRJCY/y7M+yCoQiavE2Qxz0QeamGLc2uGogiOqF37d4CvjIlD5prP5IzCW8vIEYNmdGfCETiM5Dl/q0ASwhiDBmjT9mGLfQRJGePhPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVKlZ1ug; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u//JvNB29YDYokkM2UhCz1jy4ncVNz45Su7Sw3eJXwoC58Sz4rFGpwXljgwWQP6a7jjUhzOIBX+77dj05sRvg8H2mkvh58Jb+Ab60IVVwglu8b+JNrjd8ubjSkFG3BIueBMusg1hIoDE9qxKwzQEJbvGFdg7ns91tlU+t/NWs88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+sarZdA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVKlZ1ug"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25066C4CEC6;
-	Tue, 15 Oct 2024 12:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+sarZdA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829CDC4CEC6;
+	Tue, 15 Oct 2024 12:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997002;
-	bh=CiUlOniYWyo4165gNUJ6kZvVERzy+J7tY7NvaVENtco=;
+	s=korg; t=1728997005;
+	bh=4bGlVJ0ttJ3/W71y9gkpP2OSAQNN1/BR5LV5shIzpPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZVKlZ1ugE8yMb0c7CPpCDbrawqzGzGBaC/rKka7lJSPT9/wN1o1NOYGgB8COB95/p
-	 R9wDDJddqmUCQmUfYOUmDaNEEMwRoW8FTrNuwHnDk+ksJCxQ8b7pDWjUlIulZpXMq2
-	 l+34My8uEEmVsp9JMMDpB2MCHdo2vkFYdDfVKmIA=
+	b=0+sarZdAhHXKjYToY6Pac30Bl/tfyDR2vZ+oCQTymUI3hxCTk2KLWcGfUMnUvIf0y
+	 rBKp98vu/NaA+OSKiyqIaAcV8uInYJddX5u0dSNvwDBB3x2WalfrPHaG49QxVJo7H5
+	 gyIpG0LMAbv3PcgzoN7w6mr3/57nc6aqQ80Kg6Ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6c6c08700f9480c41fe3@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 059/518] wifi: rtw88: always wait for both firmware loading attempts
-Date: Tue, 15 Oct 2024 14:39:23 +0200
-Message-ID: <20241015123919.287597159@linuxfoundation.org>
+Subject: [PATCH 5.10 060/518] ACPI: PMIC: Remove unneeded check in tps68470_pmic_opregion_probe()
+Date: Tue, 15 Oct 2024 14:39:24 +0200
+Message-ID: <20241015123919.325594366@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,56 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 0e735a4c6137262bcefe45bb52fde7b1f5fc6c4d ]
+[ Upstream commit 07442c46abad1d50ac82af5e0f9c5de2732c4592 ]
 
-In 'rtw_wait_firmware_completion()', always wait for both (regular and
-wowlan) firmware loading attempts. Otherwise if 'rtw_usb_intf_init()'
-has failed in 'rtw_usb_probe()', 'rtw_usb_disconnect()' may issue
-'ieee80211_free_hw()' when one of 'rtw_load_firmware_cb()' (usually
-the wowlan one) is still in progress, causing UAF detected by KASAN.
+In tps68470_pmic_opregion_probe() pointer 'dev' is compared to NULL which
+is useless.
 
-Fixes: c8e5695eae99 ("rtw88: load wowlan firmware if wowlan is supported")
-Reported-by: syzbot+6c6c08700f9480c41fe3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6c6c08700f9480c41fe3
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240726114657.25396-1-dmantipov@yandex.ru
+Fix this issue by removing unneeded check.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e13452ac3790 ("ACPI / PMIC: Add TI PMIC TPS68470 operation region driver")
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://patch.msgid.link/20240730225339.13165-1-amishin@t-argos.ru
+[ rjw: Subject edit ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/main.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/acpi/pmic/tps68470_pmic.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
-index 2ef1416899f03..91eea38f62cd3 100644
---- a/drivers/net/wireless/realtek/rtw88/main.c
-+++ b/drivers/net/wireless/realtek/rtw88/main.c
-@@ -1007,20 +1007,21 @@ static int rtw_wait_firmware_completion(struct rtw_dev *rtwdev)
- {
- 	struct rtw_chip_info *chip = rtwdev->chip;
- 	struct rtw_fw_state *fw;
-+	int ret = 0;
+diff --git a/drivers/acpi/pmic/tps68470_pmic.c b/drivers/acpi/pmic/tps68470_pmic.c
+index ebd03e4729555..0d1a82eeb4b0b 100644
+--- a/drivers/acpi/pmic/tps68470_pmic.c
++++ b/drivers/acpi/pmic/tps68470_pmic.c
+@@ -376,10 +376,8 @@ static int tps68470_pmic_opregion_probe(struct platform_device *pdev)
+ 	struct tps68470_pmic_opregion *opregion;
+ 	acpi_status status;
  
- 	fw = &rtwdev->fw;
- 	wait_for_completion(&fw->completion);
- 	if (!fw->firmware)
+-	if (!dev || !tps68470_regmap) {
+-		dev_warn(dev, "dev or regmap is NULL\n");
 -		return -EINVAL;
-+		ret = -EINVAL;
+-	}
++	if (!tps68470_regmap)
++		return dev_err_probe(dev, -EINVAL, "regmap is missing\n");
  
- 	if (chip->wow_fw_name) {
- 		fw = &rtwdev->wow_fw;
- 		wait_for_completion(&fw->completion);
- 		if (!fw->firmware)
--			return -EINVAL;
-+			ret = -EINVAL;
- 	}
- 
--	return 0;
-+	return ret;
- }
- 
- static int rtw_power_on(struct rtw_dev *rtwdev)
+ 	if (!handle) {
+ 		dev_warn(dev, "acpi handle is NULL\n");
 -- 
 2.43.0
 
