@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F86E1D4154;
-	Tue, 15 Oct 2024 11:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0801D0492;
+	Tue, 15 Oct 2024 11:53:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993236; cv=none; b=mzhml2kT8Xo8ySbRCSbZgndX9JmylwOvUdMX+oAq2uJDjnA9wwM87uZ2qP0DtMUcqBjDZT0w7TSiJjpZHojZt1I6pq+OJDl4/oha46LC2gegtffHDn9jPvXXmlsTDyMK/Trw3TN9g39xniZMknLSDAczzyrr6ZEGsqJIzNmo4OE=
+	t=1728993239; cv=none; b=Jmq+JspOLkVsKcFaKc6z6PQhxpab6Q+UQjN6vgAvvMpVNZ4DbOMYJ0XCej15HFAnFRxJYe3a4IZeNUKB6PnBnObqnltDcuX7uf9FARVBDNkTFxf11h+eAN+Y/b0Gya//fmDBAq/afSyx4S8T4cwNkTqZ/3a0BziUCbBivArXmcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993236; c=relaxed/simple;
-	bh=eTc4dUqJSnx9vWT96gSs1PibJ78fCn47fVjQNZpD/nM=;
+	s=arc-20240116; t=1728993239; c=relaxed/simple;
+	bh=WbunqHXtw60Yg4/+ZP/HiKrIvzC148w+yUqjuc5/x9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMaHwQclauWTLYleaoiBll6R7wiiRPKTvfsMgKNHtyWAEDJa9zq4qvBWRqkQW6o7V3FLzxBAHQnvEqz0phwxQEpvwPGGyWwOk9awdmvo+I8jy5Q/xvf9dUHfyHFwDnPkKfp2YVcmv4+cDlbrVCWyhDS5ClFrBcOVzVI5aex91EE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRiRVUh8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nn1V0FnOQJnNvBQJtPK14jnPEXlZpBfG3U3kl3fALwuEhn4jLqUdJdLqHTWI7lqYYrGXuqdiwLbpAQdQKHwcSlwo7lXlgWdLPKjKqdWI8jP3ixmfJckizkqLM99N0BLyEQYL/EElc0ABNytHuq7R6FXNjhkXZt9qYC7VsyN30Kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIQXiLuz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRiRVUh8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B180CC4CEC6;
-	Tue, 15 Oct 2024 11:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIQXiLuz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EE7C4CEC6;
+	Tue, 15 Oct 2024 11:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993236;
-	bh=eTc4dUqJSnx9vWT96gSs1PibJ78fCn47fVjQNZpD/nM=;
+	s=korg; t=1728993239;
+	bh=WbunqHXtw60Yg4/+ZP/HiKrIvzC148w+yUqjuc5/x9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sRiRVUh84h1rsCV9nAc4o9QeJ6/TZSVU55t/0oe8icQ+szDVpj5bJEsrOSJTu1DyK
-	 URdpLZPiE+kzmeYGopQKvbupaqvnEGHhrU2JckMbI7OdnWBYFjnnf5qUiEM3QYEp2L
-	 ghvFcTINtt6CBDfoZ3J+jdqxxL2lJyUbwaHzFpVg=
+	b=dIQXiLuz3qkxShp9x5k0C8QTehxJcQV9agsNsqlCkOBvUpw14tzypE1OvE0XtlZP+
+	 99BRty+sJEAxyDHF/JosCctISUucbES5wMBd4grZB/MUzds9jMxwb1pp3u92hRYAnp
+	 rxJgWkNQBFZ0FaZhz6PTRk/TmCAyToDNQYTZpO+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 5.15 320/691] USB: misc: cypress_cy7c63: check for short transfer
-Date: Tue, 15 Oct 2024 13:24:28 +0200
-Message-ID: <20241015112453.038854122@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 321/691] USB: class: CDC-ACM: fix race between get_serial and set_serial
+Date: Tue, 15 Oct 2024 13:24:29 +0200
+Message-ID: <20241015112453.078184076@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,40 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Oliver Neukum <oneukum@suse.com>
 
-commit 49cd2f4d747eeb3050b76245a7f72aa99dbd3310 upstream.
+commit b41c1fa155ba56d125885b0191aabaf3c508d0a3 upstream.
 
-As we process the second byte of a control transfer, transfers
-of less than 2 bytes must be discarded.
+TIOCGSERIAL is an ioctl. Thus it must be atomic. It returns
+two values. Racing with set_serial it can return an inconsistent
+result. The mutex must be taken.
 
-This bug is as old as the driver.
+In terms of logic the bug is as old as the driver. In terms of
+code it goes back to the conversion to the get_serial and
+set_serial methods.
 
-SIgned-off-by: Oliver Neukum <oneukum@suse.com>
-CC: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240912125449.1030536-1-oneukum@suse.com
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Cc: stable <stable@kernel.org>
+Fixes: 99f75a1fcd865 ("cdc-acm: switch to ->[sg]et_serial()")
+Link: https://lore.kernel.org/r/20240912141916.1044393-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/cypress_cy7c63.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/class/cdc-acm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/misc/cypress_cy7c63.c
-+++ b/drivers/usb/misc/cypress_cy7c63.c
-@@ -88,6 +88,9 @@ static int vendor_command(struct cypress
- 				 USB_DIR_IN | USB_TYPE_VENDOR | USB_RECIP_OTHER,
- 				 address, data, iobuf, CYPRESS_MAX_REQSIZE,
- 				 USB_CTRL_GET_TIMEOUT);
-+	/* we must not process garbage */
-+	if (retval < 2)
-+		goto err_buf;
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -942,10 +942,12 @@ static int get_serial_info(struct tty_st
+ 	struct acm *acm = tty->driver_data;
  
- 	/* store returned data (more READs to be added) */
- 	switch (request) {
-@@ -107,6 +110,7 @@ static int vendor_command(struct cypress
- 			break;
- 	}
+ 	ss->line = acm->minor;
++	mutex_lock(&acm->port.mutex);
+ 	ss->close_delay	= jiffies_to_msecs(acm->port.close_delay) / 10;
+ 	ss->closing_wait = acm->port.closing_wait == ASYNC_CLOSING_WAIT_NONE ?
+ 				ASYNC_CLOSING_WAIT_NONE :
+ 				jiffies_to_msecs(acm->port.closing_wait) / 10;
++	mutex_unlock(&acm->port.mutex);
+ 	return 0;
+ }
  
-+err_buf:
- 	kfree(iobuf);
- error:
- 	return retval;
 
 
