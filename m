@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D761EF081;
-	Tue, 15 Oct 2024 11:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4881EF95B;
+	Tue, 15 Oct 2024 11:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992433; cv=none; b=BQlrRL/SL9/09PVcJKC/jSGbW+yht5aFsPR73yMChAcvyO+6ihTxso/zhfkCaNwI/AoUA+PdkxJXSGi7/9Jy8ubuGXleczvYYFMyd4/lhEqJXkYiDtcwEDynFtXkXWhjzBMVC2kpmWlKh7CAcigvE2Om7X6oTXlluJlAGYrZna4=
+	t=1728992437; cv=none; b=Jfo4EjKk0ie4mO6mU7PIw7LLP0SPmfzDUGvSoaUvzGLvgodE9QAITnUntxDvvH8VyB1IGY6t7VOj9B/8E6JcXod7avhT7Np2xtVOOnu4LjIlaIuWgvj7jY4kHoDRWFzth46wVdTrZC+VbFEph3kuq7PsW8E8H/9ZT39Hg0DYydc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992433; c=relaxed/simple;
-	bh=4Lo4TzSTCA9IX7Blj/jYoRlxgYDwkU82GN7DEJM9cDc=;
+	s=arc-20240116; t=1728992437; c=relaxed/simple;
+	bh=OSa0gwsklTMkY3XG0D0/nlQ7pFAZn9ltCeBAuQR++l8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTMpDGx7rXn1nLzNk2C+8/mXzToQqsbXOgkpX8BWMyctATRLT641Rjz0UsYMn/JTy6qeUlciBFWMmxPLfzDZbzU/JQSuxHVxIlx9Iifn3HYFheo8HTGrWX/r4pvOfoGxMZJd3XdRFFYKOoB4HgVRMDLGAnZrL1nJX/HbPeAETy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmrC2Ocr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WIaRXgGteFSGkI+zG2j4v+Vm0wKEer1mDAryUpK7NQk/6HgYbIGmWrdOvm0Tj/eUCcfDWVYDqJKeihdyyGuaI7Kx5csTjVTvaHGdohuB7LTyzLHkOlbwLbrCqeI7Vi4Tt2UtpUPKkib01HNetnTokMb1N7HfF31AvKnL2PWOtFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/r0rjdq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmrC2Ocr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D845C4CEC6;
-	Tue, 15 Oct 2024 11:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/r0rjdq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FE4C4CEC6;
+	Tue, 15 Oct 2024 11:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992433;
-	bh=4Lo4TzSTCA9IX7Blj/jYoRlxgYDwkU82GN7DEJM9cDc=;
+	s=korg; t=1728992437;
+	bh=OSa0gwsklTMkY3XG0D0/nlQ7pFAZn9ltCeBAuQR++l8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HmrC2OcrB27pWU7ymBsHmk++g+U8anYvSmlhznk2fdTaMx+qdD4e87424AEW9WgwR
-	 ozWmNPKH5EGfFMvlaE38MubEPAbf6fJE/bge6phLzTK5I7+xDF24U65cDZfnqUA5qJ
-	 4Kxt1G6vivdueKvMf8rOWT2mTDWpu+h+eNQSvKz8=
+	b=o/r0rjdqFSw38ElKzbNzubBxa6aVlOTaHHcJCeJ7xgCffYQARcK14jSTGAfLASIWI
+	 8XCJ2R0jXmj7Yjw0lQ3YB24d9Li3L9c9mnP38qkkxjnkGkUL+kB8qruXGXEL8a3alC
+	 SorTZqxA7zCphRMRt8Ef1DwWZdadeC64ecivgpTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hagar Hemdan <hagarhem@amazon.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
-Subject: [PATCH 5.15 084/691] gpio: prevent potential speculation leaks in gpio_device_get_desc()
-Date: Tue, 15 Oct 2024 13:20:32 +0200
-Message-ID: <20241015112443.694082534@linuxfoundation.org>
+	Liao Chen <liaochen4@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 075/691] spi: bcm63xx: Enable module autoloading
+Date: Tue, 15 Oct 2024 13:20:23 +0200
+Message-ID: <20241015112443.335204467@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,50 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hagar Hemdan <hagarhem@amazon.com>
+From: Liao Chen <liaochen4@huawei.com>
 
-commit d795848ecce24a75dfd46481aee066ae6fe39775 upstream.
+[ Upstream commit 709df70a20e990d262c473ad9899314039e8ec82 ]
 
-Userspace may trigger a speculative read of an address outside the gpio
-descriptor array.
-Users can do that by calling gpio_ioctl() with an offset out of range.
-Offset is copied from user and then used as an array index to get
-the gpio descriptor without sanitization in gpio_device_get_desc().
+Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded based
+on the alias from of_device_id table.
 
-This change ensures that the offset is sanitized by using
-array_index_nospec() to mitigate any possibility of speculative
-information leaks.
-
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
-
-Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
-Link: https://lore.kernel.org/r/20240523085332.1801-1-hagarhem@amazon.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Liao Chen <liaochen4@huawei.com>
+Link: https://patch.msgid.link/20240831094231.795024-1-liaochen4@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-bcm63xx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -5,6 +5,7 @@
- #include <linux/module.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
-+#include <linux/nospec.h>
- #include <linux/spinlock.h>
- #include <linux/list.h>
- #include <linux/device.h>
-@@ -146,7 +147,7 @@ struct gpio_desc *gpiochip_get_desc(stru
- 	if (hwnum >= gdev->ngpio)
- 		return ERR_PTR(-EINVAL);
+diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
+index 147199002df1e..a9921dcd6b797 100644
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -482,6 +482,7 @@ static const struct of_device_id bcm63xx_spi_of_match[] = {
+ 	{ .compatible = "brcm,bcm6358-spi", .data = &bcm6358_spi_reg_offsets },
+ 	{ },
+ };
++MODULE_DEVICE_TABLE(of, bcm63xx_spi_of_match);
  
--	return &gdev->descs[hwnum];
-+	return &gdev->descs[array_index_nospec(hwnum, gdev->ngpio)];
- }
- EXPORT_SYMBOL_GPL(gpiochip_get_desc);
- 
+ static int bcm63xx_spi_probe(struct platform_device *pdev)
+ {
+-- 
+2.43.0
+
 
 
