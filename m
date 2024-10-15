@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F8C1D8DEA;
-	Tue, 15 Oct 2024 12:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25461EABD1;
+	Tue, 15 Oct 2024 12:02:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993747; cv=none; b=Xax6/ogjM7rZ7+Yn6DuNBk8YNrh4orpGb8HIUg1to/cvKPEeuuGGc1R9h4Eg9hKtwVLsOqv7co5VgLRn9/ragwaQOhviTnqbTdx57w4gK9bu4tvYrgSZZkJ1H0NVifZNLoWoL0MJTsMd/R6opjvoI4jWmHvOxfoNrFmZmBLQRDI=
+	t=1728993751; cv=none; b=jq9lJT/UzgPi0Xu0wnE/D8JbrA+r9/vTcf0PUo3ELMu4XmEN4rG5BmHkQwePZstWdn37XdBeywGDI5ReOBbFyUm7I8kGILItIMl5gMlGWYHjiW61ejHgDP7fBu1RmBT/5jFUL2C7nbqxSds3qxgQwQCUS+/hQRsRkc7hPvSnPjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993747; c=relaxed/simple;
-	bh=vytAFp2n9DINcKQE+XYr1p0gTiphVgb1lqrbMg2+sxc=;
+	s=arc-20240116; t=1728993751; c=relaxed/simple;
+	bh=uayjGSyPE1UJydSkjd3bUC6WkSaKUYu9BPb9XbgaehY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kZDRshPFnqK8uekK/7XVk/cpLVDIhx0KyfW3tjoOguCG/cRDK4CzHGWveQiTLJXDFAxseb7HIH4GLSqs1IvhlV7iXeCURHcAHyI7LhxMBaFO3pRrwPdhq8is64iIN2vG/lpnUYHDWY2iwWDYH0Q+xVkW0Xp0BSAoq5LZH2NQPHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbqqBeZW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tNp+YS2RdibCJVZBdVUYU0mlvq6WInnD5WUXXSIMMoPD1oHbQnAF00evrZTmluacc1WP1WrXAx2rGEvtBfaQz42XPqo8U31XnQ2Be6An69Uzr6IxzGtX+7f5jpFwF3U3jtlWTG8Af2lz/uESVPrOGmCXGksctRtlJb7ZVrhEvAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BP054+mt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbqqBeZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3746BC4CEC6;
-	Tue, 15 Oct 2024 12:02:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BP054+mt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61490C4CEC6;
+	Tue, 15 Oct 2024 12:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993747;
-	bh=vytAFp2n9DINcKQE+XYr1p0gTiphVgb1lqrbMg2+sxc=;
+	s=korg; t=1728993750;
+	bh=uayjGSyPE1UJydSkjd3bUC6WkSaKUYu9BPb9XbgaehY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bbqqBeZWrceJOHhNcPqPRWrioY9ky4fvg00/5hebPCvGu226YbO8ZqqEBkoWU2Z5s
-	 rsJFMWZDJUgiPEYAvf1AcF9IGI6xA1/bFpMMLBIlyB010qHL0iw6R4gjyrLQB+YL//
-	 gg+7F0R4zeyohk2rfuEWFAYf5cuyke+1H5Uo00/s=
+	b=BP054+mt379LkZDNuWcqgZBwvLPIyNb11GYMjW6+RTnYZtgdN//5aKSjNNw4/+wLB
+	 HHEQgA+OiiwtKjK2M7Z1gxEc3iZndLf6D27SyhaXEm0pMra9pJff4wNAodrTFTsGD1
+	 Y4z5pg3Cs3Nv9WRXdXqXQ2/hAuShq5aOGy5PQEH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
+	"yao.ly" <yao.ly@linux.alibaba.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 5.15 503/691] ext4: no need to continue when the number of entries is 1
-Date: Tue, 15 Oct 2024 13:27:31 +0200
-Message-ID: <20241015112500.307527301@linuxfoundation.org>
+Subject: [PATCH 5.15 504/691] ext4: correct encrypted dentry name hash when not casefolded
+Date: Tue, 15 Oct 2024 13:27:32 +0200
+Message-ID: <20241015112500.346883054@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,33 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: yao.ly <yao.ly@linux.alibaba.com>
 
-commit 1a00a393d6a7fb1e745a41edd09019bd6a0ad64c upstream.
+commit 70dd7b573afeba9b8f8a33f2ae1e4a9a2ec8c1ec upstream.
 
-Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
-Reported-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ae688d469e36fb5138d0
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reported-and-tested-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/tencent_BE7AEE6C7C2D216CB8949CE8E6EE7ECC2C0A@qq.com
+EXT4_DIRENT_HASH and EXT4_DIRENT_MINOR_HASH will access struct
+ext4_dir_entry_hash followed ext4_dir_entry. But there is no ext4_dir_entry_hash
+followed when inode is encrypted and not casefolded
+
+Signed-off-by: yao.ly <yao.ly@linux.alibaba.com>
+Link: https://patch.msgid.link/1719816219-128287-1-git-send-email-yao.ly@linux.alibaba.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/dir.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -2047,7 +2047,7 @@ static struct ext4_dir_entry_2 *do_split
- 		split = count/2;
+--- a/fs/ext4/dir.c
++++ b/fs/ext4/dir.c
+@@ -279,12 +279,20 @@ static int ext4_readdir(struct file *fil
+ 					struct fscrypt_str de_name =
+ 							FSTR_INIT(de->name,
+ 								de->name_len);
++					u32 hash;
++					u32 minor_hash;
++
++					if (IS_CASEFOLDED(inode)) {
++						hash = EXT4_DIRENT_HASH(de);
++						minor_hash = EXT4_DIRENT_MINOR_HASH(de);
++					} else {
++						hash = 0;
++						minor_hash = 0;
++					}
  
- 	hash2 = map[split].hash;
--	continued = hash2 == map[split - 1].hash;
-+	continued = split > 0 ? hash2 == map[split - 1].hash : 0;
- 	dxtrace(printk(KERN_INFO "Split block %lu at %x, %i/%i\n",
- 			(unsigned long)dx_get_block(frame->at),
- 					hash2, split, count-split));
+ 					/* Directory is encrypted */
+ 					err = fscrypt_fname_disk_to_usr(inode,
+-						EXT4_DIRENT_HASH(de),
+-						EXT4_DIRENT_MINOR_HASH(de),
+-						&de_name, &fstr);
++						hash, minor_hash, &de_name, &fstr);
+ 					de_name = fstr;
+ 					fstr.len = save_len;
+ 					if (err)
 
 
