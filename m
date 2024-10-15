@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785031D0492;
-	Tue, 15 Oct 2024 11:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCADB1D0492;
+	Tue, 15 Oct 2024 11:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993175; cv=none; b=Ue/WhKEsG5pOurT/6FIEgOun5xpepRYM10ouI2HPHkW/1iRKsDXfCjJOfGNyExABBEQWeOovMz0p+JfgKGe77ihDl3ulvehU4zZmyqf51vcYdrCjCTrckPKNr69NUiI0TClLWbip312tk4B2JVH5D1nKMTg7pqbglz5SB0sSTk4=
+	t=1728993178; cv=none; b=RtWf8mWq894347hAi/NI5SCvUqUOI7eCsv6N3B27qJK6f0+VF0zqVaCrEyAH2rqk98GJkGzVt6aN5RCpVSq99STox85K5uxcsEUzn1JkbPvDmHOWNNRUh+lKD/GTGqMV02KiVN70jdliz+CIyqinc34MWIOJde81U1tyI9o3fBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993175; c=relaxed/simple;
-	bh=LPGduGZvHwmd9gmaLjt240qdz2KGzdHhrF9BsIhx7+k=;
+	s=arc-20240116; t=1728993178; c=relaxed/simple;
+	bh=ON18hNAHUfmsHnnhQ5CQe9S6DbsQHM+0rV5n0DzjZTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHYyeV3BkSU1wSODfLEVFVVmNJlQQcMuafZKRK7LD03FTwVjD1eJHlD+ltWYJCOVr2nCJniB4WS5S/UkoB1GXT8BQP+c8hDLYo1IFnUYTt8H3UlzKRNRbJk3DSoanjBDaGOd1QOP/OYWIo3fKhOl7vR8sOkoNWjQR09mYMPvZrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spCL5a30; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YpLa6mUhPCC7goD8TzjvnjQpbAs/a5a7BoojK0lyX5SyqJF/MQ5+ZJw+177J+b2pYhu0H3SDMAG8Dmc2aMkNozyDIK0E6U3ADWidYwb0akbyMbKuYkdjsEKftqjfYqvKp1i33/hu2DrVYmxZDAGRFj+X8SsYi4D5jnprtVAAMHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZJoTOt3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spCL5a30"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E673FC4CEC6;
-	Tue, 15 Oct 2024 11:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZJoTOt3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD94C4CEC6;
+	Tue, 15 Oct 2024 11:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993175;
-	bh=LPGduGZvHwmd9gmaLjt240qdz2KGzdHhrF9BsIhx7+k=;
+	s=korg; t=1728993178;
+	bh=ON18hNAHUfmsHnnhQ5CQe9S6DbsQHM+0rV5n0DzjZTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=spCL5a30EGvcB1p2b89+GM6gh5VfrfKhsvMlX9vRAdo373vfwHL0iK6k7w3pLwhN+
-	 joam7erRVTCdGZUSnKV7W9hbrzoDynfkTpT4jUVTKt1zyRTdCEUex+stNqLZUrFN2F
-	 g+TekV9WlWxRLjk/11ztdnLiJoVBRATbpLPD9ao0=
+	b=HZJoTOt3Z5b+scmLq6F0ce1MhqRkqSB0Iz8/Vpk8NFmm3Z2mCztIHHhgsTX8WTKf7
+	 eVwBDEE6Pc1YltVvoTJjEvcn7M3sEMuL1VbitZetA/nXnBwAsK+Lcm0fZ3EJX0CBcR
+	 bntGMxa+Fis1paqkEunEdLK3rlbzta+j3p7+ZZaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Usama Arif <usamaarif642@gmail.com>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 5.15 333/691] efistub/tpm: Use ACPI reclaim memory for event log to avoid corruption
-Date: Tue, 15 Oct 2024 13:24:41 +0200
-Message-ID: <20241015112453.551185757@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.15 334/691] perf/x86/intel/pt: Fix sampling synchronization
+Date: Tue, 15 Oct 2024 13:24:42 +0200
+Message-ID: <20241015112453.590731450@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,45 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 77d48d39e99170b528e4f2e9fc5d1d64cdedd386 upstream.
+commit d92792a4b26e50b96ab734cbe203d8a4c932a7a9 upstream.
 
-The TPM event log table is a Linux specific construct, where the data
-produced by the GetEventLog() boot service is cached in memory, and
-passed on to the OS using an EFI configuration table.
+pt_event_snapshot_aux() uses pt->handle_nmi to determine if tracing
+needs to be stopped, however tracing can still be going because
+pt->handle_nmi is set to zero before tracing is stopped in pt_event_stop,
+whereas pt_event_snapshot_aux() requires that tracing must be stopped in
+order to copy a sample of trace from the buffer.
 
-The use of EFI_LOADER_DATA here results in the region being left
-unreserved in the E820 memory map constructed by the EFI stub, and this
-is the memory description that is passed on to the incoming kernel by
-kexec, which is therefore unaware that the region should be reserved.
+Instead call pt_config_stop() always, which anyway checks config for
+RTIT_CTL_TRACEEN and does nothing if it is already clear.
 
-Even though the utility of the TPM2 event log after a kexec is
-questionable, any corruption might send the parsing code off into the
-weeds and crash the kernel. So let's use EFI_ACPI_RECLAIM_MEMORY
-instead, which is always treated as reserved by the E820 conversion
-logic.
+Note pt_event_snapshot_aux() can continue to use pt->handle_nmi to
+determine if the trace needs to be restarted afterwards.
 
-Cc: <stable@vger.kernel.org>
-Reported-by: Breno Leitao <leitao@debian.org>
-Tested-by: Usama Arif <usamaarif642@gmail.com>
-Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 25e8920b301c ("perf/x86/intel/pt: Add sampling support")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20240715160712.127117-2-adrian.hunter@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/libstub/tpm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/events/intel/pt.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/firmware/efi/libstub/tpm.c
-+++ b/drivers/firmware/efi/libstub/tpm.c
-@@ -115,7 +115,7 @@ void efi_retrieve_tpm2_eventlog(void)
- 	}
+--- a/arch/x86/events/intel/pt.c
++++ b/arch/x86/events/intel/pt.c
+@@ -1586,6 +1586,7 @@ static void pt_event_stop(struct perf_ev
+ 	 * see comment in intel_pt_interrupt().
+ 	 */
+ 	WRITE_ONCE(pt->handle_nmi, 0);
++	barrier();
  
- 	/* Allocate space for the logs and copy them. */
--	status = efi_bs_call(allocate_pool, EFI_LOADER_DATA,
-+	status = efi_bs_call(allocate_pool, EFI_ACPI_RECLAIM_MEMORY,
- 			     sizeof(*log_tbl) + log_size, (void **)&log_tbl);
+ 	pt_config_stop(event);
  
- 	if (status != EFI_SUCCESS) {
+@@ -1637,11 +1638,10 @@ static long pt_event_snapshot_aux(struct
+ 		return 0;
+ 
+ 	/*
+-	 * Here, handle_nmi tells us if the tracing is on
++	 * There is no PT interrupt in this mode, so stop the trace and it will
++	 * remain stopped while the buffer is copied.
+ 	 */
+-	if (READ_ONCE(pt->handle_nmi))
+-		pt_config_stop(event);
+-
++	pt_config_stop(event);
+ 	pt_read_offset(buf);
+ 	pt_update_head(pt);
+ 
+@@ -1653,11 +1653,10 @@ static long pt_event_snapshot_aux(struct
+ 	ret = perf_output_copy_aux(&pt->handle, handle, from, to);
+ 
+ 	/*
+-	 * If the tracing was on when we turned up, restart it.
+-	 * Compiler barrier not needed as we couldn't have been
+-	 * preempted by anything that touches pt->handle_nmi.
++	 * Here, handle_nmi tells us if the tracing was on.
++	 * If the tracing was on, restart it.
+ 	 */
+-	if (pt->handle_nmi)
++	if (READ_ONCE(pt->handle_nmi))
+ 		pt_config_start(event);
+ 
+ 	return ret;
 
 
