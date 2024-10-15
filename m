@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73B21C07DF;
-	Tue, 15 Oct 2024 13:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072291EBA0A;
+	Tue, 15 Oct 2024 13:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998043; cv=none; b=qrLwyncwGFU4/0eqCnebN4x9b8bWufeC82DSmkTxuj3Q8Ze/rG/rIrO8S7shK0da+LZs65ukpNp0bKFK+nt3779CK5Z41bKBPl15M/iYfrrchWLxH7eTzU37UXEVkJXI2v4tT1NIhZiJhiSh7mGw70vRmCv95zXd7ZOzG7WyBcg=
+	t=1728998047; cv=none; b=sX8AxVlek5fDI28CJkSOVFFXjWbp9+0JCl9OBVVOnODtOH1HINdWD4BbUDVZ6DZdCGzTvQ2+FlkkM2efTOUqqobfSClzBL3IPHqFbdbmrniWQDDwzcuM771ZcBb9PbprDrC5FgeZcoKTmAuYxByNFn/InwR6eBuLHK/3fHM5HGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998043; c=relaxed/simple;
-	bh=ZERZPZJIhtUETpDXHcPDoTmnZy29cptg1GLtod4F0FY=;
+	s=arc-20240116; t=1728998047; c=relaxed/simple;
+	bh=5/dbaKBx3RrdrwlL/j7ub4bdPGt+lNYvP7v/l7NfRqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fDSjYajWW4dx+nm9xa+3VymE+rAUbU7bowTCBabvrld0nfKThuNyyWn4k81GRSGW5lfZDtEZGkfy7Y1vSEIFpHBOhN7i4uC46DBVhRZifbNvzigRPun6Ii1v4b3egIKQkVvtpwVjP7kP6ysil3E9i3T6msozLChFJpBknIRp6n8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gl0rKIUa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q2jUD7jLzJajne96l3+ieyExsDh32Xlx2fGYHBRxkiaBy6yDcYdA0HdL6X5CckEtmWCKgGOnx9kvPMcUceQwCnU7MgLN+Ot0vVo3SdjCfBL/YkVo8YMH8ocvRBrTtg/Pm/CbNdL+ezzm3W5sEQYp03hTgDDkpI/I3yj5MGks85E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8h4lcHI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gl0rKIUa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA228C4CEC6;
-	Tue, 15 Oct 2024 13:14:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8h4lcHI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AF26C4CECF;
+	Tue, 15 Oct 2024 13:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998043;
-	bh=ZERZPZJIhtUETpDXHcPDoTmnZy29cptg1GLtod4F0FY=;
+	s=korg; t=1728998046;
+	bh=5/dbaKBx3RrdrwlL/j7ub4bdPGt+lNYvP7v/l7NfRqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gl0rKIUa1dK2pEmm1a0tLZR2sFLwBry63Qf9oHdEwCaV/UASkKfuo9PK9Ag2qbR8r
-	 OfNzyrVNNFYsYDshEvzNjPzTRsoD6omjglnFm26pDzmgbnTFTB6oCzYK1EbOCPY3Cn
-	 Yag96AecmCqy9vC/aaqyhaZu3w0MN8qDsLun9P/k=
+	b=S8h4lcHIKvOC/3358VWRJcYkTbe0bzPS41ijBJPtZGX+Hgwbi9qGsS3FRzIZQJz9W
+	 qpQ5R+xWjUjfx6Y0D+P59JebSerMVpAsW4ncmW2hBIk789uIZFej+SumkpluRaB1mK
+	 7N9MiREF/YWsqKl3gOVjD3Foj4KKvkdSjiHJdF2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 5.10 362/518] firmware: tegra: bpmp: Drop unused mbox_client_to_bpmp()
-Date: Tue, 15 Oct 2024 14:44:26 +0200
-Message-ID: <20241015123930.942552833@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 363/518] spi: bcm63xx: Fix module autoloading
+Date: Tue, 15 Oct 2024 14:44:27 +0200
+Message-ID: <20241015123930.981560353@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -50,37 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 9c3a62c20f7fb00294a4237e287254456ba8a48b upstream.
+commit 909f34f2462a99bf876f64c5c61c653213e32fce upstream.
 
-mbox_client_to_bpmp() is not used, W=1 builds:
+Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
+based on the alias from platform_device_id table.
 
-  drivers/firmware/tegra/bpmp.c:28:1: error: unused function 'mbox_client_to_bpmp' [-Werror,-Wunused-function]
-
-Fixes: cdfa358b248e ("firmware: tegra: Refactor BPMP driver")
+Fixes: 44d8fb30941d ("spi/bcm63xx: move register definitions into the driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
+Link: https://patch.msgid.link/20240819123349.4020472-2-ruanjinjie@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/tegra/bpmp.c |    6 ------
- 1 file changed, 6 deletions(-)
+ drivers/spi/spi-bcm63xx.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/firmware/tegra/bpmp.c
-+++ b/drivers/firmware/tegra/bpmp.c
-@@ -25,12 +25,6 @@
- #define MSG_RING	BIT(1)
- #define TAG_SZ		32
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -476,6 +476,7 @@ static const struct platform_device_id b
+ 	{
+ 	},
+ };
++MODULE_DEVICE_TABLE(platform, bcm63xx_spi_dev_match);
  
--static inline struct tegra_bpmp *
--mbox_client_to_bpmp(struct mbox_client *client)
--{
--	return container_of(client, struct tegra_bpmp, mbox.client);
--}
--
- static inline const struct tegra_bpmp_ops *
- channel_to_ops(struct tegra_bpmp_channel *channel)
- {
+ static const struct of_device_id bcm63xx_spi_of_match[] = {
+ 	{ .compatible = "brcm,bcm6348-spi", .data = &bcm6348_spi_reg_offsets },
 
 
