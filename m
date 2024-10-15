@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F397F1EABB9;
-	Tue, 15 Oct 2024 11:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7270B19B3FF;
+	Tue, 15 Oct 2024 11:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993133; cv=none; b=j0sHUuDBmAc/Tu2SKSyuG0pbBfM6Hx6XyVysHSD8GeVb7ZuVsk4M/YpFm23Hf1cW3gYyg+0RGX1WUXzMOt49VSbaDzYQlWeAMfDRvlc0a0EhP3+ojbxRzYGfKF2LeWULcUqUTEbSwirgJvwz1QXZEZprQa2DZ5FoZ5n2b1OMHRs=
+	t=1728993136; cv=none; b=HF4PNzTNZjjjMK/v61s2Tf84cQaxeuCWfyuDq8oFN84Ufe4z6HkPKh8/bWxCF2XqOI8r1YoB/c83q+lZp9Y21FWcdvVm77ZlJf6fgBGBTpc8ifPnA1Z32C7aWPkcmWb43fZnUqE5icpMjCiSCB91rKSUfYDfkTT/8Q/bwp7uNok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993133; c=relaxed/simple;
-	bh=lyPXRuWHNtFmZMHhFyJDWnPtCs36zrf8XKSxf0uAr9w=;
+	s=arc-20240116; t=1728993136; c=relaxed/simple;
+	bh=awt0asRVzN+G7Ej/dmJjJuD2eh67B0sTzS/lgSesoPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B5zfjYtN4uJBAxr0IuEAh7K/XItzg0a66M7J4WPSlByy2GqagyM1f+DLQH8ilDpNk62ApUi3wNMjILkKGv/J7XH7KFL9ktDEPQS1vWep4pTy2tighglgKLwNIO6lHmAxxbi38TkVSeeDEquO98a4B1gUwhn8HVVcANXpnepyyCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zL56+JIP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UfaDoeEkE9naZMk7UoLI9waQaVbw5dciyraVZ9+Pq3cfSfC/20AKkFRP218T+9Ub26iXTNe9wN2zeM+z8SGed00xQv8K9jMnaZOrcPBmjo7PQtGaZ3C5IcG4eMN65kFVByxByN5USnyVobJ1emYHfEb5RMu72Ts7yhe+6wvcdZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JS3p+MAE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zL56+JIP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63609C4CEC6;
-	Tue, 15 Oct 2024 11:52:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JS3p+MAE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E6EC4CEC6;
+	Tue, 15 Oct 2024 11:52:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993132;
-	bh=lyPXRuWHNtFmZMHhFyJDWnPtCs36zrf8XKSxf0uAr9w=;
+	s=korg; t=1728993136;
+	bh=awt0asRVzN+G7Ej/dmJjJuD2eh67B0sTzS/lgSesoPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zL56+JIPXjKlJFj0+paFgLqpg9VXDK0Hmz8W3P0KKwYG8XBjplURnY1rIpu6InE3Q
-	 MeO1/4ow6/nmiL1eeJO4u374w7geXdMvRvIQ6jDrxvJmFgndlFzHyiiUkCkLvxp5KW
-	 2MGNRlOo+9J4hUhFSxqSDzdQcM2DEXHPup0VBmTc=
+	b=JS3p+MAE69wbwDzaX9OSKDb2QhJQrVI0EWpB9QhfX4cUnBs22H25B/3dt2JXUo4GC
+	 ctl5kepEUWexAaVPmSAqZxSzSZ6fCsETHOwIjbhCBkNHd8Ze6LQzpKamVCCUjq1rdF
+	 3wm8Ef2bJOS6cst0AtPYMn86VjxLG2YNEWEMr/oE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Anthony Koo <anthony.koo@amd.com>,
-	Robin Chen <robin.chen@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 5.15 313/691] drm/amd/display: Round calculated vtotal
-Date: Tue, 15 Oct 2024 13:24:21 +0200
-Message-ID: <20241015112452.760052114@linuxfoundation.org>
+	Pawel Laszczak <pawell@cadence.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 5.15 322/691] usb: cdnsp: Fix incorrect usb_request status
+Date: Tue, 15 Oct 2024 13:24:30 +0200
+Message-ID: <20241015112453.117968618@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -54,37 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Chen <robin.chen@amd.com>
+From: Pawel Laszczak <pawell@cadence.com>
 
-commit c03fca619fc687338a3b6511fdbed94096abdf79 upstream.
+commit 1702bec4477cc7d31adb4a760d14d33fac928b7a upstream.
 
-[WHY]
-The calculated vtotal may has 1 line deviation. To get precisely
-vtotal number, round the vtotal result.
+Fix changes incorrect usb_request->status returned during disabling
+endpoints. Before fix the status returned during dequeuing requests
+while disabling endpoint was ECONNRESET.
+Patch change it to ESHUTDOWN.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Anthony Koo <anthony.koo@amd.com>
-Signed-off-by: Robin Chen <robin.chen@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Patch fixes issue detected during testing UVC gadget.
+During stopping streaming the class starts dequeuing usb requests and
+controller driver returns the -ECONNRESET status. After completion
+requests the class or application "uvc-gadget" try to queue this
+request again. Changing this status to ESHUTDOWN cause that UVC assumes
+that endpoint is disabled, or device is disconnected and stops
+re-queuing usb requests.
+
+Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
+cc: stable@vger.kernel.org
+Signed-off-by: Pawel Laszczak <pawell@cadence.com>
+Reviewed-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/PH7PR07MB9538E8CA7A2096AAF6A3718FDD9E2@PH7PR07MB9538.namprd07.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/modules/freesync/freesync.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/cdns3/cdnsp-ring.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
-+++ b/drivers/gpu/drm/amd/display/modules/freesync/freesync.c
-@@ -131,7 +131,7 @@ unsigned int mod_freesync_calc_v_total_f
+--- a/drivers/usb/cdns3/cdnsp-ring.c
++++ b/drivers/usb/cdns3/cdnsp-ring.c
+@@ -718,7 +718,8 @@ int cdnsp_remove_request(struct cdnsp_de
+ 	seg = cdnsp_trb_in_td(pdev, cur_td->start_seg, cur_td->first_trb,
+ 			      cur_td->last_trb, hw_deq);
  
- 	v_total = div64_u64(div64_u64(((unsigned long long)(
- 			frame_duration_in_ns) * (stream->timing.pix_clk_100hz / 10)),
--			stream->timing.h_total), 1000000);
-+			stream->timing.h_total) + 500000, 1000000);
- 
- 	/* v_total cannot be less than nominal */
- 	if (v_total < stream->timing.v_total) {
+-	if (seg && (pep->ep_state & EP_ENABLED))
++	if (seg && (pep->ep_state & EP_ENABLED) &&
++	    !(pep->ep_state & EP_DIS_IN_RROGRESS))
+ 		cdnsp_find_new_dequeue_state(pdev, pep, preq->request.stream_id,
+ 					     cur_td, &deq_state);
+ 	else
+@@ -736,7 +737,8 @@ int cdnsp_remove_request(struct cdnsp_de
+ 	 * During disconnecting all endpoint will be disabled so we don't
+ 	 * have to worry about updating dequeue pointer.
+ 	 */
+-	if (pdev->cdnsp_state & CDNSP_STATE_DISCONNECT_PENDING) {
++	if (pdev->cdnsp_state & CDNSP_STATE_DISCONNECT_PENDING ||
++	    pep->ep_state & EP_DIS_IN_RROGRESS) {
+ 		status = -ESHUTDOWN;
+ 		ret = cdnsp_cmd_set_deq(pdev, pep, &deq_state);
+ 	}
 
 
