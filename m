@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696841E764A;
-	Tue, 15 Oct 2024 11:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BBB1CFEA9;
+	Tue, 15 Oct 2024 11:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992898; cv=none; b=eAl2Ce0jcQXZ4qgxiTqYznZ7xwXnpgv/MK8HPPgFpW2d/4Q6qxwMhkT16aDWWLDaHTvejHi8MiuiQUaFsd+dcc+PcA24gEx8F2y/l0wmXg9mD0Jyd5ObOBtfsuMc/MwRgLonJttxtdGN5MapTRTuSp9mZBJ2NXzgUdpTRsRXIfk=
+	t=1728992902; cv=none; b=Fx54gXCEb7LYNaEbnryY/InwJrRxf90SV4Wedqm7sZ5L0Yx+CEWiDzaZF6W3HPRuClGi/8yhQstt+tE3t1OM0h+A3FmdcFCF9s0/wQl6Tq7McmzOhF7mDqxzkea17yC19RpyYTugEVGXpaX14BuQN2ws54KkkkR8RhOnCvVJuZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992898; c=relaxed/simple;
-	bh=K5cHNoqjiQarSg32LSUIZ/fFAIm0s+tpChMHrai6psw=;
+	s=arc-20240116; t=1728992902; c=relaxed/simple;
+	bh=AkJyTHUfnyv8mAHmrq5tawDJcL2KjaRMM2z8YwAOw7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G15vNpi2UgX45svHWVzMq8Hobf2xI5OqEDnKMAyULegTWh7oZzBS6F6xloep53YtxU+ZEjOJQ59wnvRfCOcm4nbJ/+3Jc7coYTNN/tzJuWilKjq1OpBIiOjvDiQrhEH47FHP3yO2BK3dWGREPD5AHQGsWJ3K/XMkIRVeZ9c0jKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ioAy4gyh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bktD6ZdWTnEHVOr4iEH1OXiQ9xvKaJO6XsfrJFS0W2dkf6G0I+dXNuZaaI4wsnlEpjSmh3EbzbvgPJSrFAFxpUl6RW8bhoIcH5tZE+bQk3t6nggNw/vA44XUg3RylJBSqzZefYQu9xgBfVWyZ5+akqu31wLgLbJG1CEtIdiYjeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mr5xgdGB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ioAy4gyh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4768C4CEC6;
-	Tue, 15 Oct 2024 11:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mr5xgdGB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5B3C4CEC6;
+	Tue, 15 Oct 2024 11:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992898;
-	bh=K5cHNoqjiQarSg32LSUIZ/fFAIm0s+tpChMHrai6psw=;
+	s=korg; t=1728992901;
+	bh=AkJyTHUfnyv8mAHmrq5tawDJcL2KjaRMM2z8YwAOw7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ioAy4gyh093v7A+1GveFG/JKmiLtURxSQlv59ucR9AASQxTCg/iqG9faBZnwz1/Y6
-	 1r4FVUwPKeGEr0V7aUignDDRfPIm7BA5bvOZIK/5ujIwF9KGnqwAnsqFhgOYYNMBHm
-	 8a30rxKHQHa04Ct20f2vkp8c+S1ybdZ/wpVvcIMU=
+	b=mr5xgdGB4t/VrbZp0jYOySEcciRsn6rtgwXhoBh5/76Q5PBzheIoKJkO7Qyo65yVI
+	 fy2HNZ8wpIfzRkzVQRN6TGP6XGIeCDGvMXkHyICs60+nE0CnteG8eCFxDE8mFrMVN0
+	 wcP4BUptVcacV7UahNQWmtke77Kf7LjJbWXaJ0Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+9bff4c7b992038a7409f@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 210/691] nilfs2: fix potential null-ptr-deref in nilfs_btree_insert()
-Date: Tue, 15 Oct 2024 13:22:38 +0200
-Message-ID: <20241015112448.695600494@linuxfoundation.org>
+Subject: [PATCH 5.15 245/691] IB/core: Fix ib_cache_setup_one error flow cleanup
+Date: Tue, 15 Oct 2024 13:23:13 +0200
+Message-ID: <20241015112450.078733316@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,64 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 9403001ad65ae4f4c5de368bdda3a0636b51d51a ]
+[ Upstream commit 1403c8b14765eab805377dd3b75e96ace8747aed ]
 
-Patch series "nilfs2: fix potential issues with empty b-tree nodes".
+When ib_cache_update return an error, we exit ib_cache_setup_one
+instantly with no proper cleanup, even though before this we had
+already successfully done gid_table_setup_one, that results in
+the kernel WARN below.
 
-This series addresses three potential issues with empty b-tree nodes that
-can occur with corrupted filesystem images, including one recently
-discovered by syzbot.
+Do proper cleanup using gid_table_cleanup_one before returning
+the err in order to fix the issue.
 
-This patch (of 3):
+WARNING: CPU: 4 PID: 922 at drivers/infiniband/core/cache.c:806 gid_table_release_one+0x181/0x1a0
+Modules linked in:
+CPU: 4 UID: 0 PID: 922 Comm: c_repro Not tainted 6.11.0-rc1+ #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+RIP: 0010:gid_table_release_one+0x181/0x1a0
+Code: 44 8b 38 75 0c e8 2f cb 34 ff 4d 8b b5 28 05 00 00 e8 23 cb 34 ff 44 89 f9 89 da 4c 89 f6 48 c7 c7 d0 58 14 83 e8 4f de 21 ff <0f> 0b 4c 8b 75 30 e9 54 ff ff ff 48 8    3 c4 10 5b 5d 41 5c 41 5d 41
+RSP: 0018:ffffc90002b835b0 EFLAGS: 00010286
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff811c8527
+RDX: 0000000000000000 RSI: ffffffff811c8534 RDI: 0000000000000001
+RBP: ffff8881011b3d00 R08: ffff88810b3abe00 R09: 205d303839303631
+R10: 666572207972746e R11: 72746e6520444947 R12: 0000000000000001
+R13: ffff888106390000 R14: ffff8881011f2110 R15: 0000000000000001
+FS:  00007fecc3b70800(0000) GS:ffff88813bd00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020000340 CR3: 000000010435a001 CR4: 00000000003706b0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ? show_regs+0x94/0xa0
+ ? __warn+0x9e/0x1c0
+ ? gid_table_release_one+0x181/0x1a0
+ ? report_bug+0x1f9/0x340
+ ? gid_table_release_one+0x181/0x1a0
+ ? handle_bug+0xa2/0x110
+ ? exc_invalid_op+0x31/0xa0
+ ? asm_exc_invalid_op+0x16/0x20
+ ? __warn_printk+0xc7/0x180
+ ? __warn_printk+0xd4/0x180
+ ? gid_table_release_one+0x181/0x1a0
+ ib_device_release+0x71/0xe0
+ ? __pfx_ib_device_release+0x10/0x10
+ device_release+0x44/0xd0
+ kobject_put+0x135/0x3d0
+ put_device+0x20/0x30
+ rxe_net_add+0x7d/0xa0
+ rxe_newlink+0xd7/0x190
+ nldev_newlink+0x1b0/0x2a0
+ ? __pfx_nldev_newlink+0x10/0x10
+ rdma_nl_rcv_msg+0x1ad/0x2e0
+ rdma_nl_rcv_skb.constprop.0+0x176/0x210
+ netlink_unicast+0x2de/0x400
+ netlink_sendmsg+0x306/0x660
+ __sock_sendmsg+0x110/0x120
+ ____sys_sendmsg+0x30e/0x390
+ ___sys_sendmsg+0x9b/0xf0
+ ? kstrtouint+0x6e/0xa0
+ ? kstrtouint_from_user+0x7c/0xb0
+ ? get_pid_task+0xb0/0xd0
+ ? proc_fail_nth_write+0x5b/0x140
+ ? __fget_light+0x9a/0x200
+ ? preempt_count_add+0x47/0xa0
+ __sys_sendmsg+0x61/0xd0
+ do_syscall_64+0x50/0x110
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-If a b-tree is broken on the device, and the b-tree height is greater than
-2 (the level of the root node is greater than 1) even if the number of
-child nodes of the b-tree root is 0, a NULL pointer dereference occurs in
-nilfs_btree_prepare_insert(), which is called from nilfs_btree_insert().
-
-This is because, when the number of child nodes of the b-tree root is 0,
-nilfs_btree_do_lookup() does not set the block buffer head in any of
-path[x].bp_bh, leaving it as the initial value of NULL, but if the level
-of the b-tree root node is greater than 1, nilfs_btree_get_nonroot_node(),
-which accesses the buffer memory of path[x].bp_bh, is called.
-
-Fix this issue by adding a check to nilfs_btree_root_broken(), which
-performs sanity checks when reading the root node from the device, to
-detect this inconsistency.
-
-Thanks to Lizhi Xu for trying to solve the bug and clarifying the cause
-early on.
-
-Link: https://lkml.kernel.org/r/20240904081401.16682-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20240902084101.138971-1-lizhi.xu@windriver.com
-Link: https://lkml.kernel.org/r/20240904081401.16682-2-konishi.ryusuke@gmail.com
-Fixes: 17c76b0104e4 ("nilfs2: B-tree based block mapping")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+9bff4c7b992038a7409f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9bff4c7b992038a7409f
-Cc: Lizhi Xu <lizhi.xu@windriver.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1901b91f9982 ("IB/core: Fix potential NULL pointer dereference in pkey cache")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
+Link: https://patch.msgid.link/79137687d829899b0b1c9835fcb4b258004c439a.1725273354.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/btree.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/cache.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nilfs2/btree.c b/fs/nilfs2/btree.c
-index 8e3d343b9a793..fbb6ec56843f4 100644
---- a/fs/nilfs2/btree.c
-+++ b/fs/nilfs2/btree.c
-@@ -381,7 +381,8 @@ static int nilfs_btree_root_broken(const struct nilfs_btree_node *node,
- 	if (unlikely(level < NILFS_BTREE_LEVEL_NODE_MIN ||
- 		     level >= NILFS_BTREE_LEVEL_MAX ||
- 		     nchildren < 0 ||
--		     nchildren > NILFS_BTREE_ROOT_NCHILDREN_MAX)) {
-+		     nchildren > NILFS_BTREE_ROOT_NCHILDREN_MAX ||
-+		     (nchildren == 0 && level > NILFS_BTREE_LEVEL_NODE_MIN))) {
- 		nilfs_crit(inode->i_sb,
- 			   "bad btree root (ino=%lu): level = %d, flags = 0x%x, nchildren = %d",
- 			   inode->i_ino, level, flags, nchildren);
+diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
+index 98f3d8b382c15..b534ef03168c6 100644
+--- a/drivers/infiniband/core/cache.c
++++ b/drivers/infiniband/core/cache.c
+@@ -1623,8 +1623,10 @@ int ib_cache_setup_one(struct ib_device *device)
+ 
+ 	rdma_for_each_port (device, p) {
+ 		err = ib_cache_update(device, p, true, true, true);
+-		if (err)
++		if (err) {
++			gid_table_cleanup_one(device);
+ 			return err;
++		}
+ 	}
+ 
+ 	return 0;
 -- 
 2.43.0
 
