@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A131D4154;
-	Tue, 15 Oct 2024 12:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FE01E1A35;
+	Tue, 15 Oct 2024 12:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994007; cv=none; b=KzvZbSm75q0wX+lMQc6+JYwD3yqQIdM+nsPwTU3ysU1LEXZSOS+v5hcrrwPOpB6YH9rHmPvfiOi4iWHxGi5otqIyIvCR4Rx0zCjFJxURA+bXBun5W/LE9/Z6SJfjQjlHNgHRkEIgQLwN25TeVQSX0Lmx5DQQK/0tXn7Q3UIDI+8=
+	t=1728994011; cv=none; b=fjtdwmNzMQPKGScil758P//Yzo5hgs7i/Pe9zvQ/rW/ISewI6lKAh/FKjYOYRXtormjDsZQ8NKZsBdKLwgHhdO0amJiD0rA+whpZ2UXTj7S9Q4W1jIudQtFQe/AHKJR4a5Cap+HKH1qA9NYVPRYt+38uAd5UUAyRE4otbUn/1DM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994007; c=relaxed/simple;
-	bh=RMc9hGRG/VHKqsU8JZhxHagkNbvKIN7sp6Ts+VoUATc=;
+	s=arc-20240116; t=1728994011; c=relaxed/simple;
+	bh=Jj7Z7OjsjmoLxTyRyWxsHmP5g17IfZlsOEaT4f1mCBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=byN8z3xMd3BMe/PTbstLsX50+kLbuaoOt3vAGmI0S33a7ebQrEkyK2cAWOmi4VtFwhzYIZRRJRHq/0AyK12oDdCV4yg6Xm17IpQUE6XA1bC6YjWQo9qc5yFEp9A/3C+oZ8Z4CFQr4oxLFIPPoKwlf2L4yexTy7KVa2CZLf6i6Qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4FLTwBs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ppvZxx6+1+gxtDzJd6Rami6YiP4Dnr+/pXAt1L7r/s41sLcckieFO4rNCV+3OFhgp0fTNfcFGriojUqcWZ1wAqxjbALuq0efzIXNL1rI0TB7xc2u2ocCSWBQvlTqoyWYOeUNnLOjyKqW+bAEF43l1H5zs9pGlJ/wrXGDsCeZo/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pEmF7Ckt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4FLTwBs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10022C4CEC6;
-	Tue, 15 Oct 2024 12:06:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pEmF7Ckt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A1FEC4CEC6;
+	Tue, 15 Oct 2024 12:06:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994007;
-	bh=RMc9hGRG/VHKqsU8JZhxHagkNbvKIN7sp6Ts+VoUATc=;
+	s=korg; t=1728994010;
+	bh=Jj7Z7OjsjmoLxTyRyWxsHmP5g17IfZlsOEaT4f1mCBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v4FLTwBsv97HTC17zFUHVUZ61qKL3dEd/nqB5qiHTEuKG/w5aybbokBzR+Mb34h10
-	 IBXgMiPqjNT+NeCSK2bXr+TiT9OfLEZtn4gDV0e3LFNaj1h9j5v4Ne9S7buyefE5GA
-	 i3sPv9ApCfY8gfLXLpTW/7e7B3KUEy3/WJuTYlvo=
+	b=pEmF7Ckt8RWILIE9O53Ltm1kBSogrkaQ/G20Ls9xSJnOc85WcNPXsJ90OxBFZUqpO
+	 hRXiqOnXcicyO/cKFWiPEqakkbMgH8XuZZr92O+Ew3BtF9cChXY5CHyAkRTipwpiK+
+	 5Zn46PlZbaq3DyqIK2teR4FAGk1PbbNQQyMZbFdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil R <akhilrajeev@nvidia.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 552/691] i2c: smbus: Use device_*() functions instead of of_*()
-Date: Tue, 15 Oct 2024 13:28:20 +0200
-Message-ID: <20241015112502.250131313@linuxfoundation.org>
+	"dmitry.baryshkov@linaro.org, agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, Sumit Semwal" <sumit.semwal@linaro.org>,
+	Sumit Semwal <sumit.semwal@linaro.org>
+Subject: [PATCH 5.15 579/691] Revert "arm64: dts: qcom: sm8250: switch UFS QMP PHY to new style of bindings"
+Date: Tue, 15 Oct 2024 13:28:47 +0200
+Message-ID: <20241015112503.321121510@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,119 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil R <akhilrajeev@nvidia.com>
+From: Sumit Semwal <sumit.semwal@linaro.org>
 
-[ Upstream commit a263a84088f689bf0c1552a510b25d0bcc45fcae ]
+This reverts commit cf9c7b34b90b622254b236a9a43737b6059a1c14.
 
-Change of_*() functions to device_*() for firmware agnostic usage.
-This allows to have the smbus_alert interrupt without any changes
-in the controller drivers using the ACPI table.
+This commit breaks UFS on RB5 in the 6.1 LTS kernels. The original patch
+author suggests that this is not a stable kernel patch, hence reverting
+it.
 
-Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Stable-dep-of: 8d3cefaf6592 ("i2c: core: Lock address during client device instantiation")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This was reported during testing with 6.1.103 / 5.15.165 LTS kernels
+merged in the respective Android Common Kernel branches.
+
+Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-base.c  |  2 +-
- drivers/i2c/i2c-core-smbus.c | 11 ++++++-----
- drivers/i2c/i2c-smbus.c      |  5 +++--
- include/linux/i2c-smbus.h    |  6 +++---
- 4 files changed, 13 insertions(+), 11 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
-index b163ef91aabab..c8cb6f44a0f88 100644
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -1526,7 +1526,7 @@ static int i2c_register_adapter(struct i2c_adapter *adap)
- 		goto out_list;
- 	}
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -1702,7 +1702,7 @@
+ 				     "jedec,ufs-2.0";
+ 			reg = <0 0x01d84000 0 0x3000>;
+ 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+-			phys = <&ufs_mem_phy>;
++			phys = <&ufs_mem_phy_lanes>;
+ 			phy-names = "ufsphy";
+ 			lanes-per-direction = <2>;
+ 			#reset-cells = <1>;
+@@ -1746,8 +1746,10 @@
  
--	res = of_i2c_setup_smbus_alert(adap);
-+	res = i2c_setup_smbus_alert(adap);
- 	if (res)
- 		goto out_reg;
+ 		ufs_mem_phy: phy@1d87000 {
+ 			compatible = "qcom,sm8250-qmp-ufs-phy";
+-			reg = <0 0x01d87000 0 0x1000>;
+-
++			reg = <0 0x01d87000 0 0x1c0>;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
+ 			clock-names = "ref",
+ 				      "ref_aux";
+ 			clocks = <&rpmhcc RPMH_CXO_CLK>,
+@@ -1755,12 +1757,18 @@
  
-diff --git a/drivers/i2c/i2c-core-smbus.c b/drivers/i2c/i2c-core-smbus.c
-index e5b2d1465e7ed..304c2c8fee68e 100644
---- a/drivers/i2c/i2c-core-smbus.c
-+++ b/drivers/i2c/i2c-core-smbus.c
-@@ -14,6 +14,7 @@
- #include <linux/err.h>
- #include <linux/i2c.h>
- #include <linux/i2c-smbus.h>
-+#include <linux/property.h>
- #include <linux/slab.h>
+ 			resets = <&ufs_mem_hc 0>;
+ 			reset-names = "ufsphy";
++			status = "disabled";
  
- #include "i2c-core.h"
-@@ -701,13 +702,13 @@ struct i2c_client *i2c_new_smbus_alert_device(struct i2c_adapter *adapter,
- }
- EXPORT_SYMBOL_GPL(i2c_new_smbus_alert_device);
+ 			power-domains = <&gcc UFS_PHY_GDSC>;
  
--#if IS_ENABLED(CONFIG_I2C_SMBUS) && IS_ENABLED(CONFIG_OF)
--int of_i2c_setup_smbus_alert(struct i2c_adapter *adapter)
-+#if IS_ENABLED(CONFIG_I2C_SMBUS)
-+int i2c_setup_smbus_alert(struct i2c_adapter *adapter)
- {
- 	int irq;
+-			#phy-cells = <0>;
+-
+-			status = "disabled";
++			ufs_mem_phy_lanes: phy@1d87400 {
++				reg = <0 0x01d87400 0 0x16c>,
++				      <0 0x01d87600 0 0x200>,
++				      <0 0x01d87c00 0 0x200>,
++				      <0 0x01d87800 0 0x16c>,
++				      <0 0x01d87a00 0 0x200>;
++				#phy-cells = <0>;
++			};
+ 		};
  
--	irq = of_property_match_string(adapter->dev.of_node, "interrupt-names",
--				       "smbus_alert");
-+	irq = device_property_match_string(adapter->dev.parent, "interrupt-names",
-+					   "smbus_alert");
- 	if (irq == -EINVAL || irq == -ENODATA)
- 		return 0;
- 	else if (irq < 0)
-@@ -715,5 +716,5 @@ int of_i2c_setup_smbus_alert(struct i2c_adapter *adapter)
- 
- 	return PTR_ERR_OR_ZERO(i2c_new_smbus_alert_device(adapter, NULL));
- }
--EXPORT_SYMBOL_GPL(of_i2c_setup_smbus_alert);
-+EXPORT_SYMBOL_GPL(i2c_setup_smbus_alert);
- #endif
-diff --git a/drivers/i2c/i2c-smbus.c b/drivers/i2c/i2c-smbus.c
-index 44582cf29e162..cacdadb9415c5 100644
---- a/drivers/i2c/i2c-smbus.c
-+++ b/drivers/i2c/i2c-smbus.c
-@@ -13,7 +13,7 @@
- #include <linux/interrupt.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
--#include <linux/of_irq.h>
-+#include <linux/property.h>
- #include <linux/slab.h>
- #include <linux/workqueue.h>
- 
-@@ -178,7 +178,8 @@ static int smbalert_probe(struct i2c_client *ara,
- 	if (setup) {
- 		irq = setup->irq;
- 	} else {
--		irq = of_irq_get_byname(adapter->dev.of_node, "smbus_alert");
-+		irq = fwnode_irq_get_byname(dev_fwnode(adapter->dev.parent),
-+					    "smbus_alert");
- 		if (irq <= 0)
- 			return irq;
- 	}
-diff --git a/include/linux/i2c-smbus.h b/include/linux/i2c-smbus.h
-index 1ef421818d3a8..95cf902e0bdae 100644
---- a/include/linux/i2c-smbus.h
-+++ b/include/linux/i2c-smbus.h
-@@ -30,10 +30,10 @@ struct i2c_client *i2c_new_smbus_alert_device(struct i2c_adapter *adapter,
- 					      struct i2c_smbus_alert_setup *setup);
- int i2c_handle_smbus_alert(struct i2c_client *ara);
- 
--#if IS_ENABLED(CONFIG_I2C_SMBUS) && IS_ENABLED(CONFIG_OF)
--int of_i2c_setup_smbus_alert(struct i2c_adapter *adap);
-+#if IS_ENABLED(CONFIG_I2C_SMBUS)
-+int i2c_setup_smbus_alert(struct i2c_adapter *adap);
- #else
--static inline int of_i2c_setup_smbus_alert(struct i2c_adapter *adap)
-+static inline int i2c_setup_smbus_alert(struct i2c_adapter *adap)
- {
- 	return 0;
- }
--- 
-2.43.0
-
+ 		ipa_virt: interconnect@1e00000 {
 
 
