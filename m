@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7A51E7658;
-	Tue, 15 Oct 2024 11:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C104D1E3DE8;
+	Tue, 15 Oct 2024 11:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993355; cv=none; b=vEVi2Y+fN/icCfq3c7JO5PovYWf68Lk2aJfz26HDQTv7yUmMCY6g8kSxAup6uTYmL+cqjM6miinAAMnaJli3Aj1Ulbb5qESBquWmu9dLlDBsnY0eXQ4j7nUY+S5nbtQoxD9NRIDaEeF5vFwFBaZQ0JhpV+H+pWqJZbEeQmhwf6g=
+	t=1728993358; cv=none; b=DDeN7ETs5TWrMEmkSQXU/Fyu6jEmtQj662uX+nDxMM1VN5bPfG/HSJJABTc+n8U5FuCG9/EmXJncQGlCtoJjlup+aatG5yN35bo/pfSxOrFVgAS24H2kgtqofpaCv4otmrjwjrVvSyfYb6LW/Rf/3ZjCsv3C17CrcqYbLRasg8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993355; c=relaxed/simple;
-	bh=UTQjGs9EdbBt7BoURQWmAxT/ZC3LZYuCv7EUv1ey53k=;
+	s=arc-20240116; t=1728993358; c=relaxed/simple;
+	bh=jUTO2WDlWS2E7Z/k0N02nAcHPmeWn3sq0tCpIPOT6pQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WSb0c0aAXNoi5OBKhhp+ByqWMtPawpwygxwBxwin0IBXdh1Ldt2JgabGjfg5GM90ZWa3n/XYeLRIjTqEQKd+rdQgxm0AFb/BQYMxk/XmSs6rbdnjpqYDHo+IHeM3riEpj9S9wEnx8IgwagWUFAaajxZiggw4AZjT8oz8+bQSMzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zaDQxIKm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=K+K3YRiBgyYtvZXTEnn6LVVgzG+o1RLQqxoW9kJzV9gHOpA3U7gEzClgMctHvUGHsCyhn5BUGWGOqXB38Ky3OA0+gb+pEmr4t4NLCC6b5qIHf+AvAmmO+er2BpID6htHtWEWCmM4iGgF7DdwdYvPfVthQsJgnDtd4Qysu5xOE1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVmDwhZw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaDQxIKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E2DC4CECF;
-	Tue, 15 Oct 2024 11:55:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVmDwhZw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3079DC4CED0;
+	Tue, 15 Oct 2024 11:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993355;
-	bh=UTQjGs9EdbBt7BoURQWmAxT/ZC3LZYuCv7EUv1ey53k=;
+	s=korg; t=1728993358;
+	bh=jUTO2WDlWS2E7Z/k0N02nAcHPmeWn3sq0tCpIPOT6pQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zaDQxIKmJNNNTj98vdsnmThToZHlTQeHQlDRBwz+SybiEUtz6asj+SCpzGYUo1eMb
-	 VSwpFtR/+ct9xSsBUoYwq6wWAde3gTQHegJ9QBOOEZcLhejx2tyWnZZmsgyuea3Ahr
-	 risSVda1xXpyKGwA2AKFZy27DKGHint3vUGYX3tQ=
+	b=sVmDwhZwEzOjXb+/sO/g8XtDGoyOuiT+XVUORU8wW35BJPcGl/HgXu7DUYJv2m78n
+	 5DCliy1llWS+8WaK3nP+E3v9aHjGmGJwkxmtKK8CErT57T3FOI2D0deo2CvXtXwfF3
+	 5fLNrBrZWE1dulR9S0wTYeZ9S+y9zjywYbDs+jiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 355/691] xhci: remove xhci_test_trb_in_td_math early development check
-Date: Tue, 15 Oct 2024 13:25:03 +0200
-Message-ID: <20241015112454.435146643@linuxfoundation.org>
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Casey Schaufler <casey@schaufler-ca.com>,
+	Christian Brauner <brauner@kernel.org>,
+	James Morris <jmorris@namei.org>,
+	Jann Horn <jannh@google.com>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Paul Moore <paul@paul-moore.com>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 5.15 346/691] fs: Fix file_set_fowner LSM hook inconsistencies
+Date: Tue, 15 Oct 2024 13:24:54 +0200
+Message-ID: <20241015112454.072231711@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -44,211 +52,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit 54f9927dfe2266402a226d5f51d38236bdca0590 ]
+commit 26f204380a3c182e5adf1a798db0724d6111b597 upstream.
 
-Time to remove this test trb in td math check that was added
-in early stage of xhci driver development.
+The fcntl's F_SETOWN command sets the process that handle SIGIO/SIGURG
+for the related file descriptor.  Before this change, the
+file_set_fowner LSM hook was always called, ignoring the VFS logic which
+may not actually change the process that handles SIGIO (e.g. TUN, TTY,
+dnotify), nor update the related UID/EUID.
 
-It verified that the size, alignment and boundaries of the event and
-command rings allocated by the driver itself are correct.
+Moreover, because security_file_set_fowner() was called without lock
+(e.g. f_owner.lock), concurrent F_SETOWN commands could result to a race
+condition and inconsistent LSM states (e.g. SELinux's fown_sid) compared
+to struct fown_struct's UID/EUID.
 
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230202150505.618915-3-mathias.nyman@linux.intel.com
+This change makes sure the LSM states are always in sync with the VFS
+state by moving the security_file_set_fowner() call close to the
+UID/EUID updates and using the same f_owner.lock .
+
+Rename f_modown() to __f_setown() to simplify code.
+
+Cc: stable@vger.kernel.org
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Casey Schaufler <casey@schaufler-ca.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: James Morris <jmorris@namei.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Ondrej Mosnacek <omosnace@redhat.com>
+Cc: Paul Moore <paul@paul-moore.com>
+Cc: Serge E. Hallyn <serge@hallyn.com>
+Cc: Stephen Smalley <stephen.smalley.work@gmail.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: e5fa8db0be3e ("usb: xhci: fix loss of data on Cadence xHC")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mem.c | 160 ------------------------------------
- 1 file changed, 160 deletions(-)
+ fs/fcntl.c |   14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index 1ab3571b882e3..5b5b8ac28e746 100644
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -1941,164 +1941,6 @@ void xhci_mem_cleanup(struct xhci_hcd *xhci)
- 	xhci->usb3_rhub.bus_state.bus_suspended = 0;
+--- a/fs/fcntl.c
++++ b/fs/fcntl.c
+@@ -85,8 +85,8 @@ static int setfl(int fd, struct file * f
+ 	return error;
  }
  
--static int xhci_test_trb_in_td(struct xhci_hcd *xhci,
--		struct xhci_segment *input_seg,
--		union xhci_trb *start_trb,
--		union xhci_trb *end_trb,
--		dma_addr_t input_dma,
--		struct xhci_segment *result_seg,
--		char *test_name, int test_number)
--{
--	unsigned long long start_dma;
--	unsigned long long end_dma;
--	struct xhci_segment *seg;
--
--	start_dma = xhci_trb_virt_to_dma(input_seg, start_trb);
--	end_dma = xhci_trb_virt_to_dma(input_seg, end_trb);
--
--	seg = trb_in_td(xhci, input_seg, start_trb, end_trb, input_dma, false);
--	if (seg != result_seg) {
--		xhci_warn(xhci, "WARN: %s TRB math test %d failed!\n",
--				test_name, test_number);
--		xhci_warn(xhci, "Tested TRB math w/ seg %p and "
--				"input DMA 0x%llx\n",
--				input_seg,
--				(unsigned long long) input_dma);
--		xhci_warn(xhci, "starting TRB %p (0x%llx DMA), "
--				"ending TRB %p (0x%llx DMA)\n",
--				start_trb, start_dma,
--				end_trb, end_dma);
--		xhci_warn(xhci, "Expected seg %p, got seg %p\n",
--				result_seg, seg);
--		trb_in_td(xhci, input_seg, start_trb, end_trb, input_dma,
--			  true);
--		return -1;
--	}
--	return 0;
--}
--
--/* TRB math checks for xhci_trb_in_td(), using the command and event rings. */
--static int xhci_check_trb_in_td_math(struct xhci_hcd *xhci)
--{
--	struct {
--		dma_addr_t		input_dma;
--		struct xhci_segment	*result_seg;
--	} simple_test_vector [] = {
--		/* A zeroed DMA field should fail */
--		{ 0, NULL },
--		/* One TRB before the ring start should fail */
--		{ xhci->event_ring->first_seg->dma - 16, NULL },
--		/* One byte before the ring start should fail */
--		{ xhci->event_ring->first_seg->dma - 1, NULL },
--		/* Starting TRB should succeed */
--		{ xhci->event_ring->first_seg->dma, xhci->event_ring->first_seg },
--		/* Ending TRB should succeed */
--		{ xhci->event_ring->first_seg->dma + (TRBS_PER_SEGMENT - 1)*16,
--			xhci->event_ring->first_seg },
--		/* One byte after the ring end should fail */
--		{ xhci->event_ring->first_seg->dma + (TRBS_PER_SEGMENT - 1)*16 + 1, NULL },
--		/* One TRB after the ring end should fail */
--		{ xhci->event_ring->first_seg->dma + (TRBS_PER_SEGMENT)*16, NULL },
--		/* An address of all ones should fail */
--		{ (dma_addr_t) (~0), NULL },
--	};
--	struct {
--		struct xhci_segment	*input_seg;
--		union xhci_trb		*start_trb;
--		union xhci_trb		*end_trb;
--		dma_addr_t		input_dma;
--		struct xhci_segment	*result_seg;
--	} complex_test_vector [] = {
--		/* Test feeding a valid DMA address from a different ring */
--		{	.input_seg = xhci->event_ring->first_seg,
--			.start_trb = xhci->event_ring->first_seg->trbs,
--			.end_trb = &xhci->event_ring->first_seg->trbs[TRBS_PER_SEGMENT - 1],
--			.input_dma = xhci->cmd_ring->first_seg->dma,
--			.result_seg = NULL,
--		},
--		/* Test feeding a valid end TRB from a different ring */
--		{	.input_seg = xhci->event_ring->first_seg,
--			.start_trb = xhci->event_ring->first_seg->trbs,
--			.end_trb = &xhci->cmd_ring->first_seg->trbs[TRBS_PER_SEGMENT - 1],
--			.input_dma = xhci->cmd_ring->first_seg->dma,
--			.result_seg = NULL,
--		},
--		/* Test feeding a valid start and end TRB from a different ring */
--		{	.input_seg = xhci->event_ring->first_seg,
--			.start_trb = xhci->cmd_ring->first_seg->trbs,
--			.end_trb = &xhci->cmd_ring->first_seg->trbs[TRBS_PER_SEGMENT - 1],
--			.input_dma = xhci->cmd_ring->first_seg->dma,
--			.result_seg = NULL,
--		},
--		/* TRB in this ring, but after this TD */
--		{	.input_seg = xhci->event_ring->first_seg,
--			.start_trb = &xhci->event_ring->first_seg->trbs[0],
--			.end_trb = &xhci->event_ring->first_seg->trbs[3],
--			.input_dma = xhci->event_ring->first_seg->dma + 4*16,
--			.result_seg = NULL,
--		},
--		/* TRB in this ring, but before this TD */
--		{	.input_seg = xhci->event_ring->first_seg,
--			.start_trb = &xhci->event_ring->first_seg->trbs[3],
--			.end_trb = &xhci->event_ring->first_seg->trbs[6],
--			.input_dma = xhci->event_ring->first_seg->dma + 2*16,
--			.result_seg = NULL,
--		},
--		/* TRB in this ring, but after this wrapped TD */
--		{	.input_seg = xhci->event_ring->first_seg,
--			.start_trb = &xhci->event_ring->first_seg->trbs[TRBS_PER_SEGMENT - 3],
--			.end_trb = &xhci->event_ring->first_seg->trbs[1],
--			.input_dma = xhci->event_ring->first_seg->dma + 2*16,
--			.result_seg = NULL,
--		},
--		/* TRB in this ring, but before this wrapped TD */
--		{	.input_seg = xhci->event_ring->first_seg,
--			.start_trb = &xhci->event_ring->first_seg->trbs[TRBS_PER_SEGMENT - 3],
--			.end_trb = &xhci->event_ring->first_seg->trbs[1],
--			.input_dma = xhci->event_ring->first_seg->dma + (TRBS_PER_SEGMENT - 4)*16,
--			.result_seg = NULL,
--		},
--		/* TRB not in this ring, and we have a wrapped TD */
--		{	.input_seg = xhci->event_ring->first_seg,
--			.start_trb = &xhci->event_ring->first_seg->trbs[TRBS_PER_SEGMENT - 3],
--			.end_trb = &xhci->event_ring->first_seg->trbs[1],
--			.input_dma = xhci->cmd_ring->first_seg->dma + 2*16,
--			.result_seg = NULL,
--		},
--	};
--
--	unsigned int num_tests;
--	int i, ret;
--
--	num_tests = ARRAY_SIZE(simple_test_vector);
--	for (i = 0; i < num_tests; i++) {
--		ret = xhci_test_trb_in_td(xhci,
--				xhci->event_ring->first_seg,
--				xhci->event_ring->first_seg->trbs,
--				&xhci->event_ring->first_seg->trbs[TRBS_PER_SEGMENT - 1],
--				simple_test_vector[i].input_dma,
--				simple_test_vector[i].result_seg,
--				"Simple", i);
--		if (ret < 0)
--			return ret;
--	}
--
--	num_tests = ARRAY_SIZE(complex_test_vector);
--	for (i = 0; i < num_tests; i++) {
--		ret = xhci_test_trb_in_td(xhci,
--				complex_test_vector[i].input_seg,
--				complex_test_vector[i].start_trb,
--				complex_test_vector[i].end_trb,
--				complex_test_vector[i].input_dma,
--				complex_test_vector[i].result_seg,
--				"Complex", i);
--		if (ret < 0)
--			return ret;
--	}
--	xhci_dbg(xhci, "TRB math tests passed.\n");
--	return 0;
--}
--
- static void xhci_set_hc_event_deq(struct xhci_hcd *xhci)
+-static void f_modown(struct file *filp, struct pid *pid, enum pid_type type,
+-                     int force)
++void __f_setown(struct file *filp, struct pid *pid, enum pid_type type,
++		int force)
  {
- 	u64 temp;
-@@ -2549,8 +2391,6 @@ int xhci_mem_init(struct xhci_hcd *xhci, gfp_t flags)
- 					0, flags);
- 	if (!xhci->event_ring)
- 		goto fail;
--	if (xhci_check_trb_in_td_math(xhci) < 0)
--		goto fail;
+ 	write_lock_irq(&filp->f_owner.lock);
+ 	if (force || !filp->f_owner.pid) {
+@@ -96,19 +96,13 @@ static void f_modown(struct file *filp,
  
- 	ret = xhci_alloc_erst(xhci, xhci->event_ring, &xhci->erst, flags);
- 	if (ret)
--- 
-2.43.0
-
+ 		if (pid) {
+ 			const struct cred *cred = current_cred();
++			security_file_set_fowner(filp);
+ 			filp->f_owner.uid = cred->uid;
+ 			filp->f_owner.euid = cred->euid;
+ 		}
+ 	}
+ 	write_unlock_irq(&filp->f_owner.lock);
+ }
+-
+-void __f_setown(struct file *filp, struct pid *pid, enum pid_type type,
+-		int force)
+-{
+-	security_file_set_fowner(filp);
+-	f_modown(filp, pid, type, force);
+-}
+ EXPORT_SYMBOL(__f_setown);
+ 
+ int f_setown(struct file *filp, unsigned long arg, int force)
+@@ -144,7 +138,7 @@ EXPORT_SYMBOL(f_setown);
+ 
+ void f_delown(struct file *filp)
+ {
+-	f_modown(filp, NULL, PIDTYPE_TGID, 1);
++	__f_setown(filp, NULL, PIDTYPE_TGID, 1);
+ }
+ 
+ pid_t f_getown(struct file *filp)
 
 
