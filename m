@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6DA81AF0A5;
-	Tue, 15 Oct 2024 12:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469A01AF0A7;
+	Tue, 15 Oct 2024 12:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996827; cv=none; b=YNGZtz6b2T5iAPXQkNeLyZN9QdjmE3yWmG2kD/QFtnv9F06S2NXjlxv35n1X5JyjEOQZemdZvNESMHJH7UtaMjF+AIvQKf4bEoVjC3+ryIgEXVHcrNDDKgcByHvCvNd5WJTzB3VQaPiFVWwnNJsuBEt2PhCgthAbNM40om6bMNE=
+	t=1728996831; cv=none; b=h0XKsAUxcWzKg9FtzDnpYPABcspTeXRC3BZGVYt+255MxyOPFzJGPMIJQUXTkR+prhqJ703qYF86QGEERd6/Kt5I3uEJlH2rFeBA50e7W3wHTY/C47em8Ze7+QhJhouvZOzYGDLj0Mk1PRUMOXhIFOXaDl7TVDeRhf1znty6jWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996827; c=relaxed/simple;
-	bh=ZDGduTByK6LOmsBls590EqrN6jC+VuzSUOW1zDvew1w=;
+	s=arc-20240116; t=1728996831; c=relaxed/simple;
+	bh=uIuQzjUgeG23mDvvv79jGKjJWKn8q8GdgdP0Nt6jUn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gIiDO12b992mJGrn/8NUVia9PAShEvVpKONT7XoEVD+vozWnJRMXkOMMqHewF2KQQdG5o+Uv+XK8p1+pLZPYSxpySIDPniGpOdjmGbz0bSpl7bDMB8eG+0ukv03Uq06K1yzwkO4M8nLPN4JvihU71xgUngyC4RhaMx7YKG/7r3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7dP8oWh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qIZicJufx3WtEm+VFIOOqDF3V02Bvj8Cex2MYUWn3HCwf/mQ/O5VEkYqBxeHF51XoMhE85SJI3SQ+UzVQk+UyI1n3C+/cY+NkC6iVzfbDZrCWVu7JPN/hmp7jYkMjnMhvjnXcwBETjZVHPGJ6PharPWuTFPDQbgBScfcHlnFzHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDtHYjB1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7dP8oWh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BD2C4CEC6;
-	Tue, 15 Oct 2024 12:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDtHYjB1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F726C4CECF;
+	Tue, 15 Oct 2024 12:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728996827;
-	bh=ZDGduTByK6LOmsBls590EqrN6jC+VuzSUOW1zDvew1w=;
+	s=korg; t=1728996830;
+	bh=uIuQzjUgeG23mDvvv79jGKjJWKn8q8GdgdP0Nt6jUn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D7dP8oWhY9At+2ygqfw7plR1ilQP1q4sVZMa3NFbtR7Y5H+C4W5o1awDHHXIS04zN
-	 GL6F2lWMVSYZj54ZOVs6k7hT2+nVTholVLc2/4zZwKC/ceUISBn35xWikT2MVgLkfT
-	 uA6uec0+xMtM4cBERtbeKVpY3LLIWEmN68dhZTLY=
+	b=hDtHYjB1UuaL/jnl7iWsIj4jcjsGmNyL9JcwhOeEZ3tMqXJH3izp4qf0rjneQolT9
+	 YPgei84CMPBEA2IOxeI7i75BjL7Al0fd2qt7ULBhjWnB55ncPT4pWcKQdund8AKyEF
+	 r2KR8+7pWtSrUlyS5ZSNLIMHCy4WqqcjGD1RZwp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 011/518] scripts: kconfig: merge_config: config files: add a trailing newline
-Date: Tue, 15 Oct 2024 14:38:35 +0200
-Message-ID: <20241015123917.271005881@linuxfoundation.org>
+Subject: [PATCH 5.10 012/518] drm/msm/adreno: Fix error return if missing firmware-name
+Date: Tue, 15 Oct 2024 14:38:36 +0200
+Message-ID: <20241015123917.309001928@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,46 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anders Roxell <anders.roxell@linaro.org>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 33330bcf031818e60a816db0cfd3add9eecc3b28 ]
+[ Upstream commit 624ab9cde26a9f150b4fd268b0f3dae3184dc40c ]
 
-When merging files without trailing newlines at the end of the file, two
-config fragments end up at the same row if file1.config doens't have a
-trailing newline at the end of the file.
+-ENODEV is used to signify that there is no zap shader for the platform,
+and the CPU can directly take the GPU out of secure mode.  We want to
+use this return code when there is no zap-shader node.  But not when
+there is, but without a firmware-name property.  This case we want to
+treat as-if the needed fw is not found.
 
-file1.config "CONFIG_1=y"
-file2.config "CONFIG_2=y"
-./scripts/kconfig/merge_config.sh -m .config file1.config file2.config
-
-This will generate a .config looking like this.
-cat .config
-...
-CONFIG_1=yCONFIG_2=y"
-
-Making sure so we add a newline at the end of every config file that is
-passed into the script.
-
-Signed-off-by: Anders Roxell <anders.roxell@linaro.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/604564/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/merge_config.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/kconfig/merge_config.sh b/scripts/kconfig/merge_config.sh
-index 63c8565206a4..d7d5c58b8b6a 100755
---- a/scripts/kconfig/merge_config.sh
-+++ b/scripts/kconfig/merge_config.sh
-@@ -150,6 +150,8 @@ for ORIG_MERGE_FILE in $MERGE_LIST ; do
- 			sed -i "/$CFG[ =]/d" $MERGE_FILE
- 		fi
- 	done
-+	# In case the previous file lacks a new line at the end
-+	echo >> $TMP_FILE
- 	cat $MERGE_FILE >> $TMP_FILE
- done
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 11a6a41b4910..a5f95801adfe 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -93,7 +93,7 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
+ 		 * was a bad idea, and is only provided for backwards
+ 		 * compatibility for older targets.
+ 		 */
+-		return -ENODEV;
++		return -ENOENT;
+ 	}
  
+ 	if (IS_ERR(fw)) {
 -- 
 2.43.0
 
