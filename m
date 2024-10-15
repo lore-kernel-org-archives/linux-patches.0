@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9678E1D1512;
-	Tue, 15 Oct 2024 12:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDAE11C57B1;
+	Tue, 15 Oct 2024 12:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993734; cv=none; b=gVojRrVjFc/5QoB7Jgm+n/lyxhgzkXigSeysBmUSOmPPGjfol7nuOZab2nquDocipLpa7ARR3x0vkEv0q01bb4ey2FRYLP3GyKnftRzqQa3M8G84syDCbhLmZxaHc1LDst3Zyc0TMQ6LmFvzSLH0mZKXhSKxFuoQq98nsV2uhaU=
+	t=1728993737; cv=none; b=eckBLT9wNSYYWEUHtdEJ8HDTAIKYFxBZPDzPI5boV1h32QM+jJsuKIvSSpJkgZharUPaq/CTys4Phhr+ChAkeKKmN/oxLPF6+SJSFh+sFpea81wzKR72dnWvhSvKeytXJd8TsPirVSnwQxLWApZNlAAMB7teHtLQLzWotvg961I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993734; c=relaxed/simple;
-	bh=azDvUFarOjsijyOa96z5Rup5TtVDeNx2KgG8XZoAV5I=;
+	s=arc-20240116; t=1728993737; c=relaxed/simple;
+	bh=3ShOYmdRcq64R4lCMTAfQ/5aw4eu516rlgdB2YKfNE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HcPWylkjhl4cBvq0gOU9ebYCrkGv3Ay9LYHfTuhbbymr9XMjgTzGlG7Ak0ZSktsahPMG+szMR8MpglVCH8uOwvUFX6/PsEAN9pxXDh6x84Xotek7HCFR8GFk1X1NtzdpvJqWxWpsDb0z50PAjOL9Ul+nGO9MflA26HdYDp3ONV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVECoh4m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D1BH3fKt5GwCzfscxWLFxnrrzDiABCbZm0DG1iby8q9AY3r5Q296hmE1Bqnyv/p4QIiGmPzhahyuovF9Q/23nSNW1XNSDH6zMS4LABH2gVSiiszcnSaXXI0FfWTyEAley4iEPChRlZ6SJhKYT7uiiRWPTTYxponP6WHOovn+yg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qanj3RXJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVECoh4m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0545BC4CEC6;
-	Tue, 15 Oct 2024 12:02:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qanj3RXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E215C4CEC6;
+	Tue, 15 Oct 2024 12:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993734;
-	bh=azDvUFarOjsijyOa96z5Rup5TtVDeNx2KgG8XZoAV5I=;
+	s=korg; t=1728993737;
+	bh=3ShOYmdRcq64R4lCMTAfQ/5aw4eu516rlgdB2YKfNE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iVECoh4mbhqsERFrwyUYdgOhJknYgFg+QS2XRRSRQkDDcy+aCI/ekn440SdzGJ+rJ
-	 LV3/NEZ1Ha6yJ1K2JOmrROLPPy+3K71+C3NJWz85nKJ2ZHULApi1LJW3q5XeAPGmgh
-	 pvvDY5JE9/5frTobohG04+fsg0xrCYDgs2+xU3Wk=
+	b=qanj3RXJ7br8lN6uzkXD2jOWhJMmRWl7cYy37UFO8BFS2HehvSJ+IKqKM3vPGYyzh
+	 LgzY0Ca9xvy2QLR906ZmAvZ4Du00O3NfCoVE/NpzynHb5kueH1m1mLls74AxqhibSs
+	 e+lDg03SXstoBW9K0dV2hJ8aCwnKtLaX0BXwDgiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Lalinsky <lalinsky@c4.cz>,
+	"Hans P. Moller" <hmoller@uc.cl>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 500/691] ALSA: usb-audio: Add native DSD support for Luxman D-08u
-Date: Tue, 15 Oct 2024 13:27:28 +0200
-Message-ID: <20241015112500.189170563@linuxfoundation.org>
+Subject: [PATCH 5.15 501/691] ALSA: line6: add hw monitor volume control to POD HD500X
+Date: Tue, 15 Oct 2024 13:27:29 +0200
+Message-ID: <20241015112500.228242638@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -50,33 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Lalinsky <lalinsky@c4.cz>
+From: Hans P. Moller <hmoller@uc.cl>
 
-commit 6b0bde5d8d4078ca5feec72fd2d828f0e5cf115d upstream.
+commit 703235a244e533652346844cfa42623afb36eed1 upstream.
 
-Add native DSD support for Luxman D-08u DAC, by adding the PID/VID 1852:5062.
-This makes DSD playback work, and also sound quality when playing PCM files
-is improved, crackling sounds are gone.
+Add hw monitor volume control for POD HD500X. This is done adding
+LINE6_CAP_HWMON_CTL to the capabilities
 
-Signed-off-by: Jan Lalinsky <lalinsky@c4.cz>
+Signed-off-by: Hans P. Moller <hmoller@uc.cl>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241003030811.2655735-1-lalinsky@c4.cz
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20241003232828.5819-1-hmoller@uc.cl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/line6/podhd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1846,6 +1846,8 @@ static const struct usb_audio_quirk_flag
- 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
- 	DEVICE_FLG(0x17aa, 0x104d, /* Lenovo ThinkStation P620 Internal Speaker + Front Headset */
- 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
-+	DEVICE_FLG(0x1852, 0x5062, /* Luxman D-08u */
-+		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x1852, 0x5065, /* Luxman DA-06 */
- 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x1901, 0x0191, /* GE B850V3 CP2114 audio interface */
+--- a/sound/usb/line6/podhd.c
++++ b/sound/usb/line6/podhd.c
+@@ -507,7 +507,7 @@ static const struct line6_properties pod
+ 	[LINE6_PODHD500X] = {
+ 		.id = "PODHD500X",
+ 		.name = "POD HD500X",
+-		.capabilities	= LINE6_CAP_CONTROL
++		.capabilities	= LINE6_CAP_CONTROL | LINE6_CAP_HWMON_CTL
+ 				| LINE6_CAP_PCM | LINE6_CAP_HWMON,
+ 		.altsetting = 1,
+ 		.ep_ctrl_r = 0x81,
 
 
