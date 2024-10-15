@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927911AF0CE;
-	Tue, 15 Oct 2024 13:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036B11D515E;
+	Tue, 15 Oct 2024 13:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998418; cv=none; b=c6s57zoGlPg39EpDvMNYeVgyAXmzNj2IHP09gJpaLhP87Tsl+yBtQhNQAyl/qneBfYreicK8+gyjxzG5jt1C9BsXtOAKZbQnJRB4ZeUGsgwt7T4gksE6MTs2751gXzuxXJlo4K+EloG5eVLv1xWq6m8RjYXOG2JQAaAuxkW62KI=
+	t=1728998422; cv=none; b=rI38PAMRG/0nt2Y3byAcZt7fZlYp0zozaLogI1+T/5B4vK2/tr/pEZgKVU/zj8CrglAoybHmADBU2ibj1k7ylAkdg0WfG0SwIgo7S5eFn6/Udlb9bF82j/irfyAt9aD2GjCEQBwTMdcvoGep6B0McNJwJOuH3h6LxWJE5FDEz7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998418; c=relaxed/simple;
-	bh=w9r8q/E+THRrfZeiPswinzHiv6Vory82eSR53h98C70=;
+	s=arc-20240116; t=1728998422; c=relaxed/simple;
+	bh=hqUDtsPsCqSDkd0M6UFdnOC04e+cTT9sJY7PmDzwqrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tkBqfCDncrJhNcJUIK2CLxhNTQLGkB+G9ZU0Z2upe+c+il7QRHSc/h+U5+vqFGqyOHYYFRlQa6MPnVeoLpdk7ayiezP20P9aTe79EiUO7x6d7d/lJeJAFaM30HtB0tOKRyzSTdX+ttcuwwN49vLw3rNFxwb42IPBkybwnMiLg8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MsUn4BbY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=apqODWj44/LJMNPEnBFT18rqLdOJdxs0rZqC5AAnYSN2lak3zOZxcKiZ9WG63d3jPrF06NameSVGJToeenMkbvjVfOg0QxgmdWg7SOiRujmVBFh2+akA4zbf2lBYx3xyM+MS2dwuvY2G53sYHzBdH1Vy3yMZJ0zInaDqvo/mhTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKS/KHd+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MsUn4BbY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64FEC4CED3;
-	Tue, 15 Oct 2024 13:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKS/KHd+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69985C4CEC6;
+	Tue, 15 Oct 2024 13:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998418;
-	bh=w9r8q/E+THRrfZeiPswinzHiv6Vory82eSR53h98C70=;
+	s=korg; t=1728998421;
+	bh=hqUDtsPsCqSDkd0M6UFdnOC04e+cTT9sJY7PmDzwqrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MsUn4BbYWyiZoU3qUfZzr2pmUiprhJpJuDNWpG6+xwSX0qf6nkt+xMJxMRFT3+C2d
-	 Ksoh6Ht+/Qn4E18JRpaZQ5OHjQygobqPrSwR1cO3yrWZOmavAZNAgnOaXoKiHScVGd
-	 z4kFnj7F8rjZTdIdmw/vuc7HXsj+b7oXW4TikKVw=
+	b=uKS/KHd+wsgSvoVANblGwg+0XsNyRwuf88cM5k+Ius6BZzdmA2HWhdduYgdFPm6V9
+	 vl9rRX1zF48tu8OrXAnj0DZUyVVmHClKBZRWBki6Zvk4CigQhZrZnpeply9eahJ5mL
+	 5vqgEQbVzmg1rYobHdrfx/5u8DmgAtpniVro+qjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Egorenkov <egorenar@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 440/518] s390/zcore: no need to check return value of debugfs_create functions
-Date: Tue, 15 Oct 2024 14:45:44 +0200
-Message-ID: <20241015123933.988033996@linuxfoundation.org>
+Subject: [PATCH 5.10 441/518] s390/zcore: release dump save area on restart or power down
+Date: Tue, 15 Oct 2024 14:45:45 +0200
+Message-ID: <20241015123934.026071652@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,56 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Egorenkov <egorenar@linux.ibm.com>
 
-[ Upstream commit 7449ca87312a5b0390b765be65a126e6e5451026 ]
+[ Upstream commit dabdfac0e85c8c1e811b10c08742f49285e78a17 ]
 
-When calling debugfs functions, there is no need to ever check the
-return value.  The function can work or not, but the code logic should
-never do something different based on this.
-
-See commit 7dd541a3fb34 ("s390: no need to check return value of debugfs_create functions").
+The zFCP/NVMe standalone dumper is supposed to release the dump save area
+resource as soon as possible but might fail to do so, for instance, if it
+crashes. To avoid this situation, register a reboot notifier and ensure
+the dump save area resource is released on reboot or power down.
 
 Signed-off-by: Alexander Egorenkov <egorenar@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Stable-dep-of: 0b18c852cc6f ("tracing: Have saved_cmdlines arrays all in one allocation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/char/zcore.c | 18 +-----------------
- 1 file changed, 1 insertion(+), 17 deletions(-)
+ drivers/s390/char/zcore.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
 diff --git a/drivers/s390/char/zcore.c b/drivers/s390/char/zcore.c
-index 3841c0e77df69..5f659fa9224a3 100644
+index 5f659fa9224a3..1aee6b2ae66fb 100644
 --- a/drivers/s390/char/zcore.c
 +++ b/drivers/s390/char/zcore.c
-@@ -302,28 +302,12 @@ static int __init zcore_init(void)
- 		goto fail;
+@@ -15,6 +15,7 @@
+ #include <linux/init.h>
+ #include <linux/slab.h>
+ #include <linux/debugfs.h>
++#include <linux/reboot.h>
  
- 	zcore_dir = debugfs_create_dir("zcore" , NULL);
--	if (!zcore_dir) {
--		rc = -ENOMEM;
--		goto fail;
--	}
- 	zcore_reipl_file = debugfs_create_file("reipl", S_IRUSR, zcore_dir,
- 						NULL, &zcore_reipl_fops);
--	if (!zcore_reipl_file) {
--		rc = -ENOMEM;
--		goto fail_dir;
--	}
+ #include <asm/asm-offsets.h>
+ #include <asm/ipl.h>
+@@ -247,6 +248,28 @@ static int __init zcore_reipl_init(void)
+ 	return 0;
+ }
+ 
++static int zcore_reboot_and_on_panic_handler(struct notifier_block *self,
++					     unsigned long	   event,
++					     void		   *data)
++{
++	if (hsa_available)
++		release_hsa();
++
++	return NOTIFY_OK;
++}
++
++static struct notifier_block zcore_reboot_notifier = {
++	.notifier_call	= zcore_reboot_and_on_panic_handler,
++	/* we need to be notified before reipl and kdump */
++	.priority	= INT_MAX,
++};
++
++static struct notifier_block zcore_on_panic_notifier = {
++	.notifier_call	= zcore_reboot_and_on_panic_handler,
++	/* we need to be notified before reipl and kdump */
++	.priority	= INT_MAX,
++};
++
+ static int __init zcore_init(void)
+ {
+ 	unsigned char arch;
+@@ -307,6 +330,9 @@ static int __init zcore_init(void)
  	zcore_hsa_file = debugfs_create_file("hsa", S_IRUSR|S_IWUSR, zcore_dir,
  					     NULL, &zcore_hsa_fops);
--	if (!zcore_hsa_file) {
--		rc = -ENOMEM;
--		goto fail_reipl_file;
--	}
--	return 0;
  
--fail_reipl_file:
--	debugfs_remove(zcore_reipl_file);
--fail_dir:
--	debugfs_remove(zcore_dir);
-+	return 0;
++	register_reboot_notifier(&zcore_reboot_notifier);
++	atomic_notifier_chain_register(&panic_notifier_list, &zcore_on_panic_notifier);
++
+ 	return 0;
  fail:
  	diag308(DIAG308_REL_HSA, NULL);
- 	return rc;
 -- 
 2.43.0
 
