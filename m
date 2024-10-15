@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299AF19B3FF;
-	Tue, 15 Oct 2024 11:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B9E1E9080;
+	Tue, 15 Oct 2024 11:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993149; cv=none; b=JjYIiiQuF+F44j0acR4DAyemPdg2BYgjSV8Gy3jv+Mb7ZZDusVMzXooi7CnejNOIkHQUP0gFeFyluUSU/j4o8nBZ0CfV/d0iFml/oX4GioF1KHPgxM2DSv8LgJTPpG0eHq/JOMrw7/A8W/gWEQqalgV7yze95GEYHtP4lIRhn1s=
+	t=1728993152; cv=none; b=if5eAf2IXrw1ep2WBg09M/m4dAHrDOvvjp5dHm7DLz3JHKmJuLxrolWyNOaeE6mgDjvsmktE68qSHh+Rjx4i6sVVhVJS2HkWazCU2koqf4cpZZ4KyZfrnMbNpDfATGUEJoI4j896HbP5ZUtLbq+XogQiqaXd6KIlm8WrQVgXOgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993149; c=relaxed/simple;
-	bh=7WEYYDXNZgW6dUKnRlluzZsS6vj9JlaKSAqUXVB57a0=;
+	s=arc-20240116; t=1728993152; c=relaxed/simple;
+	bh=McMpkH8lS7x0fpHH39EUNlfDklfiqbpiQ5W4PIwiTcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qktCvTPuigvwOB0nFUV/ufgblmcf2ybkTKJgA4kPIEMOBe2IIwyFMuL8DxpoMNiboqUTBIrRXQxeZwE7vIqWBtK8BaaWlR87J2WQ5COB0BigwNHDACR9Q3RvODHw/LMq6x6qb91lmERXZ7h2bh2lFkpi1oYeXNB1sauL8N6c0+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nHNx8A8c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t6Ry6h3HBr40b3FBPUfUr81CVqMdE0hhFCjeCwEEJWaNv1wAu84VzOHEv7Fj8dPxwzMW8hwxf5BdEY0uPsSw4w/CV/l9jf8I9ifeWeoTvdmvbNuea+lcUoyxz8q++0LxYqIMB1PuA7nk0pUl9JXGokga8DCfDbZ35Caf3RGTsXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/OvhFBF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nHNx8A8c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8989C4CECE;
-	Tue, 15 Oct 2024 11:52:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/OvhFBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CA2C4CEC6;
+	Tue, 15 Oct 2024 11:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993149;
-	bh=7WEYYDXNZgW6dUKnRlluzZsS6vj9JlaKSAqUXVB57a0=;
+	s=korg; t=1728993152;
+	bh=McMpkH8lS7x0fpHH39EUNlfDklfiqbpiQ5W4PIwiTcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nHNx8A8c0kpgPfOOqm2fPuRzQIIqIcTH3XrHxiKwZuubEvuEKI2yMiLHn2jxWJBSO
-	 DyunA8xbE2xOIn8yYoUVrAkp/lg6ir7blkvoUtK27Mz0zHPPQUom7ml/M/c4rKYjXA
-	 Xj1fCGzoO5/K4CWdCDFF+BOwAreKa8xyvrftIhT4=
+	b=1/OvhFBF2JHgRNI4sVbmHK7dYLvvXc3YBW7hyFRHNxu7kZ9V8jC/GW00rrqUc+P/T
+	 62ywI0pBaYmBsDGEYKYkT80XwWWXvM3hR3rqoJJSiNM7jnTu9v6FnOOzvovina8FhN
+	 b9SqIzz0kP5PKxHvmzfBIesMLeDYg0XREQKykKgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jim Quinlan <james.quinlan@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 5.15 326/691] tty: rp2: Fix reset with non forgiving PCIe host bridges
-Date: Tue, 15 Oct 2024 13:24:34 +0200
-Message-ID: <20241015112453.275962159@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 327/691] xhci: Set quirky xHC PCI hosts to D3 _after_ stopping and freeing them.
+Date: Tue, 15 Oct 2024 13:24:35 +0200
+Message-ID: <20241015112453.315533922@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,44 +49,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit f16dd10ba342c429b1e36ada545fb36d4d1f0e63 upstream.
+commit f81dfa3b57c624c56f2bff171c431bc7f5b558f2 upstream.
 
-The write to RP2_GLOBAL_CMD followed by an immediate read of
-RP2_GLOBAL_CMD in rp2_reset_asic() is intented to flush out the write,
-however by then the device is already in reset and cannot respond to a
-memory cycle access.
+PCI xHC host should be stopped and xhci driver memory freed before putting
+host to PCI D3 state during PCI remove callback.
 
-On platforms such as the Raspberry Pi 4 and others using the
-pcie-brcmstb.c driver, any memory access to a device that cannot respond
-is met with a fatal system error, rather than being substituted with all
-1s as is usually the case on PC platforms.
+Hosts with XHCI_SPURIOUS_WAKEUP quirk did this the wrong way around
+and set the host to D3 before calling usb_hcd_pci_remove(dev), which will
+access the host to stop it, and then free xhci.
 
-Swapping the delay and the read ensures that the device has finished
-resetting before we attempt to read from it.
-
-Fixes: 7d9f49afa451 ("serial: rp2: New driver for Comtrol RocketPort 2 cards")
-Cc: stable <stable@kernel.org>
-Suggested-by: Jim Quinlan <james.quinlan@broadcom.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20240906225435.707837-1-florian.fainelli@broadcom.com
+Fixes: f1f6d9a8b540 ("xhci: don't dereference a xhci member after removing xhci")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240905143300.1959279-12-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/rp2.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci-pci.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/rp2.c
-+++ b/drivers/tty/serial/rp2.c
-@@ -598,8 +598,8 @@ static void rp2_reset_asic(struct rp2_ca
- 	u32 clk_cfg;
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -535,8 +535,10 @@ put_runtime_pm:
+ static void xhci_pci_remove(struct pci_dev *dev)
+ {
+ 	struct xhci_hcd *xhci;
++	bool set_power_d3;
  
- 	writew(1, base + RP2_GLOBAL_CMD);
--	readw(base + RP2_GLOBAL_CMD);
- 	msleep(100);
-+	readw(base + RP2_GLOBAL_CMD);
- 	writel(0, base + RP2_CLK_PRESCALER);
+ 	xhci = hcd_to_xhci(pci_get_drvdata(dev));
++	set_power_d3 = xhci->quirks & XHCI_SPURIOUS_WAKEUP;
  
- 	/* TDM clock configuration */
+ 	xhci->xhc_state |= XHCI_STATE_REMOVING;
+ 
+@@ -549,11 +551,11 @@ static void xhci_pci_remove(struct pci_d
+ 		xhci->shared_hcd = NULL;
+ 	}
+ 
++	usb_hcd_pci_remove(dev);
++
+ 	/* Workaround for spurious wakeups at shutdown with HSW */
+-	if (xhci->quirks & XHCI_SPURIOUS_WAKEUP)
++	if (set_power_d3)
+ 		pci_set_power_state(dev, PCI_D3hot);
+-
+-	usb_hcd_pci_remove(dev);
+ }
+ 
+ #ifdef CONFIG_PM
 
 
