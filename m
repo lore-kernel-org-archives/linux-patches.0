@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053101C07DB;
-	Tue, 15 Oct 2024 13:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421B91C07C9;
+	Tue, 15 Oct 2024 13:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997324; cv=none; b=JNptSJtFi884nFPDl8sMWNOk7cG2liCN+Qwz7Vh1oXRFmZI2qG1XIOLHoGzh6+YNwZzBRMTxMQEPmwWqtUNa/hdbqfxMUD1OzvrWQ/3CUGHFyFR2OnQ5G17Yvr5YNpKRNeMkHqpmOVy3vI9sq/qJz8BxR1RY/oiKGHd3JuAeX/k=
+	t=1728997332; cv=none; b=ECa5KI71qrlDNIwCUbKqEvgbbPsLxaptyO4VKyUAqsglFLsnaYcSyeLjg1mqJ/KeNrXcvTNZcxV7O3ygibCjf/8aqK/i0GhCheF0ujk6nhOq7ioCdjpRzEkzoG+owfUyjgZMCjECp3/ZBQflQ/7E8x5v9Ea7UJlwMhhRxIw5YXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997324; c=relaxed/simple;
-	bh=gkj6J94MCwABJ4ouw2GGlLkdBYC9qBrA7M5Mgqe7blk=;
+	s=arc-20240116; t=1728997332; c=relaxed/simple;
+	bh=FxPeSqgvfJtpExeuZtZt6HMZAnf3GVZbh0dw0Z/d1CE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LTFHeg4JKleBmoTldlvG8tXTNZLObbATE2oR1HXeUp+RjEINNcvgSeKKw3nst4Igp4P+1fZNgqphO+SqX7I2dPIiybzKFqsGPDIHskyLl+58SwEA+hldkhh9Cadr6FpPMCaLq39grBE97NOI5u6T29kyFMEiI3m9coySpfkVMPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdMjDDIq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CBHTqu0rBlMVNeozLi6MIfF0BAnYUPpynoIcQG+zBVmRQJp4+5lGtsMseYTynyzOTAfDxY5cJHYu7V1MheRDNumxkojajJ7QPHRNRrjknFioxrrW6gXkDRh7C/g7KgkdfSSSq6+N2k0BgRMei/cIDCgfo2Z8LDp5/mbqBGcRqrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTqWBzUD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdMjDDIq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76307C4CEC6;
-	Tue, 15 Oct 2024 13:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTqWBzUD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAF6C4CECE;
+	Tue, 15 Oct 2024 13:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997323;
-	bh=gkj6J94MCwABJ4ouw2GGlLkdBYC9qBrA7M5Mgqe7blk=;
+	s=korg; t=1728997332;
+	bh=FxPeSqgvfJtpExeuZtZt6HMZAnf3GVZbh0dw0Z/d1CE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CdMjDDIqnOmXQiUmwbxy6K37vThbpbtvjONJB4j7CzzcmtL1RpvHcNLbdVhiwHmt3
-	 HdthRkRe5jpShMkKJXWp1NNCe+rOQRknHtBewj9n1PdeMT1P0HF+SpNUvyRVFq1BdK
-	 2nEO4GVcTEfgTI7PkM6rKgOHNmHLNniX28Zo/T24=
+	b=bTqWBzUDcrlRSCLP3jLRtILkFZZqB1HnPJw2/FshbgnnBk7RT8+g/DJb9L2XOeY04
+	 sgXrp+j/Y67ZkvgZeHMX+z7X3IWzZQlv0U61Qm7M0mAlRBVZTiVwfGBTlNOWhlS6L6
+	 Eo3S+F++MWYGhAhv7RXq6gocCiKMKVvvWIDBDJ2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
-	Jan Beulich <jbeulich@suse.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 133/518] xen: use correct end address of kernel for conflict checking
-Date: Tue, 15 Oct 2024 14:40:37 +0200
-Message-ID: <20241015123922.129097460@linuxfoundation.org>
+Subject: [PATCH 5.10 151/518] ext4: avoid negative min_clusters in find_group_orlov()
+Date: Tue, 15 Oct 2024 14:40:55 +0200
+Message-ID: <20241015123922.836396789@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -46,53 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit fac1bceeeb04886fc2ee952672e6e6c85ce41dca ]
+[ Upstream commit bb0a12c3439b10d88412fd3102df5b9a6e3cd6dc ]
 
-When running as a Xen PV dom0 the kernel is loaded by the hypervisor
-using a different memory map than that of the host. In order to
-minimize the required changes in the kernel, the kernel adapts its
-memory map to that of the host. In order to do that it is checking
-for conflicts of its load address with the host memory map.
+min_clusters is signed integer and will be converted to unsigned
+integer when compared with unsigned number stats.free_clusters.
+If min_clusters is negative, it will be converted to a huge unsigned
+value in which case all groups may not meet the actual desired free
+clusters.
+Set negative min_clusters to 0 to avoid unexpected behavior.
 
-Unfortunately the tested memory range does not include the .brk
-area, which might result in crashes or memory corruption when this
-area does conflict with the memory map of the host.
-
-Fix the test by using the _end label instead of __bss_stop.
-
-Fixes: 808fdb71936c ("xen: check for kernel memory conflicting with memory layout")
-
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Link: https://patch.msgid.link/20240820132234.2759926-4-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/setup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/ialloc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/xen/setup.c b/arch/x86/xen/setup.c
-index 1f80dd3a2dd4a..629c94d1ab24c 100644
---- a/arch/x86/xen/setup.c
-+++ b/arch/x86/xen/setup.c
-@@ -856,7 +856,7 @@ char * __init xen_memory_setup(void)
- 	 * to relocating (and even reusing) pages with kernel text or data.
- 	 */
- 	if (xen_is_e820_reserved(__pa_symbol(_text),
--			__pa_symbol(__bss_stop) - __pa_symbol(_text))) {
-+				 __pa_symbol(_end) - __pa_symbol(_text))) {
- 		xen_raw_console_write("Xen hypervisor allocated kernel memory conflicts with E820 map\n");
- 		BUG();
- 	}
+diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
+index 26ebbb0388cc9..c91e0cef04a53 100644
+--- a/fs/ext4/ialloc.c
++++ b/fs/ext4/ialloc.c
+@@ -513,6 +513,8 @@ static int find_group_orlov(struct super_block *sb, struct inode *parent,
+ 	if (min_inodes < 1)
+ 		min_inodes = 1;
+ 	min_clusters = avefreec - EXT4_CLUSTERS_PER_GROUP(sb)*flex_size / 4;
++	if (min_clusters < 0)
++		min_clusters = 0;
+ 
+ 	/*
+ 	 * Start looking in the flex group where we last allocated an
 -- 
 2.43.0
 
