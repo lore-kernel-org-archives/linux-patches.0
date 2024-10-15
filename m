@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB16B1D90CD;
-	Tue, 15 Oct 2024 11:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249AA1D4154;
+	Tue, 15 Oct 2024 11:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993166; cv=none; b=n6GAwy0Qw0N50qmqTBnrtDY2WvASe0ut9dMq+wPzaEM9YLGlZi5TjA7mSWJJXXi03nOW0rCH+LfV0iPW8228vtB62aKxe47UN9YpDezwINAeHppfIFmGIkjE/nw3ykaYqNSq7ZWx0Nht0OSfOvV4tfooL6cncit00fs5kiu/owY=
+	t=1728993169; cv=none; b=brB0xYBxgqActUuqZZ6Dc/nBjpeQ7epqPr3qA02ERfn8DpW+OMAjKxARcq7+nSC3bjLipcLukmcTvlIrA+i+F83tGEY9dzR3F5tKQCa44Tx4q6xBwQHo3P4t9LS4P7HRiPDjkVN+WRrXaeV5pK5pI4HbThMmUt/9LWmTbdeOTCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993166; c=relaxed/simple;
-	bh=scuaBc/33nDt/8UwNLxCDfj8K4xSxjfTrLH/Uh/Qbgg=;
+	s=arc-20240116; t=1728993169; c=relaxed/simple;
+	bh=b7TG667xqbxGvXLQv038cfclxEi/vQSAC6yu+n9VhcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RwouOrtZJPhJO4Z/pOSm2jz2VgA32O+x6D40ew8T6dvddfm9zXQAdn/J6FfpCyG1l9FYiccPfaoC2EAPETbilQGhCTNGcI76zUmTKycRIzeS7I/fJYKPB0OVZQM+Kp7iiAjruR8XV0+JnvmQibfPjtTYn+AbKVWrz1NxmewLkXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+H0xIOn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R4VNy8V4morFwOfbMEJQlD0CqT+t7Bt3zl7rayzO0yh6oRsgaIoNIEk+i1h7h4XWMnVDZCwLgyW8ZwskeQMhBJ/+jkZGhHLjwmZeUTP4b1jQvHOB6rTQccq81EYlrpv3xScUknFl/X9HTaTU9UNnbxpjby4LLWMFWaNHY2yvx3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqXPJgc8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+H0xIOn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CB1C4CEC6;
-	Tue, 15 Oct 2024 11:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqXPJgc8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAC8C4CEC6;
+	Tue, 15 Oct 2024 11:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993165;
-	bh=scuaBc/33nDt/8UwNLxCDfj8K4xSxjfTrLH/Uh/Qbgg=;
+	s=korg; t=1728993169;
+	bh=b7TG667xqbxGvXLQv038cfclxEi/vQSAC6yu+n9VhcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F+H0xIOn+XgwgGvD8pJMnCfKnCWRnlwJ81/1+Kyd5lzk4u/SMJcZOVKIml/UDNu+e
-	 hK9xvMmSZQI+/FP7ixy+9FE9RTdZqUDt3scO7ga4SAKw+FeRG40xmSaTIlTpD88AYQ
-	 ID6TNnqxwXfmBuNIztG6tifjoVSNGZatMO3GMfBE=
+	b=wqXPJgc8Ob7+KNQJLOcyyvlZIjHgZvEVAwxlVdRTMb7c49qNTt7KTqINTDGrORnMW
+	 54VzfTDT5ezDBbg3UQoprEYWQZ0bTqmRAesLHh6DaTpjfaxpJKqqyInCugPDBo6gqa
+	 Alkyi5tekFyjLXk/RWZOFIL5KnB2/vJjTGojVe94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 331/691] ACPI: sysfs: validate return type of _STR method
-Date: Tue, 15 Oct 2024 13:24:39 +0200
-Message-ID: <20241015112453.472715417@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 314/691] drm/amd/display: Validate backlight caps are sane
+Date: Tue, 15 Oct 2024 13:24:22 +0200
+Message-ID: <20241015112452.799574007@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -44,45 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 4bb1e7d027413835b086aed35bc3f0713bc0f72b upstream.
+commit 327e62f47eb57ae5ff63de82b0815557104e439a upstream.
 
-Only buffer objects are valid return values of _STR.
+Currently amdgpu takes backlight caps provided by the ACPI tables
+on systems as is.  If the firmware sets maximums that are too low
+this means that users don't get a good experience.
 
-If something else is returned description_show() will access invalid
-memory.
+To avoid having to maintain a quirk list of such systems, do a sanity
+check on the values.  Check that the spread is at least half of the
+values that amdgpu would use if no ACPI table was found and if not
+use the amdgpu defaults.
 
-Fixes: d1efe3c324ea ("ACPI: Add new sysfs interface to export device description")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://patch.msgid.link/20240709-acpi-sysfs-groups-v2-1-058ab0667fa8@weissschuh.net
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3020
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/device_sysfs.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/acpi/device_sysfs.c
-+++ b/drivers/acpi/device_sysfs.c
-@@ -543,8 +543,9 @@ int acpi_device_setup_files(struct acpi_
- 	 * If device has _STR, 'description' file is created
- 	 */
- 	if (acpi_has_method(dev->handle, "_STR")) {
--		status = acpi_evaluate_object(dev->handle, "_STR",
--					NULL, &buffer);
-+		status = acpi_evaluate_object_typed(dev->handle, "_STR",
-+						    NULL, &buffer,
-+						    ACPI_TYPE_BUFFER);
- 		if (ACPI_FAILURE(status))
- 			buffer.pointer = NULL;
- 		dev->pnp.str_obj = buffer.pointer;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -3906,6 +3906,7 @@ static int amdgpu_dm_mode_config_init(st
+ 
+ #define AMDGPU_DM_DEFAULT_MIN_BACKLIGHT 12
+ #define AMDGPU_DM_DEFAULT_MAX_BACKLIGHT 255
++#define AMDGPU_DM_MIN_SPREAD ((AMDGPU_DM_DEFAULT_MAX_BACKLIGHT - AMDGPU_DM_DEFAULT_MIN_BACKLIGHT) / 2)
+ #define AUX_BL_DEFAULT_TRANSITION_TIME_MS 50
+ 
+ #if defined(CONFIG_BACKLIGHT_CLASS_DEVICE) ||\
+@@ -3923,6 +3924,21 @@ static void amdgpu_dm_update_backlight_c
+ 		return;
+ 
+ 	amdgpu_acpi_get_backlight_caps(&caps);
++
++	/* validate the firmware value is sane */
++	if (caps.caps_valid) {
++		int spread = caps.max_input_signal - caps.min_input_signal;
++
++		if (caps.max_input_signal > AMDGPU_DM_DEFAULT_MAX_BACKLIGHT ||
++		    caps.min_input_signal < AMDGPU_DM_DEFAULT_MIN_BACKLIGHT ||
++		    spread > AMDGPU_DM_DEFAULT_MAX_BACKLIGHT ||
++		    spread < AMDGPU_DM_MIN_SPREAD) {
++			DRM_DEBUG_KMS("DM: Invalid backlight caps: min=%d, max=%d\n",
++				      caps.min_input_signal, caps.max_input_signal);
++			caps.caps_valid = false;
++		}
++	}
++
+ 	if (caps.caps_valid) {
+ 		dm->backlight_caps[bl_idx].caps_valid = true;
+ 		if (caps.aux_support)
 
 
