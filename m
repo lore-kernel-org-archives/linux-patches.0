@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F801D90DB;
-	Tue, 15 Oct 2024 11:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C02C1D90CD;
+	Tue, 15 Oct 2024 11:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992241; cv=none; b=rRNcwrfHr+7aq+C8+4IahV9QwfFyWXIfnmkCImR7vz2xEvxDWVMHddVQlLb0v7bV9Pl4dH4FCxUUoXeFSlSn9w7gUO0zTsxtzZ1+levXTqLU8l8cPDR88q9UBBW9zBNITiiUfxUtXcjfEl5nTV6zUA/7JvygGxQZfQX6BQwwtyM=
+	t=1728992245; cv=none; b=QVAkTEtVJcYMDZgTrUGmnYldnKDwCqhYq8+Sq/BrR6UfRm3bFFduuGASi/t5kB9XNBcY8ORRvNrFPbLfnuij4RGfI2L4rj+bIfmTZW6zU7QPeRkejfUWBB6EsmYaGZiwNU6nu/OziZChEIdTkowwxAraMWDhGnrZp4f2gbcbRj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992241; c=relaxed/simple;
-	bh=mNUggOZHhBRL4SY4FC60OCxYo3TaHhtLTShU2Foq6jY=;
+	s=arc-20240116; t=1728992245; c=relaxed/simple;
+	bh=hOGNZz6sYyX8Q95oKA4CzH7cI34IR1JrZjNxSW7PbSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IKZPERRFdefqTIQ3AOyDjlgEElvnFM5/VZH6ocFDG40G3v+HAH5oCY1euIJdUmN9QkO2AgSVr9sAnT8rttcfnoU3575pmRu9svhmcXnwdbAr8vaajcNpZZSTx3jDnrXcLcylYjmNMPQMkL8IAwGe/Y3an6t73S5QN5npPVqrHIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTlUKNy2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=icoCTlG3f4PlTHNKesDGjRCH7iRvEuSWnauhOjawGuCrQv9ADxR3r0iOdUV19sZLb/DBFS/DONu12RsqtBkj7vx/umJXOm6KP2tLvL0/FtdgDShZ7mLWt2z5MPy8mhFB6Z9ZIRYZws1gu7P12yQS11XLQM8l3Lt184GArngMmQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wiWUWmNo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTlUKNy2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADD8C4CEC6;
-	Tue, 15 Oct 2024 11:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wiWUWmNo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF864C4CEC6;
+	Tue, 15 Oct 2024 11:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992241;
-	bh=mNUggOZHhBRL4SY4FC60OCxYo3TaHhtLTShU2Foq6jY=;
+	s=korg; t=1728992245;
+	bh=hOGNZz6sYyX8Q95oKA4CzH7cI34IR1JrZjNxSW7PbSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HTlUKNy2mdyd1VhKWHA8lssfpZWnlhma6mzl/A1Cqu6gSZMPEpSRztRue+qpRtKCr
-	 5CZDM0vFj3fXSSTrOGcNmnR459kocOJ50hhV5CtQ0i70AchuwaBYlpaVRKTO5VW9LZ
-	 zow0lAuiC1ujdFGRj/zgzyEp8b/2+lh1eFoO9Jvs=
+	b=wiWUWmNo945QUilOGRqqqvA3q/bATOUxFWn+J/KYfPjcdvsqCxHmU9O8lGeK04Jxd
+	 GEiwrVXwh4DQ7NWUvS61EjonMiLSzYuDlrWyXocGvIgPlGO9PYrjRATme+vzk0eJLy
+	 0HpYTTyOIpYHIQEe6xZGrxxKIwSVA+diCT6ByjAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	George Kuruvinakunnel <george.kuruvinakunnel@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/691] ALSA: hda/realtek - Fixed ALC256 headphone no sound
-Date: Tue, 15 Oct 2024 13:20:08 +0200
-Message-ID: <20241015112442.735041372@linuxfoundation.org>
+Subject: [PATCH 5.15 043/691] igb: Always call igb_xdp_ring_update_tail() under Tx lock
+Date: Tue, 15 Oct 2024 13:19:51 +0200
+Message-ID: <20241015112442.052711475@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,124 +54,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
 
-[ Upstream commit 9b82ff1362f50914c8292902e07be98a9f59d33d ]
+[ Upstream commit 27717f8b17c098c4373ddb8fe89e1a1899c7779d ]
 
-Dell platform, plug headphone or headset, it had a chance to get no
-sound from headphone.
-Replace depop procedure will solve this issue.
+Always call igb_xdp_ring_update_tail() under __netif_tx_lock, add a comment
+and lockdep assert to indicate that. This is needed to share the same TX
+ring between XDP, XSK and slow paths. Furthermore, the current XDP
+implementation is racy on tail updates.
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/bb8e2de30d294dc287944efa0667685a@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 9cbc948b5a20 ("igb: add XDP support")
+Signed-off-by: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
+[Kurt: Add lockdep assert and fixes tag]
+Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
+Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Tested-by: George Kuruvinakunnel <george.kuruvinakunnel@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 50 ++++++++++++++++++++++++++---------
- 1 file changed, 37 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_main.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 52246a65eb893..d2f52bb5dfa4c 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -4905,6 +4905,30 @@ static void alc269_fixup_hp_line1_mic1_led(struct hda_codec *codec,
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index 420bc34fb8c1..559ddb40347c 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -34,6 +34,7 @@
+ #include <linux/bpf_trace.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/etherdevice.h>
++#include <linux/lockdep.h>
+ #ifdef CONFIG_IGB_DCA
+ #include <linux/dca.h>
+ #endif
+@@ -2893,8 +2894,11 @@ static int igb_xdp(struct net_device *dev, struct netdev_bpf *xdp)
  	}
  }
  
-+static void alc_hp_mute_disable(struct hda_codec *codec, unsigned int delay)
-+{
-+	if (delay <= 0)
-+		delay = 75;
-+	snd_hda_codec_write(codec, 0x21, 0,
-+		    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
-+	msleep(delay);
-+	snd_hda_codec_write(codec, 0x21, 0,
-+		    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+	msleep(delay);
-+}
++/* This function assumes __netif_tx_lock is held by the caller. */
+ static void igb_xdp_ring_update_tail(struct igb_ring *ring)
+ {
++	lockdep_assert_held(&txring_txq(ring)->_xmit_lock);
 +
-+static void alc_hp_enable_unmute(struct hda_codec *codec, unsigned int delay)
-+{
-+	if (delay <= 0)
-+		delay = 75;
-+	snd_hda_codec_write(codec, 0x21, 0,
-+		    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
-+	msleep(delay);
-+	snd_hda_codec_write(codec, 0x21, 0,
-+		    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
-+	msleep(delay);
-+}
-+
- static const struct coef_fw alc225_pre_hsmode[] = {
- 	UPDATE_COEF(0x4a, 1<<8, 0),
- 	UPDATE_COEFEX(0x57, 0x05, 1<<14, 0),
-@@ -5006,6 +5030,7 @@ static void alc_headset_mode_unplugged(struct hda_codec *codec)
- 	case 0x10ec0236:
- 	case 0x10ec0256:
- 	case 0x19e58326:
-+		alc_hp_mute_disable(codec, 75);
- 		alc_process_coef_fw(codec, coef0256);
- 		break;
- 	case 0x10ec0234:
-@@ -5277,6 +5302,7 @@ static void alc_headset_mode_default(struct hda_codec *codec)
- 		alc_write_coef_idx(codec, 0x45, 0xc089);
- 		msleep(50);
- 		alc_process_coef_fw(codec, coef0256);
-+		alc_hp_enable_unmute(codec, 75);
- 		break;
- 	case 0x10ec0234:
- 	case 0x10ec0274:
-@@ -5374,6 +5400,7 @@ static void alc_headset_mode_ctia(struct hda_codec *codec)
- 	case 0x10ec0256:
- 	case 0x19e58326:
- 		alc_process_coef_fw(codec, coef0256);
-+		alc_hp_enable_unmute(codec, 75);
- 		break;
- 	case 0x10ec0234:
- 	case 0x10ec0274:
-@@ -5489,6 +5516,7 @@ static void alc_headset_mode_omtp(struct hda_codec *codec)
- 	case 0x10ec0256:
- 	case 0x19e58326:
- 		alc_process_coef_fw(codec, coef0256);
-+		alc_hp_enable_unmute(codec, 75);
- 		break;
- 	case 0x10ec0234:
- 	case 0x10ec0274:
-@@ -5594,25 +5622,21 @@ static void alc_determine_headset_type(struct hda_codec *codec)
- 		alc_write_coef_idx(codec, 0x06, 0x6104);
- 		alc_write_coefex_idx(codec, 0x57, 0x3, 0x09a3);
+ 	/* Force memory writes to complete before letting h/w know there
+ 	 * are new descriptors to fetch.
+ 	 */
+@@ -2979,11 +2983,11 @@ static int igb_xdp_xmit(struct net_device *dev, int n,
+ 		nxmit++;
+ 	}
  
--		snd_hda_codec_write(codec, 0x21, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--		msleep(80);
--		snd_hda_codec_write(codec, 0x21, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
+-	__netif_tx_unlock(nq);
 -
- 		alc_process_coef_fw(codec, coef0255);
- 		msleep(300);
- 		val = alc_read_coef_idx(codec, 0x46);
- 		is_ctia = (val & 0x0070) == 0x0070;
--
-+		if (!is_ctia) {
-+			alc_write_coef_idx(codec, 0x45, 0xe089);
-+			msleep(100);
-+			val = alc_read_coef_idx(codec, 0x46);
-+			if ((val & 0x0070) == 0x0070)
-+				is_ctia = false;
-+			else
-+				is_ctia = true;
-+		}
- 		alc_write_coefex_idx(codec, 0x57, 0x3, 0x0da3);
- 		alc_update_coefex_idx(codec, 0x57, 0x5, 1<<14, 0);
--
--		snd_hda_codec_write(codec, 0x21, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
--		msleep(80);
--		snd_hda_codec_write(codec, 0x21, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
- 		break;
- 	case 0x10ec0234:
- 	case 0x10ec0274:
+ 	if (unlikely(flags & XDP_XMIT_FLUSH))
+ 		igb_xdp_ring_update_tail(tx_ring);
+ 
++	__netif_tx_unlock(nq);
++
+ 	return nxmit;
+ }
+ 
+@@ -8703,12 +8707,14 @@ static void igb_put_rx_buffer(struct igb_ring *rx_ring,
+ 
+ static int igb_clean_rx_irq(struct igb_q_vector *q_vector, const int budget)
+ {
++	unsigned int total_bytes = 0, total_packets = 0;
+ 	struct igb_adapter *adapter = q_vector->adapter;
+ 	struct igb_ring *rx_ring = q_vector->rx.ring;
+-	struct sk_buff *skb = rx_ring->skb;
+-	unsigned int total_bytes = 0, total_packets = 0;
+ 	u16 cleaned_count = igb_desc_unused(rx_ring);
++	struct sk_buff *skb = rx_ring->skb;
++	int cpu = smp_processor_id();
+ 	unsigned int xdp_xmit = 0;
++	struct netdev_queue *nq;
+ 	struct xdp_buff xdp;
+ 	u32 frame_sz = 0;
+ 	int rx_buf_pgcnt;
+@@ -8835,7 +8841,10 @@ static int igb_clean_rx_irq(struct igb_q_vector *q_vector, const int budget)
+ 	if (xdp_xmit & IGB_XDP_TX) {
+ 		struct igb_ring *tx_ring = igb_xdp_tx_queue_mapping(adapter);
+ 
++		nq = txring_txq(tx_ring);
++		__netif_tx_lock(nq, cpu);
+ 		igb_xdp_ring_update_tail(tx_ring);
++		__netif_tx_unlock(nq);
+ 	}
+ 
+ 	u64_stats_update_begin(&rx_ring->rx_syncp);
 -- 
 2.43.0
 
