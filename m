@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACB41C07FF;
-	Tue, 15 Oct 2024 13:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D95F1C07FF;
+	Tue, 15 Oct 2024 13:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997673; cv=none; b=eGplQODijl99YbrSgDdNmpgYB8vvGTOgaKzkMur+cw5S5Xvgb3sQmqsnsJ7r1I4//prvVlsKKVUUtellSlwStF1DgxmJn4xhsGwt7wfMmflC2Qa3NZK/5NbcHwKOF7cF89SlyroyFXeczal/VwP6ZuXs2njCW0iFUNox4Ar86sE=
+	t=1728997676; cv=none; b=b83ajEtQCTvx2htv+x9LjFvGWAqhYUPSHZMG0p1GjmVhsfq0Dhbzk2aF9kIsqzxGSCv+FuMW8psFZ6qK6/XKBnzPzCOrhTwvPLk5LuIP8FdA2CKMrVTObj5X0e03JbjfS+aqcqkg6imiE4kvlUh58gwXEn/5ZFOyR6tPc4LCfbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997673; c=relaxed/simple;
-	bh=6yIGy1Cz4b7Q8/IEINCzx8vFjtUk16zOUUiH5DbXcAY=;
+	s=arc-20240116; t=1728997676; c=relaxed/simple;
+	bh=PpPZTqiOC8EdXlVomEfOuXedlfAERmUwdyOOq3iKVIU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=igKYwuDLfWhouJy9sfILVdQG8rtIpqL7d9naob1FRmO8aBJdJkde0S495ofJM4d1f7l1yzl6A+wY/BKHUUbiGn+ViKZhhuHLz84pn1Sw3GHITWZSs61/4SLxJLqQjXwS6oGsVEqN+Y5zwnE1N2AU758jFG08/r8zHpJuG1D+qyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBoaEY5e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qtruO6Qtva41Xoe74/8efHHwps7hQede1ujK0YqEZjQAeMH6pVtIRHleKcMtL94gwxyzci8el1/iOd9j4qvROzz5ysk1qoTRneboZKfjY6oSnpnzGQA3veKwTPnVf23Rmz4+Nvew5ikmnOHWFiqiyMjClLirO5wliq7oWL3rpHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9hdFXfk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBoaEY5e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7DAC4CECE;
-	Tue, 15 Oct 2024 13:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9hdFXfk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3EAC4CEC6;
+	Tue, 15 Oct 2024 13:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997673;
-	bh=6yIGy1Cz4b7Q8/IEINCzx8vFjtUk16zOUUiH5DbXcAY=;
+	s=korg; t=1728997676;
+	bh=PpPZTqiOC8EdXlVomEfOuXedlfAERmUwdyOOq3iKVIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fBoaEY5e6nWJgUECMk+/ziMOYj2AvdNBHvpKWwXVm/mjaxxnBLmN4pvd434qahWjI
-	 98FkP2vNExh2+KqHWe1JN6to4qAHjRveejBIl2sJGZSWLf5Q68gE7eC3r5rt6LN62S
-	 9U5OdykHSZDkJ75BtrhBw2AkJs0z9CkHE109ENLs=
+	b=B9hdFXfkAx3Cx3IH2FUoyAh4MComftZMsOXvo3tLRTqvOVX8bxJ9EX+0vm6cJ28iT
+	 036CAmWAisQPjKanml/dIvPJ/9oXuqfxzDjztCfJrjQIw+zBpgPOpZls73Arup06hP
+	 KAWtH/jIdTtaSrP009LX5UAJNEXbuRSQqbA6jgLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 252/518] soc: versatile: realview: fix soc_dev leak during device remove
-Date: Tue, 15 Oct 2024 14:42:36 +0200
-Message-ID: <20241015123926.716751540@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 5.10 235/518] efistub/tpm: Use ACPI reclaim memory for event log to avoid corruption
+Date: Tue, 15 Oct 2024 14:42:19 +0200
+Message-ID: <20241015123926.063814025@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,63 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit c774f2564c0086c23f5269fd4691f233756bf075 ]
+commit 77d48d39e99170b528e4f2e9fc5d1d64cdedd386 upstream.
 
-If device is unbound, the soc_dev should be unregistered to prevent
-memory leak.
+The TPM event log table is a Linux specific construct, where the data
+produced by the GetEventLog() boot service is cached in memory, and
+passed on to the OS using an EFI configuration table.
 
-Fixes: a2974c9c1f83 ("soc: add driver for the ARM RealView")
-Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/20240825-soc-dev-fixes-v1-3-ff4b35abed83@linaro.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The use of EFI_LOADER_DATA here results in the region being left
+unreserved in the E820 memory map constructed by the EFI stub, and this
+is the memory description that is passed on to the incoming kernel by
+kexec, which is therefore unaware that the region should be reserved.
+
+Even though the utility of the TPM2 event log after a kexec is
+questionable, any corruption might send the parsing code off into the
+weeds and crash the kernel. So let's use EFI_ACPI_RECLAIM_MEMORY
+instead, which is always treated as reserved by the E820 conversion
+logic.
+
+Cc: <stable@vger.kernel.org>
+Reported-by: Breno Leitao <leitao@debian.org>
+Tested-by: Usama Arif <usamaarif642@gmail.com>
+Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/versatile/soc-realview.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/firmware/efi/libstub/tpm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/versatile/soc-realview.c b/drivers/soc/versatile/soc-realview.c
-index d304ee69287af..cf91abe07d38d 100644
---- a/drivers/soc/versatile/soc-realview.c
-+++ b/drivers/soc/versatile/soc-realview.c
-@@ -4,6 +4,7 @@
-  *
-  * Author: Linus Walleij <linus.walleij@linaro.org>
-  */
-+#include <linux/device.h>
- #include <linux/init.h>
- #include <linux/io.h>
- #include <linux/slab.h>
-@@ -81,6 +82,13 @@ static struct attribute *realview_attrs[] = {
+--- a/drivers/firmware/efi/libstub/tpm.c
++++ b/drivers/firmware/efi/libstub/tpm.c
+@@ -115,7 +115,7 @@ void efi_retrieve_tpm2_eventlog(void)
+ 	}
  
- ATTRIBUTE_GROUPS(realview);
+ 	/* Allocate space for the logs and copy them. */
+-	status = efi_bs_call(allocate_pool, EFI_LOADER_DATA,
++	status = efi_bs_call(allocate_pool, EFI_ACPI_RECLAIM_MEMORY,
+ 			     sizeof(*log_tbl) + log_size, (void **)&log_tbl);
  
-+static void realview_soc_socdev_release(void *data)
-+{
-+	struct soc_device *soc_dev = data;
-+
-+	soc_device_unregister(soc_dev);
-+}
-+
- static int realview_soc_probe(struct platform_device *pdev)
- {
- 	struct regmap *syscon_regmap;
-@@ -109,6 +117,11 @@ static int realview_soc_probe(struct platform_device *pdev)
- 	if (IS_ERR(soc_dev))
- 		return -ENODEV;
- 
-+	ret = devm_add_action_or_reset(&pdev->dev, realview_soc_socdev_release,
-+				       soc_dev);
-+	if (ret)
-+		return ret;
-+
- 	ret = regmap_read(syscon_regmap, REALVIEW_SYS_ID_OFFSET,
- 			  &realview_coreid);
- 	if (ret)
--- 
-2.43.0
-
+ 	if (status != EFI_SUCCESS) {
 
 
