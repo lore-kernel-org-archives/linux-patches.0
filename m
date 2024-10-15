@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D972296C4;
-	Tue, 15 Oct 2024 13:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5020C1D5AC6;
+	Tue, 15 Oct 2024 13:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998235; cv=none; b=gNLDOiFL5ck4/6+yVRApyoYILj02Svx/hXOSvlj6PtApn5VmOsYYCghSwCWHhQivcJdrb1b0PKw7/pTCstOI0MGWYzY/x/9pX5TBTWXiHC5Z9SGdlZVrTlyrp+HpIxZzqOfSidgO0Y+L4+sLOFAJgithJU//4RdmhYvYUVQmbPs=
+	t=1728998238; cv=none; b=T83/4i977gC8Mk2qvLCMqdxBadS1puERTTv6olu912zXsC8BSO7w2epfrDyRMFXkJjLU2ZX7OfK3veKDD2Y3UupEzLzwVvRFhpQmOa+PxKSM/B73QgGrFKMTorwR/Bh7DrftB6CwlQkTpym6k62fsvG6VHDCgWITpEzoLimX9hY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998235; c=relaxed/simple;
-	bh=qVNTwD6b5jmw0P9YY7NKp9xgURMmn5wz8J7I/uJ9CiA=;
+	s=arc-20240116; t=1728998238; c=relaxed/simple;
+	bh=INFF3Bp9D1qaohKidNH8qPcF+61jgUuPkYeBq9qo2AE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g7yLMsP3v91/ZLIrn5F0HDcaeQ8jbEp8aJTdnRuX8KXF41vV0IWm5VFVefs+OYh4FsOCW/BXjiomaE6s/AHGW3HhzZAKNHuYg/Y8BXtHvG9n0Vuone9svToldg1DrDzBcVns6su+F5keFNrVAVokQUyAuNvoa0X4Od9baJWt8bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=voxpmASe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kFWOWWF4PWG70E9ifoR4TMxbjTvpnbXZdKRyI1zNfR06c3KL9CFCG7UxHiZUssaPj9/nz6F8HJTTYXWW4uO2ZT5KmDYDW3dNQp2kYYaSpxQY/OXECsCQLkcQgPjaEeZu/9w2jJV5WVQTyPUv4URdFbSSea/rYp5RvzGyFhHXRp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtWsjFgO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voxpmASe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A01C4CEC6;
-	Tue, 15 Oct 2024 13:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtWsjFgO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65A8C4CECF;
+	Tue, 15 Oct 2024 13:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998235;
-	bh=qVNTwD6b5jmw0P9YY7NKp9xgURMmn5wz8J7I/uJ9CiA=;
+	s=korg; t=1728998238;
+	bh=INFF3Bp9D1qaohKidNH8qPcF+61jgUuPkYeBq9qo2AE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=voxpmASeuTbkODiyV+QXiC5j76qz73ZJIIVrdMmRHk2IAjaBRy+XzKQgjFuGgsNio
-	 crFvjAk1Xdtbo2inyIYZ4U0NIGII1eAndpuspsgd4ou+Wv92LoJBPx3rH+YLlNqaWt
-	 5kC8R6lpdljs6gkRb5barp23QfPxfg//kfk4LvJg=
+	b=rtWsjFgOqdky5YMlYoS8KYxQTdtFt1B67AKNGI2Htvw/yjE6rdKaExEBSE2DGEAv9
+	 rTtPprykaJubUJLilB4bMj406ABO+2tsm4S5O/rMVhOsMWeuDYno2cl2IohS1wtSCy
+	 RQpiMKUtFyRfCKlhh8kPtC4kfH2XQ56geFKyHza8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Andi Shyti <andi.shyti@kernel.org>,
-	Michal Simek <michal.simek@amd.com>,
-	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 418/518] i2c: xiic: Use devm_clk_get_enabled()
-Date: Tue, 15 Oct 2024 14:45:22 +0200
-Message-ID: <20241015123933.129383528@linuxfoundation.org>
+Subject: [PATCH 5.10 419/518] i2c: xiic: Fix pm_runtime_set_suspended() with runtime pm enabled
+Date: Tue, 15 Oct 2024 14:45:23 +0200
+Message-ID: <20241015123933.167771632@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,89 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andi Shyti <andi.shyti@kernel.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 8390dc7477e49e4acc9e553f385f4ff59d186efe ]
+[ Upstream commit 0c8d604dea437b69a861479b413d629bc9b3da70 ]
 
-Replace the pair of functions, devm_clk_get() and clk_prepare_enable(),
-with a single function devm_clk_get_enabled().
+It is not valid to call pm_runtime_set_suspended() for devices
+with runtime PM enabled because it returns -EAGAIN if it is enabled
+already and working. So, call pm_runtime_disable() before to fix it.
 
+Fixes: 36ecbcab84d0 ("i2c: xiic: Implement power management")
+Cc: <stable@vger.kernel.org> # v4.6+
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Stable-dep-of: 0c8d604dea43 ("i2c: xiic: Fix pm_runtime_set_suspended() with runtime pm enabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-xiic.c |   20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ drivers/i2c/busses/i2c-xiic.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/i2c/busses/i2c-xiic.c
 +++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -837,16 +837,11 @@ static int xiic_i2c_probe(struct platfor
- 
- 	mutex_init(&i2c->lock);
- 
--	i2c->clk = devm_clk_get(&pdev->dev, NULL);
-+	i2c->clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(i2c->clk))
- 		return dev_err_probe(&pdev->dev, PTR_ERR(i2c->clk),
--				     "input clock not found.\n");
-+				     "failed to enable input clock.\n");
- 
--	ret = clk_prepare_enable(i2c->clk);
--	if (ret) {
--		dev_err(&pdev->dev, "Unable to enable clock.\n");
--		return ret;
--	}
- 	i2c->dev = &pdev->dev;
- 	pm_runtime_set_autosuspend_delay(i2c->dev, XIIC_PM_TIMEOUT);
- 	pm_runtime_use_autosuspend(i2c->dev);
-@@ -858,7 +853,7 @@ static int xiic_i2c_probe(struct platfor
- 
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "Cannot claim IRQ\n");
--		goto err_clk_dis;
-+		goto err_pm_disable;
- 	}
- 
- 	i2c->singlemaster =
-@@ -879,14 +874,14 @@ static int xiic_i2c_probe(struct platfor
- 	ret = xiic_reinit(i2c);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "Cannot xiic_reinit\n");
--		goto err_clk_dis;
-+		goto err_pm_disable;
- 	}
- 
- 	/* add i2c adapter to i2c tree */
- 	ret = i2c_add_adapter(&i2c->adap);
- 	if (ret) {
- 		xiic_deinit(i2c);
--		goto err_clk_dis;
-+		goto err_pm_disable;
- 	}
- 
- 	if (pdata) {
-@@ -897,10 +892,10 @@ static int xiic_i2c_probe(struct platfor
- 
+@@ -893,8 +893,8 @@ static int xiic_i2c_probe(struct platfor
  	return 0;
  
--err_clk_dis:
-+err_pm_disable:
- 	pm_runtime_set_suspended(&pdev->dev);
+ err_pm_disable:
+-	pm_runtime_set_suspended(&pdev->dev);
  	pm_runtime_disable(&pdev->dev);
--	clk_disable_unprepare(i2c->clk);
-+
++	pm_runtime_set_suspended(&pdev->dev);
+ 
  	return ret;
  }
- 
-@@ -918,7 +913,6 @@ static int xiic_i2c_remove(struct platfo
- 
- 	xiic_deinit(i2c);
- 	pm_runtime_put_sync(i2c->dev);
--	clk_disable_unprepare(i2c->clk);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
 
 
