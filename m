@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8E319B3FF;
-	Tue, 15 Oct 2024 11:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A1E19B3FF;
+	Tue, 15 Oct 2024 11:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992988; cv=none; b=roDaQ32QR3vMKSW8efpQBL0phKhtB5Ao8JbrV0AP0ubaS2BUBt0G6Fa/iejgjX6CBX4F4QxgZGx0FlU38dMmB2F168QXXL0LZJLRscHqvG9X9tlxIWsmy+deNqKWjMHBj3U2NO0eDIZBOynDAOLq3BVfyVHclVYxATL6INWdwdY=
+	t=1728992991; cv=none; b=LlfAQa0b+6if8cPcfo5jqW4Dtp7JFpVsWxY52MrcfsGCe/SBXC+d9E+j16+i8L5mCNgyq4Q9WjvaT+79XFAQzRaS2rM0836niadPy2yYRgg0hFIfp+agZJB7gxXiZmd5PpiJL6ffVZZEl5e1urE4c4tMsKkbxezlOmMwDZMzEY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992988; c=relaxed/simple;
-	bh=LvWnKjx01b3USk5y/fHjDcjX7Q29vz8y0bb6HTT8ML8=;
+	s=arc-20240116; t=1728992991; c=relaxed/simple;
+	bh=98ouZD0wfT4IA76vTX8BsHdb0PYvWWz+gMgS2Qu8ABU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=if/i4fM+B9fRlEUjd1Z5Ewc81txleVLMOUEmN5FAmS3bEoVBuTKycBGysWMro2ngkZY1fo717zl5mn4rDwYIwEPO/t8u2+xZDKF0rldGpu8tWxHoe+an2/Lj19EhvjMewNjBE//U9AjMoQ3k8QX04sonOCMkrvCoTTxGv51ohGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlXmdJX2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g+hFoTOkKEBxhlYIwSBqtZNSDYOhiSg5L0WPpzMdiBBVsC7cai65z7eM9DNj++ft1JZWok75B0XDhiQN5mI7OsIglL4u/xuPH4Gj7V2U4TkGUqC/wFYO31oMp6oKPqK8e+ye4GKTNog35WQLqAs3GihJQe6DGO5WhDjT22z94fM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PpjRynwB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlXmdJX2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48816C4CEC6;
-	Tue, 15 Oct 2024 11:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpjRynwB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5E5AC4CEC6;
+	Tue, 15 Oct 2024 11:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992987;
-	bh=LvWnKjx01b3USk5y/fHjDcjX7Q29vz8y0bb6HTT8ML8=;
+	s=korg; t=1728992991;
+	bh=98ouZD0wfT4IA76vTX8BsHdb0PYvWWz+gMgS2Qu8ABU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FlXmdJX2/pCRuVLGstr800zvkU6lEyi1i0MAJtXnt1CGEG8/KS+a5b/QVNvotj1bL
-	 adpGynR0baQIFHLVjmwHYUMneB3JPo3U+iyZncvST/PHz2kvQFp5LPzOMcZHCUcuFi
-	 YCfvstTKPinC1jKAfzCCRQc9jWciG5ZB4uebWVS4=
+	b=PpjRynwBs6H3M3QqdE/+C4TvFOaWYQdB1tv6BYVqH3G27HMaD/Mxx4kI9O8z7ZFNE
+	 lWtYPSOwLlQNkhR4lFdUd08Efg+STzIoX9Lx9L+LZ6yIUYb+yETWeVr33c4k4nZ6kL
+	 wTI2MTExiNdXk0oO8rb8dZVjBC5gofz2cLsDBffc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 276/691] coresight: tmc: sg: Do not leak sg_table
-Date: Tue, 15 Oct 2024 13:23:44 +0200
-Message-ID: <20241015112451.300057043@linuxfoundation.org>
+Subject: [PATCH 5.15 277/691] interconnect: qcom: sm8250: Enable sync_state
+Date: Tue, 15 Oct 2024 13:23:45 +0200
+Message-ID: <20241015112451.338957720@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,71 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit c58dc5a1f886f2fcc1133746d0cbaa1fe7fd44ff ]
+[ Upstream commit bfc7db1cb94ad664546d70212699f8cc6c539e8c ]
 
-Running perf with cs_etm on Juno triggers the following kmemleak warning !
+Add the generic icc sync_state callback to ensure interconnect votes
+are taken into account, instead of being pegged at maximum values.
 
-:~# cat /sys/kernel/debug/kmemleak
- unreferenced object 0xffffff8806b6d720 (size 96):
- comm "perf", pid 562, jiffies 4297810960
- hex dump (first 32 bytes):
- 38 d8 13 07 88 ff ff ff 00 d0 9e 85 c0 ff ff ff  8...............
- 00 10 00 88 c0 ff ff ff 00 f0 ff f7 ff 00 00 00  ................
- backtrace (crc 1dbf6e00):
- [<ffffffc08107381c>] kmemleak_alloc+0xbc/0xd8
- [<ffffffc0802f9798>] kmalloc_trace_noprof+0x220/0x2e8
- [<ffffffc07bb71948>] tmc_alloc_sg_table+0x48/0x208 [coresight_tmc]
- [<ffffffc07bb71cbc>] tmc_etr_alloc_sg_buf+0xac/0x240 [coresight_tmc]
- [<ffffffc07bb72538>] tmc_alloc_etr_buf.constprop.0+0x1f0/0x260 [coresight_tmc]
- [<ffffffc07bb7280c>] alloc_etr_buf.constprop.0.isra.0+0x74/0xa8 [coresight_tmc]
- [<ffffffc07bb72950>] tmc_alloc_etr_buffer+0x110/0x260 [coresight_tmc]
- [<ffffffc07bb38afc>] etm_setup_aux+0x204/0x3b0 [coresight]
- [<ffffffc08025837c>] rb_alloc_aux+0x20c/0x318
- [<ffffffc08024dd84>] perf_mmap+0x2e4/0x7a0
- [<ffffffc0802cceb0>] mmap_region+0x3b0/0xa08
- [<ffffffc0802cd8a8>] do_mmap+0x3a0/0x500
- [<ffffffc080295328>] vm_mmap_pgoff+0x100/0x1d0
- [<ffffffc0802cadf8>] ksys_mmap_pgoff+0xb8/0x110
- [<ffffffc080020688>] __arm64_sys_mmap+0x38/0x58
- [<ffffffc080028fc0>] invoke_syscall.constprop.0+0x58/0x100
-
-This due to the fact that we do not free the "sg_table" itself while
-freeing up  the SG table and data pages. Fix this by freeing the sg_table
-in tmc_free_sg_table().
-
-Fixes: 99443ea19e8b ("coresight: Add generic TMC sg table framework")
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: James Clark <james.clark@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20240702132846.1677261-1-suzuki.poulose@arm.com
+Fixes: b95b668eaaa2 ("interconnect: qcom: icc-rpmh: Add BCMs to commit list in pre_aggregate")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20231130-topic-8250icc_syncstate-v1-1-7ce78ba6e04c@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-tmc-etr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/interconnect/qcom/sm8250.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-index b9cd1f9555523..3b58aed97fc1c 100644
---- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
-+++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
-@@ -257,6 +257,7 @@ void tmc_free_sg_table(struct tmc_sg_table *sg_table)
- {
- 	tmc_free_table_pages(sg_table);
- 	tmc_free_data_pages(sg_table);
-+	kfree(sg_table);
- }
- EXPORT_SYMBOL_GPL(tmc_free_sg_table);
- 
-@@ -338,7 +339,6 @@ struct tmc_sg_table *tmc_alloc_sg_table(struct device *dev,
- 		rc = tmc_alloc_table_pages(sg_table);
- 	if (rc) {
- 		tmc_free_sg_table(sg_table);
--		kfree(sg_table);
- 		return ERR_PTR(rc);
- 	}
- 
+diff --git a/drivers/interconnect/qcom/sm8250.c b/drivers/interconnect/qcom/sm8250.c
+index aa707582ea016..8dfb5dea562a3 100644
+--- a/drivers/interconnect/qcom/sm8250.c
++++ b/drivers/interconnect/qcom/sm8250.c
+@@ -551,6 +551,7 @@ static struct platform_driver qnoc_driver = {
+ 	.driver = {
+ 		.name = "qnoc-sm8250",
+ 		.of_match_table = qnoc_of_match,
++		.sync_state = icc_sync_state,
+ 	},
+ };
+ module_platform_driver(qnoc_driver);
 -- 
 2.43.0
 
