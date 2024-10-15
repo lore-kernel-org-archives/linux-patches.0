@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CF9205E26;
-	Tue, 15 Oct 2024 13:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D9A205E26;
+	Tue, 15 Oct 2024 13:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998168; cv=none; b=cYVxi3LtO0h62AIxJ+t0IVZb0IoXqFSaViGkGPbOdkvVLSsyJgaDthglXQ+n5muzPUIBF0Si/4gP7ZbA/PtF70WJjXD7YAEbdlkno9g8POr4YxbaA8JORYZ7q8LTxb1ZEUFUL2vtlnK3Cr0P2XHbPHMCgjmZIyvUb8UtCEY7vMY=
+	t=1728998172; cv=none; b=fa+WYtXXfgbhPnKCxPri5Y9PPBRcFN3FZunj8AGL3OOvLC+G+CQTOq6+tA0tROd5xGFTMxvdvFPgMmjBkLBoNixok0EwM5koIiAzNq5diajUjuhWxT6SYB6L/MakGvitF0i0oV5Z1N7KwNvm768jDMLNu/+s9Q+z5WgbNZsuQ2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998168; c=relaxed/simple;
-	bh=9ASP2S9XlN9f652oN2iYH/3GVKCDtkDtVVThzYtUyyk=;
+	s=arc-20240116; t=1728998172; c=relaxed/simple;
+	bh=U8Yi44pYv/A9mRoPkDj+KtdYsXKEBHCCV24L82w7zoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Or69V6lq2elHVxL3aB8yvYlFS9JUYlMBArf6W0SKke7dY9xMlDK06uLJ5QCpCpC2HMo8a4kvt5bPaL+0ERqd87b9eAe9824a+yproXFuDgIHBA4VlCMJLQt/YY4I77r+mwD8v7C2kExLWhh3yS0PJAON0hYi4SQ18U+VvVI1JOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZxyKVSwr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K/HXiqNl5KekN8TnrpS2fQQ6l/vQVYq3l8Gg2rubkpcnWHha6f43RBI/4VlR8xnpK+P1MdRFoxSAvYAGbs/DisL1xwQisZh9kzIj3cEgdhbqD+Wucr30/UDw89sIpHfftAwtWgI+U/2biZv2mhQ5a7bCLqpUXEdBecBtWeZAy9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yf01NaLs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxyKVSwr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF3BC4CEC6;
-	Tue, 15 Oct 2024 13:16:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yf01NaLs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B1C6C4CEC6;
+	Tue, 15 Oct 2024 13:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998168;
-	bh=9ASP2S9XlN9f652oN2iYH/3GVKCDtkDtVVThzYtUyyk=;
+	s=korg; t=1728998171;
+	bh=U8Yi44pYv/A9mRoPkDj+KtdYsXKEBHCCV24L82w7zoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZxyKVSwrHkk1PvwbkhwZYHhufy3jU8hYi9MsdyQr4RGndf/DpFY99Zoz1uOyacE/+
-	 ReIpkEPGkjzfajEFsxHclMEaUhwftrQYj5QeO2EI1kg7NT7qGGHFmZgFYF1xGhrEGh
-	 T4CWFyuBWfJfF/SaE4wL7Tv56sY3JRdCOSh0VJ0w=
+	b=yf01NaLswuKJjD9teKbMQ3aMS3ZbW0tWQ0XquwyzwjrkpcZIjJ6gc8eM7YEO1xRRK
+	 FMLjh/fA++fxZn2hD6Dtan4yXCPqAj14nBZJA0CHj3wfhnf2uYXsgthpav3laNcKwW
+	 D+q8VeRdZxOS2cHOgZ5VCNRmvsklt9+3Zuq70xe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Stange <nstange@suse.com>,
-	Chun-Yi Lee <jlee@suse.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 398/518] aoe: fix the potential use-after-free problem in more places
-Date: Tue, 15 Oct 2024 14:45:02 +0200
-Message-ID: <20241015123932.335925787@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 372/518] ext4: propagate errors from ext4_find_extent() in ext4_insert_range()
+Date: Tue, 15 Oct 2024 14:44:36 +0200
+Message-ID: <20241015123931.330364996@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,98 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chun-Yi Lee <joeyli.kernel@gmail.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 6d6e54fc71ad1ab0a87047fd9c211e75d86084a3 upstream.
+commit 369c944ed1d7c3fb7b35f24e4735761153afe7b3 upstream.
 
-For fixing CVE-2023-6270, f98364e92662 ("aoe: fix the potential
-use-after-free problem in aoecmd_cfg_pkts") makes tx() calling dev_put()
-instead of doing in aoecmd_cfg_pkts(). It avoids that the tx() runs
-into use-after-free.
+Even though ext4_find_extent() returns an error, ext4_insert_range() still
+returns 0. This may confuse the user as to why fallocate returns success,
+but the contents of the file are not as expected. So propagate the error
+returned by ext4_find_extent() to avoid inconsistencies.
 
-Then Nicolai Stange found more places in aoe have potential use-after-free
-problem with tx(). e.g. revalidate(), aoecmd_ata_rw(), resend(), probe()
-and aoecmd_cfg_rsp(). Those functions also use aoenet_xmit() to push
-packet to tx queue. So they should also use dev_hold() to increase the
-refcnt of skb->dev.
-
-On the other hand, moving dev_put() to tx() causes that the refcnt of
-skb->dev be reduced to a negative value, because corresponding
-dev_hold() are not called in revalidate(), aoecmd_ata_rw(), resend(),
-probe(), and aoecmd_cfg_rsp(). This patch fixed this issue.
-
-Cc: stable@vger.kernel.org
-Link: https://nvd.nist.gov/vuln/detail/CVE-2023-6270
-Fixes: f98364e92662 ("aoe: fix the potential use-after-free problem in aoecmd_cfg_pkts")
-Reported-by: Nicolai Stange <nstange@suse.com>
-Signed-off-by: Chun-Yi Lee <jlee@suse.com>
-Link: https://lore.kernel.org/stable/20240624064418.27043-1-jlee%40suse.com
-Link: https://lore.kernel.org/r/20241002035458.24401-1-jlee@suse.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 331573febb6a ("ext4: Add support FALLOC_FL_INSERT_RANGE for fallocate")
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/20240822023545.1994557-11-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/aoe/aoecmd.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ fs/ext4/extents.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/block/aoe/aoecmd.c
-+++ b/drivers/block/aoe/aoecmd.c
-@@ -362,6 +362,7 @@ ata_rw_frameinit(struct frame *f)
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -5566,6 +5566,7 @@ static int ext4_insert_range(struct file
+ 	path = ext4_find_extent(inode, offset_lblk, NULL, 0);
+ 	if (IS_ERR(path)) {
+ 		up_write(&EXT4_I(inode)->i_data_sem);
++		ret = PTR_ERR(path);
+ 		goto out_stop;
  	}
  
- 	ah->cmdstat = ATA_CMD_PIO_READ | writebit | extbit;
-+	dev_hold(t->ifp->nd);
- 	skb->dev = t->ifp->nd;
- }
- 
-@@ -402,6 +403,8 @@ aoecmd_ata_rw(struct aoedev *d)
- 		__skb_queue_head_init(&queue);
- 		__skb_queue_tail(&queue, skb);
- 		aoenet_xmit(&queue);
-+	} else {
-+		dev_put(f->t->ifp->nd);
- 	}
- 	return 1;
- }
-@@ -484,10 +487,13 @@ resend(struct aoedev *d, struct frame *f
- 	memcpy(h->dst, t->addr, sizeof h->dst);
- 	memcpy(h->src, t->ifp->nd->dev_addr, sizeof h->src);
- 
-+	dev_hold(t->ifp->nd);
- 	skb->dev = t->ifp->nd;
- 	skb = skb_clone(skb, GFP_ATOMIC);
--	if (skb == NULL)
-+	if (skb == NULL) {
-+		dev_put(t->ifp->nd);
- 		return;
-+	}
- 	f->sent = ktime_get();
- 	__skb_queue_head_init(&queue);
- 	__skb_queue_tail(&queue, skb);
-@@ -618,6 +624,8 @@ probe(struct aoetgt *t)
- 		__skb_queue_head_init(&queue);
- 		__skb_queue_tail(&queue, skb);
- 		aoenet_xmit(&queue);
-+	} else {
-+		dev_put(f->t->ifp->nd);
- 	}
- }
- 
-@@ -1403,6 +1411,7 @@ aoecmd_ata_id(struct aoedev *d)
- 	ah->cmdstat = ATA_CMD_ID_ATA;
- 	ah->lba3 = 0xa0;
- 
-+	dev_hold(t->ifp->nd);
- 	skb->dev = t->ifp->nd;
- 
- 	d->rttavg = RTTAVG_INIT;
-@@ -1412,6 +1421,8 @@ aoecmd_ata_id(struct aoedev *d)
- 	skb = skb_clone(skb, GFP_ATOMIC);
- 	if (skb)
- 		f->sent = ktime_get();
-+	else
-+		dev_put(t->ifp->nd);
- 
- 	return skb;
- }
 
 
