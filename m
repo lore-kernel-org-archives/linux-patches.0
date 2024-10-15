@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95091EBFF1;
-	Tue, 15 Oct 2024 11:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112331684A3;
+	Tue, 15 Oct 2024 11:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992133; cv=none; b=rgsdn1/7n2hW1aTRPkubL0pco+3OSuHC41gXOGFpC21XbiE8J2ITxuD/NhS0327WEFL34IsMpw3Tm/7hsnX1GU2fJDsKX1BjKpwPkDaIvRQQt2YxuaD4Mh47q1bjcvSfuyjGYcAy9UME6jDE5DhbnYeuDEHTv6JT6nNesTVUuqs=
+	t=1728992136; cv=none; b=nl/5oEJ2FR6n0Dp5v1Ad+VNjVAnmqTakn5XZscCZyp23WII0EmjlbuVFuMyxQBGgRMsM038N/Sw3qyrJ5NPWT7AUoqa979Y9kmD+fBqr/VbxVF46lxB1wj3OoMdj3qiGlxPz/o5qJUUCnw8cnvqywgBL1yAvHzyuES8s2EUXehY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992133; c=relaxed/simple;
-	bh=r0nT14xTc4nwEHEkDql0gwBB9frjgzORyij4VrzhVxM=;
+	s=arc-20240116; t=1728992136; c=relaxed/simple;
+	bh=rcBGSj1Fg3IK32E0j+15dsYq0aPGvW++FXdzfEqFoSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aOM1CHtKfikrCAVCJKMWusFNncdlLZivSfHmDztscUgMkap7KlybkKrh1oZ4BtpHXx+6RiqDAr9QWjS03pKL8S88YxneI02M10x37aMaoPtdnksWE5KvcZUH0UxBpNGSgH0ktXYaTXdsI2I/lNCS7c3PoCdEbbc9Jz7zSZFTtLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7jWEp2p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gx/2awbeShVD/UcWYjn9RaH44zHsh4yH/BO9CjHRPh65N912lZmdx5uONLNJ71VnueeDiwrUMvKopu7YtB/02od/vN6XAb7c5VcKaUX+uH3odmdNklTbb3vR5Jioyt86tsK8O/xe0i3WsSOpbN/bCw08A+nksbneyjbWe+xoR0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONuQuXHO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7jWEp2p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59BCC4CECE;
-	Tue, 15 Oct 2024 11:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONuQuXHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 476A4C4CEC6;
+	Tue, 15 Oct 2024 11:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992132;
-	bh=r0nT14xTc4nwEHEkDql0gwBB9frjgzORyij4VrzhVxM=;
+	s=korg; t=1728992135;
+	bh=rcBGSj1Fg3IK32E0j+15dsYq0aPGvW++FXdzfEqFoSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7jWEp2p69b2NEFY00/g1jBlVZwJ5hKkuEwPLD3f4wHeSVByaMBZ2fQ7NQWp46rPU
-	 OkNVH0p6oUBuJKx5AviO4hjyk8SIOhsx0Leie4biRt9rQbjbkSLFI9Tjf4heAOnoms
-	 gs1KblfP9VfZ3utkTpAcLtlHF92oihz3GjeqMoHg=
+	b=ONuQuXHO7936wpMTlo7zAj1DPf4KeKO357Jqi6mQaIkJiOJ1cUhNP9kQHBF79vSN3
+	 18x4KACpuywVEw7kGWe6wXlJ9CyNKK1ty8bouWKpNL+s82JscOpDlfMi4cP8JjR7dF
+	 RNqV//erjD0B+xamp/14gzMNs2/aQdEN1qPJBi2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/691] NFSv4: Fix clearing of layout segments in layoutreturn
-Date: Tue, 15 Oct 2024 13:19:35 +0200
-Message-ID: <20241015112441.411866439@linuxfoundation.org>
+Subject: [PATCH 5.15 028/691] NFS: Avoid unnecessary rescanning of the per-server delegation list
+Date: Tue, 15 Oct 2024 13:19:36 +0200
+Message-ID: <20241015112441.451205555@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -54,61 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit d72b7963115bea971a28eaa2cb76722c023f9fdf ]
+[ Upstream commit f92214e4c312f6ea9d78650cc6291d200f17abb6 ]
 
-Make sure that we clear the layout segments in cases where we see a
-fatal error, and also in the case where the layout is invalid.
+If the call to nfs_delegation_grab_inode() fails, we will not have
+dropped any locks that require us to rescan the list.
 
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 9 ++++++---
- fs/nfs/pnfs.c     | 5 ++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ fs/nfs/delegation.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 770fa1cb112d..f1c351e40c7a 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -9755,13 +9755,16 @@ static void nfs4_layoutreturn_done(struct rpc_task *task, void *calldata)
- 		fallthrough;
- 	default:
- 		task->tk_status = 0;
-+		lrp->res.lrs_present = 0;
- 		fallthrough;
- 	case 0:
- 		break;
- 	case -NFS4ERR_DELAY:
--		if (nfs4_async_handle_error(task, server, NULL, NULL) != -EAGAIN)
--			break;
--		goto out_restart;
-+		if (nfs4_async_handle_error(task, server, NULL, NULL) ==
-+		    -EAGAIN)
-+			goto out_restart;
-+		lrp->res.lrs_present = 0;
-+		break;
- 	}
- 	dprintk("<-- %s\n", __func__);
- 	return;
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index e13f1c762951..fb12a2193884 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -1169,10 +1169,9 @@ void pnfs_layoutreturn_free_lsegs(struct pnfs_layout_hdr *lo,
- 	LIST_HEAD(freeme);
+diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
+index 6a3ba306c321..8124d4f8b29a 100644
+--- a/fs/nfs/delegation.c
++++ b/fs/nfs/delegation.c
+@@ -627,6 +627,9 @@ static int nfs_server_return_marked_delegations(struct nfs_server *server,
+ 				prev = delegation;
+ 			continue;
+ 		}
++		inode = nfs_delegation_grab_inode(delegation);
++		if (inode == NULL)
++			continue;
  
- 	spin_lock(&inode->i_lock);
--	if (!pnfs_layout_is_valid(lo) ||
--	    !nfs4_stateid_match_other(&lo->plh_stateid, arg_stateid))
-+	if (!nfs4_stateid_match_other(&lo->plh_stateid, arg_stateid))
- 		goto out_unlock;
--	if (stateid) {
-+	if (stateid && pnfs_layout_is_valid(lo)) {
- 		u32 seq = be32_to_cpu(arg_stateid->seqid);
+ 		if (prev) {
+ 			struct inode *tmp = nfs_delegation_grab_inode(prev);
+@@ -637,12 +640,6 @@ static int nfs_server_return_marked_delegations(struct nfs_server *server,
+ 			}
+ 		}
  
- 		pnfs_mark_matching_lsegs_invalid(lo, &freeme, range, seq);
+-		inode = nfs_delegation_grab_inode(delegation);
+-		if (inode == NULL) {
+-			rcu_read_unlock();
+-			iput(to_put);
+-			goto restart;
+-		}
+ 		delegation = nfs_start_delegation_return_locked(NFS_I(inode));
+ 		rcu_read_unlock();
+ 
+@@ -1164,7 +1161,6 @@ static int nfs_server_reap_unclaimed_delegations(struct nfs_server *server,
+ 	struct inode *inode;
+ restart:
+ 	rcu_read_lock();
+-restart_locked:
+ 	list_for_each_entry_rcu(delegation, &server->delegations, super_list) {
+ 		if (test_bit(NFS_DELEGATION_INODE_FREEING,
+ 					&delegation->flags) ||
+@@ -1175,7 +1171,7 @@ static int nfs_server_reap_unclaimed_delegations(struct nfs_server *server,
+ 			continue;
+ 		inode = nfs_delegation_grab_inode(delegation);
+ 		if (inode == NULL)
+-			goto restart_locked;
++			continue;
+ 		delegation = nfs_start_delegation_return_locked(NFS_I(inode));
+ 		rcu_read_unlock();
+ 		if (delegation != NULL) {
+@@ -1296,7 +1292,6 @@ static int nfs_server_reap_expired_delegations(struct nfs_server *server,
+ 	nfs4_stateid stateid;
+ restart:
+ 	rcu_read_lock();
+-restart_locked:
+ 	list_for_each_entry_rcu(delegation, &server->delegations, super_list) {
+ 		if (test_bit(NFS_DELEGATION_INODE_FREEING,
+ 					&delegation->flags) ||
+@@ -1307,7 +1302,7 @@ static int nfs_server_reap_expired_delegations(struct nfs_server *server,
+ 			continue;
+ 		inode = nfs_delegation_grab_inode(delegation);
+ 		if (inode == NULL)
+-			goto restart_locked;
++			continue;
+ 		spin_lock(&delegation->lock);
+ 		cred = get_cred_rcu(delegation->cred);
+ 		nfs4_stateid_copy(&stateid, &delegation->stateid);
 -- 
 2.43.0
 
