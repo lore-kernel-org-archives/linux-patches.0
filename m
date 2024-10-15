@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5720C1EF0B8;
-	Tue, 15 Oct 2024 12:06:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790091EABD1;
+	Tue, 15 Oct 2024 12:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993967; cv=none; b=RzLfmV7w7lXl/sl0w8NfWb+z1iQUn6mB38bzWaHGRy3Z4/w/9l5q5BW9ZBNYtodAjQxxLzSWcx+hXSjbJlbJID58qHcjysvpDRXw92f2VweT/H4QyLhcD2/h4ZJmsJXa21zaVPQ5GgMMvLF+ObOL3n1zFF9cYyMTXBZqDUDbj0c=
+	t=1728993970; cv=none; b=cMWHek+ocgkvButhdRXloGeO/HL2aEthQx8k86pQQ0AoFQJPtZezHe1BNh3YGfafS8AtkMx2hi1KP92a1cHeO94VOWdLx82NMRo2tN5ut5IiuvRJ2PNRuFR+Zxlz+wQg9efHXLc+DrDvcVqcaDTazVh4gy1lH7t0hIA9Q2N51IM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993967; c=relaxed/simple;
-	bh=C9WG2G64qFk0bNXNyUXGT+4naVpMxMMyhsnYGWwuADk=;
+	s=arc-20240116; t=1728993970; c=relaxed/simple;
+	bh=qW6PPshGWkhpT9q9N4oTGOeZLv7XhbJgHMNamp8dcW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pAR2M7zeKmbaOs++4WZ25VH51R+U0LMmTMGX6w7lmwwFrJHJeN3DZGhPMZIsRw1SJczCGLnnRQZzSsHpxF2KHvl4XvnLT9dp7HOC52zN7kO/N8z/LcwpuifDUgG/dlri9iIhGvz5m9WhdcvIXi9+o2vUsZCtANQkvl+2gl/QcF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYFNV+Mo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BogWovgKqeE6W8i4qWx8ijOLbb/Ervcn9Sasr2kdifRN0EG1m4YfaTO3D1wye+tNEnmaaODIlCJKgiO3PTk7WLEJUcnT0tU/DSb4K3OlU7BBDBQjLbzMWenaywr2FRV3zSV6EwBddJxLvNHY01og6Fdko/vyFukmJY9U2xPg4lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fskWQB12; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYFNV+Mo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB68BC4CED1;
-	Tue, 15 Oct 2024 12:06:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fskWQB12"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF5EC4CEC6;
+	Tue, 15 Oct 2024 12:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993967;
-	bh=C9WG2G64qFk0bNXNyUXGT+4naVpMxMMyhsnYGWwuADk=;
+	s=korg; t=1728993970;
+	bh=qW6PPshGWkhpT9q9N4oTGOeZLv7XhbJgHMNamp8dcW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HYFNV+MoLHk9iO9qe6tV4MY0S0BzTq+yH/DfHd9wYBdLwc+EAlzzqQu0X/HL4DEpK
-	 BkcXeB3RtnWgmXozMi30RSBdyuMFpl/IOHiACGBa1cXBOwAagx7xMq2WLHq3psRw+O
-	 2BfwlO8MJl38FG1aVDwlNtqij5+bsexiDRGpTUag=
+	b=fskWQB126LXtItQdl3v1VVLLEq8/cWd6fOOJWdSdQKK/PdfSvZ+aGT/QNsJzGfYBx
+	 Qa7ZQJX3o/HyHAsCYCg1PSiKt102LT7FXiO+4VtDgi227Yb+MRK4RL1bPzotb5sZlP
+	 xeJskkZpc945L3ossU00HDSLUpNTPGBAzBILsk44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Cole-Baker <sigmaris@gmail.com>,
-	"=?UTF-8?q?Milan=20P . =20Stani=C4=87?=" <mps@arvanta.net>,
-	Linus Heckemann <git@sphalerite.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 568/691] drm/rockchip: support gamma control on RK3399
-Date: Tue, 15 Oct 2024 13:28:36 +0200
-Message-ID: <20241015112502.886160191@linuxfoundation.org>
+Subject: [PATCH 5.15 551/691] device property: Add fwnode_irq_get_byname
+Date: Tue, 15 Oct 2024 13:28:19 +0200
+Message-ID: <20241015112502.211332147@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -47,213 +47,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hugh Cole-Baker <sigmaris@gmail.com>
+From: Akhil R <akhilrajeev@nvidia.com>
 
-[ Upstream commit 7ae7a6211fe7251543796d5af971acb8c9e2da9e ]
+[ Upstream commit ca0acb511c21738b32386ce0f85c284b351d919e ]
 
-The RK3399 has a 1024-entry gamma LUT with 10 bits per component on its
-"big" VOP and a 256-entry, 8 bit per component LUT on the "little" VOP.
-Compared to the RK3288, it no longer requires disabling gamma while
-updating the LUT. On the RK3399, the LUT can be updated at any time as
-the hardware has two LUT buffers, one can be written while the other is
-in use. A swap of the buffers is triggered by writing 1 to the
-update_gamma_lut register.
+Add fwnode_irq_get_byname() to get an interrupt by name from either
+ACPI table or Device Tree, whichever is used for enumeration.
 
-Signed-off-by: Hugh Cole-Baker <sigmaris@gmail.com>
-Tested-by: "Milan P. Stanić" <mps@arvanta.net>
-Tested-by: Linus Heckemann <git@sphalerite.org>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20211019215843.42718-3-sigmaris@gmail.com
-Stable-dep-of: 6b44aa559d6c ("drm/rockchip: vop: clear DMA stop bit on RK3066")
+In the ACPI case, this allow us to use 'interrupt-names' in
+_DSD which can be mapped to Interrupt() resource by index.
+The implementation is similar to 'interrupt-names' in the
+Device Tree.
+
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: 8d3cefaf6592 ("i2c: core: Lock address during client device instantiation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 105 +++++++++++++-------
- 1 file changed, 71 insertions(+), 34 deletions(-)
+ drivers/base/property.c  | 29 +++++++++++++++++++++++++++++
+ include/linux/property.h |  1 +
+ 2 files changed, 30 insertions(+)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-index c9056bf8659ad..3d5e463757f55 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-@@ -9,6 +9,7 @@
- #include <linux/delay.h>
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
-+#include <linux/log2.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_device.h>
-@@ -66,6 +67,9 @@
- #define VOP_REG_SET(vop, group, name, v) \
- 		    vop_reg_set(vop, &vop->data->group->name, 0, ~0, v, #name)
- 
-+#define VOP_HAS_REG(vop, group, name) \
-+		(!!(vop->data->group->name.mask))
-+
- #define VOP_INTR_SET_TYPE(vop, name, type, v) \
- 	do { \
- 		int i, reg = 0, mask = 0; \
-@@ -1211,17 +1215,22 @@ static bool vop_dsp_lut_is_enabled(struct vop *vop)
- 	return vop_read_reg(vop, 0, &vop->data->common->dsp_lut_en);
+diff --git a/drivers/base/property.c b/drivers/base/property.c
+index 87bb97e12749e..ff1be3e311eeb 100644
+--- a/drivers/base/property.c
++++ b/drivers/base/property.c
+@@ -1066,6 +1066,35 @@ void __iomem *fwnode_iomap(struct fwnode_handle *fwnode, int index)
  }
+ EXPORT_SYMBOL(fwnode_iomap);
  
-+static u32 vop_lut_buffer_index(struct vop *vop)
++/**
++ * fwnode_irq_get_byname - Get IRQ from a fwnode using its name
++ * @fwnode:	Pointer to the firmware node
++ * @name:	IRQ name
++ *
++ * Description:
++ * Find a match to the string @name in the 'interrupt-names' string array
++ * in _DSD for ACPI, or of_node for Device Tree. Then get the Linux IRQ
++ * number of the IRQ resource corresponding to the index of the matched
++ * string.
++ *
++ * Return:
++ * Linux IRQ number on success, or negative errno otherwise.
++ */
++int fwnode_irq_get_byname(const struct fwnode_handle *fwnode, const char *name)
 +{
-+	return vop_read_reg(vop, 0, &vop->data->common->lut_buffer_index);
++	int index;
++
++	if (!name)
++		return -EINVAL;
++
++	index = fwnode_property_match_string(fwnode, "interrupt-names",  name);
++	if (index < 0)
++		return index;
++
++	return fwnode_irq_get(fwnode, index);
 +}
++EXPORT_SYMBOL(fwnode_irq_get_byname);
 +
- static void vop_crtc_write_gamma_lut(struct vop *vop, struct drm_crtc *crtc)
- {
- 	struct drm_color_lut *lut = crtc->state->gamma_lut->data;
--	unsigned int i;
-+	unsigned int i, bpc = ilog2(vop->data->lut_size);
+ /**
+  * fwnode_graph_get_next_endpoint - Get next endpoint firmware node
+  * @fwnode: Pointer to the parent firmware node
+diff --git a/include/linux/property.h b/include/linux/property.h
+index 032262e3d9991..840f0545d4f9d 100644
+--- a/include/linux/property.h
++++ b/include/linux/property.h
+@@ -125,6 +125,7 @@ struct fwnode_handle *fwnode_handle_get(struct fwnode_handle *fwnode);
+ void fwnode_handle_put(struct fwnode_handle *fwnode);
  
- 	for (i = 0; i < crtc->gamma_size; i++) {
- 		u32 word;
+ int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index);
++int fwnode_irq_get_byname(const struct fwnode_handle *fwnode, const char *name);
  
--		word = (drm_color_lut_extract(lut[i].red, 10) << 20) |
--		       (drm_color_lut_extract(lut[i].green, 10) << 10) |
--			drm_color_lut_extract(lut[i].blue, 10);
-+		word = (drm_color_lut_extract(lut[i].red, bpc) << (2 * bpc)) |
-+		       (drm_color_lut_extract(lut[i].green, bpc) << bpc) |
-+			drm_color_lut_extract(lut[i].blue, bpc);
- 		writel(word, vop->lut_regs + i * 4);
- 	}
- }
-@@ -1231,38 +1240,66 @@ static void vop_crtc_gamma_set(struct vop *vop, struct drm_crtc *crtc,
- {
- 	struct drm_crtc_state *state = crtc->state;
- 	unsigned int idle;
-+	u32 lut_idx, old_idx;
- 	int ret;
+ void __iomem *fwnode_iomap(struct fwnode_handle *fwnode, int index);
  
- 	if (!vop->lut_regs)
- 		return;
--	/*
--	 * To disable gamma (gamma_lut is null) or to write
--	 * an update to the LUT, clear dsp_lut_en.
--	 */
--	spin_lock(&vop->reg_lock);
--	VOP_REG_SET(vop, common, dsp_lut_en, 0);
--	vop_cfg_done(vop);
--	spin_unlock(&vop->reg_lock);
- 
--	/*
--	 * In order to write the LUT to the internal memory,
--	 * we need to first make sure the dsp_lut_en bit is cleared.
--	 */
--	ret = readx_poll_timeout(vop_dsp_lut_is_enabled, vop,
--				 idle, !idle, 5, 30 * 1000);
--	if (ret) {
--		DRM_DEV_ERROR(vop->dev, "display LUT RAM enable timeout!\n");
--		return;
--	}
-+	if (!state->gamma_lut || !VOP_HAS_REG(vop, common, update_gamma_lut)) {
-+		/*
-+		 * To disable gamma (gamma_lut is null) or to write
-+		 * an update to the LUT, clear dsp_lut_en.
-+		 */
-+		spin_lock(&vop->reg_lock);
-+		VOP_REG_SET(vop, common, dsp_lut_en, 0);
-+		vop_cfg_done(vop);
-+		spin_unlock(&vop->reg_lock);
- 
--	if (!state->gamma_lut)
--		return;
-+		/*
-+		 * In order to write the LUT to the internal memory,
-+		 * we need to first make sure the dsp_lut_en bit is cleared.
-+		 */
-+		ret = readx_poll_timeout(vop_dsp_lut_is_enabled, vop,
-+					 idle, !idle, 5, 30 * 1000);
-+		if (ret) {
-+			DRM_DEV_ERROR(vop->dev, "display LUT RAM enable timeout!\n");
-+			return;
-+		}
-+
-+		if (!state->gamma_lut)
-+			return;
-+	} else {
-+		/*
-+		 * On RK3399 the gamma LUT can updated without clearing dsp_lut_en,
-+		 * by setting update_gamma_lut then waiting for lut_buffer_index change
-+		 */
-+		old_idx = vop_lut_buffer_index(vop);
-+	}
- 
- 	spin_lock(&vop->reg_lock);
- 	vop_crtc_write_gamma_lut(vop, crtc);
- 	VOP_REG_SET(vop, common, dsp_lut_en, 1);
-+	VOP_REG_SET(vop, common, update_gamma_lut, 1);
- 	vop_cfg_done(vop);
- 	spin_unlock(&vop->reg_lock);
-+
-+	if (VOP_HAS_REG(vop, common, update_gamma_lut)) {
-+		ret = readx_poll_timeout(vop_lut_buffer_index, vop,
-+					 lut_idx, lut_idx != old_idx, 5, 30 * 1000);
-+		if (ret) {
-+			DRM_DEV_ERROR(vop->dev, "gamma LUT update timeout!\n");
-+			return;
-+		}
-+
-+		/*
-+		 * update_gamma_lut is auto cleared by HW, but write 0 to clear the bit
-+		 * in our backup of the regs.
-+		 */
-+		spin_lock(&vop->reg_lock);
-+		VOP_REG_SET(vop, common, update_gamma_lut, 0);
-+		spin_unlock(&vop->reg_lock);
-+	}
- }
- 
- static void vop_crtc_atomic_begin(struct drm_crtc *crtc,
-@@ -1312,14 +1349,6 @@ static void vop_crtc_atomic_enable(struct drm_crtc *crtc,
- 		return;
- 	}
- 
--	/*
--	 * If we have a GAMMA LUT in the state, then let's make sure
--	 * it's updated. We might be coming out of suspend,
--	 * which means the LUT internal memory needs to be re-written.
--	 */
--	if (crtc->state->gamma_lut)
--		vop_crtc_gamma_set(vop, crtc, old_state);
--
- 	mutex_lock(&vop->vop_lock);
- 
- 	WARN_ON(vop->event);
-@@ -1410,6 +1439,14 @@ static void vop_crtc_atomic_enable(struct drm_crtc *crtc,
- 
- 	VOP_REG_SET(vop, common, standby, 0);
- 	mutex_unlock(&vop->vop_lock);
-+
-+	/*
-+	 * If we have a GAMMA LUT in the state, then let's make sure
-+	 * it's updated. We might be coming out of suspend,
-+	 * which means the LUT internal memory needs to be re-written.
-+	 */
-+	if (crtc->state->gamma_lut)
-+		vop_crtc_gamma_set(vop, crtc, old_state);
- }
- 
- static bool vop_fs_irq_is_pending(struct vop *vop)
-@@ -2139,8 +2176,8 @@ static int vop_bind(struct device *dev, struct device *master, void *data)
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
- 	if (res) {
--		if (!vop_data->lut_size) {
--			DRM_DEV_ERROR(dev, "no gamma LUT size defined\n");
-+		if (vop_data->lut_size != 1024 && vop_data->lut_size != 256) {
-+			DRM_DEV_ERROR(dev, "unsupported gamma LUT size %d\n", vop_data->lut_size);
- 			return -EINVAL;
- 		}
- 		vop->lut_regs = devm_ioremap_resource(dev, res);
 -- 
 2.43.0
 
