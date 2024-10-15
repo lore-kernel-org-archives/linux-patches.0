@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FC91D5ACD;
-	Tue, 15 Oct 2024 11:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3502F1EABC3;
+	Tue, 15 Oct 2024 11:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992483; cv=none; b=ee5LdD4Ur+XVX53Kb9gu6sCfherBGxsd8nuVmVVAb6Pk8IwI+J+6fdNrwfaECYVKp3CV+PcyjX8K1jWZPKnkfiv6Lr+YqyhdbHwwAxnE84E+WklQXbsmqcEy1IKZR8MG28ricAdqvPFKzq5w38rUZfGfyLtj8sietYU1tid3ZAQ=
+	t=1728992486; cv=none; b=XQExs5peh+SZqEEhfmOp/Mtf5po0KJcMdEUb+Oyj9LrElNcsBqX0P9oYNCwJ1nZBkRRQrWdDjlbrgSMUTrlTIeCE8rBEi4vDnO2JfSBS6KH20vrFq/srBj7jOd7yybbWLIJb3LyxoK0XKidRc4zxDblqLavvVErQnQKCEr740AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992483; c=relaxed/simple;
-	bh=qEbbbV7+y5wHr/bnRBcCTAxF7KqH8u5CNKS+AVu+wmw=;
+	s=arc-20240116; t=1728992486; c=relaxed/simple;
+	bh=NQZjipq9waB/FQoJCJTumu80oH+djOV8/LNBUdEQKL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FYlevNIybZ8RJiNH+t2DXoW18J/mpGXzCRAaEoNQEdoSMD9mtohkiDeBdUoMNcqKJkxGy1pHLrjCirds5lgKGCCKLmMPNXuNsAZ/WPS1e1wG8TtdoXha2NFy7H0Dkt1pCSHcynWhkzXCjTmry4iZ+cg0GhXzjlUckutgfwG/xxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPYH6L1j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aHomsFuGJzRdjkkEe98QKU4vByeQMalLtgygijzjiJNwfJXdIKhUb6kahGlD5GxujcGjQ9l8S1myJ5lGjOufyl7DorfnU+CJ6t/ztjX+srx5An6J9chflMzg5s0Io2ZfmyO7y38BLR+lm40s52CPs5OzyBrROUUh2IU4gxsA0YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yh4jHEIC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPYH6L1j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693EDC4CEC6;
-	Tue, 15 Oct 2024 11:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yh4jHEIC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987C7C4CED3;
+	Tue, 15 Oct 2024 11:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992482;
-	bh=qEbbbV7+y5wHr/bnRBcCTAxF7KqH8u5CNKS+AVu+wmw=;
+	s=korg; t=1728992486;
+	bh=NQZjipq9waB/FQoJCJTumu80oH+djOV8/LNBUdEQKL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yPYH6L1jVoyg6XuwJ/B6db7mNLYKOR1UuUe1iG+40Y8VJ9zCESmw02cio7PYiDILR
-	 6LRfuPh5+ShYQpL6lgGGtND3udllIMFF+8x38bxwlrWMUZ2ewypBV+F0W8NpREtN1z
-	 BFrZI8XihAhZXO4XKMvKXlpmmBT23cK4HAQxOdkQ=
+	b=yh4jHEIC3PPZqmJPAUxHgTbO17roHQKtF4FTuuf5iOPOwew8jxxAab+IoeHE/JAot
+	 R9uEpI7zX7eN3crY7jjdcuzYvDh+d2w9wLmX164ghKvXEjxsIDxCKmxRu28vr9Tw1D
+	 bTiBKEZnkd7TW7Td7HiJLyQzBRrJBLt8rpn7uyiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Guillaume Nault <gnault@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 111/691] netfilter: nf_tables: elements with timeout below CONFIG_HZ never expire
-Date: Tue, 15 Oct 2024 13:20:59 +0200
-Message-ID: <20241015112444.768014986@linuxfoundation.org>
+Subject: [PATCH 5.15 129/691] bareudp: Pull inner IP header on xmit.
+Date: Tue, 15 Oct 2024 13:21:17 +0200
+Message-ID: <20241015112445.475908551@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -50,33 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit e0c47281723f301894c14e6f5cd5884fdfb813f9 ]
+[ Upstream commit c471236b2359e6b27388475dd04fff0a5e2bf922 ]
 
-Element timeout that is below CONFIG_HZ never expires because the
-timeout extension is not allocated given that nf_msecs_to_jiffies64()
-returns 0. Set timeout to the minimum value to honor timeout.
+Both bareudp_xmit_skb() and bareudp6_xmit_skb() read their skb's inner
+IP header to get its ECN value (with ip_tunnel_ecn_encap()). Therefore
+we need to ensure that the inner IP header is part of the skb's linear
+data.
 
-Fixes: 8e1102d5a159 ("netfilter: nf_tables: support timeouts larger than 23 days")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 571912c69f0e ("net: UDP tunnel encapsulation module for tunnelling different protocols like MPLS, IP, NSH etc.")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/267328222f0a11519c6de04c640a4f87a38ea9ed.1726046181.git.gnault@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/bareudp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index df10a2047bb0e..c00a9495f3453 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4153,7 +4153,7 @@ int nf_msecs_to_jiffies64(const struct nlattr *nla, u64 *result)
- 		return -ERANGE;
+diff --git a/drivers/net/bareudp.c b/drivers/net/bareudp.c
+index 3fcd3b84a066e..bec8a2c8656c0 100644
+--- a/drivers/net/bareudp.c
++++ b/drivers/net/bareudp.c
+@@ -312,6 +312,9 @@ static int bareudp_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 	__be32 saddr;
+ 	int err;
  
- 	ms *= NSEC_PER_MSEC;
--	*result = nsecs_to_jiffies64(ms);
-+	*result = nsecs_to_jiffies64(ms) ? : !!ms;
- 	return 0;
- }
++	if (!skb_vlan_inet_prepare(skb, skb->protocol != htons(ETH_P_TEB)))
++		return -EINVAL;
++
+ 	if (!sock)
+ 		return -ESHUTDOWN;
+ 
+@@ -375,6 +378,9 @@ static int bareudp6_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 	__be16 sport;
+ 	int err;
+ 
++	if (!skb_vlan_inet_prepare(skb, skb->protocol != htons(ETH_P_TEB)))
++		return -EINVAL;
++
+ 	if (!sock)
+ 		return -ESHUTDOWN;
  
 -- 
 2.43.0
