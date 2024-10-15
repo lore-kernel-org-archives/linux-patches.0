@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548211C07E0;
-	Tue, 15 Oct 2024 12:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C921C07C2;
+	Tue, 15 Oct 2024 13:00:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997197; cv=none; b=sIEY0kSA8uGUKnvHn9p8ydahJpCinQnpAB4zTobTUkC06Tt4I86gduC3FNcEXjlDmCnA79GQeWAstUxrxiS9Y919TjTFmms+94SfmHmOnGkPH2ZAFa2aLP+0GdFuQ30h6o32yTkaee0HKYwcTBwl+jZaSuXjLlyMjHgARfHGTmw=
+	t=1728997200; cv=none; b=i7da4HZ8ZKLx3p01EsB+NLAoudbOORg+lmH13b+G1047AStwCLAiV6IRVKjD38oxCsSjl/YkkMGRepvI8qW5++C42M3T0m1gxZxzZ55zzSzxovGGn7GYHxEcIt5aMLI3Yze3yd1oLULwYDQ9rtboOtLhE564r7BPpIH4v/B5SsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997197; c=relaxed/simple;
-	bh=PY/u9bq+/3OzklbaE4RwzLUm5iP3ST/1OrA36GR0pF8=;
+	s=arc-20240116; t=1728997200; c=relaxed/simple;
+	bh=qZvOIRpBP/uL+kbNa64YCWpGNQXXeutrXpUoR5IebBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+KksVkZNY5+co/NSCa+jMSdqDTUdAKL9+8pAk/vzlm/0fcHhM2cmjaJuGzR+21tFh9b7pBr5xx0rYGL6BKehe1KFqNIh2oL8VamAWqNC1hq1Vm9GMOJmH43rdTzEGfGiwBDqwmCKN2T+djHkXnf/UnpRoEH7RrE/njGad3XaRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=luHXIhFm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fR60davWqkucnRZxQHT0OSiQNon1UT1iGIzh8Lr5xktxhi8APSyvUAlFJbEYKzr0sTBC6exlTZIbJ7hQghmMlNegJV14mPysgRuORCUHgJ9CIv27G+VjXK9rJ8FJ9RN+ayiW4smvYJgbI1xuTtP+OM10JftOiske2d5IHkeclOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9U9Q2kY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="luHXIhFm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC51C4CECF;
-	Tue, 15 Oct 2024 12:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9U9Q2kY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C01C4CEC6;
+	Tue, 15 Oct 2024 12:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997197;
-	bh=PY/u9bq+/3OzklbaE4RwzLUm5iP3ST/1OrA36GR0pF8=;
+	s=korg; t=1728997200;
+	bh=qZvOIRpBP/uL+kbNa64YCWpGNQXXeutrXpUoR5IebBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=luHXIhFmB7U8hnn4sK3pM6uP4IVZGhjuRaqiD96X+frY+zZJAaiVHwHrgauIzKlcV
-	 2yQB4QK+cm5AE3v/VldXIYKvFvHfzTbX34SnWD8K+ZPkAa1wyboIIk9rZuvuc2PX+/
-	 keSwbJKUAYCSsiX6T+Wy/0JYjA/jBYnBxju0+E0Y=
+	b=t9U9Q2kYmYDPkDZJlrHgHj5B5bi0jfx9aqFGiezSOIzy9NtigZzbv8nsJknOnUCOn
+	 PTc94+DRabi8ZpkHffV/Uuo+7pJk72ihTTq7IwfoyGxiax4LUvoLx9N4+yzTnNBv1M
+	 f2yG4eS+GZHY9qRJVgMrhVK6fGmGfXBIQRUpsFd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/518] drm/amdgpu: Replace one-element array with flexible-array member
-Date: Tue, 15 Oct 2024 14:40:19 +0200
-Message-ID: <20241015123921.436913547@linuxfoundation.org>
+Subject: [PATCH 5.10 098/518] ARM: dts: imx7d-zii-rmu2: fix Ethernet PHY pinctrl property
+Date: Tue, 15 Oct 2024 14:40:02 +0200
+Message-ID: <20241015123920.784121040@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,66 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 320e2590e281d0a7865e861f50155b5b435e9813 ]
+[ Upstream commit 0e49cfe364dea4345551516eb2fe53135a10432b ]
 
-One-element arrays are deprecated, and we are replacing them with
-flexible array members instead. So, replace one-element array with
-flexible-array member in struct _ATOM_FAKE_EDID_PATCH_RECORD and
-refactor the rest of the code accordingly.
+There is no "fsl,phy" property in pin controller pincfg nodes:
 
-Important to mention is that doing a build before/after this patch
-results in no binary output differences.
+  imx7d-zii-rmu2.dtb: pinctrl@302c0000: enet1phyinterruptgrp: 'fsl,pins' is a required property
+  imx7d-zii-rmu2.dtb: pinctrl@302c0000: enet1phyinterruptgrp: 'fsl,phy' does not match any of the regexes: 'pinctrl-[0-9]+'
 
-This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
-routines on memcpy() and help us make progress towards globally
-enabling -fstrict-flex-arrays=3 [1].
-
-Link: https://github.com/KSPP/linux/issues/79
-Link: https://github.com/KSPP/linux/issues/238
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=101836 [1]
-
-Signed-off-by: Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 8155566a26b8 ("drm/amdgpu: properly handle vbios fake edid sizing")
+Fixes: f496e6750083 ("ARM: dts: Add ZII support for ZII i.MX7 RMU2 board")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/atombios_encoders.c | 7 +++++--
- drivers/gpu/drm/amd/include/atombios.h         | 2 +-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/imx7d-zii-rmu2.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c b/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
-index 8339c8c3a328f..78b4e749ca9fe 100644
---- a/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
-+++ b/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
-@@ -2113,8 +2113,11 @@ amdgpu_atombios_encoder_get_lcd_info(struct amdgpu_encoder *encoder)
- 						}
- 					}
- 					record += fake_edid_record->ucFakeEDIDLength ?
--						fake_edid_record->ucFakeEDIDLength + 2 :
--						sizeof(ATOM_FAKE_EDID_PATCH_RECORD);
-+						  struct_size(fake_edid_record,
-+							      ucFakeEDIDString,
-+							      fake_edid_record->ucFakeEDIDLength) :
-+						  /* empty fake edid record must be 3 bytes long */
-+						  sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
- 					break;
- 				case LCD_PANEL_RESOLUTION_RECORD_TYPE:
- 					panel_res_record = (ATOM_PANEL_RESOLUTION_PATCH_RECORD *)record;
-diff --git a/drivers/gpu/drm/amd/include/atombios.h b/drivers/gpu/drm/amd/include/atombios.h
-index 8ba21747b40a3..c9f70accd46d8 100644
---- a/drivers/gpu/drm/amd/include/atombios.h
-+++ b/drivers/gpu/drm/amd/include/atombios.h
-@@ -4107,7 +4107,7 @@ typedef struct _ATOM_FAKE_EDID_PATCH_RECORD
- {
-   UCHAR ucRecordType;
-   UCHAR ucFakeEDIDLength;       // = 128 means EDID length is 128 bytes, otherwise the EDID length = ucFakeEDIDLength*128
--  UCHAR ucFakeEDIDString[1];    // This actually has ucFakeEdidLength elements.
-+  UCHAR ucFakeEDIDString[];     // This actually has ucFakeEdidLength elements.
- } ATOM_FAKE_EDID_PATCH_RECORD;
+diff --git a/arch/arm/boot/dts/imx7d-zii-rmu2.dts b/arch/arm/boot/dts/imx7d-zii-rmu2.dts
+index 1065941807e83..ce59342e55aae 100644
+--- a/arch/arm/boot/dts/imx7d-zii-rmu2.dts
++++ b/arch/arm/boot/dts/imx7d-zii-rmu2.dts
+@@ -350,7 +350,7 @@ MX7D_PAD_SD3_RESET_B__SD3_RESET_B	0x59
  
- typedef struct  _ATOM_PANEL_RESOLUTION_PATCH_RECORD
+ &iomuxc_lpsr {
+ 	pinctrl_enet1_phy_interrupt: enet1phyinterruptgrp {
+-		fsl,phy = <
++		fsl,pins = <
+ 			MX7D_PAD_LPSR_GPIO1_IO02__GPIO1_IO2	0x08
+ 		>;
+ 	};
 -- 
 2.43.0
 
