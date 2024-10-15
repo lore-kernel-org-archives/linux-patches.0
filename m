@@ -1,168 +1,146 @@
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E431B85D7
-	for <patches@lists.linux.dev>; Tue, 15 Oct 2024 08:53:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AE71D9A70
+	for <patches@lists.linux.dev>; Tue, 15 Oct 2024 09:38:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728982428; cv=none; b=L2928suWvB/8YorTFW943O+iUf0oOJK5hLny644EiqDuPP4LGg67V9gIDZEU4ZCKuYxqVXdGq5LWTrLkyt/KlaUcKdFePeJdkwp6KeM3xc2ni5MvaAofojy5m9aIEDlKM2+q7oH1j/xEtqCXEx34EEIw5pxvrcTVFdDLro1NzTc=
+	t=1728985090; cv=none; b=LPdL2un2Mo3fqm7FzM7YhAXitWgwrpqcQho040n07hGTelsveEG4puEKcrZcwaEE+OG746qQHjOSgwjjgSNdkhrgesABR/7FBQJNyMRrJDwbXtpDVi5T0sgrtOJWnT3aalvQqgDIQzcz5moGmHBZJ2n0ZNLZpkBy9196cmS2NP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728982428; c=relaxed/simple;
-	bh=mGonrEb1BPUx4D9j4VoLPoRRMOa9lPSnwGc8RZ4M4wA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Lqi9sReJG3avbuJOj2VRLveokIOQuklf1xvIBzCX3z7/RpOFNJEvirzlIJ7kSlbOqbLCiiOOZrVTq3FkXKkRKrk7ZdqtzN9yVOWNT8z5YViVlEutLfepwLPhZkbA3nJIAVEWDTeXZEn+jig9gkZr6ToT1X/8dq3N5ajoo+TYduU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vuMNy8Xv; arc=none smtp.client-ip=209.85.221.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vuMNy8Xv"
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-50d55d86f95so615181e0c.1
-        for <patches@lists.linux.dev>; Tue, 15 Oct 2024 01:53:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728982424; x=1729587224; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xxR65U6vScytg2kv+c/PJeOMb0nLoNUa0TL3Lk+ySjQ=;
-        b=vuMNy8Xv6Bx/Uxsqn1JmIhjyHMHMvbkiv90ox2D3MAIdbW0kusRqNsbHNhjJkNagtx
-         MM/2Xt+bSSmh/KuCmGfj0yGPBMtvn2imcOyWcyzaOFMVyT0kDagz2s1jjIjsKYSIn3FH
-         DsLol+HGpBg+6f3FvkKelcdpcoddUh3oo1fP7MSLoe8Mtk5B9UKefLsqKRlDwd3qBaps
-         J17XnfGEfKzcLjayyOxR2vTHrdR3/vEM6blvn8qIeMovMOjDu3l/CmdKgc0yXoEmESmf
-         Z9aszciRJE2a2+uTsJVF07VdIRhxMQ9JLuDGi0wjhyi0H7f26XZtsCDpdz7fWqVFd6Yd
-         TBXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728982424; x=1729587224;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xxR65U6vScytg2kv+c/PJeOMb0nLoNUa0TL3Lk+ySjQ=;
-        b=Vd35Bva4J6XywwKNgdjwJqzIKNfUhUmz4vhx6CSIDvak+kqP+NsGY87SWOCkpYa3qv
-         MEyywsGdt4gs5G2X8NiybF08e+R8J5nJq56abNoke4+QJ++jioq6wPD0c8iE4pzgs4cF
-         E3Kox08LvVDTWWz7dO5BtwXSTkM6K+y/CKnGmo0iuFLV+2pVmxq+MCBtXZeUMxiH+T9b
-         GDPMc4qs0jlI8SPP26Tf9ejcC9fY6h7WVa5WrQXIknDl6ZdAm63g2sBM07ilK0zpOvtR
-         egalHggd4hOBRmxVCKCKfr4PHJBIGbRbv1cXtkyYh5eLXXioLvM2AvkEbe8w2NZ0VJbf
-         rT1A==
-X-Forwarded-Encrypted: i=1; AJvYcCVcT3G9AMkq+BzXj+6i/t+Ck4iKmJWAPIG4WLQtXzF62QkeAj6d87oWkBFJnDMK+ovDg7hC1GGO@lists.linux.dev
-X-Gm-Message-State: AOJu0YyXBaPh7kTGEuPUMrCg7EjS0SlO/rB4s0MuOJMaX9Wp+/j51f14
-	c+9WfCBmviuOJgnFZMC6H2tLIrFVC2V0tpqAi/SqROC24FGSoTIhbLWprRTcKMyA7At2MwmMgfo
-	SHGn5ml3aLIQ3sPl7aZAdV6fKFGEZ0O+1AKqd9w==
-X-Google-Smtp-Source: AGHT+IHYT/lHJ/KmvqL7SaqGdoczqsfadmaNNg8dY7DEGsvtTmxYpiRRMNBoaPAsZOUeM9hrJ0Cis2z02a5DwvTJsUI=
-X-Received: by 2002:a05:6122:209f:b0:50d:35d9:ad5a with SMTP id
- 71dfb90a1353d-50d35d9b726mr6394442e0c.5.1728982423743; Tue, 15 Oct 2024
- 01:53:43 -0700 (PDT)
+	s=arc-20240116; t=1728985090; c=relaxed/simple;
+	bh=WkFsvszqVPTGJ45zScx2bg3QTySV+PQBpCxtr/kUBMY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZCIaVbQDE4U6330UsjbbM/bZC/31JPoaA8gK46E6txC6/w6xtpBnYj89EPxVXAjTzoc7GdiJEuIVRS+QfCwJbn4auMHDf6ibQv6jqQDfgA7TwVAnFTSkEn5yRqbdgooD3hl5K8LyhEyxsceYv9BZ/ECizGRrlG/zfsoBlIXkQMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ore@pengutronix.de>)
+	id 1t0e0D-0007sj-GF; Tue, 15 Oct 2024 11:38:05 +0200
+Received: from [2a0a:edc0:2:b01:1d::c5] (helo=pty.whiteo.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ore@pengutronix.de>)
+	id 1t0e0B-00202n-UO; Tue, 15 Oct 2024 11:38:03 +0200
+Received: from ore by pty.whiteo.stw.pengutronix.de with local (Exim 4.96)
+	(envelope-from <ore@pengutronix.de>)
+	id 1t0e0B-00CdCJ-2g;
+	Tue, 15 Oct 2024 11:38:03 +0200
+Date: Tue, 15 Oct 2024 11:38:03 +0200
+From: Oleksij Rempel <o.rempel@pengutronix.de>
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Jon Hunter <jonathanh@nvidia.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org,
+	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 6.1 000/798] 6.1.113-rc1 review
+Message-ID: <Zw43-8oV-vSeyj5D@pengutronix.de>
+References: <20241014141217.941104064@linuxfoundation.org>
+ <3ab1938a-6f6a-4664-9991-d196e684974d@nvidia.com>
+ <CAMuHMdVHLiB7PWji9uRLZNWqFa1r7NiTv9MWCCAg=3-924M7tA@mail.gmail.com>
+ <CAMuHMdVcE1Wvi+g5P5CEe5RFEuBfSCmR+7HFVfiC1rG6bHdesA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241014141217.941104064@linuxfoundation.org>
-In-Reply-To: <20241014141217.941104064@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 15 Oct 2024 14:23:32 +0530
-Message-ID: <CA+G9fYuaZVQL_h1BYX4LajoMgUzZxJUH5ipdyO_4k36F62Z5DA@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/798] 6.1.113-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org, linux-s390@vger.kernel.org, 
-	Sven Schnelle <svens@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>, 
-	Vasily Gorbik <gor@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMuHMdVcE1Wvi+g5P5CEe5RFEuBfSCmR+7HFVfiC1rG6bHdesA@mail.gmail.com>
+X-Sent-From: Pengutronix Hildesheim
+X-URL: http://www.pengutronix.de/
+X-Accept-Language: de,en
+X-Accept-Content-Type: text/plain
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ore@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: patches@lists.linux.dev
 
-On Mon, 14 Oct 2024 at 20:20, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.1.113 release.
-> There are 798 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 16 Oct 2024 14:09:57 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.113-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Hi all,
 
+On Tue, Oct 15, 2024 at 09:07:14AM +0200, Geert Uytterhoeven wrote:
+> CC Oleksij
+> 
+> On Tue, Oct 15, 2024 at 9:06 AM Geert Uytterhoeven <geert@linux-m68k.org> wrote:
+> > On Tue, Oct 15, 2024 at 7:32 AM Jon Hunter <jonathanh@nvidia.com> wrote:
+> > > On 14/10/2024 15:09, Greg Kroah-Hartman wrote:
+> > > > This is the start of the stable review cycle for the 6.1.113 release.
+> > > > There are 798 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > >
+> > > > Responses should be made by Wed, 16 Oct 2024 14:09:57 +0000.
+> > > > Anything received after that time might be too late.
+> > > >
+> > > > The whole patch series can be found in one patch at:
+> > > >       https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.113-rc1.gz
+> > > > or in the git tree and branch at:
+> > > >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > > > and the diffstat can be found below.
+> > > >
+> > > > thanks,
+> > > >
+> > > > greg k-h
+> > > >
+> > > > -------------
+> > > > Pseudo-Shortlog of commits:
+> > >
+> > > ...
+> > >
+> > > > Oleksij Rempel <linux@rempel-privat.de>
+> > > >      clk: imx6ul: add ethernet refclock mux support
+> > >
+> > >
+> > > I am seeing the following build issue for ARM multi_v7_defconfig and
+> > > bisect is point to the commit ...
+> > >
+> > > drivers/clk/imx/clk-imx6ul.c: In function ‘imx6ul_clocks_init’:
+> > > drivers/clk/imx/clk-imx6ul.c:487:34: error: implicit declaration of function ‘imx_obtain_fixed_of_clock’; did you mean ‘imx_obtain_fixed_clock’? [-Werror=implicit-function-declaration]
+> > >    hws[IMX6UL_CLK_ENET1_REF_PAD] = imx_obtain_fixed_of_clock(ccm_node, "enet1_ref_pad", 0);
+> > >                                    ^~~~~~~~~~~~~~~~~~~~~~~~~
+> > >                                    imx_obtain_fixed_clock
+> > > drivers/clk/imx/clk-imx6ul.c:487:32: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+> > >    hws[IMX6UL_CLK_ENET1_REF_PAD] = imx_obtain_fixed_of_clock(ccm_node, "enet1_ref_pad", 0);
+> > >                                  ^
+> > > drivers/clk/imx/clk-imx6ul.c:489:34: error: implicit declaration of function ‘imx_clk_gpr_mux’; did you mean ‘imx_clk_hw_mux’? [-Werror=implicit-function-declaration]
+> > >    hws[IMX6UL_CLK_ENET1_REF_SEL] = imx_clk_gpr_mux("enet1_ref_sel", "fsl,imx6ul-iomuxc-gpr",
+> > >                                    ^~~~~~~~~~~~~~~
+> > >                                    imx_clk_hw_mux
+> > > drivers/clk/imx/clk-imx6ul.c:489:32: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+> > >    hws[IMX6UL_CLK_ENET1_REF_SEL] = imx_clk_gpr_mux("enet1_ref_sel", "fsl,imx6ul-iomuxc-gpr",
+> > >                                  ^
+> > > drivers/clk/imx/clk-imx6ul.c:492:32: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+> > >    hws[IMX6UL_CLK_ENET2_REF_PAD] = imx_obtain_fixed_of_clock(ccm_node, "enet2_ref_pad", 0);
+> > >                                  ^
+> > > drivers/clk/imx/clk-imx6ul.c:494:32: warning: assignment makes pointer from integer without a cast [-Wint-conversion]
+> > >    hws[IMX6UL_CLK_ENET2_REF_SEL] = imx_clk_gpr_mux("enet2_ref_sel", "fsl,imx6ul-iomuxc-gpr",
+> >
+> > Missing backports of the other clock-related patches in the original
+> > series[1]?
+> > imx_obtain_fixed_clock() was introduced in commit 7757731053406dd0
+> > ("clk: imx: add imx_obtain_fixed_of_clock()"), but some of the other
+> > patches from that series may be needed, too?
+> >
+> > [1] https://lore.kernel.org/all/20230131084642.709385-1-o.rempel@pengutronix.de/
 
-The S390 build broke on the stable-rc linux-6.1.y branch due to
-following build warnings / errors.
+Yes, I agree, at least commit 7757731053406dd0 is missing. Other patches
+in [1] series are only interesting if corresponding device trees was
+upstream.
 
-First seen on v6.1.112-799-gc060104c065d
-  GOOD: v6.1.112
-  BAD: v6.1.112-799-gc060104c065d
-
-List of regressions,
-* s390, build
-  - clang-19-allnoconfig
-  - clang-19-defconfig
-  - clang-19-tinyconfig
-  - clang-nightly-allnoconfig
-  - clang-nightly-defconfig
-  - clang-nightly-tinyconfig
-  - gcc-13-allmodconfig
-  - gcc-13-allnoconfig
-  - gcc-13-defconfig
-  - gcc-13-tinyconfig
-  - gcc-8-allnoconfig
-  - gcc-8-defconfig-fe40093d
-  - gcc-8-tinyconfig
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-The bisection pointing to,
-  73e9443b9ea8d5a1b9b87c4988acc3daae363832
-  s390/traps: Handle early warnings gracefully
-    [ Upstream commit 3c4d0ae0671827f4b536cc2d26f8b9c54584ccc5 ]
-
-
-Build log:
--------
-arch/s390/kernel/early.c: In function '__do_early_pgm_check':
-arch/s390/kernel/early.c:154:30: error: implicit declaration of
-function 'get_lowcore'; did you mean 'S390_lowcore'?
-[-Werror=implicit-function-declaration]
-  154 |         struct lowcore *lc = get_lowcore();
-      |                              ^~~~~~~~~~~
-      |                              S390_lowcore
-arch/s390/kernel/early.c:154:30: warning: initialization of 'struct
-lowcore *' from 'int' makes pointer from integer without a cast
-[-Wint-conversion]
-cc1: some warnings being treated as errors
-
-
-Build log link:
----------
- - https://storage.tuxsuite.com/public/linaro/lkft/builds/2nQwhZnhhAGtyIv600SDYdtypnI/
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.112-799-gc060104c065d/testrun/25432580/suite/build/test/gcc-13-defconfig/log
-
-metadata:
-----
-  git describe: v6.1.112-799-gc060104c065d
-  git repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-  git sha: c060104c065dc2884e301155e32dd955e6bb45b5
-  kernel config:
-https://storage.tuxsuite.com/public/linaro/lkft/builds/2nQwhZnhhAGtyIv600SDYdtypnI/config
-  build url: https://storage.tuxsuite.com/public/linaro/lkft/builds/2nQwhZnhhAGtyIv600SDYdtypnI/
-  toolchain: clang-19 and gcc-13
-  config: defconfig
-  arch: S390
-
-Steps to reproduce:
--------
-# tuxmake --runtime podman --target-arch s390 --toolchain gcc-13
---kconfig defconfig
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Regards,
+Oleksij
+-- 
+Pengutronix e.K.                           |                             |
+Steuerwalder Str. 21                       | http://www.pengutronix.de/  |
+31137 Hildesheim, Germany                  | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
