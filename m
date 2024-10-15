@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0471EF09B;
-	Tue, 15 Oct 2024 11:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19EE61EABC3;
+	Tue, 15 Oct 2024 11:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992735; cv=none; b=Dx0W/G8L1BkHZXFv+19recgJN5oiHx7KJVxm7yavaBDIlwZ8P1qS2rmL2WlNhpF2L6rOusG3mvvSrujAe+kRG9SrJCBmqTUpWDWtbbdfuYVaojJoI+CWV81LF9K65ha8uSMJIuWUjKX5tlxLLQCKrf6J7P63GMJSHN09pM99jog=
+	t=1728992744; cv=none; b=L4dYgFcqklbI9tNPeiwm6VsOKRBDREt2WBctV5C++3cTfX1p0ew6eFl/Q3VI/oWF/k/F0JlK1iADUY4v8/Stnz07y0o22ErEm34e9q6MYREJBd6BBbx/a4skPSSAMphdu114SWCxAvfQhcrmyzle7jaxZUh6xH9tQ+B9z6y7bGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992735; c=relaxed/simple;
-	bh=O1nn4/bNMMgAUcZ9MP3A3PbATfvnChDzF067+mstXVw=;
+	s=arc-20240116; t=1728992744; c=relaxed/simple;
+	bh=Vm7mqtZ5lMCfDsFDdZoRkelZMpcjd0daPBOII1h0Ueg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W3ucVd2hffExDT166WY8nqyit8R9+k2EMMMncCXqQO4cNCWZmNZ6KkWz8t+5GRBinx68TRyjakZ1PrwZRZWQm4knbI4vIm2AxU3SLcO1pSZz6n3v4IQXIxx25Ozb+E5YuRRPScf6MTbtcfQ8JeuCElcNNzf8Zjx6C+OqebKmjvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=APW7tlDH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fSpHbJlK4R0uuSOUr/zzxBEMyviboeqs1sG9MERaFvStSOxbilu7JEG49o8/mtG5aQrhF9lt1PlyV/5AbODCObCn1BJNX1vl6uTXn+zbekVITG1jItm1UYE/WyuhIc9ns/6vzM0BBm8luXWunaSNakE8LaxH+LfbSESz/6D1wDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PEWcWPkD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="APW7tlDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153D2C4CEC6;
-	Tue, 15 Oct 2024 11:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PEWcWPkD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F8FC4CEC6;
+	Tue, 15 Oct 2024 11:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992735;
-	bh=O1nn4/bNMMgAUcZ9MP3A3PbATfvnChDzF067+mstXVw=;
+	s=korg; t=1728992743;
+	bh=Vm7mqtZ5lMCfDsFDdZoRkelZMpcjd0daPBOII1h0Ueg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=APW7tlDHzoyVKCoAKYTjy7GyReO53XzomGCkenwLoBktphmAUvbZLJYS/o7tKWJjr
-	 +JpZ2gXoSb7uuHFADYq4Ml4Z9yPFfiUjBoSlJTjhGJrKce69xPOMIVjiXQJhZ4P+eK
-	 j6g92PT70E9ew+FmpXjjTmCkk0GSjbFGrgISI5hg=
+	b=PEWcWPkDC35aYzfxpMgxw7nTk9N4l1aNJoZYC4np0EjaqczUxUhqJ3W3IRhuEs7rq
+	 GcqbBgQQtF7vFjYsPPDxXy3An/bF9phQ/1yczM+FIvKFxC3eDiC1QqKIMxMdb2eWDv
+	 XccFhpGtvjI5ZQ+AOegz6rDm7JwQAS3xAmggqNOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yangerkun <yangerkun@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Jiawei Ye <jiawei.ye@foxmail.com>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 203/691] ext4: clear EXT4_GROUP_INFO_WAS_TRIMMED_BIT even mount with discard
-Date: Tue, 15 Oct 2024 13:22:31 +0200
-Message-ID: <20241015112448.416623445@linuxfoundation.org>
+Subject: [PATCH 5.15 204/691] smackfs: Use rcu_assign_pointer() to ensure safe assignment in smk_set_cipso
+Date: Tue, 15 Oct 2024 13:22:32 +0200
+Message-ID: <20241015112448.456305697@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,67 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: yangerkun <yangerkun@huawei.com>
+From: Jiawei Ye <jiawei.ye@foxmail.com>
 
-[ Upstream commit 20cee68f5b44fdc2942d20f3172a262ec247b117 ]
+[ Upstream commit 2749749afa071f8a0e405605de9da615e771a7ce ]
 
-Commit 3d56b8d2c74c ("ext4: Speed up FITRIM by recording flags in
-ext4_group_info") speed up fstrim by skipping trim trimmed group. We
-also has the chance to clear trimmed once there exists some block free
-for this group(mount without discard), and the next trim for this group
-will work well too.
+In the `smk_set_cipso` function, the `skp->smk_netlabel.attr.mls.cat`
+field is directly assigned to a new value without using the appropriate
+RCU pointer assignment functions. According to RCU usage rules, this is
+illegal and can lead to unpredictable behavior, including data
+inconsistencies and impossible-to-diagnose memory corruption issues.
 
-For mount with discard, we will issue dicard when we free blocks, so
-leave trimmed flag keep alive to skip useless trim trigger from
-userspace seems reasonable. But for some case like ext4 build on
-dm-thinpool(ext4 blocksize 4K, pool blocksize 128K), discard from ext4
-maybe unaligned for dm thinpool, and thinpool will just finish this
-discard(see process_discard_bio when begein equals to end) without
-actually process discard. For this case, trim from userspace can really
-help us to free some thinpool block.
+This possible bug was identified using a static analysis tool developed
+by myself, specifically designed to detect RCU-related issues.
 
-So convert to clear trimmed flag for all case no matter mounted with
-discard or not.
+To address this, the assignment is now done using rcu_assign_pointer(),
+which ensures that the pointer assignment is done safely, with the
+necessary memory barriers and synchronization. This change prevents
+potential RCU dereference issues by ensuring that the `cat` field is
+safely updated while still adhering to RCU's requirements.
 
-Fixes: 3d56b8d2c74c ("ext4: Speed up FITRIM by recording flags in ext4_group_info")
-Signed-off-by: yangerkun <yangerkun@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240817085510.2084444-1-yangerkun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 0817534ff9ea ("smackfs: Fix use-after-free in netlbl_catmap_walk()")
+Signed-off-by: Jiawei Ye <jiawei.ye@foxmail.com>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ security/smack/smackfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index a48c9cc5aa6e8..6b7d69037b836 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3721,11 +3721,8 @@ static void ext4_free_data_in_buddy(struct super_block *sb,
- 	/*
- 	 * Clear the trimmed flag for the group so that the next
- 	 * ext4_trim_fs can trim it.
--	 * If the volume is mounted with -o discard, online discard
--	 * is supported and the free blocks will be trimmed online.
- 	 */
--	if (!test_opt(sb, DISCARD))
--		EXT4_MB_GRP_CLEAR_TRIMMED(db);
-+	EXT4_MB_GRP_CLEAR_TRIMMED(db);
- 
- 	if (!db->bb_free_root.rb_node) {
- 		/* No more items in the per group rb tree
-@@ -6127,8 +6124,9 @@ static void ext4_mb_clear_bb(handle_t *handle, struct inode *inode,
- 					 " group:%u block:%d count:%lu failed"
- 					 " with %d", block_group, bit, count,
- 					 err);
--		} else
--			EXT4_MB_GRP_CLEAR_TRIMMED(e4b.bd_info);
-+		}
-+
-+		EXT4_MB_GRP_CLEAR_TRIMMED(e4b.bd_info);
- 
- 		ext4_lock_group(sb, block_group);
- 		mb_clear_bits(bitmap_bh->b_data, bit, count_clusters);
+diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
+index 27fd7744e0fc0..f6961a8895296 100644
+--- a/security/smack/smackfs.c
++++ b/security/smack/smackfs.c
+@@ -920,7 +920,7 @@ static ssize_t smk_set_cipso(struct file *file, const char __user *buf,
+ 	rc = smk_netlbl_mls(maplevel, mapcatset, &ncats, SMK_CIPSOLEN);
+ 	if (rc >= 0) {
+ 		old_cat = skp->smk_netlabel.attr.mls.cat;
+-		skp->smk_netlabel.attr.mls.cat = ncats.attr.mls.cat;
++		rcu_assign_pointer(skp->smk_netlabel.attr.mls.cat, ncats.attr.mls.cat);
+ 		skp->smk_netlabel.attr.mls.lvl = ncats.attr.mls.lvl;
+ 		synchronize_rcu();
+ 		netlbl_catmap_free(old_cat);
 -- 
 2.43.0
 
