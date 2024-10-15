@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316161D0492;
-	Tue, 15 Oct 2024 11:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9041D89F5;
+	Tue, 15 Oct 2024 11:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993270; cv=none; b=bQ7WO2GTNpBhloq+2QZCfNEC80W0s5hsfZ9rxvVDYLw2zzz4yEd0W/kWAnSPMdRufTGliZNwSBzDaM/1mwIYF3QKnSuLv2J115PuP3rQKO63wy68GFsY7CH1Z2fjFu4+nul2If5aRE1ElB8SGexRUhZ1Zh3L2xEOLCnw2IaL0ow=
+	t=1728993273; cv=none; b=QzGVdGukH8fYUe+rwwkFKOtOOJf8fya+880Lp5H8WjDJrMQVz0f9FBhhLM8106CJ7szEFWIuzKI9SpXBodW7JksNw33caODO0Lz8WLzzTZ2kPwmJd4lv6elRCewlE0Lle2fJwIhkNKRSO26Vi6y939fDnzkRBCOnghofyfFtOwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993270; c=relaxed/simple;
-	bh=3ffWtYMQeYS19LSl7JW+36r9C0zFgL1q7h6Lnz4j8Lc=;
+	s=arc-20240116; t=1728993273; c=relaxed/simple;
+	bh=IuMryy82ityy+y2gYnkxMLPoqWMc/MmLFk7ryYs3AlU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dSWanLH6zEuIDfeyEqeLmmIXrLsBlF6rez0aAWywQ6hXFOvsXrj9zMHk8PPjzhSkrwXjxpTd5lfdySJ/+OYeAEL77SbY7xZjq1sRpU+J79/t2hS6DXcyKcHfz5hHRFKrKiypJwGwPBd7JdHkbLiLpv0WXU7Hb+DSoCOLyKwUW1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTcOtx5m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D09+WC89AlaC09RrTXvsDHITrwFBSE+FraZg1FRGpUKZGYPbW81vXx+F6/VShfYFLsWA9chnwLWZss+leHPZ9SYwwYwoXm1pAhEjDcWUZuosd3gWhSrwxAKBt+D2wnO0hBZHvkWb1CIRClnmjl4xP78f9ZVMNa+ttIYDG1OAKX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUjb7Hl8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTcOtx5m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D86C4CEC6;
-	Tue, 15 Oct 2024 11:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUjb7Hl8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00838C4CEC6;
+	Tue, 15 Oct 2024 11:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993270;
-	bh=3ffWtYMQeYS19LSl7JW+36r9C0zFgL1q7h6Lnz4j8Lc=;
+	s=korg; t=1728993273;
+	bh=IuMryy82ityy+y2gYnkxMLPoqWMc/MmLFk7ryYs3AlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTcOtx5mFtOrkLWml+QjuFvMZneg5J/ZTgMeDARQBrICvwoBjccf7VW6d6biqpK2A
-	 OTcgBUFcmrsVSaocDRfzBO5FvFEfYmcd9FX0GvAFbpFLBhQbS9r0x/+sVSmXRwz+0b
-	 +bAUzbJ4m/pZXPmruQaqRQEiIUv8IH98QqrYjz18=
+	b=FUjb7Hl8Wope3l4HvK6zw1bJfM/Ui5ot/WIHIujF3KVDX7E1/doZJFAZrUpuGFUyt
+	 bka9r7X9q2wrUOHg9M5iMnBoC0bJnEecoDdMTGn04GLGJBPlyzFmNXLgcbqApvc6dY
+	 Tcq05DzHelIuPFekJut+tBTIDKB1vlqNlNPSFDqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dmitry Vyukov <dvyukov@google.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Xin Li <xin3.li@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Shan Kang <shan.kang@intel.com>,
+	Alexander Potapenko <glider@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 362/691] x86/idtentry: Incorporate definitions/declarations of the FRED entries
-Date: Tue, 15 Oct 2024 13:25:10 +0200
-Message-ID: <20241015112454.712438089@linuxfoundation.org>
+Subject: [PATCH 5.15 363/691] x86/entry: Remove unwanted instrumentation in common_interrupt()
+Date: Tue, 15 Oct 2024 13:25:11 +0200
+Message-ID: <20241015112454.753187274@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,222 +53,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Li <xin3.li@intel.com>
+From: Dmitry Vyukov <dvyukov@google.com>
 
-[ Upstream commit 90f357208200a941e90e75757123326684d715d0 ]
+[ Upstream commit 477d81a1c47a1b79b9c08fc92b5dea3c5143800b ]
 
-FRED and IDT can share most of the definitions and declarations so
-that in the majority of cases the actual handler implementation is the
-same.
+common_interrupt() and related variants call kvm_set_cpu_l1tf_flush_l1d(),
+which is neither marked noinstr nor __always_inline.
 
-The differences are the exceptions where FRED stores exception related
-information on the stack and the sysvec implementations as FRED can
-handle irqentry/exit() in the dispatcher instead of having it in each
-handler.
+So compiler puts it out of line and adds instrumentation to it.  Since the
+call is inside of instrumentation_begin/end(), objtool does not warn about
+it.
 
-Also add stub defines for vectors which are not used due to Kconfig
-decisions to spare the ifdeffery in the actual FRED dispatch code.
+The manifestation is that KCOV produces spurious coverage in
+kvm_set_cpu_l1tf_flush_l1d() in random places because the call happens when
+preempt count is not yet updated to say that the kernel is in an interrupt.
 
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Xin Li <xin3.li@intel.com>
+Mark kvm_set_cpu_l1tf_flush_l1d() as __always_inline and move it out of the
+instrumentation_begin/end() section.  It only calls __this_cpu_write()
+which is already safe to call in noinstr contexts.
+
+Fixes: 6368558c3710 ("x86/entry: Provide IDTENTRY_SYSVEC")
+Signed-off-by: Dmitry Vyukov <dvyukov@google.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Shan Kang <shan.kang@intel.com>
-Link: https://lore.kernel.org/r/20231205105030.8698-23-xin3.li@intel.com
-Stable-dep-of: 477d81a1c47a ("x86/entry: Remove unwanted instrumentation in common_interrupt()")
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/3f9a1de9e415fcb53d07dc9e19fa8481bb021b1b.1718092070.git.dvyukov@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/idtentry.h | 71 +++++++++++++++++++++++++++++----
- 1 file changed, 63 insertions(+), 8 deletions(-)
+ arch/x86/include/asm/hardirq.h  | 8 ++++++--
+ arch/x86/include/asm/idtentry.h | 6 +++---
+ 2 files changed, 9 insertions(+), 5 deletions(-)
 
+diff --git a/arch/x86/include/asm/hardirq.h b/arch/x86/include/asm/hardirq.h
+index 275e7fd20310f..a18df4191699c 100644
+--- a/arch/x86/include/asm/hardirq.h
++++ b/arch/x86/include/asm/hardirq.h
+@@ -62,7 +62,11 @@ extern u64 arch_irq_stat(void);
+ 
+ 
+ #if IS_ENABLED(CONFIG_KVM_INTEL)
+-static inline void kvm_set_cpu_l1tf_flush_l1d(void)
++/*
++ * This function is called from noinstr interrupt contexts
++ * and must be inlined to not get instrumentation.
++ */
++static __always_inline void kvm_set_cpu_l1tf_flush_l1d(void)
+ {
+ 	__this_cpu_write(irq_stat.kvm_cpu_l1tf_flush_l1d, 1);
+ }
+@@ -77,7 +81,7 @@ static __always_inline bool kvm_get_cpu_l1tf_flush_l1d(void)
+ 	return __this_cpu_read(irq_stat.kvm_cpu_l1tf_flush_l1d);
+ }
+ #else /* !IS_ENABLED(CONFIG_KVM_INTEL) */
+-static inline void kvm_set_cpu_l1tf_flush_l1d(void) { }
++static __always_inline void kvm_set_cpu_l1tf_flush_l1d(void) { }
+ #endif /* IS_ENABLED(CONFIG_KVM_INTEL) */
+ 
+ #endif /* _ASM_X86_HARDIRQ_H */
 diff --git a/arch/x86/include/asm/idtentry.h b/arch/x86/include/asm/idtentry.h
-index 1345088e99025..a65575136255b 100644
+index a65575136255b..151cd0b5f4306 100644
 --- a/arch/x86/include/asm/idtentry.h
 +++ b/arch/x86/include/asm/idtentry.h
-@@ -11,15 +11,18 @@
- 
- #include <asm/irq_stack.h>
- 
-+typedef void (*idtentry_t)(struct pt_regs *regs);
-+
- /**
-  * DECLARE_IDTENTRY - Declare functions for simple IDT entry points
-  *		      No error code pushed by hardware
-  * @vector:	Vector number (ignored for C)
-  * @func:	Function name of the entry point
-  *
-- * Declares three functions:
-+ * Declares four functions:
-  * - The ASM entry point: asm_##func
-  * - The XEN PV trap entry point: xen_##func (maybe unused)
-+ * - The C handler called from the FRED event dispatcher (maybe unused)
-  * - The C handler called from the ASM entry point
-  *
-  * Note: This is the C variant of DECLARE_IDTENTRY(). As the name says it
-@@ -29,6 +32,7 @@
- #define DECLARE_IDTENTRY(vector, func)					\
- 	asmlinkage void asm_##func(void);				\
- 	asmlinkage void xen_asm_##func(void);				\
-+	void fred_##func(struct pt_regs *regs);				\
- 	__visible void func(struct pt_regs *regs)
- 
- /**
-@@ -135,6 +139,17 @@ static __always_inline void __##func(struct pt_regs *regs,		\
- #define DEFINE_IDTENTRY_RAW(func)					\
- __visible noinstr void func(struct pt_regs *regs)
- 
-+/**
-+ * DEFINE_FREDENTRY_RAW - Emit code for raw FRED entry points
-+ * @func:	Function name of the entry point
-+ *
-+ * @func is called from the FRED event dispatcher with interrupts disabled.
-+ *
-+ * See @DEFINE_IDTENTRY_RAW for further details.
-+ */
-+#define DEFINE_FREDENTRY_RAW(func)					\
-+noinstr void fred_##func(struct pt_regs *regs)
-+
- /**
-  * DECLARE_IDTENTRY_RAW_ERRORCODE - Declare functions for raw IDT entry points
-  *				    Error code pushed by hardware
-@@ -231,17 +246,27 @@ static noinline void __##func(struct pt_regs *regs, u32 vector)
- #define DEFINE_IDTENTRY_SYSVEC(func)					\
- static void __##func(struct pt_regs *regs);				\
+@@ -210,8 +210,8 @@ __visible noinstr void func(struct pt_regs *regs,			\
+ 	irqentry_state_t state = irqentry_enter(regs);			\
+ 	u32 vector = (u32)(u8)error_code;				\
  									\
-+static __always_inline void instr_##func(struct pt_regs *regs)		\
-+{									\
-+	kvm_set_cpu_l1tf_flush_l1d();					\
-+	run_sysvec_on_irqstack_cond(__##func, regs);			\
-+}									\
-+									\
- __visible noinstr void func(struct pt_regs *regs)			\
++	kvm_set_cpu_l1tf_flush_l1d();                                   \
+ 	instrumentation_begin();					\
+-	kvm_set_cpu_l1tf_flush_l1d();					\
+ 	run_irq_on_irqstack_cond(__##func, regs, vector);		\
+ 	instrumentation_end();						\
+ 	irqentry_exit(regs, state);					\
+@@ -248,7 +248,6 @@ static void __##func(struct pt_regs *regs);				\
+ 									\
+ static __always_inline void instr_##func(struct pt_regs *regs)		\
+ {									\
+-	kvm_set_cpu_l1tf_flush_l1d();					\
+ 	run_sysvec_on_irqstack_cond(__##func, regs);			\
+ }									\
+ 									\
+@@ -256,6 +255,7 @@ __visible noinstr void func(struct pt_regs *regs)			\
  {									\
  	irqentry_state_t state = irqentry_enter(regs);			\
  									\
++	kvm_set_cpu_l1tf_flush_l1d();                                   \
  	instrumentation_begin();					\
--	kvm_set_cpu_l1tf_flush_l1d();					\
--	run_sysvec_on_irqstack_cond(__##func, regs);			\
-+	instr_##func (regs);						\
+ 	instr_##func (regs);						\
  	instrumentation_end();						\
- 	irqentry_exit(regs, state);					\
- }									\
- 									\
-+void fred_##func(struct pt_regs *regs)					\
-+{									\
-+	instr_##func (regs);						\
-+}									\
-+									\
- static noinline void __##func(struct pt_regs *regs)
- 
- /**
-@@ -258,19 +283,29 @@ static noinline void __##func(struct pt_regs *regs)
- #define DEFINE_IDTENTRY_SYSVEC_SIMPLE(func)				\
- static __always_inline void __##func(struct pt_regs *regs);		\
- 									\
--__visible noinstr void func(struct pt_regs *regs)			\
-+static __always_inline void instr_##func(struct pt_regs *regs)		\
+@@ -286,7 +286,6 @@ static __always_inline void __##func(struct pt_regs *regs);		\
+ static __always_inline void instr_##func(struct pt_regs *regs)		\
  {									\
--	irqentry_state_t state = irqentry_enter(regs);			\
--									\
--	instrumentation_begin();					\
  	__irq_enter_raw();						\
- 	kvm_set_cpu_l1tf_flush_l1d();					\
+-	kvm_set_cpu_l1tf_flush_l1d();					\
  	__##func (regs);						\
  	__irq_exit_raw();						\
-+}									\
-+									\
-+__visible noinstr void func(struct pt_regs *regs)			\
-+{									\
-+	irqentry_state_t state = irqentry_enter(regs);			\
-+									\
-+	instrumentation_begin();					\
-+	instr_##func (regs);						\
- 	instrumentation_end();						\
- 	irqentry_exit(regs, state);					\
  }									\
+@@ -295,6 +294,7 @@ __visible noinstr void func(struct pt_regs *regs)			\
+ {									\
+ 	irqentry_state_t state = irqentry_enter(regs);			\
  									\
-+void fred_##func(struct pt_regs *regs)					\
-+{									\
-+	instr_##func (regs);						\
-+}									\
-+									\
- static __always_inline void __##func(struct pt_regs *regs)
- 
- /**
-@@ -408,15 +443,18 @@ __visible noinstr void func(struct pt_regs *regs,			\
- /* C-Code mapping */
- #define DECLARE_IDTENTRY_NMI		DECLARE_IDTENTRY_RAW
- #define DEFINE_IDTENTRY_NMI		DEFINE_IDTENTRY_RAW
-+#define DEFINE_FREDENTRY_NMI		DEFINE_FREDENTRY_RAW
- 
- #ifdef CONFIG_X86_64
- #define DECLARE_IDTENTRY_MCE		DECLARE_IDTENTRY_IST
- #define DEFINE_IDTENTRY_MCE		DEFINE_IDTENTRY_IST
- #define DEFINE_IDTENTRY_MCE_USER	DEFINE_IDTENTRY_NOIST
-+#define DEFINE_FREDENTRY_MCE		DEFINE_FREDENTRY_RAW
- 
- #define DECLARE_IDTENTRY_DEBUG		DECLARE_IDTENTRY_IST
- #define DEFINE_IDTENTRY_DEBUG		DEFINE_IDTENTRY_IST
- #define DEFINE_IDTENTRY_DEBUG_USER	DEFINE_IDTENTRY_NOIST
-+#define DEFINE_FREDENTRY_DEBUG		DEFINE_FREDENTRY_RAW
- #endif
- 
- #else /* !__ASSEMBLY__ */
-@@ -645,23 +683,36 @@ DECLARE_IDTENTRY_SYSVEC(IRQ_MOVE_CLEANUP_VECTOR,	sysvec_irq_move_cleanup);
- DECLARE_IDTENTRY_SYSVEC(REBOOT_VECTOR,			sysvec_reboot);
- DECLARE_IDTENTRY_SYSVEC(CALL_FUNCTION_SINGLE_VECTOR,	sysvec_call_function_single);
- DECLARE_IDTENTRY_SYSVEC(CALL_FUNCTION_VECTOR,		sysvec_call_function);
-+#else
-+# define fred_sysvec_reschedule_ipi			NULL
-+# define fred_sysvec_reboot				NULL
-+# define fred_sysvec_call_function_single		NULL
-+# define fred_sysvec_call_function			NULL
- #endif
- 
- #ifdef CONFIG_X86_LOCAL_APIC
- # ifdef CONFIG_X86_MCE_THRESHOLD
- DECLARE_IDTENTRY_SYSVEC(THRESHOLD_APIC_VECTOR,		sysvec_threshold);
-+# else
-+# define fred_sysvec_threshold				NULL
- # endif
- 
- # ifdef CONFIG_X86_MCE_AMD
- DECLARE_IDTENTRY_SYSVEC(DEFERRED_ERROR_VECTOR,		sysvec_deferred_error);
-+# else
-+# define fred_sysvec_deferred_error			NULL
- # endif
- 
- # ifdef CONFIG_X86_THERMAL_VECTOR
- DECLARE_IDTENTRY_SYSVEC(THERMAL_APIC_VECTOR,		sysvec_thermal);
-+# else
-+# define fred_sysvec_thermal				NULL
- # endif
- 
- # ifdef CONFIG_IRQ_WORK
- DECLARE_IDTENTRY_SYSVEC(IRQ_WORK_VECTOR,		sysvec_irq_work);
-+# else
-+# define fred_sysvec_irq_work				NULL
- # endif
- #endif
- 
-@@ -669,12 +720,16 @@ DECLARE_IDTENTRY_SYSVEC(IRQ_WORK_VECTOR,		sysvec_irq_work);
- DECLARE_IDTENTRY_SYSVEC(POSTED_INTR_VECTOR,		sysvec_kvm_posted_intr_ipi);
- DECLARE_IDTENTRY_SYSVEC(POSTED_INTR_WAKEUP_VECTOR,	sysvec_kvm_posted_intr_wakeup_ipi);
- DECLARE_IDTENTRY_SYSVEC(POSTED_INTR_NESTED_VECTOR,	sysvec_kvm_posted_intr_nested_ipi);
-+#else
-+# define fred_sysvec_kvm_posted_intr_ipi		NULL
-+# define fred_sysvec_kvm_posted_intr_wakeup_ipi		NULL
-+# define fred_sysvec_kvm_posted_intr_nested_ipi		NULL
- #endif
- 
- #if IS_ENABLED(CONFIG_HYPERV)
- DECLARE_IDTENTRY_SYSVEC(HYPERVISOR_CALLBACK_VECTOR,	sysvec_hyperv_callback);
- DECLARE_IDTENTRY_SYSVEC(HYPERV_REENLIGHTENMENT_VECTOR,	sysvec_hyperv_reenlightenment);
--DECLARE_IDTENTRY_SYSVEC(HYPERV_STIMER0_VECTOR,	sysvec_hyperv_stimer0);
-+DECLARE_IDTENTRY_SYSVEC(HYPERV_STIMER0_VECTOR,		sysvec_hyperv_stimer0);
- #endif
- 
- #if IS_ENABLED(CONFIG_ACRN_GUEST)
++	kvm_set_cpu_l1tf_flush_l1d();                                   \
+ 	instrumentation_begin();					\
+ 	instr_##func (regs);						\
+ 	instrumentation_end();						\
 -- 
 2.43.0
 
