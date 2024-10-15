@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA7D1B2183;
-	Tue, 15 Oct 2024 13:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4361B2184;
+	Tue, 15 Oct 2024 13:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998575; cv=none; b=mmuzUx2nVDJbLA7+1kzVAyky4uIQ1RVCwiTqf0fO0wSmsH5W6b9x0Lql7BIYLEL2m0J9Ps4MajSPMjvuYupcKY9GPt07KUUrFBK8ZpfKll79Inv7M1zpFwBDUVmen9mhJjvkdctz9C1iNHWgi6UQ1gEyXCwSCWbSS0+wMPOGIag=
+	t=1728998579; cv=none; b=g4BqCmHvuutJwwnn6YpfP3chJBZIredKF0NzHCQ3hPbzsiCMrz6ichpv7tr6Q8oXXgwt+tLJJP0+DE5yXZjzLawZ/I3mGDq3ozoHQrJwg/GiuAtDNhl+RlFpV7v7pq4QbuM25wVGP6BPUwDWLUTKAmyCQbB4gjFfFku8N9n4uiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998575; c=relaxed/simple;
-	bh=GHdBxmFj2zCmaXUpe85KseiVkhOZflZIa6KDnM85AfQ=;
+	s=arc-20240116; t=1728998579; c=relaxed/simple;
+	bh=10h2vRt9FRpXX/jrN5ieOhiVPE6dgWPbjnePcK9sg7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uaZMh3no76oVKfz0MA2KZMliZHonfjAYr6ysK7bHYn32VFwu7IdCVKcW5C0E7cEo1jQP4FiSCOhDzxTSHiSylHFISalXMpk930Sy7E5olZzgPxzUAM3ZMBkJ6qdMnUIlpQ5VPHHMWZvKiwhav8gJueNcDc+UWjadJyv/WUq3gsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jl1GmUAM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FZGHO1ms3p8MMteE1r3/SOZ22cI4SnddtjaoTKLk5K1WKLsS/8olv9EZwXg3AGvU+hrfd0uW5Se4Lr5feRgV5/+0KgFSr7bkDj1J3C4qJj6kQrbyDTsHRr4XXrvYA1aqDleX/mfJzua9VmIJqHpKBAGs5bTX84lchPZGcj10di0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVa0gNiq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jl1GmUAM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98714C4CEC6;
-	Tue, 15 Oct 2024 13:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVa0gNiq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C99DC4CEC6;
+	Tue, 15 Oct 2024 13:22:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998575;
-	bh=GHdBxmFj2zCmaXUpe85KseiVkhOZflZIa6KDnM85AfQ=;
+	s=korg; t=1728998578;
+	bh=10h2vRt9FRpXX/jrN5ieOhiVPE6dgWPbjnePcK9sg7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jl1GmUAMCOLZ7RKAnrFyZiPeQ6UiHKE+rgsew6oUWgou2X+OviB+uCMi3k9HTNfQj
-	 SNUI+AyglZOB1nDipf5HNN4/pthRCWpgD09o8C4o54bE+YZHnUJZwJksYF25WO2hXG
-	 paPQkgAoXNQ4p+LRnW+XL1sP3mv7OCKAugJDichU=
+	b=aVa0gNiqbsJGb4BDejQsdWH5yPAdRTRjloBMijNAPQsOR+fmSFBc6Q5ZRgjh44ORt
+	 z6AyaoPfVvbYNX2W/PNS1MuQBYpM9y6hJ86caa0lTyLNda9Bqu2wy8we48JvFXLYtG
+	 jqn7kxrh/b2mbEBEMZ/oMoPXafR6qnjXvaL2NfSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yixing Liu <liuyixing1@huawei.com>,
-	Weihang Li <liweihang@huawei.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 5.10 518/518] RDMA/hns: Fix uninitialized variable
-Date: Tue, 15 Oct 2024 14:47:02 +0200
-Message-ID: <20241015123936.980450794@linuxfoundation.org>
+	Icenowy Zheng <uwu@icenowy.me>,
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.10 506/518] usb: storage: ignore bogus device raised by JieLi BR21 USB sound chip
+Date: Tue, 15 Oct 2024 14:46:50 +0200
+Message-ID: <20241015123936.520417073@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,33 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yixing Liu <liuyixing1@huawei.com>
+From: Icenowy Zheng <uwu@icenowy.me>
 
-commit 2a38c0f10e6d7d28e06ff1eb1f350804c4850275 upstream.
+commit a6555cb1cb69db479d0760e392c175ba32426842 upstream.
 
-A random value will be returned if the condition below is not met, so it
-needs to be initialized.
+JieLi tends to use SCSI via USB Mass Storage to implement their own
+proprietary commands instead of implementing another USB interface.
+Enumerating it as a generic mass storage device will lead to a Hardware
+Error sense key get reported.
 
-Fixes: 9ea9a53ea93b ("RDMA/hns: Add mapped page count checking for MTR")
-Link: https://lore.kernel.org/r/1624011020-16992-3-git-send-email-liweihang@huawei.com
-Signed-off-by: Yixing Liu <liuyixing1@huawei.com>
-Signed-off-by: Weihang Li <liweihang@huawei.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Ignore this bogus device to prevent appearing a unusable sdX device
+file.
+
+Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
+Cc: stable <stable@kernel.org>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20241001083407.8336-1-uwu@icenowy.me
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_mr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/storage/unusual_devs.h |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/infiniband/hw/hns/hns_roce_mr.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
-@@ -832,7 +832,7 @@ int hns_roce_mtr_map(struct hns_roce_dev
- 	struct ib_device *ibdev = &hr_dev->ib_dev;
- 	struct hns_roce_buf_region *r;
- 	unsigned int i, mapped_cnt;
--	int ret;
-+	int ret = 0;
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -2412,6 +2412,17 @@ UNUSUAL_DEV(  0xc251, 0x4003, 0x0100, 0x
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_NOT_LOCKABLE),
  
- 	/*
- 	 * Only use the first page address as root ba when hopnum is 0, this
++/*
++ * Reported by Icenowy Zheng <uwu@icenowy.me>
++ * This is an interface for vendor-specific cryptic commands instead
++ * of real USB storage device.
++ */
++UNUSUAL_DEV(  0xe5b7, 0x0811, 0x0100, 0x0100,
++		"ZhuHai JieLi Technology",
++		"JieLi BR21",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_IGNORE_DEVICE),
++
+ /* Reported by Andrew Simmons <andrew.simmons@gmail.com> */
+ UNUSUAL_DEV(  0xed06, 0x4500, 0x0001, 0x0001,
+ 		"DataStor",
 
 
