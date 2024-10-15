@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B6B1E7666;
-	Tue, 15 Oct 2024 11:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95091EBFF1;
+	Tue, 15 Oct 2024 11:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992129; cv=none; b=c6+hsFluMRDrMVMcOH+gqEaB4GgvT+MzJsBPHexfrfLS2PbOAdzQdNC3GBKv6IT74eH6FG2NLs5XOmUzsDR4dLZExPkvwGIi7qCmkqjObTl6lXFj2qq9ysEhIp0ph0u5baYm1Fia/oRJPiqC35pxLvV6u6yHnHkswRauMaaVhZQ=
+	t=1728992133; cv=none; b=rgsdn1/7n2hW1aTRPkubL0pco+3OSuHC41gXOGFpC21XbiE8J2ITxuD/NhS0327WEFL34IsMpw3Tm/7hsnX1GU2fJDsKX1BjKpwPkDaIvRQQt2YxuaD4Mh47q1bjcvSfuyjGYcAy9UME6jDE5DhbnYeuDEHTv6JT6nNesTVUuqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992129; c=relaxed/simple;
-	bh=MMnodEZlFzZm6Ug61Vw8uUny/LwTqNeuyJ2fG83lOxQ=;
+	s=arc-20240116; t=1728992133; c=relaxed/simple;
+	bh=r0nT14xTc4nwEHEkDql0gwBB9frjgzORyij4VrzhVxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/jJiD+OHbRHtDiISLONmc/OiZl1ztAIDVUvY3OyxVePHbV9HAYhmlGJne40dy7aX+Szhjv3CbDKbQagB266OOlSURV6kMbKZgDVGs9o51MXUwZLfhOWkdCXgpzfI4JPBOApbMORZ0L62nCjZvdKSQvFNPrjfkmNMCTEsoZ4zN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdWpIN57; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aOM1CHtKfikrCAVCJKMWusFNncdlLZivSfHmDztscUgMkap7KlybkKrh1oZ4BtpHXx+6RiqDAr9QWjS03pKL8S88YxneI02M10x37aMaoPtdnksWE5KvcZUH0UxBpNGSgH0ktXYaTXdsI2I/lNCS7c3PoCdEbbc9Jz7zSZFTtLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7jWEp2p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdWpIN57"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72873C4CEC6;
-	Tue, 15 Oct 2024 11:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7jWEp2p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59BCC4CECE;
+	Tue, 15 Oct 2024 11:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992129;
-	bh=MMnodEZlFzZm6Ug61Vw8uUny/LwTqNeuyJ2fG83lOxQ=;
+	s=korg; t=1728992132;
+	bh=r0nT14xTc4nwEHEkDql0gwBB9frjgzORyij4VrzhVxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tdWpIN57F3OdaZDNUlVB7/0y0x9RXrMcx9kwtb3PN3LM9n3Mn7f4FPj0r87mRs0AQ
-	 KlxUrhXlFrqj9G5fhAVi2aDMlR8qlOOPTWRkNz89Ty3y8TYrzocMLgPoRs1M5leEpy
-	 l7dJtnNgksCAjnHRFPyYstkNIs4Q07KXQaPteEmk=
+	b=f7jWEp2p69b2NEFY00/g1jBlVZwJ5hKkuEwPLD3f4wHeSVByaMBZ2fQ7NQWp46rPU
+	 OkNVH0p6oUBuJKx5AviO4hjyk8SIOhsx0Leie4biRt9rQbjbkSLFI9Tjf4heAOnoms
+	 gs1KblfP9VfZ3utkTpAcLtlHF92oihz3GjeqMoHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	syzbot+9709e73bae885b05314b@syzkaller.appspotmail.com,
-	Heming Zhao <heming.zhao@suse.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 009/691] ocfs2: fix uninit-value in ocfs2_get_block()
-Date: Tue, 15 Oct 2024 13:19:17 +0200
-Message-ID: <20241015112440.700671855@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 027/691] NFSv4: Fix clearing of layout segments in layoutreturn
+Date: Tue, 15 Oct 2024 13:19:35 +0200
+Message-ID: <20241015112441.411866439@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -58,75 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 2af148ef8549a12f8025286b8825c2833ee6bcb8 upstream.
+[ Upstream commit d72b7963115bea971a28eaa2cb76722c023f9fdf ]
 
-syzbot reported an uninit-value BUG:
+Make sure that we clear the layout segments in cases where we see a
+fatal error, and also in the case where the layout is invalid.
 
-BUG: KMSAN: uninit-value in ocfs2_get_block+0xed2/0x2710 fs/ocfs2/aops.c:159
-ocfs2_get_block+0xed2/0x2710 fs/ocfs2/aops.c:159
-do_mpage_readpage+0xc45/0x2780 fs/mpage.c:225
-mpage_readahead+0x43f/0x840 fs/mpage.c:374
-ocfs2_readahead+0x269/0x320 fs/ocfs2/aops.c:381
-read_pages+0x193/0x1110 mm/readahead.c:160
-page_cache_ra_unbounded+0x901/0x9f0 mm/readahead.c:273
-do_page_cache_ra mm/readahead.c:303 [inline]
-force_page_cache_ra+0x3b1/0x4b0 mm/readahead.c:332
-force_page_cache_readahead mm/internal.h:347 [inline]
-generic_fadvise+0x6b0/0xa90 mm/fadvise.c:106
-vfs_fadvise mm/fadvise.c:185 [inline]
-ksys_fadvise64_64 mm/fadvise.c:199 [inline]
-__do_sys_fadvise64 mm/fadvise.c:214 [inline]
-__se_sys_fadvise64 mm/fadvise.c:212 [inline]
-__x64_sys_fadvise64+0x1fb/0x3a0 mm/fadvise.c:212
-x64_sys_call+0xe11/0x3ba0
-arch/x86/include/generated/asm/syscalls_64.h:222
-do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
-entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-This is because when ocfs2_extent_map_get_blocks() fails, p_blkno is
-uninitialized.  So the error log will trigger the above uninit-value
-access.
-
-The error log is out-of-date since get_blocks() was removed long time ago.
-And the error code will be logged in ocfs2_extent_map_get_blocks() once
-ocfs2_get_cluster() fails, so fix this by only logging inode and block.
-
-Link: https://syzkaller.appspot.com/bug?extid=9709e73bae885b05314b
-Link: https://lkml.kernel.org/r/20240925090600.3643376-1-joseph.qi@linux.alibaba.com
-Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: syzbot+9709e73bae885b05314b@syzkaller.appspotmail.com
-Tested-by: syzbot+9709e73bae885b05314b@syzkaller.appspotmail.com
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/aops.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/nfs/nfs4proc.c | 9 ++++++---
+ fs/nfs/pnfs.c     | 5 ++---
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
---- a/fs/ocfs2/aops.c
-+++ b/fs/ocfs2/aops.c
-@@ -156,9 +156,8 @@ int ocfs2_get_block(struct inode *inode,
- 	err = ocfs2_extent_map_get_blocks(inode, iblock, &p_blkno, &count,
- 					  &ext_flags);
- 	if (err) {
--		mlog(ML_ERROR, "Error %d from get_blocks(0x%p, %llu, 1, "
--		     "%llu, NULL)\n", err, inode, (unsigned long long)iblock,
--		     (unsigned long long)p_blkno);
-+		mlog(ML_ERROR, "get_blocks() failed, inode: 0x%p, "
-+		     "block: %llu\n", inode, (unsigned long long)iblock);
- 		goto bail;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 770fa1cb112d..f1c351e40c7a 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -9755,13 +9755,16 @@ static void nfs4_layoutreturn_done(struct rpc_task *task, void *calldata)
+ 		fallthrough;
+ 	default:
+ 		task->tk_status = 0;
++		lrp->res.lrs_present = 0;
+ 		fallthrough;
+ 	case 0:
+ 		break;
+ 	case -NFS4ERR_DELAY:
+-		if (nfs4_async_handle_error(task, server, NULL, NULL) != -EAGAIN)
+-			break;
+-		goto out_restart;
++		if (nfs4_async_handle_error(task, server, NULL, NULL) ==
++		    -EAGAIN)
++			goto out_restart;
++		lrp->res.lrs_present = 0;
++		break;
  	}
+ 	dprintk("<-- %s\n", __func__);
+ 	return;
+diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
+index e13f1c762951..fb12a2193884 100644
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -1169,10 +1169,9 @@ void pnfs_layoutreturn_free_lsegs(struct pnfs_layout_hdr *lo,
+ 	LIST_HEAD(freeme);
  
+ 	spin_lock(&inode->i_lock);
+-	if (!pnfs_layout_is_valid(lo) ||
+-	    !nfs4_stateid_match_other(&lo->plh_stateid, arg_stateid))
++	if (!nfs4_stateid_match_other(&lo->plh_stateid, arg_stateid))
+ 		goto out_unlock;
+-	if (stateid) {
++	if (stateid && pnfs_layout_is_valid(lo)) {
+ 		u32 seq = be32_to_cpu(arg_stateid->seqid);
+ 
+ 		pnfs_mark_matching_lsegs_invalid(lo, &freeme, range, seq);
+-- 
+2.43.0
+
 
 
