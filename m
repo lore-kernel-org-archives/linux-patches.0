@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888D31C07F8;
-	Tue, 15 Oct 2024 12:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C97F1C07CC;
+	Tue, 15 Oct 2024 12:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996902; cv=none; b=utB1+Sm4/Azg1tGR6VMTdRruv3AhhgCCx9/Yud6xJXHOUmgGxveplMWJ3EyUhnr58GGJ3HV9LnRjKaX4unphudYuixVJ7CWqQa86YzsF0bT+5vwkByhHZaawE2PfJVIgn0NEjM1glLaJ9mENQ+ZOOM30XEVacZSszzSiy0wulpI=
+	t=1728996905; cv=none; b=h8yCNI+keB92U/ray+EJ0jMAuPgiPaP36be77EaIfQow0QNxqGXyvFJ5Bifk2Lkjw+oBJzyDcNMIBCPWxwql861A38Vi9mGxkdAobhgTKJd4oBBBRycLvFP8PuztB/dwVEjQhOkpINn2xBjke9MPfZ5NiPGkPlxz9eKYHb4B6OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996902; c=relaxed/simple;
-	bh=IxJXHrQbtoxSvBEOeACD0w3Ilf8hGxQBCPs90vIUwAw=;
+	s=arc-20240116; t=1728996905; c=relaxed/simple;
+	bh=NyZkOZhPkgMsr/VGrNT11Qv1VFHqNKlaAvZWey/Acj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UJ6+XLyMZ3dZraIqSgxGVsTal6A+YZsjxNfduKE3NGz8Qh5WZ9tbOnk+UXwGCc+TZXGpfcxPpXDJreJEIZ4nnbfgc8cYjsUK0/WBS9/4fPxXxsOYkPWfz/4jf3LsnlGH46kmVSiuAsRNbdour03YbfjVZETrQ2mDlKM6x6KYZ74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXwtFtBb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qn4b/eZya2O2SVqYxdMxF2lDJyirETKRsQw+dgEIIZNQN+gLHqCmrdfu9fZ2uUn6yTBKvf8nGWaUA6y3LNHZ80hXxEmuz5t1YmUJiYn7rMSNQdrbIuqHrPoCC+JXQktUBYlPn70bAvD5Hv/eETLS9Zf9euf1E7U3YXeG7snKkRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZpYfB2Dg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXwtFtBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90774C4CEC6;
-	Tue, 15 Oct 2024 12:55:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZpYfB2Dg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D4DC4CEC6;
+	Tue, 15 Oct 2024 12:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728996902;
-	bh=IxJXHrQbtoxSvBEOeACD0w3Ilf8hGxQBCPs90vIUwAw=;
+	s=korg; t=1728996905;
+	bh=NyZkOZhPkgMsr/VGrNT11Qv1VFHqNKlaAvZWey/Acj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fXwtFtBbvT4Xkkm5feP83TI3wGgbH/O64JmnqP00WQ2HmXXYlBxnbkJjK4/yODfWc
-	 698wXkd/SSurY2EaTzxRunEw6Bfj7V8EnS5WXoR4HNnxWp161bWRV77augfm1fQvGL
-	 D369TxnvreCo524I/HV7HNhGDzCJcieDmi7Xvego=
+	b=ZpYfB2DgQS4a8kRArGcF9SSUYiMGzCotAQ98g8OU9j3Mg5/4mqqsbXQLF2GHCsTIX
+	 YmhDQ89BbpPZKl3Bm69yTODf6eVCt6NoTT8Mh+SvcMVJf+O3q19mrQGItGgN2BD9mJ
+	 S2uU7t8gykO0zz7Z//lgrbhle3xK7MtWPYcCOSxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Jeff Layton <jlayton@kernel.org>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 007/518] powerpc/mm: Fix boot warning with hugepages and CONFIG_DEBUG_VIRTUAL
-Date: Tue, 15 Oct 2024 14:38:31 +0200
-Message-ID: <20241015123917.116626240@linuxfoundation.org>
+Subject: [PATCH 5.10 008/518] btrfs: update target inodes ctime on unlink
+Date: Tue, 15 Oct 2024 14:38:32 +0200
+Message-ID: <20241015123917.155261442@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,83 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit e7e846dc6c73fbc94ae8b4ec20d05627646416f2 ]
+[ Upstream commit 3bc2ac2f8f0b78a13140fc72022771efe0c9b778 ]
 
-Booting with CONFIG_DEBUG_VIRTUAL leads to following warning when
-passing hugepage reservation on command line:
+Unlink changes the link count on the target inode. POSIX mandates that
+the ctime must also change when this occurs.
 
-  Kernel command line: hugepagesz=1g hugepages=1 hugepagesz=64m hugepages=1 hugepagesz=256m hugepages=1 noreboot
-  HugeTLB: allocating 1 of page size 1.00 GiB failed.  Only allocated 0 hugepages.
-  ------------[ cut here ]------------
-  WARNING: CPU: 0 PID: 0 at arch/powerpc/include/asm/io.h:948 __alloc_bootmem_huge_page+0xd4/0x284
-  Modules linked in:
-  CPU: 0 PID: 0 Comm: swapper Not tainted 6.10.0-rc6-00396-g6b0e82791bd0-dirty #936
-  Hardware name: MPC8544DS e500v2 0x80210030 MPC8544 DS
-  NIP:  c1020240 LR: c10201d0 CTR: 00000000
-  REGS: c13fdd30 TRAP: 0700   Not tainted  (6.10.0-rc6-00396-g6b0e82791bd0-dirty)
-  MSR:  00021000 <CE,ME>  CR: 44084288  XER: 20000000
+According to https://pubs.opengroup.org/onlinepubs/9699919799/functions/unlink.html:
 
-  GPR00: c10201d0 c13fde20 c130b560 e8000000 e8001000 00000000 00000000 c1420000
-  GPR08: 00000000 00028001 00000000 00000004 44084282 01066ac0 c0eb7c9c efffe149
-  GPR16: c0fc4228 0000005f ffffffff c0eb7d0c c0eb7cc0 c0eb7ce0 ffffffff 00000000
-  GPR24: c1441cec efffe153 e8001000 c14240c0 00000000 c1441d64 00000000 e8000000
-  NIP [c1020240] __alloc_bootmem_huge_page+0xd4/0x284
-  LR [c10201d0] __alloc_bootmem_huge_page+0x64/0x284
-  Call Trace:
-  [c13fde20] [c10201d0] __alloc_bootmem_huge_page+0x64/0x284 (unreliable)
-  [c13fde50] [c10207b8] hugetlb_hstate_alloc_pages+0x8c/0x3e8
-  [c13fdeb0] [c1021384] hugepages_setup+0x240/0x2cc
-  [c13fdef0] [c1000574] unknown_bootoption+0xfc/0x280
-  [c13fdf30] [c0078904] parse_args+0x200/0x4c4
-  [c13fdfa0] [c1000d9c] start_kernel+0x238/0x7d0
-  [c13fdff0] [c0000434] set_ivor+0x12c/0x168
-  Code: 554aa33e 7c042840 3ce0c142 80a7427c 5109a016 50caa016 7c9a2378 7fdcf378 4180000c 7c052040 41810160 7c095040 <0fe00000> 38c00000 40800108 3c60c0eb
-  ---[ end trace 0000000000000000 ]---
+"Upon successful completion, unlink() shall mark for update the last data
+ modification and last file status change timestamps of the parent
+ directory. Also, if the file's link count is not 0, the last file status
+ change timestamp of the file shall be marked for update."
 
-This is due to virt_addr_valid() using high_memory before it is set.
-
-high_memory is set in mem_init() using max_low_pfn, but max_low_pfn
-is available long before, it is set in mem_topology_setup(). So just
-like commit daa9ada2093e ("powerpc/mm: Fix boot crash with FLATMEM")
-moved the setting of max_mapnr immediately after the call to
-mem_topology_setup(), the same can be done for high_memory.
-
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/62b69c4baad067093f39e7e60df0fe27a86b8d2a.1723100702.git.christophe.leroy@csgroup.eu
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: David Sterba <dsterba@suse.com>
+[ add link to the opengroup docs ]
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/setup-common.c | 1 +
- arch/powerpc/mm/mem.c              | 2 --
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ fs/btrfs/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/kernel/setup-common.c b/arch/powerpc/kernel/setup-common.c
-index 1e417c3eedfe..b99b35ba2412 100644
---- a/arch/powerpc/kernel/setup-common.c
-+++ b/arch/powerpc/kernel/setup-common.c
-@@ -908,6 +908,7 @@ void __init setup_arch(char **cmdline_p)
- 	mem_topology_setup();
- 	/* Set max_mapnr before paging_init() */
- 	set_max_mapnr(max_pfn);
-+	high_memory = (void *)__va(max_low_pfn * PAGE_SIZE);
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index cd3156a9a268..24598acb9a31 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -3704,6 +3704,7 @@ static int __btrfs_unlink_inode(struct btrfs_trans_handle *trans,
  
- 	/*
- 	 * Release secondary cpus out of their spinloops at 0x60 now that
-diff --git a/arch/powerpc/mm/mem.c b/arch/powerpc/mm/mem.c
-index 08e3422eb792..cd6a68a64d87 100644
---- a/arch/powerpc/mm/mem.c
-+++ b/arch/powerpc/mm/mem.c
-@@ -292,8 +292,6 @@ void __init mem_init(void)
- 		swiotlb_init(0);
- #endif
- 
--	high_memory = (void *) __va(max_low_pfn * PAGE_SIZE);
--
- 	kasan_late_init();
- 
- 	memblock_free_all();
+ 	btrfs_i_size_write(dir, dir->vfs_inode.i_size - name_len * 2);
+ 	inode_inc_iversion(&inode->vfs_inode);
++	inode_set_ctime_current(&inode->vfs_inode);
+ 	inode_inc_iversion(&dir->vfs_inode);
+ 	inode->vfs_inode.i_ctime = dir->vfs_inode.i_mtime =
+ 		dir->vfs_inode.i_ctime = current_time(&inode->vfs_inode);
 -- 
 2.43.0
 
