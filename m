@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F111C07FF;
-	Tue, 15 Oct 2024 13:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A19D1C07FF;
+	Tue, 15 Oct 2024 13:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997774; cv=none; b=LwbHFX/aZQkqAwUfj3Q8vG0oaqJN+OJf3Q2JaAIvBJ9/ONy8QNxMffHPhwIYFZ8wVETuIcKSaL8m7N0GusDkqXIpGXuDgmB8pofXkQ4WwsKycRpbobrcnK7l9eJy6u/rFZeLGGMHwEwcPbOpreS4qN9hhyb5UmwFAvGEX5WGUxc=
+	t=1728997777; cv=none; b=angOkeUWqhRTqK8boLM+YG29IQdM5DPgibjpoTSwFp+CNc3o8P3FYncrxIrwcOEg6CHVZeQCorbcta8nNIw7Y+D/umhEk2EQFgVhmYeCCfaLwKG8+EyJm0SUGAB4Osw3VJtQzzFC80xynSRIxWuNCZtsNmL3o8cDIm0W2aV/2bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997774; c=relaxed/simple;
-	bh=m57SBefBHIrMGhYG+gQKfsqG7aPFQ0CKfQ+ZognvKKQ=;
+	s=arc-20240116; t=1728997777; c=relaxed/simple;
+	bh=FfuUR6ZrySQCajFd2t4N8988uDbHovVCAU9yL2oLB8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CacL5nlz9i4xj6W8JjEFny5gc0U/1Hfexn0GtzYVNRNEsCU8MT/kx9Hgw9hU7g+ZV9eO7nntowWZUOmZFId96KpZOZocBocMOKUQyA2du5PXn/MRVtSoPtLi9DnJBiQqRYStaqdGeVtp68D8WGTC2I0Yr1oc5ZrdFxqnWRnlGdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auGlBwQn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WESmab6+ZjVZFb20X0GGzzmV3WFGW8hf9k6i6LoRX45BTDS75nfDdTInUe91XkBJrN6zcAdJwVyPPt57niebAB25h7Kok8OrlAVPUwXctEP1m3jPNhNr0w1PcWZapPzYFhQ46cWEIazyBkG4TPqCemNaN38wyEqcuVRns/rEE+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4tHAURv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auGlBwQn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFADC4CEC6;
-	Tue, 15 Oct 2024 13:09:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4tHAURv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C899EC4CEC6;
+	Tue, 15 Oct 2024 13:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997774;
-	bh=m57SBefBHIrMGhYG+gQKfsqG7aPFQ0CKfQ+ZognvKKQ=;
+	s=korg; t=1728997777;
+	bh=FfuUR6ZrySQCajFd2t4N8988uDbHovVCAU9yL2oLB8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=auGlBwQnbqfK0v8xjcbs2T5F0GXTFd/P8NladraKG+nnd2n7IjjGZ0KUoc+hwbfyj
-	 Ods76GxFBCVuIzYFecq6NUxaK769INaXR9C7OkL23GR5LtChu61Rv+kuAmOizmdu32
-	 lKX0CTUhuoNij8rtiwyQV+VXtKuisQQuVzfCSG8Y=
+	b=o4tHAURvtde5bk4R3cyg2LWnDrXxBmhgMJANuhP5wRZZYeEOKZHY4Hw79sNwdTmNh
+	 NXFuJq29VfzqSzcLAHC3RqQCZ4x9EY6d6Gb26WZ6y46zd07PdqJebeSGay7DitNWsy
+	 YMLp0/mlnzO5/TfRbjf4kz6GumoKN5+5nUGHiEHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Michal Simek <michal.simek@xilinx.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Michal Simek <michal.simek@amd.com>,
 	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 283/518] i2c: xiic: Fix RX IRQ busy check
-Date: Tue, 15 Oct 2024 14:43:07 +0200
-Message-ID: <20241015123927.913308558@linuxfoundation.org>
+Subject: [PATCH 5.10 284/518] i2c: xiic: xiic_xfer(): Fix runtime PM leak on error path
+Date: Tue, 15 Oct 2024 14:43:08 +0200
+Message-ID: <20241015123927.950849328@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,37 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-[ Upstream commit 294b29f15469e90893c2b72a738a962ee02a12eb ]
+[ Upstream commit d663d93bb47e7ab45602b227701022d8aa16040a ]
 
-In case the XIIC does TX/RX transfer, make sure no other kernel thread
-can start another TX transfer at the same time. This could happen since
-the driver only checks tx_msg for being non-NULL and returns -EBUSY in
-that case, however it is necessary to check also rx_msg for the same.
+The xiic_xfer() function gets a runtime PM reference when the function is
+entered. This reference is released when the function is exited. There is
+currently one error path where the function exits directly, which leads to
+a leak of the runtime PM reference.
 
-Signed-off-by: Marek Vasut <marex@denx.de>
-Acked-by: Michal Simek <michal.simek@xilinx.com>
+Make sure that this error path also releases the runtime PM reference.
+
+Fixes: fdacc3c7405d ("i2c: xiic: Switch from waitqueue to completion")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Stable-dep-of: 1d4a1adbed25 ("i2c: xiic: Try re-initialization on bus busy timeout")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-xiic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-xiic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
-index c6447b2769f9d..b91ea900aae3a 100644
+index b91ea900aae3a..bd5fc4ace0667 100644
 --- a/drivers/i2c/busses/i2c-xiic.c
 +++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -545,7 +545,7 @@ static int xiic_busy(struct xiic_i2c *i2c)
- 	int tries = 3;
- 	int err;
+@@ -744,7 +744,7 @@ static int xiic_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 	err = xiic_start_xfer(i2c, msgs, num);
+ 	if (err < 0) {
+ 		dev_err(adap->dev.parent, "Error xiic_start_xfer\n");
+-		return err;
++		goto out;
+ 	}
  
--	if (i2c->tx_msg)
-+	if (i2c->tx_msg || i2c->rx_msg)
- 		return -EBUSY;
- 
- 	/* In single master mode bus can only be busy, when in use by this
+ 	err = wait_for_completion_timeout(&i2c->completion, XIIC_XFER_TIMEOUT);
+@@ -762,6 +762,8 @@ static int xiic_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 		err = (i2c->state == STATE_DONE) ? num : -EIO;
+ 	}
+ 	mutex_unlock(&i2c->lock);
++
++out:
+ 	pm_runtime_mark_last_busy(i2c->dev);
+ 	pm_runtime_put_autosuspend(i2c->dev);
+ 	return err;
 -- 
 2.43.0
 
