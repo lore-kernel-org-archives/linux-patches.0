@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B731D0492;
-	Tue, 15 Oct 2024 11:54:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2F61D4154;
+	Tue, 15 Oct 2024 11:54:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993291; cv=none; b=AB/flM2aKs/5oFItVxRYLthkKT5mmv0mGdJ+vdUN0/XXyOwHDvpaTh/XfxMaW07FlRvMzGEO8WvL0L3Enz10yHCS1/ADu6M6VdCk1GbJKADO1lGmsmIQtwQROsqVJWSmwlMmWyfhE0zANhOXeXp+kbm9dr9JVpNd/vHGR3eOTHw=
+	t=1728993294; cv=none; b=r916InTVu3HMjOLUfKUv8LISNM0yQtPrh/oQcll4p738vHAYz0BFsiSLk0i4bUiVyPETKiyzx0h3M+HYuxEyWDXdDGJh2u4Eu7Ef3i5q7+INuBJHraBdLY1grqNjKqTysS6nqmQy9HbMvH++6VIJugMpceEMDPGc3em9Nfy6anI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993291; c=relaxed/simple;
-	bh=QdxkpItk8tfE5RoxI2BZnnPkG2RiK+l/L8+i8qQcEDk=;
+	s=arc-20240116; t=1728993294; c=relaxed/simple;
+	bh=Stg2hl1mO4OiL6y/SUbSIbCLg8Z6clGbVUmmsQV4A+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXOo14Pth/HBZ8Ip0ImM9kAdeZAjWTC2WQgBUFomJTF2OOIVgioVvcG1LpcLzFDnk9bQHHryg/FkJW7BeI0eNDw2dInO8XhmoJp4ATIv8DYpTIpTr3cmsUGU7DbrMN/3ReMVS0TLrm11TC7atWA4f18kbHcAuicHapACdnvFaSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0F8ynvL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CFibTIhzA+D0mLcgk4FN6uidSKMf0ZLlRP00b/8n6azZSSeFWx0Uzu/Q/TOoIvlzGmKCsjqx1GNCBl963pp049KvwwAPRkMMdODd2s2hoGoCDBxBLrdd4ytzRXvoN/BTJ1ng9UTObRoClZUiVr5cwYlplK2NAXmI+0I8CLJzTOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O5kl0D+p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0F8ynvL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B464C4CEC6;
-	Tue, 15 Oct 2024 11:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O5kl0D+p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF802C4CEC6;
+	Tue, 15 Oct 2024 11:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993290;
-	bh=QdxkpItk8tfE5RoxI2BZnnPkG2RiK+l/L8+i8qQcEDk=;
+	s=korg; t=1728993294;
+	bh=Stg2hl1mO4OiL6y/SUbSIbCLg8Z6clGbVUmmsQV4A+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X0F8ynvL/FUo4lMUa5Hdtygk/gAEk34pbnFn/vtVjrgCwEXoglRcfNj+nYyiGZwV3
-	 lE1vwP4jqANNBkhAq4Zpl0j6dI8AJjdewRC3YToKS8ePLeZMgy/FiegcsyRvEw3Gvt
-	 fRH87l6O8Sb7hvhV2M310b3eO0md/ysHJZYknMNA=
+	b=O5kl0D+pmxMIxuJK+waCfS8NSU87tSacxxv4q2tSOmN5POWZg45hkCjK5jmnfOeFt
+	 0Ycsv4Z2NfRMKAPv4VnzWqxmro0aUHM8U8g62vQAJpzpAzQLO942gmRbWG2BPenGbI
+	 5ttwW0aTd6gWha0aycfXYECjoFqJv0HeKFlvtLX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
-	Kees Cook <kees@kernel.org>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 367/691] mm: only enforce minimum stack gap size if its sensible
-Date: Tue, 15 Oct 2024 13:25:15 +0200
-Message-ID: <20241015112454.912151219@linuxfoundation.org>
+	Tommy Huang <tommy_huang@aspeedtech.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.15 368/691] i2c: aspeed: Update the stop sw state when the bus recovery occurs
+Date: Tue, 15 Oct 2024 13:25:16 +0200
+Message-ID: <20241015112454.951889811@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -56,51 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Gow <davidgow@google.com>
+From: Tommy Huang <tommy_huang@aspeedtech.com>
 
-commit 69b50d4351ed924f29e3d46b159e28f70dfc707f upstream.
+commit 93701d3b84ac5f3ea07259d4ced405c53d757985 upstream.
 
-The generic mmap_base code tries to leave a gap between the top of the
-stack and the mmap base address, but enforces a minimum gap size (MIN_GAP)
-of 128MB, which is too large on some setups.  In particular, on arm tasks
-without ADDR_LIMIT_32BIT, the STACK_TOP value is less than 128MB, so it's
-impossible to fit such a gap in.
+When the i2c bus recovery occurs, driver will send i2c stop command
+in the scl low condition. In this case the sw state will still keep
+original situation. Under multi-master usage, i2c bus recovery will
+be called when i2c transfer timeout occurs. Update the stop command
+calling with aspeed_i2c_do_stop function to update master_state.
 
-Only enforce this minimum if MIN_GAP < MAX_GAP, as we'd prefer to honour
-MAX_GAP, which is defined proportionally, so scales better and always
-leaves us with both _some_ stack space and some room for mmap.
-
-This fixes the usercopy KUnit test suite on 32-bit arm, as it doesn't set
-any personality flags so gets the default (in this case 26-bit) task size.
-This test can be run with: ./tools/testing/kunit/kunit.py run --arch arm
-usercopy --make_options LLVM=1
-
-Link: https://lkml.kernel.org/r/20240803074642.1849623-2-davidgow@google.com
-Fixes: dba79c3df4a2 ("arm: use generic mmap top-down layout and brk randomization")
-Signed-off-by: David Gow <davidgow@google.com>
-Reviewed-by: Kees Cook <kees@kernel.org>
-Cc: Alexandre Ghiti <alex@ghiti.fr>
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: f327c686d3ba ("i2c: aspeed: added driver for Aspeed I2C")
+Cc: stable@vger.kernel.org # v4.13+
+Signed-off-by: Tommy Huang <tommy_huang@aspeedtech.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/util.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-aspeed.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/mm/util.c
-+++ b/mm/util.c
-@@ -430,7 +430,7 @@ static unsigned long mmap_base(unsigned
- 	if (gap + pad > gap)
- 		gap += pad;
+--- a/drivers/i2c/busses/i2c-aspeed.c
++++ b/drivers/i2c/busses/i2c-aspeed.c
+@@ -172,6 +172,13 @@ struct aspeed_i2c_bus {
  
--	if (gap < MIN_GAP)
-+	if (gap < MIN_GAP && MIN_GAP < MAX_GAP)
- 		gap = MIN_GAP;
- 	else if (gap > MAX_GAP)
- 		gap = MAX_GAP;
+ static int aspeed_i2c_reset(struct aspeed_i2c_bus *bus);
+ 
++/* precondition: bus.lock has been acquired. */
++static void aspeed_i2c_do_stop(struct aspeed_i2c_bus *bus)
++{
++	bus->master_state = ASPEED_I2C_MASTER_STOP;
++	writel(ASPEED_I2CD_M_STOP_CMD, bus->base + ASPEED_I2C_CMD_REG);
++}
++
+ static int aspeed_i2c_recover_bus(struct aspeed_i2c_bus *bus)
+ {
+ 	unsigned long time_left, flags;
+@@ -189,7 +196,7 @@ static int aspeed_i2c_recover_bus(struct
+ 			command);
+ 
+ 		reinit_completion(&bus->cmd_complete);
+-		writel(ASPEED_I2CD_M_STOP_CMD, bus->base + ASPEED_I2C_CMD_REG);
++		aspeed_i2c_do_stop(bus);
+ 		spin_unlock_irqrestore(&bus->lock, flags);
+ 
+ 		time_left = wait_for_completion_timeout(
+@@ -386,13 +393,6 @@ static void aspeed_i2c_do_start(struct a
+ }
+ 
+ /* precondition: bus.lock has been acquired. */
+-static void aspeed_i2c_do_stop(struct aspeed_i2c_bus *bus)
+-{
+-	bus->master_state = ASPEED_I2C_MASTER_STOP;
+-	writel(ASPEED_I2CD_M_STOP_CMD, bus->base + ASPEED_I2C_CMD_REG);
+-}
+-
+-/* precondition: bus.lock has been acquired. */
+ static void aspeed_i2c_next_msg_or_stop(struct aspeed_i2c_bus *bus)
+ {
+ 	if (bus->msgs_index + 1 < bus->msgs_count) {
 
 
