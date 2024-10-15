@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FA820721A;
-	Tue, 15 Oct 2024 13:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C90C1B2183;
+	Tue, 15 Oct 2024 13:22:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998542; cv=none; b=tG+1942LdX39Y17cfwrpkP0k+vUwsnIiFy5cCY/7Sw+lY/kGhoeVcQshy3qc8NL/Tce7+TeCaDkR7FofJ64yHkg/lcXdpK8mvbncc+S+8e9L9ri1x44dhE1ejk8HhNhb2C/VlPh968Npkk1CllzIva8ILSbF7iEClJdFHcMRgPo=
+	t=1728998545; cv=none; b=eOa5cIKfVZ7j+Bveff5hPajGu4AUEjgorBYSzOAZWdlkc3amAxkjGFbCeH+xGkc9BZi/hvo2K9f+Jfn8IlFcRKmzbkma9GbnDm4QA1Y34MsGMbZXXnXhdJ2gv5OrOG+qNlqeZhLAaaAOK63PUWyFedUb1lPQ3jbhYqQav6yWLM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998542; c=relaxed/simple;
-	bh=6J4kBnTSQdPjBqMw/n/HvjNOuZbhPNhOVknqjfuwsFs=;
+	s=arc-20240116; t=1728998545; c=relaxed/simple;
+	bh=xV4KsVmIZVYaMR0c/Jbgdj57P5/pXiAQMwhGOEC4uJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G3UKDiTzKIC3wTBFjkdlclWH0g8ooTBBq5PGVWlQuqhBiOptx+cjhXtJ2lRlBvpw0fIHB8dG+sz3OJ2XM+RTyg/M4N2wCEaimIN+oqhpJNVLpywxGtRcv8jDSDKL1i45nBg6/B4IdEuBc9rvzKqz9jkVHTpYOJCWTWxIMsI1UMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kbPMiVEU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BckKn7WGcsSWcNuXr5Vq9NaD9SHuVK8X48S+N0wkDHJc1e6HN5HflX3xOgN+W48GV3XfyNVNyFby9oSeW/odY7NPVMO/wgvE5YrSO0qmukJsPFAILug7bCK773pBdPpleVIFrc2wQx+umkdyumQ0FM3wb5rQsRdu9FV+jsFZN9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4OtxyWO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kbPMiVEU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8725AC4CEC6;
-	Tue, 15 Oct 2024 13:22:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4OtxyWO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2657C4CEC6;
+	Tue, 15 Oct 2024 13:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998542;
-	bh=6J4kBnTSQdPjBqMw/n/HvjNOuZbhPNhOVknqjfuwsFs=;
+	s=korg; t=1728998545;
+	bh=xV4KsVmIZVYaMR0c/Jbgdj57P5/pXiAQMwhGOEC4uJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kbPMiVEUVaqXc7TMLuR9AR+HZu7dfEgXOo1CdsheM7jbfJi4B4pa62WgyCArPDmEK
-	 SSeWqzpp7AS+KudCNst4qpx+f+30ir/f3+dj1h7se8h1BwgBWkEDwERl3xtDsT8stW
-	 lnhQvJFBe1OcWCfUUx9lt+w0vjITkQSQj8o3D+1Q=
+	b=n4OtxyWOt96ndnxIcLPbEwBhO2bzfPnR6phhFUKm4+U1dv1I9IykmDMsQbPve+k6J
+	 mUKTaeaDZqQr7hWQBWS8VZ4mAiCdMMDLZVLfjXt3l/pGNlllFCs3lj23gJ8Oitdnni
+	 b7oQ+uhO4XhvAjePZFHcK/obnTVL6DCApZ1n6jMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo van Lil <inguin@gmx.de>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Geumhwan Yu <geumhwan.yu@samsung.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 476/518] net: phy: dp83869: fix memory corruption when enabling fiber
-Date: Tue, 15 Oct 2024 14:46:20 +0200
-Message-ID: <20241015123935.376833400@linuxfoundation.org>
+Subject: [PATCH 5.10 477/518] tcp: fix to allow timestamp undo if no retransmits were sent
+Date: Tue, 15 Oct 2024 14:46:21 +0200
+Message-ID: <20241015123935.415095585@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,41 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ingo van Lil <inguin@gmx.de>
+From: Neal Cardwell <ncardwell@google.com>
 
-[ Upstream commit a842e443ca8184f2dc82ab307b43a8b38defd6a5 ]
+[ Upstream commit e37ab7373696e650d3b6262a5b882aadad69bb9e ]
 
-When configuring the fiber port, the DP83869 PHY driver incorrectly
-calls linkmode_set_bit() with a bit mask (1 << 10) rather than a bit
-number (10). This corrupts some other memory location -- in case of
-arm64 the priv pointer in the same structure.
+Fix the TCP loss recovery undo logic in tcp_packet_delayed() so that
+it can trigger undo even if TSQ prevents a fast recovery episode from
+reaching tcp_retransmit_skb().
 
-Since the advertising flags are updated from supported at the end of the
-function the incorrect line isn't needed at all and can be removed.
+Geumhwan Yu <geumhwan.yu@samsung.com> recently reported that after
+this commit from 2019:
 
-Fixes: a29de52ba2a1 ("net: dp83869: Add ability to advertise Fiber connection")
-Signed-off-by: Ingo van Lil <inguin@gmx.de>
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241002161807.440378-1-inguin@gmx.de
+commit bc9f38c8328e ("tcp: avoid unconditional congestion window undo
+on SYN retransmit")
+
+...and before this fix we could have buggy scenarios like the
+following:
+
++ Due to reordering, a TCP connection receives some SACKs and enters a
+  spurious fast recovery.
+
++ TSQ prevents all invocations of tcp_retransmit_skb(), because many
+  skbs are queued in lower layers of the sending machine's network
+  stack; thus tp->retrans_stamp remains 0.
+
++ The connection receives a TCP timestamp ECR value echoing a
+  timestamp before the fast recovery, indicating that the fast
+  recovery was spurious.
+
++ The connection fails to undo the spurious fast recovery because
+  tp->retrans_stamp is 0, and thus tcp_packet_delayed() returns false,
+  due to the new logic in the 2019 commit: commit bc9f38c8328e ("tcp:
+  avoid unconditional congestion window undo on SYN retransmit")
+
+This fix tweaks the logic to be more similar to the
+tcp_packet_delayed() logic before bc9f38c8328e, except that we take
+care not to be fooled by the FLAG_SYN_ACKED code path zeroing out
+tp->retrans_stamp (the bug noted and fixed by Yuchung in
+bc9f38c8328e).
+
+Note that this returns the high-level behavior of tcp_packet_delayed()
+to again match the comment for the function, which says: "Nothing was
+retransmitted or returned timestamp is less than timestamp of the
+first retransmission." Note that this comment is in the original
+2005-04-16 Linux git commit, so this is evidently long-standing
+behavior.
+
+Fixes: bc9f38c8328e ("tcp: avoid unconditional congestion window undo on SYN retransmit")
+Reported-by: Geumhwan Yu <geumhwan.yu@samsung.com>
+Diagnosed-by: Geumhwan Yu <geumhwan.yu@samsung.com>
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Yuchung Cheng <ycheng@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241001200517.2756803-2-ncardwell.sw@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/dp83869.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/ipv4/tcp_input.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/dp83869.c b/drivers/net/phy/dp83869.c
-index 65b69ff35e403..01b593e0bb4a1 100644
---- a/drivers/net/phy/dp83869.c
-+++ b/drivers/net/phy/dp83869.c
-@@ -610,7 +610,6 @@ static int dp83869_configure_fiber(struct phy_device *phydev,
- 		     phydev->supported);
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 06c03b21500fb..93756b153580c 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -2423,8 +2423,22 @@ static bool tcp_skb_spurious_retrans(const struct tcp_sock *tp,
+  */
+ static inline bool tcp_packet_delayed(const struct tcp_sock *tp)
+ {
+-	return tp->retrans_stamp &&
+-	       tcp_tsopt_ecr_before(tp, tp->retrans_stamp);
++	const struct sock *sk = (const struct sock *)tp;
++
++	if (tp->retrans_stamp &&
++	    tcp_tsopt_ecr_before(tp, tp->retrans_stamp))
++		return true;  /* got echoed TS before first retransmission */
++
++	/* Check if nothing was retransmitted (retrans_stamp==0), which may
++	 * happen in fast recovery due to TSQ. But we ignore zero retrans_stamp
++	 * in TCP_SYN_SENT, since when we set FLAG_SYN_ACKED we also clear
++	 * retrans_stamp even if we had retransmitted the SYN.
++	 */
++	if (!tp->retrans_stamp &&	   /* no record of a retransmit/SYN? */
++	    sk->sk_state != TCP_SYN_SENT)  /* not the FLAG_SYN_ACKED case? */
++		return true;  /* nothing was retransmitted */
++
++	return false;
+ }
  
- 	linkmode_set_bit(ETHTOOL_LINK_MODE_FIBRE_BIT, phydev->supported);
--	linkmode_set_bit(ADVERTISED_FIBRE, phydev->advertising);
- 
- 	if (dp83869->mode == DP83869_RGMII_1000_BASE) {
- 		linkmode_set_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
+ /* Undo procedures. */
 -- 
 2.43.0
 
