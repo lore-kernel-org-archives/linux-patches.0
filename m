@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0333C1C07ED;
-	Tue, 15 Oct 2024 13:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D291C07ED;
+	Tue, 15 Oct 2024 13:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998012; cv=none; b=JTqTv332R/ijpXbF8JOB3ff0p8GREQZYwDo2gB0JD13SqyI35k/vB15x1OQVxsDox1NoNiFsiJ2PY7MI5gzq6tXC233eiw6Zz2QVlRxZHDRl2m7NOjnOF3/PSt2vCJ7v50JDE7TJrDn9WVibTM/L/Wz1MhgoBU36rIKBikQPZ0s=
+	t=1728998015; cv=none; b=HVKhgoKNIJ631n9S/QMw0kCFqr32fdIcRnbnoMskEbFCK3FANJbhmWuybP2hqkYxLU0nXqDM2qobPrhh5OzRqgRWn4gAput36xa0ewXYFglHU/hQjhRuOGJoJkVAZu9SsQLKKdGaIgmqp5upnnOmnh59wMQ9BHJC46ZMbr5s7tE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998012; c=relaxed/simple;
-	bh=hq/RDSwd40QLrSZNn2WUPHfghWoR2kDC6LF5euU+L7M=;
+	s=arc-20240116; t=1728998015; c=relaxed/simple;
+	bh=IwbwkmWfdF5r57BD9U2pbauofWXqqUt6WIq9HLY1Qvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KysXbdRrYpxuZSss+TLJZlaYqq9HRM5XnVch2HnjbsM3BnoBDN32nYNfbLFQOh3+/5TYOKQioIZSMmKZgBcZMPi7vc2UhJtvASA/P9atu+Lv6Rh8f7gE6CjwtiuUN7ZttAYIDnBpnsqdiAFhmRFBv+lzWjCiAUX0du5uOec/YBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YT2q5W2e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g81tAX0i969uB6OIfYJdF9cC1eH9/rKNgzL4Jt7wwwIOlE5gGeAL0cgcW4JxDlaWnhG322eGLhMMVqQWAm5BRA5GgWe9pX15WX58yfBV15PntMBr0CiLyEuo654xRbDw/ClEg/GzV3/FRqlBmokhkIsizcV3MbgkZiywIpLT+iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ke7ZS/dn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YT2q5W2e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BCAC4CEC6;
-	Tue, 15 Oct 2024 13:13:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ke7ZS/dn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA60C4CEC6;
+	Tue, 15 Oct 2024 13:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998011;
-	bh=hq/RDSwd40QLrSZNn2WUPHfghWoR2kDC6LF5euU+L7M=;
+	s=korg; t=1728998015;
+	bh=IwbwkmWfdF5r57BD9U2pbauofWXqqUt6WIq9HLY1Qvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YT2q5W2eZFrSgaC65SIDlApRlMKxoFEOR4kVtCdhmPG6+UtJOQAKeQw/paIQDNSh1
-	 /6weVq0ItSFbpKZ42kh8mg215LFdkqL87UbJggsFbsiqhNznhtrkdMrog0DQ8a/W8O
-	 ehArnS37t83JvIRmFOB64Ra4af6NrLWuGT9y9US0=
+	b=ke7ZS/dn7AQIyytwkyYwpeJOV1pfP31+/Nca8swvTIm3QXZvl8oTrYI4XS1JnA9dC
+	 UcMxodF44yoGrq8tvRdi6jhIrjwdfrCxPos/OlmZvE5EXx4m8y2Ufv1dUvOSKiCv8J
+	 hbNMOOnvivQF+SknSqDnH+u1c8g3v933Akbpt5vE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+02341e0daa42a15ce130@syzkaller.appspotmail.com,
+	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 354/518] spi: spi-imx: Fix pm_runtime_set_suspended() with runtime pm enabled
-Date: Tue, 15 Oct 2024 14:44:18 +0200
-Message-ID: <20241015123930.630288648@linuxfoundation.org>
+Subject: [PATCH 5.10 337/518] jfs: Fix uninit-value access of new_ea in ea_buffer
+Date: Tue, 15 Oct 2024 14:44:01 +0200
+Message-ID: <20241015123929.979853956@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,37 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-[ Upstream commit b6e05ba0844139dde138625906015c974c86aa93 ]
+[ Upstream commit 2b59ffad47db1c46af25ccad157bb3b25147c35c ]
 
-It is not valid to call pm_runtime_set_suspended() for devices
-with runtime PM enabled because it returns -EAGAIN if it is enabled
-already and working. So, call pm_runtime_disable() before to fix it.
+syzbot reports that lzo1x_1_do_compress is using uninit-value:
 
-Fixes: 43b6bf406cd0 ("spi: imx: fix runtime pm support for !CONFIG_PM")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20240923040015.3009329-2-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+=====================================================
+BUG: KMSAN: uninit-value in lzo1x_1_do_compress+0x19f9/0x2510 lib/lzo/lzo1x_compress.c:178
+
+...
+
+Uninit was stored to memory at:
+ ea_put fs/jfs/xattr.c:639 [inline]
+
+...
+
+Local variable ea_buf created at:
+ __jfs_setxattr+0x5d/0x1ae0 fs/jfs/xattr.c:662
+ __jfs_xattr_set+0xe6/0x1f0 fs/jfs/xattr.c:934
+
+=====================================================
+
+The reason is ea_buf->new_ea is not initialized properly.
+
+Fix this by using memset to empty its content at the beginning
+in ea_get().
+
+Reported-by: syzbot+02341e0daa42a15ce130@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=02341e0daa42a15ce130
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-imx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/xattr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-index 8566da12d15e3..f1a0073a8700f 100644
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -1756,8 +1756,8 @@ static int spi_imx_probe(struct platform_device *pdev)
- 		spi_imx_sdma_exit(spi_imx);
- out_runtime_pm_put:
- 	pm_runtime_dont_use_autosuspend(spi_imx->dev);
--	pm_runtime_set_suspended(&pdev->dev);
- 	pm_runtime_disable(spi_imx->dev);
-+	pm_runtime_set_suspended(&pdev->dev);
+diff --git a/fs/jfs/xattr.c b/fs/jfs/xattr.c
+index aea5531559c06..4ebee6e4dc1f9 100644
+--- a/fs/jfs/xattr.c
++++ b/fs/jfs/xattr.c
+@@ -434,6 +434,8 @@ static int ea_get(struct inode *inode, struct ea_buffer *ea_buf, int min_size)
+ 	int rc;
+ 	int quota_allocation = 0;
  
- 	clk_disable_unprepare(spi_imx->clk_ipg);
- out_put_per:
++	memset(&ea_buf->new_ea, 0, sizeof(ea_buf->new_ea));
++
+ 	/* When fsck.jfs clears a bad ea, it doesn't clear the size */
+ 	if (ji->ea.flag == 0)
+ 		ea_size = 0;
 -- 
 2.43.0
 
