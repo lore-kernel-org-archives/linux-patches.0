@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AAB1E6339;
-	Tue, 15 Oct 2024 11:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9E41D8DEA;
+	Tue, 15 Oct 2024 11:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993585; cv=none; b=N/XBbqTweLzAyOPq4ZLyBePoKHJYef6l6owDc720EpQnWZhWXP4696r8shsOyMub/ikyqs43ZoIqnfYokWsB7Yzb7S0UYW9B72n2I78GmizyqDmPG/ywqzgb5BkOvoxSeiHzHcrdtaZJ5jBt0+eu7UMHBFCD5xsI/x456Nb+s9k=
+	t=1728993588; cv=none; b=IKLLjyhTozmPzKcnkia3lzKw5rw760Juz4hUxgFKRyimhU2nfb2vcBzw0Hk3PRJZD2q/lAhzw9sEN9R3CyAVtHj6eNLwngmFZ8h3r3FT+P7tLB1D+ZH7ctwaCe5punSgjFwRVzmQSLi7IYor6BGFhGFmIkLb8BC8fe7PrAqv18Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993585; c=relaxed/simple;
-	bh=97kZ3YND6ufdJlCHuSEPqmnjS2j4wd53pa1Yd/stxqg=;
+	s=arc-20240116; t=1728993588; c=relaxed/simple;
+	bh=9r4DDr5HDDxCiUPuOOSq9bfn8CB0opW4pmPy+p/1xg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eF93LasNeO+z2/3wdWJpREAGQWrAGUe7w1mWFG6PnIxvOI7bA+MeWuQYBC8nM555hfd7bnw0ouXvv0H+xqd3jhsm7Uq6cNg95TNaiAaNc+2kEgkzaqJk93z4UP0atSeMgWvyrVfPJ31k4GBD9AI8DzjLjMNTOLZqxO4438bw+ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qo46A2bG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L6hsjuj2HjKy4xdnextcbkbpWY5JA1rSkATHpN9WQFn/LxkDKdPzzucv+vttu0YAFqDhjZt2XsMmoW9ke8Nj5W73fdMwrXatwagD4sfer22no8bT/MA7CUTpovTzQlb0AxrD6fK0UvHqcXkVDGPqqpN7hXJNp7FnUci2c1AXV5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G07b2Mpg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qo46A2bG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6417BC4CEC6;
-	Tue, 15 Oct 2024 11:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G07b2Mpg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89E3C4CEC6;
+	Tue, 15 Oct 2024 11:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993584;
-	bh=97kZ3YND6ufdJlCHuSEPqmnjS2j4wd53pa1Yd/stxqg=;
+	s=korg; t=1728993588;
+	bh=9r4DDr5HDDxCiUPuOOSq9bfn8CB0opW4pmPy+p/1xg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qo46A2bGuMcDykcL5Rz6weIo5RZ93/2VbRgDRiwubEAtkHsLyWzg10gWPsi7pNuFc
-	 Vhy9uDVSYFY3jfvyvXaikyUcfaneIhHg2+DLF2TvrJF+H33AGsME2IECeQnomHPYq4
-	 fJDUOMMPXxUMS2Gxszz4+YyzZ0BH+FAlq8oPHmgY=
+	b=G07b2MpgBAMFq76Vu4F4wx3+9vjGLsFENgBrBo7ouR9U/WCAH/0FJ6uG/DBQY5BdT
+	 POgEjxHtGmNRF4FLIcv4cRD4BZiYTVAD9gyyqfvYkN1WrhIXVgQn+d92022E8Qw8o8
+	 U43e04oDV/oLS63zYgb8FV4fZbRrA6pfN0xV9xGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seiji Nishikawa <snishika@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sanjay K Kumar <sanjay.k.kumar@intel.com>,
+	Jacob Pan <jacob.jun.pan@linux.intel.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 414/691] ACPI: PAD: fix crash in exit_round_robin()
-Date: Tue, 15 Oct 2024 13:26:02 +0200
-Message-ID: <20241015112456.774611279@linuxfoundation.org>
+Subject: [PATCH 5.15 449/691] iommu/vt-d: Fix potential lockup if qi_submit_sync called with 0 count
+Date: Tue, 15 Oct 2024 13:26:37 +0200
+Message-ID: <20241015112458.169093078@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,94 +54,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seiji Nishikawa <snishika@redhat.com>
+From: Sanjay K Kumar <sanjay.k.kumar@intel.com>
 
-[ Upstream commit 0a2ed70a549e61c5181bad5db418d223b68ae932 ]
+[ Upstream commit 3cf74230c139f208b7fb313ae0054386eee31a81 ]
 
-The kernel occasionally crashes in cpumask_clear_cpu(), which is called
-within exit_round_robin(), because when executing clear_bit(nr, addr) with
-nr set to 0xffffffff, the address calculation may cause misalignment within
-the memory, leading to access to an invalid memory address.
+If qi_submit_sync() is invoked with 0 invalidation descriptors (for
+instance, for DMA draining purposes), we can run into a bug where a
+submitting thread fails to detect the completion of invalidation_wait.
+Subsequently, this led to a soft lockup. Currently, there is no impact
+by this bug on the existing users because no callers are submitting
+invalidations with 0 descriptors. This fix will enable future users
+(such as DMA drain) calling qi_submit_sync() with 0 count.
 
-----------
-BUG: unable to handle kernel paging request at ffffffffe0740618
-        ...
-CPU: 3 PID: 2919323 Comm: acpi_pad/14 Kdump: loaded Tainted: G           OE  X --------- -  - 4.18.0-425.19.2.el8_7.x86_64 #1
-        ...
-RIP: 0010:power_saving_thread+0x313/0x411 [acpi_pad]
-Code: 89 cd 48 89 d3 eb d1 48 c7 c7 55 70 72 c0 e8 64 86 b0 e4 c6 05 0d a1 02 00 01 e9 bc fd ff ff 45 89 e4 42 8b 04 a5 20 82 72 c0 <f0> 48 0f b3 05 f4 9c 01 00 42 c7 04 a5 20 82 72 c0 ff ff ff ff 31
-RSP: 0018:ff72a5d51fa77ec8 EFLAGS: 00010202
-RAX: 00000000ffffffff RBX: ff462981e5d8cb80 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000246 RDI: 0000000000000246
-RBP: ff46297556959d80 R08: 0000000000000382 R09: ff46297c8d0f38d8
-R10: 0000000000000000 R11: 0000000000000001 R12: 000000000000000e
-R13: 0000000000000000 R14: ffffffffffffffff R15: 000000000000000e
-FS:  0000000000000000(0000) GS:ff46297a800c0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffffffe0740618 CR3: 0000007e20410004 CR4: 0000000000771ee0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- ? acpi_pad_add+0x120/0x120 [acpi_pad]
- kthread+0x10b/0x130
- ? set_kthread_struct+0x50/0x50
- ret_from_fork+0x1f/0x40
-        ...
-CR2: ffffffffe0740618
+Suppose thread T1 invokes qi_submit_sync() with non-zero descriptors, while
+concurrently, thread T2 calls qi_submit_sync() with zero descriptors. Both
+threads then enter a while loop, waiting for their respective descriptors
+to complete. T1 detects its completion (i.e., T1's invalidation_wait status
+changes to QI_DONE by HW) and proceeds to call reclaim_free_desc() to
+reclaim all descriptors, potentially including adjacent ones of other
+threads that are also marked as QI_DONE.
 
-crash> dis -lr ffffffffc0726923
-        ...
-/usr/src/debug/kernel-4.18.0-425.19.2.el8_7/linux-4.18.0-425.19.2.el8_7.x86_64/./include/linux/cpumask.h: 114
-0xffffffffc0726918 <power_saving_thread+776>:	mov    %r12d,%r12d
-/usr/src/debug/kernel-4.18.0-425.19.2.el8_7/linux-4.18.0-425.19.2.el8_7.x86_64/./include/linux/cpumask.h: 325
-0xffffffffc072691b <power_saving_thread+779>:	mov    -0x3f8d7de0(,%r12,4),%eax
-/usr/src/debug/kernel-4.18.0-425.19.2.el8_7/linux-4.18.0-425.19.2.el8_7.x86_64/./arch/x86/include/asm/bitops.h: 80
-0xffffffffc0726923 <power_saving_thread+787>:	lock btr %rax,0x19cf4(%rip)        # 0xffffffffc0740620 <pad_busy_cpus_bits>
+During this time, while T2 is waiting to acquire the qi->q_lock, the IOMMU
+hardware may complete the invalidation for T2, setting its status to
+QI_DONE. However, if T1's execution of reclaim_free_desc() frees T2's
+invalidation_wait descriptor and changes its status to QI_FREE, T2 will
+not observe the QI_DONE status for its invalidation_wait and will
+indefinitely remain stuck.
 
-crash> px tsk_in_cpu[14]
-$66 = 0xffffffff
+This soft lockup does not occur when only non-zero descriptors are
+submitted.In such cases, invalidation descriptors are interspersed among
+wait descriptors with the status QI_IN_USE, acting as barriers. These
+barriers prevent the reclaim code from mistakenly freeing descriptors
+belonging to other submitters.
 
-crash> px 0xffffffffc072692c+0x19cf4
-$99 = 0xffffffffc0740620
+Considered the following example timeline:
+	T1			T2
+========================================
+	ID1
+	WD1
+	while(WD1!=QI_DONE)
+	unlock
+				lock
+	WD1=QI_DONE*		WD2
+				while(WD2!=QI_DONE)
+				unlock
+	lock
+	WD1==QI_DONE?
+	ID1=QI_DONE		WD2=DONE*
+	reclaim()
+	ID1=FREE
+	WD1=FREE
+	WD2=FREE
+	unlock
+				soft lockup! T2 never sees QI_DONE in WD2
 
-crash> sym 0xffffffffc0740620
-ffffffffc0740620 (b) pad_busy_cpus_bits [acpi_pad]
+Where:
+ID = invalidation descriptor
+WD = wait descriptor
+* Written by hardware
 
-crash> px pad_busy_cpus_bits[0]
-$42 = 0xfffc0
-----------
+The root of the problem is that the descriptor status QI_DONE flag is used
+for two conflicting purposes:
+1. signal a descriptor is ready for reclaim (to be freed)
+2. signal by the hardware that a wait descriptor is complete
 
-To fix this, ensure that tsk_in_cpu[tsk_index] != -1 before calling
-cpumask_clear_cpu() in exit_round_robin(), just as it is done in
-round_robin_cpu().
+The solution (in this patch) is state separation by using QI_FREE flag
+for #1.
 
-Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
-Link: https://patch.msgid.link/20240825141352.25280-1-snishika@redhat.com
-[ rjw: Subject edit, avoid updates to the same value ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Once a thread's invalidation descriptors are complete, their status would
+be set to QI_FREE. The reclaim_free_desc() function would then only
+free descriptors marked as QI_FREE instead of those marked as
+QI_DONE. This change ensures that T2 (from the previous example) will
+correctly observe the completion of its invalidation_wait (marked as
+QI_DONE).
+
+Signed-off-by: Sanjay K Kumar <sanjay.k.kumar@intel.com>
+Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20240728210059.1964602-1-jacob.jun.pan@linux.intel.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_pad.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/iommu/intel/dmar.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/acpi_pad.c b/drivers/acpi/acpi_pad.c
-index f45979aa2d648..76bb9836b6497 100644
---- a/drivers/acpi/acpi_pad.c
-+++ b/drivers/acpi/acpi_pad.c
-@@ -129,8 +129,10 @@ static void exit_round_robin(unsigned int tsk_index)
+diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
+index 1134aa24d67f1..7109d86491289 100644
+--- a/drivers/iommu/intel/dmar.c
++++ b/drivers/iommu/intel/dmar.c
+@@ -1198,9 +1198,7 @@ static void free_iommu(struct intel_iommu *iommu)
+  */
+ static inline void reclaim_free_desc(struct q_inval *qi)
  {
- 	struct cpumask *pad_busy_cpus = to_cpumask(pad_busy_cpus_bits);
+-	while (qi->desc_status[qi->free_tail] == QI_DONE ||
+-	       qi->desc_status[qi->free_tail] == QI_ABORT) {
+-		qi->desc_status[qi->free_tail] = QI_FREE;
++	while (qi->desc_status[qi->free_tail] == QI_FREE && qi->free_tail != qi->free_head) {
+ 		qi->free_tail = (qi->free_tail + 1) % QI_LENGTH;
+ 		qi->free_cnt++;
+ 	}
+@@ -1435,8 +1433,16 @@ int qi_submit_sync(struct intel_iommu *iommu, struct qi_desc *desc,
+ 		raw_spin_lock(&qi->q_lock);
+ 	}
  
--	cpumask_clear_cpu(tsk_in_cpu[tsk_index], pad_busy_cpus);
--	tsk_in_cpu[tsk_index] = -1;
-+	if (tsk_in_cpu[tsk_index] != -1) {
-+		cpumask_clear_cpu(tsk_in_cpu[tsk_index], pad_busy_cpus);
-+		tsk_in_cpu[tsk_index] = -1;
-+	}
- }
+-	for (i = 0; i < count; i++)
+-		qi->desc_status[(index + i) % QI_LENGTH] = QI_DONE;
++	/*
++	 * The reclaim code can free descriptors from multiple submissions
++	 * starting from the tail of the queue. When count == 0, the
++	 * status of the standalone wait descriptor at the tail of the queue
++	 * must be set to QI_FREE to allow the reclaim code to proceed.
++	 * It is also possible that descriptors from one of the previous
++	 * submissions has to be reclaimed by a subsequent submission.
++	 */
++	for (i = 0; i <= count; i++)
++		qi->desc_status[(index + i) % QI_LENGTH] = QI_FREE;
  
- static unsigned int idle_pct = 5; /* percentage */
+ 	reclaim_free_desc(qi);
+ 	raw_spin_unlock_irqrestore(&qi->q_lock, flags);
 -- 
 2.43.0
 
