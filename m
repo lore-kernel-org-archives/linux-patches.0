@@ -1,56 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547E21E3DE8;
-	Tue, 15 Oct 2024 11:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A8B1EC014;
+	Tue, 15 Oct 2024 11:45:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992729; cv=none; b=OPTvUhLZTFJr33QqwB6SQVSYDcryouYFR96RjaIXHJCDCl3v/MRSQw8qObswSdrFu5JnBVmcFFyG/1FS/XicA1lSFe3/OydIubUpPIqXoq2vrRlh2x9PxjZPMiv1TwE+neGdtH1g8dUbB0zsJXoIEwBuspp/F4xP2fVHnN9y/a0=
+	t=1728992732; cv=none; b=qxrN50dYaY/o5pmpIC9TLfaNPO5f0P38YeZ4JvDOpaHQP8pfrQVWcVaOlOXQskFeD76YUm8AWH4MvFtsRJMrGVf9Am645NAwr88BaUN9a+F9syHYORaA90iP3N3OeA5NaGe/hNQvO34BYfUmScVSj57TCvzeLO/Dc1Y/YxkV//E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992729; c=relaxed/simple;
-	bh=RrD4k4BLRHX3QIj6uSjQ24DGF+jfaY3+VCozPJB3mhQ=;
+	s=arc-20240116; t=1728992732; c=relaxed/simple;
+	bh=0FAsMIml8DRc7G5Gj/qNZyBLBK+TfDNmdh0/wSmD/HY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rcf65jMsh7rxAFs+1ryTD83SSgFHHuDvFKgoD9Ey1IrEX450Lve8pJkYkgiLTzV7VQx6nigrvsWLBXCYHbPPmy/K5Lr9dGSKUXDfBzajPoAyY82WLlOJLZLPO1lkfn+DnVAS75D5W7gCTHXXeIWQs7urOICs7e2p6XoCwotIrCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15CWO/2l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MUbeNQf0w7w4graZY4i88y0Cg9lahUGOf5qmmVDRcQTc/iUiZZHi7NyZwaLHsVwnN0yMknf0N2sjxxxEMuzE9VTwoDrw/tPxaAim6UTy9wsSx3vAB/lc6brtAzdqQ7d41HIvmarTPQvV3GOlVCcX3QAm3ep9BsPqNdg297Mkfb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNUksopc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15CWO/2l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988CAC4CEC6;
-	Tue, 15 Oct 2024 11:45:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNUksopc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5ECC4CECE;
+	Tue, 15 Oct 2024 11:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992729;
-	bh=RrD4k4BLRHX3QIj6uSjQ24DGF+jfaY3+VCozPJB3mhQ=;
+	s=korg; t=1728992732;
+	bh=0FAsMIml8DRc7G5Gj/qNZyBLBK+TfDNmdh0/wSmD/HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=15CWO/2lfbJAHfEwnDJPGb41ZNd3Lw5qpKKlV8QjWdpZRtio9wAE0jfdggMROvvzt
-	 axvbZzEsZVNm+O0u7K5X9g0CJbVq4atM0jS95rJaHTt5iQ20mP6rRld+35jNg0O/SA
-	 fRyEzelBd5Bjg9H8eeWFSfon8YK8DljH2IWaPHVg=
+	b=oNUksopc8XIJgLJdGND+aHVS5b4PxQJK54L/1+3rkpr69L7I9rPArsM2HoAYCTJGy
+	 Qut+6o0I7qYAT8tr1FvBMZX4KSHMUxL1sa0jT9LZpcl97tLnam66YQcsSz9OdFl+yh
+	 9+boplaJAtgr0UQPKIfn9Node8ZjKgTvq0HaHV0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lasse Collin <lasse.collin@tukaani.org>,
-	Sam James <sam@gentoo.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Joel Stanley <joel@jms.id.au>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Jubin Zhong <zhongjubin@huawei.com>,
-	Jules Maselbas <jmaselbas@zdiv.net>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Rui Li <me@lirui.org>,
-	Simon Glass <sjg@chromium.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Will Deacon <will@kernel.org>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.15 201/691] xz: cleanup CRC32 edits from 2018
-Date: Tue, 15 Oct 2024 13:22:29 +0200
-Message-ID: <20241015112448.334821983@linuxfoundation.org>
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	David Gow <davidgow@google.com>,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Tejun Heo <tj@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 202/691] kthread: fix task state in kthread worker if being frozen
+Date: Tue, 15 Oct 2024 13:22:30 +0200
+Message-ID: <20241015112448.375859859@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -63,82 +51,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lasse Collin <lasse.collin@tukaani.org>
+From: Chen Yu <yu.c.chen@intel.com>
 
-[ Upstream commit 2ee96abef214550d9e92f5143ee3ac1fd1323e67 ]
+[ Upstream commit e16c7b07784f3fb03025939c4590b9a7c64970a7 ]
 
-In 2018, a dependency on <linux/crc32poly.h> was added to avoid
-duplicating the same constant in multiple files.  Two months later it was
-found to be a bad idea and the definition of CRC32_POLY_LE macro was moved
-into xz_private.h to avoid including <linux/crc32poly.h>.
+When analyzing a kernel waring message, Peter pointed out that there is a
+race condition when the kworker is being frozen and falls into
+try_to_freeze() with TASK_INTERRUPTIBLE, which could trigger a
+might_sleep() warning in try_to_freeze().  Although the root cause is not
+related to freeze()[1], it is still worthy to fix this issue ahead.
 
-xz_private.h is a wrong place for it too.  Revert back to the upstream
-version which has the poly in xz_crc32_init() in xz_crc32.c.
+One possible race scenario:
 
-Link: https://lkml.kernel.org/r/20240721133633.47721-10-lasse.collin@tukaani.org
-Fixes: faa16bc404d7 ("lib: Use existing define with polynomial")
-Fixes: 242cdad873a7 ("lib/xz: Put CRC32_POLY_LE in xz_private.h")
-Signed-off-by: Lasse Collin <lasse.collin@tukaani.org>
-Reviewed-by: Sam James <sam@gentoo.org>
-Tested-by: Michael Ellerman <mpe@ellerman.id.au> (powerpc)
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: Joel Stanley <joel@jms.id.au>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Emil Renner Berthing <emil.renner.berthing@canonical.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Jubin Zhong <zhongjubin@huawei.com>
-Cc: Jules Maselbas <jmaselbas@zdiv.net>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: Rui Li <me@lirui.org>
-Cc: Simon Glass <sjg@chromium.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Will Deacon <will@kernel.org>
+        CPU 0                                           CPU 1
+        -----                                           -----
+
+        // kthread_worker_fn
+        set_current_state(TASK_INTERRUPTIBLE);
+                                                       suspend_freeze_processes()
+                                                         freeze_processes
+                                                           static_branch_inc(&freezer_active);
+                                                         freeze_kernel_threads
+                                                           pm_nosig_freezing = true;
+        if (work) { //false
+          __set_current_state(TASK_RUNNING);
+
+        } else if (!freezing(current)) //false, been frozen
+
+                      freezing():
+                      if (static_branch_unlikely(&freezer_active))
+                        if (pm_nosig_freezing)
+                          return true;
+          schedule()
+	}
+
+        // state is still TASK_INTERRUPTIBLE
+        try_to_freeze()
+          might_sleep() <--- warning
+
+Fix this by explicitly set the TASK_RUNNING before entering
+try_to_freeze().
+
+Link: https://lore.kernel.org/lkml/Zs2ZoAcUsZMX2B%2FI@chenyu5-mobl2/ [1]
+Link: https://lkml.kernel.org/r/20240827112308.181081-1-yu.c.chen@intel.com
+Fixes: b56c0d8937e6 ("kthread: implement kthread_worker")
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Suggested-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: David Gow <davidgow@google.com>
+Cc: Mateusz Guzik <mjguzik@gmail.com>
+Cc: Mickaël Salaün <mic@digikod.net>
+Cc: Tejun Heo <tj@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/xz/xz_crc32.c   | 2 +-
- lib/xz/xz_private.h | 4 ----
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ kernel/kthread.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/lib/xz/xz_crc32.c b/lib/xz/xz_crc32.c
-index 88a2c35e1b597..5627b00fca296 100644
---- a/lib/xz/xz_crc32.c
-+++ b/lib/xz/xz_crc32.c
-@@ -29,7 +29,7 @@ STATIC_RW_DATA uint32_t xz_crc32_table[256];
+diff --git a/kernel/kthread.c b/kernel/kthread.c
+index 4cc6897b7ca40..13cfe01ed2fc7 100644
+--- a/kernel/kthread.c
++++ b/kernel/kthread.c
+@@ -781,8 +781,16 @@ int kthread_worker_fn(void *worker_ptr)
+ 		 * event only cares about the address.
+ 		 */
+ 		trace_sched_kthread_work_execute_end(work, func);
+-	} else if (!freezing(current))
++	} else if (!freezing(current)) {
+ 		schedule();
++	} else {
++		/*
++		 * Handle the case where the current remains
++		 * TASK_INTERRUPTIBLE. try_to_freeze() expects
++		 * the current to be TASK_RUNNING.
++		 */
++		__set_current_state(TASK_RUNNING);
++	}
  
- XZ_EXTERN void xz_crc32_init(void)
- {
--	const uint32_t poly = CRC32_POLY_LE;
-+	const uint32_t poly = 0xEDB88320;
- 
- 	uint32_t i;
- 	uint32_t j;
-diff --git a/lib/xz/xz_private.h b/lib/xz/xz_private.h
-index 09360ebb510ef..482b90f363fe3 100644
---- a/lib/xz/xz_private.h
-+++ b/lib/xz/xz_private.h
-@@ -102,10 +102,6 @@
- #	endif
- #endif
- 
--#ifndef CRC32_POLY_LE
--#define CRC32_POLY_LE 0xedb88320
--#endif
--
- /*
-  * Allocate memory for LZMA2 decoder. xz_dec_lzma2_reset() must be used
-  * before calling xz_dec_lzma2_run().
+ 	try_to_freeze();
+ 	cond_resched();
 -- 
 2.43.0
 
