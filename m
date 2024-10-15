@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195D92281D6;
-	Tue, 15 Oct 2024 13:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7516229114;
+	Tue, 15 Oct 2024 13:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998054; cv=none; b=m+yCj8kbK4uHTOSgK6K1NUes0nqxzC/CmXZpUCEKOO3NbvwZrKzDpAdeY8RU2MXY0n2MFxK/xON77OKISzlyx8Ap7DZhHGQCoZqQV2YMkYSAoNRKQaoDt6ROIsEDBI77OGNna4asj/S9/8RNIOd7/+bib+4+vMfxXr04WmtaL7Q=
+	t=1728998057; cv=none; b=FExWthtYad1yZnchHGQ71D4MaXPlf342mvUC63EKcukEh7lDCoYJjfppckJwzScOixvxKGvhT+aZ5tJBJhaNwf3BC4q0PuL1bwWNWb3H5kFvXyUweXU+cIhLK+Zddwgy9APcGANQdx5sZiq66qIQVkY8mxAruaHD2WJ0L9CsLvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998054; c=relaxed/simple;
-	bh=OIyJsdbMH0LtaiMD+SGJ3q4iK1VEy6gQIrftqjhRmbA=;
+	s=arc-20240116; t=1728998057; c=relaxed/simple;
+	bh=r4MqBhlhHvTt7U7zOvM+JbUKpZv61VKTSVHOOEfBImY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pT0HK+V29AQelQLdjX/5h3Ufdv97ZsSqMyWqZh5yYnGuQYcuUYTEz92tqCmHBUWlVmZs7WB6t2WR8Irw8wHeOyfwM4Bbe4xKU+x8hdVG0Lo9qb07++dxOFytDv2bDPrb0T3tBpirEEBuH0D7R1YX+5SBTycUPRIb+g4Fvhp+Soo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgvUyA1z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fXDElDO0WMlWBFBiUSpENVYWMWpuBuWBF4z0FV2f5oC0OZVy9/5fjb9wKaiLGcmYZyVggxT8rJAkxaYoPcWAuwGtpakvxcePAFFL+xzxCkygwfg3hmIRi/ebtfHUZ6StCuAA4YhmKnCRV+pyBFan3SUQVxok3gFq4YVgOD/I7/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IU2hGMv2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgvUyA1z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F655C4CECF;
-	Tue, 15 Oct 2024 13:14:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IU2hGMv2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9212C4CED7;
+	Tue, 15 Oct 2024 13:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998053;
-	bh=OIyJsdbMH0LtaiMD+SGJ3q4iK1VEy6gQIrftqjhRmbA=;
+	s=korg; t=1728998057;
+	bh=r4MqBhlhHvTt7U7zOvM+JbUKpZv61VKTSVHOOEfBImY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XgvUyA1zru34DtsLS78JqYtm2R1udEzZVlAiom5r29YDrfsARoxvVQ6JQcK0iqfib
-	 Wnb89SYCrGuEwQE8ToLwOw8n/u6o6FK4VMLeIE+GheJZaidwOqs/7jAaXc43p5cTkc
-	 b3rrz/HzyYy9A3K8GzQarNAXR6PQ3AcXiUe1a+7Y=
+	b=IU2hGMv2JWeADDVxT+1Q/imQJEgJXi6H9KG+VTo8kKyS259IadoN661Z2lFOFQ95G
+	 ePOUDGo1uw+oTES+DWltuvtANSSlZhQNcqJJ91G9xKt3bt0UESUP/EwF3aTBJNxTOH
+	 zLZaiyZqzRIsXv4xg9yuVMj3HPCO6Code254l2/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Liu <liupeng01@kylinos.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 338/518] drm/amdgpu: add raven1 gfxoff quirk
-Date: Tue, 15 Oct 2024 14:44:02 +0200
-Message-ID: <20241015123930.017684604@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 365/518] parisc: Fix itlb miss handler for 64-bit programs
+Date: Tue, 15 Oct 2024 14:44:29 +0200
+Message-ID: <20241015123931.060433587@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,35 +49,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Liu <liupeng01@kylinos.cn>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 0126c0ae11e8b52ecfde9d1b174ee2f32d6c3a5d ]
+commit 9542130937e9dc707dd7c6b7af73326437da2d50 upstream.
 
-Fix screen corruption with openkylin.
+For an itlb miss when executing code above 4 Gb on ILP64 adjust the
+iasq/iaoq in the same way isr/ior was adjusted.  This fixes signal
+delivery for the 64-bit static test program from
+http://ftp.parisc-linux.org/src/64bit.tar.gz.  Note that signals are
+handled by the signal trampoline code in the 64-bit VDSO which is mapped
+into high userspace memory region above 4GB for 64-bit processes.
 
-Link: https://bbs.openkylin.top/t/topic/171497
-Signed-off-by: Peng Liu <liupeng01@kylinos.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org	# v4.19+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/parisc/kernel/entry.S |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-index acef2227d992b..3f320ead85d12 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -1250,6 +1250,8 @@ static const struct amdgpu_gfxoff_quirk amdgpu_gfxoff_quirk_list[] = {
- 	{ 0x1002, 0x15dd, 0x1002, 0x15dd, 0xc6 },
- 	/* Apple MacBook Pro (15-inch, 2019) Radeon Pro Vega 20 4 GB */
- 	{ 0x1002, 0x69af, 0x106b, 0x019a, 0xc0 },
-+	/* https://bbs.openkylin.top/t/topic/171497 */
-+	{ 0x1002, 0x15d8, 0x19e5, 0x3e14, 0xc2 },
- 	{ 0, 0, 0, 0, 0 },
- };
+--- a/arch/parisc/kernel/entry.S
++++ b/arch/parisc/kernel/entry.S
+@@ -1071,8 +1071,7 @@ ENTRY_CFI(intr_save)		/* for os_hpmc */
+ 	STREG           %r16, PT_ISR(%r29)
+ 	STREG           %r17, PT_IOR(%r29)
  
--- 
-2.43.0
-
+-#if 0 && defined(CONFIG_64BIT)
+-	/* Revisit when we have 64-bit code above 4Gb */
++#if defined(CONFIG_64BIT)
+ 	b,n		intr_save2
+ 
+ skip_save_ior:
+@@ -1080,8 +1079,7 @@ skip_save_ior:
+ 	 * need to adjust iasq/iaoq here in the same way we adjusted isr/ior
+ 	 * above.
+ 	 */
+-	extrd,u,*	%r8,PSW_W_BIT,1,%r1
+-	cmpib,COND(=),n	1,%r1,intr_save2
++	bb,COND(>=),n	%r8,PSW_W_BIT,intr_save2
+ 	LDREG		PT_IASQ0(%r29), %r16
+ 	LDREG		PT_IAOQ0(%r29), %r17
+ 	/* adjust iasq/iaoq */
 
 
