@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975EA1C57B1;
-	Tue, 15 Oct 2024 12:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FF61C57B1;
+	Tue, 15 Oct 2024 12:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993806; cv=none; b=DFlWO5IhEiG/aMI69hWjP6Ury1QWIlcapXC9XYroNkoYEaPheJLcupO59blFNSztU7JHWExt+EpkwmEgx8TSujiDo8+8D5qIm/Lf5tMI4KslNgu1IIqGhfGbV9w+Q7LtVyQt5pgHYcrY/5TZAUmLX/5wKk8uJcxFqffbWySvS5I=
+	t=1728993810; cv=none; b=UUHLMm8gFw8gYm95tzG6l1cEgWuMDdV55owKABOSDR5HngYxhW6EOHaEN/ybOH+T3r59pur50eWYMckGbGkYuD7n/YpJGe7sIWJVaxnqPJc2b6M/ggpnl1APQkLWmJb1hfPD3GRUz/7YyhC02MASFjxw9MNjLBBqOn3rC3wc1i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993806; c=relaxed/simple;
-	bh=WqsdEYdzAKXvx53Nx9jbcGWr2VQazqs3qq9Z2BRiuhc=;
+	s=arc-20240116; t=1728993810; c=relaxed/simple;
+	bh=bKPUT0dYn4U3hz+jNJoZ+yzEE49l9xU4CqQQwYt+JfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sn5qaCsZIBHCjI02OwzafdVJMEryTa7xxHvxfdrKyC/Ykt/vqfBNt7dfJfxTyHNC7NIjdzDb3GW7LzsnK6iDE8hk+Hh8uoCDdcG4BB/KpHQXTY1Hin9J/t4P2Y246HcSapon93k8D4bVL8WWd67HQ7t0+5sX/GdIxEgtOlYi4Z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oX0Gg3fV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DrbB1H38kstjbcUrZqbGHJp4tKCtvUn13uJ4iWMTi7vK3yDsDItiGd5yI7acNWQFXW4XpytxSVj4JwB9LzAM9ROSRS3rjbCETb3alPp8S6xrJA9rhHQcUrsbH+HfmES7voX5KqrJhi0HQOYFK1Kfkh/oLL9+czI0K/JKviDnkPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5QgAgzD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oX0Gg3fV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 004A7C4CECE;
-	Tue, 15 Oct 2024 12:03:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5QgAgzD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774F1C4CEC6;
+	Tue, 15 Oct 2024 12:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993806;
-	bh=WqsdEYdzAKXvx53Nx9jbcGWr2VQazqs3qq9Z2BRiuhc=;
+	s=korg; t=1728993809;
+	bh=bKPUT0dYn4U3hz+jNJoZ+yzEE49l9xU4CqQQwYt+JfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oX0Gg3fVhfsTg2X6L9fifaYiQYo2pWcbxU/q2irPcx8iYTLf9W6Ud/6FQUtNeF4yy
-	 gqM5Gd2cBz+gvlNe/U9Gazt2E/SMoa4zq2VQPMOYliOx3tFD8mhk3Ny0jj8SflSTjT
-	 r74qbI9fo7L13GAeuHoEvxbGAlI7YNo4DVm6o6eo=
+	b=L5QgAgzDyNev4kDsAGvq3dr4DmVp25yNZrVMUJhCqa7aerKB0f3wuoywt2ZDSa3ie
+	 LcE3Rt+8Lf1XmTPndZZP22nC1Y6kguOlNNE4f6BRL1BWky3Htk2Xi1tmy2NN/jkKdo
+	 zBHdvrhPDiAWghMaT1ssJZ1u7/PDA7He7+raGT1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Hancock <robert.hancock@calian.com>,
-	Manikanta Guntupalli <manikanta.guntupalli@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.15 491/691] i2c: xiic: Wait for TX empty to avoid missed TX NAKs
-Date: Tue, 15 Oct 2024 13:27:19 +0200
-Message-ID: <20241015112459.830386592@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 482/691] selftests: vDSO: fix vDSO name for powerpc
+Date: Tue, 15 Oct 2024 13:27:10 +0200
+Message-ID: <20241015112459.470714946@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,75 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Hancock <robert.hancock@calian.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit 521da1e9225450bd323db5fa5bca942b1dc485b7 upstream.
+[ Upstream commit 59eb856c3ed9b3552befd240c0c339f22eed3fa1 ]
 
-Frequently an I2C write will be followed by a read, such as a register
-address write followed by a read of the register value. In this driver,
-when the TX FIFO half empty interrupt was raised and it was determined
-that there was enough space in the TX FIFO to send the following read
-command, it would do so without waiting for the TX FIFO to actually
-empty.
+Following error occurs when running vdso_test_correctness on powerpc:
 
-Unfortunately it appears that in some cases this can result in a NAK
-that was raised by the target device on the write, such as due to an
-unsupported register address, being ignored and the subsequent read
-being done anyway. This can potentially put the I2C bus into an
-invalid state and/or result in invalid read data being processed.
+~ # ./vdso_test_correctness
+[WARN]	failed to find vDSO
+[SKIP]	No vDSO, so skipping clock_gettime() tests
+[SKIP]	No vDSO, so skipping clock_gettime64() tests
+[RUN]	Testing getcpu...
+[OK]	CPU 0: syscall: cpu 0, node 0
 
-To avoid this, once a message has been fully written to the TX FIFO,
-wait for the TX FIFO empty interrupt before moving on to the next
-message, to ensure NAKs are handled properly.
+On powerpc, vDSO is neither called linux-vdso.so.1 nor linux-gate.so.1
+but linux-vdso32.so.1 or linux-vdso64.so.1.
 
-Fixes: e1d5b6598cdc ("i2c: Add support for Xilinx XPS IIC Bus Interface")
-Signed-off-by: Robert Hancock <robert.hancock@calian.com>
-Cc: <stable@vger.kernel.org> # v2.6.34+
-Reviewed-by: Manikanta Guntupalli <manikanta.guntupalli@amd.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Also search those two names before giving up.
+
+Fixes: c7e5789b24d3 ("kselftest: Move test_vdso to the vDSO test suite")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-xiic.c |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ tools/testing/selftests/vDSO/vdso_test_correctness.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/i2c/busses/i2c-xiic.c
-+++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -494,14 +494,17 @@ static irqreturn_t xiic_process(int irq,
- 			goto out;
- 		}
- 
--		xiic_fill_tx_fifo(i2c);
--
--		/* current message sent and there is space in the fifo */
--		if (!xiic_tx_space(i2c) && xiic_tx_fifo_space(i2c) >= 2) {
-+		if (xiic_tx_space(i2c)) {
-+			xiic_fill_tx_fifo(i2c);
-+		} else {
-+			/* current message fully written */
- 			dev_dbg(i2c->adap.dev.parent,
- 				"%s end of message sent, nmsgs: %d\n",
- 				__func__, i2c->nmsgs);
--			if (i2c->nmsgs > 1) {
-+			/* Don't move onto the next message until the TX FIFO empties,
-+			 * to ensure that a NAK is not missed.
-+			 */
-+			if (i2c->nmsgs > 1 && (pend & XIIC_INTR_TX_EMPTY_MASK)) {
- 				i2c->nmsgs--;
- 				i2c->tx_msg++;
- 				xfer_more = 1;
-@@ -512,11 +515,7 @@ static irqreturn_t xiic_process(int irq,
- 					"%s Got TX IRQ but no more to do...\n",
- 					__func__);
- 			}
--		} else if (!xiic_tx_space(i2c) && (i2c->nmsgs == 1))
--			/* current frame is sent and is last,
--			 * make sure to disable tx half
--			 */
--			xiic_irq_dis(i2c, XIIC_INTR_TX_HALF_MASK);
-+		}
- 	}
- out:
- 	dev_dbg(i2c->adap.dev.parent, "%s clr: 0x%x\n", __func__, clr);
+diff --git a/tools/testing/selftests/vDSO/vdso_test_correctness.c b/tools/testing/selftests/vDSO/vdso_test_correctness.c
+index c4aea794725a7..739cd83f3dfb7 100644
+--- a/tools/testing/selftests/vDSO/vdso_test_correctness.c
++++ b/tools/testing/selftests/vDSO/vdso_test_correctness.c
+@@ -113,6 +113,12 @@ static void fill_function_pointers()
+ 	if (!vdso)
+ 		vdso = dlopen("linux-gate.so.1",
+ 			      RTLD_LAZY | RTLD_LOCAL | RTLD_NOLOAD);
++	if (!vdso)
++		vdso = dlopen("linux-vdso32.so.1",
++			      RTLD_LAZY | RTLD_LOCAL | RTLD_NOLOAD);
++	if (!vdso)
++		vdso = dlopen("linux-vdso64.so.1",
++			      RTLD_LAZY | RTLD_LOCAL | RTLD_NOLOAD);
+ 	if (!vdso) {
+ 		printf("[WARN]\tfailed to find vDSO\n");
+ 		return;
+-- 
+2.43.0
+
 
 
