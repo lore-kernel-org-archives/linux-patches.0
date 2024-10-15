@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31271CFEA9;
-	Tue, 15 Oct 2024 13:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5861AF0AD;
+	Tue, 15 Oct 2024 13:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997683; cv=none; b=JECo8bqvM8Um3ul1ra56ML77PQ+ucVFngdNr6J92f20xJ4TWal6aFHuArKb5a0j6IKWMpvqS2a1RAl5FINMyaUZWn+876WeUwOgK6krFfZI+FXz1cajNPqAGjTAEzTYvpfJjEZ27yhEAitxDicg0KALvunH8vFtoJwWYq3+U6l0=
+	t=1728997685; cv=none; b=Dp7JKXOkdv1OjjGIx1HTkNWAvqpPLSuPdQs5Pe3edwDCUOikhqBdf0XIGW+nX0tH0tbL1YptZXfk2mExSqT3z5mLuzxx5pnS7s5N6Gj86oq0SUWwCgvH8jvUs2diN+hSGyunWojLR7pyOeQmo05s+Oj+N/o1PE42+4nlGKHBydk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997683; c=relaxed/simple;
-	bh=USE0kV8bRdCBv9wtU0QS4hm5riYfdaZUvyvhhx+v76E=;
+	s=arc-20240116; t=1728997685; c=relaxed/simple;
+	bh=NkN4m4FtWl8GIP4Jlq3mbilUnOQSvjMO7gJSveIt/cM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BT2w+wLoLc0PhZPNJn4E0eIDKGNdEO4VYWW03YeixLbmh4diaFJwbt3Y/S1OXXLigsUX9NYVqJl4AqGhz6/pa0/4mk9yuA78d+dAuHGz+IqRGiVtaBS/2nzRxv8iiC5sUB487/t8DBSb5MJ7KofAIfH/BeGXfqmx3UTCk/H9YhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0g8q5L0r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F1tqZZRsJ1Cq4gLmFREPa2oBNQYYBOgfPBrfED0ADCVfa/Lm0Hr0hrnO3HsFoFg21VnnovKM/OSxmeWPLRFl1lcNeqdmhy6b1JCpv379EqyTWFnzjUQmHMB1lyMolqumIQMGsuWNY40w3ZpS8wlTaGvmbv0JRlYZBDWgKfKI9HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRxr35ic; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0g8q5L0r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B77FC4CEC6;
-	Tue, 15 Oct 2024 13:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRxr35ic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1C2C4CEC6;
+	Tue, 15 Oct 2024 13:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997682;
-	bh=USE0kV8bRdCBv9wtU0QS4hm5riYfdaZUvyvhhx+v76E=;
+	s=korg; t=1728997685;
+	bh=NkN4m4FtWl8GIP4Jlq3mbilUnOQSvjMO7gJSveIt/cM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0g8q5L0r6HanDpDmc3oKVazhCgu6XLa9PjVObF78AI7/c2ju7dcwDg0bWNAyQu7bx
-	 2mH39ans8v9jZ7l5/HoOdG64zJTOfi+/AgPQg6U08esVMU4maBBNpK+ulWaNBLJz0Z
-	 EnzO1Mi3hMIxjXY98NxwY+N5k42MS8cRjBYzfgXk=
+	b=YRxr35icV//0B0W/g9mu98gOBZZ2lpnIZA4I8Ryf6b+olXDi9bDrnW0gh0dUGCXQM
+	 a0Kf0KIkok93Qm7gijdMikbwb1lkAZDALlghicV/qu4g6T5BwAmd2Up2lpaMO3e7Yx
+	 czDSIwjQjjRBNgGzFUfAXGWAbqh5J/q8izinNuS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 254/518] USB: misc: yurex: fix race between read and write
-Date: Tue, 15 Oct 2024 14:42:38 +0200
-Message-ID: <20241015123926.795308635@linuxfoundation.org>
+Subject: [PATCH 5.10 255/518] pps: remove usage of the deprecated ida_simple_xx() API
+Date: Tue, 15 Oct 2024 14:42:39 +0200
+Message-ID: <20241015123926.832619567@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -50,61 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 93907620b308609c72ba4b95b09a6aa2658bb553 ]
+[ Upstream commit 55dbc5b5174d0e7d1fa397d05aa4cb145e8b887e ]
 
-The write code path touches the bbu member in a non atomic manner
-without taking the spinlock. Fix it.
+ida_alloc() and ida_free() should be preferred to the deprecated
+ida_simple_get() and ida_simple_remove().
 
-The bug is as old as the driver.
+This is less verbose.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-CC: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240912132126.1034743-1-oneukum@suse.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/9f681747d446b874952a892491387d79ffe565a9.1713089394.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: Rodolfo Giometti <giometti@enneenne.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 62c5a01a5711 ("pps: add an error check in parport_attach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/yurex.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/pps/clients/pps_parport.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/misc/yurex.c b/drivers/usb/misc/yurex.c
-index 62bd302e8bb71..494db0178c1e1 100644
---- a/drivers/usb/misc/yurex.c
-+++ b/drivers/usb/misc/yurex.c
-@@ -403,7 +403,6 @@ static ssize_t yurex_read(struct file *file, char __user *buffer, size_t count,
- 	struct usb_yurex *dev;
- 	int len = 0;
- 	char in_buffer[MAX_S64_STRLEN];
--	unsigned long flags;
- 
- 	dev = file->private_data;
- 
-@@ -416,9 +415,9 @@ static ssize_t yurex_read(struct file *file, char __user *buffer, size_t count,
- 	if (WARN_ON_ONCE(dev->bbu > S64_MAX || dev->bbu < S64_MIN))
- 		return -EIO;
- 
--	spin_lock_irqsave(&dev->lock, flags);
-+	spin_lock_irq(&dev->lock);
- 	scnprintf(in_buffer, MAX_S64_STRLEN, "%lld\n", dev->bbu);
--	spin_unlock_irqrestore(&dev->lock, flags);
-+	spin_unlock_irq(&dev->lock);
- 	mutex_unlock(&dev->io_mutex);
- 
- 	return simple_read_from_buffer(buffer, count, ppos, in_buffer, len);
-@@ -508,8 +507,11 @@ static ssize_t yurex_write(struct file *file, const char __user *user_buffer,
- 			__func__, retval);
- 		goto error;
+diff --git a/drivers/pps/clients/pps_parport.c b/drivers/pps/clients/pps_parport.c
+index 7a41fb7b0decf..4bb3678c7e451 100644
+--- a/drivers/pps/clients/pps_parport.c
++++ b/drivers/pps/clients/pps_parport.c
+@@ -144,7 +144,7 @@ static void parport_attach(struct parport *port)
+ 		return;
  	}
--	if (set && timeout)
-+	if (set && timeout) {
-+		spin_lock_irq(&dev->lock);
- 		dev->bbu = c2;
-+		spin_unlock_irq(&dev->lock);
-+	}
- 	return timeout ? count : -EIO;
  
- error:
+-	index = ida_simple_get(&pps_client_index, 0, 0, GFP_KERNEL);
++	index = ida_alloc(&pps_client_index, GFP_KERNEL);
+ 	memset(&pps_client_cb, 0, sizeof(pps_client_cb));
+ 	pps_client_cb.private = device;
+ 	pps_client_cb.irq_func = parport_irq;
+@@ -184,7 +184,7 @@ static void parport_attach(struct parport *port)
+ err_unregister_dev:
+ 	parport_unregister_device(device->pardev);
+ err_free:
+-	ida_simple_remove(&pps_client_index, index);
++	ida_free(&pps_client_index, index);
+ 	kfree(device);
+ }
+ 
+@@ -204,7 +204,7 @@ static void parport_detach(struct parport *port)
+ 	pps_unregister_source(device->pps);
+ 	parport_release(pardev);
+ 	parport_unregister_device(pardev);
+-	ida_simple_remove(&pps_client_index, device->index);
++	ida_free(&pps_client_index, device->index);
+ 	kfree(device);
+ }
+ 
 -- 
 2.43.0
 
