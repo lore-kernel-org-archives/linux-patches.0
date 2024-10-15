@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB2D1AF0CE;
-	Tue, 15 Oct 2024 13:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927911AF0CE;
+	Tue, 15 Oct 2024 13:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998415; cv=none; b=pPT3b5TIEcQuGqcW0Odo2CihvjAi4V0ifiPRhB/xTk6CzulKuDcoRZQ8LSbjphMnh3tjaTL3BUV/94P6kCq+qkBWAAyhYIgTAZmAxyuctLxoW/aXMtQQQ2WxiPTr7ytj5S0ZFh89Xz4w1Jac7sL73nKW/WfPRBAl9mh68KPxRoI=
+	t=1728998418; cv=none; b=c6s57zoGlPg39EpDvMNYeVgyAXmzNj2IHP09gJpaLhP87Tsl+yBtQhNQAyl/qneBfYreicK8+gyjxzG5jt1C9BsXtOAKZbQnJRB4ZeUGsgwt7T4gksE6MTs2751gXzuxXJlo4K+EloG5eVLv1xWq6m8RjYXOG2JQAaAuxkW62KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998415; c=relaxed/simple;
-	bh=GWR45q1zeh9J5xViJYo0wvPNj0sMGbdTR5WQt6Q9fls=;
+	s=arc-20240116; t=1728998418; c=relaxed/simple;
+	bh=w9r8q/E+THRrfZeiPswinzHiv6Vory82eSR53h98C70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/9mm21MuBzjp5oP+vyXA5hNqaK/Vk9K6LlOc02RgTdWNsJfb67N9UBK2IeqlQmbb4Dy0wm8tvEIix2giMHtv7tm+Wjt8WSkkTFjGlVAdPs3Xo5XPzt25KV8u5omeIbu3Ud6ITVqPsyPQmSCZ2KcVvfVlnjDpxS5aS9QD0bBOxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ektwNJ2J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tkBqfCDncrJhNcJUIK2CLxhNTQLGkB+G9ZU0Z2upe+c+il7QRHSc/h+U5+vqFGqyOHYYFRlQa6MPnVeoLpdk7ayiezP20P9aTe79EiUO7x6d7d/lJeJAFaM30HtB0tOKRyzSTdX+ttcuwwN49vLw3rNFxwb42IPBkybwnMiLg8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MsUn4BbY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ektwNJ2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BB8C4CEC6;
-	Tue, 15 Oct 2024 13:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MsUn4BbY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64FEC4CED3;
+	Tue, 15 Oct 2024 13:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998414;
-	bh=GWR45q1zeh9J5xViJYo0wvPNj0sMGbdTR5WQt6Q9fls=;
+	s=korg; t=1728998418;
+	bh=w9r8q/E+THRrfZeiPswinzHiv6Vory82eSR53h98C70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ektwNJ2JXcNHVUmIz2OMN/67BqDCYFSsI4YUdUc5G9YF5VjWYFnyZPVGIQM+grBqu
-	 B3WikVEBUOMATVzJsspDpt3vPO6dKJhgLzV68g5ZAP2zEZCItxVz3WtmOQqpTfyYW1
-	 d1UYf2rcKM+RwJFk2nNnJ6UJ8fCozTQ6IFswYm/0=
+	b=MsUn4BbYWyiZoU3qUfZzr2pmUiprhJpJuDNWpG6+xwSX0qf6nkt+xMJxMRFT3+C2d
+	 Ksoh6Ht+/Qn4E18JRpaZQ5OHjQygobqPrSwR1cO3yrWZOmavAZNAgnOaXoKiHScVGd
+	 z4kFnj7F8rjZTdIdmw/vuc7HXsj+b7oXW4TikKVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Alexander Egorenkov <egorenar@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 469/518] drm/amd/display: Check null pointer before dereferencing se
-Date: Tue, 15 Oct 2024 14:46:13 +0200
-Message-ID: <20241015123935.106802642@linuxfoundation.org>
+Subject: [PATCH 5.10 440/518] s390/zcore: no need to check return value of debugfs_create functions
+Date: Tue, 15 Oct 2024 14:45:44 +0200
+Message-ID: <20241015123933.988033996@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,39 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Alexander Egorenkov <egorenar@linux.ibm.com>
 
-[ Upstream commit ff599ef6970ee000fa5bc38d02fa5ff5f3fc7575 ]
+[ Upstream commit 7449ca87312a5b0390b765be65a126e6e5451026 ]
 
-[WHAT & HOW]
-se is null checked previously in the same function, indicating
-it might be null; therefore, it must be checked when used again.
+When calling debugfs functions, there is no need to ever check the
+return value.  The function can work or not, but the code logic should
+never do something different based on this.
 
-This fixes 1 FORWARD_NULL issue reported by Coverity.
+See commit 7dd541a3fb34 ("s390: no need to check return value of debugfs_create functions").
 
-Acked-by: Alex Hung <alex.hung@amd.com>
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alexander Egorenkov <egorenar@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Stable-dep-of: 0b18c852cc6f ("tracing: Have saved_cmdlines arrays all in one allocation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/char/zcore.c | 18 +-----------------
+ 1 file changed, 1 insertion(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
-index 661907e8a7dec..84fb1377ec934 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
-@@ -1258,7 +1258,7 @@ bool dc_validate_seamless_boot_timing(const struct dc *dc,
- 		if (crtc_timing->pix_clk_100hz != pix_clk_100hz)
- 			return false;
+diff --git a/drivers/s390/char/zcore.c b/drivers/s390/char/zcore.c
+index 3841c0e77df69..5f659fa9224a3 100644
+--- a/drivers/s390/char/zcore.c
++++ b/drivers/s390/char/zcore.c
+@@ -302,28 +302,12 @@ static int __init zcore_init(void)
+ 		goto fail;
  
--		if (!se->funcs->dp_get_pixel_format)
-+		if (!se || !se->funcs->dp_get_pixel_format)
- 			return false;
+ 	zcore_dir = debugfs_create_dir("zcore" , NULL);
+-	if (!zcore_dir) {
+-		rc = -ENOMEM;
+-		goto fail;
+-	}
+ 	zcore_reipl_file = debugfs_create_file("reipl", S_IRUSR, zcore_dir,
+ 						NULL, &zcore_reipl_fops);
+-	if (!zcore_reipl_file) {
+-		rc = -ENOMEM;
+-		goto fail_dir;
+-	}
+ 	zcore_hsa_file = debugfs_create_file("hsa", S_IRUSR|S_IWUSR, zcore_dir,
+ 					     NULL, &zcore_hsa_fops);
+-	if (!zcore_hsa_file) {
+-		rc = -ENOMEM;
+-		goto fail_reipl_file;
+-	}
+-	return 0;
  
- 		if (!se->funcs->dp_get_pixel_format(
+-fail_reipl_file:
+-	debugfs_remove(zcore_reipl_file);
+-fail_dir:
+-	debugfs_remove(zcore_dir);
++	return 0;
+ fail:
+ 	diag308(DIAG308_REL_HSA, NULL);
+ 	return rc;
 -- 
 2.43.0
 
