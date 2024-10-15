@@ -1,118 +1,101 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670411B3936;
-	Tue, 15 Oct 2024 20:09:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B001B0F0F
+	for <patches@lists.linux.dev>; Tue, 15 Oct 2024 22:21:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729022947; cv=none; b=bxO1Jxh5Abuyr1Jh57qRLg6LUaKKkH1d9qFI/Ofu4SxDhqOYSNpajkqdptImIMd3pF0r3YPFrjbTpR8UjHWK63faU9Mngul5B0ArdEHcasHsPM8gwXTn01L4vxRVAdlvtc/IughPiyTuxCC6vgOU3JjGYhPNWSsrvNqRouoxdOs=
+	t=1729030894; cv=none; b=AMge9GzHHZ5C3OojUww4NqIDX5sm9VoefSpotBUMvUrkXZdfVYmiKErQplYvUamWaOngoriiIbsSqsSgw2LKhBBd2K934wwyanaG7vOlBcD6gjPzB/mBuoCeiFGIlDNWhbNDOMY2G054hfKlMt3Ty3gMnectLaRN0+e0ZNhSXVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729022947; c=relaxed/simple;
-	bh=yOK+c3AkDCJtLcWfWWwZThk3SidCyjv2F09akPi0dDQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Q3my4vwwqeENAjw7Oaklp7/RbMFe8CEbMJqgfQEMyeQhvfmw18hQ7EknuElaQbXZLNpzrdWokmRF4osM2g1b8mg2Db+DwkapznTnD5PxxXqGVRN7eItB2XLr/LCrTJxueasTwPfFLM/tloI5AqFW5AQ5KpRIu8V2ERSGIV/CGUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AO6KPsrV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1729030894; c=relaxed/simple;
+	bh=ltQMRIsXUfjEPweA4ruMh+CIceGsnMVBfbTkfwieJUs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LTSKVbtY9TldKmjET8KSAaaKL/lVrpnY9ilfu5tiLkcjwrdUIBGCphx/jWQOnd5h+77CJsGmGGFVbZxCkQZRDHJGorrHpuCKSpATMtEYxB74UPVTQylSD1leTi2kP3pmdliaJLvDnTMZgLJLhyPxYTxRncztkm85cdt//xTk8EY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArFp8a15; arc=none smtp.client-ip=209.85.166.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AO6KPsrV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92492C4CEC6;
-	Tue, 15 Oct 2024 20:09:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729022946;
-	bh=yOK+c3AkDCJtLcWfWWwZThk3SidCyjv2F09akPi0dDQ=;
-	h=From:Date:Subject:To:Cc:From;
-	b=AO6KPsrVhhx372QCXY93AxJSBx5E+Ql2F+YLwWAwVb6Lhrfy5bVT6FsGutt3avCos
-	 KcPYnb7bO2dY52KTkntP/W5oLnY43rhPwoXtoMA/Y7oKvIsJznlxsbNPXaRNUWubXn
-	 RuLAPUpQjejEYhH7K4tZtq8HVkFlUek3YaPEcDzG6cjfxBy9Y2oMYdkQosjbfYqYAC
-	 sw/PWGrEeEyFaZs/RLhVUOCIFr/U1N29DN/1viFD3M5lRBp44KEudr3EEOWObVaxw7
-	 WoDoyWaWt/Jl8/6w67npxvRBSizEIq8XmgBVIdARGlYAWEoVzIv5X1HzbPRBlabHHf
-	 Oa/0poeEziKAA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 15 Oct 2024 13:09:02 -0700
-Subject: [PATCH] staging: gpid: fmh: Drop residue from
- fmh_gpid_fifo_read_countable()
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArFp8a15"
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-83a9be2c0bfso5672039f.2
+        for <patches@lists.linux.dev>; Tue, 15 Oct 2024 15:21:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1729030892; x=1729635692; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TNv6EpUkF46yC8CnPi4D029NeIjdWSFiLY/SEWTCkiU=;
+        b=ArFp8a15aS4FMfEkLfJZ5PPoj7qnjkA04WpViGBPrdimm2fHc899KVmuFGVeG7AsC/
+         f6MNDUSOsO/tFMfmSJGOUn9O9jRo1HxMKKqw5uUOCGOJCq2P4mK1QahvfgT2WvcBgJqs
+         5NVFJt5z4dX0CthlsU4dJpHspZBUeD4LSqlAI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729030892; x=1729635692;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TNv6EpUkF46yC8CnPi4D029NeIjdWSFiLY/SEWTCkiU=;
+        b=Wz1OuBnj8rkYmvE73m/ypUflR4d2vaD4GYAPZckHoOku14n/09ju/Xz7RdP51UrX7V
+         +vX9LLrQhNM0+Dc1v3iopbycNWCHjBqR1GZRhknyTMzWKLmf1I8YASXcCcHrUFP27Uhg
+         zeJBxlLqYwkujHdkf93VN/0eIEUwZN5sKEMA5CyhVXgNJ+ZJoAL8z+u+GOWVbKMgfwF7
+         3LZpsux7lNplHXOofxE+MiXoyOLYAtXmK1x53R09WccI0nQAKISGBGQyMthPAk7UhUbN
+         SXE9yvanuWHohiNIefEXZhnZbhPA7z0mvx8H0a04Z1S2k92zb1jVa7BLmBI5lJVrbphc
+         R8+w==
+X-Gm-Message-State: AOJu0YzNp7Z1qvFTV9hA6eGOObG838J9SsrVZTh+8yvCusXFzfTw6394
+	XSCZiqrfm6c0RrqgU4QiHc+VNxOHRnDGNUE4jlK6Ay9vBSZPz+XxtwpmzUQ1XCg=
+X-Google-Smtp-Source: AGHT+IEaclnUl4KoFETjKApAJu24dk+GljHsnn/vZz/hzAdpQuBIfKEIAYOFjZjg6nfn/buMaj3f4Q==
+X-Received: by 2002:a05:6e02:194d:b0:3a2:4cc4:cfd with SMTP id e9e14a558f8ab-3a3b5faab6amr157980805ab.14.1729030891827;
+        Tue, 15 Oct 2024 15:21:31 -0700 (PDT)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4dbecc6a612sm521449173.162.2024.10.15.15.21.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 15 Oct 2024 15:21:31 -0700 (PDT)
+Message-ID: <cb1a9ce8-c84d-41d4-8fc1-ef7d181af1e2@linuxfoundation.org>
+Date: Tue, 15 Oct 2024 16:21:30 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 000/691] 5.15.168-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20241015112440.309539031@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241015-staging-gpib-fmh-fix-residue-used-uninitialized-v1-1-23ef05b099da@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAN3LDmcC/x3NwQrCMBCE4Vcpe3ahCVrUVxEPSbNJBzSWbFOkp
- e9u8Pgd/pmdVApE6d7tVGSF4pMbzKmjcXI5CSM0k+3t2fTmwrq4hJw4zfAc3xNHfLmIIlThqhK
- 4ZmQscC9sTf7qozXhZodBqK3ORVrxf3w8j+MH4Tgn/4EAAAA=
-X-Change-ID: 20241015-staging-gpib-fmh-fix-residue-used-uninitialized-b8bf21d9266e
-To: Dave Penkler <dpenkler@gmail.com>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-staging@lists.linux.dev, llvm@lists.linux.dev, 
- patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2652; i=nathan@kernel.org;
- h=from:subject:message-id; bh=yOK+c3AkDCJtLcWfWWwZThk3SidCyjv2F09akPi0dDQ=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDOl8px894J9oUb27nO1mR8u5X/8easqtnDi9fZXpZ90vp
- w5dmFoo2lHKwiDGxSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAmwsbFyHDmdOb9Q7ce5vbI
- LQmz58pYm880t+XY88/pdjYPP5lp3HnM8Feo97H9l4iDubM4/p5fuMzg5qV5hxe+LBX0qjtm/sL
- T+gUzAA==
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Clang warns (or errors with CONFIG_WERROR=y):
+On 10/15/24 05:19, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.168 release.
+> There are 691 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 17 Oct 2024 11:22:41 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.168-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-  drivers/staging/gpib/fmh_gpib/fmh_gpib.c:970:43: error: variable 'residue' is uninitialized when used here [-Werror,-Wuninitialized]
-    970 |                                 (int)(*bytes_read), (int)length, (int)residue);
-        |                                                                       ^~~~~~~
+Compiled and booted on my test system. No dmesg regressions.
 
-residue is never initialized in this function and it is not used outside
-of an error print. Just remove it altogether, as it is likely not
-necessary in this function, as this same exact statement in present in
-fmh_gpib_dma_read().
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Fixes: 8e4841a0888c ("staging: gpib: Add Frank Mori Hess FPGA PCI GPIB driver")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/staging/gpib/fmh_gpib/fmh_gpib.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/staging/gpib/fmh_gpib/fmh_gpib.c b/drivers/staging/gpib/fmh_gpib/fmh_gpib.c
-index 07c75ba8df7c53041e3cf013bb769677ac205381..0e27b3ef1a1df217b05de710412a683d5d381a25 100644
---- a/drivers/staging/gpib/fmh_gpib/fmh_gpib.c
-+++ b/drivers/staging/gpib/fmh_gpib/fmh_gpib.c
-@@ -922,7 +922,6 @@ static int fmh_gpib_fifo_read_countable(gpib_board_t *board, uint8_t *buffer,
- 	struct fmh_priv *e_priv = board->private_data;
- 	struct nec7210_priv *nec_priv = &e_priv->nec7210_priv;
- 	int retval = 0;
--	unsigned int residue;
- 
- 	//	printk("%s: enter, bus_address=0x%x, length=%i\n", __FUNCTION__,
- 	// (unsigned)bus_address,
-@@ -966,8 +965,8 @@ static int fmh_gpib_fifo_read_countable(gpib_board_t *board, uint8_t *buffer,
- 		unsigned int data_value;
- 
- 		if ((*bytes_read) >= length) {
--			dev_err(board->dev, "unexpected extra bytes in rx fifo, discarding!  bytes_read=%d length=%d residue=%d\n",
--				(int)(*bytes_read), (int)length, (int)residue);
-+			dev_err(board->dev, "unexpected extra bytes in rx fifo, discarding!  bytes_read=%d length=%d\n",
-+				(int)(*bytes_read), (int)length);
- 			break;
- 		}
- 		data_value = fifos_read(e_priv, FIFO_DATA_REG);
-@@ -976,8 +975,8 @@ static int fmh_gpib_fifo_read_countable(gpib_board_t *board, uint8_t *buffer,
- 			*end = 1;
- 	}
- 
--//	printk("\tbytes_read=%i, residue=%i, end=%i, retval=%i, wait_retval=%i\n",
--//		   *bytes_read, residue, *end, retval, wait_retval);
-+//	printk("\tbytes_read=%i, end=%i, retval=%i, wait_retval=%i\n",
-+//		   *bytes_read, *end, retval, wait_retval);
- 
- 	return retval;
- }
-
----
-base-commit: e0eb7cc4d70d672cf9344916aba58136fd6e495e
-change-id: 20241015-staging-gpib-fmh-fix-residue-used-uninitialized-b8bf21d9266e
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+thanks,
+-- Shuah
