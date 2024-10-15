@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9041D89F5;
-	Tue, 15 Oct 2024 11:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439B81D4154;
+	Tue, 15 Oct 2024 11:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993273; cv=none; b=QzGVdGukH8fYUe+rwwkFKOtOOJf8fya+880Lp5H8WjDJrMQVz0f9FBhhLM8106CJ7szEFWIuzKI9SpXBodW7JksNw33caODO0Lz8WLzzTZ2kPwmJd4lv6elRCewlE0Lle2fJwIhkNKRSO26Vi6y939fDnzkRBCOnghofyfFtOwQ=
+	t=1728993277; cv=none; b=dpRucHnV8xVn6m2mioH4KihbYRf1U59VUMdCGhhgz8MvWRrLwYXmmbk6rsWWXQOvkYFt8vWjLaay36s/smhcuf2TIoww8GEtpgm8SOlgcy04JVpp9wDqORRc4Pg/nVutLA7UlEWCvyUaYQad6D+t5i270ivfHJMHtuTFph4ocvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993273; c=relaxed/simple;
-	bh=IuMryy82ityy+y2gYnkxMLPoqWMc/MmLFk7ryYs3AlU=;
+	s=arc-20240116; t=1728993277; c=relaxed/simple;
+	bh=+DF5C7iaPsci/sKWebrKyup72yddDERhnaMqEvw1lak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D09+WC89AlaC09RrTXvsDHITrwFBSE+FraZg1FRGpUKZGYPbW81vXx+F6/VShfYFLsWA9chnwLWZss+leHPZ9SYwwYwoXm1pAhEjDcWUZuosd3gWhSrwxAKBt+D2wnO0hBZHvkWb1CIRClnmjl4xP78f9ZVMNa+ttIYDG1OAKX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUjb7Hl8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KNXlHRp+C9XTV1dKdHzvkxMqwjW0LxvO8Qw7x02oiNvoHsg0F13LV5ov/4OYM/HCOTCl1VqS0IU7wyChNmXIQgZdaoKrZyGHVRivTjmRxOOL77TQTe29ZnXIiGGLgZSioNPWHfCjVx8IICza9y+Wmt1lBLmFdflQ6l11amkxzOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kDgm8jKs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUjb7Hl8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00838C4CEC6;
-	Tue, 15 Oct 2024 11:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kDgm8jKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7442C4CEC6;
+	Tue, 15 Oct 2024 11:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993273;
-	bh=IuMryy82ityy+y2gYnkxMLPoqWMc/MmLFk7ryYs3AlU=;
+	s=korg; t=1728993277;
+	bh=+DF5C7iaPsci/sKWebrKyup72yddDERhnaMqEvw1lak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FUjb7Hl8Wope3l4HvK6zw1bJfM/Ui5ot/WIHIujF3KVDX7E1/doZJFAZrUpuGFUyt
-	 bka9r7X9q2wrUOHg9M5iMnBoC0bJnEecoDdMTGn04GLGJBPlyzFmNXLgcbqApvc6dY
-	 Tcq05DzHelIuPFekJut+tBTIDKB1vlqNlNPSFDqY=
+	b=kDgm8jKsmSbSMcCx6m8hWeNGeKk8dwfpypFB8CIPVSQpnsIvr0l1sls093UeNpNG3
+	 TOPG8RYZU8bsWhZodsM5Hz5BE1/BNp42D0p4sr0qBGsvCvSrsoWbfR9gMQGE8KuOPK
+	 Rrp1EVHqbrhJcik3zEmXonan20JqtqKAIVFm7fWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Alexander Potapenko <glider@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 363/691] x86/entry: Remove unwanted instrumentation in common_interrupt()
-Date: Tue, 15 Oct 2024 13:25:11 +0200
-Message-ID: <20241015112454.753187274@linuxfoundation.org>
+	Felix Moessbauer <felix.moessbauer@siemens.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 364/691] io_uring/sqpoll: do not allow pinning outside of cpuset
+Date: Tue, 15 Oct 2024 13:25:12 +0200
+Message-ID: <20241015112454.792741046@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,112 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Vyukov <dvyukov@google.com>
+From: Felix Moessbauer <felix.moessbauer@siemens.com>
 
-[ Upstream commit 477d81a1c47a1b79b9c08fc92b5dea3c5143800b ]
+The submit queue polling threads are userland threads that just never
+exit to the userland. When creating the thread with IORING_SETUP_SQ_AFF,
+the affinity of the poller thread is set to the cpu specified in
+sq_thread_cpu. However, this CPU can be outside of the cpuset defined
+by the cgroup cpuset controller. This violates the rules defined by the
+cpuset controller and is a potential issue for realtime applications.
 
-common_interrupt() and related variants call kvm_set_cpu_l1tf_flush_l1d(),
-which is neither marked noinstr nor __always_inline.
+In b7ed6d8ffd6 we fixed the default affinity of the poller thread, in
+case no explicit pinning is required by inheriting the one of the
+creating task. In case of explicit pinning, the check is more
+complicated, as also a cpu outside of the parent cpumask is allowed.
+We implemented this by using cpuset_cpus_allowed (that has support for
+cgroup cpusets) and testing if the requested cpu is in the set.
 
-So compiler puts it out of line and adds instrumentation to it.  Since the
-call is inside of instrumentation_begin/end(), objtool does not warn about
-it.
-
-The manifestation is that KCOV produces spurious coverage in
-kvm_set_cpu_l1tf_flush_l1d() in random places because the call happens when
-preempt count is not yet updated to say that the kernel is in an interrupt.
-
-Mark kvm_set_cpu_l1tf_flush_l1d() as __always_inline and move it out of the
-instrumentation_begin/end() section.  It only calls __this_cpu_write()
-which is already safe to call in noinstr contexts.
-
-Fixes: 6368558c3710 ("x86/entry: Provide IDTENTRY_SYSVEC")
-Signed-off-by: Dmitry Vyukov <dvyukov@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/3f9a1de9e415fcb53d07dc9e19fa8481bb021b1b.1718092070.git.dvyukov@google.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 37d1e2e3642e ("io_uring: move SQPOLL thread io-wq forked worker")
+Cc: stable@vger.kernel.org # 6.1+
+Signed-off-by: Felix Moessbauer <felix.moessbauer@siemens.com>
+Link: https://lore.kernel.org/r/20240909150036.55921-1-felix.moessbauer@siemens.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/hardirq.h  | 8 ++++++--
- arch/x86/include/asm/idtentry.h | 6 +++---
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ io_uring/io_uring.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/hardirq.h b/arch/x86/include/asm/hardirq.h
-index 275e7fd20310f..a18df4191699c 100644
---- a/arch/x86/include/asm/hardirq.h
-+++ b/arch/x86/include/asm/hardirq.h
-@@ -62,7 +62,11 @@ extern u64 arch_irq_stat(void);
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -56,6 +56,7 @@
+ #include <linux/mm.h>
+ #include <linux/mman.h>
+ #include <linux/percpu.h>
++#include <linux/cpuset.h>
+ #include <linux/slab.h>
+ #include <linux/blkdev.h>
+ #include <linux/bvec.h>
+@@ -8746,10 +8747,12 @@ static int io_sq_offload_create(struct i
+ 			return 0;
  
+ 		if (p->flags & IORING_SETUP_SQ_AFF) {
++			struct cpumask allowed_mask;
+ 			int cpu = p->sq_thread_cpu;
  
- #if IS_ENABLED(CONFIG_KVM_INTEL)
--static inline void kvm_set_cpu_l1tf_flush_l1d(void)
-+/*
-+ * This function is called from noinstr interrupt contexts
-+ * and must be inlined to not get instrumentation.
-+ */
-+static __always_inline void kvm_set_cpu_l1tf_flush_l1d(void)
- {
- 	__this_cpu_write(irq_stat.kvm_cpu_l1tf_flush_l1d, 1);
- }
-@@ -77,7 +81,7 @@ static __always_inline bool kvm_get_cpu_l1tf_flush_l1d(void)
- 	return __this_cpu_read(irq_stat.kvm_cpu_l1tf_flush_l1d);
- }
- #else /* !IS_ENABLED(CONFIG_KVM_INTEL) */
--static inline void kvm_set_cpu_l1tf_flush_l1d(void) { }
-+static __always_inline void kvm_set_cpu_l1tf_flush_l1d(void) { }
- #endif /* IS_ENABLED(CONFIG_KVM_INTEL) */
- 
- #endif /* _ASM_X86_HARDIRQ_H */
-diff --git a/arch/x86/include/asm/idtentry.h b/arch/x86/include/asm/idtentry.h
-index a65575136255b..151cd0b5f4306 100644
---- a/arch/x86/include/asm/idtentry.h
-+++ b/arch/x86/include/asm/idtentry.h
-@@ -210,8 +210,8 @@ __visible noinstr void func(struct pt_regs *regs,			\
- 	irqentry_state_t state = irqentry_enter(regs);			\
- 	u32 vector = (u32)(u8)error_code;				\
- 									\
-+	kvm_set_cpu_l1tf_flush_l1d();                                   \
- 	instrumentation_begin();					\
--	kvm_set_cpu_l1tf_flush_l1d();					\
- 	run_irq_on_irqstack_cond(__##func, regs, vector);		\
- 	instrumentation_end();						\
- 	irqentry_exit(regs, state);					\
-@@ -248,7 +248,6 @@ static void __##func(struct pt_regs *regs);				\
- 									\
- static __always_inline void instr_##func(struct pt_regs *regs)		\
- {									\
--	kvm_set_cpu_l1tf_flush_l1d();					\
- 	run_sysvec_on_irqstack_cond(__##func, regs);			\
- }									\
- 									\
-@@ -256,6 +255,7 @@ __visible noinstr void func(struct pt_regs *regs)			\
- {									\
- 	irqentry_state_t state = irqentry_enter(regs);			\
- 									\
-+	kvm_set_cpu_l1tf_flush_l1d();                                   \
- 	instrumentation_begin();					\
- 	instr_##func (regs);						\
- 	instrumentation_end();						\
-@@ -286,7 +286,6 @@ static __always_inline void __##func(struct pt_regs *regs);		\
- static __always_inline void instr_##func(struct pt_regs *regs)		\
- {									\
- 	__irq_enter_raw();						\
--	kvm_set_cpu_l1tf_flush_l1d();					\
- 	__##func (regs);						\
- 	__irq_exit_raw();						\
- }									\
-@@ -295,6 +294,7 @@ __visible noinstr void func(struct pt_regs *regs)			\
- {									\
- 	irqentry_state_t state = irqentry_enter(regs);			\
- 									\
-+	kvm_set_cpu_l1tf_flush_l1d();                                   \
- 	instrumentation_begin();					\
- 	instr_##func (regs);						\
- 	instrumentation_end();						\
--- 
-2.43.0
-
+ 			ret = -EINVAL;
+-			if (cpu >= nr_cpu_ids || !cpu_online(cpu))
++			cpuset_cpus_allowed(current, &allowed_mask);
++			if (!cpumask_test_cpu(cpu, &allowed_mask))
+ 				goto err_sqpoll;
+ 			sqd->sq_cpu = cpu;
+ 		} else {
 
 
