@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB18D1D1512;
-	Tue, 15 Oct 2024 12:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AF01C57B1;
+	Tue, 15 Oct 2024 12:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993639; cv=none; b=g3TQCxSjgiMTx7P+ZwMmY1KOZDUJSeFhHPx+MKrvi3Zej2yy+t5pKIF9NrfmL3dMEsPAB17LOEbAIZJtKQ6czf8FMf/f0ZTXI56oA4C/Zp7rIBSY9tLx0M1EDmXMHLSAPcSD7+cj+dnVtmDKN7FGbVHor0YBZK2R+XNmN4NicQk=
+	t=1728993643; cv=none; b=sOYPcrGHJilWmQcoQCsKuUnT0nnxQWT7lA5cFipo5FKa0Oh7wIRT06fRdm0j227MH+h55KZAuW4Yo4or3wUT0RYyxRwQboyuI3VyhnJXUjKvFJTiR7o2pX5lOSAG+wLSFYrcTm6SQCccqVrDlbWeKL/tjWzVtq8F3Zxwflao1ZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993639; c=relaxed/simple;
-	bh=fKpWOQANyYnHRxwCLDwIK7epRJ7trwX7dTitKjPWSOY=;
+	s=arc-20240116; t=1728993643; c=relaxed/simple;
+	bh=T+qXV6KKHf8idzK4wYwLS/0GrBmI66u+bf+ysC7WUWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LOeu0EqtQNC0TecTD8snvWl5ELbHSZN+MerL4p7y1LibEvg8CMbWXLC1ZWKduR7CjRlhMyrYG5ZGXN7NSreWKE7UAU9k9Htb0mbHMDw21FU6TbxAqrXmHkSuFITPo5Kc01D/zDGpuQF2z1HhvHjxiyRGDewUXyT4hl+IR7O2RxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PMeQPb3E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uyXj/8U5Y6qgItveYjllmCESL91BPyMXQc51S19eY8RUtXrqnpRT1EkgJzB5pHWtCxSiZba8YF4RWSJC73GsNJ3L9dJG1Ub0DkBhw1lXkp2SjmrJVx47R7uyLrDZ3mM4g4Aj89Cd/leVZqx6H9iq/f+wNxRBxdQwnP58bYTaRao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arfiKBXP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PMeQPb3E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2B9C4CEC6;
-	Tue, 15 Oct 2024 12:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arfiKBXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCACBC4CEC6;
+	Tue, 15 Oct 2024 12:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993639;
-	bh=fKpWOQANyYnHRxwCLDwIK7epRJ7trwX7dTitKjPWSOY=;
+	s=korg; t=1728993643;
+	bh=T+qXV6KKHf8idzK4wYwLS/0GrBmI66u+bf+ysC7WUWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PMeQPb3Ek/hnen7p3b+N3irRDwZo1wYJo6+8vQCuUuLkiCLXv/9ItRd9QOdU/N/Xa
-	 mw+CvTJKogW7qlGgAS79rwAA5703ZvgXjCSWuvpVB1YZ7cmYCK53Gdd6mFEY3sWa9H
-	 3qbbswxeHdWpp3pANuL5jM4/jGBMTEumg+uxWk3M=
+	b=arfiKBXPB6ZKPX6QOWWmygmhrGR9FR5F58vjPbHZdKlvYvXlKjWdb99iH5yEpOKi8
+	 ySeZviBNHb4VqKjhHxgZXCNNjY+X00r9c+Y9VC18pGvtWpTis0G2tvom5nOLAQw0zc
+	 URxo2xADkeeNiEo2tJgQGjsVUpTmRn7Spyvv5wic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 471/691] of/irq: Refer to actual buffer size in of_irq_parse_one()
-Date: Tue, 15 Oct 2024 13:26:59 +0200
-Message-ID: <20241015112459.038321589@linuxfoundation.org>
+Subject: [PATCH 5.15 472/691] ext4: ext4_search_dir should return a proper error
+Date: Tue, 15 Oct 2024 13:27:00 +0200
+Message-ID: <20241015112459.077722992@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,37 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit 39ab331ab5d377a18fbf5a0e0b228205edfcc7f4 ]
+[ Upstream commit cd69f8f9de280e331c9e6ff689ced0a688a9ce8f ]
 
-Replace two open-coded calculations of the buffer size by invocations of
-sizeof() on the buffer itself, to make sure the code will always use the
-actual buffer size.
+ext4_search_dir currently returns -1 in case of a failure, while it returns
+0 when the name is not found. In such failure cases, it should return an
+error code instead.
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/817c0b9626fd30790fc488c472a3398324cfcc0c.1724156125.git.geert+renesas@glider.be
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+This becomes even more important when ext4_find_inline_entry returns an
+error code as well in the next commit.
+
+-EFSCORRUPTED seems appropriate as such error code as these failures would
+be caused by unexpected record lengths and is in line with other instances
+of ext4_check_dir_entry failures.
+
+In the case of ext4_dx_find_entry, the current use of ERR_BAD_DX_DIR was
+left as is to reduce the risk of regressions.
+
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Link: https://patch.msgid.link/20240821152324.3621860-2-cascardo@igalia.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/irq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/namei.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/of/irq.c b/drivers/of/irq.c
-index ad0cb49e233ac..70ac9cb3b2c67 100644
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -301,8 +301,8 @@ int of_irq_parse_one(struct device_node *device, int index, struct of_phandle_ar
- 	addr = of_get_property(device, "reg", &addr_len);
+diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
+index a80f2cdab3744..3fb3c5dfded70 100644
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -1526,7 +1526,7 @@ static bool ext4_match(struct inode *parent,
+ }
  
- 	/* Prevent out-of-bounds read in case of longer interrupt parent address size */
--	if (addr_len > (3 * sizeof(__be32)))
--		addr_len = 3 * sizeof(__be32);
-+	if (addr_len > sizeof(addr_buf))
-+		addr_len = sizeof(addr_buf);
- 	if (addr)
- 		memcpy(addr_buf, addr, addr_len);
- 
+ /*
+- * Returns 0 if not found, -1 on failure, and 1 on success
++ * Returns 0 if not found, -EFSCORRUPTED on failure, and 1 on success
+  */
+ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
+ 		    struct inode *dir, struct ext4_filename *fname,
+@@ -1547,7 +1547,7 @@ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
+ 			 * a full check */
+ 			if (ext4_check_dir_entry(dir, NULL, de, bh, search_buf,
+ 						 buf_size, offset))
+-				return -1;
++				return -EFSCORRUPTED;
+ 			*res_dir = de;
+ 			return 1;
+ 		}
+@@ -1555,7 +1555,7 @@ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
+ 		de_len = ext4_rec_len_from_disk(de->rec_len,
+ 						dir->i_sb->s_blocksize);
+ 		if (de_len <= 0)
+-			return -1;
++			return -EFSCORRUPTED;
+ 		offset += de_len;
+ 		de = (struct ext4_dir_entry_2 *) ((char *) de + de_len);
+ 	}
+@@ -1707,8 +1707,10 @@ static struct buffer_head *__ext4_find_entry(struct inode *dir,
+ 			goto cleanup_and_exit;
+ 		} else {
+ 			brelse(bh);
+-			if (i < 0)
++			if (i < 0) {
++				ret = ERR_PTR(i);
+ 				goto cleanup_and_exit;
++			}
+ 		}
+ 	next:
+ 		if (++block >= nblocks)
+@@ -1803,7 +1805,7 @@ static struct buffer_head * ext4_dx_find_entry(struct inode *dir,
+ 		if (retval == 1)
+ 			goto success;
+ 		brelse(bh);
+-		if (retval == -1) {
++		if (retval < 0) {
+ 			bh = ERR_PTR(ERR_BAD_DX_DIR);
+ 			goto errout;
+ 		}
 -- 
 2.43.0
 
