@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4632E1D4154;
-	Tue, 15 Oct 2024 11:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3C81E766C;
+	Tue, 15 Oct 2024 11:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993444; cv=none; b=V9zZHuHPmlUKN2LEN3txz666ewKpJc6IpuTcnk5hD/ybRKONqE0fYo4ZblPDo3THRDrwp+EmPemAqmwPf0gQ9e17grV8Iu9h0S8qSt1r6utaovPZQAUOYbSc1C07jop48V9qrnQ79p5P9InJySMADZ9Bcpt3JMPBzgDSqdTydFU=
+	t=1728993447; cv=none; b=ZQlDFGEfMLPwaOBrpVepC9m6rZt9/UkifhFpbTgljdSQz3zpGjqzmosg4idC3MtjFCsFj2ntoiCkZOSJ4iXsTitDEGr+wkwbCxCNtx1yX6YP8dbhc8mNHRawtcsk8YSeMLQeMH/jYZGOir1x2mqDmSmuggVgJZJOjHbzQWtEU1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993444; c=relaxed/simple;
-	bh=TngfWL24CIJ3n/1w/bbNdF7mQuNPa2sgOg3bh7A8zls=;
+	s=arc-20240116; t=1728993447; c=relaxed/simple;
+	bh=gvhx86S7Fwc3v3O9KF25RCSH0WyjZ3nBgN0+d1n/vLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlclaphPt0oG5LP6iQscyMC2Jl0Rzxmj+G0gcyaBILpPPrS7+TGWCStPIF+dgZCLQmk0t932+nLDxCNwufBlYK/QZPtqPD771us+nHyBIt0pSLwUWmWW4tiVTI7sdptyPK2j0vbA1iGympY0cGnJa7WbCr2l1BPSjwAQ6QMYLt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NP585it7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HCBy1hRmcWpNwJL/MKAzoI/ktxhz5vLrzcskKXk3SH2v7nVvMAIGPivP3aKkkh8w9m/kg3ozzchnWmY00WYnX73S/lpIdm4zk1BXb8vfJ1A16Ucak3JpygYA3NTBXZaGIRtB+5vyoFcpZdX1pS3VRynzA9B99kp0R7NKlIhFJ5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJ0Q7ttn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NP585it7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC64C4CEC6;
-	Tue, 15 Oct 2024 11:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJ0Q7ttn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F070DC4CEC6;
+	Tue, 15 Oct 2024 11:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993444;
-	bh=TngfWL24CIJ3n/1w/bbNdF7mQuNPa2sgOg3bh7A8zls=;
+	s=korg; t=1728993447;
+	bh=gvhx86S7Fwc3v3O9KF25RCSH0WyjZ3nBgN0+d1n/vLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NP585it7HBCS4XqRG3HEVsTQWqQpdclWGgm0JPRnPCJcmVMz59zMOjQh926FjUoA0
-	 bpjW/IoxB14CKoYrOykwG9Ti15kU0PKIp9Ti2bwGFcEDSAxko45D60V49BtwhEs+sf
-	 i5FPMK0QsLMaM2brwOFkzfU+0zM7NYDIOKx+8KG4=
+	b=HJ0Q7ttnGCmOt2rqvYJGKBaTNtW/Mk5gg5J+2b5M9VS3hEcAlZD45/EZ4v91aOcTd
+	 oFFkDF3nsTUc3P4SwJQJFZdhVoHMQRhdiQKRiXNTklMUeISXyOsFobw2fD7nIq0ZCV
+	 TGw8BkqN2AtxFna/7+irxteGYP2hMfMIxjnhRUY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 412/691] net: hisilicon: hns_dsaf_mac: fix OF node leak in hns_mac_get_info()
-Date: Tue, 15 Oct 2024 13:26:00 +0200
-Message-ID: <20241015112456.695787233@linuxfoundation.org>
+Subject: [PATCH 5.15 413/691] net: hisilicon: hns_mdio: fix OF node leak in probe()
+Date: Tue, 15 Oct 2024 13:26:01 +0200
+Message-ID: <20241015112456.734573741@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -54,32 +54,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 5680cf8d34e1552df987e2f4bb1bff0b2a8c8b11 ]
+[ Upstream commit e62beddc45f487b9969821fad3a0913d9bc18a2f ]
 
 Driver is leaking OF node reference from
-of_parse_phandle_with_fixed_args() in hns_mac_get_info().
+of_parse_phandle_with_fixed_args() in probe().
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240827144421.52852-3-krzysztof.kozlowski@linaro.org
+Link: https://patch.msgid.link/20240827144421.52852-4-krzysztof.kozlowski@linaro.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c | 1 +
+ drivers/net/ethernet/hisilicon/hns_mdio.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c b/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-index 236ee9b9d1e60..7f7c14c742605 100644
---- a/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-+++ b/drivers/net/ethernet/hisilicon/hns/hns_dsaf_mac.c
-@@ -933,6 +933,7 @@ static int hns_mac_get_info(struct hns_mac_cb *mac_cb)
- 			mac_cb->cpld_ctrl = NULL;
+diff --git a/drivers/net/ethernet/hisilicon/hns_mdio.c b/drivers/net/ethernet/hisilicon/hns_mdio.c
+index 07fdab58001d9..dd5fe71279f04 100644
+--- a/drivers/net/ethernet/hisilicon/hns_mdio.c
++++ b/drivers/net/ethernet/hisilicon/hns_mdio.c
+@@ -497,6 +497,7 @@ static int hns_mdio_probe(struct platform_device *pdev)
+ 						MDIO_SC_RESET_ST;
+ 				}
+ 			}
++			of_node_put(reg_args.np);
  		} else {
- 			syscon = syscon_node_to_regmap(cpld_args.np);
-+			of_node_put(cpld_args.np);
- 			if (IS_ERR_OR_NULL(syscon)) {
- 				dev_dbg(mac_cb->dev, "no cpld-syscon found!\n");
- 				mac_cb->cpld_ctrl = NULL;
+ 			dev_warn(&pdev->dev, "find syscon ret = %#x\n", ret);
+ 			mdio_dev->subctrl_vbase = NULL;
 -- 
 2.43.0
 
