@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193E313F435;
-	Tue, 15 Oct 2024 11:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C32F1E6321;
+	Tue, 15 Oct 2024 11:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992314; cv=none; b=J6AR20cTcSiMhgVK8IM9EKb71PsphNqaVi9cYsoJlUslL3Pu2gMtp1O65r8uf2kuitPlXT2qdwO6cGqvq/if4MU9Uy0KM9P+yoNopeMxl+dbjeMfD4pNROdzoY4Z/Rth2gyHGYhYGBfpNxM6TwXgJG/zrb5Fn99JehKHce3VoNE=
+	t=1728992317; cv=none; b=I/3FnyQ8zEeQE1o+ifvQPdY/D1A/nKEtu3/An/FJBqzDn5ooyHy3eSoktLlIr5PRtuHWY47ZeUZduk8rusPMwjMCMijQz2wCj0dU8Dgv8Q2u23QlQormqpe77vtVMS8uUy9dlv+q8HFUn5MlITjMjbJRR7MrV3s5QLAYFx1IhTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992314; c=relaxed/simple;
-	bh=hi2NNBgT94HqMTASBjz9QrUBhb069Yjh2Mv7b8VtLqI=;
+	s=arc-20240116; t=1728992317; c=relaxed/simple;
+	bh=SoeOo6jDA/NNJvi+DNF7ZBUbhJxUUU23r8pECOspYZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VOh1vslQD6DgqmOYmtwYirDFBGKp88s+oN936WctzeCqB1d1VdBj/YQnIYst50Nbt+/Zy99F+wCcrYOzTVnW5GETzf4EFndd1wvgVaZ5amq9PhjZF86t9cRl8NaHe4RC+liAERcQ/RIeVG58HKigx3O7CfvgFJlqpolMVWbw18M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VfoKYklP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MY4b87cZCk5xBJOUdZ+xHQZFaMZB9ugzm7KY5HnHv5bgkKMfcKI0txwEqZ2FvjgwOOrwxewmnsymYW38lNGWIAlap/QogQ8mkeeH5eQUQoEO7H5R9PbJVetZ5+WjK0B1Tsc3404Vr6vsxd2ic6nbt8JfGfCb1dFBqC5I3EKmd50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OE3Mn4FQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VfoKYklP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F068C4CEC6;
-	Tue, 15 Oct 2024 11:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OE3Mn4FQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF26C4CEC6;
+	Tue, 15 Oct 2024 11:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992313;
-	bh=hi2NNBgT94HqMTASBjz9QrUBhb069Yjh2Mv7b8VtLqI=;
+	s=korg; t=1728992317;
+	bh=SoeOo6jDA/NNJvi+DNF7ZBUbhJxUUU23r8pECOspYZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VfoKYklPPCR89ssc3TNzNh5v0tPcaQ6ymcPEupGtxLm5ftvNJDTUhAkK6a1Uxfkek
-	 ShCEcpcfUVNGwI2Q8iGuFfqzTZ5majbnM2MnQDKCseBeruHh9t3Kul7Da6GwOFpYzo
-	 eKPXmIhNvHo2iG7PiyFy1dnCzrRiCf4Ujjpq8QP8=
+	b=OE3Mn4FQ2bIjd2Clvdo9ZUSHi0fK35hG56/rQwpZDnJxD9L+31L6+3LuAcRkFBGfZ
+	 /R/mk41p9mC+RhtOL1iTzshAh1ziZqOKq8uFcabexE3SIMk4R3/SUWstQmeZEEQkwP
+	 fjjo0QFNKi6zcMNuw6rOv8ZAoBQmLupnJ2juTtSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Naveen Mamindlapalli <naveenm@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 049/691] fou: fix initialization of grc
-Date: Tue, 15 Oct 2024 13:19:57 +0200
-Message-ID: <20241015112442.292725361@linuxfoundation.org>
+Subject: [PATCH 5.15 050/691] octeontx2-af: Set XOFF on other child transmit schedulers during SMQ flush
+Date: Tue, 15 Oct 2024 13:19:58 +0200
+Message-ID: <20241015112442.331893738@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,42 +52,212 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Naveen Mamindlapalli <naveenm@marvell.com>
 
-[ Upstream commit 4c8002277167125078e6b9b90137bdf443ebaa08 ]
+[ Upstream commit e18aab0470d8f6259be82282ffb3fdcfeaeff6c3 ]
 
-The grc must be initialize first. There can be a condition where if
-fou is NULL, goto out will be executed and grc would be used
-uninitialized.
+When multiple transmit scheduler queues feed a TL1 transmit link, the
+SMQ flush initiated on a low priority queue might get stuck when a high
+priority queue fully subscribes the transmit link. This inturn effects
+interface teardown. To avoid this, temporarily XOFF all TL1's other
+immediate child transmit scheduler queues and also clear any rate limit
+configuration on all the scheduler queues in SMQ(flush) hierarchy.
 
-Fixes: 7e4196935069 ("fou: Fix null-ptr-deref in GRO.")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20240906102839.202798-1-usama.anjum@collabora.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Naveen Mamindlapalli <naveenm@marvell.com>
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 019aba04f08c ("octeontx2-af: Modify SMQ flush sequence to drop packets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fou.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/rvu.h   |  16 +++
+ .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 130 +++++++++++++++++-
+ 2 files changed, 144 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/fou.c b/net/ipv4/fou.c
-index 135da756dd5a..1d67df4d8ed6 100644
---- a/net/ipv4/fou.c
-+++ b/net/ipv4/fou.c
-@@ -334,11 +334,11 @@ static struct sk_buff *gue_gro_receive(struct sock *sk,
- 	struct gro_remcsum grc;
- 	u8 proto;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+index b4be1b597f33..db02fae7b831 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+@@ -277,6 +277,22 @@ struct nix_mark_format {
+ 	u32 *cfg;
+ };
  
-+	skb_gro_remcsum_init(&grc);
++/* smq(flush) to tl1 cir/pir info */
++struct nix_smq_tree_ctx {
++	u64 cir_off;
++	u64 cir_val;
++	u64 pir_off;
++	u64 pir_val;
++};
 +
- 	if (!fou)
- 		goto out;
++/* smq flush context */
++struct nix_smq_flush_ctx {
++	int smq;
++	u16 tl1_schq;
++	u16 tl2_schq;
++	struct nix_smq_tree_ctx smq_tree_ctx[NIX_TXSCH_LVL_CNT];
++};
++
+ struct npc_pkind {
+ 	struct rsrc_bmap rsrc;
+ 	u32	*pfchan_map;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index 641f1d969bb7..e6b368ec4a3b 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -2081,9 +2081,121 @@ int rvu_mbox_handler_nix_txsch_alloc(struct rvu *rvu,
+ 	return rc;
+ }
  
--	skb_gro_remcsum_init(&grc);
--
- 	off = skb_gro_offset(skb);
- 	len = off + sizeof(*guehdr);
++static void nix_smq_flush_fill_ctx(struct rvu *rvu, int blkaddr, int smq,
++				   struct nix_smq_flush_ctx *smq_flush_ctx)
++{
++	struct nix_smq_tree_ctx *smq_tree_ctx;
++	u64 parent_off, regval;
++	u16 schq;
++	int lvl;
++
++	smq_flush_ctx->smq = smq;
++
++	schq = smq;
++	for (lvl = NIX_TXSCH_LVL_SMQ; lvl <= NIX_TXSCH_LVL_TL1; lvl++) {
++		smq_tree_ctx = &smq_flush_ctx->smq_tree_ctx[lvl];
++		if (lvl == NIX_TXSCH_LVL_TL1) {
++			smq_flush_ctx->tl1_schq = schq;
++			smq_tree_ctx->cir_off = NIX_AF_TL1X_CIR(schq);
++			smq_tree_ctx->pir_off = 0;
++			smq_tree_ctx->pir_val = 0;
++			parent_off = 0;
++		} else if (lvl == NIX_TXSCH_LVL_TL2) {
++			smq_flush_ctx->tl2_schq = schq;
++			smq_tree_ctx->cir_off = NIX_AF_TL2X_CIR(schq);
++			smq_tree_ctx->pir_off = NIX_AF_TL2X_PIR(schq);
++			parent_off = NIX_AF_TL2X_PARENT(schq);
++		} else if (lvl == NIX_TXSCH_LVL_TL3) {
++			smq_tree_ctx->cir_off = NIX_AF_TL3X_CIR(schq);
++			smq_tree_ctx->pir_off = NIX_AF_TL3X_PIR(schq);
++			parent_off = NIX_AF_TL3X_PARENT(schq);
++		} else if (lvl == NIX_TXSCH_LVL_TL4) {
++			smq_tree_ctx->cir_off = NIX_AF_TL4X_CIR(schq);
++			smq_tree_ctx->pir_off = NIX_AF_TL4X_PIR(schq);
++			parent_off = NIX_AF_TL4X_PARENT(schq);
++		} else if (lvl == NIX_TXSCH_LVL_MDQ) {
++			smq_tree_ctx->cir_off = NIX_AF_MDQX_CIR(schq);
++			smq_tree_ctx->pir_off = NIX_AF_MDQX_PIR(schq);
++			parent_off = NIX_AF_MDQX_PARENT(schq);
++		}
++		/* save cir/pir register values */
++		smq_tree_ctx->cir_val = rvu_read64(rvu, blkaddr, smq_tree_ctx->cir_off);
++		if (smq_tree_ctx->pir_off)
++			smq_tree_ctx->pir_val = rvu_read64(rvu, blkaddr, smq_tree_ctx->pir_off);
++
++		/* get parent txsch node */
++		if (parent_off) {
++			regval = rvu_read64(rvu, blkaddr, parent_off);
++			schq = (regval >> 16) & 0x1FF;
++		}
++	}
++}
++
++static void nix_smq_flush_enadis_xoff(struct rvu *rvu, int blkaddr,
++				      struct nix_smq_flush_ctx *smq_flush_ctx, bool enable)
++{
++	struct nix_txsch *txsch;
++	struct nix_hw *nix_hw;
++	u64 regoff;
++	int tl2;
++
++	nix_hw = get_nix_hw(rvu->hw, blkaddr);
++	if (!nix_hw)
++		return;
++
++	/* loop through all TL2s with matching PF_FUNC */
++	txsch = &nix_hw->txsch[NIX_TXSCH_LVL_TL2];
++	for (tl2 = 0; tl2 < txsch->schq.max; tl2++) {
++		/* skip the smq(flush) TL2 */
++		if (tl2 == smq_flush_ctx->tl2_schq)
++			continue;
++		/* skip unused TL2s */
++		if (TXSCH_MAP_FLAGS(txsch->pfvf_map[tl2]) & NIX_TXSCHQ_FREE)
++			continue;
++		/* skip if PF_FUNC doesn't match */
++		if ((TXSCH_MAP_FUNC(txsch->pfvf_map[tl2]) & ~RVU_PFVF_FUNC_MASK) !=
++		    (TXSCH_MAP_FUNC(txsch->pfvf_map[smq_flush_ctx->tl2_schq] &
++				    ~RVU_PFVF_FUNC_MASK)))
++			continue;
++		/* enable/disable XOFF */
++		regoff = NIX_AF_TL2X_SW_XOFF(tl2);
++		if (enable)
++			rvu_write64(rvu, blkaddr, regoff, 0x1);
++		else
++			rvu_write64(rvu, blkaddr, regoff, 0x0);
++	}
++}
++
++static void nix_smq_flush_enadis_rate(struct rvu *rvu, int blkaddr,
++				      struct nix_smq_flush_ctx *smq_flush_ctx, bool enable)
++{
++	u64 cir_off, pir_off, cir_val, pir_val;
++	struct nix_smq_tree_ctx *smq_tree_ctx;
++	int lvl;
++
++	for (lvl = NIX_TXSCH_LVL_SMQ; lvl <= NIX_TXSCH_LVL_TL1; lvl++) {
++		smq_tree_ctx = &smq_flush_ctx->smq_tree_ctx[lvl];
++		cir_off = smq_tree_ctx->cir_off;
++		cir_val = smq_tree_ctx->cir_val;
++		pir_off = smq_tree_ctx->pir_off;
++		pir_val = smq_tree_ctx->pir_val;
++
++		if (enable) {
++			rvu_write64(rvu, blkaddr, cir_off, cir_val);
++			if (lvl != NIX_TXSCH_LVL_TL1)
++				rvu_write64(rvu, blkaddr, pir_off, pir_val);
++		} else {
++			rvu_write64(rvu, blkaddr, cir_off, 0x0);
++			if (lvl != NIX_TXSCH_LVL_TL1)
++				rvu_write64(rvu, blkaddr, pir_off, 0x0);
++		}
++	}
++}
++
+ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
+ 			 int smq, u16 pcifunc, int nixlf)
+ {
++	struct nix_smq_flush_ctx *smq_flush_ctx;
+ 	int pf = rvu_get_pf(pcifunc);
+ 	u8 cgx_id = 0, lmac_id = 0;
+ 	int err, restore_tx_en = 0;
+@@ -2096,6 +2208,14 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
+ 						   lmac_id, true);
+ 	}
  
++	/* XOFF all TL2s whose parent TL1 matches SMQ tree TL1 */
++	smq_flush_ctx = kzalloc(sizeof(*smq_flush_ctx), GFP_KERNEL);
++	if (!smq_flush_ctx)
++		return -ENOMEM;
++	nix_smq_flush_fill_ctx(rvu, blkaddr, smq, smq_flush_ctx);
++	nix_smq_flush_enadis_xoff(rvu, blkaddr, smq_flush_ctx, true);
++	nix_smq_flush_enadis_rate(rvu, blkaddr, smq_flush_ctx, false);
++
+ 	cfg = rvu_read64(rvu, blkaddr, NIX_AF_SMQX_CFG(smq));
+ 	/* Do SMQ flush and set enqueue xoff */
+ 	cfg |= BIT_ULL(50) | BIT_ULL(49);
+@@ -2110,8 +2230,14 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
+ 	err = rvu_poll_reg(rvu, blkaddr,
+ 			   NIX_AF_SMQX_CFG(smq), BIT_ULL(49), true);
+ 	if (err)
+-		dev_err(rvu->dev,
+-			"NIXLF%d: SMQ%d flush failed\n", nixlf, smq);
++		dev_info(rvu->dev,
++			 "NIXLF%d: SMQ%d flush failed, txlink might be busy\n",
++			 nixlf, smq);
++
++	/* clear XOFF on TL2s */
++	nix_smq_flush_enadis_rate(rvu, blkaddr, smq_flush_ctx, true);
++	nix_smq_flush_enadis_xoff(rvu, blkaddr, smq_flush_ctx, false);
++	kfree(smq_flush_ctx);
+ 
+ 	rvu_cgx_enadis_rx_bp(rvu, pf, true);
+ 	/* restore cgx tx state */
 -- 
 2.43.0
 
