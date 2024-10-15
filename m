@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E251E7669;
-	Tue, 15 Oct 2024 11:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D481E7669;
+	Tue, 15 Oct 2024 11:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992331; cv=none; b=dZixbjbNYAb8XR6NcdNCV14K03hBKQTQI6yR//JmhGk10577wajNNDG2FYGS+uAKI1sFtTj4bOfbpgXDMPvXAOTXwD/ATD2oKscCXijN3uNfewISzgrfJsscN1UoFlDDYE8WsiwQd9QXpDvC2sELO8oRK2T67/GEV0QNx0xjYwc=
+	t=1728992334; cv=none; b=H0F+vG8ptMWk/vxUlSBJBVAU8u2s0sCfroN215kkmQQFuAEuBTths5p9BOwNhK7MQppWBtW5cM8sCunsuFNFBpeR/JUXDuK1USRjgzg6naaSExgKMZwYw8Z8Ydi+Ztyb+izG+Kyd7AjiTz4JKekZ8p1CFOy6J6t6WYTX+Z171hE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992331; c=relaxed/simple;
-	bh=mRVrKpj+3v/fRYI14h1gFxMVAb+WfTQ1M3zDkhtifgo=;
+	s=arc-20240116; t=1728992334; c=relaxed/simple;
+	bh=Un5gbO0mYqgdWbQ6lau6lzJ91bpzpIXa8iWT25Ok+AQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UBIFoQwIf7Se0wYg3iW0oFD5/jm5nwzCwnfxIT7WxotcUN9ciVICyHlRlsCU9JypihFTOp1DQjaGWVvAYzqTI2v9IT5Rb+6/nLAOnR2QQlJsS1u+pmrNL4hqMQkG/xxiJVR0ZRKHgBHFLt4TQ88vtRbk+4u/dMh06rr1EoTJhbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdxFYTkU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TJXsHdc4qQV7QKtVBjXL1d6zzZo4nckgcA3K3zoBXbOm8T7HLBQS4CL2dce95EJ2SmRUeYCE7lzQaVNfs8C4J+HcZA2J0gssDBmGAGfdYDsU1ccOUobRHQKZwqLGKCydGZIKTFZkWh/4F5KG3+eabqzqt0BeB47MUatZzoCg0gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AE8GmwdI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdxFYTkU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932AAC4CEC6;
-	Tue, 15 Oct 2024 11:38:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AE8GmwdI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C69C4CEC6;
+	Tue, 15 Oct 2024 11:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992331;
-	bh=mRVrKpj+3v/fRYI14h1gFxMVAb+WfTQ1M3zDkhtifgo=;
+	s=korg; t=1728992334;
+	bh=Un5gbO0mYqgdWbQ6lau6lzJ91bpzpIXa8iWT25Ok+AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdxFYTkUse+1IODcE3hs94AUaib1Gqb63/e88yT9snpG7yuI51Kue1jfZCnB9/8iz
-	 YIK2PldKONFCeJEY//elC8WRps31zdW0fYc9m0Guv70lw0KGN/mPwPfjzkBqqfv3Pa
-	 zQvigGqHh5sYlrqvtf3gTp0dW+qRu7e9W37/9+Vw=
+	b=AE8GmwdI+6xsRfvHrfffk3W0rYagGmXXewMY90qomC5IVl0wD9+SBlQfQntU66yrA
+	 ElCaTuF6JE+cK2O1j4YZipZdAaxSmC7TGcjEKzaYHLXF5NGPqMVi9pzOTH78sM2KWv
+	 Id+Gy/NZoZtSnIVDC8uMpYSkHTc6xAfE+qg0mhoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 5.15 086/691] gpiolib: cdev: Ignore reconfiguration without direction
-Date: Tue, 15 Oct 2024 13:20:34 +0200
-Message-ID: <20241015112443.773948727@linuxfoundation.org>
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Waiman Long <longman@redhat.com>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Yosry Ahmed <yosryahmed@google.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 5.15 087/691] cgroup: Move rcu_head up near the top of cgroup_root
+Date: Tue, 15 Oct 2024 13:20:35 +0200
+Message-ID: <20241015112443.818158083@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -44,78 +48,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kent Gibson <warthog618@gmail.com>
+From: Waiman Long <longman@redhat.com>
 
-commit b440396387418fe2feaacd41ca16080e7a8bc9ad upstream.
+commit a7fb0423c201ba12815877a0b5a68a6a1710b23a upstream.
 
-linereq_set_config() behaves badly when direction is not set.
-The configuration validation is borrowed from linereq_create(), where,
-to verify the intent of the user, the direction must be set to in order to
-effect a change to the electrical configuration of a line. But, when
-applied to reconfiguration, that validation does not allow for the unset
-direction case, making it possible to clear flags set previously without
-specifying the line direction.
+Commit d23b5c577715 ("cgroup: Make operations on the cgroup root_list RCU
+safe") adds a new rcu_head to the cgroup_root structure and kvfree_rcu()
+for freeing the cgroup_root.
 
-Adding to the inconsistency, those changes are not immediately applied by
-linereq_set_config(), but will take effect when the line value is next get
-or set.
+The current implementation of kvfree_rcu(), however, has the limitation
+that the offset of the rcu_head structure within the larger data
+structure must be less than 4096 or the compilation will fail. See the
+macro definition of __is_kvfree_rcu_offset() in include/linux/rcupdate.h
+for more information.
 
-For example, by requesting a configuration with no flags set, an output
-line with GPIO_V2_LINE_FLAG_ACTIVE_LOW and GPIO_V2_LINE_FLAG_OPEN_DRAIN
-set could have those flags cleared, inverting the sense of the line and
-changing the line drive to push-pull on the next line value set.
+By putting rcu_head below the large cgroup structure, any change to the
+cgroup structure that makes it larger run the risk of causing build
+failure under certain configurations. Commit 77070eeb8821 ("cgroup:
+Avoid false cacheline sharing of read mostly rstat_cpu") happens to be
+the last straw that breaks it. Fix this problem by moving the rcu_head
+structure up before the cgroup structure.
 
-Skip the reconfiguration of lines for which the direction is not set, and
-only reconfigure the lines for which direction is set.
-
-Fixes: a54756cb24ea ("gpiolib: cdev: support GPIO_V2_LINE_SET_CONFIG_IOCTL")
-Signed-off-by: Kent Gibson <warthog618@gmail.com>
-Link: https://lore.kernel.org/r/20240626052925.174272-3-warthog618@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: d23b5c577715 ("cgroup: Make operations on the cgroup root_list RCU safe")
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Closes: https://lore.kernel.org/lkml/20231207143806.114e0a74@canb.auug.org.au/
+Signed-off-by: Waiman Long <longman@redhat.com>
+Acked-by: Yafang Shao <laoar.shao@gmail.com>
+Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
+Reviewed-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-cdev.c |   13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ include/linux/cgroup-defs.h |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -1186,15 +1186,18 @@ static long linereq_set_config_unlocked(
- 	for (i = 0; i < lr->num_lines; i++) {
- 		desc = lr->lines[i].desc;
- 		flags = gpio_v2_line_config_flags(lc, i);
-+		/*
-+		 * Lines not explicitly reconfigured as input or output
-+		 * are left unchanged.
-+		 */
-+		if (!(flags & GPIO_V2_LINE_DIRECTION_FLAGS))
-+			continue;
+--- a/include/linux/cgroup-defs.h
++++ b/include/linux/cgroup-defs.h
+@@ -505,6 +505,10 @@ struct cgroup_root {
+ 	/* Unique id for this hierarchy. */
+ 	int hierarchy_id;
+ 
++	/* A list running through the active hierarchies */
++	struct list_head root_list;
++	struct rcu_head rcu;	/* Must be near the top */
 +
- 		polarity_change =
- 			(!!test_bit(FLAG_ACTIVE_LOW, &desc->flags) !=
- 			 ((flags & GPIO_V2_LINE_FLAG_ACTIVE_LOW) != 0));
+ 	/* The root cgroup.  Root is destroyed on its release. */
+ 	struct cgroup cgrp;
  
- 		gpio_v2_line_config_flags_to_desc_flags(flags, &desc->flags);
--		/*
--		 * Lines have to be requested explicitly for input
--		 * or output, else the line will be treated "as is".
--		 */
- 		if (flags & GPIO_V2_LINE_FLAG_OUTPUT) {
- 			int val = gpio_v2_line_config_output_value(lc, i);
+@@ -514,10 +518,6 @@ struct cgroup_root {
+ 	/* Number of cgroups in the hierarchy, used only for /proc/cgroups */
+ 	atomic_t nr_cgrps;
  
-@@ -1202,7 +1205,7 @@ static long linereq_set_config_unlocked(
- 			ret = gpiod_direction_output(desc, val);
- 			if (ret)
- 				return ret;
--		} else if (flags & GPIO_V2_LINE_FLAG_INPUT) {
-+		} else {
- 			ret = gpiod_direction_input(desc);
- 			if (ret)
- 				return ret;
+-	/* A list running through the active hierarchies */
+-	struct list_head root_list;
+-	struct rcu_head rcu;
+-
+ 	/* Hierarchy-specific flags */
+ 	unsigned int flags;
+ 
 
 
