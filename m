@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A521C57B1;
-	Tue, 15 Oct 2024 12:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975EA1C57B1;
+	Tue, 15 Oct 2024 12:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993803; cv=none; b=Y98ZfH/j3Q5fbuLPAD84LeouhUwWg/wv7EutLaDGlquazLnG3XaAiBGMW/G+16ECg/VdAAT7NLk1W4DrHBIJAESqS+SDMuxBfoVVBpmkYOWVBB1ALo3dTGwpelscXnohvVx2xwATxj7jXyziM07cc98VvxGXf8dHhjibjn5MHw0=
+	t=1728993806; cv=none; b=DFlWO5IhEiG/aMI69hWjP6Ury1QWIlcapXC9XYroNkoYEaPheJLcupO59blFNSztU7JHWExt+EpkwmEgx8TSujiDo8+8D5qIm/Lf5tMI4KslNgu1IIqGhfGbV9w+Q7LtVyQt5pgHYcrY/5TZAUmLX/5wKk8uJcxFqffbWySvS5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993803; c=relaxed/simple;
-	bh=Gz/Xy/QAgs2Pil/hsd8aUimQZGcq4AkaKH7WrHMnk5A=;
+	s=arc-20240116; t=1728993806; c=relaxed/simple;
+	bh=WqsdEYdzAKXvx53Nx9jbcGWr2VQazqs3qq9Z2BRiuhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pl6OejcytgxDYNxpgVM9kP1vBi1e5bCioZwP1k3FUWqzvWZSJkPdJ/bMjhG11TfPHr3rJX3EihtUbXOSrRKsGTlIDhv9hL9x0d41/pPIWq7kV1OXrqDLIMq7A+OGTgTdodaUyfke24KqHVdVyyopKMzex4584eTVe4oAq+ij15c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OW4S61Z2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sn5qaCsZIBHCjI02OwzafdVJMEryTa7xxHvxfdrKyC/Ykt/vqfBNt7dfJfxTyHNC7NIjdzDb3GW7LzsnK6iDE8hk+Hh8uoCDdcG4BB/KpHQXTY1Hin9J/t4P2Y246HcSapon93k8D4bVL8WWd67HQ7t0+5sX/GdIxEgtOlYi4Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oX0Gg3fV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OW4S61Z2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B2AC4CEC6;
-	Tue, 15 Oct 2024 12:03:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oX0Gg3fV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 004A7C4CECE;
+	Tue, 15 Oct 2024 12:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993803;
-	bh=Gz/Xy/QAgs2Pil/hsd8aUimQZGcq4AkaKH7WrHMnk5A=;
+	s=korg; t=1728993806;
+	bh=WqsdEYdzAKXvx53Nx9jbcGWr2VQazqs3qq9Z2BRiuhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OW4S61Z2ERVqk+ohDNBKtDc55FSw94rRTN0SXVR4cR6JZ3qss2KlTFmsm9edPtzNK
-	 /Aor3RVoLRQo6Uplyok78xnVcaUIoQNF974DoaJKZg0WHmSxfRZgn0mRplXgFx1LCj
-	 Oht6XFnTTAWVExuO4hBc0HzNCcPTCmFKTkizUDMQ=
+	b=oX0Gg3fVhfsTg2X6L9fifaYiQYo2pWcbxU/q2irPcx8iYTLf9W6Ud/6FQUtNeF4yy
+	 gqM5Gd2cBz+gvlNe/U9Gazt2E/SMoa4zq2VQPMOYliOx3tFD8mhk3Ny0jj8SflSTjT
+	 r74qbI9fo7L13GAeuHoEvxbGAlI7YNo4DVm6o6eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Robert Hancock <robert.hancock@calian.com>,
+	Manikanta Guntupalli <manikanta.guntupalli@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.15 490/691] i2c: qcom-geni: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Tue, 15 Oct 2024 13:27:18 +0200
-Message-ID: <20241015112459.787544740@linuxfoundation.org>
+Subject: [PATCH 5.15 491/691] i2c: xiic: Wait for TX empty to avoid missed TX NAKs
+Date: Tue, 15 Oct 2024 13:27:19 +0200
+Message-ID: <20241015112459.830386592@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,43 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Robert Hancock <robert.hancock@calian.com>
 
-commit e2c85d85a05f16af2223fcc0195ff50a7938b372 upstream.
+commit 521da1e9225450bd323db5fa5bca942b1dc485b7 upstream.
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+Frequently an I2C write will be followed by a read, such as a register
+address write followed by a read of the register value. In this driver,
+when the TX FIFO half empty interrupt was raised and it was determined
+that there was enough space in the TX FIFO to send the following read
+command, it would do so without waiting for the TX FIFO to actually
+empty.
 
-Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: <stable@vger.kernel.org> # v4.19+
-Acked-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Unfortunately it appears that in some cases this can result in a NAK
+that was raised by the target device on the write, such as due to an
+unsupported register address, being ignored and the subsequent read
+being done anyway. This can potentially put the I2C bus into an
+invalid state and/or result in invalid read data being processed.
+
+To avoid this, once a message has been fully written to the TX FIFO,
+wait for the TX FIFO empty interrupt before moving on to the next
+message, to ensure NAKs are handled properly.
+
+Fixes: e1d5b6598cdc ("i2c: Add support for Xilinx XPS IIC Bus Interface")
+Signed-off-by: Robert Hancock <robert.hancock@calian.com>
+Cc: <stable@vger.kernel.org> # v2.6.34+
+Reviewed-by: Manikanta Guntupalli <manikanta.guntupalli@amd.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-xiic.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -565,15 +565,13 @@ static int geni_i2c_probe(struct platfor
- 	init_completion(&gi2c->done);
- 	spin_lock_init(&gi2c->lock);
- 	platform_set_drvdata(pdev, gi2c);
--	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, 0,
-+	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_NO_AUTOEN,
- 			       dev_name(dev), gi2c);
- 	if (ret) {
- 		dev_err(dev, "Request_irq failed:%d: err:%d\n",
- 			gi2c->irq, ret);
- 		return ret;
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -494,14 +494,17 @@ static irqreturn_t xiic_process(int irq,
+ 			goto out;
+ 		}
+ 
+-		xiic_fill_tx_fifo(i2c);
+-
+-		/* current message sent and there is space in the fifo */
+-		if (!xiic_tx_space(i2c) && xiic_tx_fifo_space(i2c) >= 2) {
++		if (xiic_tx_space(i2c)) {
++			xiic_fill_tx_fifo(i2c);
++		} else {
++			/* current message fully written */
+ 			dev_dbg(i2c->adap.dev.parent,
+ 				"%s end of message sent, nmsgs: %d\n",
+ 				__func__, i2c->nmsgs);
+-			if (i2c->nmsgs > 1) {
++			/* Don't move onto the next message until the TX FIFO empties,
++			 * to ensure that a NAK is not missed.
++			 */
++			if (i2c->nmsgs > 1 && (pend & XIIC_INTR_TX_EMPTY_MASK)) {
+ 				i2c->nmsgs--;
+ 				i2c->tx_msg++;
+ 				xfer_more = 1;
+@@ -512,11 +515,7 @@ static irqreturn_t xiic_process(int irq,
+ 					"%s Got TX IRQ but no more to do...\n",
+ 					__func__);
+ 			}
+-		} else if (!xiic_tx_space(i2c) && (i2c->nmsgs == 1))
+-			/* current frame is sent and is last,
+-			 * make sure to disable tx half
+-			 */
+-			xiic_irq_dis(i2c, XIIC_INTR_TX_HALF_MASK);
++		}
  	}
--	/* Disable the interrupt so that the system can enter low-power mode */
--	disable_irq(gi2c->irq);
- 	i2c_set_adapdata(&gi2c->adap, gi2c);
- 	gi2c->adap.dev.parent = dev;
- 	gi2c->adap.dev.of_node = dev->of_node;
+ out:
+ 	dev_dbg(i2c->adap.dev.parent, "%s clr: 0x%x\n", __func__, clr);
 
 
