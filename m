@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0EB1EB9F1;
-	Tue, 15 Oct 2024 13:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195D92281D6;
+	Tue, 15 Oct 2024 13:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998050; cv=none; b=RfQADsOQEyGrBOz05iZZBxpatz3IgbWThW7aLx/7jqlQMF3+Wxb0E6wtD5LqOhV7+SUQ2gandUQS1G4/QnhFDkRQ+PRkuKAnouVMApun9obVeu+aH8lND/EzOn/Xkze0nD1x5wvmjz6R6EluKbmTsUBScRyLaYF5Z79OdfzCRjU=
+	t=1728998054; cv=none; b=m+yCj8kbK4uHTOSgK6K1NUes0nqxzC/CmXZpUCEKOO3NbvwZrKzDpAdeY8RU2MXY0n2MFxK/xON77OKISzlyx8Ap7DZhHGQCoZqQV2YMkYSAoNRKQaoDt6ROIsEDBI77OGNna4asj/S9/8RNIOd7/+bib+4+vMfxXr04WmtaL7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998050; c=relaxed/simple;
-	bh=9mgzkZhj5qOmzlEDqH7p8QsDqG5w8zcCAah0SY52BKM=;
+	s=arc-20240116; t=1728998054; c=relaxed/simple;
+	bh=OIyJsdbMH0LtaiMD+SGJ3q4iK1VEy6gQIrftqjhRmbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g+gpm+dlvaj1MM7avKoMxcUNJVnK71wNVxEhMO2jl4V+QSH6KTObic/cOoMtXidR5HflgHHPG0qmtQ9Rx7n0ml9oXMHqrpATpLqAGFx65BUZpaNoEvUKBYswx3xhksy/ZU3ZdOE8I5pfa1vwV8qaXFSKnsO/tThaCr9rfUDUYHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EyNw3RdU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pT0HK+V29AQelQLdjX/5h3Ufdv97ZsSqMyWqZh5yYnGuQYcuUYTEz92tqCmHBUWlVmZs7WB6t2WR8Irw8wHeOyfwM4Bbe4xKU+x8hdVG0Lo9qb07++dxOFytDv2bDPrb0T3tBpirEEBuH0D7R1YX+5SBTycUPRIb+g4Fvhp+Soo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgvUyA1z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EyNw3RdU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01B9C4CED3;
-	Tue, 15 Oct 2024 13:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgvUyA1z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F655C4CECF;
+	Tue, 15 Oct 2024 13:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998050;
-	bh=9mgzkZhj5qOmzlEDqH7p8QsDqG5w8zcCAah0SY52BKM=;
+	s=korg; t=1728998053;
+	bh=OIyJsdbMH0LtaiMD+SGJ3q4iK1VEy6gQIrftqjhRmbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EyNw3RdUWXonxzAa6CuDkHr92uN3bW/FByKeRnYMt9s279ThVCBJDUeYwRonJ1vwK
-	 Vwm7Q+JbZdhMtolUQVoyR42lKLLQFGF0wEdUOn7Nb8afd3uXDp5UM/hlBqcBIJoSi3
-	 RpxtrQ1aLo4s0HBT/GxXvg2aOJyux0YrLTeY1+Uo=
+	b=XgvUyA1zru34DtsLS78JqYtm2R1udEzZVlAiom5r29YDrfsARoxvVQ6JQcK0iqfib
+	 Wnb89SYCrGuEwQE8ToLwOw8n/u6o6FK4VMLeIE+GheJZaidwOqs/7jAaXc43p5cTkc
+	 b3rrz/HzyYy9A3K8GzQarNAXR6PQ3AcXiUe1a+7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Gengkun <luogengkun@huaweicloud.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>
-Subject: [PATCH 5.10 364/518] perf/core: Fix small negative period being ignored
-Date: Tue, 15 Oct 2024 14:44:28 +0200
-Message-ID: <20241015123931.022304502@linuxfoundation.org>
+	Peng Liu <liupeng01@kylinos.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 338/518] drm/amdgpu: add raven1 gfxoff quirk
+Date: Tue, 15 Oct 2024 14:44:02 +0200
+Message-ID: <20241015123930.017684604@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,104 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luo Gengkun <luogengkun@huaweicloud.com>
+From: Peng Liu <liupeng01@kylinos.cn>
 
-commit 62c0b1061593d7012292f781f11145b2d46f43ab upstream.
+[ Upstream commit 0126c0ae11e8b52ecfde9d1b174ee2f32d6c3a5d ]
 
-In perf_adjust_period, we will first calculate period, and then use
-this period to calculate delta. However, when delta is less than 0,
-there will be a deviation compared to when delta is greater than or
-equal to 0. For example, when delta is in the range of [-14,-1], the
-range of delta = delta + 7 is between [-7,6], so the final value of
-delta/8 is 0. Therefore, the impact of -1 and -2 will be ignored.
-This is unacceptable when the target period is very short, because
-we will lose a lot of samples.
+Fix screen corruption with openkylin.
 
-Here are some tests and analyzes:
-before:
-  # perf record -e cs -F 1000  ./a.out
-  [ perf record: Woken up 1 times to write data ]
-  [ perf record: Captured and wrote 0.022 MB perf.data (518 samples) ]
-
-  # perf script
-  ...
-  a.out     396   257.956048:         23 cs:  ffffffff81f4eeec schedul>
-  a.out     396   257.957891:         23 cs:  ffffffff81f4eeec schedul>
-  a.out     396   257.959730:         23 cs:  ffffffff81f4eeec schedul>
-  a.out     396   257.961545:         23 cs:  ffffffff81f4eeec schedul>
-  a.out     396   257.963355:         23 cs:  ffffffff81f4eeec schedul>
-  a.out     396   257.965163:         23 cs:  ffffffff81f4eeec schedul>
-  a.out     396   257.966973:         23 cs:  ffffffff81f4eeec schedul>
-  a.out     396   257.968785:         23 cs:  ffffffff81f4eeec schedul>
-  a.out     396   257.970593:         23 cs:  ffffffff81f4eeec schedul>
-  ...
-
-after:
-  # perf record -e cs -F 1000  ./a.out
-  [ perf record: Woken up 1 times to write data ]
-  [ perf record: Captured and wrote 0.058 MB perf.data (1466 samples) ]
-
-  # perf script
-  ...
-  a.out     395    59.338813:         11 cs:  ffffffff81f4eeec schedul>
-  a.out     395    59.339707:         12 cs:  ffffffff81f4eeec schedul>
-  a.out     395    59.340682:         13 cs:  ffffffff81f4eeec schedul>
-  a.out     395    59.341751:         13 cs:  ffffffff81f4eeec schedul>
-  a.out     395    59.342799:         12 cs:  ffffffff81f4eeec schedul>
-  a.out     395    59.343765:         11 cs:  ffffffff81f4eeec schedul>
-  a.out     395    59.344651:         11 cs:  ffffffff81f4eeec schedul>
-  a.out     395    59.345539:         12 cs:  ffffffff81f4eeec schedul>
-  a.out     395    59.346502:         13 cs:  ffffffff81f4eeec schedul>
-  ...
-
-test.c
-
-int main() {
-        for (int i = 0; i < 20000; i++)
-                usleep(10);
-
-        return 0;
-}
-
-  # time ./a.out
-  real    0m1.583s
-  user    0m0.040s
-  sys     0m0.298s
-
-The above results were tested on x86-64 qemu with KVM enabled using
-test.c as test program. Ideally, we should have around 1500 samples,
-but the previous algorithm had only about 500, whereas the modified
-algorithm now has about 1400. Further more, the new version shows 1
-sample per 0.001s, while the previous one is 1 sample per 0.002s.This
-indicates that the new algorithm is more sensitive to small negative
-values compared to old algorithm.
-
-Fixes: bd2b5b12849a ("perf_counter: More aggressive frequency adjustment")
-Signed-off-by: Luo Gengkun <luogengkun@huaweicloud.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20240831074316.2106159-2-luogengkun@huaweicloud.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://bbs.openkylin.top/t/topic/171497
+Signed-off-by: Peng Liu <liupeng01@kylinos.cn>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -4065,7 +4065,11 @@ static void perf_adjust_period(struct pe
- 	period = perf_calculate_period(event, nsec, count);
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+index acef2227d992b..3f320ead85d12 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -1250,6 +1250,8 @@ static const struct amdgpu_gfxoff_quirk amdgpu_gfxoff_quirk_list[] = {
+ 	{ 0x1002, 0x15dd, 0x1002, 0x15dd, 0xc6 },
+ 	/* Apple MacBook Pro (15-inch, 2019) Radeon Pro Vega 20 4 GB */
+ 	{ 0x1002, 0x69af, 0x106b, 0x019a, 0xc0 },
++	/* https://bbs.openkylin.top/t/topic/171497 */
++	{ 0x1002, 0x15d8, 0x19e5, 0x3e14, 0xc2 },
+ 	{ 0, 0, 0, 0, 0 },
+ };
  
- 	delta = (s64)(period - hwc->sample_period);
--	delta = (delta + 7) / 8; /* low pass filter */
-+	if (delta >= 0)
-+		delta += 7;
-+	else
-+		delta -= 7;
-+	delta /= 8; /* low pass filter */
- 
- 	sample_period = hwc->sample_period + delta;
- 
+-- 
+2.43.0
+
 
 
