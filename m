@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07F11E7C3C;
-	Tue, 15 Oct 2024 11:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DF81D5ADB;
+	Tue, 15 Oct 2024 11:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992582; cv=none; b=DOtu1mjLWu/331BjSa+JPWgLLevgZDFQNqbElHO/DRS7qVUT9gaxoRtcpdgdBcXgqmEWC3Aebn+9PjLkjeMTZ6O3Aff5pEaXlgJ0VQUQ1AeyrqNxeRJHJx6uv4BGnR6FLbTeo5PPDZhKvzXVQrD3ZM5XklivTRS7pGe11FUgf/Q=
+	t=1728992586; cv=none; b=k04TBqHPp4BnGmitTuaQPKnUqzY7kfqGI3FxxbQo7Apxf7e5Q/OZh2IchKltO+VFF4RV8nhtRzbS4/hLItRKZvTfa27fceQq8bBkADQXtiT175jQUywAKbILg1bAMhThAVQlT05i+Lln8yvgWg0l7ZQCOr1X9eGxXrZO7AnNrIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992582; c=relaxed/simple;
-	bh=BRFOLSoD/qQiy8bFrgS42PC0BXI1b/QLecX9FsYj29o=;
+	s=arc-20240116; t=1728992586; c=relaxed/simple;
+	bh=JeAzcy+uuR5dJ8xRH9p4BoSEJ0qgqjCkofrRjIq7TZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/pYHSEoLzxcS8Q1qvht3gM0dbbi7IV134RRPwRl+NGlnAwZdpRtzCIRO0SrSk963Vr6byJXSzbXB7ZPe+F+DaHz1gA8l4/ERLtPJO1H7BBm7F7vch0fkvHhYY5UI0+lSR3IhwfeXJdXEElVA9wm1ctxQY9FGNnrYltYO1gkk6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CiBd5Xm7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MDhbezLR4HiAY4VPlvKqSHzIFqU+A6FIzbiw2jwDkA6tN2fTxTjnWfYGPIsPKJX2SZFo3poyR6OGAN0AbGv5so2/UQ+iXYj+cKE4JE8qOYno/+uv2QCjLiYHh67vPt49PROpZwjHxI4YKIKs5VLUUNtm/amgIP4rE6Ua+pS8EFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUdJg0Ku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CiBd5Xm7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3112BC4CEC6;
-	Tue, 15 Oct 2024 11:43:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUdJg0Ku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9E9C4CEC6;
+	Tue, 15 Oct 2024 11:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992582;
-	bh=BRFOLSoD/qQiy8bFrgS42PC0BXI1b/QLecX9FsYj29o=;
+	s=korg; t=1728992586;
+	bh=JeAzcy+uuR5dJ8xRH9p4BoSEJ0qgqjCkofrRjIq7TZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CiBd5Xm7RYEkqX+e4N5g0/s4vAIRkBvYPqqPCa7/riM1IT7hh3JFyv8QDknMjyDVR
-	 3qtuCAptmS4EtqBBe9SMRREWtV67umxiarlhb9niJFvkFjqvKONg9o3dh7w5CIjBDm
-	 2Fm8vssTkf14Z15vlTxkCb4aD2PTxIGfe+EOJoRc=
+	b=AUdJg0Ku9SVSM9MKToBU2CTEVUwsIi0kPvMSSZZW6/dGe6PINebQbg6/lv8EwmZSt
+	 351VliV6gNDDvQYyw5yJOMaKl2X8Zq6j9oh/mN3/qXsPZT4B5RK3m3/9LHJUbE4Tol
+	 yPIChf/GJ4GcbYx3MBAUHGwq4Fm4H4r481vHTR8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 159/691] pmdomain: core: Harden inter-column space in debug summary
-Date: Tue, 15 Oct 2024 13:21:47 +0200
-Message-ID: <20241015112446.672276656@linuxfoundation.org>
+Subject: [PATCH 5.15 160/691] drm/stm: Fix an error handling path in stm_drm_platform_probe()
+Date: Tue, 15 Oct 2024 13:21:48 +0200
+Message-ID: <20241015112446.711969329@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,36 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 692c20c4d075bd452acfbbc68200fc226c7c9496 ]
+[ Upstream commit ce7c90bfda2656418c69ba0dd8f8a7536b8928d4 ]
 
-The inter-column space in the debug summary is two spaces.  However, in
-one case, the extra space is handled implicitly in a field width
-specifier.  Make inter-column space explicit to ease future maintenance.
+If drm_dev_register() fails, a call to drv_load() must be undone, as
+already done in the remove function.
 
-Fixes: 45fbc464b047 ("PM: domains: Add "performance" column to debug summary")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/ae61eb363621b981edde878e1e74d701702a579f.1725459707.git.geert+renesas@glider.be
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: b759012c5fa7 ("drm/stm: Add STM32 LTDC driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20fff7f853f20a48a96db8ff186124470ec4d976.1704560028.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/domain.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/stm/drv.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-index aaf6c297c63d2..fda0a5e50a2d9 100644
---- a/drivers/base/power/domain.c
-+++ b/drivers/base/power/domain.c
-@@ -3053,7 +3053,7 @@ static int genpd_summary_one(struct seq_file *s,
- 	else
- 		snprintf(state, sizeof(state), "%s",
- 			 status_lookup[genpd->status]);
--	seq_printf(s, "%-30s  %-50s %u", genpd->name, state, genpd->performance_state);
-+	seq_printf(s, "%-30s  %-49s  %u", genpd->name, state, genpd->performance_state);
+diff --git a/drivers/gpu/drm/stm/drv.c b/drivers/gpu/drm/stm/drv.c
+index 222869b232ae0..d8f4d1150913b 100644
+--- a/drivers/gpu/drm/stm/drv.c
++++ b/drivers/gpu/drm/stm/drv.c
+@@ -195,12 +195,14 @@ static int stm_drm_platform_probe(struct platform_device *pdev)
  
- 	/*
- 	 * Modifications on the list require holding locks on both
+ 	ret = drm_dev_register(ddev, 0);
+ 	if (ret)
+-		goto err_put;
++		goto err_unload;
+ 
+ 	drm_fbdev_generic_setup(ddev, 16);
+ 
+ 	return 0;
+ 
++err_unload:
++	drv_unload(ddev);
+ err_put:
+ 	drm_dev_put(ddev);
+ 
 -- 
 2.43.0
 
