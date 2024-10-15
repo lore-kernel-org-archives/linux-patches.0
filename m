@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1620A1EBA09;
-	Tue, 15 Oct 2024 12:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9894F1F8910;
+	Tue, 15 Oct 2024 12:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994279; cv=none; b=TpFpQ1oQOjBNnhZ5+vbmKDWLkzULQhv0UluGaYoZY0W3qhc9Ftyz7nDzuqb4vSEhY8W4/KRTN3kPYbAWCpt+vErY6NMfoDfjv89apLDILC/Fp+k75S/nS60rQ3yQTjLPAbtu82LHUsoP5pViO1/sMK5KrWGGmUFfN/7CFk+QBZk=
+	t=1728994282; cv=none; b=QkGU6P+RPXHPVbxB1HmU8BC6e+PTfz/b6tOVBePHhDQ+WjhngW3aG2Ve2OGrD8jbleDYvANybScFcGHTRbOQ0glo7oMrLKztRxCxQaqb9rNyy/SLmQp2J6F/4cMSQjQMigtxV0zfgx4oEm0FEpjnw61V7wPCwNO5d1fyiye7jyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994279; c=relaxed/simple;
-	bh=hAhxdA6/cg8nNP5KJcI/8uUibQ2amI1UJoE9v9l4pt0=;
+	s=arc-20240116; t=1728994282; c=relaxed/simple;
+	bh=0S4BlbK3a+1HJ08Mpepzg3bPluTN0n8rFLuBn2GAX0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oSV/3m3lhN/iegJqNuwkn/QKfZaRzmOQkmmBbUU/HZGESeA9pAk28IJ3HgnFBxdwrlL1qYSg1vkGO0pc6t/lB+LMWNMjZN2fP1Mqn4ivB4CacuEmQATbc2XErTHi2d/6hMJjyYttjMDUKOLr4a7CL004YSqOZMOGiCApEO9cZFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5sKO2gq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XcX7RyRCphwLYVtYEqXE52MLCVvcn+902iPalKI4OAHQvFpEE3ISEOT5wo/afkIhiVdSGUsI1MaK4TSdXOGwYHwJ5HWple3DsYF72YY6fHt6Cs0xOWfeqvOHpCKB7hPZA0EBB4MpjrI83GmbgOi97RFki8gc5NEllo1d8H9q4NU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxmJIsxO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5sKO2gq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85CAFC4CECF;
-	Tue, 15 Oct 2024 12:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxmJIsxO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8BDAC4CEC6;
+	Tue, 15 Oct 2024 12:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994278;
-	bh=hAhxdA6/cg8nNP5KJcI/8uUibQ2amI1UJoE9v9l4pt0=;
+	s=korg; t=1728994282;
+	bh=0S4BlbK3a+1HJ08Mpepzg3bPluTN0n8rFLuBn2GAX0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R5sKO2gqKQ85vbUAlf55JyAlDmrJhHqZf7ATgttIU/TWJhte0BIKoqLfV2QgTo/RN
-	 qCRm6+4Rm2Mn/2G31xm39WWv1CQIsam42reBQ2dVIKNV8hcoTn9E+VDKmkiGi7vrsy
-	 un5ney2NEq9IgsX5ZTJ1HOE5FBkU+mNKdlUkIcyk=
+	b=JxmJIsxOwpHDUQCoRJKSOg3vNwJ1TUtNoQVbKkbRBulqdvmlSSlNXc57s3PU+P1kh
+	 OzUAPWXYtz417ZfaoF4sqefPei2ezM3xx29tOECHKancqB4AFRwKxTyfDD65hK4SSX
+	 fJ4fr6oa6f2Ee+S88WjM3yF6IGKBHiO4UiBsTbSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	David Ahern <dsahern@kernel.org>,
-	Guillaume Nault <gnault@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Mitchell Levy <levymitchell0@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 651/691] netfilter: rpfilter/fib: Populate flowic_l3mdev field
-Date: Tue, 15 Oct 2024 13:29:59 +0200
-Message-ID: <20241015112506.163819793@linuxfoundation.org>
+Subject: [PATCH 5.15 660/691] x86/fpu: Avoid writing LBR bit to IA32_XSS unless supported
+Date: Tue, 15 Oct 2024 13:30:08 +0200
+Message-ID: <20241015112506.518479412@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,104 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Mitchell Levy <levymitchell0@gmail.com>
 
-[ Upstream commit acc641ab95b66b813c1ce856c377a2bbe71e7f52 ]
+There are two distinct CPU features related to the use of XSAVES and LBR:
+whether LBR is itself supported and whether XSAVES supports LBR. The LBR
+subsystem correctly checks both in intel_pmu_arch_lbr_init(), but the
+XSTATE subsystem does not.
 
-Use the introduced field for correct operation with VRF devices instead
-of conditionally overwriting flowic_oif. This is a partial revert of
-commit b575b24b8eee3 ("netfilter: Fix rpfilter dropping vrf packets by
-mistake"), implementing a simpler solution.
+The LBR bit is only removed from xfeatures_mask_independent when LBR is not
+supported by the CPU, but there is no validation of XSTATE support.
+If XSAVES does not support LBR the write to IA32_XSS causes a #GP fault,
+leaving the state of IA32_XSS unchanged, i.e. zero. The fault is handled
+with a warning and the boot continues.
 
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Stable-dep-of: 05ef7055debc ("netfilter: fib: check correct rtable in vrf setups")
+Consequently the next XRSTORS which tries to restore supervisor state fails
+with #GP because the RFBM has zero for all supervisor features, which does
+not match the XCOMP_BV field.
+
+As XFEATURE_MASK_FPSTATE includes supervisor features setting up the FPU
+causes a #GP, which ends up in fpu_reset_from_exception_fixup(). That fails
+due to the same problem resulting in recursive #GPs until the kernel runs
+out of stack space and double faults.
+
+Prevent this by storing the supported independent features in
+fpu_kernel_cfg during XSTATE initialization and use that cached value for
+retrieving the independent feature bits to be written into IA32_XSS.
+
+[ tglx: Massaged change log ]
+
+Fixes: f0dccc9da4c0 ("x86/fpu/xstate: Support dynamic supervisor feature for LBR")
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+[ Mitchell Levy: Backport to 5.15, since struct fpu_config is not
+  introduced until 578971f4e228 and feature masks are not included in
+  said struct until 1c253ff2287f ]
+Signed-off-by: Mitchell Levy <levymitchell0@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20240812-xsave-lbr-fix-v3-1-95bac1bf62f4@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/ipt_rpfilter.c  | 2 +-
- net/ipv4/netfilter/nft_fib_ipv4.c  | 2 +-
- net/ipv6/netfilter/ip6t_rpfilter.c | 9 +++------
- net/ipv6/netfilter/nft_fib_ipv6.c  | 5 ++---
- 4 files changed, 7 insertions(+), 11 deletions(-)
+ arch/x86/include/asm/fpu/xstate.h | 5 +++--
+ arch/x86/kernel/fpu/xstate.c      | 7 +++++++
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/netfilter/ipt_rpfilter.c b/net/ipv4/netfilter/ipt_rpfilter.c
-index 8cd3224d913e0..63f3e8219dd5a 100644
---- a/net/ipv4/netfilter/ipt_rpfilter.c
-+++ b/net/ipv4/netfilter/ipt_rpfilter.c
-@@ -78,7 +78,7 @@ static bool rpfilter_mt(const struct sk_buff *skb, struct xt_action_param *par)
- 	flow.flowi4_mark = info->flags & XT_RPFILTER_VALID_MARK ? skb->mark : 0;
- 	flow.flowi4_tos = iph->tos & IPTOS_RT_MASK;
- 	flow.flowi4_scope = RT_SCOPE_UNIVERSE;
--	flow.flowi4_oif = l3mdev_master_ifindex_rcu(xt_in(par));
-+	flow.flowi4_l3mdev = l3mdev_master_ifindex_rcu(xt_in(par));
+diff --git a/arch/x86/include/asm/fpu/xstate.h b/arch/x86/include/asm/fpu/xstate.h
+index d91df71f60fb1..3bc08b5313b0b 100644
+--- a/arch/x86/include/asm/fpu/xstate.h
++++ b/arch/x86/include/asm/fpu/xstate.h
+@@ -85,6 +85,7 @@
+ #endif
  
- 	return rpfilter_lookup_reverse(xt_net(par), &flow, xt_in(par), info->flags) ^ invert;
+ extern u64 xfeatures_mask_all;
++extern u64 xfeatures_mask_indep;
+ 
+ static inline u64 xfeatures_mask_supervisor(void)
+ {
+@@ -124,9 +125,9 @@ static inline u64 xfeatures_mask_fpstate(void)
+ static inline u64 xfeatures_mask_independent(void)
+ {
+ 	if (!boot_cpu_has(X86_FEATURE_ARCH_LBR))
+-		return XFEATURE_MASK_INDEPENDENT & ~XFEATURE_MASK_LBR;
++		return xfeatures_mask_indep & ~XFEATURE_MASK_LBR;
+ 
+-	return XFEATURE_MASK_INDEPENDENT;
++	return xfeatures_mask_indep;
  }
-diff --git a/net/ipv4/netfilter/nft_fib_ipv4.c b/net/ipv4/netfilter/nft_fib_ipv4.c
-index 9e6f0f1275e2c..22168f12b3819 100644
---- a/net/ipv4/netfilter/nft_fib_ipv4.c
-+++ b/net/ipv4/netfilter/nft_fib_ipv4.c
-@@ -84,7 +84,7 @@ void nft_fib4_eval(const struct nft_expr *expr, struct nft_regs *regs,
- 		oif = NULL;
  
- 	if (priv->flags & NFTA_FIB_F_IIF)
--		fl4.flowi4_oif = l3mdev_master_ifindex_rcu(oif);
-+		fl4.flowi4_l3mdev = l3mdev_master_ifindex_rcu(oif);
+ extern u64 xstate_fx_sw_bytes[USER_XSTATE_FX_SW_WORDS];
+diff --git a/arch/x86/kernel/fpu/xstate.c b/arch/x86/kernel/fpu/xstate.c
+index 81891f0fff6f6..3772577462a07 100644
+--- a/arch/x86/kernel/fpu/xstate.c
++++ b/arch/x86/kernel/fpu/xstate.c
+@@ -60,6 +60,11 @@ static short xsave_cpuid_features[] __initdata = {
+  * XSAVE buffer, both supervisor and user xstates.
+  */
+ u64 xfeatures_mask_all __ro_after_init;
++/*
++ * This represents the "independent" xfeatures that are supported by XSAVES, but not managed as part
++ * of the FPU core, such as LBR.
++ */
++u64 xfeatures_mask_indep __ro_after_init;
+ EXPORT_SYMBOL_GPL(xfeatures_mask_all);
  
- 	if (nft_hook(pkt) == NF_INET_PRE_ROUTING &&
- 	    nft_fib_is_loopback(pkt->skb, nft_in(pkt))) {
-diff --git a/net/ipv6/netfilter/ip6t_rpfilter.c b/net/ipv6/netfilter/ip6t_rpfilter.c
-index d800801a5dd27..69d86b040a6af 100644
---- a/net/ipv6/netfilter/ip6t_rpfilter.c
-+++ b/net/ipv6/netfilter/ip6t_rpfilter.c
-@@ -37,6 +37,7 @@ static bool rpfilter_lookup_reverse6(struct net *net, const struct sk_buff *skb,
- 	bool ret = false;
- 	struct flowi6 fl6 = {
- 		.flowi6_iif = LOOPBACK_IFINDEX,
-+		.flowi6_l3mdev = l3mdev_master_ifindex_rcu(dev),
- 		.flowlabel = (* (__be32 *) iph) & IPV6_FLOWINFO_MASK,
- 		.flowi6_proto = iph->nexthdr,
- 		.daddr = iph->saddr,
-@@ -55,9 +56,7 @@ static bool rpfilter_lookup_reverse6(struct net *net, const struct sk_buff *skb,
- 	if (rpfilter_addr_linklocal(&iph->saddr)) {
- 		lookup_flags |= RT6_LOOKUP_F_IFACE;
- 		fl6.flowi6_oif = dev->ifindex;
--	/* Set flowi6_oif for vrf devices to lookup route in l3mdev domain. */
--	} else if (netif_is_l3_master(dev) || netif_is_l3_slave(dev) ||
--		  (flags & XT_RPFILTER_LOOSE) == 0)
-+	} else if ((flags & XT_RPFILTER_LOOSE) == 0)
- 		fl6.flowi6_oif = dev->ifindex;
- 
- 	rt = (void *)ip6_route_lookup(net, &fl6, skb, lookup_flags);
-@@ -72,9 +71,7 @@ static bool rpfilter_lookup_reverse6(struct net *net, const struct sk_buff *skb,
- 		goto out;
+ static unsigned int xstate_offsets[XFEATURE_MAX] __ro_after_init =
+@@ -768,6 +773,8 @@ void __init fpu__init_system_xstate(void)
+ 		goto out_disable;
  	}
  
--	if (rt->rt6i_idev->dev == dev ||
--	    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) == dev->ifindex ||
--	    (flags & XT_RPFILTER_LOOSE))
-+	if (rt->rt6i_idev->dev == dev || (flags & XT_RPFILTER_LOOSE))
- 		ret = true;
-  out:
- 	ip6_rt_put(rt);
-diff --git a/net/ipv6/netfilter/nft_fib_ipv6.c b/net/ipv6/netfilter/nft_fib_ipv6.c
-index 602743f6dcee0..72a9a04920ab2 100644
---- a/net/ipv6/netfilter/nft_fib_ipv6.c
-+++ b/net/ipv6/netfilter/nft_fib_ipv6.c
-@@ -37,9 +37,8 @@ static int nft_fib6_flowi_init(struct flowi6 *fl6, const struct nft_fib *priv,
- 	if (ipv6_addr_type(&fl6->daddr) & IPV6_ADDR_LINKLOCAL) {
- 		lookup_flags |= RT6_LOOKUP_F_IFACE;
- 		fl6->flowi6_oif = get_ifindex(dev ? dev : pkt->skb->dev);
--	} else if ((priv->flags & NFTA_FIB_F_IIF) &&
--		   (netif_is_l3_master(dev) || netif_is_l3_slave(dev))) {
--		fl6->flowi6_oif = dev->ifindex;
-+	} else if (priv->flags & NFTA_FIB_F_IIF) {
-+		fl6->flowi6_l3mdev = l3mdev_master_ifindex_rcu(dev);
- 	}
- 
- 	if (ipv6_addr_type(&fl6->saddr) & IPV6_ADDR_UNICAST)
++	xfeatures_mask_indep = xfeatures_mask_all & XFEATURE_MASK_INDEPENDENT;
++
+ 	/*
+ 	 * Clear XSAVE features that are disabled in the normal CPUID.
+ 	 */
 -- 
 2.43.0
 
