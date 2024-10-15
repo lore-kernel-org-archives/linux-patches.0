@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B66D1C57B1;
-	Tue, 15 Oct 2024 12:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B211C57B1;
+	Tue, 15 Oct 2024 12:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993711; cv=none; b=WdzRrood+a+vg/EXKY0gPRvtVZ8XQr+n4ZrNo9MjuLEcHWGByst8a8RLcbtQHyMrLhhoh4oTRj3lJe60Xy+ut87tnTrxaue8o+HGTjlJp6nLee2EaSxRSWxZEqaDSUxOLkjYo9WkNwlVjciUlQE8U2XoK5Li1zpWcdsrPnQXPfA=
+	t=1728993714; cv=none; b=nU1Qotvqi2ZT+zM4OX6MXu8KHdt5h5lr9udOTJ6sa+PFI8cN2+dI9V0z+H4ZWyErkYWNt2kndDfGyx59JYyIGY6Q9zk7we4gtgqUkcy8gQt58gKSYd32GcTiCm2tHdDtmTVCE/A9di7LB7nv1W4KkEdgdlMZMdOtMEStJvX6PZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993711; c=relaxed/simple;
-	bh=i4b484gNj7usPWq1AxVpFaSNRrdz4PdnScPpXw+qzRc=;
+	s=arc-20240116; t=1728993714; c=relaxed/simple;
+	bh=B5ztk8n7MiNAjFmgbBiCIAoOXxYUBz3kLcI34n4bMoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/6RgRpUmsRcYG1CGQGoyNn6F4hggX1V8gg+XjarNuDspfrTvV+E4RKbVK5PBsSfHHX/46zyoUlHa/UtkkPAk5YID4lBZf+fx4deBRFhiY+IURttXGqShK2ldVAJeIDbI2E42nSlnweWCi7/wNB8G0IdeVmZtq0OqzK813JckWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JOrApUMJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oG43vDlnDy8ervbYT35xeEHKxddxl70v+n1D5/e7fOqAhEZVXM5Wq2hT2g0ujcaJMU0wqnFQtbhJAAUGjH9Khe+VgcdGBoorKHs9gqZEW4hMM6J/d9ym4hkeskhyHLPvqZnvZtXMPmH9DnVNfm5q9aGDx1wOOYPRTwt8F3ackDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2sZ0e/S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JOrApUMJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1274CC4CEC6;
-	Tue, 15 Oct 2024 12:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2sZ0e/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB81C4CEC6;
+	Tue, 15 Oct 2024 12:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993711;
-	bh=i4b484gNj7usPWq1AxVpFaSNRrdz4PdnScPpXw+qzRc=;
+	s=korg; t=1728993714;
+	bh=B5ztk8n7MiNAjFmgbBiCIAoOXxYUBz3kLcI34n4bMoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JOrApUMJLVPa53h+m1NVZwGEYq3twJ70vFWA0orulSPcWLuBp247U+zhL2bH3MZUQ
-	 3I1D4HnblKuxYJ2zY9cGQ6+k4uXkNbZ1uWdlqL71C47sGOieROpEx5Z9dwWtI/s+9c
-	 nAwq4YR4jnBMN7GZcX/m4YrtsuoBrmPc37LLQ3yY=
+	b=w2sZ0e/SCVcIfIHMH3ENcTAlGb8Zh7+ftYlbPXrq4BRsAsGZjVSWBwhcX+sxZPxIh
+	 lJMYlaiQVh2TGknZyRLtKLu/+x3sr5kf7AhDRoZ0ZZGWIYsCYI63QLnf8271g0nGAx
+	 0EEaiq9KYCkUi9lkMfk+0TBEpWRwDQ9ENKbn8w1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 493/691] spi: bcm63xx: Fix module autoloading
-Date: Tue, 15 Oct 2024 13:27:21 +0200
-Message-ID: <20241015112459.910651560@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 5.15 494/691] power: supply: hwmon: Fix missing temp1_max_alarm attribute
+Date: Tue, 15 Oct 2024 13:27:22 +0200
+Message-ID: <20241015112459.950017083@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,33 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 909f34f2462a99bf876f64c5c61c653213e32fce upstream.
+commit e50a57d16f897e45de1112eb6478577b197fab52 upstream.
 
-Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
-based on the alias from platform_device_id table.
+Temp channel 0 aka temp1 can have a temp1_max_alarm attribute for
+power_supply devices which have a POWER_SUPPLY_PROP_TEMP_ALERT_MAX
+property.
 
-Fixes: 44d8fb30941d ("spi/bcm63xx: move register definitions into the driver")
+HWMON_T_MAX_ALARM was missing from power_supply_hwmon_info for
+temp channel 0, causing the hwmon temp1_max_alarm attribute to be
+missing from such power_supply devices.
+
+Add this to power_supply_hwmon_info to fix this.
+
+Fixes: f1d33ae806ec ("power: supply: remove duplicated argument in power_supply_hwmon_info")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
-Link: https://patch.msgid.link/20240819123349.4020472-2-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240908185337.103696-2-hdegoede@redhat.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-bcm63xx.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/power/supply/power_supply_hwmon.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-bcm63xx.c
-+++ b/drivers/spi/spi-bcm63xx.c
-@@ -476,6 +476,7 @@ static const struct platform_device_id b
- 	{
- 	},
- };
-+MODULE_DEVICE_TABLE(platform, bcm63xx_spi_dev_match);
+--- a/drivers/power/supply/power_supply_hwmon.c
++++ b/drivers/power/supply/power_supply_hwmon.c
+@@ -299,7 +299,8 @@ static const struct hwmon_channel_info *
+ 			   HWMON_T_INPUT     |
+ 			   HWMON_T_MAX       |
+ 			   HWMON_T_MIN       |
+-			   HWMON_T_MIN_ALARM,
++			   HWMON_T_MIN_ALARM |
++			   HWMON_T_MAX_ALARM,
  
- static const struct of_device_id bcm63xx_spi_of_match[] = {
- 	{ .compatible = "brcm,bcm6348-spi", .data = &bcm6348_spi_reg_offsets },
+ 			   HWMON_T_LABEL     |
+ 			   HWMON_T_INPUT     |
 
 
