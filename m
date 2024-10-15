@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB00A1C07C8;
-	Tue, 15 Oct 2024 12:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801F71C07C2;
+	Tue, 15 Oct 2024 12:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997133; cv=none; b=d8LKhjDZizE5J5W9K1xJatSivnjaA5JFdRCcWWYnykFcP35snxr72AzyQMfbYrkmsIh0/I1lPrvXs8eoEpbhsX6k3sMNNOYtfbEl9tAOgpy4EQDXZZhO5kvaBLfVU7JC6r/pWM8WG1/piz1oGdky0btTAaf/n/BMoTex6TZ5x1E=
+	t=1728997137; cv=none; b=YydL3iBC07ZHJ4eoUng7x/tY6doUCu6mTNGhdj7Y0I+4uv7GfV1EiQ9TXcSiC2QnPzMii9OrqZbvro2J3FR00gpoCBkc2DWBgXt0J0DpIll2KR9Pb6KB90hXGi7S/Iigt1Hhu2RJNtbbPutTGj8rUPdCbysFfPzQtSWTIbV3qkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997133; c=relaxed/simple;
-	bh=ZTxQL38oauiyBBLlCJI9LE3Bf5hYYeLt6u16KsieSuc=;
+	s=arc-20240116; t=1728997137; c=relaxed/simple;
+	bh=bSCXKasXnNAbCTzjn8mdtmGcesl6tzfVZqJlVRXoi/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pV7Ke5h5+B+NeZlatCvYJCRkVAryGLyya0ipM9Vc5vukBn7u7zZIjyvWCq/0DA+fZuGkMnJKThkiEBeJlXFVqEllbuEgbPdbhbCb0P98vFT3PakwCtOmj8M+2ucukmBmtfhxQXkWQFCT3v0t61FJ2aWppYPfoH5IwPOQx/pPT7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o77CqAsb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GoCo6xK1XexIje4EOWdDZRc3tcNkZz8FJaQYwqWLPhmuYSZxFtcc4l4g4fVDVFvbuIJ29vyOd5Oh5U9t0XNzqbyEVD8jp3F03cnVmncTGVYQzE18wGMiDPpI8zcCyqiNNsUjQjeTHpdR21RfnZXPCMtBi/YuC8AeLPxll/dsXW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCNtl2jw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o77CqAsb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36AD1C4CEC6;
-	Tue, 15 Oct 2024 12:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCNtl2jw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E87C4CEC6;
+	Tue, 15 Oct 2024 12:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997133;
-	bh=ZTxQL38oauiyBBLlCJI9LE3Bf5hYYeLt6u16KsieSuc=;
+	s=korg; t=1728997137;
+	bh=bSCXKasXnNAbCTzjn8mdtmGcesl6tzfVZqJlVRXoi/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o77CqAsbiowK5XejDDxneuQmOAe2LtTF3wqBzxgE1vmst8lyxr78PG/8qFub8VdKZ
-	 Y3WQLpxW1aTcqo32GSphJFyb2Y1jF/0tADVedfWw56nlgC4YT0mmGeLCcApY/Qy2fV
-	 8fWFrxJESAWCQLmFPGeh9ElXSy+aaqRe8knbT/y4=
+	b=DCNtl2jwbXP/MOwDgTJiCVOdyHqbHn3BFosWS9j/UhPjhARnK91qx7ZRptca8jhFE
+	 ISsU+42TtvC4YZPamVVfqsoyxXei9xSuQ9PxjY3trVHAynbwbO/cdJgihqR5wuvQ4/
+	 iAOFqRBZsLPkUVFaH7vFaoDgnN7DrmaW5ZqoVvgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 066/518] can: j1939: use correct function name in comment
-Date: Tue, 15 Oct 2024 14:39:30 +0200
-Message-ID: <20241015123919.553070410@linuxfoundation.org>
+Subject: [PATCH 5.10 067/518] netfilter: nf_tables: elements with timeout below CONFIG_HZ never expire
+Date: Tue, 15 Oct 2024 14:39:31 +0200
+Message-ID: <20241015123919.590883807@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,42 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit dc2ddcd136fe9b6196a7dd01f75f824beb02d43f ]
+[ Upstream commit e0c47281723f301894c14e6f5cd5884fdfb813f9 ]
 
-The function j1939_cancel_all_active_sessions() was renamed to
-j1939_cancel_active_session() but name in comment wasn't updated.
+Element timeout that is below CONFIG_HZ never expires because the
+timeout extension is not allocated given that nf_msecs_to_jiffies64()
+returns 0. Set timeout to the minimum value to honor timeout.
 
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Link: https://patch.msgid.link/1724935703-44621-1-git-send-email-zhangchangzhong@huawei.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 8e1102d5a159 ("netfilter: nf_tables: support timeouts larger than 23 days")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/j1939/transport.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/netfilter/nf_tables_api.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
-index 478dafc738571..a86256ab14022 100644
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -1171,10 +1171,10 @@ static enum hrtimer_restart j1939_tp_txtimer(struct hrtimer *hrtimer)
- 		break;
- 	case -ENETDOWN:
- 		/* In this case we should get a netdev_event(), all active
--		 * sessions will be cleared by
--		 * j1939_cancel_all_active_sessions(). So handle this as an
--		 * error, but let j1939_cancel_all_active_sessions() do the
--		 * cleanup including propagation of the error to user space.
-+		 * sessions will be cleared by j1939_cancel_active_session().
-+		 * So handle this as an error, but let
-+		 * j1939_cancel_active_session() do the cleanup including
-+		 * propagation of the error to user space.
- 		 */
- 		break;
- 	case -EOVERFLOW:
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 87c572ba69acb..5c937c5564b3f 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4026,7 +4026,7 @@ int nf_msecs_to_jiffies64(const struct nlattr *nla, u64 *result)
+ 		return -ERANGE;
+ 
+ 	ms *= NSEC_PER_MSEC;
+-	*result = nsecs_to_jiffies64(ms);
++	*result = nsecs_to_jiffies64(ms) ? : !!ms;
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
