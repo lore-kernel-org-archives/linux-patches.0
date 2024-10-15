@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB1E1C4A0E;
-	Tue, 15 Oct 2024 13:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527081C4A04;
+	Tue, 15 Oct 2024 13:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998607; cv=none; b=KV0EcWCBnZ2MZMcsH9DQFt14kBF/1KHGVr9Zgtx4muz2cr1jv/VlYbyUKM+mq63f+r2ZnJ4YB2IoUVVrI/pDTy6+1qXEl0OgA8RNjkKZp4vQpul3eSbzxol55dCrfTrepF5ddlM5vsiYzpnH4EB2DrviuDi07oktU/r6NBrKsSA=
+	t=1728998610; cv=none; b=kHBhEl6XipPmZRv8tyZ7AExmBs7yr9hYHZUee/8Lbm2hSFbvwCCM5YjZEsDk0dVy0a1Hxdkq8XXdIbM4uttXlwbzgs1N6NkMR4YnJrAddhU1ZKNlhw/EIXP8JR8XJVVU+/RIeztpKp9wzn7vygGsdKihh4/glnDL3Zp26fdvJG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998607; c=relaxed/simple;
-	bh=dWOXZYFtECKw/d18mrHmP42NWefOl0DUMbJB8uSglAs=;
+	s=arc-20240116; t=1728998610; c=relaxed/simple;
+	bh=UH724FMghBacLx3NsWtJ9ls6ICfXLHmoXzkJk3rvt0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7i7b9RVZ3YLau3x8vqwgEVgX5cNZEDFPJ3NpQ0dtxqbRa8gRLV8Vd4Uzacj1pUToPh0U4A9AFwa4DbD73hcmv+RpcixwDX3y0paeRQXhspUHsHP0HP3ALwczbdRh0N0csaZCdxktp4KIXcXHRD5HGFO9lcFrtX7VwLx0kQON9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JspoTyw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cc9zn4nXcB/pFbJEuEp/jPKZIk/h7jl4+pBsXZY1xO9hwe7OWOD9Jo8h94XVD1qls2hXfR9Vjcpcjl95cCnQXzCTNnvI7By+guj5cl2mbf6eQkP2dqj1uvJVQhDyJFEFzkXYZaHdSiFYR8Noja2ybKKyF6dQLbSVv4ACp+a+dL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsaawFTD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JspoTyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD35C4CEC6;
-	Tue, 15 Oct 2024 13:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsaawFTD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA487C4CEC6;
+	Tue, 15 Oct 2024 13:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998606;
-	bh=dWOXZYFtECKw/d18mrHmP42NWefOl0DUMbJB8uSglAs=;
+	s=korg; t=1728998610;
+	bh=UH724FMghBacLx3NsWtJ9ls6ICfXLHmoXzkJk3rvt0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2JspoTyw+PdGnVMn+fg0ylwLDqXiBUivgLDblWT+uxKL/aJmGbKmE1pPDvLswC58E
-	 TiSY9PmBOhs23p96K2IwYSl3s+cr0d/7nlBWSnbf5GruADKjuUkQB4O8CkCskzjg6a
-	 zTx2pfDOPLuc3mRPAtmG2N0MqPVHKy5xYtrb2P0o=
+	b=vsaawFTDjG8twcpey/kgPj4XIBjl0+Zda4uBNK4LSh8z54qlx8q/INxCVOmhqn67O
+	 LSeeNe1InJC3zy3RQDgPo6RezR19kc9+Igt/xQQ9rCfmTgfzvpP6BCubl3eKlfhhEU
+	 pmg86inSI9te+P9ktkYHdq+9qSKit1m573k/IYPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@idosch.org>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 513/518] net: Handle l3mdev in ip_tunnel_init_flow
-Date: Tue, 15 Oct 2024 14:46:57 +0200
-Message-ID: <20241015123936.789579667@linuxfoundation.org>
+	stable@kernel.org,
+	Selvarasu Ganesan <selvarasu.g@samsung.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.10 504/518] usb: dwc3: core: Stop processing of pending events if controller is halted
+Date: Tue, 15 Oct 2024 14:46:48 +0200
+Message-ID: <20241015123936.443982353@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,105 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Ahern <dsahern@kernel.org>
+From: Selvarasu Ganesan <selvarasu.g@samsung.com>
 
-commit db53cd3d88dc328dea2e968c9c8d3b4294a8a674 upstream.
+commit 0d410e8913f5cffebcca79ffdd596009d4a13a28 upstream.
 
-Ido reported that the commit referenced in the Fixes tag broke
-a gre use case with dummy devices. Add a check to ip_tunnel_init_flow
-to see if the oif is an l3mdev port and if so set the oif to 0 to
-avoid the oif comparison in fib_lookup_good_nhc.
+This commit addresses an issue where events were being processed when
+the controller was in a halted state. To fix this issue by stop
+processing the events as the event count was considered stale or
+invalid when the controller was halted.
 
-Fixes: 40867d74c374 ("net: Add l3mdev index to flow struct and avoid oif reset for port devices")
-Reported-by: Ido Schimmel <idosch@idosch.org>
-Signed-off-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fc8bb91bc83e ("usb: dwc3: implement runtime PM")
+Cc: stable@kernel.org
+Signed-off-by: Selvarasu Ganesan <selvarasu.g@samsung.com>
+Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20240916231813.206-1-selvarasu.g@samsung.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c |    2 +-
- include/net/ip_tunnels.h                            |   11 +++++++++--
- net/ipv4/ip_gre.c                                   |    4 ++--
- net/ipv4/ip_tunnel.c                                |    9 +++++----
- 4 files changed, 17 insertions(+), 9 deletions(-)
+ drivers/usb/dwc3/core.c   |   22 +++++++++++++++++++---
+ drivers/usb/dwc3/core.h   |    4 ----
+ drivers/usb/dwc3/gadget.c |   11 -----------
+ 3 files changed, 19 insertions(+), 18 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_span.c
-@@ -422,7 +422,7 @@ mlxsw_sp_span_gretap4_route(const struct
- 
- 	parms = mlxsw_sp_ipip_netdev_parms4(to_dev);
- 	ip_tunnel_init_flow(&fl4, parms.iph.protocol, *daddrp, *saddrp,
--			    0, 0, parms.link, tun->fwmark, 0);
-+			    0, 0, dev_net(to_dev), parms.link, tun->fwmark, 0);
- 
- 	rt = ip_route_output_key(tun->net, &fl4);
- 	if (IS_ERR(rt))
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -240,11 +240,18 @@ static inline __be32 tunnel_id_to_key32(
- static inline void ip_tunnel_init_flow(struct flowi4 *fl4,
- 				       int proto,
- 				       __be32 daddr, __be32 saddr,
--				       __be32 key, __u8 tos, int oif,
-+				       __be32 key, __u8 tos,
-+				       struct net *net, int oif,
- 				       __u32 mark, __u32 tun_inner_hash)
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -457,6 +457,7 @@ static int dwc3_alloc_event_buffers(stru
+ int dwc3_event_buffers_setup(struct dwc3 *dwc)
  {
- 	memset(fl4, 0, sizeof(*fl4));
--	fl4->flowi4_oif = oif;
+ 	struct dwc3_event_buffer	*evt;
++	u32				reg;
+ 
+ 	if (!dwc->ev_buf)
+ 		return 0;
+@@ -469,8 +470,10 @@ int dwc3_event_buffers_setup(struct dwc3
+ 			upper_32_bits(evt->dma));
+ 	dwc3_writel(dwc->regs, DWC3_GEVNTSIZ(0),
+ 			DWC3_GEVNTSIZ_SIZE(evt->length));
+-	dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), 0);
+ 
++	/* Clear any stale event */
++	reg = dwc3_readl(dwc->regs, DWC3_GEVNTCOUNT(0));
++	dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), reg);
+ 	return 0;
+ }
+ 
+@@ -497,7 +500,10 @@ void dwc3_event_buffers_cleanup(struct d
+ 	dwc3_writel(dwc->regs, DWC3_GEVNTADRHI(0), 0);
+ 	dwc3_writel(dwc->regs, DWC3_GEVNTSIZ(0), DWC3_GEVNTSIZ_INTMASK
+ 			| DWC3_GEVNTSIZ_SIZE(0));
+-	dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), 0);
 +
-+	if (oif) {
-+		fl4->flowi4_l3mdev = l3mdev_master_upper_ifindex_by_index_rcu(net, oif);
-+		/* Legacy VRF/l3mdev use case */
-+		fl4->flowi4_oif = fl4->flowi4_l3mdev ? 0 : oif;
-+	}
++	/* Clear any stale event */
++	reg = dwc3_readl(dwc->regs, DWC3_GEVNTCOUNT(0));
++	dwc3_writel(dwc->regs, DWC3_GEVNTCOUNT(0), reg);
+ }
+ 
+ static int dwc3_alloc_scratch_buffers(struct dwc3 *dwc)
+@@ -1899,7 +1905,11 @@ static int dwc3_runtime_resume(struct de
+ 
+ 	switch (dwc->current_dr_role) {
+ 	case DWC3_GCTL_PRTCAP_DEVICE:
+-		dwc3_gadget_process_pending_events(dwc);
++		if (dwc->pending_events) {
++			pm_runtime_put(dwc->dev);
++			dwc->pending_events = false;
++			enable_irq(dwc->irq_gadget);
++		}
+ 		break;
+ 	case DWC3_GCTL_PRTCAP_HOST:
+ 	default:
+@@ -1986,6 +1996,12 @@ static void dwc3_complete(struct device
+ static const struct dev_pm_ops dwc3_dev_pm_ops = {
+ 	SET_SYSTEM_SLEEP_PM_OPS(dwc3_suspend, dwc3_resume)
+ 	.complete = dwc3_complete,
 +
- 	fl4->daddr = daddr;
- 	fl4->saddr = saddr;
- 	fl4->flowi4_tos = tos;
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -608,8 +608,8 @@ static int gre_fill_metadata_dst(struct
- 	key = &info->key;
- 	ip_tunnel_init_flow(&fl4, IPPROTO_GRE, key->u.ipv4.dst, key->u.ipv4.src,
- 			    tunnel_id_to_key32(key->tun_id),
--			    key->tos & ~INET_ECN_MASK, 0, skb->mark,
--			    skb_get_hash(skb));
-+			    key->tos & ~INET_ECN_MASK, dev_net(dev), 0,
-+			    skb->mark, skb_get_hash(skb));
- 	rt = ip_route_output_key(dev_net(dev), &fl4);
- 	if (IS_ERR(rt))
- 		return PTR_ERR(rt);
---- a/net/ipv4/ip_tunnel.c
-+++ b/net/ipv4/ip_tunnel.c
-@@ -294,8 +294,8 @@ static int ip_tunnel_bind_dev(struct net
++	/*
++	 * Runtime suspend halts the controller on disconnection. It relies on
++	 * platforms with custom connection notification to start the controller
++	 * again.
++	 */
+ 	SET_RUNTIME_PM_OPS(dwc3_runtime_suspend, dwc3_runtime_resume,
+ 			dwc3_runtime_idle)
+ };
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -1532,7 +1532,6 @@ static inline void dwc3_otg_host_init(st
+ #if !IS_ENABLED(CONFIG_USB_DWC3_HOST)
+ int dwc3_gadget_suspend(struct dwc3 *dwc);
+ int dwc3_gadget_resume(struct dwc3 *dwc);
+-void dwc3_gadget_process_pending_events(struct dwc3 *dwc);
+ #else
+ static inline int dwc3_gadget_suspend(struct dwc3 *dwc)
+ {
+@@ -1544,9 +1543,6 @@ static inline int dwc3_gadget_resume(str
+ 	return 0;
+ }
  
- 		ip_tunnel_init_flow(&fl4, iph->protocol, iph->daddr,
- 				    iph->saddr, tunnel->parms.o_key,
--				    RT_TOS(iph->tos), tunnel->parms.link,
--				    tunnel->fwmark, 0);
-+				    RT_TOS(iph->tos), dev_net(dev),
-+				    tunnel->parms.link, tunnel->fwmark, 0);
- 		rt = ip_route_output_key(tunnel->net, &fl4);
+-static inline void dwc3_gadget_process_pending_events(struct dwc3 *dwc)
+-{
+-}
+ #endif /* !IS_ENABLED(CONFIG_USB_DWC3_HOST) */
  
- 		if (!IS_ERR(rt)) {
-@@ -597,7 +597,7 @@ void ip_md_tunnel_xmit(struct sk_buff *s
- 	}
- 	ip_tunnel_init_flow(&fl4, proto, key->u.ipv4.dst, key->u.ipv4.src,
- 			    tunnel_id_to_key32(key->tun_id), RT_TOS(tos),
--			    0, skb->mark, skb_get_hash(skb));
-+			    dev_net(dev), 0, skb->mark, skb_get_hash(skb));
- 	if (tunnel->encap.type != TUNNEL_ENCAP_NONE)
- 		goto tx_error;
- 
-@@ -753,7 +753,8 @@ void ip_tunnel_xmit(struct sk_buff *skb,
- 	}
- 
- 	ip_tunnel_init_flow(&fl4, protocol, dst, tnl_params->saddr,
--			    tunnel->parms.o_key, RT_TOS(tos), tunnel->parms.link,
-+			    tunnel->parms.o_key, RT_TOS(tos),
-+			    dev_net(dev), tunnel->parms.link,
- 			    tunnel->fwmark, skb_get_hash(skb));
- 
- 	if (ip_tunnel_encap(skb, tunnel, &protocol, &fl4) < 0)
+ #if IS_ENABLED(CONFIG_USB_DWC3_ULPI)
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4093,14 +4093,3 @@ err1:
+ err0:
+ 	return ret;
+ }
+-
+-void dwc3_gadget_process_pending_events(struct dwc3 *dwc)
+-{
+-	if (dwc->pending_events) {
+-		dwc3_interrupt(dwc->irq_gadget, dwc->ev_buf);
+-		dwc3_thread_interrupt(dwc->irq_gadget, dwc->ev_buf);
+-		pm_runtime_put(dwc->dev);
+-		dwc->pending_events = false;
+-		enable_irq(dwc->irq_gadget);
+-	}
+-}
 
 
