@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9406E210183;
-	Tue, 15 Oct 2024 13:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CDC227B80;
+	Tue, 15 Oct 2024 13:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998029; cv=none; b=qZuxqtRi+/9NdVmTgqhca24Cv9emS0tu1xQBDC62q2Xy1vk9AH2ovBjn5ptTPA2fi93LwLNO9LJaAOUFjjuEpbGQMt7vFkCD3lPFZcZE7LIGYbuj7TvNlh/berpTEe5gvI7z1Es2L2aJ2yb0GT3++QqG/zg/6wVQmDDuSNRUd6c=
+	t=1728998032; cv=none; b=u4V5fuHU8C+H+f3BkQ2Dy7AiAvumdJ9lp0aYA3Otq0Hr/QW23Ia0d44CIWrY0y8TZlG3jILRbGDqjOsLiWInqT7Y6Dxw+ZEAXLNgAHsqMHhNBMGw/jnkaqp6fUGc4I+cj4EWd1d47M1/zbkPuLkf3eohvIE4pNZnwgMW8vUo2uU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998029; c=relaxed/simple;
-	bh=QHnO+D/bo8ask/8qcmJHiNND1si7MLhJmw+81MzxxR8=;
+	s=arc-20240116; t=1728998032; c=relaxed/simple;
+	bh=AEG54ASg5ujHqp/8FGmAofxeHqL9r5U50+CssB+9/Qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pUWVnWN6SNrNMBQN8F50mqm7oOH3VuqMpPAD1d8jVgvB9X75jX5WWWMzqvAnLsSXfpUGyybxDmcARqXckNlcwYY5psvs5d1RwWsRG+VaZ+UGCrfciD1Niq6Egb4EGuLiLK5bXemoURKzL8egT7b2fhpIsQW2REcXxzDD9SDW6XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I04xbEZ9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XQdV5IGxHlcPb6OmKFko29JaL4DO5w2ACynuAze0mm2yEqLBSwtJAb6OYdZRHWBL97x1fWMM9+JFIO4GcktVoMbWJAfal/LuJuNJ1xRk84CdwV5BV6iLvVt4Gh12LsFs+jZck3UStooIolh13XqDSzmar0pTCgLn0y7IC3vVAGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKw3KbBV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I04xbEZ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0685C4CED1;
-	Tue, 15 Oct 2024 13:13:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKw3KbBV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32371C4CEC6;
+	Tue, 15 Oct 2024 13:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998029;
-	bh=QHnO+D/bo8ask/8qcmJHiNND1si7MLhJmw+81MzxxR8=;
+	s=korg; t=1728998032;
+	bh=AEG54ASg5ujHqp/8FGmAofxeHqL9r5U50+CssB+9/Qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I04xbEZ9V34KRECxpmLDbBYKbVpKE3fcKbXVY3kbk1LxyfVSyF+Cau59aQ09SNefv
-	 VX3BoHdtb7DrcOteVljUniXZ0msm+DEmn0OhBXPqRF/cs1SyuTXGnEhC+6lIpy/55m
-	 EWcsUdsNGwHxaehzK9AuBxkIWlYL+u7r9LhoKflo=
+	b=eKw3KbBVicGjIRxTcOGTGbNeToSo+3mypmsDsax/QkKyx0zfwvzH1Ecxoj9/LVXxj
+	 EhEtUXDuIVjtPvYYOVsMlm74hf6VWLReNNmf4N20+XgiXCLzkgTunLlKGnM44qMYV3
+	 yqHV8ui/daxpOtroMG1oScuq+HrEr46taTgCO3YU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Mario Casquero <mcasquer@redhat.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 358/518] selftests/mm: fix charge_reserved_hugetlb.sh test
-Date: Tue, 15 Oct 2024 14:44:22 +0200
-Message-ID: <20241015123930.786710644@linuxfoundation.org>
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Marek Vasut <marex@denx.de>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.10 359/518] i2c: stm32f7: Do not prepare/unprepare clock during runtime suspend/resume
+Date: Tue, 15 Oct 2024 14:44:23 +0200
+Message-ID: <20241015123930.824656231@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -55,116 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit c41a701d18efe6b8aa402efab16edbaba50c9548 ]
+commit 048bbbdbf85e5e00258dfb12f5e368f908801d7b upstream.
 
-Currently, running the charge_reserved_hugetlb.sh selftest we can
-sometimes observe something like:
+In case there is any sort of clock controller attached to this I2C bus
+controller, for example Versaclock or even an AIC32x4 I2C codec, then
+an I2C transfer triggered from the clock controller clk_ops .prepare
+callback may trigger a deadlock on drivers/clk/clk.c prepare_lock mutex.
 
-  $ ./charge_reserved_hugetlb.sh -cgroup-v2
-  ...
-  write_result is 0
-  After write:
-  hugetlb_usage=0
-  reserved_usage=10485760
-  killing write_to_hugetlbfs
-  Received 2.
-  Deleting the memory
-  Detach failure: Invalid argument
-  umount: /mnt/huge: target is busy.
+This is because the clock controller first grabs the prepare_lock mutex
+and then performs the prepare operation, including its I2C access. The
+I2C access resumes this I2C bus controller via .runtime_resume callback,
+which calls clk_prepare_enable(), which attempts to grab the prepare_lock
+mutex again and deadlocks.
 
-Both cases are issues in the test.
+Since the clock are already prepared since probe() and unprepared in
+remove(), use simple clk_enable()/clk_disable() calls to enable and
+disable the clock on runtime suspend and resume, to avoid hitting the
+prepare_lock mutex.
 
-While the unmount error seems to be racy, it will make the test fail:
-	$ ./run_vmtests.sh -t hugetlb
-	...
-	# [FAIL]
-	not ok 10 charge_reserved_hugetlb.sh -cgroup-v2 # exit=32
-
-The issue is that we are not waiting for the write_to_hugetlbfs process to
-quit.  So it might still have a hugetlbfs file open, about which umount is
-not happy.  Fix that by making "killall" wait for the process to quit.
-
-The other error ("Detach failure: Invalid argument") does not seem to
-result in a test error, but is misleading.  Turns out write_to_hugetlbfs.c
-unconditionally tries to cleanup using shmdt(), even when we only
-mmap()'ed a hugetlb file.  Even worse, shmaddr is never even set for the
-SHM case.  Fix that as well.
-
-With this change it seems to work as expected.
-
-Link: https://lkml.kernel.org/r/20240821123115.2068812-1-david@redhat.com
-Fixes: 29750f71a9b4 ("hugetlb_cgroup: add hugetlb_cgroup reservation tests")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reported-by: Mario Casquero <mcasquer@redhat.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Tested-by: Mario Casquero <mcasquer@redhat.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Acked-by: Alain Volmat <alain.volmat@foss.st.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Fixes: 4e7bca6fc07b ("i2c: i2c-stm32f7: add PM Runtime support")
+Cc: <stable@vger.kernel.org> # v5.0+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/vm/charge_reserved_hugetlb.sh |    2 -
- tools/testing/selftests/vm/write_to_hugetlbfs.c       |   21 ++++++++++--------
- 2 files changed, 13 insertions(+), 10 deletions(-)
+ drivers/i2c/busses/i2c-stm32f7.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
-+++ b/tools/testing/selftests/vm/charge_reserved_hugetlb.sh
-@@ -249,7 +249,7 @@ function cleanup_hugetlb_memory() {
-   local cgroup="$1"
-   if [[ "$(pgrep -f write_to_hugetlbfs)" != "" ]]; then
-     echo killing write_to_hugetlbfs
--    killall -2 write_to_hugetlbfs
-+    killall -2 --wait write_to_hugetlbfs
-     wait_for_hugetlb_memory_to_get_depleted $cgroup
-   fi
-   set -e
---- a/tools/testing/selftests/vm/write_to_hugetlbfs.c
-+++ b/tools/testing/selftests/vm/write_to_hugetlbfs.c
-@@ -28,7 +28,7 @@ enum method {
+--- a/drivers/i2c/busses/i2c-stm32f7.c
++++ b/drivers/i2c/busses/i2c-stm32f7.c
+@@ -2278,7 +2278,7 @@ static int __maybe_unused stm32f7_i2c_ru
+ 	struct stm32f7_i2c_dev *i2c_dev = dev_get_drvdata(dev);
  
- /* Global variables. */
- static const char *self;
--static char *shmaddr;
-+static int *shmaddr;
- static int shmid;
+ 	if (!stm32f7_i2c_is_slave_registered(i2c_dev))
+-		clk_disable_unprepare(i2c_dev->clk);
++		clk_disable(i2c_dev->clk);
  
- /*
-@@ -47,15 +47,17 @@ void sig_handler(int signo)
- {
- 	printf("Received %d.\n", signo);
- 	if (signo == SIGINT) {
--		printf("Deleting the memory\n");
--		if (shmdt((const void *)shmaddr) != 0) {
--			perror("Detach failure");
-+		if (shmaddr) {
-+			printf("Deleting the memory\n");
-+			if (shmdt((const void *)shmaddr) != 0) {
-+				perror("Detach failure");
-+				shmctl(shmid, IPC_RMID, NULL);
-+				exit(4);
-+			}
-+
- 			shmctl(shmid, IPC_RMID, NULL);
--			exit(4);
-+			printf("Done deleting the memory\n");
- 		}
--
--		shmctl(shmid, IPC_RMID, NULL);
--		printf("Done deleting the memory\n");
- 	}
- 	exit(2);
+ 	return 0;
  }
-@@ -211,7 +213,8 @@ int main(int argc, char **argv)
- 			shmctl(shmid, IPC_RMID, NULL);
- 			exit(2);
- 		}
--		printf("shmaddr: %p\n", ptr);
-+		shmaddr = ptr;
-+		printf("shmaddr: %p\n", shmaddr);
+@@ -2289,9 +2289,9 @@ static int __maybe_unused stm32f7_i2c_ru
+ 	int ret;
  
- 		break;
- 	default:
+ 	if (!stm32f7_i2c_is_slave_registered(i2c_dev)) {
+-		ret = clk_prepare_enable(i2c_dev->clk);
++		ret = clk_enable(i2c_dev->clk);
+ 		if (ret) {
+-			dev_err(dev, "failed to prepare_enable clock\n");
++			dev_err(dev, "failed to enable clock\n");
+ 			return ret;
+ 		}
+ 	}
 
 
