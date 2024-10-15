@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788EA1D0492;
-	Tue, 15 Oct 2024 11:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5531E1D0492;
+	Tue, 15 Oct 2024 11:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993205; cv=none; b=IIOHlSDdfSNPYC/6Rc1pjTGiY8F2rTMp18VUvClnYJOkrXzN2lpD1JhENZJCqKPk95MZv2cid8ps6U2Qzt1IYyZ5B8Q0sIsQC1/kqvnAppJbzg+0ozPTXoBCWeGQ8ELxfmWwsc0C3csUjUcGUZhtn7o9EKtFoJ1Rt5HGAIcYJhw=
+	t=1728993209; cv=none; b=P9o56bEZzNPXHXFBE3Is+EPeBiBxKphIH0Kru+xATmRTd9ECF0i3lGBvW0f4VUBSHg7Rkx/SlSreZdVsz1iBrXLI2QwswZwbvOm9t30qtG8+UWJKAr291nYOs0eKoQa88MX88DPjmOtjCMJqAxgmueR1X71kidT+Tw76Dq+fZDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993205; c=relaxed/simple;
-	bh=pfpF3b95H0YuVWjqQw80R8KSRhVfvPHoEbbO5RV8R7k=;
+	s=arc-20240116; t=1728993209; c=relaxed/simple;
+	bh=Dezv4ay4MVxjEt+9/1K+iUHZjlKKuG0SGsul2z+ElA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QUQBi07Wztp/B0rLNCaU40lfMyrzXmFL+KfEvc3MSzsdC9IiM4WL0pflShXAWemvpjpDlMOc2sVKanK8Se1mjpZaA/WdYGSdS/ahUb7IGcyff7u0Dww/VY10jJ50yxhweY6I6rDHcngnqr4rzGDNVM47qvTEk0amWyCeq6zY3TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+FrpOG+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TVGDSOEy0uTRapibFeof5mUETzFobTDta0UgKllrLMpEjZrPTYVO725yFLCMKWrY6UCgra6jHKNF6IN2LgytDEt+hd7LetVyHys7mMDSfILwhdxfg1K15C/E0aBsiEmU4TWfiRm7O9dYoeldoztUSmhBmRewfzFdogOhlhENwV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVFzF/rm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+FrpOG+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDAB7C4CEC6;
-	Tue, 15 Oct 2024 11:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVFzF/rm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E05EC4CEC6;
+	Tue, 15 Oct 2024 11:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993205;
-	bh=pfpF3b95H0YuVWjqQw80R8KSRhVfvPHoEbbO5RV8R7k=;
+	s=korg; t=1728993208;
+	bh=Dezv4ay4MVxjEt+9/1K+iUHZjlKKuG0SGsul2z+ElA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n+FrpOG+KUzREnL49AMmnMMGxu1HTaPpUeHhUlOJfva+jduNEAYNEeU4a8xK1zH36
-	 O7r73g0wEQLEi4ex6VM2rHXse2QFwmEfKzGTm5DJItyhUZBHSkJphR6eoYWOfFHy82
-	 GuEKVlLx2szdTQCfvsvlZPln8f+iqFOIt4ca/2Sw=
+	b=pVFzF/rmkB+0RmhTD380d5Y16aNrdUpA4rsfCINXSeTQU1tG/VeHPRZeBqHlJUZnG
+	 O9sjxdOv69b9odgtXcpBb1d3C+Gcr6ltVCLePiskPKgy80gawkvuVRmQKTjVEsrj7R
+	 cB14/+EY1AdT7qX5mvsnsShs4cUzqgHgZaSVDJ48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stan Johnson <userm57@yahoo.com>,
-	Finn Thain <fthain@linux-m68k.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 315/691] scsi: mac_scsi: Revise printk(KERN_DEBUG ...) messages
-Date: Tue, 15 Oct 2024 13:24:23 +0200
-Message-ID: <20241015112452.838806552@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.15 342/691] hwrng: cctrng - Add missing clk_disable_unprepare in cctrng_resume
+Date: Tue, 15 Oct 2024 13:24:50 +0200
+Message-ID: <20241015112453.914578238@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,129 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit 5ec4f820cb9766e4583df947150a6febce8da794 upstream.
+commit 4b7acc85de14ee8a2236f54445dc635d47eceac0 upstream.
 
-After a bus fault, capture and log the chip registers immediately, if the
-NDEBUG_PSEUDO_DMA macro is defined. Remove some printk(KERN_DEBUG ...)
-messages that aren't needed any more.  Don't skip the debug message when
-bytes == 0. Show all of the byte counters in the debug messages.
+Add the missing clk_disable_unprepare() before return in
+cctrng_resume().
 
-Cc: stable@vger.kernel.org # 5.15+
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Link: https://lore.kernel.org/r/7573c79f4e488fc00af2b8a191e257ca945e0409.1723001788.git.fthain@linux-m68k.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: a583ed310bb6 ("hwrng: cctrng - introduce Arm CryptoCell driver")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mac_scsi.c | 42 +++++++++++++++++++++--------------------
- 1 file changed, 22 insertions(+), 20 deletions(-)
+ drivers/char/hw_random/cctrng.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/mac_scsi.c b/drivers/scsi/mac_scsi.c
-index 53ee8f84d094..e67b038a3577 100644
---- a/drivers/scsi/mac_scsi.c
-+++ b/drivers/scsi/mac_scsi.c
-@@ -286,13 +286,14 @@ static inline int macscsi_pread(struct NCR5380_hostdata *hostdata,
- 	while (!NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
- 	                              BASR_DRQ | BASR_PHASE_MATCH,
- 	                              BASR_DRQ | BASR_PHASE_MATCH, 0)) {
--		int bytes;
-+		int bytes, chunk_bytes;
- 
- 		if (macintosh_config->ident == MAC_MODEL_IIFX)
- 			write_ctrl_reg(hostdata, CTRL_HANDSHAKE_MODE |
- 			                         CTRL_INTERRUPTS_ENABLE);
- 
--		bytes = mac_pdma_recv(s, d, min(hostdata->pdma_residual, 512));
-+		chunk_bytes = min(hostdata->pdma_residual, 512);
-+		bytes = mac_pdma_recv(s, d, chunk_bytes);
- 
- 		if (bytes > 0) {
- 			d += bytes;
-@@ -302,23 +303,23 @@ static inline int macscsi_pread(struct NCR5380_hostdata *hostdata,
- 		if (hostdata->pdma_residual == 0)
- 			goto out;
- 
--		if (NCR5380_poll_politely2(hostdata, STATUS_REG, SR_REQ, SR_REQ,
--		                           BUS_AND_STATUS_REG, BASR_ACK,
--		                           BASR_ACK, 0) < 0)
--			scmd_printk(KERN_DEBUG, hostdata->connected,
--			            "%s: !REQ and !ACK\n", __func__);
- 		if (!(NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH))
- 			goto out;
- 
- 		if (bytes == 0)
- 			udelay(MAC_PDMA_DELAY);
- 
--		if (bytes >= 0)
-+		if (bytes > 0)
- 			continue;
- 
--		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
--		         "%s: bus error (%d/%d)\n", __func__, d - dst, len);
- 		NCR5380_dprint(NDEBUG_PSEUDO_DMA, hostdata->host);
-+		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
-+			 "%s: bus error [%d/%d] (%d/%d)\n",
-+			 __func__, d - dst, len, bytes, chunk_bytes);
-+
-+		if (bytes == 0)
-+			continue;
-+
- 		result = -1;
- 		goto out;
+--- a/drivers/char/hw_random/cctrng.c
++++ b/drivers/char/hw_random/cctrng.c
+@@ -665,6 +665,7 @@ static int __maybe_unused cctrng_resume(
+ 	/* wait for Cryptocell reset completion */
+ 	if (!cctrng_wait_for_reset_completion(drvdata)) {
+ 		dev_err(dev, "Cryptocell reset not completed");
++		clk_disable_unprepare(drvdata->clk);
+ 		return -EBUSY;
  	}
-@@ -345,13 +346,14 @@ static inline int macscsi_pwrite(struct NCR5380_hostdata *hostdata,
- 	while (!NCR5380_poll_politely(hostdata, BUS_AND_STATUS_REG,
- 	                              BASR_DRQ | BASR_PHASE_MATCH,
- 	                              BASR_DRQ | BASR_PHASE_MATCH, 0)) {
--		int bytes;
-+		int bytes, chunk_bytes;
  
- 		if (macintosh_config->ident == MAC_MODEL_IIFX)
- 			write_ctrl_reg(hostdata, CTRL_HANDSHAKE_MODE |
- 			                         CTRL_INTERRUPTS_ENABLE);
- 
--		bytes = mac_pdma_send(s, d, min(hostdata->pdma_residual, 512));
-+		chunk_bytes = min(hostdata->pdma_residual, 512);
-+		bytes = mac_pdma_send(s, d, chunk_bytes);
- 
- 		if (bytes > 0) {
- 			s += bytes;
-@@ -370,23 +372,23 @@ static inline int macscsi_pwrite(struct NCR5380_hostdata *hostdata,
- 			goto out;
- 		}
- 
--		if (NCR5380_poll_politely2(hostdata, STATUS_REG, SR_REQ, SR_REQ,
--		                           BUS_AND_STATUS_REG, BASR_ACK,
--		                           BASR_ACK, 0) < 0)
--			scmd_printk(KERN_DEBUG, hostdata->connected,
--			            "%s: !REQ and !ACK\n", __func__);
- 		if (!(NCR5380_read(BUS_AND_STATUS_REG) & BASR_PHASE_MATCH))
- 			goto out;
- 
- 		if (bytes == 0)
- 			udelay(MAC_PDMA_DELAY);
- 
--		if (bytes >= 0)
-+		if (bytes > 0)
- 			continue;
- 
--		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
--		         "%s: bus error (%d/%d)\n", __func__, s - src, len);
- 		NCR5380_dprint(NDEBUG_PSEUDO_DMA, hostdata->host);
-+		dsprintk(NDEBUG_PSEUDO_DMA, hostdata->host,
-+			 "%s: bus error [%d/%d] (%d/%d)\n",
-+			 __func__, s - src, len, bytes, chunk_bytes);
-+
-+		if (bytes == 0)
-+			continue;
-+
- 		result = -1;
- 		goto out;
- 	}
--- 
-2.46.2
-
 
 
