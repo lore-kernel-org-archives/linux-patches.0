@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164FE1C07DC;
-	Tue, 15 Oct 2024 12:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739C91C07DD;
+	Tue, 15 Oct 2024 12:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996954; cv=none; b=jaL1ZFadHgvDMgHBP8nrpzoK87URdFx84PuwsIGLDqnnHO5RQYnBm84rwZCu1kohXSCqZ3e3rANweAlreJ9nZWGW8ALXX1WU41bwN0ZsFYQmOBN6Z3G/H0TO8ppEhppSw2ZNYd9BYRWlZvmMNF7EsYbgmPFZqrD3J+4VlGq9XAE=
+	t=1728996957; cv=none; b=tN9WECyFElv7opNpjjtDrzcO5h79YALcmVkhLA5XSiBIe7fF7/foa+GdnH6r9MlRXUvcwVOMILcE5f4489t5DIiFmgv9gt62/ICGLD/x3O9y/qoInB+lXKBX3xHyzUKgQQRT+gmtRstROtEbk9/D0WUalEG359Wu05SBmePOL1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996954; c=relaxed/simple;
-	bh=4ndoeBP3Ko4HtA3Axm8X6VCGEcgwHz2SecE6TCJHQZk=;
+	s=arc-20240116; t=1728996957; c=relaxed/simple;
+	bh=PJf60X3lt9OSn58JbBYO2Ap5b/HXvqmpMfMecTEfKYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iHl4ZclKY+Y/XKI9u7BAhYhP58fQ1y/5PzE65YG6JfvV1roEs9Es6xfh/2xr0gGUVhPwI3jCwAb5q/AeluflVFP2BZxqSTkIRHh7zr6nn71B9izbnpyLQtxS8qgpDHEjvW9TTvOcWNAMyB1gYacqghnd/WQye6TcQAX+HnsLxiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtWfv+cl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aw9fnUkWe5MMMy15uR7Bw4R3XyAcsmwZLNpqSzw/itbje154Lv/UVxo8H0x7y10edNywk9dBQhFmc94R8uoJkO4/D3eOFVIQR2d6wcsNX2L8oVd3wnqMwBdG4mYj85UqLOOKf4XExzodINaGi0vbcG11YlWir9sG4XV6WPrYnkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+/9flr+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtWfv+cl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA64C4CEC6;
-	Tue, 15 Oct 2024 12:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+/9flr+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9150C4CEC6;
+	Tue, 15 Oct 2024 12:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728996954;
-	bh=4ndoeBP3Ko4HtA3Axm8X6VCGEcgwHz2SecE6TCJHQZk=;
+	s=korg; t=1728996957;
+	bh=PJf60X3lt9OSn58JbBYO2Ap5b/HXvqmpMfMecTEfKYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gtWfv+cl2/foDq3pMfsEJ45LZCBcHxzMeLSAPP2Djr+l49K1uz6RZCtKDv2J5fRZo
-	 Qp7ENuwGOwQlre3T0T0jP9kemcaVaJ0/onoK82lmg2r9jVEZM3kx43AI8I0oAOAfiR
-	 D4DrbQFP/BEJ9dY7LwrEVUHMNYg2qsHvBTbH8N2g=
+	b=W+/9flr+YyxrZURTUH2qWqvJRc0K8mqePowf8Ut6JHYDYC9mNYHcANsJzIBdLBrAc
+	 IK33eFuCQyM6MwbmFF5/25tQ5khFcoQuAyd7etGYOVPaJJR2VbnAK1rmLTSPWFfJY2
+	 5pvlvDJX4jxhgJmnYTppv0bPr+Y7ElCaAlYBWZiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/518] ALSA: hda/realtek - Fixed ALC256 headphone no sound
-Date: Tue, 15 Oct 2024 14:38:54 +0200
-Message-ID: <20241015123918.168791781@linuxfoundation.org>
+	Geliang Tang <geliangtang@gmail.com>,
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Subject: [PATCH 5.10 048/518] mptcp: export lookup_anno_list_by_saddr
+Date: Tue, 15 Oct 2024 14:39:12 +0200
+Message-ID: <20241015123918.864322911@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,126 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Geliang Tang <geliangtang@gmail.com>
 
-[ Upstream commit 9b82ff1362f50914c8292902e07be98a9f59d33d ]
+commit d88c476f4a7dd69a2588470f6c4f8b663efa16c6 upstream.
 
-Dell platform, plug headphone or headset, it had a chance to get no
-sound from headphone.
-Replace depop procedure will solve this issue.
+This patch exported the static function lookup_anno_list_by_saddr, and
+renamed it to mptcp_lookup_anno_list_by_saddr.
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/bb8e2de30d294dc287944efa0667685a@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Geliang Tang <geliangtang@gmail.com>
+Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: b4cd80b03389 ("mptcp: pm: Fix uaf in __timer_delete_sync")
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c | 50 ++++++++++++++++++++++++++---------
- 1 file changed, 37 insertions(+), 13 deletions(-)
+ net/mptcp/pm_netlink.c |   10 +++++-----
+ net/mptcp/protocol.h   |    3 +++
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index c104a33b3e8fa..a952888b5b8af 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -4846,6 +4846,30 @@ static void alc269_fixup_hp_line1_mic1_led(struct hda_codec *codec,
- 	}
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -194,9 +194,9 @@ static void check_work_pending(struct mp
+ 		WRITE_ONCE(msk->pm.work_pending, false);
  }
  
-+static void alc_hp_mute_disable(struct hda_codec *codec, unsigned int delay)
-+{
-+	if (delay <= 0)
-+		delay = 75;
-+	snd_hda_codec_write(codec, 0x21, 0,
-+		    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
-+	msleep(delay);
-+	snd_hda_codec_write(codec, 0x21, 0,
-+		    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+	msleep(delay);
-+}
-+
-+static void alc_hp_enable_unmute(struct hda_codec *codec, unsigned int delay)
-+{
-+	if (delay <= 0)
-+		delay = 75;
-+	snd_hda_codec_write(codec, 0x21, 0,
-+		    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
-+	msleep(delay);
-+	snd_hda_codec_write(codec, 0x21, 0,
-+		    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
-+	msleep(delay);
-+}
-+
- static const struct coef_fw alc225_pre_hsmode[] = {
- 	UPDATE_COEF(0x4a, 1<<8, 0),
- 	UPDATE_COEFEX(0x57, 0x05, 1<<14, 0),
-@@ -4947,6 +4971,7 @@ static void alc_headset_mode_unplugged(struct hda_codec *codec)
- 	case 0x10ec0236:
- 	case 0x10ec0256:
- 	case 0x19e58326:
-+		alc_hp_mute_disable(codec, 75);
- 		alc_process_coef_fw(codec, coef0256);
- 		break;
- 	case 0x10ec0234:
-@@ -5218,6 +5243,7 @@ static void alc_headset_mode_default(struct hda_codec *codec)
- 		alc_write_coef_idx(codec, 0x45, 0xc089);
- 		msleep(50);
- 		alc_process_coef_fw(codec, coef0256);
-+		alc_hp_enable_unmute(codec, 75);
- 		break;
- 	case 0x10ec0234:
- 	case 0x10ec0274:
-@@ -5315,6 +5341,7 @@ static void alc_headset_mode_ctia(struct hda_codec *codec)
- 	case 0x10ec0256:
- 	case 0x19e58326:
- 		alc_process_coef_fw(codec, coef0256);
-+		alc_hp_enable_unmute(codec, 75);
- 		break;
- 	case 0x10ec0234:
- 	case 0x10ec0274:
-@@ -5430,6 +5457,7 @@ static void alc_headset_mode_omtp(struct hda_codec *codec)
- 	case 0x10ec0256:
- 	case 0x19e58326:
- 		alc_process_coef_fw(codec, coef0256);
-+		alc_hp_enable_unmute(codec, 75);
- 		break;
- 	case 0x10ec0234:
- 	case 0x10ec0274:
-@@ -5535,25 +5563,21 @@ static void alc_determine_headset_type(struct hda_codec *codec)
- 		alc_write_coef_idx(codec, 0x06, 0x6104);
- 		alc_write_coefex_idx(codec, 0x57, 0x3, 0x09a3);
+-static struct mptcp_pm_add_entry *
+-lookup_anno_list_by_saddr(struct mptcp_sock *msk,
+-			  struct mptcp_addr_info *addr)
++struct mptcp_pm_add_entry *
++mptcp_lookup_anno_list_by_saddr(struct mptcp_sock *msk,
++				struct mptcp_addr_info *addr)
+ {
+ 	struct mptcp_pm_add_entry *entry;
  
--		snd_hda_codec_write(codec, 0x21, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--		msleep(80);
--		snd_hda_codec_write(codec, 0x21, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
--
- 		alc_process_coef_fw(codec, coef0255);
- 		msleep(300);
- 		val = alc_read_coef_idx(codec, 0x46);
- 		is_ctia = (val & 0x0070) == 0x0070;
--
-+		if (!is_ctia) {
-+			alc_write_coef_idx(codec, 0x45, 0xe089);
-+			msleep(100);
-+			val = alc_read_coef_idx(codec, 0x46);
-+			if ((val & 0x0070) == 0x0070)
-+				is_ctia = false;
-+			else
-+				is_ctia = true;
-+		}
- 		alc_write_coefex_idx(codec, 0x57, 0x3, 0x0da3);
- 		alc_update_coefex_idx(codec, 0x57, 0x5, 1<<14, 0);
--
--		snd_hda_codec_write(codec, 0x21, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
--		msleep(80);
--		snd_hda_codec_write(codec, 0x21, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
- 		break;
- 	case 0x10ec0234:
- 	case 0x10ec0274:
--- 
-2.43.0
-
+@@ -255,7 +255,7 @@ mptcp_pm_del_add_timer(struct mptcp_sock
+ 	struct sock *sk = (struct sock *)msk;
+ 
+ 	spin_lock_bh(&msk->pm.lock);
+-	entry = lookup_anno_list_by_saddr(msk, addr);
++	entry = mptcp_lookup_anno_list_by_saddr(msk, addr);
+ 	if (entry)
+ 		entry->retrans_times = ADD_ADDR_RETRANS_MAX;
+ 	spin_unlock_bh(&msk->pm.lock);
+@@ -272,7 +272,7 @@ static bool mptcp_pm_alloc_anno_list(str
+ 	struct mptcp_pm_add_entry *add_entry = NULL;
+ 	struct sock *sk = (struct sock *)msk;
+ 
+-	if (lookup_anno_list_by_saddr(msk, &entry->addr))
++	if (mptcp_lookup_anno_list_by_saddr(msk, &entry->addr))
+ 		return false;
+ 
+ 	add_entry = kmalloc(sizeof(*add_entry), GFP_ATOMIC);
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -451,6 +451,9 @@ void mptcp_pm_free_anno_list(struct mptc
+ struct mptcp_pm_add_entry *
+ mptcp_pm_del_add_timer(struct mptcp_sock *msk,
+ 		       struct mptcp_addr_info *addr);
++struct mptcp_pm_add_entry *
++mptcp_lookup_anno_list_by_saddr(struct mptcp_sock *msk,
++				struct mptcp_addr_info *addr);
+ 
+ int mptcp_pm_announce_addr(struct mptcp_sock *msk,
+ 			   const struct mptcp_addr_info *addr,
 
 
