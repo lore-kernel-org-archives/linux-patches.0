@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE64019B3FF;
-	Tue, 15 Oct 2024 11:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365661D4154;
+	Tue, 15 Oct 2024 11:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993011; cv=none; b=RO6HEZclVI366EnTPREy5U52+50EKubx3+X+ke0j9Cxm5QWLordbJ9g7D+F0TBbGIw+JL+kfZTrO06DzGIjo2VyyfQqAuvCVczz/57EDzIEBBHioa2WNT0ptcxH+xtGIJ8xjfCZA86JBX8iEC6OuhlEslMYNhEBloh3pEJcCSUU=
+	t=1728993015; cv=none; b=c8AR316GXklpXdOddqJiyldxEBdWPvUZFtx/J9NVFGTilP27KpABJp5s7uT9Q5a33Nt4JYPVM6+3AMqYZH9pX5ZLkleyCzPii/FTgIBCj84OKv4y5IwBSgGKjYM4hahlLDxB+m2KWlmcmEC8FDKAJXoCai4k/Wr4Wu3gk+wzy3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993011; c=relaxed/simple;
-	bh=yqILZbu8SQ5bKZfy4zs/V10GgFXSK1L0UXZanXDSSo0=;
+	s=arc-20240116; t=1728993015; c=relaxed/simple;
+	bh=kygjASMGyNVmaqAJwzLLQpi7MrrqkuojAuHJIDQYygc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQuYVxDJk36zoHZGwDGRAA12qRIsNWm6rMU54heFP3fK8bZptq9uxLUxMtkeB2OwSjr+lObhknmwQ/pEAsUqk10ZrgnfxlF6z1k3PFqGWr5NULOl+u3776p5c6OMBI+8f6kzF0PkH9lRXKzWUOcYtmHBKZhQul3HehgherOzePs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XOVJ9n+f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rP42lCkcjbFKgatHWqdEUDfcAoVxu3CDcH6/USxfc1bLp3S/BjZizGXXgWU9Su+TGxS9Yrc+mIEKKu+yvGzyb12bSsO84OOvZZ1TFGNOZcMFsEa/jCD2QEZQUNPknzpqKLNqvFlVFmqu64dQTR5W+y6WIp8AR6YxvMmn3jdjVug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VN7fV9zJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XOVJ9n+f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40830C4CEC6;
-	Tue, 15 Oct 2024 11:50:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VN7fV9zJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BAAEC4CEC6;
+	Tue, 15 Oct 2024 11:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993011;
-	bh=yqILZbu8SQ5bKZfy4zs/V10GgFXSK1L0UXZanXDSSo0=;
+	s=korg; t=1728993015;
+	bh=kygjASMGyNVmaqAJwzLLQpi7MrrqkuojAuHJIDQYygc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XOVJ9n+fAkXpHYCgiDhtQfFzZbybgx/eQj8pFbh33/yTT3VbW31k56VQSpCU46PAJ
-	 qDdiNbF5JfYosFOKIzJ3b5Z9lzWXN+RV85JPu7rjM6AJ2Bw9vTwR/Nf7SDRm0P0ZHa
-	 ySGnHkcZl9nVkUHwQUfQmhHkRTF367EqobBmQjoE=
+	b=VN7fV9zJaWhPRZFnvvH0rcXOu94tw/4GXww75gzcSZmLpCenZBDn9q4lkOxQmb70q
+	 bMR8yzDBJA2ky9huMch9GM82fFZmvWT+myuFtpgD75KHBjYZJCzfkduHzbZZHEo0kP
+	 oaRXwhl15ORsrDZVVsCyVJJVepDMOBzAx2/373gU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Wang Jianzheng <wangjianzheng@vivo.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 253/691] RDMA/hns: Fix VF triggering PF reset in abnormal interrupt handler
-Date: Tue, 15 Oct 2024 13:23:21 +0200
-Message-ID: <20241015112450.392591165@linuxfoundation.org>
+Subject: [PATCH 5.15 244/691] pinctrl: mvebu: Fix devinit_dove_pinctrl_probe function
+Date: Tue, 15 Oct 2024 13:23:12 +0200
+Message-ID: <20241015112450.039872349@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,49 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Wang Jianzheng <wangjianzheng@vivo.com>
 
-[ Upstream commit 4321feefa5501a746ebf6a7d8b59e6b955ae1860 ]
+[ Upstream commit c25478419f6fd3f74c324a21ec007cf14f2688d7 ]
 
-In abnormal interrupt handler, a PF reset will be triggered even if
-the device is a VF. It should be a VF reset.
+When an error occurs during the execution of the function
+__devinit_dove_pinctrl_probe, the clk is not properly disabled.
 
-Fixes: 2b9acb9a97fe ("RDMA/hns: Add the process of AEQ overflow for hip08")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20240906093444.3571619-7-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fix this by calling clk_disable_unprepare before return.
+
+Fixes: ba607b6238a1 ("pinctrl: mvebu: make pdma clock on dove mandatory")
+Signed-off-by: Wang Jianzheng <wangjianzheng@vivo.com>
+Link: https://lore.kernel.org/20240829064823.19808-1-wangjianzheng@vivo.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/pinctrl/mvebu/pinctrl-dove.c | 42 +++++++++++++++++++---------
+ 1 file changed, 29 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 92cff8d014cbe..64d458fd39ba9 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -5814,6 +5814,7 @@ static irqreturn_t abnormal_interrupt_basic(struct hns_roce_dev *hr_dev,
- 	struct pci_dev *pdev = hr_dev->pci_dev;
- 	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(pdev);
- 	const struct hnae3_ae_ops *ops = ae_dev->ops;
-+	enum hnae3_reset_type reset_type;
- 	irqreturn_t int_work = IRQ_NONE;
- 	u32 int_en;
+diff --git a/drivers/pinctrl/mvebu/pinctrl-dove.c b/drivers/pinctrl/mvebu/pinctrl-dove.c
+index bd74daa9ed666..c84326dfe371c 100644
+--- a/drivers/pinctrl/mvebu/pinctrl-dove.c
++++ b/drivers/pinctrl/mvebu/pinctrl-dove.c
+@@ -769,7 +769,7 @@ static int dove_pinctrl_probe(struct platform_device *pdev)
+ 		of_match_device(dove_pinctrl_of_match, &pdev->dev);
+ 	struct mvebu_mpp_ctrl_data *mpp_data;
+ 	void __iomem *base;
+-	int i;
++	int i, ret;
  
-@@ -5825,10 +5826,12 @@ static irqreturn_t abnormal_interrupt_basic(struct hns_roce_dev *hr_dev,
- 		roce_write(hr_dev, ROCEE_VF_ABN_INT_ST_REG,
- 			   1 << HNS_ROCE_V2_VF_INT_ST_AEQ_OVERFLOW_S);
+ 	pdev->dev.platform_data = (void *)match->data;
  
-+		reset_type = hr_dev->is_vf ?
-+			     HNAE3_VF_FUNC_RESET : HNAE3_FUNC_RESET;
+@@ -785,13 +785,17 @@ static int dove_pinctrl_probe(struct platform_device *pdev)
+ 	clk_prepare_enable(clk);
+ 
+ 	base = devm_platform_get_and_ioremap_resource(pdev, 0, &mpp_res);
+-	if (IS_ERR(base))
+-		return PTR_ERR(base);
++	if (IS_ERR(base)) {
++		ret = PTR_ERR(base);
++		goto err_probe;
++	}
+ 
+ 	mpp_data = devm_kcalloc(&pdev->dev, dove_pinctrl_info.ncontrols,
+ 				sizeof(*mpp_data), GFP_KERNEL);
+-	if (!mpp_data)
+-		return -ENOMEM;
++	if (!mpp_data) {
++		ret = -ENOMEM;
++		goto err_probe;
++	}
+ 
+ 	dove_pinctrl_info.control_data = mpp_data;
+ 	for (i = 0; i < ARRAY_SIZE(dove_mpp_controls); i++)
+@@ -810,8 +814,10 @@ static int dove_pinctrl_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	mpp4_base = devm_ioremap_resource(&pdev->dev, res);
+-	if (IS_ERR(mpp4_base))
+-		return PTR_ERR(mpp4_base);
++	if (IS_ERR(mpp4_base)) {
++		ret = PTR_ERR(mpp4_base);
++		goto err_probe;
++	}
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 2);
+ 	if (!res) {
+@@ -822,8 +828,10 @@ static int dove_pinctrl_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	pmu_base = devm_ioremap_resource(&pdev->dev, res);
+-	if (IS_ERR(pmu_base))
+-		return PTR_ERR(pmu_base);
++	if (IS_ERR(pmu_base)) {
++		ret = PTR_ERR(pmu_base);
++		goto err_probe;
++	}
+ 
+ 	gconfmap = syscon_regmap_lookup_by_compatible("marvell,dove-global-config");
+ 	if (IS_ERR(gconfmap)) {
+@@ -833,12 +841,17 @@ static int dove_pinctrl_probe(struct platform_device *pdev)
+ 		adjust_resource(&fb_res,
+ 			(mpp_res->start & INT_REGS_MASK) + GC_REGS_OFFS, 0x14);
+ 		gc_base = devm_ioremap_resource(&pdev->dev, &fb_res);
+-		if (IS_ERR(gc_base))
+-			return PTR_ERR(gc_base);
++		if (IS_ERR(gc_base)) {
++			ret = PTR_ERR(gc_base);
++			goto err_probe;
++		}
 +
- 		/* Set reset level for reset_event() */
- 		if (ops->set_default_reset_request)
--			ops->set_default_reset_request(ae_dev,
--						       HNAE3_FUNC_RESET);
-+			ops->set_default_reset_request(ae_dev, reset_type);
- 		if (ops->reset_event)
- 			ops->reset_event(pdev, NULL);
+ 		gconfmap = devm_regmap_init_mmio(&pdev->dev,
+ 						 gc_base, &gc_regmap_config);
+-		if (IS_ERR(gconfmap))
+-			return PTR_ERR(gconfmap);
++		if (IS_ERR(gconfmap)) {
++			ret = PTR_ERR(gconfmap);
++			goto err_probe;
++		}
+ 	}
  
+ 	/* Warn on any missing DT resource */
+@@ -846,6 +859,9 @@ static int dove_pinctrl_probe(struct platform_device *pdev)
+ 		dev_warn(&pdev->dev, FW_BUG "Missing pinctrl regs in DTB. Please update your firmware.\n");
+ 
+ 	return mvebu_pinctrl_probe(pdev);
++err_probe:
++	clk_disable_unprepare(clk);
++	return ret;
+ }
+ 
+ static struct platform_driver dove_pinctrl_driver = {
 -- 
 2.43.0
 
