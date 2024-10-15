@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C2C1C07C2;
-	Tue, 15 Oct 2024 12:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2425C1C07C2;
+	Tue, 15 Oct 2024 12:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997021; cv=none; b=uq8FG2OE10N1THUgXziMDJyM3WCUIodSMnO3vKhvqWfJ4aPYGFUtfBxXCS90a4/fLfJpN05Edv9qoUUf9EpDTQshU7i494wBBQVOXRDosTKeF+lNJYolLk7ScmbD/kQvO6jSIcfJ8BRtus985FQA77OndJt9qhmLXeL4OPIp1fQ=
+	t=1728997024; cv=none; b=AI+l9XK0F1R4z04rpA5KqmVc2trptq2A/dnhNKjFubt4fhXAQffFfhlxoQuU8+T32wKrF5HXStSxguYFCkEPV0nQZqDCsQb4SlakcNJ6HVuzRxu5tFLHWVdLdkjsatNhaWAjjlS3Oivj8c1ew9Qu9E9q4XEAd4aY/QPUChImDpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997021; c=relaxed/simple;
-	bh=9SM+Rjta8E45KFaqWDoHbZ0BUgAqHhm4lesX5ddw6+g=;
+	s=arc-20240116; t=1728997024; c=relaxed/simple;
+	bh=5MQMIDcJ+LIbIhttc3S3hGo/nT2Ar0Rb3AwoPPfCccs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z9Nxu7xCrNUvvulhQXi7Tb7CgZZjr2l0Y3D8I2NdJs5P0mf6mfYCqVGdixbuFfkOe5bBb0/plxT8zMmbFrk57mvvH7mrKHkHpAMxyOwdKFuI5wcmIB5CbnM9Y7Iq8peXH1lR0crELDPXXL5ttyKgiHDtwJyK/iZS0weeZrUQPmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=atyLR0Fd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tbr7bEaiADqJWPQtbd5b6OYV+Fkbxnc+TwLKb/SzKKC1CJjhpsVvvygqSlQD5JszRMZviNTP9VZ8kcfa40hI7RaWsswXd2SOUP4FUfEQiGZ8xA1lx78KDzNv0IqWwwOjMyQ1b58CGUq8BPAbYgTeP3PgIKMxxT0xRc8MBFYzV1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2GrdVZnD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="atyLR0Fd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69715C4CEC6;
-	Tue, 15 Oct 2024 12:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GrdVZnD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96976C4CEC6;
+	Tue, 15 Oct 2024 12:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997020;
-	bh=9SM+Rjta8E45KFaqWDoHbZ0BUgAqHhm4lesX5ddw6+g=;
+	s=korg; t=1728997024;
+	bh=5MQMIDcJ+LIbIhttc3S3hGo/nT2Ar0Rb3AwoPPfCccs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=atyLR0FdMdHiOlEtFxMSnHU40Tgn1nI/q9XOaULByLGiKQqUz0GUf6SATxp/YBgL9
-	 OB9guulTm/R+R+AjPwUyA5b9Y/rgWtoR5HYUXizEi7jLsEjONyhkYuVeRAoF2pwQ+Q
-	 /ylbVOx87AYh4jNpWsEPDspF4aOMd7ZLDfHV1ii8=
+	b=2GrdVZnDoqXxFcwPVDbvl4ueMSyXiJavWN47q1896i/f2VyPjMzs7iTP9ETX4wzTk
+	 AmUJ9OAt7Pi+iO+kEDsEtBimC5wTN46tNpYTIIZw3u74XcRbuqA5X9POTjScTeCKg7
+	 9ceVDLGnXe3n+HJr+GiaEvNlkDHAUKnuhogaBilI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Mike Rapoport <rppt@kernel.org>,
-	Wei Yang <richard.weiyang@gmail.com>,
+	Jacky Chou <jacky_chou@aspeedtech.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 033/518] microblaze: dont treat zero reserved memory regions as error
-Date: Tue, 15 Oct 2024 14:38:57 +0200
-Message-ID: <20241015123918.281818518@linuxfoundation.org>
+Subject: [PATCH 5.10 034/518] net: ftgmac100: Ensure tx descriptor updates are visible
+Date: Tue, 15 Oct 2024 14:38:58 +0200
+Message-ID: <20241015123918.320632348@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,49 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport <rppt@kernel.org>
+From: Jacky Chou <jacky_chou@aspeedtech.com>
 
-[ Upstream commit 0075df288dd8a7abfe03b3766176c393063591dd ]
+[ Upstream commit 4186c8d9e6af57bab0687b299df10ebd47534a0a ]
 
-Before commit 721f4a6526da ("mm/memblock: remove empty dummy entry") the
-check for non-zero of memblock.reserved.cnt in mmu_init() would always
-be true either because  memblock.reserved.cnt is initialized to 1 or
-because there were memory reservations earlier.
+The driver must ensure TX descriptor updates are visible
+before updating TX pointer and TX clear pointer.
 
-The removal of dummy empty entry in memblock caused this check to fail
-because now memblock.reserved.cnt is initialized to 0.
+This resolves TX hangs observed on AST2600 when running
+iperf3.
 
-Remove the check for non-zero of memblock.reserved.cnt because it's
-perfectly fine to have an empty memblock.reserved array that early in
-boot.
-
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Mike Rapoport <rppt@kernel.org>
-Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20240729053327.4091459-1-rppt@kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Jacky Chou <jacky_chou@aspeedtech.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/mm/init.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/net/ethernet/faraday/ftgmac100.c | 26 ++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/arch/microblaze/mm/init.c b/arch/microblaze/mm/init.c
-index 45da639bd22ca..a2cd139c5eb41 100644
---- a/arch/microblaze/mm/init.c
-+++ b/arch/microblaze/mm/init.c
-@@ -245,11 +245,6 @@ asmlinkage void __init mmu_init(void)
- {
- 	unsigned int kstart, ksize;
+diff --git a/drivers/net/ethernet/faraday/ftgmac100.c b/drivers/net/ethernet/faraday/ftgmac100.c
+index 969af4dd64055..bc9a7f2d23504 100644
+--- a/drivers/net/ethernet/faraday/ftgmac100.c
++++ b/drivers/net/ethernet/faraday/ftgmac100.c
+@@ -569,7 +569,7 @@ static bool ftgmac100_rx_packet(struct ftgmac100 *priv, int *processed)
+ 	(*processed)++;
+ 	return true;
  
--	if (!memblock.reserved.cnt) {
--		pr_emerg("Error memory count\n");
--		machine_restart(NULL);
--	}
--
- 	if ((u32) memblock.memory.regions[0].size < 0x400000) {
- 		pr_emerg("Memory must be greater than 4MB\n");
- 		machine_restart(NULL);
+- drop:
++drop:
+ 	/* Clean rxdes0 (which resets own bit) */
+ 	rxdes->rxdes0 = cpu_to_le32(status & priv->rxdes0_edorr_mask);
+ 	priv->rx_pointer = ftgmac100_next_rx_pointer(priv, pointer);
+@@ -653,6 +653,11 @@ static bool ftgmac100_tx_complete_packet(struct ftgmac100 *priv)
+ 	ftgmac100_free_tx_packet(priv, pointer, skb, txdes, ctl_stat);
+ 	txdes->txdes0 = cpu_to_le32(ctl_stat & priv->txdes0_edotr_mask);
+ 
++	/* Ensure the descriptor config is visible before setting the tx
++	 * pointer.
++	 */
++	smp_wmb();
++
+ 	priv->tx_clean_pointer = ftgmac100_next_tx_pointer(priv, pointer);
+ 
+ 	return true;
+@@ -806,6 +811,11 @@ static netdev_tx_t ftgmac100_hard_start_xmit(struct sk_buff *skb,
+ 	dma_wmb();
+ 	first->txdes0 = cpu_to_le32(f_ctl_stat);
+ 
++	/* Ensure the descriptor config is visible before setting the tx
++	 * pointer.
++	 */
++	smp_wmb();
++
+ 	/* Update next TX pointer */
+ 	priv->tx_pointer = pointer;
+ 
+@@ -826,7 +836,7 @@ static netdev_tx_t ftgmac100_hard_start_xmit(struct sk_buff *skb,
+ 
+ 	return NETDEV_TX_OK;
+ 
+- dma_err:
++dma_err:
+ 	if (net_ratelimit())
+ 		netdev_err(netdev, "map tx fragment failed\n");
+ 
+@@ -848,7 +858,7 @@ static netdev_tx_t ftgmac100_hard_start_xmit(struct sk_buff *skb,
+ 	 * last fragment, so we know ftgmac100_free_tx_packet()
+ 	 * hasn't freed the skb yet.
+ 	 */
+- drop:
++drop:
+ 	/* Drop the packet */
+ 	dev_kfree_skb_any(skb);
+ 	netdev->stats.tx_dropped++;
+@@ -1419,7 +1429,7 @@ static void ftgmac100_reset_task(struct work_struct *work)
+ 	ftgmac100_init_all(priv, true);
+ 
+ 	netdev_dbg(netdev, "Reset done !\n");
+- bail:
++bail:
+ 	if (priv->mii_bus)
+ 		mutex_unlock(&priv->mii_bus->mdio_lock);
+ 	if (netdev->phydev)
+@@ -1490,15 +1500,15 @@ static int ftgmac100_open(struct net_device *netdev)
+ 
+ 	return 0;
+ 
+- err_ncsi:
++err_ncsi:
+ 	napi_disable(&priv->napi);
+ 	netif_stop_queue(netdev);
+- err_alloc:
++err_alloc:
+ 	ftgmac100_free_buffers(priv);
+ 	free_irq(netdev->irq, netdev);
+- err_irq:
++err_irq:
+ 	netif_napi_del(&priv->napi);
+- err_hw:
++err_hw:
+ 	iowrite32(0, priv->base + FTGMAC100_OFFSET_IER);
+ 	ftgmac100_free_rings(priv);
+ 	return err;
 -- 
 2.43.0
 
