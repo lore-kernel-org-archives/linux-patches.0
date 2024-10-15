@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334D51D4154;
-	Tue, 15 Oct 2024 11:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94BDF1D0492;
+	Tue, 15 Oct 2024 11:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993185; cv=none; b=IEn03I9LgVjtidmlyT6002wy5J3cfcnIMacwfPNfNJFM9xCE/2DF/eXvOC8XPuf5HZp2Bh95wfWPamdValCEe0HUjwvQdLLi+Z0KshneoSO/ea+ICgX+EyrkYGFoOse7ZvtgS8dP2xBUTJrN4b+cozEG8HPz0NuUz0gOdi2CJ1M=
+	t=1728993188; cv=none; b=i/gaza6rW/ABi+RHDdTRTZpKEO+URqXk8096OpuFfgvCrrury6pd6d9Hw+Xcdhlg78kuAzisJGZUNaiziXi+kjuoK7YM41CSvG/6r7P9ZXpmTkgnvoSwLOFk8lKV47zvoGbWuD0c6b/C4WdwTmoe2O2bWWKwzgybiQbmgZldEKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993185; c=relaxed/simple;
-	bh=W75oMlwS0mlsZS5PuRgpxhGvWbkN+232kz7cAGee2ck=;
+	s=arc-20240116; t=1728993188; c=relaxed/simple;
+	bh=5y62rX7O412CIMNe9OTM74zghtQdxMv0n+9ojapJk8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+dNYrEt+FiuY+CRWVm/N/jq57oJnkgl1LiIMr2J8aSEhN96CLr0iOkgP1GNcZ1sbq3CBmEq+4Vyd7ghYSAyMRoqQ7tXF3XvCHBCRLOzyV93lyl78r+yrdJLGu8mgMZG6RGZH/G+u62qR0V3pyByk/U/Ixy7ES0LfTRN8fRtX+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mi5qrE02; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eDLepI7riMiedHXkYxutZyxUzETKqu2yDebOhY390wC20wcuGSh3z9q1v0wQQrW6KpnbTXm/pn7yZTFJHfExPFXC7yAUqEAEZWlbforwO5o6l3TSMYLjFcYG71BMOlFkLFqmKIg4Gc80dRhqyB7G4d5QQFT79z+frC1AJ4hiNAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iXQTrr3O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mi5qrE02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A041C4CEC6;
-	Tue, 15 Oct 2024 11:53:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iXQTrr3O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F64C4CEC6;
+	Tue, 15 Oct 2024 11:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993185;
-	bh=W75oMlwS0mlsZS5PuRgpxhGvWbkN+232kz7cAGee2ck=;
+	s=korg; t=1728993188;
+	bh=5y62rX7O412CIMNe9OTM74zghtQdxMv0n+9ojapJk8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mi5qrE02rRi15jEFEltqUdHvxBNrgZ7UKnp+Cz54cdnedQI2CBXs5S0HRT/0twnBc
-	 jaEgQED2JfimcnlfvzhKRW1XCTYTT2Jf/RMTgg4eja6FQQcJ5jjqfU5i4s6D1BSAxx
-	 r2xll/s9tq4P42rcZEXjWDQhTP3OwO5JQ7OOsEj0=
+	b=iXQTrr3O5kM0s/IYdf9c2TDyIpm84kupK/eRANoqw9H7g/JVwqiW4T0suYZirGv7J
+	 dTFmBZleuvjQ6c04RHoWcGCIRXsmUFo3OXeEPLnDF2hs5XSYpk6H3yETdX5ssv4T6W
+	 GVsK1/AEc41x6YRrb6idyeQqZnJ6KsUJwR7MFdGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 5.15 336/691] wifi: mt76: mt7615: check devm_kasprintf() returned value
-Date: Tue, 15 Oct 2024 13:24:44 +0200
-Message-ID: <20241015112453.678754843@linuxfoundation.org>
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.15 337/691] debugobjects: Fix conditions in fill_pool()
+Date: Tue, 15 Oct 2024 13:24:45 +0200
+Message-ID: <20241015112453.717534441@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,37 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-commit 5acdc432f832d810e0d638164c393b877291d9b4 upstream.
+commit 684d28feb8546d1e9597aa363c3bfcf52fe250b7 upstream.
 
-devm_kasprintf() can return a NULL pointer on failure but this returned
-value is not checked. Fix this lack and check the returned value.
+fill_pool() uses 'obj_pool_min_free' to decide whether objects should be
+handed back to the kmem cache. But 'obj_pool_min_free' records the lowest
+historical value of the number of objects in the object pool and not the
+minimum number of objects which should be kept in the pool.
 
-Found by code review.
+Use 'debug_objects_pool_min_level' instead, which holds the minimum number
+which was scaled to the number of CPUs at boot time.
 
+[ tglx: Massage change log ]
+
+Fixes: d26bf5056fc0 ("debugobjects: Reduce number of pool_lock acquisitions in fill_pool()")
+Fixes: 36c4ead6f6df ("debugobjects: Add global free list and the counter")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Fixes: 0bb4e9187ea4 ("mt76: mt7615: fix hwmon temp sensor mem use-after-free")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://patch.msgid.link/20240905014753.353271-1-make24@iscas.ac.cn
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/all/20240904133944.2124-3-thunder.leizhen@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/init.c |    3 +++
- 1 file changed, 3 insertions(+)
+ lib/debugobjects.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-@@ -56,6 +56,9 @@ int mt7615_thermal_init(struct mt7615_de
- 
- 	name = devm_kasprintf(&wiphy->dev, GFP_KERNEL, "mt7615_%s",
- 			      wiphy_name(wiphy));
-+	if (!name)
-+		return -ENOMEM;
-+
- 	hwmon = devm_hwmon_device_register_with_groups(&wiphy->dev, name, dev,
- 						       mt7615_hwmon_groups);
- 	if (IS_ERR(hwmon))
+--- a/lib/debugobjects.c
++++ b/lib/debugobjects.c
+@@ -144,13 +144,14 @@ static void fill_pool(void)
+ 	 * READ_ONCE()s pair with the WRITE_ONCE()s in pool_lock critical
+ 	 * sections.
+ 	 */
+-	while (READ_ONCE(obj_nr_tofree) && (READ_ONCE(obj_pool_free) < obj_pool_min_free)) {
++	while (READ_ONCE(obj_nr_tofree) &&
++	       READ_ONCE(obj_pool_free) < debug_objects_pool_min_level) {
+ 		raw_spin_lock_irqsave(&pool_lock, flags);
+ 		/*
+ 		 * Recheck with the lock held as the worker thread might have
+ 		 * won the race and freed the global free list already.
+ 		 */
+-		while (obj_nr_tofree && (obj_pool_free < obj_pool_min_free)) {
++		while (obj_nr_tofree && (obj_pool_free < debug_objects_pool_min_level)) {
+ 			obj = hlist_entry(obj_to_free.first, typeof(*obj), node);
+ 			hlist_del(&obj->node);
+ 			WRITE_ONCE(obj_nr_tofree, obj_nr_tofree - 1);
 
 
