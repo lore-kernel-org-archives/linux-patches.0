@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCF21EBFF5;
-	Tue, 15 Oct 2024 12:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8441CACD0;
+	Tue, 15 Oct 2024 12:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994262; cv=none; b=k6IPUGcbnVTnFhGDdmqbKd30Xy0Cwvb/yf8QjwyR3F6/fP5Nvn9eVqEQqUI/u+68hhrEhG0mrhgum4BT4kOjw+nxgA/PGIOSfYtWEjwYWZHoMn0jm7rwjmy0AD55XSW+AWCqcvFTcKfX68XVUQYo7LCkIddvCBwSZs284LEIBe8=
+	t=1728994265; cv=none; b=S1EbJsoAVi9or2fwviKVwbKkx5rAfxuf7B8gwxsXVrTgriWJPtoz0FVhsqNoIYeDJn82TzVachGd6XhYXY4CXLo28KO3Y74lZc9r558FZTy6/oSJsCQAh/WrSH6f32UfV7wFw78q0CptVZRCZLCaiN0TsQd+NqSNUxnkjWzaiCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994262; c=relaxed/simple;
-	bh=eY5qRxaaEuCUigt3MI5l4LnggFpqhZk6LuNV0jBTTDM=;
+	s=arc-20240116; t=1728994265; c=relaxed/simple;
+	bh=Kh/q3iqD0ndthMj52kE60AxRoRQ7LTQBHkWwlAmS99U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eqYqvjmuTT22HuFfOf3f1IsuYz3236RdzjwULR59RlmsLERZWtyURHxu4GtDKpfVreN2n0jsMvVnNK9W+G2l7W6f/69JF7xXPYcjs0NhXZOP32uKzWZgo9u3a2BuuK27csj+wm4RKCB20aFmrYvH+Ub8hu6fdor6R7Q5EgeAfSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imEVORq0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MKgRIukeEkyLFEaDAembjuv9SLmQEesEiojwD7JJRasCCPVWDQWeTfmziQBBaJG0l1CIgM9eb05twqMOBCpnBqSRF04cwN0nKXg3WpPrYfkdS/TpXnIBNBDCMCipeY0RZny84d+mS7nHTlxsaMt9A4upsKpYdlmv3PIaR58qUMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2fcUVmHu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imEVORq0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E748C4CEC6;
-	Tue, 15 Oct 2024 12:11:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fcUVmHu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FDD8C4CEC6;
+	Tue, 15 Oct 2024 12:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994262;
-	bh=eY5qRxaaEuCUigt3MI5l4LnggFpqhZk6LuNV0jBTTDM=;
+	s=korg; t=1728994265;
+	bh=Kh/q3iqD0ndthMj52kE60AxRoRQ7LTQBHkWwlAmS99U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imEVORq0hZzAUtSubUY5Cdj8xglofQgsWcijSsbl5HY/nlLdhk8g+eSqjbfRI3h+h
-	 yvKvPsbLDpGusTReiny5Rl0DfgzNh8sDNJMve/NqqiwzDoUp40ILv21AvnHL2shmTV
-	 Nfq8Au/fuci0D+AFMgtfwX0y4PrSNTrAPbqrnOdo=
+	b=2fcUVmHurMzwV3bxsex/8E2hL1aoXMUSD1lM75gJGckkl0YVcG0tzgllsUKqf3bfT
+	 4PcC14FI3wSb5b0zODOo7jUXlBLKPFZgCnriRTyy61+ooGBORF+gK3veJoKr4wdRLq
+	 MsD8SLdDZLbtIYGkP9aI11HSHrZpg7OTGUQvbUTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Shumilin <shum.sdl@nppct.ru>,
-	Helge Deller <deller@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 622/691] fbdev: sisfb: Fix strbuf array overflow
-Date: Tue, 15 Oct 2024 13:29:30 +0200
-Message-ID: <20241015112505.019030151@linuxfoundation.org>
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sherry Yang <sherry.yang@oracle.com>
+Subject: [PATCH 5.15 623/691] RDMA/rxe: Fix seg fault in rxe_comp_queue_pkt
+Date: Tue, 15 Oct 2024 13:29:31 +0200
+Message-ID: <20241015112505.058838531@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,42 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Shumilin <shum.sdl@nppct.ru>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 9cf14f5a2746c19455ce9cb44341b5527b5e19c3 ]
+commit 2b23b6097303ed0ba5f4bc036a1c07b6027af5c6 upstream.
 
-The values of the variables xres and yres are placed in strbuf.
-These variables are obtained from strbuf1.
-The strbuf1 array contains digit characters
-and a space if the array contains non-digit characters.
-Then, when executing sprintf(strbuf, "%ux%ux8", xres, yres);
-more than 16 bytes will be written to strbuf.
-It is suggested to increase the size of the strbuf array to 24.
+In rxe_comp_queue_pkt() an incoming response packet skb is enqueued to the
+resp_pkts queue and then a decision is made whether to run the completer
+task inline or schedule it. Finally the skb is dereferenced to bump a 'hw'
+performance counter. This is wrong because if the completer task is
+already running in a separate thread it may have already processed the skb
+and freed it which can cause a seg fault.  This has been observed
+infrequently in testing at high scale.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This patch fixes this by changing the order of enqueuing the packet until
+after the counter is accessed.
 
-Signed-off-by: Andrey Shumilin <shum.sdl@nppct.ru>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/20240329145513.35381-4-rpearsonhpe@gmail.com
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Fixes: 0b1e5b99a48b ("IB/rxe: Add port protocol stats")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+[Sherry: bp to fix CVE-2024-38544. Fix conflict due to missing commit:
+dccb23f6c312 ("RDMA/rxe: Split rxe_run_task() into two subroutines")
+which is not necessary to backport]
+Signed-off-by: Sherry Yang <sherry.yang@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/sis/sis_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/sw/rxe/rxe_comp.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/video/fbdev/sis/sis_main.c b/drivers/video/fbdev/sis/sis_main.c
-index c6e21ba008953..ce9dc1e8bcdca 100644
---- a/drivers/video/fbdev/sis/sis_main.c
-+++ b/drivers/video/fbdev/sis/sis_main.c
-@@ -183,7 +183,7 @@ static void sisfb_search_mode(char *name, bool quiet)
+--- a/drivers/infiniband/sw/rxe/rxe_comp.c
++++ b/drivers/infiniband/sw/rxe/rxe_comp.c
+@@ -124,12 +124,12 @@ void rxe_comp_queue_pkt(struct rxe_qp *q
  {
- 	unsigned int j = 0, xres = 0, yres = 0, depth = 0, rate = 0;
- 	int i = 0;
--	char strbuf[16], strbuf1[20];
-+	char strbuf[24], strbuf1[20];
- 	char *nameptr = name;
+ 	int must_sched;
  
- 	/* We don't know the hardware specs yet and there is no ivideo */
--- 
-2.43.0
-
+-	skb_queue_tail(&qp->resp_pkts, skb);
+-
+-	must_sched = skb_queue_len(&qp->resp_pkts) > 1;
++	must_sched = skb_queue_len(&qp->resp_pkts) > 0;
+ 	if (must_sched != 0)
+ 		rxe_counter_inc(SKB_TO_PKT(skb)->rxe, RXE_CNT_COMPLETER_SCHED);
+ 
++	skb_queue_tail(&qp->resp_pkts, skb);
++
+ 	rxe_run_task(&qp->comp.task, must_sched);
+ }
+ 
 
 
