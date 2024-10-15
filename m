@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0CA01AF0AB;
-	Tue, 15 Oct 2024 13:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913A21C07FF;
+	Tue, 15 Oct 2024 13:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997692; cv=none; b=aNIAU0MjreSrk0cIy3dQjosFhgV0Q3yJgr2BUyr4D30WE74n+GFVLsdqoB0wSMrGi+CKZCaPmPeIbyb/btqYTrBHU23uLJkrlGQ33Isgr552ZV9sJqI28PCOb0JjBVvst4ttyVwKvTpqSOi2CHbexqoJm48KgDXiSdCg2B+cjHA=
+	t=1728997695; cv=none; b=cdVQn078suc3STj0Lpb2WXrst6dOK+8PSlaxGB/5jjEkoveebVWWepb26Z6h9nZjO4wr/g3WgwtggR6h67HXN5JBB0uGDYo+jLQFWpNky/AYBvQVPs47RPTlgnrs2bZHr6ZMqhlCijdMWjOpDCCSrJptTaV+xA+bT5Q5BPt4N9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997692; c=relaxed/simple;
-	bh=gWV9EoslgWTPoNorcXNnh7fzQEUHDHLkT2TAvCgBBkk=;
+	s=arc-20240116; t=1728997695; c=relaxed/simple;
+	bh=jFgKOSeRn/pXYIg4CeIRcdopGQvglQkgGrOfWpWdRjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bh/I9QQz+Yts4JXjsHJuMxzHjQwShwx5KE2Jb2U1ca/ylj7/ZUa9POf6zq3pYSAwz2bax7RxU4CADSujDqucl4kpNayyWm+epSqJYo/ivGQ0EmsWELIm6/4AVll1CDp7nn3+Ibis3Zw1mXJF7JpiODwoJHsDNv8yS2M+KAwO088=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbZkqfqB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kPyINhLVMHKA+6LahKOpexWf0o8cs7dmp81di03HHhTnnXRWS9lTBtUL/LFX1/W1PYfNSnb/8PF4MelNeBAdxYZBpjSowFloq121SNUvVpSZ+x7AqiSUoQbwaoo/XE+tGv9Xy9zbuapo+arPOYgQpVabgm/bN9K9yl1F/iXd7M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adqqUbwD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbZkqfqB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6081C4CEC6;
-	Tue, 15 Oct 2024 13:08:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adqqUbwD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D36AC4CEC6;
+	Tue, 15 Oct 2024 13:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997692;
-	bh=gWV9EoslgWTPoNorcXNnh7fzQEUHDHLkT2TAvCgBBkk=;
+	s=korg; t=1728997695;
+	bh=jFgKOSeRn/pXYIg4CeIRcdopGQvglQkgGrOfWpWdRjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VbZkqfqBFZ1QJaoureMXTC1CTK5TH5mndGI8LfRgpUudSOEVQM/PHfhZRRcpXqjpw
-	 DpY2I8uiZb4aCVuOrbSWDL83t2cMpj1cye/spavI1UmBsY090tfPd5JyC/R5Qk7sM4
-	 5CdlHgX5tnqaLPhV9fLjbzfv9IV83OrVbKOMC2D0=
+	b=adqqUbwDVTmSQ3JA5Utf3QdQR8SLLe1XNQzt+MiO36iMMNp+0BQ06Uj/E5v/4eXh7
+	 aNrqY4Lvzq6BwbGBpj2tzb7JqFfLORCFq9uiG+xPVZQB5UR5RVjN5kzILrQTyh7Fnn
+	 1+0liVpTNp8UKyvQ9HgPoPtIqfG9iJEG/G4ZFcvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Moritz Fischer <mdf@kernel.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 257/518] usb: renesas-xhci: Remove renesas_xhci_pci_exit()
-Date: Tue, 15 Oct 2024 14:42:41 +0200
-Message-ID: <20241015123926.907865055@linuxfoundation.org>
+Subject: [PATCH 5.10 258/518] xhci: Set quirky xHC PCI hosts to D3 _after_ stopping and freeing them.
+Date: Tue, 15 Oct 2024 14:42:42 +0200
+Message-ID: <20241015123926.945841652@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,75 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moritz Fischer <mdf@kernel.org>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 884c274408296e7e0f56545f909b3d3a671104aa ]
+[ Upstream commit f81dfa3b57c624c56f2bff171c431bc7f5b558f2 ]
 
-Remove empty function renesas_xhci_pci_exit() that does not
-actually do anything.
+PCI xHC host should be stopped and xhci driver memory freed before putting
+host to PCI D3 state during PCI remove callback.
 
-Cc: Mathias Nyman <mathias.nyman@intel.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Moritz Fischer <mdf@kernel.org>
-Link: https://lore.kernel.org/r/20210718015111.389719-3-mdf@kernel.org
+Hosts with XHCI_SPURIOUS_WAKEUP quirk did this the wrong way around
+and set the host to D3 before calling usb_hcd_pci_remove(dev), which will
+access the host to stop it, and then free xhci.
+
+Fixes: f1f6d9a8b540 ("xhci: don't dereference a xhci member after removing xhci")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240905143300.1959279-12-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: f81dfa3b57c6 ("xhci: Set quirky xHC PCI hosts to D3 _after_ stopping and freeing them.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-pci-renesas.c | 5 -----
- drivers/usb/host/xhci-pci.c         | 2 --
- drivers/usb/host/xhci-pci.h         | 3 ---
- 3 files changed, 10 deletions(-)
+ drivers/usb/host/xhci-pci.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-pci-renesas.c b/drivers/usb/host/xhci-pci-renesas.c
-index 96692dbbd4dad..01ad6fc1adcaf 100644
---- a/drivers/usb/host/xhci-pci-renesas.c
-+++ b/drivers/usb/host/xhci-pci-renesas.c
-@@ -631,9 +631,4 @@ int renesas_xhci_check_request_fw(struct pci_dev *pdev,
- }
- EXPORT_SYMBOL_GPL(renesas_xhci_check_request_fw);
- 
--void renesas_xhci_pci_exit(struct pci_dev *dev)
--{
--}
--EXPORT_SYMBOL_GPL(renesas_xhci_pci_exit);
--
- MODULE_LICENSE("GPL v2");
 diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-index 88f223b975d34..4a88e75cd9586 100644
+index 4a88e75cd9586..82700a734f8a6 100644
 --- a/drivers/usb/host/xhci-pci.c
 +++ b/drivers/usb/host/xhci-pci.c
-@@ -533,8 +533,6 @@ static void xhci_pci_remove(struct pci_dev *dev)
+@@ -531,8 +531,10 @@ static int xhci_pci_probe(struct pci_dev *dev, const struct pci_device_id *id)
+ static void xhci_pci_remove(struct pci_dev *dev)
+ {
  	struct xhci_hcd *xhci;
++	bool set_power_d3;
  
  	xhci = hcd_to_xhci(pci_get_drvdata(dev));
--	if (xhci->quirks & XHCI_RENESAS_FW_QUIRK)
--		renesas_xhci_pci_exit(dev);
++	set_power_d3 = xhci->quirks & XHCI_SPURIOUS_WAKEUP;
  
  	xhci->xhc_state |= XHCI_STATE_REMOVING;
  
-diff --git a/drivers/usb/host/xhci-pci.h b/drivers/usb/host/xhci-pci.h
-index acd7cf0a1706e..cb9a8f331a446 100644
---- a/drivers/usb/host/xhci-pci.h
-+++ b/drivers/usb/host/xhci-pci.h
-@@ -7,7 +7,6 @@
- #if IS_ENABLED(CONFIG_USB_XHCI_PCI_RENESAS)
- int renesas_xhci_check_request_fw(struct pci_dev *dev,
- 				  const struct pci_device_id *id);
--void renesas_xhci_pci_exit(struct pci_dev *dev);
+@@ -545,11 +547,11 @@ static void xhci_pci_remove(struct pci_dev *dev)
+ 		xhci->shared_hcd = NULL;
+ 	}
  
- #else
- static int renesas_xhci_check_request_fw(struct pci_dev *dev,
-@@ -16,8 +15,6 @@ static int renesas_xhci_check_request_fw(struct pci_dev *dev,
- 	return 0;
++	usb_hcd_pci_remove(dev);
++
+ 	/* Workaround for spurious wakeups at shutdown with HSW */
+-	if (xhci->quirks & XHCI_SPURIOUS_WAKEUP)
++	if (set_power_d3)
+ 		pci_set_power_state(dev, PCI_D3hot);
+-
+-	usb_hcd_pci_remove(dev);
  }
  
--static void renesas_xhci_pci_exit(struct pci_dev *dev) { };
--
- #endif
- 
- struct xhci_driver_data {
+ #ifdef CONFIG_PM
 -- 
 2.43.0
 
