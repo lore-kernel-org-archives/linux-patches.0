@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3241C07ED;
-	Tue, 15 Oct 2024 13:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F0F1C07FF;
+	Tue, 15 Oct 2024 13:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997950; cv=none; b=gA7Gdi83NOcW7bseop/2M8kTESZ0asvGqxU4dQVw9I7jIQgcqcy0POqAr1TsrKdVDeX+CgsidlFkSHAepcayhRT68ix6b9j/tbr8PDZv8FXW7UQfObpFjghaJQevAqZPPPjr1cRhJH9HBaPel7YjX+0cUx5HGoiNRxIdlM2gPCI=
+	t=1728997954; cv=none; b=hwlK96L3nofUcKXj/09pG9BeF2mXdreM0BUdWoWNcBCBb7ndh78xJSZnAihLUqvrpQ4Q+bAjQNHaBltNuHc2tSD2Avbf/LgyOwjxRUPSIqtkSAy9ZtxIqUl6bzDCn4hIdC4SD+fFaHRWEUDCmh91w/Je8VZFkBqPwsqXcwIYUmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997950; c=relaxed/simple;
-	bh=CyViX1MPm/7dk2lAOiD2+WUb8reZKmWf0crkWF6cXgo=;
+	s=arc-20240116; t=1728997954; c=relaxed/simple;
+	bh=fiJRlgMaXidg5nH05EcUO4tD0f2I1iuOlReLSvtdvvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MYtW9VUS/MvESvJL+Lo2lcl0sm2RAc1nGqtpoUxyqdivhF6bY8pBtVbG8RV8BuNW8C95WYwARggYfEpa0Drq1+h/WRNomQf8PNQLpDCWDJ2XFZ1pONT17bFzNOhhU2y66he/chu9pqB4OFA5SQVcNuNVW1KZlEJf4DLQ548hTQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LnTVM5aG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JmXqj2Lf+hDUpAyZlvbeP3iqa3dSmO/ptTHp1E9OfZuqNGXi2jG0xrmh1CXXBvUaPifqd7+jrNzVXFlLpE4peknVjACiOz7NPP+I8YkRJ6sqhB0lWUxp4QCvr3saI4+BdAYixvwZ3iRt/GM8sZTClVChefr9RhDlJ3CHFzOKQjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=onrT4mFX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LnTVM5aG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE7BEC4CEC6;
-	Tue, 15 Oct 2024 13:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="onrT4mFX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709A2C4CEC6;
+	Tue, 15 Oct 2024 13:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997950;
-	bh=CyViX1MPm/7dk2lAOiD2+WUb8reZKmWf0crkWF6cXgo=;
+	s=korg; t=1728997953;
+	bh=fiJRlgMaXidg5nH05EcUO4tD0f2I1iuOlReLSvtdvvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LnTVM5aGCkz8U52VljUgksLyhTx1joK8w8/wRLWVaTGsia9g8qXOTjR0GsYNZAZ/0
-	 j1RaYm3oW8NmoG/XvsNRpVxcWjdp5h1vvHUfTAIV5evwOJ/VpYIVEbkIgDej1Psiim
-	 WU3z/RPDHKz8lL4n8vGwcdQK3DBpXG9DblGrwmYY=
+	b=onrT4mFXVvkhnLG9ZGnU4PLZ6LBO2fJz2dN2ujPpccqQOeGWBIfsUvBCcL2MliOo4
+	 3LkDVXahMFnEM+yM3KB9nbheuE1gdQijnuT0FeoknZoq7PA8ThxDbYupeCMMDg/v/G
+	 OZKNNCYugmdOL7YJJIGlZRqYdGWK4YMu8sNHW59A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e38d703eeb410b17b473@syzkaller.appspotmail.com,
-	Remington Brasga <rbrasga@uci.edu>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 334/518] jfs: UBSAN: shift-out-of-bounds in dbFindBits
-Date: Tue, 15 Oct 2024 14:43:58 +0200
-Message-ID: <20241015123929.865486619@linuxfoundation.org>
+Subject: [PATCH 5.10 305/518] wifi: ath11k: fix array out-of-bound access in SoC stats
+Date: Tue, 15 Oct 2024 14:43:29 +0200
+Message-ID: <20241015123928.758727089@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,33 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remington Brasga <rbrasga@uci.edu>
+From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
 
-[ Upstream commit b0b2fc815e514221f01384f39fbfbff65d897e1c ]
+[ Upstream commit 69f253e46af98af17e3efa3e5dfa72fcb7d1983d ]
 
-Fix issue with UBSAN throwing shift-out-of-bounds warning.
+Currently, the ath11k_soc_dp_stats::hal_reo_error array is defined with a
+maximum size of DP_REO_DST_RING_MAX. However, the ath11k_dp_process_rx()
+function access ath11k_soc_dp_stats::hal_reo_error using the REO
+destination SRNG ring ID, which is incorrect. SRNG ring ID differ from
+normal ring ID, and this usage leads to out-of-bounds array access. To fix
+this issue, modify ath11k_dp_process_rx() to use the normal ring ID
+directly instead of the SRNG ring ID to avoid out-of-bounds array access.
 
-Reported-by: syzbot+e38d703eeb410b17b473@syzkaller.appspotmail.com
-Signed-off-by: Remington Brasga <rbrasga@uci.edu>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://patch.msgid.link/20240704070811.4186543-3-quic_periyasa@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 2 +-
+ drivers/net/wireless/ath/ath11k/dp_rx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 801996da08a45..750853367d4ff 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -3084,7 +3084,7 @@ static int dbFindBits(u32 word, int l2nb)
+diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
+index 6c4b84282e44c..720c94806e1a1 100644
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -2621,7 +2621,7 @@ int ath11k_dp_process_rx(struct ath11k_base *ab, int ring_id,
+ 		if (push_reason !=
+ 		    HAL_REO_DEST_RING_PUSH_REASON_ROUTING_INSTRUCTION) {
+ 			dev_kfree_skb_any(msdu);
+-			ab->soc_stats.hal_reo_error[dp->reo_dst_ring[ring_id].ring_id]++;
++			ab->soc_stats.hal_reo_error[ring_id]++;
+ 			continue;
+ 		}
  
- 	/* scan the word for nb free bits at nb alignments.
- 	 */
--	for (bitno = 0; mask != 0; bitno += nb, mask >>= nb) {
-+	for (bitno = 0; mask != 0; bitno += nb, mask = (mask >> nb)) {
- 		if ((mask & word) == mask)
- 			break;
- 	}
 -- 
 2.43.0
 
