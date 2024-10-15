@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F2E1EBFFF;
-	Tue, 15 Oct 2024 12:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5720C1EF0B8;
+	Tue, 15 Oct 2024 12:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993964; cv=none; b=qqAAIKYA6Lzk5V6a7Rbv5ulcB4JJzNr/MOatYpeaFEK68hf76GzNhFaIS4hHNl+/pwk5ma7g0gyeMZoiEkdUi38N7Wd2fC+p/NurVC3MwbjWGL5bW5h8M9yT7FkRxsH0i3qzPftIyT1hCb8RE6eXGGnaAPsNxBffmKhxWyzngfE=
+	t=1728993967; cv=none; b=RzLfmV7w7lXl/sl0w8NfWb+z1iQUn6mB38bzWaHGRy3Z4/w/9l5q5BW9ZBNYtodAjQxxLzSWcx+hXSjbJlbJID58qHcjysvpDRXw92f2VweT/H4QyLhcD2/h4ZJmsJXa21zaVPQ5GgMMvLF+ObOL3n1zFF9cYyMTXBZqDUDbj0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993964; c=relaxed/simple;
-	bh=iNTqx3GxYLXaiXXApOoVPFNRNyiAWqHx2KXIE39sd+o=;
+	s=arc-20240116; t=1728993967; c=relaxed/simple;
+	bh=C9WG2G64qFk0bNXNyUXGT+4naVpMxMMyhsnYGWwuADk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aJHq/eMwg5Ww65hg+VuZuIbsxqPVCWxO9K1XSbKTOaytaiclhjQzxyjG5jL6HtH/cx1VxGOyAMJIcOYkmg79X2QzE24qh4/kuuETaS3wlj6+FMfL74dr/8ktpbhnmPA3wTOqUYZZvwLBiS16YnWnF8L6UTuxA7SPsPsKSDx2A4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYNGta0/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pAR2M7zeKmbaOs++4WZ25VH51R+U0LMmTMGX6w7lmwwFrJHJeN3DZGhPMZIsRw1SJczCGLnnRQZzSsHpxF2KHvl4XvnLT9dp7HOC52zN7kO/N8z/LcwpuifDUgG/dlri9iIhGvz5m9WhdcvIXi9+o2vUsZCtANQkvl+2gl/QcF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HYFNV+Mo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYNGta0/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F871C4CECF;
-	Tue, 15 Oct 2024 12:06:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HYFNV+Mo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB68BC4CED1;
+	Tue, 15 Oct 2024 12:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993963;
-	bh=iNTqx3GxYLXaiXXApOoVPFNRNyiAWqHx2KXIE39sd+o=;
+	s=korg; t=1728993967;
+	bh=C9WG2G64qFk0bNXNyUXGT+4naVpMxMMyhsnYGWwuADk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FYNGta0/adTic4VYmlXuZaRITYkrYIAZQ+SmgJ/6T3zItOs8KEcx2rUhQMYBdGBn2
-	 1QfcHxtbMZi7s9ZurgQdCHhBYecdZQtb5s8zb/iSkQKzEOdk9/BxCNdn3HsRPKEaNd
-	 nQPJcAoReDRd2Knt36NsdGVouVQQtSp6sfQch7nw=
+	b=HYFNV+MoLHk9iO9qe6tV4MY0S0BzTq+yH/DfHd9wYBdLwc+EAlzzqQu0X/HL4DEpK
+	 BkcXeB3RtnWgmXozMi30RSBdyuMFpl/IOHiACGBa1cXBOwAagx7xMq2WLHq3psRw+O
+	 2BfwlO8MJl38FG1aVDwlNtqij5+bsexiDRGpTUag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Heckemann <git@sphalerite.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 567/691] drm/rockchip: define gamma registers for RK3399
-Date: Tue, 15 Oct 2024 13:28:35 +0200
-Message-ID: <20241015112502.847363926@linuxfoundation.org>
+Subject: [PATCH 5.15 568/691] drm/rockchip: support gamma control on RK3399
+Date: Tue, 15 Oct 2024 13:28:36 +0200
+Message-ID: <20241015112502.886160191@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -56,113 +56,204 @@ Content-Transfer-Encoding: 8bit
 
 From: Hugh Cole-Baker <sigmaris@gmail.com>
 
-[ Upstream commit 3ba000d6ae999b99f29afd64814877a5c4406786 ]
+[ Upstream commit 7ae7a6211fe7251543796d5af971acb8c9e2da9e ]
 
-The VOP on RK3399 has a different approach from previous versions for
-setting a gamma lookup table, using an update_gamma_lut register. As
-this differs from RK3288, give RK3399 its own set of "common" register
-definitions.
+The RK3399 has a 1024-entry gamma LUT with 10 bits per component on its
+"big" VOP and a 256-entry, 8 bit per component LUT on the "little" VOP.
+Compared to the RK3288, it no longer requires disabling gamma while
+updating the LUT. On the RK3399, the LUT can be updated at any time as
+the hardware has two LUT buffers, one can be written while the other is
+in use. A swap of the buffers is triggered by writing 1 to the
+update_gamma_lut register.
 
 Signed-off-by: Hugh Cole-Baker <sigmaris@gmail.com>
 Tested-by: "Milan P. Stanić" <mps@arvanta.net>
 Tested-by: Linus Heckemann <git@sphalerite.org>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20211019215843.42718-2-sigmaris@gmail.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20211019215843.42718-3-sigmaris@gmail.com
 Stable-dep-of: 6b44aa559d6c ("drm/rockchip: vop: clear DMA stop bit on RK3066")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.h |  2 ++
- drivers/gpu/drm/rockchip/rockchip_vop_reg.c | 24 +++++++++++++++++++--
- drivers/gpu/drm/rockchip/rockchip_vop_reg.h |  1 +
- 3 files changed, 25 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 105 +++++++++++++-------
+ 1 file changed, 71 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
-index 857d97cdc67c6..14179e89bd215 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
-@@ -99,6 +99,8 @@ struct vop_common {
- 	struct vop_reg dither_down_en;
- 	struct vop_reg dither_up;
- 	struct vop_reg dsp_lut_en;
-+	struct vop_reg update_gamma_lut;
-+	struct vop_reg lut_buffer_index;
- 	struct vop_reg gate_en;
- 	struct vop_reg mmu_en;
- 	struct vop_reg out_mode;
-diff --git a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
-index 8c873fcd0e99f..de7eb2fda4833 100644
---- a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
-@@ -865,6 +865,24 @@ static const struct vop_output rk3399_output = {
- 	.mipi_dual_channel_en = VOP_REG(RK3288_SYS_CTRL, 0x1, 3),
- };
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+index c9056bf8659ad..3d5e463757f55 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+@@ -9,6 +9,7 @@
+ #include <linux/delay.h>
+ #include <linux/iopoll.h>
+ #include <linux/kernel.h>
++#include <linux/log2.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/of_device.h>
+@@ -66,6 +67,9 @@
+ #define VOP_REG_SET(vop, group, name, v) \
+ 		    vop_reg_set(vop, &vop->data->group->name, 0, ~0, v, #name)
  
-+static const struct vop_common rk3399_common = {
-+	.standby = VOP_REG_SYNC(RK3399_SYS_CTRL, 0x1, 22),
-+	.gate_en = VOP_REG(RK3399_SYS_CTRL, 0x1, 23),
-+	.mmu_en = VOP_REG(RK3399_SYS_CTRL, 0x1, 20),
-+	.dither_down_sel = VOP_REG(RK3399_DSP_CTRL1, 0x1, 4),
-+	.dither_down_mode = VOP_REG(RK3399_DSP_CTRL1, 0x1, 3),
-+	.dither_down_en = VOP_REG(RK3399_DSP_CTRL1, 0x1, 2),
-+	.pre_dither_down = VOP_REG(RK3399_DSP_CTRL1, 0x1, 1),
-+	.dither_up = VOP_REG(RK3399_DSP_CTRL1, 0x1, 6),
-+	.dsp_lut_en = VOP_REG(RK3399_DSP_CTRL1, 0x1, 0),
-+	.update_gamma_lut = VOP_REG(RK3399_DSP_CTRL1, 0x1, 7),
-+	.lut_buffer_index = VOP_REG(RK3399_DBG_POST_REG1, 0x1, 1),
-+	.data_blank = VOP_REG(RK3399_DSP_CTRL0, 0x1, 19),
-+	.dsp_blank = VOP_REG(RK3399_DSP_CTRL0, 0x3, 18),
-+	.out_mode = VOP_REG(RK3399_DSP_CTRL0, 0xf, 0),
-+	.cfg_done = VOP_REG_SYNC(RK3399_REG_CFG_DONE, 0x1, 0),
-+};
++#define VOP_HAS_REG(vop, group, name) \
++		(!!(vop->data->group->name.mask))
 +
- static const struct vop_yuv2yuv_phy rk3399_yuv2yuv_win01_data = {
- 	.y2r_coefficients = {
- 		VOP_REG(RK3399_WIN0_YUV2YUV_Y2R + 0, 0xffff, 0),
-@@ -946,7 +964,7 @@ static const struct vop_data rk3399_vop_big = {
- 	.version = VOP_VERSION(3, 5),
- 	.feature = VOP_FEATURE_OUTPUT_RGB10,
- 	.intr = &rk3366_vop_intr,
--	.common = &rk3288_common,
-+	.common = &rk3399_common,
- 	.modeset = &rk3288_modeset,
- 	.output = &rk3399_output,
- 	.afbc = &rk3399_vop_afbc,
-@@ -954,6 +972,7 @@ static const struct vop_data rk3399_vop_big = {
- 	.win = rk3399_vop_win_data,
- 	.win_size = ARRAY_SIZE(rk3399_vop_win_data),
- 	.win_yuv2yuv = rk3399_vop_big_win_yuv2yuv_data,
-+	.lut_size = 1024,
- };
+ #define VOP_INTR_SET_TYPE(vop, name, type, v) \
+ 	do { \
+ 		int i, reg = 0, mask = 0; \
+@@ -1211,17 +1215,22 @@ static bool vop_dsp_lut_is_enabled(struct vop *vop)
+ 	return vop_read_reg(vop, 0, &vop->data->common->dsp_lut_en);
+ }
  
- static const struct vop_win_data rk3399_vop_lit_win_data[] = {
-@@ -972,13 +991,14 @@ static const struct vop_win_yuv2yuv_data rk3399_vop_lit_win_yuv2yuv_data[] = {
- static const struct vop_data rk3399_vop_lit = {
- 	.version = VOP_VERSION(3, 6),
- 	.intr = &rk3366_vop_intr,
--	.common = &rk3288_common,
-+	.common = &rk3399_common,
- 	.modeset = &rk3288_modeset,
- 	.output = &rk3399_output,
- 	.misc = &rk3368_misc,
- 	.win = rk3399_vop_lit_win_data,
- 	.win_size = ARRAY_SIZE(rk3399_vop_lit_win_data),
- 	.win_yuv2yuv = rk3399_vop_lit_win_yuv2yuv_data,
-+	.lut_size = 256,
- };
++static u32 vop_lut_buffer_index(struct vop *vop)
++{
++	return vop_read_reg(vop, 0, &vop->data->common->lut_buffer_index);
++}
++
+ static void vop_crtc_write_gamma_lut(struct vop *vop, struct drm_crtc *crtc)
+ {
+ 	struct drm_color_lut *lut = crtc->state->gamma_lut->data;
+-	unsigned int i;
++	unsigned int i, bpc = ilog2(vop->data->lut_size);
  
- static const struct vop_win_data rk3228_vop_win_data[] = {
-diff --git a/drivers/gpu/drm/rockchip/rockchip_vop_reg.h b/drivers/gpu/drm/rockchip/rockchip_vop_reg.h
-index 0b3cd65ba5c1b..406e981c75bd7 100644
---- a/drivers/gpu/drm/rockchip/rockchip_vop_reg.h
-+++ b/drivers/gpu/drm/rockchip/rockchip_vop_reg.h
-@@ -628,6 +628,7 @@
- #define RK3399_YUV2YUV_WIN			0x02c0
- #define RK3399_YUV2YUV_POST			0x02c4
- #define RK3399_AUTO_GATING_EN			0x02cc
-+#define RK3399_DBG_POST_REG1			0x036c
- #define RK3399_WIN0_CSC_COE			0x03a0
- #define RK3399_WIN1_CSC_COE			0x03c0
- #define RK3399_WIN2_CSC_COE			0x03e0
+ 	for (i = 0; i < crtc->gamma_size; i++) {
+ 		u32 word;
+ 
+-		word = (drm_color_lut_extract(lut[i].red, 10) << 20) |
+-		       (drm_color_lut_extract(lut[i].green, 10) << 10) |
+-			drm_color_lut_extract(lut[i].blue, 10);
++		word = (drm_color_lut_extract(lut[i].red, bpc) << (2 * bpc)) |
++		       (drm_color_lut_extract(lut[i].green, bpc) << bpc) |
++			drm_color_lut_extract(lut[i].blue, bpc);
+ 		writel(word, vop->lut_regs + i * 4);
+ 	}
+ }
+@@ -1231,38 +1240,66 @@ static void vop_crtc_gamma_set(struct vop *vop, struct drm_crtc *crtc,
+ {
+ 	struct drm_crtc_state *state = crtc->state;
+ 	unsigned int idle;
++	u32 lut_idx, old_idx;
+ 	int ret;
+ 
+ 	if (!vop->lut_regs)
+ 		return;
+-	/*
+-	 * To disable gamma (gamma_lut is null) or to write
+-	 * an update to the LUT, clear dsp_lut_en.
+-	 */
+-	spin_lock(&vop->reg_lock);
+-	VOP_REG_SET(vop, common, dsp_lut_en, 0);
+-	vop_cfg_done(vop);
+-	spin_unlock(&vop->reg_lock);
+ 
+-	/*
+-	 * In order to write the LUT to the internal memory,
+-	 * we need to first make sure the dsp_lut_en bit is cleared.
+-	 */
+-	ret = readx_poll_timeout(vop_dsp_lut_is_enabled, vop,
+-				 idle, !idle, 5, 30 * 1000);
+-	if (ret) {
+-		DRM_DEV_ERROR(vop->dev, "display LUT RAM enable timeout!\n");
+-		return;
+-	}
++	if (!state->gamma_lut || !VOP_HAS_REG(vop, common, update_gamma_lut)) {
++		/*
++		 * To disable gamma (gamma_lut is null) or to write
++		 * an update to the LUT, clear dsp_lut_en.
++		 */
++		spin_lock(&vop->reg_lock);
++		VOP_REG_SET(vop, common, dsp_lut_en, 0);
++		vop_cfg_done(vop);
++		spin_unlock(&vop->reg_lock);
+ 
+-	if (!state->gamma_lut)
+-		return;
++		/*
++		 * In order to write the LUT to the internal memory,
++		 * we need to first make sure the dsp_lut_en bit is cleared.
++		 */
++		ret = readx_poll_timeout(vop_dsp_lut_is_enabled, vop,
++					 idle, !idle, 5, 30 * 1000);
++		if (ret) {
++			DRM_DEV_ERROR(vop->dev, "display LUT RAM enable timeout!\n");
++			return;
++		}
++
++		if (!state->gamma_lut)
++			return;
++	} else {
++		/*
++		 * On RK3399 the gamma LUT can updated without clearing dsp_lut_en,
++		 * by setting update_gamma_lut then waiting for lut_buffer_index change
++		 */
++		old_idx = vop_lut_buffer_index(vop);
++	}
+ 
+ 	spin_lock(&vop->reg_lock);
+ 	vop_crtc_write_gamma_lut(vop, crtc);
+ 	VOP_REG_SET(vop, common, dsp_lut_en, 1);
++	VOP_REG_SET(vop, common, update_gamma_lut, 1);
+ 	vop_cfg_done(vop);
+ 	spin_unlock(&vop->reg_lock);
++
++	if (VOP_HAS_REG(vop, common, update_gamma_lut)) {
++		ret = readx_poll_timeout(vop_lut_buffer_index, vop,
++					 lut_idx, lut_idx != old_idx, 5, 30 * 1000);
++		if (ret) {
++			DRM_DEV_ERROR(vop->dev, "gamma LUT update timeout!\n");
++			return;
++		}
++
++		/*
++		 * update_gamma_lut is auto cleared by HW, but write 0 to clear the bit
++		 * in our backup of the regs.
++		 */
++		spin_lock(&vop->reg_lock);
++		VOP_REG_SET(vop, common, update_gamma_lut, 0);
++		spin_unlock(&vop->reg_lock);
++	}
+ }
+ 
+ static void vop_crtc_atomic_begin(struct drm_crtc *crtc,
+@@ -1312,14 +1349,6 @@ static void vop_crtc_atomic_enable(struct drm_crtc *crtc,
+ 		return;
+ 	}
+ 
+-	/*
+-	 * If we have a GAMMA LUT in the state, then let's make sure
+-	 * it's updated. We might be coming out of suspend,
+-	 * which means the LUT internal memory needs to be re-written.
+-	 */
+-	if (crtc->state->gamma_lut)
+-		vop_crtc_gamma_set(vop, crtc, old_state);
+-
+ 	mutex_lock(&vop->vop_lock);
+ 
+ 	WARN_ON(vop->event);
+@@ -1410,6 +1439,14 @@ static void vop_crtc_atomic_enable(struct drm_crtc *crtc,
+ 
+ 	VOP_REG_SET(vop, common, standby, 0);
+ 	mutex_unlock(&vop->vop_lock);
++
++	/*
++	 * If we have a GAMMA LUT in the state, then let's make sure
++	 * it's updated. We might be coming out of suspend,
++	 * which means the LUT internal memory needs to be re-written.
++	 */
++	if (crtc->state->gamma_lut)
++		vop_crtc_gamma_set(vop, crtc, old_state);
+ }
+ 
+ static bool vop_fs_irq_is_pending(struct vop *vop)
+@@ -2139,8 +2176,8 @@ static int vop_bind(struct device *dev, struct device *master, void *data)
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+ 	if (res) {
+-		if (!vop_data->lut_size) {
+-			DRM_DEV_ERROR(dev, "no gamma LUT size defined\n");
++		if (vop_data->lut_size != 1024 && vop_data->lut_size != 256) {
++			DRM_DEV_ERROR(dev, "unsupported gamma LUT size %d\n", vop_data->lut_size);
+ 			return -EINVAL;
+ 		}
+ 		vop->lut_regs = devm_ioremap_resource(dev, res);
 -- 
 2.43.0
 
