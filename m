@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6756F1DD0C9;
-	Tue, 15 Oct 2024 13:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3371DD0CD;
+	Tue, 15 Oct 2024 13:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998331; cv=none; b=Qb3DGb0sHxSLWPy5hXv+Yv+ajLZaEns6nHj4w7H+wCxQxtAPr/Ec+G6SFJP/fC07S4olYTZ8UGW7ISsWa3iFASYjkOw3iHxB2+ZClxORBa4rdlGbrdhYqnS1v0WWzkOrsBDsGts95Fh/tZ2iMJ39I4EYR0K5L/tSz5D3zaLjDiU=
+	t=1728998335; cv=none; b=suzfxvpzn/EhAGZkShXQkz0fdOwwPBUzxxhJfN7r8SXLLFrXrEhq24+zRmbdnOO2+ncM0e4qnL49bmpwP0MxO/4WDhoIAULcsZyheCKtrW/zJdZ0fJj95o1gybqkIcvrGpn/PtGmFw1K7Ewr5RRtEE9Q3S+9WZg65qJiMrnHBmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998331; c=relaxed/simple;
-	bh=wKiuE0sNAXS0eizeC+VV9jGsBvyFKDIHUgfJi6gFKtI=;
+	s=arc-20240116; t=1728998335; c=relaxed/simple;
+	bh=dW+iZHkeg9GZnScn/aivDXAUjkSGjuLjVOHHlDCxfd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lUk9ZiMTlhzA+A4RZRwa0TmwxqHOjCW6eA6RbHsVcaEE3eG5mm3Np+1N9QFQq8EaqhA4ghEOOFPMW8sj85i1ob41e6/oMqziLDWSVxfoHy+VvxIUrQoxJvCN8ce5ldU4P8HX5IIlAP1Xq+AJ9FxPFpxQEgi+tgVXYUlOhsvyBUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1z4iFSlz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bGlC3rWsVb9rq1KaMrUU9XNx0kHT+3lOY8p5zSFMLRFGRpeqkzkii//k2UQYWT55H3U3wNaNSuhZ33JfhB0xDBoPaE1ioKgy0ngYok3zbrsTosIdLuEvJb2KoMRIHu3YE2V7plTrOjsfyP1h63tYuk0mHN2cDyk56L+DA5mdKyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mX0whDnC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1z4iFSlz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93406C4CEC6;
-	Tue, 15 Oct 2024 13:18:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mX0whDnC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15065C4CECE;
+	Tue, 15 Oct 2024 13:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998331;
-	bh=wKiuE0sNAXS0eizeC+VV9jGsBvyFKDIHUgfJi6gFKtI=;
+	s=korg; t=1728998334;
+	bh=dW+iZHkeg9GZnScn/aivDXAUjkSGjuLjVOHHlDCxfd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1z4iFSlzrIyAU1pVDpE6mwOWbNIDZIwdHrSy7aEgie/T/A1za+y+rhtCT5IRGoHMm
-	 a2Yq7APWttP650T+IQRuTmfIcz3ITJZzOgUkuyPkpl4QT78OR0HV2DeXmIVqvpGAes
-	 rkl3re1Q+mem5rxjLGxwfinKelmlJPbzR6O1t5rg=
+	b=mX0whDnC99xnwR/XYDpiYmJmqoeamU2cqFfvUhKxty/GAxFZrExtfr1QO5k4XDvGx
+	 YGfljA38JZzpwDvCNrmeSnSvb2Ol9fzT92gdjxraqEeY4TuwLFl9XaJccbxs9Iq1v9
+	 yNMkI64RkA94wPPUeTCKhHnT3dy7cwTaEUQZTO6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francis Laniel <flaniel@linux.microsoft.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Markus Boehme <markubo@amazon.com>,
-	Sherry Yang <sherry.yang@oracle.com>,
+	Torsten Hilbrich <torsten.hilbrich@secunet.com>,
+	Mathias Krause <minipli@grsecurity.net>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 447/518] tracing/kprobes: Fix symbol counting logic by looking at modules as well
-Date: Tue, 15 Oct 2024 14:45:51 +0200
-Message-ID: <20241015123934.257419279@linuxfoundation.org>
+Subject: [PATCH 5.10 448/518] Input: synaptics-rmi4 - fix UAF of IRQ domain on driver removal
+Date: Tue, 15 Oct 2024 14:45:52 +0200
+Message-ID: <20241015123934.295796743@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -56,47 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Mathias Krause <minipli@grsecurity.net>
 
-commit 926fe783c8a64b33997fec405cf1af3e61aed441 upstream.
+commit fbf8d71742557abaf558d8efb96742d442720cc2 upstream.
 
-Recent changes to count number of matching symbols when creating
-a kprobe event failed to take into account kernel modules. As such, it
-breaks kprobes on kernel module symbols, by assuming there is no match.
+Calling irq_domain_remove() will lead to freeing the IRQ domain
+prematurely. The domain is still referenced and will be attempted to get
+used via rmi_free_function_list() -> rmi_unregister_function() ->
+irq_dispose_mapping() -> irq_get_irq_data()'s ->domain pointer.
 
-Fix this my calling module_kallsyms_on_each_symbol() in addition to
-kallsyms_on_each_match_symbol() to perform a proper counting.
+With PaX's MEMORY_SANITIZE this will lead to an access fault when
+attempting to dereference embedded pointers, as in Torsten's report that
+was faulting on the 'domain->ops->unmap' test.
 
-Link: https://lore.kernel.org/all/20231027233126.2073148-1-andrii@kernel.org/
+Fix this by releasing the IRQ domain only after all related IRQs have
+been deactivated.
 
-Cc: Francis Laniel <flaniel@linux.microsoft.com>
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Fixes: b022f0c7e404 ("tracing/kprobes: Return EADDRNOTAVAIL when func matches several symbols")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Song Liu <song@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Markus Boehme <markubo@amazon.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[Sherry: It's a fix for previous backport, thus backport together]
-Signed-off-by: Sherry Yang <sherry.yang@oracle.com>
+Fixes: 24d28e4f1271 ("Input: synaptics-rmi4 - convert irq distribution to irq_domain")
+Reported-by: Torsten Hilbrich <torsten.hilbrich@secunet.com>
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
+Link: https://lore.kernel.org/r/20240222142654.856566-1-minipli@grsecurity.net
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_kprobe.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/input/rmi4/rmi_driver.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
-index 91dfe8cf1ce8b..ae059345ddf4c 100644
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -742,6 +742,8 @@ static unsigned int number_of_same_symbols(char *func_name)
+diff --git a/drivers/input/rmi4/rmi_driver.c b/drivers/input/rmi4/rmi_driver.c
+index aa32371f04af6..ef9ea295f9e03 100644
+--- a/drivers/input/rmi4/rmi_driver.c
++++ b/drivers/input/rmi4/rmi_driver.c
+@@ -978,12 +978,12 @@ static int rmi_driver_remove(struct device *dev)
  
- 	kallsyms_on_each_symbol(count_symbols, &args);
+ 	rmi_disable_irq(rmi_dev, false);
  
-+	module_kallsyms_on_each_symbol(count_symbols, &args);
+-	irq_domain_remove(data->irqdomain);
+-	data->irqdomain = NULL;
+-
+ 	rmi_f34_remove_sysfs(rmi_dev);
+ 	rmi_free_function_list(rmi_dev);
+ 
++	irq_domain_remove(data->irqdomain);
++	data->irqdomain = NULL;
 +
- 	return args.count;
+ 	return 0;
  }
  
 -- 
