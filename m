@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA841C07C4;
-	Tue, 15 Oct 2024 13:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB121C07C4;
+	Tue, 15 Oct 2024 13:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997288; cv=none; b=ivij5pK88GG5JyORSazvJdELAFFJiz5YgURQQZxuiEhwA75dVXtqMfSTkQFL5vl+6s5C5J3M5dtm5arBkReJen2pjSd98nq5rZRrvCNHYqb23hUOaYMO7VzdrnMtjZ5cbla4XHgpwFPiCboSEZJ33qN4CodMOuoBHuIrmW7+Hc8=
+	t=1728997291; cv=none; b=DMWXTxt0Doyy3Sy3vZR35DCpBVbdFE8Cr0KobTBU+nFekIjyKDoRO6Hq9n9xQMgdZ62yr3Xhds94eWYwvvjlwSDbBOsybYyMB5tAB+w82S0rppqfOsmIZD1/smPURVLUdsb2vTxHR2Krbk5xH8rRrNAJMdy1mWvswbKf7mTqEC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997288; c=relaxed/simple;
-	bh=ytcTdLySsoafz2xDLbtLGozskl9g5pSeek4yDymO6sE=;
+	s=arc-20240116; t=1728997291; c=relaxed/simple;
+	bh=Ak8mx7Lb9IO4HpTGFW9h4z79ad/Fba9+ZWYfYXL10ZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A73R9k+mRNrbRxZUA6sU6YCVfHUBSvN9QGoVzunxk3QUFlFXdJeb0B22/VcMxSPFQcVwa/3h2ZUBthNwYlgxPnrCJavHaJvu8jC6wi8C0dtG7yzX0+tvv5oIKlT5i+VE6PlxlH1zE6SYm5LK+BUIuOWnPcZOZCp6H4GHAm/ui3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BhYFGUXa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hL1vR9QSyfZRbT20HoPMbKHMANM+FVtX9TM3BzBs77RFn9XTeqimdQ2377/QXm4C+pZS4Ee1QURl6YY+ChRU4krmPgIXHKIRtIiunltuT63ReBDeFOtVkSfUxtIoTb2tpR38M6f4Me1Z8FcMaNQxaSAsDqnpWp1fMuqkbIL/xc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1xag1H/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BhYFGUXa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19275C4CEC6;
-	Tue, 15 Oct 2024 13:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1xag1H/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6DA0C4CECE;
+	Tue, 15 Oct 2024 13:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997287;
-	bh=ytcTdLySsoafz2xDLbtLGozskl9g5pSeek4yDymO6sE=;
+	s=korg; t=1728997291;
+	bh=Ak8mx7Lb9IO4HpTGFW9h4z79ad/Fba9+ZWYfYXL10ZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BhYFGUXaQwkA482/IC8EYAAOTTbPElC76Zfs01QdRdoLMBUmmpcI6uM/+tSB7emAz
-	 RHSEW1/JiR1Z7/3EadxW/+PG3NjNhilzIIc5PYxxmoI80pBDlsgkLiD2ozK1RSoBKt
-	 BG4IUBjXcjMCimV0dHOczy498EDGyzc10Il4WXs4=
+	b=X1xag1H/iUs904X/AJU+24dnRyCl1yj51JwXPVlYD/dxGFTNVvVQ2orZPNDjuKkst
+	 JpkdbdGYXSoHStFtD7qT7GN9ei6wWJVdBuanXj6Bpb30SlY9WiHipQcHQ/0kdbNuHR
+	 +s/cDzjnawgbuZZHYnZiug9iI4r3mdxUUgTTzb3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuesong Li <liyuesong@vivo.com>,
-	Inki Dae <inki.dae@samsung.com>,
+	Tony Ambardar <tony.ambardar@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 132/518] drivers:drm:exynos_drm_gsc:Fix wrong assignment in gsc_bind()
-Date: Tue, 15 Oct 2024 14:40:36 +0200
-Message-ID: <20241015123922.091662250@linuxfoundation.org>
+Subject: [PATCH 5.10 141/518] selftests/bpf: Fix errors compiling cg_storage_multi.h with musl libc
+Date: Tue, 15 Oct 2024 14:40:45 +0200
+Message-ID: <20241015123922.439539529@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,34 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuesong Li <liyuesong@vivo.com>
+From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit 94ebc3d3235c5c516f67315059ce657e5090e94b ]
+[ Upstream commit 730561d3c08d4a327cceaabf11365958a1c00cec ]
 
-cocci reported a double assignment problem. Upon reviewing previous
-commits, it appears this may actually be an incorrect assignment.
+Remove a redundant include of '<asm/types.h>', whose needed definitions are
+already included (via '<linux/types.h>') in cg_storage_multi_egress_only.c,
+cg_storage_multi_isolated.c, and cg_storage_multi_shared.c. This avoids
+redefinition errors seen compiling for mips64el/musl-libc like:
 
-Fixes: 8b9550344d39 ("drm/ipp: clean up debug messages")
-Signed-off-by: Yuesong Li <liyuesong@vivo.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+  In file included from progs/cg_storage_multi_egress_only.c:13:
+  In file included from progs/cg_storage_multi.h:6:
+  In file included from /usr/mips64el-linux-gnuabi64/include/asm/types.h:23:
+  /usr/include/asm-generic/int-l64.h:29:25: error: typedef redefinition with different types ('long' vs 'long long')
+     29 | typedef __signed__ long __s64;
+        |                         ^
+  /usr/include/asm-generic/int-ll64.h:30:44: note: previous definition is here
+     30 | __extension__ typedef __signed__ long long __s64;
+        |                                            ^
+
+Fixes: 9e5bd1f7633b ("selftests/bpf: Test CGROUP_STORAGE map can't be used by multiple progs")
+Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/4f4702e9f6115b7f84fea01b2326ca24c6df7ba8.1721713597.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_gsc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/progs/cg_storage_multi.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_gsc.c b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-index bcf830c5b8ea9..1bc2afcf9f088 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_gsc.c
-@@ -1169,7 +1169,7 @@ static int gsc_bind(struct device *dev, struct device *master, void *data)
- 	struct exynos_drm_ipp *ipp = &ctx->ipp;
+diff --git a/tools/testing/selftests/bpf/progs/cg_storage_multi.h b/tools/testing/selftests/bpf/progs/cg_storage_multi.h
+index a0778fe7857a1..41d59f0ee606c 100644
+--- a/tools/testing/selftests/bpf/progs/cg_storage_multi.h
++++ b/tools/testing/selftests/bpf/progs/cg_storage_multi.h
+@@ -3,8 +3,6 @@
+ #ifndef __PROGS_CG_STORAGE_MULTI_H
+ #define __PROGS_CG_STORAGE_MULTI_H
  
- 	ctx->drm_dev = drm_dev;
--	ctx->drm_dev = drm_dev;
-+	ipp->drm_dev = drm_dev;
- 	exynos_drm_register_dma(drm_dev, dev, &ctx->dma_priv);
- 
- 	exynos_drm_ipp_register(dev, ipp, &ipp_funcs,
+-#include <asm/types.h>
+-
+ struct cgroup_value {
+ 	__u32 egress_pkts;
+ 	__u32 ingress_pkts;
 -- 
 2.43.0
 
