@@ -1,50 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7431D5ABD;
-	Tue, 15 Oct 2024 13:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96351E6321;
+	Tue, 15 Oct 2024 13:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998516; cv=none; b=VQK0QZQobucU87X6JB0zpq7ZiwhXV7gNSB5DlFCC/nA0DQkVZinRPuM3kSOUilRFFY9KMkXTC7lV2XZAjaPcu8UQJRVdmDKgmDDkSS+XIOWDgm3cMBrP2GAiQEcRs0BHwtnSK6iuCErGfxlHqPMS5OeqJUCeB41XFP51v04Excc=
+	t=1728998518; cv=none; b=oIK+HIZGsffUSDFmXTpQFlVuQt2MFc4OMmI8ZxutlyJmiT2fgJ3YgriCgB9g8sj+8DDuSk6bjpycY+TZhoSlhj645F7mvI6S5TU3u/HVw1MgGEKBI2BRGRstNF3QdThVJG7WMrr3qdWP+yhDEhKFRjeNFVOJVgjgDVlC8Zb7wFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998516; c=relaxed/simple;
-	bh=qtyhqOtSWFFTo/XPOstH0PTpHF/9WgQ0qML1n706fhk=;
+	s=arc-20240116; t=1728998518; c=relaxed/simple;
+	bh=IueWrLqPq1micJ43bEiA6ctdVLNorTrLbSYZ8mfDqeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0cvxTTn02UZ3wpgoXsx98EhQi95EoEZdfQlD573mP7GltA93JcNKTWLkdQuXGoNdLmuyhN5omjBG9CBduW91PUVgUaQ12gxjx/rz2XmBrb7FbD6Uq+eSCE8jg0GE8id80kLOZjj7wRsqkM9vfhrqr2Cnvf9uOeH7gPLBjtmsIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=umVlTQQh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZE1+okkAqa5/B/hLXIRiFb8NOVOchc5GcYb3ecn/Pi92XbqR0g5VIPnpOsnr+cGS0X6mbMeaLtuGsEABkkS1GQQ/Z5PrtmaomovGjrWAvu9sHqjKUlbUrOR6krfrHy6nrPGSE6En0QsySeGX2lLKtyeh1pFssKlWcCSHE2kFYDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qVh10P83; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umVlTQQh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6AEDC4CEC6;
-	Tue, 15 Oct 2024 13:21:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qVh10P83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49387C4CEC6;
+	Tue, 15 Oct 2024 13:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998515;
-	bh=qtyhqOtSWFFTo/XPOstH0PTpHF/9WgQ0qML1n706fhk=;
+	s=korg; t=1728998518;
+	bh=IueWrLqPq1micJ43bEiA6ctdVLNorTrLbSYZ8mfDqeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=umVlTQQhmtxXaNjdQO8tDgPhVZAb2nTaCxa+OVVtSz6WqwMNy+gSINwgg0DoiENFR
-	 hmZ57lsQrC6wBIY62THyxhC9oDLpIrMD9Gl/JhxxjNbBhn3fFLda4FCBAeVR0I7VwA
-	 tzRgxIQafBsu9nPoytdqyZBkm3Brd7jeoZGwAQV4=
+	b=qVh10P83jHtFC9Z3+5eSxowxXnkqyeL1A77uyHzUNLzFCtu1DFPVMVTEQGhvftVvt
+	 TfdivoV+DgtJS+d+4yeCR7esx52mBMiBS0rmeJGpU6UhN7ik8jonSMX0XyRTVBx+IJ
+	 6WG+MHbTnWWrp6JRAisl8LYhbdmv5x5COCcTjESY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	David Hildenbrand <david@redhat.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Baoquan He <bhe@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 499/518] resource: fix region_intersects() vs add_memory_driver_managed()
-Date: Tue, 15 Oct 2024 14:46:43 +0200
-Message-ID: <20241015123936.254361777@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Dave Ertman <david.m.ertman@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.10 473/518] ice: fix VLAN replay after reset
+Date: Tue, 15 Oct 2024 14:46:17 +0200
+Message-ID: <20241015123935.261704598@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -63,178 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huang Ying <ying.huang@intel.com>
+From: Dave Ertman <david.m.ertman@intel.com>
 
-commit b4afe4183ec77f230851ea139d91e5cf2644c68b upstream.
+[ Upstream commit 0eae2c136cb624e4050092feb59f18159b4f2512 ]
 
-On a system with CXL memory, the resource tree (/proc/iomem) related to
-CXL memory may look like something as follows.
+There is a bug currently when there are more than one VLAN defined
+and any reset that affects the PF is initiated, after the reset rebuild
+no traffic will pass on any VLAN but the last one created.
 
-490000000-50fffffff : CXL Window 0
-  490000000-50fffffff : region0
-    490000000-50fffffff : dax0.0
-      490000000-50fffffff : System RAM (kmem)
+This is caused by the iteration though the VLANs during replay each
+clearing the vsi_map bitmap of the VSI that is being replayed.  The
+problem is that during rhe replay, the pointer to the vsi_map bitmap
+is used by each successive vlan to determine if it should be replayed
+on this VSI.
 
-Because drivers/dax/kmem.c calls add_memory_driver_managed() during
-onlining CXL memory, which makes "System RAM (kmem)" a descendant of "CXL
-Window X".  This confuses region_intersects(), which expects all "System
-RAM" resources to be at the top level of iomem_resource.  This can lead to
-bugs.
+The logic was that the replay of the VLAN would replace the bit in the map
+before the next VLAN would iterate through.  But, since the replay copies
+the old bitmap pointer to filt_replay_rules and creates a new one for the
+recreated VLANS, it does not do this, and leaves the old bitmap broken
+to be used to replay the remaining VLANs.
 
-For example, when the following command line is executed to write some
-memory in CXL memory range via /dev/mem,
+Since the old bitmap will be cleaned up in post replay cleanup, there is
+no need to alter it and break following VLAN replay, so don't clear the
+bit.
 
- $ dd if=data of=/dev/mem bs=$((1 << 10)) seek=$((0x490000000 >> 10)) count=1
- dd: error writing '/dev/mem': Bad address
- 1+0 records in
- 0+0 records out
- 0 bytes copied, 0.0283507 s, 0.0 kB/s
-
-the command fails as expected.  However, the error code is wrong.  It
-should be "Operation not permitted" instead of "Bad address".  More
-seriously, the /dev/mem permission checking in devmem_is_allowed() passes
-incorrectly.  Although the accessing is prevented later because ioremap()
-isn't allowed to map system RAM, it is a potential security issue.  During
-command executing, the following warning is reported in the kernel log for
-calling ioremap() on system RAM.
-
- ioremap on RAM at 0x0000000490000000 - 0x0000000490000fff
- WARNING: CPU: 2 PID: 416 at arch/x86/mm/ioremap.c:216 __ioremap_caller.constprop.0+0x131/0x35d
- Call Trace:
-  memremap+0xcb/0x184
-  xlate_dev_mem_ptr+0x25/0x2f
-  write_mem+0x94/0xfb
-  vfs_write+0x128/0x26d
-  ksys_write+0xac/0xfe
-  do_syscall_64+0x9a/0xfd
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-The details of command execution process are as follows.  In the above
-resource tree, "System RAM" is a descendant of "CXL Window 0" instead of a
-top level resource.  So, region_intersects() will report no System RAM
-resources in the CXL memory region incorrectly, because it only checks the
-top level resources.  Consequently, devmem_is_allowed() will return 1
-(allow access via /dev/mem) for CXL memory region incorrectly.
-Fortunately, ioremap() doesn't allow to map System RAM and reject the
-access.
-
-So, region_intersects() needs to be fixed to work correctly with the
-resource tree with "System RAM" not at top level as above.  To fix it, if
-we found a unmatched resource in the top level, we will continue to search
-matched resources in its descendant resources.  So, we will not miss any
-matched resources in resource tree anymore.
-
-In the new implementation, an example resource tree
-
-|------------- "CXL Window 0" ------------|
-|-- "System RAM" --|
-
-will behave similar as the following fake resource tree for
-region_intersects(, IORESOURCE_SYSTEM_RAM, ),
-
-|-- "System RAM" --||-- "CXL Window 0a" --|
-
-Where "CXL Window 0a" is part of the original "CXL Window 0" that
-isn't covered by "System RAM".
-
-Link: https://lkml.kernel.org/r/20240906030713.204292-2-ying.huang@intel.com
-Fixes: c221c0b0308f ("device-dax: "Hotplug" persistent memory for use like normal RAM")
-Signed-off-by: "Huang, Ying" <ying.huang@intel.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Alison Schofield <alison.schofield@intel.com>
-Cc: Vishal Verma <vishal.l.verma@intel.com>
-Cc: Ira Weiny <ira.weiny@intel.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 334cb0626de1 ("ice: Implement VSI replay framework")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Dave Ertman <david.m.ertman@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/resource.c | 58 ++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 50 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_switch.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/kernel/resource.c b/kernel/resource.c
-index 100253d4909c9..1087f33d70c4d 100644
---- a/kernel/resource.c
-+++ b/kernel/resource.c
-@@ -539,21 +539,63 @@ EXPORT_SYMBOL_GPL(page_is_ram);
- int region_intersects(resource_size_t start, size_t size, unsigned long flags,
- 		      unsigned long desc)
- {
--	struct resource res;
-+	resource_size_t ostart, oend;
- 	int type = 0; int other = 0;
--	struct resource *p;
-+	struct resource *p, *dp;
-+	bool is_type, covered;
-+	struct resource res;
- 
- 	res.start = start;
- 	res.end = start + size - 1;
- 
- 	read_lock(&resource_lock);
- 	for (p = iomem_resource.child; p ; p = p->sibling) {
--		bool is_type = (((p->flags & flags) == flags) &&
--				((desc == IORES_DESC_NONE) ||
--				 (desc == p->desc)));
--
--		if (resource_overlaps(p, &res))
--			is_type ? type++ : other++;
-+		if (!resource_overlaps(p, &res))
-+			continue;
-+		is_type = (p->flags & flags) == flags &&
-+			(desc == IORES_DESC_NONE || desc == p->desc);
-+		if (is_type) {
-+			type++;
-+			continue;
-+		}
-+		/*
-+		 * Continue to search in descendant resources as if the
-+		 * matched descendant resources cover some ranges of 'p'.
-+		 *
-+		 * |------------- "CXL Window 0" ------------|
-+		 * |-- "System RAM" --|
-+		 *
-+		 * will behave similar as the following fake resource
-+		 * tree when searching "System RAM".
-+		 *
-+		 * |-- "System RAM" --||-- "CXL Window 0a" --|
-+		 */
-+		covered = false;
-+		ostart = max(res.start, p->start);
-+		oend = min(res.end, p->end);
-+		for (dp = p->child; dp; dp = next_resource(dp, false)) {
-+			if (!resource_overlaps(dp, &res))
-+				continue;
-+			is_type = (dp->flags & flags) == flags &&
-+				(desc == IORES_DESC_NONE || desc == dp->desc);
-+			if (is_type) {
-+				type++;
-+				/*
-+				 * Range from 'ostart' to 'dp->start'
-+				 * isn't covered by matched resource.
-+				 */
-+				if (dp->start > ostart)
-+					break;
-+				if (dp->end >= oend) {
-+					covered = true;
-+					break;
-+				}
-+				/* Remove covered range */
-+				ostart = max(ostart, dp->end + 1);
-+			}
-+		}
-+		if (!covered)
-+			other++;
- 	}
- 	read_unlock(&resource_lock);
- 
+diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
+index 1645fb527fdb7..68d756e86ca15 100644
+--- a/drivers/net/ethernet/intel/ice/ice_switch.c
++++ b/drivers/net/ethernet/intel/ice/ice_switch.c
+@@ -2789,8 +2789,6 @@ ice_replay_vsi_fltr(struct ice_hw *hw, u16 vsi_handle, u8 recp_id,
+ 		if (!itr->vsi_list_info ||
+ 		    !test_bit(vsi_handle, itr->vsi_list_info->vsi_map))
+ 			continue;
+-		/* Clearing it so that the logic can add it back */
+-		clear_bit(vsi_handle, itr->vsi_list_info->vsi_map);
+ 		f_entry.fltr_info.vsi_handle = vsi_handle;
+ 		f_entry.fltr_info.fltr_act = ICE_FWD_TO_VSI;
+ 		/* update the src in case it is VSI num */
 -- 
 2.43.0
 
