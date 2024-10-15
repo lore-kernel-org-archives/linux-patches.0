@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A4E1B21B8;
-	Tue, 15 Oct 2024 13:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9181C4A04;
+	Tue, 15 Oct 2024 13:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998599; cv=none; b=aRMUPZMqok1uDT99FGWe/rNhsHlOO2qdKbx1M/Fy1Ft8BPfNln+xEXsfIrR90oTSfIEpgThCBWfJKMDAFoJs5rNO7W+YfgeUNz+k+jtSgV1pSXspcL/KRGRUAC6RpCkHeQEuMhXObTXv1OsGydG1SeAFPVC5LvpR+YozTiEtSiY=
+	t=1728998603; cv=none; b=SUq6Xs/H2Vv6mfsgaNZt7rbjF5Zf2VEUja+cuu7SW6LfFnLTuXgQTVWdEq3dII/kySTjk7SPbTyUWDHiiI2l7EpAZSq8qMUtubvDinuTiO1/9rrpx9nSXwq6QRwZ+t6ObMIcZ5Sa2KfyXD+9N9V+ZnhgiJmjD1r2RBpexs7DGQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998599; c=relaxed/simple;
-	bh=mLKIGX2agFfR9U1EbcPU05CB2RTjGs8mWPRu5by9Iss=;
+	s=arc-20240116; t=1728998603; c=relaxed/simple;
+	bh=tuLuCB9nZuHZmXC0O4b4C3RBIsW64wPWIZBMfMq8/Dw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ATX0Z+sPUfU9/iFw0d/5/aKthWEWbH0YNVWRXO649OYDBB3QHDj4ZTGUGo+IfOCBTIpDe23M2NCNLv1B69kY4mDoZAYpiRK98eMbKtj+pprAS9WQa3aKxUk7vxrZiDbUpo3cngRyjK7Lro1lwSAHlvqEB2nxw6IzPUVavb4TSLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+LhkJYi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uga9dHuK20KKPJ6kbdR7ooBX2WkExErgIzWPIBMsYgrPEObHxI0b7dyIPU/G0jrIRUPMbmM89vi5yQq8YUxs+IaCyb1v7aEikX0JlYm5YWbYV0faQAnZ/EBPMMK7myVo0T8sn64JprangpgbXaY2aFb4ZBJfvP+RlxEprknMZ/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLeRMRRO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+LhkJYi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7BDFC4CEC6;
-	Tue, 15 Oct 2024 13:23:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLeRMRRO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFA5C4CEC6;
+	Tue, 15 Oct 2024 13:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998599;
-	bh=mLKIGX2agFfR9U1EbcPU05CB2RTjGs8mWPRu5by9Iss=;
+	s=korg; t=1728998602;
+	bh=tuLuCB9nZuHZmXC0O4b4C3RBIsW64wPWIZBMfMq8/Dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+LhkJYi5dmYYeQnQz2iyeEa7ywv9qcc71eI9QaZ/LvkQcK/He0AlBDgbjEZscMfQ
-	 XRNWkzYR0wELNuWmuv0bhR+deNwhskKihP/nqvPk/DXRrdZf1qiblqQ3Ylb7gOS3Om
-	 8NRetN0DQrN6USTiuBctUE1epfSSYioXf/Gavrks=
+	b=WLeRMRROC8kZlTo7sVxNOdeqOrLZN8GJZi3cElnmWLz4uxp3CDGs+2pbc1qnImJHD
+	 romUQu1xMLigLh/1CJ9GbZ83eOP8Z90kxmZzBzC0iFrzR5K8eYjMITphJGCXrHguyV
+	 sHDvCcYIhRCaiFAZYpFB7Lpsg2lQfiU5EMuHbCVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eyal Birger <eyal.birger@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 511/518] net: geneve: add missing netlink policy and size for IFLA_GENEVE_INNER_PROTO_INHERIT
-Date: Tue, 15 Oct 2024 14:46:55 +0200
-Message-ID: <20241015123936.712738959@linuxfoundation.org>
+	kernel test robot <oliver.sang@intel.com>,
+	David Ahern <dsahern@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 5.10 512/518] xfrm: Pass flowi_oif or l3mdev as oif to xfrm_dst_lookup
+Date: Tue, 15 Oct 2024 14:46:56 +0200
+Message-ID: <20241015123936.751681790@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -50,47 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eyal Birger <eyal.birger@gmail.com>
+From: David Ahern <dsahern@kernel.org>
 
-commit 36c2e31ad25bd087756b8db9584994d1d80c236b upstream.
+commit 748b82c23e25310fec54e1eff2cb63936f391b24 upstream.
 
-Add missing netlink attribute policy and size calculation.
-Also enable strict validation from this new attribute onwards.
+The commit referenced in the Fixes tag no longer changes the
+flow oif to the l3mdev ifindex. A xfrm use case was expecting
+the flowi_oif to be the VRF if relevant and the change broke
+that test. Update xfrm_bundle_create to pass oif if set and any
+potential flowi_l3mdev if oif is not set.
 
-Fixes: 435fe1c0c1f7 ("net: geneve: support IPv4/IPv6 as inner protocol")
-Signed-off-by: Eyal Birger <eyal.birger@gmail.com>
-Link: https://lore.kernel.org/r/20220322043954.3042468-1-eyal.birger@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 40867d74c374 ("net: Add l3mdev index to flow struct and avoid oif reset for port devices")
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Signed-off-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/geneve.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/xfrm/xfrm_policy.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -1277,6 +1277,7 @@ static void geneve_setup(struct net_devi
- }
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -2595,12 +2595,14 @@ static struct dst_entry *xfrm_bundle_cre
  
- static const struct nla_policy geneve_policy[IFLA_GENEVE_MAX + 1] = {
-+	[IFLA_GENEVE_UNSPEC]		= { .strict_start_type = IFLA_GENEVE_INNER_PROTO_INHERIT },
- 	[IFLA_GENEVE_ID]		= { .type = NLA_U32 },
- 	[IFLA_GENEVE_REMOTE]		= { .len = sizeof_field(struct iphdr, daddr) },
- 	[IFLA_GENEVE_REMOTE6]		= { .len = sizeof(struct in6_addr) },
-@@ -1290,6 +1291,7 @@ static const struct nla_policy geneve_po
- 	[IFLA_GENEVE_UDP_ZERO_CSUM6_RX]	= { .type = NLA_U8 },
- 	[IFLA_GENEVE_TTL_INHERIT]	= { .type = NLA_U8 },
- 	[IFLA_GENEVE_DF]		= { .type = NLA_U8 },
-+	[IFLA_GENEVE_INNER_PROTO_INHERIT]	= { .type = NLA_FLAG },
- };
+ 		if (xfrm[i]->props.mode != XFRM_MODE_TRANSPORT) {
+ 			__u32 mark = 0;
++			int oif;
  
- static int geneve_validate(struct nlattr *tb[], struct nlattr *data[],
-@@ -1795,6 +1797,7 @@ static size_t geneve_get_size(const stru
- 		nla_total_size(sizeof(__u8)) + /* IFLA_GENEVE_UDP_ZERO_CSUM6_TX */
- 		nla_total_size(sizeof(__u8)) + /* IFLA_GENEVE_UDP_ZERO_CSUM6_RX */
- 		nla_total_size(sizeof(__u8)) + /* IFLA_GENEVE_TTL_INHERIT */
-+		nla_total_size(0) +	 /* IFLA_GENEVE_INNER_PROTO_INHERIT */
- 		0;
- }
+ 			if (xfrm[i]->props.smark.v || xfrm[i]->props.smark.m)
+ 				mark = xfrm_smark_get(fl->flowi_mark, xfrm[i]);
  
+ 			family = xfrm[i]->props.family;
+-			dst = xfrm_dst_lookup(xfrm[i], tos, fl->flowi_oif,
++			oif = fl->flowi_oif ? : fl->flowi_l3mdev;
++			dst = xfrm_dst_lookup(xfrm[i], tos, oif,
+ 					      &saddr, &daddr, family, mark);
+ 			err = PTR_ERR(dst);
+ 			if (IS_ERR(dst))
 
 
