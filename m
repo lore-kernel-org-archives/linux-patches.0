@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391A01D95AB;
-	Tue, 15 Oct 2024 11:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A111D95AB;
+	Tue, 15 Oct 2024 11:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993159; cv=none; b=ENbcpBHvv8VLqrKPXCkhaVbhzv55iEoANFBnf3ssNBy4qztLrfV+wgnLS44LuSzZcyndQE2iLvlgYYm9BHc+ytvjagZyylcWfeZAr17SROMrDC8y5ypfvNurL+C3xLwx6ToheqNtAP18t+ZA4PKmwA/xVoSdNDG2l8MlTrUdtRM=
+	t=1728993162; cv=none; b=Hbq/iq9a3QH4X1kEgVWxdfvDQqat0j9ud7s6Mv+C6RBvkuNQNvfGAeLdWszNBmmtIrBrC8xFJGkevwtDWhc3GTopvZqguw3zvPLOzW2karXIXIxhTFMk4UD+0pkfHoyjK4OwfYZlJOTwfiRvqLH5SCSf/mIDBao4pV315mGjZks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993159; c=relaxed/simple;
-	bh=FnkoSXlYQ5AkGUhLzz7HcDU/+BRgCVHR9W6chY9KNGM=;
+	s=arc-20240116; t=1728993162; c=relaxed/simple;
+	bh=F3zQg0X5ArO2y7eVdgEv9SYa8ShD3rHe4KKFdFZaQNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K5FWYk812xQXOrqWRwk6qMQeBbgp0aVnP+flQ5AQFEreTFWDm3l85FGPjVFiBcq23w9VUclzkLo47mpgFvfkPzmSc2rWrB4AqqY/ZKgksUPxvR9b3W1CjSzA9Ma40dTKTlVBU/SeRBh3WxD41NaRzjgffUWH8oURj2wdWtLq5YE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13R133Ez; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K1S2qyvo0FXCpUlkrJLyPSmtnQeVx8080ZJVzcsLwsi7a7DDsJY4C7xEsd1WHVYDU68eE8ew/mR/KL+JMkW8ThnYCbWHIJoZGrqSQXP+ftRjy9yHJekepv0ecMrTmUZbvvSepKQVFN9n1YYpSzFMJv3wsMdiDXNNPj/wkUdIbeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQqhfSFX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13R133Ez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978AFC4CEC6;
-	Tue, 15 Oct 2024 11:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQqhfSFX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A21C4CEC6;
+	Tue, 15 Oct 2024 11:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993159;
-	bh=FnkoSXlYQ5AkGUhLzz7HcDU/+BRgCVHR9W6chY9KNGM=;
+	s=korg; t=1728993162;
+	bh=F3zQg0X5ArO2y7eVdgEv9SYa8ShD3rHe4KKFdFZaQNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13R133Ez8kVeyHmm1q4yP1qt8Pj+kuLO0qoEARua9kBD5KXUEoLi17qe0y15Bchle
-	 B2VmtOcIg54XsuAcsK1N+S2AVurSRfN1kPuPTsIiITIGLYWZEBQZteRZ4irv/shoNR
-	 qJHhEndTZ/FTnPymNpywuGLlZUXZq+mxNYxEUqnQ=
+	b=oQqhfSFXDv5jRb2+AFxkRM+GfUBfvXrRpWaGrAjsjvEe8cLwI64I2xQPPfcZTyF1L
+	 8mSZabyJM6Qe04aJoiobU1pbBdEcZ/sMPsaCQDSWzResslfUrTQwg1MtdxdZ/f3zwa
+	 +4kJwZJa10gb2J/QCSLrPtNy64WsIdNFAfmM4KlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiu-ji Chen <chenqiuji666@gmail.com>,
-	Philipp Reisner <philipp.reisner@linbit.com>,
+	Mikhail Lobanov <m.lobanov@rosalinux.ru>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 329/691] drbd: Fix atomicity violation in drbd_uuid_set_bm()
-Date: Tue, 15 Oct 2024 13:24:37 +0200
-Message-ID: <20241015112453.394322959@linuxfoundation.org>
+Subject: [PATCH 5.15 330/691] drbd: Add NULL check for net_conf to prevent dereference in state validation
+Date: Tue, 15 Oct 2024 13:24:38 +0200
+Message-ID: <20241015112453.433464254@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,58 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiu-ji Chen <chenqiuji666@gmail.com>
+From: Mikhail Lobanov <m.lobanov@rosalinux.ru>
 
-commit 2f02b5af3a4482b216e6a466edecf6ba8450fa45 upstream.
+commit a5e61b50c9f44c5edb6e134ede6fee8806ffafa9 upstream.
 
-The violation of atomicity occurs when the drbd_uuid_set_bm function is
-executed simultaneously with modifying the value of
-device->ldev->md.uuid[UI_BITMAP]. Consider a scenario where, while
-device->ldev->md.uuid[UI_BITMAP] passes the validity check when its
-value is not zero, the value of device->ldev->md.uuid[UI_BITMAP] is
-written to zero. In this case, the check in drbd_uuid_set_bm might refer
-to the old value of device->ldev->md.uuid[UI_BITMAP] (before locking),
-which allows an invalid value to pass the validity check, resulting in
-inconsistency.
+If the net_conf pointer is NULL and the code attempts to access its
+fields without a check, it will lead to a null pointer dereference.
+Add a NULL check before dereferencing the pointer.
 
-To address this issue, it is recommended to include the data validity
-check within the locked section of the function. This modification
-ensures that the value of device->ldev->md.uuid[UI_BITMAP] does not
-change during the validation process, thereby maintaining its integrity.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This possible bug is found by an experimental static analysis tool
-developed by our team. This tool analyzes the locking APIs to extract
-function pairs that can be concurrently executed, and then analyzes the
-instructions in the paired functions to identify possible concurrency
-bugs including data races and atomicity violations.
-
-Fixes: 9f2247bb9b75 ("drbd: Protect accesses to the uuid set with a spinlock")
+Fixes: 44ed167da748 ("drbd: rcu_read_lock() and rcu_dereference() for tconn->net_conf")
 Cc: stable@vger.kernel.org
-Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
-Reviewed-by: Philipp Reisner <philipp.reisner@linbit.com>
-Link: https://lore.kernel.org/r/20240913083504.10549-1-chenqiuji666@gmail.com
+Signed-off-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
+Link: https://lore.kernel.org/r/20240909133740.84297-1-m.lobanov@rosalinux.ru
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/drbd/drbd_main.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/block/drbd/drbd_state.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/block/drbd/drbd_main.c
-+++ b/drivers/block/drbd/drbd_main.c
-@@ -3406,10 +3406,12 @@ void drbd_uuid_new_current(struct drbd_d
- void drbd_uuid_set_bm(struct drbd_device *device, u64 val) __must_hold(local)
- {
- 	unsigned long flags;
--	if (device->ldev->md.uuid[UI_BITMAP] == 0 && val == 0)
-+	spin_lock_irqsave(&device->ldev->md.uuid_lock, flags);
-+	if (device->ldev->md.uuid[UI_BITMAP] == 0 && val == 0) {
-+		spin_unlock_irqrestore(&device->ldev->md.uuid_lock, flags);
- 		return;
-+	}
+--- a/drivers/block/drbd/drbd_state.c
++++ b/drivers/block/drbd/drbd_state.c
+@@ -876,7 +876,7 @@ is_valid_state(struct drbd_device *devic
+ 		  ns.disk == D_OUTDATED)
+ 		rv = SS_CONNECTED_OUTDATES;
  
--	spin_lock_irqsave(&device->ldev->md.uuid_lock, flags);
- 	if (val == 0) {
- 		drbd_uuid_move_history(device);
- 		device->ldev->md.uuid[UI_HISTORY_START] = device->ldev->md.uuid[UI_BITMAP];
+-	else if ((ns.conn == C_VERIFY_S || ns.conn == C_VERIFY_T) &&
++	else if (nc && (ns.conn == C_VERIFY_S || ns.conn == C_VERIFY_T) &&
+ 		 (nc->verify_alg[0] == 0))
+ 		rv = SS_NO_VERIFY_ALG;
+ 
 
 
