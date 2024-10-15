@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678541C4A10;
-	Tue, 15 Oct 2024 13:18:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93B21B21BB;
+	Tue, 15 Oct 2024 13:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998307; cv=none; b=Lqm/t/cMuNMvnGX2MgGRqDnd7e6NhrZW+VzMFbsllrqxJafc9Kg02LrN/2zJFx+/kry+s5oDtc60sEW7Iaq37K/Du2XUrxWpTPRgxfQuCcm9DLQB55xgVP/TAu0FS4H+ooOUvAh9kGyl1EkJQ/dYYUVaqbAKEzsLGlqwWL0C4J8=
+	t=1728998310; cv=none; b=W9Zy7PPrqHq5iHlJA1LHG3RaGnTqaDXXUyFDfl+cueZXuR009bTVg/HGG8rE5+ixd04jcGU6DPDGU8QAW5EARBXFZQ2WcBr+YEx3+zOwtN3mcyzZCkwq3h68Pa5mAjaATIUCebObBNaos0inElfRL2aHDajP30R4xwA31ZebDnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998307; c=relaxed/simple;
-	bh=2jQ0Qle3p0/AYFGmpKWmMMuobjAKqMmB4VRf3lHuvBQ=;
+	s=arc-20240116; t=1728998310; c=relaxed/simple;
+	bh=z6z/LiduBLgvKBsJasmEu2f6rhiC/3wm0mmLtNGmCiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k6JY6Boi2+1ATm28qTUC+BS9ckQm52EvoVsEjCggKuGNwEkg6RV3ILmFEvORF+feChw5FX/ITSdqrt+xJ5yLvjKw1O56U4HfNDvDOTo5ps7h1NlDdZT6aWg2dqIIBRsS+NX/dBjLWEsDnxBFWD7W8xoXWm1NQT/LsKhDQlBCjxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VjG3NWdI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OAeZNtmwSRNM662tllhjxLH+EA4pKVxpIGH6woV6ED/CD6BmuXKzO29bV0tNYs6e850dRleHr9pvCFHlZSJUgFtuybLaJXchoqsoAI8IvT4jfIny+WfXdeQSNPDsgeXD6wa/DzdtUSvN455keSvnpIpnbAfSvsQdvUlt/9E9fg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGFzBtEK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VjG3NWdI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F4DC4CEC6;
-	Tue, 15 Oct 2024 13:18:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGFzBtEK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DBB7C4CEC6;
+	Tue, 15 Oct 2024 13:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998307;
-	bh=2jQ0Qle3p0/AYFGmpKWmMMuobjAKqMmB4VRf3lHuvBQ=;
+	s=korg; t=1728998310;
+	bh=z6z/LiduBLgvKBsJasmEu2f6rhiC/3wm0mmLtNGmCiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VjG3NWdIyCE9E5Dkn4QtnK1mQmq2uZxEwSS/D8vpI3BlG6SLypqBJNp1uKYMBszSs
-	 X3ZJC+ODfQpEnU9EHx0m/fcfVh7Qq2UMj19na3w37aP8DRPx1GgZgJYB3YXocSgc+L
-	 IwYccTFIo0O/TuHHQg0urqL/DR7Bmzck7jSqxHs0=
+	b=wGFzBtEKj2D3FYhUhJRdwXwnougeCMIC584VT1mIqUrzAP63eb3UPPmBuHKsOjQZJ
+	 sj2leZrVsad6hkakAVj5K1fkLwjQWOH95XotHZ496ZOYj5ZeNdzfSG5E1i+JQpDRPB
+	 hMIGOlC2RiX3ekkubFvzYJnJpT7IU3oiYk6vSYqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 409/518] Input: adp5589-keys - fix adp5589_gpio_get_value()
-Date: Tue, 15 Oct 2024 14:45:13 +0200
-Message-ID: <20241015123932.768523988@linuxfoundation.org>
+	Lamome Julien <julien.lamome@wanadoo.fr>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.10 410/518] ACPI: resource: Add Asus Vivobook X1704VAP to irq1_level_low_skip_override[]
+Date: Tue, 15 Oct 2024 14:45:14 +0200
+Message-ID: <20241015123932.807585398@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -50,49 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit c684771630e64bc39bddffeb65dd8a6612a6b249 upstream.
+commit 2f80ce0b78c340e332f04a5801dee5e4ac8cfaeb upstream.
 
-The adp5589 seems to have the same behavior as similar devices as
-explained in commit 910a9f5636f5 ("Input: adp5588-keys - get value from
-data out when dir is out").
+Like other Asus Vivobook models the X1704VAP has its keybopard IRQ (1)
+described as ActiveLow in the DSDT, which the kernel overrides to EdgeHigh
+which breaks the keyboard.
 
-Basically, when the gpio is set as output we need to get the value from
-ADP5589_GPO_DATA_OUT_A register instead of ADP5589_GPI_STATUS_A.
+Add the X1704VAP to the irq1_level_low_skip_override[] quirk table to fix
+this.
 
-Fixes: 9d2e173644bb ("Input: ADP5589 - new driver for I2C Keypad Decoder and I/O Expander")
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20241001-b4-dev-adp5589-fw-conversion-v1-2-fca0149dfc47@analog.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reported-by: Lamome Julien <julien.lamome@wanadoo.fr>
+Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1078696
+Closes: https://lore.kernel.org/all/1226760b-4699-4529-bf57-6423938157a3@wanadoo.fr/
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20240927141606.66826-3-hdegoede@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/adp5589-keys.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/acpi/resource.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/input/keyboard/adp5589-keys.c
-+++ b/drivers/input/keyboard/adp5589-keys.c
-@@ -390,10 +390,17 @@ static int adp5589_gpio_get_value(struct
- 	struct adp5589_kpad *kpad = gpiochip_get_data(chip);
- 	unsigned int bank = kpad->var->bank(kpad->gpiomap[off]);
- 	unsigned int bit = kpad->var->bit(kpad->gpiomap[off]);
-+	int val;
- 
--	return !!(adp5589_read(kpad->client,
--			       kpad->var->reg(ADP5589_GPI_STATUS_A) + bank) &
--			       bit);
-+	mutex_lock(&kpad->gpio_lock);
-+	if (kpad->dir[bank] & bit)
-+		val = kpad->dat_out[bank];
-+	else
-+		val = adp5589_read(kpad->client,
-+				   kpad->var->reg(ADP5589_GPI_STATUS_A) + bank);
-+	mutex_unlock(&kpad->gpio_lock);
-+
-+	return !!(val & bit);
- }
- 
- static void adp5589_gpio_set_value(struct gpio_chip *chip,
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -443,6 +443,13 @@ static const struct dmi_system_id asus_l
+ 		},
+ 	},
+ 	{
++		/* Asus Vivobook X1704VAP */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_BOARD_NAME, "X1704VAP"),
++		},
++	},
++	{
+ 		/* TongFang GMxXGxx/TUXEDO Polaris 15 Gen5 AMD */
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "GMxXGxx"),
 
 
