@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3268A1D4154;
-	Tue, 15 Oct 2024 12:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F211CFEA9;
+	Tue, 15 Oct 2024 12:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993888; cv=none; b=UdKnewDPFXvNzRqnXFubLKzcTnkj72DrreO43MqAMj3pFlgCR3WMgs86yEuPmmfB58i9ryf4t2ArtY8sT5wzgELlKxiYxZZlfIqzoi7S6jwW9DdC35rrPddM+Youc6z6xs+imZE9Yjhc3qNf52KnpuxXLDn2NQXXueYx57ngUxo=
+	t=1728993891; cv=none; b=ukvImrLtEWFjyLPW4IrTmzZvZBORI8ORX4PSVHLeM7v3SqFcOCsjawnA9KD0Yyh94bqJ+JPAs7O7yrurV8VY8oF3sWMgJdGpVZGphY0sI1S4zSnwpTLRNzctqd+g4D9FsOjen823/pZhKOv7tyEG62z0pZMz4KAM3aEzxrxqqiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993888; c=relaxed/simple;
-	bh=2YXnkZkt7omvpJoZw016kg/Ky0qTrai024VLziD9D1o=;
+	s=arc-20240116; t=1728993891; c=relaxed/simple;
+	bh=mTWH6Fk7nxhNb6hPBez7TzQ2ghaZb+Pe7kVYevSsXIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kG9lgSVMJS6VbcVdV90X/j6Gl/H7tJT+NnKyeOP8POz3eS7RMI+31kl+Qnk9MBRUVWE6AHN/NhGQdEpsJA2wRNP0YL3PKu4iqFi8nA5QR5nu6b6GV3aroV0Uzi8dFwmTityS8cm4qEGa125zLYFmGC3euatqPYR6sGByN2h+8z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1oKej6x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VOF5FhOJqxxFjycOCLPPOv3GP5+MrITR7rXqZ+y049BKG+wava5dGOyTW177VvAFWEcgbLmoM3DIR4F2Fb+LPp2oJwMhF7cCyobOc+zkonwylhHAD8B0hegMsrzqbbYvjiVeioc2x6eXXrczPZaLwwf/LEZIomwGnbpsrJWVZi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxPxQ2gA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1oKej6x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97FC2C4CEC6;
-	Tue, 15 Oct 2024 12:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxPxQ2gA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179DCC4CEC6;
+	Tue, 15 Oct 2024 12:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993888;
-	bh=2YXnkZkt7omvpJoZw016kg/Ky0qTrai024VLziD9D1o=;
+	s=korg; t=1728993891;
+	bh=mTWH6Fk7nxhNb6hPBez7TzQ2ghaZb+Pe7kVYevSsXIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O1oKej6xcUOJ9UXy4kQ3sJuq1P8yMrr7/eAZpT6KIMgcac+tykdRiSrRWL1Ngz3Tk
-	 HRJ0C9yiV8m6gOiBdW8uL/MOW3vsYTGuxzyxxHIXeZ7XLVgyLlV60ATzyU//uUOHjw
-	 yxQOABfj+Ft1qKj39MxU2JvZa4H6OwJl8hllDHdg=
+	b=TxPxQ2gAbWZwtpvDvqJal1zEaYWGYdhQyisrlFzN+lGugx/VCulm7kZyvGE734X64
+	 4UysZlZu1OwlkXJO88pY04v8SQpq75e6EMP3t5qhrRYKFrfJ/iaOX/LpExhXQpsnqg
+	 Oq46Qd65GkWQFWwE0WYG8doLACbaqD3Ic5DEBhoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Wei Li <liwei391@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 544/691] tracing/hwlat: Fix a race during cpuhp processing
-Date: Tue, 15 Oct 2024 13:28:12 +0200
-Message-ID: <20241015112501.930899055@linuxfoundation.org>
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Aoyama Wataru <wataru.aoyama@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 5.15 518/691] exfat: fix memory leak in exfat_load_bitmap()
+Date: Tue, 15 Oct 2024 13:27:46 +0200
+Message-ID: <20241015112500.903784802@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,46 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Li <liwei391@huawei.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-commit 2a13ca2e8abb12ee43ada8a107dadca83f140937 upstream.
+commit d2b537b3e533f28e0d97293fe9293161fe8cd137 upstream.
 
-The cpuhp online/offline processing race also exists in percpu-mode hwlat
-tracer in theory, apply the fix too. That is:
+If the first directory entry in the root directory is not a bitmap
+directory entry, 'bh' will not be released and reassigned, which
+will cause a memory leak.
 
-    T1                       | T2
-    [CPUHP_ONLINE]           | cpu_device_down()
-     hwlat_hotplug_workfn()  |
-                             |     cpus_write_lock()
-                             |     takedown_cpu(1)
-                             |     cpus_write_unlock()
-    [CPUHP_OFFLINE]          |
-        cpus_read_lock()     |
-        start_kthread(1)     |
-        cpus_read_unlock()   |
-
+Fixes: 1e49a94cf707 ("exfat: add bitmap operations")
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20240924094515.3561410-5-liwei391@huawei.com
-Fixes: ba998f7d9531 ("trace/hwlat: Support hotplug operations")
-Signed-off-by: Wei Li <liwei391@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Aoyama Wataru <wataru.aoyama@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_hwlat.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/exfat/balloc.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/kernel/trace/trace_hwlat.c
-+++ b/kernel/trace/trace_hwlat.c
-@@ -520,6 +520,8 @@ static void hwlat_hotplug_workfn(struct
- 	if (!hwlat_busy || hwlat_data.thread_mode != MODE_PER_CPU)
- 		goto out_unlock;
+--- a/fs/exfat/balloc.c
++++ b/fs/exfat/balloc.c
+@@ -110,11 +110,8 @@ int exfat_load_bitmap(struct super_block
+ 				return -EIO;
  
-+	if (!cpu_online(cpu))
-+		goto out_unlock;
- 	if (!cpumask_test_cpu(cpu, tr->tracing_cpumask))
- 		goto out_unlock;
+ 			type = exfat_get_entry_type(ep);
+-			if (type == TYPE_UNUSED)
+-				break;
+-			if (type != TYPE_BITMAP)
+-				continue;
+-			if (ep->dentry.bitmap.flags == 0x0) {
++			if (type == TYPE_BITMAP &&
++			    ep->dentry.bitmap.flags == 0x0) {
+ 				int err;
  
+ 				err = exfat_allocate_bitmap(sb, ep);
+@@ -122,6 +119,9 @@ int exfat_load_bitmap(struct super_block
+ 				return err;
+ 			}
+ 			brelse(bh);
++
++			if (type == TYPE_UNUSED)
++				return -EINVAL;
+ 		}
+ 
+ 		if (exfat_get_next_cluster(sb, &clu.dir))
 
 
