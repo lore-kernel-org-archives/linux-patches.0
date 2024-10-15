@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2881B2184;
-	Tue, 15 Oct 2024 13:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410FE1B2183;
+	Tue, 15 Oct 2024 13:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998562; cv=none; b=rjx6w7ZFQ47YlB1ogJkGjoGjPLwc57onHYCZTENLxORYrVBaPJFMWeFDQoMX//T5TNbtqTl+UaeuUo0jBcUWZ3+10dZlVofpf59JEhIgYGFBELH2WQa/SpZQuQpOzdYuP7m3qjKgjGtlsqELBZY/X34cKXl9HAohtGmtpMgCkqw=
+	t=1728998565; cv=none; b=EJZdhLxRjad8FXnu4gzin9PrKGZVNuOBHIxdaK92UvqB7ruCkvSVkOeFcVJ04SNuKOLfxXxI1DtlxfG2626ZEeJxKDfhN7vNbc3LgdFzvnP2/K62NH02KZWBaAEJfBD4hl7Vcs6xlE7qfCFm9ej7u1NQLi/jfVAXpWcjwiaHI1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998562; c=relaxed/simple;
-	bh=VYvIX6HyzVuVYhee0aANETOocpjacypjMPT2ek1xBng=;
+	s=arc-20240116; t=1728998565; c=relaxed/simple;
+	bh=lLgzSOscctCHgZ6mDn+BlhBETU6lNfRg9YI3EtQgSXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iuOQjXylEWxv9QXKbFbh+4ntBQyc9ove1ZXt9E/F0/QHGY5YXpVx1YUYL8TW53L7skJm8y9LjJfscKI+/QBMQKJK/xo1WSg3+wcf1U+5X/o5dDltMr7dS3slAfcG2rsx7v7/1lONTCwKUwllQa9/p3PVt4KuC4sHJRUVx7jgYeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uu75l9uK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AypKg255UEE66i5TYcURlZ/dtgIxIrdihiSJP3eEH0mAuywYEpQkyJQDjbs6fmt+dHiHwtvtkvq9o6BrFBUF+tBk6ZsmhrLrxaPEo3qkzLhQLnMxJMi087cuBLiWKCNNtM8oY1PtKij79louIS2ZWEd5H29v/tGv+l0zJCIY1G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5tCr1nf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uu75l9uK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F366C4CEC6;
-	Tue, 15 Oct 2024 13:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5tCr1nf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B665AC4CEC6;
+	Tue, 15 Oct 2024 13:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998562;
-	bh=VYvIX6HyzVuVYhee0aANETOocpjacypjMPT2ek1xBng=;
+	s=korg; t=1728998565;
+	bh=lLgzSOscctCHgZ6mDn+BlhBETU6lNfRg9YI3EtQgSXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uu75l9uKxBwc8yQj2T8+yK0MSWENd6nmUL7RVjcSNrR8Daawfnp7tEHxlNeHq6Gdv
-	 gs3lZAZC0ZlFO+gzypngnvt0d1gu/adWBuiTagTjKjTk0Hlt7mknteCfrks57az0Uk
-	 f8jhWl443CKPzEyA6zoZ44KNkiyKAvUbpX1BQWU8=
+	b=I5tCr1nfCrxnERnGTdZ9n0yUBBJ0i1pCGWKnfUaLJ1jKY0+gmepDevO/H07S8ouOF
+	 M+RKKvk/2tzn7jkXac0Mpt44yz5K1SC/wfFOqhbnGLig/lGgG/Smmh7BZGdj0644QH
+	 hdTZghy2Zv67Uln8SzCsSigKOgrN4/qaXh7YCSy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Makarov <am@3a-alliance.com>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Jianlin Shi <jishi@redhat.com>,
+	Antoine Tenart <atenart@kernel.org>,
 	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 514/518] net: seg6: fix seg6_lookup_any_nexthop() to handle VRFs using flowi_l3mdev
-Date: Tue, 15 Oct 2024 14:46:58 +0200
-Message-ID: <20241015123936.828081231@linuxfoundation.org>
+Subject: [PATCH 5.10 515/518] net: vrf: determine the dst using the original ifindex for multicast
+Date: Tue, 15 Oct 2024 14:46:59 +0200
+Message-ID: <20241015123936.866342636@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,67 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Antoine Tenart <atenart@kernel.org>
 
-commit a3bd2102e464202b58d57390a538d96f57ffc361 upstream.
+commit f2575c8f404911da83f25b688e12afcf4273e640 upstream.
 
-Commit 40867d74c374 ("net: Add l3mdev index to flow struct and avoid oif
-reset for port devices") adds a new entry (flowi_l3mdev) in the common
-flow struct used for indicating the l3mdev index for later rule and
-table matching.
-The l3mdev_update_flow() has been adapted to properly set the
-flowi_l3mdev based on the flowi_oif/flowi_iif. In fact, when a valid
-flowi_iif is supplied to the l3mdev_update_flow(), this function can
-update the flowi_l3mdev entry only if it has not yet been set (i.e., the
-flowi_l3mdev entry is equal to 0).
+Multicast packets received on an interface bound to a VRF are marked as
+belonging to the VRF and the skb device is updated to point to the VRF
+device itself. This was fine even when a route was associated to a
+device as when performing a fib table lookup 'oif' in fib6_table_lookup
+(coming from 'skb->dev->ifindex' in ip6_route_input) was set to 0 when
+FLOWI_FLAG_SKIP_NH_OIF was set.
 
-The SRv6 End.DT6 behavior in VRF mode leverages a VRF device in order to
-force the routing lookup into the associated routing table. This routing
-operation is performed by seg6_lookup_any_nextop() preparing a flowi6
-data structure used by ip6_route_input_lookup() which, in turn,
-(indirectly) invokes l3mdev_update_flow().
+With commit 40867d74c374 ("net: Add l3mdev index to flow struct and
+avoid oif reset for port devices") this is not longer true and multicast
+traffic is not received on the original interface.
 
-However, seg6_lookup_any_nexthop() does not initialize the new
-flowi_l3mdev entry which is filled with random garbage data. This
-prevents l3mdev_update_flow() from properly updating the flowi_l3mdev
-with the VRF index, and thus SRv6 End.DT6 (VRF mode)/DT46 behaviors are
-broken.
-
-This patch correctly initializes the flowi6 instance allocated and used
-by seg6_lookup_any_nexhtop(). Specifically, the entire flowi6 instance
-is wiped out: in case new entries are added to flowi/flowi6 (as happened
-with the flowi_l3mdev entry), we should no longer have incorrectly
-initialized values. As a result of this operation, the value of
-flowi_l3mdev is also set to 0.
-
-The proposed fix can be tested easily. Starting from the commit
-referenced in the Fixes, selftests [1],[2] indicate that the SRv6
-End.DT6 (VRF mode)/DT46 behaviors no longer work correctly. By applying
-this patch, those behaviors are back to work properly again.
-
-[1] - tools/testing/selftests/net/srv6_end_dt46_l3vpn_test.sh
-[2] - tools/testing/selftests/net/srv6_end_dt6_l3vpn_test.sh
+Instead of adding back a similar check in fib6_table_lookup determine
+the dst using the original ifindex for multicast VRF traffic. To make
+things consistent across the function do the above for all strict
+packets, which was the logic before commit 6f12fa775530 ("vrf: mark skb
+for multicast or link-local as enslaved to VRF"). Note that reverting to
+this behavior should be fine as the change was about marking packets
+belonging to the VRF, not about their dst.
 
 Fixes: 40867d74c374 ("net: Add l3mdev index to flow struct and avoid oif reset for port devices")
-Reported-by: Anton Makarov <am@3a-alliance.com>
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Reported-by: Jianlin Shi <jishi@redhat.com>
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
 Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20220608091917.20345-1-andrea.mayer@uniroma2.it
+Link: https://lore.kernel.org/r/20221220171825.1172237-1-atenart@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_local.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/vrf.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -163,6 +163,7 @@ seg6_lookup_any_nexthop(struct sk_buff *
- 	struct flowi6 fl6;
- 	int dev_flags = 0;
+--- a/drivers/net/vrf.c
++++ b/drivers/net/vrf.c
+@@ -1336,8 +1336,8 @@ static struct sk_buff *vrf_ip6_rcv(struc
  
-+	memset(&fl6, 0, sizeof(fl6));
- 	fl6.flowi6_iif = skb->dev->ifindex;
- 	fl6.daddr = nhaddr ? *nhaddr : hdr->daddr;
- 	fl6.saddr = hdr->saddr;
+ 	/* loopback, multicast & non-ND link-local traffic; do not push through
+ 	 * packet taps again. Reset pkt_type for upper layers to process skb.
+-	 * For strict packets with a source LLA, determine the dst using the
+-	 * original ifindex.
++	 * For non-loopback strict packets, determine the dst using the original
++	 * ifindex.
+ 	 */
+ 	if (skb->pkt_type == PACKET_LOOPBACK || (need_strict && !is_ndisc)) {
+ 		skb->dev = vrf_dev;
+@@ -1346,7 +1346,7 @@ static struct sk_buff *vrf_ip6_rcv(struc
+ 
+ 		if (skb->pkt_type == PACKET_LOOPBACK)
+ 			skb->pkt_type = PACKET_HOST;
+-		else if (ipv6_addr_type(&ipv6_hdr(skb)->saddr) & IPV6_ADDR_LINKLOCAL)
++		else
+ 			vrf_ip6_input_dst(skb, vrf_dev, orig_iif);
+ 
+ 		goto out;
 
 
