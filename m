@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A7941D90CD;
-	Tue, 15 Oct 2024 11:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349C51E490B;
+	Tue, 15 Oct 2024 11:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992180; cv=none; b=PXVUApaGR+H5bLBpHglqIfCeJi2IcK8aoYHAvqXnPOIS7jX+jwakh1BkvNKFJd1QECYjLsP+2xPgTZnj18ApJlrcKISUgc/0CjslhjT7UVH1JP5EhnrxNoolQnWrmBLIKWrtOs2vWzI+2kaR7WigxpbIFjASrF5KcxQQnjs9Nd4=
+	t=1728992183; cv=none; b=qRU45znm3d8EPa9t7PBb6lVjDSuZiWODNX9hrCg5xzN/Qw9d7uIbPZe6eh4/zZZTLVaQjgdlyYepTxTh/29trPvimSOCZjgRSFqampjlbFwwjEvzoT3CzoxRcJXD3szTkJLPnO16SWJrLkRsl17nC7EnRxBPqpLtJhlFWFEglzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992180; c=relaxed/simple;
-	bh=QdBNaIx5xfzvLUvh1PbQLwjItMWn5/z/fbZltXcfV2c=;
+	s=arc-20240116; t=1728992183; c=relaxed/simple;
+	bh=SbnlkcpVSOALKjZ+/AIdCBpE21zUcYfYjpUVgiZdfOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IMfJMij8HzM9NgPyTPtpUHadj5sx3yfCui/X0T9JZ8MgsSHoNEGZJ5vdWKFUwMBV7JAbVO0sfgECHXIcCI+xmZiJ4CnujYMOVjIh0ROfZaCYqSIJ4haU3Bz1boA5Bt7aAcoe6tDwz8If9GQ6SEWVecRokAFH59l6rDiSzAzmpnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnI8806B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CARbKEr88/UY+AIP6okP/jBtrqwux+di3iDIihg+PPbsHqVaVCC0qtl8VJsrG1krBSR1tZRiJlr3aeI6GEFwe92UsFkJd3s/vwdsHn/hxnczspeLr+S/sWUdp10j0xxif7Uz3XjFx5vSo6CK8BOqvS3PdfpQgDOmLGvP2b2R5iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cruA4rme; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnI8806B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 704C3C4CEC6;
-	Tue, 15 Oct 2024 11:36:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cruA4rme"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83701C4CEC6;
+	Tue, 15 Oct 2024 11:36:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992179;
-	bh=QdBNaIx5xfzvLUvh1PbQLwjItMWn5/z/fbZltXcfV2c=;
+	s=korg; t=1728992183;
+	bh=SbnlkcpVSOALKjZ+/AIdCBpE21zUcYfYjpUVgiZdfOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XnI8806Br8+J7B86UR8Ffio6NN5ADK6F+XNiyHZvPNRz4L/7qjb9Tz3ANwA3j7u+S
-	 +yR4oqpHMhya1siOTxNb9hs70LMo1dkIzZbw0Jev9pz82r1lXP3dGhulBOCizgMmOg
-	 FlMWJyyqhSyKozPOv3rXm4/KnVEQ0tr3buXNmlGU=
+	b=cruA4rmezIpXP345wHbWxhDEf/jydtKXGtCjvkkzfKX4L5tLdP2bD1Sn6FFzxYva0
+	 F1Tc7HGVhgxJw0USZhbJ8YTQPQNH57gqnbIQlrK0yh9+W6SADAddc1bvHcVU+6PuIY
+	 M61F66tcD4Ewj84710y6Av1HG9h9YQbBAHQETZs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?M=C3=A5rten=20Lindahl?= <marten.lindahl@axis.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 040/691] hwmon: (pmbus) Introduce and use write_byte_data callback
-Date: Tue, 15 Oct 2024 13:19:48 +0200
-Message-ID: <20241015112441.933816675@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	syzbot+f7af59df5d6b25f0febd@syzkaller.appspotmail.com,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 011/691] ocfs2: cancel dqi_sync_work before freeing oinfo
+Date: Tue, 15 Oct 2024 13:19:19 +0200
+Message-ID: <20241015112440.780211820@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -45,105 +52,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mårten Lindahl <marten.lindahl@axis.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 5de3e13f7f6b496bd7bd9ff4d2b915b7d3e67cda ]
+commit 35fccce29feb3706f649726d410122dd81b92c18 upstream.
 
-Some of the pmbus core functions uses pmbus_write_byte_data, which does
-not support driver callbacks for chip specific write operations. This
-could potentially influence some specific regulator chips that for
-example need a time delay before each data access.
+ocfs2_global_read_info() will initialize and schedule dqi_sync_work at the
+end, if error occurs after successfully reading global quota, it will
+trigger the following warning with CONFIG_DEBUG_OBJECTS_* enabled:
 
-Lets add support for driver callback with _pmbus_write_byte_data.
+ODEBUG: free active (active state 0) object: 00000000d8b0ce28 object type: timer_list hint: qsync_work_fn+0x0/0x16c
 
-Signed-off-by: Mårten Lindahl <marten.lindahl@axis.com>
-Link: https://lore.kernel.org/r/20220428144039.2464667-2-marten.lindahl@axis.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 20471071f198 ("hwmon: (pmbus) Conditionally clear individual status bits for pmbus rev >= 1.2")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This reports that there is an active delayed work when freeing oinfo in
+error handling, so cancel dqi_sync_work first.  BTW, return status instead
+of -1 when .read_file_info fails.
+
+Link: https://syzkaller.appspot.com/bug?extid=f7af59df5d6b25f0febd
+Link: https://lkml.kernel.org/r/20240904071004.2067695-1-joseph.qi@linux.alibaba.com
+Fixes: 171bf93ce11f ("ocfs2: Periodic quota syncing")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Reported-by: syzbot+f7af59df5d6b25f0febd@syzkaller.appspotmail.com
+Tested-by: syzbot+f7af59df5d6b25f0febd@syzkaller.appspotmail.com
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/pmbus.h      |  2 ++
- drivers/hwmon/pmbus/pmbus_core.c | 24 +++++++++++++++++++++---
- 2 files changed, 23 insertions(+), 3 deletions(-)
+ fs/ocfs2/quota_local.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/pmbus.h b/drivers/hwmon/pmbus/pmbus.h
-index ef3a8ecde4df..e2a570930bd7 100644
---- a/drivers/hwmon/pmbus/pmbus.h
-+++ b/drivers/hwmon/pmbus/pmbus.h
-@@ -438,6 +438,8 @@ struct pmbus_driver_info {
- 	int (*read_byte_data)(struct i2c_client *client, int page, int reg);
- 	int (*read_word_data)(struct i2c_client *client, int page, int phase,
- 			      int reg);
-+	int (*write_byte_data)(struct i2c_client *client, int page, int reg,
-+			      u8 byte);
- 	int (*write_word_data)(struct i2c_client *client, int page, int reg,
- 			       u16 word);
- 	int (*write_byte)(struct i2c_client *client, int page, u8 value);
-diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
-index 63b616ce3a6e..cc9ce5b2f0f2 100644
---- a/drivers/hwmon/pmbus/pmbus_core.c
-+++ b/drivers/hwmon/pmbus/pmbus_core.c
-@@ -276,6 +276,24 @@ static int _pmbus_write_word_data(struct i2c_client *client, int page, int reg,
- 	return pmbus_write_word_data(client, page, reg, word);
- }
+--- a/fs/ocfs2/quota_local.c
++++ b/fs/ocfs2/quota_local.c
+@@ -689,7 +689,7 @@ static int ocfs2_local_read_info(struct
+ 	int status;
+ 	struct buffer_head *bh = NULL;
+ 	struct ocfs2_quota_recovery *rec;
+-	int locked = 0;
++	int locked = 0, global_read = 0;
  
-+/*
-+ * _pmbus_write_byte_data() is similar to pmbus_write_byte_data(), but checks if
-+ * a device specific mapping function exists and calls it if necessary.
-+ */
-+static int _pmbus_write_byte_data(struct i2c_client *client, int page, int reg, u8 value)
-+{
-+	struct pmbus_data *data = i2c_get_clientdata(client);
-+	const struct pmbus_driver_info *info = data->info;
-+	int status;
-+
-+	if (info->write_byte_data) {
-+		status = info->write_byte_data(client, page, reg, value);
-+		if (status != -ENODATA)
-+			return status;
-+	}
-+	return pmbus_write_byte_data(client, page, reg, value);
-+}
-+
- int pmbus_update_fan(struct i2c_client *client, int page, int id,
- 		     u8 config, u8 mask, u16 command)
- {
-@@ -290,7 +308,7 @@ int pmbus_update_fan(struct i2c_client *client, int page, int id,
- 
- 	to = (from & ~mask) | (config & mask);
- 	if (to != from) {
--		rv = pmbus_write_byte_data(client, page,
-+		rv = _pmbus_write_byte_data(client, page,
- 					   pmbus_fan_config_registers[id], to);
- 		if (rv < 0)
- 			return rv;
-@@ -397,7 +415,7 @@ int pmbus_update_byte_data(struct i2c_client *client, int page, u8 reg,
- 	tmp = (rv & ~mask) | (value & mask);
- 
- 	if (tmp != rv)
--		rv = pmbus_write_byte_data(client, page, reg, tmp);
-+		rv = _pmbus_write_byte_data(client, page, reg, tmp);
- 
- 	return rv;
- }
-@@ -912,7 +930,7 @@ static int pmbus_get_boolean(struct i2c_client *client, struct pmbus_boolean *b,
- 
- 	regval = status & mask;
- 	if (regval) {
--		ret = pmbus_write_byte_data(client, page, reg, regval);
-+		ret = _pmbus_write_byte_data(client, page, reg, regval);
- 		if (ret)
- 			goto unlock;
+ 	info->dqi_max_spc_limit = 0x7fffffffffffffffLL;
+ 	info->dqi_max_ino_limit = 0x7fffffffffffffffLL;
+@@ -697,6 +697,7 @@ static int ocfs2_local_read_info(struct
+ 	if (!oinfo) {
+ 		mlog(ML_ERROR, "failed to allocate memory for ocfs2 quota"
+ 			       " info.");
++		status = -ENOMEM;
+ 		goto out_err;
  	}
--- 
-2.43.0
-
+ 	info->dqi_priv = oinfo;
+@@ -709,6 +710,7 @@ static int ocfs2_local_read_info(struct
+ 	status = ocfs2_global_read_info(sb, type);
+ 	if (status < 0)
+ 		goto out_err;
++	global_read = 1;
+ 
+ 	status = ocfs2_inode_lock(lqinode, &oinfo->dqi_lqi_bh, 1);
+ 	if (status < 0) {
+@@ -779,10 +781,12 @@ out_err:
+ 		if (locked)
+ 			ocfs2_inode_unlock(lqinode, 1);
+ 		ocfs2_release_local_quota_bitmaps(&oinfo->dqi_chunk);
++		if (global_read)
++			cancel_delayed_work_sync(&oinfo->dqi_sync_work);
+ 		kfree(oinfo);
+ 	}
+ 	brelse(bh);
+-	return -1;
++	return status;
+ }
+ 
+ /* Write local info to quota file */
 
 
