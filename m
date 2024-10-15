@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 137661C57B1;
-	Tue, 15 Oct 2024 12:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FBE1C57B1;
+	Tue, 15 Oct 2024 12:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993930; cv=none; b=cRkM2J7zXzh7bLezTWbRIV7SdBSJQ89WRc3r3S5sUgVuNjMKe32qwuyXxEq5W+098shqNNOK3dIv1Z8yGuxIvTbMSwO4p0rGj5/gFFOqeCFWNcaxxP5sleKKd29aFboQeH3IeyVD49KeS637G+kiz3gl3zgjj+oErXPRa/dQh68=
+	t=1728993933; cv=none; b=hCcgWz+fYIwdwaV0ZFOWwvEuCalM1YITuFV1FVrn3h/b9+95epIut/HOdA41zd3f/vi1ny/qUdwcuK5lVtGjfmHmjZ96Kgc3uUktPg5yeDAZKHp9iEjceoWvXv/043+AJmmue83NEGkGYjYyzsNiVxNH6tkWPbIknJ4pYEMRnkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993930; c=relaxed/simple;
-	bh=p6lGES2ENT8YU7cDLEy5awUSUrZ+RlJohadn33+Dn/s=;
+	s=arc-20240116; t=1728993933; c=relaxed/simple;
+	bh=QckrsCEl35rfwqJoBCvNCV/zVdHBTbMvgkHffWtDDCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UT0+wMw3IeAT+7OBw586pm5O+682duAxgqk2hyd4ZYC7QoQx1URkYLLiI1Iqxw5eAY+bwETNf55atD3E+KGz4xwLzFhuBsdbjk0suPzMwI9wFuYFlbxmhC4OtOjRQGgnSOwuWmwzcATdYXlsFZ3b8TQ/Fc5cJhDMLYqGIWQUqf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8sSIhQO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m3SafdQ0TxpTePj+nRQ2c69H+qRVK7/9/AQI0bN6Nwgj0QyoeORJABzaVg4k8nnN24pWRkfY1LGfPyFqk1vQ7CjxiJhegwDbDrLl79z7qLehDQRCIqU4FuwGFcaSZJhbb30F/t0Vp5ixsvDKIQTtdmwYVRQB7uK7tjeahwksNFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vt9nUGoo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8sSIhQO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7890AC4CEC6;
-	Tue, 15 Oct 2024 12:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vt9nUGoo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5395C4CEC6;
+	Tue, 15 Oct 2024 12:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993930;
-	bh=p6lGES2ENT8YU7cDLEy5awUSUrZ+RlJohadn33+Dn/s=;
+	s=korg; t=1728993933;
+	bh=QckrsCEl35rfwqJoBCvNCV/zVdHBTbMvgkHffWtDDCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E8sSIhQOrtJ4rq1gUjE/ELxlD9whoFohmBPltKPTOkgEm7ogCbatQzXi9FJcacGuT
-	 TH8zpitm1fFXX6ab5VhdvplKt/M3dhoyCoBMPMj/QeQQlmQ/PsaSlEVdkWutKTbLro
-	 +UFikChyTax+ecsieO2lACRUmehnrEbDuru65LB8=
+	b=vt9nUGoo8FcJnBNQICYsxPiziybLjOc7yQrOTxVfidX35bQKcgts8sUl9I9L2w0Iy
+	 HGxZ2p0Pvn+SiBrRY2q/IHs9bwRZLe4mcCclFdpE4FEb4vho6ovxE3luSgtFDdJ5gO
+	 Inw1B9n5YshB8FBwtXSYPNRpMcgn/Cf2G69Lu83M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.15 515/691] ext4: use handle to mark fc as ineligible in __track_dentry_update()
-Date: Tue, 15 Oct 2024 13:27:43 +0200
-Message-ID: <20241015112500.785780442@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 550/691] device property: Add fwnode_iomap()
+Date: Tue, 15 Oct 2024 13:28:18 +0200
+Message-ID: <20241015112502.170230814@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,102 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+From: Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>
 
-commit faab35a0370fd6e0821c7a8dd213492946fc776f upstream.
+[ Upstream commit eca6e2d4a4a4b824f055eeaaa24f1c2327fb91a2 ]
 
-Calling ext4_fc_mark_ineligible() with a NULL handle is racy and may result
-in a fast-commit being done before the filesystem is effectively marked as
-ineligible.  This patch fixes the calls to this function in
-__track_dentry_update() by adding an extra parameter to the callback used in
-ext4_fc_track_template().
+This patch introduces a new helper routine - fwnode_iomap(), which
+allows to map the memory mapped IO for a given device node.
 
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240923104909.18342-2-luis.henriques@linux.dev
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This implementation does not cover the ACPI case and may be expanded
+in the future. The main purpose here is to be able to develop resource
+provider agnostic drivers.
+
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/20211203212358.31444-2-anand.ashok.dumbre@xilinx.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 8d3cefaf6592 ("i2c: core: Lock address during client device instantiation")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/fast_commit.c |   19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/base/property.c  | 16 ++++++++++++++++
+ include/linux/property.h |  2 ++
+ 2 files changed, 18 insertions(+)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -344,7 +344,7 @@ void ext4_fc_mark_ineligible(struct supe
-  */
- static int ext4_fc_track_template(
- 	handle_t *handle, struct inode *inode,
--	int (*__fc_track_fn)(struct inode *, void *, bool),
-+	int (*__fc_track_fn)(handle_t *handle, struct inode *, void *, bool),
- 	void *args, int enqueue)
- {
- 	bool update = false;
-@@ -361,7 +361,7 @@ static int ext4_fc_track_template(
- 		ext4_fc_reset_inode(inode);
- 		ei->i_sync_tid = tid;
- 	}
--	ret = __fc_track_fn(inode, args, update);
-+	ret = __fc_track_fn(handle, inode, args, update);
- 	mutex_unlock(&ei->i_fc_lock);
- 
- 	if (!enqueue)
-@@ -385,7 +385,8 @@ struct __track_dentry_update_args {
- };
- 
- /* __track_fn for directory entry updates. Called with ei->i_fc_lock. */
--static int __track_dentry_update(struct inode *inode, void *arg, bool update)
-+static int __track_dentry_update(handle_t *handle, struct inode *inode,
-+				 void *arg, bool update)
- {
- 	struct ext4_fc_dentry_update *node;
- 	struct ext4_inode_info *ei = EXT4_I(inode);
-@@ -400,14 +401,14 @@ static int __track_dentry_update(struct
- 
- 	if (IS_ENCRYPTED(dir)) {
- 		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_ENCRYPTED_FILENAME,
--					NULL);
-+					handle);
- 		mutex_lock(&ei->i_fc_lock);
- 		return -EOPNOTSUPP;
- 	}
- 
- 	node = kmem_cache_alloc(ext4_fc_dentry_cachep, GFP_NOFS);
- 	if (!node) {
--		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, NULL);
-+		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, handle);
- 		mutex_lock(&ei->i_fc_lock);
- 		return -ENOMEM;
- 	}
-@@ -419,7 +420,7 @@ static int __track_dentry_update(struct
- 		node->fcd_name.name = kmalloc(dentry->d_name.len, GFP_NOFS);
- 		if (!node->fcd_name.name) {
- 			kmem_cache_free(ext4_fc_dentry_cachep, node);
--			ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, NULL);
-+			ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, handle);
- 			mutex_lock(&ei->i_fc_lock);
- 			return -ENOMEM;
- 		}
-@@ -533,7 +534,8 @@ void ext4_fc_track_create(handle_t *hand
+diff --git a/drivers/base/property.c b/drivers/base/property.c
+index 21f4184db42fc..87bb97e12749e 100644
+--- a/drivers/base/property.c
++++ b/drivers/base/property.c
+@@ -1050,6 +1050,22 @@ int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index)
  }
+ EXPORT_SYMBOL(fwnode_irq_get);
  
- /* __track_fn for inode tracking */
--static int __track_inode(struct inode *inode, void *arg, bool update)
-+static int __track_inode(handle_t *handle, struct inode *inode, void *arg,
-+			 bool update)
- {
- 	if (update)
- 		return -EEXIST;
-@@ -573,7 +575,8 @@ struct __track_range_args {
- };
++/**
++ * fwnode_iomap - Maps the memory mapped IO for a given fwnode
++ * @fwnode:	Pointer to the firmware node
++ * @index:	Index of the IO range
++ *
++ * Returns a pointer to the mapped memory.
++ */
++void __iomem *fwnode_iomap(struct fwnode_handle *fwnode, int index)
++{
++	if (IS_ENABLED(CONFIG_OF_ADDRESS) && is_of_node(fwnode))
++		return of_iomap(to_of_node(fwnode), index);
++
++	return NULL;
++}
++EXPORT_SYMBOL(fwnode_iomap);
++
+ /**
+  * fwnode_graph_get_next_endpoint - Get next endpoint firmware node
+  * @fwnode: Pointer to the parent firmware node
+diff --git a/include/linux/property.h b/include/linux/property.h
+index fe2092e39aedb..032262e3d9991 100644
+--- a/include/linux/property.h
++++ b/include/linux/property.h
+@@ -126,6 +126,8 @@ void fwnode_handle_put(struct fwnode_handle *fwnode);
  
- /* __track_fn for tracking data updates */
--static int __track_range(struct inode *inode, void *arg, bool update)
-+static int __track_range(handle_t *handle, struct inode *inode, void *arg,
-+			 bool update)
- {
- 	struct ext4_inode_info *ei = EXT4_I(inode);
- 	ext4_lblk_t oldstart;
+ int fwnode_irq_get(const struct fwnode_handle *fwnode, unsigned int index);
+ 
++void __iomem *fwnode_iomap(struct fwnode_handle *fwnode, int index);
++
+ unsigned int device_get_child_node_count(struct device *dev);
+ 
+ static inline bool device_property_read_bool(struct device *dev,
+-- 
+2.43.0
+
 
 
