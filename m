@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109BC1C07FE;
-	Tue, 15 Oct 2024 12:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4821C07DE;
+	Tue, 15 Oct 2024 12:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996940; cv=none; b=HMCG5vI2vDBH2vtfEjwFyinooLuh817U2AWvT7s3pKkogfQZjxkrGY0fmv9exTidrrI33kwCLRQnQdaoaq0lfljzpbPb0bBM0qd971+AqQLhs7fUBMWmEHYI0xzMtNbaG96/cy4EaOB4YOK9zqq3BfsDaaMSix1m7c0+RsayMJk=
+	t=1728996943; cv=none; b=M4OkHaMw3l+9EeSiYQIA2rH5644yAjZIWvapnpsLWdiGWsyrX2w4OT1hxuZQTyN7s+G9d//UGi6PGs5fmbWMB5qxYhnTnO3rCWF7ydVr1qegMwxV6npUBFYsoBfuXpRlavmJgJGCyoymxzwbydKxP88pzyTSiidp1IZhapFbJgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996940; c=relaxed/simple;
-	bh=uz/oWbSp4hOiqMCuJqW0uFdzwl28JCJBmQ1TTI3Xv3o=;
+	s=arc-20240116; t=1728996943; c=relaxed/simple;
+	bh=1cEzU8oTbACOtQQlDZeHdqr5iIvjdMgkD/p+BkZXWb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qe9h5xy4HTMT133id0z4Rmr6xkHsBdSo3Jntg6J6oARZmM6DJOYeXwLMr4Wj5K0cgjpEAHJ7KdCvEn3FB9c38FLgZdJHNSZyJQDzsrLNY9Gf7JvRPbL2J7Jo3EhC8mkh+KbxbMPghi8LQCIQ+vKE0dmu/lI8970aYorGg8d2px0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvUdfIY4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aqdFfdYXQ6KC3F2VqgqALnyhAlR27CHxRR35rNA71rPdlnNvrc6wM0MMEgxy3QjmdjjVgai2kTCruEbZu9gEb42xcON62D0LQqJzeyRY867aUOJxFMxVVn95nwgUkFAiSCRsUW9anLxoAJG7MQ9cELE+s8NhJVD2SuNgMdjen8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBLbz0pG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvUdfIY4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 761DFC4CEC6;
-	Tue, 15 Oct 2024 12:55:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBLbz0pG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3721C4CEC6;
+	Tue, 15 Oct 2024 12:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728996939;
-	bh=uz/oWbSp4hOiqMCuJqW0uFdzwl28JCJBmQ1TTI3Xv3o=;
+	s=korg; t=1728996943;
+	bh=1cEzU8oTbACOtQQlDZeHdqr5iIvjdMgkD/p+BkZXWb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IvUdfIY434pee53zSTaMqQ1ONdiZRV9+vjXYSUITwfQZAm0XVN8Xfnd5Cn14vHWd3
-	 Hfna9kHYczzovhEvgVx/JiME7lLEZ6XDMN7CnNMOregUZCShh/+rf7QKmwGM1UeVs4
-	 JZEYayZyz5ovwq0YjMCgswrkFd84E9GeWqFayjH0=
+	b=sBLbz0pGH4qAJLXeyIPEqnkpefKRvdXUA82kDcENF4ULplgC6iFTbsX9yeOK/3F/h
+	 xpsL8wwv/VRtZSVrTVXBoYG8vORT7/Dh7xZx5uLWCvSu5dB+y+wOTB6NmQI/Kpeyzn
+	 pzmjYsBEV3+/Adtc8tRbeU3xsCoTZCgK33SZjc7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 044/518] cgroup: Make operations on the cgroup root_list RCU safe
-Date: Tue, 15 Oct 2024 14:39:08 +0200
-Message-ID: <20241015123918.713061260@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 045/518] netfilter: nft_set_pipapo: walk over current view on netlink dump
+Date: Tue, 15 Oct 2024 14:39:09 +0200
+Message-ID: <20241015123918.750351261@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,122 +50,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit d23b5c577715892c87533b13923306acc6243f93 ]
+commit 29b359cf6d95fd60730533f7f10464e95bd17c73 upstream.
 
-At present, when we perform operations on the cgroup root_list, we must
-hold the cgroup_mutex, which is a relatively heavyweight lock. In reality,
-we can make operations on this list RCU-safe, eliminating the need to hold
-the cgroup_mutex during traversal. Modifications to the list only occur in
-the cgroup root setup and destroy paths, which should be infrequent in a
-production environment. In contrast, traversal may occur frequently.
-Therefore, making it RCU-safe would be beneficial.
+The generation mask can be updated while netlink dump is in progress.
+The pipapo set backend walk iterator cannot rely on it to infer what
+view of the datastructure is to be used. Add notation to specify if user
+wants to read/update the set.
 
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Based on patch from Florian Westphal.
+
+Fixes: 2b84e215f874 ("netfilter: nft_set_pipapo: .walk does not deal with generations")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/cgroup-defs.h     |  1 +
- kernel/cgroup/cgroup-internal.h |  3 ++-
- kernel/cgroup/cgroup.c          | 14 +++++++-------
- 3 files changed, 10 insertions(+), 8 deletions(-)
+ include/net/netfilter/nf_tables.h |   13 +++++++++++++
+ net/netfilter/nf_tables_api.c     |    5 +++++
+ net/netfilter/nft_set_pipapo.c    |    5 +++--
+ 3 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/cgroup-defs.h b/include/linux/cgroup-defs.h
-index 6c6323a01d430..e0e03c68000f0 100644
---- a/include/linux/cgroup-defs.h
-+++ b/include/linux/cgroup-defs.h
-@@ -512,6 +512,7 @@ struct cgroup_root {
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -262,9 +262,22 @@ struct nft_set_elem {
+ 	void			*priv;
+ };
  
- 	/* A list running through the active hierarchies */
- 	struct list_head root_list;
-+	struct rcu_head rcu;
- 
- 	/* Hierarchy-specific flags */
- 	unsigned int flags;
-diff --git a/kernel/cgroup/cgroup-internal.h b/kernel/cgroup/cgroup-internal.h
-index d8fcc139ac05d..f38f56b8cc416 100644
---- a/kernel/cgroup/cgroup-internal.h
-+++ b/kernel/cgroup/cgroup-internal.h
-@@ -172,7 +172,8 @@ extern struct list_head cgroup_roots;
- 
- /* iterate across the hierarchies */
- #define for_each_root(root)						\
--	list_for_each_entry((root), &cgroup_roots, root_list)
-+	list_for_each_entry_rcu((root), &cgroup_roots, root_list,	\
-+				lockdep_is_held(&cgroup_mutex))
- 
- /**
-  * for_each_subsys - iterate all enabled cgroup subsystems
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index 643d8e178f7b9..66970b74106c8 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -1304,7 +1304,7 @@ static void cgroup_exit_root_id(struct cgroup_root *root)
- 
- void cgroup_free_root(struct cgroup_root *root)
++/**
++ * enum nft_iter_type - nftables set iterator type
++ *
++ * @NFT_ITER_READ: read-only iteration over set elements
++ * @NFT_ITER_UPDATE: iteration under mutex to update set element state
++ */
++enum nft_iter_type {
++	NFT_ITER_UNSPEC,
++	NFT_ITER_READ,
++	NFT_ITER_UPDATE,
++};
++
+ struct nft_set;
+ struct nft_set_iter {
+ 	u8		genmask;
++	enum nft_iter_type type:8;
+ 	unsigned int	count;
+ 	unsigned int	skip;
+ 	int		err;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -594,6 +594,7 @@ static void nft_map_deactivate(const str
  {
--	kfree(root);
-+	kfree_rcu(root, rcu);
- }
+ 	struct nft_set_iter iter = {
+ 		.genmask	= nft_genmask_next(ctx->net),
++		.type		= NFT_ITER_UPDATE,
+ 		.fn		= nft_mapelem_deactivate,
+ 	};
  
- static void cgroup_destroy_root(struct cgroup_root *root)
-@@ -1337,7 +1337,7 @@ static void cgroup_destroy_root(struct cgroup_root *root)
- 	spin_unlock_irq(&css_set_lock);
+@@ -4777,6 +4778,7 @@ int nf_tables_bind_set(const struct nft_
+ 		}
  
- 	if (!list_empty(&root->root_list)) {
--		list_del(&root->root_list);
-+		list_del_rcu(&root->root_list);
- 		cgroup_root_count--;
- 	}
- 
-@@ -1382,7 +1382,6 @@ current_cgns_cgroup_from_root(struct cgroup_root *root)
- 	}
- 	rcu_read_unlock();
- 
--	BUG_ON(!res);
- 	return res;
- }
- 
-@@ -1392,7 +1391,6 @@ static struct cgroup *cset_cgroup_from_root(struct css_set *cset,
+ 		iter.genmask	= nft_genmask_next(ctx->net);
++		iter.type	= NFT_ITER_UPDATE;
+ 		iter.skip 	= 0;
+ 		iter.count	= 0;
+ 		iter.err	= 0;
+@@ -4830,6 +4832,7 @@ static void nft_map_activate(const struc
  {
- 	struct cgroup *res = NULL;
+ 	struct nft_set_iter iter = {
+ 		.genmask	= nft_genmask_next(ctx->net),
++		.type		= NFT_ITER_UPDATE,
+ 		.fn		= nft_mapelem_activate,
+ 	};
  
--	lockdep_assert_held(&cgroup_mutex);
- 	lockdep_assert_held(&css_set_lock);
+@@ -5142,6 +5145,7 @@ static int nf_tables_dump_set(struct sk_
+ 	args.cb			= cb;
+ 	args.skb		= skb;
+ 	args.iter.genmask	= nft_genmask_cur(net);
++	args.iter.type		= NFT_ITER_READ;
+ 	args.iter.skip		= cb->args[0];
+ 	args.iter.count		= 0;
+ 	args.iter.err		= 0;
+@@ -6065,6 +6069,7 @@ static int nf_tables_delsetelem(struct n
+ 	if (nla[NFTA_SET_ELEM_LIST_ELEMENTS] == NULL) {
+ 		struct nft_set_iter iter = {
+ 			.genmask	= genmask,
++			.type		= NFT_ITER_UPDATE,
+ 			.fn		= nft_flush_set,
+ 		};
+ 		set->ops->walk(&ctx, set, &iter);
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -2026,13 +2026,14 @@ static void nft_pipapo_walk(const struct
+ 			    struct nft_set_iter *iter)
+ {
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+-	struct net *net = read_pnet(&set->net);
+ 	struct nft_pipapo_match *m;
+ 	struct nft_pipapo_field *f;
+ 	int i, r;
  
- 	if (cset == &init_css_set) {
-@@ -1418,7 +1416,9 @@ static struct cgroup *cset_cgroup_from_root(struct css_set *cset,
- 
- /*
-  * Return the cgroup for "task" from the given hierarchy. Must be
-- * called with cgroup_mutex and css_set_lock held.
-+ * called with css_set_lock held to prevent task's groups from being modified.
-+ * Must be called with either cgroup_mutex or rcu read lock to prevent the
-+ * cgroup root from being destroyed.
-  */
- struct cgroup *task_cgroup_from_root(struct task_struct *task,
- 				     struct cgroup_root *root)
-@@ -1950,7 +1950,7 @@ void init_cgroup_root(struct cgroup_fs_context *ctx)
- 	struct cgroup_root *root = ctx->root;
- 	struct cgroup *cgrp = &root->cgrp;
- 
--	INIT_LIST_HEAD(&root->root_list);
-+	INIT_LIST_HEAD_RCU(&root->root_list);
- 	atomic_set(&root->nr_cgrps, 1);
- 	cgrp->root = root;
- 	init_cgroup_housekeeping(cgrp);
-@@ -2028,7 +2028,7 @@ int cgroup_setup_root(struct cgroup_root *root, u16 ss_mask)
- 	 * care of subsystems' refcounts, which are explicitly dropped in
- 	 * the failure exit path.
- 	 */
--	list_add(&root->root_list, &cgroup_roots);
-+	list_add_rcu(&root->root_list, &cgroup_roots);
- 	cgroup_root_count++;
- 
- 	/*
--- 
-2.43.0
-
++	WARN_ON_ONCE(iter->type == NFT_ITER_UNSPEC);
++
+ 	rcu_read_lock();
+-	if (iter->genmask == nft_genmask_cur(net))
++	if (iter->type == NFT_ITER_READ)
+ 		m = rcu_dereference(priv->match);
+ 	else
+ 		m = priv->clone;
 
 
