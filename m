@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4511EBFE4;
-	Tue, 15 Oct 2024 11:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30D71EBFFC;
+	Tue, 15 Oct 2024 11:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992092; cv=none; b=cdn+6xM5wjN+yUb38GLIJRSKthAo7Etn5Zk+FsoP4HcbR6hY59UCldGaMuNT4zPRTzJhaJ0h6UgQFPlhlv2k0fdJzr66lZsf4FTV4RJ427z09zdjfGvoA5IYS8ZRIN7mnBk6ssoe32AT6IE1gTMGqwDjLkua4llDb+Ae8tQYUrk=
+	t=1728992095; cv=none; b=mCxn/zN0UKpfKRHw/dx6r2LAUd7NQZfZooLiYcpcThGZUdx6Nl/w1r+ZaGmGnQ8EziJ7+H2VP4qFcnb0rRhVH3a9WOzN+Jet1098Ojvg4KoJv4NwFM8YX72kXookioQHfU4+NlbxLznpsZT4nzNdc1PZbXgbpvEpahISDitVUFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992092; c=relaxed/simple;
-	bh=eiUUEcpVjgixv55bL63Ld/vrIMrOfg0kkHa0q4OwvAI=;
+	s=arc-20240116; t=1728992095; c=relaxed/simple;
+	bh=jftUI5cS5FIumnKuDBxGDElVqXxgQf2x+TiSueQNy+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZVhQ1tLS88yM/cqHq4/SsznSukeP76ghNqSo6BnLQEPOIZGy7VGolA3tsqtTpuxHfWWtc5jk9xFx9z4eErTBr9xVZB2pOFEUJbtGBwboTOdaZbVqPDFvt1eBoeGwkTqxpCY87jkHmJ53uH4/6/k2ank/MT9BhevA+3S6lnhtvOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZcjeOji; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oYqanq+sKbhsTQi6bWrY4vE9IUnnGC369roe6qXpeVe4QIYYAmUQyUiKqc/zOwVwpfEsoGbpDTuM6J+z+UVTANRbI3fF0RFwjk1U7ISf14MCyk+sN/lGtG1GpzZPpdGElUmYiFP1STXlpXjITy3mAiormXOkcX0c7+2l/G5JStE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSduvziY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZcjeOji"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7839DC4CEC6;
-	Tue, 15 Oct 2024 11:34:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSduvziY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70CC3C4CEC6;
+	Tue, 15 Oct 2024 11:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992091;
-	bh=eiUUEcpVjgixv55bL63Ld/vrIMrOfg0kkHa0q4OwvAI=;
+	s=korg; t=1728992094;
+	bh=jftUI5cS5FIumnKuDBxGDElVqXxgQf2x+TiSueQNy+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZcjeOjimIe37yI6WD9btMACAQeI1gEP3gILH+Tl4f4yGinygvg62UfACmkA8nbLg
-	 lnqWAYysQtdLesSbzGzialXQv0dGkcA0ajdnifuGhFSydSZUdAfImqwXaWYp6zwRBN
-	 G2OKuzt4YuygxU9SjqMnquyDhWvSYf6PVL65Vcyg=
+	b=vSduvziYlEUvKqJRf1SUibkqcB4j7Ao0pvjH7OKwi6xGeP6BYfV6iwl5usSqM0W8P
+	 3jzxZUh68XQRUJEcFJvB0QiZum776BZKALwwkrwgiTu/uuhAwRDahHPhKHQgLq3KtT
+	 p/lluXxUmyKxakWdqNZgqaIBWQixptDW7VWd8DqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
-	Su Yue <glass.su@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 008/691] ocfs2: fix the la space leak when unmounting an ocfs2 volume
-Date: Tue, 15 Oct 2024 13:19:16 +0200
-Message-ID: <20241015112440.660761453@linuxfoundation.org>
+	Linus Walleij <linus.walleij@linaro.org>,
+	Pawel Dembicki <paweldembicki@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 017/691] net: phy: vitesse: repair vsc73xx autonegotiation
+Date: Tue, 15 Oct 2024 13:19:25 +0200
+Message-ID: <20241015112441.019099465@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -58,60 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heming Zhao <heming.zhao@suse.com>
+From: Pawel Dembicki <paweldembicki@gmail.com>
 
-commit dfe6c5692fb525e5e90cefe306ee0dffae13d35f upstream.
+[ Upstream commit de7a670f8defe4ed2115552ad23dea0f432f7be4 ]
 
-This bug has existed since the initial OCFS2 code.  The code logic in
-ocfs2_sync_local_to_main() is wrong, as it ignores the last contiguous
-free bits, which causes an OCFS2 volume to lose the last free clusters of
-LA window on each umount command.
+When the vsc73xx mdio bus work properly, the generic autonegotiation
+configuration works well.
 
-Link: https://lkml.kernel.org/r/20240719114310.14245-1-heming.zhao@suse.com
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Su Yue <glass.su@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Pawel Dembicki <paweldembicki@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/localalloc.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/net/phy/vitesse.c | 14 --------------
+ 1 file changed, 14 deletions(-)
 
---- a/fs/ocfs2/localalloc.c
-+++ b/fs/ocfs2/localalloc.c
-@@ -1008,6 +1008,25 @@ static int ocfs2_sync_local_to_main(stru
- 		start = bit_off + 1;
- 	}
+diff --git a/drivers/net/phy/vitesse.c b/drivers/net/phy/vitesse.c
+index 897b979ec03c..3b5fcaf0dd36 100644
+--- a/drivers/net/phy/vitesse.c
++++ b/drivers/net/phy/vitesse.c
+@@ -237,16 +237,6 @@ static int vsc739x_config_init(struct phy_device *phydev)
+ 	return 0;
+ }
  
-+	/* clear the contiguous bits until the end boundary */
-+	if (count) {
-+		blkno = la_start_blk +
-+			ocfs2_clusters_to_blocks(osb->sb,
-+					start - count);
-+
-+		trace_ocfs2_sync_local_to_main_free(
-+				count, start - count,
-+				(unsigned long long)la_start_blk,
-+				(unsigned long long)blkno);
-+
-+		status = ocfs2_release_clusters(handle,
-+				main_bm_inode,
-+				main_bm_bh, blkno,
-+				count);
-+		if (status < 0)
-+			mlog_errno(status);
-+	}
-+
- bail:
- 	if (status)
- 		mlog_errno(status);
+-static int vsc73xx_config_aneg(struct phy_device *phydev)
+-{
+-	/* The VSC73xx switches does not like to be instructed to
+-	 * do autonegotiation in any way, it prefers that you just go
+-	 * with the power-on/reset defaults. Writing some registers will
+-	 * just make autonegotiation permanently fail.
+-	 */
+-	return 0;
+-}
+-
+ /* This adds a skew for both TX and RX clocks, so the skew should only be
+  * applied to "rgmii-id" interfaces. It may not work as expected
+  * on "rgmii-txid", "rgmii-rxid" or "rgmii" interfaces.
+@@ -444,7 +434,6 @@ static struct phy_driver vsc82xx_driver[] = {
+ 	.phy_id_mask    = 0x000ffff0,
+ 	/* PHY_GBIT_FEATURES */
+ 	.config_init    = vsc738x_config_init,
+-	.config_aneg    = vsc73xx_config_aneg,
+ 	.read_page      = vsc73xx_read_page,
+ 	.write_page     = vsc73xx_write_page,
+ }, {
+@@ -453,7 +442,6 @@ static struct phy_driver vsc82xx_driver[] = {
+ 	.phy_id_mask    = 0x000ffff0,
+ 	/* PHY_GBIT_FEATURES */
+ 	.config_init    = vsc738x_config_init,
+-	.config_aneg    = vsc73xx_config_aneg,
+ 	.read_page      = vsc73xx_read_page,
+ 	.write_page     = vsc73xx_write_page,
+ }, {
+@@ -462,7 +450,6 @@ static struct phy_driver vsc82xx_driver[] = {
+ 	.phy_id_mask    = 0x000ffff0,
+ 	/* PHY_GBIT_FEATURES */
+ 	.config_init    = vsc739x_config_init,
+-	.config_aneg    = vsc73xx_config_aneg,
+ 	.read_page      = vsc73xx_read_page,
+ 	.write_page     = vsc73xx_write_page,
+ }, {
+@@ -471,7 +458,6 @@ static struct phy_driver vsc82xx_driver[] = {
+ 	.phy_id_mask    = 0x000ffff0,
+ 	/* PHY_GBIT_FEATURES */
+ 	.config_init    = vsc739x_config_init,
+-	.config_aneg    = vsc73xx_config_aneg,
+ 	.read_page      = vsc73xx_read_page,
+ 	.write_page     = vsc73xx_write_page,
+ }, {
+-- 
+2.43.0
+
 
 
