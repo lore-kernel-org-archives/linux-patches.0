@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C311D0492;
-	Tue, 15 Oct 2024 11:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B731D0492;
+	Tue, 15 Oct 2024 11:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993287; cv=none; b=NhQXYuqmVeFbHtOpxOuUlL4ioACZvlSdmrnxJEI5m++yINHZt85HOZT4Zqmma58ny/Nhv6zGutx8AYtJ+ngaA0XJL3vhONzjxCVFDpDXFL0vFj10q/rLMw6uwBRZvG37G7waCkq1W6gmqWHX5Kqgd3NBk3Ze2HQ3dUxFv3iagBw=
+	t=1728993291; cv=none; b=AB/flM2aKs/5oFItVxRYLthkKT5mmv0mGdJ+vdUN0/XXyOwHDvpaTh/XfxMaW07FlRvMzGEO8WvL0L3Enz10yHCS1/ADu6M6VdCk1GbJKADO1lGmsmIQtwQROsqVJWSmwlMmWyfhE0zANhOXeXp+kbm9dr9JVpNd/vHGR3eOTHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993287; c=relaxed/simple;
-	bh=Ttm6G/btj/vi5gyrJcKxFSjdh9Tc+6p2jrzRtrxVZQw=;
+	s=arc-20240116; t=1728993291; c=relaxed/simple;
+	bh=QdxkpItk8tfE5RoxI2BZnnPkG2RiK+l/L8+i8qQcEDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EAXhygOCNdYdeZ3Y5+3AJ4ZOPqeafBHGbuCE672YSex0GMEkLfKZSfnXk0uplTm8hQIn2lWThLgvXbz+XxSStKiHKYuWNwsBEDTlna0HbKSvaRq1yqn08pvUFS5L6/Kb1l46JuKz6W4CEadl6liQ23txk651z5ca6TPh/JY8pyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rh3RBGxG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aXOo14Pth/HBZ8Ip0ImM9kAdeZAjWTC2WQgBUFomJTF2OOIVgioVvcG1LpcLzFDnk9bQHHryg/FkJW7BeI0eNDw2dInO8XhmoJp4ATIv8DYpTIpTr3cmsUGU7DbrMN/3ReMVS0TLrm11TC7atWA4f18kbHcAuicHapACdnvFaSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0F8ynvL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rh3RBGxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9955C4CEC6;
-	Tue, 15 Oct 2024 11:54:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0F8ynvL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B464C4CEC6;
+	Tue, 15 Oct 2024 11:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993287;
-	bh=Ttm6G/btj/vi5gyrJcKxFSjdh9Tc+6p2jrzRtrxVZQw=;
+	s=korg; t=1728993290;
+	bh=QdxkpItk8tfE5RoxI2BZnnPkG2RiK+l/L8+i8qQcEDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rh3RBGxGyWe6XPv5DExmxzKm4CMwFiDqfSaCu4nXhxQi8WQ9mqraItIZPe6KBH84j
-	 +JFKbfAhxFqu+IUkSjoK1s+6WTC2yPX8K5nuVNFq5YahS7mZRMENCXND/BYLF3t1Nl
-	 ldLEbbiAKhX6ADR+zxG+P4HjpVQRFnZg+XKgV2vQ=
+	b=X0F8ynvL/FUo4lMUa5Hdtygk/gAEk34pbnFn/vtVjrgCwEXoglRcfNj+nYyiGZwV3
+	 lE1vwP4jqANNBkhAq4Zpl0j6dI8AJjdewRC3YToKS8ePLeZMgy/FiegcsyRvEw3Gvt
+	 fRH87l6O8Sb7hvhV2M310b3eO0md/ysHJZYknMNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Waiman Long <longman@redhat.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Xuewen Yan <xuewen.yan@unisoc.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 5.15 366/691] lockdep: fix deadlock issue between lockdep and rcu
-Date: Tue, 15 Oct 2024 13:25:14 +0200
-Message-ID: <20241015112454.872698757@linuxfoundation.org>
+	David Gow <davidgow@google.com>,
+	Kees Cook <kees@kernel.org>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 367/691] mm: only enforce minimum stack gap size if its sensible
+Date: Tue, 15 Oct 2024 13:25:15 +0200
+Message-ID: <20241015112454.912151219@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -55,215 +56,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: David Gow <davidgow@google.com>
 
-commit a6f88ac32c6e63e69c595bfae220d8641704c9b7 upstream.
+commit 69b50d4351ed924f29e3d46b159e28f70dfc707f upstream.
 
-There is a deadlock scenario between lockdep and rcu when
-rcu nocb feature is enabled, just as following call stack:
+The generic mmap_base code tries to leave a gap between the top of the
+stack and the mmap base address, but enforces a minimum gap size (MIN_GAP)
+of 128MB, which is too large on some setups.  In particular, on arm tasks
+without ADDR_LIMIT_32BIT, the STACK_TOP value is less than 128MB, so it's
+impossible to fit such a gap in.
 
-     rcuop/x
--000|queued_spin_lock_slowpath(lock = 0xFFFFFF817F2A8A80, val = ?)
--001|queued_spin_lock(inline) // try to hold nocb_gp_lock
--001|do_raw_spin_lock(lock = 0xFFFFFF817F2A8A80)
--002|__raw_spin_lock_irqsave(inline)
--002|_raw_spin_lock_irqsave(lock = 0xFFFFFF817F2A8A80)
--003|wake_nocb_gp_defer(inline)
--003|__call_rcu_nocb_wake(rdp = 0xFFFFFF817F30B680)
--004|__call_rcu_common(inline)
--004|call_rcu(head = 0xFFFFFFC082EECC28, func = ?)
--005|call_rcu_zapped(inline)
--005|free_zapped_rcu(ch = ?)// hold graph lock
--006|rcu_do_batch(rdp = 0xFFFFFF817F245680)
--007|nocb_cb_wait(inline)
--007|rcu_nocb_cb_kthread(arg = 0xFFFFFF817F245680)
--008|kthread(_create = 0xFFFFFF80803122C0)
--009|ret_from_fork(asm)
+Only enforce this minimum if MIN_GAP < MAX_GAP, as we'd prefer to honour
+MAX_GAP, which is defined proportionally, so scales better and always
+leaves us with both _some_ stack space and some room for mmap.
 
-     rcuop/y
--000|queued_spin_lock_slowpath(lock = 0xFFFFFFC08291BBC8, val = 0)
--001|queued_spin_lock()
--001|lockdep_lock()
--001|graph_lock() // try to hold graph lock
--002|lookup_chain_cache_add()
--002|validate_chain()
--003|lock_acquire
--004|_raw_spin_lock_irqsave(lock = 0xFFFFFF817F211D80)
--005|lock_timer_base(inline)
--006|mod_timer(inline)
--006|wake_nocb_gp_defer(inline)// hold nocb_gp_lock
--006|__call_rcu_nocb_wake(rdp = 0xFFFFFF817F2A8680)
--007|__call_rcu_common(inline)
--007|call_rcu(head = 0xFFFFFFC0822E0B58, func = ?)
--008|call_rcu_hurry(inline)
--008|rcu_sync_call(inline)
--008|rcu_sync_func(rhp = 0xFFFFFFC0822E0B58)
--009|rcu_do_batch(rdp = 0xFFFFFF817F266680)
--010|nocb_cb_wait(inline)
--010|rcu_nocb_cb_kthread(arg = 0xFFFFFF817F266680)
--011|kthread(_create = 0xFFFFFF8080363740)
--012|ret_from_fork(asm)
+This fixes the usercopy KUnit test suite on 32-bit arm, as it doesn't set
+any personality flags so gets the default (in this case 26-bit) task size.
+This test can be run with: ./tools/testing/kunit/kunit.py run --arch arm
+usercopy --make_options LLVM=1
 
-rcuop/x and rcuop/y are rcu nocb threads with the same nocb gp thread.
-This patch release the graph lock before lockdep call_rcu.
-
-Fixes: a0b0fd53e1e6 ("locking/lockdep: Free lock classes that are no longer in use")
-Cc: stable@vger.kernel.org
-Cc: Boqun Feng <boqun.feng@gmail.com>
-Cc: Waiman Long <longman@redhat.com>
-Cc: Carlos Llamas <cmllamas@google.com>
-Cc: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Acked-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Link: https://lore.kernel.org/r/20240620225436.3127927-1-cmllamas@google.com
+Link: https://lkml.kernel.org/r/20240803074642.1849623-2-davidgow@google.com
+Fixes: dba79c3df4a2 ("arm: use generic mmap top-down layout and brk randomization")
+Signed-off-by: David Gow <davidgow@google.com>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Cc: Alexandre Ghiti <alex@ghiti.fr>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/locking/lockdep.c |   48 +++++++++++++++++++++++++++++++----------------
- 1 file changed, 32 insertions(+), 16 deletions(-)
+ mm/util.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/locking/lockdep.c
-+++ b/kernel/locking/lockdep.c
-@@ -6028,25 +6028,27 @@ static struct pending_free *get_pending_
- static void free_zapped_rcu(struct rcu_head *cb);
+--- a/mm/util.c
++++ b/mm/util.c
+@@ -430,7 +430,7 @@ static unsigned long mmap_base(unsigned
+ 	if (gap + pad > gap)
+ 		gap += pad;
  
- /*
-- * Schedule an RCU callback if no RCU callback is pending. Must be called with
-- * the graph lock held.
-- */
--static void call_rcu_zapped(struct pending_free *pf)
-+* See if we need to queue an RCU callback, must called with
-+* the lockdep lock held, returns false if either we don't have
-+* any pending free or the callback is already scheduled.
-+* Otherwise, a call_rcu() must follow this function call.
-+*/
-+static bool prepare_call_rcu_zapped(struct pending_free *pf)
- {
- 	WARN_ON_ONCE(inside_selftest());
- 
- 	if (list_empty(&pf->zapped))
--		return;
-+		return false;
- 
- 	if (delayed_free.scheduled)
--		return;
-+		return false;
- 
- 	delayed_free.scheduled = true;
- 
- 	WARN_ON_ONCE(delayed_free.pf + delayed_free.index != pf);
- 	delayed_free.index ^= 1;
- 
--	call_rcu(&delayed_free.rcu_head, free_zapped_rcu);
-+	return true;
- }
- 
- /* The caller must hold the graph lock. May be called from RCU context. */
-@@ -6072,6 +6074,7 @@ static void free_zapped_rcu(struct rcu_h
- {
- 	struct pending_free *pf;
- 	unsigned long flags;
-+	bool need_callback;
- 
- 	if (WARN_ON_ONCE(ch != &delayed_free.rcu_head))
- 		return;
-@@ -6083,14 +6086,18 @@ static void free_zapped_rcu(struct rcu_h
- 	pf = delayed_free.pf + (delayed_free.index ^ 1);
- 	__free_zapped_classes(pf);
- 	delayed_free.scheduled = false;
-+	need_callback =
-+		prepare_call_rcu_zapped(delayed_free.pf + delayed_free.index);
-+	lockdep_unlock();
-+	raw_local_irq_restore(flags);
- 
- 	/*
--	 * If there's anything on the open list, close and start a new callback.
--	 */
--	call_rcu_zapped(delayed_free.pf + delayed_free.index);
-+	* If there's pending free and its callback has not been scheduled,
-+	* queue an RCU callback.
-+	*/
-+	if (need_callback)
-+		call_rcu(&delayed_free.rcu_head, free_zapped_rcu);
- 
--	lockdep_unlock();
--	raw_local_irq_restore(flags);
- }
- 
- /*
-@@ -6130,6 +6137,7 @@ static void lockdep_free_key_range_reg(v
- {
- 	struct pending_free *pf;
- 	unsigned long flags;
-+	bool need_callback;
- 
- 	init_data_structures_once();
- 
-@@ -6137,10 +6145,11 @@ static void lockdep_free_key_range_reg(v
- 	lockdep_lock();
- 	pf = get_pending_free();
- 	__lockdep_free_key_range(pf, start, size);
--	call_rcu_zapped(pf);
-+	need_callback = prepare_call_rcu_zapped(pf);
- 	lockdep_unlock();
- 	raw_local_irq_restore(flags);
--
-+	if (need_callback)
-+		call_rcu(&delayed_free.rcu_head, free_zapped_rcu);
- 	/*
- 	 * Wait for any possible iterators from look_up_lock_class() to pass
- 	 * before continuing to free the memory they refer to.
-@@ -6234,6 +6243,7 @@ static void lockdep_reset_lock_reg(struc
- 	struct pending_free *pf;
- 	unsigned long flags;
- 	int locked;
-+	bool need_callback = false;
- 
- 	raw_local_irq_save(flags);
- 	locked = graph_lock();
-@@ -6242,11 +6252,13 @@ static void lockdep_reset_lock_reg(struc
- 
- 	pf = get_pending_free();
- 	__lockdep_reset_lock(pf, lock);
--	call_rcu_zapped(pf);
-+	need_callback = prepare_call_rcu_zapped(pf);
- 
- 	graph_unlock();
- out_irq:
- 	raw_local_irq_restore(flags);
-+	if (need_callback)
-+		call_rcu(&delayed_free.rcu_head, free_zapped_rcu);
- }
- 
- /*
-@@ -6290,6 +6302,7 @@ void lockdep_unregister_key(struct lock_
- 	struct pending_free *pf;
- 	unsigned long flags;
- 	bool found = false;
-+	bool need_callback = false;
- 
- 	might_sleep();
- 
-@@ -6310,11 +6323,14 @@ void lockdep_unregister_key(struct lock_
- 	if (found) {
- 		pf = get_pending_free();
- 		__lockdep_free_key_range(pf, key, 1);
--		call_rcu_zapped(pf);
-+		need_callback = prepare_call_rcu_zapped(pf);
- 	}
- 	lockdep_unlock();
- 	raw_local_irq_restore(flags);
- 
-+	if (need_callback)
-+		call_rcu(&delayed_free.rcu_head, free_zapped_rcu);
-+
- 	/* Wait until is_dynamic_key() has finished accessing k->hash_entry. */
- 	synchronize_rcu();
- }
+-	if (gap < MIN_GAP)
++	if (gap < MIN_GAP && MIN_GAP < MAX_GAP)
+ 		gap = MIN_GAP;
+ 	else if (gap > MAX_GAP)
+ 		gap = MAX_GAP;
 
 
