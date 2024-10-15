@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC48D15099D;
-	Tue, 15 Oct 2024 11:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B5815099D;
+	Tue, 15 Oct 2024 11:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992217; cv=none; b=uWO6Qk1S2lE8NUBDpRcPC+jbxGT8R+Csp6Gmrp40RYYnTyJm9xqGAM35jGMBv6XopBCc38H/82RruiSYMoPKtXBRb7fiE13ubzCigAE37SmJOPOH9qejwwcff7g0niQE2ohUmuCKTsl0uB0e6TZ+Hh8+BhAwLsr/lR3a4LouNoM=
+	t=1728992221; cv=none; b=ggPIaMoh3DG5Aa837jlu/lPvPEHeMXtgu736Pjs1B3t7h+IQEi3OXbtx+C2TUcMnjKrppFMUkXn12fdG3ORRTFDCZ88mTd3OVqX1lFQFM0KTwiT4SHbeAiHQqQ4IGXN8WTMWoqWrkPmr+jVT5A8sWS31HUxHRiYUXkxSpOTlJVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992217; c=relaxed/simple;
-	bh=K9Zbzz69cavpPM38NjMlsQPFAimrq+XmAqztNxdjk4Y=;
+	s=arc-20240116; t=1728992221; c=relaxed/simple;
+	bh=Y+W9lIYuzlGgTjb9lZBdZvsM4zefcGiWv7AyUOo/TPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dsH6jXWdYBR0WJujFnMdGXOd6E+azkRZS7uy8m34UGKPx+FDDnpnwswlB5DwUSp4nGOcIbiLOkGFS1Uvic+UV7d2pfImvBWNk/0c6k3rAAU4sP//KuXaQgicdqTQOg12Ak/ExV7KxrImo8pxYToksZMoGIhMg92qfKuFrqrZQxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9pJm2zh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M+5jDHEvxkiK9vPSdZBbjeQUkVg/Bywme50Ao7QSbmf2Fvfa9d3g7T9ZwNzPU/a3jpL71EtMiPkVX0Jb6LGXRScji66lw20T1xpoj8u33nmzMzXzoxyJ4EQNaw+KVhxr7awXd7lRpTJ0fXQ/ypvET/Ow4zT0F3J89XszyOUX3Mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EInzWOri; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9pJm2zh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7F5C4CEC6;
-	Tue, 15 Oct 2024 11:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EInzWOri"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663A2C4CEC6;
+	Tue, 15 Oct 2024 11:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992216;
-	bh=K9Zbzz69cavpPM38NjMlsQPFAimrq+XmAqztNxdjk4Y=;
+	s=korg; t=1728992220;
+	bh=Y+W9lIYuzlGgTjb9lZBdZvsM4zefcGiWv7AyUOo/TPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9pJm2zhjnHk77L7pLVRzeA2DfJ+186Noo8so+f62ttqGQFWb2w9xcvpNx621/c3P
-	 7yxx0MTlirm1OsjDS9ypn2RKUS0A8Ur8E+4RZf1G6Fu2KXv9XUC3SsTEI3rskgwkya
-	 tzSYhxt2N4fYRyPEepdjO/fnXbz8VLZGLgya9QiE=
+	b=EInzWOrifk4WemcnLFbN+zRxCcQNzN8KTsWWdj+e3eJr8Qc8XUoz58GjHvaqZIELy
+	 6gqAFfm5hjCU6WscyoZWsQEKKvQLpzANT89T5CNsGgvaK/KOcSv78L4rCYaQ5dMNhi
+	 1ud6sI4ObtI3cwnen4dAhFWIYOkDI8EXgWcEkal8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 053/691] netfilter: nft_socket: fix sk refcount leaks
-Date: Tue, 15 Oct 2024 13:20:01 +0200
-Message-ID: <20241015112442.451313605@linuxfoundation.org>
+Subject: [PATCH 5.15 054/691] net: dpaa: Pad packets to ETH_ZLEN
+Date: Tue, 15 Oct 2024 13:20:02 +0200
+Message-ID: <20241015112442.491872602@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,57 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit 8b26ff7af8c32cb4148b3e147c52f9e4c695209c ]
+[ Upstream commit cbd7ec083413c6a2e0c326d49e24ec7d12c7a9e0 ]
 
-We must put 'sk' reference before returning.
+When sending packets under 60 bytes, up to three bytes of the buffer
+following the data may be leaked. Avoid this by extending all packets to
+ETH_ZLEN, ensuring nothing is leaked in the padding. This bug can be
+reproduced by running
 
-Fixes: 039b1f4f24ec ("netfilter: nft_socket: fix erroneous socket assignment")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+	$ ping -s 11 destination
+
+Fixes: 9ad1a3749333 ("dpaa_eth: add support for DPAA Ethernet")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240910143144.1439910-1-sean.anderson@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_socket.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/freescale/dpaa/dpaa_eth.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_socket.c b/net/netfilter/nft_socket.c
-index 3c444fcb20ec..3cbfb6ba32c7 100644
---- a/net/netfilter/nft_socket.c
-+++ b/net/netfilter/nft_socket.c
-@@ -108,13 +108,13 @@ static void nft_socket_eval(const struct nft_expr *expr,
- 			*dest = sk->sk_mark;
- 		} else {
- 			regs->verdict.code = NFT_BREAK;
--			return;
-+			goto out_put_sk;
- 		}
- 		break;
- 	case NFT_SOCKET_WILDCARD:
- 		if (!sk_fullsock(sk)) {
- 			regs->verdict.code = NFT_BREAK;
--			return;
-+			goto out_put_sk;
- 		}
- 		nft_socket_wildcard(pkt, regs, sk, dest);
- 		break;
-@@ -122,7 +122,7 @@ static void nft_socket_eval(const struct nft_expr *expr,
- 	case NFT_SOCKET_CGROUPV2:
- 		if (!nft_sock_get_eval_cgroupv2(dest, sk, pkt, priv->level)) {
- 			regs->verdict.code = NFT_BREAK;
--			return;
-+			goto out_put_sk;
- 		}
- 		break;
- #endif
-@@ -131,6 +131,7 @@ static void nft_socket_eval(const struct nft_expr *expr,
- 		regs->verdict.code = NFT_BREAK;
- 	}
+diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
+index 119f560b2e65..6fbf4efa0786 100644
+--- a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
++++ b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
+@@ -2269,12 +2269,12 @@ static netdev_tx_t
+ dpaa_start_xmit(struct sk_buff *skb, struct net_device *net_dev)
+ {
+ 	const int queue_mapping = skb_get_queue_mapping(skb);
+-	bool nonlinear = skb_is_nonlinear(skb);
+ 	struct rtnl_link_stats64 *percpu_stats;
+ 	struct dpaa_percpu_priv *percpu_priv;
+ 	struct netdev_queue *txq;
+ 	struct dpaa_priv *priv;
+ 	struct qm_fd fd;
++	bool nonlinear;
+ 	int offset = 0;
+ 	int err = 0;
  
-+out_put_sk:
- 	if (sk != skb->sk)
- 		sock_gen_put(sk);
- }
+@@ -2284,6 +2284,13 @@ dpaa_start_xmit(struct sk_buff *skb, struct net_device *net_dev)
+ 
+ 	qm_fd_clear_fd(&fd);
+ 
++	/* Packet data is always read as 32-bit words, so zero out any part of
++	 * the skb which might be sent if we have to pad the packet
++	 */
++	if (__skb_put_padto(skb, ETH_ZLEN, false))
++		goto enomem;
++
++	nonlinear = skb_is_nonlinear(skb);
+ 	if (!nonlinear) {
+ 		/* We're going to store the skb backpointer at the beginning
+ 		 * of the data buffer, so we need a privately owned skb
 -- 
 2.43.0
 
