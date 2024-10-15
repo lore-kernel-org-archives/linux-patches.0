@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9640F1D9A5F;
-	Tue, 15 Oct 2024 11:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8B51EF0AB;
+	Tue, 15 Oct 2024 11:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992545; cv=none; b=jqk0tJ3YCMZp1pIUEFtAhYT7bSD7Fsh1FTcmdI+L7xpX5UlIJjdo+5MqkpRE9oD8aIyezacsn6giY+tWBKdQupkSHZNnnNcvE3qMnSaHZ0Y2iOy6U5iLJDAC6ZCkO5jq2qyUQ5XftYrxko9ekX3qbNDioZxvH77iFsnvQ5fQQIY=
+	t=1728992549; cv=none; b=gmcipBijS47mY4TuCpr0w5/MEqLWWv7SWYjSYw7TzKmspfFjx9Jc1iN3Nk5xmFK1OqzPL97KPrfW1VH+DwMiXYspltBOM1hDN7+kwE2wAZ0LdqpOFKfJ7fMgbdtbqs764+V3N4Ns1a2dyejrQRB+FPc97oH80gH7WBVe7YKgRmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992545; c=relaxed/simple;
-	bh=0T6UpPSRWuDeUTWyNdJVNAfVskjP0t7hiGvEpafZQ1M=;
+	s=arc-20240116; t=1728992549; c=relaxed/simple;
+	bh=Dp8wdZaYb9qG4skUE0397wMMy9jOTvFLiQQqiYH7UZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LdYevxfw7uyxdEoTN0z+Jr2cHvvX5OvGJ2Ip99Sd365izx5Qbno/6uop5d+ABKD/tY8jcsgncSg6L6pOmil/zDFGwryEQ7axmrVEqSmBfRZ2Noo3rR2IDH11XNQztttWruvVMKHID9CF0e6wFIl6b7pokD/Qe6TeHCHWIb8rXn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGVoExKi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LVKr1mFm2nm337BLjHNDYyawQxD/6SZ2k2chV1T/tMzVSFtBzpIHmj2/NqUDZD4cRMEUJY+7EUfoRfraDlDM9YdkSeGpaknW36kE0QfGxwIHGV0mAFAyiL9qBdPy7Gp62chcRn2RvyxkWP3s/niy9SXMDgRwLH77EaqizfauOtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snqCbo9j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGVoExKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088C5C4CEC6;
-	Tue, 15 Oct 2024 11:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snqCbo9j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644CDC4CEC6;
+	Tue, 15 Oct 2024 11:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992545;
-	bh=0T6UpPSRWuDeUTWyNdJVNAfVskjP0t7hiGvEpafZQ1M=;
+	s=korg; t=1728992548;
+	bh=Dp8wdZaYb9qG4skUE0397wMMy9jOTvFLiQQqiYH7UZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FGVoExKi9WMBt2lIsh3h3tWdoMuwxdQgzmbPLXYr+/qVxhT5r3NGBWS8htfK3Hxdu
-	 304+41kdvIz2rkTwh5k+ivFvO2bdC3Sv7hcr+WFT9I1PxLBlSPYlWUBrrJk3eX7u7H
-	 bwY67uyBPyVPkU6YIAjxq9YeP/JOTjVv1F2YWaKE=
+	b=snqCbo9jSk2MGbid+obk3kThpGyrNFj9s1N5QWLb/YuC7e5R5t3UaGpAdkVLQ2MN5
+	 5GDduar8PKkAZGnWk0RCsyFj7xvbuMRjmEUhniN8r91VnHqL0ePQ5mD0jpPAVhuGKQ
+	 W/4W+R+J9GBgkZqWIYwiHwf7yrDAFRtrHX5ICt1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Molina Sabido, Gerardo" <gerardo.molina.sabido@intel.com>,
-	Aaron Lu <aaron.lu@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Kai Huang <kai.huang@intel.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Zhimin Luo <zhimin.luo@intel.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Kees Cook <kees@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 116/691] x86/sgx: Fix deadlock in SGX NUMA node search
-Date: Tue, 15 Oct 2024 13:21:04 +0200
-Message-ID: <20241015112444.963437386@linuxfoundation.org>
+Subject: [PATCH 5.15 117/691] wifi: cfg80211: fix UBSAN noise in cfg80211_wext_siwscan()
+Date: Tue, 15 Oct 2024 13:21:05 +0200
+Message-ID: <20241015112445.002925791@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -55,83 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Lu <aaron.lu@intel.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 9c936844010466535bd46ea4ce4656ef17653644 ]
+[ Upstream commit a26a5107bc52922cf5f67361e307ad66547b51c7 ]
 
-When the current node doesn't have an EPC section configured by firmware
-and all other EPC sections are used up, CPU can get stuck inside the
-while loop that looks for an available EPC page from remote nodes
-indefinitely, leading to a soft lockup. Note how nid_of_current will
-never be equal to nid in that while loop because nid_of_current is not
-set in sgx_numa_mask.
+Looking at https://syzkaller.appspot.com/bug?extid=1a3986bbd3169c307819
+and running reproducer with CONFIG_UBSAN_BOUNDS, I've noticed the
+following:
 
-Also worth mentioning is that it's perfectly fine for the firmware not
-to setup an EPC section on a node. While setting up an EPC section on
-each node can enhance performance, it is not a requirement for
-functionality.
+[ T4985] UBSAN: array-index-out-of-bounds in net/wireless/scan.c:3479:25
+[ T4985] index 164 is out of range for type 'struct ieee80211_channel *[]'
+<...skipped...>
+[ T4985] Call Trace:
+[ T4985]  <TASK>
+[ T4985]  dump_stack_lvl+0x1c2/0x2a0
+[ T4985]  ? __pfx_dump_stack_lvl+0x10/0x10
+[ T4985]  ? __pfx__printk+0x10/0x10
+[ T4985]  __ubsan_handle_out_of_bounds+0x127/0x150
+[ T4985]  cfg80211_wext_siwscan+0x11a4/0x1260
+<...the rest is not too useful...>
 
-Rework the loop to start and end on *a* node that has SGX memory. This
-avoids the deadlock looking for the current SGX-lacking node to show up
-in the loop when it never will.
+Even if we do 'creq->n_channels = n_channels' before 'creq->ssids =
+(void *)&creq->channels[n_channels]', UBSAN treats the latter as
+off-by-one error. Fix this by using pointer arithmetic rather than
+an expression with explicit array indexing and use convenient
+'struct_size()' to simplify the math here and in 'kzalloc()' above.
 
-Fixes: 901ddbb9ecf5 ("x86/sgx: Add a basic NUMA allocation scheme to sgx_alloc_epc_page()")
-Reported-by: "Molina Sabido, Gerardo" <gerardo.molina.sabido@intel.com>
-Signed-off-by: Aaron Lu <aaron.lu@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Tested-by: Zhimin Luo <zhimin.luo@intel.com>
-Link: https://lore.kernel.org/all/20240905080855.1699814-2-aaron.lu%40intel.com
+Fixes: 5ba63533bbf6 ("cfg80211: fix alignment problem in scan request")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Link: https://patch.msgid.link/20240905150400.126386-1-dmantipov@yandex.ru
+[fix coding style for multi-line calculation]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/sgx/main.c | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ net/wireless/scan.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/sgx/main.c b/arch/x86/kernel/cpu/sgx/main.c
-index 4ea48acf55faa..ad453b4387a44 100644
---- a/arch/x86/kernel/cpu/sgx/main.c
-+++ b/arch/x86/kernel/cpu/sgx/main.c
-@@ -505,24 +505,25 @@ struct sgx_epc_page *__sgx_alloc_epc_page(void)
- {
- 	struct sgx_epc_page *page;
- 	int nid_of_current = numa_node_id();
--	int nid = nid_of_current;
-+	int nid_start, nid;
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index b8e28025710dd..dc41b31073e75 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -2813,8 +2813,8 @@ int cfg80211_wext_siwscan(struct net_device *dev,
+ 		n_channels = ieee80211_get_num_supported_channels(wiphy);
+ 	}
  
--	if (node_isset(nid_of_current, sgx_numa_mask)) {
--		page = __sgx_alloc_epc_page_from_node(nid_of_current);
--		if (page)
--			return page;
--	}
--
--	/* Fall back to the non-local NUMA nodes: */
--	while (true) {
--		nid = next_node_in(nid, sgx_numa_mask);
--		if (nid == nid_of_current)
--			break;
-+	/*
-+	 * Try local node first. If it doesn't have an EPC section,
-+	 * fall back to the non-local NUMA nodes.
-+	 */
-+	if (node_isset(nid_of_current, sgx_numa_mask))
-+		nid_start = nid_of_current;
-+	else
-+		nid_start = next_node_in(nid_of_current, sgx_numa_mask);
- 
-+	nid = nid_start;
-+	do {
- 		page = __sgx_alloc_epc_page_from_node(nid);
- 		if (page)
- 			return page;
--	}
-+
-+		nid = next_node_in(nid, sgx_numa_mask);
-+	} while (nid != nid_start);
- 
- 	return ERR_PTR(-ENOMEM);
- }
+-	creq = kzalloc(sizeof(*creq) + sizeof(struct cfg80211_ssid) +
+-		       n_channels * sizeof(void *),
++	creq = kzalloc(struct_size(creq, channels, n_channels) +
++		       sizeof(struct cfg80211_ssid),
+ 		       GFP_ATOMIC);
+ 	if (!creq) {
+ 		err = -ENOMEM;
+@@ -2824,7 +2824,7 @@ int cfg80211_wext_siwscan(struct net_device *dev,
+ 	creq->wiphy = wiphy;
+ 	creq->wdev = dev->ieee80211_ptr;
+ 	/* SSIDs come after channels */
+-	creq->ssids = (void *)&creq->channels[n_channels];
++	creq->ssids = (void *)creq + struct_size(creq, channels, n_channels);
+ 	creq->n_channels = n_channels;
+ 	creq->n_ssids = 1;
+ 	creq->scan_start = jiffies;
 -- 
 2.43.0
 
