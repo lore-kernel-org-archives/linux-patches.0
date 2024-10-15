@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23391C07C4;
-	Tue, 15 Oct 2024 13:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AEE1C07C4;
+	Tue, 15 Oct 2024 13:01:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997280; cv=none; b=kvQKrfNVJaV64h085vB+qcmN0l6BG8WLMtcbVZZiSOvlNnngnkIvg5KNWtxDM5CObeaZM6RL/dzaKu6o/sqV0i8zlptrDMoAQ87LBspfn8FwJIbhrmF93i8N1NV9kR72DgzCOfU/aqN+TE8rDnJjGJ7C02z2fks4BP5JiNElQrc=
+	t=1728997284; cv=none; b=B8b2q2GSOF2ZZNh+WESl9kPGvMLRXRdJEu1ZpKyx4sT8wihlJQ4/ho7PDz+LBTNZchYPdw0j/tInTtZlWM8KiFI+txf/Bp1OUt93p7B3tzOXY8vLPJi8RC7yTfvwrVFCW25a1h4aGoe+EHNrKLKDbqH5HPR6MBUjhTsLEcK4Brw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997280; c=relaxed/simple;
-	bh=ZbZNSgBNx9gOc6ZQC3B5dXBJ3kVi0NTjlG7sD7VCBKU=;
+	s=arc-20240116; t=1728997284; c=relaxed/simple;
+	bh=1a8m/mWEeaTlCfvL97KvZ5BgT1szXiIhFlm0HtO85og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jfzd86E83E7FlUT8YeL6AEwejgdxPKvwiDNGUfVuUJjeOLz5+CaDX2ry4xTRlz2VgHGJDySkBLL0twZVE3/dGBI95PVzq/90klYrjdyV4hZ9WxGKYl5yE6RNSY4ysLOtP570bUM7MMMrDGWAKF24G8Q1vjapXr/6L0WiBXoYCr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBfQ4vxF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YoUF/Uzq0QnobIzRiSErDCaaL2W4uuNR2ha7MntQvw3efA/wJrttBLx+FumkX5rZNzEaYN8ArzP0LaJVxgF+wgnjpKi2Y6xQnRFxk/3pVMus35FtdG5gEtSrAA5I6dG/f58LVGoxlQ9mT6CmgS3PsmGTWuAbkjCfakNCs/WMyz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NapMgkV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBfQ4vxF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5F1C4CEC6;
-	Tue, 15 Oct 2024 13:01:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NapMgkV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85DCAC4CEC6;
+	Tue, 15 Oct 2024 13:01:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997280;
-	bh=ZbZNSgBNx9gOc6ZQC3B5dXBJ3kVi0NTjlG7sD7VCBKU=;
+	s=korg; t=1728997284;
+	bh=1a8m/mWEeaTlCfvL97KvZ5BgT1szXiIhFlm0HtO85og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iBfQ4vxFNfURi3O8t6Ov6U1TTzPdwqKg+mIEBBIpcWVniEdT3/7ES9m/dtTWrbl3u
-	 zypRCp5QmHVwc3JIxZh4yv5OxZYpZSiDfMm8VX2blY5y9iTNL9GRrupQviZEZxZPnK
-	 zajvIXPZnydP9bzywHIABNYLRuASKVzHHTi8JuB4=
+	b=NapMgkV25eG4ZMy64e4oshX2TXvld4j75sj+zeeIQ1PilX9O7MG3SMF8lcccQx3yJ
+	 R5zoj2RT64Wcid7nyJQTbrARIz6x0Dlv4uFDrDdnfbGvsJYCCiNh4cadronvMr2n60
+	 T8GyyccCpkkM8zmd93nLNHRhEvfsNfp14GSlCb5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 105/518] hwmon: (max16065) Remove use of i2c_match_id()
-Date: Tue, 15 Oct 2024 14:40:09 +0200
-Message-ID: <20241015123921.054055609@linuxfoundation.org>
+Subject: [PATCH 5.10 096/518] spi: ppc4xx: Avoid returning 0 when failed to parse and map IRQ
+Date: Tue, 15 Oct 2024 14:40:00 +0200
+Message-ID: <20241015123920.707285382@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,68 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Davis <afd@ti.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 5a71654b398e3471f0169c266a3587cf09e1200c ]
+[ Upstream commit 7781f1d120fec8624fc654eda900fc8748262082 ]
 
-The function i2c_match_id() is used to fetch the matching ID from
-the i2c_device_id table. This is often used to then retrieve the
-matching driver_data. This can be done in one step with the helper
-i2c_get_match_data().
+0 is incorrect error code when failed to parse and map IRQ.
+Replace OF specific old API for IRQ retrieval with a generic
+one to fix this issue.
 
-This helper has a couple other benefits:
- * It doesn't need the i2c_device_id passed in so we do not need
-   to have that forward declared, allowing us to remove those or
-   move the i2c_device_id table down to its more natural spot
-   with the other module info.
- * It also checks for device match data, which allows for OF and
-   ACPI based probing. That means we do not have to manually check
-   those first and can remove those checks.
-
-Signed-off-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20240403203633.914389-20-afd@ti.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 119abf7d1815 ("hwmon: (max16065) Fix alarm attributes")
+Fixes: 0f245463b01e ("spi: ppc4xx: handle irq_of_parse_and_map() errors")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20240814144525.2648450-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/max16065.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/spi/spi-ppc4xx.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/max16065.c b/drivers/hwmon/max16065.c
-index 6a09ab606fcbf..072f22f85dc0c 100644
---- a/drivers/hwmon/max16065.c
-+++ b/drivers/hwmon/max16065.c
-@@ -494,8 +494,6 @@ static const struct attribute_group max16065_max_group = {
- 	.is_visible = max16065_secondary_is_visible,
- };
+diff --git a/drivers/spi/spi-ppc4xx.c b/drivers/spi/spi-ppc4xx.c
+index bfcfafda3eb1c..6413bcd28913a 100644
+--- a/drivers/spi/spi-ppc4xx.c
++++ b/drivers/spi/spi-ppc4xx.c
+@@ -26,7 +26,6 @@
+ #include <linux/errno.h>
+ #include <linux/wait.h>
+ #include <linux/of_address.h>
+-#include <linux/of_irq.h>
+ #include <linux/of_platform.h>
+ #include <linux/interrupt.h>
+ #include <linux/delay.h>
+@@ -410,9 +409,10 @@ static int spi_ppc4xx_of_probe(struct platform_device *op)
+ 	}
  
--static const struct i2c_device_id max16065_id[];
--
- static int max16065_probe(struct i2c_client *client)
- {
- 	struct i2c_adapter *adapter = client->adapter;
-@@ -506,7 +504,7 @@ static int max16065_probe(struct i2c_client *client)
- 	bool have_secondary;		/* true if chip has secondary limits */
- 	bool secondary_is_max = false;	/* secondary limits reflect max */
- 	int groups = 0;
--	const struct i2c_device_id *id = i2c_match_id(max16065_id, client);
-+	enum chips chip = (uintptr_t)i2c_get_match_data(client);
+ 	/* Request IRQ */
+-	hw->irqnum = irq_of_parse_and_map(np, 0);
+-	if (hw->irqnum <= 0)
++	ret = platform_get_irq(op, 0);
++	if (ret < 0)
+ 		goto free_host;
++	hw->irqnum = ret;
  
- 	if (!i2c_check_functionality(adapter, I2C_FUNC_SMBUS_BYTE_DATA
- 				     | I2C_FUNC_SMBUS_READ_WORD_DATA))
-@@ -519,9 +517,9 @@ static int max16065_probe(struct i2c_client *client)
- 	data->client = client;
- 	mutex_init(&data->update_lock);
- 
--	data->num_adc = max16065_num_adc[id->driver_data];
--	data->have_current = max16065_have_current[id->driver_data];
--	have_secondary = max16065_have_secondary[id->driver_data];
-+	data->num_adc = max16065_num_adc[chip];
-+	data->have_current = max16065_have_current[chip];
-+	have_secondary = max16065_have_secondary[chip];
- 
- 	if (have_secondary) {
- 		val = i2c_smbus_read_byte_data(client, MAX16065_SW_ENABLE);
+ 	ret = request_irq(hw->irqnum, spi_ppc4xx_int,
+ 			  0, "spi_ppc4xx_of", (void *)hw);
 -- 
 2.43.0
 
