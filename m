@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADFE1C07DB;
-	Tue, 15 Oct 2024 13:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA2F1C07DB;
+	Tue, 15 Oct 2024 13:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997609; cv=none; b=kG4NEZhPaiT59O9TTj6Cirbbh3WNqM9nHextWndLZGmnNQ0zfFZx7y7nsadqwIhAoHo/NqrkINJyxk4w1NakjyZdZbZRJ4SNfC4q0Oh9jSrcLv+Yok7y/9quMg6W+fxBNBKZk2trW9XMVkcbodS6M2BM/ytTmDJ4aRuIiPPB7gc=
+	t=1728997612; cv=none; b=FEX1eL79+tUFvwXS42ko4c4WEubmBO11X+0pzPcIAnQgxtIUXpR1Qr8pdhPQbGwHuUyDfnbO5Oi6AzAqeDo31LiNzMbQm2CO/jyggBi5EBR9x5KR1ffZXvidTkXq+8lYrSYFcfjCT9pPTqcty4br3tVk19MqK3IbmAKvLm4TLDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997609; c=relaxed/simple;
-	bh=bmjDflcShSPyufruBSo7fzJKtLVc7tEDJEHsJ7N85kg=;
+	s=arc-20240116; t=1728997612; c=relaxed/simple;
+	bh=dV3tSXSGNAPSqboE7Ssxt/0+hHzLZuUhJkzPlTwNB5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pW43py1km8nqY0rQPJRjBvqU24sHRmgOJuZYmAOJK9hrzcSpY30tCqYPA67h9qqxy9n/HhJ+gUl14DFf9vzloQ7XIubzxUMdFIyDUFM78xgS62eaW5QPQWRtoI9pe37K/ZF2ZbyK5qVh7Sz8PcMgxRuWd6vKvLwUMKHNgt4m//k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKLihY3b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qB4N96/Q3BZrDewQbgsRquoXaKt5avJ2gZ1vYZIUbyui+keFrgBChLiwLd9bA5/ju7zjkJax67EyTDte2/QUQdhOLVOA5N9K4x2P0dMBjBv69eW1Jxy4sVY8OFWplLpExSAmrYKxygwG7NCqlqhvQ2+Ro44u5wpSzZUb2/e/jKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlihQL9c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKLihY3b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C792DC4CEC6;
-	Tue, 15 Oct 2024 13:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlihQL9c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA30FC4CEC6;
+	Tue, 15 Oct 2024 13:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997609;
-	bh=bmjDflcShSPyufruBSo7fzJKtLVc7tEDJEHsJ7N85kg=;
+	s=korg; t=1728997612;
+	bh=dV3tSXSGNAPSqboE7Ssxt/0+hHzLZuUhJkzPlTwNB5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AKLihY3bHOj/HO+D3X3IYOzAlRWoOLaSxab0RuTRkpbj17w2CgHMENi7u+ExNLrOD
-	 F22N1D90qtGwAjUSBZoiJfd/Ga2pehE9bjvt1IUriyChsAtud1T2HB8cXkk1pU7vEl
-	 ZCMzsWc11lON1+5hr/CWVc2/IWM0mBTVrcMbWVGg=
+	b=ZlihQL9c9vc7jUuriUkd/SgAJNgtxKw1+yFWQmir+mj8ccoqTZXaAlHMt2GgI6jR6
+	 SBdUb3z4d0Rao+N9D85b8tDHiUs29MmnKlVwMT04A/4q36NF44QaNaHN49E7SxqMBU
+	 153D6NJKzePg3gG1NL8J2TLy5CsrQ8GCJRk7qr/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Lobanov <m.lobanov@rosalinux.ru>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 232/518] drbd: Add NULL check for net_conf to prevent dereference in state validation
-Date: Tue, 15 Oct 2024 14:42:16 +0200
-Message-ID: <20241015123925.947478001@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 203/518] net: ipv6: select DST_CACHE from IPV6_RPL_LWTUNNEL
+Date: Tue, 15 Oct 2024 14:41:47 +0200
+Message-ID: <20241015123924.819612627@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -44,42 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikhail Lobanov <m.lobanov@rosalinux.ru>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-commit a5e61b50c9f44c5edb6e134ede6fee8806ffafa9 upstream.
+[ Upstream commit 93c21077bb9ba08807c459982d440dbbee4c7af3 ]
 
-If the net_conf pointer is NULL and the code attempts to access its
-fields without a check, it will lead to a null pointer dereference.
-Add a NULL check before dereferencing the pointer.
+The rpl sr tunnel code contains calls to dst_cache_*() which are
+only present when the dst cache is built.
+Select DST_CACHE to build the dst cache, similar to other kconfig
+options in the same file.
+Compiling the rpl sr tunnel without DST_CACHE will lead to linker
+errors.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 44ed167da748 ("drbd: rcu_read_lock() and rcu_dereference() for tconn->net_conf")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
-Link: https://lore.kernel.org/r/20240909133740.84297-1-m.lobanov@rosalinux.ru
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a7a29f9c361f ("net: ipv6: add rpl sr tunnel")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Simon Horman <horms@kernel.org> # build-tested
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_state.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/block/drbd/drbd_state.c
-+++ b/drivers/block/drbd/drbd_state.c
-@@ -876,7 +876,7 @@ is_valid_state(struct drbd_device *devic
- 		  ns.disk == D_OUTDATED)
- 		rv = SS_CONNECTED_OUTDATES;
- 
--	else if ((ns.conn == C_VERIFY_S || ns.conn == C_VERIFY_T) &&
-+	else if (nc && (ns.conn == C_VERIFY_S || ns.conn == C_VERIFY_T) &&
- 		 (nc->verify_alg[0] == 0))
- 		rv = SS_NO_VERIFY_ALG;
- 
+diff --git a/net/ipv6/Kconfig b/net/ipv6/Kconfig
+index 747f56e0c6368..db430f7c45a25 100644
+--- a/net/ipv6/Kconfig
++++ b/net/ipv6/Kconfig
+@@ -322,6 +322,7 @@ config IPV6_RPL_LWTUNNEL
+ 	bool "IPv6: RPL Source Routing Header support"
+ 	depends on IPV6
+ 	select LWTUNNEL
++	select DST_CACHE
+ 	help
+ 	  Support for RFC6554 RPL Source Routing Header using the lightweight
+ 	  tunnels mechanism.
+-- 
+2.43.0
+
 
 
