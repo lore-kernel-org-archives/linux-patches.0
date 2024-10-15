@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F961C07FF;
-	Tue, 15 Oct 2024 13:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B6B1C07FF;
+	Tue, 15 Oct 2024 13:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997751; cv=none; b=kCNtzX8Aq5WIO4BpZ+MOVFrih4uvuzxa41uCPqZ07HWq0VQ9mFcEvmsXiIudq3i5u0FObGJXoGHz4VkvsPBtjR3g+tLByE1GhHvtK803St6zbNaSLl3KTaAxNfvLgaUQD+z0WI04F4Fr6F/tskyaKQ/Cf8g+/iVyUUj9oWl+o1A=
+	t=1728997754; cv=none; b=Y4vUBdlzz/MgHOmTFeoqEVPngawflmmFKblIR4C+pjiCAdStCrRS65ZCXez5mWs/d3nWjUKqnntUrtvdwy94K7Ay7uWt2O/U/cvHuRoNIGG8gi13+wyz4KmlLXiHzGu9uAhxU1+DDXie6cud4xOvm6wYHWOxQMREUalHzET4N9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997751; c=relaxed/simple;
-	bh=/m7x+kE2XqsLF7ryr6F5oJiqE1bHCRhyLn0+UGRurpA=;
+	s=arc-20240116; t=1728997754; c=relaxed/simple;
+	bh=OpT79SoeaQwHOQuj2Y6Nw8hlUHiMdWAqWw2c65rZ8E8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BySxJ+9YuUwlfIZjRJqVjIniK1tNtqIrdsQaamvcxiy9irJBpA+X2ThHvuXjUp2qjct+dnAXX8Kos6yjnldE7fG+d8KFa/XAXTt+2yCz0F5jOXXCCbpagyvzKnjmWtX3vFXO3qPR0AfDTJvLJEOpJ/Xn409/AurAq2dpAa1c9hY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kl8Gq+lu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0/v7l7Ht4EFGMA9uThW9mW0C61dlQE8jSHqWJzuScocPm+kYvF6aLJtAuzB7ijSYUWnB4JHr1YxQhd6a3B0camFeyrp6q8LBxXTPgLIjZ7G66TE/V76MeFFjUYAsWwPx21okrfmalCmbiZLpkWNSbL74IPlquToFd4dyAUjYA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hb0xXIHO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kl8Gq+lu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0E3C4CEC6;
-	Tue, 15 Oct 2024 13:09:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hb0xXIHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3AEC4CEC6;
+	Tue, 15 Oct 2024 13:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997751;
-	bh=/m7x+kE2XqsLF7ryr6F5oJiqE1bHCRhyLn0+UGRurpA=;
+	s=korg; t=1728997754;
+	bh=OpT79SoeaQwHOQuj2Y6Nw8hlUHiMdWAqWw2c65rZ8E8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kl8Gq+lukFQcABt3fw7N8ZhgjG1fUtP12wi3gae5Joc5qAQcK+vROrDlwSVu6fvr6
-	 gBjxXP1EbsEbiiEcAwNw6+8EUv4QACYwTa6VSgk5R+FCvU35/ftep2s9Z984dlCmpG
-	 7lkCVF2avPSVPF/3ul5b78WX8cXcmYI+d9ydN5F4=
+	b=hb0xXIHOUrgfnoOqG5qRIkAKTuAwmd9GxYiQOYwlQrkyUWhomU7HWeb2NAeSUUVXu
+	 VcrtHAdnEtOQdVHEci+m3thwhbPH6DX0pPFC+6mhDTMBRXSPvIJ+FMgrrYohaX6VJa
+	 hs/xqHAAq+vEX82GIfqxm78Ddhqp0UehqTmZtyns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Patrick Donnelly <pdonnell@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jonathan Davies <jonathan.davies@nutanix.com>,
+	Willem de Bruijn <willemb@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 268/518] ceph: remove the incorrect Fw reference check when dirtying pages
-Date: Tue, 15 Oct 2024 14:42:52 +0200
-Message-ID: <20241015123927.337566528@linuxfoundation.org>
+Subject: [PATCH 5.10 277/518] net: avoid potential underflow in qdisc_pkt_len_init() with UFO
+Date: Tue, 15 Oct 2024 14:43:01 +0200
+Message-ID: <20241015123927.683997647@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,35 +55,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c08dfb1b49492c09cf13838c71897493ea3b424e ]
+[ Upstream commit c20029db28399ecc50e556964eaba75c43b1e2f1 ]
 
-When doing the direct-io reads it will also try to mark pages dirty,
-but for the read path it won't hold the Fw caps and there is case
-will it get the Fw reference.
+After commit 7c6d2ecbda83 ("net: be more gentle about silly gso
+requests coming from user") virtio_net_hdr_to_skb() had sanity check
+to detect malicious attempts from user space to cook a bad GSO packet.
 
-Fixes: 5dda377cf0a6 ("ceph: set i_head_snapc when getting CEPH_CAP_FILE_WR reference")
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Then commit cf9acc90c80ec ("net: virtio_net_hdr_to_skb: count
+transport header in UFO") while fixing one issue, allowed user space
+to cook a GSO packet with the following characteristic :
+
+IPv4 SKB_GSO_UDP, gso_size=3, skb->len = 28.
+
+When this packet arrives in qdisc_pkt_len_init(), we end up
+with hdr_len = 28 (IPv4 header + UDP header), matching skb->len
+
+Then the following sets gso_segs to 0 :
+
+gso_segs = DIV_ROUND_UP(skb->len - hdr_len,
+                        shinfo->gso_size);
+
+Then later we set qdisc_skb_cb(skb)->pkt_len to back to zero :/
+
+qdisc_skb_cb(skb)->pkt_len += (gso_segs - 1) * hdr_len;
+
+This leads to the following crash in fq_codel [1]
+
+qdisc_pkt_len_init() is best effort, we only want an estimation
+of the bytes sent on the wire, not crashing the kernel.
+
+This patch is fixing this particular issue, a following one
+adds more sanity checks for another potential bug.
+
+[1]
+[   70.724101] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[   70.724561] #PF: supervisor read access in kernel mode
+[   70.724561] #PF: error_code(0x0000) - not-present page
+[   70.724561] PGD 10ac61067 P4D 10ac61067 PUD 107ee2067 PMD 0
+[   70.724561] Oops: Oops: 0000 [#1] SMP NOPTI
+[   70.724561] CPU: 11 UID: 0 PID: 2163 Comm: b358537762 Not tainted 6.11.0-virtme #991
+[   70.724561] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   70.724561] RIP: 0010:fq_codel_enqueue (net/sched/sch_fq_codel.c:120 net/sched/sch_fq_codel.c:168 net/sched/sch_fq_codel.c:230) sch_fq_codel
+[ 70.724561] Code: 24 08 49 c1 e1 06 44 89 7c 24 18 45 31 ed 45 31 c0 31 ff 89 44 24 14 4c 03 8b 90 01 00 00 eb 04 39 ca 73 37 4d 8b 39 83 c7 01 <49> 8b 17 49 89 11 41 8b 57 28 45 8b 5f 34 49 c7 07 00 00 00 00 49
+All code
+========
+   0:	24 08                	and    $0x8,%al
+   2:	49 c1 e1 06          	shl    $0x6,%r9
+   6:	44 89 7c 24 18       	mov    %r15d,0x18(%rsp)
+   b:	45 31 ed             	xor    %r13d,%r13d
+   e:	45 31 c0             	xor    %r8d,%r8d
+  11:	31 ff                	xor    %edi,%edi
+  13:	89 44 24 14          	mov    %eax,0x14(%rsp)
+  17:	4c 03 8b 90 01 00 00 	add    0x190(%rbx),%r9
+  1e:	eb 04                	jmp    0x24
+  20:	39 ca                	cmp    %ecx,%edx
+  22:	73 37                	jae    0x5b
+  24:	4d 8b 39             	mov    (%r9),%r15
+  27:	83 c7 01             	add    $0x1,%edi
+  2a:*	49 8b 17             	mov    (%r15),%rdx		<-- trapping instruction
+  2d:	49 89 11             	mov    %rdx,(%r9)
+  30:	41 8b 57 28          	mov    0x28(%r15),%edx
+  34:	45 8b 5f 34          	mov    0x34(%r15),%r11d
+  38:	49 c7 07 00 00 00 00 	movq   $0x0,(%r15)
+  3f:	49                   	rex.WB
+
+Code starting with the faulting instruction
+===========================================
+   0:	49 8b 17             	mov    (%r15),%rdx
+   3:	49 89 11             	mov    %rdx,(%r9)
+   6:	41 8b 57 28          	mov    0x28(%r15),%edx
+   a:	45 8b 5f 34          	mov    0x34(%r15),%r11d
+   e:	49 c7 07 00 00 00 00 	movq   $0x0,(%r15)
+  15:	49                   	rex.WB
+[   70.724561] RSP: 0018:ffff95ae85e6fb90 EFLAGS: 00000202
+[   70.724561] RAX: 0000000002000000 RBX: ffff95ae841de000 RCX: 0000000000000000
+[   70.724561] RDX: 0000000000000000 RSI: 0000000000000001 RDI: 0000000000000001
+[   70.724561] RBP: ffff95ae85e6fbf8 R08: 0000000000000000 R09: ffff95b710a30000
+[   70.724561] R10: 0000000000000000 R11: bdf289445ce31881 R12: ffff95ae85e6fc58
+[   70.724561] R13: 0000000000000000 R14: 0000000000000040 R15: 0000000000000000
+[   70.724561] FS:  000000002c5c1380(0000) GS:ffff95bd7fcc0000(0000) knlGS:0000000000000000
+[   70.724561] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   70.724561] CR2: 0000000000000000 CR3: 000000010c568000 CR4: 00000000000006f0
+[   70.724561] Call Trace:
+[   70.724561]  <TASK>
+[   70.724561] ? __die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434)
+[   70.724561] ? page_fault_oops (arch/x86/mm/fault.c:715)
+[   70.724561] ? exc_page_fault (./arch/x86/include/asm/irqflags.h:26 ./arch/x86/include/asm/irqflags.h:87 ./arch/x86/include/asm/irqflags.h:147 arch/x86/mm/fault.c:1489 arch/x86/mm/fault.c:1539)
+[   70.724561] ? asm_exc_page_fault (./arch/x86/include/asm/idtentry.h:623)
+[   70.724561] ? fq_codel_enqueue (net/sched/sch_fq_codel.c:120 net/sched/sch_fq_codel.c:168 net/sched/sch_fq_codel.c:230) sch_fq_codel
+[   70.724561] dev_qdisc_enqueue (net/core/dev.c:3784)
+[   70.724561] __dev_queue_xmit (net/core/dev.c:3880 (discriminator 2) net/core/dev.c:4390 (discriminator 2))
+[   70.724561] ? irqentry_enter (kernel/entry/common.c:237)
+[   70.724561] ? sysvec_apic_timer_interrupt (./arch/x86/include/asm/hardirq.h:74 (discriminator 2) arch/x86/kernel/apic/apic.c:1043 (discriminator 2) arch/x86/kernel/apic/apic.c:1043 (discriminator 2))
+[   70.724561] ? trace_hardirqs_on (kernel/trace/trace_preemptirq.c:58 (discriminator 4))
+[   70.724561] ? asm_sysvec_apic_timer_interrupt (./arch/x86/include/asm/idtentry.h:702)
+[   70.724561] ? virtio_net_hdr_to_skb.constprop.0 (./include/linux/virtio_net.h:129 (discriminator 1))
+[   70.724561] packet_sendmsg (net/packet/af_packet.c:3145 (discriminator 1) net/packet/af_packet.c:3177 (discriminator 1))
+[   70.724561] ? _raw_spin_lock_bh (./arch/x86/include/asm/atomic.h:107 (discriminator 4) ./include/linux/atomic/atomic-arch-fallback.h:2170 (discriminator 4) ./include/linux/atomic/atomic-instrumented.h:1302 (discriminator 4) ./include/asm-generic/qspinlock.h:111 (discriminator 4) ./include/linux/spinlock.h:187 (discriminator 4) ./include/linux/spinlock_api_smp.h:127 (discriminator 4) kernel/locking/spinlock.c:178 (discriminator 4))
+[   70.724561] ? netdev_name_node_lookup_rcu (net/core/dev.c:325 (discriminator 1))
+[   70.724561] __sys_sendto (net/socket.c:730 (discriminator 1) net/socket.c:745 (discriminator 1) net/socket.c:2210 (discriminator 1))
+[   70.724561] ? __sys_setsockopt (./include/linux/file.h:34 net/socket.c:2355)
+[   70.724561] __x64_sys_sendto (net/socket.c:2222 (discriminator 1) net/socket.c:2218 (discriminator 1) net/socket.c:2218 (discriminator 1))
+[   70.724561] do_syscall_64 (arch/x86/entry/common.c:52 (discriminator 1) arch/x86/entry/common.c:83 (discriminator 1))
+[   70.724561] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+[   70.724561] RIP: 0033:0x41ae09
+
+Fixes: cf9acc90c80ec ("net: virtio_net_hdr_to_skb: count transport header in UFO")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Jonathan Davies <jonathan.davies@nutanix.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jonathan Davies <jonathan.davies@nutanix.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 3465ff95cb89f..2362f2591f4ad 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -91,7 +91,6 @@ static int ceph_set_page_dirty(struct page *page)
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 5e91496fd3a36..0da9ca0a42305 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3759,7 +3759,7 @@ static void qdisc_pkt_len_init(struct sk_buff *skb)
+ 						sizeof(_tcphdr), &_tcphdr);
+ 			if (likely(th))
+ 				hdr_len += __tcp_hdrlen(th);
+-		} else {
++		} else if (shinfo->gso_type & SKB_GSO_UDP_L4) {
+ 			struct udphdr _udphdr;
  
- 	/* dirty the head */
- 	spin_lock(&ci->i_ceph_lock);
--	BUG_ON(ci->i_wr_ref == 0); // caller should hold Fw reference
- 	if (__ceph_have_pending_cap_snap(ci)) {
- 		struct ceph_cap_snap *capsnap =
- 				list_last_entry(&ci->i_cap_snaps,
+ 			if (skb_header_pointer(skb, skb_transport_offset(skb),
 -- 
 2.43.0
 
