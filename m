@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27ADB1CFEA9;
-	Tue, 15 Oct 2024 12:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840E21D95A2;
+	Tue, 15 Oct 2024 12:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993878; cv=none; b=YabuL2ab3UnmF+6zvI+IFlk3bA+Gn1WdOXf6D9Za6csVZFP4jCnvaLN7rZ1U73tuaAXPpYgVxfac0pUjL4XaNelWKKNHSIlRws2vOFZoP4cwneKo43A1jwZFO9KSEuKgfvxRBokijbbVv+aNrWeBzeENCLUM0WGlCqq8QVgOiog=
+	t=1728993881; cv=none; b=Mtv/ago7s/7W5KuAbv/hM+qqaMvByonaL8UnXLJA9DsRdnYbCO+cVmebMUNozKbNvYSduIlcBZfkJALx0KUl2cgjMas20vSlxdRBkKSQyYi/hHAKj0jHjXD98cjM/yzuIc8oCKiYTAKS+8BcDF0k9vG5vke+Ydy+kDdY3UMz6hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993878; c=relaxed/simple;
-	bh=Diu9y5E39MRohQptNJ3nQ+QS6MrGZAEK4E51at+/9eE=;
+	s=arc-20240116; t=1728993881; c=relaxed/simple;
+	bh=4abGWQbM3w1bTsoQNnEVt0+cXB8vLPgDW9Y6r89z+v0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SsSoXgvUsTpGzDdTi2q5aGVH30gYW5y7SXSMc09DNFDxXIo49eX/nrskfqFTnetImm1F6uY3a5ESnRmj2xSOkErxkeHtXKP28w817fz6RuarVbjfn9OdZBoLk+YHQHOvNMdTB3Uaav/+tA8dYn+mOX/l00HosE9RiypoG+lWAsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YehpHjX5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n9qmSX2UKL2ubQMeNOamP16PC3QuUyUOzKmi2SlY0gOg3/cFplcHmsIM3KxVmxaOh1HnIPIEg7ugjjjERBuk2gh9gDwVo/Io+C+kBAgBX5DlVEyC/CSzomieUDZT7WjeZAXNSlgamJDzhhKrlGWEIxiUXcZki+owhPsLddaQLH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MDcOgKDO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YehpHjX5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C77C4CEC6;
-	Tue, 15 Oct 2024 12:04:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MDcOgKDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E893DC4CEC6;
+	Tue, 15 Oct 2024 12:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993878;
-	bh=Diu9y5E39MRohQptNJ3nQ+QS6MrGZAEK4E51at+/9eE=;
+	s=korg; t=1728993881;
+	bh=4abGWQbM3w1bTsoQNnEVt0+cXB8vLPgDW9Y6r89z+v0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YehpHjX5dtQ5TxykDgof6DkUYfZ35CtERZdYUGZ78SNm0E2FahOFZusY6HehFPy06
-	 zq76lgpGISQ+QyMZwiLCKXsP6ej+cR8kiqufj04vwDq5/avj862uYLcWKfbkJUGUP8
-	 zaIwdBQE68vq8tF/dZveyj6Gf9YHFLf+dlZ9i46Y=
+	b=MDcOgKDOKvoHzym6RzYI82/M4Jpsd5m3gIk3l65B+62X8u9HQALTXfMz/dPw2NW+c
+	 3MJ3VYYvW/nZVFSAHa4uGZvRJqJnd4rRPaOt5xvmnxmKd6fjSxU5tyxvN+sZwWLu6b
+	 Cl2v9VMnw7/Z/flQN6bQYKnNgwwOq5TQSxdnVoK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+283673dbc38527ef9f3d@syzkaller.appspotmail.com,
-	Josef Bacik <josef@toxicpanda.com>,
+	syzbot+8aaf2df2ef0164ffe1fb@syzkaller.appspotmail.com,
 	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 541/691] btrfs: fix a NULL pointer dereference when failed to start a new trasacntion
-Date: Tue, 15 Oct 2024 13:28:09 +0200
-Message-ID: <20241015112501.811168806@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
+	Filipe Manana <fdmanana@suse.com>
+Subject: [PATCH 5.15 542/691] btrfs: wait for fixup workers before stopping cleaner kthread during umount
+Date: Tue, 15 Oct 2024 13:28:10 +0200
+Message-ID: <20241015112501.851315035@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,89 +53,227 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit c3b47f49e83197e8dffd023ec568403bcdbb774b upstream.
+commit 41fd1e94066a815a7ab0a7025359e9b40e4b3576 upstream.
 
-[BUG]
-Syzbot reported a NULL pointer dereference with the following crash:
+During unmount, at close_ctree(), we have the following steps in this order:
 
-  FAULT_INJECTION: forcing a failure.
-   start_transaction+0x830/0x1670 fs/btrfs/transaction.c:676
-   prepare_to_relocate+0x31f/0x4c0 fs/btrfs/relocation.c:3642
-   relocate_block_group+0x169/0xd20 fs/btrfs/relocation.c:3678
-  ...
-  BTRFS info (device loop0): balance: ended with status: -12
-  Oops: general protection fault, probably for non-canonical address 0xdffffc00000000cc: 0000 [#1] PREEMPT SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000660-0x0000000000000667]
-  RIP: 0010:btrfs_update_reloc_root+0x362/0xa80 fs/btrfs/relocation.c:926
+1) Park the cleaner kthread - this doesn't destroy the kthread, it basically
+   halts its execution (wake ups against it work but do nothing);
+
+2) We stop the cleaner kthread - this results in freeing the respective
+   struct task_struct;
+
+3) We call btrfs_stop_all_workers() which waits for any jobs running in all
+   the work queues and then free the work queues.
+
+Syzbot reported a case where a fixup worker resulted in a crash when doing
+a delayed iput on its inode while attempting to wake up the cleaner at
+btrfs_add_delayed_iput(), because the task_struct of the cleaner kthread
+was already freed. This can happen during unmount because we don't wait
+for any fixup workers still running before we call kthread_stop() against
+the cleaner kthread, which stops and free all its resources.
+
+Fix this by waiting for any fixup workers at close_ctree() before we call
+kthread_stop() against the cleaner and run pending delayed iputs.
+
+The stack traces reported by syzbot were the following:
+
+  BUG: KASAN: slab-use-after-free in __lock_acquire+0x77/0x2050 kernel/locking/lockdep.c:5065
+  Read of size 8 at addr ffff8880272a8a18 by task kworker/u8:3/52
+
+  CPU: 1 UID: 0 PID: 52 Comm: kworker/u8:3 Not tainted 6.12.0-rc1-syzkaller #0
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+  Workqueue: btrfs-fixup btrfs_work_helper
   Call Trace:
    <TASK>
-   commit_fs_roots+0x2ee/0x720 fs/btrfs/transaction.c:1496
-   btrfs_commit_transaction+0xfaf/0x3740 fs/btrfs/transaction.c:2430
-   del_balance_item fs/btrfs/volumes.c:3678 [inline]
-   reset_balance_state+0x25e/0x3c0 fs/btrfs/volumes.c:3742
-   btrfs_balance+0xead/0x10c0 fs/btrfs/volumes.c:4574
-   btrfs_ioctl_balance+0x493/0x7c0 fs/btrfs/ioctl.c:3673
-   vfs_ioctl fs/ioctl.c:51 [inline]
-   __do_sys_ioctl fs/ioctl.c:907 [inline]
-   __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:893
+   __dump_stack lib/dump_stack.c:94 [inline]
+   dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+   print_address_description mm/kasan/report.c:377 [inline]
+   print_report+0x169/0x550 mm/kasan/report.c:488
+   kasan_report+0x143/0x180 mm/kasan/report.c:601
+   __lock_acquire+0x77/0x2050 kernel/locking/lockdep.c:5065
+   lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5825
+   __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
+   _raw_spin_lock_irqsave+0xd5/0x120 kernel/locking/spinlock.c:162
+   class_raw_spinlock_irqsave_constructor include/linux/spinlock.h:551 [inline]
+   try_to_wake_up+0xb0/0x1480 kernel/sched/core.c:4154
+   btrfs_writepage_fixup_worker+0xc16/0xdf0 fs/btrfs/inode.c:2842
+   btrfs_work_helper+0x390/0xc50 fs/btrfs/async-thread.c:314
+   process_one_work kernel/workqueue.c:3229 [inline]
+   process_scheduled_works+0xa63/0x1850 kernel/workqueue.c:3310
+   worker_thread+0x870/0xd30 kernel/workqueue.c:3391
+   kthread+0x2f0/0x390 kernel/kthread.c:389
+   ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+   </TASK>
+
+  Allocated by task 2:
+   kasan_save_stack mm/kasan/common.c:47 [inline]
+   kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+   unpoison_slab_object mm/kasan/common.c:319 [inline]
+   __kasan_slab_alloc+0x66/0x80 mm/kasan/common.c:345
+   kasan_slab_alloc include/linux/kasan.h:247 [inline]
+   slab_post_alloc_hook mm/slub.c:4086 [inline]
+   slab_alloc_node mm/slub.c:4135 [inline]
+   kmem_cache_alloc_node_noprof+0x16b/0x320 mm/slub.c:4187
+   alloc_task_struct_node kernel/fork.c:180 [inline]
+   dup_task_struct+0x57/0x8c0 kernel/fork.c:1107
+   copy_process+0x5d1/0x3d50 kernel/fork.c:2206
+   kernel_clone+0x223/0x880 kernel/fork.c:2787
+   kernel_thread+0x1bc/0x240 kernel/fork.c:2849
+   create_kthread kernel/kthread.c:412 [inline]
+   kthreadd+0x60d/0x810 kernel/kthread.c:765
+   ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+  Freed by task 61:
+   kasan_save_stack mm/kasan/common.c:47 [inline]
+   kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+   kasan_save_free_info+0x40/0x50 mm/kasan/generic.c:579
+   poison_slab_object mm/kasan/common.c:247 [inline]
+   __kasan_slab_free+0x59/0x70 mm/kasan/common.c:264
+   kasan_slab_free include/linux/kasan.h:230 [inline]
+   slab_free_hook mm/slub.c:2343 [inline]
+   slab_free mm/slub.c:4580 [inline]
+   kmem_cache_free+0x1a2/0x420 mm/slub.c:4682
+   put_task_struct include/linux/sched/task.h:144 [inline]
+   delayed_put_task_struct+0x125/0x300 kernel/exit.c:228
+   rcu_do_batch kernel/rcu/tree.c:2567 [inline]
+   rcu_core+0xaaa/0x17a0 kernel/rcu/tree.c:2823
+   handle_softirqs+0x2c5/0x980 kernel/softirq.c:554
+   __do_softirq kernel/softirq.c:588 [inline]
+   invoke_softirq kernel/softirq.c:428 [inline]
+   __irq_exit_rcu+0xf4/0x1c0 kernel/softirq.c:637
+   irq_exit_rcu+0x9/0x30 kernel/softirq.c:649
+   instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1037 [inline]
+   sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1037
+   asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:702
+
+  Last potentially related work creation:
+   kasan_save_stack+0x3f/0x60 mm/kasan/common.c:47
+   __kasan_record_aux_stack+0xac/0xc0 mm/kasan/generic.c:541
+   __call_rcu_common kernel/rcu/tree.c:3086 [inline]
+   call_rcu+0x167/0xa70 kernel/rcu/tree.c:3190
+   context_switch kernel/sched/core.c:5318 [inline]
+   __schedule+0x184b/0x4ae0 kernel/sched/core.c:6675
+   schedule_idle+0x56/0x90 kernel/sched/core.c:6793
+   do_idle+0x56a/0x5d0 kernel/sched/idle.c:354
+   cpu_startup_entry+0x42/0x60 kernel/sched/idle.c:424
+   start_secondary+0x102/0x110 arch/x86/kernel/smpboot.c:314
+   common_startup_64+0x13e/0x147
+
+  The buggy address belongs to the object at ffff8880272a8000
+   which belongs to the cache task_struct of size 7424
+  The buggy address is located 2584 bytes inside of
+   freed 7424-byte region [ffff8880272a8000, ffff8880272a9d00)
+
+  The buggy address belongs to the physical page:
+  page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x272a8
+  head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+  flags: 0xfff00000000040(head|node=0|zone=1|lastcpupid=0x7ff)
+  page_type: f5(slab)
+  raw: 00fff00000000040 ffff88801bafa500 dead000000000122 0000000000000000
+  raw: 0000000000000000 0000000080040004 00000001f5000000 0000000000000000
+  head: 00fff00000000040 ffff88801bafa500 dead000000000122 0000000000000000
+  head: 0000000000000000 0000000080040004 00000001f5000000 0000000000000000
+  head: 00fff00000000003 ffffea00009caa01 ffffffffffffffff 0000000000000000
+  head: 0000000000000008 0000000000000000 00000000ffffffff 0000000000000000
+  page dumped because: kasan: bad access detected
+  page_owner tracks the page as allocated
+  page last allocated via order 3, migratetype Unmovable, gfp_mask 0xd20c0(__GFP_IO|__GFP_FS|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 2, tgid 2 (kthreadd), ts 71247381401, free_ts 71214998153
+   set_page_owner include/linux/page_owner.h:32 [inline]
+   post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1537
+   prep_new_page mm/page_alloc.c:1545 [inline]
+   get_page_from_freelist+0x3039/0x3180 mm/page_alloc.c:3457
+   __alloc_pages_noprof+0x256/0x6c0 mm/page_alloc.c:4733
+   alloc_pages_mpol_noprof+0x3e8/0x680 mm/mempolicy.c:2265
+   alloc_slab_page+0x6a/0x120 mm/slub.c:2413
+   allocate_slab+0x5a/0x2f0 mm/slub.c:2579
+   new_slab mm/slub.c:2632 [inline]
+   ___slab_alloc+0xcd1/0x14b0 mm/slub.c:3819
+   __slab_alloc+0x58/0xa0 mm/slub.c:3909
+   __slab_alloc_node mm/slub.c:3962 [inline]
+   slab_alloc_node mm/slub.c:4123 [inline]
+   kmem_cache_alloc_node_noprof+0x1fe/0x320 mm/slub.c:4187
+   alloc_task_struct_node kernel/fork.c:180 [inline]
+   dup_task_struct+0x57/0x8c0 kernel/fork.c:1107
+   copy_process+0x5d1/0x3d50 kernel/fork.c:2206
+   kernel_clone+0x223/0x880 kernel/fork.c:2787
+   kernel_thread+0x1bc/0x240 kernel/fork.c:2849
+   create_kthread kernel/kthread.c:412 [inline]
+   kthreadd+0x60d/0x810 kernel/kthread.c:765
+   ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+  page last free pid 5230 tgid 5230 stack trace:
+   reset_page_owner include/linux/page_owner.h:25 [inline]
+   free_pages_prepare mm/page_alloc.c:1108 [inline]
+   free_unref_page+0xcd0/0xf00 mm/page_alloc.c:2638
+   discard_slab mm/slub.c:2678 [inline]
+   __put_partials+0xeb/0x130 mm/slub.c:3146
+   put_cpu_partial+0x17c/0x250 mm/slub.c:3221
+   __slab_free+0x2ea/0x3d0 mm/slub.c:4450
+   qlink_free mm/kasan/quarantine.c:163 [inline]
+   qlist_free_all+0x9a/0x140 mm/kasan/quarantine.c:179
+   kasan_quarantine_reduce+0x14f/0x170 mm/kasan/quarantine.c:286
+   __kasan_slab_alloc+0x23/0x80 mm/kasan/common.c:329
+   kasan_slab_alloc include/linux/kasan.h:247 [inline]
+   slab_post_alloc_hook mm/slub.c:4086 [inline]
+   slab_alloc_node mm/slub.c:4135 [inline]
+   kmem_cache_alloc_noprof+0x135/0x2a0 mm/slub.c:4142
+   getname_flags+0xb7/0x540 fs/namei.c:139
+   do_sys_openat2+0xd2/0x1d0 fs/open.c:1409
+   do_sys_open fs/open.c:1430 [inline]
+   __do_sys_openat fs/open.c:1446 [inline]
+   __se_sys_openat fs/open.c:1441 [inline]
+   __x64_sys_openat+0x247/0x2a0 fs/open.c:1441
    do_syscall_x64 arch/x86/entry/common.c:52 [inline]
    do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
    entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-[CAUSE]
-The allocation failure happens at the start_transaction() inside
-prepare_to_relocate(), and during the error handling we call
-unset_reloc_control(), which makes fs_info->balance_ctl to be NULL.
+  Memory state around the buggy address:
+   ffff8880272a8900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+   ffff8880272a8980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+  >ffff8880272a8a00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                              ^
+   ffff8880272a8a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+   ffff8880272a8b00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+  ==================================================================
 
-Then we continue the error path cleanup in btrfs_balance() by calling
-reset_balance_state() which will call del_balance_item() to fully delete
-the balance item in the root tree.
-
-However during the small window between set_reloc_contrl() and
-unset_reloc_control(), we can have a subvolume tree update and created a
-reloc_root for that subvolume.
-
-Then we go into the final btrfs_commit_transaction() of
-del_balance_item(), and into btrfs_update_reloc_root() inside
-commit_fs_roots().
-
-That function checks if fs_info->reloc_ctl is in the merge_reloc_tree
-stage, but since fs_info->reloc_ctl is NULL, it results a NULL pointer
-dereference.
-
-[FIX]
-Just add extra check on fs_info->reloc_ctl inside
-btrfs_update_reloc_root(), before checking
-fs_info->reloc_ctl->merge_reloc_tree.
-
-That DEAD_RELOC_TREE handling is to prevent further modification to the
-reloc tree during merge stage, but since there is no reloc_ctl at all,
-we do not need to bother that.
-
-Reported-by: syzbot+283673dbc38527ef9f3d@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/66f6bfa7.050a0220.38ace9.0019.GAE@google.com/
+Reported-by: syzbot+8aaf2df2ef0164ffe1fb@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/66fb36b1.050a0220.aab67.003b.GAE@google.com/
 CC: stable@vger.kernel.org # 4.19+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/relocation.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/disk-io.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -919,7 +919,7 @@ int btrfs_update_reloc_root(struct btrfs
- 	btrfs_grab_root(reloc_root);
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -4396,6 +4396,17 @@ void __cold close_ctree(struct btrfs_fs_
+ 	btrfs_cleanup_defrag_inodes(fs_info);
  
- 	/* root->reloc_root will stay until current relocation finished */
--	if (fs_info->reloc_ctl->merge_reloc_tree &&
-+	if (fs_info->reloc_ctl && fs_info->reloc_ctl->merge_reloc_tree &&
- 	    btrfs_root_refs(root_item) == 0) {
- 		set_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state);
- 		/*
+ 	/*
++	 * Wait for any fixup workers to complete.
++	 * If we don't wait for them here and they are still running by the time
++	 * we call kthread_stop() against the cleaner kthread further below, we
++	 * get an use-after-free on the cleaner because the fixup worker adds an
++	 * inode to the list of delayed iputs and then attempts to wakeup the
++	 * cleaner kthread, which was already stopped and destroyed. We parked
++	 * already the cleaner, but below we run all pending delayed iputs.
++	 */
++	btrfs_flush_workqueue(fs_info->fixup_workers);
++
++	/*
+ 	 * After we parked the cleaner kthread, ordered extents may have
+ 	 * completed and created new delayed iputs. If one of the async reclaim
+ 	 * tasks is running and in the RUN_DELAYED_IPUTS flush state, then we
 
 
