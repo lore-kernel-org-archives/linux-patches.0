@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32A9E19B3FF;
-	Tue, 15 Oct 2024 11:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C26FA1E766C;
+	Tue, 15 Oct 2024 11:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992813; cv=none; b=aFsr5cYI30IEyxdgYeQIEPdz+jUMMPUpoInmPdk9cUy985mbF3b3voRm34PpB28ArEJ2WYu6BYReALoo6bffwURDxk3qwY5fP0Q6qNpClDvYbG+fFss+fLzWSKnlXMptv7qDFJiikPyzCx/Po5e+E+Y3ZvFL9V4bA1Pe+oV+KCI=
+	t=1728992816; cv=none; b=VU0fnbTSJ5VyOLdyUzFOBeHATbAISH5wc9WAQGkDcOtlzQmGka614hl5pzaxnG5K2eC7CIoVQCBU0dpKPgMSxVkPEIpjgFzJuIe9jbdh81Z/McK7pW/jJAJBtN7sicKJjQmim6L7QwRwj5ykn1l2NZAIMh6sZ0jMeHw8w0cnS3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992813; c=relaxed/simple;
-	bh=Qow0G2PNoVQKFFpuRZ+TT3IKcCwahOJmiaDcuogXK04=;
+	s=arc-20240116; t=1728992816; c=relaxed/simple;
+	bh=TXMoD85FzcWXeKDq3OcCzVk4USeiQ2klIX2ikTCa6ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ld6GT4ejmFscPKAZfx4HsYfzbdUmbj9PzYFnLRU1PUV9IGkNhWLWw5WQBxLfF8bxPAwMRPiyMneOER/tQoTyoUf/lPo6gpEFU0ULCH98vZkFooUysFLbNPJZpgXe6bm0zxVYc+OgUDpP2rdxgIcaQXHG9RGwA6Ncrpz6A9JO/XY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMWFRDk1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=scdxG2dMskmFqFC0kWG6b5zpLIIUh/U2lxg3b7DVLdKmKPzUZ7byFM5UqCdRBEJR+9W2wjrfmbSO+4LTK9Xz1/uWrk/yQVr15rniI5oL++Y/ZVUvmP76qe/8S0Tcckk8aOgv45IDuFDEQt9ikspnoffz5N94COQgk2t7Ixjtgds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/jNMLSd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMWFRDk1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDCCC4CEC6;
-	Tue, 15 Oct 2024 11:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/jNMLSd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A55C4CEC6;
+	Tue, 15 Oct 2024 11:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992813;
-	bh=Qow0G2PNoVQKFFpuRZ+TT3IKcCwahOJmiaDcuogXK04=;
+	s=korg; t=1728992816;
+	bh=TXMoD85FzcWXeKDq3OcCzVk4USeiQ2klIX2ikTCa6ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kMWFRDk1qSfoXubkdrwDD4xVnfxmPFjiC6CYMw+1BF+424244VmFeasdD79+JUr91
-	 dzsBq44lca2mMhbTbrUKphPlRViN5ASYg4BtnJvd4dLB5vFkEF6zGh4fxFNYsNDMXD
-	 GWN3mF3004gxuhuiSkwbpKso4FyognuhB40YWH5Q=
+	b=Z/jNMLSdar9gXB0paVtWz88mRpHsNIgHglBQ4Kl+fD8lMiaZJUY7ninhKWc3hDi/v
+	 2HXlVvT0vty46sfBS3IBxyzL0yT2myRweW2ymMGjNIetZP0UfSz0v+wWD+LF86Sr8/
+	 yTN4C4Rm6rOk9iqnj43H6Up9mksRaS92E+R6O2Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Lv <terry.lv@nxp.com>,
-	Iuliana Prodan <iuliana.prodan@nxp.com>,
 	Peng Fan <peng.fan@nxp.com>,
 	Daniel Baluta <daniel.baluta@nxp.com>,
 	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 226/691] remoteproc: imx_rproc: Correct ddr alias for i.MX8M
-Date: Tue, 15 Oct 2024 13:22:54 +0200
-Message-ID: <20241015112449.328442673@linuxfoundation.org>
+Subject: [PATCH 5.15 227/691] remoteproc: imx_rproc: Initialize workqueue earlier
+Date: Tue, 15 Oct 2024 13:22:55 +0200
+Message-ID: <20241015112449.368080695@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -56,36 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit c901f817792822eda9cec23814a4621fa3e66695 ]
+[ Upstream commit 858e57c1d3dd7b92cc0fa692ba130a0a5d57e49d ]
 
-The DDR Alias address should be 0x40000000 according to RM, so correct
-it.
+Initialize workqueue before requesting mailbox channel, otherwise if
+mailbox interrupt comes before workqueue ready, the imx_rproc_rx_callback
+will trigger issue.
 
-Fixes: 4ab8f9607aad ("remoteproc: imx_rproc: support i.MX8MQ/M")
-Reported-by: Terry Lv <terry.lv@nxp.com>
-Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
+Fixes: 2df7062002d0 ("remoteproc: imx_proc: enable virtio/mailbox")
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Link: https://lore.kernel.org/r/20240719-imx_rproc-v2-1-10d0268c7eb1@nxp.com
+Link: https://lore.kernel.org/r/20240719-imx_rproc-v2-3-10d0268c7eb1@nxp.com
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_rproc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/remoteproc/imx_rproc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
-index d5ce97e75f027..fec093b3f5e10 100644
+index fec093b3f5e10..c45c87a94d62a 100644
 --- a/drivers/remoteproc/imx_rproc.c
 +++ b/drivers/remoteproc/imx_rproc.c
-@@ -158,7 +158,7 @@ static const struct imx_rproc_att imx_rproc_att_imx8mq[] = {
- 	/* QSPI Code - alias */
- 	{ 0x08000000, 0x08000000, 0x08000000, 0 },
- 	/* DDR (Code) - alias */
--	{ 0x10000000, 0x80000000, 0x0FFE0000, 0 },
-+	{ 0x10000000, 0x40000000, 0x0FFE0000, 0 },
- 	/* TCML */
- 	{ 0x1FFE0000, 0x007E0000, 0x00020000, ATT_OWN  | ATT_IOMEM},
- 	/* TCMU */
+@@ -792,6 +792,8 @@ static int imx_rproc_probe(struct platform_device *pdev)
+ 		goto err_put_rproc;
+ 	}
+ 
++	INIT_WORK(&priv->rproc_work, imx_rproc_vq_work);
++
+ 	ret = imx_rproc_xtr_mbox_init(rproc);
+ 	if (ret)
+ 		goto err_put_wkq;
+@@ -810,8 +812,6 @@ static int imx_rproc_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_put_mbox;
+ 
+-	INIT_WORK(&priv->rproc_work, imx_rproc_vq_work);
+-
+ 	if (rproc->state != RPROC_DETACHED)
+ 		rproc->auto_boot = of_property_read_bool(np, "fsl,auto-boot");
+ 
 -- 
 2.43.0
 
