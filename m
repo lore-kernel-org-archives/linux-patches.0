@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9831B1EB9F1;
-	Tue, 15 Oct 2024 12:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7902D1EBA12;
+	Tue, 15 Oct 2024 12:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994237; cv=none; b=iNgGfY3KcHI4PGFTtY/AJKNwkfnTvTr6UXevT0AxeySwVZIoR15MkQLIDm0wGzO3GY6aQ7gTKp1HvW7KofABkZrmNEhzQBw9qLzN1BbLD/Jzt4Upk/F1oKs/PWw1oo+jnrrSRJecJQJqlAO5uRj0eh4tZBGk9hn/S7S3hKtMDSs=
+	t=1728994242; cv=none; b=MoLj8ecTX7ES7b6XZeA+KgoYbOIpuIMpGEQDJQ/DvUI37BSOy+WqugmnNzvS3tMxIuKvhmngCMKfnYk2a4nfU2CpmV6dTKRCO1NQE+byIhHMdiJDbkaXMITuclSItkWxXQUmBpYSL/vNAl84UjFIfs4OH80mnP6nEdwDVAHm3i4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994237; c=relaxed/simple;
-	bh=smf2dSr3rUSI1+l1ksx8bzeIUJJhhK5eDbRUaeYo1oM=;
+	s=arc-20240116; t=1728994242; c=relaxed/simple;
+	bh=ZbXijO28zfKTQlqTXVtV8OoFw9ZUa2VzAxgO2ZucsDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jHqpbCwe72/OT0xe/9D2RbRl/lbXo/XqfrFyA2H1830sA9oH6FQWgbTdKVpVrvKoFr5KEy+9k9ufMp8PH9arRST2Jwjytf//Yv5rbf5U43Fv1Ak2MX353DWwjFqbkD1BihGUXMABJJY9UAIyPzwpzS67iHlaqx6Mi7RYF/YvB08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2FMrRfT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V0yXQDbdB/1djuF0sslJT87OqyZcJCYTEk6ghRBYuXiKwCno9NFMZbDwoD+W8yvGHhD5momo3id9yzXqELPn4mplbRxfoUvxomno/o74HUzlzsA//54IqdvN/xxEd4A18ZOa6sJ+kn7QQD1M1NmJWM5NZU096EUb8v4dspLKA78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e1RnsmQN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2FMrRfT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02363C4CEC6;
-	Tue, 15 Oct 2024 12:10:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1RnsmQN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7815BC4CEC6;
+	Tue, 15 Oct 2024 12:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994237;
-	bh=smf2dSr3rUSI1+l1ksx8bzeIUJJhhK5eDbRUaeYo1oM=;
+	s=korg; t=1728994241;
+	bh=ZbXijO28zfKTQlqTXVtV8OoFw9ZUa2VzAxgO2ZucsDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2FMrRfT5XSgv2sQrCn4wgDQjmtMKrpCAu7bvb5m6QXj6vk3331u9t++1wNj4+jxU
-	 E5yaIrccixUjxDqAWq4FLA8b7aB2rLeKu2xX29qpWLrd35yLefqj7LD7vb4aHOhIDH
-	 b8LHFfAls9CiuI5HfQ/TBQCjTovGXYfRoi1cjfv0=
+	b=e1RnsmQNCyv7nZkvBAK/gQsryBdcU82RK82SFsk+hG3VtPMRx86OC6mK44VLMc9Ez
+	 vA5EdnkiVVs5oUZtf+JRZKbQz0wyV6/j9Poc0Pyc9DJeyyygl4UIYQQP2cSTv9qx+T
+	 NPKIBKeVzJSe93Shvdm9ZZXdSqyCK2pXZdmNfW3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Jun <zhujun2@cmss.chinamobile.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 619/691] tools/iio: Add memory allocation failure check for trigger_name
-Date: Tue, 15 Oct 2024 13:29:27 +0200
-Message-ID: <20241015112504.901918857@linuxfoundation.org>
+Subject: [PATCH 5.15 646/691] net/sched: accept TCA_STAB only for root qdisc
+Date: Tue, 15 Oct 2024 13:29:54 +0200
+Message-ID: <20241015112505.964354897@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,36 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Jun <zhujun2@cmss.chinamobile.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3c6b818b097dd6932859bcc3d6722a74ec5931c1 ]
+[ Upstream commit 3cb7cf1540ddff5473d6baeb530228d19bc97b8a ]
 
-Added a check to handle memory allocation failure for `trigger_name`
-and return `-ENOMEM`.
+Most qdiscs maintain their backlog using qdisc_pkt_len(skb)
+on the assumption it is invariant between the enqueue()
+and dequeue() handlers.
 
-Signed-off-by: Zhu Jun <zhujun2@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20240828093129.3040-1-zhujun2@cmss.chinamobile.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Unfortunately syzbot can crash a host rather easily using
+a TBF + SFQ combination, with an STAB on SFQ [1]
+
+We can't support TCA_STAB on arbitrary level, this would
+require to maintain per-qdisc storage.
+
+[1]
+[   88.796496] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[   88.798611] #PF: supervisor read access in kernel mode
+[   88.799014] #PF: error_code(0x0000) - not-present page
+[   88.799506] PGD 0 P4D 0
+[   88.799829] Oops: Oops: 0000 [#1] SMP NOPTI
+[   88.800569] CPU: 14 UID: 0 PID: 2053 Comm: b371744477 Not tainted 6.12.0-rc1-virtme #1117
+[   88.801107] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   88.801779] RIP: 0010:sfq_dequeue (net/sched/sch_sfq.c:272 net/sched/sch_sfq.c:499) sch_sfq
+[ 88.802544] Code: 0f b7 50 12 48 8d 04 d5 00 00 00 00 48 89 d6 48 29 d0 48 8b 91 c0 01 00 00 48 c1 e0 03 48 01 c2 66 83 7a 1a 00 7e c0 48 8b 3a <4c> 8b 07 4c 89 02 49 89 50 08 48 c7 47 08 00 00 00 00 48 c7 07 00
+All code
+========
+   0:	0f b7 50 12          	movzwl 0x12(%rax),%edx
+   4:	48 8d 04 d5 00 00 00 	lea    0x0(,%rdx,8),%rax
+   b:	00
+   c:	48 89 d6             	mov    %rdx,%rsi
+   f:	48 29 d0             	sub    %rdx,%rax
+  12:	48 8b 91 c0 01 00 00 	mov    0x1c0(%rcx),%rdx
+  19:	48 c1 e0 03          	shl    $0x3,%rax
+  1d:	48 01 c2             	add    %rax,%rdx
+  20:	66 83 7a 1a 00       	cmpw   $0x0,0x1a(%rdx)
+  25:	7e c0                	jle    0xffffffffffffffe7
+  27:	48 8b 3a             	mov    (%rdx),%rdi
+  2a:*	4c 8b 07             	mov    (%rdi),%r8		<-- trapping instruction
+  2d:	4c 89 02             	mov    %r8,(%rdx)
+  30:	49 89 50 08          	mov    %rdx,0x8(%r8)
+  34:	48 c7 47 08 00 00 00 	movq   $0x0,0x8(%rdi)
+  3b:	00
+  3c:	48                   	rex.W
+  3d:	c7                   	.byte 0xc7
+  3e:	07                   	(bad)
+	...
+
+Code starting with the faulting instruction
+===========================================
+   0:	4c 8b 07             	mov    (%rdi),%r8
+   3:	4c 89 02             	mov    %r8,(%rdx)
+   6:	49 89 50 08          	mov    %rdx,0x8(%r8)
+   a:	48 c7 47 08 00 00 00 	movq   $0x0,0x8(%rdi)
+  11:	00
+  12:	48                   	rex.W
+  13:	c7                   	.byte 0xc7
+  14:	07                   	(bad)
+	...
+[   88.803721] RSP: 0018:ffff9a1f892b7d58 EFLAGS: 00000206
+[   88.804032] RAX: 0000000000000000 RBX: ffff9a1f8420c800 RCX: ffff9a1f8420c800
+[   88.804560] RDX: ffff9a1f81bc1440 RSI: 0000000000000000 RDI: 0000000000000000
+[   88.805056] RBP: ffffffffc04bb0e0 R08: 0000000000000001 R09: 00000000ff7f9a1f
+[   88.805473] R10: 000000000001001b R11: 0000000000009a1f R12: 0000000000000140
+[   88.806194] R13: 0000000000000001 R14: ffff9a1f886df400 R15: ffff9a1f886df4ac
+[   88.806734] FS:  00007f445601a740(0000) GS:ffff9a2e7fd80000(0000) knlGS:0000000000000000
+[   88.807225] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   88.807672] CR2: 0000000000000000 CR3: 000000050cc46000 CR4: 00000000000006f0
+[   88.808165] Call Trace:
+[   88.808459]  <TASK>
+[   88.808710] ? __die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434)
+[   88.809261] ? page_fault_oops (arch/x86/mm/fault.c:715)
+[   88.809561] ? exc_page_fault (./arch/x86/include/asm/irqflags.h:26 ./arch/x86/include/asm/irqflags.h:87 ./arch/x86/include/asm/irqflags.h:147 arch/x86/mm/fault.c:1489 arch/x86/mm/fault.c:1539)
+[   88.809806] ? asm_exc_page_fault (./arch/x86/include/asm/idtentry.h:623)
+[   88.810074] ? sfq_dequeue (net/sched/sch_sfq.c:272 net/sched/sch_sfq.c:499) sch_sfq
+[   88.810411] sfq_reset (net/sched/sch_sfq.c:525) sch_sfq
+[   88.810671] qdisc_reset (./include/linux/skbuff.h:2135 ./include/linux/skbuff.h:2441 ./include/linux/skbuff.h:3304 ./include/linux/skbuff.h:3310 net/sched/sch_generic.c:1036)
+[   88.810950] tbf_reset (./include/linux/timekeeping.h:169 net/sched/sch_tbf.c:334) sch_tbf
+[   88.811208] qdisc_reset (./include/linux/skbuff.h:2135 ./include/linux/skbuff.h:2441 ./include/linux/skbuff.h:3304 ./include/linux/skbuff.h:3310 net/sched/sch_generic.c:1036)
+[   88.811484] netif_set_real_num_tx_queues (./include/linux/spinlock.h:396 ./include/net/sch_generic.h:768 net/core/dev.c:2958)
+[   88.811870] __tun_detach (drivers/net/tun.c:590 drivers/net/tun.c:673)
+[   88.812271] tun_chr_close (drivers/net/tun.c:702 drivers/net/tun.c:3517)
+[   88.812505] __fput (fs/file_table.c:432 (discriminator 1))
+[   88.812735] task_work_run (kernel/task_work.c:230)
+[   88.813016] do_exit (kernel/exit.c:940)
+[   88.813372] ? trace_hardirqs_on (kernel/trace/trace_preemptirq.c:58 (discriminator 4))
+[   88.813639] ? handle_mm_fault (./arch/x86/include/asm/irqflags.h:42 ./arch/x86/include/asm/irqflags.h:97 ./arch/x86/include/asm/irqflags.h:155 ./include/linux/memcontrol.h:1022 ./include/linux/memcontrol.h:1045 ./include/linux/memcontrol.h:1052 mm/memory.c:5928 mm/memory.c:6088)
+[   88.813867] do_group_exit (kernel/exit.c:1070)
+[   88.814138] __x64_sys_exit_group (kernel/exit.c:1099)
+[   88.814490] x64_sys_call (??:?)
+[   88.814791] do_syscall_64 (arch/x86/entry/common.c:52 (discriminator 1) arch/x86/entry/common.c:83 (discriminator 1))
+[   88.815012] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+[   88.815495] RIP: 0033:0x7f44560f1975
+
+Fixes: 175f9c1bba9b ("net_sched: Add size table for qdiscs")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://patch.msgid.link/20241007184130.3960565-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/iio/iio_generic_buffer.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/net/sch_generic.h | 1 -
+ net/sched/sch_api.c       | 7 ++++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
-index 0d0a7a19d6f95..9ef5ee087eda3 100644
---- a/tools/iio/iio_generic_buffer.c
-+++ b/tools/iio/iio_generic_buffer.c
-@@ -498,6 +498,10 @@ int main(int argc, char **argv)
- 			return -ENOMEM;
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 6906da5c733ea..0919dfd3a67a6 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -829,7 +829,6 @@ static inline void qdisc_calculate_pkt_len(struct sk_buff *skb,
+ static inline int qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 				struct sk_buff **to_free)
+ {
+-	qdisc_calculate_pkt_len(skb, sch);
+ 	return sch->enqueue(skb, sch, to_free);
+ }
+ 
+diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
+index 7fdc2c1f87561..724bfeccc6e7f 100644
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -589,7 +589,6 @@ void __qdisc_calculate_pkt_len(struct sk_buff *skb,
+ 		pkt_len = 1;
+ 	qdisc_skb_cb(skb)->pkt_len = pkt_len;
+ }
+-EXPORT_SYMBOL(__qdisc_calculate_pkt_len);
+ 
+ void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc)
+ {
+@@ -1119,6 +1118,12 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
+ 			return -EINVAL;
  		}
- 		trigger_name = malloc(IIO_MAX_NAME_LENGTH);
-+		if (!trigger_name) {
-+			ret = -ENOMEM;
-+			goto error;
+ 
++		if (new &&
++		    !(parent->flags & TCQ_F_MQROOT) &&
++		    rcu_access_pointer(new->stab)) {
++			NL_SET_ERR_MSG(extack, "STAB not supported on a non root");
++			return -EINVAL;
 +		}
- 		ret = read_sysfs_string("name", trig_dev_name, trigger_name);
- 		free(trig_dev_name);
- 		if (ret < 0) {
+ 		err = cops->graft(parent, cl, new, &old, extack);
+ 		if (err)
+ 			return err;
 -- 
 2.43.0
 
