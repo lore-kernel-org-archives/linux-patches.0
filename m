@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9894F1F8910;
-	Tue, 15 Oct 2024 12:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FA21EBFE0;
+	Tue, 15 Oct 2024 12:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994282; cv=none; b=QkGU6P+RPXHPVbxB1HmU8BC6e+PTfz/b6tOVBePHhDQ+WjhngW3aG2Ve2OGrD8jbleDYvANybScFcGHTRbOQ0glo7oMrLKztRxCxQaqb9rNyy/SLmQp2J6F/4cMSQjQMigtxV0zfgx4oEm0FEpjnw61V7wPCwNO5d1fyiye7jyI=
+	t=1728994285; cv=none; b=iRAdMl9Lc+f6bnTSbieEtuzvaG7ULaPbOooFg0GQAHmu3/DwqxfrVzOqRvjq4Ps8SmVrHZCGQTNtJ+dc7joQ/mh/zpFvM+ZiidgP9uklVJlpAQ9fB0xS/NJwf50MKylhVNhEBqbyBaRpqOc1Dwep4e2JeRZp7XAqknHCIS4/p/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994282; c=relaxed/simple;
-	bh=0S4BlbK3a+1HJ08Mpepzg3bPluTN0n8rFLuBn2GAX0g=;
+	s=arc-20240116; t=1728994285; c=relaxed/simple;
+	bh=I8A49rsDpg0E6jDKsk25GCmLX1qKMFdAoCufV1rfUp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XcX7RyRCphwLYVtYEqXE52MLCVvcn+902iPalKI4OAHQvFpEE3ISEOT5wo/afkIhiVdSGUsI1MaK4TSdXOGwYHwJ5HWple3DsYF72YY6fHt6Cs0xOWfeqvOHpCKB7hPZA0EBB4MpjrI83GmbgOi97RFki8gc5NEllo1d8H9q4NU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxmJIsxO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TpqMkqtopFZIP5iwqpaHcup9FEDZySAh2w1X5hguZ2oKILVmAGbSEyMBSTAdPryA474DmVKdAomKcI1715odsRCG5IxhnJH6fl9LWNbgqss9qaUR9DdU9BW7h5xAZFTDsEz8FkfIZz86Op/66lAsad56pbyJFq6jgB6PjITnKYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N858v//n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxmJIsxO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8BDAC4CEC6;
-	Tue, 15 Oct 2024 12:11:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N858v//n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DE5DC4CEC6;
+	Tue, 15 Oct 2024 12:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994282;
-	bh=0S4BlbK3a+1HJ08Mpepzg3bPluTN0n8rFLuBn2GAX0g=;
+	s=korg; t=1728994285;
+	bh=I8A49rsDpg0E6jDKsk25GCmLX1qKMFdAoCufV1rfUp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JxmJIsxOwpHDUQCoRJKSOg3vNwJ1TUtNoQVbKkbRBulqdvmlSSlNXc57s3PU+P1kh
-	 OzUAPWXYtz417ZfaoF4sqefPei2ezM3xx29tOECHKancqB4AFRwKxTyfDD65hK4SSX
-	 fJ4fr6oa6f2Ee+S88WjM3yF6IGKBHiO4UiBsTbSw=
+	b=N858v//n2efbkzptrPa1kRgKzpshUulpFjzXvpLc4F3w3xhSp8kR9tMyixZO7gu58
+	 Vq8vCie5V2P/gNLOZr4bwa8y1MN3arFczDYZD8SccaG2DJfDtarydMtX8yPwQjuT7A
+	 M56MDvHYg0zJ+JVFUoJImTAgWxxSPMdKDSN5aUaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Mitchell Levy <levymitchell0@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Eric Tremblay <etremblay@distech-controls.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 660/691] x86/fpu: Avoid writing LBR bit to IA32_XSS unless supported
-Date: Tue, 15 Oct 2024 13:30:08 +0200
-Message-ID: <20241015112506.518479412@linuxfoundation.org>
+Subject: [PATCH 5.15 661/691] hwmon: (tmp513) Add missing dependency on REGMAP_I2C
+Date: Tue, 15 Oct 2024 13:30:09 +0200
+Message-ID: <20241015112506.557928954@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,98 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mitchell Levy <levymitchell0@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-There are two distinct CPU features related to the use of XSAVES and LBR:
-whether LBR is itself supported and whether XSAVES supports LBR. The LBR
-subsystem correctly checks both in intel_pmu_arch_lbr_init(), but the
-XSTATE subsystem does not.
+[ Upstream commit 193bc02c664999581a1f38c152f379fce91afc0c ]
 
-The LBR bit is only removed from xfeatures_mask_independent when LBR is not
-supported by the CPU, but there is no validation of XSTATE support.
-If XSAVES does not support LBR the write to IA32_XSS causes a #GP fault,
-leaving the state of IA32_XSS unchanged, i.e. zero. The fault is handled
-with a warning and the boot continues.
+0-day reports:
 
-Consequently the next XRSTORS which tries to restore supervisor state fails
-with #GP because the RFBM has zero for all supervisor features, which does
-not match the XCOMP_BV field.
+drivers/hwmon/tmp513.c:162:21: error:
+	variable 'tmp51x_regmap_config' has initializer but incomplete type
+162 | static const struct regmap_config tmp51x_regmap_config = {
+    |                     ^
 
-As XFEATURE_MASK_FPSTATE includes supervisor features setting up the FPU
-causes a #GP, which ends up in fpu_reset_from_exception_fixup(). That fails
-due to the same problem resulting in recursive #GPs until the kernel runs
-out of stack space and double faults.
+struct regmap_config is only available if REGMAP is enabled.
+Add the missing Kconfig dependency to fix the problem.
 
-Prevent this by storing the supported independent features in
-fpu_kernel_cfg during XSTATE initialization and use that cached value for
-retrieving the independent feature bits to be written into IA32_XSS.
-
-[ tglx: Massaged change log ]
-
-Fixes: f0dccc9da4c0 ("x86/fpu/xstate: Support dynamic supervisor feature for LBR")
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-[ Mitchell Levy: Backport to 5.15, since struct fpu_config is not
-  introduced until 578971f4e228 and feature masks are not included in
-  said struct until 1c253ff2287f ]
-Signed-off-by: Mitchell Levy <levymitchell0@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240812-xsave-lbr-fix-v3-1-95bac1bf62f4@gmail.com
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202410020246.2cTDDx0X-lkp@intel.com/
+Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
+Cc: Eric Tremblay <etremblay@distech-controls.com>
+Reviewed-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/fpu/xstate.h | 5 +++--
- arch/x86/kernel/fpu/xstate.c      | 7 +++++++
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ drivers/hwmon/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/include/asm/fpu/xstate.h b/arch/x86/include/asm/fpu/xstate.h
-index d91df71f60fb1..3bc08b5313b0b 100644
---- a/arch/x86/include/asm/fpu/xstate.h
-+++ b/arch/x86/include/asm/fpu/xstate.h
-@@ -85,6 +85,7 @@
- #endif
- 
- extern u64 xfeatures_mask_all;
-+extern u64 xfeatures_mask_indep;
- 
- static inline u64 xfeatures_mask_supervisor(void)
- {
-@@ -124,9 +125,9 @@ static inline u64 xfeatures_mask_fpstate(void)
- static inline u64 xfeatures_mask_independent(void)
- {
- 	if (!boot_cpu_has(X86_FEATURE_ARCH_LBR))
--		return XFEATURE_MASK_INDEPENDENT & ~XFEATURE_MASK_LBR;
-+		return xfeatures_mask_indep & ~XFEATURE_MASK_LBR;
- 
--	return XFEATURE_MASK_INDEPENDENT;
-+	return xfeatures_mask_indep;
- }
- 
- extern u64 xstate_fx_sw_bytes[USER_XSTATE_FX_SW_WORDS];
-diff --git a/arch/x86/kernel/fpu/xstate.c b/arch/x86/kernel/fpu/xstate.c
-index 81891f0fff6f6..3772577462a07 100644
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -60,6 +60,11 @@ static short xsave_cpuid_features[] __initdata = {
-  * XSAVE buffer, both supervisor and user xstates.
-  */
- u64 xfeatures_mask_all __ro_after_init;
-+/*
-+ * This represents the "independent" xfeatures that are supported by XSAVES, but not managed as part
-+ * of the FPU core, such as LBR.
-+ */
-+u64 xfeatures_mask_indep __ro_after_init;
- EXPORT_SYMBOL_GPL(xfeatures_mask_all);
- 
- static unsigned int xstate_offsets[XFEATURE_MAX] __ro_after_init =
-@@ -768,6 +773,8 @@ void __init fpu__init_system_xstate(void)
- 		goto out_disable;
- 	}
- 
-+	xfeatures_mask_indep = xfeatures_mask_all & XFEATURE_MASK_INDEPENDENT;
-+
- 	/*
- 	 * Clear XSAVE features that are disabled in the normal CPUID.
- 	 */
+diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+index 17ba1d9ff0751..7bc81da4ee2ef 100644
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -1949,6 +1949,7 @@ config SENSORS_TMP421
+ config SENSORS_TMP513
+ 	tristate "Texas Instruments TMP513 and compatibles"
+ 	depends on I2C
++	select REGMAP_I2C
+ 	help
+ 	  If you say yes here you get support for Texas Instruments TMP512,
+ 	  and TMP513 temperature and power supply sensor chips.
 -- 
 2.43.0
 
