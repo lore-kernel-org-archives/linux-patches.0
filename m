@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E3E229100;
-	Tue, 15 Oct 2024 13:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9351320C476;
+	Tue, 15 Oct 2024 13:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998213; cv=none; b=L2Xv7ebimUQWql1LvjTN01KJjGxIbSnX0mr7kUQ6Y7TwJ06kGE+JZF48MoYzfzjANx+8GKbuRNFfo/LPCUzPhf4Ax7hhqH+oV6kfrazZbt10haQ3SEAQTm6Wx7NU3XsUA5t95Iq+tq6yk/2F+ajoFobESIJyDXwuc5k3xBraubU=
+	t=1728998216; cv=none; b=DpVIl+78OX0vP+k/MXDaXKpb/BgO/lE7zZiL/XZXR6pXDinmrUUTr+VW2Zqp/pd0MwlKORQkdL3Uu57M9P2UqkIfqfK4edLAEfzZMFuYBc2Ttj8rAXJvcLi98HPXZr/80b1AYdE3GXIESm11lB66foV3NmvC7nvR95nODnShGZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998213; c=relaxed/simple;
-	bh=ucjIxcxGVTLwvQjGCakOob5ycgIjr66o3amDV5TXrdw=;
+	s=arc-20240116; t=1728998216; c=relaxed/simple;
+	bh=14MAp4Uo5I6+0m14b2UD6YzMWVbDwc/FpLntNJyES9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C1cpqMtqwp+tM7IvDV6VoAlUaAXTYIYwE7okyHSIq/oAcWTY0F3EB7j7nG8GEMo92J4VT0Nq1bBt/3H8Jx2BNgzVyFIOL4zM/BDL6R7zJsUOA5bChpn8x+c8rKPknPQzotdOv+KI6J9V8SHi8q090tTL3RRDE/6+dplPDag6a8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oY4aM58z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kHOSUdmdC0jHXikeE8F3kU6Hm/jR7oH9ZQjhCr/zt3S4WZxTwY9536oR8JlokT2PwSvBrGAWiZig1WbUxlzGU3wS1vrPUff+xmO/uDxb8OMKTL/MRWmddhEZqb6j93+Kvq5lAcO2e7WXsomcKbmzaMZeKT0+wIEB4FheJsqOjrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1MSPWvN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oY4aM58z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695FDC4CEC6;
-	Tue, 15 Oct 2024 13:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1MSPWvN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D2BC4CEC6;
+	Tue, 15 Oct 2024 13:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998212;
-	bh=ucjIxcxGVTLwvQjGCakOob5ycgIjr66o3amDV5TXrdw=;
+	s=korg; t=1728998216;
+	bh=14MAp4Uo5I6+0m14b2UD6YzMWVbDwc/FpLntNJyES9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oY4aM58z2TBA09YsBTr3XIyTx5MXSalV9ZLwgqVaiun3Lg4w4DTs9NE+U5zIGopf4
-	 65t5tjF6y3N+Ho24Yk4hwFWf+QQ/j1vx5Cq13536gW8xgBZBqDVJlc8GubQbxKdTu+
-	 JKOKm1no061XXq3Cf/Y/9+gWpRuAIQ0DZvMjIA3s=
+	b=r1MSPWvNFIfKKBd3sm02zWih1HxhMLm7tvKezcjptPbQNQxfpXX+Zh/0uIqFAoPAq
+	 jjKroJ9rjU7ZM6z2tESrjpnn1C2RNEn4F8lNc0hWoDGvSJNhjH39b01QhHjC8WOapF
+	 VsBnVMeFyWRP3sBwyTclDd+UmxYRra1e7Ki3Jqzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.10 404/518] clk: qcom: gcc-sm8250: Do not turn off PCIe GDSCs during gdsc_disable()
-Date: Tue, 15 Oct 2024 14:45:08 +0200
-Message-ID: <20241015123932.567520842@linuxfoundation.org>
+	syzbot+8aaf2df2ef0164ffe1fb@syzkaller.appspotmail.com,
+	Qu Wenruo <wqu@suse.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	David Sterba <dsterba@suse.com>,
+	Filipe Manana <fdmanana@suse.com>
+Subject: [PATCH 5.10 413/518] btrfs: wait for fixup workers before stopping cleaner kthread during umount
+Date: Tue, 15 Oct 2024 14:45:17 +0200
+Message-ID: <20241015123932.923466704@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -50,57 +53,227 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit ade508b545c969c72cd68479f275a5dd640fd8b9 upstream.
+commit 41fd1e94066a815a7ab0a7025359e9b40e4b3576 upstream.
 
-With PWRSTS_OFF_ON, PCIe GDSCs are turned off during gdsc_disable(). This
-can happen during scenarios such as system suspend and breaks the resume
-of PCIe controllers from suspend.
+During unmount, at close_ctree(), we have the following steps in this order:
 
-So use PWRSTS_RET_ON to indicate the GDSC driver to not turn off the GDSCs
-during gdsc_disable() and allow the hardware to transition the GDSCs to
-retention when the parent domain enters low power state during system
-suspend.
+1) Park the cleaner kthread - this doesn't destroy the kthread, it basically
+   halts its execution (wake ups against it work but do nothing);
 
-Cc: stable@vger.kernel.org # 5.7
-Fixes: 3e5770921a88 ("clk: qcom: gcc: Add global clock controller driver for SM8250")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240719134238.312191-1-manivannan.sadhasivam@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+2) We stop the cleaner kthread - this results in freeing the respective
+   struct task_struct;
+
+3) We call btrfs_stop_all_workers() which waits for any jobs running in all
+   the work queues and then free the work queues.
+
+Syzbot reported a case where a fixup worker resulted in a crash when doing
+a delayed iput on its inode while attempting to wake up the cleaner at
+btrfs_add_delayed_iput(), because the task_struct of the cleaner kthread
+was already freed. This can happen during unmount because we don't wait
+for any fixup workers still running before we call kthread_stop() against
+the cleaner kthread, which stops and free all its resources.
+
+Fix this by waiting for any fixup workers at close_ctree() before we call
+kthread_stop() against the cleaner and run pending delayed iputs.
+
+The stack traces reported by syzbot were the following:
+
+  BUG: KASAN: slab-use-after-free in __lock_acquire+0x77/0x2050 kernel/locking/lockdep.c:5065
+  Read of size 8 at addr ffff8880272a8a18 by task kworker/u8:3/52
+
+  CPU: 1 UID: 0 PID: 52 Comm: kworker/u8:3 Not tainted 6.12.0-rc1-syzkaller #0
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+  Workqueue: btrfs-fixup btrfs_work_helper
+  Call Trace:
+   <TASK>
+   __dump_stack lib/dump_stack.c:94 [inline]
+   dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+   print_address_description mm/kasan/report.c:377 [inline]
+   print_report+0x169/0x550 mm/kasan/report.c:488
+   kasan_report+0x143/0x180 mm/kasan/report.c:601
+   __lock_acquire+0x77/0x2050 kernel/locking/lockdep.c:5065
+   lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5825
+   __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
+   _raw_spin_lock_irqsave+0xd5/0x120 kernel/locking/spinlock.c:162
+   class_raw_spinlock_irqsave_constructor include/linux/spinlock.h:551 [inline]
+   try_to_wake_up+0xb0/0x1480 kernel/sched/core.c:4154
+   btrfs_writepage_fixup_worker+0xc16/0xdf0 fs/btrfs/inode.c:2842
+   btrfs_work_helper+0x390/0xc50 fs/btrfs/async-thread.c:314
+   process_one_work kernel/workqueue.c:3229 [inline]
+   process_scheduled_works+0xa63/0x1850 kernel/workqueue.c:3310
+   worker_thread+0x870/0xd30 kernel/workqueue.c:3391
+   kthread+0x2f0/0x390 kernel/kthread.c:389
+   ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+   </TASK>
+
+  Allocated by task 2:
+   kasan_save_stack mm/kasan/common.c:47 [inline]
+   kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+   unpoison_slab_object mm/kasan/common.c:319 [inline]
+   __kasan_slab_alloc+0x66/0x80 mm/kasan/common.c:345
+   kasan_slab_alloc include/linux/kasan.h:247 [inline]
+   slab_post_alloc_hook mm/slub.c:4086 [inline]
+   slab_alloc_node mm/slub.c:4135 [inline]
+   kmem_cache_alloc_node_noprof+0x16b/0x320 mm/slub.c:4187
+   alloc_task_struct_node kernel/fork.c:180 [inline]
+   dup_task_struct+0x57/0x8c0 kernel/fork.c:1107
+   copy_process+0x5d1/0x3d50 kernel/fork.c:2206
+   kernel_clone+0x223/0x880 kernel/fork.c:2787
+   kernel_thread+0x1bc/0x240 kernel/fork.c:2849
+   create_kthread kernel/kthread.c:412 [inline]
+   kthreadd+0x60d/0x810 kernel/kthread.c:765
+   ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+  Freed by task 61:
+   kasan_save_stack mm/kasan/common.c:47 [inline]
+   kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+   kasan_save_free_info+0x40/0x50 mm/kasan/generic.c:579
+   poison_slab_object mm/kasan/common.c:247 [inline]
+   __kasan_slab_free+0x59/0x70 mm/kasan/common.c:264
+   kasan_slab_free include/linux/kasan.h:230 [inline]
+   slab_free_hook mm/slub.c:2343 [inline]
+   slab_free mm/slub.c:4580 [inline]
+   kmem_cache_free+0x1a2/0x420 mm/slub.c:4682
+   put_task_struct include/linux/sched/task.h:144 [inline]
+   delayed_put_task_struct+0x125/0x300 kernel/exit.c:228
+   rcu_do_batch kernel/rcu/tree.c:2567 [inline]
+   rcu_core+0xaaa/0x17a0 kernel/rcu/tree.c:2823
+   handle_softirqs+0x2c5/0x980 kernel/softirq.c:554
+   __do_softirq kernel/softirq.c:588 [inline]
+   invoke_softirq kernel/softirq.c:428 [inline]
+   __irq_exit_rcu+0xf4/0x1c0 kernel/softirq.c:637
+   irq_exit_rcu+0x9/0x30 kernel/softirq.c:649
+   instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1037 [inline]
+   sysvec_apic_timer_interrupt+0xa6/0xc0 arch/x86/kernel/apic/apic.c:1037
+   asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:702
+
+  Last potentially related work creation:
+   kasan_save_stack+0x3f/0x60 mm/kasan/common.c:47
+   __kasan_record_aux_stack+0xac/0xc0 mm/kasan/generic.c:541
+   __call_rcu_common kernel/rcu/tree.c:3086 [inline]
+   call_rcu+0x167/0xa70 kernel/rcu/tree.c:3190
+   context_switch kernel/sched/core.c:5318 [inline]
+   __schedule+0x184b/0x4ae0 kernel/sched/core.c:6675
+   schedule_idle+0x56/0x90 kernel/sched/core.c:6793
+   do_idle+0x56a/0x5d0 kernel/sched/idle.c:354
+   cpu_startup_entry+0x42/0x60 kernel/sched/idle.c:424
+   start_secondary+0x102/0x110 arch/x86/kernel/smpboot.c:314
+   common_startup_64+0x13e/0x147
+
+  The buggy address belongs to the object at ffff8880272a8000
+   which belongs to the cache task_struct of size 7424
+  The buggy address is located 2584 bytes inside of
+   freed 7424-byte region [ffff8880272a8000, ffff8880272a9d00)
+
+  The buggy address belongs to the physical page:
+  page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x272a8
+  head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+  flags: 0xfff00000000040(head|node=0|zone=1|lastcpupid=0x7ff)
+  page_type: f5(slab)
+  raw: 00fff00000000040 ffff88801bafa500 dead000000000122 0000000000000000
+  raw: 0000000000000000 0000000080040004 00000001f5000000 0000000000000000
+  head: 00fff00000000040 ffff88801bafa500 dead000000000122 0000000000000000
+  head: 0000000000000000 0000000080040004 00000001f5000000 0000000000000000
+  head: 00fff00000000003 ffffea00009caa01 ffffffffffffffff 0000000000000000
+  head: 0000000000000008 0000000000000000 00000000ffffffff 0000000000000000
+  page dumped because: kasan: bad access detected
+  page_owner tracks the page as allocated
+  page last allocated via order 3, migratetype Unmovable, gfp_mask 0xd20c0(__GFP_IO|__GFP_FS|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 2, tgid 2 (kthreadd), ts 71247381401, free_ts 71214998153
+   set_page_owner include/linux/page_owner.h:32 [inline]
+   post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1537
+   prep_new_page mm/page_alloc.c:1545 [inline]
+   get_page_from_freelist+0x3039/0x3180 mm/page_alloc.c:3457
+   __alloc_pages_noprof+0x256/0x6c0 mm/page_alloc.c:4733
+   alloc_pages_mpol_noprof+0x3e8/0x680 mm/mempolicy.c:2265
+   alloc_slab_page+0x6a/0x120 mm/slub.c:2413
+   allocate_slab+0x5a/0x2f0 mm/slub.c:2579
+   new_slab mm/slub.c:2632 [inline]
+   ___slab_alloc+0xcd1/0x14b0 mm/slub.c:3819
+   __slab_alloc+0x58/0xa0 mm/slub.c:3909
+   __slab_alloc_node mm/slub.c:3962 [inline]
+   slab_alloc_node mm/slub.c:4123 [inline]
+   kmem_cache_alloc_node_noprof+0x1fe/0x320 mm/slub.c:4187
+   alloc_task_struct_node kernel/fork.c:180 [inline]
+   dup_task_struct+0x57/0x8c0 kernel/fork.c:1107
+   copy_process+0x5d1/0x3d50 kernel/fork.c:2206
+   kernel_clone+0x223/0x880 kernel/fork.c:2787
+   kernel_thread+0x1bc/0x240 kernel/fork.c:2849
+   create_kthread kernel/kthread.c:412 [inline]
+   kthreadd+0x60d/0x810 kernel/kthread.c:765
+   ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+  page last free pid 5230 tgid 5230 stack trace:
+   reset_page_owner include/linux/page_owner.h:25 [inline]
+   free_pages_prepare mm/page_alloc.c:1108 [inline]
+   free_unref_page+0xcd0/0xf00 mm/page_alloc.c:2638
+   discard_slab mm/slub.c:2678 [inline]
+   __put_partials+0xeb/0x130 mm/slub.c:3146
+   put_cpu_partial+0x17c/0x250 mm/slub.c:3221
+   __slab_free+0x2ea/0x3d0 mm/slub.c:4450
+   qlink_free mm/kasan/quarantine.c:163 [inline]
+   qlist_free_all+0x9a/0x140 mm/kasan/quarantine.c:179
+   kasan_quarantine_reduce+0x14f/0x170 mm/kasan/quarantine.c:286
+   __kasan_slab_alloc+0x23/0x80 mm/kasan/common.c:329
+   kasan_slab_alloc include/linux/kasan.h:247 [inline]
+   slab_post_alloc_hook mm/slub.c:4086 [inline]
+   slab_alloc_node mm/slub.c:4135 [inline]
+   kmem_cache_alloc_noprof+0x135/0x2a0 mm/slub.c:4142
+   getname_flags+0xb7/0x540 fs/namei.c:139
+   do_sys_openat2+0xd2/0x1d0 fs/open.c:1409
+   do_sys_open fs/open.c:1430 [inline]
+   __do_sys_openat fs/open.c:1446 [inline]
+   __se_sys_openat fs/open.c:1441 [inline]
+   __x64_sys_openat+0x247/0x2a0 fs/open.c:1441
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+  Memory state around the buggy address:
+   ffff8880272a8900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+   ffff8880272a8980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+  >ffff8880272a8a00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                              ^
+   ffff8880272a8a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+   ffff8880272a8b00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+  ==================================================================
+
+Reported-by: syzbot+8aaf2df2ef0164ffe1fb@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/66fb36b1.050a0220.aab67.003b.GAE@google.com/
+CC: stable@vger.kernel.org # 4.19+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-sm8250.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/btrfs/disk-io.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/clk/qcom/gcc-sm8250.c
-+++ b/drivers/clk/qcom/gcc-sm8250.c
-@@ -3229,7 +3229,7 @@ static struct gdsc pcie_0_gdsc = {
- 	.pd = {
- 		.name = "pcie_0_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -4132,6 +4132,17 @@ void __cold close_ctree(struct btrfs_fs_
+ 	btrfs_cleanup_defrag_inodes(fs_info);
  
- static struct gdsc pcie_1_gdsc = {
-@@ -3237,7 +3237,7 @@ static struct gdsc pcie_1_gdsc = {
- 	.pd = {
- 		.name = "pcie_1_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
- 
- static struct gdsc pcie_2_gdsc = {
-@@ -3245,7 +3245,7 @@ static struct gdsc pcie_2_gdsc = {
- 	.pd = {
- 		.name = "pcie_2_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- };
- 
- static struct gdsc ufs_card_gdsc = {
+ 	/*
++	 * Wait for any fixup workers to complete.
++	 * If we don't wait for them here and they are still running by the time
++	 * we call kthread_stop() against the cleaner kthread further below, we
++	 * get an use-after-free on the cleaner because the fixup worker adds an
++	 * inode to the list of delayed iputs and then attempts to wakeup the
++	 * cleaner kthread, which was already stopped and destroyed. We parked
++	 * already the cleaner, but below we run all pending delayed iputs.
++	 */
++	btrfs_flush_workqueue(fs_info->fixup_workers);
++
++	/*
+ 	 * After we parked the cleaner kthread, ordered extents may have
+ 	 * completed and created new delayed iputs. If one of the async reclaim
+ 	 * tasks is running and in the RUN_DELAYED_IPUTS flush state, then we
 
 
