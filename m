@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9AF19B3FF;
-	Tue, 15 Oct 2024 11:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8AE19B3FF;
+	Tue, 15 Oct 2024 11:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993470; cv=none; b=VSsu8GTzhNcWqa10ULjoMMCym7qtx7usKx8tXMyS/PqNY1NaPFqmfrpePK3JzoXw9WD1t1nZqYxQZxyUz5LfNVlEutd6ARSyGgdQNdGAv/Tt16l4aiK16kVbzloIhawn1yVWUaXoSUhhNMRE/3PfgJbSm5nxMsotn8gzvyAEjuc=
+	t=1728993473; cv=none; b=WTfYmw4GsiR5256qbBlWhpwBt/dXR65uvxsco0d5ltwYFJFpaBZhAbFkEP2SaNHtZSmVjtmp+LeSk2/2ufAGMf4ksphLhZfwNwxL6hKFSrAl/bHe60u111MZhS0Qhe6QciTcO4yBSMyD0ubS0CKSXah4CxqtimuKb3BDW+GP8NM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993470; c=relaxed/simple;
-	bh=pryBSm15TwtmzVOmA6RuTC0hWGoYKxmrIer7sFnFF04=;
+	s=arc-20240116; t=1728993473; c=relaxed/simple;
+	bh=eXO+CtBoyB0aPGvywgEzdX8zL9mkw3EwKrxngmuW3IE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AWi7nlOlZ2IhBr2VoV6x6rlb97mejho+KrTphexu6NFQR7pD3OtRb6lvo+deo9fDuiiZ7A/dyqPbDhiOQm2Eqewkp7Fxqfw3C0MVdLuccecayke4BP9JIPhfX404JlMgE9emQb41Pq2z2SbjbN2eVJbqMyZRgfBUlmeLc2AQU9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxHG72FB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=adohD455r1VNFypyftDSbCLrXEo6KYPlAhjPbar8A+ZLvPzh3HkKxEwoJWWIUirh6Zb+VU+uYgV3z7RZK8Ov6tsLUYP2ACLWJcNtUAU2yc6geITKTgAlTzrG1NAJShaX/8E5Js32IGTr2vRA6Mu98wSpbCkuU/xTCHfwpq6NSOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=to5GjOdM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxHG72FB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E136AC4CEC6;
-	Tue, 15 Oct 2024 11:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="to5GjOdM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30AE1C4CEC6;
+	Tue, 15 Oct 2024 11:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993470;
-	bh=pryBSm15TwtmzVOmA6RuTC0hWGoYKxmrIer7sFnFF04=;
+	s=korg; t=1728993473;
+	bh=eXO+CtBoyB0aPGvywgEzdX8zL9mkw3EwKrxngmuW3IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rxHG72FBUeiDHPWQH/snMfDKypjiAcI/SlTRb1RS5w0B66d/DjZfeSJpMG4UDPiSf
-	 BDcoWUXLIu83lvFoBWgngerd3+GQt+GuBpRRg7wLVsGyqZ0pcxMkt18lPgG8E7tdWB
-	 rxsSmSmtz9lZ1m4f1H8C2fVajZSWrSo/53VdhQOs=
+	b=to5GjOdMSmvVtA8BE0zkp+BykmsTTHNeb+cZbMjfoqb1YLMqHcpxutgUQItEvYJsx
+	 LBTGFV51YT0foAX++fkTPcAebPRWWtIkRl7gXT744rJ858u9HehyYU0pEYUqTFjImu
+	 ZVpfMTDPMdYgPm62ejoxvstNlsYeLjczBSNhvFDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elena Salomatkina <esalomatkina@ispras.ru>,
-	Simon Horman <horms@kernel.org>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 380/691] net/mlx5e: Fix NULL deref in mlx5e_tir_builder_alloc()
-Date: Tue, 15 Oct 2024 13:25:28 +0200
-Message-ID: <20241015112455.426878978@linuxfoundation.org>
+Subject: [PATCH 5.15 415/691] ACPICA: Fix memory leak if acpi_ps_get_next_namepath() fails
+Date: Tue, 15 Oct 2024 13:26:03 +0200
+Message-ID: <20241015112456.814369961@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -55,42 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Elena Salomatkina <esalomatkina@ispras.ru>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit f25389e779500cf4a59ef9804534237841bce536 ]
+[ Upstream commit 5accb265f7a1b23e52b0ec42313d1e12895552f4 ]
 
-In mlx5e_tir_builder_alloc() kvzalloc() may return NULL
-which is dereferenced on the next line in a reference
-to the modify field.
+ACPICA commit 2802af722bbde7bf1a7ac68df68e179e2555d361
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+If acpi_ps_get_next_namepath() fails, the previously allocated
+union acpi_parse_object needs to be freed before returning the
+status code.
 
-Fixes: a6696735d694 ("net/mlx5e: Convert TIR to a dedicated object")
-Signed-off-by: Elena Salomatkina <esalomatkina@ispras.ru>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+The issue was first being reported on the Linux ACPI mailing list:
+
+Link: https://lore.kernel.org/linux-acpi/56f94776-484f-48c0-8855-dba8e6a7793b@yandex.ru/T/
+Link: https://github.com/acpica/acpica/commit/2802af72
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tir.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/acpi/acpica/psargs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tir.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tir.c
-index a1afb8585e37f..ae64d22d21613 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tir.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tir.c
-@@ -23,6 +23,9 @@ struct mlx5e_tir_builder *mlx5e_tir_builder_alloc(bool modify)
- 	struct mlx5e_tir_builder *builder;
+diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
+index b9ff535aa02e6..fd351074c6129 100644
+--- a/drivers/acpi/acpica/psargs.c
++++ b/drivers/acpi/acpica/psargs.c
+@@ -820,6 +820,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
+ 			    acpi_ps_get_next_namepath(walk_state, parser_state,
+ 						      arg,
+ 						      ACPI_NOT_METHOD_CALL);
++			if (ACPI_FAILURE(status)) {
++				acpi_ps_free_op(arg);
++				return_ACPI_STATUS(status);
++			}
+ 		} else {
+ 			/* Single complex argument, nothing returned */
  
- 	builder = kvzalloc(sizeof(*builder), GFP_KERNEL);
-+	if (!builder)
-+		return NULL;
-+
- 	builder->modify = modify;
+@@ -854,6 +858,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
+ 			    acpi_ps_get_next_namepath(walk_state, parser_state,
+ 						      arg,
+ 						      ACPI_POSSIBLE_METHOD_CALL);
++			if (ACPI_FAILURE(status)) {
++				acpi_ps_free_op(arg);
++				return_ACPI_STATUS(status);
++			}
  
- 	return builder;
+ 			if (arg->common.aml_opcode == AML_INT_METHODCALL_OP) {
+ 
 -- 
 2.43.0
 
