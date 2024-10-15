@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C571A1E379D;
-	Tue, 15 Oct 2024 13:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81451AF0A9;
+	Tue, 15 Oct 2024 13:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997409; cv=none; b=BgFa21hW8IkfkEMt5hVCYL1c2mhXPLUgs0369sZ8nNQf21jGo9Gw+Ng9063yX+HzHWZd+X+Vp3eWnYIesVlN9F5y5GkPkCxLW4YoG6YFNu/komUlI6JaTZCTyJEs3/sCuJhuii1IuEIALFFnGOYQlSSmMCNYjx9cNGlzw/OztBE=
+	t=1728997412; cv=none; b=X3+6/tU6RJRfHA/fcpDaY7Tn23jIuv0UzpF0Wb1wzpIZSXbmQrhYm2y7+ral3zaHxEvRu4FkR9f/Zf1Pvzki2NFAS3eTzD5+suE5cqRiwDxr0Vjf0ZCU3itaxc52xzQUPWqauFGo67qckkd+VP1CyjjjSmBbGLFUPd+VcFl5Hr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997409; c=relaxed/simple;
-	bh=cImxAtC2DUqUYq5Uckkft8jA4IyNfQL1ZdBNkT9XTf0=;
+	s=arc-20240116; t=1728997412; c=relaxed/simple;
+	bh=272v4f9pb5w3mnLTIfHI/7/rNhuqiB0r4YIErZKbV+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sEewezJM0UXMh3P7NUmkXL/xEj3i/2mRCkGcgQqbBehvgZF+W/ZLXQvDzdNgsrdHu9FRzJklTN0CNNxs8EDLmXWp606npTookAQBjS+e4sWBmqWgLfSQ1xCbXOR+iNUzWF03p7QCAy9BZY8lWpd/RhoSKe34jXHJ5KS07QdhRYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNghUCxy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C0qKNrm0hO8e+wGF4r5hXxlyeJAtQMMcX2n/7ZviPgYipuN+UpXY7rG04PQcBiydeK2APOTU9GqyFapctYXvMgv7dXuAYQWsmseMwnx4kuhSxu5TLvDqe+V+2nNjMoKcMH3TiwgrLFNTiNhTCe4GTRAa4Un75yrJwQR21rc9fkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ifSgTzVk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNghUCxy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17F9C4CEC6;
-	Tue, 15 Oct 2024 13:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ifSgTzVk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D9FC4CECE;
+	Tue, 15 Oct 2024 13:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997409;
-	bh=cImxAtC2DUqUYq5Uckkft8jA4IyNfQL1ZdBNkT9XTf0=;
+	s=korg; t=1728997412;
+	bh=272v4f9pb5w3mnLTIfHI/7/rNhuqiB0r4YIErZKbV+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNghUCxyAARjgBiCyHR3WDuC+2tM/41+ucnM4KW+2aVpxoIKLFrshyXPsgcV/0sAP
-	 uDPbd0DyvJIyC6/V9IA4gG7ODGNs/8IQbQtmNrXNm8D9GMNHa9umd5VkuoLczTauSp
-	 1mnyCbszwN6dCt9MsOl3el3QDQUFF71SL7eKROrI=
+	b=ifSgTzVk+HwxzgpcHglljJKx0uAhi4eUa4dv11p0uQfK17ET8lqHKr0hr0oD7sxOa
+	 MiJRgL17ts8FEaVnpdcuQssYiIe4Cyhn8Qg8dgjRoSJ5M1mZMeR4bhGQvtXbcCu1Xy
+	 7M6Wxwj4rTEVrKnU4K8BDh3syyAQafhssTjWn5zU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Xi Wang <wangxi11@huawei.com>,
+	Weihang Li <liweihang@huawei.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 166/518] PCI: xilinx-nwl: Fix register misspelling
-Date: Tue, 15 Oct 2024 14:41:10 +0200
-Message-ID: <20241015123923.402913534@linuxfoundation.org>
+Subject: [PATCH 5.10 175/518] RDMA/hns: Add mapped page count checking for MTR
+Date: Tue, 15 Oct 2024 14:41:19 +0200
+Message-ID: <20241015123923.746426063@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,60 +52,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Xi Wang <wangxi11@huawei.com>
 
-[ Upstream commit a437027ae1730b8dc379c75fa0dd7d3036917400 ]
+[ Upstream commit 9ea9a53ea93be1cc66729ceb920f0d07285d6bfd ]
 
-MSIC -> MISC
+Add the mapped page count checking flow to avoid invalid page size when
+creating MTR.
 
-Fixes: c2a7ff18edcd ("PCI: xilinx-nwl: Expand error logging")
-Link: https://lore.kernel.org/r/20240531161337.864994-4-sean.anderson@linux.dev
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: 38389eaa4db1 ("RDMA/hns: Add mtr support for mixed multihop addressing")
+Link: https://lore.kernel.org/r/1612517974-31867-4-git-send-email-liweihang@huawei.com
+Signed-off-by: Xi Wang <wangxi11@huawei.com>
+Signed-off-by: Weihang Li <liweihang@huawei.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: d586628b169d ("RDMA/hns: Fix the overflow risk of hem_list_calc_ba_range()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-xilinx-nwl.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hem.c |  9 ++--
+ drivers/infiniband/hw/hns/hns_roce_mr.c  | 56 ++++++++++++++----------
+ 2 files changed, 40 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/pci/controller/pcie-xilinx-nwl.c b/drivers/pci/controller/pcie-xilinx-nwl.c
-index 2a9fe7c3aef9f..5c6653d825fb5 100644
---- a/drivers/pci/controller/pcie-xilinx-nwl.c
-+++ b/drivers/pci/controller/pcie-xilinx-nwl.c
-@@ -79,8 +79,8 @@
- #define MSGF_MISC_SR_NON_FATAL_DEV	BIT(22)
- #define MSGF_MISC_SR_FATAL_DEV		BIT(23)
- #define MSGF_MISC_SR_LINK_DOWN		BIT(24)
--#define MSGF_MSIC_SR_LINK_AUTO_BWIDTH	BIT(25)
--#define MSGF_MSIC_SR_LINK_BWIDTH	BIT(26)
-+#define MSGF_MISC_SR_LINK_AUTO_BWIDTH	BIT(25)
-+#define MSGF_MISC_SR_LINK_BWIDTH	BIT(26)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
+index 854b41c14774d..fa920a7621eef 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
+@@ -981,9 +981,8 @@ static struct roce_hem_item *hem_list_alloc_item(struct hns_roce_dev *hr_dev,
+ 		return NULL;
  
- #define MSGF_MISC_SR_MASKALL		(MSGF_MISC_SR_RXMSG_AVAIL | \
- 					MSGF_MISC_SR_RXMSG_OVER | \
-@@ -95,8 +95,8 @@
- 					MSGF_MISC_SR_NON_FATAL_DEV | \
- 					MSGF_MISC_SR_FATAL_DEV | \
- 					MSGF_MISC_SR_LINK_DOWN | \
--					MSGF_MSIC_SR_LINK_AUTO_BWIDTH | \
--					MSGF_MSIC_SR_LINK_BWIDTH)
-+					MSGF_MISC_SR_LINK_AUTO_BWIDTH | \
-+					MSGF_MISC_SR_LINK_BWIDTH)
+ 	if (exist_bt) {
+-		hem->addr = dma_alloc_coherent(hr_dev->dev,
+-						   count * BA_BYTE_LEN,
+-						   &hem->dma_addr, GFP_KERNEL);
++		hem->addr = dma_alloc_coherent(hr_dev->dev, count * BA_BYTE_LEN,
++					       &hem->dma_addr, GFP_KERNEL);
+ 		if (!hem->addr) {
+ 			kfree(hem);
+ 			return NULL;
+@@ -1242,6 +1241,10 @@ static int hem_list_alloc_root_bt(struct hns_roce_dev *hr_dev,
+ 	if (ba_num < 1)
+ 		return -ENOMEM;
  
- /* Legacy interrupt status mask bits */
- #define MSGF_LEG_SR_INTA		BIT(0)
-@@ -305,10 +305,10 @@ static irqreturn_t nwl_pcie_misc_handler(int irq, void *data)
- 	if (misc_stat & MSGF_MISC_SR_FATAL_DEV)
- 		dev_err(dev, "Fatal Error Detected\n");
++	if (ba_num > unit)
++		return -ENOBUFS;
++
++	ba_num = min_t(int, ba_num, unit);
+ 	INIT_LIST_HEAD(&temp_root);
+ 	offset = r->offset;
+ 	/* indicate to last region */
+diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
+index 7e93c9b4a33f1..5fad718cfdbe3 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_mr.c
++++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
+@@ -633,30 +633,26 @@ int hns_roce_dealloc_mw(struct ib_mw *ibmw)
+ }
  
--	if (misc_stat & MSGF_MSIC_SR_LINK_AUTO_BWIDTH)
-+	if (misc_stat & MSGF_MISC_SR_LINK_AUTO_BWIDTH)
- 		dev_info(dev, "Link Autonomous Bandwidth Management Status bit set\n");
+ static int mtr_map_region(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
+-			  dma_addr_t *pages, struct hns_roce_buf_region *region)
++			  struct hns_roce_buf_region *region, dma_addr_t *pages,
++			  int max_count)
+ {
++	int count, npage;
++	int offset, end;
+ 	__le64 *mtts;
+-	int offset;
+-	int count;
+-	int npage;
+ 	u64 addr;
+-	int end;
+ 	int i;
  
--	if (misc_stat & MSGF_MSIC_SR_LINK_BWIDTH)
-+	if (misc_stat & MSGF_MISC_SR_LINK_BWIDTH)
- 		dev_info(dev, "Link Bandwidth Management Status bit set\n");
+-	/* if hopnum is 0, buffer cannot store BAs, so skip write mtt */
+-	if (!region->hopnum)
+-		return 0;
+-
+ 	offset = region->offset;
+ 	end = offset + region->count;
+ 	npage = 0;
+-	while (offset < end) {
++	while (offset < end && npage < max_count) {
++		count = 0;
+ 		mtts = hns_roce_hem_list_find_mtt(hr_dev, &mtr->hem_list,
+ 						  offset, &count, NULL);
+ 		if (!mtts)
+ 			return -ENOBUFS;
  
- 	/* Clear misc interrupt status */
+-		for (i = 0; i < count; i++) {
++		for (i = 0; i < count && npage < max_count; i++) {
+ 			if (hr_dev->hw_rev == HNS_ROCE_HW_VER1)
+ 				addr = to_hr_hw_page_addr(pages[npage]);
+ 			else
+@@ -668,7 +664,7 @@ static int mtr_map_region(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
+ 		offset += count;
+ 	}
+ 
+-	return 0;
++	return npage;
+ }
+ 
+ static inline bool mtr_has_mtt(struct hns_roce_buf_attr *attr)
+@@ -835,8 +831,8 @@ int hns_roce_mtr_map(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
+ {
+ 	struct ib_device *ibdev = &hr_dev->ib_dev;
+ 	struct hns_roce_buf_region *r;
+-	unsigned int i;
+-	int err;
++	unsigned int i, mapped_cnt;
++	int ret;
+ 
+ 	/*
+ 	 * Only use the first page address as root ba when hopnum is 0, this
+@@ -847,26 +843,42 @@ int hns_roce_mtr_map(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
+ 		return 0;
+ 	}
+ 
+-	for (i = 0; i < mtr->hem_cfg.region_count; i++) {
++	for (i = 0, mapped_cnt = 0; i < mtr->hem_cfg.region_count &&
++	     mapped_cnt < page_cnt; i++) {
+ 		r = &mtr->hem_cfg.region[i];
++		/* if hopnum is 0, no need to map pages in this region */
++		if (!r->hopnum) {
++			mapped_cnt += r->count;
++			continue;
++		}
++
+ 		if (r->offset + r->count > page_cnt) {
+-			err = -EINVAL;
++			ret = -EINVAL;
+ 			ibdev_err(ibdev,
+ 				  "failed to check mtr%u end %u + %u, max %u.\n",
+ 				  i, r->offset, r->count, page_cnt);
+-			return err;
++			return ret;
+ 		}
+ 
+-		err = mtr_map_region(hr_dev, mtr, &pages[r->offset], r);
+-		if (err) {
++		ret = mtr_map_region(hr_dev, mtr, r, &pages[r->offset],
++				     page_cnt - mapped_cnt);
++		if (ret < 0) {
+ 			ibdev_err(ibdev,
+ 				  "failed to map mtr%u offset %u, ret = %d.\n",
+-				  i, r->offset, err);
+-			return err;
++				  i, r->offset, ret);
++			return ret;
+ 		}
++		mapped_cnt += ret;
++		ret = 0;
+ 	}
+ 
+-	return 0;
++	if (mapped_cnt < page_cnt) {
++		ret = -ENOBUFS;
++		ibdev_err(ibdev, "failed to map mtr pages count: %u < %u.\n",
++			  mapped_cnt, page_cnt);
++	}
++
++	return ret;
+ }
+ 
+ int hns_roce_mtr_find(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
 -- 
 2.43.0
 
