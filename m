@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4361B2184;
-	Tue, 15 Oct 2024 13:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4481B1B2181;
+	Tue, 15 Oct 2024 13:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998579; cv=none; b=g4BqCmHvuutJwwnn6YpfP3chJBZIredKF0NzHCQ3hPbzsiCMrz6ichpv7tr6Q8oXXgwt+tLJJP0+DE5yXZjzLawZ/I3mGDq3ozoHQrJwg/GiuAtDNhl+RlFpV7v7pq4QbuM25wVGP6BPUwDWLUTKAmyCQbB4gjFfFku8N9n4uiA=
+	t=1728998582; cv=none; b=WJFymD+Plgx3td7F8mwGwb8Y+jQUN5ETfrJLub787iIMDcvZUck8HvtCjysgC6wqNI6eGBIKNdC10i3+Mtr2SRQ7tDCYWeAnbKknvYu/ZaoWfzP1mf7/R9TvyrAymmz5O8XxE7JQmYrUbYcNQOke1O/aL6GMtfs0IP8XqTjK7LE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998579; c=relaxed/simple;
-	bh=10h2vRt9FRpXX/jrN5ieOhiVPE6dgWPbjnePcK9sg7A=;
+	s=arc-20240116; t=1728998582; c=relaxed/simple;
+	bh=uwmqVF2ksGzon5E6V5Afa8haKeTGr78YmMylWDLYwRE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FZGHO1ms3p8MMteE1r3/SOZ22cI4SnddtjaoTKLk5K1WKLsS/8olv9EZwXg3AGvU+hrfd0uW5Se4Lr5feRgV5/+0KgFSr7bkDj1J3C4qJj6kQrbyDTsHRr4XXrvYA1aqDleX/mfJzua9VmIJqHpKBAGs5bTX84lchPZGcj10di0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVa0gNiq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AmBWsiBmqDL/hPZxhvkUvp24YrG8GNX5ktuz1kR/vY1Du/uXjpe5qjvNgUiJaoNXbreUkDDkvSW0TK9qB7ly/cf8FyB/XtwpvXiBnM3xQ1CBAnvoc8WD+2i0VqrW5FV7AFoeJVO9xPfuqvNnqU5kT0+8ZhoBiGA6F3zHhJFVelo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FkzXJZI0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVa0gNiq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C99DC4CEC6;
-	Tue, 15 Oct 2024 13:22:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FkzXJZI0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8469C4CEC6;
+	Tue, 15 Oct 2024 13:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998578;
-	bh=10h2vRt9FRpXX/jrN5ieOhiVPE6dgWPbjnePcK9sg7A=;
+	s=korg; t=1728998582;
+	bh=uwmqVF2ksGzon5E6V5Afa8haKeTGr78YmMylWDLYwRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVa0gNiqbsJGb4BDejQsdWH5yPAdRTRjloBMijNAPQsOR+fmSFBc6Q5ZRgjh44ORt
-	 z6AyaoPfVvbYNX2W/PNS1MuQBYpM9y6hJ86caa0lTyLNda9Bqu2wy8we48JvFXLYtG
-	 jqn7kxrh/b2mbEBEMZ/oMoPXafR6qnjXvaL2NfSA=
+	b=FkzXJZI0dosMrHd/agXQTNKZAXc1ifi5oSPS9a47OGFwSGXVjmYeZvIWquzJj1WGn
+	 g583T7oaNZWI584akLfGpCNYQbUIru0WSFG1DjIA3HiUm/y8drP4NMu5hHsAzm1DwP
+	 FX5UxBVR3CXCIXAm4E53MIAEk3oLo9YzpyI7CvTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <uwu@icenowy.me>,
-	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.10 506/518] usb: storage: ignore bogus device raised by JieLi BR21 USB sound chip
-Date: Tue, 15 Oct 2024 14:46:50 +0200
-Message-ID: <20241015123936.520417073@linuxfoundation.org>
+	SurajSonawane2415 <surajsonawane0215@gmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 5.10 507/518] hid: intel-ish-hid: Fix uninitialized variable rv in ish_fw_xfer_direct_dma
+Date: Tue, 15 Oct 2024 14:46:51 +0200
+Message-ID: <20241015123936.559303403@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,46 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <uwu@icenowy.me>
+From: SurajSonawane2415 <surajsonawane0215@gmail.com>
 
-commit a6555cb1cb69db479d0760e392c175ba32426842 upstream.
+commit d41bff05a61fb539f21e9bf0d39fac77f457434e upstream.
 
-JieLi tends to use SCSI via USB Mass Storage to implement their own
-proprietary commands instead of implementing another USB interface.
-Enumerating it as a generic mass storage device will lead to a Hardware
-Error sense key get reported.
+Fix the uninitialized symbol 'rv' in the function ish_fw_xfer_direct_dma
+to resolve the following warning from the smatch tool:
+drivers/hid/intel-ish-hid/ishtp-fw-loader.c:714 ish_fw_xfer_direct_dma()
+error: uninitialized symbol 'rv'.
+Initialize 'rv' to 0 to prevent undefined behavior from uninitialized
+access.
 
-Ignore this bogus device to prevent appearing a unusable sdX device
-file.
-
-Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
-Cc: stable <stable@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20241001083407.8336-1-uwu@icenowy.me
+Cc: stable@vger.kernel.org
+Fixes: 91b228107da3 ("HID: intel-ish-hid: ISH firmware loader client driver")
+Signed-off-by: SurajSonawane2415 <surajsonawane0215@gmail.com>
+Link: https://patch.msgid.link/20241004075944.44932-1-surajsonawane0215@gmail.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_devs.h |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/hid/intel-ish-hid/ishtp-fw-loader.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/storage/unusual_devs.h
-+++ b/drivers/usb/storage/unusual_devs.h
-@@ -2412,6 +2412,17 @@ UNUSUAL_DEV(  0xc251, 0x4003, 0x0100, 0x
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_NOT_LOCKABLE),
- 
-+/*
-+ * Reported by Icenowy Zheng <uwu@icenowy.me>
-+ * This is an interface for vendor-specific cryptic commands instead
-+ * of real USB storage device.
-+ */
-+UNUSUAL_DEV(  0xe5b7, 0x0811, 0x0100, 0x0100,
-+		"ZhuHai JieLi Technology",
-+		"JieLi BR21",
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
-+		US_FL_IGNORE_DEVICE),
-+
- /* Reported by Andrew Simmons <andrew.simmons@gmail.com> */
- UNUSUAL_DEV(  0xed06, 0x4500, 0x0001, 0x0001,
- 		"DataStor",
+--- a/drivers/hid/intel-ish-hid/ishtp-fw-loader.c
++++ b/drivers/hid/intel-ish-hid/ishtp-fw-loader.c
+@@ -630,7 +630,7 @@ static int ish_fw_xfer_direct_dma(struct
+ 				  const struct firmware *fw,
+ 				  const struct shim_fw_info fw_info)
+ {
+-	int rv;
++	int rv = 0;
+ 	void *dma_buf;
+ 	dma_addr_t dma_buf_phy;
+ 	u32 fragment_offset, fragment_size, payload_max_size;
 
 
