@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96EA01C07FF;
-	Tue, 15 Oct 2024 13:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F961C07FF;
+	Tue, 15 Oct 2024 13:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997748; cv=none; b=MpKgxgJ+Z8Y9xNRh6slYx3zznaPTvtFVP+HEyeLXa6cx8s49qdEPe2ZCb0kKLvqyxn5MsbkrDpbpFLxH6HXKDEy6oMrvZKKemQTGPUDLJeEg1L7/9Ahz6uaafY4mIOLDTnoG+agvvHArppamx6liuLNeQyU0Crkecdi1W3+C1n8=
+	t=1728997751; cv=none; b=kCNtzX8Aq5WIO4BpZ+MOVFrih4uvuzxa41uCPqZ07HWq0VQ9mFcEvmsXiIudq3i5u0FObGJXoGHz4VkvsPBtjR3g+tLByE1GhHvtK803St6zbNaSLl3KTaAxNfvLgaUQD+z0WI04F4Fr6F/tskyaKQ/Cf8g+/iVyUUj9oWl+o1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997748; c=relaxed/simple;
-	bh=kD4oI/DaDZqGuZrTWD4d5QAJtYjWri3uINDlvo/pRQs=;
+	s=arc-20240116; t=1728997751; c=relaxed/simple;
+	bh=/m7x+kE2XqsLF7ryr6F5oJiqE1bHCRhyLn0+UGRurpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LKEOLvA4k2AG8Fj6Kxzl8PORRd9TEWBytMRQq6/2Lthz08hWAksTvPrv+i7XB8l8YIanU5DYMuaYr58ETk87xUdy5QPqdRFeUcQceEkJVOIi/72piH2lvFKAX5PbZLwuOm/279gWT5WvCYNIdVx8fV4osnpyNcA0D3gdhE3tNNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8/UZHhZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BySxJ+9YuUwlfIZjRJqVjIniK1tNtqIrdsQaamvcxiy9irJBpA+X2ThHvuXjUp2qjct+dnAXX8Kos6yjnldE7fG+d8KFa/XAXTt+2yCz0F5jOXXCCbpagyvzKnjmWtX3vFXO3qPR0AfDTJvLJEOpJ/Xn409/AurAq2dpAa1c9hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kl8Gq+lu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8/UZHhZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD03C4CEC6;
-	Tue, 15 Oct 2024 13:09:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kl8Gq+lu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0E3C4CEC6;
+	Tue, 15 Oct 2024 13:09:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997748;
-	bh=kD4oI/DaDZqGuZrTWD4d5QAJtYjWri3uINDlvo/pRQs=;
+	s=korg; t=1728997751;
+	bh=/m7x+kE2XqsLF7ryr6F5oJiqE1bHCRhyLn0+UGRurpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j8/UZHhZJWPblYsJ7Ex2usF3UVTWPnDUPIOAbV02QupPCj2JIjvPoQ0R9+pjc/EUx
-	 S1+P5pjDPcRg2CKkJlZdZBxIxMBd5WTesB8ihKc+/Lcwo7Hn0zEoW2KTnctcXllWV9
-	 k7Z6+RdwP92vYip6KiPPdiA5So072IxxMgO33Szo=
+	b=kl8Gq+lukFQcABt3fw7N8ZhgjG1fUtP12wi3gae5Joc5qAQcK+vROrDlwSVu6fvr6
+	 gBjxXP1EbsEbiiEcAwNw6+8EUv4QACYwTa6VSgk5R+FCvU35/ftep2s9Z984dlCmpG
+	 7lkCVF2avPSVPF/3ul5b78WX8cXcmYI+d9ydN5F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.10 233/518] ACPI: sysfs: validate return type of _STR method
-Date: Tue, 15 Oct 2024 14:42:17 +0200
-Message-ID: <20241015123925.985149440@linuxfoundation.org>
+	Xiubo Li <xiubli@redhat.com>,
+	Patrick Donnelly <pdonnell@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 268/518] ceph: remove the incorrect Fw reference check when dirtying pages
+Date: Tue, 15 Oct 2024 14:42:52 +0200
+Message-ID: <20241015123927.337566528@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -44,45 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Xiubo Li <xiubli@redhat.com>
 
-commit 4bb1e7d027413835b086aed35bc3f0713bc0f72b upstream.
+[ Upstream commit c08dfb1b49492c09cf13838c71897493ea3b424e ]
 
-Only buffer objects are valid return values of _STR.
+When doing the direct-io reads it will also try to mark pages dirty,
+but for the read path it won't hold the Fw caps and there is case
+will it get the Fw reference.
 
-If something else is returned description_show() will access invalid
-memory.
-
-Fixes: d1efe3c324ea ("ACPI: Add new sysfs interface to export device description")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://patch.msgid.link/20240709-acpi-sysfs-groups-v2-1-058ab0667fa8@weissschuh.net
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5dda377cf0a6 ("ceph: set i_head_snapc when getting CEPH_CAP_FILE_WR reference")
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/device_sysfs.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ceph/addr.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/acpi/device_sysfs.c
-+++ b/drivers/acpi/device_sysfs.c
-@@ -533,8 +533,9 @@ int acpi_device_setup_files(struct acpi_
- 	 * If device has _STR, 'description' file is created
- 	 */
- 	if (acpi_has_method(dev->handle, "_STR")) {
--		status = acpi_evaluate_object(dev->handle, "_STR",
--					NULL, &buffer);
-+		status = acpi_evaluate_object_typed(dev->handle, "_STR",
-+						    NULL, &buffer,
-+						    ACPI_TYPE_BUFFER);
- 		if (ACPI_FAILURE(status))
- 			buffer.pointer = NULL;
- 		dev->pnp.str_obj = buffer.pointer;
+diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
+index 3465ff95cb89f..2362f2591f4ad 100644
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -91,7 +91,6 @@ static int ceph_set_page_dirty(struct page *page)
+ 
+ 	/* dirty the head */
+ 	spin_lock(&ci->i_ceph_lock);
+-	BUG_ON(ci->i_wr_ref == 0); // caller should hold Fw reference
+ 	if (__ceph_have_pending_cap_snap(ci)) {
+ 		struct ceph_cap_snap *capsnap =
+ 				list_last_entry(&ci->i_cap_snaps,
+-- 
+2.43.0
+
 
 
