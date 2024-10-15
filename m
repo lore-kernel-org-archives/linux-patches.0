@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF7C1C7274;
-	Tue, 15 Oct 2024 11:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CEA1C7274;
+	Tue, 15 Oct 2024 11:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992572; cv=none; b=GmwZ3XClqI1i+q2d4YUoAk+5fgpIkTemQmWM1FhGKiuH7Rkpfb7HAhHzoBo+xn8qX4NswO0HP2tiOrNXcXDm5ynEoeLJ/0kGmC15pXDkGmkT0bOEJlLKiXDnlnAGQakSz1LpyJfXRbARd7kZmQWYw1ei/VQpScYPAFE+UDUzPRU=
+	t=1728992576; cv=none; b=I/IZ1Stq7d69sNF+Wo+dP3riBfdsUan+jMJA1vk+hkZT48WYsiu5yvRz3X6geRR/wRBssOdpZSfGHaiEkyaP/N1keuExxKvDcC2yGqKoXtHZEnivAPKhVEvc+1ZrqbM1zB4DBq1QP4QAGBu0/ZZ5FVactq+8AVslbuhTnnYMfZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992572; c=relaxed/simple;
-	bh=Z36gv/Y/BXEJzBDwQgl9KeFJigbGkTN9h+HtAfoJ5GI=;
+	s=arc-20240116; t=1728992576; c=relaxed/simple;
+	bh=y4b3fifxRvSM9QMw/QqxT1PFY5cl+0fZfVmVTy5MJvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k8qj6PP0ywK53zZAn5LUB4hSw66+GPzbLt4EcgzI1cIxqNxB+5WHjENLRX1Mi3BqrvSnIxz9mqDEsPFNvkrs+q4dzq+z4/EF5KVODJF2SC2Q86jhlUR69NJ2BtEhhZrBUUn7OSxxyKKU0wcZfLW9k7Qnp3/Yl+Df2kcsxiOas9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6SRglNa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qWIzW0kIvQQiefH2M0igpiu4Ku8lmYDV5aejuRH3qLJV9wRLbw0BRw8p/lMkvLq/UroWdNNVJlPEwLoh/4ALSd+EslOBDEQbHPIb3bRFZrz4cBZizrnQDsHkwNX1tr44bI4ugFjAVagsLx5sW+719qBIxJzvHWth3MGDK7b+Zto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MszBWc8C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6SRglNa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B18C4CEC6;
-	Tue, 15 Oct 2024 11:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MszBWc8C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 531ABC4CEC6;
+	Tue, 15 Oct 2024 11:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992572;
-	bh=Z36gv/Y/BXEJzBDwQgl9KeFJigbGkTN9h+HtAfoJ5GI=;
+	s=korg; t=1728992575;
+	bh=y4b3fifxRvSM9QMw/QqxT1PFY5cl+0fZfVmVTy5MJvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k6SRglNaASK3fo48pM3JAejjrXq+J5/xK+R6BtTmwLX4PS+cNyqD+bQM9JDpzbfyZ
-	 0thW38O6uUU2mdOl/b1BhLL0EqlafdTkOf90z0uNKm3bEl5ULG2G+vwEuOFp078Q2i
-	 H44oWbObvZRA6jHC8RkYhdl5GmLMNQ7+wB3VN6Nw=
+	b=MszBWc8CrNp5773q8lIlDSO+OEdKUxtDlTVO94+RizThNyFfvFia0bzS94pWI2Eco
+	 tXBqVhIlg1duZ7UI5WcaJPVN7c5XTe1//cIRVaelZBFpS6o5bmhKryd43uor7hrmM7
+	 D9rx1hSwS6yIva6wxdjcI1dKGlsM2qFHiZY7w5iI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artur Weber <aweber.kernel@gmail.com>,
-	Henrik Grimler <henrik@grimler.se>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 156/691] power: supply: max17042_battery: Fix SOC threshold calc w/ no current sense
-Date: Tue, 15 Oct 2024 13:21:44 +0200
-Message-ID: <20241015112446.553503287@linuxfoundation.org>
+Subject: [PATCH 5.15 157/691] fbdev: hpfb: Fix an error handling path in hpfb_dio_probe()
+Date: Tue, 15 Oct 2024 13:21:45 +0200
+Message-ID: <20241015112446.592745432@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,56 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artur Weber <aweber.kernel@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 3a3acf839b2cedf092bdd1ff65b0e9895df1656b ]
+[ Upstream commit aa578e897520f32ae12bec487f2474357d01ca9c ]
 
-Commit 223a3b82834f ("power: supply: max17042_battery: use VFSOC for
-capacity when no rsns") made it so that capacity on systems without
-current sensing would be read from VFSOC instead of RepSOC. However,
-the SOC threshold calculation still read RepSOC to get the SOC
-regardless of the current sensing option state.
+If an error occurs after request_mem_region(), a corresponding
+release_mem_region() should be called, as already done in the remove
+function.
 
-Fix this by applying the same conditional to determine which register
-should be read.
-
-This also seems to be the intended behavior as per the datasheet - SOC
-alert config value in MiscCFG on setups without current sensing is set
-to a value of 0b11, indicating SOC alerts being generated based on
-VFSOC, instead of 0b00 which indicates SOC alerts being generated based
-on RepSOC.
-
-This fixes an issue on the Galaxy S3/Midas boards, where the alert
-interrupt would be constantly retriggered, causing high CPU usage
-on idle (around ~12%-15%).
-
-Fixes: e5f3872d2044 ("max17042: Add support for signalling change in SOC")
-Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
-Reviewed-by: Henrik Grimler <henrik@grimler.se>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240817-max17042-soc-threshold-fix-v1-1-72b45899c3cc@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/max17042_battery.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/hpfb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/power/supply/max17042_battery.c b/drivers/power/supply/max17042_battery.c
-index aaf6f1bd3d298..754d78b4c0aad 100644
---- a/drivers/power/supply/max17042_battery.c
-+++ b/drivers/power/supply/max17042_battery.c
-@@ -857,7 +857,10 @@ static void max17042_set_soc_threshold(struct max17042_chip *chip, u16 off)
- 	/* program interrupt thresholds such that we should
- 	 * get interrupt for every 'off' perc change in the soc
- 	 */
--	regmap_read(map, MAX17042_RepSOC, &soc);
-+	if (chip->pdata->enable_current_sense)
-+		regmap_read(map, MAX17042_RepSOC, &soc);
-+	else
-+		regmap_read(map, MAX17042_VFSOC, &soc);
- 	soc >>= 8;
- 	soc_tr = (soc + off) << 8;
- 	if (off < soc)
+diff --git a/drivers/video/fbdev/hpfb.c b/drivers/video/fbdev/hpfb.c
+index 8d418abdd7678..1e9c52e2714dd 100644
+--- a/drivers/video/fbdev/hpfb.c
++++ b/drivers/video/fbdev/hpfb.c
+@@ -344,6 +344,7 @@ static int hpfb_dio_probe(struct dio_dev *d, const struct dio_device_id *ent)
+ 	if (hpfb_init_one(paddr, vaddr)) {
+ 		if (d->scode >= DIOII_SCBASE)
+ 			iounmap((void *)vaddr);
++		release_mem_region(d->resource.start, resource_size(&d->resource));
+ 		return -ENOMEM;
+ 	}
+ 	return 0;
 -- 
 2.43.0
 
