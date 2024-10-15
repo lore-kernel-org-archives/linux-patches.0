@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458AF1C07CC;
-	Tue, 15 Oct 2024 13:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBE21C07CC;
+	Tue, 15 Oct 2024 13:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997378; cv=none; b=HQ2FDPT3f98qrMDIxuh6rNdYdTsR1lv7krNuN7jrVzWzJc/e8As4qjrJGJD1s6/qDtmNk5f1pTB6w4mdCSAzKgyFGFVlSHZeNz/eSHTcpncmP38afv7xfKlh67W6X/wey22Hs3vXmahm0qSTzz00gVXPmkz1bcaNAbbcnvPE3G0=
+	t=1728997381; cv=none; b=iIjoH6gI6YVJ93SQUKtqaVgXaJtCrhfofCLIU2XxjsIj6KVsEHi3aS0zVGwUy15e4m0J9tjQdINozKXWwSjgWXOY8KUK4044emMMviPH9kQ4MlQRo/0De+VTYVsiX1uf/adk+J+HJK4/E2HRePv67cL+YEuoVA0d/3QnQx3ygxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997378; c=relaxed/simple;
-	bh=QAHIUibCnh6Yg3wnjSMTIS0kyCiRv0WHOfOx7cDVlt8=;
+	s=arc-20240116; t=1728997381; c=relaxed/simple;
+	bh=Gfrm+UholqIf4o69ygsul1JnjiI/Zfup+SZOH6PlsiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ByYKfzXEzln/yzWT5wvCXogn0tvnyV14txa3blex1MMmGm0L68iaWPtwuOrG1pleSiZGM1z5Wc2eJFh8oqQV1p8FKL9VGi2PLrzoqF5T492dFUl2mszjjA3pVJui7W8ohR2j+/ubWIIB01YnbRrLDTgVylZ3mwm2zLwL3s7KZfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMzCggA0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cimPsC8mXmbDmhUvPnji3IM8rYTZd7APh1kAWJC7aCiCiwGMWEjrXSv2Jq6FqVEeoNNuxVIFadQilupBiuIOQQKQuZMUOMr8yoZe0kzNDAiOKbJ9wWKPIg54JK3dy5PZg7+4N4alGnEuTLiZFEAZH/AyGywk2fAL3xX1PPdQLSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mAY6BmG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMzCggA0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B872EC4CEC6;
-	Tue, 15 Oct 2024 13:02:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mAY6BmG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBEA8C4CECE;
+	Tue, 15 Oct 2024 13:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997378;
-	bh=QAHIUibCnh6Yg3wnjSMTIS0kyCiRv0WHOfOx7cDVlt8=;
+	s=korg; t=1728997381;
+	bh=Gfrm+UholqIf4o69ygsul1JnjiI/Zfup+SZOH6PlsiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMzCggA0AH1dcNnJ3SyxNB2korgSQSfUlqWc4NfapRk/dVTIP2Va3aOnpjrdweYKG
-	 B28osoQ5a9CUgr6nNy+cWV0RIy+Zp9QR/aDpgEFxiuP4cWqD41NNrkvxuKYf6sr+xf
-	 J/Bl779gnvftj47XWHXHTbyrCnU2fMl1prhLQrEM=
+	b=1mAY6BmGPnjDkhM7rjlpio/Ivosih3jzX2IqxgJNFTyVuJB913l38VEKQJwzs8Qdx
+	 UvwHcATOrqJD4KC2GY5NSTJLQjVr1xzK+sL10ErWAE10MgNkDxX3AvlW+46vx0092f
+	 jyEZJ2+3cbL2VNo2Z+YfVCs2YLoIo4A5qeByqzyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junlin Li <make24@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jonathan McDowell <noodles@meta.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 164/518] drivers: media: dvb-frontends/rtl2830: fix an out-of-bounds write error
-Date: Tue, 15 Oct 2024 14:41:08 +0200
-Message-ID: <20241015123923.327141328@linuxfoundation.org>
+Subject: [PATCH 5.10 135/518] tpm: Clean up TPM space after command failure
+Date: Tue, 15 Oct 2024 14:40:39 +0200
+Message-ID: <20241015123922.205718350@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,40 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junlin Li <make24@iscas.ac.cn>
+From: Jonathan McDowell <noodles@meta.com>
 
-[ Upstream commit 46d7ebfe6a75a454a5fa28604f0ef1491f9d8d14 ]
+[ Upstream commit e3aaebcbb7c6b403416f442d1de70d437ce313a7 ]
 
-Ensure index in rtl2830_pid_filter does not exceed 31 to prevent
-out-of-bounds access.
+tpm_dev_transmit prepares the TPM space before attempting command
+transmission. However if the command fails no rollback of this
+preparation is done. This can result in transient handles being leaked
+if the device is subsequently closed with no further commands performed.
 
-dev->filters is a 32-bit value, so set_bit and clear_bit functions should
-only operate on indices from 0 to 31. If index is 32, it will attempt to
-access a non-existent 33rd bit, leading to out-of-bounds access.
-Change the boundary check from index > 32 to index >= 32 to resolve this
-issue.
+Fix this by flushing the space in the event of command transmission
+failure.
 
-Fixes: df70ddad81b4 ("[media] rtl2830: implement PID filter")
-Signed-off-by: Junlin Li <make24@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 745b361e989a ("tpm: infrastructure for TPM spaces")
+Signed-off-by: Jonathan McDowell <noodles@meta.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/rtl2830.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/tpm/tpm-dev-common.c | 2 ++
+ drivers/char/tpm/tpm2-space.c     | 3 +++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/media/dvb-frontends/rtl2830.c b/drivers/media/dvb-frontends/rtl2830.c
-index e6b8367c8cce4..84c00c6894d3d 100644
---- a/drivers/media/dvb-frontends/rtl2830.c
-+++ b/drivers/media/dvb-frontends/rtl2830.c
-@@ -609,7 +609,7 @@ static int rtl2830_pid_filter(struct dvb_frontend *fe, u8 index, u16 pid, int on
- 		index, pid, onoff);
+diff --git a/drivers/char/tpm/tpm-dev-common.c b/drivers/char/tpm/tpm-dev-common.c
+index b99e1941c52c9..fde81ecbd6a3b 100644
+--- a/drivers/char/tpm/tpm-dev-common.c
++++ b/drivers/char/tpm/tpm-dev-common.c
+@@ -48,6 +48,8 @@ static ssize_t tpm_dev_transmit(struct tpm_chip *chip, struct tpm_space *space,
  
- 	/* skip invalid PIDs (0x2000) */
--	if (pid > 0x1fff || index > 32)
-+	if (pid > 0x1fff || index >= 32)
- 		return 0;
+ 	if (!ret)
+ 		ret = tpm2_commit_space(chip, space, buf, &len);
++	else
++		tpm2_flush_space(chip);
  
- 	if (onoff)
+ out_rc:
+ 	return ret ? ret : len;
+diff --git a/drivers/char/tpm/tpm2-space.c b/drivers/char/tpm/tpm2-space.c
+index ffb35f0154c16..c57404c6b98c9 100644
+--- a/drivers/char/tpm/tpm2-space.c
++++ b/drivers/char/tpm/tpm2-space.c
+@@ -166,6 +166,9 @@ void tpm2_flush_space(struct tpm_chip *chip)
+ 	struct tpm_space *space = &chip->work_space;
+ 	int i;
+ 
++	if (!space)
++		return;
++
+ 	for (i = 0; i < ARRAY_SIZE(space->context_tbl); i++)
+ 		if (space->context_tbl[i] && ~space->context_tbl[i])
+ 			tpm2_flush_context(chip, space->context_tbl[i]);
 -- 
 2.43.0
 
