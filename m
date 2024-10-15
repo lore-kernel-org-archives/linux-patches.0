@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CAB1DFD8;
-	Tue, 15 Oct 2024 13:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC941AF0B0;
+	Tue, 15 Oct 2024 13:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997787; cv=none; b=qmJFDaT8w6LptEqoDAtHHKzz4eh4BjlnebJgcwKyrymbLFVukcqFm3k5izioOWaB4wjvcCFdOlY2FB6e9IMi+/Mmv6InuP9kZu5zqHipZ01kapFNFLn+1jK7sygAhLdlDAFgTgOd5x3393i6K7/L4u8cVxs9OWQl85PSPnQihS0=
+	t=1728997790; cv=none; b=bD5gGao+ellsHpKHEAV0SEx7GvAe/2S65Rb78KwnVan4Ihlm/+H6lS4bJ1PBCLRoKhisFewvr20BoRPjt2reEa+SfoV/3UhJO45TN2d9f0LKctePbl4h5S8NJQ95shDOUWHV4f/1td1b8PJ2Y3x6X5FcZJyc+qLM/bprZLoXlr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997787; c=relaxed/simple;
-	bh=rl+4+oI1vJFF+ZE7e/jWBdrZN4bD1Alc6zqirAHFhO4=;
+	s=arc-20240116; t=1728997790; c=relaxed/simple;
+	bh=rcagSSZrBBTGdb+LiJexW9KbzwVsG3CZM3fFp084w/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ynpr0epvx2t1KahPAuWwnPFpb4K9tJhUrUv7YibFe1HUdragw/WzzJI79WFn9R63ml/xL9FNB9v4MhIlAXhWwF+AbkiomzSIOX1VXnrx/hct10Uks8w816e/NXmjMxNpUUQFxuZ15L9xKBOF5uqgnfoCZrBoGGVQdYMmPeZa1Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogpOtNAp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MRwR61NiC84dWcXcdhbKD/NpYp5Ran4eSxbZl3bZVgwXvjBXu0EYNLHIEUoffTGT44ObWNYJsEaTPCQAoou4wTjTdBFkOj7FERXGkaXbRMeE1JE7ik5MZrGz5vaVrb2J5/SfXFO5vJmfRdqsJbNFFoDKwCTsbFplXxxKmn1+4v8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLDblAXc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogpOtNAp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75D0C4CEC6;
-	Tue, 15 Oct 2024 13:09:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLDblAXc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16647C4CECF;
+	Tue, 15 Oct 2024 13:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997787;
-	bh=rl+4+oI1vJFF+ZE7e/jWBdrZN4bD1Alc6zqirAHFhO4=;
+	s=korg; t=1728997790;
+	bh=rcagSSZrBBTGdb+LiJexW9KbzwVsG3CZM3fFp084w/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ogpOtNApLn9rgloLn0nkbMwS0IXN2O1Kq4fKNPlFlh/ebLxnt7jmN2wwm+ZWWXScY
-	 GE9JN5kSnGfiSkST74LXDuC1M09IKlM9LsXJTmrKhWfDF06NchdWnBfh/dvLmUhRvj
-	 322Hw2/waRvEsuFeFGwQ/PEQw7z4pX/DsiL+VVT4=
+	b=kLDblAXcvYsJtP3nHDFnNnCItvc/b8TsKMqk89Sk2RUKwNZrlGGUL2Mv3PL1zS2GC
+	 leiT5ookEFy42aV7VUZ5WXLsGft+gV8n6Y9McRVGg2GJyf/wAub6LWZpbHkJobNTNB
+	 R0Q9SFxPzEEkVU04tV2s4k9LZh2S12uvJYHKX8Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Tomasz Figa <tfiga@chromium.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 269/518] ieee802154: Fix build error
-Date: Tue, 15 Oct 2024 14:42:53 +0200
-Message-ID: <20241015123927.376571908@linuxfoundation.org>
+Subject: [PATCH 5.10 287/518] media: usbtv: Remove useless locks in usbtv_video_free()
+Date: Tue, 15 Oct 2024 14:43:11 +0200
+Message-ID: <20241015123928.066485746@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,38 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 
-[ Upstream commit addf89774e48c992316449ffab4f29c2309ebefb ]
+[ Upstream commit 65e6a2773d655172143cc0b927cdc89549842895 ]
 
-If REGMAP_SPI is m and IEEE802154_MCR20A is y,
+Remove locks calls in usbtv_video_free() because
+are useless and may led to a deadlock as reported here:
+https://syzkaller.appspot.com/x/bisect.txt?x=166dc872180000
+Also remove usbtv_stop() call since it will be called when
+unregistering the device.
 
-	mcr20a.c:(.text+0x3ed6c5b): undefined reference to `__devm_regmap_init_spi'
-	ld: mcr20a.c:(.text+0x3ed6cb5): undefined reference to `__devm_regmap_init_spi'
+Before 'c838530d230b' this issue would only be noticed if you
+disconnect while streaming and now it is noticeable even when
+disconnecting while not streaming.
 
-Select REGMAP_SPI for IEEE802154_MCR20A to fix it.
+Fixes: c838530d230b ("media: media videobuf2: Be more flexible on the number of queue stored buffers")
+Fixes: f3d27f34fdd7 ("[media] usbtv: Add driver for Fushicai USBTV007 video frame grabber")
 
-Fixes: 8c6ad9cc5157 ("ieee802154: Add NXP MCR20A IEEE 802.15.4 transceiver driver")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/20240909131740.1296608-1-ruanjinjie@huawei.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Reviewed-by: Tomasz Figa <tfiga@chromium.org>
+Tested-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+[hverkuil: fix minor spelling mistake in log message]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/usb/usbtv/usbtv-video.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/drivers/net/ieee802154/Kconfig b/drivers/net/ieee802154/Kconfig
-index 0f7c6dc2ed154..26f393a0507c1 100644
---- a/drivers/net/ieee802154/Kconfig
-+++ b/drivers/net/ieee802154/Kconfig
-@@ -108,6 +108,7 @@ config IEEE802154_CA8210_DEBUGFS
+diff --git a/drivers/media/usb/usbtv/usbtv-video.c b/drivers/media/usb/usbtv/usbtv-video.c
+index 3b4a2e7692309..f2aaec0f77c8d 100644
+--- a/drivers/media/usb/usbtv/usbtv-video.c
++++ b/drivers/media/usb/usbtv/usbtv-video.c
+@@ -959,15 +959,8 @@ int usbtv_video_init(struct usbtv *usbtv)
  
- config IEEE802154_MCR20A
- 	tristate "MCR20A transceiver driver"
-+	select REGMAP_SPI
- 	depends on IEEE802154_DRIVERS && MAC802154
- 	depends on SPI
- 	help
+ void usbtv_video_free(struct usbtv *usbtv)
+ {
+-	mutex_lock(&usbtv->vb2q_lock);
+-	mutex_lock(&usbtv->v4l2_lock);
+-
+-	usbtv_stop(usbtv);
+ 	vb2_video_unregister_device(&usbtv->vdev);
+ 	v4l2_device_disconnect(&usbtv->v4l2_dev);
+ 
+-	mutex_unlock(&usbtv->v4l2_lock);
+-	mutex_unlock(&usbtv->vb2q_lock);
+-
+ 	v4l2_device_put(&usbtv->v4l2_dev);
+ }
 -- 
 2.43.0
 
