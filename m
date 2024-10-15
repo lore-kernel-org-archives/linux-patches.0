@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33FC206E74;
-	Tue, 15 Oct 2024 13:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCDA205E26;
+	Tue, 15 Oct 2024 13:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998486; cv=none; b=mbD15xWy3L1+cO8diOhoEGdjYB5FDGQs09IWyf6AHyZKJ8WOXCtfjEFxhoXouHahIEza1h0FRJE+JcgM+VibeIuedQISpDh4/bffU+s9i2GrZpULDDsThHrUuQk3fbaeJnXKFHNlkyVZJi1s/ivvgW9Q17xkE7bwYBiakFaJG6c=
+	t=1728998488; cv=none; b=mpzwXrhG9LGs/TDUXKE4OEfMqmbzHfBSaO4JYI+6wW8djr1iNI1ckV3ZVbxJBX4Nk6cO0+S6/s7e6lIbLbGaHbCMkgNpGiIn5raxqY21I5rK5kuSAh6wNYp57zD+MLa8SJX6psyuh73cfnEThhD3lbJ8MLzO23lG3wpbubgP3C8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998486; c=relaxed/simple;
-	bh=Irx3+vtSmKD4/hi9AdlB2O+YOyWaDCVjsPvFIwgarmw=;
+	s=arc-20240116; t=1728998488; c=relaxed/simple;
+	bh=CIwCEQvFmPqXxJjg3BubZEqg2FxqLzxLDPh3oiSPUJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAZ1dsKU+P5bGdl/jHyhXDGNi5Eu0mJp8NswagF1zXMfFTwlOrLPG9ECLCKjF5lUZJ34lhxG/K2rmpmjUt4mNF6mK8yh9+y3TJuDlg+8UqreMqE9VQAPikPKV4E03I/P7ZNDfKs1idgPzUQs4kyEtluDBezNsEXq6lELqRpE5bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rN8ZUgaN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M1DGepwfzpHCBr+Ph0VVs5JiVc2PCV4oNiyv6Ue1cRqYsG9YxCvbsX4I1eXUX++cgoE4m4f4Ko4fH/7TJKKufrXgaggKHYacYcKkU6R7G8xoit9OPG+w5ozYTa2YcntUml5kxe+ZOTp/qYS26NeJ3I9tEfvIY2xhePNL/kW0BLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NubsRI/u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rN8ZUgaN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B395C4CEC6;
-	Tue, 15 Oct 2024 13:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NubsRI/u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4806EC4CECE;
+	Tue, 15 Oct 2024 13:21:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998485;
-	bh=Irx3+vtSmKD4/hi9AdlB2O+YOyWaDCVjsPvFIwgarmw=;
+	s=korg; t=1728998488;
+	bh=CIwCEQvFmPqXxJjg3BubZEqg2FxqLzxLDPh3oiSPUJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rN8ZUgaNOme6b17Xf/ComSRIkTO95j0QiYlm4GerVeLHUPp7/2ZFwVjblNxpAA/S9
-	 J2sQ9y33Wqh9iHg4omTf1uiYp61v59V5zOaM9uX3Sm9CoPjn1t8TNdFJCbjcnPeem0
-	 WywEk2cYEnfxnKhtXBmqyf8aTJmMS1fWNCKTFbo0=
+	b=NubsRI/uBgAR/6lrBYavD7P5J9rKu+SAtRbwuTYrYehQC6vB/tXJ5t6f1Igl3+ELA
+	 u0OL7UmE0zS/OPfsOh6zN3SHKHTJiw9Vk4JALMRjYmxLoEJNK9LEhr7T0viyy/v7Si
+	 L2HiTnCeOWflUQXdR30r+jAC3aCLu2DwNrzbg3Ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Rosen Penev <rosenp@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 490/518] net/sched: accept TCA_STAB only for root qdisc
-Date: Tue, 15 Oct 2024 14:46:34 +0200
-Message-ID: <20241015123935.909235329@linuxfoundation.org>
+Subject: [PATCH 5.10 491/518] net: ibm: emac: mal: fix wrong goto
+Date: Tue, 15 Oct 2024 14:46:35 +0200
+Message-ID: <20241015123935.947625754@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,148 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 3cb7cf1540ddff5473d6baeb530228d19bc97b8a ]
+[ Upstream commit 08c8acc9d8f3f70d62dd928571368d5018206490 ]
 
-Most qdiscs maintain their backlog using qdisc_pkt_len(skb)
-on the assumption it is invariant between the enqueue()
-and dequeue() handlers.
+dcr_map is called in the previous if and therefore needs to be unmapped.
 
-Unfortunately syzbot can crash a host rather easily using
-a TBF + SFQ combination, with an STAB on SFQ [1]
-
-We can't support TCA_STAB on arbitrary level, this would
-require to maintain per-qdisc storage.
-
-[1]
-[   88.796496] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[   88.798611] #PF: supervisor read access in kernel mode
-[   88.799014] #PF: error_code(0x0000) - not-present page
-[   88.799506] PGD 0 P4D 0
-[   88.799829] Oops: Oops: 0000 [#1] SMP NOPTI
-[   88.800569] CPU: 14 UID: 0 PID: 2053 Comm: b371744477 Not tainted 6.12.0-rc1-virtme #1117
-[   88.801107] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[   88.801779] RIP: 0010:sfq_dequeue (net/sched/sch_sfq.c:272 net/sched/sch_sfq.c:499) sch_sfq
-[ 88.802544] Code: 0f b7 50 12 48 8d 04 d5 00 00 00 00 48 89 d6 48 29 d0 48 8b 91 c0 01 00 00 48 c1 e0 03 48 01 c2 66 83 7a 1a 00 7e c0 48 8b 3a <4c> 8b 07 4c 89 02 49 89 50 08 48 c7 47 08 00 00 00 00 48 c7 07 00
-All code
-========
-   0:	0f b7 50 12          	movzwl 0x12(%rax),%edx
-   4:	48 8d 04 d5 00 00 00 	lea    0x0(,%rdx,8),%rax
-   b:	00
-   c:	48 89 d6             	mov    %rdx,%rsi
-   f:	48 29 d0             	sub    %rdx,%rax
-  12:	48 8b 91 c0 01 00 00 	mov    0x1c0(%rcx),%rdx
-  19:	48 c1 e0 03          	shl    $0x3,%rax
-  1d:	48 01 c2             	add    %rax,%rdx
-  20:	66 83 7a 1a 00       	cmpw   $0x0,0x1a(%rdx)
-  25:	7e c0                	jle    0xffffffffffffffe7
-  27:	48 8b 3a             	mov    (%rdx),%rdi
-  2a:*	4c 8b 07             	mov    (%rdi),%r8		<-- trapping instruction
-  2d:	4c 89 02             	mov    %r8,(%rdx)
-  30:	49 89 50 08          	mov    %rdx,0x8(%r8)
-  34:	48 c7 47 08 00 00 00 	movq   $0x0,0x8(%rdi)
-  3b:	00
-  3c:	48                   	rex.W
-  3d:	c7                   	.byte 0xc7
-  3e:	07                   	(bad)
-	...
-
-Code starting with the faulting instruction
-===========================================
-   0:	4c 8b 07             	mov    (%rdi),%r8
-   3:	4c 89 02             	mov    %r8,(%rdx)
-   6:	49 89 50 08          	mov    %rdx,0x8(%r8)
-   a:	48 c7 47 08 00 00 00 	movq   $0x0,0x8(%rdi)
-  11:	00
-  12:	48                   	rex.W
-  13:	c7                   	.byte 0xc7
-  14:	07                   	(bad)
-	...
-[   88.803721] RSP: 0018:ffff9a1f892b7d58 EFLAGS: 00000206
-[   88.804032] RAX: 0000000000000000 RBX: ffff9a1f8420c800 RCX: ffff9a1f8420c800
-[   88.804560] RDX: ffff9a1f81bc1440 RSI: 0000000000000000 RDI: 0000000000000000
-[   88.805056] RBP: ffffffffc04bb0e0 R08: 0000000000000001 R09: 00000000ff7f9a1f
-[   88.805473] R10: 000000000001001b R11: 0000000000009a1f R12: 0000000000000140
-[   88.806194] R13: 0000000000000001 R14: ffff9a1f886df400 R15: ffff9a1f886df4ac
-[   88.806734] FS:  00007f445601a740(0000) GS:ffff9a2e7fd80000(0000) knlGS:0000000000000000
-[   88.807225] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   88.807672] CR2: 0000000000000000 CR3: 000000050cc46000 CR4: 00000000000006f0
-[   88.808165] Call Trace:
-[   88.808459]  <TASK>
-[   88.808710] ? __die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434)
-[   88.809261] ? page_fault_oops (arch/x86/mm/fault.c:715)
-[   88.809561] ? exc_page_fault (./arch/x86/include/asm/irqflags.h:26 ./arch/x86/include/asm/irqflags.h:87 ./arch/x86/include/asm/irqflags.h:147 arch/x86/mm/fault.c:1489 arch/x86/mm/fault.c:1539)
-[   88.809806] ? asm_exc_page_fault (./arch/x86/include/asm/idtentry.h:623)
-[   88.810074] ? sfq_dequeue (net/sched/sch_sfq.c:272 net/sched/sch_sfq.c:499) sch_sfq
-[   88.810411] sfq_reset (net/sched/sch_sfq.c:525) sch_sfq
-[   88.810671] qdisc_reset (./include/linux/skbuff.h:2135 ./include/linux/skbuff.h:2441 ./include/linux/skbuff.h:3304 ./include/linux/skbuff.h:3310 net/sched/sch_generic.c:1036)
-[   88.810950] tbf_reset (./include/linux/timekeeping.h:169 net/sched/sch_tbf.c:334) sch_tbf
-[   88.811208] qdisc_reset (./include/linux/skbuff.h:2135 ./include/linux/skbuff.h:2441 ./include/linux/skbuff.h:3304 ./include/linux/skbuff.h:3310 net/sched/sch_generic.c:1036)
-[   88.811484] netif_set_real_num_tx_queues (./include/linux/spinlock.h:396 ./include/net/sch_generic.h:768 net/core/dev.c:2958)
-[   88.811870] __tun_detach (drivers/net/tun.c:590 drivers/net/tun.c:673)
-[   88.812271] tun_chr_close (drivers/net/tun.c:702 drivers/net/tun.c:3517)
-[   88.812505] __fput (fs/file_table.c:432 (discriminator 1))
-[   88.812735] task_work_run (kernel/task_work.c:230)
-[   88.813016] do_exit (kernel/exit.c:940)
-[   88.813372] ? trace_hardirqs_on (kernel/trace/trace_preemptirq.c:58 (discriminator 4))
-[   88.813639] ? handle_mm_fault (./arch/x86/include/asm/irqflags.h:42 ./arch/x86/include/asm/irqflags.h:97 ./arch/x86/include/asm/irqflags.h:155 ./include/linux/memcontrol.h:1022 ./include/linux/memcontrol.h:1045 ./include/linux/memcontrol.h:1052 mm/memory.c:5928 mm/memory.c:6088)
-[   88.813867] do_group_exit (kernel/exit.c:1070)
-[   88.814138] __x64_sys_exit_group (kernel/exit.c:1099)
-[   88.814490] x64_sys_call (??:?)
-[   88.814791] do_syscall_64 (arch/x86/entry/common.c:52 (discriminator 1) arch/x86/entry/common.c:83 (discriminator 1))
-[   88.815012] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-[   88.815495] RIP: 0033:0x7f44560f1975
-
-Fixes: 175f9c1bba9b ("net_sched: Add size table for qdiscs")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://patch.msgid.link/20241007184130.3960565-1-edumazet@google.com
+Fixes: 1ff0fcfcb1a6 ("ibm_newemac: Fix new MAL feature handling")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://patch.msgid.link/20241007235711.5714-1-rosenp@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sch_generic.h | 1 -
- net/sched/sch_api.c       | 7 ++++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/ibm/emac/mal.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index a62677be74528..4db11c4695cf6 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -830,7 +830,6 @@ static inline void qdisc_calculate_pkt_len(struct sk_buff *skb,
- static inline int qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 				struct sk_buff **to_free)
- {
--	qdisc_calculate_pkt_len(skb, sch);
- 	return sch->enqueue(skb, sch, to_free);
- }
+diff --git a/drivers/net/ethernet/ibm/emac/mal.c b/drivers/net/ethernet/ibm/emac/mal.c
+index 075c07303f165..b095d5057b5eb 100644
+--- a/drivers/net/ethernet/ibm/emac/mal.c
++++ b/drivers/net/ethernet/ibm/emac/mal.c
+@@ -576,7 +576,7 @@ static int mal_probe(struct platform_device *ofdev)
+ 		printk(KERN_ERR "%pOF: Support for 405EZ not enabled!\n",
+ 				ofdev->dev.of_node);
+ 		err = -ENODEV;
+-		goto fail;
++		goto fail_unmap;
+ #endif
+ 	}
  
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index 5c2d230790db9..d0e4845ea7018 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -589,7 +589,6 @@ void __qdisc_calculate_pkt_len(struct sk_buff *skb,
- 		pkt_len = 1;
- 	qdisc_skb_cb(skb)->pkt_len = pkt_len;
- }
--EXPORT_SYMBOL(__qdisc_calculate_pkt_len);
- 
- void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc)
- {
-@@ -1119,6 +1118,12 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
- 			return -EINVAL;
- 		}
- 
-+		if (new &&
-+		    !(parent->flags & TCQ_F_MQROOT) &&
-+		    rcu_access_pointer(new->stab)) {
-+			NL_SET_ERR_MSG(extack, "STAB not supported on a non root");
-+			return -EINVAL;
-+		}
- 		err = cops->graft(parent, cl, new, &old, extack);
- 		if (err)
- 			return err;
 -- 
 2.43.0
 
