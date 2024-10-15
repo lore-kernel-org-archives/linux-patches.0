@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FE01E1A35;
-	Tue, 15 Oct 2024 12:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9A91D4154;
+	Tue, 15 Oct 2024 12:06:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994011; cv=none; b=fjtdwmNzMQPKGScil758P//Yzo5hgs7i/Pe9zvQ/rW/ISewI6lKAh/FKjYOYRXtormjDsZQ8NKZsBdKLwgHhdO0amJiD0rA+whpZ2UXTj7S9Q4W1jIudQtFQe/AHKJR4a5Cap+HKH1qA9NYVPRYt+38uAd5UUAyRE4otbUn/1DM=
+	t=1728994014; cv=none; b=cc+N3yrvITKfgqYfW5T+997/wKX0FvYhU6N/f8qfN4rSQuHXs7Fvgjx5AYIET4NxVqY1XdMScI1NYSOlDuYNU5pwoyrheLnkgdLO4e9JFAhGiZ/PmGSqbQrat2iMo9D4RiFsZ6ltmMbEgWflt5dQze9jGkeMQXhxXU4G2qUjGas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994011; c=relaxed/simple;
-	bh=Jj7Z7OjsjmoLxTyRyWxsHmP5g17IfZlsOEaT4f1mCBw=;
+	s=arc-20240116; t=1728994014; c=relaxed/simple;
+	bh=psGYccKpgM8FpOEyJ2bvPdehn1zn4pT3aY6XB7Hu9Vo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ppvZxx6+1+gxtDzJd6Rami6YiP4Dnr+/pXAt1L7r/s41sLcckieFO4rNCV+3OFhgp0fTNfcFGriojUqcWZ1wAqxjbALuq0efzIXNL1rI0TB7xc2u2ocCSWBQvlTqoyWYOeUNnLOjyKqW+bAEF43l1H5zs9pGlJ/wrXGDsCeZo/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pEmF7Ckt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hiwkPZwCuGsIUOnQXo6py7i2Yv9FzgwjjUrM78XOCseMCADkkI8dMoCoK5KGiFmHTQrXO+TDGFZPACI+sFWpY/Rfbln0/aICxag2zJvbvigHDOJL5QwtWaWwR4B2nY/MBCqUb0BxpE6QspH9K203sDsZknFDwaRI+Htg7ym733Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSLlufh2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pEmF7Ckt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A1FEC4CEC6;
-	Tue, 15 Oct 2024 12:06:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSLlufh2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC9ECC4CEC6;
+	Tue, 15 Oct 2024 12:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994010;
-	bh=Jj7Z7OjsjmoLxTyRyWxsHmP5g17IfZlsOEaT4f1mCBw=;
+	s=korg; t=1728994014;
+	bh=psGYccKpgM8FpOEyJ2bvPdehn1zn4pT3aY6XB7Hu9Vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pEmF7Ckt8RWILIE9O53Ltm1kBSogrkaQ/G20Ls9xSJnOc85WcNPXsJ90OxBFZUqpO
-	 hRXiqOnXcicyO/cKFWiPEqakkbMgH8XuZZr92O+Ew3BtF9cChXY5CHyAkRTipwpiK+
-	 5Zn46PlZbaq3DyqIK2teR4FAGk1PbbNQQyMZbFdg=
+	b=oSLlufh2RnVF6BdKzFFzDqC5djMoA3cD/jGsjnfoJZVRg1CJ2URCV/t4MkNrLH8Ig
+	 gy0PU536FGRY21svE29SOQPzY1bQ3Xe0vuQ8nrxlsDkn45BiHOXX4UHWkRsq58YIKN
+	 oEg5j739SWZkhN+VF/r7gbbAJJ/2jBe+iPUuP5nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"dmitry.baryshkov@linaro.org, agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, Sumit Semwal" <sumit.semwal@linaro.org>,
-	Sumit Semwal <sumit.semwal@linaro.org>
-Subject: [PATCH 5.15 579/691] Revert "arm64: dts: qcom: sm8250: switch UFS QMP PHY to new style of bindings"
-Date: Tue, 15 Oct 2024 13:28:47 +0200
-Message-ID: <20241015112503.321121510@linuxfoundation.org>
+	zhanchengbin <zhanchengbin1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	Baokun Li <libaokun1@huawei.com>
+Subject: [PATCH 5.15 580/691] ext4: fix inode tree inconsistency caused by ENOMEM
+Date: Tue, 15 Oct 2024 13:28:48 +0200
+Message-ID: <20241015112503.360615372@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -50,68 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumit Semwal <sumit.semwal@linaro.org>
+From: zhanchengbin <zhanchengbin1@huawei.com>
 
-This reverts commit cf9c7b34b90b622254b236a9a43737b6059a1c14.
+commit 3f5424790d4377839093b68c12b130077a4e4510 upstream.
 
-This commit breaks UFS on RB5 in the 6.1 LTS kernels. The original patch
-author suggests that this is not a stable kernel patch, hence reverting
-it.
+If ENOMEM fails when the extent is splitting, we need to restore the length
+of the split extent.
+In the ext4_split_extent_at function, only in ext4_ext_create_new_leaf will
+it alloc memory and change the shape of the extent tree,even if an ENOMEM
+is returned at this time, the extent tree is still self-consistent, Just
+restore the split extent lens in the function ext4_split_extent_at.
 
-This was reported during testing with 6.1.103 / 5.15.165 LTS kernels
-merged in the respective Android Common Kernel branches.
+ext4_split_extent_at
+ ext4_ext_insert_extent
+  ext4_ext_create_new_leaf
+   1)ext4_ext_split
+     ext4_find_extent
+   2)ext4_ext_grow_indepth
+     ext4_find_extent
 
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
+Signed-off-by: zhanchengbin <zhanchengbin1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230103022812.130603-1-zhanchengbin1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: Baokun Li <libaokun1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ fs/ext4/extents.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -1702,7 +1702,7 @@
- 				     "jedec,ufs-2.0";
- 			reg = <0 0x01d84000 0 0x3000>;
- 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
--			phys = <&ufs_mem_phy>;
-+			phys = <&ufs_mem_phy_lanes>;
- 			phy-names = "ufsphy";
- 			lanes-per-direction = <2>;
- 			#reset-cells = <1>;
-@@ -1746,8 +1746,10 @@
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -3232,7 +3232,7 @@ static int ext4_split_extent_at(handle_t
+ 		ext4_ext_mark_unwritten(ex2);
  
- 		ufs_mem_phy: phy@1d87000 {
- 			compatible = "qcom,sm8250-qmp-ufs-phy";
--			reg = <0 0x01d87000 0 0x1000>;
--
-+			reg = <0 0x01d87000 0 0x1c0>;
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
- 			clock-names = "ref",
- 				      "ref_aux";
- 			clocks = <&rpmhcc RPMH_CXO_CLK>,
-@@ -1755,12 +1757,18 @@
+ 	err = ext4_ext_insert_extent(handle, inode, ppath, &newex, flags);
+-	if (err != -ENOSPC && err != -EDQUOT)
++	if (err != -ENOSPC && err != -EDQUOT && err != -ENOMEM)
+ 		goto out;
  
- 			resets = <&ufs_mem_hc 0>;
- 			reset-names = "ufsphy";
-+			status = "disabled";
- 
- 			power-domains = <&gcc UFS_PHY_GDSC>;
- 
--			#phy-cells = <0>;
--
--			status = "disabled";
-+			ufs_mem_phy_lanes: phy@1d87400 {
-+				reg = <0 0x01d87400 0 0x16c>,
-+				      <0 0x01d87600 0 0x200>,
-+				      <0 0x01d87c00 0 0x200>,
-+				      <0 0x01d87800 0 0x16c>,
-+				      <0 0x01d87a00 0 0x200>;
-+				#phy-cells = <0>;
-+			};
- 		};
- 
- 		ipa_virt: interconnect@1e00000 {
+ 	/*
 
 
