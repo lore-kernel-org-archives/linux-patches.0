@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2220A19B3FF;
-	Tue, 15 Oct 2024 11:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CC219B3FF;
+	Tue, 15 Oct 2024 11:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992836; cv=none; b=SQ5JJ6dVx+SpbrFH1ihpsIbjvHbzE9Zfmr9Wdj1W1Di2s3dDYC8a/q+IuKBuLBTP14t/IH0DXqqze5AQlQH5mBUN+hIifD69PEAsHGBsFkMq/VHYTy9gRsEMQmOw2rhS3Y5stMUpqNY/AB+H2+F7EN6NfIyYrTpVZuAbIFvmjWE=
+	t=1728992839; cv=none; b=DHtxIhmMVCvZSHrH1Ey3UZuZgV9he7XAOlPCvDb0sFYou0tDXui2nfNuwiUI9iTwYE2pzKqRvqCtnSDS0WEhts6aGU++MGCadDqfsRF0ML18pQKhhDdWMFUnzUa8TJU+WyO+GEKGleRUjLW7L2YgIw9kBhrTVB9Nar6V+0dg1n0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992836; c=relaxed/simple;
-	bh=01hUSxMt/bogjYDaM6AjHB1Ykwcgr0oHVNmPCpnxILs=;
+	s=arc-20240116; t=1728992839; c=relaxed/simple;
+	bh=/wTJetyUZ7LsfOSxDwpwcP9U68ymWNnfbx0/lreH8Fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AqEhfXD8uLyFCM3bjEaS6/DENaM416QJEOlftp+RYbA1PWpfpg0v/6dGQ072FUUrCyFnOiTevihPQtPrvXkZiYyitknZxOZ6LBmf5urLVZgFnnmLTiQUtyy3aKGMXWOJGn6kSFks4xOgf1f+77qSRbwojCx0VUzvfPqc3acNJQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PBWiL3d7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gI6ECWSTPsaDj3Lply6uHOO0s68Iok7cfX2bymY1SQ2q1Djj9RY09U/1xbq2wwcNBLW1HgtanBh7uirCpPs/kC7FtQGAfbTB/9yUPuGJE++JQVLfH8rXDNrO5UhXBEnWyMCnff7ojfJJk5VRreZUEbrK3ae4sEeFloJfggMNPuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZRCpXsR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PBWiL3d7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85210C4CEC6;
-	Tue, 15 Oct 2024 11:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZRCpXsR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A12C4CEC6;
+	Tue, 15 Oct 2024 11:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992836;
-	bh=01hUSxMt/bogjYDaM6AjHB1Ykwcgr0oHVNmPCpnxILs=;
+	s=korg; t=1728992839;
+	bh=/wTJetyUZ7LsfOSxDwpwcP9U68ymWNnfbx0/lreH8Fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PBWiL3d7tCNW5xVqdizMX4KgFt3oyySCtc7VWcJkfhiv2beMtne4AGaXALWEybuQg
-	 z6TjTn3lN3J64wFlnyLjf7UpVBmFEUMZwdkvuTKMS3saRPtxKjTCdo0v6eDofdPtnf
-	 hb3c19v2W6i4/RlXqLscL+PoxB+a1OLIeA7Is+NE=
+	b=DZRCpXsRwk0cKbGoYiwAe194QckfdL/YTLoaQy7McsIsGPzKTA9EUe7pFyviN4wXZ
+	 SnS2yOWqXVzxZdRrOtEtKn2xHrKOJTCXQ0nj3wsofFnGqwD2u37RcHWDOW/XMGkYsv
+	 SS1t5cfdwK17rIoXgWWWCXy1fwQckPN92L/GSO7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junlin Li <make24@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 232/691] drivers: media: dvb-frontends/rtl2830: fix an out-of-bounds write error
-Date: Tue, 15 Oct 2024 13:23:00 +0200
-Message-ID: <20241015112449.566627136@linuxfoundation.org>
+Subject: [PATCH 5.15 233/691] PCI: keystone: Fix if-statement expression in ks_pcie_quirk()
+Date: Tue, 15 Oct 2024 13:23:01 +0200
+Message-ID: <20241015112449.606045269@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -45,46 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junlin Li <make24@iscas.ac.cn>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 46d7ebfe6a75a454a5fa28604f0ef1491f9d8d14 ]
+[ Upstream commit 6188a1c762eb9bbd444f47696eda77a5eae6207a ]
 
-Ensure index in rtl2830_pid_filter does not exceed 31 to prevent
-out-of-bounds access.
+This code accidentally uses && where || was intended.  It potentially
+results in a NULL dereference.
 
-dev->filters is a 32-bit value, so set_bit and clear_bit functions should
-only operate on indices from 0 to 31. If index is 32, it will attempt to
-access a non-existent 33rd bit, leading to out-of-bounds access.
-Change the boundary check from index > 32 to index >= 32 to resolve this
-issue.
+Thus, fix the if-statement expression to use the correct condition.
 
-Fixes: df70ddad81b4 ("[media] rtl2830: implement PID filter")
-Signed-off-by: Junlin Li <make24@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 86f271f22bbb ("PCI: keystone: Add workaround for Errata #i2037 (AM65x SR 1.0)")
+Link: https://lore.kernel.org/linux-pci/1b762a93-e1b2-4af3-8c04-c8843905c279@stanley.mountain
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/rtl2830.c | 2 +-
+ drivers/pci/controller/dwc/pci-keystone.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/dvb-frontends/rtl2830.c b/drivers/media/dvb-frontends/rtl2830.c
-index e6b8367c8cce4..84c00c6894d3d 100644
---- a/drivers/media/dvb-frontends/rtl2830.c
-+++ b/drivers/media/dvb-frontends/rtl2830.c
-@@ -609,7 +609,7 @@ static int rtl2830_pid_filter(struct dvb_frontend *fe, u8 index, u16 pid, int on
- 		index, pid, onoff);
+diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+index 24031123a5504..80eb0c04bc59d 100644
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -589,7 +589,7 @@ static void ks_pcie_quirk(struct pci_dev *dev)
+ 	 */
+ 	if (pci_match_id(am6_pci_devids, bridge)) {
+ 		bridge_dev = pci_get_host_bridge_device(dev);
+-		if (!bridge_dev && !bridge_dev->parent)
++		if (!bridge_dev || !bridge_dev->parent)
+ 			return;
  
- 	/* skip invalid PIDs (0x2000) */
--	if (pid > 0x1fff || index > 32)
-+	if (pid > 0x1fff || index >= 32)
- 		return 0;
- 
- 	if (onoff)
+ 		ks_pcie = dev_get_drvdata(bridge_dev->parent);
 -- 
 2.43.0
 
