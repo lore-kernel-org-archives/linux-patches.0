@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3C81E766C;
-	Tue, 15 Oct 2024 11:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E251D8DEA;
+	Tue, 15 Oct 2024 11:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993447; cv=none; b=ZQlDFGEfMLPwaOBrpVepC9m6rZt9/UkifhFpbTgljdSQz3zpGjqzmosg4idC3MtjFCsFj2ntoiCkZOSJ4iXsTitDEGr+wkwbCxCNtx1yX6YP8dbhc8mNHRawtcsk8YSeMLQeMH/jYZGOir1x2mqDmSmuggVgJZJOjHbzQWtEU1c=
+	t=1728993451; cv=none; b=dKyLaDEssmXrT68JPakNaLvvVbngBAJFCrfgxlyhdSYijYjSnKudYsFF6NgJoHDFfR8yygK0HzlbjTD1nILunvVlVR5sUxQXUjVloZl/M9Q3LELJpjRunaBAiIzAG5tyuPLTdvRQJRh28K6Ij9mmOcey06k737FD1RtYRrUvnMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993447; c=relaxed/simple;
-	bh=gvhx86S7Fwc3v3O9KF25RCSH0WyjZ3nBgN0+d1n/vLg=;
+	s=arc-20240116; t=1728993451; c=relaxed/simple;
+	bh=phfyauhdDeXYwbtbPGWAPdx6CThHy9n+pypyvuw0mEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HCBy1hRmcWpNwJL/MKAzoI/ktxhz5vLrzcskKXk3SH2v7nVvMAIGPivP3aKkkh8w9m/kg3ozzchnWmY00WYnX73S/lpIdm4zk1BXb8vfJ1A16Ucak3JpygYA3NTBXZaGIRtB+5vyoFcpZdX1pS3VRynzA9B99kp0R7NKlIhFJ5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJ0Q7ttn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cgAjShqWvk9L+F9vcTuSskgmvacE5URmf0GvJ4U/q9xaT793KbXVg8GOsOcH3jgk3Qp0TZk7jdnRhWJMZ1p3VLAU6CV7vEjvM9gWJO0zH1d0zEgzkV4JX63mo5w7XBVFvtUBmR8lbiBJgontpojlJUgE4HLGp7cpu4Wo/CCBZAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DB6fEGgw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJ0Q7ttn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F070DC4CEC6;
-	Tue, 15 Oct 2024 11:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DB6fEGgw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36042C4CEC6;
+	Tue, 15 Oct 2024 11:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993447;
-	bh=gvhx86S7Fwc3v3O9KF25RCSH0WyjZ3nBgN0+d1n/vLg=;
+	s=korg; t=1728993450;
+	bh=phfyauhdDeXYwbtbPGWAPdx6CThHy9n+pypyvuw0mEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HJ0Q7ttnGCmOt2rqvYJGKBaTNtW/Mk5gg5J+2b5M9VS3hEcAlZD45/EZ4v91aOcTd
-	 oFFkDF3nsTUc3P4SwJQJFZdhVoHMQRhdiQKRiXNTklMUeISXyOsFobw2fD7nIq0ZCV
-	 TGw8BkqN2AtxFna/7+irxteGYP2hMfMIxjnhRUY4=
+	b=DB6fEGgwHNixLJl8NiTCvOznW+ShoCieTWFA8LL4eDBDB+cf45UIp5rFdJ28eK/SD
+	 nfCX3KkHZIRaplNb/mMjDhbxbfdO8AREIwGNkfQeLJ4rZY6YQeJsBbFdKgdCpc8Zys
+	 stJ9SzdjWn3hxHfG+FI1Ip5ePtid7GSCxVvg3Ubk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 413/691] net: hisilicon: hns_mdio: fix OF node leak in probe()
-Date: Tue, 15 Oct 2024 13:26:01 +0200
-Message-ID: <20241015112456.734573741@linuxfoundation.org>
+Subject: [PATCH 5.15 384/691] Bluetooth: btmrvl: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Tue, 15 Oct 2024 13:25:32 +0200
+Message-ID: <20241015112455.583762855@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,34 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit e62beddc45f487b9969821fad3a0913d9bc18a2f ]
+[ Upstream commit 7b1ab460592ca818e7b52f27cd3ec86af79220d1 ]
 
-Driver is leaking OF node reference from
-of_parse_phandle_with_fixed_args() in probe().
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240827144421.52852-4-krzysztof.kozlowski@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: bb7f4f0bcee6 ("btmrvl: add platform specific wakeup interrupt support")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns_mdio.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btmrvl_sdio.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns_mdio.c b/drivers/net/ethernet/hisilicon/hns_mdio.c
-index 07fdab58001d9..dd5fe71279f04 100644
---- a/drivers/net/ethernet/hisilicon/hns_mdio.c
-+++ b/drivers/net/ethernet/hisilicon/hns_mdio.c
-@@ -497,6 +497,7 @@ static int hns_mdio_probe(struct platform_device *pdev)
- 						MDIO_SC_RESET_ST;
- 				}
- 			}
-+			of_node_put(reg_args.np);
+diff --git a/drivers/bluetooth/btmrvl_sdio.c b/drivers/bluetooth/btmrvl_sdio.c
+index 68378b42ea7fd..f71f32d4d4712 100644
+--- a/drivers/bluetooth/btmrvl_sdio.c
++++ b/drivers/bluetooth/btmrvl_sdio.c
+@@ -105,7 +105,7 @@ static int btmrvl_sdio_probe_of(struct device *dev,
  		} else {
- 			dev_warn(&pdev->dev, "find syscon ret = %#x\n", ret);
- 			mdio_dev->subctrl_vbase = NULL;
+ 			ret = devm_request_irq(dev, cfg->irq_bt,
+ 					       btmrvl_wake_irq_bt,
+-					       0, "bt_wake", card);
++					       IRQF_NO_AUTOEN, "bt_wake", card);
+ 			if (ret) {
+ 				dev_err(dev,
+ 					"Failed to request irq_bt %d (%d)\n",
+@@ -114,7 +114,6 @@ static int btmrvl_sdio_probe_of(struct device *dev,
+ 
+ 			/* Configure wakeup (enabled by default) */
+ 			device_init_wakeup(dev, true);
+-			disable_irq(cfg->irq_bt);
+ 		}
+ 	}
+ 
 -- 
 2.43.0
 
