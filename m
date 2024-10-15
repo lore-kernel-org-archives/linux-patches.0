@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C6E205E26;
-	Tue, 15 Oct 2024 12:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5901AF0A8;
+	Tue, 15 Oct 2024 12:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996895; cv=none; b=nA/iJAfzixujrrdJpzUptdID1Wxs2wQ6jOE1EmvR0TQ0Kx0iRhtA4ELaE8yH2XtlIyP4El5eW0cJYc0fGqD7Pp1diInAHvgstjg/gDxONXBNfsDLbqWHP6eXz9ShNGGRQ2oDaK00x9iLe+Zf96bMZpnpmzhxGt0cCJ5mPCrfUjk=
+	t=1728996898; cv=none; b=HQcqLQEGAtNWiu7yjth98bAmflqNcDXbyIXCGDDiu1nG83b/POB61PFVIQVxv5rspcbcNnXlVONHwl6Rpt/vJ4B28Vche+250ob2AfKPRasPY1vbkqhuSxgkF3CSg0AoE4xN2+jKabLE1LrVFhzkg2B1wVsOh3mJ4e/jLF42reg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996895; c=relaxed/simple;
-	bh=wcpzP6EmHbaaoS2Zd72LUpls/hae3GU3RRNyH5t7PXY=;
+	s=arc-20240116; t=1728996898; c=relaxed/simple;
+	bh=Gk1W1yw6Q52JEM53l9HHoX3Qv7hj2q7UKg3g0LrvL/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HjxrLow5z4gtp82sz2ShBvQbCbuJfhmWY1yjbBxmuKkgLbbE7ncX/heeiCMTd5e52EpFuJLzAbjDO3zW9IvTFROmBU/AQgrPgcy4Ys0/fP7855GOQ3GluI3fMFg7NXkLkwcenKEOzRmISLG39d8NTEmp18qL9GRZIy7qda9pPWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zY5rFKur; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n6V/s8ffztBFL/WgOFpRRP2EpIRmwf/4LZMAX8nGYl0Kjf8DPPxuHOuE1Fey2dav/PfYWebWAcJAgaw3O3hEXjNi6O2flKNdu6/MCq7UHBAjNmIZ3jh1PftwVLKfANucIC1j1N8EQeDVRjn+HbkrH4c6R4LY9yqZ+zjdEbk32Ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S3wogcJg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zY5rFKur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E6DC4CEC6;
-	Tue, 15 Oct 2024 12:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S3wogcJg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346D4C4CEC6;
+	Tue, 15 Oct 2024 12:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728996895;
-	bh=wcpzP6EmHbaaoS2Zd72LUpls/hae3GU3RRNyH5t7PXY=;
+	s=korg; t=1728996898;
+	bh=Gk1W1yw6Q52JEM53l9HHoX3Qv7hj2q7UKg3g0LrvL/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zY5rFKurrAxkCI0KgQ4JmzcstW8aG0TuQQrfmtDAA+optIDiEExRORDkh8Ot6Bu3x
-	 vBPFQaBzdrqPKseZs2VrN/59KKq6jB1Aw84c6GQzLge39hczTNIsPU4qAhFff1uiBn
-	 YE+8CPCP3boMo+RH4eo1nkWCmdzbY9E84j9updys=
+	b=S3wogcJgL1SoYjsN+j8ypZpruAg0GdSTOZhR+LriVRg6ReqfqudmWPAm6xi3yWNTO
+	 Z1WwHg6ml5wi1J6umq019zLWxK/hmPJiJw1pgYHHF7LsdfPBooWY7FWpEQrEJ/cn6n
+	 kPUWhxOSebT3w6KQkOY3T2WLHnjO7ugefGV7CJKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moon Yeounsu <yyyynoom@gmail.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Pawel Dembicki <paweldembicki@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 005/518] net: ethernet: use ip_hdrlen() instead of bit shift
-Date: Tue, 15 Oct 2024 14:38:29 +0200
-Message-ID: <20241015123917.038605180@linuxfoundation.org>
+Subject: [PATCH 5.10 006/518] net: phy: vitesse: repair vsc73xx autonegotiation
+Date: Tue, 15 Oct 2024 14:38:30 +0200
+Message-ID: <20241015123917.077627550@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,48 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moon Yeounsu <yyyynoom@gmail.com>
+From: Pawel Dembicki <paweldembicki@gmail.com>
 
-[ Upstream commit 9a039eeb71a42c8b13408a1976e300f3898e1be0 ]
+[ Upstream commit de7a670f8defe4ed2115552ad23dea0f432f7be4 ]
 
-`ip_hdr(skb)->ihl << 2` is the same as `ip_hdrlen(skb)`
-Therefore, we should use a well-defined function not a bit shift
-to find the header length.
+When the vsc73xx mdio bus work properly, the generic autonegotiation
+configuration works well.
 
-It also compresses two lines to a single line.
-
-Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
-Reviewed-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Pawel Dembicki <paweldembicki@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/jme.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/net/phy/vitesse.c | 14 --------------
+ 1 file changed, 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/jme.c b/drivers/net/ethernet/jme.c
-index e9efe074edc1..80858206c514 100644
---- a/drivers/net/ethernet/jme.c
-+++ b/drivers/net/ethernet/jme.c
-@@ -947,15 +947,13 @@ jme_udpsum(struct sk_buff *skb)
- 	if (skb->protocol != htons(ETH_P_IP))
- 		return csum;
- 	skb_set_network_header(skb, ETH_HLEN);
--	if ((ip_hdr(skb)->protocol != IPPROTO_UDP) ||
--	    (skb->len < (ETH_HLEN +
--			(ip_hdr(skb)->ihl << 2) +
--			sizeof(struct udphdr)))) {
-+
-+	if (ip_hdr(skb)->protocol != IPPROTO_UDP ||
-+	    skb->len < (ETH_HLEN + ip_hdrlen(skb) + sizeof(struct udphdr))) {
- 		skb_reset_network_header(skb);
- 		return csum;
- 	}
--	skb_set_transport_header(skb,
--			ETH_HLEN + (ip_hdr(skb)->ihl << 2));
-+	skb_set_transport_header(skb, ETH_HLEN + ip_hdrlen(skb));
- 	csum = udp_hdr(skb)->check;
- 	skb_reset_transport_header(skb);
- 	skb_reset_network_header(skb);
+diff --git a/drivers/net/phy/vitesse.c b/drivers/net/phy/vitesse.c
+index bb680352708a..3f594c8784e2 100644
+--- a/drivers/net/phy/vitesse.c
++++ b/drivers/net/phy/vitesse.c
+@@ -232,16 +232,6 @@ static int vsc739x_config_init(struct phy_device *phydev)
+ 	return 0;
+ }
+ 
+-static int vsc73xx_config_aneg(struct phy_device *phydev)
+-{
+-	/* The VSC73xx switches does not like to be instructed to
+-	 * do autonegotiation in any way, it prefers that you just go
+-	 * with the power-on/reset defaults. Writing some registers will
+-	 * just make autonegotiation permanently fail.
+-	 */
+-	return 0;
+-}
+-
+ /* This adds a skew for both TX and RX clocks, so the skew should only be
+  * applied to "rgmii-id" interfaces. It may not work as expected
+  * on "rgmii-txid", "rgmii-rxid" or "rgmii" interfaces. */
+@@ -424,7 +414,6 @@ static struct phy_driver vsc82xx_driver[] = {
+ 	.phy_id_mask    = 0x000ffff0,
+ 	/* PHY_GBIT_FEATURES */
+ 	.config_init    = vsc738x_config_init,
+-	.config_aneg    = vsc73xx_config_aneg,
+ 	.read_page      = vsc73xx_read_page,
+ 	.write_page     = vsc73xx_write_page,
+ }, {
+@@ -433,7 +422,6 @@ static struct phy_driver vsc82xx_driver[] = {
+ 	.phy_id_mask    = 0x000ffff0,
+ 	/* PHY_GBIT_FEATURES */
+ 	.config_init    = vsc738x_config_init,
+-	.config_aneg    = vsc73xx_config_aneg,
+ 	.read_page      = vsc73xx_read_page,
+ 	.write_page     = vsc73xx_write_page,
+ }, {
+@@ -442,7 +430,6 @@ static struct phy_driver vsc82xx_driver[] = {
+ 	.phy_id_mask    = 0x000ffff0,
+ 	/* PHY_GBIT_FEATURES */
+ 	.config_init    = vsc739x_config_init,
+-	.config_aneg    = vsc73xx_config_aneg,
+ 	.read_page      = vsc73xx_read_page,
+ 	.write_page     = vsc73xx_write_page,
+ }, {
+@@ -451,7 +438,6 @@ static struct phy_driver vsc82xx_driver[] = {
+ 	.phy_id_mask    = 0x000ffff0,
+ 	/* PHY_GBIT_FEATURES */
+ 	.config_init    = vsc739x_config_init,
+-	.config_aneg    = vsc73xx_config_aneg,
+ 	.read_page      = vsc73xx_read_page,
+ 	.write_page     = vsc73xx_write_page,
+ }, {
 -- 
 2.43.0
 
