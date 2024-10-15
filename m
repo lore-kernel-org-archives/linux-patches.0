@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410A91684A3;
-	Tue, 15 Oct 2024 11:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF25C1684A3;
+	Tue, 15 Oct 2024 11:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992206; cv=none; b=cka+1zZZ16izH/aCgY6Cl+pYktAM3rTauj00iG+GnD/jOqotxhSeyJS5VrxaP6WaXEjfXPy+zKygSX9Uod1EjBNVzudECcLQ8d5SLlJFnLMSi34LU41yeYqX6Z8l9icf0F71OhHYqs2hd7Mmj7U+rQ1IQVR/bkgQf8cLiCYNPPA=
+	t=1728992209; cv=none; b=pjk2OaDqKK5z7qUppXep6BU8MOeTy/eOrozCs6SQoFR836xj+Nht9yVeipfolfTLU8zcklSJBvRTqgJSsMN8XFfq3hA8WJODJYr3EHfDANn0wXqRQgnahIPVcMumsEmo+kY92Ut5tGwJ3stVfTBE2HCVEZwTbg6HnGcKRH2vba0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992206; c=relaxed/simple;
-	bh=cqZpjL7ap3eRzcW2kKhm3PDP6SQUBsrilz3ec62E6h0=;
+	s=arc-20240116; t=1728992209; c=relaxed/simple;
+	bh=f3QRmsRMnWLTYr+zpS06owq/RLuFUkVkUEXz3EZtzg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iS2o8irH64RuJVhfg/yuc9uNJb91I286idyrHQyivZXckqo8Etjy+jkPHO24PXSzGZMpAUp3qEwOasvxmFPYKNAHnAzm8tbsYAW/H2ODtDo8/cCVUCoUL79uDBqdWjjo12C7kmOaJkJeJPN+6eS5vEDYEzXcjXAsHszBRymI79M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVQFfjEx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eW8d2fumTZ0257ye9aZlT9V/XkFtz/UXSOZpZA7oq9hHzYTR/UexQrZ89TWkZZZqBe43Vg3mXyxPUMNtCR5ji9xH6hAMzOLlRcyQDiCIOwdJsWut9GG1tetlNSGIbC3/Ep57oqbdo9rMmLtWr2LuCsP8Cat1eTx56R81H2x/95E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CqrzNu3O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVQFfjEx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8D1C4CEC6;
-	Tue, 15 Oct 2024 11:36:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CqrzNu3O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F969C4CEC6;
+	Tue, 15 Oct 2024 11:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992206;
-	bh=cqZpjL7ap3eRzcW2kKhm3PDP6SQUBsrilz3ec62E6h0=;
+	s=korg; t=1728992209;
+	bh=f3QRmsRMnWLTYr+zpS06owq/RLuFUkVkUEXz3EZtzg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVQFfjExgSmvunFHHgPaAHtRfUmW6NbQkBL1pfHv8cPf1slGNuwnpWlHY6Ts7yhHS
-	 zx97xHrcer9SV4IZyHVmuoIzbWTuRzB6z0eVPecJ8ehV8D0wa1n2mfKhP1ha9nmFpy
-	 4szrTSC4UlZlYDruM9C4CybXyx2lyql6iGB4sHdI=
+	b=CqrzNu3OFpjNwxlA5xIPRS4zda4HhFo0g5xYucukkhrwaOEwE1IQp/foyLHTcq/Je
+	 1MulPJdWZwdwVIhHW1JFX2ccRDbRavRJ2q3iGJ//0KpBSC0MwcSnq/+kJAWsO5OzAS
+	 IHpWAl+mbQiE0Ibj9Qp3i25vRnekjW9m1nb+fWVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Naveen Mamindlapalli <naveenm@marvell.com>,
+	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 042/691] ice: fix accounting for filters shared by multiple VSIs
-Date: Tue, 15 Oct 2024 13:19:50 +0200
-Message-ID: <20241015112442.013088061@linuxfoundation.org>
+Subject: [PATCH 5.15 051/691] octeontx2-af: Modify SMQ flush sequence to drop packets
+Date: Tue, 15 Oct 2024 13:19:59 +0200
+Message-ID: <20241015112442.371683350@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,67 +52,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Naveen Mamindlapalli <naveenm@marvell.com>
 
-[ Upstream commit e843cf7b34fe2e0c1afc55e1f3057375c9b77a14 ]
+[ Upstream commit 019aba04f08c2102b35ce7fee9d4628d349f56c0 ]
 
-When adding a switch filter (such as a MAC or VLAN filter), it is expected
-that the driver will detect the case where the filter already exists, and
-return -EEXIST. This is used by calling code such as ice_vc_add_mac_addr,
-and ice_vsi_add_vlan to avoid incrementing the accounting fields such as
-vsi->num_vlan or vf->num_mac.
+The current implementation of SMQ flush sequence waits for the packets
+in the TM pipeline to be transmitted out of the link. This sequence
+doesn't succeed in HW when there is any issue with link such as lack of
+link credits, link down or any other traffic that is fully occupying the
+link bandwidth (QoS). This patch modifies the SMQ flush sequence to
+drop the packets after TL1 level (SQM) instead of polling for the packets
+to be sent out of RPM/CGX link.
 
-This logic works correctly for the case where only a single VSI has added a
-given switch filter.
-
-When a second VSI adds the same switch filter, the driver converts the
-existing filter from an ICE_FWD_TO_VSI filter into an ICE_FWD_TO_VSI_LIST
-filter. This saves switch resources, by ensuring that multiple VSIs can
-re-use the same filter.
-
-The ice_add_update_vsi_list() function is responsible for doing this
-conversion. When first converting a filter from the FWD_TO_VSI into
-FWD_TO_VSI_LIST, it checks if the VSI being added is the same as the
-existing rule's VSI. In such a case it returns -EEXIST.
-
-However, when the switch rule has already been converted to a
-FWD_TO_VSI_LIST, the logic is different. Adding a new VSI in this case just
-requires extending the VSI list entry. The logic for checking if the rule
-already exists in this case returns 0 instead of -EEXIST.
-
-This breaks the accounting logic mentioned above, so the counters for how
-many MAC and VLAN filters exist for a given VF or VSI no longer accurately
-reflect the actual count. This breaks other code which relies on these
-counts.
-
-In typical usage this primarily affects such filters generally shared by
-multiple VSIs such as VLAN 0, or broadcast and multicast MAC addresses.
-
-Fix this by correctly reporting -EEXIST in the case of adding the same VSI
-to a switch rule already converted to ICE_FWD_TO_VSI_LIST.
-
-Fixes: 9daf8208dd4d ("ice: Add support for switch filter programming")
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 5d9b976d4480 ("octeontx2-af: Support fixed transmit scheduler topology")
+Signed-off-by: Naveen Mamindlapalli <naveenm@marvell.com>
+Reviewed-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
+Link: https://patch.msgid.link/20240906045838.1620308-1-naveenm@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_switch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/marvell/octeontx2/af/rvu.h   |  3 +-
+ .../ethernet/marvell/octeontx2/af/rvu_nix.c   | 59 +++++++++++++++----
+ 2 files changed, 48 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
-index deb828e761fa..128c67c6de77 100644
---- a/drivers/net/ethernet/intel/ice/ice_switch.c
-+++ b/drivers/net/ethernet/intel/ice/ice_switch.c
-@@ -1286,7 +1286,7 @@ ice_add_update_vsi_list(struct ice_hw *hw,
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+index db02fae7b831..66bb2222350c 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.h
+@@ -279,6 +279,7 @@ struct nix_mark_format {
  
- 		/* A rule already exists with the new VSI being added */
- 		if (test_bit(vsi_handle, m_entry->vsi_list_info->vsi_map))
--			return 0;
-+			return -EEXIST;
+ /* smq(flush) to tl1 cir/pir info */
+ struct nix_smq_tree_ctx {
++	u16 schq;
+ 	u64 cir_off;
+ 	u64 cir_val;
+ 	u64 pir_off;
+@@ -288,8 +289,6 @@ struct nix_smq_tree_ctx {
+ /* smq flush context */
+ struct nix_smq_flush_ctx {
+ 	int smq;
+-	u16 tl1_schq;
+-	u16 tl2_schq;
+ 	struct nix_smq_tree_ctx smq_tree_ctx[NIX_TXSCH_LVL_CNT];
+ };
  
- 		/* Update the previously created VSI list set with
- 		 * the new VSI ID passed in
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index e6b368ec4a3b..f2e1c63035e8 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -2094,14 +2094,13 @@ static void nix_smq_flush_fill_ctx(struct rvu *rvu, int blkaddr, int smq,
+ 	schq = smq;
+ 	for (lvl = NIX_TXSCH_LVL_SMQ; lvl <= NIX_TXSCH_LVL_TL1; lvl++) {
+ 		smq_tree_ctx = &smq_flush_ctx->smq_tree_ctx[lvl];
++		smq_tree_ctx->schq = schq;
+ 		if (lvl == NIX_TXSCH_LVL_TL1) {
+-			smq_flush_ctx->tl1_schq = schq;
+ 			smq_tree_ctx->cir_off = NIX_AF_TL1X_CIR(schq);
+ 			smq_tree_ctx->pir_off = 0;
+ 			smq_tree_ctx->pir_val = 0;
+ 			parent_off = 0;
+ 		} else if (lvl == NIX_TXSCH_LVL_TL2) {
+-			smq_flush_ctx->tl2_schq = schq;
+ 			smq_tree_ctx->cir_off = NIX_AF_TL2X_CIR(schq);
+ 			smq_tree_ctx->pir_off = NIX_AF_TL2X_PIR(schq);
+ 			parent_off = NIX_AF_TL2X_PARENT(schq);
+@@ -2136,8 +2135,8 @@ static void nix_smq_flush_enadis_xoff(struct rvu *rvu, int blkaddr,
+ {
+ 	struct nix_txsch *txsch;
+ 	struct nix_hw *nix_hw;
++	int tl2, tl2_schq;
+ 	u64 regoff;
+-	int tl2;
+ 
+ 	nix_hw = get_nix_hw(rvu->hw, blkaddr);
+ 	if (!nix_hw)
+@@ -2145,16 +2144,17 @@ static void nix_smq_flush_enadis_xoff(struct rvu *rvu, int blkaddr,
+ 
+ 	/* loop through all TL2s with matching PF_FUNC */
+ 	txsch = &nix_hw->txsch[NIX_TXSCH_LVL_TL2];
++	tl2_schq = smq_flush_ctx->smq_tree_ctx[NIX_TXSCH_LVL_TL2].schq;
+ 	for (tl2 = 0; tl2 < txsch->schq.max; tl2++) {
+ 		/* skip the smq(flush) TL2 */
+-		if (tl2 == smq_flush_ctx->tl2_schq)
++		if (tl2 == tl2_schq)
+ 			continue;
+ 		/* skip unused TL2s */
+ 		if (TXSCH_MAP_FLAGS(txsch->pfvf_map[tl2]) & NIX_TXSCHQ_FREE)
+ 			continue;
+ 		/* skip if PF_FUNC doesn't match */
+ 		if ((TXSCH_MAP_FUNC(txsch->pfvf_map[tl2]) & ~RVU_PFVF_FUNC_MASK) !=
+-		    (TXSCH_MAP_FUNC(txsch->pfvf_map[smq_flush_ctx->tl2_schq] &
++		    (TXSCH_MAP_FUNC(txsch->pfvf_map[tl2_schq] &
+ 				    ~RVU_PFVF_FUNC_MASK)))
+ 			continue;
+ 		/* enable/disable XOFF */
+@@ -2196,10 +2196,12 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
+ 			 int smq, u16 pcifunc, int nixlf)
+ {
+ 	struct nix_smq_flush_ctx *smq_flush_ctx;
++	int err, restore_tx_en = 0, i;
+ 	int pf = rvu_get_pf(pcifunc);
+ 	u8 cgx_id = 0, lmac_id = 0;
+-	int err, restore_tx_en = 0;
+-	u64 cfg;
++	u16 tl2_tl3_link_schq;
++	u8 link, link_level;
++	u64 cfg, bmap = 0;
+ 
+ 	/* enable cgx tx if disabled */
+ 	if (is_pf_cgxmapped(rvu, pf)) {
+@@ -2216,16 +2218,38 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
+ 	nix_smq_flush_enadis_xoff(rvu, blkaddr, smq_flush_ctx, true);
+ 	nix_smq_flush_enadis_rate(rvu, blkaddr, smq_flush_ctx, false);
+ 
+-	cfg = rvu_read64(rvu, blkaddr, NIX_AF_SMQX_CFG(smq));
+-	/* Do SMQ flush and set enqueue xoff */
+-	cfg |= BIT_ULL(50) | BIT_ULL(49);
+-	rvu_write64(rvu, blkaddr, NIX_AF_SMQX_CFG(smq), cfg);
+-
+ 	/* Disable backpressure from physical link,
+ 	 * otherwise SMQ flush may stall.
+ 	 */
+ 	rvu_cgx_enadis_rx_bp(rvu, pf, false);
+ 
++	link_level = rvu_read64(rvu, blkaddr, NIX_AF_PSE_CHANNEL_LEVEL) & 0x01 ?
++			NIX_TXSCH_LVL_TL3 : NIX_TXSCH_LVL_TL2;
++	tl2_tl3_link_schq = smq_flush_ctx->smq_tree_ctx[link_level].schq;
++	link = smq_flush_ctx->smq_tree_ctx[NIX_TXSCH_LVL_TL1].schq;
++
++	/* SMQ set enqueue xoff */
++	cfg = rvu_read64(rvu, blkaddr, NIX_AF_SMQX_CFG(smq));
++	cfg |= BIT_ULL(50);
++	rvu_write64(rvu, blkaddr, NIX_AF_SMQX_CFG(smq), cfg);
++
++	/* Clear all NIX_AF_TL3_TL2_LINK_CFG[ENA] for the TL3/TL2 queue */
++	for (i = 0; i < (rvu->hw->cgx_links + rvu->hw->lbk_links); i++) {
++		cfg = rvu_read64(rvu, blkaddr,
++				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link));
++		if (!(cfg & BIT_ULL(12)))
++			continue;
++		bmap |= (1 << i);
++		cfg &= ~BIT_ULL(12);
++		rvu_write64(rvu, blkaddr,
++			    NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link), cfg);
++	}
++
++	/* Do SMQ flush and set enqueue xoff */
++	cfg = rvu_read64(rvu, blkaddr, NIX_AF_SMQX_CFG(smq));
++	cfg |= BIT_ULL(50) | BIT_ULL(49);
++	rvu_write64(rvu, blkaddr, NIX_AF_SMQX_CFG(smq), cfg);
++
+ 	/* Wait for flush to complete */
+ 	err = rvu_poll_reg(rvu, blkaddr,
+ 			   NIX_AF_SMQX_CFG(smq), BIT_ULL(49), true);
+@@ -2234,6 +2258,17 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
+ 			 "NIXLF%d: SMQ%d flush failed, txlink might be busy\n",
+ 			 nixlf, smq);
+ 
++	/* Set NIX_AF_TL3_TL2_LINKX_CFG[ENA] for the TL3/TL2 queue */
++	for (i = 0; i < (rvu->hw->cgx_links + rvu->hw->lbk_links); i++) {
++		if (!(bmap & (1 << i)))
++			continue;
++		cfg = rvu_read64(rvu, blkaddr,
++				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link));
++		cfg |= BIT_ULL(12);
++		rvu_write64(rvu, blkaddr,
++			    NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link), cfg);
++	}
++
+ 	/* clear XOFF on TL2s */
+ 	nix_smq_flush_enadis_rate(rvu, blkaddr, smq_flush_ctx, true);
+ 	nix_smq_flush_enadis_xoff(rvu, blkaddr, smq_flush_ctx, false);
 -- 
 2.43.0
 
