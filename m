@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA48212EEB;
-	Tue, 15 Oct 2024 13:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B821B2187;
+	Tue, 15 Oct 2024 13:22:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998548; cv=none; b=FCYBYziEqcL4J3IYHMpGEohOmsqlRx2qOyaUNcDHVZjPQEIKKWOyvnQk02UhvdPy/+QINgaMs/vW/2OouenyNG6ZAn50sIDfOLQe8yvOlIi8lPGyB/tWUl9n5LnuhRvGKTe4cbS0+FJ8OUlptj5NSpjPyA+UH2YK/dQld3e0iqE=
+	t=1728998552; cv=none; b=m8nEaV+97YcPXAHpdzL4XiPYEyH3Wt7T/zsASEoVs4flrMaPQu76/HRVgzH+gmNURHphJg8uWUldxLTq4RS8WTFIEKWEjZ2KqLsD6T7n5GMU/G80lBYnJqgvlUEBSnKdjp4ANSsMHXwmDJtBRXQly4NzFhyoqqIIB8r3mrR87g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998548; c=relaxed/simple;
-	bh=JMGJvfOFtmHCoyauny/l/tQWfH5NS6T/9CGKYZkcFM0=;
+	s=arc-20240116; t=1728998552; c=relaxed/simple;
+	bh=wFAj0HdnpOcHd8mCVE56oqxVKczdyzTVl/yRLaF+7j8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uBNlmds03uJFeRdqMd6SgcL74lNSARmQyPgUzAb0307n4SwF4gph/E3XQCTOCAW2iGqmoFXZCIKIoChQfZXM5GtpprDF6hkANJ4ri9pgzDjy8InolmYLhlkqUJ7onIxRGXGoSJQh8I5HGfg5O9XX2Ku6HfjR8WG0uxU3iZSOZag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvfenX11; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MjRj4jeCmOVfKp6Hjtdbk33USOea8ld0BdCACumtQATLATUOOOdvQeN6TfYrhATt23YRqNv8RCONghB4o0eVoptVF3qsb78CsuMjIbRbBAW7SzP/HQ3kd++OfWwmq6e/0IddjRfNIDXbLvTmd0E7ji+5P/Nsx8i9Z65nLdjzPig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aAQh8Or9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvfenX11"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31600C4CEC6;
-	Tue, 15 Oct 2024 13:22:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aAQh8Or9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 761F9C4CEC6;
+	Tue, 15 Oct 2024 13:22:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998548;
-	bh=JMGJvfOFtmHCoyauny/l/tQWfH5NS6T/9CGKYZkcFM0=;
+	s=korg; t=1728998551;
+	bh=wFAj0HdnpOcHd8mCVE56oqxVKczdyzTVl/yRLaF+7j8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SvfenX11sG+G43dFVlPu/MQyu5laQ2IUCQw1O1m1p+AYsooA4M6ccS0pN4lv8PX1W
-	 50bobAADbIhYSRegCM/zMTVSEar1eBzf5+Gq+9CbnbZMq9GYz3lPMa1ojbwgYNgUSA
-	 v7LfhshbalLBlSdg5MmmVj2lmMgR470HSCBl4FPU=
+	b=aAQh8Or9zc9DGU7J9mPw0DMkXQM9wUkGm8J0p+PwAO8ySYjONe+lrGLMPI2H4hCeA
+	 JHrCH+TqbFzX1UBRW5zunSNcLURom1epF6aLUMJ5VaYRKLViEZNC3gZOUaog3w2ZTO
+	 egJXsteDENahzJFLL7YfaglHIJj3wF9tK2tOaRpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Cardwell <ncardwell@google.com>,
-	Yuchung Cheng <ycheng@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Andy Roulin <aroulin@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 478/518] tcp: fix tcp_enter_recovery() to zero retrans_stamp when its safe
-Date: Tue, 15 Oct 2024 14:46:22 +0200
-Message-ID: <20241015123935.452693754@linuxfoundation.org>
+Subject: [PATCH 5.10 479/518] netfilter: br_netfilter: fix panic with metadata_dst skb
+Date: Tue, 15 Oct 2024 14:46:23 +0200
+Message-ID: <20241015123935.490513822@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,151 +53,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neal Cardwell <ncardwell@google.com>
+From: Andy Roulin <aroulin@nvidia.com>
 
-[ Upstream commit b41b4cbd9655bcebcce941bef3601db8110335be ]
+[ Upstream commit f9ff7665cd128012868098bbd07e28993e314fdb ]
 
-Fix tcp_enter_recovery() so that if there are no retransmits out then
-we zero retrans_stamp when entering fast recovery. This is necessary
-to fix two buggy behaviors.
+Fix a kernel panic in the br_netfilter module when sending untagged
+traffic via a VxLAN device.
+This happens during the check for fragmentation in br_nf_dev_queue_xmit.
 
-Currently a non-zero retrans_stamp value can persist across multiple
-back-to-back loss recovery episodes. This is because we generally only
-clears retrans_stamp if we are completely done with loss recoveries,
-and get to tcp_try_to_open() and find !tcp_any_retrans_done(sk). This
-behavior causes two bugs:
+It is dependent on:
+1) the br_netfilter module being loaded;
+2) net.bridge.bridge-nf-call-iptables set to 1;
+3) a bridge with a VxLAN (single-vxlan-device) netdevice as a bridge port;
+4) untagged frames with size higher than the VxLAN MTU forwarded/flooded
 
-(1) When a loss recovery episode (CA_Loss or CA_Recovery) is followed
-immediately by a new CA_Recovery, the retrans_stamp value can persist
-and can be a time before this new CA_Recovery episode starts. That
-means that timestamp-based undo will be using the wrong retrans_stamp
-(a value that is too old) when comparing incoming TS ecr values to
-retrans_stamp to see if the current fast recovery episode can be
-undone.
+When forwarding the untagged packet to the VxLAN bridge port, before
+the netfilter hooks are called, br_handle_egress_vlan_tunnel is called and
+changes the skb_dst to the tunnel dst. The tunnel_dst is a metadata type
+of dst, i.e., skb_valid_dst(skb) is false, and metadata->dst.dev is NULL.
 
-(2) If there is a roughly minutes-long sequence of back-to-back fast
-recovery episodes, one after another (e.g. in a shallow-buffered or
-policed bottleneck), where each fast recovery successfully makes
-forward progress and recovers one window of sequence space (but leaves
-at least one retransmit in flight at the end of the recovery),
-followed by several RTOs, then the ETIMEDOUT check may be using the
-wrong retrans_stamp (a value set at the start of the first fast
-recovery in the sequence). This can cause a very premature ETIMEDOUT,
-killing the connection prematurely.
+Then in the br_netfilter hooks, in br_nf_dev_queue_xmit, there's a check
+for frames that needs to be fragmented: frames with higher MTU than the
+VxLAN device end up calling br_nf_ip_fragment, which in turns call
+ip_skb_dst_mtu.
 
-This commit changes the code to zero retrans_stamp when entering fast
-recovery, when this is known to be safe (no retransmits are out in the
-network). That ensures that when starting a fast recovery episode, and
-it is safe to do so, retrans_stamp is set when we send the fast
-retransmit packet. That addresses both bug (1) and bug (2) by ensuring
-that (if no retransmits are out when we start a fast recovery) we use
-the initial fast retransmit of this fast recovery as the time value
-for undo and ETIMEDOUT calculations.
+The ip_dst_mtu tries to use the skb_dst(skb) as if it was a valid dst
+with valid dst->dev, thus the crash.
 
-This makes intuitive sense, since the start of a new fast recovery
-episode (in a scenario where no lost packets are out in the network)
-means that the connection has made forward progress since the last RTO
-or fast recovery, and we should thus "restart the clock" used for both
-undo and ETIMEDOUT logic.
+This case was never supported in the first place, so drop the packet
+instead.
 
-Note that if when we start fast recovery there *are* retransmits out
-in the network, there can still be undesirable (1)/(2) issues. For
-example, after this patch we can still have the (1) and (2) problems
-in cases like this:
+PING 10.0.0.2 (10.0.0.2) from 0.0.0.0 h1-eth0: 2000(2028) bytes of data.
+[  176.291791] Unable to handle kernel NULL pointer dereference at
+virtual address 0000000000000110
+[  176.292101] Mem abort info:
+[  176.292184]   ESR = 0x0000000096000004
+[  176.292322]   EC = 0x25: DABT (current EL), IL = 32 bits
+[  176.292530]   SET = 0, FnV = 0
+[  176.292709]   EA = 0, S1PTW = 0
+[  176.292862]   FSC = 0x04: level 0 translation fault
+[  176.293013] Data abort info:
+[  176.293104]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[  176.293488]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[  176.293787]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[  176.293995] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000043ef5000
+[  176.294166] [0000000000000110] pgd=0000000000000000,
+p4d=0000000000000000
+[  176.294827] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+[  176.295252] Modules linked in: vxlan ip6_udp_tunnel udp_tunnel veth
+br_netfilter bridge stp llc ipv6 crct10dif_ce
+[  176.295923] CPU: 0 PID: 188 Comm: ping Not tainted
+6.8.0-rc3-g5b3fbd61b9d1 #2
+[  176.296314] Hardware name: linux,dummy-virt (DT)
+[  176.296535] pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS
+BTYPE=--)
+[  176.296808] pc : br_nf_dev_queue_xmit+0x390/0x4ec [br_netfilter]
+[  176.297382] lr : br_nf_dev_queue_xmit+0x2ac/0x4ec [br_netfilter]
+[  176.297636] sp : ffff800080003630
+[  176.297743] x29: ffff800080003630 x28: 0000000000000008 x27:
+ffff6828c49ad9f8
+[  176.298093] x26: ffff6828c49ad000 x25: 0000000000000000 x24:
+00000000000003e8
+[  176.298430] x23: 0000000000000000 x22: ffff6828c4960b40 x21:
+ffff6828c3b16d28
+[  176.298652] x20: ffff6828c3167048 x19: ffff6828c3b16d00 x18:
+0000000000000014
+[  176.298926] x17: ffffb0476322f000 x16: ffffb7e164023730 x15:
+0000000095744632
+[  176.299296] x14: ffff6828c3f1c880 x13: 0000000000000002 x12:
+ffffb7e137926a70
+[  176.299574] x11: 0000000000000001 x10: ffff6828c3f1c898 x9 :
+0000000000000000
+[  176.300049] x8 : ffff6828c49bf070 x7 : 0008460f18d5f20e x6 :
+f20e0100bebafeca
+[  176.300302] x5 : ffff6828c7f918fe x4 : ffff6828c49bf070 x3 :
+0000000000000000
+[  176.300586] x2 : 0000000000000000 x1 : ffff6828c3c7ad00 x0 :
+ffff6828c7f918f0
+[  176.300889] Call trace:
+[  176.301123]  br_nf_dev_queue_xmit+0x390/0x4ec [br_netfilter]
+[  176.301411]  br_nf_post_routing+0x2a8/0x3e4 [br_netfilter]
+[  176.301703]  nf_hook_slow+0x48/0x124
+[  176.302060]  br_forward_finish+0xc8/0xe8 [bridge]
+[  176.302371]  br_nf_hook_thresh+0x124/0x134 [br_netfilter]
+[  176.302605]  br_nf_forward_finish+0x118/0x22c [br_netfilter]
+[  176.302824]  br_nf_forward_ip.part.0+0x264/0x290 [br_netfilter]
+[  176.303136]  br_nf_forward+0x2b8/0x4e0 [br_netfilter]
+[  176.303359]  nf_hook_slow+0x48/0x124
+[  176.303803]  __br_forward+0xc4/0x194 [bridge]
+[  176.304013]  br_flood+0xd4/0x168 [bridge]
+[  176.304300]  br_handle_frame_finish+0x1d4/0x5c4 [bridge]
+[  176.304536]  br_nf_hook_thresh+0x124/0x134 [br_netfilter]
+[  176.304978]  br_nf_pre_routing_finish+0x29c/0x494 [br_netfilter]
+[  176.305188]  br_nf_pre_routing+0x250/0x524 [br_netfilter]
+[  176.305428]  br_handle_frame+0x244/0x3cc [bridge]
+[  176.305695]  __netif_receive_skb_core.constprop.0+0x33c/0xecc
+[  176.306080]  __netif_receive_skb_one_core+0x40/0x8c
+[  176.306197]  __netif_receive_skb+0x18/0x64
+[  176.306369]  process_backlog+0x80/0x124
+[  176.306540]  __napi_poll+0x38/0x17c
+[  176.306636]  net_rx_action+0x124/0x26c
+[  176.306758]  __do_softirq+0x100/0x26c
+[  176.307051]  ____do_softirq+0x10/0x1c
+[  176.307162]  call_on_irq_stack+0x24/0x4c
+[  176.307289]  do_softirq_own_stack+0x1c/0x2c
+[  176.307396]  do_softirq+0x54/0x6c
+[  176.307485]  __local_bh_enable_ip+0x8c/0x98
+[  176.307637]  __dev_queue_xmit+0x22c/0xd28
+[  176.307775]  neigh_resolve_output+0xf4/0x1a0
+[  176.308018]  ip_finish_output2+0x1c8/0x628
+[  176.308137]  ip_do_fragment+0x5b4/0x658
+[  176.308279]  ip_fragment.constprop.0+0x48/0xec
+[  176.308420]  __ip_finish_output+0xa4/0x254
+[  176.308593]  ip_finish_output+0x34/0x130
+[  176.308814]  ip_output+0x6c/0x108
+[  176.308929]  ip_send_skb+0x50/0xf0
+[  176.309095]  ip_push_pending_frames+0x30/0x54
+[  176.309254]  raw_sendmsg+0x758/0xaec
+[  176.309568]  inet_sendmsg+0x44/0x70
+[  176.309667]  __sys_sendto+0x110/0x178
+[  176.309758]  __arm64_sys_sendto+0x28/0x38
+[  176.309918]  invoke_syscall+0x48/0x110
+[  176.310211]  el0_svc_common.constprop.0+0x40/0xe0
+[  176.310353]  do_el0_svc+0x1c/0x28
+[  176.310434]  el0_svc+0x34/0xb4
+[  176.310551]  el0t_64_sync_handler+0x120/0x12c
+[  176.310690]  el0t_64_sync+0x190/0x194
+[  176.311066] Code: f9402e61 79402aa2 927ff821 f9400023 (f9408860)
+[  176.315743] ---[ end trace 0000000000000000 ]---
+[  176.316060] Kernel panic - not syncing: Oops: Fatal exception in
+interrupt
+[  176.316371] Kernel Offset: 0x37e0e3000000 from 0xffff800080000000
+[  176.316564] PHYS_OFFSET: 0xffff97d780000000
+[  176.316782] CPU features: 0x0,88000203,3c020000,0100421b
+[  176.317210] Memory Limit: none
+[  176.317527] ---[ end Kernel panic - not syncing: Oops: Fatal
+Exception in interrupt ]---\
 
-+ round 1: sender sends flight 1
-
-+ round 2: sender receives SACKs and enters fast recovery 1,
-  retransmits some packets in flight 1 and then sends some new data as
-  flight 2
-
-+ round 3: sender receives some SACKs for flight 2, notes losses, and
-  retransmits some packets to fill the holes in flight 2
-
-+ fast recovery has some lost retransmits in flight 1 and continues
-  for one or more rounds sending retransmits for flight 1 and flight 2
-
-+ fast recovery 1 completes when snd_una reaches high_seq at end of
-  flight 1
-
-+ there are still holes in the SACK scoreboard in flight 2, so we
-  enter fast recovery 2, but some retransmits in the flight 2 sequence
-  range are still in flight (retrans_out > 0), so we can't execute the
-  new retrans_stamp=0 added here to clear retrans_stamp
-
-It's not yet clear how to fix these remaining (1)/(2) issues in an
-efficient way without breaking undo behavior, given that retrans_stamp
-is currently used for undo and ETIMEDOUT. Perhaps the optimal (but
-expensive) strategy would be to set retrans_stamp to the timestamp of
-the earliest outstanding retransmit when entering fast recovery. But
-at least this commit makes things better.
-
-Note that this does not change the semantics of retrans_stamp; it
-simply makes retrans_stamp accurate in some cases where it was not
-before:
-
-(1) Some loss recovery, followed by an immediate entry into a fast
-recovery, where there are no retransmits out when entering the fast
-recovery.
-
-(2) When a TFO server has a SYNACK retransmit that sets retrans_stamp,
-and then the ACK that completes the 3-way handshake has SACK blocks
-that trigger a fast recovery. In this case when entering fast recovery
-we want to zero out the retrans_stamp from the TFO SYNACK retransmit,
-and set the retrans_stamp based on the timestamp of the fast recovery.
-
-We introduce a tcp_retrans_stamp_cleanup() helper, because this
-two-line sequence already appears in 3 places and is about to appear
-in 2 more as a result of this bug fix patch series. Once this bug fix
-patches series in the net branch makes it into the net-next branch
-we'll update the 3 other call sites to use the new helper.
-
-This is a long-standing issue. The Fixes tag below is chosen to be the
-oldest commit at which the patch will apply cleanly, which is from
-Linux v3.5 in 2012.
-
-Fixes: 1fbc340514fc ("tcp: early retransmit: tcp_enter_recovery()")
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Yuchung Cheng <ycheng@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241001200517.2756803-3-ncardwell.sw@gmail.com
+Fixes: 11538d039ac6 ("bridge: vlan dst_metadata hooks in ingress and egress paths")
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Andy Roulin <aroulin@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20241001154400.22787-2-aroulin@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/bridge/br_netfilter_hooks.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 93756b153580c..6b926c71b6f31 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -2472,6 +2472,16 @@ static bool tcp_any_retrans_done(const struct sock *sk)
- 	return false;
- }
+diff --git a/net/bridge/br_netfilter_hooks.c b/net/bridge/br_netfilter_hooks.c
+index f14beb9a62edb..4f867aca6300a 100644
+--- a/net/bridge/br_netfilter_hooks.c
++++ b/net/bridge/br_netfilter_hooks.c
+@@ -33,6 +33,7 @@
+ #include <net/ip.h>
+ #include <net/ipv6.h>
+ #include <net/addrconf.h>
++#include <net/dst_metadata.h>
+ #include <net/route.h>
+ #include <net/netfilter/br_netfilter.h>
+ #include <net/netns/generic.h>
+@@ -753,6 +754,10 @@ static int br_nf_dev_queue_xmit(struct net *net, struct sock *sk, struct sk_buff
+ 		return br_dev_queue_push_xmit(net, sk, skb);
+ 	}
  
-+/* If loss recovery is finished and there are no retransmits out in the
-+ * network, then we clear retrans_stamp so that upon the next loss recovery
-+ * retransmits_timed_out() and timestamp-undo are using the correct value.
-+ */
-+static void tcp_retrans_stamp_cleanup(struct sock *sk)
-+{
-+	if (!tcp_any_retrans_done(sk))
-+		tcp_sk(sk)->retrans_stamp = 0;
-+}
++	/* Fragmentation on metadata/template dst is not supported */
++	if (unlikely(!skb_valid_dst(skb)))
++		goto drop;
 +
- static void DBGUNDO(struct sock *sk, const char *msg)
- {
- #if FASTRETRANS_DEBUG > 1
-@@ -2808,6 +2818,9 @@ void tcp_enter_recovery(struct sock *sk, bool ece_ack)
- 	struct tcp_sock *tp = tcp_sk(sk);
- 	int mib_idx;
- 
-+	/* Start the clock with our fast retransmit, for undo and ETIMEDOUT. */
-+	tcp_retrans_stamp_cleanup(sk);
-+
- 	if (tcp_is_reno(tp))
- 		mib_idx = LINUX_MIB_TCPRENORECOVERY;
- 	else
+ 	/* This is wrong! We should preserve the original fragment
+ 	 * boundaries by preserving frag_list rather than refragmenting.
+ 	 */
 -- 
 2.43.0
 
