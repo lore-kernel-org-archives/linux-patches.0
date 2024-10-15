@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5531E1D0492;
-	Tue, 15 Oct 2024 11:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720CA1D0492;
+	Tue, 15 Oct 2024 11:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993209; cv=none; b=P9o56bEZzNPXHXFBE3Is+EPeBiBxKphIH0Kru+xATmRTd9ECF0i3lGBvW0f4VUBSHg7Rkx/SlSreZdVsz1iBrXLI2QwswZwbvOm9t30qtG8+UWJKAr291nYOs0eKoQa88MX88DPjmOtjCMJqAxgmueR1X71kidT+Tw76Dq+fZDc=
+	t=1728993212; cv=none; b=OBmBnaOygyM6Mc986PmC0/kNlW80PNl7FtL2kNbY+obcZ68J3zA3bEjlCsuE2Cah3DStoHDgVIzzOG41FBkFtFMJhqNynhW37Z2ikEEx/gA870N53S6cVmKL5BJ8/xH2WK3VA/NtrAIODT11nQ9WE3zCwoNH0zrGDu30x2XYPoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993209; c=relaxed/simple;
-	bh=Dezv4ay4MVxjEt+9/1K+iUHZjlKKuG0SGsul2z+ElA0=;
+	s=arc-20240116; t=1728993212; c=relaxed/simple;
+	bh=pwIuCNprq2dxKbAnKq2flL7ggM2dUm21yQgiSpDoeLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TVGDSOEy0uTRapibFeof5mUETzFobTDta0UgKllrLMpEjZrPTYVO725yFLCMKWrY6UCgra6jHKNF6IN2LgytDEt+hd7LetVyHys7mMDSfILwhdxfg1K15C/E0aBsiEmU4TWfiRm7O9dYoeldoztUSmhBmRewfzFdogOhlhENwV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVFzF/rm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OWwmU1pNeJAfZCq276nxUrHSCVOXN+enBK4SuriMcxmiTge2JMhbKJGh0doLsX8gsPaP9oZBLghYtrKomBLpAWssqMGTwEVoUq7Uod2/84DEgV5uXYcjWoadbKuluFzrMIm23wSE3SlgUllkdS4gmT8O1fv/aQZ6HqSrhfDXSt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMo3Z927; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVFzF/rm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E05EC4CEC6;
-	Tue, 15 Oct 2024 11:53:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMo3Z927"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4423C4CEC6;
+	Tue, 15 Oct 2024 11:53:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993208;
-	bh=Dezv4ay4MVxjEt+9/1K+iUHZjlKKuG0SGsul2z+ElA0=;
+	s=korg; t=1728993212;
+	bh=pwIuCNprq2dxKbAnKq2flL7ggM2dUm21yQgiSpDoeLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pVFzF/rmkB+0RmhTD380d5Y16aNrdUpA4rsfCINXSeTQU1tG/VeHPRZeBqHlJUZnG
-	 O9sjxdOv69b9odgtXcpBb1d3C+Gcr6ltVCLePiskPKgy80gawkvuVRmQKTjVEsrj7R
-	 cB14/+EY1AdT7qX5mvsnsShs4cUzqgHgZaSVDJ48=
+	b=kMo3Z927AGtYeMMBX7wjy3+J33Yk+GvZs1idRQlPWgaMgY5po3g1LyecOiaZyL+zX
+	 OUbWLy4ZbeWX8oLwmpysFZoRObGNI21YcklaYUJFQJLkvXp0BbDkY7Ry1SqfsfUKaI
+	 YH3D76uFZNNOrfjps6mREfz/kWw7syF1Hdk3FItU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.15 342/691] hwrng: cctrng - Add missing clk_disable_unprepare in cctrng_resume
-Date: Tue, 15 Oct 2024 13:24:50 +0200
-Message-ID: <20241015112453.914578238@linuxfoundation.org>
+	Nikola Radojevic <nikola@radojevic.rs>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 5.15 343/691] arm64: dts: rockchip: Raise Pinebook Pros panel backlight PWM frequency
+Date: Tue, 15 Oct 2024 13:24:51 +0200
+Message-ID: <20241015112453.953607563@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -44,37 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Dragan Simic <dsimic@manjaro.org>
 
-commit 4b7acc85de14ee8a2236f54445dc635d47eceac0 upstream.
+commit 8c51521de18755d4112a77a598a348b38d0af370 upstream.
 
-Add the missing clk_disable_unprepare() before return in
-cctrng_resume().
+Increase the frequency of the PWM signal that drives the LED backlight of
+the Pinebook Pro's panel, from about 1.35 KHz (which equals to the PWM
+period of 740,740 ns), to exactly 8 kHz (which equals to the PWM period of
+125,000 ns).  Using a higher PWM frequency for the panel backlight, which
+reduces the flicker, can only be beneficial to the end users' eyes.
 
-Fixes: a583ed310bb6 ("hwrng: cctrng - introduce Arm CryptoCell driver")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+On top of that, increasing the backlight PWM signal frequency reportedly
+eliminates the buzzing emitted from the Pinebook Pro's built-in speakers
+when certain backlight levels are set, which cause some weird interference
+with some of the components of the Pinebook Pro's audio chain.
+
+The old value for the backlight PWM period, i.e. 740,740 ns, is pretty much
+an arbitrary value that was selected during the very early bring-up of the
+Pinebook Pro, only because that value seemed to minimize horizontal line
+distortion on the display, which resulted from the old X.org drivers causing
+screen tearing when dragging windows around.  That's no longer an issue, so
+there are no reasons to stick with the old PWM period value.
+
+The lower and the upper backlight PWM frequency limits for the Pinebook Pro's
+panel, according to its datasheet, are 200 Hz and 10 kHz, respectively. [1]
+These changes still leave some headroom, which may have some positive effects
+on the lifetime expectancy of the panel's backlight LEDs.
+
+[1] https://files.pine64.org/doc/datasheet/PinebookPro/NV140FHM-N49_Rev.P0_20160804_201710235838.pdf
+
+Fixes: 5a65505a6988 ("arm64: dts: rockchip: Add initial support for Pinebook Pro")
+Cc: stable@vger.kernel.org
+Reported-by: Nikola Radojevic <nikola@radojevic.rs>
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Tested-by: Nikola Radojević <nikola@radojevic.rs>
+Link: https://lore.kernel.org/r/2a23b6cfd8c0513e5b233b4006ee3d3ed09b824f.1722805655.git.dsimic@manjaro.org
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/cctrng.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/char/hw_random/cctrng.c
-+++ b/drivers/char/hw_random/cctrng.c
-@@ -665,6 +665,7 @@ static int __maybe_unused cctrng_resume(
- 	/* wait for Cryptocell reset completion */
- 	if (!cctrng_wait_for_reset_completion(drvdata)) {
- 		dev_err(dev, "Cryptocell reset not completed");
-+		clk_disable_unprepare(drvdata->clk);
- 		return -EBUSY;
- 	}
+--- a/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-pinebook-pro.dts
+@@ -31,7 +31,7 @@
+ 	backlight: edp-backlight {
+ 		compatible = "pwm-backlight";
+ 		power-supply = <&vcc_12v>;
+-		pwms = <&pwm0 0 740740 0>;
++		pwms = <&pwm0 0 125000 0>;
+ 	};
  
+ 	bat: battery {
 
 
