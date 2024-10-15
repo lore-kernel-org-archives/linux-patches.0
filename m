@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FDD1C07DF;
-	Tue, 15 Oct 2024 13:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889F61C07DF;
+	Tue, 15 Oct 2024 13:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997981; cv=none; b=WFf0VKY9vY4CdOuIrS//3ZmxcufFPIQjXsFzKXht917MK41K7TxfOk3S1X2oZ2X8mckheniDg9UF8+fcSv0JPm1gZbeovemGI+A3N346JEKPtet9lGUPmup/SMkvUHVbltOvghLS4w35Gvj461exzneaAnHj368edkBRxpEMmiY=
+	t=1728997984; cv=none; b=qEDJR4zMWkbwytR55DMlJCiDIo3uY1VxDM9MVtoggWs2kiS9bwPy320lXBhh6nXZJzzMG9yjYCYcei0FSXCTwnfKjcppuFRblpJgoK4U9K2YbJ5OlCyBpAN8AzQRM+Oxd7QDd1kijGUSzNb5rvvbWPePHSNaChQ2OqTkx9rOcQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997981; c=relaxed/simple;
-	bh=bUNjnbvIhhmWFwmGbTewMxwtnb1Uo1qr+yOp0+mbjpM=;
+	s=arc-20240116; t=1728997984; c=relaxed/simple;
+	bh=bEIYjIlqMmecmxhCIzs0nuSO4ufaj75LPrEa1aAtgyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mJyJHmy+Vz6jRrKVOIKpH73iEUBNLggu/iF+Pu4xQG2g6Qhpq5rR+7xNzR/rsXPI8mFxhgx+pRNxc15qOuWshK31JGCf/Oe99kLg5FFabzeUtLy9n1cMPZc7ovjDT88j1W/M+K78z9vw+zOt/qnQ37nBOqkgLnA15//EQ6auvOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDN0aHWq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fRkdd/p0XoNcKfsB8y29NlqUXT7Kr/a4aPXJUnXLtlZsvgxaZotK8KMoBXZx2/453TwTPy0XuCDp1D4C4IJkax6cVSvANBbCyF49FZlwHLzsRcCv0FLXrTUNIBoBl3NUNCPLmAekRX84L+IiwmHR1XDAK1g9WPyIniu61E+X3lM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMvTx9Wx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDN0aHWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78154C4CEC6;
-	Tue, 15 Oct 2024 13:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMvTx9Wx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED7BC4CEC6;
+	Tue, 15 Oct 2024 13:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997980;
-	bh=bUNjnbvIhhmWFwmGbTewMxwtnb1Uo1qr+yOp0+mbjpM=;
+	s=korg; t=1728997984;
+	bh=bEIYjIlqMmecmxhCIzs0nuSO4ufaj75LPrEa1aAtgyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vDN0aHWqJmLZAB+stv4ow3G3OXm77vJf01QXkTXud7TsUffToSmcrvqQXierzIZfG
-	 XbbkzWqsLT7ULVWKB+gkUI5oEcBmkbVPW4an1xKlafdVB4qVfD7WFUaKz+8Lbdk5ZA
-	 X0WISvjWT2CUInXvqYVUny7W8o46okP9t8BLP6Ik=
+	b=gMvTx9WxNzFs0BH07i18VLGlicKh1mGj3MVyy1GBO4n7abHJr7aUODvwNalNFSEB6
+	 dG0818DBWF/gKp98B50yLcrH9N9skJUELIDEm8CX5BrNbNx88h6q3DFhcYUcTIc0Qd
+	 F6GcQ+gtLK9eUJJFsO5g2CibkSWMroNvfYJv1AsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 345/518] drm/amd/display: Initialize get_bytes_per_elements default to 1
-Date: Tue, 15 Oct 2024 14:44:09 +0200
-Message-ID: <20241015123930.287173796@linuxfoundation.org>
+Subject: [PATCH 5.10 346/518] drm/printer: Allow NULL data in devcoredump printer
+Date: Tue, 15 Oct 2024 14:44:10 +0200
+Message-ID: <20241015123930.326204135@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -54,53 +52,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit 4067f4fa0423a89fb19a30b57231b384d77d2610 ]
+[ Upstream commit 53369581dc0c68a5700ed51e1660f44c4b2bb524 ]
 
-Variables, used as denominators and maybe not assigned to other values,
-should not be 0. bytes_per_element_y & bytes_per_element_c are
-initialized by get_bytes_per_element() which should never return 0.
+We want to determine the size of the devcoredump before writing it out.
+To that end, we will run the devcoredump printer with NULL data to get
+the size, alloc data based on the generated offset, then run the
+devcorecump again with a valid data pointer to print.  This necessitates
+not writing data to the data pointer on the initial pass, when it is
+NULL.
 
-This fixes 10 DIVIDE_BY_ZERO issues reported by Coverity.
+v5:
+ - Better commit message (Jonathan)
+ - Add kerenl doc with examples (Jani)
 
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Acked-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240801154118.2547543-3-matthew.brost@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c | 2 +-
- .../gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_print.c | 13 +++++----
+ include/drm/drm_print.h     | 54 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 61 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
-index 6a6d5970d1d58..0388694572f58 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/display_rq_dlg_calc_20v2.c
-@@ -78,7 +78,7 @@ static void calculate_ttu_cursor(struct display_mode_lib *mode_lib,
+diff --git a/drivers/gpu/drm/drm_print.c b/drivers/gpu/drm/drm_print.c
+index 111b932cf2a9b..02fdf001b0478 100644
+--- a/drivers/gpu/drm/drm_print.c
++++ b/drivers/gpu/drm/drm_print.c
+@@ -78,8 +78,9 @@ void __drm_puts_coredump(struct drm_printer *p, const char *str)
+ 			copy = iterator->remain;
  
- static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
- {
--	unsigned int ret_val = 0;
-+	unsigned int ret_val = 1;
+ 		/* Copy out the bit of the string that we need */
+-		memcpy(iterator->data,
+-			str + (iterator->start - iterator->offset), copy);
++		if (iterator->data)
++			memcpy(iterator->data,
++			       str + (iterator->start - iterator->offset), copy);
  
- 	if (source_format == dm_444_16) {
- 		if (!is_chroma)
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
-index dc1c81a6e3771..8593fd07116a7 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn21/display_rq_dlg_calc_21.c
-@@ -53,7 +53,7 @@ static void calculate_ttu_cursor(
+ 		iterator->offset = iterator->start + copy;
+ 		iterator->remain -= copy;
+@@ -88,7 +89,8 @@ void __drm_puts_coredump(struct drm_printer *p, const char *str)
  
- static unsigned int get_bytes_per_element(enum source_format_class source_format, bool is_chroma)
- {
--	unsigned int ret_val = 0;
-+	unsigned int ret_val = 1;
+ 		len = min_t(ssize_t, strlen(str), iterator->remain);
  
- 	if (source_format == dm_444_16) {
- 		if (!is_chroma)
+-		memcpy(iterator->data + pos, str, len);
++		if (iterator->data)
++			memcpy(iterator->data + pos, str, len);
+ 
+ 		iterator->offset += len;
+ 		iterator->remain -= len;
+@@ -118,8 +120,9 @@ void __drm_printfn_coredump(struct drm_printer *p, struct va_format *vaf)
+ 	if ((iterator->offset >= iterator->start) && (len < iterator->remain)) {
+ 		ssize_t pos = iterator->offset - iterator->start;
+ 
+-		snprintf(((char *) iterator->data) + pos,
+-			iterator->remain, "%pV", vaf);
++		if (iterator->data)
++			snprintf(((char *) iterator->data) + pos,
++				 iterator->remain, "%pV", vaf);
+ 
+ 		iterator->offset += len;
+ 		iterator->remain -= len;
+diff --git a/include/drm/drm_print.h b/include/drm/drm_print.h
+index f32d179e139d9..037b51c166e1b 100644
+--- a/include/drm/drm_print.h
++++ b/include/drm/drm_print.h
+@@ -121,7 +121,8 @@ drm_vprintf(struct drm_printer *p, const char *fmt, va_list *va)
+ 
+ /**
+  * struct drm_print_iterator - local struct used with drm_printer_coredump
+- * @data: Pointer to the devcoredump output buffer
++ * @data: Pointer to the devcoredump output buffer, can be NULL if using
++ * drm_printer_coredump to determine size of devcoredump
+  * @start: The offset within the buffer to start writing
+  * @remain: The number of bytes to write for this iteration
+  */
+@@ -166,6 +167,57 @@ struct drm_print_iterator {
+  *			coredump_read, ...)
+  *	}
+  *
++ * The above example has a time complexity of O(N^2), where N is the size of the
++ * devcoredump. This is acceptable for small devcoredumps but scales poorly for
++ * larger ones.
++ *
++ * Another use case for drm_coredump_printer is to capture the devcoredump into
++ * a saved buffer before the dev_coredump() callback. This involves two passes:
++ * one to determine the size of the devcoredump and another to print it to a
++ * buffer. Then, in dev_coredump(), copy from the saved buffer into the
++ * devcoredump read buffer.
++ *
++ * For example::
++ *
++ *	char *devcoredump_saved_buffer;
++ *
++ *	ssize_t __coredump_print(char *buffer, ssize_t count, ...)
++ *	{
++ *		struct drm_print_iterator iter;
++ *		struct drm_printer p;
++ *
++ *		iter.data = buffer;
++ *		iter.start = 0;
++ *		iter.remain = count;
++ *
++ *		p = drm_coredump_printer(&iter);
++ *
++ *		drm_printf(p, "foo=%d\n", foo);
++ *		...
++ *		return count - iter.remain;
++ *	}
++ *
++ *	void coredump_print(...)
++ *	{
++ *		ssize_t count;
++ *
++ *		count = __coredump_print(NULL, INT_MAX, ...);
++ *		devcoredump_saved_buffer = kvmalloc(count, GFP_KERNEL);
++ *		__coredump_print(devcoredump_saved_buffer, count, ...);
++ *	}
++ *
++ *	void coredump_read(char *buffer, loff_t offset, size_t count,
++ *			   void *data, size_t datalen)
++ *	{
++ *		...
++ *		memcpy(buffer, devcoredump_saved_buffer + offset, count);
++ *		...
++ *	}
++ *
++ * The above example has a time complexity of O(N*2), where N is the size of the
++ * devcoredump. This scales better than the previous example for larger
++ * devcoredumps.
++ *
+  * RETURNS:
+  * The &drm_printer object
+  */
 -- 
 2.43.0
 
