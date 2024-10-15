@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E4F1D90DB;
-	Tue, 15 Oct 2024 11:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296F31E8857;
+	Tue, 15 Oct 2024 11:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992358; cv=none; b=tdqZiVT7g6bVKnfndhsAw/E0BTetj+jJE2PIbUpKvJK1z728p34hMli51KZPP8JXBTskPuCKN+WgX5mAhjfswoHHuqIXRbf4T03BPkG1OvT4fpllloCoGypFTkiIe7id9/gFt228wQIXJAAn5xlWtSEI7BchtyocK6XL4x7+S9o=
+	t=1728992362; cv=none; b=kB+6ipSvvfvpvilRwgcktN1TSfuXeVS2sevMtO7o59QlPumt23NUSsjhrZgG7VUWEqb0jzG/IKveAQrmn2lMDMKKH0N1bvj2ca/RndRsHSJk7Pv6R6uXFqLVqCwaLl43DxnpeUiHZVz1VJVW3lgsa6y9tgaGgc4qlrq0fITpMAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992358; c=relaxed/simple;
-	bh=sdwX8YfcylWKQOWcPS8Bb0Pmnk3MIqIsreSFvMLj19Y=;
+	s=arc-20240116; t=1728992362; c=relaxed/simple;
+	bh=0JqWU2tIuKR8No+JJ1u6iN7pyHhsIjceJxMiSs4BRX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YvhKl/e9vGDWFQjqq2LrYrSBlZ8LQwWKcBYw+waWfmELrO5xmoNI7TM1U+fVcge/5UORxX0BKzV0SuHHiEQ10EooJNp37PUD54+dfi0ydA0LM6tiiS/WtE2gvoLdVRZ5trn9VCdQfYNZspfxiMo7y0Ir1x8OKrPgZfmz7K5yLwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0DoklAR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qn6txbv95tMr9LqPEPoASt8pYFJ7hTYaTyvYf58j7+6FC4DnhelFIvKGYPJLzvnHnLRy7tSmG7yAUVVKuwJT0wWymyKwboFLXYqhF7JPymvOk1awcmWpQiGOlgt6sZaXoiqvWsiDDUVHLAiZsksoVlMXDqcpDMWAIEuNKkG/1Q8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXKf+FvV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0DoklAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD612C4CEC6;
-	Tue, 15 Oct 2024 11:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXKf+FvV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362B7C4CECE;
+	Tue, 15 Oct 2024 11:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992358;
-	bh=sdwX8YfcylWKQOWcPS8Bb0Pmnk3MIqIsreSFvMLj19Y=;
+	s=korg; t=1728992361;
+	bh=0JqWU2tIuKR8No+JJ1u6iN7pyHhsIjceJxMiSs4BRX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T0DoklARE6eyG1cKTZsjq1Hvl0HoC8QyPQ7xzqomoujCmxr8tWjKGahfvLXOqkLCF
-	 hqHenOe1v5TQoZN4tljwbb8Xo/J6wOz/md9DnH00qIb7mRtigNg4LzB1DUTU/+65a2
-	 9C5CJKKa51+N1tCwLcrcPPgs7fmw96VTKS7FyEWo=
+	b=wXKf+FvVSevIRLHy66kyb+3Q2PXvyqwGqGwQHNj2zQfL0ot9WHHLplVK3433qYPyk
+	 Cf9EI6WsRZcrE8QMF4Toh/svrtoNd121DtPMtwdIsqLXfi0OgNJBq2bcunt/0VY+Tm
+	 vFOgTAd1j/HSCXvVdQhvnHYq15jDil0+/F7I7KeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 094/691] EDAC/synopsys: Fix error injection on Zynq UltraScale+
-Date: Tue, 15 Oct 2024 13:20:42 +0200
-Message-ID: <20241015112444.094182524@linuxfoundation.org>
+Subject: [PATCH 5.15 077/691] spi: spidev: Add missing spi_device_id for jg10309-01
+Date: Tue, 15 Oct 2024 13:20:25 +0200
+Message-ID: <20241015112443.414177745@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,111 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 35e6dbfe1846caeafabb49b7575adb36b0aa2269 ]
+[ Upstream commit 5478a4f7b94414def7b56d2f18bc2ed9b0f3f1f2 ]
 
-The Zynq UltraScale+ MPSoC DDR has a disjoint memory from 2GB to 32GB.
-The DDR host interface has a contiguous memory so while injecting
-errors, the driver should remove the hole else the injection fails as
-the address translation is incorrect.
+When the of_device_id entry for "elgin,jg10309-01" was added, the
+corresponding spi_device_id was forgotten, causing a warning message
+during boot-up:
 
-Introduce a get_mem_info() function pointer and set it for Zynq
-UltraScale+ platform to return host address.
+    SPI driver spidev has no spi_device_id for elgin,jg10309-01
 
-Fixes: 1a81361f75d8 ("EDAC, synopsys: Add Error Injection support for ZynqMP DDR controller")
-Signed-off-by: Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20240711100656.31376-1-shubhrajyoti.datta@amd.com
+Fix module autoloading and shut up the warning by adding the missing
+entry.
+
+Fixes: 5f3eee1eef5d0edd ("spi: spidev: Add an entry for elgin,jg10309-01")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/54bbb9d8a8db7e52d13e266f2d4a9bcd8b42a98a.1725366625.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/synopsys_edac.c | 35 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ drivers/spi/spidev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/edac/synopsys_edac.c b/drivers/edac/synopsys_edac.c
-index feb203efcffff..e8ddb029f10d8 100644
---- a/drivers/edac/synopsys_edac.c
-+++ b/drivers/edac/synopsys_edac.c
-@@ -23,6 +23,7 @@
- #include <linux/module.h>
- #include <linux/platform_device.h>
- #include <linux/spinlock.h>
-+#include <linux/sizes.h>
- #include <linux/interrupt.h>
- #include <linux/of.h>
- #include <linux/of_device.h>
-@@ -351,6 +352,7 @@ struct synps_edac_priv {
-  * @get_mtype:		Get mtype.
-  * @get_dtype:		Get dtype.
-  * @get_ecc_state:	Get ECC state.
-+ * @get_mem_info:	Get EDAC memory info
-  * @quirks:		To differentiate IPs.
-  */
- struct synps_platform_data {
-@@ -358,6 +360,9 @@ struct synps_platform_data {
- 	enum mem_type (*get_mtype)(const void __iomem *base);
- 	enum dev_type (*get_dtype)(const void __iomem *base);
- 	bool (*get_ecc_state)(void __iomem *base);
-+#ifdef CONFIG_EDAC_DEBUG
-+	u64 (*get_mem_info)(struct synps_edac_priv *priv);
-+#endif
- 	int quirks;
- };
- 
-@@ -416,6 +421,25 @@ static int zynq_get_error_info(struct synps_edac_priv *priv)
- 	return 0;
- }
- 
-+#ifdef CONFIG_EDAC_DEBUG
-+/**
-+ * zynqmp_get_mem_info - Get the current memory info.
-+ * @priv:	DDR memory controller private instance data.
-+ *
-+ * Return: host interface address.
-+ */
-+static u64 zynqmp_get_mem_info(struct synps_edac_priv *priv)
-+{
-+	u64 hif_addr = 0, linear_addr;
-+
-+	linear_addr = priv->poison_addr;
-+	if (linear_addr >= SZ_32G)
-+		linear_addr = linear_addr - SZ_32G + SZ_2G;
-+	hif_addr = linear_addr >> 3;
-+	return hif_addr;
-+}
-+#endif
-+
- /**
-  * zynqmp_get_error_info - Get the current ECC error info.
-  * @priv:	DDR memory controller private instance data.
-@@ -936,6 +960,9 @@ static const struct synps_platform_data zynqmp_edac_def = {
- 	.get_mtype	= zynqmp_get_mtype,
- 	.get_dtype	= zynqmp_get_dtype,
- 	.get_ecc_state	= zynqmp_get_ecc_state,
-+#ifdef CONFIG_EDAC_DEBUG
-+	.get_mem_info	= zynqmp_get_mem_info,
-+#endif
- 	.quirks         = (DDR_ECC_INTR_SUPPORT
- #ifdef CONFIG_EDAC_DEBUG
- 			  | DDR_ECC_DATA_POISON_SUPPORT
-@@ -989,10 +1016,16 @@ MODULE_DEVICE_TABLE(of, synps_edac_match);
- static void ddr_poison_setup(struct synps_edac_priv *priv)
- {
- 	int col = 0, row = 0, bank = 0, bankgrp = 0, rank = 0, regval;
-+	const struct synps_platform_data *p_data;
- 	int index;
- 	ulong hif_addr = 0;
- 
--	hif_addr = priv->poison_addr >> 3;
-+	p_data = priv->p_data;
-+
-+	if (p_data->get_mem_info)
-+		hif_addr = p_data->get_mem_info(priv);
-+	else
-+		hif_addr = priv->poison_addr >> 3;
- 
- 	for (index = 0; index < DDR_MAX_ROW_SHIFT; index++) {
- 		if (priv->row_shift[index])
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 8570cd35b7e50..2ea29fb819410 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -684,6 +684,7 @@ static struct class *spidev_class;
+ static const struct spi_device_id spidev_spi_ids[] = {
+ 	{ .name = "bh2228fv" },
+ 	{ .name = "dh2228fv" },
++	{ .name = "jg10309-01" },
+ 	{ .name = "ltc2488" },
+ 	{ .name = "sx1301" },
+ 	{ .name = "bk4" },
 -- 
 2.43.0
 
