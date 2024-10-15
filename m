@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBFE1D4154;
-	Tue, 15 Oct 2024 11:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCB11D5ACD;
+	Tue, 15 Oct 2024 11:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992922; cv=none; b=VeA0ppH1JLGYiKrSQUF05u83Oe4/Y1A00dOnbLdq7oBNQbBibgYHkCBJupYOYuqRySXmLAvYY2j4+qsWO4TBtIPKeED5MlvigIRSVVWI0rEma0HhXXxj/JZnZBA855mvbHHxgY0dM8Gyvp688Q9/TpjHXtXCWwzYeblFATv0n3A=
+	t=1728992925; cv=none; b=qczoU6KdCmtJ8ZMrzGFp2BrJWu/9UpwGtq9pMDRMXO3qiyvHXsQe/LoVeKKxrfmwSbhBX3GCPqOp1QQXPlUj+aBU2or4zvbm7zqm5YYiRdPlduOCkbWUdLhzJV8r1xVSwf+lav+vcY90Aj/6NmUNWaksem24q205RHctlStw2ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992922; c=relaxed/simple;
-	bh=04UqINanThXH1FFXyHnze9rtqu0xW4tUSBZ9vZwLCXc=;
+	s=arc-20240116; t=1728992925; c=relaxed/simple;
+	bh=ZWbpFoJlKe2gCCb1xPO/BAOFgJhF6JZ4EoSbDosj8bI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NyPHim114n2JdE1g/rvw7iiVrDPgDskByLY69NRYTJMeFmcOszBjVRB9I7VW5lXn2xp+vQco+sjCBM2j8/gpY+Qqz1YgEXm+8TcQywV00rT4LMMFOdK5tmPyAfKP1Ce2jRDGNQxpoIAeQP9d9Igf81tQWe4PVatlBj0xBaBaabE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jl7zf/fY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DqQyHzdQi3N04yevAXuz6v5kRy6jcVvJdaiusfZZZnWBTKwQCvZ9NOSyJdGpHzZvOJPIsOMfU9giOx8SHvHPUSjLaX0Oc7ViQ5yofBIHlUl4KMBFnabQLPUGMRW+wWVx4/wE7sMUO1SbOTKHfHXEjMPbMckD6CJCzvvpCoLpgRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0md6gdFu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jl7zf/fY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15C6C4CEC6;
-	Tue, 15 Oct 2024 11:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0md6gdFu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062D8C4CEC6;
+	Tue, 15 Oct 2024 11:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992922;
-	bh=04UqINanThXH1FFXyHnze9rtqu0xW4tUSBZ9vZwLCXc=;
+	s=korg; t=1728992925;
+	bh=ZWbpFoJlKe2gCCb1xPO/BAOFgJhF6JZ4EoSbDosj8bI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jl7zf/fYLoojd/Je5rJ5vM3feEf9DeWwUheGNY4gnDNZFH7zozFfXnvvlPmNTqEdn
-	 ZDPlLydE0h3rib5Rie+G+8+40vH2t9jbQVseK0oxfysuL0PWxYtsWwCWKUWsG7Jldp
-	 YC5O3oRNy+i+IN5JFluuTe7FizuHfiyZwkzogeVo=
+	b=0md6gdFuqNcjLOr+CzWH0PH9wAnvAlN/YD5QndNedAKX9N4dAkEa5ucDjgOXKwhwG
+	 oGfkSCazjVaEKWz8VQrgf7uavOpS4A+XCDkR66g6aHre/8gMNAU2Haydtqq4114HiB
+	 Pq9pBUVkyqD6qk022dfd/Ia7D9AHPjRjjVIEZpzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Hawking <maxahawking@sonnenkinder.org>,
-	Jon Mason <jdmason@kudzu.us>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 259/691] ntb_perf: Fix printk format
-Date: Tue, 15 Oct 2024 13:23:27 +0200
-Message-ID: <20241015112450.629215195@linuxfoundation.org>
+	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>
+Subject: [PATCH 5.15 260/691] nfsd: call cache_put if xdr_reserve_space returns NULL
+Date: Tue, 15 Oct 2024 13:23:28 +0200
+Message-ID: <20241015112450.668749828@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,33 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Hawking <maxahawking@sonnenkinder.org>
+From: Guoqing Jiang <guoqing.jiang@linux.dev>
 
-[ Upstream commit 1501ae7479c8d0f66efdbfdc9ae8d6136cefbd37 ]
+[ Upstream commit d078cbf5c38de83bc31f83c47dcd2184c04a50c7 ]
 
-The correct printk format is %pa or %pap, but not %pa[p].
+If not enough buffer space available, but idmap_lookup has triggered
+lookup_fn which calls cache_get and returns successfully. Then we
+missed to call cache_put here which pairs with cache_get.
 
-Fixes: 99a06056124d ("NTB: ntb_perf: Fix address err in perf_copy_chunk")
-Signed-off-by: Max Hawking <maxahawking@sonnenkinder.org>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Fixes: ddd1ea563672 ("nfsd4: use xdr_reserve_space in attribute encoding")
+Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
+Reviwed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/test/ntb_perf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4idmap.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/ntb/test/ntb_perf.c b/drivers/ntb/test/ntb_perf.c
-index 65e1e5cf1b29a..5a7a02408166e 100644
---- a/drivers/ntb/test/ntb_perf.c
-+++ b/drivers/ntb/test/ntb_perf.c
-@@ -1227,7 +1227,7 @@ static ssize_t perf_dbgfs_read_info(struct file *filep, char __user *ubuf,
- 			"\tOut buffer addr 0x%pK\n", peer->outbuf);
+diff --git a/fs/nfsd/nfs4idmap.c b/fs/nfsd/nfs4idmap.c
+index 5e9809aff37eb..717e400b16b86 100644
+--- a/fs/nfsd/nfs4idmap.c
++++ b/fs/nfsd/nfs4idmap.c
+@@ -581,6 +581,7 @@ static __be32 idmap_id_to_name(struct xdr_stream *xdr,
+ 		.id = id,
+ 		.type = type,
+ 	};
++	__be32 status = nfs_ok;
+ 	__be32 *p;
+ 	int ret;
+ 	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
+@@ -593,12 +594,16 @@ static __be32 idmap_id_to_name(struct xdr_stream *xdr,
+ 		return nfserrno(ret);
+ 	ret = strlen(item->name);
+ 	WARN_ON_ONCE(ret > IDMAP_NAMESZ);
++
+ 	p = xdr_reserve_space(xdr, ret + 4);
+-	if (!p)
+-		return nfserr_resource;
+-	p = xdr_encode_opaque(p, item->name, ret);
++	if (unlikely(!p)) {
++		status = nfserr_resource;
++		goto out_put;
++	}
++	xdr_encode_opaque(p, item->name, ret);
++out_put:
+ 	cache_put(&item->h, nn->idtoname_cache);
+-	return 0;
++	return status;
+ }
  
- 		pos += scnprintf(buf + pos, buf_size - pos,
--			"\tOut buff phys addr %pa[p]\n", &peer->out_phys_addr);
-+			"\tOut buff phys addr %pap\n", &peer->out_phys_addr);
- 
- 		pos += scnprintf(buf + pos, buf_size - pos,
- 			"\tOut buffer size %pa\n", &peer->outbuf_size);
+ static bool
 -- 
 2.43.0
 
