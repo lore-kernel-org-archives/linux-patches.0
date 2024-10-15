@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113AD1D9A42;
-	Tue, 15 Oct 2024 11:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537761EBA1E;
+	Tue, 15 Oct 2024 11:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992516; cv=none; b=R/xSrhfyCDLBqKX7grpgwOk7VdbxEKX+yfz6o6H9p/ADC6SsnLOAdTaJ7pQQh3roXY7M9v6Jj5yEuek98rjE6WRc9x4EGKiOCa4tgZ3m6V70uOAnVrxRGH8Bn3LLaz1QFzwhGk5VppiIEzUHjiH3jLuQj2aBgsXf7yjQ/7VDVJ0=
+	t=1728992519; cv=none; b=n+hANuU4Q4OUaSGXONfuC4IAnKaxekRRcyZsduX3mbDsP5paUbvxu7E3Fx5HLQNTFUs3VsLpMBVnUrG3bdfwmzbz5O5O94rf/JdE0nUYY5mYnPwSDehEYC03Eu7p8H3OQlBzCWog8kRDihf2OW4ar03O8UpYNVeVgmNWS8KAe58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992516; c=relaxed/simple;
-	bh=0wS8uI0YNYvsLDJBUeBb2Tb7hvbWZjLhZDxnLHT/T+o=;
+	s=arc-20240116; t=1728992519; c=relaxed/simple;
+	bh=FTNHZ8BdEhK4D3A/D4WijrElH9MQPtY5yYqXwlhIjEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p0Vqz71n4j/RPcTO4csrO6b0BCXIpznOT0NaMMy2M1pjOJa3N86QAQXkm4Bnuv06TgCzT/AuzPfUQ7XHYBFpsCf8mAiT68bAIh6X9aVPzE8VqWjCtr38pX5gxCJdaGZcCeyawoZ70NcDHd/aApdFYukUKPVwIfV0uVFM2umHJA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zAIsX5Gt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LykR+2odf16fF9s5rfzhD1ORCQvE/erFNFQrarRNLAkLSmrv/Djahk7/XXIu9IViIX/hXA6g3/RsOLxgknqiDYs6Af9LnE5oU37+sq3u7Mjs6nbfdy3nJTp607zfCZqnd91WbunHnF1ELdZJQPm/yGm85MHOf7rbMiG+UGxKXkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMgCuzeG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zAIsX5Gt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F67C4CEC6;
-	Tue, 15 Oct 2024 11:41:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMgCuzeG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C136C4CEC6;
+	Tue, 15 Oct 2024 11:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992515;
-	bh=0wS8uI0YNYvsLDJBUeBb2Tb7hvbWZjLhZDxnLHT/T+o=;
+	s=korg; t=1728992519;
+	bh=FTNHZ8BdEhK4D3A/D4WijrElH9MQPtY5yYqXwlhIjEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zAIsX5Gtqgk8rPEGpxLYkB+mFrKwxQSs50SYJu/6wPDeI7Me8mxl0ESBppDIJjdWw
-	 uJuHcaJMTqgJMQACitTk6VNZ0uIOYhrkit5mronS2pmod5Ef32Yg4Hkc9Svy7eLaUZ
-	 UEx1TuBM0HmPZFX+qdsZYiDlDhUxuuX59KGDebj8=
+	b=dMgCuzeGBp7YhOS2dAHDRAAuXRvt5YfFCn9DyHMDvuMhQ5KN3Bq0lzlpNmnaGA4xZ
+	 tL2kuVRxxVZtiEFl0yUSrlvwP/db+rX5ud3yjtSlvACdUxu+A5qjMD6Db0oiR9cSbj
+	 BKsIK0g4nDEtwG/w59mxT0BQSr4DtBkulqbDJK5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Riyan Dhiman <riyandhiman14@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 138/691] block: fix potential invalid pointer dereference in blk_add_partition
-Date: Tue, 15 Oct 2024 13:21:26 +0200
-Message-ID: <20241015112445.832347289@linuxfoundation.org>
+Subject: [PATCH 5.15 112/691] netfilter: nf_tables: reject element expiration with no timeout
+Date: Tue, 15 Oct 2024 13:21:00 +0200
+Message-ID: <20241015112444.807094592@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,52 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Riyan Dhiman <riyandhiman14@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 26e197b7f9240a4ac301dd0ad520c0c697c2ea7d ]
+[ Upstream commit d2dc429ecb4e79ad164028d965c00f689e6f6d06 ]
 
-The blk_add_partition() function initially used a single if-condition
-(IS_ERR(part)) to check for errors when adding a partition. This was
-modified to handle the specific case of -ENXIO separately, allowing the
-function to proceed without logging the error in this case. However,
-this change unintentionally left a path where md_autodetect_dev()
-could be called without confirming that part is a valid pointer.
+If element timeout is unset and set provides no default timeout, the
+element expiration is silently ignored, reject this instead to let user
+know this is unsupported.
 
-This commit separates the error handling logic by splitting the
-initial if-condition, improving code readability and handling specific
-error scenarios explicitly. The function now distinguishes the general
-error case from -ENXIO without altering the existing behavior of
-md_autodetect_dev() calls.
+Also prepare for supporting timeout that never expire, where zero
+timeout and expiration must be also rejected.
 
-Fixes: b72053072c0b (block: allow partitions on host aware zone devices)
-Signed-off-by: Riyan Dhiman <riyandhiman14@gmail.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20240911132954.5874-1-riyandhiman14@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 8e1102d5a159 ("netfilter: nf_tables: support timeouts larger than 23 days")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/partitions/core.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/netfilter/nf_tables_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/block/partitions/core.c b/block/partitions/core.c
-index 00fb271a60510..0d1fe2b42b855 100644
---- a/block/partitions/core.c
-+++ b/block/partitions/core.c
-@@ -590,9 +590,11 @@ static bool blk_add_partition(struct gendisk *disk,
- 
- 	part = add_partition(disk, p, from, size, state->parts[p].flags,
- 			     &state->parts[p].info);
--	if (IS_ERR(part) && PTR_ERR(part) != -ENXIO) {
--		printk(KERN_ERR " %s: p%d could not be added: %pe\n",
--		       disk->disk_name, p, part);
-+	if (IS_ERR(part)) {
-+		if (PTR_ERR(part) != -ENXIO) {
-+			printk(KERN_ERR " %s: p%d could not be added: %pe\n",
-+			       disk->disk_name, p, part);
-+		}
- 		return true;
- 	}
- 
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index c00a9495f3453..300926b56572d 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6295,6 +6295,9 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	if (nla[NFTA_SET_ELEM_EXPIRATION] != NULL) {
+ 		if (!(set->flags & NFT_SET_TIMEOUT))
+ 			return -EINVAL;
++		if (timeout == 0)
++			return -EOPNOTSUPP;
++
+ 		err = nf_msecs_to_jiffies64(nla[NFTA_SET_ELEM_EXPIRATION],
+ 					    &expiration);
+ 		if (err)
 -- 
 2.43.0
 
