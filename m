@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD83A1EABAB;
-	Tue, 15 Oct 2024 11:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391A01D95AB;
+	Tue, 15 Oct 2024 11:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993155; cv=none; b=oNAeeSzBdHGtlDNxO6xXz1h7hyEw56vwW8xqFGq+nIPSSocKs4UypTTGPuIr0Xv9LarCxBy5rk9IwO1DjKwWFJ3v60msh0zb+3qWG3aV1He1nLmK85V8CdKOydG2rmYhio2EESZSRCUGDoLZg4Brb8S5DEgTd2BHfvd6sb8v7t8=
+	t=1728993159; cv=none; b=ENbcpBHvv8VLqrKPXCkhaVbhzv55iEoANFBnf3ssNBy4qztLrfV+wgnLS44LuSzZcyndQE2iLvlgYYm9BHc+ytvjagZyylcWfeZAr17SROMrDC8y5ypfvNurL+C3xLwx6ToheqNtAP18t+ZA4PKmwA/xVoSdNDG2l8MlTrUdtRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993155; c=relaxed/simple;
-	bh=R8T8E2oX/nr/Dy46GX23F5Bn0VyVW9uruliExJwFBwA=;
+	s=arc-20240116; t=1728993159; c=relaxed/simple;
+	bh=FnkoSXlYQ5AkGUhLzz7HcDU/+BRgCVHR9W6chY9KNGM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j0eEGllMGRQutJwrsgUwuRe1v1kmsdGURTY4boed9kqTEhjRMOTEd1/kWX6IiMb8JlRbN63Vtn51+lE+keWUBwzlG4ICXxG2AusxZGwOdt0ki2rk/ogdX936+Q3atbVyVAG9UxjDiPagkghcx6qr0ZJ9PHoX6DLwVHXjJ9af0pM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2GHZfhiB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K5FWYk812xQXOrqWRwk6qMQeBbgp0aVnP+flQ5AQFEreTFWDm3l85FGPjVFiBcq23w9VUclzkLo47mpgFvfkPzmSc2rWrB4AqqY/ZKgksUPxvR9b3W1CjSzA9Ma40dTKTlVBU/SeRBh3WxD41NaRzjgffUWH8oURj2wdWtLq5YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13R133Ez; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2GHZfhiB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE68C4CEC6;
-	Tue, 15 Oct 2024 11:52:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13R133Ez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978AFC4CEC6;
+	Tue, 15 Oct 2024 11:52:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993155;
-	bh=R8T8E2oX/nr/Dy46GX23F5Bn0VyVW9uruliExJwFBwA=;
+	s=korg; t=1728993159;
+	bh=FnkoSXlYQ5AkGUhLzz7HcDU/+BRgCVHR9W6chY9KNGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2GHZfhiBD1ZZPygse4a5M1RYGJGOAAEYs2o8UWyuht0lN1Y9gEsDxGyvm0sSpxXGu
-	 dqzFJ6TPyJbI+IsWRqqujA0MJ38TkZO4OMj3q8zwlihMp6/n0CGzTogoBGpzHFyrml
-	 Sa7bKLV0FN+YwdvuYQ+KRTJqZUCUAdVk1qo5id3s=
+	b=13R133Ez8kVeyHmm1q4yP1qt8Pj+kuLO0qoEARua9kBD5KXUEoLi17qe0y15Bchle
+	 B2VmtOcIg54XsuAcsK1N+S2AVurSRfN1kPuPTsIiITIGLYWZEBQZteRZ4irv/shoNR
+	 qJHhEndTZ/FTnPymNpywuGLlZUXZq+mxNYxEUqnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavan Kumar Paluri <papaluri@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.15 328/691] crypto: ccp - Properly unregister /dev/sev on sev PLATFORM_STATUS failure
-Date: Tue, 15 Oct 2024 13:24:36 +0200
-Message-ID: <20241015112453.355069024@linuxfoundation.org>
+	Qiu-ji Chen <chenqiuji666@gmail.com>,
+	Philipp Reisner <philipp.reisner@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 329/691] drbd: Fix atomicity violation in drbd_uuid_set_bm()
+Date: Tue, 15 Oct 2024 13:24:37 +0200
+Message-ID: <20241015112453.394322959@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,80 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavan Kumar Paluri <papaluri@amd.com>
+From: Qiu-ji Chen <chenqiuji666@gmail.com>
 
-commit ce3d2d6b150ba8528f3218ebf0cee2c2c572662d upstream.
+commit 2f02b5af3a4482b216e6a466edecf6ba8450fa45 upstream.
 
-In case of sev PLATFORM_STATUS failure, sev_get_api_version() fails
-resulting in sev_data field of psp_master nulled out. This later becomes
-a problem when unloading the ccp module because the device has not been
-unregistered (via misc_deregister()) before clearing the sev_data field
-of psp_master. As a result, on reloading the ccp module, a duplicate
-device issue is encountered as can be seen from the dmesg log below.
+The violation of atomicity occurs when the drbd_uuid_set_bm function is
+executed simultaneously with modifying the value of
+device->ldev->md.uuid[UI_BITMAP]. Consider a scenario where, while
+device->ldev->md.uuid[UI_BITMAP] passes the validity check when its
+value is not zero, the value of device->ldev->md.uuid[UI_BITMAP] is
+written to zero. In this case, the check in drbd_uuid_set_bm might refer
+to the old value of device->ldev->md.uuid[UI_BITMAP] (before locking),
+which allows an invalid value to pass the validity check, resulting in
+inconsistency.
 
-on reloading ccp module via modprobe ccp
+To address this issue, it is recommended to include the data validity
+check within the locked section of the function. This modification
+ensures that the value of device->ldev->md.uuid[UI_BITMAP] does not
+change during the validation process, thereby maintaining its integrity.
 
-Call Trace:
-  <TASK>
-  dump_stack_lvl+0xd7/0xf0
-  dump_stack+0x10/0x20
-  sysfs_warn_dup+0x5c/0x70
-  sysfs_create_dir_ns+0xbc/0xd
-  kobject_add_internal+0xb1/0x2f0
-  kobject_add+0x7a/0xe0
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? get_device_parent+0xd4/0x1e0
-  ? __pfx_klist_children_get+0x10/0x10
-  device_add+0x121/0x870
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  device_create_groups_vargs+0xdc/0x100
-  device_create_with_groups+0x3f/0x60
-  misc_register+0x13b/0x1c0
-  sev_dev_init+0x1d4/0x290 [ccp]
-  psp_dev_init+0x136/0x300 [ccp]
-  sp_init+0x6f/0x80 [ccp]
-  sp_pci_probe+0x2a6/0x310 [ccp]
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  local_pci_probe+0x4b/0xb0
-  work_for_cpu_fn+0x1a/0x30
-  process_one_work+0x203/0x600
-  worker_thread+0x19e/0x350
-  ? __pfx_worker_thread+0x10/0x10
-  kthread+0xeb/0x120
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x3c/0x60
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
-  kobject: kobject_add_internal failed for sev with -EEXIST, don't try to register things with the same name in the same directory.
-  ccp 0000:22:00.1: sev initialization failed
-  ccp 0000:22:00.1: psp initialization failed
-  ccp 0000:a2:00.1: no command queues available
-  ccp 0000:a2:00.1: psp enabled
+This possible bug is found by an experimental static analysis tool
+developed by our team. This tool analyzes the locking APIs to extract
+function pairs that can be concurrently executed, and then analyzes the
+instructions in the paired functions to identify possible concurrency
+bugs including data races and atomicity violations.
 
-Address this issue by unregistering the /dev/sev before clearing out
-sev_data in case of PLATFORM_STATUS failure.
-
-Fixes: 200664d5237f ("crypto: ccp: Add Secure Encrypted Virtualization (SEV) command support")
+Fixes: 9f2247bb9b75 ("drbd: Protect accesses to the uuid set with a spinlock")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pavan Kumar Paluri <papaluri@amd.com>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
+Reviewed-by: Philipp Reisner <philipp.reisner@linbit.com>
+Link: https://lore.kernel.org/r/20240913083504.10549-1-chenqiuji666@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/ccp/sev-dev.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/drbd/drbd_main.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/crypto/ccp/sev-dev.c
-+++ b/drivers/crypto/ccp/sev-dev.c
-@@ -1141,6 +1141,8 @@ void sev_pci_init(void)
- 	return;
+--- a/drivers/block/drbd/drbd_main.c
++++ b/drivers/block/drbd/drbd_main.c
+@@ -3406,10 +3406,12 @@ void drbd_uuid_new_current(struct drbd_d
+ void drbd_uuid_set_bm(struct drbd_device *device, u64 val) __must_hold(local)
+ {
+ 	unsigned long flags;
+-	if (device->ldev->md.uuid[UI_BITMAP] == 0 && val == 0)
++	spin_lock_irqsave(&device->ldev->md.uuid_lock, flags);
++	if (device->ldev->md.uuid[UI_BITMAP] == 0 && val == 0) {
++		spin_unlock_irqrestore(&device->ldev->md.uuid_lock, flags);
+ 		return;
++	}
  
- err:
-+	sev_dev_destroy(psp_master);
-+
- 	psp_master->sev_data = NULL;
- }
- 
+-	spin_lock_irqsave(&device->ldev->md.uuid_lock, flags);
+ 	if (val == 0) {
+ 		drbd_uuid_move_history(device);
+ 		device->ldev->md.uuid[UI_HISTORY_START] = device->ldev->md.uuid[UI_BITMAP];
 
 
