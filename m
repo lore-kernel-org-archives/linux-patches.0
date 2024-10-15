@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C2F1C57B1;
-	Tue, 15 Oct 2024 12:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178741E1A35;
+	Tue, 15 Oct 2024 12:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994020; cv=none; b=WPny1fkrKzka93EiTyqvL38061wEav/8Va/CzzrKT/i294jkz0AmfU6oGgirNVeIyys6FyweFTuvEoHEoPf+8eY+uexI1E/KO+S3a99hxZdfazzDLYCJj7fQ81xmAZgdi/U9bYOOK2r0vw3p/uq6KbC5JZWL1VtBEr9ulgvCryE=
+	t=1728994024; cv=none; b=ADdSTtCYv8D37ffBRs/HHOGKoQae3IL5v1laQ1OBEGOJNoJtWkJyVvfb3aG5CShs1UVApKCfus9kESkCdpltr/yobs9iqztDtYlfURRWc036ikWLhYeUDy/QwdJJQJ25F7+3xt5LDu+mRUExUwaF9WbgJB5+CTlnOwvBuSFAyyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994020; c=relaxed/simple;
-	bh=Nk7+eurXkmfNEarZMIKZacWHZexxVEL6dLqcRqewvyw=;
+	s=arc-20240116; t=1728994024; c=relaxed/simple;
+	bh=g1C8c6xyKUSa5GDIMgU1tozETRyhRIkIvc1Zqd3UyCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdBpKIYTjoxnyXmygku/xBny8Hz3YAvktjgArp3B1WMjkbuon7IJrSlc1QesMrsVyQgDNa48mro8PC5Tk7grv7dpm01Mi8i0DM4TNI/3AatpL/7WpXnzRMPdsIeL9jEQuEKf48TyRpUDHnq0EPT5PgXek9COo+MORg+3NhcIQxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtWY037c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=of2lUeJTeC1saryhe3gpu/XqmdmU9usQxZdrpv/cU7PPmLd9aPNkCp7Gaq8pAUaEDVl1h9I+L6Dco1xG7HXLUuCZChj5aCI4jTLDYNq0PcRmBdSrJh3XproswEQc9V9yxV6dkVy64b2jvCjo+YBfrOMqF+iWbu92znjfyxm5EeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gz1JXySy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtWY037c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371F8C4CEC6;
-	Tue, 15 Oct 2024 12:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gz1JXySy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A98FC4CEC6;
+	Tue, 15 Oct 2024 12:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994020;
-	bh=Nk7+eurXkmfNEarZMIKZacWHZexxVEL6dLqcRqewvyw=;
+	s=korg; t=1728994024;
+	bh=g1C8c6xyKUSa5GDIMgU1tozETRyhRIkIvc1Zqd3UyCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dtWY037cwbOhjQf2IanMsAUXZ4IJR1qsuf8/2p4NLMP4Ha7d5qmYwRqbU+AhITbDM
-	 o7di6HyCNRXuaGUmwrtcG0KrVSofBfL2yXSuPo+d7ogujrf8A+2UUT20+Mwz2bfrEW
-	 LKxv5/ehnoR6k8x6IEpFWez4z7QlDRYmTwHeACNA=
+	b=gz1JXySyqmorelAoN6dZ2wlcTb4mkFnJKnZhT+n10L7fd+u1ZWG0goq6vMAL3bKQ1
+	 BjJ3gR1Vmq3zr2fokx3G61grOV3BxTX2Wz5Rnir6j2eTF2xFmaKsgtuHoCVPBv3EqC
+	 V4svNk3oKgNs8WhVaf0R4oUn+ZGnHdzUMefbUsXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoran Zhang <wh1sper@zju.edu.cn>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 5.15 582/691] vhost/scsi: null-ptr-dereference in vhost_scsi_get_req()
-Date: Tue, 15 Oct 2024 13:28:50 +0200
-Message-ID: <20241015112503.439396797@linuxfoundation.org>
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Wolfram Sang <wsa@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 553/691] i2c: create debugfs entry per adapter
+Date: Tue, 15 Oct 2024 13:28:21 +0200
+Message-ID: <20241015112502.288962259@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,115 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoran Zhang <wh1sper@zju.edu.cn>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-commit 221af82f606d928ccef19a16d35633c63026f1be upstream.
+[ Upstream commit 73febd775bdbdb98c81255ff85773ac410ded5c4 ]
 
-Since commit 3f8ca2e115e5 ("vhost/scsi: Extract common handling code
-from control queue handler") a null pointer dereference bug can be
-triggered when guest sends an SCSI AN request.
+Two drivers already implement custom debugfs handling for their
+i2c_adapter and more will come. So, let the core create a debugfs
+directory per adapter and pass that to drivers for their debugfs files.
 
-In vhost_scsi_ctl_handle_vq(), `vc.target` is assigned with
-`&v_req.tmf.lun[1]` within a switch-case block and is then passed to
-vhost_scsi_get_req() which extracts `vc->req` and `tpg`. However, for
-a `VIRTIO_SCSI_T_AN_*` request, tpg is not required, so `vc.target` is
-set to NULL in this branch. Later, in vhost_scsi_get_req(),
-`vc->target` is dereferenced without being checked, leading to a null
-pointer dereference bug. This bug can be triggered from guest.
-
-When this bug occurs, the vhost_worker process is killed while holding
-`vq->mutex` and the corresponding tpg will remain occupied
-indefinitely.
-
-Below is the KASAN report:
-Oops: general protection fault, probably for non-canonical address
-0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 1 PID: 840 Comm: poc Not tainted 6.10.0+ #1
-Hardware name: QEMU Ubuntu 24.04 PC (i440FX + PIIX, 1996), BIOS
-1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:vhost_scsi_get_req+0x165/0x3a0
-Code: 00 fc ff df 48 89 fa 48 c1 ea 03 80 3c 02 00 0f 85 2b 02 00 00
-48 b8 00 00 00 00 00 fc ff df 4d 8b 65 30 4c 89 e2 48 c1 ea 03 <0f> b6
-04 02 4c 89 e2 83 e2 07 38 d0 7f 08 84 c0 0f 85 be 01 00 00
-RSP: 0018:ffff888017affb50 EFLAGS: 00010246
-RAX: dffffc0000000000 RBX: ffff88801b000000 RCX: 0000000000000000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff888017affcb8
-RBP: ffff888017affb80 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000000
-R13: ffff888017affc88 R14: ffff888017affd1c R15: ffff888017993000
-FS:  000055556e076500(0000) GS:ffff88806b100000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000000200027c0 CR3: 0000000010ed0004 CR4: 0000000000370ef0
-Call Trace:
- <TASK>
- ? show_regs+0x86/0xa0
- ? die_addr+0x4b/0xd0
- ? exc_general_protection+0x163/0x260
- ? asm_exc_general_protection+0x27/0x30
- ? vhost_scsi_get_req+0x165/0x3a0
- vhost_scsi_ctl_handle_vq+0x2a4/0xca0
- ? __pfx_vhost_scsi_ctl_handle_vq+0x10/0x10
- ? __switch_to+0x721/0xeb0
- ? __schedule+0xda5/0x5710
- ? __kasan_check_write+0x14/0x30
- ? _raw_spin_lock+0x82/0xf0
- vhost_scsi_ctl_handle_kick+0x52/0x90
- vhost_run_work_list+0x134/0x1b0
- vhost_task_fn+0x121/0x350
-...
- </TASK>
----[ end trace 0000000000000000 ]---
-
-Let's add a check in vhost_scsi_get_req.
-
-Fixes: 3f8ca2e115e5 ("vhost/scsi: Extract common handling code from control queue handler")
-Signed-off-by: Haoran Zhang <wh1sper@zju.edu.cn>
-[whitespace fixes]
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Message-Id: <b26d7ddd-b098-4361-88f8-17ca7f90adf7@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: 8d3cefaf6592 ("i2c: core: Lock address during client device instantiation")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/scsi.c |   25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ drivers/i2c/i2c-core-base.c | 11 +++++++++++
+ include/linux/i2c.h         |  2 ++
+ 2 files changed, 13 insertions(+)
 
---- a/drivers/vhost/scsi.c
-+++ b/drivers/vhost/scsi.c
-@@ -899,20 +899,23 @@ vhost_scsi_get_req(struct vhost_virtqueu
- 		/* virtio-scsi spec requires byte 0 of the lun to be 1 */
- 		vq_err(vq, "Illegal virtio-scsi lun: %u\n", *vc->lunp);
- 	} else {
--		struct vhost_scsi_tpg **vs_tpg, *tpg;
-+		struct vhost_scsi_tpg **vs_tpg, *tpg = NULL;
+diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
+index c8cb6f44a0f88..76d70de2d317d 100644
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -16,6 +16,7 @@
+ #include <linux/acpi.h>
+ #include <linux/clk/clk-conf.h>
+ #include <linux/completion.h>
++#include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/err.h>
+ #include <linux/errno.h>
+@@ -66,6 +67,8 @@ static int i2c_detect(struct i2c_adapter *adapter, struct i2c_driver *driver);
+ static DEFINE_STATIC_KEY_FALSE(i2c_trace_msg_key);
+ static bool is_registered;
  
--		vs_tpg = vhost_vq_get_backend(vq);	/* validated at handler entry */
--
--		tpg = READ_ONCE(vs_tpg[*vc->target]);
--		if (unlikely(!tpg)) {
--			vq_err(vq, "Target 0x%x does not exist\n", *vc->target);
--		} else {
--			if (tpgp)
--				*tpgp = tpg;
--			ret = 0;
-+		if (vc->target) {
-+			/* validated at handler entry */
-+			vs_tpg = vhost_vq_get_backend(vq);
-+			tpg = READ_ONCE(vs_tpg[*vc->target]);
-+			if (unlikely(!tpg)) {
-+				vq_err(vq, "Target 0x%x does not exist\n", *vc->target);
-+				goto out;
-+			}
- 		}
--	}
++static struct dentry *i2c_debugfs_root;
++
+ int i2c_transfer_trace_reg(void)
+ {
+ 	static_branch_inc(&i2c_trace_msg_key);
+@@ -1526,6 +1529,8 @@ static int i2c_register_adapter(struct i2c_adapter *adap)
+ 		goto out_list;
+ 	}
  
-+		if (tpgp)
-+			*tpgp = tpg;
-+		ret = 0;
-+	}
-+out:
- 	return ret;
++	adap->debugfs = debugfs_create_dir(dev_name(&adap->dev), i2c_debugfs_root);
++
+ 	res = i2c_setup_smbus_alert(adap);
+ 	if (res)
+ 		goto out_reg;
+@@ -1564,6 +1569,7 @@ static int i2c_register_adapter(struct i2c_adapter *adap)
+ 	return 0;
+ 
+ out_reg:
++	debugfs_remove_recursive(adap->debugfs);
+ 	init_completion(&adap->dev_released);
+ 	device_unregister(&adap->dev);
+ 	wait_for_completion(&adap->dev_released);
+@@ -1765,6 +1771,8 @@ void i2c_del_adapter(struct i2c_adapter *adap)
+ 
+ 	i2c_host_notify_irq_teardown(adap);
+ 
++	debugfs_remove_recursive(adap->debugfs);
++
+ 	/* wait until all references to the device are gone
+ 	 *
+ 	 * FIXME: This is old code and should ideally be replaced by an
+@@ -2062,6 +2070,8 @@ static int __init i2c_init(void)
+ 
+ 	is_registered = true;
+ 
++	i2c_debugfs_root = debugfs_create_dir("i2c", NULL);
++
+ #ifdef CONFIG_I2C_COMPAT
+ 	i2c_adapter_compat_class = class_compat_register("i2c-adapter");
+ 	if (!i2c_adapter_compat_class) {
+@@ -2100,6 +2110,7 @@ static void __exit i2c_exit(void)
+ #ifdef CONFIG_I2C_COMPAT
+ 	class_compat_unregister(i2c_adapter_compat_class);
+ #endif
++	debugfs_remove_recursive(i2c_debugfs_root);
+ 	bus_unregister(&i2c_bus_type);
+ 	tracepoint_synchronize_unregister();
  }
+diff --git a/include/linux/i2c.h b/include/linux/i2c.h
+index 8bcc0142c32c2..7c2ff4d7c360a 100644
+--- a/include/linux/i2c.h
++++ b/include/linux/i2c.h
+@@ -740,6 +740,8 @@ struct i2c_adapter {
  
+ 	struct irq_domain *host_notify_domain;
+ 	struct regulator *bus_regulator;
++
++	struct dentry *debugfs;
+ };
+ #define to_i2c_adapter(d) container_of(d, struct i2c_adapter, dev)
+ 
+-- 
+2.43.0
+
 
 
