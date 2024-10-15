@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB351D95AB;
-	Tue, 15 Oct 2024 11:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2C71CFEA9;
+	Tue, 15 Oct 2024 11:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993056; cv=none; b=EkrcMsltqm9zWVUYDb0v1aQwfNWgfH6Kskg7PM9IKEO0vwwWkz1b5i+QnkbToUQqDLjreZlHtfGy842Y1wNj73MW4y0wgLN5RfP5rrnWX4M4Z5S1RPjaiOOyBldEaYH1DK2D/Z01dxd2Q1gyR505Py1Rqe2Q/Po84Qp9oGLKAJ8=
+	t=1728993059; cv=none; b=RT0VuNXkDgECbfw04mHQ0eGRtYPBso0pttQOprY4b7Vimm097m+WaWA/5WRIJOh9uRkWp9l7sXTOGMuosr73+y+SSi3btfqd+plYDYuRRaPwViBJ3Uvr1OwcnePLgtT9piUApHNDsWrRDSJUvvORO4mg/kNDQsNMKm3rU8+zu2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993056; c=relaxed/simple;
-	bh=WogZpCKI0E8XvmyTaiN2yNh8xgEzkXU8Hj82OrTXrbc=;
+	s=arc-20240116; t=1728993059; c=relaxed/simple;
+	bh=27eUOmwnYNXrr8o/6Vk0Xn3uKhSKAQJxXpveSUgmDgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SXr/JZHYINUryaQt/GCC4YZ4R9I1ojeqNkNUmesXY9vFkkR/yNdmfaz1tgFNhz18Ih0ETLQySeCdfOtMAiSTaChtPNbwI8Pr95G2FmXGTZfeDsInZ69DegQMphIS5rgnJ5vqlrSjIye2I8uxLZzyvuYvcROe+mPFB0qtuP3sAKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0kz5i6h3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VD2+jglnTuK41Np4KLz/osHycmM6l9cTJvXl3H5fWac+cJrfyuWvuTjOy4WeZ0pIzhyKl6gHonCpbIG5X5g1MQ8xmSnZoyh5Nz2z428MDGIcfbe/6L7TenNF2HAjVq5xldlaT0OE3aqZ32t0vlFq5DLarNvYkAAY2Mwq0A13ls4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OhUXxaNg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0kz5i6h3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7B3C4CEC6;
-	Tue, 15 Oct 2024 11:50:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OhUXxaNg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F075CC4CEC6;
+	Tue, 15 Oct 2024 11:50:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993056;
-	bh=WogZpCKI0E8XvmyTaiN2yNh8xgEzkXU8Hj82OrTXrbc=;
+	s=korg; t=1728993059;
+	bh=27eUOmwnYNXrr8o/6Vk0Xn3uKhSKAQJxXpveSUgmDgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0kz5i6h3V0k0vPMA59IZTMeYFlBjAr4XvjOQWCOUJTN8q1sFmuuogAZWe3a5/W8dH
-	 YLGwd5LoQKNGwvsbp97vBCCoDMdLxf7IorJSKqoJo8AmGfkIdi+OldkLkeVq8sE7O1
-	 I3tDfPFXnbE1eUVO0NFFDnh6vM3tyP4R7FlunMUQ=
+	b=OhUXxaNgJ/yYJlY95wCUsRaNFHl/0PwTHYT1DXLzzxNOv4/cAMHfgcdZ7wCnjeZbI
+	 y47kizcrEC0G2+cwV4KZUxtQpaZRR9gDySDwoXiKX/9CeqlwtZGjvLPK5qYbWPgW45
+	 Yfgiws5q2hIfwzZIPlp9h6943EfUcFPGTi49k4Ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zdenek Kabelac <zkabelac@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 280/691] Revert "dm: requeue IO if mapping table not yet available"
-Date: Tue, 15 Oct 2024 13:23:48 +0200
-Message-ID: <20241015112451.458513333@linuxfoundation.org>
+Subject: [PATCH 5.15 298/691] netfilter: ctnetlink: compile ctnetlink_label_size with CONFIG_NF_CONNTRACK_EVENTS
+Date: Tue, 15 Oct 2024 13:24:06 +0200
+Message-ID: <20241015112452.173202618@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,82 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit c8691cd0fc11197515ed148de0780d927bfca38b ]
+[ Upstream commit e1f1ee0e9ad8cbe660f5c104e791c5f1a7cf4c31 ]
 
-This reverts commit fa247089de9936a46e290d4724cb5f0b845600f5.
+Only provide ctnetlink_label_size when it is used,
+which is when CONFIG_NF_CONNTRACK_EVENTS is configured.
 
-The following sequence of commands causes a livelock - there will be
-workqueue process looping and consuming 100% CPU:
+Flagged by clang-18 W=1 builds as:
 
-dmsetup create --notable test
-truncate -s 1MiB testdata
-losetup /dev/loop0 testdata
-dmsetup load test --table '0 2048 linear /dev/loop0 0'
-dd if=/dev/zero of=/dev/dm-0 bs=16k count=1 conv=fdatasync
+.../nf_conntrack_netlink.c:385:19: warning: unused function 'ctnetlink_label_size' [-Wunused-function]
+  385 | static inline int ctnetlink_label_size(const struct nf_conn *ct)
+      |                   ^~~~~~~~~~~~~~~~~~~~
 
-The livelock is caused by the commit fa247089de99. The commit claims that
-it fixes a race condition, however, it is unknown what the actual race
-condition is and what program is involved in the race condition.
+The condition on CONFIG_NF_CONNTRACK_LABELS being removed by
+this patch guards compilation of non-trivial implementations
+of ctnetlink_dump_labels() and ctnetlink_label_size().
 
-When the inactive table is loaded, the nodes /dev/dm-0 and
-/sys/block/dm-0 are created. /dev/dm-0 has zero size at this point. When
-the device is suspended and resumed, the nodes /dev/mapper/test and
-/dev/disk/* are created.
+However, this is not necessary as each of these functions
+will always return 0 if CONFIG_NF_CONNTRACK_LABELS is not defined
+as each function starts with the equivalent of:
 
-If some program opens a block device before it is created by dmsetup or
-lvm, the program is buggy, so dm could just report an error as it used to
-do before.
+	struct nf_conn_labels *labels = nf_ct_labels_find(ct);
 
-Reported-by: Zdenek Kabelac <zkabelac@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: fa247089de99 ("dm: requeue IO if mapping table not yet available")
+	if (!labels)
+		return 0;
+
+And nf_ct_labels_find always returns NULL if CONFIG_NF_CONNTRACK_LABELS
+is not enabled.  So I believe that the compiler optimises the code away
+in such cases anyway.
+
+Found by inspection.
+Compile tested only.
+
+Originally splitted in two patches, Pablo Neira Ayuso collapsed them and
+added Fixes: tag.
+
+Fixes: 0ceabd83875b ("netfilter: ctnetlink: deliver labels to userspace")
+Link: https://lore.kernel.org/netfilter-devel/20240909151712.GZ2097826@kernel.org/
+Signed-off-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-rq.c |  4 +++-
- drivers/md/dm.c    | 11 ++++++++---
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ net/netfilter/nf_conntrack_netlink.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/md/dm-rq.c b/drivers/md/dm-rq.c
-index 53a9b16c7b2e6..7eedcd012f45f 100644
---- a/drivers/md/dm-rq.c
-+++ b/drivers/md/dm-rq.c
-@@ -504,8 +504,10 @@ static blk_status_t dm_mq_queue_rq(struct blk_mq_hw_ctx *hctx,
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index b429ffde25b1a..585103c16a8af 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -370,7 +370,7 @@ static int ctnetlink_dump_secctx(struct sk_buff *skb, const struct nf_conn *ct)
+ #define ctnetlink_dump_secctx(a, b) (0)
+ #endif
  
- 		map = dm_get_live_table(md, &srcu_idx);
- 		if (unlikely(!map)) {
-+			DMERR_LIMIT("%s: mapping table unavailable, erroring io",
-+				    dm_device_name(md));
- 			dm_put_live_table(md, srcu_idx);
--			return BLK_STS_RESOURCE;
-+			return BLK_STS_IOERR;
- 		}
- 		ti = dm_table_find_target(map, 0);
- 		dm_put_live_table(md, srcu_idx);
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index 8199166ca8620..8b192fc1f798c 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -1593,10 +1593,15 @@ static blk_qc_t dm_submit_bio(struct bio *bio)
- 	struct dm_table *map;
+-#ifdef CONFIG_NF_CONNTRACK_LABELS
++#ifdef CONFIG_NF_CONNTRACK_EVENTS
+ static inline int ctnetlink_label_size(const struct nf_conn *ct)
+ {
+ 	struct nf_conn_labels *labels = nf_ct_labels_find(ct);
+@@ -379,6 +379,7 @@ static inline int ctnetlink_label_size(const struct nf_conn *ct)
+ 		return 0;
+ 	return nla_total_size(sizeof(labels->bits));
+ }
++#endif
  
- 	map = dm_get_live_table(md, &srcu_idx);
-+	if (unlikely(!map)) {
-+		DMERR_LIMIT("%s: mapping table unavailable, erroring io",
-+			    dm_device_name(md));
-+		bio_io_error(bio);
-+		goto out;
-+	}
+ static int
+ ctnetlink_dump_labels(struct sk_buff *skb, const struct nf_conn *ct)
+@@ -399,10 +400,6 @@ ctnetlink_dump_labels(struct sk_buff *skb, const struct nf_conn *ct)
  
--	/* If suspended, or map not yet available, queue this IO for later */
--	if (unlikely(test_bit(DMF_BLOCK_IO_FOR_SUSPEND, &md->flags)) ||
--	    unlikely(!map)) {
-+	/* If suspended, queue this IO for later */
-+	if (unlikely(test_bit(DMF_BLOCK_IO_FOR_SUSPEND, &md->flags))) {
- 		if (bio->bi_opf & REQ_NOWAIT)
- 			bio_wouldblock_error(bio);
- 		else if (bio->bi_opf & REQ_RAHEAD)
+ 	return 0;
+ }
+-#else
+-#define ctnetlink_dump_labels(a, b) (0)
+-#define ctnetlink_label_size(a)	(0)
+-#endif
+ 
+ #define master_tuple(ct) &(ct->master->tuplehash[IP_CT_DIR_ORIGINAL].tuple)
+ 
 -- 
 2.43.0
 
