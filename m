@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E483C1C07C3;
-	Tue, 15 Oct 2024 12:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC261C07DD;
+	Tue, 15 Oct 2024 12:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996947; cv=none; b=CG4TSR69dhMFQh+EHQ72tDhisx5fmCU17J0+BPHdpaJ3moY8Y+DZEZ1O7f/FnbvHMQJG6zkfSyAe88GV5SKA9rpNNAhFAq4wsPKeJY3Nb1sRiRBALIaEYLx1N4pYEWBRWIOxymwyqTxZ5AnkSc/vMMAXQhRaYXTRjVUbmmLfxyM=
+	t=1728996950; cv=none; b=rTs/NhJDs7/KNNd1obFJ8s0/DEcEHiZxNXLnQQfsuN0O3wuEoKEv31PZT1afykiobU+dz+DTLPJRhUFfdQxNan9ttDsjPbOneJcZvsvoqtzz2D7K9Ubml1gQpIqaRwieWFweQAF3bRh0D4bHPmUnAmHZWqlZwNdgh2K5h4WbKI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996947; c=relaxed/simple;
-	bh=3w6wGSORqcmCxn5P2LBtOD0Aoaq4hYnaNMJeLvKxJY0=;
+	s=arc-20240116; t=1728996950; c=relaxed/simple;
+	bh=RNJhTlxW8NvWGpNTKsu0NKr75zZ2pMeCGhE3398aLEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OA7U/TtEHF3F5vtrW4OjHfLhiuqUEkz0wtrSFO4CsGe9T6SYKq2AJ4G4/SB9osJwU3K/YMVo4fiHamkPLXSows2Bis0CDkboTfKksNLC21jB2Y+XLRlKEzu73ldEsrEFN28XJgX+lOcZasqpMI/xpsaYsPTwtJeSTMsBuW9yEFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oatGnKS4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GEG6f33UWOs397TBPy2IrKq0txA5ILFmtGDFjS8AqQ5mJSJR7t5MsKJqSYCr0aSAYe3JKwNAMYLOBoM/UOdZ4UTpHfGirlPQ6CePzSCi3lyhN2YsUYgkean6epaOJIKj5ZuHZmGIVkIXvFQ7N8Nw6NASiQ/5XbZoY1iqki25vWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEHx59If; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oatGnKS4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53968C4CEC6;
-	Tue, 15 Oct 2024 12:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEHx59If"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B0AC4CEC6;
+	Tue, 15 Oct 2024 12:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728996946;
-	bh=3w6wGSORqcmCxn5P2LBtOD0Aoaq4hYnaNMJeLvKxJY0=;
+	s=korg; t=1728996950;
+	bh=RNJhTlxW8NvWGpNTKsu0NKr75zZ2pMeCGhE3398aLEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oatGnKS4cELKqXCYuVD1Wu1fq1Yf+xmW5k5TnPy83AtBakx7h8UpsBm7WrGSEBYTW
-	 w/t7+1XZ3ecDYoQf5CnDgU611b96ZvDzv0zeckA/Bhfl9gM3U1mDio2nVyIasZyvq0
-	 7/oN5nObCnxdY5vtawA041mJJahuKsoPDbG/lVkU=
+	b=oEHx59IfPPNWS63bQk5uN2jEn2UOfIgNLTl28gc5hsDXIBeYaeCorjkedr4SETPBn
+	 eStYDWehix8p5i/mlZ4SOvSe3+shWBRPxbD7eMxnQnqt/OSCPko6jV8JIQWiHT/nmd
+	 sf9IitQPqAgANnMI0jdc4k0l3Lgra35/5KAFc2vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 046/518] netfilter: nf_tables: missing iterator type in lookup walk
-Date: Tue, 15 Oct 2024 14:39:10 +0200
-Message-ID: <20241015123918.789171662@linuxfoundation.org>
+	Hagar Hemdan <hagarhem@amazon.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Subject: [PATCH 5.10 047/518] gpio: prevent potential speculation leaks in gpio_device_get_desc()
+Date: Tue, 15 Oct 2024 14:39:11 +0200
+Message-ID: <20241015123918.826484633@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -50,42 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Hagar Hemdan <hagarhem@amazon.com>
 
-commit efefd4f00c967d00ad7abe092554ffbb70c1a793 upstream.
+commit d795848ecce24a75dfd46481aee066ae6fe39775 upstream.
 
-Add missing decorator type to lookup expression and tighten WARN_ON_ONCE
-check in pipapo to spot earlier that this is unset.
+Userspace may trigger a speculative read of an address outside the gpio
+descriptor array.
+Users can do that by calling gpio_ioctl() with an offset out of range.
+Offset is copied from user and then used as an array index to get
+the gpio descriptor without sanitization in gpio_device_get_desc().
 
-Fixes: 29b359cf6d95 ("netfilter: nft_set_pipapo: walk over current view on netlink dump")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+This change ensures that the offset is sanitized by using
+array_index_nospec() to mitigate any possibility of speculative
+information leaks.
+
+This bug was discovered and resolved using Coverity Static Analysis
+Security Testing (SAST) by Synopsys, Inc.
+
+Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
+Link: https://lore.kernel.org/r/20240523085332.1801-1-hagarhem@amazon.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_lookup.c     |    1 +
- net/netfilter/nft_set_pipapo.c |    3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpio/gpiolib.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/netfilter/nft_lookup.c
-+++ b/net/netfilter/nft_lookup.c
-@@ -207,6 +207,7 @@ static int nft_lookup_validate(const str
- 		return 0;
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -4,6 +4,7 @@
+ #include <linux/module.h>
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
++#include <linux/nospec.h>
+ #include <linux/spinlock.h>
+ #include <linux/list.h>
+ #include <linux/device.h>
+@@ -143,7 +144,7 @@ struct gpio_desc *gpiochip_get_desc(stru
+ 	if (hwnum >= gdev->ngpio)
+ 		return ERR_PTR(-EINVAL);
  
- 	iter.genmask	= nft_genmask_next(ctx->net);
-+	iter.type	= NFT_ITER_UPDATE;
- 	iter.skip	= 0;
- 	iter.count	= 0;
- 	iter.err	= 0;
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -2030,7 +2030,8 @@ static void nft_pipapo_walk(const struct
- 	struct nft_pipapo_field *f;
- 	int i, r;
+-	return &gdev->descs[hwnum];
++	return &gdev->descs[array_index_nospec(hwnum, gdev->ngpio)];
+ }
+ EXPORT_SYMBOL_GPL(gpiochip_get_desc);
  
--	WARN_ON_ONCE(iter->type == NFT_ITER_UNSPEC);
-+	WARN_ON_ONCE(iter->type != NFT_ITER_READ &&
-+		     iter->type != NFT_ITER_UPDATE);
- 
- 	rcu_read_lock();
- 	if (iter->type == NFT_ITER_READ)
 
 
