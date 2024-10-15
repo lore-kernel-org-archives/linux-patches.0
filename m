@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D611AF0A5;
-	Tue, 15 Oct 2024 12:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E891AF0B4;
+	Tue, 15 Oct 2024 12:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996838; cv=none; b=aNLBSIAF1/7hJVgxBtbi8iuJ/Op2BNf5bNMJJTw6LMPGEmSBP4CQbUlCMs7RZx5/u/8wl8CdLnT9JOG/9xio0S/1kv/2frfB/6CdEaYBopklMkTrH7mQh5GmN7XYoKt7jF5MZKLTACakjari7eTIzY4KEwIH4vGl56SHxuR9Hb8=
+	t=1728996841; cv=none; b=n1Gd+Cw0RBcLzmI2eSs+22d7xpXVM/sd8w5x842DExcDh+KxM7MGqAz1PLyAyULE0Ig0xVk8r4ta6BfloHSMownOiUOWyk0d0bpMgesgixTiak25RkhnFSDzRoiBERc9hONN9Qgbw3xtc6mm8njAbnxMBzMtetvBwOd8wWcuC9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996838; c=relaxed/simple;
-	bh=yKMgN4SkwV9VILyGt/GDItqFw+wXpRGNcfWA3nvDYDY=;
+	s=arc-20240116; t=1728996841; c=relaxed/simple;
+	bh=RCeone1DARUHDP6OA0rAFGM2CJQ27gLZQK3S1qdrXXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PcNU5cNnUflQRmhXtpZv57Sl0rVCAe8oa9x92cUvE1zBFnGJQMpK4qhlbzrB2SOA/Xb2+JTvIaTpqo16IulhEluf3yoyq45nBheHopS6duwI1H/YjGdcpnWEYHelH+pF9v6sswhKIIHyRsKq4Kw41M12bGNF65I1jkeAWBSdKtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0CBN6XT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q/JhgKFkZzz3uneWNNfFdpRA2pn4RZusr9hnDftETOgvbTCRL58aX2zDcXadWYADxNw/Ix68WW/5SesM/HbO1EF5VMP7JUs3outM2SA8T4BuoSvWQW8WTumF+uAD9hKPB6jv3sspYOvzo/KibRaqoXouKqHmnF9Iv1wJ9OAT20Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFgu32H7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0CBN6XT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED5EC4CECE;
-	Tue, 15 Oct 2024 12:53:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFgu32H7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AF6C4CEC6;
+	Tue, 15 Oct 2024 12:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728996837;
-	bh=yKMgN4SkwV9VILyGt/GDItqFw+wXpRGNcfWA3nvDYDY=;
+	s=korg; t=1728996841;
+	bh=RCeone1DARUHDP6OA0rAFGM2CJQ27gLZQK3S1qdrXXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v0CBN6XTKeXuU8mQpadMet4NmZQUzKwL27TMaBp7UjjEaRn16g6tiiGJ6w6mgUVHQ
-	 DV0fC0p1PMNHsNhUfFhPrZ3Y9rDnD2/qjGa9ZDC70vuWweq0jstnlx2DaP3zo3J/Ks
-	 JDaCjCfDOOeZSxoNadh1C/QN4v5GIEvQ5p2+Z2fE=
+	b=JFgu32H72abmVQjuwQB+AhKnSVaK7MrJd/3G5Dy/GJXfNCvzc2xR3L/RNfmELi+lp
+	 CvEeKORXEfvOODmdvrakDWEY7/AF2JWMzGRQcTuJLlTc6TmkyfGqlhtIbVQH0IIEJS
+	 ZOjzyLWCNfRuVu/Jkt3Dka8yASchXVyh1QIJrV0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 014/518] NFS: Avoid unnecessary rescanning of the per-server delegation list
-Date: Tue, 15 Oct 2024 14:38:38 +0200
-Message-ID: <20241015123917.384254786@linuxfoundation.org>
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 5.10 015/518] arm64: dts: rockchip: override BIOS_DISABLE signal via GPIO hog on RK3399 Puma
+Date: Tue, 15 Oct 2024 14:38:39 +0200
+Message-ID: <20241015123917.421923586@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,84 +50,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Quentin Schulz <quentin.schulz@cherry.de>
 
-[ Upstream commit f92214e4c312f6ea9d78650cc6291d200f17abb6 ]
+commit 741f5ba7ccba5d7ae796dd11c320e28045524771 upstream.
 
-If the call to nfs_delegation_grab_inode() fails, we will not have
-dropped any locks that require us to rescan the list.
+The Qseven BIOS_DISABLE signal on the RK3399-Q7 keeps the on-module eMMC
+and SPI flash powered-down initially (in fact it keeps the reset signal
+asserted). BIOS_DISABLE_OVERRIDE pin allows to override that signal so
+that eMMC and SPI can be used regardless of the state of the signal.
 
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Let's make this GPIO a hog so that it's reserved and locked in the
+proper state.
+
+At the same time, make sure the pin is reserved for the hog and cannot
+be requested by another node.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Link: https://lore.kernel.org/r/20240731-puma-emmc-6-v1-2-4e28eadf32d0@cherry.de
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/delegation.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi |   23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
-index 1eb6c7a142ff..c15188d0b6b3 100644
---- a/fs/nfs/delegation.c
-+++ b/fs/nfs/delegation.c
-@@ -609,6 +609,9 @@ static int nfs_server_return_marked_delegations(struct nfs_server *server,
- 				prev = delegation;
- 			continue;
- 		}
-+		inode = nfs_delegation_grab_inode(delegation);
-+		if (inode == NULL)
-+			continue;
+--- a/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-puma.dtsi
+@@ -148,6 +148,22 @@
+ 	drive-impedance-ohm = <33>;
+ };
  
- 		if (prev) {
- 			struct inode *tmp = nfs_delegation_grab_inode(prev);
-@@ -619,12 +622,6 @@ static int nfs_server_return_marked_delegations(struct nfs_server *server,
- 			}
- 		}
++&gpio3 {
++	/*
++	 * The Qseven BIOS_DISABLE signal on the RK3399-Q7 keeps the on-module
++	 * eMMC and SPI flash powered-down initially (in fact it keeps the
++	 * reset signal asserted). BIOS_DISABLE_OVERRIDE pin allows to override
++	 * that signal so that eMMC and SPI can be used regardless of the state
++	 * of the signal.
++	 */
++	bios-disable-override-hog {
++		gpios = <RK_PD5 GPIO_ACTIVE_LOW>;
++		gpio-hog;
++		line-name = "bios_disable_override";
++		output-high;
++	};
++};
++
+ &gmac {
+ 	assigned-clocks = <&cru SCLK_RMII_SRC>;
+ 	assigned-clock-parents = <&clkin_gmac>;
+@@ -437,9 +453,14 @@
  
--		inode = nfs_delegation_grab_inode(delegation);
--		if (inode == NULL) {
--			rcu_read_unlock();
--			iput(to_put);
--			goto restart;
--		}
- 		delegation = nfs_start_delegation_return_locked(NFS_I(inode));
- 		rcu_read_unlock();
+ &pinctrl {
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&q7_thermal_pin>;
++	pinctrl-0 = <&q7_thermal_pin &bios_disable_override_hog_pin>;
  
-@@ -1140,7 +1137,6 @@ static int nfs_server_reap_unclaimed_delegations(struct nfs_server *server,
- 	struct inode *inode;
- restart:
- 	rcu_read_lock();
--restart_locked:
- 	list_for_each_entry_rcu(delegation, &server->delegations, super_list) {
- 		if (test_bit(NFS_DELEGATION_INODE_FREEING,
- 					&delegation->flags) ||
-@@ -1151,7 +1147,7 @@ static int nfs_server_reap_unclaimed_delegations(struct nfs_server *server,
- 			continue;
- 		inode = nfs_delegation_grab_inode(delegation);
- 		if (inode == NULL)
--			goto restart_locked;
-+			continue;
- 		delegation = nfs_start_delegation_return_locked(NFS_I(inode));
- 		rcu_read_unlock();
- 		if (delegation != NULL) {
-@@ -1272,7 +1268,6 @@ static int nfs_server_reap_expired_delegations(struct nfs_server *server,
- 	nfs4_stateid stateid;
- restart:
- 	rcu_read_lock();
--restart_locked:
- 	list_for_each_entry_rcu(delegation, &server->delegations, super_list) {
- 		if (test_bit(NFS_DELEGATION_INODE_FREEING,
- 					&delegation->flags) ||
-@@ -1283,7 +1278,7 @@ static int nfs_server_reap_expired_delegations(struct nfs_server *server,
- 			continue;
- 		inode = nfs_delegation_grab_inode(delegation);
- 		if (inode == NULL)
--			goto restart_locked;
-+			continue;
- 		spin_lock(&delegation->lock);
- 		cred = get_cred_rcu(delegation->cred);
- 		nfs4_stateid_copy(&stateid, &delegation->stateid);
--- 
-2.43.0
-
+ 	gpios {
++		bios_disable_override_hog_pin: bios-disable-override-hog-pin {
++			rockchip,pins =
++				<3 RK_PD5 RK_FUNC_GPIO &pcfg_pull_down>;
++		};
++
+ 		q7_thermal_pin: q7-thermal-pin {
+ 			rockchip,pins =
+ 				<0 RK_PA3 RK_FUNC_GPIO &pcfg_pull_up>;
 
 
