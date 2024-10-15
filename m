@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EBD1B219C;
-	Tue, 15 Oct 2024 13:22:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA7D1B2183;
+	Tue, 15 Oct 2024 13:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998572; cv=none; b=myNBpH094u6XzUKyL5ofLYpQnxjL7mOtqQggs/csEziU6eLY7cXDeiwAqrGuSUEyYM/3URohkVGzY9t99LfMFDzrNDLVdcju2PjZ7ianzDHMH4qR1/t2xYiiWrgsozRamqSt5Ef9SbgOmMYxYQc0n2SdVbAX94KPMhEpe4sl+kM=
+	t=1728998575; cv=none; b=mmuzUx2nVDJbLA7+1kzVAyky4uIQ1RVCwiTqf0fO0wSmsH5W6b9x0Lql7BIYLEL2m0J9Ps4MajSPMjvuYupcKY9GPt07KUUrFBK8ZpfKll79Inv7M1zpFwBDUVmen9mhJjvkdctz9C1iNHWgi6UQ1gEyXCwSCWbSS0+wMPOGIag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998572; c=relaxed/simple;
-	bh=PVX3pchPFRkxqsHQhncSgmr2LF/UqQ4TWpK0R2XNvQ8=;
+	s=arc-20240116; t=1728998575; c=relaxed/simple;
+	bh=GHdBxmFj2zCmaXUpe85KseiVkhOZflZIa6KDnM85AfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uLweKFPK99EPRDIcdDDT2iMOI6O8vqi5npx92xCgLm6zkSpIn3M88EhpHe5gQGEQhQfapSyRXteyLPzn23gV01qRLn9z1kbrcTkTP1zNzfRy2kJrKzZt5Ip6OgHDzpg0BQKMPUTF4S+2c1/jThz6z+/sdUPcVjeOVFqB1aqDKjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yp2E33Pp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uaZMh3no76oVKfz0MA2KZMliZHonfjAYr6ysK7bHYn32VFwu7IdCVKcW5C0E7cEo1jQP4FiSCOhDzxTSHiSylHFISalXMpk930Sy7E5olZzgPxzUAM3ZMBkJ6qdMnUIlpQ5VPHHMWZvKiwhav8gJueNcDc+UWjadJyv/WUq3gsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jl1GmUAM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yp2E33Pp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C007C4CEC6;
-	Tue, 15 Oct 2024 13:22:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jl1GmUAM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98714C4CEC6;
+	Tue, 15 Oct 2024 13:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998571;
-	bh=PVX3pchPFRkxqsHQhncSgmr2LF/UqQ4TWpK0R2XNvQ8=;
+	s=korg; t=1728998575;
+	bh=GHdBxmFj2zCmaXUpe85KseiVkhOZflZIa6KDnM85AfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yp2E33PpW2jQX8JfH6QdlhpkPCsq3IwTHiPyU1ULUUfNp2VhFEZ+1mMrriMdR3CCc
-	 QZchZYAkjQWFeYERKwMU/GtZhwR86kYQhoGBpCQlKA8/AUq1if6gBhACPUK8vYEW86
-	 LPPjSkS0tlOelc4vqqV8bOK7pqkr6L0NbOhkjiAQ=
+	b=Jl1GmUAMCOLZ7RKAnrFyZiPeQ6UiHKE+rgsew6oUWgou2X+OviB+uCMi3k9HTNfQj
+	 SNUI+AyglZOB1nDipf5HNN4/pthRCWpgD09o8C4o54bE+YZHnUJZwJksYF25WO2hXG
+	 paPQkgAoXNQ4p+LRnW+XL1sP3mv7OCKAugJDichU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+47479b71cdfc78f56d30@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 517/518] ext4: fix warning in ext4_dio_write_end_io()
-Date: Tue, 15 Oct 2024 14:47:01 +0200
-Message-ID: <20241015123936.941684563@linuxfoundation.org>
+	Yixing Liu <liuyixing1@huawei.com>,
+	Weihang Li <liweihang@huawei.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 5.10 518/518] RDMA/hns: Fix uninitialized variable
+Date: Tue, 15 Oct 2024 14:47:02 +0200
+Message-ID: <20241015123936.980450794@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,64 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Yixing Liu <liuyixing1@huawei.com>
 
-commit 619f75dae2cf117b1d07f27b046b9ffb071c4685 upstream.
+commit 2a38c0f10e6d7d28e06ff1eb1f350804c4850275 upstream.
 
-The syzbot has reported that it can hit the warning in
-ext4_dio_write_end_io() because i_size < i_disksize. Indeed the
-reproducer creates a race between DIO IO completion and truncate
-expanding the file and thus ext4_dio_write_end_io() sees an inconsistent
-inode state where i_disksize is already updated but i_size is not
-updated yet. Since we are careful when setting up DIO write and consider
-it extending (and thus performing the IO synchronously with i_rwsem held
-exclusively) whenever it goes past either of i_size or i_disksize, we
-can use the same test during IO completion without risking entering
-ext4_handle_inode_extension() without i_rwsem held. This way we make it
-obvious both i_size and i_disksize are large enough when we report DIO
-completion without relying on unreliable WARN_ON.
+A random value will be returned if the condition below is not met, so it
+needs to be initialized.
 
-Reported-by:  <syzbot+47479b71cdfc78f56d30@syzkaller.appspotmail.com>
-Fixes: 91562895f803 ("ext4: properly sync file size update after O_SYNC direct IO")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20231130095653.22679-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 9ea9a53ea93b ("RDMA/hns: Add mapped page count checking for MTR")
+Link: https://lore.kernel.org/r/1624011020-16992-3-git-send-email-liweihang@huawei.com
+Signed-off-by: Yixing Liu <liuyixing1@huawei.com>
+Signed-off-by: Weihang Li <liweihang@huawei.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/file.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_mr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/file.c
-+++ b/fs/ext4/file.c
-@@ -323,9 +323,10 @@ static void ext4_inode_extension_cleanup
- 		return;
- 	}
+--- a/drivers/infiniband/hw/hns/hns_roce_mr.c
++++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
+@@ -832,7 +832,7 @@ int hns_roce_mtr_map(struct hns_roce_dev
+ 	struct ib_device *ibdev = &hr_dev->ib_dev;
+ 	struct hns_roce_buf_region *r;
+ 	unsigned int i, mapped_cnt;
+-	int ret;
++	int ret = 0;
+ 
  	/*
--	 * If i_disksize got extended due to writeback of delalloc blocks while
--	 * the DIO was running we could fail to cleanup the orphan list in
--	 * ext4_handle_inode_extension(). Do it now.
-+	 * If i_disksize got extended either due to writeback of delalloc
-+	 * blocks or extending truncate while the DIO was running we could fail
-+	 * to cleanup the orphan list in ext4_handle_inode_extension(). Do it
-+	 * now.
- 	 */
- 	if (!list_empty(&EXT4_I(inode)->i_orphan) && inode->i_nlink) {
- 		handle_t *handle = ext4_journal_start(inode, EXT4_HT_INODE, 2);
-@@ -360,10 +361,11 @@ static int ext4_dio_write_end_io(struct
- 	 * blocks. But the code in ext4_iomap_alloc() is careful to use
- 	 * zeroed/unwritten extents if this is possible; thus we won't leave
- 	 * uninitialized blocks in a file even if we didn't succeed in writing
--	 * as much as we intended.
-+	 * as much as we intended. Also we can race with truncate or write
-+	 * expanding the file so we have to be a bit careful here.
- 	 */
--	WARN_ON_ONCE(i_size_read(inode) < READ_ONCE(EXT4_I(inode)->i_disksize));
--	if (pos + size <= READ_ONCE(EXT4_I(inode)->i_disksize))
-+	if (pos + size <= READ_ONCE(EXT4_I(inode)->i_disksize) &&
-+	    pos + size <= i_size_read(inode))
- 		return size;
- 	return ext4_handle_inode_extension(inode, pos, size);
- }
+ 	 * Only use the first page address as root ba when hopnum is 0, this
 
 
