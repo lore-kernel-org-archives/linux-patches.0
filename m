@@ -1,39 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931C42281E5;
-	Tue, 15 Oct 2024 13:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7431D5ABD;
+	Tue, 15 Oct 2024 13:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998512; cv=none; b=RexhY3Cr0ZeFPOrTgcskkTUOG/3dMLWZ0Y4Pd66tyTOhjNLv2moOKE57aMATaSJkmVBJrO/g99SvgwCIOlLkKlioUJneYzMJwmFjqDM7ukHDuyCELwbMs/2BAK19kwZsbcL/TXZfKjXUyvvWJwVxY24GGMMkly/9aGVzEq1BdO8=
+	t=1728998516; cv=none; b=VQK0QZQobucU87X6JB0zpq7ZiwhXV7gNSB5DlFCC/nA0DQkVZinRPuM3kSOUilRFFY9KMkXTC7lV2XZAjaPcu8UQJRVdmDKgmDDkSS+XIOWDgm3cMBrP2GAiQEcRs0BHwtnSK6iuCErGfxlHqPMS5OeqJUCeB41XFP51v04Excc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998512; c=relaxed/simple;
-	bh=q4oCPTxRWAM2exm0QNXs+n58xRFPNOKgzA9lKdsT+Xs=;
+	s=arc-20240116; t=1728998516; c=relaxed/simple;
+	bh=qtyhqOtSWFFTo/XPOstH0PTpHF/9WgQ0qML1n706fhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+dPcw/21g+9iDERMt+Ek58tnTnFwtpF5VImV5BuEpfo/LOAo+EqGwgXYqVzzEIxgglFVEYgzcNSK33KlqHiJNeD3Y4s4LrX59Eks10DezVZJRMLJvpkJAuRqzXfBT96oEFIeG7ko5OoSF4ViV9ADIQ6VZ6cni/DmYjtk5r627Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VeeNQoKX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S0cvxTTn02UZ3wpgoXsx98EhQi95EoEZdfQlD573mP7GltA93JcNKTWLkdQuXGoNdLmuyhN5omjBG9CBduW91PUVgUaQ12gxjx/rz2XmBrb7FbD6Uq+eSCE8jg0GE8id80kLOZjj7wRsqkM9vfhrqr2Cnvf9uOeH7gPLBjtmsIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=umVlTQQh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VeeNQoKX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3CBC4CEC6;
-	Tue, 15 Oct 2024 13:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umVlTQQh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6AEDC4CEC6;
+	Tue, 15 Oct 2024 13:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998512;
-	bh=q4oCPTxRWAM2exm0QNXs+n58xRFPNOKgzA9lKdsT+Xs=;
+	s=korg; t=1728998515;
+	bh=qtyhqOtSWFFTo/XPOstH0PTpHF/9WgQ0qML1n706fhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VeeNQoKX1orPK4xduKDHWUo9/joVjYen7Zjp5ZVO0MsY0hqSZy2SlCz9ilorYT/Eu
-	 EuRGg4nQ+Tp9tzEShcLD/z1oybi5nBhJ9tUrp8SSexhaYs78g7J2pcEQ3+lKbEaKHq
-	 eH2YDINtPRDdMgHfYdRSWzRB2zca15WLfbs70lR8=
+	b=umVlTQQhmtxXaNjdQO8tDgPhVZAb2nTaCxa+OVVtSz6WqwMNy+gSINwgg0DoiENFR
+	 hmZ57lsQrC6wBIY62THyxhC9oDLpIrMD9Gl/JhxxjNbBhn3fFLda4FCBAeVR0I7VwA
+	 tzRgxIQafBsu9nPoytdqyZBkm3Brd7jeoZGwAQV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2ada1bc857496353be5a@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Baoquan He <bhe@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 498/518] slip: make slhc_remember() more robust against malicious packets
-Date: Tue, 15 Oct 2024 14:46:42 +0200
-Message-ID: <20241015123936.216208212@linuxfoundation.org>
+Subject: [PATCH 5.10 499/518] resource: fix region_intersects() vs add_memory_driver_managed()
+Date: Tue, 15 Oct 2024 14:46:43 +0200
+Message-ID: <20241015123936.254361777@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,168 +63,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Huang Ying <ying.huang@intel.com>
 
-[ Upstream commit 7d3fce8cbe3a70a1c7c06c9b53696be5d5d8dd5c ]
+commit b4afe4183ec77f230851ea139d91e5cf2644c68b upstream.
 
-syzbot found that slhc_remember() was missing checks against
-malicious packets [1].
+On a system with CXL memory, the resource tree (/proc/iomem) related to
+CXL memory may look like something as follows.
 
-slhc_remember() only checked the size of the packet was at least 20,
-which is not good enough.
+490000000-50fffffff : CXL Window 0
+  490000000-50fffffff : region0
+    490000000-50fffffff : dax0.0
+      490000000-50fffffff : System RAM (kmem)
 
-We need to make sure the packet includes the IPv4 and TCP header
-that are supposed to be carried.
+Because drivers/dax/kmem.c calls add_memory_driver_managed() during
+onlining CXL memory, which makes "System RAM (kmem)" a descendant of "CXL
+Window X".  This confuses region_intersects(), which expects all "System
+RAM" resources to be at the top level of iomem_resource.  This can lead to
+bugs.
 
-Add iph and th pointers to make the code more readable.
+For example, when the following command line is executed to write some
+memory in CXL memory range via /dev/mem,
 
-[1]
+ $ dd if=data of=/dev/mem bs=$((1 << 10)) seek=$((0x490000000 >> 10)) count=1
+ dd: error writing '/dev/mem': Bad address
+ 1+0 records in
+ 0+0 records out
+ 0 bytes copied, 0.0283507 s, 0.0 kB/s
 
-BUG: KMSAN: uninit-value in slhc_remember+0x2e8/0x7b0 drivers/net/slip/slhc.c:666
-  slhc_remember+0x2e8/0x7b0 drivers/net/slip/slhc.c:666
-  ppp_receive_nonmp_frame+0xe45/0x35e0 drivers/net/ppp/ppp_generic.c:2455
-  ppp_receive_frame drivers/net/ppp/ppp_generic.c:2372 [inline]
-  ppp_do_recv+0x65f/0x40d0 drivers/net/ppp/ppp_generic.c:2212
-  ppp_input+0x7dc/0xe60 drivers/net/ppp/ppp_generic.c:2327
-  pppoe_rcv_core+0x1d3/0x720 drivers/net/ppp/pppoe.c:379
-  sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1113
-  __release_sock+0x1da/0x330 net/core/sock.c:3072
-  release_sock+0x6b/0x250 net/core/sock.c:3626
-  pppoe_sendmsg+0x2b8/0xb90 drivers/net/ppp/pppoe.c:903
-  sock_sendmsg_nosec net/socket.c:729 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:744
-  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
-  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
-  __do_sys_sendmmsg net/socket.c:2771 [inline]
-  __se_sys_sendmmsg net/socket.c:2768 [inline]
-  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
-  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+the command fails as expected.  However, the error code is wrong.  It
+should be "Operation not permitted" instead of "Bad address".  More
+seriously, the /dev/mem permission checking in devmem_is_allowed() passes
+incorrectly.  Although the accessing is prevented later because ioremap()
+isn't allowed to map system RAM, it is a potential security issue.  During
+command executing, the following warning is reported in the kernel log for
+calling ioremap() on system RAM.
 
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:4091 [inline]
-  slab_alloc_node mm/slub.c:4134 [inline]
-  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4186
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:587
-  __alloc_skb+0x363/0x7b0 net/core/skbuff.c:678
-  alloc_skb include/linux/skbuff.h:1322 [inline]
-  sock_wmalloc+0xfe/0x1a0 net/core/sock.c:2732
-  pppoe_sendmsg+0x3a7/0xb90 drivers/net/ppp/pppoe.c:867
-  sock_sendmsg_nosec net/socket.c:729 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:744
-  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
-  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
-  __do_sys_sendmmsg net/socket.c:2771 [inline]
-  __se_sys_sendmmsg net/socket.c:2768 [inline]
-  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
-  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ ioremap on RAM at 0x0000000490000000 - 0x0000000490000fff
+ WARNING: CPU: 2 PID: 416 at arch/x86/mm/ioremap.c:216 __ioremap_caller.constprop.0+0x131/0x35d
+ Call Trace:
+  memremap+0xcb/0x184
+  xlate_dev_mem_ptr+0x25/0x2f
+  write_mem+0x94/0xfb
+  vfs_write+0x128/0x26d
+  ksys_write+0xac/0xfe
+  do_syscall_64+0x9a/0xfd
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-CPU: 0 UID: 0 PID: 5460 Comm: syz.2.33 Not tainted 6.12.0-rc2-syzkaller-00006-g87d6aab2389e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+The details of command execution process are as follows.  In the above
+resource tree, "System RAM" is a descendant of "CXL Window 0" instead of a
+top level resource.  So, region_intersects() will report no System RAM
+resources in the CXL memory region incorrectly, because it only checks the
+top level resources.  Consequently, devmem_is_allowed() will return 1
+(allow access via /dev/mem) for CXL memory region incorrectly.
+Fortunately, ioremap() doesn't allow to map System RAM and reject the
+access.
 
-Fixes: b5451d783ade ("slip: Move the SLIP drivers")
-Reported-by: syzbot+2ada1bc857496353be5a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/670646db.050a0220.3f80e.0027.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241009091132.2136321-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+So, region_intersects() needs to be fixed to work correctly with the
+resource tree with "System RAM" not at top level as above.  To fix it, if
+we found a unmatched resource in the top level, we will continue to search
+matched resources in its descendant resources.  So, we will not miss any
+matched resources in resource tree anymore.
+
+In the new implementation, an example resource tree
+
+|------------- "CXL Window 0" ------------|
+|-- "System RAM" --|
+
+will behave similar as the following fake resource tree for
+region_intersects(, IORESOURCE_SYSTEM_RAM, ),
+
+|-- "System RAM" --||-- "CXL Window 0a" --|
+
+Where "CXL Window 0a" is part of the original "CXL Window 0" that
+isn't covered by "System RAM".
+
+Link: https://lkml.kernel.org/r/20240906030713.204292-2-ying.huang@intel.com
+Fixes: c221c0b0308f ("device-dax: "Hotplug" persistent memory for use like normal RAM")
+Signed-off-by: "Huang, Ying" <ying.huang@intel.com>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: Dave Jiang <dave.jiang@intel.com>
+Cc: Alison Schofield <alison.schofield@intel.com>
+Cc: Vishal Verma <vishal.l.verma@intel.com>
+Cc: Ira Weiny <ira.weiny@intel.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/slip/slhc.c | 57 ++++++++++++++++++++++++-----------------
- 1 file changed, 34 insertions(+), 23 deletions(-)
+ kernel/resource.c | 58 ++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 50 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/slip/slhc.c b/drivers/net/slip/slhc.c
-index f78ceba42e57e..603a29f3905ba 100644
---- a/drivers/net/slip/slhc.c
-+++ b/drivers/net/slip/slhc.c
-@@ -643,46 +643,57 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
- int
- slhc_remember(struct slcompress *comp, unsigned char *icp, int isize)
+diff --git a/kernel/resource.c b/kernel/resource.c
+index 100253d4909c9..1087f33d70c4d 100644
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -539,21 +539,63 @@ EXPORT_SYMBOL_GPL(page_is_ram);
+ int region_intersects(resource_size_t start, size_t size, unsigned long flags,
+ 		      unsigned long desc)
  {
--	struct cstate *cs;
--	unsigned ihl;
--
-+	const struct tcphdr *th;
- 	unsigned char index;
-+	struct iphdr *iph;
-+	struct cstate *cs;
-+	unsigned int ihl;
+-	struct resource res;
++	resource_size_t ostart, oend;
+ 	int type = 0; int other = 0;
+-	struct resource *p;
++	struct resource *p, *dp;
++	bool is_type, covered;
++	struct resource res;
  
--	if(isize < 20) {
--		/* The packet is shorter than a legal IP header */
-+	/* The packet is shorter than a legal IP header.
-+	 * Also make sure isize is positive.
-+	 */
-+	if (isize < (int)sizeof(struct iphdr)) {
-+runt:
- 		comp->sls_i_runt++;
--		return slhc_toss( comp );
-+		return slhc_toss(comp);
- 	}
-+	iph = (struct iphdr *)icp;
- 	/* Peek at the IP header's IHL field to find its length */
--	ihl = icp[0] & 0xf;
--	if(ihl < 20 / 4){
--		/* The IP header length field is too small */
--		comp->sls_i_runt++;
--		return slhc_toss( comp );
--	}
--	index = icp[9];
--	icp[9] = IPPROTO_TCP;
-+	ihl = iph->ihl;
-+	/* The IP header length field is too small,
-+	 * or packet is shorter than the IP header followed
-+	 * by minimal tcp header.
-+	 */
-+	if (ihl < 5 || isize < ihl * 4 + sizeof(struct tcphdr))
-+		goto runt;
-+
-+	index = iph->protocol;
-+	iph->protocol = IPPROTO_TCP;
+ 	res.start = start;
+ 	res.end = start + size - 1;
  
- 	if (ip_fast_csum(icp, ihl)) {
- 		/* Bad IP header checksum; discard */
- 		comp->sls_i_badcheck++;
--		return slhc_toss( comp );
-+		return slhc_toss(comp);
- 	}
--	if(index > comp->rslot_limit) {
-+	if (index > comp->rslot_limit) {
- 		comp->sls_i_error++;
- 		return slhc_toss(comp);
- 	}
+ 	read_lock(&resource_lock);
+ 	for (p = iomem_resource.child; p ; p = p->sibling) {
+-		bool is_type = (((p->flags & flags) == flags) &&
+-				((desc == IORES_DESC_NONE) ||
+-				 (desc == p->desc)));
 -
-+	th = (struct tcphdr *)(icp + ihl * 4);
-+	if (th->doff < sizeof(struct tcphdr) / 4)
-+		goto runt;
-+	if (isize < ihl * 4 + th->doff * 4)
-+		goto runt;
- 	/* Update local state */
- 	cs = &comp->rstate[comp->recv_current = index];
- 	comp->flags &=~ SLF_TOSS;
--	memcpy(&cs->cs_ip,icp,20);
--	memcpy(&cs->cs_tcp,icp + ihl*4,20);
-+	memcpy(&cs->cs_ip, iph, sizeof(*iph));
-+	memcpy(&cs->cs_tcp, th, sizeof(*th));
- 	if (ihl > 5)
--	  memcpy(cs->cs_ipopt, icp + sizeof(struct iphdr), (ihl - 5) * 4);
--	if (cs->cs_tcp.doff > 5)
--	  memcpy(cs->cs_tcpopt, icp + ihl*4 + sizeof(struct tcphdr), (cs->cs_tcp.doff - 5) * 4);
--	cs->cs_hsize = ihl*2 + cs->cs_tcp.doff*2;
-+	  memcpy(cs->cs_ipopt, &iph[1], (ihl - 5) * 4);
-+	if (th->doff > 5)
-+	  memcpy(cs->cs_tcpopt, &th[1], (th->doff - 5) * 4);
-+	cs->cs_hsize = ihl*2 + th->doff*2;
- 	cs->initialized = true;
- 	/* Put headers back on packet
- 	 * Neither header checksum is recalculated
+-		if (resource_overlaps(p, &res))
+-			is_type ? type++ : other++;
++		if (!resource_overlaps(p, &res))
++			continue;
++		is_type = (p->flags & flags) == flags &&
++			(desc == IORES_DESC_NONE || desc == p->desc);
++		if (is_type) {
++			type++;
++			continue;
++		}
++		/*
++		 * Continue to search in descendant resources as if the
++		 * matched descendant resources cover some ranges of 'p'.
++		 *
++		 * |------------- "CXL Window 0" ------------|
++		 * |-- "System RAM" --|
++		 *
++		 * will behave similar as the following fake resource
++		 * tree when searching "System RAM".
++		 *
++		 * |-- "System RAM" --||-- "CXL Window 0a" --|
++		 */
++		covered = false;
++		ostart = max(res.start, p->start);
++		oend = min(res.end, p->end);
++		for (dp = p->child; dp; dp = next_resource(dp, false)) {
++			if (!resource_overlaps(dp, &res))
++				continue;
++			is_type = (dp->flags & flags) == flags &&
++				(desc == IORES_DESC_NONE || desc == dp->desc);
++			if (is_type) {
++				type++;
++				/*
++				 * Range from 'ostart' to 'dp->start'
++				 * isn't covered by matched resource.
++				 */
++				if (dp->start > ostart)
++					break;
++				if (dp->end >= oend) {
++					covered = true;
++					break;
++				}
++				/* Remove covered range */
++				ostart = max(ostart, dp->end + 1);
++			}
++		}
++		if (!covered)
++			other++;
+ 	}
+ 	read_unlock(&resource_lock);
+ 
 -- 
 2.43.0
 
