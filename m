@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71EE1D90CD;
-	Tue, 15 Oct 2024 11:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C1019B3FF;
+	Tue, 15 Oct 2024 11:57:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993463; cv=none; b=VApa9hDO1GMGEEoZj6MpSoHH0LSqGoooxfO76qf5922W8PAt/CXjnIpr7e029BzTEwEeyN8VLr8QNencdnSrGhNaIp0hSQUFOmY54vT/OgtT7AgqH96gOulRME9QU2F4ySvwqlDJnXU7Uy2FOblk/jfY1j+REhSPdyzh6Sx+dcE=
+	t=1728993467; cv=none; b=ug1aGfOJjH52b+JT4GQYexB/agqVMIxP5gsLuEc07URTm6ITovGWs3BbtN8s/HRvPl1ZVfuIKbf/qEN2iR2855nmD6K+0Y/hp1RE/e/A4f6coqjuu+vAbsA8eKMkQOf6GhLb0ecLyUobz0lDbCogkdespqEbOtPYI1yGMdufIg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993463; c=relaxed/simple;
-	bh=V0+eXFyb9Tfj5h2SsN0rsiLgpUtpMtV6uV/c2yKZQVk=;
+	s=arc-20240116; t=1728993467; c=relaxed/simple;
+	bh=7TmYMrmUhMbwTaEIxXNlEISjXW0zSVvY5kRVY9uyXWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dr60eSrkrVTTG/Q7I16AlfokXeWzuiFmn1SxoHDyVFTJRsbKfF/6cVpPy7tiIqlKK0VG5iM+8N4UwvE3VvrS4Sph1+PrEjIQe8raEh8GQEndDRo9HjkxT0pc+voeCMoXyn2LauRcvxuEHSUZFn63zMS0a9pJr6ftIHT3hI3OFCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hy2WfNGD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JYlQz2Dbc7qR9Jti/QGmsfb+beQRUOJvpG2VQzSVN3PzTxH09K1q/C9t6+xmPnCwLk5X+vdwBKwC3VVFjiinTtq2eC6nsnCp0SHeynJTaG44GLxucsuzj9W3Rq+R0oXSZkND6+y5gkbzSqblw/Mf9ZLaECpSEKKHrGVOzK3mwbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XFTp6ylY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hy2WfNGD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB1EC4CEC6;
-	Tue, 15 Oct 2024 11:57:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XFTp6ylY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51170C4CEC6;
+	Tue, 15 Oct 2024 11:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993463;
-	bh=V0+eXFyb9Tfj5h2SsN0rsiLgpUtpMtV6uV/c2yKZQVk=;
+	s=korg; t=1728993466;
+	bh=7TmYMrmUhMbwTaEIxXNlEISjXW0zSVvY5kRVY9uyXWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hy2WfNGD8VQ4vJbmFVi9ephE962ykEMluCERx/E8zlxInfSrOyy2EsVIXGGcWGz4n
-	 jcenlKZx+1dBk8UrI7qxBappjDW7gj9NiBPeGG4kvs/lPLw4JP3yIf6r5353FzQgMi
-	 AqIR+QO8tEZgjqy0Q/Ok2c1c/sQfGhyVbBOsuNwc=
+	b=XFTp6ylYK9RzhW3fNOuuSfbLJoRAlRfeheAHt1dkCMjBC4uT3DiX7hG8WlvA9/poi
+	 uX0YJwwL1uaioEqLg0FOfZqP4t2t6ruAn3Z3Jo1CCDWqZm8sw/kLE3NX4yYCQ8kesy
+	 v1B1QZe7n9Ck6iqokfjMT470aQ2nyRs6HnI4vtfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brendan Dolan-Gavitt <brendandg@nyu.edu>,
-	Zekun Shen <bruceshenzk@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 388/691] stmmac_pci: Fix underflow size in stmmac_rx
-Date: Tue, 15 Oct 2024 13:25:36 +0200
-Message-ID: <20241015112455.740872510@linuxfoundation.org>
+Subject: [PATCH 5.15 389/691] net: stmmac: Disable automatic FCS/Pad stripping
+Date: Tue, 15 Oct 2024 13:25:37 +0200
+Message-ID: <20241015112455.780320774@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,84 +52,181 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zekun Shen <bruceshenzk@gmail.com>
+From: Kurt Kanzenbach <kurt@linutronix.de>
 
-[ Upstream commit 0f296e782f21dc1c55475a3c107ac68ab09cc1cf ]
+[ Upstream commit 929d43421ee526c5a3c4d6f7e2bb1b98b2cb1b1f ]
 
-This bug report came up when we were testing the device driver
-by fuzzing. It shows that buf1_len can get underflowed and be
-0xfffffffc (4294967292).
+The stmmac has the possibility to automatically strip the padding/FCS for IEEE
+802.3 type frames. This feature is enabled conditionally. Therefore, the stmmac
+receive path has to have a determination logic whether the FCS has to be
+stripped in software or not.
 
-This bug is triggerable with a compromised/malfunctioning device.
-We found the bug through QEMU emulation tested the patch with
-emulation. We did NOT test it on real hardware.
+In fact, for DSA this ACS feature is disabled and the determination logic
+doesn't check for it properly. For instance, when using DSA in combination with
+an older stmmac (pre version 4), the FCS is not stripped by hardware or software
+which is problematic.
 
-Attached is the bug report by fuzzing.
+So either add another check for DSA to the fast path or simply disable ACS
+feature completely. The latter approach has been chosen, because most of the
+time the FCS is stripped in software anyway and it removes conditionals from the
+receive fast path.
 
-BUG: KASAN: use-after-free in stmmac_napi_poll_rx+0x1c08/0x36e0 [stmmac]
-Read of size 4294967292 at addr ffff888016358000 by task ksoftirqd/0/9
-
-CPU: 0 PID: 9 Comm: ksoftirqd/0 Tainted: G        W         5.6.0 #1
-Call Trace:
- dump_stack+0x76/0xa0
- print_address_description.constprop.0+0x16/0x200
- ? stmmac_napi_poll_rx+0x1c08/0x36e0 [stmmac]
- ? stmmac_napi_poll_rx+0x1c08/0x36e0 [stmmac]
- __kasan_report.cold+0x37/0x7c
- ? stmmac_napi_poll_rx+0x1c08/0x36e0 [stmmac]
- kasan_report+0xe/0x20
- check_memory_region+0x15a/0x1d0
- memcpy+0x20/0x50
- stmmac_napi_poll_rx+0x1c08/0x36e0 [stmmac]
- ? stmmac_suspend+0x850/0x850 [stmmac]
- ? __next_timer_interrupt+0xba/0xf0
- net_rx_action+0x363/0xbd0
- ? call_timer_fn+0x240/0x240
- ? __switch_to_asm+0x40/0x70
- ? napi_busy_loop+0x520/0x520
- ? __schedule+0x839/0x15a0
- __do_softirq+0x18c/0x634
- ? takeover_tasklets+0x5f0/0x5f0
- run_ksoftirqd+0x15/0x20
- smpboot_thread_fn+0x2f1/0x6b0
- ? smpboot_unregister_percpu_thread+0x160/0x160
- ? __kthread_parkme+0x80/0x100
- ? smpboot_unregister_percpu_thread+0x160/0x160
- kthread+0x2b5/0x3b0
- ? kthread_create_on_node+0xd0/0xd0
- ret_from_fork+0x22/0x40
-
-Reported-by: Brendan Dolan-Gavitt <brendandg@nyu.edu>
-Signed-off-by: Zekun Shen <bruceshenzk@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/87v8q8jjgh.fsf@kurt/
+Link: https://lore.kernel.org/r/20220905130155.193640-1-kurt@linutronix.de
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 4c1b56671b68 ("net: stmmac: dwmac4: extend timeout for VLAN Tag register busy bit check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ .../net/ethernet/stmicro/stmmac/dwmac100.h    |  2 +-
+ .../net/ethernet/stmicro/stmmac/dwmac1000.h   |  2 +-
+ .../ethernet/stmicro/stmmac/dwmac1000_core.c  |  9 -------
+ .../ethernet/stmicro/stmmac/dwmac100_core.c   |  8 -------
+ .../net/ethernet/stmicro/stmmac/dwmac4_core.c |  1 -
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 24 ++++---------------
+ 6 files changed, 6 insertions(+), 40 deletions(-)
 
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac100.h b/drivers/net/ethernet/stmicro/stmmac/dwmac100.h
+index 35ab8d0bdce71..7ab791c8d355f 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac100.h
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac100.h
+@@ -56,7 +56,7 @@
+ #define MAC_CONTROL_TE		0x00000008	/* Transmitter Enable */
+ #define MAC_CONTROL_RE		0x00000004	/* Receiver Enable */
+ 
+-#define MAC_CORE_INIT (MAC_CONTROL_HBD | MAC_CONTROL_ASTP)
++#define MAC_CORE_INIT (MAC_CONTROL_HBD)
+ 
+ /* MAC FLOW CTRL defines */
+ #define MAC_FLOW_CTRL_PT_MASK	0xffff0000	/* Pause Time Mask */
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac1000.h b/drivers/net/ethernet/stmicro/stmmac/dwmac1000.h
+index 3c73453725f94..4296ddda8aaa6 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac1000.h
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac1000.h
+@@ -126,7 +126,7 @@ enum inter_frame_gap {
+ #define GMAC_CONTROL_TE		0x00000008	/* Transmitter Enable */
+ #define GMAC_CONTROL_RE		0x00000004	/* Receiver Enable */
+ 
+-#define GMAC_CORE_INIT (GMAC_CONTROL_JD | GMAC_CONTROL_PS | GMAC_CONTROL_ACS | \
++#define GMAC_CORE_INIT (GMAC_CONTROL_JD | GMAC_CONTROL_PS | \
+ 			GMAC_CONTROL_BE | GMAC_CONTROL_DCRS)
+ 
+ /* GMAC Frame Filter defines */
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
+index 76edb9b726756..0e00dd83d027a 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
+@@ -15,7 +15,6 @@
+ #include <linux/crc32.h>
+ #include <linux/slab.h>
+ #include <linux/ethtool.h>
+-#include <net/dsa.h>
+ #include <asm/io.h>
+ #include "stmmac.h"
+ #include "stmmac_pcs.h"
+@@ -24,7 +23,6 @@
+ static void dwmac1000_core_init(struct mac_device_info *hw,
+ 				struct net_device *dev)
+ {
+-	struct stmmac_priv *priv = netdev_priv(dev);
+ 	void __iomem *ioaddr = hw->pcsr;
+ 	u32 value = readl(ioaddr + GMAC_CONTROL);
+ 	int mtu = dev->mtu;
+@@ -32,13 +30,6 @@ static void dwmac1000_core_init(struct mac_device_info *hw,
+ 	/* Configure GMAC core */
+ 	value |= GMAC_CORE_INIT;
+ 
+-	/* Clear ACS bit because Ethernet switch tagging formats such as
+-	 * Broadcom tags can look like invalid LLC/SNAP packets and cause the
+-	 * hardware to truncate packets on reception.
+-	 */
+-	if (netdev_uses_dsa(dev) || !priv->plat->enh_desc)
+-		value &= ~GMAC_CONTROL_ACS;
+-
+ 	if (mtu > 1500)
+ 		value |= GMAC_CONTROL_2K;
+ 	if (mtu > 2000)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac100_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac100_core.c
+index 75071a7d551a8..a6e8d7bd95886 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac100_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac100_core.c
+@@ -15,7 +15,6 @@
+ *******************************************************************************/
+ 
+ #include <linux/crc32.h>
+-#include <net/dsa.h>
+ #include <asm/io.h>
+ #include "stmmac.h"
+ #include "dwmac100.h"
+@@ -28,13 +27,6 @@ static void dwmac100_core_init(struct mac_device_info *hw,
+ 
+ 	value |= MAC_CORE_INIT;
+ 
+-	/* Clear ASTP bit because Ethernet switch tagging formats such as
+-	 * Broadcom tags can look like invalid LLC/SNAP packets and cause the
+-	 * hardware to truncate packets on reception.
+-	 */
+-	if (netdev_uses_dsa(dev))
+-		value &= ~MAC_CONTROL_ASTP;
+-
+ 	writel(value, ioaddr + MAC_CONTROL);
+ 
+ #ifdef STMMAC_VLAN_TAG_USED
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+index e5c5a9c5389c3..687eb17e41c6e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+@@ -14,7 +14,6 @@
+ #include <linux/slab.h>
+ #include <linux/ethtool.h>
+ #include <linux/io.h>
+-#include <net/dsa.h>
+ #include "stmmac.h"
+ #include "stmmac_pcs.h"
+ #include "dwmac4.h"
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index cd92b8e03a9a1..23c0355c13c18 100644
+index 23c0355c13c18..b62d153f1676e 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5241,12 +5241,13 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
- 		if (likely(!(status & rx_not_ls)) &&
- 		    (likely(priv->synopsys_id >= DWMAC_CORE_4_00) ||
- 		     unlikely(status != llc_snap))) {
--			if (buf2_len)
-+			if (buf2_len) {
- 				buf2_len -= ETH_FCS_LEN;
--			else
-+				len -= ETH_FCS_LEN;
-+			} else if (buf1_len) {
- 				buf1_len -= ETH_FCS_LEN;
--
--			len -= ETH_FCS_LEN;
-+				len -= ETH_FCS_LEN;
-+			}
- 		}
+@@ -5045,16 +5045,8 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+ 		buf1_len = stmmac_rx_buf1_len(priv, p, status, len);
+ 		len += buf1_len;
  
- 		if (!skb) {
+-		/* ACS is set; GMAC core strips PAD/FCS for IEEE 802.3
+-		 * Type frames (LLC/LLC-SNAP)
+-		 *
+-		 * llc_snap is never checked in GMAC >= 4, so this ACS
+-		 * feature is always disabled and packets need to be
+-		 * stripped manually.
+-		 */
+-		if (likely(!(status & rx_not_ls)) &&
+-		    (likely(priv->synopsys_id >= DWMAC_CORE_4_00) ||
+-		     unlikely(status != llc_snap))) {
++		/* ACS is disabled; strip manually. */
++		if (likely(!(status & rx_not_ls))) {
+ 			buf1_len -= ETH_FCS_LEN;
+ 			len -= ETH_FCS_LEN;
+ 		}
+@@ -5231,16 +5223,8 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+ 		buf2_len = stmmac_rx_buf2_len(priv, p, status, len);
+ 		len += buf2_len;
+ 
+-		/* ACS is set; GMAC core strips PAD/FCS for IEEE 802.3
+-		 * Type frames (LLC/LLC-SNAP)
+-		 *
+-		 * llc_snap is never checked in GMAC >= 4, so this ACS
+-		 * feature is always disabled and packets need to be
+-		 * stripped manually.
+-		 */
+-		if (likely(!(status & rx_not_ls)) &&
+-		    (likely(priv->synopsys_id >= DWMAC_CORE_4_00) ||
+-		     unlikely(status != llc_snap))) {
++		/* ACS is disabled; strip manually. */
++		if (likely(!(status & rx_not_ls))) {
+ 			if (buf2_len) {
+ 				buf2_len -= ETH_FCS_LEN;
+ 				len -= ETH_FCS_LEN;
 -- 
 2.43.0
 
