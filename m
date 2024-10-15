@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77851C07C4;
-	Tue, 15 Oct 2024 12:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8AA1C07C4;
+	Tue, 15 Oct 2024 12:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997106; cv=none; b=FavleY0pn88ZcH9yvvnrg7HfDw2hkSs9Pu2jg3KvMc5/SLsbXVAdZwVSB7YjGmcxklP+q2+uwQGtecQynd5RPKxoB3KOo1xxy7vvT7FcyN1cEzjWvdZt+olvQ+xe1j0Jwn5oiuIOI6v7X26CarMGWo/eK5KaBUCcwVry6YiT/5g=
+	t=1728997110; cv=none; b=C3nSaFAuWeydCuh9ij8UikWdHun4hlPGSzi1pWxwtdJpEj5rm4b4LYciFCDdAhxcrjYvPzhZU1BcrIE6EfXhGl1HqlywvsCawrwVn69yb1HhGMSyCFUlIIvtX8tZmiUysAGks4xkXFbysdElkAbD7jIh7cMFPHoPV0JDZjPYmEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997106; c=relaxed/simple;
-	bh=gX3rJQ1n/A9KJFNwdJi7+dEqNyqQPzpy1MUXk+WSa1k=;
+	s=arc-20240116; t=1728997110; c=relaxed/simple;
+	bh=Wp9/0Sq3hFSFrJZ2kD5iID9BjQ8MiCOTtuytuSzFSlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WnRIW4GlH4QaDkxGBhEWE2zboeEx5uExXHMizO8sbFDkDqMvSxnEQN8Z2at512qZZHpNGJDb+pa3Tt7WyKgBmT6x60QTQuEXdThkkfMd93pKqnNsCwHUVrSgOydHxv4zZyHYxKmBf5iJwIvw0ibwJds+guTDUS3fHLj/vgXLa4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pVtFe8sU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tKvSodn88ak8/snlknCSH+RLbvT+0VDDzcaDRKZRrPh5dzw7ANIbsq2aVvBmkkHk7dGvv3CCFX6SED622Ob+N3zgsObcrPx9jgrOyEkmhyIAXAoTOT9f3p84Ul/xFF0vvxkfgtC/KiLmDqBL/ajvx7kvRV/v+53/KCxYWJd79Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwgqESC4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pVtFe8sU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A978C4CEC6;
-	Tue, 15 Oct 2024 12:58:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwgqESC4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477B3C4CEC6;
+	Tue, 15 Oct 2024 12:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997106;
-	bh=gX3rJQ1n/A9KJFNwdJi7+dEqNyqQPzpy1MUXk+WSa1k=;
+	s=korg; t=1728997109;
+	bh=Wp9/0Sq3hFSFrJZ2kD5iID9BjQ8MiCOTtuytuSzFSlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pVtFe8sUV/vgMxYfsfX8V07rhSUyVq4Aya1FuVe2T/H5xkRFj6ulG3Vq+yW38LO+k
-	 on6JIJvq+MvzFM7CDzF3QclFkpOQJypCC7a37L8RT5PJHHyQt7eDR0gCzEDVceaKs3
-	 kA9nKPxP84SixkMtu40iyvqRpioh+EwvCVUv9u34=
+	b=PwgqESC4r0b1CjZrf1jXeP0bO4tmL6ToNRyvaytFGsmShIXPsdVoaGydrsu/t0vIJ
+	 MQBnvFVMCYiwVe14IvQTdMiH63Y8Ngb22FvoYo4IW4oqYDzdy62eXtSxLqXyKOBnT/
+	 HlF5aOvvNZ/Ge52uP3hL7kYc7NIamHG7PBmTR00s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 089/518] net: tipc: avoid possible garbage value
-Date: Tue, 15 Oct 2024 14:39:53 +0200
-Message-ID: <20241015123920.439728766@linuxfoundation.org>
+Subject: [PATCH 5.10 090/518] block, bfq: fix possible UAF for bfqq->bic with merge chain
+Date: Tue, 15 Oct 2024 14:39:54 +0200
+Message-ID: <20241015123920.478533317@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -46,51 +45,227 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 99655a304e450baaae6b396cb942b9e47659d644 ]
+[ Upstream commit 18ad4df091dd5d067d2faa8fce1180b79f7041a7 ]
 
-Clang static checker (scan-build) warning:
-net/tipc/bcast.c:305:4:
-The expression is an uninitialized value. The computed value will also
-be garbage [core.uninitialized.Assign]
-  305 |                         (*cong_link_cnt)++;
-      |                         ^~~~~~~~~~~~~~~~~~
+1) initial state, three tasks:
 
-tipc_rcast_xmit() will increase cong_link_cnt's value, but cong_link_cnt
-is uninitialized. Although it won't really cause a problem, it's better
-to fix it.
+		Process 1       Process 2	Process 3
+		 (BIC1)          (BIC2)		 (BIC3)
+		  |  Λ            |  Λ		  |  Λ
+		  |  |            |  |		  |  |
+		  V  |            V  |		  V  |
+		  bfqq1           bfqq2		  bfqq3
+process ref:	   1		    1		    1
 
-Fixes: dca4a17d24ee ("tipc: fix potential hanging after b/rcast changing")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Reviewed-by: Justin Stitt <justinstitt@google.com>
-Link: https://patch.msgid.link/20240912110119.2025503-1-suhui@nfschina.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+2) bfqq1 merged to bfqq2:
+
+		Process 1       Process 2	Process 3
+		 (BIC1)          (BIC2)		 (BIC3)
+		  |               |		  |  Λ
+		  \--------------\|		  |  |
+		                  V		  V  |
+		  bfqq1--------->bfqq2		  bfqq3
+process ref:	   0		    2		    1
+
+3) bfqq2 merged to bfqq3:
+
+		Process 1       Process 2	Process 3
+		 (BIC1)          (BIC2)		 (BIC3)
+	 here -> Λ                |		  |
+		  \--------------\ \-------------\|
+		                  V		  V
+		  bfqq1--------->bfqq2---------->bfqq3
+process ref:	   0		    1		    3
+
+In this case, IO from Process 1 will get bfqq2 from BIC1 first, and then
+get bfqq3 through merge chain, and finially handle IO by bfqq3.
+Howerver, current code will think bfqq2 is owned by BIC1, like initial
+state, and set bfqq2->bic to BIC1.
+
+bfq_insert_request
+-> by Process 1
+ bfqq = bfq_init_rq(rq)
+  bfqq = bfq_get_bfqq_handle_split
+   bfqq = bic_to_bfqq
+   -> get bfqq2 from BIC1
+ bfqq->ref++
+ rq->elv.priv[0] = bic
+ rq->elv.priv[1] = bfqq
+ if (bfqq_process_refs(bfqq) == 1)
+  bfqq->bic = bic
+  -> record BIC1 to bfqq2
+
+  __bfq_insert_request
+   new_bfqq = bfq_setup_cooperator
+   -> get bfqq3 from bfqq2->new_bfqq
+   bfqq_request_freed(bfqq)
+   new_bfqq->ref++
+   rq->elv.priv[1] = new_bfqq
+   -> handle IO by bfqq3
+
+Fix the problem by checking bfqq is from merge chain fist. And this
+might fix a following problem reported by our syzkaller(unreproducible):
+
+==================================================================
+BUG: KASAN: slab-use-after-free in bfq_do_early_stable_merge block/bfq-iosched.c:5692 [inline]
+BUG: KASAN: slab-use-after-free in bfq_do_or_sched_stable_merge block/bfq-iosched.c:5805 [inline]
+BUG: KASAN: slab-use-after-free in bfq_get_queue+0x25b0/0x2610 block/bfq-iosched.c:5889
+Write of size 1 at addr ffff888123839eb8 by task kworker/0:1H/18595
+
+CPU: 0 PID: 18595 Comm: kworker/0:1H Tainted: G             L     6.6.0-07439-gba2303cacfda #6
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+Workqueue: kblockd blk_mq_requeue_work
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x91/0xf0 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:364 [inline]
+ print_report+0x10d/0x610 mm/kasan/report.c:475
+ kasan_report+0x8e/0xc0 mm/kasan/report.c:588
+ bfq_do_early_stable_merge block/bfq-iosched.c:5692 [inline]
+ bfq_do_or_sched_stable_merge block/bfq-iosched.c:5805 [inline]
+ bfq_get_queue+0x25b0/0x2610 block/bfq-iosched.c:5889
+ bfq_get_bfqq_handle_split+0x169/0x5d0 block/bfq-iosched.c:6757
+ bfq_init_rq block/bfq-iosched.c:6876 [inline]
+ bfq_insert_request block/bfq-iosched.c:6254 [inline]
+ bfq_insert_requests+0x1112/0x5cf0 block/bfq-iosched.c:6304
+ blk_mq_insert_request+0x290/0x8d0 block/blk-mq.c:2593
+ blk_mq_requeue_work+0x6bc/0xa70 block/blk-mq.c:1502
+ process_one_work kernel/workqueue.c:2627 [inline]
+ process_scheduled_works+0x432/0x13f0 kernel/workqueue.c:2700
+ worker_thread+0x6f2/0x1160 kernel/workqueue.c:2781
+ kthread+0x33c/0x440 kernel/kthread.c:388
+ ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:305
+ </TASK>
+
+Allocated by task 20776:
+ kasan_save_stack+0x20/0x40 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ __kasan_slab_alloc+0x87/0x90 mm/kasan/common.c:328
+ kasan_slab_alloc include/linux/kasan.h:188 [inline]
+ slab_post_alloc_hook mm/slab.h:763 [inline]
+ slab_alloc_node mm/slub.c:3458 [inline]
+ kmem_cache_alloc_node+0x1a4/0x6f0 mm/slub.c:3503
+ ioc_create_icq block/blk-ioc.c:370 [inline]
+ ioc_find_get_icq+0x180/0xaa0 block/blk-ioc.c:436
+ bfq_prepare_request+0x39/0xf0 block/bfq-iosched.c:6812
+ blk_mq_rq_ctx_init.isra.7+0x6ac/0xa00 block/blk-mq.c:403
+ __blk_mq_alloc_requests+0xcc0/0x1070 block/blk-mq.c:517
+ blk_mq_get_new_requests block/blk-mq.c:2940 [inline]
+ blk_mq_submit_bio+0x624/0x27c0 block/blk-mq.c:3042
+ __submit_bio+0x331/0x6f0 block/blk-core.c:624
+ __submit_bio_noacct_mq block/blk-core.c:703 [inline]
+ submit_bio_noacct_nocheck+0x816/0xb40 block/blk-core.c:732
+ submit_bio_noacct+0x7a6/0x1b50 block/blk-core.c:826
+ xlog_write_iclog+0x7d5/0xa00 fs/xfs/xfs_log.c:1958
+ xlog_state_release_iclog+0x3b8/0x720 fs/xfs/xfs_log.c:619
+ xlog_cil_push_work+0x19c5/0x2270 fs/xfs/xfs_log_cil.c:1330
+ process_one_work kernel/workqueue.c:2627 [inline]
+ process_scheduled_works+0x432/0x13f0 kernel/workqueue.c:2700
+ worker_thread+0x6f2/0x1160 kernel/workqueue.c:2781
+ kthread+0x33c/0x440 kernel/kthread.c:388
+ ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:305
+
+Freed by task 946:
+ kasan_save_stack+0x20/0x40 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ kasan_save_free_info+0x2b/0x50 mm/kasan/generic.c:522
+ ____kasan_slab_free mm/kasan/common.c:236 [inline]
+ __kasan_slab_free+0x12c/0x1c0 mm/kasan/common.c:244
+ kasan_slab_free include/linux/kasan.h:164 [inline]
+ slab_free_hook mm/slub.c:1815 [inline]
+ slab_free_freelist_hook mm/slub.c:1841 [inline]
+ slab_free mm/slub.c:3786 [inline]
+ kmem_cache_free+0x118/0x6f0 mm/slub.c:3808
+ rcu_do_batch+0x35c/0xe30 kernel/rcu/tree.c:2189
+ rcu_core+0x819/0xd90 kernel/rcu/tree.c:2462
+ __do_softirq+0x1b0/0x7a2 kernel/softirq.c:553
+
+Last potentially related work creation:
+ kasan_save_stack+0x20/0x40 mm/kasan/common.c:45
+ __kasan_record_aux_stack+0xaf/0xc0 mm/kasan/generic.c:492
+ __call_rcu_common kernel/rcu/tree.c:2712 [inline]
+ call_rcu+0xce/0x1020 kernel/rcu/tree.c:2826
+ ioc_destroy_icq+0x54c/0x830 block/blk-ioc.c:105
+ ioc_release_fn+0xf0/0x360 block/blk-ioc.c:124
+ process_one_work kernel/workqueue.c:2627 [inline]
+ process_scheduled_works+0x432/0x13f0 kernel/workqueue.c:2700
+ worker_thread+0x6f2/0x1160 kernel/workqueue.c:2781
+ kthread+0x33c/0x440 kernel/kthread.c:388
+ ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:305
+
+Second to last potentially related work creation:
+ kasan_save_stack+0x20/0x40 mm/kasan/common.c:45
+ __kasan_record_aux_stack+0xaf/0xc0 mm/kasan/generic.c:492
+ __call_rcu_common kernel/rcu/tree.c:2712 [inline]
+ call_rcu+0xce/0x1020 kernel/rcu/tree.c:2826
+ ioc_destroy_icq+0x54c/0x830 block/blk-ioc.c:105
+ ioc_release_fn+0xf0/0x360 block/blk-ioc.c:124
+ process_one_work kernel/workqueue.c:2627 [inline]
+ process_scheduled_works+0x432/0x13f0 kernel/workqueue.c:2700
+ worker_thread+0x6f2/0x1160 kernel/workqueue.c:2781
+ kthread+0x33c/0x440 kernel/kthread.c:388
+ ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:305
+
+The buggy address belongs to the object at ffff888123839d68
+ which belongs to the cache bfq_io_cq of size 1360
+The buggy address is located 336 bytes inside of
+ freed 1360-byte region [ffff888123839d68, ffff88812383a2b8)
+
+The buggy address belongs to the physical page:
+page:ffffea00048e0e00 refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88812383f588 pfn:0x123838
+head:ffffea00048e0e00 order:3 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+flags: 0x17ffffc0000a40(workingset|slab|head|node=0|zone=2|lastcpupid=0x1fffff)
+page_type: 0xffffffff()
+raw: 0017ffffc0000a40 ffff88810588c200 ffffea00048ffa10 ffff888105889488
+raw: ffff88812383f588 0000000000150006 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff888123839d80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888123839e00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff888123839e80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                        ^
+ ffff888123839f00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888123839f80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+
+Fixes: 36eca8948323 ("block, bfq: add Early Queue Merge (EQM)")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20240902130329.3787024-2-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/bcast.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/bfq-iosched.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/tipc/bcast.c b/net/tipc/bcast.c
-index 593846d252143..114fef65f92ea 100644
---- a/net/tipc/bcast.c
-+++ b/net/tipc/bcast.c
-@@ -320,8 +320,8 @@ static int tipc_mcast_send_sync(struct net *net, struct sk_buff *skb,
- {
- 	struct tipc_msg *hdr, *_hdr;
- 	struct sk_buff_head tmpq;
-+	u16 cong_link_cnt = 0;
- 	struct sk_buff *_skb;
--	u16 cong_link_cnt;
- 	int rc = 0;
- 
- 	/* Is a cluster supporting with new capabilities ? */
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 6687b805bab3b..0b2c8e76708ff 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -6194,7 +6194,8 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
+ 	 * addition, if the queue has also just been split, we have to
+ 	 * resume its state.
+ 	 */
+-	if (likely(bfqq != &bfqd->oom_bfqq) && bfqq_process_refs(bfqq) == 1) {
++	if (likely(bfqq != &bfqd->oom_bfqq) && !bfqq->new_bfqq &&
++	    bfqq_process_refs(bfqq) == 1) {
+ 		bfqq->bic = bic;
+ 		if (split) {
+ 			/*
 -- 
 2.43.0
 
