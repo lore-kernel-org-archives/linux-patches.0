@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9731C57B1;
-	Tue, 15 Oct 2024 12:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DD21C57B1;
+	Tue, 15 Oct 2024 12:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994077; cv=none; b=iRkEktZkbyRH0Hgf4c0nD/C00wmKuomzUTZ6bdKe8iiBQKmGBonImFjbvP2v8VGHx++rXKtVm+KZ5zf92s8SDaf3YN7doT/8k8/I9WeP+tbvidq3wOG1krhJmi2hoPeBUCX06njyQry3xGVJI8b5j15yNozjxiygPhbskg9jKhY=
+	t=1728994081; cv=none; b=NONtchtLw5xC+QZ3i+uwUnxFBLB7y35nCKl0Y9gwneoeKumABFybOqBTvVBpcxisXqEmfeUhJHGMBqGBRSSnQfQnV8JAMCLwHCVEhNCEMKWJ2QSDYqE6pTWzuu03tOjRPHtGJtDuXcSwY0Si1HTZzV4Y6AoToybE3ppxRrF8dcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994077; c=relaxed/simple;
-	bh=YwUsabvgXMJ2ahBdc8AGmajNu2RPPOzRWailLrLULjw=;
+	s=arc-20240116; t=1728994081; c=relaxed/simple;
+	bh=lI8KGJcwvWzS4W+kESZG1UcWFIX0bufMIIfoia0cA9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TQdyp3jsGm5J/9khOs9DgRbzwDv84CqmLXr/KK3SvGeSYCxgGAMBcR29zK1aDO4ZeT1WUsPRanFe1ZvV/9qeFWg/clq+yLP9AVd6R/DxZkP5QUvAs5ZrdWA3RL57WbZZtkKgg+aXBahg5IzDBxVwuxrtQjCqYFYt7PBBJ2HAaH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxp7ZjRv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aN6AHpZ3OZQRB1ngG2Br2XA4i66t4W/6+0o8JLczVVcGWAqgVLnG3EUO5iq9WmATCslGTifCf9gRSD6BZpg3y58xDDYIVZpAv6azfXiqehRoENYDVtrYNtDk08/o3+iViJsN2eRQq0wauc2buMYR0hrK2Xn3NZvZ+gA4YkWldUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYr8hnkz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxp7ZjRv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0640C4CEC6;
-	Tue, 15 Oct 2024 12:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYr8hnkz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A5BC4CEC6;
+	Tue, 15 Oct 2024 12:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994077;
-	bh=YwUsabvgXMJ2ahBdc8AGmajNu2RPPOzRWailLrLULjw=;
+	s=korg; t=1728994080;
+	bh=lI8KGJcwvWzS4W+kESZG1UcWFIX0bufMIIfoia0cA9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vxp7ZjRvJi0FpA9ZtRt1YpVOsRA71jSiZIT4TWEFww30FmYVn8WS0FuWb+EqOSq4X
-	 fdRgE4jErTpSHuJHJJcwT+AS/o0/H834eRRXT3ns5620dEpf6FGZcTtVB4+I4uUPuZ
-	 2wWz1sOQVQifN6mkZJQR5atlJ5AwO1xz/3RG1u6s=
+	b=LYr8hnkzryKwATRmA1sflCXonniIGha9gPb4wyssnHwNa8gSj4aZmpUnO2JFasGZf
+	 Ey5wvouACM1MjjJ+m5cEqjvH/Kh1nZqN1ZSTKRN5UnTT79E2r7kCZIea4FcwPCty7e
+	 WHa1LM/BIBDZU0h8FC7P1ZYxkjSZCFVVWFAAMQGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Wojciech=20G=C5=82adysz?= <wojciech.gladysz@infogain.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 601/691] ext4: nested locking for xattr inode
-Date: Tue, 15 Oct 2024 13:29:09 +0200
-Message-ID: <20241015112504.196584023@linuxfoundation.org>
+Subject: [PATCH 5.15 602/691] s390/cpum_sf: Remove WARN_ON_ONCE statements
+Date: Tue, 15 Oct 2024 13:29:10 +0200
+Message-ID: <20241015112504.235739487@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -45,191 +48,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wojciech Gładysz <wojciech.gladysz@infogain.com>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit d1bc560e9a9c78d0b2314692847fc8661e0aeb99 ]
+[ Upstream commit b495e710157606889f2d8bdc62aebf2aa02f67a7 ]
 
-Add nested locking with I_MUTEX_XATTR subclass to avoid lockdep warning
-while handling xattr inode on file open syscall at ext4_xattr_inode_iget.
+Remove WARN_ON_ONCE statements. These have not triggered in the
+past.
 
-Backtrace
-EXT4-fs (loop0): Ignoring removed oldalloc option
-======================================================
-WARNING: possible circular locking dependency detected
-5.10.0-syzkaller #0 Not tainted
-------------------------------------------------------
-syz-executor543/2794 is trying to acquire lock:
-ffff8880215e1a48 (&ea_inode->i_rwsem#7/1){+.+.}-{3:3}, at: inode_lock include/linux/fs.h:782 [inline]
-ffff8880215e1a48 (&ea_inode->i_rwsem#7/1){+.+.}-{3:3}, at: ext4_xattr_inode_iget+0x42a/0x5c0 fs/ext4/xattr.c:425
-
-but task is already holding lock:
-ffff8880215e3278 (&ei->i_data_sem/3){++++}-{3:3}, at: ext4_setattr+0x136d/0x19c0 fs/ext4/inode.c:5559
-
-which lock already depends on the new lock.
-
-the existing dependency chain (in reverse order) is:
-
--> #1 (&ei->i_data_sem/3){++++}-{3:3}:
-       lock_acquire+0x197/0x480 kernel/locking/lockdep.c:5566
-       down_write+0x93/0x180 kernel/locking/rwsem.c:1564
-       ext4_update_i_disksize fs/ext4/ext4.h:3267 [inline]
-       ext4_xattr_inode_write fs/ext4/xattr.c:1390 [inline]
-       ext4_xattr_inode_lookup_create fs/ext4/xattr.c:1538 [inline]
-       ext4_xattr_set_entry+0x331a/0x3d80 fs/ext4/xattr.c:1662
-       ext4_xattr_ibody_set+0x124/0x390 fs/ext4/xattr.c:2228
-       ext4_xattr_set_handle+0xc27/0x14e0 fs/ext4/xattr.c:2385
-       ext4_xattr_set+0x219/0x390 fs/ext4/xattr.c:2498
-       ext4_xattr_user_set+0xc9/0xf0 fs/ext4/xattr_user.c:40
-       __vfs_setxattr+0x404/0x450 fs/xattr.c:177
-       __vfs_setxattr_noperm+0x11d/0x4f0 fs/xattr.c:208
-       __vfs_setxattr_locked+0x1f9/0x210 fs/xattr.c:266
-       vfs_setxattr+0x112/0x2c0 fs/xattr.c:283
-       setxattr+0x1db/0x3e0 fs/xattr.c:548
-       path_setxattr+0x15a/0x240 fs/xattr.c:567
-       __do_sys_setxattr fs/xattr.c:582 [inline]
-       __se_sys_setxattr fs/xattr.c:578 [inline]
-       __x64_sys_setxattr+0xc5/0xe0 fs/xattr.c:578
-       do_syscall_64+0x6d/0xa0 arch/x86/entry/common.c:62
-       entry_SYSCALL_64_after_hwframe+0x61/0xcb
-
--> #0 (&ea_inode->i_rwsem#7/1){+.+.}-{3:3}:
-       check_prev_add kernel/locking/lockdep.c:2988 [inline]
-       check_prevs_add kernel/locking/lockdep.c:3113 [inline]
-       validate_chain+0x1695/0x58f0 kernel/locking/lockdep.c:3729
-       __lock_acquire+0x12fd/0x20d0 kernel/locking/lockdep.c:4955
-       lock_acquire+0x197/0x480 kernel/locking/lockdep.c:5566
-       down_write+0x93/0x180 kernel/locking/rwsem.c:1564
-       inode_lock include/linux/fs.h:782 [inline]
-       ext4_xattr_inode_iget+0x42a/0x5c0 fs/ext4/xattr.c:425
-       ext4_xattr_inode_get+0x138/0x410 fs/ext4/xattr.c:485
-       ext4_xattr_move_to_block fs/ext4/xattr.c:2580 [inline]
-       ext4_xattr_make_inode_space fs/ext4/xattr.c:2682 [inline]
-       ext4_expand_extra_isize_ea+0xe70/0x1bb0 fs/ext4/xattr.c:2774
-       __ext4_expand_extra_isize+0x304/0x3f0 fs/ext4/inode.c:5898
-       ext4_try_to_expand_extra_isize fs/ext4/inode.c:5941 [inline]
-       __ext4_mark_inode_dirty+0x591/0x810 fs/ext4/inode.c:6018
-       ext4_setattr+0x1400/0x19c0 fs/ext4/inode.c:5562
-       notify_change+0xbb6/0xe60 fs/attr.c:435
-       do_truncate+0x1de/0x2c0 fs/open.c:64
-       handle_truncate fs/namei.c:2970 [inline]
-       do_open fs/namei.c:3311 [inline]
-       path_openat+0x29f3/0x3290 fs/namei.c:3425
-       do_filp_open+0x20b/0x450 fs/namei.c:3452
-       do_sys_openat2+0x124/0x460 fs/open.c:1207
-       do_sys_open fs/open.c:1223 [inline]
-       __do_sys_open fs/open.c:1231 [inline]
-       __se_sys_open fs/open.c:1227 [inline]
-       __x64_sys_open+0x221/0x270 fs/open.c:1227
-       do_syscall_64+0x6d/0xa0 arch/x86/entry/common.c:62
-       entry_SYSCALL_64_after_hwframe+0x61/0xcb
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&ei->i_data_sem/3);
-                               lock(&ea_inode->i_rwsem#7/1);
-                               lock(&ei->i_data_sem/3);
-  lock(&ea_inode->i_rwsem#7/1);
-
- *** DEADLOCK ***
-
-5 locks held by syz-executor543/2794:
- #0: ffff888026fbc448 (sb_writers#4){.+.+}-{0:0}, at: mnt_want_write+0x4a/0x2a0 fs/namespace.c:365
- #1: ffff8880215e3488 (&sb->s_type->i_mutex_key#7){++++}-{3:3}, at: inode_lock include/linux/fs.h:782 [inline]
- #1: ffff8880215e3488 (&sb->s_type->i_mutex_key#7){++++}-{3:3}, at: do_truncate+0x1cf/0x2c0 fs/open.c:62
- #2: ffff8880215e3310 (&ei->i_mmap_sem){++++}-{3:3}, at: ext4_setattr+0xec4/0x19c0 fs/ext4/inode.c:5519
- #3: ffff8880215e3278 (&ei->i_data_sem/3){++++}-{3:3}, at: ext4_setattr+0x136d/0x19c0 fs/ext4/inode.c:5559
- #4: ffff8880215e30c8 (&ei->xattr_sem){++++}-{3:3}, at: ext4_write_trylock_xattr fs/ext4/xattr.h:162 [inline]
- #4: ffff8880215e30c8 (&ei->xattr_sem){++++}-{3:3}, at: ext4_try_to_expand_extra_isize fs/ext4/inode.c:5938 [inline]
- #4: ffff8880215e30c8 (&ei->xattr_sem){++++}-{3:3}, at: __ext4_mark_inode_dirty+0x4fb/0x810 fs/ext4/inode.c:6018
-
-stack backtrace:
-CPU: 1 PID: 2794 Comm: syz-executor543 Not tainted 5.10.0-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x177/0x211 lib/dump_stack.c:118
- print_circular_bug+0x146/0x1b0 kernel/locking/lockdep.c:2002
- check_noncircular+0x2cc/0x390 kernel/locking/lockdep.c:2123
- check_prev_add kernel/locking/lockdep.c:2988 [inline]
- check_prevs_add kernel/locking/lockdep.c:3113 [inline]
- validate_chain+0x1695/0x58f0 kernel/locking/lockdep.c:3729
- __lock_acquire+0x12fd/0x20d0 kernel/locking/lockdep.c:4955
- lock_acquire+0x197/0x480 kernel/locking/lockdep.c:5566
- down_write+0x93/0x180 kernel/locking/rwsem.c:1564
- inode_lock include/linux/fs.h:782 [inline]
- ext4_xattr_inode_iget+0x42a/0x5c0 fs/ext4/xattr.c:425
- ext4_xattr_inode_get+0x138/0x410 fs/ext4/xattr.c:485
- ext4_xattr_move_to_block fs/ext4/xattr.c:2580 [inline]
- ext4_xattr_make_inode_space fs/ext4/xattr.c:2682 [inline]
- ext4_expand_extra_isize_ea+0xe70/0x1bb0 fs/ext4/xattr.c:2774
- __ext4_expand_extra_isize+0x304/0x3f0 fs/ext4/inode.c:5898
- ext4_try_to_expand_extra_isize fs/ext4/inode.c:5941 [inline]
- __ext4_mark_inode_dirty+0x591/0x810 fs/ext4/inode.c:6018
- ext4_setattr+0x1400/0x19c0 fs/ext4/inode.c:5562
- notify_change+0xbb6/0xe60 fs/attr.c:435
- do_truncate+0x1de/0x2c0 fs/open.c:64
- handle_truncate fs/namei.c:2970 [inline]
- do_open fs/namei.c:3311 [inline]
- path_openat+0x29f3/0x3290 fs/namei.c:3425
- do_filp_open+0x20b/0x450 fs/namei.c:3452
- do_sys_openat2+0x124/0x460 fs/open.c:1207
- do_sys_open fs/open.c:1223 [inline]
- __do_sys_open fs/open.c:1231 [inline]
- __se_sys_open fs/open.c:1227 [inline]
- __x64_sys_open+0x221/0x270 fs/open.c:1227
- do_syscall_64+0x6d/0xa0 arch/x86/entry/common.c:62
- entry_SYSCALL_64_after_hwframe+0x61/0xcb
-RIP: 0033:0x7f0cde4ea229
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 21 18 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffd81d1c978 EFLAGS: 00000246 ORIG_RAX: 0000000000000002
-RAX: ffffffffffffffda RBX: 0030656c69662f30 RCX: 00007f0cde4ea229
-RDX: 0000000000000089 RSI: 00000000000a0a00 RDI: 00000000200001c0
-RBP: 2f30656c69662f2e R08: 0000000000208000 R09: 0000000000208000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007ffd81d1c9c0
-R13: 00007ffd81d1ca00 R14: 0000000000080000 R15: 0000000000000003
-EXT4-fs error (device loop0): ext4_expand_extra_isize_ea:2730: inode #13: comm syz-executor543: corrupted in-inode xattr
-
-Signed-off-by: Wojciech Gładysz <wojciech.gladysz@infogain.com>
-Link: https://patch.msgid.link/20240801143827.19135-1-wojciech.gladysz@infogain.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Acked-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/xattr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/s390/kernel/perf_cpum_sf.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
-index 03d90e4c20b86..a22c85bf8ae96 100644
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -422,7 +422,7 @@ static int ext4_xattr_inode_iget(struct inode *parent, unsigned long ea_ino,
- 		ext4_set_inode_state(inode, EXT4_STATE_LUSTRE_EA_INODE);
- 		ext4_xattr_inode_set_ref(inode, 1);
- 	} else {
--		inode_lock(inode);
-+		inode_lock_nested(inode, I_MUTEX_XATTR);
- 		inode->i_flags |= S_NOQUOTA;
- 		inode_unlock(inode);
- 	}
-@@ -990,7 +990,7 @@ static int ext4_xattr_inode_update_ref(handle_t *handle, struct inode *ea_inode,
- 	s64 ref_count;
- 	int ret;
+diff --git a/arch/s390/kernel/perf_cpum_sf.c b/arch/s390/kernel/perf_cpum_sf.c
+index 4e6fadaeaa1a6..a8ba3887b367f 100644
+--- a/arch/s390/kernel/perf_cpum_sf.c
++++ b/arch/s390/kernel/perf_cpum_sf.c
+@@ -1432,7 +1432,7 @@ static int aux_output_begin(struct perf_output_handle *handle,
+ 	unsigned long head, base, offset;
+ 	struct hws_trailer_entry *te;
  
--	inode_lock(ea_inode);
-+	inode_lock_nested(ea_inode, I_MUTEX_XATTR);
+-	if (WARN_ON_ONCE(handle->head & ~PAGE_MASK))
++	if (handle->head & ~PAGE_MASK)
+ 		return -EINVAL;
  
- 	ret = ext4_reserve_inode_write(handle, ea_inode, &iloc);
- 	if (ret)
+ 	aux->head = handle->head >> PAGE_SHIFT;
+@@ -1613,7 +1613,7 @@ static void hw_collect_aux(struct cpu_hw_sf *cpuhw)
+ 	unsigned long num_sdb;
+ 
+ 	aux = perf_get_aux(handle);
+-	if (WARN_ON_ONCE(!aux))
++	if (!aux)
+ 		return;
+ 
+ 	/* Inform user space new data arrived */
+@@ -1635,7 +1635,7 @@ static void hw_collect_aux(struct cpu_hw_sf *cpuhw)
+ 					    __func__);
+ 			break;
+ 		}
+-		if (WARN_ON_ONCE(!aux))
++		if (!aux)
+ 			return;
+ 
+ 		/* Update head and alert_mark to new position */
+@@ -1870,12 +1870,8 @@ static void cpumsf_pmu_start(struct perf_event *event, int flags)
+ {
+ 	struct cpu_hw_sf *cpuhw = this_cpu_ptr(&cpu_hw_sf);
+ 
+-	if (WARN_ON_ONCE(!(event->hw.state & PERF_HES_STOPPED)))
++	if (!(event->hw.state & PERF_HES_STOPPED))
+ 		return;
+-
+-	if (flags & PERF_EF_RELOAD)
+-		WARN_ON_ONCE(!(event->hw.state & PERF_HES_UPTODATE));
+-
+ 	perf_pmu_disable(event->pmu);
+ 	event->hw.state = 0;
+ 	cpuhw->lsctl.cs = 1;
 -- 
 2.43.0
 
