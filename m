@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102B51C57B1;
-	Tue, 15 Oct 2024 12:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E061C57B1;
+	Tue, 15 Oct 2024 12:06:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993993; cv=none; b=hpTvjdPrRa1j0Qde/n3l21XpW2OmqziG7JHMGsJWPtkm9seWmRcuxpFewuGPtISZw9LkykJykU96FSYv9VTlezjVbfPuSojGrzawIdT4AnUxzZ9PxDjHGShSufCDap8oBOvTYoyyMOVzE1rgg+reW63aOP95ZPQOT9rLvqzgsZM=
+	t=1728993996; cv=none; b=Ohs2JJWuP30NbF9B8Rk3Py6nVh8PqY1ugpVJ9VwlVdaxJ91FhDb/gln7+QrtW7R62gJqR2P97vRH48XaIYWhkWzxnByqilRtmxR7m3Jf7avcYieXAo9raPwuE8KFAAm88iiXJHG0qvMSFtPSMG/R20NLsBZ2FvRrQ7pgPsUwEZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993993; c=relaxed/simple;
-	bh=DcYws80j3+qmfG/lGWxklf5SidDcaV4NHtsE7KA6kjI=;
+	s=arc-20240116; t=1728993996; c=relaxed/simple;
+	bh=L5QNx7g4vPCeRpezS42TDytSzij8ouuqVWQRjX8sjLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J8fCgSY8C0ecRLbiKXX3q8ROC1sDuONCq/C+d6Sn92pBGxh/ajMsMBIOcAvDZ0yHsEdNivLvnZ4mbfvgIcvk4J63pYCYd3fgffpt5GSRMzBODg0BVlHCA9TPNphDX3Umix/+CfG7I73piPuCHJOdXRKz63zre26POKHvElFCQhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdKTm3kb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G94bSakpdueS6mx6GoRpg7mRsOU9lQ5xJ9E5xZtlYhy00RJsEXR40Kr1gociuM18If1FahEAYRZOAGlvHzxeAvHM6K/VBAiZUOWn/jkwlDftuhiJQx6MQs2c5f7R/3uYS+b5qXD3uTpsMSbG38G/7sLKOcsWHU2YZan4Ejzg6Ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9otesrW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdKTm3kb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83911C4CEC6;
-	Tue, 15 Oct 2024 12:06:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9otesrW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0EF4C4CEC6;
+	Tue, 15 Oct 2024 12:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993992;
-	bh=DcYws80j3+qmfG/lGWxklf5SidDcaV4NHtsE7KA6kjI=;
+	s=korg; t=1728993996;
+	bh=L5QNx7g4vPCeRpezS42TDytSzij8ouuqVWQRjX8sjLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HdKTm3kbiE7PAgFmsSBwQ4CHz3QUUMhJCz3tQXiW1pgTAmF6A6jSbRH40okAFwPg6
-	 yOKcF8xaGgc/j5dO8aHI+0NASJvCMXk+Z0b5RC8BV2rEsmaDEH/SSBGn4GxXmqgVnw
-	 SXkn4zMpF4GPyH5Vbrtqvnk93vMrfV/XqZw8AMOU=
+	b=V9otesrWKbeg/kW57Ydhp9WfMLjan1cYsDdJ3l4iHg+XvP091SpLZf7nTWY8hWpvT
+	 oETAgZ6eUrWL30b06TYG687R4RhPtekZ9Dbv2kPQyuaCnARPV2cEkmiQ9lHEcAakSU
+	 QvkVpy5UlYUymArF5dZ0IxuOJovAKCksnzhwG2rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 575/691] r8169: add tally counter fields added with RTL8125
-Date: Tue, 15 Oct 2024 13:28:43 +0200
-Message-ID: <20241015112503.163758368@linuxfoundation.org>
+Subject: [PATCH 5.15 576/691] clk: qcom: gcc-sc8180x: Add GPLL9 support
+Date: Tue, 15 Oct 2024 13:28:44 +0200
+Message-ID: <20241015112503.202624044@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,64 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-[ Upstream commit ced8e8b8f40accfcce4a2bbd8b150aa76d5eff9a ]
+[ Upstream commit 818a2f8d5e4ad2c1e39a4290158fe8e39a744c70 ]
 
-RTL8125 added fields to the tally counter, what may result in the chip
-dma'ing these new fields to unallocated memory. Therefore make sure
-that the allocated memory area is big enough to hold all of the
-tally counter values, even if we use only parts of it.
+Add the missing GPLL9 pll and fix the gcc_parents_7 data to use
+the correct pll hw.
 
-Fixes: f1bce4ad2f1c ("r8169: add support for RTL8125")
+Fixes: 4433594bbe5d ("clk: qcom: gcc: Add global clock controller driver for SC8180x")
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/741d26a9-2b2b-485d-91d9-ecb302e345b5@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Link: https://lore.kernel.org/r/20240812-gcc-sc8180x-fixes-v2-3-8b3eaa5fb856@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 27 +++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/clk/qcom/gcc-sc8180x.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index f6e0424bf83d5..7ce11c9529c58 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -576,6 +576,33 @@ struct rtl8169_counters {
- 	__le32	rx_multicast;
- 	__le16	tx_aborted;
- 	__le16	tx_underrun;
-+	/* new since RTL8125 */
-+	__le64 tx_octets;
-+	__le64 rx_octets;
-+	__le64 rx_multicast64;
-+	__le64 tx_unicast64;
-+	__le64 tx_broadcast64;
-+	__le64 tx_multicast64;
-+	__le32 tx_pause_on;
-+	__le32 tx_pause_off;
-+	__le32 tx_pause_all;
-+	__le32 tx_deferred;
-+	__le32 tx_late_collision;
-+	__le32 tx_all_collision;
-+	__le32 tx_aborted32;
-+	__le32 align_errors32;
-+	__le32 rx_frame_too_long;
-+	__le32 rx_runt;
-+	__le32 rx_pause_on;
-+	__le32 rx_pause_off;
-+	__le32 rx_pause_all;
-+	__le32 rx_unknown_opcode;
-+	__le32 rx_mac_error;
-+	__le32 tx_underrun32;
-+	__le32 rx_mac_missed;
-+	__le32 rx_tcam_dropped;
-+	__le32 tdu;
-+	__le32 rdu;
+diff --git a/drivers/clk/qcom/gcc-sc8180x.c b/drivers/clk/qcom/gcc-sc8180x.c
+index 8c986a60e62c7..ba004281f2944 100644
+--- a/drivers/clk/qcom/gcc-sc8180x.c
++++ b/drivers/clk/qcom/gcc-sc8180x.c
+@@ -143,6 +143,23 @@ static struct clk_alpha_pll gpll7 = {
+ 	},
  };
  
- struct rtl8169_tc_offsets {
++static struct clk_alpha_pll gpll9 = {
++	.offset = 0x1c000,
++	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_TRION],
++	.clkr = {
++		.enable_reg = 0x52000,
++		.enable_mask = BIT(9),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "gpll9",
++			.parent_data = &(const struct clk_parent_data) {
++				.fw_name = "bi_tcxo",
++			},
++			.num_parents = 1,
++			.ops = &clk_alpha_pll_fixed_trion_ops,
++		},
++	},
++};
++
+ static const struct parent_map gcc_parent_map_0[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_GPLL0_OUT_MAIN, 1 },
+@@ -242,7 +259,7 @@ static const struct parent_map gcc_parent_map_7[] = {
+ static const struct clk_parent_data gcc_parents_7[] = {
+ 	{ .fw_name = "bi_tcxo", },
+ 	{ .hw = &gpll0.clkr.hw },
+-	{ .name = "gppl9" },
++	{ .hw = &gpll9.clkr.hw },
+ 	{ .hw = &gpll4.clkr.hw },
+ 	{ .hw = &gpll0_out_even.clkr.hw },
+ };
+@@ -4420,6 +4437,7 @@ static struct clk_regmap *gcc_sc8180x_clocks[] = {
+ 	[GPLL1] = &gpll1.clkr,
+ 	[GPLL4] = &gpll4.clkr,
+ 	[GPLL7] = &gpll7.clkr,
++	[GPLL9] = &gpll9.clkr,
+ };
+ 
+ static const struct qcom_reset_map gcc_sc8180x_resets[] = {
 -- 
 2.43.0
 
