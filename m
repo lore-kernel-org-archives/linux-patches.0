@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278971C07F5;
-	Tue, 15 Oct 2024 13:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9867F1C07D4;
+	Tue, 15 Oct 2024 13:19:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998359; cv=none; b=gq2isTGQyfWV1An0deLrBiClBKaTZjlyCwxgl4bWDBm3A002zAOckuPt1cXoDEyguL6Qwkmb2HRLzzP6H0/HmarpKuU5rMi9e/vTPH0/ZZLjDYB19lxT51Or/dJdtaSJkJ1Pgle8pl4YrJAtbugLuuN3QifaamqmDusYgMhDJkI=
+	t=1728998362; cv=none; b=ZPvM2d5QMR3t98Bg5KFXC2eMadBlcCLR9WWOYVNJIz9sQz2rx6TPP3lfTjX2usMMq4Rhj4mJ2/h+aeSKv0plyHLiQL3YhLjanH2Ipb30ds9zaPSmUKECeNtm3whQZejcy6TcrZCowP7JKvz3mBiln/K9DmptmbLHNTKYEL8DE78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998359; c=relaxed/simple;
-	bh=JUxOexc84AlvPWAp4BGdljlsSW3h4xFjDG0iJL/uWnc=;
+	s=arc-20240116; t=1728998362; c=relaxed/simple;
+	bh=F1pmrIl09F4zOM0SuPagAvxHPsAuzZi40xJ9uyWnmF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DKtYUJ/hsF9z6Af9jvOBEgXcGfBUrX7KWVrWNTzcGqAq2PTHqIfu1bSSNJv/YZbhr22JRn57UlEeDhT9+OdLHs3qSwA1rXLgsk3N+Ulrdj85C7PDdIFNOtWCBN7aJPq2HyCG5Np8XXGKZCgKjJz6033dcyIDvstYeTVrZCL4qT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1AxBAr/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=npZt3pdgJEpT7XmDGT/PNZGsOLb+XifkakfiKeGFtzNC4RO9upCbnJoCvwbkXSqeBJWisadjeFaG5YeHpo0ALEdQ03AFldzcPpBYG739/Y5cUWyUOEQOz257gQPL9HBr6URGeOVIsj4Ew5FAoyj/WElTdBQzc03MELY6ciruoXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eeEyNaHL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1AxBAr/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87AA9C4CEC6;
-	Tue, 15 Oct 2024 13:19:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeEyNaHL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FD7C4CEC6;
+	Tue, 15 Oct 2024 13:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998359;
-	bh=JUxOexc84AlvPWAp4BGdljlsSW3h4xFjDG0iJL/uWnc=;
+	s=korg; t=1728998362;
+	bh=F1pmrIl09F4zOM0SuPagAvxHPsAuzZi40xJ9uyWnmF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n1AxBAr//DuTzbJgmtHJLBgFjZN0lmsWTau1mknx1LJX7bfhYwusgNKbggwVE/8xx
-	 MnJwP+m8/3CtiXwsmYvh6n7N3xpImjJMGLCQk57c7tZuFf8IPnceDsFbNRYXo3V5o9
-	 V1YUgG21kr8gBV/YxrbSvZLy1JG2NgAhmqUV/TiU=
+	b=eeEyNaHL70Dqi4/XDHK+iusGfjEDIUGEvMrlN6FLX/5bLeTJvqXbEFzsHL0reeHPk
+	 lHH3tnhkZcM/nx/b5/xGyIZ4rGo/qDDs8XZfWCE+wYsmewq+9Z3AGA5YunemTGZIai
+	 xwJCs610Z8dJjCeePS/w1yb4EchtQ9rqrP26OuRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sachin Sant <sachinp@linux.ibm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 455/518] RDMA/mad: Improve handling of timed out WRs of mad agent
-Date: Tue, 15 Oct 2024 14:45:59 +0200
-Message-ID: <20241015123934.567949596@linuxfoundation.org>
+Subject: [PATCH 5.10 438/518] tracing: Remove precision vsnprintf() check from print event
+Date: Tue, 15 Oct 2024 14:45:42 +0200
+Message-ID: <20241015123933.911484567@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,140 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 2a777679b8ccd09a9a65ea0716ef10365179caac ]
+[ Upstream commit 5efd3e2aef91d2d812290dcb25b2058e6f3f532c ]
 
-Current timeout handler of mad agent acquires/releases mad_agent_priv
-lock for every timed out WRs. This causes heavy locking contention
-when higher no. of WRs are to be handled inside timeout handler.
+This reverts 60be76eeabb3d ("tracing: Add size check when printing
+trace_marker output"). The only reason the precision check was added
+was because of a bug that miscalculated the write size of the string into
+the ring buffer and it truncated it removing the terminating nul byte. On
+reading the trace it crashed the kernel. But this was due to the bug in
+the code that happened during development and should never happen in
+practice. If anything, the precision can hide bugs where the string in the
+ring buffer isn't nul terminated and it will not be checked.
 
-This leads to softlockup with below trace in some use cases where
-rdma-cm path is used to establish connection between peer nodes
+Link: https://lore.kernel.org/all/C7E7AF1A-D30F-4D18-B8E5-AF1EF58004F5@linux.ibm.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20240227125706.04279ac2@gandalf.local.home
+Link: https://lore.kernel.org/all/20240302111244.3a1674be@gandalf.local.home/
+Link: https://lore.kernel.org/linux-trace-kernel/20240304174341.2a561d9f@gandalf.local.home
 
-Trace:
------
- BUG: soft lockup - CPU#4 stuck for 26s! [kworker/u128:3:19767]
- CPU: 4 PID: 19767 Comm: kworker/u128:3 Kdump: loaded Tainted: G OE
-     -------  ---  5.14.0-427.13.1.el9_4.x86_64 #1
- Hardware name: Dell Inc. PowerEdge R740/01YM03, BIOS 2.4.8 11/26/2019
- Workqueue: ib_mad1 timeout_sends [ib_core]
- RIP: 0010:__do_softirq+0x78/0x2ac
- RSP: 0018:ffffb253449e4f98 EFLAGS: 00000246
- RAX: 00000000ffffffff RBX: 0000000000000000 RCX: 000000000000001f
- RDX: 000000000000001d RSI: 000000003d1879ab RDI: fff363b66fd3a86b
- RBP: ffffb253604cbcd8 R08: 0000009065635f3b R09: 0000000000000000
- R10: 0000000000000040 R11: ffffb253449e4ff8 R12: 0000000000000000
- R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000040
- FS:  0000000000000000(0000) GS:ffff8caa1fc80000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007fd9ec9db900 CR3: 0000000891934006 CR4: 00000000007706e0
- DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- PKRU: 55555554
- Call Trace:
-  <IRQ>
-  ? show_trace_log_lvl+0x1c4/0x2df
-  ? show_trace_log_lvl+0x1c4/0x2df
-  ? __irq_exit_rcu+0xa1/0xc0
-  ? watchdog_timer_fn+0x1b2/0x210
-  ? __pfx_watchdog_timer_fn+0x10/0x10
-  ? __hrtimer_run_queues+0x127/0x2c0
-  ? hrtimer_interrupt+0xfc/0x210
-  ? __sysvec_apic_timer_interrupt+0x5c/0x110
-  ? sysvec_apic_timer_interrupt+0x37/0x90
-  ? asm_sysvec_apic_timer_interrupt+0x16/0x20
-  ? __do_softirq+0x78/0x2ac
-  ? __do_softirq+0x60/0x2ac
-  __irq_exit_rcu+0xa1/0xc0
-  sysvec_call_function_single+0x72/0x90
-  </IRQ>
-  <TASK>
-  asm_sysvec_call_function_single+0x16/0x20
- RIP: 0010:_raw_spin_unlock_irq+0x14/0x30
- RSP: 0018:ffffb253604cbd88 EFLAGS: 00000247
- RAX: 000000000001960d RBX: 0000000000000002 RCX: ffff8cad2a064800
- RDX: 000000008020001b RSI: 0000000000000001 RDI: ffff8cad5d39f66c
- RBP: ffff8cad5d39f600 R08: 0000000000000001 R09: 0000000000000000
- R10: ffff8caa443e0c00 R11: ffffb253604cbcd8 R12: ffff8cacb8682538
- R13: 0000000000000005 R14: ffffb253604cbd90 R15: ffff8cad5d39f66c
-  cm_process_send_error+0x122/0x1d0 [ib_cm]
-  timeout_sends+0x1dd/0x270 [ib_core]
-  process_one_work+0x1e2/0x3b0
-  ? __pfx_worker_thread+0x10/0x10
-  worker_thread+0x50/0x3a0
-  ? __pfx_worker_thread+0x10/0x10
-  kthread+0xdd/0x100
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x29/0x50
-  </TASK>
-
-Simplified timeout handler by creating local list of timed out WRs
-and invoke send handler post creating the list. The new method acquires/
-releases lock once to fetch the list and hence helps to reduce locking
-contetiong when processing higher no. of WRs
-
-Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Link: https://lore.kernel.org/r/20240722110325.195085-1-saravanan.vajravel@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 60be76eeabb3d ("tracing: Add size check when printing trace_marker output")
+Reported-by: Sachin Sant <sachinp@linux.ibm.com>
+Tested-by: Sachin Sant <sachinp@linux.ibm.com>
+Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/mad.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ kernel/trace/trace_output.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/core/mad.c b/drivers/infiniband/core/mad.c
-index 9355e521d9f4d..521c3d050be2d 100644
---- a/drivers/infiniband/core/mad.c
-+++ b/drivers/infiniband/core/mad.c
-@@ -2631,14 +2631,16 @@ static int retry_send(struct ib_mad_send_wr_private *mad_send_wr)
- 
- static void timeout_sends(struct work_struct *work)
+diff --git a/kernel/trace/trace_output.c b/kernel/trace/trace_output.c
+index 753b84c50848a..94b0991717b6d 100644
+--- a/kernel/trace/trace_output.c
++++ b/kernel/trace/trace_output.c
+@@ -1313,12 +1313,11 @@ static enum print_line_t trace_print_print(struct trace_iterator *iter,
  {
-+	struct ib_mad_send_wr_private *mad_send_wr, *n;
- 	struct ib_mad_agent_private *mad_agent_priv;
--	struct ib_mad_send_wr_private *mad_send_wr;
- 	struct ib_mad_send_wc mad_send_wc;
-+	struct list_head local_list;
- 	unsigned long flags, delay;
+ 	struct print_entry *field;
+ 	struct trace_seq *s = &iter->seq;
+-	int max = iter->ent_size - offsetof(struct print_entry, buf);
  
- 	mad_agent_priv = container_of(work, struct ib_mad_agent_private,
- 				      timed_work.work);
- 	mad_send_wc.vendor_err = 0;
-+	INIT_LIST_HEAD(&local_list);
+ 	trace_assign_type(field, iter->ent);
  
- 	spin_lock_irqsave(&mad_agent_priv->lock, flags);
- 	while (!list_empty(&mad_agent_priv->wait_list)) {
-@@ -2656,13 +2658,16 @@ static void timeout_sends(struct work_struct *work)
- 			break;
- 		}
+ 	seq_print_ip_sym(s, field->ip, flags);
+-	trace_seq_printf(s, ": %.*s", max, field->buf);
++	trace_seq_printf(s, ": %s", field->buf);
  
--		list_del(&mad_send_wr->agent_list);
-+		list_del_init(&mad_send_wr->agent_list);
- 		if (mad_send_wr->status == IB_WC_SUCCESS &&
- 		    !retry_send(mad_send_wr))
- 			continue;
- 
--		spin_unlock_irqrestore(&mad_agent_priv->lock, flags);
-+		list_add_tail(&mad_send_wr->agent_list, &local_list);
-+	}
-+	spin_unlock_irqrestore(&mad_agent_priv->lock, flags);
- 
-+	list_for_each_entry_safe(mad_send_wr, n, &local_list, agent_list) {
- 		if (mad_send_wr->status == IB_WC_SUCCESS)
- 			mad_send_wc.status = IB_WC_RESP_TIMEOUT_ERR;
- 		else
-@@ -2670,11 +2675,8 @@ static void timeout_sends(struct work_struct *work)
- 		mad_send_wc.send_buf = &mad_send_wr->send_buf;
- 		mad_agent_priv->agent.send_handler(&mad_agent_priv->agent,
- 						   &mad_send_wc);
--
- 		deref_mad_agent(mad_agent_priv);
--		spin_lock_irqsave(&mad_agent_priv->lock, flags);
- 	}
--	spin_unlock_irqrestore(&mad_agent_priv->lock, flags);
+ 	return trace_handle_return(s);
  }
+@@ -1327,11 +1326,10 @@ static enum print_line_t trace_print_raw(struct trace_iterator *iter, int flags,
+ 					 struct trace_event *event)
+ {
+ 	struct print_entry *field;
+-	int max = iter->ent_size - offsetof(struct print_entry, buf);
  
- /*
+ 	trace_assign_type(field, iter->ent);
+ 
+-	trace_seq_printf(&iter->seq, "# %lx %.*s", field->ip, max, field->buf);
++	trace_seq_printf(&iter->seq, "# %lx %s", field->ip, field->buf);
+ 
+ 	return trace_handle_return(&iter->seq);
+ }
 -- 
 2.43.0
 
