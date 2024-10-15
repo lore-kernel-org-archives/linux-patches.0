@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA8B1EBA15;
-	Tue, 15 Oct 2024 11:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E251E7669;
+	Tue, 15 Oct 2024 11:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992328; cv=none; b=kUN9jj573Vkv7d6024G/coGqSnnYZSkkRsc0s1ETAaiMr+vvnfZM2cC/flM0wtVi7FE+nZdLoomOoinvf9AY7U9hlUH7E5hbJ60Sy99pKt4xToGrbx1whANO3QJMBK+Ktr/U9ySznyTIdHYjZnfxwP1o0/vB9PFAoiUm2EfHV9E=
+	t=1728992331; cv=none; b=dZixbjbNYAb8XR6NcdNCV14K03hBKQTQI6yR//JmhGk10577wajNNDG2FYGS+uAKI1sFtTj4bOfbpgXDMPvXAOTXwD/ATD2oKscCXijN3uNfewISzgrfJsscN1UoFlDDYE8WsiwQd9QXpDvC2sELO8oRK2T67/GEV0QNx0xjYwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992328; c=relaxed/simple;
-	bh=NnvlB9hSxXV6LtZYl2daiSAY8llJ3xYN8h4Ol83HfQo=;
+	s=arc-20240116; t=1728992331; c=relaxed/simple;
+	bh=mRVrKpj+3v/fRYI14h1gFxMVAb+WfTQ1M3zDkhtifgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FKAikhzgvYTBte9gzxr+2Cs3KHZz3H3TgduzYgQwbyQ3eu30CkRmFQ685bjJ1f6waGtV8LR9XExS/ncAEpfHSZol89PVQXGNDfb2Un7jBqd/2TbIEN8NMx1X6ZXNOjncT+9JbntxJ3X3EdzDr/soB7X9w1RrZbeHfew733vl7LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ki7aUtUu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UBIFoQwIf7Se0wYg3iW0oFD5/jm5nwzCwnfxIT7WxotcUN9ciVICyHlRlsCU9JypihFTOp1DQjaGWVvAYzqTI2v9IT5Rb+6/nLAOnR2QQlJsS1u+pmrNL4hqMQkG/xxiJVR0ZRKHgBHFLt4TQ88vtRbk+4u/dMh06rr1EoTJhbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdxFYTkU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ki7aUtUu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC49C4CECF;
-	Tue, 15 Oct 2024 11:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdxFYTkU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932AAC4CEC6;
+	Tue, 15 Oct 2024 11:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992327;
-	bh=NnvlB9hSxXV6LtZYl2daiSAY8llJ3xYN8h4Ol83HfQo=;
+	s=korg; t=1728992331;
+	bh=mRVrKpj+3v/fRYI14h1gFxMVAb+WfTQ1M3zDkhtifgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ki7aUtUuDV1IzEmFaTV5DYmit50/UWJUffX/BXMzPW1L2M/cLM/sA5dpG8KQf1HVH
-	 2aQYcX95W0Oqam1z/4EN6wlpvTaz7NOpbLHWEaxypyzomtfDwX+iIZZvAKQG1doaPq
-	 7l/65sa1lCLjMdhmIrJ8FVPM3NHX+3i4CKCekxjU=
+	b=EdxFYTkUse+1IODcE3hs94AUaib1Gqb63/e88yT9snpG7yuI51Kue1jfZCnB9/8iz
+	 YIK2PldKONFCeJEY//elC8WRps31zdW0fYc9m0Guv70lw0KGN/mPwPfjzkBqqfv3Pa
+	 zQvigGqHh5sYlrqvtf3gTp0dW+qRu7e9W37/9+Vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xingwei lee <xrivendell7@gmail.com>,
-	yue sun <samsun1006219@gmail.com>,
-	syzbot+e5167d7144a62715044c@syzkaller.appspotmail.com,
-	Florian Westphal <fw@strlen.de>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Saeed Mirzamohammadi <saeed.mirzamohammadi@oracle.com>
-Subject: [PATCH 5.15 085/691] inet: inet_defrag: prevent sk release while still in use
-Date: Tue, 15 Oct 2024 13:20:33 +0200
-Message-ID: <20241015112443.734705321@linuxfoundation.org>
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 5.15 086/691] gpiolib: cdev: Ignore reconfiguration without direction
+Date: Tue, 15 Oct 2024 13:20:34 +0200
+Message-ID: <20241015112443.773948727@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -55,305 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Kent Gibson <warthog618@gmail.com>
 
-commit 18685451fc4e546fc0e718580d32df3c0e5c8272 upstream.
+commit b440396387418fe2feaacd41ca16080e7a8bc9ad upstream.
 
-ip_local_out() and other functions can pass skb->sk as function argument.
+linereq_set_config() behaves badly when direction is not set.
+The configuration validation is borrowed from linereq_create(), where,
+to verify the intent of the user, the direction must be set to in order to
+effect a change to the electrical configuration of a line. But, when
+applied to reconfiguration, that validation does not allow for the unset
+direction case, making it possible to clear flags set previously without
+specifying the line direction.
 
-If the skb is a fragment and reassembly happens before such function call
-returns, the sk must not be released.
+Adding to the inconsistency, those changes are not immediately applied by
+linereq_set_config(), but will take effect when the line value is next get
+or set.
 
-This affects skb fragments reassembled via netfilter or similar
-modules, e.g. openvswitch or ct_act.c, when run as part of tx pipeline.
+For example, by requesting a configuration with no flags set, an output
+line with GPIO_V2_LINE_FLAG_ACTIVE_LOW and GPIO_V2_LINE_FLAG_OPEN_DRAIN
+set could have those flags cleared, inverting the sense of the line and
+changing the line drive to push-pull on the next line value set.
 
-Eric Dumazet made an initial analysis of this bug.  Quoting Eric:
-  Calling ip_defrag() in output path is also implying skb_orphan(),
-  which is buggy because output path relies on sk not disappearing.
+Skip the reconfiguration of lines for which the direction is not set, and
+only reconfigure the lines for which direction is set.
 
-  A relevant old patch about the issue was :
-  8282f27449bf ("inet: frag: Always orphan skbs inside ip_defrag()")
-
-  [..]
-
-  net/ipv4/ip_output.c depends on skb->sk being set, and probably to an
-  inet socket, not an arbitrary one.
-
-  If we orphan the packet in ipvlan, then downstream things like FQ
-  packet scheduler will not work properly.
-
-  We need to change ip_defrag() to only use skb_orphan() when really
-  needed, ie whenever frag_list is going to be used.
-
-Eric suggested to stash sk in fragment queue and made an initial patch.
-However there is a problem with this:
-
-If skb is refragmented again right after, ip_do_fragment() will copy
-head->sk to the new fragments, and sets up destructor to sock_wfree.
-IOW, we have no choice but to fix up sk_wmem accouting to reflect the
-fully reassembled skb, else wmem will underflow.
-
-This change moves the orphan down into the core, to last possible moment.
-As ip_defrag_offset is aliased with sk_buff->sk member, we must move the
-offset into the FRAG_CB, else skb->sk gets clobbered.
-
-This allows to delay the orphaning long enough to learn if the skb has
-to be queued or if the skb is completing the reasm queue.
-
-In the former case, things work as before, skb is orphaned.  This is
-safe because skb gets queued/stolen and won't continue past reasm engine.
-
-In the latter case, we will steal the skb->sk reference, reattach it to
-the head skb, and fix up wmem accouting when inet_frag inflates truesize.
-
-Fixes: 7026b1ddb6b8 ("netfilter: Pass socket pointer down through okfn().")
-Diagnosed-by: Eric Dumazet <edumazet@google.com>
-Reported-by: xingwei lee <xrivendell7@gmail.com>
-Reported-by: yue sun <samsun1006219@gmail.com>
-Reported-by: syzbot+e5167d7144a62715044c@syzkaller.appspotmail.com
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240326101845.30836-1-fw@strlen.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Saeed Mirzamohammadi <saeed.mirzamohammadi@oracle.com>
+Fixes: a54756cb24ea ("gpiolib: cdev: support GPIO_V2_LINE_SET_CONFIG_IOCTL")
+Signed-off-by: Kent Gibson <warthog618@gmail.com>
+Link: https://lore.kernel.org/r/20240626052925.174272-3-warthog618@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/skbuff.h                  |    7 ---
- net/ipv4/inet_fragment.c                |   70 ++++++++++++++++++++++++++------
- net/ipv4/ip_fragment.c                  |    2 
- net/ipv6/netfilter/nf_conntrack_reasm.c |    2 
- 4 files changed, 60 insertions(+), 21 deletions(-)
+ drivers/gpio/gpiolib-cdev.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/include/linux/skbuff.h
-+++ b/include/linux/skbuff.h
-@@ -660,8 +660,6 @@ typedef unsigned char *sk_buff_data_t;
-  *	@rbnode: RB tree node, alternative to next/prev for netem/tcp
-  *	@list: queue head
-  *	@sk: Socket we are owned by
-- *	@ip_defrag_offset: (aka @sk) alternate use of @sk, used in
-- *		fragmentation management
-  *	@dev: Device we arrived on/are leaving by
-  *	@dev_scratch: (aka @dev) alternate use of @dev when @dev would be %NULL
-  *	@cb: Control buffer. Free for use by every layer. Put private vars here
-@@ -778,10 +776,7 @@ struct sk_buff {
- 		struct list_head	list;
- 	};
- 
--	union {
--		struct sock		*sk;
--		int			ip_defrag_offset;
--	};
-+	struct sock		*sk;
- 
- 	union {
- 		ktime_t		tstamp;
---- a/net/ipv4/inet_fragment.c
-+++ b/net/ipv4/inet_fragment.c
-@@ -24,6 +24,8 @@
- #include <net/ip.h>
- #include <net/ipv6.h>
- 
-+#include "../core/sock_destructor.h"
-+
- /* Use skb->cb to track consecutive/adjacent fragments coming at
-  * the end of the queue. Nodes in the rb-tree queue will
-  * contain "runs" of one or more adjacent fragments.
-@@ -39,6 +41,7 @@ struct ipfrag_skb_cb {
- 	};
- 	struct sk_buff		*next_frag;
- 	int			frag_run_len;
-+	int			ip_defrag_offset;
- };
- 
- #define FRAG_CB(skb)		((struct ipfrag_skb_cb *)((skb)->cb))
-@@ -390,12 +393,12 @@ int inet_frag_queue_insert(struct inet_f
- 	 */
- 	if (!last)
- 		fragrun_create(q, skb);  /* First fragment. */
--	else if (last->ip_defrag_offset + last->len < end) {
-+	else if (FRAG_CB(last)->ip_defrag_offset + last->len < end) {
- 		/* This is the common case: skb goes to the end. */
- 		/* Detect and discard overlaps. */
--		if (offset < last->ip_defrag_offset + last->len)
-+		if (offset < FRAG_CB(last)->ip_defrag_offset + last->len)
- 			return IPFRAG_OVERLAP;
--		if (offset == last->ip_defrag_offset + last->len)
-+		if (offset == FRAG_CB(last)->ip_defrag_offset + last->len)
- 			fragrun_append_to_last(q, skb);
- 		else
- 			fragrun_create(q, skb);
-@@ -412,13 +415,13 @@ int inet_frag_queue_insert(struct inet_f
- 
- 			parent = *rbn;
- 			curr = rb_to_skb(parent);
--			curr_run_end = curr->ip_defrag_offset +
-+			curr_run_end = FRAG_CB(curr)->ip_defrag_offset +
- 					FRAG_CB(curr)->frag_run_len;
--			if (end <= curr->ip_defrag_offset)
-+			if (end <= FRAG_CB(curr)->ip_defrag_offset)
- 				rbn = &parent->rb_left;
- 			else if (offset >= curr_run_end)
- 				rbn = &parent->rb_right;
--			else if (offset >= curr->ip_defrag_offset &&
-+			else if (offset >= FRAG_CB(curr)->ip_defrag_offset &&
- 				 end <= curr_run_end)
- 				return IPFRAG_DUP;
- 			else
-@@ -432,7 +435,7 @@ int inet_frag_queue_insert(struct inet_f
- 		rb_insert_color(&skb->rbnode, &q->rb_fragments);
- 	}
- 
--	skb->ip_defrag_offset = offset;
-+	FRAG_CB(skb)->ip_defrag_offset = offset;
- 
- 	return IPFRAG_OK;
- }
-@@ -442,13 +445,28 @@ void *inet_frag_reasm_prepare(struct ine
- 			      struct sk_buff *parent)
- {
- 	struct sk_buff *fp, *head = skb_rb_first(&q->rb_fragments);
--	struct sk_buff **nextp;
-+	void (*destructor)(struct sk_buff *);
-+	unsigned int orig_truesize = 0;
-+	struct sk_buff **nextp = NULL;
-+	struct sock *sk = skb->sk;
- 	int delta;
- 
-+	if (sk && is_skb_wmem(skb)) {
-+		/* TX: skb->sk might have been passed as argument to
-+		 * dst->output and must remain valid until tx completes.
-+		 *
-+		 * Move sk to reassembled skb and fix up wmem accounting.
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -1186,15 +1186,18 @@ static long linereq_set_config_unlocked(
+ 	for (i = 0; i < lr->num_lines; i++) {
+ 		desc = lr->lines[i].desc;
+ 		flags = gpio_v2_line_config_flags(lc, i);
++		/*
++		 * Lines not explicitly reconfigured as input or output
++		 * are left unchanged.
 +		 */
-+		orig_truesize = skb->truesize;
-+		destructor = skb->destructor;
-+	}
++		if (!(flags & GPIO_V2_LINE_DIRECTION_FLAGS))
++			continue;
 +
- 	if (head != skb) {
- 		fp = skb_clone(skb, GFP_ATOMIC);
--		if (!fp)
--			return NULL;
-+		if (!fp) {
-+			head = skb;
-+			goto out_restore_sk;
-+		}
- 		FRAG_CB(fp)->next_frag = FRAG_CB(skb)->next_frag;
- 		if (RB_EMPTY_NODE(&skb->rbnode))
- 			FRAG_CB(parent)->next_frag = fp;
-@@ -457,6 +475,12 @@ void *inet_frag_reasm_prepare(struct ine
- 					&q->rb_fragments);
- 		if (q->fragments_tail == skb)
- 			q->fragments_tail = fp;
-+
-+		if (orig_truesize) {
-+			/* prevent skb_morph from releasing sk */
-+			skb->sk = NULL;
-+			skb->destructor = NULL;
-+		}
- 		skb_morph(skb, head);
- 		FRAG_CB(skb)->next_frag = FRAG_CB(head)->next_frag;
- 		rb_replace_node(&head->rbnode, &skb->rbnode,
-@@ -464,13 +488,13 @@ void *inet_frag_reasm_prepare(struct ine
- 		consume_skb(head);
- 		head = skb;
- 	}
--	WARN_ON(head->ip_defrag_offset != 0);
-+	WARN_ON(FRAG_CB(head)->ip_defrag_offset != 0);
+ 		polarity_change =
+ 			(!!test_bit(FLAG_ACTIVE_LOW, &desc->flags) !=
+ 			 ((flags & GPIO_V2_LINE_FLAG_ACTIVE_LOW) != 0));
  
- 	delta = -head->truesize;
+ 		gpio_v2_line_config_flags_to_desc_flags(flags, &desc->flags);
+-		/*
+-		 * Lines have to be requested explicitly for input
+-		 * or output, else the line will be treated "as is".
+-		 */
+ 		if (flags & GPIO_V2_LINE_FLAG_OUTPUT) {
+ 			int val = gpio_v2_line_config_output_value(lc, i);
  
- 	/* Head of list must not be cloned. */
- 	if (skb_unclone(head, GFP_ATOMIC))
--		return NULL;
-+		goto out_restore_sk;
- 
- 	delta += head->truesize;
- 	if (delta)
-@@ -486,7 +510,7 @@ void *inet_frag_reasm_prepare(struct ine
- 
- 		clone = alloc_skb(0, GFP_ATOMIC);
- 		if (!clone)
--			return NULL;
-+			goto out_restore_sk;
- 		skb_shinfo(clone)->frag_list = skb_shinfo(head)->frag_list;
- 		skb_frag_list_init(head);
- 		for (i = 0; i < skb_shinfo(head)->nr_frags; i++)
-@@ -503,6 +527,21 @@ void *inet_frag_reasm_prepare(struct ine
- 		nextp = &skb_shinfo(head)->frag_list;
- 	}
- 
-+out_restore_sk:
-+	if (orig_truesize) {
-+		int ts_delta = head->truesize - orig_truesize;
-+
-+		/* if this reassembled skb is fragmented later,
-+		 * fraglist skbs will get skb->sk assigned from head->sk,
-+		 * and each frag skb will be released via sock_wfree.
-+		 *
-+		 * Update sk_wmem_alloc.
-+		 */
-+		head->sk = sk;
-+		head->destructor = destructor;
-+		refcount_add(ts_delta, &sk->sk_wmem_alloc);
-+	}
-+
- 	return nextp;
- }
- EXPORT_SYMBOL(inet_frag_reasm_prepare);
-@@ -510,6 +549,8 @@ EXPORT_SYMBOL(inet_frag_reasm_prepare);
- void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
- 			    void *reasm_data, bool try_coalesce)
- {
-+	struct sock *sk = is_skb_wmem(head) ? head->sk : NULL;
-+	const unsigned int head_truesize = head->truesize;
- 	struct sk_buff **nextp = (struct sk_buff **)reasm_data;
- 	struct rb_node *rbn;
- 	struct sk_buff *fp;
-@@ -572,6 +613,9 @@ void inet_frag_reasm_finish(struct inet_
- 	skb_mark_not_on_list(head);
- 	head->prev = NULL;
- 	head->tstamp = q->stamp;
-+
-+	if (sk)
-+		refcount_add(sum_truesize - head_truesize, &sk->sk_wmem_alloc);
- }
- EXPORT_SYMBOL(inet_frag_reasm_finish);
- 
---- a/net/ipv4/ip_fragment.c
-+++ b/net/ipv4/ip_fragment.c
-@@ -377,6 +377,7 @@ static int ip_frag_queue(struct ipq *qp,
- 	}
- 
- 	skb_dst_drop(skb);
-+	skb_orphan(skb);
- 	return -EINPROGRESS;
- 
- insert_error:
-@@ -479,7 +480,6 @@ int ip_defrag(struct net *net, struct sk
- 	struct ipq *qp;
- 
- 	__IP_INC_STATS(net, IPSTATS_MIB_REASMREQDS);
--	skb_orphan(skb);
- 
- 	/* Lookup (or create) queue header */
- 	qp = ip_find(net, ip_hdr(skb), user, vif);
---- a/net/ipv6/netfilter/nf_conntrack_reasm.c
-+++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
-@@ -297,6 +297,7 @@ static int nf_ct_frag6_queue(struct frag
- 	}
- 
- 	skb_dst_drop(skb);
-+	skb_orphan(skb);
- 	return -EINPROGRESS;
- 
- insert_error:
-@@ -472,7 +473,6 @@ int nf_ct_frag6_gather(struct net *net,
- 	hdr = ipv6_hdr(skb);
- 	fhdr = (struct frag_hdr *)skb_transport_header(skb);
- 
--	skb_orphan(skb);
- 	fq = fq_find(net, fhdr->identification, user, hdr,
- 		     skb->dev ? skb->dev->ifindex : 0);
- 	if (fq == NULL) {
+@@ -1202,7 +1205,7 @@ static long linereq_set_config_unlocked(
+ 			ret = gpiod_direction_output(desc, val);
+ 			if (ret)
+ 				return ret;
+-		} else if (flags & GPIO_V2_LINE_FLAG_INPUT) {
++		} else {
+ 			ret = gpiod_direction_input(desc);
+ 			if (ret)
+ 				return ret;
 
 
