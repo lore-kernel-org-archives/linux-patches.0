@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB301C07E5;
-	Tue, 15 Oct 2024 13:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E161C07E5;
+	Tue, 15 Oct 2024 13:06:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997600; cv=none; b=seEuIg6GxFNE8jr3mqNt+qx54fIbH66FAaCMFuTH4VkDh/XSm1aZCWvqOIXFUy2HQnYDEqZlVwL/GIZo3DquVssMNPijqIXdeMs2jh0vpc+ea2pHWlFKqUxKmh5JQXc8bk6m11taxPB+/RE9N0SfNZRyDDjegLynSGRqhbvCaLU=
+	t=1728997602; cv=none; b=H5Mg2yh0brUZdqm92oNvMtL0J0+THTU/lEJsR7h/sKfAfUwEuaGR8VBGO7Pp3tFxEpZ1B9l5U0seNhsJaWvWss6y9awT7n1eS51md3uChFxEymifP+NxQ3xu15HQH9RSa35/eCjEjZeMmDEOXbQFhX1Rlw8Esxq8e/esT+MdmnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997600; c=relaxed/simple;
-	bh=JnZjIGxXq7K2t7qWNGz/U/jko6URe2oU/EGUGoJ9YHw=;
+	s=arc-20240116; t=1728997602; c=relaxed/simple;
+	bh=6taNoQ+mdRiTCCe3ue1JQmFrz8UiRZIhQ9J52AoIX1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHn5HmonURAlLQTHoGtFGH1/+mvwIfBPvwOF9W0/7Ul2tppC1WEv3sE89P6ok4A5ZKDQqLy24F9riQHkeUy0Rym1+1zsf3KEg6mcuq596WE6DjMo4jYqmrYlsSEggHGNk7I8HZsvwEcGUeB7OJSOk9YZJFC3c0hvQPDyGL8sPeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kni0tLTl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bQQ1fPqhAAL4PgrvVY8zfVaDtQAIamFXoGSG/jDAzSRf4kqJjic8lX2WAuO+LPhz/WHtj9dN5X/7Dg0unLepunKjqy7YZhsdfXAAQi1ZrfEwBPkkYFSyMAHhtnCMGMOnQ1MPg+d+yijsKPIuwj4f9y8HzGI+YqzGDPKyzRemklY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpjTz8nj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kni0tLTl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A84C4CEC6;
-	Tue, 15 Oct 2024 13:06:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpjTz8nj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA2BC4CEC6;
+	Tue, 15 Oct 2024 13:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997599;
-	bh=JnZjIGxXq7K2t7qWNGz/U/jko6URe2oU/EGUGoJ9YHw=;
+	s=korg; t=1728997602;
+	bh=6taNoQ+mdRiTCCe3ue1JQmFrz8UiRZIhQ9J52AoIX1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kni0tLTl67i02gHYJP61BSu5jksIO5ljdi9gsxqEprJEefB44o5xG70NFWAFgpvZ8
-	 ebtvS3WLxiVtY08dpCnvHuuxoOnxX6BjoRVyIjeqNj7I0TxGR3JLOjg6ViHfWngLDi
-	 1yabj+Irl/r6CLo29lzb055KvbJyz03QX681OpSM=
+	b=rpjTz8njDvPJ9vJ78tLfHcTASfox3YsUmRZTmWs0tg1OKqnO6PxtKi5jaUrrwe9N6
+	 EiYQu4pW2/bUA6BE9PEpvXvJmnRD75pDwaZ0hkUgTW+PZhiDAu4qpmSvsdbYEUtz/5
+	 AJQcKf/FFjnskJ86oXI15dU5hTwiQjbLsXia9OQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jim Quinlan <james.quinlan@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 5.10 229/518] tty: rp2: Fix reset with non forgiving PCIe host bridges
-Date: Tue, 15 Oct 2024 14:42:13 +0200
-Message-ID: <20241015123925.833376711@linuxfoundation.org>
+	Pavan Kumar Paluri <papaluri@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 230/518] crypto: ccp - Properly unregister /dev/sev on sev PLATFORM_STATUS failure
+Date: Tue, 15 Oct 2024 14:42:14 +0200
+Message-ID: <20241015123925.871463568@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,44 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Pavan Kumar Paluri <papaluri@amd.com>
 
-commit f16dd10ba342c429b1e36ada545fb36d4d1f0e63 upstream.
+commit ce3d2d6b150ba8528f3218ebf0cee2c2c572662d upstream.
 
-The write to RP2_GLOBAL_CMD followed by an immediate read of
-RP2_GLOBAL_CMD in rp2_reset_asic() is intented to flush out the write,
-however by then the device is already in reset and cannot respond to a
-memory cycle access.
+In case of sev PLATFORM_STATUS failure, sev_get_api_version() fails
+resulting in sev_data field of psp_master nulled out. This later becomes
+a problem when unloading the ccp module because the device has not been
+unregistered (via misc_deregister()) before clearing the sev_data field
+of psp_master. As a result, on reloading the ccp module, a duplicate
+device issue is encountered as can be seen from the dmesg log below.
 
-On platforms such as the Raspberry Pi 4 and others using the
-pcie-brcmstb.c driver, any memory access to a device that cannot respond
-is met with a fatal system error, rather than being substituted with all
-1s as is usually the case on PC platforms.
+on reloading ccp module via modprobe ccp
 
-Swapping the delay and the read ensures that the device has finished
-resetting before we attempt to read from it.
+Call Trace:
+  <TASK>
+  dump_stack_lvl+0xd7/0xf0
+  dump_stack+0x10/0x20
+  sysfs_warn_dup+0x5c/0x70
+  sysfs_create_dir_ns+0xbc/0xd
+  kobject_add_internal+0xb1/0x2f0
+  kobject_add+0x7a/0xe0
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  ? get_device_parent+0xd4/0x1e0
+  ? __pfx_klist_children_get+0x10/0x10
+  device_add+0x121/0x870
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  device_create_groups_vargs+0xdc/0x100
+  device_create_with_groups+0x3f/0x60
+  misc_register+0x13b/0x1c0
+  sev_dev_init+0x1d4/0x290 [ccp]
+  psp_dev_init+0x136/0x300 [ccp]
+  sp_init+0x6f/0x80 [ccp]
+  sp_pci_probe+0x2a6/0x310 [ccp]
+  ? srso_alias_return_thunk+0x5/0xfbef5
+  local_pci_probe+0x4b/0xb0
+  work_for_cpu_fn+0x1a/0x30
+  process_one_work+0x203/0x600
+  worker_thread+0x19e/0x350
+  ? __pfx_worker_thread+0x10/0x10
+  kthread+0xeb/0x120
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork+0x3c/0x60
+  ? __pfx_kthread+0x10/0x10
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+  kobject: kobject_add_internal failed for sev with -EEXIST, don't try to register things with the same name in the same directory.
+  ccp 0000:22:00.1: sev initialization failed
+  ccp 0000:22:00.1: psp initialization failed
+  ccp 0000:a2:00.1: no command queues available
+  ccp 0000:a2:00.1: psp enabled
 
-Fixes: 7d9f49afa451 ("serial: rp2: New driver for Comtrol RocketPort 2 cards")
-Cc: stable <stable@kernel.org>
-Suggested-by: Jim Quinlan <james.quinlan@broadcom.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20240906225435.707837-1-florian.fainelli@broadcom.com
+Address this issue by unregistering the /dev/sev before clearing out
+sev_data in case of PLATFORM_STATUS failure.
+
+Fixes: 200664d5237f ("crypto: ccp: Add Secure Encrypted Virtualization (SEV) command support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Pavan Kumar Paluri <papaluri@amd.com>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/rp2.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/ccp/sev-dev.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/tty/serial/rp2.c
-+++ b/drivers/tty/serial/rp2.c
-@@ -600,8 +600,8 @@ static void rp2_reset_asic(struct rp2_ca
- 	u32 clk_cfg;
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -1129,6 +1129,8 @@ void sev_pci_init(void)
+ 	return;
  
- 	writew(1, base + RP2_GLOBAL_CMD);
--	readw(base + RP2_GLOBAL_CMD);
- 	msleep(100);
-+	readw(base + RP2_GLOBAL_CMD);
- 	writel(0, base + RP2_CLK_PRESCALER);
+ err:
++	sev_dev_destroy(psp_master);
++
+ 	psp_master->sev_data = NULL;
+ }
  
- 	/* TDM clock configuration */
 
 
