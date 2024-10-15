@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47BF1B219E;
-	Tue, 15 Oct 2024 13:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A4C1B2185;
+	Tue, 15 Oct 2024 13:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998270; cv=none; b=pruLwCpgbo/138bk18V7tC0gItt+lac+Xj7XZuofiihA/pkSn4HBzZ6U/YAFuueigxtiwCOykSa2/KkPRFRq6E3DdfnFEDTJ8ZM5d6J92tw2uOSwMTYymc4fkGzJvte6Jc5GU0tpbp7lsrEX5wjTiCwGWsU1cV5eOAi9BZ2rsdQ=
+	t=1728998274; cv=none; b=LDL5NhZhF0QsxiSOkUBemDTPCa5JmpYnq5gfIk2wZQpdDQxlkbs8hLv9pkISs+M5wm4ieAA6hfFC8+fc+PBqZ5Fqe0eznFGesU6bdeXsVHQ/Uuw85nILlBA1XTREDQJYAAVYOTy6DTOc3lDOzae2HgOaHOWXkhsJilNZM/uiwyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998270; c=relaxed/simple;
-	bh=EMmdUfZ8oVBedZiq6+JSkYa6rjDL4/37xl/HEmiJMHQ=;
+	s=arc-20240116; t=1728998274; c=relaxed/simple;
+	bh=tvbOXrxv/qIwdxPZfUmLJqFD6oe3MBnjddhn1qMS4UA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pe0l5Ux9MbV02b3QbDBKLcpAJAFIAYOu6db98ivsFWHhx9TCaS87PGVFhpcviGb0t3tX3nNKaTMQ/ETh63saYaC1fXEBupgS8TNYbErlgH0fqVdSGbyj8W1Ucgwksapb5NW4Un0Jzxt3Aunr7Ur84pRodTOUZg4dh5lNAG0w5NQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wF9NS2h2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gz3Am5dhk5mWWeUFW7tOKVoDmhr1Rl0r9a1gvcHNQ0tkw4gbsjhHPPscDyd5Ytc5Z/OPEh4KG2WaduD++qAeUiVYHzVbvsi190+xWOk4BhBVHQQ5vMP7ejBoew5SDwdDJkq9CSyvbTvxMClJ3JzbSJxuxI3UEUsGvgPb3YEB8/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYMc8NQG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wF9NS2h2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5193C4CEC6;
-	Tue, 15 Oct 2024 13:17:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYMc8NQG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7E6C4CEC6;
+	Tue, 15 Oct 2024 13:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998270;
-	bh=EMmdUfZ8oVBedZiq6+JSkYa6rjDL4/37xl/HEmiJMHQ=;
+	s=korg; t=1728998273;
+	bh=tvbOXrxv/qIwdxPZfUmLJqFD6oe3MBnjddhn1qMS4UA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wF9NS2h2IcOh+oC/7ygTLzmkq3C6W7vQv6nJBLzC2q9fZrdyqz4VHDZ90iXCOU/MV
-	 PNlqgKt7MWizwzTed+Zl8FareV8J4b9igdBsxlAwm1/9UjYRbaVVSSNDdvpyV+G3G0
-	 XL5YHkqwHPs5mKNBvV0muq6matDaBhhTVLijQJD4=
+	b=uYMc8NQGH4HbyYfqLWKm2hCZv75xg+Wb3C6OruP8DgSR94PBGtSIcpxFvApE1/oNt
+	 XI1UfwaLmrdzT5yuwPptmEtCJFPJanyQVKPQ5jfGJTzWuhfJ3nHKf8cCqvjyFE6Hlr
+	 VVSINtAOtbYZxe8KPZuZ/0hzuIrPWEATwzi18Mu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 428/518] drm/rockchip: vop: clear DMA stop bit on RK3066
-Date: Tue, 15 Oct 2024 14:45:32 +0200
-Message-ID: <20241015123933.512126504@linuxfoundation.org>
+Subject: [PATCH 5.10 429/518] clk: qcom: dispcc-sm8250: use CLK_SET_RATE_PARENT for branch clocks
+Date: Tue, 15 Oct 2024 14:45:33 +0200
+Message-ID: <20241015123933.549944162@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,73 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 6b44aa559d6c7f4ea591ef9d2352a7250138d62a ]
+[ Upstream commit 0e93c6320ecde0583de09f3fe801ce8822886fec ]
 
-The RK3066 VOP sets a dma_stop bit when it's done scanning out a frame
-and needs the driver to acknowledge that by clearing the bit.
+Add CLK_SET_RATE_PARENT for several branch clocks. Such clocks don't
+have a way to change the rate, so set the parent rate instead.
 
-Unless we clear it "between" frames, the RGB output only shows noise
-instead of the picture. atomic_flush is the place for it that least
-affects other code (doing it on vblank would require converting all
-other usages of the reg_lock to spin_(un)lock_irq, which would affect
-performance for everyone).
-
-This seems to be a redundant synchronization mechanism that was removed
-in later iterations of the VOP hardware block.
-
-Fixes: f4a6de855eae ("drm: rockchip: vop: add rk3066 vop definitions")
+Fixes: 80a18f4a8567 ("clk: qcom: Add display clock controller driver for SM8150 and SM8250")
 Cc: stable@vger.kernel.org
-Signed-off-by: Val Packett <val@packett.cool>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240624204054.5524-2-val@packett.cool
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240804-sm8350-fixes-v1-1-1149dd8399fe@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 4 ++++
- drivers/gpu/drm/rockchip/rockchip_drm_vop.h | 1 +
- drivers/gpu/drm/rockchip/rockchip_vop_reg.c | 1 +
- 3 files changed, 6 insertions(+)
+ drivers/clk/qcom/dispcc-sm8250.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-index 18ee781ddb79e..b4517e338f5ec 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
-@@ -1523,6 +1523,10 @@ static void vop_crtc_atomic_flush(struct drm_crtc *crtc,
- 	VOP_AFBC_SET(vop, enable, s->enable_afbc);
- 	vop_cfg_done(vop);
- 
-+	/* Ack the DMA transfer of the previous frame (RK3066). */
-+	if (VOP_HAS_REG(vop, common, dma_stop))
-+		VOP_REG_SET(vop, common, dma_stop, 0);
-+
- 	spin_unlock(&vop->reg_lock);
- 
- 	/*
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
-index 14179e89bd215..32d1783be01d3 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
-@@ -103,6 +103,7 @@ struct vop_common {
- 	struct vop_reg lut_buffer_index;
- 	struct vop_reg gate_en;
- 	struct vop_reg mmu_en;
-+	struct vop_reg dma_stop;
- 	struct vop_reg out_mode;
- 	struct vop_reg standby;
- };
-diff --git a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
-index 310746468ff33..b43b684bee866 100644
---- a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
-@@ -401,6 +401,7 @@ static const struct vop_output rk3066_output = {
- };
- 
- static const struct vop_common rk3066_common = {
-+	.dma_stop = VOP_REG(RK3066_SYS_CTRL0, 0x1, 0),
- 	.standby = VOP_REG(RK3066_SYS_CTRL0, 0x1, 1),
- 	.out_mode = VOP_REG(RK3066_DSP_CTRL0, 0xf, 0),
- 	.cfg_done = VOP_REG(RK3066_REG_CFG_DONE, 0x1, 0),
+diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
+index 07a98d3f882d0..bbdd27946bf1f 100644
+--- a/drivers/clk/qcom/dispcc-sm8250.c
++++ b/drivers/clk/qcom/dispcc-sm8250.c
+@@ -665,6 +665,7 @@ static struct clk_branch disp_cc_mdss_dp_link1_intf_clk = {
+ 				.hw = &disp_cc_mdss_dp_link1_div_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -700,6 +701,7 @@ static struct clk_branch disp_cc_mdss_dp_link_intf_clk = {
+ 				.hw = &disp_cc_mdss_dp_link_div_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -825,6 +827,7 @@ static struct clk_branch disp_cc_mdss_mdp_lut_clk = {
+ 				.hw = &disp_cc_mdss_mdp_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
 -- 
 2.43.0
 
