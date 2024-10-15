@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EED61C07FF;
-	Tue, 15 Oct 2024 13:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562891AF0B1;
+	Tue, 15 Oct 2024 13:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997725; cv=none; b=TzAC9MZRxk+VIV7+WLOCWpRkyBzLJkSpO317UVu08YLQqbbvF2KCIiq8biNZ0qJu4BPNIJo2g3dZLBizkQOkInIEvHHULdySGg7HNW6gXdnvMa76Ue1se8R7Uuy3lJLcDnEKBbvPjG1bP9c7fgksJlrJrbUBQCFtA3jghqGIlZE=
+	t=1728997728; cv=none; b=t62VVPhv5Ycicrou5gbPGaBQmbkpm+VaRx7yIf0kfxYYjAsb3pSnZxtE2gTHHS9F1AtAto4QVVIbkEloT9MVXLga3eTxCs0TbNUYsOLiV6iEW65/c831qxsdci4ht+gPfyBUfh4IPfMnjB62b1YsKnF+Cx5IiZfCe8E6Cb8SL8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997725; c=relaxed/simple;
-	bh=FguqohK9UnfdjEPCVDcpWkttA3cGUduDFcY4NEg8SkM=;
+	s=arc-20240116; t=1728997728; c=relaxed/simple;
+	bh=MRyA5qgEh4x1dXCTYcdP1DhhdDCP5kZ92n8PdkgU0DY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tk14Ojx4w2j7NfaUfn2xXJXu/QGB0uZaqYjO7ZAceCmzAeDlsbESgCEd/kWqmSf9jvL3lv4eSTxqVCmYAzAib551P1l+dsq4NUv7rPrHZZ7MeE6/WEX/aL1Fhr7H3sx3ZACrV6xb9hGgGfzXj1oJdxvAoq7cBY0JpYHAw+FhkLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOVSn5C5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HfCKm9qr5DcqkK7GnuxOIz7jelur99bKF2+CyulovXf/j7IZOAPiVtHk/MRDWqWp2QeL0VjNilTE6LlC7C88y2kheTumv17jilBFp7FYeHxiZslUkfP2PGvs7E/s3rv45PYLLGoqmBbWBTY5RT7eCKaUph0fekifupZwLuFNsTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LA4mZQuh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOVSn5C5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA07DC4CEC6;
-	Tue, 15 Oct 2024 13:08:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LA4mZQuh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD64C4CEC6;
+	Tue, 15 Oct 2024 13:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997725;
-	bh=FguqohK9UnfdjEPCVDcpWkttA3cGUduDFcY4NEg8SkM=;
+	s=korg; t=1728997728;
+	bh=MRyA5qgEh4x1dXCTYcdP1DhhdDCP5kZ92n8PdkgU0DY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kOVSn5C5grz0ogo96bbOQNmtmWAhs1RSNNHbWRreqA2CDCjh6zOc03nHygV/BR3M+
-	 SXKGLBpsMES5c+lnb+f104kZRzsp59hjS5hL9Vs5eaxpxhDdjR7gGq4c5eG5FjiBi5
-	 8DLhanMFZOsf+XmemfkUyZzZiK8AK5O1UFiq6CY8=
+	b=LA4mZQuhpSTMtmxQCYqRhCE4IRywai1MQXFY6aimezhWQHqeaAL2ftANZ50co0PJ8
+	 zKzM0CCLfMexuulcpAE3PzFpZSrZoJYqIhXuarSBmwPHhOcSlIHCDWz5JgvOu966Wp
+	 L0Q7+vKiuqtNliwXklVXv3CXlEkQkzzlYLKnxH9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chen <liaochen4@huawei.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 266/518] mailbox: rockchip: fix a typo in module autoloading
-Date: Tue, 15 Oct 2024 14:42:50 +0200
-Message-ID: <20241015123927.260451662@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 5.10 237/518] wifi: rtw88: 8822c: Fix reported RX band width
+Date: Tue, 15 Oct 2024 14:42:21 +0200
+Message-ID: <20241015123926.141297668@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,39 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liao Chen <liaochen4@huawei.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit e92d87c9c5d769e4cb1dd7c90faa38dddd7e52e3 ]
+commit a71ed5898dfae68262f79277915d1dfe34586bc6 upstream.
 
-MODULE_DEVICE_TABLE(of, rockchip_mbox_of_match) could let the module
-properly autoloaded based on the alias from of_device_id table. It
-should be 'rockchip_mbox_of_match' instead of 'rockchp_mbox_of_match',
-just fix it.
+"iw dev wlp2s0 station dump" shows incorrect rx bitrate:
 
-Fixes: f70ed3b5dc8b ("mailbox: rockchip: Add Rockchip mailbox driver")
-Signed-off-by: Liao Chen <liaochen4@huawei.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+tx bitrate:     866.7 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 2
+rx bitrate:     86.7 MBit/s VHT-MCS 9 VHT-NSS 1
+
+This is because the RX band width is calculated incorrectly. Fix the
+calculation according to the phydm_rxsc_2_bw() function from the
+official drivers.
+
+After:
+
+tx bitrate:     866.7 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 2
+rx bitrate:     390.0 MBit/s VHT-MCS 9 80MHz VHT-NSS 1
+
+It also works correctly with the AP configured for 20 MHz and 40 MHz.
+
+Tested with RTL8822CE.
+
+Cc: stable@vger.kernel.org
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/bca8949b-e2bd-4515-98fd-70d3049a0097@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/rockchip-mailbox.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/rtw8822c.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mailbox/rockchip-mailbox.c b/drivers/mailbox/rockchip-mailbox.c
-index 979acc810f307..ca50f7f176f6a 100644
---- a/drivers/mailbox/rockchip-mailbox.c
-+++ b/drivers/mailbox/rockchip-mailbox.c
-@@ -159,7 +159,7 @@ static const struct of_device_id rockchip_mbox_of_match[] = {
- 	{ .compatible = "rockchip,rk3368-mailbox", .data = &rk3368_drv_data},
- 	{ },
- };
--MODULE_DEVICE_TABLE(of, rockchp_mbox_of_match);
-+MODULE_DEVICE_TABLE(of, rockchip_mbox_of_match);
+--- a/drivers/net/wireless/realtek/rtw88/rtw8822c.c
++++ b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
+@@ -1813,12 +1813,14 @@ static void query_phy_status_page1(struc
+ 	else
+ 		rxsc = GET_PHY_STAT_P1_HT_RXSC(phy_status);
  
- static int rockchip_mbox_probe(struct platform_device *pdev)
- {
--- 
-2.43.0
-
+-	if (rxsc >= 9 && rxsc <= 12)
++	if (rxsc == 0)
++		bw = rtwdev->hal.current_band_width;
++	else if (rxsc >= 1 && rxsc <= 8)
++		bw = RTW_CHANNEL_WIDTH_20;
++	else if (rxsc >= 9 && rxsc <= 12)
+ 		bw = RTW_CHANNEL_WIDTH_40;
+-	else if (rxsc >= 13)
+-		bw = RTW_CHANNEL_WIDTH_80;
+ 	else
+-		bw = RTW_CHANNEL_WIDTH_20;
++		bw = RTW_CHANNEL_WIDTH_80;
+ 
+ 	pkt_stat->rx_power[RF_PATH_A] = GET_PHY_STAT_P1_PWDB_A(phy_status) - 110;
+ 	pkt_stat->rx_power[RF_PATH_B] = GET_PHY_STAT_P1_PWDB_B(phy_status) - 110;
 
 
