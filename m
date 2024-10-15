@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9059E1C57B1;
-	Tue, 15 Oct 2024 12:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5AA1C57B1;
+	Tue, 15 Oct 2024 12:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993816; cv=none; b=VusxcmbRN0rfw0zSTPokJXo+Z0SXu3YizVzICoy6HWWM6z0nN3QyGk9o/UmCMKbKDsvSHnRbSnCAFCpWRExZJBfgwtUCDTlqibJcCiibk/HHth44r+35mNt3plEMhUx5cKDhgTzA1cIAziA0HlaJSlCD6CynRquPWTGkBwqP1B8=
+	t=1728993819; cv=none; b=c4aYbwVNdAL4zzFKs+vzbvjziWOorZM8vFXfZTczmXttax9jmOqb8Czf7elMYhDnJ/Pc2eTTUVvWUZNrdH4zYuaNI9TSrJBMO391/tYKR6OCSsx7Xfjsq4K8E4QQpMJmOD5PUhTkuTCztoSWmOY6iWAszzMaISmf5k4bp5PSxGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993816; c=relaxed/simple;
-	bh=BOw8Rriag/HetO4A3NUNLUM+LQ3idlw+nF6IM3NZ5gE=;
+	s=arc-20240116; t=1728993819; c=relaxed/simple;
+	bh=eGJ8QubKQkPYvypgB16CIHIhQGlg1/g8vTm6ekAavL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pLDd7PpvDQ50g0EW/9APXvWCB+6AXXuyqJjd2zjzqOt3saVUsQUFjRn7fTgdNjFuv1VBgpUWJgDMnEwJ3A5I45LBCnpHIddg5Mmlb9NDlLuaI8FUFGc4CwBO/xGa/wqkdgLRoFOgRDu/4YvBoRDD9UvTCHgXSQ58jYWDQzsNOZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIqOsOvH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kk54Jt/ZCIt30FmKh7sT5Xfxnx8EcwMGRPhSlgz40f9k02w1ivIaC/yPxyl5UgjK0Hqet0B9R/UNDOeVu3rXDnWI4Cg/Jh2a1/nUtcehmknWBURS8CQYSuXxs/i0oa+1hNZPg1SPyr5im5591mc5mtysvIFKIxDUzqZ66ysQTPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POaOcigz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIqOsOvH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3923C4CEC6;
-	Tue, 15 Oct 2024 12:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POaOcigz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0102AC4CEC6;
+	Tue, 15 Oct 2024 12:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993816;
-	bh=BOw8Rriag/HetO4A3NUNLUM+LQ3idlw+nF6IM3NZ5gE=;
+	s=korg; t=1728993819;
+	bh=eGJ8QubKQkPYvypgB16CIHIhQGlg1/g8vTm6ekAavL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZIqOsOvHT9FtbcgZw3hbB2G7K5/9MCrKoc9iOe7wYCkU2sm3gspEGvPlX8SwKHIvI
-	 ByeHoNG+7Fp8dK7rbM/Z4m8KVyShb76W2qGUTnTUvWNNa6RKxbufVj9KiXWoJOzKcU
-	 dRBqOzDBxxiCM4VqqaJMymBy0OnUTG89XLy7RMNk=
+	b=POaOcigzzjbHCQ5H+owIQD3xfUVP7SKZ7YdC8HbdNKeXEGGr9+rEP243fmMKC7udS
+	 2XBhXWexFRFxDJs9zzmdXH8iu8IbmBnA39BERAH4tzHoDEylV7LnX28VSPyPqZJVHp
+	 PT1PZZA92SJRLx66DYJ3nnPC2Q3zg1vXnyXicz3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.15 525/691] clk: qcom: dispcc-sm8250: use CLK_SET_RATE_PARENT for branch clocks
-Date: Tue, 15 Oct 2024 13:27:53 +0200
-Message-ID: <20241015112501.178190119@linuxfoundation.org>
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 5.15 526/691] media: sun4i_csi: Implement link validate for sun4i_csi subdev
+Date: Tue, 15 Oct 2024 13:27:54 +0200
+Message-ID: <20241015112501.218317488@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -50,48 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 
-commit 0e93c6320ecde0583de09f3fe801ce8822886fec upstream.
+commit 2dc5d5d401f5c6cecd97800ffef82e8d17d228f0 upstream.
 
-Add CLK_SET_RATE_PARENT for several branch clocks. Such clocks don't
-have a way to change the rate, so set the parent rate instead.
+The sun4i_csi driver doesn't implement link validation for the subdev it
+registers, leaving the link between the subdev and its source
+unvalidated. Fix it, using the v4l2_subdev_link_validate() helper.
 
-Fixes: 80a18f4a8567 ("clk: qcom: Add display clock controller driver for SM8150 and SM8250")
+Fixes: 577bbf23b758 ("media: sunxi: Add A10 CSI driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240804-sm8350-fixes-v1-1-1149dd8399fe@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Acked-by: Chen-Yu Tsai <wens@csie.org>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/dispcc-sm8250.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/clk/qcom/dispcc-sm8250.c
-+++ b/drivers/clk/qcom/dispcc-sm8250.c
-@@ -832,6 +832,7 @@ static struct clk_branch disp_cc_mdss_dp
- 				&disp_cc_mdss_dp_link1_div_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -867,6 +868,7 @@ static struct clk_branch disp_cc_mdss_dp
- 				&disp_cc_mdss_dp_link_div_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -992,6 +994,7 @@ static struct clk_branch disp_cc_mdss_md
- 				&disp_cc_mdss_mdp_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
+--- a/drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c
++++ b/drivers/media/platform/sunxi/sun4i-csi/sun4i_csi.c
+@@ -40,6 +40,10 @@ static const struct media_entity_operati
+ 	.link_validate = v4l2_subdev_link_validate,
+ };
+ 
++static const struct media_entity_operations sun4i_csi_subdev_entity_ops = {
++	.link_validate = v4l2_subdev_link_validate,
++};
++
+ static int sun4i_csi_notify_bound(struct v4l2_async_notifier *notifier,
+ 				  struct v4l2_subdev *subdev,
+ 				  struct v4l2_async_subdev *asd)
+@@ -218,6 +222,7 @@ static int sun4i_csi_probe(struct platfo
+ 	v4l2_subdev_init(subdev, &sun4i_csi_subdev_ops);
+ 	subdev->flags = V4L2_SUBDEV_FL_HAS_DEVNODE | V4L2_SUBDEV_FL_HAS_EVENTS;
+ 	subdev->entity.function = MEDIA_ENT_F_VID_IF_BRIDGE;
++	subdev->entity.ops = &sun4i_csi_subdev_entity_ops;
+ 	subdev->owner = THIS_MODULE;
+ 	snprintf(subdev->name, sizeof(subdev->name), "sun4i-csi-0");
+ 	v4l2_set_subdevdata(subdev, csi);
 
 
