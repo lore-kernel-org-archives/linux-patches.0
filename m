@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6686C1EC018;
-	Tue, 15 Oct 2024 12:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A171EF941;
+	Tue, 15 Oct 2024 12:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994196; cv=none; b=Vum+FLT21BXL0FoaqV+8Amr7UCR3tk/X0EoJELdTfYkGzk0ZoakELVwChilqBGYB+H5QEDuQpPBJRiRtTJw89CLkRyPhvVD8jVlU8dGlkk2yuivS6fO4OnJvNJJORKj1xqObCWzgoYmfyqlqvV68A0p4srXEYTOJN3PynXOoxjo=
+	t=1728994200; cv=none; b=OFJJ7gWcFecvw4UydHeTzSWjbzswkjAYIoZR0Q89u4z/l5XLXzUlDwaxOr/bKourF82eQlP0W76/k4h0EKtpfqFpVRZ19BrX0cQDwnb3EdlNq8Gpp/BZIXXokDyOE4UnzNufAGj0ZMy7+pQC6x21lwlem3hARRpgyHDZ7cvedfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994196; c=relaxed/simple;
-	bh=dFihTw/eDNY13F1ZBAT3LdZ3BXF0ox3a/i+HERVtLuk=;
+	s=arc-20240116; t=1728994200; c=relaxed/simple;
+	bh=MQUgX2Ci4GE285drRM50b2Gtk7+cS1u6g2w3s/WCCNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XRiuNAnR3H3cUFSFyag+OT9muQj9TkekUgSIqGWnilcR+gx3yPysMWtARD6clFr4YXo4nazVLNmJLJVkgw/bOQXAEMGpnSEDj8Gh9SCMzq9EvzzhRJfW0R+MBys3KUvfTOQo5JRwpSd/QCGuTMY778GoNR3AEKb+gDY6U+Zm9/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8QJnWaj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A1mVqD+QXZjpB7bCymFPGv9BmKFiphkdKdstpnqujLAgxYkPPRAoeRjn39O9hilSKPhEoaqN4uA3Nwwfns0geH2MVc8TvjaCQk5CRV9t/9owiFt258chOR+kmQMd9lrHpxORZTup4yY7dymhyWeTYgFCxkigGmzZoa16rp8edp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALP8uMRY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8QJnWaj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3A0C4CEC6;
-	Tue, 15 Oct 2024 12:09:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALP8uMRY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F29AC4CEC6;
+	Tue, 15 Oct 2024 12:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994196;
-	bh=dFihTw/eDNY13F1ZBAT3LdZ3BXF0ox3a/i+HERVtLuk=;
+	s=korg; t=1728994199;
+	bh=MQUgX2Ci4GE285drRM50b2Gtk7+cS1u6g2w3s/WCCNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q8QJnWajdBz0AD0a7dXOMHfbZJZEjUzAKFGxaNA0uVWUhlL3+sVi/bRL9Pt9epg9V
-	 j/av7ApuhEs5KnwzaQfQFPRUe2sL2VGK1VOgPdk3dPKyCJ7Eem8sDede+1pr1WqE69
-	 ByvPAlHauT/j7KVN/vecR8ZNhh66O+5pGV2Ypiao=
+	b=ALP8uMRYQKRoEwSPkkscm4Xl17vyNVcSXQyN4Nebzl+VUINEKbMMWrAOl7tLaf21m
+	 ZE3f2Ypey0IHy5ytAFnrttQhLrWaGP4eyPGklLonbRdyfEVVGvK5UeJlnAj6igMmPS
+	 MyaCRATjtyETLqOIVg0o395ZfMg+0Mfi7Nr9MqO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Philip Chen <philipchen@chromium.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 635/691] thermal: intel: int340x: processor: Fix warning during module unload
-Date: Tue, 15 Oct 2024 13:29:43 +0200
-Message-ID: <20241015112505.532225454@linuxfoundation.org>
+Subject: [PATCH 5.15 618/691] virtio_pmem: Check device status before requesting flush
+Date: Tue, 15 Oct 2024 13:29:26 +0200
+Message-ID: <20241015112504.861498881@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,80 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Philip Chen <philipchen@chromium.org>
 
-[ Upstream commit 99ca0b57e49fb73624eede1c4396d9e3d10ccf14 ]
+[ Upstream commit e25fbcd97cf52c3c9824d44b5c56c19673c3dd50 ]
 
-The processor_thermal driver uses pcim_device_enable() to enable a PCI
-device, which means the device will be automatically disabled on driver
-detach.  Thus there is no need to call pci_disable_device() again on it.
+If a pmem device is in a bad status, the driver side could wait for
+host ack forever in virtio_pmem_flush(), causing the system to hang.
 
-With recent PCI device resource management improvements, e.g. commit
-f748a07a0b64 ("PCI: Remove legacy pcim_release()"), this problem is
-exposed and triggers the warining below.
+So add a status check in the beginning of virtio_pmem_flush() to return
+early if the device is not activated.
 
- [  224.010735] proc_thermal_pci 0000:00:04.0: disabling already-disabled device
- [  224.010747] WARNING: CPU: 8 PID: 4442 at drivers/pci/pci.c:2250 pci_disable_device+0xe5/0x100
- ...
- [  224.010844] Call Trace:
- [  224.010845]  <TASK>
- [  224.010847]  ? show_regs+0x6d/0x80
- [  224.010851]  ? __warn+0x8c/0x140
- [  224.010854]  ? pci_disable_device+0xe5/0x100
- [  224.010856]  ? report_bug+0x1c9/0x1e0
- [  224.010859]  ? handle_bug+0x46/0x80
- [  224.010862]  ? exc_invalid_op+0x1d/0x80
- [  224.010863]  ? asm_exc_invalid_op+0x1f/0x30
- [  224.010867]  ? pci_disable_device+0xe5/0x100
- [  224.010869]  ? pci_disable_device+0xe5/0x100
- [  224.010871]  ? kfree+0x21a/0x2b0
- [  224.010873]  pcim_disable_device+0x20/0x30
- [  224.010875]  devm_action_release+0x16/0x20
- [  224.010878]  release_nodes+0x47/0xc0
- [  224.010880]  devres_release_all+0x9f/0xe0
- [  224.010883]  device_unbind_cleanup+0x12/0x80
- [  224.010885]  device_release_driver_internal+0x1ca/0x210
- [  224.010887]  driver_detach+0x4e/0xa0
- [  224.010889]  bus_remove_driver+0x6f/0xf0
- [  224.010890]  driver_unregister+0x35/0x60
- [  224.010892]  pci_unregister_driver+0x44/0x90
- [  224.010894]  proc_thermal_pci_driver_exit+0x14/0x5f0 [processor_thermal_device_pci]
- ...
- [  224.010921] ---[ end trace 0000000000000000 ]---
-
-Remove the excess pci_disable_device() calls.
-
-Fixes: acd65d5d1cf4 ("thermal/drivers/int340x/processor_thermal: Add PCI MMIO based thermal driver")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20240930081801.28502-3-rui.zhang@intel.com
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Philip Chen <philipchen@chromium.org>
+Message-Id: <20240826215313.2673566-1-philipchen@chromium.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Pankaj Gupta <pankaj.gupta.linux@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/int340x_thermal/processor_thermal_device_pci.c        | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/nvdimm/nd_virtio.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
-index 921ed55c30f06..f1c65eae8c10a 100644
---- a/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
-+++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
-@@ -287,7 +287,6 @@ static int proc_thermal_pci_probe(struct pci_dev *pdev, const struct pci_device_
- 	if (!pci_info->no_legacy)
- 		proc_thermal_remove(proc_priv);
- 	proc_thermal_mmio_remove(pdev, proc_priv);
--	pci_disable_device(pdev);
+diff --git a/drivers/nvdimm/nd_virtio.c b/drivers/nvdimm/nd_virtio.c
+index 10351d5b49fac..41e97c6567cf9 100644
+--- a/drivers/nvdimm/nd_virtio.c
++++ b/drivers/nvdimm/nd_virtio.c
+@@ -44,6 +44,15 @@ static int virtio_pmem_flush(struct nd_region *nd_region)
+ 	unsigned long flags;
+ 	int err, err1;
  
- 	return ret;
- }
-@@ -309,7 +308,6 @@ static void proc_thermal_pci_remove(struct pci_dev *pdev)
- 	proc_thermal_mmio_remove(pdev, pci_info->proc_priv);
- 	if (!pci_info->no_legacy)
- 		proc_thermal_remove(proc_priv);
--	pci_disable_device(pdev);
- }
- 
- #ifdef CONFIG_PM_SLEEP
++	/*
++	 * Don't bother to submit the request to the device if the device is
++	 * not activated.
++	 */
++	if (vdev->config->get_status(vdev) & VIRTIO_CONFIG_S_NEEDS_RESET) {
++		dev_info(&vdev->dev, "virtio pmem device needs a reset\n");
++		return -EIO;
++	}
++
+ 	might_sleep();
+ 	req_data = kmalloc(sizeof(*req_data), GFP_KERNEL);
+ 	if (!req_data)
 -- 
 2.43.0
 
