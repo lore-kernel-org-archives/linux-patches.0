@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D81320721A;
-	Tue, 15 Oct 2024 13:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FA820721A;
+	Tue, 15 Oct 2024 13:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998539; cv=none; b=tsAEuk7aZBUN0xL8B3v8GXrvUbaAU6ZOaSgnOsslWmxqjuGzdxDcbyTGWEnB11QyBrNv7U4Tx290e6VSua+8vcrAB1s5Yu+vssR9iTzjlUr8KFIlyM2ezbYJ3pNtr7/p4xk2qjv+OpaUkT8YvQLms/o0X5vvv6tXDmkTwmIHPNk=
+	t=1728998542; cv=none; b=tG+1942LdX39Y17cfwrpkP0k+vUwsnIiFy5cCY/7Sw+lY/kGhoeVcQshy3qc8NL/Tce7+TeCaDkR7FofJ64yHkg/lcXdpK8mvbncc+S+8e9L9ri1x44dhE1ejk8HhNhb2C/VlPh968Npkk1CllzIva8ILSbF7iEClJdFHcMRgPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998539; c=relaxed/simple;
-	bh=dDE9T5AOP97HUWidOtpSBh8EVjHbUP7iW5QxR6kjV5Q=;
+	s=arc-20240116; t=1728998542; c=relaxed/simple;
+	bh=6J4kBnTSQdPjBqMw/n/HvjNOuZbhPNhOVknqjfuwsFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dm/7UEpbh//GVZNmmXvc/umESsK4U9FxtVfZzn3R666YLzUnfChKXGCTlwmKRClk+vKJprrPL0kfVSIJlHxqMbYWXfETCiFg5QePNSWWnnue++ynka93sfIuikbqQD0wY1p6aL27cEOmNg5rWMqcuSkGFctHsLjP3/fweK+SZXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ja+UQUt3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G3UKDiTzKIC3wTBFjkdlclWH0g8ooTBBq5PGVWlQuqhBiOptx+cjhXtJ2lRlBvpw0fIHB8dG+sz3OJ2XM+RTyg/M4N2wCEaimIN+oqhpJNVLpywxGtRcv8jDSDKL1i45nBg6/B4IdEuBc9rvzKqz9jkVHTpYOJCWTWxIMsI1UMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kbPMiVEU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ja+UQUt3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 295D8C4CEC6;
-	Tue, 15 Oct 2024 13:22:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kbPMiVEU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8725AC4CEC6;
+	Tue, 15 Oct 2024 13:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998538;
-	bh=dDE9T5AOP97HUWidOtpSBh8EVjHbUP7iW5QxR6kjV5Q=;
+	s=korg; t=1728998542;
+	bh=6J4kBnTSQdPjBqMw/n/HvjNOuZbhPNhOVknqjfuwsFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ja+UQUt3ihSz9QdbzwMYCxzvJZBBR9pMO/83e4T1HYj1HEcQZ1/CG0OoKnIzBJEI9
-	 BJQYP9DcakdyaLTP+tTxwLctjNdCkOEZ9hloD4b+mihr/ork2PlO3zBPz77ocQbl2s
-	 2FqFAHlENUQ7gbzbuHtP6TafJ8ufi/K6UKJdUmfM=
+	b=kbPMiVEUVaqXc7TMLuR9AR+HZu7dfEgXOo1CdsheM7jbfJi4B4pa62WgyCArPDmEK
+	 SSeWqzpp7AS+KudCNst4qpx+f+30ir/f3+dj1h7se8h1BwgBWkEDwERl3xtDsT8stW
+	 lnhQvJFBe1OcWCfUUx9lt+w0vjITkQSQj8o3D+1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanjun Zhang <zhangyanjun@cestc.cn>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Ingo van Lil <inguin@gmx.de>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 475/518] NFSv4: Prevent NULL-pointer dereference in nfs42_complete_copies()
-Date: Tue, 15 Oct 2024 14:46:19 +0200
-Message-ID: <20241015123935.339407789@linuxfoundation.org>
+Subject: [PATCH 5.10 476/518] net: phy: dp83869: fix memory corruption when enabling fiber
+Date: Tue, 15 Oct 2024 14:46:20 +0200
+Message-ID: <20241015123935.376833400@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -46,196 +47,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yanjun Zhang <zhangyanjun@cestc.cn>
+From: Ingo van Lil <inguin@gmx.de>
 
-[ Upstream commit a848c29e3486189aaabd5663bc11aea50c5bd144 ]
+[ Upstream commit a842e443ca8184f2dc82ab307b43a8b38defd6a5 ]
 
-On the node of an NFS client, some files saved in the mountpoint of the
-NFS server were copied to another location of the same NFS server.
-Accidentally, the nfs42_complete_copies() got a NULL-pointer dereference
-crash with the following syslog:
+When configuring the fiber port, the DP83869 PHY driver incorrectly
+calls linkmode_set_bit() with a bit mask (1 << 10) rather than a bit
+number (10). This corrupts some other memory location -- in case of
+arm64 the priv pointer in the same structure.
 
-[232064.838881] NFSv4: state recovery failed for open file nfs/pvc-12b5200d=
--cd0f-46a3-b9f0-af8f4fe0ef64.qcow2, error =3D -116
-[232064.839360] NFSv4: state recovery failed for open file nfs/pvc-12b5200d=
--cd0f-46a3-b9f0-af8f4fe0ef64.qcow2, error =3D -116
-[232066.588183] Unable to handle kernel NULL pointer dereference at virtual=
- address 0000000000000058
-[232066.588586] Mem abort info:
-[232066.588701]   ESR =3D 0x0000000096000007
-[232066.588862]   EC =3D 0x25: DABT (current EL), IL =3D 32 bits
-[232066.589084]   SET =3D 0, FnV =3D 0
-[232066.589216]   EA =3D 0, S1PTW =3D 0
-[232066.589340]   FSC =3D 0x07: level 3 translation fault
-[232066.589559] Data abort info:
-[232066.589683]   ISV =3D 0, ISS =3D 0x00000007
-[232066.589842]   CM =3D 0, WnR =3D 0
-[232066.589967] user pgtable: 64k pages, 48-bit VAs, pgdp=3D00002000956ff400
-[232066.590231] [0000000000000058] pgd=3D08001100ae100003, p4d=3D08001100ae=
-100003, pud=3D08001100ae100003, pmd=3D08001100b3c00003, pte=3D0000000000000=
-000
-[232066.590757] Internal error: Oops: 96000007 [#1] SMP
-[232066.590958] Modules linked in: rpcsec_gss_krb5 auth_rpcgss nfsv4 dns_re=
-solver nfs lockd grace fscache netfs ocfs2_dlmfs ocfs2_stack_o2cb ocfs2_dlm=
- vhost_net vhost vhost_iotlb tap tun ipt_rpfilter xt_multiport ip_set_hash_=
-ip ip_set_hash_net xfrm_interface xfrm6_tunnel tunnel4 tunnel6 esp4 ah4 wir=
-eguard libcurve25519_generic veth xt_addrtype xt_set nf_conntrack_netlink i=
-p_set_hash_ipportnet ip_set_hash_ipportip ip_set_bitmap_port ip_set_hash_ip=
-port dummy ip_set ip_vs_sh ip_vs_wrr ip_vs_rr ip_vs iptable_filter sch_ingr=
-ess nfnetlink_cttimeout vport_gre ip_gre ip_tunnel gre vport_geneve geneve =
-vport_vxlan vxlan ip6_udp_tunnel udp_tunnel openvswitch nf_conncount dm_rou=
-nd_robin dm_service_time dm_multipath xt_nat xt_MASQUERADE nft_chain_nat nf=
-_nat xt_mark xt_conntrack xt_comment nft_compat nft_counter nf_tables nfnet=
-link ocfs2 ocfs2_nodemanager ocfs2_stackglue iscsi_tcp libiscsi_tcp libiscs=
-i scsi_transport_iscsi ipmi_ssif nbd overlay 8021q garp mrp bonding tls rfk=
-ill sunrpc ext4 mbcache jbd2
-[232066.591052]  vfat fat cas_cache cas_disk ses enclosure scsi_transport_s=
-as sg acpi_ipmi ipmi_si ipmi_devintf ipmi_msghandler ip_tables vfio_pci vfi=
-o_pci_core vfio_virqfd vfio_iommu_type1 vfio dm_mirror dm_region_hash dm_lo=
-g dm_mod nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 br_netfilter bridge stp=
- llc fuse xfs libcrc32c ast drm_vram_helper qla2xxx drm_kms_helper syscopya=
-rea crct10dif_ce sysfillrect ghash_ce sysimgblt sha2_ce fb_sys_fops cec sha=
-256_arm64 sha1_ce drm_ttm_helper ttm nvme_fc igb sbsa_gwdt nvme_fabrics drm=
- nvme_core i2c_algo_bit i40e scsi_transport_fc megaraid_sas aes_neon_bs
-[232066.596953] CPU: 6 PID: 4124696 Comm: 10.253.166.125- Kdump: loaded Not=
- tainted 5.15.131-9.cl9_ocfs2.aarch64 #1
-[232066.597356] Hardware name: Great Wall .\x93\x8e...RF6260 V5/GWMSSE2GL1T=
-, BIOS T656FBE_V3.0.18 2024-01-06
-[232066.597721] pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=
-=3D--)
-[232066.598034] pc : nfs4_reclaim_open_state+0x220/0x800 [nfsv4]
-[232066.598327] lr : nfs4_reclaim_open_state+0x12c/0x800 [nfsv4]
-[232066.598595] sp : ffff8000f568fc70
-[232066.598731] x29: ffff8000f568fc70 x28: 0000000000001000 x27: ffff21003d=
-b33000
-[232066.599030] x26: ffff800005521ae0 x25: ffff0100f98fa3f0 x24: 0000000000=
-000001
-[232066.599319] x23: ffff800009920008 x22: ffff21003db33040 x21: ffff21003d=
-b33050
-[232066.599628] x20: ffff410172fe9e40 x19: ffff410172fe9e00 x18: 0000000000=
-000000
-[232066.599914] x17: 0000000000000000 x16: 0000000000000004 x15: 0000000000=
-000000
-[232066.600195] x14: 0000000000000000 x13: ffff800008e685a8 x12: 00000000ea=
-c0c6e6
-[232066.600498] x11: 0000000000000000 x10: 0000000000000008 x9 : ffff800005=
-4e5828
-[232066.600784] x8 : 00000000ffffffbf x7 : 0000000000000001 x6 : 000000000a=
-9eb14a
-[232066.601062] x5 : 0000000000000000 x4 : ffff70ff8a14a800 x3 : 0000000000=
-000058
-[232066.601348] x2 : 0000000000000001 x1 : 54dce46366daa6c6 x0 : 0000000000=
-000000
-[232066.601636] Call trace:
-[232066.601749]  nfs4_reclaim_open_state+0x220/0x800 [nfsv4]
-[232066.601998]  nfs4_do_reclaim+0x1b8/0x28c [nfsv4]
-[232066.602218]  nfs4_state_manager+0x928/0x10f0 [nfsv4]
-[232066.602455]  nfs4_run_state_manager+0x78/0x1b0 [nfsv4]
-[232066.602690]  kthread+0x110/0x114
-[232066.602830]  ret_from_fork+0x10/0x20
-[232066.602985] Code: 1400000d f9403f20 f9402e61 91016003 (f9402c00)
-[232066.603284] SMP: stopping secondary CPUs
-[232066.606936] Starting crashdump kernel...
-[232066.607146] Bye!
+Since the advertising flags are updated from supported at the end of the
+function the incorrect line isn't needed at all and can be removed.
 
-Analysing the vmcore, we know that nfs4_copy_state listed by destination
-nfs_server->ss_copies was added by the field copies in handle_async_copy(),
-and we found a waiting copy process with the stack as:
-PID: 3511963  TASK: ffff710028b47e00  CPU: 0   COMMAND: "cp"
- #0 [ffff8001116ef740] __switch_to at ffff8000081b92f4
- #1 [ffff8001116ef760] __schedule at ffff800008dd0650
- #2 [ffff8001116ef7c0] schedule at ffff800008dd0a00
- #3 [ffff8001116ef7e0] schedule_timeout at ffff800008dd6aa0
- #4 [ffff8001116ef860] __wait_for_common at ffff800008dd166c
- #5 [ffff8001116ef8e0] wait_for_completion_interruptible at ffff800008dd1898
- #6 [ffff8001116ef8f0] handle_async_copy at ffff8000055142f4 [nfsv4]
- #7 [ffff8001116ef970] _nfs42_proc_copy at ffff8000055147c8 [nfsv4]
- #8 [ffff8001116efa80] nfs42_proc_copy at ffff800005514cf0 [nfsv4]
- #9 [ffff8001116efc50] __nfs4_copy_file_range.constprop.0 at ffff8000054ed6=
-94 [nfsv4]
-
-The NULL-pointer dereference was due to nfs42_complete_copies() listed
-the nfs_server->ss_copies by the field ss_copies of nfs4_copy_state.
-So the nfs4_copy_state address ffff0100f98fa3f0 was offset by 0x10 and
-the data accessed through this pointer was also incorrect. Generally,
-the ordered list nfs4_state_owner->so_states indicate open(O_RDWR) or
-open(O_WRITE) states are reclaimed firstly by nfs4_reclaim_open_state().
-When destination state reclaim is failed with NFS_STATE_RECOVERY_FAILED
-and copies are not deleted in nfs_server->ss_copies, the source state
-may be passed to the nfs42_complete_copies() process earlier, resulting
-in this crash scene finally. To solve this issue, we add a list_head
-nfs_server->ss_src_copies for a server-to-server copy specially.
-
-Fixes: 0e65a32c8a56 ("NFS: handle source server reboot")
-Signed-off-by: Yanjun Zhang <zhangyanjun@cestc.cn>
-Reviewed-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Fixes: a29de52ba2a1 ("net: dp83869: Add ability to advertise Fiber connection")
+Signed-off-by: Ingo van Lil <inguin@gmx.de>
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20241002161807.440378-1-inguin@gmx.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/client.c           | 1 +
- fs/nfs/nfs42proc.c        | 2 +-
- fs/nfs/nfs4state.c        | 2 +-
- include/linux/nfs_fs_sb.h | 1 +
- 4 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/phy/dp83869.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/nfs/client.c b/fs/nfs/client.c
-index 1437eb31dd034..6afb66b8855e9 100644
---- a/fs/nfs/client.c
-+++ b/fs/nfs/client.c
-@@ -927,6 +927,7 @@ struct nfs_server *nfs_alloc_server(void)
- 	INIT_LIST_HEAD(&server->layouts);
- 	INIT_LIST_HEAD(&server->state_owners_lru);
- 	INIT_LIST_HEAD(&server->ss_copies);
-+	INIT_LIST_HEAD(&server->ss_src_copies);
-=20
- 	atomic_set(&server->active, 0);
-=20
-diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
-index dfeea712014b7..47aa721d0d83d 100644
---- a/fs/nfs/nfs42proc.c
-+++ b/fs/nfs/nfs42proc.c
-@@ -210,7 +210,7 @@ static int handle_async_copy(struct nfs42_copy_res *res,
-=20
- 	if (dst_server !=3D src_server) {
- 		spin_lock(&src_server->nfs_client->cl_lock);
--		list_add_tail(&copy->src_copies, &src_server->ss_copies);
-+		list_add_tail(&copy->src_copies, &src_server->ss_src_copies);
- 		spin_unlock(&src_server->nfs_client->cl_lock);
- 	}
-=20
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index e5cdb700bbe72..807dd6f17e1bd 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -1596,7 +1596,7 @@ static void nfs42_complete_copies(struct nfs4_state_o=
-wner *sp, struct nfs4_state
- 			complete(&copy->completion);
- 		}
- 	}
--	list_for_each_entry(copy, &sp->so_server->ss_copies, src_copies) {
-+	list_for_each_entry(copy, &sp->so_server->ss_src_copies, src_copies) {
- 		if ((test_bit(NFS_CLNT_SRC_SSC_COPY_STATE, &state->flags) &&
- 				!nfs4_stateid_match_other(&state->stateid,
- 				&copy->parent_src_state->stateid)))
-diff --git a/include/linux/nfs_fs_sb.h b/include/linux/nfs_fs_sb.h
-index 38e60ec742df7..cb2cb4d9c0131 100644
---- a/include/linux/nfs_fs_sb.h
-+++ b/include/linux/nfs_fs_sb.h
-@@ -230,6 +230,7 @@ struct nfs_server {
- 	struct list_head	layouts;
- 	struct list_head	delegations;
- 	struct list_head	ss_copies;
-+	struct list_head	ss_src_copies;
-=20
- 	unsigned long		mig_gen;
- 	unsigned long		mig_status;
---=20
+diff --git a/drivers/net/phy/dp83869.c b/drivers/net/phy/dp83869.c
+index 65b69ff35e403..01b593e0bb4a1 100644
+--- a/drivers/net/phy/dp83869.c
++++ b/drivers/net/phy/dp83869.c
+@@ -610,7 +610,6 @@ static int dp83869_configure_fiber(struct phy_device *phydev,
+ 		     phydev->supported);
+ 
+ 	linkmode_set_bit(ETHTOOL_LINK_MODE_FIBRE_BIT, phydev->supported);
+-	linkmode_set_bit(ADVERTISED_FIBRE, phydev->advertising);
+ 
+ 	if (dp83869->mode == DP83869_RGMII_1000_BASE) {
+ 		linkmode_set_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
+-- 
 2.43.0
 
 
