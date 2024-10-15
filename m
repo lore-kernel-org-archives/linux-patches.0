@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4621C07C4;
-	Tue, 15 Oct 2024 13:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABA71C07C4;
+	Tue, 15 Oct 2024 13:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997267; cv=none; b=D0QPza+DWUUk0GM+5tGDDv+RtznaXRxrqrDth3DzWC9Fz5p2zzJ77XaJc63RDefKQJjEaD1GMrVcF/K/Fb+g5hPxmQAKh06+1UByY2/SPW8KoEBLs1smeAMdy272RTgZokBdJxSuZKxc9inh+LdjX3G8FUJDMZLoe0vFIPW+vzY=
+	t=1728997271; cv=none; b=XRRs+Vsw/4U7GX/65PmBjD5DC7lEgOjWeL2cZ+YcB3N8CjXfPmr1C+zsuct3oey5Pgff/wBkC2vkylKnpXVG1rngE154ggNuyoPq4mvEp8wgX07ozbKJtraLnTXzN6Uxx3Jva0OWLG1eWQ59ypk38SZulULSrAwCQSBZkh91PbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997267; c=relaxed/simple;
-	bh=A5hD1MhkeJLq2AAwxcTIeTrqDBbM/P2m+d5NL1DHcOI=;
+	s=arc-20240116; t=1728997271; c=relaxed/simple;
+	bh=1SbLv/9JUsAWUVvusj16drT8DI7/C/mOSkFLmuaFdRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Baqf0dY2PRigQ2HxpAj6TYon33pZnaQa3nHiClseJyNWEGQ/rF1MPHXARA//8GG1IorF2nYt2uy47Y8tJhlIwrQugqN5M3UDDuLp7+QI1AhJLYnLwKSs0oqCNzJgE3LvV2oqfDAL1m6ivepqRbZmIgVNT/a0V4NMam4zv12eW+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5vmmGpV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ahgvITaG6ZSk8PTlNbw5gujt9QRFZRVQJ2KGl1q8lSZq2wBTZdag/dGoS3tRS1EPRV1E+vbD5n2wD1M+momMVSXFTgWiIvkUoqKTovWIkCnB+7vnZ7ocUDPTxJTiddjP+r5tsNPzEoUcHPihdxP9MeNtbyYVuohHrPgxmH9dPVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kKQCqw3l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5vmmGpV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D151CC4CEC6;
-	Tue, 15 Oct 2024 13:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kKQCqw3l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 536F6C4CEC6;
+	Tue, 15 Oct 2024 13:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997267;
-	bh=A5hD1MhkeJLq2AAwxcTIeTrqDBbM/P2m+d5NL1DHcOI=;
+	s=korg; t=1728997270;
+	bh=1SbLv/9JUsAWUVvusj16drT8DI7/C/mOSkFLmuaFdRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T5vmmGpVna7dazlGqrz2mToNM/eBuP944tqeLXpJFSQDfP/TwJDNDh8Yx9yXwMWdg
-	 7szjFSVklIgOns5MUOy5E5spnt3Vx5/a+DjnolyyYYR9WcaxjdAxjVIFOirRfS12E2
-	 zv2QfkVfHu3syk4FmL/I3urCkZisQKo6RY/WU6N8=
+	b=kKQCqw3l6HYsyb6DD5hayTWjkXewcO/hbCFor3Wa7gf1LLAHWPHsdyIVkkHA9poOB
+	 y1V+ay7HhbS5ibuBVVJDNt+qBOwYN9Nf++jJrMf8dyBkFvd0lPfM0RRysAKPXW4Nc/
+	 fJjyBo+iRqOiHLP8jw6vPpbeKXVUbUsLZRxCdIqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ankit Agrawal <agrawal.ag.ankit@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 101/518] clocksource/drivers/qcom: Add missing iounmap() on errors in msm_dt_timer_init()
-Date: Tue, 15 Oct 2024 14:40:05 +0200
-Message-ID: <20241015123920.898175719@linuxfoundation.org>
+Subject: [PATCH 5.10 102/518] m68k: Fix kernel_clone_args.flags in m68k_clone()
+Date: Tue, 15 Oct 2024 14:40:06 +0200
+Message-ID: <20241015123920.938733539@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,48 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit ca140a0dc0a18acd4653b56db211fec9b2339986 ]
+[ Upstream commit 09b3d870faa7bc3e96c0978ab3cf4e96e4b15571 ]
 
-Add the missing iounmap() when clock frequency fails to get read by the
-of_property_read_u32() call, or if the call to msm_timer_init() fails.
+Stan Johnson recently reported a failure from the 'dump' command:
 
-Fixes: 6e3321631ac2 ("ARM: msm: Add DT support to msm_timer")
-Signed-off-by: Ankit Agrawal <agrawal.ag.ankit@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240713095713.GA430091@bnew-VirtualBox
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+  DUMP: Date of this level 0 dump: Fri Aug  9 23:37:15 2024
+  DUMP: Dumping /dev/sda (an unlisted file system) to /dev/null
+  DUMP: Label: none
+  DUMP: Writing 10 Kilobyte records
+  DUMP: mapping (Pass I) [regular files]
+  DUMP: mapping (Pass II) [directories]
+  DUMP: estimated 3595695 blocks.
+  DUMP: Context save fork fails in parent 671
+
+The dump program uses the clone syscall with the CLONE_IO flag, that is,
+flags == 0x80000000. When that value is promoted from long int to u64 by
+m68k_clone(), it undergoes sign-extension. The new value includes
+CLONE_INTO_CGROUP so the validation in cgroup_css_set_fork() fails and
+the syscall returns -EBADF. Avoid sign-extension by casting to u32.
+
+Reported-by: Stan Johnson <userm57@yahoo.com>
+Closes: https://lists.debian.org/debian-68k/2024/08/msg00000.html
+Fixes: 6aabc1facdb2 ("m68k: Implement copy_thread_tls()")
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/3463f1e5d4e95468dc9f3368f2b78ffa7b72199b.1723335149.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-qcom.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/m68k/kernel/process.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clocksource/timer-qcom.c b/drivers/clocksource/timer-qcom.c
-index b4afe3a675835..eac4c95c6127f 100644
---- a/drivers/clocksource/timer-qcom.c
-+++ b/drivers/clocksource/timer-qcom.c
-@@ -233,6 +233,7 @@ static int __init msm_dt_timer_init(struct device_node *np)
- 	}
- 
- 	if (of_property_read_u32(np, "clock-frequency", &freq)) {
-+		iounmap(cpu0_base);
- 		pr_err("Unknown frequency\n");
- 		return -EINVAL;
- 	}
-@@ -243,7 +244,11 @@ static int __init msm_dt_timer_init(struct device_node *np)
- 	freq /= 4;
- 	writel_relaxed(DGT_CLK_CTL_DIV_4, source_base + DGT_CLK_CTL);
- 
--	return msm_timer_init(freq, 32, irq, !!percpu_offset);
-+	ret = msm_timer_init(freq, 32, irq, !!percpu_offset);
-+	if (ret)
-+		iounmap(cpu0_base);
-+
-+	return ret;
- }
- TIMER_OF_DECLARE(kpss_timer, "qcom,kpss-timer", msm_dt_timer_init);
- TIMER_OF_DECLARE(scss_timer, "qcom,scss-timer", msm_dt_timer_init);
+diff --git a/arch/m68k/kernel/process.c b/arch/m68k/kernel/process.c
+index da83cc83e7912..8c2656371a879 100644
+--- a/arch/m68k/kernel/process.c
++++ b/arch/m68k/kernel/process.c
+@@ -116,7 +116,7 @@ asmlinkage int m68k_clone(struct pt_regs *regs)
+ {
+ 	/* regs will be equal to current_pt_regs() */
+ 	struct kernel_clone_args args = {
+-		.flags		= regs->d1 & ~CSIGNAL,
++		.flags		= (u32)(regs->d1) & ~CSIGNAL,
+ 		.pidfd		= (int __user *)regs->d3,
+ 		.child_tid	= (int __user *)regs->d4,
+ 		.parent_tid	= (int __user *)regs->d3,
 -- 
 2.43.0
 
