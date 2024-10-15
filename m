@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7401D4154;
-	Tue, 15 Oct 2024 11:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F7F1D0492;
+	Tue, 15 Oct 2024 11:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993401; cv=none; b=f5R6unQcaJoqgk1P0MsGn7XQMGIWnh0uoiq/uNJuH2w9c9PbWHhvRU7yC4PJSzp3Yh957cUmuXm8zpExR0JjxIXu8QDcodCNKud7GExRdEA+rQoolKydKxiIEyB9XHLbxTjw3l9S9h+zLqlOMipCxP389hBq22dsnEcwwSCXqr8=
+	t=1728993405; cv=none; b=BXkBqWzUqzAUO3Fd1L/dVD9VJfkg11M/9k+TKyaG+1cY/nrsQtOu2JVAdb4JHGSEy7IxsNxsHd4ngvunJh6UAtfxsCgeEe5Ldwz0XO3JwofvtVWhco7B6kGe4YHxzhW0CrPoOhERNNtvr35XcI7FMsG0hCC5byyHwOVqYDdEW5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993401; c=relaxed/simple;
-	bh=U6CvHeLEyZjxVMzPMfXlSVSQpkmFrPb0bHHALdo76Qo=;
+	s=arc-20240116; t=1728993405; c=relaxed/simple;
+	bh=rP4U+TPHiz7yv7lB3Ux5c7O9ZCu0T52mLbgSGwi3g4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T8I08GfxjufoftwObN2cpXo+9iSOVpqF9n06L1K77tVB9jAcNEXf7heOI3GkgQycBss43XoJCN8p9SVughJxSTke8hu9euBUCEgHwvBBbl6lvu5QKhzLgaKy4oEa6/voY0BQD2YuzljXcWT1QT8iu3EdHI2gEOdSCtwwTj6MvlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tda6u/HX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TPp8Cgu2pAbrGP7FoTMAdHVQ9Nx1M9KPeEIv/M5GM3Uhk0SACMc1asqRTEsRQyUgXXkj215QzKaL2AEgDz4LbgMfAIW/CQHWgjB5XbQfjEtTDAX47jm5PRkH08bk/PWZYUukFFFBdYDWOIqVIeV7KnGvWcqqNPLjsWBNcKmwDls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtUsIa2h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tda6u/HX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64C1AC4CECF;
-	Tue, 15 Oct 2024 11:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtUsIa2h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F88AC4CEC6;
+	Tue, 15 Oct 2024 11:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993401;
-	bh=U6CvHeLEyZjxVMzPMfXlSVSQpkmFrPb0bHHALdo76Qo=;
+	s=korg; t=1728993405;
+	bh=rP4U+TPHiz7yv7lB3Ux5c7O9ZCu0T52mLbgSGwi3g4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tda6u/HXgzxJfaByq76SWwyY7iZT9ldtFSWhUFKN+8L/SZCmY4A0uiR+qisViaOVy
-	 SeB1sjhQRFERtHn7YUTI6B1C/KNfjwyuhqMffx1fo+H29V6WlICmVLs9d6kKgz8Zor
-	 Bh6LfUKXdLt/ooEg2+tfwIz75tyFhnYadIo+7cAA=
+	b=LtUsIa2hJKoJLNodynu2PdbmGLnhGj8T1d6yOBS+6sZ/mk4z60XS9irhApTh/4sa6
+	 QsSbeJeuMljXKV5hiilgmNTbGek6bRXoUkiEL4dIrZQ2mn3hFug+hHz1Jo/74wq8Hc
+	 9cqgUwpPGque3cnSGbhSvL8BJ5A3e1QW+CFP7yDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Tomasz Figa <tfiga@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 400/691] media: usbtv: Remove useless locks in usbtv_video_free()
-Date: Tue, 15 Oct 2024 13:25:48 +0200
-Message-ID: <20241015112456.215217240@linuxfoundation.org>
+Subject: [PATCH 5.15 401/691] ALSA: mixer_oss: Remove some incorrect kfree_const() usages
+Date: Tue, 15 Oct 2024 13:25:49 +0200
+Message-ID: <20241015112456.254503925@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,53 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 65e6a2773d655172143cc0b927cdc89549842895 ]
+[ Upstream commit 368e4663c557de4a33f321b44e7eeec0a21b2e4e ]
 
-Remove locks calls in usbtv_video_free() because
-are useless and may led to a deadlock as reported here:
-https://syzkaller.appspot.com/x/bisect.txt?x=166dc872180000
-Also remove usbtv_stop() call since it will be called when
-unregistering the device.
+"assigned" and "assigned->name" are allocated in snd_mixer_oss_proc_write()
+using kmalloc() and kstrdup(), so there is no point in using kfree_const()
+to free these resources.
 
-Before 'c838530d230b' this issue would only be noticed if you
-disconnect while streaming and now it is noticeable even when
-disconnecting while not streaming.
+Switch to the more standard kfree() to free these resources.
 
-Fixes: c838530d230b ("media: media videobuf2: Be more flexible on the number of queue stored buffers")
-Fixes: f3d27f34fdd7 ("[media] usbtv: Add driver for Fushicai USBTV007 video frame grabber")
+This could avoid a memory leak.
 
-Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Reviewed-by: Tomasz Figa <tfiga@chromium.org>
-Tested-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-[hverkuil: fix minor spelling mistake in log message]
+Fixes: 454f5ec1d2b7 ("ALSA: mixer: oss: Constify snd_mixer_oss_assign_table definition")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://patch.msgid.link/63ac20f64234b7c9ea87a7fa9baf41e8255852f7.1727374631.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/usbtv/usbtv-video.c | 7 -------
- 1 file changed, 7 deletions(-)
+ sound/core/oss/mixer_oss.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/usb/usbtv/usbtv-video.c b/drivers/media/usb/usbtv/usbtv-video.c
-index a714ad77ca8e2..e5fcf53229812 100644
---- a/drivers/media/usb/usbtv/usbtv-video.c
-+++ b/drivers/media/usb/usbtv/usbtv-video.c
-@@ -959,15 +959,8 @@ int usbtv_video_init(struct usbtv *usbtv)
- 
- void usbtv_video_free(struct usbtv *usbtv)
- {
--	mutex_lock(&usbtv->vb2q_lock);
--	mutex_lock(&usbtv->v4l2_lock);
--
--	usbtv_stop(usbtv);
- 	vb2_video_unregister_device(&usbtv->vdev);
- 	v4l2_device_disconnect(&usbtv->v4l2_dev);
- 
--	mutex_unlock(&usbtv->v4l2_lock);
--	mutex_unlock(&usbtv->vb2q_lock);
--
- 	v4l2_device_put(&usbtv->v4l2_dev);
- }
+diff --git a/sound/core/oss/mixer_oss.c b/sound/core/oss/mixer_oss.c
+index 9620115cfdc09..c8291869ef906 100644
+--- a/sound/core/oss/mixer_oss.c
++++ b/sound/core/oss/mixer_oss.c
+@@ -967,8 +967,8 @@ static void snd_mixer_oss_slot_free(struct snd_mixer_oss_slot *chn)
+ 	struct slot *p = chn->private_data;
+ 	if (p) {
+ 		if (p->allocated && p->assigned) {
+-			kfree_const(p->assigned->name);
+-			kfree_const(p->assigned);
++			kfree(p->assigned->name);
++			kfree(p->assigned);
+ 		}
+ 		kfree(p);
+ 	}
 -- 
 2.43.0
 
