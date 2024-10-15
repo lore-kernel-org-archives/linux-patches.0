@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF63F1FC7C9;
-	Tue, 15 Oct 2024 13:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310DC1FC7F0;
+	Tue, 15 Oct 2024 13:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998468; cv=none; b=mDRJZ5EugD/UqQ9CEPBaJWfeVp+OMW5eXxsEeCFq9D7BV3cm0X7iGPa9VNeW1hKfV1ibJmIucisYAjeBvKaNrMaktpL/xN2GLBIujg7DMlnJgJK/wFwcufLWT57se3RtYtHCptTXHIxzYSzh37p44A+TnSEkUlScfPVikF8C/QM=
+	t=1728998472; cv=none; b=QioecpnuVZP8ZPCfWyCqjcarILfxwnfd3eIo0F5WkxZfOXcCmzc1IfjPdxvtYQXXa4emL/33RRvvc2Xwz6LIHOi+2UMeKAmUWH1ZEchxOUjhg8JsmoNu5Wgxg91E48SWW4sD2xtY+29pjzvZkyTCZffEDle73NgTmStNZCQybxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998468; c=relaxed/simple;
-	bh=QsQQMPJP4pn93n7MnPNlCsWK0Qy53Mp/R463dIrI67Q=;
+	s=arc-20240116; t=1728998472; c=relaxed/simple;
+	bh=RvFXQtyhqPD2ppjoWg8/wDP+DatHTvshgzphyrcc2mw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ive3jcfLuwMXFDXLSyZFOiTRisZrWgoftXJ1T57PoGxHpuSNggsLQJOsrHqteFU9ZR4eeBabKEWl6H+2jlrTXw4Y7FiGSmDU+iPEiDXEwjboX/jmF53/sgDYMgHoenF6MBDUhkpzURgthWhU60nwx58jZZFsmST4Q2IdSyHlV/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyjlZojb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ChyS2CJlY6K0Dy2eLymSCitLDRFpHFik3qZOmreJ9TlkriInIKzBEykfKT+FvXxQl+xYQ/ciMlv18dlW8CiC+zz71NRU2qZMZEn5utA61Zy0NFtirKUwmbSGgo4+xBXhhJQChuf/D/fxz7jL73fM1+E32k50HtZBDQyRY83Bez0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNY2zekr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyjlZojb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3851C4CED1;
-	Tue, 15 Oct 2024 13:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNY2zekr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63887C4CECE;
+	Tue, 15 Oct 2024 13:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998468;
-	bh=QsQQMPJP4pn93n7MnPNlCsWK0Qy53Mp/R463dIrI67Q=;
+	s=korg; t=1728998471;
+	bh=RvFXQtyhqPD2ppjoWg8/wDP+DatHTvshgzphyrcc2mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XyjlZojbatNxlS3UFGQ6aESI7vl3NGJU5Ouka4XpiLw/FUXxOUvFB5y9A20Cy6dHc
-	 c6wXvBodNtLwajjGgNru3OgoQw9neY7eid6yR6OMV5cGUPLi1GxG8vcay2eA2MA+E1
-	 fApvaSVijSeEmFwVpO95cjpnOlZGRJ48C8eJj/7k=
+	b=MNY2zekriAWJw0YGF9moC/53NhtVKuN5He4xgsbH0gZt1Dp1tILFzpZ2jKD8MAo9u
+	 0CGf9ZybZI+FKOJD1vU88ZEUPYXphb0Zxftj2jDMPiKYkVhSZaHmn60Q+IZHa3UO+r
+	 A7MMJYCDmOFGUQi4aNqR3Mh7GvBHYemoZw5pb9hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Billy Tsai <billy_tsai@aspeedtech.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 486/518] net: dsa: b53: fix jumbo frames on 10/100 ports
-Date: Tue, 15 Oct 2024 14:46:30 +0200
-Message-ID: <20241015123935.756497148@linuxfoundation.org>
+Subject: [PATCH 5.10 487/518] gpio: aspeed: Add the flush write to ensure the write complete.
+Date: Tue, 15 Oct 2024 14:46:31 +0200
+Message-ID: <20241015123935.795266839@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,40 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit 2f3dcd0d39affe5b9ba1c351ce0e270c8bdd5109 ]
+[ Upstream commit 1bb5a99e1f3fd27accb804aa0443a789161f843c ]
 
-All modern chips support and need the 10_100 bit set for supporting jumbo
-frames on 10/100 ports, so instead of enabling it only for 583XX enable
-it for everything except bcm63xx, where the bit is writeable, but does
-nothing.
+Performing a dummy read ensures that the register write operation is fully
+completed, mitigating any potential bus delays that could otherwise impact
+the frequency of bitbang usage. E.g., if the JTAG application uses GPIO to
+control the JTAG pins (TCK, TMS, TDI, TDO, and TRST), and the application
+sets the TCK clock to 1 MHz, the GPIO's high/low transitions will rely on
+a delay function to ensure the clock frequency does not exceed 1 MHz.
+However, this can lead to rapid toggling of the GPIO because the write
+operation is POSTed and does not wait for a bus acknowledgment.
 
-Tested on BCM53115, where jumbo frames were dropped at 10/100 speeds
-without the bit set.
-
-Fixes: 6ae5834b983a ("net: dsa: b53: add MTU configuration support")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 361b79119a4b ("gpio: Add Aspeed driver")
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Link: https://lore.kernel.org/r/20241008081450.1490955-2-billy_tsai@aspeedtech.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-aspeed.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 459caaf6aa613..2fc33019e814a 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -2188,7 +2188,7 @@ static int b53_change_mtu(struct dsa_switch *ds, int port, int mtu)
- 		return 0;
+diff --git a/drivers/gpio/gpio-aspeed.c b/drivers/gpio/gpio-aspeed.c
+index bbd04a63fb12a..41e3f3b351cf6 100644
+--- a/drivers/gpio/gpio-aspeed.c
++++ b/drivers/gpio/gpio-aspeed.c
+@@ -404,6 +404,8 @@ static void __aspeed_gpio_set(struct gpio_chip *gc, unsigned int offset,
+ 	gpio->dcache[GPIO_BANK(offset)] = reg;
  
- 	enable_jumbo = (mtu > ETH_DATA_LEN);
--	allow_10_100 = (dev->chip_id == BCM583XX_DEVICE_ID);
-+	allow_10_100 = !is63xx(dev);
- 
- 	return b53_set_jumbo(dev, enable_jumbo, allow_10_100);
+ 	iowrite32(reg, addr);
++	/* Flush write */
++	ioread32(addr);
  }
+ 
+ static void aspeed_gpio_set(struct gpio_chip *gc, unsigned int offset,
 -- 
 2.43.0
 
