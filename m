@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3331E766D;
-	Tue, 15 Oct 2024 11:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA0815099D;
+	Tue, 15 Oct 2024 11:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992231; cv=none; b=mPbYOg80e8Y2uJw0QkYxtrrQ+xzConJfS3TjOawnvTXAoi1AF9k8NhdZWxmsV4Hs6YBkodMiqzb3+tWVU8YZN03ZaRHPr+JNdF/d61s6njM3ga8obIMhYNqFVXUYxTmUWpK8JUkfidkVYNdHsRo9GT2gszDSpgeL9ipMdsBHzQU=
+	t=1728992234; cv=none; b=n0JMlq6kly1LPi7YkBW84AZz6qvZ7rd85sQc5SE4RpB/VUEWQr8oZbjG5j4wBZJlzVgxayj437jdBZp7WghNN5QcuAzyNFm+wghypYuQMX5DS3EowUcKCoLRpMg75lJamVunoj6is/uioQtb/qXT4fLCSibKtAOUJvoXT6HEtL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992231; c=relaxed/simple;
-	bh=Yd4jDv6hr/hPqBxjvvn2Z0nEFZpft1uKZp5nXI7WVmo=;
+	s=arc-20240116; t=1728992234; c=relaxed/simple;
+	bh=uzJz4CcyAsH1BxydOgnLxo6tcrneUcz7hz7Vv7CU0js=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kx46qSABAOXFdiafUCNXhitwEJERw4W7XOtAmxsS14YUC2Dh2UDzJGFTqnyncsnTG/0Lzg5m/0ArDBFeWW0X1m9Ult8KNlU1nFDPRG6qWGCDop/i15LSUhXER57WELT84N4QsKrjc+lY+P/mvE9bOxJ+hy+UAE6XnpOT2uiFHMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YpaPy+hV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hSUMDkHEpo0WiBNOQhhIoOeDII/qIyMj+7UiJ2HYqDzGha6lsnX8RWiRPCwRj46V0WbTE4IkW4n4gLVLM3a5zYtk6l3xnhw93WuLVYW4GmFSDXmPD61f+pgGvEJBPhSlTYVpFQ3c0o5gh5kvVUdVVLgAGkMuGBP4sovYBoHvQd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=edu4kk4G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YpaPy+hV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3131C4CECE;
-	Tue, 15 Oct 2024 11:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="edu4kk4G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B22C4CEC6;
+	Tue, 15 Oct 2024 11:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992231;
-	bh=Yd4jDv6hr/hPqBxjvvn2Z0nEFZpft1uKZp5nXI7WVmo=;
+	s=korg; t=1728992234;
+	bh=uzJz4CcyAsH1BxydOgnLxo6tcrneUcz7hz7Vv7CU0js=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YpaPy+hVrwMgkQ0o5lTsVg+wiK+KyZ3raSqNUivojXimaKEzfM+kOTxYI2+PpJCAX
-	 u25177ig4v5QHJ6gdmPxcY2jQtrHHlsna7GgkjEwjkYvxnRkDX7RTp6aGN+N3EHk7L
-	 UQ7VBEkolYzYTejHS+QmAy74CFv/VfB+fCypkfY8=
+	b=edu4kk4GQ2kAtl5v0zOoEMpBPkj5Kxs5YNiDmQBNokafPE3fGv4/disEcuAwyHZ+w
+	 Vlue3awSpbyvu2bntCT+fGxVHlBf2S/cIi0nrkw7dv5NVxEEqbpcsJ1cuLPtaBfX7/
+	 ysFZ6sDTBtDy/4xod1433eMKm4pi/TkGCjJJ2Ubc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyu Jin <xingyuj@google.com>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	John Stultz <jstultz@google.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>
-Subject: [PATCH 5.15 057/691] dma-buf: heaps: Fix off-by-one in CMA heap fault handler
-Date: Tue, 15 Oct 2024 13:20:05 +0200
-Message-ID: <20241015112442.617089286@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 058/691] ASoC: meson: axg-card: fix use-after-free
+Date: Tue, 15 Oct 2024 13:20:06 +0200
+Message-ID: <20241015112442.656602340@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,41 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: T.J. Mercier <tjmercier@google.com>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-commit ea5ff5d351b520524019f7ff7f9ce418de2dad87 upstream.
+commit 4f9a71435953f941969a4f017e2357db62d85a86 upstream.
 
-Until VM_DONTEXPAND was added in commit 1c1914d6e8c6 ("dma-buf: heaps:
-Don't track CMA dma-buf pages under RssFile") it was possible to obtain
-a mapping larger than the buffer size via mremap and bypass the overflow
-check in dma_buf_mmap_internal. When using such a mapping to attempt to
-fault past the end of the buffer, the CMA heap fault handler also checks
-the fault offset against the buffer size, but gets the boundary wrong by
-1. Fix the boundary check so that we don't read off the end of the pages
-array and insert an arbitrary page in the mapping.
+Buffer 'card->dai_link' is reallocated in 'meson_card_reallocate_links()',
+so move 'pad' pointer initialization after this function when memory is
+already reallocated.
 
-Reported-by: Xingyu Jin <xingyuj@google.com>
-Fixes: a5d2d29e24be ("dma-buf: heaps: Move heap-helper logic into the cma_heap implementation")
-Cc: stable@vger.kernel.org # Applicable >= 5.10. Needs adjustments only for 5.10.
-Signed-off-by: T.J. Mercier <tjmercier@google.com>
-Acked-by: John Stultz <jstultz@google.com>
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240830192627.2546033-1-tjmercier@google.com
+Kasan bug report:
+
+==================================================================
+BUG: KASAN: slab-use-after-free in axg_card_add_link+0x76c/0x9bc
+Read of size 8 at addr ffff000000e8b260 by task modprobe/356
+
+CPU: 0 PID: 356 Comm: modprobe Tainted: G O 6.9.12-sdkernel #1
+Call trace:
+ dump_backtrace+0x94/0xec
+ show_stack+0x18/0x24
+ dump_stack_lvl+0x78/0x90
+ print_report+0xfc/0x5c0
+ kasan_report+0xb8/0xfc
+ __asan_load8+0x9c/0xb8
+ axg_card_add_link+0x76c/0x9bc [snd_soc_meson_axg_sound_card]
+ meson_card_probe+0x344/0x3b8 [snd_soc_meson_card_utils]
+ platform_probe+0x8c/0xf4
+ really_probe+0x110/0x39c
+ __driver_probe_device+0xb8/0x18c
+ driver_probe_device+0x108/0x1d8
+ __driver_attach+0xd0/0x25c
+ bus_for_each_dev+0xe0/0x154
+ driver_attach+0x34/0x44
+ bus_add_driver+0x134/0x294
+ driver_register+0xa8/0x1e8
+ __platform_driver_register+0x44/0x54
+ axg_card_pdrv_init+0x20/0x1000 [snd_soc_meson_axg_sound_card]
+ do_one_initcall+0xdc/0x25c
+ do_init_module+0x10c/0x334
+ load_module+0x24c4/0x26cc
+ init_module_from_file+0xd4/0x128
+ __arm64_sys_finit_module+0x1f4/0x41c
+ invoke_syscall+0x60/0x188
+ el0_svc_common.constprop.0+0x78/0x13c
+ do_el0_svc+0x30/0x40
+ el0_svc+0x38/0x78
+ el0t_64_sync_handler+0x100/0x12c
+ el0t_64_sync+0x190/0x194
+
+Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://patch.msgid.link/20240911142425.598631-1-avkrasnov@salutedevices.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/heaps/cma_heap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/meson/axg-card.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/dma-buf/heaps/cma_heap.c
-+++ b/drivers/dma-buf/heaps/cma_heap.c
-@@ -165,7 +165,7 @@ static vm_fault_t cma_heap_vm_fault(stru
- 	struct vm_area_struct *vma = vmf->vma;
- 	struct cma_heap_buffer *buffer = vma->vm_private_data;
+--- a/sound/soc/meson/axg-card.c
++++ b/sound/soc/meson/axg-card.c
+@@ -104,7 +104,7 @@ static int axg_card_add_tdm_loopback(str
+ 				     int *index)
+ {
+ 	struct meson_card *priv = snd_soc_card_get_drvdata(card);
+-	struct snd_soc_dai_link *pad = &card->dai_link[*index];
++	struct snd_soc_dai_link *pad;
+ 	struct snd_soc_dai_link *lb;
+ 	struct snd_soc_dai_link_component *dlc;
+ 	int ret;
+@@ -114,6 +114,7 @@ static int axg_card_add_tdm_loopback(str
+ 	if (ret)
+ 		return ret;
  
--	if (vmf->pgoff > buffer->pagecount)
-+	if (vmf->pgoff >= buffer->pagecount)
- 		return VM_FAULT_SIGBUS;
++	pad = &card->dai_link[*index];
+ 	lb = &card->dai_link[*index + 1];
  
- 	vmf->page = buffer->pages[vmf->pgoff];
+ 	lb->name = devm_kasprintf(card->dev, GFP_KERNEL, "%s-lb", pad->name);
 
 
