@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4B21EC00A;
-	Tue, 15 Oct 2024 12:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754731EBA1F;
+	Tue, 15 Oct 2024 12:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994386; cv=none; b=pMaLJVC9dtiS6DO7zkvYqgCnKFOzoyW0HQbtLzTImKkp0IDotPQtshPpcv7rYmusorzMHQ358pmmjTI/mq18nJsbabpOTlsX+5rRL1W0YqnSNjwqFQBCNKFczE8R3kud1VIeWgMNmtf/8NWlskdAxEemHa/y+Wa4doc4gAKkpBA=
+	t=1728994389; cv=none; b=N/UjePKrM3EAZ2tyiZhxfj3V432XWyNWuX7u8LQqYV4CXOnXytk67sSOW0llpYlVnH+1n0JH6Ofzj9Yyn/Vh6CLVu723nTm+BFUR8iQpHt+KPoN6IL8Gz3hzjJksikVtD3lXsqDNLxqgnmSG/EdFYdrtz4eWq9XzwXRTvrdAwBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994386; c=relaxed/simple;
-	bh=Yy1GkbUDRyhx/8vMLDWuTcKk5PQiCFNkW0b/XodNctw=;
+	s=arc-20240116; t=1728994389; c=relaxed/simple;
+	bh=BXCTtBxPokqXzPQTA18tMcWduXJmEkbOcnNPOGwcjMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E85HVKcUnWuqlcXOGLIJXMcmQKIs5lXsrVZudfSMLUg4nzvTxEgPvMFabD/WJRYn25fxa7G+DWg04voqm8w0QuF6rMt3Hmx2WfY+b9E01sOYkBgg9ePyFMrTnUlqGaNQDjpjrE4LfYblMU3SQ8Qk8iRmKZ9hbXVb8bmzS7SfYBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLhSiq8p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hDLG3fCGiLvhB0vAPNC9vBhBp1UO3+3gNVvmYOFAx3gycKh6w0jjUJQPv72IfOoq1qV0qtKUjxmxuUaWKEaXRXB/p3wrYI3F5EV1HUuNejJmpjtnyyaK6H3ym9jjSfYEVXFAwPoLdiLfup+ggt1BlmmQOfGa2q4kBmCsIeFrcyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gf7TjvPt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLhSiq8p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E012C4CEC6;
-	Tue, 15 Oct 2024 12:13:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gf7TjvPt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46DFC4CEC6;
+	Tue, 15 Oct 2024 12:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994385;
-	bh=Yy1GkbUDRyhx/8vMLDWuTcKk5PQiCFNkW0b/XodNctw=;
+	s=korg; t=1728994389;
+	bh=BXCTtBxPokqXzPQTA18tMcWduXJmEkbOcnNPOGwcjMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oLhSiq8p1DE12O39qJjuD6tFhGqo7IIfPF8Mqjrb13xHiNLWUDfDb7b8N87omtl6P
-	 JhQ+/g1xtVxTE6g8UnjRflQyfoVlaNFFohbtg6Yww/gn2halmI68vE4pCkR8mb3Zfd
-	 AfOrJaoky0G/2+MP8kFcbwYDFEKsCOSapQGqrafI=
+	b=gf7TjvPto+8x1WbuneVLxXzqlYYKOTsyJcQ6jWjG4PQP6A1p6lTkezD+96zzsfyXO
+	 L1rB3lhOCo6KgZkF8ZgoBrT9wq6saFWzDgs7FxR1zvMOnKWxT0dfe8EDtC0Uif+/nq
+	 OVkN/oxoewHsRWdjcBBmSwRbPTSDsNBTrIpRN0qM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.15 691/691] net: xilinx: axienet: Schedule NAPI in two steps
-Date: Tue, 15 Oct 2024 13:30:39 +0200
-Message-ID: <20241015112507.742777180@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 679/691] block, bfq: fix uaf for accessing waker_bfqq after splitting
+Date: Tue, 15 Oct 2024 13:30:27 +0200
+Message-ID: <20241015112507.273014478@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,55 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit ba0da2dc934ec5ac32bbeecbd0670da16ba03565 upstream.
+commit 1ba0403ac6447f2d63914fb760c44a3b19c44eaf upstream.
 
-As advised by Documentation/networking/napi.rst, masking IRQs after
-calling napi_schedule can be racy. Avoid this by only masking/scheduling
-if napi_schedule_prep returns true.
+After commit 42c306ed7233 ("block, bfq: don't break merge chain in
+bfq_split_bfqq()"), if the current procress is the last holder of bfqq,
+the bfqq can be freed after bfq_split_bfqq(). Hence recored the bfqq and
+then access bfqq->waker_bfqq may trigger UAF. What's more, the waker_bfqq
+may in the merge chain of bfqq, hence just recored waker_bfqq is still
+not safe.
 
-Fixes: 9e2bc267e780 ("net: axienet: Use NAPI for TX completion path")
-Fixes: cc37610caaf8 ("net: axienet: implement NAPI and GRO receive")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240913145711.2284295-1-sean.anderson@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix the problem by adding a helper bfq_waker_bfqq() to check if
+bfqq->waker_bfqq is in the merge chain, and current procress is the only
+holder.
+
+Fixes: 42c306ed7233 ("block, bfq: don't break merge chain in bfq_split_bfqq()")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20240909134154.954924-2-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ block/bfq-iosched.c |   31 ++++++++++++++++++++++++++++---
+ 1 file changed, 28 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -1070,9 +1070,10 @@ static irqreturn_t axienet_tx_irq(int ir
- 		u32 cr = lp->tx_dma_cr;
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -6568,6 +6568,31 @@ static void bfq_prepare_request(struct r
+ 	rq->elv.priv[0] = rq->elv.priv[1] = NULL;
+ }
  
- 		cr &= ~(XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_DELAY_MASK);
--		axienet_dma_out32(lp, XAXIDMA_TX_CR_OFFSET, cr);
--
--		napi_schedule(&lp->napi_tx);
-+		if (napi_schedule_prep(&lp->napi_tx)) {
-+			axienet_dma_out32(lp, XAXIDMA_TX_CR_OFFSET, cr);
-+			__napi_schedule(&lp->napi_tx);
++static struct bfq_queue *bfq_waker_bfqq(struct bfq_queue *bfqq)
++{
++	struct bfq_queue *new_bfqq = bfqq->new_bfqq;
++	struct bfq_queue *waker_bfqq = bfqq->waker_bfqq;
++
++	if (!waker_bfqq)
++		return NULL;
++
++	while (new_bfqq) {
++		if (new_bfqq == waker_bfqq) {
++			/*
++			 * If waker_bfqq is in the merge chain, and current
++			 * is the only procress.
++			 */
++			if (bfqq_process_refs(waker_bfqq) == 1)
++				return NULL;
++			break;
 +		}
- 	}
++
++		new_bfqq = new_bfqq->new_bfqq;
++	}
++
++	return waker_bfqq;
++}
++
+ /*
+  * If needed, init rq, allocate bfq data structures associated with
+  * rq, and increment reference counters in the destination bfq_queue
+@@ -6628,7 +6653,7 @@ static struct bfq_queue *bfq_init_rq(str
+ 		/* If the queue was seeky for too long, break it apart. */
+ 		if (bfq_bfqq_coop(bfqq) && bfq_bfqq_split_coop(bfqq) &&
+ 			!bic->stably_merged) {
+-			struct bfq_queue *old_bfqq = bfqq;
++			struct bfq_queue *waker_bfqq = bfq_waker_bfqq(bfqq);
  
- 	return IRQ_HANDLED;
-@@ -1114,9 +1115,10 @@ static irqreturn_t axienet_rx_irq(int ir
- 		u32 cr = lp->rx_dma_cr;
+ 			/* Update bic before losing reference to bfqq */
+ 			if (bfq_bfqq_in_large_burst(bfqq))
+@@ -6647,7 +6672,7 @@ static struct bfq_queue *bfq_init_rq(str
+ 				bfqq_already_existing = true;
  
- 		cr &= ~(XAXIDMA_IRQ_IOC_MASK | XAXIDMA_IRQ_DELAY_MASK);
--		axienet_dma_out32(lp, XAXIDMA_RX_CR_OFFSET, cr);
--
--		napi_schedule(&lp->napi_rx);
-+		if (napi_schedule_prep(&lp->napi_rx)) {
-+			axienet_dma_out32(lp, XAXIDMA_RX_CR_OFFSET, cr);
-+			__napi_schedule(&lp->napi_rx);
-+		}
- 	}
+ 			if (!bfqq_already_existing) {
+-				bfqq->waker_bfqq = old_bfqq->waker_bfqq;
++				bfqq->waker_bfqq = waker_bfqq;
+ 				bfqq->tentative_waker_bfqq = NULL;
  
- 	return IRQ_HANDLED;
+ 				/*
+@@ -6657,7 +6682,7 @@ static struct bfq_queue *bfq_init_rq(str
+ 				 * woken_list of the waker. See
+ 				 * bfq_check_waker for details.
+ 				 */
+-				if (bfqq->waker_bfqq)
++				if (waker_bfqq)
+ 					hlist_add_head(&bfqq->woken_list_node,
+ 						       &bfqq->waker_bfqq->woken_list);
+ 			}
 
 
