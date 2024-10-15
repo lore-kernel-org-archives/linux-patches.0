@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D291C07ED;
-	Tue, 15 Oct 2024 13:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56521D5AD3;
+	Tue, 15 Oct 2024 13:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998015; cv=none; b=HVKhgoKNIJ631n9S/QMw0kCFqr32fdIcRnbnoMskEbFCK3FANJbhmWuybP2hqkYxLU0nXqDM2qobPrhh5OzRqgRWn4gAput36xa0ewXYFglHU/hQjhRuOGJoJkVAZu9SsQLKKdGaIgmqp5upnnOmnh59wMQ9BHJC46ZMbr5s7tE=
+	t=1728998018; cv=none; b=cWFv7E7GStyfmxLJWAGkM2WrYo/7V7QwUAkovDTMnatClWBLPoWK7wCyPT+KZGdvNLlixdJB0AmB7Cd2jDYTpSyIvE/5SgG/5FVcHTsLUMCO/ASd+O0tVRYHqz9G6YLR3W6GBO8DYDysFOSjE/1tV9gN6qd8cZzy0vny+IUvp6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998015; c=relaxed/simple;
-	bh=IwbwkmWfdF5r57BD9U2pbauofWXqqUt6WIq9HLY1Qvs=;
+	s=arc-20240116; t=1728998018; c=relaxed/simple;
+	bh=llJE/fevbi1DImn0iV7zjoVL94MHAla5aQwkx9/Da5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g81tAX0i969uB6OIfYJdF9cC1eH9/rKNgzL4Jt7wwwIOlE5gGeAL0cgcW4JxDlaWnhG322eGLhMMVqQWAm5BRA5GgWe9pX15WX58yfBV15PntMBr0CiLyEuo654xRbDw/ClEg/GzV3/FRqlBmokhkIsizcV3MbgkZiywIpLT+iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ke7ZS/dn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q4fPjvmxuuM1zSU8fjfLGVxTy4Z480GWQ7ncLYpeynBsI9fPegmhKRBDTz2pn+c06/C1DlBOpK+WSysPCw2+jJIV5jYLxF3N4gB/n/2Nphgff0G7qtBE+uf0lVNy32lYDBP/OzjV5+HcY5VRQXIk94nXQ8bR4/xoe++3f9zZqu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXUPI75H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ke7ZS/dn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA60C4CEC6;
-	Tue, 15 Oct 2024 13:13:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXUPI75H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448F3C4CECF;
+	Tue, 15 Oct 2024 13:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998015;
-	bh=IwbwkmWfdF5r57BD9U2pbauofWXqqUt6WIq9HLY1Qvs=;
+	s=korg; t=1728998018;
+	bh=llJE/fevbi1DImn0iV7zjoVL94MHAla5aQwkx9/Da5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ke7ZS/dn7AQIyytwkyYwpeJOV1pfP31+/Nca8swvTIm3QXZvl8oTrYI4XS1JnA9dC
-	 UcMxodF44yoGrq8tvRdi6jhIrjwdfrCxPos/OlmZvE5EXx4m8y2Ufv1dUvOSKiCv8J
-	 hbNMOOnvivQF+SknSqDnH+u1c8g3v933Akbpt5vE=
+	b=PXUPI75HGX5oGXNDbFu9GuuZ5fJqs8TKWteRZixxTnG/C8mJw8wTmfOMWOs4dAu2K
+	 H03vUrL00b0q5BN6mI+r2P9KxrSiot0yTq53dUYj9bkv/5EqpIcpYowid1lTTgvfn8
+	 wIe9QUy7n1pG6cUO0dxM5QzBB0fdof67sfI7P4m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+02341e0daa42a15ce130@syzkaller.appspotmail.com,
-	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 337/518] jfs: Fix uninit-value access of new_ea in ea_buffer
-Date: Tue, 15 Oct 2024 14:44:01 +0200
-Message-ID: <20241015123929.979853956@linuxfoundation.org>
+Subject: [PATCH 5.10 355/518] spi: s3c64xx: fix timeout counters in flush_fifo
+Date: Tue, 15 Oct 2024 14:44:19 +0200
+Message-ID: <20241015123930.669520396@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,55 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit 2b59ffad47db1c46af25ccad157bb3b25147c35c ]
+[ Upstream commit 68a16708d2503b6303d67abd43801e2ca40c208d ]
 
-syzbot reports that lzo1x_1_do_compress is using uninit-value:
+In the s3c64xx_flush_fifo() code, the loops counter is post-decremented
+in the do { } while(test && loops--) condition. This means the loops is
+left at the unsigned equivalent of -1 if the loop times out. The test
+after will never pass as if tests for loops == 0.
 
-=====================================================
-BUG: KMSAN: uninit-value in lzo1x_1_do_compress+0x19f9/0x2510 lib/lzo/lzo1x_compress.c:178
-
-...
-
-Uninit was stored to memory at:
- ea_put fs/jfs/xattr.c:639 [inline]
-
-...
-
-Local variable ea_buf created at:
- __jfs_setxattr+0x5d/0x1ae0 fs/jfs/xattr.c:662
- __jfs_xattr_set+0xe6/0x1f0 fs/jfs/xattr.c:934
-
-=====================================================
-
-The reason is ea_buf->new_ea is not initialized properly.
-
-Fix this by using memset to empty its content at the beginning
-in ea_get().
-
-Reported-by: syzbot+02341e0daa42a15ce130@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=02341e0daa42a15ce130
-Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Fixes: 230d42d422e7 ("spi: Add s3c64xx SPI Controller driver")
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20240924134009.116247-2-ben.dooks@codethink.co.uk
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/xattr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-s3c64xx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/jfs/xattr.c b/fs/jfs/xattr.c
-index aea5531559c06..4ebee6e4dc1f9 100644
---- a/fs/jfs/xattr.c
-+++ b/fs/jfs/xattr.c
-@@ -434,6 +434,8 @@ static int ea_get(struct inode *inode, struct ea_buffer *ea_buf, int min_size)
- 	int rc;
- 	int quota_allocation = 0;
+diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
+index d435df1b715bb..7beea6f930933 100644
+--- a/drivers/spi/spi-s3c64xx.c
++++ b/drivers/spi/spi-s3c64xx.c
+@@ -215,7 +215,7 @@ static void s3c64xx_flush_fifo(struct s3c64xx_spi_driver_data *sdd)
+ 	loops = msecs_to_loops(1);
+ 	do {
+ 		val = readl(regs + S3C64XX_SPI_STATUS);
+-	} while (TX_FIFO_LVL(val, sdd) && loops--);
++	} while (TX_FIFO_LVL(val, sdd) && --loops);
  
-+	memset(&ea_buf->new_ea, 0, sizeof(ea_buf->new_ea));
-+
- 	/* When fsck.jfs clears a bad ea, it doesn't clear the size */
- 	if (ji->ea.flag == 0)
- 		ea_size = 0;
+ 	if (loops == 0)
+ 		dev_warn(&sdd->pdev->dev, "Timed out flushing TX FIFO\n");
+@@ -228,7 +228,7 @@ static void s3c64xx_flush_fifo(struct s3c64xx_spi_driver_data *sdd)
+ 			readl(regs + S3C64XX_SPI_RX_DATA);
+ 		else
+ 			break;
+-	} while (loops--);
++	} while (--loops);
+ 
+ 	if (loops == 0)
+ 		dev_warn(&sdd->pdev->dev, "Timed out flushing RX FIFO\n");
 -- 
 2.43.0
 
