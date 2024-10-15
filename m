@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9171A76DA;
-	Tue, 15 Oct 2024 11:45:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E221A76DA;
+	Tue, 15 Oct 2024 11:46:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992757; cv=none; b=nENhYxYZSE3C7VdguqzqfBJCV+GbB4yZNWxinA74xM+44toytNM2y5RDIWu+loTquy0fB8PZ18vjzAWZiAcC2R/h7DDT89eKe3e2Y23vLG7EBS05BqbdrcYS/GLp/hz4pOdxkOmHqcyrRePILWYDzTaaas8ZHFiY328U9QiLX9Y=
+	t=1728992760; cv=none; b=fdYcoUYQ1n4Wrwg4Bbys4xFJv9KacGWO/r9igfYktRjcGRtz2AQ7kvESjwJDba4i3aODEOptkPolg8Wud9OYascUEDkdaBMSFftLxAgafwGIE11qjg+CVoLYww9vgFKykm7gcdc4a5CRUKqGyNNpKTSEZLY5hojcEM83BMpAcGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992757; c=relaxed/simple;
-	bh=VI6tCz7wxQXs1OQqROQhZSLOA5iTsiegGuC62C8BJEQ=;
+	s=arc-20240116; t=1728992760; c=relaxed/simple;
+	bh=y5T0eGv+Stq217awY0Ss1OIAXW9bG7DtyoUGgrqS4pM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VQZ/3VjsHzT1U7xmMu9gmm8iw93uogVdck2R/rio/7m8CNXHANFouljr8cTvKWwsYmuSJ5T+CxwoPtmPQLOBZduIgfhWd/Hz9rc5MgviC5/a4Y/uw6AKOCq0bAl4vKSsHuBvBZXlJ1JxtH47sBIoA2nXZ3Y3O4eldIUdvfRx68I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nySW5yZx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WX+00QiYh7qs1zVrNAICwN3sHloE2OcA5mFwavHlcMkif447eM8CwQ4TBcNiI9jJ263JJAkiKq1WY4FsAr3efoa9R18hVLGMJR42xAsaX8Ieis+1nXDgBhEc2ywbmZMpkuWeTn6WkuQVSawyb8Fgd+6kvfMdUCQEr7111R7Bz3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXgtfR8u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nySW5yZx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13541C4CEC6;
-	Tue, 15 Oct 2024 11:45:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXgtfR8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426ADC4CEC6;
+	Tue, 15 Oct 2024 11:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992757;
-	bh=VI6tCz7wxQXs1OQqROQhZSLOA5iTsiegGuC62C8BJEQ=;
+	s=korg; t=1728992760;
+	bh=y5T0eGv+Stq217awY0Ss1OIAXW9bG7DtyoUGgrqS4pM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nySW5yZxkGQ3o2+uOUCVbY3l7E1eGYwNHnIT6obelhL9AVrJOqtqFU4KmErDzrQJB
-	 YKOOT7OcFYfYxOk40sLm+H7Pi/QC71dyMRuLe5q9OZ8p2qSlv1LALFgf1JykcG110H
-	 Z5UNcDu2coLou9Tfp/Irfp61MyhtlTB8IoL4m66g=
+	b=EXgtfR8uj1p0js1k+XNfLgdYo8Xxm2U5aSil/0nmWUNlM/A9Lt8/ORqslVlwSI+V/
+	 3oYJjXH6HbvcVZIr6Q8YzLUGHnt5kZdhMz5KEoXsHHvsgzDQsEjkVODcsVcVeljboH
+	 2AlKPhRjy40OvbuSUL++Vs+Kdc0vobcW6Dkv796U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 207/691] ext4: avoid negative min_clusters in find_group_orlov()
-Date: Tue, 15 Oct 2024 13:22:35 +0200
-Message-ID: <20241015112448.576489487@linuxfoundation.org>
+Subject: [PATCH 5.15 208/691] ext4: return error on ext4_find_inline_entry
+Date: Tue, 15 Oct 2024 13:22:36 +0200
+Message-ID: <20241015112448.616413597@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,39 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit bb0a12c3439b10d88412fd3102df5b9a6e3cd6dc ]
+[ Upstream commit 4d231b91a944f3cab355fce65af5871fb5d7735b ]
 
-min_clusters is signed integer and will be converted to unsigned
-integer when compared with unsigned number stats.free_clusters.
-If min_clusters is negative, it will be converted to a huge unsigned
-value in which case all groups may not meet the actual desired free
-clusters.
-Set negative min_clusters to 0 to avoid unexpected behavior.
+In case of errors when reading an inode from disk or traversing inline
+directory entries, return an error-encoded ERR_PTR instead of returning
+NULL. ext4_find_inline_entry only caller, __ext4_find_entry already returns
+such encoded errors.
 
-Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Link: https://patch.msgid.link/20240820132234.2759926-4-shikemeng@huaweicloud.com
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Link: https://patch.msgid.link/20240821152324.3621860-3-cascardo@igalia.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: c6b72f5d82b1 ("ext4: avoid OOB when system.data xattr changes underneath the filesystem")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ialloc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/inline.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
-index a00c91aa755c4..5841686e80b3a 100644
---- a/fs/ext4/ialloc.c
-+++ b/fs/ext4/ialloc.c
-@@ -515,6 +515,8 @@ static int find_group_orlov(struct super_block *sb, struct inode *parent,
- 	if (min_inodes < 1)
- 		min_inodes = 1;
- 	min_clusters = avefreec - EXT4_CLUSTERS_PER_GROUP(sb)*flex_size / 4;
-+	if (min_clusters < 0)
-+		min_clusters = 0;
+diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
+index bc7f6417888dc..9e42c3b18458a 100644
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -1676,8 +1676,9 @@ struct buffer_head *ext4_find_inline_entry(struct inode *dir,
+ 	void *inline_start;
+ 	int inline_size;
  
- 	/*
- 	 * Start looking in the flex group where we last allocated an
+-	if (ext4_get_inode_loc(dir, &iloc))
+-		return NULL;
++	ret = ext4_get_inode_loc(dir, &iloc);
++	if (ret)
++		return ERR_PTR(ret);
+ 
+ 	down_read(&EXT4_I(dir)->xattr_sem);
+ 	if (!ext4_has_inline_data(dir)) {
+@@ -1708,7 +1709,10 @@ struct buffer_head *ext4_find_inline_entry(struct inode *dir,
+ 
+ out:
+ 	brelse(iloc.bh);
+-	iloc.bh = NULL;
++	if (ret < 0)
++		iloc.bh = ERR_PTR(ret);
++	else
++		iloc.bh = NULL;
+ out_find:
+ 	up_read(&EXT4_I(dir)->xattr_sem);
+ 	return iloc.bh;
 -- 
 2.43.0
 
