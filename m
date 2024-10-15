@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310DC1FC7F0;
-	Tue, 15 Oct 2024 13:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579CB1FAF01;
+	Tue, 15 Oct 2024 13:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998472; cv=none; b=QioecpnuVZP8ZPCfWyCqjcarILfxwnfd3eIo0F5WkxZfOXcCmzc1IfjPdxvtYQXXa4emL/33RRvvc2Xwz6LIHOi+2UMeKAmUWH1ZEchxOUjhg8JsmoNu5Wgxg91E48SWW4sD2xtY+29pjzvZkyTCZffEDle73NgTmStNZCQybxw=
+	t=1728998475; cv=none; b=E+0R7tkNUrrFSNg0XRWl5Pb4roZJe8hXB5QDzkLJ8bdLsWYOd8MaoZESxz3FvLzQnsPyfsH1enYnnIB9d3YDcx/G5icO/QHH04r/9LhB/+/7vAOn8amMY2XpqhAnwxXvsr/Y9xXNgcBJRW9w3ab+RmART2tu8NxdQBNT1QSPY1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998472; c=relaxed/simple;
-	bh=RvFXQtyhqPD2ppjoWg8/wDP+DatHTvshgzphyrcc2mw=;
+	s=arc-20240116; t=1728998475; c=relaxed/simple;
+	bh=LKWvnb/SKCEaVx5LmNHfmSxTv7Kgh0kzLCCMJKXOrrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ChyS2CJlY6K0Dy2eLymSCitLDRFpHFik3qZOmreJ9TlkriInIKzBEykfKT+FvXxQl+xYQ/ciMlv18dlW8CiC+zz71NRU2qZMZEn5utA61Zy0NFtirKUwmbSGgo4+xBXhhJQChuf/D/fxz7jL73fM1+E32k50HtZBDQyRY83Bez0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNY2zekr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CRRB14cnkindgDZM60PpJXlPI4xwBguaHWqccK1Sam78YDRAwJPvLqT8Bs8zVXC6df8O/r6EB+n8XPivPC2ZbASDyYf0wuKCfBmrX2JwDkYTiwWr/jZ76Zt2j9quRHKVGMvrr2PaWBVV2gAwvF16NHwUffIg+gFvOfYEMz6qmxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BlViMcMv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNY2zekr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63887C4CECE;
-	Tue, 15 Oct 2024 13:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BlViMcMv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5F62C4CED0;
+	Tue, 15 Oct 2024 13:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998471;
-	bh=RvFXQtyhqPD2ppjoWg8/wDP+DatHTvshgzphyrcc2mw=;
+	s=korg; t=1728998475;
+	bh=LKWvnb/SKCEaVx5LmNHfmSxTv7Kgh0kzLCCMJKXOrrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MNY2zekriAWJw0YGF9moC/53NhtVKuN5He4xgsbH0gZt1Dp1tILFzpZ2jKD8MAo9u
-	 0CGf9ZybZI+FKOJD1vU88ZEUPYXphb0Zxftj2jDMPiKYkVhSZaHmn60Q+IZHa3UO+r
-	 A7MMJYCDmOFGUQi4aNqR3Mh7GvBHYemoZw5pb9hY=
+	b=BlViMcMv7DZWArvKwGWCt718tQYE/easdEMK50+JJOzbGNu/GsDfjhh+r0bgzfOfG
+	 /BXPtoQH2O++ce3XYi+4fi7CNaHkm5NyZRfUk3U+xVmt899ZOmxYjleYFPGkvN8tJa
+	 GXv0uuSLsHFZWNYucAyEEW0XsylPd3agZynXD2rU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Billy Tsai <billy_tsai@aspeedtech.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 487/518] gpio: aspeed: Add the flush write to ensure the write complete.
-Date: Tue, 15 Oct 2024 14:46:31 +0200
-Message-ID: <20241015123935.795266839@linuxfoundation.org>
+Subject: [PATCH 5.10 488/518] gpio: aspeed: Use devm_clk api to manage clock source
+Date: Tue, 15 Oct 2024 14:46:32 +0200
+Message-ID: <20241015123935.833179826@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -54,40 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit 1bb5a99e1f3fd27accb804aa0443a789161f843c ]
+[ Upstream commit a6191a3d18119184237f4ee600039081ad992320 ]
 
-Performing a dummy read ensures that the register write operation is fully
-completed, mitigating any potential bus delays that could otherwise impact
-the frequency of bitbang usage. E.g., if the JTAG application uses GPIO to
-control the JTAG pins (TCK, TMS, TDI, TDO, and TRST), and the application
-sets the TCK clock to 1 MHz, the GPIO's high/low transitions will rely on
-a delay function to ensure the clock frequency does not exceed 1 MHz.
-However, this can lead to rapid toggling of the GPIO because the write
-operation is POSTed and does not wait for a bus acknowledgment.
+Replace of_clk_get with devm_clk_get_enabled to manage the clock source.
 
-Fixes: 361b79119a4b ("gpio: Add Aspeed driver")
+Fixes: 5ae4cb94b313 ("gpio: aspeed: Add debounce support")
 Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Link: https://lore.kernel.org/r/20241008081450.1490955-2-billy_tsai@aspeedtech.com
+Link: https://lore.kernel.org/r/20241008081450.1490955-3-billy_tsai@aspeedtech.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-aspeed.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpio/gpio-aspeed.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpio/gpio-aspeed.c b/drivers/gpio/gpio-aspeed.c
-index bbd04a63fb12a..41e3f3b351cf6 100644
+index 41e3f3b351cf6..a70c499c2a193 100644
 --- a/drivers/gpio/gpio-aspeed.c
 +++ b/drivers/gpio/gpio-aspeed.c
-@@ -404,6 +404,8 @@ static void __aspeed_gpio_set(struct gpio_chip *gc, unsigned int offset,
- 	gpio->dcache[GPIO_BANK(offset)] = reg;
+@@ -1159,7 +1159,7 @@ static int __init aspeed_gpio_probe(struct platform_device *pdev)
+ 	if (!gpio_id)
+ 		return -EINVAL;
  
- 	iowrite32(reg, addr);
-+	/* Flush write */
-+	ioread32(addr);
- }
- 
- static void aspeed_gpio_set(struct gpio_chip *gc, unsigned int offset,
+-	gpio->clk = of_clk_get(pdev->dev.of_node, 0);
++	gpio->clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(gpio->clk)) {
+ 		dev_warn(&pdev->dev,
+ 				"Failed to get clock from devicetree, debouncing disabled\n");
 -- 
 2.43.0
 
