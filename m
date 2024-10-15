@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6183D1E6339;
-	Tue, 15 Oct 2024 11:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F51519B3FF;
+	Tue, 15 Oct 2024 11:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993571; cv=none; b=KQTZ1iZSpRbNtpNMd5+VmbPUpu8t0kdV6QnGpq8ddz5Bi/nAHY2hA2VMUtKl0ekZrFEMFGZyb+qFfTn8JiTeOv7HC+NH8jmo/vmyyB/yyKV4VWwpatyw7Ibx3bFo4dxJNCkWswQrd38r31Earsl/NQJFTyGeaJa7bhA47bFo/tQ=
+	t=1728993574; cv=none; b=Mq1gZJ6NzC0hHoYt4ZN7aKcoD0lA5oqPS/IEf08XZbyQyJoduIsD3S2JpirmugF5r2Q4n9KYAHq7ctjVfep4iQXJaC8cWMyY5q5ELAbju8ThRMR20nHeoEchDv+3dt+QJuUq5PFMLWaGHWmLP+pU9wjLF+7QE7OcyLLWIC8bV1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993571; c=relaxed/simple;
-	bh=yox/JP1T+nBs76QDOaCq9KyFC8o13YBYsHKjOBGUYnw=;
+	s=arc-20240116; t=1728993574; c=relaxed/simple;
+	bh=vD9s+ZNpl5vyuz3NQS8G4McorOs9TMSSUFb00TwuqpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QpzCXMtDbnS3/XO8VrLO0R3VZT2FxrrM6qcNWYt6FjZqKnEPyOyTq1zREHUFjoKARUlINYVyW68jnIrXM9w6Fx6duG0GgUS1XQEcHd03MuYPQ657r1y9urfPCtMNwSRTLEJHEKwA4COLpew+gTR582alh3F0lX4kCpXMO4IEv/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLr2ds6T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OfiDJZIyaw961+3R+Hu0PZM3yh3G5xbUmlpJQyzisbz7iUFHGvQe3PBwr4Foh4gldU7Dd7MNdl3+V7NymoJ/kGjJYy/p6JXD8CtgV0WuThLFUe27Yqiu63QAuo4iF3QF6ObZ0etRFlcXtK9suNigoV143A5b5rwjeTkalniOEj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZSniNJ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLr2ds6T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87FEC4CEC6;
-	Tue, 15 Oct 2024 11:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZSniNJ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11EA5C4CEC6;
+	Tue, 15 Oct 2024 11:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993571;
-	bh=yox/JP1T+nBs76QDOaCq9KyFC8o13YBYsHKjOBGUYnw=;
+	s=korg; t=1728993574;
+	bh=vD9s+ZNpl5vyuz3NQS8G4McorOs9TMSSUFb00TwuqpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tLr2ds6TxRyH14laCPbwxltUIH5nmIVfWsCrkJeIOxWnBd0WG1adm1bC7pkzBNNLR
-	 U4jAFSFt/VE+2r/uEF9bV+I8Ik9CrG7PgG3yAx+qtvuarRhrAwaVmyx0A0lNeMxYdC
-	 qyjndrMmEdLZNot1OE/Hx7pgwcXTfZ5MMOm2bkHc=
+	b=SZSniNJ+prTkzG+n0CWFbrcglTWUx3sYGEAY4co/m3jeIsfJE2bLzzQUzoNRrOZte
+	 m4vEaHMmJ6d//TiQIXB85wqepID13QaDhsCm19iVRjzOCdygE3BUBDJKLkpKLnfLn5
+	 b6e0U6xnADQ9rWxA914kN9tZ+ZIBPWNIfbkUl6m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 420/691] wifi: ath11k: fix array out-of-bound access in SoC stats
-Date: Tue, 15 Oct 2024 13:26:08 +0200
-Message-ID: <20241015112457.013531485@linuxfoundation.org>
+Subject: [PATCH 5.15 421/691] wifi: rtw88: select WANT_DEV_COREDUMP
+Date: Tue, 15 Oct 2024 13:26:09 +0200
+Message-ID: <20241015112457.054549108@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,41 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+From: Zong-Zhe Yang <kevin_yang@realtek.com>
 
-[ Upstream commit 69f253e46af98af17e3efa3e5dfa72fcb7d1983d ]
+[ Upstream commit 7e989b0c1e33210c07340bf5228aa83ea52515b5 ]
 
-Currently, the ath11k_soc_dp_stats::hal_reo_error array is defined with a
-maximum size of DP_REO_DST_RING_MAX. However, the ath11k_dp_process_rx()
-function access ath11k_soc_dp_stats::hal_reo_error using the REO
-destination SRNG ring ID, which is incorrect. SRNG ring ID differ from
-normal ring ID, and this usage leads to out-of-bounds array access. To fix
-this issue, modify ath11k_dp_process_rx() to use the normal ring ID
-directly instead of the SRNG ring ID to avoid out-of-bounds array access.
+We have invoked device coredump when fw crash.
+Should select WANT_DEV_COREDUMP by ourselves.
 
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://patch.msgid.link/20240704070811.4186543-3-quic_periyasa@quicinc.com
+Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20240718070616.42217-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 6920cce493f69..318c3bfd45fdd 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -2637,7 +2637,7 @@ int ath11k_dp_process_rx(struct ath11k_base *ab, int ring_id,
- 		if (push_reason !=
- 		    HAL_REO_DEST_RING_PUSH_REASON_ROUTING_INSTRUCTION) {
- 			dev_kfree_skb_any(msdu);
--			ab->soc_stats.hal_reo_error[dp->reo_dst_ring[ring_id].ring_id]++;
-+			ab->soc_stats.hal_reo_error[ring_id]++;
- 			continue;
- 		}
+diff --git a/drivers/net/wireless/realtek/rtw88/Kconfig b/drivers/net/wireless/realtek/rtw88/Kconfig
+index e3d7cb6c12902..5c18da555681a 100644
+--- a/drivers/net/wireless/realtek/rtw88/Kconfig
++++ b/drivers/net/wireless/realtek/rtw88/Kconfig
+@@ -12,6 +12,7 @@ if RTW88
  
+ config RTW88_CORE
+ 	tristate
++	select WANT_DEV_COREDUMP
+ 
+ config RTW88_PCI
+ 	tristate
 -- 
 2.43.0
 
