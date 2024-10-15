@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2451C07DF;
-	Tue, 15 Oct 2024 13:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3717F1C07ED;
+	Tue, 15 Oct 2024 13:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997899; cv=none; b=CrGo0gYHr5zDHXwel+czY7nL2ZqKFuRU0L+ZM2u+/48+mvhSOAkqK7ujQGfI59ZkGPqTaXgPsAdgwqlFd/xOZVMZJkx+5ocDrVDhc8gJ+fkggvCDlgcWMd0E+png+HYyIHon05aCyIqhhBKhepknz10m5T/6uxDzmL9Dmw4Zans=
+	t=1728997902; cv=none; b=ZtiUJcEuFWirGFuu5TY3vSDtmmnjr2xH1Lbmi8LVCv1Pnp2Zw9t3p57YrL3wwOFWcINcpfUs4FCrgkjJbGy1GYD0OUjj5vc3jG/BmDD9XeM2nD1BOEB/ZQ6FuG4kKElgEiXlhOlCJZa9r/3nX/dV02A97JXcLNbwRFKVEf/OeHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997899; c=relaxed/simple;
-	bh=Z2u2nQVhYugad6c3hjw0N6bBIW8Ma7mVfEyMqz/WPV0=;
+	s=arc-20240116; t=1728997902; c=relaxed/simple;
+	bh=FO7swbQRmmZdczf1xmleBfYC2dGIxBM48xp5q56yIM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bIDdlyMlqVEcg8bK8DVWNqg4SfymQHXIRcqF0+zndSbvXbbx8ms2pO99povX2tRtS8msb7u0goGRAYmpctjbL4d0YkIcYiaEWyRFlpNkSIxeR0RUs2vJ24/lRUv/YkRJf4ja3/8Z3mXbm/bHlA4fYsE+ruhKNVRR1RjhyjvhPyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzoJuw9Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QhCTaVvBF+61Zr0P1T00/X95QIz80GNl0KRoYpK/G7JiM6GmA+I43QHUiLDfd+IYd/1C1z6m41bPsX3dQwo4UdrjG9llSN94PNAWsCpksQyiRiUYYwoZO9NROBWAnkEYSY2Lhgr7yzvh4ahSA7muTB5ca7BK/m3qqwZXzzTZcCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k68x7Nlr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzoJuw9Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 625A4C4CEC6;
-	Tue, 15 Oct 2024 13:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k68x7Nlr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8977C4CEC6;
+	Tue, 15 Oct 2024 13:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997898;
-	bh=Z2u2nQVhYugad6c3hjw0N6bBIW8Ma7mVfEyMqz/WPV0=;
+	s=korg; t=1728997902;
+	bh=FO7swbQRmmZdczf1xmleBfYC2dGIxBM48xp5q56yIM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VzoJuw9Q3a2EXyFwqdpIR7ef36ltE7Ouj8CjW9AWJs8AH0BOj5XMIkaoQ3+Azo6kb
-	 1VbjiNdQeBSE7Du2sPn5fadLVni26Y/ZBqPKIHuCt3jpQdjehcxapKowv78A7eKf+1
-	 X4VfKAPsYt5slGmh/H2YxZiBQ2wWNnB4mlnEcnrg=
+	b=k68x7NlrTwdqU66HSkbKVf8w/YQZ9jbmlecS702e+WREjbmyx/gEOdKFW0BebaeMm
+	 Vg4In/VH8HF2PjvAmI2wSYnIX/GprUoPqarjws6cycXLgZjhwz8BVtO99BAitLYez/
+	 ekzmeifn/CWfOWMZl3dfxlZFto7Z5srmLOmO3kSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	"David S. Miller" <davem@davemloft.net>,
+	Joshua Pius <joshuapius@chromium.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 303/518] net: sched: consistently use rcu_replace_pointer() in taprio_change()
-Date: Tue, 15 Oct 2024 14:43:27 +0200
-Message-ID: <20241015123928.682221309@linuxfoundation.org>
+Subject: [PATCH 5.10 321/518] ALSA: usb-audio: Add logitech Audio profile quirk
+Date: Tue, 15 Oct 2024 14:43:45 +0200
+Message-ID: <20241015123929.369868324@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,40 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Joshua Pius <joshuapius@chromium.org>
 
-[ Upstream commit d5c4546062fd6f5dbce575c7ea52ad66d1968678 ]
+[ Upstream commit a51c925c11d7b855167e64b63eb4378e5adfc11d ]
 
-According to Vinicius (and carefully looking through the whole
-https://syzkaller.appspot.com/bug?extid=b65e0af58423fc8a73aa
-once again), txtime branch of 'taprio_change()' is not going to
-race against 'advance_sched()'. But using 'rcu_replace_pointer()'
-in the former may be a good idea as well.
+Specify shortnames for the following Logitech Devices: Rally bar, Rally
+bar mini, Tap, MeetUp and Huddle.
 
-Suggested-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Joshua Pius <joshuapius@chromium.org>
+Link: https://patch.msgid.link/20240912152635.1859737-1-joshuapius@google.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/usb/card.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index ec6b24edf5f93..04ed23b5f21b4 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -1577,7 +1577,9 @@ static int taprio_change(struct Qdisc *sch, struct nlattr *opt,
- 			goto unlock;
- 		}
+diff --git a/sound/usb/card.c b/sound/usb/card.c
+index 6b172db58a310..476694ffc393d 100644
+--- a/sound/usb/card.c
++++ b/sound/usb/card.c
+@@ -377,6 +377,12 @@ static const struct usb_audio_device_name usb_audio_names[] = {
+ 	/* Creative/Toshiba Multimedia Center SB-0500 */
+ 	DEVICE_NAME(0x041e, 0x3048, "Toshiba", "SB-0500"),
  
--		rcu_assign_pointer(q->admin_sched, new_admin);
-+		/* Not going to race against advance_sched(), but still */
-+		admin = rcu_replace_pointer(q->admin_sched, new_admin,
-+					    lockdep_rtnl_is_held());
- 		if (admin)
- 			call_rcu(&admin->rcu, taprio_free_sched_cb);
- 	} else {
++	/* Logitech Audio Devices */
++	DEVICE_NAME(0x046d, 0x0867, "Logitech, Inc.", "Logi-MeetUp"),
++	DEVICE_NAME(0x046d, 0x0874, "Logitech, Inc.", "Logi-Tap-Audio"),
++	DEVICE_NAME(0x046d, 0x087c, "Logitech, Inc.", "Logi-Huddle"),
++	DEVICE_NAME(0x046d, 0x0898, "Logitech, Inc.", "Logi-RB-Audio"),
++	DEVICE_NAME(0x046d, 0x08d2, "Logitech, Inc.", "Logi-RBM-Audio"),
+ 	DEVICE_NAME(0x046d, 0x0990, "Logitech, Inc.", "QuickCam Pro 9000"),
+ 
+ 	/* ASUS ROG Zenith II: this machine has also two devices, one for
 -- 
 2.43.0
 
