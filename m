@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307EF1D8DEA;
-	Tue, 15 Oct 2024 12:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4101F1CFEA9;
+	Tue, 15 Oct 2024 12:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993771; cv=none; b=GTH1ATqqUHFD2tuFPyThRUtKS78lyuvB7jDQ2d4rl+mKNXHoXKhpMkX72dkuI7t6GQ1xLUlLk1E6f9aIkRmMU3/XSO4MCGnsC+NSxjcMGNGRdfMYz09xyhv9x15NoR3bwgssyhJsXH6Vz2rDTGu0JAuDQAdqA0YB5Eb0K3l+wEk=
+	t=1728993774; cv=none; b=iXtvsmKT3OAlmWtIBu2Z2YkBQFKUgxOeJ6mhMcx7/RNLIwpGwUIv86/2YAm8uqiPCoPB8H3lbdAMpYZphzskpIXcVxJwKmAFcgsZI/p4Vj8Mh3rayx7iUOEnPlbFlBSDD5NCua8LwkBbah7L1N6HkYhkQkKL6qWHqN1XyqYmGTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993771; c=relaxed/simple;
-	bh=nDhzsquXkYlp4iIPDaR5iqKzeQItbJD38rLZZwrxEtw=;
+	s=arc-20240116; t=1728993774; c=relaxed/simple;
+	bh=bTgvN3pbuHWcBoxXIHc0c4e3BOrMX0kDmJ00oez0ANY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WaOqNZztP1FJWf4DsSGDU2Fv0NQlvUEy3sC9pwga1iFTI1WtAkXWjEsEOrUiuMhQE+OOULqd6RfC2bIdD6QG0uwe5E1H3Y1w/cXY5zm16fE3WQSWcXMEjuH69RsjDbh6unKaVkqVr52S1uneCMKKGLYjX4Mi81aVB6w2F2/9qKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRlq8Qvs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qUx1hCSm0cI2xb+EaznjOIMyMlAJYUgnTzYXbeyrcQZyvTVQGnNfxvHZlY02KzKip1uQ7s7xhC2OhJJVGvelO7moStdwv6OPYs0aD8m3VctQIvT7G0RSXgNJbIxQ9O6aW90Aktglcl4Zkcnk1LJQZjiae38Wtfw3q/SzWcLyiOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ApnckhAd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRlq8Qvs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0CFC4CECF;
-	Tue, 15 Oct 2024 12:02:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApnckhAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BECEBC4CEC6;
+	Tue, 15 Oct 2024 12:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993770;
-	bh=nDhzsquXkYlp4iIPDaR5iqKzeQItbJD38rLZZwrxEtw=;
+	s=korg; t=1728993774;
+	bh=bTgvN3pbuHWcBoxXIHc0c4e3BOrMX0kDmJ00oez0ANY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BRlq8QvsJStqqtsSaOLxIC0kyswsNFywrkg/QlZ/FS9NULZfiZTSmDoYbPRS3lxd2
-	 a1kIM8XWNFLljoitasflBGy0jj2BYHMfwbzhCUgXcOBm74gLB08BLj0vCpKz6+8Eq/
-	 NdnTHcmrGOaG5v4I10rsP8oCiELiwlr1bfd1ycok=
+	b=ApnckhAd9IHStn0sE1HW1gqqRrWwp1YwzvXUq0ct2aGz3p8WclF+HmxQ6DrUWxvSd
+	 E20DyKgDV0wGynWVcqybOmTvbE934SUkiMugdMtUp3Ic4Y452kWIiQz7TuLnrQetiB
+	 I+naVuuGBEmHLIMH8VtZ1sX89xBPttHSC6Wm6mA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,11 +30,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Baokun Li <libaokun1@huawei.com>,
 	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 510/691] ext4: fix double brelse() the buffer of the extents path
-Date: Tue, 15 Oct 2024 13:27:38 +0200
-Message-ID: <20241015112500.586094734@linuxfoundation.org>
+Subject: [PATCH 5.15 511/691] ext4: update orig_path in ext4_find_extent()
+Date: Tue, 15 Oct 2024 13:27:39 +0200
+Message-ID: <20241015112500.625555807@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -55,98 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-commit dcaa6c31134c0f515600111c38ed7750003e1b9c upstream.
+commit 5b4b2dcace35f618fe361a87bae6f0d13af31bc1 upstream.
 
-In ext4_ext_try_to_merge_up(), set path[1].p_bh to NULL after it has been
-released, otherwise it may be released twice. An example of what triggers
-this is as follows:
+In ext4_find_extent(), if the path is not big enough, we free it and set
+*orig_path to NULL. But after reallocating and successfully initializing
+the path, we don't update *orig_path, in which case the caller gets a
+valid path but a NULL ppath, and this may cause a NULL pointer dereference
+or a path memory leak. For example:
 
-  split2    map    split1
-|--------|-------|--------|
+ext4_split_extent
+  path = *ppath = 2000
+  ext4_find_extent
+    if (depth > path[0].p_maxdepth)
+      kfree(path = 2000);
+      *orig_path = path = NULL;
+      path = kcalloc() = 3000
+  ext4_split_extent_at(*ppath = NULL)
+    path = *ppath;
+    ex = path[depth].p_ext;
+    // NULL pointer dereference!
 
-ext4_ext_map_blocks
- ext4_ext_handle_unwritten_extents
-  ext4_split_convert_extents
-   // path->p_depth == 0
-   ext4_split_extent
-     // 1. do split1
-     ext4_split_extent_at
-       |ext4_ext_insert_extent
-       |  ext4_ext_create_new_leaf
-       |    ext4_ext_grow_indepth
-       |      le16_add_cpu(&neh->eh_depth, 1)
-       |    ext4_find_extent
-       |      // return -ENOMEM
-       |// get error and try zeroout
-       |path = ext4_find_extent
-       |  path->p_depth = 1
-       |ext4_ext_try_to_merge
-       |  ext4_ext_try_to_merge_up
-       |    path->p_depth = 0
-       |    brelse(path[1].p_bh)  ---> not set to NULL here
-       |// zeroout success
-     // 2. update path
-     ext4_find_extent
-     // 3. do split2
-     ext4_split_extent_at
-       ext4_ext_insert_extent
-         ext4_ext_create_new_leaf
-           ext4_ext_grow_indepth
-             le16_add_cpu(&neh->eh_depth, 1)
-           ext4_find_extent
-             path[0].p_bh = NULL;
-             path->p_depth = 1
-             read_extent_tree_block  ---> return err
-             // path[1].p_bh is still the old value
-             ext4_free_ext_path
-               ext4_ext_drop_refs
-                 // path->p_depth == 1
-                 brelse(path[1].p_bh)  ---> brelse a buffer twice
-
-Finally got the following WARRNING when removing the buffer from lru:
-
-============================================
-VFS: brelse: Trying to free free buffer
-WARNING: CPU: 2 PID: 72 at fs/buffer.c:1241 __brelse+0x58/0x90
-CPU: 2 PID: 72 Comm: kworker/u19:1 Not tainted 6.9.0-dirty #716
-RIP: 0010:__brelse+0x58/0x90
+==================================================================
+BUG: kernel NULL pointer dereference, address: 0000000000000010
+CPU: 6 UID: 0 PID: 576 Comm: fsstress Not tainted 6.11.0-rc2-dirty #847
+RIP: 0010:ext4_split_extent_at+0x6d/0x560
 Call Trace:
  <TASK>
- __find_get_block+0x6e7/0x810
- bdev_getblk+0x2b/0x480
- __ext4_get_inode_loc+0x48a/0x1240
- ext4_get_inode_loc+0xb2/0x150
- ext4_reserve_inode_write+0xb7/0x230
- __ext4_mark_inode_dirty+0x144/0x6a0
- ext4_ext_insert_extent+0x9c8/0x3230
- ext4_ext_map_blocks+0xf45/0x2dc0
- ext4_map_blocks+0x724/0x1700
- ext4_do_writepages+0x12d6/0x2a70
+ ext4_split_extent.isra.0+0xcb/0x1b0
+ ext4_ext_convert_to_initialized+0x168/0x6c0
+ ext4_ext_handle_unwritten_extents+0x325/0x4d0
+ ext4_ext_map_blocks+0x520/0xdb0
+ ext4_map_blocks+0x2b0/0x690
+ ext4_iomap_begin+0x20e/0x2c0
 [...]
-============================================
+==================================================================
 
-Fixes: ecb94f5fdf4b ("ext4: collapse a single extent tree block into the inode if possible")
+Therefore, *orig_path is updated when the extent lookup succeeds, so that
+the caller can safely use path or *ppath.
+
+Fixes: 10809df84a4d ("ext4: teach ext4_ext_find_extent() to realloc path if necessary")
 Cc: stable@kernel.org
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20240822023545.1994557-9-libaokun@huaweicloud.com
+Link: https://patch.msgid.link/20240822023545.1994557-6-libaokun@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/extents.c     |    3 ++-
+ fs/ext4/move_extent.c |    1 -
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 --- a/fs/ext4/extents.c
 +++ b/fs/ext4/extents.c
-@@ -1872,6 +1872,7 @@ static void ext4_ext_try_to_merge_up(han
- 	path[0].p_hdr->eh_max = cpu_to_le16(max_root);
+@@ -950,6 +950,8 @@ ext4_find_extent(struct inode *inode, ex
  
- 	brelse(path[1].p_bh);
-+	path[1].p_bh = NULL;
- 	ext4_free_blocks(handle, inode, NULL, blk, 1,
- 			 EXT4_FREE_BLOCKS_METADATA | EXT4_FREE_BLOCKS_FORGET);
+ 	ext4_ext_show_path(inode, path);
+ 
++	if (orig_path)
++		*orig_path = path;
+ 	return path;
+ 
+ err:
+@@ -3250,7 +3252,6 @@ static int ext4_split_extent_at(handle_t
+ 	}
+ 	depth = ext_depth(inode);
+ 	ex = path[depth].p_ext;
+-	*ppath = path;
+ 
+ 	if (EXT4_EXT_MAY_ZEROOUT & split_flag) {
+ 		if (split_flag & (EXT4_EXT_DATA_VALID1|EXT4_EXT_DATA_VALID2)) {
+--- a/fs/ext4/move_extent.c
++++ b/fs/ext4/move_extent.c
+@@ -36,7 +36,6 @@ get_ext_path(struct inode *inode, ext4_l
+ 		*ppath = NULL;
+ 		return -ENODATA;
+ 	}
+-	*ppath = path;
+ 	return 0;
  }
+ 
 
 
