@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E467A1D8DEA;
-	Tue, 15 Oct 2024 11:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2D11D8DEA;
+	Tue, 15 Oct 2024 11:58:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993531; cv=none; b=KEaTDVZRTBfzPO2vaWXB8DTPWuyC5+ZVhoyHr1Lr5Rcv0dHSVCFp5Zx27gl6f0MyObDzbvpgFNciJG3xKzXnBS1sneGODB8C1ULYwHoi6I+57JrgzWURUNNPnaMgo9dHThkXKt3nNw11NkF8R/LshCC0td77bBO5uW1yUyuV4Y0=
+	t=1728993534; cv=none; b=M1hsSiMhCVZstKOeKMCG549LLX0j89scs0JoVERwLWx09SiNxRv4spj3h48FQcFz55QRdJSttMJwq+vK2gP7IAMczhz4+8WbrEJDktTzzc7YClb3cA4X+W0YySwIy5+NiKaUDu0AhPckomtx4pMl7zv7ABjVnlg7Efth0CJeC8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993531; c=relaxed/simple;
-	bh=4/JVq7cVMWiHABLy5GY0TkK/wlyZ6KUS2Wh/4wKoADM=;
+	s=arc-20240116; t=1728993534; c=relaxed/simple;
+	bh=j6V2HcuiL53ufe9Ik9lAsG6DbJ62YWJVOIZEzLNXRwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pOnCB9PrB0watzJnXBuTzApa5fKN4u7OhRp8NJGVcwCbbbHRWxKOGWZEU0ArBdbXxssR+iPes8cU5t+lBjK1o1AgtSGwfjD8Y0VkzpfSn884dExLCm9kay4dlE0S6OhngGCYS1L9vrWksuj0xdwYy/fHhvbmGLJRrJiaLvk9KsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPmaPy8F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gm7v4VJeAcf62YDmR98bjTTVARbpCurhxqeiG2t9OquXdCm5bxYLPcbD1Icque/pNrXPTjQfgkXnnsCxZmCjWWXXfY+k0x6vmnj7eCiuE5CQFKQqAb4/7NXhohv1vX5kJnU5mWD0dAN2BXwNV6LwIgIWfyrVcqWHoQffIpsmSvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XYV1sT21; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPmaPy8F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC66C4CEC6;
-	Tue, 15 Oct 2024 11:58:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XYV1sT21"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980E4C4CEC6;
+	Tue, 15 Oct 2024 11:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993530;
-	bh=4/JVq7cVMWiHABLy5GY0TkK/wlyZ6KUS2Wh/4wKoADM=;
+	s=korg; t=1728993534;
+	bh=j6V2HcuiL53ufe9Ik9lAsG6DbJ62YWJVOIZEzLNXRwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lPmaPy8FaPiR72VHcyi7b5dp5MAnYmIkNW43t5dMUkR+XwMRrksOzAU91KZG3PeiQ
-	 NtF868EheltRQCcUugmbvkZPFvsbG6IaBa1Mvagzgef7TuTFOkQmbXXgWMVtoAZWXL
-	 TgSMO86seRDG8aFB4/j/WZkkU9U/gCuvvxcVNOYs=
+	b=XYV1sT21YkhEmsTSo8uyacJ9s0C/GsscCK3AdpKEgPkSG+IEjtFIzv4R1kuwkndVn
+	 fD7bOeXqpqV6jT1C3k77mN7GBGZnfLZPd9f+lTVq5jCVjSnX4kUz2ewtZ0jxl2n7dY
+	 p9eq2g9XEVq2pNl+F2aZUAw0m7j4YRrFky/y7850=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Pius <joshuapius@chromium.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Ahmed S. Darwish" <darwi@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 439/691] ALSA: usb-audio: Add logitech Audio profile quirk
-Date: Tue, 15 Oct 2024 13:26:27 +0200
-Message-ID: <20241015112457.770154206@linuxfoundation.org>
+Subject: [PATCH 5.15 440/691] tools/x86/kcpuid: Protect against faulty "max subleaf" values
+Date: Tue, 15 Oct 2024 13:26:28 +0200
+Message-ID: <20241015112457.809977607@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -45,44 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joshua Pius <joshuapius@chromium.org>
+From: Ahmed S. Darwish <darwi@linutronix.de>
 
-[ Upstream commit a51c925c11d7b855167e64b63eb4378e5adfc11d ]
+[ Upstream commit cf96ab1a966b87b09fdd9e8cc8357d2d00776a3a ]
 
-Specify shortnames for the following Logitech Devices: Rally bar, Rally
-bar mini, Tap, MeetUp and Huddle.
+Protect against the kcpuid code parsing faulty max subleaf numbers
+through a min() expression.  Thus, ensuring that max_subleaf will always
+be ≤ MAX_SUBLEAF_NUM.
 
-Signed-off-by: Joshua Pius <joshuapius@chromium.org>
-Link: https://patch.msgid.link/20240912152635.1859737-1-joshuapius@google.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Use "u32" for the subleaf numbers since kcpuid is compiled with -Wextra,
+which includes signed/unsigned comparisons warnings.
+
+Signed-off-by: Ahmed S. Darwish <darwi@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20240718134755.378115-5-darwi@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/card.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/arch/x86/kcpuid/kcpuid.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/sound/usb/card.c b/sound/usb/card.c
-index bebd42413fadb..bec6d41a143d2 100644
---- a/sound/usb/card.c
-+++ b/sound/usb/card.c
-@@ -382,6 +382,12 @@ static const struct usb_audio_device_name usb_audio_names[] = {
- 	/* Creative/Toshiba Multimedia Center SB-0500 */
- 	DEVICE_NAME(0x041e, 0x3048, "Toshiba", "SB-0500"),
+diff --git a/tools/arch/x86/kcpuid/kcpuid.c b/tools/arch/x86/kcpuid/kcpuid.c
+index dae75511fef71..bbeb2dc86410b 100644
+--- a/tools/arch/x86/kcpuid/kcpuid.c
++++ b/tools/arch/x86/kcpuid/kcpuid.c
+@@ -7,7 +7,8 @@
+ #include <string.h>
+ #include <getopt.h>
  
-+	/* Logitech Audio Devices */
-+	DEVICE_NAME(0x046d, 0x0867, "Logitech, Inc.", "Logi-MeetUp"),
-+	DEVICE_NAME(0x046d, 0x0874, "Logitech, Inc.", "Logi-Tap-Audio"),
-+	DEVICE_NAME(0x046d, 0x087c, "Logitech, Inc.", "Logi-Huddle"),
-+	DEVICE_NAME(0x046d, 0x0898, "Logitech, Inc.", "Logi-RB-Audio"),
-+	DEVICE_NAME(0x046d, 0x08d2, "Logitech, Inc.", "Logi-RBM-Audio"),
- 	DEVICE_NAME(0x046d, 0x0990, "Logitech, Inc.", "QuickCam Pro 9000"),
+-#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
++#define ARRAY_SIZE(x)	(sizeof(x) / sizeof((x)[0]))
++#define min(a, b)	(((a) < (b)) ? (a) : (b))
  
- 	DEVICE_NAME(0x05e1, 0x0408, "Syntek", "STK1160"),
+ typedef unsigned int u32;
+ typedef unsigned long long u64;
+@@ -203,12 +204,9 @@ static void raw_dump_range(struct cpuid_range *range)
+ #define MAX_SUBLEAF_NUM		32
+ struct cpuid_range *setup_cpuid_range(u32 input_eax)
+ {
+-	u32 max_func, idx_func;
+-	int subleaf;
++	u32 max_func, idx_func, subleaf, max_subleaf;
++	u32 eax, ebx, ecx, edx, f = input_eax;
+ 	struct cpuid_range *range;
+-	u32 eax, ebx, ecx, edx;
+-	u32 f = input_eax;
+-	int max_subleaf;
+ 	bool allzero;
+ 
+ 	eax = input_eax;
+@@ -254,7 +252,7 @@ struct cpuid_range *setup_cpuid_range(u32 input_eax)
+ 		 * others have to be tried (0xf)
+ 		 */
+ 		if (f == 0x7 || f == 0x14 || f == 0x17 || f == 0x18)
+-			max_subleaf = (eax & 0xff) + 1;
++			max_subleaf = min((eax & 0xff) + 1, max_subleaf);
+ 
+ 		if (f == 0xb)
+ 			max_subleaf = 2;
 -- 
 2.43.0
 
