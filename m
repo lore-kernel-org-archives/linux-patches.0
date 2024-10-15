@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B1C1C07DB;
-	Tue, 15 Oct 2024 13:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2641C07DB;
+	Tue, 15 Oct 2024 13:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997515; cv=none; b=lsvu9u7/Pnxz37ErHH+mhu2QpW07C8dvYFopiVxtox/V1G2Mey2KMPVEpLx1RAwtGHIB+AvI6qUsOo0q0IpEhG2IH6i7LrScrvrTLY+BVaj0+pbYUfYHkfBekeaaS0LWqrHdW8AhASxxjujsU3u6byVPt5ff2Zf/10LUbdxpGRg=
+	t=1728997519; cv=none; b=GersYhPH8K7sZLqNCLxU+SI1+07EpKDLrSq7X6KhaA32FcG/2L/itGDDOdNS8zWvHd56ybGtV6VTTOSVKb/8FzI+AWuP3qmSC/gdjNrF4HbYqr77UPUddT/HDMSXlfcDSiTNUzFlK8fhsTslegDJsZdF2CQqfKWKafEAGNcGJlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997515; c=relaxed/simple;
-	bh=c9twD0EJ5lJm0JJ7N1OHAo865pxow5ugQ8tUy1tdpNY=;
+	s=arc-20240116; t=1728997519; c=relaxed/simple;
+	bh=tzkrrtIYLvr/FF+rAH2iMd5neU/mcikZHLMJMTxDyKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tQoY+j20bWCbT+v2Hjf3SWz3/f1AJBYOXhROvB7yuDwzspntFkzkK7cLDqqVkC6kJhA/8aCenE9JMKTJE794nK8b40Si9eQ9+1nxmgcLAcl41nw02dy6SYQND+KiHzEqfsqC5PF4PHcImj0cb0dlOLRMBAWha6NCektjfw4Kix8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogFwq2lq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OB7JX7xKTfYmB30gjT691w0+6SQYIGxnaCdd0Jeuh+/17ayWIh4e3zV9qJXku7+CT25gj/z1mmMGSq7U7DJL88Bs/Y568iNaL1rrd1g7z3mfa4MulxLmqO4SAhId/DoEUrAmv3x6k/rwKSLMbr6P+ng8S0b9qaS9DJUiotBd0xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTpPwHS4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogFwq2lq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DA1C4CEC6;
-	Tue, 15 Oct 2024 13:05:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTpPwHS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A22FDC4CEC6;
+	Tue, 15 Oct 2024 13:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997515;
-	bh=c9twD0EJ5lJm0JJ7N1OHAo865pxow5ugQ8tUy1tdpNY=;
+	s=korg; t=1728997519;
+	bh=tzkrrtIYLvr/FF+rAH2iMd5neU/mcikZHLMJMTxDyKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ogFwq2lqs3OdIgOiPLiY0GFJpL+WOcXjXGPSac9Ayq8nkUHcg9rdVetu6Zg7SpiLH
-	 fMObFRM14YrUa8bx1TZ8M6Xsb+ZRnh2GGsEJyl6jABIuRsJ2pQxGQua3hhB9aeJ7JM
-	 TnoGUHu1ySPtOU69qqajIsofgdGa/hEmkggMXd8w=
+	b=PTpPwHS4bBAfk4w+uv4rrGVa1FSTVIsB0CJCHQAJ+jHjwxSORz8bitWLNsh25enwh
+	 fBYyD1cqxB+dDluwVVnR6PPixeeAuMUxEMOiuyqEvaxuftnH++h3uOaoKgIkbsG1bZ
+	 rSrPIBrJ4nglAQ4oA8jan4d5fO39y048sv1T6LCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Blixt <jonas.blixt@actia.se>,
-	Anson Huang <anson.huang@nxp.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 174/518] watchdog: imx_sc_wdt: Dont disable WDT in suspend
-Date: Tue, 15 Oct 2024 14:41:18 +0200
-Message-ID: <20241015123923.706259052@linuxfoundation.org>
+Subject: [PATCH 5.10 165/518] PCI: keystone: Fix if-statement expression in ks_pcie_quirk()
+Date: Tue, 15 Oct 2024 14:41:09 +0200
+Message-ID: <20241015123923.365342794@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -47,77 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Blixt <jonas.blixt@actia.se>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 2d9d6d300fb0a4ae4431bb308027ac9385746d42 ]
+[ Upstream commit 6188a1c762eb9bbd444f47696eda77a5eae6207a ]
 
-Parts of the suspend and resume chain is left unprotected if we disable
-the WDT here.
+This code accidentally uses && where || was intended.  It potentially
+results in a NULL dereference.
 
->From experiments we can see that the SCU disables and re-enables the WDT
-when we enter and leave suspend to ram. By not touching the WDT here we
-are protected by the WDT all the way to the SCU.
+Thus, fix the if-statement expression to use the correct condition.
 
-Signed-off-by: Jonas Blixt <jonas.blixt@actia.se>
-CC: Anson Huang <anson.huang@nxp.com>
-Fixes: 986857acbc9a ("watchdog: imx_sc: Add i.MX system controller watchdog support")
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20240801121845.1465765-1-jonas.blixt@actia.se
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 86f271f22bbb ("PCI: keystone: Add workaround for Errata #i2037 (AM65x SR 1.0)")
+Link: https://lore.kernel.org/linux-pci/1b762a93-e1b2-4af3-8c04-c8843905c279@stanley.mountain
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/imx_sc_wdt.c | 24 ------------------------
- 1 file changed, 24 deletions(-)
+ drivers/pci/controller/dwc/pci-keystone.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/imx_sc_wdt.c b/drivers/watchdog/imx_sc_wdt.c
-index 8ac021748d160..79649b0e89e47 100644
---- a/drivers/watchdog/imx_sc_wdt.c
-+++ b/drivers/watchdog/imx_sc_wdt.c
-@@ -213,29 +213,6 @@ static int imx_sc_wdt_probe(struct platform_device *pdev)
- 	return devm_watchdog_register_device(dev, wdog);
- }
+diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+index 0b49bdf149a69..08f37ae8a1110 100644
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -598,7 +598,7 @@ static void ks_pcie_quirk(struct pci_dev *dev)
+ 	 */
+ 	if (pci_match_id(am6_pci_devids, bridge)) {
+ 		bridge_dev = pci_get_host_bridge_device(dev);
+-		if (!bridge_dev && !bridge_dev->parent)
++		if (!bridge_dev || !bridge_dev->parent)
+ 			return;
  
--static int __maybe_unused imx_sc_wdt_suspend(struct device *dev)
--{
--	struct imx_sc_wdt_device *imx_sc_wdd = dev_get_drvdata(dev);
--
--	if (watchdog_active(&imx_sc_wdd->wdd))
--		imx_sc_wdt_stop(&imx_sc_wdd->wdd);
--
--	return 0;
--}
--
--static int __maybe_unused imx_sc_wdt_resume(struct device *dev)
--{
--	struct imx_sc_wdt_device *imx_sc_wdd = dev_get_drvdata(dev);
--
--	if (watchdog_active(&imx_sc_wdd->wdd))
--		imx_sc_wdt_start(&imx_sc_wdd->wdd);
--
--	return 0;
--}
--
--static SIMPLE_DEV_PM_OPS(imx_sc_wdt_pm_ops,
--			 imx_sc_wdt_suspend, imx_sc_wdt_resume);
--
- static const struct of_device_id imx_sc_wdt_dt_ids[] = {
- 	{ .compatible = "fsl,imx-sc-wdt", },
- 	{ /* sentinel */ }
-@@ -247,7 +224,6 @@ static struct platform_driver imx_sc_wdt_driver = {
- 	.driver		= {
- 		.name	= "imx-sc-wdt",
- 		.of_match_table = imx_sc_wdt_dt_ids,
--		.pm	= &imx_sc_wdt_pm_ops,
- 	},
- };
- module_platform_driver(imx_sc_wdt_driver);
+ 		ks_pcie = dev_get_drvdata(bridge_dev->parent);
 -- 
 2.43.0
 
