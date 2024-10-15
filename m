@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A1A1C07C2;
-	Tue, 15 Oct 2024 12:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356A51C07C2;
+	Tue, 15 Oct 2024 12:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997037; cv=none; b=IEFaE96vWgtIDlZnT1H+ynRLPXOhUuvQDCod28cRVfIrIpTs8DB473VGzmz1qNKwSZ+IvzsHkBYyf6zxFM5q83Ctyh7j6yv+VSdq/PChyxQzVnje+5+J9chpOvbMtA5T8K88gR0/UfvCH/iCrrQuWsO0iVVUumu3SAAPdsP0cuA=
+	t=1728997040; cv=none; b=RQ2+WjKVrpJnJ6r/eWzUJjkoJiSOi294FsdBm4lulvWDemxHcAZTt9HBl+SDInOUTzY1SQaNOzslRpcQqfFTkCXcg9z1MO0Fo7ZYtRFFHOVs76cyWIsejmvYz0+BMKBJkfFMoIj2+a0CcTOpY6agMNFyPcqHHeMP8ogR/Toz2Io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997037; c=relaxed/simple;
-	bh=fX0mq54fhcIKE7VXr79FR/ZY6gjEDReVd/FAVuBOtS8=;
+	s=arc-20240116; t=1728997040; c=relaxed/simple;
+	bh=mfNO06x7CzV9C4kVk2BVTBFMvLMPMUdC7WHKpUONeJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lvXjNBtL0Ceprat3ABOmHxLcWRK6G5JK1zFEMrwy0hN5n08TVinBurhitgfs0WXcranL5yYVsT2gYKkSlcL/oEaJh/2MyLA7VtT6cDiQG/f0agarUYpRQxUchWORdhx+zYSPkgUaT7yBChmceHXNEiyfZ3o0Qy7m4kBFnOFI2TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrHiqlQZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UVJJ85h0u8psVyVvY1iJkZHt8gy+ahIC2wq5JO5Tnf/aMk+s+eqnEiD1Urg1fNM4rKFsOJVUQ4E0vodvkhNJh4i5gKXiAY1drMkkn1by60BrtOw+EJ5/xGI9ANVv3GdapRULRgLe8ij9SO26HkSnZA2kQGXDfJWSDsUyMv6rZDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRft76h9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrHiqlQZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C557C4CEC6;
-	Tue, 15 Oct 2024 12:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRft76h9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999BFC4CEC6;
+	Tue, 15 Oct 2024 12:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997036;
-	bh=fX0mq54fhcIKE7VXr79FR/ZY6gjEDReVd/FAVuBOtS8=;
+	s=korg; t=1728997040;
+	bh=mfNO06x7CzV9C4kVk2BVTBFMvLMPMUdC7WHKpUONeJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yrHiqlQZ63lNqbVJ80g0bh/CiOOvAcIIiLd7txjTy1HtSh5+AGvHELQ4y4iA+9s6c
-	 ubGN3Fd+4RtUaGzZhqgeMt0XM/wlJ9i5XX+5MLWQZN7Sa+07h1cbC9jadF4IHrPJEJ
-	 JdfzPlSSQuLMRonXM+ip8KoPnuYwc9g7aSfXqpPo=
+	b=dRft76h9/cnrylnNnkY2WmgyU4lxkThYE86FcIs1PtAErq6IDB7aGI+t8szEcocLB
+	 y6YMW43kaAOF8gLqAXecBxhTwF++vNlezfYDThTR+MXm1+/fHB1RFqwUz+7b4MJKsA
+	 qtWLUVKM5JHCj3yHw8LPXhvLE549SnbR2CV+qVmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyu Jin <xingyuj@google.com>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	John Stultz <jstultz@google.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>
-Subject: [PATCH 5.10 028/518] dma-buf: heaps: Fix off-by-one in CMA heap fault handler
-Date: Tue, 15 Oct 2024 14:38:52 +0200
-Message-ID: <20241015123918.092767297@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 063/518] fs/namespace: fnic: Switch to use %ptTd
+Date: Tue, 15 Oct 2024 14:39:27 +0200
+Message-ID: <20241015123919.439507737@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,44 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: T.J. Mercier <tjmercier@google.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit ea5ff5d351b520524019f7ff7f9ce418de2dad87 upstream.
+[ Upstream commit 74e60b8b2f0fe3702710e648a31725ee8224dbdf ]
 
-Until VM_DONTEXPAND was added in commit 1c1914d6e8c6 ("dma-buf: heaps:
-Don't track CMA dma-buf pages under RssFile") it was possible to obtain
-a mapping larger than the buffer size via mremap and bypass the overflow
-check in dma_buf_mmap_internal. When using such a mapping to attempt to
-fault past the end of the buffer, the CMA heap fault handler also checks
-the fault offset against the buffer size, but gets the boundary wrong by
-1. Fix the boundary check so that we don't read off the end of the pages
-array and insert an arbitrary page in the mapping.
+Use %ptTd instead of open-coded variant to print contents
+of time64_t type in human readable form.
 
-Reported-by: Xingyu Jin <xingyuj@google.com>
-Fixes: a5d2d29e24be ("dma-buf: heaps: Move heap-helper logic into the cma_heap implementation")
-Cc: stable@vger.kernel.org # Applicable >= 5.10. Needs adjustments only for 5.10.
-Signed-off-by: T.J. Mercier <tjmercier@google.com>
-Acked-by: John Stultz <jstultz@google.com>
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240830192627.2546033-1-tjmercier@google.com
-[ TJ: Backport to 5.10. On this kernel the bug is located in
-  dma_heap_vm_fault which is used by both the CMA and system heaps. ]
-Signed-off-by: T.J. Mercier <tjmercier@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Stable-dep-of: 4bcda1eaf184 ("mount: handle OOM on mnt_warn_timestamp_expiry")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/heaps/heap-helpers.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/namespace.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/drivers/dma-buf/heaps/heap-helpers.c
-+++ b/drivers/dma-buf/heaps/heap-helpers.c
-@@ -161,7 +161,7 @@ static vm_fault_t dma_heap_vm_fault(stru
- 	struct vm_area_struct *vma = vmf->vma;
- 	struct heap_helper_buffer *buffer = vma->vm_private_data;
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 1665315e08e9a..17d3bea73f8d8 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -2557,15 +2557,12 @@ static void mnt_warn_timestamp_expiry(struct path *mountpoint, struct vfsmount *
+ 	   (ktime_get_real_seconds() + TIME_UPTIME_SEC_MAX > sb->s_time_max)) {
+ 		char *buf = (char *)__get_free_page(GFP_KERNEL);
+ 		char *mntpath = buf ? d_path(mountpoint, buf, PAGE_SIZE) : ERR_PTR(-ENOMEM);
+-		struct tm tm;
  
--	if (vmf->pgoff > buffer->pagecount)
-+	if (vmf->pgoff >= buffer->pagecount)
- 		return VM_FAULT_SIGBUS;
+-		time64_to_tm(sb->s_time_max, 0, &tm);
+-
+-		pr_warn("%s filesystem being %s at %s supports timestamps until %04ld (0x%llx)\n",
++		pr_warn("%s filesystem being %s at %s supports timestamps until %ptTd (0x%llx)\n",
+ 			sb->s_type->name,
+ 			is_mounted(mnt) ? "remounted" : "mounted",
+-			mntpath,
+-			tm.tm_year+1900, (unsigned long long)sb->s_time_max);
++			mntpath, &sb->s_time_max,
++			(unsigned long long)sb->s_time_max);
  
- 	vmf->page = buffer->pages[vmf->pgoff];
+ 		free_page((unsigned long)buf);
+ 		sb->s_iflags |= SB_I_TS_EXPIRY_WARNED;
+-- 
+2.43.0
+
 
 
