@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBB21E32AF;
-	Tue, 15 Oct 2024 11:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4921D90DB;
+	Tue, 15 Oct 2024 11:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992283; cv=none; b=CQUyHPig28SONdY78q4C6DL02bNxsNH4oXZCreac0aFqJqGDQ9TBBUMEOQML9m3jVw7fjUkcKUCco/BVOW5rBhYLQT522CHHapfJW/8E0ifBIfxV18lEQEwYC7kDBwW1cftRhjb2gFkcdrkUa/8B8YY38tPXK8NOYf9SoiXn6dE=
+	t=1728992286; cv=none; b=drYzVBizF2FRg2OSTKDaoI1oSjrLnil39/MPXU8K+9w5h6S23dtD7K8m8Q2kpr+ikHvkJxInxLC3FIlQ0W+0Dd3dE5Fphy0NgUStITxZmL4SwK3AL8UmqIlPUxvet6vl6s0rhzCJO9JH86b/sqoyf8S+gXgTF35PTWf1VPKmCPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992283; c=relaxed/simple;
-	bh=wgguHSVvPnKoz4X++Jpqz4EyLw3N59frdDuKyOWA4ms=;
+	s=arc-20240116; t=1728992286; c=relaxed/simple;
+	bh=rIodb4yfC+3vgh9Fp84USS1eXYpeUY7In/gvdwNekr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OD288uw3Xxb9NtpRHGS38fhuIcy2NlME89G9uEyOZV46gfYZNzAThbzRlQWYZHyelx3ZVaLHaN6M1AwomsE39DV7kf4cNbIklvO3M5JThg3Ha0BfYTB66MY8G+Uvl4jic/b3GDNYrDPD/e2Tvsxu4gy2WuAjR3Clj5hZTvwOTFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eghobOiw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G3O4KbZxaL1mVit1YL41KOklJJWix6sWnv58jZkUxk94LuvQiXXElrOOUkZLeaXD+z0rkPWvrX96d+SrP7TinI4zMrrD37z0ht0Nnp6DHKHV+Itgcy8Fr3h5NZbc4hnoJ1u+M+2nJZZApYC9wgYuXHaAXwa3wDRRdSGYGZPpm7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKF4SHfH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eghobOiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAC2C4CEC6;
-	Tue, 15 Oct 2024 11:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKF4SHfH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0C2C4CEC6;
+	Tue, 15 Oct 2024 11:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992283;
-	bh=wgguHSVvPnKoz4X++Jpqz4EyLw3N59frdDuKyOWA4ms=;
+	s=korg; t=1728992286;
+	bh=rIodb4yfC+3vgh9Fp84USS1eXYpeUY7In/gvdwNekr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eghobOiwMhpMgFgZBk8odj/s7Mgyas9yQPfOrJ/SJWaezQUCftcLot3a2N5MIQcQf
-	 oX8OAkFS2a0MAeKFX3cipR3hRtgxyjua4JZVt8i2pdScnH3y0hpFveyBEc5WNGqAY6
-	 2kUJOP7sNhBR4vgaMaDY58QFT0hQKC9VldfeNp38=
+	b=vKF4SHfHCYiTVa8IeH3/X4O4L1gOaFMHwyYPlZ6Ekk+hlkXinNAGRUrmQEqmrADV7
+	 vWN956t/ZEx1pG+w+f6Qhvin2oBrTMZvVypQ7eJ9bZIgDGB5sPeENCAUah4vQ8Up4g
+	 /aqNAimjq/yTUHYdQ/Cokrp7F8KGVn4FyHrAPuJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Liao Chen <liaochen4@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 044/691] net/mlx5e: Add missing link modes to ptys2ethtool_map
-Date: Tue, 15 Oct 2024 13:19:52 +0200
-Message-ID: <20241015112442.091513183@linuxfoundation.org>
+Subject: [PATCH 5.15 071/691] ASoC: intel: fix module autoloading
+Date: Tue, 15 Oct 2024 13:20:19 +0200
+Message-ID: <20241015112443.171824122@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,38 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Liao Chen <liaochen4@huawei.com>
 
-[ Upstream commit 7617d62cba4a8a3ff3ed3fda0171c43f135c142e ]
+[ Upstream commit ae61a3391088d29aa8605c9f2db84295ab993a49 ]
 
-Add MLX5E_1000BASE_T and MLX5E_100BASE_TX to the legacy
-modes in ptys2legacy_ethtool_table, since they were missing.
+Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
+based on the alias from of_device_id table.
 
-Fixes: 665bc53969d7 ("net/mlx5e: Use new ethtool get/set link ksettings API")
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Liao Chen <liaochen4@huawei.com>
+Link: https://patch.msgid.link/20240826084924.368387-2-liaochen4@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/intel/keembay/kmb_platform.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index 06f6809b1c2b..a9080e3ecd84 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -129,6 +129,10 @@ void mlx5e_build_ptys2ethtool_map(void)
- 				       ETHTOOL_LINK_MODE_100000baseKR4_Full_BIT);
- 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_100GBASE_LR4, legacy,
- 				       ETHTOOL_LINK_MODE_100000baseLR4_ER4_Full_BIT);
-+	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_100BASE_TX, legacy,
-+				       ETHTOOL_LINK_MODE_100baseT_Full_BIT);
-+	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_1000BASE_T, legacy,
-+				       ETHTOOL_LINK_MODE_1000baseT_Full_BIT);
- 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_10GBASE_T, legacy,
- 				       ETHTOOL_LINK_MODE_10000baseT_Full_BIT);
- 	MLX5_BUILD_PTYS2ETHTOOL_CONFIG(MLX5E_25GBASE_CR, legacy,
+diff --git a/sound/soc/intel/keembay/kmb_platform.c b/sound/soc/intel/keembay/kmb_platform.c
+index a6fb74ba1c424..86a4c32686e73 100644
+--- a/sound/soc/intel/keembay/kmb_platform.c
++++ b/sound/soc/intel/keembay/kmb_platform.c
+@@ -815,6 +815,7 @@ static const struct of_device_id kmb_plat_of_match[] = {
+ 	{ .compatible = "intel,keembay-tdm", .data = &intel_kmb_tdm_dai},
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, kmb_plat_of_match);
+ 
+ static int kmb_plat_dai_probe(struct platform_device *pdev)
+ {
 -- 
 2.43.0
 
