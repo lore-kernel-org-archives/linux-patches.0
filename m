@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D2F1D0492;
-	Tue, 15 Oct 2024 11:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFE81D0492;
+	Tue, 15 Oct 2024 11:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993253; cv=none; b=eNjS92aAI4YYqiWH0JQNNk4gtmLHiEVYH7eqim1s+UHcqaNcOSNKp+nIYk+NAQ3uz+A09l4wd99XSTpOYtT8zIpZCtm9AB/WMyWyAQboABiC1I5iO4t0FX/nHqFeaAY614onuzSo5EsjTMGhPqc9H9eW/voQvQzUZ7tfN0lrUnw=
+	t=1728993256; cv=none; b=MXagRlX2WKILBxo9rAGb+Pm7k7pxO7zN0i8pfVSaZP/Mh93SOVNJ5OPHcQHEfQWS4Js3MH+vMGQt0R4Ae8Fv45BXRCyzHifl6OXE3TeNgHT9fffHrNbyKWuONNZbP8gPsm574+sShMzQdYh+rCz7Cu2kMjuZ7euNCH3a29sZsZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993253; c=relaxed/simple;
-	bh=EHsDV5PC95b+F33QTXFkok4Kn6s8X+dY5ZgF0MvhHYA=;
+	s=arc-20240116; t=1728993256; c=relaxed/simple;
+	bh=PwqUpFR1gBFsAJnTEAg6BzYvpS5dyKk12JCtLpOOWUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gWSaV7gQP8q5LeckTZDfrcOj9zXWkV5Z4hbQLZava9HAr+vfv147Nm17VCp1y4Vv2rHKEa30/H7IArpiyuuBLgt+hM0nRA4nEfopNKtZlurjzS/HJO62TtfdDZ0WuqirddNBpKyfB21Fu3oCiKV4HFD9GPbMtzoE5/K2YaGrYjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMA0mrR9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GdiGiVYlgmHgKfl2Jp0VoJCtnigOISbBE9k+HdWIVH6IdHzLAMnMKaWZDuR3RPjp4rEtHqod6rIsuJL5XQsU3uaOVtezIkwuxy+//LNJJt8zU2KoVZszY78qJXTuCMGf2UnOYGlqreITf1L4YkvCic6XZCnuXpk/sFytxfFXkjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rV67P0pt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMA0mrR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB82CC4CEC6;
-	Tue, 15 Oct 2024 11:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rV67P0pt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A437C4CEC6;
+	Tue, 15 Oct 2024 11:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993253;
-	bh=EHsDV5PC95b+F33QTXFkok4Kn6s8X+dY5ZgF0MvhHYA=;
+	s=korg; t=1728993256;
+	bh=PwqUpFR1gBFsAJnTEAg6BzYvpS5dyKk12JCtLpOOWUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dMA0mrR9uN/DgqG3tBXORsRoxwdtJzC0Sp0rgMUdar4tRjqAhchwq3kPQuDkJLbKn
-	 j1HIUM/tVbA4n+KHgjtARl3Vo0ELeujzb0vUivjGgx0RX/1lVogmE1T6apjy6gpV6U
-	 M2xlpR0qSOiUzdUWvTU//M1yufvDCzytc4IT3I+I=
+	b=rV67P0pt/HbQJ2zdGZQmtXT9M9Ot10tOS0+WciXQ7ICI2Q9rRzitgZyp0QManpX1F
+	 l7jSAnuLmRyfdhGvER0bHjtWXtVLxvxESvHGhZYmxf78a+X4s9vvU1Cl6+xCl0tEHz
+	 c1prvrxo4ONX+QqaRubD4fNaXr/UhBcQW7/eYVuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Daehwan Jung <dh10.jung@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 357/691] xhci: Preserve RsvdP bits in ERSTBA register correctly
-Date: Tue, 15 Oct 2024 13:25:05 +0200
-Message-ID: <20241015112454.514766066@linuxfoundation.org>
+Subject: [PATCH 5.15 358/691] xhci: Add a quirk for writing ERST in high-low order
+Date: Tue, 15 Oct 2024 13:25:06 +0200
+Message-ID: <20241015112454.554965074@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,62 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Daehwan Jung <dh10.jung@samsung.com>
 
-[ Upstream commit cf97c5e0f7dda2edc15ecd96775fe6c355823784 ]
+[ Upstream commit bc162403e33e1d57e40994977acaf19f1434e460 ]
 
-xhci_add_interrupter() erroneously preserves only the lowest 4 bits when
-writing the ERSTBA register, not the lowest 6 bits.  Fix it.
+This quirk is for the controller that has a limitation in supporting
+separate ERSTBA_HI and ERSTBA_LO programming. It's supported when
+the ERSTBA is programmed ERSTBA_HI before ERSTBA_LO. That's because
+the internal initialization of event ring fetches the
+"Event Ring Segment Table Entry" based on the indication of ERSTBA_LO
+written.
 
-Migrate the ERST_BASE_RSVDP macro to the modern GENMASK_ULL() syntax to
-avoid a u64 cast.
-
-This was previously fixed by commit 8c1cbec9db1a ("xhci: fix event ring
-segment table related masks and variables in header"), but immediately
-undone by commit b17a57f89f69 ("xhci: Refactor interrupter code for
-initial multi interrupter support.").
-
-Fixes: b17a57f89f69 ("xhci: Refactor interrupter code for initial multi interrupter support.")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v6.3+
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230915143108.1532163-5-mathias.nyman@linux.intel.com
+Signed-off-by: Daehwan Jung <dh10.jung@samsung.com>
+Link: https://lore.kernel.org/r/1718019553-111939-3-git-send-email-dh10.jung@samsung.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: e5fa8db0be3e ("usb: xhci: fix loss of data on Cadence xHC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mem.c | 4 ++--
- drivers/usb/host/xhci.h     | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/host/xhci-mem.c | 5 ++++-
+ drivers/usb/host/xhci.h     | 2 ++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index bb5b8f20368d9..e762b82545753 100644
+index e762b82545753..c44b66628a6dc 100644
 --- a/drivers/usb/host/xhci-mem.c
 +++ b/drivers/usb/host/xhci-mem.c
-@@ -2316,8 +2316,8 @@ xhci_alloc_interrupter(struct xhci_hcd *xhci, unsigned int intr_num, gfp_t flags
- 	writel(erst_size, &ir->ir_set->erst_size);
- 
+@@ -2318,7 +2318,10 @@ xhci_alloc_interrupter(struct xhci_hcd *xhci, unsigned int intr_num, gfp_t flags
  	erst_base = xhci_read_64(xhci, &ir->ir_set->erst_base);
--	erst_base &= ERST_PTR_MASK;
--	erst_base |= (ir->erst.erst_dma_addr & (u64) ~ERST_PTR_MASK);
-+	erst_base &= ERST_BASE_RSVDP;
-+	erst_base |= ir->erst.erst_dma_addr & ~ERST_BASE_RSVDP;
- 	xhci_write_64(xhci, erst_base, &ir->ir_set->erst_base);
+ 	erst_base &= ERST_BASE_RSVDP;
+ 	erst_base |= ir->erst.erst_dma_addr & ~ERST_BASE_RSVDP;
+-	xhci_write_64(xhci, erst_base, &ir->ir_set->erst_base);
++	if (xhci->quirks & XHCI_WRITE_64_HI_LO)
++		hi_lo_writeq(erst_base, &ir->ir_set->erst_base);
++	else
++		xhci_write_64(xhci, erst_base, &ir->ir_set->erst_base);
  
  	/* Set the event ring dequeue address of this interrupter */
+ 	xhci_set_hc_event_deq(xhci, ir);
 diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index 2a01157f6b5b8..9d63f39398d08 100644
+index 9d63f39398d08..c6162140d641d 100644
 --- a/drivers/usb/host/xhci.h
 +++ b/drivers/usb/host/xhci.h
-@@ -514,7 +514,7 @@ struct xhci_intr_reg {
- #define	ERST_SIZE_MASK		(0xffff << 16)
+@@ -17,6 +17,7 @@
+ #include <linux/kernel.h>
+ #include <linux/usb/hcd.h>
+ #include <linux/io-64-nonatomic-lo-hi.h>
++#include <linux/io-64-nonatomic-hi-lo.h>
  
- /* erst_base bitmasks */
--#define ERST_BASE_RSVDP		(0x3f)
-+#define ERST_BASE_RSVDP		(GENMASK_ULL(5, 0))
+ /* Code sharing between pci-quirks and xhci hcd */
+ #include	"xhci-ext-caps.h"
+@@ -1916,6 +1917,7 @@ struct xhci_hcd {
+ #define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
+ #define XHCI_ZHAOXIN_TRB_FETCH	BIT_ULL(45)
+ #define XHCI_ZHAOXIN_HOST	BIT_ULL(46)
++#define XHCI_WRITE_64_HI_LO	BIT_ULL(47)
  
- /* erst_dequeue bitmasks */
- /* Dequeue ERST Segment Index (DESI) - Segment number (or alias)
+ 	unsigned int		num_active_eps;
+ 	unsigned int		limit_active_eps;
 -- 
 2.43.0
 
