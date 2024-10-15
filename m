@@ -1,38 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9991EBFE6;
-	Tue, 15 Oct 2024 11:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547E21E3DE8;
+	Tue, 15 Oct 2024 11:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992726; cv=none; b=afmAaIyoVMegZB9+OIUJObe+C/5DpfTdB1hgITH/BsbzRtbCqq2W8WkLdiV5EidyncIU03FUneC4kEFPabxbkwYQXHYQkzSwKEgf+/sMgPJP/g4JwX69f9mqJhEOQYsYQ288/VdnV/EVhDI5ukU2AZRsmbgjWO3Glcpgfm2ew9E=
+	t=1728992729; cv=none; b=OPTvUhLZTFJr33QqwB6SQVSYDcryouYFR96RjaIXHJCDCl3v/MRSQw8qObswSdrFu5JnBVmcFFyG/1FS/XicA1lSFe3/OydIubUpPIqXoq2vrRlh2x9PxjZPMiv1TwE+neGdtH1g8dUbB0zsJXoIEwBuspp/F4xP2fVHnN9y/a0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992726; c=relaxed/simple;
-	bh=0S5H2PkSDraWxsw57ezZjexqaDdJ5uUGlzuUQdBZGDI=;
+	s=arc-20240116; t=1728992729; c=relaxed/simple;
+	bh=RrD4k4BLRHX3QIj6uSjQ24DGF+jfaY3+VCozPJB3mhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LtPA1GKMcTulmWdzTciCwiQmFqehFKU/BaW+tWGaLAz4ryr1JsVlqMac20F19QNfpcBd4diFk2YOD4zoG1obqZTKUKdQOyCxpm1sxaEGVl0ZT+Awt7qt5fwlQNkyximu9VHPzPSt405od5Jyexx56GiNB7A5mmv/ktFeXlpDVac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XO/VaLeD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rcf65jMsh7rxAFs+1ryTD83SSgFHHuDvFKgoD9Ey1IrEX450Lve8pJkYkgiLTzV7VQx6nigrvsWLBXCYHbPPmy/K5Lr9dGSKUXDfBzajPoAyY82WLlOJLZLPO1lkfn+DnVAS75D5W7gCTHXXeIWQs7urOICs7e2p6XoCwotIrCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15CWO/2l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XO/VaLeD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4447C4CEC6;
-	Tue, 15 Oct 2024 11:45:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15CWO/2l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988CAC4CEC6;
+	Tue, 15 Oct 2024 11:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992726;
-	bh=0S5H2PkSDraWxsw57ezZjexqaDdJ5uUGlzuUQdBZGDI=;
+	s=korg; t=1728992729;
+	bh=RrD4k4BLRHX3QIj6uSjQ24DGF+jfaY3+VCozPJB3mhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XO/VaLeDPU9Rc+tbwq9X/yQXzqfMNWi2r97TJ1LD48neg/Zwz8bwv+OXOZYmjjAyM
-	 oMKnwCzpKs1SAFC1Sh/SeXVFnB6FbY16eIYMouxVwkb62GiPb+VXrh05fBRM8cYh8H
-	 FZ39yqh9rG4ud+wfz2Dj7EPZGMv8MOIyyM0h3H54=
+	b=15CWO/2lfbJAHfEwnDJPGb41ZNd3Lw5qpKKlV8QjWdpZRtio9wAE0jfdggMROvvzt
+	 axvbZzEsZVNm+O0u7K5X9g0CJbVq4atM0jS95rJaHTt5iQ20mP6rRld+35jNg0O/SA
+	 fRyEzelBd5Bjg9H8eeWFSfon8YK8DljH2IWaPHVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 200/691] selftests/bpf: Fix C++ compile error from missing _Bool type
-Date: Tue, 15 Oct 2024 13:22:28 +0200
-Message-ID: <20241015112448.295773657@linuxfoundation.org>
+	Lasse Collin <lasse.collin@tukaani.org>,
+	Sam James <sam@gentoo.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Joel Stanley <joel@jms.id.au>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Jubin Zhong <zhongjubin@huawei.com>,
+	Jules Maselbas <jmaselbas@zdiv.net>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Rui Li <me@lirui.org>,
+	Simon Glass <sjg@chromium.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.15 201/691] xz: cleanup CRC32 edits from 2018
+Date: Tue, 15 Oct 2024 13:22:29 +0200
+Message-ID: <20241015112448.334821983@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,53 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Lasse Collin <lasse.collin@tukaani.org>
 
-[ Upstream commit aa95073fd290b5b3e45f067fa22bb25e59e1ff7c ]
+[ Upstream commit 2ee96abef214550d9e92f5143ee3ac1fd1323e67 ]
 
-While building, bpftool makes a skeleton from test_core_extern.c, which
-itself includes <stdbool.h> and uses the 'bool' type. However, the skeleton
-test_core_extern.skel.h generated *does not* include <stdbool.h> or use the
-'bool' type, instead using the C-only '_Bool' type. Compiling test_cpp.cpp
-with g++ 12.3 for mips64el/musl-libc then fails with error:
+In 2018, a dependency on <linux/crc32poly.h> was added to avoid
+duplicating the same constant in multiple files.  Two months later it was
+found to be a bad idea and the definition of CRC32_POLY_LE macro was moved
+into xz_private.h to avoid including <linux/crc32poly.h>.
 
-  In file included from test_cpp.cpp:9:
-  test_core_extern.skel.h:45:17: error: '_Bool' does not name a type
-     45 |                 _Bool CONFIG_BOOL;
-        |                 ^~~~~
+xz_private.h is a wrong place for it too.  Revert back to the upstream
+version which has the poly in xz_crc32_init() in xz_crc32.c.
 
-This was likely missed previously because glibc uses a GNU extension for
-<stdbool.h> with C++ (#define _Bool bool), not supported by musl libc.
-
-Normally, a C fragment would include <stdbool.h> and use the 'bool' type,
-and thus cleanly work after import by C++. The ideal fix would be for
-'bpftool gen skeleton' to output the correct type/include supporting C++,
-but in the meantime add a conditional define as above.
-
-Fixes: 7c8dce4b1661 ("bpftool: Make skeleton C code compilable with C++ compiler")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/6fc1dd28b8bda49e51e4f610bdc9d22f4455632d.1722244708.git.tony.ambardar@gmail.com
+Link: https://lkml.kernel.org/r/20240721133633.47721-10-lasse.collin@tukaani.org
+Fixes: faa16bc404d7 ("lib: Use existing define with polynomial")
+Fixes: 242cdad873a7 ("lib/xz: Put CRC32_POLY_LE in xz_private.h")
+Signed-off-by: Lasse Collin <lasse.collin@tukaani.org>
+Reviewed-by: Sam James <sam@gentoo.org>
+Tested-by: Michael Ellerman <mpe@ellerman.id.au> (powerpc)
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Joel Stanley <joel@jms.id.au>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Jubin Zhong <zhongjubin@huawei.com>
+Cc: Jules Maselbas <jmaselbas@zdiv.net>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Rui Li <me@lirui.org>
+Cc: Simon Glass <sjg@chromium.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_cpp.cpp | 4 ++++
- 1 file changed, 4 insertions(+)
+ lib/xz/xz_crc32.c   | 2 +-
+ lib/xz/xz_private.h | 4 ----
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_cpp.cpp b/tools/testing/selftests/bpf/test_cpp.cpp
-index a8d2e9a87fbfa..6edcb541cc90e 100644
---- a/tools/testing/selftests/bpf/test_cpp.cpp
-+++ b/tools/testing/selftests/bpf/test_cpp.cpp
-@@ -3,6 +3,10 @@
- #include <bpf/libbpf.h>
- #include <bpf/bpf.h>
- #include <bpf/btf.h>
-+
-+#ifndef _Bool
-+#define _Bool bool
-+#endif
- #include "test_core_extern.skel.h"
+diff --git a/lib/xz/xz_crc32.c b/lib/xz/xz_crc32.c
+index 88a2c35e1b597..5627b00fca296 100644
+--- a/lib/xz/xz_crc32.c
++++ b/lib/xz/xz_crc32.c
+@@ -29,7 +29,7 @@ STATIC_RW_DATA uint32_t xz_crc32_table[256];
  
- /* do nothing, just make sure we can link successfully */
+ XZ_EXTERN void xz_crc32_init(void)
+ {
+-	const uint32_t poly = CRC32_POLY_LE;
++	const uint32_t poly = 0xEDB88320;
+ 
+ 	uint32_t i;
+ 	uint32_t j;
+diff --git a/lib/xz/xz_private.h b/lib/xz/xz_private.h
+index 09360ebb510ef..482b90f363fe3 100644
+--- a/lib/xz/xz_private.h
++++ b/lib/xz/xz_private.h
+@@ -102,10 +102,6 @@
+ #	endif
+ #endif
+ 
+-#ifndef CRC32_POLY_LE
+-#define CRC32_POLY_LE 0xedb88320
+-#endif
+-
+ /*
+  * Allocate memory for LZMA2 decoder. xz_dec_lzma2_reset() must be used
+  * before calling xz_dec_lzma2_run().
 -- 
 2.43.0
 
