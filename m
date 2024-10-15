@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23691A76DA;
-	Tue, 15 Oct 2024 11:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015721D90CD;
+	Tue, 15 Oct 2024 11:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992785; cv=none; b=LYv1it4bqmANK45sfqPHiSIgmt/11/Mw1P8KsfHyT2GTKly6SV++ZbStiXRNvI0/pUFJd4n4LIRaOpRX5Tp+gSjKZgjHcEUqnU3tVAZBJnjUeAsvZNfpZjttGAQlSr906fSxaX1ajP60vky8/CGi+BHLVyeRTygi3ePKZt2U48Y=
+	t=1728992788; cv=none; b=VUdzbao83d7gXKzZ0OLOLh8qyA6AUPC4uXjd2nChh+muzIQKIyPGgJXhxsEfJS6LDfqSboxtVKPLDQDhbpusuxUCAmyLsaBScdBfNdvNjNJXRUFqQ7izrjLdRL31B5TqCXTko9zYsD/5gwiVszjmk0BDqZ57Cm4VNP7SC0yRCUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992785; c=relaxed/simple;
-	bh=Er5lDbBlPVTnsFUTkOudc6GWEUi0wXOC57wj6z30mXI=;
+	s=arc-20240116; t=1728992788; c=relaxed/simple;
+	bh=584j/ISlvHwT8Kuu3wpeXQJ+ySnfMc0qvNAcTFvZwa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XN9LwDj848fZ+/HtSYzVK4P5/3TgbG45eMbh1A/fL+T/xRLWdnreTs21a+1TUEzBEnlD7gLIgjyh7qCoY1wEQKqzBKotYJ9f7aUmIbwsqBAyAGjleZDwoKyRdA00TgZ3vyJk8n+oIHcFzHl/sEKhCI2wQP5wzomrXW2biLvuupo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+xIJ69Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jdyYS7uC8oYHMU4C5x8EVsb/kWcKfmHrePWknUcMabrPBp3Eal5EvGOdRKmfwkHmO1hhnEr7tlH8I9uRN8t/QWvgnJOESZp1H8XD7MQ2rR6bFBr9UNEptUDIfhFuEXWqtRnJM2Nf2PDUA3GhLAano5ksIPXcMYrcyfIekgU6rZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+d8NcE2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+xIJ69Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7EBC4CEC6;
-	Tue, 15 Oct 2024 11:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+d8NcE2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F8AC4CEC6;
+	Tue, 15 Oct 2024 11:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992784;
-	bh=Er5lDbBlPVTnsFUTkOudc6GWEUi0wXOC57wj6z30mXI=;
+	s=korg; t=1728992787;
+	bh=584j/ISlvHwT8Kuu3wpeXQJ+ySnfMc0qvNAcTFvZwa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z+xIJ69Q57Oyp4Y+yePbxV7r+mgd0c/7zcn6T0s6iMhfwabMh/C18EPIyifudUtm4
-	 U5q+hmfNljNz+qmqRGJL9egl02jxMO78zABzVIilxFSvOPrPFl81x81SP4bNo+MKpt
-	 1xKsrVcRdxXldWqb4NjGcww++IgiaBhZ9AmqRCkQ=
+	b=A+d8NcE23517o6x2i7zB1ZKGstBNBsRXxozCqo+SKL55A77f/wwE3O+jKhlxna5+x
+	 fguqCPN9u8PONDXAqPyt6HIfxt7EwIggCTkFEFq7JhBHN+X6VAFwd8bTfYgb3WUHI+
+	 BVEFYGONjX4Y71zy/WEvk2Spuf/7gAxNeQ6X7dbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sherry Yang <sherry.yang@oracle.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 186/691] drm/msm: fix %s null argument error
-Date: Tue, 15 Oct 2024 13:22:14 +0200
-Message-ID: <20241015112447.741494266@linuxfoundation.org>
+Subject: [PATCH 5.15 177/691] powerpc/8xx: Fix initial memory mapping
+Date: Tue, 15 Oct 2024 13:22:05 +0200
+Message-ID: <20241015112447.388865098@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,46 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sherry Yang <sherry.yang@oracle.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 25b85075150fe8adddb096db8a4b950353045ee1 ]
+[ Upstream commit f9f2bff64c2f0dbee57be3d8c2741357ad3d05e6 ]
 
-The following build error was triggered because of NULL string argument:
+Commit cf209951fa7f ("powerpc/8xx: Map linear memory with huge pages")
+introduced an initial mapping of kernel TEXT using PAGE_KERNEL_TEXT,
+but the pages that contain kernel TEXT may also contain kernel RODATA,
+and depending on selected debug options PAGE_KERNEL_TEXT may be either
+RWX or ROX. RODATA must be writable during init because it also
+contains ro_after_init data.
 
-BUILDSTDERR: drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c: In function 'mdp5_smp_dump':
-BUILDSTDERR: drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c:352:51: error: '%s' directive argument is null [-Werror=format-overflow=]
-BUILDSTDERR:   352 |                         drm_printf(p, "%s:%d\t%d\t%s\n",
-BUILDSTDERR:       |                                                   ^~
-BUILDSTDERR: drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c:352:51: error: '%s' directive argument is null [-Werror=format-overflow=]
+So use PAGE_KERNEL_X instead to be sure it is RWX.
 
-This happens from the commit a61ddb4393ad ("drm: enable (most) W=1
-warnings by default across the subsystem"). Using "(null)" instead
-to fix it.
-
-Fixes: bc5289eed481 ("drm/msm/mdp5: add debugfs to show smp block status")
-Signed-off-by: Sherry Yang <sherry.yang@oracle.com>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/611071/
-Link: https://lore.kernel.org/r/20240827165337.1075904-1-sherry.yang@oracle.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: cf209951fa7f ("powerpc/8xx: Map linear memory with huge pages")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/dac7a828d8497c4548c91840575a706657baa4f1.1724173828.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/mm/nohash/8xx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
-index d7fa2c49e7410..45820ac1a5254 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c
-@@ -356,7 +356,7 @@ void mdp5_smp_dump(struct mdp5_smp *smp, struct drm_printer *p)
+diff --git a/arch/powerpc/mm/nohash/8xx.c b/arch/powerpc/mm/nohash/8xx.c
+index 94efd4fa6e768..3876d1710185d 100644
+--- a/arch/powerpc/mm/nohash/8xx.c
++++ b/arch/powerpc/mm/nohash/8xx.c
+@@ -151,11 +151,11 @@ unsigned long __init mmu_mapin_ram(unsigned long base, unsigned long top)
  
- 			drm_printf(p, "%s:%d\t%d\t%s\n",
- 				pipe2name(pipe), j, inuse,
--				plane ? plane->name : NULL);
-+				plane ? plane->name : "(null)");
+ 	mmu_mapin_immr();
  
- 			total += inuse;
- 		}
+-	mmu_mapin_ram_chunk(0, boundary, PAGE_KERNEL_TEXT, true);
++	mmu_mapin_ram_chunk(0, boundary, PAGE_KERNEL_X, true);
+ 	if (debug_pagealloc_enabled_or_kfence()) {
+ 		top = boundary;
+ 	} else {
+-		mmu_mapin_ram_chunk(boundary, einittext8, PAGE_KERNEL_TEXT, true);
++		mmu_mapin_ram_chunk(boundary, einittext8, PAGE_KERNEL_X, true);
+ 		mmu_mapin_ram_chunk(einittext8, top, PAGE_KERNEL, true);
+ 	}
+ 
 -- 
 2.43.0
 
