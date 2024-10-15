@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1721C07DF;
-	Tue, 15 Oct 2024 13:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B2E1C07DF;
+	Tue, 15 Oct 2024 13:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997976; cv=none; b=heDj5TstWzMrrdZXiwOM1auRfrPR7LmlNyfLjv5lU5nvhwXW4YKw+Lt7K3vy0WDf52mj9TUHXb4AvmuJol10Eo0yc+4PT8IFqXEAkww0E1AFu/indqMmdOelj8AEBIJyYCXqssMa20pZcIelp4ffy69tE8ogTWg3Fj+t69vmvFA=
+	t=1728997977; cv=none; b=k5umUc5Q3/W9GUhnLblvby4WvE4fQAo4G6KDX01TlyLf6OA8eqTUSV9nQms8O4oAl54rAXtCrUA10WDaMEqZ5hCdJWVKDElVX9O+axSz4tUisu/cU7gqxeXqwGWMk/cd4GyAnzvejJ/QhwLqrMIZlFXqVHfRnOch9rdmunsy8Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997976; c=relaxed/simple;
-	bh=btwrCMgvR6weXbw1juWGXMEXdiX8ppM/GFZg9lEsE1M=;
+	s=arc-20240116; t=1728997977; c=relaxed/simple;
+	bh=WAtzophLqe3yQ4EvHb/egoQUN3loa3rmaaHn2sVkxds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sLo41V9s7TZDZC5VqMR5zwSHzg+BVfC7/vlYGZx5cIrJpQRzz0yC55ZCkQ3wQsdPGdr6ISBuNlUa+mrZ+sDRREoiiYm+b364GpugGk5ZW0hElw6/xvsMnn7hYgasMAntkQVhlDa/7gPx2Ue0tn1Ogqw3V6Gz0KIo8jvsRMN2NUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+HAKQHe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HsDgDzITrHXZ58v4aYEcBK7CN9IfQi1RF9lxSoywaBtHl0DdBfFO2P9wVF8ProaPEik3bxIdURo3EphkoybY+MmBrh8F8m9bkHRuIOS3jTOsmVEQI2uqHI4puX/c45u5fs1NhA9rp8OXVKN4g2X/Hpz2oiJMwrVVRXn9ormr8vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdoh/pM7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+HAKQHe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33F9C4CEC6;
-	Tue, 15 Oct 2024 13:12:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdoh/pM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C4B7C4CEC6;
+	Tue, 15 Oct 2024 13:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997974;
-	bh=btwrCMgvR6weXbw1juWGXMEXdiX8ppM/GFZg9lEsE1M=;
+	s=korg; t=1728997977;
+	bh=WAtzophLqe3yQ4EvHb/egoQUN3loa3rmaaHn2sVkxds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W+HAKQHeYtrC9mewLFemb/LSbVmhKUXdhJqFM/XPodNHAEjPmakYHQk2xg02frd8K
-	 ht0+/GF1a0zYTYMFARiiRqRUbUY0VTCzADiJ5GVDbfGo6/Q0rZOVxHTEk3zHGF9FLI
-	 UCM6bIn+e5lFCZpPtyDK5GBxdcy3VxcolA309Q+k=
+	b=rdoh/pM7UwPRCpppHMMY7caeD0uGiOfgWL5IMErLj1Vusjib/mVyHJrza7QlrCEd3
+	 53uxltTAs+yEL816N/jHfVeeZtvWaWU4+IgMjGJAbBjxUqRCCyLo2LwdcbUzVKSybw
+	 M4DD7VvjDp5wSylBTEpXzeGdcnnWWWGBCqe/OWjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 301/518] ACPICA: Fix memory leak if acpi_ps_get_next_namepath() fails
-Date: Tue, 15 Oct 2024 14:43:25 +0200
-Message-ID: <20241015123928.605570261@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 336/518] jfs: check if leafidx greater than num leaves per dmap tree
+Date: Tue, 15 Oct 2024 14:44:00 +0200
+Message-ID: <20241015123929.942166467@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,53 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 5accb265f7a1b23e52b0ec42313d1e12895552f4 ]
+[ Upstream commit d64ff0d2306713ff084d4b09f84ed1a8c75ecc32 ]
 
-ACPICA commit 2802af722bbde7bf1a7ac68df68e179e2555d361
+syzbot report a out of bounds in dbSplit, it because dmt_leafidx greater
+than num leaves per dmap tree, add a checking for dmt_leafidx in dbFindLeaf.
 
-If acpi_ps_get_next_namepath() fails, the previously allocated
-union acpi_parse_object needs to be freed before returning the
-status code.
+Shaggy:
+Modified sanity check to apply to control pages as well as leaf pages.
 
-The issue was first being reported on the Linux ACPI mailing list:
-
-Link: https://lore.kernel.org/linux-acpi/56f94776-484f-48c0-8855-dba8e6a7793b@yandex.ru/T/
-Link: https://github.com/acpica/acpica/commit/2802af72
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-and-tested-by: syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=dca05492eff41f604890
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/psargs.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/jfs/jfs_dmap.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index 3b40db4ad9f3e..a56d8708cb8ee 100644
---- a/drivers/acpi/acpica/psargs.c
-+++ b/drivers/acpi/acpica/psargs.c
-@@ -820,6 +820,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
- 			    acpi_ps_get_next_namepath(walk_state, parser_state,
- 						      arg,
- 						      ACPI_NOT_METHOD_CALL);
-+			if (ACPI_FAILURE(status)) {
-+				acpi_ps_free_op(arg);
-+				return_ACPI_STATUS(status);
-+			}
- 		} else {
- 			/* Single complex argument, nothing returned */
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 750853367d4ff..8efd93992946b 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -3006,9 +3006,10 @@ static void dbAdjTree(dmtree_t *tp, int leafno, int newval, bool is_ctl)
+ static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
+ {
+ 	int ti, n = 0, k, x = 0;
+-	int max_size;
++	int max_size, max_idx;
  
-@@ -854,6 +858,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
- 			    acpi_ps_get_next_namepath(walk_state, parser_state,
- 						      arg,
- 						      ACPI_POSSIBLE_METHOD_CALL);
-+			if (ACPI_FAILURE(status)) {
-+				acpi_ps_free_op(arg);
-+				return_ACPI_STATUS(status);
-+			}
+ 	max_size = is_ctl ? CTLTREESIZE : TREESIZE;
++	max_idx = is_ctl ? LPERCTL : LPERDMAP;
  
- 			if (arg->common.aml_opcode == AML_INT_METHODCALL_OP) {
+ 	/* first check the root of the tree to see if there is
+ 	 * sufficient free space.
+@@ -3040,6 +3041,8 @@ static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
+ 		 */
+ 		assert(n < 4);
+ 	}
++	if (le32_to_cpu(tp->dmt_leafidx) >= max_idx)
++		return -ENOSPC;
  
+ 	/* set the return to the leftmost leaf describing sufficient
+ 	 * free space.
 -- 
 2.43.0
 
