@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A19D1C07FF;
-	Tue, 15 Oct 2024 13:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901371C07FF;
+	Tue, 15 Oct 2024 13:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997777; cv=none; b=angOkeUWqhRTqK8boLM+YG29IQdM5DPgibjpoTSwFp+CNc3o8P3FYncrxIrwcOEg6CHVZeQCorbcta8nNIw7Y+D/umhEk2EQFgVhmYeCCfaLwKG8+EyJm0SUGAB4Osw3VJtQzzFC80xynSRIxWuNCZtsNmL3o8cDIm0W2aV/2bs=
+	t=1728997780; cv=none; b=ETtLDLh+h4iaA1uyGpTRpyzHy78uI5PgJxLywtBdlgBxGH3l3kV4mGufllnVh4g6Ukh//2za0lgP9cx7TpFGULDjdid9d3CnOJZRA/N8nyZb9ZNuUoQLfaxUJh2mbAg2lnCul/EacgMJlKqr80kV3r0vUS95PqiBaRuD9AGh2xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997777; c=relaxed/simple;
-	bh=FfuUR6ZrySQCajFd2t4N8988uDbHovVCAU9yL2oLB8w=;
+	s=arc-20240116; t=1728997780; c=relaxed/simple;
+	bh=45vxPLvSZirvK2tndphoxtioIjl+usbIpdTLrNN4zt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WESmab6+ZjVZFb20X0GGzzmV3WFGW8hf9k6i6LoRX45BTDS75nfDdTInUe91XkBJrN6zcAdJwVyPPt57niebAB25h7Kok8OrlAVPUwXctEP1m3jPNhNr0w1PcWZapPzYFhQ46cWEIazyBkG4TPqCemNaN38wyEqcuVRns/rEE+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4tHAURv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QFKZEYxLs40Aywz6lOuCSzUMhc/tk55PV+Xy9mRA1J9I0BrJkGqdqmhxu5vvEbW6HhvxaHmFE0F8LpuEqVAeS27qAa8dg5FEljrKH8YD6k/ZhMEzSMSOFeGctShhm4qow45bjWKjIe+40Y0Qy7CWNgFdkd21Pj/l/SAkBOO3RJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ti9fnZC9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4tHAURv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C899EC4CEC6;
-	Tue, 15 Oct 2024 13:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ti9fnZC9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2327C4CEC6;
+	Tue, 15 Oct 2024 13:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997777;
-	bh=FfuUR6ZrySQCajFd2t4N8988uDbHovVCAU9yL2oLB8w=;
+	s=korg; t=1728997780;
+	bh=45vxPLvSZirvK2tndphoxtioIjl+usbIpdTLrNN4zt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o4tHAURvtde5bk4R3cyg2LWnDrXxBmhgMJANuhP5wRZZYeEOKZHY4Hw79sNwdTmNh
-	 NXFuJq29VfzqSzcLAHC3RqQCZ4x9EY6d6Gb26WZ6y46zd07PdqJebeSGay7DitNWsy
-	 YMLp0/mlnzO5/TfRbjf4kz6GumoKN5+5nUGHiEHY=
+	b=Ti9fnZC9Wq8x7ToiZmE7Xkh+SSRDZuky3EpdGwGsh0QBO4keLTWotEQ6I5NqvEYRi
+	 OwY++gDWLEsqTWSJmgh12Pkd61o8t2B66VoJZv7D9O8C2XeVqG+opEcS2nfLdwafX/
+	 e0DRRFg6eI23nTqWej27XbNDCWmLQVIlN2A3cxks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
+	Marc Ferland <marc.ferland@sonatest.com>,
 	Michal Simek <michal.simek@amd.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 284/518] i2c: xiic: xiic_xfer(): Fix runtime PM leak on error path
-Date: Tue, 15 Oct 2024 14:43:08 +0200
-Message-ID: <20241015123927.950849328@linuxfoundation.org>
+Subject: [PATCH 5.10 285/518] i2c: xiic: improve error message when transfer fails to start
+Date: Tue, 15 Oct 2024 14:43:09 +0200
+Message-ID: <20241015123927.988254228@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,49 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: Marc Ferland <marc.ferland@sonatest.com>
 
-[ Upstream commit d663d93bb47e7ab45602b227701022d8aa16040a ]
+[ Upstream commit ee1691d0ae103ba7fd9439800ef454674fadad27 ]
 
-The xiic_xfer() function gets a runtime PM reference when the function is
-entered. This reference is released when the function is exited. There is
-currently one error path where the function exits directly, which leads to
-a leak of the runtime PM reference.
+xiic_start_xfer can fail for different reasons:
 
-Make sure that this error path also releases the runtime PM reference.
+- EBUSY: bus is busy or i2c messages still in tx_msg or rx_msg
+- ETIMEDOUT: timed-out trying to clear the RX fifo
+- EINVAL: wrong clock settings
 
-Fixes: fdacc3c7405d ("i2c: xiic: Switch from waitqueue to completion")
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Both EINVAL and ETIMEDOUT will currently print a specific error
+message followed by a generic one, for example:
+
+    Failed to clear rx fifo
+    Error xiic_start_xfer
+
+however EBUSY will simply output the generic message:
+
+    Error xiic_start_xfer
+
+which is not really helpful.
+
+This commit adds a new error message when a busy condition is detected
+and also removes the generic message since it does not provide any
+relevant information to the user.
+
+Signed-off-by: Marc Ferland <marc.ferland@sonatest.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Stable-dep-of: 1d4a1adbed25 ("i2c: xiic: Try re-initialization on bus busy timeout")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-xiic.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-xiic.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
-index b91ea900aae3a..bd5fc4ace0667 100644
+index bd5fc4ace0667..41104f9f6f0ae 100644
 --- a/drivers/i2c/busses/i2c-xiic.c
 +++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -744,7 +744,7 @@ static int xiic_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+@@ -711,8 +711,11 @@ static int xiic_start_xfer(struct xiic_i2c *i2c, struct i2c_msg *msgs, int num)
+ 	mutex_lock(&i2c->lock);
+ 
+ 	ret = xiic_busy(i2c);
+-	if (ret)
++	if (ret) {
++		dev_err(i2c->adap.dev.parent,
++			"cannot start a transfer while busy\n");
+ 		goto out;
++	}
+ 
+ 	i2c->tx_msg = msgs;
+ 	i2c->rx_msg = NULL;
+@@ -742,10 +745,8 @@ static int xiic_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 		return err;
+ 
  	err = xiic_start_xfer(i2c, msgs, num);
- 	if (err < 0) {
- 		dev_err(adap->dev.parent, "Error xiic_start_xfer\n");
--		return err;
-+		goto out;
- 	}
+-	if (err < 0) {
+-		dev_err(adap->dev.parent, "Error xiic_start_xfer\n");
++	if (err < 0)
+ 		goto out;
+-	}
  
  	err = wait_for_completion_timeout(&i2c->completion, XIIC_XFER_TIMEOUT);
-@@ -762,6 +762,8 @@ static int xiic_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
- 		err = (i2c->state == STATE_DONE) ? num : -EIO;
- 	}
- 	mutex_unlock(&i2c->lock);
-+
-+out:
- 	pm_runtime_mark_last_busy(i2c->dev);
- 	pm_runtime_put_autosuspend(i2c->dev);
- 	return err;
+ 	mutex_lock(&i2c->lock);
 -- 
 2.43.0
 
