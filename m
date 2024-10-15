@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8AE19B3FF;
-	Tue, 15 Oct 2024 11:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4931EABA8;
+	Tue, 15 Oct 2024 11:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993473; cv=none; b=WTfYmw4GsiR5256qbBlWhpwBt/dXR65uvxsco0d5ltwYFJFpaBZhAbFkEP2SaNHtZSmVjtmp+LeSk2/2ufAGMf4ksphLhZfwNwxL6hKFSrAl/bHe60u111MZhS0Qhe6QciTcO4yBSMyD0ubS0CKSXah4CxqtimuKb3BDW+GP8NM=
+	t=1728993477; cv=none; b=m7gzGFwjGoHeI92FZvQMURlUfcqs1WhHuzK+wsFyDFx1BVOCmCFkz8CfLO+jDJcZq7mZj0KLi7tvlZXO1s4GDzujnm59sPk6vdlpfurjY1s45TPsIy24zw8MZjj5f6T+XrHt1Hm9Or8/+dgZCofny70icQYD6C0mPMrzxiRCZPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993473; c=relaxed/simple;
-	bh=eXO+CtBoyB0aPGvywgEzdX8zL9mkw3EwKrxngmuW3IE=;
+	s=arc-20240116; t=1728993477; c=relaxed/simple;
+	bh=Gej8DbtnNdAYDFIjerPjju/hvuLPTj7O5g4w0XrpTIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=adohD455r1VNFypyftDSbCLrXEo6KYPlAhjPbar8A+ZLvPzh3HkKxEwoJWWIUirh6Zb+VU+uYgV3z7RZK8Ov6tsLUYP2ACLWJcNtUAU2yc6geITKTgAlTzrG1NAJShaX/8E5Js32IGTr2vRA6Mu98wSpbCkuU/xTCHfwpq6NSOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=to5GjOdM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZdeOjdcLiZHWgclr13GKU8nb6M4IV2ZdP4y754l0rURnQvE9hA1RaZAcfTjq/mhuQKsf2TQXUP+keZ/8ggUROwqIPEuvrP+Ue9r9peLCKbzkGNE8VKAjJlgWqEXmvM8Mb6txN5TntY5Ei+RZeXaRlzBUlxwS4UCsOqdNd60rmI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuIa0shL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="to5GjOdM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30AE1C4CEC6;
-	Tue, 15 Oct 2024 11:57:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuIa0shL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68946C4CECF;
+	Tue, 15 Oct 2024 11:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993473;
-	bh=eXO+CtBoyB0aPGvywgEzdX8zL9mkw3EwKrxngmuW3IE=;
+	s=korg; t=1728993476;
+	bh=Gej8DbtnNdAYDFIjerPjju/hvuLPTj7O5g4w0XrpTIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=to5GjOdMSmvVtA8BE0zkp+BykmsTTHNeb+cZbMjfoqb1YLMqHcpxutgUQItEvYJsx
-	 LBTGFV51YT0foAX++fkTPcAebPRWWtIkRl7gXT744rJ858u9HehyYU0pEYUqTFjImu
-	 ZVpfMTDPMdYgPm62ejoxvstNlsYeLjczBSNhvFDc=
+	b=DuIa0shLK0MTX8GNq+Ez8IBJDC2B1kcXesHFQ8Y8eMLtzk0Gy95q1NA/fFB3fqhI2
+	 4Ubd2V5IEYUvTvJ49O4AOkfGUJF+NU2S5f5xFd14jOGYlYGakcM6TXcTg/uX67aTgP
+	 KsNziosELgY+8pbsbzJXKDcPZ2enuVY9YZAqrOXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <horms@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 415/691] ACPICA: Fix memory leak if acpi_ps_get_next_namepath() fails
-Date: Tue, 15 Oct 2024 13:26:03 +0200
-Message-ID: <20241015112456.814369961@linuxfoundation.org>
+Subject: [PATCH 5.15 424/691] tipc: guard against string buffer overrun
+Date: Tue, 15 Oct 2024 13:26:12 +0200
+Message-ID: <20241015112457.172743968@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,53 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit 5accb265f7a1b23e52b0ec42313d1e12895552f4 ]
+[ Upstream commit 6555a2a9212be6983d2319d65276484f7c5f431a ]
 
-ACPICA commit 2802af722bbde7bf1a7ac68df68e179e2555d361
+Smatch reports that copying media_name and if_name to name_parts may
+overwrite the destination.
 
-If acpi_ps_get_next_namepath() fails, the previously allocated
-union acpi_parse_object needs to be freed before returning the
-status code.
+ .../bearer.c:166 bearer_name_validate() error: strcpy() 'media_name' too large for 'name_parts->media_name' (32 vs 16)
+ .../bearer.c:167 bearer_name_validate() error: strcpy() 'if_name' too large for 'name_parts->if_name' (1010102 vs 16)
 
-The issue was first being reported on the Linux ACPI mailing list:
+This does seem to be the case so guard against this possibility by using
+strscpy() and failing if truncation occurs.
 
-Link: https://lore.kernel.org/linux-acpi/56f94776-484f-48c0-8855-dba8e6a7793b@yandex.ru/T/
-Link: https://github.com/acpica/acpica/commit/2802af72
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Introduced by commit b97bf3fd8f6a ("[TIPC] Initial merge")
+
+Compile tested only.
+
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240801-tipic-overrun-v2-1-c5b869d1f074@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/psargs.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/tipc/bearer.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index b9ff535aa02e6..fd351074c6129 100644
---- a/drivers/acpi/acpica/psargs.c
-+++ b/drivers/acpi/acpica/psargs.c
-@@ -820,6 +820,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
- 			    acpi_ps_get_next_namepath(walk_state, parser_state,
- 						      arg,
- 						      ACPI_NOT_METHOD_CALL);
-+			if (ACPI_FAILURE(status)) {
-+				acpi_ps_free_op(arg);
-+				return_ACPI_STATUS(status);
-+			}
- 		} else {
- 			/* Single complex argument, nothing returned */
+diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
+index 17e8e6e3670ab..8c2793181ee7b 100644
+--- a/net/tipc/bearer.c
++++ b/net/tipc/bearer.c
+@@ -163,8 +163,12 @@ static int bearer_name_validate(const char *name,
  
-@@ -854,6 +858,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
- 			    acpi_ps_get_next_namepath(walk_state, parser_state,
- 						      arg,
- 						      ACPI_POSSIBLE_METHOD_CALL);
-+			if (ACPI_FAILURE(status)) {
-+				acpi_ps_free_op(arg);
-+				return_ACPI_STATUS(status);
-+			}
- 
- 			if (arg->common.aml_opcode == AML_INT_METHODCALL_OP) {
- 
+ 	/* return bearer name components, if necessary */
+ 	if (name_parts) {
+-		strcpy(name_parts->media_name, media_name);
+-		strcpy(name_parts->if_name, if_name);
++		if (strscpy(name_parts->media_name, media_name,
++			    TIPC_MAX_MEDIA_NAME) < 0)
++			return 0;
++		if (strscpy(name_parts->if_name, if_name,
++			    TIPC_MAX_IF_NAME) < 0)
++			return 0;
+ 	}
+ 	return 1;
+ }
 -- 
 2.43.0
 
