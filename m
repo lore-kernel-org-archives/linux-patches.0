@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8BE1EC000;
-	Tue, 15 Oct 2024 12:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F2E1EBFFF;
+	Tue, 15 Oct 2024 12:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993960; cv=none; b=A7zeKD7tmYqABmc/0gnPtvErVsGPU+hWwrxDfw5U0zb0qE2BDUrZzzlHprqITrgNFrjTlvi/8vXolTje3Gmp+LS1gdVjDuJM4nq6CtQTeeXTdkEJQrjEZAAHTmEqgt3MLHtDZ39Wx57ji6JBAWyDFfOEE/EiwJrJCnvteEr51Ds=
+	t=1728993964; cv=none; b=qqAAIKYA6Lzk5V6a7Rbv5ulcB4JJzNr/MOatYpeaFEK68hf76GzNhFaIS4hHNl+/pwk5ma7g0gyeMZoiEkdUi38N7Wd2fC+p/NurVC3MwbjWGL5bW5h8M9yT7FkRxsH0i3qzPftIyT1hCb8RE6eXGGnaAPsNxBffmKhxWyzngfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993960; c=relaxed/simple;
-	bh=7tAMF6ERPkwSlJvVY6Rjy+rEEhyAIs59cLF0tlAj6BY=;
+	s=arc-20240116; t=1728993964; c=relaxed/simple;
+	bh=iNTqx3GxYLXaiXXApOoVPFNRNyiAWqHx2KXIE39sd+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PDBN56T+2L9SUPXRbeQnsxotPi9aaL6aRfZ8V2QpC+DCbReuDJxo7u05H9YBKGh82TeX31F4b+B1fa8tEqXBTzvOGgri8Reay4tV9F9pKlR34Nu+gmZew+QcckzIMs3Ul2MNSCZE+L/3FOAyeRwRcWqoJJSfWdZ/34HmPc3d5hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rt7EWu2p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aJHq/eMwg5Ww65hg+VuZuIbsxqPVCWxO9K1XSbKTOaytaiclhjQzxyjG5jL6HtH/cx1VxGOyAMJIcOYkmg79X2QzE24qh4/kuuETaS3wlj6+FMfL74dr/8ktpbhnmPA3wTOqUYZZvwLBiS16YnWnF8L6UTuxA7SPsPsKSDx2A4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYNGta0/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rt7EWu2p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBE3C4CEC6;
-	Tue, 15 Oct 2024 12:05:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYNGta0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F871C4CECF;
+	Tue, 15 Oct 2024 12:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993960;
-	bh=7tAMF6ERPkwSlJvVY6Rjy+rEEhyAIs59cLF0tlAj6BY=;
+	s=korg; t=1728993963;
+	bh=iNTqx3GxYLXaiXXApOoVPFNRNyiAWqHx2KXIE39sd+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rt7EWu2pHPOkqKG69cRWIxXnlxYbdT++wl3z2OAhLD6Pe521U5ejFJKfMlRLg8P7F
-	 7BDZJeA5J5McFeps4OF9Iop7LYpk6CYhaKQRI8T2dbmwWUSRkfSLK4Uo1PrOPH0aLo
-	 Yf9xMEurFyhxFy3UHpwh3GtKkwTqJulYQtKaD+sg=
+	b=FYNGta0/adTic4VYmlXuZaRITYkrYIAZQ+SmgJ/6T3zItOs8KEcx2rUhQMYBdGBn2
+	 1QfcHxtbMZi7s9ZurgQdCHhBYecdZQtb5s8zb/iSkQKzEOdk9/BxCNdn3HsRPKEaNd
+	 nQPJcAoReDRd2Knt36NsdGVouVQQtSp6sfQch7nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Jann Horn <jannh@google.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Hugh Cole-Baker <sigmaris@gmail.com>,
+	"=?UTF-8?q?Milan=20P . =20Stani=C4=87?=" <mps@arvanta.net>,
+	Linus Heckemann <git@sphalerite.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 566/691] lib/buildid: harden build ID parsing logic
-Date: Tue, 15 Oct 2024 13:28:34 +0200
-Message-ID: <20241015112502.808394471@linuxfoundation.org>
+Subject: [PATCH 5.15 567/691] drm/rockchip: define gamma registers for RK3399
+Date: Tue, 15 Oct 2024 13:28:35 +0200
+Message-ID: <20241015112502.847363926@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -48,181 +47,122 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Hugh Cole-Baker <sigmaris@gmail.com>
 
-[ Upstream commit 905415ff3ffb1d7e5afa62bacabd79776bd24606 ]
+[ Upstream commit 3ba000d6ae999b99f29afd64814877a5c4406786 ]
 
-Harden build ID parsing logic, adding explicit READ_ONCE() where it's
-important to have a consistent value read and validated just once.
+The VOP on RK3399 has a different approach from previous versions for
+setting a gamma lookup table, using an update_gamma_lut register. As
+this differs from RK3288, give RK3399 its own set of "common" register
+definitions.
 
-Also, as pointed out by Andi Kleen, we need to make sure that entire ELF
-note is within a page bounds, so move the overflow check up and add an
-extra note_size boundaries validation.
-
-Fixes tag below points to the code that moved this code into
-lib/buildid.c, and then subsequently was used in perf subsystem, making
-this code exposed to perf_event_open() users in v5.12+.
-
-Cc: stable@vger.kernel.org
-Reviewed-by: Eduard Zingerman <eddyz87@gmail.com>
-Reviewed-by: Jann Horn <jannh@google.com>
-Suggested-by: Andi Kleen <ak@linux.intel.com>
-Fixes: bd7525dacd7e ("bpf: Move stack_map_get_build_id into lib")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20240829174232.3133883-2-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Hugh Cole-Baker <sigmaris@gmail.com>
+Tested-by: "Milan P. Stanić" <mps@arvanta.net>
+Tested-by: Linus Heckemann <git@sphalerite.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20211019215843.42718-2-sigmaris@gmail.com
+Stable-dep-of: 6b44aa559d6c ("drm/rockchip: vop: clear DMA stop bit on RK3066")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/buildid.c | 76 +++++++++++++++++++++++++++++----------------------
- 1 file changed, 44 insertions(+), 32 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.h |  2 ++
+ drivers/gpu/drm/rockchip/rockchip_vop_reg.c | 24 +++++++++++++++++++--
+ drivers/gpu/drm/rockchip/rockchip_vop_reg.h |  1 +
+ 3 files changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/lib/buildid.c b/lib/buildid.c
-index 493537344fc81..e41fb0ee405f6 100644
---- a/lib/buildid.c
-+++ b/lib/buildid.c
-@@ -18,31 +18,37 @@ static int parse_build_id_buf(unsigned char *build_id,
- 			      const void *note_start,
- 			      Elf32_Word note_size)
- {
--	Elf32_Word note_offs = 0, new_offs;
--
--	while (note_offs + sizeof(Elf32_Nhdr) < note_size) {
--		Elf32_Nhdr *nhdr = (Elf32_Nhdr *)(note_start + note_offs);
-+	const char note_name[] = "GNU";
-+	const size_t note_name_sz = sizeof(note_name);
-+	u64 note_off = 0, new_off, name_sz, desc_sz;
-+	const char *data;
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
+index 857d97cdc67c6..14179e89bd215 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.h
+@@ -99,6 +99,8 @@ struct vop_common {
+ 	struct vop_reg dither_down_en;
+ 	struct vop_reg dither_up;
+ 	struct vop_reg dsp_lut_en;
++	struct vop_reg update_gamma_lut;
++	struct vop_reg lut_buffer_index;
+ 	struct vop_reg gate_en;
+ 	struct vop_reg mmu_en;
+ 	struct vop_reg out_mode;
+diff --git a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
+index 8c873fcd0e99f..de7eb2fda4833 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
++++ b/drivers/gpu/drm/rockchip/rockchip_vop_reg.c
+@@ -865,6 +865,24 @@ static const struct vop_output rk3399_output = {
+ 	.mipi_dual_channel_en = VOP_REG(RK3288_SYS_CTRL, 0x1, 3),
+ };
+ 
++static const struct vop_common rk3399_common = {
++	.standby = VOP_REG_SYNC(RK3399_SYS_CTRL, 0x1, 22),
++	.gate_en = VOP_REG(RK3399_SYS_CTRL, 0x1, 23),
++	.mmu_en = VOP_REG(RK3399_SYS_CTRL, 0x1, 20),
++	.dither_down_sel = VOP_REG(RK3399_DSP_CTRL1, 0x1, 4),
++	.dither_down_mode = VOP_REG(RK3399_DSP_CTRL1, 0x1, 3),
++	.dither_down_en = VOP_REG(RK3399_DSP_CTRL1, 0x1, 2),
++	.pre_dither_down = VOP_REG(RK3399_DSP_CTRL1, 0x1, 1),
++	.dither_up = VOP_REG(RK3399_DSP_CTRL1, 0x1, 6),
++	.dsp_lut_en = VOP_REG(RK3399_DSP_CTRL1, 0x1, 0),
++	.update_gamma_lut = VOP_REG(RK3399_DSP_CTRL1, 0x1, 7),
++	.lut_buffer_index = VOP_REG(RK3399_DBG_POST_REG1, 0x1, 1),
++	.data_blank = VOP_REG(RK3399_DSP_CTRL0, 0x1, 19),
++	.dsp_blank = VOP_REG(RK3399_DSP_CTRL0, 0x3, 18),
++	.out_mode = VOP_REG(RK3399_DSP_CTRL0, 0xf, 0),
++	.cfg_done = VOP_REG_SYNC(RK3399_REG_CFG_DONE, 0x1, 0),
++};
 +
-+	while (note_off + sizeof(Elf32_Nhdr) < note_size &&
-+	       note_off + sizeof(Elf32_Nhdr) > note_off /* overflow */) {
-+		Elf32_Nhdr *nhdr = (Elf32_Nhdr *)(note_start + note_off);
-+
-+		name_sz = READ_ONCE(nhdr->n_namesz);
-+		desc_sz = READ_ONCE(nhdr->n_descsz);
-+
-+		new_off = note_off + sizeof(Elf32_Nhdr);
-+		if (check_add_overflow(new_off, ALIGN(name_sz, 4), &new_off) ||
-+		    check_add_overflow(new_off, ALIGN(desc_sz, 4), &new_off) ||
-+		    new_off > note_size)
-+			break;
+ static const struct vop_yuv2yuv_phy rk3399_yuv2yuv_win01_data = {
+ 	.y2r_coefficients = {
+ 		VOP_REG(RK3399_WIN0_YUV2YUV_Y2R + 0, 0xffff, 0),
+@@ -946,7 +964,7 @@ static const struct vop_data rk3399_vop_big = {
+ 	.version = VOP_VERSION(3, 5),
+ 	.feature = VOP_FEATURE_OUTPUT_RGB10,
+ 	.intr = &rk3366_vop_intr,
+-	.common = &rk3288_common,
++	.common = &rk3399_common,
+ 	.modeset = &rk3288_modeset,
+ 	.output = &rk3399_output,
+ 	.afbc = &rk3399_vop_afbc,
+@@ -954,6 +972,7 @@ static const struct vop_data rk3399_vop_big = {
+ 	.win = rk3399_vop_win_data,
+ 	.win_size = ARRAY_SIZE(rk3399_vop_win_data),
+ 	.win_yuv2yuv = rk3399_vop_big_win_yuv2yuv_data,
++	.lut_size = 1024,
+ };
  
- 		if (nhdr->n_type == BUILD_ID &&
--		    nhdr->n_namesz == sizeof("GNU") &&
--		    !strcmp((char *)(nhdr + 1), "GNU") &&
--		    nhdr->n_descsz > 0 &&
--		    nhdr->n_descsz <= BUILD_ID_SIZE_MAX) {
--			memcpy(build_id,
--			       note_start + note_offs +
--			       ALIGN(sizeof("GNU"), 4) + sizeof(Elf32_Nhdr),
--			       nhdr->n_descsz);
--			memset(build_id + nhdr->n_descsz, 0,
--			       BUILD_ID_SIZE_MAX - nhdr->n_descsz);
-+		    name_sz == note_name_sz &&
-+		    memcmp(nhdr + 1, note_name, note_name_sz) == 0 &&
-+		    desc_sz > 0 && desc_sz <= BUILD_ID_SIZE_MAX) {
-+			data = note_start + note_off + ALIGN(note_name_sz, 4);
-+			memcpy(build_id, data, desc_sz);
-+			memset(build_id + desc_sz, 0, BUILD_ID_SIZE_MAX - desc_sz);
- 			if (size)
--				*size = nhdr->n_descsz;
-+				*size = desc_sz;
- 			return 0;
- 		}
--		new_offs = note_offs + sizeof(Elf32_Nhdr) +
--			ALIGN(nhdr->n_namesz, 4) + ALIGN(nhdr->n_descsz, 4);
--		if (new_offs <= note_offs)  /* overflow */
--			break;
--		note_offs = new_offs;
-+
-+		note_off = new_off;
- 	}
+ static const struct vop_win_data rk3399_vop_lit_win_data[] = {
+@@ -972,13 +991,14 @@ static const struct vop_win_yuv2yuv_data rk3399_vop_lit_win_yuv2yuv_data[] = {
+ static const struct vop_data rk3399_vop_lit = {
+ 	.version = VOP_VERSION(3, 6),
+ 	.intr = &rk3366_vop_intr,
+-	.common = &rk3288_common,
++	.common = &rk3399_common,
+ 	.modeset = &rk3288_modeset,
+ 	.output = &rk3399_output,
+ 	.misc = &rk3368_misc,
+ 	.win = rk3399_vop_lit_win_data,
+ 	.win_size = ARRAY_SIZE(rk3399_vop_lit_win_data),
+ 	.win_yuv2yuv = rk3399_vop_lit_win_yuv2yuv_data,
++	.lut_size = 256,
+ };
  
- 	return -EINVAL;
-@@ -71,7 +77,7 @@ static int get_build_id_32(const void *page_addr, unsigned char *build_id,
- {
- 	Elf32_Ehdr *ehdr = (Elf32_Ehdr *)page_addr;
- 	Elf32_Phdr *phdr;
--	int i;
-+	__u32 i, phnum;
- 
- 	/*
- 	 * FIXME
-@@ -80,18 +86,19 @@ static int get_build_id_32(const void *page_addr, unsigned char *build_id,
- 	 */
- 	if (ehdr->e_phoff != sizeof(Elf32_Ehdr))
- 		return -EINVAL;
-+
-+	phnum = READ_ONCE(ehdr->e_phnum);
- 	/* only supports phdr that fits in one page */
--	if (ehdr->e_phnum >
--	    (PAGE_SIZE - sizeof(Elf32_Ehdr)) / sizeof(Elf32_Phdr))
-+	if (phnum > (PAGE_SIZE - sizeof(Elf32_Ehdr)) / sizeof(Elf32_Phdr))
- 		return -EINVAL;
- 
- 	phdr = (Elf32_Phdr *)(page_addr + sizeof(Elf32_Ehdr));
- 
--	for (i = 0; i < ehdr->e_phnum; ++i) {
-+	for (i = 0; i < phnum; ++i) {
- 		if (phdr[i].p_type == PT_NOTE &&
- 		    !parse_build_id(page_addr, build_id, size,
--				    page_addr + phdr[i].p_offset,
--				    phdr[i].p_filesz))
-+				    page_addr + READ_ONCE(phdr[i].p_offset),
-+				    READ_ONCE(phdr[i].p_filesz)))
- 			return 0;
- 	}
- 	return -EINVAL;
-@@ -103,7 +110,7 @@ static int get_build_id_64(const void *page_addr, unsigned char *build_id,
- {
- 	Elf64_Ehdr *ehdr = (Elf64_Ehdr *)page_addr;
- 	Elf64_Phdr *phdr;
--	int i;
-+	__u32 i, phnum;
- 
- 	/*
- 	 * FIXME
-@@ -112,18 +119,19 @@ static int get_build_id_64(const void *page_addr, unsigned char *build_id,
- 	 */
- 	if (ehdr->e_phoff != sizeof(Elf64_Ehdr))
- 		return -EINVAL;
-+
-+	phnum = READ_ONCE(ehdr->e_phnum);
- 	/* only supports phdr that fits in one page */
--	if (ehdr->e_phnum >
--	    (PAGE_SIZE - sizeof(Elf64_Ehdr)) / sizeof(Elf64_Phdr))
-+	if (phnum > (PAGE_SIZE - sizeof(Elf64_Ehdr)) / sizeof(Elf64_Phdr))
- 		return -EINVAL;
- 
- 	phdr = (Elf64_Phdr *)(page_addr + sizeof(Elf64_Ehdr));
- 
--	for (i = 0; i < ehdr->e_phnum; ++i) {
-+	for (i = 0; i < phnum; ++i) {
- 		if (phdr[i].p_type == PT_NOTE &&
- 		    !parse_build_id(page_addr, build_id, size,
--				    page_addr + phdr[i].p_offset,
--				    phdr[i].p_filesz))
-+				    page_addr + READ_ONCE(phdr[i].p_offset),
-+				    READ_ONCE(phdr[i].p_filesz)))
- 			return 0;
- 	}
- 	return -EINVAL;
-@@ -152,6 +160,10 @@ int build_id_parse(struct vm_area_struct *vma, unsigned char *build_id,
- 	page = find_get_page(vma->vm_file->f_mapping, 0);
- 	if (!page)
- 		return -EFAULT;	/* page not mapped */
-+	if (!PageUptodate(page)) {
-+		put_page(page);
-+		return -EFAULT;
-+	}
- 
- 	ret = -EINVAL;
- 	page_addr = kmap_atomic(page);
+ static const struct vop_win_data rk3228_vop_win_data[] = {
+diff --git a/drivers/gpu/drm/rockchip/rockchip_vop_reg.h b/drivers/gpu/drm/rockchip/rockchip_vop_reg.h
+index 0b3cd65ba5c1b..406e981c75bd7 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_vop_reg.h
++++ b/drivers/gpu/drm/rockchip/rockchip_vop_reg.h
+@@ -628,6 +628,7 @@
+ #define RK3399_YUV2YUV_WIN			0x02c0
+ #define RK3399_YUV2YUV_POST			0x02c4
+ #define RK3399_AUTO_GATING_EN			0x02cc
++#define RK3399_DBG_POST_REG1			0x036c
+ #define RK3399_WIN0_CSC_COE			0x03a0
+ #define RK3399_WIN1_CSC_COE			0x03c0
+ #define RK3399_WIN2_CSC_COE			0x03e0
 -- 
 2.43.0
 
