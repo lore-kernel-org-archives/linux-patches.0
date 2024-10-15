@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0021C07F1;
-	Tue, 15 Oct 2024 13:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326951F8F17;
+	Tue, 15 Oct 2024 13:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998154; cv=none; b=VtMfZG7LuO2+vupw7JkOIASsqxy2Q6uJ3Js9VoOjjxppeb+sXkdUh12nDSRtGRpp5de8kFoa4Mk3vK1TYUN7gSAMonHG1UuDS9sNXLl+i2vmNHK7hLqeuDNr6dnjW1Ugk9/uhanFl1VAixEcz414dXqAdzEe9kGZdVnQUBlRSJ0=
+	t=1728998158; cv=none; b=tE4sc7UC9oI0XciUSgOrZky8t9G5PwrAjOU+7lV6AOfcaMd6v/cQ3j6nhwjS1UujGw7JTxmKhygnTSq0Vm4iuQXUftB6ABc/mNp0ffBfkFj7/qqTPUlwA7A4/2q9KxWgrg7k8Okmmem/pjljwKvDosVrYb7jVfrzZcvuc2156ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998154; c=relaxed/simple;
-	bh=f0ybB5bWO+jqW0BYi4nCZnPn+9dH06Uqoa1E720xG1o=;
+	s=arc-20240116; t=1728998158; c=relaxed/simple;
+	bh=3al3shN+CiXY0g53HspUdiWw18MdmyAzl9O0Imyfcxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTlu5WqLlMyVvkjO4ou6ibLC2QEYvtO24R5WiAMe2JkE3DuoX1J1cYVHeaRFYFOBBuYRICvJ3EZKktPPwDogxhtB3zJtAIpwJT1clgMsntADiRpaCliX0sxwhkwCec1cSWumsKX5/e0RxotT6aU7C4a2iUWnAb1lJswd98MjcHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oc1Bn27O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SNmcO0xoU05xKcWHgfyx0fo3+KgesevD4yxsoClBF94sZwg87TrNBvNMgNECQSBPAkbVZpSMoy8GDLV16bAIzbUjfCHqXeqmtBpI3qv8cVA3MqI3cddX1IWy4YRmfBzbbtO34EFEhYrSvMdBz38O+W/AivBAqFOHJaw/vEnQJ+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=buxAMY8p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oc1Bn27O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F62AC4CEC6;
-	Tue, 15 Oct 2024 13:15:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="buxAMY8p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F3DC4CEC6;
+	Tue, 15 Oct 2024 13:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998154;
-	bh=f0ybB5bWO+jqW0BYi4nCZnPn+9dH06Uqoa1E720xG1o=;
+	s=korg; t=1728998157;
+	bh=3al3shN+CiXY0g53HspUdiWw18MdmyAzl9O0Imyfcxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oc1Bn27Okn8j+MQzHReCzjfFk7ytjOYFJjIZ4qr4QtYTsnDcqnKT6PaxWx251bv7E
-	 F5fxcMk2AEHQRmhNOAVLuShSVH+3U1rcjhohtwc0uVC01NIAUUPrvd3iXrxAxAytyr
-	 ldFMaPdV2cTvyuFgAm4SYVJZbewCfpWeHi9PQCME=
+	b=buxAMY8p0yskbQ+Gvgza4DnfGEOQnuEGt9EIYEVSLKHumIP6Qc03Ppsaf1nXOSLnk
+	 HHthdY+N49cZW8yvSOzsiyVqequ+hIpp3E0WghGx1PmSdHtUia5XrOOPQ9MatK7A83
+	 2MPDoebo4m9YBv2L/VQcUb1wkZVydQOdV5VS6hhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Aoyama Wataru <wataru.aoyama@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 5.10 394/518] exfat: fix memory leak in exfat_load_bitmap()
-Date: Tue, 15 Oct 2024 14:44:58 +0200
-Message-ID: <20241015123932.183215565@linuxfoundation.org>
+	Olga Kornievskaia <okorniev@redhat.com>,
+	NeilBrown <neilb@suse.de>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 395/518] nfsd: fix delegation_blocked() to block correctly for at least 30 seconds
+Date: Tue, 15 Oct 2024 14:44:59 +0200
+Message-ID: <20241015123932.220718795@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,49 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: NeilBrown <neilb@suse.de>
 
-commit d2b537b3e533f28e0d97293fe9293161fe8cd137 upstream.
+commit 45bb63ed20e02ae146336412889fe5450316a84f upstream.
 
-If the first directory entry in the root directory is not a bitmap
-directory entry, 'bh' will not be released and reassigned, which
-will cause a memory leak.
+The pair of bloom filtered used by delegation_blocked() was intended to
+block delegations on given filehandles for between 30 and 60 seconds.  A
+new filehandle would be recorded in the "new" bit set.  That would then
+be switch to the "old" bit set between 0 and 30 seconds later, and it
+would remain as the "old" bit set for 30 seconds.
 
-Fixes: 1e49a94cf707 ("exfat: add bitmap operations")
+Unfortunately the code intended to clear the old bit set once it reached
+30 seconds old, preparing it to be the next new bit set, instead cleared
+the *new* bit set before switching it to be the old bit set.  This means
+that the "old" bit set is always empty and delegations are blocked
+between 0 and 30 seconds.
+
+This patch updates bd->new before clearing the set with that index,
+instead of afterwards.
+
+Reported-by: Olga Kornievskaia <okorniev@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Reviewed-by: Aoyama Wataru <wataru.aoyama@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 6282cd565553 ("NFSD: Don't hand out delegations for 30 seconds after recalling them.")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/balloc.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/nfsd/nfs4state.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/exfat/balloc.c
-+++ b/fs/exfat/balloc.c
-@@ -110,11 +110,8 @@ int exfat_load_bitmap(struct super_block
- 				return -EIO;
- 
- 			type = exfat_get_entry_type(ep);
--			if (type == TYPE_UNUSED)
--				break;
--			if (type != TYPE_BITMAP)
--				continue;
--			if (ep->dentry.bitmap.flags == 0x0) {
-+			if (type == TYPE_BITMAP &&
-+			    ep->dentry.bitmap.flags == 0x0) {
- 				int err;
- 
- 				err = exfat_allocate_bitmap(sb, ep);
-@@ -122,6 +119,9 @@ int exfat_load_bitmap(struct super_block
- 				return err;
- 			}
- 			brelse(bh);
-+
-+			if (type == TYPE_UNUSED)
-+				return -EINVAL;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1090,7 +1090,8 @@ static void nfs4_free_deleg(struct nfs4_
+  * When a delegation is recalled, the filehandle is stored in the "new"
+  * filter.
+  * Every 30 seconds we swap the filters and clear the "new" one,
+- * unless both are empty of course.
++ * unless both are empty of course.  This results in delegations for a
++ * given filehandle being blocked for between 30 and 60 seconds.
+  *
+  * Each filter is 256 bits.  We hash the filehandle to 32bit and use the
+  * low 3 bytes as hash-table indices.
+@@ -1119,9 +1120,9 @@ static int delegation_blocked(struct knf
+ 		if (ktime_get_seconds() - bd->swap_time > 30) {
+ 			bd->entries -= bd->old_entries;
+ 			bd->old_entries = bd->entries;
++			bd->new = 1-bd->new;
+ 			memset(bd->set[bd->new], 0,
+ 			       sizeof(bd->set[0]));
+-			bd->new = 1-bd->new;
+ 			bd->swap_time = ktime_get_seconds();
  		}
- 
- 		if (exfat_get_next_cluster(sb, &clu.dir))
+ 		spin_unlock(&blocked_delegations_lock);
 
 
