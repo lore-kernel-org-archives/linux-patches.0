@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6851E8832;
-	Tue, 15 Oct 2024 13:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB87E1AF0AC;
+	Tue, 15 Oct 2024 13:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997892; cv=none; b=eqgi2QGWwysnjnzAHxIH1cDwkUudrRb6khJTxEM6d89Q7eG2B4ohT9tUco9ww9IVAgPh6gQFdVhrNYOLvoh5M229Ht/Y2I9LNMhdF15lsxfIIUDiNiXaSMy+awrrxCY6E/cki2Bj9bWr4Z3+FC4C3cdxW4sBdxVS88VTExn71/o=
+	t=1728997895; cv=none; b=GmUZMvsL49siddHUBSVzhXRWoi+6v7Df2zYfKBr+t7q+5C1g01Q5GkRaQDznqGOgqjTVwhLpLH4Kh5ahMEtlZbambNqh6/xYdwtp4d7RA2xw+R+sMrYymmM6qa/ZeHDCjEpUUwERtq3IMi9X2sFIPv7BRG7hufqE6aGMFAH3DDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997892; c=relaxed/simple;
-	bh=sWmBG/eogVZMewWpDQ/8N92UqT+f8J3zEEzpl/9iCYo=;
+	s=arc-20240116; t=1728997895; c=relaxed/simple;
+	bh=amDpxvX2dt78rFTDOqRsjbgn+GtZ3CfsRV9+eaKkBLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szsHRtSpMgOcNh0BgJnvLJU6Ltii2A/bB1Hfcndv3tTWwawMKzLtGrM7Fo+stW1H/X9kAT4K7NTSq4VuflcPNSjKXFwzZuUX9tCn6aIrQzoRQYsS1NyWB293ESPaVIXiAtjjp7Y/CbzXUlpPuUa7dMJQqsT8Ee74X/+2qi20Tjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kRaNFBRB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jr2197mCJ40XAXV8xAKQhp9xSNpCl1nKu5QeriuzbuQkLRzzL5vCrH8MJBYwOfa+q/xf3T18/Vsuw84501J0WikHL9PVAsXyKCUks2pDyIXLgfEtVnug7XqbTRKTG5+csZ8jVCUrzmuJ2t3LNw4bbWAm+7XD7MvtMBQ/sz9nhVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmkgagKY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRaNFBRB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE85C4CECF;
-	Tue, 15 Oct 2024 13:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmkgagKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB48C4CEC6;
+	Tue, 15 Oct 2024 13:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997892;
-	bh=sWmBG/eogVZMewWpDQ/8N92UqT+f8J3zEEzpl/9iCYo=;
+	s=korg; t=1728997895;
+	bh=amDpxvX2dt78rFTDOqRsjbgn+GtZ3CfsRV9+eaKkBLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kRaNFBRBoIf2KhgKaxUi6jttB8jMazCiRuAh8civrEGs07ofRmgqkDceEoz8UyjNo
-	 dm7kIbqPxlek11zX+niriAfHz/LskvVZZejrqgLFfaoA4W8bT0SW7gFCkC9qHGCn3o
-	 YSVFSJt2x5gaCNYzAfqqhu/hUC4p0xIBKvAPQGNM=
+	b=cmkgagKY+yKBeirc85lianRI2V9Fp/NHPVTB8IlDE0dl6PdYkUyu2VBi/btlVCLq4
+	 QVUInYMc+3980ArrDsnRAgEhOsAV9IBT6dBVg4lZB7rdz1faGqrYqrAI0TmTucHFUO
+	 JD/I5W2i1KK+vOpTthKk94xQe2Y/o/gJyP8Wqo34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 319/518] signal: Replace BUG_ON()s
-Date: Tue, 15 Oct 2024 14:43:43 +0200
-Message-ID: <20241015123929.293214664@linuxfoundation.org>
+Subject: [PATCH 5.10 320/518] ALSA: usb-audio: Define macros for quirk table entries
+Date: Tue, 15 Oct 2024 14:43:44 +0200
+Message-ID: <20241015123929.331411300@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,59 +50,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 7f8af7bac5380f2d95a63a6f19964e22437166e1 ]
+[ Upstream commit 0c3ad39b791c2ecf718afcaca30e5ceafa939d5c ]
 
-These really can be handled gracefully without killing the machine.
+Many entries in the USB-audio quirk tables have relatively complex
+expressions.  For improving the readability, introduce a few macros.
+Those are applied in the following patch.
 
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20240814134844.2726-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/signal.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ sound/usb/quirks-table.h | 77 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 77 insertions(+)
 
-diff --git a/kernel/signal.c b/kernel/signal.c
-index bfc1da526ebbe..7a9af6d4f2b01 100644
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -1817,10 +1817,11 @@ struct sigqueue *sigqueue_alloc(void)
+diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
+index 008229ae7ff41..c6104523dd79c 100644
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -35,6 +35,83 @@
+ 	.bInterfaceClass = USB_CLASS_AUDIO, \
+ 	.bInterfaceSubClass = USB_SUBCLASS_AUDIOCONTROL
  
- void sigqueue_free(struct sigqueue *q)
++/* Quirk .driver_info, followed by the definition of the quirk entry;
++ * put like QUIRK_DRIVER_INFO { ... } in each entry of the quirk table
++ */
++#define QUIRK_DRIVER_INFO \
++	.driver_info = (unsigned long)&(const struct snd_usb_audio_quirk)
++
++/*
++ * Macros for quirk data entries
++ */
++
++/* Quirk data entry for ignoring the interface */
++#define QUIRK_DATA_IGNORE(_ifno) \
++	.ifnum = (_ifno), .type = QUIRK_IGNORE_INTERFACE
++/* Quirk data entry for a standard audio interface */
++#define QUIRK_DATA_STANDARD_AUDIO(_ifno) \
++	.ifnum = (_ifno), .type = QUIRK_AUDIO_STANDARD_INTERFACE
++/* Quirk data entry for a standard MIDI interface */
++#define QUIRK_DATA_STANDARD_MIDI(_ifno) \
++	.ifnum = (_ifno), .type = QUIRK_MIDI_STANDARD_INTERFACE
++/* Quirk data entry for a standard mixer interface */
++#define QUIRK_DATA_STANDARD_MIXER(_ifno) \
++	.ifnum = (_ifno), .type = QUIRK_AUDIO_STANDARD_MIXER
++
++/* Quirk data entry for Yamaha MIDI */
++#define QUIRK_DATA_MIDI_YAMAHA(_ifno) \
++	.ifnum = (_ifno), .type = QUIRK_MIDI_YAMAHA
++/* Quirk data entry for Edirol UAxx */
++#define QUIRK_DATA_EDIROL_UAXX(_ifno) \
++	.ifnum = (_ifno), .type = QUIRK_AUDIO_EDIROL_UAXX
++/* Quirk data entry for raw bytes interface */
++#define QUIRK_DATA_RAW_BYTES(_ifno) \
++	.ifnum = (_ifno), .type = QUIRK_MIDI_RAW_BYTES
++
++/* Quirk composite array terminator */
++#define QUIRK_COMPOSITE_END	{ .ifnum = -1 }
++
++/* Quirk data entry for composite quirks;
++ * followed by the quirk array that is terminated with QUIRK_COMPOSITE_END
++ * e.g. QUIRK_DATA_COMPOSITE { { quirk1 }, { quirk2 },..., QUIRK_COMPOSITE_END }
++ */
++#define QUIRK_DATA_COMPOSITE \
++	.ifnum = QUIRK_ANY_INTERFACE, \
++	.type = QUIRK_COMPOSITE, \
++	.data = &(const struct snd_usb_audio_quirk[])
++
++/* Quirk data entry for a fixed audio endpoint;
++ * followed by audioformat definition
++ * e.g. QUIRK_DATA_AUDIOFORMAT(n) { .formats = xxx, ... }
++ */
++#define QUIRK_DATA_AUDIOFORMAT(_ifno)	    \
++	.ifnum = (_ifno),		    \
++	.type = QUIRK_AUDIO_FIXED_ENDPOINT, \
++	.data = &(const struct audioformat)
++
++/* Quirk data entry for a fixed MIDI endpoint;
++ * followed by snd_usb_midi_endpoint_info definition
++ * e.g. QUIRK_DATA_MIDI_FIXED_ENDPOINT(n) { .out_cables = x, .in_cables = y }
++ */
++#define QUIRK_DATA_MIDI_FIXED_ENDPOINT(_ifno) \
++	.ifnum = (_ifno),		      \
++	.type = QUIRK_MIDI_FIXED_ENDPOINT,    \
++	.data = &(const struct snd_usb_midi_endpoint_info)
++/* Quirk data entry for a MIDIMAN MIDI endpoint */
++#define QUIRK_DATA_MIDI_MIDIMAN(_ifno) \
++	.ifnum = (_ifno),	       \
++	.type = QUIRK_MIDI_MIDIMAN,    \
++	.data = &(const struct snd_usb_midi_endpoint_info)
++/* Quirk data entry for a EMAGIC MIDI endpoint */
++#define QUIRK_DATA_MIDI_EMAGIC(_ifno) \
++	.ifnum = (_ifno),	      \
++	.type = QUIRK_MIDI_EMAGIC,    \
++	.data = &(const struct snd_usb_midi_endpoint_info)
++
++/*
++ * Here we go... the quirk table definition begins:
++ */
++
+ /* FTDI devices */
  {
--	unsigned long flags;
- 	spinlock_t *lock = &current->sighand->siglock;
-+	unsigned long flags;
- 
--	BUG_ON(!(q->flags & SIGQUEUE_PREALLOC));
-+	if (WARN_ON_ONCE(!(q->flags & SIGQUEUE_PREALLOC)))
-+		return;
- 	/*
- 	 * We must hold ->siglock while testing q->list
- 	 * to serialize with collect_signal() or with
-@@ -1848,7 +1849,10 @@ int send_sigqueue(struct sigqueue *q, struct pid *pid, enum pid_type type)
- 	unsigned long flags;
- 	int ret, result;
- 
--	BUG_ON(!(q->flags & SIGQUEUE_PREALLOC));
-+	if (WARN_ON_ONCE(!(q->flags & SIGQUEUE_PREALLOC)))
-+		return 0;
-+	if (WARN_ON_ONCE(q->info.si_code != SI_TIMER))
-+		return 0;
- 
- 	ret = -1;
- 	rcu_read_lock();
-@@ -1867,7 +1871,6 @@ int send_sigqueue(struct sigqueue *q, struct pid *pid, enum pid_type type)
- 		 * If an SI_TIMER entry is already queue just increment
- 		 * the overrun count.
- 		 */
--		BUG_ON(q->info.si_code != SI_TIMER);
- 		q->info.si_overrun++;
- 		result = TRACE_SIGNAL_ALREADY_PENDING;
- 		goto out;
+ 	USB_DEVICE(0x0403, 0xb8d8),
 -- 
 2.43.0
 
