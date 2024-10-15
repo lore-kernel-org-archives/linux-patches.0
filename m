@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593EC1C07CC;
-	Tue, 15 Oct 2024 13:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663061C07CC;
+	Tue, 15 Oct 2024 13:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997314; cv=none; b=pMiINNNVQh+KOYW0dTsxKF7ma+nrr6oJMqgCNOW2j7wyFsYSydJwwLlCydydzBo3+aSaMWdkbsI4YM0pe/85iI8G5QKq+bSsfvmY58dGWF8ceO8rh9ztLdQjSJvGAtMebU4urAZ3icN+HDlxjT2mohjzfgUntTZctXK/FRH0wE0=
+	t=1728997317; cv=none; b=DmC0NvTQmCcV3egDdZPNqDKOk3FSrl7cFOOv/YFnkoiGJHGKU+IocaLcSkx7ZSnvAbH/8heWm24/LKNUSM0W8qD4Uu073VbAEa15m3/CWOUbpGebn0XOzCrpT/5QcN+jhqqmCRWULBhoDE+zcDj2+LfgKjtdF8xWThGOnjC8Qxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997314; c=relaxed/simple;
-	bh=OKY0uvHLYGfMFjY+nVelwh6MYO71TYwkSfaZwCRb7A0=;
+	s=arc-20240116; t=1728997317; c=relaxed/simple;
+	bh=TNfV6C0oxHR4EyMWEz24g+QKRma1T7Kk/JYQsEZMzuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lxpIj7JRRvjeJq9dr8b7/pX/as2B7nPzjxZ1oK513k45kXKNBaNw40fnnvMqxnPE8z/AbbloN0xLJqpi4l9zqlCIAljLw6TA2unpDkCoX5MiB5yrvE+yKMNzbRqxJVIULQwIeViSfARIweMwxaZ/9QL28zQTeJXXcxKf7kgxJ+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnGQo9x7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=svlrEN7J0aga1ejJHvLin2DTWBuJ0yNbFzDwc3Z9XDhAteodGZ4PaOMl1cNt7E5FuKL42+qgl99bxVLzmiFNfYC6/u+B47VaiPfFT2VsXYnPHnHgILEqPuruOWwiH1w+CcLWhwUcU4f7lKCnC1j2Kfi3IwKIFn4VCx+Qnr9TEYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdQuMSTU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnGQo9x7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D0B3C4CEC6;
-	Tue, 15 Oct 2024 13:01:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdQuMSTU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3225C4CEC6;
+	Tue, 15 Oct 2024 13:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997313;
-	bh=OKY0uvHLYGfMFjY+nVelwh6MYO71TYwkSfaZwCRb7A0=;
+	s=korg; t=1728997317;
+	bh=TNfV6C0oxHR4EyMWEz24g+QKRma1T7Kk/JYQsEZMzuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pnGQo9x7SUPbD81hIppzzl9PkxlLeDUxcx+2tM5vng1KfNypxKi6wGYe4xR/pg9nq
-	 lurn2DFRtLQlz+KOX6vCx/kW33PdWe3QNwBu0Fe6aw5rXEZkgQLB5TDT9rRqQrSWjE
-	 txG9KLqeUbaJ1JLZgfIA+i9Gxd49RIttNL6RzgyE=
+	b=CdQuMSTUSslIxGYVEDJPRLy9n4Eko0KhtpFdKRNSN+arkLMnHVUzm/+En1ofFn/Vv
+	 bJBq4WHhZxf/Ko8uGce+2cxSD7GAcHYnzTeslQD7VKCXiz5CAJkr4d7gkkY3n28NZV
+	 4P4YrlmWjRwRt5zay4OdZOEDZosZe1TQEnPJcRyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawei Ye <jiawei.ye@foxmail.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 148/518] smackfs: Use rcu_assign_pointer() to ensure safe assignment in smk_set_cipso
-Date: Tue, 15 Oct 2024 14:40:52 +0200
-Message-ID: <20241015123922.712119840@linuxfoundation.org>
+Subject: [PATCH 5.10 149/518] ext4: avoid buffer_head leak in ext4_mark_inode_used()
+Date: Tue, 15 Oct 2024 14:40:53 +0200
+Message-ID: <20241015123922.751611837@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,46 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawei Ye <jiawei.ye@foxmail.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 2749749afa071f8a0e405605de9da615e771a7ce ]
+[ Upstream commit 5e5b2a56c57def1b41efd49596621504d7bcc61c ]
 
-In the `smk_set_cipso` function, the `skp->smk_netlabel.attr.mls.cat`
-field is directly assigned to a new value without using the appropriate
-RCU pointer assignment functions. According to RCU usage rules, this is
-illegal and can lead to unpredictable behavior, including data
-inconsistencies and impossible-to-diagnose memory corruption issues.
+Release inode_bitmap_bh from ext4_read_inode_bitmap() in
+ext4_mark_inode_used() to avoid buffer_head leak.
+By the way, remove unneeded goto for invalid ino when inode_bitmap_bh
+is NULL.
 
-This possible bug was identified using a static analysis tool developed
-by myself, specifically designed to detect RCU-related issues.
-
-To address this, the assignment is now done using rcu_assign_pointer(),
-which ensures that the pointer assignment is done safely, with the
-necessary memory barriers and synchronization. This change prevents
-potential RCU dereference issues by ensuring that the `cat` field is
-safely updated while still adhering to RCU's requirements.
-
-Fixes: 0817534ff9ea ("smackfs: Fix use-after-free in netlbl_catmap_walk()")
-Signed-off-by: Jiawei Ye <jiawei.ye@foxmail.com>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Link: https://patch.msgid.link/20240820132234.2759926-2-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smackfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/ialloc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
-index 8403c91a6b297..44f0b5148a5b9 100644
---- a/security/smack/smackfs.c
-+++ b/security/smack/smackfs.c
-@@ -920,7 +920,7 @@ static ssize_t smk_set_cipso(struct file *file, const char __user *buf,
- 	rc = smk_netlbl_mls(maplevel, mapcatset, &ncats, SMK_CIPSOLEN);
- 	if (rc >= 0) {
- 		old_cat = skp->smk_netlabel.attr.mls.cat;
--		skp->smk_netlabel.attr.mls.cat = ncats.attr.mls.cat;
-+		rcu_assign_pointer(skp->smk_netlabel.attr.mls.cat, ncats.attr.mls.cat);
- 		skp->smk_netlabel.attr.mls.lvl = ncats.attr.mls.lvl;
- 		synchronize_rcu();
- 		netlbl_catmap_free(old_cat);
+diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
+index d178543ca13f1..34def2892b838 100644
+--- a/fs/ext4/ialloc.c
++++ b/fs/ext4/ialloc.c
+@@ -754,10 +754,10 @@ int ext4_mark_inode_used(struct super_block *sb, int ino)
+ 	struct ext4_group_desc *gdp;
+ 	ext4_group_t group;
+ 	int bit;
+-	int err = -EFSCORRUPTED;
++	int err;
+ 
+ 	if (ino < EXT4_FIRST_INO(sb) || ino > max_ino)
+-		goto out;
++		return -EFSCORRUPTED;
+ 
+ 	group = (ino - 1) / EXT4_INODES_PER_GROUP(sb);
+ 	bit = (ino - 1) % EXT4_INODES_PER_GROUP(sb);
+@@ -860,6 +860,7 @@ int ext4_mark_inode_used(struct super_block *sb, int ino)
+ 	err = ext4_handle_dirty_metadata(NULL, NULL, group_desc_bh);
+ 	sync_dirty_buffer(group_desc_bh);
+ out:
++	brelse(inode_bitmap_bh);
+ 	return err;
+ }
+ 
 -- 
 2.43.0
 
