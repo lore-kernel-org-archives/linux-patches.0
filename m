@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D12B1AF0AB;
-	Tue, 15 Oct 2024 13:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EE71AF0A9;
+	Tue, 15 Oct 2024 13:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997660; cv=none; b=G+u1LdsavJadn/7e3bGe4GD1KUZdW9bVsvfeRbdUpoQeVN5MdjL+gvvjhmI50AKXtoXOs++m/vv+pZrpXf5G8pYTR0fwVb/iOuxJxGCF51Zik5BMunetBxJZla6SHpAU8kJy57XpghOnAOS2tq1ubhtFAB37asCqTZRRw1gGOQE=
+	t=1728997663; cv=none; b=tkF1FhgjwiNfyjGpsHd2yTlzGdPOVqrvFFAvDvMsyeQr+yjwsD3d08n04S5ftUhJ4v0wuQkhwLahFf0uqm3ixFNGMlU8vyGgyCqVtuVBq9ssb75VWCYUK1XiF9qcMURJuXArTagD1tP2q23qT902hcwyXyfryzeabXdrswFxweQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997660; c=relaxed/simple;
-	bh=TI6DfyT3uSrSRD5wpmGNX3K5IaREmPl/Zfo0vLdmhRg=;
+	s=arc-20240116; t=1728997663; c=relaxed/simple;
+	bh=HUDusPxXCqPZmPUbh/HNm+EH1i3NwKH5+9W/Te3gKtw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MPh6slyT1kEQ8RpQDoRUFIzyE4Xns0S1Czm/R1cv75b+z8dQb+WJZgGOonqqj+MenVq3TZ5RJfULCUnbPEMaFOFWKgkLr9n15YWRg5A2SD8dFFor05IHqeukDBnE2sfnC0TeJ6XWO+kwBM0DhAbPi/tQT6vCFF9LR/yjfTM6Z1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mCuvNgKj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EwGjSwVWHxp1wJBUoBfUY/tZikeVbbFBmiOPywkhWDfJIOEoqG16ndhks0YmAO2xnQ4c42Hbjn4OzMulx+r1nQ5cjsWZz/pQ83rDTkPa4/1G1DWllZTUK3JKpniVR+zwk2bOU8fKtsZDV0GI87gVnohZi6mIsr2UIADLUXSJvOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ilqWTA0y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCuvNgKj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6583C4CEC6;
-	Tue, 15 Oct 2024 13:07:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ilqWTA0y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F52C4CEC6;
+	Tue, 15 Oct 2024 13:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997660;
-	bh=TI6DfyT3uSrSRD5wpmGNX3K5IaREmPl/Zfo0vLdmhRg=;
+	s=korg; t=1728997663;
+	bh=HUDusPxXCqPZmPUbh/HNm+EH1i3NwKH5+9W/Te3gKtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mCuvNgKjF4vaTrhPmotcwAGnk+qQnxpwemlVz2uHlQJb8jcJ8MDPkHHJl7VcdQUMN
-	 1BlWENF2MqwunUZg0MpWLT79tEnC/kWFcMe8ZiuezP+T7EbnCm+HR7sKLhwHWGOPWA
-	 /Z01gtANYKLYIL33jnhXw/5sjHNdlBp3PeFJtk7M=
+	b=ilqWTA0yPUls2gxKZFmOzSi9Gn4bivVxnIXwflhGWKnLgRCQ9g20Hkn9IbC5BdRS3
+	 11kGPE7fS1NpEGLoGsWtZ3XXXr0/HYC0O5wDIciqugnb6u4bnYtR549TfY3myOO9hn
+	 E0M4ElVVtaohkI4+6JHhhdxf8eoFMw8TMP7iZd28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gafert <christian.gafert@rohde-schwarz.com>,
-	Max Ferger <max.ferger@rohde-schwarz.com>,
-	Van Giang Nguyen <vangiang.nguyen@rohde-schwarz.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.10 248/518] padata: use integer wrap around to prevent deadlock on seq_nr overflow
-Date: Tue, 15 Oct 2024 14:42:32 +0200
-Message-ID: <20241015123926.563657551@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Rob Herring <robh@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 249/518] PCI: xilinx-nwl: Use irq_data_get_irq_chip_data()
+Date: Tue, 15 Oct 2024 14:42:33 +0200
+Message-ID: <20241015123926.601305850@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,46 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: VanGiang Nguyen <vangiang.nguyen@rohde-schwarz.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 9a22b2812393d93d84358a760c347c21939029a6 upstream.
+[ Upstream commit e56427068a8d796bb7b8e297f2b6e947380e383f ]
 
-When submitting more than 2^32 padata objects to padata_do_serial, the
-current sorting implementation incorrectly sorts padata objects with
-overflowed seq_nr, causing them to be placed before existing objects in
-the reorder list. This leads to a deadlock in the serialization process
-as padata_find_next cannot match padata->seq_nr and pd->processed
-because the padata instance with overflowed seq_nr will be selected
-next.
+Going through a full irq descriptor lookup instead of just using the proper
+helper function which provides direct access is suboptimal.
 
-To fix this, we use an unsigned integer wrap around to correctly sort
-padata objects in scenarios with integer overflow.
+In fact it _is_ wrong because the chip callback needs to get the chip data
+which is relevant for the chip while using the irq descriptor variant
+returns the irq chip data of the top level chip of a hierarchy. It does not
+matter in this case because the chip is the top level chip, but that
+doesn't make it more correct.
 
-Fixes: bfde23ce200e ("padata: unbind parallel jobs from specific CPUs")
-Cc: <stable@vger.kernel.org>
-Co-developed-by: Christian Gafert <christian.gafert@rohde-schwarz.com>
-Signed-off-by: Christian Gafert <christian.gafert@rohde-schwarz.com>
-Co-developed-by: Max Ferger <max.ferger@rohde-schwarz.com>
-Signed-off-by: Max Ferger <max.ferger@rohde-schwarz.com>
-Signed-off-by: Van Giang Nguyen <vangiang.nguyen@rohde-schwarz.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lore.kernel.org/r/20201210194044.364211860@linutronix.de
+Stable-dep-of: 0199d2f2bd8c ("PCI: xilinx-nwl: Fix off-by-one in INTx IRQ handler")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/controller/pcie-xilinx-nwl.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -409,7 +409,8 @@ void padata_do_serial(struct padata_priv
- 	/* Sort in ascending order of sequence number. */
- 	list_for_each_prev(pos, &reorder->list) {
- 		cur = list_entry(pos, struct padata_priv, list);
--		if (cur->seq_nr < padata->seq_nr)
-+		/* Compare by difference to consider integer wrap around */
-+		if ((signed int)(cur->seq_nr - padata->seq_nr) < 0)
- 			break;
- 	}
- 	list_add(&padata->list, pos);
+diff --git a/drivers/pci/controller/pcie-xilinx-nwl.c b/drivers/pci/controller/pcie-xilinx-nwl.c
+index 396fa1ffe698c..c710f9c298786 100644
+--- a/drivers/pci/controller/pcie-xilinx-nwl.c
++++ b/drivers/pci/controller/pcie-xilinx-nwl.c
+@@ -381,13 +381,11 @@ static void nwl_pcie_msi_handler_low(struct irq_desc *desc)
+ 
+ static void nwl_mask_leg_irq(struct irq_data *data)
+ {
+-	struct irq_desc *desc = irq_to_desc(data->irq);
+-	struct nwl_pcie *pcie;
++	struct nwl_pcie *pcie = irq_data_get_irq_chip_data(data);
+ 	unsigned long flags;
+ 	u32 mask;
+ 	u32 val;
+ 
+-	pcie = irq_desc_get_chip_data(desc);
+ 	mask = 1 << (data->hwirq - 1);
+ 	raw_spin_lock_irqsave(&pcie->leg_mask_lock, flags);
+ 	val = nwl_bridge_readl(pcie, MSGF_LEG_MASK);
+@@ -397,13 +395,11 @@ static void nwl_mask_leg_irq(struct irq_data *data)
+ 
+ static void nwl_unmask_leg_irq(struct irq_data *data)
+ {
+-	struct irq_desc *desc = irq_to_desc(data->irq);
+-	struct nwl_pcie *pcie;
++	struct nwl_pcie *pcie = irq_data_get_irq_chip_data(data);
+ 	unsigned long flags;
+ 	u32 mask;
+ 	u32 val;
+ 
+-	pcie = irq_desc_get_chip_data(desc);
+ 	mask = 1 << (data->hwirq - 1);
+ 	raw_spin_lock_irqsave(&pcie->leg_mask_lock, flags);
+ 	val = nwl_bridge_readl(pcie, MSGF_LEG_MASK);
+-- 
+2.43.0
+
 
 
