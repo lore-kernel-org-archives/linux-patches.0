@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F6E1E1A35;
-	Tue, 15 Oct 2024 12:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A131D4154;
+	Tue, 15 Oct 2024 12:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994004; cv=none; b=jQvZKoqhwSTOPBGmR5CHCeHRJXI2m9f9QcMtHRP/XFyO5L0mP/IrbS4SyWuTYSooksFPFUbqhdpd1w90nI2OWMmb0yswcfo7WYtQGwpAMXEXbZhXK0OaZpKsA9uRE2/uLRRji3bdlosXGam2qMC2oZmokMixnoJBgu44xoYGnD8=
+	t=1728994007; cv=none; b=KzvZbSm75q0wX+lMQc6+JYwD3yqQIdM+nsPwTU3ysU1LEXZSOS+v5hcrrwPOpB6YH9rHmPvfiOi4iWHxGi5otqIyIvCR4Rx0zCjFJxURA+bXBun5W/LE9/Z6SJfjQjlHNgHRkEIgQLwN25TeVQSX0Lmx5DQQK/0tXn7Q3UIDI+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994004; c=relaxed/simple;
-	bh=j8hgGJ+VpbjwKHWOgJWI3DdEqH6Z5lu5WjrHy9uGBKc=;
+	s=arc-20240116; t=1728994007; c=relaxed/simple;
+	bh=RMc9hGRG/VHKqsU8JZhxHagkNbvKIN7sp6Ts+VoUATc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ALwkibw8tnxPikHtlma6gexqJ1MMs5CngPcqZYs6ENq76TN41GcLeBzxHbGAt373v0IWlyH1s6X6o/gvx1YloKhlBFVi/w03Lex/xntdMN3ZzhKpruJs9JG6MmNbEeAgi4TgW/S7xxEPdtGWAZIiux54VEEQP1ifXAmJdz/zcZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btwbMe6m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=byN8z3xMd3BMe/PTbstLsX50+kLbuaoOt3vAGmI0S33a7ebQrEkyK2cAWOmi4VtFwhzYIZRRJRHq/0AyK12oDdCV4yg6Xm17IpQUE6XA1bC6YjWQo9qc5yFEp9A/3C+oZ8Z4CFQr4oxLFIPPoKwlf2L4yexTy7KVa2CZLf6i6Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4FLTwBs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btwbMe6m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37336C4CEC6;
-	Tue, 15 Oct 2024 12:06:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4FLTwBs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10022C4CEC6;
+	Tue, 15 Oct 2024 12:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994004;
-	bh=j8hgGJ+VpbjwKHWOgJWI3DdEqH6Z5lu5WjrHy9uGBKc=;
+	s=korg; t=1728994007;
+	bh=RMc9hGRG/VHKqsU8JZhxHagkNbvKIN7sp6Ts+VoUATc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=btwbMe6mjL8uIlvbpsYHZwawItwspX53FC3qDm2z4ddGDtWNf51HEjsPOGl75xSa9
-	 w0+tnOqPknvnh7ivt26CqjAK6w3kjuVJmzyEjoaqWmFzOmo5S84IuXC6bzDM48VitZ
-	 uII5ciw3ST9G+zfj0PIiGe3QNoxUonoMbldpBfwc=
+	b=v4FLTwBsv97HTC17zFUHVUZ61qKL3dEd/nqB5qiHTEuKG/w5aybbokBzR+Mb34h10
+	 IBXgMiPqjNT+NeCSK2bXr+TiT9OfLEZtn4gDV0e3LFNaj1h9j5v4Ne9S7buyefE5GA
+	 i3sPv9ApCfY8gfLXLpTW/7e7B3KUEy3/WJuTYlvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 578/691] ACPI: battery: Fix possible crash when unregistering a battery hook
-Date: Tue, 15 Oct 2024 13:28:46 +0200
-Message-ID: <20241015112503.282076935@linuxfoundation.org>
+Subject: [PATCH 5.15 552/691] i2c: smbus: Use device_*() functions instead of of_*()
+Date: Tue, 15 Oct 2024 13:28:20 +0200
+Message-ID: <20241015112502.250131313@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,67 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Akhil R <akhilrajeev@nvidia.com>
 
-[ Upstream commit 76959aff14a0012ad6b984ec7686d163deccdc16 ]
+[ Upstream commit a263a84088f689bf0c1552a510b25d0bcc45fcae ]
 
-When a battery hook returns an error when adding a new battery, then
-the battery hook is automatically unregistered.
-However the battery hook provider cannot know that, so it will later
-call battery_hook_unregister() on the already unregistered battery
-hook, resulting in a crash.
+Change of_*() functions to device_*() for firmware agnostic usage.
+This allows to have the smbus_alert interrupt without any changes
+in the controller drivers using the ACPI table.
 
-Fix this by using the list head to mark already unregistered battery
-hooks as already being unregistered so that they can be ignored by
-battery_hook_unregister().
-
-Fixes: fa93854f7a7e ("battery: Add the battery hooking API")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20241001212835.341788-3-W_Armin@gmx.de
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: 8d3cefaf6592 ("i2c: core: Lock address during client device instantiation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/battery.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/i2c/i2c-core-base.c  |  2 +-
+ drivers/i2c/i2c-core-smbus.c | 11 ++++++-----
+ drivers/i2c/i2c-smbus.c      |  5 +++--
+ include/linux/i2c-smbus.h    |  6 +++---
+ 4 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index 6a8580427e1a9..8bb0f4d06adc0 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -712,7 +712,7 @@ static void battery_hook_unregister_unlocked(struct acpi_battery_hook *hook)
- 	list_for_each_entry(battery, &acpi_battery_list, list) {
- 		hook->remove_battery(battery->bat);
+diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
+index b163ef91aabab..c8cb6f44a0f88 100644
+--- a/drivers/i2c/i2c-core-base.c
++++ b/drivers/i2c/i2c-core-base.c
+@@ -1526,7 +1526,7 @@ static int i2c_register_adapter(struct i2c_adapter *adap)
+ 		goto out_list;
  	}
--	list_del(&hook->list);
-+	list_del_init(&hook->list);
  
- 	pr_info("extension unregistered: %s\n", hook->name);
+-	res = of_i2c_setup_smbus_alert(adap);
++	res = i2c_setup_smbus_alert(adap);
+ 	if (res)
+ 		goto out_reg;
+ 
+diff --git a/drivers/i2c/i2c-core-smbus.c b/drivers/i2c/i2c-core-smbus.c
+index e5b2d1465e7ed..304c2c8fee68e 100644
+--- a/drivers/i2c/i2c-core-smbus.c
++++ b/drivers/i2c/i2c-core-smbus.c
+@@ -14,6 +14,7 @@
+ #include <linux/err.h>
+ #include <linux/i2c.h>
+ #include <linux/i2c-smbus.h>
++#include <linux/property.h>
+ #include <linux/slab.h>
+ 
+ #include "i2c-core.h"
+@@ -701,13 +702,13 @@ struct i2c_client *i2c_new_smbus_alert_device(struct i2c_adapter *adapter,
  }
-@@ -720,7 +720,14 @@ static void battery_hook_unregister_unlocked(struct acpi_battery_hook *hook)
- void battery_hook_unregister(struct acpi_battery_hook *hook)
+ EXPORT_SYMBOL_GPL(i2c_new_smbus_alert_device);
+ 
+-#if IS_ENABLED(CONFIG_I2C_SMBUS) && IS_ENABLED(CONFIG_OF)
+-int of_i2c_setup_smbus_alert(struct i2c_adapter *adapter)
++#if IS_ENABLED(CONFIG_I2C_SMBUS)
++int i2c_setup_smbus_alert(struct i2c_adapter *adapter)
  {
- 	mutex_lock(&hook_mutex);
--	battery_hook_unregister_unlocked(hook);
-+	/*
-+	 * Ignore already unregistered battery hooks. This might happen
-+	 * if a battery hook was previously unloaded due to an error when
-+	 * adding a new battery.
-+	 */
-+	if (!list_empty(&hook->list))
-+		battery_hook_unregister_unlocked(hook);
-+
- 	mutex_unlock(&hook_mutex);
- }
- EXPORT_SYMBOL_GPL(battery_hook_unregister);
-@@ -730,7 +737,6 @@ void battery_hook_register(struct acpi_battery_hook *hook)
- 	struct acpi_battery *battery;
+ 	int irq;
  
- 	mutex_lock(&hook_mutex);
--	INIT_LIST_HEAD(&hook->list);
- 	list_add(&hook->list, &battery_hook_list);
- 	/*
- 	 * Now that the driver is registered, we need
+-	irq = of_property_match_string(adapter->dev.of_node, "interrupt-names",
+-				       "smbus_alert");
++	irq = device_property_match_string(adapter->dev.parent, "interrupt-names",
++					   "smbus_alert");
+ 	if (irq == -EINVAL || irq == -ENODATA)
+ 		return 0;
+ 	else if (irq < 0)
+@@ -715,5 +716,5 @@ int of_i2c_setup_smbus_alert(struct i2c_adapter *adapter)
+ 
+ 	return PTR_ERR_OR_ZERO(i2c_new_smbus_alert_device(adapter, NULL));
+ }
+-EXPORT_SYMBOL_GPL(of_i2c_setup_smbus_alert);
++EXPORT_SYMBOL_GPL(i2c_setup_smbus_alert);
+ #endif
+diff --git a/drivers/i2c/i2c-smbus.c b/drivers/i2c/i2c-smbus.c
+index 44582cf29e162..cacdadb9415c5 100644
+--- a/drivers/i2c/i2c-smbus.c
++++ b/drivers/i2c/i2c-smbus.c
+@@ -13,7 +13,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+-#include <linux/of_irq.h>
++#include <linux/property.h>
+ #include <linux/slab.h>
+ #include <linux/workqueue.h>
+ 
+@@ -178,7 +178,8 @@ static int smbalert_probe(struct i2c_client *ara,
+ 	if (setup) {
+ 		irq = setup->irq;
+ 	} else {
+-		irq = of_irq_get_byname(adapter->dev.of_node, "smbus_alert");
++		irq = fwnode_irq_get_byname(dev_fwnode(adapter->dev.parent),
++					    "smbus_alert");
+ 		if (irq <= 0)
+ 			return irq;
+ 	}
+diff --git a/include/linux/i2c-smbus.h b/include/linux/i2c-smbus.h
+index 1ef421818d3a8..95cf902e0bdae 100644
+--- a/include/linux/i2c-smbus.h
++++ b/include/linux/i2c-smbus.h
+@@ -30,10 +30,10 @@ struct i2c_client *i2c_new_smbus_alert_device(struct i2c_adapter *adapter,
+ 					      struct i2c_smbus_alert_setup *setup);
+ int i2c_handle_smbus_alert(struct i2c_client *ara);
+ 
+-#if IS_ENABLED(CONFIG_I2C_SMBUS) && IS_ENABLED(CONFIG_OF)
+-int of_i2c_setup_smbus_alert(struct i2c_adapter *adap);
++#if IS_ENABLED(CONFIG_I2C_SMBUS)
++int i2c_setup_smbus_alert(struct i2c_adapter *adap);
+ #else
+-static inline int of_i2c_setup_smbus_alert(struct i2c_adapter *adap)
++static inline int i2c_setup_smbus_alert(struct i2c_adapter *adap)
+ {
+ 	return 0;
+ }
 -- 
 2.43.0
 
