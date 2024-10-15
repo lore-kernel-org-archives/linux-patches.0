@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E5F1D89F5;
-	Tue, 15 Oct 2024 11:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F231EBA0A;
+	Tue, 15 Oct 2024 11:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992849; cv=none; b=D8SV3pmfed5jeiourmNRGy+t5VNT+xyh5yGEzL2IQaKEQssO8DmzzBhEqpnVVHAg6Pl5DDlWR7FYR2xv2uYoLYRbeNojHADjBojOfiyFYBDZIPu5aBhpVtcvOKkMcSXpZmis1jXLzl5inuRtDaTU6KcX08We9k9+U2muU5Yi5j0=
+	t=1728992852; cv=none; b=b4rbTEFHILA9I+iMTqYS2t/LoGD73J7c0Pr9HwCvlGdBhxtVE0nQYrwHzSYDmI2ww/p0KeQf0YHn/XzlIXuox472mJM5VbRbnv0FMdwZPZl66hUYLIfkwx9oqDsFy340UfVoPM8OTt16DueCSsuCIFmt0evT/6h1e443ul+MauU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992849; c=relaxed/simple;
-	bh=c1coEXTzqrljKzWV+NnLn1Rg3hrDuSyZ4zleLP1wxnM=;
+	s=arc-20240116; t=1728992852; c=relaxed/simple;
+	bh=RUuew2MTY3Ipm4utfrC5EyNi3oB3fpNdIq8Ag0PwboI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XlF4x3sb7ex2y84NCR+A2rvLo+XBLzL8c0MFAAWQY5ptJeSD9yXrLOMmzzaz90nXC9PG/0FgQ/WrXWP0syIqQy68pJoR7JHCJGBze4jMF5cyexS/T6QeN0Q+tz74miNnRzB20WhimoRqS7ZulJ73F1n1ffpuea7etsDWMv9lpis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKMygY3j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mTM/57GBF5pRn8RxWa1toQsPX9fNpGAS3tUmA/ummZ7pbv5qdW/poaOTMpjl1cq6DRdIXewuONw22dQCFzCnzD//A89GFO6LZuY7PHpYIkaO2fuWyl9A8YJquQGLyrtEgeE8OvfQKPCyVpIDXjjvkLCbJyz+yBt/3kLhz32EmJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+xWCivF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKMygY3j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6147CC4CEC6;
-	Tue, 15 Oct 2024 11:47:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+xWCivF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90349C4CECF;
+	Tue, 15 Oct 2024 11:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992848;
-	bh=c1coEXTzqrljKzWV+NnLn1Rg3hrDuSyZ4zleLP1wxnM=;
+	s=korg; t=1728992852;
+	bh=RUuew2MTY3Ipm4utfrC5EyNi3oB3fpNdIq8Ag0PwboI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qKMygY3jdsu5jfv/CYKvW1NeFl2ZLA/uWTkZSUhGXPjHl9h0TyTHv0rTZfoFPYhkT
-	 ZOqQhslW9tm4nILEYzOt++WSN8MQLzIk2pUoQzLNy9KLJsOehFi6URjywln0e9OMUk
-	 swzaZHqnQmrsQinVWJAnJ5KWz5tpaxSR4QpXIEb0=
+	b=f+xWCivFPv/mThMp7tHJZtpQ4GtxjLTkSG/wcETauZR6k1c04X3Bk0WyZO6X0nwtX
+	 Nqqi0JdO7RFdH69Se+CJ0aoseLE8r56plUXQ9bg6CIrEcuYzy4zwkYLes76YXVHGeQ
+	 1u4liNncipYmBNnlSP172s5G4S5cbD6Z5FXtBVtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 236/691] RDMA/iwcm: Fix WARNING:at_kernel/workqueue.c:#check_flush_dependency
-Date: Tue, 15 Oct 2024 13:23:04 +0200
-Message-ID: <20241015112449.724091942@linuxfoundation.org>
+Subject: [PATCH 5.15 237/691] pinctrl: single: fix missing error code in pcs_probe()
+Date: Tue, 15 Oct 2024 13:23:05 +0200
+Message-ID: <20241015112449.764054282@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,81 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 86dfdd8288907f03c18b7fb462e0e232c4f98d89 ]
+[ Upstream commit cacd8cf79d7823b07619865e994a7916fcc8ae91 ]
 
-In the commit aee2424246f9 ("RDMA/iwcm: Fix a use-after-free related to
-destroying CM IDs"), the function flush_workqueue is invoked to flush the
-work queue iwcm_wq.
+If pinctrl_enable() fails in pcs_probe(), it should return the error code.
 
-But at that time, the work queue iwcm_wq was created via the function
-alloc_ordered_workqueue without the flag WQ_MEM_RECLAIM.
-
-Because the current process is trying to flush the whole iwcm_wq, if
-iwcm_wq doesn't have the flag WQ_MEM_RECLAIM, verify that the current
-process is not reclaiming memory or running on a workqueue which doesn't
-have the flag WQ_MEM_RECLAIM as that can break forward-progress guarantee
-leading to a deadlock.
-
-The call trace is as below:
-
-[  125.350876][ T1430] Call Trace:
-[  125.356281][ T1430]  <TASK>
-[ 125.361285][ T1430] ? __warn (kernel/panic.c:693)
-[ 125.367640][ T1430] ? check_flush_dependency (kernel/workqueue.c:3706 (discriminator 9))
-[ 125.375689][ T1430] ? report_bug (lib/bug.c:180 lib/bug.c:219)
-[ 125.382505][ T1430] ? handle_bug (arch/x86/kernel/traps.c:239)
-[ 125.388987][ T1430] ? exc_invalid_op (arch/x86/kernel/traps.c:260 (discriminator 1))
-[ 125.395831][ T1430] ? asm_exc_invalid_op (arch/x86/include/asm/idtentry.h:621)
-[ 125.403125][ T1430] ? check_flush_dependency (kernel/workqueue.c:3706 (discriminator 9))
-[ 125.410984][ T1430] ? check_flush_dependency (kernel/workqueue.c:3706 (discriminator 9))
-[ 125.418764][ T1430] __flush_workqueue (kernel/workqueue.c:3970)
-[ 125.426021][ T1430] ? __pfx___might_resched (kernel/sched/core.c:10151)
-[ 125.433431][ T1430] ? destroy_cm_id (drivers/infiniband/core/iwcm.c:375) iw_cm
-[ 125.441209][ T1430] ? __pfx___flush_workqueue (kernel/workqueue.c:3910)
-[ 125.473900][ T1430] ? _raw_spin_lock_irqsave (arch/x86/include/asm/atomic.h:107 include/linux/atomic/atomic-arch-fallback.h:2170 include/linux/atomic/atomic-instrumented.h:1302 include/asm-generic/qspinlock.h:111 include/linux/spinlock.h:187 include/linux/spinlock_api_smp.h:111 kernel/locking/spinlock.c:162)
-[ 125.473909][ T1430] ? __pfx__raw_spin_lock_irqsave (kernel/locking/spinlock.c:161)
-[ 125.482537][ T1430] _destroy_id (drivers/infiniband/core/cma.c:2044) rdma_cm
-[ 125.495072][ T1430] nvme_rdma_free_queue (drivers/nvme/host/rdma.c:656 drivers/nvme/host/rdma.c:650) nvme_rdma
-[ 125.505827][ T1430] nvme_rdma_reset_ctrl_work (drivers/nvme/host/rdma.c:2180) nvme_rdma
-[ 125.505831][ T1430] process_one_work (kernel/workqueue.c:3231)
-[ 125.515122][ T1430] worker_thread (kernel/workqueue.c:3306 kernel/workqueue.c:3393)
-[ 125.515127][ T1430] ? __pfx_worker_thread (kernel/workqueue.c:3339)
-[ 125.531837][ T1430] kthread (kernel/kthread.c:389)
-[ 125.539864][ T1430] ? __pfx_kthread (kernel/kthread.c:342)
-[ 125.550628][ T1430] ret_from_fork (arch/x86/kernel/process.c:147)
-[ 125.558840][ T1430] ? __pfx_kthread (kernel/kthread.c:342)
-[ 125.558844][ T1430] ret_from_fork_asm (arch/x86/entry/entry_64.S:257)
-[  125.566487][ T1430]  </TASK>
-[  125.566488][ T1430] ---[ end trace 0000000000000000 ]---
-
-Fixes: aee2424246f9 ("RDMA/iwcm: Fix a use-after-free related to destroying CM IDs")
-Link: https://patch.msgid.link/r/20240820113336.19860-1-yanjun.zhu@linux.dev
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202408151633.fc01893c-oliver.sang@intel.com
-Tested-by: kernel test robot <oliver.sang@intel.com>
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 8f773bfbdd42 ("pinctrl: single: fix possible memory leak when pinctrl_enable() fails")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/20240819024625.154441-1-yangyingliang@huaweicloud.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/iwcm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-single.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/iwcm.c b/drivers/infiniband/core/iwcm.c
-index 2d09d1be38f19..3e4941754b48d 100644
---- a/drivers/infiniband/core/iwcm.c
-+++ b/drivers/infiniband/core/iwcm.c
-@@ -1191,7 +1191,7 @@ static int __init iw_cm_init(void)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
+index d32d5c5e99bcd..28f3fabc72e30 100644
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -1919,7 +1919,8 @@ static int pcs_probe(struct platform_device *pdev)
  
--	iwcm_wq = alloc_ordered_workqueue("iw_cm_wq", 0);
-+	iwcm_wq = alloc_ordered_workqueue("iw_cm_wq", WQ_MEM_RECLAIM);
- 	if (!iwcm_wq)
- 		goto err_alloc;
+ 	dev_info(pcs->dev, "%i pins, size %u\n", pcs->desc.npins, pcs->size);
  
+-	if (pinctrl_enable(pcs->pctl))
++	ret = pinctrl_enable(pcs->pctl);
++	if (ret)
+ 		goto free;
+ 
+ 	return 0;
 -- 
 2.43.0
 
