@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA0A1AF0D7;
-	Tue, 15 Oct 2024 13:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186AC1AF0B1;
+	Tue, 15 Oct 2024 13:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997709; cv=none; b=FL+5fM20XR1/Ex3cs3Cx2qJ6W0LqO4NXjRIcavsCkCSTv1tqOcHHw3pRqwIKzeKsZyYdApJ/pmrMMoT+/0A2XflsyJrunX4pwo1/zDVa2Z1/rzemd04m9JmUq4OexjMAlzmuFgovcw1mpj3Tfyz6ON0aBjJXGesEZPBlZUMGeV0=
+	t=1728997712; cv=none; b=rZghQC/61Ty6iadtU1xOLBXcv/W7iQ6JCoRIL9sX35jr/tvx2a4kftE/LyHQXbvvvnyWHkfXL97d58q6un7NJfaD3radF9rOXjL25CcASsJ5NsEkOzb91GAdjrZTtbkyYxb+HMm3qP1GF8uRiJipm8kelMi9gYVPec3YNkSeJrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997709; c=relaxed/simple;
-	bh=El5HKR5glTHK8wRm76K2FsQ6IVktZeexnmuHKej2ZLU=;
+	s=arc-20240116; t=1728997712; c=relaxed/simple;
+	bh=Wv2b1rwKVwowNJfF8LveIrf4IcV8I41mR1op2ZW/MeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+DXY511sY/YW1C9bzY+VNnDBW/yrpVwWnAKSzukBWlKizC+pLZUVlXC+Loxzvsw11IKC7GR/PPrrthoE9FRsT1PO8yqQ4p3HcMuAViJZUumWabQEqjsg/lZSolvX731zTkw6mWwWXLO425CHNvIg4/IgJGe3gYGgF3aTmDW+Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5VW4QPC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J11rJqI4ROoL9bK54J78JS8IEDEbhAdv8Pb9F3y+fccr7/pk7b46aAISSOZPXdaC/XSPf9guCjNF/Bq4vD/Bb++MiyE+yUi00qkoMSn+P0OlH/p8CVtnB8N6fKPN70wyID4e7ybbZqKUShwPsiRxAJ/I+V+mxf4L2ZhBqQNLBDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7eIhZ/F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5VW4QPC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32808C4CEC6;
-	Tue, 15 Oct 2024 13:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7eIhZ/F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762EDC4CEC6;
+	Tue, 15 Oct 2024 13:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997708;
-	bh=El5HKR5glTHK8wRm76K2FsQ6IVktZeexnmuHKej2ZLU=;
+	s=korg; t=1728997711;
+	bh=Wv2b1rwKVwowNJfF8LveIrf4IcV8I41mR1op2ZW/MeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M5VW4QPCHAEgBuS22BZ2GUDKZAcnMpa0L2osDcMjyBVoopKqlTWgiEh1ofEe6FRqL
-	 H8qHNDkx7Blo1tFeRZgIbZj7cuKR+iyfuo1wy281XwFBO6dVkpsJSL1CUB3zXwF+3w
-	 JaRImclwsnFRVoFT5WhoPtCScORsF1ysSYe2B6GA=
+	b=T7eIhZ/FfEDYxOm0nAYFrySh7RqFNChkmXAVcjLvhHAw3xHeGBpBMJjud85y4nMhI
+	 UMhPiNSCdnGnUtdidXiyC79qRJ2s9lSp+Dv7TGbuqJdSUTwNqvLKZlCvtTIN9LZ9JB
+	 uQtXfqM9bVQQjKEz5dRPCMnd78Qp9QbKf4Up+xk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tommy Huang <tommy_huang@aspeedtech.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.10 262/518] i2c: aspeed: Update the stop sw state when the bus recovery occurs
-Date: Tue, 15 Oct 2024 14:42:46 +0200
-Message-ID: <20241015123927.104762431@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.10 236/518] perf/x86/intel/pt: Fix sampling synchronization
+Date: Tue, 15 Oct 2024 14:42:20 +0200
+Message-ID: <20241015123926.102344718@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -50,63 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tommy Huang <tommy_huang@aspeedtech.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 93701d3b84ac5f3ea07259d4ced405c53d757985 upstream.
+commit d92792a4b26e50b96ab734cbe203d8a4c932a7a9 upstream.
 
-When the i2c bus recovery occurs, driver will send i2c stop command
-in the scl low condition. In this case the sw state will still keep
-original situation. Under multi-master usage, i2c bus recovery will
-be called when i2c transfer timeout occurs. Update the stop command
-calling with aspeed_i2c_do_stop function to update master_state.
+pt_event_snapshot_aux() uses pt->handle_nmi to determine if tracing
+needs to be stopped, however tracing can still be going because
+pt->handle_nmi is set to zero before tracing is stopped in pt_event_stop,
+whereas pt_event_snapshot_aux() requires that tracing must be stopped in
+order to copy a sample of trace from the buffer.
 
-Fixes: f327c686d3ba ("i2c: aspeed: added driver for Aspeed I2C")
-Cc: stable@vger.kernel.org # v4.13+
-Signed-off-by: Tommy Huang <tommy_huang@aspeedtech.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Instead call pt_config_stop() always, which anyway checks config for
+RTIT_CTL_TRACEEN and does nothing if it is already clear.
+
+Note pt_event_snapshot_aux() can continue to use pt->handle_nmi to
+determine if the trace needs to be restarted afterwards.
+
+Fixes: 25e8920b301c ("perf/x86/intel/pt: Add sampling support")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20240715160712.127117-2-adrian.hunter@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-aspeed.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/x86/events/intel/pt.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -172,6 +172,13 @@ struct aspeed_i2c_bus {
+--- a/arch/x86/events/intel/pt.c
++++ b/arch/x86/events/intel/pt.c
+@@ -1586,6 +1586,7 @@ static void pt_event_stop(struct perf_ev
+ 	 * see comment in intel_pt_interrupt().
+ 	 */
+ 	WRITE_ONCE(pt->handle_nmi, 0);
++	barrier();
  
- static int aspeed_i2c_reset(struct aspeed_i2c_bus *bus);
+ 	pt_config_stop(event);
  
-+/* precondition: bus.lock has been acquired. */
-+static void aspeed_i2c_do_stop(struct aspeed_i2c_bus *bus)
-+{
-+	bus->master_state = ASPEED_I2C_MASTER_STOP;
-+	writel(ASPEED_I2CD_M_STOP_CMD, bus->base + ASPEED_I2C_CMD_REG);
-+}
-+
- static int aspeed_i2c_recover_bus(struct aspeed_i2c_bus *bus)
- {
- 	unsigned long time_left, flags;
-@@ -189,7 +196,7 @@ static int aspeed_i2c_recover_bus(struct
- 			command);
+@@ -1637,11 +1638,10 @@ static long pt_event_snapshot_aux(struct
+ 		return 0;
  
- 		reinit_completion(&bus->cmd_complete);
--		writel(ASPEED_I2CD_M_STOP_CMD, bus->base + ASPEED_I2C_CMD_REG);
-+		aspeed_i2c_do_stop(bus);
- 		spin_unlock_irqrestore(&bus->lock, flags);
- 
- 		time_left = wait_for_completion_timeout(
-@@ -386,13 +393,6 @@ static void aspeed_i2c_do_start(struct a
- }
- 
- /* precondition: bus.lock has been acquired. */
--static void aspeed_i2c_do_stop(struct aspeed_i2c_bus *bus)
--{
--	bus->master_state = ASPEED_I2C_MASTER_STOP;
--	writel(ASPEED_I2CD_M_STOP_CMD, bus->base + ASPEED_I2C_CMD_REG);
--}
+ 	/*
+-	 * Here, handle_nmi tells us if the tracing is on
++	 * There is no PT interrupt in this mode, so stop the trace and it will
++	 * remain stopped while the buffer is copied.
+ 	 */
+-	if (READ_ONCE(pt->handle_nmi))
+-		pt_config_stop(event);
 -
--/* precondition: bus.lock has been acquired. */
- static void aspeed_i2c_next_msg_or_stop(struct aspeed_i2c_bus *bus)
- {
- 	if (bus->msgs_index + 1 < bus->msgs_count) {
++	pt_config_stop(event);
+ 	pt_read_offset(buf);
+ 	pt_update_head(pt);
+ 
+@@ -1653,11 +1653,10 @@ static long pt_event_snapshot_aux(struct
+ 	ret = perf_output_copy_aux(&pt->handle, handle, from, to);
+ 
+ 	/*
+-	 * If the tracing was on when we turned up, restart it.
+-	 * Compiler barrier not needed as we couldn't have been
+-	 * preempted by anything that touches pt->handle_nmi.
++	 * Here, handle_nmi tells us if the tracing was on.
++	 * If the tracing was on, restart it.
+ 	 */
+-	if (pt->handle_nmi)
++	if (READ_ONCE(pt->handle_nmi))
+ 		pt_config_start(event);
+ 
+ 	return ret;
 
 
