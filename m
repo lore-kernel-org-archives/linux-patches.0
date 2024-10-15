@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D101E6321;
-	Tue, 15 Oct 2024 11:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABA61E3DF3;
+	Tue, 15 Oct 2024 11:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992532; cv=none; b=pwJQt4wcA9YYcz5MrlIWTnCdPq88zXywkWEsvjMXIpx5rH2ugYvK/uf70Z8YPibsJxLLVMintrHlAMLSbbDsQ2/eT6gOQaONqTA+d+bqUIcADmQrXgaGXzqtON2nGoMuZDvu67bBsXjAhLFpKJLDJZS+FeW9CohsHiiONyCM/tE=
+	t=1728992535; cv=none; b=NainJ7SOIfWSgBrP2CgT4OpQGwkr6F4YCiSxoVDoYszy5YQNMD2QnfZon/5XaloSQqx6MUDObvg2D2TCqtNmD//tjMlUKc6LqgkfEHmKfjza9VJj9LIGYkDNAphM0y1MxWAsQNTxQZx5NW5jyDbG2O9TStsnWvSZYv2Bvfl/d4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992532; c=relaxed/simple;
-	bh=9lz+PdWwhPs4lsDLdONYzjKx3PmVoeQMjS1PZ7iy5wA=;
+	s=arc-20240116; t=1728992535; c=relaxed/simple;
+	bh=YZ4g3jD/CpH7oKapwC6bPtImPCrgdg2fjGbeogrzCeY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UUGfnGhaHpnYrjgGURur4Ni6noCHjRoUPy03c3IeIqinCcN07QgkPIGOuHeRxDU0zHvGneeiCbjJCBDilEXx1tr8+qloJIpZVijY7hSt576oL1b+RKOJzth4jhM3kkqhl9lmAoyhHiOSmGHuljLyU7qpeVPvT8yUjZ1mXvZBY44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGScBMON; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I/xUEUkFSAaO8b4DiAzAoerje0K/O5l6L7COY7IBq+CdPMIhz5T2cTRXQZo1DPo7EJ5XiXAg1nhFmflu8tR3FcCuz5rylDrq6lNYEC/NTl4/t0LLoYossEMiF9nb8G4X9DlkMc3LLvnoFq2z4Bj3nPlHonA2yj8MqSmRNbzn71o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AO2qVPCZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGScBMON"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10ADC4CEC6;
-	Tue, 15 Oct 2024 11:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AO2qVPCZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326EFC4CECE;
+	Tue, 15 Oct 2024 11:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992532;
-	bh=9lz+PdWwhPs4lsDLdONYzjKx3PmVoeQMjS1PZ7iy5wA=;
+	s=korg; t=1728992535;
+	bh=YZ4g3jD/CpH7oKapwC6bPtImPCrgdg2fjGbeogrzCeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UGScBMOND4OOt1eUaaKnStDS54ASeq6n1bnnxVKKcMg1bIBfFFy1reFp4vudtZ0ME
-	 j29eSdwiRSrLKAvTf6quwiVxJnl3LLHTHb2xf7p6z3TFBgCL/rvsrcz1w4U3XX+oY1
-	 1HFXl59qs6ogx3rgXz1L1IOmAGF2c8t//4nIr85M=
+	b=AO2qVPCZ4PJZtrzuD5mIiRpeKf3o6EpOUIpn5Nkb0ZCcpMACk1YUIaRlogJVhtREU
+	 GKwopK1ukRDiksKTX8hH97ibm/MdFgKBJaGCTHE8MYy3pCJ0zCu0QJvGFE5S6YRFoo
+	 l/szzi0y0qUEcwqeqdeqii/hzgttlrZMjJ3+jwhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Dahl <ada@thorsis.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 142/691] ARM: dts: microchip: sam9x60: Fix rtc/rtt clocks
-Date: Tue, 15 Oct 2024 13:21:30 +0200
-Message-ID: <20241015112445.990084235@linuxfoundation.org>
+Subject: [PATCH 5.15 113/691] netfilter: nf_tables: reject expiration higher than timeout
+Date: Tue, 15 Oct 2024 13:21:01 +0200
+Message-ID: <20241015112444.845814100@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,52 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Dahl <ada@thorsis.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit d355c895fa4ddd8bec15569eee540baeed7df8c5 ]
+[ Upstream commit c0f38a8c60174368aed1d0f9965d733195f15033 ]
 
-The RTC and RTT peripherals use the timing domain slow clock (TD_SLCK),
-sourced from the 32.768 kHz crystal oscillator or slow rc oscillator.
+Report ERANGE to userspace if user specifies an expiration larger than
+the timeout.
 
-The previously used Monitoring domain slow clock (MD_SLCK) is sourced
-from an internal RC oscillator which is most probably not precise enough
-for real time clock purposes.
-
-Fixes: 1e5f532c2737 ("ARM: dts: at91: sam9x60: add device tree for soc and board")
-Fixes: 5f6b33f46346 ("ARM: dts: sam9x60: add rtt")
-Signed-off-by: Alexander Dahl <ada@thorsis.com>
-Link: https://lore.kernel.org/r/20240821055136.6858-1-ada@thorsis.com
-[claudiu.beznea: removed () around the last commit description paragraph,
- removed " in front of "timing domain slow clock", described that
- TD_SLCK can also be sourced from slow rc oscillator]
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Fixes: 8e1102d5a159 ("netfilter: nf_tables: support timeouts larger than 23 days")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/sam9x60.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_tables_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/boot/dts/sam9x60.dtsi b/arch/arm/boot/dts/sam9x60.dtsi
-index e1e0dec8cc1f2..5e569cf1cccfc 100644
---- a/arch/arm/boot/dts/sam9x60.dtsi
-+++ b/arch/arm/boot/dts/sam9x60.dtsi
-@@ -692,7 +692,7 @@ rtt: rtt@fffffe20 {
- 				compatible = "microchip,sam9x60-rtt", "atmel,at91sam9260-rtt";
- 				reg = <0xfffffe20 0x20>;
- 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
--				clocks = <&clk32k 0>;
-+				clocks = <&clk32k 1>;
- 			};
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 300926b56572d..dff7e507d03a5 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6302,6 +6302,9 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 					    &expiration);
+ 		if (err)
+ 			return err;
++
++		if (expiration > timeout)
++			return -ERANGE;
+ 	}
  
- 			pit: timer@fffffe40 {
-@@ -718,7 +718,7 @@ rtc: rtc@fffffea8 {
- 				compatible = "microchip,sam9x60-rtc", "atmel,at91sam9x5-rtc";
- 				reg = <0xfffffea8 0x100>;
- 				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
--				clocks = <&clk32k 0>;
-+				clocks = <&clk32k 1>;
- 			};
- 
- 			watchdog: watchdog@ffffff80 {
+ 	if (nla[NFTA_SET_ELEM_EXPR]) {
 -- 
 2.43.0
 
