@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE3A146588;
-	Tue, 15 Oct 2024 11:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B2C1D4154;
+	Tue, 15 Oct 2024 11:44:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992644; cv=none; b=o0TxfCRrMOV1avI6P+w4vsMgYPEj+4uTMupb07OfNzXgV/AOjZCPdr9wrGIzCpHLqtGFqmxSGZDEEVSl1QM8QwEzpu4HhT1i6Vu9uJGbnQ3Rsk2+6mlK4U24lYFaYVkyGugIuQ61bQNbLYS5/PAhhIQfI93rp5tLf4gtA4FEIa4=
+	t=1728992647; cv=none; b=XFN3Rq7ugpRCUDgA1HpbIOeGq28d9iocWlEvJh37tWS+hJtVL6rfxO3LVIv+aIoxz0BuJXqWPgGWHHEpz9EBdvATRMgEXqGE0xXW+MN4KBOyZMOOQu4Z2fFZF0bY9heQzHGCf/KNwzT7GxN8LvQRaz1O9lT2NDLanRcmm3u9g8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992644; c=relaxed/simple;
-	bh=CAC6RtdVWzA77LjBlgRdmzOFNDTvFX4JBNmIywh5Ki8=;
+	s=arc-20240116; t=1728992647; c=relaxed/simple;
+	bh=WgV/782MN6SkKHagtdqycz48QfYS+70b/+9IPBc6tcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rPz7xvzC1dw6nWWFquegt7GsskWGboOAr32w1PmskSuBjiVgXJNQQ442uqTB3eo6k2amlAkIfrlIoz3GFMRD0WG2hgXb/6A9T/xixA0aHXgs8Y3W4CaqH9J3cATV/XPU2cPyykDL9rg6X9OCVFTR8MJoHKlMmGXbvWT4UIlnDw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpSdqD87; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hTCfM3+21i7k/FG3HOkvzySFL8O1oduQkJUvUY8CUGo++aPN8UoNAtvffgaB7lf/A5n7ja1S/x3b04CJ4ZLjKaQZ9k0MF3vn41UnUmKRk26uyToqNjEYfy/sifPa7O9UbI3iMgSfC5fpXmeHhcaK8CRPCywTV3hiiemoh5/EeAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRGO/52h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpSdqD87"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F6CC4CEC6;
-	Tue, 15 Oct 2024 11:44:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRGO/52h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0621DC4CEC6;
+	Tue, 15 Oct 2024 11:44:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992644;
-	bh=CAC6RtdVWzA77LjBlgRdmzOFNDTvFX4JBNmIywh5Ki8=;
+	s=korg; t=1728992647;
+	bh=WgV/782MN6SkKHagtdqycz48QfYS+70b/+9IPBc6tcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpSdqD87FGfFy13pLdmEwZdTJEKqacHEcq8N+Bnk4+A7zsSqvm5rOJMNAW7gQ6OjB
-	 onlHEESfJ+3Iu1Eupl0j7/mkR8QlE8sNsoHLlObt6uiuTrMSFPXnAxDOKOHRjdEgwR
-	 T0HfQROt0JMyjRr5lBBMS9DxJ5szZUN59RkA07Bw=
+	b=TRGO/52hjWDemz/M2B0fnq5DeVLZGWQhJpG71wyNsDWlH45ipXHWKkMKBDW8wBaHC
+	 WqESP+zcxdw+3fWsRj6c79eF/SPECuh3ykwTOUf+rLJ0DmvNDgRuAPsQujPro3FOQa
+	 cgDnSBKet6IQ5rLmrkA1sgp3kojArK7ivxeF0xW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 175/691] powerpc/32: Remove the nobats kernel parameter
-Date: Tue, 15 Oct 2024 13:22:03 +0200
-Message-ID: <20241015112447.310281729@linuxfoundation.org>
+Subject: [PATCH 5.15 176/691] powerpc/32: Remove noltlbs kernel parameter
+Date: Tue, 15 Oct 2024 13:22:04 +0200
+Message-ID: <20241015112447.349463374@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,121 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 1ce844973bb516e95d3f2bcb001a3992548def9d ]
+[ Upstream commit 56e54b4e6c477b2a7df43f9a320ae5f9a5bfb16c ]
 
-Mapping without BATs doesn't bring any added value to the user.
+Mapping without large TLBs has no added value on the 8xx.
 
-Remove that option.
+Mapping without large TLBs is still necessary on 40x when
+selecting CONFIG_KFENCE or CONFIG_DEBUG_PAGEALLOC or
+CONFIG_STRICT_KERNEL_RWX, but this is done automatically
+and doesn't require user selection.
+
+Remove 'noltlbs' kernel parameter, the user has no reason
+to use it.
 
 Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/6977314c823cfb728bc0273cea634b41807bfb64.1655202721.git.christophe.leroy@csgroup.eu
+Link: https://lore.kernel.org/r/80ca17bd39cf608a8ebd0764d7064a498e131199.1655202721.git.christophe.leroy@csgroup.eu
 Stable-dep-of: f9f2bff64c2f ("powerpc/8xx: Fix initial memory mapping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |  3 ---
- arch/powerpc/mm/book3s32/mmu.c                  |  2 +-
- arch/powerpc/mm/init_32.c                       | 11 -----------
- arch/powerpc/mm/mmu_decl.h                      |  1 -
- arch/powerpc/platforms/83xx/misc.c              | 14 ++++++--------
- 5 files changed, 7 insertions(+), 24 deletions(-)
+ Documentation/admin-guide/kernel-parameters.txt | 3 ---
+ arch/powerpc/mm/init_32.c                       | 3 ---
+ arch/powerpc/mm/nohash/8xx.c                    | 9 ---------
+ 3 files changed, 15 deletions(-)
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index cf35b2cf90c27..e2c2ccba6e388 100644
+index e2c2ccba6e388..c22a8ee02e73b 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -3451,9 +3451,6 @@
+@@ -3626,9 +3626,6 @@
  
- 	noautogroup	Disable scheduler automatic task group creation.
+ 	nolapic_timer	[X86-32,APIC] Do not use the local APIC timer.
  
--	nobats		[PPC] Do not use BATs for mapping kernel lowmem
--			on "Classic" PPC cores.
+-	noltlbs		[PPC] Do not use large page/tlb entries for kernel
+-			lowmem mapping on PPC40x and PPC8xx
 -
- 	nocache		[ARM]
+ 	nomca		[IA-64] Disable machine check abort handling
  
- 	noclflush	[BUGS=X86] Don't use the CLFLUSH instruction
-diff --git a/arch/powerpc/mm/book3s32/mmu.c b/arch/powerpc/mm/book3s32/mmu.c
-index 692c336e4f55b..75c7f35666642 100644
---- a/arch/powerpc/mm/book3s32/mmu.c
-+++ b/arch/powerpc/mm/book3s32/mmu.c
-@@ -165,7 +165,7 @@ unsigned long __init mmu_mapin_ram(unsigned long base, unsigned long top)
- 	size = roundup_pow_of_two((unsigned long)_einittext - PAGE_OFFSET);
- 	setibat(0, PAGE_OFFSET, 0, size, PAGE_KERNEL_X);
- 
--	if (debug_pagealloc_enabled_or_kfence() || __map_without_bats) {
-+	if (debug_pagealloc_enabled_or_kfence()) {
- 		pr_debug_once("Read-Write memory mapped without BATs\n");
- 		if (base >= border)
- 			return base;
+ 	nomce		[X86-32] Disable Machine Check Exception
 diff --git a/arch/powerpc/mm/init_32.c b/arch/powerpc/mm/init_32.c
-index 3d690be48e845..b702f2b642957 100644
+index b702f2b642957..967432d1b6c78 100644
 --- a/arch/powerpc/mm/init_32.c
 +++ b/arch/powerpc/mm/init_32.c
-@@ -70,12 +70,6 @@ EXPORT_SYMBOL(agp_special_page);
- 
- void MMU_init(void);
- 
--/*
-- * this tells the system to map all of ram with the segregs
-- * (i.e. page tables) instead of the bats.
-- * -- Cort
-- */
--int __map_without_bats;
- int __map_without_ltlbs;
- 
- /* max amount of low RAM to map in */
-@@ -86,11 +80,6 @@ unsigned long __max_low_memory = MAX_LOW_MEM;
+@@ -80,9 +80,6 @@ unsigned long __max_low_memory = MAX_LOW_MEM;
   */
  static void __init MMU_setup(void)
  {
--	/* Check for nobats option (used in mapin_ram). */
--	if (strstr(boot_command_line, "nobats")) {
--		__map_without_bats = 1;
+-	if (strstr(boot_command_line, "noltlbs")) {
+-		__map_without_ltlbs = 1;
 -	}
+ 	if (IS_ENABLED(CONFIG_PPC_8xx))
+ 		return;
+ 
+diff --git a/arch/powerpc/mm/nohash/8xx.c b/arch/powerpc/mm/nohash/8xx.c
+index 5348e1f9eb940..94efd4fa6e768 100644
+--- a/arch/powerpc/mm/nohash/8xx.c
++++ b/arch/powerpc/mm/nohash/8xx.c
+@@ -18,8 +18,6 @@
+ 
+ #define IMMR_SIZE (FIX_IMMR_SIZE << PAGE_SHIFT)
+ 
+-extern int __map_without_ltlbs;
 -
- 	if (strstr(boot_command_line, "noltlbs")) {
- 		__map_without_ltlbs = 1;
- 	}
-diff --git a/arch/powerpc/mm/mmu_decl.h b/arch/powerpc/mm/mmu_decl.h
-index 21996b9e0a64f..990dccf45fc13 100644
---- a/arch/powerpc/mm/mmu_decl.h
-+++ b/arch/powerpc/mm/mmu_decl.h
-@@ -92,7 +92,6 @@ extern void mapin_ram(void);
- extern void setbat(int index, unsigned long virt, phys_addr_t phys,
- 		   unsigned int size, pgprot_t prot);
+ static unsigned long block_mapped_ram;
  
--extern int __map_without_bats;
- extern unsigned int rtas_data, rtas_size;
+ /*
+@@ -32,8 +30,6 @@ phys_addr_t v_block_mapped(unsigned long va)
  
- struct hash_pte;
-diff --git a/arch/powerpc/platforms/83xx/misc.c b/arch/powerpc/platforms/83xx/misc.c
-index 3285dabcf923b..2fb2a85d131fd 100644
---- a/arch/powerpc/platforms/83xx/misc.c
-+++ b/arch/powerpc/platforms/83xx/misc.c
-@@ -121,17 +121,15 @@ void __init mpc83xx_setup_pci(void)
+ 	if (va >= VIRT_IMMR_BASE && va < VIRT_IMMR_BASE + IMMR_SIZE)
+ 		return p + va - VIRT_IMMR_BASE;
+-	if (__map_without_ltlbs)
+-		return 0;
+ 	if (va >= PAGE_OFFSET && va < PAGE_OFFSET + block_mapped_ram)
+ 		return __pa(va);
+ 	return 0;
+@@ -49,8 +45,6 @@ unsigned long p_block_mapped(phys_addr_t pa)
  
- void __init mpc83xx_setup_arch(void)
- {
-+	phys_addr_t immrbase = get_immrbase();
-+	int immrsize = IS_ALIGNED(immrbase, SZ_2M) ? SZ_2M : SZ_1M;
-+	unsigned long va = fix_to_virt(FIX_IMMR_BASE);
-+
- 	if (ppc_md.progress)
- 		ppc_md.progress("mpc83xx_setup_arch()", 0);
+ 	if (pa >= p && pa < p + IMMR_SIZE)
+ 		return VIRT_IMMR_BASE + pa - p;
+-	if (__map_without_ltlbs)
+-		return 0;
+ 	if (pa < block_mapped_ram)
+ 		return (unsigned long)__va(pa);
+ 	return 0;
+@@ -157,9 +151,6 @@ unsigned long __init mmu_mapin_ram(unsigned long base, unsigned long top)
  
--	if (!__map_without_bats) {
--		phys_addr_t immrbase = get_immrbase();
--		int immrsize = IS_ALIGNED(immrbase, SZ_2M) ? SZ_2M : SZ_1M;
--		unsigned long va = fix_to_virt(FIX_IMMR_BASE);
+ 	mmu_mapin_immr();
+ 
+-	if (__map_without_ltlbs)
+-		return 0;
 -
--		setbat(-1, va, immrbase, immrsize, PAGE_KERNEL_NCG);
--		update_bats();
--	}
-+	setbat(-1, va, immrbase, immrsize, PAGE_KERNEL_NCG);
-+	update_bats();
- }
- 
- int machine_check_83xx(struct pt_regs *regs)
+ 	mmu_mapin_ram_chunk(0, boundary, PAGE_KERNEL_TEXT, true);
+ 	if (debug_pagealloc_enabled_or_kfence()) {
+ 		top = boundary;
 -- 
 2.43.0
 
