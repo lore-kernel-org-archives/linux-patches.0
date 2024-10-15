@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFC81C07ED;
-	Tue, 15 Oct 2024 13:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548CF1C07ED;
+	Tue, 15 Oct 2024 13:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997810; cv=none; b=h5stD67/++Uzzgsmsny/7r36Zwx7/NiUWIyY+NQkpY9YCKQ8frG+SUYi+E3niZCc+dLEYzpHau/+uTQ1/kVAMcLFp340mR0dLY9KV96Tj5FMteOEqvo/ymoWT9yHdlngH7ORSjJ7PQBR5LE68aKmUd2VEXVN7vHFuA8h8PIdd2A=
+	t=1728997813; cv=none; b=kh/SHPryA7pwVXxvKRpVlorPBHMwks2uKh5ERFuAznucVAv368bi+7i4A8nve6eERAQvBT+6hCL/CzR0OTeGhghDiG/Lp1swr94p6B41GLGt9x/UvR5CmLmeStP5bc3G05XdnEnIhqJ3ZV5nf91ipDWujkHIjJYFfwuQXtBl5kU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997810; c=relaxed/simple;
-	bh=qHy66VAQahBgRbnCLfA+fK/fy2r8cOTkVnM9PivXteE=;
+	s=arc-20240116; t=1728997813; c=relaxed/simple;
+	bh=TzQV8dM0pHuHzU9zjC3cewNLzqjCFDLoiDrdwKBgwlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AmlaL7izEAdLa7D3ydEGDLqW0Ob5p6fXvCSEAGWx3onZXnMWPri0GJMmezW0Z0qC6aHtein2nZvGqylss1o3W/i5flt4KL0Qbz5F+YGa0VebsG9o1LFD8UexSYSIaOCEYgMCjMHuEuokCftw8JucIMX01A/5cu8HI4EatB3+TLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTt8J3UK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UfLJvPPrl5ln/WQFwopf/oLWoOv7NjWQ9R9xnbvokPw7q3rVp641z/rSLK1uJY2gEA1NVfFxhMIKZwdlGkbBZlWboEZvJqmSwc5w6hgZte87yUWG6DhyOu9gTC1XKzKu+1zwal/M8+OhN8gWgfdMQYATG+wiJAIdaZh2HDWUkU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OyMYm/e7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTt8J3UK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E109C4CEC6;
-	Tue, 15 Oct 2024 13:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OyMYm/e7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BCEC4CEC6;
+	Tue, 15 Oct 2024 13:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997809;
-	bh=qHy66VAQahBgRbnCLfA+fK/fy2r8cOTkVnM9PivXteE=;
+	s=korg; t=1728997813;
+	bh=TzQV8dM0pHuHzU9zjC3cewNLzqjCFDLoiDrdwKBgwlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NTt8J3UK0bxUoofVjJretJuzF6g1EXoVfUhqk6HA4TCQ+9jDhB9fh8Bu6M5eCekoB
-	 90cA904ZPyvyCz7tKBZpwdSX+clOrY9fJ/H3LvUbbAsAaqRfEv/dBUGySypL12j9Ii
-	 /NtkPeIy7tfWanc49ZSjB9Q3o65amDhQOt8Rr5IQ=
+	b=OyMYm/e7hfeOjd0rtoGiyw+ynnyZMQPFdYLnhHPGKT1eAqCQ0DbzCXv/YczdqoScy
+	 XobI/gKjxJWPgdqtgGBdUX+s+l6Njs1XzRBJwXXsBpNVq20bvjC0G9o/VPv9U31KRo
+	 pE7WC67tKuPigFTIRa2xcL2PRoWrIkik3+IH9TDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Eric Biggers <ebiggers@google.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Dmitry Kandybka <d.kandybka@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 293/518] f2fs: Require FMODE_WRITE for atomic write ioctls
-Date: Tue, 15 Oct 2024 14:43:17 +0200
-Message-ID: <20241015123928.294802984@linuxfoundation.org>
+Subject: [PATCH 5.10 294/518] wifi: ath9k: fix possible integer overflow in ath9k_get_et_stats()
+Date: Tue, 15 Oct 2024 14:43:18 +0200
+Message-ID: <20241015123928.337584077@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -47,101 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Dmitry Kandybka <d.kandybka@gmail.com>
 
-commit 4f5a100f87f32cb65d4bb1ad282a08c92f6f591e upstream.
+[ Upstream commit 3f66f26703093886db81f0610b97a6794511917c ]
 
-The F2FS ioctls for starting and committing atomic writes check for
-inode_owner_or_capable(), but this does not give LSMs like SELinux or
-Landlock an opportunity to deny the write access - if the caller's FSUID
-matches the inode's UID, inode_owner_or_capable() immediately returns true.
+In 'ath9k_get_et_stats()', promote TX stats counters to 'u64'
+to avoid possible integer overflow. Compile tested only.
 
-There are scenarios where LSMs want to deny a process the ability to write
-particular files, even files that the FSUID of the process owns; but this
-can currently partially be bypassed using atomic write ioctls in two ways:
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
- - F2FS_IOC_START_ATOMIC_REPLACE + F2FS_IOC_COMMIT_ATOMIC_WRITE can
-   truncate an inode to size 0
- - F2FS_IOC_START_ATOMIC_WRITE + F2FS_IOC_ABORT_ATOMIC_WRITE can revert
-   changes another process concurrently made to a file
-
-Fix it by requiring FMODE_WRITE for these operations, just like for
-F2FS_IOC_MOVE_RANGE. Since any legitimate caller should only be using these
-ioctls when intending to write into the file, that seems unlikely to break
-anything.
-
-Fixes: 88b88a667971 ("f2fs: support atomic writes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Dmitry Kandybka <d.kandybka@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://patch.msgid.link/20240725111743.14422-1-d.kandybka@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/wireless/ath/ath9k/debug.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 060bd64502c68..7ce22137afbe9 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2054,6 +2054,9 @@ static int f2fs_ioc_start_atomic_write(struct file *filp)
- 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
- 	int ret;
+diff --git a/drivers/net/wireless/ath/ath9k/debug.c b/drivers/net/wireless/ath/ath9k/debug.c
+index 8d98347e0ddff..8631258b1ea7a 100644
+--- a/drivers/net/wireless/ath/ath9k/debug.c
++++ b/drivers/net/wireless/ath/ath9k/debug.c
+@@ -1316,11 +1316,11 @@ void ath9k_get_et_stats(struct ieee80211_hw *hw,
+ 	struct ath_softc *sc = hw->priv;
+ 	int i = 0;
  
-+	if (!(filp->f_mode & FMODE_WRITE))
-+		return -EBADF;
-+
- 	if (!inode_owner_or_capable(inode))
- 		return -EACCES;
- 
-@@ -2124,6 +2127,9 @@ static int f2fs_ioc_commit_atomic_write(struct file *filp)
- 	struct inode *inode = file_inode(filp);
- 	int ret;
- 
-+	if (!(filp->f_mode & FMODE_WRITE))
-+		return -EBADF;
-+
- 	if (!inode_owner_or_capable(inode))
- 		return -EACCES;
- 
-@@ -2166,6 +2172,9 @@ static int f2fs_ioc_start_volatile_write(struct file *filp)
- 	struct inode *inode = file_inode(filp);
- 	int ret;
- 
-+	if (!(filp->f_mode & FMODE_WRITE))
-+		return -EBADF;
-+
- 	if (!inode_owner_or_capable(inode))
- 		return -EACCES;
- 
-@@ -2201,6 +2210,9 @@ static int f2fs_ioc_release_volatile_write(struct file *filp)
- 	struct inode *inode = file_inode(filp);
- 	int ret;
- 
-+	if (!(filp->f_mode & FMODE_WRITE))
-+		return -EBADF;
-+
- 	if (!inode_owner_or_capable(inode))
- 		return -EACCES;
- 
-@@ -2230,6 +2242,9 @@ static int f2fs_ioc_abort_volatile_write(struct file *filp)
- 	struct inode *inode = file_inode(filp);
- 	int ret;
- 
-+	if (!(filp->f_mode & FMODE_WRITE))
-+		return -EBADF;
-+
- 	if (!inode_owner_or_capable(inode))
- 		return -EACCES;
- 
+-	data[i++] = (sc->debug.stats.txstats[PR_QNUM(IEEE80211_AC_BE)].tx_pkts_all +
++	data[i++] = ((u64)sc->debug.stats.txstats[PR_QNUM(IEEE80211_AC_BE)].tx_pkts_all +
+ 		     sc->debug.stats.txstats[PR_QNUM(IEEE80211_AC_BK)].tx_pkts_all +
+ 		     sc->debug.stats.txstats[PR_QNUM(IEEE80211_AC_VI)].tx_pkts_all +
+ 		     sc->debug.stats.txstats[PR_QNUM(IEEE80211_AC_VO)].tx_pkts_all);
+-	data[i++] = (sc->debug.stats.txstats[PR_QNUM(IEEE80211_AC_BE)].tx_bytes_all +
++	data[i++] = ((u64)sc->debug.stats.txstats[PR_QNUM(IEEE80211_AC_BE)].tx_bytes_all +
+ 		     sc->debug.stats.txstats[PR_QNUM(IEEE80211_AC_BK)].tx_bytes_all +
+ 		     sc->debug.stats.txstats[PR_QNUM(IEEE80211_AC_VI)].tx_bytes_all +
+ 		     sc->debug.stats.txstats[PR_QNUM(IEEE80211_AC_VO)].tx_bytes_all);
 -- 
 2.43.0
 
