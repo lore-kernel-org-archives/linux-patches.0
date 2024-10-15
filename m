@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2069D1E6321;
-	Tue, 15 Oct 2024 13:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0CA01AF0AB;
+	Tue, 15 Oct 2024 13:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997689; cv=none; b=TAXiXsiirtptm8ISzaTV+vfx6FP6HFeYTUG100TyZDt215Q87t+gKs9EOPHOEUZYcUxMxoOBe2xEBG673XJWhYZ1Ro+w7IeKCsJpeA0AqGEaJKI0KI/1Ts7gFU3PZOLH4spE++8i06xnzk4NVuJ4Taw/0hOyTeLgY+c3qrQWYMk=
+	t=1728997692; cv=none; b=aNIAU0MjreSrk0cIy3dQjosFhgV0Q3yJgr2BUyr4D30WE74n+GFVLsdqoB0wSMrGi+CKZCaPmPeIbyb/btqYTrBHU23uLJkrlGQ33Isgr552ZV9sJqI28PCOb0JjBVvst4ttyVwKvTpqSOi2CHbexqoJm48KgDXiSdCg2B+cjHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997689; c=relaxed/simple;
-	bh=M3gnujApRWQUrJva+dXOp4CXnns76fDtYSqwelL7qZY=;
+	s=arc-20240116; t=1728997692; c=relaxed/simple;
+	bh=gWV9EoslgWTPoNorcXNnh7fzQEUHDHLkT2TAvCgBBkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vh8CM3xNDLRKi078AoxHrqOoUL80kbW0L6iay19QgweUaQHDrNFnKFmaXnrHP0rGB6XBz3FIdMVMQYMta3JrmVVYAcXrgQqbod0BWg4JGcW2xZk/Ew5QKBPz034+ui+7Dc8YRfma2kU3i4KDREerlU6VQHvVmnFbaSFnGPWnZzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jmnyt65P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bh/I9QQz+Yts4JXjsHJuMxzHjQwShwx5KE2Jb2U1ca/ylj7/ZUa9POf6zq3pYSAwz2bax7RxU4CADSujDqucl4kpNayyWm+epSqJYo/ivGQ0EmsWELIm6/4AVll1CDp7nn3+Ibis3Zw1mXJF7JpiODwoJHsDNv8yS2M+KAwO088=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbZkqfqB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jmnyt65P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859B0C4CED1;
-	Tue, 15 Oct 2024 13:08:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbZkqfqB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6081C4CEC6;
+	Tue, 15 Oct 2024 13:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997689;
-	bh=M3gnujApRWQUrJva+dXOp4CXnns76fDtYSqwelL7qZY=;
+	s=korg; t=1728997692;
+	bh=gWV9EoslgWTPoNorcXNnh7fzQEUHDHLkT2TAvCgBBkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jmnyt65P0Df1q4+4slKVBg222ZOIax+sK6ZtFgJM8gNTlP8NU+8otJzHRxRoPsHic
-	 GWBPFfiJcIrGS7JaqXBPWpsbHJSyQCPQRC4Szz/9ljOr+4Xj21WctGloGM8UIaBrCp
-	 h5s5CFGQClOfLHSU/+2EX6rqCJdd0dF7cbooMR0k=
+	b=VbZkqfqBFZ1QJaoureMXTC1CTK5TH5mndGI8LfRgpUudSOEVQM/PHfhZRRcpXqjpw
+	 DpY2I8uiZb4aCVuOrbSWDL83t2cMpj1cye/spavI1UmBsY090tfPd5JyC/R5Qk7sM4
+	 5CdlHgX5tnqaLPhV9fLjbzfv9IV83OrVbKOMC2D0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Rodolfo Giometti <giometti@enneenne.com>,
+	Mathias Nyman <mathias.nyman@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Moritz Fischer <mdf@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 256/518] pps: add an error check in parport_attach
-Date: Tue, 15 Oct 2024 14:42:40 +0200
-Message-ID: <20241015123926.870059457@linuxfoundation.org>
+Subject: [PATCH 5.10 257/518] usb: renesas-xhci: Remove renesas_xhci_pci_exit()
+Date: Tue, 15 Oct 2024 14:42:41 +0200
+Message-ID: <20241015123926.907865055@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,63 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Moritz Fischer <mdf@kernel.org>
 
-[ Upstream commit 62c5a01a5711c8e4be8ae7b6f0db663094615d48 ]
+[ Upstream commit 884c274408296e7e0f56545f909b3d3a671104aa ]
 
-In parport_attach, the return value of ida_alloc is unchecked, witch leads
-to the use of an invalid index value.
+Remove empty function renesas_xhci_pci_exit() that does not
+actually do anything.
 
-To address this issue, index should be checked. When the index value is
-abnormal, the device should be freed.
-
-Found by code review, compile tested only.
-
-Cc: stable@vger.kernel.org
-Fixes: fb56d97df70e ("pps: client: use new parport device model")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/20240828131814.3034338-1-make24@iscas.ac.cn
+Cc: Mathias Nyman <mathias.nyman@intel.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Moritz Fischer <mdf@kernel.org>
+Link: https://lore.kernel.org/r/20210718015111.389719-3-mdf@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: f81dfa3b57c6 ("xhci: Set quirky xHC PCI hosts to D3 _after_ stopping and freeing them.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/clients/pps_parport.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci-pci-renesas.c | 5 -----
+ drivers/usb/host/xhci-pci.c         | 2 --
+ drivers/usb/host/xhci-pci.h         | 3 ---
+ 3 files changed, 10 deletions(-)
 
-diff --git a/drivers/pps/clients/pps_parport.c b/drivers/pps/clients/pps_parport.c
-index 4bb3678c7e451..84e49204912f8 100644
---- a/drivers/pps/clients/pps_parport.c
-+++ b/drivers/pps/clients/pps_parport.c
-@@ -145,6 +145,9 @@ static void parport_attach(struct parport *port)
- 	}
+diff --git a/drivers/usb/host/xhci-pci-renesas.c b/drivers/usb/host/xhci-pci-renesas.c
+index 96692dbbd4dad..01ad6fc1adcaf 100644
+--- a/drivers/usb/host/xhci-pci-renesas.c
++++ b/drivers/usb/host/xhci-pci-renesas.c
+@@ -631,9 +631,4 @@ int renesas_xhci_check_request_fw(struct pci_dev *pdev,
+ }
+ EXPORT_SYMBOL_GPL(renesas_xhci_check_request_fw);
  
- 	index = ida_alloc(&pps_client_index, GFP_KERNEL);
-+	if (index < 0)
-+		goto err_free_device;
-+
- 	memset(&pps_client_cb, 0, sizeof(pps_client_cb));
- 	pps_client_cb.private = device;
- 	pps_client_cb.irq_func = parport_irq;
-@@ -155,7 +158,7 @@ static void parport_attach(struct parport *port)
- 						    index);
- 	if (!device->pardev) {
- 		pr_err("couldn't register with %s\n", port->name);
--		goto err_free;
-+		goto err_free_ida;
- 	}
+-void renesas_xhci_pci_exit(struct pci_dev *dev)
+-{
+-}
+-EXPORT_SYMBOL_GPL(renesas_xhci_pci_exit);
+-
+ MODULE_LICENSE("GPL v2");
+diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
+index 88f223b975d34..4a88e75cd9586 100644
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -533,8 +533,6 @@ static void xhci_pci_remove(struct pci_dev *dev)
+ 	struct xhci_hcd *xhci;
  
- 	if (parport_claim_or_block(device->pardev) < 0) {
-@@ -183,8 +186,9 @@ static void parport_attach(struct parport *port)
- 	parport_release(device->pardev);
- err_unregister_dev:
- 	parport_unregister_device(device->pardev);
--err_free:
-+err_free_ida:
- 	ida_free(&pps_client_index, index);
-+err_free_device:
- 	kfree(device);
+ 	xhci = hcd_to_xhci(pci_get_drvdata(dev));
+-	if (xhci->quirks & XHCI_RENESAS_FW_QUIRK)
+-		renesas_xhci_pci_exit(dev);
+ 
+ 	xhci->xhc_state |= XHCI_STATE_REMOVING;
+ 
+diff --git a/drivers/usb/host/xhci-pci.h b/drivers/usb/host/xhci-pci.h
+index acd7cf0a1706e..cb9a8f331a446 100644
+--- a/drivers/usb/host/xhci-pci.h
++++ b/drivers/usb/host/xhci-pci.h
+@@ -7,7 +7,6 @@
+ #if IS_ENABLED(CONFIG_USB_XHCI_PCI_RENESAS)
+ int renesas_xhci_check_request_fw(struct pci_dev *dev,
+ 				  const struct pci_device_id *id);
+-void renesas_xhci_pci_exit(struct pci_dev *dev);
+ 
+ #else
+ static int renesas_xhci_check_request_fw(struct pci_dev *dev,
+@@ -16,8 +15,6 @@ static int renesas_xhci_check_request_fw(struct pci_dev *dev,
+ 	return 0;
  }
  
+-static void renesas_xhci_pci_exit(struct pci_dev *dev) { };
+-
+ #endif
+ 
+ struct xhci_driver_data {
 -- 
 2.43.0
 
