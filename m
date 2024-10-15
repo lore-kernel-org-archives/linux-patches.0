@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A551C07C4;
-	Tue, 15 Oct 2024 12:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F1C1C07D4;
+	Tue, 15 Oct 2024 12:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996855; cv=none; b=Ltr620joXuX4oNUAQUKghM2IV3YGr5zOJzRZha4ZOSczpM6LUjJi1D/qVRrDYrGVJxlSjqE89u0gV9Dl6kdlJAh5a5LaQ8EqaAcOFwggTNjCur7+DBEb8/UF900DHr++MFjRJb7K9LUNjAe3ZA+GDrDXrgjzBBZeG384YqRvAos=
+	t=1728996859; cv=none; b=FQfdOzRNTOoNGr4utYMS9LBI9xE0+KF2xw56Rcsi9Yz1wqcMF/uJnndO/QgIWLonJ5jloS51HB+iEv86cDOpW+YEpaNf7CDepDfys9ojQYqa2IjvdIVBH1UkPBlpkGt6wXHsHsJ4WW6R4LdOZ2MzMoxcSoRJMBkL4zTvPrDCaHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996855; c=relaxed/simple;
-	bh=SJ5JtrZAuQxNUuUHHcB0K6Q+fQP5/ZXpDVVstrM5Vmg=;
+	s=arc-20240116; t=1728996859; c=relaxed/simple;
+	bh=+OMbZal0lFXYIruPfrnZfqhACzAW20kEvSYIHa4fNXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHY+SbhEFZBKG0r2U9jHBCnxcfWXiskoM1LQKN5mpJ/QMwobY5/CSuAtAP7AQHm+1NTS098b4CKB2+nSA8xGsSV/ERGYJnZ8NQiB8wTRIf48O2gh7Z+AZxEE2mawCH/q0HpEpfL/pdlr4xh8MN0qIftwvTLvwXj+IfFvsGAaiXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpHsHLVP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pOmmMUsaFgHkzrwV37C/8zz+TRfrjzxrPYsuUgsT/wYpKdm58lyz9QU4ilQZybimKXPVb7Xo3Fy2h7Bi37l/1vxM62EQfB9cWVnPjvyu9jggfiNKTqtNjtJouXdURyuLBdlkiahsgxczCWypE6K6UM+ENGIdn4wbeacg+DE3J6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7xcdaE7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpHsHLVP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92E1C4CEC6;
-	Tue, 15 Oct 2024 12:54:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7xcdaE7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E5CC4CEC6;
+	Tue, 15 Oct 2024 12:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728996855;
-	bh=SJ5JtrZAuQxNUuUHHcB0K6Q+fQP5/ZXpDVVstrM5Vmg=;
+	s=korg; t=1728996858;
+	bh=+OMbZal0lFXYIruPfrnZfqhACzAW20kEvSYIHa4fNXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QpHsHLVPhEMTRIPl/XQHDJc4tX0DEW8qdc99h7VrLv7+viNynaPjEmKyQGzUaZ1kt
-	 ezyz/tAgTjulT6xjO+nobH34Qf7wXwsnVk6ntyES2eh1fINhMFUP3zHUZr593ULl3S
-	 TMNk8VBlgKgJYyt8h/qHp6qeG1LV3k7C7YOc22ms=
+	b=i7xcdaE7Q6HVKZjn1lVrmgYZD8MeVPyRg18+6pXNDOFa5xAiESO6NWmJIJSV5Q6tx
+	 J0+hUi/xODgzx4rgC59lwIWwWsk8rMnJIzcp1kf7zV/QLv/aH4bNC4cd3ZTTR1pwPq
+	 vwAut/6+GE0Ja6nezYT5EJ4fS/iHwoXoFENQM5Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Piyush Mehta <piyush.mehta@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/518] ice: fix accounting for filters shared by multiple VSIs
-Date: Tue, 15 Oct 2024 14:38:43 +0200
-Message-ID: <20241015123917.576050757@linuxfoundation.org>
+Subject: [PATCH 5.10 002/518] usb: dwc3: core: Enable GUCTL1 bit 10 for fixing termination error after resume bug
+Date: Tue, 15 Oct 2024 14:38:26 +0200
+Message-ID: <20241015123916.924513982@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,67 +50,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Piyush Mehta <piyush.mehta@amd.com>
 
-[ Upstream commit e843cf7b34fe2e0c1afc55e1f3057375c9b77a14 ]
+[ Upstream commit 63d7f9810a38102cdb8cad214fac98682081e1a7 ]
 
-When adding a switch filter (such as a MAC or VLAN filter), it is expected
-that the driver will detect the case where the filter already exists, and
-return -EEXIST. This is used by calling code such as ice_vc_add_mac_addr,
-and ice_vsi_add_vlan to avoid incrementing the accounting fields such as
-vsi->num_vlan or vf->num_mac.
+When configured in HOST mode, after issuing U3/L2 exit controller fails
+to send proper CRC checksum in CRC5 field. Because of this behavior
+Transaction Error is generated, resulting in reset and re-enumeration of
+usb device attached. Enabling chicken bit 10 of GUCTL1 will correct this
+problem.
 
-This logic works correctly for the case where only a single VSI has added a
-given switch filter.
+When this bit is set to '1', the UTMI/ULPI opmode will be changed to
+"normal" along with HS terminations, term, and xcvr signals after EOR.
+This option is to support certain legacy UTMI/ULPI PHYs.
 
-When a second VSI adds the same switch filter, the driver converts the
-existing filter from an ICE_FWD_TO_VSI filter into an ICE_FWD_TO_VSI_LIST
-filter. This saves switch resources, by ensuring that multiple VSIs can
-re-use the same filter.
+Added "snps,resume-hs-terminations" quirk to resolved the above issue.
 
-The ice_add_update_vsi_list() function is responsible for doing this
-conversion. When first converting a filter from the FWD_TO_VSI into
-FWD_TO_VSI_LIST, it checks if the VSI being added is the same as the
-existing rule's VSI. In such a case it returns -EEXIST.
-
-However, when the switch rule has already been converted to a
-FWD_TO_VSI_LIST, the logic is different. Adding a new VSI in this case just
-requires extending the VSI list entry. The logic for checking if the rule
-already exists in this case returns 0 instead of -EEXIST.
-
-This breaks the accounting logic mentioned above, so the counters for how
-many MAC and VLAN filters exist for a given VF or VSI no longer accurately
-reflect the actual count. This breaks other code which relies on these
-counts.
-
-In typical usage this primarily affects such filters generally shared by
-multiple VSIs such as VLAN 0, or broadcast and multicast MAC addresses.
-
-Fix this by correctly reporting -EEXIST in the case of adding the same VSI
-to a switch rule already converted to ICE_FWD_TO_VSI_LIST.
-
-Fixes: 9daf8208dd4d ("ice: Add support for switch filter programming")
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Piyush Mehta <piyush.mehta@amd.com>
+Link: https://lore.kernel.org/r/20220920052235.194272-3-piyush.mehta@amd.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 9149c9b0c7e0 ("usb: dwc3: core: update LC timer as per USB Spec V3.2")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_switch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/core.c | 17 +++++++++++++++++
+ drivers/usb/dwc3/core.h |  4 ++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
-index 0155c45d9d7f..1645fb527fdb 100644
---- a/drivers/net/ethernet/intel/ice/ice_switch.c
-+++ b/drivers/net/ethernet/intel/ice/ice_switch.c
-@@ -1259,7 +1259,7 @@ ice_add_update_vsi_list(struct ice_hw *hw,
+diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+index 3a88e4268590..82db59304492 100644
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1054,6 +1054,21 @@ static int dwc3_core_init(struct dwc3 *dwc)
+ 		dwc3_writel(dwc->regs, DWC3_GUCTL2, reg);
+ 	}
  
- 		/* A rule already exists with the new VSI being added */
- 		if (test_bit(vsi_handle, m_entry->vsi_list_info->vsi_map))
--			return 0;
-+			return -EEXIST;
++	/*
++	 * When configured in HOST mode, after issuing U3/L2 exit controller
++	 * fails to send proper CRC checksum in CRC5 feild. Because of this
++	 * behaviour Transaction Error is generated, resulting in reset and
++	 * re-enumeration of usb device attached. All the termsel, xcvrsel,
++	 * opmode becomes 0 during end of resume. Enabling bit 10 of GUCTL1
++	 * will correct this problem. This option is to support certain
++	 * legacy ULPI PHYs.
++	 */
++	if (dwc->resume_hs_terminations) {
++		reg = dwc3_readl(dwc->regs, DWC3_GUCTL1);
++		reg |= DWC3_GUCTL1_RESUME_OPMODE_HS_HOST;
++		dwc3_writel(dwc->regs, DWC3_GUCTL1, reg);
++	}
++
+ 	if (!DWC3_VER_IS_PRIOR(DWC3, 250A)) {
+ 		reg = dwc3_readl(dwc->regs, DWC3_GUCTL1);
  
- 		/* Update the previously created VSI list set with
- 		 * the new VSI ID passed in
+@@ -1378,6 +1393,8 @@ static void dwc3_get_properties(struct dwc3 *dwc)
+ 				"snps,dis-del-phy-power-chg-quirk");
+ 	dwc->dis_tx_ipgap_linecheck_quirk = device_property_read_bool(dev,
+ 				"snps,dis-tx-ipgap-linecheck-quirk");
++	dwc->resume_hs_terminations = device_property_read_bool(dev,
++				"snps,resume-hs-terminations");
+ 	dwc->parkmode_disable_ss_quirk = device_property_read_bool(dev,
+ 				"snps,parkmode-disable-ss-quirk");
+ 
+diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+index 620c19deeee7..dbfb17ee4cca 100644
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -254,6 +254,7 @@
+ #define DWC3_GUCTL1_TX_IPGAP_LINECHECK_DIS	BIT(28)
+ #define DWC3_GUCTL1_DEV_L1_EXIT_BY_HW		BIT(24)
+ #define DWC3_GUCTL1_PARKMODE_DISABLE_SS		BIT(17)
++#define DWC3_GUCTL1_RESUME_OPMODE_HS_HOST	BIT(10)
+ 
+ /* Global Status Register */
+ #define DWC3_GSTS_OTG_IP	BIT(10)
+@@ -1051,6 +1052,8 @@ struct dwc3_scratchpad_array {
+  *			change quirk.
+  * @dis_tx_ipgap_linecheck_quirk: set if we disable u2mac linestate
+  *			check during HS transmit.
++ * @resume-hs-terminations: Set if we enable quirk for fixing improper crc
++ *			generation after resume from suspend.
+  * @parkmode_disable_ss_quirk: set if we need to disable all SuperSpeed
+  *			instances in park mode.
+  * @tx_de_emphasis_quirk: set if we enable Tx de-emphasis quirk
+@@ -1252,6 +1255,7 @@ struct dwc3 {
+ 	unsigned		dis_u2_freeclk_exists_quirk:1;
+ 	unsigned		dis_del_phy_power_chg_quirk:1;
+ 	unsigned		dis_tx_ipgap_linecheck_quirk:1;
++	unsigned		resume_hs_terminations:1;
+ 	unsigned		parkmode_disable_ss_quirk:1;
+ 
+ 	unsigned		tx_de_emphasis_quirk:1;
 -- 
 2.43.0
 
