@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D0F1D4154;
-	Tue, 15 Oct 2024 11:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E709D19B3FF;
+	Tue, 15 Oct 2024 11:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992803; cv=none; b=Xya7CrQHWNLPhIC4q3VozgoATo0Ypwf+jVqyPPOE7s0bkNp7W/ZCPWQnonqzlYa2u8ySrVnTNfgycv+DtCSppO14WxSJ0ZlrPUBUEXlO5HQd3NG6YEzS8apdiLfprhOeSH2VLb5AMIKheV1MipJ5WwCJOS1o/rbksIVt1Z4KOe0=
+	t=1728992807; cv=none; b=sjdu5DOI8avAebFzyybf+BHzrN/EsmWytuw46fTLw5Dj1B3Fpj4KmJIyaZyFz56ZMFejpAOk86nCmD0PhmcBQ6xIEYHQ49pIv3QSlBLo2v9AQpQLc3kW17s0a/1YwCULHpZzPHcexbf1i8Ka8OD4eHRXEJM3u5BnlgPyjERWWRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992803; c=relaxed/simple;
-	bh=xnS2v80SVwyhU/eSyRmR24QX/Lwt/IGKAUYCCgJNwT8=;
+	s=arc-20240116; t=1728992807; c=relaxed/simple;
+	bh=TUYuBzN4zSBXmhA0t6ETpuIz9yUrGiAGbK44/G8o8rA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=psHFYs3ANJVORulTWtw1oYmpnCvkuCcj8BSwTRNA2rvkC2UNilYq8lnuQHNeDAxu0IAwM1Vnz2jju7wXknHcHol0QzhpIsM2hVsEK0ZxPEyJXMPSlEhp48Q+5SwOWGnFe6I1BG6HBBGnhG6wrq1msZ9sAytUTALimVtga0Oyr8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ldP8pHq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DgxyWmp7vLAWj/0Gg3d+q5Tjv5ROGwK4gOu2nBxWy2O72Ld0nqjKR9RcZiyWu1bGNNrosf0mn63idV7KC2O0Bq37nG924Xwlam9bOpzLeSmEqNGSYbrboZTKdd3uizMtmj+MytYB2ZILHT9MITNKJbbaHAkro44zzvn3ji2n6J0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SF8l9gms; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ldP8pHq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A23C4CEC6;
-	Tue, 15 Oct 2024 11:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SF8l9gms"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711B0C4CEC6;
+	Tue, 15 Oct 2024 11:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992803;
-	bh=xnS2v80SVwyhU/eSyRmR24QX/Lwt/IGKAUYCCgJNwT8=;
+	s=korg; t=1728992806;
+	bh=TUYuBzN4zSBXmhA0t6ETpuIz9yUrGiAGbK44/G8o8rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ldP8pHq+/xiMOHXca+oH9gkV4ze3Go4NFo1L3xBvwYSHf/n0/0dJ6duRbFo6+OO/
-	 hbMqcGhJioTZ75OOUTGvfojeW0kjjnGHW/lSiBxCIDlG7fwERY/B/2Wupd5+OdJ35V
-	 09kds6SbKYqX2XrSL0CRkShf7tdUu7SIfZ1cLZPE=
+	b=SF8l9gmssoa+v60bdqvutfL7gQYsHEYeyBBLIU73ePDGFd09M0IEzM2/2eJFcgJaa
+	 vc/9MdxjddNW3amV7AwVQtaMmaQmJelZHSfm/DqGtOcshfBUMZgNpqN0AcyVybU2cr
+	 l497pVBVr5TEUCY/MYKtA+KKN4PTQhLI+mh+mKi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhipeng Wang <zhipeng.wang_1@nxp.com>,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
 	Peng Fan <peng.fan@nxp.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 223/691] clk: imx: imx8mp: fix clock tree update of TF-A managed clocks
-Date: Tue, 15 Oct 2024 13:22:51 +0200
-Message-ID: <20241015112449.211203316@linuxfoundation.org>
+Subject: [PATCH 5.15 224/691] clk: imx: imx8qxp: Register dc0_bypass0_clk before disp clk
+Date: Tue, 15 Oct 2024 13:22:52 +0200
+Message-ID: <20241015112449.250096793@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,59 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhipeng Wang <zhipeng.wang_1@nxp.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 3d29036853b9cb07ac49e8261fca82a940be5c41 ]
+[ Upstream commit e61352d5ecdc0da2e7253121c15d9a3e040f78a1 ]
 
-On the i.MX8M*, the TF-A exposes a SiP (Silicon Provider) service
-for DDR frequency scaling. The imx8m-ddrc-devfreq driver calls the
-SiP and then does clk_set_parent on the DDR muxes to synchronize
-the clock tree.
+The initialization order of SCU clocks affects the sequence of SCU clock
+resume. If there are no other effects, the earlier the initialization,
+the earlier the resume. During SCU clock resume, the clock rate is
+restored. As SCFW guidelines, configure the parent clock rate before
+configuring the child rate.
 
-since commit 936c383673b9 ("clk: imx: fix composite peripheral flags"),
-these TF-A managed muxes have SET_PARENT_GATE set, which results
-in imx8m-ddrc-devfreq's clk_set_parent after SiP failing with -EBUSY:
-
-clk_set_parent(dram_apb_src, sys1_pll_40m);(busfreq-imx8mq.c)
-
-commit 926bf91248dd
-("clk: imx8m: fix clock tree update of TF-A managed clocks") adds this
-method and enables 8mm, 8mn and 8mq. i.MX8MP also needs it.
-
-This is safe to do, because updating the Linux clock tree to reflect
-reality will always be glitch-free.
-
-Another reason to this patch is that powersave image BT music
-requires dram to be 400MTS, so clk_set_parent(dram_alt_src,
-sys1_pll_800m); is required. Without this patch, it will not succeed.
-
-Fixes: 936c383673b9 ("clk: imx: fix composite peripheral flags")
-Signed-off-by: Zhipeng Wang <zhipeng.wang_1@nxp.com>
-Reviewed-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Fixes: 91e916771de0 ("clk: imx: scu: remove legacy scu clock binding support")
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240607133347.3291040-7-peng.fan@oss.nxp.com
+Link: https://lore.kernel.org/r/20240607133347.3291040-14-peng.fan@oss.nxp.com
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mp.c | 4 ++--
+ drivers/clk/imx/clk-imx8qxp.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
-index cdeacdc143b5c..8e980271b9dc6 100644
---- a/drivers/clk/imx/clk-imx8mp.c
-+++ b/drivers/clk/imx/clk-imx8mp.c
-@@ -566,8 +566,8 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
+diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
+index ef560b59df11f..43d59bc5a229a 100644
+--- a/drivers/clk/imx/clk-imx8qxp.c
++++ b/drivers/clk/imx/clk-imx8qxp.c
+@@ -200,11 +200,11 @@ static int imx8qxp_clk_probe(struct platform_device *pdev)
+ 	imx_clk_scu("usb3_lpm_div", IMX_SC_R_USB_2, IMX_SC_PM_CLK_MISC);
  
- 	hws[IMX8MP_CLK_IPG_ROOT] = imx_clk_hw_divider2("ipg_root", "ahb_root", ccm_base + 0x9080, 0, 1);
+ 	/* Display controller SS */
+-	imx_clk_scu2("dc0_disp0_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC0);
+-	imx_clk_scu2("dc0_disp1_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC1);
+ 	imx_clk_scu("dc0_pll0_clk", IMX_SC_R_DC_0_PLL_0, IMX_SC_PM_CLK_PLL);
+ 	imx_clk_scu("dc0_pll1_clk", IMX_SC_R_DC_0_PLL_1, IMX_SC_PM_CLK_PLL);
+ 	imx_clk_scu("dc0_bypass0_clk", IMX_SC_R_DC_0_VIDEO0, IMX_SC_PM_CLK_BYPASS);
++	imx_clk_scu2("dc0_disp0_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC0);
++	imx_clk_scu2("dc0_disp1_clk", dc0_sels, ARRAY_SIZE(dc0_sels), IMX_SC_R_DC_0, IMX_SC_PM_CLK_MISC1);
+ 	imx_clk_scu("dc0_bypass1_clk", IMX_SC_R_DC_0_VIDEO1, IMX_SC_PM_CLK_BYPASS);
  
--	hws[IMX8MP_CLK_DRAM_ALT] = imx8m_clk_hw_composite("dram_alt", imx8mp_dram_alt_sels, ccm_base + 0xa000);
--	hws[IMX8MP_CLK_DRAM_APB] = imx8m_clk_hw_composite_critical("dram_apb", imx8mp_dram_apb_sels, ccm_base + 0xa080);
-+	hws[IMX8MP_CLK_DRAM_ALT] = imx8m_clk_hw_fw_managed_composite("dram_alt", imx8mp_dram_alt_sels, ccm_base + 0xa000);
-+	hws[IMX8MP_CLK_DRAM_APB] = imx8m_clk_hw_fw_managed_composite_critical("dram_apb", imx8mp_dram_apb_sels, ccm_base + 0xa080);
- 	hws[IMX8MP_CLK_VPU_G1] = imx8m_clk_hw_composite("vpu_g1", imx8mp_vpu_g1_sels, ccm_base + 0xa100);
- 	hws[IMX8MP_CLK_VPU_G2] = imx8m_clk_hw_composite("vpu_g2", imx8mp_vpu_g2_sels, ccm_base + 0xa180);
- 	hws[IMX8MP_CLK_CAN1] = imx8m_clk_hw_composite("can1", imx8mp_can1_sels, ccm_base + 0xa200);
+ 	imx_clk_scu2("dc1_disp0_clk", dc1_sels, ARRAY_SIZE(dc1_sels), IMX_SC_R_DC_1, IMX_SC_PM_CLK_MISC0);
 -- 
 2.43.0
 
