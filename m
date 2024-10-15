@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606661C07DC;
-	Tue, 15 Oct 2024 13:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB73E1C07FF;
+	Tue, 15 Oct 2024 13:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997529; cv=none; b=cLKxlrgiwHDt9OZ665hYVnfszQh11CvENYv6BSqmUQbclDMiuAzYzjuj2cG0jdZBrMhMZ0my9SAxwWRnOA1URTm/9+LUQox3LL+l7PdW8tJkr21e6wFwGJcboqMsZfsmcYYZ7LJizSRMQNbZaE3kQLWpI8Ig6iDQrKvc643Q60o=
+	t=1728997533; cv=none; b=o2AmMvFhIkyyptiCcUok16DPKh1TT0VjVnxCNjIywvZQLw0jNFD9gc7gvWgP+3TK7PWKX18nZ7515m73zqHf9MYKJlIg9fvvwP84TO/gaBNv0IrB5OqQWTukh1takQALsOVe+lHpNVigZUMQxzq+8ujtZ47ArHCIwmi/dOCcV2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997529; c=relaxed/simple;
-	bh=scOn0k+7kKqkwCho8BTI90zo2zvgRGZRgMiX1Fqg1D8=;
+	s=arc-20240116; t=1728997533; c=relaxed/simple;
+	bh=K6sVb9CE3BKTpxsiygy56jcqSTlx9GFADwZ1/dmssxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/dkrrGF8KVsgTluqJNaDXnGX63/zhRsEQV3fr3mkV1l0DsTXOT7JtUA0v0+2pTlEryoYpysGpD7+wBpRjPbIAyEN/GTArW7ayUFP7blXqHQjlkLeoP0GifP0cb0wVGvkRgI/fgGwYhSycQd5NRFhOpkFx+YgXzCxO2QjrOBLok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VPl2XUrd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D4usu7C5Vy+VAaTUwoCI/C9PQgfqNr9jWkLRHU7QtLzRS1iFRKw78RKQYw/BjO+R8JLRdhQ9h0vrdygcVW0/kZ8SdlvEDOsgXowUB4jBrAyiTcVWI1ulfik9pXapffNgO9EzGfe8S2lU4JlcQZ1/rPjv1iGMNRh0RN6bFfavRdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtsvSaHi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VPl2XUrd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FC2C4CEC6;
-	Tue, 15 Oct 2024 13:05:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtsvSaHi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40697C4CECF;
+	Tue, 15 Oct 2024 13:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997529;
-	bh=scOn0k+7kKqkwCho8BTI90zo2zvgRGZRgMiX1Fqg1D8=;
+	s=korg; t=1728997532;
+	bh=K6sVb9CE3BKTpxsiygy56jcqSTlx9GFADwZ1/dmssxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VPl2XUrd0evOOLcCYHYsCUrXknGRimp6uA56hBKfINa7vjMRRHzDbq2EZCu3Xo7Z0
-	 RSxYJ32JlVdqobPN+8iTb5zUeIN/JSCuJYi9BEVCslmN1REXdEY3F2ZFUPV3ERnOsN
-	 B0mJ+2cT8YHyM3673Vutl6J/onxQOID2rdFkxH5k=
+	b=VtsvSaHijOXsEGPO8Mi8MFxvIzhFQr8gdG+p+BxBJaLnhtLkujndWIwi4DgaGxSOO
+	 4wWhs7KG3wgF2SRxbR9+J+PP+6BGaLpvTWdnWZOAW3Av7Ak4Gxb6O93O3jQWqdHSc+
+	 mOvWJi6S3qQIS7br1rf2IkrLnttMoFr6HoGf2/CA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@intel.com>,
-	Sumeet Pawnikar <sumeet.r.pawnikar@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Subject: [PATCH 5.10 210/518] powercap: RAPL: fix invalid initialization for pl4_supported field
-Date: Tue, 15 Oct 2024 14:41:54 +0200
-Message-ID: <20241015123925.098503384@linuxfoundation.org>
+Subject: [PATCH 5.10 211/518] x86/mm: Switch to new Intel CPU model defines
+Date: Tue, 15 Oct 2024 14:41:55 +0200
+Message-ID: <20241015123925.136181052@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,45 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumeet Pawnikar <sumeet.r.pawnikar@intel.com>
+From: Tony Luck <tony.luck@intel.com>
 
-commit d05b5e0baf424c8c4b4709ac11f66ab726c8deaf upstream.
+commit 2eda374e883ad297bd9fe575a16c1dc850346075 upstream.
 
-The current initialization of the struct x86_cpu_id via
-pl4_support_ids[] is partial and wrong. It is initializing
-"stepping" field with "X86_FEATURE_ANY" instead of "feature" field.
+New CPU #defines encode vendor and family as well as model.
 
-Use X86_MATCH_INTEL_FAM6_MODEL macro instead of initializing
-each field of the struct x86_cpu_id for pl4_supported list of CPUs.
-This X86_MATCH_INTEL_FAM6_MODEL macro internally uses another macro
-X86_MATCH_VENDOR_FAM_MODEL_FEATURE for X86 based CPU matching with
-appropriate initialized values.
+[ dhansen: vertically align 0's in invlpg_miss_ids[] ]
 
-Reported-by: Dave Hansen <dave.hansen@intel.com>
-Link: https://lore.kernel.org/lkml/28ead36b-2d9e-1a36-6f4e-04684e420260@intel.com
-Fixes: eb52bc2ae5b8 ("powercap: RAPL: Add Power Limit4 support for Meteor Lake SoC")
-Fixes: b08b95cf30f5 ("powercap: RAPL: Add Power Limit4 support for Alder Lake-N and Raptor Lake-P")
-Fixes: 515755906921 ("powercap: RAPL: Add Power Limit4 support for RaptorLake")
-Fixes: 1cc5b9a411e4 ("powercap: Add Power Limit4 support for Alder Lake SoC")
-Fixes: 8365a898fe53 ("powercap: Add Power Limit4 support")
-Signed-off-by: Sumeet Pawnikar <sumeet.r.pawnikar@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-[ Ricardo: I only kept TIGERLAKE in pl4_support_ids as only this model is
-  enumerated before this changeset. ]
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/all/20240424181518.41946-1-tony.luck%40intel.com
+[ Ricardo: I used the old match macro X86_MATCH_INTEL_FAM6_MODEL()
+  instead of X86_MATCH_VFM() as in the upstream commit.
+  I also kept the ALDERLAKE_N name instead of ATOM_GRACEMONT. Both refer
+  to the same CPU model. ]
 Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/powercap/intel_rapl_msr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/mm/init.c |   16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
---- a/drivers/powercap/intel_rapl_msr.c
-+++ b/drivers/powercap/intel_rapl_msr.c
-@@ -126,7 +126,7 @@ static int rapl_msr_write_raw(int cpu, s
+--- a/arch/x86/mm/init.c
++++ b/arch/x86/mm/init.c
+@@ -257,21 +257,17 @@ static void __init probe_page_size_mask(
+ 	}
+ }
  
- /* List of verified CPUs. */
- static const struct x86_cpu_id pl4_support_ids[] = {
--	{ X86_VENDOR_INTEL, 6, INTEL_FAM6_TIGERLAKE_L, X86_FEATURE_ANY },
-+	X86_MATCH_INTEL_FAM6_MODEL(TIGERLAKE_L, NULL),
+-#define INTEL_MATCH(_model) { .vendor  = X86_VENDOR_INTEL,	\
+-			      .family  = 6,			\
+-			      .model = _model,			\
+-			    }
+ /*
+  * INVLPG may not properly flush Global entries
+  * on these CPUs when PCIDs are enabled.
+  */
+ static const struct x86_cpu_id invlpg_miss_ids[] = {
+-	INTEL_MATCH(INTEL_FAM6_ALDERLAKE   ),
+-	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_L ),
+-	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_N ),
+-	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE  ),
+-	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_P),
+-	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_S),
++	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,      0),
++	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,    0),
++	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_N,    0),
++	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE,     0),
++	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_P,   0),
++	X86_MATCH_INTEL_FAM6_MODEL(RAPTORLAKE_S,   0),
  	{}
  };
  
