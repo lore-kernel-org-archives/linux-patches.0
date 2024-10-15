@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410FE1B2183;
-	Tue, 15 Oct 2024 13:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4C61B2184;
+	Tue, 15 Oct 2024 13:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998565; cv=none; b=EJZdhLxRjad8FXnu4gzin9PrKGZVNuOBHIxdaK92UvqB7ruCkvSVkOeFcVJ04SNuKOLfxXxI1DtlxfG2626ZEeJxKDfhN7vNbc3LgdFzvnP2/K62NH02KZWBaAEJfBD4hl7Vcs6xlE7qfCFm9ej7u1NQLi/jfVAXpWcjwiaHI1g=
+	t=1728998568; cv=none; b=ZsI8TSv1Nt3CaPJOJn6KvZJj43DZCwNnQcdehIi4tJLCvZXZzt5DO05P3hLHCCjBzeAOWcqgKPLE15E8SdFaemQt/aCCc5nT18GC9BeO5Pgu1dVGiZwZsC4XU2B0QO05dze3CdzE3pKy5Vvx1yMhPleHB3GhrwwhpvfFlQ9JYKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998565; c=relaxed/simple;
-	bh=lLgzSOscctCHgZ6mDn+BlhBETU6lNfRg9YI3EtQgSXo=;
+	s=arc-20240116; t=1728998568; c=relaxed/simple;
+	bh=bs8xuSRsWYeuu9zFf1+wag3rBaFcfI23GMr7UNH6eAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AypKg255UEE66i5TYcURlZ/dtgIxIrdihiSJP3eEH0mAuywYEpQkyJQDjbs6fmt+dHiHwtvtkvq9o6BrFBUF+tBk6ZsmhrLrxaPEo3qkzLhQLnMxJMi087cuBLiWKCNNtM8oY1PtKij79louIS2ZWEd5H29v/tGv+l0zJCIY1G0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5tCr1nf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vfr/D3VipbJjTRZ33hMapMZTuWwvdI41xPJcJy41RYN7USqG8psmeTyLp3UsnMezdDziqdZ3w13lR7KvyO53Ccc4LZZoHRBTcl01FWaYoUriB6AClWcldzaOA5klmJW8B1/B7kNPcL9FnPz///y1kwlzG/wdDYA2HaCfv9Dl9KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ap06ws0z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5tCr1nf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B665AC4CEC6;
-	Tue, 15 Oct 2024 13:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ap06ws0z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5458C4CEC6;
+	Tue, 15 Oct 2024 13:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998565;
-	bh=lLgzSOscctCHgZ6mDn+BlhBETU6lNfRg9YI3EtQgSXo=;
+	s=korg; t=1728998568;
+	bh=bs8xuSRsWYeuu9zFf1+wag3rBaFcfI23GMr7UNH6eAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I5tCr1nfCrxnERnGTdZ9n0yUBBJ0i1pCGWKnfUaLJ1jKY0+gmepDevO/H07S8ouOF
-	 M+RKKvk/2tzn7jkXac0Mpt44yz5K1SC/wfFOqhbnGLig/lGgG/Smmh7BZGdj0644QH
-	 hdTZghy2Zv67Uln8SzCsSigKOgrN4/qaXh7YCSy4=
+	b=ap06ws0zKsUa90zbLkFiX3IKn+CcGY6d5KBMOkd0sa+dXcjPubuOumylm51pWzaQJ
+	 GVkVtiBFn8k1zpdpe4DAVhXJtWseAVezKSS6tVcYbVyAAeGuGPG9SAmbFkHCnixcJC
+	 ZfBwO2sbuRWxjKYVMaJEAgdL403lbtXdFXdOe/Ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianlin Shi <jishi@redhat.com>,
-	Antoine Tenart <atenart@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 515/518] net: vrf: determine the dst using the original ifindex for multicast
-Date: Tue, 15 Oct 2024 14:46:59 +0200
-Message-ID: <20241015123936.866342636@linuxfoundation.org>
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 516/518] netfilter: ip6t_rpfilter: Fix regression with VRF interfaces
+Date: Tue, 15 Oct 2024 14:47:00 +0200
+Message-ID: <20241015123936.903979064@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,61 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Phil Sutter <phil@nwl.cc>
 
-commit f2575c8f404911da83f25b688e12afcf4273e640 upstream.
+commit efb056e5f1f0036179b2f92c1c15f5ea7a891d70 upstream.
 
-Multicast packets received on an interface bound to a VRF are marked as
-belonging to the VRF and the skb device is updated to point to the VRF
-device itself. This was fine even when a route was associated to a
-device as when performing a fib table lookup 'oif' in fib6_table_lookup
-(coming from 'skb->dev->ifindex' in ip6_route_input) was set to 0 when
-FLOWI_FLAG_SKIP_NH_OIF was set.
+When calling ip6_route_lookup() for the packet arriving on the VRF
+interface, the result is always the real (slave) interface. Expect this
+when validating the result.
 
-With commit 40867d74c374 ("net: Add l3mdev index to flow struct and
-avoid oif reset for port devices") this is not longer true and multicast
-traffic is not received on the original interface.
-
-Instead of adding back a similar check in fib6_table_lookup determine
-the dst using the original ifindex for multicast VRF traffic. To make
-things consistent across the function do the above for all strict
-packets, which was the logic before commit 6f12fa775530 ("vrf: mark skb
-for multicast or link-local as enslaved to VRF"). Note that reverting to
-this behavior should be fine as the change was about marking packets
-belonging to the VRF, not about their dst.
-
-Fixes: 40867d74c374 ("net: Add l3mdev index to flow struct and avoid oif reset for port devices")
-Reported-by: Jianlin Shi <jishi@redhat.com>
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20221220171825.1172237-1-atenart@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: acc641ab95b66 ("netfilter: rpfilter/fib: Populate flowic_l3mdev field")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vrf.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ipv6/netfilter/ip6t_rpfilter.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/vrf.c
-+++ b/drivers/net/vrf.c
-@@ -1336,8 +1336,8 @@ static struct sk_buff *vrf_ip6_rcv(struc
- 
- 	/* loopback, multicast & non-ND link-local traffic; do not push through
- 	 * packet taps again. Reset pkt_type for upper layers to process skb.
--	 * For strict packets with a source LLA, determine the dst using the
--	 * original ifindex.
-+	 * For non-loopback strict packets, determine the dst using the original
-+	 * ifindex.
- 	 */
- 	if (skb->pkt_type == PACKET_LOOPBACK || (need_strict && !is_ndisc)) {
- 		skb->dev = vrf_dev;
-@@ -1346,7 +1346,7 @@ static struct sk_buff *vrf_ip6_rcv(struc
- 
- 		if (skb->pkt_type == PACKET_LOOPBACK)
- 			skb->pkt_type = PACKET_HOST;
--		else if (ipv6_addr_type(&ipv6_hdr(skb)->saddr) & IPV6_ADDR_LINKLOCAL)
-+		else
- 			vrf_ip6_input_dst(skb, vrf_dev, orig_iif);
- 
+--- a/net/ipv6/netfilter/ip6t_rpfilter.c
++++ b/net/ipv6/netfilter/ip6t_rpfilter.c
+@@ -72,7 +72,9 @@ static bool rpfilter_lookup_reverse6(str
  		goto out;
+ 	}
+ 
+-	if (rt->rt6i_idev->dev == dev || (flags & XT_RPFILTER_LOOSE))
++	if (rt->rt6i_idev->dev == dev ||
++	    l3mdev_master_ifindex_rcu(rt->rt6i_idev->dev) == dev->ifindex ||
++	    (flags & XT_RPFILTER_LOOSE))
+ 		ret = true;
+  out:
+ 	ip6_rt_put(rt);
 
 
