@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A361AF0AB;
-	Tue, 15 Oct 2024 13:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7EC1AF0A9;
+	Tue, 15 Oct 2024 13:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997735; cv=none; b=QkJ1/Dq8vsOC/rHDsd8DMuBT806m4zUhFnN+EDhnZtJoIzDZRz44HxBJbNO5ncLmQaduUreZRN1OS/AgGucpUsN1AuKm9KWjNLM4S+mqLh+1CdtCJCHzX4c/S+r8waxkaBup/PTVyqYV8QIxNbW4rgYQvikQAS2Zdw7g4mEPCgQ=
+	t=1728997738; cv=none; b=WCc1gcwceLknu7/MLkkgnzNZ6PrCqWYfS3D4QfV/GnZ+0pkMmTza01u66CJBBZM9V6+Lk9fUkgVQoLhTE71NlXFTDLOouD1D3AGYYKEaqI9OhQD0MJ4s37QSRIJ+PHBnYoekAiYF/Y+1cFcr6XCmm7R0LIzX2auiJViRLghKj+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997735; c=relaxed/simple;
-	bh=ioaLN5GssGQb6e5+rb8I+jh8bLToFvpzbp8KYbeTkp0=;
+	s=arc-20240116; t=1728997738; c=relaxed/simple;
+	bh=5yzxQt/tSiqL/R8s2tVVPQ9rt/bg8yCw3xg5C7mbcs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=POAQJ74JvrEX4ZmGRcZrm3PbsC+G57YhXaw/RUhKkmo26DL1Xtotm+UkSjXfuBI/aDOEEQbKeb218CJOH1ONKylSCUfNzgQGjw01lJdE2KX/LRYoHQWPvozzXDFusLaE1nXeXq6XhOovTI2eLQL3DSMTcBsuAmPcknYfAYa2en0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0kynUTz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KaIghyhaugXGJi4NCaDl9CBKB36VqfWoAcWUMKUaN15P+eEKhqd9iSKAEW0I5S00jBv0E8+TkX50l3vfVbdPloRTa/OaE7oOylczG9JwVkIhRgGB/XRtY564fDjlD+xcORMMykm+tEMH3PxDNowLvwByfjlTYAO2gsADHRDyh1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvBm87rj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0kynUTz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67335C4CEC6;
-	Tue, 15 Oct 2024 13:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvBm87rj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE51DC4CECE;
+	Tue, 15 Oct 2024 13:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997734;
-	bh=ioaLN5GssGQb6e5+rb8I+jh8bLToFvpzbp8KYbeTkp0=;
+	s=korg; t=1728997738;
+	bh=5yzxQt/tSiqL/R8s2tVVPQ9rt/bg8yCw3xg5C7mbcs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0kynUTzC7Rm7h0Z+SKdqhbu+NHlrPXK87dBxjt4DVTO1M2754gBTgY5cTqSWk4RU
-	 iEH9JSzfoEvC5zVaKwdV4SY3QzPqAvBGtUpS7ZKKEwqMLMzWh4k8cFtadGiaVirGuP
-	 ssaYV9nbREXWuov5V2tWb7qE3HMh11vNB6TLODRc=
+	b=EvBm87rjp29ViOIfhw7JrC7EDk3boDbV49P4J0Bfqcbi/k7+ZmDIApbpLgtbm+LXW
+	 tduDdLzgxYOxgfBZQHVwE1dmMWx+fYbI2TGrPpYEhSUXhQ8IoWXcPVr3ZG21fjdEC+
+	 RMRyTGwNGYBDdQ0Hkv+vBiOdR4kvb6DBbszF/Lq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 5.10 239/518] f2fs: prevent possible int overflow in dir_block_index()
-Date: Tue, 15 Oct 2024 14:42:23 +0200
-Message-ID: <20241015123926.217727219@linuxfoundation.org>
+Subject: [PATCH 5.10 240/518] f2fs: avoid potential int overflow in sanity_check_area_boundary()
+Date: Tue, 15 Oct 2024 14:42:24 +0200
+Message-ID: <20241015123926.256337841@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,40 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 47f268f33dff4a5e31541a990dc09f116f80e61c upstream.
+commit 50438dbc483ca6a133d2bce9d5d6747bcee38371 upstream.
 
-The result of multiplication between values derived from functions
-dir_buckets() and bucket_blocks() *could* technically reach
-2^30 * 2^2 = 2^32.
+While calculating the end addresses of main area and segment 0, u32
+may be not enough to hold the result without the danger of int
+overflow.
 
-While unlikely to happen, it is prudent to ensure that it will not
-lead to integer overflow. Thus, use mul_u32_u32() as it's more
-appropriate to mitigate the issue.
+Just in case, play it safe and cast one of the operands to a
+wider type (u64).
 
 Found by Linux Verification Center (linuxtesting.org) with static
 analysis tool SVACE.
 
-Fixes: 3843154598a0 ("f2fs: introduce large directory support")
+Fixes: fd694733d523 ("f2fs: cover large section in sanity check of super")
 Cc: stable@vger.kernel.org
 Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/dir.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/f2fs/super.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/dir.c
-+++ b/fs/f2fs/dir.c
-@@ -183,7 +183,8 @@ static unsigned long dir_block_index(uns
- 	unsigned long bidx = 0;
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -2754,9 +2754,9 @@ static inline bool sanity_check_area_bou
+ 	u32 segment_count = le32_to_cpu(raw_super->segment_count);
+ 	u32 log_blocks_per_seg = le32_to_cpu(raw_super->log_blocks_per_seg);
+ 	u64 main_end_blkaddr = main_blkaddr +
+-				(segment_count_main << log_blocks_per_seg);
++				((u64)segment_count_main << log_blocks_per_seg);
+ 	u64 seg_end_blkaddr = segment0_blkaddr +
+-				(segment_count << log_blocks_per_seg);
++				((u64)segment_count << log_blocks_per_seg);
  
- 	for (i = 0; i < level; i++)
--		bidx += dir_buckets(i, dir_level) * bucket_blocks(i);
-+		bidx += mul_u32_u32(dir_buckets(i, dir_level),
-+				    bucket_blocks(i));
- 	bidx += idx * bucket_blocks(level);
- 	return bidx;
- }
+ 	if (segment0_blkaddr != cp_blkaddr) {
+ 		f2fs_info(sbi, "Mismatch start address, segment0(%u) cp_blkaddr(%u)",
 
 
