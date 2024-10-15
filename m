@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AECB1B2181;
-	Tue, 15 Oct 2024 13:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A4E1B21B8;
+	Tue, 15 Oct 2024 13:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998594; cv=none; b=dKWEGDW6+wLKTowz1MOmbFs7pN/xK9hSrXGCmNfREdxE26sBBdEJ9y89HqEzuR6yGrskEYT1PQcseswgMa4ufQZ2b6S/jeTfxgPNmRfCa3qrx/feg9MfAPPQ/JRmWQ9ac1eVPJmE0ya6nNNiJ7x/H68TYIKPz8BRMWH51X0Echs=
+	t=1728998599; cv=none; b=aRMUPZMqok1uDT99FGWe/rNhsHlOO2qdKbx1M/Fy1Ft8BPfNln+xEXsfIrR90oTSfIEpgThCBWfJKMDAFoJs5rNO7W+YfgeUNz+k+jtSgV1pSXspcL/KRGRUAC6RpCkHeQEuMhXObTXv1OsGydG1SeAFPVC5LvpR+YozTiEtSiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998594; c=relaxed/simple;
-	bh=qvGJjLlsaZJQMBgrUJhYv6j81sf58sGRKO8wFuD3BtE=;
+	s=arc-20240116; t=1728998599; c=relaxed/simple;
+	bh=mLKIGX2agFfR9U1EbcPU05CB2RTjGs8mWPRu5by9Iss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VL6UOKmXodXjfZj/bazmkf+HlkaQiFAMdwqUtCQyE2rKxSuXd80wcsCnsy9fiJO4GxYyZAQVo6ZHWW23PeJjO0yXN9hyMdqzy7dfT/AnGCuDiv8aTjlW5jhGGTy0kUudr1ck64tfiVddFeK3yWbGCjGBZtirv/sCCQx7rv09m78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMuqlZ+o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ATX0Z+sPUfU9/iFw0d/5/aKthWEWbH0YNVWRXO649OYDBB3QHDj4ZTGUGo+IfOCBTIpDe23M2NCNLv1B69kY4mDoZAYpiRK98eMbKtj+pprAS9WQa3aKxUk7vxrZiDbUpo3cngRyjK7Lro1lwSAHlvqEB2nxw6IzPUVavb4TSLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+LhkJYi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMuqlZ+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6773C4CEC6;
-	Tue, 15 Oct 2024 13:23:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+LhkJYi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7BDFC4CEC6;
+	Tue, 15 Oct 2024 13:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998594;
-	bh=qvGJjLlsaZJQMBgrUJhYv6j81sf58sGRKO8wFuD3BtE=;
+	s=korg; t=1728998599;
+	bh=mLKIGX2agFfR9U1EbcPU05CB2RTjGs8mWPRu5by9Iss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JMuqlZ+oF0YlTPA6iYRM7Imc2vGJHIzVEPtfk64LXHbXADGKFI0YCPNrUhUfTVYhR
-	 a1Eo4NkdXsB1fTzXSagHXAxoNfz3zRxQ/wr6rhjxvhWCaHv3Gf6FvT6PhWTs9tUIPO
-	 x0CAABiSemU9a+9BaoMuUrsVgQKNOtJXXLFkd1vI=
+	b=M+LhkJYi5dmYYeQnQz2iyeEa7ywv9qcc71eI9QaZ/LvkQcK/He0AlBDgbjEZscMfQ
+	 XRNWkzYR0wELNuWmuv0bhR+deNwhskKihP/nqvPk/DXRrdZf1qiblqQ3Ylb7gOS3Om
+	 8NRetN0DQrN6USTiuBctUE1epfSSYioXf/Gavrks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonatan Maman <Ymaman@Nvidia.com>,
-	Gal Shalom <GalShalom@Nvidia.com>,
-	Ben Skeggs <bskeggs@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 5.10 510/518] nouveau/dmem: Fix vulnerability in migrate_to_ram upon copy error
-Date: Tue, 15 Oct 2024 14:46:54 +0200
-Message-ID: <20241015123936.673992078@linuxfoundation.org>
+	Eyal Birger <eyal.birger@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 511/518] net: geneve: add missing netlink policy and size for IFLA_GENEVE_INNER_PROTO_INHERIT
+Date: Tue, 15 Oct 2024 14:46:55 +0200
+Message-ID: <20241015123936.712738959@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -52,48 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonatan Maman <Ymaman@Nvidia.com>
+From: Eyal Birger <eyal.birger@gmail.com>
 
-commit 835745a377a4519decd1a36d6b926e369b3033e2 upstream.
+commit 36c2e31ad25bd087756b8db9584994d1d80c236b upstream.
 
-The `nouveau_dmem_copy_one` function ensures that the copy push command is
-sent to the device firmware but does not track whether it was executed
-successfully.
+Add missing netlink attribute policy and size calculation.
+Also enable strict validation from this new attribute onwards.
 
-In the case of a copy error (e.g., firmware or hardware failure), the
-copy push command will be sent via the firmware channel, and
-`nouveau_dmem_copy_one` will likely report success, leading to the
-`migrate_to_ram` function returning a dirty HIGH_USER page to the user.
-
-This can result in a security vulnerability, as a HIGH_USER page that may
-contain sensitive or corrupted data could be returned to the user.
-
-To prevent this vulnerability, we allocate a zero page. Thus, in case of
-an error, a non-dirty (zero) page will be returned to the user.
-
-Fixes: 5be73b690875 ("drm/nouveau/dmem: device memory helpers for SVM")
-Signed-off-by: Yonatan Maman <Ymaman@Nvidia.com>
-Co-developed-by: Gal Shalom <GalShalom@Nvidia.com>
-Signed-off-by: Gal Shalom <GalShalom@Nvidia.com>
-Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241008115943.990286-3-ymaman@nvidia.com
+Fixes: 435fe1c0c1f7 ("net: geneve: support IPv4/IPv6 as inner protocol")
+Signed-off-by: Eyal Birger <eyal.birger@gmail.com>
+Link: https://lore.kernel.org/r/20220322043954.3042468-1-eyal.birger@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_dmem.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/geneve.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/nouveau/nouveau_dmem.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_dmem.c
-@@ -149,7 +149,7 @@ static vm_fault_t nouveau_dmem_fault_cop
- 	if (!spage || !(args->src[0] & MIGRATE_PFN_MIGRATE))
- 		return 0;
+--- a/drivers/net/geneve.c
++++ b/drivers/net/geneve.c
+@@ -1277,6 +1277,7 @@ static void geneve_setup(struct net_devi
+ }
  
--	dpage = alloc_page_vma(GFP_HIGHUSER, vmf->vma, vmf->address);
-+	dpage = alloc_page_vma(GFP_HIGHUSER | __GFP_ZERO, vmf->vma, vmf->address);
- 	if (!dpage)
- 		return VM_FAULT_SIGBUS;
- 	lock_page(dpage);
+ static const struct nla_policy geneve_policy[IFLA_GENEVE_MAX + 1] = {
++	[IFLA_GENEVE_UNSPEC]		= { .strict_start_type = IFLA_GENEVE_INNER_PROTO_INHERIT },
+ 	[IFLA_GENEVE_ID]		= { .type = NLA_U32 },
+ 	[IFLA_GENEVE_REMOTE]		= { .len = sizeof_field(struct iphdr, daddr) },
+ 	[IFLA_GENEVE_REMOTE6]		= { .len = sizeof(struct in6_addr) },
+@@ -1290,6 +1291,7 @@ static const struct nla_policy geneve_po
+ 	[IFLA_GENEVE_UDP_ZERO_CSUM6_RX]	= { .type = NLA_U8 },
+ 	[IFLA_GENEVE_TTL_INHERIT]	= { .type = NLA_U8 },
+ 	[IFLA_GENEVE_DF]		= { .type = NLA_U8 },
++	[IFLA_GENEVE_INNER_PROTO_INHERIT]	= { .type = NLA_FLAG },
+ };
+ 
+ static int geneve_validate(struct nlattr *tb[], struct nlattr *data[],
+@@ -1795,6 +1797,7 @@ static size_t geneve_get_size(const stru
+ 		nla_total_size(sizeof(__u8)) + /* IFLA_GENEVE_UDP_ZERO_CSUM6_TX */
+ 		nla_total_size(sizeof(__u8)) + /* IFLA_GENEVE_UDP_ZERO_CSUM6_RX */
+ 		nla_total_size(sizeof(__u8)) + /* IFLA_GENEVE_TTL_INHERIT */
++		nla_total_size(0) +	 /* IFLA_GENEVE_INNER_PROTO_INHERIT */
+ 		0;
+ }
+ 
 
 
