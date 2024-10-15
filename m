@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54EDC19B3FF;
-	Tue, 15 Oct 2024 11:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98E91CFEA9;
+	Tue, 15 Oct 2024 11:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992939; cv=none; b=cBiYNkQDKwlIALJU2iHxLNUJL/k31CHRqF4KOjOfDIUY5osH+zoduiDHTDjmIn/nZeHxas5M3N8GzFVg0IDM2c7n9Uy/RrykiekCw71jpFW4VRELYROC6TwO0wTotMxEM7MvzPpc1d9ClR8EoEtUNc9WUXBUb+zw4BYLWNMRD5k=
+	t=1728992942; cv=none; b=jAJIPbGVPMl4tg1DF0StrkcTTMc+/Shlogo5m9ramCTK+NMEQJMr7B5g4+wy0D1VtVHY1C0XceHIsBFWkBnume9Zk0wPQDnMZoUVea+jrPZiwPDd+UwiSFeMx3ocqgauC3scOpJ23WJaJjZ+7h/WaqKJJ/NvcO2RBUcO6zriHJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992939; c=relaxed/simple;
-	bh=2RN34Rt68iv3qzxRmiX9VAxxRQ6/XGZWXYVxi4baksY=;
+	s=arc-20240116; t=1728992942; c=relaxed/simple;
+	bh=4EBqSkPT1vFE3lZZ4PGFK8gg2A8j1n1ej1sHuaK5Uvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzGQCOeSBISKuoA2I1ZsYZmHDBEfADwZ/ZEIm5X+8M0nmo3L5pvZ+HCIB1fw4sTex/AHgem3tx3ryGaRjwGRYPA4rBz3TJeza2HNHGOg5jDW0ecQFuiptZeH++gmiMymuRcr9AEgxLwoHr9jRuj2u6A/3W99rnGi6/yXjp7Szwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFmHK5hQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gpeHyahXjr6hIHKUArpSAV4nAtOeYiGyoSJ3wZ3zxKDnR8ifu1PnncSSkqqRsGzML/HE2mlZAevfNylHll8GrzFOubpczolMOu0kst0MGfnAWt6vU5tstVMohyqgsLMs/7HMBhXyrjim5pZd3N0Oxl5gmY/2hHjOvl0Rw4tFUZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCb7y9Q7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFmHK5hQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA638C4CECE;
-	Tue, 15 Oct 2024 11:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCb7y9Q7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36E1AC4CECE;
+	Tue, 15 Oct 2024 11:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992939;
-	bh=2RN34Rt68iv3qzxRmiX9VAxxRQ6/XGZWXYVxi4baksY=;
+	s=korg; t=1728992942;
+	bh=4EBqSkPT1vFE3lZZ4PGFK8gg2A8j1n1ej1sHuaK5Uvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFmHK5hQT0PcnrzSoVTb/vkvUG2tXIbqybF1t+UaRDTNLBAEVNm5dB7qoU7W7jqXk
-	 Q+VG3Qd2uHQ3P65T34xI/jy4dAN0U+sA5ScjOYR94P4sdu70ClzTHILcalmlh12eCy
-	 rGoxYUI/U5JivKqone9Qwt4ddCDzUEE02jw0Inkg=
+	b=gCb7y9Q749LrC/5hZY85wYIQO0PQCLf/tvT0mfPfohY/VDtaTYwDnaLswnduPEexK
+	 YeRIyZwUJA+qf1Y8DjjrkUUG7CkYGh5UozKuBbQFRt7c//GxqjlbRjdq7DPe73428y
+	 bViOzbGxXudTZr1xQ0UWzSuyY0QGYkIQMC/Cwbt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Blixt <jonas.blixt@actia.se>,
-	Anson Huang <anson.huang@nxp.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 246/691] watchdog: imx_sc_wdt: Dont disable WDT in suspend
-Date: Tue, 15 Oct 2024 13:23:14 +0200
-Message-ID: <20241015112450.117686493@linuxfoundation.org>
+Subject: [PATCH 5.15 264/691] f2fs: remove unneeded check condition in __f2fs_setxattr()
+Date: Tue, 15 Oct 2024 13:23:32 +0200
+Message-ID: <20241015112450.828111373@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,71 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Blixt <jonas.blixt@actia.se>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 2d9d6d300fb0a4ae4431bb308027ac9385746d42 ]
+[ Upstream commit bc3994ffa4cf23f55171943c713366132c3ff45d ]
 
-Parts of the suspend and resume chain is left unprotected if we disable
-the WDT here.
+It has checked return value of write_all_xattrs(), remove unneeded
+following check condition.
 
->From experiments we can see that the SCU disables and re-enables the WDT
-when we enter and leave suspend to ram. By not touching the WDT here we
-are protected by the WDT all the way to the SCU.
-
-Signed-off-by: Jonas Blixt <jonas.blixt@actia.se>
-CC: Anson Huang <anson.huang@nxp.com>
-Fixes: 986857acbc9a ("watchdog: imx_sc: Add i.MX system controller watchdog support")
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20240801121845.1465765-1-jonas.blixt@actia.se
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: aaf8c0b9ae04 ("f2fs: reduce expensive checkpoint trigger frequency")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/imx_sc_wdt.c | 24 ------------------------
- 1 file changed, 24 deletions(-)
+ fs/f2fs/xattr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/watchdog/imx_sc_wdt.c b/drivers/watchdog/imx_sc_wdt.c
-index 8ac021748d160..79649b0e89e47 100644
---- a/drivers/watchdog/imx_sc_wdt.c
-+++ b/drivers/watchdog/imx_sc_wdt.c
-@@ -213,29 +213,6 @@ static int imx_sc_wdt_probe(struct platform_device *pdev)
- 	return devm_watchdog_register_device(dev, wdog);
- }
+diff --git a/fs/f2fs/xattr.c b/fs/f2fs/xattr.c
+index 4f2069bf2b4bc..ec019feab062e 100644
+--- a/fs/f2fs/xattr.c
++++ b/fs/f2fs/xattr.c
+@@ -760,7 +760,7 @@ static int __f2fs_setxattr(struct inode *inode, int index,
+ 	if (index == F2FS_XATTR_INDEX_ENCRYPTION &&
+ 			!strcmp(name, F2FS_XATTR_NAME_ENCRYPTION_CONTEXT))
+ 		f2fs_set_encrypted_inode(inode);
+-	if (!error && S_ISDIR(inode->i_mode))
++	if (S_ISDIR(inode->i_mode))
+ 		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_CP);
  
--static int __maybe_unused imx_sc_wdt_suspend(struct device *dev)
--{
--	struct imx_sc_wdt_device *imx_sc_wdd = dev_get_drvdata(dev);
--
--	if (watchdog_active(&imx_sc_wdd->wdd))
--		imx_sc_wdt_stop(&imx_sc_wdd->wdd);
--
--	return 0;
--}
--
--static int __maybe_unused imx_sc_wdt_resume(struct device *dev)
--{
--	struct imx_sc_wdt_device *imx_sc_wdd = dev_get_drvdata(dev);
--
--	if (watchdog_active(&imx_sc_wdd->wdd))
--		imx_sc_wdt_start(&imx_sc_wdd->wdd);
--
--	return 0;
--}
--
--static SIMPLE_DEV_PM_OPS(imx_sc_wdt_pm_ops,
--			 imx_sc_wdt_suspend, imx_sc_wdt_resume);
--
- static const struct of_device_id imx_sc_wdt_dt_ids[] = {
- 	{ .compatible = "fsl,imx-sc-wdt", },
- 	{ /* sentinel */ }
-@@ -247,7 +224,6 @@ static struct platform_driver imx_sc_wdt_driver = {
- 	.driver		= {
- 		.name	= "imx-sc-wdt",
- 		.of_match_table = imx_sc_wdt_dt_ids,
--		.pm	= &imx_sc_wdt_pm_ops,
- 	},
- };
- module_platform_driver(imx_sc_wdt_driver);
+ same:
 -- 
 2.43.0
 
