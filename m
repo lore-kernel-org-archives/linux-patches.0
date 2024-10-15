@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF66D1E907D;
-	Tue, 15 Oct 2024 11:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B6B1E7666;
+	Tue, 15 Oct 2024 11:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992126; cv=none; b=LmWlSvAV1i/U/1FTliAxFG8aymjdNQIL9fzb9TssoP2EIHvoMgtzOFSxESrQpe3o0hLeD5bcTEMGYfGdecq41Qbv7Q/fKZ3VYSP5jHtlv7HKI9nSgb3wqJLBq7CAv0i0/uD6QzMUFvjFJ26FgpHPmS6oRpMSTkCjB+ryAiEQ8vA=
+	t=1728992129; cv=none; b=c6+hsFluMRDrMVMcOH+gqEaB4GgvT+MzJsBPHexfrfLS2PbOAdzQdNC3GBKv6IT74eH6FG2NLs5XOmUzsDR4dLZExPkvwGIi7qCmkqjObTl6lXFj2qq9ysEhIp0ph0u5baYm1Fia/oRJPiqC35pxLvV6u6yHnHkswRauMaaVhZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992126; c=relaxed/simple;
-	bh=OrkDED4+q3jl1ytEsh8bOfyRyR/5OAYNJO4j187LCQ8=;
+	s=arc-20240116; t=1728992129; c=relaxed/simple;
+	bh=MMnodEZlFzZm6Ug61Vw8uUny/LwTqNeuyJ2fG83lOxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A1+G5uUN1y05wjKzsqd3nniDZpowDCPtpCPHU4eIoy8QQALpI9pVLbdIKtJncweklQn1d0sIhLiMmn6tBUGYUGvZoVDyDd6kUcOy3ulv+o0z/LvmLlpnxrWgL7O3rcGMJ70mmOEDx4K0Lkdm0Kwyjk2R/5IkZKkQSSdo3UWHFMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMpp//fl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G/jJiD+OHbRHtDiISLONmc/OiZl1ztAIDVUvY3OyxVePHbV9HAYhmlGJne40dy7aX+Szhjv3CbDKbQagB266OOlSURV6kMbKZgDVGs9o51MXUwZLfhOWkdCXgpzfI4JPBOApbMORZ0L62nCjZvdKSQvFNPrjfkmNMCTEsoZ4zN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdWpIN57; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMpp//fl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41207C4CECF;
-	Tue, 15 Oct 2024 11:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdWpIN57"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72873C4CEC6;
+	Tue, 15 Oct 2024 11:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992125;
-	bh=OrkDED4+q3jl1ytEsh8bOfyRyR/5OAYNJO4j187LCQ8=;
+	s=korg; t=1728992129;
+	bh=MMnodEZlFzZm6Ug61Vw8uUny/LwTqNeuyJ2fG83lOxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RMpp//flGDdzjityuBODRie3mYC2alEB/jEwh0sEzI1G6u7AAasMQG1Jplv7sZEY4
-	 65hh+OhOfWKMbQo3sqornjj3e+5diMem1G3dpbvl+WT0cqKd4l8pB8iWpTe3ltvM2r
-	 54pE/nw96amK9uUft1FBZgXAOGoHYjjx60/s+QGs=
+	b=tdWpIN57F3OdaZDNUlVB7/0y0x9RXrMcx9kwtb3PN3LM9n3Mn7f4FPj0r87mRs0AQ
+	 KlxUrhXlFrqj9G5fhAVi2aDMlR8qlOOPTWRkNz89Ty3y8TYrzocMLgPoRs1M5leEpy
+	 l7dJtnNgksCAjnHRFPyYstkNIs4Q07KXQaPteEmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 026/691] Input: i8042 - add Fujitsu Lifebook E756 to i8042 quirk table
-Date: Tue, 15 Oct 2024 13:19:34 +0200
-Message-ID: <20241015112441.372479725@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	syzbot+9709e73bae885b05314b@syzkaller.appspotmail.com,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 009/691] ocfs2: fix uninit-value in ocfs2_get_block()
+Date: Tue, 15 Oct 2024 13:19:17 +0200
+Message-ID: <20241015112440.700671855@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,44 +58,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 7ce7c2283fa6843ab3c2adfeb83dcc504a107858 ]
+commit 2af148ef8549a12f8025286b8825c2833ee6bcb8 upstream.
 
-Yet another quirk entry for Fujitsu laptop.  Lifebook E756 requires
-i8041.nomux for keeping the touchpad working after suspend/resume.
+syzbot reported an uninit-value BUG:
 
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1229056
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20240814100630.2048-1-tiwai@suse.de
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+BUG: KMSAN: uninit-value in ocfs2_get_block+0xed2/0x2710 fs/ocfs2/aops.c:159
+ocfs2_get_block+0xed2/0x2710 fs/ocfs2/aops.c:159
+do_mpage_readpage+0xc45/0x2780 fs/mpage.c:225
+mpage_readahead+0x43f/0x840 fs/mpage.c:374
+ocfs2_readahead+0x269/0x320 fs/ocfs2/aops.c:381
+read_pages+0x193/0x1110 mm/readahead.c:160
+page_cache_ra_unbounded+0x901/0x9f0 mm/readahead.c:273
+do_page_cache_ra mm/readahead.c:303 [inline]
+force_page_cache_ra+0x3b1/0x4b0 mm/readahead.c:332
+force_page_cache_readahead mm/internal.h:347 [inline]
+generic_fadvise+0x6b0/0xa90 mm/fadvise.c:106
+vfs_fadvise mm/fadvise.c:185 [inline]
+ksys_fadvise64_64 mm/fadvise.c:199 [inline]
+__do_sys_fadvise64 mm/fadvise.c:214 [inline]
+__se_sys_fadvise64 mm/fadvise.c:212 [inline]
+__x64_sys_fadvise64+0x1fb/0x3a0 mm/fadvise.c:212
+x64_sys_call+0xe11/0x3ba0
+arch/x86/include/generated/asm/syscalls_64.h:222
+do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
+entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+This is because when ocfs2_extent_map_get_blocks() fails, p_blkno is
+uninitialized.  So the error log will trigger the above uninit-value
+access.
+
+The error log is out-of-date since get_blocks() was removed long time ago.
+And the error code will be logged in ocfs2_extent_map_get_blocks() once
+ocfs2_get_cluster() fails, so fix this by only logging inode and block.
+
+Link: https://syzkaller.appspot.com/bug?extid=9709e73bae885b05314b
+Link: https://lkml.kernel.org/r/20240925090600.3643376-1-joseph.qi@linux.alibaba.com
+Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reported-by: syzbot+9709e73bae885b05314b@syzkaller.appspotmail.com
+Tested-by: syzbot+9709e73bae885b05314b@syzkaller.appspotmail.com
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ocfs2/aops.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/input/serio/i8042-acpipnpio.h b/drivers/input/serio/i8042-acpipnpio.h
-index 49d87f56cb90..a6474090a882 100644
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -617,6 +617,15 @@ static const struct dmi_system_id i8042_dmi_quirk_table[] __initconst = {
- 		},
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
- 	},
-+	{
-+		/* Fujitsu Lifebook E756 */
-+		/* https://bugzilla.suse.com/show_bug.cgi?id=1229056 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "FUJITSU"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "LIFEBOOK E756"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX)
-+	},
- 	{
- 		/* Fujitsu Lifebook E5411 */
- 		.matches = {
--- 
-2.43.0
-
+--- a/fs/ocfs2/aops.c
++++ b/fs/ocfs2/aops.c
+@@ -156,9 +156,8 @@ int ocfs2_get_block(struct inode *inode,
+ 	err = ocfs2_extent_map_get_blocks(inode, iblock, &p_blkno, &count,
+ 					  &ext_flags);
+ 	if (err) {
+-		mlog(ML_ERROR, "Error %d from get_blocks(0x%p, %llu, 1, "
+-		     "%llu, NULL)\n", err, inode, (unsigned long long)iblock,
+-		     (unsigned long long)p_blkno);
++		mlog(ML_ERROR, "get_blocks() failed, inode: 0x%p, "
++		     "block: %llu\n", inode, (unsigned long long)iblock);
+ 		goto bail;
+ 	}
+ 
 
 
