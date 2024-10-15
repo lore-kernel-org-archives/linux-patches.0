@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675BC1C07E0;
-	Tue, 15 Oct 2024 13:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30351AF0B2;
+	Tue, 15 Oct 2024 13:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997471; cv=none; b=Cqer0HUAsnVbt8GohnswoOP8SLKbV7RDR6qEIHYMUz56JmOBeBNui4rdxUhnrFSh+YiFjKiVtysAkHK4FdKjQT+J7COZtIiLwB9MICTzXoVSB+n66kEBoKVKS9OkPdbGwReB6lqm/+4yrDBn2Pg4hy1fj/OQtxeYg1MLNZMuVCA=
+	t=1728997474; cv=none; b=M1pEJEcyX9aEX2VuFsaJtCWf7s47Ql7E5HuIw9VeiVlGTFHt7y7OWOHQwEjml0Hg3V3wIn3dSlT4gYNjZoRQ1AdSSeMXTQxaDh4qf5y6RSeCE9RpV8k/aJs3Bbf0h+bfjAcGOoKS47sRJGTb4GWvi2HZBoPIrLwwGq95KyFeOeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997471; c=relaxed/simple;
-	bh=8mIJ09GftxTdx4+AFb3CDiJTVvg5DBSPdUxi39wIMdc=;
+	s=arc-20240116; t=1728997474; c=relaxed/simple;
+	bh=PyZNc9dSmrPMHlk5NNjBuxk1IjlyoYMK2s+i4rXoe0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H1xvKgzhDGyXQd65izOfiCxNhMEHRCnds40tI8woawVO9k4rbrgznHE1uzPot7JdBZXSf9LwZkw5Mc0kPh25bIUGr1yqWcgFEM/z2MkBcLyE63y3FFthVCtx8ua2iPC5peNuAWBO+2vD0fePhx9+lU6GVDcldDQqGxWnmtyPXAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0T8kRYSc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sLvXasiS3T2KD08hrXOsyBU98FKK8hig68CNzwdgwD4PEv8omvtUJjURljl3Po3KMq35S+2KejujaOZyYcBbvB26KGKES7GbYSJ/K2xFfAeuqbggEQO1ijw90zosrdfweilUGQycl0GAY0rDp/oWFsGWxYEvRvplT08ZhzOMfzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lL/iegq8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0T8kRYSc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD19AC4CEC6;
-	Tue, 15 Oct 2024 13:04:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lL/iegq8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BEFC4CEC6;
+	Tue, 15 Oct 2024 13:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997471;
-	bh=8mIJ09GftxTdx4+AFb3CDiJTVvg5DBSPdUxi39wIMdc=;
+	s=korg; t=1728997474;
+	bh=PyZNc9dSmrPMHlk5NNjBuxk1IjlyoYMK2s+i4rXoe0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0T8kRYSccK5/NYc9xHPDFBc5QSXExCNQcWfsF5iJmIquZXFmMLWNmeH+TCzKr31ZQ
-	 0jGiEv4Q/XmjgcgV4NvvuBInnDWkVLbnohX5BQ9K4ef/KYNPEuHxJ4KUmvXwL0BH4n
-	 cMBlE6jRW2CZMEx+M7l/L/NK0aWk1yCWyX0C9rEg=
+	b=lL/iegq8P4hvR6w4dvd9+HHOYZMe95UHBEem1O26wMnUkKmHRbb2LINpyxRFYrreT
+	 1oePwD/kqtepJMjCE4VXuhzkN+raunZWz9EAdVRNXAijS0oAYIv756h+86xZDIRFqa
+	 UYtRyWNCCOO/hRdEkTEzxhuIuU1U4SpPrQGcgvNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 192/518] spi: lpspi: release requested DMA channels
-Date: Tue, 15 Oct 2024 14:41:36 +0200
-Message-ID: <20241015123924.392881704@linuxfoundation.org>
+Subject: [PATCH 5.10 193/518] spi: spi-fsl-lpspi: Undo runtime PM changes at driver exit time
+Date: Tue, 15 Oct 2024 14:41:37 +0200
+Message-ID: <20241015123924.431785664@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -51,51 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit f02bff30114f385d53ae3e45141db602923bca5d ]
+[ Upstream commit 3b577de206d52dbde9428664b6d823d35a803d75 ]
 
-The requested DMA channels are never released. Do this in .remove as well
-as in .probe. spi_register_controller() can return -EPROBE_DEFER if
-cs-gpios are not probed yet.
+It's important to undo pm_runtime_use_autosuspend() with
+pm_runtime_dont_use_autosuspend() at driver exit time unless driver
+initially enabled pm_runtime with devm_pm_runtime_enable()
+(which handles it for you).
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20211109103134.184216-1-alexander.stein@ew.tq-group.com
+Hence, call pm_runtime_dont_use_autosuspend() at driver exit time
+to fix it.
+
+Fixes: 944c01a889d9 ("spi: lpspi: enable runtime pm for lpspi")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://patch.msgid.link/20240906021251.610462-1-ruanjinjie@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 3b577de206d5 ("spi: spi-fsl-lpspi: Undo runtime PM changes at driver exit time")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/spi/spi-fsl-lpspi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index bc3e434ba2986..314629b172281 100644
+index 314629b172281..b6674fb6c1d67 100644
 --- a/drivers/spi/spi-fsl-lpspi.c
 +++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -920,7 +920,7 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
- 	ret = devm_spi_register_controller(&pdev->dev, controller);
- 	if (ret < 0) {
- 		dev_err_probe(&pdev->dev, ret, "spi_register_controller error: %i\n", ret);
--		goto out_pm_get;
-+		goto free_dma;
- 	}
+@@ -948,6 +948,7 @@ static int fsl_lpspi_remove(struct platform_device *pdev)
  
- 	pm_runtime_mark_last_busy(fsl_lpspi->dev);
-@@ -928,6 +928,8 @@ static int fsl_lpspi_probe(struct platform_device *pdev)
+ 	fsl_lpspi_dma_exit(controller);
  
- 	return 0;
- 
-+free_dma:
-+	fsl_lpspi_dma_exit(controller);
- out_pm_get:
- 	pm_runtime_dont_use_autosuspend(fsl_lpspi->dev);
- 	pm_runtime_put_sync(fsl_lpspi->dev);
-@@ -944,6 +946,8 @@ static int fsl_lpspi_remove(struct platform_device *pdev)
- 	struct fsl_lpspi_data *fsl_lpspi =
- 				spi_controller_get_devdata(controller);
- 
-+	fsl_lpspi_dma_exit(controller);
-+
++	pm_runtime_dont_use_autosuspend(fsl_lpspi->dev);
  	pm_runtime_disable(fsl_lpspi->dev);
  	return 0;
  }
