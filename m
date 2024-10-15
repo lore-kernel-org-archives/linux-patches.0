@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8E11C07CF;
-	Tue, 15 Oct 2024 13:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434DA1C9B81;
+	Tue, 15 Oct 2024 13:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997384; cv=none; b=blNKNQz2ozYd/ePzpJvBB+zvHZdcGJGMKHNgyUXVA0lzLOt0GIvYR7lrUXc60cqTcL24kRNr9xBiCXssalEabvW3z1v4L84WQsxcgnccPkkgX5dnNMPqfXV1guhlEDbXsC8if791EVmlDQxt254V0Ch4Aq24xNVkFyJkoJ2SngQ=
+	t=1728997388; cv=none; b=tl2ln/X0eYIZGx+YfJoh2aVer90OqlfMYmlRfmHzdEArHuWE/ZRVOCQxnp2yZhITLB9yW7BCe+cfuHE5GT3XplJfAZjqvRx4k3RuK3D44E8jzTg/Oc8FwMopp2+AafvNDNvZJ5GnhqBf6UN7Nw3m3TAN05Q/jdZVCCOcS+KItec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997384; c=relaxed/simple;
-	bh=Ys5IASUi7MZSOW4OqXp3m2uSJCO/KWbaQzgYWhqT3rY=;
+	s=arc-20240116; t=1728997388; c=relaxed/simple;
+	bh=EuUfL2wYf6laS0WOI+5EHqAEvv2bW1NT/bDU3MmCxe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=icFZfB/kfWSSiKhNIwb+yG0vaSAXiHp4/+Kv83PbCkcldrosBuMx6Esrvoa7qGWjwDzhMfXi8X9w4zNkefunL3R4dgeloj/64bRNWCKxt/AgJl7Ha7T/5KjKk21RNRkA05Hr2X1ENm5wDt00aM1DqaRIjPr2fL1splSiXUcl7Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qtbo1SEg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZwpHtUPLjBl05ScVyFtaK5/O31cnnjXf4O75w/OO95pOT2lLYnXRY9Nt5zok4UtjY6JfDOyj3kfsi90mqMbGMGEZ1EbgwhLPmSsNgQFvonnfUiWHLKpCuoIXY3FCxPDS85cbYW1kCp099PYqB32717UfZxlf0wvok/UrbTTK53A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADaS1m2f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qtbo1SEg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E50C4CEC6;
-	Tue, 15 Oct 2024 13:03:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADaS1m2f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8DE5C4CED2;
+	Tue, 15 Oct 2024 13:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997384;
-	bh=Ys5IASUi7MZSOW4OqXp3m2uSJCO/KWbaQzgYWhqT3rY=;
+	s=korg; t=1728997388;
+	bh=EuUfL2wYf6laS0WOI+5EHqAEvv2bW1NT/bDU3MmCxe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qtbo1SEg8dbbvNliFMi5L1/JFtiVHy1IiZnGbPH3nKKXgLXGvhAyOwNzlh4RgkK3r
-	 OmKiDxbHZYS2cU6mr3OvdN9Ewzigtv3tADgKrcvfKt3UnsH2+fFDXzC+gb1PnvHyAg
-	 9BWwYmwoZ9xwSOV+Z58PfyMZxTvpXUfgdpyTAHqQ=
+	b=ADaS1m2f/2SmwQer5GACYffcH5msovkjaKz1AdrVS5VU5JFacaUXRBOuogiYoqkPD
+	 LhALhH5gKBuQFGxJ4T7487B+gabtlXgveyVwFVV01BZ6Z/BeNgtYHWcxNX6tEHBwim
+	 ogACJkDnYN/3+3vIbtIz0k8zntb+xdcVt7hMuoYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Ambardar <tony.ambardar@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 136/518] selftests/bpf: Fix compile error from rlim_t in sk_storage_map.c
-Date: Tue, 15 Oct 2024 14:40:40 +0200
-Message-ID: <20241015123922.245612054@linuxfoundation.org>
+Subject: [PATCH 5.10 137/518] selftests/bpf: Fix missing ARRAY_SIZE() definition in bench.c
+Date: Tue, 15 Oct 2024 14:40:41 +0200
+Message-ID: <20241015123922.285263528@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,53 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit d393f9479d4aaab0fa4c3caf513f28685e831f13 ]
+[ Upstream commit d44c93fc2f5a0c47b23fa03d374e45259abd92d2 ]
 
-Cast 'rlim_t' argument to match expected type of printf() format and avoid
-compile errors seen building for mips64el/musl-libc:
+Add a "bpf_util.h" include to avoid the following error seen compiling for
+mips64el with musl libc:
 
-  In file included from map_tests/sk_storage_map.c:20:
-  map_tests/sk_storage_map.c: In function 'test_sk_storage_map_stress_free':
-  map_tests/sk_storage_map.c:414:56: error: format '%lu' expects argument of type 'long unsigned int', but argument 2 has type 'rlim_t' {aka 'long long unsigned int'} [-Werror=format=]
-    414 |                 CHECK(err, "setrlimit(RLIMIT_NOFILE)", "rlim_new:%lu errno:%d",
-        |                                                        ^~~~~~~~~~~~~~~~~~~~~~~
-    415 |                       rlim_new.rlim_cur, errno);
-        |                       ~~~~~~~~~~~~~~~~~
-        |                               |
-        |                               rlim_t {aka long long unsigned int}
-  ./test_maps.h:12:24: note: in definition of macro 'CHECK'
-     12 |                 printf(format);                                         \
-        |                        ^~~~~~
-  map_tests/sk_storage_map.c:414:68: note: format string is defined here
-    414 |                 CHECK(err, "setrlimit(RLIMIT_NOFILE)", "rlim_new:%lu errno:%d",
-        |                                                                  ~~^
-        |                                                                    |
-        |                                                                    long unsigned int
-        |                                                                  %llu
+  bench.c: In function 'find_benchmark':
+  bench.c:590:25: error: implicit declaration of function 'ARRAY_SIZE' [-Werror=implicit-function-declaration]
+    590 |         for (i = 0; i < ARRAY_SIZE(benchs); i++) {
+        |                         ^~~~~~~~~~
   cc1: all warnings being treated as errors
 
-Fixes: 51a0e301a563 ("bpf: Add BPF_MAP_TYPE_SK_STORAGE test to test_maps")
+Fixes: 8e7c2a023ac0 ("selftests/bpf: Add benchmark runner infrastructure")
 Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/1e00a1fa7acf91b4ca135c4102dc796d518bad86.1721713597.git.tony.ambardar@gmail.com
+Link: https://lore.kernel.org/bpf/bc4dde77dfcd17a825d8f28f72f3292341966810.1721713597.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/map_tests/sk_storage_map.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/bench.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/map_tests/sk_storage_map.c b/tools/testing/selftests/bpf/map_tests/sk_storage_map.c
-index e569edc679d88..9228e33cc0db7 100644
---- a/tools/testing/selftests/bpf/map_tests/sk_storage_map.c
-+++ b/tools/testing/selftests/bpf/map_tests/sk_storage_map.c
-@@ -416,7 +416,7 @@ static void test_sk_storage_map_stress_free(void)
- 		rlim_new.rlim_max = rlim_new.rlim_cur + 128;
- 		err = setrlimit(RLIMIT_NOFILE, &rlim_new);
- 		CHECK(err, "setrlimit(RLIMIT_NOFILE)", "rlim_new:%lu errno:%d",
--		      rlim_new.rlim_cur, errno);
-+		      (unsigned long) rlim_new.rlim_cur, errno);
- 	}
+diff --git a/tools/testing/selftests/bpf/bench.c b/tools/testing/selftests/bpf/bench.c
+index 332ed2f7b4022..0a257dd3e027f 100644
+--- a/tools/testing/selftests/bpf/bench.c
++++ b/tools/testing/selftests/bpf/bench.c
+@@ -11,6 +11,7 @@
+ #include <sys/resource.h>
+ #include <signal.h>
+ #include "bench.h"
++#include "bpf_util.h"
+ #include "testing_helpers.h"
  
- 	err = do_sk_storage_map_stress_free();
+ struct env env = {
 -- 
 2.43.0
 
