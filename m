@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D044F1F9413;
-	Tue, 15 Oct 2024 13:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0021C07F1;
+	Tue, 15 Oct 2024 13:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728998150; cv=none; b=uJeK+jalmo1WDwO20lV8GuAtTPlQENla3CB97ocJtbf/f5XVzHUzknWotBsac07f8XGlsa45baRmHUI1445aVBIb+fVppOBDWTJ11F6S5SiGf+cu6dPFjBd+LUbfgUZwNhwCMfZaa8tm7bN61z1G3xFw6AOGZVAMnioPWCaAvnY=
+	t=1728998154; cv=none; b=VtMfZG7LuO2+vupw7JkOIASsqxy2Q6uJ3Js9VoOjjxppeb+sXkdUh12nDSRtGRpp5de8kFoa4Mk3vK1TYUN7gSAMonHG1UuDS9sNXLl+i2vmNHK7hLqeuDNr6dnjW1Ugk9/uhanFl1VAixEcz414dXqAdzEe9kGZdVnQUBlRSJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728998150; c=relaxed/simple;
-	bh=kiGo6soc+ShokvsjTlUbDx0Tez0MqOJv7kKzqSn8BfU=;
+	s=arc-20240116; t=1728998154; c=relaxed/simple;
+	bh=f0ybB5bWO+jqW0BYi4nCZnPn+9dH06Uqoa1E720xG1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKuqofRUb7Hg9f8UsMaIlskIfV/PnzDtCe8BsQeDWIfNn8mCSXILviq+ToZipdPHr6ejnZEVTtkPFiVZcJ+pW1UOVltW71kTX5O6wWnQSHlflIagxX7UsctayEPSu2sHmRNzDDV7fgq6dkLoqMwlVMcUMcr+/wUXW0dGUSUr1WE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kabIPU7Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTlu5WqLlMyVvkjO4ou6ibLC2QEYvtO24R5WiAMe2JkE3DuoX1J1cYVHeaRFYFOBBuYRICvJ3EZKktPPwDogxhtB3zJtAIpwJT1clgMsntADiRpaCliX0sxwhkwCec1cSWumsKX5/e0RxotT6aU7C4a2iUWnAb1lJswd98MjcHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oc1Bn27O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kabIPU7Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D56C4CEC6;
-	Tue, 15 Oct 2024 13:15:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oc1Bn27O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F62AC4CEC6;
+	Tue, 15 Oct 2024 13:15:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728998150;
-	bh=kiGo6soc+ShokvsjTlUbDx0Tez0MqOJv7kKzqSn8BfU=;
+	s=korg; t=1728998154;
+	bh=f0ybB5bWO+jqW0BYi4nCZnPn+9dH06Uqoa1E720xG1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kabIPU7QJaZ9xnuCWdt8rd53oLJTcqR9QJ3mVllyFZawbPyhKNn03s7k4WLgVrzn/
-	 7c+N/nut6Jaxk/7rmivcOHK2Rz33Ar0BdhN0jIrGN4c9N73FbTb7HiNqsq9LZXP9JW
-	 rbcynWreKMZt5rwUKuEXECjbhMHOtia/1enEnGKY=
+	b=Oc1Bn27Okn8j+MQzHReCzjfFk7ytjOYFJjIZ4qr4QtYTsnDcqnKT6PaxWx251bv7E
+	 F5fxcMk2AEHQRmhNOAVLuShSVH+3U1rcjhohtwc0uVC01NIAUUPrvd3iXrxAxAytyr
+	 ldFMaPdV2cTvyuFgAm4SYVJZbewCfpWeHi9PQCME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.10 393/518] riscv: define ILLEGAL_POINTER_VALUE for 64bit
-Date: Tue, 15 Oct 2024 14:44:57 +0200
-Message-ID: <20241015123932.145561147@linuxfoundation.org>
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Aoyama Wataru <wataru.aoyama@sony.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 5.10 394/518] exfat: fix memory leak in exfat_load_bitmap()
+Date: Tue, 15 Oct 2024 14:44:58 +0200
+Message-ID: <20241015123932.183215565@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -50,38 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-commit 5c178472af247c7b50f962495bb7462ba453b9fb upstream.
+commit d2b537b3e533f28e0d97293fe9293161fe8cd137 upstream.
 
-This is used in poison.h for poison pointer offset. Based on current
-SV39, SV48 and SV57 vm layout, 0xdead000000000000 is a proper value
-that is not mappable, this can avoid potentially turning an oops to
-an expolit.
+If the first directory entry in the root directory is not a bitmap
+directory entry, 'bh' will not be released and reassigned, which
+will cause a memory leak.
 
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Fixes: fbe934d69eb7 ("RISC-V: Build Infrastructure")
+Fixes: 1e49a94cf707 ("exfat: add bitmap operations")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240705170210.3236-1-jszhang@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Aoyama Wataru <wataru.aoyama@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/Kconfig |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/exfat/balloc.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -193,6 +193,11 @@ config GENERIC_HWEIGHT
- config FIX_EARLYCON_MEM
- 	def_bool MMU
+--- a/fs/exfat/balloc.c
++++ b/fs/exfat/balloc.c
+@@ -110,11 +110,8 @@ int exfat_load_bitmap(struct super_block
+ 				return -EIO;
  
-+config ILLEGAL_POINTER_VALUE
-+	hex
-+	default 0 if 32BIT
-+	default 0xdead000000000000 if 64BIT
+ 			type = exfat_get_entry_type(ep);
+-			if (type == TYPE_UNUSED)
+-				break;
+-			if (type != TYPE_BITMAP)
+-				continue;
+-			if (ep->dentry.bitmap.flags == 0x0) {
++			if (type == TYPE_BITMAP &&
++			    ep->dentry.bitmap.flags == 0x0) {
+ 				int err;
+ 
+ 				err = exfat_allocate_bitmap(sb, ep);
+@@ -122,6 +119,9 @@ int exfat_load_bitmap(struct super_block
+ 				return err;
+ 			}
+ 			brelse(bh);
 +
- config PGTABLE_LEVELS
- 	int
- 	default 3 if 64BIT
++			if (type == TYPE_UNUSED)
++				return -EINVAL;
+ 		}
+ 
+ 		if (exfat_get_next_cluster(sb, &clu.dir))
 
 
