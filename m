@@ -1,66 +1,66 @@
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FA518A6D9
-	for <patches@lists.linux.dev>; Tue, 15 Oct 2024 07:50:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEBB1C8767
+	for <patches@lists.linux.dev>; Tue, 15 Oct 2024 08:21:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728978618; cv=none; b=qoYIhqwf7Oiv9QxgPuZvGomYzL1zphXdWuSBi5aWTq6IMquriqmvTYY+nI/BzsB7BJH4w/gspsgzjcJBbtphQ5BokSV7kwsTTabRgGP6rZdb8DyawOxf7uf+x41L+cqX1nZ2EsaLiDoTdkC/61WtKFaBwWrCewgNV6qfjdDSMiU=
+	t=1728980495; cv=none; b=SE7bDTi6O4c8WRfbdaqwvXhFujsQKlCinzJ9ohKokCHwn1TPPygze1Li7kAXIvscxuQ5IYxoqc8ucBFRrOv7/4wm78L9oqxcAI1uXgrZI1DxT8RTEw+xBUoCLn0rKPx7kWBj7YNKWcgr/J0Zc1uBw05I81TCjAntKGSIV8o38vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728978618; c=relaxed/simple;
-	bh=vOa6EcRUks3vJ+gN4gguaBuawT8MdWJj35kDikZazRA=;
+	s=arc-20240116; t=1728980495; c=relaxed/simple;
+	bh=zD3HmgW+TlfcyOvp2QLRv/48BOBk+PPPEeanN3RBWTE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IhAecQVpLTJN9/exe1AOk229nASv9tzl24WIRXDlJNe5UDlvXI+TGDmtwLYsU8TIKu2sZmKdbZHhx2Z9/9txWJXhXS5fwX7aERYqpickGghnvyjCQqGNTTf6dF5Jpwp8WQb02grO7exCd8Ih/x9f/6luD6NhaZBw+e+hj3O6+og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oHUHD78R; arc=none smtp.client-ip=209.85.217.54
+	 To:Cc:Content-Type; b=R0goq3RoBpsi3vi/E7U8qqWSue3FgfQfwPKlb1TWuYMm0hDvcJvwZnVOhQgJBvFaWt8vGXQyZUK+RzZteyriozSIYMiEPUZazaeTqpfwixQuL5nI+brESZrL+IPiUBQlRi1T1wsIdEtCZceCKlqn17ZFKi0o9mmaXdmN+TOqsuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jGhd/OyX; arc=none smtp.client-ip=209.85.222.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oHUHD78R"
-Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-4a47177cf6bso1015788137.3
-        for <patches@lists.linux.dev>; Tue, 15 Oct 2024 00:50:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jGhd/OyX"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-84fb533bb9bso1100325241.3
+        for <patches@lists.linux.dev>; Tue, 15 Oct 2024 01:21:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728978616; x=1729583416; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1728980493; x=1729585293; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pLYLixg5lxjAYGEflgM8mT9I/QjIrhiXb1eT8NYFyD8=;
-        b=oHUHD78RopSo2TiOfJ1bCwfi7KF8gMXivHDcvx2L14wln6KVpc/IKBj8ff9q7psj3k
-         GqNUZZM4cNCazIZOzUweXE0qjTLbJDjF1pU5umCyb3Huk4kGKFqnL8WXdmQk7lQ20dn+
-         ObQIwCAGkbP8/5lwNgO8RAWGOuNV5pBnBr44kClY/M4kjrtxyx4jmgqmaQ5UPotNgDBx
-         7j9i8ILoRNwq2SP3nW6tuIGNvzyBQcg0ZF28UsI06OWeUhOH7i7tzGMQdyRz5U5BvReT
-         yu+07/cFBKWvlX/cOoXsh570RsmDOXVo0HuYJ0/PB1srSdZFXxscu839pxconGW+01Qg
-         5h3g==
+        bh=lW8e1d56O5rgpMPsi4Gluv5d8nw+f0Vj8iqFfuuPxRg=;
+        b=jGhd/OyX94FBZ+mtorKuju7uguW9h/3xP87WQ7LUdW4x0u31xfgKiiZ/yi1JCvaMKY
+         31nb6m+y68QmyRo5GGCb/D438aT3IwFv5Lg8eMDLoqQqijMZqCD3B5DBqHF0fy+qIwTN
+         2XEwEBF3L46s8I1e9WfVzrbMkCkA77RfADlCfIVxTlOWgNvUN4Pb6Lo03Y8ugr5faQqv
+         vklwXxRyHVv6cb7QpvCpQkh7TTmo0CwREae9rrKtYqZHPM20pju+VfXSMBxV95wf3l6C
+         pL+rqhGJqgE0oRhPpKFzt/1oU8hG0Bj1v5L5mqXpqmQL09Dsrd8EATGAz694PBaVafBB
+         G5+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728978616; x=1729583416;
+        d=1e100.net; s=20230601; t=1728980493; x=1729585293;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pLYLixg5lxjAYGEflgM8mT9I/QjIrhiXb1eT8NYFyD8=;
-        b=im2CijrvUGJGzF076lf5wvpmd+600d2HpW2/k2ypJxiKDsj4KguCqG9oKE+UgDVazF
-         s+n6SOAuoQAudCgapma5C9FHq7DpVHxjGuppYNEYKrM3Qm+TN4DHjxlQHGa6chY3Sla0
-         d6xOPWgtVHff/OVNxzQxiurD8AavEPZZFbBKez6V7SOChq/TSi25OjvnYSKoe6Cz5xba
-         Qir9n6E3bn6R2mL412PZRaW8nn0ZZxkhaxBI3JCTQRssTMPdZZ1cD8/JEs5SEIUWgvOq
-         9o/rLnLuOFxxEtYJfaa4AbVjAo4XMquDhkgmLQBzJBh1FdZ/zrxubKTflnbGcu40UWUR
-         HwDw==
-X-Forwarded-Encrypted: i=1; AJvYcCX+B8vNgSgfsUj8v23dGH0f51oIe+f87NLu1+gCTRVGLeTlmox+IqC2hniZuhH2ivXTm/diKRbB@lists.linux.dev
-X-Gm-Message-State: AOJu0YyyIda73XrcTYeKrJXYU21p5rwsC+LwED1JnxFaVOaFod57YyKC
-	duW/Ry0n+ibZYzUVF0Dq+Ecq1NneNbHxqVPtzTPt+aUdo6Rwjm8PPFv9caTt1UhJPfpBELQaw3n
-	diXSBdVtTzKqAgvC2fJfoRkW3HTI3ALYUr1pcEw==
-X-Google-Smtp-Source: AGHT+IHJTQgMwy07yt4Kv3cxeA6jaDdGJW3Q76nXmTxUbWPQyJERX0qrCdD9zyui+kZPBA1VduE7XrCzaRDLLhLgFV0=
-X-Received: by 2002:a05:6102:3913:b0:493:bb35:d8f9 with SMTP id
- ada2fe7eead31-4a475f0bc31mr6236860137.5.1728978615788; Tue, 15 Oct 2024
- 00:50:15 -0700 (PDT)
+        bh=lW8e1d56O5rgpMPsi4Gluv5d8nw+f0Vj8iqFfuuPxRg=;
+        b=KhQjpGMLUwk/PMj3CUEOzwqDz6UBpwp2EalFnh28q5W1v6Eg5luIhZ/jiaY1ZFW9PH
+         N5YVlyIvFeF+hXpFuBK9p2o8Q3BRf7bOjHnjWpfPhmNe20eG+oHAl7rQ2fBHdI8DZOJ2
+         QqdFJU1KMce/LigJlsrcokQfukNvdGIl1rQIiuZX7al6+iQvkRddcnkXB/tgxflxm4lY
+         Ois8oc8vyYXQsguFYPmGg2HwVr2HgElfnrSFu7Kx8QItVUWTkw1YQnAAjwM8P7ZXtp0e
+         ptoi5XR9pMcmbP2rJ2Rfc5zLAKOUZ9j2dwGn+KZgoM7UvEav+ti0JNBA2y7Vhrds0jwt
+         5sLw==
+X-Forwarded-Encrypted: i=1; AJvYcCWKZXUiCFsSTQtbqxt9mr8x6h086SslA2OpTuBQwYCBTFXow5SUnsXFii7P5IwleQqSmAKpLJap@lists.linux.dev
+X-Gm-Message-State: AOJu0YxzM/zMAFHjPy9/T5qcuxJxTLf933H/NvWAcZpORmHwMIXtimdi
+	h7GfDuDRzZhs7VcFU3zwBlpBnVZYHt6zMGDSB9XVpzs1sy7ccbSMPssDxqrq0jo7M4/iMulDEMN
+	cc81KyD/7lN/1IdbRk/0st8w3zFDkB00KyF06+Q==
+X-Google-Smtp-Source: AGHT+IFUIwYSu6KbEUAyth9XxFqC5nZrcsAdb62v1PqnR10rTpKu/1c9tc94aN8gqcFnCnBkFhMxBIdlbJj9h25BLbM=
+X-Received: by 2002:a05:6102:cd4:b0:493:eebc:d77d with SMTP id
+ ada2fe7eead31-4a4659ca79dmr8656632137.15.1728980492921; Tue, 15 Oct 2024
+ 01:21:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241014141044.974962104@linuxfoundation.org> <CA+G9fYsPPmEbjNza_Tjyf+ZweuHcjHboOJfHeVSSVnmEV2gzXw@mail.gmail.com>
-In-Reply-To: <CA+G9fYsPPmEbjNza_Tjyf+ZweuHcjHboOJfHeVSSVnmEV2gzXw@mail.gmail.com>
+References: <20241014141042.954319779@linuxfoundation.org>
+In-Reply-To: <20241014141042.954319779@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 15 Oct 2024 13:20:04 +0530
-Message-ID: <CA+G9fYvpCw4Dh5BhKjS4bsWix=i=koK6Kw_jU=9zSOFu-UePBg@mail.gmail.com>
-Subject: Re: [PATCH 6.11 000/214] 6.11.4-rc1 review
+Date: Tue, 15 Oct 2024 13:51:21 +0530
+Message-ID: <CA+G9fYs-BXW2J-n1R7VO2j-qqpP=3nzYC4a2C7=-fnLTW8OR8w@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/213] 6.6.57-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -68,111 +68,99 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
 	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org, Heiko Carstens <hca@linux.ibm.com>, 
-	Alexander Gordeev <agordeev@linux.ibm.com>, Sven Schnelle <svens@linux.ibm.com>, 
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>, Thomas Richter <tmricht@linux.ibm.com>, 
-	linux-s390@vger.kernel.org
+	broonie@kernel.org, Sven Schnelle <svens@linux.ibm.com>, 
+	Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>, linux-s390@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 15 Oct 2024 at 12:35, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+On Mon, 14 Oct 2024 at 20:06, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> On Mon, 14 Oct 2024 at 19:55, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.11.4 release.
-> > There are 214 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Wed, 16 Oct 2024 14:09:57 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.11.4-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
-
-[Adding Reported-by: ]
-
+> This is the start of the stable review cycle for the 6.6.57 release.
+> There are 213 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> The S390 build broke on the stable-rc linux-6.11.y branch due to
-> following build warnings / errors.
+> Responses should be made by Wed, 16 Oct 2024 14:09:57 +0000.
+> Anything received after that time might be too late.
 >
-> First seen on v6.11.3-215-ga491a66f8da4
->   GOOD: v6.11.3
->   BAD: v6.11.3-215-ga491a66f8da4
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.57-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-This S390 build regressions are noticed on stable-rc branches
- - linux-6.11.y
- - linux-6.6.y
- - linux-6.1.y
+The S390 build broke on the stable-rc linux-6.6.y branch due to
+following build warnings / errors.
+
+First seen on v6.6.56-214-g8a7bf87a1018
+  GOOD: v6.6.56
+  BAD: v6.6.56-214-g8a7bf87a1018
+
+Bisection points to,
+  d38c79a1f30ba78448cc58d5dee31c636e16112d
+  s390/traps: Handle early warnings gracefully
+    [ Upstream commit 3c4d0ae0671827f4b536cc2d26f8b9c54584ccc5 ]
+
+List of regressions,
+* s390, build
+  - clang-19-allnoconfig
+  - clang-19-defconfig
+  - clang-19-tinyconfig
+  - clang-nightly-allnoconfig
+  - clang-nightly-defconfig
+  - clang-nightly-tinyconfig
+  - gcc-13-allmodconfig
+  - gcc-13-allnoconfig
+  - gcc-13-defconfig
+  - gcc-13-tinyconfig
+  - gcc-8-allnoconfig
+  - gcc-8-defconfig-fe40093d
+  - gcc-8-tinyconfig
 
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-> List of regressions,
-> * s390, build
->   - clang-19-allnoconfig
->   - clang-19-defconfig
->   - clang-nightly-allnoconfig
->   - clang-nightly-defconfig
->   - gcc-13-allmodconfig
->   - gcc-13-allnoconfig
->   - gcc-13-defconfig
->   - gcc-13-tinyconfig
->   - gcc-8-allnoconfig
->   - gcc-8-defconfig-fe40093d
->   - gcc-8-tinyconfig
->
-> Build log:
-> -------
->   arch/s390/include/asm/cpu_mf.h: Assembler messages:
->   arch/s390/include/asm/cpu_mf.h:165: Error: Unrecognized opcode: `lpp'
->   make[3]: *** [scripts/Makefile.build:244: arch/s390/boot/startup.o] Error 1
->
->   arch/s390/include/asm/atomic_ops.h: Assembler messages:
->   arch/s390/include/asm/atomic_ops.h:83: Error: Unrecognized opcode: `laag'
->   arch/s390/include/asm/atomic_ops.h:83: Error: Unrecognized opcode: `laag'
->   make[3]: *** [scripts/Makefile.build:244: arch/s390/boot/vmem.o] Error 1
->
->   arch/s390/include/asm/bitops.h: Assembler messages:
->   arch/s390/include/asm/bitops.h:308: Error: Unrecognized opcode: `flogr'
->   make[3]: *** [scripts/Makefile.build:244:
-> arch/s390/boot/pgm_check_info.o] Error 1
->
->   arch/s390/include/asm/timex.h: Assembler messages:
->   arch/s390/include/asm/timex.h:192: Error: Unrecognized opcode: `stckf'
->   arch/s390/include/asm/timex.h:192: Error: Unrecognized opcode: `stckf'
->   make[3]: *** [scripts/Makefile.build:244: arch/s390/boot/kaslr.o] Error 1
->   make[3]: Target 'arch/s390/boot/bzImage' not remade because of errors.
->   make[2]: *** [arch/s390/Makefile:137: bzImage] Error 2
->
-> Build log:
-> ---------
->  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.11.y/build/v6.11.3-215-ga491a66f8da4/testrun/25429522/suite/build/test/gcc-13-defconfig/log
->
-> metadata:
-> ----
->   git describe: v6.11.3-215-ga491a66f8da4
->   git repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
->   git sha: a491a66f8da4fbfc06aedae9a8b0586d11a51fa9
->   kernel config:
-> https://storage.tuxsuite.com/public/linaro/lkft/builds/2nQsfudCDSTlwmKIKEozbcVOnCs/config
->   build url: https://storage.tuxsuite.com/public/linaro/lkft/builds/2nQsfudCDSTlwmKIKEozbcVOnCs/
->   toolchain: clang-19 and gcc-13
->   config: defconfig
->   arch: S390
->
-> Steps to reproduce:
-> -------
-> # tuxmake --runtime podman --target-arch s390 --toolchain gcc-13
-> --kconfig defconfig
->
->
-> --
-> Linaro LKFT
-> https://lkft.linaro.org
+Build log:
+-------
+arch/s390/kernel/early.c: In function '__do_early_pgm_check':
+arch/s390/kernel/early.c:177:30: error: implicit declaration of
+function 'get_lowcore'; did you mean 'S390_lowcore'?
+[-Werror=implicit-function-declaration]
+  177 |         struct lowcore *lc = get_lowcore();
+      |                              ^~~~~~~~~~~
+      |                              S390_lowcore
+arch/s390/kernel/early.c:177:30: warning: initialization of 'struct
+lowcore *' from 'int' makes pointer from integer without a cast
+[-Wint-conversion]
+cc1: some warnings being treated as errors
+make[5]: *** [scripts/Makefile.build:243: arch/s390/kernel/early.o] Error 1
+
+
+Build log link:
+---------
+  - https://storage.tuxsuite.com/public/linaro/lkft/builds/2nQwi03QYzWjrOZMpsvCF31N0Oc/
+  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.56-214-g8a7bf87a1018/testrun/25432877/suite/build/test/gcc-13-defconfig/log
+
+metadata:
+----
+  git describe: v6.6.56-214-g8a7bf87a1018
+  git repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+  git sha: 8a7bf87a1018a21d9dbbc5a794cb9a4fb3243aa0
+  kernel config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2nQwi03QYzWjrOZMpsvCF31N0Oc/config
+  build url: https://storage.tuxsuite.com/public/linaro/lkft/builds/2nQwi03QYzWjrOZMpsvCF31N0Oc/
+  toolchain: clang-19 and gcc-13
+  config: defconfig
+  arch: S390
+
+Steps to reproduce:
+-------
+# tuxmake --runtime podman --target-arch s390 --toolchain gcc-13
+--kconfig defconfig
+
+--
+Linaro LKFT
+https://lkft.linaro.org
