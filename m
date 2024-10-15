@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1C81D4154;
-	Tue, 15 Oct 2024 11:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316161D0492;
+	Tue, 15 Oct 2024 11:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993266; cv=none; b=SH49O9AeTo6JrD4o/1hhi1XzDqrwmCIRIXZ4+ZJoARKLrA5nLaoMAXI7KV/qvtKwuq6KuFAxDNZPG+Llg4rm3WNWR1cIjYAUYwN7U5oxo4c6rDZxJZV+Qn43rE/d7YMzX8lL9FaTdmMU5rIdM8Z9sYLcBywlTdPBaJ90mW6LUw0=
+	t=1728993270; cv=none; b=bQ7WO2GTNpBhloq+2QZCfNEC80W0s5hsfZ9rxvVDYLw2zzz4yEd0W/kWAnSPMdRufTGliZNwSBzDaM/1mwIYF3QKnSuLv2J115PuP3rQKO63wy68GFsY7CH1Z2fjFu4+nul2If5aRE1ElB8SGexRUhZ1Zh3L2xEOLCnw2IaL0ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993266; c=relaxed/simple;
-	bh=VXBsXgnhx2H1kOTtRBwKPCruk+IKM2aCpefXg6KjxOw=;
+	s=arc-20240116; t=1728993270; c=relaxed/simple;
+	bh=3ffWtYMQeYS19LSl7JW+36r9C0zFgL1q7h6Lnz4j8Lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uCdGAghX0qb3QVUDZgc24Fl8V1G/lA6cUL0SLmDSmc48DG82SWecxTBdGLFNI+pHAUTk4rPkt1M/heDNE0Glkw/InQkfj+SNSmlcdwRZGXm+NMjHyplSWYgXr9i4AEVeHVEkf6gT0+PuzuoX+Hf/TAemDwlyn0mzDNgy5ItzVsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pG9Own+r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dSWanLH6zEuIDfeyEqeLmmIXrLsBlF6rez0aAWywQ6hXFOvsXrj9zMHk8PPjzhSkrwXjxpTd5lfdySJ/+OYeAEL77SbY7xZjq1sRpU+J79/t2hS6DXcyKcHfz5hHRFKrKiypJwGwPBd7JdHkbLiLpv0WXU7Hb+DSoCOLyKwUW1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTcOtx5m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pG9Own+r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBE9C4CECF;
-	Tue, 15 Oct 2024 11:54:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTcOtx5m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D86C4CEC6;
+	Tue, 15 Oct 2024 11:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993266;
-	bh=VXBsXgnhx2H1kOTtRBwKPCruk+IKM2aCpefXg6KjxOw=;
+	s=korg; t=1728993270;
+	bh=3ffWtYMQeYS19LSl7JW+36r9C0zFgL1q7h6Lnz4j8Lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pG9Own+rJ398f7QmMVcs58xvIACMvaNZCY922qyMeRlDVD5crBHjWQvisVGgXwzfJ
-	 SgdWKFmBdcZtWUTRxxsc2nt7Axkby1l68pncgjkUfOjM3dQT3vffQ2IrP53Cs/F0oh
-	 tSeE8NJW5TkBMNxQzYxKiy/A3zeA63w/FNDSKZiQ=
+	b=RTcOtx5mFtOrkLWml+QjuFvMZneg5J/ZTgMeDARQBrICvwoBjccf7VW6d6biqpK2A
+	 OTcgBUFcmrsVSaocDRfzBO5FvFEfYmcd9FX0GvAFbpFLBhQbS9r0x/+sVSmXRwz+0b
+	 +bAUzbJ4m/pZXPmruQaqRQEiIUv8IH98QqrYjz18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Rodolfo Giometti <giometti@enneenne.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Xin Li <xin3.li@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Shan Kang <shan.kang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 361/691] pps: add an error check in parport_attach
-Date: Tue, 15 Oct 2024 13:25:09 +0200
-Message-ID: <20241015112454.673159824@linuxfoundation.org>
+Subject: [PATCH 5.15 362/691] x86/idtentry: Incorporate definitions/declarations of the FRED entries
+Date: Tue, 15 Oct 2024 13:25:10 +0200
+Message-ID: <20241015112454.712438089@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,63 +53,222 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Xin Li <xin3.li@intel.com>
 
-[ Upstream commit 62c5a01a5711c8e4be8ae7b6f0db663094615d48 ]
+[ Upstream commit 90f357208200a941e90e75757123326684d715d0 ]
 
-In parport_attach, the return value of ida_alloc is unchecked, witch leads
-to the use of an invalid index value.
+FRED and IDT can share most of the definitions and declarations so
+that in the majority of cases the actual handler implementation is the
+same.
 
-To address this issue, index should be checked. When the index value is
-abnormal, the device should be freed.
+The differences are the exceptions where FRED stores exception related
+information on the stack and the sysvec implementations as FRED can
+handle irqentry/exit() in the dispatcher instead of having it in each
+handler.
 
-Found by code review, compile tested only.
+Also add stub defines for vectors which are not used due to Kconfig
+decisions to spare the ifdeffery in the actual FRED dispatch code.
 
-Cc: stable@vger.kernel.org
-Fixes: fb56d97df70e ("pps: client: use new parport device model")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/20240828131814.3034338-1-make24@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Xin Li <xin3.li@intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Shan Kang <shan.kang@intel.com>
+Link: https://lore.kernel.org/r/20231205105030.8698-23-xin3.li@intel.com
+Stable-dep-of: 477d81a1c47a ("x86/entry: Remove unwanted instrumentation in common_interrupt()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/clients/pps_parport.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/idtentry.h | 71 +++++++++++++++++++++++++++++----
+ 1 file changed, 63 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pps/clients/pps_parport.c b/drivers/pps/clients/pps_parport.c
-index af972cdc04b53..53e9c304ae0a7 100644
---- a/drivers/pps/clients/pps_parport.c
-+++ b/drivers/pps/clients/pps_parport.c
-@@ -149,6 +149,9 @@ static void parport_attach(struct parport *port)
- 	}
+diff --git a/arch/x86/include/asm/idtentry.h b/arch/x86/include/asm/idtentry.h
+index 1345088e99025..a65575136255b 100644
+--- a/arch/x86/include/asm/idtentry.h
++++ b/arch/x86/include/asm/idtentry.h
+@@ -11,15 +11,18 @@
  
- 	index = ida_alloc(&pps_client_index, GFP_KERNEL);
-+	if (index < 0)
-+		goto err_free_device;
+ #include <asm/irq_stack.h>
+ 
++typedef void (*idtentry_t)(struct pt_regs *regs);
 +
- 	memset(&pps_client_cb, 0, sizeof(pps_client_cb));
- 	pps_client_cb.private = device;
- 	pps_client_cb.irq_func = parport_irq;
-@@ -159,7 +162,7 @@ static void parport_attach(struct parport *port)
- 						    index);
- 	if (!device->pardev) {
- 		pr_err("couldn't register with %s\n", port->name);
--		goto err_free;
-+		goto err_free_ida;
- 	}
+ /**
+  * DECLARE_IDTENTRY - Declare functions for simple IDT entry points
+  *		      No error code pushed by hardware
+  * @vector:	Vector number (ignored for C)
+  * @func:	Function name of the entry point
+  *
+- * Declares three functions:
++ * Declares four functions:
+  * - The ASM entry point: asm_##func
+  * - The XEN PV trap entry point: xen_##func (maybe unused)
++ * - The C handler called from the FRED event dispatcher (maybe unused)
+  * - The C handler called from the ASM entry point
+  *
+  * Note: This is the C variant of DECLARE_IDTENTRY(). As the name says it
+@@ -29,6 +32,7 @@
+ #define DECLARE_IDTENTRY(vector, func)					\
+ 	asmlinkage void asm_##func(void);				\
+ 	asmlinkage void xen_asm_##func(void);				\
++	void fred_##func(struct pt_regs *regs);				\
+ 	__visible void func(struct pt_regs *regs)
  
- 	if (parport_claim_or_block(device->pardev) < 0) {
-@@ -187,8 +190,9 @@ static void parport_attach(struct parport *port)
- 	parport_release(device->pardev);
- err_unregister_dev:
- 	parport_unregister_device(device->pardev);
--err_free:
-+err_free_ida:
- 	ida_free(&pps_client_index, index);
-+err_free_device:
- 	kfree(device);
- }
+ /**
+@@ -135,6 +139,17 @@ static __always_inline void __##func(struct pt_regs *regs,		\
+ #define DEFINE_IDTENTRY_RAW(func)					\
+ __visible noinstr void func(struct pt_regs *regs)
  
++/**
++ * DEFINE_FREDENTRY_RAW - Emit code for raw FRED entry points
++ * @func:	Function name of the entry point
++ *
++ * @func is called from the FRED event dispatcher with interrupts disabled.
++ *
++ * See @DEFINE_IDTENTRY_RAW for further details.
++ */
++#define DEFINE_FREDENTRY_RAW(func)					\
++noinstr void fred_##func(struct pt_regs *regs)
++
+ /**
+  * DECLARE_IDTENTRY_RAW_ERRORCODE - Declare functions for raw IDT entry points
+  *				    Error code pushed by hardware
+@@ -231,17 +246,27 @@ static noinline void __##func(struct pt_regs *regs, u32 vector)
+ #define DEFINE_IDTENTRY_SYSVEC(func)					\
+ static void __##func(struct pt_regs *regs);				\
+ 									\
++static __always_inline void instr_##func(struct pt_regs *regs)		\
++{									\
++	kvm_set_cpu_l1tf_flush_l1d();					\
++	run_sysvec_on_irqstack_cond(__##func, regs);			\
++}									\
++									\
+ __visible noinstr void func(struct pt_regs *regs)			\
+ {									\
+ 	irqentry_state_t state = irqentry_enter(regs);			\
+ 									\
+ 	instrumentation_begin();					\
+-	kvm_set_cpu_l1tf_flush_l1d();					\
+-	run_sysvec_on_irqstack_cond(__##func, regs);			\
++	instr_##func (regs);						\
+ 	instrumentation_end();						\
+ 	irqentry_exit(regs, state);					\
+ }									\
+ 									\
++void fred_##func(struct pt_regs *regs)					\
++{									\
++	instr_##func (regs);						\
++}									\
++									\
+ static noinline void __##func(struct pt_regs *regs)
+ 
+ /**
+@@ -258,19 +283,29 @@ static noinline void __##func(struct pt_regs *regs)
+ #define DEFINE_IDTENTRY_SYSVEC_SIMPLE(func)				\
+ static __always_inline void __##func(struct pt_regs *regs);		\
+ 									\
+-__visible noinstr void func(struct pt_regs *regs)			\
++static __always_inline void instr_##func(struct pt_regs *regs)		\
+ {									\
+-	irqentry_state_t state = irqentry_enter(regs);			\
+-									\
+-	instrumentation_begin();					\
+ 	__irq_enter_raw();						\
+ 	kvm_set_cpu_l1tf_flush_l1d();					\
+ 	__##func (regs);						\
+ 	__irq_exit_raw();						\
++}									\
++									\
++__visible noinstr void func(struct pt_regs *regs)			\
++{									\
++	irqentry_state_t state = irqentry_enter(regs);			\
++									\
++	instrumentation_begin();					\
++	instr_##func (regs);						\
+ 	instrumentation_end();						\
+ 	irqentry_exit(regs, state);					\
+ }									\
+ 									\
++void fred_##func(struct pt_regs *regs)					\
++{									\
++	instr_##func (regs);						\
++}									\
++									\
+ static __always_inline void __##func(struct pt_regs *regs)
+ 
+ /**
+@@ -408,15 +443,18 @@ __visible noinstr void func(struct pt_regs *regs,			\
+ /* C-Code mapping */
+ #define DECLARE_IDTENTRY_NMI		DECLARE_IDTENTRY_RAW
+ #define DEFINE_IDTENTRY_NMI		DEFINE_IDTENTRY_RAW
++#define DEFINE_FREDENTRY_NMI		DEFINE_FREDENTRY_RAW
+ 
+ #ifdef CONFIG_X86_64
+ #define DECLARE_IDTENTRY_MCE		DECLARE_IDTENTRY_IST
+ #define DEFINE_IDTENTRY_MCE		DEFINE_IDTENTRY_IST
+ #define DEFINE_IDTENTRY_MCE_USER	DEFINE_IDTENTRY_NOIST
++#define DEFINE_FREDENTRY_MCE		DEFINE_FREDENTRY_RAW
+ 
+ #define DECLARE_IDTENTRY_DEBUG		DECLARE_IDTENTRY_IST
+ #define DEFINE_IDTENTRY_DEBUG		DEFINE_IDTENTRY_IST
+ #define DEFINE_IDTENTRY_DEBUG_USER	DEFINE_IDTENTRY_NOIST
++#define DEFINE_FREDENTRY_DEBUG		DEFINE_FREDENTRY_RAW
+ #endif
+ 
+ #else /* !__ASSEMBLY__ */
+@@ -645,23 +683,36 @@ DECLARE_IDTENTRY_SYSVEC(IRQ_MOVE_CLEANUP_VECTOR,	sysvec_irq_move_cleanup);
+ DECLARE_IDTENTRY_SYSVEC(REBOOT_VECTOR,			sysvec_reboot);
+ DECLARE_IDTENTRY_SYSVEC(CALL_FUNCTION_SINGLE_VECTOR,	sysvec_call_function_single);
+ DECLARE_IDTENTRY_SYSVEC(CALL_FUNCTION_VECTOR,		sysvec_call_function);
++#else
++# define fred_sysvec_reschedule_ipi			NULL
++# define fred_sysvec_reboot				NULL
++# define fred_sysvec_call_function_single		NULL
++# define fred_sysvec_call_function			NULL
+ #endif
+ 
+ #ifdef CONFIG_X86_LOCAL_APIC
+ # ifdef CONFIG_X86_MCE_THRESHOLD
+ DECLARE_IDTENTRY_SYSVEC(THRESHOLD_APIC_VECTOR,		sysvec_threshold);
++# else
++# define fred_sysvec_threshold				NULL
+ # endif
+ 
+ # ifdef CONFIG_X86_MCE_AMD
+ DECLARE_IDTENTRY_SYSVEC(DEFERRED_ERROR_VECTOR,		sysvec_deferred_error);
++# else
++# define fred_sysvec_deferred_error			NULL
+ # endif
+ 
+ # ifdef CONFIG_X86_THERMAL_VECTOR
+ DECLARE_IDTENTRY_SYSVEC(THERMAL_APIC_VECTOR,		sysvec_thermal);
++# else
++# define fred_sysvec_thermal				NULL
+ # endif
+ 
+ # ifdef CONFIG_IRQ_WORK
+ DECLARE_IDTENTRY_SYSVEC(IRQ_WORK_VECTOR,		sysvec_irq_work);
++# else
++# define fred_sysvec_irq_work				NULL
+ # endif
+ #endif
+ 
+@@ -669,12 +720,16 @@ DECLARE_IDTENTRY_SYSVEC(IRQ_WORK_VECTOR,		sysvec_irq_work);
+ DECLARE_IDTENTRY_SYSVEC(POSTED_INTR_VECTOR,		sysvec_kvm_posted_intr_ipi);
+ DECLARE_IDTENTRY_SYSVEC(POSTED_INTR_WAKEUP_VECTOR,	sysvec_kvm_posted_intr_wakeup_ipi);
+ DECLARE_IDTENTRY_SYSVEC(POSTED_INTR_NESTED_VECTOR,	sysvec_kvm_posted_intr_nested_ipi);
++#else
++# define fred_sysvec_kvm_posted_intr_ipi		NULL
++# define fred_sysvec_kvm_posted_intr_wakeup_ipi		NULL
++# define fred_sysvec_kvm_posted_intr_nested_ipi		NULL
+ #endif
+ 
+ #if IS_ENABLED(CONFIG_HYPERV)
+ DECLARE_IDTENTRY_SYSVEC(HYPERVISOR_CALLBACK_VECTOR,	sysvec_hyperv_callback);
+ DECLARE_IDTENTRY_SYSVEC(HYPERV_REENLIGHTENMENT_VECTOR,	sysvec_hyperv_reenlightenment);
+-DECLARE_IDTENTRY_SYSVEC(HYPERV_STIMER0_VECTOR,	sysvec_hyperv_stimer0);
++DECLARE_IDTENTRY_SYSVEC(HYPERV_STIMER0_VECTOR,		sysvec_hyperv_stimer0);
+ #endif
+ 
+ #if IS_ENABLED(CONFIG_ACRN_GUEST)
 -- 
 2.43.0
 
