@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B386F1C07DB;
-	Tue, 15 Oct 2024 13:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A78A1C07DB;
+	Tue, 15 Oct 2024 13:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997539; cv=none; b=AZ60vXVp3gH4+PueS11JjWkllxw57OeleyBFeO817QIsB04dxau0QQOdJoxksuD8J9zuP+LrQjJdxIxrV04pNYsjTKnuVgWoHlp5ZB7SOZPZPedRx+I0XAFlb91tXpvRKOBlS2dSk52HrVe3WiT9ZBBSf7z3sGr6E3/uGL4ni3w=
+	t=1728997543; cv=none; b=jx3PY3GdZ3YMB1WVHuJcEVHuWEUD5D6VfafgKKHsys8ZWsdy0+zbit8fQpODf8wOs4b2BQ2TKEQBNrgVWcBGVYETLhXm9VGtVoJLHTn9yPHH/cRcSCAD4c6GksmAM4qTwqxaD9gdpqfyi2/db06sxciXZkBFWRKUiTYw4+O/36I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997539; c=relaxed/simple;
-	bh=KmqiT1ZaUOUy133FfgvnXsho6OQXlA1CF9WihsW5BRg=;
+	s=arc-20240116; t=1728997543; c=relaxed/simple;
+	bh=JwOHyxWXWzb9x7+pgDeNedJF0wRcI2K711JGd9LzlcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gWQMRjIm7FK2BShkJgeC8HC6w0Bez4e2jOSLM4BaYAKyhPXNxDGU0wo2NgmpoucSu3CmUq5j7ptZjL1Maz++9Kng+ojz8VtSun3bjJGLBC0OoAKgugpga2Gs5ypqwbjAsolEK0AnOUuJH8HbQ0DU9clx5TViQMLERTRy0puBoaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=msPDumIr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z8KO57NnLC4qX1JR0hxSVGKmoWjJMYDij/SDzldgXLqvx7smmaepikK/sOD1afMb1Se12xQrGPt4WdRQSkJZmjU5V1/eOAoA+hsGHq7mW9amUiECe4n9XmJlG6fiQCICMyrrfXR1sfA9SSJxZwUDf0U5O/XeQHABCSyVVZ9VVto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qgomaNgV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="msPDumIr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23780C4CEC6;
-	Tue, 15 Oct 2024 13:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgomaNgV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E212C4CECE;
+	Tue, 15 Oct 2024 13:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997539;
-	bh=KmqiT1ZaUOUy133FfgvnXsho6OQXlA1CF9WihsW5BRg=;
+	s=korg; t=1728997543;
+	bh=JwOHyxWXWzb9x7+pgDeNedJF0wRcI2K711JGd9LzlcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=msPDumIr45CEYTksWd7UEs1DB70uI6pR5uxYRZWQYmB8uEK3D0oDg2e+d0ZjSSTSr
-	 Hz6dLEoHhonBRVsjeYiNFp9zQsa9bf6r5gjhAK4KprJzjvo8KaBwKOROuKtm51j3ax
-	 6H93qsbJ91v4A4TIxkHduOnddtbclxMhlcLNRhfM=
+	b=qgomaNgV/6OIElB9wlsYeUANDEjQRxfK2U1JlWezxhNz1AanThZ9PY209O6a9bL/V
+	 w8gZd+nbVgRiJ33d5zpTS8YwKQqo99ZtuUHvGlGJt96clBT0ZFVDqCqhF0r9XgSOkH
+	 Z5r9DDcNtL3o9jxu8Wzj1hfYmDRmT/8JoAnamSaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>
-Subject: [PATCH 5.10 213/518] Revert "bpf: Eliminate rlimit-based memory accounting for devmap maps"
-Date: Tue, 15 Oct 2024 14:41:57 +0200
-Message-ID: <20241015123925.213792215@linuxfoundation.org>
+	=?UTF-8?q?Toke=20H=F8iland-J=F8rgensen?= <toke@redhat.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Pu Lehui <pulehui@huawei.com>,
+	syzbot+8cd36f6b65f3cafd400a@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 214/518] bpf: Fix DEVMAP_HASH overflow check on 32-bit arches
+Date: Tue, 15 Oct 2024 14:41:58 +0200
+Message-ID: <20241015123925.253120323@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -43,80 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-This reverts commit 70294d8bc31f3b7789e5e32f757aa9344556d964 which is
-commit 844f157f6c0a905d039d2e20212ab3231f2e5eaf upstream.
+[ Upstream commit 281d464a34f540de166cee74b723e97ac2515ec3 ]
 
-Commit 70294d8bc31f ("bpf: Eliminate rlimit-based memory accounting for
-devmap maps") is part of the v5.11+ base mechanism of memcg-based memory
-accounting[0]. The commit cannot be independently backported to the 5.10
-stable branch, otherwise the related memory when creating devmap will be
-unrestricted. Let's roll back to rlimit-based memory accounting mode for
-devmap.
+The devmap code allocates a number hash buckets equal to the next power
+of two of the max_entries value provided when creating the map. When
+rounding up to the next power of two, the 32-bit variable storing the
+number of buckets can overflow, and the code checks for overflow by
+checking if the truncated 32-bit value is equal to 0. However, on 32-bit
+arches the rounding up itself can overflow mid-way through, because it
+ends up doing a left-shift of 32 bits on an unsigned long value. If the
+size of an unsigned long is four bytes, this is undefined behaviour, so
+there is no guarantee that we'll end up with a nice and tidy 0-value at
+the end.
 
-Link: https://lore.kernel.org/bpf/20201201215900.3569844-1-guro@fb.com [0]
+Syzbot managed to turn this into a crash on arm32 by creating a
+DEVMAP_HASH with max_entries > 0x80000000 and then trying to update it.
+Fix this by moving the overflow check to before the rounding up
+operation.
+
+Fixes: 6f9d451ab1a3 ("xdp: Add devmap_hash map type for looking up devices by hashed index")
+Link: https://lore.kernel.org/r/000000000000ed666a0611af6818@google.com
+Reported-and-tested-by: syzbot+8cd36f6b65f3cafd400a@syzkaller.appspotmail.com
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Message-ID: <20240307120340.99577-2-toke@redhat.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Pu Lehui <pulehui@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/devmap.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ kernel/bpf/devmap.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 --- a/kernel/bpf/devmap.c
 +++ b/kernel/bpf/devmap.c
-@@ -109,6 +109,8 @@ static inline struct hlist_head *dev_map
- static int dev_map_init_map(struct bpf_dtab *dtab, union bpf_attr *attr)
- {
- 	u32 valsize = attr->value_size;
-+	u64 cost = 0;
-+	int err;
+@@ -131,10 +131,13 @@ static int dev_map_init_map(struct bpf_d
+ 	bpf_map_init_from_attr(&dtab->map, attr);
  
- 	/* check sanity of attributes. 2 value sizes supported:
- 	 * 4 bytes: ifindex
-@@ -133,13 +135,21 @@ static int dev_map_init_map(struct bpf_d
- 
- 		if (!dtab->n_buckets) /* Overflow check */
- 			return -EINVAL;
-+		cost += (u64) sizeof(struct hlist_head) * dtab->n_buckets;
-+	} else {
-+		cost += (u64) dtab->map.max_entries * sizeof(struct bpf_dtab_netdev *);
- 	}
- 
-+	/* if map size is larger than memlock limit, reject it */
-+	err = bpf_map_charge_init(&dtab->map.memory, cost);
-+	if (err)
-+		return -EINVAL;
-+
  	if (attr->map_type == BPF_MAP_TYPE_DEVMAP_HASH) {
- 		dtab->dev_index_head = dev_map_create_hash(dtab->n_buckets,
- 							   dtab->map.numa_node);
- 		if (!dtab->dev_index_head)
--			return -ENOMEM;
-+			goto free_charge;
- 
- 		spin_lock_init(&dtab->index_lock);
- 	} else {
-@@ -147,10 +157,14 @@ static int dev_map_init_map(struct bpf_d
- 						      sizeof(struct bpf_dtab_netdev *),
- 						      dtab->map.numa_node);
- 		if (!dtab->netdev_map)
--			return -ENOMEM;
-+			goto free_charge;
- 	}
- 
- 	return 0;
+-		dtab->n_buckets = roundup_pow_of_two(dtab->map.max_entries);
+-
+-		if (!dtab->n_buckets) /* Overflow check */
++		/* hash table size must be power of 2; roundup_pow_of_two() can
++		 * overflow into UB on 32-bit arches, so check that first
++		 */
++		if (dtab->map.max_entries > 1UL << 31)
+ 			return -EINVAL;
 +
-+free_charge:
-+	bpf_map_charge_finish(&dtab->map.memory);
-+	return -ENOMEM;
- }
- 
- static struct bpf_map *dev_map_alloc(union bpf_attr *attr)
++		dtab->n_buckets = roundup_pow_of_two(dtab->map.max_entries);
+ 		cost += (u64) sizeof(struct hlist_head) * dtab->n_buckets;
+ 	} else {
+ 		cost += (u64) dtab->map.max_entries * sizeof(struct bpf_dtab_netdev *);
 
 
