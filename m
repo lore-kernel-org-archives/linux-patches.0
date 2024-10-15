@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4621D95AB;
-	Tue, 15 Oct 2024 11:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9640F1D9A5F;
+	Tue, 15 Oct 2024 11:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992542; cv=none; b=QvmrxRKDC7rrq/QMTcbun4Slw3OIJGZEwM0MbxDt1sZAwO/ALF3Mp5hfD86hW5A+Q/x0sTpkt7nMc72H1y1zefXMuZfHCcSg1w9r8QUDUWqjYOePp6i8sRt6N6p4yEJzccNoo+qAoA1uSUq1tYRmnRPeBxuDVpwk+EK0abAo88c=
+	t=1728992545; cv=none; b=jqk0tJ3YCMZp1pIUEFtAhYT7bSD7Fsh1FTcmdI+L7xpX5UlIJjdo+5MqkpRE9oD8aIyezacsn6giY+tWBKdQupkSHZNnnNcvE3qMnSaHZ0Y2iOy6U5iLJDAC6ZCkO5jq2qyUQ5XftYrxko9ekX3qbNDioZxvH77iFsnvQ5fQQIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992542; c=relaxed/simple;
-	bh=iOcvd6ymRG6HKRNojeR3g6sCV86vkhrGnxgZCYxx4EA=;
+	s=arc-20240116; t=1728992545; c=relaxed/simple;
+	bh=0T6UpPSRWuDeUTWyNdJVNAfVskjP0t7hiGvEpafZQ1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ASWk6cYWlCTdR1h1lxHO5aSMjbP4ci5fx9PqCmH16CVYXMihjSa7Wjvc407WuGnT3/lseSydWQCG0Soeh6h+78XKUHTbuQbG+sJj4/Xww3K7w2PshDxNKfQbCbih1CJ7o6i85gyvsarRFNDVMNlSM2gNiQp56NUS/K17yRuHuCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqYhvUCs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LdYevxfw7uyxdEoTN0z+Jr2cHvvX5OvGJ2Ip99Sd365izx5Qbno/6uop5d+ABKD/tY8jcsgncSg6L6pOmil/zDFGwryEQ7axmrVEqSmBfRZ2Noo3rR2IDH11XNQztttWruvVMKHID9CF0e6wFIl6b7pokD/Qe6TeHCHWIb8rXn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGVoExKi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqYhvUCs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7DF1C4CEC6;
-	Tue, 15 Oct 2024 11:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGVoExKi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088C5C4CEC6;
+	Tue, 15 Oct 2024 11:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992542;
-	bh=iOcvd6ymRG6HKRNojeR3g6sCV86vkhrGnxgZCYxx4EA=;
+	s=korg; t=1728992545;
+	bh=0T6UpPSRWuDeUTWyNdJVNAfVskjP0t7hiGvEpafZQ1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bqYhvUCsGoup4ICBKqOSGUvtMZLm8XP2MSQUyEikt4eJn6gaglmAKcrDEcjRGhxAw
-	 xSZ+XTmyFU2i1A1htkzaDdH2DlbEF1XCNWt06NWyxeVc+5RVRCzgL+So2E2ec5EgSA
-	 X02NPvKkI5ldvLvKLVNWrZTw8uyeWYl38JEAUBTg=
+	b=FGVoExKi9WMBt2lIsh3h3tWdoMuwxdQgzmbPLXYr+/qVxhT5r3NGBWS8htfK3Hxdu
+	 304+41kdvIz2rkTwh5k+ivFvO2bdC3Sv7hcr+WFT9I1PxLBlSPYlWUBrrJk3eX7u7H
+	 bwY67uyBPyVPkU6YIAjxq9YeP/JOTjVv1F2YWaKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nishanth Menon <nm@ti.com>,
-	Dhruva Gole <d-gole@ti.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Molina Sabido, Gerardo" <gerardo.molina.sabido@intel.com>,
+	Aaron Lu <aaron.lu@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Kai Huang <kai.huang@intel.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Zhimin Luo <zhimin.luo@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 115/691] cpufreq: ti-cpufreq: Introduce quirks to handle syscon fails appropriately
-Date: Tue, 15 Oct 2024 13:21:03 +0200
-Message-ID: <20241015112444.923928713@linuxfoundation.org>
+Subject: [PATCH 5.15 116/691] x86/sgx: Fix deadlock in SGX NUMA node search
+Date: Tue, 15 Oct 2024 13:21:04 +0200
+Message-ID: <20241015112444.963437386@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,86 +55,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nishanth Menon <nm@ti.com>
+From: Aaron Lu <aaron.lu@intel.com>
 
-[ Upstream commit abc00ffda43bd4ba85896713464c7510c39f8165 ]
+[ Upstream commit 9c936844010466535bd46ea4ce4656ef17653644 ]
 
-Commit b4bc9f9e27ed ("cpufreq: ti-cpufreq: add support for omap34xx
-and omap36xx") introduced special handling for OMAP3 class devices
-where syscon node may not be present. However, this also creates a bug
-where the syscon node is present, however the offset used to read
-is beyond the syscon defined range.
+When the current node doesn't have an EPC section configured by firmware
+and all other EPC sections are used up, CPU can get stuck inside the
+while loop that looks for an available EPC page from remote nodes
+indefinitely, leading to a soft lockup. Note how nid_of_current will
+never be equal to nid in that while loop because nid_of_current is not
+set in sgx_numa_mask.
 
-Fix this by providing a quirk option that is populated when such
-special handling is required. This allows proper failure for all other
-platforms when the syscon node and efuse offsets are mismatched.
+Also worth mentioning is that it's perfectly fine for the firmware not
+to setup an EPC section on a node. While setting up an EPC section on
+each node can enhance performance, it is not a requirement for
+functionality.
 
-Fixes: b4bc9f9e27ed ("cpufreq: ti-cpufreq: add support for omap34xx and omap36xx")
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Tested-by: Dhruva Gole <d-gole@ti.com>
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Rework the loop to start and end on *a* node that has SGX memory. This
+avoids the deadlock looking for the current SGX-lacking node to show up
+in the loop when it never will.
+
+Fixes: 901ddbb9ecf5 ("x86/sgx: Add a basic NUMA allocation scheme to sgx_alloc_epc_page()")
+Reported-by: "Molina Sabido, Gerardo" <gerardo.molina.sabido@intel.com>
+Signed-off-by: Aaron Lu <aaron.lu@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Zhimin Luo <zhimin.luo@intel.com>
+Link: https://lore.kernel.org/all/20240905080855.1699814-2-aaron.lu%40intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/ti-cpufreq.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/sgx/main.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/cpufreq/ti-cpufreq.c b/drivers/cpufreq/ti-cpufreq.c
-index 88bffa0bd0139..c91d416fc5809 100644
---- a/drivers/cpufreq/ti-cpufreq.c
-+++ b/drivers/cpufreq/ti-cpufreq.c
-@@ -53,6 +53,9 @@ struct ti_cpufreq_soc_data {
- 	unsigned long efuse_shift;
- 	unsigned long rev_offset;
- 	bool multi_regulator;
-+/* Backward compatibility hack: Might have missing syscon */
-+#define TI_QUIRK_SYSCON_MAY_BE_MISSING	0x1
-+	u8 quirks;
- };
+diff --git a/arch/x86/kernel/cpu/sgx/main.c b/arch/x86/kernel/cpu/sgx/main.c
+index 4ea48acf55faa..ad453b4387a44 100644
+--- a/arch/x86/kernel/cpu/sgx/main.c
++++ b/arch/x86/kernel/cpu/sgx/main.c
+@@ -505,24 +505,25 @@ struct sgx_epc_page *__sgx_alloc_epc_page(void)
+ {
+ 	struct sgx_epc_page *page;
+ 	int nid_of_current = numa_node_id();
+-	int nid = nid_of_current;
++	int nid_start, nid;
  
- struct ti_cpufreq_data {
-@@ -156,6 +159,7 @@ static struct ti_cpufreq_soc_data omap34xx_soc_data = {
- 	.efuse_mask = BIT(3),
- 	.rev_offset = OMAP3_CONTROL_IDCODE - OMAP3_SYSCON_BASE,
- 	.multi_regulator = false,
-+	.quirks = TI_QUIRK_SYSCON_MAY_BE_MISSING,
- };
+-	if (node_isset(nid_of_current, sgx_numa_mask)) {
+-		page = __sgx_alloc_epc_page_from_node(nid_of_current);
+-		if (page)
+-			return page;
+-	}
+-
+-	/* Fall back to the non-local NUMA nodes: */
+-	while (true) {
+-		nid = next_node_in(nid, sgx_numa_mask);
+-		if (nid == nid_of_current)
+-			break;
++	/*
++	 * Try local node first. If it doesn't have an EPC section,
++	 * fall back to the non-local NUMA nodes.
++	 */
++	if (node_isset(nid_of_current, sgx_numa_mask))
++		nid_start = nid_of_current;
++	else
++		nid_start = next_node_in(nid_of_current, sgx_numa_mask);
  
- /*
-@@ -183,6 +187,7 @@ static struct ti_cpufreq_soc_data omap36xx_soc_data = {
- 	.efuse_mask = BIT(9),
- 	.rev_offset = OMAP3_CONTROL_IDCODE - OMAP3_SYSCON_BASE,
- 	.multi_regulator = true,
-+	.quirks = TI_QUIRK_SYSCON_MAY_BE_MISSING,
- };
++	nid = nid_start;
++	do {
+ 		page = __sgx_alloc_epc_page_from_node(nid);
+ 		if (page)
+ 			return page;
+-	}
++
++		nid = next_node_in(nid, sgx_numa_mask);
++	} while (nid != nid_start);
  
- /*
-@@ -197,6 +202,7 @@ static struct ti_cpufreq_soc_data am3517_soc_data = {
- 	.efuse_mask = 0,
- 	.rev_offset = OMAP3_CONTROL_IDCODE - OMAP3_SYSCON_BASE,
- 	.multi_regulator = false,
-+	.quirks = TI_QUIRK_SYSCON_MAY_BE_MISSING,
- };
- 
- 
-@@ -216,7 +222,7 @@ static int ti_cpufreq_get_efuse(struct ti_cpufreq_data *opp_data,
- 
- 	ret = regmap_read(opp_data->syscon, opp_data->soc_data->efuse_offset,
- 			  &efuse);
--	if (ret == -EIO) {
-+	if (opp_data->soc_data->quirks & TI_QUIRK_SYSCON_MAY_BE_MISSING && ret == -EIO) {
- 		/* not a syscon register! */
- 		void __iomem *regs = ioremap(OMAP3_SYSCON_BASE +
- 				opp_data->soc_data->efuse_offset, 4);
-@@ -257,7 +263,7 @@ static int ti_cpufreq_get_rev(struct ti_cpufreq_data *opp_data,
- 
- 	ret = regmap_read(opp_data->syscon, opp_data->soc_data->rev_offset,
- 			  &revision);
--	if (ret == -EIO) {
-+	if (opp_data->soc_data->quirks & TI_QUIRK_SYSCON_MAY_BE_MISSING && ret == -EIO) {
- 		/* not a syscon register! */
- 		void __iomem *regs = ioremap(OMAP3_SYSCON_BASE +
- 				opp_data->soc_data->rev_offset, 4);
+ 	return ERR_PTR(-ENOMEM);
+ }
 -- 
 2.43.0
 
