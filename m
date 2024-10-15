@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C83B1EABC3;
-	Tue, 15 Oct 2024 12:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38521F12F3;
+	Tue, 15 Oct 2024 12:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994186; cv=none; b=BMv9LdFWaP3i5k4tcwEGAR3qzSc4SXu6ZIYOu8Q962c/TkgO9cimvSWPb8kL0B14p/CDKJk4DR10DFLljE2zPW691JgyPznUQXBeW9BYfWkk0lu8mzZwLmuyp/++T9Rim3SsGdDzPa3GDXI9Oz0hA1NcLZelG2vA6dWPhkN3bpo=
+	t=1728994189; cv=none; b=incd+ENHwz7z2buDk0prlGwFEPeyQhX2Y1TUT3JPBH5xwHQJYep1plk4oK5zLDRZi8/ZJnZWb8bWDaEslKg5DIDQfuD5oZE/BivNXznF6TTHJRTVSCFFDt+99HV+poHe4Nem1LYNEu2QjC51YgK+qDhobSWzAY3QTKlEg1XHUJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994186; c=relaxed/simple;
-	bh=S3rLIbRWb0PZDnt0/feGXyyy0yaK/787Gq9OnPjXHjQ=;
+	s=arc-20240116; t=1728994189; c=relaxed/simple;
+	bh=5ZIm1OJMOVD+e0Pea1f3EjPBEH17Ljo7oqyHJ1XAZ6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C8xUp/O0K7xqXkR/WEnNkKTbZspQwXbxLjIv25tMGh5D7Wuu6Kn4gDFcpRWL8nWtvxAwBI/Oelbuu9RGroS0EUit2YCr2ezWK/pmy+UfO4Rqnon5jIGnu3p66gH4lPpDgXV51rAw5WhE2Iz+TQ0QzaEkRTDLJj4mb7hUV2NA2qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nITzR8ul; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JbTlQdiMcH5rhDl0VA1ilwAx4JcMba7MeQGomjriNqQPuVYTQFJru0IuXNcgD6RAh+eCtydSZFh0344XY6s8Z73TTwy/qdagMKrlZomLnJfiEnwyEKFmKTVYJf3Q9/i4sqr9ELumJq0IvwcttPmzJZetzN/HFiQgEAbZIrYB7vE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWnRk7oR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nITzR8ul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A5DC4CEC6;
-	Tue, 15 Oct 2024 12:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWnRk7oR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1446BC4CEC6;
+	Tue, 15 Oct 2024 12:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994186;
-	bh=S3rLIbRWb0PZDnt0/feGXyyy0yaK/787Gq9OnPjXHjQ=;
+	s=korg; t=1728994189;
+	bh=5ZIm1OJMOVD+e0Pea1f3EjPBEH17Ljo7oqyHJ1XAZ6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nITzR8ul99dWdDXFDQmJGbbSTf9AKSfSHSBxKAYBARjjjTDE6Q21kBPaHjussAQ8y
-	 JfZ7wf4UhK0USGlZOPEaFTWa4JS+cKeEWykOdJ5jDyWJCNeU1dohpA0LLWD8xmZ3h0
-	 mpBfJNVSZyw3703ezHc64P1a6LKzyW53ai2HpY8w=
+	b=dWnRk7oRV9Z53minxxChxHzF6ru4XRYjUqDVeJ1NX/e+WBCyuC6sdD1lxI8SPAtEY
+	 v/vffx+1OiYhOGjFJB2GnbTOkE0y/DcD8kic+XI8BWyZzduH+K7eYBzM8NCtrawRTr
+	 n5m9gZ5hXKoMj3eJaGFfqOiEJ0TS+LCuF5pzw8I8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d7ce59b06b3eb14fd218@syzkaller.appspotmail.com,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 632/691] Bluetooth: RFCOMM: FIX possible deadlock in rfcomm_sk_state_change
-Date: Tue, 15 Oct 2024 13:29:40 +0200
-Message-ID: <20241015112505.413297382@linuxfoundation.org>
+Subject: [PATCH 5.15 633/691] net: phy: bcm84881: Fix some error handling paths
+Date: Tue, 15 Oct 2024 13:29:41 +0200
+Message-ID: <20241015112505.452597634@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,49 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 08d1914293dae38350b8088980e59fbc699a72fe ]
+[ Upstream commit 9234a2549cb6ac038bec36cc7c084218e9575513 ]
 
-rfcomm_sk_state_change attempts to use sock_lock so it must never be
-called with it locked but rfcomm_sock_ioctl always attempt to lock it
-causing the following trace:
+If phy_read_mmd() fails, the error code stored in 'bmsr' should be returned
+instead of 'val' which is likely to be 0.
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.8.0-syzkaller-08951-gfe46a7dd189e #0 Not tainted
-------------------------------------------------------
-syz-executor386/5093 is trying to acquire lock:
-ffff88807c396258 (sk_lock-AF_BLUETOOTH-BTPROTO_RFCOMM){+.+.}-{0:0}, at: lock_sock include/net/sock.h:1671 [inline]
-ffff88807c396258 (sk_lock-AF_BLUETOOTH-BTPROTO_RFCOMM){+.+.}-{0:0}, at: rfcomm_sk_state_change+0x5b/0x310 net/bluetooth/rfcomm/sock.c:73
-
-but task is already holding lock:
-ffff88807badfd28 (&d->lock){+.+.}-{3:3}, at: __rfcomm_dlc_close+0x226/0x6a0 net/bluetooth/rfcomm/core.c:491
-
-Reported-by: syzbot+d7ce59b06b3eb14fd218@syzkaller.appspotmail.com
-Tested-by: syzbot+d7ce59b06b3eb14fd218@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d7ce59b06b3eb14fd218
-Fixes: 3241ad820dbb ("[Bluetooth] Add timestamp support to L2CAP, RFCOMM and SCO")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 75f4d8d10e01 ("net: phy: add Broadcom BCM84881 PHY driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://patch.msgid.link/3e1755b0c40340d00e089d6adae5bca2f8c79e53.1727982168.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/sock.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/phy/bcm84881.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
-index 4397e14ff560f..44c998e4a9e6c 100644
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -876,9 +876,7 @@ static int rfcomm_sock_ioctl(struct socket *sock, unsigned int cmd, unsigned lon
+diff --git a/drivers/net/phy/bcm84881.c b/drivers/net/phy/bcm84881.c
+index 9717a1626f3fa..37a64a37b2ae3 100644
+--- a/drivers/net/phy/bcm84881.c
++++ b/drivers/net/phy/bcm84881.c
+@@ -120,7 +120,7 @@ static int bcm84881_aneg_done(struct phy_device *phydev)
  
- 	if (err == -ENOIOCTLCMD) {
- #ifdef CONFIG_BT_RFCOMM_TTY
--		lock_sock(sk);
- 		err = rfcomm_dev_ioctl(sk, cmd, (void __user *) arg);
--		release_sock(sk);
- #else
- 		err = -EOPNOTSUPP;
- #endif
+ 	bmsr = phy_read_mmd(phydev, MDIO_MMD_AN, MDIO_AN_C22 + MII_BMSR);
+ 	if (bmsr < 0)
+-		return val;
++		return bmsr;
+ 
+ 	return !!(val & MDIO_AN_STAT1_COMPLETE) &&
+ 	       !!(bmsr & BMSR_ANEGCOMPLETE);
+@@ -146,7 +146,7 @@ static int bcm84881_read_status(struct phy_device *phydev)
+ 
+ 	bmsr = phy_read_mmd(phydev, MDIO_MMD_AN, MDIO_AN_C22 + MII_BMSR);
+ 	if (bmsr < 0)
+-		return val;
++		return bmsr;
+ 
+ 	phydev->autoneg_complete = !!(val & MDIO_AN_STAT1_COMPLETE) &&
+ 				   !!(bmsr & BMSR_ANEGCOMPLETE);
 -- 
 2.43.0
 
