@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DFB1D0492;
-	Tue, 15 Oct 2024 11:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03981D0492;
+	Tue, 15 Oct 2024 11:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993321; cv=none; b=EjBT3lIINZMXxpcnUtkQvNDDqETwJKfPxSQKe/ab2zps67i6BsjqR70h4b+gSiLvKMjnulOy60dwgYQFwsV/++k0iHqgObpaojrWDtOU91OYZ9044oG9eUcMzxDwnoDuASvGQeYrXdPMAIwA5T8TS8Shbr/l1U+MfM5DTvv6LBM=
+	t=1728993325; cv=none; b=PdJ/J9Tij+XCWHHwrKy+nInqm8JTaGF3YVYT3nTAV79s3jugboCO5QnhG3P7VDXKLkgCR2e75+YO1ThfC3L1QrNh9cxOm+HJqnpFtV6sdR1C4UuBilvPvx9PnKlyU7BT+cP91un0NDQF5QhWh2jjo8enccaUHWGOsIU8ub+7Shw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993321; c=relaxed/simple;
-	bh=QhaZSNR3nbnBLQAbjoY8Cg5XA85bjHvUtyEwWsaDfQg=;
+	s=arc-20240116; t=1728993325; c=relaxed/simple;
+	bh=rlRLmArb+FAsOLV3Za44tsVWhLj/UU1G47l80YtsJSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UxfHPAS+j5hdDe6gHnfcuw8cisgarVO60kpoJOpLC8r2q1MfOurQMfYk6uLU/lo+5n+j7j4XCfHUJh1Szgork/x+xuG1mLyNI4TjJKlFpmfn0NlIjv0cjTFgCF2MXmttaQPL9IHcYdXD6dnHvZC0X5C1k2nlDB3OzlFWPDOmXus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aoT1NZgE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I1lCH1Xyv9GzWNgUaJJp37JCmA5vx97d5Stkh1489v8sFRWXxK9shHmS1Aqvq27brxYBAm3IgM0AliTu53gVOdOIWSmdex/TZYFF3qFhVmo8G5eEJDwmGjqx2AkKXgxi6EcWD2bN8I2j3ygjm5Sc3utiuVZBgyuuRUAxhAvYafo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NeuSyIsp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aoT1NZgE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18E1C4CECE;
-	Tue, 15 Oct 2024 11:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NeuSyIsp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F50C4CEC6;
+	Tue, 15 Oct 2024 11:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993321;
-	bh=QhaZSNR3nbnBLQAbjoY8Cg5XA85bjHvUtyEwWsaDfQg=;
+	s=korg; t=1728993324;
+	bh=rlRLmArb+FAsOLV3Za44tsVWhLj/UU1G47l80YtsJSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aoT1NZgEQ+mNw4Z+XqhZtZHEvQc3L163uOzo9UPXBlPXiC04GrnKo9rtcYG+ht6cQ
-	 HhMvsYTSzdc0g07MhStpJM94ecm3xObwnE/lxu4n8taOQgMGFoEPIrhtO6g5UAwgzU
-	 HfMZnMb/1L96HsBtdjQRjJwOE1+jPcpVxEsAWMV4=
+	b=NeuSyIsplbDAzE7X4Rf0RIb+2Nn3AADmJ1QMjNEaFGTnDinc3vZMuGRBf6W4bB94h
+	 j9WDuA5YyKIrSyWAY609HMDHVJv/nNr1Qcm3u1yZgwehbi312bmaQs+7wT8yKkDnc4
+	 PLQooNcxuA/3BBR45UBiMTsi6vRoQb2UT0lEfKHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gafert <christian.gafert@rohde-schwarz.com>,
-	Max Ferger <max.ferger@rohde-schwarz.com>,
-	Van Giang Nguyen <vangiang.nguyen@rohde-schwarz.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 5.15 349/691] padata: use integer wrap around to prevent deadlock on seq_nr overflow
-Date: Tue, 15 Oct 2024 13:24:57 +0200
-Message-ID: <20241015112454.192080871@linuxfoundation.org>
+	Xiubo Li <xiubli@redhat.com>,
+	Patrick Donnelly <pdonnell@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 376/691] ceph: remove the incorrect Fw reference check when dirtying pages
+Date: Tue, 15 Oct 2024 13:25:24 +0200
+Message-ID: <20241015112455.268905487@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,46 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: VanGiang Nguyen <vangiang.nguyen@rohde-schwarz.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-commit 9a22b2812393d93d84358a760c347c21939029a6 upstream.
+[ Upstream commit c08dfb1b49492c09cf13838c71897493ea3b424e ]
 
-When submitting more than 2^32 padata objects to padata_do_serial, the
-current sorting implementation incorrectly sorts padata objects with
-overflowed seq_nr, causing them to be placed before existing objects in
-the reorder list. This leads to a deadlock in the serialization process
-as padata_find_next cannot match padata->seq_nr and pd->processed
-because the padata instance with overflowed seq_nr will be selected
-next.
+When doing the direct-io reads it will also try to mark pages dirty,
+but for the read path it won't hold the Fw caps and there is case
+will it get the Fw reference.
 
-To fix this, we use an unsigned integer wrap around to correctly sort
-padata objects in scenarios with integer overflow.
-
-Fixes: bfde23ce200e ("padata: unbind parallel jobs from specific CPUs")
-Cc: <stable@vger.kernel.org>
-Co-developed-by: Christian Gafert <christian.gafert@rohde-schwarz.com>
-Signed-off-by: Christian Gafert <christian.gafert@rohde-schwarz.com>
-Co-developed-by: Max Ferger <max.ferger@rohde-schwarz.com>
-Signed-off-by: Max Ferger <max.ferger@rohde-schwarz.com>
-Signed-off-by: Van Giang Nguyen <vangiang.nguyen@rohde-schwarz.com>
-Acked-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5dda377cf0a6 ("ceph: set i_head_snapc when getting CEPH_CAP_FILE_WR reference")
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ceph/addr.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -396,7 +396,8 @@ void padata_do_serial(struct padata_priv
- 	/* Sort in ascending order of sequence number. */
- 	list_for_each_prev(pos, &reorder->list) {
- 		cur = list_entry(pos, struct padata_priv, list);
--		if (cur->seq_nr < padata->seq_nr)
-+		/* Compare by difference to consider integer wrap around */
-+		if ((signed int)(cur->seq_nr - padata->seq_nr) < 0)
- 			break;
- 	}
- 	list_add(&padata->list, pos);
+diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
+index b218a26291b8e..e1096ca1a39b1 100644
+--- a/fs/ceph/addr.c
++++ b/fs/ceph/addr.c
+@@ -95,7 +95,6 @@ static int ceph_set_page_dirty(struct page *page)
+ 
+ 	/* dirty the head */
+ 	spin_lock(&ci->i_ceph_lock);
+-	BUG_ON(ci->i_wr_ref == 0); // caller should hold Fw reference
+ 	if (__ceph_have_pending_cap_snap(ci)) {
+ 		struct ceph_cap_snap *capsnap =
+ 				list_last_entry(&ci->i_cap_snaps,
+-- 
+2.43.0
+
 
 
