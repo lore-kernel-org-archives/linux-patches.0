@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE3C1C07C4;
-	Tue, 15 Oct 2024 12:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439551C07C4;
+	Tue, 15 Oct 2024 12:56:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996975; cv=none; b=f1nF4I1aWKYBLzz3a5pRwXEhx+l8Qu2Uws/Nx6Cs8as9sFjjXcC9/asiImnGhlmziInZEb/T4RxF5DVaJic4d0NwX7HfpjDjRdQuthggVs9lOX4ZIU3YdWEnw1otT92O54WWIHQWe7lLsAsrszwa2j8muqTx2z0DVsqZDLF8vSI=
+	t=1728996978; cv=none; b=eD8jIoKJ2r2nVCOxQZfK4a3jWSATxJ/ryusP992DE5EDAvkABBs8RAzFI0GfTvHe584J3h61pH5i7/ACVLU9pzBjWk6iiskss2f7CmdOJ9KhM5tvO1nJhpLmapSoNtQJWUgeJpl4gc30eRYUfAjc7sGzzxMvCMfU4TBQJgMJWFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996975; c=relaxed/simple;
-	bh=/y8hdch1bOMpq4Hp0cUZ28U1ANMobecvFn98aI3dsig=;
+	s=arc-20240116; t=1728996978; c=relaxed/simple;
+	bh=MI1kOLrU9s09e8SVVXcBj9eRLcR1wFQ6jn26w84QWA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t3aOdU2LQ+fwQ7I0PaPyqqf2jEBUAh2bMOBJ3SX7aTAt1PYNNWx2i6PllKQCChT5dHLBp07fp23QBu4hBCFxh5iGKM6foxmNI7HEwQx/cEnAwL+b64dbW5/DwA/19xxTkq3rArAlH3y81pu8qdKY284ql6rulVQfIw2qN8kpsyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9/FBOF7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rb22N4LzMX6xT5QCZoOLKmy/+tSA6wrDw7AYSs9WgexpePdr4+b9hx1yBRASvc4nAwr3bpCoYEaF7QguaDkmT32w29q47mHpWOxJcdfpt31/1jx5n9FUAH0H060xX/8FTKKaLSUsbkMEuvg4Fum8fkOYMNAtRIS6DfIT2HwdvHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWKLBHlh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9/FBOF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 493A5C4CEC6;
-	Tue, 15 Oct 2024 12:56:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWKLBHlh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB8FC4CEC6;
+	Tue, 15 Oct 2024 12:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728996974;
-	bh=/y8hdch1bOMpq4Hp0cUZ28U1ANMobecvFn98aI3dsig=;
+	s=korg; t=1728996978;
+	bh=MI1kOLrU9s09e8SVVXcBj9eRLcR1wFQ6jn26w84QWA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A9/FBOF7/1pcOKiVBrs10gNKAzLnGFE/LFFKwXVr2e/gq6DeCodvegYWdtRVuxkte
-	 x7PKXgDBUW92LJMjoJ6KcXDGLaRA5vh1wVAqU8oXhmuecPQqAcpxt6Goqzv05DeD2E
-	 a7yY9q0uLT0Or50q4Mkn9vxj+pT+PW6YD+mW8ci4=
+	b=UWKLBHlh+iNgmY7b2LtzstVGQUyLaMV3o4x6LG01VYTvSfx+YFebT/l0TxYD2HuUu
+	 XnDGSQLTv/kFCFJnh5tdZlvBBsc/XzlRZ6BVEXYsOmAIrPfmtaOAqmapGZqgusxOiH
+	 07SeYNbJw/osOCIhJ569b5QuAvDB50vEE/qF/NP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	mark.rutland@arm.com,
-	mathieu.desnoyers@efficios.com,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 5.10 053/518] ftrace: Fix possible use-after-free issue in ftrace_location()
-Date: Tue, 15 Oct 2024 14:39:17 +0200
-Message-ID: <20241015123919.059615048@linuxfoundation.org>
+	Kent Gibson <warthog618@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 5.10 054/518] gpiolib: cdev: Ignore reconfiguration without direction
+Date: Tue, 15 Oct 2024 14:39:18 +0200
+Message-ID: <20241015123919.097556435@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -54,172 +50,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Kent Gibson <warthog618@gmail.com>
 
-commit e60b613df8b6253def41215402f72986fee3fc8d upstream.
+commit b440396387418fe2feaacd41ca16080e7a8bc9ad upstream.
 
-KASAN reports a bug:
+linereq_set_config() behaves badly when direction is not set.
+The configuration validation is borrowed from linereq_create(), where,
+to verify the intent of the user, the direction must be set to in order to
+effect a change to the electrical configuration of a line. But, when
+applied to reconfiguration, that validation does not allow for the unset
+direction case, making it possible to clear flags set previously without
+specifying the line direction.
 
-  BUG: KASAN: use-after-free in ftrace_location+0x90/0x120
-  Read of size 8 at addr ffff888141d40010 by task insmod/424
-  CPU: 8 PID: 424 Comm: insmod Tainted: G        W          6.9.0-rc2+
-  [...]
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x68/0xa0
-   print_report+0xcf/0x610
-   kasan_report+0xb5/0xe0
-   ftrace_location+0x90/0x120
-   register_kprobe+0x14b/0xa40
-   kprobe_init+0x2d/0xff0 [kprobe_example]
-   do_one_initcall+0x8f/0x2d0
-   do_init_module+0x13a/0x3c0
-   load_module+0x3082/0x33d0
-   init_module_from_file+0xd2/0x130
-   __x64_sys_finit_module+0x306/0x440
-   do_syscall_64+0x68/0x140
-   entry_SYSCALL_64_after_hwframe+0x71/0x79
+Adding to the inconsistency, those changes are not immediately applied by
+linereq_set_config(), but will take effect when the line value is next get
+or set.
 
-The root cause is that, in lookup_rec(), ftrace record of some address
-is being searched in ftrace pages of some module, but those ftrace pages
-at the same time is being freed in ftrace_release_mod() as the
-corresponding module is being deleted:
+For example, by requesting a configuration with no flags set, an output
+line with GPIO_V2_LINE_FLAG_ACTIVE_LOW and GPIO_V2_LINE_FLAG_OPEN_DRAIN
+set could have those flags cleared, inverting the sense of the line and
+changing the line drive to push-pull on the next line value set.
 
-           CPU1                       |      CPU2
-  register_kprobes() {                | delete_module() {
-    check_kprobe_address_safe() {     |
-      arch_check_ftrace_location() {  |
-        ftrace_location() {           |
-          lookup_rec() // USE!        |   ftrace_release_mod() // Free!
+Skip the reconfiguration of lines for which the direction is not set, and
+only reconfigure the lines for which direction is set.
 
-To fix this issue:
-  1. Hold rcu lock as accessing ftrace pages in ftrace_location_range();
-  2. Use ftrace_location_range() instead of lookup_rec() in
-     ftrace_location();
-  3. Call synchronize_rcu() before freeing any ftrace pages both in
-     ftrace_process_locs()/ftrace_release_mod()/ftrace_free_mem().
-
-Link: https://lore.kernel.org/linux-trace-kernel/20240509192859.1273558-1-zhengyejian1@huawei.com
-
-Cc: stable@vger.kernel.org
-Cc: <mhiramat@kernel.org>
-Cc: <mark.rutland@arm.com>
-Cc: <mathieu.desnoyers@efficios.com>
-Fixes: ae6aa16fdc16 ("kprobes: introduce ftrace based optimization")
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-[Shivani: Modified to apply on v5.10.y]
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Fixes: a54756cb24ea ("gpiolib: cdev: support GPIO_V2_LINE_SET_CONFIG_IOCTL")
+Signed-off-by: Kent Gibson <warthog618@gmail.com>
+Link: https://lore.kernel.org/r/20240626052925.174272-3-warthog618@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ftrace.c |   39 +++++++++++++++++++++++----------------
- 1 file changed, 23 insertions(+), 16 deletions(-)
+ drivers/gpio/gpiolib-cdev.c |   13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -1566,12 +1566,15 @@ static struct dyn_ftrace *lookup_rec(uns
- unsigned long ftrace_location_range(unsigned long start, unsigned long end)
- {
- 	struct dyn_ftrace *rec;
-+	unsigned long ip = 0;
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -1110,15 +1110,18 @@ static long linereq_set_config_unlocked(
+ 	for (i = 0; i < lr->num_lines; i++) {
+ 		desc = lr->lines[i].desc;
+ 		flags = gpio_v2_line_config_flags(lc, i);
++		/*
++		 * Lines not explicitly reconfigured as input or output
++		 * are left unchanged.
++		 */
++		if (!(flags & GPIO_V2_LINE_DIRECTION_FLAGS))
++			continue;
++
+ 		polarity_change =
+ 			(!!test_bit(FLAG_ACTIVE_LOW, &desc->flags) !=
+ 			 ((flags & GPIO_V2_LINE_FLAG_ACTIVE_LOW) != 0));
  
-+	rcu_read_lock();
- 	rec = lookup_rec(start, end);
- 	if (rec)
--		return rec->ip;
-+		ip = rec->ip;
-+	rcu_read_unlock();
+ 		gpio_v2_line_config_flags_to_desc_flags(flags, &desc->flags);
+-		/*
+-		 * Lines have to be requested explicitly for input
+-		 * or output, else the line will be treated "as is".
+-		 */
+ 		if (flags & GPIO_V2_LINE_FLAG_OUTPUT) {
+ 			int val = gpio_v2_line_config_output_value(lc, i);
  
--	return 0;
-+	return ip;
- }
- 
- /**
-@@ -1584,25 +1587,22 @@ unsigned long ftrace_location_range(unsi
-  */
- unsigned long ftrace_location(unsigned long ip)
- {
--	struct dyn_ftrace *rec;
-+	unsigned long loc;
- 	unsigned long offset;
- 	unsigned long size;
- 
--	rec = lookup_rec(ip, ip);
--	if (!rec) {
-+	loc = ftrace_location_range(ip, ip);
-+	if (!loc) {
- 		if (!kallsyms_lookup_size_offset(ip, &size, &offset))
- 			goto out;
- 
- 		/* map sym+0 to __fentry__ */
- 		if (!offset)
--			rec = lookup_rec(ip, ip + size - 1);
-+			loc = ftrace_location_range(ip, ip + size - 1);
- 	}
- 
--	if (rec)
--		return rec->ip;
--
- out:
--	return 0;
-+	return loc;
- }
- 
- /**
-@@ -6331,6 +6331,8 @@ static int ftrace_process_locs(struct mo
- 	/* We should have used all pages unless we skipped some */
- 	if (pg_unuse) {
- 		WARN_ON(!skipped);
-+		/* Need to synchronize with ftrace_location_range() */
-+		synchronize_rcu();
- 		ftrace_free_pages(pg_unuse);
- 	}
- 	return ret;
-@@ -6513,6 +6515,9 @@ void ftrace_release_mod(struct module *m
-  out_unlock:
- 	mutex_unlock(&ftrace_lock);
- 
-+	/* Need to synchronize with ftrace_location_range() */
-+	if (tmp_page)
-+		synchronize_rcu();
- 	for (pg = tmp_page; pg; pg = tmp_page) {
- 
- 		/* Needs to be called outside of ftrace_lock */
-@@ -6835,6 +6840,7 @@ void ftrace_free_mem(struct module *mod,
- 	unsigned long start = (unsigned long)(start_ptr);
- 	unsigned long end = (unsigned long)(end_ptr);
- 	struct ftrace_page **last_pg = &ftrace_pages_start;
-+	struct ftrace_page *tmp_page = NULL;
- 	struct ftrace_page *pg;
- 	struct dyn_ftrace *rec;
- 	struct dyn_ftrace key;
-@@ -6878,12 +6884,8 @@ void ftrace_free_mem(struct module *mod,
- 		ftrace_update_tot_cnt--;
- 		if (!pg->index) {
- 			*last_pg = pg->next;
--			if (pg->records) {
--				free_pages((unsigned long)pg->records, pg->order);
--				ftrace_number_of_pages -= 1 << pg->order;
--			}
--			ftrace_number_of_groups--;
--			kfree(pg);
-+			pg->next = tmp_page;
-+			tmp_page = pg;
- 			pg = container_of(last_pg, struct ftrace_page, next);
- 			if (!(*last_pg))
- 				ftrace_pages = pg;
-@@ -6900,6 +6902,11 @@ void ftrace_free_mem(struct module *mod,
- 		clear_func_from_hashes(func);
- 		kfree(func);
- 	}
-+	/* Need to synchronize with ftrace_location_range() */
-+	if (tmp_page) {
-+		synchronize_rcu();
-+		ftrace_free_pages(tmp_page);
-+	}
- }
- 
- void __init ftrace_free_init_mem(void)
+@@ -1126,7 +1129,7 @@ static long linereq_set_config_unlocked(
+ 			ret = gpiod_direction_output(desc, val);
+ 			if (ret)
+ 				return ret;
+-		} else if (flags & GPIO_V2_LINE_FLAG_INPUT) {
++		} else {
+ 			ret = gpiod_direction_input(desc);
+ 			if (ret)
+ 				return ret;
 
 
