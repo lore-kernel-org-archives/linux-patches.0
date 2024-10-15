@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F271E9079;
-	Tue, 15 Oct 2024 11:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8B51CFEA9;
+	Tue, 15 Oct 2024 11:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728992929; cv=none; b=fqTL9YjD+P7fOCkj++EO/cRgQxzelsppFeSn25IHezAnhikxeN9UnBWD+24EWTfC+eye+o+gADowZ4DpAG0oSe2cjv0m0oibBbuiF/Jdhh5xos1RlOyJBu8jATMAhu5BGO55lxO6NeNGWBHaYFZzekP38QTAIU2DjpBOyOLjFS4=
+	t=1728992932; cv=none; b=cLBzQQI6PNzSoQfSSOp99ZBgktxmtjdgWmYqnmPXxkrR+/FgwFB40R597MYZbyGSSXKnFFo1zi4rEEAp5jucQE2HaBNj3U3AVfZ3DQM2nq1zQYrnVoihlkW0OYNWkkZrLFcalOuk3CJDQ1AW9lgQazjUfevTNJpMPz30R34F+gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728992929; c=relaxed/simple;
-	bh=G/ExRifo9HyaEAB0CDRXzE3CACP3idT6mRG4JdztqB8=;
+	s=arc-20240116; t=1728992932; c=relaxed/simple;
+	bh=eg/rV0FVMN/j8db28BknjR6HRRumnO+SLNmWQdcwpuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C+YQzyHwFtliE6MB5xCX7hBuVidizv452oyXtRpsUv6IJkPI5rIEU53FmoyBz0dK+VQ+AKVkGnebOYoY7YvjfsvMj9Cn0LVeAQPZjnimjIDomkdi8K/uSayhUm3KYCwrIFHxmiLGiGgHrzqf3rDIiN8+IBuphrd42WOsV60sbnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ml1/J8S9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oy+pzpfbt5eilF54wTxcZhitgDzCngXNozuYA/ybWFLa334NnS3AEFxY1Pn6c6ofjJM3cMiN8jLGhnq4YbEkPhcnZX/j2z919JRuSLnWkEi9afe6xkofA+asa5Ka8sU4Sh8H6gTUhhu84s2pqs54sWfrTvU4ykucAc0JhTGcxws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FaFnHdV1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ml1/J8S9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987A5C4CEC6;
-	Tue, 15 Oct 2024 11:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FaFnHdV1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8B9C4CEC6;
+	Tue, 15 Oct 2024 11:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728992929;
-	bh=G/ExRifo9HyaEAB0CDRXzE3CACP3idT6mRG4JdztqB8=;
+	s=korg; t=1728992932;
+	bh=eg/rV0FVMN/j8db28BknjR6HRRumnO+SLNmWQdcwpuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ml1/J8S9cVWHkWoDQzocp+OV6cSaAeDaGCOnMUy+SjKJpFJJvzC0tAFAKILij1w0U
-	 lBlcrzDrPs4vOj4CsTlS2KNgb5E/qFNRn4QIFg8mzyDKrAydrBcu/jrhTyeGyg5xb6
-	 q3Ec0YMlgngcW8KU/7gR9SFw3gGxSrrEp9DhItGY=
+	b=FaFnHdV1ur824l/TBYnGOm+dNo2/E+QVEnFW6YfnQnP1c5myqFpgtVU42wAHuL86H
+	 Q1RjIqim+PdJW3AGRj+sYcaevqntn2UG/dyjqAyxd8tMY4SwtDJDYMVY0qIGjudzMk
+	 jHAOz6XjrLWMgBZBz3HJlH+NSRqvLIRNgDCW21Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Scott Mayhew <smayhew@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Yonggil Song <yonggil.song@samsung.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 261/691] nfsd: return -EINVAL when namelen is 0
-Date: Tue, 15 Oct 2024 13:23:29 +0200
-Message-ID: <20241015112450.708701809@linuxfoundation.org>
+Subject: [PATCH 5.15 262/691] f2fs: fix typo
+Date: Tue, 15 Oct 2024 13:23:30 +0200
+Message-ID: <20241015112450.749257916@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -53,93 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Yonggil Song <yonggil.song@samsung.com>
 
-[ Upstream commit 22451a16b7ab7debefce660672566be887db1637 ]
+[ Upstream commit d382e36970ecf8242921400db2afde15fb6ed49e ]
 
-When we have a corrupted main.sqlite in /var/lib/nfs/nfsdcld/, it may
-result in namelen being 0, which will cause memdup_user() to return
-ZERO_SIZE_PTR.
-When we access the name.data that has been assigned the value of
-ZERO_SIZE_PTR in nfs4_client_to_reclaim(), null pointer dereference is
-triggered.
+Fix typo in f2fs.h
+Detected by Jaeyoon Choi
 
-[ T1205] ==================================================================
-[ T1205] BUG: KASAN: null-ptr-deref in nfs4_client_to_reclaim+0xe9/0x260
-[ T1205] Read of size 1 at addr 0000000000000010 by task nfsdcld/1205
-[ T1205]
-[ T1205] CPU: 11 PID: 1205 Comm: nfsdcld Not tainted 5.10.0-00003-g2c1423731b8d #406
-[ T1205] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS ?-20190727_073836-buildvm-ppc64le-16.ppc.fedoraproject.org-3.fc31 04/01/2014
-[ T1205] Call Trace:
-[ T1205]  dump_stack+0x9a/0xd0
-[ T1205]  ? nfs4_client_to_reclaim+0xe9/0x260
-[ T1205]  __kasan_report.cold+0x34/0x84
-[ T1205]  ? nfs4_client_to_reclaim+0xe9/0x260
-[ T1205]  kasan_report+0x3a/0x50
-[ T1205]  nfs4_client_to_reclaim+0xe9/0x260
-[ T1205]  ? nfsd4_release_lockowner+0x410/0x410
-[ T1205]  cld_pipe_downcall+0x5ca/0x760
-[ T1205]  ? nfsd4_cld_tracking_exit+0x1d0/0x1d0
-[ T1205]  ? down_write_killable_nested+0x170/0x170
-[ T1205]  ? avc_policy_seqno+0x28/0x40
-[ T1205]  ? selinux_file_permission+0x1b4/0x1e0
-[ T1205]  rpc_pipe_write+0x84/0xb0
-[ T1205]  vfs_write+0x143/0x520
-[ T1205]  ksys_write+0xc9/0x170
-[ T1205]  ? __ia32_sys_read+0x50/0x50
-[ T1205]  ? ktime_get_coarse_real_ts64+0xfe/0x110
-[ T1205]  ? ktime_get_coarse_real_ts64+0xa2/0x110
-[ T1205]  do_syscall_64+0x33/0x40
-[ T1205]  entry_SYSCALL_64_after_hwframe+0x67/0xd1
-[ T1205] RIP: 0033:0x7fdbdb761bc7
-[ T1205] Code: 0f 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 514
-[ T1205] RSP: 002b:00007fff8c4b7248 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-[ T1205] RAX: ffffffffffffffda RBX: 000000000000042b RCX: 00007fdbdb761bc7
-[ T1205] RDX: 000000000000042b RSI: 00007fff8c4b75f0 RDI: 0000000000000008
-[ T1205] RBP: 00007fdbdb761bb0 R08: 0000000000000000 R09: 0000000000000001
-[ T1205] R10: 0000000000000000 R11: 0000000000000246 R12: 000000000000042b
-[ T1205] R13: 0000000000000008 R14: 00007fff8c4b75f0 R15: 0000000000000000
-[ T1205] ==================================================================
-
-Fix it by checking namelen.
-
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Fixes: 74725959c33c ("nfsd: un-deprecate nfsdcld")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Scott Mayhew <smayhew@redhat.com>
-Tested-by: Scott Mayhew <smayhew@redhat.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Yonggil Song <yonggil.song@samsung.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: aaf8c0b9ae04 ("f2fs: reduce expensive checkpoint trigger frequency")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4recover.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/f2fs/f2fs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
-index 5d680045fa2c7..2cc543f6c410f 100644
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -806,6 +806,10 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
- 			ci = &cmsg->cm_u.cm_clntinfo;
- 			if (get_user(namelen, &ci->cc_name.cn_len))
- 				return -EFAULT;
-+			if (!namelen) {
-+				dprintk("%s: namelen should not be zero", __func__);
-+				return -EINVAL;
-+			}
- 			name.data = memdup_user(&ci->cc_name.cn_id, namelen);
- 			if (IS_ERR(name.data))
- 				return PTR_ERR(name.data);
-@@ -828,6 +832,10 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
- 			cnm = &cmsg->cm_u.cm_name;
- 			if (get_user(namelen, &cnm->cn_len))
- 				return -EFAULT;
-+			if (!namelen) {
-+				dprintk("%s: namelen should not be zero", __func__);
-+				return -EINVAL;
-+			}
- 			name.data = memdup_user(&cnm->cn_id, namelen);
- 			if (IS_ERR(name.data))
- 				return PTR_ERR(name.data);
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index e49fca9daf2d3..25f879ed599a5 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -261,7 +261,7 @@ enum {
+ 	ORPHAN_INO,		/* for orphan ino list */
+ 	APPEND_INO,		/* for append ino list */
+ 	UPDATE_INO,		/* for update ino list */
+-	TRANS_DIR_INO,		/* for trasactions dir ino list */
++	TRANS_DIR_INO,		/* for transactions dir ino list */
+ 	FLUSH_INO,		/* for multiple device flushing */
+ 	MAX_INO_ENTRY,		/* max. list */
+ };
 -- 
 2.43.0
 
