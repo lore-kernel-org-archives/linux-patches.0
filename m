@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249AA1D4154;
-	Tue, 15 Oct 2024 11:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9EF1D4154;
+	Tue, 15 Oct 2024 11:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728993169; cv=none; b=brB0xYBxgqActUuqZZ6Dc/nBjpeQ7epqPr3qA02ERfn8DpW+OMAjKxARcq7+nSC3bjLipcLukmcTvlIrA+i+F83tGEY9dzR3F5tKQCa44Tx4q6xBwQHo3P4t9LS4P7HRiPDjkVN+WRrXaeV5pK5pI4HbThMmUt/9LWmTbdeOTCg=
+	t=1728993172; cv=none; b=PNwptYHPrMi3oR+Tn2QtLPo7DU1xro59juXoTbPg5gPIXQr4Mkva1JtNMHVSomvpAtMlqA0fofdfnvp8SnMUBb8MvYI/qCHgVgxhfXMaldIZbrRaBiNfW4eRebvCAB8XfeSwPSid3P7Y/wLglo0GorCWkB75CMoHdnyQqdM2mqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728993169; c=relaxed/simple;
-	bh=b7TG667xqbxGvXLQv038cfclxEi/vQSAC6yu+n9VhcE=;
+	s=arc-20240116; t=1728993172; c=relaxed/simple;
+	bh=HyBiQVJtxknYh1V97h6jizsrymLHNPID1XxWCScFHVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R4VNy8V4morFwOfbMEJQlD0CqT+t7Bt3zl7rayzO0yh6oRsgaIoNIEk+i1h7h4XWMnVDZCwLgyW8ZwskeQMhBJ/+jkZGhHLjwmZeUTP4b1jQvHOB6rTQccq81EYlrpv3xScUknFl/X9HTaTU9UNnbxpjby4LLWMFWaNHY2yvx3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqXPJgc8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dz6CJ0VsqAEPG0jZEoZoozrgPvQcLKUM+eWu2yj/Zu93cJ9jtVWh7XIn20nyaFpvDBJ1Gqo9X8pHcMVSsJhfvepYwilf4bEqHGUVeVRaVTz+FEk3urEJVtuxF4Z2GFz3UVdHsmVfFtkALPkAKl/1FuKsiKkjIyU3c1A5q7tawSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBTycWw8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqXPJgc8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAC8C4CEC6;
-	Tue, 15 Oct 2024 11:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBTycWw8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12E7C4CEC6;
+	Tue, 15 Oct 2024 11:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728993169;
-	bh=b7TG667xqbxGvXLQv038cfclxEi/vQSAC6yu+n9VhcE=;
+	s=korg; t=1728993172;
+	bh=HyBiQVJtxknYh1V97h6jizsrymLHNPID1XxWCScFHVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wqXPJgc8Ob7+KNQJLOcyyvlZIjHgZvEVAwxlVdRTMb7c49qNTt7KTqINTDGrORnMW
-	 54VzfTDT5ezDBbg3UQoprEYWQZ0bTqmRAesLHh6DaTpjfaxpJKqqyInCugPDBo6gqa
-	 Alkyi5tekFyjLXk/RWZOFIL5KnB2/vJjTGojVe94=
+	b=LBTycWw8/t5w04NwnKq2wkmXrA3rGLxAMm3r/Am28uPT2WpoZwUXh4w0pcMiW//yS
+	 93D64YOQ5vnv6D+BV9nO+P58kCLbDn9GB3FQXRK4E55TKUSMS8UFu9lsapLsmV1ZE7
+	 PLGv/9HOxzL/bBcvRTn/0BxFnWgIaNvcQ9+Lqn8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 314/691] drm/amd/display: Validate backlight caps are sane
-Date: Tue, 15 Oct 2024 13:24:22 +0200
-Message-ID: <20241015112452.799574007@linuxfoundation.org>
+	Werner Sembach <wse@tuxedocomputers.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 332/691] ACPI: resource: Add another DMI match for the TongFang GMxXGxx
+Date: Tue, 15 Oct 2024 13:24:40 +0200
+Message-ID: <20241015112453.512000682@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,60 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-commit 327e62f47eb57ae5ff63de82b0815557104e439a upstream.
+commit a98cfe6ff15b62f94a44d565607a16771c847bc6 upstream.
 
-Currently amdgpu takes backlight caps provided by the ACPI tables
-on systems as is.  If the firmware sets maximums that are too low
-this means that users don't get a good experience.
+Internal documentation suggest that the TUXEDO Polaris 15 Gen5 AMD might
+have GMxXGxX as the board name instead of GMxXGxx.
 
-To avoid having to maintain a quirk list of such systems, do a sanity
-check on the values.  Check that the spread is at least half of the
-values that amdgpu would use if no ACPI table was found and if not
-use the amdgpu defaults.
+Adding both to be on the safe side.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3020
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: All applicable <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240910094008.1601230-1-wse@tuxedocomputers.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/acpi/resource.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3906,6 +3906,7 @@ static int amdgpu_dm_mode_config_init(st
- 
- #define AMDGPU_DM_DEFAULT_MIN_BACKLIGHT 12
- #define AMDGPU_DM_DEFAULT_MAX_BACKLIGHT 255
-+#define AMDGPU_DM_MIN_SPREAD ((AMDGPU_DM_DEFAULT_MAX_BACKLIGHT - AMDGPU_DM_DEFAULT_MIN_BACKLIGHT) / 2)
- #define AUX_BL_DEFAULT_TRANSITION_TIME_MS 50
- 
- #if defined(CONFIG_BACKLIGHT_CLASS_DEVICE) ||\
-@@ -3923,6 +3924,21 @@ static void amdgpu_dm_update_backlight_c
- 		return;
- 
- 	amdgpu_acpi_get_backlight_caps(&caps);
-+
-+	/* validate the firmware value is sane */
-+	if (caps.caps_valid) {
-+		int spread = caps.max_input_signal - caps.min_input_signal;
-+
-+		if (caps.max_input_signal > AMDGPU_DM_DEFAULT_MAX_BACKLIGHT ||
-+		    caps.min_input_signal < AMDGPU_DM_DEFAULT_MIN_BACKLIGHT ||
-+		    spread > AMDGPU_DM_DEFAULT_MAX_BACKLIGHT ||
-+		    spread < AMDGPU_DM_MIN_SPREAD) {
-+			DRM_DEBUG_KMS("DM: Invalid backlight caps: min=%d, max=%d\n",
-+				      caps.min_input_signal, caps.max_input_signal);
-+			caps.caps_valid = false;
-+		}
-+	}
-+
- 	if (caps.caps_valid) {
- 		dm->backlight_caps[bl_idx].caps_valid = true;
- 		if (caps.aux_support)
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -516,6 +516,12 @@ static const struct dmi_system_id mainge
+ 		},
+ 	},
+ 	{
++		/* TongFang GMxXGxX/TUXEDO Polaris 15 Gen5 AMD */
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "GMxXGxX"),
++		},
++	},
++	{
+ 		/* TongFang GMxXGxx sold as Eluktronics Inc. RP-15 */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Eluktronics Inc."),
 
 
