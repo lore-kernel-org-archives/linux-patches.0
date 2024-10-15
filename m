@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4A21C07C2;
-	Tue, 15 Oct 2024 12:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F250D1C07C2;
+	Tue, 15 Oct 2024 12:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997061; cv=none; b=DVCs+4/fcuht6bFf+3CbhFPa5X7dZ6zYm2/GEacLAFWoBQkQsNUZ/SBAK4bQD2oGatDBroCBDmrfNZihYsHeuy9xvepvlXMjWb9lB8Ja5OcApCreU8xOC8sXcYT0P+Gg0miBhQd3VsZT18N1R7I7erl94Tmjp6UFfZCk/PVgKnE=
+	t=1728997065; cv=none; b=J/aCFdJrGbXd/FLDdaFEMRy+UCGACt9j6gOHtWcawZR9VYHdE0aPGlDTItnp6uPGE/ugaBAy0IbPOj4lXIWEoln1wZFqLbn1kHLxDtCSrf47pv20Wrw1sVSeVLEiMxlHUtLza60cyQakqjVNnFPyh9aJw8fmzak0Saq+jDK8qkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997061; c=relaxed/simple;
-	bh=yyJ+uASLC4zdws/2vZPBPaHS+ZQD6lOlXnQ8ZHv8xZw=;
+	s=arc-20240116; t=1728997065; c=relaxed/simple;
+	bh=Mffuc3OtpdHEuDyqW3U/viqYYpnjCGlW6Ed8pDXcK2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SqMOjo+2TpjB36eGWj9kq/ENCe7kIBTJlv81f33d2dmpk0PflY2GOqav9opkzZhqlvnpzZEY55eMgQXtOGqzMfUOioGL8SDxPbjCngQJ98ZF29f3xRQwr2aSibIz8WGLTSAGagiIUABenfznZWW2bFVP9J1Zw2ibIKm+08B4AkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJmbXEwY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lrVhkJuPpmQzJuuZENtiMvUpx1PypDixQFCka2iVqFX8k/oxsi9aQ1s6ocACHhIgNiqq1YQNYeEcB+Fp8IWOKasdBB1xsTmAMJ7JjN66h+y9Bq9THLui1IQ3rhsAYFwGy3Q1ZvwadrGVGW+Q5Y3VR3puHsftOko8crMbBvYgyWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pxJ4Bcca; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJmbXEwY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DADC4CEC6;
-	Tue, 15 Oct 2024 12:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pxJ4Bcca"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638FDC4CECF;
+	Tue, 15 Oct 2024 12:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728997061;
-	bh=yyJ+uASLC4zdws/2vZPBPaHS+ZQD6lOlXnQ8ZHv8xZw=;
+	s=korg; t=1728997064;
+	bh=Mffuc3OtpdHEuDyqW3U/viqYYpnjCGlW6Ed8pDXcK2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oJmbXEwY/j6IdkA1ooDda3NNfr3QtCJ/Df+1M9rwjEL1bLPvKelPAvnrP6jMiXpZ2
-	 q90ZhL4IwWJIOwzO55/3LvTs0nbj+S5B3Bn5W8ODXTaZjxO02qDWwS1jEizQNWa75H
-	 Ukp7Y1CmQuYEPpyl4TRaqr96dloYaLYEXc7UFcP4=
+	b=pxJ4BccaGzexMyoDg7/Yx6vBHnQSxDcD1jPd8/AJuYyi1+/en40DbXV1ujExW6jno
+	 aoDoSVvNXYWqIRngjiefwcL2Z6QXeyyNRgsjHZouZDqVref2vJgDPelErNi//+yneK
+	 xlEcKNSkvgzGT4ztwd1fC5FQLa9ngVGUM+VREcqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0532ac7a06fb1a03187e@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Faiz Abbas <faiz_abbas@ti.com>,
+	Aswath Govindraju <a-govindraju@ti.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 077/518] can: bcm: Clear bo->bcm_proc_read after remove_proc_entry().
-Date: Tue, 15 Oct 2024 14:39:41 +0200
-Message-ID: <20241015123919.973292518@linuxfoundation.org>
+Subject: [PATCH 5.10 078/518] can: m_can: Add support for transceiver as phy
+Date: Tue, 15 Oct 2024 14:39:42 +0200
+Message-ID: <20241015123920.012137078@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015123916.821186887@linuxfoundation.org>
 References: <20241015123916.821186887@linuxfoundation.org>
@@ -53,97 +52,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Faiz Abbas <faiz_abbas@ti.com>
 
-[ Upstream commit 94b0818fa63555a65f6ba107080659ea6bcca63e ]
+[ Upstream commit d836cb5fe045463cdab15ad6f278f7c7c194228f ]
 
-syzbot reported a warning in bcm_release(). [0]
+Add support for implementing transceiver node as phy. The max_bitrate
+is obtained by getting a phy attribute.
 
-The blamed change fixed another warning that is triggered when
-connect() is issued again for a socket whose connect()ed device has
-been unregistered.
-
-However, if the socket is just close()d without the 2nd connect(), the
-remaining bo->bcm_proc_read triggers unnecessary remove_proc_entry()
-in bcm_release().
-
-Let's clear bo->bcm_proc_read after remove_proc_entry() in bcm_notify().
-
-[0]
-name '4986'
-WARNING: CPU: 0 PID: 5234 at fs/proc/generic.c:711 remove_proc_entry+0x2e7/0x5d0 fs/proc/generic.c:711
-Modules linked in:
-CPU: 0 UID: 0 PID: 5234 Comm: syz-executor606 Not tainted 6.11.0-rc5-syzkaller-00178-g5517ae241919 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
-RIP: 0010:remove_proc_entry+0x2e7/0x5d0 fs/proc/generic.c:711
-Code: ff eb 05 e8 cb 1e 5e ff 48 8b 5c 24 10 48 c7 c7 e0 f7 aa 8e e8 2a 38 8e 09 90 48 c7 c7 60 3a 1b 8c 48 89 de e8 da 42 20 ff 90 <0f> 0b 90 90 48 8b 44 24 18 48 c7 44 24 40 0e 36 e0 45 49 c7 04 07
-RSP: 0018:ffffc9000345fa20 EFLAGS: 00010246
-RAX: 2a2d0aee2eb64600 RBX: ffff888032f1f548 RCX: ffff888029431e00
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc9000345fb08 R08: ffffffff8155b2f2 R09: 1ffff1101710519a
-R10: dffffc0000000000 R11: ffffed101710519b R12: ffff888011d38640
-R13: 0000000000000004 R14: 0000000000000000 R15: dffffc0000000000
-FS:  0000000000000000(0000) GS:ffff8880b8800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fcfb52722f0 CR3: 000000000e734000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- bcm_release+0x250/0x880 net/can/bcm.c:1578
- __sock_release net/socket.c:659 [inline]
- sock_close+0xbc/0x240 net/socket.c:1421
- __fput+0x24a/0x8a0 fs/file_table.c:422
- task_work_run+0x24f/0x310 kernel/task_work.c:228
- exit_task_work include/linux/task_work.h:40 [inline]
- do_exit+0xa2f/0x27f0 kernel/exit.c:882
- do_group_exit+0x207/0x2c0 kernel/exit.c:1031
- __do_sys_exit_group kernel/exit.c:1042 [inline]
- __se_sys_exit_group kernel/exit.c:1040 [inline]
- __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1040
- x64_sys_call+0x2634/0x2640 arch/x86/include/generated/asm/syscalls_64.h:232
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fcfb51ee969
-Code: Unable to access opcode bytes at 0x7fcfb51ee93f.
-RSP: 002b:00007ffce0109ca8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-RAX: ffffffffffffffda RBX: 0000000000000001 RCX: 00007fcfb51ee969
-RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000001
-RBP: 00007fcfb526f3b0 R08: ffffffffffffffb8 R09: 0000555500000000
-R10: 0000555500000000 R11: 0000000000000246 R12: 00007fcfb526f3b0
-R13: 0000000000000000 R14: 00007fcfb5271ee0 R15: 00007fcfb51bf160
- </TASK>
-
-Fixes: 76fe372ccb81 ("can: bcm: Remove proc entry when dev is unregistered.")
-Reported-by: syzbot+0532ac7a06fb1a03187e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0532ac7a06fb1a03187e
-Tested-by: syzbot+0532ac7a06fb1a03187e@syzkaller.appspotmail.com
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://patch.msgid.link/20240905012237.79683-1-kuniyu@amazon.com
+Link: https://lore.kernel.org/r/20210724174001.553047-1-mkl@pengutronix.de
+Signed-off-by: Faiz Abbas <faiz_abbas@ti.com>
+Signed-off-by: Aswath Govindraju <a-govindraju@ti.com>
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: 2c09b50efcad ("can: m_can: m_can_close(): stop clocks after device has been shut down")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/bcm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/can/m_can/m_can.c          | 11 ++++++++++-
+ drivers/net/can/m_can/m_can.h          |  2 ++
+ drivers/net/can/m_can/m_can_platform.c | 13 +++++++++++++
+ 3 files changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index b2b1bd6727871..cb849b5a8c14d 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -1424,8 +1424,10 @@ static void bcm_notify(struct bcm_sock *bo, unsigned long msg,
- 		/* remove device reference, if this is our bound device */
- 		if (bo->bound && bo->ifindex == dev->ifindex) {
- #if IS_ENABLED(CONFIG_PROC_FS)
--			if (sock_net(sk)->can.bcmproc_dir && bo->bcm_proc_read)
-+			if (sock_net(sk)->can.bcmproc_dir && bo->bcm_proc_read) {
- 				remove_proc_entry(bo->procname, sock_net(sk)->can.bcmproc_dir);
-+				bo->bcm_proc_read = NULL;
-+			}
- #endif
- 			bo->bound   = 0;
- 			bo->ifindex = 0;
+diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
+index 19a19a7b7deb8..f314d93aca0d9 100644
+--- a/drivers/net/can/m_can/m_can.c
++++ b/drivers/net/can/m_can/m_can.c
+@@ -21,6 +21,7 @@
+ #include <linux/iopoll.h>
+ #include <linux/can/dev.h>
+ #include <linux/pinctrl/consumer.h>
++#include <linux/phy/phy.h>
+ 
+ #include "m_can.h"
+ 
+@@ -1438,6 +1439,8 @@ static int m_can_close(struct net_device *dev)
+ 	close_candev(dev);
+ 	can_led_event(dev, CAN_LED_EVENT_STOP);
+ 
++	phy_power_off(cdev->transceiver);
++
+ 	return 0;
+ }
+ 
+@@ -1624,10 +1627,14 @@ static int m_can_open(struct net_device *dev)
+ 	struct m_can_classdev *cdev = netdev_priv(dev);
+ 	int err;
+ 
+-	err = m_can_clk_start(cdev);
++	err = phy_power_on(cdev->transceiver);
+ 	if (err)
+ 		return err;
+ 
++	err = m_can_clk_start(cdev);
++	if (err)
++		goto out_phy_power_off;
++
+ 	/* open the can device */
+ 	err = open_candev(dev);
+ 	if (err) {
+@@ -1679,6 +1686,8 @@ static int m_can_open(struct net_device *dev)
+ 	close_candev(dev);
+ exit_disable_clks:
+ 	m_can_clk_stop(cdev);
++out_phy_power_off:
++	phy_power_off(cdev->transceiver);
+ 	return err;
+ }
+ 
+diff --git a/drivers/net/can/m_can/m_can.h b/drivers/net/can/m_can/m_can.h
+index b2699a7c99973..8cad1235afa0b 100644
+--- a/drivers/net/can/m_can/m_can.h
++++ b/drivers/net/can/m_can/m_can.h
+@@ -27,6 +27,7 @@
+ #include <linux/iopoll.h>
+ #include <linux/can/dev.h>
+ #include <linux/pinctrl/consumer.h>
++#include <linux/phy/phy.h>
+ 
+ /* m_can lec values */
+ enum m_can_lec_type {
+@@ -80,6 +81,7 @@ struct m_can_classdev {
+ 	struct workqueue_struct *tx_wq;
+ 	struct work_struct tx_work;
+ 	struct sk_buff *tx_skb;
++	struct phy *transceiver;
+ 
+ 	struct can_bittiming_const *bit_timing;
+ 	struct can_bittiming_const *data_timing;
+diff --git a/drivers/net/can/m_can/m_can_platform.c b/drivers/net/can/m_can/m_can_platform.c
+index 161cb9be018c0..dbebb9bba545f 100644
+--- a/drivers/net/can/m_can/m_can_platform.c
++++ b/drivers/net/can/m_can/m_can_platform.c
+@@ -6,6 +6,7 @@
+ // Copyright (C) 2018-19 Texas Instruments Incorporated - http://www.ti.com/
+ 
+ #include <linux/platform_device.h>
++#include <linux/phy/phy.h>
+ 
+ #include "m_can.h"
+ 
+@@ -60,6 +61,7 @@ static int m_can_plat_probe(struct platform_device *pdev)
+ 	struct resource *res;
+ 	void __iomem *addr;
+ 	void __iomem *mram_addr;
++	struct phy *transceiver;
+ 	int irq, ret = 0;
+ 
+ 	mcan_class = m_can_class_allocate_dev(&pdev->dev);
+@@ -99,6 +101,16 @@ static int m_can_plat_probe(struct platform_device *pdev)
+ 		goto probe_fail;
+ 	}
+ 
++	transceiver = devm_phy_optional_get(&pdev->dev, NULL);
++	if (IS_ERR(transceiver)) {
++		ret = PTR_ERR(transceiver);
++		dev_err_probe(&pdev->dev, ret, "failed to get phy\n");
++		goto probe_fail;
++	}
++
++	if (transceiver)
++		mcan_class->can.bitrate_max = transceiver->attrs.max_link_rate;
++
+ 	priv->base = addr;
+ 	priv->mram_base = mram_addr;
+ 
+@@ -106,6 +118,7 @@ static int m_can_plat_probe(struct platform_device *pdev)
+ 	mcan_class->pm_clock_support = 1;
+ 	mcan_class->can.clock.freq = clk_get_rate(mcan_class->cclk);
+ 	mcan_class->dev = &pdev->dev;
++	mcan_class->transceiver = transceiver;
+ 
+ 	mcan_class->ops = &m_can_plat_ops;
+ 
 -- 
 2.43.0
 
