@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38521F12F3;
-	Tue, 15 Oct 2024 12:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D1F1EF083;
+	Tue, 15 Oct 2024 12:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994189; cv=none; b=incd+ENHwz7z2buDk0prlGwFEPeyQhX2Y1TUT3JPBH5xwHQJYep1plk4oK5zLDRZi8/ZJnZWb8bWDaEslKg5DIDQfuD5oZE/BivNXznF6TTHJRTVSCFFDt+99HV+poHe4Nem1LYNEu2QjC51YgK+qDhobSWzAY3QTKlEg1XHUJg=
+	t=1728994193; cv=none; b=nClmVPKw1j55Z9+r07s6grNBjyzfGgFHpcJKY6NuUsqorwZ1hMylRyd1dxTTgv3cmRijnbhVxHp9Vqjfs5zArhurPcPoRQchR8z63e8PO9LK2rTzRhZafwmhZvaai+jO1Yg322vp79jpYpp0gd6AlePa0Y8jEQw1MB7iT+/L00o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994189; c=relaxed/simple;
-	bh=5ZIm1OJMOVD+e0Pea1f3EjPBEH17Ljo7oqyHJ1XAZ6U=;
+	s=arc-20240116; t=1728994193; c=relaxed/simple;
+	bh=fgO8dFMYGADS/QF2wLTmAlnSGony1CKRithSvhb3Etc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JbTlQdiMcH5rhDl0VA1ilwAx4JcMba7MeQGomjriNqQPuVYTQFJru0IuXNcgD6RAh+eCtydSZFh0344XY6s8Z73TTwy/qdagMKrlZomLnJfiEnwyEKFmKTVYJf3Q9/i4sqr9ELumJq0IvwcttPmzJZetzN/HFiQgEAbZIrYB7vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWnRk7oR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k7br7w+3iPdlqi5LyKMEVX8iTXbIav1MH4DoihkzyK+JrsCw169zZ9veTVtPMyGxHlqXjf2YnF98hy4CakEQr6K8S2csRrIjivMER1d4xEW35YGb50SdKBD9JoKLBVeUJgTp+ax4YZsgpdTC0QwwM77DU+HRrUG1JGn5NWQFxFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKM1yVyl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWnRk7oR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1446BC4CEC6;
-	Tue, 15 Oct 2024 12:09:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKM1yVyl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A62C4CEC6;
+	Tue, 15 Oct 2024 12:09:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994189;
-	bh=5ZIm1OJMOVD+e0Pea1f3EjPBEH17Ljo7oqyHJ1XAZ6U=;
+	s=korg; t=1728994192;
+	bh=fgO8dFMYGADS/QF2wLTmAlnSGony1CKRithSvhb3Etc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dWnRk7oRV9Z53minxxChxHzF6ru4XRYjUqDVeJ1NX/e+WBCyuC6sdD1lxI8SPAtEY
-	 v/vffx+1OiYhOGjFJB2GnbTOkE0y/DcD8kic+XI8BWyZzduH+K7eYBzM8NCtrawRTr
-	 n5m9gZ5hXKoMj3eJaGFfqOiEJ0TS+LCuF5pzw8I8=
+	b=cKM1yVylcIZhKexTPiDkT2SXOwDjE3FYx2gXtxT9+D+bRZx9VR5rlvW/bvSzVvL7o
+	 6bOxajLrqh0FmfuFM30zp0fbH1r89aOppFOefCQWpyia5Y82XkD2vzYHskZf763fi0
+	 5yDVXWOD8RBs2vBptdMXi1jLFo2zuQq9wE2F5VR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 633/691] net: phy: bcm84881: Fix some error handling paths
-Date: Tue, 15 Oct 2024 13:29:41 +0200
-Message-ID: <20241015112505.452597634@linuxfoundation.org>
+Subject: [PATCH 5.15 634/691] thermal: int340x: processor_thermal: Set feature mask before proc_thermal_add
+Date: Tue, 15 Oct 2024 13:29:42 +0200
+Message-ID: <20241015112505.491732098@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -51,44 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-[ Upstream commit 9234a2549cb6ac038bec36cc7c084218e9575513 ]
+[ Upstream commit 6ebc25d8b053a208786295bab58abbb66b39c318 ]
 
-If phy_read_mmd() fails, the error code stored in 'bmsr' should be returned
-instead of 'val' which is likely to be 0.
+The function proc_thermal_add() adds sysfs entries for power limits.
 
-Fixes: 75f4d8d10e01 ("net: phy: add Broadcom BCM84881 PHY driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://patch.msgid.link/3e1755b0c40340d00e089d6adae5bca2f8c79e53.1727982168.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The feature mask of available features is not present at that time, so
+it cannot be used by proc_thermal_add() to selectively create sysfs
+attributes.
+
+The feature mask is set by proc_thermal_mmio_add(), so modify the code
+to call it before proc_thermal_add() so as to allow the latter to use
+the feature mask.
+
+There is no functional impact with this change.
+
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 99ca0b57e49f ("thermal: intel: int340x: processor: Fix warning during module unload")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/bcm84881.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../processor_thermal_device_pci.c            | 21 +++++++++----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/phy/bcm84881.c b/drivers/net/phy/bcm84881.c
-index 9717a1626f3fa..37a64a37b2ae3 100644
---- a/drivers/net/phy/bcm84881.c
-+++ b/drivers/net/phy/bcm84881.c
-@@ -120,7 +120,7 @@ static int bcm84881_aneg_done(struct phy_device *phydev)
+diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
+index b4bcd3fe9eb2f..921ed55c30f06 100644
+--- a/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
++++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_device_pci.c
+@@ -237,26 +237,26 @@ static int proc_thermal_pci_probe(struct pci_dev *pdev, const struct pci_device_
  
- 	bmsr = phy_read_mmd(phydev, MDIO_MMD_AN, MDIO_AN_C22 + MII_BMSR);
- 	if (bmsr < 0)
--		return val;
-+		return bmsr;
+ 	INIT_DELAYED_WORK(&pci_info->work, proc_thermal_threshold_work_fn);
  
- 	return !!(val & MDIO_AN_STAT1_COMPLETE) &&
- 	       !!(bmsr & BMSR_ANEGCOMPLETE);
-@@ -146,7 +146,7 @@ static int bcm84881_read_status(struct phy_device *phydev)
+-	ret = proc_thermal_add(&pdev->dev, proc_priv);
+-	if (ret) {
+-		dev_err(&pdev->dev, "error: proc_thermal_add, will continue\n");
+-		pci_info->no_legacy = 1;
+-	}
+-
+ 	proc_priv->priv_data = pci_info;
+ 	pci_info->proc_priv = proc_priv;
+ 	pci_set_drvdata(pdev, proc_priv);
  
- 	bmsr = phy_read_mmd(phydev, MDIO_MMD_AN, MDIO_AN_C22 + MII_BMSR);
- 	if (bmsr < 0)
--		return val;
-+		return bmsr;
+ 	ret = proc_thermal_mmio_add(pdev, proc_priv, id->driver_data);
+ 	if (ret)
+-		goto err_ret_thermal;
++		return ret;
++
++	ret = proc_thermal_add(&pdev->dev, proc_priv);
++	if (ret) {
++		dev_err(&pdev->dev, "error: proc_thermal_add, will continue\n");
++		pci_info->no_legacy = 1;
++	}
  
- 	phydev->autoneg_complete = !!(val & MDIO_AN_STAT1_COMPLETE) &&
- 				   !!(bmsr & BMSR_ANEGCOMPLETE);
+ 	pci_info->tzone = thermal_zone_device_register("TCPU_PCI", 1, 1, pci_info,
+ 							&tzone_ops,
+ 							&tzone_params, 0, 0);
+ 	if (IS_ERR(pci_info->tzone)) {
+ 		ret = PTR_ERR(pci_info->tzone);
+-		goto err_ret_mmio;
++		goto err_del_legacy;
+ 	}
+ 
+ 	/* request and enable interrupt */
+@@ -283,11 +283,10 @@ static int proc_thermal_pci_probe(struct pci_dev *pdev, const struct pci_device_
+ 	pci_free_irq_vectors(pdev);
+ err_ret_tzone:
+ 	thermal_zone_device_unregister(pci_info->tzone);
+-err_ret_mmio:
+-	proc_thermal_mmio_remove(pdev, proc_priv);
+-err_ret_thermal:
++err_del_legacy:
+ 	if (!pci_info->no_legacy)
+ 		proc_thermal_remove(proc_priv);
++	proc_thermal_mmio_remove(pdev, proc_priv);
+ 	pci_disable_device(pdev);
+ 
+ 	return ret;
 -- 
 2.43.0
 
