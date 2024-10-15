@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483121C57B1;
-	Tue, 15 Oct 2024 12:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FEAE1C57B1;
+	Tue, 15 Oct 2024 12:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728994037; cv=none; b=COHovx3I5iRlQQLnN5TdwPhAN+kLsmHwyAeJ+M+XNf+9DW2y4GHQl9mzAHh1R/UqrSd6FMOEcSzvR2YTEwgW9tfkyw5W/7pyyzo/BoOjOP2adS6cwmvG0igdY1IVuR9pyXuQms3eZs7UmgM1dmfcGmkzT/OR+wPuxTS9pe/6rjY=
+	t=1728994040; cv=none; b=byUxyFX5khNSeFqxlGd6J8wJiKcDll47GoX/aElqzXM0wQW1VA8LHMj9IXuJNOj4sJfZxyk2YtKd7XumR2wqSwo9pcI57ZKFtdgZnVF3ac0KVDKC4wQRcWdSrHva1dbNhdMWDo5GR8+uWUT4Q7wj/S4DZrbjfwc2pcqb/GrUlBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728994037; c=relaxed/simple;
-	bh=bsNX3mzYZMtWlu+inQPFLSSoBBIsUY8qiQFdKdb/Cbg=;
+	s=arc-20240116; t=1728994040; c=relaxed/simple;
+	bh=bAmX0Z4pLxGqNsmC4e7tOtr+zvkNgi7uuMlLvzHu5T0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=djXdJ33iflgS9gGCDJhPPtHiUsfG+yxXt84xJG/BghHBNMk+cDiH6UCIq0KuH6jPs9lmZIp3WufSj8yxPun7qHiMVTaDyac4XAoXvMsGPFHWjgZRkLyTy5YHryQzvPDegNlOdM6xqKFt0pmPRxiiOrlXdcTpiQYipdSvqaY2kIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zj6o7jQj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bYt6xH0J/3dDfm2rPOpP07nUwNpHOGDoU4ax2UtLbudDlcTX4BFBEz08bDw/pzgGM7CllczT1ctq61VeJNc8Zdogu4xxUcgvhGK/nVM2uo1M1IlBNXf2IB5gu5RlKZl+L7E2qXiF1A57rYxxYbVlPQaUhRVnS0EvTVyFByF6jjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e47W+CC7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zj6o7jQj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADED8C4CEC6;
-	Tue, 15 Oct 2024 12:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e47W+CC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0923C4CEC6;
+	Tue, 15 Oct 2024 12:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728994037;
-	bh=bsNX3mzYZMtWlu+inQPFLSSoBBIsUY8qiQFdKdb/Cbg=;
+	s=korg; t=1728994040;
+	bh=bAmX0Z4pLxGqNsmC4e7tOtr+zvkNgi7uuMlLvzHu5T0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zj6o7jQjJDQ9yfOYxmU/RN6a8Yx3z6mf0zr6uMpfTLPTxW6LM8MuRw8notCLKXRel
-	 aQ0hHyl6O5Eo7eVjtl3Dj8XZrWGtSymlmjshtlYY1wgtYiR1nQz9mk3GbAvFS1p20/
-	 mTyXfWfztzDVyhznKuYgO7pYeFhQwLILJDyJoHIk=
+	b=e47W+CC7XjYkOnrCAyK+bP2vApJrHdAv9SI3uD/NXnzKYikfvXf45l9+4Fjh4PhUP
+	 04zul6EUJz0E5ex9JpkrKqkMJHhh+4/8145+3ddm+r04g55mrwFPn/40L5UZS6TioP
+	 bBLVTFV6ixNQbGlEaa+u7GMtdcuSSHzwl+R1qoYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Jan Kara <jack@suse.cz>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 557/691] spi: bcm63xx: Fix missing pm_runtime_disable()
-Date: Tue, 15 Oct 2024 13:28:25 +0200
-Message-ID: <20241015112502.450486976@linuxfoundation.org>
+Subject: [PATCH 5.15 558/691] ext4: properly sync file size update after O_SYNC direct IO
+Date: Tue, 15 Oct 2024 13:28:26 +0200
+Message-ID: <20241015112502.493255330@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 References: <20241015112440.309539031@linuxfoundation.org>
@@ -52,56 +54,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 265697288ec2160ca84707565d6641d46f69b0ff ]
+[ Upstream commit 91562895f8030cb9a0470b1db49de79346a69f91 ]
 
-The pm_runtime_disable() is missing in the remove function, fix it
-by using devm_pm_runtime_enable(), so the pm_runtime_disable() in
-the probe error path can also be removed.
+Gao Xiang has reported that on ext4 O_SYNC direct IO does not properly
+sync file size update and thus if we crash at unfortunate moment, the
+file can have smaller size although O_SYNC IO has reported successful
+completion. The problem happens because update of on-disk inode size is
+handled in ext4_dio_write_iter() *after* iomap_dio_rw() (and thus
+dio_complete() in particular) has returned and generic_file_sync() gets
+called by dio_complete(). Fix the problem by handling on-disk inode size
+update directly in our ->end_io completion handler.
 
-Fixes: 2d13f2ff6073 ("spi: bcm63xx-spi: fix pm_runtime")
-Cc: stable@vger.kernel.org # v5.13+
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Suggested-by: Jonas Gorski <jonas.gorski@gmail.com>
-Link: https://patch.msgid.link/20240819123349.4020472-3-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+References: https://lore.kernel.org/all/02d18236-26ef-09b0-90ad-030c4fe3ee20@linux.alibaba.com
+Reported-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+CC: stable@vger.kernel.org
+Fixes: 378f32bab371 ("ext4: introduce direct I/O write using iomap infrastructure")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Tested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20231013121350.26872-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: dda898d7ffe8 ("ext4: dax: fix overflowing extents beyond inode size when partially writing")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm63xx.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/ext4/file.c | 153 +++++++++++++++++++++----------------------------
+ 1 file changed, 65 insertions(+), 88 deletions(-)
 
-diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
-index 51296615536a9..695ac74571286 100644
---- a/drivers/spi/spi-bcm63xx.c
-+++ b/drivers/spi/spi-bcm63xx.c
-@@ -595,13 +595,15 @@ static int bcm63xx_spi_probe(struct platform_device *pdev)
+diff --git a/fs/ext4/file.c b/fs/ext4/file.c
+index 4704fe627c4e2..94ce73fadcba6 100644
+--- a/fs/ext4/file.c
++++ b/fs/ext4/file.c
+@@ -279,80 +279,38 @@ static ssize_t ext4_buffered_write_iter(struct kiocb *iocb,
+ }
  
- 	bcm_spi_writeb(bs, SPI_INTR_CLEAR_ALL, SPI_INT_STATUS);
+ static ssize_t ext4_handle_inode_extension(struct inode *inode, loff_t offset,
+-					   ssize_t written, size_t count)
++					   ssize_t count)
+ {
+ 	handle_t *handle;
+-	bool truncate = false;
+-	u8 blkbits = inode->i_blkbits;
+-	ext4_lblk_t written_blk, end_blk;
+-	int ret;
+-
+-	/*
+-	 * Note that EXT4_I(inode)->i_disksize can get extended up to
+-	 * inode->i_size while the I/O was running due to writeback of delalloc
+-	 * blocks. But, the code in ext4_iomap_alloc() is careful to use
+-	 * zeroed/unwritten extents if this is possible; thus we won't leave
+-	 * uninitialized blocks in a file even if we didn't succeed in writing
+-	 * as much as we intended.
+-	 */
+-	WARN_ON_ONCE(i_size_read(inode) < EXT4_I(inode)->i_disksize);
+-	if (offset + count <= EXT4_I(inode)->i_disksize) {
+-		/*
+-		 * We need to ensure that the inode is removed from the orphan
+-		 * list if it has been added prematurely, due to writeback of
+-		 * delalloc blocks.
+-		 */
+-		if (!list_empty(&EXT4_I(inode)->i_orphan) && inode->i_nlink) {
+-			handle = ext4_journal_start(inode, EXT4_HT_INODE, 2);
+-
+-			if (IS_ERR(handle)) {
+-				ext4_orphan_del(NULL, inode);
+-				return PTR_ERR(handle);
+-			}
+-
+-			ext4_orphan_del(handle, inode);
+-			ext4_journal_stop(handle);
+-		}
+-
+-		return written;
+-	}
+-
+-	if (written < 0)
+-		goto truncate;
  
--	pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		goto out_clk_disable;
++	lockdep_assert_held_write(&inode->i_rwsem);
+ 	handle = ext4_journal_start(inode, EXT4_HT_INODE, 2);
+-	if (IS_ERR(handle)) {
+-		written = PTR_ERR(handle);
+-		goto truncate;
+-	}
++	if (IS_ERR(handle))
++		return PTR_ERR(handle);
  
- 	/* register and we are done */
- 	ret = devm_spi_register_master(dev, master);
- 	if (ret) {
- 		dev_err(dev, "spi register failed\n");
--		goto out_pm_disable;
-+		goto out_clk_disable;
+-	if (ext4_update_inode_size(inode, offset + written)) {
+-		ret = ext4_mark_inode_dirty(handle, inode);
++	if (ext4_update_inode_size(inode, offset + count)) {
++		int ret = ext4_mark_inode_dirty(handle, inode);
+ 		if (unlikely(ret)) {
+-			written = ret;
+ 			ext4_journal_stop(handle);
+-			goto truncate;
++			return ret;
+ 		}
  	}
  
- 	dev_info(dev, "at %pr (irq %d, FIFOs size %d)\n",
-@@ -609,8 +611,6 @@ static int bcm63xx_spi_probe(struct platform_device *pdev)
+-	/*
+-	 * We may need to truncate allocated but not written blocks beyond EOF.
+-	 */
+-	written_blk = ALIGN(offset + written, 1 << blkbits);
+-	end_blk = ALIGN(offset + count, 1 << blkbits);
+-	if (written_blk < end_blk && ext4_can_truncate(inode))
+-		truncate = true;
+-
+-	/*
+-	 * Remove the inode from the orphan list if it has been extended and
+-	 * everything went OK.
+-	 */
+-	if (!truncate && inode->i_nlink)
++	if (inode->i_nlink)
+ 		ext4_orphan_del(handle, inode);
+ 	ext4_journal_stop(handle);
  
- 	return 0;
+-	if (truncate) {
+-truncate:
++	return count;
++}
++
++/*
++ * Clean up the inode after DIO or DAX extending write has completed and the
++ * inode size has been updated using ext4_handle_inode_extension().
++ */
++static void ext4_inode_extension_cleanup(struct inode *inode, ssize_t count)
++{
++	lockdep_assert_held_write(&inode->i_rwsem);
++	if (count < 0) {
+ 		ext4_truncate_failed_write(inode);
+ 		/*
+ 		 * If the truncate operation failed early, then the inode may
+@@ -361,9 +319,28 @@ static ssize_t ext4_handle_inode_extension(struct inode *inode, loff_t offset,
+ 		 */
+ 		if (inode->i_nlink)
+ 			ext4_orphan_del(NULL, inode);
++		return;
+ 	}
++	/*
++	 * If i_disksize got extended due to writeback of delalloc blocks while
++	 * the DIO was running we could fail to cleanup the orphan list in
++	 * ext4_handle_inode_extension(). Do it now.
++	 */
++	if (!list_empty(&EXT4_I(inode)->i_orphan) && inode->i_nlink) {
++		handle_t *handle = ext4_journal_start(inode, EXT4_HT_INODE, 2);
  
--out_pm_disable:
--	pm_runtime_disable(&pdev->dev);
- out_clk_disable:
- 	clk_disable_unprepare(clk);
- out_err:
+-	return written;
++		if (IS_ERR(handle)) {
++			/*
++			 * The write has successfully completed. Not much to
++			 * do with the error here so just cleanup the orphan
++			 * list and hope for the best.
++			 */
++			ext4_orphan_del(NULL, inode);
++			return;
++		}
++		ext4_orphan_del(handle, inode);
++		ext4_journal_stop(handle);
++	}
+ }
+ 
+ static int ext4_dio_write_end_io(struct kiocb *iocb, ssize_t size,
+@@ -372,31 +349,22 @@ static int ext4_dio_write_end_io(struct kiocb *iocb, ssize_t size,
+ 	loff_t pos = iocb->ki_pos;
+ 	struct inode *inode = file_inode(iocb->ki_filp);
+ 
++	if (!error && size && flags & IOMAP_DIO_UNWRITTEN)
++		error = ext4_convert_unwritten_extents(NULL, inode, pos, size);
+ 	if (error)
+ 		return error;
+-
+-	if (size && flags & IOMAP_DIO_UNWRITTEN) {
+-		error = ext4_convert_unwritten_extents(NULL, inode, pos, size);
+-		if (error < 0)
+-			return error;
+-	}
+ 	/*
+-	 * If we are extending the file, we have to update i_size here before
+-	 * page cache gets invalidated in iomap_dio_rw(). Otherwise racing
+-	 * buffered reads could zero out too much from page cache pages. Update
+-	 * of on-disk size will happen later in ext4_dio_write_iter() where
+-	 * we have enough information to also perform orphan list handling etc.
+-	 * Note that we perform all extending writes synchronously under
+-	 * i_rwsem held exclusively so i_size update is safe here in that case.
+-	 * If the write was not extending, we cannot see pos > i_size here
+-	 * because operations reducing i_size like truncate wait for all
+-	 * outstanding DIO before updating i_size.
++	 * Note that EXT4_I(inode)->i_disksize can get extended up to
++	 * inode->i_size while the I/O was running due to writeback of delalloc
++	 * blocks. But the code in ext4_iomap_alloc() is careful to use
++	 * zeroed/unwritten extents if this is possible; thus we won't leave
++	 * uninitialized blocks in a file even if we didn't succeed in writing
++	 * as much as we intended.
+ 	 */
+-	pos += size;
+-	if (pos > i_size_read(inode))
+-		i_size_write(inode, pos);
+-
+-	return 0;
++	WARN_ON_ONCE(i_size_read(inode) < READ_ONCE(EXT4_I(inode)->i_disksize));
++	if (pos + size <= READ_ONCE(EXT4_I(inode)->i_disksize))
++		return size;
++	return ext4_handle_inode_extension(inode, pos, size);
+ }
+ 
+ static const struct iomap_dio_ops ext4_dio_write_ops = {
+@@ -572,9 +540,16 @@ static ssize_t ext4_dio_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 			   0);
+ 	if (ret == -ENOTBLK)
+ 		ret = 0;
+-
+-	if (extend)
+-		ret = ext4_handle_inode_extension(inode, offset, ret, count);
++	if (extend) {
++		/*
++		 * We always perform extending DIO write synchronously so by
++		 * now the IO is completed and ext4_handle_inode_extension()
++		 * was called. Cleanup the inode in case of error or race with
++		 * writeback of delalloc blocks.
++		 */
++		WARN_ON_ONCE(ret == -EIOCBQUEUED);
++		ext4_inode_extension_cleanup(inode, ret);
++	}
+ 
+ out:
+ 	if (ilock_shared)
+@@ -655,8 +630,10 @@ ext4_dax_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 
+ 	ret = dax_iomap_rw(iocb, from, &ext4_iomap_ops);
+ 
+-	if (extend)
+-		ret = ext4_handle_inode_extension(inode, offset, ret, count);
++	if (extend) {
++		ret = ext4_handle_inode_extension(inode, offset, ret);
++		ext4_inode_extension_cleanup(inode, ret);
++	}
+ out:
+ 	inode_unlock(inode);
+ 	if (ret > 0)
 -- 
 2.43.0
 
