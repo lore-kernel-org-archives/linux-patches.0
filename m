@@ -1,135 +1,107 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4AA14A4C3
-	for <patches@lists.linux.dev>; Wed, 16 Oct 2024 01:57:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C139E1494DD
+	for <patches@lists.linux.dev>; Wed, 16 Oct 2024 02:24:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729043826; cv=none; b=GEgH7tAXMTv/swJ42lg7/lAZt6fSpiungZK4b568UmYNdVoqClreRzQX4vpN59V06yfKQeyfyKpj+6vS0kIlHE3Y80tLxZruwuA+aDJgUJ0XgFwxrLYz4AJOmtYOkUICcdVSYBuQsNf4XaYuNbtTB2xVSgn0XSheFjhVC2PiKlQ=
+	t=1729045444; cv=none; b=JFAVW2wB4bFG3S7yhz5qIaFU7myLnkIVUkATG1Uou0opeMVDv8Vpb5G+m5KU84SNyUbC21imfB54b3VeeteKSAxDaxFbR2bbXqNQHx4koxq6j+IZnVR5kiBWd8mlFkFdSHixVtDHVMV4yZPUMMmBsWSDvDpgJBX3/M5cUCa/uvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729043826; c=relaxed/simple;
-	bh=6btI4iopsKLLKW9bPf4SycRrF9fzH3XxNtDWeivhWT8=;
+	s=arc-20240116; t=1729045444; c=relaxed/simple;
+	bh=+GF1oCaa4XIdm2rCPBWvV+uTROdOd1KyxDhkbhawAvc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UNuqo6W4vWE4vCsO7SE5PkmLLebZ2BFg/uhXH/XqYf/uTh2Y2RJUgW3QnsAAQ03P6/bE80Uxy3DivxOSGBiThho2wY8W1GdVo6Yv+f1guT6FMMEkvKbeqVOZmLB9mP3hwkw490L5m91VvBdnPftGx/3zOVdJksaYHBV40m1xpP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mxCc++sR; arc=none smtp.client-ip=209.85.167.50
+	 To:Cc:Content-Type; b=OeCO0FH3KwngCS4fK8StQ9qizt400EoxiQng93gfu7mlBvxaM+N7R5BL3/ZQrB61o9992Z/11Tz564/iw3L2s8RMgX+I3CfGBFaK/p5Ur5V/I/rcl9v6m4Lo/prsY64WITJMi63NtryK81q7N+CfG75ciAtJGroVHeQEKaTYC/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nofvZaOf; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mxCc++sR"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5366fd6fdf1so7205328e87.0
-        for <patches@lists.linux.dev>; Tue, 15 Oct 2024 18:57:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nofvZaOf"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-539d9fffea1so4879757e87.2
+        for <patches@lists.linux.dev>; Tue, 15 Oct 2024 19:24:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729043823; x=1729648623; darn=lists.linux.dev;
+        d=linaro.org; s=google; t=1729045441; x=1729650241; darn=lists.linux.dev;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+FelR6GsDdJRo+uFPqIYovXFoQ6VzTQQEO/rkc9OHfQ=;
-        b=mxCc++sRcirU/rq/kNxDlR6NJm5NLMah/2Aie7+I9Vt9hT33osWNpcEdZWjZggq2R7
-         tCMwiWG7EqIyO2ppIC3yMecS4LGtytXzLt1E21cWuNG+LgcrFwX18YA0weuqTzf6OkBW
-         OzzGAvLBqxcoBBXy+739xetrnNXbRt+FNm/ujjzcfG5UIJpThiCbfoiPuM858YGRdnO3
-         3KZEqMxPD2XTeNA2y9NUEXPJZ1U1/XeWWXHH3neb5VsTCRxV6IJE/DSooUyppzHwfuf/
-         bi29y1P0gJlKdYT3+dTHYH2Bc/auUIx6zRQbKY5fN4jeoRNq0xe/XvTTslY6uP3E69h8
-         eTRQ==
+        bh=qiWvrpKzeq83YnQqOE7ISPaRFxYtddrp60dv+zolb9U=;
+        b=nofvZaOfyWsBjfzInq6Nt5348snRx1WfxC8/qUyceii+muEi+UPrZLzPtbO35vJmzY
+         WoOnUDYgUY7NS935HNxhPMqa738rDPNZJl9/t//bhdwBox68qoOzfS/Fb8ImybKAtmwc
+         811UEjfXwKpbEJxjuTTO8k3i7bAgDdimRnn7yfZpZR22aEqHFGQ8zRn9wSyff4DH8smz
+         6rI8kXlZL4ExKYnY1uvWSvhwdzMJnBP+E7ZBq20Z2hLPgjE0VDZ8M1lyFwtzYWnUatrt
+         LE1Dmd6TCcljMgkSHq9Mk1us+qHMezNwxA2vfDMRJmbTJmCXu6oCpP10d4iWxNYPXkYp
+         bCrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729043823; x=1729648623;
+        d=1e100.net; s=20230601; t=1729045441; x=1729650241;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+FelR6GsDdJRo+uFPqIYovXFoQ6VzTQQEO/rkc9OHfQ=;
-        b=IyXjy3Mlw87M2RPRm8op+hUcidyz1WwWG2MCgcVyV8t+ijgDij6tKkPvp+pbY7H7CW
-         hk19bHvFZgEIFY+PslBPbr6oW2WE4bpXOdX1BT/FNMYUc0dk65sfwA7TMuuTnuTz0mxk
-         jiSuJQXk/AHxVxsS8IqBrCrrVC/Ca9qwobChiCqHjFWnievRb291RnVz0xvKHMxAH3jy
-         H9WAlYfE4ArCBC6rGJgoEe8hZ7UL15c/xUoJa1PzWskSYcSB/icAU/PbOnfzahBxpGNa
-         6/6GyvFZZ+avF0rPhMQ7z3j3MQc0v8uyesqv1itvpygD631GdS8FvJih/CVkTtXbu6Pk
-         KtKw==
-X-Forwarded-Encrypted: i=1; AJvYcCWObEZlKRD2dbHU/0FlhjquG9EJiR+Nh6uXRzNOi9jEIrFuWNiYn4GigbV+0k5eByNY5VMm1Auw@lists.linux.dev
-X-Gm-Message-State: AOJu0YzZEoAjOpful/m0tmTf58lNQz6G2umyHnPTHyRywlhe0v30U4Fk
-	5DXfMMv2eBTJiumwTP2L2J7vF4HBmgCpb5AcEO/oNWIPyrCpcPnl1ma3eQY5U2RL/MOWhdFTTcz
-	pF+zx8dFWgXBNz2Wq2LCBZTBdSn+tVR8g42iYEw==
-X-Google-Smtp-Source: AGHT+IGHNJy6WCLVvS1v7p2xUs8DBaNAGSH314OUXrO/87SH8h3u7zNrDy2Yj2k60G+29EMeHRdokeLA3B/2m0BY1IA=
-X-Received: by 2002:a05:6512:3a91:b0:539:a353:279c with SMTP id
- 2adb3069b0e04-53a03f2d542mr1721990e87.28.1729043822707; Tue, 15 Oct 2024
- 18:57:02 -0700 (PDT)
+        bh=qiWvrpKzeq83YnQqOE7ISPaRFxYtddrp60dv+zolb9U=;
+        b=J8o6dkVkk+DvBryPb4w8EJPEcCQj9wXocwcgT16ANE7GP4CzsNryw778w8EdXOBI69
+         EkjbxJ9s4Q8dMNFVXFMOJ9/xe3TTwwe/Dziwamwg/bbEYEB7CrBeeDluYRaTa3AiuviQ
+         /5ER9XisXc6P3n5Ouq9F4aKRagsQCpPq6CT19xJ4lhy0RWXETj8+vWHWQwY7tjdHn/ZC
+         uHS0gGIjy/MjWCfjA0pqB6XD3cxKBcOMT8QQPGg/uJrc7OOiF7/kMNKP2LXlMW9BSwGy
+         25inRPp4N1YJO9w9ou188AaDleR6t2PiQ5LL7jrGIabKa3bs8jtZorPFW5adLjiCCODM
+         p5Hw==
+X-Forwarded-Encrypted: i=1; AJvYcCXfL/aAMer7tfv7SKf8H2KF0/J6DQAOPukeo2XG8plwm4RTZFBPXJVzZRU3L9EwXQ+6YurXqCdJ@lists.linux.dev
+X-Gm-Message-State: AOJu0YwIlPw6WlE5RV53I/QUp7JLh59Xvi2czJ1OhRbs3jXJAfggB9hm
+	7katPhd7KAXnf5rHJs3JqaA6Bsb/NbwCApQjEWCU7UYsDiHPL5A8zEJr+9C+1lOwJucUcitxrkZ
+	vmtb8KDK18WnCpshKubLBpFeqaNFLCKRYKpWK7g==
+X-Google-Smtp-Source: AGHT+IEV/byr5lu2UsUC2RRVM2gDVA1eLiMxNLS7gT854PVdY6PhxgM/HLAZnNXx36HxSizxkKPg933nd9PyJjzpqHw=
+X-Received: by 2002:a05:6512:3094:b0:539:da76:c77e with SMTP id
+ 2adb3069b0e04-53a03f045ecmr1718387e87.5.1729045440632; Tue, 15 Oct 2024
+ 19:24:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1728491453.git.nicolinc@nvidia.com> <88114b5c725bb3300a9599d3eeebded221a0b1f9.1728491453.git.nicolinc@nvidia.com>
- <CABQgh9Eaj_vy1=sS2Pf7RC7Vy5PopDfwoshECULEU-jK3JF_sQ@mail.gmail.com>
- <Zwn/4m8Ac0xEiJi8@Asurada-Nvidia> <CABQgh9Ft=xxJK-bjS6wCZ5BN4AiKtF9fzdBkevA3x2yb_4O4Kg@mail.gmail.com>
- <CABQgh9HP1M8GAXMwf0ZNn5EpMBAvJU3JLRWcN5H1wfGrqXSe1Q@mail.gmail.com>
- <Zw08z9TOFL57z07O@Asurada-Nvidia> <CABQgh9H-SB7q1v_XtWaO12K7jMMaq8Lj7F4kpDv9sJ5v-F6DZw@mail.gmail.com>
- <Zw3M/h1KYe9MjcZK@Asurada-Nvidia> <Zw64C7bQicoAmAM3@Asurada-Nvidia>
-In-Reply-To: <Zw64C7bQicoAmAM3@Asurada-Nvidia>
+References: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
+In-Reply-To: <0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com>
 From: Zhangfei Gao <zhangfei.gao@linaro.org>
-Date: Wed, 16 Oct 2024 09:56:51 +0800
-Message-ID: <CABQgh9Fea006HPwVTAuxk7KGh-7-YbjRhoUttVo_iACjAbr0CQ@mail.gmail.com>
-Subject: Re: [PATCH v3 03/11] iommufd: Introduce IOMMUFD_OBJ_VIOMMU and its
- related struct
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: jgg@nvidia.com, kevin.tian@intel.com, will@kernel.org, joro@8bytes.org, 
-	suravee.suthikulpanit@amd.com, robin.murphy@arm.com, dwmw2@infradead.org, 
-	baolu.lu@linux.intel.com, shuah@kernel.org, linux-kernel@vger.kernel.org, 
-	iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	linux-kselftest@vger.kernel.org, eric.auger@redhat.com, 
-	jean-philippe@linaro.org, mdf@kernel.org, mshavit@google.com, 
-	shameerali.kolothum.thodi@huawei.com, smostafa@google.com, yi.l.liu@intel.com, 
-	aik@amd.com, patches@lists.linux.dev
+Date: Wed, 16 Oct 2024 10:23:49 +0800
+Message-ID: <CABQgh9E32c5inrn=Q5HWThuJQ4xV=EFWLGwbyxVLHQVUZ_uYCA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] Initial support for SMMUv3 nested translation
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: acpica-devel@lists.linux.dev, Hanjun Guo <guohanjun@huawei.com>, 
+	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>, 
+	kvm@vger.kernel.org, Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Robert Moore <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>, 
+	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>, 
+	Alex Williamson <alex.williamson@redhat.com>, Eric Auger <eric.auger@redhat.com>, 
+	Jean-Philippe Brucker <jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>, 
+	Michael Shavit <mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev, 
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>, Mostafa Saleh <smostafa@google.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 16 Oct 2024 at 02:44, Nicolin Chen <nicolinc@nvidia.com> wrote:
->
-> On Mon, Oct 14, 2024 at 07:01:40PM -0700, Nicolin Chen wrote:
-> > On Tue, Oct 15, 2024 at 09:15:01AM +0800, Zhangfei Gao wrote:
-> >
-> > > > > iommufd_device_bind
-> > > > > iommufd_device_attach
-> > > > > iommufd_vdevice_alloc_ioctl
-> > > > >
-> > > > > iommufd_device_detach
-> > > > > iommufd_device_unbind // refcount check fail
-> > > > > iommufd_vdevice_destroy ref--
-> > > >
-> > > > Things should be symmetric. As you suspected, vdevice should be
-> > > > destroyed before iommufd_device_detach.
-> > >
-> > > I am trying based on your for_iommufd_viommu_p2-v3 branch, do you have
-> > > this issue?
-> > > In checking whether close fd before unbind?
-> >
-> > Oops, my bad. I will provide a fix.
->
-> This should fix the problem:
->
-> ---------------------------------------------------------------------
-> diff --git a/drivers/iommu/iommufd/device.c b/drivers/iommu/iommufd/device.c
-> index 5fd3dd420290..13100cfea29d 100644
-> --- a/drivers/iommu/iommufd/device.c
-> +++ b/drivers/iommu/iommufd/device.c
-> @@ -277,6 +277,11 @@ EXPORT_SYMBOL_NS_GPL(iommufd_ctx_has_group, IOMMUFD);
->   */
->  void iommufd_device_unbind(struct iommufd_device *idev)
->  {
-> +       mutex_lock(&idev->igroup->lock);
-> +       /* idev->vdev object should be destroyed prior, yet just in case.. */
-> +       if (idev->vdev)
-> +               iommufd_object_remove(idev->ictx, NULL, idev->vdev->obj.id, 0);
-> +       mutex_unlock(&idev->igroup->lock);
->         iommufd_object_destroy_user(idev->ictx, &idev->obj);
->  }
->  EXPORT_SYMBOL_NS_GPL(iommufd_device_unbind, IOMMUFD);
-> ---------------------------------------------------------------------
+Hi, Jason
 
-Not yet
-[  574.162112] Unable to handle kernel NULL pointer dereference at
-virtual address 0000000000000004
-[  574.261102] pc : iommufd_object_remove+0x7c/0x278
-[  574.265795] lr : iommufd_device_unbind+0x44/0x98
-in check
+On Tue, 27 Aug 2024 at 23:51, Jason Gunthorpe <jgg@nvidia.com> wrote:
+>
+> This brings support for the IOMMFD ioctls:
+>
+>  - IOMMU_GET_HW_INFO
+>  - IOMMU_HWPT_ALLOC_NEST_PARENT
+>  - IOMMU_DOMAIN_NESTED
+>  - ops->enforce_cache_coherency()
+>
+> This is quite straightforward as the nested STE can just be built in the
+> special NESTED domain op and fed through the generic update machinery.
+>
+> The design allows the user provided STE fragment to control several
+> aspects of the translation, including putting the STE into a "virtual
+> bypass" or a aborting state. This duplicates functionality available by
+> other means, but it allows trivially preserving the VMID in the STE as we
+> eventually move towards the VIOMMU owning the VMID.
+>
+> Nesting support requires the system to either support S2FWB or the
+> stronger CANWBS ACPI flag. This is to ensure the VM cannot bypass the
+> cache and view incoherent data, currently VFIO lacks any cache flushing
+> that would make this safe.
+
+What if the system does not support S2FWB or CANWBS, any workaround to
+passthrough?
+Currently I am testing nesting by ignoring this check.
 
 Thanks
-
->
-> Thanks
-> Nicolin
