@@ -1,102 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3BF1D2F4A;
-	Wed, 16 Oct 2024 21:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0CB13B298;
+	Wed, 16 Oct 2024 21:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729113168; cv=none; b=QswL5hJeXAr+RRRVGMEFDgf2SxUV/aCsn88OuQQWHQoxquAUfZEr90ilq6mMUMHn/ts3xFWz3lTdiqkJyGuL2gOQ9Xxd3xdkcbMiadxbcxYikHMPAqv/KKUZ27u7HVTDeBywURYTCydjko1AF5bz8QUCN1QdQ018bLxJH+2WN4Y=
+	t=1729113618; cv=none; b=CQoeuq9BLE/TdrH+zPqM88Zr7mqeMcF1bGhbuPRndcmCJ7/Fq/uIwUJ3Kf83AsBB3KjNBnOVDPbjywUZAwtnPTr6t6zrl8ZhC3QTisQ1pilvOFFTSwnraL/RPAHTvF+ZlLdkFInj4qphFv4N1/jQiWNKdOuXuEhIGmREQc68hkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729113168; c=relaxed/simple;
-	bh=Tx5OAIRhuHpTGueX/fN7PxdVTqTqNhozXaD5BbCIjDA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JrGLlggZ6t2KxrC43PE4NwzMiemkNoXinIxjEwlIgMFI+zrzNus8ooHaEzU9NI6As5VS0a+lBp0mGTlbx2xlbezQ0KhMPCKQ7hvAdV+VtuJvvtYMOCdHLLXM9pF7XPQTQV0FljE3MApHYQklWQBdarTFKiYE7UqgvdIQH1dZR6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IY+/U/Ya; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1729113618; c=relaxed/simple;
+	bh=pvI7NWjIsxacW6JnIO272A6in4jx/EkKzXEIVWUeS3Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=O/JlpjIq33fyioOquGpleJybJFdZDP8IuVCQHUaCGtHaGvnX3gG7uuXoHqwhYYCmNXpWxDCKHR35+oGT6R+Kftq61sMDmYmif6N5dN8IF13YU2CRd3ts9hqM8E8Wc9diKUXjSAGdwYplTq9Djc7do+a33gNwBV5ijqN0NCE1O+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rqMT46D+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IY+/U/Ya"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F412AC4CED0;
-	Wed, 16 Oct 2024 21:12:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rqMT46D+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14E3C4CEC5;
+	Wed, 16 Oct 2024 21:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729113167;
-	bh=Tx5OAIRhuHpTGueX/fN7PxdVTqTqNhozXaD5BbCIjDA=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=IY+/U/YaQ+GHR6P5Z7HHUVSFRkhLvT18LgLID1Zi9JO6JCYlb4soAQT8gkX0uzRyN
-	 9k4WdN5mqNF82g8R5E1kdpKzKIPjY8I7a8KzznAYRh7tib49w0vPEDXUInmqT/DuPe
-	 NTN10KXf3wQE8xxjZudaaGWTP1Jq40osfjJN9ACR6xDZcO6XpygX6qP0aa/sZuUS1Z
-	 y0f8lJkookgf4JmUEeC4vaeYqcU/+jpyvxHKt5RFtx8fSEJx07NS2aS+Z0lWi7nk6d
-	 MDih4wwBq75vhm9pHipCNP8Y+yy8xHmKrRarVebczynv1I+3esefwEdPtcghZvUedX
-	 MMFx6zcnnlk4w==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 16 Oct 2024 14:12:38 -0700
-Subject: [PATCH 2/2] um: Disable auto variable initialization for
- stub_exe.c
+	s=k20201202; t=1729113618;
+	bh=pvI7NWjIsxacW6JnIO272A6in4jx/EkKzXEIVWUeS3Q=;
+	h=From:To:Cc:Subject:Date:From;
+	b=rqMT46D+EbA5csYjrloYEHCdekOAy00Z+ubmhAuoVfOkJ72tPNCo1JqVMeNbLNTUX
+	 q4IbQovpgl50roNZLNYGL0TepgStjXevU9A2JjKj9qXcx6NlNlpWW0qtrFPNTNzppS
+	 2XD6Q9OJ3Wc0xYAO6/rzOiAPgNrmlNdDnR1XzBD6C4kpK7ebNkeuKjg+ojho9IARm4
+	 gE6LxcpBGBL++28I+yit2NOpz/DBMxfl89cehxf2a5bzvOb/Wsy1g7PAbPxRCf2LRP
+	 Cso5xry9KA6z61YPoAuJKzLe6K3ilDn9YxOlMmmqVLM7GcUnaoydcyIJU5iqWiLIXr
+	 w8fO2i0fCTTiQ==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@google.com>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	kunit-dev@googlegroups.com
+Subject: [PATCH] of: Allow overlay kunit tests to run CONFIG_OF_OVERLAY=n
+Date: Wed, 16 Oct 2024 14:20:15 -0700
+Message-ID: <20241016212016.887552-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.47.0.rc1.288.g06298d1525-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241016-uml-fix-stub_exe-clang-v1-2-3d6381dc5a78@kernel.org>
-References: <20241016-uml-fix-stub_exe-clang-v1-0-3d6381dc5a78@kernel.org>
-In-Reply-To: <20241016-uml-fix-stub_exe-clang-v1-0-3d6381dc5a78@kernel.org>
-To: Richard Weinberger <richard@nod.at>, 
- Anton Ivanov <anton.ivanov@cambridgegreys.com>, 
- Johannes Berg <johannes@sipsolutions.net>
-Cc: Nick Desaulniers <ndesaulniers@google.com>, 
- Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
- Benjamin Berg <benjamin.berg@intel.com>, linux-um@lists.infradead.org, 
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1734; i=nathan@kernel.org;
- h=from:subject:message-id; bh=Tx5OAIRhuHpTGueX/fN7PxdVTqTqNhozXaD5BbCIjDA=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDOkCOr69m9aqV71aunTbjgB9zSLGfX4hN5VE3i55yFbMm
- 7dQOPNVRykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZhIdTMjwxzTLYtOP/s706bQ
- vOTp+4MdDw5mPS+2blv2uGye9KoKSxuG/8k7QpiUk23rz9kZJL9JErzYM4trAotg0+LrthPFH0j
- l8wMA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Transfer-Encoding: 8bit
 
-When automatic variable initialization is enabled via
-CONFIG_INIT_STACK_ALL_{PATTERN,ZERO}, clang will insert a call to
-memset() to initialize an object created with __builtin_alloca(). This
-ultimately breaks the build when linking stub_exe because it is a
-standalone executable that does not include or link against memset().
+Some configurations want to enable CONFIG_KUNIT without enabling
+CONFIG_OF_OVERLAY. The kunit overlay code already skips if
+CONFIG_OF_OVERLAY isn't enabled, so this select here isn't really doing
+anything besides making it easier to run the tests without them
+skipping. Remove the select and move the config setting to the
+drivers/of/.kunitconfig file so that the overlay tests can be run with
+or without CONFIG_OF_OVERLAY set to test either behavior.
 
-  ld: arch/um/kernel/skas/stub_exe.o: in function `_start':
-  arch/um/kernel/skas/stub_exe.c:83:(.ltext+0x15): undefined reference to `memset'
-
-Disable automatic variable initialization for stub_exe.c by passing the
-default value of 'uninitialized' to '-ftrivial-auto-var-init', which
-avoids generating the call to memset(). This code is small and runs
-quickly as it is just designed to set up an environment, so stack
-variable initialization is unnecessary overhead for little gain.
-
-Fixes: 32e8eaf263d9 ("um: use execveat to create userspace MMs")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 5c9dd72d8385 ("of: Add a KUnit test for overlays and test managed APIs")
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 ---
- arch/um/kernel/skas/Makefile | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/of/.kunitconfig   | 1 +
+ drivers/of/Kconfig        | 1 -
+ drivers/of/overlay_test.c | 2 ++
+ 3 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/um/kernel/skas/Makefile b/arch/um/kernel/skas/Makefile
-index f93db893b8236cf805edd01b41501d51dd8f0a35..f6a219074772283f3c6c6d8d6ccaa8a1cfc24e33 100644
---- a/arch/um/kernel/skas/Makefile
-+++ b/arch/um/kernel/skas/Makefile
-@@ -39,6 +39,11 @@ targets += stub_exe.dbg stub_exe $(stub_exe_objs-y)
+diff --git a/drivers/of/.kunitconfig b/drivers/of/.kunitconfig
+index 4c53d2c7a275..7d570cb922a1 100644
+--- a/drivers/of/.kunitconfig
++++ b/drivers/of/.kunitconfig
+@@ -1,4 +1,5 @@
+ CONFIG_KUNIT=y
+ CONFIG_OF=y
+ CONFIG_OF_KUNIT_TEST=y
++CONFIG_OF_OVERLAY=y
+ CONFIG_OF_OVERLAY_KUNIT_TEST=y
+diff --git a/drivers/of/Kconfig b/drivers/of/Kconfig
+index 0e2d608c3e20..0efa2d1b687a 100644
+--- a/drivers/of/Kconfig
++++ b/drivers/of/Kconfig
+@@ -111,7 +111,6 @@ config OF_OVERLAY_KUNIT_TEST
+ 	tristate "Device Tree overlay KUnit tests" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT
+ 	default KUNIT_ALL_TESTS
+-	select OF_OVERLAY
+ 	help
+ 	  This option builds KUnit unit tests for the device tree overlay code.
  
- CFLAGS_stub.o := $(CFLAGS_NO_HARDENING)
- CFLAGS_stub_exe.o := $(CFLAGS_NO_HARDENING)
-+
-+# Clang will call memset() from __builtin_alloca() when stack variable
-+# initialization is enabled, which is used in stub_exe.c.
-+CFLAGS_stub_exe.o += $(call cc-option, -ftrivial-auto-var-init=uninitialized)
-+
- UNPROFILE_OBJS := stub.o stub_exe.o
- KCOV_INSTRUMENT := n
+diff --git a/drivers/of/overlay_test.c b/drivers/of/overlay_test.c
+index 1f76d50fb16a..c787524c5a88 100644
+--- a/drivers/of/overlay_test.c
++++ b/drivers/of/overlay_test.c
+@@ -65,6 +65,8 @@ static void of_overlay_apply_kunit_cleanup(struct kunit *test)
+ 	struct device_node *np;
+ 
+ 	of_root_kunit_skip(test);
++	if (!IS_ENABLED(CONFIG_OF_OVERLAY))
++		kunit_skip(test, "requires CONFIG_OF_OVERLAY to apply overlay");
+ 	if (!IS_ENABLED(CONFIG_OF_EARLY_FLATTREE))
+ 		kunit_skip(test, "requires CONFIG_OF_EARLY_FLATTREE for root node");
  
 
+base-commit: 6e0391e48cf9fb8b1b5e27c0cbbaf2e4639f2c33
 -- 
-2.47.0
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
