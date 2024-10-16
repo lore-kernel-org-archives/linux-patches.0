@@ -1,103 +1,104 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0CB13B298;
-	Wed, 16 Oct 2024 21:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FD013B298;
+	Wed, 16 Oct 2024 21:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729113618; cv=none; b=CQoeuq9BLE/TdrH+zPqM88Zr7mqeMcF1bGhbuPRndcmCJ7/Fq/uIwUJ3Kf83AsBB3KjNBnOVDPbjywUZAwtnPTr6t6zrl8ZhC3QTisQ1pilvOFFTSwnraL/RPAHTvF+ZlLdkFInj4qphFv4N1/jQiWNKdOuXuEhIGmREQc68hkY=
+	t=1729113869; cv=none; b=AgJxa+ipRFXg1h5J2uweyQqY2LXr43aOZDukBk598I9sThsyHL5PZK3MwOWeWBnrI7F6L6KtOAFokVmFSXePWmrqt8B5Cp2jILofQAdni19k2wfefUZ56W/JCqk96seK5GT4C5BseIuzMQtEw5HqPMWOZpOUbJaTUJFHC0AYJUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729113618; c=relaxed/simple;
-	bh=pvI7NWjIsxacW6JnIO272A6in4jx/EkKzXEIVWUeS3Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=O/JlpjIq33fyioOquGpleJybJFdZDP8IuVCQHUaCGtHaGvnX3gG7uuXoHqwhYYCmNXpWxDCKHR35+oGT6R+Kftq61sMDmYmif6N5dN8IF13YU2CRd3ts9hqM8E8Wc9diKUXjSAGdwYplTq9Djc7do+a33gNwBV5ijqN0NCE1O+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rqMT46D+; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1729113869; c=relaxed/simple;
+	bh=WmRyooRpNUPsrOSIwLEuGtI5tETK3P7F58Xs9VK/nqU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UbrZUyKlISAXdX69mhNKd8lEvtJPJr7HO4BuQfUHbXsJGEX0fZ2bWKXLEm4lCBZAHDl1Xuo0WXFEH56q/U1RTy8FQynKXynKWShL5T1vkMqF1d9YqjObNDV6ay9o0emPcFrrM0uWVsn+7Wxm/xgbmoj9EjFtZlPDfzrEeNab1FI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c7/6Prv0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rqMT46D+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14E3C4CEC5;
-	Wed, 16 Oct 2024 21:20:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c7/6Prv0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D230C4CECD;
+	Wed, 16 Oct 2024 21:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729113618;
-	bh=pvI7NWjIsxacW6JnIO272A6in4jx/EkKzXEIVWUeS3Q=;
-	h=From:To:Cc:Subject:Date:From;
-	b=rqMT46D+EbA5csYjrloYEHCdekOAy00Z+ubmhAuoVfOkJ72tPNCo1JqVMeNbLNTUX
-	 q4IbQovpgl50roNZLNYGL0TepgStjXevU9A2JjKj9qXcx6NlNlpWW0qtrFPNTNzppS
-	 2XD6Q9OJ3Wc0xYAO6/rzOiAPgNrmlNdDnR1XzBD6C4kpK7ebNkeuKjg+ojho9IARm4
-	 gE6LxcpBGBL++28I+yit2NOpz/DBMxfl89cehxf2a5bzvOb/Wsy1g7PAbPxRCf2LRP
-	 Cso5xry9KA6z61YPoAuJKzLe6K3ilDn9YxOlMmmqVLM7GcUnaoydcyIJU5iqWiLIXr
-	 w8fO2i0fCTTiQ==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Rob Herring <robh@kernel.org>,
-	Saravana Kannan <saravanak@google.com>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	devicetree@vger.kernel.org,
-	kunit-dev@googlegroups.com
-Subject: [PATCH] of: Allow overlay kunit tests to run CONFIG_OF_OVERLAY=n
-Date: Wed, 16 Oct 2024 14:20:15 -0700
-Message-ID: <20241016212016.887552-1-sboyd@kernel.org>
-X-Mailer: git-send-email 2.47.0.rc1.288.g06298d1525-goog
+	s=k20201202; t=1729113869;
+	bh=WmRyooRpNUPsrOSIwLEuGtI5tETK3P7F58Xs9VK/nqU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=c7/6Prv0V/3uEKt5DQtqrnxyPW+061zPoW9DD2m5SSMpeREYxcAQtl3ic6CvySKSN
+	 e50H621ALjxb7Te6UYMKh3m6wM5StaKEuuqc8NRN/zN8Zamof45GxR2lZx6lc1OuD7
+	 2waucJwnFs8bNs+Nfwzs9+WbTiSK4saf+HJRmnWkdDYfcK5zzR63me4hK3IzJmlP2K
+	 CsBg0dTzFDLeEyEKVCZc889Lju7SQOZCGpIkE579Kds6XwFCXUVqiFAFTXygSjB5GS
+	 bYqIUtBFrUhuynUF6pos3ukihM0+vjR1XMURbBndqor8amdckbZFcuY7QFixWHNEQI
+	 +RP/ffKudQJCw==
+Date: Wed, 16 Oct 2024 14:24:27 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: Masahiro Yamada <masahiroy@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Aleksei Vetrov <vvvvvv@google.com>, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
+	patches@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH] kbuild: Fully disable
+ -Wenum-{compare-conditional,enum-conversion}
+Message-ID: <20241016212427.GA695927@thelio-3990X>
+References: <20241016-disable-two-clang-enum-warnings-v1-1-ae886d7a0269@kernel.org>
+ <a22ab6cb-6eb6-44df-9e82-b6e95b9ae08e@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a22ab6cb-6eb6-44df-9e82-b6e95b9ae08e@app.fastmail.com>
 
-Some configurations want to enable CONFIG_KUNIT without enabling
-CONFIG_OF_OVERLAY. The kunit overlay code already skips if
-CONFIG_OF_OVERLAY isn't enabled, so this select here isn't really doing
-anything besides making it easier to run the tests without them
-skipping. Remove the select and move the config setting to the
-drivers/of/.kunitconfig file so that the overlay tests can be run with
-or without CONFIG_OF_OVERLAY set to test either behavior.
+On Wed, Oct 16, 2024 at 06:31:27PM +0000, Arnd Bergmann wrote:
+> On Wed, Oct 16, 2024, at 18:01, Nathan Chancellor wrote:
+> > -Wenum-enum-conversion and -Wenum-compare-conditional were strengthened
+> > in clang-19 to warn in C mode, which caused the kernel to move them to
+> > W=1 in commit 75b5ab134bb5 ("kbuild: Move
+> > -Wenum-{compare-conditional,enum-conversion} into W=1") because there
+> > were numerous instances of each that would break builds with -Werror.
+> > Unfortunately, this is not a full solution, as more and more developers,
+> > subsystems, and distributors are building with W=1 as well, so they
+> > continue to see the numerous instances of these warnings.
+> >
+> > Since the move to W=1, there have not been many new instances that have
+> > appeared through various build reports and the ones that have appeared
+> > seem to be following similar existing patterns, suggesting that most
+> > instances of these warnings will not be real issues. The only
+> > alternatives for silencing these warnings are adding casts (which is
+> > generally seen as an ugly practice) or refactoring the enums to macro
+> > defines or a unified enum (which may be undesirable because of type
+> > safety in other parts of the code).
+> >
+> > Disable the warnings altogether so that W=1 users do not see them.
+> 
+> I don't think we have to go all the way of completely disabling
+> the warnings here, they are still potentially useful. I can see
+> three ways of being less aggressive with them:
+> 
+> - keep -Wno-enum-compare-conditional in W=1 and fix up the
+>   remaining warnings for that, iirc the Wno-enum-enum-conversion
+>   is the one that causes the problems.
+> 
+> - Move them to W=2 instead of always disabled
+> 
+> - Leave the warnings enabled for clang-18 and older.
 
-Fixes: 5c9dd72d8385 ("of: Add a KUnit test for overlays and test managed APIs")
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/of/.kunitconfig   | 1 +
- drivers/of/Kconfig        | 1 -
- drivers/of/overlay_test.c | 2 ++
- 3 files changed, 3 insertions(+), 1 deletion(-)
+Arnd and I talked about this offline in the ClangBuiltLinux meeting
+today. I am going to run my usual test matrix against a tree with
+-Wenum-compare-conditional turned on to see how many instances of these
+warnings are in the tree and how difficult it would be to silence them
+to address the first point above. I will move -Wenum-enum-conversion to
+W=2 and send that as v2 soon to satisfy point two, which should clear up
+the blockage for the Android folks.
 
-diff --git a/drivers/of/.kunitconfig b/drivers/of/.kunitconfig
-index 4c53d2c7a275..7d570cb922a1 100644
---- a/drivers/of/.kunitconfig
-+++ b/drivers/of/.kunitconfig
-@@ -1,4 +1,5 @@
- CONFIG_KUNIT=y
- CONFIG_OF=y
- CONFIG_OF_KUNIT_TEST=y
-+CONFIG_OF_OVERLAY=y
- CONFIG_OF_OVERLAY_KUNIT_TEST=y
-diff --git a/drivers/of/Kconfig b/drivers/of/Kconfig
-index 0e2d608c3e20..0efa2d1b687a 100644
---- a/drivers/of/Kconfig
-+++ b/drivers/of/Kconfig
-@@ -111,7 +111,6 @@ config OF_OVERLAY_KUNIT_TEST
- 	tristate "Device Tree overlay KUnit tests" if !KUNIT_ALL_TESTS
- 	depends on KUNIT
- 	default KUNIT_ALL_TESTS
--	select OF_OVERLAY
- 	help
- 	  This option builds KUnit unit tests for the device tree overlay code.
- 
-diff --git a/drivers/of/overlay_test.c b/drivers/of/overlay_test.c
-index 1f76d50fb16a..c787524c5a88 100644
---- a/drivers/of/overlay_test.c
-+++ b/drivers/of/overlay_test.c
-@@ -65,6 +65,8 @@ static void of_overlay_apply_kunit_cleanup(struct kunit *test)
- 	struct device_node *np;
- 
- 	of_root_kunit_skip(test);
-+	if (!IS_ENABLED(CONFIG_OF_OVERLAY))
-+		kunit_skip(test, "requires CONFIG_OF_OVERLAY to apply overlay");
- 	if (!IS_ENABLED(CONFIG_OF_EARLY_FLATTREE))
- 		kunit_skip(test, "requires CONFIG_OF_EARLY_FLATTREE for root node");
- 
+While disabling the warnings for clang-19 and newer and leaving them on
+for clang-18 and older would technically address the issue at hand, it
+won't result in increased coverage because the whole point of the change
+that caused this in clang-19 is enabling the warning for C code, so
+clang-18 and older won't ever emit these warnings.
 
-base-commit: 6e0391e48cf9fb8b1b5e27c0cbbaf2e4639f2c33
--- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
-
+Cheers,
+Nathan
