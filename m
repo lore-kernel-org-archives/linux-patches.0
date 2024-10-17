@@ -1,95 +1,90 @@
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C1F27456
-	for <patches@lists.linux.dev>; Thu, 17 Oct 2024 02:44:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDED111AD
+	for <patches@lists.linux.dev>; Thu, 17 Oct 2024 02:48:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729133096; cv=none; b=uS37xwfPrRM49nNzN/dCGFPyTE3SNe83lvC6IUThxTrWJs+4VEX8A43dTaQSvSmI/xbyq2pqGdNOASxj43ztgLyfbVy2wOIaReQ1mhlVXX2Xd4XcZwchSZ15caWEsIQpKYHe9CKgbds+GosKzRHadXunRR4W/HOWgKWyUGN6+7A=
+	t=1729133297; cv=none; b=vFXZNvFgkf6jn62+zmkPHynWWL5A/6NpSicvqho79F7+tyaxKrwuXCcufV2qxbmJ3yyaLQYqF1p8uC4Luh3vtrepGswKMPHbDl5CZMFxY6izT3AdpGHHNPEXtAaw9Gw78xBla1iaLn3WO31u5YPvbBfgcTpxStZI8KIIhuF4z9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729133096; c=relaxed/simple;
-	bh=7ta3z/hV/IpZ4ahIXqlJcX/G80JpAJT4ilUcS4INWxE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VxdmpTUFWy+8U7YvzNJ4zFfCMIaWYvLgyGYbo5EMXi+d/r6xfFsZPbfcfMJpE27wAegmcNRmJyJt2AMacGlu0cihVf+QtjQzm2eh9H1R84RQaI4C4ugMiKqjtKs4vREjJlrHA/1pnhQyKpo2mGMDKJ3DXABbO1UB859yGVC7vrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=fsGLmLEY; arc=none smtp.client-ip=90.155.50.34
+	s=arc-20240116; t=1729133297; c=relaxed/simple;
+	bh=/4B2dYg6lCh3A2TBvEOq6N8YTHk6ZGEoTCPXkS1BwE0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TQFgUwDOWkmRNny83Cks+EbrxUR23iXirAJzwBdr0DqvuYl5JKIxaV+7kA65QYdgPhLNwWION38k08HfTgtEQNtXbrNj8AfL5MSICZEWobFsX8z/AYUmPGKhiB4iIzH8Q94aKxdQfUy22j74EuvypUR3zX/CHLwen8KE3RHU45A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=KqCgD/eP; arc=none smtp.client-ip=198.137.202.133
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="fsGLmLEY"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="KqCgD/eP"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description;
-	bh=ECKMUpYSJvQNNNhUeowTTPXY5+HEoB+I2ZvTarA4H6I=; b=fsGLmLEYMnvUIBf1xYys/7h2gB
-	TTnJybOtwM/KZbqq1J4v2ECpHy3k7z4gatjn0FJ+mgi02f1KPaxcrauATe1bLAt/HozZZLXZ541VC
-	VGPLXOPuuSeDI0Ybc22spxT2LOC82ZplJUKIiekOBT5yitnN0WzEIY6jiVPG3bs5Igb/GPD+oml37
-	Xa2Bttxysn2xp0zdCFlRk/RERQoeRkf4QCHl7xzY72IrCG5rZCyzGH93u2Bz0QjSJhi8udWcHnlSS
-	Dbv8dSH906agIEdmyFfgBlSVFo1zLUecZp32NZdJM+hQ/8uB6n/Ugut8c64T6kLLxgpfUsEiht4fy
-	e4Q3Z8Rw==;
-Received: from [50.53.2.24] (helo=[192.168.254.17])
-	by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
-	id 1t1GVN-00000009nfx-3KZh;
-	Thu, 17 Oct 2024 02:44:50 +0000
-Message-ID: <3380e075-ea9e-495a-b011-c2af47dbc1d5@infradead.org>
-Date: Wed, 16 Oct 2024 19:44:44 -0700
+	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=ucFuiCRRvpRupTzMst2/fXuORqTG4PkFhkImvRCzP9A=; b=KqCgD/eP6Ku4A8bCEiADaMB7QE
+	VqV5gUpwkNb5mUcPFAZFPNVy7ixDzFbb6GLfl8ZhrLDf6oIQ7vJ3sA5mSC8AepdHhncmNjQKUXtz9
+	VjDhKx4Qj9nRMCVY08uGSyvaahSmP2Zw77/rOPN8+By/L8keYyM9TINNVDhnAKkSmcMKFfzDP8bX8
+	etlqD0AXRkIJ9eY4m2IHmsTNkHl67XB+684SSNB1wPVnwBqd/5iIufwslQggFVtFvK0uTD0CQL5gX
+	2tj9pBA5JpCiUxj5rHmJul5dryBIve0J62NIoabGZXg2q9TLYJHj5sOQaynq+mTd9C/S7N5VLAVlG
+	0kUBwV5Q==;
+Received: from [50.53.2.24] (helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
+	id 1t1GYf-0000000DaQT-3rjH;
+	Thu, 17 Oct 2024 02:48:13 +0000
+From: Randy Dunlap <rdunlap@infradead.org>
+To: dri-devel@lists.freedesktop.org
+Cc: patches@lists.linux.dev,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v2] drm/fbdev-dma: remove obsolete kernel-doc references
+Date: Wed, 16 Oct 2024 19:48:13 -0700
+Message-ID: <20241017024813.61908-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.47.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] >>>>>>>>>>>>>>>>>>>>>>> FIXME <<<<<<<<<<<<<<<<<<<<<<
-To: dri-devel@lists.freedesktop.org
-Cc: patches@lists.linux.dev, Stephen Rothwell <sfr@canb.auug.org.au>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Thomas Zimmermann <tzimmermann@suse.de>
-References: <20241017024305.61318-1-rdunlap@infradead.org>
-Content-Language: en-US
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <20241017024305.61318-1-rdunlap@infradead.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Whoops, I reverted the subject line change.
-Will resend it.
+The kernel-doc comments in these 3 files was removed so remove the
+references to these files to prevent kernel-doc warnings.
 
-On 10/16/24 7:43 PM, Randy Dunlap wrote:
-> 
-> drivers/gpu/drm/drm_fbdev_dma.c:1: warning: no structured comments found
-> drivers/gpu/drm/drm_fbdev_shmem.c:1: warning: no structured comments found
-> drivers/gpu/drm/drm_fbdev_ttm.c:1: warning: no structured comments found
-> 
-> Fixes: 731fddf4302e ("drm/fbdev-dma: Remove obsolete setup function")
-> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-> Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-> Cc: David Airlie <airlied@gmail.com>
-> Cc: Simona Vetter <simona@ffwll.ch>
-> Cc: Thomas Zimmermann <tzimmermann@suse.de>
-> Cc: dri-devel@lists.freedesktop.org
-> ---
->  Documentation/gpu/drm-kms-helpers.rst |    9 ---------
->  1 file changed, 9 deletions(-)
-> 
-> --- linux-next-20241016.orig/Documentation/gpu/drm-kms-helpers.rst
-> +++ linux-next-20241016/Documentation/gpu/drm-kms-helpers.rst
-> @@ -110,15 +110,6 @@ fbdev Helper Functions Reference
->  .. kernel-doc:: drivers/gpu/drm/drm_fb_helper.c
->     :doc: fbdev helpers
->  
-> -.. kernel-doc:: drivers/gpu/drm/drm_fbdev_dma.c
-> -   :export:
-> -
-> -.. kernel-doc:: drivers/gpu/drm/drm_fbdev_shmem.c
-> -   :export:
-> -
-> -.. kernel-doc:: drivers/gpu/drm/drm_fbdev_ttm.c
-> -   :export:
-> -
->  .. kernel-doc:: include/drm/drm_fb_helper.h
->     :internal:
->  
+drivers/gpu/drm/drm_fbdev_dma.c:1: warning: no structured comments found
+drivers/gpu/drm/drm_fbdev_shmem.c:1: warning: no structured comments found
+drivers/gpu/drm/drm_fbdev_ttm.c:1: warning: no structured comments found
 
--- 
-~Randy
+Fixes: 731fddf4302e ("drm/fbdev-dma: Remove obsolete setup function")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Closes: https://lore.kernel.org/all/20241002142250.07e1c46c@canb.auug.org.au/
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: dri-devel@lists.freedesktop.org
+---
+Cc: patches@lists.linux.dev
 
+ Documentation/gpu/drm-kms-helpers.rst |    9 ---------
+ 1 file changed, 9 deletions(-)
+
+--- linux-next-20241016.orig/Documentation/gpu/drm-kms-helpers.rst
++++ linux-next-20241016/Documentation/gpu/drm-kms-helpers.rst
+@@ -110,15 +110,6 @@ fbdev Helper Functions Reference
+ .. kernel-doc:: drivers/gpu/drm/drm_fb_helper.c
+    :doc: fbdev helpers
+ 
+-.. kernel-doc:: drivers/gpu/drm/drm_fbdev_dma.c
+-   :export:
+-
+-.. kernel-doc:: drivers/gpu/drm/drm_fbdev_shmem.c
+-   :export:
+-
+-.. kernel-doc:: drivers/gpu/drm/drm_fbdev_ttm.c
+-   :export:
+-
+ .. kernel-doc:: include/drm/drm_fb_helper.h
+    :internal:
+ 
