@@ -1,129 +1,66 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FF71D097F;
-	Thu, 17 Oct 2024 20:20:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00022281D9;
+	Thu, 17 Oct 2024 20:38:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729196422; cv=none; b=XsVAz5uKUGmxFv8OXBdKQe3V3EKT/PEcE+O6l0dURmuGDu+b3pFjJ9xBsX9BgY7ItGStVeDVusqDzMm8hvn6GKJWovzqu84VkdOLCT9AjIfRYDA1+j38/0kC0TgJx6SOvk6ob8WZ9ZY/kkjWuDZnsBtrM4xeJ1OSLsXi7CuJdsE=
+	t=1729197491; cv=none; b=ZA1qVJR4cCzXyum0GmrUanyRjZvghJfSqGNrLqxe0y3PKhFdTb74haQfhB2f+H5xcgx4QA8QTgYVcn7PVIKS+FkyjSS7yOZaF7J5/57EbstUXkhWyv7cSPNpUfyMRPrdYEfJsfRCjzzzNjIvb4CzK9US4gulkcgbJbi+t+V6Yp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729196422; c=relaxed/simple;
-	bh=XVVHSpwPe5HZHIHmXyXLtKocHLxVUhDN4zyjgfNLGBc=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=rKk43fZSkVpMu+h+FsTgXvZryKuMGopXlKTXWLXZWmNAs4oHrOd8dpIjWm7K/kM8vylJrf49t3MGfCyFHGcHkWp8RM6Hjgd0NtM62n0UQ6vI+cG3FTZ7x8X9DGIY/8R+jjRaODGNmo3nxoZq/Rt1UGaHq0hl39gvmy4n57ma1/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=SYSRcHS5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=esjRwHfr; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1729197491; c=relaxed/simple;
+	bh=0UHHrTjAza58qjJLzePzBA4rNvByGUnrFxNmL3nc7TY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mPuxgOjsHut4G6YBv1jxMDjFt+7KaG0TMFWJDj/rM90GWmk6WYHR4545TwzawAaIvBrC5FoG4Uf56StHJzBZ1urs28SdY+ERvl7xjUow+cTnbDAFd8alOLsr37Q39zVNUsFdITIyfB5zxfUmlt0qOCIo0Z1MIyEg6Z5wmL5nA7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RQKYE7qP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="SYSRcHS5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="esjRwHfr"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E3C2F114008E;
-	Thu, 17 Oct 2024 16:20:15 -0400 (EDT)
-Received: from phl-imap-11 ([10.202.2.101])
-  by phl-compute-10.internal (MEProxy); Thu, 17 Oct 2024 16:20:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1729196415;
-	 x=1729282815; bh=/elZsdY9jdfXA5CNoGnQjupWAHOxpp9CXjyZ+kdKV3U=; b=
-	SYSRcHS536J51tTNmu7p25c8eCeTwmReNsfcMZiUUFX3HerJXw2PCihWwZHywWGm
-	XtkRVqaf0bJUmpkEr0xel839tS3XZKe0Q7GrlVPy/KuOMsxVKWYaCXew3geWnrC/
-	2AEFRgONyP55oSc0QSDD5A+rtP38y+mK2Fw6zWyJ83U5DM3dCA+7Q7RGJxT3V3qK
-	PXJu6LX3+OCfkkQqFeAUqfiFuvsHdGemIYGzXF1Ja2J2o4FTrcpXI5uxtJpRMkIv
-	XhFTs7AtGEAXYvpVaDtpGH4eJAuwb4/Q6FiFaEtvfeq236LL7BLQ38NPRLeiZOIE
-	aanvzf71Rdt12wyTdJhEJg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1729196415; x=
-	1729282815; bh=/elZsdY9jdfXA5CNoGnQjupWAHOxpp9CXjyZ+kdKV3U=; b=e
-	sjRwHfrPQL/I7PGEXUrHIwKI9uBSCibtGL35CXJcreL1HM2WdOhwX9hJ+PDSM78Q
-	Ig1UZIXJvzm35koI59fUZ9ZX2QSjEld4Iw1Od2PVIcfq/dWuMgFt7c/quxQ5ONwy
-	eiUo4X7xzVfvb93XvPY9a56E4K9d3eXJq32kenGz7RhA3x71OpZR64CD6jMi3jwy
-	pbtKPBJFESt9sUAlo5oOmyjeqXAud3nrjZUce/MZsBnnNXNHM1MrRoXCLNar4yLp
-	Hk5naff+RPsXrx+1fOGHjUZ1mAi0FZUO49ifQRH75s31llKW4ZYfI3hJSZNt/3zX
-	4L9Mcr5c8LLxYcCTkmyyA==
-X-ME-Sender: <xms:f3ERZxp_Ga5mu0cJjb7aVzvymuknjw_5FzNpeIWT8fvF--o0ifQuMw>
-    <xme:f3ERZzqW-gjkWsKt8u4-NBxKeY8aWgxHLMxbHivCu_csd1FzacTkIdfr58rFcHaV2
-    Nhkk9DLtBu1303d_K4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdehuddgudehudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthejredtredt
-    tdenucfhrhhomhepfdetrhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusg
-    druggvqeenucggtffrrghtthgvrhhnpeefhfehteffuddvgfeigefhjeetvdekteekjeef
-    keekleffjeetvedvgefhhfeihfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnhgusegr
-    rhhnuggsrdguvgdpnhgspghrtghpthhtohepuddvpdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopehnihgtohhlrghssehfjhgrshhlvgdrvghupdhrtghpthhtohepjhhushht
-    ihhnshhtihhtthesghhoohhglhgvrdgtohhmpdhrtghpthhtohepmhhorhgsohesghhooh
-    hglhgvrdgtohhmpdhrtghpthhtohepnhguvghsrghulhhnihgvrhhssehgohhoghhlvgdr
-    tghomhdprhgtphhtthhopehvvhhvvhhvvhesghhoohhglhgvrdgtohhmpdhrtghpthhtoh
-    epmhgrshgrhhhirhhohieskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgrthhhrghn
-    sehkvghrnhgvlhdrohhrghdprhgtphhtthhopehllhhvmheslhhishhtshdrlhhinhhugi
-    druggvvhdprhgtphhtthhopehprghttghhvghssehlihhsthhsrdhlihhnuhigrdguvghv
-X-ME-Proxy: <xmx:f3ERZ-NqgrYOAN4t_T3U9HhDYT3z9ZTa-_7sOybYYgyxU_LXhOoBug>
-    <xmx:f3ERZ87gtondBc9e_O9u301RZAiPLrHRd91WUdkF9RmeEX3YDeqP4w>
-    <xmx:f3ERZw6QAg_-99Hcc-GQ3pILjqgzkTd9-bUPX1s9_8yAJzNpAHiDTw>
-    <xmx:f3ERZ0iGUiPXLHw2MWllSX_rnjgWR--yQS_mLHBrM3SVOzC6qJyv4Q>
-    <xmx:f3ERZwi7NrQID7mZR1fAGrsOfdwTOygTsFkxqm8wvhiJUsxLKdp3gMSz>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 161932220072; Thu, 17 Oct 2024 16:20:15 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RQKYE7qP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248A9C4CECE;
+	Thu, 17 Oct 2024 20:38:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729197491;
+	bh=0UHHrTjAza58qjJLzePzBA4rNvByGUnrFxNmL3nc7TY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RQKYE7qPzDgGMHlW5k1Ldc7ZH0Ze1+g8lVguxO4nrOmNii5S7zU9vpRWDIH3e9SN8
+	 BotpTH1CsN9n6rZqhnxx/udpH3Yazkx8vg5IJV2zbvlxrumOEnW4bs3FaIlNzyossr
+	 X9Ell4O3v1QoU0NX5uNR4mPBYyRvmnAjiBREprAF2PIMX5unbMSyPtljSkV+MjwoSR
+	 9qe8JOsHsmUQcyaH4fHdPJdnJe3sfDODIZi6+hpzENcIVOL5FxogtKtgGOsla9d7Kz
+	 a2AWMHVhmXlRxrRzLL8/5l2zre6QFpOrQlmWOchlK5ym6pTEKa0bGuXFvNdsKM8/OV
+	 9cwV9W74wSIWA==
+Date: Thu, 17 Oct 2024 15:38:10 -0500
+From: Rob Herring <robh@kernel.org>
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Saravana Kannan <saravanak@google.com>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, devicetree@vger.kernel.org,
+	kunit-dev@googlegroups.com
+Subject: Re: [PATCH] of: Allow overlay kunit tests to run CONFIG_OF_OVERLAY=n
+Message-ID: <20241017203810.GA814469-robh@kernel.org>
+References: <20241016212016.887552-1-sboyd@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Thu, 17 Oct 2024 20:19:54 +0000
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Nathan Chancellor" <nathan@kernel.org>,
- "Masahiro Yamada" <masahiroy@kernel.org>
-Cc: "Nicolas Schier" <nicolas@fjasle.eu>,
- "Nick Desaulniers" <ndesaulniers@google.com>,
- "Bill Wendling" <morbo@google.com>, "Justin Stitt" <justinstitt@google.com>,
- "Aleksei Vetrov" <vvvvvv@google.com>, linux-kbuild@vger.kernel.org,
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev,
- stable@vger.kernel.org
-Message-Id: <079876f3-19c6-41bf-8e70-8764fd4c62e4@app.fastmail.com>
-In-Reply-To: 
- <20241017-disable-two-clang-enum-warnings-v2-1-163ac04346ae@kernel.org>
-References: 
- <20241017-disable-two-clang-enum-warnings-v2-1-163ac04346ae@kernel.org>
-Subject: Re: [PATCH v2] kbuild: Move -Wenum-enum-conversion to W=2
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241016212016.887552-1-sboyd@kernel.org>
 
-On Thu, Oct 17, 2024, at 17:09, Nathan Chancellor wrote:
-> -Wenum-enum-conversion was strengthened in clang-19 to warn for C, which
-> caused the kernel to move it to W=1 in commit 75b5ab134bb5 ("kbuild:
-> Move -Wenum-{compare-conditional,enum-conversion} into W=1") because
-> there were numerous instances that would break builds with -Werror.
-> Unfortunately, this is not a full solution, as more and more developers,
-> subsystems, and distributors are building with W=1 as well, so they
-> continue to see the numerous instances of this warning.
->
-> Since the move to W=1, there have not been many new instances that have
-> appeared through various build reports and the ones that have appeared
-> seem to be following similar existing patterns, suggesting that most
-> instances of this warning will not be real issues. The only alternatives
-> for silencing this warning are adding casts (which is generally seen as
-> an ugly practice) or refactoring the enums to macro defines or a unified
-> enum (which may be undesirable because of type safety in other parts of
-> the code).
->
-> Move the warning to W=2, where warnings that occur frequently but may be
-> relevant should reside.
->
-> Cc: stable@vger.kernel.org
-> Fixes: 75b5ab134bb5 ("kbuild: Move 
-> -Wenum-{compare-conditional,enum-conversion} into W=1")
-> Link: https://lore.kernel.org/ZwRA9SOcOjjLJcpi@google.com/
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+On Wed, Oct 16, 2024 at 02:20:15PM -0700, Stephen Boyd wrote:
+> Some configurations want to enable CONFIG_KUNIT without enabling
+> CONFIG_OF_OVERLAY. The kunit overlay code already skips if
+> CONFIG_OF_OVERLAY isn't enabled, so this select here isn't really doing
+> anything besides making it easier to run the tests without them
+> skipping. Remove the select and move the config setting to the
+> drivers/of/.kunitconfig file so that the overlay tests can be run with
+> or without CONFIG_OF_OVERLAY set to test either behavior.
+> 
+> Fixes: 5c9dd72d8385 ("of: Add a KUnit test for overlays and test managed APIs")
 
-Acked-by: Arnd Bergmann <arnd@arndb.de>
+Doesn't really seem like a fix. Does this need to go into 6.12?
+
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> ---
+>  drivers/of/.kunitconfig   | 1 +
+>  drivers/of/Kconfig        | 1 -
+>  drivers/of/overlay_test.c | 2 ++
+>  3 files changed, 3 insertions(+), 1 deletion(-)
