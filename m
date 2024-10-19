@@ -1,60 +1,60 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D4E26AFB
-	for <patches@lists.linux.dev>; Sat, 19 Oct 2024 15:17:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCDC645
+	for <patches@lists.linux.dev>; Sat, 19 Oct 2024 18:53:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729351057; cv=none; b=UewoVc61xBaqHwUQY1aGgHZI+gWmVgGN3w3ekxIeyjXVO8vU6FTsFBKwBpgL2VgZdUxn1TTtKQ0kvNjHm3iqtccNcDBsXzUAtbXi//EUHFd1WCF/jJjukCpkUsZxANsP8gtRX7YRX/iYE8LwPuUFcc1utOx3FZKv3B0/4a49YiI=
+	t=1729364002; cv=none; b=n77LVFEY4DKUZyeKk8auAmfamsSro1puuNuQaVNQ+v87UYZdCygrIBipOHlFFP5WkIRwJ7tyB6o3dS6H97HpUr8X+xrmz9o6XANUg4yITgYnDdPELaRkqwUPT6vGtGFi+VBq/uRjf/Sz3PWTWx62Oq3LPWUGKUrLZOY5y9AcfnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729351057; c=relaxed/simple;
-	bh=qlYxZ/mutiFyZglQTOt+FaPUID/Hkn0Wn85xFGqh1rc=;
+	s=arc-20240116; t=1729364002; c=relaxed/simple;
+	bh=1PhY70V8GOUc+TLmLYSJrrntcDdtq1eG3y2frVI08Uo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uGkn2Hbj2BWjuv0LlETmMm49Re6mwZLj428bzFajnVcxnf5K3yGjj2zl8TzTuVqCjSEOcSs9hoPQOEIeZBWaFWbdUY0IzALLtN2ghFCfiqzrqljyG96L/y7w9BGRqRBJzVxEJYXauw/FWeSy5+sX0WKGLkmEa37TqQR4iGzQ56o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cP2zdPrI; arc=none smtp.client-ip=209.85.210.180
+	 In-Reply-To:Content-Type; b=Yn3nqX9iBONgK30ehaEvu+DR88hLHrraM/Y1DFEHvQoDNBRP65VV7f0ni1rsXtOUpApWvwQZUC3dqcMDc5dZFEPN0JMx/cWOhbWW/5TkYyVFuE9s282Loe6Vx7qJ0pf61Ov/w/eYTQIu48R6/uscoQXnRRENiN8Uqv46IdDPd/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CAtQRQ7O; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cP2zdPrI"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-71e983487a1so2025066b3a.2
-        for <patches@lists.linux.dev>; Sat, 19 Oct 2024 08:17:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CAtQRQ7O"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-7ea784aea63so1578978a12.3
+        for <patches@lists.linux.dev>; Sat, 19 Oct 2024 11:53:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729351054; x=1729955854; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1729363999; x=1729968799; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=AaKPVphA6VOFY1TbMrOg1qFr2iQWaxZBWL1Sz95ALok=;
-        b=cP2zdPrI16SBCfk6BExbgoTc5GPakrx86OEOXrb+KNcBGwr3FG+r322jO54t6Eio0t
-         7UjrTxp/SrhotFgDB6sW2lCBIHtUrxoRwciD4oPI3W83FL2w5AcI7lReEDOBitGuJXip
-         P5Pa2zrHWcE+miUJK+xZDyYj5JOCJOKhidmccsJz5Lr+2vyGLVqlAGCttQJ5VXid/krO
-         +DSZkiOzcnqEvPKaaGy/P+6Wuk7PucGzZRqdnVSXNRJg8tqon5ZD0/L96HTO3S2zqE55
-         q1SpV/cDz8xN0JtewdR5H/5kfhdONgdTs7Od0LoOhhvteVinxr1CdQHK3tfVw1iSCGOB
-         +kPw==
+        bh=DjpGM9T6CWreh9wg2H5SjyS9PX1h20Do3Kr4hgqqd4g=;
+        b=CAtQRQ7OmYsjs+QAgiBGem+C5Do00F4AjfdFg3PkxAck7lrXwq7xEi1m/8ic92DyW4
+         M6Zx1sebWpvZUw9pjYYhksDN2MiSZfws+aaxYtgrsiPobCu8LUVdjPSuJ++z4OTKM2Yf
+         MtUf2yXS40MHicOOMrT9o91cMyDAtCLc5mQJ7FkOJ+WZNMi8s4rvmhH2DNyi+2kBAkjC
+         lwK5E3M+LT+L/8xges9TXdTEseO51PuVR5sn94UDtdfMsy1crcW+pikU+EACdKdgvF25
+         yJSjhdYHxcOs9+BwtXyLbdLIkoT21dMNkWW9qdDPIML0ZFhXqZ9yYwY7dk3B0CLTy3F2
+         hqbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729351054; x=1729955854;
+        d=1e100.net; s=20230601; t=1729363999; x=1729968799;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AaKPVphA6VOFY1TbMrOg1qFr2iQWaxZBWL1Sz95ALok=;
-        b=pLif7wLiL4/p+cyKsrHMHHnV5Plc9bb2ayxm5NM463zaVLMPBUjmq+3Bf4QTc1rRHq
-         lhu8PtRaxJX/mx6ouV/yaxAxzvNaKV+D19wC1cmVJaoSvJaCl9EeyhmjryC4lu7HHzI8
-         2A9Qzk4xiY9+8DV/UIzEsvmznvMC/z+OH7PkzyvCn8fJTzWeph9yNgc/gzcSofgZi/Ta
-         ECKRlauqMvV0po5WbDv/RST+tLRflwf+b8WvndLGSBZY8CaEinPclCDq1RB3IiwfAiXY
-         F/VMZ0pXPUsKgKrP6Jh7+YKfFeSbyyN8MhtPvyY6/uTu6n8I1kOXlBEkE1wnhREQ50LM
-         Ac5g==
-X-Gm-Message-State: AOJu0YxsORYfNVzDKurokfys4YCRyj8ry2dmg1UI2Ujg/FfsaK07Nfuh
-	fI6LKlOAO7OMODLhp6HXg50lp0E3RCmA/8A0DGnhs/oYR7W67sw6
-X-Google-Smtp-Source: AGHT+IGVmd48wCb4OfOnkBW4/lrP8cPYon+iJQwsqlHmHRPSx7svPiI5fzsxZphXuazsL46X/CdWFA==
-X-Received: by 2002:a05:6a00:1913:b0:71e:4c01:b3da with SMTP id d2e1a72fcca58-71ea31d28dfmr8098510b3a.5.1729351054222;
-        Sat, 19 Oct 2024 08:17:34 -0700 (PDT)
+        bh=DjpGM9T6CWreh9wg2H5SjyS9PX1h20Do3Kr4hgqqd4g=;
+        b=klIdzkC/XYnECjtMyWri/BucIKtSs1BnlQna1gXAISW/3uba7PemseKMxx+cxDvSD8
+         9+nKFSNsQDZJ3HNdQx8hq5JJYLNbSePaZ+xit/2jnaA2g3P8IF46BbaN7eqJPW4I+2re
+         6sDRQTsh+0GsUF4AuuhjVKd2/4CMtnrfSLNkPFguRwLj5+DS+pvIRrl0qRGq4CQjsPIK
+         6EOpt5AAkSI7wSWAt3tl21Uhfz/qQLmTVQGop6Bd8PHjqlQgOpMevTCOMNutFsUGvgh6
+         U57aMIvJYCWuecECI/IsCXdcj/tZ69cYvYD+2c9LVtoJOVBgUQqAYmVj/jz1lR6D7+71
+         gMnQ==
+X-Gm-Message-State: AOJu0YyLKbK4RcqLOWXZEt8ZQ1k8e0RqXWku9AQsZDKRhkh1ql45qHCe
+	EaAy0pyPyJijlKAb9tJqU/PerdHppA12qL+TceELbIY9yEKegvDS
+X-Google-Smtp-Source: AGHT+IGhomoq7YA3Lcbm4z7G96mwgHXtfACfJ6DXFPiHy6cItNFe+jAxkrGIRMlYaoMY24koRAgO9g==
+X-Received: by 2002:a05:6a21:670f:b0:1d8:ae90:c647 with SMTP id adf61e73a8af0-1d92c5abfd9mr9249286637.42.1729363998312;
+        Sat, 19 Oct 2024 11:53:18 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7eacc2a5c9esm2992255a12.94.2024.10.19.08.17.32
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71ec13d7525sm65086b3a.103.2024.10.19.11.53.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 19 Oct 2024 08:17:33 -0700 (PDT)
+        Sat, 19 Oct 2024 11:53:17 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <f035e6ef-32e1-45a2-962e-dc27fa54271b@roeck-us.net>
-Date: Sat, 19 Oct 2024 08:17:31 -0700
+Message-ID: <f46542ec-bb43-4a30-900b-d3c9d1763753@roeck-us.net>
+Date: Sat, 19 Oct 2024 11:53:15 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,15 +62,17 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 000/791] 6.1.113-rc2 review
+Subject: Re: [PATCH 5.15 000/691] 5.15.168-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
  patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
  jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
  srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
- allen.lkml@gmail.com, broonie@kernel.org
-References: <20241015112501.498328041@linuxfoundation.org>
+ allen.lkml@gmail.com, broonie@kernel.org,
+ Christophe Leroy <christophe.leroy@csgroup.eu>,
+ Michael Ellerman <mpe@ellerman.id.au>
+References: <20241015112440.309539031@linuxfoundation.org>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -116,13 +118,15 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <20241015112501.498328041@linuxfoundation.org>
+In-Reply-To: <20241015112440.309539031@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/15/24 04:26, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.113 release.
-> There are 791 patches in this series, all will be posted as a response
+Hi,
+
+On 10/15/24 04:19, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.168 release.
+> There are 691 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -130,51 +134,75 @@ On 10/15/24 04:26, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 ...
-
-> Nicholas Piggin <npiggin@gmail.com>
->      powerpc/64: Option to build big-endian with ELFv2 ABI
+> Christophe Leroy <christophe.leroy@csgroup.eu>
+>      powerpc/mm: Fix boot warning with hugepages and CONFIG_DEBUG_VIRTUAL
 > 
 
-With this patch in the tree, trying to build ppc:allmodconfig
-with gcc version 13.3 and binutils version 2.42 results in:
+This patch triggers a crash when trying to boot various powerpc images.
 
-Error log:
-/tmp/cccUl45i.s: Assembler messages:
-/tmp/cccUl45i.s: Error: .size expression for gcm_init_p8 does not evaluate to a constant
+------------[ cut here ]------------
+kernel BUG at include/linux/scatterlist.h:143!
+Oops: Exception in kernel mode, sig: 5 [#1]
+BE PAGE_SIZE=4K MMU=Hash PREEMPT SMP NR_CPUS=32 NUMA PowerMac
+Modules linked in:
+CPU: 0 PID: 25 Comm: cryptomgr_test Not tainted 5.15.167-00018-g00ef1de6d646 #1
+NIP:  c00000000082c6c0 LR: c00000000082f460 CTR: 0000000000000000
+REGS: c00000000962b540 TRAP: 0700   Not tainted  (5.15.167-00018-g00ef1de6d646)
+MSR:  8000000000028032 <SF,EE,IR,DR,RI>  CR: 84000440  XER: 20000000
+IRQMASK: 0
+GPR00: c00000000082f44c c00000000962b7e0 c000000001ef6c00 c00000000962b9e8
+GPR04: c0000000096e2000 0000000000000008 c00000000962ba48 0000000000000200
+GPR08: 000000003e2a5000 c000000000000000 0000000000000000 0000000000000001
+GPR12: 0000000024000440 c000000002b62000 c00000000011e6b0 c0000000096c8e40
+GPR16: 0000000000000000 c00000000148c300 c00000000148c2f0 0000000000000008
+GPR20: 0000000000000040 c00000000147ddf8 0000000000000040 c00000000956f4a8
+GPR24: c000000002a23c98 c000000001417d18 c0000000096e2000 0000000000000001
+GPR28: 0000000000000008 c00000000962b9e8 00000000000096e2 c0000000096e2000
+NIP [c00000000082c6c0] .sg_set_buf+0x50/0x350
+LR [c00000000082f460] .test_akcipher_one+0x280/0x860
+Call Trace:
+[c00000000962b7e0] [c00000000956f4f3] 0xc00000000956f4f3 (unreliable)
+[c00000000962b890] [c00000000082f44c] .test_akcipher_one+0x26c/0x860
+[c00000000962bad0] [c00000000082fb14] .alg_test_akcipher+0xd4/0x150
+[c00000000962bb70] [c00000000082bcac] .alg_test+0x15c/0x640
+[c00000000962bcd0] [c000000000829850] .cryptomgr_test+0x40/0x70
+[c00000000962bd50] [c00000000011e880] .kthread+0x1d0/0x1e0
+[c00000000962be10] [c00000000000cc60] .ret_from_kernel_thread+0x58/0x60
+Instruction dump:
+fbe1fff8 6129ffff fb61ffd8 7c244840 7c9f2378 91810008 7c7d1b78 f821ff51
+7cbc2b78 789ea402 41810078 3b600001 <0b1b0000> 3d220007 7bde3664 39492f20
+---[ end trace fdddc57d958f029f ]---
 
-and many other similar messages. The problem affects various drivers in
-drivers/crypto/vmx/. The problem afects all configurations with CRYPTO_DEV_VMX_ENCRYPT
-enabled.
+The problem affects v5.15.168 and v5.10.227. Reverting the offending patch
+fixes the problem in both branches.
 
-Reverting the patch doesn't work because this patch is part of a larger series. However,
-I found that applying upstream commit 505ea33089dc ("powerpc/64: Add big-endian ELFv2
-flavour to crypto VMX asm generation") fixes the problem.
+My test images do not have hugepages or CONFIG_DEBUG_VIRTUAL enabled.
+
+Bisect log is attached. I copied the author and Michael for comments.
 
 Guenter
 
 ---
-# bad: [54d90d17e8cee20b163d395829162cec92b583f4] Linux 6.1.113
-# good: [aa4cd140bba57b7064b4c7a7141bebd336d32087] Linux 6.1.112
-git bisect start 'HEAD' 'v6.1.112'
-# bad: [2bf4c101d7c99483b8b15a0c8f881e3f399f7e18] net: ethernet: lantiq_etop: fix memory disclosure
-git bisect bad 2bf4c101d7c99483b8b15a0c8f881e3f399f7e18
-# good: [f88f1145e134fe1da3966d86adb5d813ce2d7c1a] PCI/PM: Increase wait time after resume
-git bisect good f88f1145e134fe1da3966d86adb5d813ce2d7c1a
-# good: [12aea49495d99bebf185275e7ff33deee4d849a9] fs: Create a generic is_dot_dotdot() utility
-git bisect good 12aea49495d99bebf185275e7ff33deee4d849a9
-# bad: [f8a29300150e2b18405ff62cc4ed1554bc9c431d] usb: yurex: Replace snprintf() with the safer scnprintf() variant
-git bisect bad f8a29300150e2b18405ff62cc4ed1554bc9c431d
-# good: [5410d1529047dd32039a2796ea9bd955c6f38b1d] ACPI: resource: Add another DMI match for the TongFang GMxXGxx
-git bisect good 5410d1529047dd32039a2796ea9bd955c6f38b1d
-# good: [85868884298a81078f5be51be75ad46c14c6e831] hwrng: cctrng - Add missing clk_disable_unprepare in cctrng_resume
-git bisect good 85868884298a81078f5be51be75ad46c14c6e831
-# good: [41fbdd452460341399757b4db3cd12a67951fb83] EDAC/igen6: Fix conversion of system address to physical memory address
-git bisect good 41fbdd452460341399757b4db3cd12a67951fb83
-# good: [b986ec200f9fb5c4d863d789e28f45cd2f253656] soc: versatile: realview: fix soc_dev leak during device remove
-git bisect good b986ec200f9fb5c4d863d789e28f45cd2f253656
-# bad: [9eb76d5168c10a46647df5514acc863039a44885] powerpc/64: Add support to build with prefixed instructions
-git bisect bad 9eb76d5168c10a46647df5514acc863039a44885
-# bad: [8b9f7d8d71bf9b91ad4cb1ff589d7cdf4bc0673a] powerpc/64: Option to build big-endian with ELFv2 ABI
-git bisect bad 8b9f7d8d71bf9b91ad4cb1ff589d7cdf4bc0673a
-# first bad commit: [8b9f7d8d71bf9b91ad4cb1ff589d7cdf4bc0673a] powerpc/64: Option to build big-endian with ELFv2 ABI
+# bad: [584a40a22cb9bf5a03135869f11c3106b6200453] Linux 5.15.168
+# good: [3a5928702e7120f83f703fd566082bfb59f1a57e] Linux 5.15.167
+git bisect start 'HEAD' 'v5.15.167'
+# bad: [62356668d855deb075a93fdf9f26888c4f80b7d6] nfs: fix memory leak in error path of nfs4_do_reclaim
+git bisect bad 62356668d855deb075a93fdf9f26888c4f80b7d6
+# bad: [791b3d66d2ef3a64de517651d606afb9521b5d39] drm/bridge: lontium-lt8912b: Validate mode in drm_bridge_funcs::mode_valid()
+git bisect bad 791b3d66d2ef3a64de517651d606afb9521b5d39
+# bad: [4318608dc28ef184158b4045896740716bea23f0] inet: inet_defrag: prevent sk release while still in use
+git bisect bad 4318608dc28ef184158b4045896740716bea23f0
+# bad: [25cf67f8ff2ff04607b556fe4d8d4a402b133d29] ice: fix accounting for filters shared by multiple VSIs
+git bisect bad 25cf67f8ff2ff04607b556fe4d8d4a402b133d29
+# bad: [10c111760128351b2b5ce72bb5345b0e0c89dc36] Input: synaptics - enable SMBus for HP Elitebook 840 G2
+git bisect bad 10c111760128351b2b5ce72bb5345b0e0c89dc36
+# good: [020f5c53c17f66c0a8f2d37dad27ace301b8d8a1] ocfs2: reserve space for inline xattr before attaching reflink tree
+git bisect good 020f5c53c17f66c0a8f2d37dad27ace301b8d8a1
+# good: [d71c5e8cbcf9ced0765f99fd669da2610088e08e] usbnet: ipheth: fix carrier detection in modes 1 and 4
+git bisect good d71c5e8cbcf9ced0765f99fd669da2610088e08e
+# bad: [00ef1de6d64654e069849e79a9878318ad37a093] powerpc/mm: Fix boot warning with hugepages and CONFIG_DEBUG_VIRTUAL
+git bisect bad 00ef1de6d64654e069849e79a9878318ad37a093
+# good: [be4e5f5bdc19cbb6568509d1af1d94cc82537a95] net: phy: vitesse: repair vsc73xx autonegotiation
+git bisect good be4e5f5bdc19cbb6568509d1af1d94cc82537a95
+# first bad commit: [00ef1de6d64654e069849e79a9878318ad37a093] powerpc/mm: Fix boot warning with hugepages and CONFIG_DEBUG_VIRTUAL
 
