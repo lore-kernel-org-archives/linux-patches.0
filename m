@@ -1,132 +1,113 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6931D198E71
-	for <patches@lists.linux.dev>; Mon, 21 Oct 2024 17:10:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB6F1C330C
+	for <patches@lists.linux.dev>; Mon, 21 Oct 2024 17:12:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729530611; cv=none; b=qXtu0FrOXTIMQHyJ42O23LoFM1zp2s/q/Yiy0RFaqQSQkDF0njfYrYx/6Cq6pUZvjmkQTPcgZKfnRYsY2TsO9NDkICreltKag+PawxgRhGry/23mqdilT35tJ2i15fdyLOS7K5JTm68d/puXA7l5HO+5o+4q1z4fYdl5z+C6z8Q=
+	t=1729530747; cv=none; b=Oop2qoR/bJyHoFd9VqPMQ+LtEmcJl4JpoWl8OPFUDkvIWvk2wYfOpm7ZPziqW6vchuY0Okw5gK8BI7hozn1TAMtoV5O4p6LgcHSE02hP995S6mRC5ySHu7ZzeOTDhL/kkAEdbA5EKf6OEkkX54ZGMBo0Pb/wYWPqo4VK6o/mS5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729530611; c=relaxed/simple;
-	bh=0Ky3ry4ktAXzMeSeT0I7OGPp/mgeOZjYi1TiOp84HlM=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=B+CncHapqq0uhq2E+HDqDpiGinEQuX0fOWSgvuC7zqReHNdgM0/cEJbiuO5+NAFIH5VvNXiceMthV56+wPl/BDb+68HwHjdznHutKmdtiTgeLwdQ3CFWiW8gBbpXsYCKOXGdPZa8P+rapMpfYEcL/BtNeZZfUwQu5Jy+uIhguD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--surenb.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=L1Lur3Gh; arc=none smtp.client-ip=209.85.128.202
+	s=arc-20240116; t=1729530747; c=relaxed/simple;
+	bh=SCTFdrbfUBXrIcqhRwUXd+X5Tdul2fIzg9oC8CWTHCI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KQe6jUGadP8O/5vLsT+JZz582T+05EQOVaiM1qGwVPvMLWx9qCRljmChcBmueekq6PPhTQG0XGacr3I7LcI2frXv0vUgrq7VIo3tH5fKPHQANSnpO5AFP4+4ygWAWkOtp3aISE/VZpVDTyvAnlFADjfclX5f61thww4aE+niW+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=eMchxw35; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--surenb.bounces.google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="L1Lur3Gh"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6e3497c8eb0so53428047b3.0
-        for <patches@lists.linux.dev>; Mon, 21 Oct 2024 10:10:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eMchxw35"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-4608dddaa35so18661cf.0
+        for <patches@lists.linux.dev>; Mon, 21 Oct 2024 10:12:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1729530608; x=1730135408; darn=lists.linux.dev;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hyrIf92icdv4C2H2apolpF3+XQ094SRto0t5Nmu1wWk=;
-        b=L1Lur3GhmYGfI0OtIxJpA1mFDn6EwLwFSU980GxKbrwOgOU7ilD+FtBM7ib1cW72OK
-         pQFPH1p7gyS45STfg4rhw6xAro9RhpBT0RWxRrHrHtw1gmdkBESWS+dewTE3bg0I19Ma
-         26T/7JcVI1IOxVpwy+PwsRVvLQ7YtyFDgQVAGVK8LynsMinBzNFI7fwRFVdwKvimDzhy
-         XRopfPXAZtjUknLu54/p4QVDGSb9MVhjPnH8NKm2hV2ZZ/iCdPMQhuHx6FF1tIu94PJ9
-         KccsKNevIHI0hrwea1Lsi17WKV+KNAGTZgdBJ8+hm5m7SI5I79MeeXGsjFYMNoPm92ZS
-         XJLQ==
+        d=google.com; s=20230601; t=1729530744; x=1730135544; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gwNJFQj9wVXQQyM3LpHrEo68BHNeskwH6JzAGyjqzms=;
+        b=eMchxw35he1vWfBfk5+8NA7jkNPIOgBuEq1kAiumzVeL+SbIohD0WaSTS9zAgcJM2y
+         oRAfaDtLGjA0PaqJCdVaRG3UNvc0Mxa+KZKFZe4/Jru6xtgIXyubslwqawywfdhb+gTa
+         oyxPDULAz48XKt4aRXDfqC0LmH9T5Uobv6jq413I8MJWr/nCdAquuqP+joDQ6vIM5MBr
+         iIkmKMnHbQYqJzhrdj1dxUm9qtcFGwag7eP24nCQnUG1Y8Y2mIIdSmp+/bqPxSSOJyxZ
+         LlGgxx5TWPi+YAx6LePgv3GsX5wBYx8J0T0dTjmuzncoJJo/dmq9Iqr2SzoWmAJeEGkx
+         469A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729530608; x=1730135408;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hyrIf92icdv4C2H2apolpF3+XQ094SRto0t5Nmu1wWk=;
-        b=vWEuQxgHjmb4gOQihQe/khTDE84U1JLwQ+OLeIADNBE9mi8QAlMoidmP9I+oHVc6E3
-         OV7YxU3joCdEGmQGYhDtt24/8RYDuy9ny8TVD6fbpcdDnzonWSLZc05IVFGLpKBF9/zU
-         /mmoHTF0ZWrBV4qZZaJ5GfqfhFgAkwQKCtghTY0EYYWbGsYLswUrcxneEQKM6yWjUfVW
-         GknpIqUHQuBuiz5cqYOxhq2wDic3KVN5TFZLw57FAo8MtmunC7F3nVwIywCfHNvELrrD
-         k6/bT5rb+v8YaPQKF0DABaabE42eiCsLZcCkHB3E6cwDH70PHYcVh2A/yf1p6eXXW87A
-         YcOA==
-X-Forwarded-Encrypted: i=1; AJvYcCXvpqpN5R2JMue5Qj10Q09KANDfno+j+oZ4P5xXEN3Ji5JzwMQIkoprJBBkceVVU/AGPF96g2mS@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy0ocArG3k75HymleUKfTU+sMRSvqrCsbpts7TQIi32YmSvDdha
-	LS9WEcW/oneVpVMlZDHKklTlFLYZ1UkWG7ceQqaQ46025Ixz+8tpeqb5l3McB/J9IjYpE261mSy
-	w4g==
-X-Google-Smtp-Source: AGHT+IH4ff05WX++Qh7Giyaz3E0EwBe0lKlsLONpmg8aOIOXjzTlun11Cl2tFDQ8IAnXNo6FMDRe62BnuSo=
-X-Received: from surenb-desktop.mtv.corp.google.com ([2a00:79e0:2e3f:8:cfa8:1167:32cd:5d81])
- (user=surenb job=sendgmr) by 2002:a05:690c:368d:b0:6d9:d865:46c7 with SMTP id
- 00721157ae682-6e7d4812d70mr30257b3.2.1729530608363; Mon, 21 Oct 2024 10:10:08
- -0700 (PDT)
-Date: Mon, 21 Oct 2024 10:10:03 -0700
-In-Reply-To: <20241021171003.2907935-1-surenb@google.com>
+        d=1e100.net; s=20230601; t=1729530744; x=1730135544;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gwNJFQj9wVXQQyM3LpHrEo68BHNeskwH6JzAGyjqzms=;
+        b=lFI/n0qrDP/jky0Evm1I2WWGzDx+CSSvNqr//W7hXRXdciJCosppdzxTcKJYck0ymI
+         ccm0wCD4h5a0I371hF2PTuSqM39FqykNoRCTuyOrBaoVTwPfazAg8CgIxyey+QqqwVD8
+         fe8CaeIOG9jDGyTFCIQ/MeNv4xQzFxQrXZFo0evSFr3wKywwmgUDOOoRnoJzx/5V9KxQ
+         9wed7wiaQ3CRuw5NpQajm8GgE2/8x3CnbK5kKGbOXyeGdpM9S7OSC90xV6JXI/EtQxox
+         dBy+IvSibt4fjrnM63bJCTCnIF+sRh+vlg86DrZSxJaHbg9VekGx6B6MNJe6ytN0XN6w
+         uf0g==
+X-Forwarded-Encrypted: i=1; AJvYcCXBypICykq5LKLCykgYxA3X7nprZC8rSuZ7SyKvVieBZcH1QysiB4h5IQVBoLsj38IXI8uHW14/@lists.linux.dev
+X-Gm-Message-State: AOJu0YzmH5HoJSRPhynleTc+81zMBxcWZ+Xw0OMrJR0yBTAzgUdgVN64
+	IV3qBtSPArLoKeXsl4Fpw9+tSnO0d5CvMcsS09nqmaEfy8WWRzFVN3tZOwa8gE9AtM8ekrWHgNK
+	RvoS7ePJv0yV0cNfBeJRyr3aSJCv/ENayTYJ/
+X-Google-Smtp-Source: AGHT+IEX1w5oqvDfujpUByKRchWeThxcAKNpbwDI3AtAJ2PzyzefCjV0Et+8rfWN9SPjgyE6zHw/nVLVcU2oYC5446c=
+X-Received: by 2002:a05:622a:5b97:b0:460:371b:bfd9 with SMTP id
+ d75a77b69052e-460be4194femr5020471cf.5.1729530744180; Mon, 21 Oct 2024
+ 10:12:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20241021171003.2907935-1-surenb@google.com>
-X-Mailer: git-send-email 2.47.0.105.g07ac214952-goog
-Message-ID: <20241021171003.2907935-2-surenb@google.com>
-Subject: [PATCH 6.11.y 2/2] lib: alloc_tag_module_unload must wait for pending
- kfree_rcu calls
+MIME-Version: 1.0
+References: <20241021102259.324175287@linuxfoundation.org> <20241021102300.282974151@linuxfoundation.org>
+ <a4163f51-cc1a-0848-d0fd-e9b94dafc306@candelatech.com> <ZxZ_uX0e1iEKZMk5@pc636>
+ <2024102130-tweet-wheat-0e55@gregkh> <fb0cd50e-5525-4521-aa1d-f919ae19f77d@suse.cz>
+ <CAJuCfpFU1tLc_wvAGu1T3WximLFRARVxBtJTm0bOfgqt_MnYyA@mail.gmail.com>
+In-Reply-To: <CAJuCfpFU1tLc_wvAGu1T3WximLFRARVxBtJTm0bOfgqt_MnYyA@mail.gmail.com>
 From: Suren Baghdasaryan <surenb@google.com>
-To: gregkh@linuxfoundation.org
-Cc: akpm@linux-foundation.org, fw@strlen.de, urezki@gmail.com, vbabka@suse.cz, 
-	greearb@candelatech.com, kent.overstreet@linux.dev, surenb@google.com, 
-	stable@vger.kernel.org, patches@lists.linux.dev
+Date: Mon, 21 Oct 2024 10:12:13 -0700
+Message-ID: <CAJuCfpFzgYvCTOWNDq55tG+xPVdJ5Rc2DjH6Ltzrc7--U4Kv5Q@mail.gmail.com>
+Subject: Re: [PATCH 6.11 024/135] lib: alloc_tag_module_unload must wait for
+ pending kfree_rcu calls
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Uladzislau Rezki <urezki@gmail.com>, 
+	Ben Greear <greearb@candelatech.com>, stable@vger.kernel.org, patches@lists.linux.dev, 
+	Florian Westphal <fw@strlen.de>, Kent Overstreet <kent.overstreet@linux.dev>, 
+	Andrew Morton <akpm@linux-foundation.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Florian Westphal <fw@strlen.de>
+On Mon, Oct 21, 2024 at 10:06=E2=80=AFAM Suren Baghdasaryan <surenb@google.=
+com> wrote:
+>
+> On Mon, Oct 21, 2024 at 10:04=E2=80=AFAM Vlastimil Babka <vbabka@suse.cz>=
+ wrote:
+> >
+> > On 10/21/24 18:57, Greg Kroah-Hartman wrote:
+> > > On Mon, Oct 21, 2024 at 06:22:17PM +0200, Uladzislau Rezki wrote:
+> > >> On Mon, Oct 21, 2024 at 09:16:43AM -0700, Ben Greear wrote:
+> > >> > On 10/21/24 03:23, Greg Kroah-Hartman wrote:
+> > >> > > 6.11-stable review patch.  If anyone has any objections, please =
+let me know.
+> > >> >
+> > >> > This won't compile in my 6.11 tree (as of last week), I think it n=
+eeds more
+> > >> > upstream patches and/or a different work-around.
+> > >> >
+> > >> > Possibly that has already been backported into 6.11 stable and I j=
+ust haven't
+> > >> > seen it yet.
+> > >> >
+> > >> Right. The kvfree_rcu_barrier() will appear starting from 6.12 kerne=
+l.
+> > >
+> > > Ick, how is it building on all of my tests?  What config option am I
+> > > missing?
+> >
+> > Most likely CONFIG_MEM_ALLOC_PROFILING
+> > Depends on: PROC_FS [=3Dy] && !DEBUG_FORCE_WEAK_PER_CPU [=3Dn]
+>
+> Yes, it's disabled by default.
 
-From: Florian Westphal <fw@strlen.de>
+6.11 backports including prerequisite patch are posted at
+https://lore.kernel.org/all/20241021171003.2907935-1-surenb@google.com/
 
-commit dc783ba4b9df3fb3e76e968b2cbeb9960069263c upstream.
-
-Ben Greear reports following splat:
- ------------[ cut here ]------------
- net/netfilter/nf_nat_core.c:1114 module nf_nat func:nf_nat_register_fn has 256 allocated at module unload
- WARNING: CPU: 1 PID: 10421 at lib/alloc_tag.c:168 alloc_tag_module_unload+0x22b/0x3f0
- Modules linked in: nf_nat(-) btrfs ufs qnx4 hfsplus hfs minix vfat msdos fat
-...
- Hardware name: Default string Default string/SKYBAY, BIOS 5.12 08/04/2020
- RIP: 0010:alloc_tag_module_unload+0x22b/0x3f0
-  codetag_unload_module+0x19b/0x2a0
-  ? codetag_load_module+0x80/0x80
-
-nf_nat module exit calls kfree_rcu on those addresses, but the free
-operation is likely still pending by the time alloc_tag checks for leaks.
-
-Wait for outstanding kfree_rcu operations to complete before checking
-resolves this warning.
-
-Reproducer:
-unshare -n iptables-nft -t nat -A PREROUTING -p tcp
-grep nf_nat /proc/allocinfo # will list 4 allocations
-rmmod nft_chain_nat
-rmmod nf_nat                # will WARN.
-
-Link: https://lkml.kernel.org/r/20241007205236.11847-1-fw@strlen.de
-Fixes: a473573964e5 ("lib: code tagging module support")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reported-by: Ben Greear <greearb@candelatech.com>
-Closes: https://lore.kernel.org/netdev/bdaaef9d-4364-4171-b82b-bcfc12e207eb@candelatech.com/
-Cc: Uladzislau Rezki <urezki@gmail.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
----
- lib/codetag.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/lib/codetag.c b/lib/codetag.c
-index afa8a2d4f317..d1fbbb7c2ec3 100644
---- a/lib/codetag.c
-+++ b/lib/codetag.c
-@@ -228,6 +228,9 @@ bool codetag_unload_module(struct module *mod)
- 	if (!mod)
- 		return true;
- 
-+	/* await any module's kfree_rcu() operations to complete */
-+	kvfree_rcu_barrier();
-+
- 	mutex_lock(&codetag_lock);
- 	list_for_each_entry(cttype, &codetag_types, link) {
- 		struct codetag_module *found = NULL;
--- 
-2.47.0.105.g07ac214952-goog
-
+>
+> >
