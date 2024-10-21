@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587DC1F4710;
-	Mon, 21 Oct 2024 10:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2095D1F9A80;
+	Mon, 21 Oct 2024 10:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507870; cv=none; b=U6UNa5TdjyldTWQHEQhBr1yvQASn+RVHCkRlJ+Vaso2aIdTx9FuN35S5d3Fys3jEHekTs+MSdYbLykWSHNjXSBn9qJs899WF+kBpThgs8Rj7RcL4wsclQqA7fRXj3GKjFYNArZUMf4FuqxDU0FX0SXoZbtmPSyhUCSjpSt5QxNk=
+	t=1729507873; cv=none; b=UA/bdOVSSgDMAXJBiPpdqvQdFZaMuQ5ejsGoI72NR0u9tL8cN+sgbnHxJ+GHN/n/s6vFcmy78YIinnTNrlQWkuEmFB7m4+kG5chAEmucz8lFyjsgazlnNOo//ws1jIDRAlgahTxpAQmBxWjaj/1BhyARD0kWzNpXhV4/zqpAyas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507870; c=relaxed/simple;
-	bh=H/Fjx4cboTkM80k2KvLenuZReGdEHDSRvHj1HootnT0=;
+	s=arc-20240116; t=1729507873; c=relaxed/simple;
+	bh=7dYKpQZhV/cWmKGC9JP8OvMxdVKa/FM0rLF7OKJg0+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZHSG9xz4pFYLflKtmiPdc0IDRtB3YV1uaJaB5pJz33sgymqHawRx3olzj1DtvWzbkA1/A+JNyNjVk6ogJEX0+Y8PEV6R8Yl0xBYb4VMsbJIK7C6N/qmM7U2JeE4tg/6Ppz7CLcQWaKcLNMGVsH13pvPoV7+cbfiH3Aue5kNYJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6SOOxr4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P3OykOfuo3ENgBEf0gXL7rWCcti1BtumlneA3nmn9qxItq3CEvUg0zuN5dmA8GwYEgQIgKoovtHus2lTFlwEne/OsffjyqK7ztLJLBrGjzAkxH6++1wmhHoIezWLo5eKeeI1Uu+oOIYtGS9GNYpQxJy37HiYVsuG66spVainAwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1X/Sbjji; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6SOOxr4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D3EC4CEE6;
-	Mon, 21 Oct 2024 10:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1X/Sbjji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95AA8C4CEE7;
+	Mon, 21 Oct 2024 10:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507870;
-	bh=H/Fjx4cboTkM80k2KvLenuZReGdEHDSRvHj1HootnT0=;
+	s=korg; t=1729507873;
+	bh=7dYKpQZhV/cWmKGC9JP8OvMxdVKa/FM0rLF7OKJg0+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S6SOOxr4/6hMMPLBodQ/uYn8MgLFPWfydv6d3kGWXbdlTUOxZ4dxsPLGn7oIL4Tnf
-	 ir6H8RXLoRP/5jM8idZ3R5wmDhzQHm8CtoyvN4OSnSwtYIi/5qW+utc7HOEpE//63H
-	 X6Tpmmn7GZPSfU+0/IxQVDZaozBSmpGiHlRk1EYc=
+	b=1X/SbjjiiQgUubFT8mwebPKrFrSuFAdPLsm3GbA9s6Wv4c8u7K69BnbAC5Frc2UEX
+	 FbUx/5cSbN4PY8cLFig+OTsNcwA21k3atcSHyQiAcmPk5JWedWYvvRRZYoScFXO56D
+	 CzErCRmF+AkSu5Gwzm8cbJsDdz4fhaLfv4F6vZBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunkun Jiang <jiangkunkun@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.10 46/52] irqchip/gic-v4: Dont allow a VMOVP on a dying VPE
-Date: Mon, 21 Oct 2024 12:26:07 +0200
-Message-ID: <20241021102243.429687871@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Geliang Tang <geliang.tang@suse.com>,
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Subject: [PATCH 5.10 47/52] mptcp: track and update contiguous data status
+Date: Mon, 21 Oct 2024 12:26:08 +0200
+Message-ID: <20241021102243.468326394@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102241.624153108@linuxfoundation.org>
 References: <20241021102241.624153108@linuxfoundation.org>
@@ -51,103 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Geliang Tang <geliang.tang@suse.com>
 
-commit 1442ee0011983f0c5c4b92380e6853afb513841a upstream.
+commit 0530020a7c8f2204e784f0dbdc882bbd961fdbde upstream.
 
-Kunkun Jiang reported that there is a small window of opportunity for
-userspace to force a change of affinity for a VPE while the VPE has already
-been unmapped, but the corresponding doorbell interrupt still visible in
-/proc/irq/.
+This patch adds a new member allow_infinite_fallback in mptcp_sock,
+which is initialized to 'true' when the connection begins and is set
+to 'false' on any retransmit or successful MP_JOIN. Only do infinite
+mapping fallback if there is a single subflow AND there have been no
+retransmissions AND there have never been any MP_JOINs.
 
-Plug the race by checking the value of vmapp_count, which tracks whether
-the VPE is mapped ot not, and returning an error in this case.
-
-This involves making vmapp_count common to both GICv4.1 and its v4.0
-ancestor.
-
-Fixes: 64edfaa9a234 ("irqchip/gic-v4.1: Implement the v4.1 flavour of VMAPP")
-Reported-by: Kunkun Jiang <jiangkunkun@huawei.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/c182ece6-2ba0-ce4f-3404-dba7a3ab6c52@huawei.com
-Link: https://lore.kernel.org/all/20241002204959.2051709-1-maz@kernel.org
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Geliang Tang <geliang.tang@suse.com>
+Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: e32d262c89e2 ("mptcp: handle consistently DSS corruption")
+[ Conflicts in protocol.c, because commit 3e5014909b56 ("mptcp: cleanup
+  MPJ subflow list handling") is not in this version. This commit is
+  linked to a new feature, changing the context around. The new line
+  can still be added at the same place.
+  Conflicts in protocol.h, because commit 4f6e14bd19d6 ("mptcp: support
+  TCP_CORK and TCP_NODELAY") is not in this version. This commit is
+  linked to a new feature, changing the context around. The new line can
+  still be added at the same place.
+  Conflicts in subflow.c, because commit 0348c690ed37 ("mptcp: add the
+  fallback check") is not in this version. This commit is linked to a
+  new feature, changing the context around. The new line can still be
+  added at the same place.
+  Extra conflicts in v5.10, because the context has been changed. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c   |   18 ++++++++++++------
- include/linux/irqchip/arm-gic-v4.h |    4 +++-
- 2 files changed, 15 insertions(+), 7 deletions(-)
+ net/mptcp/protocol.c |    6 +++++-
+ net/mptcp/protocol.h |    1 +
+ net/mptcp/subflow.c  |    1 +
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -789,8 +789,8 @@ static struct its_vpe *its_build_vmapp_c
- 	its_encode_valid(cmd, desc->its_vmapp_cmd.valid);
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1810,9 +1810,11 @@ static void mptcp_worker(struct work_str
+ 		if (!mptcp_ext_cache_refill(msk))
+ 			break;
+ 	}
+-	if (copied)
++	if (copied) {
+ 		tcp_push(ssk, msg.msg_flags, mss_now, tcp_sk(ssk)->nonagle,
+ 			 size_goal);
++		WRITE_ONCE(msk->allow_infinite_fallback, false);
++	}
  
- 	if (!desc->its_vmapp_cmd.valid) {
-+		alloc = !atomic_dec_return(&desc->its_vmapp_cmd.vpe->vmapp_count);
- 		if (is_v4_1(its)) {
--			alloc = !atomic_dec_return(&desc->its_vmapp_cmd.vpe->vmapp_count);
- 			its_encode_alloc(cmd, alloc);
- 			/*
- 			 * Unmapping a VPE is self-synchronizing on GICv4.1,
-@@ -809,13 +809,13 @@ static struct its_vpe *its_build_vmapp_c
- 	its_encode_vpt_addr(cmd, vpt_addr);
- 	its_encode_vpt_size(cmd, LPI_NRBITS - 1);
+ 	dfrag->data_seq = orig_write_seq;
+ 	dfrag->offset = orig_offset;
+@@ -1845,6 +1847,7 @@ static int __mptcp_init_sock(struct sock
  
-+	alloc = !atomic_fetch_inc(&desc->its_vmapp_cmd.vpe->vmapp_count);
-+
- 	if (!is_v4_1(its))
- 		goto out;
+ 	msk->first = NULL;
+ 	inet_csk(sk)->icsk_sync_mss = mptcp_sync_mss;
++	WRITE_ONCE(msk->allow_infinite_fallback, true);
  
- 	vconf_addr = virt_to_phys(page_address(desc->its_vmapp_cmd.vpe->its_vm->vprop_page));
+ 	mptcp_pm_data_init(msk);
  
--	alloc = !atomic_fetch_inc(&desc->its_vmapp_cmd.vpe->vmapp_count);
--
- 	its_encode_alloc(cmd, alloc);
+@@ -2543,6 +2546,7 @@ bool mptcp_finish_join(struct sock *sk)
+ 	if (parent_sock && !sk->sk_socket)
+ 		mptcp_sock_graft(sk, parent_sock);
+ 	subflow->map_seq = READ_ONCE(msk->ack_seq);
++	WRITE_ONCE(msk->allow_infinite_fallback, false);
+ 	return true;
+ }
  
- 	/* We can only signal PTZ when alloc==1. Why do we have two bits? */
-@@ -3793,6 +3793,13 @@ static int its_vpe_set_affinity(struct i
- 	int from, cpu;
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -213,6 +213,7 @@ struct mptcp_sock {
+ 	bool		rcv_data_fin;
+ 	bool		snd_data_fin_enable;
+ 	bool		use_64bit_ack; /* Set when we received a 64-bit DSN */
++	bool		allow_infinite_fallback;
+ 	spinlock_t	join_list_lock;
+ 	struct work_struct work;
+ 	struct sk_buff  *ooo_last_skb;
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1179,6 +1179,7 @@ int __mptcp_subflow_connect(struct sock
+ 	list_add_tail(&subflow->node, &msk->join_list);
+ 	spin_unlock_bh(&msk->join_list_lock);
  
- 	/*
-+	 * Check if we're racing against a VPE being destroyed, for
-+	 * which we don't want to allow a VMOVP.
-+	 */
-+	if (!atomic_read(&vpe->vmapp_count))
-+		return -EINVAL;
-+
-+	/*
- 	 * Changing affinity is mega expensive, so let's be as lazy as
- 	 * we can and only do it if we really have to. Also, if mapped
- 	 * into the proxy device, we need to move the doorbell
-@@ -4424,9 +4431,8 @@ static int its_vpe_init(struct its_vpe *
- 	raw_spin_lock_init(&vpe->vpe_lock);
- 	vpe->vpe_id = vpe_id;
- 	vpe->vpt_page = vpt_page;
--	if (gic_rdists->has_rvpeid)
--		atomic_set(&vpe->vmapp_count, 0);
--	else
-+	atomic_set(&vpe->vmapp_count, 0);
-+	if (!gic_rdists->has_rvpeid)
- 		vpe->vpe_proxy_event = -1;
++	WRITE_ONCE(msk->allow_infinite_fallback, false);
+ 	return err;
  
- 	return 0;
---- a/include/linux/irqchip/arm-gic-v4.h
-+++ b/include/linux/irqchip/arm-gic-v4.h
-@@ -56,10 +56,12 @@ struct its_vpe {
- 				bool	enabled;
- 				bool	group;
- 			}			sgi_config[16];
--			atomic_t vmapp_count;
- 		};
- 	};
- 
-+	/* Track the VPE being mapped */
-+	atomic_t vmapp_count;
-+
- 	/*
- 	 * Ensures mutual exclusion between affinity setting of the
- 	 * vPE and vLPI operations using vpe->col_idx.
+ failed:
 
 
