@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D321E1E47CE;
-	Mon, 21 Oct 2024 10:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5181E47CE;
+	Mon, 21 Oct 2024 10:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507543; cv=none; b=ESAJI+puyrD79SYthHuxc/3Ra8SUIxlUA5dyzFyctXQHx4c3Iul8ABWR0kl8013xVnrZ2RgTZVfKfSLxwwnFELE4wf5LNMfdqn/l3vtrLS8Zd08j7pEkwg+SeMeLbi2PJpgaMcw9X/0wJNHlTS5TfQ9cjYhnDyK7OQnXlBlfkzY=
+	t=1729507546; cv=none; b=r8sNgLmePW0LiPxKyHHXi5gDS7cARsDSZclth/oxaBc9ubHlpzFnQsxwb78G1c+2DBHlcpIno6sIR5hyGWoc80hJtR4X5sxeuWBO8BH3SpmLqL7880XjDSZkJfoU0sX/GXOTyk9ym/eb6UHp8DD1nqtdzYJKPk76UqfG7zAGw5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507543; c=relaxed/simple;
-	bh=S+dTmz6B2Cx8QehcW2AoQN4UqbAvq10py/Pt9qcaDEE=;
+	s=arc-20240116; t=1729507546; c=relaxed/simple;
+	bh=SudJlkPT97ZXKd9WFC4PeI40EjIkRJu1m/TfcYowRcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ehTZYif3H9AqmSRohjlc5NX+VXXosCUmbHXEa9Ao1ny61Kl0CyaPOp3L6wJoTLB00W6qUGITZNYXpjzkWxuzIWGxtfSNMDLU8RdtI58YBa6uJwKOBJeeTHI+YkhLJPit0Vf3XJrMcVCFF/dj0jOp/ZOqtejn/Df9JCcpGIdUtpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWjZpNli; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cTZM3yIZJj/+Pt2fGbhVxPHVbe2Yk6Kbjam2TI+Nu0Z2H1q7kH+qramzsgQnjTmDyz27PhNs5d+kfa5MgRC6Soesl135dGYZp2ZX+u+pEpZa5u8Rc8keQrNoyhqqHhpSh78taca7Kvgc+rEnsjqz86mgqPy+AJ/fSb28FGf7qPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5Xpm//E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWjZpNli"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5568DC4CEC3;
-	Mon, 21 Oct 2024 10:45:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5Xpm//E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E879C4CEC3;
+	Mon, 21 Oct 2024 10:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507543;
-	bh=S+dTmz6B2Cx8QehcW2AoQN4UqbAvq10py/Pt9qcaDEE=;
+	s=korg; t=1729507546;
+	bh=SudJlkPT97ZXKd9WFC4PeI40EjIkRJu1m/TfcYowRcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dWjZpNliV5WH7vO/5/w99NLMUfdDfUyqNmB90JNrU6c3nyHNOEhPsDeWzc6REvavU
-	 mXgs5FaAnGpApveM6HMPMIFOMmOaws/pJ5S/SCx2sxSk3i3lghW2uAUYPm+f9zca1A
-	 ezudc/XP/rAhpoOPSChaO5mJt6iI5AM/cYe2F75E=
+	b=J5Xpm//EWRFR8ZBPUZdWKtwt5ND+eXgQZSIjwtAf7Jc6sQjmhob8WIlM6eHnrQ7XA
+	 B1Uv1yIjngvf3dhaM/z3KvtjjSKBuY5LTGEzsTfW8EgaPMH8tNXMy4whFDoQr9+EVm
+	 JaGW/RAkag1XXlnm+qvmXFxXv13T5p+Yh9f5AvyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d31185aa54170f7fc1f5@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 5.15 21/82] udf: Fix bogus checksum computation in udf_rename()
-Date: Mon, 21 Oct 2024 12:25:02 +0200
-Message-ID: <20241021102248.089187706@linuxfoundation.org>
+	Wei Fang <wei.fang@nxp.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 22/82] net: enetc: remove xdp_drops statistic from enetc_xdp_drop()
+Date: Mon, 21 Oct 2024 12:25:03 +0200
+Message-ID: <20241021102248.128362675@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102247.209765070@linuxfoundation.org>
 References: <20241021102247.209765070@linuxfoundation.org>
@@ -51,41 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 27ab33854873e6fb958cb074681a0107cc2ecc4c ]
+commit 412950d5746f7aa139e14fe95338694c1f09b595 upstream.
 
-Syzbot reports uninitialized memory access in udf_rename() when updating
-checksum of '..' directory entry of a moved directory. This is indeed
-true as we pass on-stack diriter.fi to the udf_update_tag() and because
-that has only struct fileIdentDesc included in it and not the impUse or
-name fields, the checksumming function is going to checksum random stack
-contents beyond the end of the structure. This is actually harmless
-because the following udf_fiiter_write_fi() will recompute the checksum
-from on-disk buffers where everything is properly included. So all that
-is needed is just removing the bogus calculation.
+The xdp_drops statistic indicates the number of XDP frames dropped in
+the Rx direction. However, enetc_xdp_drop() is also used in XDP_TX and
+XDP_REDIRECT actions. If frame loss occurs in these two actions, the
+frames loss count should not be included in xdp_drops, because there
+are already xdp_tx_drops and xdp_redirect_failures to count the frame
+loss of these two actions, so it's better to remove xdp_drops statistic
+from enetc_xdp_drop() and increase xdp_drops in XDP_DROP action.
 
-Fixes: e9109a92d2a9 ("udf: Convert udf_rename() to new directory iteration code")
-Link: https://lore.kernel.org/all/000000000000cf405f060d8f75a9@google.com/T/
-Link: https://patch.msgid.link/20240617154201.29512-1-jack@suse.cz
-Reported-by: syzbot+d31185aa54170f7fc1f5@syzkaller.appspotmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Fixes: 7ed2bc80074e ("net: enetc: add support for XDP_TX")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20241010092056.298128-2-wei.fang@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/namei.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/udf/namei.c
-+++ b/fs/udf/namei.c
-@@ -857,8 +857,6 @@ static int udf_rename(struct user_namesp
- 	if (has_diriter) {
- 		diriter.fi.icb.extLocation =
- 					cpu_to_lelb(UDF_I(new_dir)->i_location);
--		udf_update_tag((char *)&diriter.fi,
--			       udf_dir_entry_len(&diriter.fi));
- 		udf_fiiter_write_fi(&diriter, NULL);
- 		udf_fiiter_release(&diriter);
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -1223,7 +1223,6 @@ static void enetc_xdp_drop(struct enetc_
+ 				  &rx_ring->rx_swbd[rx_ring_first]);
+ 		enetc_bdr_idx_inc(rx_ring, &rx_ring_first);
+ 	}
+-	rx_ring->stats.xdp_drops++;
+ }
  
+ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+@@ -1280,6 +1279,7 @@ static int enetc_clean_rx_ring_xdp(struc
+ 			fallthrough;
+ 		case XDP_DROP:
+ 			enetc_xdp_drop(rx_ring, orig_i, i);
++			rx_ring->stats.xdp_drops++;
+ 			break;
+ 		case XDP_PASS:
+ 			rxbd = orig_rxbd;
 
 
