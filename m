@@ -1,207 +1,83 @@
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A274437;
-	Mon, 21 Oct 2024 09:18:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25ACDDC3;
+	Mon, 21 Oct 2024 09:45:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729502293; cv=none; b=MmQ+G3Dn8P7OMrZBSMjnelPpXNvkqLccoRuh0ijoI1JJJoQ0GUywlpb+Xe0NYvYNVzCdwftoPvZzafN0Kh0Q4RlaIAzda1DFFoGgnQrz4v1t5QiddiEK60+KYKmmHdsp8/IgNyRMB7LICOAZQoceKYnX6TOWP8ZPYiSn6az4hrY=
+	t=1729503913; cv=none; b=tLaI9orikb1cY2WXcHp/dPHptk27qF51p2GOXiGIEVNbFp3hIN36fnN4PB7f4JVACrbRoeh6KY8/HG12M+VWtre8rP6oP1K1FWvKmczWVwVxUOSxNN8oUEBfktrdUzzs6W+Zlcn3opPx33KPNHXaGFCcW69zg/O64TPgHHXR5Dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729502293; c=relaxed/simple;
-	bh=llXWt9EDhIYDizPZ/i9tAy/u1WhV07tHJvNbQJI8fKs=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oJiPccZDtRe0PQmVfexF33TLkB8Slt05ykeG5+Xc4qGg0uvPoEav+zTtxDjZBrfR/IlV/bo+xnpV+orQsRnCR3jHL5/qIfDCeBovy1ow5PeSE9kG/x5904IHlIxlXzpS1AlUKs4O7U7Hr+ou0k4n9f8N5Kc48UiK+8yBpZ9Cs30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=iRiLxaJY; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1729503913; c=relaxed/simple;
+	bh=Ep7s8Iir+aUXjgcsL5rbrQeIFsWtZOkKEyPeOzyaxJs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ao5/hF420xdXp+LHmq8YRxGYC7a3IMp7KoKs7VtRKo5M9pdSijadvqk0cb75J7KhNXVjVmTa0sIAkwcdMDqPR9wHTfxfF7nK8EB881pi0JzFR116hY6ZGGOls1cpGA4egeXFCpX4MKGr3uZg+J/a306wIMBk9egREDLemqJ80ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rn/H+gUz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="iRiLxaJY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1729502282;
-	bh=llXWt9EDhIYDizPZ/i9tAy/u1WhV07tHJvNbQJI8fKs=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=iRiLxaJYj2gJ8NB+toquY4hFDZlDvXrtQOIjIVyInTjcCyWgo6y4me+DUzJnRZidj
-	 ogODuuGnQq0CyLvAdQEXXhZZ+AdBGGRxcTlrd3mcpqxUoU+RAY7S88Fuw6tIs1a/G4
-	 zJN2w8MSlv5JxDHrpY4sjuNnPXeLLan0ntA2goGvPWmb4xHrGrUnqXOWENnMwDgOaS
-	 JrUNzCt+/F8IafMZUs0pUBt162K6Ktoc6w6FF10QOa/yaKPcfo7xBWsBfeyL0Ym6OF
-	 LN0nARUNuYt4s6qnYwuS0Nv3jrizRGPxIijnxl5c8OVC+ZYLREK8jUpkY1zLLLYufv
-	 C17ckxOyMHBZw==
-Received: from localhost (unknown [IPv6:2a01:e0a:2c:6930:5cf4:84a1:2763:fe0d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bbrezillon)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 35E0F17E05BD;
-	Mon, 21 Oct 2024 11:18:02 +0200 (CEST)
-Date: Mon, 21 Oct 2024 11:17:58 +0200
-From: Boris Brezillon <boris.brezillon@collabora.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- linux-arm-kernel@lists.infradead.org, Robin Murphy <robin.murphy@arm.com>,
- Will Deacon <will@kernel.org>, dri-devel@lists.freedesktop.org, Liviu Dudau
- <liviu.dudau@arm.com>, patches@lists.linux.dev, Steven Price
- <steven.price@arm.com>
-Subject: Re: [PATCH] iommu/io-pgtable-arm: Remove split on unmap behavior
-Message-ID: <20241021111758.561c81ca@collabora.com>
-In-Reply-To: <0-v1-8c5f369ec2e5+75-arm_no_split_jgg@nvidia.com>
-References: <0-v1-8c5f369ec2e5+75-arm_no_split_jgg@nvidia.com>
-Organization: Collabora
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rn/H+gUz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B9CC4CEC3;
+	Mon, 21 Oct 2024 09:45:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1729503913;
+	bh=Ep7s8Iir+aUXjgcsL5rbrQeIFsWtZOkKEyPeOzyaxJs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rn/H+gUzViYvlRUWUmxrfOnEEPA4+mbaxQPi058+OxzGQ01sTW0+3RolZjmBwmQm6
+	 ko6MRU0clb2bpyfQBPqOZFzJo/rn9slJlUrAHUrPo4C5zrgeW7vsvPTyeQsAiZL5Wn
+	 gdxowahc6CXp9u6RYairi7vQKDjYbM8e4iOvHAYk=
+Date: Mon, 21 Oct 2024 11:45:10 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.1 000/791] 6.1.113-rc2 review
+Message-ID: <2024102100-robust-shaking-8655@gregkh>
+References: <20241015112501.498328041@linuxfoundation.org>
+ <f035e6ef-32e1-45a2-962e-dc27fa54271b@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f035e6ef-32e1-45a2-962e-dc27fa54271b@roeck-us.net>
 
-On Fri, 18 Oct 2024 14:19:26 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
+On Sat, Oct 19, 2024 at 08:17:31AM -0700, Guenter Roeck wrote:
+> On 10/15/24 04:26, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.113 release.
+> > There are 791 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Thu, 17 Oct 2024 11:22:41 +0000.
+> > Anything received after that time might be too late.
+> > 
+> ...
+> 
+> > Nicholas Piggin <npiggin@gmail.com>
+> >      powerpc/64: Option to build big-endian with ELFv2 ABI
+> > 
+> 
+> With this patch in the tree, trying to build ppc:allmodconfig
+> with gcc version 13.3 and binutils version 2.42 results in:
+> 
+> Error log:
+> /tmp/cccUl45i.s: Assembler messages:
+> /tmp/cccUl45i.s: Error: .size expression for gcm_init_p8 does not evaluate to a constant
+> 
+> and many other similar messages. The problem affects various drivers in
+> drivers/crypto/vmx/. The problem afects all configurations with CRYPTO_DEV_VMX_ENCRYPT
+> enabled.
+> 
+> Reverting the patch doesn't work because this patch is part of a larger series. However,
+> I found that applying upstream commit 505ea33089dc ("powerpc/64: Add big-endian ELFv2
+> flavour to crypto VMX asm generation") fixes the problem.
 
-> Of the page table implementations (AMD v1/2, VT-D SS, ARM32, DART)
-> arm_lpae is unique in how it handles partial unmap of large IOPTEs.
-> 
-> All other drivers will unmap the large IOPTE and return it's length.  For
-> example if a 2M IOPTE is present and the first 4K is requested to be
-> unmapped then unmap will remove the whole 2M and report 2M as the result.
-> 
-> arm_lpae instead replaces the IOPTE with a table of smaller IOPTEs, unmaps
-> the 4K and returns 4k. This is actually an illegal/non-hitless operation
-> on at least SMMUv3 because of the BBM level 0 rules.
-> 
-> Long ago VFIO could trigger a path like this, today I know of no user of
-> this functionality.
-> 
-> Given it doesn't work fully correctly on SMMUv3 and would create
-> portability problems if any user depends on it, remove the unique support
-> in arm_lpae and align with the expected iommu interface.
-> 
-> Outside the iommu users, this will potentially effect io_pgtable users of
-> ARM_32_LPAE_S1, ARM_32_LPAE_S2, ARM_64_LPAE_S1, ARM_64_LPAE_S2, and
-> ARM_MALI_LPAE formats.
-> 
-> Cc: Boris Brezillon <boris.brezillon@collabora.com>
-> Cc: Steven Price <steven.price@arm.com>
-> Cc: Liviu Dudau <liviu.dudau@arm.com>
-> Cc: dri-devel@lists.freedesktop.org
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/io-pgtable-arm.c | 72 +++-------------------------------
->  1 file changed, 6 insertions(+), 66 deletions(-)
-> 
-> I don't know anything in the iommu space that needs this, and this is the only
-> page table implementation in iommu that does it.
-> 
-> I'm not sure about DRM, I looked for awhile and only Panthor was unclear.
+Now queued up, thanks.
 
-I theory, Panthor can do partial unmaps (unmapping a subregion of a
-physically contiguous 2M section). In practice, it's not something we
-rely on yet, so I don't think it's a blocker. If we ever want to support
-that, we can always do it in two steps (unmap the 2M region and remap
-the borders). At some point it'd be good to have some kind of atomic
-page table updates, so we don't have this short period of time during
-which nothing is mapped (between the unmap and the remap), but that's a
-different story.
-
-> 
-> If DRM does use this, I'd respin this to make it into a quirk and iommu won't
-> set it.
-> 
-> Thanks,
-> Jason
-> 
-> 
-> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> index 0e67f1721a3d98..a51fae9c909111 100644
-> --- a/drivers/iommu/io-pgtable-arm.c
-> +++ b/drivers/iommu/io-pgtable-arm.c
-> @@ -569,66 +569,6 @@ static void arm_lpae_free_pgtable(struct io_pgtable *iop)
->  	kfree(data);
->  }
->  
-> -static size_t arm_lpae_split_blk_unmap(struct arm_lpae_io_pgtable *data,
-> -				       struct iommu_iotlb_gather *gather,
-> -				       unsigned long iova, size_t size,
-> -				       arm_lpae_iopte blk_pte, int lvl,
-> -				       arm_lpae_iopte *ptep, size_t pgcount)
-> -{
-> -	struct io_pgtable_cfg *cfg = &data->iop.cfg;
-> -	arm_lpae_iopte pte, *tablep;
-> -	phys_addr_t blk_paddr;
-> -	size_t tablesz = ARM_LPAE_GRANULE(data);
-> -	size_t split_sz = ARM_LPAE_BLOCK_SIZE(lvl, data);
-> -	int ptes_per_table = ARM_LPAE_PTES_PER_TABLE(data);
-> -	int i, unmap_idx_start = -1, num_entries = 0, max_entries;
-> -
-> -	if (WARN_ON(lvl == ARM_LPAE_MAX_LEVELS))
-> -		return 0;
-> -
-> -	tablep = __arm_lpae_alloc_pages(tablesz, GFP_ATOMIC, cfg, data->iop.cookie);
-> -	if (!tablep)
-> -		return 0; /* Bytes unmapped */
-> -
-> -	if (size == split_sz) {
-> -		unmap_idx_start = ARM_LPAE_LVL_IDX(iova, lvl, data);
-> -		max_entries = ptes_per_table - unmap_idx_start;
-> -		num_entries = min_t(int, pgcount, max_entries);
-> -	}
-> -
-> -	blk_paddr = iopte_to_paddr(blk_pte, data);
-> -	pte = iopte_prot(blk_pte);
-> -
-> -	for (i = 0; i < ptes_per_table; i++, blk_paddr += split_sz) {
-> -		/* Unmap! */
-> -		if (i >= unmap_idx_start && i < (unmap_idx_start + num_entries))
-> -			continue;
-> -
-> -		__arm_lpae_init_pte(data, blk_paddr, pte, lvl, 1, &tablep[i]);
-> -	}
-> -
-> -	pte = arm_lpae_install_table(tablep, ptep, blk_pte, data);
-> -	if (pte != blk_pte) {
-> -		__arm_lpae_free_pages(tablep, tablesz, cfg, data->iop.cookie);
-> -		/*
-> -		 * We may race against someone unmapping another part of this
-> -		 * block, but anything else is invalid. We can't misinterpret
-> -		 * a page entry here since we're never at the last level.
-> -		 */
-> -		if (iopte_type(pte) != ARM_LPAE_PTE_TYPE_TABLE)
-> -			return 0;
-> -
-> -		tablep = iopte_deref(pte, data);
-> -	} else if (unmap_idx_start >= 0) {
-> -		for (i = 0; i < num_entries; i++)
-> -			io_pgtable_tlb_add_page(&data->iop, gather, iova + i * size, size);
-> -
-> -		return num_entries * size;
-> -	}
-> -
-> -	return __arm_lpae_unmap(data, gather, iova, size, pgcount, lvl, tablep);
-> -}
-> -
->  static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
->  			       struct iommu_iotlb_gather *gather,
->  			       unsigned long iova, size_t size, size_t pgcount,
-> @@ -678,12 +618,12 @@ static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
->  
->  		return i * size;
->  	} else if (iopte_leaf(pte, lvl, iop->fmt)) {
-> -		/*
-> -		 * Insert a table at the next level to map the old region,
-> -		 * minus the part we want to unmap
-> -		 */
-> -		return arm_lpae_split_blk_unmap(data, gather, iova, size, pte,
-> -						lvl + 1, ptep, pgcount);
-> +		/* Unmap the entire large IOPTE and return its size */
-> +		size = ARM_LPAE_BLOCK_SIZE(lvl, data);
-> +		__arm_lpae_clear_pte(ptep, &iop->cfg, 1);
-> +		if (gather && !iommu_iotlb_gather_queued(gather))
-> +			io_pgtable_tlb_add_page(iop, gather, iova, size);
-> +		return size;
->  	}
->  
->  	/* Keep on walkin' */
-> 
-> base-commit: 27ab08d646a1b53330229a97100200c9567d28b5
-
+greg k-h
