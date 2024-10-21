@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB3539FD6;
-	Mon, 21 Oct 2024 10:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F291139FD6;
+	Mon, 21 Oct 2024 10:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506764; cv=none; b=gBfbJtTzQV4OSLTLdB+1QrfGUG0QxW4DRACMkqlVcBv8o2M3uWzgKZ+x6bdRql2bxtuhLPrdeCXob7mU8YHu6MvEXII5KP+BnnPLcvR/ei5zc5GTnFVGayCRTPimYj4Q+IueZmwbsB9zq9Zpi4r6DJG7IW3/hJdRvIy+Il/aKk8=
+	t=1729506767; cv=none; b=ooFtVr3tz+kb/fVgtVZMaWIIXBwGg8oeWVtF10Ug8kF4RBqNl4rRWGC5amoDf3l1dc4nR40qlRuPPBTw7CIlHdTY5WaawbvrBBT9dxq1IJPXydQNFBusR24VkAVZ9lO3LnHYR6dbR/Uxk0Sgdg646a++P9Tn+i2sq3rQLhgDk1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506764; c=relaxed/simple;
-	bh=PzSW4xBeSK1rwdg0RGr2gTPL7a6GMu5708uYvW7kJSw=;
+	s=arc-20240116; t=1729506767; c=relaxed/simple;
+	bh=jhfVmdL53pyKjWtkacl7ML7pxqXLunyjdzPDlMFNB/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j+FU1brheqqnOVQQKLem0eeQuuPdxME6f7CwIkotw/TPyuFA1IOQaaDjqhbjs/sI2X3rhSOqF3CVga40gKa0z0n1dNw6xAPuB8yA+2QtUOB3APIJEY2CcMdza2gqUJx+UztxLfQylFjn5DYGe0mNjUtoy/oF7RIpV7wTm2J34ZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a04zcFgT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZRbMNk72IT9uyX0c4n1mSn27IvUnOyMzz+GS0UE6nh5dbWxJIwO6WIyY9auCEUVmVCJ0vQTZ0lF3ilgLYpCC1J8OUCsYPbthmDmaOjMVtFOUZZ2n7gW6gzQTF1/gFQqRz/sc1GinYMR2CZ2vp9rFAuv/iKNabL7EzGbRE3mnVQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOQi1gFs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a04zcFgT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB88C4CEC3;
-	Mon, 21 Oct 2024 10:32:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOQi1gFs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A31DC4CEC3;
+	Mon, 21 Oct 2024 10:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506763;
-	bh=PzSW4xBeSK1rwdg0RGr2gTPL7a6GMu5708uYvW7kJSw=;
+	s=korg; t=1729506766;
+	bh=jhfVmdL53pyKjWtkacl7ML7pxqXLunyjdzPDlMFNB/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a04zcFgTfNCbTZpNhv8ILntTLLfLl9BikwEuPAONl7RdFydQgbeYDdCnewJPCT+he
-	 a2FNrVMDTcX/lXXLrI98xeW+eejnh2FiHqe5i7IBmh5tWTb4QgamazlDQFzxmrLvPw
-	 YWk4npKWpQbF6fuq0TQo0ScjGVjN11WL7GBX5wO4=
+	b=YOQi1gFsPkrAHy1HEz4xNncg2CzTox2gNGjcVzxfN8cm0jxJ/Sqjy1F0Oqvk2o0te
+	 XiNqNqGLsxvO6VSYclEHw1AKY9mebfVUwnq7imRxpwDa93l3qjTY3CsTY2A2VDKL4f
+	 18COSW0AHZiaho5UwlnKY65YYbTzALIVH1OzXLd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	stable@kernel.org
-Subject: [PATCH 6.11 114/135] x86/resctrl: Annotate get_mem_config() functions as __init
-Date: Mon, 21 Oct 2024 12:24:30 +0200
-Message-ID: <20241021102303.789091306@linuxfoundation.org>
+	Dave Hansen <dave.hansen@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Todd Brandt <todd.e.brandt@intel.com>
+Subject: [PATCH 6.11 115/135] x86/apic: Always explicitly disarm TSC-deadline timer
+Date: Mon, 21 Oct 2024 12:24:31 +0200
+Message-ID: <20241021102303.827715379@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -52,60 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Zhang Rui <rui.zhang@intel.com>
 
-commit d5fd042bf4cfb557981d65628e1779a492cd8cfa upstream.
+commit ffd95846c6ec6cf1f93da411ea10d504036cab42 upstream.
 
-After a recent LLVM change [1] that deduces __cold on functions that only call
-cold code (such as __init functions), there is a section mismatch warning from
-__get_mem_config_intel(), which got moved to .text.unlikely. as a result of
-that optimization:
+New processors have become pickier about the local APIC timer state
+before entering low power modes. These low power modes are used (for
+example) when you close your laptop lid and suspend. If you put your
+laptop in a bag and it is not in this low power mode, it is likely
+to get quite toasty while it quickly sucks the battery dry.
 
-  WARNING: modpost: vmlinux: section mismatch in reference: \
-  __get_mem_config_intel+0x77 (section: .text.unlikely.) -> thread_throttle_mode_init (section: .init.text)
+The problem boils down to some CPUs' inability to power down until the
+CPU recognizes that the local APIC timer is shut down. The current
+kernel code works in one-shot and periodic modes but does not work for
+deadline mode. Deadline mode has been the supported and preferred mode
+on Intel CPUs for over a decade and uses an MSR to drive the timer
+instead of an APIC register.
 
-Mark __get_mem_config_intel() as __init as well since it is only called
-from __init code, which clears up the warning.
+Disable the TSC Deadline timer in lapic_timer_shutdown() by writing to
+MSR_IA32_TSC_DEADLINE when in TSC-deadline mode. Also avoid writing
+to the initial-count register (APIC_TMICT) which is ignored in
+TSC-deadline mode.
 
-While __rdt_get_mem_config_amd() does not exhibit a warning because it
-does not call any __init code, it is a similar function that is only
-called from __init code like __get_mem_config_intel(), so mark it __init
-as well to keep the code symmetrical.
+Note: The APIC_LVTT|=APIC_LVT_MASKED operation should theoretically be
+enough to tell the hardware that the timer will not fire in any of the
+timer modes. But mitigating AMD erratum 411[1] also requires clearing
+out APIC_TMICT. Solely setting APIC_LVT_MASKED is also ineffective in
+practice on Intel Lunar Lake systems, which is the motivation for this
+change.
 
-CONFIG_SECTION_MISMATCH_WARN_ONLY=n would turn this into a fatal error.
+1. 411 Processor May Exit Message-Triggered C1E State Without an Interrupt if Local APIC Timer Reaches Zero - https://www.amd.com/content/dam/amd/en/documents/archived-tech-docs/revision-guides/41322_10h_Rev_Gd.pdf
 
-Fixes: 05b93417ce5b ("x86/intel_rdt/mba: Add primary support for Memory Bandwidth Allocation (MBA)")
-Fixes: 4d05bf71f157 ("x86/resctrl: Introduce AMD QOS feature")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Cc: <stable@kernel.org>
-Link: https://github.com/llvm/llvm-project/commit/6b11573b8c5e3d36beee099dbe7347c2a007bf53 [1]
-Link: https://lore.kernel.org/r/20240917-x86-restctrl-get_mem_config_intel-init-v3-1-10d521256284@kernel.org
+Fixes: 279f1461432c ("x86: apic: Use tsc deadline for oneshot when available")
+Suggested-by: Dave Hansen <dave.hansen@intel.com>
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Tested-by: Todd Brandt <todd.e.brandt@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20241015061522.25288-1-rui.zhang%40intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/resctrl/core.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/apic/apic.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -207,7 +207,7 @@ static inline bool rdt_get_mb_table(stru
- 	return false;
+--- a/arch/x86/kernel/apic/apic.c
++++ b/arch/x86/kernel/apic/apic.c
+@@ -440,7 +440,19 @@ static int lapic_timer_shutdown(struct c
+ 	v = apic_read(APIC_LVTT);
+ 	v |= (APIC_LVT_MASKED | LOCAL_TIMER_VECTOR);
+ 	apic_write(APIC_LVTT, v);
+-	apic_write(APIC_TMICT, 0);
++
++	/*
++	 * Setting APIC_LVT_MASKED (above) should be enough to tell
++	 * the hardware that this timer will never fire. But AMD
++	 * erratum 411 and some Intel CPU behavior circa 2024 say
++	 * otherwise.  Time for belt and suspenders programming: mask
++	 * the timer _and_ zero the counter registers:
++	 */
++	if (v & APIC_LVT_TIMER_TSCDEADLINE)
++		wrmsrl(MSR_IA32_TSC_DEADLINE, 0);
++	else
++		apic_write(APIC_TMICT, 0);
++
+ 	return 0;
  }
  
--static bool __get_mem_config_intel(struct rdt_resource *r)
-+static __init bool __get_mem_config_intel(struct rdt_resource *r)
- {
- 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
- 	union cpuid_0x10_3_eax eax;
-@@ -241,7 +241,7 @@ static bool __get_mem_config_intel(struc
- 	return true;
- }
- 
--static bool __rdt_get_mem_config_amd(struct rdt_resource *r)
-+static __init bool __rdt_get_mem_config_amd(struct rdt_resource *r)
- {
- 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
- 	u32 eax, ebx, ecx, edx, subleaf;
 
 
