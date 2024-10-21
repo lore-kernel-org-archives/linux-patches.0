@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3231E1EABCE;
-	Mon, 21 Oct 2024 10:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B531EABCE;
+	Mon, 21 Oct 2024 10:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507070; cv=none; b=e0rEAJbeEy0My6CvMfYr/z4v8SQvVJCUd40JsHGL+Ul3GwZMraYRwKVdrZXjda5ryxAZ39KN68PVTRDXooLVQQqCCNu2mxl89eOA53Wrk5LWIXbY8OLA771ryHv7ElJS/ittWLtInzs0RFrgd2QHdroyitL0VhEAOk+Igo8ik4Y=
+	t=1729507073; cv=none; b=F1vIoEzMtjMQjbC/kdlyuIdFb1gemqS4z/oBboKhNgwr+XT0YUhfp0I+Cfn2WkSGkNGqA2XMZeN82FDg7Jcg8u3gLP8LIMNUAVHJkebkl/A0YpYjTRFRSnH1xaEfTUYURxuDdv/v5/k9CQJZ3o5DIejxazq9HCJZ4O1uiJWcYKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507070; c=relaxed/simple;
-	bh=IK7hgFvD88uX9dsVpOqCIKCy2d45ZxKHmAFfoThwtXU=;
+	s=arc-20240116; t=1729507073; c=relaxed/simple;
+	bh=ZnTtR6gEnMU1uejB6AZMKeNH1ukPLhmMpVJUsqpxCJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=POxAA7jvFWzH5iymcg2KL7AO8Ab/AzOAdV5lIclt/tmCaPLm8OmjysPG4oUdIFobKEWwj8MF7Yj0RAe3mEdaDnJK030FxvpMCvqjMGcXXpTz2yUwMUICkWmWMkypgfnj/V+DI4oTDYUJEnzCnr09CXucIye9zM8FZNr8L+8W4yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2iGo/7+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qri/09E/F/SveURhzL7jBFO+ejp18A/x/duOVAks94Zs1Kwb1flCVxOVpgzswH+DlOczcX603ocoaZiwX/P+TmX/5/TsCdIJmgsMqivIGU/Qh//MWs3j56J5XXD9+KsegmHogpf+08gQMIvMdkMXhum/tJ0ez7g4dTggFjOUXW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/sZ2w8K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2iGo/7+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A830FC4CEC3;
-	Mon, 21 Oct 2024 10:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/sZ2w8K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C670C4CEC7;
+	Mon, 21 Oct 2024 10:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507070;
-	bh=IK7hgFvD88uX9dsVpOqCIKCy2d45ZxKHmAFfoThwtXU=;
+	s=korg; t=1729507073;
+	bh=ZnTtR6gEnMU1uejB6AZMKeNH1ukPLhmMpVJUsqpxCJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e2iGo/7+KvHcqsU34zyxy66jvkDwUVT2JDmI2BBtDx2WWP6xSAoEe80c76uRq0/Et
-	 aWZgHW4M0AhoIYGnQvUt7e/RlXOtY0UXSjNE18QflkE7hCK1opi5ERjuWr+WG5JGfr
-	 O5TOMQtiyNhhP6UbZjg644IkYUKd33C9U0etSN+s=
+	b=a/sZ2w8K6EFRm34fuOVBW2D5Ng/H7JU3LJilRiPeJuQS5fHwFs/DF8bVVFa2IT0Zm
+	 1DxX6mm6B3bt9sza6VY/KPI0aywFaedcjW+2buLPWsPu6NIcb/ytitutglUeJNC64x
+	 Z1ty3c3tMwkRe2dR7bfyjW9qKljJcxMOoULfPWWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 079/124] iio: frequency: adf4377: add missing select REMAP_SPI in Kconfig
-Date: Mon, 21 Oct 2024 12:24:43 +0200
-Message-ID: <20241021102259.787625738@linuxfoundation.org>
+Subject: [PATCH 6.6 080/124] iio: light: bu27008: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
+Date: Mon, 21 Oct 2024 12:24:44 +0200
+Message-ID: <20241021102259.826460231@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -53,31 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit c64643ed4eaa5dfd0b3bab7ef1c50b84f3dbaba4 upstream.
+commit aa99ef68eff5bc6df4959a372ae355b3b73f9930 upstream.
 
-This driver makes use of regmap_spi, but does not select the required
-module.
-Add the missing 'select REGMAP_SPI'.
+This driver makes use of triggered buffers, but does not select the
+required modules.
 
-Fixes: eda549e2e524 ("iio: frequency: adf4377: add support for ADF4377")
+Add the missing 'select IIO_BUFFER' and 'select IIO_TRIGGERED_BUFFER'.
+
+Fixes: 41ff93d14f78 ("iio: light: ROHM BU27008 color sensor")
 Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20241003-ad2s1210-select-v1-3-4019453f8c33@gmail.com
+Acked-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Link: https://patch.msgid.link/20241003-iio-select-v1-10-67c0385197cd@gmail.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/frequency/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/light/Kconfig |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/frequency/Kconfig
-+++ b/drivers/iio/frequency/Kconfig
-@@ -53,6 +53,7 @@ config ADF4371
- config ADF4377
- 	tristate "Analog Devices ADF4377 Microwave Wideband Synthesizer"
- 	depends on SPI && COMMON_CLK
-+	select REGMAP_SPI
+--- a/drivers/iio/light/Kconfig
++++ b/drivers/iio/light/Kconfig
+@@ -294,6 +294,8 @@ config ROHM_BU27008
+ 	depends on I2C
+ 	select REGMAP_I2C
+ 	select IIO_GTS_HELPER
++	select IIO_BUFFER
++	select IIO_TRIGGERED_BUFFER
  	help
- 	  Say yes here to build support for Analog Devices ADF4377 Microwave
- 	  Wideband Synthesizer.
+ 	  Enable support for the ROHM BU27008 color sensor.
+ 	  The ROHM BU27008 is a sensor with 5 photodiodes (red, green,
 
 
