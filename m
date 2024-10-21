@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F4D1E47CE;
-	Mon, 21 Oct 2024 10:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D321E1E47CE;
+	Mon, 21 Oct 2024 10:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507541; cv=none; b=KrzNHWzgDulLeFk0E8RnPlSJXyjV6E2KcuRWtbtKVObCi0xcjKyhldpWkoLONppgqyTTvI4/pxbaDVQCH7smkZmOwQTZCBnRcULFhoGaUWVykHh0nUdz1XyIEP1zU4j0bisSYsf0YKUZr/xqQl3CKJ5JO9EfYmW1nA6KsVryNYI=
+	t=1729507543; cv=none; b=ESAJI+puyrD79SYthHuxc/3Ra8SUIxlUA5dyzFyctXQHx4c3Iul8ABWR0kl8013xVnrZ2RgTZVfKfSLxwwnFELE4wf5LNMfdqn/l3vtrLS8Zd08j7pEkwg+SeMeLbi2PJpgaMcw9X/0wJNHlTS5TfQ9cjYhnDyK7OQnXlBlfkzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507541; c=relaxed/simple;
-	bh=njpuScdZmHivLymRhs+Mmv4OWiZ4oEPXlTHGmsnnBwo=;
+	s=arc-20240116; t=1729507543; c=relaxed/simple;
+	bh=S+dTmz6B2Cx8QehcW2AoQN4UqbAvq10py/Pt9qcaDEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T5OSo218B0sKhjJtS78QBd8JpXZbgWde2HbDxcLdcnqFAUNTWoKOE29H+sdNGDe34GLDpsBCLxZzv7+u9nDbr7bJUQQmADX8rLK5L6+m1j8BauSbjM5WWfCNm8GDPPkFdFxyWhTKXA4FNKFLHEh1d2zFW7BlYD55kAHrkNp1o/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6QKMjsG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ehTZYif3H9AqmSRohjlc5NX+VXXosCUmbHXEa9Ao1ny61Kl0CyaPOp3L6wJoTLB00W6qUGITZNYXpjzkWxuzIWGxtfSNMDLU8RdtI58YBa6uJwKOBJeeTHI+YkhLJPit0Vf3XJrMcVCFF/dj0jOp/ZOqtejn/Df9JCcpGIdUtpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWjZpNli; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6QKMjsG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E74BC4CEC3;
-	Mon, 21 Oct 2024 10:45:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWjZpNli"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5568DC4CEC3;
+	Mon, 21 Oct 2024 10:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507540;
-	bh=njpuScdZmHivLymRhs+Mmv4OWiZ4oEPXlTHGmsnnBwo=;
+	s=korg; t=1729507543;
+	bh=S+dTmz6B2Cx8QehcW2AoQN4UqbAvq10py/Pt9qcaDEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h6QKMjsG/2ta/PEcWV0aJj5BUN8CIKsR5ZEqFj9FKaC5kMfJ3N79G5E5STukhyjyS
-	 UI8E/1WQ12tpEx+jlpBSZNUKHmq0zivu2kT4tDVS5dPFcIEQwT21X8cJ4qhcEwsOkl
-	 Iw0BcZytWALjicvQNmSlNMxkwt0LEVWE5GtJP0UQ=
+	b=dWjZpNliV5WH7vO/5/w99NLMUfdDfUyqNmB90JNrU6c3nyHNOEhPsDeWzc6REvavU
+	 mXgs5FaAnGpApveM6HMPMIFOMmOaws/pJ5S/SCx2sxSk3i3lghW2uAUYPm+f9zca1A
+	 ezudc/XP/rAhpoOPSChaO5mJt6iI5AM/cYe2F75E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+d31185aa54170f7fc1f5@syzkaller.appspotmail.com,
 	Jan Kara <jack@suse.cz>,
 	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 5.15 20/82] udf: Dont return bh from udf_expand_dir_adinicb()
-Date: Mon, 21 Oct 2024 12:25:01 +0200
-Message-ID: <20241021102248.039242735@linuxfoundation.org>
+Subject: [PATCH 5.15 21/82] udf: Fix bogus checksum computation in udf_rename()
+Date: Mon, 21 Oct 2024 12:25:02 +0200
+Message-ID: <20241021102248.089187706@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102247.209765070@linuxfoundation.org>
 References: <20241021102247.209765070@linuxfoundation.org>
@@ -52,109 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit f386c802a6fda8f9fe4a5cf418c49aa84dfc52e4 ]
+[ Upstream commit 27ab33854873e6fb958cb074681a0107cc2ecc4c ]
 
-Nobody uses the bh returned from udf_expand_dir_adinicb(). Don't return
-it.
+Syzbot reports uninitialized memory access in udf_rename() when updating
+checksum of '..' directory entry of a moved directory. This is indeed
+true as we pass on-stack diriter.fi to the udf_update_tag() and because
+that has only struct fileIdentDesc included in it and not the impUse or
+name fields, the checksumming function is going to checksum random stack
+contents beyond the end of the structure. This is actually harmless
+because the following udf_fiiter_write_fi() will recompute the checksum
+from on-disk buffers where everything is properly included. So all that
+is needed is just removing the bogus calculation.
 
+Fixes: e9109a92d2a9 ("udf: Convert udf_rename() to new directory iteration code")
+Link: https://lore.kernel.org/all/000000000000cf405f060d8f75a9@google.com/T/
+Link: https://patch.msgid.link/20240617154201.29512-1-jack@suse.cz
+Reported-by: syzbot+d31185aa54170f7fc1f5@syzkaller.appspotmail.com
 Signed-off-by: Jan Kara <jack@suse.cz>
-[cascardo: skip backport of 101ee137d32a ("udf: Drop VARCONV support")]
 Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/namei.c |   33 +++++++++++++--------------------
- 1 file changed, 13 insertions(+), 20 deletions(-)
+ fs/udf/namei.c |    2 --
+ 1 file changed, 2 deletions(-)
 
 --- a/fs/udf/namei.c
 +++ b/fs/udf/namei.c
-@@ -136,8 +136,7 @@ static struct dentry *udf_lookup(struct
- 	return d_splice_alias(inode, dentry);
- }
+@@ -857,8 +857,6 @@ static int udf_rename(struct user_namesp
+ 	if (has_diriter) {
+ 		diriter.fi.icb.extLocation =
+ 					cpu_to_lelb(UDF_I(new_dir)->i_location);
+-		udf_update_tag((char *)&diriter.fi,
+-			       udf_dir_entry_len(&diriter.fi));
+ 		udf_fiiter_write_fi(&diriter, NULL);
+ 		udf_fiiter_release(&diriter);
  
--static struct buffer_head *udf_expand_dir_adinicb(struct inode *inode,
--					udf_pblk_t *block, int *err)
-+static int udf_expand_dir_adinicb(struct inode *inode, udf_pblk_t *block)
- {
- 	udf_pblk_t newblock;
- 	struct buffer_head *dbh = NULL;
-@@ -157,23 +156,23 @@ static struct buffer_head *udf_expand_di
- 	if (!inode->i_size) {
- 		iinfo->i_alloc_type = alloctype;
- 		mark_inode_dirty(inode);
--		return NULL;
-+		return 0;
- 	}
- 
- 	/* alloc block, and copy data to it */
- 	*block = udf_new_block(inode->i_sb, inode,
- 			       iinfo->i_location.partitionReferenceNum,
--			       iinfo->i_location.logicalBlockNum, err);
-+			       iinfo->i_location.logicalBlockNum, &ret);
- 	if (!(*block))
--		return NULL;
-+		return ret;
- 	newblock = udf_get_pblock(inode->i_sb, *block,
- 				  iinfo->i_location.partitionReferenceNum,
- 				0);
--	if (!newblock)
--		return NULL;
-+	if (newblock == 0xffffffff)
-+		return -EFSCORRUPTED;
- 	dbh = udf_tgetblk(inode->i_sb, newblock);
- 	if (!dbh)
--		return NULL;
-+		return -ENOMEM;
- 	lock_buffer(dbh);
- 	memcpy(dbh->b_data, iinfo->i_data, inode->i_size);
- 	memset(dbh->b_data + inode->i_size, 0,
-@@ -195,9 +194,9 @@ static struct buffer_head *udf_expand_di
- 	ret = udf_add_aext(inode, &epos, &eloc, inode->i_size, 0);
- 	brelse(epos.bh);
- 	if (ret < 0) {
--		*err = ret;
-+		brelse(dbh);
- 		udf_free_blocks(inode->i_sb, inode, &eloc, 0, 1);
--		return NULL;
-+		return ret;
- 	}
- 	mark_inode_dirty(inode);
- 
-@@ -213,6 +212,7 @@ static struct buffer_head *udf_expand_di
- 			impuse = NULL;
- 		udf_fiiter_write_fi(&iter, impuse);
- 	}
-+	brelse(dbh);
- 	/*
- 	 * We don't expect the iteration to fail as the directory has been
- 	 * already verified to be correct
-@@ -220,7 +220,7 @@ static struct buffer_head *udf_expand_di
- 	WARN_ON_ONCE(ret);
- 	udf_fiiter_release(&iter);
- 
--	return dbh;
-+	return 0;
- }
- 
- static int udf_fiiter_add_entry(struct inode *dir, struct dentry *dentry,
-@@ -266,17 +266,10 @@ static int udf_fiiter_add_entry(struct i
- 	}
- 	if (dinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB &&
- 	    blksize - udf_ext0_offset(dir) - iter->pos < nfidlen) {
--		struct buffer_head *retbh;
--
- 		udf_fiiter_release(iter);
--		/*
--		 * FIXME: udf_expand_dir_adinicb does not need to return bh
--		 * once other users are gone
--		 */
--		retbh = udf_expand_dir_adinicb(dir, &block, &ret);
--		if (!retbh)
-+		ret = udf_expand_dir_adinicb(dir, &block);
-+		if (ret)
- 			return ret;
--		brelse(retbh);
- 		ret = udf_fiiter_init(iter, dir, dir->i_size);
- 		if (ret < 0)
- 			return ret;
 
 
