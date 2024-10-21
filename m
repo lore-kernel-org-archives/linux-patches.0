@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548CE1F76D0;
-	Mon, 21 Oct 2024 10:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1F81F130E;
+	Mon, 21 Oct 2024 10:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507379; cv=none; b=RcUen5ZS/o16mA0n9WoNtVQul9+G7r/xyvyUJVdcAWa61i0dGvWB49SwfjFD1KXRJU8iBKkisPPrU87ZW6EuBlwuka67JSpkt/xnoVrWkoLbLA2q/MeSMx9cfpjMCNP+BFLloNTs66TLyyzzdfxV6Ok0Hs4O5OvRBbJMsolBNbw=
+	t=1729507382; cv=none; b=fhNSr2nRRXFrD6Z25+IwKoAKzzQbe8vRV6LQsXje7iaJI29pSVQCQlzLkAQ8p7VqDB4mSKU5bFi9GlLZHXnQIaOThjvYHtHtPu4whW6xUop7Gk6OkYjABusFEEF2L7yZqRJrMwEba17Bj2AW+fx5TPNht60ClG665dYS+uR+5ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507379; c=relaxed/simple;
-	bh=p2L/RJAcczu6SRVRkud4QeaSvh5mzxO/s+npFoA3VHU=;
+	s=arc-20240116; t=1729507382; c=relaxed/simple;
+	bh=od+ZT6ZXiMGZG9n62iBHiC5lrUe852pnJjY3uGDN0jU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hlI0NALTFNpVHmL5M4nbJczKbNPd3LkBgVioDQISBANWJq/pAlYmLNXvqwiYLxAtAX5MQ4pXWhmBnF3bDPJpzZBnyHvjvfX1OVOXxQSAjXW4g6NFo9hIQt3iYr+/vhkT/NjZSHi0Fpvtmnb1jXCclHCntARGEnAj8qR6LTuVS8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ep9ckNw2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LH31uC0h1ygEOazW70RJepKcQrkKBFQA0t3ChQx0fX4LhKflwodXFCcviaSZz4qzhmNPZgzMRzdaVzI9psvRXw6eEx4SGend2aiqd7Zl6tyl6pkheKDM2QWdshPSQ+K3IVU16Kq90GNF0kpuOtoWtJn0qdxOrrFcdsNqLybg5Yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KX3U9ZHn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ep9ckNw2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8091C4CEC3;
-	Mon, 21 Oct 2024 10:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KX3U9ZHn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA5CC4CEC3;
+	Mon, 21 Oct 2024 10:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507379;
-	bh=p2L/RJAcczu6SRVRkud4QeaSvh5mzxO/s+npFoA3VHU=;
+	s=korg; t=1729507382;
+	bh=od+ZT6ZXiMGZG9n62iBHiC5lrUe852pnJjY3uGDN0jU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ep9ckNw2s+cKjzihEOasSPD5s3+phrummPbOe4PwLYgeoC6+2y1CvnCHJnLR9JZ1A
-	 Y0wSrsOCKViOMya2TsHP0d06VOukRg+SaeGs2PMgOCd/9xcTLIuzlav78QDyGEuB6z
-	 uB3ps8wm4lHOssra9UfmhMy5l0rPOqGt60rcNb3k=
+	b=KX3U9ZHn2Ls6nbRVNMMgUpnsmFLZ6ay1LVHQfmfbNbeiZCDMDwESoINXmrwGuNagh
+	 TXReWkSsx754vuLETd6q3iamela7ddQtO2kYE1EiUS7BC9FWs2I7B0q4TffHmBy7Oq
+	 PJkcUSR2Pi2XsBbwrx/XBX2rRaslKyCeB5DVWsXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Wei Fang <wei.fang@nxp.com>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 26/91] net: enetc: add missing static descriptor and inline keyword
-Date: Mon, 21 Oct 2024 12:24:40 +0200
-Message-ID: <20241021102250.846094217@linuxfoundation.org>
+Subject: [PATCH 6.1 27/91] posix-clock: Fix missing timespec64 check in pc_clock_settime()
+Date: Mon, 21 Oct 2024 12:24:41 +0200
+Message-ID: <20241021102250.884387133@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -53,47 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 1d7b2ce43d2c22a21dadaf689cb36a69570346a6 upstream.
+commit d8794ac20a299b647ba9958f6d657051fc51a540 upstream.
 
-Fix the build warnings when CONFIG_FSL_ENETC_MDIO is not enabled.
-The detailed warnings are shown as follows.
+As Andrew pointed out, it will make sense that the PTP core
+checked timespec64 struct's tv_sec and tv_nsec range before calling
+ptp->info->settime64().
 
-include/linux/fsl/enetc_mdio.h:62:18: warning: no previous prototype for function 'enetc_hw_alloc' [-Wmissing-prototypes]
-      62 | struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
-         |                  ^
-include/linux/fsl/enetc_mdio.h:62:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-      62 | struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
-         | ^
-         | static
-8 warnings generated.
+As the man manual of clock_settime() said, if tp.tv_sec is negative or
+tp.tv_nsec is outside the range [0..999,999,999], it should return EINVAL,
+which include dynamic clocks which handles PTP clock, and the condition is
+consistent with timespec64_valid(). As Thomas suggested, timespec64_valid()
+only check the timespec is valid, but not ensure that the time is
+in a valid range, so check it ahead using timespec64_valid_strict()
+in pc_clock_settime() and return -EINVAL if not valid.
 
-Fixes: 6517798dd343 ("enetc: Make MDIO accessors more generic and export to include/linux/fsl")
+There are some drivers that use tp->tv_sec and tp->tv_nsec directly to
+write registers without validity checks and assume that the higher layer
+has checked it, which is dangerous and will benefit from this, such as
+hclge_ptp_settime(), igb_ptp_settime_i210(), _rcar_gen4_ptp_settime(),
+and some drivers can remove the checks of itself.
+
 Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202410102136.jQHZOcS4-lkp@intel.com/
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20241011030103.392362-1-wei.fang@nxp.com
+Fixes: 0606f422b453 ("posix clocks: Introduce dynamic clocks")
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Suggested-by: Andrew Lunn <andrew@lunn.ch>
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://patch.msgid.link/20241009072302.1754567-2-ruanjinjie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fsl/enetc_mdio.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/time/posix-clock.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/include/linux/fsl/enetc_mdio.h
-+++ b/include/linux/fsl/enetc_mdio.h
-@@ -48,7 +48,8 @@ static inline int enetc_mdio_read(struct
- static inline int enetc_mdio_write(struct mii_bus *bus, int phy_id, int regnum,
- 				   u16 value)
- { return -EINVAL; }
--struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
-+static inline struct enetc_hw *enetc_hw_alloc(struct device *dev,
-+					      void __iomem *port_regs)
- { return ERR_PTR(-EINVAL); }
+--- a/kernel/time/posix-clock.c
++++ b/kernel/time/posix-clock.c
+@@ -299,6 +299,9 @@ static int pc_clock_settime(clockid_t id
+ 		goto out;
+ 	}
  
- #endif
++	if (!timespec64_valid_strict(ts))
++		return -EINVAL;
++
+ 	if (cd.clk->ops.clock_settime)
+ 		err = cd.clk->ops.clock_settime(cd.clk, ts);
+ 	else
 
 
