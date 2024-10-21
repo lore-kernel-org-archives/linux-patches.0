@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166941E3DF0;
-	Mon, 21 Oct 2024 10:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0C01EBA16;
+	Mon, 21 Oct 2024 10:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507763; cv=none; b=Bz6gtoVB9VPaYOPUToCgGNZPcS65XfsSFKk5pVTY6RhJhn7MIAGnh8AEOCIwrRaqIgkCdzzZTLkqwKZrQEh5oAKt9FYJ6FZC+3jeTPsxvWLkcEpum6/z+BdlqzmsFny2onifDemuXi9GrUmsRzAPsXZtpz/N2MjIh70qcInSx7A=
+	t=1729507766; cv=none; b=MJqjQLwXLszhLegPQ9jlPDKMYnRngNLMoULjfYdVBk64CmFIJ5llCoYgFL5cA3fFtRTZo/1b7rmEIVbyJEXgQWxW1IKJYq4BvUdwYbx7RUDJR5tTtjoopIobQPsqR+gm20j58yYxP9/HV+X8eApxwiPXuhiLzeLgv97Gu+JL1PQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507763; c=relaxed/simple;
-	bh=evC+SJpD+zFCFu9Ux7qB9NsiuT7o6ArcGQxGRduwiwk=;
+	s=arc-20240116; t=1729507766; c=relaxed/simple;
+	bh=wTr/TzjfxQprzJHoFZQ3VyaPCkcIJzQAO0J6nXGM1IU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPWls1AOaPeUQmyMO9BEwooKUduY3R9sxVQmhMWU/kgxhHYbKL+Kw5WCuqtMG1q5belv8T4UixDg/5IyyTsIG1Tnfcu0CFfxpqWcLqzkXs2QeHXu0bHqXwjX3GJuM621EW106V9tH5saD0je/P/TkQQQFcrKfdT4U1x1FPa1aXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIEdppGS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tI9RTiyLcglbAeLsdVZI5nzmmk+OtbqWcXL6xvxRwOrtkYWkE+JQy0PGcmfAvkL6djTUJMBtZtuNFbmoUqBTHHjB2fe/5qSFn74/4++Ab/3N+BjrUi24RKK6vpsIWQwu1n4yplEI0ioLEqLAeOXfzlT4sGq3OzD6X/TLNP03gIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l097QZMt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIEdppGS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6B1C4CEC3;
-	Mon, 21 Oct 2024 10:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l097QZMt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 808F9C4CEC3;
+	Mon, 21 Oct 2024 10:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507762;
-	bh=evC+SJpD+zFCFu9Ux7qB9NsiuT7o6ArcGQxGRduwiwk=;
+	s=korg; t=1729507765;
+	bh=wTr/TzjfxQprzJHoFZQ3VyaPCkcIJzQAO0J6nXGM1IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PIEdppGSICl/wBBKTTrw3sxjmu9eeQsW5xtrGJO1P5XpT/3AxJdSGY8yUy9uwj9kR
-	 73YdlQ6eL8khBefBqFdsCHwW7kh1EAo5xo/HhIvTNUwkm2XKaLvlWCvgu/CllbmPcF
-	 jG8RxfWtwo4jrUt3/qaKS7P5Yh9GRFxrdG81dXPc=
+	b=l097QZMtRidTpxQcQ7M+Ld1qZHHcfXTXGVt35x7sq4sgR4ReBq+J1LR15XLBAv9wi
+	 K6DVzWuB5TYknERLq9lIo43+HRrJH5XV35gS/L1YaUsn/qSjN3J8qD7drJOTwTmYv2
+	 iT3hmBRK7XVAxEeCShyzGQuxBXKYQ6WNSH+/Yy1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Saeed Mirzamohammadi <saeed.mirzamohammadi@oracle.com>
-Subject: [PATCH 5.10 11/52] KVM: Fix a data race on last_boosted_vcpu in kvm_vcpu_on_spin()
-Date: Mon, 21 Oct 2024 12:25:32 +0200
-Message-ID: <20241021102242.069895603@linuxfoundation.org>
+	Felix Moessbauer <felix.moessbauer@siemens.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 12/52] io_uring/sqpoll: do not allow pinning outside of cpuset
+Date: Mon, 21 Oct 2024 12:25:33 +0200
+Message-ID: <20241021102242.108501826@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102241.624153108@linuxfoundation.org>
 References: <20241021102241.624153108@linuxfoundation.org>
@@ -51,97 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Felix Moessbauer <felix.moessbauer@siemens.com>
 
-commit 49f683b41f28918df3e51ddc0d928cb2e934ccdb upstream.
+commit f011c9cf04c06f16b24f583d313d3c012e589e50 upstream.
 
-Use {READ,WRITE}_ONCE() to access kvm->last_boosted_vcpu to ensure the
-loads and stores are atomic.  In the extremely unlikely scenario the
-compiler tears the stores, it's theoretically possible for KVM to attempt
-to get a vCPU using an out-of-bounds index, e.g. if the write is split
-into multiple 8-bit stores, and is paired with a 32-bit load on a VM with
-257 vCPUs:
+The submit queue polling threads are userland threads that just never
+exit to the userland. When creating the thread with IORING_SETUP_SQ_AFF,
+the affinity of the poller thread is set to the cpu specified in
+sq_thread_cpu. However, this CPU can be outside of the cpuset defined
+by the cgroup cpuset controller. This violates the rules defined by the
+cpuset controller and is a potential issue for realtime applications.
 
-  CPU0                              CPU1
-  last_boosted_vcpu = 0xff;
+In b7ed6d8ffd6 we fixed the default affinity of the poller thread, in
+case no explicit pinning is required by inheriting the one of the
+creating task. In case of explicit pinning, the check is more
+complicated, as also a cpu outside of the parent cpumask is allowed.
+We implemented this by using cpuset_cpus_allowed (that has support for
+cgroup cpusets) and testing if the requested cpu is in the set.
 
-                                    (last_boosted_vcpu = 0x100)
-                                    last_boosted_vcpu[15:8] = 0x01;
-  i = (last_boosted_vcpu = 0x1ff)
-                                    last_boosted_vcpu[7:0] = 0x00;
-
-  vcpu = kvm->vcpu_array[0x1ff];
-
-As detected by KCSAN:
-
-  BUG: KCSAN: data-race in kvm_vcpu_on_spin [kvm] / kvm_vcpu_on_spin [kvm]
-
-  write to 0xffffc90025a92344 of 4 bytes by task 4340 on cpu 16:
-  kvm_vcpu_on_spin (arch/x86/kvm/../../../virt/kvm/kvm_main.c:4112) kvm
-  handle_pause (arch/x86/kvm/vmx/vmx.c:5929) kvm_intel
-  vmx_handle_exit (arch/x86/kvm/vmx/vmx.c:?
-		 arch/x86/kvm/vmx/vmx.c:6606) kvm_intel
-  vcpu_run (arch/x86/kvm/x86.c:11107 arch/x86/kvm/x86.c:11211) kvm
-  kvm_arch_vcpu_ioctl_run (arch/x86/kvm/x86.c:?) kvm
-  kvm_vcpu_ioctl (arch/x86/kvm/../../../virt/kvm/kvm_main.c:?) kvm
-  __se_sys_ioctl (fs/ioctl.c:52 fs/ioctl.c:904 fs/ioctl.c:890)
-  __x64_sys_ioctl (fs/ioctl.c:890)
-  x64_sys_call (arch/x86/entry/syscall_64.c:33)
-  do_syscall_64 (arch/x86/entry/common.c:?)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-  read to 0xffffc90025a92344 of 4 bytes by task 4342 on cpu 4:
-  kvm_vcpu_on_spin (arch/x86/kvm/../../../virt/kvm/kvm_main.c:4069) kvm
-  handle_pause (arch/x86/kvm/vmx/vmx.c:5929) kvm_intel
-  vmx_handle_exit (arch/x86/kvm/vmx/vmx.c:?
-			arch/x86/kvm/vmx/vmx.c:6606) kvm_intel
-  vcpu_run (arch/x86/kvm/x86.c:11107 arch/x86/kvm/x86.c:11211) kvm
-  kvm_arch_vcpu_ioctl_run (arch/x86/kvm/x86.c:?) kvm
-  kvm_vcpu_ioctl (arch/x86/kvm/../../../virt/kvm/kvm_main.c:?) kvm
-  __se_sys_ioctl (fs/ioctl.c:52 fs/ioctl.c:904 fs/ioctl.c:890)
-  __x64_sys_ioctl (fs/ioctl.c:890)
-  x64_sys_call (arch/x86/entry/syscall_64.c:33)
-  do_syscall_64 (arch/x86/entry/common.c:?)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-  value changed: 0x00000012 -> 0x00000000
-
-Fixes: 217ece6129f2 ("KVM: use yield_to instead of sleep in kvm_vcpu_on_spin")
-Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://lore.kernel.org/r/20240510092353.2261824-1-leitao@debian.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Saeed Mirzamohammadi <saeed.mirzamohammadi@oracle.com>
+Fixes: 37d1e2e3642e ("io_uring: move SQPOLL thread io-wq forked worker")
+Signed-off-by: Felix Moessbauer <felix.moessbauer@siemens.com>
+Link: https://lore.kernel.org/r/20240909150036.55921-1-felix.moessbauer@siemens.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/kvm_main.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -3090,12 +3090,13 @@ void kvm_vcpu_on_spin(struct kvm_vcpu *m
- {
- 	struct kvm *kvm = me->kvm;
- 	struct kvm_vcpu *vcpu;
--	int last_boosted_vcpu = me->kvm->last_boosted_vcpu;
-+	int last_boosted_vcpu;
- 	int yielded = 0;
- 	int try = 3;
- 	int pass;
- 	int i;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -56,6 +56,7 @@
+ #include <linux/mm.h>
+ #include <linux/mman.h>
+ #include <linux/percpu.h>
++#include <linux/cpuset.h>
+ #include <linux/slab.h>
+ #include <linux/blkdev.h>
+ #include <linux/bvec.h>
+@@ -8571,10 +8572,12 @@ static int io_sq_offload_create(struct i
+ 			return 0;
  
-+	last_boosted_vcpu = READ_ONCE(kvm->last_boosted_vcpu);
- 	kvm_vcpu_set_in_spin_loop(me, true);
- 	/*
- 	 * We boost the priority of a VCPU that is runnable but not
-@@ -3126,7 +3127,7 @@ void kvm_vcpu_on_spin(struct kvm_vcpu *m
+ 		if (p->flags & IORING_SETUP_SQ_AFF) {
++			struct cpumask allowed_mask;
+ 			int cpu = p->sq_thread_cpu;
  
- 			yielded = kvm_vcpu_yield_to(vcpu);
- 			if (yielded > 0) {
--				kvm->last_boosted_vcpu = i;
-+				WRITE_ONCE(kvm->last_boosted_vcpu, i);
- 				break;
- 			} else if (yielded < 0) {
- 				try--;
+ 			ret = -EINVAL;
+-			if (cpu >= nr_cpu_ids || !cpu_online(cpu))
++			cpuset_cpus_allowed(current, &allowed_mask);
++			if (!cpumask_test_cpu(cpu, &allowed_mask))
+ 				goto err_sqpoll;
+ 			sqd->sq_cpu = cpu;
+ 		} else {
 
 
