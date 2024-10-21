@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD43C1F941B;
-	Mon, 21 Oct 2024 10:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF131EBFFD;
+	Mon, 21 Oct 2024 10:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507786; cv=none; b=lLYhWX4S1h2Gu1rNoMQN1eQEgJqQC0S/HR+UWMItD5+IKZgWbn3uzrCLOtCLrFS6VcT6edJyBZyhcHibvNT6W6MJjrrKw1mHei0r946P91uF+jYgF9Q6kB3ZNmb9CchQ8xHxIAvIjgB3Z6z6J4ImJ1NimhIla3IN8cLRbfnr+tU=
+	t=1729507789; cv=none; b=at6McaSnF6aPqm9d8V4qjDTonuBlfR0QV8fmYWbSaN3/ZgT6DzCwbQ0pv1YAOyfQgT9azp9VjJ+aH7Hqk+9Kh6nw0woHejCmR/0qU22mclcdNYh1UP17fyBWS0hIzejcy7jZvylJyQh+kkfbXWNX1k7J1wYwyVH1lRSqvZ1StDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507786; c=relaxed/simple;
-	bh=+wH1MyFEyFPqEKiRhNuZh3xbfRAazDi7Wf2QrPgdkiE=;
+	s=arc-20240116; t=1729507789; c=relaxed/simple;
+	bh=zTO4buLTtD3E5uRN9jQnl3lN07Za5zkQD0TuX2bDcOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BVsfaO+69HK9V9Xa7moaSH9dTc15aLc3DPe24efszf3it09PeptkW3a1GDkfqNjy9h1X+KKjMnlT2NDk6E4xKZjYXzd+8IFMQTjEGJz4GFS4mgS5ESY9PXnPMc2yPZ8vu4SeyfuPh9CrY7P6ZzsM6WNqhPXi8zOBX0Uf7j1XSsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvmy8skI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LGMmzcTQcXaatRpNxWSsd2lYNn+tv75+WsBN2bksqmaFFevBcDXdBHAaxN70EpNJBAicIZnu3ePN5vSjApHbm3lYGHS1ag+6+wvmeqyrVHCfdz8/fuuZBLamyohIImILDox9f2ouaGPp9XQQ5HnZuzUXPsjSOU/4u8/W1vBw4+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1N4FMkbB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvmy8skI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB68C4CEC3;
-	Mon, 21 Oct 2024 10:49:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1N4FMkbB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41336C4CEC3;
+	Mon, 21 Oct 2024 10:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507786;
-	bh=+wH1MyFEyFPqEKiRhNuZh3xbfRAazDi7Wf2QrPgdkiE=;
+	s=korg; t=1729507789;
+	bh=zTO4buLTtD3E5uRN9jQnl3lN07Za5zkQD0TuX2bDcOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dvmy8skId69V7TdlL/WmoFwub1Ve5n4gIc9ZvdYCHts8DwTqXcKwwj1tUYBJE/23V
-	 /VgxFiF14eV4NvGakOE24BiO/MgdhAzZx7MXphuftksicggoXN0uw82lfWdwd/GPKb
-	 BOElm3jLJYqmcLiDoRYkp2+q4ZSIXLOeg+jqsyp4=
+	b=1N4FMkbB9qtq0pdNdznotLLM8kXNVOjaGcsuvwf5qXNBMv9Bh00YPBwgLRLeiwmrn
+	 oGzgiDbbPSU1IlYQVUQC8s2J/iqAmMH1R9D/02G1/yGvJ01nZJwgqp+COEyCSMOjkh
+	 a8bFJcYCUSfUSNKwQ0o9mquUQ2X+aS4O41hhix60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Wikner <kwikner@ethz.ch>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 5.10 19/52] x86/entry: Have entry_ibpb() invalidate return predictions
-Date: Mon, 21 Oct 2024 12:25:40 +0200
-Message-ID: <20241021102242.378149241@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 02/52] net: enetc: add missing static descriptor and inline keyword
+Date: Mon, 21 Oct 2024 12:25:23 +0200
+Message-ID: <20241021102241.721902328@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102241.624153108@linuxfoundation.org>
 References: <20241021102241.624153108@linuxfoundation.org>
@@ -51,47 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Wikner <kwikner@ethz.ch>
+From: Wei Fang <wei.fang@nxp.com>
 
-commit 50e4b3b94090babe8d4bb85c95f0d3e6b07ea86e upstream.
+commit 1d7b2ce43d2c22a21dadaf689cb36a69570346a6 upstream.
 
-entry_ibpb() should invalidate all indirect predictions, including return
-target predictions. Not all IBPB implementations do this, in which case the
-fallback is RSB filling.
+Fix the build warnings when CONFIG_FSL_ENETC_MDIO is not enabled.
+The detailed warnings are shown as follows.
 
-Prevent SRSO-style hijacks of return predictions following IBPB, as the return
-target predictor can be corrupted before the IBPB completes.
+include/linux/fsl/enetc_mdio.h:62:18: warning: no previous prototype for function 'enetc_hw_alloc' [-Wmissing-prototypes]
+      62 | struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
+         |                  ^
+include/linux/fsl/enetc_mdio.h:62:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+      62 | struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
+         | ^
+         | static
+8 warnings generated.
 
-  [ bp: Massage. ]
-
-Signed-off-by: Johannes Wikner <kwikner@ethz.ch>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
+Fixes: 6517798dd343 ("enetc: Make MDIO accessors more generic and export to include/linux/fsl")
+Cc: stable@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202410102136.jQHZOcS4-lkp@intel.com/
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20241011030103.392362-1-wei.fang@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/entry/entry.S |    5 +++++
- 1 file changed, 5 insertions(+)
+ include/linux/fsl/enetc_mdio.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/entry/entry.S
-+++ b/arch/x86/entry/entry.S
-@@ -9,6 +9,8 @@
- #include <asm/unwind_hints.h>
- #include <asm/segment.h>
- #include <asm/cache.h>
-+#include <asm/cpufeatures.h>
-+#include <asm/nospec-branch.h>
+--- a/include/linux/fsl/enetc_mdio.h
++++ b/include/linux/fsl/enetc_mdio.h
+@@ -48,7 +48,8 @@ static inline int enetc_mdio_read(struct
+ static inline int enetc_mdio_write(struct mii_bus *bus, int phy_id, int regnum,
+ 				   u16 value)
+ { return -EINVAL; }
+-struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
++static inline struct enetc_hw *enetc_hw_alloc(struct device *dev,
++					      void __iomem *port_regs)
+ { return ERR_PTR(-EINVAL); }
  
- .pushsection .noinstr.text, "ax"
- 
-@@ -17,6 +19,9 @@ SYM_FUNC_START(entry_ibpb)
- 	movl	$PRED_CMD_IBPB, %eax
- 	xorl	%edx, %edx
- 	wrmsr
-+
-+	/* Make sure IBPB clears return stack preductions too. */
-+	FILL_RETURN_BUFFER %rax, RSB_CLEAR_LOOPS, X86_BUG_IBPB_NO_RET
- 	RET
- SYM_FUNC_END(entry_ibpb)
- /* For KVM */
+ #endif
 
 
