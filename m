@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BED1E7C18;
-	Mon, 21 Oct 2024 10:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFBC1E6DFF;
+	Mon, 21 Oct 2024 10:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507162; cv=none; b=rB0qcxyZ8RF42+8tqIUpYH7qaVrKF/1uW0m3XpJdchtvGUpNBdoRnTClyKYmNvl2haWquY1ONubQp3YjpAi6OzqgUgG9ACJBUjDVHCxQ9OJTKwrCPNKSpCQII6LNLQqLblF0WUSkajgaJTkHd+t8nFXq19HCPYLCfwLH/hsdFcg=
+	t=1729507165; cv=none; b=d5cRcDkP5UBwUluH7CrIr3j8QyGJOI59XCnNxkv6+Ob/gWBSm+7th2BtekiY/Pt+9dC1F5c/fVRMD+4szZUrwhUtQfo+ps2ByRR7e42x7fVkvq/98Dkxeevi6gOqw+ZJGmVNqV7EGI3M+9cIkC2oQFisuJazSH4KvIqNqhJhQlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507162; c=relaxed/simple;
-	bh=M2iJ4XIKREdzxoR0Jw1ALmZ/LC/9iviV2Ws/kLUg5Mw=;
+	s=arc-20240116; t=1729507165; c=relaxed/simple;
+	bh=favt9dLQJO5oU7OxCYMrYe4shXCzLH/yINcajU+dAgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hV/ANyZk3tYu3PrREDINUAJ6WVLe1NBRxZWUe2eLtuoTFcPBtXxI4mP57lkzpp3wgdiT+kAzfts61EnX4SNKVIAiqjzw8RWrG+BPmYi4mBpAc9giwAg6bFAqrrruNbGkHT2fuLSfgCpW5bvmr1OgejqFVqpuvwmhFYc+i3uo9K4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJmnUWq2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fxOlFJiREhyBnXG2PVHMefHfiHXqEY1XUev1PJ2GmCTQm4HL0Napb5rio0+C8umAjB7KN9B7vmXfJ/AKJr8velvgekWkzoTV0FfziwsgyXwnBb+LhsB7rCunlWz01qildOsDxDecBW9mhsciiXSWY3kEhFfFpw7IPKnhmrvi3AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfXWbyIv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJmnUWq2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A369C4CEC3;
-	Mon, 21 Oct 2024 10:39:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfXWbyIv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30700C4CEC7;
+	Mon, 21 Oct 2024 10:39:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507162;
-	bh=M2iJ4XIKREdzxoR0Jw1ALmZ/LC/9iviV2Ws/kLUg5Mw=;
+	s=korg; t=1729507165;
+	bh=favt9dLQJO5oU7OxCYMrYe4shXCzLH/yINcajU+dAgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IJmnUWq2DD7NFuyuQ/Gq+Ny1ZM3mEcuJUAFm9bVNjwHA7WWxmJmcPEWArc7BKwSwd
-	 0/eM5RUi/zLQVoKFl4onHxLWUXJ2oicxezNSP9iRFk2JXvfl020zDGRSUSDDurh0M/
-	 GKHnkjppMvHWb/GWkDN2cbKA6gXzsUcOZF5Bc4Mg=
+	b=CfXWbyIvQGkrP6qESkgDdV0cxhvshOSniQkaStv20zreECmfziHSYgM1RRMaRKoaL
+	 yWDQ7/HG9izDbwpWNm98kaSefcSWBErURNXJpUTKtaMj9s0aG97sl0PErX7kIs66xU
+	 IpsanRiy+X9sxETLSUJ9aRfEcdShSRKajxHUHeUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Matsievskiy <matsievskiysv@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Ma Ke <make24@iscas.ac.cn>,
 	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.6 110/124] pinctrl: ocelot: fix system hang on level based interrupts
-Date: Mon, 21 Oct 2024 12:25:14 +0200
-Message-ID: <20241021102300.973290117@linuxfoundation.org>
+Subject: [PATCH 6.6 111/124] pinctrl: stm32: check devm_kasprintf() returned value
+Date: Mon, 21 Oct 2024 12:25:15 +0200
+Message-ID: <20241021102301.011529905@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -51,76 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Matsievskiy <matsievskiysv@gmail.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 93b8ddc54507a227087c60a0013ed833b6ae7d3c upstream.
+commit b0f0e3f0552a566def55c844b0d44250c58e4df6 upstream.
 
-The current implementation only calls chained_irq_enter() and
-chained_irq_exit() if it detects pending interrupts.
+devm_kasprintf() can return a NULL pointer on failure but this returned
+value is not checked. Fix this lack and check the returned value.
 
-```
-for (i = 0; i < info->stride; i++) {
-	uregmap_read(info->map, id_reg + 4 * i, &reg);
-	if (!reg)
-		continue;
-
-	chained_irq_enter(parent_chip, desc);
-```
-
-However, in case of GPIO pin configured in level mode and the parent
-controller configured in edge mode, GPIO interrupt might be lowered by the
-hardware. In the result, if the interrupt is short enough, the parent
-interrupt is still pending while the GPIO interrupt is cleared;
-chained_irq_enter() never gets called and the system hangs trying to
-service the parent interrupt.
-
-Moving chained_irq_enter() and chained_irq_exit() outside the for loop
-ensures that they are called even when GPIO interrupt is lowered by the
-hardware.
-
-The similar code with chained_irq_enter() / chained_irq_exit() functions
-wrapping interrupt checking loop may be found in many other drivers:
-```
-grep -r -A 10 chained_irq_enter drivers/pinctrl
-```
+Found by code review.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Sergey Matsievskiy <matsievskiysv@gmail.com>
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/20241012105743.12450-2-matsievskiysv@gmail.com
+Fixes: 32c170ff15b0 ("pinctrl: stm32: set default gpio line names using pin names")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Link: https://lore.kernel.org/20240906100326.624445-1-make24@iscas.ac.cn
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-ocelot.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pinctrl/stm32/pinctrl-stm32.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/pinctrl/pinctrl-ocelot.c
-+++ b/drivers/pinctrl/pinctrl-ocelot.c
-@@ -1962,21 +1962,21 @@ static void ocelot_irq_handler(struct ir
- 	unsigned int reg = 0, irq, i;
- 	unsigned long irqs;
+--- a/drivers/pinctrl/stm32/pinctrl-stm32.c
++++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
+@@ -1387,10 +1387,15 @@ static int stm32_gpiolib_register_bank(s
  
-+	chained_irq_enter(parent_chip, desc);
-+
- 	for (i = 0; i < info->stride; i++) {
- 		regmap_read(info->map, id_reg + 4 * i, &reg);
- 		if (!reg)
- 			continue;
- 
--		chained_irq_enter(parent_chip, desc);
--
- 		irqs = reg;
- 
- 		for_each_set_bit(irq, &irqs,
- 				 min(32U, info->desc->npins - 32 * i))
- 			generic_handle_domain_irq(chip->irq.domain, irq + 32 * i);
--
--		chained_irq_exit(parent_chip, desc);
+ 	for (i = 0; i < npins; i++) {
+ 		stm32_pin = stm32_pctrl_get_desc_pin_from_gpio(pctl, bank, i);
+-		if (stm32_pin && stm32_pin->pin.name)
++		if (stm32_pin && stm32_pin->pin.name) {
+ 			names[i] = devm_kasprintf(dev, GFP_KERNEL, "%s", stm32_pin->pin.name);
+-		else
++			if (!names[i]) {
++				err = -ENOMEM;
++				goto err_clk;
++			}
++		} else {
+ 			names[i] = NULL;
++		}
  	}
-+
-+	chained_irq_exit(parent_chip, desc);
- }
  
- static int ocelot_gpiochip_register(struct platform_device *pdev,
+ 	bank->gpio_chip.names = (const char * const *)names;
 
 
