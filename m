@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF21D1F429E;
-	Mon, 21 Oct 2024 10:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097231EB9EB;
+	Mon, 21 Oct 2024 10:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506806; cv=none; b=GZlognBzUJfhzCFk4Fo9i7LCo9dDYwlF/VB/zAoYzkFg2Q5XrW9XW4OEqNRuHy6LY7WMd9/5RJ8qqpyzlvPI3TFUY61Bl443Oy3ZRiCvwJG6PFBhIJ/Mzj4hh93UrIpZF9cgQcoM1DnfW2P8XIHO4jLfEY8r43PZv+1m4ENONIY=
+	t=1729506810; cv=none; b=qClvJ8fMR67bCA+H7L1qgAG8mNDSS5TE/a7Ggo+0T0GWrCOMFHUbovxjm8i+ftuqr5UZBryqWGljazd+A18SHjBIhnz57FtEWqTEXZQHSN2iDx0P6QzFc73a29fmTyXN2fMoNChMuEiFtAXgAZ9R/cSPBNbxEgRSyW0vdZ38+yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506806; c=relaxed/simple;
-	bh=OwuA1SZIgFvmJsaujaG2pSjJb0vLAdDdFhGh6UxL/RI=;
+	s=arc-20240116; t=1729506810; c=relaxed/simple;
+	bh=XIPhKd+LOtnIILzMpmiPaZ4AiFi6J6IYLpg6MBGVBdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYG4iiOjpXUezMKWWiVzNkKrsunf1uIoIntlr3YKBJSCHgm28ilFgP7bk1pjDPx4httl5HLscN0qODL5yT8kX/AmmdZM1yBeUENl49/rAShYDktLJ59DBBAeNP4rRXOyOhaJQLVkU+3I5Mx4GlZdW1RGcGAZSAG/oheXTc4SMTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1ExPhFJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Erl1u6LvjsLZDQzyCHDfELpZsMb7+rQ9BKMlJ7Q/SlOKRWvK4MpeCDE2cWFHdFS39KDpm0TBRp4S1NnLyBHyCTXDUP97K4qbjDfTLrqjZkptppck3T1ubwW9efArdosjZRW4mgjB5ol0A8V5oW99y8+hd6P2jQ2L4Si5Eozde00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o8t1G6My; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1ExPhFJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FADEC4CEEE;
-	Mon, 21 Oct 2024 10:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o8t1G6My"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561A9C4CEE7;
+	Mon, 21 Oct 2024 10:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506806;
-	bh=OwuA1SZIgFvmJsaujaG2pSjJb0vLAdDdFhGh6UxL/RI=;
+	s=korg; t=1729506809;
+	bh=XIPhKd+LOtnIILzMpmiPaZ4AiFi6J6IYLpg6MBGVBdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1ExPhFJz0m/d+7BtAfc8XbpvXzaJCci7hrYkVR9mLxLefjNiakaXi0gSFVovBZnd
-	 lRD7/4dbEcXMr72HssLmcpUzYkYvWvB3UOQeYcMibqutov/smtVhU0RWrFroh69JiJ
-	 DygP/Pv7k5T3+Fv/702gGGbZzVobweBCxinZsjhc=
+	b=o8t1G6Myvm3gRgW6QPOrQ188S/vtO2LpK0UDSGt5Q0pGHMwVpbUTTUoIpHHAJv6JM
+	 pljKTYPgfqDwA0T73zslHMKrAzjSFCXEbAB9CjEAXq2OjAKPz4fhD9D9r/YORyZWGd
+	 Kp71c1RMGx0yxVU1rU2ez2dvlus7R4LZ8TbIL/mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.11 127/135] irqchip/sifive-plic: Unmask interrupt in plic_irq_enable()
-Date: Mon, 21 Oct 2024 12:24:43 +0200
-Message-ID: <20241021102304.311323656@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Anup Patel <anup@brainfault.org>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>
+Subject: [PATCH 6.11 128/135] irqchip/sifive-plic: Return error code on failure
+Date: Mon, 21 Oct 2024 12:24:44 +0200
+Message-ID: <20241021102304.349777022@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -50,81 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Charlie Jenkins <charlie@rivosinc.com>
 
-commit 6b1e0651e9ce8ce418ad4ff360e7b9925dc5da79 upstream.
+commit 6eabf656048d904d961584de2e1d45bc0854f9fb upstream.
 
-It is possible that an interrupt is disabled and masked at the same time.
-When the interrupt is enabled again by enable_irq(), only plic_irq_enable()
-is called, not plic_irq_unmask(). The interrupt remains masked and never
-raises.
+Set error to -ENOMEM if kcalloc() fails or if irq_domain_add_linear()
+fails inside of plic_probe() instead of returning 0.
 
-An example where interrupt is both disabled and masked is when
-handle_fasteoi_irq() is the handler, and IRQS_ONESHOT is set. The interrupt
-handler:
-
-  1. Mask the interrupt
-  2. Handle the interrupt
-  3. Check if interrupt is still enabled, and unmask it (see
-     cond_unmask_eoi_irq())
-
-If another task disables the interrupt in the middle of the above steps,
-the interrupt will not get unmasked, and will remain masked when it is
-enabled in the future.
-
-The problem is occasionally observed when PREEMPT_RT is enabled, because
-PREEMPT_RT adds the IRQS_ONESHOT flag. But PREEMPT_RT only makes the problem
-more likely to appear, the bug has been around since commit a1706a1c5062
-("irqchip/sifive-plic: Separate the enable and mask operations").
-
-Fix it by unmasking interrupt in plic_irq_enable().
-
-Fixes: a1706a1c5062 ("irqchip/sifive-plic: Separate the enable and mask operations")
-Signed-off-by: Nam Cao <namcao@linutronix.de>
+Fixes: 4d936f10ff80 ("irqchip/sifive-plic: Probe plic driver early for Allwinner D1 platform")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Charlie Jenkins <charlie@rivosinc.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241003084152.2422969-1-namcao@linutronix.de
+Link: https://lore.kernel.org/all/20240903-correct_error_codes_sifive_plic-v1-1-d929b79663a2@rivosinc.com
+Closes: https://lore.kernel.org/r/202409031122.yBh8HrxA-lkp@intel.com/
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-sifive-plic.c |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/irqchip/irq-sifive-plic.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 --- a/drivers/irqchip/irq-sifive-plic.c
 +++ b/drivers/irqchip/irq-sifive-plic.c
-@@ -123,16 +123,6 @@ static inline void plic_irq_toggle(const
- 	}
- }
+@@ -578,8 +578,10 @@ static int plic_probe(struct fwnode_hand
  
--static void plic_irq_enable(struct irq_data *d)
--{
--	plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 1);
--}
--
--static void plic_irq_disable(struct irq_data *d)
--{
--	plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 0);
--}
--
- static void plic_irq_unmask(struct irq_data *d)
- {
- 	struct plic_priv *priv = irq_data_get_irq_chip_data(d);
-@@ -147,6 +137,17 @@ static void plic_irq_mask(struct irq_dat
- 	writel(0, priv->regs + PRIORITY_BASE + d->hwirq * PRIORITY_PER_ID);
- }
+ 		handler->enable_save = kcalloc(DIV_ROUND_UP(nr_irqs, 32),
+ 					       sizeof(*handler->enable_save), GFP_KERNEL);
+-		if (!handler->enable_save)
++		if (!handler->enable_save) {
++			error = -ENOMEM;
+ 			goto fail_cleanup_contexts;
++		}
+ done:
+ 		for (hwirq = 1; hwirq <= nr_irqs; hwirq++) {
+ 			plic_toggle(handler, hwirq, 0);
+@@ -591,8 +593,10 @@ done:
  
-+static void plic_irq_enable(struct irq_data *d)
-+{
-+	plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 1);
-+	plic_irq_unmask(d);
-+}
-+
-+static void plic_irq_disable(struct irq_data *d)
-+{
-+	plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 0);
-+}
-+
- static void plic_irq_eoi(struct irq_data *d)
- {
- 	struct plic_handler *handler = this_cpu_ptr(&plic_handlers);
+ 	priv->irqdomain = irq_domain_add_linear(to_of_node(fwnode), nr_irqs + 1,
+ 						&plic_irqdomain_ops, priv);
+-	if (WARN_ON(!priv->irqdomain))
++	if (WARN_ON(!priv->irqdomain)) {
++		error = -ENOMEM;
+ 		goto fail_cleanup_contexts;
++	}
+ 
+ 	/*
+ 	 * We can have multiple PLIC instances so setup global state
 
 
