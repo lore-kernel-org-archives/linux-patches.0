@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4991E6311;
-	Mon, 21 Oct 2024 10:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176761E3784;
+	Mon, 21 Oct 2024 10:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507864; cv=none; b=ulVI6yGo7wdhGIndy9fm3zlLsIaRgTJTPGI3W+HcIBrsIDqP9J6cTrisqM0pquOtHF0EtQZZDtqQb4dNcUkX1kSxbJkSR5c6bvuBuFn64CkzGbNgYONLRtiABOBm77gBv7vNj47phoiw8tjT83hPTWjKjSDGamNFKkAlsRHckzk=
+	t=1729507867; cv=none; b=m+ZBWX8c/u4kBNnZKwE+rHl2G40YFeNg3ZXxPaqdACMKuTvSw6DW6CiVDsbLpyFu9kfC/nelkcokBYgS1GPUNsBxArJpTrokH4+6NrZ/e7OCfMSUA+y+Obfkt1RMasUkBvsKa2h+kogyiSvRAupkfuk7KwM+y+m3VHjYFTni9Hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507864; c=relaxed/simple;
-	bh=YAK5du6+5nwmipx7qxjUsGqHE/AGJPmOMLkwye14mGE=;
+	s=arc-20240116; t=1729507867; c=relaxed/simple;
+	bh=Bf1sJA68YpLM6brPp6TUu0/bEzoGYZr64QsjMaolO2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GUHe/vf0EqAtfXCXlrxOqqqqliI/GyUAhfhBeN1DH+H5wKNRBNQXiFxnAJJPgdbWNT51LFNmxgUeWcakk7Yy2jy4sAL212/DoFm0N71L+EXGb8uLGuNU8Bpl28nrcitmXub/UyXP4c501H31oF6dp6j6zltKNURgI0AMdnNA5lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PlgElrM9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nFTn8u9H1RGcvZC28GZCcy3dvqZq/7ds1NqSgjmdH2eiMbhwpZBYbRVCPSV6VLSr8NigfTOanCWbygi69hFa3PG+P5gn2meWQOeUCUErLQfMToFJZ+h5ceAsAvpceLroY9/IKKu+cMiSATGkIRPipS2wgSV8yFiFW3B8L+MB/MQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlOziXKb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PlgElrM9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EEA4C4CEC3;
-	Mon, 21 Oct 2024 10:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlOziXKb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B75DC4CEC3;
+	Mon, 21 Oct 2024 10:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507864;
-	bh=YAK5du6+5nwmipx7qxjUsGqHE/AGJPmOMLkwye14mGE=;
+	s=korg; t=1729507866;
+	bh=Bf1sJA68YpLM6brPp6TUu0/bEzoGYZr64QsjMaolO2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlgElrM9YMzFKoztB/WovaPYhkfj3ov83JwyT+FuZtaTl/5fvF2zRGPSM3zSUFtB+
-	 uwLPskvAFlmDPEAdpJW07xjuIehGz8R4Gi4IYkz5Yxpqfy/QEPXZsMQO+dQ2vjwi6c
-	 /STsTZZ/v5TnPhNSp51K7MwK1TvLNO9POZmDZg7Y=
+	b=OlOziXKbLqLrgsXUrGd/9evdW0BZXlC8V32Inon3RDGJNQpYomFpXwfzK8K+M2fPG
+	 vIEtM4jRXpYFrInrpRKRZDfVM2RoSlYnlsZCzHWIudwnPMgx5ql0jjgYa0wKKWqDD4
+	 t3lVRq5nJ8zgCY3R9ilullRld6XqEsLpFiWbM1dY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jari Ruusu <jariruusu@protonmail.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 5.10 44/52] x86/entry_32: Do not clobber user EFLAGS.ZF
-Date: Mon, 21 Oct 2024 12:26:05 +0200
-Message-ID: <20241021102243.352644554@linuxfoundation.org>
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Subject: [PATCH 5.10 45/52] x86/entry_32: Clear CPU buffers after register restore in NMI return
+Date: Mon, 21 Oct 2024 12:26:06 +0200
+Message-ID: <20241021102243.390249954@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102241.624153108@linuxfoundation.org>
 References: <20241021102241.624153108@linuxfoundation.org>
@@ -53,21 +52,21 @@ Content-Transfer-Encoding: 8bit
 
 From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit 2e2e5143d4868163d6756c8c6a4d28cbfa5245e5 upstream.
+commit 48a2440d0f20c826b884e04377ccc1e4696c84e9 upstream.
 
-Opportunistic SYSEXIT executes VERW to clear CPU buffers after user EFLAGS
-are restored. This can clobber user EFLAGS.ZF.
+CPU buffers are currently cleared after call to exc_nmi, but before
+register state is restored. This may be okay for MDS mitigation but not for
+RDFS. Because RDFS mitigation requires CPU buffers to be cleared when
+registers don't have any sensitive data.
 
-Move CLEAR_CPU_BUFFERS before the user EFLAGS are restored. This ensures
-that the user EFLAGS.ZF is not clobbered.
+Move CLEAR_CPU_BUFFERS after RESTORE_ALL_NMI.
 
-Closes: https://lore.kernel.org/lkml/yVXwe8gvgmPADpRB6lXlicS2fcHoV5OHHxyuFbB_MEleRPD7-KhGe5VtORejtPe-KCkT8Uhcg5d7-IBw4Ojb4H7z5LQxoZylSmJ8KNL3A8o=@protonmail.com/
 Fixes: a0e2dab44d22 ("x86/entry_32: Add VERW just before userspace transition")
-Reported-by: Jari Ruusu <jariruusu@protonmail.com>
+Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
 Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
 Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240925-fix-dosemu-vm86-v7-1-1de0daca2d42%40linux.intel.com
+Link: https://lore.kernel.org/all/20240925-fix-dosemu-vm86-v7-2-1de0daca2d42%40linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  arch/x86/entry/entry_32.S |    3 ++-
@@ -75,22 +74,29 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/arch/x86/entry/entry_32.S
 +++ b/arch/x86/entry/entry_32.S
-@@ -939,6 +939,8 @@ SYM_FUNC_START(entry_SYSENTER_32)
+@@ -1222,7 +1222,6 @@ SYM_CODE_START(asm_exc_nmi)
  
- 	/* Now ready to switch the cr3 */
- 	SWITCH_TO_USER_CR3 scratch_reg=%eax
-+	/* Clobbers ZF */
-+	CLEAR_CPU_BUFFERS
- 
- 	/*
- 	 * Restore all flags except IF. (We restore IF separately because
-@@ -949,7 +951,6 @@ SYM_FUNC_START(entry_SYSENTER_32)
- 	BUG_IF_WRONG_CR3 no_user_check=1
- 	popfl
- 	popl	%eax
+ 	/* Not on SYSENTER stack. */
+ 	call	exc_nmi
 -	CLEAR_CPU_BUFFERS
+ 	jmp	.Lnmi_return
  
- 	/*
- 	 * Return back to the vDSO, which will pop ecx and edx.
+ .Lnmi_from_sysenter_stack:
+@@ -1243,6 +1242,7 @@ SYM_CODE_START(asm_exc_nmi)
+ 
+ 	CHECK_AND_APPLY_ESPFIX
+ 	RESTORE_ALL_NMI cr3_reg=%edi pop=4
++	CLEAR_CPU_BUFFERS
+ 	jmp	.Lirq_return
+ 
+ #ifdef CONFIG_X86_ESPFIX32
+@@ -1284,6 +1284,7 @@ SYM_CODE_START(asm_exc_nmi)
+ 	 *  1 - orig_ax
+ 	 */
+ 	lss	(1+5+6)*4(%esp), %esp			# back to espfix stack
++	CLEAR_CPU_BUFFERS
+ 	jmp	.Lirq_return
+ #endif
+ SYM_CODE_END(asm_exc_nmi)
 
 
