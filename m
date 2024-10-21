@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4945A1F472E;
-	Mon, 21 Oct 2024 10:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B1E1EABD4;
+	Mon, 21 Oct 2024 10:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507301; cv=none; b=V2iLDxTqQxkMDGIHwx3Ynk+yiiq+3WBlU4E+yvAvelDZaIdaWKecoF7/2NVB81uTd32WrdbJ00wqDW/xF4IPTtrbLMFos8/Il2rUW0Z2WNIA7d56xI5hxNqBqu8VYTiSBFHlknCZ7FZoFsKcUgmflJICSpZqG23OHDUTzEPfNJg=
+	t=1729507304; cv=none; b=bLyDHeH9/Sb7WdGRldE13aNbcrCIcx4EiTzef9tMcJxBTCix+lcWQvUh844CSWcJtBuUj3ys1G7ea6IlX3KFAa+vzU9vayX6q5aL0jvQ0iG2dH2R65FydpkMPI46FT3C/wQ8kvQZyoMTcFL4PsKr7VXSi9Uj1UiOubZKEHwKyxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507301; c=relaxed/simple;
-	bh=hsjPfk90fLfS9Tjd5gEA5YptzFBHerY7aWjbwS4OjXQ=;
+	s=arc-20240116; t=1729507304; c=relaxed/simple;
+	bh=WOchI3moU7LmVUGlWg5z/ph6qDoYU2cLaKCUhMoguqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hywPiNg3r3GuqA8G9rTsECFAJBqO/7gmmTwJnW4M9gQOly9gb/0+atMGKBcQ19foAXJfYETyLVi/wm+/1StIqGHe96mS7rPdvxunJTMc7Rb0c3S8vT6xB1Zl2qUsB4s+almjlkb/pdAXGxUX0bFSt/mDZMgG4f7uhGa+LF23W8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2omc14a2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L/JOIEde3XsqmYG12sb8PE1CAXEGm7oT99G2C2L+9ZBdFIe2Q+nFvVuQAoWRCHJp2nK04kQiGELb6pepMm1kAyIAwqyc/3mjVoKC8lZCzXIm9IpXeJ4r8Oe1E5mY6ztc/rBk67qurT2gnLaUXlAH1vtsIM/JHi25TAaJtbITwXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0vCxrVFh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2omc14a2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD827C4CEC3;
-	Mon, 21 Oct 2024 10:41:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vCxrVFh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E6EC4CEC3;
+	Mon, 21 Oct 2024 10:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507301;
-	bh=hsjPfk90fLfS9Tjd5gEA5YptzFBHerY7aWjbwS4OjXQ=;
+	s=korg; t=1729507304;
+	bh=WOchI3moU7LmVUGlWg5z/ph6qDoYU2cLaKCUhMoguqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2omc14a2KLSHQTRk/whQ/DOtuNsdWw+OFJH8EYJJZE91ovDtQOVS+HOD17JfU2UFp
-	 AXt8bQ6jpwi5dbfeHxy+H7DzJoYxQkDwtXWQUZSswnRNr04fbvAtbnNUnn83DYlC6v
-	 e4hLJNBQ/sZY9HDz2qFeivCIsgRnqC8PEPb2VrNQ=
+	b=0vCxrVFh1FdtkjomJOmxAf/2iFcxgRKddiPccTgKOzSP9/ezcLtNxJH4FGDqjDOfS
+	 klvhVEi0IWJz1kvl/KZNOvdhDvGUAIt3MM+SZ9AuZb8xQ535W+saPanOjtuPd1f7se
+	 5yIbGvYvokURSOWFkPIb0VS8m6rqdg8QuSAyL/Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	syzbot+ef0d7bc412553291aa86@syzkaller.appspotmail.com,
+	Liu Shixin <liushixin2@huawei.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Naoya Horiguchi <nao.horiguchi@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 32/91] fat: fix uninitialized variable
-Date: Mon, 21 Oct 2024 12:24:46 +0200
-Message-ID: <20241021102251.079326176@linuxfoundation.org>
+Subject: [PATCH 6.1 33/91] mm/swapfile: skip HugeTLB pages for unuse_vma
+Date: Mon, 21 Oct 2024 12:24:47 +0200
+Message-ID: <20241021102251.117719100@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -51,36 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+From: Liu Shixin <liushixin2@huawei.com>
 
-commit 963a7f4d3b90ee195b895ca06b95757fcba02d1a upstream.
+commit 7528c4fb1237512ee18049f852f014eba80bbe8d upstream.
 
-syszbot produced this with a corrupted fs image.  In theory, however an IO
-error would trigger this also.
+I got a bad pud error and lost a 1GB HugeTLB when calling swapoff.  The
+problem can be reproduced by the following steps:
 
-This affects just an error report, so should not be a serious error.
+ 1. Allocate an anonymous 1GB HugeTLB and some other anonymous memory.
+ 2. Swapout the above anonymous memory.
+ 3. run swapoff and we will get a bad pud error in kernel message:
 
-Link: https://lkml.kernel.org/r/87r08wjsnh.fsf@mail.parknet.co.jp
-Link: https://lkml.kernel.org/r/66ff2c95.050a0220.49194.03e9.GAE@google.com
-Signed-off-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Reported-by: syzbot+ef0d7bc412553291aa86@syzkaller.appspotmail.com
+  mm/pgtable-generic.c:42: bad pud 00000000743d215d(84000001400000e7)
+
+We can tell that pud_clear_bad is called by pud_none_or_clear_bad in
+unuse_pud_range() by ftrace.  And therefore the HugeTLB pages will never
+be freed because we lost it from page table.  We can skip HugeTLB pages
+for unuse_vma to fix it.
+
+Link: https://lkml.kernel.org/r/20241015014521.570237-1-liushixin2@huawei.com
+Fixes: 0fe6e20b9c4c ("hugetlb, rmap: add reverse mapping for hugepage")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fat/namei_vfat.c |    2 +-
+ mm/swapfile.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/fat/namei_vfat.c
-+++ b/fs/fat/namei_vfat.c
-@@ -1037,7 +1037,7 @@ error_inode:
- 	if (corrupt < 0) {
- 		fat_fs_error(new_dir->i_sb,
- 			     "%s: Filesystem corrupted (i_pos %lld)",
--			     __func__, sinfo.i_pos);
-+			     __func__, new_i_pos);
- 	}
- 	goto out;
- }
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -2006,7 +2006,7 @@ static int unuse_mm(struct mm_struct *mm
+ 
+ 	mmap_read_lock(mm);
+ 	for_each_vma(vmi, vma) {
+-		if (vma->anon_vma) {
++		if (vma->anon_vma && !is_vm_hugetlb_page(vma)) {
+ 			ret = unuse_vma(vma, type);
+ 			if (ret)
+ 				break;
 
 
