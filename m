@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FFE1E1C11;
-	Mon, 21 Oct 2024 10:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BED1E7C18;
+	Mon, 21 Oct 2024 10:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507159; cv=none; b=mimM9gMAQfeRzEIJQH5i1lCj57eadvXvxpGW1qbqn7SddaKSHYCRrdMO2/CQ5hdDrG/X3vASGCRnqR3xWbpnwI0MPSOwZb6vEKOJostoIndfW9v1YCC4qPHTnEYpHT1fJoGPDN3HmWCeVFLhddYElCAgxheC80VCXq32MadvDXU=
+	t=1729507162; cv=none; b=rB0qcxyZ8RF42+8tqIUpYH7qaVrKF/1uW0m3XpJdchtvGUpNBdoRnTClyKYmNvl2haWquY1ONubQp3YjpAi6OzqgUgG9ACJBUjDVHCxQ9OJTKwrCPNKSpCQII6LNLQqLblF0WUSkajgaJTkHd+t8nFXq19HCPYLCfwLH/hsdFcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507159; c=relaxed/simple;
-	bh=d86cUJRoNagLq+Rpvi8fZGkaPnYB95IK/Woj2bSKjwk=;
+	s=arc-20240116; t=1729507162; c=relaxed/simple;
+	bh=M2iJ4XIKREdzxoR0Jw1ALmZ/LC/9iviV2Ws/kLUg5Mw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ak3xle4MrV8wX7xN/AIid9luFEY8F7uLPsobyIcccH8Gp80RmNHD6YCCF5eR/YemgarH8EP7eWBa4x0xFYOvRQW01SM4VXwiNXCXLYkmtmodZt1UPSerA66lmlcFCqZXWsn6sukpJ/UR7QM2TSG3lfn/+aKbKjoswO4GrVVWNPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJFpQekw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hV/ANyZk3tYu3PrREDINUAJ6WVLe1NBRxZWUe2eLtuoTFcPBtXxI4mP57lkzpp3wgdiT+kAzfts61EnX4SNKVIAiqjzw8RWrG+BPmYi4mBpAc9giwAg6bFAqrrruNbGkHT2fuLSfgCpW5bvmr1OgejqFVqpuvwmhFYc+i3uo9K4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJmnUWq2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJFpQekw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 476D5C4CEC3;
-	Mon, 21 Oct 2024 10:39:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJmnUWq2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A369C4CEC3;
+	Mon, 21 Oct 2024 10:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507159;
-	bh=d86cUJRoNagLq+Rpvi8fZGkaPnYB95IK/Woj2bSKjwk=;
+	s=korg; t=1729507162;
+	bh=M2iJ4XIKREdzxoR0Jw1ALmZ/LC/9iviV2Ws/kLUg5Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJFpQekwWWG8TvJQ20eH2poSNJw50BreVWcmMSCq4zTAkJwcpdyeGOQgqbdV4wyGh
-	 TeO9RTVEDup5aOSGFVClX2c8aCQywLsz1idYARI+/GbbHkzf6z9GY4Qb6mCGOsgy+4
-	 NVUKTOBJ0eSvBCI2dcPdPtuj8QV+GexzkgogH8/A=
+	b=IJmnUWq2DD7NFuyuQ/Gq+Ny1ZM3mEcuJUAFm9bVNjwHA7WWxmJmcPEWArc7BKwSwd
+	 0/eM5RUi/zLQVoKFl4onHxLWUXJ2oicxezNSP9iRFk2JXvfl020zDGRSUSDDurh0M/
+	 GKHnkjppMvHWb/GWkDN2cbKA6gXzsUcOZF5Bc4Mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Gill <rtgill82@gmail.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Brian Gerst <brgerst@gmail.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.6 109/124] x86/bugs: Use code segment selector for VERW operand
-Date: Mon, 21 Oct 2024 12:25:13 +0200
-Message-ID: <20241021102300.933445413@linuxfoundation.org>
+	Sergey Matsievskiy <matsievskiysv@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.6 110/124] pinctrl: ocelot: fix system hang on level based interrupts
+Date: Mon, 21 Oct 2024 12:25:14 +0200
+Message-ID: <20241021102300.973290117@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -53,81 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Sergey Matsievskiy <matsievskiysv@gmail.com>
 
-commit e4d2102018542e3ae5e297bc6e229303abff8a0f upstream.
+commit 93b8ddc54507a227087c60a0013ed833b6ae7d3c upstream.
 
-Robert Gill reported below #GP in 32-bit mode when dosemu software was
-executing vm86() system call:
+The current implementation only calls chained_irq_enter() and
+chained_irq_exit() if it detects pending interrupts.
 
-  general protection fault: 0000 [#1] PREEMPT SMP
-  CPU: 4 PID: 4610 Comm: dosemu.bin Not tainted 6.6.21-gentoo-x86 #1
-  Hardware name: Dell Inc. PowerEdge 1950/0H723K, BIOS 2.7.0 10/30/2010
-  EIP: restore_all_switch_stack+0xbe/0xcf
-  EAX: 00000000 EBX: 00000000 ECX: 00000000 EDX: 00000000
-  ESI: 00000000 EDI: 00000000 EBP: 00000000 ESP: ff8affdc
-  DS: 0000 ES: 0000 FS: 0000 GS: 0033 SS: 0068 EFLAGS: 00010046
-  CR0: 80050033 CR2: 00c2101c CR3: 04b6d000 CR4: 000406d0
-  Call Trace:
-   show_regs+0x70/0x78
-   die_addr+0x29/0x70
-   exc_general_protection+0x13c/0x348
-   exc_bounds+0x98/0x98
-   handle_exception+0x14d/0x14d
-   exc_bounds+0x98/0x98
-   restore_all_switch_stack+0xbe/0xcf
-   exc_bounds+0x98/0x98
-   restore_all_switch_stack+0xbe/0xcf
+```
+for (i = 0; i < info->stride; i++) {
+	uregmap_read(info->map, id_reg + 4 * i, &reg);
+	if (!reg)
+		continue;
 
-This only happens in 32-bit mode when VERW based mitigations like MDS/RFDS
-are enabled. This is because segment registers with an arbitrary user value
-can result in #GP when executing VERW. Intel SDM vol. 2C documents the
-following behavior for VERW instruction:
+	chained_irq_enter(parent_chip, desc);
+```
 
-  #GP(0) - If a memory operand effective address is outside the CS, DS, ES,
-	   FS, or GS segment limit.
+However, in case of GPIO pin configured in level mode and the parent
+controller configured in edge mode, GPIO interrupt might be lowered by the
+hardware. In the result, if the interrupt is short enough, the parent
+interrupt is still pending while the GPIO interrupt is cleared;
+chained_irq_enter() never gets called and the system hangs trying to
+service the parent interrupt.
 
-CLEAR_CPU_BUFFERS macro executes VERW instruction before returning to user
-space. Use %cs selector to reference VERW operand. This ensures VERW will
-not #GP for an arbitrary user %ds.
+Moving chained_irq_enter() and chained_irq_exit() outside the for loop
+ensures that they are called even when GPIO interrupt is lowered by the
+hardware.
 
-[ mingo: Fixed the SOB chain. ]
+The similar code with chained_irq_enter() / chained_irq_exit() functions
+wrapping interrupt checking loop may be found in many other drivers:
+```
+grep -r -A 10 chained_irq_enter drivers/pinctrl
+```
 
-Fixes: a0e2dab44d22 ("x86/entry_32: Add VERW just before userspace transition")
-Reported-by: Robert Gill <rtgill82@gmail.com>
-Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com
-Cc: stable@vger.kernel.org # 5.10+
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218707
-Closes: https://lore.kernel.org/all/8c77ccfd-d561-45a1-8ed5-6b75212c7a58@leemhuis.info/
-Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
-Suggested-by: Brian Gerst <brgerst@gmail.com>
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sergey Matsievskiy <matsievskiysv@gmail.com>
+Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lore.kernel.org/20241012105743.12450-2-matsievskiysv@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-ocelot.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -332,7 +332,16 @@
-  * Note: Only the memory operand variant of VERW clears the CPU buffers.
-  */
- .macro CLEAR_CPU_BUFFERS
--	ALTERNATIVE "", __stringify(verw _ASM_RIP(mds_verw_sel)), X86_FEATURE_CLEAR_CPU_BUF
-+#ifdef CONFIG_X86_64
-+	ALTERNATIVE "", "verw mds_verw_sel(%rip)", X86_FEATURE_CLEAR_CPU_BUF
-+#else
-+	/*
-+	 * In 32bit mode, the memory operand must be a %cs reference. The data
-+	 * segments may not be usable (vm86 mode), and the stack segment may not
-+	 * be flat (ESPFIX32).
-+	 */
-+	ALTERNATIVE "", "verw %cs:mds_verw_sel", X86_FEATURE_CLEAR_CPU_BUF
-+#endif
- .endm
+--- a/drivers/pinctrl/pinctrl-ocelot.c
++++ b/drivers/pinctrl/pinctrl-ocelot.c
+@@ -1962,21 +1962,21 @@ static void ocelot_irq_handler(struct ir
+ 	unsigned int reg = 0, irq, i;
+ 	unsigned long irqs;
  
- #ifdef CONFIG_X86_64
++	chained_irq_enter(parent_chip, desc);
++
+ 	for (i = 0; i < info->stride; i++) {
+ 		regmap_read(info->map, id_reg + 4 * i, &reg);
+ 		if (!reg)
+ 			continue;
+ 
+-		chained_irq_enter(parent_chip, desc);
+-
+ 		irqs = reg;
+ 
+ 		for_each_set_bit(irq, &irqs,
+ 				 min(32U, info->desc->npins - 32 * i))
+ 			generic_handle_domain_irq(chip->irq.domain, irq + 32 * i);
+-
+-		chained_irq_exit(parent_chip, desc);
+ 	}
++
++	chained_irq_exit(parent_chip, desc);
+ }
+ 
+ static int ocelot_gpiochip_register(struct platform_device *pdev,
 
 
