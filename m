@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCEDB1F4266;
-	Mon, 21 Oct 2024 10:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8476B1EB9E1;
+	Mon, 21 Oct 2024 10:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507050; cv=none; b=PhKKlUomQlEqPWz5JtIxwRgpJTGEBUi2eCwN27aqBuVy0qTLh5f5n7eJMkili3kg9dJziUpqRKC5fitZASJv7dA6yvyJ+d9plUrdnt9UNLi0l2DkT295cVOpA8dBD9PBI/VIDILISDgIvRYE/htiKAWCUYVwotV1yNVsFlVx7J4=
+	t=1729507052; cv=none; b=f6cvUQRzvY36LCfyAMEil7JctlgsxaOS/FP2o349TxPasc16b8FggWrMtyv6pFQC3Umbz81/kO2gduBxKNDhg6flWoiDlT+Tx9VDGyPoAw6G7ForRKnOas8ruZBHM2WGCdQpNUy6NAEIx5COdAaoVex0Erg9qJX5TQ3GqGERJ/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507050; c=relaxed/simple;
-	bh=Wr7FTMzp20OhCFGzkRUrk37wlBRxYNLqwgnZVl5dn+Q=;
+	s=arc-20240116; t=1729507052; c=relaxed/simple;
+	bh=9WVsF3ADFCMeb7iTHjguHakoBB3iMkvoVIx6s20Imlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XBB2eODJVWh3hz4Zmp/x57/uVAnCRHYA5Ywk0xEvJpocG51fZKdPDqavOH5fhw5yM18vbZDVoer+FwULoo1riom4I+xM60R7qFtl6kxGR1eAJ8FaiDjvlsywJjU1lX+OiBtDRaL3e8wn8oQ1TgmhB+MhG/NbQwFxW9N1b9Vg8+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDbKiYxi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hire9rUqzxQDsu+ZfqPJPIKSYUFuiiVWj3+EB6/iLT9RrGEesdYDX0aWGJY7Mqxq88Z1p7+0Xmnp4KLjb+HWYYJN2/aD6v5Q9M2ee5pppkDFvDXXQlVdWM0NFIRPdcd9YggnDdC876ncjT9JK2HqQ8o5XiwfeadJq3GkO38kpd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gyKkMkwF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDbKiYxi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E70C4CEC3;
-	Mon, 21 Oct 2024 10:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyKkMkwF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03240C4CEC7;
+	Mon, 21 Oct 2024 10:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507049;
-	bh=Wr7FTMzp20OhCFGzkRUrk37wlBRxYNLqwgnZVl5dn+Q=;
+	s=korg; t=1729507052;
+	bh=9WVsF3ADFCMeb7iTHjguHakoBB3iMkvoVIx6s20Imlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CDbKiYxibc+YoN1Q3N2DboEcDAKV5xhksIU7/bboQD2WbxSkpzhOlj6vbh0Iw1Iot
-	 kKwWuoBgADMPKgf/LCn8Nci3YzK+Op7EdFkineEZWsw/d1Y6PpmD1BZa8HrCZ+5lyH
-	 BS8Gl/4xtW2zlMGTq8i/dNFzz4I+Hla0HibRt0Ko=
+	b=gyKkMkwF9XUw7jcs3XoKTArCnPvVYpohL5vwsZfOX3WlEJ8ywtV2fMtYDC3uzs62C
+	 7ahI+X/DxPFDTbrTccs9V7DPCqv+Q9kg9ytT/IXO/r2DwWSH3tk1cVRAMAMhSh+cIA
+	 lh9Ha7WxHJHiznoIle82EomqFzNv2INNa0U8tntM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Wikner <kwikner@ethz.ch>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.6 055/124] x86/cpufeatures: Add a IBPB_NO_RET BUG flag
-Date: Mon, 21 Oct 2024 12:24:19 +0200
-Message-ID: <20241021102258.859450907@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Sean Nyekjaer <sean@geanix.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 073/124] iio: adc: ti-ads8688: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
+Date: Mon, 21 Oct 2024 12:24:37 +0200
+Message-ID: <20241021102259.557449827@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -51,44 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Wikner <kwikner@ethz.ch>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 3ea87dfa31a7b0bb0ff1675e67b9e54883013074 upstream.
+commit 4c4834fd8696a949d1b1f1c2c5b96e1ad2083b02 upstream.
 
-Set this flag if the CPU has an IBPB implementation that does not
-invalidate return target predictions. Zen generations < 4 do not flush
-the RSB when executing an IBPB and this bug flag denotes that.
+This driver makes use of triggered buffers, but does not select the
+required modules.
 
-  [ bp: Massage. ]
+Fixes: 2a86487786b5 ("iio: adc: ti-ads8688: add trigger and buffer support")
+Add the missing 'select IIO_BUFFER' and 'select IIO_TRIGGERED_BUFFER'.
 
-Signed-off-by: Johannes Wikner <kwikner@ethz.ch>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Reviewed-by: Sean Nyekjaer <sean@geanix.com>
+Link: https://patch.msgid.link/20241003-iio-select-v1-4-67c0385197cd@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpufeatures.h |    1 +
- arch/x86/kernel/cpu/common.c       |    3 +++
- 2 files changed, 4 insertions(+)
+ drivers/iio/adc/Kconfig |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -517,4 +517,5 @@
- #define X86_BUG_DIV0			X86_BUG(1*32 + 1) /* AMD DIV0 speculation bug */
- #define X86_BUG_RFDS			X86_BUG(1*32 + 2) /* CPU is vulnerable to Register File Data Sampling */
- #define X86_BUG_BHI			X86_BUG(1*32 + 3) /* CPU is affected by Branch History Injection */
-+#define X86_BUG_IBPB_NO_RET		X86_BUG(1*32 + 4) /* "ibpb_no_ret" IBPB omits return target predictions */
- #endif /* _ASM_X86_CPUFEATURES_H */
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -1483,6 +1483,9 @@ static void __init cpu_set_bug_bits(stru
- 	     boot_cpu_has(X86_FEATURE_HYPERVISOR)))
- 		setup_force_cpu_bug(X86_BUG_BHI);
- 
-+	if (cpu_has(c, X86_FEATURE_AMD_IBPB) && !cpu_has(c, X86_FEATURE_AMD_IBPB_RET))
-+		setup_force_cpu_bug(X86_BUG_IBPB_NO_RET);
-+
- 	if (cpu_matches(cpu_vuln_whitelist, NO_MELTDOWN))
- 		return;
- 
+--- a/drivers/iio/adc/Kconfig
++++ b/drivers/iio/adc/Kconfig
+@@ -1286,6 +1286,8 @@ config TI_ADS8344
+ config TI_ADS8688
+ 	tristate "Texas Instruments ADS8688"
+ 	depends on SPI
++	select IIO_BUFFER
++	select IIO_TRIGGERED_BUFFER
+ 	help
+ 	  If you say yes here you get support for Texas Instruments ADS8684 and
+ 	  and ADS8688 ADC chips
 
 
