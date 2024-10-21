@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164651E2618;
-	Mon, 21 Oct 2024 10:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2CA1E2618;
+	Mon, 21 Oct 2024 10:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507121; cv=none; b=gNNHXu9JmoLrZVYwlrbm0C/cM7ilSvBIh8Tq/4AGBxrMZ4MSDk40Eik2MBrMZS9XPlf0K6e3Wg7grXY+g24v36fbn7Hnq/zI2JrXOuuRreTWU4WfWkDUovCV2ns0O6BruZWtKbyxqC+EiElbnCwDC99q5VZLsbT/QqxRI96MZlE=
+	t=1729507124; cv=none; b=nP6DLXWW+NQtXiBCW4RGAplWDaOjdgL6ETuh8XHC7tpG6AeY/oPNwACWp7qLz6rm55Uc0KeSUwFmjP7Wltm91RtuEG6TEVr17w4SnHHV6QfTok1xvK4qQPS09oOdczqX+38bfVmZFyMMsIAoPwf3bFx2vvdN6ucWB9g7dDmlk1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507121; c=relaxed/simple;
-	bh=J1p0xivP7K1Ws0G/ikkiGx+itttSP7JRfL8eApI/Img=;
+	s=arc-20240116; t=1729507124; c=relaxed/simple;
+	bh=xS7udohdo2YG8O7WP+r3xXq365WyM2d+I5BfOCsOuuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WrEzglHv2BuivwtMt/DE4PbxNMuRrCqZxtIRm3N9tQEeMIRh3Sdg61hrepSInZDhSLR/9B+/93hvLd1PUBlqBVuhMgWy6ckzZ2EFpgMcWR2HSYPD+eEVTp/nartkF8EGO/h3IStbuo4p/TormT2M9Nct4UnZcH6l8j2vDHyM//0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dfyt0+Yf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lqzaaErswmeAyrlWlbJwXreuC3wyiVBJjT/32rZIadjx3mXMWuaC/Xu2zCZIxyT+kfnmSnvPOozhZ4g7EFlexyKY3V0krP0wf/MrpHNsGrgUdDFrKsAUIetZWiYY3RZ0zYTSWURSul+cW0S7eQO6TyTEkj58floVPENq01iGUdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jzb77/3l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dfyt0+Yf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D719C4CEC3;
-	Mon, 21 Oct 2024 10:38:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jzb77/3l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 808E9C4CEC3;
+	Mon, 21 Oct 2024 10:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507120;
-	bh=J1p0xivP7K1Ws0G/ikkiGx+itttSP7JRfL8eApI/Img=;
+	s=korg; t=1729507123;
+	bh=xS7udohdo2YG8O7WP+r3xXq365WyM2d+I5BfOCsOuuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dfyt0+YfgH7erBD+PK9ti6Bh8yIw9cV2AGrFx/y9Qt6SwRGhFdANz7hdGRGU/UH5+
-	 TaGuHVt9PguEpHI8vYjCq3DQjl21m2mHuiY2cTcMdQvoji1G26oVOq+RGPCSamr+sD
-	 aNg7t7Ynix7FbR2NNAoyuMWDfGFj7aKXN0mB/wDg=
+	b=Jzb77/3lrux76jtqbkFYmrfoASuDnEPPxi854z4xu9h0G+aMjCJ4u+Cg8nLMqKAdv
+	 pFs6sK0msctHBw7LxoK4LCwhoPNvR68lkPMrR3yLiohR6q3fdgBH6rKhuzk3cFruP1
+	 2K6cTYMoNQ7Dc2ijfi+/mGKirSPlgsqazB/1klwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jonathan Marek <jonathan@marek.ca>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.6 097/124] usb: typec: qcom-pmic-typec: fix sink status being overwritten with RP_DEF
-Date: Mon, 21 Oct 2024 12:25:01 +0200
-Message-ID: <20241021102300.475662251@linuxfoundation.org>
+	Prashanth K <quic_prashk@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.6 098/124] usb: dwc3: Wait for EndXfer completion before restoring GUSB2PHYCFG
+Date: Mon, 21 Oct 2024 12:25:02 +0200
+Message-ID: <20241021102300.514195275@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -53,35 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Marek <jonathan@marek.ca>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-commit ffe85c24d7ca5de7d57690c0ab194b3838674935 upstream.
+commit c96e31252110a84dcc44412e8a7b456b33c3e298 upstream.
 
-This line is overwriting the result of the above switch-case.
+DWC3 programming guide mentions that when operating in USB2.0 speeds,
+if GUSB2PHYCFG[6] or GUSB2PHYCFG[8] is set, it must be cleared prior
+to issuing commands and may be set again  after the command completes.
+But currently while issuing EndXfer command without CmdIOC set, we
+wait for 1ms after GUSB2PHYCFG is restored. This results in cases
+where EndXfer command doesn't get completed and causes SMMU faults
+since requests are unmapped afterwards. Hence restore GUSB2PHYCFG
+after waiting for EndXfer command completion.
 
-This fixes the tcpm driver getting stuck in a "Sink TX No Go" loop.
-
-Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241005144146.2345-1-jonathan@marek.ca
+Cc: stable@vger.kernel.org
+Fixes: 1d26ba0944d3 ("usb: dwc3: Wait unconditionally after issuing EndXfer command")
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20240924093208.2524531-1-quic_prashk@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/usb/dwc3/gadget.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-@@ -252,7 +252,6 @@ int qcom_pmic_typec_port_get_cc(struct p
- 			val = TYPEC_CC_RP_DEF;
- 			break;
- 		}
--		val = TYPEC_CC_RP_DEF;
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -438,6 +438,10 @@ skip_status:
+ 			dwc3_gadget_ep_get_transfer_index(dep);
  	}
  
- 	if (misc & CC_ORIENTATION)
++	if (DWC3_DEPCMD_CMD(cmd) == DWC3_DEPCMD_ENDTRANSFER &&
++	    !(cmd & DWC3_DEPCMD_CMDIOC))
++		mdelay(1);
++
+ 	if (saved_config) {
+ 		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
+ 		reg |= saved_config;
+@@ -1734,12 +1738,10 @@ static int __dwc3_stop_active_transfer(s
+ 	WARN_ON_ONCE(ret);
+ 	dep->resource_index = 0;
+ 
+-	if (!interrupt) {
+-		mdelay(1);
++	if (!interrupt)
+ 		dep->flags &= ~DWC3_EP_TRANSFER_STARTED;
+-	} else if (!ret) {
++	else if (!ret)
+ 		dep->flags |= DWC3_EP_END_TRANSFER_PENDING;
+-	}
+ 
+ 	dep->flags &= ~DWC3_EP_DELAY_STOP;
+ 	return ret;
 
 
