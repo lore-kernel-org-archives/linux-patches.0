@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063211E884F;
-	Mon, 21 Oct 2024 10:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E341E0087;
+	Mon, 21 Oct 2024 10:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507586; cv=none; b=ZhXmyH5stRVFRK854MPCyAzzYnOrw/giZ5lQ33cZvjIDhlcJ+xBEIeovQkXZUFxbDSqF1vTKxh3sUTnmqteId4kg0rB0hhmooBlVLzheOOcaA5Utbmq2Bxmm/D6/yRrTs4pehFSMAgTRrpIaBZoUcf2pkP+dLqV83ABwiIohl78=
+	t=1729507589; cv=none; b=D4+B2KlVJohLKP+1Rej/f6H/U7sxAt7jzU8FhV6pCeuJm8cTRxyvzO1aaKtlouylwaSQfgGnDzLRpXBzi81G8SaHCTk7BdFxC4MgPimqytL+o4vlyCPrmRuYRMDbTrt41FwN+foBxu8ciT63Lba7YnNEf6T7/JZfCeP48JIG/dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507586; c=relaxed/simple;
-	bh=C3RtUO8TBHaJUp9AGPGXsdlPM5zRX9wzb0kMsGi/MOo=;
+	s=arc-20240116; t=1729507589; c=relaxed/simple;
+	bh=qzytvI6X6dYy7p2w81r5U/ZElz8EZ4aONiOBsJPLfUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDJPZtX24UQ7Xla0HrkE0y8juJso9Gg+DroukcVa6qAwhVYyl68Ie5z+ybWPm2U9HTT3BIrBcE3yMENtqN0f02lP2wnvVb66ql0ny5bKWlq75X/mhy6FhxQCqYQ7JORAoMueVUNjEJFPinqpUnCeoVJ7UcfEHbFMypqnzds2qQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5X27mkM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jKzbdIxlq3+Hn07nz29wo13LhSRi1h8Tiw2WQvgi3ThDsaByOEpXRi+p04Y5wH8ou1GZuy+hWs4DEeK0L4z/3247GB/mfCz24sXdjHyIqmscD/qG4cK49OiPUbe4NtQZqUuTL+zE8uSGrihyec9f9z25qAdOlQ/pd2V75W+ATa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNuTxnKB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5X27mkM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC09C4CEC3;
-	Mon, 21 Oct 2024 10:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNuTxnKB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA97C4CEC3;
+	Mon, 21 Oct 2024 10:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507585;
-	bh=C3RtUO8TBHaJUp9AGPGXsdlPM5zRX9wzb0kMsGi/MOo=;
+	s=korg; t=1729507588;
+	bh=qzytvI6X6dYy7p2w81r5U/ZElz8EZ4aONiOBsJPLfUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y5X27mkMgNnORgO7UCF6VBn86H8npIpan1VePC+Q0YiLQvuk+Ed1aPRH3h7ZaZtdE
-	 W6fDzkrnmYgjoOqp5wwNW+lKdh0ZpYlsEMz8abY6D1N0xkYvXsNh8ZVJwvpl1aKjBN
-	 TjtMDiweQ7suDPu6PdNPudnfh7Ipb7YDUbI6FVcs=
+	b=TNuTxnKB7WN9vYFSQmHZ33h9rDDFRG9ZBuSZuTSKfFCLhP0obQBaiKB7pkGv4+gWC
+	 42YT/bDOd3wJLx0ypigJ5zgddmkvoh5azT+bDr5HXOI7DWqUG+3Szfex6qQAmHV+oY
+	 YxDZEA0YmIKrjVRyR4eaH4fnj7yqU69OrZpkAZVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Saeed Mirzamohammadi <saeed.mirzamohammadi@oracle.com>
-Subject: [PATCH 5.15 34/82] KVM: Fix a data race on last_boosted_vcpu in kvm_vcpu_on_spin()
-Date: Mon, 21 Oct 2024 12:25:15 +0200
-Message-ID: <20241021102248.592688087@linuxfoundation.org>
+	=?UTF-8?q?Noralf=20Tr=C3=B8nnes?= <noralf@tronnes.org>,
+	Eric Anholt <eric@anholt.net>,
+	Rob Herring <robh@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	dri-devel@lists.freedesktop.org,
+	"Wachowski, Karol" <karol.wachowski@intel.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Sherry Yang <sherry.yang@oracle.com>
+Subject: [PATCH 5.15 35/82] drm/shmem-helper: Fix BUG_ON() on mmap(PROT_WRITE, MAP_PRIVATE)
+Date: Mon, 21 Oct 2024 12:25:16 +0200
+Message-ID: <20241021102248.630465317@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102247.209765070@linuxfoundation.org>
 References: <20241021102247.209765070@linuxfoundation.org>
@@ -45,103 +55,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Wachowski, Karol <karol.wachowski@intel.com>
 
-commit 49f683b41f28918df3e51ddc0d928cb2e934ccdb upstream.
+commit 39bc27bd688066a63e56f7f64ad34fae03fbe3b8 upstream.
 
-Use {READ,WRITE}_ONCE() to access kvm->last_boosted_vcpu to ensure the
-loads and stores are atomic.  In the extremely unlikely scenario the
-compiler tears the stores, it's theoretically possible for KVM to attempt
-to get a vCPU using an out-of-bounds index, e.g. if the write is split
-into multiple 8-bit stores, and is paired with a 32-bit load on a VM with
-257 vCPUs:
+Lack of check for copy-on-write (COW) mapping in drm_gem_shmem_mmap
+allows users to call mmap with PROT_WRITE and MAP_PRIVATE flag
+causing a kernel panic due to BUG_ON in vmf_insert_pfn_prot:
+BUG_ON((vma->vm_flags & VM_PFNMAP) && is_cow_mapping(vma->vm_flags));
 
-  CPU0                              CPU1
-  last_boosted_vcpu = 0xff;
+Return -EINVAL early if COW mapping is detected.
 
-                                    (last_boosted_vcpu = 0x100)
-                                    last_boosted_vcpu[15:8] = 0x01;
-  i = (last_boosted_vcpu = 0x1ff)
-                                    last_boosted_vcpu[7:0] = 0x00;
+This bug affects all drm drivers using default shmem helpers.
+It can be reproduced by this simple example:
+void *ptr = mmap(0, size, PROT_WRITE, MAP_PRIVATE, fd, mmap_offset);
+ptr[0] = 0;
 
-  vcpu = kvm->vcpu_array[0x1ff];
-
-As detected by KCSAN:
-
-  BUG: KCSAN: data-race in kvm_vcpu_on_spin [kvm] / kvm_vcpu_on_spin [kvm]
-
-  write to 0xffffc90025a92344 of 4 bytes by task 4340 on cpu 16:
-  kvm_vcpu_on_spin (arch/x86/kvm/../../../virt/kvm/kvm_main.c:4112) kvm
-  handle_pause (arch/x86/kvm/vmx/vmx.c:5929) kvm_intel
-  vmx_handle_exit (arch/x86/kvm/vmx/vmx.c:?
-		 arch/x86/kvm/vmx/vmx.c:6606) kvm_intel
-  vcpu_run (arch/x86/kvm/x86.c:11107 arch/x86/kvm/x86.c:11211) kvm
-  kvm_arch_vcpu_ioctl_run (arch/x86/kvm/x86.c:?) kvm
-  kvm_vcpu_ioctl (arch/x86/kvm/../../../virt/kvm/kvm_main.c:?) kvm
-  __se_sys_ioctl (fs/ioctl.c:52 fs/ioctl.c:904 fs/ioctl.c:890)
-  __x64_sys_ioctl (fs/ioctl.c:890)
-  x64_sys_call (arch/x86/entry/syscall_64.c:33)
-  do_syscall_64 (arch/x86/entry/common.c:?)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-  read to 0xffffc90025a92344 of 4 bytes by task 4342 on cpu 4:
-  kvm_vcpu_on_spin (arch/x86/kvm/../../../virt/kvm/kvm_main.c:4069) kvm
-  handle_pause (arch/x86/kvm/vmx/vmx.c:5929) kvm_intel
-  vmx_handle_exit (arch/x86/kvm/vmx/vmx.c:?
-			arch/x86/kvm/vmx/vmx.c:6606) kvm_intel
-  vcpu_run (arch/x86/kvm/x86.c:11107 arch/x86/kvm/x86.c:11211) kvm
-  kvm_arch_vcpu_ioctl_run (arch/x86/kvm/x86.c:?) kvm
-  kvm_vcpu_ioctl (arch/x86/kvm/../../../virt/kvm/kvm_main.c:?) kvm
-  __se_sys_ioctl (fs/ioctl.c:52 fs/ioctl.c:904 fs/ioctl.c:890)
-  __x64_sys_ioctl (fs/ioctl.c:890)
-  x64_sys_call (arch/x86/entry/syscall_64.c:33)
-  do_syscall_64 (arch/x86/entry/common.c:?)
-  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-  value changed: 0x00000012 -> 0x00000000
-
-Fixes: 217ece6129f2 ("KVM: use yield_to instead of sleep in kvm_vcpu_on_spin")
-Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://lore.kernel.org/r/20240510092353.2261824-1-leitao@debian.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Saeed Mirzamohammadi <saeed.mirzamohammadi@oracle.com>
+Fixes: 2194a63a818d ("drm: Add library for shmem backed GEM objects")
+Cc: Noralf Trønnes <noralf@tronnes.org>
+Cc: Eric Anholt <eric@anholt.net>
+Cc: Rob Herring <robh@kernel.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.2+
+Signed-off-by: Wachowski, Karol <karol.wachowski@intel.com>
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240520100514.925681-1-jacek.lawrynowicz@linux.intel.com
+[ Sherry: bp to fix CVE-2024-39497, ignore context change due to missing
+  commit 21aa27ddc582 ("drm/shmem-helper: Switch to reservation lock")  ]
+Signed-off-by: Sherry Yang <sherry.yang@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/kvm_main.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_gem_shmem_helper.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -3528,12 +3528,13 @@ void kvm_vcpu_on_spin(struct kvm_vcpu *m
- {
- 	struct kvm *kvm = me->kvm;
- 	struct kvm_vcpu *vcpu;
--	int last_boosted_vcpu = me->kvm->last_boosted_vcpu;
-+	int last_boosted_vcpu;
- 	int yielded = 0;
- 	int try = 3;
- 	int pass;
- 	int i;
+--- a/drivers/gpu/drm/drm_gem_shmem_helper.c
++++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
+@@ -607,6 +607,9 @@ int drm_gem_shmem_mmap(struct drm_gem_sh
+ 		return ret;
+ 	}
  
-+	last_boosted_vcpu = READ_ONCE(kvm->last_boosted_vcpu);
- 	kvm_vcpu_set_in_spin_loop(me, true);
- 	/*
- 	 * We boost the priority of a VCPU that is runnable but not
-@@ -3565,7 +3566,7 @@ void kvm_vcpu_on_spin(struct kvm_vcpu *m
- 
- 			yielded = kvm_vcpu_yield_to(vcpu);
- 			if (yielded > 0) {
--				kvm->last_boosted_vcpu = i;
-+				WRITE_ONCE(kvm->last_boosted_vcpu, i);
- 				break;
- 			} else if (yielded < 0) {
- 				try--;
++	if (is_cow_mapping(vma->vm_flags))
++		return -EINVAL;
++
+ 	ret = drm_gem_shmem_get_pages(shmem);
+ 	if (ret)
+ 		return ret;
 
 
