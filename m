@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819561EB9ED;
-	Mon, 21 Oct 2024 10:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EE11EB9E1;
+	Mon, 21 Oct 2024 10:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507064; cv=none; b=aKXrCrAoHb4Ngvddcnnb0NUCoxsq3GSlt47DXiMCZYcRVPFJXBQQAmJdYWQZe/I620BbKQZw8JpUkpqYYb3Jvr5DTOnTVWNve/dY9dgm/TRVfuM3SxN2mVa6gMFw++mpLHrNFd2vYF/2NB2FSpzbsh1+RCdB8x67CpIZNBQNhmo=
+	t=1729507067; cv=none; b=guubuNqUCf9bjUedahbog8L+WdTuVzZ2u8pFwh4y1uudIW/WkLds3FIH+y78JGRBY63PONq8GloDXV7pPxsHrafmJWI/ftNSCTgoFJ0QZHHux69ofy9tmMlXynglVR0us6hzGUeFopXExZzXtVoNxHqky4jyGkHAu1czbtldfBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507064; c=relaxed/simple;
-	bh=YPh7r3fS6H5vuzGgrL61UBQQ+H/jEDAdqdhU4JXuVyw=;
+	s=arc-20240116; t=1729507067; c=relaxed/simple;
+	bh=e7nMwLj5gYdkoniuVQpyA+g3naqrrNH2w5jn3nnvvRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XVSDONhW+zaYloHmLTRZhvgHOVo6h8Bg5UUGNItNfK0V0MXVHSw0fXNrO2YVZWZwDXME7I61mRU+v5gSJJN/HTBaALk6mEj75Q/Sa+u0az07Qy56E6hsCwiArxFC7HWzRNF2Hl0hh6GHTs7+z2AQhTKRAEQ0fuFc+EE+H0q5FtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgfXX5PO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G2Ox8SjpDoqH7zx/+j1SZoqVItVOxaIenxE2PG+ZP7haRvOA6grP6kNPtlht4wum/ZQdJ2MZaPr1+Cn17eCWzD+bnOAyoe6PdYJo/lhtIHEEjy5Jiv0vYLvy/Pi5HEia4As1V96zcow01Djjj1XpqRouR83X97S6QbhogLmw0r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBQApgQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgfXX5PO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6FB6C4CEC3;
-	Mon, 21 Oct 2024 10:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBQApgQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC0CC4CEC3;
+	Mon, 21 Oct 2024 10:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507064;
-	bh=YPh7r3fS6H5vuzGgrL61UBQQ+H/jEDAdqdhU4JXuVyw=;
+	s=korg; t=1729507067;
+	bh=e7nMwLj5gYdkoniuVQpyA+g3naqrrNH2w5jn3nnvvRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WgfXX5POWtNmV2eypwPfoXqw/vaWwWJhyKoqmULerIJ7LBQPFmHJQGixofDmLisL0
-	 ChfpoYzc4K+Mfnv33f5PcKC5+5mgYc+C8EwTs9MOifMHVJgDPrV2wbdsnfBDk/yW+g
-	 75V+NhsqhtzWzLI4VN50NQXiptcY72buetfzbd3c=
+	b=OBQApgQLWg8nxYGRZ+XQzaD0zOECi9jR/uynsrNMhkhVw0EzuNjYYuoaAlq5TcSsa
+	 JIV71gRfwskzGRckyG6CiAIKd9o2OeFJXvo01C3PSV5m/m090P8G1wPXeTszGi2NoW
+	 MHEOZDi4vxk93U1+YXbU7AH2rV6VkxgpomCzXmVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Gedenryd <emil.gedenryd@axis.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 077/124] iio: light: opt3001: add missing full-scale range value
-Date: Mon, 21 Oct 2024 12:24:41 +0200
-Message-ID: <20241021102259.711539674@linuxfoundation.org>
+Subject: [PATCH 6.6 078/124] iio: amplifiers: ada4250: add missing select REGMAP_SPI in Kconfig
+Date: Mon, 21 Oct 2024 12:24:42 +0200
+Message-ID: <20241021102259.749675961@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -51,41 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Gedenryd <emil.gedenryd@axis.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 530688e39c644543b71bdd9cb45fdfb458a28eaa upstream.
+commit b7983033a10baa0d98784bb411b2679bfb207d9a upstream.
 
-The opt3001 driver uses predetermined full-scale range values to
-determine what exponent to use for event trigger threshold values.
-The problem is that one of the values specified in the datasheet is
-missing from the implementation. This causes larger values to be
-scaled down to an incorrect exponent, effectively reducing the
-maximum settable threshold value by a factor of 2.
+This driver makes use of regmap_spi, but does not select the required
+module.
+Add the missing 'select REGMAP_SPI'.
 
-Add missing full-scale range array value.
-
-Fixes: 94a9b7b1809f ("iio: light: add support for TI's opt3001 light sensor")
-Signed-off-by: Emil Gedenryd <emil.gedenryd@axis.com>
+Fixes: 28b4c30bfa5f ("iio: amplifiers: ada4250: add support for ADA4250")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20241003-ad2s1210-select-v1-5-4019453f8c33@gmail.com
 Cc: <Stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240913-add_opt3002-v2-1-69e04f840360@axis.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/opt3001.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/amplifiers/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/light/opt3001.c
-+++ b/drivers/iio/light/opt3001.c
-@@ -139,6 +139,10 @@ static const struct opt3001_scale opt300
- 		.val2 = 400000,
- 	},
- 	{
-+		.val = 41932,
-+		.val2 = 800000,
-+	},
-+	{
- 		.val = 83865,
- 		.val2 = 600000,
- 	},
+--- a/drivers/iio/amplifiers/Kconfig
++++ b/drivers/iio/amplifiers/Kconfig
+@@ -27,6 +27,7 @@ config AD8366
+ config ADA4250
+ 	tristate "Analog Devices ADA4250 Instrumentation Amplifier"
+ 	depends on SPI
++	select REGMAP_SPI
+ 	help
+ 	  Say yes here to build support for Analog Devices ADA4250
+ 	  SPI Amplifier's support. The driver provides direct access via
 
 
