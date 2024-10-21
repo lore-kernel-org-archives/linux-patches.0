@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0BF1F470E;
-	Mon, 21 Oct 2024 10:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B591EF099;
+	Mon, 21 Oct 2024 10:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507484; cv=none; b=l8kjocn+hTf0/ad4qJw9mE/Car1VFyIV8VMAaix6mNV1m85ECbvxtJH7GRd+7WfARrBcCU2/jUgmBITAptJocJ7+lYcN89pO+K+LcN59TpYOYeXMp3+LAxPBMq9Lr88QeBYDQ5PZiD+nWKYmDEHZ+kW+qe9xKdRJic/9r2thocQ=
+	t=1729507487; cv=none; b=aBqkCR+eylEs3CFCzrowKSKchECpaoRY+0NRmy9pl257N0N0JvN3JoVerzkQaYkP1Wz0adwhDX2Rfw9Ac4aGoJtwu6FmSRw+8jZCvg03l9RMqEPr0DsvpjTxi8u6dU0Jt2VNQffacYpRnG3mvP3lpFPoOnzyPHz9fPTeoHWGDGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507484; c=relaxed/simple;
-	bh=ufOYtMKW+wqfvwtZcmR3wMPYqXtzd5bZxoX/43ZAh+I=;
+	s=arc-20240116; t=1729507487; c=relaxed/simple;
+	bh=2Cm6eRgA1BQkZupsc/6ZrPdsUusB1I/djzebI3rOC9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gUlGPSjsU0L/oDN4duJ336Oo8QsKRxXFhNT0n7vGxY7TkYUnmyA6svFvmNmjS0rDKi/hYD1PCABHcqo/0fW8mQEdMFWIScueJGVvoc0EJBaCRU52irh3MYmOC/G4DHx/OX33VsegEZHbNfYHpvd/WWLtIbROMwebJ5aG8eAa32M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JC01RAK7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fweIhPCkQZVW4FQJkZKkpXGzO1jaTtvkNQCW5xEGVHrZSY1j1TNkGXDNzJpV7kJjQYH6/GT9zJzfYTO6A26fHde/3lSppBUVX4WYShf9luVN1/cGDIqrv+mZalrGYLqwMQodrNRwR/A94thRtLH+GknXstsHAHCQvrKwOBat//U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEuUJ8zj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JC01RAK7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E8AC4CEC3;
-	Mon, 21 Oct 2024 10:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEuUJ8zj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6825C4CEE5;
+	Mon, 21 Oct 2024 10:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507484;
-	bh=ufOYtMKW+wqfvwtZcmR3wMPYqXtzd5bZxoX/43ZAh+I=;
+	s=korg; t=1729507487;
+	bh=2Cm6eRgA1BQkZupsc/6ZrPdsUusB1I/djzebI3rOC9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JC01RAK7Hx0wUYkAeczhE0doy0ZOFBsFM+llPwk9+E+KTCtBFMhT3yOwGme455eYI
-	 ILRxOawTDjruXGeQtq3oNjTRO1BaFcDib0WXsPIDp4ZFuTWBdJLD76T0FOqT2BYDTY
-	 VGTUi+GSeZetFPXczsAtHLsdrjV1Wz4ezEqaNGGU=
+	b=qEuUJ8zjr5EJvWqvNSfLOG+Pir8yt2c60oSgZBav+biu/jhBGPV46InLDAtEkGX4E
+	 YKm2S/vCSNNhriT92OO6sqYTJrE+TwudRfBlakP39Dze2oTRC2eWIqvkJoH7pQpw8u
+	 T+ZJhKGxf1pgxfWC60YQrJPKKIELnYWBzUhLbmj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Emil Gedenryd <emil.gedenryd@axis.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 61/91] iio: light: veml6030: fix IIO device retrieval from embedded device
-Date: Mon, 21 Oct 2024 12:25:15 +0200
-Message-ID: <20241021102252.198547445@linuxfoundation.org>
+Subject: [PATCH 6.1 62/91] iio: light: opt3001: add missing full-scale range value
+Date: Mon, 21 Oct 2024 12:25:16 +0200
+Message-ID: <20241021102252.236829340@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -50,45 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Emil Gedenryd <emil.gedenryd@axis.com>
 
-commit c7c44e57750c31de43906d97813273fdffcf7d02 upstream.
+commit 530688e39c644543b71bdd9cb45fdfb458a28eaa upstream.
 
-The dev pointer that is received as an argument in the
-in_illuminance_period_available_show function references the device
-embedded in the IIO device, not in the i2c client.
+The opt3001 driver uses predetermined full-scale range values to
+determine what exponent to use for event trigger threshold values.
+The problem is that one of the values specified in the datasheet is
+missing from the implementation. This causes larger values to be
+scaled down to an incorrect exponent, effectively reducing the
+maximum settable threshold value by a factor of 2.
 
-dev_to_iio_dev() must be used to accessthe right data. The current
-implementation leads to a segmentation fault on every attempt to read
-the attribute because indio_dev gets a NULL assignment.
+Add missing full-scale range array value.
 
-This bug has been present since the first appearance of the driver,
-apparently since the last version (V6) before getting applied. A
-constant attribute was used until then, and the last modifications might
-have not been tested again.
-
-Cc: stable@vger.kernel.org
-Fixes: 7b779f573c48 ("iio: light: add driver for veml6030 ambient light sensor")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20240913-veml6035-v1-3-0b09c0c90418@gmail.com
+Fixes: 94a9b7b1809f ("iio: light: add support for TI's opt3001 light sensor")
+Signed-off-by: Emil Gedenryd <emil.gedenryd@axis.com>
+Cc: <Stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240913-add_opt3002-v2-1-69e04f840360@axis.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/veml6030.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/iio/light/opt3001.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/iio/light/veml6030.c
-+++ b/drivers/iio/light/veml6030.c
-@@ -99,9 +99,8 @@ static const char * const period_values[
- static ssize_t in_illuminance_period_available_show(struct device *dev,
- 				struct device_attribute *attr, char *buf)
- {
-+	struct veml6030_data *data = iio_priv(dev_to_iio_dev(dev));
- 	int ret, reg, x;
--	struct iio_dev *indio_dev = i2c_get_clientdata(to_i2c_client(dev));
--	struct veml6030_data *data = iio_priv(indio_dev);
- 
- 	ret = regmap_read(data->regmap, VEML6030_REG_ALS_CONF, &reg);
- 	if (ret) {
+--- a/drivers/iio/light/opt3001.c
++++ b/drivers/iio/light/opt3001.c
+@@ -139,6 +139,10 @@ static const struct opt3001_scale opt300
+ 		.val2 = 400000,
+ 	},
+ 	{
++		.val = 41932,
++		.val2 = 800000,
++	},
++	{
+ 		.val = 83865,
+ 		.val2 = 600000,
+ 	},
 
 
