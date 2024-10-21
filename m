@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3C21E0087;
-	Mon, 21 Oct 2024 10:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6911E47B0;
+	Mon, 21 Oct 2024 10:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507207; cv=none; b=eiWvjDI5Jly1M5XHuVuFttsqoMkBaeDZ9nRWfPn0uI92sdlbJNJoKWj+0X9F6q5TvkC7PcjBWPNNHEGGeWstLKy8X8nnw/gUy8vgnUobunoT5r4pRtBO0QvUjYuuOHIU168zDNvXl4h9/h8f5NbItgao9o3QW5upmnOuq8WXcjY=
+	t=1729507210; cv=none; b=YtUJEkytQd27L+lNJKf7dUyjcbkpT1vxB8fiVTrWZwyleSyeGr8okY7Osqixb1ZXsPsqjiBnHRaMqXgLUg6nlFZuQSONaXadWoH95RguItFiCFYEcyvLBgFqOfgeDsfcgoHQAM9fhbdI0DBHwUJLnxL0ozxrIROmdou62ET5UYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507207; c=relaxed/simple;
-	bh=1t6zmq5evz7YAalKSm6T6pwyX8xGje7jnvyFAWLLk3o=;
+	s=arc-20240116; t=1729507210; c=relaxed/simple;
+	bh=cYmW1JutOKyCfXnJoWB/Psu9t5E5CdRfN4RuTxroNIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CXNg5m5aLejSFl4SOngziFP3hwfPJfvhDzrCofqySedoAicJ6+ZV3O+BmQ4+asZpPeUkAN2T0/pWd/mOt+FDROhIOOYuXqeQPC0tS1pKehQVqX/Ci7n2jbbAit2yPauJTE+UNTQwL1PWabbCC770vOsrvZAI0QlDVu0I7voyiyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NjDknawe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gj7IRdUwe+vaQaTjoRz3mUO5+UJELp/T1/yqWcSIbY7LoFtmZ49TZXNuFSLrSKP72c4gnhZeXm02ntmkWDJnqwx6azSp2J3YEbAiZdml9Az55HG2BqRbwrQWINii2rP8TXmJK93T66PZ+f2M2EOwXosm3NdP/U5uhTaV3JCSd/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cs9T3bG5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NjDknawe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FD8C4CEC3;
-	Mon, 21 Oct 2024 10:40:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cs9T3bG5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4874C4CEC7;
+	Mon, 21 Oct 2024 10:40:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507207;
-	bh=1t6zmq5evz7YAalKSm6T6pwyX8xGje7jnvyFAWLLk3o=;
+	s=korg; t=1729507210;
+	bh=cYmW1JutOKyCfXnJoWB/Psu9t5E5CdRfN4RuTxroNIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NjDknaweyCTur7ruo8SszxC3B+DuX42cNKeZB5GteoY8+dv/KtTbcAtq/CmnAtw0a
-	 8aR1bwAGkeyBOD7/AZ05PDOaBehTWIumVu0Kaia1kh1ds72z7U05zNPqYv9rqT0dUq
-	 XIaW8tWZGV3r8gnfnwzh2RfeQbLCDNvjUBfT/Eug=
+	b=cs9T3bG5vE53DnvxP7vaV1/muzAkJpLUEkRsznpQO8jtwG18OpLrPh/iEZZX4EtjD
+	 roO9HCC0avJvVPaNjbypotbJzoFXElLy6TwpicuVmUxSFVz+vIUAoooqYu06yl0ZIu
+	 qX/g4MMypH3xuiKYbnpitQ2tU91f7R/mjzXhNnaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.6 094/124] xhci: Mitigate failed set dequeue pointer commands
-Date: Mon, 21 Oct 2024 12:24:58 +0200
-Message-ID: <20241021102300.361195471@linuxfoundation.org>
+	"Benjamin B. Frost" <benjamin@geanix.com>,
+	Lars Melin <larsm17@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 095/124] USB: serial: option: add support for Quectel EG916Q-GL
+Date: Mon, 21 Oct 2024 12:24:59 +0200
+Message-ID: <20241021102300.399733695@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -49,39 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Benjamin B. Frost <benjamin@geanix.com>
 
-commit fe49df60cdb7c2975aa743dc295f8786e4b7db10 upstream.
+commit 540eff5d7faf0c9330ec762da49df453263f7676 upstream.
 
-Avoid xHC host from processing a cancelled URB by always turning
-cancelled URB TDs into no-op TRBs before queuing a 'Set TR Deq' command.
+Add Quectel EM916Q-GL with product ID 0x6007
 
-If the command fails then xHC will start processing the cancelled TD
-instead of skipping it once endpoint is restarted, causing issues like
-Babble error.
+T:  Bus=01 Lev=02 Prnt=02 Port=01 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=6007 Rev= 2.00
+S:  Manufacturer=Quectel
+S:  Product=EG916Q-GL
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=200mA
+A:  FirstIf#= 4 IfCount= 2 Cls=02(comm.) Sub=06 Prot=00
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=84(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=86(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=88(I) Atr=03(Int.) MxPS=  32 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+I:* If#= 5 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-This is not a complete solution as a failed 'Set TR Deq' command does not
-guarantee xHC TRB caches are cleared.
+MI_00 Quectel USB Diag Port
+MI_01 Quectel USB NMEA Port
+MI_02 Quectel USB AT Port
+MI_03 Quectel USB Modem Port
+MI_04 Quectel USB Net Port
 
-Fixes: 4db356924a50 ("xhci: turn cancelled td cleanup to its own function")
+Signed-off-by: Benjamin B. Frost <benjamin@geanix.com>
+Reviewed-by: Lars Melin <larsm17@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20241016140000.783905-3-mathias.nyman@linux.intel.com
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1046,7 +1046,7 @@ static int xhci_invalidate_cancelled_tds
- 					td_to_noop(xhci, ring, cached_td, false);
- 					cached_td->cancel_status = TD_CLEARED;
- 				}
--
-+				td_to_noop(xhci, ring, td, false);
- 				td->cancel_status = TD_CLEARING_CACHE;
- 				cached_td = td;
- 				break;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -279,6 +279,7 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_EG912Y			0x6001
+ #define QUECTEL_PRODUCT_EC200S_CN		0x6002
+ #define QUECTEL_PRODUCT_EC200A			0x6005
++#define QUECTEL_PRODUCT_EG916Q			0x6007
+ #define QUECTEL_PRODUCT_EM061K_LWW		0x6008
+ #define QUECTEL_PRODUCT_EM061K_LCN		0x6009
+ #define QUECTEL_PRODUCT_EC200T			0x6026
+@@ -1270,6 +1271,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200S_CN, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200T, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG912Y, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG916Q, 0xff, 0x00, 0x00) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
+ 
+ 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
 
 
