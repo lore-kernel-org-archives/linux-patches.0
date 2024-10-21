@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E821E5020;
-	Mon, 21 Oct 2024 10:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C0D1E7C10;
+	Mon, 21 Oct 2024 10:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506452; cv=none; b=MKIItSXGfjBAmLVjUjMbs03DSLR+RGgBSG5BertQtQZGvhTIuq7H0Ov8iR8DUcU5xmLJNUaEIjDC3+GcWAJMS9iuQxiX9BtMSh6nv1q2Pa/umM9fxOnVIw1njS6fbYy7NgxKnxNc9gNyj1jglPqi1r8e50uAyaTcqpWXqklO+K4=
+	t=1729506455; cv=none; b=hE3o8oexuWta6sO7FHMi2XYPnp2PUpR3Lx/gmiVrtJpjpe1LDsTkzqLdabaDvAP85rOZnBwZ/NqhDavBf82mLqvQt0cCzba12ERYHmtxMQAl9dgpIwaUKfpI93v1AmuwUuFLUZ7j9BCEOEYCpdZpUTymy/Jt7hJisPnd7Cck9U8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506452; c=relaxed/simple;
-	bh=o87Tmyti0HxQbtyAzluPK0kdYL+uI0YxUvGePAfJF0Q=;
+	s=arc-20240116; t=1729506455; c=relaxed/simple;
+	bh=tnvV29nc7flNY7GW2jdoTCayLM0hSmnqC9e2U0K5Loc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZ/PlQVe/Ni5oSEi08nhnhMKMVoqAW727c4gMt8A1EYP14kXObqEwj+t2+CgAH8VrM2tpggpOaMIaZfAbFlM/r/guDVWjiTE+hQv2buVHSNh7Uxz49p9LbmRnpEbP5R9twIaV/QNrFjfgHzPflFVwOpUGQsJnTcBh1aqVYIfTC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wRn+VA2G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NzYiESUsN6gzMPooiKO2LNFpMDVEmlDr+GYVBt09eIkk5zqXKLgRt9+QXLn00NhUpHAtJgpgAIA5fgKw4SlOAJnFV6MDkUH/sGt4mVzotbUIM2mtYfkPboWB8ytsMs3TnNxc7yJvx5YoYEfvOYfAmHlnWuo89KmHKIyFYFn8rh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gyWqvr2q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wRn+VA2G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86576C4CEC3;
-	Mon, 21 Oct 2024 10:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyWqvr2q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72DB1C4CEC3;
+	Mon, 21 Oct 2024 10:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506451;
-	bh=o87Tmyti0HxQbtyAzluPK0kdYL+uI0YxUvGePAfJF0Q=;
+	s=korg; t=1729506455;
+	bh=tnvV29nc7flNY7GW2jdoTCayLM0hSmnqC9e2U0K5Loc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wRn+VA2GuqQ9csUFSkRX/oLYN2qkVeoNMbFf8V/vSAv8zIsUg6KJ5TEsxcuer/Yr5
-	 ud44bsD7Q75cjybe3bHEJkWfjG4cVc/IGSvWKIpcZcShEllsW48bzArsc00qu/gxqm
-	 +gWbLTW8jnxmL5xu9hq2HD7D+UpUEW4WUiFLm/4E=
+	b=gyWqvr2qhPZ3pogm3RSLPUf6utaG6Y552P8um2moPC1z22N1n4CJYHcPtqWMG/7e/
+	 o8LLqJrK0Igfg6uqtJeSYSnWMmE0cL1tP+Pyq+L6b0MLiYFddpzONRr3B4ucfOdO+z
+	 IpY7NLFwN65KpiDY3jfqwht7cJogVcM9mWfPN7WA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <anand.jain@oracle.com>,
-	Roi Martin <jroi.martin@gmail.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.11 002/135] btrfs: fix uninitialized pointer free on read_alloc_one_name() error
-Date: Mon, 21 Oct 2024 12:22:38 +0200
-Message-ID: <20241021102259.425712451@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.11 011/135] net: enetc: add missing static descriptor and inline keyword
+Date: Mon, 21 Oct 2024 12:22:47 +0200
+Message-ID: <20241021102259.779258039@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -51,49 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roi Martin <jroi.martin@gmail.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-commit 2ab5e243c2266c841e0f6904fad1514b18eaf510 upstream.
+commit 1d7b2ce43d2c22a21dadaf689cb36a69570346a6 upstream.
 
-The function read_alloc_one_name() does not initialize the name field of
-the passed fscrypt_str struct if kmalloc fails to allocate the
-corresponding buffer.  Thus, it is not guaranteed that
-fscrypt_str.name is initialized when freeing it.
+Fix the build warnings when CONFIG_FSL_ENETC_MDIO is not enabled.
+The detailed warnings are shown as follows.
 
-This is a follow-up to the linked patch that fixes the remaining
-instances of the bug introduced by commit e43eec81c516 ("btrfs: use
-struct qstr instead of name and namelen pairs").
+include/linux/fsl/enetc_mdio.h:62:18: warning: no previous prototype for function 'enetc_hw_alloc' [-Wmissing-prototypes]
+      62 | struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
+         |                  ^
+include/linux/fsl/enetc_mdio.h:62:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+      62 | struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
+         | ^
+         | static
+8 warnings generated.
 
-Link: https://lore.kernel.org/linux-btrfs/20241009080833.1355894-1-jroi.martin@gmail.com/
-Fixes: e43eec81c516 ("btrfs: use struct qstr instead of name and namelen pairs")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Roi Martin <jroi.martin@gmail.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 6517798dd343 ("enetc: Make MDIO accessors more generic and export to include/linux/fsl")
+Cc: stable@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202410102136.jQHZOcS4-lkp@intel.com/
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20241011030103.392362-1-wei.fang@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-log.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/fsl/enetc_mdio.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -1845,7 +1845,7 @@ static noinline int replay_one_name(stru
- 				    struct btrfs_dir_item *di,
- 				    struct btrfs_key *key)
- {
--	struct fscrypt_str name;
-+	struct fscrypt_str name = { 0 };
- 	struct btrfs_dir_item *dir_dst_di;
- 	struct btrfs_dir_item *index_dst_di;
- 	bool dir_dst_matches = false;
-@@ -2125,7 +2125,7 @@ static noinline int check_item_in_log(st
- 	struct extent_buffer *eb;
- 	int slot;
- 	struct btrfs_dir_item *di;
--	struct fscrypt_str name;
-+	struct fscrypt_str name = { 0 };
- 	struct inode *inode = NULL;
- 	struct btrfs_key location;
+--- a/include/linux/fsl/enetc_mdio.h
++++ b/include/linux/fsl/enetc_mdio.h
+@@ -59,7 +59,8 @@ static inline int enetc_mdio_read_c45(st
+ static inline int enetc_mdio_write_c45(struct mii_bus *bus, int phy_id,
+ 				       int devad, int regnum, u16 value)
+ { return -EINVAL; }
+-struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
++static inline struct enetc_hw *enetc_hw_alloc(struct device *dev,
++					      void __iomem *port_regs)
+ { return ERR_PTR(-EINVAL); }
  
+ #endif
 
 
