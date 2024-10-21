@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2095D1F9A80;
-	Mon, 21 Oct 2024 10:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F771F9AA3;
+	Mon, 21 Oct 2024 10:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507873; cv=none; b=UA/bdOVSSgDMAXJBiPpdqvQdFZaMuQ5ejsGoI72NR0u9tL8cN+sgbnHxJ+GHN/n/s6vFcmy78YIinnTNrlQWkuEmFB7m4+kG5chAEmucz8lFyjsgazlnNOo//ws1jIDRAlgahTxpAQmBxWjaj/1BhyARD0kWzNpXhV4/zqpAyas=
+	t=1729507876; cv=none; b=GDoWIu/H14uewpZbOQ27iWrMQhLV8J3c4qnvqUufzronIFc8ZumeSAaCF4nwfZmOFDUVpG49zQmZkN8aiqEp69qGrRDAr9TnQIRFp+LjJjM1u2d+b0Kv+so/p97h75XOtWam8doocWc0pPLvYxEdf2IcdDRhW0khMK14c2dO/zI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507873; c=relaxed/simple;
-	bh=7dYKpQZhV/cWmKGC9JP8OvMxdVKa/FM0rLF7OKJg0+k=;
+	s=arc-20240116; t=1729507876; c=relaxed/simple;
+	bh=2Gzg9X06Ykyml4vxGMC5T9Fho1kPelEeQmBH0e+r8gQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P3OykOfuo3ENgBEf0gXL7rWCcti1BtumlneA3nmn9qxItq3CEvUg0zuN5dmA8GwYEgQIgKoovtHus2lTFlwEne/OsffjyqK7ztLJLBrGjzAkxH6++1wmhHoIezWLo5eKeeI1Uu+oOIYtGS9GNYpQxJy37HiYVsuG66spVainAwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1X/Sbjji; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uK5E9Dne/MHLT2b0nbqNrvHd101YZp7nPfyaLzQD2asMfRRpIJCKNpfurDodVI2W1QfR6XHZ6rx84gXJKxEHmCUyP5mxC9DFTswlEdl/AsWrNqueIjoY1856+sVxkqL/I0jpRc01zaOaLQrbizmjD5XpBbSDwbGvyKsNVTrT1Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xNDrN8qg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1X/Sbjji"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95AA8C4CEE7;
-	Mon, 21 Oct 2024 10:51:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xNDrN8qg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DB1C4CEC3;
+	Mon, 21 Oct 2024 10:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507873;
-	bh=7dYKpQZhV/cWmKGC9JP8OvMxdVKa/FM0rLF7OKJg0+k=;
+	s=korg; t=1729507876;
+	bh=2Gzg9X06Ykyml4vxGMC5T9Fho1kPelEeQmBH0e+r8gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1X/SbjjiiQgUubFT8mwebPKrFrSuFAdPLsm3GbA9s6Wv4c8u7K69BnbAC5Frc2UEX
-	 FbUx/5cSbN4PY8cLFig+OTsNcwA21k3atcSHyQiAcmPk5JWedWYvvRRZYoScFXO56D
-	 CzErCRmF+AkSu5Gwzm8cbJsDdz4fhaLfv4F6vZBs=
+	b=xNDrN8qghl+ift7o46EHeVlVswQ5oCYfublVEqilSVhG67ONi3lzopWd5edo/VF66
+	 or/h/JOkwm0mB2xcklDtbAopkdDiCXw6wTISmmizFaGnnMp7VESBdXGt8yYrgpgzZp
+	 cXCryGfC7SLTgqNuLGVjmulpj+Jz4hdB58DjpZRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paolo Abeni <pabeni@redhat.com>,
-	Geliang Tang <geliang.tang@suse.com>,
-	Mat Martineau <mathew.j.martineau@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Subject: [PATCH 5.10 47/52] mptcp: track and update contiguous data status
-Date: Mon, 21 Oct 2024 12:26:08 +0200
-Message-ID: <20241021102243.468326394@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 48/52] mptcp: handle consistently DSS corruption
+Date: Mon, 21 Oct 2024 12:26:09 +0200
+Message-ID: <20241021102243.508538366@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102241.624153108@linuxfoundation.org>
 References: <20241021102241.624153108@linuxfoundation.org>
@@ -53,92 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <geliang.tang@suse.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 0530020a7c8f2204e784f0dbdc882bbd961fdbde upstream.
+commit e32d262c89e2b22cb0640223f953b548617ed8a6 upstream.
 
-This patch adds a new member allow_infinite_fallback in mptcp_sock,
-which is initialized to 'true' when the connection begins and is set
-to 'false' on any retransmit or successful MP_JOIN. Only do infinite
-mapping fallback if there is a single subflow AND there have been no
-retransmissions AND there have never been any MP_JOINs.
+Bugged peer implementation can send corrupted DSS options, consistently
+hitting a few warning in the data path. Use DEBUG_NET assertions, to
+avoid the splat on some builds and handle consistently the error, dumping
+related MIBs and performing fallback and/or reset according to the
+subflow type.
 
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Geliang Tang <geliang.tang@suse.com>
-Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: e32d262c89e2 ("mptcp: handle consistently DSS corruption")
-[ Conflicts in protocol.c, because commit 3e5014909b56 ("mptcp: cleanup
-  MPJ subflow list handling") is not in this version. This commit is
-  linked to a new feature, changing the context around. The new line
-  can still be added at the same place.
-  Conflicts in protocol.h, because commit 4f6e14bd19d6 ("mptcp: support
-  TCP_CORK and TCP_NODELAY") is not in this version. This commit is
-  linked to a new feature, changing the context around. The new line can
-  still be added at the same place.
-  Conflicts in subflow.c, because commit 0348c690ed37 ("mptcp: add the
-  fallback check") is not in this version. This commit is linked to a
-  new feature, changing the context around. The new line can still be
-  added at the same place.
-  Extra conflicts in v5.10, because the context has been changed. ]
+Fixes: 6771bfd9ee24 ("mptcp: update mptcp ack sequence from work queue")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20241008-net-mptcp-fallback-fixes-v1-1-c6fb8e93e551@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in mib.[ch], because commit 104125b82e5c ("mptcp: add mib
+  for infinite map sending") is linked to a new feature, not available
+  in this version. Resolving the conflicts is easy, simply adding the
+  new lines declaring the new "DSS corruptions" MIB entries.
+  Also removed in protocol.c and subflow.c all DEBUG_NET_WARN_ON_ONCE
+  because they are not defined in this version: enough with the MIB
+  counters that have been added in this commit. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    6 +++++-
- net/mptcp/protocol.h |    1 +
- net/mptcp/subflow.c  |    1 +
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ net/mptcp/mib.c      |    2 ++
+ net/mptcp/mib.h      |    2 ++
+ net/mptcp/protocol.c |   20 +++++++++++++++++---
+ net/mptcp/subflow.c  |    2 +-
+ 4 files changed, 22 insertions(+), 4 deletions(-)
 
+--- a/net/mptcp/mib.c
++++ b/net/mptcp/mib.c
+@@ -23,6 +23,8 @@ static const struct snmp_mib mptcp_snmp_
+ 	SNMP_MIB_ITEM("MPJoinAckRx", MPTCP_MIB_JOINACKRX),
+ 	SNMP_MIB_ITEM("MPJoinAckHMacFailure", MPTCP_MIB_JOINACKMAC),
+ 	SNMP_MIB_ITEM("DSSNotMatching", MPTCP_MIB_DSSNOMATCH),
++	SNMP_MIB_ITEM("DSSCorruptionFallback", MPTCP_MIB_DSSCORRUPTIONFALLBACK),
++	SNMP_MIB_ITEM("DSSCorruptionReset", MPTCP_MIB_DSSCORRUPTIONRESET),
+ 	SNMP_MIB_ITEM("InfiniteMapRx", MPTCP_MIB_INFINITEMAPRX),
+ 	SNMP_MIB_ITEM("OFOQueueTail", MPTCP_MIB_OFOQUEUETAIL),
+ 	SNMP_MIB_ITEM("OFOQueue", MPTCP_MIB_OFOQUEUE),
+--- a/net/mptcp/mib.h
++++ b/net/mptcp/mib.h
+@@ -16,6 +16,8 @@ enum linux_mptcp_mib_field {
+ 	MPTCP_MIB_JOINACKRX,		/* Received an ACK + MP_JOIN */
+ 	MPTCP_MIB_JOINACKMAC,		/* HMAC was wrong on ACK + MP_JOIN */
+ 	MPTCP_MIB_DSSNOMATCH,		/* Received a new mapping that did not match the previous one */
++	MPTCP_MIB_DSSCORRUPTIONFALLBACK,/* DSS corruption detected, fallback */
++	MPTCP_MIB_DSSCORRUPTIONRESET,	/* DSS corruption detected, MPJ subflow reset */
+ 	MPTCP_MIB_INFINITEMAPRX,	/* Received an infinite mapping */
+ 	MPTCP_MIB_OFOQUEUETAIL,	/* Segments inserted into OoO queue tail */
+ 	MPTCP_MIB_OFOQUEUE,		/* Segments inserted into OoO queue */
 --- a/net/mptcp/protocol.c
 +++ b/net/mptcp/protocol.c
-@@ -1810,9 +1810,11 @@ static void mptcp_worker(struct work_str
- 		if (!mptcp_ext_cache_refill(msk))
- 			break;
+@@ -457,6 +457,18 @@ static void mptcp_check_data_fin(struct
  	}
--	if (copied)
-+	if (copied) {
- 		tcp_push(ssk, msg.msg_flags, mss_now, tcp_sk(ssk)->nonagle,
- 			 size_goal);
-+		WRITE_ONCE(msk->allow_infinite_fallback, false);
-+	}
- 
- 	dfrag->data_seq = orig_write_seq;
- 	dfrag->offset = orig_offset;
-@@ -1845,6 +1847,7 @@ static int __mptcp_init_sock(struct sock
- 
- 	msk->first = NULL;
- 	inet_csk(sk)->icsk_sync_mss = mptcp_sync_mss;
-+	WRITE_ONCE(msk->allow_infinite_fallback, true);
- 
- 	mptcp_pm_data_init(msk);
- 
-@@ -2543,6 +2546,7 @@ bool mptcp_finish_join(struct sock *sk)
- 	if (parent_sock && !sk->sk_socket)
- 		mptcp_sock_graft(sk, parent_sock);
- 	subflow->map_seq = READ_ONCE(msk->ack_seq);
-+	WRITE_ONCE(msk->allow_infinite_fallback, false);
- 	return true;
  }
  
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -213,6 +213,7 @@ struct mptcp_sock {
- 	bool		rcv_data_fin;
- 	bool		snd_data_fin_enable;
- 	bool		use_64bit_ack; /* Set when we received a 64-bit DSN */
-+	bool		allow_infinite_fallback;
- 	spinlock_t	join_list_lock;
- 	struct work_struct work;
- 	struct sk_buff  *ooo_last_skb;
++static void mptcp_dss_corruption(struct mptcp_sock *msk, struct sock *ssk)
++{
++	if (READ_ONCE(msk->allow_infinite_fallback)) {
++		MPTCP_INC_STATS(sock_net(ssk),
++				MPTCP_MIB_DSSCORRUPTIONFALLBACK);
++		mptcp_do_fallback(ssk);
++	} else {
++		MPTCP_INC_STATS(sock_net(ssk), MPTCP_MIB_DSSCORRUPTIONRESET);
++		mptcp_subflow_reset(ssk);
++	}
++}
++
+ static bool __mptcp_move_skbs_from_subflow(struct mptcp_sock *msk,
+ 					   struct sock *ssk,
+ 					   unsigned int *bytes)
+@@ -519,10 +531,12 @@ static bool __mptcp_move_skbs_from_subfl
+ 				moved += len;
+ 			seq += len;
+ 
+-			if (WARN_ON_ONCE(map_remaining < len))
+-				break;
++			if (unlikely(map_remaining < len))
++				mptcp_dss_corruption(msk, ssk);
+ 		} else {
+-			WARN_ON_ONCE(!fin);
++			if (unlikely(!fin))
++				mptcp_dss_corruption(msk, ssk);
++
+ 			sk_eat_skb(ssk, skb);
+ 			done = true;
+ 		}
 --- a/net/mptcp/subflow.c
 +++ b/net/mptcp/subflow.c
-@@ -1179,6 +1179,7 @@ int __mptcp_subflow_connect(struct sock
- 	list_add_tail(&subflow->node, &msk->join_list);
- 	spin_unlock_bh(&msk->join_list_lock);
+@@ -702,7 +702,7 @@ static bool skb_is_fully_mapped(struct s
+ 	unsigned int skb_consumed;
  
-+	WRITE_ONCE(msk->allow_infinite_fallback, false);
- 	return err;
+ 	skb_consumed = tcp_sk(ssk)->copied_seq - TCP_SKB_CB(skb)->seq;
+-	if (WARN_ON_ONCE(skb_consumed >= skb->len))
++	if (unlikely(skb_consumed >= skb->len))
+ 		return true;
  
- failed:
+ 	return skb->len - skb_consumed <= subflow->map_data_len -
 
 
