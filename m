@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F6A1E47CD;
-	Mon, 21 Oct 2024 10:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC381E47CD;
+	Mon, 21 Oct 2024 10:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507195; cv=none; b=ZU3esOy0GJOdE6uwTaebNFcZxdsC/DPI7uwVtsIbxsaYC+MbqpAEZMQl38krmXtuJFcJUop1lY4bbT9JF4IYtaaO+GBtFz+HWn14S/4HnpmkAhHz8jdtXhNZ72ubkgLfTScuK7FvVtGszOZ4iqZZ+idm2X5YU+oShzz6SqGNwAQ=
+	t=1729507198; cv=none; b=iVvszYFG8GfQ3OUEUarTp9tJNL9ZBp37quczWfGMsi3Z8guFs576dFFlZQXRfTcJsQXOSA6IdJzFZhgV7aiaXxVAOUEpSGcte6Mynmm4Fe9BET1+r33dGQMsMpf+KG+OBaAQXE9s1+3256ly3ET0zdCL6TH0uuNE7KUH2bF8its=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507195; c=relaxed/simple;
-	bh=HZtFgva5utvgqEbZ2aTR0OBXrNQ8nFeOVaIVcKRpt74=;
+	s=arc-20240116; t=1729507198; c=relaxed/simple;
+	bh=NsCHxQo+4T/44bLrh+pmwLdQJ1ow6GIAXmXLJyj049w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pk4ePssvvHoOzmE++3/shFUFls+f1YR/V/osvA1uY2i6taExPrRFsi4KlfQrNLOj6AOQSkGd5i5Yk5sfq8XiemoqF22mRbs0nggmcFz9HC3s3IlEFTfzRy0dq/2abjHEw0bi2tFJyrUld4LUyswgW0t1uqG1+4whwlZn21itfMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIUeunJD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cBSiRoClNnyTjE0MdTDMDSGbyiJf4uNTJ1faL+/dmVWP6IEDhZBlcM+7munM1J2iuJcpKU4zqc3PDtNygJCt9NZ+G5IbjuRiP5Rmwi4FJg3sghBEy0bJ8eibA9xKADJ0BuWvEHaTnCmEGj9cadn7e36cooKIeVT/RwrIc+eYpoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jv0qT5HP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIUeunJD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCD7C4CEC3;
-	Mon, 21 Oct 2024 10:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jv0qT5HP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3937C4CEC3;
+	Mon, 21 Oct 2024 10:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507195;
-	bh=HZtFgva5utvgqEbZ2aTR0OBXrNQ8nFeOVaIVcKRpt74=;
+	s=korg; t=1729507198;
+	bh=NsCHxQo+4T/44bLrh+pmwLdQJ1ow6GIAXmXLJyj049w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dIUeunJD5m7WS62LLahLp73xqJDI5xqIHYUmHOqRbSVgigUmseYx65T1fcHYvh9BO
-	 mk0j1kvoIe7hOYzVTWipEN0NydfVkuXJq8nMW5gQ86e9K6Mtjx1uq4Y7260mP6PNh0
-	 Ie7L6aQftLJrvdjw7D7Csimpp9CYY4uLSjPwgURM=
+	b=Jv0qT5HPz/Wb7hmCtGZQQPDl8lxewlLlYZ3Gcp3dxLEtzqJpNHO4uujcb1Z+h2d8T
+	 Bys273vbvx98Lqw2Wjr1brJBqtcNsGn6adWSHI6UxNvhyKpGU40TfalTyZbaUcg3gY
+	 SwdeZaOVQ5W6tp+psUvVVlbcLR8raPVgQjl6KNvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 120/124] selftests: mptcp: join: change capture/checksum as bool
-Date: Mon, 21 Oct 2024 12:25:24 +0200
-Message-ID: <20241021102301.363989240@linuxfoundation.org>
+	syzbot+955da2d57931604ee691@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>
+Subject: [PATCH 6.6 091/124] vt: prevent kernel-infoleak in con_font_get()
+Date: Mon, 21 Oct 2024 12:24:55 +0200
+Message-ID: <20241021102300.246144855@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -51,108 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 8c6f6b4bb53a904f922dfb90d566391d3feee32c upstream.
+commit f956052e00de211b5c9ebaa1958366c23f82ee9e upstream.
 
-To maintain consistency with other scripts, this patch changes vars
-'capture' and 'checksum' as bool vars in mptcp_join.
+font.data may not initialize all memory spaces depending on the implementation
+of vc->vc_sw->con_font_get. This may cause info-leak, so to prevent this, it
+is safest to modify it to initialize the allocated memory space to 0, and it
+generally does not affect the overall performance of the system.
 
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://lore.kernel.org/r/20240223-upstream-net-next-20240223-misc-improvements-v1-7-b6c8a10396bd@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 5afca7e996c4 ("selftests: mptcp: join: test for prohibited MPC to port-based endp")
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+955da2d57931604ee691@syzkaller.appspotmail.com
+Fixes: 05e2600cb0a4 ("VT: Bump font size limitation to 64x128 pixels")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Link: https://lore.kernel.org/r/20241010174619.59662-1-aha310510@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/tty/vt/vt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -30,11 +30,11 @@ iptables="iptables"
- ip6tables="ip6tables"
- timeout_poll=30
- timeout_test=$((timeout_poll * 2 + 1))
--capture=0
--checksum=0
-+capture=false
-+checksum=false
- ip_mptcp=0
- check_invert=0
--validate_checksum=0
-+validate_checksum=false
- init=0
- evts_ns1=""
- evts_ns2=""
-@@ -99,7 +99,7 @@ init_partial()
- 		ip netns exec $netns sysctl -q net.mptcp.pm_type=0 2>/dev/null || true
- 		ip netns exec $netns sysctl -q net.ipv4.conf.all.rp_filter=0
- 		ip netns exec $netns sysctl -q net.ipv4.conf.default.rp_filter=0
--		if [ $checksum -eq 1 ]; then
-+		if $checksum; then
- 			ip netns exec $netns sysctl -q net.mptcp.checksum_enabled=1
- 		fi
- 	done
-@@ -386,7 +386,7 @@ reset_with_checksum()
- 	ip netns exec $ns1 sysctl -q net.mptcp.checksum_enabled=$ns1_enable
- 	ip netns exec $ns2 sysctl -q net.mptcp.checksum_enabled=$ns2_enable
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -4550,7 +4550,7 @@ static int con_font_get(struct vc_data *
+ 		return -EINVAL;
  
--	validate_checksum=1
-+	validate_checksum=true
- }
- 
- reset_with_allow_join_id0()
-@@ -419,7 +419,7 @@ reset_with_allow_join_id0()
- setup_fail_rules()
- {
- 	check_invert=1
--	validate_checksum=1
-+	validate_checksum=true
- 	local i="$1"
- 	local ip="${2:-4}"
- 	local tables
-@@ -1024,7 +1024,7 @@ do_transfer()
- 	:> "$sout"
- 	:> "$capout"
- 
--	if [ $capture -eq 1 ]; then
-+	if $capture; then
- 		local capuser
- 		if [ -z $SUDO_USER ] ; then
- 			capuser=""
-@@ -1125,7 +1125,7 @@ do_transfer()
- 	wait $spid
- 	local rets=$?
- 
--	if [ $capture -eq 1 ]; then
-+	if $capture; then
- 	    sleep 1
- 	    kill $cappid
- 	fi
-@@ -1514,7 +1514,7 @@ chk_join_nr()
- 	else
- 		print_ok
- 	fi
--	if [ $validate_checksum -eq 1 ]; then
-+	if $validate_checksum; then
- 		chk_csum_nr $csum_ns1 $csum_ns2
- 		chk_fail_nr $fail_nr $fail_nr
- 		chk_rst_nr $rst_nr $rst_nr
-@@ -3960,10 +3960,10 @@ while getopts "${all_tests_args}cCih" op
- 			tests+=("${all_tests[${opt}]}")
- 			;;
- 		c)
--			capture=1
-+			capture=true
- 			;;
- 		C)
--			checksum=1
-+			checksum=true
- 			;;
- 		i)
- 			ip_mptcp=1
+ 	if (op->data) {
+-		font.data = kvmalloc(max_font_size, GFP_KERNEL);
++		font.data = kvzalloc(max_font_size, GFP_KERNEL);
+ 		if (!font.data)
+ 			return -ENOMEM;
+ 	} else
 
 
