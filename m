@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7ED1E570D;
-	Mon, 21 Oct 2024 10:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C081E47B4;
+	Mon, 21 Oct 2024 10:33:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506819; cv=none; b=ODgukQ6QfAXTXkBjW7iUQrVkYG+tt4XlywzR6wFFu3lZ/0GAmQRT9z43KtuBOykzLKnOo2n12WQFJQHnMfP49s0wT/wOXYtWjv+ML9RZis2QhivQZZDnXG5CLcLXyinOPq9Grnae8XzRCI97HkGnJ7jZveZ7HL3revp8VldEYx0=
+	t=1729506822; cv=none; b=jnfvdJOndqqfDwsjUKjCJR8ImVk4XbaClpQnK6p2dFOQ2Fr3na3zPVaYiuoxI+u/WbetkKp9V46keH138kxX1dZATm8mToYGseTCm4Lm2x5JRX53VWjFeKdt4aeDCp1wv08Pz8RCwbSxqirwZiXgcPOkJBCmCpNWjaV2x0IO4E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506819; c=relaxed/simple;
-	bh=FOLoKGMkiiZuwJcqUMPAcZBTg8RUZ/5QU/LZ59Pd0iI=;
+	s=arc-20240116; t=1729506822; c=relaxed/simple;
+	bh=zp3Pz3eeAedYBZm/La51PDR8UgZJQ8BA8cIdXs8ffH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XDMOS69dreJ2Bku0rVQ/cYFQYsW6Fdo05GAdhdnI3wiRrF5kfNU50y6zdiPnh6NF31SjquTMQuzvvFRsjG2odNz9WN/DuLZYCYc2LLE+xUJScxniO8dYFz+XryRYf3rhZTDTUgDcV7X8RSRU6PGstLhg+ZNAdRfct4Lcyp+tgbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ai/+ak7G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QK33iWTPmA5kfpIEZM5yyyYjTvbqrSu1/NuP4lVvM1mON/BFDiyDnE+q3lYVIiGxx1XHb9Qbhd7giZwNbiT7jjUwuxZMFim2GXevbWGSvttDgOEUFlpqZndBtLmZXW2Og31K8KoeWZliB3G/NII73RDuFpsVYZxq+IraQ4KDexI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ym6mUthz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ai/+ak7G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BFE8C4CEC3;
-	Mon, 21 Oct 2024 10:33:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ym6mUthz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603E8C4CEC3;
+	Mon, 21 Oct 2024 10:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506818;
-	bh=FOLoKGMkiiZuwJcqUMPAcZBTg8RUZ/5QU/LZ59Pd0iI=;
+	s=korg; t=1729506821;
+	bh=zp3Pz3eeAedYBZm/La51PDR8UgZJQ8BA8cIdXs8ffH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ai/+ak7Gv8ueyizsRn5lcgzu7I85pihHqCOrarbez8/dZgMzQIw78aRvuc2OVj1RX
-	 ZGq9Y4rE1VXIsKvkiaPHAYYNN9WRr+Izic6//+4F4LJLSksb3c3GHve/USGjCEymhg
-	 j2arSa/nKEUkucGn9mspeXpgaJqKyLvL/exHg1Z4=
+	b=ym6mUthzAVUdNtDHBVVdTMTKUgOBbi5r4tnfY7lowyESuuxkd1G4jMAjq2rYZFzz/
+	 WsFo2DO/LH1uVcbI9R5iD3OE0UcUHr4ojAV7sWGRulS/PF87ioN9DaBza7KpM2dVYS
+	 sXxaKDfY390pvqWn04wZBrHPRsWicQNo9DwC8a3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH 6.11 131/135] serial: qcom-geni: fix shutdown race
-Date: Mon, 21 Oct 2024 12:24:47 +0200
-Message-ID: <20241021102304.471693559@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6.11 105/135] usb: typec: qcom-pmic-typec: fix sink status being overwritten with RP_DEF
+Date: Mon, 21 Oct 2024 12:24:21 +0200
+Message-ID: <20241021102303.434647004@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -51,45 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jonathan Marek <jonathan@marek.ca>
 
-commit 23f5f5debcaac1399cfeacec215278bf6dbc1d11 upstream.
+commit ffe85c24d7ca5de7d57690c0ab194b3838674935 upstream.
 
-A commit adding back the stopping of tx on port shutdown failed to add
-back the locking which had also been removed by commit e83766334f96
-("tty: serial: qcom_geni_serial: No need to stop tx/rx on UART
-shutdown").
+This line is overwriting the result of the above switch-case.
 
-Holding the port lock is needed to serialise against the console code,
-which may update the interrupt enable register and access the port
-state.
+This fixes the tcpm driver getting stuck in a "Sink TX No Go" loop.
 
-Fixes: d8aca2f96813 ("tty: serial: qcom-geni-serial: stop operations in progress at shutdown")
-Fixes: 947cc4ecc06c ("serial: qcom-geni: fix soft lockup on sw flow control and suspend")
-Cc: stable@vger.kernel.org	# 6.3
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20241009145110.16847-4-johan+linaro@kernel.org
+Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241005144146.2345-1-jonathan@marek.ca
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1096,10 +1096,12 @@ static void qcom_geni_serial_shutdown(st
- {
- 	disable_irq(uport->irq);
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+@@ -432,7 +432,6 @@ static int qcom_pmic_typec_port_get_cc(s
+ 			val = TYPEC_CC_RP_DEF;
+ 			break;
+ 		}
+-		val = TYPEC_CC_RP_DEF;
+ 	}
  
-+	uart_port_lock_irq(uport);
- 	qcom_geni_serial_stop_tx(uport);
- 	qcom_geni_serial_stop_rx(uport);
- 
- 	qcom_geni_serial_cancel_tx_cmd(uport);
-+	uart_port_unlock_irq(uport);
- }
- 
- static void qcom_geni_serial_flush_buffer(struct uart_port *uport)
+ 	if (misc & CC_ORIENTATION)
 
 
