@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8AF195FEC;
-	Mon, 21 Oct 2024 10:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81DD1EABA6;
+	Mon, 21 Oct 2024 10:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507231; cv=none; b=h8TEDiOX76v+35Xjs623S9u3FQi5wL9VVerGHE2dpMwFHH8cwtJeEc6MeyZio+maiBcTna8h5Elb5QRUTq409JmwIYzbf9p8GQKcPnWoiV7P/R/YcB9UEuhysqlmeU3TtTvbbiEIGp9noUD573TBLODi2+cigZjmayjhoQTzaPY=
+	t=1729507234; cv=none; b=dXx2m4MU79g5CVLOhoTE2ORdrYDN7z7hWMDLmDd3Wl1m4fRBOD6AnnGi5Km6amzQ/PPx5N6vcOlp0o5ZVl3AsQtXvUkCLNSfGaEu4aikJYu3bi6wPX25d0nJFtSW4zysLg9e+4dBLj90uqsNGw/8kBcsvE4aq8YRblGr/FEWAnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507231; c=relaxed/simple;
-	bh=6rkTIn+GaYqhIXXLwBKGz8GbJ9OXtliHyYAyAnlpQtY=;
+	s=arc-20240116; t=1729507234; c=relaxed/simple;
+	bh=7NEvsXqaOcs6tw+RnUQvLa49NWAw3lDYM2DWbEduj6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vCzGuOzQu1Z2hmuR+Jb4eGCOXOwgLj0ZfL2doZNSGKO/UxMQbXpro54I2s5rRQU+88QaxCrNjAFWj+5/KGwER065DngPYxkgILYbRamqW1/XUAqdOS3kI4H+q05jMcq4zT8QTByhp+/5ath5gw0bOd+qrDIh+omjwBOsPPjWgIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCGhjv65; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SYvEKKA/FA9KfxHl5XK52Wp/51sz0RPFqzEwN9VCquMXFhKyefR5XmWO5EKADZ/clG9oYj+SMaTB7yz7ljWugc+34LqoaWIApOixHJLyvx2byEnwXf+cFrjTIT7JJM1ecwPiTEJmy6I52jpKh3DfWuaK7L5HwGjySgrowgiULCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DeYCSEwg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCGhjv65"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4124C4CEC3;
-	Mon, 21 Oct 2024 10:40:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DeYCSEwg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28103C4CEC3;
+	Mon, 21 Oct 2024 10:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507231;
-	bh=6rkTIn+GaYqhIXXLwBKGz8GbJ9OXtliHyYAyAnlpQtY=;
+	s=korg; t=1729507234;
+	bh=7NEvsXqaOcs6tw+RnUQvLa49NWAw3lDYM2DWbEduj6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YCGhjv65d7xzVxWhI8VpNTVlk0QAWnLriEd9Y6yRIJToxBG39oe98f+cefOxZ/clh
-	 5aXHPQustP+Bfg/WtNYhg3oUvaUnaN1kPsgt8BpWpi1XCOMjK0sHNNUhBgLZyiOYMG
-	 DsKh6BPLCg4Lfr8tXQcP6vNPd2gS9Tqcu3KEZ14Q=
+	b=DeYCSEwgsXXc/sEK4CizzfiMgWoaPxmOMKeF1YAVI93sSuBDzHqxKUcAr5yAcZU/F
+	 Jy+me376SDfsVFpZV1zGIZUfzSEjy7mZ3C7eHnFDwGri09AlqkLUuthZF7HF+DiQrF
+	 evfWXJ715ziYx75vgGlciGiZoADGgp1hXsNsD2lQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Roi Martin <jroi.martin@gmail.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 01/91] btrfs: fix uninitialized pointer free in add_inode_ref()
-Date: Mon, 21 Oct 2024 12:24:15 +0200
-Message-ID: <20241021102249.853676139@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Subject: [PATCH 6.1 10/91] udf: Provide function to mark entry as deleted using new directory iteration code
+Date: Mon, 21 Oct 2024 12:24:24 +0200
+Message-ID: <20241021102250.207121646@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -51,55 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roi Martin <jroi.martin@gmail.com>
+From: Jan Kara <jack@suse.cz>
 
-commit 66691c6e2f18d2aa4b22ffb624b9bdc97e9979e4 upstream.
+[ Upstream commit 4cca7e3df7bea8661a0c2a70c0d250e9aa5cedb4 ]
 
-The add_inode_ref() function does not initialize the "name" struct when
-it is declared.  If any of the following calls to "read_one_inode()
-returns NULL,
+Provide function udf_fiiter_delete_entry() to mark directory entry as
+deleted using new directory iteration code.
 
-	dir = read_one_inode(root, parent_objectid);
-	if (!dir) {
-		ret = -ENOENT;
-		goto out;
-	}
-
-	inode = read_one_inode(root, inode_objectid);
-	if (!inode) {
-		ret = -EIO;
-		goto out;
-	}
-
-then "name.name" would be freed on "out" before being initialized.
-
-out:
-	...
-	kfree(name.name);
-
-This issue was reported by Coverity with CID 1526744.
-
-Fixes: e43eec81c516 ("btrfs: use struct qstr instead of name and namelen pairs")
-CC: stable@vger.kernel.org # 6.6+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Roi Martin <jroi.martin@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-log.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/namei.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -1372,7 +1372,7 @@ static noinline int add_inode_ref(struct
- 	struct inode *inode = NULL;
- 	unsigned long ref_ptr;
- 	unsigned long ref_end;
--	struct fscrypt_str name;
-+	struct fscrypt_str name = { 0 };
- 	int ret;
- 	int log_ref_ver = 0;
- 	u64 parent_objectid;
+--- a/fs/udf/namei.c
++++ b/fs/udf/namei.c
+@@ -714,6 +714,16 @@ out_ok:
+ 	return fi;
+ }
+ 
++static void udf_fiiter_delete_entry(struct udf_fileident_iter *iter)
++{
++	iter->fi.fileCharacteristics |= FID_FILE_CHAR_DELETED;
++
++	if (UDF_QUERY_FLAG(iter->dir->i_sb, UDF_FLAG_STRICT))
++		memset(&iter->fi.icb, 0x00, sizeof(struct long_ad));
++
++	udf_fiiter_write_fi(iter, NULL);
++}
++
+ static int udf_delete_entry(struct inode *inode, struct fileIdentDesc *fi,
+ 			    struct udf_fileident_bh *fibh,
+ 			    struct fileIdentDesc *cfi)
 
 
