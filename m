@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9267C1953B9;
-	Mon, 21 Oct 2024 10:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDBF1953B9;
+	Mon, 21 Oct 2024 10:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507406; cv=none; b=Nf+ynmndquDmcp9ogYfxK/1nsGoSaI/xxBtpyC2pUBf3DqYTr8h+7o4tB21nx10UmedFduDukiFbCjWCsznXJwwvpiSGDCN549rHHSNLQ/ejQFkRHSvfTqyRyozZxOzFAZwN0GlxZlVnFDvAImSaNTnuDSGmVR+sFR8QvudrZYs=
+	t=1729507409; cv=none; b=DDtS4dNTcLhPm4p+eF0VNqzNJwj37IuZ2h1A8km/iVVO1oZHEqdDlVTEcoF17e34EHCRtKCIIDNZkEmmu9p72XE8igQ/KgkglLJJWimKObBQwNcjKO2TB+wmEc7MObxQkjUpvqyKa8yWXnPdJ9F2CX7X1sHm8+OBnpZo6D29YHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507406; c=relaxed/simple;
-	bh=O1PrQc2B31OvCyystX9+8MxkUGd8HlmIt9KXNeK4KIc=;
+	s=arc-20240116; t=1729507409; c=relaxed/simple;
+	bh=SFIXoqeZ94CkRiR+LUlFUbV2LoOftb1p7tNpfTiVdw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PPFWdugx9AeV3knTox+LDC8H8+IDwnibGyTNpgza6Bmz9GHoYNeIGCmH7iEuJ73aKoV7I7WwUE3F1/qpgMz2sKSaHQ6gsO9TkAAmHDRQAjXyMbzxc9JoCKqA5LGTS7Ok+PTMnOP3uJKj001eQ9UtTu2RezgCd0wZpva/jr1OT7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GPv+GuXm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qzvN3TYrmNY4yKVEHWnFJgGXt5WjzGuocKdazSEGVppaBEIQdXPWunEFFXVPmj5ut3Q8QJ9wqFz/8+veQdgwqCbUtTeZa6g5znVe2dxjdGmkiNX9BLhwzpveQgohFp2zIWW6ZKidsMHNduZJQjR57k6heCRbS3yjWn+2TEa8kMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2mmhsBti; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GPv+GuXm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F8CC4CEC3;
-	Mon, 21 Oct 2024 10:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2mmhsBti"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0F1C4CEC3;
+	Mon, 21 Oct 2024 10:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507406;
-	bh=O1PrQc2B31OvCyystX9+8MxkUGd8HlmIt9KXNeK4KIc=;
+	s=korg; t=1729507409;
+	bh=SFIXoqeZ94CkRiR+LUlFUbV2LoOftb1p7tNpfTiVdw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GPv+GuXm0cL3p2TsWqKRv/cat44s55/a1ji/RUsW6VV25sETk6lDV23XFKLg4AKJM
-	 uK50SSHTpoF8p3HlAOy/Cw3t4R1bQmKgnBZ0PcWnGbFGxzCH4kgSkmUxtV4NMuA2SZ
-	 DHEX+zwCGkFm7qA2kwe0G/jJHQsAf7IZOarpW++Q=
+	b=2mmhsBtidOO2xbl/zDmyEZP+8QHUvU96WcJAG9mckmWeIqeaZGqpbIAX54ESwEd76
+	 uH+zhAAFwgMS5aizkgSYhP4lOFzcoJuSXIk2RPDJH8tKkel5jxrdyu96k6W65UXuoV
+	 rnKxkIz4qFI1Q+S5FcAJUpeDJ8wEs0tDlcoP3rWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 67/91] iio: adc: ti-ads124s08: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
-Date: Mon, 21 Oct 2024 12:25:21 +0200
-Message-ID: <20241021102252.429384300@linuxfoundation.org>
+	Aaron Thompson <dev@aaront.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.1 68/91] Bluetooth: Call iso_exit() on module unload
+Date: Mon, 21 Oct 2024 12:25:22 +0200
+Message-ID: <20241021102252.475171553@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -51,35 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Aaron Thompson <dev@aaront.org>
 
-commit eb143d05def52bc6d193e813018e5fa1a0e47c77 upstream.
+commit d458cd1221e9e56da3b2cc5518ad3225caa91f20 upstream.
 
-This driver makes use of triggered buffers, but does not select the
-required modules.
+If iso_init() has been called, iso_exit() must be called on module
+unload. Without that, the struct proto that iso_init() registered with
+proto_register() becomes invalid, which could cause unpredictable
+problems later. In my case, with CONFIG_LIST_HARDENED and
+CONFIG_BUG_ON_DATA_CORRUPTION enabled, loading the module again usually
+triggers this BUG():
 
-Add the missing 'select IIO_BUFFER' and 'select IIO_TRIGGERED_BUFFER'.
+  list_add corruption. next->prev should be prev (ffffffffb5355fd0),
+    but was 0000000000000068. (next=ffffffffc0a010d0).
+  ------------[ cut here ]------------
+  kernel BUG at lib/list_debug.c:29!
+  Oops: invalid opcode: 0000 [#1] PREEMPT SMP PTI
+  CPU: 1 PID: 4159 Comm: modprobe Not tainted 6.10.11-4+bt2-ao-desktop #1
+  RIP: 0010:__list_add_valid_or_report+0x61/0xa0
+  ...
+    __list_add_valid_or_report+0x61/0xa0
+    proto_register+0x299/0x320
+    hci_sock_init+0x16/0xc0 [bluetooth]
+    bt_init+0x68/0xd0 [bluetooth]
+    __pfx_bt_init+0x10/0x10 [bluetooth]
+    do_one_initcall+0x80/0x2f0
+    do_init_module+0x8b/0x230
+    __do_sys_init_module+0x15f/0x190
+    do_syscall_64+0x68/0x110
+  ...
 
-Fixes: e717f8c6dfec ("iio: adc: Add the TI ads124s08 ADC code")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20241003-iio-select-v1-3-67c0385197cd@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: stable@vger.kernel.org
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
+Signed-off-by: Aaron Thompson <dev@aaront.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/Kconfig |    2 ++
+ net/bluetooth/af_bluetooth.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/iio/adc/Kconfig
-+++ b/drivers/iio/adc/Kconfig
-@@ -1205,6 +1205,8 @@ config TI_ADS8688
- config TI_ADS124S08
- 	tristate "Texas Instruments ADS124S08"
- 	depends on SPI
-+	select IIO_BUFFER
-+	select IIO_TRIGGERED_BUFFER
- 	help
- 	  If you say yes here you get support for Texas Instruments ADS124S08
- 	  and ADS124S06 ADC chips
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -802,6 +802,8 @@ cleanup_led:
+ 
+ static void __exit bt_exit(void)
+ {
++	iso_exit();
++
+ 	mgmt_exit();
+ 
+ 	sco_exit();
 
 
