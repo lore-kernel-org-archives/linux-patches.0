@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97361EF086;
-	Mon, 21 Oct 2024 10:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73111E6DC5;
+	Mon, 21 Oct 2024 10:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506885; cv=none; b=t3bOJwJxeYvbFH+Iv1/XtyS37pd5nOLsH3dAHWeWSr865Z+upxP/EWnZ0kTGwh8/s424n3bVYdBGRxF3NlFFdyX2gkckoc0z9ny6wynRBbhIByi+HBwlYyvlBAykZUb3PUh0HyTuZk4CzPygX99DrM/MKwNj9qVEcxaCxEqUzfs=
+	t=1729506887; cv=none; b=bK5Ugx4UahZR9dhT7sAew8oL9vssrQ1+XCiFDfPpHhLO3v4d00/vvQ0ZIdBcZweG5PgMocGdNZKM3kAgmb47Q8PcIvHcSyKRuARt2m48SmpHbEhJ0hylCa5LATLqEns70IGpQPdM+WZWA+hat+z276waJ9jnwq2/P7DzaSbZrmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506885; c=relaxed/simple;
-	bh=+zWLa8dwnYPOURvxvOLjSBLjQBDJ9V0Hm/DFsX7QlAI=;
+	s=arc-20240116; t=1729506887; c=relaxed/simple;
+	bh=vBIWCqmA1lMY7N/t4uzgYAsWFZ1+IT2V2UwhY3htERE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=egM5DU09otg6c5rREpUNYpxPGpQVy6NFhzrIHarlVxdgEOoNCEZ8kj9Rhxc5ENmcMi7+qcg0lAt5cCmuV5st/M+54LAohhRiVHNPujTU7+K8Xyys2vwow4CKOLgCq8y2cQSMZc8FgEjrYZA8wzWKuvaIYdWXRGa/qN1eyMdwb9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8DltHFr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P4PkFh88vnaKCFtjZGbboPGgKWaXyMmmyCiT9w9D6JHOIrk1T48cmOvOnUNgGJRC6X2VEKZ8P7wxem6YTVxu3zH0BAbg224/oYzV7cfOMdS7Ia/ZzcsF8oJm8qS0F8SEo2xfbN2vh3A9DA15XpSbN0JSY5cfEt9gJY3XeQGl8Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbfRjJOt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8DltHFr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234E3C4CEC7;
-	Mon, 21 Oct 2024 10:34:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbfRjJOt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1728BC4CEC3;
+	Mon, 21 Oct 2024 10:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506884;
-	bh=+zWLa8dwnYPOURvxvOLjSBLjQBDJ9V0Hm/DFsX7QlAI=;
+	s=korg; t=1729506887;
+	bh=vBIWCqmA1lMY7N/t4uzgYAsWFZ1+IT2V2UwhY3htERE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8DltHFrZP2aDKRv/JuDkXvI9yqKU78Yc16TPoTlQinuZkVplbDxHJiWeDrB7BpuF
-	 F+BAFk2g4ComrHA7D4kHbfc1QOnigS0KCGrryi/Uy8SjrTy092LDkB6U/o9E+AlMM4
-	 XOanb2FnTHEgRNKzPdInIAsAC0X7H23W9QdmwyzU=
+	b=TbfRjJOtha0xIAbwTUewfmZMIDLqMupIRzTiGD2zx2+tz19oiI4kQ36u7VQvIuF0e
+	 mIRSi1r8Y/TbIufVKdgQzdswY4YCZAtV3Q6pr3o7rVcYsQojGryJjBvbSFLSwI2NjQ
+	 9yb52SQY+sfZXyqGUd9mLNnaY/vaqclvDDOEeoo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	syzbot+ef0d7bc412553291aa86@syzkaller.appspotmail.com,
+	Edward Liaw <edliaw@google.com>,
+	Lokesh Gidra <lokeshgidra@google.com>,
+	Peter Xu <peterx@redhat.com>,
+	Shuah Khan <shuah@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 018/124] fat: fix uninitialized variable
-Date: Mon, 21 Oct 2024 12:23:42 +0200
-Message-ID: <20241021102257.428440446@linuxfoundation.org>
+Subject: [PATCH 6.6 019/124] selftests/mm: replace atomic_bool with pthread_barrier_t
+Date: Mon, 21 Oct 2024 12:23:43 +0200
+Message-ID: <20241021102257.466649133@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -51,36 +53,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
+From: Edward Liaw <edliaw@google.com>
 
-commit 963a7f4d3b90ee195b895ca06b95757fcba02d1a upstream.
+commit e61ef21e27e8deed8c474e9f47f4aa7bc37e138c upstream.
 
-syszbot produced this with a corrupted fs image.  In theory, however an IO
-error would trigger this also.
+Patch series "selftests/mm: fix deadlock after pthread_create".
 
-This affects just an error report, so should not be a serious error.
+On Android arm, pthread_create followed by a fork caused a deadlock in the
+case where the fork required work to be completed by the created thread.
 
-Link: https://lkml.kernel.org/r/87r08wjsnh.fsf@mail.parknet.co.jp
-Link: https://lkml.kernel.org/r/66ff2c95.050a0220.49194.03e9.GAE@google.com
-Signed-off-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Reported-by: syzbot+ef0d7bc412553291aa86@syzkaller.appspotmail.com
+Update the synchronization primitive to use pthread_barrier instead of
+atomic_bool.
+
+Apply the same fix to the wp-fork-with-event test.
+
+
+This patch (of 2):
+
+Swap synchronization primitive with pthread_barrier, so that stdatomic.h
+does not need to be included.
+
+The synchronization is needed on Android ARM64; we see a deadlock with
+pthread_create when the parent thread races forward before the child has a
+chance to start doing work.
+
+Link: https://lkml.kernel.org/r/20241003211716.371786-1-edliaw@google.com
+Link: https://lkml.kernel.org/r/20241003211716.371786-2-edliaw@google.com
+Fixes: cff294582798 ("selftests/mm: extend and rename uffd pagemap test")
+Signed-off-by: Edward Liaw <edliaw@google.com>
+Cc: Lokesh Gidra <lokeshgidra@google.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Shuah Khan <shuah@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fat/namei_vfat.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/mm/uffd-common.c     |    5 +++--
+ tools/testing/selftests/mm/uffd-common.h     |    3 +--
+ tools/testing/selftests/mm/uffd-unit-tests.c |   14 ++++++++------
+ 3 files changed, 12 insertions(+), 10 deletions(-)
 
---- a/fs/fat/namei_vfat.c
-+++ b/fs/fat/namei_vfat.c
-@@ -1037,7 +1037,7 @@ error_inode:
- 	if (corrupt < 0) {
- 		fat_fs_error(new_dir->i_sb,
- 			     "%s: Filesystem corrupted (i_pos %lld)",
--			     __func__, sinfo.i_pos);
-+			     __func__, new_i_pos);
- 	}
- 	goto out;
- }
+--- a/tools/testing/selftests/mm/uffd-common.c
++++ b/tools/testing/selftests/mm/uffd-common.c
+@@ -17,7 +17,7 @@ bool map_shared;
+ bool test_uffdio_wp = true;
+ unsigned long long *count_verify;
+ uffd_test_ops_t *uffd_test_ops;
+-atomic_bool ready_for_fork;
++pthread_barrier_t ready_for_fork;
+ 
+ static int uffd_mem_fd_create(off_t mem_size, bool hugetlb)
+ {
+@@ -508,7 +508,8 @@ void *uffd_poll_thread(void *arg)
+ 	pollfd[1].fd = pipefd[cpu*2];
+ 	pollfd[1].events = POLLIN;
+ 
+-	ready_for_fork = true;
++	/* Ready for parent thread to fork */
++	pthread_barrier_wait(&ready_for_fork);
+ 
+ 	for (;;) {
+ 		ret = poll(pollfd, 2, -1);
+--- a/tools/testing/selftests/mm/uffd-common.h
++++ b/tools/testing/selftests/mm/uffd-common.h
+@@ -33,7 +33,6 @@
+ #include <inttypes.h>
+ #include <stdint.h>
+ #include <sys/random.h>
+-#include <stdatomic.h>
+ 
+ #include "../kselftest.h"
+ #include "vm_util.h"
+@@ -99,7 +98,7 @@ extern bool map_shared;
+ extern bool test_uffdio_wp;
+ extern unsigned long long *count_verify;
+ extern volatile bool test_uffdio_copy_eexist;
+-extern atomic_bool ready_for_fork;
++extern pthread_barrier_t ready_for_fork;
+ 
+ extern uffd_test_ops_t anon_uffd_test_ops;
+ extern uffd_test_ops_t shmem_uffd_test_ops;
+--- a/tools/testing/selftests/mm/uffd-unit-tests.c
++++ b/tools/testing/selftests/mm/uffd-unit-tests.c
+@@ -770,7 +770,7 @@ static void uffd_sigbus_test_common(bool
+ 	char c;
+ 	struct uffd_args args = { 0 };
+ 
+-	ready_for_fork = false;
++	pthread_barrier_init(&ready_for_fork, NULL, 2);
+ 
+ 	fcntl(uffd, F_SETFL, uffd_flags | O_NONBLOCK);
+ 
+@@ -787,8 +787,9 @@ static void uffd_sigbus_test_common(bool
+ 	if (pthread_create(&uffd_mon, NULL, uffd_poll_thread, &args))
+ 		err("uffd_poll_thread create");
+ 
+-	while (!ready_for_fork)
+-		; /* Wait for the poll_thread to start executing before forking */
++	/* Wait for child thread to start before forking */
++	pthread_barrier_wait(&ready_for_fork);
++	pthread_barrier_destroy(&ready_for_fork);
+ 
+ 	pid = fork();
+ 	if (pid < 0)
+@@ -829,7 +830,7 @@ static void uffd_events_test_common(bool
+ 	char c;
+ 	struct uffd_args args = { 0 };
+ 
+-	ready_for_fork = false;
++	pthread_barrier_init(&ready_for_fork, NULL, 2);
+ 
+ 	fcntl(uffd, F_SETFL, uffd_flags | O_NONBLOCK);
+ 	if (uffd_register(uffd, area_dst, nr_pages * page_size,
+@@ -840,8 +841,9 @@ static void uffd_events_test_common(bool
+ 	if (pthread_create(&uffd_mon, NULL, uffd_poll_thread, &args))
+ 		err("uffd_poll_thread create");
+ 
+-	while (!ready_for_fork)
+-		; /* Wait for the poll_thread to start executing before forking */
++	/* Wait for child thread to start before forking */
++	pthread_barrier_wait(&ready_for_fork);
++	pthread_barrier_destroy(&ready_for_fork);
+ 
+ 	pid = fork();
+ 	if (pid < 0)
 
 
