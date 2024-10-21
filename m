@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9486D1953B9;
-	Mon, 21 Oct 2024 10:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F97B1F4266;
+	Mon, 21 Oct 2024 10:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507415; cv=none; b=XNEvTlEl7+b+hdOPtP/8EFxR2vbtTRtO2tezQ/hfqukwjIH61Xy4Nv0lEYhgAm3m5duGWwvDWqVEpYu/PHjfpQH7TtSzBTU0DY7kp5SHzTeFi/ePOERZnpyqYkBVAF5ZQwhF24AvfLwqM1NElrosS1ATaGjPQo8gKyHkV34psEU=
+	t=1729507418; cv=none; b=B0p7CTuyrIjqmjPwWk9S6yY8OMbuiME0SzHZ3DiD28Ne2Lay9RFOOPC8RuhU/xw8qd6o2goVIGRsib5lQAAVxMZ9JTujVFDXlM7SRkS5k5vqZiTF0Yg/tVEqo/jzdBGqMWsu0G14Ojbx4dUz3rOvosM/A+Ovo4s7gQfJtPxk22U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507415; c=relaxed/simple;
-	bh=Od45SlU9CfuPWk5R65rmFsN1AfOfS8JHDrDDBJpTbUE=;
+	s=arc-20240116; t=1729507418; c=relaxed/simple;
+	bh=VJeZGT/Q3bhjP7pv+4SqrCTTIyPEyGpINt/1DZF2n3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DoCNHP8EN2bsnbaknBFJuW44+BtL5/CwNCgMyikuQUoEDd8yGWXff2BwfMZQzo3b9CfNg0exMwxRL+P5vlG/dDrOg4t07nW7eqviUMbV0xYHmyH42Zvr5SGHfrKp0uR4GjaQzV/VrEAC6aDCAvdAedMDVtbkmlEjqF/SdVa5N48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbTIXFDi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Y7lWgMLRy3ujrXlEOo4DUZ0cU5AwpidYl4QCtwVrW+HYJEf46JN44ckH9XM9OktZ09pG08MjW5YlugDDallKzpyn3nNfQ0FUb/8yJHf9MIfIlONmB4nwIa9wax7qURWIsF4vpHifjPa6lGJ4PQHcJw9BMvOeyto+0vCUxDnWlYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCxXV3zW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbTIXFDi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156FFC4CEC3;
-	Mon, 21 Oct 2024 10:43:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCxXV3zW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC83C4CEC7;
+	Mon, 21 Oct 2024 10:43:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507415;
-	bh=Od45SlU9CfuPWk5R65rmFsN1AfOfS8JHDrDDBJpTbUE=;
+	s=korg; t=1729507418;
+	bh=VJeZGT/Q3bhjP7pv+4SqrCTTIyPEyGpINt/1DZF2n3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JbTIXFDiiEWCLZsFI2Qc1QSPKXLd3lnjcStzbtKYYQHa/KxP0kb72jg3QpjvvUOVQ
-	 QDG6dU7A5wDNVXxVeBP4zs1mjE5fwf/M75ByrHOTIgmvKBVupzkfHFlnJ3eIUjJUQe
-	 gsOopZoHs3sJgPA+cgugTeT6AJSZKow89OGElZZQ=
+	b=QCxXV3zWJFsIUqBEf5AwWhS/9YC2BvnzV8JjKURnsx9aVp+C6g9RttgJY/uMy8V4U
+	 nsofDw9nclOJPlOI8ythRq2OpG2bJYHN7q5lw2BrJ9i7znby9I/j04e8r1JLaAiI30
+	 o3WFUadk/zXKDH+c1LdTTQJGzOnVfm653iCV8Xfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Thompson <dev@aaront.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 70/91] Bluetooth: ISO: Fix multiple init when debugfs is disabled
-Date: Mon, 21 Oct 2024 12:25:24 +0200
-Message-ID: <20241021102252.552263720@linuxfoundation.org>
+Subject: [PATCH 6.1 71/91] Bluetooth: btusb: Fix regression with fake CSR controllers 0a12:0001
+Date: Mon, 21 Oct 2024 12:25:25 +0200
+Message-ID: <20241021102252.591664258@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -44,74 +43,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aaron Thompson <dev@aaront.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit a9b7b535ba192c6b77e6c15a4c82d853163eab8c upstream.
+commit 2c1dda2acc4192d826e84008d963b528e24d12bc upstream.
 
-If bt_debugfs is not created successfully, which happens if either
-CONFIG_DEBUG_FS or CONFIG_DEBUG_FS_ALLOW_ALL is unset, then iso_init()
-returns early and does not set iso_inited to true. This means that a
-subsequent call to iso_init() will result in duplicate calls to
-proto_register(), bt_sock_register(), etc.
+Fake CSR controllers don't seem to handle short-transfer properly which
+cause command to time out:
 
-With CONFIG_LIST_HARDENED and CONFIG_BUG_ON_DATA_CORRUPTION enabled, the
-duplicate call to proto_register() triggers this BUG():
+kernel: usb 1-1: new full-speed USB device number 19 using xhci_hcd
+kernel: usb 1-1: New USB device found, idVendor=0a12, idProduct=0001, bcdDevice=88.91
+kernel: usb 1-1: New USB device strings: Mfr=0, Product=2, SerialNumber=0
+kernel: usb 1-1: Product: BT DONGLE10
+...
+Bluetooth: hci1: Opcode 0x1004 failed: -110
+kernel: Bluetooth: hci1: command 0x1004 tx timeout
 
-  list_add double add: new=ffffffffc0b280d0, prev=ffffffffbab56250,
-    next=ffffffffc0b280d0.
-  ------------[ cut here ]------------
-  kernel BUG at lib/list_debug.c:35!
-  Oops: invalid opcode: 0000 [#1] PREEMPT SMP PTI
-  CPU: 2 PID: 887 Comm: bluetoothd Not tainted 6.10.11-1-ao-desktop #1
-  RIP: 0010:__list_add_valid_or_report+0x9a/0xa0
-  ...
-    __list_add_valid_or_report+0x9a/0xa0
-    proto_register+0x2b5/0x340
-    iso_init+0x23/0x150 [bluetooth]
-    set_iso_socket_func+0x68/0x1b0 [bluetooth]
-    kmem_cache_free+0x308/0x330
-    hci_sock_sendmsg+0x990/0x9e0 [bluetooth]
-    __sock_sendmsg+0x7b/0x80
-    sock_write_iter+0x9a/0x110
-    do_iter_readv_writev+0x11d/0x220
-    vfs_writev+0x180/0x3e0
-    do_writev+0xca/0x100
-  ...
+According to USB Spec 2.0 Section 5.7.3 Interrupt Transfer Packet Size
+Constraints a interrupt transfer is considered complete when the size is 0
+(ZPL) or < wMaxPacketSize:
 
-This change removes the early return. The check for iso_debugfs being
-NULL was unnecessary, it is always NULL when iso_inited is false.
+ 'When an interrupt transfer involves more data than can fit in one
+ data payload of the currently established maximum size, all data
+ payloads are required to be maximum-sized except for the last data
+ payload, which will contain the remaining data. An interrupt transfer
+ is complete when the endpoint does one of the following:
 
-Cc: stable@vger.kernel.org
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
-Signed-off-by: Aaron Thompson <dev@aaront.org>
+ • Has transferred exactly the amount of data expected
+ • Transfers a packet with a payload size less than wMaxPacketSize or
+ transfers a zero-length packet'
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219365
+Fixes: 7b05933340f4 ("Bluetooth: btusb: Fix not handling ZPL/short-transfer")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/iso.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/bluetooth/btusb.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1837,13 +1837,9 @@ int iso_init(void)
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -1191,10 +1191,15 @@ static int btusb_submit_intr_urb(struct
+ 	if (!urb)
+ 		return -ENOMEM;
  
- 	hci_register_cb(&iso_cb);
+-	/* Use maximum HCI Event size so the USB stack handles
+-	 * ZPL/short-transfer automatically.
+-	 */
+-	size = HCI_MAX_EVENT_SIZE;
++	if (le16_to_cpu(data->udev->descriptor.idVendor)  == 0x0a12 &&
++	    le16_to_cpu(data->udev->descriptor.idProduct) == 0x0001)
++		/* Fake CSR devices don't seem to support sort-transter */
++		size = le16_to_cpu(data->intr_ep->wMaxPacketSize);
++	else
++		/* Use maximum HCI Event size so the USB stack handles
++		 * ZPL/short-transfer automatically.
++		 */
++		size = HCI_MAX_EVENT_SIZE;
  
--	if (IS_ERR_OR_NULL(bt_debugfs))
--		return 0;
--
--	if (!iso_debugfs) {
-+	if (!IS_ERR_OR_NULL(bt_debugfs))
- 		iso_debugfs = debugfs_create_file("iso", 0444, bt_debugfs,
- 						  NULL, &iso_debugfs_fops);
--	}
- 
- 	iso_inited = true;
- 
+ 	buf = kmalloc(size, mem_flags);
+ 	if (!buf) {
 
 
