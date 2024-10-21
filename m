@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176761E3784;
-	Mon, 21 Oct 2024 10:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587DC1F4710;
+	Mon, 21 Oct 2024 10:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507867; cv=none; b=m+ZBWX8c/u4kBNnZKwE+rHl2G40YFeNg3ZXxPaqdACMKuTvSw6DW6CiVDsbLpyFu9kfC/nelkcokBYgS1GPUNsBxArJpTrokH4+6NrZ/e7OCfMSUA+y+Obfkt1RMasUkBvsKa2h+kogyiSvRAupkfuk7KwM+y+m3VHjYFTni9Hw=
+	t=1729507870; cv=none; b=U6UNa5TdjyldTWQHEQhBr1yvQASn+RVHCkRlJ+Vaso2aIdTx9FuN35S5d3Fys3jEHekTs+MSdYbLykWSHNjXSBn9qJs899WF+kBpThgs8Rj7RcL4wsclQqA7fRXj3GKjFYNArZUMf4FuqxDU0FX0SXoZbtmPSyhUCSjpSt5QxNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507867; c=relaxed/simple;
-	bh=Bf1sJA68YpLM6brPp6TUu0/bEzoGYZr64QsjMaolO2c=;
+	s=arc-20240116; t=1729507870; c=relaxed/simple;
+	bh=H/Fjx4cboTkM80k2KvLenuZReGdEHDSRvHj1HootnT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFTn8u9H1RGcvZC28GZCcy3dvqZq/7ds1NqSgjmdH2eiMbhwpZBYbRVCPSV6VLSr8NigfTOanCWbygi69hFa3PG+P5gn2meWQOeUCUErLQfMToFJZ+h5ceAsAvpceLroY9/IKKu+cMiSATGkIRPipS2wgSV8yFiFW3B8L+MB/MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OlOziXKb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SZHSG9xz4pFYLflKtmiPdc0IDRtB3YV1uaJaB5pJz33sgymqHawRx3olzj1DtvWzbkA1/A+JNyNjVk6ogJEX0+Y8PEV6R8Yl0xBYb4VMsbJIK7C6N/qmM7U2JeE4tg/6Ppz7CLcQWaKcLNMGVsH13pvPoV7+cbfiH3Aue5kNYJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6SOOxr4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OlOziXKb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B75DC4CEC3;
-	Mon, 21 Oct 2024 10:51:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6SOOxr4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D3EC4CEE6;
+	Mon, 21 Oct 2024 10:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507866;
-	bh=Bf1sJA68YpLM6brPp6TUu0/bEzoGYZr64QsjMaolO2c=;
+	s=korg; t=1729507870;
+	bh=H/Fjx4cboTkM80k2KvLenuZReGdEHDSRvHj1HootnT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OlOziXKbLqLrgsXUrGd/9evdW0BZXlC8V32Inon3RDGJNQpYomFpXwfzK8K+M2fPG
-	 vIEtM4jRXpYFrInrpRKRZDfVM2RoSlYnlsZCzHWIudwnPMgx5ql0jjgYa0wKKWqDD4
-	 t3lVRq5nJ8zgCY3R9ilullRld6XqEsLpFiWbM1dY=
+	b=S6SOOxr4/6hMMPLBodQ/uYn8MgLFPWfydv6d3kGWXbdlTUOxZ4dxsPLGn7oIL4Tnf
+	 ir6H8RXLoRP/5jM8idZ3R5wmDhzQHm8CtoyvN4OSnSwtYIi/5qW+utc7HOEpE//63H
+	 X6Tpmmn7GZPSfU+0/IxQVDZaozBSmpGiHlRk1EYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Subject: [PATCH 5.10 45/52] x86/entry_32: Clear CPU buffers after register restore in NMI return
-Date: Mon, 21 Oct 2024 12:26:06 +0200
-Message-ID: <20241021102243.390249954@linuxfoundation.org>
+	Kunkun Jiang <jiangkunkun@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.10 46/52] irqchip/gic-v4: Dont allow a VMOVP on a dying VPE
+Date: Mon, 21 Oct 2024 12:26:07 +0200
+Message-ID: <20241021102243.429687871@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102241.624153108@linuxfoundation.org>
 References: <20241021102241.624153108@linuxfoundation.org>
@@ -50,53 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 48a2440d0f20c826b884e04377ccc1e4696c84e9 upstream.
+commit 1442ee0011983f0c5c4b92380e6853afb513841a upstream.
 
-CPU buffers are currently cleared after call to exc_nmi, but before
-register state is restored. This may be okay for MDS mitigation but not for
-RDFS. Because RDFS mitigation requires CPU buffers to be cleared when
-registers don't have any sensitive data.
+Kunkun Jiang reported that there is a small window of opportunity for
+userspace to force a change of affinity for a VPE while the VPE has already
+been unmapped, but the corresponding doorbell interrupt still visible in
+/proc/irq/.
 
-Move CLEAR_CPU_BUFFERS after RESTORE_ALL_NMI.
+Plug the race by checking the value of vmapp_count, which tracks whether
+the VPE is mapped ot not, and returning an error in this case.
 
-Fixes: a0e2dab44d22 ("x86/entry_32: Add VERW just before userspace transition")
-Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240925-fix-dosemu-vm86-v7-2-1de0daca2d42%40linux.intel.com
+This involves making vmapp_count common to both GICv4.1 and its v4.0
+ancestor.
+
+Fixes: 64edfaa9a234 ("irqchip/gic-v4.1: Implement the v4.1 flavour of VMAPP")
+Reported-by: Kunkun Jiang <jiangkunkun@huawei.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/c182ece6-2ba0-ce4f-3404-dba7a3ab6c52@huawei.com
+Link: https://lore.kernel.org/all/20241002204959.2051709-1-maz@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/entry/entry_32.S |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v3-its.c   |   18 ++++++++++++------
+ include/linux/irqchip/arm-gic-v4.h |    4 +++-
+ 2 files changed, 15 insertions(+), 7 deletions(-)
 
---- a/arch/x86/entry/entry_32.S
-+++ b/arch/x86/entry/entry_32.S
-@@ -1222,7 +1222,6 @@ SYM_CODE_START(asm_exc_nmi)
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -789,8 +789,8 @@ static struct its_vpe *its_build_vmapp_c
+ 	its_encode_valid(cmd, desc->its_vmapp_cmd.valid);
  
- 	/* Not on SYSENTER stack. */
- 	call	exc_nmi
--	CLEAR_CPU_BUFFERS
- 	jmp	.Lnmi_return
+ 	if (!desc->its_vmapp_cmd.valid) {
++		alloc = !atomic_dec_return(&desc->its_vmapp_cmd.vpe->vmapp_count);
+ 		if (is_v4_1(its)) {
+-			alloc = !atomic_dec_return(&desc->its_vmapp_cmd.vpe->vmapp_count);
+ 			its_encode_alloc(cmd, alloc);
+ 			/*
+ 			 * Unmapping a VPE is self-synchronizing on GICv4.1,
+@@ -809,13 +809,13 @@ static struct its_vpe *its_build_vmapp_c
+ 	its_encode_vpt_addr(cmd, vpt_addr);
+ 	its_encode_vpt_size(cmd, LPI_NRBITS - 1);
  
- .Lnmi_from_sysenter_stack:
-@@ -1243,6 +1242,7 @@ SYM_CODE_START(asm_exc_nmi)
++	alloc = !atomic_fetch_inc(&desc->its_vmapp_cmd.vpe->vmapp_count);
++
+ 	if (!is_v4_1(its))
+ 		goto out;
  
- 	CHECK_AND_APPLY_ESPFIX
- 	RESTORE_ALL_NMI cr3_reg=%edi pop=4
-+	CLEAR_CPU_BUFFERS
- 	jmp	.Lirq_return
+ 	vconf_addr = virt_to_phys(page_address(desc->its_vmapp_cmd.vpe->its_vm->vprop_page));
  
- #ifdef CONFIG_X86_ESPFIX32
-@@ -1284,6 +1284,7 @@ SYM_CODE_START(asm_exc_nmi)
- 	 *  1 - orig_ax
- 	 */
- 	lss	(1+5+6)*4(%esp), %esp			# back to espfix stack
-+	CLEAR_CPU_BUFFERS
- 	jmp	.Lirq_return
- #endif
- SYM_CODE_END(asm_exc_nmi)
+-	alloc = !atomic_fetch_inc(&desc->its_vmapp_cmd.vpe->vmapp_count);
+-
+ 	its_encode_alloc(cmd, alloc);
+ 
+ 	/* We can only signal PTZ when alloc==1. Why do we have two bits? */
+@@ -3793,6 +3793,13 @@ static int its_vpe_set_affinity(struct i
+ 	int from, cpu;
+ 
+ 	/*
++	 * Check if we're racing against a VPE being destroyed, for
++	 * which we don't want to allow a VMOVP.
++	 */
++	if (!atomic_read(&vpe->vmapp_count))
++		return -EINVAL;
++
++	/*
+ 	 * Changing affinity is mega expensive, so let's be as lazy as
+ 	 * we can and only do it if we really have to. Also, if mapped
+ 	 * into the proxy device, we need to move the doorbell
+@@ -4424,9 +4431,8 @@ static int its_vpe_init(struct its_vpe *
+ 	raw_spin_lock_init(&vpe->vpe_lock);
+ 	vpe->vpe_id = vpe_id;
+ 	vpe->vpt_page = vpt_page;
+-	if (gic_rdists->has_rvpeid)
+-		atomic_set(&vpe->vmapp_count, 0);
+-	else
++	atomic_set(&vpe->vmapp_count, 0);
++	if (!gic_rdists->has_rvpeid)
+ 		vpe->vpe_proxy_event = -1;
+ 
+ 	return 0;
+--- a/include/linux/irqchip/arm-gic-v4.h
++++ b/include/linux/irqchip/arm-gic-v4.h
+@@ -56,10 +56,12 @@ struct its_vpe {
+ 				bool	enabled;
+ 				bool	group;
+ 			}			sgi_config[16];
+-			atomic_t vmapp_count;
+ 		};
+ 	};
+ 
++	/* Track the VPE being mapped */
++	atomic_t vmapp_count;
++
+ 	/*
+ 	 * Ensures mutual exclusion between affinity setting of the
+ 	 * vPE and vLPI operations using vpe->col_idx.
 
 
