@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612661E6DD5;
-	Mon, 21 Oct 2024 10:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B1D1E7C01;
+	Mon, 21 Oct 2024 10:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506510; cv=none; b=gQ1aiB+hGS+r59mmxngKyC5wpcIMDmCDpqnK/5r5X8PRdE0sBAt+HRf48AJdEyfHvILOP+mfyQvYHDvMDsIc+JVmP8C3T/IzkRzppeZb/qs6PbUWd1CK0oEA3jN8PX3lF/xdrb6hdU7d2kMlM68c5Ea40K8i8ApufuDeXE88hpE=
+	t=1729506513; cv=none; b=pqb3tDtfHiCU5RAnk8lPIx5YwrUPAJ+KzdJnhQDLlh4cgDS/Pdg0tRRBFx0h5vPhvFkXxQSjweQ4YTvzFD20W7A0w8V9FGPEPluQkeUzWKUEU6gsB3DgFH2klTiC8lXxRkMpghrfV7nfaUrauUinHvUvSuZ8lNzoMK0H5pzQFvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506510; c=relaxed/simple;
-	bh=fv1cXGQbQvBm7mvZNbCzV0LP1zkfpO+Y3s1FmiIskH4=;
+	s=arc-20240116; t=1729506513; c=relaxed/simple;
+	bh=+Dbywfda9YHir6yBWN5rhcumZI3vz9396P0kvzJ+l3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RBWr25XwVdP9Cm7mAhwtbtKcWxMyMqGb4DjEyDwiXBGHHzyHZbnju1bQRXN3VKZFmXveykQgJ6BToBAN1WdyZy0F9kJut+it7VcsT0jnut3g37V5fIFfGhqrwGWGGYq0OVsdVBUirBt15W+/K/TaN2Y2Wt2NQH2MeyFkX0mVr7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIdJA8BZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WDW3nTBhX2f+zKbxY9sTA4Fuj2608GyJD3VwXul7hz9JfnIoWi9cCoZeUQMLa/rz/5RfLuZCOErv39pZgUolYj7n4JBYqR/2szvRSVyCyRwnTdydum2/0gVUsFlQx3EhVXy2+1Uq+PK2ANRwJ+jpl5cpxrMAXKr/VohBnq6uDqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWg5R+Wq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIdJA8BZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B729C4CEC3;
-	Mon, 21 Oct 2024 10:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWg5R+Wq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B765C4CEC3;
+	Mon, 21 Oct 2024 10:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506510;
-	bh=fv1cXGQbQvBm7mvZNbCzV0LP1zkfpO+Y3s1FmiIskH4=;
+	s=korg; t=1729506512;
+	bh=+Dbywfda9YHir6yBWN5rhcumZI3vz9396P0kvzJ+l3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BIdJA8BZmv0nyhVad+nUwfDoRGKC9UN+D1RqiZ64sbAArw7fYbj5G/+Nro6s0GYlE
-	 nC70y8Lq1Qx6cSM7HEB1RDB2ESH3lNLVFlbkuVGC1y2OX4tep9b9VK4+30gIe4zn+h
-	 KSt1ZkLYrHCxt6a/b6hPl060wwX8tDoowWzahKrM=
+	b=rWg5R+WqV6Csi60wKiUWli2aPKF8O4aAnZr24Zmpq5f8dg4N8sBPm8UfkKU70XRrm
+	 K0F/P64aHOwj5AtwV9o8NHx7iDYYzOTmiKH8/B6BLixVCM93ZjV8+sCxKUMwwN68+z
+	 47vFTnxC9hOSXgWRn0/46NZhLqAzqNGda6OLvSh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Shi <yang@os.amperecomputing.com>,
-	Gautam Menghani <gautammenghani201@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Wei Xu <weixugc@google.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Brian Geffon <bgeffon@google.com>,
+	Jan Alexander Steffens <heftig@archlinux.org>,
+	Suleiman Souhlal <suleiman@google.com>,
+	Yu Zhao <yuzhao@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 028/135] mm: khugepaged: fix the arguments order in khugepaged_collapse_file trace point
-Date: Mon, 21 Oct 2024 12:23:04 +0200
-Message-ID: <20241021102300.435722848@linuxfoundation.org>
+Subject: [PATCH 6.11 029/135] mm/mglru: only clear kswapd_failures if reclaimable
+Date: Mon, 21 Oct 2024 12:23:05 +0200
+Message-ID: <20241021102300.476022129@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -52,75 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Shi <yang@os.amperecomputing.com>
+From: Wei Xu <weixugc@google.com>
 
-commit 37f0b47c5143c2957909ced44fc09ffb118c99f7 upstream.
+commit b130ba4a6259f6b64d8af15e9e7ab1e912bcb7ad upstream.
 
-The "addr" and "is_shmem" arguments have different order in TP_PROTO and
-TP_ARGS.  This resulted in the incorrect trace result:
+lru_gen_shrink_node() unconditionally clears kswapd_failures, which can
+prevent kswapd from sleeping and cause 100% kswapd cpu usage even when
+kswapd repeatedly fails to make progress in reclaim.
 
-text-hugepage-644429 [276] 392092.878683: mm_khugepaged_collapse_file:
-mm=0xffff20025d52c440, hpage_pfn=0x200678c00, index=512, addr=1, is_shmem=0,
-filename=text-hugepage, nr=512, result=failed
+Only clear kswap_failures in lru_gen_shrink_node() if reclaim makes some
+progress, similar to shrink_node().
 
-The value of "addr" is wrong because it was treated as bool value, the
-type of is_shmem.
+I happened to run into this problem in one of my tests recently.  It
+requires a combination of several conditions: The allocator needs to
+allocate a right amount of pages such that it can wake up kswapd
+without itself being OOM killed; there is no memory for kswapd to
+reclaim (My test disables swap and cleans page cache first); no other
+process frees enough memory at the same time.
 
-Fix the order in TP_PROTO to keep "addr" is before "is_shmem" since the
-original patch review suggested this order to achieve best packing.
-
-And use "lx" for "addr" instead of "ld" in TP_printk because address is
-typically shown in hex.
-
-After the fix, the trace result looks correct:
-
-text-hugepage-7291  [004]   128.627251: mm_khugepaged_collapse_file:
-mm=0xffff0001328f9500, hpage_pfn=0x20016ea00, index=512, addr=0x400000,
-is_shmem=0, filename=text-hugepage, nr=512, result=failed
-
-Link: https://lkml.kernel.org/r/20241012011702.1084846-1-yang@os.amperecomputing.com
-Fixes: 4c9473e87e75 ("mm/khugepaged: add tracepoint to collapse_file()")
-Signed-off-by: Yang Shi <yang@os.amperecomputing.com>
-Cc: Gautam Menghani <gautammenghani201@gmail.com>
-Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
-Cc: <stable@vger.kernel.org>    [6.2+]
+Link: https://lkml.kernel.org/r/20241014221211.832591-1-weixugc@google.com
+Fixes: e4dde56cd208 ("mm: multi-gen LRU: per-node lru_gen_folio lists")
+Signed-off-by: Wei Xu <weixugc@google.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Jan Alexander Steffens <heftig@archlinux.org>
+Cc: Suleiman Souhlal <suleiman@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/huge_memory.h |    4 ++--
- mm/khugepaged.c                    |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ mm/vmscan.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/trace/events/huge_memory.h
-+++ b/include/trace/events/huge_memory.h
-@@ -208,7 +208,7 @@ TRACE_EVENT(mm_khugepaged_scan_file,
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4940,8 +4940,8 @@ static void lru_gen_shrink_node(struct p
  
- TRACE_EVENT(mm_khugepaged_collapse_file,
- 	TP_PROTO(struct mm_struct *mm, struct folio *new_folio, pgoff_t index,
--			bool is_shmem, unsigned long addr, struct file *file,
-+			unsigned long addr, bool is_shmem, struct file *file,
- 			int nr, int result),
- 	TP_ARGS(mm, new_folio, index, addr, is_shmem, file, nr, result),
- 	TP_STRUCT__entry(
-@@ -233,7 +233,7 @@ TRACE_EVENT(mm_khugepaged_collapse_file,
- 		__entry->result = result;
- 	),
- 
--	TP_printk("mm=%p, hpage_pfn=0x%lx, index=%ld, addr=%ld, is_shmem=%d, filename=%s, nr=%d, result=%s",
-+	TP_printk("mm=%p, hpage_pfn=0x%lx, index=%ld, addr=%lx, is_shmem=%d, filename=%s, nr=%d, result=%s",
- 		__entry->mm,
- 		__entry->hpfn,
- 		__entry->index,
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -2219,7 +2219,7 @@ rollback:
- 	folio_put(new_folio);
- out:
- 	VM_BUG_ON(!list_empty(&pagelist));
--	trace_mm_khugepaged_collapse_file(mm, new_folio, index, is_shmem, addr, file, HPAGE_PMD_NR, result);
-+	trace_mm_khugepaged_collapse_file(mm, new_folio, index, addr, is_shmem, file, HPAGE_PMD_NR, result);
- 	return result;
+ 	blk_finish_plug(&plug);
+ done:
+-	/* kswapd should never fail */
+-	pgdat->kswapd_failures = 0;
++	if (sc->nr_reclaimed > reclaimed)
++		pgdat->kswapd_failures = 0;
  }
  
+ /******************************************************************************
 
 
