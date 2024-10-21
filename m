@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2088F39FD6;
-	Mon, 21 Oct 2024 10:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1358D16F27E;
+	Mon, 21 Oct 2024 10:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506617; cv=none; b=AgQmpo1JVQFDLWUtnRRz+WQ8BDjqAXFAm6a1X/AU37hhY3YFTWIhvBr6LqXs49LI4sGJ/HWtp+B5hUe3JRLYc14JaDL0EvK6sB6lXteKhxINmm8Kw9MoRtW39Ldh2v6HDtItUVRcGlLGNUWwB17vId/8kvbDX8J+eiaSzc5l7wg=
+	t=1729506620; cv=none; b=j4pmsRsg1V6CgPGJ4z5uSxCDOcEcuKHoppqOsRrPCFIX763LeGwEOG6JDv8H37j1D8l5DWEkclLdUae5Dkt8Ih+Hoj54Lemdv0XbWlT3BRmBs/Yb/82Qi/piXdT2zFj9HTL/hoz0H/dhHvAo8J2bqa9FgqcX7Mtn0pBFhffWRIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506617; c=relaxed/simple;
-	bh=x5R7P4IOrQAsaa/HkuwcqR/SRbEOo7xY5m4Gqi9Fk5g=;
+	s=arc-20240116; t=1729506620; c=relaxed/simple;
+	bh=Ik35TOZqTeA1W06+VbhisdbYxmrfuU5sbXPjhttuF6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KaPKpwogkMAhUB4AQcr+o0/Ncrp5N7adm7LHYufFLnKOfvwH1GNL5ouWTfctaYmDJtOTbXz3b6zeK5BFU7SnhtNnr1olGO/8uIDDtC5SQ8ts6mHYcQIvhpHfqOd1Zf9644fIUOnhrp0TENtjCKd+F2YZB2GxK9AZI4qvTlTbBoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdjTTESR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aPObfjcwJzCNETbOBfbX7vFSi1U4awXAe2AnQmat8g8WbyKdzpx+AI+1QR2OkxQYw3Tre0VKPeTcl39hN0uH+ypBlf1Qadjn3JV8YUAGnhNPUb3RP201DQ4OcuDpRc8emrOTxsMqte4Plp+6CGklzyD9g/j1BI2M3TgY8w/qm8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkXY+Pzd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdjTTESR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93858C4CEC3;
-	Mon, 21 Oct 2024 10:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkXY+Pzd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D74C4CEC3;
+	Mon, 21 Oct 2024 10:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506617;
-	bh=x5R7P4IOrQAsaa/HkuwcqR/SRbEOo7xY5m4Gqi9Fk5g=;
+	s=korg; t=1729506619;
+	bh=Ik35TOZqTeA1W06+VbhisdbYxmrfuU5sbXPjhttuF6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cdjTTESRrMAf3tiJNdPvzxYgSbtSekMuqCyeaYWYXwHX2BX46ekjR9VGbsH0Wy6El
-	 rmrbDiAvvpcLh/Furxq4v1u5qNIotPv8U0rGnVz6CjcER2gXofsodV0bmfc2xiN6pA
-	 cWATS0faA8oi2cZI9k0kZuc6E9bWrR34nCDGQAaY=
+	b=RkXY+PzdnnaLXSxYce/eT1Cr2z6gO6dlHpKRdD0uST/K9/9+AHSdbzNRsoxzRjJnF
+	 FDAdAJ+bz5/FDkJM5drOaPHCW2PRYTwtTRIXdHA28EtSK8dkeoiY5Hxy1B6DlpviI+
+	 Mhv0U8PPRnvgHJYj0dGH2HHbMR0ks193kuG186DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	dri-devel@lists.freedesktop.org,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Martin Krastev <martin.krastev@broadcom.com>
-Subject: [PATCH 6.11 064/135] drm/vmwgfx: Cleanup kms setup without 3d
-Date: Mon, 21 Oct 2024 12:23:40 +0200
-Message-ID: <20241021102301.834286912@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.11 038/135] s390/sclp_vt220: Convert newlines to CRLF instead of LFCR
+Date: Mon, 21 Oct 2024 12:23:14 +0200
+Message-ID: <20241021102300.823578350@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -47,105 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-commit 512a9721cae0d88d34ff441f2f5917cd149af8af upstream.
+commit dee3df68ab4b00fff6bdf9fc39541729af37307c upstream.
 
-Do not validate format equality for the non 3d cases to allow xrgb to
-argb copies and make sure the dx binding flags are only used
-on dx compatible surfaces.
+According to the VT220 specification the possible character combinations
+sent on RETURN are only CR or CRLF [0].
 
-Fixes basic 2d kms setup on configurations without 3d. There's little
-practical benefit to it because kms framebuffer coherence is disabled
-on configurations without 3d but with those changes the code actually
-makes sense.
+	The Return key sends either a CR character (0/13) or a CR
+	character (0/13) and an LF character (0/10), depending on the
+	set/reset state of line feed/new line mode (LNM).
 
-v2: Remove the now unused format variable
+The sclp/vt220 driver however uses LFCR. This can confuse tools, for
+example the kunit runner.
 
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Fixes: d6667f0ddf46 ("drm/vmwgfx: Fix handling of dumb buffers")
-Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.9+
-Cc: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Cc: Martin Krastev <martin.krastev@broadcom.com>
-Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240827043905.472825-1-zack.rusin@broadcom.com
+Link: https://vt100.net/docs/vt220-rm/chapter3.html#S3.2
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Link: https://lore.kernel.org/r/20241014-s390-kunit-v1-2-941defa765a6@linutronix.de
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c     |   29 -----------------------------
- drivers/gpu/drm/vmwgfx/vmwgfx_surface.c |    9 ++++++---
- 2 files changed, 6 insertions(+), 32 deletions(-)
+ drivers/s390/char/sclp_vt220.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -1283,7 +1283,6 @@ static int vmw_kms_new_framebuffer_surfa
- {
- 	struct drm_device *dev = &dev_priv->drm;
- 	struct vmw_framebuffer_surface *vfbs;
--	enum SVGA3dSurfaceFormat format;
- 	struct vmw_surface *surface;
- 	int ret;
+--- a/drivers/s390/char/sclp_vt220.c
++++ b/drivers/s390/char/sclp_vt220.c
+@@ -319,7 +319,7 @@ sclp_vt220_add_msg(struct sclp_vt220_req
+ 	buffer = (void *) ((addr_t) sccb + sccb->header.length);
  
-@@ -1320,34 +1319,6 @@ static int vmw_kms_new_framebuffer_surfa
- 		return -EINVAL;
- 	}
+ 	if (convertlf) {
+-		/* Perform Linefeed conversion (0x0a -> 0x0a 0x0d)*/
++		/* Perform Linefeed conversion (0x0a -> 0x0d 0x0a)*/
+ 		for (from=0, to=0;
+ 		     (from < count) && (to < sclp_vt220_space_left(request));
+ 		     from++) {
+@@ -328,8 +328,8 @@ sclp_vt220_add_msg(struct sclp_vt220_req
+ 			/* Perform conversion */
+ 			if (c == 0x0a) {
+ 				if (to + 1 < sclp_vt220_space_left(request)) {
+-					((unsigned char *) buffer)[to++] = c;
+ 					((unsigned char *) buffer)[to++] = 0x0d;
++					((unsigned char *) buffer)[to++] = c;
+ 				} else
+ 					break;
  
--	switch (mode_cmd->pixel_format) {
--	case DRM_FORMAT_ARGB8888:
--		format = SVGA3D_A8R8G8B8;
--		break;
--	case DRM_FORMAT_XRGB8888:
--		format = SVGA3D_X8R8G8B8;
--		break;
--	case DRM_FORMAT_RGB565:
--		format = SVGA3D_R5G6B5;
--		break;
--	case DRM_FORMAT_XRGB1555:
--		format = SVGA3D_A1R5G5B5;
--		break;
--	default:
--		DRM_ERROR("Invalid pixel format: %p4cc\n",
--			  &mode_cmd->pixel_format);
--		return -EINVAL;
--	}
--
--	/*
--	 * For DX, surface format validation is done when surface->scanout
--	 * is set.
--	 */
--	if (!has_sm4_context(dev_priv) && format != surface->metadata.format) {
--		DRM_ERROR("Invalid surface format for requested mode.\n");
--		return -EINVAL;
--	}
--
- 	vfbs = kzalloc(sizeof(*vfbs), GFP_KERNEL);
- 	if (!vfbs) {
- 		ret = -ENOMEM;
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_surface.c
-@@ -2276,9 +2276,12 @@ int vmw_dumb_create(struct drm_file *fil
- 	const struct SVGA3dSurfaceDesc *desc = vmw_surface_get_desc(format);
- 	SVGA3dSurfaceAllFlags flags = SVGA3D_SURFACE_HINT_TEXTURE |
- 				      SVGA3D_SURFACE_HINT_RENDERTARGET |
--				      SVGA3D_SURFACE_SCREENTARGET |
--				      SVGA3D_SURFACE_BIND_SHADER_RESOURCE |
--				      SVGA3D_SURFACE_BIND_RENDER_TARGET;
-+				      SVGA3D_SURFACE_SCREENTARGET;
-+
-+	if (vmw_surface_is_dx_screen_target_format(format)) {
-+		flags |= SVGA3D_SURFACE_BIND_SHADER_RESOURCE |
-+			 SVGA3D_SURFACE_BIND_RENDER_TARGET;
-+	}
- 
- 	/*
- 	 * Without mob support we're just going to use raw memory buffer
 
 
