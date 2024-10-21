@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBE71E9098;
-	Mon, 21 Oct 2024 10:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA113195FEC;
+	Mon, 21 Oct 2024 10:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506989; cv=none; b=Ha/MV3rta9wMCURn2huAGdrk6jCmNGgKKOXtvPEhGjnoDPo3bt1n21ygE4P4lhsuj12iIcevlj3fY1vpeTnGwTVd5sH+6RhKnZtpiTutA6T/eHsxQJAMsCyCmn/ayz4iLa/Pn3lk1XU/tQAo+H2I6zuxDEhQM65cdk5feVc30Bo=
+	t=1729506993; cv=none; b=YboKQQQbmM0rfvLbzS+l+QZC9eDF88tyYzyyd/7j2byUbS3QlN9Rp3JGcCy7QRJfHUFwu4RNQ5KKtsas8ijeGpyhqjloYheCR9Q58FIIqMTpz0HHXzxrWrEHSPYyB/TfPmP5qeGykg4DyJw2KoW3XqEOjTKfcyjEqiRP0qFglGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506989; c=relaxed/simple;
-	bh=US7GiHuOVPhZjNL7zOKMcns/ZEslLwq02XALlK19UQI=;
+	s=arc-20240116; t=1729506993; c=relaxed/simple;
+	bh=Y4iE72LHV9l6YQR/BPzs0UX6mTkWbbHYwbDU3NcRIjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=akVsW3SVVKo1d4cWnpl3soDqN3wZ7KWfzpW2Vwm2pA3fDLoIcrqMFYd1nNxqUrCQSDM9RicZklCf+QsRbH+hkZfrJmdnwqLtPqkQfN4tzYQ9BZldfGP2fUZZ58ecy/TaCdaLobwMuVzPmYvyRrtmUuzk9oL8kuVVFZujNl9lnF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xob1GdA1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBbvXLSmHwpXVVUu0XEaCJd8AdCxB2K/LyLan69prFUoDXoFub5IliL23KbwHeUdrz98PBOhhVs0SOhyukbQCshST74OaLAQ5thabmYGEx+Q7PzYjK9fRDFjuAvSuG1p2jsVRZ56F16fvRU8HFr1w20PDeyOITjWAcfnSueQBSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hESZ+PTN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xob1GdA1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E547C4CEC3;
-	Mon, 21 Oct 2024 10:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hESZ+PTN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E29C4CEC7;
+	Mon, 21 Oct 2024 10:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506989;
-	bh=US7GiHuOVPhZjNL7zOKMcns/ZEslLwq02XALlK19UQI=;
+	s=korg; t=1729506992;
+	bh=Y4iE72LHV9l6YQR/BPzs0UX6mTkWbbHYwbDU3NcRIjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xob1GdA1SSXgLyJkSsptT7gO5hNj+SO23+1y4q4h6IorJtSEmYG3fyLvaxWJ2l91M
-	 Php5oNeSQjEPtNdNU4FIJ+6r3NXd/s60IYreSHwxCAgcrCxj/cs7zE1+7/otF9JO6y
-	 I2IhmH8YQyFv3rXqPeSNQXfw7h5YIR1GCIquys/w=
+	b=hESZ+PTN/WxKS6kdLA3XUwcU7AtNx6JlLt9TYP/jURejnA++1qB4HhFnreHqWUR0L
+	 QacEY8mv0utw1q/BNEIfmbzYzI27cKlflmGkyEY4CKsQoE1rtdrSYABoeo8H2kiqVt
+	 T5mE2dlSRpeP5/MmPAmvEc6MIROeF/eed9fspn8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.6 051/124] s390/sclp_vt220: Convert newlines to CRLF instead of LFCR
-Date: Mon, 21 Oct 2024 12:24:15 +0200
-Message-ID: <20241021102258.704098589@linuxfoundation.org>
+	Nico Boehr <nrb@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>
+Subject: [PATCH 6.6 052/124] KVM: s390: gaccess: Check if guest address is in memslot
+Date: Mon, 21 Oct 2024 12:24:16 +0200
+Message-ID: <20241021102258.743453118@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -45,59 +45,124 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Nico Boehr <nrb@linux.ibm.com>
 
-commit dee3df68ab4b00fff6bdf9fc39541729af37307c upstream.
+commit e8061f06185be0a06a73760d6526b8b0feadfe52 upstream.
 
-According to the VT220 specification the possible character combinations
-sent on RETURN are only CR or CRLF [0].
+Previously, access_guest_page() did not check whether the given guest
+address is inside of a memslot. This is not a problem, since
+kvm_write_guest_page/kvm_read_guest_page return -EFAULT in this case.
 
-	The Return key sends either a CR character (0/13) or a CR
-	character (0/13) and an LF character (0/10), depending on the
-	set/reset state of line feed/new line mode (LNM).
+However, -EFAULT is also returned when copy_to/from_user fails.
 
-The sclp/vt220 driver however uses LFCR. This can confuse tools, for
-example the kunit runner.
+When emulating a guest instruction, the address being outside a memslot
+usually means that an addressing exception should be injected into the
+guest.
 
-Link: https://vt100.net/docs/vt220-rm/chapter3.html#S3.2
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Failure in copy_to/from_user however indicates that something is wrong
+in userspace and hence should be handled there.
+
+To be able to distinguish these two cases, return PGM_ADDRESSING in
+access_guest_page() when the guest address is outside guest memory. In
+access_guest_real(), populate vcpu->arch.pgm.code such that
+kvm_s390_inject_prog_cond() can be used in the caller for injecting into
+the guest (if applicable).
+
+Since this adds a new return value to access_guest_page(), we need to make
+sure that other callers are not confused by the new positive return value.
+
+There are the following users of access_guest_page():
+- access_guest_with_key() does the checking itself (in
+  guest_range_to_gpas()), so this case should never happen. Even if, the
+  handling is set up properly.
+- access_guest_real() just passes the return code to its callers, which
+  are:
+    - read_guest_real() - see below
+    - write_guest_real() - see below
+
+There are the following users of read_guest_real():
+- ar_translation() in gaccess.c which already returns PGM_*
+- setup_apcb10(), setup_apcb00(), setup_apcb11() in vsie.c which always
+  return -EFAULT on read_guest_read() nonzero return - no change
+- shadow_crycb(), handle_stfle() always present this as validity, this
+  could be handled better but doesn't change current behaviour - no change
+
+There are the following users of write_guest_real():
+- kvm_s390_store_status_unloaded() always returns -EFAULT on
+  write_guest_real() failure.
+
+Fixes: 2293897805c2 ("KVM: s390: add architecture compliant guest access functions")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Link: https://lore.kernel.org/r/20241014-s390-kunit-v1-2-941defa765a6@linutronix.de
+Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240917151904.74314-2-nrb@linux.ibm.com
+Acked-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/char/sclp_vt220.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/s390/kvm/gaccess.c |    4 ++++
+ arch/s390/kvm/gaccess.h |   14 ++++++++------
+ 2 files changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/s390/char/sclp_vt220.c
-+++ b/drivers/s390/char/sclp_vt220.c
-@@ -319,7 +319,7 @@ sclp_vt220_add_msg(struct sclp_vt220_req
- 	buffer = (void *) ((addr_t) sccb + sccb->header.length);
+--- a/arch/s390/kvm/gaccess.c
++++ b/arch/s390/kvm/gaccess.c
+@@ -1001,6 +1001,8 @@ static int access_guest_page(struct kvm
+ 	const gfn_t gfn = gpa_to_gfn(gpa);
+ 	int rc;
  
- 	if (convertlf) {
--		/* Perform Linefeed conversion (0x0a -> 0x0a 0x0d)*/
-+		/* Perform Linefeed conversion (0x0a -> 0x0d 0x0a)*/
- 		for (from=0, to=0;
- 		     (from < count) && (to < sclp_vt220_space_left(request));
- 		     from++) {
-@@ -328,8 +328,8 @@ sclp_vt220_add_msg(struct sclp_vt220_req
- 			/* Perform conversion */
- 			if (c == 0x0a) {
- 				if (to + 1 < sclp_vt220_space_left(request)) {
--					((unsigned char *) buffer)[to++] = c;
- 					((unsigned char *) buffer)[to++] = 0x0d;
-+					((unsigned char *) buffer)[to++] = c;
- 				} else
- 					break;
++	if (!gfn_to_memslot(kvm, gfn))
++		return PGM_ADDRESSING;
+ 	if (mode == GACC_STORE)
+ 		rc = kvm_write_guest_page(kvm, gfn, data, offset, len);
+ 	else
+@@ -1158,6 +1160,8 @@ int access_guest_real(struct kvm_vcpu *v
+ 		gra += fragment_len;
+ 		data += fragment_len;
+ 	}
++	if (rc > 0)
++		vcpu->arch.pgm.code = rc;
+ 	return rc;
+ }
  
+--- a/arch/s390/kvm/gaccess.h
++++ b/arch/s390/kvm/gaccess.h
+@@ -405,11 +405,12 @@ int read_guest_abs(struct kvm_vcpu *vcpu
+  * @len: number of bytes to copy
+  *
+  * Copy @len bytes from @data (kernel space) to @gra (guest real address).
+- * It is up to the caller to ensure that the entire guest memory range is
+- * valid memory before calling this function.
+  * Guest low address and key protection are not checked.
+  *
+- * Returns zero on success or -EFAULT on error.
++ * Returns zero on success, -EFAULT when copying from @data failed, or
++ * PGM_ADRESSING in case @gra is outside a memslot. In this case, pgm check info
++ * is also stored to allow injecting into the guest (if applicable) using
++ * kvm_s390_inject_prog_cond().
+  *
+  * If an error occurs data may have been copied partially to guest memory.
+  */
+@@ -428,11 +429,12 @@ int write_guest_real(struct kvm_vcpu *vc
+  * @len: number of bytes to copy
+  *
+  * Copy @len bytes from @gra (guest real address) to @data (kernel space).
+- * It is up to the caller to ensure that the entire guest memory range is
+- * valid memory before calling this function.
+  * Guest key protection is not checked.
+  *
+- * Returns zero on success or -EFAULT on error.
++ * Returns zero on success, -EFAULT when copying to @data failed, or
++ * PGM_ADRESSING in case @gra is outside a memslot. In this case, pgm check info
++ * is also stored to allow injecting into the guest (if applicable) using
++ * kvm_s390_inject_prog_cond().
+  *
+  * If an error occurs data may have been copied partially to kernel space.
+  */
 
 
