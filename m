@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CA71E47B8;
-	Mon, 21 Oct 2024 10:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193EF1E47B8;
+	Mon, 21 Oct 2024 10:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507888; cv=none; b=l9FAPNu9/gQGDcp13i6MoTTKlWsNjsFhkm+89twd76J4mKjKkQ7Eo/pMIyu5faZfn97MD7DGPVz2vTnmbrKoGQ50aBUizE9qPll33Sk0RS0yIhout6TYMzMAUfrIm7TTNOlyjYbZvCs/T70GsMDn0NyflgnWenrCzU6zNY12/40=
+	t=1729507891; cv=none; b=HO6H2HceWsiDMXTn+K4BNP7NC4SL+hhSWcHGUxhuhbEeXRQHmrw7lKGTfvV7JaZfqMvIBcuyIKM2gnyLNn0+La/8iajx0maYMPIB39jzB237TY6/iZDZOrMZ1dDkScF4poLqykn/Zdk8v3XaCIt4wnZGG54mx4m5CsGE9xeGRFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507888; c=relaxed/simple;
-	bh=piilS1U7UhP7FOY5+tfsbMF0nmn1g/an9Xi2+Sokbvc=;
+	s=arc-20240116; t=1729507891; c=relaxed/simple;
+	bh=thz/05KF6Ih2eJkGU1Fy89xxaZIPbIwW2gixrg6CwRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z/jZ54nksM74iO1mnAHINKDmYvcDvLiABfr70dyhKCLvK5+l8YwzqNg2u1qwk8L+ApWScYZs/vn6b0DDGxHotQSUKw1u+Z9JK9/c6MgO9OD2Mz573AHinXvRlLmkGVQRyYDVWO2McTZpu72cWoYN7dcsF8dNRHjggsu+fdU6x4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eix+Ujqp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VkMiHNjBaG2Nl4CnE1g6MunVehtfGRDkYmhLW7bN376+AGNCSNMN/a6WH7StBRzQlDPrpLvAuhWIBv/P9nmhj9Pv/fh/+pzJ+/FTxZMlv+kL0XrznNuc8Kh1nt+Argc7nX4A77IQ38AWCzmqXUvEfhE1zgeoxiA6v8hNIZED/20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlthxIbU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eix+Ujqp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EC1C4CEC3;
-	Mon, 21 Oct 2024 10:51:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlthxIbU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D37BC4CEC3;
+	Mon, 21 Oct 2024 10:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507888;
-	bh=piilS1U7UhP7FOY5+tfsbMF0nmn1g/an9Xi2+Sokbvc=;
+	s=korg; t=1729507890;
+	bh=thz/05KF6Ih2eJkGU1Fy89xxaZIPbIwW2gixrg6CwRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eix+UjqpnLePw8dfE/7QqvN1uxu6ZCBiHfJr9ZyKaRBJ/Y7l3J8vH4PbFAb9U7pLk
-	 IPRTNsRFvGy3A/lRh5qeHy4SHaYRi9EudRmcMVq3e4KDPlF15+LkQgqAzamq/grfEI
-	 7q39Mhg2acKUn6u5MDCEqXgYRSsE4cLpwvMEz53I=
+	b=KlthxIbUXSb+VQ93/VNtBooMae0pj2rvhbtyAcmUWUbPldClJYXPmr4DiI/ckDMCC
+	 UY2bFschjLwpyc6w60jQqQOXh0rVuFzkLtY7iZ5qtfobvdhOpC1aozaYYYvr5Fhjue
+	 U5EVNh8TPV+HembYWUDysgSAA5ITNLvJl17Ci3Zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kaihengf@nvidia.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Vasiliy Kovalev <kovalev@altlinux.org>
-Subject: [PATCH 5.10 52/52] ALSA: hda/conexant - Use cached pin control for Node 0x1d on HP EliteOne 1000 G2
-Date: Mon, 21 Oct 2024 12:26:13 +0200
-Message-ID: <20241021102243.666034647@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 27/52] iio: dac: ltc1660: add missing select REGMAP_SPI in Kconfig
+Date: Mon, 21 Oct 2024 12:25:48 +0200
+Message-ID: <20241021102242.688942713@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102241.624153108@linuxfoundation.org>
 References: <20241021102241.624153108@linuxfoundation.org>
@@ -51,36 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 164cd0e077a18d6208523c82b102c98c77fdd51f upstream.
+commit 252ff06a4cb4e572cb3c7fcfa697db96b08a7781 upstream.
 
-The cached version avoids redundant commands to the codec, improving
-stability and reducing unnecessary operations. This change ensures
-better power management and reliable restoration of pin configurations,
-especially after hibernation (S4) and other power transitions.
+This driver makes use of regmap_spi, but does not select the required
+module.
+Add the missing 'select REGMAP_SPI'.
 
-Fixes: 9988844c457f ("ALSA: hda/conexant - Fix audio routing for HP EliteOne 1000 G2")
-Suggested-by: Kai-Heng Feng <kaihengf@nvidia.com>
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://patch.msgid.link/20241016080713.46801-1-kovalev@altlinux.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 8316cebd1e59 ("iio: dac: add support for ltc1660")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20241003-ad2s1210-select-v1-7-4019453f8c33@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_conexant.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/dac/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -261,7 +261,7 @@ static void cxt_fixup_update_pinctl(stru
- 		 * This is the value stored in the codec register after
- 		 * the correct initialization of the previous windows boot.
- 		 */
--		snd_hda_set_pin_ctl(codec, 0x1d, AC_PINCTL_HP_EN);
-+		snd_hda_set_pin_ctl_cache(codec, 0x1d, AC_PINCTL_HP_EN);
- 	}
- }
- 
+--- a/drivers/iio/dac/Kconfig
++++ b/drivers/iio/dac/Kconfig
+@@ -272,6 +272,7 @@ config LPC18XX_DAC
+ config LTC1660
+ 	tristate "Linear Technology LTC1660/LTC1665 DAC SPI driver"
+ 	depends on SPI
++	select REGMAP_SPI
+ 	help
+ 	  Say yes here to build support for Linear Technology
+ 	  LTC1660 and LTC1665 Digital to Analog Converters.
 
 
