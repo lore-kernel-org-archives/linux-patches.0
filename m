@@ -1,48 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E341E0087;
-	Mon, 21 Oct 2024 10:46:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5551E3764;
+	Mon, 21 Oct 2024 10:46:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507589; cv=none; b=D4+B2KlVJohLKP+1Rej/f6H/U7sxAt7jzU8FhV6pCeuJm8cTRxyvzO1aaKtlouylwaSQfgGnDzLRpXBzi81G8SaHCTk7BdFxC4MgPimqytL+o4vlyCPrmRuYRMDbTrt41FwN+foBxu8ciT63Lba7YnNEf6T7/JZfCeP48JIG/dA=
+	t=1729507592; cv=none; b=YMr0ivxkr2MYRRHfm280+xz+mmKaU7ocZfTq0xQzOxxxGOWtvTIwpsOlDMVAGXNSRZrSdoWzpRJVEsH7E4a4MZYauHfJmorpdgMcwVlB/WmKlcsycEiIPEg2eW+zDHrkLjqI4+UU/EGFUoyi54ZGOTFrqTRBMc+0VpRioMe0xA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507589; c=relaxed/simple;
-	bh=qzytvI6X6dYy7p2w81r5U/ZElz8EZ4aONiOBsJPLfUA=;
+	s=arc-20240116; t=1729507592; c=relaxed/simple;
+	bh=QUE86SavnZrubu0gFY0ucn77M+rBlf4D8l229wWmfK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jKzbdIxlq3+Hn07nz29wo13LhSRi1h8Tiw2WQvgi3ThDsaByOEpXRi+p04Y5wH8ou1GZuy+hWs4DEeK0L4z/3247GB/mfCz24sXdjHyIqmscD/qG4cK49OiPUbe4NtQZqUuTL+zE8uSGrihyec9f9z25qAdOlQ/pd2V75W+ATa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNuTxnKB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dpwB5aUugko8LbBzfkWMP3ohSm71a3sMw/n6BtGoii5itMe74dBPTvvH43ntcf2zOETPPPrxPJbnzaqFlLbjTCLH2O0KMIioKdYwMYT3PjervunvlImQ4dGbQ47U75t3L2vdOUkpfOcwY1hfsYUD3LnczSTo8K4RdsK5e6qGOnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J9VDrfgv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNuTxnKB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA97C4CEC3;
-	Mon, 21 Oct 2024 10:46:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J9VDrfgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BEC5C4CEC3;
+	Mon, 21 Oct 2024 10:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507588;
-	bh=qzytvI6X6dYy7p2w81r5U/ZElz8EZ4aONiOBsJPLfUA=;
+	s=korg; t=1729507591;
+	bh=QUE86SavnZrubu0gFY0ucn77M+rBlf4D8l229wWmfK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TNuTxnKB7WN9vYFSQmHZ33h9rDDFRG9ZBuSZuTSKfFCLhP0obQBaiKB7pkGv4+gWC
-	 42YT/bDOd3wJLx0ypigJ5zgddmkvoh5azT+bDr5HXOI7DWqUG+3Szfex6qQAmHV+oY
-	 YxDZEA0YmIKrjVRyR4eaH4fnj7yqU69OrZpkAZVs=
+	b=J9VDrfgv8ajBCHFuMSy2QtI2zuV8N1ICklo7SqTS0B2VicE/t0MuRgnQrSvPnXhYG
+	 bI8c/dI71IxFZcz5RsrgKiKduzciZKKCO+DH6VgUUQvwQMXcghAx4HKha2/CTGodrA
+	 cIY+7vJTD5Iuu2Uo+fBSRbZVBIeuzwU3dP6tvyk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Noralf=20Tr=C3=B8nnes?= <noralf@tronnes.org>,
-	Eric Anholt <eric@anholt.net>,
-	Rob Herring <robh@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	dri-devel@lists.freedesktop.org,
-	"Wachowski, Karol" <karol.wachowski@intel.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Sherry Yang <sherry.yang@oracle.com>
-Subject: [PATCH 5.15 35/82] drm/shmem-helper: Fix BUG_ON() on mmap(PROT_WRITE, MAP_PRIVATE)
-Date: Mon, 21 Oct 2024 12:25:16 +0200
-Message-ID: <20241021102248.630465317@linuxfoundation.org>
+	Felix Moessbauer <felix.moessbauer@siemens.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 36/82] io_uring/sqpoll: do not allow pinning outside of cpuset
+Date: Mon, 21 Oct 2024 12:25:17 +0200
+Message-ID: <20241021102248.670749448@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102247.209765070@linuxfoundation.org>
 References: <20241021102247.209765070@linuxfoundation.org>
@@ -55,63 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wachowski, Karol <karol.wachowski@intel.com>
+From: Felix Moessbauer <felix.moessbauer@siemens.com>
 
-commit 39bc27bd688066a63e56f7f64ad34fae03fbe3b8 upstream.
+commit f011c9cf04c06f16b24f583d313d3c012e589e50 upstream.
 
-Lack of check for copy-on-write (COW) mapping in drm_gem_shmem_mmap
-allows users to call mmap with PROT_WRITE and MAP_PRIVATE flag
-causing a kernel panic due to BUG_ON in vmf_insert_pfn_prot:
-BUG_ON((vma->vm_flags & VM_PFNMAP) && is_cow_mapping(vma->vm_flags));
+The submit queue polling threads are userland threads that just never
+exit to the userland. When creating the thread with IORING_SETUP_SQ_AFF,
+the affinity of the poller thread is set to the cpu specified in
+sq_thread_cpu. However, this CPU can be outside of the cpuset defined
+by the cgroup cpuset controller. This violates the rules defined by the
+cpuset controller and is a potential issue for realtime applications.
 
-Return -EINVAL early if COW mapping is detected.
+In b7ed6d8ffd6 we fixed the default affinity of the poller thread, in
+case no explicit pinning is required by inheriting the one of the
+creating task. In case of explicit pinning, the check is more
+complicated, as also a cpu outside of the parent cpumask is allowed.
+We implemented this by using cpuset_cpus_allowed (that has support for
+cgroup cpusets) and testing if the requested cpu is in the set.
 
-This bug affects all drm drivers using default shmem helpers.
-It can be reproduced by this simple example:
-void *ptr = mmap(0, size, PROT_WRITE, MAP_PRIVATE, fd, mmap_offset);
-ptr[0] = 0;
-
-Fixes: 2194a63a818d ("drm: Add library for shmem backed GEM objects")
-Cc: Noralf Trønnes <noralf@tronnes.org>
-Cc: Eric Anholt <eric@anholt.net>
-Cc: Rob Herring <robh@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.2+
-Signed-off-by: Wachowski, Karol <karol.wachowski@intel.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240520100514.925681-1-jacek.lawrynowicz@linux.intel.com
-[ Sherry: bp to fix CVE-2024-39497, ignore context change due to missing
-  commit 21aa27ddc582 ("drm/shmem-helper: Switch to reservation lock")  ]
-Signed-off-by: Sherry Yang <sherry.yang@oracle.com>
+Fixes: 37d1e2e3642e ("io_uring: move SQPOLL thread io-wq forked worker")
+Signed-off-by: Felix Moessbauer <felix.moessbauer@siemens.com>
+Link: https://lore.kernel.org/r/20240909150036.55921-1-felix.moessbauer@siemens.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_gem_shmem_helper.c |    3 +++
- 1 file changed, 3 insertions(+)
+ io_uring/io_uring.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_gem_shmem_helper.c
-+++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
-@@ -607,6 +607,9 @@ int drm_gem_shmem_mmap(struct drm_gem_sh
- 		return ret;
- 	}
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -56,6 +56,7 @@
+ #include <linux/mm.h>
+ #include <linux/mman.h>
+ #include <linux/percpu.h>
++#include <linux/cpuset.h>
+ #include <linux/slab.h>
+ #include <linux/blkdev.h>
+ #include <linux/bvec.h>
+@@ -8746,10 +8747,12 @@ static int io_sq_offload_create(struct i
+ 			return 0;
  
-+	if (is_cow_mapping(vma->vm_flags))
-+		return -EINVAL;
-+
- 	ret = drm_gem_shmem_get_pages(shmem);
- 	if (ret)
- 		return ret;
+ 		if (p->flags & IORING_SETUP_SQ_AFF) {
++			struct cpumask allowed_mask;
+ 			int cpu = p->sq_thread_cpu;
+ 
+ 			ret = -EINVAL;
+-			if (cpu >= nr_cpu_ids || !cpu_online(cpu))
++			cpuset_cpus_allowed(current, &allowed_mask);
++			if (!cpumask_test_cpu(cpu, &allowed_mask))
+ 				goto err_sqpoll;
+ 			sqd->sq_cpu = cpu;
+ 		} else {
 
 
