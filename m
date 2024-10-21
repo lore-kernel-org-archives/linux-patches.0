@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E458D1EC001;
-	Mon, 21 Oct 2024 10:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCD61EF099;
+	Mon, 21 Oct 2024 10:38:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507127; cv=none; b=nqYMCZohVMT3ZAYSToL9ZBWHqPOSFdgwIrMfY4JJTsWkmZkN8UvTkaR4mBW5X6jHrRz61g5NRcx1mFZsuEOSNbRYFvK9av1UyzzTsLv2JG0z9bTlM0ukLGhSIEf9XF0dwQ8cimRJyzDGWmGz7NqvYZrlNWGMdhUffxHyVgX5exU=
+	t=1729507130; cv=none; b=pPlIQG5gFsWE4Xvq9E8c+GQ3jb1Vp2Cd1p+6tqFJsKRIy9G8/TWKMRnEvh5MziwNomF1h0QZn3mqyNKzW6dmZ/dGPbbNY9fpEl3WFseV0cY/A7H2qFu8pD4DB06NMhdAL58QNuPw4adVfw5BUEjS47Egjms+jBn9a9wA/gtnSGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507127; c=relaxed/simple;
-	bh=EZenF0rP618uFIoNVAZvxBH1h6CKfIOv0iiu9hePBgo=;
+	s=arc-20240116; t=1729507130; c=relaxed/simple;
+	bh=Tzyd52wjQgO5nqrirDLWZQfi6KGX0WQab+9HML/eQ4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=egGhwBTz6s5jEfOJiw7tqkpkGXXcOsyM6MppKIs4Y2Jpu5AEP9vUUUdl1g9jtETvarXqcl3Mxrv1qFN00rcXQ8DwqE5O0A9G1I8NrO9A78xMldOHl6WUU42qyUe+Gxmm4YJEdFay5vuCf4mQczBll0GY6wDX+5Ahbu/89m1umGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpU08c7x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bfyitBXWsrURlbh9DfsvYyWlKOizYNfyf8On9HPKEt9Nl/nY/kQcEtMiAkkkns/KQ2MK0BAMNTks8E4XH+SZ2hdxOT1H1P4mxQGQWN1v3YTtdnj+rIqmHdfVeagHlI6bI/qssHCYuZLaseHs3GWrq9qCTSXSZEK+AI6iH37Hcek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0XYYN6a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpU08c7x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F79C4CEC3;
-	Mon, 21 Oct 2024 10:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0XYYN6a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8FEC4CEC3;
+	Mon, 21 Oct 2024 10:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507126;
-	bh=EZenF0rP618uFIoNVAZvxBH1h6CKfIOv0iiu9hePBgo=;
+	s=korg; t=1729507129;
+	bh=Tzyd52wjQgO5nqrirDLWZQfi6KGX0WQab+9HML/eQ4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GpU08c7xcZMH9k4sj+1BTPqOsmnNY8KZoHyG9fLqQw0NxhqcoZrhkc09E60lMl7Aa
-	 vjPQOQrDcM6z5tySaUK1z7jAC9bNdbKjviNPsLKZc1zsP+BjSVVasd+mTJsmK8Wn+F
-	 Td6soolZKoKp5NaON0B1weweEW0gq8pSQsumNPNI=
+	b=c0XYYN6a4T+cqaVPys0vX1kz5bAYJuC8hlvb1rCD7qp9K43Fz+lm5ZJ7Id17IlJtf
+	 1pEagtk+0qx7acqV6aZ3Ut+/F3JJZ1WDX8MEyogmWmq4FNxuhEzkvAeAR1QxSRl5Tr
+	 eTL/HlifHrSQOMsDxhz2eVBNrOC7DNDLIo2ynacU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Heiko Thiery <heiko.thiery@gmail.com>,
 	Michael Walle <mwalle@kernel.org>
-Subject: [PATCH 6.6 099/124] misc: microchip: pci1xxxx: add support for NVMEM_DEVID_AUTO for EEPROM device
-Date: Mon, 21 Oct 2024 12:25:03 +0200
-Message-ID: <20241021102300.552498622@linuxfoundation.org>
+Subject: [PATCH 6.6 100/124] misc: microchip: pci1xxxx: add support for NVMEM_DEVID_AUTO for OTP device
+Date: Mon, 21 Oct 2024 12:25:04 +0200
+Message-ID: <20241021102300.591188624@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -52,33 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Thiery <heiko.thiery@gmail.com>
 
-commit 3c2d73de49be528276474c1a53f78b38ee11c1fa upstream.
+commit 2471787c1f0dae6721f60ab44be37460635d3732 upstream.
 
 By using NVMEM_DEVID_AUTO we support more than 1 device and
 automatically enumerate.
 
-Fixes: 9ab5465349c0 ("misc: microchip: pci1xxxx: Add support to read and write into PCI1XXXX EEPROM via NVMEM sysfs")
+Fixes: 0969001569e4 ("misc: microchip: pci1xxxx: Add support to read and write into PCI1XXXX OTP via NVMEM sysfs")
 Cc: stable@vger.kernel.org
 Signed-off-by: Heiko Thiery <heiko.thiery@gmail.com>
 Reviewed-by: Michael Walle <mwalle@kernel.org>
-Link: https://lore.kernel.org/r/20241007071120.9522-1-heiko.thiery@gmail.com
+Link: https://lore.kernel.org/r/20241007071120.9522-2-heiko.thiery@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
  drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_otpe2p.c | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_otpe2p.c b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_otpe2p.c
-index 7c3d8bedf90b..d1cd4544c83c 100644
+index d1cd4544c83c..a2ed477e0370 100644
 --- a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_otpe2p.c
 +++ b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_otpe2p.c
-@@ -364,6 +364,7 @@ static int pci1xxxx_otp_eeprom_probe(struct auxiliary_device *aux_dev,
- 	if (is_eeprom_responsive(priv)) {
- 		priv->nvmem_config_eeprom.type = NVMEM_TYPE_EEPROM;
- 		priv->nvmem_config_eeprom.name = EEPROM_NAME;
-+		priv->nvmem_config_eeprom.id = NVMEM_DEVID_AUTO;
- 		priv->nvmem_config_eeprom.dev = &aux_dev->dev;
- 		priv->nvmem_config_eeprom.owner = THIS_MODULE;
- 		priv->nvmem_config_eeprom.reg_read = pci1xxxx_eeprom_read;
+@@ -384,6 +384,7 @@ static int pci1xxxx_otp_eeprom_probe(struct auxiliary_device *aux_dev,
+ 
+ 	priv->nvmem_config_otp.type = NVMEM_TYPE_OTP;
+ 	priv->nvmem_config_otp.name = OTP_NAME;
++	priv->nvmem_config_otp.id = NVMEM_DEVID_AUTO;
+ 	priv->nvmem_config_otp.dev = &aux_dev->dev;
+ 	priv->nvmem_config_otp.owner = THIS_MODULE;
+ 	priv->nvmem_config_otp.reg_read = pci1xxxx_otp_read;
 -- 
 2.47.0
 
