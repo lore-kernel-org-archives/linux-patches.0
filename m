@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8B11E766E;
-	Mon, 21 Oct 2024 10:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB3539FD6;
+	Mon, 21 Oct 2024 10:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506761; cv=none; b=rRSwU9awYQ4Re2Di92NmwLTv8csrYuOfR2b1LHFKhUP+nuf61oMzPv+Igf07qzjGlMR3H9mlV/exOpEMksdBkn8X/Vf0XF715+kboRUPw5CbHXxLTYn1VKSeXXlTIA1If4q+YVCYrgfjkHjsa1O6tAOW//7TUnmVVdkpDgpwQ7k=
+	t=1729506764; cv=none; b=gBfbJtTzQV4OSLTLdB+1QrfGUG0QxW4DRACMkqlVcBv8o2M3uWzgKZ+x6bdRql2bxtuhLPrdeCXob7mU8YHu6MvEXII5KP+BnnPLcvR/ei5zc5GTnFVGayCRTPimYj4Q+IueZmwbsB9zq9Zpi4r6DJG7IW3/hJdRvIy+Il/aKk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506761; c=relaxed/simple;
-	bh=cKM/941V8bAmlrnoNkVAm6As9oSAmQBRSuw+uELgtf4=;
+	s=arc-20240116; t=1729506764; c=relaxed/simple;
+	bh=PzSW4xBeSK1rwdg0RGr2gTPL7a6GMu5708uYvW7kJSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gc7PgkuHgO76hodrKeC1xeCP2M+BGanGW0PEf8vbNSE6sZaOdP2o8Eip0MzLT/sbP/9qVfM4HbtXK52/nF13gL2UPrKobU3kqEUYQk+UJACqQj2HuARgZM4WrxHpSEqcNTfvIQRz+OVQ6yJ+s8X50noH0XOrQCPf9G0gH0fFIHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBLeFREC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j+FU1brheqqnOVQQKLem0eeQuuPdxME6f7CwIkotw/TPyuFA1IOQaaDjqhbjs/sI2X3rhSOqF3CVga40gKa0z0n1dNw6xAPuB8yA+2QtUOB3APIJEY2CcMdza2gqUJx+UztxLfQylFjn5DYGe0mNjUtoy/oF7RIpV7wTm2J34ZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a04zcFgT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBLeFREC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D91CC4CEC3;
-	Mon, 21 Oct 2024 10:32:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a04zcFgT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB88C4CEC3;
+	Mon, 21 Oct 2024 10:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506760;
-	bh=cKM/941V8bAmlrnoNkVAm6As9oSAmQBRSuw+uELgtf4=;
+	s=korg; t=1729506763;
+	bh=PzSW4xBeSK1rwdg0RGr2gTPL7a6GMu5708uYvW7kJSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CBLeFRECYFF3dOzxf/hF48HlI+6Bf+cTizfvZy4SYeotEVoJOyMnRI4GiYvLVGPpU
-	 W+zt+Xp4pzH0+wH1AcfOsxq5pzZtT3KMpVDslWNDhL7nNVlqT1D8V0alJ1jf/t6QyB
-	 ynj/tpTmSvy7rGc6feZbSdpIr3u7Wdnzwa23cvek=
+	b=a04zcFgTfNCbTZpNhv8ILntTLLfLl9BikwEuPAONl7RdFydQgbeYDdCnewJPCT+he
+	 a2FNrVMDTcX/lXXLrI98xeW+eejnh2FiHqe5i7IBmh5tWTb4QgamazlDQFzxmrLvPw
+	 YWk4npKWpQbF6fuq0TQo0ScjGVjN11WL7GBX5wO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.11 113/135] parport: Proper fix for array out-of-bounds access
-Date: Mon, 21 Oct 2024 12:24:29 +0200
-Message-ID: <20241021102303.745215260@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	stable@kernel.org
+Subject: [PATCH 6.11 114/135] x86/resctrl: Annotate get_mem_config() functions as __init
+Date: Mon, 21 Oct 2024 12:24:30 +0200
+Message-ID: <20241021102303.789091306@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -49,105 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 02ac3a9ef3a18b58d8f3ea2b6e46de657bf6c4f9 upstream.
+commit d5fd042bf4cfb557981d65628e1779a492cd8cfa upstream.
 
-The recent fix for array out-of-bounds accesses replaced sprintf()
-calls blindly with snprintf().  However, since snprintf() returns the
-would-be-printed size, not the actually output size, the length
-calculation can still go over the given limit.
+After a recent LLVM change [1] that deduces __cold on functions that only call
+cold code (such as __init functions), there is a section mismatch warning from
+__get_mem_config_intel(), which got moved to .text.unlikely. as a result of
+that optimization:
 
-Use scnprintf() instead of snprintf(), which returns the actually
-output letters, for addressing the potential out-of-bounds access
-properly.
+  WARNING: modpost: vmlinux: section mismatch in reference: \
+  __get_mem_config_intel+0x77 (section: .text.unlikely.) -> thread_throttle_mode_init (section: .init.text)
 
-Fixes: ab11dac93d2d ("dev/parport: fix the array out-of-bounds risk")
-Cc: stable@vger.kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20240920103318.19271-1-tiwai@suse.de
+Mark __get_mem_config_intel() as __init as well since it is only called
+from __init code, which clears up the warning.
+
+While __rdt_get_mem_config_amd() does not exhibit a warning because it
+does not call any __init code, it is a similar function that is only
+called from __init code like __get_mem_config_intel(), so mark it __init
+as well to keep the code symmetrical.
+
+CONFIG_SECTION_MISMATCH_WARN_ONLY=n would turn this into a fatal error.
+
+Fixes: 05b93417ce5b ("x86/intel_rdt/mba: Add primary support for Memory Bandwidth Allocation (MBA)")
+Fixes: 4d05bf71f157 ("x86/resctrl: Introduce AMD QOS feature")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Cc: <stable@kernel.org>
+Link: https://github.com/llvm/llvm-project/commit/6b11573b8c5e3d36beee099dbe7347c2a007bf53 [1]
+Link: https://lore.kernel.org/r/20240917-x86-restctrl-get_mem_config_intel-init-v3-1-10d521256284@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parport/procfs.c |   22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ arch/x86/kernel/cpu/resctrl/core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/parport/procfs.c
-+++ b/drivers/parport/procfs.c
-@@ -51,12 +51,12 @@ static int do_active_device(const struct
- 	
- 	for (dev = port->devices; dev ; dev = dev->next) {
- 		if(dev == port->cad) {
--			len += snprintf(buffer, sizeof(buffer), "%s\n", dev->name);
-+			len += scnprintf(buffer, sizeof(buffer), "%s\n", dev->name);
- 		}
- 	}
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -207,7 +207,7 @@ static inline bool rdt_get_mb_table(stru
+ 	return false;
+ }
  
- 	if(!len) {
--		len += snprintf(buffer, sizeof(buffer), "%s\n", "none");
-+		len += scnprintf(buffer, sizeof(buffer), "%s\n", "none");
- 	}
+-static bool __get_mem_config_intel(struct rdt_resource *r)
++static __init bool __get_mem_config_intel(struct rdt_resource *r)
+ {
+ 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+ 	union cpuid_0x10_3_eax eax;
+@@ -241,7 +241,7 @@ static bool __get_mem_config_intel(struc
+ 	return true;
+ }
  
- 	if (len > *lenp)
-@@ -87,19 +87,19 @@ static int do_autoprobe(const struct ctl
- 	}
- 	
- 	if ((str = info->class_name) != NULL)
--		len += snprintf (buffer + len, sizeof(buffer) - len, "CLASS:%s;\n", str);
-+		len += scnprintf (buffer + len, sizeof(buffer) - len, "CLASS:%s;\n", str);
- 
- 	if ((str = info->model) != NULL)
--		len += snprintf (buffer + len, sizeof(buffer) - len, "MODEL:%s;\n", str);
-+		len += scnprintf (buffer + len, sizeof(buffer) - len, "MODEL:%s;\n", str);
- 
- 	if ((str = info->mfr) != NULL)
--		len += snprintf (buffer + len, sizeof(buffer) - len, "MANUFACTURER:%s;\n", str);
-+		len += scnprintf (buffer + len, sizeof(buffer) - len, "MANUFACTURER:%s;\n", str);
- 
- 	if ((str = info->description) != NULL)
--		len += snprintf (buffer + len, sizeof(buffer) - len, "DESCRIPTION:%s;\n", str);
-+		len += scnprintf (buffer + len, sizeof(buffer) - len, "DESCRIPTION:%s;\n", str);
- 
- 	if ((str = info->cmdset) != NULL)
--		len += snprintf (buffer + len, sizeof(buffer) - len, "COMMAND SET:%s;\n", str);
-+		len += scnprintf (buffer + len, sizeof(buffer) - len, "COMMAND SET:%s;\n", str);
- 
- 	if (len > *lenp)
- 		len = *lenp;
-@@ -128,7 +128,7 @@ static int do_hardware_base_addr(const s
- 	if (write) /* permissions prevent this anyway */
- 		return -EACCES;
- 
--	len += snprintf (buffer, sizeof(buffer), "%lu\t%lu\n", port->base, port->base_hi);
-+	len += scnprintf (buffer, sizeof(buffer), "%lu\t%lu\n", port->base, port->base_hi);
- 
- 	if (len > *lenp)
- 		len = *lenp;
-@@ -155,7 +155,7 @@ static int do_hardware_irq(const struct
- 	if (write) /* permissions prevent this anyway */
- 		return -EACCES;
- 
--	len += snprintf (buffer, sizeof(buffer), "%d\n", port->irq);
-+	len += scnprintf (buffer, sizeof(buffer), "%d\n", port->irq);
- 
- 	if (len > *lenp)
- 		len = *lenp;
-@@ -182,7 +182,7 @@ static int do_hardware_dma(const struct
- 	if (write) /* permissions prevent this anyway */
- 		return -EACCES;
- 
--	len += snprintf (buffer, sizeof(buffer), "%d\n", port->dma);
-+	len += scnprintf (buffer, sizeof(buffer), "%d\n", port->dma);
- 
- 	if (len > *lenp)
- 		len = *lenp;
-@@ -213,7 +213,7 @@ static int do_hardware_modes(const struc
- #define printmode(x)							\
- do {									\
- 	if (port->modes & PARPORT_MODE_##x)				\
--		len += snprintf(buffer + len, sizeof(buffer) - len, "%s%s", f++ ? "," : "", #x); \
-+		len += scnprintf(buffer + len, sizeof(buffer) - len, "%s%s", f++ ? "," : "", #x); \
- } while (0)
- 		int f = 0;
- 		printmode(PCSPP);
+-static bool __rdt_get_mem_config_amd(struct rdt_resource *r)
++static __init bool __rdt_get_mem_config_amd(struct rdt_resource *r)
+ {
+ 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+ 	u32 eax, ebx, ecx, edx, subleaf;
 
 
