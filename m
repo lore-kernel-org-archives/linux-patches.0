@@ -1,94 +1,99 @@
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F33F1E0E0E
-	for <patches@lists.linux.dev>; Mon, 21 Oct 2024 16:22:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5859F137750
+	for <patches@lists.linux.dev>; Mon, 21 Oct 2024 16:29:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729527744; cv=none; b=tOJEnZ8fyuS7Dd2ygoq2lfG39zg9hyIl0zIw7wnz8H9D6VsFfmmXlUXWMf0ANcbLKXHJODyzARif9VhvSSBqlEht9OtA6OGHZu/2ZVV1wk2+exf7NKvYw6izEGQmlNf6xLxJkFrmTZYStD/YPUcQZ9GHvbeXd3uj57jAgyGFxHg=
+	t=1729528178; cv=none; b=nN3nJZCoy4vMOF51Rm5I41h5LHefTt2LDQHuKqmXzNg6exIwP6s1byIXcjL3d11j9x2lnfp24+wakEqB4ZkU8wvy956ptC1Dc5DzLpfOQivupjYHg1dg5I79FbsOSNaDKBvUSEP62eyPr8q5P76atwr6MgnoCEVFuz+wblg7jNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729527744; c=relaxed/simple;
-	bh=OPwLm4KbXRPjPPUsnhN3viq6xYmj5UJS4BgPDBMUoO0=;
-	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DfYFLd6BYC1Vbi5K6yPrtTrXVwqAlRjP7oyS66rDcv7S7rs1TMkMEoEMYmGj02OYEb6Ret/5u/bQuyIOBShEGO60AgjqXtMwlycZhJtDy+WzyFYfW6i4HEAD4+e1ZvQAu17ejrLt6bUEL4iHO+DR8vkJKF9GpfqrmQiyyc93rpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cpMAoE0E; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729528178; c=relaxed/simple;
+	bh=WZHTYHf+LQjJZi4Vq2sTO5SCLoWHTXWW4eydbVA8m9k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E+lwylM9SV4y7vZJT1JGM6uyYEpTmR7TlMCkNFHOee7Gj/xyeLodv9c2+dM2CJSbjI6u375LGqb3uXhCA/UZsPvPmLSXmSwMIsa1lK9ONKfZyeqeYCr6sK1Uuv6A5vaRixGKpgxOc0gtriRxhhMf2Ve2BaQUb2D1CB0Q6b1bSvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=KuMzZBW0; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cpMAoE0E"
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-539e3f35268so2900964e87.3
-        for <patches@lists.linux.dev>; Mon, 21 Oct 2024 09:22:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729527741; x=1730132541; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7bhwla8+6KA+J2l2zXzoT/1T3zQj3xRspy+bneLu4x4=;
-        b=cpMAoE0EZGMrWou6kDHiMX05K3072g1EP6Jhji5PklWfvwvyWvcumStKchKU/KUTl4
-         SfC5bJMCrerCE8r8todyoFjhN5gSH9GSP6wNCmlkV3ig9n4d3skrtIFGVNB9bzHK7EXo
-         uFPQ4MQu5FaXSB7jh9nv7bDQXmYn3S0EddT2Xdk7h7C4igK5tXi9e9yAoKyHVUYBLwx5
-         W2lWXAECx3LAC86icCjgxsuzK16O39rMQ62IuHtsU/2HE5a/pnl5rKk37p06nkUvv5Wm
-         I7H57vEfHbsEcQLl1HRctbuYogpCA/JN9Sb/pUOXodV/SyAjeJ27a+cdp8SKGGu00oDw
-         MF+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729527741; x=1730132541;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7bhwla8+6KA+J2l2zXzoT/1T3zQj3xRspy+bneLu4x4=;
-        b=uoWHtSNF3hyxrrlQ73O+jbyJ1bpSzGN2CbENLK2PwbWqGUA9IHQH635AjbAfb3066q
-         XNVphfAPNvgWq2iK15IDwKiBcv3u2RLF3iDJ1zM8kgBSwuTLSpqCNthzcaPZg/THg1Cp
-         Z9EiS+Kcf0BTHuT+7UxLhRoHsPPW+V+/bX3YXjT7z3mBffnHy/qkIAg+AvWiKFUteo/t
-         sjMrnNRN0Dt9i5ohIElunVCaQfTDxCtfL8H5Crky9SA+wbw5kP6RKUAtLlZnPgKc/+ME
-         8u1xLNxBk9VAqpCmlBmESV/22pmXdLaWdbrhnrM5y11NpuFJVx3gaSJjTs8PpViPokTD
-         uSDA==
-X-Forwarded-Encrypted: i=1; AJvYcCVHuSgO8MAxPjqY4dHTyfHFRl2zCWFUqhzEAqqP04XRijRoYVCSSFfJ5LFlhk0BUVEh2IOHgyMl@lists.linux.dev
-X-Gm-Message-State: AOJu0YyXEfrpxJT7NQDtUCyi7bfAqVNLei/WYqZ8R6uZu4AmL7x5vLvZ
-	YJDFUxgeU/XktpV61Ug+952DaKJOF2aCRfhegakGm9+3D1u0Nu/j
-X-Google-Smtp-Source: AGHT+IG0ia65F5bFAoAh4IwlqxoYqOtesCPVPMKTH3oy6uQ69GOTbPfTqJEHKVXBSwaxhqJSuLqKMw==
-X-Received: by 2002:a05:6512:308d:b0:536:55a8:6f78 with SMTP id 2adb3069b0e04-53a15219180mr5534266e87.17.1729527740521;
-        Mon, 21 Oct 2024 09:22:20 -0700 (PDT)
-Received: from pc636 (host-90-233-222-236.mobileonline.telia.com. [90.233.222.236])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a2243ecb4sm518168e87.247.2024.10.21.09.22.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 09:22:20 -0700 (PDT)
-From: Uladzislau Rezki <urezki@gmail.com>
-X-Google-Original-From: Uladzislau Rezki <urezki@pc636>
-Date: Mon, 21 Oct 2024 18:22:17 +0200
-To: Ben Greear <greearb@candelatech.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Florian Westphal <fw@strlen.de>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 6.11 024/135] lib: alloc_tag_module_unload must wait for
- pending kfree_rcu calls
-Message-ID: <ZxZ_uX0e1iEKZMk5@pc636>
-References: <20241021102259.324175287@linuxfoundation.org>
- <20241021102300.282974151@linuxfoundation.org>
- <a4163f51-cc1a-0848-d0fd-e9b94dafc306@candelatech.com>
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="KuMzZBW0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=h5BU
+	UOZKlL8+fKDy2XIpjtStZODLfDkNQWHc7fkq2ao=; b=KuMzZBW01Hua5r5hPeOq
+	DeMgJpbwoXFF5NbUsRXpBN/FmhD4JSk7yzGu0E5Dd2+Xe1IUZw0B4LV9GAyD+4OJ
+	919IzcC0miMiLl/gPSLM9/b6NeGOGLNH7686KkXE9ShK+gpapGwtZauRTk8pk62l
+	XCYdSGH53BifBkuzQlpHGkUSW24tMz9ECqkJsu0Ay5mIwRwfLDPIjtVSxu4gT972
+	0AwZEzVIT0dDNNcNn5tp7IE1+HuIfm+Iyt8C5iqticUsGMEuGoDSyIM5tQBjj50L
+	7Cbmmkw8S5jMKXVR9Kd7lvlQpW2bBdU1iVGktg0zhF3gSGoBF/bi/r1d4QAzktcd
+	nQ==
+Received: (qmail 275883 invoked from network); 21 Oct 2024 18:29:26 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 21 Oct 2024 18:29:26 +0200
+X-UD-Smtp-Session: l3s3148p1@F631J/8kaC5dtTCq
+Date: Mon, 21 Oct 2024 18:29:24 +0200
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] MAINTAINERS: Remove some entries due to various
+ compliance requirements.
+Message-ID: <ZxaBZHJcZ768Qg1o@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <2024101835-tiptop-blip-09ed@gregkh>
+ <a520d1f5-8273-d67e-97fe-67f73edce9f1@linux-m68k.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Yl+L//SofObhi9wx"
+Content-Disposition: inline
+In-Reply-To: <a520d1f5-8273-d67e-97fe-67f73edce9f1@linux-m68k.org>
+
+
+--Yl+L//SofObhi9wx
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a4163f51-cc1a-0848-d0fd-e9b94dafc306@candelatech.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 21, 2024 at 09:16:43AM -0700, Ben Greear wrote:
-> On 10/21/24 03:23, Greg Kroah-Hartman wrote:
-> > 6.11-stable review patch.  If anyone has any objections, please let me know.
-> 
-> This won't compile in my 6.11 tree (as of last week), I think it needs more
-> upstream patches and/or a different work-around.
-> 
-> Possibly that has already been backported into 6.11 stable and I just haven't
-> seen it yet.
-> 
-Right. The kvfree_rcu_barrier() will appear starting from 6.12 kernel.
 
---
-Uladzislau Rezki
+> > Remove some entries due to various compliance requirements. They can co=
+me
+> > back in the future if sufficient documentation is provided.
+>=20
+> This is very vague...
+> What are "various compliance requirements"?
+> What does "sufficient documentation" mean?
+>=20
+> I can guess, but I think it's better to spell out the rules, as Linux
+> kernel development is done "in the open".  I am also afraid this is
+> opening the door for further (ab)use...
+
+I agree.
+
+
+--Yl+L//SofObhi9wx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmcWgWAACgkQFA3kzBSg
+KbZbRA/+KmyVE7THE67LHd2bsDBSiZkwVv9kPwQNcCd86SzwnBN87/CeOhZxoI0F
+e5X+lZIXevQvSJkqu8I1ZZNY9xV50GUncndawqL5mSS/GW+WMXPNIu8osTV8gg25
+WHD9cJysiD7WT50vSOncqESU5WA8OAQrv/9VC3bCQBfXEuYd8GNZaW1DLVBAcsek
+e5sGupyYJBcMJYmIfpPkbKpN7oAkuD4q/ysCqkUe+Quzg6IxoKplPgIjxcJsgdLS
+JkNTq29ZiS0QrziugUI03SvnXO/MMJEbhDPPZNInEKEhxy3tjsAfUcsP20G+TeiX
+R248SgmUekBfjAZ0gDRjPZfKJc7snBKURUK1B0E2+1qrbi52fX/RfslNn0gHO8Tl
+9nf6YlLjgLCd5092qAIngqdMIsudeAK4QPNKAmTkwgtDdRduAiyrjCMox8ldLuJJ
+tTHUJlxFOeRLEVN7Z6rtGGSrKsQyGdF9ff/Oe6FYuKlJiP/iwAfFQ7moKTt8FGLX
+GNdfYhujZNl/dP06BxDxec+y/B2Gg0H3fVF0P3P1GY/SRgxgA7nsqjCuxAttSG6y
+IKOjNyRcQ2knNFq2q4OlzoH0k0zSHBvbN+bZ7kg48THKKWx+YT1/eri0sdXCxaKY
+Kv1vM/3t9Kencw7T9chtP1QAbU6bAXiXOytcS/RGPJVkkeTXccE=
+=8I/w
+-----END PGP SIGNATURE-----
+
+--Yl+L//SofObhi9wx--
