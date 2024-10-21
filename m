@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC071E47B4;
-	Mon, 21 Oct 2024 10:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD781E47B4;
+	Mon, 21 Oct 2024 10:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506740; cv=none; b=hVQAfktltp0nmJpK9RGs4WN3te4S9Av9tCaOstWXFNc1yPxlokRiFVKXBfVozPWa3jpaFh56ARljaGutnPeGXvCPrvsLaDz+NYrLMUPx9oDKJD1SiKz1gf4D9kW5JYdGEswUOL8k92OY2pSnu9/PtDUP0SsKoPy2yrj59X/Hwjs=
+	t=1729506743; cv=none; b=XJ/Y3ZXZ5sbI0qZayYmMvp5Msh3tWWxxQ22NnSpPKDzq1jntEwZ9Nhei/93Wf5Ud/EN9BWOLDr8ZCGw6/90BJae54tb+4lwZ6UUpcYkb6PjmO+X0goC+VZ0/Fx3pNLE8yNrCZ8xsxp9dxXOwFKHVXDInx3W2Ixm4eSP1RaivoOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506740; c=relaxed/simple;
-	bh=Y7MJ6nSCaU8o4CB8ZLJ59GGkv7FJ+Z0cfW2eEmTaT5s=;
+	s=arc-20240116; t=1729506743; c=relaxed/simple;
+	bh=Lqt9l6oBljZmpWtSg7yY9ip+a4GdOUqMcERdZHJw3b8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hpx1TAqaEQzb4EMKS21S4zwtR0jf7PBSgEZGWSgJ4oI6/le8uQvs73enEQwFvmMuQgL9hQXY04lsVot3izFjnkY1dLAsi6S4YyoZWVqEVcjKtG7Q92PxtEGRFbzWh2UQwx0XV3wLweUsQ2r8XLCo7R4V/E4OxJwWIxMspu3c9vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxxrwIJi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HSPyOlfyqxaebBWrMVi/aVqNdCIaQQwV3iBfRRM2Q2CjiPteEYZU2R12mw0KZYmhGbgOzVOldejHmSOQCGIfPUW/YiGg1ESDJl4Fam5RmT7NxxDOr9KM/PIdhc28oRfrBonDCmHSGLuaZpvhUsVbuLU1ZEnT82rgV/+iTRq7UKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAVrH9w5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxxrwIJi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E68C4CEC3;
-	Mon, 21 Oct 2024 10:32:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAVrH9w5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6F2C4CEC3;
+	Mon, 21 Oct 2024 10:32:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506740;
-	bh=Y7MJ6nSCaU8o4CB8ZLJ59GGkv7FJ+Z0cfW2eEmTaT5s=;
+	s=korg; t=1729506743;
+	bh=Lqt9l6oBljZmpWtSg7yY9ip+a4GdOUqMcERdZHJw3b8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SxxrwIJiP0InQNIK3UXeQA/oKS2bWjdmHMnbSkf3u0DbZx5Mm2xcuk1cqL7EGeGJc
-	 +LI5C8ClnGvhYS4rN4/0djdtyJsrtktU2SeaB5Y1nmJh0AZ1WnzSHbRQWhjqdUD9/m
-	 f7lL5bYE/nLicFHKN+8uGzlWpOgFB8xlSqsZqwwQ=
+	b=OAVrH9w58LzfVlnUZnp2PzSHfKFQVzf2nEfId0KsDLfHk8ecRp1agZJXT8xTTfqm4
+	 Y4OhHcXlq+vSZG2lz70ZfTbyEq2X3cM0rQg9y6GOpAHzrtYQc/LJZp5m5/6oFGZKdF
+	 sEEvOo64SBjl36vTDpqba2VS1nNidBWbEJNHzGIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Stable@vger.kernel.org,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.11 074/135] iio: hid-sensors: Fix an error handling path in _hid_sensor_set_report_latency()
-Date: Mon, 21 Oct 2024 12:23:50 +0200
-Message-ID: <20241021102302.224335499@linuxfoundation.org>
+Subject: [PATCH 6.11 075/135] iio: light: veml6030: fix ALS sensor resolution
+Date: Mon, 21 Oct 2024 12:23:51 +0200
+Message-ID: <20241021102302.264235044@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -52,34 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 3a29b84cf7fbf912a6ab1b9c886746f02b74ea25 upstream.
+commit c9e9746f275c45108f2b0633a4855d65d9ae0736 upstream.
 
-If hid_sensor_set_report_latency() fails, the error code should be returned
-instead of a value likely to be interpreted as 'success'.
+The driver still uses the sensor resolution provided in the datasheet
+until Rev. 1.6, 28-Apr-2022, which was updated with Rev 1.7,
+28-Nov-2023. The original ambient light resolution has been updated from
+0.0036 lx/ct to 0.0042 lx/ct, which is the value that can be found in
+the current device datasheet.
 
-Fixes: 138bc7969c24 ("iio: hid-sensor-hub: Implement batch mode")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/c50640665f091a04086e5092cf50f73f2055107a.1727980825.git.christophe.jaillet@wanadoo.fr
-Cc: <Stable@vger.kernel.org>
+Update the default resolution for IT = 100 ms and GAIN = 1/8 from the
+original 4608 mlux/cnt to the current value from the "Resolution and
+maximum detection range" table (Application Note 84367, page 5), 5376
+mlux/cnt.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 7b779f573c48 ("iio: light: add driver for veml6030 ambient light sensor")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20240923-veml6035-v2-1-58c72a0df31c@gmail.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/common/hid-sensors/hid-sensor-trigger.c |    2 +-
+ drivers/iio/light/veml6030.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/common/hid-sensors/hid-sensor-trigger.c
-+++ b/drivers/iio/common/hid-sensors/hid-sensor-trigger.c
-@@ -32,7 +32,7 @@ static ssize_t _hid_sensor_set_report_la
- 	latency = integer * 1000 + fract / 1000;
- 	ret = hid_sensor_set_report_latency(attrb, latency);
- 	if (ret < 0)
--		return len;
-+		return ret;
+--- a/drivers/iio/light/veml6030.c
++++ b/drivers/iio/light/veml6030.c
+@@ -780,7 +780,7 @@ static int veml6030_hw_init(struct iio_d
  
- 	attrb->latency_ms = hid_sensor_get_report_latency(attrb);
+ 	/* Cache currently active measurement parameters */
+ 	data->cur_gain = 3;
+-	data->cur_resolution = 4608;
++	data->cur_resolution = 5376;
+ 	data->cur_integration_time = 3;
  
+ 	return ret;
 
 
