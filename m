@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C361E47B4;
-	Mon, 21 Oct 2024 10:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37FF1E5707;
+	Mon, 21 Oct 2024 10:29:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506581; cv=none; b=AQnv17wprwyNTFcRZkZ7bbcW0NRhZTHU6RL01mwXHQ0bCVQ5UzxG5/6S+M7UypmyYPKwED+1CVvnK+qZ284EKQdryuUcPPagNHTlOcojnvYLo62kAx/G9OWvAmeE9NtXlaJhAHIoQcUmso9Fwf4XonfxkIs4rdvaiCqnGettxTU=
+	t=1729506584; cv=none; b=MDoFaVUenI3Qqj2jViZmMd4Qh9XUm7K/0WHzlu4Lj+FeVYTQrXNT1EoZmCaqp3lrj9iU/UlRDX86V9TBMUUpM3IwLwLVTnAFLpiUGT6HTKAh23+5lsuZfNAT6Wa3cfJWrPn84wfgoP+wEwCy7p5zO/ZfiijJyZr4Cy75iqsiK5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506581; c=relaxed/simple;
-	bh=wPqXME0dt7z+ev/x4/CSfcBN2vedcggMoQRRqOFLMHg=;
+	s=arc-20240116; t=1729506584; c=relaxed/simple;
+	bh=eB4XZ5RfZ4jhdeNLgCQntCSyR4wZYuq3+Lt6mHZtllM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D/+Ftoj0wzBNOBvKu6TA7LCyz+ObQ8UbrW41AxHLTcq8j0iEvaFRaSVmZFPbx8D6ZHxdixQCEv3Q+Kw7CNALsCw2KkmrLBFvwiUgSfz0NicOgFARfObkzga/0viUE51hEUEZusgkSep8NeiDZHi32R8FakIS74qrJbrfz6V2OZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WhUwIKG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pa4y+fxoqbpfDrmjKdH4QptgNPhI6K40VP7QrpxV8F2ufePydNRdEFv4T4gDX454SF6KXqnEoMywWpgpFhn12XlxF0xCwS/mzusebXj1kJMxBbbcclu8WHs3UoHFJtuRAAjc6HJQRt5oiI9jR0mbR1H4Ngt1B3DL2PE62o+hGqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gAUe6QR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WhUwIKG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09998C4CEC3;
-	Mon, 21 Oct 2024 10:29:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gAUe6QR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEEE6C4CEC3;
+	Mon, 21 Oct 2024 10:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506581;
-	bh=wPqXME0dt7z+ev/x4/CSfcBN2vedcggMoQRRqOFLMHg=;
+	s=korg; t=1729506584;
+	bh=eB4XZ5RfZ4jhdeNLgCQntCSyR4wZYuq3+Lt6mHZtllM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1WhUwIKGVV/huJH1NwqIVSdZHdJA+c6bVJESpQ8V8rvbs49gZb+rN0itLKmEID8vF
-	 BYCE7ACrj0/uoVELBTVPhl4Np9DWbo3uYtMW8a56S8GHZu4KF9oF3iy2w7ecfDvNRW
-	 2rF9ZG8tOW7AbzpYYjxhGOwgV1kwBz91ubET3IaQ=
+	b=2gAUe6QRx5rf2gRBcaJxTHo6GrCESlFY3rNmPesJbffr0X4qR12gAIA1BjUjwhtIi
+	 bAR7tXFHVlWwC+Da/HvmRO86U3KxKwBZkuj3fOg91Knz8giMoeQdE674XT4P8lJrS0
+	 ixkEMgE/aYE0FbU+MwgAmxCKKekXqHai5sIB3gn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Lu <luyun@kylinos.cn>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.11 053/135] selftest: hid: add the missing tests directory
-Date: Mon, 21 Oct 2024 12:23:29 +0200
-Message-ID: <20241021102301.405403513@linuxfoundation.org>
+	John Edwards <uejji@uejji.net>,
+	"Derek J. Clark" <derekjohn.clark@gmail.com>,
+	Christopher Snowhill <kode54@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.11 054/135] Input: xpad - add support for MSI Claw A1M
+Date: Mon, 21 Oct 2024 12:23:30 +0200
+Message-ID: <20241021102301.443196293@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -51,52 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: John Edwards <uejji@uejji.net>
 
-commit fe05c40ca9c18cfdb003f639a30fc78a7ab49519 upstream.
+commit 22a18935d7d96bbb1a28076f843c1926d0ba189e upstream.
 
-Commit 160c826b4dd0 ("selftest: hid: add missing run-hid-tools-tests.sh")
-has added the run-hid-tools-tests.sh script for it to be installed, but
-I forgot to add the tests directory together.
+Add MSI Claw A1M controller to xpad_device match table when in xinput mode.
+Add MSI VID as XPAD_XBOX360_VENDOR.
 
-If running the test case without the tests directory,  will results in
-the following error message:
-
-    make -C tools/testing/selftests/ TARGETS=hid install \
-	    INSTALL_PATH=$KSFT_INSTALL_PATH
-    cd $KSFT_INSTALL_PATH
-    ./run_kselftest.sh -t hid:hid-core.sh
-
-  /usr/lib/python3.11/site-packages/_pytest/config/__init__.py:331: PluggyTeardownRaisedWarning: A plugin raised an exception during an old-style hookwrapper teardown.
-  Plugin: helpconfig, Hook: pytest_cmdline_parse
-  UsageError: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]
-  __main__.py: error: unrecognized arguments: --udevd
-    inifile: None
-    rootdir: /root/linux/kselftest_install/hid
-
-In fact, the run-hid-tools-tests.sh script uses the scripts in the tests
-directory to run tests. The tests directory also needs to be added to be
-installed.
-
-Fixes: ffb85d5c9e80 ("selftests: hid: import hid-tools hid-core tests")
+Signed-off-by: John Edwards <uejji@uejji.net>
+Reviewed-by: Derek J. Clark <derekjohn.clark@gmail.com>
+Reviewed-by: Christopher Snowhill <kode54@gmail.com>
+Link: https://lore.kernel.org/r/20241010232020.3292284-4-uejji@uejji.net
 Cc: stable@vger.kernel.org
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Acked-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/hid/Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/joystick/xpad.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/testing/selftests/hid/Makefile
-+++ b/tools/testing/selftests/hid/Makefile
-@@ -18,6 +18,7 @@ TEST_PROGS += hid-usb_crash.sh
- TEST_PROGS += hid-wacom.sh
- 
- TEST_FILES := run-hid-tools-tests.sh
-+TEST_FILES += tests
- 
- CXX ?= $(CROSS_COMPILE)g++
- 
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -218,6 +218,7 @@ static const struct xpad_device {
+ 	{ 0x0c12, 0x8810, "Zeroplus Xbox Controller", 0, XTYPE_XBOX },
+ 	{ 0x0c12, 0x9902, "HAMA VibraX - *FAULTY HARDWARE*", 0, XTYPE_XBOX },
+ 	{ 0x0d2f, 0x0002, "Andamiro Pump It Up pad", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX },
++	{ 0x0db0, 0x1901, "Micro Star International Xbox360 Controller for Windows", 0, XTYPE_XBOX360 },
+ 	{ 0x0e4c, 0x1097, "Radica Gamester Controller", 0, XTYPE_XBOX },
+ 	{ 0x0e4c, 0x1103, "Radica Gamester Reflex", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX },
+ 	{ 0x0e4c, 0x2390, "Radica Games Jtech Controller", 0, XTYPE_XBOX },
+@@ -493,6 +494,7 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOX360_VENDOR(0x07ff),		/* Mad Catz Gamepad */
+ 	XPAD_XBOXONE_VENDOR(0x0b05),		/* ASUS controllers */
+ 	XPAD_XBOX360_VENDOR(0x0c12),		/* Zeroplus X-Box 360 controllers */
++	XPAD_XBOX360_VENDOR(0x0db0),		/* Micro Star International X-Box 360 controllers */
+ 	XPAD_XBOX360_VENDOR(0x0e6f),		/* 0x0e6f Xbox 360 controllers */
+ 	XPAD_XBOXONE_VENDOR(0x0e6f),		/* 0x0e6f Xbox One controllers */
+ 	XPAD_XBOX360_VENDOR(0x0f0d),		/* Hori controllers */
 
 
