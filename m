@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FBA1E7C05;
-	Mon, 21 Oct 2024 10:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7CF194085;
+	Mon, 21 Oct 2024 10:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507505; cv=none; b=ZRu33Uj88w+vj/dFLCHQ6uu45ZyFA8UFPPZVAD+JemQ5HPbXjRlpi/Smn5nmUHNYb8qZaD7My2RQi+PURFJITPwKlze3lcMFiP1RfechnEFal4FER2/dfcC3rYQuzHKlhmL3H1cURSk2XWeOqRx8U8A3jHA81Ghd5orEwihQAFs=
+	t=1729507508; cv=none; b=lZOnbWi5+McMKjTlohOr3y0Up6ZgYV60TtERMVzFvF42MeW4LCVMcDsT92TjT1Z8g5gy29Jv2pQ+Q2M9xqVX38eDZ6/x93lclecbDW7KhHfBCd0Cb5zPmhbATDOdh7g7HSo+//olZybBjXLamGaE2eADVcsRaVmBmYaTtEnveqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507505; c=relaxed/simple;
-	bh=spMahO7XoRlpCDymYhy01lQDg5fcawM2Z9Un1Zyw9iQ=;
+	s=arc-20240116; t=1729507508; c=relaxed/simple;
+	bh=Kknx94Y8PHpMIWMmde8IU0RGdmfP2k7jaYcLtIsp878=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FiU6MJsG0lCng7V39qPCXnQwFOU5pW3ElS8nyGz73X89WpbXZ+zCWoLHLnivkOwtBdvqVzphtS7FUqPB0Xyasj+FojLjnS9N0yUhUFvrt2RiGgpkcBAz/E1MiE3g2z9UcukMgytb+MmiSM4I105dwXsSFHT3jryDSwneciSF6wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3TCh9Ur; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gmUOQuHBTOqptlHdus7iDRAE/ONtwET/KDGN5UJ2IegYkf+/fpS3E72/FIhpg4emBD1MYm77Q53oP81yaBGz760n1Hy/de19OBjkEhdhtF4MGmAE7WY8AEoCMetXmn8VhyjX1p9X544csAUf+RCJ2zCxpMm/UqyEmhCslYzXZpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=USTKkgL1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3TCh9Ur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C81C4CEC3;
-	Mon, 21 Oct 2024 10:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="USTKkgL1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB27DC4CEC3;
+	Mon, 21 Oct 2024 10:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507505;
-	bh=spMahO7XoRlpCDymYhy01lQDg5fcawM2Z9Un1Zyw9iQ=;
+	s=korg; t=1729507508;
+	bh=Kknx94Y8PHpMIWMmde8IU0RGdmfP2k7jaYcLtIsp878=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3TCh9UribSBB4Ubpr1wS9nQMGZ2FKzADIFpTyCAPZeNlAehd1xzt6eHWj4S/MA24
-	 lS606ITsGAbEbnob/EIqo2JzplbUqxIiRfZu6FLeacFbFbFpBTWIo5e8eUjImK/PuD
-	 FFnRzbWu/NO8UN3d1mTmhOjUPqogOXjT9U5DIaC0=
+	b=USTKkgL1MFZ8QEJDrdXOEJ3Mfudlo7Yyne91jcMr4wuLnBjDK3dE++ghhwgRL5K1u
+	 bqIaikdwg9fnRt/mnksUnIgQUA0vclbEiQmgEwUh7YsCQacIQxR+BV3AYogXhCZrAh
+	 cEu4natz4l7jluBAsewoDcN0bhl7PL/POLmEegBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	syzbot+8a192e8d090fa9a31135@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 89/91] nilfs2: propagate directory read errors from nilfs_find_entry()
-Date: Mon, 21 Oct 2024 12:25:43 +0200
-Message-ID: <20241021102253.286095853@linuxfoundation.org>
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 01/82] ALSA: hda/conexant - Fix audio routing for HP EliteOne 1000 G2
+Date: Mon, 21 Oct 2024 12:24:42 +0200
+Message-ID: <20241021102247.270807183@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
-References: <20241021102249.791942892@linuxfoundation.org>
+In-Reply-To: <20241021102247.209765070@linuxfoundation.org>
+References: <20241021102247.209765070@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,234 +46,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-commit 08cfa12adf888db98879dbd735bc741360a34168 upstream.
+commit 9988844c457f6f17fb2e75aa000b6c3b1b673bb9 upstream.
 
-Syzbot reported that a task hang occurs in vcs_open() during a fuzzing
-test for nilfs2.
+There is a problem with simultaneous audio output to headphones and
+speakers, and when headphones are turned off, the speakers also turn
+off and do not turn them on.
 
-The root cause of this problem is that in nilfs_find_entry(), which
-searches for directory entries, ignores errors when loading a directory
-page/folio via nilfs_get_folio() fails.
+However, it was found that if you boot linux immediately after windows,
+there are no such problems. When comparing alsa-info, the only difference
+is the different configuration of Node 0x1d:
 
-If the filesystem images is corrupted, and the i_size of the directory
-inode is large, and the directory page/folio is successfully read but
-fails the sanity check, for example when it is zero-filled,
-nilfs_check_folio() may continue to spit out error messages in bursts.
+working conf. (windows): Pin-ctls: 0x80: HP
+not working     (linux): Pin-ctls: 0xc0: OUT HP
 
-Fix this issue by propagating the error to the callers when loading a
-page/folio fails in nilfs_find_entry().
+This patch disable the AC_PINCTL_OUT_EN bit of Node 0x1d and fixes the
+described problem.
 
-The current interface of nilfs_find_entry() and its callers is outdated
-and cannot propagate error codes such as -EIO and -ENOMEM returned via
-nilfs_find_entry(), so fix it together.
-
-Link: https://lkml.kernel.org/r/20241004033640.6841-1-konishi.ryusuke@gmail.com
-Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: Lizhi Xu <lizhi.xu@windriver.com>
-Closes: https://lkml.kernel.org/r/20240927013806.3577931-1-lizhi.xu@windriver.com
-Reported-by: syzbot+8a192e8d090fa9a31135@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=8a192e8d090fa9a31135
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://patch.msgid.link/20241009134248.662175-1-kovalev@altlinux.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/dir.c   |   50 +++++++++++++++++++++++++++-----------------------
- fs/nilfs2/namei.c |   39 ++++++++++++++++++++++++++-------------
- fs/nilfs2/nilfs.h |    2 +-
- 3 files changed, 54 insertions(+), 37 deletions(-)
+ sound/pci/hda/patch_conexant.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/fs/nilfs2/dir.c
-+++ b/fs/nilfs2/dir.c
-@@ -331,6 +331,8 @@ static int nilfs_readdir(struct file *fi
-  * returns the page in which the entry was found, and the entry itself
-  * (as a parameter - res_dir). Page is returned mapped and unlocked.
-  * Entry is guaranteed to be valid.
-+ *
-+ * On failure, returns an error pointer and the caller should ignore res_page.
-  */
- struct nilfs_dir_entry *
- nilfs_find_entry(struct inode *dir, const struct qstr *qstr,
-@@ -358,22 +360,24 @@ nilfs_find_entry(struct inode *dir, cons
- 	do {
- 		char *kaddr = nilfs_get_page(dir, n, &page);
- 
--		if (!IS_ERR(kaddr)) {
--			de = (struct nilfs_dir_entry *)kaddr;
--			kaddr += nilfs_last_byte(dir, n) - reclen;
--			while ((char *) de <= kaddr) {
--				if (de->rec_len == 0) {
--					nilfs_error(dir->i_sb,
--						"zero-length directory entry");
--					nilfs_put_page(page);
--					goto out;
--				}
--				if (nilfs_match(namelen, name, de))
--					goto found;
--				de = nilfs_next_entry(de);
-+		if (IS_ERR(kaddr))
-+			return ERR_CAST(kaddr);
-+
-+		de = (struct nilfs_dir_entry *)kaddr;
-+		kaddr += nilfs_last_byte(dir, n) - reclen;
-+		while ((char *)de <= kaddr) {
-+			if (de->rec_len == 0) {
-+				nilfs_error(dir->i_sb,
-+					    "zero-length directory entry");
-+				nilfs_put_page(page);
-+				goto out;
- 			}
--			nilfs_put_page(page);
-+			if (nilfs_match(namelen, name, de))
-+				goto found;
-+			de = nilfs_next_entry(de);
- 		}
-+		nilfs_put_page(page);
-+
- 		if (++n >= npages)
- 			n = 0;
- 		/* next page is past the blocks we've got */
-@@ -386,7 +390,7 @@ nilfs_find_entry(struct inode *dir, cons
- 		}
- 	} while (n != start);
- out:
--	return NULL;
-+	return ERR_PTR(-ENOENT);
- 
- found:
- 	*res_page = page;
-@@ -431,19 +435,19 @@ fail:
- 	return NULL;
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -307,6 +307,7 @@ enum {
+ 	CXT_FIXUP_HP_SPECTRE,
+ 	CXT_FIXUP_HP_GATE_MIC,
+ 	CXT_FIXUP_MUTE_LED_GPIO,
++	CXT_FIXUP_HP_ELITEONE_OUT_DIS,
+ 	CXT_FIXUP_HP_ZBOOK_MUTE_LED,
+ 	CXT_FIXUP_HEADSET_MIC,
+ 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
+@@ -324,6 +325,19 @@ static void cxt_fixup_stereo_dmic(struct
+ 	spec->gen.inv_dmic_split = 1;
  }
  
--ino_t nilfs_inode_by_name(struct inode *dir, const struct qstr *qstr)
-+int nilfs_inode_by_name(struct inode *dir, const struct qstr *qstr, ino_t *ino)
- {
--	ino_t res = 0;
- 	struct nilfs_dir_entry *de;
- 	struct page *page;
- 
- 	de = nilfs_find_entry(dir, qstr, &page);
--	if (de) {
--		res = le64_to_cpu(de->inode);
--		kunmap(page);
--		put_page(page);
--	}
--	return res;
-+	if (IS_ERR(de))
-+		return PTR_ERR(de);
++/* fix widget control pin settings */
++static void cxt_fixup_update_pinctl(struct hda_codec *codec,
++				   const struct hda_fixup *fix, int action)
++{
++	if (action == HDA_FIXUP_ACT_PROBE) {
++		/* Unset OUT_EN for this Node pin, leaving only HP_EN.
++		 * This is the value stored in the codec register after
++		 * the correct initialization of the previous windows boot.
++		 */
++		snd_hda_set_pin_ctl(codec, 0x1d, AC_PINCTL_HP_EN);
++	}
++}
 +
-+	*ino = le64_to_cpu(de->inode);
-+	kunmap(page);
-+	put_page(page);
-+	return 0;
- }
- 
- /* Releases the page */
---- a/fs/nilfs2/namei.c
-+++ b/fs/nilfs2/namei.c
-@@ -55,12 +55,20 @@ nilfs_lookup(struct inode *dir, struct d
+ static void cxt5066_increase_mic_boost(struct hda_codec *codec,
+ 				   const struct hda_fixup *fix, int action)
  {
- 	struct inode *inode;
- 	ino_t ino;
-+	int res;
- 
- 	if (dentry->d_name.len > NILFS_NAME_LEN)
- 		return ERR_PTR(-ENAMETOOLONG);
- 
--	ino = nilfs_inode_by_name(dir, &dentry->d_name);
--	inode = ino ? nilfs_iget(dir->i_sb, NILFS_I(dir)->i_root, ino) : NULL;
-+	res = nilfs_inode_by_name(dir, &dentry->d_name, &ino);
-+	if (res) {
-+		if (res != -ENOENT)
-+			return ERR_PTR(res);
-+		inode = NULL;
-+	} else {
-+		inode = nilfs_iget(dir->i_sb, NILFS_I(dir)->i_root, ino);
-+	}
-+
- 	return d_splice_alias(inode, dentry);
- }
- 
-@@ -263,10 +271,11 @@ static int nilfs_do_unlink(struct inode
- 	struct page *page;
- 	int err;
- 
--	err = -ENOENT;
- 	de = nilfs_find_entry(dir, &dentry->d_name, &page);
--	if (!de)
-+	if (IS_ERR(de)) {
-+		err = PTR_ERR(de);
- 		goto out;
-+	}
- 
- 	inode = d_inode(dentry);
- 	err = -EIO;
-@@ -361,10 +370,11 @@ static int nilfs_rename(struct user_name
- 	if (unlikely(err))
- 		return err;
- 
--	err = -ENOENT;
- 	old_de = nilfs_find_entry(old_dir, &old_dentry->d_name, &old_page);
--	if (!old_de)
-+	if (IS_ERR(old_de)) {
-+		err = PTR_ERR(old_de);
- 		goto out;
-+	}
- 
- 	if (S_ISDIR(old_inode->i_mode)) {
- 		err = -EIO;
-@@ -381,10 +391,12 @@ static int nilfs_rename(struct user_name
- 		if (dir_de && !nilfs_empty_dir(new_inode))
- 			goto out_dir;
- 
--		err = -ENOENT;
--		new_de = nilfs_find_entry(new_dir, &new_dentry->d_name, &new_page);
--		if (!new_de)
-+		new_de = nilfs_find_entry(new_dir, &new_dentry->d_name,
-+					  &new_page);
-+		if (IS_ERR(new_de)) {
-+			err = PTR_ERR(new_de);
- 			goto out_dir;
-+		}
- 		nilfs_set_link(new_dir, new_de, new_page, old_inode);
- 		nilfs_mark_inode_dirty(new_dir);
- 		new_inode->i_ctime = current_time(new_inode);
-@@ -438,13 +450,14 @@ out:
-  */
- static struct dentry *nilfs_get_parent(struct dentry *child)
- {
--	unsigned long ino;
-+	ino_t ino;
-+	int res;
- 	struct inode *inode;
- 	struct nilfs_root *root;
- 
--	ino = nilfs_inode_by_name(d_inode(child), &dotdot_name);
--	if (!ino)
--		return ERR_PTR(-ENOENT);
-+	res = nilfs_inode_by_name(d_inode(child), &dotdot_name, &ino);
-+	if (res)
-+		return ERR_PTR(res);
- 
- 	root = NILFS_I(d_inode(child))->i_root;
- 
---- a/fs/nilfs2/nilfs.h
-+++ b/fs/nilfs2/nilfs.h
-@@ -233,7 +233,7 @@ static inline __u32 nilfs_mask_flags(umo
- 
- /* dir.c */
- extern int nilfs_add_link(struct dentry *, struct inode *);
--extern ino_t nilfs_inode_by_name(struct inode *, const struct qstr *);
-+int nilfs_inode_by_name(struct inode *dir, const struct qstr *qstr, ino_t *ino);
- extern int nilfs_make_empty(struct inode *, struct inode *);
- extern struct nilfs_dir_entry *
- nilfs_find_entry(struct inode *, const struct qstr *, struct page **);
+@@ -975,6 +989,10 @@ static const struct hda_fixup cxt_fixups
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = cxt_fixup_mute_led_gpio,
+ 	},
++	[CXT_FIXUP_HP_ELITEONE_OUT_DIS] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = cxt_fixup_update_pinctl,
++	},
+ 	[CXT_FIXUP_HP_ZBOOK_MUTE_LED] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = cxt_fixup_hp_zbook_mute_led,
+@@ -1065,6 +1083,7 @@ static const struct snd_pci_quirk cxt506
+ 	SND_PCI_QUIRK(0x103c, 0x83b2, "HP EliteBook 840 G5", CXT_FIXUP_HP_DOCK),
+ 	SND_PCI_QUIRK(0x103c, 0x83b3, "HP EliteBook 830 G5", CXT_FIXUP_HP_DOCK),
+ 	SND_PCI_QUIRK(0x103c, 0x83d3, "HP ProBook 640 G4", CXT_FIXUP_HP_DOCK),
++	SND_PCI_QUIRK(0x103c, 0x83e5, "HP EliteOne 1000 G2", CXT_FIXUP_HP_ELITEONE_OUT_DIS),
+ 	SND_PCI_QUIRK(0x103c, 0x8402, "HP ProBook 645 G4", CXT_FIXUP_MUTE_LED_GPIO),
+ 	SND_PCI_QUIRK(0x103c, 0x8427, "HP ZBook Studio G5", CXT_FIXUP_HP_ZBOOK_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x844f, "HP ZBook Studio G5", CXT_FIXUP_HP_ZBOOK_MUTE_LED),
 
 
