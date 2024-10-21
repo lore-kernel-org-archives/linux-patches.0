@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF131EBFFD;
-	Mon, 21 Oct 2024 10:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE071EBFFD;
+	Mon, 21 Oct 2024 10:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507789; cv=none; b=at6McaSnF6aPqm9d8V4qjDTonuBlfR0QV8fmYWbSaN3/ZgT6DzCwbQ0pv1YAOyfQgT9azp9VjJ+aH7Hqk+9Kh6nw0woHejCmR/0qU22mclcdNYh1UP17fyBWS0hIzejcy7jZvylJyQh+kkfbXWNX1k7J1wYwyVH1lRSqvZ1StDo=
+	t=1729507792; cv=none; b=LLCq3ysLOkCgOetDomqvsfH+/c3UtHuQ26rWl51m/pedLEMn/5pyHMkMJcTLiuwn3UqTYhzEQB9mlZvTWdK4Kk6oxZykqpqo7w6PCMJeBi8TEON9JDvB8v/Ro4EEF/VpcqrP4FwmljMGGe9nETFN1OLe103uqnWxLZAOpNC0/qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507789; c=relaxed/simple;
-	bh=zTO4buLTtD3E5uRN9jQnl3lN07Za5zkQD0TuX2bDcOA=;
+	s=arc-20240116; t=1729507792; c=relaxed/simple;
+	bh=Iz3atXoJuy4EzJ6DtlNHe1j0U4+rc3V7/db6MYoPmq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LGMmzcTQcXaatRpNxWSsd2lYNn+tv75+WsBN2bksqmaFFevBcDXdBHAaxN70EpNJBAicIZnu3ePN5vSjApHbm3lYGHS1ag+6+wvmeqyrVHCfdz8/fuuZBLamyohIImILDox9f2ouaGPp9XQQ5HnZuzUXPsjSOU/4u8/W1vBw4+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1N4FMkbB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ffGDgUOkpdr0bPXhY3odpQuwiu0561tX2zyRYWpsiV4nObYyRN4sM8F1t6+7uBrBVdOGgiV4qOXsBQbLK79TBzf8qeD3f5uXrijqhTsnO6+vTAYHYW92nb+flxu24eiN6c9rOCPo4R7l++POBGa0gqhzdvNU1Zk0W1PEImbb9C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MsMCy3xe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1N4FMkbB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41336C4CEC3;
-	Mon, 21 Oct 2024 10:49:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MsMCy3xe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7F8C4CEE5;
+	Mon, 21 Oct 2024 10:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507789;
-	bh=zTO4buLTtD3E5uRN9jQnl3lN07Za5zkQD0TuX2bDcOA=;
+	s=korg; t=1729507792;
+	bh=Iz3atXoJuy4EzJ6DtlNHe1j0U4+rc3V7/db6MYoPmq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1N4FMkbB9qtq0pdNdznotLLM8kXNVOjaGcsuvwf5qXNBMv9Bh00YPBwgLRLeiwmrn
-	 oGzgiDbbPSU1IlYQVUQC8s2J/iqAmMH1R9D/02G1/yGvJ01nZJwgqp+COEyCSMOjkh
-	 a8bFJcYCUSfUSNKwQ0o9mquUQ2X+aS4O41hhix60=
+	b=MsMCy3xeGwlPPxr0+CcPUEEDlBqzglLQXS/2ROsrn51PbT2odTRz/F+bfFguBId1b
+	 kWhK+gUvhSlXdBsBx04YCKCM/9ExUNKDFvnrsbXvfcUtuLLJrmhQpOqxck8u+0iHkI
+	 s7+koqzmOQt01nB0wKpbBeiI44i68sU5tNePXkOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Wei Fang <wei.fang@nxp.com>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 02/52] net: enetc: add missing static descriptor and inline keyword
-Date: Mon, 21 Oct 2024 12:25:23 +0200
-Message-ID: <20241021102241.721902328@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Johannes Wikner <kwikner@ethz.ch>,
+	stable@kernel.org
+Subject: [PATCH 5.10 20/52] x86/bugs: Skip RSB fill at VMEXIT
+Date: Mon, 21 Oct 2024 12:25:41 +0200
+Message-ID: <20241021102242.416752755@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102241.624153108@linuxfoundation.org>
 References: <20241021102241.624153108@linuxfoundation.org>
@@ -53,47 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Johannes Wikner <kwikner@ethz.ch>
 
-commit 1d7b2ce43d2c22a21dadaf689cb36a69570346a6 upstream.
+commit 0fad2878642ec46225af2054564932745ac5c765 upstream.
 
-Fix the build warnings when CONFIG_FSL_ENETC_MDIO is not enabled.
-The detailed warnings are shown as follows.
+entry_ibpb() is designed to follow Intel's IBPB specification regardless
+of CPU. This includes invalidating RSB entries.
 
-include/linux/fsl/enetc_mdio.h:62:18: warning: no previous prototype for function 'enetc_hw_alloc' [-Wmissing-prototypes]
-      62 | struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
-         |                  ^
-include/linux/fsl/enetc_mdio.h:62:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-      62 | struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
-         | ^
-         | static
-8 warnings generated.
+Hence, if IBPB on VMEXIT has been selected, entry_ibpb() as part of the
+RET untraining in the VMEXIT path will take care of all BTB and RSB
+clearing so there's no need to explicitly fill the RSB anymore.
 
-Fixes: 6517798dd343 ("enetc: Make MDIO accessors more generic and export to include/linux/fsl")
-Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202410102136.jQHZOcS4-lkp@intel.com/
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20241011030103.392362-1-wei.fang@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  [ bp: Massage commit message. ]
+
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Johannes Wikner <kwikner@ethz.ch>
+Cc: <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/fsl/enetc_mdio.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/bugs.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/include/linux/fsl/enetc_mdio.h
-+++ b/include/linux/fsl/enetc_mdio.h
-@@ -48,7 +48,8 @@ static inline int enetc_mdio_read(struct
- static inline int enetc_mdio_write(struct mii_bus *bus, int phy_id, int regnum,
- 				   u16 value)
- { return -EINVAL; }
--struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
-+static inline struct enetc_hw *enetc_hw_alloc(struct device *dev,
-+					      void __iomem *port_regs)
- { return ERR_PTR(-EINVAL); }
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1062,6 +1062,14 @@ do_cmd_auto:
+ 	case RETBLEED_MITIGATION_IBPB:
+ 		setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
+ 		mitigate_smt = true;
++
++		/*
++		 * There is no need for RSB filling: entry_ibpb() ensures
++		 * all predictions, including the RSB, are invalidated,
++		 * regardless of IBPB implementation.
++		 */
++		setup_clear_cpu_cap(X86_FEATURE_RSB_VMEXIT);
++
+ 		break;
  
- #endif
+ 	default:
+@@ -2465,6 +2473,13 @@ static void __init srso_select_mitigatio
+ 			if (!boot_cpu_has(X86_FEATURE_ENTRY_IBPB) && has_microcode) {
+ 				setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
+ 				srso_mitigation = SRSO_MITIGATION_IBPB_ON_VMEXIT;
++
++				/*
++				 * There is no need for RSB filling: entry_ibpb() ensures
++				 * all predictions, including the RSB, are invalidated,
++				 * regardless of IBPB implementation.
++				 */
++				setup_clear_cpu_cap(X86_FEATURE_RSB_VMEXIT);
+ 			}
+ 		} else {
+ 			pr_err("WARNING: kernel not compiled with CPU_SRSO.\n");
 
 
