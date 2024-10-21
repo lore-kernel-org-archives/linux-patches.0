@@ -1,446 +1,842 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D551E3DDB;
-	Mon, 21 Oct 2024 10:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766471F471E;
+	Mon, 21 Oct 2024 10:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507292; cv=none; b=jd8aIne6bEiUwsC60DqVtSz9ZLLDDDst8FFRhv80+N6XbLvAsTSEajxfDbf2Uoyl87+z1jKjVe0txtQl7cfYj2RfhuTZt/j/Mktz93N5Mu0w0xNWo9xADOUOuoNoqks+//OAm11PdzWs3cqzHux/h79epAflGP1ytwYnpdcpEFw=
+	t=1729507295; cv=none; b=jv4TFQqzHO1ALWktbbxTPM2o7AhUgGw7gBz77CP4CFfAg1p9wD47heQ3Tx3F2PcVr/5OtGJWJ3NHXB6v5HnsynX8vP7N5UxBu/8Wb2gnO63DGrGM1Mc539YkdUOLVAp86enscxcJ2hJcTkf0VcNPCeWN7I8N19qUivoauXASuEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507292; c=relaxed/simple;
-	bh=zOMLSPc3pd5T5Sfdfz7likWS6q2kd1GbeE8B6oyaTE8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AeFaBuLxFc88fNJZlfP1nWdRJvEuZo+QxNDlJMJO+XXTsnlmsvIJMWmI4g3RASBIa/kbO7XOGoYJagHnhWsEt0JJ8W3HRn/77lb5mZ3H8NJG7mP54+c/mMINAp2u8HihGiWKtEGEK7wijeM1rCF8Kk+ZqT/RZrLkkDAIenPXCz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11dq29E6; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1729507295; c=relaxed/simple;
+	bh=gfjQlBuRec7l4rHMgFCcuFmRTaSTkZQsmXh8NtjM6fE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=oISXvISeHLFs1/xyGloxaAt0pwwY4dwzpcP+bh+iqs2F+FmhXbFBOoaW1SQAbUNfHDiYu7xHrK36wh75tuV5w72r9t8biCkgaiUUcpcwRgCm9lkitt39dguBs0j6fsN870QO5X342tMi+z/6E+r5laheA3/mYXL71d5Z2jKQ4TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3IvUGfP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11dq29E6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F507C4CEC3;
-	Mon, 21 Oct 2024 10:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3IvUGfP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA56C4CEC7;
+	Mon, 21 Oct 2024 10:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507291;
-	bh=zOMLSPc3pd5T5Sfdfz7likWS6q2kd1GbeE8B6oyaTE8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=11dq29E6kV8fUiql1AjJdHk6Hwo/Xd40cCm/8DUs24BnTbKddcQm648DPI+EBBJpx
-	 //+4VGAsJ9+FS/72Kz0KIVq7LmY4zEtbSouxfGuTVHQYVHB4mtkKgkthzQe2VQ1lUJ
-	 wwHJ1ym1b2nQ61ltj9qRsdjaqkZkh9PNuI2WzRMY=
+	s=korg; t=1729507295;
+	bh=gfjQlBuRec7l4rHMgFCcuFmRTaSTkZQsmXh8NtjM6fE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Y3IvUGfPugMdnlLDUAeqcalpYaNbPnvYk++bwHa9DIYSXws54Ck1YydMJjPUngM4v
+	 9gxcfA7QQcaZBXUX995jXgyQsMtEb7MuBP4VfFHjpInwCBuMqI61/MPuC/yxT6+qSe
+	 6ZXM10WDPsRvBSmCBC4akgrPdf8fk7cL88DbTi2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org
-Subject: [PATCH 6.1 00/91] 6.1.114-rc1 review
-Date: Mon, 21 Oct 2024 12:24:14 +0200
-Message-ID: <20241021102249.791942892@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Subject: [PATCH 6.1 22/91] udf: Remove old directory iteration code
+Date: Mon, 21 Oct 2024 12:24:36 +0200
+Message-ID: <20241021102250.686719879@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
+References: <20241021102249.791942892@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.114-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.1.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.1.114-rc1
-X-KernelTest-Deadline: 2024-10-23T10:22+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.1.114 release.
-There are 91 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
-
-Responses should be made by Wed, 23 Oct 2024 10:22:25 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.114-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.1.114-rc1
-
-Vasiliy Kovalev <kovalev@altlinux.org>
-    ALSA: hda/conexant - Use cached pin control for Node 0x1d on HP EliteOne 1000 G2
-
-Nicholas Piggin <npiggin@gmail.com>
-    powerpc/64: Add big-endian ELFv2 flavour to crypto VMX asm generation
-
-Ryusuke Konishi <konishi.ryusuke@gmail.com>
-    nilfs2: propagate directory read errors from nilfs_find_entry()
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: prevent MPC handshake on port-based signal endpoints
-
-Paolo Abeni <pabeni@redhat.com>
-    tcp: fix mptcp DSS corruption due to large pmtu xmit
-
-Nam Cao <namcao@linutronix.de>
-    irqchip/sifive-plic: Unmask interrupt in plic_irq_enable()
-
-Marc Zyngier <maz@kernel.org>
-    irqchip/gic-v4: Don't allow a VMOVP on a dying VPE
-
-Ma Ke <make24@iscas.ac.cn>
-    pinctrl: apple: check devm_kasprintf() returned value
-
-Sergey Matsievskiy <matsievskiysv@gmail.com>
-    pinctrl: ocelot: fix system hang on level based interrupts
-
-Longlong Xia <xialonglong@kylinos.cn>
-    tty: n_gsm: Fix use-after-free in gsm_cleanup_mux
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/entry_32: Clear CPU buffers after register restore in NMI return
-
-Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-    x86/entry_32: Do not clobber user EFLAGS.ZF
-
-Zhang Rui <rui.zhang@intel.com>
-    x86/apic: Always explicitly disarm TSC-deadline timer
-
-Nathan Chancellor <nathan@kernel.org>
-    x86/resctrl: Annotate get_mem_config() functions as __init
-
-Takashi Iwai <tiwai@suse.de>
-    parport: Proper fix for array out-of-bounds access
-
-Prashanth K <quic_prashk@quicinc.com>
-    usb: dwc3: Wait for EndXfer completion before restoring GUSB2PHYCFG
-
-Daniele Palmas <dnlplm@gmail.com>
-    USB: serial: option: add Telit FN920C04 MBIM compositions
-
-Benjamin B. Frost <benjamin@geanix.com>
-    USB: serial: option: add support for Quectel EG916Q-GL
-
-Mathias Nyman <mathias.nyman@linux.intel.com>
-    xhci: Mitigate failed set dequeue pointer commands
-
-Mathias Nyman <mathias.nyman@linux.intel.com>
-    xhci: Fix incorrect stream context type macro
-
-Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-    Bluetooth: btusb: Fix regression with fake CSR controllers 0a12:0001
-
-Aaron Thompson <dev@aaront.org>
-    Bluetooth: ISO: Fix multiple init when debugfs is disabled
-
-Aaron Thompson <dev@aaront.org>
-    Bluetooth: Remove debugfs directory on module init failure
-
-Aaron Thompson <dev@aaront.org>
-    Bluetooth: Call iso_exit() on module unload
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: adc: ti-ads124s08: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: dac: ad3552r: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: proximity: mb1232: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: dac: ad5766: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: amplifiers: ada4250: add missing select REGMAP_SPI in Kconfig
-
-Emil Gedenryd <emil.gedenryd@axis.com>
-    iio: light: opt3001: add missing full-scale range value
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: light: veml6030: fix IIO device retrieval from embedded device
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: light: veml6030: fix ALS sensor resolution
-
-Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-    iio: hid-sensors: Fix an error handling path in _hid_sensor_set_report_latency()
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: adc: ti-ads8688: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: dac: stm32-dac-core: add missing select REGMAP_MMIO in Kconfig
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: dac: ltc1660: add missing select REGMAP_SPI in Kconfig
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: dac: ad5770r: add missing select REGMAP_SPI in Kconfig
-
-Mohammed Anees <pvmohammedanees2003@gmail.com>
-    drm/amdgpu: prevent BO_HANDLES error from being overwritten
-
-Alex Deucher <alexander.deucher@amd.com>
-    drm/amdgpu/swsmu: Only force workload setup on init
-
-Nikolay Kuratov <kniv@yandex-team.ru>
-    drm/vmwgfx: Handle surface check failure correctly
-
-Ville Syrjälä <ville.syrjala@linux.intel.com>
-    drm/radeon: Fix encoder->possible_clones
-
-Seunghwan Baek <sh8267.baek@samsung.com>
-    scsi: ufs: core: Set SDEV_OFFLINE when UFS is shut down
-
-Jens Axboe <axboe@kernel.dk>
-    io_uring/sqpoll: close race on waiting for sqring entries
-
-Omar Sandoval <osandov@fb.com>
-    blk-rq-qos: fix crash on rq_qos_wait vs. rq_qos_wake_function race
-
-Johannes Wikner <kwikner@ethz.ch>
-    x86/bugs: Do not use UNTRAIN_RET with IBPB on entry
-
-Johannes Wikner <kwikner@ethz.ch>
-    x86/bugs: Skip RSB fill at VMEXIT
-
-Johannes Wikner <kwikner@ethz.ch>
-    x86/entry: Have entry_ibpb() invalidate return predictions
-
-Johannes Wikner <kwikner@ethz.ch>
-    x86/cpufeatures: Add a IBPB_NO_RET BUG flag
-
-Jim Mattson <jmattson@google.com>
-    x86/cpufeatures: Define X86_FEATURE_AMD_IBPB_RET
-
-Michael Mueller <mimu@linux.ibm.com>
-    KVM: s390: Change virtual to physical address access in diag 0x258 handler
-
-Nico Boehr <nrb@linux.ibm.com>
-    KVM: s390: gaccess: Check if guest address is in memslot
-
-Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-    s390/sclp_vt220: Convert newlines to CRLF instead of LFCR
-
-Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-    s390/sclp: Deactivate sclp after all its users
-
-Lu Baolu <baolu.lu@linux.intel.com>
-    iommu/vt-d: Fix incorrect pci_for_each_dma_alias() for non-PCI devices
-
-Wachowski, Karol <karol.wachowski@intel.com>
-    drm/shmem-helper: Fix BUG_ON() on mmap(PROT_WRITE, MAP_PRIVATE)
-
-Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-    maple_tree: correct tree corruption on spanning store
-
-Jakub Kicinski <kuba@kernel.org>
-    devlink: bump the instance index directly when iterating
-
-Jakub Kicinski <kuba@kernel.org>
-    devlink: drop the filter argument from devlinks_xa_find_get
-
-Liu Shixin <liushixin2@huawei.com>
-    mm/swapfile: skip HugeTLB pages for unuse_vma
-
-OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-    fat: fix uninitialized variable
-
-Nianyao Tang <tangnianyao@huawei.com>
-    irqchip/gic-v3-its: Fix VSYNC referencing an unmapped VPE on GIC v4.1
-
-Oleksij Rempel <linux@rempel-privat.de>
-    net: macb: Avoid 20s boot delay by skipping MDIO bus registration for fixed-link PHY
-
-Mark Rutland <mark.rutland@arm.com>
-    arm64: probes: Fix simulate_ldr*_literal()
-
-Mark Rutland <mark.rutland@arm.com>
-    arm64: probes: Remove broken LDR (literal) uprobe support
-
-Jinjie Ruan <ruanjinjie@huawei.com>
-    posix-clock: Fix missing timespec64 check in pc_clock_settime()
-
-Wei Fang <wei.fang@nxp.com>
-    net: enetc: add missing static descriptor and inline keyword
-
-Wei Fang <wei.fang@nxp.com>
-    net: enetc: remove xdp_drops statistic from enetc_xdp_drop()
-
-Jan Kara <jack@suse.cz>
-    udf: Don't return bh from udf_expand_dir_adinicb()
-
-Jan Kara <jack@suse.cz>
-    udf: Handle error when expanding directory
-
-Jan Kara <jack@suse.cz>
-    udf: Remove old directory iteration code
-
-Jan Kara <jack@suse.cz>
-    udf: Convert udf_link() to new directory iteration code
-
-Jan Kara <jack@suse.cz>
-    udf: Convert udf_mkdir() to new directory iteration code
-
-Jan Kara <jack@suse.cz>
-    udf: Convert udf_add_nondir() to new directory iteration
-
-Jan Kara <jack@suse.cz>
-    udf: Implement adding of dir entries using new iteration code
-
-Jan Kara <jack@suse.cz>
-    udf: Convert udf_unlink() to new directory iteration code
-
-Jan Kara <jack@suse.cz>
-    udf: Convert udf_rmdir() to new directory iteration code
-
-Jan Kara <jack@suse.cz>
-    udf: Convert empty_dir() to new directory iteration code
-
-Jan Kara <jack@suse.cz>
-    udf: Convert udf_get_parent() to new directory iteration code
-
-Jan Kara <jack@suse.cz>
-    udf: Convert udf_lookup() to use new directory iteration code
-
-Jan Kara <jack@suse.cz>
-    udf: Convert udf_readdir() to new directory iteration
-
-Jan Kara <jack@suse.cz>
-    udf: Convert udf_rename() to new directory iteration code
-
-Jan Kara <jack@suse.cz>
-    udf: Provide function to mark entry as deleted using new directory iteration code
-
-Jan Kara <jack@suse.cz>
-    udf: Implement searching for directory entry using new iteration code
-
-Jan Kara <jack@suse.cz>
-    udf: Move udf_expand_dir_adinicb() to its callsite
-
-Jan Kara <jack@suse.cz>
-    udf: Convert udf_expand_dir_adinicb() to new directory iteration
-
-Jan Kara <jack@suse.cz>
-    udf: New directory iteration code
-
-Matthieu Baerts (NGI0) <matttbe@kernel.org>
-    mptcp: pm: fix UaF read in mptcp_pm_nl_rm_addr_or_subflow
-
-Vasiliy Kovalev <kovalev@altlinux.org>
-    ALSA: hda/conexant - Fix audio routing for HP EliteOne 1000 G2
-
-Namjae Jeon <linkinjeon@kernel.org>
-    ksmbd: fix user-after-free from session log off
-
-Roi Martin <jroi.martin@gmail.com>
-    btrfs: fix uninitialized pointer free on read_alloc_one_name() error
-
-Roi Martin <jroi.martin@gmail.com>
-    btrfs: fix uninitialized pointer free in add_inode_ref()
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |    4 +-
- arch/arm64/kernel/probes/decode-insn.c             |   16 +-
- arch/arm64/kernel/probes/simulate-insn.c           |   18 +-
- arch/s390/kvm/diag.c                               |    2 +-
- arch/s390/kvm/gaccess.c                            |    4 +
- arch/s390/kvm/gaccess.h                            |   14 +-
- arch/x86/entry/entry.S                             |    5 +
- arch/x86/entry/entry_32.S                          |    6 +-
- arch/x86/include/asm/cpufeatures.h                 |    4 +-
- arch/x86/kernel/apic/apic.c                        |   14 +-
- arch/x86/kernel/cpu/bugs.c                         |   32 +
- arch/x86/kernel/cpu/common.c                       |    3 +
- arch/x86/kernel/cpu/resctrl/core.c                 |    4 +-
- block/blk-rq-qos.c                                 |    2 +-
- drivers/bluetooth/btusb.c                          |   13 +-
- drivers/crypto/vmx/Makefile                        |   12 +-
- drivers/crypto/vmx/ppc-xlate.pl                    |   10 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c             |    2 +-
- drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c          |    6 +-
- drivers/gpu/drm/drm_gem_shmem_helper.c             |    3 +
- drivers/gpu/drm/radeon/radeon_encoders.c           |    2 +-
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c                |    1 +
- drivers/iio/adc/Kconfig                            |    4 +
- drivers/iio/amplifiers/Kconfig                     |    1 +
- .../iio/common/hid-sensors/hid-sensor-trigger.c    |    2 +-
- drivers/iio/dac/Kconfig                            |    7 +
- drivers/iio/light/opt3001.c                        |    4 +
- drivers/iio/light/veml6030.c                       |    5 +-
- drivers/iio/proximity/Kconfig                      |    2 +
- drivers/iommu/intel/iommu.c                        |    4 +-
- drivers/irqchip/irq-gic-v3-its.c                   |   26 +-
- drivers/irqchip/irq-sifive-plic.c                  |   21 +-
- drivers/net/ethernet/cadence/macb_main.c           |   14 +-
- drivers/net/ethernet/freescale/enetc/enetc.c       |    2 +-
- drivers/parport/procfs.c                           |   22 +-
- drivers/pinctrl/pinctrl-apple-gpio.c               |    3 +
- drivers/pinctrl/pinctrl-ocelot.c                   |    8 +-
- drivers/s390/char/sclp.c                           |    3 +-
- drivers/s390/char/sclp_vt220.c                     |    4 +-
- drivers/tty/n_gsm.c                                |    2 +
- drivers/ufs/core/ufshcd.c                          |    4 +-
- drivers/usb/dwc3/gadget.c                          |   10 +-
- drivers/usb/host/xhci-ring.c                       |    2 +-
- drivers/usb/host/xhci.h                            |    2 +-
- drivers/usb/serial/option.c                        |    8 +
- fs/btrfs/tree-log.c                                |    6 +-
- fs/fat/namei_vfat.c                                |    2 +-
- fs/nilfs2/dir.c                                    |   50 +-
- fs/nilfs2/namei.c                                  |   39 +-
- fs/nilfs2/nilfs.h                                  |    2 +-
- fs/smb/server/mgmt/user_session.c                  |   26 +-
- fs/smb/server/mgmt/user_session.h                  |    4 +
- fs/smb/server/server.c                             |    2 +
- fs/smb/server/smb2pdu.c                            |    8 +-
- fs/udf/dir.c                                       |  148 +--
- fs/udf/directory.c                                 |  594 ++++++++---
- fs/udf/inode.c                                     |   90 --
- fs/udf/namei.c                                     | 1037 +++++++-------------
- fs/udf/udfdecl.h                                   |   45 +-
- include/linux/fsl/enetc_mdio.h                     |    3 +-
- include/linux/irqchip/arm-gic-v4.h                 |    4 +-
- io_uring/io_uring.h                                |    9 +-
- kernel/time/posix-clock.c                          |    3 +
- lib/maple_tree.c                                   |   12 +-
- mm/swapfile.c                                      |    2 +-
- net/bluetooth/af_bluetooth.c                       |    3 +
- net/bluetooth/iso.c                                |    6 +-
- net/devlink/leftover.c                             |   40 +-
- net/ipv4/tcp_output.c                              |    4 +-
- net/mptcp/mib.c                                    |    1 +
- net/mptcp/mib.h                                    |    1 +
- net/mptcp/pm_netlink.c                             |    3 +-
- net/mptcp/protocol.h                               |    1 +
- net/mptcp/subflow.c                                |   11 +
- sound/pci/hda/patch_conexant.c                     |   19 +
- 75 files changed, 1237 insertions(+), 1275 deletions(-)
+6.1-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Jan Kara <jack@suse.cz>
+
+[ Upstream commit 1e0290d61a870ed61a6510863029939bbf6b0006 ]
+
+Remove old directory iteration code that is now unused.
+
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ fs/udf/directory.c |  178 ------------------
+ fs/udf/namei.c     |  505 -----------------------------------------------------
+ fs/udf/udfdecl.h   |   22 --
+ 3 files changed, 705 deletions(-)
+
+--- a/fs/udf/directory.c
++++ b/fs/udf/directory.c
+@@ -470,184 +470,6 @@ int udf_fiiter_append_blk(struct udf_fil
+ 	return 0;
+ }
+ 
+-struct fileIdentDesc *udf_fileident_read(struct inode *dir, loff_t *nf_pos,
+-					 struct udf_fileident_bh *fibh,
+-					 struct fileIdentDesc *cfi,
+-					 struct extent_position *epos,
+-					 struct kernel_lb_addr *eloc, uint32_t *elen,
+-					 sector_t *offset)
+-{
+-	struct fileIdentDesc *fi;
+-	int i, num;
+-	udf_pblk_t block;
+-	struct buffer_head *tmp, *bha[16];
+-	struct udf_inode_info *iinfo = UDF_I(dir);
+-
+-	fibh->soffset = fibh->eoffset;
+-
+-	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB) {
+-		fi = udf_get_fileident(iinfo->i_data -
+-				       (iinfo->i_efe ?
+-					sizeof(struct extendedFileEntry) :
+-					sizeof(struct fileEntry)),
+-				       dir->i_sb->s_blocksize,
+-				       &(fibh->eoffset));
+-		if (!fi)
+-			return NULL;
+-
+-		*nf_pos += fibh->eoffset - fibh->soffset;
+-
+-		memcpy((uint8_t *)cfi, (uint8_t *)fi,
+-		       sizeof(struct fileIdentDesc));
+-
+-		return fi;
+-	}
+-
+-	if (fibh->eoffset == dir->i_sb->s_blocksize) {
+-		uint32_t lextoffset = epos->offset;
+-		unsigned char blocksize_bits = dir->i_sb->s_blocksize_bits;
+-
+-		if (udf_next_aext(dir, epos, eloc, elen, 1) !=
+-		    (EXT_RECORDED_ALLOCATED >> 30))
+-			return NULL;
+-
+-		block = udf_get_lb_pblock(dir->i_sb, eloc, *offset);
+-
+-		(*offset)++;
+-
+-		if ((*offset << blocksize_bits) >= *elen)
+-			*offset = 0;
+-		else
+-			epos->offset = lextoffset;
+-
+-		brelse(fibh->sbh);
+-		fibh->sbh = fibh->ebh = udf_tread(dir->i_sb, block);
+-		if (!fibh->sbh)
+-			return NULL;
+-		fibh->soffset = fibh->eoffset = 0;
+-
+-		if (!(*offset & ((16 >> (blocksize_bits - 9)) - 1))) {
+-			i = 16 >> (blocksize_bits - 9);
+-			if (i + *offset > (*elen >> blocksize_bits))
+-				i = (*elen >> blocksize_bits)-*offset;
+-			for (num = 0; i > 0; i--) {
+-				block = udf_get_lb_pblock(dir->i_sb, eloc,
+-							  *offset + i);
+-				tmp = udf_tgetblk(dir->i_sb, block);
+-				if (tmp && !buffer_uptodate(tmp) &&
+-						!buffer_locked(tmp))
+-					bha[num++] = tmp;
+-				else
+-					brelse(tmp);
+-			}
+-			if (num) {
+-				bh_readahead_batch(num, bha, REQ_RAHEAD);
+-				for (i = 0; i < num; i++)
+-					brelse(bha[i]);
+-			}
+-		}
+-	} else if (fibh->sbh != fibh->ebh) {
+-		brelse(fibh->sbh);
+-		fibh->sbh = fibh->ebh;
+-	}
+-
+-	fi = udf_get_fileident(fibh->sbh->b_data, dir->i_sb->s_blocksize,
+-			       &(fibh->eoffset));
+-
+-	if (!fi)
+-		return NULL;
+-
+-	*nf_pos += fibh->eoffset - fibh->soffset;
+-
+-	if (fibh->eoffset <= dir->i_sb->s_blocksize) {
+-		memcpy((uint8_t *)cfi, (uint8_t *)fi,
+-		       sizeof(struct fileIdentDesc));
+-	} else if (fibh->eoffset > dir->i_sb->s_blocksize) {
+-		uint32_t lextoffset = epos->offset;
+-
+-		if (udf_next_aext(dir, epos, eloc, elen, 1) !=
+-		    (EXT_RECORDED_ALLOCATED >> 30))
+-			return NULL;
+-
+-		block = udf_get_lb_pblock(dir->i_sb, eloc, *offset);
+-
+-		(*offset)++;
+-
+-		if ((*offset << dir->i_sb->s_blocksize_bits) >= *elen)
+-			*offset = 0;
+-		else
+-			epos->offset = lextoffset;
+-
+-		fibh->soffset -= dir->i_sb->s_blocksize;
+-		fibh->eoffset -= dir->i_sb->s_blocksize;
+-
+-		fibh->ebh = udf_tread(dir->i_sb, block);
+-		if (!fibh->ebh)
+-			return NULL;
+-
+-		if (sizeof(struct fileIdentDesc) > -fibh->soffset) {
+-			int fi_len;
+-
+-			memcpy((uint8_t *)cfi, (uint8_t *)fi, -fibh->soffset);
+-			memcpy((uint8_t *)cfi - fibh->soffset,
+-			       fibh->ebh->b_data,
+-			       sizeof(struct fileIdentDesc) + fibh->soffset);
+-
+-			fi_len = udf_dir_entry_len(cfi);
+-			*nf_pos += fi_len - (fibh->eoffset - fibh->soffset);
+-			fibh->eoffset = fibh->soffset + fi_len;
+-		} else {
+-			memcpy((uint8_t *)cfi, (uint8_t *)fi,
+-			       sizeof(struct fileIdentDesc));
+-		}
+-	}
+-	/* Got last entry outside of dir size - fs is corrupted! */
+-	if (*nf_pos > dir->i_size)
+-		return NULL;
+-	return fi;
+-}
+-
+-struct fileIdentDesc *udf_get_fileident(void *buffer, int bufsize, int *offset)
+-{
+-	struct fileIdentDesc *fi;
+-	int lengthThisIdent;
+-	uint8_t *ptr;
+-	int padlen;
+-
+-	if ((!buffer) || (!offset)) {
+-		udf_debug("invalidparms, buffer=%p, offset=%p\n",
+-			  buffer, offset);
+-		return NULL;
+-	}
+-
+-	ptr = buffer;
+-
+-	if ((*offset > 0) && (*offset < bufsize))
+-		ptr += *offset;
+-	fi = (struct fileIdentDesc *)ptr;
+-	if (fi->descTag.tagIdent != cpu_to_le16(TAG_IDENT_FID)) {
+-		udf_debug("0x%x != TAG_IDENT_FID\n",
+-			  le16_to_cpu(fi->descTag.tagIdent));
+-		udf_debug("offset: %d sizeof: %lu bufsize: %d\n",
+-			  *offset, (unsigned long)sizeof(struct fileIdentDesc),
+-			  bufsize);
+-		return NULL;
+-	}
+-	if ((*offset + sizeof(struct fileIdentDesc)) > bufsize)
+-		lengthThisIdent = sizeof(struct fileIdentDesc);
+-	else
+-		lengthThisIdent = sizeof(struct fileIdentDesc) +
+-			fi->lengthFileIdent + le16_to_cpu(fi->lengthOfImpUse);
+-
+-	/* we need to figure padding, too! */
+-	padlen = lengthThisIdent % UDF_NAME_PAD;
+-	if (padlen)
+-		lengthThisIdent += (UDF_NAME_PAD - padlen);
+-	*offset = *offset + lengthThisIdent;
+-
+-	return fi;
+-}
+-
+ struct short_ad *udf_get_fileshortad(uint8_t *ptr, int maxoffset, uint32_t *offset,
+ 			      int inc)
+ {
+--- a/fs/udf/namei.c
++++ b/fs/udf/namei.c
+@@ -41,105 +41,6 @@ static inline int udf_match(int len1, co
+ 	return !memcmp(name1, name2, len1);
+ }
+ 
+-int udf_write_fi(struct inode *inode, struct fileIdentDesc *cfi,
+-		 struct fileIdentDesc *sfi, struct udf_fileident_bh *fibh,
+-		 uint8_t *impuse, uint8_t *fileident)
+-{
+-	uint16_t crclen = fibh->eoffset - fibh->soffset - sizeof(struct tag);
+-	uint16_t crc;
+-	int offset;
+-	uint16_t liu = le16_to_cpu(cfi->lengthOfImpUse);
+-	uint8_t lfi = cfi->lengthFileIdent;
+-	int padlen = fibh->eoffset - fibh->soffset - liu - lfi -
+-		sizeof(struct fileIdentDesc);
+-	int adinicb = 0;
+-
+-	if (UDF_I(inode)->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB)
+-		adinicb = 1;
+-
+-	offset = fibh->soffset + sizeof(struct fileIdentDesc);
+-
+-	if (impuse) {
+-		if (adinicb || (offset + liu < 0)) {
+-			memcpy((uint8_t *)sfi->impUse, impuse, liu);
+-		} else if (offset >= 0) {
+-			memcpy(fibh->ebh->b_data + offset, impuse, liu);
+-		} else {
+-			memcpy((uint8_t *)sfi->impUse, impuse, -offset);
+-			memcpy(fibh->ebh->b_data, impuse - offset,
+-				liu + offset);
+-		}
+-	}
+-
+-	offset += liu;
+-
+-	if (fileident) {
+-		if (adinicb || (offset + lfi < 0)) {
+-			memcpy(sfi->impUse + liu, fileident, lfi);
+-		} else if (offset >= 0) {
+-			memcpy(fibh->ebh->b_data + offset, fileident, lfi);
+-		} else {
+-			memcpy(sfi->impUse + liu, fileident, -offset);
+-			memcpy(fibh->ebh->b_data, fileident - offset,
+-				lfi + offset);
+-		}
+-	}
+-
+-	offset += lfi;
+-
+-	if (adinicb || (offset + padlen < 0)) {
+-		memset(sfi->impUse + liu + lfi, 0x00, padlen);
+-	} else if (offset >= 0) {
+-		memset(fibh->ebh->b_data + offset, 0x00, padlen);
+-	} else {
+-		memset(sfi->impUse + liu + lfi, 0x00, -offset);
+-		memset(fibh->ebh->b_data, 0x00, padlen + offset);
+-	}
+-
+-	crc = crc_itu_t(0, (uint8_t *)cfi + sizeof(struct tag),
+-		      sizeof(struct fileIdentDesc) - sizeof(struct tag));
+-
+-	if (fibh->sbh == fibh->ebh) {
+-		crc = crc_itu_t(crc, (uint8_t *)sfi->impUse,
+-			      crclen + sizeof(struct tag) -
+-			      sizeof(struct fileIdentDesc));
+-	} else if (sizeof(struct fileIdentDesc) >= -fibh->soffset) {
+-		crc = crc_itu_t(crc, fibh->ebh->b_data +
+-					sizeof(struct fileIdentDesc) +
+-					fibh->soffset,
+-			      crclen + sizeof(struct tag) -
+-					sizeof(struct fileIdentDesc));
+-	} else {
+-		crc = crc_itu_t(crc, (uint8_t *)sfi->impUse,
+-			      -fibh->soffset - sizeof(struct fileIdentDesc));
+-		crc = crc_itu_t(crc, fibh->ebh->b_data, fibh->eoffset);
+-	}
+-
+-	cfi->descTag.descCRC = cpu_to_le16(crc);
+-	cfi->descTag.descCRCLength = cpu_to_le16(crclen);
+-	cfi->descTag.tagChecksum = udf_tag_checksum(&cfi->descTag);
+-
+-	if (adinicb || (sizeof(struct fileIdentDesc) <= -fibh->soffset)) {
+-		memcpy((uint8_t *)sfi, (uint8_t *)cfi,
+-			sizeof(struct fileIdentDesc));
+-	} else {
+-		memcpy((uint8_t *)sfi, (uint8_t *)cfi, -fibh->soffset);
+-		memcpy(fibh->ebh->b_data, (uint8_t *)cfi - fibh->soffset,
+-		       sizeof(struct fileIdentDesc) + fibh->soffset);
+-	}
+-
+-	if (adinicb) {
+-		mark_inode_dirty(inode);
+-	} else {
+-		if (fibh->sbh != fibh->ebh)
+-			mark_buffer_dirty_inode(fibh->ebh, inode);
+-		mark_buffer_dirty_inode(fibh->sbh, inode);
+-	}
+-	inode_inc_iversion(inode);
+-
+-	return 0;
+-}
+-
+ /**
+  * udf_fiiter_find_entry - find entry in given directory.
+  *
+@@ -207,161 +108,6 @@ out_ok:
+ 	return ret;
+ }
+ 
+-/**
+- * udf_find_entry - find entry in given directory.
+- *
+- * @dir:	directory inode to search in
+- * @child:	qstr of the name
+- * @fibh:	buffer head / inode with file identifier descriptor we found
+- * @cfi:	found file identifier descriptor with given name
+- *
+- * This function searches in the directory @dir for a file name @child. When
+- * found, @fibh points to the buffer head(s) (bh is NULL for in ICB
+- * directories) containing the file identifier descriptor (FID). In that case
+- * the function returns pointer to the FID in the buffer or inode - but note
+- * that FID may be split among two buffers (blocks) so accessing it via that
+- * pointer isn't easily possible. This pointer can be used only as an iterator
+- * for other directory manipulation functions. For inspection of the FID @cfi
+- * can be used - the found FID is copied there.
+- *
+- * Returns pointer to FID, NULL when nothing found, or error code.
+- */
+-static struct fileIdentDesc *udf_find_entry(struct inode *dir,
+-					    const struct qstr *child,
+-					    struct udf_fileident_bh *fibh,
+-					    struct fileIdentDesc *cfi)
+-{
+-	struct fileIdentDesc *fi = NULL;
+-	loff_t f_pos;
+-	udf_pblk_t block;
+-	int flen;
+-	unsigned char *fname = NULL, *copy_name = NULL;
+-	unsigned char *nameptr;
+-	uint8_t lfi;
+-	uint16_t liu;
+-	loff_t size;
+-	struct kernel_lb_addr eloc;
+-	uint32_t elen;
+-	sector_t offset;
+-	struct extent_position epos = {};
+-	struct udf_inode_info *dinfo = UDF_I(dir);
+-	int isdotdot = child->len == 2 &&
+-		child->name[0] == '.' && child->name[1] == '.';
+-	struct super_block *sb = dir->i_sb;
+-
+-	size = udf_ext0_offset(dir) + dir->i_size;
+-	f_pos = udf_ext0_offset(dir);
+-
+-	fibh->sbh = fibh->ebh = NULL;
+-	fibh->soffset = fibh->eoffset = f_pos & (sb->s_blocksize - 1);
+-	if (dinfo->i_alloc_type != ICBTAG_FLAG_AD_IN_ICB) {
+-		if (inode_bmap(dir, f_pos >> sb->s_blocksize_bits, &epos,
+-		    &eloc, &elen, &offset) != (EXT_RECORDED_ALLOCATED >> 30)) {
+-			fi = ERR_PTR(-EIO);
+-			goto out_err;
+-		}
+-
+-		block = udf_get_lb_pblock(sb, &eloc, offset);
+-		if ((++offset << sb->s_blocksize_bits) < elen) {
+-			if (dinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
+-				epos.offset -= sizeof(struct short_ad);
+-			else if (dinfo->i_alloc_type == ICBTAG_FLAG_AD_LONG)
+-				epos.offset -= sizeof(struct long_ad);
+-		} else
+-			offset = 0;
+-
+-		fibh->sbh = fibh->ebh = udf_tread(sb, block);
+-		if (!fibh->sbh) {
+-			fi = ERR_PTR(-EIO);
+-			goto out_err;
+-		}
+-	}
+-
+-	fname = kmalloc(UDF_NAME_LEN, GFP_NOFS);
+-	if (!fname) {
+-		fi = ERR_PTR(-ENOMEM);
+-		goto out_err;
+-	}
+-
+-	while (f_pos < size) {
+-		fi = udf_fileident_read(dir, &f_pos, fibh, cfi, &epos, &eloc,
+-					&elen, &offset);
+-		if (!fi) {
+-			fi = ERR_PTR(-EIO);
+-			goto out_err;
+-		}
+-
+-		liu = le16_to_cpu(cfi->lengthOfImpUse);
+-		lfi = cfi->lengthFileIdent;
+-
+-		if (fibh->sbh == fibh->ebh) {
+-			nameptr = udf_get_fi_ident(fi);
+-		} else {
+-			int poffset;	/* Unpaded ending offset */
+-
+-			poffset = fibh->soffset + sizeof(struct fileIdentDesc) +
+-					liu + lfi;
+-
+-			if (poffset >= lfi)
+-				nameptr = (uint8_t *)(fibh->ebh->b_data +
+-						      poffset - lfi);
+-			else {
+-				if (!copy_name) {
+-					copy_name = kmalloc(UDF_NAME_LEN_CS0,
+-							    GFP_NOFS);
+-					if (!copy_name) {
+-						fi = ERR_PTR(-ENOMEM);
+-						goto out_err;
+-					}
+-				}
+-				nameptr = copy_name;
+-				memcpy(nameptr, udf_get_fi_ident(fi),
+-					lfi - poffset);
+-				memcpy(nameptr + lfi - poffset,
+-					fibh->ebh->b_data, poffset);
+-			}
+-		}
+-
+-		if ((cfi->fileCharacteristics & FID_FILE_CHAR_DELETED) != 0) {
+-			if (!UDF_QUERY_FLAG(sb, UDF_FLAG_UNDELETE))
+-				continue;
+-		}
+-
+-		if ((cfi->fileCharacteristics & FID_FILE_CHAR_HIDDEN) != 0) {
+-			if (!UDF_QUERY_FLAG(sb, UDF_FLAG_UNHIDE))
+-				continue;
+-		}
+-
+-		if ((cfi->fileCharacteristics & FID_FILE_CHAR_PARENT) &&
+-		    isdotdot)
+-			goto out_ok;
+-
+-		if (!lfi)
+-			continue;
+-
+-		flen = udf_get_filename(sb, nameptr, lfi, fname, UDF_NAME_LEN);
+-		if (flen < 0) {
+-			fi = ERR_PTR(flen);
+-			goto out_err;
+-		}
+-
+-		if (udf_match(flen, fname, child->len, child->name))
+-			goto out_ok;
+-	}
+-
+-	fi = NULL;
+-out_err:
+-	if (fibh->sbh != fibh->ebh)
+-		brelse(fibh->ebh);
+-	brelse(fibh->sbh);
+-out_ok:
+-	brelse(epos.bh);
+-	kfree(fname);
+-	kfree(copy_name);
+-
+-	return fi;
+-}
+-
+ static struct dentry *udf_lookup(struct inode *dir, struct dentry *dentry,
+ 				 unsigned int flags)
+ {
+@@ -582,245 +328,6 @@ store_fi:
+ 	return 0;
+ }
+ 
+-static struct fileIdentDesc *udf_add_entry(struct inode *dir,
+-					   struct dentry *dentry,
+-					   struct udf_fileident_bh *fibh,
+-					   struct fileIdentDesc *cfi, int *err)
+-{
+-	struct super_block *sb = dir->i_sb;
+-	struct fileIdentDesc *fi = NULL;
+-	unsigned char *name = NULL;
+-	int namelen;
+-	loff_t f_pos;
+-	loff_t size = udf_ext0_offset(dir) + dir->i_size;
+-	int nfidlen;
+-	udf_pblk_t block;
+-	struct kernel_lb_addr eloc;
+-	uint32_t elen = 0;
+-	sector_t offset;
+-	struct extent_position epos = {};
+-	struct udf_inode_info *dinfo;
+-
+-	fibh->sbh = fibh->ebh = NULL;
+-	name = kmalloc(UDF_NAME_LEN_CS0, GFP_NOFS);
+-	if (!name) {
+-		*err = -ENOMEM;
+-		goto out_err;
+-	}
+-
+-	if (dentry) {
+-		if (!dentry->d_name.len) {
+-			*err = -EINVAL;
+-			goto out_err;
+-		}
+-		namelen = udf_put_filename(sb, dentry->d_name.name,
+-					   dentry->d_name.len,
+-					   name, UDF_NAME_LEN_CS0);
+-		if (!namelen) {
+-			*err = -ENAMETOOLONG;
+-			goto out_err;
+-		}
+-	} else {
+-		namelen = 0;
+-	}
+-
+-	nfidlen = ALIGN(sizeof(struct fileIdentDesc) + namelen, UDF_NAME_PAD);
+-
+-	f_pos = udf_ext0_offset(dir);
+-
+-	fibh->soffset = fibh->eoffset = f_pos & (dir->i_sb->s_blocksize - 1);
+-	dinfo = UDF_I(dir);
+-	if (dinfo->i_alloc_type != ICBTAG_FLAG_AD_IN_ICB) {
+-		if (inode_bmap(dir, f_pos >> dir->i_sb->s_blocksize_bits, &epos,
+-		    &eloc, &elen, &offset) != (EXT_RECORDED_ALLOCATED >> 30)) {
+-			block = udf_get_lb_pblock(dir->i_sb,
+-					&dinfo->i_location, 0);
+-			fibh->soffset = fibh->eoffset = sb->s_blocksize;
+-			goto add;
+-		}
+-		block = udf_get_lb_pblock(dir->i_sb, &eloc, offset);
+-		if ((++offset << dir->i_sb->s_blocksize_bits) < elen) {
+-			if (dinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
+-				epos.offset -= sizeof(struct short_ad);
+-			else if (dinfo->i_alloc_type == ICBTAG_FLAG_AD_LONG)
+-				epos.offset -= sizeof(struct long_ad);
+-		} else
+-			offset = 0;
+-
+-		fibh->sbh = fibh->ebh = udf_tread(dir->i_sb, block);
+-		if (!fibh->sbh) {
+-			*err = -EIO;
+-			goto out_err;
+-		}
+-
+-		block = dinfo->i_location.logicalBlockNum;
+-	}
+-
+-	while (f_pos < size) {
+-		fi = udf_fileident_read(dir, &f_pos, fibh, cfi, &epos, &eloc,
+-					&elen, &offset);
+-
+-		if (!fi) {
+-			*err = -EIO;
+-			goto out_err;
+-		}
+-
+-		if ((cfi->fileCharacteristics & FID_FILE_CHAR_DELETED) != 0) {
+-			if (udf_dir_entry_len(cfi) == nfidlen) {
+-				cfi->descTag.tagSerialNum = cpu_to_le16(1);
+-				cfi->fileVersionNum = cpu_to_le16(1);
+-				cfi->fileCharacteristics = 0;
+-				cfi->lengthFileIdent = namelen;
+-				cfi->lengthOfImpUse = cpu_to_le16(0);
+-				if (!udf_write_fi(dir, cfi, fi, fibh, NULL,
+-						  name))
+-					goto out_ok;
+-				else {
+-					*err = -EIO;
+-					goto out_err;
+-				}
+-			}
+-		}
+-	}
+-
+-add:
+-	f_pos += nfidlen;
+-
+-	if (dinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB &&
+-	    sb->s_blocksize - fibh->eoffset < nfidlen) {
+-		brelse(epos.bh);
+-		epos.bh = NULL;
+-		fibh->soffset -= udf_ext0_offset(dir);
+-		fibh->eoffset -= udf_ext0_offset(dir);
+-		f_pos -= udf_ext0_offset(dir);
+-		if (fibh->sbh != fibh->ebh)
+-			brelse(fibh->ebh);
+-		brelse(fibh->sbh);
+-		fibh->sbh = fibh->ebh =
+-				udf_expand_dir_adinicb(dir, &block, err);
+-		if (!fibh->sbh)
+-			goto out_err;
+-		epos.block = dinfo->i_location;
+-		epos.offset = udf_file_entry_alloc_offset(dir);
+-		/* Load extent udf_expand_dir_adinicb() has created */
+-		udf_current_aext(dir, &epos, &eloc, &elen, 1);
+-	}
+-
+-	/* Entry fits into current block? */
+-	if (sb->s_blocksize - fibh->eoffset >= nfidlen) {
+-		fibh->soffset = fibh->eoffset;
+-		fibh->eoffset += nfidlen;
+-		if (fibh->sbh != fibh->ebh) {
+-			brelse(fibh->sbh);
+-			fibh->sbh = fibh->ebh;
+-		}
+-
+-		if (dinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB) {
+-			block = dinfo->i_location.logicalBlockNum;
+-			fi = (struct fileIdentDesc *)
+-					(dinfo->i_data + fibh->soffset -
+-					 udf_ext0_offset(dir) +
+-					 dinfo->i_lenEAttr);
+-		} else {
+-			block = eloc.logicalBlockNum +
+-					((elen - 1) >>
+-						dir->i_sb->s_blocksize_bits);
+-			fi = (struct fileIdentDesc *)
+-				(fibh->sbh->b_data + fibh->soffset);
+-		}
+-	} else {
+-		/* Round up last extent in the file */
+-		elen = (elen + sb->s_blocksize - 1) & ~(sb->s_blocksize - 1);
+-		if (dinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
+-			epos.offset -= sizeof(struct short_ad);
+-		else if (dinfo->i_alloc_type == ICBTAG_FLAG_AD_LONG)
+-			epos.offset -= sizeof(struct long_ad);
+-		udf_write_aext(dir, &epos, &eloc, elen, 1);
+-		dinfo->i_lenExtents = (dinfo->i_lenExtents + sb->s_blocksize
+-					- 1) & ~(sb->s_blocksize - 1);
+-
+-		fibh->soffset = fibh->eoffset - sb->s_blocksize;
+-		fibh->eoffset += nfidlen - sb->s_blocksize;
+-		if (fibh->sbh != fibh->ebh) {
+-			brelse(fibh->sbh);
+-			fibh->sbh = fibh->ebh;
+-		}
+-
+-		block = eloc.logicalBlockNum + ((elen - 1) >>
+-						dir->i_sb->s_blocksize_bits);
+-		fibh->ebh = udf_bread(dir,
+-				f_pos >> dir->i_sb->s_blocksize_bits, 1, err);
+-		if (!fibh->ebh)
+-			goto out_err;
+-		/* Extents could have been merged, invalidate our position */
+-		brelse(epos.bh);
+-		epos.bh = NULL;
+-		epos.block = dinfo->i_location;
+-		epos.offset = udf_file_entry_alloc_offset(dir);
+-
+-		if (!fibh->soffset) {
+-			/* Find the freshly allocated block */
+-			while (udf_next_aext(dir, &epos, &eloc, &elen, 1) ==
+-				(EXT_RECORDED_ALLOCATED >> 30))
+-				;
+-			block = eloc.logicalBlockNum + ((elen - 1) >>
+-					dir->i_sb->s_blocksize_bits);
+-			brelse(fibh->sbh);
+-			fibh->sbh = fibh->ebh;
+-			fi = (struct fileIdentDesc *)(fibh->sbh->b_data);
+-		} else {
+-			fi = (struct fileIdentDesc *)
+-				(fibh->sbh->b_data + sb->s_blocksize +
+-					fibh->soffset);
+-		}
+-	}
+-
+-	memset(cfi, 0, sizeof(struct fileIdentDesc));
+-	if (UDF_SB(sb)->s_udfrev >= 0x0200)
+-		udf_new_tag((char *)cfi, TAG_IDENT_FID, 3, 1, block,
+-			    sizeof(struct tag));
+-	else
+-		udf_new_tag((char *)cfi, TAG_IDENT_FID, 2, 1, block,
+-			    sizeof(struct tag));
+-	cfi->fileVersionNum = cpu_to_le16(1);
+-	cfi->lengthFileIdent = namelen;
+-	cfi->lengthOfImpUse = cpu_to_le16(0);
+-	if (!udf_write_fi(dir, cfi, fi, fibh, NULL, name)) {
+-		dir->i_size += nfidlen;
+-		if (dinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB)
+-			dinfo->i_lenAlloc += nfidlen;
+-		else {
+-			/* Find the last extent and truncate it to proper size */
+-			while (udf_next_aext(dir, &epos, &eloc, &elen, 1) ==
+-				(EXT_RECORDED_ALLOCATED >> 30))
+-				;
+-			elen -= dinfo->i_lenExtents - dir->i_size;
+-			if (dinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
+-				epos.offset -= sizeof(struct short_ad);
+-			else if (dinfo->i_alloc_type == ICBTAG_FLAG_AD_LONG)
+-				epos.offset -= sizeof(struct long_ad);
+-			udf_write_aext(dir, &epos, &eloc, elen, 1);
+-			dinfo->i_lenExtents = dir->i_size;
+-		}
+-
+-		mark_inode_dirty(dir);
+-		goto out_ok;
+-	} else {
+-		*err = -EIO;
+-		goto out_err;
+-	}
+-
+-out_err:
+-	fi = NULL;
+-	if (fibh->sbh != fibh->ebh)
+-		brelse(fibh->ebh);
+-	brelse(fibh->sbh);
+-out_ok:
+-	brelse(epos.bh);
+-	kfree(name);
+-	return fi;
+-}
+-
+ static void udf_fiiter_delete_entry(struct udf_fileident_iter *iter)
+ {
+ 	iter->fi.fileCharacteristics |= FID_FILE_CHAR_DELETED;
+@@ -831,18 +338,6 @@ static void udf_fiiter_delete_entry(stru
+ 	udf_fiiter_write_fi(iter, NULL);
+ }
+ 
+-static int udf_delete_entry(struct inode *inode, struct fileIdentDesc *fi,
+-			    struct udf_fileident_bh *fibh,
+-			    struct fileIdentDesc *cfi)
+-{
+-	cfi->fileCharacteristics |= FID_FILE_CHAR_DELETED;
+-
+-	if (UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_STRICT))
+-		memset(&(cfi->icb), 0x00, sizeof(struct long_ad));
+-
+-	return udf_write_fi(inode, cfi, fi, fibh, NULL, NULL);
+-}
+-
+ static int udf_add_nondir(struct dentry *dentry, struct inode *inode)
+ {
+ 	struct udf_inode_info *iinfo = UDF_I(inode);
+--- a/fs/udf/udfdecl.h
++++ b/fs/udf/udfdecl.h
+@@ -104,13 +104,6 @@ struct udf_fileident_iter {
+ 					 */
+ };
+ 
+-struct udf_fileident_bh {
+-	struct buffer_head *sbh;
+-	struct buffer_head *ebh;
+-	int soffset;
+-	int eoffset;
+-};
+-
+ struct udf_vds_record {
+ 	uint32_t block;
+ 	uint32_t volDescSeqNum;
+@@ -139,19 +132,12 @@ struct inode *udf_find_metadata_inode_ef
+ 					u32 meta_file_loc, u32 partition_num);
+ 
+ /* namei.c */
+-extern int udf_write_fi(struct inode *inode, struct fileIdentDesc *,
+-			struct fileIdentDesc *, struct udf_fileident_bh *,
+-			uint8_t *, uint8_t *);
+ static inline unsigned int udf_dir_entry_len(struct fileIdentDesc *cfi)
+ {
+ 	return ALIGN(sizeof(struct fileIdentDesc) +
+ 		le16_to_cpu(cfi->lengthOfImpUse) + cfi->lengthFileIdent,
+ 		UDF_NAME_PAD);
+ }
+-static inline uint8_t *udf_get_fi_ident(struct fileIdentDesc *fi)
+-{
+-	return ((uint8_t *)(fi + 1)) + le16_to_cpu(fi->lengthOfImpUse);
+-}
+ 
+ /* file.c */
+ extern long udf_ioctl(struct file *, unsigned int, unsigned long);
+@@ -266,14 +252,6 @@ void udf_fiiter_release(struct udf_filei
+ void udf_fiiter_write_fi(struct udf_fileident_iter *iter, uint8_t *impuse);
+ void udf_fiiter_update_elen(struct udf_fileident_iter *iter, uint32_t new_elen);
+ int udf_fiiter_append_blk(struct udf_fileident_iter *iter);
+-extern struct fileIdentDesc *udf_fileident_read(struct inode *, loff_t *,
+-						struct udf_fileident_bh *,
+-						struct fileIdentDesc *,
+-						struct extent_position *,
+-						struct kernel_lb_addr *, uint32_t *,
+-						sector_t *);
+-extern struct fileIdentDesc *udf_get_fileident(void *buffer, int bufsize,
+-					       int *offset);
+ extern struct long_ad *udf_get_filelongad(uint8_t *, int, uint32_t *, int);
+ extern struct short_ad *udf_get_fileshortad(uint8_t *, int, uint32_t *, int);
+ 
 
 
