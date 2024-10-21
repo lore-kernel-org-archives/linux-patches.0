@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D961E47A5;
-	Mon, 21 Oct 2024 10:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674CF1EABA0;
+	Mon, 21 Oct 2024 10:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506843; cv=none; b=BuAeqx0osHVrsWJyRQYL3ITCTEYKFo1l6/S0aG/7xRppdj4xJ+8QGQW78YtkgIlErmeaU9V5TmM9AWdM7eujR4o75O0DJWwACyBtz2fZMUgEnXGIq27wksEmHoccxErNEZw8aQ3Oqg8r/NKLAbrthCfv/WxrsuvJWUKNArq+3bo=
+	t=1729506846; cv=none; b=YDIr/fgAM9ot/QjFbEL8oqUj6svwo/aG/HVxFDJsaJmfT3TNUVJCVjAtnBhf5IuaLwh5w6NPmOyAmX7a5PzOVKvemEY0JyNMEQYU9OVQtzMa25NBpLW4cchNZVIiq1pNwnQm/s9KYs0o5bsjJ6blDEt7AFX3qHK0PPAozhHgkfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506843; c=relaxed/simple;
-	bh=3VFUYkuodr/OIaMZfLm/2mouPOtSN13HUbXbg2utzJU=;
+	s=arc-20240116; t=1729506846; c=relaxed/simple;
+	bh=a302S1Tis++lSNpjdL4hDm+E39alV284BmhnEm7r8+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TQtmfjKhHpTjLZXyaYfhgA4AYZdnaj+nTKAiQ8bnHdJmCOpsfm9h5RHlOPJQ+vtaz+TvYFmkQftjC/uhMRYv4Gk3ufvDDNrzF42ziR29bP/cU1Sxs9QKdYKFC3GIEVo8Lkq2IkYbKp0IYepwnYQ4qv04kCO+78lLqMYQKv/nnL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2WjfEXW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YGlhb5rQclsQuqVbxPAPYfpy+zG60+BW5GQeV6SV7lAoQ7EP6YRHAEuwjiv6snXvSUtr1/32fGAkUBAbgcgWqjP5zJWqFZ5EW7G92nF+pWI0s2nKjEzSwhw6WljXmFPMtdSHWSwQCmOB7jzRa3NcADjhtJg0pmrlgrXVgJHJWbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+CKwArX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2WjfEXW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F5BC4CEC3;
-	Mon, 21 Oct 2024 10:34:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+CKwArX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08D3C4CEC7;
+	Mon, 21 Oct 2024 10:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506843;
-	bh=3VFUYkuodr/OIaMZfLm/2mouPOtSN13HUbXbg2utzJU=;
+	s=korg; t=1729506846;
+	bh=a302S1Tis++lSNpjdL4hDm+E39alV284BmhnEm7r8+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m2WjfEXWPdtJ9RkK+8mnhCPBzZWdqN/NVXYcMEJsNwsyMYwAmODrs33bnbN1owgBk
-	 JPbojdJK09E+H5wCTQaJx919RtxWraldKuiXha20EeG395RkBLpeiQlD40AaMll8rr
-	 HkgSFljGHfYzkZSIWCyYe8JxgJuOyHsWBQB8fjlo=
+	b=K+CKwArXrwyrujUMT7D2jW/rGx5fFudWgtkFuLt7VlqrOMTmzKH0XaPk7K0lM1EKc
+	 QsW07jXZSrHjrMfXC89WlRErbCKvdqIoPn8ZuigmVVDqpiLM2JnpwUCOw+ZtQYUSLo
+	 Y/blFU3dnFd+sXGU5e37+v/H8Tdlca54BbSHhklQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashanth K <quic_prashk@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.11 108/135] usb: dwc3: Wait for EndXfer completion before restoring GUSB2PHYCFG
-Date: Mon, 21 Oct 2024 12:24:24 +0200
-Message-ID: <20241021102303.551912504@linuxfoundation.org>
+	Roger Quadros <rogerq@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Dhruva Gole <d-gole@ti.com>
+Subject: [PATCH 6.11 109/135] usb: dwc3: core: Fix system suspend on TI AM62 platforms
+Date: Mon, 21 Oct 2024 12:24:25 +0200
+Message-ID: <20241021102303.590008452@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -50,56 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashanth K <quic_prashk@quicinc.com>
+From: Roger Quadros <rogerq@kernel.org>
 
-commit c96e31252110a84dcc44412e8a7b456b33c3e298 upstream.
+commit 705e3ce37bccdf2ed6f848356ff355f480d51a91 upstream.
 
-DWC3 programming guide mentions that when operating in USB2.0 speeds,
-if GUSB2PHYCFG[6] or GUSB2PHYCFG[8] is set, it must be cleared prior
-to issuing commands and may be set again  after the command completes.
-But currently while issuing EndXfer command without CmdIOC set, we
-wait for 1ms after GUSB2PHYCFG is restored. This results in cases
-where EndXfer command doesn't get completed and causes SMMU faults
-since requests are unmapped afterwards. Hence restore GUSB2PHYCFG
-after waiting for EndXfer command completion.
+Since commit 6d735722063a ("usb: dwc3: core: Prevent phy suspend during init"),
+system suspend is broken on AM62 TI platforms.
 
-Cc: stable@vger.kernel.org
-Fixes: 1d26ba0944d3 ("usb: dwc3: Wait unconditionally after issuing EndXfer command")
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Before that commit, both DWC3_GUSB3PIPECTL_SUSPHY and DWC3_GUSB2PHYCFG_SUSPHY
+bits (hence forth called 2 SUSPHY bits) were being set during core
+initialization and even during core re-initialization after a system
+suspend/resume.
+
+These bits are required to be set for system suspend/resume to work correctly
+on AM62 platforms.
+
+Since that commit, the 2 SUSPHY bits are not set for DEVICE/OTG mode if gadget
+driver is not loaded and started.
+For Host mode, the 2 SUSPHY bits are set before the first system suspend but
+get cleared at system resume during core re-init and are never set again.
+
+This patch resovles these two issues by ensuring the 2 SUSPHY bits are set
+before system suspend and restored to the original state during system resume.
+
+Cc: stable@vger.kernel.org # v6.9+
+Fixes: 6d735722063a ("usb: dwc3: core: Prevent phy suspend during init")
+Link: https://lore.kernel.org/all/1519dbe7-73b6-4afc-bfe3-23f4f75d772f@kernel.org/
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
 Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20240924093208.2524531-1-quic_prashk@quicinc.com
+Tested-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Link: https://lore.kernel.org/r/20241011-am62-lpm-usb-v3-1-562d445625b5@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/usb/dwc3/core.c |   19 +++++++++++++++++++
+ drivers/usb/dwc3/core.h |    3 +++
+ 2 files changed, 22 insertions(+)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -438,6 +438,10 @@ skip_status:
- 			dwc3_gadget_ep_get_transfer_index(dep);
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -2342,6 +2342,11 @@ static int dwc3_suspend_common(struct dw
+ 	u32 reg;
+ 	int i;
+ 
++	dwc->susphy_state = (dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0)) &
++			    DWC3_GUSB2PHYCFG_SUSPHY) ||
++			    (dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0)) &
++			    DWC3_GUSB3PIPECTL_SUSPHY);
++
+ 	switch (dwc->current_dr_role) {
+ 	case DWC3_GCTL_PRTCAP_DEVICE:
+ 		if (pm_runtime_suspended(dwc->dev))
+@@ -2393,6 +2398,15 @@ static int dwc3_suspend_common(struct dw
+ 		break;
  	}
  
-+	if (DWC3_DEPCMD_CMD(cmd) == DWC3_DEPCMD_ENDTRANSFER &&
-+	    !(cmd & DWC3_DEPCMD_CMDIOC))
-+		mdelay(1);
++	if (!PMSG_IS_AUTO(msg)) {
++		/*
++		 * TI AM62 platform requires SUSPHY to be
++		 * enabled for system suspend to work.
++		 */
++		if (!dwc->susphy_state)
++			dwc3_enable_susphy(dwc, true);
++	}
 +
- 	if (saved_config) {
- 		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
- 		reg |= saved_config;
-@@ -1715,12 +1719,10 @@ static int __dwc3_stop_active_transfer(s
- 	WARN_ON_ONCE(ret);
- 	dep->resource_index = 0;
+ 	return 0;
+ }
  
--	if (!interrupt) {
--		mdelay(1);
-+	if (!interrupt)
- 		dep->flags &= ~DWC3_EP_TRANSFER_STARTED;
--	} else if (!ret) {
-+	else if (!ret)
- 		dep->flags |= DWC3_EP_END_TRANSFER_PENDING;
--	}
+@@ -2460,6 +2474,11 @@ static int dwc3_resume_common(struct dwc
+ 		break;
+ 	}
  
- 	dep->flags &= ~DWC3_EP_DELAY_STOP;
- 	return ret;
++	if (!PMSG_IS_AUTO(msg)) {
++		/* restore SUSPHY state to that before system suspend. */
++		dwc3_enable_susphy(dwc, dwc->susphy_state);
++	}
++
+ 	return 0;
+ }
+ 
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -1150,6 +1150,8 @@ struct dwc3_scratchpad_array {
+  * @sys_wakeup: set if the device may do system wakeup.
+  * @wakeup_configured: set if the device is configured for remote wakeup.
+  * @suspended: set to track suspend event due to U3/L2.
++ * @susphy_state: state of DWC3_GUSB2PHYCFG_SUSPHY + DWC3_GUSB3PIPECTL_SUSPHY
++ *		  before PM suspend.
+  * @imod_interval: set the interrupt moderation interval in 250ns
+  *			increments or 0 to disable.
+  * @max_cfg_eps: current max number of IN eps used across all USB configs.
+@@ -1382,6 +1384,7 @@ struct dwc3 {
+ 	unsigned		sys_wakeup:1;
+ 	unsigned		wakeup_configured:1;
+ 	unsigned		suspended:1;
++	unsigned		susphy_state:1;
+ 
+ 	u16			imod_interval;
+ 
 
 
