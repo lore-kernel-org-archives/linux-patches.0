@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12CA1E570A;
-	Mon, 21 Oct 2024 10:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B241E907C;
+	Mon, 21 Oct 2024 10:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506984; cv=none; b=NPEFCUJeEo3ovGxvLdydzGjr6zpAhLXWJ+yk94N1SLbmHnFt0k27fI7YTrfmgaCqT8YQsXe+WL7IxZNykQq13lehXyW1hwAqsiOnK6mWdVJkamEzdl692WIh9vIWAyUqRA+TeYGKckWJpJstN5VrmDDHEcqIGC+6QbpBi8+HFW8=
+	t=1729506987; cv=none; b=FC5dUdENPfysf6+PbSJfcG1zZarYkx/cvwMVvlIYrQ0NwCYC3DWlNeL+4am4drI/7jxVv/KOBRLf4GMMz+IghLFNhNzfbC5flqr7ga3VCWgeLB1dBeOayXZ22sTkRRVUZz88nC708FOuUtadE6VzP3W4Ag+1Usz6Q1awas6c6Ds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506984; c=relaxed/simple;
-	bh=AtKAaJivpLsxIWtEmhF0pAcF+z9byZNnrUh1oVUc1pU=;
+	s=arc-20240116; t=1729506987; c=relaxed/simple;
+	bh=mRpisEpSbJeOzRGWgiNfuhJKgZN7KWoc9P+zKLbQAX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aOZAfKm2wo9N4V5o0iloVbVePu0+H9df7tYBicM3fuQADg4RiBq9w3z/AgQYX11rk+/fGuhgS1fUQdweRIkabl1S7+eYzssiMYOCxeWTaRp9BFtkH0u4RzmFdezCNWBDh+Z835yPnwaoxpDyRZH+RwMGpXh+BARCYo3xNOF1QqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdT0X02Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZB6q8v+93ffw6qaqC4epTSO/9YRkOhP9rSN5wFWfZlylVGUy2IVkJfb4p6+7glIw/HMOhHd4WawpRNXm1dx0KmihrcPqzFoRLDk8+C8sO4mv8XM+XKt88I1hj/ObsSiZDjoPWwd1RzU89u5diyUskEXYXmbCPqlG/Rraiw0dG4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J4DdVu8j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdT0X02Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D493C4CEC7;
-	Mon, 21 Oct 2024 10:36:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4DdVu8j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19328C4CEC3;
+	Mon, 21 Oct 2024 10:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506983;
-	bh=AtKAaJivpLsxIWtEmhF0pAcF+z9byZNnrUh1oVUc1pU=;
+	s=korg; t=1729506986;
+	bh=mRpisEpSbJeOzRGWgiNfuhJKgZN7KWoc9P+zKLbQAX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdT0X02QNZlM0a2Y/p8mS8NI5RpacpsS+POWoRKJflc3niqM0HTd+m2VoASyfukUT
-	 kjEdtQM8y8mDQkjKOERvH5rjMElvqTc7xsrn+0sXpZkB4sowvzEDuLeo7gCyQoWOD0
-	 qJee/mhoX+rlkXf6vx+TxLKH5VM2mmrc6L+r3C7s=
+	b=J4DdVu8jf10dY5AtbAabF8KDiLnzKuyFroRIykLI5UlvThLoRtN/kVjhYSaBPbdux
+	 nFpHQjrYtBneQKjy4cNMkonpuQ4/ph9GyoFAP+ylK5BWtI+2JrDQ5pGbZ0UnkwZPo/
+	 j82SFQ+qbJyicykcDVH2JdWESfmxz3SRPNbmZYHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 023/124] mm/swapfile: skip HugeTLB pages for unuse_vma
-Date: Mon, 21 Oct 2024 12:23:47 +0200
-Message-ID: <20241021102257.621312655@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.6 050/124] s390/sclp: Deactivate sclp after all its users
+Date: Mon, 21 Oct 2024 12:24:14 +0200
+Message-ID: <20241021102258.664966459@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -46,52 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-commit 7528c4fb1237512ee18049f852f014eba80bbe8d upstream.
+commit 0d9dc27df22d9b5c8dc7185c8dddbc14f5468518 upstream.
 
-I got a bad pud error and lost a 1GB HugeTLB when calling swapoff.  The
-problem can be reproduced by the following steps:
+On reboot the SCLP interface is deactivated through a reboot notifier.
+This happens before other components using SCLP have the chance to run
+their own reboot notifiers.
+Two of those components are the SCLP console and tty drivers which try
+to flush the last outstanding messages.
+At that point the SCLP interface is already unusable and the messages
+are discarded.
 
- 1. Allocate an anonymous 1GB HugeTLB and some other anonymous memory.
- 2. Swapout the above anonymous memory.
- 3. run swapoff and we will get a bad pud error in kernel message:
+Execute sclp_deactivate() as late as possible to avoid this issue.
 
-  mm/pgtable-generic.c:42: bad pud 00000000743d215d(84000001400000e7)
-
-We can tell that pud_clear_bad is called by pud_none_or_clear_bad in
-unuse_pud_range() by ftrace.  And therefore the HugeTLB pages will never
-be freed because we lost it from page table.  We can skip HugeTLB pages
-for unuse_vma to fix it.
-
-Link: https://lkml.kernel.org/r/20241015014521.570237-1-liushixin2@huawei.com
-Fixes: 0fe6e20b9c4c ("hugetlb, rmap: add reverse mapping for hugepage")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4ae46db99cd8 ("s390/consoles: improve panic notifiers reliability")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Link: https://lore.kernel.org/r/20241014-s390-kunit-v1-1-941defa765a6@linutronix.de
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/swapfile.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/s390/char/sclp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/swapfile.c
-+++ b/mm/swapfile.c
-@@ -2003,7 +2003,7 @@ static int unuse_mm(struct mm_struct *mm
+--- a/drivers/s390/char/sclp.c
++++ b/drivers/s390/char/sclp.c
+@@ -1195,7 +1195,8 @@ sclp_reboot_event(struct notifier_block
+ }
  
- 	mmap_read_lock(mm);
- 	for_each_vma(vmi, vma) {
--		if (vma->anon_vma) {
-+		if (vma->anon_vma && !is_vm_hugetlb_page(vma)) {
- 			ret = unuse_vma(vma, type);
- 			if (ret)
- 				break;
+ static struct notifier_block sclp_reboot_notifier = {
+-	.notifier_call = sclp_reboot_event
++	.notifier_call = sclp_reboot_event,
++	.priority      = INT_MIN,
+ };
+ 
+ static ssize_t con_pages_show(struct device_driver *dev, char *buf)
 
 
