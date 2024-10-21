@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6791E3784;
-	Mon, 21 Oct 2024 10:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297651E3784;
+	Mon, 21 Oct 2024 10:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506483; cv=none; b=fjuxtgPdHFN0mccp0Z3D9x9/Voa3S8uFKwFJkzTJAjaOw6odXIR3PGZ1ICwXIz49kN6dkhi9goaT4ceXYZTwWgJ/hYAdEgFWgo7vvw2/PCASt+rUSSMU4JGRaaRQh/rwoZLBlcbNO4zdpP/8QT4AlN2DQbunZ/k/57XQST48sAU=
+	t=1729506486; cv=none; b=GvREGXphctComNJ1aRFWqjccx5DqBsHwAA16jmuCk1Vo6SUZ5/Dsc54cT2iqyzhPFXsrSZa2mShj6rW0+mhp6HNQM6UkOotNJMcxlCrZPhHRIA9is4Dyc26A8AJwa+loBCqyrc4hprPTMbXhbEfcW0Ngv9VmBh16umpA/pn9yu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506483; c=relaxed/simple;
-	bh=stvJGuYEDeL5V8bnWSPObIoj8SFJfQiD2oJvb65iA9A=;
+	s=arc-20240116; t=1729506486; c=relaxed/simple;
+	bh=2x3yuVb13vSCfLGDR0nRmDWBr/BeDlOPrpyGiVa+/CU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZnfVIXCbs8xPqJeA0ps3JYYDX3UF/+4loub9OWAV9iqRsQyZiiM974XOxBsstrHUCIkeEzj+ROvupTuFLdIn/hxzw7kNGDSYqIyUsz51eF9u3BlvFuSx9fuVMP+qren4NUmFaXh3O8q+e0d7N/D1ELnfKDYcXS5T8vFromzYK60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oe6EJzCN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IXz02G26ctJMbmORZD2WFEQouMNB38pj9EeceUqDOXTUT4pc9TunVmUqoypmtQ26HmiZI7/bvmD+JwgxCgHpb5qDtbU4LxEmHj00CgoNiq7/6dnPIDXTybyM1ViijjaCbNg0pzHMGfN86P29O9Tc1rvMIVG7ljG+9ekvRlxGGOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRChsH5Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oe6EJzCN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EE8C4CEC3;
-	Mon, 21 Oct 2024 10:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRChsH5Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D355C4CEC3;
+	Mon, 21 Oct 2024 10:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506483;
-	bh=stvJGuYEDeL5V8bnWSPObIoj8SFJfQiD2oJvb65iA9A=;
+	s=korg; t=1729506486;
+	bh=2x3yuVb13vSCfLGDR0nRmDWBr/BeDlOPrpyGiVa+/CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oe6EJzCNof6nPhRRge83KSmqYH+jUEmJDV5Uaw3YX0dFyACLNbj3zeffyUxV9OXUF
-	 DbHku1zdkfb0bzq2H9Rz9ozhT0CtpBNHHYaGcru0dN3/lqjxVvPeD9vXSKZkQ1QBE8
-	 0MH8eX2hCsRvql5KbOhc5UdU8tPnW+vHVx2+EggQ=
+	b=KRChsH5QG+FV/glG6KsF7Y7jSZXAytzFnMA8/sg0iz/DSrgBNvvvDIQSDvZ4jfJ0I
+	 RA5Fizn0WMdsJEIxncQ41QNE8oba4Ij2XCU/rVn3Rbv3l3xJjK335D6MOsziJmi6lc
+	 CCIzE5g1TU7v564P4e0n6Q+Jw3CgEDEJZSy1vNgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.11 020/135] selftests: mptcp: join: test for prohibited MPC to port-based endp
-Date: Mon, 21 Oct 2024 12:22:56 +0200
-Message-ID: <20241021102300.130266455@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.11 003/135] ksmbd: fix user-after-free from session log off
+Date: Mon, 21 Oct 2024 12:22:39 +0200
+Message-ID: <20241021102259.465829303@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -52,219 +51,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 5afca7e996c42aed1b4a42d4712817601ba42aff upstream.
+commit 7aa8804c0b67b3cb263a472d17f2cb50d7f1a930 upstream.
 
-Explicitly verify that MPC connection attempts towards a port-based
-signal endpoint fail with a reset.
+There is racy issue between smb2 session log off and smb2 session setup.
+It will cause user-after-free from session log off.
+This add session_lock when setting SMB2_SESSION_EXPIRED and referece
+count to session struct not to free session while it is being used.
 
-Note that this new test is a bit different from the other ones, not
-using 'run_tests'. It is then needed to add the capture capability, and
-the picking the right port which have been extracted into three new
-helpers. The info about the capture can also be printed from a single
-point, which simplifies the exit paths in do_transfer().
-
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
-
-Fixes: 1729cf186d8a ("mptcp: create the listening socket for new port")
-Cc: stable@vger.kernel.org
-Co-developed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20241014-net-mptcp-mpc-port-endp-v2-2-7faea8e6b6ae@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org # v5.15+
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-25282
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |  115 +++++++++++++++++-------
- 1 file changed, 85 insertions(+), 30 deletions(-)
+ fs/smb/server/mgmt/user_session.c |   26 +++++++++++++++++++++-----
+ fs/smb/server/mgmt/user_session.h |    4 ++++
+ fs/smb/server/server.c            |    2 ++
+ fs/smb/server/smb2pdu.c           |    8 +++++++-
+ 4 files changed, 34 insertions(+), 6 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -23,6 +23,7 @@ tmpfile=""
- cout=""
- err=""
- capout=""
-+cappid=""
- ns1=""
- ns2=""
- iptables="iptables"
-@@ -861,40 +862,62 @@ check_cestab()
- 	fi
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -177,9 +177,10 @@ static void ksmbd_expire_session(struct
+ 
+ 	down_write(&conn->session_lock);
+ 	xa_for_each(&conn->sessions, id, sess) {
+-		if (sess->state != SMB2_SESSION_VALID ||
+-		    time_after(jiffies,
+-			       sess->last_active + SMB2_SESSION_TIMEOUT)) {
++		if (atomic_read(&sess->refcnt) == 0 &&
++		    (sess->state != SMB2_SESSION_VALID ||
++		     time_after(jiffies,
++			       sess->last_active + SMB2_SESSION_TIMEOUT))) {
+ 			xa_erase(&conn->sessions, sess->id);
+ 			hash_del(&sess->hlist);
+ 			ksmbd_session_destroy(sess);
+@@ -269,8 +270,6 @@ struct ksmbd_session *ksmbd_session_look
+ 
+ 	down_read(&sessions_table_lock);
+ 	sess = __session_lookup(id);
+-	if (sess)
+-		sess->last_active = jiffies;
+ 	up_read(&sessions_table_lock);
+ 
+ 	return sess;
+@@ -289,6 +288,22 @@ struct ksmbd_session *ksmbd_session_look
+ 	return sess;
  }
  
--do_transfer()
-+cond_start_capture()
- {
--	local listener_ns="$1"
--	local connector_ns="$2"
--	local cl_proto="$3"
--	local srv_proto="$4"
--	local connect_addr="$5"
--
--	local port=$((10000 + MPTCP_LIB_TEST_COUNTER - 1))
--	local cappid
--	local FAILING_LINKS=${FAILING_LINKS:-""}
--	local fastclose=${fastclose:-""}
--	local speed=${speed:-"fast"}
-+	local ns="$1"
- 
--	:> "$cout"
--	:> "$sout"
- 	:> "$capout"
- 
- 	if $capture; then
--		local capuser
--		if [ -z $SUDO_USER ] ; then
-+		local capuser capfile
-+		if [ -z $SUDO_USER ]; then
- 			capuser=""
- 		else
- 			capuser="-Z $SUDO_USER"
- 		fi
- 
--		capfile=$(printf "mp_join-%02u-%s.pcap" "$MPTCP_LIB_TEST_COUNTER" "${listener_ns}")
-+		capfile=$(printf "mp_join-%02u-%s.pcap" "$MPTCP_LIB_TEST_COUNTER" "$ns")
- 
- 		echo "Capturing traffic for test $MPTCP_LIB_TEST_COUNTER into $capfile"
--		ip netns exec ${listener_ns} tcpdump -i any -s 65535 -B 32768 $capuser -w $capfile > "$capout" 2>&1 &
-+		ip netns exec "$ns" tcpdump -i any -s 65535 -B 32768 $capuser -w "$capfile" > "$capout" 2>&1 &
- 		cappid=$!
- 
- 		sleep 1
- 	fi
++void ksmbd_user_session_get(struct ksmbd_session *sess)
++{
++	atomic_inc(&sess->refcnt);
 +}
 +
-+cond_stop_capture()
++void ksmbd_user_session_put(struct ksmbd_session *sess)
 +{
-+	if $capture; then
-+		sleep 1
-+		kill $cappid
-+		cat "$capout"
-+	fi
-+}
++	if (!sess)
++		return;
 +
-+get_port()
-+{
-+	echo "$((10000 + MPTCP_LIB_TEST_COUNTER - 1))"
-+}
-+
-+do_transfer()
-+{
-+	local listener_ns="$1"
-+	local connector_ns="$2"
-+	local cl_proto="$3"
-+	local srv_proto="$4"
-+	local connect_addr="$5"
-+	local port
-+
-+	local FAILING_LINKS=${FAILING_LINKS:-""}
-+	local fastclose=${fastclose:-""}
-+	local speed=${speed:-"fast"}
-+	port=$(get_port)
-+
-+	:> "$cout"
-+	:> "$sout"
-+
-+	cond_start_capture ${listener_ns}
- 
- 	NSTAT_HISTORY=/tmp/${listener_ns}.nstat ip netns exec ${listener_ns} \
- 		nstat -n
-@@ -981,10 +1004,7 @@ do_transfer()
- 	wait $spid
- 	local rets=$?
- 
--	if $capture; then
--	    sleep 1
--	    kill $cappid
--	fi
-+	cond_stop_capture
- 
- 	NSTAT_HISTORY=/tmp/${listener_ns}.nstat ip netns exec ${listener_ns} \
- 		nstat | grep Tcp > /tmp/${listener_ns}.out
-@@ -1000,7 +1020,6 @@ do_transfer()
- 		ip netns exec ${connector_ns} ss -Menita 1>&2 -o "dport = :$port"
- 		cat /tmp/${connector_ns}.out
- 
--		cat "$capout"
- 		return 1
- 	fi
- 
-@@ -1017,13 +1036,7 @@ do_transfer()
- 	fi
- 	rets=$?
- 
--	if [ $retc -eq 0 ] && [ $rets -eq 0 ];then
--		cat "$capout"
--		return 0
--	fi
--
--	cat "$capout"
--	return 1
-+	[ $retc -eq 0 ] && [ $rets -eq 0 ]
- }
- 
- make_file()
-@@ -2786,6 +2799,32 @@ verify_listener_events()
- 	fail_test
- }
- 
-+chk_mpc_endp_attempt()
-+{
-+	local retl=$1
-+	local attempts=$2
-+
-+	print_check "Connect"
-+
-+	if [ ${retl} = 124 ]; then
-+		fail_test "timeout on connect"
-+	elif [ ${retl} = 0 ]; then
-+		fail_test "unexpected successful connect"
++	if (atomic_read(&sess->refcnt) <= 0)
++		WARN_ON(1);
 +	else
-+		print_ok
-+
-+		print_check "Attempts"
-+		count=$(mptcp_lib_get_counter ${ns1} "MPTcpExtMPCapableEndpAttempt")
-+		if [ -z "$count" ]; then
-+			print_skip
-+		elif [ "$count" != "$attempts" ]; then
-+			fail_test "got ${count} MPC attempt[s] on port-based endpoint, expected ${attempts}"
-+		else
-+			print_ok
-+		fi
-+	fi
++		atomic_dec(&sess->refcnt);
 +}
 +
- add_addr_ports_tests()
+ struct preauth_session *ksmbd_preauth_session_alloc(struct ksmbd_conn *conn,
+ 						    u64 sess_id)
  {
- 	# signal address with port
-@@ -2876,6 +2915,22 @@ add_addr_ports_tests()
- 		chk_join_nr 2 2 2
- 		chk_add_nr 2 2 2
- 	fi
-+
-+	if reset "port-based signal endpoint must not accept mpc"; then
-+		local port retl count
-+		port=$(get_port)
-+
-+		cond_start_capture ${ns1}
-+		pm_nl_add_endpoint ${ns1} 10.0.2.1 flags signal port ${port}
-+		mptcp_lib_wait_local_port_listen ${ns1} ${port}
-+
-+		timeout 1 ip netns exec ${ns2} \
-+			./mptcp_connect -t ${timeout_poll} -p $port -s MPTCP 10.0.2.1 >/dev/null 2>&1
-+		retl=$?
-+		cond_stop_capture
-+
-+		chk_mpc_endp_attempt ${retl} 1
-+	fi
- }
+@@ -393,6 +408,7 @@ static struct ksmbd_session *__session_c
+ 	xa_init(&sess->rpc_handle_list);
+ 	sess->sequence_number = 1;
+ 	rwlock_init(&sess->tree_conns_lock);
++	atomic_set(&sess->refcnt, 1);
  
- syncookies_tests()
+ 	ret = __init_smb2_session(sess);
+ 	if (ret)
+--- a/fs/smb/server/mgmt/user_session.h
++++ b/fs/smb/server/mgmt/user_session.h
+@@ -61,6 +61,8 @@ struct ksmbd_session {
+ 	struct ksmbd_file_table		file_table;
+ 	unsigned long			last_active;
+ 	rwlock_t			tree_conns_lock;
++
++	atomic_t			refcnt;
+ };
+ 
+ static inline int test_session_flag(struct ksmbd_session *sess, int bit)
+@@ -104,4 +106,6 @@ void ksmbd_release_tree_conn_id(struct k
+ int ksmbd_session_rpc_open(struct ksmbd_session *sess, char *rpc_name);
+ void ksmbd_session_rpc_close(struct ksmbd_session *sess, int id);
+ int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id);
++void ksmbd_user_session_get(struct ksmbd_session *sess);
++void ksmbd_user_session_put(struct ksmbd_session *sess);
+ #endif /* __USER_SESSION_MANAGEMENT_H__ */
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -238,6 +238,8 @@ static void __handle_ksmbd_work(struct k
+ 	} while (is_chained == true);
+ 
+ send:
++	if (work->sess)
++		ksmbd_user_session_put(work->sess);
+ 	if (work->tcon)
+ 		ksmbd_tree_connect_put(work->tcon);
+ 	smb3_preauth_hash_rsp(work);
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -605,8 +605,10 @@ int smb2_check_user_session(struct ksmbd
+ 
+ 	/* Check for validity of user session */
+ 	work->sess = ksmbd_session_lookup_all(conn, sess_id);
+-	if (work->sess)
++	if (work->sess) {
++		ksmbd_user_session_get(work->sess);
+ 		return 1;
++	}
+ 	ksmbd_debug(SMB, "Invalid user session, Uid %llu\n", sess_id);
+ 	return -ENOENT;
+ }
+@@ -1746,6 +1748,7 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 		}
+ 
+ 		conn->binding = true;
++		ksmbd_user_session_get(sess);
+ 	} else if ((conn->dialect < SMB30_PROT_ID ||
+ 		    server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL) &&
+ 		   (req->Flags & SMB2_SESSION_REQ_FLAG_BINDING)) {
+@@ -1772,6 +1775,7 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 		}
+ 
+ 		conn->binding = false;
++		ksmbd_user_session_get(sess);
+ 	}
+ 	work->sess = sess;
+ 
+@@ -2232,7 +2236,9 @@ int smb2_session_logoff(struct ksmbd_wor
+ 	}
+ 
+ 	ksmbd_destroy_file_table(&sess->file_table);
++	down_write(&conn->session_lock);
+ 	sess->state = SMB2_SESSION_EXPIRED;
++	up_write(&conn->session_lock);
+ 
+ 	ksmbd_free_user(sess->user);
+ 	sess->user = NULL;
 
 
