@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCCC1E2618;
-	Mon, 21 Oct 2024 10:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40EB3A1CD;
+	Mon, 21 Oct 2024 10:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507115; cv=none; b=IHHykEz1z/VyF3qPcX06xeTiQwlJe97KKk7LAtG+PzgdshzPKl+9SqrK95qaH5ay2DL17uhhE5B3ehjy7KCdGy/oFDpLhOkHivGObG6EkMTV70qnJdlRA1puak1hq7EtTgKyNkbl38qmhWhpdX0oLUUFiP4a14Wf3cobeT0V+74=
+	t=1729507118; cv=none; b=PQbYsIYKBIKzg5UbP7n1ogVJabXsxQI3OEYijuLEzuU53OuuuLDa0gbjT0QFEnfCNyxyVYDZsZgq0E+iSikgmqOE6NZVlPkDN73y99j5lAYcMdTo82Px87mg3dy2EeZZ17FnjuEATmOBO8PWuhfJsqz4gDmzQYMu6nzL6PrjnWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507115; c=relaxed/simple;
-	bh=VPoYP1lKs7I6bksYYSffqL7ZUN2jjRmivbzfBcpt64o=;
+	s=arc-20240116; t=1729507118; c=relaxed/simple;
+	bh=nOLN8KLeksMQDxv5HWOkDax+ZuiJeJZ2vitFug2MeSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=clB8UQv0RHEVk5cvjT1WDNKH5/hJCHrXE1neSbarKsp+YixiktFBt5KQPYtI5qHsJ5cI8c96KH1+oYAYiwHc7kTQuwk0wZAWxmfKvSCMB+bS0p4LwgCVhOjnToasm+8CISG82FEh1mXmafjW5IA99IS3LC0b7TgFPpXJnL5ueDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGf739Dt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SuNV2cLMEycmfQhKaiWCekwjQTFCfuwlijQ57rlUc+zJIMQ25KabC4/z85h+fMTU75K3mH+WhxhERPzSO6Ihq8Z/NiRsawM0s/OeDQOCCIuy9ymLRdKXjH7hAw/Bex4u7QkIF9d5rt39ivCYaT6TU9spIKkOPlvJnZ59u1BvCR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHtikhgJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGf739Dt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694F2C4CEE5;
-	Mon, 21 Oct 2024 10:38:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHtikhgJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6363CC4CEC3;
+	Mon, 21 Oct 2024 10:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507114;
-	bh=VPoYP1lKs7I6bksYYSffqL7ZUN2jjRmivbzfBcpt64o=;
+	s=korg; t=1729507117;
+	bh=nOLN8KLeksMQDxv5HWOkDax+ZuiJeJZ2vitFug2MeSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZGf739Dtxg1exkvB4+Gk5zYxYHE6Eou+ENw6ri20VsEoWwWUV8xkkSnFFMZJlOqw9
-	 L3jEqn+tshxDdmy73oSlJ3V4E2U8fqXSV8KBUYldGiG4EM6YcPe3Lmp2BYia0yuL23
-	 cxILj92XoV/5Tmh5C0YS7k7/Zob1n9f2fdzyOWuE=
+	b=CHtikhgJHlffoXmqRq7POTyswkFEkCz+CiIwTf31Eugh+7bUtYSisjHHn9vo1+4io
+	 xQEVoPLgSCFwqaxP5/Qot87Z/ThS7NbGDNJOlAM+sayJ7/6c0tRRI4pD4gkejUS8ZI
+	 8QABP5jwN4U1F9s8YLZ8Js+E5JQeESYn9RaGt9lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Michael Mueller <mimu@linux.ibm.com>,
-	Nico Boehr <nrb@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>
-Subject: [PATCH 6.6 053/124] KVM: s390: Change virtual to physical address access in diag 0x258 handler
-Date: Mon, 21 Oct 2024 12:24:17 +0200
-Message-ID: <20241021102258.781321336@linuxfoundation.org>
+	Aaron Thompson <dev@aaront.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 088/124] Bluetooth: Remove debugfs directory on module init failure
+Date: Mon, 21 Oct 2024 12:24:52 +0200
+Message-ID: <20241021102300.132243031@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -54,42 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Mueller <mimu@linux.ibm.com>
+From: Aaron Thompson <dev@aaront.org>
 
-commit cad4b3d4ab1f062708fff33f44d246853f51e966 upstream.
+commit 1db4564f101b47188c1b71696bd342ef09172b22 upstream.
 
-The parameters for the diag 0x258 are real addresses, not virtual, but
-KVM was using them as virtual addresses. This only happened to work, since
-the Linux kernel as a guest used to have a 1:1 mapping for physical vs
-virtual addresses.
+If bt_init() fails, the debugfs directory currently is not removed. If
+the module is loaded again after that, the debugfs directory is not set
+up properly due to the existing directory.
 
-Fix KVM so that it correctly uses the addresses as real addresses.
+  # modprobe bluetooth
+  # ls -laF /sys/kernel/debug/bluetooth
+  total 0
+  drwxr-xr-x  2 root root 0 Sep 27 14:26 ./
+  drwx------ 31 root root 0 Sep 27 14:25 ../
+  -r--r--r--  1 root root 0 Sep 27 14:26 l2cap
+  -r--r--r--  1 root root 0 Sep 27 14:26 sco
+  # modprobe -r bluetooth
+  # ls -laF /sys/kernel/debug/bluetooth
+  ls: cannot access '/sys/kernel/debug/bluetooth': No such file or directory
+  #
+
+  # modprobe bluetooth
+  modprobe: ERROR: could not insert 'bluetooth': Invalid argument
+  # dmesg | tail -n 6
+  Bluetooth: Core ver 2.22
+  NET: Registered PF_BLUETOOTH protocol family
+  Bluetooth: HCI device and connection manager initialized
+  Bluetooth: HCI socket layer initialized
+  Bluetooth: Faking l2cap_init() failure for testing
+  NET: Unregistered PF_BLUETOOTH protocol family
+  # ls -laF /sys/kernel/debug/bluetooth
+  total 0
+  drwxr-xr-x  2 root root 0 Sep 27 14:31 ./
+  drwx------ 31 root root 0 Sep 27 14:26 ../
+  #
+
+  # modprobe bluetooth
+  # dmesg | tail -n 7
+  Bluetooth: Core ver 2.22
+  debugfs: Directory 'bluetooth' with parent '/' already present!
+  NET: Registered PF_BLUETOOTH protocol family
+  Bluetooth: HCI device and connection manager initialized
+  Bluetooth: HCI socket layer initialized
+  Bluetooth: L2CAP socket layer initialized
+  Bluetooth: SCO socket layer initialized
+  # ls -laF /sys/kernel/debug/bluetooth
+  total 0
+  drwxr-xr-x  2 root root 0 Sep 27 14:31 ./
+  drwx------ 31 root root 0 Sep 27 14:26 ../
+  #
 
 Cc: stable@vger.kernel.org
-Fixes: 8ae04b8f500b ("KVM: s390: Guest's memory access functions get access registers")
-Suggested-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Michael Mueller <mimu@linux.ibm.com>
-Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240917151904.74314-3-nrb@linux.ibm.com
-Acked-by: Janosch Frank <frankja@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: ffcecac6a738 ("Bluetooth: Create root debugfs directory during module init")
+Signed-off-by: Aaron Thompson <dev@aaront.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/diag.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/af_bluetooth.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/s390/kvm/diag.c
-+++ b/arch/s390/kvm/diag.c
-@@ -77,7 +77,7 @@ static int __diag_page_ref_service(struc
- 	vcpu->stat.instruction_diagnose_258++;
- 	if (vcpu->run->s.regs.gprs[rx] & 7)
- 		return kvm_s390_inject_program_int(vcpu, PGM_SPECIFICATION);
--	rc = read_guest(vcpu, vcpu->run->s.regs.gprs[rx], rx, &parm, sizeof(parm));
-+	rc = read_guest_real(vcpu, vcpu->run->s.regs.gprs[rx], &parm, sizeof(parm));
- 	if (rc)
- 		return kvm_s390_inject_prog_cond(vcpu, rc);
- 	if (parm.parm_version != 2 || parm.parm_len < 5 || parm.code != 0x258)
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -825,6 +825,7 @@ cleanup_sysfs:
+ 	bt_sysfs_cleanup();
+ cleanup_led:
+ 	bt_leds_cleanup();
++	debugfs_remove_recursive(bt_debugfs);
+ 	return err;
+ }
+ 
 
 
