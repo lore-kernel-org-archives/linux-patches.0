@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5BA1E571B;
-	Mon, 21 Oct 2024 10:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887331E5716;
+	Mon, 21 Oct 2024 10:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506461; cv=none; b=FBnfYSQC83hAhPzUnLcssmYhkpI/ho9ABVd9DKpEEXH8He7Ug4jrO4UUSfLTWDNLaqjxdY1XqLVVBSESIXCa1UHanjW2hpBoStn2GjMHOMkJfPn8Yi4W+OkSkBxXc1/0yewpKx4POvbEEA+T8pOjzgwIgx1i3MXVxm96VNDuXms=
+	t=1729506464; cv=none; b=fFgBDBdtjeZtI5mQjLv4Qf91f2ZIQ5UpboBb9uehye2n8TTmtW5xOc154bMSRkYj0JRUgGCJfvT2PlNMZqmWgsRIv1+FpUJEUL9dGqjam+dLvoYgJAQeqP0vkKU+J05eQaBTc385ewZUGf4RvuF+WrhfKRm42GE0LuLQPwpD/mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506461; c=relaxed/simple;
-	bh=i/k+DmwDktxyxI3bqqfKn+tuTvLfdbg60V8OYTFGivs=;
+	s=arc-20240116; t=1729506464; c=relaxed/simple;
+	bh=FOV9K9OhJxRefzmVM4LojiepehUbk/7ZTCi0NN1p/lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WWeLLZivDT17V3lycCGd7wve6RGBENqFFaX4SSMTij1gnE/EqXyU14QLdx3dtha3V2zTdhmgbGi+xhnwTubSPkZiJ6r6XfAT7AMI4VnYbyxjiXslWard2tefHllYtwStLsRf6YRXmCMb3tNZmLvaUclqgaQRfqfd6yHwYnkB7lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1W9TJ/L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ueSvQFoxT5w+nPYWjCcc/GmRHtgdcxdKfAspueuqHHK8jhKYo+dgNIw8I53mTtchetkpb6uJmUbahwYAceN6K2/afE/2ZfyxzKbu6aqsfPyqtJx2sp2KCzd+O/ss6o9LAb1W9ZRYxuNpQw+QiBgk+HFPWmWZNUpxXuySxOu9gDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTubKste; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1W9TJ/L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16FBC4CEC3;
-	Mon, 21 Oct 2024 10:27:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTubKste"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC97BC4CEC3;
+	Mon, 21 Oct 2024 10:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506461;
-	bh=i/k+DmwDktxyxI3bqqfKn+tuTvLfdbg60V8OYTFGivs=;
+	s=korg; t=1729506464;
+	bh=FOV9K9OhJxRefzmVM4LojiepehUbk/7ZTCi0NN1p/lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I1W9TJ/LkRps1uHY4OOzpoyjGwzptjECNH6fawhBeLLv5UF9iJ+PlyajPYf++U+Ro
-	 nAqgTd9r/bgL0tweIgWD60FcVL2bAe3FBnD5M9bfxzcQ3faBliexaV5AELzJERTNKW
-	 QS1GVhO6kcj+AR+0yfPBjyJiEspXZe1NmySsA0Uc=
+	b=dTubKste3abEpRD4Z0MWbfUzEZgBXN0+m+eVv7tw/S7rzXrEvovvwX5zrx/KuodzE
+	 Nk7fUuAHsPkOwZxaTrCayyRCnWeibsO+WxSOGRxt5jKltlM1xK9RXBsdllqiMA1VfR
+	 Or4h7ovUq+IAXfWFkKNoZ6sjRMsGkbXY6LDwVqWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Babrou <ivan@cloudflare.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.11 013/135] udp: Compute L4 checksum as usual when not segmenting the skb
-Date: Mon, 21 Oct 2024 12:22:49 +0200
-Message-ID: <20241021102259.856952303@linuxfoundation.org>
+	Josua Mayer <josua@solid-run.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>
+Subject: [PATCH 6.11 014/135] arm64: dts: marvell: cn9130-sr-som: fix cp0 mdio pin numbers
+Date: Mon, 21 Oct 2024 12:22:50 +0200
+Message-ID: <20241021102259.896120862@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -52,64 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Sitnicki <jakub@cloudflare.com>
+From: Josua Mayer <josua@solid-run.com>
 
-commit d96016a764f6aa5c7528c3d3f9cb472ef7266951 upstream.
+commit 841dd5b122b4b8080ede69c5f72fd6057da43f8a upstream.
 
-If:
+SolidRun CN9130 SoM actually uses CP_MPP[0:1] for mdio. CP_MPP[40]
+provides reference clock for dsa switch and ethernet phy on Clearfog
+Pro, wheras MPP[41] controls efuse programming voltage "VHV".
 
-  1) the user requested USO, but
-  2) there is not enough payload for GSO to kick in, and
-  3) the egress device doesn't offer checksum offload, then
+Update the cp0 mdio pinctrl node to specify mpp0, mpp1.
 
-we want to compute the L4 checksum in software early on.
-
-In the case when we are not taking the GSO path, but it has been requested,
-the software checksum fallback in skb_segment doesn't get a chance to
-compute the full checksum, if the egress device can't do it. As a result we
-end up sending UDP datagrams with only a partial checksum filled in, which
-the peer will discard.
-
-Fixes: 10154dbded6d ("udp: Allow GSO transmit from devices with no checksum offload")
-Reported-by: Ivan Babrou <ivan@cloudflare.com>
-Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
-Acked-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20241011-uso-swcsum-fixup-v2-1-6e1ddc199af9@cloudflare.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1c510c7d82e5 ("arm64: dts: add description for solidrun cn9130 som and clearfog boards")
+Cc: stable@vger.kernel.org # 6.11.x
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/stable/20241002-cn9130-som-mdio-v1-1-0942be4dc550%40solid-run.com
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/udp.c |    4 +++-
- net/ipv6/udp.c |    4 +++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/marvell/cn9130-sr-som.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -950,8 +950,10 @@ static int udp_send_skb(struct sk_buff *
- 			skb_shinfo(skb)->gso_type = SKB_GSO_UDP_L4;
- 			skb_shinfo(skb)->gso_segs = DIV_ROUND_UP(datalen,
- 								 cork->gso_size);
-+
-+			/* Don't checksum the payload, skb will get segmented */
-+			goto csum_partial;
- 		}
--		goto csum_partial;
- 	}
+diff --git a/arch/arm64/boot/dts/marvell/cn9130-sr-som.dtsi b/arch/arm64/boot/dts/marvell/cn9130-sr-som.dtsi
+index 4676e3488f54..cb8d54895a77 100644
+--- a/arch/arm64/boot/dts/marvell/cn9130-sr-som.dtsi
++++ b/arch/arm64/boot/dts/marvell/cn9130-sr-som.dtsi
+@@ -136,7 +136,7 @@
+ 		};
  
- 	if (is_udplite)  				 /*     UDP-Lite      */
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -1266,8 +1266,10 @@ static int udp_v6_send_skb(struct sk_buf
- 			skb_shinfo(skb)->gso_type = SKB_GSO_UDP_L4;
- 			skb_shinfo(skb)->gso_segs = DIV_ROUND_UP(datalen,
- 								 cork->gso_size);
-+
-+			/* Don't checksum the payload, skb will get segmented */
-+			goto csum_partial;
- 		}
--		goto csum_partial;
- 	}
+ 		cp0_mdio_pins: cp0-mdio-pins {
+-			marvell,pins = "mpp40", "mpp41";
++			marvell,pins = "mpp0", "mpp1";
+ 			marvell,function = "ge";
+ 		};
  
- 	if (is_udplite)
+-- 
+2.47.0
+
 
 
