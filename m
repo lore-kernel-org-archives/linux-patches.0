@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA991E47AC;
-	Mon, 21 Oct 2024 10:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA09D1E47AC;
+	Mon, 21 Oct 2024 10:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507330; cv=none; b=MhhNjPCmEbi9+Hex+mx69kUndmu2MGV4F7Iok7MkC/9ASrYlIIceqjG2y3iOhyW6lG1ujXCDd86OK8I7aEsHGa4oTiNIulAXZvwYhmngEKx7BDXeEZ7OF9AhS8bf++TyoPik5h1A62dbX0vM1trCIJvAKkJG7nOUU75cOEUPGWE=
+	t=1729507333; cv=none; b=aGH5/x2cEa+Wu8vewjG3ksM+Nmi0WdTEgdpD/PYOUCIqb7+kLtjrkf08C16uTPhog9Z6XY5n/KH+TUJ+L3+9Z2JtnsUGJe2nz62CbInr8sPGBUyCJMtRR6NaU6wzo6f1lfbnCFCBdB4zk6dwZYymW2BstKK/Q/wncPw4sgL58qQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507330; c=relaxed/simple;
-	bh=Cp7jiUWLqWSEBug1gS+K78QdCadiv7VoRgahWFH8ouk=;
+	s=arc-20240116; t=1729507333; c=relaxed/simple;
+	bh=KujQDZ2XR6B7FHYORg2ORFWLPInrqRyW9aVEIV9SGhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QI7LwHCaTWFERFsdCcOnmX1KxjMwpnUZoMokJ0lVYE5xB7yDsQUDKxa7aDaFRJYno6P8rbriBieu1SR2bV6y6zBZmPyLAIvotyAlG+dQNrHru9XkIF6uUWX/anNmoANXddZklvJ6YstRzEcDR/DccAoouYCi5jKHJ2DiXvs1swc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imxMCQbq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J2SmEayU/8LjceypjFCcZFLzz4m/TeLUh8t3IWpA6ftlTKuwkLBcgvDkfB9tOQeTbbjy+Shyb1MhJsLskT2zHses3BWPysmNmod8f9RDumGrm9PAKVDvpEdnYxlXstmCU3wc6cvH+1U52zrjd42reTNATwe4N1DLgSUKcsxap+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzeZYZ15; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imxMCQbq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFE9C4CEC3;
-	Mon, 21 Oct 2024 10:42:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzeZYZ15"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCADC4CEC3;
+	Mon, 21 Oct 2024 10:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507330;
-	bh=Cp7jiUWLqWSEBug1gS+K78QdCadiv7VoRgahWFH8ouk=;
+	s=korg; t=1729507333;
+	bh=KujQDZ2XR6B7FHYORg2ORFWLPInrqRyW9aVEIV9SGhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imxMCQbqN5EHOKoLWUG7pUUYlQSlNVYKwXypGZgN9cJNMYWLeK5M9TLh3si1LwEvl
-	 PSxzXi3sypTmnwCuqDX3LVhPCvGoRkCfbul8ntcnZJ4nbXir0LGpy7WYJpkFam9cHB
-	 7Tse3En85uCHb8KrSVHkto75+GRiDn1seXjt77CA=
+	b=TzeZYZ15wo954zraqcTolqJNgYqoxR7YyKJA8zdc98Itp67tF2E2KlGvgr3KhfBIB
+	 ZQBhSGS76tR8VJ3vKrNVAYJdULQaC8E82PIKqG9cjEAteBebyTUML+yC0sWoGZ5eGH
+	 Pqb1DIVprgZNl0Dm8XUSUFh8xpOnpNhOidzodKU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Michael Mueller <mimu@linux.ibm.com>,
 	Nico Boehr <nrb@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Janosch Frank <frankja@linux.ibm.com>
-Subject: [PATCH 6.1 41/91] KVM: s390: gaccess: Check if guest address is in memslot
-Date: Mon, 21 Oct 2024 12:24:55 +0200
-Message-ID: <20241021102251.425191717@linuxfoundation.org>
+Subject: [PATCH 6.1 42/91] KVM: s390: Change virtual to physical address access in diag 0x258 handler
+Date: Mon, 21 Oct 2024 12:24:56 +0200
+Message-ID: <20241021102251.463461813@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -51,118 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nico Boehr <nrb@linux.ibm.com>
+From: Michael Mueller <mimu@linux.ibm.com>
 
-commit e8061f06185be0a06a73760d6526b8b0feadfe52 upstream.
+commit cad4b3d4ab1f062708fff33f44d246853f51e966 upstream.
 
-Previously, access_guest_page() did not check whether the given guest
-address is inside of a memslot. This is not a problem, since
-kvm_write_guest_page/kvm_read_guest_page return -EFAULT in this case.
+The parameters for the diag 0x258 are real addresses, not virtual, but
+KVM was using them as virtual addresses. This only happened to work, since
+the Linux kernel as a guest used to have a 1:1 mapping for physical vs
+virtual addresses.
 
-However, -EFAULT is also returned when copy_to/from_user fails.
+Fix KVM so that it correctly uses the addresses as real addresses.
 
-When emulating a guest instruction, the address being outside a memslot
-usually means that an addressing exception should be injected into the
-guest.
-
-Failure in copy_to/from_user however indicates that something is wrong
-in userspace and hence should be handled there.
-
-To be able to distinguish these two cases, return PGM_ADDRESSING in
-access_guest_page() when the guest address is outside guest memory. In
-access_guest_real(), populate vcpu->arch.pgm.code such that
-kvm_s390_inject_prog_cond() can be used in the caller for injecting into
-the guest (if applicable).
-
-Since this adds a new return value to access_guest_page(), we need to make
-sure that other callers are not confused by the new positive return value.
-
-There are the following users of access_guest_page():
-- access_guest_with_key() does the checking itself (in
-  guest_range_to_gpas()), so this case should never happen. Even if, the
-  handling is set up properly.
-- access_guest_real() just passes the return code to its callers, which
-  are:
-    - read_guest_real() - see below
-    - write_guest_real() - see below
-
-There are the following users of read_guest_real():
-- ar_translation() in gaccess.c which already returns PGM_*
-- setup_apcb10(), setup_apcb00(), setup_apcb11() in vsie.c which always
-  return -EFAULT on read_guest_read() nonzero return - no change
-- shadow_crycb(), handle_stfle() always present this as validity, this
-  could be handled better but doesn't change current behaviour - no change
-
-There are the following users of write_guest_real():
-- kvm_s390_store_status_unloaded() always returns -EFAULT on
-  write_guest_real() failure.
-
-Fixes: 2293897805c2 ("KVM: s390: add architecture compliant guest access functions")
 Cc: stable@vger.kernel.org
+Fixes: 8ae04b8f500b ("KVM: s390: Guest's memory access functions get access registers")
+Suggested-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Michael Mueller <mimu@linux.ibm.com>
 Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240917151904.74314-2-nrb@linux.ibm.com
+Link: https://lore.kernel.org/r/20240917151904.74314-3-nrb@linux.ibm.com
 Acked-by: Janosch Frank <frankja@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/gaccess.c |    4 ++++
- arch/s390/kvm/gaccess.h |   14 ++++++++------
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ arch/s390/kvm/diag.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/kvm/gaccess.c
-+++ b/arch/s390/kvm/gaccess.c
-@@ -1001,6 +1001,8 @@ static int access_guest_page(struct kvm
- 	const gfn_t gfn = gpa_to_gfn(gpa);
- 	int rc;
- 
-+	if (!gfn_to_memslot(kvm, gfn))
-+		return PGM_ADDRESSING;
- 	if (mode == GACC_STORE)
- 		rc = kvm_write_guest_page(kvm, gfn, data, offset, len);
- 	else
-@@ -1158,6 +1160,8 @@ int access_guest_real(struct kvm_vcpu *v
- 		gra += fragment_len;
- 		data += fragment_len;
- 	}
-+	if (rc > 0)
-+		vcpu->arch.pgm.code = rc;
- 	return rc;
- }
- 
---- a/arch/s390/kvm/gaccess.h
-+++ b/arch/s390/kvm/gaccess.h
-@@ -402,11 +402,12 @@ int read_guest_abs(struct kvm_vcpu *vcpu
-  * @len: number of bytes to copy
-  *
-  * Copy @len bytes from @data (kernel space) to @gra (guest real address).
-- * It is up to the caller to ensure that the entire guest memory range is
-- * valid memory before calling this function.
-  * Guest low address and key protection are not checked.
-  *
-- * Returns zero on success or -EFAULT on error.
-+ * Returns zero on success, -EFAULT when copying from @data failed, or
-+ * PGM_ADRESSING in case @gra is outside a memslot. In this case, pgm check info
-+ * is also stored to allow injecting into the guest (if applicable) using
-+ * kvm_s390_inject_prog_cond().
-  *
-  * If an error occurs data may have been copied partially to guest memory.
-  */
-@@ -425,11 +426,12 @@ int write_guest_real(struct kvm_vcpu *vc
-  * @len: number of bytes to copy
-  *
-  * Copy @len bytes from @gra (guest real address) to @data (kernel space).
-- * It is up to the caller to ensure that the entire guest memory range is
-- * valid memory before calling this function.
-  * Guest key protection is not checked.
-  *
-- * Returns zero on success or -EFAULT on error.
-+ * Returns zero on success, -EFAULT when copying to @data failed, or
-+ * PGM_ADRESSING in case @gra is outside a memslot. In this case, pgm check info
-+ * is also stored to allow injecting into the guest (if applicable) using
-+ * kvm_s390_inject_prog_cond().
-  *
-  * If an error occurs data may have been copied partially to kernel space.
-  */
+--- a/arch/s390/kvm/diag.c
++++ b/arch/s390/kvm/diag.c
+@@ -77,7 +77,7 @@ static int __diag_page_ref_service(struc
+ 	vcpu->stat.instruction_diagnose_258++;
+ 	if (vcpu->run->s.regs.gprs[rx] & 7)
+ 		return kvm_s390_inject_program_int(vcpu, PGM_SPECIFICATION);
+-	rc = read_guest(vcpu, vcpu->run->s.regs.gprs[rx], rx, &parm, sizeof(parm));
++	rc = read_guest_real(vcpu, vcpu->run->s.regs.gprs[rx], &parm, sizeof(parm));
+ 	if (rc)
+ 		return kvm_s390_inject_prog_cond(vcpu, rc);
+ 	if (parm.parm_version != 2 || parm.parm_len < 5 || parm.code != 0x258)
 
 
