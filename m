@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9848A1E47AC;
-	Mon, 21 Oct 2024 10:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918581E47A6;
+	Mon, 21 Oct 2024 10:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506716; cv=none; b=pv30dXxCJ4awp5Mw87gFahr+CAlLrjkJTtSKdODXA5mdn0winLYdk3FSM7W67vxYpkmJKh/bP8VkXaAwV+1uWGO4NhjjhcrDKe+eL922NfeCE89udbTYRjWNMttZ8JNxy3bPFNriHSG5fgXRSnnp3ieHGbo6YMegvlMZ4tY0Z44=
+	t=1729506719; cv=none; b=VAzvrHtkad/8E8GTR+t5IGv/wYXR4Rb8p9imxRny5MAfktaCCH2q411gHq9/dMAlKUCHNfBP8uXX61SRDW4Qy0E1IefVkeN8A/nyln0eall7VH25SK+ck2WSgKeUk2obcxuDRkDLqCiIP6WR7h8jhrxetVJxsmS7Cwx4lnBZC4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506716; c=relaxed/simple;
-	bh=oGZGF2/1VdY2Z3iPwRddJi9ELOwmPnoKFw1New4Dixo=;
+	s=arc-20240116; t=1729506719; c=relaxed/simple;
+	bh=Mxm5sz/9AG1BdCBsMcS31zaCSdZResGK+tgID/8Pbzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sh7AuCsP4vat7Z9LAu5q7QdBBk717Y1r1oprBjpf1edMfW2CIkzNSB247I4QSh6dVzdEwqthdcbIetApGi2aRF5AH1hFF7KGb8qdVbhpVuSc7Xyll4N/f8AfCVS53TY5//4LIQDWXdrC0sPUl7Awff1MhHftP0eWxWqKSKGG0lU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrVUZUMN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kTyx4mdZ97vLZw68yFSjTWx1OIajD1JoJmU7ZScBpD2XyPPmlN+Lku94N0rRgVhWMszhPpVcnf1xqP4jisFntF48smLGDWdycjuJ+cOe2rooLS1coFxWs6rOWwhbKYjnIae1ytvKbK9/eWz8JkjOHPixsqTyBrJOuOaGE5gt/0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ya4OjBze; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrVUZUMN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E15C4CEE5;
-	Mon, 21 Oct 2024 10:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ya4OjBze"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA7FC4CEE5;
+	Mon, 21 Oct 2024 10:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506716;
-	bh=oGZGF2/1VdY2Z3iPwRddJi9ELOwmPnoKFw1New4Dixo=;
+	s=korg; t=1729506719;
+	bh=Mxm5sz/9AG1BdCBsMcS31zaCSdZResGK+tgID/8Pbzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PrVUZUMNlFGtodblmw6qAgz1+qWOUUwEf8J9e70W6Jgjahw+WPbogEnZkN53Fjrky
-	 jOgHVr014VzaSENSNFXuiivdenKNYijP4bdwqxnVg4uneXAUqgHFp5tPHH+283ttua
-	 YFraYYi0aVUWhqwnUawmhEIsp0+aODigxSRLNsEU=
+	b=Ya4OjBzepk7ATFdgX9yPQdH+bNmtZ5Q/2qtBbibPBmvEX6v7Vv1kLvZMTogoIFQrT
+	 V3nj2Gyqthye4G+dE+I5zfs4jzfjA6YK1gpSv8cHSYLTRr94no5tfIhFAiGujBsVaF
+	 G1RgNcFPX1zi1T233L+5obrGbsRwXrLyXKVYcu9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Kenneth Crudup <kenny@panix.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.11 097/135] Bluetooth: btusb: Fix not being able to reconnect after suspend
-Date: Mon, 21 Oct 2024 12:24:13 +0200
-Message-ID: <20241021102303.120595342@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.11 071/135] iio: dac: ltc1660: add missing select REGMAP_SPI in Kconfig
+Date: Mon, 21 Oct 2024 12:23:47 +0200
+Message-ID: <20241021102302.108683558@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -52,70 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 4084286151fc91cd093578f615bfb68f9efbbfcb upstream.
+commit 252ff06a4cb4e572cb3c7fcfa697db96b08a7781 upstream.
 
-This partially reverts 81b3e33bb054 ("Bluetooth: btusb: Don't fail
-external suspend requests") as it introduced a call to hci_suspend_dev
-that assumes the system-suspend which doesn't work well when just the
-device is being suspended because wakeup flag is only set for remote
-devices that can wakeup the system.
+This driver makes use of regmap_spi, but does not select the required
+module.
+Add the missing 'select REGMAP_SPI'.
 
-Reported-by: Rafael J. Wysocki <rafael@kernel.org>
-Reported-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reported-by: Kenneth Crudup <kenny@panix.com>
-Fixes: 610712298b11 ("Bluetooth: btusb: Don't fail external suspend requests")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Tested-by: Rafael J. Wysocki <rafael@kernel.org>
+Fixes: 8316cebd1e59 ("iio: dac: add support for ltc1660")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20241003-ad2s1210-select-v1-7-4019453f8c33@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |   14 --------------
- 1 file changed, 14 deletions(-)
+ drivers/iio/dac/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -4092,7 +4092,6 @@ static void btusb_disconnect(struct usb_
- static int btusb_suspend(struct usb_interface *intf, pm_message_t message)
- {
- 	struct btusb_data *data = usb_get_intfdata(intf);
--	int err;
- 
- 	BT_DBG("intf %p", intf);
- 
-@@ -4105,16 +4104,6 @@ static int btusb_suspend(struct usb_inte
- 	if (data->suspend_count++)
- 		return 0;
- 
--	/* Notify Host stack to suspend; this has to be done before stopping
--	 * the traffic since the hci_suspend_dev itself may generate some
--	 * traffic.
--	 */
--	err = hci_suspend_dev(data->hdev);
--	if (err) {
--		data->suspend_count--;
--		return err;
--	}
--
- 	spin_lock_irq(&data->txlock);
- 	if (!(PMSG_IS_AUTO(message) && data->tx_in_flight)) {
- 		set_bit(BTUSB_SUSPENDING, &data->flags);
-@@ -4122,7 +4111,6 @@ static int btusb_suspend(struct usb_inte
- 	} else {
- 		spin_unlock_irq(&data->txlock);
- 		data->suspend_count--;
--		hci_resume_dev(data->hdev);
- 		return -EBUSY;
- 	}
- 
-@@ -4243,8 +4231,6 @@ static int btusb_resume(struct usb_inter
- 	spin_unlock_irq(&data->txlock);
- 	schedule_work(&data->work);
- 
--	hci_resume_dev(data->hdev);
--
- 	return 0;
- 
- failed:
+--- a/drivers/iio/dac/Kconfig
++++ b/drivers/iio/dac/Kconfig
+@@ -354,6 +354,7 @@ config LPC18XX_DAC
+ config LTC1660
+ 	tristate "Linear Technology LTC1660/LTC1665 DAC SPI driver"
+ 	depends on SPI
++	select REGMAP_SPI
+ 	help
+ 	  Say yes here to build support for Linear Technology
+ 	  LTC1660 and LTC1665 Digital to Analog Converters.
 
 
