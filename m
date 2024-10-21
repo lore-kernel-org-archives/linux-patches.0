@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8A01EF945;
-	Mon, 21 Oct 2024 10:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FCD1EF945;
+	Mon, 21 Oct 2024 10:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507286; cv=none; b=r5VmYJ3ZB/CZvw32vIZv/6yQr6Jx7rWZere8TUsHilHzP1nEDed51TBR1A8hAT376lI7I63XUi7olKBGfi85x96VfMVhPf2wm/IUYmL3Z5NTOnzRrEvlj7N04pcophWD4Qf1cOn9uPBZ8hXrXple+Vm7chEc50xiFCwcnQ4YVdg=
+	t=1729507289; cv=none; b=hDcp8/W0rkNJnU3dpXKsSHkfPTRGL6dyOrbLMJyIDE5ZNvW3w48W25WsLmFp65F5ClHAH6du9cunWPUT+5blAiMVw/f1IRcKohr7kC9vfNtS9crTBl7aVAQD7BMmTMcUVw+rbxXKm217cN+lYy0wykwOxNZeGhzYx/dw7ZPFbg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507286; c=relaxed/simple;
-	bh=XFPO8qQHAIIKZKAZYkW41arcK18t0vWSuI/E+z+Q9lU=;
+	s=arc-20240116; t=1729507289; c=relaxed/simple;
+	bh=er45FBhXgQMN3gFCN07TF4ZCCoWXHqINBsXDWJIshOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vm6gYczor7RMlrtk4hibpjDrEgXzBQ1IUdug4B/nCI7k4RrafJtUWjh8iM0EbaoZ6A+CF53fbnmec7eMNDB641kvY27keAhToGO9zw2pj/lQaNpUvIbtJkNJANoSnwgItq8OiSP1KGb9M/t0ST/Ei7Ei35hu6U5Th/SgGwnmNy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjntyqMF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qa1NN0a4DTtzgEnBwUoR5+zDHll3qCeZs2t36UMvAx5x8GKL9xTWekNkcJNeAY0XHh6Y3FOWKFaPallMwXeCyr0M6QN2qmvNGrUTaSboYnApLsOzLy1VGJU+oJo1/WAkOURKiHo3ux6G9uqHPSzQ3l0x75LXmshQKmrRlaK58Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mdda6ywc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjntyqMF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A378FC4CEC3;
-	Mon, 21 Oct 2024 10:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mdda6ywc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F02C4CEC3;
+	Mon, 21 Oct 2024 10:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507286;
-	bh=XFPO8qQHAIIKZKAZYkW41arcK18t0vWSuI/E+z+Q9lU=;
+	s=korg; t=1729507289;
+	bh=er45FBhXgQMN3gFCN07TF4ZCCoWXHqINBsXDWJIshOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KjntyqMFnBreWjoOmETJ0vja2qKqjll1ghLI6ywamxftPyF4N0Qntja7O51oJXhzk
-	 0n33rrgbAR7kKsct/d5tJbJ/LwYiiWZikvx+GA99DWlxubaUNPhEI0LvY4Hvpi1O4G
-	 pDPO6U0QRsNM8fXqo8wpRexsY6vp5xHw2nu/lCBw=
+	b=Mdda6ywcjae0GUt2lFJsNLD0Jlnc1Jkj0iV8fz8nhixK+Fz7RoqwTamngCdSJp5kj
+	 tLV2NCusE1neiZJ17LO3YyhXlCVFCURGjJV32ue7JjZtrgkfI9ZZut/G8muA/72rb/
+	 4wUMzL6SPEfJfIysX9cmijcfGBvLjrQNGwSwn+PI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+69c9fdccc6dd08961d34@syzkaller.appspotmail.com,
 	Jan Kara <jack@suse.cz>,
 	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 6.1 08/91] udf: Move udf_expand_dir_adinicb() to its callsite
-Date: Mon, 21 Oct 2024 12:24:22 +0200
-Message-ID: <20241021102250.125753099@linuxfoundation.org>
+Subject: [PATCH 6.1 09/91] udf: Implement searching for directory entry using new iteration code
+Date: Mon, 21 Oct 2024 12:24:23 +0200
+Message-ID: <20241021102250.167573110@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -52,213 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit a27b2923de7efaa1da1e243fb80ff0fa432e4be0 ]
+[ Upstream commit 1c80afa04db39c98aebea9aabfafa37a208cdfee ]
 
-There is just one caller of udf_expand_dir_adinicb(). Move the function
-to its caller into namei.c as it is more about directory handling than
-anything else anyway.
+Implement searching for directory entry - udf_fiiter_find_entry() -
+using new directory iteration code.
 
+Reported-by: syzbot+69c9fdccc6dd08961d34@syzkaller.appspotmail.com
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c   |   82 -------------------------------------------------------
- fs/udf/namei.c   |   82 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- fs/udf/udfdecl.h |    2 -
- 3 files changed, 82 insertions(+), 84 deletions(-)
+ fs/udf/namei.c |   67 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 67 insertions(+)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -325,88 +325,6 @@ int udf_expand_file_adinicb(struct inode
- 	return err;
- }
- 
--struct buffer_head *udf_expand_dir_adinicb(struct inode *inode,
--					    udf_pblk_t *block, int *err)
--{
--	udf_pblk_t newblock;
--	struct buffer_head *dbh = NULL;
--	struct kernel_lb_addr eloc;
--	struct extent_position epos;
--	uint8_t alloctype;
--	struct udf_inode_info *iinfo = UDF_I(inode);
--	struct udf_fileident_iter iter;
--	uint8_t *impuse;
--	int ret;
--
--	if (UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_USE_SHORT_AD))
--		alloctype = ICBTAG_FLAG_AD_SHORT;
--	else
--		alloctype = ICBTAG_FLAG_AD_LONG;
--
--	if (!inode->i_size) {
--		iinfo->i_alloc_type = alloctype;
--		mark_inode_dirty(inode);
--		return NULL;
--	}
--
--	/* alloc block, and copy data to it */
--	*block = udf_new_block(inode->i_sb, inode,
--			       iinfo->i_location.partitionReferenceNum,
--			       iinfo->i_location.logicalBlockNum, err);
--	if (!(*block))
--		return NULL;
--	newblock = udf_get_pblock(inode->i_sb, *block,
--				  iinfo->i_location.partitionReferenceNum,
--				0);
--	if (!newblock)
--		return NULL;
--	dbh = udf_tgetblk(inode->i_sb, newblock);
--	if (!dbh)
--		return NULL;
--	lock_buffer(dbh);
--	memcpy(dbh->b_data, iinfo->i_data, inode->i_size);
--	memset(dbh->b_data + inode->i_size, 0,
--	       inode->i_sb->s_blocksize - inode->i_size);
--	set_buffer_uptodate(dbh);
--	unlock_buffer(dbh);
--
--	/* Drop inline data, add block instead */
--	iinfo->i_alloc_type = alloctype;
--	memset(iinfo->i_data + iinfo->i_lenEAttr, 0, iinfo->i_lenAlloc);
--	iinfo->i_lenAlloc = 0;
--	eloc.logicalBlockNum = *block;
--	eloc.partitionReferenceNum =
--				iinfo->i_location.partitionReferenceNum;
--	iinfo->i_lenExtents = inode->i_size;
--	epos.bh = NULL;
--	epos.block = iinfo->i_location;
--	epos.offset = udf_file_entry_alloc_offset(inode);
--	udf_add_aext(inode, &epos, &eloc, inode->i_size, 0);
--	brelse(epos.bh);
--	mark_inode_dirty(inode);
--
--	/* Now fixup tags in moved directory entries */
--	for (ret = udf_fiiter_init(&iter, inode, 0);
--	     !ret && iter.pos < inode->i_size;
--	     ret = udf_fiiter_advance(&iter)) {
--		iter.fi.descTag.tagLocation = cpu_to_le32(*block);
--		if (iter.fi.lengthOfImpUse != cpu_to_le16(0))
--			impuse = dbh->b_data + iter.pos +
--						sizeof(struct fileIdentDesc);
--		else
--			impuse = NULL;
--		udf_fiiter_write_fi(&iter, impuse);
--	}
--	/*
--	 * We don't expect the iteration to fail as the directory has been
--	 * already verified to be correct
--	 */
--	WARN_ON_ONCE(ret);
--	udf_fiiter_release(&iter);
--
--	return dbh;
--}
--
- static int udf_get_block(struct inode *inode, sector_t block,
- 			 struct buffer_head *bh_result, int create)
- {
 --- a/fs/udf/namei.c
 +++ b/fs/udf/namei.c
-@@ -326,6 +326,88 @@ static struct dentry *udf_lookup(struct
- 	return d_splice_alias(inode, dentry);
+@@ -141,6 +141,73 @@ int udf_write_fi(struct inode *inode, st
  }
  
-+static struct buffer_head *udf_expand_dir_adinicb(struct inode *inode,
-+					udf_pblk_t *block, int *err)
+ /**
++ * udf_fiiter_find_entry - find entry in given directory.
++ *
++ * @dir:	directory inode to search in
++ * @child:	qstr of the name
++ * @iter:	iter to use for searching
++ *
++ * This function searches in the directory @dir for a file name @child. When
++ * found, @iter points to the position in the directory with given entry.
++ *
++ * Returns 0 on success, < 0 on error (including -ENOENT).
++ */
++static int udf_fiiter_find_entry(struct inode *dir, const struct qstr *child,
++				 struct udf_fileident_iter *iter)
 +{
-+	udf_pblk_t newblock;
-+	struct buffer_head *dbh = NULL;
-+	struct kernel_lb_addr eloc;
-+	struct extent_position epos;
-+	uint8_t alloctype;
-+	struct udf_inode_info *iinfo = UDF_I(inode);
-+	struct udf_fileident_iter iter;
-+	uint8_t *impuse;
++	int flen;
++	unsigned char *fname = NULL;
++	struct super_block *sb = dir->i_sb;
++	int isdotdot = child->len == 2 &&
++		child->name[0] == '.' && child->name[1] == '.';
 +	int ret;
 +
-+	if (UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_USE_SHORT_AD))
-+		alloctype = ICBTAG_FLAG_AD_SHORT;
-+	else
-+		alloctype = ICBTAG_FLAG_AD_LONG;
++	fname = kmalloc(UDF_NAME_LEN, GFP_NOFS);
++	if (!fname)
++		return -ENOMEM;
 +
-+	if (!inode->i_size) {
-+		iinfo->i_alloc_type = alloctype;
-+		mark_inode_dirty(inode);
-+		return NULL;
++	for (ret = udf_fiiter_init(iter, dir, 0);
++	     !ret && iter->pos < dir->i_size;
++	     ret = udf_fiiter_advance(iter)) {
++		if (iter->fi.fileCharacteristics & FID_FILE_CHAR_DELETED) {
++			if (!UDF_QUERY_FLAG(sb, UDF_FLAG_UNDELETE))
++				continue;
++		}
++
++		if (iter->fi.fileCharacteristics & FID_FILE_CHAR_HIDDEN) {
++			if (!UDF_QUERY_FLAG(sb, UDF_FLAG_UNHIDE))
++				continue;
++		}
++
++		if ((iter->fi.fileCharacteristics & FID_FILE_CHAR_PARENT) &&
++		    isdotdot)
++			goto out_ok;
++
++		if (!iter->fi.lengthFileIdent)
++			continue;
++
++		flen = udf_get_filename(sb, iter->name,
++				iter->fi.lengthFileIdent, fname, UDF_NAME_LEN);
++		if (flen < 0) {
++			ret = flen;
++			goto out_err;
++		}
++
++		if (udf_match(flen, fname, child->len, child->name))
++			goto out_ok;
 +	}
++	if (!ret)
++		ret = -ENOENT;
 +
-+	/* alloc block, and copy data to it */
-+	*block = udf_new_block(inode->i_sb, inode,
-+			       iinfo->i_location.partitionReferenceNum,
-+			       iinfo->i_location.logicalBlockNum, err);
-+	if (!(*block))
-+		return NULL;
-+	newblock = udf_get_pblock(inode->i_sb, *block,
-+				  iinfo->i_location.partitionReferenceNum,
-+				0);
-+	if (!newblock)
-+		return NULL;
-+	dbh = udf_tgetblk(inode->i_sb, newblock);
-+	if (!dbh)
-+		return NULL;
-+	lock_buffer(dbh);
-+	memcpy(dbh->b_data, iinfo->i_data, inode->i_size);
-+	memset(dbh->b_data + inode->i_size, 0,
-+	       inode->i_sb->s_blocksize - inode->i_size);
-+	set_buffer_uptodate(dbh);
-+	unlock_buffer(dbh);
++out_err:
++	udf_fiiter_release(iter);
++out_ok:
++	kfree(fname);
 +
-+	/* Drop inline data, add block instead */
-+	iinfo->i_alloc_type = alloctype;
-+	memset(iinfo->i_data + iinfo->i_lenEAttr, 0, iinfo->i_lenAlloc);
-+	iinfo->i_lenAlloc = 0;
-+	eloc.logicalBlockNum = *block;
-+	eloc.partitionReferenceNum =
-+				iinfo->i_location.partitionReferenceNum;
-+	iinfo->i_lenExtents = inode->i_size;
-+	epos.bh = NULL;
-+	epos.block = iinfo->i_location;
-+	epos.offset = udf_file_entry_alloc_offset(inode);
-+	udf_add_aext(inode, &epos, &eloc, inode->i_size, 0);
-+	brelse(epos.bh);
-+	mark_inode_dirty(inode);
-+
-+	/* Now fixup tags in moved directory entries */
-+	for (ret = udf_fiiter_init(&iter, inode, 0);
-+	     !ret && iter.pos < inode->i_size;
-+	     ret = udf_fiiter_advance(&iter)) {
-+		iter.fi.descTag.tagLocation = cpu_to_le32(*block);
-+		if (iter.fi.lengthOfImpUse != cpu_to_le16(0))
-+			impuse = dbh->b_data + iter.pos +
-+						sizeof(struct fileIdentDesc);
-+		else
-+			impuse = NULL;
-+		udf_fiiter_write_fi(&iter, impuse);
-+	}
-+	/*
-+	 * We don't expect the iteration to fail as the directory has been
-+	 * already verified to be correct
-+	 */
-+	WARN_ON_ONCE(ret);
-+	udf_fiiter_release(&iter);
-+
-+	return dbh;
++	return ret;
 +}
 +
- static struct fileIdentDesc *udf_add_entry(struct inode *dir,
- 					   struct dentry *dentry,
- 					   struct udf_fileident_bh *fibh,
---- a/fs/udf/udfdecl.h
-+++ b/fs/udf/udfdecl.h
-@@ -169,8 +169,6 @@ static inline struct inode *udf_iget(str
- 	return __udf_iget(sb, ino, false);
- }
- extern int udf_expand_file_adinicb(struct inode *);
--extern struct buffer_head *udf_expand_dir_adinicb(struct inode *inode,
--						  udf_pblk_t *block, int *err);
- extern struct buffer_head *udf_bread(struct inode *inode, udf_pblk_t block,
- 				      int create, int *err);
- extern int udf_setsize(struct inode *, loff_t);
++/**
+  * udf_find_entry - find entry in given directory.
+  *
+  * @dir:	directory inode to search in
 
 
