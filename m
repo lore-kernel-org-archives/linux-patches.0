@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA8D1F4FB0;
-	Mon, 21 Oct 2024 10:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4657A1F706E;
+	Mon, 21 Oct 2024 10:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507014; cv=none; b=iSCt76cbhqKzVW7VCw96dMcq45dSda7cG7Op9ZiTDAFdB78ihdUIOwgKWVAMm8TQZpEr2XltWk8XHFqFMIAQ1akw83tqPLNzffgyUVnG4vhOHRM6xn1Tftz6EnU2fXxt1/yijQ0N9UGUZkbd0f1guyCB589G9rwrXF0WPi7RcNs=
+	t=1729507017; cv=none; b=LF/YRGEnCVztkhxy6m6RhOniLdtGh+G9iv5RPjK+hIeJqXR7fwnuk+gYsuKZ6DT1xFiUkHS/viusKMUpYVijlwOn8BcAYo/BTJDWBYOm2zLF8EMiFvfFG/pAD0Kq5aDLs+d7rfFXeuMF/s3sYlc3QGXfop3B49wOTXi8qbTFU9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507014; c=relaxed/simple;
-	bh=fzLEba1XYABICshWu+p5m07qK08WnnV72VnC2rKTZmk=;
+	s=arc-20240116; t=1729507017; c=relaxed/simple;
+	bh=Ur62jsoWDGiGrYWJZmncaGH+tREd21XFboDKRMUdO2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QuolF1zYY6LD6H1Zc6Xtxr8vv8XCst4M4KvU9u3l2Hjh1z10p3DTCK/bAixCnNPlEf0QGT3BcsTCwwN+PSUOPsMnTW1iBOCNPgkrZ+AXx3m027bzxqm73T1AOIYNut7dWBfNIQHCvvwXZOrIkL/tZqmqfrXyuIbKtI2GhmaORGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTPkfVF7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CF1fRYGSZezG0BmfQIhqRPFDI+bCyt5rWLXysl+MFuza/0jSiaF5kUZ+sWxqBu8lDhrlGdRW5O091r8mHt/SCpH9HSt1YV5T8euh1vHZAOdEU55bOmcPDOO+PD/1mU05wKNEcufGEJmMGIEGE4mPwg3tY/eezBZ82E2tj0pI/vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbKDVKT6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTPkfVF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE65C4CEE7;
-	Mon, 21 Oct 2024 10:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbKDVKT6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B6AC4CEC3;
+	Mon, 21 Oct 2024 10:36:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507013;
-	bh=fzLEba1XYABICshWu+p5m07qK08WnnV72VnC2rKTZmk=;
+	s=korg; t=1729507016;
+	bh=Ur62jsoWDGiGrYWJZmncaGH+tREd21XFboDKRMUdO2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LTPkfVF7OA5EyTcEg3zAH3aFC5Bh32r3CCOTgXMnVIjdXmlNmQ9gmGZjh4yy7116/
-	 /Ulh6/S9bRODB3EIPFqin7KvCniFCxNva3shS/LLgd+iJh5svqHWwTUya5I4lBMoVV
-	 VqLp6n3jcCjsjYL+I+Di735EWDTJHhog9GYEciIY=
+	b=QbKDVKT6+6HbruFyd73OxnqLALbwAVP5h2uxKqF9VBeaTjWYagqqPucCNTH1A/73B
+	 s2t1K37uvRh4jTdiUg7x/l6dtMnOU7bMTE1GrLuhiqN/wkXh37SWvDfAZiJnoOOpWp
+	 ysXA7yrrFnBVxiaXfqFaSs9n1G2iq5ksDcNRFwR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Liaw <edliaw@google.com>,
-	Lokesh Gidra <lokeshgidra@google.com>,
-	Peter Xu <peterx@redhat.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 020/124] selftests/mm: fix deadlock for fork after pthread_create on ARM
-Date: Mon, 21 Oct 2024 12:23:44 +0200
-Message-ID: <20241021102257.505196777@linuxfoundation.org>
+	Venkatesh Srinivas <venkateshs@chromium.org>,
+	Jim Mattson <jmattson@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	stable@kernel.org
+Subject: [PATCH 6.6 054/124] x86/cpufeatures: Define X86_FEATURE_AMD_IBPB_RET
+Date: Mon, 21 Oct 2024 12:24:18 +0200
+Message-ID: <20241021102258.820632684@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -53,50 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Liaw <edliaw@google.com>
+From: Jim Mattson <jmattson@google.com>
 
-commit e142cc87ac4ec618f2ccf5f68aedcd6e28a59d9d upstream.
+commit ff898623af2ed564300752bba83a680a1e4fec8d upstream.
 
-On Android with arm, there is some synchronization needed to avoid a
-deadlock when forking after pthread_create.
+AMD's initial implementation of IBPB did not clear the return address
+predictor. Beginning with Zen4, AMD's IBPB *does* clear the return address
+predictor. This behavior is enumerated by CPUID.80000008H:EBX.IBPB_RET[30].
 
-Link: https://lkml.kernel.org/r/20241003211716.371786-3-edliaw@google.com
-Fixes: cff294582798 ("selftests/mm: extend and rename uffd pagemap test")
-Signed-off-by: Edward Liaw <edliaw@google.com>
-Cc: Lokesh Gidra <lokeshgidra@google.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Define X86_FEATURE_AMD_IBPB_RET for use in KVM_GET_SUPPORTED_CPUID,
+when determining cross-vendor capabilities.
+
+Suggested-by: Venkatesh Srinivas <venkateshs@chromium.org>
+Signed-off-by: Jim Mattson <jmattson@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/uffd-unit-tests.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/x86/include/asm/cpufeatures.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/mm/uffd-unit-tests.c
-+++ b/tools/testing/selftests/mm/uffd-unit-tests.c
-@@ -237,6 +237,9 @@ static void *fork_event_consumer(void *d
- 	fork_event_args *args = data;
- 	struct uffd_msg msg = { 0 };
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -216,7 +216,7 @@
+ #define X86_FEATURE_SPEC_STORE_BYPASS_DISABLE	( 7*32+23) /* "" Disable Speculative Store Bypass. */
+ #define X86_FEATURE_LS_CFG_SSBD		( 7*32+24)  /* "" AMD SSBD implementation via LS_CFG MSR */
+ #define X86_FEATURE_IBRS		( 7*32+25) /* Indirect Branch Restricted Speculation */
+-#define X86_FEATURE_IBPB		( 7*32+26) /* Indirect Branch Prediction Barrier */
++#define X86_FEATURE_IBPB		( 7*32+26) /* "ibpb" Indirect Branch Prediction Barrier without a guaranteed RSB flush */
+ #define X86_FEATURE_STIBP		( 7*32+27) /* Single Thread Indirect Branch Predictors */
+ #define X86_FEATURE_ZEN			( 7*32+28) /* "" Generic flag for all Zen and newer */
+ #define X86_FEATURE_L1TF_PTEINV		( 7*32+29) /* "" L1TF workaround PTE inversion */
+@@ -347,6 +347,7 @@
+ #define X86_FEATURE_CPPC		(13*32+27) /* Collaborative Processor Performance Control */
+ #define X86_FEATURE_AMD_PSFD            (13*32+28) /* "" Predictive Store Forwarding Disable */
+ #define X86_FEATURE_BTC_NO		(13*32+29) /* "" Not vulnerable to Branch Type Confusion */
++#define X86_FEATURE_AMD_IBPB_RET	(13*32+30) /* "" IBPB clears return address predictor */
+ #define X86_FEATURE_BRS			(13*32+31) /* Branch Sampling available */
  
-+	/* Ready for parent thread to fork */
-+	pthread_barrier_wait(&ready_for_fork);
-+
- 	/* Read until a full msg received */
- 	while (uffd_read_msg(args->parent_uffd, &msg));
- 
-@@ -304,8 +307,12 @@ static int pagemap_test_fork(int uffd, b
- 
- 	/* Prepare a thread to resolve EVENT_FORK */
- 	if (with_event) {
-+		pthread_barrier_init(&ready_for_fork, NULL, 2);
- 		if (pthread_create(&thread, NULL, fork_event_consumer, &args))
- 			err("pthread_create()");
-+		/* Wait for child thread to start before forking */
-+		pthread_barrier_wait(&ready_for_fork);
-+		pthread_barrier_destroy(&ready_for_fork);
- 	}
- 
- 	child = fork();
+ /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX), word 14 */
 
 
