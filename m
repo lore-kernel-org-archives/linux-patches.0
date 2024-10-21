@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017451EABB6;
-	Mon, 21 Oct 2024 10:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170951E5718;
+	Mon, 21 Oct 2024 10:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507733; cv=none; b=dy+FMd2jjRDv6igENNgypZ+iJGQJOHERbWQ3RSLyten3QDYKWydlDlHp+O8WmQXmKpsh2yyLJqkgCmP81abQap8pfi/eiKA3qwWDUdvELp/rb+qx73U6zDhepm56hHrx1UFwkNGz1tnY8z6CdPO4jgrwqVZCEU3/jxHct8UUAvQ=
+	t=1729507736; cv=none; b=sO3pMp9tmT/LWKN+8G1ZNAPDBgTlqAgkbvWH0aWxa+aH91UxufF0W+YkJeHTrea/SiBlo93BfFMalUW+AinOuEUYQfUXNoBrPutcoM43b5aX269LTzIPdpVv4IcX/vhRilOmU2Tu1dPbfSQRt8XrjITW/FirwhS3jkKsmN5hHh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507733; c=relaxed/simple;
-	bh=mUVwBKl+f07PcEAIGfO2zSOkL6s0CAvHQ0JB1FOy6wI=;
+	s=arc-20240116; t=1729507736; c=relaxed/simple;
+	bh=6RaaTiAiAkS3SyAoluwCtyK2OI+2XgEUI/yGuQrZWSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EZ28Wo475mWZBWVV7nVl1LWHAwvRwb2xUw/salrr2HtZm3pPcnOweHj+8H+wg5622aE5fUT6WGYempuUjIsqxxTGMOASBocOj0iRVkgOT+PpLn94RcOjswJ3pKsEVl81hQqQjjt57JK6mFhZLDOuuZdjjSipAAcH22a1OtqSSRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kIer0lfX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ep7yQYJf9Jl8SzQhUHtdsR+CpNFyhq+7zK9Vj8n+zhloN18D0fIrU9tKfLxe0F6g/orCwaqlHzAldYtep31/LVsY00TYSGcNI0xWYKC3M39jJitsFPV1JkWSTR26Hx379HRMNjwq4jwVKEPqn1yPxJ4jlg8F1NWsxRHxF7YwusA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMeq0ZYX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kIer0lfX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F59C4CEC3;
-	Mon, 21 Oct 2024 10:48:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMeq0ZYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61447C4CEC7;
+	Mon, 21 Oct 2024 10:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507732;
-	bh=mUVwBKl+f07PcEAIGfO2zSOkL6s0CAvHQ0JB1FOy6wI=;
+	s=korg; t=1729507735;
+	bh=6RaaTiAiAkS3SyAoluwCtyK2OI+2XgEUI/yGuQrZWSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kIer0lfXR8IeYY803Im2+OK/32xyOv+H3d/llSdwnEW3xC7/I+7gSvh3rOe4obgaz
-	 rF3yweeIEtDLAnwBbeIQyBAz0r9qRIutZ4H0KY+lHHWjDna92I1qilDjWzbCfA7aHX
-	 BhGMbtD0w0f2JLbnLa7jBRNzwT6GrKa+kQxkC5u8=
+	b=gMeq0ZYXDHBni3yRAJWM2/2/2dgwFX06pbNUCDfDz+k610s859bTkCV0W9b5uE73l
+	 XNtO19EkdZqwbT1xcOSf8IweQ0koZKPdLix+zxF8K9rZrVy42LF87hcuqS7Q6aZkLn
+	 2vXThB5Br9EjUUEuhTDpzAFZPQ+LZfZcHynIx7AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 52/82] iio: dac: ltc1660: add missing select REGMAP_SPI in Kconfig
-Date: Mon, 21 Oct 2024 12:25:33 +0200
-Message-ID: <20241021102249.294565227@linuxfoundation.org>
+	Johannes Wikner <kwikner@ethz.ch>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 5.15 43/82] x86/cpufeatures: Add a IBPB_NO_RET BUG flag
+Date: Mon, 21 Oct 2024 12:25:24 +0200
+Message-ID: <20241021102248.943420633@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102247.209765070@linuxfoundation.org>
 References: <20241021102247.209765070@linuxfoundation.org>
@@ -51,33 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Johannes Wikner <kwikner@ethz.ch>
 
-commit 252ff06a4cb4e572cb3c7fcfa697db96b08a7781 upstream.
+commit 3ea87dfa31a7b0bb0ff1675e67b9e54883013074 upstream.
 
-This driver makes use of regmap_spi, but does not select the required
-module.
-Add the missing 'select REGMAP_SPI'.
+Set this flag if the CPU has an IBPB implementation that does not
+invalidate return target predictions. Zen generations < 4 do not flush
+the RSB when executing an IBPB and this bug flag denotes that.
 
-Fixes: 8316cebd1e59 ("iio: dac: add support for ltc1660")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20241003-ad2s1210-select-v1-7-4019453f8c33@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+  [ bp: Massage. ]
+
+Signed-off-by: Johannes Wikner <kwikner@ethz.ch>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/include/asm/cpufeatures.h |    1 +
+ arch/x86/kernel/cpu/common.c       |    3 +++
+ 2 files changed, 4 insertions(+)
 
---- a/drivers/iio/dac/Kconfig
-+++ b/drivers/iio/dac/Kconfig
-@@ -284,6 +284,7 @@ config LPC18XX_DAC
- config LTC1660
- 	tristate "Linear Technology LTC1660/LTC1665 DAC SPI driver"
- 	depends on SPI
-+	select REGMAP_SPI
- 	help
- 	  Say yes here to build support for Linear Technology
- 	  LTC1660 and LTC1665 Digital to Analog Converters.
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -481,4 +481,5 @@
+ #define X86_BUG_DIV0			X86_BUG(1*32 + 1) /* AMD DIV0 speculation bug */
+ #define X86_BUG_RFDS			X86_BUG(1*32 + 2) /* CPU is vulnerable to Register File Data Sampling */
+ #define X86_BUG_BHI			X86_BUG(1*32 + 3) /* CPU is affected by Branch History Injection */
++#define X86_BUG_IBPB_NO_RET		X86_BUG(1*32 + 4) /* "ibpb_no_ret" IBPB omits return target predictions */
+ #endif /* _ASM_X86_CPUFEATURES_H */
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1352,6 +1352,9 @@ static void __init cpu_set_bug_bits(stru
+ 	     boot_cpu_has(X86_FEATURE_HYPERVISOR)))
+ 		setup_force_cpu_bug(X86_BUG_BHI);
+ 
++	if (cpu_has(c, X86_FEATURE_AMD_IBPB) && !cpu_has(c, X86_FEATURE_AMD_IBPB_RET))
++		setup_force_cpu_bug(X86_BUG_IBPB_NO_RET);
++
+ 	if (cpu_matches(cpu_vuln_whitelist, NO_MELTDOWN))
+ 		return;
+ 
 
 
