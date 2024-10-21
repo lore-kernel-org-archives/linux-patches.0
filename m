@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD361F12F7;
-	Mon, 21 Oct 2024 10:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF21D1F429E;
+	Mon, 21 Oct 2024 10:33:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506803; cv=none; b=ELPZPcjjtzOih+A1fayXs2loZKL4xl3+srWIaBJzStdyPkcLjJ0JGuliFopfBFF6G1D2lqsBcGxZSL048EVflAE1TFtBfIszZDJR9jRkCdA7tnMyafDY+iPHcH5eOedpYuyOiMeMA+Af1/7TawHxQJXsc9ybkbcUUhRahLg41q8=
+	t=1729506806; cv=none; b=GZlognBzUJfhzCFk4Fo9i7LCo9dDYwlF/VB/zAoYzkFg2Q5XrW9XW4OEqNRuHy6LY7WMd9/5RJ8qqpyzlvPI3TFUY61Bl443Oy3ZRiCvwJG6PFBhIJ/Mzj4hh93UrIpZF9cgQcoM1DnfW2P8XIHO4jLfEY8r43PZv+1m4ENONIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506803; c=relaxed/simple;
-	bh=N1h3bQg2QrZwxEx/+Y+JEKUHuUkwZ2Um1x+L7PrE0V8=;
+	s=arc-20240116; t=1729506806; c=relaxed/simple;
+	bh=OwuA1SZIgFvmJsaujaG2pSjJb0vLAdDdFhGh6UxL/RI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSIy7wh8wGF1GRHwxoqhabz4E5rRA41OE5cfAdz5powxd7sFygRLXVyXBqFn/VEw9/arMvv/fStvAatEU6pZ+UlpTjc9z/QprvDFshdTXLetJ/5I0nArvteGZ6338A0t44lEk4Irikq6AR+2P45ZAWYHFKfDcc/1+HQvHVr9AAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZrsotxEp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WYG4iiOjpXUezMKWWiVzNkKrsunf1uIoIntlr3YKBJSCHgm28ilFgP7bk1pjDPx4httl5HLscN0qODL5yT8kX/AmmdZM1yBeUENl49/rAShYDktLJ59DBBAeNP4rRXOyOhaJQLVkU+3I5Mx4GlZdW1RGcGAZSAG/oheXTc4SMTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1ExPhFJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZrsotxEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9AA8C4CEFF;
-	Mon, 21 Oct 2024 10:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1ExPhFJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FADEC4CEEE;
+	Mon, 21 Oct 2024 10:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506803;
-	bh=N1h3bQg2QrZwxEx/+Y+JEKUHuUkwZ2Um1x+L7PrE0V8=;
+	s=korg; t=1729506806;
+	bh=OwuA1SZIgFvmJsaujaG2pSjJb0vLAdDdFhGh6UxL/RI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZrsotxEpfcm+93xK7ngdZAQFckju7u2Zawy8oFlhimfiuZto5mnxRW9eWq3SSXGtB
-	 3FvdoSC57WIjMiSj30WgwgmzCYfDh/3TsCUPKne61KO+UqkkdzALepAuBtdyhQ1YUM
-	 OXOchc4ZCvVmYGhHWwv3sAF+wRLveM/mgcprl7cE=
+	b=S1ExPhFJz0m/d+7BtAfc8XbpvXzaJCci7hrYkVR9mLxLefjNiakaXi0gSFVovBZnd
+	 lRD7/4dbEcXMr72HssLmcpUzYkYvWvB3UOQeYcMibqutov/smtVhU0RWrFroh69JiJ
+	 DygP/Pv7k5T3+Fv/702gGGbZzVobweBCxinZsjhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunkun Jiang <jiangkunkun@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Nam Cao <namcao@linutronix.de>,
 	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.11 126/135] irqchip/gic-v4: Dont allow a VMOVP on a dying VPE
-Date: Mon, 21 Oct 2024 12:24:42 +0200
-Message-ID: <20241021102304.262304578@linuxfoundation.org>
+Subject: [PATCH 6.11 127/135] irqchip/sifive-plic: Unmask interrupt in plic_irq_enable()
+Date: Mon, 21 Oct 2024 12:24:43 +0200
+Message-ID: <20241021102304.311323656@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -51,103 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Nam Cao <namcao@linutronix.de>
 
-commit 1442ee0011983f0c5c4b92380e6853afb513841a upstream.
+commit 6b1e0651e9ce8ce418ad4ff360e7b9925dc5da79 upstream.
 
-Kunkun Jiang reported that there is a small window of opportunity for
-userspace to force a change of affinity for a VPE while the VPE has already
-been unmapped, but the corresponding doorbell interrupt still visible in
-/proc/irq/.
+It is possible that an interrupt is disabled and masked at the same time.
+When the interrupt is enabled again by enable_irq(), only plic_irq_enable()
+is called, not plic_irq_unmask(). The interrupt remains masked and never
+raises.
 
-Plug the race by checking the value of vmapp_count, which tracks whether
-the VPE is mapped ot not, and returning an error in this case.
+An example where interrupt is both disabled and masked is when
+handle_fasteoi_irq() is the handler, and IRQS_ONESHOT is set. The interrupt
+handler:
 
-This involves making vmapp_count common to both GICv4.1 and its v4.0
-ancestor.
+  1. Mask the interrupt
+  2. Handle the interrupt
+  3. Check if interrupt is still enabled, and unmask it (see
+     cond_unmask_eoi_irq())
 
-Fixes: 64edfaa9a234 ("irqchip/gic-v4.1: Implement the v4.1 flavour of VMAPP")
-Reported-by: Kunkun Jiang <jiangkunkun@huawei.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+If another task disables the interrupt in the middle of the above steps,
+the interrupt will not get unmasked, and will remain masked when it is
+enabled in the future.
+
+The problem is occasionally observed when PREEMPT_RT is enabled, because
+PREEMPT_RT adds the IRQS_ONESHOT flag. But PREEMPT_RT only makes the problem
+more likely to appear, the bug has been around since commit a1706a1c5062
+("irqchip/sifive-plic: Separate the enable and mask operations").
+
+Fix it by unmasking interrupt in plic_irq_enable().
+
+Fixes: a1706a1c5062 ("irqchip/sifive-plic: Separate the enable and mask operations")
+Signed-off-by: Nam Cao <namcao@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/c182ece6-2ba0-ce4f-3404-dba7a3ab6c52@huawei.com
-Link: https://lore.kernel.org/all/20241002204959.2051709-1-maz@kernel.org
+Link: https://lore.kernel.org/all/20241003084152.2422969-1-namcao@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c   |   18 ++++++++++++------
- include/linux/irqchip/arm-gic-v4.h |    4 +++-
- 2 files changed, 15 insertions(+), 7 deletions(-)
+ drivers/irqchip/irq-sifive-plic.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -797,8 +797,8 @@ static struct its_vpe *its_build_vmapp_c
- 	its_encode_valid(cmd, desc->its_vmapp_cmd.valid);
+--- a/drivers/irqchip/irq-sifive-plic.c
++++ b/drivers/irqchip/irq-sifive-plic.c
+@@ -123,16 +123,6 @@ static inline void plic_irq_toggle(const
+ 	}
+ }
  
- 	if (!desc->its_vmapp_cmd.valid) {
-+		alloc = !atomic_dec_return(&desc->its_vmapp_cmd.vpe->vmapp_count);
- 		if (is_v4_1(its)) {
--			alloc = !atomic_dec_return(&desc->its_vmapp_cmd.vpe->vmapp_count);
- 			its_encode_alloc(cmd, alloc);
- 			/*
- 			 * Unmapping a VPE is self-synchronizing on GICv4.1,
-@@ -817,13 +817,13 @@ static struct its_vpe *its_build_vmapp_c
- 	its_encode_vpt_addr(cmd, vpt_addr);
- 	its_encode_vpt_size(cmd, LPI_NRBITS - 1);
- 
-+	alloc = !atomic_fetch_inc(&desc->its_vmapp_cmd.vpe->vmapp_count);
-+
- 	if (!is_v4_1(its))
- 		goto out;
- 
- 	vconf_addr = virt_to_phys(page_address(desc->its_vmapp_cmd.vpe->its_vm->vprop_page));
- 
--	alloc = !atomic_fetch_inc(&desc->its_vmapp_cmd.vpe->vmapp_count);
+-static void plic_irq_enable(struct irq_data *d)
+-{
+-	plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 1);
+-}
 -
- 	its_encode_alloc(cmd, alloc);
+-static void plic_irq_disable(struct irq_data *d)
+-{
+-	plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 0);
+-}
+-
+ static void plic_irq_unmask(struct irq_data *d)
+ {
+ 	struct plic_priv *priv = irq_data_get_irq_chip_data(d);
+@@ -147,6 +137,17 @@ static void plic_irq_mask(struct irq_dat
+ 	writel(0, priv->regs + PRIORITY_BASE + d->hwirq * PRIORITY_PER_ID);
+ }
  
- 	/*
-@@ -3807,6 +3807,13 @@ static int its_vpe_set_affinity(struct i
- 	unsigned long flags;
- 
- 	/*
-+	 * Check if we're racing against a VPE being destroyed, for
-+	 * which we don't want to allow a VMOVP.
-+	 */
-+	if (!atomic_read(&vpe->vmapp_count))
-+		return -EINVAL;
++static void plic_irq_enable(struct irq_data *d)
++{
++	plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 1);
++	plic_irq_unmask(d);
++}
 +
-+	/*
- 	 * Changing affinity is mega expensive, so let's be as lazy as
- 	 * we can and only do it if we really have to. Also, if mapped
- 	 * into the proxy device, we need to move the doorbell
-@@ -4463,9 +4470,8 @@ static int its_vpe_init(struct its_vpe *
- 	raw_spin_lock_init(&vpe->vpe_lock);
- 	vpe->vpe_id = vpe_id;
- 	vpe->vpt_page = vpt_page;
--	if (gic_rdists->has_rvpeid)
--		atomic_set(&vpe->vmapp_count, 0);
--	else
-+	atomic_set(&vpe->vmapp_count, 0);
-+	if (!gic_rdists->has_rvpeid)
- 		vpe->vpe_proxy_event = -1;
- 
- 	return 0;
---- a/include/linux/irqchip/arm-gic-v4.h
-+++ b/include/linux/irqchip/arm-gic-v4.h
-@@ -66,10 +66,12 @@ struct its_vpe {
- 				bool	enabled;
- 				bool	group;
- 			}			sgi_config[16];
--			atomic_t vmapp_count;
- 		};
- 	};
- 
-+	/* Track the VPE being mapped */
-+	atomic_t vmapp_count;
++static void plic_irq_disable(struct irq_data *d)
++{
++	plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 0);
++}
 +
- 	/*
- 	 * Ensures mutual exclusion between affinity setting of the
- 	 * vPE and vLPI operations using vpe->col_idx.
+ static void plic_irq_eoi(struct irq_data *d)
+ {
+ 	struct plic_handler *handler = this_cpu_ptr(&plic_handlers);
 
 
