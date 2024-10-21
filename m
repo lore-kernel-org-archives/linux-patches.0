@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782F61E7C29;
-	Mon, 21 Oct 2024 10:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699AA1E7C24;
+	Mon, 21 Oct 2024 10:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506725; cv=none; b=qeG0YqaNRvVs2VuzkpqP0PmuscQdlJ812zm/4R8fVP7ZXv6/J1Kf2PkHmhVOucI41GB55Kv9Vq2Ys8JIQow8z6nVUYf1H0fDa3GTFzq/8Xbtkn9I/gHrLl7AXiwoC2P3U6dWEY2lKBSciYa1jsGKlaLm+izy2NVIQrejwns3mt8=
+	t=1729506728; cv=none; b=foB/Ksmqdp+rd7dzhhEBi/AixSyyR+1JJ240mgDgJIRV2iTeSjRpvmu8AReTUAigbVBb/ve3f2a1jV2KEIfxj7cMrH5lkaFNRHEMNmctiFs/QMkSNdqbh+c6pr1gsciTLZi73z8JJcK0fCXsjrzHg+c04a9jH01xKMxsEmuvEIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506725; c=relaxed/simple;
-	bh=ckPvU2LvqN6Gs/FnGsDS99vhBKSyuwlDUU7oMQbF0SA=;
+	s=arc-20240116; t=1729506728; c=relaxed/simple;
+	bh=52Wb+kFHBBtP04/pJbBoWKhJJlkGptGVmgUS2rCPIBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EY7H8E0WribEwAz224ydMnWnslQtOQhL0+9kG1VMFwIKlm64SSVVB6Ze0X6dz1I8E/OhC8XtRnQeimfYpbklAfWMTgoQggaesqlEdtX3kic8oM8DvKpeTo1QPcBgPUmO7mbRfl8X5htZp37fkM9AU+aF012pbvDjtF3GiHebhkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y678w5lR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z7RZW0j0FThrgUlAvOs9eBXPG8hWocP1odUKWz+gleLN3iKokRr54CLszcFo6M9JL4skUbsQ1XS4riA3dgBvdSHbvScwUbMXClQOPEqQZRUuk52P/LHzHriDmXmzGB47DXVcj/Rxmt7LEJYJfI2rFnvBzT0JIG/0qseuCeIZf44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VR7Sqx03; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y678w5lR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B2DC4CEC3;
-	Mon, 21 Oct 2024 10:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VR7Sqx03"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B5EC4CEC3;
+	Mon, 21 Oct 2024 10:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506725;
-	bh=ckPvU2LvqN6Gs/FnGsDS99vhBKSyuwlDUU7oMQbF0SA=;
+	s=korg; t=1729506728;
+	bh=52Wb+kFHBBtP04/pJbBoWKhJJlkGptGVmgUS2rCPIBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y678w5lRa1qVFc7+LW/YgITfHKFKCbtrh9tkBp8ZAP0cbayyxiupfHRB1Qg2f101Z
-	 SYxf5ySByw2nmUmDTE5c1emfxkZVfxn1M6BDEc93jHvcTa2GtUic1wG7ghXvkRPpgH
-	 lHV0PHvaeXkfyflkgF+IqzUVfLgiIZBFh2IaKO00=
+	b=VR7Sqx03oWPQQ6MC7JDX+JCI43+2tL4nXG8+cBR16JBcKdim6O0+WGT0oniSxlNgb
+	 atYz70v8YPA5TCcni+cthKwL/mDsu4l5w6pWlaZwsPOUBsm1Db42brK5FvGjdZKH1A
+	 OrrQxLltw8iNPLRrMjUPS3udX05tf7VlT3HKXxwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+955da2d57931604ee691@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>
-Subject: [PATCH 6.11 099/135] vt: prevent kernel-infoleak in con_font_get()
-Date: Mon, 21 Oct 2024 12:24:15 +0200
-Message-ID: <20241021102303.198614204@linuxfoundation.org>
+	Henry Lin <henryl@nvidia.com>
+Subject: [PATCH 6.11 100/135] xhci: tegra: fix checked USB2 port number
+Date: Mon, 21 Oct 2024 12:24:16 +0200
+Message-ID: <20241021102303.237308687@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -50,35 +49,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Henry Lin <henryl@nvidia.com>
 
-commit f956052e00de211b5c9ebaa1958366c23f82ee9e upstream.
+commit 7d381137cb6ecf558ef6698c7730ddd482d4c8f2 upstream.
 
-font.data may not initialize all memory spaces depending on the implementation
-of vc->vc_sw->con_font_get. This may cause info-leak, so to prevent this, it
-is safest to modify it to initialize the allocated memory space to 0, and it
-generally does not affect the overall performance of the system.
+If USB virtualizatoin is enabled, USB2 ports are shared between all
+Virtual Functions. The USB2 port number owned by an USB2 root hub in
+a Virtual Function may be less than total USB2 phy number supported
+by the Tegra XUSB controller.
 
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+955da2d57931604ee691@syzkaller.appspotmail.com
-Fixes: 05e2600cb0a4 ("VT: Bump font size limitation to 64x128 pixels")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Link: https://lore.kernel.org/r/20241010174619.59662-1-aha310510@gmail.com
+Using total USB2 phy number as port number to check all PORTSC values
+would cause invalid memory access.
+
+[  116.923438] Unable to handle kernel paging request at virtual address 006c622f7665642f
+...
+[  117.213640] Call trace:
+[  117.216783]  tegra_xusb_enter_elpg+0x23c/0x658
+[  117.222021]  tegra_xusb_runtime_suspend+0x40/0x68
+[  117.227260]  pm_generic_runtime_suspend+0x30/0x50
+[  117.232847]  __rpm_callback+0x84/0x3c0
+[  117.237038]  rpm_suspend+0x2dc/0x740
+[  117.241229] pm_runtime_work+0xa0/0xb8
+[  117.245769]  process_scheduled_works+0x24c/0x478
+[  117.251007]  worker_thread+0x23c/0x328
+[  117.255547]  kthread+0x104/0x1b0
+[  117.259389]  ret_from_fork+0x10/0x20
+[  117.263582] Code: 54000222 f9461ae8 f8747908 b4ffff48 (f9400100)
+
+Cc: stable@vger.kernel.org # v6.3+
+Fixes: a30951d31b25 ("xhci: tegra: USB2 pad power controls")
+Signed-off-by: Henry Lin <henryl@nvidia.com>
+Link: https://lore.kernel.org/r/20241014042134.27664-1-henryl@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/vt.c |    2 +-
+ drivers/usb/host/xhci-tegra.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -4726,7 +4726,7 @@ static int con_font_get(struct vc_data *
- 		return -EINVAL;
+--- a/drivers/usb/host/xhci-tegra.c
++++ b/drivers/usb/host/xhci-tegra.c
+@@ -2183,7 +2183,7 @@ static int tegra_xusb_enter_elpg(struct
+ 		goto out;
+ 	}
  
- 	if (op->data) {
--		font.data = kvmalloc(max_font_size, GFP_KERNEL);
-+		font.data = kvzalloc(max_font_size, GFP_KERNEL);
- 		if (!font.data)
- 			return -ENOMEM;
- 	} else
+-	for (i = 0; i < tegra->num_usb_phys; i++) {
++	for (i = 0; i < xhci->usb2_rhub.num_ports; i++) {
+ 		if (!xhci->usb2_rhub.ports[i])
+ 			continue;
+ 		portsc = readl(xhci->usb2_rhub.ports[i]->addr);
 
 
