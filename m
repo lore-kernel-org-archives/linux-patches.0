@@ -1,214 +1,99 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10C6B946C;
-	Mon, 21 Oct 2024 11:32:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from andre.telenet-ops.be (andre.telenet-ops.be [195.130.132.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918011E9072
+	for <patches@lists.linux.dev>; Mon, 21 Oct 2024 12:02:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.130.132.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729510349; cv=none; b=oKAuBsib1YN3TepnJapVhyC0wqG5DV9SRnu1M9d3B5mDUoA1uy1Y2MdDkanKKjyusDCv0LfxqtdWRHvkvP9CHEmX8qPinOUIHusChYq4vYHTcIINFYLMouesjQ5EeFFVOW9f36bBvTrOYARLoYr/cG0Mc+DvS4P7ocdfFGCdaLI=
+	t=1729512162; cv=none; b=DHM0WBqEEKsXYsm3+V4S7t0KNjDU5xzCH0tJiymO+64lqtMhQpRdDVBATFl19KhdX5j3Lw7sPd8pFdxuOV4jPU0TmIM65XUx9jWDvwU5ILYZHf8YmC0VgpRKa16/04hNY6moaFprY6IldHLrY5yaEWic5ex6o1yubTIzDoM+NIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729510349; c=relaxed/simple;
-	bh=9IoIzZMlxOpCqYsRROuxv+oGo8/nUEtz2IrUQECh7rs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AxmAK6pB1/3Ls+tf2pMLIXiRio9PId/48D2Okn5BKSFi3bq7R6DUoaJWW7lhXOYyTvhVLyuYYJuEzR0ISlFE/l51e80LyhDvddjB6e0pL9/PwWQ3nAJ0eHiiz757mvFq9hk5NjS7tLKIG3sP9qREGzT7CvtuVucISfJcfoj1lmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CBD21DA7;
-	Mon, 21 Oct 2024 04:32:55 -0700 (PDT)
-Received: from [10.57.24.27] (unknown [10.57.24.27])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id ECE3C3F528;
-	Mon, 21 Oct 2024 04:32:23 -0700 (PDT)
-Message-ID: <850c70ff-a7f0-4a0b-83a4-0b03a039831d@arm.com>
-Date: Mon, 21 Oct 2024 12:32:21 +0100
+	s=arc-20240116; t=1729512162; c=relaxed/simple;
+	bh=XB/ma5czQuICzNFrraRxoB0KoIC4DnukcfKzkvlvMMU=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=OH1UxWqgKf/awlGt/gGcC3lUQMFYgIr7Qr4QROPfmAcbFVaPQOGJbyMgG3WgmW6K8/K/jAse093hmP6inY2OKjrceCh+/5tryH++j8d8CiRs9BjCL3RqN2XY/ZkQ/vgkQbP2gr1H7lDQy7HkTLM8XvkA7LO/HzRNVU+MCyHhDrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=none smtp.mailfrom=linux-m68k.org; arc=none smtp.client-ip=195.130.132.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux-m68k.org
+Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed80:a141:3544:6743:cb10])
+	by andre.telenet-ops.be with cmsmtp
+	id T02X2D00A5HsszL0102XVT; Mon, 21 Oct 2024 14:02:31 +0200
+Received: from geert (helo=localhost)
+	by ramsan.of.borg with local-esmtp (Exim 4.95)
+	(envelope-from <geert@linux-m68k.org>)
+	id 1t2r7H-004FNQ-Ob;
+	Mon, 21 Oct 2024 14:02:31 +0200
+Date: Mon, 21 Oct 2024 14:02:31 +0200 (CEST)
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] MAINTAINERS: Remove some entries due to various compliance
+ requirements.
+In-Reply-To: <2024101835-tiptop-blip-09ed@gregkh>
+Message-ID: <6c773870-6eb7-394b-8be-7a414c99b5f1@linux-m68k.org>
+References: <2024101835-tiptop-blip-09ed@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] iommu/io-pgtable-arm: Remove split on unmap behavior
-To: Boris Brezillon <boris.brezillon@collabora.com>,
- Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- linux-arm-kernel@lists.infradead.org, Robin Murphy <robin.murphy@arm.com>,
- Will Deacon <will@kernel.org>, dri-devel@lists.freedesktop.org,
- Liviu Dudau <liviu.dudau@arm.com>, patches@lists.linux.dev
-References: <0-v1-8c5f369ec2e5+75-arm_no_split_jgg@nvidia.com>
- <20241021111758.561c81ca@collabora.com>
-From: Steven Price <steven.price@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20241021111758.561c81ca@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 
-On 21/10/2024 10:17, Boris Brezillon wrote:
-> On Fri, 18 Oct 2024 14:19:26 -0300
-> Jason Gunthorpe <jgg@nvidia.com> wrote:
-> 
->> Of the page table implementations (AMD v1/2, VT-D SS, ARM32, DART)
->> arm_lpae is unique in how it handles partial unmap of large IOPTEs.
->>
->> All other drivers will unmap the large IOPTE and return it's length.  For
->> example if a 2M IOPTE is present and the first 4K is requested to be
->> unmapped then unmap will remove the whole 2M and report 2M as the result.
->>
->> arm_lpae instead replaces the IOPTE with a table of smaller IOPTEs, unmaps
->> the 4K and returns 4k. This is actually an illegal/non-hitless operation
->> on at least SMMUv3 because of the BBM level 0 rules.
+ 	Hi Greg,
 
-Mali GPUs can (theoretically) do this safely because we can lock a
-region during the operation (LOCKADDR register). But neither Panfrost
-nor Panthor make use of this today.
+Thanks for your patch, which is now commit 6e90b675cf942e50
+("MAINTAINERS: Remove some entries due to various compliance
+requirements.") in v6.12-rc4.
 
->> Long ago VFIO could trigger a path like this, today I know of no user of
->> this functionality.
->>
->> Given it doesn't work fully correctly on SMMUv3 and would create
->> portability problems if any user depends on it, remove the unique support
->> in arm_lpae and align with the expected iommu interface.
->>
->> Outside the iommu users, this will potentially effect io_pgtable users of
->> ARM_32_LPAE_S1, ARM_32_LPAE_S2, ARM_64_LPAE_S1, ARM_64_LPAE_S2, and
->> ARM_MALI_LPAE formats.
->>
->> Cc: Boris Brezillon <boris.brezillon@collabora.com>
->> Cc: Steven Price <steven.price@arm.com>
->> Cc: Liviu Dudau <liviu.dudau@arm.com>
->> Cc: dri-devel@lists.freedesktop.org
->> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
->> ---
->>  drivers/iommu/io-pgtable-arm.c | 72 +++-------------------------------
->>  1 file changed, 6 insertions(+), 66 deletions(-)
->>
->> I don't know anything in the iommu space that needs this, and this is the only
->> page table implementation in iommu that does it.
->>
->> I'm not sure about DRM, I looked for awhile and only Panthor was unclear.
-> 
-> I theory, Panthor can do partial unmaps (unmapping a subregion of a
-> physically contiguous 2M section). In practice, it's not something we
-> rely on yet, so I don't think it's a blocker. If we ever want to support
+On Fri, 18 Oct 2024, Greg Kroah-Hartman wrote:
+> Remove some entries due to various compliance requirements. They can come
+> back in the future if sufficient documentation is provided.
+>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-As above, we fail to lock the 2M section before updating the page
-tables, so this functionality is broken today in Panthor.
+[...]
 
-> that, we can always do it in two steps (unmap the 2M region and remap
-> the borders). At some point it'd be good to have some kind of atomic
-> page table updates, so we don't have this short period of time during
-> which nothing is mapped (between the unmap and the remap), but that's a
-> different story.
+> @@ -888,7 +882,6 @@ F:	drivers/staging/media/sunxi/cedrus/
+>
+> ALPHA PORT
+> M:	Richard Henderson <richard.henderson@linaro.org>
+> -M:	Ivan Kokshaysky <ink@jurassic.park.msu.ru>
+> M:	Matt Turner <mattst88@gmail.com>
+> L:	linux-alpha@vger.kernel.org
+> S:	Odd Fixes
+> @@ -2263,12 +2256,6 @@ L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+> S:	Maintained
+> F:	arch/arm/mach-ep93xx/ts72xx.c
+>
+> -ARM/CIRRUS LOGIC CLPS711X ARM ARCHITECTURE
+> -M:	Alexander Shiyan <shc_work@mail.ru>
+> -L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+> -S:	Odd Fixes
+> -N:	clps711x
+> -
 
-The GPU hardware provides that. The only possible missing piece is that
-the driver needs to know ahead of time that the unmap would unmap the 2M
-region so it can do the correct lock before the entries are removed.
+This also removes the mailing list entry, causing submitters of future
+patches to forget CCing the mailing list.
 
-> 
->>
->> If DRM does use this, I'd respin this to make it into a quirk and iommu won't
->> set it.
+Why not just drop the cancelled M:-entry instead, like you did above?
 
-You should be safe as far as Panfrost and Panthor are concerned.
+The same is true for several other sections.
+I have sent a fix for the sections related to Renesas drivers[1].
 
-Thanks,
-Steve
+> ARM/CIRRUS LOGIC EP93XX ARM ARCHITECTURE
+> M:	Hartley Sweeten <hsweeten@visionengravers.com>
+> M:	Alexander Sverdlin <alexander.sverdlin@gmail.com>
 
->>
->> Thanks,
->> Jason
->>
->>
->> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
->> index 0e67f1721a3d98..a51fae9c909111 100644
->> --- a/drivers/iommu/io-pgtable-arm.c
->> +++ b/drivers/iommu/io-pgtable-arm.c
->> @@ -569,66 +569,6 @@ static void arm_lpae_free_pgtable(struct io_pgtable *iop)
->>  	kfree(data);
->>  }
->>  
->> -static size_t arm_lpae_split_blk_unmap(struct arm_lpae_io_pgtable *data,
->> -				       struct iommu_iotlb_gather *gather,
->> -				       unsigned long iova, size_t size,
->> -				       arm_lpae_iopte blk_pte, int lvl,
->> -				       arm_lpae_iopte *ptep, size_t pgcount)
->> -{
->> -	struct io_pgtable_cfg *cfg = &data->iop.cfg;
->> -	arm_lpae_iopte pte, *tablep;
->> -	phys_addr_t blk_paddr;
->> -	size_t tablesz = ARM_LPAE_GRANULE(data);
->> -	size_t split_sz = ARM_LPAE_BLOCK_SIZE(lvl, data);
->> -	int ptes_per_table = ARM_LPAE_PTES_PER_TABLE(data);
->> -	int i, unmap_idx_start = -1, num_entries = 0, max_entries;
->> -
->> -	if (WARN_ON(lvl == ARM_LPAE_MAX_LEVELS))
->> -		return 0;
->> -
->> -	tablep = __arm_lpae_alloc_pages(tablesz, GFP_ATOMIC, cfg, data->iop.cookie);
->> -	if (!tablep)
->> -		return 0; /* Bytes unmapped */
->> -
->> -	if (size == split_sz) {
->> -		unmap_idx_start = ARM_LPAE_LVL_IDX(iova, lvl, data);
->> -		max_entries = ptes_per_table - unmap_idx_start;
->> -		num_entries = min_t(int, pgcount, max_entries);
->> -	}
->> -
->> -	blk_paddr = iopte_to_paddr(blk_pte, data);
->> -	pte = iopte_prot(blk_pte);
->> -
->> -	for (i = 0; i < ptes_per_table; i++, blk_paddr += split_sz) {
->> -		/* Unmap! */
->> -		if (i >= unmap_idx_start && i < (unmap_idx_start + num_entries))
->> -			continue;
->> -
->> -		__arm_lpae_init_pte(data, blk_paddr, pte, lvl, 1, &tablep[i]);
->> -	}
->> -
->> -	pte = arm_lpae_install_table(tablep, ptep, blk_pte, data);
->> -	if (pte != blk_pte) {
->> -		__arm_lpae_free_pages(tablep, tablesz, cfg, data->iop.cookie);
->> -		/*
->> -		 * We may race against someone unmapping another part of this
->> -		 * block, but anything else is invalid. We can't misinterpret
->> -		 * a page entry here since we're never at the last level.
->> -		 */
->> -		if (iopte_type(pte) != ARM_LPAE_PTE_TYPE_TABLE)
->> -			return 0;
->> -
->> -		tablep = iopte_deref(pte, data);
->> -	} else if (unmap_idx_start >= 0) {
->> -		for (i = 0; i < num_entries; i++)
->> -			io_pgtable_tlb_add_page(&data->iop, gather, iova + i * size, size);
->> -
->> -		return num_entries * size;
->> -	}
->> -
->> -	return __arm_lpae_unmap(data, gather, iova, size, pgcount, lvl, tablep);
->> -}
->> -
->>  static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
->>  			       struct iommu_iotlb_gather *gather,
->>  			       unsigned long iova, size_t size, size_t pgcount,
->> @@ -678,12 +618,12 @@ static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
->>  
->>  		return i * size;
->>  	} else if (iopte_leaf(pte, lvl, iop->fmt)) {
->> -		/*
->> -		 * Insert a table at the next level to map the old region,
->> -		 * minus the part we want to unmap
->> -		 */
->> -		return arm_lpae_split_blk_unmap(data, gather, iova, size, pte,
->> -						lvl + 1, ptep, pgcount);
->> +		/* Unmap the entire large IOPTE and return its size */
->> +		size = ARM_LPAE_BLOCK_SIZE(lvl, data);
->> +		__arm_lpae_clear_pte(ptep, &iop->cfg, 1);
->> +		if (gather && !iommu_iotlb_gather_queued(gather))
->> +			io_pgtable_tlb_add_page(iop, gather, iova, size);
->> +		return size;
->>  	}
->>  
->>  	/* Keep on walkin' */
->>
->> base-commit: 27ab08d646a1b53330229a97100200c9567d28b5
-> 
+[1] "[PATCH/RFC] MAINTAINERS: Re-add cancelled Renesas driver sections"
+     https://lore.kernel.org/all/0a189e2c4090a1b308e18005d2552e335bac354f.1729511337.git.geert+renesas@glider.be/
 
+Gr{oetje,eeting}s,
+
+ 						Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+ 							    -- Linus Torvalds
