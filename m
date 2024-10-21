@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039C31E2618;
-	Mon, 21 Oct 2024 10:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3371E573A;
+	Mon, 21 Oct 2024 10:38:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507109; cv=none; b=RBeqJctwEPxeijvUzhiFi0MSDrtLTres0o8aGb/vyWxZ9I+ozjzhiGMuydsVNWnxEraellyv6ivkIopcELS9Bo7zZR9xK5drZG8Fd7k91gGDQ0ROBjrxqhJWlN4fAzBGcCgaPNXVt0dCKQLAAZnk1kRsxU4ObQAFjz7bGOZ5HQs=
+	t=1729507112; cv=none; b=Xflr07lF4pdyTR8jFnFCrMjfPpLBEiifx3YgtZiYxsY9lIYT8R0O+jDXI/MPPCmieh3PCKoAjatJT+i8VwaNtj7I4lByVHXs8S4/1oz5mOannN87WrRuLmZP2jyYLfWvJI2A8cuwdxu5aIj+7U4d5Pq8vH7FZUzEh0DX0MjU9Dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507109; c=relaxed/simple;
-	bh=zYTE7E2EZWtBz2CmLS4wYmbJ/ZB/wcsp02RT2gijDG4=;
+	s=arc-20240116; t=1729507112; c=relaxed/simple;
+	bh=VraGhiL17usBYsVmvWeacWnQzUl1wmdYMlIgXnd3efo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HaJiGfjxfhEsXowjTNg+hFd2OKfitCGuWFEqQK8DFCweEvmMlVbnWDnkSxwneFd4u1DjxRy9ivoCC1lIYRUJy0U4Gs650/sF5RuFe78VBQq4DbntsnVV/w80MPy55Jp21o0x2iF7BFYlaOHRyV+OjehsFIbEGylstZs1EmlQvLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqpVDIpw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jbtfygi7RexQPDE1TzQST5jnB8zRlD6OOlKf+l0/3lqp+rO2/oerSUTRyV1kYTqSk8h2l5QWJtJjNZtzeReBfE48M+KI7qBp8dFWj1SutakH4dL7TEruGl7O4i6j4fzFxseri6fFJs7MRW8Rai4VsuM5U6k3z5W46IYvjsEOokw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o9a7P3Do; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqpVDIpw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74CA4C4CEC3;
-	Mon, 21 Oct 2024 10:38:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o9a7P3Do"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0B9C4CEC3;
+	Mon, 21 Oct 2024 10:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507108;
-	bh=zYTE7E2EZWtBz2CmLS4wYmbJ/ZB/wcsp02RT2gijDG4=;
+	s=korg; t=1729507111;
+	bh=VraGhiL17usBYsVmvWeacWnQzUl1wmdYMlIgXnd3efo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SqpVDIpw50THVaIVdHcZPgvICKaumi0NyLxMx4dAGxH6+g3XA33xcdi4TapFAd2Jl
-	 5HPPEqa+hGfRzfTf3gsH1wI8OS/c0LQQzHO5kVP02oiIn5ARJw1+hgdq5GZ/vYkBIK
-	 No9ItAlrG2LIUGjDZ7h5+QWNqoF8U0GdI5CeAAkc=
+	b=o9a7P3DoN2haBFUHf7OH8PUuLrvXayq9cLP5CtVuMOyGYNwdUMo2YfuYIzebeVq0Z
+	 pW/V1Smqao3aph3bTiWGkgR5uw/rMY6RUf8yr4g5yueqCD+VSOti0FRFzCI0sWu9WQ
+	 2bEc5AJHVmxnM1EaqtS8hd9LXHVUinA6J7FGWLGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 061/124] ublk: dont allow user copy for unprivileged device
-Date: Mon, 21 Oct 2024 12:24:25 +0200
-Message-ID: <20241021102259.095542206@linuxfoundation.org>
+	Yun Lu <luyun@kylinos.cn>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.6 062/124] selftest: hid: add the missing tests directory
+Date: Mon, 21 Oct 2024 12:24:26 +0200
+Message-ID: <20241021102259.133602793@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -50,66 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Yun Lu <luyun@kylinos.cn>
 
-commit 42aafd8b48adac1c3b20fe5892b1b91b80c1a1e6 upstream.
+commit fe05c40ca9c18cfdb003f639a30fc78a7ab49519 upstream.
 
-UBLK_F_USER_COPY requires userspace to call write() on ublk char
-device for filling request buffer, and unprivileged device can't
-be trusted.
+Commit 160c826b4dd0 ("selftest: hid: add missing run-hid-tools-tests.sh")
+has added the run-hid-tools-tests.sh script for it to be installed, but
+I forgot to add the tests directory together.
 
-So don't allow user copy for unprivileged device.
+If running the test case without the tests directory,  will results in
+the following error message:
 
+    make -C tools/testing/selftests/ TARGETS=hid install \
+	    INSTALL_PATH=$KSFT_INSTALL_PATH
+    cd $KSFT_INSTALL_PATH
+    ./run_kselftest.sh -t hid:hid-core.sh
+
+  /usr/lib/python3.11/site-packages/_pytest/config/__init__.py:331: PluggyTeardownRaisedWarning: A plugin raised an exception during an old-style hookwrapper teardown.
+  Plugin: helpconfig, Hook: pytest_cmdline_parse
+  UsageError: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]
+  __main__.py: error: unrecognized arguments: --udevd
+    inifile: None
+    rootdir: /root/linux/kselftest_install/hid
+
+In fact, the run-hid-tools-tests.sh script uses the scripts in the tests
+directory to run tests. The tests directory also needs to be added to be
+installed.
+
+Fixes: ffb85d5c9e80 ("selftests: hid: import hid-tools hid-core tests")
 Cc: stable@vger.kernel.org
-Fixes: 1172d5b8beca ("ublk: support user copy")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20241016134847.2911721-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Yun Lu <luyun@kylinos.cn>
+Acked-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/ublk_drv.c      |   11 ++++++++++-
- include/uapi/linux/ublk_cmd.h |    8 +++++++-
- 2 files changed, 17 insertions(+), 2 deletions(-)
+ tools/testing/selftests/hid/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -2327,10 +2327,19 @@ static int ublk_ctrl_add_dev(struct io_u
- 	 * TODO: provide forward progress for RECOVERY handler, so that
- 	 * unprivileged device can benefit from it
- 	 */
--	if (info.flags & UBLK_F_UNPRIVILEGED_DEV)
-+	if (info.flags & UBLK_F_UNPRIVILEGED_DEV) {
- 		info.flags &= ~(UBLK_F_USER_RECOVERY_REISSUE |
- 				UBLK_F_USER_RECOVERY);
+diff --git a/tools/testing/selftests/hid/Makefile b/tools/testing/selftests/hid/Makefile
+index 38ae31bb07b5..662209f5fabc 100644
+--- a/tools/testing/selftests/hid/Makefile
++++ b/tools/testing/selftests/hid/Makefile
+@@ -18,6 +18,7 @@ TEST_PROGS += hid-usb_crash.sh
+ TEST_PROGS += hid-wacom.sh
  
-+		/*
-+		 * For USER_COPY, we depends on userspace to fill request
-+		 * buffer by pwrite() to ublk char device, which can't be
-+		 * used for unprivileged device
-+		 */
-+		if (info.flags & UBLK_F_USER_COPY)
-+			return -EINVAL;
-+	}
-+
- 	/* the created device is always owned by current user */
- 	ublk_store_owner_uid_gid(&info.owner_uid, &info.owner_gid);
+ TEST_FILES := run-hid-tools-tests.sh
++TEST_FILES += tests
  
---- a/include/uapi/linux/ublk_cmd.h
-+++ b/include/uapi/linux/ublk_cmd.h
-@@ -173,7 +173,13 @@
- /* use ioctl encoding for uring command */
- #define UBLK_F_CMD_IOCTL_ENCODE	(1UL << 6)
+ CXX ?= $(CROSS_COMPILE)g++
  
--/* Copy between request and user buffer by pread()/pwrite() */
-+/*
-+ *  Copy between request and user buffer by pread()/pwrite()
-+ *
-+ *  Not available for UBLK_F_UNPRIVILEGED_DEV, otherwise userspace may
-+ *  deceive us by not filling request buffer, then kernel uninitialized
-+ *  data may be leaked.
-+ */
- #define UBLK_F_USER_COPY	(1UL << 7)
- 
- /*
+-- 
+2.47.0
+
 
 
