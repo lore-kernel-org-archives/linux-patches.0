@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2199D1EF95D;
-	Mon, 21 Oct 2024 10:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D149F1EABB6;
+	Mon, 21 Oct 2024 10:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507029; cv=none; b=JtEGTki0Q1f74+WAQ35nwTq4x9BUK5nydaB7dlMk4yxN764M+FpDnIRx0cgUNB7Ra1UUPcSNCPtGy5YU8GwCgow+lOxTp5yMW09K/Wf4eT7qjgg2Qhznj8asyUHjsJg2D5Pr4n7WfbOBPzgz8Eu9mu5+bDvK8+TyFLXk4ygSRIQ=
+	t=1729507031; cv=none; b=qli7EZCxnr9g2alzrsXqwk8EhQCqWyZBaq8Xw8eBV9PNAwSb8lakQRRuUHbqlGNDQWvrIjQbrq0ByfKjoU9bWXO0aVqMsOwKmvPYCjawe4X5xj7IvpcPQaKpKlathMRg0EHTaCKbG4vjk714gP123tDkT2GqyLzyuJ6Tazp+aAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507029; c=relaxed/simple;
-	bh=gWFRp2eW84fpBnFgl3iI5sQ8IZE9d2zHk5FS5xXOAWY=;
+	s=arc-20240116; t=1729507031; c=relaxed/simple;
+	bh=uDoKHkzRX5ViTXoc0765LQXkIWRYvxpO/v5dRLN4BOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eLSziVSt9/jpNvVhkO1GmHQ3PzeXiYSLnTSehshyo5zUYa/lE+8/d3Fr8z3F3UBIKSJWDou1QKZgqh4rRY368tiZsZB03wlTtMMRhIS214PeTBKOws340wY+6NokODxnOB8JulKApwP4iXbRAcwECtjrxsBdYMlM2VooInmb0fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dfiuLgjI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HuBs/WHnzCCmEpGdPis9UJk91Qko/EnxD0ajF7mJ2ol3+2DXo99ZWaw7SbpWydlvx5zf2b0biKrjFzrVZUJKLfIlb+cTARuTFGfqLDzipfeJ8LMaLDzqotp572KZewihERPLWIbjh3hz68uOnsON3HQJMzvQ8nJDCHb1ZhaeJ30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cYamFc26; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dfiuLgjI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AAA8C4CEC3;
-	Mon, 21 Oct 2024 10:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cYamFc26"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53929C4CEC3;
+	Mon, 21 Oct 2024 10:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507028;
-	bh=gWFRp2eW84fpBnFgl3iI5sQ8IZE9d2zHk5FS5xXOAWY=;
+	s=korg; t=1729507031;
+	bh=uDoKHkzRX5ViTXoc0765LQXkIWRYvxpO/v5dRLN4BOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dfiuLgjI5UgItBBXtAkZfOlUaoEUEaLyr5AN6hbkLIxhtZBL/p3xYS3EHrm/buGv7
-	 HlxsqDUttFHjwn1HBdIEigAjZaMpR6vuMEXRWxAuOuxzIaXzySBaxVAy0zK0ro3qbo
-	 KaLzDYGPSLyqyWK3ND4vO+Gi3xFehkh+mZChBJ34=
+	b=cYamFc26oB2WNKecyiD9NaihvAXWwNKnLaqyQeHNJLD42QQWc1X1MSwlHiEqiexh7
+	 oUo32M853YU+t/cYfUtNH2eWrkFRhI1Yj0DWIgEwOGJeLpS9O82d7UOgLYopkTUzZC
+	 g0pYbID6oP6jEFJkMpElkRc8djwRMpaTNzfPNgnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	amd-gfx@lists.freedesktop.org,
-	Erhard Furtner <erhard_f@mailbox.org>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>
-Subject: [PATCH 6.6 066/124] drm/radeon: Fix encoder->possible_clones
-Date: Mon, 21 Oct 2024 12:24:30 +0200
-Message-ID: <20241021102259.287482641@linuxfoundation.org>
+	Nikolay Kuratov <kniv@yandex-team.ru>,
+	Zack Rusin <zack.rusin@broadcom.com>
+Subject: [PATCH 6.6 067/124] drm/vmwgfx: Handle surface check failure correctly
+Date: Mon, 21 Oct 2024 12:24:31 +0200
+Message-ID: <20241021102259.326434132@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -46,54 +44,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Nikolay Kuratov <kniv@yandex-team.ru>
 
-commit 28127dba64d8ae1a0b737b973d6d029908599611 upstream.
+commit 26498b8d54373d31a621d7dec95c4bd842563b3b upstream.
 
-Include the encoder itself in its possible_clones bitmask.
-In the past nothing validated that drivers were populating
-possible_clones correctly, but that changed in commit
-74d2aacbe840 ("drm: Validate encoder->possible_clones").
-Looks like radeon never got the memo and is still not
-following the rules 100% correctly.
+Currently if condition (!bo and !vmw_kms_srf_ok()) was met
+we go to err_out with ret == 0.
+err_out dereferences vfb if ret == 0, but in our case vfb is still NULL.
 
-This results in some warnings during driver initialization:
-Bogus possible_clones: [ENCODER:46:TV-46] possible_clones=0x4 (full encoder mask=0x7)
-WARNING: CPU: 0 PID: 170 at drivers/gpu/drm/drm_mode_config.c:615 drm_mode_config_validate+0x113/0x39c
-...
+Fix this by assigning sensible error to ret.
 
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: amd-gfx@lists.freedesktop.org
-Fixes: 74d2aacbe840 ("drm: Validate encoder->possible_clones")
-Reported-by: Erhard Furtner <erhard_f@mailbox.org>
-Closes: https://lore.kernel.org/dri-devel/20241009000321.418e4294@yea/
-Tested-by: Erhard Furtner <erhard_f@mailbox.org>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3b6e7d40649c0d75572039aff9d0911864c689db)
+Found by Linux Verification Center (linuxtesting.org) with SVACE
+
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
 Cc: stable@vger.kernel.org
+Fixes: 810b3e1683d0 ("drm/vmwgfx: Support topology greater than texture size")
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241002122429.1981822-1-kniv@yandex-team.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/radeon_encoders.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/radeon/radeon_encoders.c
-+++ b/drivers/gpu/drm/radeon/radeon_encoders.c
-@@ -42,7 +42,7 @@ static uint32_t radeon_encoder_clones(st
- 	struct radeon_device *rdev = dev->dev_private;
- 	struct radeon_encoder *radeon_encoder = to_radeon_encoder(encoder);
- 	struct drm_encoder *clone_encoder;
--	uint32_t index_mask = 0;
-+	uint32_t index_mask = drm_encoder_mask(encoder);
- 	int count;
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+@@ -1659,6 +1659,7 @@ static struct drm_framebuffer *vmw_kms_f
+ 		DRM_ERROR("Surface size cannot exceed %dx%d\n",
+ 			dev_priv->texture_max_width,
+ 			dev_priv->texture_max_height);
++		ret = -EINVAL;
+ 		goto err_out;
+ 	}
  
- 	/* DIG routing gets problematic */
 
 
