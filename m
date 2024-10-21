@@ -1,145 +1,94 @@
-Received: from dispatch1-us1.ppe-hosted.com (dispatch1-us1.ppe-hosted.com [148.163.129.52])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EB0405FB
-	for <patches@lists.linux.dev>; Mon, 21 Oct 2024 16:16:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.129.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F33F1E0E0E
+	for <patches@lists.linux.dev>; Mon, 21 Oct 2024 16:22:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729527416; cv=none; b=buyRZmHqgI/HrO6vMeHSAlO6YqqrAcLoeqRgQ0aRefkRbC0DdHqWAvPMx8GPEzsn/1LTPUqvZvQonyfFAPcLDsE2C88f8s13asBaNhKexhe6jRzUi7TjdbyIf9iEbrqSClUI0aILRefgli/JJAhBBnr4LWt06b7HjckWKBMOcPI=
+	t=1729527744; cv=none; b=tOJEnZ8fyuS7Dd2ygoq2lfG39zg9hyIl0zIw7wnz8H9D6VsFfmmXlUXWMf0ANcbLKXHJODyzARif9VhvSSBqlEht9OtA6OGHZu/2ZVV1wk2+exf7NKvYw6izEGQmlNf6xLxJkFrmTZYStD/YPUcQZ9GHvbeXd3uj57jAgyGFxHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729527416; c=relaxed/simple;
-	bh=WgoboZvhZ6u1huV9+RG2MfL4m/H0UopAC5srv0brp5U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nL8nBRFjoNxlly8Dg5FHB3b1GmyhtkfCJS9qisbuMJuQIsw9sUt65qZ+Qzx/+KbvS2v78D0KM4D8pmTO7g4Yr1HrUIBHvYQP3Rf2rSlclqMuXP6iMAKHWiE0NW+KauggXgCh9IICeOwFQgNRFGZ+YTeR7qZaUKyn1+DBBTMS4sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=candelatech.com; spf=pass smtp.mailfrom=candelatech.com; dkim=pass (1024-bit key) header.d=candelatech.com header.i=@candelatech.com header.b=m6+i9IFO; arc=none smtp.client-ip=148.163.129.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=candelatech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=candelatech.com
+	s=arc-20240116; t=1729527744; c=relaxed/simple;
+	bh=OPwLm4KbXRPjPPUsnhN3viq6xYmj5UJS4BgPDBMUoO0=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DfYFLd6BYC1Vbi5K6yPrtTrXVwqAlRjP7oyS66rDcv7S7rs1TMkMEoEMYmGj02OYEb6Ret/5u/bQuyIOBShEGO60AgjqXtMwlycZhJtDy+WzyFYfW6i4HEAD4+e1ZvQAu17ejrLt6bUEL4iHO+DR8vkJKF9GpfqrmQiyyc93rpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cpMAoE0E; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=candelatech.com header.i=@candelatech.com header.b="m6+i9IFO"
-X-Virus-Scanned: Proofpoint Essentials engine
-Received: from mail3.candelatech.com (mail.candelatech.com [208.74.158.173])
-	by mx1-us1.ppe-hosted.com (PPE Hosted ESMTP Server) with ESMTP id 90654B8008F;
-	Mon, 21 Oct 2024 16:16:44 +0000 (UTC)
-Received: from [192.168.100.159] (unknown [50.251.239.81])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by mail3.candelatech.com (Postfix) with ESMTPSA id 05E8F13C2B0;
-	Mon, 21 Oct 2024 09:16:44 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail3.candelatech.com 05E8F13C2B0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=candelatech.com;
-	s=default; t=1729527404;
-	bh=WgoboZvhZ6u1huV9+RG2MfL4m/H0UopAC5srv0brp5U=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=m6+i9IFOjDfTk0ueOjvusZELdzapGfrbpCJq5g1WKTy36MLjC0I71tmWoFWbCIQqH
-	 MLu7pSAb27lZa284fbcLq7jVmOfWqvEONnkG/oWeRBeFba9x/CRxT1OdBaVAdWFrGl
-	 dDxizky4Iht8EeKmRPB1jDjWRXMs5VWWTwFkJMb0=
-Message-ID: <a4163f51-cc1a-0848-d0fd-e9b94dafc306@candelatech.com>
-Date: Mon, 21 Oct 2024 09:16:43 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cpMAoE0E"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-539e3f35268so2900964e87.3
+        for <patches@lists.linux.dev>; Mon, 21 Oct 2024 09:22:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729527741; x=1730132541; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7bhwla8+6KA+J2l2zXzoT/1T3zQj3xRspy+bneLu4x4=;
+        b=cpMAoE0EZGMrWou6kDHiMX05K3072g1EP6Jhji5PklWfvwvyWvcumStKchKU/KUTl4
+         SfC5bJMCrerCE8r8todyoFjhN5gSH9GSP6wNCmlkV3ig9n4d3skrtIFGVNB9bzHK7EXo
+         uFPQ4MQu5FaXSB7jh9nv7bDQXmYn3S0EddT2Xdk7h7C4igK5tXi9e9yAoKyHVUYBLwx5
+         W2lWXAECx3LAC86icCjgxsuzK16O39rMQ62IuHtsU/2HE5a/pnl5rKk37p06nkUvv5Wm
+         I7H57vEfHbsEcQLl1HRctbuYogpCA/JN9Sb/pUOXodV/SyAjeJ27a+cdp8SKGGu00oDw
+         MF+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729527741; x=1730132541;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7bhwla8+6KA+J2l2zXzoT/1T3zQj3xRspy+bneLu4x4=;
+        b=uoWHtSNF3hyxrrlQ73O+jbyJ1bpSzGN2CbENLK2PwbWqGUA9IHQH635AjbAfb3066q
+         XNVphfAPNvgWq2iK15IDwKiBcv3u2RLF3iDJ1zM8kgBSwuTLSpqCNthzcaPZg/THg1Cp
+         Z9EiS+Kcf0BTHuT+7UxLhRoHsPPW+V+/bX3YXjT7z3mBffnHy/qkIAg+AvWiKFUteo/t
+         sjMrnNRN0Dt9i5ohIElunVCaQfTDxCtfL8H5Crky9SA+wbw5kP6RKUAtLlZnPgKc/+ME
+         8u1xLNxBk9VAqpCmlBmESV/22pmXdLaWdbrhnrM5y11NpuFJVx3gaSJjTs8PpViPokTD
+         uSDA==
+X-Forwarded-Encrypted: i=1; AJvYcCVHuSgO8MAxPjqY4dHTyfHFRl2zCWFUqhzEAqqP04XRijRoYVCSSFfJ5LFlhk0BUVEh2IOHgyMl@lists.linux.dev
+X-Gm-Message-State: AOJu0YyXEfrpxJT7NQDtUCyi7bfAqVNLei/WYqZ8R6uZu4AmL7x5vLvZ
+	YJDFUxgeU/XktpV61Ug+952DaKJOF2aCRfhegakGm9+3D1u0Nu/j
+X-Google-Smtp-Source: AGHT+IG0ia65F5bFAoAh4IwlqxoYqOtesCPVPMKTH3oy6uQ69GOTbPfTqJEHKVXBSwaxhqJSuLqKMw==
+X-Received: by 2002:a05:6512:308d:b0:536:55a8:6f78 with SMTP id 2adb3069b0e04-53a15219180mr5534266e87.17.1729527740521;
+        Mon, 21 Oct 2024 09:22:20 -0700 (PDT)
+Received: from pc636 (host-90-233-222-236.mobileonline.telia.com. [90.233.222.236])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a2243ecb4sm518168e87.247.2024.10.21.09.22.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2024 09:22:20 -0700 (PDT)
+From: Uladzislau Rezki <urezki@gmail.com>
+X-Google-Original-From: Uladzislau Rezki <urezki@pc636>
+Date: Mon, 21 Oct 2024 18:22:17 +0200
+To: Ben Greear <greearb@candelatech.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Florian Westphal <fw@strlen.de>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH 6.11 024/135] lib: alloc_tag_module_unload must wait for
+ pending kfree_rcu calls
+Message-ID: <ZxZ_uX0e1iEKZMk5@pc636>
+References: <20241021102259.324175287@linuxfoundation.org>
+ <20241021102300.282974151@linuxfoundation.org>
+ <a4163f51-cc1a-0848-d0fd-e9b94dafc306@candelatech.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 6.11 024/135] lib: alloc_tag_module_unload must wait for
- pending kfree_rcu calls
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Florian Westphal <fw@strlen.de>,
- Uladzislau Rezki <urezki@gmail.com>, Vlastimil Babka <vbabka@suse.cz>,
- Suren Baghdasaryan <surenb@google.com>,
- Kent Overstreet <kent.overstreet@linux.dev>,
- Andrew Morton <akpm@linux-foundation.org>
-References: <20241021102259.324175287@linuxfoundation.org>
- <20241021102300.282974151@linuxfoundation.org>
-Content-Language: en-US
-From: Ben Greear <greearb@candelatech.com>
-Organization: Candela Technologies
-In-Reply-To: <20241021102300.282974151@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-MDID: 1729527406-z74ek1Q30KBM
-X-MDID-O:
- us5;ut7;1729527406;z74ek1Q30KBM;<greearb@candelatech.com>;60288392067775ecebc71e116bf8ca95
-X-PPE-TRUSTED: V=1;DIR=OUT;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a4163f51-cc1a-0848-d0fd-e9b94dafc306@candelatech.com>
 
-On 10/21/24 03:23, Greg Kroah-Hartman wrote:
-> 6.11-stable review patch.  If anyone has any objections, please let me know.
+On Mon, Oct 21, 2024 at 09:16:43AM -0700, Ben Greear wrote:
+> On 10/21/24 03:23, Greg Kroah-Hartman wrote:
+> > 6.11-stable review patch.  If anyone has any objections, please let me know.
+> 
+> This won't compile in my 6.11 tree (as of last week), I think it needs more
+> upstream patches and/or a different work-around.
+> 
+> Possibly that has already been backported into 6.11 stable and I just haven't
+> seen it yet.
+> 
+Right. The kvfree_rcu_barrier() will appear starting from 6.12 kernel.
 
-This won't compile in my 6.11 tree (as of last week), I think it needs more
-upstream patches and/or a different work-around.
-
-Possibly that has already been backported into 6.11 stable and I just haven't
-seen it yet.
-
-Thanks,
-Ben
-
-> 
-> ------------------
-> 
-> From: Florian Westphal <fw@strlen.de>
-> 
-> commit dc783ba4b9df3fb3e76e968b2cbeb9960069263c upstream.
-> 
-> Ben Greear reports following splat:
->   ------------[ cut here ]------------
->   net/netfilter/nf_nat_core.c:1114 module nf_nat func:nf_nat_register_fn has 256 allocated at module unload
->   WARNING: CPU: 1 PID: 10421 at lib/alloc_tag.c:168 alloc_tag_module_unload+0x22b/0x3f0
->   Modules linked in: nf_nat(-) btrfs ufs qnx4 hfsplus hfs minix vfat msdos fat
-> ...
->   Hardware name: Default string Default string/SKYBAY, BIOS 5.12 08/04/2020
->   RIP: 0010:alloc_tag_module_unload+0x22b/0x3f0
->    codetag_unload_module+0x19b/0x2a0
->    ? codetag_load_module+0x80/0x80
-> 
-> nf_nat module exit calls kfree_rcu on those addresses, but the free
-> operation is likely still pending by the time alloc_tag checks for leaks.
-> 
-> Wait for outstanding kfree_rcu operations to complete before checking
-> resolves this warning.
-> 
-> Reproducer:
-> unshare -n iptables-nft -t nat -A PREROUTING -p tcp
-> grep nf_nat /proc/allocinfo # will list 4 allocations
-> rmmod nft_chain_nat
-> rmmod nf_nat                # will WARN.
-> 
-> [akpm@linux-foundation.org: add comment]
-> Link: https://lkml.kernel.org/r/20241007205236.11847-1-fw@strlen.de
-> Fixes: a473573964e5 ("lib: code tagging module support")
-> Signed-off-by: Florian Westphal <fw@strlen.de>
-> Reported-by: Ben Greear <greearb@candelatech.com>
-> Closes: https://lore.kernel.org/netdev/bdaaef9d-4364-4171-b82b-bcfc12e207eb@candelatech.com/
-> Cc: Uladzislau Rezki <urezki@gmail.com>
-> Cc: Vlastimil Babka <vbabka@suse.cz>
-> Cc: Suren Baghdasaryan <surenb@google.com>
-> Cc: Kent Overstreet <kent.overstreet@linux.dev>
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->   lib/codetag.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/lib/codetag.c b/lib/codetag.c
-> index afa8a2d4f317..d1fbbb7c2ec3 100644
-> --- a/lib/codetag.c
-> +++ b/lib/codetag.c
-> @@ -228,6 +228,9 @@ bool codetag_unload_module(struct module *mod)
->   	if (!mod)
->   		return true;
->   
-> +	/* await any module's kfree_rcu() operations to complete */
-> +	kvfree_rcu_barrier();
-> +
->   	mutex_lock(&codetag_lock);
->   	list_for_each_entry(cttype, &codetag_types, link) {
->   		struct codetag_module *found = NULL;
-
--- 
-Ben Greear <greearb@candelatech.com>
-Candela Technologies Inc  http://www.candelatech.com
-
-
+--
+Uladzislau Rezki
