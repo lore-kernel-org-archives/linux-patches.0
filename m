@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73CB31E3DD6;
-	Mon, 21 Oct 2024 10:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1001E7C05;
+	Mon, 21 Oct 2024 10:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506905; cv=none; b=skTpXD87hHsgwFcyseGmj27mxH5dt8gppvwABauTRpfFLu7p5zxEbq1hlccotPwb847BeWb4hz9yEedfOBwYz/M74xLufxIwdNLSAmeGEeefjVZEzinlCDMHYAOJXsjiNRydaZAlYWg/wdd6ST3XncTLxpSOkEycdYQ+V1Vhtoo=
+	t=1729506908; cv=none; b=mgvGd3o6b6lK3kKVI+87KNVqtkGr1oALdynfwGl6O0Bq+pxb+8fGjL5bWLAQg0nU+gYQHedD6k3vMTL9N6rXWGQ9UBI/IOaZ8DyzJRjLCfMWjgJAzk8HIqp970vrW94x3Nn48lXZ+rPrk/M56kjCRkaDX5k8XBhpuz54giFPJhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506905; c=relaxed/simple;
-	bh=DDod9Oxq0VT2iTrivItE+GhXd/BkOpMLrEYGb+kyN+c=;
+	s=arc-20240116; t=1729506908; c=relaxed/simple;
+	bh=jgkvAzLBqPhJGVRmAYmcUrk4EVipogZdHdohwje+Sxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VuFcHeTk9V5oI5exlknAXMBdRYcM/D2shUmM10/KTIpqM6gYXYKSDhjZymGDFbDSWeLUHcsKW2cTi6JOeIzaBHB1MXSEdFI5m8xsAaAi03lwXpfkBpaUlgdCe2kSAOqpy8N62YoFpwZU/qK8MDiqYjR9Kl5tvLTHJtafsiqCGCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjxFwZUh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mgXtHPlIa/5Hglr87BYi9u4gleNZtcSUkcnUSV5pDZmwVir6BQauyDNRa0zxd8jzDW6hg9yQc+NlYcnSGkchmG+Gi7puDhsiffuT3Kl9leuIMpCkClApcS2dS4sgATbmkh0Pt0ZVGR8H1UhunM9O45lqhky6I0roYfX+ZbTmmfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjW2TJp/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjxFwZUh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7DE1C4CEC3;
-	Mon, 21 Oct 2024 10:35:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjW2TJp/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF637C4CEC3;
+	Mon, 21 Oct 2024 10:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506905;
-	bh=DDod9Oxq0VT2iTrivItE+GhXd/BkOpMLrEYGb+kyN+c=;
+	s=korg; t=1729506908;
+	bh=jgkvAzLBqPhJGVRmAYmcUrk4EVipogZdHdohwje+Sxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DjxFwZUhiRJEQ9V7GKl5BVlLiWuZwvIRGymsiEcPc00AAO/xYBlb0KD95qkWbbcAS
-	 vR7N2GBh9In3uJGviBL2klEtrJed6piMYuxM0yO0qbUFh4yOSjr+m+bkEzs9kE9AOB
-	 7TfQxL0xVN5dRCe+rIwlFsAsViCWm+Bhp5Cm6GBg=
+	b=AjW2TJp/xfaRvEt94lS0tW8PcW0cxGSUWoYaPTxhl83m5tP+2qEUlCSzhsF1LSc9c
+	 ipPtpIW5UfRSE2JONJYrYdY/zB+D6OsiVWO3NPpqExXNItGKROXH9AhhYaCXDlxDiR
+	 GtrtlZU8twfboG1hjBxEDWW22i/594BP4I3x+ty0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wei Fang <wei.fang@nxp.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 007/124] net: enetc: block concurrent XDP transmissions during ring reconfiguration
-Date: Mon, 21 Oct 2024 12:23:31 +0200
-Message-ID: <20241021102257.001402115@linuxfoundation.org>
+Subject: [PATCH 6.6 008/124] net: enetc: disable Tx BD rings after they are empty
+Date: Mon, 21 Oct 2024 12:23:32 +0200
+Message-ID: <20241021102257.041209489@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -53,107 +53,139 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Fang <wei.fang@nxp.com>
 
-commit c728a95ccf2a8ba544facfc30a4418d4c68c39f0 upstream.
+commit 0a93f2ca4be6c4616d371f18a3fabad2df7f8d55 upstream.
 
-When testing the XDP_REDIRECT function on the LS1028A platform, we
-found a very reproducible issue that the Tx frames can no longer be
-sent out even if XDP_REDIRECT is turned off. Specifically, if there
-is a lot of traffic on Rx direction, when XDP_REDIRECT is turned on,
-the console may display some warnings like "timeout for tx ring #6
-clear", and all redirected frames will be dropped, the detailed log
-is as follows.
+The Tx BD rings are disabled first in enetc_stop() and the driver
+waits for them to become empty. This operation is not safe while
+the ring is actively transmitting frames, and will cause the ring
+to not be empty and hardware exception. As described in the NETC
+block guide, software should only disable an active Tx ring after
+all pending ring entries have been consumed (i.e. when PI = CI).
+Disabling a transmit ring that is actively processing BDs risks
+a HW-SW race hazard whereby a hardware resource becomes assigned
+to work on one or more ring entries only to have those entries be
+removed due to the ring becoming disabled.
 
-root@ls1028ardb:~# ./xdp-bench redirect eno0 eno2
-Redirecting from eno0 (ifindex 3; driver fsl_enetc) to eno2 (ifindex 4; driver fsl_enetc)
-[203.849809] fsl_enetc 0000:00:00.2 eno2: timeout for tx ring #5 clear
-[204.006051] fsl_enetc 0000:00:00.2 eno2: timeout for tx ring #6 clear
-[204.161944] fsl_enetc 0000:00:00.2 eno2: timeout for tx ring #7 clear
-eno0->eno2     1420505 rx/s       1420590 err,drop/s      0 xmit/s
-  xmit eno0->eno2    0 xmit/s     1420590 drop/s     0 drv_err/s     15.71 bulk-avg
-eno0->eno2     1420484 rx/s       1420485 err,drop/s      0 xmit/s
-  xmit eno0->eno2    0 xmit/s     1420485 drop/s     0 drv_err/s     15.71 bulk-avg
+When testing XDP_REDIRECT feautre, although all frames were blocked
+from being put into Tx rings during ring reconfiguration, the similar
+warning log was still encountered:
 
-By analyzing the XDP_REDIRECT implementation of enetc driver, the
-driver will reconfigure Tx and Rx BD rings when a bpf program is
-installed or uninstalled, but there is no mechanisms to block the
-redirected frames when enetc driver reconfigures rings. Similarly,
-XDP_TX verdicts on received frames can also lead to frames being
-enqueued in the Tx rings. Because XDP ignores the state set by the
-netif_tx_wake_queue() API, so introduce the ENETC_TX_DOWN flag to
-suppress transmission of XDP frames.
+fsl_enetc 0000:00:00.2 eno2: timeout for tx ring #6 clear
+fsl_enetc 0000:00:00.2 eno2: timeout for tx ring #7 clear
 
-Fixes: c33bfaf91c4c ("net: enetc: set up XDP program under enetc_reconfigure()")
+The reason is that when there are still unsent frames in the Tx ring,
+disabling the Tx ring causes the remaining frames to be unable to be
+sent out. And the Tx ring cannot be restored, which means that even
+if the xdp program is uninstalled, the Tx frames cannot be sent out
+anymore. Therefore, correct the operation order in enect_start() and
+enect_stop().
+
+Fixes: ff58fda09096 ("net: enetc: prioritize ability to go down over packet processing")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wei Fang <wei.fang@nxp.com>
 Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20241010092056.298128-3-wei.fang@nxp.com
+Link: https://patch.msgid.link/20241010092056.298128-4-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c |   14 ++++++++++++++
- drivers/net/ethernet/freescale/enetc/enetc.h |    1 +
- 2 files changed, 15 insertions(+)
+ drivers/net/ethernet/freescale/enetc/enetc.c |   36 +++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 10 deletions(-)
 
 --- a/drivers/net/ethernet/freescale/enetc/enetc.c
 +++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -902,6 +902,7 @@ static bool enetc_clean_tx_ring(struct e
- 
- 	if (unlikely(tx_frm_cnt && netif_carrier_ok(ndev) &&
- 		     __netif_subqueue_stopped(ndev, tx_ring->index) &&
-+		     !test_bit(ENETC_TX_DOWN, &priv->flags) &&
- 		     (enetc_bd_unused(tx_ring) >= ENETC_TXBDS_MAX_NEEDED))) {
- 		netif_wake_subqueue(ndev, tx_ring->index);
- 	}
-@@ -1380,6 +1381,9 @@ int enetc_xdp_xmit(struct net_device *nd
- 	int xdp_tx_bd_cnt, i, k;
- 	int xdp_tx_frm_cnt = 0;
- 
-+	if (unlikely(test_bit(ENETC_TX_DOWN, &priv->flags)))
-+		return -ENETDOWN;
-+
- 	enetc_lock_mdio();
- 
- 	tx_ring = priv->xdp_tx_ring[smp_processor_id()];
-@@ -1605,6 +1609,12 @@ static int enetc_clean_rx_ring_xdp(struc
- 			break;
- 		case XDP_TX:
- 			tx_ring = priv->xdp_tx_ring[rx_ring->index];
-+			if (unlikely(test_bit(ENETC_TX_DOWN, &priv->flags))) {
-+				enetc_xdp_drop(rx_ring, orig_i, i);
-+				tx_ring->stats.xdp_tx_drops++;
-+				break;
-+			}
-+
- 			xdp_tx_bd_cnt = enetc_rx_swbd_to_xdp_tx_swbd(xdp_tx_arr,
- 								     rx_ring,
- 								     orig_i, i);
-@@ -2466,6 +2476,8 @@ void enetc_start(struct net_device *ndev
- 	enetc_enable_bdrs(priv);
- 
- 	netif_tx_start_all_queues(ndev);
-+
-+	clear_bit(ENETC_TX_DOWN, &priv->flags);
+@@ -2236,18 +2236,24 @@ static void enetc_enable_rxbdr(struct en
+ 	enetc_rxbdr_wr(hw, idx, ENETC_RBMR, rbmr);
  }
- EXPORT_SYMBOL_GPL(enetc_start);
  
-@@ -2523,6 +2535,8 @@ void enetc_stop(struct net_device *ndev)
- 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
+-static void enetc_enable_bdrs(struct enetc_ndev_priv *priv)
++static void enetc_enable_rx_bdrs(struct enetc_ndev_priv *priv)
+ {
+ 	struct enetc_hw *hw = &priv->si->hw;
  	int i;
  
-+	set_bit(ENETC_TX_DOWN, &priv->flags);
+-	for (i = 0; i < priv->num_tx_rings; i++)
+-		enetc_enable_txbdr(hw, priv->tx_ring[i]);
+-
+ 	for (i = 0; i < priv->num_rx_rings; i++)
+ 		enetc_enable_rxbdr(hw, priv->rx_ring[i]);
+ }
+ 
++static void enetc_enable_tx_bdrs(struct enetc_ndev_priv *priv)
++{
++	struct enetc_hw *hw = &priv->si->hw;
++	int i;
 +
++	for (i = 0; i < priv->num_tx_rings; i++)
++		enetc_enable_txbdr(hw, priv->tx_ring[i]);
++}
++
+ static void enetc_disable_rxbdr(struct enetc_hw *hw, struct enetc_bdr *rx_ring)
+ {
+ 	int idx = rx_ring->index;
+@@ -2264,18 +2270,24 @@ static void enetc_disable_txbdr(struct e
+ 	enetc_txbdr_wr(hw, idx, ENETC_TBMR, 0);
+ }
+ 
+-static void enetc_disable_bdrs(struct enetc_ndev_priv *priv)
++static void enetc_disable_rx_bdrs(struct enetc_ndev_priv *priv)
+ {
+ 	struct enetc_hw *hw = &priv->si->hw;
+ 	int i;
+ 
+-	for (i = 0; i < priv->num_tx_rings; i++)
+-		enetc_disable_txbdr(hw, priv->tx_ring[i]);
+-
+ 	for (i = 0; i < priv->num_rx_rings; i++)
+ 		enetc_disable_rxbdr(hw, priv->rx_ring[i]);
+ }
+ 
++static void enetc_disable_tx_bdrs(struct enetc_ndev_priv *priv)
++{
++	struct enetc_hw *hw = &priv->si->hw;
++	int i;
++
++	for (i = 0; i < priv->num_tx_rings; i++)
++		enetc_disable_txbdr(hw, priv->tx_ring[i]);
++}
++
+ static void enetc_wait_txbdr(struct enetc_hw *hw, struct enetc_bdr *tx_ring)
+ {
+ 	int delay = 8, timeout = 100;
+@@ -2465,6 +2477,8 @@ void enetc_start(struct net_device *ndev
+ 
+ 	enetc_setup_interrupts(priv);
+ 
++	enetc_enable_tx_bdrs(priv);
++
+ 	for (i = 0; i < priv->bdr_int_num; i++) {
+ 		int irq = pci_irq_vector(priv->si->pdev,
+ 					 ENETC_BDR_INT_BASE_IDX + i);
+@@ -2473,7 +2487,7 @@ void enetc_start(struct net_device *ndev
+ 		enable_irq(irq);
+ 	}
+ 
+-	enetc_enable_bdrs(priv);
++	enetc_enable_rx_bdrs(priv);
+ 
+ 	netif_tx_start_all_queues(ndev);
+ 
+@@ -2539,7 +2553,7 @@ void enetc_stop(struct net_device *ndev)
+ 
  	netif_tx_stop_all_queues(ndev);
  
- 	enetc_disable_bdrs(priv);
---- a/drivers/net/ethernet/freescale/enetc/enetc.h
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.h
-@@ -328,6 +328,7 @@ enum enetc_active_offloads {
+-	enetc_disable_bdrs(priv);
++	enetc_disable_rx_bdrs(priv);
  
- enum enetc_flags_bit {
- 	ENETC_TX_ONESTEP_TSTAMP_IN_PROGRESS = 0,
-+	ENETC_TX_DOWN,
- };
+ 	for (i = 0; i < priv->bdr_int_num; i++) {
+ 		int irq = pci_irq_vector(priv->si->pdev,
+@@ -2552,6 +2566,8 @@ void enetc_stop(struct net_device *ndev)
  
- /* interrupt coalescing modes */
+ 	enetc_wait_bdrs(priv);
+ 
++	enetc_disable_tx_bdrs(priv);
++
+ 	enetc_clear_interrupts(priv);
+ }
+ EXPORT_SYMBOL_GPL(enetc_stop);
 
 
