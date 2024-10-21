@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFD5195FEC;
-	Mon, 21 Oct 2024 10:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47DB1EF937;
+	Mon, 21 Oct 2024 10:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507654; cv=none; b=qXoJDXKLCIxAg8KDSGZFZbEWELJG7/gdCxEbXqcSVqY2rErTHZbweOIE5P3hYORg19Cw23AMvpLp0B2JiwhKoSAzVSLaOu3VNw3AEIE27nDBwnV8CL71eT8RJrPMlmAlSZt9Qh+xxQRuzp00GD5DVC4KdczaCT/Hw/wpOKPp6ac=
+	t=1729507657; cv=none; b=Ah7lA+ZmcO5m82uodG5pA6ELzn+bWddGbEUttgY6GomNFw1WGfuW4E7iZ2oMWPhcpa8YD5jIruFxLqFSLqd5GZBwb8gx2zpZlLqKJscB6SI7REiU4RUFKr9QgGtFQSUQ5OHT85ca4vU58K0KJfxsP+oAYF+YmUsuc6ITJKxPMJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507654; c=relaxed/simple;
-	bh=Y9V+/oRcX7GMg9hOXrhJZzlu5J8midIBEurIdAfhouA=;
+	s=arc-20240116; t=1729507657; c=relaxed/simple;
+	bh=p+1vwAGGmTLVS/dp1vKYF7kwMgoR6zqtfjZF9Y5aBDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QhDD2xxJFYjbY9m6a7kM1HOYA/BYUwYGfBABecDDNWfPUBQ/Dxg96Tpkn267+A9+jzuYVqPKS3DE3FLM/42U0si8jLkGtqhWHVaACw9AnGRFsOJUWQj1H6340+JpdaQ9Wv2t5at/kzESw6LFnozRDQ+ZgOo/XuLzPid9OKI6Nn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKduNQzq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rDrX8ujwW3h3N1h5CQpvwxG3kg06hDH1z9RFSIdcPaUe1alcPVUJXhhP9MqEOZq5cIYeaLEzW+17O1h8IHM72WdunZ/DRr7fqY14w/9LcQzneZFkdOzpYYKbo1t0t4UceHiGMTvxVYtNlFgWoetDI88vGbfhzi8s61c8T+H/gqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7HIXR+c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKduNQzq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C44C4CEC3;
-	Mon, 21 Oct 2024 10:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7HIXR+c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1340DC4CEC3;
+	Mon, 21 Oct 2024 10:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507654;
-	bh=Y9V+/oRcX7GMg9hOXrhJZzlu5J8midIBEurIdAfhouA=;
+	s=korg; t=1729507657;
+	bh=p+1vwAGGmTLVS/dp1vKYF7kwMgoR6zqtfjZF9Y5aBDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKduNQzqnx00DHqh/UZGnVnGcBQExyWq3+rgSLrF0z3MeRA2N/WoeHx3YkbAYACwa
-	 GmUsQL4OKml0ch0zXvbRpD6h4pfx34SXCx2rCxnfaa81HJAXZAGJr5q66B1zNVS2Eg
-	 mnvUFNirN8aAChniETsxuGNXd1iz2CAfHLYNStQo=
+	b=a7HIXR+c/sUEepuu+yPCVfj53SuI5iTqJ6CF99LE9du28mkLvvlJWSO/m8785RHkT
+	 WF8UKgPRQCztIh+vLL9O7icdGk4Zm635qWhegETziuqI1hmvZX7Uq/u5999nSahuVg
+	 ofXe/zDnq+UfIYJ1E86f5kV24FMV6aUHc8pA+8+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Gedenryd <emil.gedenryd@axis.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 58/82] iio: light: opt3001: add missing full-scale range value
-Date: Mon, 21 Oct 2024 12:25:39 +0200
-Message-ID: <20241021102249.524153631@linuxfoundation.org>
+Subject: [PATCH 5.15 59/82] iio: proximity: mb1232: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
+Date: Mon, 21 Oct 2024 12:25:40 +0200
+Message-ID: <20241021102249.563224761@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102247.209765070@linuxfoundation.org>
 References: <20241021102247.209765070@linuxfoundation.org>
@@ -51,41 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Gedenryd <emil.gedenryd@axis.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 530688e39c644543b71bdd9cb45fdfb458a28eaa upstream.
+commit 75461a0b15d7c026924d0001abce0476bbc7eda8 upstream.
 
-The opt3001 driver uses predetermined full-scale range values to
-determine what exponent to use for event trigger threshold values.
-The problem is that one of the values specified in the datasheet is
-missing from the implementation. This causes larger values to be
-scaled down to an incorrect exponent, effectively reducing the
-maximum settable threshold value by a factor of 2.
+This driver makes use of triggered buffers, but does not select the
+required modules.
 
-Add missing full-scale range array value.
+Add the missing 'select IIO_BUFFER' and 'select IIO_TRIGGERED_BUFFER'.
 
-Fixes: 94a9b7b1809f ("iio: light: add support for TI's opt3001 light sensor")
-Signed-off-by: Emil Gedenryd <emil.gedenryd@axis.com>
+Fixes: 16b05261537e ("mb1232.c: add distance iio sensor with i2c")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20241003-iio-select-v1-13-67c0385197cd@gmail.com
 Cc: <Stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240913-add_opt3002-v2-1-69e04f840360@axis.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/opt3001.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/proximity/Kconfig |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/light/opt3001.c
-+++ b/drivers/iio/light/opt3001.c
-@@ -139,6 +139,10 @@ static const struct opt3001_scale opt300
- 		.val2 = 400000,
- 	},
- 	{
-+		.val = 41932,
-+		.val2 = 800000,
-+	},
-+	{
- 		.val = 83865,
- 		.val2 = 600000,
- 	},
+--- a/drivers/iio/proximity/Kconfig
++++ b/drivers/iio/proximity/Kconfig
+@@ -60,6 +60,8 @@ config LIDAR_LITE_V2
+ config MB1232
+ 	tristate "MaxSonar I2CXL family ultrasonic sensors"
+ 	depends on I2C
++	select IIO_BUFFER
++	select IIO_TRIGGERED_BUFFER
+ 	help
+ 	  Say Y to build a driver for the ultrasonic sensors I2CXL of
+ 	  MaxBotix which have an i2c interface. It can be used to measure
 
 
