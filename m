@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C823D1E3DD8;
-	Mon, 21 Oct 2024 10:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1C71E47A6;
+	Mon, 21 Oct 2024 10:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507141; cv=none; b=JY63pc0g7ggpgo7j4P7lbrYNO1xidgd3sTp19nZvpjAo4WE+qgvsliyPxBm9EMAds7m4YS3rtqF/Agcu/d61mEQWHOmqUE+QrWqih3NJJp8FnI7NRPWaKO45kOECWnC1fLVhgYl8vZnh00M8gprjOvSeJD3JUV0yewHFFONBd5I=
+	t=1729507145; cv=none; b=NvJeA6mw2Bzjx1YE22179cm6NhLXwqnrWfyUQZBGARWDURXppW3VdxwzOVpSHaVd6AkKswx8AqhYmDYYbtH23eI+xp9gA16sYWlqlMFA3CYytIjRsjR8orx2xSiC88yXvEL2iq2CVWHUXxTPYfJDymYOCzXs3IX1Q3Iltjaq740=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507141; c=relaxed/simple;
-	bh=RSzahBSj9fpNb1CpC1InpnTKrF0FwIh4W3Vr/MCGll4=;
+	s=arc-20240116; t=1729507145; c=relaxed/simple;
+	bh=kC9f8U6kvT29SEYXaC1wA50oDKXMv2BCsZXMfjV5iyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rtt4HqtFgdIKh0QCUkK86vCx17jp2kp3PEthsjtIIslatqpqMbKFX2Y/oV2YfyEjPH1x+YANTdzj9E4imv6aq8WvpUPHR8Fsg9UstmCvU3nMyqHco9u9T6S+PpTnF7dmzydJm1Zo0N2gwznWMKLhUMM2WS9jBidglSwn4YpGR5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGDlctNo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PWuWYRpXSpMjQVDmsJcQgHjWI5DHrcDsxE93K9HVnPc/md1XCC9rjrDPPswL+npTg5Zd7mvW/RnQnXwAHtaEkmxeC64a08EzDHVVG9l0xssV1MFHRvjv+zGxUKasIkoDm927qekYi3j8Og0TEiAmnrHUoQPkU01NLaxz0N2MBtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=14PS9Dl3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGDlctNo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E96C4CEC3;
-	Mon, 21 Oct 2024 10:39:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="14PS9Dl3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D268C4CEC3;
+	Mon, 21 Oct 2024 10:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507141;
-	bh=RSzahBSj9fpNb1CpC1InpnTKrF0FwIh4W3Vr/MCGll4=;
+	s=korg; t=1729507144;
+	bh=kC9f8U6kvT29SEYXaC1wA50oDKXMv2BCsZXMfjV5iyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DGDlctNogy+3w2dmltSqoPyeYnuwNlvn/FQLG1+nD5AZWTUkzk3GCE0SN30k1oXZd
-	 2ZZNgDiEzUevA9EXJZwaB+upe8MKQ7CaPtTTuPFXHcDKmPImijiXswzpniD3D+MoT8
-	 2rpGmqm9bdcGkj4WYEI90qN8wyN6GGtT6pWZUbeo=
+	b=14PS9Dl33NXm+vg6RuJWI3985A5xvW91pGldroajLCgUHrt/Und7355+pGPVKhlR2
+	 NVhqH3lDIjvUt5Zblnui/ITXAVZhiAmGqp3Y7Ca2dgBtBICDIqVOqhdsKghBau/42/
+	 LBtdepEdTKSFGL6vA5mZK00uMDpuuhryF7Tiosro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Todd Brandt <todd.e.brandt@intel.com>
-Subject: [PATCH 6.6 104/124] x86/apic: Always explicitly disarm TSC-deadline timer
-Date: Mon, 21 Oct 2024 12:25:08 +0200
-Message-ID: <20241021102300.741838345@linuxfoundation.org>
+	John Allen <john.allen@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.6 105/124] x86/CPU/AMD: Only apply Zenbleed fix for Zen2 during late microcode load
+Date: Mon, 21 Oct 2024 12:25:09 +0200
+Message-ID: <20241021102300.779703805@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -54,73 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: John Allen <john.allen@amd.com>
 
-commit ffd95846c6ec6cf1f93da411ea10d504036cab42 upstream.
+commit ee4d4e8d2c3bec6ee652599ab31991055a72c322 upstream.
 
-New processors have become pickier about the local APIC timer state
-before entering low power modes. These low power modes are used (for
-example) when you close your laptop lid and suspend. If you put your
-laptop in a bag and it is not in this low power mode, it is likely
-to get quite toasty while it quickly sucks the battery dry.
+Commit
 
-The problem boils down to some CPUs' inability to power down until the
-CPU recognizes that the local APIC timer is shut down. The current
-kernel code works in one-shot and periodic modes but does not work for
-deadline mode. Deadline mode has been the supported and preferred mode
-on Intel CPUs for over a decade and uses an MSR to drive the timer
-instead of an APIC register.
+  f69759be251d ("x86/CPU/AMD: Move Zenbleed check to the Zen2 init function")
 
-Disable the TSC Deadline timer in lapic_timer_shutdown() by writing to
-MSR_IA32_TSC_DEADLINE when in TSC-deadline mode. Also avoid writing
-to the initial-count register (APIC_TMICT) which is ignored in
-TSC-deadline mode.
+causes a bit in the DE_CFG MSR to get set erroneously after a microcode late
+load.
 
-Note: The APIC_LVTT|=APIC_LVT_MASKED operation should theoretically be
-enough to tell the hardware that the timer will not fire in any of the
-timer modes. But mitigating AMD erratum 411[1] also requires clearing
-out APIC_TMICT. Solely setting APIC_LVT_MASKED is also ineffective in
-practice on Intel Lunar Lake systems, which is the motivation for this
-change.
+The microcode late load path calls into amd_check_microcode() and subsequently
+zen2_zenbleed_check(). Since the above commit removes the cpu_has_amd_erratum()
+call from zen2_zenbleed_check(), this will cause all non-Zen2 CPUs to go
+through the function and set the bit in the DE_CFG MSR.
 
-1. 411 Processor May Exit Message-Triggered C1E State Without an Interrupt if Local APIC Timer Reaches Zero - https://www.amd.com/content/dam/amd/en/documents/archived-tech-docs/revision-guides/41322_10h_Rev_Gd.pdf
+Call into the Zenbleed fix path on Zen2 CPUs only.
 
-Fixes: 279f1461432c ("x86: apic: Use tsc deadline for oneshot when available")
-Suggested-by: Dave Hansen <dave.hansen@intel.com>
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Tested-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Tested-by: Todd Brandt <todd.e.brandt@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241015061522.25288-1-rui.zhang%40intel.com
+  [ bp: Massage commit message, use cpu_feature_enabled(). ]
+
+Fixes: f69759be251d ("x86/CPU/AMD: Move Zenbleed check to the Zen2 init function")
+Signed-off-by: John Allen <john.allen@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240923164404.27227-1-john.allen@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/apic/apic.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/amd.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/apic/apic.c
-+++ b/arch/x86/kernel/apic/apic.c
-@@ -473,7 +473,19 @@ static int lapic_timer_shutdown(struct c
- 	v = apic_read(APIC_LVTT);
- 	v |= (APIC_LVT_MASKED | LOCAL_TIMER_VECTOR);
- 	apic_write(APIC_LVTT, v);
--	apic_write(APIC_TMICT, 0);
-+
-+	/*
-+	 * Setting APIC_LVT_MASKED (above) should be enough to tell
-+	 * the hardware that this timer will never fire. But AMD
-+	 * erratum 411 and some Intel CPU behavior circa 2024 say
-+	 * otherwise.  Time for belt and suspenders programming: mask
-+	 * the timer _and_ zero the counter registers:
-+	 */
-+	if (v & APIC_LVT_TIMER_TSCDEADLINE)
-+		wrmsrl(MSR_IA32_TSC_DEADLINE, 0);
-+	else
-+		apic_write(APIC_TMICT, 0);
-+
- 	return 0;
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -1374,7 +1374,8 @@ void amd_check_microcode(void)
+ 	if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD)
+ 		return;
+ 
+-	on_each_cpu(zenbleed_check_cpu, NULL, 1);
++	if (cpu_feature_enabled(X86_FEATURE_ZEN2))
++		on_each_cpu(zenbleed_check_cpu, NULL, 1);
  }
  
+ /*
 
 
