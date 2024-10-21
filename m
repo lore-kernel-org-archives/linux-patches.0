@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263581E907A;
-	Mon, 21 Oct 2024 10:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D0F1E3DF3;
+	Mon, 21 Oct 2024 10:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507268; cv=none; b=KyGM7NTDAVnpJHZprMbksx9mzJktHhf2bmkGFx7Nm08Yzl1RBpvHldUx6YZyZJnexJ0YMnVG67LuXTmI5SmIdBhX9IR1WmQuN4X7TGe50H6mBBlVVbAMLVF+cnyncUI3X1Iqke2XPPwY+q5SSsuQNfuvUCXlTaCl+uIKRDJkZ2k=
+	t=1729507271; cv=none; b=Bg0zsq/E5XiJuq0T9LrLzmw7rD8jgg3B6ScggCGdEqXT3jJWIqRasBn/QwjlEZeMZxCQv2YjMrFcAIXtEBdcSa/wCbN3KQDaSIH6NTfM/rBeBh0FKTFaodyNeFSFc0NOOmZ81hBvCXukDPYqWnneCU4dlPx3EPFjwD6d0TSX/DY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507268; c=relaxed/simple;
-	bh=3e0D15UGrqcXec1XKzJ+fVHOzrtzCLIjmPbqb0krx5A=;
+	s=arc-20240116; t=1729507271; c=relaxed/simple;
+	bh=ObphCfngXRde0m7QoMtDMyVH9tEodP5V1TtpbQ6UYAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gwwcU8xeD4FAr+4BfSHzg2dAp1jZ3KDd2+ztdNL1O/z25VVgBFtol9zKH2bCFCJWqFOAG8mdOCxDJiQQML26nwaZAReuK62JUej2L0skOiv5OlMD/s0Ae/glyFOWLTpqiMODzcDKkfzOBqWpRsILBwRu8HI/oeWVgXhXuz7cHyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJRH1o90; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pbA0293iYrKXlySJxdkd3CE6Kr5uOba0LEXr3f0rjXzeVhiZiSFHJZTn1OeIXXjuEs/4WXS9w0KTGK77qHsy/xku3XZvlT3PxQqsxcX6NYbb7zT+xCPq5CE/B8KHy9fvr1WUBYl96aCC4yAUcdOcqOCsO01LbLU4XrU4efACFwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOtjms3W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJRH1o90"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53194C4CEC7;
-	Mon, 21 Oct 2024 10:41:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOtjms3W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C51DC4CEC3;
+	Mon, 21 Oct 2024 10:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507267;
-	bh=3e0D15UGrqcXec1XKzJ+fVHOzrtzCLIjmPbqb0krx5A=;
+	s=korg; t=1729507270;
+	bh=ObphCfngXRde0m7QoMtDMyVH9tEodP5V1TtpbQ6UYAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJRH1o90Iv2KF79/mfT5VYSOmwyyZrfpPLOXJsScJ0x+FRkrYT1ygVIJ3ypgh2BfG
-	 5IL8fBBHaOQyLqn76A/1AkxUaAB8Rfqp3VRgc6QZLqCAwbOucMNiesp2Gi41/xr1GH
-	 4RewhhyMHxs9xNy71bysr3qkR+9OKZ/l88Vs4fTo=
+	b=kOtjms3W/zeMhuLqpR34pXIQLcc/ndIQQdsIGed+k2boEfj4ox5kOdCwHhZpqxtHK
+	 qv2advE87ItpjOdsN7pF+0AC/pmH90EojIwQkfkAItU6l7IHZ3HXXpwi4L9qnUQTie
+	 pIsFghKQA1C/nInv8g7ZMYorcy6ZrwcDcDIDo/lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 6.1 20/91] udf: Convert udf_mkdir() to new directory iteration code
-Date: Mon, 21 Oct 2024 12:24:34 +0200
-Message-ID: <20241021102250.606209106@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.1 03/91] ksmbd: fix user-after-free from session log off
+Date: Mon, 21 Oct 2024 12:24:17 +0200
+Message-ID: <20241021102249.930971205@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -50,98 +51,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 00bce6f792caccefa73daeaf9bde82d24d50037f ]
+commit 7aa8804c0b67b3cb263a472d17f2cb50d7f1a930 upstream.
 
-Convert udf_mkdir() to new directory iteration code.
+There is racy issue between smb2 session log off and smb2 session setup.
+It will cause user-after-free from session log off.
+This add session_lock when setting SMB2_SESSION_EXPIRED and referece
+count to session struct not to free session while it is being used.
 
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Cc: stable@vger.kernel.org # v5.15+
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-25282
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/namei.c |   48 +++++++++++++++++++++---------------------------
- 1 file changed, 21 insertions(+), 27 deletions(-)
+ fs/smb/server/mgmt/user_session.c |   26 +++++++++++++++++++++-----
+ fs/smb/server/mgmt/user_session.h |    4 ++++
+ fs/smb/server/server.c            |    2 ++
+ fs/smb/server/smb2pdu.c           |    8 +++++++-
+ 4 files changed, 34 insertions(+), 6 deletions(-)
 
---- a/fs/udf/namei.c
-+++ b/fs/udf/namei.c
-@@ -928,8 +928,7 @@ static int udf_mkdir(struct user_namespa
- 		     struct dentry *dentry, umode_t mode)
- {
- 	struct inode *inode;
--	struct udf_fileident_bh fibh;
--	struct fileIdentDesc cfi, *fi;
-+	struct udf_fileident_iter iter;
- 	int err;
- 	struct udf_inode_info *dinfo = UDF_I(dir);
- 	struct udf_inode_info *iinfo;
-@@ -941,47 +940,42 @@ static int udf_mkdir(struct user_namespa
- 	iinfo = UDF_I(inode);
- 	inode->i_op = &udf_dir_inode_operations;
- 	inode->i_fop = &udf_dir_operations;
--	fi = udf_add_entry(inode, NULL, &fibh, &cfi, &err);
--	if (!fi) {
--		inode_dec_link_count(inode);
-+	err = udf_fiiter_add_entry(inode, NULL, &iter);
-+	if (err) {
-+		clear_nlink(inode);
- 		discard_new_inode(inode);
--		goto out;
-+		return err;
- 	}
- 	set_nlink(inode, 2);
--	cfi.icb.extLength = cpu_to_le32(inode->i_sb->s_blocksize);
--	cfi.icb.extLocation = cpu_to_lelb(dinfo->i_location);
--	*(__le32 *)((struct allocDescImpUse *)cfi.icb.impUse)->impUse =
-+	iter.fi.icb.extLength = cpu_to_le32(inode->i_sb->s_blocksize);
-+	iter.fi.icb.extLocation = cpu_to_lelb(dinfo->i_location);
-+	*(__le32 *)((struct allocDescImpUse *)iter.fi.icb.impUse)->impUse =
- 		cpu_to_le32(dinfo->i_unique & 0x00000000FFFFFFFFUL);
--	cfi.fileCharacteristics =
-+	iter.fi.fileCharacteristics =
- 			FID_FILE_CHAR_DIRECTORY | FID_FILE_CHAR_PARENT;
--	udf_write_fi(inode, &cfi, fi, &fibh, NULL, NULL);
--	brelse(fibh.sbh);
-+	udf_fiiter_write_fi(&iter, NULL);
-+	udf_fiiter_release(&iter);
- 	mark_inode_dirty(inode);
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -176,9 +176,10 @@ static void ksmbd_expire_session(struct
  
--	fi = udf_add_entry(dir, dentry, &fibh, &cfi, &err);
--	if (!fi) {
-+	err = udf_fiiter_add_entry(dir, dentry, &iter);
-+	if (err) {
- 		clear_nlink(inode);
--		mark_inode_dirty(inode);
- 		discard_new_inode(inode);
--		goto out;
-+		return err;
- 	}
--	cfi.icb.extLength = cpu_to_le32(inode->i_sb->s_blocksize);
--	cfi.icb.extLocation = cpu_to_lelb(iinfo->i_location);
--	*(__le32 *)((struct allocDescImpUse *)cfi.icb.impUse)->impUse =
-+	iter.fi.icb.extLength = cpu_to_le32(inode->i_sb->s_blocksize);
-+	iter.fi.icb.extLocation = cpu_to_lelb(iinfo->i_location);
-+	*(__le32 *)((struct allocDescImpUse *)iter.fi.icb.impUse)->impUse =
- 		cpu_to_le32(iinfo->i_unique & 0x00000000FFFFFFFFUL);
--	cfi.fileCharacteristics |= FID_FILE_CHAR_DIRECTORY;
--	udf_write_fi(dir, &cfi, fi, &fibh, NULL, NULL);
-+	iter.fi.fileCharacteristics |= FID_FILE_CHAR_DIRECTORY;
-+	udf_fiiter_write_fi(&iter, NULL);
-+	udf_fiiter_release(&iter);
- 	inc_nlink(dir);
- 	dir->i_ctime = dir->i_mtime = current_time(dir);
- 	mark_inode_dirty(dir);
- 	d_instantiate_new(dentry, inode);
--	if (fibh.sbh != fibh.ebh)
--		brelse(fibh.ebh);
--	brelse(fibh.sbh);
--	err = 0;
+ 	down_write(&conn->session_lock);
+ 	xa_for_each(&conn->sessions, id, sess) {
+-		if (sess->state != SMB2_SESSION_VALID ||
+-		    time_after(jiffies,
+-			       sess->last_active + SMB2_SESSION_TIMEOUT)) {
++		if (atomic_read(&sess->refcnt) == 0 &&
++		    (sess->state != SMB2_SESSION_VALID ||
++		     time_after(jiffies,
++			       sess->last_active + SMB2_SESSION_TIMEOUT))) {
+ 			xa_erase(&conn->sessions, sess->id);
+ 			hash_del(&sess->hlist);
+ 			ksmbd_session_destroy(sess);
+@@ -268,8 +269,6 @@ struct ksmbd_session *ksmbd_session_look
  
--out:
--	return err;
-+	return 0;
+ 	down_read(&sessions_table_lock);
+ 	sess = __session_lookup(id);
+-	if (sess)
+-		sess->last_active = jiffies;
+ 	up_read(&sessions_table_lock);
+ 
+ 	return sess;
+@@ -288,6 +287,22 @@ struct ksmbd_session *ksmbd_session_look
+ 	return sess;
  }
  
- static int empty_dir(struct inode *dir)
++void ksmbd_user_session_get(struct ksmbd_session *sess)
++{
++	atomic_inc(&sess->refcnt);
++}
++
++void ksmbd_user_session_put(struct ksmbd_session *sess)
++{
++	if (!sess)
++		return;
++
++	if (atomic_read(&sess->refcnt) <= 0)
++		WARN_ON(1);
++	else
++		atomic_dec(&sess->refcnt);
++}
++
+ struct preauth_session *ksmbd_preauth_session_alloc(struct ksmbd_conn *conn,
+ 						    u64 sess_id)
+ {
+@@ -356,6 +371,7 @@ static struct ksmbd_session *__session_c
+ 	xa_init(&sess->rpc_handle_list);
+ 	sess->sequence_number = 1;
+ 	rwlock_init(&sess->tree_conns_lock);
++	atomic_set(&sess->refcnt, 1);
+ 
+ 	ret = __init_smb2_session(sess);
+ 	if (ret)
+--- a/fs/smb/server/mgmt/user_session.h
++++ b/fs/smb/server/mgmt/user_session.h
+@@ -61,6 +61,8 @@ struct ksmbd_session {
+ 	struct ksmbd_file_table		file_table;
+ 	unsigned long			last_active;
+ 	rwlock_t			tree_conns_lock;
++
++	atomic_t			refcnt;
+ };
+ 
+ static inline int test_session_flag(struct ksmbd_session *sess, int bit)
+@@ -101,4 +103,6 @@ void ksmbd_release_tree_conn_id(struct k
+ int ksmbd_session_rpc_open(struct ksmbd_session *sess, char *rpc_name);
+ void ksmbd_session_rpc_close(struct ksmbd_session *sess, int id);
+ int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id);
++void ksmbd_user_session_get(struct ksmbd_session *sess);
++void ksmbd_user_session_put(struct ksmbd_session *sess);
+ #endif /* __USER_SESSION_MANAGEMENT_H__ */
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -238,6 +238,8 @@ static void __handle_ksmbd_work(struct k
+ 	} while (is_chained == true);
+ 
+ send:
++	if (work->sess)
++		ksmbd_user_session_put(work->sess);
+ 	if (work->tcon)
+ 		ksmbd_tree_connect_put(work->tcon);
+ 	smb3_preauth_hash_rsp(work);
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -604,8 +604,10 @@ int smb2_check_user_session(struct ksmbd
+ 
+ 	/* Check for validity of user session */
+ 	work->sess = ksmbd_session_lookup_all(conn, sess_id);
+-	if (work->sess)
++	if (work->sess) {
++		ksmbd_user_session_get(work->sess);
+ 		return 1;
++	}
+ 	ksmbd_debug(SMB, "Invalid user session, Uid %llu\n", sess_id);
+ 	return -ENOENT;
+ }
+@@ -1759,6 +1761,7 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 		}
+ 
+ 		conn->binding = true;
++		ksmbd_user_session_get(sess);
+ 	} else if ((conn->dialect < SMB30_PROT_ID ||
+ 		    server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL) &&
+ 		   (req->Flags & SMB2_SESSION_REQ_FLAG_BINDING)) {
+@@ -1785,6 +1788,7 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 		}
+ 
+ 		conn->binding = false;
++		ksmbd_user_session_get(sess);
+ 	}
+ 	work->sess = sess;
+ 
+@@ -2240,7 +2244,9 @@ int smb2_session_logoff(struct ksmbd_wor
+ 	}
+ 
+ 	ksmbd_destroy_file_table(&sess->file_table);
++	down_write(&conn->session_lock);
+ 	sess->state = SMB2_SESSION_EXPIRED;
++	up_write(&conn->session_lock);
+ 
+ 	ksmbd_free_user(sess->user);
+ 	sess->user = NULL;
 
 
