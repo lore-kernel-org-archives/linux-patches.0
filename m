@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A980116F27E;
-	Mon, 21 Oct 2024 10:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21AA16F27E;
+	Mon, 21 Oct 2024 10:47:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507666; cv=none; b=Xi7gl6LvQ7tcAc59FPhuCThwdAxeJ0x0hKvEk8gaoypj78X1YPjbbPb1lg/1EJZl2bC79cFoe0NSYhNnPX6zjOZ7W3YUwP6/K2Pv0q0wCgQdWhi9abhIqfoDMNVrYCTe/BqnPb6lmO2TtksjjTyK+IKjibWLHGKMkzsu8qxYpHQ=
+	t=1729507670; cv=none; b=VA9XdNnAZS6SvB0t2MhAYzo4p54sQeg+OhpNFsE8LhLttAgVIxGU2b+zsy2vLsRZBz/W1dxCgNgWKN+GwU1Mcsf1eFRO1TL5pXu96Debia1oBbpnLM77ivzMtFwdOzAqNZsqRMcoj1laWg1nhCM58ZTrbyr47raFSDn48Z5ZspI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507666; c=relaxed/simple;
-	bh=78ZIRm2rz6EU+HMxz4cHqD5I8foJVCO/aTlUaASAEEk=;
+	s=arc-20240116; t=1729507670; c=relaxed/simple;
+	bh=eS2iY6CI2qhMhGKBvTK1LYY9R0QQhROQ5MoSaXKyRZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mHNEhvo9Izvtk+LBIS1qNAlFCOqdvbXPCiYmWUpXqNHXK9yvrNTj6wikeG2VLRO0CtwtkhdIQvy2HG5pkPhCuG/lL1P3ONPkeUA3Y6xTyl3emIWLvoi2mnW+24P5N/goyJ5TTYIu/PU25fTyZrAVwfHZBnoThMxaJL3VzKm7m78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OV3KvP44; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j99bePND7sDGyjL86dxZWI6cZPfHhTNcQV4ymRFlQvz3pLcD3j2tn4aqq4tZuZkF3LY/h4tWxZ+Gn0SIsXMi5QL6RlgY3swI8y/hmRJROrSkc6Uv+TXAfrzJl61djYJdUlx5ZD//UMdbqlSOb1f2zoy94vu8qgYysrM39VrJWxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ml9CSaqp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OV3KvP44"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B60C4CEC3;
-	Mon, 21 Oct 2024 10:47:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ml9CSaqp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CE3C4CEC3;
+	Mon, 21 Oct 2024 10:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507666;
-	bh=78ZIRm2rz6EU+HMxz4cHqD5I8foJVCO/aTlUaASAEEk=;
+	s=korg; t=1729507669;
+	bh=eS2iY6CI2qhMhGKBvTK1LYY9R0QQhROQ5MoSaXKyRZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OV3KvP44bN/CjnkbNzg5ClRkqRiKayWsuH9oXcDwpThKNT8Kovm9l32ENlKJaLwq3
-	 JURjKsX4p+YkcRhhSPRokew08WeDMLuJzb8pwwF5k/luxzhA42/1Zi2tqAZ4wJToMM
-	 uW/YMB0PcAjhQC0gvdE9Msr56wB+Jw1OlKw5rYmY=
+	b=ml9CSaqp7mnS4zaGbbvQWHwV4lE4JcBksPbz/lB15xfsH1DqtAtQacY9FbHg+VGrb
+	 IvroACJm6XGlmd21p4gpjH4/J8F2/zkkag+cqubZ3MtDpFeXQN2EGCtDqVkVkSE6/a
+	 IyL+q0eWwBIy10hUsFbDrod6qA6jxn05zZqGhFkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.15 62/82] Bluetooth: btusb: Fix regression with fake CSR controllers 0a12:0001
-Date: Mon, 21 Oct 2024 12:25:43 +0200
-Message-ID: <20241021102249.680332142@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Johannes Wikner <kwikner@ethz.ch>,
+	stable@kernel.org
+Subject: [PATCH 5.15 45/82] x86/bugs: Skip RSB fill at VMEXIT
+Date: Mon, 21 Oct 2024 12:25:26 +0200
+Message-ID: <20241021102249.022563996@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102247.209765070@linuxfoundation.org>
 References: <20241021102247.209765070@linuxfoundation.org>
@@ -43,71 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Johannes Wikner <kwikner@ethz.ch>
 
-commit 2c1dda2acc4192d826e84008d963b528e24d12bc upstream.
+commit 0fad2878642ec46225af2054564932745ac5c765 upstream.
 
-Fake CSR controllers don't seem to handle short-transfer properly which
-cause command to time out:
+entry_ibpb() is designed to follow Intel's IBPB specification regardless
+of CPU. This includes invalidating RSB entries.
 
-kernel: usb 1-1: new full-speed USB device number 19 using xhci_hcd
-kernel: usb 1-1: New USB device found, idVendor=0a12, idProduct=0001, bcdDevice=88.91
-kernel: usb 1-1: New USB device strings: Mfr=0, Product=2, SerialNumber=0
-kernel: usb 1-1: Product: BT DONGLE10
-...
-Bluetooth: hci1: Opcode 0x1004 failed: -110
-kernel: Bluetooth: hci1: command 0x1004 tx timeout
+Hence, if IBPB on VMEXIT has been selected, entry_ibpb() as part of the
+RET untraining in the VMEXIT path will take care of all BTB and RSB
+clearing so there's no need to explicitly fill the RSB anymore.
 
-According to USB Spec 2.0 Section 5.7.3 Interrupt Transfer Packet Size
-Constraints a interrupt transfer is considered complete when the size is 0
-(ZPL) or < wMaxPacketSize:
+  [ bp: Massage commit message. ]
 
- 'When an interrupt transfer involves more data than can fit in one
- data payload of the currently established maximum size, all data
- payloads are required to be maximum-sized except for the last data
- payload, which will contain the remaining data. An interrupt transfer
- is complete when the endpoint does one of the following:
-
- • Has transferred exactly the amount of data expected
- • Transfers a packet with a payload size less than wMaxPacketSize or
- transfers a zero-length packet'
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219365
-Fixes: 7b05933340f4 ("Bluetooth: btusb: Fix not handling ZPL/short-transfer")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Johannes Wikner <kwikner@ethz.ch>
+Cc: <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/bugs.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -1002,10 +1002,15 @@ static int btusb_submit_intr_urb(struct
- 	if (!urb)
- 		return -ENOMEM;
- 
--	/* Use maximum HCI Event size so the USB stack handles
--	 * ZPL/short-transfer automatically.
--	 */
--	size = HCI_MAX_EVENT_SIZE;
-+	if (le16_to_cpu(data->udev->descriptor.idVendor)  == 0x0a12 &&
-+	    le16_to_cpu(data->udev->descriptor.idProduct) == 0x0001)
-+		/* Fake CSR devices don't seem to support sort-transter */
-+		size = le16_to_cpu(data->intr_ep->wMaxPacketSize);
-+	else
-+		/* Use maximum HCI Event size so the USB stack handles
-+		 * ZPL/short-transfer automatically.
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1093,6 +1093,14 @@ do_cmd_auto:
+ 	case RETBLEED_MITIGATION_IBPB:
+ 		setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
+ 		mitigate_smt = true;
++
++		/*
++		 * There is no need for RSB filling: entry_ibpb() ensures
++		 * all predictions, including the RSB, are invalidated,
++		 * regardless of IBPB implementation.
 +		 */
-+		size = HCI_MAX_EVENT_SIZE;
++		setup_clear_cpu_cap(X86_FEATURE_RSB_VMEXIT);
++
+ 		break;
  
- 	buf = kmalloc(size, mem_flags);
- 	if (!buf) {
+ 	default:
+@@ -2603,6 +2611,13 @@ static void __init srso_select_mitigatio
+ 			if (!boot_cpu_has(X86_FEATURE_ENTRY_IBPB) && has_microcode) {
+ 				setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
+ 				srso_mitigation = SRSO_MITIGATION_IBPB_ON_VMEXIT;
++
++				/*
++				 * There is no need for RSB filling: entry_ibpb() ensures
++				 * all predictions, including the RSB, are invalidated,
++				 * regardless of IBPB implementation.
++				 */
++				setup_clear_cpu_cap(X86_FEATURE_RSB_VMEXIT);
+ 			}
+ 		} else {
+ 			pr_err("WARNING: kernel not compiled with CPU_SRSO.\n");
 
 
