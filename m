@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1D91E9081;
-	Mon, 21 Oct 2024 10:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1006D1E907F;
+	Mon, 21 Oct 2024 10:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507580; cv=none; b=VI5SHR+SbxmFz6zRz6xTktn2KDGY7TVb+qOn41tqpm+I9EDyQpiLZwxj3oEHnnMkst0CHxrWlNXYsIv3E+a/BAO+oahah72Jozy396OWtFkBsJKdrNTRCVoomU3rLz3yB7/PKuTaiiBAoUDa63+R3R2Ihrg9MsJJIMespJ9QEa4=
+	t=1729507583; cv=none; b=dBDjxkddZs3rGaQWbvhSwkLlLFDDEI+Tpob9P+MpflZbSsKwslwo2x/L+eqOiodsFC1NThT0K296CaVfz7uI8A1yOln5mheIh8tvrOmwyEFDJpEFwWCW6aoN4tosRGccZmOkNQeZ0iyhK2vgo9vjNzXCFv67/nQiYFXoJs697M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507580; c=relaxed/simple;
-	bh=H7DoioIL9Kc8dXU5TPeIy6ZLJsdxKnRVOTKvDfykPYo=;
+	s=arc-20240116; t=1729507583; c=relaxed/simple;
+	bh=KgqPflGxGC6aQpCP7h3j8opKFqu7pdZ3a9Vueginbt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jcA8u9+0h87Fojvd/QMs1k2sGorji7wXixa7/pqbPHqUiom1fHc+UmM5F5VOgjJv2+r8dvBToYSrxFDlEGkPT+6nfZEn8q659puqoMv3MbXdbufAIOrZffZwu5RDexApUnnLQzqImZhYkvamLZ8c0beaKm2M22EiFpj1XHGmgcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U0fPHSNG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CnLL5lBWlDWsHeG43akJafq/YIWpxaXf2SvYszzD/czcjjzS7/P+IMnx0dJ53XgsYhK41cg94xijtcazNR+o7K1P4ufShsEll64XbTfncsbz0GW9hQv747OgaihqZjB7A6p9IM1zxYU/VO1yxL/TJcxHt0B6tb6ss+Xd9VpoV/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PS0twP2F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U0fPHSNG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D58C4CEC7;
-	Mon, 21 Oct 2024 10:46:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PS0twP2F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A43C4CEC3;
+	Mon, 21 Oct 2024 10:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507579;
-	bh=H7DoioIL9Kc8dXU5TPeIy6ZLJsdxKnRVOTKvDfykPYo=;
+	s=korg; t=1729507582;
+	bh=KgqPflGxGC6aQpCP7h3j8opKFqu7pdZ3a9Vueginbt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U0fPHSNGgAQFvnHrqzIT0lOZN6D7J1j85ws20UVZ/p5VjASHC0KoBP5ykdiwR0dNH
-	 l46wNd2EoW10TRQQQ1toARdNbw2p4YfOJxDy4RQE2o9lDQEsyYBKvqis7lGJr6+7AJ
-	 DZS9oQ5lDPI3/Ssg23UU2LJsfTQ8UtVK+Os38nZg=
+	b=PS0twP2FbEEQr+GgOeyA+rSmhV9kFLG/UKtC3tqmgbIYnBkNICQ/Dja8Ttshs/lhU
+	 wprCbNC+Ra2DwEPyDcZVyz0BvJ6PGEQKBsUanUUxVx88pwc2LhV8HGMZz4HQ+5NY+o
+	 IxayWWdvYfU7+s+4K85zIWgJI70Pq/ChQy6n1pdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Sherry Yang <sherry.yang@oracle.com>
-Subject: [PATCH 5.15 32/82] wifi: mac80211: fix potential key use-after-free
-Date: Mon, 21 Oct 2024 12:25:13 +0200
-Message-ID: <20241021102248.515694729@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Saeed Mirzamohammadi <saeed.mirzamohammadi@oracle.com>
+Subject: [PATCH 5.15 33/82] dm-crypt, dm-verity: disable tasklets
+Date: Mon, 21 Oct 2024 12:25:14 +0200
+Message-ID: <20241021102248.553797766@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102247.209765070@linuxfoundation.org>
 References: <20241021102247.209765070@linuxfoundation.org>
@@ -52,58 +51,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 31db78a4923ef5e2008f2eed321811ca79e7f71b upstream.
+commit 0a9bab391e336489169b95cb0d4553d921302189 upstream.
 
-When ieee80211_key_link() is called by ieee80211_gtk_rekey_add()
-but returns 0 due to KRACK protection (identical key reinstall),
-ieee80211_gtk_rekey_add() will still return a pointer into the
-key, in a potential use-after-free. This normally doesn't happen
-since it's only called by iwlwifi in case of WoWLAN rekey offload
-which has its own KRACK protection, but still better to fix, do
-that by returning an error code and converting that to success on
-the cfg80211 boundary only, leaving the error for bad callers of
-ieee80211_gtk_rekey_add().
+Tasklets have an inherent problem with memory corruption. The function
+tasklet_action_common calls tasklet_trylock, then it calls the tasklet
+callback and then it calls tasklet_unlock. If the tasklet callback frees
+the structure that contains the tasklet or if it calls some code that may
+free it, tasklet_unlock will write into free memory.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: fdf7cb4185b6 ("mac80211: accept key reinstall without changing anything")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[ Sherry: bp to fix CVE-2023-52530, resolved minor conflicts in
-  net/mac80211/cfg.c because of context change due to missing commit
-  23a5f0af6ff4 ("wifi: mac80211: remove cipher scheme support")
-  ccdde7c74ffd ("wifi: mac80211: properly implement MLO key handling")]
-Signed-off-by: Sherry Yang <sherry.yang@oracle.com>
+The commits 8e14f610159d and d9a02e016aaf try to fix it for dm-crypt, but
+it is not a sufficient fix and the data corruption can still happen [1].
+There is no fix for dm-verity and dm-verity will write into free memory
+with every tasklet-processed bio.
+
+There will be atomic workqueues implemented in the kernel 6.9 [2]. They
+will have better interface and they will not suffer from the memory
+corruption problem.
+
+But we need something that stops the memory corruption now and that can be
+backported to the stable kernels. So, I'm proposing this commit that
+disables tasklets in both dm-crypt and dm-verity. This commit doesn't
+remove the tasklet support, because the tasklet code will be reused when
+atomic workqueues will be implemented.
+
+[1] https://lore.kernel.org/all/d390d7ee-f142-44d3-822a-87949e14608b@suse.de/T/
+[2] https://lore.kernel.org/lkml/20240130091300.2968534-1-tj@kernel.org/
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: 39d42fa96ba1b ("dm crypt: add flags to optionally bypass kcryptd workqueues")
+Fixes: 5721d4e5a9cdb ("dm verity: Add optional "try_verify_in_tasklet" feature")
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Saeed Mirzamohammadi <saeed.mirzamohammadi@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/cfg.c |    3 +++
- net/mac80211/key.c |    2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/md/dm-crypt.c |   37 ++-----------------------------------
+ 1 file changed, 2 insertions(+), 35 deletions(-)
 
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -511,6 +511,9 @@ static int ieee80211_add_key(struct wiph
- 		sta->cipher_scheme = cs;
+--- a/drivers/md/dm-crypt.c
++++ b/drivers/md/dm-crypt.c
+@@ -69,10 +69,8 @@ struct dm_crypt_io {
+ 	struct bio *base_bio;
+ 	u8 *integrity_metadata;
+ 	bool integrity_metadata_from_pool:1;
+-	bool in_tasklet:1;
  
- 	err = ieee80211_key_link(key, sdata, sta);
-+	/* KRACK protection, shouldn't happen but just silently accept key */
-+	if (err == -EALREADY)
-+		err = 0;
+ 	struct work_struct work;
+-	struct tasklet_struct tasklet;
  
-  out_unlock:
- 	mutex_unlock(&local->sta_mtx);
---- a/net/mac80211/key.c
-+++ b/net/mac80211/key.c
-@@ -843,7 +843,7 @@ int ieee80211_key_link(struct ieee80211_
- 	 */
- 	if (ieee80211_key_identical(sdata, old_key, key)) {
- 		ieee80211_key_free_unused(key);
--		ret = 0;
-+		ret = -EALREADY;
- 		goto out;
+ 	struct convert_context ctx;
+ 
+@@ -1725,7 +1723,6 @@ static void crypt_io_init(struct dm_cryp
+ 	io->ctx.r.req = NULL;
+ 	io->integrity_metadata = NULL;
+ 	io->integrity_metadata_from_pool = false;
+-	io->in_tasklet = false;
+ 	atomic_set(&io->io_pending, 0);
+ }
+ 
+@@ -1734,12 +1731,6 @@ static void crypt_inc_pending(struct dm_
+ 	atomic_inc(&io->io_pending);
+ }
+ 
+-static void kcryptd_io_bio_endio(struct work_struct *work)
+-{
+-	struct dm_crypt_io *io = container_of(work, struct dm_crypt_io, work);
+-	bio_endio(io->base_bio);
+-}
+-
+ /*
+  * One of the bios was finished. Check for completion of
+  * the whole request and correctly clean up the buffer.
+@@ -1763,20 +1754,6 @@ static void crypt_dec_pending(struct dm_
+ 
+ 	base_bio->bi_status = error;
+ 
+-	/*
+-	 * If we are running this function from our tasklet,
+-	 * we can't call bio_endio() here, because it will call
+-	 * clone_endio() from dm.c, which in turn will
+-	 * free the current struct dm_crypt_io structure with
+-	 * our tasklet. In this case we need to delay bio_endio()
+-	 * execution to after the tasklet is done and dequeued.
+-	 */
+-	if (io->in_tasklet) {
+-		INIT_WORK(&io->work, kcryptd_io_bio_endio);
+-		queue_work(cc->io_queue, &io->work);
+-		return;
+-	}
+-
+ 	bio_endio(base_bio);
+ }
+ 
+@@ -2220,11 +2197,6 @@ static void kcryptd_crypt(struct work_st
+ 		kcryptd_crypt_write_convert(io);
+ }
+ 
+-static void kcryptd_crypt_tasklet(unsigned long work)
+-{
+-	kcryptd_crypt((struct work_struct *)work);
+-}
+-
+ static void kcryptd_queue_crypt(struct dm_crypt_io *io)
+ {
+ 	struct crypt_config *cc = io->cc;
+@@ -2236,15 +2208,10 @@ static void kcryptd_queue_crypt(struct d
+ 		 * irqs_disabled(): the kernel may run some IO completion from the idle thread, but
+ 		 * it is being executed with irqs disabled.
+ 		 */
+-		if (in_hardirq() || irqs_disabled()) {
+-			io->in_tasklet = true;
+-			tasklet_init(&io->tasklet, kcryptd_crypt_tasklet, (unsigned long)&io->work);
+-			tasklet_schedule(&io->tasklet);
++		if (!(in_hardirq() || irqs_disabled())) {
++			kcryptd_crypt(&io->work);
+ 			return;
+ 		}
+-
+-		kcryptd_crypt(&io->work);
+-		return;
  	}
  
+ 	INIT_WORK(&io->work, kcryptd_crypt);
 
 
