@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0509A1EB9F4;
-	Mon, 21 Oct 2024 10:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5B11E571E;
+	Mon, 21 Oct 2024 10:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506669; cv=none; b=ok1kJP1Zg99yaTS+dxY21xgxfs5wfLkl8/VP+qjMy7Sx2+XZepm2ZBnp6joaWycQl0kms+2CYUeFI+pJD+BMqCzKEyhVtKQPDoFU0Q0NJbEhc8oOSB3P1jIbAXbtit9GC6moUhFSA5CU9Xn4wEsc3lhV7fY74djYZK9Mmkijld8=
+	t=1729506672; cv=none; b=aXxi9BviSnErzkMdeMmw0fDX1dSedpgnmKCwqFBnz2u/+zGgC0sxi1ZCqSRhTJUCck3SBURiIHOfGmW0WvvgAi6o95VJe36AwwX+fLnqDVQjfdopkN02e4uNh74nXSMsVXHYNvV4wouy+yGRBOOPSNSzr/eZV9xhGKklJlcZJ1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506669; c=relaxed/simple;
-	bh=jd/gggo1TfcYMUKn8nJiUq4Ow3ebp/VC82pyHE7vv0A=;
+	s=arc-20240116; t=1729506672; c=relaxed/simple;
+	bh=rqKhj1prLyQE39NCx5Lw27+MsB82G8tOub8Up7CaNQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WjrVMLVRFKo5CmLwScDwtR3MOvapJQQ1S8cDkV2NLnzuCTZ4BAXhCD1vEyc9c+xZoOaobPwKHocBhWVGVRlxZ5MHxf7c16Ds9wAa8pp3/u6RbbsuQojEdnGn6TP9vRTwnNAHQOE59f9MBDOYJZLts/vKYAaK3JWUdJMCdgU5sKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DC3aDs2j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MCLlfZuj7fz/UIEDxDUSnGsX/bMzOMPqU1nXGi5iOa18IhNXkggB8/nsMAuAan2mKcbMOI9FZf8TBVIvt2BZXI4pVP3Wuf8qJFTFCJqIE60TRW9uQw1OIpmkwYVWO2W5ZHYHziCgtXw8a43F/CromskL5q0dR2kgPS9wxdUhmx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kezqS6nw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DC3aDs2j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07455C4CEF4;
-	Mon, 21 Oct 2024 10:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kezqS6nw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDFAC4CEC7;
+	Mon, 21 Oct 2024 10:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506668;
-	bh=jd/gggo1TfcYMUKn8nJiUq4Ow3ebp/VC82pyHE7vv0A=;
+	s=korg; t=1729506671;
+	bh=rqKhj1prLyQE39NCx5Lw27+MsB82G8tOub8Up7CaNQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DC3aDs2jspb97XrSCfHbsaZPoV5m6aJS08MtssA29Usw+GeaielWd2h3wgxFIJxkX
-	 UgcAD6DZHvgSVdmRTZvRrLxvzUnKr+IeZ2de7Ue9ahIRxyWJxs17bX4Rn/EWVVmU/U
-	 nq3Q1HhtxdguGkD6CPcyEVRQ1/y9EqH7kN6HGJzA=
+	b=kezqS6nwP1WoKCYDcx21ot5ukwwnyJ0HP1wGZlIjaCLROm3M9LdMEwlfORwlxYv+C
+	 HSW9wtrtUswLQZhuUasHQpBOsgNxiDg35uVLmkhZ4v870NuLbWl7TGmp52cA8+LVwO
+	 yVx0VsvYiSAaZjlg9AjubifGSYMZqVQsykj/itLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Andrey Skvortsov <andrej.skvortzov@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.11 082/135] iio: magnetometer: af8133j: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
-Date: Mon, 21 Oct 2024 12:23:58 +0200
-Message-ID: <20241021102302.534967955@linuxfoundation.org>
+Subject: [PATCH 6.11 083/135] iio: resolver: ad2s1210 add missing select REGMAP in Kconfig
+Date: Mon, 21 Oct 2024 12:23:59 +0200
+Message-ID: <20241021102302.573087273@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -54,37 +54,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit fbb913895e3da36cb42e1e7a5a3cae1c6d150cf6 upstream.
+commit 17a99360184cf02b2b3bc3c1972e777326bfa63b upstream.
 
-This driver makes use of triggered buffers, but does not select the
-required modules.
+This driver makes use of regmap, but does not select the required
+module.
+Add the missing 'select REGMAP'.
 
-Add the missing 'select IIO_BUFFER' and 'select IIO_TRIGGERED_BUFFER'.
-
-Fixes: 1d8f4b04621f ("iio: magnetometer: add a driver for Voltafield AF8133J magnetometer")
+Fixes: b3689e14415a ("staging: iio: resolver: ad2s1210: use regmap for config registers")
 Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Reviewed-by: Andrey Skvortsov <andrej.skvortzov@gmail.com>
-Link: https://patch.msgid.link/20241003-iio-select-v1-11-67c0385197cd@gmail.com
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20241003-ad2s1210-select-v1-1-4019453f8c33@gmail.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/magnetometer/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/resolver/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iio/magnetometer/Kconfig b/drivers/iio/magnetometer/Kconfig
-index 8eb718f5e50f..f69ac75500f9 100644
---- a/drivers/iio/magnetometer/Kconfig
-+++ b/drivers/iio/magnetometer/Kconfig
-@@ -11,6 +11,8 @@ config AF8133J
- 	depends on I2C
- 	depends on OF
- 	select REGMAP_I2C
-+	select IIO_BUFFER
-+	select IIO_TRIGGERED_BUFFER
+diff --git a/drivers/iio/resolver/Kconfig b/drivers/iio/resolver/Kconfig
+index 424529d36080..640aef3e5c94 100644
+--- a/drivers/iio/resolver/Kconfig
++++ b/drivers/iio/resolver/Kconfig
+@@ -31,6 +31,7 @@ config AD2S1210
+ 	depends on SPI
+ 	depends on COMMON_CLK
+ 	depends on GPIOLIB || COMPILE_TEST
++	select REGMAP
  	help
- 	  Say yes here to build support for Voltafield AF8133J I2C-based
- 	  3-axis magnetometer chip.
+ 	  Say yes here to build support for Analog Devices spi resolver
+ 	  to digital converters, ad2s1210, provides direct access via sysfs.
 -- 
 2.47.0
 
