@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCEE01E572C;
-	Mon, 21 Oct 2024 10:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67851E5730;
+	Mon, 21 Oct 2024 10:34:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506869; cv=none; b=qNZ5GCYllY3V+nqX4fGNWv0Quwtj41wRG7ZmvZPkUhlBpYVX5Mt1oK2Bs5lAAkDkjGFEZXJjJFBiLokBYgpwOeC869awdmyzwTEjWGHP/Nltli4whbB//W+m8u089nP296uEfiZpLex5h3THvx6S/L1WSJ9f031y1129BX5bL2o=
+	t=1729506872; cv=none; b=r5Zgi7WNC4jnILHFbnbOFHPDGqOuEPQca011y/I6Mm5give72yJs6QNFd6r5RGVnU2EImGVuHV5YmaGrnQoPMx8aLM6mj64NAfW08mh00itaMMV58dsPomQNP7i9qMg0LVE6AYvXm6XrwKk3Pv8IjVIe/QkRvrCIXLG67UvWltg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506869; c=relaxed/simple;
-	bh=xcU0Ao9Q8SXE4kXpzerAlVLLTl37ecVgp2v9NcupFTo=;
+	s=arc-20240116; t=1729506872; c=relaxed/simple;
+	bh=XbJf0QekIs4hWpVNEk6zlwp2mdfgxNXFxdCsPKxm9Ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vBG3T/9gSEmNIx73G3yvy+vRViLFeT2yXSYYH+CcH619SIRFj68Lr15wfqCAqPC+Yq1AWuOHbYIzjkgdUKVWAqJh87n8ZEb8USf7u2kdS9wuPF1rabop0IF4rwqcCFe5Lign1xckL2Ldq4UekHHfSSheHHdcuhR/lPXotqiIirE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BznOn7yh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FXCPGwb8E/E0ZsBDV73OgeNnv8QZrkZ6DXsQ544M/4TYAEfahM0/pHQokghOqrksKRyfVEalv1LSBIWMPUJ+B6ugPbdNsBVlz1G5xucOHnIyzu9afxUJ8TjTY370DDvDn/l5NLEnE6cf2itwZfCajQZdzYFow7E+ypdWwQFBYH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjhCZKSo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BznOn7yh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45227C4CEC3;
-	Mon, 21 Oct 2024 10:34:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjhCZKSo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BBCC4CEC3;
+	Mon, 21 Oct 2024 10:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506869;
-	bh=xcU0Ao9Q8SXE4kXpzerAlVLLTl37ecVgp2v9NcupFTo=;
+	s=korg; t=1729506872;
+	bh=XbJf0QekIs4hWpVNEk6zlwp2mdfgxNXFxdCsPKxm9Ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BznOn7yhOWO4D2eU8j/CDI5cmQHkoCwvNCYnW0hdq3+HtufdfnEGGK2nKe1xMnLxl
-	 O+o2j0dsoGr8hdlguraOfBJS2cU+sfd0w0C8ClkbgV7+VOk/E488i2Vlks2OQgke4Q
-	 6a6egWgNRn4cZMKGDwTkw1XAXSvVn6TL3hdA79Wo=
+	b=TjhCZKSoqfnHZYcCjvt8kNwFPIm1V42f9rg5qBZGFyI5uZntEf4Cde3uzzWI3qyXT
+	 1BorqH/c32uBt3j3cYGyejZ+LK8Tn71fIxN73lYqpYMhP+ejsSYNHCZoOdaxW3BZZX
+	 0UY0kVg7DZfuVPBj/q89SbIzBBQfgWIsS1fXvywg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.6 013/124] arm64: probes: Fix simulate_ldr*_literal()
-Date: Mon, 21 Oct 2024 12:23:37 +0200
-Message-ID: <20241021102257.233674052@linuxfoundation.org>
+Subject: [PATCH 6.6 014/124] arm64: probes: Fix uprobes for big-endian kernels
+Date: Mon, 21 Oct 2024 12:23:38 +0200
+Message-ID: <20241021102257.273975242@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -53,77 +53,167 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Rutland <mark.rutland@arm.com>
 
-commit 50f813e57601c22b6f26ced3193b9b94d70a2640 upstream.
+commit 13f8f1e05f1dc36dbba6cba0ae03354c0dafcde7 upstream.
 
-The simulate_ldr_literal() code always loads a 64-bit quantity, and when
-simulating a 32-bit load into a 'W' register, it discards the most
-significant 32 bits. For big-endian kernels this means that the relevant
-bits are discarded, and the value returned is the the subsequent 32 bits
-in memory (i.e. the value at addr + 4).
+The arm64 uprobes code is broken for big-endian kernels as it doesn't
+convert the in-memory instruction encoding (which is always
+little-endian) into the kernel's native endianness before analyzing and
+simulating instructions. This may result in a few distinct problems:
 
-Additionally, simulate_ldr_literal() and simulate_ldrsw_literal() use a
-plain C load, which the compiler may tear or elide (e.g. if the target
-is the zero register). Today this doesn't happen to matter, but it may
-matter in future if trampoline code uses a LDR (literal) or LDRSW
-(literal).
+* The kernel may may erroneously reject probing an instruction which can
+  safely be probed.
 
-Update simulate_ldr_literal() and simulate_ldrsw_literal() to use an
-appropriately-sized READ_ONCE() to perform the access, which avoids
-these problems.
+* The kernel may erroneously erroneously permit stepping an
+  instruction out-of-line when that instruction cannot be stepped
+  out-of-line safely.
 
-Fixes: 39a67d49ba35 ("arm64: kprobes instruction simulation support")
+* The kernel may erroneously simulate instruction incorrectly dur to
+  interpretting the byte-swapped encoding.
+
+The endianness mismatch isn't caught by the compiler or sparse because:
+
+* The arch_uprobe::{insn,ixol} fields are encoded as arrays of u8, so
+  the compiler and sparse have no idea these contain a little-endian
+  32-bit value. The core uprobes code populates these with a memcpy()
+  which similarly does not handle endianness.
+
+* While the uprobe_opcode_t type is an alias for __le32, both
+  arch_uprobe_analyze_insn() and arch_uprobe_skip_sstep() cast from u8[]
+  to the similarly-named probe_opcode_t, which is an alias for u32.
+  Hence there is no endianness conversion warning.
+
+Fix this by changing the arch_uprobe::{insn,ixol} fields to __le32 and
+adding the appropriate __le32_to_cpu() conversions prior to consuming
+the instruction encoding. The core uprobes copies these fields as opaque
+ranges of bytes, and so is unaffected by this change.
+
+At the same time, remove MAX_UINSN_BYTES and consistently use
+AARCH64_INSN_SIZE for clarity.
+
+Tested with the following:
+
+| #include <stdio.h>
+| #include <stdbool.h>
+|
+| #define noinline __attribute__((noinline))
+|
+| static noinline void *adrp_self(void)
+| {
+|         void *addr;
+|
+|         asm volatile(
+|         "       adrp    %x0, adrp_self\n"
+|         "       add     %x0, %x0, :lo12:adrp_self\n"
+|         : "=r" (addr));
+| }
+|
+|
+| int main(int argc, char *argv)
+| {
+|         void *ptr = adrp_self();
+|         bool equal = (ptr == adrp_self);
+|
+|         printf("adrp_self   => %p\n"
+|                "adrp_self() => %p\n"
+|                "%s\n",
+|                adrp_self, ptr, equal ? "EQUAL" : "NOT EQUAL");
+|
+|         return 0;
+| }
+
+.... where the adrp_self() function was compiled to:
+
+| 00000000004007e0 <adrp_self>:
+|   4007e0:       90000000        adrp    x0, 400000 <__ehdr_start>
+|   4007e4:       911f8000        add     x0, x0, #0x7e0
+|   4007e8:       d65f03c0        ret
+
+Before this patch, the ADRP is not recognized, and is assumed to be
+steppable, resulting in corruption of the result:
+
+| # ./adrp-self
+| adrp_self   => 0x4007e0
+| adrp_self() => 0x4007e0
+| EQUAL
+| # echo 'p /root/adrp-self:0x007e0' > /sys/kernel/tracing/uprobe_events
+| # echo 1 > /sys/kernel/tracing/events/uprobes/enable
+| # ./adrp-self
+| adrp_self   => 0x4007e0
+| adrp_self() => 0xffffffffff7e0
+| NOT EQUAL
+
+After this patch, the ADRP is correctly recognized and simulated:
+
+| # ./adrp-self
+| adrp_self   => 0x4007e0
+| adrp_self() => 0x4007e0
+| EQUAL
+| #
+| # echo 'p /root/adrp-self:0x007e0' > /sys/kernel/tracing/uprobe_events
+| # echo 1 > /sys/kernel/tracing/events/uprobes/enable
+| # ./adrp-self
+| adrp_self   => 0x4007e0
+| adrp_self() => 0x4007e0
+| EQUAL
+
+Fixes: 9842ceae9fa8 ("arm64: Add uprobe support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Cc: Catalin Marinas <catalin.marinas@arm.com>
 Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20241008155851.801546-3-mark.rutland@arm.com
+Link: https://lore.kernel.org/r/20241008155851.801546-4-mark.rutland@arm.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/probes/simulate-insn.c |   18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ arch/arm64/include/asm/uprobes.h   |    8 +++-----
+ arch/arm64/kernel/probes/uprobes.c |    4 ++--
+ 2 files changed, 5 insertions(+), 7 deletions(-)
 
---- a/arch/arm64/kernel/probes/simulate-insn.c
-+++ b/arch/arm64/kernel/probes/simulate-insn.c
-@@ -171,17 +171,15 @@ simulate_tbz_tbnz(u32 opcode, long addr,
- void __kprobes
- simulate_ldr_literal(u32 opcode, long addr, struct pt_regs *regs)
- {
--	u64 *load_addr;
-+	unsigned long load_addr;
- 	int xn = opcode & 0x1f;
--	int disp;
+--- a/arch/arm64/include/asm/uprobes.h
++++ b/arch/arm64/include/asm/uprobes.h
+@@ -10,11 +10,9 @@
+ #include <asm/insn.h>
+ #include <asm/probes.h>
  
--	disp = ldr_displacement(opcode);
--	load_addr = (u64 *) (addr + disp);
-+	load_addr = addr + ldr_displacement(opcode);
+-#define MAX_UINSN_BYTES		AARCH64_INSN_SIZE
+-
+ #define UPROBE_SWBP_INSN	cpu_to_le32(BRK64_OPCODE_UPROBES)
+ #define UPROBE_SWBP_INSN_SIZE	AARCH64_INSN_SIZE
+-#define UPROBE_XOL_SLOT_BYTES	MAX_UINSN_BYTES
++#define UPROBE_XOL_SLOT_BYTES	AARCH64_INSN_SIZE
  
- 	if (opcode & (1 << 30))	/* x0-x30 */
--		set_x_reg(regs, xn, *load_addr);
-+		set_x_reg(regs, xn, READ_ONCE(*(u64 *)load_addr));
- 	else			/* w0-w30 */
--		set_w_reg(regs, xn, *load_addr);
-+		set_w_reg(regs, xn, READ_ONCE(*(u32 *)load_addr));
+ typedef __le32 uprobe_opcode_t;
  
- 	instruction_pointer_set(regs, instruction_pointer(regs) + 4);
- }
-@@ -189,14 +187,12 @@ simulate_ldr_literal(u32 opcode, long ad
- void __kprobes
- simulate_ldrsw_literal(u32 opcode, long addr, struct pt_regs *regs)
- {
--	s32 *load_addr;
-+	unsigned long load_addr;
- 	int xn = opcode & 0x1f;
--	int disp;
+@@ -23,8 +21,8 @@ struct arch_uprobe_task {
  
--	disp = ldr_displacement(opcode);
--	load_addr = (s32 *) (addr + disp);
-+	load_addr = addr + ldr_displacement(opcode);
+ struct arch_uprobe {
+ 	union {
+-		u8 insn[MAX_UINSN_BYTES];
+-		u8 ixol[MAX_UINSN_BYTES];
++		__le32 insn;
++		__le32 ixol;
+ 	};
+ 	struct arch_probe_insn api;
+ 	bool simulate;
+--- a/arch/arm64/kernel/probes/uprobes.c
++++ b/arch/arm64/kernel/probes/uprobes.c
+@@ -42,7 +42,7 @@ int arch_uprobe_analyze_insn(struct arch
+ 	else if (!IS_ALIGNED(addr, AARCH64_INSN_SIZE))
+ 		return -EINVAL;
  
--	set_x_reg(regs, xn, *load_addr);
-+	set_x_reg(regs, xn, READ_ONCE(*(s32 *)load_addr));
+-	insn = *(probe_opcode_t *)(&auprobe->insn[0]);
++	insn = le32_to_cpu(auprobe->insn);
  
- 	instruction_pointer_set(regs, instruction_pointer(regs) + 4);
- }
+ 	switch (arm_probe_decode_insn(insn, &auprobe->api)) {
+ 	case INSN_REJECTED:
+@@ -108,7 +108,7 @@ bool arch_uprobe_skip_sstep(struct arch_
+ 	if (!auprobe->simulate)
+ 		return false;
+ 
+-	insn = *(probe_opcode_t *)(&auprobe->insn[0]);
++	insn = le32_to_cpu(auprobe->insn);
+ 	addr = instruction_pointer(regs);
+ 
+ 	if (auprobe->api.handler)
 
 
