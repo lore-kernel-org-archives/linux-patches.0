@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34E51E3DF3;
-	Mon, 21 Oct 2024 10:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B501EABC4;
+	Mon, 21 Oct 2024 10:41:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507277; cv=none; b=Mz+uvX3rLpIHYhWwJTQjm64d9zoBFgfKUgSLAU7mU2qi3LEbVpbOPq/YQHaLjRAZ9AUbULeKjNYYPLWS2WRvTymb6fF06H5V/IPZP+2aqfkgTEGRcR6SAtzglUFJHFSY+tOFHeDs4AhoAjg1T2b2kc6tOrHjjX8ad4+Qe7Ah5bQ=
+	t=1729507280; cv=none; b=e9d7gko4vh7JP5ngxkemOFace6jFw9epagt+L5TZpxT0ye5swwFXS16pq6jMRqNlVApcAO1ZMbXF6CxCiObUs/5YyPoQ4cATDHI3VzJvcWHW7wxDNtnkL0rhgKttii6a2NPr7DjV1iyzquiSwJIvX+lvqTRQLxoiMGBBV+20tz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507277; c=relaxed/simple;
-	bh=VGpYx5TNSzzN3EP0K8aOB59rbvO7CWXAl6J3rh1WoQs=;
+	s=arc-20240116; t=1729507280; c=relaxed/simple;
+	bh=Fkg9jn6pPQqvJC3g1fleB0ADm1l+FsrF+xLaAPRoT8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DkpKxW3BgPe/THD4LEDSxX5zRIILqAHAwXdjomaXnKN/tjhnoSciWe3xtjNNpQH69ZaxxOlOt+bl0RkN3uc/uNZZM/TM/2bDQo/Gx7nY/V3Z/xGBcDPn197DXFHRIWK1N2kU/pVQJtvqoPnqz/Hbg0KQvrxiKKBBZgtBht0LiSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0bTg111; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t+5KE+Ahvjo9kE2dvD2InZ1gcN/2APoe1IYP/63pIQZ77+QjhJ2Arq9lX12c71CMSSJ6Y3bL2xS8cVC9qjXbYcb4r89ddLQ2tAD7ONFiZgpITbEl1Zt7CZigeQ4fTKbkTUez9raKweyAVfE+iB7UtpydOvviMtuQOy8hYEgNNtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymAo6QBn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0bTg111"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BD1C4CEC3;
-	Mon, 21 Oct 2024 10:41:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymAo6QBn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6684AC4CEC3;
+	Mon, 21 Oct 2024 10:41:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507276;
-	bh=VGpYx5TNSzzN3EP0K8aOB59rbvO7CWXAl6J3rh1WoQs=;
+	s=korg; t=1729507280;
+	bh=Fkg9jn6pPQqvJC3g1fleB0ADm1l+FsrF+xLaAPRoT8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E0bTg111pdggoaWbjOq5gcEE5a/DrGWhzi4Mb7do2dwKZSzqnvBcalv1nfgn+2q0p
-	 v6YGMXHP5okKIWNTEQCTEntbRoc8IgY+YbBmARYw4A7h4SjxPF4sxOWjbNvpnrW33v
-	 ARDgvwpxSmDHKPNF8cag41eISeK9DOnBx4p1haCk=
+	b=ymAo6QBnzL8sF5Q4B1l8w/jBsreMd+nBEccn04OSgBPvuzSDPjrkC4bY/zNN0g1Ue
+	 dhbtNvDGlLynSVgOKgsArubU80SsKFKOf7NSc7d1dXg4+88pZXxGZTGUK5/urJlVo+
+	 A0GkL+Awp0caM2p3fdfuROeUGcUtEpWGad004DHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3c8b7a8e7df6a2a226ca@syzkaller.appspotmail.com,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 05/91] mptcp: pm: fix UaF read in mptcp_pm_nl_rm_addr_or_subflow
-Date: Mon, 21 Oct 2024 12:24:19 +0200
-Message-ID: <20241021102250.008069953@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Subject: [PATCH 6.1 06/91] udf: New directory iteration code
+Date: Mon, 21 Oct 2024 12:24:20 +0200
+Message-ID: <20241021102250.046413958@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -51,257 +50,464 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-commit 7decd1f5904a489d3ccdcf131972f94645681689 upstream.
+[ Upstream commit d16076d9b684b7c8d3ccbe9c33d5ea9fe8fcca09 ]
 
-Syzkaller reported this splat:
+Add new support code for iterating directory entries. The code is also
+more carefully verifying validity of on-disk directory entries to avoid
+crashes on malicious media.
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in mptcp_pm_nl_rm_addr_or_subflow+0xb44/0xcc0 net/mptcp/pm_netlink.c:881
-  Read of size 4 at addr ffff8880569ac858 by task syz.1.2799/14662
-
-  CPU: 0 UID: 0 PID: 14662 Comm: syz.1.2799 Not tainted 6.12.0-rc2-syzkaller-00307-g36c254515dc6 #0
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-  Call Trace:
-   <TASK>
-   __dump_stack lib/dump_stack.c:94 [inline]
-   dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
-   print_address_description mm/kasan/report.c:377 [inline]
-   print_report+0xc3/0x620 mm/kasan/report.c:488
-   kasan_report+0xd9/0x110 mm/kasan/report.c:601
-   mptcp_pm_nl_rm_addr_or_subflow+0xb44/0xcc0 net/mptcp/pm_netlink.c:881
-   mptcp_pm_nl_rm_subflow_received net/mptcp/pm_netlink.c:914 [inline]
-   mptcp_nl_remove_id_zero_address+0x305/0x4a0 net/mptcp/pm_netlink.c:1572
-   mptcp_pm_nl_del_addr_doit+0x5c9/0x770 net/mptcp/pm_netlink.c:1603
-   genl_family_rcv_msg_doit+0x202/0x2f0 net/netlink/genetlink.c:1115
-   genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
-   genl_rcv_msg+0x565/0x800 net/netlink/genetlink.c:1210
-   netlink_rcv_skb+0x165/0x410 net/netlink/af_netlink.c:2551
-   genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
-   netlink_unicast_kernel net/netlink/af_netlink.c:1331 [inline]
-   netlink_unicast+0x53c/0x7f0 net/netlink/af_netlink.c:1357
-   netlink_sendmsg+0x8b8/0xd70 net/netlink/af_netlink.c:1901
-   sock_sendmsg_nosec net/socket.c:729 [inline]
-   __sock_sendmsg net/socket.c:744 [inline]
-   ____sys_sendmsg+0x9ae/0xb40 net/socket.c:2607
-   ___sys_sendmsg+0x135/0x1e0 net/socket.c:2661
-   __sys_sendmsg+0x117/0x1f0 net/socket.c:2690
-   do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
-   __do_fast_syscall_32+0x73/0x120 arch/x86/entry/common.c:386
-   do_fast_syscall_32+0x32/0x80 arch/x86/entry/common.c:411
-   entry_SYSENTER_compat_after_hwframe+0x84/0x8e
-  RIP: 0023:0xf7fe4579
-  Code: b8 01 10 06 03 74 b4 01 10 07 03 74 b0 01 10 08 03 74 d8 01 00 00 00 00 00 00 00 00 00 00 00 00 00 51 52 55 89 e5 0f 34 cd 80 <5d> 5a 59 c3 90 90 90 90 8d b4 26 00 00 00 00 8d b4 26 00 00 00 00
-  RSP: 002b:00000000f574556c EFLAGS: 00000296 ORIG_RAX: 0000000000000172
-  RAX: ffffffffffffffda RBX: 000000000000000b RCX: 0000000020000140
-  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-  RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000296 R12: 0000000000000000
-  R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-   </TASK>
-
-  Allocated by task 5387:
-   kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
-   kasan_save_track+0x14/0x30 mm/kasan/common.c:68
-   poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
-   __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:394
-   kmalloc_noprof include/linux/slab.h:878 [inline]
-   kzalloc_noprof include/linux/slab.h:1014 [inline]
-   subflow_create_ctx+0x87/0x2a0 net/mptcp/subflow.c:1803
-   subflow_ulp_init+0xc3/0x4d0 net/mptcp/subflow.c:1956
-   __tcp_set_ulp net/ipv4/tcp_ulp.c:146 [inline]
-   tcp_set_ulp+0x326/0x7f0 net/ipv4/tcp_ulp.c:167
-   mptcp_subflow_create_socket+0x4ae/0x10a0 net/mptcp/subflow.c:1764
-   __mptcp_subflow_connect+0x3cc/0x1490 net/mptcp/subflow.c:1592
-   mptcp_pm_create_subflow_or_signal_addr+0xbda/0x23a0 net/mptcp/pm_netlink.c:642
-   mptcp_pm_nl_fully_established net/mptcp/pm_netlink.c:650 [inline]
-   mptcp_pm_nl_work+0x3a1/0x4f0 net/mptcp/pm_netlink.c:943
-   mptcp_worker+0x15a/0x1240 net/mptcp/protocol.c:2777
-   process_one_work+0x958/0x1b30 kernel/workqueue.c:3229
-   process_scheduled_works kernel/workqueue.c:3310 [inline]
-   worker_thread+0x6c8/0xf00 kernel/workqueue.c:3391
-   kthread+0x2c1/0x3a0 kernel/kthread.c:389
-   ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
-   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-  Freed by task 113:
-   kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
-   kasan_save_track+0x14/0x30 mm/kasan/common.c:68
-   kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:579
-   poison_slab_object mm/kasan/common.c:247 [inline]
-   __kasan_slab_free+0x51/0x70 mm/kasan/common.c:264
-   kasan_slab_free include/linux/kasan.h:230 [inline]
-   slab_free_hook mm/slub.c:2342 [inline]
-   slab_free mm/slub.c:4579 [inline]
-   kfree+0x14f/0x4b0 mm/slub.c:4727
-   kvfree+0x47/0x50 mm/util.c:701
-   kvfree_rcu_list+0xf5/0x2c0 kernel/rcu/tree.c:3423
-   kvfree_rcu_drain_ready kernel/rcu/tree.c:3563 [inline]
-   kfree_rcu_monitor+0x503/0x8b0 kernel/rcu/tree.c:3632
-   kfree_rcu_shrink_scan+0x245/0x3a0 kernel/rcu/tree.c:3966
-   do_shrink_slab+0x44f/0x11c0 mm/shrinker.c:435
-   shrink_slab+0x32b/0x12a0 mm/shrinker.c:662
-   shrink_one+0x47e/0x7b0 mm/vmscan.c:4818
-   shrink_many mm/vmscan.c:4879 [inline]
-   lru_gen_shrink_node mm/vmscan.c:4957 [inline]
-   shrink_node+0x2452/0x39d0 mm/vmscan.c:5937
-   kswapd_shrink_node mm/vmscan.c:6765 [inline]
-   balance_pgdat+0xc19/0x18f0 mm/vmscan.c:6957
-   kswapd+0x5ea/0xbf0 mm/vmscan.c:7226
-   kthread+0x2c1/0x3a0 kernel/kthread.c:389
-   ret_from_fork+0x45/0x80 arch/x86/kernel/process.c:147
-   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-  Last potentially related work creation:
-   kasan_save_stack+0x33/0x60 mm/kasan/common.c:47
-   __kasan_record_aux_stack+0xba/0xd0 mm/kasan/generic.c:541
-   kvfree_call_rcu+0x74/0xbe0 kernel/rcu/tree.c:3810
-   subflow_ulp_release+0x2ae/0x350 net/mptcp/subflow.c:2009
-   tcp_cleanup_ulp+0x7c/0x130 net/ipv4/tcp_ulp.c:124
-   tcp_v4_destroy_sock+0x1c5/0x6a0 net/ipv4/tcp_ipv4.c:2541
-   inet_csk_destroy_sock+0x1a3/0x440 net/ipv4/inet_connection_sock.c:1293
-   tcp_done+0x252/0x350 net/ipv4/tcp.c:4870
-   tcp_rcv_state_process+0x379b/0x4f30 net/ipv4/tcp_input.c:6933
-   tcp_v4_do_rcv+0x1ad/0xa90 net/ipv4/tcp_ipv4.c:1938
-   sk_backlog_rcv include/net/sock.h:1115 [inline]
-   __release_sock+0x31b/0x400 net/core/sock.c:3072
-   __tcp_close+0x4f3/0xff0 net/ipv4/tcp.c:3142
-   __mptcp_close_ssk+0x331/0x14d0 net/mptcp/protocol.c:2489
-   mptcp_close_ssk net/mptcp/protocol.c:2543 [inline]
-   mptcp_close_ssk+0x150/0x220 net/mptcp/protocol.c:2526
-   mptcp_pm_nl_rm_addr_or_subflow+0x2be/0xcc0 net/mptcp/pm_netlink.c:878
-   mptcp_pm_nl_rm_subflow_received net/mptcp/pm_netlink.c:914 [inline]
-   mptcp_nl_remove_id_zero_address+0x305/0x4a0 net/mptcp/pm_netlink.c:1572
-   mptcp_pm_nl_del_addr_doit+0x5c9/0x770 net/mptcp/pm_netlink.c:1603
-   genl_family_rcv_msg_doit+0x202/0x2f0 net/netlink/genetlink.c:1115
-   genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
-   genl_rcv_msg+0x565/0x800 net/netlink/genetlink.c:1210
-   netlink_rcv_skb+0x165/0x410 net/netlink/af_netlink.c:2551
-   genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
-   netlink_unicast_kernel net/netlink/af_netlink.c:1331 [inline]
-   netlink_unicast+0x53c/0x7f0 net/netlink/af_netlink.c:1357
-   netlink_sendmsg+0x8b8/0xd70 net/netlink/af_netlink.c:1901
-   sock_sendmsg_nosec net/socket.c:729 [inline]
-   __sock_sendmsg net/socket.c:744 [inline]
-   ____sys_sendmsg+0x9ae/0xb40 net/socket.c:2607
-   ___sys_sendmsg+0x135/0x1e0 net/socket.c:2661
-   __sys_sendmsg+0x117/0x1f0 net/socket.c:2690
-   do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
-   __do_fast_syscall_32+0x73/0x120 arch/x86/entry/common.c:386
-   do_fast_syscall_32+0x32/0x80 arch/x86/entry/common.c:411
-   entry_SYSENTER_compat_after_hwframe+0x84/0x8e
-
-  The buggy address belongs to the object at ffff8880569ac800
-   which belongs to the cache kmalloc-512 of size 512
-  The buggy address is located 88 bytes inside of
-   freed 512-byte region [ffff8880569ac800, ffff8880569aca00)
-
-  The buggy address belongs to the physical page:
-  page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x569ac
-  head: order:2 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-  flags: 0x4fff00000000040(head|node=1|zone=1|lastcpupid=0x7ff)
-  page_type: f5(slab)
-  raw: 04fff00000000040 ffff88801ac42c80 dead000000000100 dead000000000122
-  raw: 0000000000000000 0000000080100010 00000001f5000000 0000000000000000
-  head: 04fff00000000040 ffff88801ac42c80 dead000000000100 dead000000000122
-  head: 0000000000000000 0000000080100010 00000001f5000000 0000000000000000
-  head: 04fff00000000002 ffffea00015a6b01 ffffffffffffffff 0000000000000000
-  head: 0000000000000004 0000000000000000 00000000ffffffff 0000000000000000
-  page dumped because: kasan: bad access detected
-  page_owner tracks the page as allocated
-  page last allocated via order 2, migratetype Unmovable, gfp_mask 0xd20c0(__GFP_IO|__GFP_FS|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 10238, tgid 10238 (kworker/u32:6), ts 597403252405, free_ts 597177952947
-   set_page_owner include/linux/page_owner.h:32 [inline]
-   post_alloc_hook+0x2d1/0x350 mm/page_alloc.c:1537
-   prep_new_page mm/page_alloc.c:1545 [inline]
-   get_page_from_freelist+0x101e/0x3070 mm/page_alloc.c:3457
-   __alloc_pages_noprof+0x223/0x25a0 mm/page_alloc.c:4733
-   alloc_pages_mpol_noprof+0x2c9/0x610 mm/mempolicy.c:2265
-   alloc_slab_page mm/slub.c:2412 [inline]
-   allocate_slab mm/slub.c:2578 [inline]
-   new_slab+0x2ba/0x3f0 mm/slub.c:2631
-   ___slab_alloc+0xd1d/0x16f0 mm/slub.c:3818
-   __slab_alloc.constprop.0+0x56/0xb0 mm/slub.c:3908
-   __slab_alloc_node mm/slub.c:3961 [inline]
-   slab_alloc_node mm/slub.c:4122 [inline]
-   __kmalloc_cache_noprof+0x2c5/0x310 mm/slub.c:4290
-   kmalloc_noprof include/linux/slab.h:878 [inline]
-   kzalloc_noprof include/linux/slab.h:1014 [inline]
-   mld_add_delrec net/ipv6/mcast.c:743 [inline]
-   igmp6_leave_group net/ipv6/mcast.c:2625 [inline]
-   igmp6_group_dropped+0x4ab/0xe40 net/ipv6/mcast.c:723
-   __ipv6_dev_mc_dec+0x281/0x360 net/ipv6/mcast.c:979
-   addrconf_leave_solict net/ipv6/addrconf.c:2253 [inline]
-   __ipv6_ifa_notify+0x3f6/0xc30 net/ipv6/addrconf.c:6283
-   addrconf_ifdown.isra.0+0xef9/0x1a20 net/ipv6/addrconf.c:3982
-   addrconf_notify+0x220/0x19c0 net/ipv6/addrconf.c:3781
-   notifier_call_chain+0xb9/0x410 kernel/notifier.c:93
-   call_netdevice_notifiers_info+0xbe/0x140 net/core/dev.c:1996
-   call_netdevice_notifiers_extack net/core/dev.c:2034 [inline]
-   call_netdevice_notifiers net/core/dev.c:2048 [inline]
-   dev_close_many+0x333/0x6a0 net/core/dev.c:1589
-  page last free pid 13136 tgid 13136 stack trace:
-   reset_page_owner include/linux/page_owner.h:25 [inline]
-   free_pages_prepare mm/page_alloc.c:1108 [inline]
-   free_unref_page+0x5f4/0xdc0 mm/page_alloc.c:2638
-   stack_depot_save_flags+0x2da/0x900 lib/stackdepot.c:666
-   kasan_save_stack+0x42/0x60 mm/kasan/common.c:48
-   kasan_save_track+0x14/0x30 mm/kasan/common.c:68
-   unpoison_slab_object mm/kasan/common.c:319 [inline]
-   __kasan_slab_alloc+0x89/0x90 mm/kasan/common.c:345
-   kasan_slab_alloc include/linux/kasan.h:247 [inline]
-   slab_post_alloc_hook mm/slub.c:4085 [inline]
-   slab_alloc_node mm/slub.c:4134 [inline]
-   kmem_cache_alloc_noprof+0x121/0x2f0 mm/slub.c:4141
-   skb_clone+0x190/0x3f0 net/core/skbuff.c:2084
-   do_one_broadcast net/netlink/af_netlink.c:1462 [inline]
-   netlink_broadcast_filtered+0xb11/0xef0 net/netlink/af_netlink.c:1540
-   netlink_broadcast+0x39/0x50 net/netlink/af_netlink.c:1564
-   uevent_net_broadcast_untagged lib/kobject_uevent.c:331 [inline]
-   kobject_uevent_net_broadcast lib/kobject_uevent.c:410 [inline]
-   kobject_uevent_env+0xacd/0x1670 lib/kobject_uevent.c:608
-   device_del+0x623/0x9f0 drivers/base/core.c:3882
-   snd_card_disconnect.part.0+0x58a/0x7c0 sound/core/init.c:546
-   snd_card_disconnect+0x1f/0x30 sound/core/init.c:495
-   snd_usx2y_disconnect+0xe9/0x1f0 sound/usb/usx2y/usbusx2y.c:417
-   usb_unbind_interface+0x1e8/0x970 drivers/usb/core/driver.c:461
-   device_remove drivers/base/dd.c:569 [inline]
-   device_remove+0x122/0x170 drivers/base/dd.c:561
-
-That's because 'subflow' is used just after 'mptcp_close_ssk(subflow)',
-which will initiate the release of its memory. Even if it is very likely
-the release and the re-utilisation will be done later on, it is of
-course better to avoid any issues and read the content of 'subflow'
-before closing it.
-
-Fixes: 1c1f72137598 ("mptcp: pm: only decrement add_addr_accepted for MPJ req")
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+3c8b7a8e7df6a2a226ca@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/670d7337.050a0220.4cbc0.004f.GAE@google.com
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://patch.msgid.link/20241015-net-mptcp-uaf-pm-rm-v1-1-c4ee5d987a64@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/directory.c |  395 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ fs/udf/udfdecl.h   |   23 +++
+ 2 files changed, 418 insertions(+)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -877,12 +877,12 @@ static void mptcp_pm_nl_rm_addr_or_subfl
- 				 i, rm_id, id, remote_id, msk->mpc_endpoint_id);
- 			spin_unlock_bh(&msk->pm.lock);
- 			mptcp_subflow_shutdown(sk, ssk, how);
-+			removed |= subflow->request_join;
+--- a/fs/udf/directory.c
++++ b/fs/udf/directory.c
+@@ -17,6 +17,401 @@
+ #include <linux/fs.h>
+ #include <linux/string.h>
+ #include <linux/bio.h>
++#include <linux/crc-itu-t.h>
++#include <linux/iversion.h>
++
++static int udf_verify_fi(struct udf_fileident_iter *iter)
++{
++	unsigned int len;
++
++	if (iter->fi.descTag.tagIdent != cpu_to_le16(TAG_IDENT_FID)) {
++		udf_err(iter->dir->i_sb,
++			"directory (ino %lu) has entry at pos %llu with incorrect tag %x\n",
++			iter->dir->i_ino, (unsigned long long)iter->pos,
++			le16_to_cpu(iter->fi.descTag.tagIdent));
++		return -EFSCORRUPTED;
++	}
++	len = udf_dir_entry_len(&iter->fi);
++	if (le16_to_cpu(iter->fi.lengthOfImpUse) & 3) {
++		udf_err(iter->dir->i_sb,
++			"directory (ino %lu) has entry at pos %llu with unaligned lenght of impUse field\n",
++			iter->dir->i_ino, (unsigned long long)iter->pos);
++		return -EFSCORRUPTED;
++	}
++	/*
++	 * This is in fact allowed by the spec due to long impUse field but
++	 * we don't support it. If there is real media with this large impUse
++	 * field, support can be added.
++	 */
++	if (len > 1 << iter->dir->i_blkbits) {
++		udf_err(iter->dir->i_sb,
++			"directory (ino %lu) has too big (%u) entry at pos %llu\n",
++			iter->dir->i_ino, len, (unsigned long long)iter->pos);
++		return -EFSCORRUPTED;
++	}
++	if (iter->pos + len > iter->dir->i_size) {
++		udf_err(iter->dir->i_sb,
++			"directory (ino %lu) has entry past directory size at pos %llu\n",
++			iter->dir->i_ino, (unsigned long long)iter->pos);
++		return -EFSCORRUPTED;
++	}
++	if (udf_dir_entry_len(&iter->fi) !=
++	    sizeof(struct tag) + le16_to_cpu(iter->fi.descTag.descCRCLength)) {
++		udf_err(iter->dir->i_sb,
++			"directory (ino %lu) has entry where CRC length (%u) does not match entry length (%u)\n",
++			iter->dir->i_ino,
++			(unsigned)le16_to_cpu(iter->fi.descTag.descCRCLength),
++			(unsigned)(udf_dir_entry_len(&iter->fi) -
++							sizeof(struct tag)));
++		return -EFSCORRUPTED;
++	}
++	return 0;
++}
++
++static int udf_copy_fi(struct udf_fileident_iter *iter)
++{
++	struct udf_inode_info *iinfo = UDF_I(iter->dir);
++	int blksize = 1 << iter->dir->i_blkbits;
++	int err, off, len, nameoff;
++
++	/* Skip copying when we are at EOF */
++	if (iter->pos >= iter->dir->i_size) {
++		iter->name = NULL;
++		return 0;
++	}
++	if (iter->dir->i_size < iter->pos + sizeof(struct fileIdentDesc)) {
++		udf_err(iter->dir->i_sb,
++			"directory (ino %lu) has entry straddling EOF\n",
++			iter->dir->i_ino);
++		return -EFSCORRUPTED;
++	}
++	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB) {
++		memcpy(&iter->fi, iinfo->i_data + iinfo->i_lenEAttr + iter->pos,
++		       sizeof(struct fileIdentDesc));
++		err = udf_verify_fi(iter);
++		if (err < 0)
++			return err;
++		iter->name = iinfo->i_data + iinfo->i_lenEAttr + iter->pos +
++			sizeof(struct fileIdentDesc) +
++			le16_to_cpu(iter->fi.lengthOfImpUse);
++		return 0;
++	}
++
++	off = iter->pos & (blksize - 1);
++	len = min_t(int, sizeof(struct fileIdentDesc), blksize - off);
++	memcpy(&iter->fi, iter->bh[0]->b_data + off, len);
++	if (len < sizeof(struct fileIdentDesc))
++		memcpy((char *)(&iter->fi) + len, iter->bh[1]->b_data,
++		       sizeof(struct fileIdentDesc) - len);
++	err = udf_verify_fi(iter);
++	if (err < 0)
++		return err;
++
++	/* Handle directory entry name */
++	nameoff = off + sizeof(struct fileIdentDesc) +
++				le16_to_cpu(iter->fi.lengthOfImpUse);
++	if (off + udf_dir_entry_len(&iter->fi) <= blksize) {
++		iter->name = iter->bh[0]->b_data + nameoff;
++	} else if (nameoff >= blksize) {
++		iter->name = iter->bh[1]->b_data + (nameoff - blksize);
++	} else {
++		iter->name = iter->namebuf;
++		len = blksize - nameoff;
++		memcpy(iter->name, iter->bh[0]->b_data + nameoff, len);
++		memcpy(iter->name + len, iter->bh[1]->b_data,
++		       iter->fi.lengthFileIdent - len);
++	}
++	return 0;
++}
++
++/* Readahead 8k once we are at 8k boundary */
++static void udf_readahead_dir(struct udf_fileident_iter *iter)
++{
++	unsigned int ralen = 16 >> (iter->dir->i_blkbits - 9);
++	struct buffer_head *tmp, *bha[16];
++	int i, num;
++	udf_pblk_t blk;
++
++	if (iter->loffset & (ralen - 1))
++		return;
++
++	if (iter->loffset + ralen > (iter->elen >> iter->dir->i_blkbits))
++		ralen = (iter->elen >> iter->dir->i_blkbits) - iter->loffset;
++	num = 0;
++	for (i = 0; i < ralen; i++) {
++		blk = udf_get_lb_pblock(iter->dir->i_sb, &iter->eloc,
++					iter->loffset + i);
++		tmp = udf_tgetblk(iter->dir->i_sb, blk);
++		if (tmp && !buffer_uptodate(tmp) && !buffer_locked(tmp))
++			bha[num++] = tmp;
++		else
++			brelse(tmp);
++	}
++	if (num) {
++		bh_readahead_batch(num, bha, REQ_RAHEAD);
++		for (i = 0; i < num; i++)
++			brelse(bha[i]);
++	}
++}
++
++static struct buffer_head *udf_fiiter_bread_blk(struct udf_fileident_iter *iter)
++{
++	udf_pblk_t blk;
++
++	udf_readahead_dir(iter);
++	blk = udf_get_lb_pblock(iter->dir->i_sb, &iter->eloc, iter->loffset);
++	return udf_tread(iter->dir->i_sb, blk);
++}
++
++/*
++ * Updates loffset to point to next directory block; eloc, elen & epos are
++ * updated if we need to traverse to the next extent as well.
++ */
++static int udf_fiiter_advance_blk(struct udf_fileident_iter *iter)
++{
++	iter->loffset++;
++	if (iter->loffset < iter->elen >> iter->dir->i_blkbits)
++		return 0;
++
++	iter->loffset = 0;
++	if (udf_next_aext(iter->dir, &iter->epos, &iter->eloc, &iter->elen, 1)
++			!= (EXT_RECORDED_ALLOCATED >> 30)) {
++		if (iter->pos == iter->dir->i_size) {
++			iter->elen = 0;
++			return 0;
++		}
++		udf_err(iter->dir->i_sb,
++			"extent after position %llu not allocated in directory (ino %lu)\n",
++			(unsigned long long)iter->pos, iter->dir->i_ino);
++		return -EFSCORRUPTED;
++	}
++	return 0;
++}
++
++static int udf_fiiter_load_bhs(struct udf_fileident_iter *iter)
++{
++	int blksize = 1 << iter->dir->i_blkbits;
++	int off = iter->pos & (blksize - 1);
++	int err;
++	struct fileIdentDesc *fi;
++
++	/* Is there any further extent we can map from? */
++	if (!iter->bh[0] && iter->elen) {
++		iter->bh[0] = udf_fiiter_bread_blk(iter);
++		if (!iter->bh[0]) {
++			err = -ENOMEM;
++			goto out_brelse;
++		}
++		if (!buffer_uptodate(iter->bh[0])) {
++			err = -EIO;
++			goto out_brelse;
++		}
++	}
++	/* There's no next block so we are done */
++	if (iter->pos >= iter->dir->i_size)
++		return 0;
++	/* Need to fetch next block as well? */
++	if (off + sizeof(struct fileIdentDesc) > blksize)
++		goto fetch_next;
++	fi = (struct fileIdentDesc *)(iter->bh[0]->b_data + off);
++	/* Need to fetch next block to get name? */
++	if (off + udf_dir_entry_len(fi) > blksize) {
++fetch_next:
++		udf_fiiter_advance_blk(iter);
++		iter->bh[1] = udf_fiiter_bread_blk(iter);
++		if (!iter->bh[1]) {
++			err = -ENOMEM;
++			goto out_brelse;
++		}
++		if (!buffer_uptodate(iter->bh[1])) {
++			err = -EIO;
++			goto out_brelse;
++		}
++	}
++	return 0;
++out_brelse:
++	brelse(iter->bh[0]);
++	brelse(iter->bh[1]);
++	iter->bh[0] = iter->bh[1] = NULL;
++	return err;
++}
++
++int udf_fiiter_init(struct udf_fileident_iter *iter, struct inode *dir,
++		    loff_t pos)
++{
++	struct udf_inode_info *iinfo = UDF_I(dir);
++	int err = 0;
++
++	iter->dir = dir;
++	iter->bh[0] = iter->bh[1] = NULL;
++	iter->pos = pos;
++	iter->elen = 0;
++	iter->epos.bh = NULL;
++	iter->name = NULL;
++
++	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB)
++		return udf_copy_fi(iter);
++
++	if (inode_bmap(dir, iter->pos >> dir->i_blkbits, &iter->epos,
++		       &iter->eloc, &iter->elen, &iter->loffset) !=
++	    (EXT_RECORDED_ALLOCATED >> 30)) {
++		if (pos == dir->i_size)
++			return 0;
++		udf_err(dir->i_sb,
++			"position %llu not allocated in directory (ino %lu)\n",
++			(unsigned long long)pos, dir->i_ino);
++		return -EFSCORRUPTED;
++	}
++	err = udf_fiiter_load_bhs(iter);
++	if (err < 0)
++		return err;
++	err = udf_copy_fi(iter);
++	if (err < 0) {
++		udf_fiiter_release(iter);
++		return err;
++	}
++	return 0;
++}
++
++int udf_fiiter_advance(struct udf_fileident_iter *iter)
++{
++	unsigned int oldoff, len;
++	int blksize = 1 << iter->dir->i_blkbits;
++	int err;
++
++	oldoff = iter->pos & (blksize - 1);
++	len = udf_dir_entry_len(&iter->fi);
++	iter->pos += len;
++	if (UDF_I(iter->dir)->i_alloc_type != ICBTAG_FLAG_AD_IN_ICB) {
++		if (oldoff + len >= blksize) {
++			brelse(iter->bh[0]);
++			iter->bh[0] = NULL;
++			/* Next block already loaded? */
++			if (iter->bh[1]) {
++				iter->bh[0] = iter->bh[1];
++				iter->bh[1] = NULL;
++			} else {
++				udf_fiiter_advance_blk(iter);
++			}
++		}
++		err = udf_fiiter_load_bhs(iter);
++		if (err < 0)
++			return err;
++	}
++	return udf_copy_fi(iter);
++}
++
++void udf_fiiter_release(struct udf_fileident_iter *iter)
++{
++	iter->dir = NULL;
++	brelse(iter->bh[0]);
++	brelse(iter->bh[1]);
++	iter->bh[0] = iter->bh[1] = NULL;
++}
++
++static void udf_copy_to_bufs(void *buf1, int len1, void *buf2, int len2,
++			     int off, void *src, int len)
++{
++	int copy;
++
++	if (off >= len1) {
++		off -= len1;
++	} else {
++		copy = min(off + len, len1) - off;
++		memcpy(buf1 + off, src, copy);
++		src += copy;
++		len -= copy;
++		off = 0;
++	}
++	if (len > 0) {
++		if (WARN_ON_ONCE(off + len > len2 || !buf2))
++			return;
++		memcpy(buf2 + off, src, len);
++	}
++}
++
++static uint16_t udf_crc_fi_bufs(void *buf1, int len1, void *buf2, int len2,
++				int off, int len)
++{
++	int copy;
++	uint16_t crc = 0;
++
++	if (off >= len1) {
++		off -= len1;
++	} else {
++		copy = min(off + len, len1) - off;
++		crc = crc_itu_t(crc, buf1 + off, copy);
++		len -= copy;
++		off = 0;
++	}
++	if (len > 0) {
++		if (WARN_ON_ONCE(off + len > len2 || !buf2))
++			return 0;
++		crc = crc_itu_t(crc, buf2 + off, len);
++	}
++	return crc;
++}
++
++static void udf_copy_fi_to_bufs(char *buf1, int len1, char *buf2, int len2,
++				int off, struct fileIdentDesc *fi,
++				uint8_t *impuse, uint8_t *name)
++{
++	uint16_t crc;
++	int fioff = off;
++	int crcoff = off + sizeof(struct tag);
++	unsigned int crclen = udf_dir_entry_len(fi) - sizeof(struct tag);
++
++	udf_copy_to_bufs(buf1, len1, buf2, len2, off, fi,
++			 sizeof(struct fileIdentDesc));
++	off += sizeof(struct fileIdentDesc);
++	if (impuse)
++		udf_copy_to_bufs(buf1, len1, buf2, len2, off, impuse,
++				 le16_to_cpu(fi->lengthOfImpUse));
++	off += le16_to_cpu(fi->lengthOfImpUse);
++	if (name)
++		udf_copy_to_bufs(buf1, len1, buf2, len2, off, name,
++				 fi->lengthFileIdent);
++
++	crc = udf_crc_fi_bufs(buf1, len1, buf2, len2, crcoff, crclen);
++	fi->descTag.descCRC = cpu_to_le16(crc);
++	fi->descTag.descCRCLength = cpu_to_le16(crclen);
++	fi->descTag.tagChecksum = udf_tag_checksum(&fi->descTag);
++
++	udf_copy_to_bufs(buf1, len1, buf2, len2, fioff, fi, sizeof(struct tag));
++}
++
++void udf_fiiter_write_fi(struct udf_fileident_iter *iter, uint8_t *impuse)
++{
++	struct udf_inode_info *iinfo = UDF_I(iter->dir);
++	void *buf1, *buf2 = NULL;
++	int len1, len2 = 0, off;
++	int blksize = 1 << iter->dir->i_blkbits;
++
++	off = iter->pos & (blksize - 1);
++	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB) {
++		buf1 = iinfo->i_data + iinfo->i_lenEAttr;
++		len1 = iter->dir->i_size;
++	} else {
++		buf1 = iter->bh[0]->b_data;
++		len1 = blksize;
++		if (iter->bh[1]) {
++			buf2 = iter->bh[1]->b_data;
++			len2 = blksize;
++		}
++	}
++
++	udf_copy_fi_to_bufs(buf1, len1, buf2, len2, off, &iter->fi, impuse,
++			    iter->name == iter->namebuf ? iter->name : NULL);
++
++	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB) {
++		mark_inode_dirty(iter->dir);
++	} else {
++		mark_buffer_dirty_inode(iter->bh[0], iter->dir);
++		if (iter->bh[1])
++			mark_buffer_dirty_inode(iter->bh[1], iter->dir);
++	}
++	inode_inc_iversion(iter->dir);
++}
  
- 			/* the following takes care of updating the subflows counter */
- 			mptcp_close_ssk(sk, ssk, subflow);
- 			spin_lock_bh(&msk->pm.lock);
+ struct fileIdentDesc *udf_fileident_read(struct inode *dir, loff_t *nf_pos,
+ 					 struct udf_fileident_bh *fibh,
+--- a/fs/udf/udfdecl.h
++++ b/fs/udf/udfdecl.h
+@@ -86,6 +86,24 @@ extern const struct address_space_operat
+ extern const struct address_space_operations udf_adinicb_aops;
+ extern const struct address_space_operations udf_symlink_aops;
  
--			removed |= subflow->request_join;
- 			if (rm_type == MPTCP_MIB_RMSUBFLOW)
- 				__MPTCP_INC_STATS(sock_net(sk), rm_type);
- 		}
++struct udf_fileident_iter {
++	struct inode *dir;		/* Directory we are working with */
++	loff_t pos;			/* Logical position in a dir */
++	struct buffer_head *bh[2];	/* Buffer containing 'pos' and possibly
++					 * next buffer if entry straddles
++					 * blocks */
++	struct kernel_lb_addr eloc;	/* Start of extent containing 'pos' */
++	uint32_t elen;			/* Length of extent containing 'pos' */
++	sector_t loffset;		/* Block offset of 'pos' within above
++					 * extent */
++	struct extent_position epos;	/* Position after the above extent */
++	struct fileIdentDesc fi;	/* Copied directory entry */
++	uint8_t *name;			/* Pointer to entry name */
++	uint8_t namebuf[UDF_NAME_LEN_CS0]; /* Storage for entry name in case
++					 * the name is split between two blocks
++					 */
++};
++
+ struct udf_fileident_bh {
+ 	struct buffer_head *sbh;
+ 	struct buffer_head *ebh;
+@@ -243,6 +261,11 @@ extern udf_pblk_t udf_new_block(struct s
+ 				 uint16_t partition, uint32_t goal, int *err);
+ 
+ /* directory.c */
++int udf_fiiter_init(struct udf_fileident_iter *iter, struct inode *dir,
++		    loff_t pos);
++int udf_fiiter_advance(struct udf_fileident_iter *iter);
++void udf_fiiter_release(struct udf_fileident_iter *iter);
++void udf_fiiter_write_fi(struct udf_fileident_iter *iter, uint8_t *impuse);
+ extern struct fileIdentDesc *udf_fileident_read(struct inode *, loff_t *,
+ 						struct udf_fileident_bh *,
+ 						struct fileIdentDesc *,
 
 
