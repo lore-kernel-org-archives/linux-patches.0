@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1711F80BC;
-	Mon, 21 Oct 2024 10:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548CE1F76D0;
+	Mon, 21 Oct 2024 10:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507376; cv=none; b=CaAwyDitvL1vRce31/7e2yAVOI/q3rK1me6EaUnTC1i+yl010pxf8HZk7n18uGbxCrrbBmRbY1HpblY86mFb3wn9mzMrfr19XL2z8exl6VPNgGlewyoGXM7yAY5dElhmBiqN60cntayaJcZBxuGRumtNFZBZCXPkQ5zFbIeZ578=
+	t=1729507379; cv=none; b=RcUen5ZS/o16mA0n9WoNtVQul9+G7r/xyvyUJVdcAWa61i0dGvWB49SwfjFD1KXRJU8iBKkisPPrU87ZW6EuBlwuka67JSpkt/xnoVrWkoLbLA2q/MeSMx9cfpjMCNP+BFLloNTs66TLyyzzdfxV6Ok0Hs4O5OvRBbJMsolBNbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507376; c=relaxed/simple;
-	bh=iWUs/cR37ynUbWRSxo3Pij9ETT0nkBSNs0FLNeTH5mw=;
+	s=arc-20240116; t=1729507379; c=relaxed/simple;
+	bh=p2L/RJAcczu6SRVRkud4QeaSvh5mzxO/s+npFoA3VHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MEpppepKoUL3ArfKhhaAVPesKi/DHKvM0crMgDqkGlgN0hbo8sctUZNi4sAzi2n73P/lCYq63oN8w1KYRZw4pXyRWhXWQU1ywEy6wGmvjAKZx7F516EDX2bJm9aJbi0gNIcmnfP7yvkFBhJ4uRdslcUYU7kNIqxAienSMGz5HGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PVlrCHIA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hlI0NALTFNpVHmL5M4nbJczKbNPd3LkBgVioDQISBANWJq/pAlYmLNXvqwiYLxAtAX5MQ4pXWhmBnF3bDPJpzZBnyHvjvfX1OVOXxQSAjXW4g6NFo9hIQt3iYr+/vhkT/NjZSHi0Fpvtmnb1jXCclHCntARGEnAj8qR6LTuVS8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ep9ckNw2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PVlrCHIA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D192BC4CEC3;
-	Mon, 21 Oct 2024 10:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ep9ckNw2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8091C4CEC3;
+	Mon, 21 Oct 2024 10:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507376;
-	bh=iWUs/cR37ynUbWRSxo3Pij9ETT0nkBSNs0FLNeTH5mw=;
+	s=korg; t=1729507379;
+	bh=p2L/RJAcczu6SRVRkud4QeaSvh5mzxO/s+npFoA3VHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PVlrCHIAE2AJY2yFVIMeb529p7lboCEwVHarHIT67/HEDmO1fxPS+fyyYXBnvWCCt
-	 dODPinG9v8YC/++86hrz2rIlE7m5fafTHGYe6glB9Vwnn2Z4jwj5kO6Td4/qd7Zynp
-	 FUAoJHBWmo3k3wuJqn7/+RjcQ7B+DkhbMN+4jf18=
+	b=ep9ckNw2s+cKjzihEOasSPD5s3+phrummPbOe4PwLYgeoC6+2y1CvnCHJnLR9JZ1A
+	 Y0wSrsOCKViOMya2TsHP0d06VOukRg+SaeGs2PMgOCd/9xcTLIuzlav78QDyGEuB6z
+	 uB3ps8wm4lHOssra9UfmhMy5l0rPOqGt60rcNb3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
 	Wei Fang <wei.fang@nxp.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 25/91] net: enetc: remove xdp_drops statistic from enetc_xdp_drop()
-Date: Mon, 21 Oct 2024 12:24:39 +0200
-Message-ID: <20241021102250.807574482@linuxfoundation.org>
+Subject: [PATCH 6.1 26/91] net: enetc: add missing static descriptor and inline keyword
+Date: Mon, 21 Oct 2024 12:24:40 +0200
+Message-ID: <20241021102250.846094217@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -54,45 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Fang <wei.fang@nxp.com>
 
-commit 412950d5746f7aa139e14fe95338694c1f09b595 upstream.
+commit 1d7b2ce43d2c22a21dadaf689cb36a69570346a6 upstream.
 
-The xdp_drops statistic indicates the number of XDP frames dropped in
-the Rx direction. However, enetc_xdp_drop() is also used in XDP_TX and
-XDP_REDIRECT actions. If frame loss occurs in these two actions, the
-frames loss count should not be included in xdp_drops, because there
-are already xdp_tx_drops and xdp_redirect_failures to count the frame
-loss of these two actions, so it's better to remove xdp_drops statistic
-from enetc_xdp_drop() and increase xdp_drops in XDP_DROP action.
+Fix the build warnings when CONFIG_FSL_ENETC_MDIO is not enabled.
+The detailed warnings are shown as follows.
 
-Fixes: 7ed2bc80074e ("net: enetc: add support for XDP_TX")
+include/linux/fsl/enetc_mdio.h:62:18: warning: no previous prototype for function 'enetc_hw_alloc' [-Wmissing-prototypes]
+      62 | struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
+         |                  ^
+include/linux/fsl/enetc_mdio.h:62:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+      62 | struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
+         | ^
+         | static
+8 warnings generated.
+
+Fixes: 6517798dd343 ("enetc: Make MDIO accessors more generic and export to include/linux/fsl")
 Cc: stable@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202410102136.jQHZOcS4-lkp@intel.com/
 Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
 Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20241010092056.298128-2-wei.fang@nxp.com
+Link: https://patch.msgid.link/20241011030103.392362-1-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/fsl/enetc_mdio.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/freescale/enetc/enetc.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -1492,7 +1492,6 @@ static void enetc_xdp_drop(struct enetc_
- 				  &rx_ring->rx_swbd[rx_ring_first]);
- 		enetc_bdr_idx_inc(rx_ring, &rx_ring_first);
- 	}
--	rx_ring->stats.xdp_drops++;
- }
+--- a/include/linux/fsl/enetc_mdio.h
++++ b/include/linux/fsl/enetc_mdio.h
+@@ -48,7 +48,8 @@ static inline int enetc_mdio_read(struct
+ static inline int enetc_mdio_write(struct mii_bus *bus, int phy_id, int regnum,
+ 				   u16 value)
+ { return -EINVAL; }
+-struct enetc_hw *enetc_hw_alloc(struct device *dev, void __iomem *port_regs)
++static inline struct enetc_hw *enetc_hw_alloc(struct device *dev,
++					      void __iomem *port_regs)
+ { return ERR_PTR(-EINVAL); }
  
- static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
-@@ -1557,6 +1556,7 @@ static int enetc_clean_rx_ring_xdp(struc
- 			fallthrough;
- 		case XDP_DROP:
- 			enetc_xdp_drop(rx_ring, orig_i, i);
-+			rx_ring->stats.xdp_drops++;
- 			break;
- 		case XDP_PASS:
- 			rxbd = orig_rxbd;
+ #endif
 
 
