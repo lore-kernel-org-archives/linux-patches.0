@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73111E6DC5;
-	Mon, 21 Oct 2024 10:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03221E630C;
+	Mon, 21 Oct 2024 10:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506887; cv=none; b=bK5Ugx4UahZR9dhT7sAew8oL9vssrQ1+XCiFDfPpHhLO3v4d00/vvQ0ZIdBcZweG5PgMocGdNZKM3kAgmb47Q8PcIvHcSyKRuARt2m48SmpHbEhJ0hylCa5LATLqEns70IGpQPdM+WZWA+hat+z276waJ9jnwq2/P7DzaSbZrmw=
+	t=1729506890; cv=none; b=Mz/oMW6UXllGX4L8ew7H9K8MAGiwY9Iv2cPeKqNGA82YAZAD+1YlgfOsv1Fu7eeGfmVKEXTkui4Fadz/HSskLCJwT6rvV59z32MZU87ZkXVKxHugSagSA3hUWJkcXbOJYGBNVf4dSxyL+1HLqnVLm4Ns/O+KfGWTqI8HggBCjPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506887; c=relaxed/simple;
-	bh=vBIWCqmA1lMY7N/t4uzgYAsWFZ1+IT2V2UwhY3htERE=;
+	s=arc-20240116; t=1729506890; c=relaxed/simple;
+	bh=p/5Ou8mxr7HH36yAjLRFsAELMG8c+QBR1Pn5bgR8x4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P4PkFh88vnaKCFtjZGbboPGgKWaXyMmmyCiT9w9D6JHOIrk1T48cmOvOnUNgGJRC6X2VEKZ8P7wxem6YTVxu3zH0BAbg224/oYzV7cfOMdS7Ia/ZzcsF8oJm8qS0F8SEo2xfbN2vh3A9DA15XpSbN0JSY5cfEt9gJY3XeQGl8Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbfRjJOt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fxk2je74o5NU58/Bjw/Ang9czCoZiSy+V6mzSFa2OSqzdIxFO5VTVao3R4lR3XcDpYe1nqOEqeK34Xniwtk2FotNRpuJzORwH+xL8xNCqrcs2cyKIWnzwYh9MivgKWkm4bguIObmP8bna7TH9RL0zZpbpxuKOXumyPLF+TDsQbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=So/7Hopk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbfRjJOt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1728BC4CEC3;
-	Mon, 21 Oct 2024 10:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="So/7Hopk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E04C4CEC3;
+	Mon, 21 Oct 2024 10:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506887;
-	bh=vBIWCqmA1lMY7N/t4uzgYAsWFZ1+IT2V2UwhY3htERE=;
+	s=korg; t=1729506890;
+	bh=p/5Ou8mxr7HH36yAjLRFsAELMG8c+QBR1Pn5bgR8x4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TbfRjJOtha0xIAbwTUewfmZMIDLqMupIRzTiGD2zx2+tz19oiI4kQ36u7VQvIuF0e
-	 mIRSi1r8Y/TbIufVKdgQzdswY4YCZAtV3Q6pr3o7rVcYsQojGryJjBvbSFLSwI2NjQ
-	 9yb52SQY+sfZXyqGUd9mLNnaY/vaqclvDDOEeoo0=
+	b=So/7HopksKZ49r58NfTwPU4mG/fubfORCgomdIrSbbDHw7nVE1G/h+azrUM+s8nyE
+	 qO7j5OkOtuqXxWvaQyG+ieI3CCi30tH5XmhTVFSA/801E+0Dpp7ethc9xRBbV65iKk
+	 +8iQjofTQ0WB9V1Ox+PGj6rjG43gXTV0vXVBP46E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Liaw <edliaw@google.com>,
-	Lokesh Gidra <lokeshgidra@google.com>,
-	Peter Xu <peterx@redhat.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 019/124] selftests/mm: replace atomic_bool with pthread_barrier_t
-Date: Mon, 21 Oct 2024 12:23:43 +0200
-Message-ID: <20241021102257.466649133@linuxfoundation.org>
+	Anand Jain <anand.jain@oracle.com>,
+	Roi Martin <jroi.martin@gmail.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 002/124] btrfs: fix uninitialized pointer free on read_alloc_one_name() error
+Date: Mon, 21 Oct 2024 12:23:26 +0200
+Message-ID: <20241021102256.808229649@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -53,129 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Liaw <edliaw@google.com>
+From: Roi Martin <jroi.martin@gmail.com>
 
-commit e61ef21e27e8deed8c474e9f47f4aa7bc37e138c upstream.
+commit 2ab5e243c2266c841e0f6904fad1514b18eaf510 upstream.
 
-Patch series "selftests/mm: fix deadlock after pthread_create".
+The function read_alloc_one_name() does not initialize the name field of
+the passed fscrypt_str struct if kmalloc fails to allocate the
+corresponding buffer.  Thus, it is not guaranteed that
+fscrypt_str.name is initialized when freeing it.
 
-On Android arm, pthread_create followed by a fork caused a deadlock in the
-case where the fork required work to be completed by the created thread.
+This is a follow-up to the linked patch that fixes the remaining
+instances of the bug introduced by commit e43eec81c516 ("btrfs: use
+struct qstr instead of name and namelen pairs").
 
-Update the synchronization primitive to use pthread_barrier instead of
-atomic_bool.
-
-Apply the same fix to the wp-fork-with-event test.
-
-
-This patch (of 2):
-
-Swap synchronization primitive with pthread_barrier, so that stdatomic.h
-does not need to be included.
-
-The synchronization is needed on Android ARM64; we see a deadlock with
-pthread_create when the parent thread races forward before the child has a
-chance to start doing work.
-
-Link: https://lkml.kernel.org/r/20241003211716.371786-1-edliaw@google.com
-Link: https://lkml.kernel.org/r/20241003211716.371786-2-edliaw@google.com
-Fixes: cff294582798 ("selftests/mm: extend and rename uffd pagemap test")
-Signed-off-by: Edward Liaw <edliaw@google.com>
-Cc: Lokesh Gidra <lokeshgidra@google.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/linux-btrfs/20241009080833.1355894-1-jroi.martin@gmail.com/
+Fixes: e43eec81c516 ("btrfs: use struct qstr instead of name and namelen pairs")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Roi Martin <jroi.martin@gmail.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/uffd-common.c     |    5 +++--
- tools/testing/selftests/mm/uffd-common.h     |    3 +--
- tools/testing/selftests/mm/uffd-unit-tests.c |   14 ++++++++------
- 3 files changed, 12 insertions(+), 10 deletions(-)
+ fs/btrfs/tree-log.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/mm/uffd-common.c
-+++ b/tools/testing/selftests/mm/uffd-common.c
-@@ -17,7 +17,7 @@ bool map_shared;
- bool test_uffdio_wp = true;
- unsigned long long *count_verify;
- uffd_test_ops_t *uffd_test_ops;
--atomic_bool ready_for_fork;
-+pthread_barrier_t ready_for_fork;
- 
- static int uffd_mem_fd_create(off_t mem_size, bool hugetlb)
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -1846,7 +1846,7 @@ static noinline int replay_one_name(stru
+ 				    struct btrfs_dir_item *di,
+ 				    struct btrfs_key *key)
  {
-@@ -508,7 +508,8 @@ void *uffd_poll_thread(void *arg)
- 	pollfd[1].fd = pipefd[cpu*2];
- 	pollfd[1].events = POLLIN;
+-	struct fscrypt_str name;
++	struct fscrypt_str name = { 0 };
+ 	struct btrfs_dir_item *dir_dst_di;
+ 	struct btrfs_dir_item *index_dst_di;
+ 	bool dir_dst_matches = false;
+@@ -2126,7 +2126,7 @@ static noinline int check_item_in_log(st
+ 	struct extent_buffer *eb;
+ 	int slot;
+ 	struct btrfs_dir_item *di;
+-	struct fscrypt_str name;
++	struct fscrypt_str name = { 0 };
+ 	struct inode *inode = NULL;
+ 	struct btrfs_key location;
  
--	ready_for_fork = true;
-+	/* Ready for parent thread to fork */
-+	pthread_barrier_wait(&ready_for_fork);
- 
- 	for (;;) {
- 		ret = poll(pollfd, 2, -1);
---- a/tools/testing/selftests/mm/uffd-common.h
-+++ b/tools/testing/selftests/mm/uffd-common.h
-@@ -33,7 +33,6 @@
- #include <inttypes.h>
- #include <stdint.h>
- #include <sys/random.h>
--#include <stdatomic.h>
- 
- #include "../kselftest.h"
- #include "vm_util.h"
-@@ -99,7 +98,7 @@ extern bool map_shared;
- extern bool test_uffdio_wp;
- extern unsigned long long *count_verify;
- extern volatile bool test_uffdio_copy_eexist;
--extern atomic_bool ready_for_fork;
-+extern pthread_barrier_t ready_for_fork;
- 
- extern uffd_test_ops_t anon_uffd_test_ops;
- extern uffd_test_ops_t shmem_uffd_test_ops;
---- a/tools/testing/selftests/mm/uffd-unit-tests.c
-+++ b/tools/testing/selftests/mm/uffd-unit-tests.c
-@@ -770,7 +770,7 @@ static void uffd_sigbus_test_common(bool
- 	char c;
- 	struct uffd_args args = { 0 };
- 
--	ready_for_fork = false;
-+	pthread_barrier_init(&ready_for_fork, NULL, 2);
- 
- 	fcntl(uffd, F_SETFL, uffd_flags | O_NONBLOCK);
- 
-@@ -787,8 +787,9 @@ static void uffd_sigbus_test_common(bool
- 	if (pthread_create(&uffd_mon, NULL, uffd_poll_thread, &args))
- 		err("uffd_poll_thread create");
- 
--	while (!ready_for_fork)
--		; /* Wait for the poll_thread to start executing before forking */
-+	/* Wait for child thread to start before forking */
-+	pthread_barrier_wait(&ready_for_fork);
-+	pthread_barrier_destroy(&ready_for_fork);
- 
- 	pid = fork();
- 	if (pid < 0)
-@@ -829,7 +830,7 @@ static void uffd_events_test_common(bool
- 	char c;
- 	struct uffd_args args = { 0 };
- 
--	ready_for_fork = false;
-+	pthread_barrier_init(&ready_for_fork, NULL, 2);
- 
- 	fcntl(uffd, F_SETFL, uffd_flags | O_NONBLOCK);
- 	if (uffd_register(uffd, area_dst, nr_pages * page_size,
-@@ -840,8 +841,9 @@ static void uffd_events_test_common(bool
- 	if (pthread_create(&uffd_mon, NULL, uffd_poll_thread, &args))
- 		err("uffd_poll_thread create");
- 
--	while (!ready_for_fork)
--		; /* Wait for the poll_thread to start executing before forking */
-+	/* Wait for child thread to start before forking */
-+	pthread_barrier_wait(&ready_for_fork);
-+	pthread_barrier_destroy(&ready_for_fork);
- 
- 	pid = fork();
- 	if (pid < 0)
 
 
