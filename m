@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FC51E906A;
-	Mon, 21 Oct 2024 10:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505241E909A;
+	Mon, 21 Oct 2024 10:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506659; cv=none; b=WC/d45BSy/0zQ4WlJYC4WRSRNd8JX2cOcJ6O405aJ9Vz20vOEJRcHbkcMzyldOrimr7xWzXr6Sv29JVdhd20dKDuGEVSrDucuPP7tY7Wf+mw8Wd2Jo61ZTl4ExeVgDbeAfArA551DszseamkVLI1sxPmhKk22YR5N43anjr03TU=
+	t=1729506662; cv=none; b=e681O0dYI75zSjlNgNW0Q2wGc1N8nKeq4BnYbNAa8IGfYjCkQFSt7AgDVUQMhL3jidMaeGOtOD8VFY+qaSVWcWOYUsTQktX7K45Mtojg6nLkU9xijDAC9Qrh/FZa+DyrAL7CV6MK0Dnfqvxijuvdinddf4QIICT17XjqeGW0qE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506659; c=relaxed/simple;
-	bh=0P7/rV3u1KkD0ZclGWSyvUhsnOJtybbZjFhRW2s1Yno=;
+	s=arc-20240116; t=1729506662; c=relaxed/simple;
+	bh=ZMX00w06d8mCFMMIFA7kEjqxtQ3MfhicHXhj6yD0bys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tkryrujet35HB8HzwhYV5+gZoshYYeR6+9drhpAKti10VNFw6bqjce0bI68cVIy1hQyBFEsDbcoXJRMETUzePE6hBWbA97KLZ9zqL/nu+Hc7J03VFv9M3pzrpaceAbBlQsGvIUYWltkJ+OqgjOJ+uMyIjH7cVhEBGoCE2HWtlf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/43X6EM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EMBgFVfQMfRVDIigg07vZuQoe8dSh2ryzeudi7+YzKztaezDwkPOS79zENlccGMWpygDn0acPBSVYQptQBk9hhpkzioa9hSHTZsVa3PTBAGs/26UuSrawDVKLNkhjIo2lo0BYRGvKbtFDm3gSDhfqDOe1d5/4FFaVFVHV1Tjihw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/vjfVd4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/43X6EM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C72C4CEE9;
-	Mon, 21 Oct 2024 10:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/vjfVd4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E0CC4CEC3;
+	Mon, 21 Oct 2024 10:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506659;
-	bh=0P7/rV3u1KkD0ZclGWSyvUhsnOJtybbZjFhRW2s1Yno=;
+	s=korg; t=1729506662;
+	bh=ZMX00w06d8mCFMMIFA7kEjqxtQ3MfhicHXhj6yD0bys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/43X6EM1K3ZFuIVkRFg/t/aCe4kqZVvbh0sFbGJ4+XV9L6Lsn6sSTp4w9IrJI8R7
-	 qhAp9dDCJI5SyNXHgyyvAnvixqMDMDYKkog0ORu7YvmMvXuvT7mHtnJsAFxcJaPDiW
-	 GaBr+Jdp75IMm0/bpLOX1G3SxpMRSnP1tLQVWCL8=
+	b=m/vjfVd4HeEPckWWjDZfH140dwfYllzji48f678fz/VF/aYjF0Jy/Qc05yvqkuQPi
+	 WfkZQSR4dBZfpMyMt98MxusQGe9M/l8ZhgRhpWeNf/xdrRH3pO59S2LhJxhvTuWvaq
+	 ycWzgdgac635jWQ3BuhmP0n3BrACe3w3e69DqToM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Gustavo Silva <gustavograzs@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.11 079/135] iio: frequency: adf4377: add missing select REMAP_SPI in Kconfig
-Date: Mon, 21 Oct 2024 12:23:55 +0200
-Message-ID: <20241021102302.418195182@linuxfoundation.org>
+Subject: [PATCH 6.11 080/135] iio: chemical: ens160: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
+Date: Mon, 21 Oct 2024 12:23:56 +0200
+Message-ID: <20241021102302.457052403@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -53,31 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit c64643ed4eaa5dfd0b3bab7ef1c50b84f3dbaba4 upstream.
+commit 3fd8bbf93926162eb59153a5bcd2a53b0cc04cf0 upstream.
 
-This driver makes use of regmap_spi, but does not select the required
-module.
-Add the missing 'select REGMAP_SPI'.
+This driver makes use of triggered buffers, but does not select the
+required modules.
 
-Fixes: eda549e2e524 ("iio: frequency: adf4377: add support for ADF4377")
+Add the missing 'select IIO_BUFFER' and 'select IIO_TRIGGERED_BUFFER'.
+
+Fixes: 0fc26596b4b3 ("iio: chemical: ens160: add triggered buffer support")
 Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20241003-ad2s1210-select-v1-3-4019453f8c33@gmail.com
+Acked-by: Gustavo Silva <gustavograzs@gmail.com>
+Link: https://patch.msgid.link/20241003-iio-select-v1-9-67c0385197cd@gmail.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/frequency/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/chemical/Kconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/frequency/Kconfig
-+++ b/drivers/iio/frequency/Kconfig
-@@ -53,6 +53,7 @@ config ADF4371
- config ADF4377
- 	tristate "Analog Devices ADF4377 Microwave Wideband Synthesizer"
- 	depends on SPI && COMMON_CLK
-+	select REGMAP_SPI
+diff --git a/drivers/iio/chemical/Kconfig b/drivers/iio/chemical/Kconfig
+index 678a6adb9a75..6c87223f58d9 100644
+--- a/drivers/iio/chemical/Kconfig
++++ b/drivers/iio/chemical/Kconfig
+@@ -80,6 +80,8 @@ config ENS160
+ 	tristate "ScioSense ENS160 sensor driver"
+ 	depends on (I2C || SPI)
+ 	select REGMAP
++	select IIO_BUFFER
++	select IIO_TRIGGERED_BUFFER
+ 	select ENS160_I2C if I2C
+ 	select ENS160_SPI if SPI
  	help
- 	  Say yes here to build support for Analog Devices ADF4377 Microwave
- 	  Wideband Synthesizer.
+-- 
+2.47.0
+
 
 
