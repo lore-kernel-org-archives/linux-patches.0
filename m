@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720891E1C11;
-	Mon, 21 Oct 2024 10:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B68C1E1C11;
+	Mon, 21 Oct 2024 10:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507180; cv=none; b=t0HM1zOH7ypQsySCX0XC5y871kYtFW07OknzZV7scNF2MXOQfzmL/9M8nZLh3UwzaLABlbG0g4HfUbDFbfL4gBVGRLY1BfzUKN7v1rm/vlcQy9sAXtPKrNHGDsrn4w40OyQdmP3EaxNeuSSrVGcWMH7UL6pvbBOCXKjMqDiYdUs=
+	t=1729507183; cv=none; b=IK4CZ2PITozyyxlQZPyErFXHuIVr+icFnwGuxtD5cftmAHRrr6uzOrJq3utdN1dVDNzqJ+/5DlDkqQ6Yw6sfMNFeXk2g+A0npLwmBzPI1HkeZ5dZSpJxsxDtOCQaXTZWFERNfCfIR6npVMsx3oI3OgNlfC0yzUveyegmNE3YyxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507180; c=relaxed/simple;
-	bh=aWrMxJluaQ2Aq6rzjQ5b1ZmiQmyQUbWaw0/sOsABVWY=;
+	s=arc-20240116; t=1729507183; c=relaxed/simple;
+	bh=9zedyoK74UfpqQGFdWEUavyCqplK81KwkQWs+Znq2Mg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Um+pEq/fX8hH47TOyGIFaiarR1Hw5hRsR613+8UA4aroWggBcd1zXEccFB1asi1mH/ma+IWgkZAmV1tg7whffZFILC8Clq3AbibwkJvyrD0BxBKYz1N78oVJ2ApCCYy8RdiiaDci2R8qn+qWb2leYuN3wMXlqerfTFJF8gUdD1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbg5pz5F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P3vX8moGcclZ+AIlWHAwEilndD5Gt/UzoGfV/+ioEUOMfS1P0oGd2HRr0ix0w3SJwToBg/xuE//8yBG06rJoLWmXm9Q31PFapiQC+xNGiuuVs8zg0DAkq9loZ2EuTu2fPjBypPJR8mMQ3o04cLzscxeJhVqdzqw1BwFA8TwgcDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tM3TY7Lo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbg5pz5F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E598AC4CEC3;
-	Mon, 21 Oct 2024 10:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tM3TY7Lo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2B6AC4CEC3;
+	Mon, 21 Oct 2024 10:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507180;
-	bh=aWrMxJluaQ2Aq6rzjQ5b1ZmiQmyQUbWaw0/sOsABVWY=;
+	s=korg; t=1729507183;
+	bh=9zedyoK74UfpqQGFdWEUavyCqplK81KwkQWs+Znq2Mg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fbg5pz5FbDpbG9aL0672pHJcvDRKJHcHQaHpbwCow5GmjcjUAqumljFcPZKngs4Xq
-	 QDBU+uRB0OrZK4grmPTHyyHNdbw07DW22xQziD3vYVNehEvrqw9YqU92Sll/zPaxDB
-	 27iBwyWD+LskPdtTHGRNONaMoMRDolYzL7rCrru8=
+	b=tM3TY7Lo3GT55L8HMKVi/jkeWrcBI588MlBZhDB3aPiYbNVZXALC+1F8eEsi3fMUh
+	 x1BD7ZlKrImbJ3UekjCekR1cLZWvBXE8kz0RxFiIRoNuYWNnfEVbWdvXsnKLvJlgJ8
+	 PP9Zww+cTElIPUWXlgiqo011HKjQEQb7da1WOT4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aniket Randive <quic_arandive@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 6.6 116/124] serial: qcom-geni: revert broken hibernation support
-Date: Mon, 21 Oct 2024 12:25:20 +0200
-Message-ID: <20241021102301.203727737@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 090/124] Bluetooth: btusb: Fix regression with fake CSR controllers 0a12:0001
+Date: Mon, 21 Oct 2024 12:24:54 +0200
+Message-ID: <20241021102300.208459475@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -44,106 +43,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 19df76662a33d2f2fc41a66607cb8285fc02d6ec upstream.
+commit 2c1dda2acc4192d826e84008d963b528e24d12bc upstream.
 
-This reverts commit 35781d8356a2eecaa6074ceeb80ee22e252fcdae.
+Fake CSR controllers don't seem to handle short-transfer properly which
+cause command to time out:
 
-Hibernation is not supported on Qualcomm platforms with mainline
-kernels yet a broken vendor implementation for the GENI serial driver
-made it upstream.
+kernel: usb 1-1: new full-speed USB device number 19 using xhci_hcd
+kernel: usb 1-1: New USB device found, idVendor=0a12, idProduct=0001, bcdDevice=88.91
+kernel: usb 1-1: New USB device strings: Mfr=0, Product=2, SerialNumber=0
+kernel: usb 1-1: Product: BT DONGLE10
+...
+Bluetooth: hci1: Opcode 0x1004 failed: -110
+kernel: Bluetooth: hci1: command 0x1004 tx timeout
 
-This is effectively dead code that cannot be tested and should just be
-removed, but if these paths were ever hit for an open non-console port
-they would crash the machine as the driver would fail to enable clocks
-during restore() (i.e. all ports would have to be closed by drivers and
-user space before hibernating the system to avoid this as a comment in
-the code hinted at).
+According to USB Spec 2.0 Section 5.7.3 Interrupt Transfer Packet Size
+Constraints a interrupt transfer is considered complete when the size is 0
+(ZPL) or < wMaxPacketSize:
 
-The broken implementation also added a random call to enable the
-receiver in the port setup code where it does not belong and which
-enables the receiver prematurely for console ports.
+ 'When an interrupt transfer involves more data than can fit in one
+ data payload of the currently established maximum size, all data
+ payloads are required to be maximum-sized except for the last data
+ payload, which will contain the remaining data. An interrupt transfer
+ is complete when the endpoint does one of the following:
 
-Fixes: 35781d8356a2 ("tty: serial: qcom-geni-serial: Add support for Hibernation feature")
-Cc: stable@vger.kernel.org	# 6.2
-Cc: Aniket Randive <quic_arandive@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20241009145110.16847-3-johan+linaro@kernel.org
+ • Has transferred exactly the amount of data expected
+ • Transfers a packet with a payload size less than wMaxPacketSize or
+ transfers a zero-length packet'
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219365
+Fixes: 7b05933340f4 ("Bluetooth: btusb: Fix not handling ZPL/short-transfer")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c |   41 +---------------------------------
- 1 file changed, 2 insertions(+), 39 deletions(-)
+ drivers/bluetooth/btusb.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1134,7 +1134,6 @@ static int qcom_geni_serial_port_setup(s
- 			       false, true, true);
- 	geni_se_init(&port->se, UART_RX_WM, port->rx_fifo_depth - 2);
- 	geni_se_select_mode(&port->se, port->dev_data->mode);
--	qcom_geni_serial_start_rx(uport);
- 	port->setup = true;
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -1354,10 +1354,15 @@ static int btusb_submit_intr_urb(struct
+ 	if (!urb)
+ 		return -ENOMEM;
  
- 	return 0;
-@@ -1764,38 +1763,6 @@ static int qcom_geni_serial_sys_resume(s
- 	return ret;
- }
+-	/* Use maximum HCI Event size so the USB stack handles
+-	 * ZPL/short-transfer automatically.
+-	 */
+-	size = HCI_MAX_EVENT_SIZE;
++	if (le16_to_cpu(data->udev->descriptor.idVendor)  == 0x0a12 &&
++	    le16_to_cpu(data->udev->descriptor.idProduct) == 0x0001)
++		/* Fake CSR devices don't seem to support sort-transter */
++		size = le16_to_cpu(data->intr_ep->wMaxPacketSize);
++	else
++		/* Use maximum HCI Event size so the USB stack handles
++		 * ZPL/short-transfer automatically.
++		 */
++		size = HCI_MAX_EVENT_SIZE;
  
--static int qcom_geni_serial_sys_hib_resume(struct device *dev)
--{
--	int ret = 0;
--	struct uart_port *uport;
--	struct qcom_geni_private_data *private_data;
--	struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
--
--	uport = &port->uport;
--	private_data = uport->private_data;
--
--	if (uart_console(uport)) {
--		geni_icc_set_tag(&port->se, QCOM_ICC_TAG_ALWAYS);
--		geni_icc_set_bw(&port->se);
--		ret = uart_resume_port(private_data->drv, uport);
--		/*
--		 * For hibernation usecase clients for
--		 * console UART won't call port setup during restore,
--		 * hence call port setup for console uart.
--		 */
--		qcom_geni_serial_port_setup(uport);
--	} else {
--		/*
--		 * Peripheral register settings are lost during hibernation.
--		 * Update setup flag such that port setup happens again
--		 * during next session. Clients of HS-UART will close and
--		 * open the port during hibernation.
--		 */
--		port->setup = false;
--	}
--	return ret;
--}
--
- static const struct qcom_geni_device_data qcom_geni_console_data = {
- 	.console = true,
- 	.mode = GENI_SE_FIFO,
-@@ -1807,12 +1774,8 @@ static const struct qcom_geni_device_dat
- };
- 
- static const struct dev_pm_ops qcom_geni_serial_pm_ops = {
--	.suspend = pm_sleep_ptr(qcom_geni_serial_sys_suspend),
--	.resume = pm_sleep_ptr(qcom_geni_serial_sys_resume),
--	.freeze = pm_sleep_ptr(qcom_geni_serial_sys_suspend),
--	.poweroff = pm_sleep_ptr(qcom_geni_serial_sys_suspend),
--	.restore = pm_sleep_ptr(qcom_geni_serial_sys_hib_resume),
--	.thaw = pm_sleep_ptr(qcom_geni_serial_sys_hib_resume),
-+	SYSTEM_SLEEP_PM_OPS(qcom_geni_serial_sys_suspend,
-+					qcom_geni_serial_sys_resume)
- };
- 
- static const struct of_device_id qcom_geni_serial_match_table[] = {
+ 	buf = kmalloc(size, mem_flags);
+ 	if (!buf) {
 
 
