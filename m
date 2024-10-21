@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCD61EF099;
-	Mon, 21 Oct 2024 10:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9981E5735;
+	Mon, 21 Oct 2024 10:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507130; cv=none; b=pPlIQG5gFsWE4Xvq9E8c+GQ3jb1Vp2Cd1p+6tqFJsKRIy9G8/TWKMRnEvh5MziwNomF1h0QZn3mqyNKzW6dmZ/dGPbbNY9fpEl3WFseV0cY/A7H2qFu8pD4DB06NMhdAL58QNuPw4adVfw5BUEjS47Egjms+jBn9a9wA/gtnSGg=
+	t=1729507133; cv=none; b=W5dKiytbkgvfx3IRzqY0DagJAXZQii2eVnFB9z9/KOrXo6DQhlhYlR4cqxRcekVa1T8i+E+EH0QpYuNs7aSC7Bb+4tTPGptdeYt01U9wVqPiW6yE4qr0dzUfOWSnhti20Fis4FMme0LcIJ2PXjZzhdK8rZqW1nevObSARVbWYfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507130; c=relaxed/simple;
-	bh=Tzyd52wjQgO5nqrirDLWZQfi6KGX0WQab+9HML/eQ4M=;
+	s=arc-20240116; t=1729507133; c=relaxed/simple;
+	bh=bpU4gt8YJH5W/XWeK2sC7lNosuCvtmaRfIHTbZ6wwV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bfyitBXWsrURlbh9DfsvYyWlKOizYNfyf8On9HPKEt9Nl/nY/kQcEtMiAkkkns/KQ2MK0BAMNTks8E4XH+SZ2hdxOT1H1P4mxQGQWN1v3YTtdnj+rIqmHdfVeagHlI6bI/qssHCYuZLaseHs3GWrq9qCTSXSZEK+AI6iH37Hcek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0XYYN6a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=toqieSV2SopTjcGFWU3BLncsObGygkKqsSPe9mHqcZOy7aZu1z1LHkN5nPLpLAjwpGi+3bLEVfb1bK2blXpwF8HQ7S1yaBCKN0l7wX71y1kPzEyaA50P7b0R85KUXyQc8VjyiPNJnTptFyK2rH8xGA1giCnZJiXDpuHmASSkSfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zE9WNXbe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0XYYN6a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8FEC4CEC3;
-	Mon, 21 Oct 2024 10:38:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zE9WNXbe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 570DCC4CEC3;
+	Mon, 21 Oct 2024 10:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507129;
-	bh=Tzyd52wjQgO5nqrirDLWZQfi6KGX0WQab+9HML/eQ4M=;
+	s=korg; t=1729507132;
+	bh=bpU4gt8YJH5W/XWeK2sC7lNosuCvtmaRfIHTbZ6wwV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c0XYYN6a4T+cqaVPys0vX1kz5bAYJuC8hlvb1rCD7qp9K43Fz+lm5ZJ7Id17IlJtf
-	 1pEagtk+0qx7acqV6aZ3Ut+/F3JJZ1WDX8MEyogmWmq4FNxuhEzkvAeAR1QxSRl5Tr
-	 eTL/HlifHrSQOMsDxhz2eVBNrOC7DNDLIo2ynacU=
+	b=zE9WNXbeRLkP6oLGKf9VmdxPj+RKn8voD/kftPP99wdMP9d6a3X1mwbOnjEFFwMxE
+	 3YyDswnPgUyjLND/SDdGt4wo6ebdUJ9eJwuriaU3OZIv7XjVdpjB/bvklKHFR2yolL
+	 5JkUC7t4oCem3ATS3tH+Rs2HQzar+10X5MLXX4zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Thiery <heiko.thiery@gmail.com>,
-	Michael Walle <mwalle@kernel.org>
-Subject: [PATCH 6.6 100/124] misc: microchip: pci1xxxx: add support for NVMEM_DEVID_AUTO for OTP device
-Date: Mon, 21 Oct 2024 12:25:04 +0200
-Message-ID: <20241021102300.591188624@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Esben Haabendal <esben@geanix.com>,
+	Marek Vasut <marex@denx.de>
+Subject: [PATCH 6.6 101/124] serial: imx: Update mctrl old_status on RTSD interrupt
+Date: Mon, 21 Oct 2024 12:25:05 +0200
+Message-ID: <20241021102300.629146592@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -50,37 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Thiery <heiko.thiery@gmail.com>
+From: Marek Vasut <marex@denx.de>
 
-commit 2471787c1f0dae6721f60ab44be37460635d3732 upstream.
+commit 40d7903386df4d18f04d90510ba90eedee260085 upstream.
 
-By using NVMEM_DEVID_AUTO we support more than 1 device and
-automatically enumerate.
+When sending data using DMA at high baudrate (4 Mbdps in local test case) to
+a device with small RX buffer which keeps asserting RTS after every received
+byte, it is possible that the iMX UART driver would not recognize the falling
+edge of RTS input signal and get stuck, unable to transmit any more data.
 
-Fixes: 0969001569e4 ("misc: microchip: pci1xxxx: Add support to read and write into PCI1XXXX OTP via NVMEM sysfs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Thiery <heiko.thiery@gmail.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Link: https://lore.kernel.org/r/20241007071120.9522-2-heiko.thiery@gmail.com
+This condition happens when the following sequence of events occur:
+- imx_uart_mctrl_check() is called at some point and takes a snapshot of UART
+  control signal status into sport->old_status using imx_uart_get_hwmctrl().
+  The RTSS/TIOCM_CTS bit is of interest here (*).
+- DMA transfer occurs, the remote device asserts RTS signal after each byte.
+  The i.MX UART driver recognizes each such RTS signal change, raises an
+  interrupt with USR1 register RTSD bit set, which leads to invocation of
+  __imx_uart_rtsint(), which calls uart_handle_cts_change().
+  - If the RTS signal is deasserted, uart_handle_cts_change() clears
+    port->hw_stopped and unblocks the port for further data transfers.
+  - If the RTS is asserted, uart_handle_cts_change() sets port->hw_stopped
+    and blocks the port for further data transfers. This may occur as the
+    last interrupt of a transfer, which means port->hw_stopped remains set
+    and the port remains blocked (**).
+- Any further data transfer attempts will trigger imx_uart_mctrl_check(),
+  which will read current status of UART control signals by calling
+  imx_uart_get_hwmctrl() (***) and compare it with sport->old_status .
+  - If current status differs from sport->old_status for RTS signal,
+    uart_handle_cts_change() is called and possibly unblocks the port
+    by clearing port->hw_stopped .
+  - If current status does not differ from sport->old_status for RTS
+    signal, no action occurs. This may occur in case prior snapshot (*)
+    was taken before any transfer so the RTS is deasserted, current
+    snapshot (***) was taken after a transfer and therefore RTS is
+    deasserted again, which means current status and sport->old_status
+    are identical. In case (**) triggered when RTS got asserted, and
+    made port->hw_stopped set, the port->hw_stopped will remain set
+    because no change on RTS line is recognized by this driver and
+    uart_handle_cts_change() is not called from here to unblock the
+    port->hw_stopped.
+
+Update sport->old_status in __imx_uart_rtsint() accordingly to make
+imx_uart_mctrl_check() detect such RTS change. Note that TIOCM_CAR
+and TIOCM_RI bits in sport->old_status do not suffer from this problem.
+
+Fixes: ceca629e0b48 ("[ARM] 2971/1: i.MX uart handle rts irq")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Esben Haabendal <esben@geanix.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://lore.kernel.org/r/20241002184133.19427-1-marex@denx.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_otpe2p.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/imx.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_otpe2p.c b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_otpe2p.c
-index d1cd4544c83c..a2ed477e0370 100644
---- a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_otpe2p.c
-+++ b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_otpe2p.c
-@@ -384,6 +384,7 @@ static int pci1xxxx_otp_eeprom_probe(struct auxiliary_device *aux_dev,
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -771,6 +771,21 @@ static irqreturn_t __imx_uart_rtsint(int
  
- 	priv->nvmem_config_otp.type = NVMEM_TYPE_OTP;
- 	priv->nvmem_config_otp.name = OTP_NAME;
-+	priv->nvmem_config_otp.id = NVMEM_DEVID_AUTO;
- 	priv->nvmem_config_otp.dev = &aux_dev->dev;
- 	priv->nvmem_config_otp.owner = THIS_MODULE;
- 	priv->nvmem_config_otp.reg_read = pci1xxxx_otp_read;
--- 
-2.47.0
-
+ 	imx_uart_writel(sport, USR1_RTSD, USR1);
+ 	usr1 = imx_uart_readl(sport, USR1) & USR1_RTSS;
++	/*
++	 * Update sport->old_status here, so any follow-up calls to
++	 * imx_uart_mctrl_check() will be able to recognize that RTS
++	 * state changed since last imx_uart_mctrl_check() call.
++	 *
++	 * In case RTS has been detected as asserted here and later on
++	 * deasserted by the time imx_uart_mctrl_check() was called,
++	 * imx_uart_mctrl_check() can detect the RTS state change and
++	 * trigger uart_handle_cts_change() to unblock the port for
++	 * further TX transfers.
++	 */
++	if (usr1 & USR1_RTSS)
++		sport->old_status |= TIOCM_CTS;
++	else
++		sport->old_status &= ~TIOCM_CTS;
+ 	uart_handle_cts_change(&sport->port, usr1);
+ 	wake_up_interruptible(&sport->port.state->port.delta_msr_wait);
+ 
 
 
