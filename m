@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6BF1953B9;
-	Mon, 21 Oct 2024 10:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DA61953B9;
+	Mon, 21 Oct 2024 10:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507400; cv=none; b=JERRKiXe44cZdWxB5imCJnxIuPSNNIrlwAeHmHNBofBXZyTHLoxbW8ar04gFezI2Cz+50MQmp8AlN8kJappunFKkYNjMT9/4Tqjk5pukPG8jbjY5csY9J4jIq/zJT1kfjAo3UtcowDF/EkNFKji2hg7RQnKoIdrN14Ka5PTgtxQ=
+	t=1729507403; cv=none; b=M4XvD8eTgHEaxFgePZFNoRRPLpgTzCaLBGjQuwkYfx1qVyRmkJ6qKQr21ZZvAL/J1rFcuBeeaycXZeChyWdV5WmF4IDv82hROmgo55KsC7yd+Hodsd1GWi/qHPF9tItAJh9y57J2juUVFEWVfE2OWQdvwj9nN8m3FXc4GSHK0ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507400; c=relaxed/simple;
-	bh=VXDUbLEezxym7njxiyf33xCRnjUvuDinXepj+WVr1vw=;
+	s=arc-20240116; t=1729507403; c=relaxed/simple;
+	bh=ID2o3hR4iTdYQfx9AidhZ5OkaUBE6NfKO4DdnP1f6/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MaQ9xDnqiGEKJIVZnA4VuSDtbpabDxS9BKs3WOov8sO/yZAas6he/8A/cJH0NY/m92YJINwhQARujperhyXb0F98WJphryjJFbSfbe3q/MxJuJ4jDyeemin3gXL7YR+wgoL0QYgYJHoqDNnd0/5NlYvRyLuCyAFvmcJjy8/87zY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VthM5BmQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OBs2lY4+X1x1X+QEyBhHKX3F/bOwbrwCWMYkaxoBsT9gEuYMfwjy5HyrCNA1l4Uqa5MU2N+V/M6kjubHfX+GOXEW2zFwEHEBHkEr3NFj+QQnQ/ADPUnZE6Ad2PoS7eVlW24ss9Dm5YqiwcKUfBfWyzfm3m9+iuUS2rAKb814iTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RVlkk/JG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VthM5BmQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA974C4CEE5;
-	Mon, 21 Oct 2024 10:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVlkk/JG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6829C4CEC3;
+	Mon, 21 Oct 2024 10:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507400;
-	bh=VXDUbLEezxym7njxiyf33xCRnjUvuDinXepj+WVr1vw=;
+	s=korg; t=1729507403;
+	bh=ID2o3hR4iTdYQfx9AidhZ5OkaUBE6NfKO4DdnP1f6/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VthM5BmQp5UUuocpYpPx0unlBVxVdzJ6J9zxBVprQpH+y6MY4AiN53cae9hi70XMf
-	 PEVL/jZp+w9NM54OU6XqShGnmDYqAyNoF/IVb8qBE38GgN0g2+LhLlUo8uOwazW15Y
-	 Mfi2gqViDuNywc9lnUS3qkQtKBKxP5oqEu+D750g=
+	b=RVlkk/JGqInoCnRFs8mPXE6NtLAxN/lyRpynAp4ABLD3S5ng6I84sMDADlHn4qLik
+	 b+r7HJ3zH8RlW38jWGd1iWTEfQaxnLD0+DtwOP+K/nRTBmI027WTa0eTPke/8h8KLD
+	 iUq/T83uZIEKVawsSr4EYxG5uMxQvigwmt0efF6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 65/91] iio: proximity: mb1232: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
-Date: Mon, 21 Oct 2024 12:25:19 +0200
-Message-ID: <20241021102252.353335926@linuxfoundation.org>
+Subject: [PATCH 6.1 66/91] iio: dac: ad3552r: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
+Date: Mon, 21 Oct 2024 12:25:20 +0200
+Message-ID: <20241021102252.391293424@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -53,33 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 75461a0b15d7c026924d0001abce0476bbc7eda8 upstream.
+commit 5bede948670f447154df401458aef4e2fd446ba8 upstream.
 
 This driver makes use of triggered buffers, but does not select the
 required modules.
 
 Add the missing 'select IIO_BUFFER' and 'select IIO_TRIGGERED_BUFFER'.
 
-Fixes: 16b05261537e ("mb1232.c: add distance iio sensor with i2c")
+Fixes: 8f2b54824b28 ("drivers:iio:dac: Add AD3552R driver support")
 Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20241003-iio-select-v1-13-67c0385197cd@gmail.com
+Link: https://patch.msgid.link/20241003-iio-select-v1-7-67c0385197cd@gmail.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/proximity/Kconfig |    2 ++
+ drivers/iio/dac/Kconfig | 2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/iio/proximity/Kconfig
-+++ b/drivers/iio/proximity/Kconfig
-@@ -60,6 +60,8 @@ config LIDAR_LITE_V2
- config MB1232
- 	tristate "MaxSonar I2CXL family ultrasonic sensors"
- 	depends on I2C
+diff --git a/drivers/iio/dac/Kconfig b/drivers/iio/dac/Kconfig
+index 1cfd7e2a622f..9d4600ce0427 100644
+--- a/drivers/iio/dac/Kconfig
++++ b/drivers/iio/dac/Kconfig
+@@ -9,6 +9,8 @@ menu "Digital to analog converters"
+ config AD3552R
+ 	tristate "Analog Devices AD3552R DAC driver"
+ 	depends on SPI_MASTER
 +	select IIO_BUFFER
 +	select IIO_TRIGGERED_BUFFER
  	help
- 	  Say Y to build a driver for the ultrasonic sensors I2CXL of
- 	  MaxBotix which have an i2c interface. It can be used to measure
+ 	  Say yes here to build support for Analog Devices AD3552R
+ 	  Digital to Analog Converter.
+-- 
+2.47.0
+
 
 
