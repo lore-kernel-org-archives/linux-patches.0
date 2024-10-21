@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC5A1F8934;
-	Mon, 21 Oct 2024 10:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AEF1E7C01;
+	Mon, 21 Oct 2024 10:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507535; cv=none; b=UNCCqpTfWcmf4bd0A7ByC94PXvMWGv+nciZU6Khtz5PsGdYjac5CtxDdvA3P9XN3IYjx6tGqMnBwuE4LEXQoOVCb2r5BR5KKLp4mwZSkDJHAro2e09u14TDB00ioR7+Zey94FaAyZfckDo/+RHtOgFdC8rTcvihK0Tx2Ers+PaE=
+	t=1729507538; cv=none; b=EjcVSbPcnOL+K/LsTL80EoTvFnLKuIKCW6efOCQiu+aalYwOiUYbubO+Y6i0A7DbdOGht7kjIbNOTI2eKdZ5Fwk11oy/CzzabhJWHmN6LCfSh0P4FJfg6QQHD/EIF/D7fj4g89+1L8pCAZmNU1V5QMKp+R2K3CV5P1vU2p3agdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507535; c=relaxed/simple;
-	bh=3kGIRrLAYUQiVKEJ3KU7u/FODe+4kjXpE/S8mBe+niw=;
+	s=arc-20240116; t=1729507538; c=relaxed/simple;
+	bh=7oUO0DBTLzAecv/4aax2CdUb0M/cLEOG/aCmpj/WFzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ANs5pbg7dnz4lSeWYAaH8v9RQtEz55cGXi+A1SUnbpAMOpxJHhUfOKEbs0EP7v4Nr3zhhEkI6rmx9QO7znfgscunXL+DrIvZ61lDhEUlgDXw5o3d+s5d9QLXRA85VsD8Pz/d0/ecFpiq13E5lLYWUY4WFhIqBQNE+of9JE+7Hl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YaF4/T/K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jrTQcjghfw4Q3WIE/QsBmOVe9FkuVAJ7ucBzzAUt/ZIgZU6R7YaAXxCiGGU05IUqqHHjWyNdOhalvPoDNvfxxkY5br5Poe7kYUFO7X1f3WsiMMV5NDj12sajVWY4uHfqi+TxmgeSMKHVno3wHJjs0y6nhRuAbPZdQIQy+sJLreU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxV0h0dF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YaF4/T/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBBBC4CEC3;
-	Mon, 21 Oct 2024 10:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxV0h0dF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B047C4CEE6;
+	Mon, 21 Oct 2024 10:45:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507534;
-	bh=3kGIRrLAYUQiVKEJ3KU7u/FODe+4kjXpE/S8mBe+niw=;
+	s=korg; t=1729507537;
+	bh=7oUO0DBTLzAecv/4aax2CdUb0M/cLEOG/aCmpj/WFzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YaF4/T/KxPQIDfHEl2X7+bRIqQIIAea5JSuCOu/1Wk5ZmhCQiXr8SH2yjjPsAgUYG
-	 89IwOExXI0RSn0X9uekAeYVp6gKQtDDtstFw2faAnk2jov+vBHZgMadoexOpjbR7hX
-	 ZOZIeJ0G3xJdpjQrU6DNF8BFqSqemlZLJnZtaz3U=
+	b=FxV0h0dFK2GnLC9Hpk2ItBNAew4nIUT9hYg45ozNBxYU65Q4ridnl2wUTHZlW7VNE
+	 Hid0yjGMG+W1AwZRYwWmfikV5Hgd30TsZEXjAiTWsSSqBzrwEXbZgWpsFqgrmfMPGs
+	 SgOs/ePqwZbGNQiP1+pfbo9YBs/NcJqk+UnrS8jA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jan Kara <jack@suse.cz>,
 	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 5.15 10/82] udf: Convert udf_get_parent() to new directory iteration code
-Date: Mon, 21 Oct 2024 12:24:51 +0200
-Message-ID: <20241021102247.630043168@linuxfoundation.org>
+Subject: [PATCH 5.15 19/82] udf: Handle error when expanding directory
+Date: Mon, 21 Oct 2024 12:25:00 +0200
+Message-ID: <20241021102248.000485192@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102247.209765070@linuxfoundation.org>
 References: <20241021102247.209765070@linuxfoundation.org>
@@ -52,43 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 9b06fbef4202363d74bba5459ddd231db6d3b1af ]
+[ Upstream commit 33e9a53cd9f099b138578f8e1a3d60775ff8cbba ]
 
-Convert udf_get_parent() to use udf_fiiter_find_entry().
+When there is an error when adding extent to the directory to expand it,
+make sure to propagate the error up properly. This is not expected to
+happen currently but let's make the code more futureproof.
 
 Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/namei.c |   16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ fs/udf/namei.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 --- a/fs/udf/namei.c
 +++ b/fs/udf/namei.c
-@@ -1368,17 +1368,15 @@ static struct dentry *udf_get_parent(str
- {
- 	struct kernel_lb_addr tloc;
- 	struct inode *inode = NULL;
--	struct fileIdentDesc cfi;
--	struct udf_fileident_bh fibh;
-+	struct udf_fileident_iter iter;
-+	int err;
+@@ -192,8 +192,13 @@ static struct buffer_head *udf_expand_di
+ 	epos.bh = NULL;
+ 	epos.block = iinfo->i_location;
+ 	epos.offset = udf_file_entry_alloc_offset(inode);
+-	udf_add_aext(inode, &epos, &eloc, inode->i_size, 0);
++	ret = udf_add_aext(inode, &epos, &eloc, inode->i_size, 0);
+ 	brelse(epos.bh);
++	if (ret < 0) {
++		*err = ret;
++		udf_free_blocks(inode->i_sb, inode, &eloc, 0, 1);
++		return NULL;
++	}
+ 	mark_inode_dirty(inode);
  
--	if (!udf_find_entry(d_inode(child), &dotdot_name, &fibh, &cfi))
--		return ERR_PTR(-EACCES);
-+	err = udf_fiiter_find_entry(d_inode(child), &dotdot_name, &iter);
-+	if (err)
-+		return ERR_PTR(err);
- 
--	if (fibh.sbh != fibh.ebh)
--		brelse(fibh.ebh);
--	brelse(fibh.sbh);
--
--	tloc = lelb_to_cpu(cfi.icb.extLocation);
-+	tloc = lelb_to_cpu(iter.fi.icb.extLocation);
-+	udf_fiiter_release(&iter);
- 	inode = udf_iget(child->d_sb, &tloc);
- 	if (IS_ERR(inode))
- 		return ERR_CAST(inode);
+ 	/* Now fixup tags in moved directory entries */
 
 
