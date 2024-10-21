@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE031E47B4;
-	Mon, 21 Oct 2024 10:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6781E47B4;
+	Mon, 21 Oct 2024 10:32:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506755; cv=none; b=HIgTA35HmTs7K/kAkEAUPhbnADj/w1hTRnUmIdmk2kakDJjAoMuHrf1qOhekBbnE95MQHENrgl/WUnCsbXVuY+/zzyV/s3ipHIJNNVYR2voJXCKH7ZAG3Z+d0C1l+SrakjYJCPUCuD6GQ0KitXhTVZE0t0GEv5+WXZOheZd2AoA=
+	t=1729506758; cv=none; b=kfbNYI9lmfNoS+xrFQis77ihhi6EaBIUW0HMPM8+Ku5v7roeMOKKqb3C1jayaALlwK5nqqrhcQX8ig6qyoP0Oe4BqiFsUXDnY3CH3xIW6DjgxqsSvfsuTLC+f5s8iyoUnp9HPuNYlufxXSLGG2dqeWEuxItdwHvUJ14PAqMZRt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506755; c=relaxed/simple;
-	bh=aZMLMG9M0bRU88KVpJjMmpmnK22yZQ+3jne9bS5SjTs=;
+	s=arc-20240116; t=1729506758; c=relaxed/simple;
+	bh=GQc+Zp9eXHejHahypZocZuGU9EG06HvaGWedF5cJyCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EASr6JyrJ8rVVvwFq0Nz6SWry9Jl5OpTcJS865URwsWxo/7shxPLBI7YZy95vjc4IDUkq6Frvj4c6JEMyK8QRikGt7xHcQmcFgZ+gzvOUeV/8pyOEBHoBttOXyP9yNbnUFhV8cpnPmaZ0tHszArdNVMwq/zHARjS7A046J81q9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/+eV6PY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WNnoX1J8S0JHRVgonPwPFsJukIxy5qRxUtbEZ8t26G7efmuGlp3V25XxaFHEGJyl9clPN1ndIlQyjoq+Q3MlD928g+JOo1BW0I7wukqEjp1T7OAtKxBwuUiHvalt2SDzoTbfR4Q25RTxvK4R5jS4n0DRXCm5JrkzyNjmGX+kos8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9jH9lrK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/+eV6PY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EE97C4CEC3;
-	Mon, 21 Oct 2024 10:32:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9jH9lrK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A2AC4CEC3;
+	Mon, 21 Oct 2024 10:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506754;
-	bh=aZMLMG9M0bRU88KVpJjMmpmnK22yZQ+3jne9bS5SjTs=;
+	s=korg; t=1729506757;
+	bh=GQc+Zp9eXHejHahypZocZuGU9EG06HvaGWedF5cJyCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b/+eV6PYkAgIrsQUh1zC8Nb5H6/eiJiky7d9+NjD958+6OyRKWpvXa608WD3pp+Qv
-	 KpbQZuw+35vimV8smLwfQk6ixJok7pUzZdfnTipWRrmnQqP7KtWwGP08KCLPuaNWA9
-	 rvMYLeM5xJszDfNAzQzkYDysQ4CXhP938rx69HLI=
+	b=p9jH9lrKw6dZ+yX/+zwJsHt0p5edDNDNDMvTZU1disk94beX9jPHlMYGRMBDQawx8
+	 cSUbOPDwDX4FjlmJUtwcLZ1ahNZWTAB+wDCOO6TReqVYVNWZbnRYadt4cguCklD4rj
+	 wMFFlWb+7WBMVvIIptEpVf+vAZiAI988L4vrz7yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Benjamin B. Frost" <benjamin@geanix.com>,
-	Lars Melin <larsm17@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.11 103/135] USB: serial: option: add support for Quectel EG916Q-GL
-Date: Mon, 21 Oct 2024 12:24:19 +0200
-Message-ID: <20241021102303.357348017@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Esben Haabendal <esben@geanix.com>,
+	Marek Vasut <marex@denx.de>
+Subject: [PATCH 6.11 112/135] serial: imx: Update mctrl old_status on RTSD interrupt
+Date: Mon, 21 Oct 2024 12:24:28 +0200
+Message-ID: <20241021102303.706434608@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -51,73 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin B. Frost <benjamin@geanix.com>
+From: Marek Vasut <marex@denx.de>
 
-commit 540eff5d7faf0c9330ec762da49df453263f7676 upstream.
+commit 40d7903386df4d18f04d90510ba90eedee260085 upstream.
 
-Add Quectel EM916Q-GL with product ID 0x6007
+When sending data using DMA at high baudrate (4 Mbdps in local test case) to
+a device with small RX buffer which keeps asserting RTS after every received
+byte, it is possible that the iMX UART driver would not recognize the falling
+edge of RTS input signal and get stuck, unable to transmit any more data.
 
-T:  Bus=01 Lev=02 Prnt=02 Port=01 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=6007 Rev= 2.00
-S:  Manufacturer=Quectel
-S:  Product=EG916Q-GL
-C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=200mA
-A:  FirstIf#= 4 IfCount= 2 Cls=02(comm.) Sub=06 Prot=00
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
-E:  Ad=88(I) Atr=03(Int.) MxPS=  32 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-I:* If#= 5 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+This condition happens when the following sequence of events occur:
+- imx_uart_mctrl_check() is called at some point and takes a snapshot of UART
+  control signal status into sport->old_status using imx_uart_get_hwmctrl().
+  The RTSS/TIOCM_CTS bit is of interest here (*).
+- DMA transfer occurs, the remote device asserts RTS signal after each byte.
+  The i.MX UART driver recognizes each such RTS signal change, raises an
+  interrupt with USR1 register RTSD bit set, which leads to invocation of
+  __imx_uart_rtsint(), which calls uart_handle_cts_change().
+  - If the RTS signal is deasserted, uart_handle_cts_change() clears
+    port->hw_stopped and unblocks the port for further data transfers.
+  - If the RTS is asserted, uart_handle_cts_change() sets port->hw_stopped
+    and blocks the port for further data transfers. This may occur as the
+    last interrupt of a transfer, which means port->hw_stopped remains set
+    and the port remains blocked (**).
+- Any further data transfer attempts will trigger imx_uart_mctrl_check(),
+  which will read current status of UART control signals by calling
+  imx_uart_get_hwmctrl() (***) and compare it with sport->old_status .
+  - If current status differs from sport->old_status for RTS signal,
+    uart_handle_cts_change() is called and possibly unblocks the port
+    by clearing port->hw_stopped .
+  - If current status does not differ from sport->old_status for RTS
+    signal, no action occurs. This may occur in case prior snapshot (*)
+    was taken before any transfer so the RTS is deasserted, current
+    snapshot (***) was taken after a transfer and therefore RTS is
+    deasserted again, which means current status and sport->old_status
+    are identical. In case (**) triggered when RTS got asserted, and
+    made port->hw_stopped set, the port->hw_stopped will remain set
+    because no change on RTS line is recognized by this driver and
+    uart_handle_cts_change() is not called from here to unblock the
+    port->hw_stopped.
 
-MI_00 Quectel USB Diag Port
-MI_01 Quectel USB NMEA Port
-MI_02 Quectel USB AT Port
-MI_03 Quectel USB Modem Port
-MI_04 Quectel USB Net Port
+Update sport->old_status in __imx_uart_rtsint() accordingly to make
+imx_uart_mctrl_check() detect such RTS change. Note that TIOCM_CAR
+and TIOCM_RI bits in sport->old_status do not suffer from this problem.
 
-Signed-off-by: Benjamin B. Frost <benjamin@geanix.com>
-Reviewed-by: Lars Melin <larsm17@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: ceca629e0b48 ("[ARM] 2971/1: i.MX uart handle rts irq")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Esben Haabendal <esben@geanix.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://lore.kernel.org/r/20241002184133.19427-1-marex@denx.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/imx.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -279,6 +279,7 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_EG912Y			0x6001
- #define QUECTEL_PRODUCT_EC200S_CN		0x6002
- #define QUECTEL_PRODUCT_EC200A			0x6005
-+#define QUECTEL_PRODUCT_EG916Q			0x6007
- #define QUECTEL_PRODUCT_EM061K_LWW		0x6008
- #define QUECTEL_PRODUCT_EM061K_LCN		0x6009
- #define QUECTEL_PRODUCT_EC200T			0x6026
-@@ -1270,6 +1271,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200S_CN, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200T, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG912Y, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG916Q, 0xff, 0x00, 0x00) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
+--- a/drivers/tty/serial/imx.c
++++ b/drivers/tty/serial/imx.c
+@@ -762,6 +762,21 @@ static irqreturn_t __imx_uart_rtsint(int
  
- 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
+ 	imx_uart_writel(sport, USR1_RTSD, USR1);
+ 	usr1 = imx_uart_readl(sport, USR1) & USR1_RTSS;
++	/*
++	 * Update sport->old_status here, so any follow-up calls to
++	 * imx_uart_mctrl_check() will be able to recognize that RTS
++	 * state changed since last imx_uart_mctrl_check() call.
++	 *
++	 * In case RTS has been detected as asserted here and later on
++	 * deasserted by the time imx_uart_mctrl_check() was called,
++	 * imx_uart_mctrl_check() can detect the RTS state change and
++	 * trigger uart_handle_cts_change() to unblock the port for
++	 * further TX transfers.
++	 */
++	if (usr1 & USR1_RTSS)
++		sport->old_status |= TIOCM_CTS;
++	else
++		sport->old_status &= ~TIOCM_CTS;
+ 	uart_handle_cts_change(&sport->port, usr1);
+ 	wake_up_interruptible(&sport->port.state->port.delta_msr_wait);
+ 
 
 
