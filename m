@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C351E32D7;
-	Mon, 21 Oct 2024 10:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6791E3784;
+	Mon, 21 Oct 2024 10:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506480; cv=none; b=e9cQt0MoQsjbQ7NWeZ5mjF2BhxfqIyCJc9y+D7kIPoqlGwqtlFCnTqesWXoxmUNt2NCl7Ql4JxkzR06ZvD5GklG5CYz05vcr9/bjK7+wkAaHulM9doECtez48OPgpEHErFOca21Y5JgWAKM0D/ZvAPWmEvzKEjbXvRqSgos+4KU=
+	t=1729506483; cv=none; b=fjuxtgPdHFN0mccp0Z3D9x9/Voa3S8uFKwFJkzTJAjaOw6odXIR3PGZ1ICwXIz49kN6dkhi9goaT4ceXYZTwWgJ/hYAdEgFWgo7vvw2/PCASt+rUSSMU4JGRaaRQh/rwoZLBlcbNO4zdpP/8QT4AlN2DQbunZ/k/57XQST48sAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506480; c=relaxed/simple;
-	bh=Q383C3ry5No6zGIEEXOWVtNgg2s0DQKYzieYZeYAz4w=;
+	s=arc-20240116; t=1729506483; c=relaxed/simple;
+	bh=stvJGuYEDeL5V8bnWSPObIoj8SFJfQiD2oJvb65iA9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a+3ZLEgnk8OCOdrfToahpQmGtNx3lBXkMwfSlnyUy7gYnLj/pCk5KJJUzXVi80tcc0NJxt5Z8w4i033xhMW5iCFDYoTyV13taAIykC58cUI3JXX6zmldU+JXWBID5AxCEN29Gd8GjgVSNcJKV6LjzbscYJwg/WuazcDOqYQ1RK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPfNGzXw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZnfVIXCbs8xPqJeA0ps3JYYDX3UF/+4loub9OWAV9iqRsQyZiiM974XOxBsstrHUCIkeEzj+ROvupTuFLdIn/hxzw7kNGDSYqIyUsz51eF9u3BlvFuSx9fuVMP+qren4NUmFaXh3O8q+e0d7N/D1ELnfKDYcXS5T8vFromzYK60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oe6EJzCN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPfNGzXw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3F2C4CEC3;
-	Mon, 21 Oct 2024 10:27:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oe6EJzCN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EE8C4CEC3;
+	Mon, 21 Oct 2024 10:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506479;
-	bh=Q383C3ry5No6zGIEEXOWVtNgg2s0DQKYzieYZeYAz4w=;
+	s=korg; t=1729506483;
+	bh=stvJGuYEDeL5V8bnWSPObIoj8SFJfQiD2oJvb65iA9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fPfNGzXwOv66DfBVOfV9SRaDB18WWsAamfVIqZAyGCXsBLZNf0VcVf2READWOTSY2
-	 glZuxo5lE/k1Nf622SxPVxPT5I0JOD3oBkCjzcqN0AukUFX2D7e76r940MCV04hAQU
-	 zccvfGPPjw4EeLVpTDgiuGSUWrCJ/GhPet7TsM4w=
+	b=Oe6EJzCNof6nPhRRge83KSmqYH+jUEmJDV5Uaw3YX0dFyACLNbj3zeffyUxV9OXUF
+	 DbHku1zdkfb0bzq2H9Rz9ozhT0CtpBNHHYaGcru0dN3/lqjxVvPeD9vXSKZkQ1QBE8
+	 0MH8eX2hCsRvql5KbOhc5UdU8tPnW+vHVx2+EggQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	=?UTF-8?q?Jens=20Emil=20Schulz=20=C3=98stergaard?= <jensemil.schulzostergaard@microchip.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.11 019/135] net: microchip: vcap api: Fix memory leaks in vcap_api_encode_rule_test()
-Date: Mon, 21 Oct 2024 12:22:55 +0200
-Message-ID: <20241021102300.092377617@linuxfoundation.org>
+Subject: [PATCH 6.11 020/135] selftests: mptcp: join: test for prohibited MPC to port-based endp
+Date: Mon, 21 Oct 2024 12:22:56 +0200
+Message-ID: <20241021102300.130266455@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -46,118 +46,225 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 217a3d98d1e9891a8b1438a27dfbc64ddf01f691 upstream.
+commit 5afca7e996c42aed1b4a42d4712817601ba42aff upstream.
 
-Commit a3c1e45156ad ("net: microchip: vcap: Fix use-after-free error in
-kunit test") fixed the use-after-free error, but introduced below
-memory leaks by removing necessary vcap_free_rule(), add it to fix it.
+Explicitly verify that MPC connection attempts towards a port-based
+signal endpoint fail with a reset.
 
-	unreferenced object 0xffffff80ca58b700 (size 192):
-	  comm "kunit_try_catch", pid 1215, jiffies 4294898264
-	  hex dump (first 32 bytes):
-	    00 12 7a 00 05 00 00 00 0a 00 00 00 64 00 00 00  ..z.........d...
-	    00 00 00 00 00 00 00 00 00 04 0b cc 80 ff ff ff  ................
-	  backtrace (crc 9c09c3fe):
-	    [<0000000052a0be73>] kmemleak_alloc+0x34/0x40
-	    [<0000000043605459>] __kmalloc_cache_noprof+0x26c/0x2f4
-	    [<0000000040a01b8d>] vcap_alloc_rule+0x3cc/0x9c4
-	    [<000000003fe86110>] vcap_api_encode_rule_test+0x1ac/0x16b0
-	    [<00000000b3595fc4>] kunit_try_run_case+0x13c/0x3ac
-	    [<0000000010f5d2bf>] kunit_generic_run_threadfn_adapter+0x80/0xec
-	    [<00000000c5d82c9a>] kthread+0x2e8/0x374
-	    [<00000000f4287308>] ret_from_fork+0x10/0x20
-	unreferenced object 0xffffff80cc0b0400 (size 64):
-	  comm "kunit_try_catch", pid 1215, jiffies 4294898265
-	  hex dump (first 32 bytes):
-	    80 04 0b cc 80 ff ff ff 18 b7 58 ca 80 ff ff ff  ..........X.....
-	    39 00 00 00 02 00 00 00 06 05 04 03 02 01 ff ff  9...............
-	  backtrace (crc daf014e9):
-	    [<0000000052a0be73>] kmemleak_alloc+0x34/0x40
-	    [<0000000043605459>] __kmalloc_cache_noprof+0x26c/0x2f4
-	    [<000000000ff63fd4>] vcap_rule_add_key+0x2cc/0x528
-	    [<00000000dfdb1e81>] vcap_api_encode_rule_test+0x224/0x16b0
-	    [<00000000b3595fc4>] kunit_try_run_case+0x13c/0x3ac
-	    [<0000000010f5d2bf>] kunit_generic_run_threadfn_adapter+0x80/0xec
-	    [<00000000c5d82c9a>] kthread+0x2e8/0x374
-	    [<00000000f4287308>] ret_from_fork+0x10/0x20
-	unreferenced object 0xffffff80cc0b0700 (size 64):
-	  comm "kunit_try_catch", pid 1215, jiffies 4294898265
-	  hex dump (first 32 bytes):
-	    80 07 0b cc 80 ff ff ff 28 b7 58 ca 80 ff ff ff  ........(.X.....
-	    3c 00 00 00 00 00 00 00 01 2f 03 b3 ec ff ff ff  <......../......
-	  backtrace (crc 8d877792):
-	    [<0000000052a0be73>] kmemleak_alloc+0x34/0x40
-	    [<0000000043605459>] __kmalloc_cache_noprof+0x26c/0x2f4
-	    [<000000006eadfab7>] vcap_rule_add_action+0x2d0/0x52c
-	    [<00000000323475d1>] vcap_api_encode_rule_test+0x4d4/0x16b0
-	    [<00000000b3595fc4>] kunit_try_run_case+0x13c/0x3ac
-	    [<0000000010f5d2bf>] kunit_generic_run_threadfn_adapter+0x80/0xec
-	    [<00000000c5d82c9a>] kthread+0x2e8/0x374
-	    [<00000000f4287308>] ret_from_fork+0x10/0x20
-	unreferenced object 0xffffff80cc0b0900 (size 64):
-	  comm "kunit_try_catch", pid 1215, jiffies 4294898266
-	  hex dump (first 32 bytes):
-	    80 09 0b cc 80 ff ff ff 80 06 0b cc 80 ff ff ff  ................
-	    7d 00 00 00 01 00 00 00 00 00 00 00 ff 00 00 00  }...............
-	  backtrace (crc 34181e56):
-	    [<0000000052a0be73>] kmemleak_alloc+0x34/0x40
-	    [<0000000043605459>] __kmalloc_cache_noprof+0x26c/0x2f4
-	    [<000000000ff63fd4>] vcap_rule_add_key+0x2cc/0x528
-	    [<00000000991e3564>] vcap_val_rule+0xcf0/0x13e8
-	    [<00000000fc9868e5>] vcap_api_encode_rule_test+0x678/0x16b0
-	    [<00000000b3595fc4>] kunit_try_run_case+0x13c/0x3ac
-	    [<0000000010f5d2bf>] kunit_generic_run_threadfn_adapter+0x80/0xec
-	    [<00000000c5d82c9a>] kthread+0x2e8/0x374
-	    [<00000000f4287308>] ret_from_fork+0x10/0x20
-	unreferenced object 0xffffff80cc0b0980 (size 64):
-	  comm "kunit_try_catch", pid 1215, jiffies 4294898266
-	  hex dump (first 32 bytes):
-	    18 b7 58 ca 80 ff ff ff 00 09 0b cc 80 ff ff ff  ..X.............
-	    67 00 00 00 00 00 00 00 01 01 74 88 c0 ff ff ff  g.........t.....
-	  backtrace (crc 275fd9be):
-	    [<0000000052a0be73>] kmemleak_alloc+0x34/0x40
-	    [<0000000043605459>] __kmalloc_cache_noprof+0x26c/0x2f4
-	    [<000000000ff63fd4>] vcap_rule_add_key+0x2cc/0x528
-	    [<000000001396a1a2>] test_add_def_fields+0xb0/0x100
-	    [<000000006e7621f0>] vcap_val_rule+0xa98/0x13e8
-	    [<00000000fc9868e5>] vcap_api_encode_rule_test+0x678/0x16b0
-	    [<00000000b3595fc4>] kunit_try_run_case+0x13c/0x3ac
-	    [<0000000010f5d2bf>] kunit_generic_run_threadfn_adapter+0x80/0xec
-	    [<00000000c5d82c9a>] kthread+0x2e8/0x374
-	    [<00000000f4287308>] ret_from_fork+0x10/0x20
-	......
+Note that this new test is a bit different from the other ones, not
+using 'run_tests'. It is then needed to add the capture capability, and
+the picking the right port which have been extracted into three new
+helpers. The info about the capture can also be printed from a single
+point, which simplifies the exit paths in do_transfer().
 
+The 'Fixes' tag here below is the same as the one from the previous
+commit: this patch here is not fixing anything wrong in the selftests,
+but it validates the previous fix for an issue introduced by this commit
+ID.
+
+Fixes: 1729cf186d8a ("mptcp: create the listening socket for new port")
 Cc: stable@vger.kernel.org
-Fixes: a3c1e45156ad ("net: microchip: vcap: Fix use-after-free error in kunit test")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jens Emil Schulz Østergaard <jensemil.schulzostergaard@microchip.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20241014121922.1280583-1-ruanjinjie@huawei.com
+Co-developed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20241014-net-mptcp-mpc-port-endp-v2-2-7faea8e6b6ae@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c |    2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |  115 +++++++++++++++++-------
+ 1 file changed, 85 insertions(+), 30 deletions(-)
 
---- a/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
-+++ b/drivers/net/ethernet/microchip/vcap/vcap_api_kunit.c
-@@ -1444,6 +1444,8 @@ static void vcap_api_encode_rule_test(st
- 
- 	ret = vcap_del_rule(&test_vctrl, &test_netdev, id);
- 	KUNIT_EXPECT_EQ(test, 0, ret);
-+
-+	vcap_free_rule(rule);
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -23,6 +23,7 @@ tmpfile=""
+ cout=""
+ err=""
+ capout=""
++cappid=""
+ ns1=""
+ ns2=""
+ iptables="iptables"
+@@ -861,40 +862,62 @@ check_cestab()
+ 	fi
  }
  
- static void vcap_api_set_rule_counter_test(struct kunit *test)
+-do_transfer()
++cond_start_capture()
+ {
+-	local listener_ns="$1"
+-	local connector_ns="$2"
+-	local cl_proto="$3"
+-	local srv_proto="$4"
+-	local connect_addr="$5"
+-
+-	local port=$((10000 + MPTCP_LIB_TEST_COUNTER - 1))
+-	local cappid
+-	local FAILING_LINKS=${FAILING_LINKS:-""}
+-	local fastclose=${fastclose:-""}
+-	local speed=${speed:-"fast"}
++	local ns="$1"
+ 
+-	:> "$cout"
+-	:> "$sout"
+ 	:> "$capout"
+ 
+ 	if $capture; then
+-		local capuser
+-		if [ -z $SUDO_USER ] ; then
++		local capuser capfile
++		if [ -z $SUDO_USER ]; then
+ 			capuser=""
+ 		else
+ 			capuser="-Z $SUDO_USER"
+ 		fi
+ 
+-		capfile=$(printf "mp_join-%02u-%s.pcap" "$MPTCP_LIB_TEST_COUNTER" "${listener_ns}")
++		capfile=$(printf "mp_join-%02u-%s.pcap" "$MPTCP_LIB_TEST_COUNTER" "$ns")
+ 
+ 		echo "Capturing traffic for test $MPTCP_LIB_TEST_COUNTER into $capfile"
+-		ip netns exec ${listener_ns} tcpdump -i any -s 65535 -B 32768 $capuser -w $capfile > "$capout" 2>&1 &
++		ip netns exec "$ns" tcpdump -i any -s 65535 -B 32768 $capuser -w "$capfile" > "$capout" 2>&1 &
+ 		cappid=$!
+ 
+ 		sleep 1
+ 	fi
++}
++
++cond_stop_capture()
++{
++	if $capture; then
++		sleep 1
++		kill $cappid
++		cat "$capout"
++	fi
++}
++
++get_port()
++{
++	echo "$((10000 + MPTCP_LIB_TEST_COUNTER - 1))"
++}
++
++do_transfer()
++{
++	local listener_ns="$1"
++	local connector_ns="$2"
++	local cl_proto="$3"
++	local srv_proto="$4"
++	local connect_addr="$5"
++	local port
++
++	local FAILING_LINKS=${FAILING_LINKS:-""}
++	local fastclose=${fastclose:-""}
++	local speed=${speed:-"fast"}
++	port=$(get_port)
++
++	:> "$cout"
++	:> "$sout"
++
++	cond_start_capture ${listener_ns}
+ 
+ 	NSTAT_HISTORY=/tmp/${listener_ns}.nstat ip netns exec ${listener_ns} \
+ 		nstat -n
+@@ -981,10 +1004,7 @@ do_transfer()
+ 	wait $spid
+ 	local rets=$?
+ 
+-	if $capture; then
+-	    sleep 1
+-	    kill $cappid
+-	fi
++	cond_stop_capture
+ 
+ 	NSTAT_HISTORY=/tmp/${listener_ns}.nstat ip netns exec ${listener_ns} \
+ 		nstat | grep Tcp > /tmp/${listener_ns}.out
+@@ -1000,7 +1020,6 @@ do_transfer()
+ 		ip netns exec ${connector_ns} ss -Menita 1>&2 -o "dport = :$port"
+ 		cat /tmp/${connector_ns}.out
+ 
+-		cat "$capout"
+ 		return 1
+ 	fi
+ 
+@@ -1017,13 +1036,7 @@ do_transfer()
+ 	fi
+ 	rets=$?
+ 
+-	if [ $retc -eq 0 ] && [ $rets -eq 0 ];then
+-		cat "$capout"
+-		return 0
+-	fi
+-
+-	cat "$capout"
+-	return 1
++	[ $retc -eq 0 ] && [ $rets -eq 0 ]
+ }
+ 
+ make_file()
+@@ -2786,6 +2799,32 @@ verify_listener_events()
+ 	fail_test
+ }
+ 
++chk_mpc_endp_attempt()
++{
++	local retl=$1
++	local attempts=$2
++
++	print_check "Connect"
++
++	if [ ${retl} = 124 ]; then
++		fail_test "timeout on connect"
++	elif [ ${retl} = 0 ]; then
++		fail_test "unexpected successful connect"
++	else
++		print_ok
++
++		print_check "Attempts"
++		count=$(mptcp_lib_get_counter ${ns1} "MPTcpExtMPCapableEndpAttempt")
++		if [ -z "$count" ]; then
++			print_skip
++		elif [ "$count" != "$attempts" ]; then
++			fail_test "got ${count} MPC attempt[s] on port-based endpoint, expected ${attempts}"
++		else
++			print_ok
++		fi
++	fi
++}
++
+ add_addr_ports_tests()
+ {
+ 	# signal address with port
+@@ -2876,6 +2915,22 @@ add_addr_ports_tests()
+ 		chk_join_nr 2 2 2
+ 		chk_add_nr 2 2 2
+ 	fi
++
++	if reset "port-based signal endpoint must not accept mpc"; then
++		local port retl count
++		port=$(get_port)
++
++		cond_start_capture ${ns1}
++		pm_nl_add_endpoint ${ns1} 10.0.2.1 flags signal port ${port}
++		mptcp_lib_wait_local_port_listen ${ns1} ${port}
++
++		timeout 1 ip netns exec ${ns2} \
++			./mptcp_connect -t ${timeout_poll} -p $port -s MPTCP 10.0.2.1 >/dev/null 2>&1
++		retl=$?
++		cond_stop_capture
++
++		chk_mpc_endp_attempt ${retl} 1
++	fi
+ }
+ 
+ syncookies_tests()
 
 
