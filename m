@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5BB1E9098;
-	Mon, 21 Oct 2024 10:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC9D1E9098;
+	Mon, 21 Oct 2024 10:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507603; cv=none; b=G6opzv0M6VSSdvq3yiVfO2/UiGWXWTLs9KjJT4r01Ar3QsfikttQC+G5wYzBrUnTZlgSh4ikt0wybsYem1sQtJJLFtrUCOeX0MtijneUKdSh6oVv+0a8k6U0hBbFO97ze45nDpZYZKc8UpBBC6pj8Hlh5ugiWFZpfNRyqDiA7x0=
+	t=1729507606; cv=none; b=tJD+X/iZYxX9d2/5XdYxIay/g9mamjNtG4U4G7OO7+6uPxW3XneCkEjC5ygYnlM8S5wIqqWUjkOKfw7IO+pBp3l27WIDffocjDDXk6rMKrZFON9kGSfn0Sb1RzAFlaf4ytNkv4HxlcmqrsVncaMatKOJ1TZ5hdz+Xv04D0sqNDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507603; c=relaxed/simple;
-	bh=Fwq76tkRvqoif28uROWPY1s+2bJe7ksZRxyHYkkTWCU=;
+	s=arc-20240116; t=1729507606; c=relaxed/simple;
+	bh=mFUZqQ4mkI5A36e5ZIS2NuGi+BT37LJsYf5LgDElXUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MJ/TCbX8eJPfw9RREy8E24vJTRcXRocMqPKhCz9P8U0SdNBxxoQOkLmPpeysWcIALKYGcWLV3UsG3Fmuwk2J1JAlW8VAiCJp9wlWqUSEhUCDV+36fELFP2x5e+2H4iSf2huz0jOiVhHDP43GulZgaiGCgWCB4ezkEZYSf4K8SNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXDWqcyw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BdY3wNrrk/u44S0310E2C+QqknbGHjKBBDmkV7DBPjU+B3MqSQGU+M27Q0gidR7ou+P3eHtlWNsTq2Hs5JuRtp3eHfV2LRx5J+k41byLHqN8hPy/R9WeP9BT8exgH/DU2nevJ01zlcc/NYkN9D21QcuglUqrC2A3nzyIMwp4LYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLzC2fxK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXDWqcyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA42C4CEC3;
-	Mon, 21 Oct 2024 10:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLzC2fxK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFD3C4CEC3;
+	Mon, 21 Oct 2024 10:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507603;
-	bh=Fwq76tkRvqoif28uROWPY1s+2bJe7ksZRxyHYkkTWCU=;
+	s=korg; t=1729507606;
+	bh=mFUZqQ4mkI5A36e5ZIS2NuGi+BT37LJsYf5LgDElXUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wXDWqcywtClZbhZyxG6TspQEiON65JNH5vwvuvbWdwaqEiplEWwSQxz+okCtBFU8s
-	 CvCaAVThd7abw4ACHHk5/JZRIfq1m1YK2xlXfcxApNtRsXKhcNW1Jr1TuV22PeiZ+d
-	 pT2hbz+nn3ypVYtz/1Hx12YwvOizoRNMN45b8+sA=
+	b=VLzC2fxKyoS6S4CMqTOetsLHXXTGaNDMIFlg0uGS9hNeuWTTz3Ug8s+M9asxoDWyw
+	 XSGe8t25JlK9qexzA7reCIbrJvK5PNPCM0ZsMO6BT/G2JCxS4cfR1b2RypdaLLmYAg
+	 KMENa3WdPPL5Xxw7cCjseGcndRCUG8TlQ0KTTuPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Todd Brandt <todd.e.brandt@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 5.15 39/82] iommu/vt-d: Fix incorrect pci_for_each_dma_alias() for non-PCI devices
-Date: Mon, 21 Oct 2024 12:25:20 +0200
-Message-ID: <20241021102248.786836165@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 5.15 40/82] s390/sclp_vt220: Convert newlines to CRLF instead of LFCR
+Date: Mon, 21 Oct 2024 12:25:21 +0200
+Message-ID: <20241021102248.824635034@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102247.209765070@linuxfoundation.org>
 References: <20241021102247.209765070@linuxfoundation.org>
@@ -45,49 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-commit 6e02a277f1db24fa039e23783c8921c7b0e5b1b3 upstream.
+commit dee3df68ab4b00fff6bdf9fc39541729af37307c upstream.
 
-Previously, the domain_context_clear() function incorrectly called
-pci_for_each_dma_alias() to set up context entries for non-PCI devices.
-This could lead to kernel hangs or other unexpected behavior.
+According to the VT220 specification the possible character combinations
+sent on RETURN are only CR or CRLF [0].
 
-Add a check to only call pci_for_each_dma_alias() for PCI devices. For
-non-PCI devices, domain_context_clear_one() is called directly.
+	The Return key sends either a CR character (0/13) or a CR
+	character (0/13) and an LF character (0/10), depending on the
+	set/reset state of line feed/new line mode (LNM).
 
-Reported-by: Todd Brandt <todd.e.brandt@intel.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219363
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219349
-Fixes: 9a16ab9d6402 ("iommu/vt-d: Make context clearing consistent with context mapping")
+The sclp/vt220 driver however uses LFCR. This can confuse tools, for
+example the kunit runner.
+
+Link: https://vt100.net/docs/vt220-rm/chapter3.html#S3.2
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20241014013744.102197-2-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Link: https://lore.kernel.org/r/20241014-s390-kunit-v1-2-941defa765a6@linutronix.de
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/iommu.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/s390/char/sclp_vt220.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -4465,8 +4465,10 @@ static int domain_context_clear_one_cb(s
-  */
- static void domain_context_clear(struct device_domain_info *info)
- {
--	if (!dev_is_pci(info->dev))
-+	if (!dev_is_pci(info->dev)) {
- 		domain_context_clear_one(info, info->bus, info->devfn);
-+		return;
-+	}
+--- a/drivers/s390/char/sclp_vt220.c
++++ b/drivers/s390/char/sclp_vt220.c
+@@ -320,7 +320,7 @@ sclp_vt220_add_msg(struct sclp_vt220_req
+ 	buffer = (void *) ((addr_t) sccb + sccb->header.length);
  
- 	pci_for_each_dma_alias(to_pci_dev(info->dev),
- 			       &domain_context_clear_one_cb, info);
+ 	if (convertlf) {
+-		/* Perform Linefeed conversion (0x0a -> 0x0a 0x0d)*/
++		/* Perform Linefeed conversion (0x0a -> 0x0d 0x0a)*/
+ 		for (from=0, to=0;
+ 		     (from < count) && (to < sclp_vt220_space_left(request));
+ 		     from++) {
+@@ -329,8 +329,8 @@ sclp_vt220_add_msg(struct sclp_vt220_req
+ 			/* Perform conversion */
+ 			if (c == 0x0a) {
+ 				if (to + 1 < sclp_vt220_space_left(request)) {
+-					((unsigned char *) buffer)[to++] = c;
+ 					((unsigned char *) buffer)[to++] = 0x0d;
++					((unsigned char *) buffer)[to++] = c;
+ 				} else
+ 					break;
+ 
 
 
