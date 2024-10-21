@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1B81E6311;
-	Mon, 21 Oct 2024 10:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536421E3DD8;
+	Mon, 21 Oct 2024 10:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507496; cv=none; b=BlLLKmckL2rtYcjxJio06WdApmgijuh2b1BLA4O4ww8ki0PYfhpZCC2lFF7SNtSJ2lz/vStKCWR/5VAcf1/fws7cmVDeoB1Eeh9fN2TBvcmCoOwX+OsKaC4U6E4/mFttGovyJEvjNX+Vhvf3QWWkMA24jMmS9qo4vAHF+RrQXXw=
+	t=1729507499; cv=none; b=bmmbq4zKxigNwWYIS2YT0Zn+KiLvhW8RwLHhj/s8d3SFfhT6s4/enHZnj3XSi6nLP9FmV1xdHmPsaIYwnExCXLBIIoamO/f/LoLFnVWCunBgGMY9iCJkWGxeE0oVlEvskAiNXbqwpn3UASwIU10GNf/e24n7MILDpGrXDXlJwrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507496; c=relaxed/simple;
-	bh=2NBXfGTMe8lHWI8E/jsv3BQRyMbNXYcITptxm4/0Rnw=;
+	s=arc-20240116; t=1729507499; c=relaxed/simple;
+	bh=Zv634lCckH3dxjp7HCyrn9E16GhPsf0DMS/yzvJEA/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rAqozHq18r/G0TQZ5mhTj0NDzsXZvRAw9hPxvpBI9ZgbVywFQ510F6Q2bjn3Hiri8EbaSBf816oWBbvPYtsVLEqZ9gKUfRoH5zDoW000Dp4R4nQEsxE9awLJutP5vFYhDLM6MqBN0rOStv4Ermu283O+Igu84282/+UQAb503Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQT8wdwF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CP7h2oXFRPRVO0uRm2fnxF2vpWPehH/I82HqY3oYjfhgbxCcYJiQdsj6P5UsQgdk6EB/bpuVbextYXDeby9niD+1Q2ku3ksnZKFYROsYDQAY+N0rMXdwdFAJA9zEx32QUP5+g9ZJcO+Wx3K8KIebA32V9NXtq/DM7Oz858+y6qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DkFKGiPn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQT8wdwF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B2BC4CEC3;
-	Mon, 21 Oct 2024 10:44:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DkFKGiPn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A50C4CEC3;
+	Mon, 21 Oct 2024 10:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507496;
-	bh=2NBXfGTMe8lHWI8E/jsv3BQRyMbNXYcITptxm4/0Rnw=;
+	s=korg; t=1729507499;
+	bh=Zv634lCckH3dxjp7HCyrn9E16GhPsf0DMS/yzvJEA/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQT8wdwFIfztzunD/Dhmc2NPXB7oe6zgD4gpzduC8EXFciYeGS9XfapM+QRKqEEKX
-	 OA9OLtGEI7sRb+z3ydKIzq5pH3Benxvh4gm8QVLHRVm+Cb5R51v8TOfMSGXVqoZP8P
-	 J1IKd1NDTKBJCAYDw1Rh5Obd5dWEBgrCpEULHpBw=
+	b=DkFKGiPnXLMhcV2JwmKkV6Yh2Fr8qb3Libi6KOoFrGxpTt1+JOoV8vH64OyqEJVOl
+	 Esb5OjPa021fOCowXOU9dbZWFdO2TjY4VGZ2qMKbS4dgqXcbVKoMGfJqE3td8iengM
+	 U9h3gJgp+AjdqKjdzpcphssuRi1p+d3xJaVkFtRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 55/91] iio: dac: ad5770r: add missing select REGMAP_SPI in Kconfig
-Date: Mon, 21 Oct 2024 12:25:09 +0200
-Message-ID: <20241021102251.967323632@linuxfoundation.org>
+	Nicholas Piggin <npiggin@gmail.com>,
+	Joel Stanley <joel@jms.id.au>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.1 90/91] powerpc/64: Add big-endian ELFv2 flavour to crypto VMX asm generation
+Date: Mon, 21 Oct 2024 12:25:44 +0200
+Message-ID: <20241021102253.324796295@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -51,33 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-commit bcdab6f74c91cda19714354fd4e9e3ef3c9a78b3 upstream.
+commit 505ea33089dcfc3ee3201b0fcb94751165805413 upstream.
 
-This driver makes use of regmap_spi, but does not select the required
-module.
-Add the missing 'select REGMAP_SPI'.
+This allows asm generation for big-endian ELFv2 builds.
 
-Fixes: cbbb819837f6 ("iio: dac: ad5770r: Add AD5770R support")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20241003-ad2s1210-select-v1-6-4019453f8c33@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20221128041539.1742489-4-npiggin@gmail.com
+Cc: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/crypto/vmx/Makefile     |   12 +++++++++++-
+ drivers/crypto/vmx/ppc-xlate.pl |   10 ++++++----
+ 2 files changed, 17 insertions(+), 5 deletions(-)
 
---- a/drivers/iio/dac/Kconfig
-+++ b/drivers/iio/dac/Kconfig
-@@ -224,6 +224,7 @@ config AD5766
- config AD5770R
- 	tristate "Analog Devices AD5770R IDAC driver"
- 	depends on SPI_MASTER
-+	select REGMAP_SPI
- 	help
- 	  Say yes here to build support for Analog Devices AD5770R Digital to
- 	  Analog Converter.
+--- a/drivers/crypto/vmx/Makefile
++++ b/drivers/crypto/vmx/Makefile
+@@ -2,8 +2,18 @@
+ obj-$(CONFIG_CRYPTO_DEV_VMX_ENCRYPT) += vmx-crypto.o
+ vmx-crypto-objs := vmx.o aesp8-ppc.o ghashp8-ppc.o aes.o aes_cbc.o aes_ctr.o aes_xts.o ghash.o
+ 
++ifeq ($(CONFIG_CPU_LITTLE_ENDIAN),y)
++override flavour := linux-ppc64le
++else
++ifdef CONFIG_PPC64_ELF_ABI_V2
++override flavour := linux-ppc64-elfv2
++else
++override flavour := linux-ppc64
++endif
++endif
++
+ quiet_cmd_perl = PERL    $@
+-      cmd_perl = $(PERL) $< $(if $(CONFIG_CPU_LITTLE_ENDIAN), linux-ppc64le, linux-ppc64) > $@
++      cmd_perl = $(PERL) $< $(flavour) > $@
+ 
+ targets += aesp8-ppc.S ghashp8-ppc.S
+ 
+--- a/drivers/crypto/vmx/ppc-xlate.pl
++++ b/drivers/crypto/vmx/ppc-xlate.pl
+@@ -9,6 +9,8 @@ open STDOUT,">$output" || die "can't ope
+ 
+ my %GLOBALS;
+ my $dotinlocallabels=($flavour=~/linux/)?1:0;
++my $elfv2abi=(($flavour =~ /linux-ppc64le/) or ($flavour =~ /linux-ppc64-elfv2/))?1:0;
++my $dotfunctions=($elfv2abi=~1)?0:1;
+ 
+ ################################################################
+ # directives which need special treatment on different platforms
+@@ -40,7 +42,7 @@ my $globl = sub {
+ };
+ my $text = sub {
+     my $ret = ($flavour =~ /aix/) ? ".csect\t.text[PR],7" : ".text";
+-    $ret = ".abiversion	2\n".$ret	if ($flavour =~ /linux.*64le/);
++    $ret = ".abiversion	2\n".$ret	if ($elfv2abi);
+     $ret;
+ };
+ my $machine = sub {
+@@ -56,8 +58,8 @@ my $size = sub {
+     if ($flavour =~ /linux/)
+     {	shift;
+ 	my $name = shift; $name =~ s|^[\.\_]||;
+-	my $ret  = ".size	$name,.-".($flavour=~/64$/?".":"").$name;
+-	$ret .= "\n.size	.$name,.-.$name" if ($flavour=~/64$/);
++	my $ret  = ".size	$name,.-".($dotfunctions?".":"").$name;
++	$ret .= "\n.size	.$name,.-.$name" if ($dotfunctions);
+ 	$ret;
+     }
+     else
+@@ -142,7 +144,7 @@ my $vmr = sub {
+ 
+ # Some ABIs specify vrsave, special-purpose register #256, as reserved
+ # for system use.
+-my $no_vrsave = ($flavour =~ /linux-ppc64le/);
++my $no_vrsave = ($elfv2abi);
+ my $mtspr = sub {
+     my ($f,$idx,$ra) = @_;
+     if ($idx == 256 && $no_vrsave) {
 
 
