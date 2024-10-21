@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC531E7C16;
-	Mon, 21 Oct 2024 10:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA991E47AC;
+	Mon, 21 Oct 2024 10:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507328; cv=none; b=O2Czl/OJnzHKPe5OtKSphStd+rzSKf5TYrew/wiByVoX/GNWzQhRwGwwTIW6E3Gu27zFH42Vm51Gy6Z1V42QCFRfLqft4L5CckQ1TEWfZ8tId+yU6siqyeDnYNwcN49axTwKquDdbJnrOxSWi8xYZMAa2j2/QMUhn0glrgB5N/M=
+	t=1729507330; cv=none; b=MhhNjPCmEbi9+Hex+mx69kUndmu2MGV4F7Iok7MkC/9ASrYlIIceqjG2y3iOhyW6lG1ujXCDd86OK8I7aEsHGa4oTiNIulAXZvwYhmngEKx7BDXeEZ7OF9AhS8bf++TyoPik5h1A62dbX0vM1trCIJvAKkJG7nOUU75cOEUPGWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507328; c=relaxed/simple;
-	bh=CEFVc1ZGLai6UqD4P1a+KIjKcI5FEppdf1GTzE4rQmI=;
+	s=arc-20240116; t=1729507330; c=relaxed/simple;
+	bh=Cp7jiUWLqWSEBug1gS+K78QdCadiv7VoRgahWFH8ouk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=modlw9dqZwzK6FkM+vnX4HW5BCkur8wGQDTPY7QXIVBWdJDtXxAAkZW0vXy7e6Cqid/VBqHlm9Aya8NkQ5PPAN9fOecQQxaK8bjj5f5POAvl0i0Aw03I80UMyK2dlCUPCF4w+4AJsj0yDqg/y1i7sjmZAZbAA2lhYWiAU6jpD5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jt2Wcs8I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QI7LwHCaTWFERFsdCcOnmX1KxjMwpnUZoMokJ0lVYE5xB7yDsQUDKxa7aDaFRJYno6P8rbriBieu1SR2bV6y6zBZmPyLAIvotyAlG+dQNrHru9XkIF6uUWX/anNmoANXddZklvJ6YstRzEcDR/DccAoouYCi5jKHJ2DiXvs1swc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imxMCQbq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jt2Wcs8I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7ECC4CEC3;
-	Mon, 21 Oct 2024 10:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imxMCQbq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFE9C4CEC3;
+	Mon, 21 Oct 2024 10:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507327;
-	bh=CEFVc1ZGLai6UqD4P1a+KIjKcI5FEppdf1GTzE4rQmI=;
+	s=korg; t=1729507330;
+	bh=Cp7jiUWLqWSEBug1gS+K78QdCadiv7VoRgahWFH8ouk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jt2Wcs8IX5ijX3wDIiAJfeBvMttAPzRr61l0Q/1+Q6twj1Mi+VljCdzd7eo7Qbi5k
-	 QUUpWdUoAaq2gQimMsof69QFSacRdD6cYXYM2TQCZ89U9UbBuayI+cP6KOvgm+KiD8
-	 e4+8m5RpwxVy5OFrejOvFx+TlLjUDlQdTZKLiO5k=
+	b=imxMCQbqN5EHOKoLWUG7pUUYlQSlNVYKwXypGZgN9cJNMYWLeK5M9TLh3si1LwEvl
+	 PSxzXi3sypTmnwCuqDX3LVhPCvGoRkCfbul8ntcnZJ4nbXir0LGpy7WYJpkFam9cHB
+	 7Tse3En85uCHb8KrSVHkto75+GRiDn1seXjt77CA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Subject: [PATCH 6.1 23/91] udf: Handle error when expanding directory
-Date: Mon, 21 Oct 2024 12:24:37 +0200
-Message-ID: <20241021102250.726859951@linuxfoundation.org>
+	Nico Boehr <nrb@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>
+Subject: [PATCH 6.1 41/91] KVM: s390: gaccess: Check if guest address is in memslot
+Date: Mon, 21 Oct 2024 12:24:55 +0200
+Message-ID: <20241021102251.425191717@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -50,37 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Nico Boehr <nrb@linux.ibm.com>
 
-[ Upstream commit 33e9a53cd9f099b138578f8e1a3d60775ff8cbba ]
+commit e8061f06185be0a06a73760d6526b8b0feadfe52 upstream.
 
-When there is an error when adding extent to the directory to expand it,
-make sure to propagate the error up properly. This is not expected to
-happen currently but let's make the code more futureproof.
+Previously, access_guest_page() did not check whether the given guest
+address is inside of a memslot. This is not a problem, since
+kvm_write_guest_page/kvm_read_guest_page return -EFAULT in this case.
 
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+However, -EFAULT is also returned when copy_to/from_user fails.
+
+When emulating a guest instruction, the address being outside a memslot
+usually means that an addressing exception should be injected into the
+guest.
+
+Failure in copy_to/from_user however indicates that something is wrong
+in userspace and hence should be handled there.
+
+To be able to distinguish these two cases, return PGM_ADDRESSING in
+access_guest_page() when the guest address is outside guest memory. In
+access_guest_real(), populate vcpu->arch.pgm.code such that
+kvm_s390_inject_prog_cond() can be used in the caller for injecting into
+the guest (if applicable).
+
+Since this adds a new return value to access_guest_page(), we need to make
+sure that other callers are not confused by the new positive return value.
+
+There are the following users of access_guest_page():
+- access_guest_with_key() does the checking itself (in
+  guest_range_to_gpas()), so this case should never happen. Even if, the
+  handling is set up properly.
+- access_guest_real() just passes the return code to its callers, which
+  are:
+    - read_guest_real() - see below
+    - write_guest_real() - see below
+
+There are the following users of read_guest_real():
+- ar_translation() in gaccess.c which already returns PGM_*
+- setup_apcb10(), setup_apcb00(), setup_apcb11() in vsie.c which always
+  return -EFAULT on read_guest_read() nonzero return - no change
+- shadow_crycb(), handle_stfle() always present this as validity, this
+  could be handled better but doesn't change current behaviour - no change
+
+There are the following users of write_guest_real():
+- kvm_s390_store_status_unloaded() always returns -EFAULT on
+  write_guest_real() failure.
+
+Fixes: 2293897805c2 ("KVM: s390: add architecture compliant guest access functions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240917151904.74314-2-nrb@linux.ibm.com
+Acked-by: Janosch Frank <frankja@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/namei.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/s390/kvm/gaccess.c |    4 ++++
+ arch/s390/kvm/gaccess.h |   14 ++++++++------
+ 2 files changed, 12 insertions(+), 6 deletions(-)
 
---- a/fs/udf/namei.c
-+++ b/fs/udf/namei.c
-@@ -192,8 +192,13 @@ static struct buffer_head *udf_expand_di
- 	epos.bh = NULL;
- 	epos.block = iinfo->i_location;
- 	epos.offset = udf_file_entry_alloc_offset(inode);
--	udf_add_aext(inode, &epos, &eloc, inode->i_size, 0);
-+	ret = udf_add_aext(inode, &epos, &eloc, inode->i_size, 0);
- 	brelse(epos.bh);
-+	if (ret < 0) {
-+		*err = ret;
-+		udf_free_blocks(inode->i_sb, inode, &eloc, 0, 1);
-+		return NULL;
-+	}
- 	mark_inode_dirty(inode);
+--- a/arch/s390/kvm/gaccess.c
++++ b/arch/s390/kvm/gaccess.c
+@@ -1001,6 +1001,8 @@ static int access_guest_page(struct kvm
+ 	const gfn_t gfn = gpa_to_gfn(gpa);
+ 	int rc;
  
- 	/* Now fixup tags in moved directory entries */
++	if (!gfn_to_memslot(kvm, gfn))
++		return PGM_ADDRESSING;
+ 	if (mode == GACC_STORE)
+ 		rc = kvm_write_guest_page(kvm, gfn, data, offset, len);
+ 	else
+@@ -1158,6 +1160,8 @@ int access_guest_real(struct kvm_vcpu *v
+ 		gra += fragment_len;
+ 		data += fragment_len;
+ 	}
++	if (rc > 0)
++		vcpu->arch.pgm.code = rc;
+ 	return rc;
+ }
+ 
+--- a/arch/s390/kvm/gaccess.h
++++ b/arch/s390/kvm/gaccess.h
+@@ -402,11 +402,12 @@ int read_guest_abs(struct kvm_vcpu *vcpu
+  * @len: number of bytes to copy
+  *
+  * Copy @len bytes from @data (kernel space) to @gra (guest real address).
+- * It is up to the caller to ensure that the entire guest memory range is
+- * valid memory before calling this function.
+  * Guest low address and key protection are not checked.
+  *
+- * Returns zero on success or -EFAULT on error.
++ * Returns zero on success, -EFAULT when copying from @data failed, or
++ * PGM_ADRESSING in case @gra is outside a memslot. In this case, pgm check info
++ * is also stored to allow injecting into the guest (if applicable) using
++ * kvm_s390_inject_prog_cond().
+  *
+  * If an error occurs data may have been copied partially to guest memory.
+  */
+@@ -425,11 +426,12 @@ int write_guest_real(struct kvm_vcpu *vc
+  * @len: number of bytes to copy
+  *
+  * Copy @len bytes from @gra (guest real address) to @data (kernel space).
+- * It is up to the caller to ensure that the entire guest memory range is
+- * valid memory before calling this function.
+  * Guest key protection is not checked.
+  *
+- * Returns zero on success or -EFAULT on error.
++ * Returns zero on success, -EFAULT when copying to @data failed, or
++ * PGM_ADRESSING in case @gra is outside a memslot. In this case, pgm check info
++ * is also stored to allow injecting into the guest (if applicable) using
++ * kvm_s390_inject_prog_cond().
+  *
+  * If an error occurs data may have been copied partially to kernel space.
+  */
 
 
