@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097761E47C1;
-	Mon, 21 Oct 2024 10:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F375B1F585A;
+	Mon, 21 Oct 2024 10:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507700; cv=none; b=HVMKZNVOE3YHMUiI+EGPcgf/FgMCA1Rufiij9tX3WDOMfcjhKnfaggwR2QjPHzIhlWDk8f6eky/+IZXAZVa8wwpif909ZfV2CnUrPUC+DHhQyg+2n6PPL7ELL+AXeyWT5cVxg9DGsdrPdbNvhrngxVRq97AnTb5EOlKUzf4Rw3w=
+	t=1729507703; cv=none; b=HPo1izJ0HZzQRsizwGh87+gYL4McNLj9M1lqZd0MdMPZF13foeKrKpL4XgeVtONAbczvGOjgHQRGPYY+zytNMsn2x4Xusv9WSW5SW/JSGnXRNJ49O1uE7GZ5EbKoix3qZREx6ctkcKpIsEYHPy6nCTzo+2KQm5pVXYUWV5CnOdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507700; c=relaxed/simple;
-	bh=NVHrzQirNXTACKnWLIa4LlEjR733JC8LqCJGpPtWoPs=;
+	s=arc-20240116; t=1729507703; c=relaxed/simple;
+	bh=fqE6frRUfi20neo0UgJRybSYe4aVceZfg3D4sFsgHgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=knDU/eu6owuArRfonB9sXNfD47us8GVDhx+YWhPZ3fHyS1/Pgf6sMJYuDUQof64J6vURv0sw5z7iXVeQPsHWyPHEwRbS05Afje8w5kaxisdoFmA8cdbN5ths6EMUSRMjcqdJWEfppm5ZRaZ6k4uODcqVAuRmdbXAlALvHtounVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8aHdZbi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AGxUBMSskByq8hV8NZANTeowFweTKWqA5YAB0iMxanTCn9ascxLPbQKRMZ1Nab1vd1QkNQ3dIi9UOSCAa9BToLXchpzDPKtpETN1DisXdYcJOQ91yKVJgfZ7YOAKotyZ6MzLlQBNswD/Y5N//vJG80hFobQhyPgaW5uREEmnkt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsLhMJNn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8aHdZbi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B474C4CEC7;
-	Mon, 21 Oct 2024 10:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsLhMJNn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C56C4CEC3;
+	Mon, 21 Oct 2024 10:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507699;
-	bh=NVHrzQirNXTACKnWLIa4LlEjR733JC8LqCJGpPtWoPs=;
+	s=korg; t=1729507702;
+	bh=fqE6frRUfi20neo0UgJRybSYe4aVceZfg3D4sFsgHgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g8aHdZbi5pYxYlgD7NOq9OTFZNYT0eGLJW0mvHYZdnI6wZ4gzKDAeoM3M41d5/VUD
-	 WvAWUZIEsqRWN+8AVPRSYJQ6wDeNOFanMDmdVFbvoC0DjUwmYjWr2BS0K2vA7N868m
-	 OAl3jonoHHP4jXBbwTf2rhdWs7SQeR7MCFSLdHrU=
+	b=FsLhMJNnORqzPiFuXRcTeBtIpqSKRMVhk5UlSbQL2fnOrJMv32XDWSebgMcvAVGzo
+	 RRJHjKOwx7glr1w2EfaDzs4TqBHnLOAESFUxBwhN1ZiEESy1qVyJapBPZ8ZF4Ei783
+	 lIUYCiWExd6Bs/P1mLgP+XPF5Y8/XvW5MSN9LgCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Matsievskiy <matsievskiysv@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.15 72/82] pinctrl: ocelot: fix system hang on level based interrupts
-Date: Mon, 21 Oct 2024 12:25:53 +0200
-Message-ID: <20241021102250.061402380@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Johannes Wikner <kwikner@ethz.ch>,
+	stable@kernel.org
+Subject: [PATCH 5.15 46/82] x86/bugs: Do not use UNTRAIN_RET with IBPB on entry
+Date: Mon, 21 Oct 2024 12:25:27 +0200
+Message-ID: <20241021102249.061179050@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102247.209765070@linuxfoundation.org>
 References: <20241021102247.209765070@linuxfoundation.org>
@@ -51,76 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Matsievskiy <matsievskiysv@gmail.com>
+From: Johannes Wikner <kwikner@ethz.ch>
 
-commit 93b8ddc54507a227087c60a0013ed833b6ae7d3c upstream.
+commit c62fa117c32bd1abed9304c58e0da6940f8c7fc2 upstream.
 
-The current implementation only calls chained_irq_enter() and
-chained_irq_exit() if it detects pending interrupts.
+Since X86_FEATURE_ENTRY_IBPB will invalidate all harmful predictions
+with IBPB, no software-based untraining of returns is needed anymore.
+Currently, this change affects retbleed and SRSO mitigations so if
+either of the mitigations is doing IBPB and the other one does the
+software sequence, the latter is not needed anymore.
 
-```
-for (i = 0; i < info->stride; i++) {
-	uregmap_read(info->map, id_reg + 4 * i, &reg);
-	if (!reg)
-		continue;
+  [ bp: Massage commit message. ]
 
-	chained_irq_enter(parent_chip, desc);
-```
-
-However, in case of GPIO pin configured in level mode and the parent
-controller configured in edge mode, GPIO interrupt might be lowered by the
-hardware. In the result, if the interrupt is short enough, the parent
-interrupt is still pending while the GPIO interrupt is cleared;
-chained_irq_enter() never gets called and the system hangs trying to
-service the parent interrupt.
-
-Moving chained_irq_enter() and chained_irq_exit() outside the for loop
-ensures that they are called even when GPIO interrupt is lowered by the
-hardware.
-
-The similar code with chained_irq_enter() / chained_irq_exit() functions
-wrapping interrupt checking loop may be found in many other drivers:
-```
-grep -r -A 10 chained_irq_enter drivers/pinctrl
-```
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Sergey Matsievskiy <matsievskiysv@gmail.com>
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/20241012105743.12450-2-matsievskiysv@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Johannes Wikner <kwikner@ethz.ch>
+Cc: <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-ocelot.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/bugs.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/pinctrl/pinctrl-ocelot.c
-+++ b/drivers/pinctrl/pinctrl-ocelot.c
-@@ -1279,21 +1279,21 @@ static void ocelot_irq_handler(struct ir
- 	unsigned int reg = 0, irq, i;
- 	unsigned long irqs;
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1092,6 +1092,15 @@ do_cmd_auto:
  
-+	chained_irq_enter(parent_chip, desc);
+ 	case RETBLEED_MITIGATION_IBPB:
+ 		setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
 +
- 	for (i = 0; i < info->stride; i++) {
- 		regmap_read(info->map, id_reg + 4 * i, &reg);
- 		if (!reg)
- 			continue;
- 
--		chained_irq_enter(parent_chip, desc);
--
- 		irqs = reg;
- 
- 		for_each_set_bit(irq, &irqs,
- 				 min(32U, info->desc->npins - 32 * i))
- 			generic_handle_domain_irq(chip->irq.domain, irq + 32 * i);
--
--		chained_irq_exit(parent_chip, desc);
- 	}
++		/*
++		 * IBPB on entry already obviates the need for
++		 * software-based untraining so clear those in case some
++		 * other mitigation like SRSO has selected them.
++		 */
++		setup_clear_cpu_cap(X86_FEATURE_UNRET);
++		setup_clear_cpu_cap(X86_FEATURE_RETHUNK);
 +
-+	chained_irq_exit(parent_chip, desc);
- }
+ 		mitigate_smt = true;
  
- static int ocelot_gpiochip_register(struct platform_device *pdev,
+ 		/*
+@@ -2599,6 +2608,14 @@ static void __init srso_select_mitigatio
+ 			if (has_microcode) {
+ 				setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
+ 				srso_mitigation = SRSO_MITIGATION_IBPB;
++
++				/*
++				 * IBPB on entry already obviates the need for
++				 * software-based untraining so clear those in case some
++				 * other mitigation like Retbleed has selected them.
++				 */
++				setup_clear_cpu_cap(X86_FEATURE_UNRET);
++				setup_clear_cpu_cap(X86_FEATURE_RETHUNK);
+ 			}
+ 		} else {
+ 			pr_err("WARNING: kernel not compiled with CPU_IBPB_ENTRY.\n");
 
 
