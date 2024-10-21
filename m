@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1164B194C62;
-	Mon, 21 Oct 2024 10:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 088091E47A5;
+	Mon, 21 Oct 2024 10:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506555; cv=none; b=Cj5VfjzTI1qVibCb6vq7hTPq0t8AAvAKzuzXBuD8w5TLER0Dfx9BvgrNV0ZVMccxCny0+7so7tUDZ9TMFeU2hUvSIpS4APelh2Kre7t98s9bMhc2kye5lnWMsv8TwNNl14Fy1P3d71J6CC4tUehvpJ8K+2MHuqike01tn1xMs3Y=
+	t=1729506558; cv=none; b=ls3KVZ3UeYFm4YonsSuOcCqg87dcDvslYeNBFmrBw/qSE8BaTlOfMbaoZbOyQmk2TIoQuiLOH36IlvSFIwt7FqOzTF2sM+brviVzH22r6p3ZOxXthMtQdKNIrMyZcBGfgWcBOVyZZnH0nWhocTvVSVqRt9TI6lPvFaUsRoK78mQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506555; c=relaxed/simple;
-	bh=3kL91nu/MEtOAEvqzJxhLoHDZhC+462+LNvkkPCBmJQ=;
+	s=arc-20240116; t=1729506558; c=relaxed/simple;
+	bh=exa/K0qNrI1Kd4zaI+GHeuRG7oq/xK5DbC9Ky6SPspE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hy56ks4dD2gMO33Dpuf7hDMZjL+SDCLHpVfvjMZUArccZPzzeDA9eBDE7SHFro399BBStlaIUUjhq8Bvge5ql4NyXsXePU25kz0NBQ/6PCUh7Es85RUFKD4fLeojZR25Qyut1sCTDJh+8+7zox2tbPndPxFq1MyZTFcYGpdepOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXGn+KUi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JG7LLrEobXhxoWCyE0LrVRzohY/6gvj8Tk2biGCWHPPZOtcKPMB7N86vywsEit5lWaWD7/YcjyfQvVo/x8zUiZRguB7YLIoUgDInPOa2UOAoew1ctUu6PQ9ORsNWSPm79Tb84B9EwNRQhYE9AyrWE1P8D7p/pO+tuqjPRumODiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Od8tMGa0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXGn+KUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858EBC4CEC3;
-	Mon, 21 Oct 2024 10:29:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Od8tMGa0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB5DC4CEE5;
+	Mon, 21 Oct 2024 10:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506554;
-	bh=3kL91nu/MEtOAEvqzJxhLoHDZhC+462+LNvkkPCBmJQ=;
+	s=korg; t=1729506557;
+	bh=exa/K0qNrI1Kd4zaI+GHeuRG7oq/xK5DbC9Ky6SPspE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hXGn+KUiM/QCzQxqK7YurRnYW4sjbkwdBli/+a+4jnlwJG9kZrfurOD6M3HD32W1B
-	 rKtjVLnr4KJtbLRpl8NPE4FE3bAyAixkoKd3fg4BGzpuNhgQ392XD6q0bmVxfw29Be
-	 LobsXuvZQ7P2yFgnCq1qNMKMPjJfiVdd4/jzbF5E=
+	b=Od8tMGa0Al10tueFO8gu17gZXH8zUX+lDjOQfdq14UTBCTSlLWUYcbPg/Nl2s4cCB
+	 RlDZtYKkDRD0e2rmju4imQmSiFJH4lKVmbXz+wMC7r+0ELt1++BWOeUOebIfRTpPjs
+	 bQPAiqQ221307Ya6D4jz+FTqhhjkqp1TO+XL8Y2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Todd Brandt <todd.e.brandt@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 6.11 036/135] iommu/vt-d: Fix incorrect pci_for_each_dma_alias() for non-PCI devices
-Date: Mon, 21 Oct 2024 12:23:12 +0200
-Message-ID: <20241021102300.746725711@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Johannes Wikner <kwikner@ethz.ch>,
+	stable@kernel.org
+Subject: [PATCH 6.11 045/135] x86/bugs: Do not use UNTRAIN_RET with IBPB on entry
+Date: Mon, 21 Oct 2024 12:23:21 +0200
+Message-ID: <20241021102301.095779501@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -51,43 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Johannes Wikner <kwikner@ethz.ch>
 
-commit 6e02a277f1db24fa039e23783c8921c7b0e5b1b3 upstream.
+commit c62fa117c32bd1abed9304c58e0da6940f8c7fc2 upstream.
 
-Previously, the domain_context_clear() function incorrectly called
-pci_for_each_dma_alias() to set up context entries for non-PCI devices.
-This could lead to kernel hangs or other unexpected behavior.
+Since X86_FEATURE_ENTRY_IBPB will invalidate all harmful predictions
+with IBPB, no software-based untraining of returns is needed anymore.
+Currently, this change affects retbleed and SRSO mitigations so if
+either of the mitigations is doing IBPB and the other one does the
+software sequence, the latter is not needed anymore.
 
-Add a check to only call pci_for_each_dma_alias() for PCI devices. For
-non-PCI devices, domain_context_clear_one() is called directly.
+  [ bp: Massage commit message. ]
 
-Reported-by: Todd Brandt <todd.e.brandt@intel.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219363
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219349
-Fixes: 9a16ab9d6402 ("iommu/vt-d: Make context clearing consistent with context mapping")
-Cc: stable@vger.kernel.org
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Link: https://lore.kernel.org/r/20241014013744.102197-2-baolu.lu@linux.intel.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Johannes Wikner <kwikner@ethz.ch>
+Cc: <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/iommu.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/bugs.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -3520,8 +3520,10 @@ static int domain_context_clear_one_cb(s
-  */
- static void domain_context_clear(struct device_domain_info *info)
- {
--	if (!dev_is_pci(info->dev))
-+	if (!dev_is_pci(info->dev)) {
- 		domain_context_clear_one(info, info->bus, info->devfn);
-+		return;
-+	}
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1113,6 +1113,15 @@ do_cmd_auto:
  
- 	pci_for_each_dma_alias(to_pci_dev(info->dev),
- 			       &domain_context_clear_one_cb, info);
+ 	case RETBLEED_MITIGATION_IBPB:
+ 		setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
++
++		/*
++		 * IBPB on entry already obviates the need for
++		 * software-based untraining so clear those in case some
++		 * other mitigation like SRSO has selected them.
++		 */
++		setup_clear_cpu_cap(X86_FEATURE_UNRET);
++		setup_clear_cpu_cap(X86_FEATURE_RETHUNK);
++
+ 		setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
+ 		mitigate_smt = true;
+ 
+@@ -2629,6 +2638,14 @@ static void __init srso_select_mitigatio
+ 			if (has_microcode) {
+ 				setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
+ 				srso_mitigation = SRSO_MITIGATION_IBPB;
++
++				/*
++				 * IBPB on entry already obviates the need for
++				 * software-based untraining so clear those in case some
++				 * other mitigation like Retbleed has selected them.
++				 */
++				setup_clear_cpu_cap(X86_FEATURE_UNRET);
++				setup_clear_cpu_cap(X86_FEATURE_RETHUNK);
+ 			}
+ 		} else {
+ 			pr_err("WARNING: kernel not compiled with MITIGATION_IBPB_ENTRY.\n");
 
 
