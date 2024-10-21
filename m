@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971DE1E3DF0;
-	Mon, 21 Oct 2024 10:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9486D1953B9;
+	Mon, 21 Oct 2024 10:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507412; cv=none; b=VHOj2RAZAHkqecC1JnQBwIH33YuomnhfxnOWNLn1HTnQLhUu5LH95TKZyNqkIS+2dQLOFKv7BBBM2eZXih+qb3fhpVGj02bdHvl8K9QSF3mWtMhq8xrYbwMV7HABzFe0RGM8dbOA2TFtZeUXXD+mEtNHeDMuy0NtkBts+laF6HU=
+	t=1729507415; cv=none; b=XNEvTlEl7+b+hdOPtP/8EFxR2vbtTRtO2tezQ/hfqukwjIH61Xy4Nv0lEYhgAm3m5duGWwvDWqVEpYu/PHjfpQH7TtSzBTU0DY7kp5SHzTeFi/ePOERZnpyqYkBVAF5ZQwhF24AvfLwqM1NElrosS1ATaGjPQo8gKyHkV34psEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507412; c=relaxed/simple;
-	bh=KY/HsPJjkCk2MYdX/RlEBwB3PUmQbPWX3T3KlqB+bw4=;
+	s=arc-20240116; t=1729507415; c=relaxed/simple;
+	bh=Od45SlU9CfuPWk5R65rmFsN1AfOfS8JHDrDDBJpTbUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emb3efsyyZ0ID5MDgSVKSghxZYjiOAuKEkY8WJ3g10VWIvlexu8g/0bH2UroCoXg1tXID4FMdWtkmzIl/JiGI7ODYq/3uNImHI4jJFt9mtMlGAZ7Secr/CMcNUonKND0weu7ve3lKeqLUIDD4kw4PtRUmOv8U9gqFpvn2oqtS54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wiZDmu6x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DoCNHP8EN2bsnbaknBFJuW44+BtL5/CwNCgMyikuQUoEDd8yGWXff2BwfMZQzo3b9CfNg0exMwxRL+P5vlG/dDrOg4t07nW7eqviUMbV0xYHmyH42Zvr5SGHfrKp0uR4GjaQzV/VrEAC6aDCAvdAedMDVtbkmlEjqF/SdVa5N48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbTIXFDi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wiZDmu6x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F46C4CEC3;
-	Mon, 21 Oct 2024 10:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbTIXFDi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 156FFC4CEC3;
+	Mon, 21 Oct 2024 10:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507412;
-	bh=KY/HsPJjkCk2MYdX/RlEBwB3PUmQbPWX3T3KlqB+bw4=;
+	s=korg; t=1729507415;
+	bh=Od45SlU9CfuPWk5R65rmFsN1AfOfS8JHDrDDBJpTbUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wiZDmu6xWjAv46WZJtDSI8AEhhTzE0RPUuZtoLwOhdgTjhfI7q+fxFiN0sl4bC/hC
-	 lsrjr/p0Or3jvG8y9cabBIIphS9q3M39Opjz4RdHyTivqgWGvQiuMZOyrnn/z254IM
-	 gZjAHwwY4hTsaiy5vMxTdrOXYuhPJwdibrZ/0bnY=
+	b=JbTIXFDiiEWCLZsFI2Qc1QSPKXLd3lnjcStzbtKYYQHa/KxP0kb72jg3QpjvvUOVQ
+	 QDG6dU7A5wDNVXxVeBP4zs1mjE5fwf/M75ByrHOTIgmvKBVupzkfHFlnJ3eIUjJUQe
+	 gsOopZoHs3sJgPA+cgugTeT6AJSZKow89OGElZZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Aaron Thompson <dev@aaront.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 69/91] Bluetooth: Remove debugfs directory on module init failure
-Date: Mon, 21 Oct 2024 12:25:23 +0200
-Message-ID: <20241021102252.513151651@linuxfoundation.org>
+Subject: [PATCH 6.1 70/91] Bluetooth: ISO: Fix multiple init when debugfs is disabled
+Date: Mon, 21 Oct 2024 12:25:24 +0200
+Message-ID: <20241021102252.552263720@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -52,72 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Aaron Thompson <dev@aaront.org>
 
-commit 1db4564f101b47188c1b71696bd342ef09172b22 upstream.
+commit a9b7b535ba192c6b77e6c15a4c82d853163eab8c upstream.
 
-If bt_init() fails, the debugfs directory currently is not removed. If
-the module is loaded again after that, the debugfs directory is not set
-up properly due to the existing directory.
+If bt_debugfs is not created successfully, which happens if either
+CONFIG_DEBUG_FS or CONFIG_DEBUG_FS_ALLOW_ALL is unset, then iso_init()
+returns early and does not set iso_inited to true. This means that a
+subsequent call to iso_init() will result in duplicate calls to
+proto_register(), bt_sock_register(), etc.
 
-  # modprobe bluetooth
-  # ls -laF /sys/kernel/debug/bluetooth
-  total 0
-  drwxr-xr-x  2 root root 0 Sep 27 14:26 ./
-  drwx------ 31 root root 0 Sep 27 14:25 ../
-  -r--r--r--  1 root root 0 Sep 27 14:26 l2cap
-  -r--r--r--  1 root root 0 Sep 27 14:26 sco
-  # modprobe -r bluetooth
-  # ls -laF /sys/kernel/debug/bluetooth
-  ls: cannot access '/sys/kernel/debug/bluetooth': No such file or directory
-  #
+With CONFIG_LIST_HARDENED and CONFIG_BUG_ON_DATA_CORRUPTION enabled, the
+duplicate call to proto_register() triggers this BUG():
 
-  # modprobe bluetooth
-  modprobe: ERROR: could not insert 'bluetooth': Invalid argument
-  # dmesg | tail -n 6
-  Bluetooth: Core ver 2.22
-  NET: Registered PF_BLUETOOTH protocol family
-  Bluetooth: HCI device and connection manager initialized
-  Bluetooth: HCI socket layer initialized
-  Bluetooth: Faking l2cap_init() failure for testing
-  NET: Unregistered PF_BLUETOOTH protocol family
-  # ls -laF /sys/kernel/debug/bluetooth
-  total 0
-  drwxr-xr-x  2 root root 0 Sep 27 14:31 ./
-  drwx------ 31 root root 0 Sep 27 14:26 ../
-  #
+  list_add double add: new=ffffffffc0b280d0, prev=ffffffffbab56250,
+    next=ffffffffc0b280d0.
+  ------------[ cut here ]------------
+  kernel BUG at lib/list_debug.c:35!
+  Oops: invalid opcode: 0000 [#1] PREEMPT SMP PTI
+  CPU: 2 PID: 887 Comm: bluetoothd Not tainted 6.10.11-1-ao-desktop #1
+  RIP: 0010:__list_add_valid_or_report+0x9a/0xa0
+  ...
+    __list_add_valid_or_report+0x9a/0xa0
+    proto_register+0x2b5/0x340
+    iso_init+0x23/0x150 [bluetooth]
+    set_iso_socket_func+0x68/0x1b0 [bluetooth]
+    kmem_cache_free+0x308/0x330
+    hci_sock_sendmsg+0x990/0x9e0 [bluetooth]
+    __sock_sendmsg+0x7b/0x80
+    sock_write_iter+0x9a/0x110
+    do_iter_readv_writev+0x11d/0x220
+    vfs_writev+0x180/0x3e0
+    do_writev+0xca/0x100
+  ...
 
-  # modprobe bluetooth
-  # dmesg | tail -n 7
-  Bluetooth: Core ver 2.22
-  debugfs: Directory 'bluetooth' with parent '/' already present!
-  NET: Registered PF_BLUETOOTH protocol family
-  Bluetooth: HCI device and connection manager initialized
-  Bluetooth: HCI socket layer initialized
-  Bluetooth: L2CAP socket layer initialized
-  Bluetooth: SCO socket layer initialized
-  # ls -laF /sys/kernel/debug/bluetooth
-  total 0
-  drwxr-xr-x  2 root root 0 Sep 27 14:31 ./
-  drwx------ 31 root root 0 Sep 27 14:26 ../
-  #
+This change removes the early return. The check for iso_debugfs being
+NULL was unnecessary, it is always NULL when iso_inited is false.
 
 Cc: stable@vger.kernel.org
-Fixes: ffcecac6a738 ("Bluetooth: Create root debugfs directory during module init")
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
 Signed-off-by: Aaron Thompson <dev@aaront.org>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/af_bluetooth.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/iso.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/net/bluetooth/af_bluetooth.c
-+++ b/net/bluetooth/af_bluetooth.c
-@@ -797,6 +797,7 @@ cleanup_sysfs:
- 	bt_sysfs_cleanup();
- cleanup_led:
- 	bt_leds_cleanup();
-+	debugfs_remove_recursive(bt_debugfs);
- 	return err;
- }
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1837,13 +1837,9 @@ int iso_init(void)
+ 
+ 	hci_register_cb(&iso_cb);
+ 
+-	if (IS_ERR_OR_NULL(bt_debugfs))
+-		return 0;
+-
+-	if (!iso_debugfs) {
++	if (!IS_ERR_OR_NULL(bt_debugfs))
+ 		iso_debugfs = debugfs_create_file("iso", 0444, bt_debugfs,
+ 						  NULL, &iso_debugfs_fops);
+-	}
+ 
+ 	iso_inited = true;
  
 
 
