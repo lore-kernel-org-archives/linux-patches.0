@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA031EE02C;
-	Mon, 21 Oct 2024 10:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4006F1EF091;
+	Mon, 21 Oct 2024 10:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507837; cv=none; b=AQbu16NYyo81L6qX70q5vC9H+KjUuji87sSkJNTYEwI44P6SvrSbRKEAxQsBEeXuYdS6YBipEwZNQ5XoMD8IhbsqcHaCtxKxG4ONaSh16NpqV1FiX/3/70GIVCCdCxBDbsLnUHWeyhgoF18Llmlfvwf6tQ0tyjCBRsKhU7ciWYc=
+	t=1729507840; cv=none; b=gt1mn6lSQWPTii2gSIO2xjFvYD/Hagy+Kt+01OYNakTrIHj7SRP7r7k8xr91a5+IT8tcfZngXo7SGxyC1kM3bRYRZx5CoMOvjwrYW4oridYTDWTBj6ZhNiR69n4X0dxt4653IOUanAr/PG868EOypC1zZbtNXJSlWqCZ18sAYvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507837; c=relaxed/simple;
-	bh=d136ZY8EkZ07cIJhbeXLaZQB0y9WThvSe1gjGtU8MOA=;
+	s=arc-20240116; t=1729507840; c=relaxed/simple;
+	bh=aEmFST2CWcRL2eirjNZXmhOCTxB0v6h6CFgm/sOHmo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rWWBnd/8zsiDEEi0a2Y0zkTHSYvnN3KHMJTtVysqhATkbrF1hLVuUKu3PcWvMJBB8Ij56JBdcwjefWpPANpjt1d4Pu9Af3+ifxnLyFFEvWTDgFX1Q3NVfLDS0niaZ9hQLymPq8AeGJ23HA9ib4TXtdXlnFkkt0U7OV9ZVklRG9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MetrnFtQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=U19wloP5DKHmrUeSx+ciKodkxodWGgNxPYooU3eOZXQUCIAMKTgobe8s3KzYe93HI5y9SmTm+8eLl7BhOA/rkjy9Nt1laJE2tDyh944TF6OloxMiNsVCoWKxCwVsztC3wm3nsY9W5GbbLVtuaxsnKxk1u32V3Ny69Nd51voKE58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpDDUVXT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MetrnFtQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32F2C4CEC3;
-	Mon, 21 Oct 2024 10:50:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpDDUVXT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3390C4CEC3;
+	Mon, 21 Oct 2024 10:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507837;
-	bh=d136ZY8EkZ07cIJhbeXLaZQB0y9WThvSe1gjGtU8MOA=;
+	s=korg; t=1729507840;
+	bh=aEmFST2CWcRL2eirjNZXmhOCTxB0v6h6CFgm/sOHmo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MetrnFtQoHNpYyeO9rV0XM1ijMutWSC55h9+ZYWm/D02FmZ/HQOCG/BYnrt8PgOPt
-	 yXnHxbP1Rx9H7hOSZX2vfidH8633/DuyJP8C0yaZppfirrAFD8OXPb606XN9dXC7/L
-	 AqCfCWz+UDJvovFYpYYJi9s+loQ9UgCGqW/OdrEc=
+	b=xpDDUVXTyP1u/QjgQ54JGFJUXc5mzeC/oc7irQRl2U/xRObezRDr7KpxSgHzWWdOW
+	 xgrcaNupTDsQvLdzXhetDsRD9WNlbs4Crind6gKy1NgAKKVqK6/NkgacElj2POGYbs
+	 zWGfmGk6bBvwZc4/+KLtTykS01BjXqNGv9HZSWXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Thompson <dev@aaront.org>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 5.10 36/52] Bluetooth: Remove debugfs directory on module init failure
-Date: Mon, 21 Oct 2024 12:25:57 +0200
-Message-ID: <20241021102243.040326193@linuxfoundation.org>
+Subject: [PATCH 5.10 37/52] Bluetooth: btusb: Fix regression with fake CSR controllers 0a12:0001
+Date: Mon, 21 Oct 2024 12:25:58 +0200
+Message-ID: <20241021102243.077841354@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102241.624153108@linuxfoundation.org>
 References: <20241021102241.624153108@linuxfoundation.org>
@@ -44,80 +43,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aaron Thompson <dev@aaront.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 1db4564f101b47188c1b71696bd342ef09172b22 upstream.
+commit 2c1dda2acc4192d826e84008d963b528e24d12bc upstream.
 
-If bt_init() fails, the debugfs directory currently is not removed. If
-the module is loaded again after that, the debugfs directory is not set
-up properly due to the existing directory.
+Fake CSR controllers don't seem to handle short-transfer properly which
+cause command to time out:
 
-  # modprobe bluetooth
-  # ls -laF /sys/kernel/debug/bluetooth
-  total 0
-  drwxr-xr-x  2 root root 0 Sep 27 14:26 ./
-  drwx------ 31 root root 0 Sep 27 14:25 ../
-  -r--r--r--  1 root root 0 Sep 27 14:26 l2cap
-  -r--r--r--  1 root root 0 Sep 27 14:26 sco
-  # modprobe -r bluetooth
-  # ls -laF /sys/kernel/debug/bluetooth
-  ls: cannot access '/sys/kernel/debug/bluetooth': No such file or directory
-  #
+kernel: usb 1-1: new full-speed USB device number 19 using xhci_hcd
+kernel: usb 1-1: New USB device found, idVendor=0a12, idProduct=0001, bcdDevice=88.91
+kernel: usb 1-1: New USB device strings: Mfr=0, Product=2, SerialNumber=0
+kernel: usb 1-1: Product: BT DONGLE10
+...
+Bluetooth: hci1: Opcode 0x1004 failed: -110
+kernel: Bluetooth: hci1: command 0x1004 tx timeout
 
-  # modprobe bluetooth
-  modprobe: ERROR: could not insert 'bluetooth': Invalid argument
-  # dmesg | tail -n 6
-  Bluetooth: Core ver 2.22
-  NET: Registered PF_BLUETOOTH protocol family
-  Bluetooth: HCI device and connection manager initialized
-  Bluetooth: HCI socket layer initialized
-  Bluetooth: Faking l2cap_init() failure for testing
-  NET: Unregistered PF_BLUETOOTH protocol family
-  # ls -laF /sys/kernel/debug/bluetooth
-  total 0
-  drwxr-xr-x  2 root root 0 Sep 27 14:31 ./
-  drwx------ 31 root root 0 Sep 27 14:26 ../
-  #
+According to USB Spec 2.0 Section 5.7.3 Interrupt Transfer Packet Size
+Constraints a interrupt transfer is considered complete when the size is 0
+(ZPL) or < wMaxPacketSize:
 
-  # modprobe bluetooth
-  # dmesg | tail -n 7
-  Bluetooth: Core ver 2.22
-  debugfs: Directory 'bluetooth' with parent '/' already present!
-  NET: Registered PF_BLUETOOTH protocol family
-  Bluetooth: HCI device and connection manager initialized
-  Bluetooth: HCI socket layer initialized
-  Bluetooth: L2CAP socket layer initialized
-  Bluetooth: SCO socket layer initialized
-  # ls -laF /sys/kernel/debug/bluetooth
-  total 0
-  drwxr-xr-x  2 root root 0 Sep 27 14:31 ./
-  drwx------ 31 root root 0 Sep 27 14:26 ../
-  #
+ 'When an interrupt transfer involves more data than can fit in one
+ data payload of the currently established maximum size, all data
+ payloads are required to be maximum-sized except for the last data
+ payload, which will contain the remaining data. An interrupt transfer
+ is complete when the endpoint does one of the following:
 
-Cc: stable@vger.kernel.org
-Fixes: ffcecac6a738 ("Bluetooth: Create root debugfs directory during module init")
-Signed-off-by: Aaron Thompson <dev@aaront.org>
+ • Has transferred exactly the amount of data expected
+ • Transfers a packet with a payload size less than wMaxPacketSize or
+ transfers a zero-length packet'
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219365
+Fixes: 7b05933340f4 ("Bluetooth: btusb: Fix not handling ZPL/short-transfer")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/af_bluetooth.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btusb.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/net/bluetooth/af_bluetooth.c
-+++ b/net/bluetooth/af_bluetooth.c
-@@ -779,6 +779,7 @@ cleanup_sysfs:
- 	bt_sysfs_cleanup();
- cleanup_led:
- 	bt_leds_cleanup();
-+	debugfs_remove_recursive(bt_debugfs);
- 	return err;
- }
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -928,10 +928,15 @@ static int btusb_submit_intr_urb(struct
+ 	if (!urb)
+ 		return -ENOMEM;
  
+-	/* Use maximum HCI Event size so the USB stack handles
+-	 * ZPL/short-transfer automatically.
+-	 */
+-	size = HCI_MAX_EVENT_SIZE;
++	if (le16_to_cpu(data->udev->descriptor.idVendor)  == 0x0a12 &&
++	    le16_to_cpu(data->udev->descriptor.idProduct) == 0x0001)
++		/* Fake CSR devices don't seem to support sort-transter */
++		size = le16_to_cpu(data->intr_ep->wMaxPacketSize);
++	else
++		/* Use maximum HCI Event size so the USB stack handles
++		 * ZPL/short-transfer automatically.
++		 */
++		size = HCI_MAX_EVENT_SIZE;
+ 
+ 	buf = kmalloc(size, mem_flags);
+ 	if (!buf) {
 
 
