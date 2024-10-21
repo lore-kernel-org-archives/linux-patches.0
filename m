@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695DC1E0087;
-	Mon, 21 Oct 2024 10:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591581E0087;
+	Mon, 21 Oct 2024 10:40:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507213; cv=none; b=RmxZEAfE/wzyvQhD0AFyTaUHt+OGf+rGLYYkh20kAHfV0c9q8XS5AtMYZrzi0FI0uq96j10UuHbmetGMwVoBiFz0YRM3w/e2aqU+hMEBsv3z1kEqcIiCeWxRJ/tI4MzKLwJrlnDye1nCtj3ExU69Deu/YVfkDH26loX5bJ4Xp3o=
+	t=1729507216; cv=none; b=fCv+xHyR9NWr0d6IDaZk2FVzdBWbqt38I0LD8i4BxYCz5leF379OuOALjFN8MuXSEkPyZJYsdfG89NcLYGF59udOp2Aaet82poOffX4XwmpenODTnv9z5cIgFws779c8jxqcZYoEJJso01Cy34cJ3B9p2LDPQC1DRPOyvOkBiBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507213; c=relaxed/simple;
-	bh=X2Ucz9aAFKJd4GKGoYGT8eA0CQPKDiREEe6OA6kMnEQ=;
+	s=arc-20240116; t=1729507216; c=relaxed/simple;
+	bh=Efrk8ivpdQgvHFnCPkW+LkAkjUjlFSUJPhbEefwOg6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pHIVIePOBu6/fKQcG2Ay8twEdU74bgknUk+Xt7a4ddm4/zbrXvtS8m4W5ERauZNHRiztaJbN/QWbUkuUpm6qQnlac2tUyJX/X3qzso/2Rbgy1lElOPpB7e4IJxKUlPqFaAGR0FgtvIPS7oS1WLiBUJyN6nYs00yFy/DsMQxYy+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hE+5Q+H5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bs1dlQSs0YWvqF+vhzITR93txw9I+8hwlqiom7TnAiz+9/xbiegQ/itex5gC8YJIJtVBeDjFkp5LrwjVQ5fpSFpRFmsBhpF/pcdXET9BuLQDdKGflubbz857haFhx6jxXnjdo+C8mDlilK09Fs8pY/t+pqe4kXM+/hPqXjCHKSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrFjEae3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hE+5Q+H5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCE7C4CEC3;
-	Mon, 21 Oct 2024 10:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrFjEae3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1B4C4CEC3;
+	Mon, 21 Oct 2024 10:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507213;
-	bh=X2Ucz9aAFKJd4GKGoYGT8eA0CQPKDiREEe6OA6kMnEQ=;
+	s=korg; t=1729507216;
+	bh=Efrk8ivpdQgvHFnCPkW+LkAkjUjlFSUJPhbEefwOg6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hE+5Q+H50kJnq54rbno+iCdrH2cz0y1fUCRUlO3JJ5aCtimaHW5uSzERdWGTP6cGr
-	 bSjuEEUFkh08zEZghbZJ7VdA8PTmm1bFqOW4n87nb01Q6Se+WnCquDIPM0w/c7XGOL
-	 Y4P3/K58hdk5WnUjKaCYf3alUdjlQ78OZ+5Ps0CQ=
+	b=DrFjEae3uw7lVDp5aKrdV0vm14LNgjS2LpJRWUCaecYhj0I8+xWRawc6MMeRCoZLa
+	 /26JQ+c/LgyM86VnaYY1Liaclnu8d+36mlwa5MH9wT5OrNZLRqqL2Y47w9wRLxCRDE
+	 Dol50iRSIqyni21xpqirrLHwukeAOn1v8AVTiTc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 096/124] USB: serial: option: add Telit FN920C04 MBIM compositions
-Date: Mon, 21 Oct 2024 12:25:00 +0200
-Message-ID: <20241021102300.437357436@linuxfoundation.org>
+	Aaron Thompson <dev@aaront.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 087/124] Bluetooth: Call iso_exit() on module unload
+Date: Mon, 21 Oct 2024 12:24:51 +0200
+Message-ID: <20241021102300.094930548@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -50,114 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Aaron Thompson <dev@aaront.org>
 
-commit 6d951576ee16430822a8dee1e5c54d160e1de87d upstream.
+commit d458cd1221e9e56da3b2cc5518ad3225caa91f20 upstream.
 
-Add the following Telit FN920C04 compositions:
+If iso_init() has been called, iso_exit() must be called on module
+unload. Without that, the struct proto that iso_init() registered with
+proto_register() becomes invalid, which could cause unpredictable
+problems later. In my case, with CONFIG_LIST_HARDENED and
+CONFIG_BUG_ON_DATA_CORRUPTION enabled, loading the module again usually
+triggers this BUG():
 
-0x10a2: MBIM + tty (AT/NMEA) + tty (AT) + tty (diag)
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 17 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a2 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+  list_add corruption. next->prev should be prev (ffffffffb5355fd0),
+    but was 0000000000000068. (next=ffffffffc0a010d0).
+  ------------[ cut here ]------------
+  kernel BUG at lib/list_debug.c:29!
+  Oops: invalid opcode: 0000 [#1] PREEMPT SMP PTI
+  CPU: 1 PID: 4159 Comm: modprobe Not tainted 6.10.11-4+bt2-ao-desktop #1
+  RIP: 0010:__list_add_valid_or_report+0x61/0xa0
+  ...
+    __list_add_valid_or_report+0x61/0xa0
+    proto_register+0x299/0x320
+    hci_sock_init+0x16/0xc0 [bluetooth]
+    bt_init+0x68/0xd0 [bluetooth]
+    __pfx_bt_init+0x10/0x10 [bluetooth]
+    do_one_initcall+0x80/0x2f0
+    do_init_module+0x8b/0x230
+    __do_sys_init_module+0x15f/0x190
+    do_syscall_64+0x68/0x110
+  ...
 
-0x10a7: MBIM + tty (AT) + tty (AT) + tty (diag)
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 18 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a7 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x10aa: MBIM + tty (AT) + tty (diag) + DPL (data packet logging) + adb
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 15 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10aa Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 6 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
+Signed-off-by: Aaron Thompson <dev@aaront.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ net/bluetooth/af_bluetooth.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1382,10 +1382,16 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(0) | RSVD(1) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a0, 0xff),	/* Telit FN20C04 (rmnet) */
- 	  .driver_info = RSVD(0) | NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a2, 0xff),	/* Telit FN920C04 (MBIM) */
-+	  .driver_info = NCTRL(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a4, 0xff),	/* Telit FN20C04 (rmnet) */
- 	  .driver_info = RSVD(0) | NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a7, 0xff),	/* Telit FN920C04 (MBIM) */
-+	  .driver_info = NCTRL(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a9, 0xff),	/* Telit FN20C04 (rmnet) */
- 	  .driver_info = RSVD(0) | NCTRL(2) | RSVD(3) | RSVD(4) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10aa, 0xff),	/* Telit FN920C04 (MBIM) */
-+	  .driver_info = NCTRL(3) | RSVD(4) | RSVD(5) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910),
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(3) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910_DUAL_MODEM),
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -830,6 +830,8 @@ cleanup_led:
+ 
+ static void __exit bt_exit(void)
+ {
++	iso_exit();
++
+ 	mgmt_exit();
+ 
+ 	sco_exit();
 
 
