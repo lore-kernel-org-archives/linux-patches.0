@@ -1,131 +1,101 @@
-Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE6B1EEE0
-	for <patches@lists.linux.dev>; Mon, 21 Oct 2024 20:09:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A431E0DE9
+	for <patches@lists.linux.dev>; Mon, 21 Oct 2024 22:29:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729541355; cv=none; b=Um9ZRKGUeglSQ3OycDpQBGSioqZESTF1LG9Q91vF9fb7Z4nETpWFzZPYKrQRJHVR4c62Qeg3L77Gep7QR81rhDM+FKPw53GzAjuwxfQ8sdM8ucHoda/zP4F2aKpHWEK4N7pC2My8Tabu10l8VhlmQ3d7I53zgG2hwclrtqlCKqw=
+	t=1729549760; cv=none; b=sKuMOL4jXU//Y+ht0Lv/9EFOC+YOFkeWpCJF2Gar0t8aRezPcd1l01fVcUrTeY64Rvj2Tqsx5n+jpILrdhqm/fT55lIumcbvMF3ibl/4LhO+dqpt5I1Okgmlpa6A1TwhYwnNytnWFaSZM7m2Rn/cjXZNMBBka12sTXGfPsWEmUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729541355; c=relaxed/simple;
-	bh=I6t9p1EaDfvb/Eliq/u4F2cQjKpPa4rONmqDu33+ZwQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ka2JkPvrQlV/MOeSoRSajXxQb7W4wYYX3lJUmFCNenM6/vrJr9qhi4JgrNvEcKH3C4dGjvYdi7rBlkqvvUkMFlycSuUVwGzje39tGmwtWXWtLe/NpboePILM5gAC3f3UZ1mcotogrl3j78HBEbjckcJFmoV7S+tnVAL7mmW4kbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KLPO9u9T; arc=none smtp.client-ip=209.85.221.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1729549760; c=relaxed/simple;
+	bh=DK5cAoaLipLQJ1Qq11dmR38yV4BdPfJO6Co5qz6yZms=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tNzxMY85XnJ31G7BhBCRaxcyzHUwUetfyfTw3FIm7VGWpfT7V0/l894R65O4+ayZqhvD196aSIr4L//VxZ51F8keDJRx02zCu4Dtc+8LpELSsV4y/q0Id3YTepeKUyVsoNYhNwpt6izG34Zt/wHNiUAGkfOvCOE9kl2kRHo/5+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=anRawg9E; arc=none smtp.client-ip=209.85.166.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KLPO9u9T"
-Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-50d399891d6so1225002e0c.1
-        for <patches@lists.linux.dev>; Mon, 21 Oct 2024 13:09:14 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="anRawg9E"
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-8377fd760b0so198035339f.2
+        for <patches@lists.linux.dev>; Mon, 21 Oct 2024 15:29:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729541353; x=1730146153; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=X7UfXJmHqQAN/EECC23EYEuOCLTpAVln9L8WakW7sCk=;
-        b=KLPO9u9T4oINwl7ciypkM2tLcO0rNtrFljQpjSV+NdSPVTPF/nG2KthFp1ANwPaUKM
-         choVEqHqTwIszZJW6bvlmpAztU8DrMEy7Q1NcRZW1jgaAfQWFLlIAzV2tPJRpldZNhhE
-         xJ1r4JDs/aNtzmF8SFFeEq7LfJwcax3xBD8yNez77vRALJh6JE+k1LcdThcan9OEY0ZL
-         Nh/FM3JgN6AeAPmHjQme/lJbNtrBm6FayscQKTEspFd9peqzCnOzLYeq3cxYtg+QEW4f
-         hrKZOx0eEyfjJmivUIuQanvrroL+C/b+AuTooCu8vrF8X9mgkvKdYQ1GfuAcUZqgwaTf
-         W0Ww==
+        d=linuxfoundation.org; s=google; t=1729549757; x=1730154557; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TA4XM5hTiGNOd+KQ3u3JDVeWEwmpgPZoFJVi0gICoWw=;
+        b=anRawg9EHNmIBpNbhPWAIaZiA/6zW1hZyUiAzn1CikhXPUioP2GTv+vZ3PKotuu0f0
+         bF0nKD6+gm+nYH30kER5sPnltYWqK1FoUFzW9DkkrZfhkJAtiyo86TJ6i7HOI8e54f8w
+         5uqS2XljBYVyHaofaWc/OTYK4+N4QB9RoC/OA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729541353; x=1730146153;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=X7UfXJmHqQAN/EECC23EYEuOCLTpAVln9L8WakW7sCk=;
-        b=kDW7EtNF9IGHyLb6Q0bjDwzlqqfyhOCrfPYie7wm31L+WFYicDs3PGvuilyK1grJh0
-         sKezRprVjnSnR3MhcRYHFdW7rJvRX4Zh6eOhlvtBU0raXSzXhO0N5CV3KdWdRelMabQC
-         pDK+j9zi900ag+zoiudGV/+FEVl2x7r9dTBs2qAO8WlJaM6ojI0rE5vUKkPApu9OULfM
-         WT/5UlhdLsa8AFAZbizgVeCJFoIMjn9oFOPyS/kG61fjRiJa/WJQ0i1LOfTrpJ4QFN6e
-         oK2qYPzKRa7JJ+a3b+yTD+Ca4yGa/GaX79u7lD+3jZDpiGGz10yqkkwDlgMPtzzf8Ahg
-         pN9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUjQx1dh3pLxhsHjZNfHY3ztjGkwV8eLuaI3qaZwrNNCgVgkXPfdbkHpdaVCB8x1eQt5fpBFTl/@lists.linux.dev
-X-Gm-Message-State: AOJu0YwrwL5oZ5kOtnok3ftXbIdniX3MGm1TX7sWfQ8t29GCEQ7O3iL+
-	hNknDWwcb/gJzCpr9Z1GXxIxNbm0Ft27Ym66OAwdkQoit6o5zrqaSjzbUpLOAM27Mu9IQkQp1Du
-	Yu1ZgUnmrQiRSJmFZaJfzDBvTZQw9w5cVcpBqiQ==
-X-Google-Smtp-Source: AGHT+IHOy4P9Q03evxUVUvw+iLlP+PcSvEmnXr9naHrpQxbtIPqDsLLua0p6Q8JDW2ufPcobKza/hdFknJsTy785kG4=
-X-Received: by 2002:a05:6122:179a:b0:50a:b5a3:e00c with SMTP id
- 71dfb90a1353d-50dda180bdemr8605836e0c.1.1729541352168; Mon, 21 Oct 2024
- 13:09:12 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729549757; x=1730154557;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TA4XM5hTiGNOd+KQ3u3JDVeWEwmpgPZoFJVi0gICoWw=;
+        b=EzrMEmnxOh5ONOPztOjlrFzDfNkE356jUetdDIh319X+QT9lt1ab6lFlQQ7AZCPknB
+         Y/TuKc+Lq0hCqnjLtQx18lH7LADwt8p2XmxZm7rBBwqq6k1nE8a2rPzGPyLzprGle6xs
+         5AxNQuBsXV/uOOBgo6J+DtS8utL/UW99ZatkEtV7QAlYp/kUn4QcBhlt/Cjv5Co69xO0
+         s8jGsZ46CwWrNYPJvuakUD4j9cEQ7O8LcuINJ5z+Q2gwhgrbB49UkOy6Ldl7TrHoqW3j
+         os8BvfdpBLK/sPBylPRBoqkVmaFInKK7eXuRPsyojVuxSzHL+dDNvSVh5KAJ3G0g8wFB
+         BEzA==
+X-Gm-Message-State: AOJu0Yyw1dYtFczsv7hvl7ouY2i8FeX3I5NC7QoQcLfJw6jxf3Cjlv3j
+	aPmou+lp6yMUXSF4VJX9IH3wBw5eVVKPg1Bih4ymb+C2p8Bx2O105qmsNQDoht0=
+X-Google-Smtp-Source: AGHT+IE+r2Sv2Vi8956gLES8UxPVDLR8WmGuc8PVr3WktKjFjqRF4T4ZtzxG0LU9kkxugixlftUMTA==
+X-Received: by 2002:a05:6602:6d16:b0:835:4d27:edf6 with SMTP id ca18e2360f4ac-83aba5f2764mr1039351939f.7.1729549757368;
+        Mon, 21 Oct 2024 15:29:17 -0700 (PDT)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4dc2a60947bsm1235916173.116.2024.10.21.15.29.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Oct 2024 15:29:16 -0700 (PDT)
+Message-ID: <6049fc80-b936-496b-b1d0-134de9fc19dc@linuxfoundation.org>
+Date: Mon, 21 Oct 2024 16:29:15 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241021102249.791942892@linuxfoundation.org>
-In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 22 Oct 2024 01:38:59 +0530
-Message-ID: <CA+G9fYtXZfLYbFFpj25GqFRbX5mVQvLSoafM1pT7Xff6HRMeaA@mail.gmail.com>
-Subject: Re: [PATCH 6.1 00/91] 6.1.114-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org, Jan Kara <jack@suse.cz>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.11 000/135] 6.11.5-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20241021102259.324175287@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, 21 Oct 2024 at 16:11, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.1.114 release.
-> There are 91 patches in this series, all will be posted as a response
+On 10/21/24 04:22, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.11.5 release.
+> There are 135 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Wed, 23 Oct 2024 10:22:25 +0000.
 > Anything received after that time might be too late.
->
+> 
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.114-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.11.5-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
 > and the diffstat can be found below.
->
+> 
 > thanks,
->
+> 
 > greg k-h
+> 
 
-The arm allmodconfig build failed due to following warnings / errors with
-toolchain clang-19.
-For all other 32-bit arch builds it is noticed as a warning.
+Compiled and booted on my test system. No dmesg regressions.
 
-* arm, build
-  - clang-19-allmodconfig
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-Build warning / error:
------------
-fs/udf/namei.c:747:12: error: stack frame size (1560) exceeds limit
-(1280) in 'udf_rename' [-Werror,-Wframe-larger-than]
-  747 | static int udf_rename(struct user_namespace *mnt_userns,
-struct inode *old_dir,
-      |            ^
-1 error generated.
-
-Links,
----
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.113-92-g6a7f9259c323/testrun/25501845/suite/build/test/clang-19-allmodconfig/details/
- - https://storage.tuxsuite.com/public/linaro/lkft/builds/2nkFE9BnBhh1xegvL7gVqMnXz2x/
-
-metadata:
----
-git_describe: v6.1.113-92-g6a7f9259c323
-git_repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-git_sha: 6a7f9259c323c90fd1384904b8d547666568a716
-config: https://storage.tuxsuite.com/public/linaro/lkft/builds/2nkFE9BnBhh1xegvL7gVqMnXz2x/config
-download_url: https://storage.tuxsuite.com/public/linaro/lkft/builds/2nkFE9BnBhh1xegvL7gVqMnXz2x/
-toolchain: clang-19
-arch: arm
-config: allmodconfig
-
---
-Linaro LKFT
-https://lkft.linaro.org
+thanks,
+-- Shuah
