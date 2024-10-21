@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297651E3784;
-	Mon, 21 Oct 2024 10:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB701E3784;
+	Mon, 21 Oct 2024 10:28:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506486; cv=none; b=GvREGXphctComNJ1aRFWqjccx5DqBsHwAA16jmuCk1Vo6SUZ5/Dsc54cT2iqyzhPFXsrSZa2mShj6rW0+mhp6HNQM6UkOotNJMcxlCrZPhHRIA9is4Dyc26A8AJwa+loBCqyrc4hprPTMbXhbEfcW0Ngv9VmBh16umpA/pn9yu8=
+	t=1729506489; cv=none; b=I0LLj6+3wl25FI+BT02fN/tO3PDUEdJVUNHd4vjb/eKrnShmO6HpdJ78F2R/DQmpRLF5r0Tz2PwITOn6v5C5+79bThtEPfWWZVnT4El7Ub8JJWFJKyRUwr1jRthWwKjokcljobzb7QLHNivwUMfb3I3aRaVexOmd2aOXWg+lkYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506486; c=relaxed/simple;
-	bh=2x3yuVb13vSCfLGDR0nRmDWBr/BeDlOPrpyGiVa+/CU=;
+	s=arc-20240116; t=1729506489; c=relaxed/simple;
+	bh=iIut6emIyplfQyEQhfoCKUsxOeqp2unBldDMHPbBp9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IXz02G26ctJMbmORZD2WFEQouMNB38pj9EeceUqDOXTUT4pc9TunVmUqoypmtQ26HmiZI7/bvmD+JwgxCgHpb5qDtbU4LxEmHj00CgoNiq7/6dnPIDXTybyM1ViijjaCbNg0pzHMGfN86P29O9Tc1rvMIVG7ljG+9ekvRlxGGOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRChsH5Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XG6zHqa18Z/1R+LJH4fwsNNobRINjQuefTPVmcbReXLD+Dx92+HU1mOYN84BJF/z5b4KbFn92Who7dN/6Rylv2H4SqauTgNcgk6jW7NhDiNvgGUr0n+H4crOE8z2iZJy+WLf0L6pv1e75rWln0+SbhU20tAZuGF5xrxbQbRvzdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebNGEYdo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRChsH5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D355C4CEC3;
-	Mon, 21 Oct 2024 10:28:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebNGEYdo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DB84C4CEC3;
+	Mon, 21 Oct 2024 10:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506486;
-	bh=2x3yuVb13vSCfLGDR0nRmDWBr/BeDlOPrpyGiVa+/CU=;
+	s=korg; t=1729506489;
+	bh=iIut6emIyplfQyEQhfoCKUsxOeqp2unBldDMHPbBp9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KRChsH5QG+FV/glG6KsF7Y7jSZXAytzFnMA8/sg0iz/DSrgBNvvvDIQSDvZ4jfJ0I
-	 RA5Fizn0WMdsJEIxncQ41QNE8oba4Ij2XCU/rVn3Rbv3l3xJjK335D6MOsziJmi6lc
-	 CCIzE5g1TU7v564P4e0n6Q+Jw3CgEDEJZSy1vNgY=
+	b=ebNGEYdoHx4dd9XJxXbPY7L9DyNDIyk7mHMwGo4keDTm5QZ8Da2xEzdLue8OqnUBK
+	 4DjVkQ2A2vLm7QnLJkw06ohsvRzAn+VXaMIGkRT6vnhKypbrW8gMmUtOuxTRU2oHh7
+	 vmqcyCokEz9HfZ7W9Rde8IFkFLIVGsCCKiv9JM6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.11 003/135] ksmbd: fix user-after-free from session log off
-Date: Mon, 21 Oct 2024 12:22:39 +0200
-Message-ID: <20241021102259.465829303@linuxfoundation.org>
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Bert Karwatzki <spasswolf@web.de>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.11 021/135] maple_tree: correct tree corruption on spanning store
+Date: Mon, 21 Oct 2024 12:22:57 +0200
+Message-ID: <20241021102300.168889598@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -51,151 +57,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit 7aa8804c0b67b3cb263a472d17f2cb50d7f1a930 upstream.
+commit bea07fd63192b61209d48cbb81ef474cc3ee4c62 upstream.
 
-There is racy issue between smb2 session log off and smb2 session setup.
-It will cause user-after-free from session log off.
-This add session_lock when setting SMB2_SESSION_EXPIRED and referece
-count to session struct not to free session while it is being used.
+Patch series "maple_tree: correct tree corruption on spanning store", v3.
 
-Cc: stable@vger.kernel.org # v5.15+
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-25282
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+There has been a nasty yet subtle maple tree corruption bug that appears
+to have been in existence since the inception of the algorithm.
+
+This bug seems far more likely to happen since commit f8d112a4e657
+("mm/mmap: avoid zeroing vma tree in mmap_region()"), which is the point
+at which reports started to be submitted concerning this bug.
+
+We were made definitely aware of the bug thanks to the kind efforts of
+Bert Karwatzki who helped enormously in my being able to track this down
+and identify the cause of it.
+
+The bug arises when an attempt is made to perform a spanning store across
+two leaf nodes, where the right leaf node is the rightmost child of the
+shared parent, AND the store completely consumes the right-mode node.
+
+This results in mas_wr_spanning_store() mitakenly duplicating the new and
+existing entries at the maximum pivot within the range, and thus maple
+tree corruption.
+
+The fix patch corrects this by detecting this scenario and disallowing the
+mistaken duplicate copy.
+
+The fix patch commit message goes into great detail as to how this occurs.
+
+This series also includes a test which reliably reproduces the issue, and
+asserts that the fix works correctly.
+
+Bert has kindly tested the fix and confirmed it resolved his issues.  Also
+Mikhail Gavrilov kindly reported what appears to be precisely the same
+bug, which this fix should also resolve.
+
+
+This patch (of 2):
+
+There has been a subtle bug present in the maple tree implementation from
+its inception.
+
+This arises from how stores are performed - when a store occurs, it will
+overwrite overlapping ranges and adjust the tree as necessary to
+accommodate this.
+
+A range may always ultimately span two leaf nodes.  In this instance we
+walk the two leaf nodes, determine which elements are not overwritten to
+the left and to the right of the start and end of the ranges respectively
+and then rebalance the tree to contain these entries and the newly
+inserted one.
+
+This kind of store is dubbed a 'spanning store' and is implemented by
+mas_wr_spanning_store().
+
+In order to reach this stage, mas_store_gfp() invokes
+mas_wr_preallocate(), mas_wr_store_type() and mas_wr_walk() in turn to
+walk the tree and update the object (mas) to traverse to the location
+where the write should be performed, determining its store type.
+
+When a spanning store is required, this function returns false stopping at
+the parent node which contains the target range, and mas_wr_store_type()
+marks the mas->store_type as wr_spanning_store to denote this fact.
+
+When we go to perform the store in mas_wr_spanning_store(), we first
+determine the elements AFTER the END of the range we wish to store (that
+is, to the right of the entry to be inserted) - we do this by walking to
+the NEXT pivot in the tree (i.e.  r_mas.last + 1), starting at the node we
+have just determined contains the range over which we intend to write.
+
+We then turn our attention to the entries to the left of the entry we are
+inserting, whose state is represented by l_mas, and copy these into a 'big
+node', which is a special node which contains enough slots to contain two
+leaf node's worth of data.
+
+We then copy the entry we wish to store immediately after this - the copy
+and the insertion of the new entry is performed by mas_store_b_node().
+
+After this we copy the elements to the right of the end of the range which
+we are inserting, if we have not exceeded the length of the node (i.e.
+r_mas.offset <= r_mas.end).
+
+Herein lies the bug - under very specific circumstances, this logic can
+break and corrupt the maple tree.
+
+Consider the following tree:
+
+Height
+  0                             Root Node
+                                 /      \
+                 pivot = 0xffff /        \ pivot = ULONG_MAX
+                               /          \
+  1                       A [-----]       ...
+                             /   \
+             pivot = 0x4fff /     \ pivot = 0xffff
+                           /       \
+  2 (LEAVES)          B [-----]  [-----] C
+                                      ^--- Last pivot 0xffff.
+
+Now imagine we wish to store an entry in the range [0x4000, 0xffff] (note
+that all ranges expressed in maple tree code are inclusive):
+
+1. mas_store_gfp() descends the tree, finds node A at <=0xffff, then
+   determines that this is a spanning store across nodes B and C. The mas
+   state is set such that the current node from which we traverse further
+   is node A.
+
+2. In mas_wr_spanning_store() we try to find elements to the right of pivot
+   0xffff by searching for an index of 0x10000:
+
+    - mas_wr_walk_index() invokes mas_wr_walk_descend() and
+      mas_wr_node_walk() in turn.
+
+        - mas_wr_node_walk() loops over entries in node A until EITHER it
+          finds an entry whose pivot equals or exceeds 0x10000 OR it
+          reaches the final entry.
+
+        - Since no entry has a pivot equal to or exceeding 0x10000, pivot
+          0xffff is selected, leading to node C.
+
+    - mas_wr_walk_traverse() resets the mas state to traverse node C. We
+      loop around and invoke mas_wr_walk_descend() and mas_wr_node_walk()
+      in turn once again.
+
+         - Again, we reach the last entry in node C, which has a pivot of
+           0xffff.
+
+3. We then copy the elements to the left of 0x4000 in node B to the big
+   node via mas_store_b_node(), and insert the new [0x4000, 0xffff] entry
+   too.
+
+4. We determine whether we have any entries to copy from the right of the
+   end of the range via - and with r_mas set up at the entry at pivot
+   0xffff, r_mas.offset <= r_mas.end, and then we DUPLICATE the entry at
+   pivot 0xffff.
+
+5. BUG! The maple tree is corrupted with a duplicate entry.
+
+This requires a very specific set of circumstances - we must be spanning
+the last element in a leaf node, which is the last element in the parent
+node.
+
+spanning store across two leaf nodes with a range that ends at that shared
+pivot.
+
+A potential solution to this problem would simply be to reset the walk
+each time we traverse r_mas, however given the rarity of this situation it
+seems that would be rather inefficient.
+
+Instead, this patch detects if the right hand node is populated, i.e.  has
+anything we need to copy.
+
+We do so by only copying elements from the right of the entry being
+inserted when the maximum value present exceeds the last, rather than
+basing this on offset position.
+
+The patch also updates some comments and eliminates the unused bool return
+value in mas_wr_walk_index().
+
+The work performed in commit f8d112a4e657 ("mm/mmap: avoid zeroing vma
+tree in mmap_region()") seems to have made the probability of this event
+much more likely, which is the point at which reports started to be
+submitted concerning this bug.
+
+The motivation for this change arose from Bert Karwatzki's report of
+encountering mm instability after the release of kernel v6.12-rc1 which,
+after the use of CONFIG_DEBUG_VM_MAPLE_TREE and similar configuration
+options, was identified as maple tree corruption.
+
+After Bert very generously provided his time and ability to reproduce this
+event consistently, I was able to finally identify that the issue
+discussed in this commit message was occurring for him.
+
+Link: https://lkml.kernel.org/r/cover.1728314402.git.lorenzo.stoakes@oracle.com
+Link: https://lkml.kernel.org/r/48b349a2a0f7c76e18772712d0997a5e12ab0a3b.1728314403.git.lorenzo.stoakes@oracle.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reported-by: Bert Karwatzki <spasswolf@web.de>
+Closes: https://lore.kernel.org/all/20241001023402.3374-1-spasswolf@web.de/
+Tested-by: Bert Karwatzki <spasswolf@web.de>
+Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Closes: https://lore.kernel.org/all/CABXGCsOPwuoNOqSMmAvWO2Fz4TEmPnjFj-b7iF+XFRu1h7-+Dg@mail.gmail.com/
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/user_session.c |   26 +++++++++++++++++++++-----
- fs/smb/server/mgmt/user_session.h |    4 ++++
- fs/smb/server/server.c            |    2 ++
- fs/smb/server/smb2pdu.c           |    8 +++++++-
- 4 files changed, 34 insertions(+), 6 deletions(-)
+ lib/maple_tree.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -177,9 +177,10 @@ static void ksmbd_expire_session(struct
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -2196,6 +2196,8 @@ static inline void mas_node_or_none(stru
  
- 	down_write(&conn->session_lock);
- 	xa_for_each(&conn->sessions, id, sess) {
--		if (sess->state != SMB2_SESSION_VALID ||
--		    time_after(jiffies,
--			       sess->last_active + SMB2_SESSION_TIMEOUT)) {
-+		if (atomic_read(&sess->refcnt) == 0 &&
-+		    (sess->state != SMB2_SESSION_VALID ||
-+		     time_after(jiffies,
-+			       sess->last_active + SMB2_SESSION_TIMEOUT))) {
- 			xa_erase(&conn->sessions, sess->id);
- 			hash_del(&sess->hlist);
- 			ksmbd_session_destroy(sess);
-@@ -269,8 +270,6 @@ struct ksmbd_session *ksmbd_session_look
- 
- 	down_read(&sessions_table_lock);
- 	sess = __session_lookup(id);
--	if (sess)
--		sess->last_active = jiffies;
- 	up_read(&sessions_table_lock);
- 
- 	return sess;
-@@ -289,6 +288,22 @@ struct ksmbd_session *ksmbd_session_look
- 	return sess;
+ /*
+  * mas_wr_node_walk() - Find the correct offset for the index in the @mas.
++ *                      If @mas->index cannot be found within the containing
++ *                      node, we traverse to the last entry in the node.
+  * @wr_mas: The maple write state
+  *
+  * Uses mas_slot_locked() and does not need to worry about dead nodes.
+@@ -3609,7 +3611,7 @@ static bool mas_wr_walk(struct ma_wr_sta
+ 	return true;
  }
  
-+void ksmbd_user_session_get(struct ksmbd_session *sess)
-+{
-+	atomic_inc(&sess->refcnt);
-+}
-+
-+void ksmbd_user_session_put(struct ksmbd_session *sess)
-+{
-+	if (!sess)
-+		return;
-+
-+	if (atomic_read(&sess->refcnt) <= 0)
-+		WARN_ON(1);
-+	else
-+		atomic_dec(&sess->refcnt);
-+}
-+
- struct preauth_session *ksmbd_preauth_session_alloc(struct ksmbd_conn *conn,
- 						    u64 sess_id)
+-static bool mas_wr_walk_index(struct ma_wr_state *wr_mas)
++static void mas_wr_walk_index(struct ma_wr_state *wr_mas)
  {
-@@ -393,6 +408,7 @@ static struct ksmbd_session *__session_c
- 	xa_init(&sess->rpc_handle_list);
- 	sess->sequence_number = 1;
- 	rwlock_init(&sess->tree_conns_lock);
-+	atomic_set(&sess->refcnt, 1);
+ 	struct ma_state *mas = wr_mas->mas;
  
- 	ret = __init_smb2_session(sess);
- 	if (ret)
---- a/fs/smb/server/mgmt/user_session.h
-+++ b/fs/smb/server/mgmt/user_session.h
-@@ -61,6 +61,8 @@ struct ksmbd_session {
- 	struct ksmbd_file_table		file_table;
- 	unsigned long			last_active;
- 	rwlock_t			tree_conns_lock;
-+
-+	atomic_t			refcnt;
- };
- 
- static inline int test_session_flag(struct ksmbd_session *sess, int bit)
-@@ -104,4 +106,6 @@ void ksmbd_release_tree_conn_id(struct k
- int ksmbd_session_rpc_open(struct ksmbd_session *sess, char *rpc_name);
- void ksmbd_session_rpc_close(struct ksmbd_session *sess, int id);
- int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id);
-+void ksmbd_user_session_get(struct ksmbd_session *sess);
-+void ksmbd_user_session_put(struct ksmbd_session *sess);
- #endif /* __USER_SESSION_MANAGEMENT_H__ */
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -238,6 +238,8 @@ static void __handle_ksmbd_work(struct k
- 	} while (is_chained == true);
- 
- send:
-+	if (work->sess)
-+		ksmbd_user_session_put(work->sess);
- 	if (work->tcon)
- 		ksmbd_tree_connect_put(work->tcon);
- 	smb3_preauth_hash_rsp(work);
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -605,8 +605,10 @@ int smb2_check_user_session(struct ksmbd
- 
- 	/* Check for validity of user session */
- 	work->sess = ksmbd_session_lookup_all(conn, sess_id);
--	if (work->sess)
-+	if (work->sess) {
-+		ksmbd_user_session_get(work->sess);
- 		return 1;
-+	}
- 	ksmbd_debug(SMB, "Invalid user session, Uid %llu\n", sess_id);
- 	return -ENOENT;
+@@ -3618,11 +3620,9 @@ static bool mas_wr_walk_index(struct ma_
+ 		wr_mas->content = mas_slot_locked(mas, wr_mas->slots,
+ 						  mas->offset);
+ 		if (ma_is_leaf(wr_mas->type))
+-			return true;
++			return;
+ 		mas_wr_walk_traverse(wr_mas);
+-
+ 	}
+-	return true;
  }
-@@ -1746,6 +1748,7 @@ int smb2_sess_setup(struct ksmbd_work *w
- 		}
- 
- 		conn->binding = true;
-+		ksmbd_user_session_get(sess);
- 	} else if ((conn->dialect < SMB30_PROT_ID ||
- 		    server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL) &&
- 		   (req->Flags & SMB2_SESSION_REQ_FLAG_BINDING)) {
-@@ -1772,6 +1775,7 @@ int smb2_sess_setup(struct ksmbd_work *w
- 		}
- 
- 		conn->binding = false;
-+		ksmbd_user_session_get(sess);
- 	}
- 	work->sess = sess;
- 
-@@ -2232,7 +2236,9 @@ int smb2_session_logoff(struct ksmbd_wor
- 	}
- 
- 	ksmbd_destroy_file_table(&sess->file_table);
-+	down_write(&conn->session_lock);
- 	sess->state = SMB2_SESSION_EXPIRED;
-+	up_write(&conn->session_lock);
- 
- 	ksmbd_free_user(sess->user);
- 	sess->user = NULL;
+ /*
+  * mas_extend_spanning_null() - Extend a store of a %NULL to include surrounding %NULLs.
+@@ -3853,8 +3853,8 @@ static inline int mas_wr_spanning_store(
+ 	memset(&b_node, 0, sizeof(struct maple_big_node));
+ 	/* Copy l_mas and store the value in b_node. */
+ 	mas_store_b_node(&l_wr_mas, &b_node, l_mas.end);
+-	/* Copy r_mas into b_node. */
+-	if (r_mas.offset <= r_mas.end)
++	/* Copy r_mas into b_node if there is anything to copy. */
++	if (r_mas.max > r_mas.last)
+ 		mas_mab_cp(&r_mas, r_mas.offset, r_mas.end,
+ 			   &b_node, b_node.b_end + 1);
+ 	else
 
 
