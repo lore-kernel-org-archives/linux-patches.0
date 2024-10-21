@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A101E5707;
-	Mon, 21 Oct 2024 10:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5BA1E571B;
+	Mon, 21 Oct 2024 10:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506458; cv=none; b=lgV+PGe/wzTi2qn+OyvN60M3wBFrFZmH0lO+TLhMd1UlkLK7WPY5/enXbtEq7WkvKLeCDV1oZgjxWNB1vx25JuDZAPxH+njQzoZwur7SFzoT/GWwuwpizoYqYe+Fu7uqBk0rzWL51pOlZJtXPJZ0o/32uJkcffpSRvOalQjkTb4=
+	t=1729506461; cv=none; b=FBnfYSQC83hAhPzUnLcssmYhkpI/ho9ABVd9DKpEEXH8He7Ug4jrO4UUSfLTWDNLaqjxdY1XqLVVBSESIXCa1UHanjW2hpBoStn2GjMHOMkJfPn8Yi4W+OkSkBxXc1/0yewpKx4POvbEEA+T8pOjzgwIgx1i3MXVxm96VNDuXms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506458; c=relaxed/simple;
-	bh=+tFiYsJkYcl2Hc9SmC96coOSt7NqG5nwsIJur59tix0=;
+	s=arc-20240116; t=1729506461; c=relaxed/simple;
+	bh=i/k+DmwDktxyxI3bqqfKn+tuTvLfdbg60V8OYTFGivs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jcxwDI1tcdmCR5+mIbX/Mzt712QgXi1doDRgbn6l9uG0bBGstQ2UxnonpR+hxpvRAeg3wS1h1S1w3a4+l1u9DHsRL6Jfv+mlzVHo985rHjaaPbJeoWzjzUF0l0JlyBAsGZfvf/bcmNTfLE8dK85Yqt75A8yhsVjiEAXmqU5/BiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTJCNw0a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WWeLLZivDT17V3lycCGd7wve6RGBENqFFaX4SSMTij1gnE/EqXyU14QLdx3dtha3V2zTdhmgbGi+xhnwTubSPkZiJ6r6XfAT7AMI4VnYbyxjiXslWard2tefHllYtwStLsRf6YRXmCMb3tNZmLvaUclqgaQRfqfd6yHwYnkB7lQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1W9TJ/L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTJCNw0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC58C4CEC3;
-	Mon, 21 Oct 2024 10:27:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1W9TJ/L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16FBC4CEC3;
+	Mon, 21 Oct 2024 10:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506458;
-	bh=+tFiYsJkYcl2Hc9SmC96coOSt7NqG5nwsIJur59tix0=;
+	s=korg; t=1729506461;
+	bh=i/k+DmwDktxyxI3bqqfKn+tuTvLfdbg60V8OYTFGivs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GTJCNw0aYPU4E6clzIv4fFi5qKpvhATBaMtBMxmNeN+BoYQcW0GoUq9h2XwLBIQ++
-	 5qIO/ZmWIKaxJpTNyFNOSsIhdVqP+i0GEfT6ts0N7kEpLB3I6thH+mtvre+mzjGoPx
-	 Qsan6ftABdO7R8FPw8JrsOBvrXDT8PITVyHtu4pw=
+	b=I1W9TJ/LkRps1uHY4OOzpoyjGwzptjECNH6fawhBeLLv5UF9iJ+PlyajPYf++U+Ro
+	 nAqgTd9r/bgL0tweIgWD60FcVL2bAe3FBnD5M9bfxzcQ3faBliexaV5AELzJERTNKW
+	 QS1GVhO6kcj+AR+0yfPBjyJiEspXZe1NmySsA0Uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cochran <richardcochran@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Ivan Babrou <ivan@cloudflare.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.11 012/135] posix-clock: Fix missing timespec64 check in pc_clock_settime()
-Date: Mon, 21 Oct 2024 12:22:48 +0200
-Message-ID: <20241021102259.817929921@linuxfoundation.org>
+Subject: [PATCH 6.11 013/135] udp: Compute L4 checksum as usual when not segmenting the skb
+Date: Mon, 21 Oct 2024 12:22:49 +0200
+Message-ID: <20241021102259.856952303@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -53,52 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Jakub Sitnicki <jakub@cloudflare.com>
 
-commit d8794ac20a299b647ba9958f6d657051fc51a540 upstream.
+commit d96016a764f6aa5c7528c3d3f9cb472ef7266951 upstream.
 
-As Andrew pointed out, it will make sense that the PTP core
-checked timespec64 struct's tv_sec and tv_nsec range before calling
-ptp->info->settime64().
+If:
 
-As the man manual of clock_settime() said, if tp.tv_sec is negative or
-tp.tv_nsec is outside the range [0..999,999,999], it should return EINVAL,
-which include dynamic clocks which handles PTP clock, and the condition is
-consistent with timespec64_valid(). As Thomas suggested, timespec64_valid()
-only check the timespec is valid, but not ensure that the time is
-in a valid range, so check it ahead using timespec64_valid_strict()
-in pc_clock_settime() and return -EINVAL if not valid.
+  1) the user requested USO, but
+  2) there is not enough payload for GSO to kick in, and
+  3) the egress device doesn't offer checksum offload, then
 
-There are some drivers that use tp->tv_sec and tp->tv_nsec directly to
-write registers without validity checks and assume that the higher layer
-has checked it, which is dangerous and will benefit from this, such as
-hclge_ptp_settime(), igb_ptp_settime_i210(), _rcar_gen4_ptp_settime(),
-and some drivers can remove the checks of itself.
+we want to compute the L4 checksum in software early on.
 
+In the case when we are not taking the GSO path, but it has been requested,
+the software checksum fallback in skb_segment doesn't get a chance to
+compute the full checksum, if the egress device can't do it. As a result we
+end up sending UDP datagrams with only a partial checksum filled in, which
+the peer will discard.
+
+Fixes: 10154dbded6d ("udp: Allow GSO transmit from devices with no checksum offload")
+Reported-by: Ivan Babrou <ivan@cloudflare.com>
+Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
+Acked-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: 0606f422b453 ("posix clocks: Introduce dynamic clocks")
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Suggested-by: Andrew Lunn <andrew@lunn.ch>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20241009072302.1754567-2-ruanjinjie@huawei.com
+Link: https://patch.msgid.link/20241011-uso-swcsum-fixup-v2-1-6e1ddc199af9@cloudflare.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/posix-clock.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/udp.c |    4 +++-
+ net/ipv6/udp.c |    4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
---- a/kernel/time/posix-clock.c
-+++ b/kernel/time/posix-clock.c
-@@ -319,6 +319,9 @@ static int pc_clock_settime(clockid_t id
- 		goto out;
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -950,8 +950,10 @@ static int udp_send_skb(struct sk_buff *
+ 			skb_shinfo(skb)->gso_type = SKB_GSO_UDP_L4;
+ 			skb_shinfo(skb)->gso_segs = DIV_ROUND_UP(datalen,
+ 								 cork->gso_size);
++
++			/* Don't checksum the payload, skb will get segmented */
++			goto csum_partial;
+ 		}
+-		goto csum_partial;
  	}
  
-+	if (!timespec64_valid_strict(ts))
-+		return -EINVAL;
+ 	if (is_udplite)  				 /*     UDP-Lite      */
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -1266,8 +1266,10 @@ static int udp_v6_send_skb(struct sk_buf
+ 			skb_shinfo(skb)->gso_type = SKB_GSO_UDP_L4;
+ 			skb_shinfo(skb)->gso_segs = DIV_ROUND_UP(datalen,
+ 								 cork->gso_size);
 +
- 	if (cd.clk->ops.clock_settime)
- 		err = cd.clk->ops.clock_settime(cd.clk, ts);
- 	else
++			/* Don't checksum the payload, skb will get segmented */
++			goto csum_partial;
+ 		}
+-		goto csum_partial;
+ 	}
+ 
+ 	if (is_udplite)
 
 
