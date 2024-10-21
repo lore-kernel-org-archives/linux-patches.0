@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED89E1EABA0;
-	Mon, 21 Oct 2024 10:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D961E47A5;
+	Mon, 21 Oct 2024 10:34:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506840; cv=none; b=EHnW4tqLA3D6jJCLfZuUKtozvl2NLuY/7v4R33CxMBvfzDXjcT3ibaE4B/CmpOz1QEM02EC2nXheui2LS1BuwlcPkiowwGltr9AlOnbN1yCwxzFCHUy/fuBjtcA7rF/qqCxDE+TW5KlPR5XPvGgzITo1n/6mO63YyusfMzWuHCE=
+	t=1729506843; cv=none; b=BuAeqx0osHVrsWJyRQYL3ITCTEYKFo1l6/S0aG/7xRppdj4xJ+8QGQW78YtkgIlErmeaU9V5TmM9AWdM7eujR4o75O0DJWwACyBtz2fZMUgEnXGIq27wksEmHoccxErNEZw8aQ3Oqg8r/NKLAbrthCfv/WxrsuvJWUKNArq+3bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506840; c=relaxed/simple;
-	bh=73F4MErhdlOwgz7XctIpLprxwebW0culmeRUhRDcrOk=;
+	s=arc-20240116; t=1729506843; c=relaxed/simple;
+	bh=3VFUYkuodr/OIaMZfLm/2mouPOtSN13HUbXbg2utzJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nn5M2nfCAWEvQz3OQBuGCklwpYsVzn0/MZW5T4ApCB8r0nsLRVTChTIELnUSgm/lxziiMJmzeFk/pe5kLIKE5iTXFMtzZ34zT53KzQp/4u1gpt+4d8mF141khYgueQXfWdHx9IhC4Ih48zBgq6q/9uOQnkwGVeQloF3Gs7G0RCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZOgjaGC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TQtmfjKhHpTjLZXyaYfhgA4AYZdnaj+nTKAiQ8bnHdJmCOpsfm9h5RHlOPJQ+vtaz+TvYFmkQftjC/uhMRYv4Gk3ufvDDNrzF42ziR29bP/cU1Sxs9QKdYKFC3GIEVo8Lkq2IkYbKp0IYepwnYQ4qv04kCO+78lLqMYQKv/nnL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2WjfEXW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZOgjaGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B393C4CEC3;
-	Mon, 21 Oct 2024 10:33:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2WjfEXW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F5BC4CEC3;
+	Mon, 21 Oct 2024 10:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506839;
-	bh=73F4MErhdlOwgz7XctIpLprxwebW0culmeRUhRDcrOk=;
+	s=korg; t=1729506843;
+	bh=3VFUYkuodr/OIaMZfLm/2mouPOtSN13HUbXbg2utzJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bZOgjaGCG82BfCwqBbiSFttCVFmiPN+UoTONAgb7jxuzXB6bFmOwRhdXoN52ybSBB
-	 TZHkrkzzI5n2xjCBDzmZFXmnuG4gqGlzUjBhMQmnM7yBmnCPp8BC2mUHSNrJQmKQCz
-	 Kkm282qoMVRrsqJl0gPujvrb7InTW+PW7p1WQp8I=
+	b=m2WjfEXWPdtJ9RkK+8mnhCPBzZWdqN/NVXYcMEJsNwsyMYwAmODrs33bnbN1owgBk
+	 JPbojdJK09E+H5wCTQaJx919RtxWraldKuiXha20EeG395RkBLpeiQlD40AaMll8rr
+	 HkgSFljGHfYzkZSIWCyYe8JxgJuOyHsWBQB8fjlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Kevin Groeneveld <kgroeneveld@lenbrook.com>
-Subject: [PATCH 6.11 107/135] usb: gadget: f_uac2: fix return value for UAC2_ATTRIBUTE_STRING store
-Date: Mon, 21 Oct 2024 12:24:23 +0200
-Message-ID: <20241021102303.513040403@linuxfoundation.org>
+	Prashanth K <quic_prashk@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.11 108/135] usb: dwc3: Wait for EndXfer completion before restoring GUSB2PHYCFG
+Date: Mon, 21 Oct 2024 12:24:24 +0200
+Message-ID: <20241021102303.551912504@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -50,52 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Groeneveld <kgroeneveld@lenbrook.com>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-commit 9499327714de7bc5cf6c792112c1474932d8ad31 upstream.
+commit c96e31252110a84dcc44412e8a7b456b33c3e298 upstream.
 
-The configfs store callback should return the number of bytes consumed
-not the total number of bytes we actually stored. These could differ if
-for example the passed in string had a newline we did not store.
+DWC3 programming guide mentions that when operating in USB2.0 speeds,
+if GUSB2PHYCFG[6] or GUSB2PHYCFG[8] is set, it must be cleared prior
+to issuing commands and may be set again  after the command completes.
+But currently while issuing EndXfer command without CmdIOC set, we
+wait for 1ms after GUSB2PHYCFG is restored. This results in cases
+where EndXfer command doesn't get completed and causes SMMU faults
+since requests are unmapped afterwards. Hence restore GUSB2PHYCFG
+after waiting for EndXfer command completion.
 
-If the returned value does not match the number of bytes written the
-writer might assume a failure or keep trying to write the remaining bytes.
-
-For example the following command will hang trying to write the final
-newline over and over again (tested on bash 2.05b):
-
-  echo foo > function_name
-
-Fixes: 993a44fa85c1 ("usb: gadget: f_uac2: allow changing interface name via configfs")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Kevin Groeneveld <kgroeneveld@lenbrook.com>
-Link: https://lore.kernel.org/r/20241006232637.4267-1-kgroeneveld@lenbrook.com
+Cc: stable@vger.kernel.org
+Fixes: 1d26ba0944d3 ("usb: dwc3: Wait unconditionally after issuing EndXfer command")
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20240924093208.2524531-1-quic_prashk@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_uac2.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/dwc3/gadget.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/gadget/function/f_uac2.c
-+++ b/drivers/usb/gadget/function/f_uac2.c
-@@ -2055,7 +2055,7 @@ static ssize_t f_uac2_opts_##name##_stor
- 					  const char *page, size_t len)	\
- {									\
- 	struct f_uac2_opts *opts = to_f_uac2_opts(item);		\
--	int ret = 0;							\
-+	int ret = len;							\
- 									\
- 	mutex_lock(&opts->lock);					\
- 	if (opts->refcnt) {						\
-@@ -2066,8 +2066,8 @@ static ssize_t f_uac2_opts_##name##_stor
- 	if (len && page[len - 1] == '\n')				\
- 		len--;							\
- 									\
--	ret = scnprintf(opts->name, min(sizeof(opts->name), len + 1),	\
--			"%s", page);					\
-+	scnprintf(opts->name, min(sizeof(opts->name), len + 1),		\
-+		  "%s", page);						\
- 									\
- end:									\
- 	mutex_unlock(&opts->lock);					\
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -438,6 +438,10 @@ skip_status:
+ 			dwc3_gadget_ep_get_transfer_index(dep);
+ 	}
+ 
++	if (DWC3_DEPCMD_CMD(cmd) == DWC3_DEPCMD_ENDTRANSFER &&
++	    !(cmd & DWC3_DEPCMD_CMDIOC))
++		mdelay(1);
++
+ 	if (saved_config) {
+ 		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
+ 		reg |= saved_config;
+@@ -1715,12 +1719,10 @@ static int __dwc3_stop_active_transfer(s
+ 	WARN_ON_ONCE(ret);
+ 	dep->resource_index = 0;
+ 
+-	if (!interrupt) {
+-		mdelay(1);
++	if (!interrupt)
+ 		dep->flags &= ~DWC3_EP_TRANSFER_STARTED;
+-	} else if (!ret) {
++	else if (!ret)
+ 		dep->flags |= DWC3_EP_END_TRANSFER_PENDING;
+-	}
+ 
+ 	dep->flags &= ~DWC3_EP_DELAY_STOP;
+ 	return ret;
 
 
