@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A11B1E3DF0;
-	Mon, 21 Oct 2024 10:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCA01E5726;
+	Mon, 21 Oct 2024 10:43:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507421; cv=none; b=aiWidAPQMaNtO09pQeE5cmIoj57W64BXioSJiTi9+ZemDHHoph40kQBAfwowklZP4EnuyKZLruW/stBSbT2RNmXhup1h1mShSJvRXnNkzXFCEpkA+YjAZj5+Vq866v0PD0LURCIGsMn1jXn9KF6vDQIjiKL1zUApVr5GsHrEIBE=
+	t=1729507424; cv=none; b=tVAFaszbH4n3jx4w/Hp0EFTFj+pKo4B11UvDbII5za/w8D88K/JV4JCaBZ4B3QbBS5H0BwVqtGQvQlTYzCS9rIxJSDSsB+yoguwVYdO004g86QcxCyTqj+iePGWTQpdbqLkuNmzE29oWMm9C8Xu4L8LOej1YvA9s7RKAYdoh3Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507421; c=relaxed/simple;
-	bh=VgIFgpAuUMgHkU6PM5rm5wzZShG/3OgB33UXTFNNsaA=;
+	s=arc-20240116; t=1729507424; c=relaxed/simple;
+	bh=h6w9Fucz7uFg45+vGPjufB/Eydxs+0i51jCEI9CvdpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YuGw56YWhUOBx9U7/ruw1PFkZzuP9ZSBIdj2OZ0hGeXCtiYFZHFpEbH4nMUcikB2vOCgTlViEaMXwG0uKaI31yPS+Q+8eCsY8jhI66+sa5ZB8EgqyDFtJ/ZQn8lN5hDfUjHrz6KO7EdPXEdYIaPl6s7L9kg1QqqTxoUBOgkySOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LP4sqc/W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a0k2bpjNZQ2lJJrVZTkLGbGsJ/XrHvswwRe4EgkSvglMQdegCd/WyOsm8CcD7XU/2y1FLEXjpeU2zIPwHfVzd0g+44BFNS3xrTtqWEA7VROH2iGp14kyS8rNJm6zb1ayTFUYoiolfScLs46Z+suJLsOOOBAnnQ69p3wGuLk8yaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oWkEiRBC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LP4sqc/W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA28C4CEC3;
-	Mon, 21 Oct 2024 10:43:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oWkEiRBC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E96C4CEC3;
+	Mon, 21 Oct 2024 10:43:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507421;
-	bh=VgIFgpAuUMgHkU6PM5rm5wzZShG/3OgB33UXTFNNsaA=;
+	s=korg; t=1729507424;
+	bh=h6w9Fucz7uFg45+vGPjufB/Eydxs+0i51jCEI9CvdpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LP4sqc/WS+bu+U8Pe/cNlF1C0OsWjjUoS4REJ1H7/Ybviv3d87Od6tlNya3KLtWe+
-	 x3h/aJ14rJfaTo/X0lkhUkYf3D4PtuWdsLMJs9RsizhcD7vZx9SYJlRp6RNQWzrm/x
-	 3F8dD22VcDuZYcKbfJ/1h/QvdU1YlrpeUQFynNDE=
+	b=oWkEiRBChyVuKDJw/IxwVpM9xOy1DT6xQrU+Ifozph4QmwbB/vkN1LAdpJaNFQtLp
+	 XpzCZFgia7aJqTgTb67Ajl5BLJ/WCHiTihL2Ow7qb4qsoxeKmfgHSmWUVkCQNWKorc
+	 /GnOJM/vrdZnFqLXXeJDtKPjU5eMYzkoTCc157cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.1 72/91] xhci: Fix incorrect stream context type macro
-Date: Mon, 21 Oct 2024 12:25:26 +0200
-Message-ID: <20241021102252.630301722@linuxfoundation.org>
+Subject: [PATCH 6.1 73/91] xhci: Mitigate failed set dequeue pointer commands
+Date: Mon, 21 Oct 2024 12:25:27 +0200
+Message-ID: <20241021102252.669346232@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -51,42 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 6599b6a6fa8060145046d0744456b6abdb3122a7 upstream.
+commit fe49df60cdb7c2975aa743dc295f8786e4b7db10 upstream.
 
-The stream contex type (SCT) bitfield is used both in the stream context
-data structure,  and in the 'Set TR Dequeue pointer' command TRB.
-In both cases it uses bits 3:1
+Avoid xHC host from processing a cancelled URB by always turning
+cancelled URB TDs into no-op TRBs before queuing a 'Set TR Deq' command.
 
-The SCT_FOR_TRB(p) macro used to set the stream context type (SCT) field
-for the 'Set TR Dequeue pointer' command TRB incorrectly shifts the value
-1 bit left before masking the three bits.
+If the command fails then xHC will start processing the cancelled TD
+instead of skipping it once endpoint is restarted, causing issues like
+Babble error.
 
-Fix this by first masking and rshifting, just like the similar
-SCT_FOR_CTX(p) macro does
+This is not a complete solution as a failed 'Set TR Deq' command does not
+guarantee xHC TRB caches are cleared.
 
-This issue has not been visibile as the lost bit 3 is only used with
-secondary stream arrays (SSA). Xhci driver currently only supports using
-a primary stream array with Linear stream addressing.
-
-Fixes: 95241dbdf828 ("xhci: Set SCT field for Set TR dequeue on streams")
+Fixes: 4db356924a50 ("xhci: turn cancelled td cleanup to its own function")
 Cc: stable@vger.kernel.org
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20241016140000.783905-2-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/20241016140000.783905-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.h |    2 +-
+ drivers/usb/host/xhci-ring.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1286,7 +1286,7 @@ enum xhci_setup_dev {
- /* Set TR Dequeue Pointer command TRB fields, 6.4.3.9 */
- #define TRB_TO_STREAM_ID(p)		((((p) & (0xffff << 16)) >> 16))
- #define STREAM_ID_FOR_TRB(p)		((((p)) & 0xffff) << 16)
--#define SCT_FOR_TRB(p)			(((p) << 1) & 0x7)
-+#define SCT_FOR_TRB(p)			(((p) & 0x7) << 1)
- 
- /* Link TRB specific fields */
- #define TRB_TC			(1<<1)
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1006,7 +1006,7 @@ static int xhci_invalidate_cancelled_tds
+ 					td_to_noop(xhci, ring, cached_td, false);
+ 					cached_td->cancel_status = TD_CLEARED;
+ 				}
+-
++				td_to_noop(xhci, ring, td, false);
+ 				td->cancel_status = TD_CLEARING_CACHE;
+ 				cached_td = td;
+ 				break;
 
 
