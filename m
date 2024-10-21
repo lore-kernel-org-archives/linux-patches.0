@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AC439FD6;
-	Mon, 21 Oct 2024 10:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E108839FD6;
+	Mon, 21 Oct 2024 10:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506638; cv=none; b=J/x6BQZziFxLaziB8EJ0fkj4G0C1gt3H2nVrViFCOoFRt2AIr/LAtHMqNY1Y+okQ3tukA7Mx8v7kE88Rm+p6ubIRmDMKBykMBQxZjvnm4lx5CrUkBlBfExGNtWA2dXUU5LpaBizhew+4KR0oRar860Qnjd0HOA/a86tZjnlNeRE=
+	t=1729506641; cv=none; b=UKVStqAQvJss9HTRsDX+M9Xw/qTzizvgMvJfpGmgk7XjQZJAgJqpZqygyrnQ48B2Pj7kPlcxq1vFY0juPjECp7gcPm/jOPlTaaJhtedrZWttihJbnOxvVyl1LUo4mjKBXXcFIkPKEAfS7jJcPHo1gFub2BRvW4CFxskESOmuWG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506638; c=relaxed/simple;
-	bh=vGsCdRARHjdF8aNC3HmOIje5mLYZ+ttR3Ag3KUd0ldA=;
+	s=arc-20240116; t=1729506641; c=relaxed/simple;
+	bh=H5FQJ0iKqgNWH7EYHG1NiEYy5eJM1s/SlakF4B7LkmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9SHVXO5no5yhSQ0vmaDGEWnEi6bbYTP+6cGWmZETK0Q4FUSfqgOjwWmPmzhm0RzzFTHa4G662lk85HDndYUAQCQm+5mhHM9qu/3Mp963AeR7spZ052Sqblal6KrZ9Xgrm7ZDYZB4zBbNm03SvqLzrsS0rih2zHhvhfpZ1nt3dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OQV1Rnhq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DjX8SrHBDhLGNKMw6s2nhixe4382T7Ag2/OaP2G6htOhflTDzsUbxvq3QHRN0Yiefig+PqxyMrsjbfkhNhguJl5xdg4cWKDkce2+JLaLTfBkykfmNdELc69unNx3hBw7NejNUT+mGbrm/GMUj6hpRZ5l2M14JUhzuaAElqxPRqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjxGiRUG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OQV1Rnhq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B52EC4CEC3;
-	Mon, 21 Oct 2024 10:30:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjxGiRUG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA7FC4CEC3;
+	Mon, 21 Oct 2024 10:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506637;
-	bh=vGsCdRARHjdF8aNC3HmOIje5mLYZ+ttR3Ag3KUd0ldA=;
+	s=korg; t=1729506640;
+	bh=H5FQJ0iKqgNWH7EYHG1NiEYy5eJM1s/SlakF4B7LkmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OQV1Rnhq25IP7PTxZ66lv3LNGfrLk7qhRBd18yjdcUG5LaNRM74nzMe9OWd75W/Ou
-	 JubOA1grqaPW3mpaoyZR3l/nZ+v2V1HTvApm1y+kDOP0U8X85K+ftuRgwSOKAo2apP
-	 OSGRL0tqaqGlgi7SN8llMFiVXI2hFXUKFQAWQ05E=
+	b=MjxGiRUGBvpOarKvy//4CDTSCBTdO9lwje9KnxAL2gATbVl7UUgy93lZc4iqpqwiD
+	 lZjQDnGkKRgaZ1LU4Umaj9inlMSyKtshapotw9nlgS87JVYorpXehDebgEZT5gWpzf
+	 btptepUkuqY+mlLNkmYLNU38L9VqUfIwv3a1NOFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkatesh Srinivas <venkateshs@chromium.org>,
-	Jim Mattson <jmattson@google.com>,
+	Johannes Wikner <kwikner@ethz.ch>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
 	stable@kernel.org
-Subject: [PATCH 6.11 041/135] x86/cpufeatures: Define X86_FEATURE_AMD_IBPB_RET
-Date: Mon, 21 Oct 2024 12:23:17 +0200
-Message-ID: <20241021102300.939156892@linuxfoundation.org>
+Subject: [PATCH 6.11 042/135] x86/cpufeatures: Add a IBPB_NO_RET BUG flag
+Date: Mon, 21 Oct 2024 12:23:18 +0200
+Message-ID: <20241021102300.977764795@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
 References: <20241021102259.324175287@linuxfoundation.org>
@@ -54,46 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jim Mattson <jmattson@google.com>
+From: Johannes Wikner <kwikner@ethz.ch>
 
-commit ff898623af2ed564300752bba83a680a1e4fec8d upstream.
+commit 3ea87dfa31a7b0bb0ff1675e67b9e54883013074 upstream.
 
-AMD's initial implementation of IBPB did not clear the return address
-predictor. Beginning with Zen4, AMD's IBPB *does* clear the return address
-predictor. This behavior is enumerated by CPUID.80000008H:EBX.IBPB_RET[30].
+Set this flag if the CPU has an IBPB implementation that does not
+invalidate return target predictions. Zen generations < 4 do not flush
+the RSB when executing an IBPB and this bug flag denotes that.
 
-Define X86_FEATURE_AMD_IBPB_RET for use in KVM_GET_SUPPORTED_CPUID,
-when determining cross-vendor capabilities.
+  [ bp: Massage. ]
 
-Suggested-by: Venkatesh Srinivas <venkateshs@chromium.org>
-Signed-off-by: Jim Mattson <jmattson@google.com>
+Signed-off-by: Johannes Wikner <kwikner@ethz.ch>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpufeatures.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/cpufeatures.h |    1 +
+ arch/x86/kernel/cpu/common.c       |    3 +++
+ 2 files changed, 4 insertions(+)
 
 --- a/arch/x86/include/asm/cpufeatures.h
 +++ b/arch/x86/include/asm/cpufeatures.h
-@@ -215,7 +215,7 @@
- #define X86_FEATURE_SPEC_STORE_BYPASS_DISABLE	( 7*32+23) /* Disable Speculative Store Bypass. */
- #define X86_FEATURE_LS_CFG_SSBD		( 7*32+24)  /* AMD SSBD implementation via LS_CFG MSR */
- #define X86_FEATURE_IBRS		( 7*32+25) /* "ibrs" Indirect Branch Restricted Speculation */
--#define X86_FEATURE_IBPB		( 7*32+26) /* "ibpb" Indirect Branch Prediction Barrier */
-+#define X86_FEATURE_IBPB		( 7*32+26) /* "ibpb" Indirect Branch Prediction Barrier without a guaranteed RSB flush */
- #define X86_FEATURE_STIBP		( 7*32+27) /* "stibp" Single Thread Indirect Branch Predictors */
- #define X86_FEATURE_ZEN			( 7*32+28) /* Generic flag for all Zen and newer */
- #define X86_FEATURE_L1TF_PTEINV		( 7*32+29) /* L1TF workaround PTE inversion */
-@@ -348,6 +348,7 @@
- #define X86_FEATURE_CPPC		(13*32+27) /* "cppc" Collaborative Processor Performance Control */
- #define X86_FEATURE_AMD_PSFD            (13*32+28) /* Predictive Store Forwarding Disable */
- #define X86_FEATURE_BTC_NO		(13*32+29) /* Not vulnerable to Branch Type Confusion */
-+#define X86_FEATURE_AMD_IBPB_RET	(13*32+30) /* IBPB clears return address predictor */
- #define X86_FEATURE_BRS			(13*32+31) /* "brs" Branch Sampling available */
+@@ -524,4 +524,5 @@
+ #define X86_BUG_DIV0			X86_BUG(1*32 + 1) /* "div0" AMD DIV0 speculation bug */
+ #define X86_BUG_RFDS			X86_BUG(1*32 + 2) /* "rfds" CPU is vulnerable to Register File Data Sampling */
+ #define X86_BUG_BHI			X86_BUG(1*32 + 3) /* "bhi" CPU is affected by Branch History Injection */
++#define X86_BUG_IBPB_NO_RET	   	X86_BUG(1*32 + 4) /* "ibpb_no_ret" IBPB omits return target predictions */
+ #endif /* _ASM_X86_CPUFEATURES_H */
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1443,6 +1443,9 @@ static void __init cpu_set_bug_bits(stru
+ 	     boot_cpu_has(X86_FEATURE_HYPERVISOR)))
+ 		setup_force_cpu_bug(X86_BUG_BHI);
  
- /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX), word 14 */
++	if (cpu_has(c, X86_FEATURE_AMD_IBPB) && !cpu_has(c, X86_FEATURE_AMD_IBPB_RET))
++		setup_force_cpu_bug(X86_BUG_IBPB_NO_RET);
++
+ 	if (cpu_matches(cpu_vuln_whitelist, NO_MELTDOWN))
+ 		return;
+ 
 
 
