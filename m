@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587901EBA01;
-	Mon, 21 Oct 2024 10:43:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444AE1E25E3;
+	Mon, 21 Oct 2024 10:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507433; cv=none; b=Z0K4U/TZGWajToMzbMbuCVWxsEHXTJzwWnPC4b2QvLegkNNVptiiNrxYgfEzaSyWySC7Q8f5lDtstAvTv5nLU2QknljkvK3FLq5q3R8whHH4rDtm20u+MMAHqBxXuGjbT4iIXopDcUhTfLKghMrDqz00q0jZ/VTLmuQKWkr538I=
+	t=1729507436; cv=none; b=ZvNsc0aSeFP6MtkvVurT9NTZhP4MYKaKmy6upX0UAk8+sWtqVEJzWJD8LU2BAuc2/B4dvus95iJANxOaMkp98K4qnOJfRh4ESvbbjlu6MO2ujzfbJU+l/47/laEoNoAxEIHfk6lOZrm7VEZKD+8yFg/5kHZteSlHEl7OAGb9TT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507433; c=relaxed/simple;
-	bh=W1x98siiLj152OzdNsOhmo1B2ffot8laVoxYneOijuU=;
+	s=arc-20240116; t=1729507436; c=relaxed/simple;
+	bh=A1mA4h61rRDsIvUFj3nxF8iLxOsiQqTyhwKIDGjN10E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rd26Layf66xzVLq8rX+ayRgdq6NH1VuFH+oWP0gf5HzlG0VTF8lSEnAju+50TlM250ebnoIBQ5iPfE/Xn310+o5Rns6/nLDs0BUL/zBTUeNz6mTVRr+JVTPIyBlxZnhJsZocLieniiiDuhzeP8990P8Gk+8alNxdgFeu3NcvYFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k015fGz8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a8gKwqsY8HbKUJcHnCVqVXJsS5gc3ADhhXPX+M6u3shqhKTG0eMtlhqKZz/NleZ3yJQj7TVOKCGQb8tsezFbmi1D3hM5CNa6+5/3tThM912mv7RvkoYzV7R5fmJPhDr7PV/PnAAxtHu793aNbxlixFKXp2PRQTOJsoFNjopnK2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POkdsVfY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k015fGz8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3AFC4CEC3;
-	Mon, 21 Oct 2024 10:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POkdsVfY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3728C4CEC3;
+	Mon, 21 Oct 2024 10:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507433;
-	bh=W1x98siiLj152OzdNsOhmo1B2ffot8laVoxYneOijuU=;
+	s=korg; t=1729507436;
+	bh=A1mA4h61rRDsIvUFj3nxF8iLxOsiQqTyhwKIDGjN10E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k015fGz8rQh01vj7amumjT6b6ZhOeJYiwZLma1xdY3hPDM/giFmQ7Gk1HX6vuuSh6
-	 QOAo2gTS5TRzcrjssbllv1booepxoFEo7KLPZ9Fm6ptoC+mWAkSzxYP1kothmlfLI3
-	 M0b/wBfaCTG8gBm55mGfiVXLDxd+Jfnhrpp1QgNQ=
+	b=POkdsVfY3aYTUUhBAyCtHKnH24+xd1Wg/12UPlUpB2NzFh4BRnRz90G3kPFU8iGHp
+	 893x+chYlIzW+NOyF3GCTgBakWarDT+SDDsbbK/kZXDQScUwib0D4HnTa8fVt2a9Ec
+	 cb2axEw5+JFPA+80fYoDWRg78fECM0Y5jDkExRY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 75/91] USB: serial: option: add Telit FN920C04 MBIM compositions
-Date: Mon, 21 Oct 2024 12:25:29 +0200
-Message-ID: <20241021102252.745335436@linuxfoundation.org>
+	Prashanth K <quic_prashk@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.1 76/91] usb: dwc3: Wait for EndXfer completion before restoring GUSB2PHYCFG
+Date: Mon, 21 Oct 2024 12:25:30 +0200
+Message-ID: <20241021102252.783260166@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -50,114 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-commit 6d951576ee16430822a8dee1e5c54d160e1de87d upstream.
+commit c96e31252110a84dcc44412e8a7b456b33c3e298 upstream.
 
-Add the following Telit FN920C04 compositions:
+DWC3 programming guide mentions that when operating in USB2.0 speeds,
+if GUSB2PHYCFG[6] or GUSB2PHYCFG[8] is set, it must be cleared prior
+to issuing commands and may be set again  after the command completes.
+But currently while issuing EndXfer command without CmdIOC set, we
+wait for 1ms after GUSB2PHYCFG is restored. This results in cases
+where EndXfer command doesn't get completed and causes SMMU faults
+since requests are unmapped afterwards. Hence restore GUSB2PHYCFG
+after waiting for EndXfer command completion.
 
-0x10a2: MBIM + tty (AT/NMEA) + tty (AT) + tty (diag)
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 17 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a2 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x10a7: MBIM + tty (AT) + tty (AT) + tty (diag)
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 18 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a7 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x10aa: MBIM + tty (AT) + tty (diag) + DPL (data packet logging) + adb
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 15 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10aa Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 6 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 1d26ba0944d3 ("usb: dwc3: Wait unconditionally after issuing EndXfer command")
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20240924093208.2524531-1-quic_prashk@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/dwc3/gadget.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1382,10 +1382,16 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(0) | RSVD(1) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a0, 0xff),	/* Telit FN20C04 (rmnet) */
- 	  .driver_info = RSVD(0) | NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a2, 0xff),	/* Telit FN920C04 (MBIM) */
-+	  .driver_info = NCTRL(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a4, 0xff),	/* Telit FN20C04 (rmnet) */
- 	  .driver_info = RSVD(0) | NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a7, 0xff),	/* Telit FN920C04 (MBIM) */
-+	  .driver_info = NCTRL(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a9, 0xff),	/* Telit FN20C04 (rmnet) */
- 	  .driver_info = RSVD(0) | NCTRL(2) | RSVD(3) | RSVD(4) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10aa, 0xff),	/* Telit FN920C04 (MBIM) */
-+	  .driver_info = NCTRL(3) | RSVD(4) | RSVD(5) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910),
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(3) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910_DUAL_MODEM),
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -445,6 +445,10 @@ skip_status:
+ 			dwc3_gadget_ep_get_transfer_index(dep);
+ 	}
+ 
++	if (DWC3_DEPCMD_CMD(cmd) == DWC3_DEPCMD_ENDTRANSFER &&
++	    !(cmd & DWC3_DEPCMD_CMDIOC))
++		mdelay(1);
++
+ 	if (saved_config) {
+ 		reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
+ 		reg |= saved_config;
+@@ -1731,12 +1735,10 @@ static int __dwc3_stop_active_transfer(s
+ 	WARN_ON_ONCE(ret);
+ 	dep->resource_index = 0;
+ 
+-	if (!interrupt) {
+-		mdelay(1);
++	if (!interrupt)
+ 		dep->flags &= ~DWC3_EP_TRANSFER_STARTED;
+-	} else if (!ret) {
++	else if (!ret)
+ 		dep->flags |= DWC3_EP_END_TRANSFER_PENDING;
+-	}
+ 
+ 	dep->flags &= ~DWC3_EP_DELAY_STOP;
+ 	return ret;
 
 
