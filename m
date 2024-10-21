@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0D61F4FDD;
-	Mon, 21 Oct 2024 10:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19EC1F4FD1;
+	Mon, 21 Oct 2024 10:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507342; cv=none; b=fJJa3R7zC/2GX3IMJh0UUsJv6+TxriTz6wehs31khqmvvYIBvDZdrnD44pINHIEExLDazRC/W6nKhbGTrI8O3AaTSngO7VeZ9vcgoSm5UQ9Wu+bwwBY3jQifcHQvrEPQL+YtroTiarohSJoQRvpW/p4P+0rW952q1WY3BqK0nUU=
+	t=1729507346; cv=none; b=gfG8Qm3jhxRz10kWpoPZqFgmwiQeuoRzQHuqpSMirTtAe/5a1nKQgXYiWsUX2Qyf5I9EteJTm/2BPfxz7LOduUwOjZaRF/37cQz6sSp+VirEzimEQ1trnErKn6FuaSbhc4K+blIBPAr6GAMsIyUq1MbW2hUien3QEFKPeJBSnh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507342; c=relaxed/simple;
-	bh=rA/SR38oo462CAfWp8vbLjnWkF3rQSvcBvhtMCH8Fb8=;
+	s=arc-20240116; t=1729507346; c=relaxed/simple;
+	bh=ShJy1xWRkGs0P7i//ZxDtDtmWWem3r2yZqzsL9wqags=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mVjrQdnuH1yAhiDxzRIoUnq6rXRXmRI/fDh97yHxP2McdQE2zaBy+5Ytdrz6tv+sRNrQIifckvkGKNKl0TjVo+mgPb3/KNtPcbv6CmQp/82TDGbP7KSo/YbWk1KhpyzGs0UaKX0KF15JtheUYvtRku0sFn+2HtrTCf3jw5N9rLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlKoVn2F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C6IZ04AS+NuLClt7DYgGhXEB7ahhdwGrZqFc5U7B7StXGX/HbzBVle/eVCnB/nzUuIRG+Mh1MvMIJ9VX5xAAMTF2kD49zq3hplAgRvD17QJg5K7XLxFBBurOlExQSYe4j41M/Oj+acDHfRq8LfYf0sBi3TE5wYlQUNO9Yv5QZWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ges1i7Zc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlKoVn2F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1461BC4CEC3;
-	Mon, 21 Oct 2024 10:42:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ges1i7Zc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33246C4CEC3;
+	Mon, 21 Oct 2024 10:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507342;
-	bh=rA/SR38oo462CAfWp8vbLjnWkF3rQSvcBvhtMCH8Fb8=;
+	s=korg; t=1729507345;
+	bh=ShJy1xWRkGs0P7i//ZxDtDtmWWem3r2yZqzsL9wqags=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zlKoVn2Fe1nBj6d/KuzrdxgSQKtcI0nMPtv27JiBatDLxp1ZLtbegT+69LAEAN7J3
-	 JlkD+h9r3Dci2P8zuROXK0S9Og281lTOGkE6Z8BuBJ+Jhqt6riRUMYEQ3SsWtfoE7V
-	 vG83ZFAWYlGyrj0sLyUnaRjNuVLsTQSYkCeOxII8=
+	b=ges1i7ZcFP3ckvjzgQ4im77bSkmVp61Tdl/D7p1Dxazu+GD0YXpy7d0BL2rZPup+n
+	 jVIYO1w/aR9bsFP6Gybgi5ygpJXJFDIt7BlGbM1MRBM0qtkD0qBgne+6wMeA12Zoxp
+	 G0DtqTvb5/gePVYyGsz78x2UdvbVva4LkYdEDgfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Borislav Petkov <bp@alien8.de>,
 	Johannes Wikner <kwikner@ethz.ch>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	stable@kernel.org
-Subject: [PATCH 6.1 45/91] x86/entry: Have entry_ibpb() invalidate return predictions
-Date: Mon, 21 Oct 2024 12:24:59 +0200
-Message-ID: <20241021102251.578828357@linuxfoundation.org>
+Subject: [PATCH 6.1 46/91] x86/bugs: Skip RSB fill at VMEXIT
+Date: Mon, 21 Oct 2024 12:25:00 +0200
+Message-ID: <20241021102251.618382903@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -53,45 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Wikner <kwikner@ethz.ch>
 
-commit 50e4b3b94090babe8d4bb85c95f0d3e6b07ea86e upstream.
+commit 0fad2878642ec46225af2054564932745ac5c765 upstream.
 
-entry_ibpb() should invalidate all indirect predictions, including return
-target predictions. Not all IBPB implementations do this, in which case the
-fallback is RSB filling.
+entry_ibpb() is designed to follow Intel's IBPB specification regardless
+of CPU. This includes invalidating RSB entries.
 
-Prevent SRSO-style hijacks of return predictions following IBPB, as the return
-target predictor can be corrupted before the IBPB completes.
+Hence, if IBPB on VMEXIT has been selected, entry_ibpb() as part of the
+RET untraining in the VMEXIT path will take care of all BTB and RSB
+clearing so there's no need to explicitly fill the RSB anymore.
 
-  [ bp: Massage. ]
+  [ bp: Massage commit message. ]
 
+Suggested-by: Borislav Petkov <bp@alien8.de>
 Signed-off-by: Johannes Wikner <kwikner@ethz.ch>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Cc: <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/entry/entry.S |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/x86/kernel/cpu/bugs.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/arch/x86/entry/entry.S
-+++ b/arch/x86/entry/entry.S
-@@ -9,6 +9,8 @@
- #include <asm/unwind_hints.h>
- #include <asm/segment.h>
- #include <asm/cache.h>
-+#include <asm/cpufeatures.h>
-+#include <asm/nospec-branch.h>
- 
- .pushsection .noinstr.text, "ax"
- 
-@@ -17,6 +19,9 @@ SYM_FUNC_START(entry_ibpb)
- 	movl	$PRED_CMD_IBPB, %eax
- 	xorl	%edx, %edx
- 	wrmsr
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1093,6 +1093,14 @@ do_cmd_auto:
+ 	case RETBLEED_MITIGATION_IBPB:
+ 		setup_force_cpu_cap(X86_FEATURE_ENTRY_IBPB);
+ 		mitigate_smt = true;
 +
-+	/* Make sure IBPB clears return stack preductions too. */
-+	FILL_RETURN_BUFFER %rax, RSB_CLEAR_LOOPS, X86_BUG_IBPB_NO_RET
- 	RET
- SYM_FUNC_END(entry_ibpb)
- /* For KVM */
++		/*
++		 * There is no need for RSB filling: entry_ibpb() ensures
++		 * all predictions, including the RSB, are invalidated,
++		 * regardless of IBPB implementation.
++		 */
++		setup_clear_cpu_cap(X86_FEATURE_RSB_VMEXIT);
++
+ 		break;
+ 
+ 	default:
+@@ -2603,6 +2611,13 @@ static void __init srso_select_mitigatio
+ 			if (!boot_cpu_has(X86_FEATURE_ENTRY_IBPB) && has_microcode) {
+ 				setup_force_cpu_cap(X86_FEATURE_IBPB_ON_VMEXIT);
+ 				srso_mitigation = SRSO_MITIGATION_IBPB_ON_VMEXIT;
++
++				/*
++				 * There is no need for RSB filling: entry_ibpb() ensures
++				 * all predictions, including the RSB, are invalidated,
++				 * regardless of IBPB implementation.
++				 */
++				setup_clear_cpu_cap(X86_FEATURE_RSB_VMEXIT);
+ 			}
+ 		} else {
+ 			pr_err("WARNING: kernel not compiled with CPU_SRSO.\n");
 
 
