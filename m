@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F97B1F4266;
-	Mon, 21 Oct 2024 10:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A11B1E3DF0;
+	Mon, 21 Oct 2024 10:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507418; cv=none; b=B0p7CTuyrIjqmjPwWk9S6yY8OMbuiME0SzHZ3DiD28Ne2Lay9RFOOPC8RuhU/xw8qd6o2goVIGRsib5lQAAVxMZ9JTujVFDXlM7SRkS5k5vqZiTF0Yg/tVEqo/jzdBGqMWsu0G14Ojbx4dUz3rOvosM/A+Ovo4s7gQfJtPxk22U=
+	t=1729507421; cv=none; b=aiWidAPQMaNtO09pQeE5cmIoj57W64BXioSJiTi9+ZemDHHoph40kQBAfwowklZP4EnuyKZLruW/stBSbT2RNmXhup1h1mShSJvRXnNkzXFCEpkA+YjAZj5+Vq866v0PD0LURCIGsMn1jXn9KF6vDQIjiKL1zUApVr5GsHrEIBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507418; c=relaxed/simple;
-	bh=VJeZGT/Q3bhjP7pv+4SqrCTTIyPEyGpINt/1DZF2n3A=;
+	s=arc-20240116; t=1729507421; c=relaxed/simple;
+	bh=VgIFgpAuUMgHkU6PM5rm5wzZShG/3OgB33UXTFNNsaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y7lWgMLRy3ujrXlEOo4DUZ0cU5AwpidYl4QCtwVrW+HYJEf46JN44ckH9XM9OktZ09pG08MjW5YlugDDallKzpyn3nNfQ0FUb/8yJHf9MIfIlONmB4nwIa9wax7qURWIsF4vpHifjPa6lGJ4PQHcJw9BMvOeyto+0vCUxDnWlYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCxXV3zW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YuGw56YWhUOBx9U7/ruw1PFkZzuP9ZSBIdj2OZ0hGeXCtiYFZHFpEbH4nMUcikB2vOCgTlViEaMXwG0uKaI31yPS+Q+8eCsY8jhI66+sa5ZB8EgqyDFtJ/ZQn8lN5hDfUjHrz6KO7EdPXEdYIaPl6s7L9kg1QqqTxoUBOgkySOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LP4sqc/W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCxXV3zW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC83C4CEC7;
-	Mon, 21 Oct 2024 10:43:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LP4sqc/W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA28C4CEC3;
+	Mon, 21 Oct 2024 10:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507418;
-	bh=VJeZGT/Q3bhjP7pv+4SqrCTTIyPEyGpINt/1DZF2n3A=;
+	s=korg; t=1729507421;
+	bh=VgIFgpAuUMgHkU6PM5rm5wzZShG/3OgB33UXTFNNsaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QCxXV3zWJFsIUqBEf5AwWhS/9YC2BvnzV8JjKURnsx9aVp+C6g9RttgJY/uMy8V4U
-	 nsofDw9nclOJPlOI8ythRq2OpG2bJYHN7q5lw2BrJ9i7znby9I/j04e8r1JLaAiI30
-	 o3WFUadk/zXKDH+c1LdTTQJGzOnVfm653iCV8Xfo=
+	b=LP4sqc/WS+bu+U8Pe/cNlF1C0OsWjjUoS4REJ1H7/Ybviv3d87Od6tlNya3KLtWe+
+	 x3h/aJ14rJfaTo/X0lkhUkYf3D4PtuWdsLMJs9RsizhcD7vZx9SYJlRp6RNQWzrm/x
+	 3F8dD22VcDuZYcKbfJ/1h/QvdU1YlrpeUQFynNDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 71/91] Bluetooth: btusb: Fix regression with fake CSR controllers 0a12:0001
-Date: Mon, 21 Oct 2024 12:25:25 +0200
-Message-ID: <20241021102252.591664258@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.1 72/91] xhci: Fix incorrect stream context type macro
+Date: Mon, 21 Oct 2024 12:25:26 +0200
+Message-ID: <20241021102252.630301722@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
 References: <20241021102249.791942892@linuxfoundation.org>
@@ -43,71 +43,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 2c1dda2acc4192d826e84008d963b528e24d12bc upstream.
+commit 6599b6a6fa8060145046d0744456b6abdb3122a7 upstream.
 
-Fake CSR controllers don't seem to handle short-transfer properly which
-cause command to time out:
+The stream contex type (SCT) bitfield is used both in the stream context
+data structure,  and in the 'Set TR Dequeue pointer' command TRB.
+In both cases it uses bits 3:1
 
-kernel: usb 1-1: new full-speed USB device number 19 using xhci_hcd
-kernel: usb 1-1: New USB device found, idVendor=0a12, idProduct=0001, bcdDevice=88.91
-kernel: usb 1-1: New USB device strings: Mfr=0, Product=2, SerialNumber=0
-kernel: usb 1-1: Product: BT DONGLE10
-...
-Bluetooth: hci1: Opcode 0x1004 failed: -110
-kernel: Bluetooth: hci1: command 0x1004 tx timeout
+The SCT_FOR_TRB(p) macro used to set the stream context type (SCT) field
+for the 'Set TR Dequeue pointer' command TRB incorrectly shifts the value
+1 bit left before masking the three bits.
 
-According to USB Spec 2.0 Section 5.7.3 Interrupt Transfer Packet Size
-Constraints a interrupt transfer is considered complete when the size is 0
-(ZPL) or < wMaxPacketSize:
+Fix this by first masking and rshifting, just like the similar
+SCT_FOR_CTX(p) macro does
 
- 'When an interrupt transfer involves more data than can fit in one
- data payload of the currently established maximum size, all data
- payloads are required to be maximum-sized except for the last data
- payload, which will contain the remaining data. An interrupt transfer
- is complete when the endpoint does one of the following:
+This issue has not been visibile as the lost bit 3 is only used with
+secondary stream arrays (SSA). Xhci driver currently only supports using
+a primary stream array with Linear stream addressing.
 
- • Has transferred exactly the amount of data expected
- • Transfers a packet with a payload size less than wMaxPacketSize or
- transfers a zero-length packet'
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219365
-Fixes: 7b05933340f4 ("Bluetooth: btusb: Fix not handling ZPL/short-transfer")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 95241dbdf828 ("xhci: Set SCT field for Set TR dequeue on streams")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20241016140000.783905-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/usb/host/xhci.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -1191,10 +1191,15 @@ static int btusb_submit_intr_urb(struct
- 	if (!urb)
- 		return -ENOMEM;
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1286,7 +1286,7 @@ enum xhci_setup_dev {
+ /* Set TR Dequeue Pointer command TRB fields, 6.4.3.9 */
+ #define TRB_TO_STREAM_ID(p)		((((p) & (0xffff << 16)) >> 16))
+ #define STREAM_ID_FOR_TRB(p)		((((p)) & 0xffff) << 16)
+-#define SCT_FOR_TRB(p)			(((p) << 1) & 0x7)
++#define SCT_FOR_TRB(p)			(((p) & 0x7) << 1)
  
--	/* Use maximum HCI Event size so the USB stack handles
--	 * ZPL/short-transfer automatically.
--	 */
--	size = HCI_MAX_EVENT_SIZE;
-+	if (le16_to_cpu(data->udev->descriptor.idVendor)  == 0x0a12 &&
-+	    le16_to_cpu(data->udev->descriptor.idProduct) == 0x0001)
-+		/* Fake CSR devices don't seem to support sort-transter */
-+		size = le16_to_cpu(data->intr_ep->wMaxPacketSize);
-+	else
-+		/* Use maximum HCI Event size so the USB stack handles
-+		 * ZPL/short-transfer automatically.
-+		 */
-+		size = HCI_MAX_EVENT_SIZE;
- 
- 	buf = kmalloc(size, mem_flags);
- 	if (!buf) {
+ /* Link TRB specific fields */
+ #define TRB_TC			(1<<1)
 
 
