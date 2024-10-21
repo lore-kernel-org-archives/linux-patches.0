@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926471E1C11;
-	Mon, 21 Oct 2024 10:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835401E1C11;
+	Mon, 21 Oct 2024 10:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729507174; cv=none; b=bOQ47wVHzr/mqM0pS45tIR7JzTS1KfZGQmfCtTIMgodh74/mz8+xj1Pr+diZKC40AAmFqnVM02euQ0L2xejYLaYZjuEgxeUnVtfEL9dTTONaJ/SQi6uRShYWi4d+NSiLSKxgnPWGvWKB2DcOCk4QXeywA3zTe4B/znXnOPQI0Nk=
+	t=1729507177; cv=none; b=ilwldgw0huRL3y8sLSTSSUVDNJnE6JKI2mkuIAucGY1g97o8SHpxTQDHDbhDv+9zeNOgSVWydPd+3TumQ+gl/9+8Atu1kOOfgbiRUBYVTq5L+L6vC6nTwr4OGWB2GsvBP+0yzfg+4dwimW2Wie3n2MvmNFAzkM61PUOBjwzQaAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729507174; c=relaxed/simple;
-	bh=Dn90KtWzVpluyjLr6aLaT4Z9QmQ47roErxxjL0sgU+4=;
+	s=arc-20240116; t=1729507177; c=relaxed/simple;
+	bh=Fr4e0Wrl/CECtdS0cTy6RBY7wDnHigJSfnZEnadkMS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fZ2R7ZPkXAeFTFsTQYLr5uAkR3cQuhRbww90V+c91MrncMLREvKuLHHewqAY5Zihe7UOMYUUKVuOSKyPMlyon7y/ul0q3aBCqTZmwyaP8nYijkJbOOMXn3jJ92+OiBVjB+bSNoWmyK9aCIvTNH8XPUtGD4kHE2C6Xjk1JbSSRMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=niIqk71p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hBH4CRA3T9j7xrkkuq53iBti1xsT6tcuU3lb7YebwxoKElyfVvRyQdCy8iGEHVQl76R8kUAC0WwvmGgGolIDzZD79fQCwM5Mh5X6mxe0yu9vRnbxS/AeIyHGX9L74FM4NXXJi0a8AIwtAWNVzk+PED10O1Mj1qbaRi4LPXXmHEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMx46czJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="niIqk71p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F9EC4CEC3;
-	Mon, 21 Oct 2024 10:39:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMx46czJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03556C4CEC3;
+	Mon, 21 Oct 2024 10:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729507174;
-	bh=Dn90KtWzVpluyjLr6aLaT4Z9QmQ47roErxxjL0sgU+4=;
+	s=korg; t=1729507177;
+	bh=Fr4e0Wrl/CECtdS0cTy6RBY7wDnHigJSfnZEnadkMS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=niIqk71pH8melbOgCLtIoybTOvZlIcR8LieZKpUPaY3P8jqVlO2qY5WklhJ1aTXc9
-	 LgIXkEPsQSCqg37fk6TEx5XGzGHWD6RCJjeyJT3BsGF0ayxukP7gLhGxpYUHhoIqLz
-	 gcwpcUtANrEzZbX1K0sQ+2xXw+7RXm4+QlBIzY38=
+	b=QMx46czJ7Pcf/6dTwTUhwB2916neiF+0CSKuFSMujjCz5dvO2eteYyOmar8hRG/6L
+	 90NRPrDO+mgxtNZ3Kkxb/jj/fa0umiIU0rzosPehGwkFEgV4ygKD4V/MWpEYnYu73f
+	 7vjQeFnV8zDq/vVGiliiQdzOumLoWa0lBSqVvUXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.6 114/124] irqchip/sifive-plic: Unmask interrupt in plic_irq_enable()
-Date: Mon, 21 Oct 2024 12:25:18 +0200
-Message-ID: <20241021102301.124736044@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 6.6 115/124] serial: qcom-geni: fix polled console initialisation
+Date: Mon, 21 Oct 2024 12:25:19 +0200
+Message-ID: <20241021102301.162971180@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -50,81 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 6b1e0651e9ce8ce418ad4ff360e7b9925dc5da79 upstream.
+commit 4bef7c6f299910f19876ad8e7f5897514855f1d2 upstream.
 
-It is possible that an interrupt is disabled and masked at the same time.
-When the interrupt is enabled again by enable_irq(), only plic_irq_enable()
-is called, not plic_irq_unmask(). The interrupt remains masked and never
-raises.
+The polled console (KGDB/KDB) implementation must not call port setup
+unconditionally as the port may already be in use by the console or a
+getty.
 
-An example where interrupt is both disabled and masked is when
-handle_fasteoi_irq() is the handler, and IRQS_ONESHOT is set. The interrupt
-handler:
+Only make sure that the receiver is enabled, but do not enable any
+device interrupts.
 
-  1. Mask the interrupt
-  2. Handle the interrupt
-  3. Check if interrupt is still enabled, and unmask it (see
-     cond_unmask_eoi_irq())
-
-If another task disables the interrupt in the middle of the above steps,
-the interrupt will not get unmasked, and will remain masked when it is
-enabled in the future.
-
-The problem is occasionally observed when PREEMPT_RT is enabled, because
-PREEMPT_RT adds the IRQS_ONESHOT flag. But PREEMPT_RT only makes the problem
-more likely to appear, the bug has been around since commit a1706a1c5062
-("irqchip/sifive-plic: Separate the enable and mask operations").
-
-Fix it by unmasking interrupt in plic_irq_enable().
-
-Fixes: a1706a1c5062 ("irqchip/sifive-plic: Separate the enable and mask operations")
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241003084152.2422969-1-namcao@linutronix.de
+Fixes: d8851a96ba25 ("tty: serial: qcom-geni-serial: Add a poll_init() function")
+Cc: stable@vger.kernel.org	# 6.4
+Cc: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20241009145110.16847-2-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-sifive-plic.c |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c |   21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-sifive-plic.c
-+++ b/drivers/irqchip/irq-sifive-plic.c
-@@ -120,16 +120,6 @@ static inline void plic_irq_toggle(const
- 	}
- }
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -144,6 +144,8 @@ static const struct uart_ops qcom_geni_u
+ static struct uart_driver qcom_geni_console_driver;
+ static struct uart_driver qcom_geni_uart_driver;
  
--static void plic_irq_enable(struct irq_data *d)
--{
--	plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 1);
--}
--
--static void plic_irq_disable(struct irq_data *d)
--{
--	plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 0);
--}
--
- static void plic_irq_unmask(struct irq_data *d)
++static int qcom_geni_serial_port_setup(struct uart_port *uport);
++
+ static inline struct qcom_geni_serial_port *to_dev_port(struct uart_port *uport)
  {
- 	struct plic_priv *priv = irq_data_get_irq_chip_data(d);
-@@ -144,6 +134,17 @@ static void plic_irq_mask(struct irq_dat
- 	writel(0, priv->regs + PRIORITY_BASE + d->hwirq * PRIORITY_PER_ID);
+ 	return container_of(uport, struct qcom_geni_serial_port, uport);
+@@ -385,6 +387,23 @@ static void qcom_geni_serial_poll_put_ch
+ 	writel(M_TX_FIFO_WATERMARK_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
+ 	qcom_geni_serial_poll_tx_done(uport);
  }
++
++static int qcom_geni_serial_poll_init(struct uart_port *uport)
++{
++	struct qcom_geni_serial_port *port = to_dev_port(uport);
++	int ret;
++
++	if (!port->setup) {
++		ret = qcom_geni_serial_port_setup(uport);
++		if (ret)
++			return ret;
++	}
++
++	if (!qcom_geni_serial_secondary_active(uport))
++		geni_se_setup_s_cmd(&port->se, UART_START_READ, 0);
++
++	return 0;
++}
+ #endif
  
-+static void plic_irq_enable(struct irq_data *d)
-+{
-+	plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 1);
-+	plic_irq_unmask(d);
-+}
-+
-+static void plic_irq_disable(struct irq_data *d)
-+{
-+	plic_irq_toggle(irq_data_get_effective_affinity_mask(d), d, 0);
-+}
-+
- static void plic_irq_eoi(struct irq_data *d)
- {
- 	struct plic_handler *handler = this_cpu_ptr(&plic_handlers);
+ #ifdef CONFIG_SERIAL_QCOM_GENI_CONSOLE
+@@ -1544,7 +1563,7 @@ static const struct uart_ops qcom_geni_c
+ #ifdef CONFIG_CONSOLE_POLL
+ 	.poll_get_char	= qcom_geni_serial_get_char,
+ 	.poll_put_char	= qcom_geni_serial_poll_put_char,
+-	.poll_init = qcom_geni_serial_port_setup,
++	.poll_init = qcom_geni_serial_poll_init,
+ #endif
+ 	.pm = qcom_geni_serial_pm,
+ };
 
 
