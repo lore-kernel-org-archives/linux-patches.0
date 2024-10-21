@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1635195FEC;
-	Mon, 21 Oct 2024 10:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06E539FD6;
+	Mon, 21 Oct 2024 10:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506965; cv=none; b=CbK+pie5G7wm8+9o0CLDkNThIkvONe8jknPvPCI0VPC65HCaYTnYJScHWNdjPUeX6inTK2SvsNgMJnpW7kp1iJoaOa9jaWS0kBMJdb3IuRRMn0yn4bAFWIpa6JgPmOkBa7aC4u5XAl317QWA7QVYctFB5Wqwia7bw02VjUnMk/8=
+	t=1729506968; cv=none; b=f5KYzxFp8YucbFK2Tz77BBGvWGzBg2r+0BTCvtAzESlzxx1TDo/PpxTBArJHScKeG69Pg94ZLkMqTisRxmfhZindoSDE4c41e7XO2A/FexH57q/osse8s02aZSFHfSH+DW8eAus03OMQhgzXhjAIANtfTKfEw5YisvUWS0ek3Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506965; c=relaxed/simple;
-	bh=1kKanxVfAf7S3DNaRMJuO0WGYYIOERHXK1WNkSXC7Rg=;
+	s=arc-20240116; t=1729506968; c=relaxed/simple;
+	bh=V9tQpdddGNYpSWCAWJfPE1BBZ8iQCvnwgWa4axycpvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HFQsCtL5rKRi9ud2sY6r9hmxVlq07RcGSFoi9knHU7D0soTViA6KxivJKjnx2BTozx1u+p339vq0jMTNeaU5v7OhCeLPbXxx0RVrKumxCQajxldVgAml1qrW9LovYkRDP7mqsxdYxks4iSNzBMhDhEf5Mj/wmX+248xxW97PoUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sVSyEiLB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ibRROZDhvIjBxnpvBOpUp9I2zJWdF3rjUb2vBQXlO7zEFOg4EQrrBt4N9l2mhN3MgxU/KaLytLTnnBCzDSwPNM3L0aYwKyiSD3AnCWwKF/dOhCT8w112xUmBhIvoC1j3Vc0jRVf3ju0p/NDeEzoHeWMnsRFOW1rY2NUYYm9KAug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlWXoV0f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sVSyEiLB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8F1C4CEC3;
-	Mon, 21 Oct 2024 10:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlWXoV0f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301DEC4CEC3;
+	Mon, 21 Oct 2024 10:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729506965;
-	bh=1kKanxVfAf7S3DNaRMJuO0WGYYIOERHXK1WNkSXC7Rg=;
+	s=korg; t=1729506968;
+	bh=V9tQpdddGNYpSWCAWJfPE1BBZ8iQCvnwgWa4axycpvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sVSyEiLBc+CIIqL9MvcgVPJhyIMuVyuiB9f2vjVCBTYhzIEOoCHT02AoraN/2so+l
-	 K0UBqSLCBhEaRH8ahC88N203fTDifEkbesxSkGapsRe6LoHOtX5HfX62ojLVgiEY/W
-	 sRBchu1Q2bJQVoi5Gq47Pa0PpNAlROK2sgYK41L4=
+	b=ZlWXoV0f8v4lPeGs4gbwtcbQma/zmDEejtXUQrHUA1980gxanSzzLO1rk1yTSxDig
+	 lBNqVI3Cy9m+EfrbGQZSPGHZNgUg+h8Zj6D2dfWYYKM1S6OK+5NGW4GF5vDpKElhII
+	 5peudAgQ8MCGPFFY7lj5zkrOXuL8rElisoNtYp9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-xfs@vger.kernel.org,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Catherine Hoang <catherine.hoang@oracle.com>
-Subject: [PATCH 6.6 044/124] xfs: restrict when we try to align cow fork delalloc to cowextsz hints
-Date: Mon, 21 Oct 2024 12:24:08 +0200
-Message-ID: <20241021102258.434209222@linuxfoundation.org>
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Bert Karwatzki <spasswolf@web.de>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 045/124] maple_tree: correct tree corruption on spanning store
+Date: Mon, 21 Oct 2024 12:24:09 +0200
+Message-ID: <20241021102258.471758323@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241021102256.706334758@linuxfoundation.org>
 References: <20241021102256.706334758@linuxfoundation.org>
@@ -53,172 +57,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit 288e1f693f04e66be99f27e7cbe4a45936a66745 upstream.
+commit bea07fd63192b61209d48cbb81ef474cc3ee4c62 upstream.
 
-xfs/205 produces the following failure when always_cow is enabled:
+Patch series "maple_tree: correct tree corruption on spanning store", v3.
 
-#  --- a/tests/xfs/205.out	2024-02-28 16:20:24.437887970 -0800
-#  +++ b/tests/xfs/205.out.bad	2024-06-03 21:13:40.584000000 -0700
-#  @@ -1,4 +1,5 @@
-#   QA output created by 205
-#   *** one file
-#  +   !!! disk full (expected)
-#   *** one file, a few bytes at a time
-#   *** done
+There has been a nasty yet subtle maple tree corruption bug that appears
+to have been in existence since the inception of the algorithm.
 
-This is the result of overly aggressive attempts to align cow fork
-delalloc reservations to the CoW extent size hint.  Looking at the trace
-data, we're trying to append a single fsblock to the "fred" file.
-Trying to create a speculative post-eof reservation fails because
-there's not enough space.
+This bug seems far more likely to happen since commit f8d112a4e657
+("mm/mmap: avoid zeroing vma tree in mmap_region()"), which is the point
+at which reports started to be submitted concerning this bug.
 
-We then set @prealloc_blocks to zero and try again, but the cowextsz
-alignment code triggers, which expands our request for a 1-fsblock
-reservation into a 39-block reservation.  There's not enough space for
-that, so the whole write fails with ENOSPC even though there's
-sufficient space in the filesystem to allocate the single block that we
-need to land the write.
+We were made definitely aware of the bug thanks to the kind efforts of
+Bert Karwatzki who helped enormously in my being able to track this down
+and identify the cause of it.
 
-There are two things wrong here -- first, we shouldn't be attempting
-speculative preallocations beyond what was requested when we're low on
-space.  Second, if we've already computed a posteof preallocation, we
-shouldn't bother trying to align that to the cowextsize hint.
+The bug arises when an attempt is made to perform a spanning store across
+two leaf nodes, where the right leaf node is the rightmost child of the
+shared parent, AND the store completely consumes the right-mode node.
 
-Fix both of these problems by adding a flag that only enables the
-expansion of the delalloc reservation to the cowextsize if we're doing a
-non-extending write, and only if we're not doing an ENOSPC retry.  This
-requires us to move the ENOSPC retry logic to xfs_bmapi_reserve_delalloc.
+This results in mas_wr_spanning_store() mitakenly duplicating the new and
+existing entries at the maximum pivot within the range, and thus maple
+tree corruption.
 
-I probably should have caught this six years ago when 6ca30729c206d was
-being reviewed, but oh well.  Update the comments to reflect what the
-code does now.
+The fix patch corrects this by detecting this scenario and disallowing the
+mistaken duplicate copy.
 
-Fixes: 6ca30729c206d ("xfs: bmap code cleanup")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
+The fix patch commit message goes into great detail as to how this occurs.
+
+This series also includes a test which reliably reproduces the issue, and
+asserts that the fix works correctly.
+
+Bert has kindly tested the fix and confirmed it resolved his issues.  Also
+Mikhail Gavrilov kindly reported what appears to be precisely the same
+bug, which this fix should also resolve.
+
+
+This patch (of 2):
+
+There has been a subtle bug present in the maple tree implementation from
+its inception.
+
+This arises from how stores are performed - when a store occurs, it will
+overwrite overlapping ranges and adjust the tree as necessary to
+accommodate this.
+
+A range may always ultimately span two leaf nodes.  In this instance we
+walk the two leaf nodes, determine which elements are not overwritten to
+the left and to the right of the start and end of the ranges respectively
+and then rebalance the tree to contain these entries and the newly
+inserted one.
+
+This kind of store is dubbed a 'spanning store' and is implemented by
+mas_wr_spanning_store().
+
+In order to reach this stage, mas_store_gfp() invokes
+mas_wr_preallocate(), mas_wr_store_type() and mas_wr_walk() in turn to
+walk the tree and update the object (mas) to traverse to the location
+where the write should be performed, determining its store type.
+
+When a spanning store is required, this function returns false stopping at
+the parent node which contains the target range, and mas_wr_store_type()
+marks the mas->store_type as wr_spanning_store to denote this fact.
+
+When we go to perform the store in mas_wr_spanning_store(), we first
+determine the elements AFTER the END of the range we wish to store (that
+is, to the right of the entry to be inserted) - we do this by walking to
+the NEXT pivot in the tree (i.e.  r_mas.last + 1), starting at the node we
+have just determined contains the range over which we intend to write.
+
+We then turn our attention to the entries to the left of the entry we are
+inserting, whose state is represented by l_mas, and copy these into a 'big
+node', which is a special node which contains enough slots to contain two
+leaf node's worth of data.
+
+We then copy the entry we wish to store immediately after this - the copy
+and the insertion of the new entry is performed by mas_store_b_node().
+
+After this we copy the elements to the right of the end of the range which
+we are inserting, if we have not exceeded the length of the node (i.e.
+r_mas.offset <= r_mas.end).
+
+Herein lies the bug - under very specific circumstances, this logic can
+break and corrupt the maple tree.
+
+Consider the following tree:
+
+Height
+  0                             Root Node
+                                 /      \
+                 pivot = 0xffff /        \ pivot = ULONG_MAX
+                               /          \
+  1                       A [-----]       ...
+                             /   \
+             pivot = 0x4fff /     \ pivot = 0xffff
+                           /       \
+  2 (LEAVES)          B [-----]  [-----] C
+                                      ^--- Last pivot 0xffff.
+
+Now imagine we wish to store an entry in the range [0x4000, 0xffff] (note
+that all ranges expressed in maple tree code are inclusive):
+
+1. mas_store_gfp() descends the tree, finds node A at <=0xffff, then
+   determines that this is a spanning store across nodes B and C. The mas
+   state is set such that the current node from which we traverse further
+   is node A.
+
+2. In mas_wr_spanning_store() we try to find elements to the right of pivot
+   0xffff by searching for an index of 0x10000:
+
+    - mas_wr_walk_index() invokes mas_wr_walk_descend() and
+      mas_wr_node_walk() in turn.
+
+        - mas_wr_node_walk() loops over entries in node A until EITHER it
+          finds an entry whose pivot equals or exceeds 0x10000 OR it
+          reaches the final entry.
+
+        - Since no entry has a pivot equal to or exceeding 0x10000, pivot
+          0xffff is selected, leading to node C.
+
+    - mas_wr_walk_traverse() resets the mas state to traverse node C. We
+      loop around and invoke mas_wr_walk_descend() and mas_wr_node_walk()
+      in turn once again.
+
+         - Again, we reach the last entry in node C, which has a pivot of
+           0xffff.
+
+3. We then copy the elements to the left of 0x4000 in node B to the big
+   node via mas_store_b_node(), and insert the new [0x4000, 0xffff] entry
+   too.
+
+4. We determine whether we have any entries to copy from the right of the
+   end of the range via - and with r_mas set up at the entry at pivot
+   0xffff, r_mas.offset <= r_mas.end, and then we DUPLICATE the entry at
+   pivot 0xffff.
+
+5. BUG! The maple tree is corrupted with a duplicate entry.
+
+This requires a very specific set of circumstances - we must be spanning
+the last element in a leaf node, which is the last element in the parent
+node.
+
+spanning store across two leaf nodes with a range that ends at that shared
+pivot.
+
+A potential solution to this problem would simply be to reset the walk
+each time we traverse r_mas, however given the rarity of this situation it
+seems that would be rather inefficient.
+
+Instead, this patch detects if the right hand node is populated, i.e.  has
+anything we need to copy.
+
+We do so by only copying elements from the right of the entry being
+inserted when the maximum value present exceeds the last, rather than
+basing this on offset position.
+
+The patch also updates some comments and eliminates the unused bool return
+value in mas_wr_walk_index().
+
+The work performed in commit f8d112a4e657 ("mm/mmap: avoid zeroing vma
+tree in mmap_region()") seems to have made the probability of this event
+much more likely, which is the point at which reports started to be
+submitted concerning this bug.
+
+The motivation for this change arose from Bert Karwatzki's report of
+encountering mm instability after the release of kernel v6.12-rc1 which,
+after the use of CONFIG_DEBUG_VM_MAPLE_TREE and similar configuration
+options, was identified as maple tree corruption.
+
+After Bert very generously provided his time and ability to reproduce this
+event consistently, I was able to finally identify that the issue
+discussed in this commit message was occurring for him.
+
+Link: https://lkml.kernel.org/r/cover.1728314402.git.lorenzo.stoakes@oracle.com
+Link: https://lkml.kernel.org/r/48b349a2a0f7c76e18772712d0997a5e12ab0a3b.1728314403.git.lorenzo.stoakes@oracle.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reported-by: Bert Karwatzki <spasswolf@web.de>
+Closes: https://lore.kernel.org/all/20241001023402.3374-1-spasswolf@web.de/
+Tested-by: Bert Karwatzki <spasswolf@web.de>
+Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Closes: https://lore.kernel.org/all/CABXGCsOPwuoNOqSMmAvWO2Fz4TEmPnjFj-b7iF+XFRu1h7-+Dg@mail.gmail.com/
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_bmap.c |   31 +++++++++++++++++++++++++++----
- fs/xfs/xfs_iomap.c       |   34 ++++++++++++----------------------
- 2 files changed, 39 insertions(+), 26 deletions(-)
+ lib/maple_tree.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_bmap.c
-+++ b/fs/xfs/libxfs/xfs_bmap.c
-@@ -3974,20 +3974,32 @@ xfs_bmapi_reserve_delalloc(
- 	xfs_extlen_t		alen;
- 	xfs_extlen_t		indlen;
- 	int			error;
--	xfs_fileoff_t		aoff = off;
-+	xfs_fileoff_t		aoff;
-+	bool			use_cowextszhint =
-+					whichfork == XFS_COW_FORK && !prealloc;
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -2228,6 +2228,8 @@ static inline struct maple_enode *mte_no
  
-+retry:
- 	/*
- 	 * Cap the alloc length. Keep track of prealloc so we know whether to
- 	 * tag the inode before we return.
- 	 */
-+	aoff = off;
- 	alen = XFS_FILBLKS_MIN(len + prealloc, XFS_MAX_BMBT_EXTLEN);
- 	if (!eof)
- 		alen = XFS_FILBLKS_MIN(alen, got->br_startoff - aoff);
- 	if (prealloc && alen >= len)
- 		prealloc = alen - len;
- 
--	/* Figure out the extent size, adjust alen */
--	if (whichfork == XFS_COW_FORK) {
-+	/*
-+	 * If we're targetting the COW fork but aren't creating a speculative
-+	 * posteof preallocation, try to expand the reservation to align with
-+	 * the COW extent size hint if there's sufficient free space.
-+	 *
-+	 * Unlike the data fork, the CoW cancellation functions will free all
-+	 * the reservations at inactivation, so we don't require that every
-+	 * delalloc reservation have a dirty pagecache.
-+	 */
-+	if (use_cowextszhint) {
- 		struct xfs_bmbt_irec	prev;
- 		xfs_extlen_t		extsz = xfs_get_cowextsz_hint(ip);
- 
-@@ -4006,7 +4018,7 @@ xfs_bmapi_reserve_delalloc(
- 	 */
- 	error = xfs_quota_reserve_blkres(ip, alen);
- 	if (error)
--		return error;
-+		goto out;
- 
- 	/*
- 	 * Split changing sb for alen and indlen since they could be coming
-@@ -4051,6 +4063,17 @@ out_unreserve_blocks:
- out_unreserve_quota:
- 	if (XFS_IS_QUOTA_ON(mp))
- 		xfs_quota_unreserve_blkres(ip, alen);
-+out:
-+	if (error == -ENOSPC || error == -EDQUOT) {
-+		trace_xfs_delalloc_enospc(ip, off, len);
-+
-+		if (prealloc || use_cowextszhint) {
-+			/* retry without any preallocation */
-+			use_cowextszhint = false;
-+			prealloc = 0;
-+			goto retry;
-+		}
-+	}
- 	return error;
+ /*
+  * mas_wr_node_walk() - Find the correct offset for the index in the @mas.
++ *                      If @mas->index cannot be found within the containing
++ *                      node, we traverse to the last entry in the node.
+  * @wr_mas: The maple write state
+  *
+  * Uses mas_slot_locked() and does not need to worry about dead nodes.
+@@ -3643,7 +3645,7 @@ static bool mas_wr_walk(struct ma_wr_sta
+ 	return true;
  }
  
---- a/fs/xfs/xfs_iomap.c
-+++ b/fs/xfs/xfs_iomap.c
-@@ -1127,33 +1127,23 @@ xfs_buffered_write_iomap_begin(
- 		}
- 	}
+-static bool mas_wr_walk_index(struct ma_wr_state *wr_mas)
++static void mas_wr_walk_index(struct ma_wr_state *wr_mas)
+ {
+ 	struct ma_state *mas = wr_mas->mas;
  
--retry:
--	error = xfs_bmapi_reserve_delalloc(ip, allocfork, offset_fsb,
--			end_fsb - offset_fsb, prealloc_blocks,
--			allocfork == XFS_DATA_FORK ? &imap : &cmap,
--			allocfork == XFS_DATA_FORK ? &icur : &ccur,
--			allocfork == XFS_DATA_FORK ? eof : cow_eof);
--	switch (error) {
--	case 0:
--		break;
--	case -ENOSPC:
--	case -EDQUOT:
--		/* retry without any preallocation */
--		trace_xfs_delalloc_enospc(ip, offset, count);
--		if (prealloc_blocks) {
--			prealloc_blocks = 0;
--			goto retry;
--		}
--		fallthrough;
--	default:
--		goto out_unlock;
--	}
+@@ -3652,11 +3654,9 @@ static bool mas_wr_walk_index(struct ma_
+ 		wr_mas->content = mas_slot_locked(mas, wr_mas->slots,
+ 						  mas->offset);
+ 		if (ma_is_leaf(wr_mas->type))
+-			return true;
++			return;
+ 		mas_wr_walk_traverse(wr_mas);
 -
- 	if (allocfork == XFS_COW_FORK) {
-+		error = xfs_bmapi_reserve_delalloc(ip, allocfork, offset_fsb,
-+				end_fsb - offset_fsb, prealloc_blocks, &cmap,
-+				&ccur, cow_eof);
-+		if (error)
-+			goto out_unlock;
-+
- 		trace_xfs_iomap_alloc(ip, offset, count, allocfork, &cmap);
- 		goto found_cow;
  	}
- 
-+	error = xfs_bmapi_reserve_delalloc(ip, allocfork, offset_fsb,
-+			end_fsb - offset_fsb, prealloc_blocks, &imap, &icur,
-+			eof);
-+	if (error)
-+		goto out_unlock;
-+
- 	/*
- 	 * Flag newly allocated delalloc blocks with IOMAP_F_NEW so we punch
- 	 * them out if the write happens to fail.
+-	return true;
+ }
+ /*
+  * mas_extend_spanning_null() - Extend a store of a %NULL to include surrounding %NULLs.
+@@ -3892,8 +3892,8 @@ static inline int mas_wr_spanning_store(
+ 	memset(&b_node, 0, sizeof(struct maple_big_node));
+ 	/* Copy l_mas and store the value in b_node. */
+ 	mas_store_b_node(&l_wr_mas, &b_node, l_wr_mas.node_end);
+-	/* Copy r_mas into b_node. */
+-	if (r_mas.offset <= r_wr_mas.node_end)
++	/* Copy r_mas into b_node if there is anything to copy. */
++	if (r_mas.max > r_mas.last)
+ 		mas_mab_cp(&r_mas, r_mas.offset, r_wr_mas.node_end,
+ 			   &b_node, b_node.b_end + 1);
+ 	else
 
 
