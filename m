@@ -1,155 +1,256 @@
-Received: from smtpout38.security-mail.net (smtpout38.security-mail.net [85.31.212.38])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A34A19EED2
-	for <patches@lists.linux.dev>; Tue, 22 Oct 2024 13:55:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=85.31.212.38
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729605307; cv=fail; b=kTw7vnLjaZsY9zMKrDdwkWe8JkKhuOSHCPt96VFLfdBkr2E/NApWrPJsYZG4Z7ctVSwFMN9sx0sCMacmfFhGCWPGdo+ZF9SkRC3QnPIkwcWtAIWacPcOkz2F4Y65GV4v+tLQUPjgv3OHpEaC4OFQmgRIAHrdd4rxwaPEhL2ORXs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729605307; c=relaxed/simple;
-	bh=LMGHh7NHN1bcY2Kb5D+gaArOfP1cxIW6WjoxTWXgS7w=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=LyjqYfccSchyyaChdM9oLUt/t5Zj+Jsi4P7r4UrirCGj8/7syL0HHMHvfcDWLQp069TS3KJoCGqK7jYO2EuCYOKJgWJ9MGQV7AHjCM9EiK14LtRI+O5K4dJNa6WihCuvouLvSiH0qX7cbyY+UxGCzd5N423xICf9vv60MrQDXms=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kalrayinc.com; spf=pass smtp.mailfrom=kalrayinc.com; dkim=pass (1024-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b=aOgBJR5z; dkim=fail (2048-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b=fXbMKXhT reason="signature verification failed"; arc=fail smtp.client-ip=85.31.212.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kalrayinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kalrayinc.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F5D1A257C
+	for <patches@lists.linux.dev>; Tue, 22 Oct 2024 14:45:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1729608350; cv=none; b=oqRovqGoDxI4f4r75M7SgGUf8n88Xr8aQVPrhTO+xS0THwKocgcLP1B469rPWxsh6jtmxDCP3GAajarl1/uvZmj+aPj3EEhB5YawW7ciZi9Ktf19C0u6/9D9dRIO4X3ihs+C3V9x+uj7TlhM9AdxTrNfIyOJaLccZmpV/Y/ybm8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1729608350; c=relaxed/simple;
+	bh=iPeA0xIA/17KTa13ow3RRCLpwAo+d6qgRmS6c1VLA3Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=EZZeAcn6/V9dZIDCQSIoxUGRhwoBwOK02WBg7jsbAVhy5pgPP/If+DUj0Pdal0D16cNqRheNwzkabMVPa5RB0gBn4Ff571AXNCp5p07VryCCkvi1m3V5ynqD3Udj6LsOT0Ss06SX+YeSLMbaKBEu7cWMKyYnlCS1cTvqw8MLJrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KlXGV52l; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b="aOgBJR5z";
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kalrayinc.com header.i=@kalrayinc.com header.b="fXbMKXhT"
-Received: from localhost (fx306.security-mail.net [127.0.0.1])
-	by fx306.security-mail.net (Postfix) with ESMTP id BEF8B35D1C7
-	for <patches@lists.linux.dev>; Tue, 22 Oct 2024 15:50:40 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kalrayinc.com;
-	s=sec-sig-email; t=1729605040;
-	bh=LMGHh7NHN1bcY2Kb5D+gaArOfP1cxIW6WjoxTWXgS7w=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=aOgBJR5zN7TihpQfwx435n+zF8uaqNV90KyR7DjGrlCIWAwNmjgp4d4xzAZyZfFAB
-	 bE8D00n+12b2P0RsY3HUmR0+yntJdTOgJix+Dz1U27uiA4obQOw0Ti/JDF+f/8dsWD
-	 qMkQ6MRhvnUnUmjFm1hCScZVe8DLpIfS45bJKOBw=
-Received: from fx306 (fx306.security-mail.net [127.0.0.1]) by
- fx306.security-mail.net (Postfix) with ESMTP id 6B21A35D1DC; Tue, 22 Oct
- 2024 15:50:40 +0200 (CEST)
-Received: from PAUP264CU001.outbound.protection.outlook.com
- (mail-francecentralazlp17011025.outbound.protection.outlook.com
- [40.93.76.25]) by fx306.security-mail.net (Postfix) with ESMTPS id
- D326535D1D7; Tue, 22 Oct 2024 15:50:39 +0200 (CEST)
-Received: from PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM (2603:10a6:102:14b::6)
- by MRZP264MB2379.FRAP264.PROD.OUTLOOK.COM (2603:10a6:501:1c::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.28; Tue, 22 Oct
- 2024 13:50:38 +0000
-Received: from PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
- ([fe80::7a6f:1976:3bf3:aa39]) by PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
- ([fe80::7a6f:1976:3bf3:aa39%3]) with mapi id 15.20.8069.027; Tue, 22 Oct
- 2024 13:50:38 +0000
-X-Secumail-id: <13ff1.6717adaf.cff8a.0>
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wdA+d6HLzE4tlM3jEZ46mJxpSHfmI1OJefHEZS3HSpzoXS+GTBoBc8UbD2Aso9y/IlyXy7OlnL6JhN1Buk1/UqA6Mp0blFiY9YH2bKQssKuF31ddCQfVAZiGNI/I79dp8dWrBzPvipYRsJeqyqpMdD4VMKOaveR/JZO/9qrBX5AJpRVGZ3uRDZ24ccTc9uQS5OcPnFDcLXCyV+dCWo/xGxqw8Ygninoga9/yJ61HOSrlOJuBHNpewJc7DFCbg7LPJwaSjPrHa54C9KqHy60kchnLePk1YQUnzBBwvJALZxaaY3qKJIpJPBKwqNoOd+G6ZLWOBiqvKluB62DE+T8oDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=microsoft.com; s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=w200T19YUd4kedT2+23uHCm2k28W+68AkOhALX7KAYs=;
- b=rdKAssuu3tVEUnK2Rfzwzipkxv9Vrsrmex0qtSwnEG5paLwTX6bXlSa2SQdxTsBzHMi6+52ibRKBvRHYKHyCKjGeR9oHL1BD2aUv1zerHuXSO9i+krkPzG4bz2vtuOUiv6kRHG6sCluSP6GMFl/l3YcVrZjlmFo9Qpze3Wp3FbSs1t9q/tRxvc3lN5aEKxQw1ArJDFIOMBUMi3evUjySY5nAAm0pSa2I8l2PO9U7AzjKGn89NkoxpqldmMiYf4t8ikHXEzuTJiDYZhFp8LQUOap5Lu5dN8INka5gxq0UiWw9kXKkMDE0RzZcbOoiY+s+A2oObv7H5wVBrrW9YTni4A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=kalrayinc.com; dmarc=pass action=none
- header.from=kalrayinc.com; dkim=pass header.d=kalrayinc.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kalrayinc.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=w200T19YUd4kedT2+23uHCm2k28W+68AkOhALX7KAYs=;
- b=fXbMKXhTPqSXFdzOIbfLhBMQ0rcFGDeRTSCYZ58sV6wYRvxZErLuy4AP2muexuLcPz74ZMrbq0b/yb5clJ9sudtUrBi0WOrgJUVgi0hP22l1yE6jVcBGu7SVGtF4ORxRfhCxb/yg74iX2Hmv0N2MGxpukiOsnFuotfoWTMUzAFf2s/cG17Timq8iCIVZ8jn3IfJX83DM9WryfEIowMbVcbw84QriakcRAsKeqRzu+Cd5uaGNBNwTw9kdmxPZVTDS0l026h+tfhcU5qmnN3llGk1hIKpcGVWAZIZYUHOCTB7iha+SXrW1I9i2ugq4XkX0FkpRDCqK1jgX784E7E0AOA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=kalrayinc.com;
-Message-ID: <4fe2beb6-9c68-44fb-be87-14148dddbf93@kalrayinc.com>
-Date: Tue, 22 Oct 2024 15:50:35 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 00/91] 6.1.114-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20241021102249.791942892@linuxfoundation.org>
-Content-Language: fr
-From: Yann Sionneau <ysionneau@kalrayinc.com>
-In-Reply-To: <20241021102249.791942892@linuxfoundation.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AM9P192CA0005.EURP192.PROD.OUTLOOK.COM
- (2603:10a6:20b:21d::10) To PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
- (2603:10a6:102:14b::6)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KlXGV52l"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43161e7bb25so44539895e9.2
+        for <patches@lists.linux.dev>; Tue, 22 Oct 2024 07:45:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729608347; x=1730213147; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VfScArnpdJrnqq5kLDA8YBUAiGNEl3nVLr0jXTaCRoA=;
+        b=KlXGV52lI/IXWwZGAsFxl0mNWP4MCI4dHoxIbdNSAKP5HF7M/VXIg3Whwz13oonvit
+         WHwhzN2B1jfgzqYajUQoowz9W/P2Uekyz3gQOzbzI9Zyt7gNWevWubRXGgbpureIxiHc
+         nLqcGrY9IlzlGy4/FY67AUkATmO+SfjZorp/WgHK8XblQAt2/JY2bfR6yIQwUaOmZW5N
+         3HbVqe73DD7pw+qnnof8HnKsqvkX4QaHKcBHyZKbs6qRSybqwJSGl5ZRECRt1/Pi8lJ6
+         BlUUse1SARC0GSInNcIK0Z0w2cFhN6ySPY3EOvKfQTPjrJqh6ugf+6hAxsewoU9DrAU1
+         dz0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729608347; x=1730213147;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VfScArnpdJrnqq5kLDA8YBUAiGNEl3nVLr0jXTaCRoA=;
+        b=I7zNKyyQfxL6XROT6OOtO0BSDySyfyk5+syEDp46NUl5qjofvUr0djQlIXOJy2Aku2
+         mWGuy5Wj934+jjcCcayv1Hn/tVkPc/TPkktLzBun4qdb4Azlr3FvLu7v2ZimbHl5Zuid
+         OvfOmg9e14Yb21et53/GgiUUuv3nOV5Xxel6fHimTz/t0nbv9utwwMySKD4zOIkpo76y
+         TBJZS+3MPS/WulzllB51IhZElYnu5upMpDTHmEjTxyaGudNX+5cL7i2V6uqMOzTGS3r0
+         O6V1i5uIBAqcYUZgbHNb+NxV6IA76zKnlr7p3pxz79dvF1w7WWO40t1SxqG7upqtDW6F
+         ItNA==
+X-Forwarded-Encrypted: i=1; AJvYcCUGXiF5fyWELR59cQXXX96wFt3nqjGuhVGuNKf0f6LuKn8rLfr92bQhq9QZUjfp/0wQV1Nb0F4A@lists.linux.dev
+X-Gm-Message-State: AOJu0YwkV/aU7ZYEDk0L2HutulBfIfHeN8nCdwOOzcUAge0IXcF/plDb
+	vnU5WRcr9RFoMqluDxb1lqNIggV+hw8OS+3OAZ1xXf/NYI1wTEcrtqnhWiCSe+0=
+X-Google-Smtp-Source: AGHT+IHdpnJLiOWWqS9RdieKHG3lEkycJ1QHEFPRnSHFxc+XCnvp2QLfFdCfT4PNJ2GXkhNPlTY1Jg==
+X-Received: by 2002:a05:600c:4ed3:b0:42f:8287:c24d with SMTP id 5b1f17b1804b1-4317b8edf96mr34054885e9.21.1729608346482;
+        Tue, 22 Oct 2024 07:45:46 -0700 (PDT)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37ee0a4ad48sm6778121f8f.42.2024.10.22.07.45.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Oct 2024 07:45:46 -0700 (PDT)
+Date: Tue, 22 Oct 2024 17:45:42 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: oe-kbuild@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: lkp@intel.com, oe-kbuild-all@lists.linux.dev,
+	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: Re: [PATCH] media: dvbdev: Avoid using uninitialized ret in
+ dvb_register_device()
+Message-ID: <a3da0f19-d0b0-4c44-ad27-df099263b075@stanley.mountain>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PR0P264MB3481:EE_|MRZP264MB2379:EE_
-X-MS-Office365-Filtering-Correlation-Id: 90226ee6-461a-49d0-4075-08dcf2a0826f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info: BbiczVcacf80fTy4FPz+0pZ7uSIFfvdaEtz2AOS9Wr543NbNseEvIk3Gq3mtiPqL5UsPz60IwXPYxz2dCSUqqKqxqRfT1ilNhc/hpiU28pf/vPfeoQJECOiGVJvueAvYrlR/q1Q995hD3vLvb5YhelfzyN+scWnN88gIsZ4bjXtKf5HWu8Ej3grPDdvq9aR7Ci0jYw/jw+7jUtnG9Cb1jA7LM3Qqe1gU5XmYHODV2qaTRfQpAHd+zHyz3Hu1OhSXMPgFLrUkuV3Cf/+iwYxvbsSe/dbunc4lpeprmDE4VDPVbFtI6/o2WagN51DbuWOaPGQ5R9pdhcQh1kthTRYZnta5v4FPjntZZ6FpfBrPUXpq7Yne35Yz3L/rcKKX6YMnhp3VBx75gakQvE0r7KBeGo2d6elfJc5U6MO1SW/8dwp5kq1gTaRWfmuH0NHozcNQ8qGEj5Hptq3MBN5LlKFn7Hdldm42H5z3u2CSClIGes2MMW62ANeSHbCIPHzB7eT8shjnt6dBIMrpw3L/6caSBWQYX62JMhMEHPtm6Pa7rYMgG1FToDQhaFbiigbYPwh6u6NMnqVhwzGmi142HyYNshBn7hAAFmuqGTwcluaoai3vucZluCx3NVh/+Ti2CR+1htNPWO38Y+zM1flx6P/5H8coI3H0FbfZkioarMzyhHzKipOkmK3cO2LCUeZD1PyV+zKS7zt/7JsOOhs+2GvLwJ6vqkuV6+YiSul0b56S0edDcuHtOg6AgVrZO+ztu6OBieULQa/A+RWYUWQYICNMQJtDgBPr2GTbP1HuBCLcOgv7o+Bt8W56Yjyg0Tfq4s4JZto9Q83kHdepzoNpQ3Z7yJdCyNLpMud+uolWxIZ28WWb4xwEMbPBV8TLKGp0wOyT9cDf7skl0UH0dSytJ23NxFwfQpU7OexAZBdI79+3lzyNFrB9f4992DehiiVfaHCjtX3
- LJw8ZaYUO2sfTJY5rdrZV7YwP2vgVx6iMMIGlTMuMoEmdoObrKhJVCYai5/AN0m1YLyEra+/N9mwscAO00PINJ0EVF7o6Rxp7WHdtITpaeYCzgwUxerFD/By7b24hJVfCAM6itDBfNQVsbz2oeG6xKwfDtute+KHn+FQm/bXnv6zaiQ/JtJEvSdvmCEeILT7ZYxd3pc6EsFm4U2UFCJEn3B4ghD3x97Sga4/8W8QTL9UDYeb0V0886l6RR7vGg2BsEYN7u7ubF+Pn/+cdecx5wkqeAiBFH0PQiOH09r+FceeysfLtYZwH5dO8DWeu/idLAl5l+50qVH/0VZ8XAkpNgBAGK2zUpASSukgDQC6IEe/0Tg1iwqECIm0j2hl+
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 0JozI4GBNLyDwl5KXZuEOa5hr1woMnCJxrdhJ7d0Xp6DupuQVGQl+TA9SJCk+tdp7kibqGDxOsHsrGKjTdae3HqqogGuMfa4rBLvO3+mydCqzHe6yf/CIniRLCR7mWCNu0vIZ8G40q5joehNsfac3lHubnzuvyUpAXvC7vg5KFbQVXKbKYJLB1BD+yLet1nv3dLYN2fpbSAV7u145oq5uc7J1IYGRP2r31h0mTNE/9TscJBQSo9TrCvwIL04pWv+j0AbLJWlgLGtMQCUmykQ/GxWwg8v5PG/eJdLCf1h0WKoy7NdNAXX1kDSMQ7tpF3EpA9+IVdC6Q4XxGSihGjF+nnvbxNrsWX5bjjAWmwKTlI0Wt43wwd1NFmUHTw3VPMXwupY5tLXrV/c9VdIP6lCTwcCQrF/APAlgyJgWyCmmxw0OthO8RhgR5J8XO3oky0t6hIc/wLQsFu19XMpYmwSEuGmjjilasPcj8ZaQyzBfNK+dRhzulYHD83WdlE3tu539XyxrCHqAJRwRJRu1dgEc72vueOlvxj4hIoLdHQNjKQTXjB7rjKJD2iySzGB5qavxAEYBV3a64GDEU8Lbdt+6+W6mrqu7gTo9vVhUrnmjfDjpQ5Qf05NxbFTYYE8+5qD178vEKGD4/EGuBBe0oiSkjmDGSAO0L9amW9Y7HzvU8EAVldSw8PJ/udIFDr+e5rHal6dOGHOhgNva3eBpEvhreW4HpbJ8g+qq+BJX2FzqVX3nRQri/aaqCxSR2p5jwuWIAInLzNbEc2+bAfxx0r7/QW6iw5+nRR+tDB+VsNRJJawU7ZesRbhB6sZyggtPniZ7Ngy7mMF19NK5pGM2aqFGHcrPhGjAkiKFsUS57eyyg2ZHzZjnfx0mliCSrZ3saqHdUBD3bic/jAE+glzkZldOZD5uzOjtWdL9A2oJgWuMFR0FP4yeXDP68K7Bc0jtr/y
- rFZAViD02df0esFE1CFxCkWltsbopeSRnSWAKT9luykn9wI232WjeLq/97xT17Dxoulyj4Mle9UqyVAQcXYr8UprmZJ5wlab+TnrxKKzlurZfuzbQ/bcfBF9t5PrZo+ITUkuayU9CpnlZb8uG7dZDl6h4a42CbswHTP5h2vikwAnG4lCwHhlfkg/eYzaGZOXrNaLx6/TlQz3+wxYYy/8bdzG46ImGeYSUqofmGekw0/sr2isKjTBY16zbaZR1nmTYDAFqZFH1xbNxjBt9sS0XiSbxLF3HAFZtK5agAzCGBI1IVzRdvzZ0/qEGo4hF7Vo3cckZm3c5Ag7S52pLh99U7yv0AXjOsnd87WX1kPBQHYLRFZviW7zzsWL0tKSEv2NHmR5bTCnev/+oBU/wPH8IkM83wvbA0CIa/ZHbRP+0XavIvWeE9B//Fx5nfw28/MLL49jaPsNCnI6KPbn1pvCrB/ebUda4V1Js4BXNc3hB+xCifcQwwDWx2WOCmUFeTKOvUKiUP58A/ZOUvojEpcid5T5i0UqiugpqhsfzOOT5CUcRh4y0sZ3K6vJMfgMap95SAhMqEBq/VP4A9mqsm/yIrZY+iYtKXHzWBU+WutvemQ9A14wM+bw8wZJgxOdZjKbHM1sGKnEP+NVBX0tPPMaBw==
-X-OriginatorOrg: kalrayinc.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 90226ee6-461a-49d0-4075-08dcf2a0826f
-X-MS-Exchange-CrossTenant-AuthSource: PR0P264MB3481.FRAP264.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Oct 2024 13:50:38.0624
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 8931925d-7620-4a64-b7fe-20afd86363d3
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jxs2rcJ4Ri/76uA7Srg+AWjSBjehuF5v2SQhsoeFGxfAyWXzc6YlvuAxPj5aSiaH1fxuNeIuYtrd7FCRMLFQbA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MRZP264MB2379
-X-ALTERMIMEV2_out: done
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241021-dvbdev-fix-uninitialized-return-v1-1-a704945f20e5@kernel.org>
 
-Hi Greg,
+Hi Nathan,
 
-On 10/21/24 12:24, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.114 release.
-> There are 91 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 23 Oct 2024 10:22:25 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.114-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
+kernel test robot noticed the following build warnings:
 
-I tested 6.1.114-rc1 (6a7f9259c323c) on Kalray kvx arch (not upstream 
-yet) and everything looks good!
+url:    https://github.com/intel-lab-lkp/linux/commits/Nathan-Chancellor/media-dvbdev-Avoid-using-uninitialized-ret-in-dvb_register_device/20241022-000519
+base:   ba9cf6b430433e57bfc8072364e944b7c0eca2a4
+patch link:    https://lore.kernel.org/r/20241021-dvbdev-fix-uninitialized-return-v1-1-a704945f20e5%40kernel.org
+patch subject: [PATCH] media: dvbdev: Avoid using uninitialized ret in dvb_register_device()
+config: i386-randconfig-141-20241022 (https://download.01.org/0day-ci/archive/20241022/202410222222.usQ05jBM-lkp@intel.com/config)
+compiler: clang version 18.1.8 (https://github.com/llvm/llvm-project 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)
 
-It ran on real hw (k200, k200lp and k300 boards), on qemu and on our 
-internal instruction set simulator (ISS).
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+| Closes: https://lore.kernel.org/r/202410222222.usQ05jBM-lkp@intel.com/
 
-Tests were run on several interfaces/drivers (usb, qsfp ethernet, eMMC, 
-PCIe endpoint+RC, SPI, remoteproc, uart, iommu). LTP and uClibc-ng 
-testsuites are also run without any regression.
+smatch warnings:
+drivers/media/dvb-core/dvbdev.c:600 dvb_register_device() warn: inconsistent returns '&minor_rwsem'.
 
-Everything looks fine to us.
+vim +600 drivers/media/dvb-core/dvbdev.c
 
-Tested-by: Yann Sionneau <ysionneau@kalrayinc.com>
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  454  int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
+6bbf7a855d200d drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2017-09-19  455  			const struct dvb_device *template, void *priv,
+6bbf7a855d200d drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2017-09-19  456  			enum dvb_device_type type, int demux_sink_pads)
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  457  {
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  458  	struct dvb_device *dvbdev;
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  459  	struct file_operations *dvbdevfops = NULL;
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  460  	struct dvbdevfops_node *node = NULL, *new_node = NULL;
+5f553388b06532 drivers/media/dvb/dvb-core/dvbdev.c Kay Sievers           2007-08-15  461  	struct device *clsdev;
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  462  	int minor;
+f50d51661af375 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2015-09-04  463  	int id, ret;
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  464  
+c278850206fd9d drivers/media/dvb/dvb-core/dvbdev.c Simon Arlott          2007-03-10  465  	mutex_lock(&dvbdev_register_lock);
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  466  
+f28701cc24fcfd drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2023-05-13  467  	id = dvbdev_get_free_id(adap, type);
+f28701cc24fcfd drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2023-05-13  468  	if (id < 0) {
+1e4baed379a2bf drivers/media/dvb/dvb-core/dvbdev.c Ingo Molnar           2006-01-15  469  		mutex_unlock(&dvbdev_register_lock);
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  470  		*pdvbdev = NULL;
+b3ad24d2e0b039 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2016-10-13  471  		pr_err("%s: couldn't find free device id\n", __func__);
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  472  		return -ENFILE;
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  473  	}
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  474  
+f50d51661af375 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2015-09-04  475  	*pdvbdev = dvbdev = kzalloc(sizeof(*dvbdev), GFP_KERNEL);
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  476  	if (!dvbdev) {
+1e4baed379a2bf drivers/media/dvb/dvb-core/dvbdev.c Ingo Molnar           2006-01-15  477  		mutex_unlock(&dvbdev_register_lock);
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  478  		return -ENOMEM;
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  479  	}
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  480  
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  481  	/*
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  482  	 * When a device of the same type is probe()d more than once,
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  483  	 * the first allocated fops are used. This prevents memory leaks
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  484  	 * that can occur when the same device is probe()d repeatedly.
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  485  	 */
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  486  	list_for_each_entry(node, &dvbdevfops_list, list_head) {
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  487  		if (node->fops->owner == adap->module &&
+f28701cc24fcfd drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2023-05-13  488  		    node->type == type && node->template == template) {
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  489  			dvbdevfops = node->fops;
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  490  			break;
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  491  		}
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  492  	}
+b61901024776b2 drivers/media/dvb/dvb-core/dvbdev.c Marcel Siegert        2007-02-13  493  
+f28701cc24fcfd drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2023-05-13  494  	if (!dvbdevfops) {
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  495  		dvbdevfops = kmemdup(template->fops, sizeof(*dvbdevfops), GFP_KERNEL);
+b61901024776b2 drivers/media/dvb/dvb-core/dvbdev.c Marcel Siegert        2007-02-13  496  		if (!dvbdevfops) {
+b61901024776b2 drivers/media/dvb/dvb-core/dvbdev.c Marcel Siegert        2007-02-13  497  			kfree(dvbdev);
+8c64f4cdf4e6cc drivers/media/dvb-core/dvbdev.c     Zhipeng Lu            2024-02-03  498  			*pdvbdev = NULL;
+b61901024776b2 drivers/media/dvb/dvb-core/dvbdev.c Marcel Siegert        2007-02-13  499  			mutex_unlock(&dvbdev_register_lock);
+b61901024776b2 drivers/media/dvb/dvb-core/dvbdev.c Marcel Siegert        2007-02-13  500  			return -ENOMEM;
+b61901024776b2 drivers/media/dvb/dvb-core/dvbdev.c Marcel Siegert        2007-02-13  501  		}
+b61901024776b2 drivers/media/dvb/dvb-core/dvbdev.c Marcel Siegert        2007-02-13  502  
+f28701cc24fcfd drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2023-05-13  503  		new_node = kzalloc(sizeof(*new_node), GFP_KERNEL);
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  504  		if (!new_node) {
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  505  			kfree(dvbdevfops);
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  506  			kfree(dvbdev);
+8c64f4cdf4e6cc drivers/media/dvb-core/dvbdev.c     Zhipeng Lu            2024-02-03  507  			*pdvbdev = NULL;
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  508  			mutex_unlock(&dvbdev_register_lock);
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  509  			return -ENOMEM;
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  510  		}
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  511  
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  512  		new_node->fops = dvbdevfops;
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  513  		new_node->type = type;
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  514  		new_node->template = template;
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  515  		list_add_tail(&new_node->list_head, &dvbdevfops_list);
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  516  	}
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  517  
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  518  	memcpy(dvbdev, template, sizeof(struct dvb_device));
+3a664569b71b0a drivers/media/dvb-core/dvbdev.c     Lin Ma                2022-11-28  519  	kref_init(&dvbdev->ref);
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  520  	dvbdev->type = type;
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  521  	dvbdev->id = id;
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  522  	dvbdev->adapter = adap;
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  523  	dvbdev->priv = priv;
+b61901024776b2 drivers/media/dvb/dvb-core/dvbdev.c Marcel Siegert        2007-02-13  524  	dvbdev->fops = dvbdevfops;
+ca5be9cd051662 drivers/media/dvb/dvb-core/dvbdev.c Markus Rechberger     2007-04-14  525  	init_waitqueue_head(&dvbdev->wait_queue);
+784e29d2031b53 drivers/media/dvb/dvb-core/dvbdev.c Jan Engelhardt        2009-01-11  526  	dvbdevfops->owner = adap->module;
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  527  	list_add_tail(&dvbdev->list_head, &adap->device_list);
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  528  	down_write(&minor_rwsem);
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  529  #ifdef CONFIG_DVB_DYNAMIC_MINORS
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  530  	for (minor = 0; minor < MAX_DVB_MINORS; minor++)
+f28701cc24fcfd drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2023-05-13  531  		if (!dvb_minors[minor])
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  532  			break;
+972e63e895abbe drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2024-10-15  533  	if (minor >= MAX_DVB_MINORS) {
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  534  		if (new_node) {
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  535  			list_del(&new_node->list_head);
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  536  			kfree(dvbdevfops);
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  537  			kfree(new_node);
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  538  		}
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  539  		list_del(&dvbdev->list_head);
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  540  		kfree(dvbdev);
+8c64f4cdf4e6cc drivers/media/dvb-core/dvbdev.c     Zhipeng Lu            2024-02-03  541  		*pdvbdev = NULL;
+82163edcdfa4eb drivers/media/dvb/dvb-core/dvbdev.c Santosh Nayak         2012-06-23  542  		up_write(&minor_rwsem);
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  543  		mutex_unlock(&dvbdev_register_lock);
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  544  		return -EINVAL;
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  545  	}
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  546  #else
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  547  	minor = nums2minor(adap->num, type, id);
+972e63e895abbe drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2024-10-15  548  	if (minor >= MAX_DVB_MINORS) {
+972e63e895abbe drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2024-10-15  549  		dvb_media_device_free(dvbdev);
+972e63e895abbe drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2024-10-15  550  		list_del(&dvbdev->list_head);
+972e63e895abbe drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2024-10-15  551  		kfree(dvbdev);
+972e63e895abbe drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2024-10-15  552  		*pdvbdev = NULL;
+
+up_write(&minor_rwsem);
+
+Heh.  Obviously you didn't introduce this bug but your commit triggers the
+warning because now Smatch knows it's an error path.
+
+972e63e895abbe drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2024-10-15  553  		mutex_unlock(&dvbdev_register_lock);
+922fbcc41a2134 drivers/media/dvb-core/dvbdev.c     Nathan Chancellor     2024-10-21  554  		return -EINVAL;
+972e63e895abbe drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2024-10-15  555  	}
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  556  #endif
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  557  	dvbdev->minor = minor;
+0fc044b2b5e2d0 drivers/media/dvb-core/dvbdev.c     Lin Ma                2022-08-07  558  	dvb_minors[minor] = dvb_device_get(dvbdev);
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  559  	up_write(&minor_rwsem);
+f50d51661af375 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2015-09-04  560  	ret = dvb_register_media_device(dvbdev, type, minor, demux_sink_pads);
+f50d51661af375 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2015-09-04  561  	if (ret) {
+b3ad24d2e0b039 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2016-10-13  562  		pr_err("%s: dvb_register_media_device failed to create the mediagraph\n",
+f50d51661af375 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2015-09-04  563  		       __func__);
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  564  		if (new_node) {
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  565  			list_del(&new_node->list_head);
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  566  			kfree(dvbdevfops);
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  567  			kfree(new_node);
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  568  		}
+f50d51661af375 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2015-09-04  569  		dvb_media_device_free(dvbdev);
+1fec2ecc252301 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2021-06-09  570  		list_del(&dvbdev->list_head);
+f50d51661af375 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2015-09-04  571  		kfree(dvbdev);
+8c64f4cdf4e6cc drivers/media/dvb-core/dvbdev.c     Zhipeng Lu            2024-02-03  572  		*pdvbdev = NULL;
+f50d51661af375 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2015-09-04  573  		mutex_unlock(&dvbdev_register_lock);
+f50d51661af375 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2015-09-04  574  		return ret;
+f50d51661af375 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2015-09-04  575  	}
+f50d51661af375 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2015-09-04  576  
+a9b12619f7b6f1 drivers/media/dvb/dvb-core/dvbdev.c Greg Kroah-Hartman    2008-07-21  577  	clsdev = device_create(dvb_class, adap->device,
+b7496780e80006 drivers/media/dvb/dvb-core/dvbdev.c Hans Verkuil          2008-11-03  578  			       MKDEV(DVB_MAJOR, minor),
+a5f4c0ce682efa drivers/media/dvb/dvb-core/dvbdev.c Kay Sievers           2008-10-27  579  			       dvbdev, "dvb%d.%s%d", adap->num, dnames[type], id);
+4abdcf933f6477 drivers/media/dvb/dvb-core/dvbdev.c Simon Arlott          2007-05-06  580  	if (IS_ERR(clsdev)) {
+b3ad24d2e0b039 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2016-10-13  581  		pr_err("%s: failed to create device dvb%d.%s%d (%ld)\n",
+46b4f7c176a2dd drivers/media/dvb/dvb-core/dvbdev.c Harvey Harrison       2008-04-08  582  		       __func__, adap->num, dnames[type], id, PTR_ERR(clsdev));
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  583  		if (new_node) {
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  584  			list_del(&new_node->list_head);
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  585  			kfree(dvbdevfops);
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  586  			kfree(new_node);
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  587  		}
+167faadfcf9339 drivers/media/dvb-core/dvbdev.c     Dinghao Liu           2020-08-24  588  		dvb_media_device_free(dvbdev);
+1fec2ecc252301 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2021-06-09  589  		list_del(&dvbdev->list_head);
+167faadfcf9339 drivers/media/dvb-core/dvbdev.c     Dinghao Liu           2020-08-24  590  		kfree(dvbdev);
+8c64f4cdf4e6cc drivers/media/dvb-core/dvbdev.c     Zhipeng Lu            2024-02-03  591  		*pdvbdev = NULL;
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  592  		mutex_unlock(&dvbdev_register_lock);
+4abdcf933f6477 drivers/media/dvb/dvb-core/dvbdev.c Simon Arlott          2007-05-06  593  		return PTR_ERR(clsdev);
+4abdcf933f6477 drivers/media/dvb/dvb-core/dvbdev.c Simon Arlott          2007-05-06  594  	}
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  595  
+b3ad24d2e0b039 drivers/media/dvb-core/dvbdev.c     Mauro Carvalho Chehab 2016-10-13  596  	dprintk("DVB: register adapter%d/%s%d @ minor: %i (0x%02x)\n",
+5dd3f3071070f5 drivers/media/dvb/dvb-core/dvbdev.c Andreas Oberritter    2008-10-23  597  		adap->num, dnames[type], id, minor, minor);
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  598  
+627bb528b086b4 drivers/media/dvb-core/dvbdev.c     Hyunwoo Kim           2022-11-17  599  	mutex_unlock(&dvbdev_register_lock);
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16 @600  	return 0;
+^1da177e4c3f41 drivers/media/dvb/dvb-core/dvbdev.c Linus Torvalds        2005-04-16  601  }
 
 -- 
-
-Yann
-
-
-
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
