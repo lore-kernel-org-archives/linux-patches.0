@@ -1,329 +1,110 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052161DFE1
-	for <patches@lists.linux.dev>; Wed, 23 Oct 2024 01:15:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782301C2BD;
+	Wed, 23 Oct 2024 01:48:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729646151; cv=none; b=tQ3Jk8FuaeMuPM8mNRajNwHjEpxSsTyNk6NcXONB/cG6U7nFhCYplrX6A/GIgwoCYTwoUHR3/71WQ44WOsnMTUIuO3yTNU9wbbBlQboYRRL86NfBGMD+6SePT/1V3vHFZyj25Ry8qY3SXEOGWkeGqnewPJdclKmc9xVfmShXnNo=
+	t=1729648126; cv=none; b=RF1DHSJ8xLUY0gT3FSN42c8ldUYxBg1/eB3EcJBXkWw6vQR7b38kltowo+Eg+dDA7snGrAVFhNbPCuFVPNS03rj4gfD97xR7XtQn/CZWfdc92mm3ovGjTzIdak1K+78vDxont1vzSepcnCkmuIlsyHOCqM/HC3EPtzSWo24MlMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729646151; c=relaxed/simple;
-	bh=RMT4HqsXGZ0fWm5AB8F9pHU2Q4eg0Jt9oN9/6KaBwp0=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BN/uExVv1egvatkt8wpwPX/1vjw9e71sKHCCC+609GMYEf9nnyyRFmFzP5FHpZeJ9oSwv3qwcthhKuS5eA0qsWu6Yz5ZSNIrSWF0gVeblDFPqIcqFTDG+C1Df7BpS08OBbFoPUR8OAaGZucNLeCeRA2NIflNa+uT2sjpTDYk4S8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ZYRJdzXa; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1729648126; c=relaxed/simple;
+	bh=OPsf2f9vTyNmn26NM00dQj65lrjywxxlSAM0Y4JmhPE=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=czJalUAqfkC2yx9g2BQ4WCRb4SUKoXHgnBgp/i20dINM6TaCU43mTGU+D6vwAH16M2CC/l3UmspkQwZaG+FvDGqpQYqvBnBAdfJ0yfkTjOWCVvhQzcDKaeXYVODb06uMJVy7tC78dUSfMCRiRE9zuLzxP4XfUBYH5CSLz3NRJlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GT4qmZ7S; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ZYRJdzXa"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7b158542592so366839885a.2
-        for <patches@lists.linux.dev>; Tue, 22 Oct 2024 18:15:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1729646149; x=1730250949; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MDV7eJC3+oDJ66+nOuejsfUlqPbzueqG4aQIpJGm5jM=;
-        b=ZYRJdzXaRGL5zIfDR6D7ukZ8Fqc3jOzmaVzQHns5NauQ7TR3cgurNfzNCemjYuh4ls
-         mecMT1HTWZdKxNV66K7270WhwNBPL7UIQlAJy0/OFvhr5EVZr1vF7eAqG3U6MSnGqOQm
-         X5M8Dxq4AgIPbCXx89x6otQ9TVD+RsMPw31j0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729646149; x=1730250949;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MDV7eJC3+oDJ66+nOuejsfUlqPbzueqG4aQIpJGm5jM=;
-        b=G7hxungNgkU4rFWCLk39DjB+t9dnkv+iNsFgxn52iIM/aSzR3TY9t/MI7v/tx12u2K
-         tSHLZQ6GGQDqGbyIFTwt6rVeBPXLM/lXKEmh3rk0rWijWWpnEH7rto5kuAX1v/hCnQZ+
-         /mFUXPKd4KZY98Gg2Myj20/GfqF1rPL3e88Y0mq6/fzdvB3iqQpJGgKomHPt17fUtm6o
-         u33C46XCOZJwbSPtVsDTFTjwxkjmVIULP+kJZWhY8npZ7uRptYbK3d0C6tpYHVnBoDuJ
-         MRaWAjjSvxt2XlcOAiPEIhBGUsCuvSzAYQy31rqby0q5bW8STeAQantrvcy6PQsRLrXH
-         4ueQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX1QR8VoFIbKwdx9ciK1STdSRg0iHeBtzzyt6RmU1y/qv5T6i8cskeuV1oYvk1OMYaDfjAFDwbc@lists.linux.dev
-X-Gm-Message-State: AOJu0YzTBYELsw26KZi953l0pX1xsGdSFTelZgLVLATjvdXufRFTKn4N
-	yB+JtDhEB+Z4qEUZwVLdkupwFjnx0DnfrmfbmiRMD1hVZtfWATw1ur74lMq1JLzs6UOONz/guhQ
-	vgsf3erBYds2TFevdwfWKFdSn12Mrcnt45Hhd
-X-Google-Smtp-Source: AGHT+IFQcx+O120v4jMcosEsD7YDeJhO0LSJsSQbSB2xO/5x1KCa08838jsJtZu4dV5T3yuW9UjApkWi+Qx0emqLoqU=
-X-Received: by 2002:ac8:7f54:0:b0:460:874f:f8bf with SMTP id
- d75a77b69052e-461146ce389mr10841271cf.34.1729646148785; Tue, 22 Oct 2024
- 18:15:48 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 22 Oct 2024 18:15:48 -0700
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GT4qmZ7S"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1729648124; x=1761184124;
+  h=message-id:date:mime-version:cc:subject:to:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=OPsf2f9vTyNmn26NM00dQj65lrjywxxlSAM0Y4JmhPE=;
+  b=GT4qmZ7SKrr1CMvIqSigH+kPrjAGjdXwZXVbjztckaBRhf4Z32a+Nwum
+   XXSUMZyfV+/ufwU10xVxWVWvsHpByrodTi06s48j18x/7hIujyimsAZ2m
+   ZLwk5wBxmzNo/G0FN9a3vRv5wUe24w8AseKdNqwb3JyOAULx8evdG/ZEL
+   D+zCOd21iyqPPJbp6PJOTvalsaog6OylnMMM8bFBKVUtIhPXpEUvknNZ+
+   qOb3MklZbsXPMeIMLTXGujzBFUoMqZ43M7AVmiRLcJ5JJWd/HA6URhIFx
+   UFP+xHC88bMcQHKcofUKQjYLNppu3epBBgu3DGtc+IkhMsUb0tBk3LPn2
+   A==;
+X-CSE-ConnectionGUID: BZVnzIsUTDOVuulKf5NlAQ==
+X-CSE-MsgGUID: tIgmTC8aRYGRUl69K2Qv9A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11233"; a="16838941"
+X-IronPort-AV: E=Sophos;i="6.11,223,1725346800"; 
+   d="scan'208";a="16838941"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2024 18:48:43 -0700
+X-CSE-ConnectionGUID: ja4EwEbFS4SiZHofiWkthg==
+X-CSE-MsgGUID: FrkOTik4RQeF2TiG3rO6mA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,223,1725346800"; 
+   d="scan'208";a="80386440"
+Received: from unknown (HELO [10.238.0.51]) ([10.238.0.51])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2024 18:48:38 -0700
+Message-ID: <0db7401c-ca89-49a7-a9cc-502a581af66d@linux.intel.com>
+Date: Wed, 23 Oct 2024 09:48:36 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <phdcjgqqpjpruxp7v2mw446q73xr3eg4wfgfbjw5tasgr2pgg2@77swbk47b2tg>
-References: <20240901040658.157425-1-swboyd@chromium.org> <20240901040658.157425-16-swboyd@chromium.org>
- <phdcjgqqpjpruxp7v2mw446q73xr3eg4wfgfbjw5tasgr2pgg2@77swbk47b2tg>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Tue, 22 Oct 2024 18:15:47 -0700
-Message-ID: <CAE-0n514QMaQC2yjKP8bZqyfbv6B3AQm=+NJ87vxo6NdYiL03A@mail.gmail.com>
-Subject: Re: [PATCH v4 15/18] dt-bindings: usb: Add ports to
- google,cros-ec-typec for DP altmode
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, devicetree@vger.kernel.org, 
-	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Benson Leung <bleung@chromium.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>, 
-	dri-devel@lists.freedesktop.org, Guenter Roeck <groeck@chromium.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Lee Jones <lee@kernel.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Prashant Malani <pmalani@chromium.org>, 
-	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Tzung-Bi Shih <tzungbi@kernel.org>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Daniel Scally <djrscally@gmail.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Ivan Orlov <ivan.orlov0322@gmail.com>, 
-	linux-acpi@vger.kernel.org, linux-usb@vger.kernel.org, 
-	Mika Westerberg <mika.westerberg@linux.intel.com>, 
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, 
-	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Cc: baolu.lu@linux.intel.com, Nicolin Chen <nicolinc@nvidia.com>,
+ kevin.tian@intel.com, will@kernel.org, joro@8bytes.org,
+ suravee.suthikulpanit@amd.com, robin.murphy@arm.com, dwmw2@infradead.org,
+ shuah@kernel.org, linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org,
+ eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org,
+ mshavit@google.com, shameerali.kolothum.thodi@huawei.com,
+ smostafa@google.com, yi.l.liu@intel.com, aik@amd.com,
+ zhangfei.gao@linaro.org, patches@lists.linux.dev
+Subject: Re: [PATCH v4 02/11] iommufd: Introduce IOMMUFD_OBJ_VIOMMU and its
+ related struct
+To: Jason Gunthorpe <jgg@nvidia.com>
+References: <cover.1729553811.git.nicolinc@nvidia.com>
+ <74fec8c38a7d568bd88beba9082b4a5a4bc2046f.1729553811.git.nicolinc@nvidia.com>
+ <b2c75705-2998-4e51-90f4-00b8bab785f5@linux.intel.com>
+ <ZxcspVGPBmABjUPu@nvidia.com>
+ <dd7eb37f-13c6-4c6e-8adc-954ad9974b93@linux.intel.com>
+ <20241022131554.GF13034@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <20241022131554.GF13034@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Quoting Dmitry Baryshkov (2024-09-20 02:38:53)
-> On Sat, Aug 31, 2024 at 09:06:53PM GMT, Stephen Boyd wrote:
->
-> Based on our disccusions at LPC, here are several DT examples that seem
-> sensible to implement this case and several related cases from other
-> ChromeBooks.
+On 2024/10/22 21:15, Jason Gunthorpe wrote:
+> On Tue, Oct 22, 2024 at 04:59:07PM +0800, Baolu Lu wrote:
+> 
+>> Is it feasible to make vIOMMU object more generic, rather than strictly
+>> tying it to nested translation? For example, a normal paging domain that
+>> translates gPAs to hPAs could also have a vIOMMU object associated with
+>> it.
+>>
+>> While we can only support vIOMMU object allocation uAPI for S2 paging
+>> domains in the context of this series, we could consider leaving the
+>> option open to associate a vIOMMU object with other normal paging
+>> domains that are not a nested parent?
+> Why? The nested parent flavour of the domain is basically free to
+> create, what reason would be to not do that?
 
-(Apologies for getting back to this late. I've been brewing on this topic
-for a month; only appropriate for Halloween.)
+Above addressed my question. The software using vIOMMU should allocate a
+domain of nested parent type.
 
-This is the Trogdor case, one DP controller with 2 lanes DP coming out
-that is steered with an analog mux controlled by the EC:
+> 
+> If the HW doesn't support it, then does the HW really need/support a
+> VIOMMU?
+> 
+> I suppose it could be made up to the driver, but for now I think we
+> should leave it as is in the core code requiring it until we have a
+> reason to relax it.
 
->
-> typec {
->         compatible = "google,cros-ec-typec";
->
->         port {
->                 typec_dp_in: endpoint {
->                         remote-endpoint = <&usb_1_qmp_phy_out_dp>;
->                 };
->         };
->
->         usb_c0: connector@0 {
->                 compatible = "usb-c-connector";
->                 reg = <0>;
->
->                 ports {
->                         port@0 {
->                                 reg = <0>;
->                                 usb_c0_hs_in: endpoint {
->                                         remote-endpoint = <&usb_hub_dfp1_hs>;
->                                 };
->                         };
->
->                         port@1 {
->                                 reg = <1>;
->                                 usb_c0_ss_in: endpoint {
->                                         remote-endpoint = <&usb_hub_dfp1_ss>;
->                                 };
->                         };
->                 };
->         };
->
->         usb_c1: connector@1 {
->                 compatible = "usb-c-connector";
->                 reg = <1>;
->
->                 ports {
->                         port@0 {
->                                 reg = <0>;
->                                 usb_c1_hs_in: endpoint {
->                                         remote-endpoint = <&usb_hub_dfp2_hs>;
->                                 };
->                         };
->
->                         port@1 {
->                                 reg = <1>;
->                                 usb_c1_ss_in: endpoint {
->                                         remote-endpoint = <&usb_hub_dfp2_ss>;
->                                 };
->                         };
->                 };
->         };
-> };
->
-> &usb_1_qmpphy {
->         ports {
->                 port@0 {
->                         endpoint@0 {
->                                 data-lanes = <0 1>;
->                                 // this might go to USB-3 hub
->                         };
->
->                         usb_1_qmp_phy_out_dp: endpoint@1 {
->                                 remote-endpoint = <&typec_dp_in>;
->                                 data-lanes = <2 3>;
->                         };
->                 }
->         };
-> };
->
-> -------
+Yes. In such cases, the iommu driver could always allow nested parent
+domain allocation, but fails to allocate a nested domain if the hardware
+is not capable of nesting translation.
 
-This is one Corsola case, one DP controller (IT6505) that's an external
-bridge that has 4 lanes DP but only 2 lanes of DP are usable at a time
-because 2 physical lanes are wired to one usb-c-connector while the
-other 2 physical lanes are wired to the other usb-c-connector. I say
-"one Corsola case" because there's also a DP bridge (ANX7625) on some
-Corsola variants that only has two DP lanes with a crosspoint switch
-that can send those DP lanes out of one of two pairs of lanes. The other
-two lanes are for USB3 output data if the part is connected to USB3 on
-the input side. I suspect this ANX7625 case can be described in the same
-way as below with two output endpoints and data-lanes describing which
-lanes are used for either DP endpoint.
-
->
-> typec {
->         connector@0 {
->                 port@1 {
->                         endpoint@0 {
->                                 remtoe = <&usb_hub_0>;
->                         };
->
->                         endpoint@1 {
->                                 remote = <&dp_bridge_out_0>;
->                         };
-
-(TL;DR: I think I have a plan with the last paragraph in this section, so
-I'll hack on it for a bit to see what happens.)
-
-I'm not thrilled about having two endpoints in the SuperSpeed port@1 to
-hold both signals in the Corsola case but not the Trogdor case. The
-problem is that there's only one DP endpoint on Trogdor and we can't
-have two remote-endpoint properties in there pointing to either
-usb-c-connector. But then on Corsola we have two DP endpoints and they
-both can't go to one DP input node in the typec node's graph.
-
-To harmonize this the typec graph can have one DP input endpoint on
-Trogdor while the typec graph can have two DP input endpoints on
-Corsola. In both cases, the typec graph would have two USB input
-endpoints, and then we can connect output endpoints to each
-usb-c-connector node. It would be similar to my existing binding in this
-series, except now the typec DP port can have multiple input endpoints.
-
-I understand from our discussions at LPC that I should use
-drm_connector_oob_hotplug_event() from the displayport altmode driver
-(drivers/usb/typec/altmodes/displayport.c) to tell the DP bridge like
-ANX7625 or IT6505 which output endpoint should be displaying DP. I think
-dp_altmode_probe() looks at the usb-c-connector node's parent, e.g.
-typec in the examples above, for the drm_bridge. That means we'll need
-to register a drm_bridge in the cros-ec-typec compatible node? Or we
-need to use the 'displayport' property in cros-ec-typec to point at the
-drm_bridge node?
-
-Either way the problem seems to be that I need to associate one
-drm_bridge with two displayport altmode drivers and pass some fwnode
-handle to drm_connector_oob_hotplug_event() in a way that we can map
-that back to the right output endpoint in the DP bridge graph. That
-seems to imply that we need to pass the fwnode for the usb-c-connector
-in addition to the fwnode for the drm_bridge, so that the drm_bridge
-code can look at its DT graph and find the remote node connected.
-Basically something like this:
-
-  void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
-                                       struct fwnode_handle
-*usb_connector_fwnode,
-                                       enum drm_connector_status status)
-
-(We might as well also pass the number of lanes here)
-
-Corsola could work with this design, but we'll need to teach
-dp_altmode_probe() to look for the drm_bridge elsewhere besides as the
-parent of the usb-c-connector node. That implies using the 'displayport'
-property in the cros-ec-typec node or teaching dp_altmode_probe() to
-look for the port@1/endpoint@1 remote-endpoint handle in the
-usb-c-connector graph.
-
-Assuming the bindings you've presented here are fine and good and I got
-over the differences between Trogdor and Corsola, then I can make mostly
-everything work with the drm_connector_oob_hotplug_event() signature
-change from above and some tweaks to dp_altmode_probe() to look for
-port@1/endpoint@1 first because that's the "logical" DP input endpoint
-in the usb-c-connector binding's graph. Great! The final roadblock I'm
-at is that HPD doesn't work on Trogdor, so I can't signal HPD through
-the typec framework.
-
-This series fixes that problem by "capturing" HPD state from the
-upstream drm_bridge, e.g. msm_dp, by hooking the struct
-drm_bridge_funcs::hpd_notify() path and injecting HPD into the typec
-messages received from the EC. That's a workaround to make the typec
-framework see HPD state changes that are otherwise invisible to the
-kernel. Newer firmwares actually tell us the state of HPD properly, but
-even then we have to read a gpio mux controlled by the EC to figure out
-which usb-c-connector is actually muxing DP when HPD changes on either
-typec_port. Having a drm_bridge in cros-ec-typec helped here because we
-could hook this path and signal HPD if we knew the firmware was fixed.
-If we don't have the drm_bridge anymore, I'm lost how to do this.
-
-Maybe the right answer here is to introduce a drm_connector_dp_typec
-structure that is created by the TCPM (cros-ec-typec) that sets a new
-DRM_BRIDGE_OP_DP_TYPEC bridge op flag? And then teach
-drm_bridge_connector about this new flag, similar to the HDMI one. The
-drm_bridge could implement some function that maps the typec_port
-(usb-c-connector) to the upstream drm_bridge (ANX7625) graph port,
-possibly all in drm_bridge_connector_oob_hotplug_event() so that nothing
-else really changes. It could also let us keep hooking the hpd_notify()
-path for the workaround needed on Trogdor. And finally it may let us
-harmonize the two DT bindings so that we only have one port@1/endpoint
-node in the usb-c-connector.
-
-
->                 };
->         };
->
->         connector@1 {
->                 port@1 {
->                         endpoint@0 {
->                                 remtoe = <&usb_hub_1>;
->                         };
->
->                         endpoint@1 {
->                                 remote = <&dp_bridge_out_1>;
->                         };
->                 };
->         };
-> };
->
-> dp_bridge {
->         ports {
->                 port@1 {
->                         dp_bridge_out_0: endpoint@0 {
->                                 remote = <usb_c0_ss_dp>;
->                                 data-lanes = <0 1>;
->                         };
->
->                         dp_bridge_out_1: endpoint@1 {
->                                 remote = <usb_c1_ss_dp>;
->                                 data-lanes = <2 3>;
->                         };
->                 };
->         };
-> };
->
-> -------
->
-> This one is really tough example, we didn't reach a conclusion here.
-> If the EC doesn't handle lane remapping, dp_bridge has to get
-> orientation-switch and mode-switch properties (as in the end it is the
-> dp_bridge that handles reshuffling of the lanes for the Type-C). Per the
-> DisplayPort standard the lanes are fixed (e.g. DPCD 101h explicitly
-> names lane 0, lanes 0-1, lanes 0-1-2-3).
-
-Are those logical or physical lanes?
-
-I think we'll punt on this one anyway though. We don't have any plans to
-do this orientation control mechanism so far. Previous attempts failed
-and we put an extra orientation switch control on the board to do the
-orientation flipping.
+Thanks,
+baolu
