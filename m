@@ -1,109 +1,121 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2034813A3F3
-	for <patches@lists.linux.dev>; Wed, 23 Oct 2024 06:32:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729665154; cv=none; b=RWsLeaSKUXMEuxZQ9zCw4pFV6hx1X+temSpDSE4iFcXJ+B2+k8kUI3/AATmKxPupi/T4ySvmEmQ0ow863e40cJ6QJ3Sc9W8GdXtidgH024ZEjxEBt20hdKoTIsIcNQcN7w0+8PHUGwItit5pJ35IlFYseThPPjNN1cb41Dd8V30=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729665154; c=relaxed/simple;
-	bh=ngQUyspk0u5tmnuw4tF5HJKltqCiL9AJbZfUWTdGVNU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XeIxahrLDNjviTpk4j3Rv/SYCkBA1nPYFI1zJHUsvtmUhlK6LeTyuKjrRUaFLnwBEdWLA6T89HBT1qXzHMsNlQVU/xCqRo+r8e0E9mL0K0vMFGCDWZwydKT6ndDDVXkARAmLCTARLd8Eys15yk5UKX/IP0225p6oCctog9+qCqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=iGpQUzuf; arc=none smtp.client-ip=54.243.244.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFF014B08A
+	for <patches@lists.linux.dev>; Wed, 23 Oct 2024 07:03:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1729667041; cv=pass; b=H/KhhLg9eBtlySS7DrC+u+hCXMFoaxlluZF4s4yrGWcnImp9tj3mO5LYsKBHcfIklUAUI+i5Uz5AF8p4KYOTpDlH46y3OcbOhyPsEJr3xqEt2TIOpc+4Uvyo7AACdI2FR7RYSxihT8FxnBqKuQBljKfK4ccEC5ntA3ZGz74nKBI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1729667041; c=relaxed/simple;
+	bh=xpckz667ECUV5SqYy6i40SypV2TRZYJrg8Ltbh0tDbo=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=RS0rVAMNEgoBZ6SatTs4tJZOi+/AISChFN4nQlAOekLgjKVoZB1yOfg1ERnehxpuYU5WJT6jG6rN69ngz9qKYEFPKG3AAchtvTi+DWErs2kHvFjW6wFbJY2Tzc1bmy6Tmjii0j/Rihqn+vjfuE/6OIZt/8P6a/zkKQs7qK9dLQE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=ZIptjTDa; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="iGpQUzuf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1729665067;
-	bh=ngQUyspk0u5tmnuw4tF5HJKltqCiL9AJbZfUWTdGVNU=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=iGpQUzufGKagQD2p8OJ9+o1rv05GO3s0irkkzl+B/jVQzK62CKg8qVz67X69ysnlY
-	 guTCSgPYkdN689aKc9jSkAv2q1YkVkLU9aW1hyxIu8y95ubUmp7oLbbBrYPzSuQtxk
-	 b6AP1aH471/Gf/Mf0lCx04AOx9Z8n7u1eTbhDMCE=
-X-QQ-mid: bizesmtp85t1729665063t7rgkpzf
-X-QQ-Originating-IP: /Pu5B/BFVMh1l61DmVeOAJ9BOb/PIqdl2onMEJbSJ3s=
-Received: from localhost.localdomain ( [113.57.152.160])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 23 Oct 2024 14:30:59 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 5490330265754036757
-From: WangYuli <wangyuli@uniontech.com>
-To: gregkh@linuxfoundation.org
-Cc: patches@lists.linux.dev,
-	nikita@trvn.ru,
-	ink@jurassic.park.msu.ru,
-	shc_work@mail.ru,
-	richard.henderson@linaro.org,
-	mattst88@gmail.com,
-	linux-alpha@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	fancer.lancer@gmail.com,
-	linux-hwmon@vger.kernel.org,
-	dmaengine@vger.kernel.org,
-	xeb@mail.ru,
-	netdev@vger.kernel.org,
-	s.shtylyov@omp.ru,
-	linux-ide@vger.kernel.org,
-	serjk@netup.ru,
-	aospan@netup.ru,
-	linux-media@vger.kernel.org,
-	ddrokosov@sberdevices.ru,
-	linux-iio@vger.kernel.org,
-	v.georgiev@metrotek.ru,
-	linux-mips@vger.kernel.org,
-	ntb@lists.linux.dev,
-	linux-renesas-soc@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-spi@vger.kernel.org,
-	dushistov@mail.ru,
-	manivannan.sadhasivam@linaro.org,
-	conor.dooley@microchip.com,
-	linux-fpga@vger.kernel.org,
-	tsbogend@alpha.franken.de,
-	hoan@os.amperecomputing.com,
-	geert@linux-m68k.org,
-	wsa+renesas@sang-engineering.com
-Subject: Re: [PATCH] MAINTAINERS: Remove some entries due to various compliance requirements.
-Date: Wed, 23 Oct 2024 14:30:58 +0800
-Message-ID: <A74519B4332040FA+20241023063058.223139-1-wangyuli@uniontech.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <2024101835-tiptop-blip-09ed@gregkh>
-References: <2024101835-tiptop-blip-09ed@gregkh>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="ZIptjTDa"
+ARC-Seal: i=1; a=rsa-sha256; t=1729667011; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=i2dBqxVEL25f57hIMwkSAqcEQ0YCse9Gmbsa7u5TdnZNVx+CLKTGXVh8c3b0SWbOIbEvpzoDZyZezVlhJ64KCD3MDkwZ/Vpd8Pp3qewW/UkueeLZr6qU8XNVwMiCwQuTI0D2Eim24nRPJleGYPtD0Mn9MGzkguofjiBp8UDxHh8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1729667011; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=fc8IEdKD9REzwJIzIqKTlg94QTjRn2ZW2QNsLPievH0=; 
+	b=ItFMlo0EKrMERUpSyFbJ1eL1DEwCWJqk8kbuQj8qjWIZl8aN09Vk5+RfWNTEDhwWRdyJo1m53QDre6r5i5VyJLaVyuBm7qhg9NA5k/BFSY2afVFYtsZXnJbsQCua1K3Kmw9fHHwOSPB4AtYbBPbPa236Wj6iA7T432CZmMfQmBU=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
+	dmarc=pass header.from=<Usama.Anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1729667011;
+	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=fc8IEdKD9REzwJIzIqKTlg94QTjRn2ZW2QNsLPievH0=;
+	b=ZIptjTDaA7YlF2NPRyAy9rzKa2uPNkMPaWrQAvT4I7TIc6WyotM4zNtWNxvYWeoR
+	0AaqOr6Lfc88WOCpK7sL+CoHfCZ6m2ZHSwsz471iLpqTHd24xhJLm2wNvWABa8Cq8lD
+	xpM0Lr16YZV1fqKhds2kV07cETIsddBNkWJ5iJV0=
+Received: by mx.zohomail.com with SMTPS id 1729667009606741.3329161747271;
+	Wed, 23 Oct 2024 00:03:29 -0700 (PDT)
+Message-ID: <24a31123-2c84-4dc7-87e0-c6f960a31e5d@collabora.com>
+Date: Wed, 23 Oct 2024 12:03:18 +0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtp:uniontech.com:qybglogicsvrgz:qybglogicsvrgz8a-1
-X-QQ-XMAILINFO: N6+UlSQllctNd9z1plWZnnP8kKpd9MPfEVy1geCnF8BkGlfZL4FIZ+Vc
-	C2RgjlHoyHGYxctHsmGSNdu50xYWG3s2eRIFDqxucpg7CFpjAQgR2H3Azf5VcHPl9oANQ1Y
-	XUE6UsBUK1oYctWCGDI7XM1PjaNlTFTmc/SYgjRaKvOvGCAZL/nb5DJjX23uUZv1BytU2+k
-	fhcUAR57NZ2AJ9kWGV2fQrwj8h9Fq9eb0o5qwFREuD0sJd25KczX0TtlNXlLSOc4jD2N+rZ
-	ZyygYFHtZhWVItO4bwZzyI/iLGF7d5J7WxORAu5gQY1tU49b4BF4mGRdcWEHsSpJjyOo/4+
-	ZR3/JNbr6i8U2EY7kuzuj7U+3esrw7gFVqWdBXOqfh+OdBkeWOq9hKD/msrWYhD5sGn+x8P
-	eqJlBurObi7PpeXimGcbW4N++6vPFXaQW5NzVtUHRxDaVZjbx9DSJo6KseBuW9rmtfGyVj8
-	ISc0aWM0bXIHbN5uUXDYmYnOqbKDgVrdeTNmj7SJcAl0TadGOxyYDwmuRbuECHzvidi3ciW
-	nFg2BAmPLyJOHIZAwblLi9ZF7gFawH87Ok/zAhqJy7qwCpXy5V0joaWGMyvg0hBMr6KPRVO
-	hughSUUNKaaV2XdqzqCdv84D+GAKIqPCNzRqn4VOcP80fRAuxsRFSi1kpZNJPI0wdRZflK5
-	zazUaHV3wbfigNVv+YFGflsa5rsQkTUeuF/3jOCwB5mMyP3vutVdxHDX+z3+T4CrE3aKBFT
-	3I+3sfBmMuZehUunKJcIVUftU5Zwvp+ENEL/L8DIpmwuS03Hn1anJy14/W1fTBLYXjAkbun
-	zdNXv8+JIHkBJd9EgELO2Sud16rCRYLn7q+3Iwy5S+JzsC/xRMN0+U+VpnuD2IhwKJ5EL6Z
-	0eo79wHgbyjfFVwzC3sSusu2q+SRWOtNsZStDSkSuee+wxaDjykDI+80NHwvvRusvZFEAcj
-	oxnSCdG9toT1qktgl84NDmCuy
-X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
-X-QQ-RECHKSPAM: 0
+User-Agent: Mozilla Thunderbird
+Cc: Usama.Anjum@collabora.com, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.11 000/135] 6.11.5-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+References: <20241021102259.324175287@linuxfoundation.org>
+Content-Language: en-US
+From: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
+In-Reply-To: <20241021102259.324175287@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 
-Although this commit has been merged, it's still important to know the specific reason (or even an example) that triggered this change for everyone here, right?
+On 10/21/24 3:22 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.11.5 release.
+> There are 135 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 23 Oct 2024 10:22:25 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.11.5-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
+> -------------
+Hi,
 
-And those maintainers who have been removed should be notified.
+Please find the KernelCI report below :-
 
-It should be CC'd everyone who might need to be aware of this change, including the removed maintainers, other maintainers on the subsystem, and the subsystem's mailing list.
 
-To ensure transparency.
+OVERVIEW
+
+    Builds: 25 passed, 0 failed
+
+    Boot tests: 76 passed, 0 failed
+
+    CI systems: maestro
+
+REVISION
+
+    Commit
+        name: 
+        hash: 96563e3507d7fd82e448c6803ed8e07bc6e5ec86
+    Checked out from
+        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
+
+
+BUILDS
+
+    No new build failures found
+
+BOOT TESTS
+
+    No new boot failures found
+
+See complete and up-to-date report at:
+ https://kcidb.kernelci.org/d/revision/revision?orgId=1&var-datasource=edquppk2ghfcwc&var-git_commit_hash=96563e3507d7fd82e448c6803ed8e07bc6e5ec86&var-patchset_hash=&var-origin=maestro&var-build_architecture=All&var-build_config_name=All&var-test_path=boot
+
+Tested-by: kernelci.org bot <bot@kernelci.org>
+
+Thanks,
+KernelCI team
