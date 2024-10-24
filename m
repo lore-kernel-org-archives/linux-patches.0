@@ -1,86 +1,90 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.easysoft.com (mail.easysoft.com [80.195.45.99])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8EB171675;
-	Thu, 24 Oct 2024 04:42:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0D920311
+	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 04:53:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.195.45.99
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729744929; cv=none; b=SGRfqMNdF3/qNwcFXSfzg1QVRLDemip5xGUu1chQMbWbd09xLg3s0PEWBBXXgUs6heE3T71Kd2QorXdZzDCAnHdcUXPBgjHSW4JsOWjydNrzIldaClBpl7sr4qd86FVTy1gS33Nk9MpJmqm5CqBXtztZAFiu1AI67SNzRL8nuQA=
+	t=1729745631; cv=none; b=I/3SCPpNDe314JqEjVznssrGyXLgds6WTo8+6evIpq9JlKQmDvvbEKhHqcLty8KNf+8UG74Qo2xcRAUeNYafv1ziddYTrRsScMzPnjwamIIaP6V+qmde/lqYrivzVKknPmcsTmC0H3xiem60m5xC0cAyzFsoWK3W4GOCzlphcTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729744929; c=relaxed/simple;
-	bh=/E05jT6POpOqZDCpwe8J4QUwk/2Ud1uqQgjbaLBTXt0=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=qe7SXfWJeqMkBqkBNX+jZ04P6GKiGbO2ltLOqohlDiQmUKkTsHZ74cgn8yzHBqtC+6DJGH4YeGaS7QKAA4J43B9KWvjg5TmwweKNB7l6wzbHEii9kDGkE4SvfTZMXZVL7ZEMFE4+ZKo88KH/StUCnNXQKspQU+uC+lrJda7k0Mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LlBxOEkv; arc=none smtp.client-ip=209.85.167.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729745631; c=relaxed/simple;
+	bh=TBnqBGQmDWvZ8WQkP2sKAake7ani9NgSS4g9MTqw7cw=;
+	h=To:From:Subject:Message-Id:Date; b=DzFGHza011OhlSYRUx6lQGZU5L7caFh5U4bUsE1cgU+uP9ZN3+QnZ9Heqw06BLRdEN6YVsHZyYlw0x8b5u0x6nxh1ySjlHrPfZxLjd+rzFkCw0gIy/w6iHTFNFaoDJyr7/rLabiZV4AJKGQ7BEzL/NZ7NG9sJS7iKVOLb7D2Y3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easysoft.com; spf=pass smtp.mailfrom=easysoft.com; dkim=pass (1024-bit key) header.d=easysoft.com header.i=@easysoft.com header.b=VQv77DNQ; arc=none smtp.client-ip=80.195.45.99
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easysoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=easysoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LlBxOEkv"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3e5ffbc6acbso326304b6e.3;
-        Wed, 23 Oct 2024 21:42:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729744927; x=1730349727; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=/E05jT6POpOqZDCpwe8J4QUwk/2Ud1uqQgjbaLBTXt0=;
-        b=LlBxOEkvORrvRkKVp1JjVelLQyOrPCFkKJ765OFH2j+7TjZDw3ZQfgxS5aso5gcu1U
-         yAw27O3JzyXthSn6EykAORZmoKj1ElUhVLl0Q43fDVNb4d79DSLUnOx0Z0Eb59MKDoLr
-         TJbc5OvBo30mCoPD4Bx0mhV3e0JWONqHAjeaX/Z3Nt7xJta932aI6/MH4xdCfjNweBcW
-         hJbOrwVY53tMoRNNC3GrqyrwLsSy1Xy+KbErLdW1dyQbsUk4EWAuaQyy8/SyvVWpelgM
-         jrJWGvW16WhP+F9WYmHMe9+YvIom2aSauYii+3Oe7yFLhlloPKFJqvqB4MSSEPTYUTog
-         hJVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729744927; x=1730349727;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/E05jT6POpOqZDCpwe8J4QUwk/2Ud1uqQgjbaLBTXt0=;
-        b=sOmFnTofugNOIZXXbqjMTirbKtgcTkAsiCmtGyUOMSkMytQ3HcgrKo5/SocZtjXN8E
-         TyBqgakGmOrtLbgfpt8N8MGIQeRSyrHSVEPI+xcWbUcS9B7VcEb0MMyA/9fSjawX6f/h
-         tXpHKzLs9qlGft9oGS3X6JwgHtoste7Xivf1B2cluJSGICUBfV+L4l+6Z33Fo17ZaIYS
-         u1pl1xj7HvJg+/YZQLoCGl+GzHSr9oy4MNFAkLyb3hmJT9vfafd1AjLeEs9Gqrls031E
-         bUs9mRbqsPpOImDX0ie3e0tMiktPyOsgvllcrKPdkZUq2MgBPhmV+nFwAQVVhAHWRibg
-         6bkg==
-X-Forwarded-Encrypted: i=1; AJvYcCU8/uvn5QpvKU3kw7NDI1muHIFwVHd0KpG3azfgo79NL+CgdjqRi1y9XpPrK5+N1jT6R3M=@lists.linux.dev, AJvYcCVi9eFUIoP3TFf5rgu1WmWRN396aGEzqoxUWouyhR4p2jbnCFS90btt6KJuX0c8b+JCGzD7HO6XgQ==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyBjNrxHJhq1pVJwi5DZqB/1XGMVQLFZDG8U/OrZOtUkIf0BXho
-	Uf+hrTze8pLctF3VLvK6swS5827ktrjLkVc3hHS6vKhQ0juENyIgd8Zc2aK70HlXx0XnafhK9Pz
-	I+SI5DORJXD6TPle0gBJsrpLTZDc=
-X-Google-Smtp-Source: AGHT+IEcPxkLcRYoYZ+qYqdz3rf9C8aaTqIgeoOwaGj1dLh0kiz4T/GQTSq6ljBIHvhnOb/5OXIeeI806cLnduNI9A0=
-X-Received: by 2002:a05:6870:3324:b0:286:f2cc:7a4a with SMTP id
- 586e51a60fabf-28ccb9e54fbmr5220982fac.34.1729744926679; Wed, 23 Oct 2024
- 21:42:06 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=easysoft.com header.i=@easysoft.com header.b="VQv77DNQ"
+Received: from mail.easysoft.com (localhost [127.0.0.1])
+	by mail.easysoft.com (Postfix) with ESMTP id 0712B8808A7
+	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 05:53:45 +0100 (BST)
+Authentication-Results: mail.easysoft.com (amavisd-new);
+	dkim=pass (1024-bit key) reason="pass (just generated, assumed good)"
+	header.d=easysoft.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=easysoft.com; h=
+	date:date:message-id:subject:subject:reply-to:from:from:to; s=
+	dkim; t=1729745624; x=1730609625; bh=TBnqBGQmDWvZ8WQkP2sKAake7an
+	i9NgSS4g9MTqw7cw=; b=VQv77DNQi0fv2xlwb7w4lggICI7X7SKqf2beOIbf7My
+	4faqUfw6vwGB2pTzPVFjAhLmG8n+OTQNbUvue/V36v6+EoeK39U8Co2fo4xGXIJd
+	+5wSApMqbX1E6IjP6o35gLxS6bT4fyIFZjxeNzNGu99FkGhkBni8hlc1UMrHQhSU
+	=
+X-Virus-Scanned: Debian amavisd-new at mail.easysoft.com
+Received: from mail.easysoft.com ([127.0.0.1])
+	by mail.easysoft.com (mail.easysoft.com [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id ya80EykheHew for <patches@lists.linux.dev>;
+	Thu, 24 Oct 2024 05:53:44 +0100 (BST)
+Received: from modperl.easysoft.com (unknown [172.20.100.10])
+	by mail.easysoft.com (Postfix) with ESMTPSA id B6417880683
+	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 05:53:44 +0100 (BST)
+Received: by modperl.easysoft.com (Postfix, from userid 33)
+	id 80ED61BF2DD; Thu, 24 Oct 2024 05:53:44 +0100 (BST)
+To: patches@lists.linux.dev
+From: presales@easysoft.com
+Sender: presales@easysoft.com
+Reply-To: presales@easysoft.com
+Subject: Easysoft.com Account Activated
+Message-Id: <20241024045344.80ED61BF2DD@modperl.easysoft.com>
+Date: Thu, 24 Oct 2024 05:53:44 +0100 (BST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-From: Ar Worf <fricks6@gmail.com>
-Date: Thu, 24 Oct 2024 09:42:02 +0500
-Message-ID: <CANSmiqmTobiHdS3zi794hg=rmvg6ePWDp7_vhgMD4_Sb4by7hA@mail.gmail.com>
-Subject: Re: [PATCH] Revert "MAINTAINERS: Remove some entries due to various
- compliance requirements."
-To: torvalds@linux-foundation.org
-Cc: aospan@netup.ru, conor.dooley@microchip.com, ddrokosov@sberdevices.ru, 
-	dmaengine@vger.kernel.org, dushistov@mail.ru, fancer.lancer@gmail.com, 
-	geert@linux-m68k.org, gregkh@linuxfoundation.org, hoan@os.amperecomputing.com, 
-	ink@jurassic.park.msu.ru, jeffbai@aosc.io, kexybiscuit@aosc.io, 
-	linux-alpha@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-fpga@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-hwmon@vger.kernel.org, linux-ide@vger.kernel.org, 
-	linux-iio@vger.kernel.org, linux-media@vger.kernel.org, 
-	linux-mips@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-spi@vger.kernel.org, manivannan.sadhasivam@linaro.org, 
-	Matt Turner <mattst88@gmail.com>, netdev@vger.kernel.org, nikita@trvn.ru, 
-	ntb@lists.linux.dev, patches@lists.linux.dev, richard.henderson@linaro.org, 
-	s.shtylyov@omp.ru, serjk@netup.ru, shc_work@mail.ru, torvic9@mailbox.org, 
-	tsbogend@alpha.franken.de, v.georgiev@metrotek.ru, wangyuli@uniontech.com, 
-	wsa+renesas@sang-engineering.com, xeb@mail.ru
-Content-Type: text/plain; charset="UTF-8"
 
-> I'm Finnish.
+Your easysoft.com account was successfully activated; you are now able to
+download trial software.
 
-Said a descendant of Swedish occupiers. Ooookay.
+Now that you are signed up with easysoft.com, we can offer you some additional
+great benefits:
 
-If you deleted all the code committed by Russians, that would be at
-least understandable. But what you just have done is refusing the
-people who contributed to the kernel due credit for their work, while
-keeping the results. A totally imperialist mindset.
+* Free trials of some of the best ODBC and JDBC Drivers on the market today.
+
+* Access to our online knowledge base system.
+
+* Free access to our technical helpdesk for supported or trialling customers,
+  should you need assistance.
+
+* Wider support from developers if needed.
+
+Remember our trial licenses do not restrict you from testing our software in
+the environment you are going to deploy in and against any other solutions you
+are considering. We are rightly proud of our software; the quality, efficiency
+and speed, comprehensiveness of our standards conformance, and our software
+support.
+
+Important: If you find that your firewall or company security policy prevents
+you from downloading any of our drivers then email support@easysoft.com with
+the driver you need, the platform it's for and whether you need the 32-bit
+or 64-bit version and we'll get it to you.
+
+Please do not hesitate to contact us if you require any help during your
+Easysoft Product evaluation.
+
+Thank You
+
+Easysoft Pre-Sales Support
+
+Email : presales@easysoft.com
+Tel   : +44 (0)1937 860000
+Fax   : +44 (0)1937 860001
+
