@@ -1,122 +1,119 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7DD1AF0C4;
-	Thu, 24 Oct 2024 09:54:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F751C0DFD;
+	Thu, 24 Oct 2024 09:57:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729763659; cv=none; b=b9cBpq/1peoRtZHZ4iPkLmMrnXmktHQloBRcG9vvxnHWV/9F4LE38LHSG8MXjz3elXjoLfjhsOQCBwFZpRI+eOVmslFquAUWVL5oG//sxKXOfhWWSMwp42hGuTdYGy6Fnn+dkCT8nzmuL4jacHZ/y5T0+Ls7CB/jL4r6DofAedk=
+	t=1729763846; cv=none; b=cXFgvkfoZaWOyCOtIsFq3JVnp7FG89kn9enp4IodZLIySNxyZJDvZ39r9h1h86OZn93Xri8X04NCfbhciURMa8Nd8Gk3qoverMjZlTfnSfx0EyrW5mwtPvQoOrVNZ/26XiPFmU36/WbF7YiORS3ULl5KEbiaBI9tt8brDndRQhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729763659; c=relaxed/simple;
-	bh=FKxWNgpm5Kd3t6VYzCpTSntmFd4Q0I0hT0G3IkO8d/k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tPKOivUXv2Hv92rM6fvwzWvz1FfQi/IyZlDa51E164YZLou0sQNuP3bH7nWz/q91sX9/ObddMnqP6OMSljVJ7lt7YN1MPM7MMiVGTCgxwZ7V4ByiQGMM4VzOM6OWJNDrbIDs7faqPX6hwAVRnYUnlnniwIkabk26a2GUudiLSFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ghWJJcgk; arc=none smtp.client-ip=209.85.167.46
+	s=arc-20240116; t=1729763846; c=relaxed/simple;
+	bh=PVT4x+5HpkJQPwdJsjK0MwsWAxzsoTXRtb4fDO7mWLM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IOAtxiazhUUH/3Dy2nRkZL+lQ/+ha/CKEe44PyksJRpGI6be3jbG1teBSZcOzS4hMiwYLUvoJVfTg2dDhC0BHGFBP+4ZLXHKkglewEZGqRRZmCcu8GB/7XWV/ieW/uHofxbA7oj1CtDUAycsu7s/1GVVveNYNnzlft3SqSL+cXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nVrnlyzs; arc=none smtp.client-ip=209.85.167.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ghWJJcgk"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-539e63c8678so750892e87.0;
-        Thu, 24 Oct 2024 02:54:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nVrnlyzs"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-539f84907caso780723e87.3;
+        Thu, 24 Oct 2024 02:57:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729763655; x=1730368455; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dWFrbyngtx/okFnAnXziGIwpshdD52HD2rAoJDGqVCM=;
-        b=ghWJJcgkh2l8aTP/ifP29zS0ycpLDA8cjQ6r4Or1lgUFuGCSxgJg6aqJGF/3/JD1BE
-         NyUG9/OhRHNkrqDkGjbdu8qT95fNmbLl7O5RRWivV4Yu5vu8EIf+/irmzPttNgqxPj4V
-         XQ4IQy4+a74xLUAYo/LvIr6FM3r8yhUSpLcahCDpzS/PUzHHl7oYSKnBr+xRngFu1ZPJ
-         O3ZC/r8vmt43zuVpWkdLONe6Fh9OVlQW8uLj5AYiXGUPcQT+xysLq9AVUNMU9JVKhyfM
-         7YRb+GVBzdfmyf0LrQrrlzouNTWcI3Kwvm+zrQDPmD0CqOaCG354wltLImlduTN2pJy+
-         hnYg==
+        d=gmail.com; s=20230601; t=1729763842; x=1730368642; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PVT4x+5HpkJQPwdJsjK0MwsWAxzsoTXRtb4fDO7mWLM=;
+        b=nVrnlyzsfeVKgoypgV2pPLqrCClWmyzQM3bqxqTdqforhrLbUfhaxLJju5Q1Dk1Qyu
+         M8KgFjsOtaT5SR9eRNlKQyci3s8oTQLxfezWY+a3vE7bT7+0oWp2wKbsH6RSI9EbBPui
+         WbGURzn1bOAQ/E7XhcYhnrh984FXOWQQxsYN5rghCXRRLijW/Tu908Q8eW758UGKoSFS
+         Oc6l7m39hHd0o3SCBrt/hlToNrQgmJ+Mdk9R3Ucta9bS+JO3mFzqpzQAyVDvVLSFzw2J
+         7JE3yKhoSKkOZe6m6ZOzSOlDbdcbHqhM6geBxIec+eVdf+JMQbWo9WtgwVJ0EBrVansh
+         p6ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729763655; x=1730368455;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dWFrbyngtx/okFnAnXziGIwpshdD52HD2rAoJDGqVCM=;
-        b=KyyPv6yY5Ul/Vc5ra8SsjU2Y0jIFNjlFNTn05TmF/xRhoIAPHGjfWeU+cxlg4OAbwI
-         OkhGHzAr5WM8SiqMBdeoEMrbBftEqgKjDFbSLkZEUNmWnySEWfufYaXmr93OdCIR1544
-         ZQet4j/Rrbio9JF0NUeAXzYMmPV6QDhOHVCec6Xj4bThfLmb+lXtEhNzJ1I1qLi0Qrth
-         1Y+QslazU6RkGGr7ZiTvYQ0Vc+HyChl/uwZqetF0DsbtnHAWOMAfjCzRjatXe/i6wIie
-         pcR7tZVVgcqXl6g19R7vAAsRaHWi17TTpYqS4GI2i4ZpY5Z/QsMSviG4uNhbd+GC5Rts
-         fBbg==
-X-Forwarded-Encrypted: i=1; AJvYcCWVwsrcaqZLJHfAyKBZBLaLFqEeWpmIj+zkEgj1SdTT1+Wb52bq6VB38HO8NfZ5e3+ifNk=@lists.linux.dev, AJvYcCXf08THuy0LLGdC5ou729IkcMjD4xxWDTUgQg7DciP0203Kab8Bqf8QQuzGo3csCWWtzU214QSk4A==@lists.linux.dev
-X-Gm-Message-State: AOJu0YyBeIhDCkam8SNFTTqzN0hLSmV22zQFVOHD41Qsc1es/gS0VDdF
-	wsA+8rF1nsLdfsvN4IUWC/PMT1zu/EQkqo1TzUwEQldHhHAHBIwR
-X-Google-Smtp-Source: AGHT+IESS/b985DjGqxcVR4TpFmyKByLbgcGL5xpKJP8FcedH7Cq7mq7giZwGEwbp0hOURP0H6AUbw==
-X-Received: by 2002:a05:6512:1583:b0:52e:9762:2ba4 with SMTP id 2adb3069b0e04-53b1a315eeemr2629947e87.25.1729763655208;
-        Thu, 24 Oct 2024 02:54:15 -0700 (PDT)
-Received: from [10.110.248.100] ([79.110.251.190])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53b1ade1875sm455020e87.18.2024.10.24.02.54.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Oct 2024 02:54:11 -0700 (PDT)
-Message-ID: <3448a096-849a-4f61-8017-c03a83e22c38@gmail.com>
-Date: Thu, 24 Oct 2024 14:54:04 +0500
+        d=1e100.net; s=20230601; t=1729763842; x=1730368642;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PVT4x+5HpkJQPwdJsjK0MwsWAxzsoTXRtb4fDO7mWLM=;
+        b=C54XSSbmhGFLKfW9QB6pjwqG9lCobC4b1jDmncPuXSNMZvL/kh2pwnDPiArw/LN1NK
+         QYcmQGI3uDgN8EKYTnzJXYagUKMWM4JiZ7VKP8CY7x4OBYFwlOTa81ggIKhLwzgeH6Ws
+         TUbxqZ4gGaW/KwGAliEWxPnyPH+pBdmECq7RA8Z3mRwUEX4LmwRacaK7u8HfOCnrxDbO
+         H8c/bTd91yrDzXFaldFHS6oz1pKgw71ONDIhbmS1gcUgukILZn3eHi5DJSK9HLDsY24b
+         7KK8PmJ5+Og7P3AFeN/SrmTP8j04+EQzXDIshNQPdl3zrcjsQphGHLgVj8RzV76kelGh
+         57Qw==
+X-Forwarded-Encrypted: i=1; AJvYcCUXxjKy4qgCD5fkhFZJDMg35SQaJKSxJ2nB1KzxO7hKhwCdhuTqDkYyLJ4xWTVg+pKx5sTXahnSRg==@lists.linux.dev, AJvYcCVNmkiaG0MqbGxzmwkTo5hASMeiVW6cnHMSWaucVGbmNofh8JGp93EgWup0Pd1fQi0mQxc=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwT8Qy7Ayvl7bzPu2b4XYZ9Ez1tp1j097ufg5M4Zju/CmVKNmYk
+	B5ECE2QVCI/PARmb0M6i+s2BdQWZ0BObX9bulZE6jrc6CbdBV6i+
+X-Google-Smtp-Source: AGHT+IEoo2Czcs+RGUiJMg6LdY8jxuXv0lNt1Zx6z+DI1lmpOeNWP3pCK2fVmcYSte0wULTaokncdw==
+X-Received: by 2002:a05:6512:a90:b0:539:e97c:cb10 with SMTP id 2adb3069b0e04-53b23e857f8mr904316e87.40.1729763841812;
+        Thu, 24 Oct 2024 02:57:21 -0700 (PDT)
+Received: from seven-swords.. ([2a03:d000:2:9006:4eed:fbff:fe72:e806])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a223e5988sm1310862e87.2.2024.10.24.02.57.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Oct 2024 02:57:19 -0700 (PDT)
+From: Ivan Epifanov <isage.dna@gmail.com>
+To: torvalds@linux-foundation.org
+Cc: aospan@netup.ru,
+	conor.dooley@microchip.com,
+	ddrokosov@sberdevices.ru,
+	dmaengine@vger.kernel.org,
+	dushistov@mail.ru,
+	fancer.lancer@gmail.com,
+	geert@linux-m68k.org,
+	gregkh@linuxfoundation.org,
+	hoan@os.amperecomputing.com,
+	ink@jurassic.park.msu.ru,
+	jeffbai@aosc.io,
+	kexybiscuit@aosc.io,
+	linux-alpha@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-fpga@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-hwmon@vger.kernel.org,
+	linux-ide@vger.kernel.org,
+	linux-iio@vger.kernel.org,
+	linux-media@vger.kernel.org,
+	linux-mips@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-spi@vger.kernel.org,
+	manivannan.sadhasivam@linaro.org,
+	mattst88@gmail.com,
+	netdev@vger.kernel.org,
+	nikita@trvn.ru,
+	ntb@lists.linux.dev,
+	patches@lists.linux.dev,
+	richard.henderson@linaro.org,
+	s.shtylyov@omp.ru,
+	serjk@netup.ru,
+	shc_work@mail.ru,
+	torvic9@mailbox.org,
+	tsbogend@alpha.franken.de,
+	v.georgiev@metrotek.ru,
+	wangyuli@uniontech.com,
+	wsa+renesas@sang-engineering.com,
+	xeb@mail.ru
+Subject: Re: [PATCH] Revert "MAINTAINERS: Remove some entries due to various compliance requirements."
+Date: Thu, 24 Oct 2024 12:57:08 +0300
+Message-ID: <20241024095708.189649-1-isage.dna@gmail.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <CAHk-=whNGNVnYHHSXUAsWds_MoZ-iEgRMQMxZZ0z-jY4uHT+Gg@mail.gmail.com>
+References: <CAHk-=whNGNVnYHHSXUAsWds_MoZ-iEgRMQMxZZ0z-jY4uHT+Gg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Revert "MAINTAINERS: Remove some entries due to various
- compliance requirements."
-To: Linus Torvalds <torvalds@linux-foundation.org>,
- Tor Vic <torvic9@mailbox.org>
-Cc: Kexy Biscuit <kexybiscuit@aosc.io>, jeffbai@aosc.io,
- gregkh@linuxfoundation.org, wangyuli@uniontech.com, aospan@netup.ru,
- conor.dooley@microchip.com, ddrokosov@sberdevices.ru,
- dmaengine@vger.kernel.org, dushistov@mail.ru, fancer.lancer@gmail.com,
- geert@linux-m68k.org, hoan@os.amperecomputing.com, ink@jurassic.park.msu.ru,
- linux-alpha@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-fpga@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-hwmon@vger.kernel.org, linux-ide@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-media@vger.kernel.org,
- linux-mips@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- linux-spi@vger.kernel.org, manivannan.sadhasivam@linaro.org,
- mattst88@gmail.com, netdev@vger.kernel.org, nikita@trvn.ru,
- ntb@lists.linux.dev, patches@lists.linux.dev, richard.henderson@linaro.org,
- s.shtylyov@omp.ru, serjk@netup.ru, shc_work@mail.ru,
- tsbogend@alpha.franken.de, v.georgiev@metrotek.ru,
- wsa+renesas@sang-engineering.com, xeb@mail.ru
-References: <a08dc31ab773604d8f206ba005dc4c7a@aosc.io>
- <20241023080935.2945-2-kexybiscuit@aosc.io>
- <124c1b03-24c9-4f19-99a9-6eb2241406c2@mailbox.org>
- <CAHk-=whNGNVnYHHSXUAsWds_MoZ-iEgRMQMxZZ0z-jY4uHT+Gg@mail.gmail.com>
-Content-Language: ru
-From: B4D_US3R <producerkgb@gmail.com>
-In-Reply-To: <CAHk-=whNGNVnYHHSXUAsWds_MoZ-iEgRMQMxZZ0z-jY4uHT+Gg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Grandpa, take the pills or you'll get your ass kicked.
 
-
-
-Дед, пей таблетки, а не то получишь по жопе
-
-23.10.2024 22:45, Linus Torvalds пишет:
-> Ok, lots of Russian trolls out and about.
->
-> It's entirely clear why the change was done, it's not getting
-> reverted, and using multiple random anonymous accounts to try to
-> "grass root" it by Russian troll factories isn't going to change
-> anything.
->
-> And FYI for the actual innocent bystanders who aren't troll farm
-> accounts - the "various compliance requirements" are not just a US
-> thing.
->
-> If you haven't heard of Russian sanctions yet, you should try to read
-> the news some day.  And by "news", I don't mean Russian
-> state-sponsored spam.
->
-> As to sending me a revert patch - please use whatever mush you call
-> brains. I'm Finnish. Did you think I'd be *supporting* Russian
+> I'm Finnish. Did you think I'd be *supporting* Russian
 > aggression? Apparently it's not just lack of real news, it's lack of
 > history knowledge too.
->
->                        Linus
->
+
+As an avid history lover, you've seem to forgot, that Finland fought on Nazi side.
+So yeah, we're well aware you don't like Russians, unless they're in concentration camps.
+Which is exactly what you do now: segragate, based on nationality. Strip of credits and names.
+Once a nazi - always a nazi. So, fuck you.
+
