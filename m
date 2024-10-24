@@ -1,87 +1,70 @@
-Received: from mail.notyourfox.coffee (mail.notyourfox.coffee [92.63.193.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailly.debian.org (mailly.debian.org [82.195.75.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C53158A33;
-	Wed, 23 Oct 2024 22:31:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.63.193.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DAB16DEB5
+	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 04:36:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729722716; cv=none; b=q3vuSn1p3c97UrS+1/8igS+d2zV4MGkUzQfYPYZIYixRDNsplNqK39LH+qM8YoPgUyVu5EwEmPDYFcd6+CatuaTVawmofLVbxFQxt9AqpvHP8+wTt46WdgEryR5bMgUOaISxgxIajJGTJC04h36+czba5ZlGhvJ627LfhA+TeH4=
+	t=1729744582; cv=none; b=HWnYUmqIVk1PH1hz8hI/8qeYbV0ZVe4Sd+luK76tupE+8u6R3QDseDel4Lkqw26KC6rp3nBseVncq0VkNiG5fkMhBp6dxhRoD6WD/x2WdN2yhKfu+JcBSofLM7N+4A4kibcYnd99s0ji9TheDeRcF4k7JtKgsa3jls3tngQN1es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729722716; c=relaxed/simple;
-	bh=lBqM5PBwzs7x9XceHQ9rfZgT7htaBeYa/E3GDqF9nXU=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=WB337mOGkhic3fNsyKeUY7XtqugTyJsmFsSwSXo+scTxrZOwEvZkXdfnUsuqYjTgMwE155hCPJ2faWh84m5/LKqT2Mse7TfJMF8c0nWdTNaKuFnMlsxgqfQnWtG3m2G2BY63BNs6CnC016blMzFzw7YYwwhNgFw36Wc44zyzKX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=notyourfox.coffee; spf=pass smtp.mailfrom=notyourfox.coffee; dkim=pass (2048-bit key) header.d=notyourfox.coffee header.i=@notyourfox.coffee header.b=Qzx5NnIV; arc=none smtp.client-ip=92.63.193.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=notyourfox.coffee
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=notyourfox.coffee
+	s=arc-20240116; t=1729744582; c=relaxed/simple;
+	bh=zKmOY6KmoQOXrSZE5fkbj3rIDiuSG4hehuJpyaIaqKM=;
+	h=Content-Type:MIME-Version:Subject:From:To:Date:Message-ID; b=VNAIwlRjsbLbyHN8JgMmqURxgq385QMouIhgQgXQFfOZmRJs70ndbv/EMUxFJ74Pk05antxZzcpiJ9+0IMMKoc4oGsiPvDOyETpWjwSK2XnlSoP/PW1/Q4NTu1X7umpCj17lE18vpmv0yowTtukHSHqZcWU0NfpdoWvSEgeHnUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tracker.debian.org; spf=none smtp.mailfrom=tracker.debian.org; dkim=pass (2048-bit key) header.d=tracker.debian.org header.i=@tracker.debian.org header.b=KL3jLizj; arc=none smtp.client-ip=82.195.75.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tracker.debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tracker.debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=notyourfox.coffee header.i=@notyourfox.coffee header.b="Qzx5NnIV"
-DKIM-Signature: a=rsa-sha256; bh=21ozGVKPYTmOqYBKOcOmOK+mSJIkuon14lUJ9oaW7vM=;
- c=relaxed/relaxed; d=notyourfox.coffee;
- h=Subject:Subject:Sender:To:To:Cc:Cc:From:From:Date:Date:MIME-Version:MIME-Version:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Reply-To:In-Reply-To:In-Reply-To:Message-Id:Message-Id:References:References:Autocrypt:Openpgp;
- i=@notyourfox.coffee; s=mail; t=1729721693; v=1; x=1730153693;
- b=Qzx5NnIVSz7GYrDq8cD6l5rVz4+yd3Yy0awiIXQ74n7AFlsPGnqrWQg6R6416QT+gDRK9zC8
- 9xhmK/sXgtRFfrZuRTrJT44F2y0hvsfoeDKX+jvRt/xYJezg0GvKvAfTGTChJHSFh9G5Px8JJDQ
- ItihhXdHyhCSdjbd56F+uiNFCT1zCuJG/Ri/sCwEuVj440Wyh1yTbfFA2uTKwQh8BGf1pSB7Ve+
- G1ukignizWPp5P6QKWyCjWYu/mi/HkS83y71a1L99yqksWnODf1S+p7ekZij6dMqSGCUF0KoEae
- Q6vlmTQmE/I5KlptBRFhJuu+uy+Wxrv/d/yn77tWE1ZEg==
-Received: by mail.notyourfox.coffee (envelope-sender
- <contact@notyourfox.coffee>) with ESMTPS id 9d61df4a; Wed, 23 Oct 2024
- 22:14:53 +0000
-Message-ID: <bd0c85d0-6941-4693-bae5-a3f6613f829c@notyourfox.coffee>
-Date: Thu, 24 Oct 2024 01:14:51 +0300
+	dkim=pass (2048-bit key) header.d=tracker.debian.org header.i=@tracker.debian.org header.b="KL3jLizj"
+Received: from ticharich.debian.org ([2607:f8f0:614:1::1274:64]:59242)
+	from C=NA,ST=NA,L=Ankh Morpork,O=Debian SMTP,OU=Debian SMTP CA,CN=ticharich.debian.org,EMAIL=hostmaster@ticharich.debian.org (verified)
+	by mailly.debian.org with esmtps (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.94.2)
+	(envelope-from <noreply@tracker.debian.org>)
+	id 1t3pa0-0046C1-KW
+	for patches@lists.linux.dev; Thu, 24 Oct 2024 04:36:12 +0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=tracker.debian.org; s=smtpauto.ticharich; h=Message-ID:Date:To:From:Subject
+	:Content-Transfer-Encoding:MIME-Version:Content-Type:Reply-To:Cc:Content-ID:
+	Content-Description:In-Reply-To:References;
+	bh=zKmOY6KmoQOXrSZE5fkbj3rIDiuSG4hehuJpyaIaqKM=; b=KL3jLizjbVWRo4ME5hQLrTuWmx
+	mLVjmlo6C+5SjfWHyR3yzXEyKI/udLnD1j/4Jc2WLPnypNeJhEe4xt5vKZK235hhvdwySjET+1BLu
+	cvEnvT39Q+ROg3ZTYTyHFvjfEFCWc2VNDOdw9u0cfUYAfPJ1zVcX7d4UychBc32hBCZUP7/MXxMuy
+	cSarzE92Nd8fDRbRuv607BeOYb+2LumvLSFTxl+bTzqTGEf5MZMUhhuqJKNC9+G5qzSKFh1r7nr7m
+	yixYVEMM9p2VqjMoUjLBhkIlJJAhcopwGUqqasgnI9g5Uc5SfWEUrkEVI62a+p9xQheZbJ2lr4xeJ
+	3dpMlG3Q==;
+Received: from localhost ([::1]:53744 helo=ticharich.debian.org)
+	by ticharich.debian.org with esmtp (Exim 4.94.2)
+	(envelope-from <noreply@tracker.debian.org>)
+	id 1t3pZy-000qcz-Td
+	for patches@lists.linux.dev; Thu, 24 Oct 2024 04:36:10 +0000
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: torvalds@linux-foundation.org
-Cc: aospan@netup.ru, conor.dooley@microchip.com, ddrokosov@sberdevices.ru,
- dmaengine@vger.kernel.org, dushistov@mail.ru, fancer.lancer@gmail.com,
- geert@linux-m68k.org, gregkh@linuxfoundation.org,
- hoan@os.amperecomputing.com, ink@jurassic.park.msu.ru, jeffbai@aosc.io,
- kexybiscuit@aosc.io, linux-alpha@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-fpga@vger.kernel.org,
- linux-gpio@vger.kernel.org, linux-hwmon@vger.kernel.org,
- linux-ide@vger.kernel.org, linux-iio@vger.kernel.org,
- linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
- linux-renesas-soc@vger.kernel.org, linux-spi@vger.kernel.org,
- manivannan.sadhasivam@linaro.org, mattst88@gmail.com,
- netdev@vger.kernel.org, nikita@trvn.ru, ntb@lists.linux.dev,
- patches@lists.linux.dev, richard.henderson@linaro.org, s.shtylyov@omp.ru,
- serjk@netup.ru, shc_work@mail.ru, torvic9@mailbox.org,
- tsbogend@alpha.franken.de, v.georgiev@metrotek.ru, wangyuli@uniontech.com,
- wsa+renesas@sang-engineering.com, xeb@mail.ru
-References: <CAHk-=whNGNVnYHHSXUAsWds_MoZ-iEgRMQMxZZ0z-jY4uHT+Gg@mail.gmail.com>
-Subject: Re: [PATCH] Revert "MAINTAINERS: Remove some entries due to various
- compliance requirements."
-Content-Language: en-US
-From: NotYourFox <contact@notyourfox.coffee>
-In-Reply-To: <CAHk-=whNGNVnYHHSXUAsWds_MoZ-iEgRMQMxZZ0z-jY4uHT+Gg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+Subject: Debian Package Tracker Registration Confirmation
+From: noreply@tracker.debian.org
+To: patches@lists.linux.dev
+Date: Thu, 24 Oct 2024 04:36:10 -0000
+Message-ID: <172974457091.202074.1127832324616384562@ticharich.debian.org>
 
-Dear Linus,
+You have registered to the Debian Package Tracker.
 
-Yet another of probably a million "actual innocent Russian bystanders" 
-is here. For quite a reason. While I do not contribute to Linux kernel, 
-I am a long-time user of Linux and a big fan of FOSS. You may consider 
-it a spam, and it might as well be, but this just blew up our IT-related 
-media.
-I am, or, rather, many of us are disappointed in the way you put 
-politics over software freedom now.
-This move did nothing against Russian aggression, but rather 
-disappointed a lot of us, who don't support or have anything to do with 
-the ongoing war. The contributors you dropped for, as it seems, no 
-reason other than "compliance requirements" have done some actual work 
-to improve Linux, so kicking them for apparently just being from Russia 
-is... just plain discrimination.
-If that's the law you have to follow, go on. If it's your own actual 
-choice - you need to revisit what "free software" means.
+In order to complete your registration, you must confirm that you are the
+owner of this email address by going to the following URL:
 
-If I am blatantly wrong about all this, knowing it would only be a balm 
-for my soul.
+https://tracker.debian.org/accounts/confirm/c9e1e7b5efcfe0bfcb323ae0f5f8ba028af12044
 
+If you don't understand why you got this mail, please ignore it,
+nothing will be done unless you follow the given link.
 
+If you have any problem with this service, please contact
+owner@tracker.debian.org.
+
+Thanks,
+--
+Debian Package Tracker
+https://tracker.debian.org
