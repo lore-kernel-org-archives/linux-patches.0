@@ -1,81 +1,86 @@
-Received: from mail.easysoft.com (mail.easysoft.com [80.195.45.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC9216130C
-	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 04:39:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.195.45.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8EB171675;
+	Thu, 24 Oct 2024 04:42:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729744778; cv=none; b=fF7qQko+NWynRpPwKjSBCb/ZeGa3CO7rciKkLB76AdBCasIH9ooFq97dfxBSNnAGPmo+l4YKvTvGU9S9dfyTYasZhFUFQjA+Nr73cy/RFzJrAywecpfkbuqZOpP1Rv5dh/aqcXXizYRj3mkWONyAE4ED8l65Y0oKYPUVymuZN58=
+	t=1729744929; cv=none; b=SGRfqMNdF3/qNwcFXSfzg1QVRLDemip5xGUu1chQMbWbd09xLg3s0PEWBBXXgUs6heE3T71Kd2QorXdZzDCAnHdcUXPBgjHSW4JsOWjydNrzIldaClBpl7sr4qd86FVTy1gS33Nk9MpJmqm5CqBXtztZAFiu1AI67SNzRL8nuQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729744778; c=relaxed/simple;
-	bh=jiCjO3kkD96zvDjaNYr7OtHLLniTk7NpEvsNbEKY7mQ=;
-	h=To:From:Subject:Message-Id:Date; b=q07JO8oVY+Q/xnwphPrYRLv8tjhT3Cq+BHYoLLcaOUJkOpEv1cswTspxA/4g1XXsrkY0vQY5z6MfMDdYBDkws44xhrQ9Q7mT1xqkJ47ldkKvrYoIAsSO0JASb+Acl+LL6c25ho5Wv4YWpNvNP898/SScWRwmNVJuceF961S5XoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easysoft.com; spf=pass smtp.mailfrom=easysoft.com; dkim=pass (1024-bit key) header.d=easysoft.com header.i=@easysoft.com header.b=bjyfMwPu; arc=none smtp.client-ip=80.195.45.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easysoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=easysoft.com
+	s=arc-20240116; t=1729744929; c=relaxed/simple;
+	bh=/E05jT6POpOqZDCpwe8J4QUwk/2Ud1uqQgjbaLBTXt0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=qe7SXfWJeqMkBqkBNX+jZ04P6GKiGbO2ltLOqohlDiQmUKkTsHZ74cgn8yzHBqtC+6DJGH4YeGaS7QKAA4J43B9KWvjg5TmwweKNB7l6wzbHEii9kDGkE4SvfTZMXZVL7ZEMFE4+ZKo88KH/StUCnNXQKspQU+uC+lrJda7k0Mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LlBxOEkv; arc=none smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=easysoft.com header.i=@easysoft.com header.b="bjyfMwPu"
-Received: from mail.easysoft.com (localhost [127.0.0.1])
-	by mail.easysoft.com (Postfix) with ESMTP id 785618807AF
-	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 05:33:53 +0100 (BST)
-Authentication-Results: mail.easysoft.com (amavisd-new);
-	dkim=pass (1024-bit key) reason="pass (just generated, assumed good)"
-	header.d=easysoft.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=easysoft.com; h=
-	date:date:message-id:subject:subject:reply-to:from:from:to; s=
-	dkim; t=1729744433; x=1730608434; bh=jiCjO3kkD96zvDjaNYr7OtHLLni
-	Tk7NpEvsNbEKY7mQ=; b=bjyfMwPuIFPfYDhRoZ+mKEZzYAEWWa7FoEPJuwXDFNN
-	PPXneB/jP8yp1gm0zVTHpiVcJc9c2ysuDFMxM/p8Vr1AWbk1FReQdhjKekGpkG/A
-	1nhuTszi5sm6AvKWkIAe5NQEo4IVu36dCWuMPQndLPy8xAngEQ4ir01Z7Aybn1mQ
-	=
-X-Virus-Scanned: Debian amavisd-new at mail.easysoft.com
-Received: from mail.easysoft.com ([127.0.0.1])
-	by mail.easysoft.com (mail.easysoft.com [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 2-l3t-7A5qkY for <patches@lists.linux.dev>;
-	Thu, 24 Oct 2024 05:33:53 +0100 (BST)
-Received: from modperl.easysoft.com (unknown [172.20.100.10])
-	by mail.easysoft.com (Postfix) with ESMTPSA id 44166880683
-	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 05:33:53 +0100 (BST)
-Received: by modperl.easysoft.com (Postfix, from userid 33)
-	id 298A11BF2DD; Thu, 24 Oct 2024 05:33:53 +0100 (BST)
-To: patches@lists.linux.dev
-From: presales@easysoft.com
-Sender: presales@easysoft.com
-Reply-To: presales@easysoft.com
-Subject: Easysoft.com Account Activation
-Message-Id: <20241024043353.298A11BF2DD@modperl.easysoft.com>
-Date: Thu, 24 Oct 2024 05:33:53 +0100 (BST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LlBxOEkv"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-3e5ffbc6acbso326304b6e.3;
+        Wed, 23 Oct 2024 21:42:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729744927; x=1730349727; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=/E05jT6POpOqZDCpwe8J4QUwk/2Ud1uqQgjbaLBTXt0=;
+        b=LlBxOEkvORrvRkKVp1JjVelLQyOrPCFkKJ765OFH2j+7TjZDw3ZQfgxS5aso5gcu1U
+         yAw27O3JzyXthSn6EykAORZmoKj1ElUhVLl0Q43fDVNb4d79DSLUnOx0Z0Eb59MKDoLr
+         TJbc5OvBo30mCoPD4Bx0mhV3e0JWONqHAjeaX/Z3Nt7xJta932aI6/MH4xdCfjNweBcW
+         hJbOrwVY53tMoRNNC3GrqyrwLsSy1Xy+KbErLdW1dyQbsUk4EWAuaQyy8/SyvVWpelgM
+         jrJWGvW16WhP+F9WYmHMe9+YvIom2aSauYii+3Oe7yFLhlloPKFJqvqB4MSSEPTYUTog
+         hJVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729744927; x=1730349727;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/E05jT6POpOqZDCpwe8J4QUwk/2Ud1uqQgjbaLBTXt0=;
+        b=sOmFnTofugNOIZXXbqjMTirbKtgcTkAsiCmtGyUOMSkMytQ3HcgrKo5/SocZtjXN8E
+         TyBqgakGmOrtLbgfpt8N8MGIQeRSyrHSVEPI+xcWbUcS9B7VcEb0MMyA/9fSjawX6f/h
+         tXpHKzLs9qlGft9oGS3X6JwgHtoste7Xivf1B2cluJSGICUBfV+L4l+6Z33Fo17ZaIYS
+         u1pl1xj7HvJg+/YZQLoCGl+GzHSr9oy4MNFAkLyb3hmJT9vfafd1AjLeEs9Gqrls031E
+         bUs9mRbqsPpOImDX0ie3e0tMiktPyOsgvllcrKPdkZUq2MgBPhmV+nFwAQVVhAHWRibg
+         6bkg==
+X-Forwarded-Encrypted: i=1; AJvYcCU8/uvn5QpvKU3kw7NDI1muHIFwVHd0KpG3azfgo79NL+CgdjqRi1y9XpPrK5+N1jT6R3M=@lists.linux.dev, AJvYcCVi9eFUIoP3TFf5rgu1WmWRN396aGEzqoxUWouyhR4p2jbnCFS90btt6KJuX0c8b+JCGzD7HO6XgQ==@lists.linux.dev
+X-Gm-Message-State: AOJu0YyBjNrxHJhq1pVJwi5DZqB/1XGMVQLFZDG8U/OrZOtUkIf0BXho
+	Uf+hrTze8pLctF3VLvK6swS5827ktrjLkVc3hHS6vKhQ0juENyIgd8Zc2aK70HlXx0XnafhK9Pz
+	I+SI5DORJXD6TPle0gBJsrpLTZDc=
+X-Google-Smtp-Source: AGHT+IEcPxkLcRYoYZ+qYqdz3rf9C8aaTqIgeoOwaGj1dLh0kiz4T/GQTSq6ljBIHvhnOb/5OXIeeI806cLnduNI9A0=
+X-Received: by 2002:a05:6870:3324:b0:286:f2cc:7a4a with SMTP id
+ 586e51a60fabf-28ccb9e54fbmr5220982fac.34.1729744926679; Wed, 23 Oct 2024
+ 21:42:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+From: Ar Worf <fricks6@gmail.com>
+Date: Thu, 24 Oct 2024 09:42:02 +0500
+Message-ID: <CANSmiqmTobiHdS3zi794hg=rmvg6ePWDp7_vhgMD4_Sb4by7hA@mail.gmail.com>
+Subject: Re: [PATCH] Revert "MAINTAINERS: Remove some entries due to various
+ compliance requirements."
+To: torvalds@linux-foundation.org
+Cc: aospan@netup.ru, conor.dooley@microchip.com, ddrokosov@sberdevices.ru, 
+	dmaengine@vger.kernel.org, dushistov@mail.ru, fancer.lancer@gmail.com, 
+	geert@linux-m68k.org, gregkh@linuxfoundation.org, hoan@os.amperecomputing.com, 
+	ink@jurassic.park.msu.ru, jeffbai@aosc.io, kexybiscuit@aosc.io, 
+	linux-alpha@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-fpga@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-hwmon@vger.kernel.org, linux-ide@vger.kernel.org, 
+	linux-iio@vger.kernel.org, linux-media@vger.kernel.org, 
+	linux-mips@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-spi@vger.kernel.org, manivannan.sadhasivam@linaro.org, 
+	Matt Turner <mattst88@gmail.com>, netdev@vger.kernel.org, nikita@trvn.ru, 
+	ntb@lists.linux.dev, patches@lists.linux.dev, richard.henderson@linaro.org, 
+	s.shtylyov@omp.ru, serjk@netup.ru, shc_work@mail.ru, torvic9@mailbox.org, 
+	tsbogend@alpha.franken.de, v.georgiev@metrotek.ru, wangyuli@uniontech.com, 
+	wsa+renesas@sang-engineering.com, xeb@mail.ru
+Content-Type: text/plain; charset="UTF-8"
 
-This is the email that is sent out to activate a new www.easysoft.com account.
+> I'm Finnish.
 
-Your email client may split the activation link over multiple lines
-and this could prevent the registration process completing. If this
-is the case then copy and paste the lines of the URL into the address
-bar of your browser making sure no spaces exist between the lines.
+Said a descendant of Swedish occupiers. Ooookay.
 
-Activation requires cookies to be enabled within your browser.
-If you are not sure cookies are enabled within your browser please go
-to the following location for details of how cookies are enabled.
-
-https://www.easysoft.com/company/cookie.html
-
-Please click on the following url to activate your account.
-
-https://www.easysoft.com/cgi-bin/account/activate.cgi?activation_id=*2171974F740AB87A41044B9D88E674F3C7E58626
-
-Please do not hesitate to contact us if you require any help during your
-Easysoft Product evaluation.
-
-Thank You
-
-Easysoft Pre-Sales Support
-
-Email : presales@easysoft.com
-Tel   : +44 (0)1937 860000
-Fax   : +44 (0)1937 860001
-
+If you deleted all the code committed by Russians, that would be at
+least understandable. But what you just have done is refusing the
+people who contributed to the kernel due credit for their work, while
+keeping the results. A totally imperialist mindset.
