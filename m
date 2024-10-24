@@ -1,112 +1,103 @@
-Received: from mail-oa1-f66.google.com (mail-oa1-f66.google.com [209.85.160.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DF31D220A;
-	Thu, 24 Oct 2024 12:34:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B971F1D2207;
+	Thu, 24 Oct 2024 13:05:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729773278; cv=none; b=od3BG9JcW7+JK/u6cze9nCsMRjcp3sKsN2RX2f98msfGLBlf7quZh67qGMabaCVL52p1nHLCJez80H33YpWG6l87wAqpX7KCkCrxEQP+LvSbv9F8S60ct+ub/E+f5Hyc1FDI9PCNCSdNsNizmByrvaNxONgKX7d3vmH6cW5/6k8=
+	t=1729775158; cv=none; b=RssKTclWXD1QOup+aZa6xfbQ3krDhTjmvuw6jxVuji9gt7envU3+bWRDYt9/cV69dXkRm237XbjbLhIbDHjmzEI7JlGzNuXAdvtWgnpqOvtsthY8IkqvOKeU63QqT+JQ/Q4FM9W4w3gkpS3Fh0IK9lb8dpvYjozMBi2TLrZLkCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729773278; c=relaxed/simple;
-	bh=WqKO+VQufYnnSQGNsjJoV9pHpcM4NLycUTcWyfMcgg8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AfFby7ktPfaM8Je8ZJnyk8skBpp7XZRTCl0OqQC88l6642lhOF7FcfDcgJd+zNUZQ4rB4108yO0VyGZYa3CXHToQZTItxSK0bg1D3Ns8W0bPHGykElhta433X8w+U3+LcLnK5c7UnAkc7FMM5uLjQqkkZ8uIj86y+CtQTwkIUPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k43UCJhS; arc=none smtp.client-ip=209.85.160.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729775158; c=relaxed/simple;
+	bh=QXk1V7bH3HsTPiuM9A5Py2vZdwbkg6MWH803SOVsaJ4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Luouainol4BgqxoS6fzxCrlwz7s806PxGy4dnS9hO98QofzjWvdJkdcYWN8gSvFfdpIfcjJ7Iuxc+RiYD4pFkktpKczav/G0gweXqSQ1mptGu2DtcdZYMcZ1JTBIlID4KKe+DJ8W0I/QMMTTv9cGNXDmnkimBGkbnzd/mcqnVyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vy1Wn4fL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k43UCJhS"
-Received: by mail-oa1-f66.google.com with SMTP id 586e51a60fabf-288d74b3a91so546695fac.0;
-        Thu, 24 Oct 2024 05:34:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729773275; x=1730378075; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WqKO+VQufYnnSQGNsjJoV9pHpcM4NLycUTcWyfMcgg8=;
-        b=k43UCJhSc08xpUVw4thwBUskmOZIpBdu4hXyP8MAFjmGhVAv6g2qM2qoZfnaftAHan
-         hjO3wHtlLbc7rb7UsBVBNutCX6JGzxP4An4lfNZKryRrOKsWuYgKKs7UTokJuKKqAs2y
-         N8Ddt4Ic0Hgq3LmpX5/h4/e7C/vdQ6+12svDMQW0SGBpo6U/3eH7gPbM5xma6kQzJOEP
-         T6M9sSVLFb14ssjc3zRMtDqeSA6KoAO2Y0Zvqjo1tqIC9laNZleXXL1l9Qa/0tNr6ixQ
-         9huE0mYPaf8XqLlgncCv56PCZd572LWF84pZkpXyr3ET8JI5hRlfyODt2tc7w0qQDrVJ
-         O23A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729773275; x=1730378075;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WqKO+VQufYnnSQGNsjJoV9pHpcM4NLycUTcWyfMcgg8=;
-        b=POxSX1UkNYkLCD/xb+E0n+PWufEAdDw0qFDChFlfGJp7/WVI+4itg5g7UMcM3Nb7kH
-         p+/4/cU4nX5v1X93R/DYM9yipa7S/Eba3++EMUjQpIGWsfPXNyyY8R31RYh4R3DQihDw
-         YDPnc7qRK4jyf2QJg9rc9b0fxVMId8jFJdjkuRa0kifQMErc0qbnF411aB5sIbuesIja
-         knfmRnHlMqn881v0nK1fANVhLvrQVH91GZsid1iRrmO8ZSI7Fi0kFyr0iAjW8ngGWTDg
-         4HWVFs1MkWhf8O5Js0s90L//I28RRgGm4hprfFCwnsJp+z98SJiEd+ZpICTN+ktZJtsQ
-         mYig==
-X-Forwarded-Encrypted: i=1; AJvYcCVVZlE8rG4sAGtVAXIJ+kJdpssEUocvdGZ+2pdAIoXf6PGhq2IjH8aRdwwcUv7aW+G2eFs=@lists.linux.dev, AJvYcCVfGdaNXCIdac8q9OvIVfeqaoqrJpMU/1B+di/cPOky0RmYAcKiy8gnsnbJ+ANMGKepex7GHN236Q==@lists.linux.dev
-X-Gm-Message-State: AOJu0YzSnoB5iGohbeLN3AM2sdCv0q/CZ2rYhv4L3tys/+Rhv3osM3tx
-	NZONfNdesWKd7X1Ki5/Ss++EOPyt1yYhJwSCJ7nPte3JXzyhOgX6
-X-Google-Smtp-Source: AGHT+IGNbdDr4bWOuekBU0ohovYD+u0SLmOKefBPtfh2fzqlR42/5wZYBu+ZqeJfv789Y4nUSEsYRQ==
-X-Received: by 2002:a05:6870:218a:b0:277:fb59:b74c with SMTP id 586e51a60fabf-28ced48efd0mr1364818fac.40.1729773275318;
-        Thu, 24 Oct 2024 05:34:35 -0700 (PDT)
-Received: from localhost.localdomain ([114.246.193.69])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7eaeab48f62sm8534093a12.42.2024.10.24.05.34.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Oct 2024 05:34:34 -0700 (PDT)
-From: =?UTF-8?q?=E9=99=88=E5=AF=92=E5=BD=A4?= <cxwdyx620@gmail.com>
-To: jensenhuangnvdia@gmail.com
-Cc: aospan@netup.ru,
-	conor.dooley@microchip.com,
-	ddrokosov@sberdevices.ru,
-	dmaengine@vger.kernel.org,
-	dushistov@mail.ru,
-	fancer.lancer@gmail.com,
-	geert@linux-m68k.org,
-	gregkh@linuxfoundation.org,
-	hoan@os.amperecomputing.com,
-	ink@jurassic.park.msu.ru,
-	jeffbai@aosc.io,
-	kexybiscuit@aosc.io,
-	linux-alpha@vger.kernel.org,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vy1Wn4fL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79411C4CEC7;
+	Thu, 24 Oct 2024 13:05:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729775158;
+	bh=QXk1V7bH3HsTPiuM9A5Py2vZdwbkg6MWH803SOVsaJ4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Vy1Wn4fLlykC16tJY9EfRKt3126lvfGKufGOM2l0XlojP1032MOTW502xrrPTywyV
+	 7Y69l4ulKnMB3iVxDKBaWdiHt+3LGuqNttl8YRItkAI3MzFSIvjfDjADzGcwCu4QPo
+	 oVMqArtpEcrXEoIT+Noe46x2BFsVNjtLtp+5vmkOIr1A4jwvVZnTmW3Nqqo9rnI4mA
+	 N0P0leVPPbKzcS+U68XbM42bL1qeS0CFMha/ha1PQk+vXDdznGF5M0aEQmPY51S8iy
+	 EI5eUEGub5heUuD/638YAHa/pS8V/4jbNgLRfJBpGxVjOwrQweu0clK9gwGog1w3XI
+	 Wziem035r2IIA==
+Date: Thu, 24 Oct 2024 14:05:53 +0100
+From: Will Deacon <will@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
 	linux-arm-kernel@lists.infradead.org,
-	linux-fpga@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-hwmon@vger.kernel.org,
-	linux-ide@vger.kernel.org,
-	linux-iio@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	linux-mips@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-spi@vger.kernel.org,
-	manivannan.sadhasivam@linaro.org,
-	mattst88@gmail.com,
-	netdev@vger.kernel.org,
-	nikita@trvn.ru,
-	ntb@lists.linux.dev,
-	patches@lists.linux.dev,
-	richard.henderson@linaro.org,
-	s.shtylyov@omp.ru,
-	serjk@netup.ru,
-	shc_work@mail.ru,
-	torvalds@linux-foundation.org,
-	torvic9@mailbox.org,
-	tsbogend@alpha.franken.de,
-	v.georgiev@metrotek.ru,
-	wangyuli@uniontech.com,
-	wsa+renesas@sang-engineering.com,
-	xeb@mail.ru
-Subject: Re: [PATCH] MAINTAINERS: Remove some entries due to various compliance requirements.
-Date: Thu, 24 Oct 2024 20:34:03 +0800
-Message-ID: <20241024123403.154-1-cxwdyx620@gmail.com>
-X-Mailer: git-send-email 2.47.0.windows.1
-In-Reply-To: <20241024113246.22901-1-JensenHuangNVDIA@gmail.com>
-References: <20241024113246.22901-1-JensenHuangNVDIA@gmail.com>
+	Robin Murphy <robin.murphy@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	dri-devel@lists.freedesktop.org, Liviu Dudau <liviu.dudau@arm.com>,
+	patches@lists.linux.dev, Steven Price <steven.price@arm.com>
+Subject: Re: [PATCH] iommu/io-pgtable-arm: Remove split on unmap behavior
+Message-ID: <20241024130550.GE30704@willie-the-truck>
+References: <0-v1-8c5f369ec2e5+75-arm_no_split_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0-v1-8c5f369ec2e5+75-arm_no_split_jgg@nvidia.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Well, the fact is that Linus Torvalds, our leader of Linux, is not **Palest=
-inian** but **Finnish**.=0D
+Hi Jason,
+
+On Fri, Oct 18, 2024 at 02:19:26PM -0300, Jason Gunthorpe wrote:
+> Of the page table implementations (AMD v1/2, VT-D SS, ARM32, DART)
+> arm_lpae is unique in how it handles partial unmap of large IOPTEs.
+> 
+> All other drivers will unmap the large IOPTE and return it's length.  For
+> example if a 2M IOPTE is present and the first 4K is requested to be
+> unmapped then unmap will remove the whole 2M and report 2M as the result.
+> 
+> arm_lpae instead replaces the IOPTE with a table of smaller IOPTEs, unmaps
+> the 4K and returns 4k. This is actually an illegal/non-hitless operation
+> on at least SMMUv3 because of the BBM level 0 rules.
+> 
+> Long ago VFIO could trigger a path like this, today I know of no user of
+> this functionality.
+> 
+> Given it doesn't work fully correctly on SMMUv3 and would create
+> portability problems if any user depends on it, remove the unique support
+> in arm_lpae and align with the expected iommu interface.
+> 
+> Outside the iommu users, this will potentially effect io_pgtable users of
+> ARM_32_LPAE_S1, ARM_32_LPAE_S2, ARM_64_LPAE_S1, ARM_64_LPAE_S2, and
+> ARM_MALI_LPAE formats.
+> 
+> Cc: Boris Brezillon <boris.brezillon@collabora.com>
+> Cc: Steven Price <steven.price@arm.com>
+> Cc: Liviu Dudau <liviu.dudau@arm.com>
+> Cc: dri-devel@lists.freedesktop.org
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/io-pgtable-arm.c | 72 +++-------------------------------
+>  1 file changed, 6 insertions(+), 66 deletions(-)
+
+I'd love to drop this, but I'm sure it was needed when I added it :/
+
+My recollection is hazy, but I seem to remember VFIO using the largest
+page sizes in the IOMMU 'pgsize_bitmap' for map() requests but then
+using the smallest page size for unmap() requests, so you'd end up
+cracking block mappings when tearing down a VM with assigne devices.
+
+Is this what you're referring to when you say?
+
+  > Long ago VFIO could trigger a path like this, today I know of no user of
+  > this functionality.
+
+If so, please can you provide a reference to the patch that moved VFIO
+off that problematic behaviour?
+
+Thanks!
+
+Will
