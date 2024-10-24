@@ -1,35 +1,35 @@
 Received: from mail.notyourfox.coffee (mail.notyourfox.coffee [92.63.193.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AEF02003A2;
-	Thu, 24 Oct 2024 18:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BFE1D6DA8
+	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 18:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.63.193.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729793454; cv=none; b=jvbsQZLXfGJUShLlZpRBJplMyAnli7Pn1xPZzLSddIz9qtwwAFVv5/5jXyCeH7WCWcp8GsYv0sG4VQCIvyo/LKiAcG5ikNKThq2ypSf0UmC5gh2CWQ9W+wmzujJgbvD8NLtyWx3oN44nBJlayLB7muNC0KlzFFOxuePzDOFKRfo=
+	t=1729795297; cv=none; b=Vp0tPgrZBgIiacJYzw2uVWnlpPxoRjqJf3asFFRC3EAyFnjk8VKHff/Wub6yNyN0Je/mbh1uAkA7iF5CbdcaDZH6+xBp2N8hp+uB04C7SHcWEtpr3TZ6kIgdEBSE6M3T28Njp5pbY2AUWGCg+zEo226QF/ERF/rj1BJy38llpz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729793454; c=relaxed/simple;
-	bh=4HaM2tprLpARFSOFiAD1IewWveAq50xA4izcD+Ol1hg=;
+	s=arc-20240116; t=1729795297; c=relaxed/simple;
+	bh=TXggkkz4idX/r0e7mSVQo60q6l7+Ow3gx98nO5rpWR4=;
 	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=F/19doZ4IYXXulnHQ4taEYkLYGFE63YNrEi2RX0OKR72gmYEnSQVs+p2GJ8QkwGLlYRR0C2iF02XxpMyqge8fU+SkvG7afPqCQTm94mrIGc1+forNCtUer098veSHlzfPHEZlbtNZyJvQb61kjdbFKiHO8hTuZm4xQzhtgT9dxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=notyourfox.coffee; spf=pass smtp.mailfrom=notyourfox.coffee; dkim=pass (2048-bit key) header.d=notyourfox.coffee header.i=@notyourfox.coffee header.b=JHSUzjKl; arc=none smtp.client-ip=92.63.193.195
+	 In-Reply-To:Content-Type; b=g9s3wUjQk7zaVrTug78XGu6ihtSOPuC/R9yAjQ2QQrgb8zXheWEY7m/yZ88l2fNRRJtgyGbJOdF49Z7v/Z2ExuKsW4qqc9LagYxdxSVh2lsbrUCO7qeHl3y6VpHsOSgmlCC/LfkbEsd4tDfn9ua5P2APzvcKgxolgCo/Ig/V4Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=notyourfox.coffee; spf=pass smtp.mailfrom=notyourfox.coffee; dkim=pass (2048-bit key) header.d=notyourfox.coffee header.i=@notyourfox.coffee header.b=PmIfVvfw; arc=none smtp.client-ip=92.63.193.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=notyourfox.coffee
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=notyourfox.coffee
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=notyourfox.coffee header.i=@notyourfox.coffee header.b="JHSUzjKl"
-DKIM-Signature: a=rsa-sha256; bh=zD/MvoTUjjchDlHO31PqaPi5FVCTTnWec43Dr2sc5uE=;
+	dkim=pass (2048-bit key) header.d=notyourfox.coffee header.i=@notyourfox.coffee header.b="PmIfVvfw"
+DKIM-Signature: a=rsa-sha256; bh=JSTMoweuNt8jBlS03OoZQfSlfAdoie0u3Z8nHethIg0=;
  c=relaxed/relaxed; d=notyourfox.coffee;
  h=Subject:Subject:Sender:To:To:Cc:Cc:From:From:Date:Date:MIME-Version:MIME-Version:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Reply-To:In-Reply-To:In-Reply-To:Message-Id:Message-Id:References:References:Autocrypt:Openpgp;
- i=@notyourfox.coffee; s=mail; t=1729793394; v=1; x=1730225394;
- b=JHSUzjKls5Wm839qvhA6nxJdgjfFHYyuIMcFJC4py2Th5/lRpBJL87itZiTg0D7g72byla2/
- RGt9j0YQZcrrSnTMUigTkonLFjKQ1wty2LN+88I2MCPC3PFacLmQ6qZhW6CFbZFxlrquYkL2uWA
- 8n/E59Ut+LmSKvFcVYkl9wkkdRh8MLTO73De9KCAPILQIWuDQToZmui76W//DdF1v3lfmvIwrLC
- 00BhABRp1gebdHeZoI70ehEYTqlEw8KiEoYc1vSAp1tKTck0QShQZ9gBb/1Ia55r4kKsUVkpN30
- gJICGzIIOhLel8x+rFvTjeBr9jYMQEnr6fmrnHA+6Rz6Q==
+ i=@notyourfox.coffee; s=mail; t=1729795285; v=1; x=1730227285;
+ b=PmIfVvfwuIKGpNzLumyt+Sh9au2rmpDeiu6JO7xynkONo1vz/7GmaAOz3g3XfaF59nWTK+Fo
+ FKoTLqpSqLXnGXl2V2DRKiT59MZUk9fvk2Wxp4hsiOAXnGi6+09ZkYgmC5HadJDbgxPMmlwZGBc
+ xL7Efzq5wueCM055TfV9ETkHP/58cWtrTrY8WFglLkWjj5Mk7Pe2H4f1CCrVsXYIqi7/sn2fB1M
+ c6jZY3IRpLQGliiCAVCV3yZHa1mFKm9NnSSVd3kyy9yGbOWUdDzNZw1+Mm87Ml+34UDWW9WOb0u
+ rGcMEG6+yf+x3eWCxX++PJaVqkEpG/7t2ptY3W092GsTw==
 Received: by mail.notyourfox.coffee (envelope-sender
- <contact@notyourfox.coffee>) with ESMTPS id 1345da47; Thu, 24 Oct 2024
- 18:09:54 +0000
-Message-ID: <c58172db-e3cc-488d-baa6-f095588a8771@notyourfox.coffee>
-Date: Thu, 24 Oct 2024 21:09:52 +0300
+ <contact@notyourfox.coffee>) with ESMTPS id ce689bc2; Thu, 24 Oct 2024
+ 18:41:25 +0000
+Message-ID: <51b4a9dc-42a8-4d3d-bd1d-2a5548bdc5b1@notyourfox.coffee>
+Date: Thu, 24 Oct 2024 21:41:25 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,47 +37,30 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: vladimir_putin_rus@kremlin.ru
-Cc: aospan@netup.ru, conor.dooley@microchip.com, ddrokosov@sberdevices.ru,
- dmaengine@vger.kernel.org, dushistov@mail.ru, fancer.lancer@gmail.com,
- geert@linux-m68k.org, gregkh@linuxfoundation.org,
- hoan@os.amperecomputing.com, ink@jurassic.park.msu.ru, jeffbai@aosc.io,
- kexybiscuit@aosc.io, linux-alpha@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-fpga@vger.kernel.org,
- linux-gpio@vger.kernel.org, linux-hwmon@vger.kernel.org,
- linux-ide@vger.kernel.org, linux-iio@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- linux-mips@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- linux-spi@vger.kernel.org, manivannan.sadhasivam@linaro.org,
- mattst88@gmail.com, netdev@vger.kernel.org, nikita@trvn.ru,
- ntb@lists.linux.dev, patches@lists.linux.dev, richard.henderson@linaro.org,
- s.shtylyov@omp.ru, serjk@netup.ru, shc_work@mail.ru,
- torvalds@linux-foundation.org, torvic9@mailbox.org,
- tsbogend@alpha.franken.de, v.georgiev@metrotek.ru, wangyuli@uniontech.com,
- wsa+renesas@sang-engineering.com, xeb@mail.ru
-References: <20241024140353.384881-1-vladimir_putin_rus@kremlin.ru>
-Subject: Re: [PATCH 0/2] MAINTAINERS: Remove few Chinese Entries
+To: james.bottomley@hansenpartnership.com
+Cc: geert@linux-m68k.org, gregkh@linuxfoundation.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <7ee74c1b5b589619a13c6318c9fbd0d6ac7c334a.camel@HansenPartnership.com>
+Subject: Re: [PATCH] MAINTAINERS: Remove some entries due to various
+ compliance requirements.
 Content-Language: en-US
 From: NotYourFox <contact@notyourfox.coffee>
-In-Reply-To: <20241024140353.384881-1-vladimir_putin_rus@kremlin.ru>
+In-Reply-To: <7ee74c1b5b589619a13c6318c9fbd0d6ac7c334a.camel@HansenPartnership.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-And what were you trying to accomplish?
+Thanks for clarification.
+It could be a "good enough" explanation to settle things down. If not 
+for Linus' reply.
 
-On 10/23/24 1:45 PM, Linus Torvalds wrote:
- > Ok, lots of Russian trolls out and about.
+One message made him lose most of the respect he earned in Russia for 
+good things. More importantly, our trust in Linux and FOSS in general.
+Very, very disappointing, even more to me as I don't see any better 
+alternatives.
 
-You just made his statement valid by showing yourself off. Thanks for no 
-help at all.
+Linus is a developer, a hacker, and one of the names everyone thinks 
+about when it comes to FOSS. Not one of those arrogant politicians. He 
+should have never changed.
 
----
-
-И что вы пытались этим сделать?
-
-On 10/23/24 1:45 PM, Linus Torvalds wrote:
- > Ok, lots of Russian trolls out and about.
-
-Вы только сделали его высказывание верным, решив выставить это напоказ. 
-Спасибо за абсолютный ноль помощи.
-
+Signed,
+forever a Linux user.
