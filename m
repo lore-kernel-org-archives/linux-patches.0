@@ -1,85 +1,89 @@
-Received: from bmailout2.hostsharing.net (bmailout2.hostsharing.net [83.223.78.240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from wiki.archlinuxcn.org (wiki.archlinuxcn.org [104.245.9.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D734189F5F
-	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 07:01:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.223.78.240
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4EC156228;
+	Thu, 24 Oct 2024 07:30:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.245.9.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729753297; cv=none; b=YszLq2j12+KHvq7lFoKvIQh6b6w//hmOt27H0qmzN5hEdir4/+RvlqNb9nhJYWxUaTJdxOagRLtc6bogjZzRu/Vcu2qZ1AkTMcc7+9meghjMRUPsiv3T/tHesEB46uGHY8ZSzN0bZU11GXtTdeGMMSs6Tls8Yf78aMsE0gvgVrY=
+	t=1729755071; cv=none; b=rUKZg6AYrV32I+dG+RF4jSsPB+7COTBwiRO+45XoNvKkdXXHuW9i7T24yebRSd3zvi3uDIJoXbspuQOeeWkWY3/HCu3t8sFrKRQKQPL30dL2qZHTRPMToeJ95XtY6IL8mlekDoN0UMEBV2S0UR8EWxP2Nxv+qu/Czk08kHwjBYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729753297; c=relaxed/simple;
-	bh=vD3IrRF/+qmLRBs/JLN6gmx3hMkKr0r3AFZ1sLjhq9I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s33NhLdq6R2nV0Cg7LKyL55PXO3hVzatSwfDzSwadHnkfEVJp4JQLsQZUE0FJD9kpGoQtZclHvTkX+zkh5ntNxl74Jhfhhvd5F1/vnQYQ+3xdXKjXr8gV62pwUGTj//TbAwmKnxKBDwkSxJFsK3+SCyTvkBThRQUieZ5vIpO0Ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=83.223.78.240
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
-Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
-	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
-	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
-	by bmailout2.hostsharing.net (Postfix) with ESMTPS id DDAC32800B48B;
-	Thu, 24 Oct 2024 08:56:19 +0200 (CEST)
-Received: by h08.hostsharing.net (Postfix, from userid 100393)
-	id C76D74D3F9; Thu, 24 Oct 2024 08:56:19 +0200 (CEST)
-Date: Thu, 24 Oct 2024 08:56:19 +0200
-From: Lukas Wunner <lukas@wunner.de>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] MAINTAINERS: Remove some entries due to various
- compliance requirements.
-Message-ID: <ZxnvkwZrkaeOCRAo@wunner.de>
-References: <2024101835-tiptop-blip-09ed@gregkh>
- <a520d1f5-8273-d67e-97fe-67f73edce9f1@linux-m68k.org>
+	s=arc-20240116; t=1729755071; c=relaxed/simple;
+	bh=0og/Lc+FOv201w81B5yra/V4GJ7tcC9gsrNBemtGhFs=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=JDXNKYzCZVY6ZwdrWOKpaqSu4/RimPVkKItBb3cC1Yk2nrJ0UwTDjDLy+tsNl/C4+i1DTydR1vGktcmq7bVu2tZGqcxj4HPvCjm20atSuewVJjQ0T+0mo7vpcf4pfybmnocrwZSixnxeRz+4ut11lfTH4/lPNFI10saC7M39C0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archlinuxcn.org; spf=pass smtp.mailfrom=archlinuxcn.org; dkim=pass (2048-bit key) header.d=archlinuxcn.org header.i=@archlinuxcn.org header.b=dHW1x1n0; arc=none smtp.client-ip=104.245.9.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=archlinuxcn.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=archlinuxcn.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=archlinuxcn.org header.i=@archlinuxcn.org header.b="dHW1x1n0"
+DKIM-Signature: a=rsa-sha256; bh=7bmf93KccZco1vkeephdnqfRykS8tBowUwbPty2fku8=;
+ c=relaxed/relaxed; d=archlinuxcn.org;
+ h=Subject:Subject:Sender:To:To:Cc:Cc:From:From:Date:Date:MIME-Version:MIME-Version:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Reply-To:In-Reply-To:In-Reply-To:Message-Id:Message-Id:References:References:Autocrypt:Openpgp;
+ i=@archlinuxcn.org; s=default; t=1729753926; v=1; x=1730185926;
+ b=dHW1x1n0wG8iytTW0EtHnAKJ8f/nOq6kGNnSckz5fjAWcpJ28byWz0l9i0Y6P6HFyHUjVHVi
+ YPyOz4J7jlvpfuD+XWmq7sx+9KIg8cpk8q4N307s6vpqIrEckYupyow4Vg/6tHxdLgx0qTW56kM
+ B7yLaTLwNE2lq4wIEr8BQiDTeIiIV7x38//B1pkUd7b4JVQMgdu0oii1iXQKN4mf/FaQkNvu1W9
+ VUcKxpttvs7rqGfpHb835X5NWaCWQA/RhAL4nOpyvocEl1wZU9isPtmKu9rktyE84W0qgWV9deE
+ 5EGdlnrEeQgg/75GzH4IXgpYK54ZtoSI+k9tHRrXQAYVw==
+Received: by wiki.archlinuxcn.org (envelope-sender
+ <integral@archlinuxcn.org>) with ESMTPS id 5251ddab; Thu, 24 Oct 2024
+ 15:12:06 +0800
+Message-ID: <1ca0a261-c3f1-4cb5-ada4-8125ec22cdf6@archlinuxcn.org>
+Date: Thu, 24 Oct 2024 15:11:51 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a520d1f5-8273-d67e-97fe-67f73edce9f1@linux-m68k.org>
+User-Agent: Mozilla Thunderbird
+To: torvalds@linux-foundation.org
+Cc: aospan@netup.ru, conor.dooley@microchip.com, ddrokosov@sberdevices.ru,
+ dmaengine@vger.kernel.org, dushistov@mail.ru, fancer.lancer@gmail.com,
+ geert@linux-m68k.org, gregkh@linuxfoundation.org,
+ hoan@os.amperecomputing.com, ink@jurassic.park.msu.ru, jeffbai@aosc.io,
+ kexybiscuit@aosc.io, linux-alpha@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-fpga@vger.kernel.org,
+ linux-gpio@vger.kernel.org, linux-hwmon@vger.kernel.org,
+ linux-ide@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
+ linux-renesas-soc@vger.kernel.org, linux-spi@vger.kernel.org,
+ manivannan.sadhasivam@linaro.org, mattst88@gmail.com,
+ netdev@vger.kernel.org, nikita@trvn.ru, ntb@lists.linux.dev,
+ patches@lists.linux.dev, richard.henderson@linaro.org, s.shtylyov@omp.ru,
+ serjk@netup.ru, shc_work@mail.ru, torvic9@mailbox.org,
+ tsbogend@alpha.franken.de, v.georgiev@metrotek.ru, wangyuli@uniontech.com,
+ wsa+renesas@sang-engineering.com, xeb@mail.ru
+References: <CAHk-=whNGNVnYHHSXUAsWds_MoZ-iEgRMQMxZZ0z-jY4uHT+Gg@mail.gmail.com>
+Subject: Re: [PATCH] Revert "MAINTAINERS: Remove some entries due to various
+ compliance requirements."
+Content-Language: en-US
+From: Integral <integral@archlinuxcn.org>
+In-Reply-To: <CAHk-=whNGNVnYHHSXUAsWds_MoZ-iEgRMQMxZZ0z-jY4uHT+Gg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Oct 21, 2024 at 09:49:56AM +0200, Geert Uytterhoeven wrote:
-> On Fri, 18 Oct 2024, Greg Kroah-Hartman wrote:
-> > Remove some entries due to various compliance requirements. They can come
-> > back in the future if sufficient documentation is provided.
-> 
-> This is very vague...
-> What are "various compliance requirements"?
-> What does "sufficient documentation" mean?
+Dear Linus Torvalds,
 
-Looking at what other organizations have done provides some clues.
-E.g. the RIPE NCC initially took the stance:
 
-   "The RIPE NCC provides critical services to its membership spread across
-    a diverse geographical and political region.
-    The Executive Board of the RIPE NCC believes that the means to communicate
-    should not be affected by domestic political disputes, international
-    conflicts or war. This includes the provision of correctly registered
-    Internet numbering resources."
-    https://www.ripe.net/about-us/news/ripe-ncc-executive-board-resolution-on-provision-of-critical-services/
+We are not paid actors. Most of us here are just common kernel
 
-However due to being governed by Dutch law, that policy had to be amended:
+developers or Linux users expressing our own opinions about the
 
-   "The Dutch Ministry of Foreign Affairs confirmed to us that IP resources
-    are considered economic resources, as defined in the EU sanctions
-    regulation, and must be frozen for sanctioned entities.
-    The RIPE NCC complies with this restriction by freezing the registration
-    (not the use) of the Internet number resources in the RIPE Database.
-    This means that sanctioned entities cannot acquire further resources or
-    transfer resources. However, we do not deregister their resources or
-    terminate their Standard Service Agreement (SSA) if they are RIPE NCC
-    members."
-    https://www.ripe.net/membership/member-support/the-ripe-ncc-and-ukraine-russia/
+removal commit.
 
-At least the RIPE NCC was transparent in the process and seemingly did only
-the absolute minimum to comply (freeze, but not deregister IP address blocks).
-An approach that might be befitting for the kernel community / LF as well.
 
-Thanks,
+I can fully understand your disapproval of Russian aggression. However,
 
-Lukas
+the true responsibility for the war lies with the ruler, not these innocent
+
+developers, right? Removing them from the MAINTAINERS file neither
+
+really assists Ukraine nor cripples Russia. Those who are removed are just
+
+developers, not politicians or soldiers. On the contrary, this silent 
+removal
+
+will damage our trust in the transparency of kernel development.
+
+
