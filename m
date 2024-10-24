@@ -1,226 +1,414 @@
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2041.outbound.protection.outlook.com [40.107.220.41])
+Received: from mail.tlmp.cc (unknown [148.135.104.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E596713AD38;
-	Thu, 24 Oct 2024 13:44:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729777459; cv=fail; b=ZqVaa7sWP0hPEHgbL1C1cIdmtAfnOgYTEoQiOpvRXlXzZpF2DZ6tyUDmVPnAZXrmxi4UKM7/pUjevZZQmSkm7tqXtIT2kVrm56Eh+5rp57ZBWgHLociOpEgctBxbJ4WskygNdA3UDiQuDAVVXt9qrEP2rDaHQg5EdVCXk3F18Rw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729777459; c=relaxed/simple;
-	bh=0pUSHr8/Pz8xRkaj0Y1lK/w62fveuX8mkjIECmw6YZE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=om2kq4dzEXsLqQaUrKgJK0IDI5FjsvurAaosTAep3+6rhEWZ8mLiA2nYzwm/lpB40Iip5r5/Xvas4kYUuSaIM0O0WvpRgA0ZYThs0Z6QrEocNygfV0C7cTi9zFr9V7jq4tU/qV6tDMccZemdmnpPXTlT4sj7HymrWDeuFh/3nfM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Mjzw7jQ5; arc=fail smtp.client-ip=40.107.220.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Mjzw7jQ5"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ptPoFlq8G1B4ev4EOOuw8YsgWw5QYRNidhj0HIpbXTCH0+5UFigWFxoFx8meMKSiyF0Svauf9y4VsV1k1SR6Rtjgsq2qbtZbYmP4GuA9g/cD9vqTfwU7t0O4mSI+g7RnMzblPcBn4SiiwHw+lG4qCRhB9Y1/dNgBt1dh/C8c9HPMEX2h2yfoX3dVXa9KaxlDfUyaepBV8GJwIPUHO0+8pAyowvKg5YspKFXNksyTvugf0p3Ayfqe/j4QCv5K2vO3t5xjevwIfBq3sE8+Qbbhi/duIEUpEtzzh/8+J4K2U6BMC8W9mqzywS5UoiGoM7729f0kGn22LonEU4d74HoFjQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hMKci0AEBXn5elejLJBqF7rEQuFppZ/C8jh6C51ljlE=;
- b=BO2HrA4pKReZ66Qyn0uKtZiZya/lxIAl372YZdP8TvPPO9DYHGIBC7uAgyS7aA3t+vHc8AKziS6NrSp+dy6gA+kfUiW5PJIrXAFYOlex0fyDNszSmTWGnfaOz56AVXolfaW+4d0/i6QLN0gDmMrG6jxv7Sd2zXGiEHIhl7fYUkFvF1Zl9hPh1UViDwPZdsO67zuvlE1h7nyQMl6oJx19pwfxZacQJKTDblcjwfCBLgWYF2FbKSvlG1O0/IQohGgge5qrfDQ7kyvJ5Pwv14n60m+A5MGpYFTrcbgu3Yo98uAxaI5WmJKTkXvF+UBQfpUAu2fHuhcq8nqtXsmcnmnx/w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hMKci0AEBXn5elejLJBqF7rEQuFppZ/C8jh6C51ljlE=;
- b=Mjzw7jQ5ePd4XZ9ccUrD+AUKN6ruXzFQDL8S0m3Tr4cRbE3z/K2OcBH1cXlmx2aHbMANIKb4N1NzlmNGPvx7KA1jgPhO9NpAvvVFzcUmq6WLUKwlDSfwLAQBSn4bQ0OIopskUoNHJF6xGB1HWgrtgHOFGTXowZP7PvdZrSxIgWc594aVvnSSvpr4PJU+ZDiDG75QvIbpA7P6tLtIwQ1XP8W5I15LlWtl8u44bHUPL12zdMYaEfh2bbKXohmQh/OM3ub+KM7hZ95bNWoKa68NI7lc5jFxfPSBoQdtGPjipzDdCVw/1PtMsfzdWjWkc6HPXC1hYwWNFONxfrjfwV0sIw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by CH3PR12MB8726.namprd12.prod.outlook.com (2603:10b6:610:17b::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.20; Thu, 24 Oct
- 2024 13:44:13 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8069.027; Thu, 24 Oct 2024
- 13:44:13 +0000
-Date: Thu, 24 Oct 2024 10:44:11 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Will Deacon <will@kernel.org>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFA924B28;
+	Thu, 24 Oct 2024 14:04:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.135.104.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1729778675; cv=none; b=NCLfEF1sHXwHZ+yV/jk88R7/nbliKyMNz5z/UDi18Tn8nxybLmH2+p5ZNJMotgJTMdUw7OLrQY5FioKSFIorD61Pfa0mpL7AXCVBiW7vBMMZXV9DCTfE8oD5Hv+1Z3b09x/hVjnUCCyo20J+NMmIQ9KT3bxPnD16aEL5XXheUEM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1729778675; c=relaxed/simple;
+	bh=DuN4mUXGpKtjsfh4IPC3NEefzqbLB4j+vXm91RftpnE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=mt1pyXPrYUSuVct9Zb5e1YXejuePIZiXh1C2rpav8xxKVury3wOZ6ZeQ0Km78X1FWbL5wLVlhIiZ9Vnu1OIm+kLLnfeO/DPANkbdUFhoZJDtY5D2pum0IxAEle2/CmPWtz4opaHG7nBID0sVgKVWa/4M/P/MVSTT7rHgpkZ8SkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kremlin.ru; spf=fail smtp.mailfrom=kremlin.ru; arc=none smtp.client-ip=148.135.104.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kremlin.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=kremlin.ru
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 72B125E5D8;
+	Thu, 24 Oct 2024 10:04:19 -0400 (EDT)
+From: Vladimir Vladimirovich Putin <vladimir_putin_rus@kremlin.ru>
+To: torvalds@linux-foundation.org
+Cc: aospan@netup.ru,
+	conor.dooley@microchip.com,
+	ddrokosov@sberdevices.ru,
+	dmaengine@vger.kernel.org,
+	dushistov@mail.ru,
+	fancer.lancer@gmail.com,
+	geert@linux-m68k.org,
+	gregkh@linuxfoundation.org,
+	hoan@os.amperecomputing.com,
+	ink@jurassic.park.msu.ru,
+	jeffbai@aosc.io,
+	kexybiscuit@aosc.io,
+	linux-alpha@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	dri-devel@lists.freedesktop.org, Liviu Dudau <liviu.dudau@arm.com>,
-	patches@lists.linux.dev, Steven Price <steven.price@arm.com>
-Subject: Re: [PATCH] iommu/io-pgtable-arm: Remove split on unmap behavior
-Message-ID: <20241024134411.GA6956@nvidia.com>
-References: <0-v1-8c5f369ec2e5+75-arm_no_split_jgg@nvidia.com>
- <20241024130550.GE30704@willie-the-truck>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241024130550.GE30704@willie-the-truck>
-X-ClientProxiedBy: BN9PR03CA0418.namprd03.prod.outlook.com
- (2603:10b6:408:111::33) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+	linux-fpga@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-hwmon@vger.kernel.org,
+	linux-ide@vger.kernel.org,
+	linux-iio@vger.kernel.org,
+	linux-media@vger.kernel.org,
+	linux-mips@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-spi@vger.kernel.org,
+	manivannan.sadhasivam@linaro.org,
+	mattst88@gmail.com,
+	netdev@vger.kernel.org,
+	nikita@trvn.ru,
+	ntb@lists.linux.dev,
+	patches@lists.linux.dev,
+	richard.henderson@linaro.org,
+	s.shtylyov@omp.ru,
+	serjk@netup.ru,
+	shc_work@mail.ru,
+	torvic9@mailbox.org,
+	tsbogend@alpha.franken.de,
+	v.georgiev@metrotek.ru,
+	wangyuli@uniontech.com,
+	wsa+renesas@sang-engineering.com,
+	xeb@mail.ru,
+	LKML <linux-kernel@vger.kernel.org>,
+	Vladimir Vladimirovich Putin <vladimir_putin_rus@kremlin.ru>
+Subject: [PATCH 1/2] MAINTAINERS: Remove Huawei due to compilance requirements.
+Date: Thu, 24 Oct 2024 22:03:52 +0800
+Message-ID: <20241024140353.384881-2-vladimir_putin_rus@kremlin.ru>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241024140353.384881-1-vladimir_putin_rus@kremlin.ru>
+References: <CAHk-=whNGNVnYHHSXUAsWds_MoZ-iEgRMQMxZZ0z-jY4uHT+Gg@mail.gmail.com>
+ <20241024140353.384881-1-vladimir_putin_rus@kremlin.ru>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|CH3PR12MB8726:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0ebad815-742c-48fd-4ddd-08dcf431f1d6
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?/bE6a/TZlK+Wi2y6KSVv3qf+D0vrkL6HajMA+Dj5DIcZoHOmzfYnfsVhbVfY?=
- =?us-ascii?Q?YrDBzalk1sxonbnLSQmBZ0Afum6I5LmjU6znkD28Ukl40E/TUYki0blIZJzz?=
- =?us-ascii?Q?EbvkelmCHpHnt/VrcA1GAUoqu5CQp1ZX5FYAc2b3VPkpJJV+UK0R1oHnBuOT?=
- =?us-ascii?Q?r3oW26oyjTVp1/YYmwzxQgZAB+KK3B6R0yWmZm+NBSeI5bVHzW4+WI4fURVY?=
- =?us-ascii?Q?X3SUawMpXF0zoa+DfYxGsiFjijUK0qFFD3jJBL6SPFcEmPdenpsdzSQBKVOF?=
- =?us-ascii?Q?JY0sOLqFmABYS2ql9NTZs4/y+gyr8l6ax8J5gvbnjp/CVFASEgep9ARTiAXn?=
- =?us-ascii?Q?QYSoaTFihiTEurTnDIfkaxy22r7ZfwvxLdeuyv6aRj8x9UkJ02X6NM413VG7?=
- =?us-ascii?Q?xSD9H2aDfc3bxZkexwh2VEKSuSZtEY0uQ2ZPOS5xy0za1pNmshU/Gq3jB8Si?=
- =?us-ascii?Q?jIsM9ujXcEO9wh4UqX31yMELAM592hTxCMjTJ+uMC/npE9UhOyRIgJKqGvIa?=
- =?us-ascii?Q?0njEq/St4XrZu+OLSC9YiV+7JENRtXcNnTG4RiROpYR3oilkbCJB+obH6Muz?=
- =?us-ascii?Q?/BmBFG9zGYrA17KxIy6a+s5nKyzvIkzbPdgcJKt2qlYJjkyCYVztBT8hDe7s?=
- =?us-ascii?Q?/yB/YrhPfDJnNR+oaPc47rwzIyS/xejNb5Apjmtx5YFQOHL2U2s5aH/uvSWK?=
- =?us-ascii?Q?ri0OKFhS4jllOPXaQK+STmcFaW9lep6zblNpYhpvgceGvOyYHyvtDbptHMEu?=
- =?us-ascii?Q?Rb7yPPdlKuJx/JTtiGyEySZEhMhz/Agz5hQv+qIXBzxEY1yW34G4NzcTE1AW?=
- =?us-ascii?Q?tUq5UYSsdRug4nfx4To+RuBAPWbE4fb26I+mcClgRHvk9pvw7Jjf9S8Z2fJr?=
- =?us-ascii?Q?5wYOsX7V/6dnB5Wfu0M8lUmPTvgU/xXzfh3iL+8u4+MLrdzeuTARrgUo/sFE?=
- =?us-ascii?Q?t0NRl3+CdbPl1SAFY9Y3ttFvSrJ8R+LcSOSugbKHlp+XgBHmtvyU2S2ITpZG?=
- =?us-ascii?Q?HH/CqtPIVa53xtAFa3SSVc/haOwQFCl99fsgYZtNxuYPsCqDm/Gsq8Wl+uaY?=
- =?us-ascii?Q?1c9B4bxjC80OqrNACogW5EQeiiPdE0f6LR4okdJRgalaZ8viAulduXiIVi0E?=
- =?us-ascii?Q?wiP8aIt2wB3vl7Q1nU6e468+HPSWjmqBisUrbBtpcFYWVfexkOl0C7CtWtXH?=
- =?us-ascii?Q?1oZEBf9BQZ66EesXLtCwpfCF+AbDYP16Yc1S3WIIzYu0bPOmpkPFVXYZNT0K?=
- =?us-ascii?Q?5qikkfyc4gvzYSNds7TzYUvjLRvaHxj09Hl30wEzwE4ieFvr+E3RDu6Mwqul?=
- =?us-ascii?Q?MN2LoUnaWLdHR7mjh77QLkkK?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?pZajRSkeRsWw3oHOi2ahIbaHpJU2FyN03GtFs74Xty5kgVoBniOG8g5kn65e?=
- =?us-ascii?Q?Rfs5BCJC6nET8YUzJnVIM6HsIXqw5dQBWgfj9gpCYyci+k20Q8muDLGw4g+f?=
- =?us-ascii?Q?HCA4YHE9AheqSoCUC85SGD1BYmhJGx8LDapiTrNwYXxBnbLi/NgsSB5xL04h?=
- =?us-ascii?Q?YCaDYnE9y57ZZhpS8vLnfPEDEHErTFvg+tCqqpLKGFpsYYYQ2clTZr3qqCBe?=
- =?us-ascii?Q?AYrVG4ngXUZ/C22Q2Zkuf3cQU2NgdGpEZC7q2lkHvH9FKVlUR2gDDeHrsAe+?=
- =?us-ascii?Q?5CpAyaNJuN5HbNbSE0Y4EFJ3SRSGPtcld5YSZjd/jIUyAiHAlgMe2TdxINvs?=
- =?us-ascii?Q?/GA7XUM70ilw+ZRxt7xjgyT4xJ2AL3yKlfNH+gk/Z5/KPFYdDO/BELLhTjBv?=
- =?us-ascii?Q?ysUtse2lN+o8BEagOKa0QVUWViCEjiohaB1gVKK+3PNrdH0yWQ6XRVgbaneV?=
- =?us-ascii?Q?7Xjsy4juBwUc879KOhMGeiycyR/yNWoUwOnoGkEFsjLyrbf82vnJF5PNOOfy?=
- =?us-ascii?Q?GlHneVHPeRsqA+6q37/9cMi4UuoRhNktAs+vcWOiuvEAnP/0d2bz6qRQFnrH?=
- =?us-ascii?Q?zeONRHiyrBVEPr0iDKXEimDjhgRGkojZ43gG+oFklq24xVu/j3QutRqQx+lD?=
- =?us-ascii?Q?QB+MBwp0smediI0if6yXs043jJ2h8q8ieXfSaA3lnDH8HamYFFP6JjsKh+Ua?=
- =?us-ascii?Q?q6MoHOn45NaLUKsoA7ZYSqxeI/8wFjgt30FJuXhsz7B24DE59ckufMAoVRpu?=
- =?us-ascii?Q?WVUXYVx6krEuzL5FMfoIDkqgmGtoTUPNP4/z0JI0ehQ8Aj2LS6jhXrH/5xkE?=
- =?us-ascii?Q?HNdYXqnDBixaGZIUzBSwajWKBFHJObJDVjY06ehibS+UOP1c8aSGh+BKs7A7?=
- =?us-ascii?Q?TPxuPOPwJRDaH48+PrmFxWiOzrrR1CcX0UIW9RauoAZp5NWk7I558QQn7nm4?=
- =?us-ascii?Q?DVjiv3vzYFPV3Q+662ecPtfZ1K5KyGyFBgbsjOCMQWFjBxI7hWzqzO9ZkzvI?=
- =?us-ascii?Q?GK3wKrWHFJk/0+1D95vg9T21k0fyVMlS71wshfAhgszfbRK5VODprScCQJFQ?=
- =?us-ascii?Q?GygeN/mKc67BU3b3q3uj5Bx7lIx1sTa+DX/X+4gMusJWELOiE6Ecsp8QBcD7?=
- =?us-ascii?Q?ax7n+y5ogH6HlzE7ZetJA+i0RWLJb2KSV/IdUyjc8Mqe+NXKtoQEnzMcVbvE?=
- =?us-ascii?Q?+U1+dV+oMuvz2ITJHJ1d8t+uJkQiTkTdc5dxQvLTnpFtmT83HUCs0GoNV2x4?=
- =?us-ascii?Q?07rl/XvfanjegS8t8AmLzKrKQ645wYFxIEG855TQyidPLLhHUE8KUMSPgM4v?=
- =?us-ascii?Q?d1SkF1cHRuym6w5IeRYDS7rxzGAQPhl3T/7ylCCA6AFEyoJYdvYrNO1uhayE?=
- =?us-ascii?Q?aoPN0/5r79MLtyBDzmEthUV+hXI92GeqkltoAznwwrxDXeHkYDPfShH3mgSH?=
- =?us-ascii?Q?RcZ80DXT33QiOjJF5orVUySuL+qaq+luqps5HIC4xMs1xgPeUPiC1khfte9Y?=
- =?us-ascii?Q?0vWFRaZdccLrfD84HTVkDG9PlHueYf6LFoe+1AqifdNsqjpvOD8Y+4F27qqm?=
- =?us-ascii?Q?wGnwRYiGQil8Kc+GjoHGmaiaExMpdVEbhunHSHwd?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0ebad815-742c-48fd-4ddd-08dcf431f1d6
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Oct 2024 13:44:12.9898
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: UH57mjPIQhkTp07naEU9xq+F7QvUOWEMwKo3QaqEObQpEcY66GWQywvdhFwOX0tQ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8726
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Thu, Oct 24, 2024 at 02:05:53PM +0100, Will Deacon wrote:
+Huawei Corp was added to the US Entity List[1] on 08/20/2020.
 
-> My recollection is hazy, but I seem to remember VFIO using the largest
-> page sizes in the IOMMU 'pgsize_bitmap' for map() requests but then
-> using the smallest page size for unmap() requests, so you'd end up
-> cracking block mappings when tearing down a VM with assigne devices.
->
-> Is this what you're referring to when you say?
+The Entity List is a trade restriction list published by the United
+States Department of Commerce's Bureau of Industry and Security (BIS),
+consisting of certain foreign persons, entities, or governments.
+It is published as Supplement 4 of Part 744 of the Code
+of Federal Regulations. [2]
 
-Sounds like it, but I'm really hazy on the long ago history here.
+[1]: https://www.federalregister.gov/documents/2020/08/20/2020-18213/
+addition-of-huawei-non-us-affiliates-to-the-entity-list-the-removal-of
+-temporary-general-license-and
+[2]: https://en.wikipedia.org/wiki/Entity_List
 
->   > Long ago VFIO could trigger a path like this, today I know of no user of
->   > this functionality.
-> 
-> If so, please can you provide a reference to the patch that moved VFIO
-> off that problematic behaviour?
+Signed-off-by: Vladimir Vladimirovich Putin <vladimir_putin_rus@kremlin.ru>
+---
+ MAINTAINERS | 46 ----------------------------------------------
+ 1 file changed, 46 deletions(-)
 
-Looking more deeply, I'm not really sure VFIO ever required this.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index e9659a5a7fb3..725a72e17a4a 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -322,7 +322,6 @@ F:	tools/power/acpi/
+ 
+ ACPI FOR ARM64 (ACPI/arm64)
+ M:	Lorenzo Pieralisi <lpieralisi@kernel.org>
+-M:	Hanjun Guo <guohanjun@huawei.com>
+ M:	Sudeep Holla <sudeep.holla@arm.com>
+ L:	linux-acpi@vger.kernel.org
+ L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+@@ -3873,7 +3872,6 @@ F:	Documentation/filesystems/befs.rst
+ F:	fs/befs/
+ 
+ BFQ I/O SCHEDULER
+-M:	Yu Kuai <yukuai3@huawei.com>
+ L:	linux-block@vger.kernel.org
+ S:	Odd Fixes
+ F:	Documentation/block/bfq-iosched.rst
+@@ -4038,7 +4036,6 @@ BPF JIT for ARM64
+ M:	Daniel Borkmann <daniel@iogearbox.net>
+ M:	Alexei Starovoitov <ast@kernel.org>
+ M:	Puranjay Mohan <puranjay@kernel.org>
+-R:	Xu Kuohai <xukuohai@huaweicloud.com>
+ L:	bpf@vger.kernel.org
+ S:	Supported
+ F:	arch/arm64/net/
+@@ -4082,7 +4079,6 @@ X:	arch/riscv/net/bpf_jit_comp64.c
+ 
+ BPF JIT for RISC-V (64-bit)
+ M:	Björn Töpel <bjorn@kernel.org>
+-R:	Pu Lehui <pulehui@huawei.com>
+ R:	Puranjay Mohan <puranjay@kernel.org>
+ L:	bpf@vger.kernel.org
+ S:	Maintained
+@@ -5697,7 +5693,6 @@ F:	include/linux/compiler_attributes.h
+ 
+ COMPUTE EXPRESS LINK (CXL)
+ M:	Davidlohr Bueso <dave@stgolabs.net>
+-M:	Jonathan Cameron <jonathan.cameron@huawei.com>
+ M:	Dave Jiang <dave.jiang@intel.com>
+ M:	Alison Schofield <alison.schofield@intel.com>
+ M:	Vishal Verma <vishal.l.verma@intel.com>
+@@ -5712,7 +5707,6 @@ F:	include/uapi/linux/cxl_mem.h
+ F:	tools/testing/cxl/
+ 
+ COMPUTE EXPRESS LINK PMU (CPMU)
+-M:	Jonathan Cameron <jonathan.cameron@huawei.com>
+ L:	linux-cxl@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/admin-guide/perf/cxl.rst
+@@ -8525,7 +8519,6 @@ F:	include/uapi/linux/ext4.h
+ 
+ Extended Verification Module (EVM)
+ M:	Mimi Zohar <zohar@linux.ibm.com>
+-M:	Roberto Sassu <roberto.sassu@huawei.com>
+ L:	linux-integrity@vger.kernel.org
+ S:	Supported
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/zohar/linux-integrity.git
+@@ -10189,21 +10182,17 @@ F:	net/dsa/tag_hellcreek.c
+ 
+ HISILICON DMA DRIVER
+ M:	Zhou Wang <wangzhou1@hisilicon.com>
+-M:	Jie Hai <haijie1@huawei.com>
+ L:	dmaengine@vger.kernel.org
+ S:	Maintained
+ F:	drivers/dma/hisi_dma.c
+ 
+ HISILICON GPIO DRIVER
+-M:	Jay Fang <f.fangjian@huawei.com>
+ L:	linux-gpio@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/gpio/hisilicon,ascend910-gpio.yaml
+ F:	drivers/gpio/gpio-hisi.c
+ 
+ HISILICON HIGH PERFORMANCE RSA ENGINE DRIVER (HPRE)
+-M:	Zhiqi Song <songzhiqi1@huawei.com>
+-M:	Longfang Liu <liulongfang@huawei.com>
+ L:	linux-crypto@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/ABI/testing/debugfs-hisi-hpre
+@@ -10212,7 +10201,6 @@ F:	drivers/crypto/hisilicon/hpre/hpre_crypto.c
+ F:	drivers/crypto/hisilicon/hpre/hpre_main.c
+ 
+ HISILICON HNS3 PMU DRIVER
+-M:	Jijie Shao <shaojijie@huawei.com>
+ S:	Supported
+ F:	Documentation/admin-guide/perf/hns3-pmu.rst
+ F:	drivers/perf/hisilicon/hns3_pmu.c
+@@ -10226,31 +10214,24 @@ F:	Documentation/devicetree/bindings/i2c/hisilicon,ascend910-i2c.yaml
+ F:	drivers/i2c/busses/i2c-hisi.c
+ 
+ HISILICON KUNPENG SOC HCCS DRIVER
+-M:	Huisong Li <lihuisong@huawei.com>
+ S:	Maintained
+ F:	Documentation/ABI/testing/sysfs-devices-platform-kunpeng_hccs
+ F:	drivers/soc/hisilicon/kunpeng_hccs.c
+ F:	drivers/soc/hisilicon/kunpeng_hccs.h
+ 
+ HISILICON LPC BUS DRIVER
+-M:	Jay Fang <f.fangjian@huawei.com>
+ S:	Maintained
+ W:	http://www.hisilicon.com
+ F:	Documentation/devicetree/bindings/arm/hisilicon/low-pin-count.yaml
+ F:	drivers/bus/hisi_lpc.c
+ 
+ HISILICON NETWORK SUBSYSTEM 3 DRIVER (HNS3)
+-M:	Jian Shen <shenjian15@huawei.com>
+-M:	Salil Mehta <salil.mehta@huawei.com>
+-M:	Jijie Shao <shaojijie@huawei.com>
+ L:	netdev@vger.kernel.org
+ S:	Maintained
+ W:	http://www.hisilicon.com
+ F:	drivers/net/ethernet/hisilicon/hns3/
+ 
+ HISILICON NETWORK SUBSYSTEM DRIVER
+-M:	Jian Shen <shenjian15@huawei.com>
+-M:	Salil Mehta <salil.mehta@huawei.com>
+ L:	netdev@vger.kernel.org
+ S:	Maintained
+ W:	http://www.hisilicon.com
+@@ -10259,7 +10240,6 @@ F:	drivers/net/ethernet/hisilicon/
+ 
+ HISILICON PMU DRIVER
+ M:	Yicong Yang <yangyicong@hisilicon.com>
+-M:	Jonathan Cameron <jonathan.cameron@huawei.com>
+ S:	Supported
+ W:	http://www.hisilicon.com
+ F:	Documentation/admin-guide/perf/hisi-pcie-pmu.rst
+@@ -10268,7 +10248,6 @@ F:	drivers/perf/hisilicon
+ 
+ HISILICON PTT DRIVER
+ M:	Yicong Yang <yangyicong@hisilicon.com>
+-M:	Jonathan Cameron <jonathan.cameron@huawei.com>
+ L:	linux-kernel@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/ABI/testing/sysfs-bus-event_source-devices-hisi_ptt
+@@ -10279,7 +10258,6 @@ F:	tools/perf/util/hisi-ptt*
+ F:	tools/perf/util/hisi-ptt-decoder/*
+ 
+ HISILICON QM DRIVER
+-M:	Weili Qian <qianweili@huawei.com>
+ M:	Zhou Wang <wangzhou1@hisilicon.com>
+ L:	linux-crypto@vger.kernel.org
+ S:	Maintained
+@@ -10290,7 +10268,6 @@ F:	drivers/crypto/hisilicon/sgl.c
+ F:	include/linux/hisi_acc_qm.h
+ 
+ HISILICON ROCE DRIVER
+-M:	Chengchang Tang <tangchengchang@huawei.com>
+ M:	Junxian Huang <huangjunxian6@hisilicon.com>
+ L:	linux-rdma@vger.kernel.org
+ S:	Maintained
+@@ -10298,14 +10275,12 @@ F:	Documentation/devicetree/bindings/infiniband/hisilicon-hns-roce.txt
+ F:	drivers/infiniband/hw/hns/
+ 
+ HISILICON SAS Controller
+-M:	Yihang Li <liyihang9@huawei.com>
+ S:	Supported
+ W:	http://www.hisilicon.com
+ F:	Documentation/devicetree/bindings/scsi/hisilicon-sas.txt
+ F:	drivers/scsi/hisi_sas/
+ 
+ HISILICON SECURITY ENGINE V2 DRIVER (SEC2)
+-M:	Longfang Liu <liulongfang@huawei.com>
+ L:	linux-crypto@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/ABI/testing/debugfs-hisi-sec
+@@ -10315,39 +10290,33 @@ F:	drivers/crypto/hisilicon/sec2/sec_crypto.h
+ F:	drivers/crypto/hisilicon/sec2/sec_main.c
+ 
+ HISILICON SPI Controller DRIVER FOR KUNPENG SOCS
+-M:	Jay Fang <f.fangjian@huawei.com>
+ L:	linux-spi@vger.kernel.org
+ S:	Maintained
+ W:	http://www.hisilicon.com
+ F:	drivers/spi/spi-hisi-kunpeng.c
+ 
+ HISILICON SPMI CONTROLLER DRIVER FOR HIKEY 970
+-M:	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+ L:	linux-kernel@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/spmi/hisilicon,hisi-spmi-controller.yaml
+ F:	drivers/spmi/hisi-spmi-controller.c
+ 
+ HISILICON SPMI PMIC DRIVER FOR HIKEY 6421v600
+-M:	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+ L:	linux-kernel@vger.kernel.org
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/mfd/hisilicon,hi6421-spmi-pmic.yaml
+ F:	drivers/mfd/hi6421-spmi-pmic.c
+ 
+ HISILICON TRUE RANDOM NUMBER GENERATOR V2 SUPPORT
+-M:	Weili Qian <qianweili@huawei.com>
+ S:	Maintained
+ F:	drivers/crypto/hisilicon/trng/trng.c
+ 
+ HISILICON V3XX SPI NOR FLASH Controller Driver
+-M:	Jay Fang <f.fangjian@huawei.com>
+ S:	Maintained
+ W:	http://www.hisilicon.com
+ F:	drivers/spi/spi-hisi-sfc-v3xx.c
+ 
+ HISILICON ZIP Controller DRIVER
+-M:	Yang Shen <shenyang39@huawei.com>
+ M:	Zhou Wang <wangzhou1@hisilicon.com>
+ L:	linux-crypto@vger.kernel.org
+ S:	Maintained
+@@ -10477,8 +10446,6 @@ HUAWEI ETHERNET DRIVER
+ M:	Cai Huoqing <cai.huoqing@linux.dev>
+ L:	netdev@vger.kernel.org
+ S:	Maintained
+-F:	Documentation/networking/device_drivers/ethernet/huawei/hinic.rst
+-F:	drivers/net/ethernet/huawei/hinic/
+ 
+ HUGETLB SUBSYSTEM
+ M:	Muchun Song <muchun.song@linux.dev>
+@@ -10504,7 +10471,6 @@ T:	git git://linuxtv.org/media_tree.git
+ F:	drivers/media/platform/st/sti/hva
+ 
+ HWPOISON MEMORY FAILURE HANDLING
+-M:	Miaohe Lin <linmiaohe@huawei.com>
+ R:	Naoya Horiguchi <nao.horiguchi@gmail.com>
+ L:	linux-mm@kvack.org
+ S:	Maintained
+@@ -11243,7 +11209,6 @@ F:	drivers/crypto/inside-secure/
+ 
+ INTEGRITY MEASUREMENT ARCHITECTURE (IMA)
+ M:	Mimi Zohar <zohar@linux.ibm.com>
+-M:	Roberto Sassu <roberto.sassu@huawei.com>
+ M:	Dmitry Kasatkin <dmitry.kasatkin@gmail.com>
+ R:	Eric Snowberg <eric.snowberg@oracle.com>
+ L:	linux-integrity@vger.kernel.org
+@@ -12447,7 +12412,6 @@ M:	Marc Zyngier <maz@kernel.org>
+ M:	Oliver Upton <oliver.upton@linux.dev>
+ R:	Joey Gouly <joey.gouly@arm.com>
+ R:	Suzuki K Poulose <suzuki.poulose@arm.com>
+-R:	Zenghui Yu <yuzenghui@huawei.com>
+ L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+ L:	kvmarm@lists.linux.dev
+ S:	Maintained
+@@ -20497,7 +20461,6 @@ F:	drivers/iio/chemical/ens160.h
+ 
+ SCSI LIBSAS SUBSYSTEM
+ R:	John Garry <john.g.garry@oracle.com>
+-R:	Jason Yan <yanaijie@huawei.com>
+ L:	linux-scsi@vger.kernel.org
+ S:	Supported
+ F:	Documentation/scsi/libsas.rst
+@@ -21303,7 +21266,6 @@ F:	include/linux/property.h
+ 
+ SOFTWARE RAID (Multiple Disks) SUPPORT
+ M:	Song Liu <song@kernel.org>
+-R:	Yu Kuai <yukuai3@huawei.com>
+ L:	linux-raid@vger.kernel.org
+ S:	Supported
+ Q:	https://patchwork.kernel.org/project/linux-raid/list/
+@@ -23549,7 +23511,6 @@ F:	include/uapi/misc/uacce/
+ 
+ UBI FILE SYSTEM (UBIFS)
+ M:	Richard Weinberger <richard@nod.at>
+-R:	Zhihao Cheng <chengzhihao1@huawei.com>
+ L:	linux-mtd@lists.infradead.org
+ S:	Supported
+ W:	http://www.linux-mtd.infradead.org/doc/ubifs.html
+@@ -23699,7 +23660,6 @@ F:	drivers/ufs/host/ufs-renesas.c
+ 
+ UNSORTED BLOCK IMAGES (UBI)
+ M:	Richard Weinberger <richard@nod.at>
+-R:	Zhihao Cheng <chengzhihao1@huawei.com>
+ L:	linux-mtd@lists.infradead.org
+ S:	Supported
+ W:	http://www.linux-mtd.infradead.org/
+@@ -23803,7 +23763,6 @@ S:	Maintained
+ F:	drivers/usb/roles/intel-xhci-usb-role-switch.c
+ 
+ USB IP DRIVER FOR HISILICON KIRIN 960
+-M:	Yu Chen <chenyu56@huawei.com>
+ M:	Binghui Wang <wangbinghui@hisilicon.com>
+ L:	linux-usb@vger.kernel.org
+ S:	Maintained
+@@ -24183,8 +24142,6 @@ S:	Orphan
+ F:	drivers/vfio/fsl-mc/
+ 
+ VFIO HISILICON PCI DRIVER
+-M:	Longfang Liu <liulongfang@huawei.com>
+-M:	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+ L:	kvm@vger.kernel.org
+ S:	Maintained
+ F:	drivers/vfio/pci/hisilicon/
+@@ -24213,7 +24170,6 @@ F:	drivers/vfio/pci/nvgrace-gpu/
+ VFIO PCI DEVICE SPECIFIC DRIVERS
+ R:	Jason Gunthorpe <jgg@nvidia.com>
+ R:	Yishai Hadas <yishaih@nvidia.com>
+-R:	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+ R:	Kevin Tian <kevin.tian@intel.com>
+ L:	kvm@vger.kernel.org
+ S:	Maintained
+@@ -24395,7 +24351,6 @@ F:	tools/virtio/
+ F:	tools/testing/selftests/drivers/net/virtio_net/
+ 
+ VIRTIO CRYPTO DRIVER
+-M:	Gonglei <arei.gonglei@huawei.com>
+ L:	virtualization@lists.linux.dev
+ L:	linux-crypto@vger.kernel.org
+ S:	Maintained
+@@ -25481,7 +25436,6 @@ F:	drivers/input/misc/yealink.*
+ 
+ Z3FOLD COMPRESSED PAGE ALLOCATOR
+ M:	Vitaly Wool <vitaly.wool@konsulko.com>
+-R:	Miaohe Lin <linmiaohe@huawei.com>
+ L:	linux-mm@kvack.org
+ S:	Maintained
+ F:	mm/z3fold.c
+-- 
+2.47.0
 
-vfio commit 166fd7d94afd ("vfio: hugepage support for
-vfio_iommu_type1") is the thing that added the huge page support, and
-it called map like:
-
-+               ret = iommu_map(iommu->domain, iova,
-+                               (phys_addr_t)pfn << PAGE_SHIFT,
-+                               npage << PAGE_SHIFT, prot);
-
-But then the unmap path still looked like:
-
-+               unmapped = iommu_unmap(iommu->domain, iova, PAGE_SIZE);
-+               unlocked += vfio_unpin_pages(phys >> PAGE_SHIFT,
-+                                            unmapped >> PAGE_SHIFT,
-+                                            dma->prot, false);
-
-So at that time it was relying on the "unmap smaller gives the larger
-size" trick that we see Intel and AMD implementing today. No
-requirement for split, but the ARM split code could be triggered.
-
-Next came the introduction of VFIO_TYPE1v2_IOMMU which eliminated the
-ability for userspace to request splitting a mapping. Userspace can
-only unmap what userspace maps. commit 1ef3e2bc0422
-("vfio/iommu_type1: Multi-IOMMU domain support")
-
-    To do this, our DMA tracking needs to change.  We currently try to
-    coalesce user mappings into as few tracking entries as possible.  The
-    problem then becomes that we lose granularity of user mappings.  We've
-    never guaranteed that a user is able to unmap at a finer granularity
-    than the original mapping, but we must honor the granularity of the
-    original mapping.  This coalescing code is therefore removed, allowing
-    only unmaps covering complete maps.  The change in accounting is
-    fairly small here, a typical QEMU VM will start out with roughly a
-    dozen entries, so it's arguable if this coalescing was ever needed.
-
-That blocked any requirement for splitting driven by the uAPI. Noting
-uAPI based splitting never worked right and AFAICT AMD didn't
-implement split at the time.
-
-Finally, commit 6fe1010d6d9c ("vfio/type1: DMA unmap chunking")
-changed the unmap loop to this:
-
--               unmapped = iommu_unmap(domain->domain, iova, PAGE_SIZE);
-+               /*
-+                * To optimize for fewer iommu_unmap() calls, each of which
-+                * may require hardware cache flushing, try to find the
-+                * largest contiguous physical memory chunk to unmap.
-+                */
-+               for (len = PAGE_SIZE;
-+                    !domain->fgsp && iova + len < end; len += PAGE_SIZE) {
-+                       next = iommu_iova_to_phys(domain->domain, iova + len);
-+                       if (next != phys + len)
-+                               break;
-+               }
-+
-+               unmapped = iommu_unmap(domain->domain, iova, len);
-
-fgsp=true is only possible on AMD, and this loop effectively
-guarantees that the iommu driver will never see a partial huge page
-unmap as the size is discovered via iommu_iova_to_phys() before
-calling unmap.
-
-At that point only the AMD driver will ever see a page size that is
-smaller than what is in the radix tree.
-
-Jason
