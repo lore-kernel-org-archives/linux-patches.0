@@ -1,22 +1,22 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BF41D3195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30E31F5831
 	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 18:10:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729793419; cv=none; b=STP1HpBd5VYoyx6MViB8/xkecOAN+EoDCZmFcc+7DWVO9uZteqd+f7k4ifPmmENYsWEcNcV4P1VIuRuPSDvFKUsCNUEvoOcdok67W2l6z9DKLfyqmLMDJ45+S7kXzTjF2ziB7Ds6tWz7MVikMz17wQM0Y9Eo/h/XyOIJ2Jndrs8=
+	t=1729793419; cv=none; b=lsCrNBWDtFB1uG48Gt0trRtCtkqdEGzaRErwufZYK6/JUEdCEYMY/AVxiOz4elglumIQlPIrGseOaRjos5CVxTnDJmeg36yV/RuCprZjDdZgbKMhrlvetCQY6i4RxY3LVnVAHdkMJHH5mI9zhT5/NHHEH/x/aFHmYIwG7aFb5CM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1729793419; c=relaxed/simple;
 	bh=XAHhFzK8bm2wElWsCC8UefckBqxuRKiPoF9FSQoWARc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxQsOShPIJa43oeWMGNogqk5rDhV3pUtpuZ0q0xEZPWuBkgxkoVtE3hpyLGxxwE9HtyU2RM/ym7WWUKnTLVWiT3Q4PVh/oe+/ejfHJ9T4/hEHAACw4+1a6//mQdZg5XVCjEAt1HC0pP/Zyzq523c8ZIszQ891vMeQmD9Y1poQZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZDKK5ZVj; arc=none smtp.client-ip=209.85.167.43
+	 MIME-Version; b=N5LVYwTp6CZlALsqLEOCbxPbIgXej5cd6idk2aWTKqe7zRJ3jdyXXUmGIAA/sW0PReCaXV8AcfZHAS3p3oPMKA4/ZnRMf7fJntpV0DbcRxEoDqrbUcrexDch+Fckh7x9aoVk9laWEiwZUEhc2iohQIlB8ZOxCvq4Da+Q9GtPMmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ef8S6oHV; arc=none smtp.client-ip=209.85.208.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZDKK5ZVj"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-539f76a6f0dso1212842e87.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ef8S6oHV"
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2fabb837ddbso19654791fa.1
         for <patches@lists.linux.dev>; Thu, 24 Oct 2024 11:10:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1729793416; x=1730398216; darn=lists.linux.dev;
@@ -24,39 +24,39 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
         bh=XAHhFzK8bm2wElWsCC8UefckBqxuRKiPoF9FSQoWARc=;
-        b=ZDKK5ZVjr3cXkkv+F7kiulsfGWbV1gVooHy/i5oWf4xGHL9GnPMmlZMvA1Cfz0qswt
-         lB4HMvx7f2xqiIj5RONyA9HDFhEa6bz/o3PQU7Iw5K/yrYBUgRuXocb3ScGHUTRToiSe
-         UnDra75uY2Q1YdclYl+cOEX4eZ+6s9aoubugkQonbrdfbcOU7X7EtqgvWnFSIazEG23r
-         CDikAzJ/iqckVW1bklzVUHSnMBoAxrWh60ploX6ETje+1K4lkTj4x/XDBGTEi9pHTqQN
-         ngoYkWZDJUfC2ce14wkHC8ycGHMf1wyMpgs7KfcNpq/HiK57lzp7tQYSBrkqqOQq44eg
-         5XJg==
+        b=ef8S6oHVLopjfp2Gl8uoNMWKVoz45GPV3A7pCSU3viOUJTY2qurAcsmUeR4GWTaFIa
+         O3MUXxzfwWkQ9rUrW2YNqIY2Xnd6uBj4vbxOsYdk2o0qakXjDt3WQEj9id43+HXEdpic
+         JseXrnOMclQxgqVwKS66Cjg1NATfBxQMJA39z+xyGq1FylLOMzJtzwVXzsacTYls6d9P
+         MNXap6u38ahCIX6v2lpLkDOFtBXEskzpWH6kIXy67d6eoBIdpJpdkSmoeGbqoWfwRymX
+         rlPqh+79lvW5rrr3D0o+hsjRH8sEjEyh4PSBxG4jxkKDJG5otpAFV4Rs8t030R0q1nW7
+         7NAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1729793416; x=1730398216;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
         bh=XAHhFzK8bm2wElWsCC8UefckBqxuRKiPoF9FSQoWARc=;
-        b=qe9dfpMAGPjjW7QZtSU79aGsBuSAAmY0A2/E1Wl6T9fe3WxNw7/LUrRhMVG47N8bXd
-         vvfjY36nNF+n/gk0EDqigSUeYaY14oA7zAt+HtK9hQ5RIy5yp6HdJ1obx4MyRhcR58JT
-         dGycLDt206olN5MeYduqwepjSMKvXCoVB520RyX7teUigFw86Ch3pGd/bDKtur1kZ3v4
-         aGAXR8zz79ikjB/2PwhQOOgpZfg24kKl2k9Q7hR5ZQze96BrU029lYZwYvUCHKXJawEm
-         VEk4nrJR4c+ZYXv+6zEMXl4UXPaQQgrYbmRp+eoT0q9h2+oQguNJf/Utdx7Ew7pywjK6
-         ntbg==
-X-Gm-Message-State: AOJu0YycClw8TenACY6fGkzxLldFN/AaIk/9OelJXtnQ5EjxNyYzEwq5
-	ygFlVCfqoH1gNzUnPOGL9AhanNybsqh4uHv9EmTMGdrzZZbPSBH8J8JrKWUM
-X-Google-Smtp-Source: AGHT+IH0gVQ6bmFM+cKzYpG8UnjxL6VE2ji350IVST2k/IjukgqqKLo0qSJ2iUmzcJLYhIEZVW3AKg==
-X-Received: by 2002:a05:6512:b1e:b0:539:8e77:9129 with SMTP id 2adb3069b0e04-53b1a36c6e8mr4277240e87.44.1729793415869;
+        b=EJJfCltZxn04gYGURRlLMT4rb9rGD0T4WW/ST89ZnC0s9Avgycie1ZsFQLosujip+U
+         U3MT2vTE8RnoPwmjZJAetxUDdkjY+JD8NeEtaqbgjFs1gW3z0Xz+bGjdGqIQNsOTXxY/
+         W2cqeIcBKyjvhdv8BhlCrYQC7EzkZ4bJ83/ktJfDQoRJ2JcF2+mErfnX6Z+9h+YArbXZ
+         /iUip8QLftE/yfL8GGlvPFOEBs/DmwbwYHMYlm+gODI5HP7ew2YHco6mwXC0Ua5Z1SX9
+         WsmCiahzzGUZt+raR6k+hW4gMn3DvW3yJDlaPrF/s5ZwcU/bXB1b7m4cSTTu0LxPQvqc
+         F5RQ==
+X-Gm-Message-State: AOJu0YwgCQF+hB5kMUkLFwb3G9rokcLZoZ2PhGxeRgUEZmRXe2+wiH1O
+	6msEhy9LJsAng+N3BTZmgZdMtMxwSOtCAyG8Za5PdatRagHf3iOP
+X-Google-Smtp-Source: AGHT+IGHtk9cC82SqwwOFOhlSLKmSHTSfpmy+NL3iPvPRrPnu2IO7tKZQgh2DiIm+TENAYDACPZMSA==
+X-Received: by 2002:a05:651c:b2a:b0:2fb:6362:284e with SMTP id 38308e7fff4ca-2fc9d2e61eemr72618661fa.8.1729793415596;
         Thu, 24 Oct 2024 11:10:15 -0700 (PDT)
 Received: from localhost.localdomain ([176.106.245.80])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a223e5988sm1419785e87.2.2024.10.24.11.10.09
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb9ae24d51sm14440821fa.130.2024.10.24.11.10.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Oct 2024 11:10:11 -0700 (PDT)
+        Thu, 24 Oct 2024 11:10:13 -0700 (PDT)
 From: Vladimir Putin <vladimirputin693389@gmail.com>
 To: gregkh@linuxfoundation.org
 Cc: patches@lists.linux.dev
 Subject: you should kill yourself now!
 Date: Thu, 24 Oct 2024 21:10:02 +0300
-Message-ID: <20241024181002.7203-1-vladimirputin693389@gmail.com>
+Message-ID: <20241024181002.7289-1-vladimirputin693389@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <2024101835-tiptop-blip-09ed@gregkh>
 References: <2024101835-tiptop-blip-09ed@gregkh>
