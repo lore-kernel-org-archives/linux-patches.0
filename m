@@ -1,71 +1,83 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail.notyourfox.coffee (mail.notyourfox.coffee [92.63.193.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2CA1FE107
-	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 18:10:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AEF02003A2;
+	Thu, 24 Oct 2024 18:10:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.63.193.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729793426; cv=none; b=VIzSrF6l/PmfwTkQ/jjaLilBYETiL9NHLaT3iZXQQAdJx+tzasspkRiB1NZLcrMLeFLPhSG2fghqnPApowN3jcnAfn+ZYIPDL3cepse1z5gVyKYdhU529nS3s5mVq0ASkt0pn8rmbhbYWihaYQhdty6D3Tnk3M13lCUW/6tPKbY=
+	t=1729793454; cv=none; b=jvbsQZLXfGJUShLlZpRBJplMyAnli7Pn1xPZzLSddIz9qtwwAFVv5/5jXyCeH7WCWcp8GsYv0sG4VQCIvyo/LKiAcG5ikNKThq2ypSf0UmC5gh2CWQ9W+wmzujJgbvD8NLtyWx3oN44nBJlayLB7muNC0KlzFFOxuePzDOFKRfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729793426; c=relaxed/simple;
-	bh=XAHhFzK8bm2wElWsCC8UefckBqxuRKiPoF9FSQoWARc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WImfihsov4DAMXrc4gQucxX1Rb3u7PTuDcKQYykanJ19qcEC60kEkjRVLxnS2CwGcV432ysCz+BL/8LgPQAhU9z141TvFTPDFtPUVS/XOWy7Ff4frD5bpvazimN3PlD7wWwgoXyQbsXM+Q5kJHaVQJkmHvpj1/EVphtWCFfpkgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ojp3P6Hd; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1729793454; c=relaxed/simple;
+	bh=4HaM2tprLpARFSOFiAD1IewWveAq50xA4izcD+Ol1hg=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=F/19doZ4IYXXulnHQ4taEYkLYGFE63YNrEi2RX0OKR72gmYEnSQVs+p2GJ8QkwGLlYRR0C2iF02XxpMyqge8fU+SkvG7afPqCQTm94mrIGc1+forNCtUer098veSHlzfPHEZlbtNZyJvQb61kjdbFKiHO8hTuZm4xQzhtgT9dxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=notyourfox.coffee; spf=pass smtp.mailfrom=notyourfox.coffee; dkim=pass (2048-bit key) header.d=notyourfox.coffee header.i=@notyourfox.coffee header.b=JHSUzjKl; arc=none smtp.client-ip=92.63.193.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=notyourfox.coffee
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=notyourfox.coffee
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ojp3P6Hd"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2fb443746b8so13076231fa.0
-        for <patches@lists.linux.dev>; Thu, 24 Oct 2024 11:10:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729793422; x=1730398222; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XAHhFzK8bm2wElWsCC8UefckBqxuRKiPoF9FSQoWARc=;
-        b=Ojp3P6Hdec1qpjjMNpNo9cU1gXwRkTswNCPZe2ggvBMMkWgW3fs+ZTNz7dP69JxfpE
-         LxYzPp2/CuqUQKpDuFrfYkLsV5Qm8VuJzKj75Y6L3UwHNjCgUestjs3HG7jNmBVfWm9w
-         Urp0OehixIRl4rnn+GMJWipi8a0hTWEkcvPUo1RKeG3ZJAU91fMiKOwFo680XVHlJpvv
-         xXOOFUbMe7wj+EQ3nDeZ5/UueWgkKD5Ki8mvt86eDJgsm5srSb60T2YN4sTtCyKyZe83
-         r6SBcsSbGLu63LaJ4GK8kKBJHonWzAabiZWp4ZL8/EE98GisvLeb47yFkHnrwzcqqStL
-         vMQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729793422; x=1730398222;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XAHhFzK8bm2wElWsCC8UefckBqxuRKiPoF9FSQoWARc=;
-        b=Sx0x13Pqm4AcMzpGa2+xbzt4uyTQ5cLgKpEEkaaQkpgj1+BOTDPaJr4KEDk2JK2T4K
-         W97bEy+8WxEIL056wHOVztPV8BSCYEAoRwBclGov8SkrwHKevHfZQb0oXYDV9qobx2mo
-         h7YO15GOQzcQ0GpPwfl3DC1eyLjhDyfRPXLnfkXu25L4u9igDwnDz5kBSlu09aHvusSv
-         UGWXxcTO8ZeHIGDTV42brJTioApsoQww7IK0SgmLYHaxKBZ5OZn2gD+XRez0+K34Fe6y
-         JzT4kMCT9upAU0cnKuJR+s3NFPfKgXOPqJr4s1dyd0Zt2I2xCkcFhi+tnbUv1zs0VxQq
-         mqGw==
-X-Gm-Message-State: AOJu0Yxgf5bXG/T9FLockw98X2XYwj4kTIkoIz07hIQpXbvZJSG7GEce
-	XfxHn2J8sWE2LcuiTkU9w2aHdUhgLXNElQGOJaAj1xppZSXkFaJE8trBIIKJ
-X-Google-Smtp-Source: AGHT+IGpSeIRnOZVPlTmuB7SQVSUx0NVtMQKnFrFNBBo4lZuRNAMASArk0OM3Hip4zYcaqQtZenX0w==
-X-Received: by 2002:a2e:6102:0:b0:2fb:3a92:d1a7 with SMTP id 38308e7fff4ca-2fca8264a6fmr16768971fa.33.1729793422376;
-        Thu, 24 Oct 2024 11:10:22 -0700 (PDT)
-Received: from localhost.localdomain ([176.106.245.80])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb9ae100c3sm14335791fa.109.2024.10.24.11.10.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Oct 2024 11:10:18 -0700 (PDT)
-From: Vladimir Putin <vladimirputin693389@gmail.com>
-To: gregkh@linuxfoundation.org
-Cc: patches@lists.linux.dev
-Subject: you should kill yourself now!
-Date: Thu, 24 Oct 2024 21:10:10 +0300
-Message-ID: <20241024181010.8426-1-vladimirputin693389@gmail.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <2024101835-tiptop-blip-09ed@gregkh>
-References: <2024101835-tiptop-blip-09ed@gregkh>
+	dkim=pass (2048-bit key) header.d=notyourfox.coffee header.i=@notyourfox.coffee header.b="JHSUzjKl"
+DKIM-Signature: a=rsa-sha256; bh=zD/MvoTUjjchDlHO31PqaPi5FVCTTnWec43Dr2sc5uE=;
+ c=relaxed/relaxed; d=notyourfox.coffee;
+ h=Subject:Subject:Sender:To:To:Cc:Cc:From:From:Date:Date:MIME-Version:MIME-Version:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Reply-To:In-Reply-To:In-Reply-To:Message-Id:Message-Id:References:References:Autocrypt:Openpgp;
+ i=@notyourfox.coffee; s=mail; t=1729793394; v=1; x=1730225394;
+ b=JHSUzjKls5Wm839qvhA6nxJdgjfFHYyuIMcFJC4py2Th5/lRpBJL87itZiTg0D7g72byla2/
+ RGt9j0YQZcrrSnTMUigTkonLFjKQ1wty2LN+88I2MCPC3PFacLmQ6qZhW6CFbZFxlrquYkL2uWA
+ 8n/E59Ut+LmSKvFcVYkl9wkkdRh8MLTO73De9KCAPILQIWuDQToZmui76W//DdF1v3lfmvIwrLC
+ 00BhABRp1gebdHeZoI70ehEYTqlEw8KiEoYc1vSAp1tKTck0QShQZ9gBb/1Ia55r4kKsUVkpN30
+ gJICGzIIOhLel8x+rFvTjeBr9jYMQEnr6fmrnHA+6Rz6Q==
+Received: by mail.notyourfox.coffee (envelope-sender
+ <contact@notyourfox.coffee>) with ESMTPS id 1345da47; Thu, 24 Oct 2024
+ 18:09:54 +0000
+Message-ID: <c58172db-e3cc-488d-baa6-f095588a8771@notyourfox.coffee>
+Date: Thu, 24 Oct 2024 21:09:52 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: vladimir_putin_rus@kremlin.ru
+Cc: aospan@netup.ru, conor.dooley@microchip.com, ddrokosov@sberdevices.ru,
+ dmaengine@vger.kernel.org, dushistov@mail.ru, fancer.lancer@gmail.com,
+ geert@linux-m68k.org, gregkh@linuxfoundation.org,
+ hoan@os.amperecomputing.com, ink@jurassic.park.msu.ru, jeffbai@aosc.io,
+ kexybiscuit@aosc.io, linux-alpha@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-fpga@vger.kernel.org,
+ linux-gpio@vger.kernel.org, linux-hwmon@vger.kernel.org,
+ linux-ide@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-mips@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+ linux-spi@vger.kernel.org, manivannan.sadhasivam@linaro.org,
+ mattst88@gmail.com, netdev@vger.kernel.org, nikita@trvn.ru,
+ ntb@lists.linux.dev, patches@lists.linux.dev, richard.henderson@linaro.org,
+ s.shtylyov@omp.ru, serjk@netup.ru, shc_work@mail.ru,
+ torvalds@linux-foundation.org, torvic9@mailbox.org,
+ tsbogend@alpha.franken.de, v.georgiev@metrotek.ru, wangyuli@uniontech.com,
+ wsa+renesas@sang-engineering.com, xeb@mail.ru
+References: <20241024140353.384881-1-vladimir_putin_rus@kremlin.ru>
+Subject: Re: [PATCH 0/2] MAINTAINERS: Remove few Chinese Entries
+Content-Language: en-US
+From: NotYourFox <contact@notyourfox.coffee>
+In-Reply-To: <20241024140353.384881-1-vladimir_putin_rus@kremlin.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-You should kill yourself NOW!
+And what were you trying to accomplish?
+
+On 10/23/24 1:45 PM, Linus Torvalds wrote:
+ > Ok, lots of Russian trolls out and about.
+
+You just made his statement valid by showing yourself off. Thanks for no 
+help at all.
+
+---
+
+И что вы пытались этим сделать?
+
+On 10/23/24 1:45 PM, Linus Torvalds wrote:
+ > Ok, lots of Russian trolls out and about.
+
+Вы только сделали его высказывание верным, решив выставить это напоказ. 
+Спасибо за абсолютный ноль помощи.
+
