@@ -1,114 +1,71 @@
-Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAE51D63E8;
-	Thu, 24 Oct 2024 17:46:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.154.21.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078651D3195
+	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 18:08:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729791967; cv=none; b=lInlnErrEdTmVro7e76ram9WLCaGRmkfh6AiLBckz7BaFUs1qBLcswirIwm6dv2xu88FXFC37DWowcKw0IhqlDQZe4weBPqmq39kBGOz+6vAMMRqOZu2yI8aORsOTIoSPSoAb3vB/bo1rNPIaGeuJ9ohdGAkKFSXA8XOOXFUfb4=
+	t=1729793287; cv=none; b=MJSrWGWOvqkNX8qOS96oEhddR5tyjTreCVXhrb4axdurEruPGIAmZUXx3sTzUuRvW6r2a50ylwS80ID/CQ9QjJ6IGFxlyx0Sjl4ULhxD+VghBRdwpMo+VwCputIzR7eTovslagyjxpysqQ8KCXMheexH3LQ01nv1V0dr4oWS5Og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729791967; c=relaxed/simple;
-	bh=I9Q4P1XK4E+Wu/v/AH+WHEDOhWLlmc7Q+i47sR0qHAE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Eq1AmU3HVy9YgkmjIs/NOg1+CDkWp/CBNOETSTK2n3mXDRxsYHhJlYiTzAdDAg3+mT59OhODJc4Cww2kCnzdBVJ5ph7r6lvoHBFqMXbC2CrAK2ub1lZpx/eG37X9obTI0C31meq+m92p0FQqWZF5T60u0aNeYtTVFB7qHzI8CH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru; spf=pass smtp.mailfrom=omp.ru; arc=none smtp.client-ip=90.154.21.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=omp.ru
-Received: from [192.168.2.102] (213.87.90.120) by msexch01.omp.ru
- (10.188.4.12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Thu, 24 Oct
- 2024 20:45:45 +0300
-Message-ID: <884de5fe-9f3b-4720-8be6-88972d8fc897@omp.ru>
-Date: Thu, 24 Oct 2024 20:45:44 +0300
+	s=arc-20240116; t=1729793287; c=relaxed/simple;
+	bh=XAHhFzK8bm2wElWsCC8UefckBqxuRKiPoF9FSQoWARc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UZgGsdpPRR6DvxxKnVACmn0PpLvjjbJp7OeJuC/ILHIhkq9yAWpSJcsSM8wehtb6YjqdgVZAKrMy53iCe9bEPfQQO7xD0/j3odoQKaHI+BA4WGQP3prcF86OXtDqfSDwtzJmdYg/tGuOuntXBzuHa5OfgvClR7hPfnkuUEIb3VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wrx4qBgC; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wrx4qBgC"
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-539e690479cso1317749e87.3
+        for <patches@lists.linux.dev>; Thu, 24 Oct 2024 11:08:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729793284; x=1730398084; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XAHhFzK8bm2wElWsCC8UefckBqxuRKiPoF9FSQoWARc=;
+        b=Wrx4qBgCn1wzCkm1+62JKOTuPa9MMAwCUZ2Wj8KjeJ1A+eIYXKtg4szu/e/9GmBsUF
+         cGts7sJ2ndXeXjlN0muKGAtUhDmVl/3672XNFHYyiW8Xmjg4Z2F97FPyItrI9WABX1Ux
+         VRRLjxCAXXseLR6n5udBiwD+2sNhhfOhaODCewW8Bb6ylp9o7setvb1PEjib1MZQuBsB
+         C4TL//zpCSp12rikGBbdZZdRCqGCXSAjpOEdhUlGC+NEjkEe7fd/eKrmJNgO+hEHAAW9
+         odRPDECeUweOwSjf2CsZc/Jsi3gWij+waLbDxLbkQyDPxu+e7M/2hCsS5675DwTpq3ti
+         KdZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729793284; x=1730398084;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XAHhFzK8bm2wElWsCC8UefckBqxuRKiPoF9FSQoWARc=;
+        b=FjCtUOZ0lxU8mwSFVcMCRKfDa69ud8OrDrya2E/aRz8gI/WKaDlgQV79jMf4f3w2WL
+         RCXPFf48NpHk1+XlmVBe/IPWZ5qfMVLeGKqBQi9IFb66eWyJrFASbxp0brSsOcdCzaix
+         z6eBwvuxdJaF2frQuXvXWb2DtjXDtZzzrgdYEMWmaeG50SsTrjZCkhX4TW0fSm8WDtZc
+         GyG0ux/fzc5K9KdQ8+EtG79O3HVR6NoIuhittbcbfX/Z0R5YukVJO59QZMkrEpaADyc7
+         mIHnmwEMweCcTRRZeVz1Jppo2hIiC1Hr9Z/Vj78RUkNi7xA90QB/m7H8mk1320VTGhIg
+         JBVA==
+X-Gm-Message-State: AOJu0YwQuxXmfhQs5P41dtJ7aDO9S9QxtvOfjMtCts++ZkrRTMc37+71
+	YnlNsGlXtyIhYsakSO+tiAd6gmOudTLsCZ94gLxhn9qgYXQTm0y+
+X-Google-Smtp-Source: AGHT+IHKL0+gQCny5lXKio4z6yxnoLVTxxhwjuQsJWBvUclE9isQp4ccjnvOCCEIH8kX8Vq+qF/rkw==
+X-Received: by 2002:a05:6512:692:b0:537:a855:7d6f with SMTP id 2adb3069b0e04-53b1a345f2fmr4164223e87.34.1729793283780;
+        Thu, 24 Oct 2024 11:08:03 -0700 (PDT)
+Received: from localhost.localdomain ([176.106.245.80])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a223f007esm1435167e87.77.2024.10.24.11.08.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Oct 2024 11:08:03 -0700 (PDT)
+From: Vladimir Putin <vladimirputin693389@gmail.com>
+To: gregkh@linuxfoundation.org
+Cc: patches@lists.linux.dev
+Subject: you should kill yourself now!
+Date: Thu, 24 Oct 2024 21:08:01 +0300
+Message-ID: <20241024180801.3214-1-vladimirputin693389@gmail.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <2024101835-tiptop-blip-09ed@gregkh>
+References: <2024101835-tiptop-blip-09ed@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Revert "MAINTAINERS: Remove some entries due to various
- compliance requirements."
-To: Ivan Epifanov <isage.dna@gmail.com>, <andriy.shevchenko@intel.com>
-CC: <aospan@netup.ru>, <conor.dooley@microchip.com>,
-	<ddrokosov@sberdevices.ru>, <dmaengine@vger.kernel.org>, <dushistov@mail.ru>,
-	<fancer.lancer@gmail.com>, <geert@linux-m68k.org>,
-	<gregkh@linuxfoundation.org>, <hoan@os.amperecomputing.com>,
-	<ink@jurassic.park.msu.ru>, <jeffbai@aosc.io>, <kexybiscuit@aosc.io>,
-	<linux-alpha@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-fpga@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-	<linux-hwmon@vger.kernel.org>, <linux-ide@vger.kernel.org>,
-	<linux-iio@vger.kernel.org>, <linux-media@vger.kernel.org>,
-	<linux-mips@vger.kernel.org>, <linux-renesas-soc@vger.kernel.org>,
-	<linux-spi@vger.kernel.org>, <manivannan.sadhasivam@linaro.org>,
-	<mattst88@gmail.com>, <netdev@vger.kernel.org>, <nikita@trvn.ru>,
-	<ntb@lists.linux.dev>, <patches@lists.linux.dev>,
-	<richard.henderson@linaro.org>, <serjk@netup.ru>, <shc_work@mail.ru>,
-	<torvalds@linux-foundation.org>, <torvic9@mailbox.org>,
-	<tsbogend@alpha.franken.de>, <v.georgiev@metrotek.ru>,
-	<wangyuli@uniontech.com>, <wsa+renesas@sang-engineering.com>, <xeb@mail.ru>
-References: <Zxpqnf1M8rPTB4DN@black.fi.intel.com>
- <20241024170743.241144-1-isage.dna@gmail.com>
-Content-Language: en-US
-From: Sergey Shtylyov <s.shtylyov@omp.ru>
-Organization: Open Mobile Platform
-In-Reply-To: <20241024170743.241144-1-isage.dna@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: msexch01.omp.ru (10.188.4.12) To msexch01.omp.ru
- (10.188.4.12)
-X-KSE-ServerInfo: msexch01.omp.ru, 9
-X-KSE-AntiSpam-Interceptor-Info: scan successful
-X-KSE-AntiSpam-Version: 6.1.0, Database issued on: 10/24/2024 17:32:48
-X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
-X-KSE-AntiSpam-Method: none
-X-KSE-AntiSpam-Rate: 19
-X-KSE-AntiSpam-Info: Lua profiles 188703 [Oct 24 2024]
-X-KSE-AntiSpam-Info: Version: 6.1.0.4
-X-KSE-AntiSpam-Info: Envelope from: s.shtylyov@omp.ru
-X-KSE-AntiSpam-Info: LuaCore: 40 0.3.40
- cefee68357d12c80cb9cf2bdcf92256b1d238d22
-X-KSE-AntiSpam-Info: {rep_avail}
-X-KSE-AntiSpam-Info: {Tracking_arrow_text}
-X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
-X-KSE-AntiSpam-Info: {SMTP from is not routable}
-X-KSE-AntiSpam-Info: {Found in DNSBL: 213.87.90.120 in (user)
- b.barracudacentral.org}
-X-KSE-AntiSpam-Info: {Found in DNSBL: 213.87.90.120 in (user)
- dbl.spamhaus.org}
-X-KSE-AntiSpam-Info:
-	omp.ru:7.1.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;127.0.0.199:7.1.2
-X-KSE-AntiSpam-Info: FromAlignment: s
-X-KSE-AntiSpam-Info: ApMailHostAddress: 213.87.90.120
-X-KSE-AntiSpam-Info: {DNS response errors}
-X-KSE-AntiSpam-Info: Rate: 19
-X-KSE-AntiSpam-Info: Status: not_detected
-X-KSE-AntiSpam-Info: Method: none
-X-KSE-AntiSpam-Info: Auth:dmarc=temperror header.from=omp.ru;spf=temperror
- smtp.mailfrom=omp.ru;dkim=none
-X-KSE-Antiphishing-Info: Clean
-X-KSE-Antiphishing-ScanningType: Heuristic
-X-KSE-Antiphishing-Method: None
-X-KSE-Antiphishing-Bases: 10/24/2024 17:35:00
-X-KSE-Antivirus-Interceptor-Info: scan successful
-X-KSE-Antivirus-Info: Clean, bases: 10/24/2024 2:57:00 PM
-X-KSE-Attachment-Filter-Triggered-Rules: Clean
-X-KSE-Attachment-Filter-Triggered-Filters: Clean
-X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
+Content-Transfer-Encoding: 8bit
 
-On 10/24/24 8:07 PM, Ivan Epifanov wrote:
-[...]
-
->> $ git log --author="andriy.shevchenko@intel.com"
->> $ 
-> 
-> Look who's talking
-
-$ git shortlog | grep "Andy Shevchenko"
-Andy Shevchenko (5564):
-[...]
-
-   Even I was surprised!
-
-MBR, Sergey
-
+You should kill yourself NOW!
