@@ -1,31 +1,31 @@
-Received: from vmicros1.altlinux.org (vmicros1.altlinux.org [194.107.17.57])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5C591B0F17;
-	Thu, 24 Oct 2024 10:01:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.107.17.57
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01D293399F;
+	Thu, 24 Oct 2024 11:17:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729764086; cv=none; b=c3deY2buR/TSUyOa2t+z9mU9JLLPZIMrq1XN1xyYuedlJyjIVi72doWTLbvpHmLdr7yr7qeUwuLtnN5whFMafUrDGjoucrug+3uWFVkGhwRT099uMV7vYrYM7N29guP3Qvd9btpnrzFm19SeH9vRtdF/Q2nUW9+95M7KURrDULU=
+	t=1729768639; cv=none; b=J+12eq5msQvv2xC4g678VC+QeNNvU97UYYon8akuoZVOxy9namRoWuTLodJPlnQmtS1IHa4FiCJ1C+8h8Kc6IobAqKodZQJKKcyRx8JoELc4cAXH8pu90diYWDeh7gbARMz9WsiUNoHBsfxugcE5FrHOcfQWesNc1E8qDkp1a0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729764086; c=relaxed/simple;
-	bh=iY1/51zaPHjVqosPGel6QiZiJ04KavIR7kHi6cy2EJM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jTaKuz3oDPCtoPxNuNPdqYHLrKrAOfCXTX5JrKe1cc7lkXNuYKlwJzdamKZalD3Yh6gDIkF4qOYzX7XDoUuJ913lQ0/1JtNZdZXjNNDMC/sJ2AAohunhP9moollVU0cThI3Vsx1khdA+v5bFKpbt6k/CWOJYB421niKwoeW2v+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=altlinux.ru; spf=pass smtp.mailfrom=altlinux.org; arc=none smtp.client-ip=194.107.17.57
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=altlinux.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=altlinux.org
-Received: from imap.altlinux.org (imap.altlinux.org [194.107.17.38])
-	by vmicros1.altlinux.org (Postfix) with ESMTP id 3854C72C8F5;
-	Thu, 24 Oct 2024 12:53:39 +0300 (MSK)
-Received: by imap.altlinux.org (Postfix, from userid 705)
-	id 336F236D070D; Thu, 24 Oct 2024 12:53:39 +0300 (MSK)
-Date: Thu, 24 Oct 2024 12:53:39 +0300
-From: Michael Shigorin <mike@altlinux.ru>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Tor Vic <torvic9@mailbox.org>, Kexy Biscuit <kexybiscuit@aosc.io>,
-	jeffbai@aosc.io, gregkh@linuxfoundation.org, wangyuli@uniontech.com,
-	aospan@netup.ru, conor.dooley@microchip.com,
-	ddrokosov@sberdevices.ru, dmaengine@vger.kernel.org,
-	dushistov@mail.ru, fancer.lancer@gmail.com, geert@linux-m68k.org,
-	hoan@os.amperecomputing.com, ink@jurassic.park.msu.ru,
+	s=arc-20240116; t=1729768639; c=relaxed/simple;
+	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=rPYFXpU5rHO1CXnwG5pxif2e3U4knUtLJio4cJkMS1GCPeng+iWz6AeSKJtpYDR0FUtK9/5CA+1O7vNzsXAsEbMbbt8qj7waaGsecoF3El48cG8DhpOKFDyN14uof3k/LauVpLJO4ZryIALKhUG/nu09ixVIJ/sUsZ116r31q3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [10.20.42.10])
+	by gateway (Coremail) with SMTP id _____8CxyuG3LBpnZZoKAA--.24636S3;
+	Thu, 24 Oct 2024 19:17:11 +0800 (CST)
+Received: from localhost (unknown [10.20.42.10])
+	by front1 (Coremail) with SMTP id qMiowMDx2OK3LBpnOWUPAA--.19906S2;
+	Thu, 24 Oct 2024 19:17:11 +0800 (CST)
+Date: Thu, 24 Oct 2024 19:17:34 +0800
+From: Wanglei <wanglei@loongson.cn>
+To: mike@altlinux.ru
+Cc: aospan@netup.ru, conor.dooley@microchip.com, ddrokosov@sberdevices.ru,
+	dmaengine@vger.kernel.org, dushistov@mail.ru,
+	fancer.lancer@gmail.com, geert@linux-m68k.org,
+	gregkh@linuxfoundation.org, hoan@os.amperecomputing.com,
+	ink@jurassic.park.msu.ru, jeffbai@aosc.io, kexybiscuit@aosc.io,
 	linux-alpha@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
 	linux-fpga@vger.kernel.org, linux-gpio@vger.kernel.org,
 	linux-hwmon@vger.kernel.org, linux-ide@vger.kernel.org,
@@ -35,140 +35,40 @@ Cc: Tor Vic <torvic9@mailbox.org>, Kexy Biscuit <kexybiscuit@aosc.io>,
 	mattst88@gmail.com, netdev@vger.kernel.org, nikita@trvn.ru,
 	ntb@lists.linux.dev, patches@lists.linux.dev,
 	richard.henderson@linaro.org, s.shtylyov@omp.ru, serjk@netup.ru,
-	shc_work@mail.ru, tsbogend@alpha.franken.de, v.georgiev@metrotek.ru,
+	shc_work@mail.ru, torvalds@linux-foundation.org,
+	torvic9@mailbox.org, tsbogend@alpha.franken.de,
+	v.georgiev@metrotek.ru, wangyuli@uniontech.com,
 	wsa+renesas@sang-engineering.com, xeb@mail.ru
-Subject: what about CoC? (was: [PATCH] Revert "MAINTAINERS: Remove some
+Subject: Re: what about CoC? (was: [PATCH] Revert "MAINTAINERS: Remove some
  entries due to various compliance requirements.")
-Message-ID: <20241024095339.GA32487@imap.altlinux.org>
-References: <a08dc31ab773604d8f206ba005dc4c7a@aosc.io>
- <20241023080935.2945-2-kexybiscuit@aosc.io>
- <124c1b03-24c9-4f19-99a9-6eb2241406c2@mailbox.org>
- <CAHk-=whNGNVnYHHSXUAsWds_MoZ-iEgRMQMxZZ0z-jY4uHT+Gg@mail.gmail.com>
+Message-ID: <20241024111734.GA22436@loongson-pc>
+Reply-To: Wanglei <wanglei@loongson.cn>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHk-=whNGNVnYHHSXUAsWds_MoZ-iEgRMQMxZZ0z-jY4uHT+Gg@mail.gmail.com>
+In-Reply-To: <20241024095339.GA32487@imap.altlinux.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
-
-как хорошо, что по-русски можно писать то, что думаешь
-
-
-On Wed, Oct 23, 2024 at 10:45:47AM -0700, Linus Torvalds wrote:
-> It's entirely clear why the change was done
-
-Might seem so to you, but apparently not to those wondering.
-
-> And FYI for the actual innocent bystanders who aren't troll
-> farm accounts - the "various compliance requirements" are not
-> just a US thing.
-
-US is just another victim of those trotzkist slugs --
-you can ask your father, he must know better *why*
-those have been expelled even by their own ilk
-a century ago here in Russia.
-
-> If you haven't heard of Russian sanctions yet, you should try
-> to read the news some day.  And by "news", I don't mean Russian
-> state-sponsored spam.
-
-Linus, those "news" have cost your family a child already,
-and Elon has paid a similar tax.  You have been limited in
-your right to tell what you think right here in linux-kernel@
-(unless you speak hate against *all* of the Russians, yeah).
-
-You've agreed that black is white and vice versa.  It is not.
-
-> As to sending me a revert patch - please use whatever mush
-> you call brains.
-
-It's not about the patch but rather about the attitude;
-Documentation/process/code-of-conduct-interpretation.rst:
-
-"regardless of ... ethnicity, ... nationality, ... race"
-"Focusing on what is best for the community"
-
-"Examples of unacceptable behavior ... insulting/derogatory
-comments ... Public or private harassment"
-
-Get back to single-standard integrity for yor own's sake.
-
-> I'm Finnish. Did you think I'd be *supporting* Russian
-> aggression?
-
-Have you heard of casus belli?  Do you think these were one?
-
-http://nypost.com/2022/02/21/russia-kills-5-ukrainian-saboteurs-allegedly-trying-to-breach-border/
-http://reuters.com/world/europe/russias-fsb-says-shell-ukrainian-territory-destroys-russian-border-guard-post-2022-02-21/
-
-That's February 21, 2022.  If I yelled all over the place
-about "Finnish invasion" after Russian IFVs have rovered
-Finland *first* for no good reason, would I be right?
-
-Feel free to ask, I actually grew up in Kiev and e.g.
-this bug fix was done there as well:
-
-http://bugzilla.kernel.org/show_bug.cgi?id=15658
-http://git.kernel.org/pub/scm/linux/kernel/git/tip/tip.git/commit/?id=c9e2fbd909c20b165b2b9ffb59f8b674cf0a55b0
-
-Please do revert it too then.
-
-Drop Linux network stack while at that, that "roomful
-of Russian mathematicians" is now declared untermensch.
-
-> Apparently it's not just lack of real news,
-> it's lack of history knowledge too.
-
-On your side, Linus.
-On your side.
-
-Hope you're still Finnish, not a Finnish nazi
-(swap "Russians" with "Jews" in your email and
-re-read it; it's my homegrown "nazi test" --
-if this change suddenly makes a text "nazist",
-it was).
-
-It is the US that has pushed Finland towards NATO,
-basically to follow the grim destiny that the former
-Ukraine currently harvests, and that was prepared
-for Georgia (that evades it), Moldavia (that rishes
-full speed towards destruction), Poland, the three
-Baltic states, and now your homeland.
-
-There is no regulation that can force your own heart.
-Listen to it.  Not to emotions, but to the deep truth
-that never cries aloud.
-
-You bow to the jerks who are *afraid* of opposition,
-because there is no truth in their father.
-
-Remember those who yelled "Assad must go"?
-How many of them are still around?
-Those siding with them perish with them.
+X-CM-TRANSID:qMiowMDx2OK3LBpnOWUPAA--.19906S2
+X-CM-SenderInfo: pzdqwzthl6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+	ZEXasCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29K
+	BjDU0xBIdaVrnRJUUUBlb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26c
+	xKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vE
+	j48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxV
+	AFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x02
+	67AKxVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21le4C262xC7I0v67AEwI8IwI
+	1l57IF6xkI12xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv2
+	0xvE14v26r1q6rW5McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7
+	xvr2IY64vIr41lw4CEx2IqxVAFz4v204v26I0v724l42xK82IYc2Ij64vIr41l4I8I3I0E
+	4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAFwI0_JF0_Jw1lx2IqxVAqx4xG67AKxVWUJVWUGw
+	C20s026x8GjcxK67AKxVWUJVWUGwC2zVAF1VAY17CE14v26rWY6r4UJwCIc40Y0x0EwIxG
+	rwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJw
+	CI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2
+	z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8sXo7UUUUU==
 
 
-PS: last time I've seen RMS in Moscow, he declared
-his support "to the Moscow protesters"; I've asked him
-whether he knows that the initial issue was that the
-dead people were identified en masse as those "voting"
-for "democratic" candidates in 2019 elections, and he
-stared at me and answered, "nonsense".  I've emailed
-him after BLM affairs to ask if what he sees makes
-sense but never seen a reply this time -- and dead
-voters turned out to be not a purely export-only
-"technology" a bit later (pretty cosmopolitan).
-
-
-Господи, спаси и сохрани раба Твоего заблуждшего
-Линуса и ближних его во веки веков; аминь!
-
--- 
-Michael Shigorin
-(whose first book on programming was
-Hyvonen and Seppanen's one on LISP)
-http://t.me/anna_news
