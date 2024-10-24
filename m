@@ -1,70 +1,81 @@
-Received: from mailly.debian.org (mailly.debian.org [82.195.75.114])
+Received: from mail.easysoft.com (mail.easysoft.com [80.195.45.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DAB16DEB5
-	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 04:36:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC9216130C
+	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 04:39:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.195.45.99
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729744582; cv=none; b=HWnYUmqIVk1PH1hz8hI/8qeYbV0ZVe4Sd+luK76tupE+8u6R3QDseDel4Lkqw26KC6rp3nBseVncq0VkNiG5fkMhBp6dxhRoD6WD/x2WdN2yhKfu+JcBSofLM7N+4A4kibcYnd99s0ji9TheDeRcF4k7JtKgsa3jls3tngQN1es=
+	t=1729744778; cv=none; b=fF7qQko+NWynRpPwKjSBCb/ZeGa3CO7rciKkLB76AdBCasIH9ooFq97dfxBSNnAGPmo+l4YKvTvGU9S9dfyTYasZhFUFQjA+Nr73cy/RFzJrAywecpfkbuqZOpP1Rv5dh/aqcXXizYRj3mkWONyAE4ED8l65Y0oKYPUVymuZN58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729744582; c=relaxed/simple;
-	bh=zKmOY6KmoQOXrSZE5fkbj3rIDiuSG4hehuJpyaIaqKM=;
-	h=Content-Type:MIME-Version:Subject:From:To:Date:Message-ID; b=VNAIwlRjsbLbyHN8JgMmqURxgq385QMouIhgQgXQFfOZmRJs70ndbv/EMUxFJ74Pk05antxZzcpiJ9+0IMMKoc4oGsiPvDOyETpWjwSK2XnlSoP/PW1/Q4NTu1X7umpCj17lE18vpmv0yowTtukHSHqZcWU0NfpdoWvSEgeHnUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tracker.debian.org; spf=none smtp.mailfrom=tracker.debian.org; dkim=pass (2048-bit key) header.d=tracker.debian.org header.i=@tracker.debian.org header.b=KL3jLizj; arc=none smtp.client-ip=82.195.75.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tracker.debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tracker.debian.org
+	s=arc-20240116; t=1729744778; c=relaxed/simple;
+	bh=jiCjO3kkD96zvDjaNYr7OtHLLniTk7NpEvsNbEKY7mQ=;
+	h=To:From:Subject:Message-Id:Date; b=q07JO8oVY+Q/xnwphPrYRLv8tjhT3Cq+BHYoLLcaOUJkOpEv1cswTspxA/4g1XXsrkY0vQY5z6MfMDdYBDkws44xhrQ9Q7mT1xqkJ47ldkKvrYoIAsSO0JASb+Acl+LL6c25ho5Wv4YWpNvNP898/SScWRwmNVJuceF961S5XoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easysoft.com; spf=pass smtp.mailfrom=easysoft.com; dkim=pass (1024-bit key) header.d=easysoft.com header.i=@easysoft.com header.b=bjyfMwPu; arc=none smtp.client-ip=80.195.45.99
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=easysoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=easysoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tracker.debian.org header.i=@tracker.debian.org header.b="KL3jLizj"
-Received: from ticharich.debian.org ([2607:f8f0:614:1::1274:64]:59242)
-	from C=NA,ST=NA,L=Ankh Morpork,O=Debian SMTP,OU=Debian SMTP CA,CN=ticharich.debian.org,EMAIL=hostmaster@ticharich.debian.org (verified)
-	by mailly.debian.org with esmtps (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.94.2)
-	(envelope-from <noreply@tracker.debian.org>)
-	id 1t3pa0-0046C1-KW
-	for patches@lists.linux.dev; Thu, 24 Oct 2024 04:36:12 +0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=tracker.debian.org; s=smtpauto.ticharich; h=Message-ID:Date:To:From:Subject
-	:Content-Transfer-Encoding:MIME-Version:Content-Type:Reply-To:Cc:Content-ID:
-	Content-Description:In-Reply-To:References;
-	bh=zKmOY6KmoQOXrSZE5fkbj3rIDiuSG4hehuJpyaIaqKM=; b=KL3jLizjbVWRo4ME5hQLrTuWmx
-	mLVjmlo6C+5SjfWHyR3yzXEyKI/udLnD1j/4Jc2WLPnypNeJhEe4xt5vKZK235hhvdwySjET+1BLu
-	cvEnvT39Q+ROg3ZTYTyHFvjfEFCWc2VNDOdw9u0cfUYAfPJ1zVcX7d4UychBc32hBCZUP7/MXxMuy
-	cSarzE92Nd8fDRbRuv607BeOYb+2LumvLSFTxl+bTzqTGEf5MZMUhhuqJKNC9+G5qzSKFh1r7nr7m
-	yixYVEMM9p2VqjMoUjLBhkIlJJAhcopwGUqqasgnI9g5Uc5SfWEUrkEVI62a+p9xQheZbJ2lr4xeJ
-	3dpMlG3Q==;
-Received: from localhost ([::1]:53744 helo=ticharich.debian.org)
-	by ticharich.debian.org with esmtp (Exim 4.94.2)
-	(envelope-from <noreply@tracker.debian.org>)
-	id 1t3pZy-000qcz-Td
-	for patches@lists.linux.dev; Thu, 24 Oct 2024 04:36:10 +0000
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key) header.d=easysoft.com header.i=@easysoft.com header.b="bjyfMwPu"
+Received: from mail.easysoft.com (localhost [127.0.0.1])
+	by mail.easysoft.com (Postfix) with ESMTP id 785618807AF
+	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 05:33:53 +0100 (BST)
+Authentication-Results: mail.easysoft.com (amavisd-new);
+	dkim=pass (1024-bit key) reason="pass (just generated, assumed good)"
+	header.d=easysoft.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=easysoft.com; h=
+	date:date:message-id:subject:subject:reply-to:from:from:to; s=
+	dkim; t=1729744433; x=1730608434; bh=jiCjO3kkD96zvDjaNYr7OtHLLni
+	Tk7NpEvsNbEKY7mQ=; b=bjyfMwPuIFPfYDhRoZ+mKEZzYAEWWa7FoEPJuwXDFNN
+	PPXneB/jP8yp1gm0zVTHpiVcJc9c2ysuDFMxM/p8Vr1AWbk1FReQdhjKekGpkG/A
+	1nhuTszi5sm6AvKWkIAe5NQEo4IVu36dCWuMPQndLPy8xAngEQ4ir01Z7Aybn1mQ
+	=
+X-Virus-Scanned: Debian amavisd-new at mail.easysoft.com
+Received: from mail.easysoft.com ([127.0.0.1])
+	by mail.easysoft.com (mail.easysoft.com [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 2-l3t-7A5qkY for <patches@lists.linux.dev>;
+	Thu, 24 Oct 2024 05:33:53 +0100 (BST)
+Received: from modperl.easysoft.com (unknown [172.20.100.10])
+	by mail.easysoft.com (Postfix) with ESMTPSA id 44166880683
+	for <patches@lists.linux.dev>; Thu, 24 Oct 2024 05:33:53 +0100 (BST)
+Received: by modperl.easysoft.com (Postfix, from userid 33)
+	id 298A11BF2DD; Thu, 24 Oct 2024 05:33:53 +0100 (BST)
+To: patches@lists.linux.dev
+From: presales@easysoft.com
+Sender: presales@easysoft.com
+Reply-To: presales@easysoft.com
+Subject: Easysoft.com Account Activation
+Message-Id: <20241024043353.298A11BF2DD@modperl.easysoft.com>
+Date: Thu, 24 Oct 2024 05:33:53 +0100 (BST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: Debian Package Tracker Registration Confirmation
-From: noreply@tracker.debian.org
-To: patches@lists.linux.dev
-Date: Thu, 24 Oct 2024 04:36:10 -0000
-Message-ID: <172974457091.202074.1127832324616384562@ticharich.debian.org>
 
-You have registered to the Debian Package Tracker.
+This is the email that is sent out to activate a new www.easysoft.com account.
 
-In order to complete your registration, you must confirm that you are the
-owner of this email address by going to the following URL:
+Your email client may split the activation link over multiple lines
+and this could prevent the registration process completing. If this
+is the case then copy and paste the lines of the URL into the address
+bar of your browser making sure no spaces exist between the lines.
 
-https://tracker.debian.org/accounts/confirm/c9e1e7b5efcfe0bfcb323ae0f5f8ba028af12044
+Activation requires cookies to be enabled within your browser.
+If you are not sure cookies are enabled within your browser please go
+to the following location for details of how cookies are enabled.
 
-If you don't understand why you got this mail, please ignore it,
-nothing will be done unless you follow the given link.
+https://www.easysoft.com/company/cookie.html
 
-If you have any problem with this service, please contact
-owner@tracker.debian.org.
+Please click on the following url to activate your account.
 
-Thanks,
---
-Debian Package Tracker
-https://tracker.debian.org
+https://www.easysoft.com/cgi-bin/account/activate.cgi?activation_id=*2171974F740AB87A41044B9D88E674F3C7E58626
+
+Please do not hesitate to contact us if you require any help during your
+Easysoft Product evaluation.
+
+Thank You
+
+Easysoft Pre-Sales Support
+
+Email : presales@easysoft.com
+Tel   : +44 (0)1937 860000
+Fax   : +44 (0)1937 860001
+
