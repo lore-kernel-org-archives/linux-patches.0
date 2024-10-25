@@ -1,152 +1,189 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C837B199948
-	for <patches@lists.linux.dev>; Fri, 25 Oct 2024 06:36:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B341B21A7
+	for <patches@lists.linux.dev>; Fri, 25 Oct 2024 07:11:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729838221; cv=none; b=tGLl/YoESH1kpol60sx8imtjFXO+iwj15o5UX/rnn8co9MBdRbgHVjvvSo88E3qhiO/W1EwMnLKefaz7Jf37MXfBwG0irJlz41V/pFR3gYteTesfutg7YDYFC7Gg/XcQZ3O//JNcZLqOMQ6E5GqwbON/VdPoMMuui99iP8ce6UQ=
+	t=1729840296; cv=none; b=gghy3h4GtXEJqYaML1nMEZl5vK3jQiQC55U2z7Eg36PoyJT64dhynTN/un9D6L9wLNi29XQBVMtn5sThkO7rnRTjEG/l8QF8bor54dnOs3scF4x+U21LeFB3YZJkWm6TMJsPjaMM4tYLAukv1iE1dJdfLyFPvuYaS9yMSAnTeY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729838221; c=relaxed/simple;
-	bh=76iF+HoeaObIOvzYVxcE5SrRSGI44xQ5VLVhbj7HBHw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GMmmmOJFNZF38oXYfZNQytz7cazHGgjVSefKDR3FAR0MRUCC56EufLDode8GVguglhupsDzA7LnadrEalL+OZ7R0v4J0HF5yCmi18GYsZEgjAzAHLaoUm2UkcsADoSO2nvSEwUYtZwQmAUIejwSRSd7Pk65wQ1incgamnuoXrbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BPz3VF6v; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1729840296; c=relaxed/simple;
+	bh=2Yot5CVMrhD1GTtMp0Szbyl+xfW+qQ/vMp2WrwCQU80=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=GWIRKaBgGhCuv/3qNRYS9jDGjTWmXQQhcq7OqUSG4IgLgzMPJN3g1nK3suN7IlUUmB1VK2YGlPHDkxzjpDtdH9RO7UBr2Qk6+xlaXfBYwiXRLn+BuvgQWA57dxWLCaQFhCklRj6wDNFQYTKlCxjw4VgANhpUcFUCBISq5MkXoZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldum.net; spf=pass smtp.mailfrom=oldum.net; dkim=pass (2048-bit key) header.d=oldum-net.20230601.gappssmtp.com header.i=@oldum-net.20230601.gappssmtp.com header.b=0wab8ZEQ; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldum.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldum.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BPz3VF6v"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-539f72c8fc1so2119299e87.1
-        for <patches@lists.linux.dev>; Thu, 24 Oct 2024 23:36:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=oldum-net.20230601.gappssmtp.com header.i=@oldum-net.20230601.gappssmtp.com header.b="0wab8ZEQ"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a9a68480164so222128066b.3
+        for <patches@lists.linux.dev>; Fri, 25 Oct 2024 00:11:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729838217; x=1730443017; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Db9W0DcUi/dDjwgp0S1+zwbk/KalyyaD0ylTsRWE1NQ=;
-        b=BPz3VF6vQfiSUXXagL/hY7yRhIAYiaqWGxarMSp4t3bh3QVYGvKieE/OVLfjxjDTuP
-         gGIysKUXKLKE1EwvDXwmrcCtCxEennD6YHSgDblYbXC7Wvz7UrhsVwOqWTaLPepDvXtK
-         Itx0pzRIyMQEN9I0bEvrtZQsG+35Fqs8kuWnlcUme8uC23ymMGF8H8qg4p+BEG0Yz6RY
-         8dRLTy+ly3Hi8W1nDSBGkjri+IupSlDs5NXIDzAydI4jsQbohDTmFZRFeHkTOYytLutl
-         7akJz0HfjyrfLa3n3ff38iCeafjPcOsUHamghAtFbji9Ue7qmr8a2PPBvc08UsPLEngN
-         fDFg==
+        d=oldum-net.20230601.gappssmtp.com; s=20230601; t=1729840292; x=1730445092; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2Yot5CVMrhD1GTtMp0Szbyl+xfW+qQ/vMp2WrwCQU80=;
+        b=0wab8ZEQCdabuGJb3VhxZMTqgdlfHbIVbW8SXrBr01ZoJ3e+emamPofwFWn9m23YfD
+         JSntekNKVnhQpNNuB2tvq4s8J+p8B+aNhAvW5fijSaw8Jg++mKF6uFB6E10d7uS5x3S0
+         sckT7470/F8NjfFhe3AlIaw+39v37pNQt+/Pc3/BovKHYombFeRzOjRaMGyc4A6w+WQ5
+         j1Ji4g11hdVLyHC4lxf/KMYhabPZRQKZIFUE0hKBc1KXKwFoxNN8tyUlIAa8W+J/9lJT
+         erQRgnVT11gQOMab6qR8Khv/8BZC1uM6RYfxjmESPS1m8toPwKgwGw9GdXD/fAUmX8PL
+         +i6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729838217; x=1730443017;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Db9W0DcUi/dDjwgp0S1+zwbk/KalyyaD0ylTsRWE1NQ=;
-        b=WgmL2xx6etXQ57PX/55rYeTqAhtJhP99Xdxp+aTParkfYyNzHiEQkY6sSS2MK7e//B
-         7lCGJmy6MMBUKDrZa90JhlHRnnHxFPyP1f1WgnSrCkbxGL2eFn35wotOdFtev2oFm0ZQ
-         +0NI8vM3KoUwg3c8Pvj95kn6NDxELcMbENMnXVNLaDAk9XdHw/u3WiFe6PndfNzopy4X
-         Q1RFKLzoxgwjBI394AXFOYUihtQ/ihcVA3G/z9Ah8W1uwGqIh8Q0y75WgBUoPSMpFtzK
-         tAhQ/QYoJW9hpHhZIZ4Gnhg7SUUIBtrMoQj1kt30HblqLpcaTNkQZ5GmfXGGtSMfIlUp
-         xUyw==
-X-Forwarded-Encrypted: i=1; AJvYcCX5I39VIvLLBFuhZBGMA3Vkd8RNRJ7rnfjnqRR1iiy4Z6pwA5sauVVwsla9zOHyVbe2Cy+vDh+n@lists.linux.dev
-X-Gm-Message-State: AOJu0YykfmYyi1kjyljn8a2Bzk8y9pxCAAcT2hOMWunyWuvTY7xF0fSI
-	PeG64Rk3D5RzgtC766H21/4S2K8r5Guc+FZ7oWyaNNMqd1Vyw2DGxHlSrgYLKik=
-X-Google-Smtp-Source: AGHT+IHWV57T+/9EhAWqxTiykSOfZ5lc9WHgI9sMVd6VKkCShvL2exL1I+UVy6hyP0AKb8v0iecgSw==
-X-Received: by 2002:a05:6512:3e0d:b0:52e:9fe0:bee4 with SMTP id 2adb3069b0e04-53b1a2fe533mr5111135e87.9.1729838216924;
-        Thu, 24 Oct 2024 23:36:56 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53b2e10a53csm72820e87.55.2024.10.24.23.36.53
+        d=1e100.net; s=20230601; t=1729840292; x=1730445092;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2Yot5CVMrhD1GTtMp0Szbyl+xfW+qQ/vMp2WrwCQU80=;
+        b=eyt83P5Q2BgRamz0p1CCWjZPORh5rVjZnJDqhBnYAlBxECo9s4dMUCE3j3k52kfijQ
+         Uh/CtwiH96Ei4hJsSovCyFAhmnBNHgDSElFJQnars9LuMNYf6WoRlFFU1CAB60bcEbgF
+         kJd7yulzxZl9UnxEjlAS5TewTXUWOChn7CK92M6bhJUq9uusF7bwcbbvtDoDuBXRYev2
+         /4goqmj00S6LtjjJPotDL5sBv5039MsXkfA+e9CsM13Br7qh71rpmxhK8QMZcaY8ve+C
+         Gvn5vXHW6R5eXnROTEa1UIsNphQ0oq8EBw0kZaEVR8Kv/4PtF+bmLPwZ5cXRAnH99I5v
+         c84w==
+X-Forwarded-Encrypted: i=1; AJvYcCXS9ZAj2HmHjmkYMDYselk8fgkTbhmpP81QoLDTsn9fYzLcIMENYa8Atr4p0kzg/7LHukJmtisD@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzc7hEKzRAVH1L6udG3IIh/pvVg1+P5ACYIOGuJ4w9zYzhlduuJ
+	LfWA3wbo4EWLAgEXd0p7DC9aRvJ0xXyaEtVtuQ4QJmpEbTsvJkIS4HUtS/2TvSM=
+X-Google-Smtp-Source: AGHT+IGBdf9M+MhMVkkAf67M7SvMWvUIw/h/7r8rJ3Hdx2EtRLd3htedYCpRhV8dD7bWUo1PL92GzA==
+X-Received: by 2002:a17:907:3e9f:b0:a9a:bbcc:508c with SMTP id a640c23a62f3a-a9ad2710a64mr438727766b.2.1729840291504;
+        Fri, 25 Oct 2024 00:11:31 -0700 (PDT)
+Received: from [10.1.0.200] (178-169-191-169.parvomai.ddns.bulsat.com. [178.169.191.169])
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a9b1f0298e7sm35760066b.75.2024.10.25.00.11.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Oct 2024 23:36:54 -0700 (PDT)
-Date: Fri, 25 Oct 2024 09:36:51 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, devicetree@vger.kernel.org, 
-	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Benson Leung <bleung@chromium.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, 
-	David Airlie <airlied@gmail.com>, dri-devel@lists.freedesktop.org, 
-	Guenter Roeck <groeck@chromium.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Lee Jones <lee@kernel.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Prashant Malani <pmalani@chromium.org>, 
-	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Tzung-Bi Shih <tzungbi@kernel.org>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Daniel Scally <djrscally@gmail.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Ivan Orlov <ivan.orlov0322@gmail.com>, 
-	linux-acpi@vger.kernel.org, linux-usb@vger.kernel.org, 
-	Mika Westerberg <mika.westerberg@linux.intel.com>, "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, 
-	Sakari Ailus <sakari.ailus@linux.intel.com>, Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v4 13/18] dt-bindings: usb-switch: Extend for DisplayPort
- altmode
-Message-ID: <yatu2snt2w7lrveftlfbkw6yfvso3jbsma5v6jij4rn7v37hjt@ww42wer6bytj>
-References: <20240901040658.157425-1-swboyd@chromium.org>
- <20240901040658.157425-14-swboyd@chromium.org>
- <27acewh6h2xcwp63z5o3tgrjmimf4d3mftpnmkvhdhv273zgsp@i6i5ke4btdqx>
- <CAE-0n53S2dFz74_rgx22_1i_bbEC6kj1SL5LAEq_F2wrdCgBNg@mail.gmail.com>
+        Fri, 25 Oct 2024 00:11:31 -0700 (PDT)
+Message-ID: <3ace1329d4ef99b87780d0ef07db179d27d04d44.camel@oldum.net>
+Subject: Re: [PATCH] Revert "MAINTAINERS: Remove some entries due to various
+ compliance requirements."
+From: Nikolay Kichukov <nikolay@oldum.net>
+To: Mikhail Novosyolov <m.novosyolov@rosalinux.ru>, 
+	torvalds@linux-foundation.org
+Cc: aospan@netup.ru, conor.dooley@microchip.com, ddrokosov@sberdevices.ru, 
+ dmaengine@vger.kernel.org, dushistov@mail.ru, fancer.lancer@gmail.com, 
+ geert@linux-m68k.org, gregkh@linuxfoundation.org,
+ hoan@os.amperecomputing.com,  ink@jurassic.park.msu.ru, jeffbai@aosc.io,
+ kexybiscuit@aosc.io,  linux-alpha@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org,  linux-fpga@vger.kernel.org,
+ linux-gpio@vger.kernel.org,  linux-hwmon@vger.kernel.org,
+ linux-ide@vger.kernel.org,  linux-iio@vger.kernel.org,
+ linux-media@vger.kernel.org,  linux-mips@vger.kernel.org,
+ linux-renesas-soc@vger.kernel.org,  linux-spi@vger.kernel.org,
+ manivannan.sadhasivam@linaro.org, mattst88@gmail.com, 
+ netdev@vger.kernel.org, nikita@trvn.ru, ntb@lists.linux.dev, 
+ patches@lists.linux.dev, peter@typeblog.net, richard.henderson@linaro.org, 
+ s.shtylyov@omp.ru, serjk@netup.ru, shc_work@mail.ru, torvic9@mailbox.org, 
+ tsbogend@alpha.franken.de, v.georgiev@metrotek.ru, wangyuli@uniontech.com, 
+ wsa+renesas@sang-engineering.com, xeb@mail.ru, rms@gnu.org,
+ campaigns@fsf.org
+Date: Fri, 25 Oct 2024 10:11:27 +0300
+In-Reply-To: <20241024210120.4126-1-m.novosyolov@rosalinux.ru>
+References: 
+	<CAHk-=wjw0i-95S_3Wgk+rGu0TUs8r1jVyBv0L8qfsz+TJR8XTQ@mail.gmail.com>
+	 <20241024210120.4126-1-m.novosyolov@rosalinux.ru>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.2 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n53S2dFz74_rgx22_1i_bbEC6kj1SL5LAEq_F2wrdCgBNg@mail.gmail.com>
 
-On Thu, Oct 10, 2024 at 06:43:35PM -0400, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2024-09-19 03:40:19)
-> > On Sat, Aug 31, 2024 at 09:06:51PM GMT, Stephen Boyd wrote:
-> > > diff --git a/Documentation/devicetree/bindings/usb/usb-switch.yaml b/Documentation/devicetree/bindings/usb/usb-switch.yaml
-> > > index f5dc7e23b134..816f295f322f 100644
-> > > --- a/Documentation/devicetree/bindings/usb/usb-switch.yaml
-> > > +++ b/Documentation/devicetree/bindings/usb/usb-switch.yaml
-> > > @@ -52,6 +52,14 @@ properties:
-> > >            endpoint:
-> > >              $ref: '#/$defs/usbc-in-endpoint'
-> > >
-> > > +      port@2:
-> > > +        $ref: /schemas/graph.yaml#/$defs/port-base
-> > > +        unevaluatedProperties: false
-> > > +
-> > > +        properties:
-> > > +          endpoint:
-> > > +            $ref: '#/$defs/dp-endpoint'
-> >
-> > Is it a separate port or is it an endpoint of the same upstream-facing
-> > (non-connector-facing) SS port?
-> 
-> I don't quite follow this comment. This is an input DP endpoint/port.
+On Fri, 2024-10-25 at 00:01 +0300, Mikhail Novosyolov wrote:
+> Linus, Greg,
+>=20
+> First of all thanks to you for taking by far not the most harmful
+> actions to achieve what your lawyers very kindly asked you to do.
+>=20
+> Unfortunately, already a lot of highly qualified people have started
+> thinking that you acted very badly. Of course, there are questions
+> like why removed maintainers were not properly notified and did not
+> receive any additional explanations, but, to my mind, it is useless to
+> try to find 100% justice -- it is not possible. Overton windows has
+> been opened a bit more.
+>=20
+> Usually the first contribution is much harder to make then the
+> following ones. A big problem here is that now many people even will
+> not try to contribute to the Linux kernel and other open source
+> projects: their pride for themselves, their homeland, their colleagues
+> has been severely hurt (we are ready to fight for all that).
+>=20
+> It is not clear what to do with this problem. Any ideas?
+>=20
+> I am sure that people from any country and of any nationality will
+> have similar feelings if you act with them or their colleagues in a
+> similar way.
+>=20
+> Thanks to people who were not afraid to say something against this
+> action. Chinese, Latin American, African and other people probably
+> understand that they may be the next ones to be dropped from
+> maintainers. Hope that we will not have to form another Linux kernel
+> upstream one day...
+>=20
+> I am sorry that you have to read a lot of text from people who you
+> call trolls -- it is hard to keep calm.
+>=20
+> You know, you have really made it much harder to motivate people to
+> contribute into the kernel. There is such problem among developers of
+> hardware that they do not feel comfortable enough to show their code,
+> for example because they think that it is not perfect. Let=E2=80=99s take
+> Baikal Electronics. They do publish their kernel code, but in a form
+> of tarballs without git. They slowly, but constantly worked on
+> contributing support of their hardware into the upstream kernel,
+> fixing not Baikal-related bugs by the way. One day someone told them
+> that =E2=80=9Cwe are not comfortable with accepting your patches=E2=80=9D=
+. And they
+> stopped their work on upstream. Now that man has been removed from
+> maintainers of previously contributed code (code for not Russian
+> hardware, by the way).
+>=20
+> What do I suggest to do? Well, I don=E2=80=99t know, but I do not see dir=
+ect
+> legal reasons why doing this was required and why patches from Baikal
+> could not be accepted (the fact that I do not see does not mean that
+> they do not exist, but please show them). Politicians and activists
+> can be shown a finger in some places, by both developers and lawyers,
+> at least to prevent them from being too ambitious, when they decide to
+> break something working next time... But maybe I do not know something
+> about truly democratic regimes :-)
+>=20
+> Thanks for reading.
+>=20
+Hi folks,
 
-This is the question: is this a separate port or just an endpoint on the
-port?
+I also do not consider what's happened here as normal. The maintainers
+removal stands against the key principles and values of our GNU/Linux
+communities and the FOSS ideology. Values and ideas most of us have been
+protecting and advocating for since we can remember!
 
-> 
-> >
-> > > +
-> > >  oneOf:
-> > >    - required:
-> > >        - port
-> > > @@ -65,6 +73,19 @@ $defs:
-> > >      $ref: /schemas/graph.yaml#/$defs/endpoint-base
-> > >      description: Super Speed (SS) output endpoint to a type-c connector
-> > >      unevaluatedProperties: false
-> > > +    properties:
-> > > +      data-lanes:
-> > > +        $ref: /schemas/types.yaml#/definitions/uint32-array
-> > > +        description: |
-> > > +          An array of physical USB Type-C data lane indexes.
-> > > +          - 0 is SSRX1 lane
-> > > +          - 1 is SSTX1 lane
-> > > +          - 2 is SSTX2 lane
-> > > +          - 3 is SSRX2 lane
-> > > +        minItems: 4
-> > > +        maxItems: 4
-> > > +        items:
-> > > +          maximum: 3
-> >
-> > What is the usecase to delare less than 4 lanes going to the USB-C
-> > connector?
-> 
-> I'm not aware of any usecase. The 'maximum: 3' is the max value in the
-> cell, i.e. 0, 1, 2, or 3.
+This hurt so badly! Really. This is betrial.
 
--- 
-With best wishes
-Dmitry
+Even if this is now reverted, or the upstream kernel is forked and a new
+upstream kernel repository is elected, the history of it will remain and
+haunt us all.
+
+Turned out our beloved and "free" as in freedom kernel has been
+compromised by compliance to a government.
+
+But this is the Linux kernel, how could this have happened?! It is used,
+improved and copied all over the world, not just one country! Why did we
+let this happen?
+
+This is a precedent that tells everybody what can come next, due to
+"compliance" reasons the kernel could receive code produced by a
+government institution that serves not the Linux community, but the
+governement.
+
+Surely it is not just me thinking towards what can change so we never
+again have to comply to a government of a country when fighting for
+freedom!
+
+FSF, any comments on this?
+
+Resist!
+
++rms and fsf
+
+Thanks,
+Nikolay
