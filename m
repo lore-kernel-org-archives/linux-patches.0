@@ -1,221 +1,243 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F7B1D2793;
-	Fri, 25 Oct 2024 09:18:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.16
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729847891; cv=fail; b=oUD6a3o5yb0H41BJ8O379IozuP0lM8Ev7FuTZXodO+XcYcqzMADjrntm9SGj+Get2l1SqTNhCe6bR2PGS/sB7RopeXqwlKMDYUmtvanaSySWKDFp3yQNGnwY29XsqUuyzznTly3BxRuzhS2MzzU08+H1/DXLGkO4J3ulNO6f/1w=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729847891; c=relaxed/simple;
-	bh=j4lLfgTVUULlLXIPiw4AvYlIuhdTtA8mvXPFxjDGWcQ=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=GBLvzVLdojaMPZdragEeyqT1PGAdTLWFjyfj2rhhTy2WOAW7zDVNbw9q/2nrgyvGsAI9DhEPycdPGQ7wK2SHUhuGEBOKUvBR8vdpnEcGwnPlGSNVgxsgShlghMFl5UemCHVegjkPb/fcWq4jVbxK5lv8mD+ScZ0X+cAQbDWSgXA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=f5/aKZg2; arc=fail smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D225C1D90B4
+	for <patches@lists.linux.dev>; Fri, 25 Oct 2024 10:49:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1729853383; cv=none; b=L2fwpzCPtLPcH1mbnvkHf1h21ZWObCdAsP7+zJASu5EVqzaLzoDJ/udqSqbl4pixxL4pzz0p8q1LY8ZhaPPakQLtKzKSz8fKH30e5CO5S7HlkAdWYV7WK5bXGYLkn1I43ks6Zg5qvUT3Hqpb61TPVx1AL1+C5Ryo70HlsQj67vQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1729853383; c=relaxed/simple;
+	bh=aCNAiagby3VBg8WVJeXCrYPX9K57S5WDB9gDJXTj/qI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nvrbLoYKQ6DI/P1GqOuyiDvynUJwfLhL+gcK1uZEa6tdYHAJtk4lMoCXRjYfKYTJTe3qAbu+A0+RV3/etKBjxWz8+TVS/GZ5dmQzY1K4fUlMhMs+G8rCxdu5dSK8EFUjvma1Y9w/9mwkar+TAvlEeq1e0cUiLmblr+y34+VSddw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dTdgSSPq; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="f5/aKZg2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1729847889; x=1761383889;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=j4lLfgTVUULlLXIPiw4AvYlIuhdTtA8mvXPFxjDGWcQ=;
-  b=f5/aKZg28h+Ibj/XW1YHZDNRWou6saUbowRK1+HlrSikYO0R/9qrZvBE
-   0w5QRWx4ziWU3FgEO5YtwXttWutMo/Pe5I6TZot1huauiedIZAZzrOo8z
-   X1UkENRX0g5zpStkJ4pLnaoDd77Xqijdip9VUQkusIvaF4/H/0DuGiRyf
-   LcoMpYi1PrZ0wS/TZf2e5zkMCK8nGHaNp2f49ageJevy1zzdIw0X+QCKR
-   Ffav6LX3JatFvg2PZQ3APfJNrKiFCSXeR14zm7GzguDJeM1Lw5WPWU5y9
-   OHIum5cf9BVLLCXUk+W1GfdnnysUt/9htSacHtRPhC1qURojZ9LmPYAkK
-   Q==;
-X-CSE-ConnectionGUID: 9LpZeEAiScG1Ewn0BoZAMg==
-X-CSE-MsgGUID: KMBStEOOQGytAi9Xr3kW5Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="29641102"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
-   d="scan'208";a="29641102"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2024 02:18:09 -0700
-X-CSE-ConnectionGUID: oWTD9XjOTn+VVXHTb8KnSg==
-X-CSE-MsgGUID: gsOSZKqMSNm40nhJzAJNsw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,231,1725346800"; 
-   d="scan'208";a="81183545"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by fmviesa010.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 25 Oct 2024 02:18:08 -0700
-Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Fri, 25 Oct 2024 02:18:08 -0700
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Fri, 25 Oct 2024 02:18:08 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.40) by
- edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 25 Oct 2024 02:18:07 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RnWQ0uQmdEvnYlJgTeTn4mHRarsnR9WxVCYvRp6mMnpduRfAPmnEUS7rIyNJbvzby3nDIftyzK5xscJUTUkB9B7MJV/VHi0jGrAkmc3mLEmc26jIHDLL7sF3/z8EfxoDR05gISrVGALBPkicIJhuj6HG2LTfMzlpqKH9mHFyeQ7bf7IhIjwV4+3ooEfA7ubpTWvIBxiyKhvL0B4khqMBv7yxN88EKgypDgVwgh9muz433fZ4mZNqR6iKTfNHu0PtMGHbaBT08vLZgK96I6km4eIYA7314q0SLJ4b+O0pKCXZamm8r8j9vuWW3p7Lvx6GXPvKFI7rw58Q45mkwgzONw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=j4lLfgTVUULlLXIPiw4AvYlIuhdTtA8mvXPFxjDGWcQ=;
- b=dgzzXy+EHVHt2K2++nBh7RMVjA9ilHPIhVOcaT7u+woOvc0VOCHaI9WiR4buHzjw3nsXRirevY/h2XHdxBhHlZ/OvmiQ9e0HhzFRbzgch1wnBnBN0NtdSV2WnxZYj5zrM8xXvrQNDgweUOqgpu+SQ7uFMyvC75Nomelob523ORm1+la6igXsTsK5iId8JaOytI7ofJnJ0SUoZQomSIcEW7Z4QPOnCEO631FUR8bjbVGNf9WKDf0fsY8BEZRYIRE3cWSXkMgevUDeENs27+aP5cUC7TGPBvEY3lgiO1ELBbLGH5V5sSrwBpXvJaDrZnjXvVIJqwqBg7zEabTuDZV8CA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
- by PH0PR11MB7636.namprd11.prod.outlook.com (2603:10b6:510:26f::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.23; Fri, 25 Oct
- 2024 09:18:05 +0000
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::b576:d3bd:c8e0:4bc1]) by BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::b576:d3bd:c8e0:4bc1%6]) with mapi id 15.20.8093.018; Fri, 25 Oct 2024
- 09:18:05 +0000
-From: "Tian, Kevin" <kevin.tian@intel.com>
-To: Nicolin Chen <nicolinc@nvidia.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
-	"will@kernel.org" <will@kernel.org>
-CC: "joro@8bytes.org" <joro@8bytes.org>, "suravee.suthikulpanit@amd.com"
-	<suravee.suthikulpanit@amd.com>, "robin.murphy@arm.com"
-	<robin.murphy@arm.com>, "dwmw2@infradead.org" <dwmw2@infradead.org>,
-	"baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>, "shuah@kernel.org"
-	<shuah@kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "iommu@lists.linux.dev"
-	<iommu@lists.linux.dev>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-kselftest@vger.kernel.org"
-	<linux-kselftest@vger.kernel.org>, "eric.auger@redhat.com"
-	<eric.auger@redhat.com>, "jean-philippe@linaro.org"
-	<jean-philippe@linaro.org>, "mdf@kernel.org" <mdf@kernel.org>,
-	"mshavit@google.com" <mshavit@google.com>,
-	"shameerali.kolothum.thodi@huawei.com"
-	<shameerali.kolothum.thodi@huawei.com>, "smostafa@google.com"
-	<smostafa@google.com>, "Liu, Yi L" <yi.l.liu@intel.com>, "aik@amd.com"
-	<aik@amd.com>, "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: RE: [PATCH v4 11/11] iommu/arm-smmu-v3: Add
- IOMMU_VIOMMU_TYPE_ARM_SMMUV3 support
-Thread-Topic: [PATCH v4 11/11] iommu/arm-smmu-v3: Add
- IOMMU_VIOMMU_TYPE_ARM_SMMUV3 support
-Thread-Index: AQHbJBg8SEstnmviUEes1cLxt+VtDrKXM7Yw
-Date: Fri, 25 Oct 2024 09:18:05 +0000
-Message-ID: <BN9PR11MB5276C3BC659CCCDF3A1189458C4F2@BN9PR11MB5276.namprd11.prod.outlook.com>
-References: <cover.1729553811.git.nicolinc@nvidia.com>
- <2180fdf423d0f2fcc5c031687690100b12c2ba51.1729553811.git.nicolinc@nvidia.com>
-In-Reply-To: <2180fdf423d0f2fcc5c031687690100b12c2ba51.1729553811.git.nicolinc@nvidia.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|PH0PR11MB7636:EE_
-x-ms-office365-filtering-correlation-id: 1fde5b6e-15d2-435f-3b1c-08dcf4d5ef11
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024|38070700018;
-x-microsoft-antispam-message-info: =?us-ascii?Q?UFcoLYeCL4SIozGp2EB3Mf5EjRCtFp+i3QXyXh1b+5JhNzyvQxwUJ6CWuEbB?=
- =?us-ascii?Q?rhr2MX4y+ZOGUk8UpQq7nh9ld3DUgjwKsYrxa8BiukFYEAQu2swXBevmQws2?=
- =?us-ascii?Q?iAv33ewZ0r4572unQnt03y6nG7OlYKdk7HVkwcHGfQtd8nYyg7mJMwTeSjS7?=
- =?us-ascii?Q?FZadX0y29AwPv5VnJftTUrRGrLtBQZiNGTV3S/KbDG070qEVoiJSn18UTM3I?=
- =?us-ascii?Q?bs8wBSkCMcXcvGdn6hu/EW7siyTXG9Vco2DdPKs2k6D56MUtSFwJ+6dK3oRR?=
- =?us-ascii?Q?yHyjl5Qtris5hoYkfGq7Z3MiTLJ72krmyEsz5jgs6MkdYTGl3U2Y4kbhTDz9?=
- =?us-ascii?Q?drlPQxol0KWVtOclVHPEeo5ss1QGzxzT57xrBvZ5hTl8nU/WB9Ne23SEX3Z7?=
- =?us-ascii?Q?w+8NMHTQnBx8Q1UKxWA4KJgDe/zl21GxdkYQ81fkFOIq5+bciQOtAW/2Qefd?=
- =?us-ascii?Q?6dJoSjsMAinuZoks0+dMx6gwkSWaCRTAlRkg5vZIrxWoF2uJAjm95r2H/fFS?=
- =?us-ascii?Q?4evW3qd0lg/dIDBMm9fkSjFe9DfeIN5L+PjnuSfQg4oF8bzPvGSpYzmSbLrb?=
- =?us-ascii?Q?E+aqH8CixRXQz99zv3vdS7Nbsf0NOkfe6Te98NYNa7BOZkOZwPUxjaQYG6p8?=
- =?us-ascii?Q?8H/jwYS2J1ku9G2AVLRiXRAPpkewOYo7+0ehBPKjlAO44ARJurF3CRKZ5IXZ?=
- =?us-ascii?Q?pdhBdijuZVCkho/VvrYNonTciwFDA6NdR5z353aoSDUzpdDZ9KJ2VgQycxK8?=
- =?us-ascii?Q?dHyy6lpkssJLeekb3lfITgGo6izw8+I9QztFKiDAi0UQTXJ7NCsd7azVjJ8/?=
- =?us-ascii?Q?2GzDI2EgEK7fPe9oTDkA7xfJWUn1JtHxZOLZ4trUthLLyel75DJiwQet3Dbs?=
- =?us-ascii?Q?Ci0DJpWKDONd5SqOF0wQzYST16w3STyuME26AstiM3IsLLmDIhKvdJUEfTbD?=
- =?us-ascii?Q?rOKCU2ou+oaFnQwrvih8cet8hJYkLlH8Fz/UqKarh9parEbWr99R3MeaOX/T?=
- =?us-ascii?Q?a57jbqQ6p4pcxC6C8IeuB5WhlmQwfqUfZX7W7Yst+/qkhE1+aVG8vfx7TMl0?=
- =?us-ascii?Q?XrElxLSTR+V8J/gYnL+C7P6+OJms3Rh5dsAtrFRzkuHiJ8kMzcpztk9Sns9A?=
- =?us-ascii?Q?BUUSwljSHj2ujfBj/ke1nOGTNMcyGtJeZsSJAe0EjhWR5rHrt6VuAgPterJ3?=
- =?us-ascii?Q?UZ36F9rQTZig1HhUwBUTitTWazrbMUlRsNPCXPofkG3f8+3PMdA7YOVaq3Qk?=
- =?us-ascii?Q?00+UaEXkMHb2DTSi4hClQ4w6aIMPkrUkKsUDPljJBgRDe3uhQqOvW+nn8pe+?=
- =?us-ascii?Q?oYoCTERI6Yfr1u8kftmf8qLakJwrBepqjLMxuwRBru2pa/aJs0ZWhoD1F7Wi?=
- =?us-ascii?Q?tgJRjro=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?jg1QMqq/l2x+6r/Ua0bqDe/luRkASYOhREe4XArfn7uQfpz1pD6k1a2wrpDy?=
- =?us-ascii?Q?Be5sC+XFO2ZgvZbBWmHCF2bV7cVdhkRc4BNSmxpiPVhrCUbyQJG6eg69OhXe?=
- =?us-ascii?Q?fu8z0CQPXoiuMBYGjXfEN3fcE9yM9b/zIka8OZWsibGk09N2ZZIx73EGW0zK?=
- =?us-ascii?Q?WHjx5N0AUXqmzZhocAN2u7HbWq/fnMnfVK10DyEWcW4AKFM/RiD+bGlVb4X5?=
- =?us-ascii?Q?DaO0B9ZwKXUOjvnkmZbyLPhaDNoBPvkUWOki0kaIHFsSNfIo1HkcmabrDx6N?=
- =?us-ascii?Q?Hstn4vzy1EOunSf0ciAhp8xpqxsxEiyUMaiDvHysTp5EuIEaWMGBYdmuNY6h?=
- =?us-ascii?Q?sfgTBtgKOTai1XOvPu88c+VPA8Bys4Ja94/mzw0erMjiahbT0hvGrkkFIcTH?=
- =?us-ascii?Q?JrfG6sVsa8YQWVYMFDyOkUe6bSvK4YHIlLQNTsbvKF8AlPpwTrShrZe06cGW?=
- =?us-ascii?Q?Hh7/5dlGtO1+0O6+U+hkH8n4j4TKB5AV+cXrOw8aBwGxcjl/Mao+U+ogEVKV?=
- =?us-ascii?Q?9kbP7n1EKrQ+nyf61wBZ0Xp3jRKBVXppyWUh+Yv89MgOn627fY2t1OQp7KDX?=
- =?us-ascii?Q?V7L9EMPro0Y0GxR5QZ6a4DhSXq+ngpfG7/g67p2GVAp7D2MLRgqkHkXN1SDX?=
- =?us-ascii?Q?HXpyKyrPOxi8AaMGP8OolT7jz48jjtfr9mEEBOfFsSNSBk49QZpuyn3kqnwb?=
- =?us-ascii?Q?1LreMS11Xfqx70vkjoivKt8mfgIiSm7p8GOpE37Xllw0qykeadfxR9Eyqyf8?=
- =?us-ascii?Q?i+wDJOJB/X6FSqSa03/8co7JA8jX/yX78Ij0W3EoHLg2B8Ylsh/oJpZXHEwa?=
- =?us-ascii?Q?uhxmxI1HzpT6Kji41Gnnwcxi5EIbSTZ0GDZCSLLlTX5XtftSNKEXQ1FMqz7O?=
- =?us-ascii?Q?D2dpkx7NZLD7jgbJAMmO0eAr2nL/bJ5e1pKxqbb4Iyya+bsi/RjnB0oNHk4H?=
- =?us-ascii?Q?+nr/h/EhT8F7uFzzAXzSzXMWu7g5+Xwp8tQXFtG0adQKqztFMQ369t7J1jBM?=
- =?us-ascii?Q?AeEHa2HunqfMuceV+iOjTxLnN4khoUoAmEBYArD/XAbkB9wiBAjI5zCqBx7S?=
- =?us-ascii?Q?VKL5Q6kG4sCfKIs6cXz24jLn/WtBrS4jw0YklIYEeTOGaEiikHgkhp4xVoWn?=
- =?us-ascii?Q?lRPMoC8tDd0pUntDf2r9o4W2laqlP4aTLGdT7fsDXOJFE16b83PhXrBAczV5?=
- =?us-ascii?Q?1OCRG86wbAt8MDg5Tl6uWkb8nh4+MZZEvIIXyVNRbIE3gkxbNl73VhUU8/OV?=
- =?us-ascii?Q?nN0zIOHfG+2BXImyNalKfPzwv9qBezEw/CR2bsx5o3NsXSYPKBMp1kQ4q+le?=
- =?us-ascii?Q?GdzIJ+MJvBrsUM9Iw0N/rHuoLVG8XenUGmODkiICka6dlmoAmtgCYwdKQEZ+?=
- =?us-ascii?Q?pGUK7HBnqc2CL9dcfVPlMsdTJRrXJ2DQ3ZQQt/yfKn2i1o6jD/fksoPNRSs1?=
- =?us-ascii?Q?qz1HmBOM+U10JfRrcaina83MpG6u6IwR326sOkMtQx/W8JFq0gtYOWZGfUVa?=
- =?us-ascii?Q?/v+cyl+9TekxEHeeJYrM8jEs9etWeDHX+rD8mA0fvLfsxj5CJQuC+pRgQaSO?=
- =?us-ascii?Q?FiS97i0mf84fmUJs6sTqVCJD8Pd+fWtvIk6HbTAX?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dTdgSSPq"
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-539f84907caso2101276e87.3
+        for <patches@lists.linux.dev>; Fri, 25 Oct 2024 03:49:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729853379; x=1730458179; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=tyqVh/eFIyYHOhM+diCDUXlgQP3U/MFtE2DeLsQCTPY=;
+        b=dTdgSSPqr9APSWN+BDtOLU0C5571ltUsgE7q93SpHst3P/Z862e712AhKkvxrwAL5q
+         5kMx4cYf0rsDm1N8O8VcAp8AqUo0eXr0Q3TfWPtcUj1UavOB/5PoMP0u0vryOXBZkW82
+         QundufC6cv1wGAeY25c9NRwwOQsbblwsTk47kxhFKbINDusNnssZ2hozvUX00O8mPJRE
+         VvOG/ZId/2RHePJXxk5wWMBAjNbauiqZk3sUxOVsVt+5VmnlyPcpn7Sdd0LlrFLZDdDX
+         oux5uPoGD1lr+l0rTfupZ47J9wtOEjqenY6VHGgTEZ0zsnHRUBYmw69xAvp+00zklY+c
+         mxUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729853379; x=1730458179;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tyqVh/eFIyYHOhM+diCDUXlgQP3U/MFtE2DeLsQCTPY=;
+        b=Os45+7JXnzZr6UPyCwEeW467Jg7JuIJyZXsgQG8g5jggpp4Bj4YO8On/97C01Ul1UM
+         5kIWB8GEBWnDrv0kvcwjaz2UvTtq+Xdh716GY0GXOAblxvnMZsUPAW6unCNgyLoIxsNR
+         /G4plk1SIUv/+BkNTddrqvioYutE9eyDp1CbRE9qNAe/1nF9FwcGLvR+AiklD/CyW9hw
+         TOpMD8W6unXIoB3+rYmT458KNELNxbxTp/pk0oNxV4F9Qh+Y+e6nPoUPGR+pXjboxHSs
+         VrcYyPDAqn1bhNQnmWdj9iUnA+O/zcP5QJqfsZxp6OgnvBNublw6Mg65F2c1LHh3ugzw
+         UIRA==
+X-Forwarded-Encrypted: i=1; AJvYcCWpRYPF4SUSrXOuXFeWux+/FbGnEcCsOYDAvqaJlaQ5XSyS6tj33TW1JiG8q3NGJkBUv0Iuk1a4@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzcw/yg+/mbU9WjLGWe0vemYWsSr3UXCWM9FWc9DiPBOLDnjZGe
+	qmo9tOEcbNgjIin73A8HgkbIFShC9iYDYbvBBaBfSinpsFhzQZSAqQnQnBHrMY4=
+X-Google-Smtp-Source: AGHT+IFd1s7XTf4EM8FOBisHkPGBM0CWX4Fva+d6WyJooHaUEk5EZV4vJ/wT+wZU4sf3FN36wyTG/g==
+X-Received: by 2002:a05:6512:3ba5:b0:539:fb56:7790 with SMTP id 2adb3069b0e04-53b23ddcfb2mr3231326e87.6.1729853378788;
+        Fri, 25 Oct 2024 03:49:38 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53b2e1dcb89sm132429e87.237.2024.10.25.03.49.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Oct 2024 03:49:38 -0700 (PDT)
+Date: Fri, 25 Oct 2024 13:49:36 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, devicetree@vger.kernel.org, 
+	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Benson Leung <bleung@chromium.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, 
+	David Airlie <airlied@gmail.com>, dri-devel@lists.freedesktop.org, 
+	Guenter Roeck <groeck@chromium.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Lee Jones <lee@kernel.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Prashant Malani <pmalani@chromium.org>, 
+	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Tzung-Bi Shih <tzungbi@kernel.org>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Daniel Scally <djrscally@gmail.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Ivan Orlov <ivan.orlov0322@gmail.com>, 
+	linux-acpi@vger.kernel.org, linux-usb@vger.kernel.org, 
+	Mika Westerberg <mika.westerberg@linux.intel.com>, "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, 
+	Sakari Ailus <sakari.ailus@linux.intel.com>, Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH v4 15/18] dt-bindings: usb: Add ports to
+ google,cros-ec-typec for DP altmode
+Message-ID: <lf7y7wpuca6kzqcglgs5d443iusf7xjocum4adi7t3npfavccx@zgsp37oyztme>
+References: <20240901040658.157425-1-swboyd@chromium.org>
+ <20240901040658.157425-16-swboyd@chromium.org>
+ <phdcjgqqpjpruxp7v2mw446q73xr3eg4wfgfbjw5tasgr2pgg2@77swbk47b2tg>
+ <CAE-0n514QMaQC2yjKP8bZqyfbv6B3AQm=+NJ87vxo6NdYiL03A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1fde5b6e-15d2-435f-3b1c-08dcf4d5ef11
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Oct 2024 09:18:05.5319
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: HPhPy3jLsiG/x0Lz/HmnoQj+lhjaKLXCmgX65TVfvcS+BWBXFbdBsFFLEj+N0ZRXDT1o/+rHpaNVC7ho+IL41Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB7636
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n514QMaQC2yjKP8bZqyfbv6B3AQm=+NJ87vxo6NdYiL03A@mail.gmail.com>
 
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: Tuesday, October 22, 2024 8:20 AM
->=20
-> Add a new driver-type for ARM SMMUv3 to enum iommu_viommu_type.
-> Implement
-> an arm_vsmmu_alloc() with its viommu op
-> arm_vsmmu_domain_alloc_nested(),
-> to replace arm_smmu_domain_alloc_nesting(). As an initial step, copy the
-> VMID from s2_parent. A later cleanup series is required to move the VMID
-> allocation out of the stage-2 domain allocation routine to this.
->=20
-> After that, replace nested_domain->s2_parent with nested_domain->vsmmu.
->=20
-> Note that the validatting conditions for a nested_domain allocation are
-> moved from arm_vsmmu_domain_alloc_nested to arm_vsmmu_alloc, since
-> there
-> is no point in creating a vIOMMU (vsmmu) from the beginning if it would
-> not support a nested_domain.
->=20
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+On Tue, Oct 22, 2024 at 06:15:47PM -0700, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2024-09-20 02:38:53)
+> > On Sat, Aug 31, 2024 at 09:06:53PM GMT, Stephen Boyd wrote:
 
-hmm I wonder whether this series should be merged with Jason's
-nesting series together and directly use vIOMMU to create nesting.
-Otherwise it looks a bit weird for one series to first enable a uAPI
-which is immediately replaced by another uAPI from the following
-series. Even if both are merged in one cycle, logically it doesn't
-sound clean when looking at the git history.
+> 
+> Either way the problem seems to be that I need to associate one
+> drm_bridge with two displayport altmode drivers and pass some fwnode
+> handle to drm_connector_oob_hotplug_event() in a way that we can map
+> that back to the right output endpoint in the DP bridge graph. That
+> seems to imply that we need to pass the fwnode for the usb-c-connector
+> in addition to the fwnode for the drm_bridge, so that the drm_bridge
+> code can look at its DT graph and find the remote node connected.
+> Basically something like this:
+> 
+>   void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
+>                                        struct fwnode_handle
+> *usb_connector_fwnode,
+>                                        enum drm_connector_status status)
+> 
+> (We might as well also pass the number of lanes here)
 
+I think this is a bit of an overkill.
 
+The drm_connector_oob_hotplug_event() is fine as it is, it gets
+"fwnode_handle to report the event on".
 
+What needs to be changed (in my humble opinion) is the
+drm_connector_find_by_fwnode() function (or likely a new function is to
+be added): if it can not find drm_connector for the passed fwnode, it
+should look it up on the parent, then on parent's parent, etc, until we
+actually find the drm_connector (good) or we reach the root (sad).
+
+And finally after getting the drm_connector, the oob_hotplug_event()
+callback should also receive the fwnode argument. This way the connector
+(or the bridge) can identify the fwnode (aka usb-c-connector in our
+case) that caused the event.
+
+WDYT?
+
+> Corsola could work with this design, but we'll need to teach
+> dp_altmode_probe() to look for the drm_bridge elsewhere besides as the
+> parent of the usb-c-connector node. That implies using the 'displayport'
+> property in the cros-ec-typec node or teaching dp_altmode_probe() to
+> look for the port@1/endpoint@1 remote-endpoint handle in the
+> usb-c-connector graph.
+> 
+> Assuming the bindings you've presented here are fine and good and I got
+> over the differences between Trogdor and Corsola, then I can make mostly
+> everything work with the drm_connector_oob_hotplug_event() signature
+> change from above and some tweaks to dp_altmode_probe() to look for
+> port@1/endpoint@1 first because that's the "logical" DP input endpoint
+> in the usb-c-connector binding's graph. Great! The final roadblock I'm
+> at is that HPD doesn't work on Trogdor, so I can't signal HPD through
+> the typec framework.
+
+Hmm, I thought that a normal DP's HPD GPIO works on the trogdor. Was I
+misunderstanding it? But then we don't know, which USB-C connector
+triggered the HPD...
+
+> This series fixes that problem by "capturing" HPD state from the
+> upstream drm_bridge, e.g. msm_dp, by hooking the struct
+> drm_bridge_funcs::hpd_notify() path and injecting HPD into the typec
+> messages received from the EC. That's a workaround to make the typec
+> framework see HPD state changes that are otherwise invisible to the
+> kernel. Newer firmwares actually tell us the state of HPD properly, but
+> even then we have to read a gpio mux controlled by the EC to figure out
+> which usb-c-connector is actually muxing DP when HPD changes on either
+> typec_port. Having a drm_bridge in cros-ec-typec helped here because we
+> could hook this path and signal HPD if we knew the firmware was fixed.
+> If we don't have the drm_bridge anymore, I'm lost how to do this.
+
+It's probably okay to add one, but let me think if we can work without
+it. Can we make EC driver listen for that single HPD GPIO (by making it
+an actual GPIO rather than "dp_hot") and then react to it?
+
+> 
+> Maybe the right answer here is to introduce a drm_connector_dp_typec
+> structure that is created by the TCPM (cros-ec-typec) that sets a new
+> DRM_BRIDGE_OP_DP_TYPEC bridge op flag? And then teach
+> drm_bridge_connector about this new flag, similar to the HDMI one. The
+> drm_bridge could implement some function that maps the typec_port
+> (usb-c-connector) to the upstream drm_bridge (ANX7625) graph port,
+> possibly all in drm_bridge_connector_oob_hotplug_event() so that nothing
+> else really changes. It could also let us keep hooking the hpd_notify()
+> path for the workaround needed on Trogdor. And finally it may let us
+> harmonize the two DT bindings so that we only have one port@1/endpoint
+> node in the usb-c-connector.
+
+I think we have lightly discussed adding drm_connector_displayport, so
+that part is okay. But my gut feeling is that there should be no _typec
+part in thart picture. The DRM framework shouldn't need to know all the
+Type-C details.
+
+> 
+> 
+> >                 };
+> >         };
+> >
+> >         connector@1 {
+> >                 port@1 {
+> >                         endpoint@0 {
+> >                                 remtoe = <&usb_hub_1>;
+> >                         };
+> >
+> >                         endpoint@1 {
+> >                                 remote = <&dp_bridge_out_1>;
+> >                         };
+> >                 };
+> >         };
+> > };
+> >
+> > dp_bridge {
+> >         ports {
+> >                 port@1 {
+> >                         dp_bridge_out_0: endpoint@0 {
+> >                                 remote = <usb_c0_ss_dp>;
+> >                                 data-lanes = <0 1>;
+> >                         };
+> >
+> >                         dp_bridge_out_1: endpoint@1 {
+> >                                 remote = <usb_c1_ss_dp>;
+> >                                 data-lanes = <2 3>;
+> >                         };
+> >                 };
+> >         };
+> > };
+> >
+> > -------
+> >
+> > This one is really tough example, we didn't reach a conclusion here.
+> > If the EC doesn't handle lane remapping, dp_bridge has to get
+> > orientation-switch and mode-switch properties (as in the end it is the
+> > dp_bridge that handles reshuffling of the lanes for the Type-C). Per the
+> > DisplayPort standard the lanes are fixed (e.g. DPCD 101h explicitly
+> > names lane 0, lanes 0-1, lanes 0-1-2-3).
+> 
+> Are those logical or physical lanes?
+
+Physical lanes as far as I understand.
+
+> 
+> I think we'll punt on this one anyway though. We don't have any plans to
+> do this orientation control mechanism so far. Previous attempts failed
+> and we put an extra orientation switch control on the board to do the
+> orientation flipping.
+
+Okay, it's definitely easier this way.
+
+-- 
+With best wishes
+Dmitry
