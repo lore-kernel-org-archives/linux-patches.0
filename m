@@ -1,124 +1,142 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9212C13B;
-	Sun, 27 Oct 2024 14:56:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBCBC13B
+	for <patches@lists.linux.dev>; Sun, 27 Oct 2024 15:02:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730041019; cv=none; b=pTgkUws9hS+d4dgxIsw4wMPzZgZ0wKHd0MlUAwtMyh2LpvxU86fW0A8HXrc5J9E6Wwrb4HvkJZUaPqBfgGC7tqKldYGzyR43A0VVibeWtBg09ceqvKUKalMVEJuxY7YH8enJOi212BlUxNLkp+aSFSMNLtpPPKlpfIcEzXlTddY=
+	t=1730041367; cv=none; b=vEe40mV4nyG2CuEBH5e5M9uJn+sNHFgv0L33MdnVSaIw7tDh03eB0D0PjNUzjp9j/O6ED831JwEdhAQrQxUuCBl3BC0YETOije08JJpTww5Idfk0p3KY1ZIdly25lYt3/zlkae/lws08soyaWaf6pfb9J35paq5LYX1nY1ZBOmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730041019; c=relaxed/simple;
-	bh=7ZZH3dE8R6xGp6O0QBNTJfT3j6IIfvB12djZK2Q9kDY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=H96tj28H29LfnroDc5T3aOi7UaBLpSuKjGXjMs39C7XMFid3dgdy9q9qdGOzaQNUqM4c/WSfmeYNwT43tUIN2TgJbqI42jbO662Hq75U6amvHrkLITnGh0ulyWQV2HxE7nK700tFC0bi7cZa8jxX8T3xiuM/v6oKwu/hHv07gSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SLGvJKtX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1730041367; c=relaxed/simple;
+	bh=YN5uOcCVqLCrU2rPWl/pSKH8JOoi5g+jhmSQm5uMpRE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=M0T+HzgbSx5mBAz7qS1DI5R2mYEYMYeJIoBdb6GYVzzIm0OPZMczmUfgdvUORrCs/NwdQA+LSs2tgG1oDp96sCzc9R1OwOPaOA6mXnhxASvLR1FR8YAMvOiB3VDXBZRXlokl1xqPb0VyPu6RKnv+uJ0f+1EQgbdkzI3I5i3SguU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DKQw65bg; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SLGvJKtX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D9CC4CEC3;
-	Sun, 27 Oct 2024 14:56:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730041018;
-	bh=7ZZH3dE8R6xGp6O0QBNTJfT3j6IIfvB12djZK2Q9kDY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=SLGvJKtX4DKXURQNQNzsXcOyZRL6H8lSqMHh3s4BIk3tBSb3+tn/AtUK4ifY8N2zW
-	 UEUCKlhlKYWpI003y5KRXD+N5nxMOWB9kijonAyUcI2VjBB3U3of98sxCHqM2jEhEA
-	 HNIIKrT3H2Odk+VS7nvHmJTTE7aIrckMOxwD/xw/XKZVrQ2wCs5CO7yIHSLAd1shV4
-	 S9USUxCHSLGhwsLR3veVb2ffQEQGCw2EIs6jkKj3189uXfioWVyA6HdebKlnGtqOWB
-	 fDjTIho6Hpokac1n3AaQqZnzRW8/2UiTgub0SVkDZ/2J6nO3PYQ48L3Ohs2YaGtk8t
-	 Q13iWYHzjgyEg==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	rust-for-linux@vger.kernel.org,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	linux-kbuild@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Thorsten Leemhuis <regressions@leemhuis.info>,
-	Cameron MacPherson <cameron.macpherson@gmail.com>
-Subject: [PATCH] kbuild: rust: avoid errors with old `rustc`s without LLVM patch version
-Date: Sun, 27 Oct 2024 15:56:36 +0100
-Message-ID: <20241027145636.416030-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DKQw65bg"
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-539e5c15fd3so3094121e87.3
+        for <patches@lists.linux.dev>; Sun, 27 Oct 2024 08:02:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730041363; x=1730646163; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=x4R7lu/kAshlAJXnNL3llyVtKBCbHq8h1Es4W4nUkAU=;
+        b=DKQw65bgfB5Y68rPbm6cHMIkT7ZKNd2/sdzenNHjsPSIgUDU8mNeufdWxWcSPYIzZa
+         k5lnOQVGolgQIpIBmQ8kgWQXVkUysAc2fvOGyhdPlAKjKO0vPXHq4+aHDt8W5PuJwzXV
+         YYIKU5vD/2II+jKsUajfQE0mj+Vc5XT+ZphikXBtxZF9pdrRh3pBm71qeiNbyUPiMP9m
+         vrkPqlTXPMdwR3KknCgtJXmBk99FU3X7ovUbDzzeKavYoOozpUcdvzrp2nnazvsWNXCh
+         xsaOXAI47NzvaGl81MusmM6gU23KskUa5/2cYSCzRzRsC2jFVR8ADWM2xYxHSgpOoN01
+         Hz+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730041363; x=1730646163;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x4R7lu/kAshlAJXnNL3llyVtKBCbHq8h1Es4W4nUkAU=;
+        b=SFEp57VGnhVgHfW2RZIHhv0DD59+Gp2zN118h3jGXtWcjKxtFcDScLyS+VzR2uyOHi
+         5xMRTs50qYDZ/uEHMFZMBBWiXl8cNKqgvjjVqHHa0LE3lsHTDjPeh7j0KmW7TiSrz1O4
+         4Q00cmjgM+6UTTT7GrBdQPXQymFx3h+n0hWYkLrQPRhMnnaASqk7LKjcbImqPvhKGfr+
+         I/tpqloYYGmbmmQdxJpeYRAu+/6omMiNjB80683cfaGj6/blug+9UDodJyezy6Er1Obi
+         A5OhMukeSguLOEPj5aT/Vn38zsIacBOlZYiaiNnByAULtP3nQf/tVYy2RfWJPITjpdSu
+         ThLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWXkYHbgIj6l5fy2LZ/YxBaZwVRjB8XWynHKyAyOZt4FcMVEtqSol4ZlRJW92uJpVdOew1YpnV5@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy/6VjnRDeFEQd3yqXeX7lM43n5YdLNcnBWrrDV4ZvsykdGpicg
+	jL30BNeQ8oeZ/B97g3wcC+LROhTjMveRUDW8D7pq8mrJHQpOCe642byXuPipmX5Vcz5CtdLmSCF
+	pjOi28Q2BoHN/7+T++rI4QLDsTIATYQLjf4lv+w==
+X-Google-Smtp-Source: AGHT+IFqLjsyKJ5CxjDNJGvvyW3lXMFUulX6UFQluIj2OcmHgocN09ZljnrI5ISQ8+uIxzhs+el7dmiVvKGjST2wbUc=
+X-Received: by 2002:a05:6512:1092:b0:53b:20a1:1c4a with SMTP id
+ 2adb3069b0e04-53b34a19077mr1821924e87.42.1730041363426; Sun, 27 Oct 2024
+ 08:02:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <cover.1729897278.git.nicolinc@nvidia.com> <384f7b4333a1f75da09e390902b8f82be21a0dd3.1729897278.git.nicolinc@nvidia.com>
+In-Reply-To: <384f7b4333a1f75da09e390902b8f82be21a0dd3.1729897278.git.nicolinc@nvidia.com>
+From: Zhangfei Gao <zhangfei.gao@linaro.org>
+Date: Sun, 27 Oct 2024 23:02:31 +0800
+Message-ID: <CABQgh9EpGPwdQhv7mepiMGVgR-8NMx5dcXyJ2A92W8ZzQt3bJw@mail.gmail.com>
+Subject: Re: [PATCH v5 07/13] iommufd/viommu: Add iommufd_viommu_find_dev helper
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: jgg@nvidia.com, kevin.tian@intel.com, will@kernel.org, joro@8bytes.org, 
+	suravee.suthikulpanit@amd.com, robin.murphy@arm.com, dwmw2@infradead.org, 
+	baolu.lu@linux.intel.com, shuah@kernel.org, linux-kernel@vger.kernel.org, 
+	iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-kselftest@vger.kernel.org, eric.auger@redhat.com, 
+	jean-philippe@linaro.org, mdf@kernel.org, mshavit@google.com, 
+	shameerali.kolothum.thodi@huawei.com, smostafa@google.com, yi.l.liu@intel.com, 
+	aik@amd.com, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-Some old versions of `rustc` did not report the LLVM version without
-the patch version, e.g.:
+On Sat, 26 Oct 2024 at 07:51, Nicolin Chen <nicolinc@nvidia.com> wrote:
+>
+> This avoids a bigger trouble of exposing struct iommufd_device and struct
+> iommufd_vdevice in the public header.
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> ---
+>  include/linux/iommufd.h        |  8 ++++++++
+>  drivers/iommu/iommufd/driver.c | 13 +++++++++++++
+>  2 files changed, 21 insertions(+)
+>
+> diff --git a/include/linux/iommufd.h b/include/linux/iommufd.h
+> index 0287a6d00192..dc174d02132b 100644
+> --- a/include/linux/iommufd.h
+> +++ b/include/linux/iommufd.h
+> @@ -184,6 +184,8 @@ static inline int iommufd_vfio_compat_set_no_iommu(struct iommufd_ctx *ictx)
+>  struct iommufd_object *_iommufd_object_alloc(struct iommufd_ctx *ictx,
+>                                              size_t size,
+>                                              enum iommufd_object_type type);
+> +struct device *iommufd_viommu_find_dev(struct iommufd_viommu *viommu,
+> +                                      unsigned long vdev_id);
+>  #else /* !CONFIG_IOMMUFD_DRIVER */
+>  static inline struct iommufd_object *
+>  _iommufd_object_alloc(struct iommufd_ctx *ictx, size_t size,
+> @@ -191,6 +193,12 @@ _iommufd_object_alloc(struct iommufd_ctx *ictx, size_t size,
+>  {
+>         return ERR_PTR(-EOPNOTSUPP);
+>  }
+> +
+> +static inline struct device *
+> +iommufd_viommu_find_dev(struct iommufd_viommu *viommu, unsigned long vdev_id)
+> +{
+> +       return NULL;
+> +}
+>  #endif /* CONFIG_IOMMUFD_DRIVER */
+>
+>  /*
+> diff --git a/drivers/iommu/iommufd/driver.c b/drivers/iommu/iommufd/driver.c
+> index c0876d3f91c7..3604443f82a1 100644
+> --- a/drivers/iommu/iommufd/driver.c
+> +++ b/drivers/iommu/iommufd/driver.c
+> @@ -36,3 +36,16 @@ struct iommufd_object *_iommufd_object_alloc(struct iommufd_ctx *ictx,
+>         return ERR_PTR(rc);
+>  }
+>  EXPORT_SYMBOL_NS_GPL(_iommufd_object_alloc, IOMMUFD);
+> +
+> +/* Caller should xa_lock(&viommu->vdevs) to protect the return value */
+> +struct device *iommufd_viommu_find_dev(struct iommufd_viommu *viommu,
+> +                                      unsigned long vdev_id)
+> +{
+> +       struct iommufd_vdevice *vdev;
+> +
+> +       lockdep_is_held(&viommu->vdevs.xa_lock);
+> +
+> +       vdev = xa_load(&viommu->vdevs, vdev_id);
+> +       return vdev ? vdev->idev->dev : NULL;
+> +}
 
-    $ rustc --version --verbose
-    rustc 1.48.0 (7eac88abb 2020-11-16)
-    binary: rustc
-    commit-hash: 7eac88abb2e57e752f3302f02be5f3ce3d7adfb4
-    commit-date: 2020-11-16
-    host: x86_64-unknown-linux-gnu
-    release: 1.48.0
-    LLVM version: 11.0
+Got this error?
 
-Which would make the new `scripts/rustc-llvm-version.sh` fail and,
-in turn, the build:
-
-    $ make LLVM=1
-      SYNC    include/config/auto.conf.cmd
-    ./scripts/rustc-llvm-version.sh: 13: arithmetic expression: expecting primary: "10000 * 10 + 100 * 0 + "
-    init/Kconfig:83: syntax error
-    init/Kconfig:83: invalid statement
-    make[3]: *** [scripts/kconfig/Makefile:85: syncconfig] Error 1
-    make[2]: *** [Makefile:679: syncconfig] Error 2
-    make[1]: *** [/home/cam/linux/Makefile:780: include/config/auto.conf.cmd] Error 2
-    make: *** [Makefile:224: __sub-make] Error 2
-
-Since we do not need to support such binaries, we can avoid adding logic
-for computing `rustc`'s LLVM version for those old binaries.
-
-Thus, instead, just make the match stricter.
-
-Other `rustc` binaries (even newer) did not report the LLVM version at
-all, but that was fine, since it would not match "LLVM", e.g.:
-
-    $ rustc --version --verbose
-    rustc 1.49.0 (e1884a8e3 2020-12-29)
-    binary: rustc
-    commit-hash: e1884a8e3c3e813aada8254edfa120e85bf5ffca
-    commit-date: 2020-12-29
-    host: x86_64-unknown-linux-gnu
-    release: 1.49.0
-
-Cc: Thorsten Leemhuis <regressions@leemhuis.info>
-Cc: Gary Guo <gary@garyguo.net>
-Reported-by: Cameron MacPherson <cameron.macpherson@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219423
-Fixes: af0121c2d303 ("kbuild: rust: add `CONFIG_RUSTC_LLVM_VERSION`")
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- scripts/rustc-llvm-version.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/scripts/rustc-llvm-version.sh b/scripts/rustc-llvm-version.sh
-index b6063cbe5bdc..a500d1ae3101 100755
---- a/scripts/rustc-llvm-version.sh
-+++ b/scripts/rustc-llvm-version.sh
-@@ -13,7 +13,7 @@ get_canonical_version()
- 	echo $((10000 * $1 + 100 * $2 + $3))
- }
- 
--if output=$("$@" --version --verbose 2>/dev/null | grep LLVM); then
-+if output=$("$@" --version --verbose 2>/dev/null | grep -E 'LLVM.*[0-9]+\.[0-9]+\.[0-9]+'); then
- 	set -- $output
- 	get_canonical_version $3
- else
--- 
-2.47.0
-
+ld: Unexpected GOT/PLT entries detected!
+ld: Unexpected run-time procedure linkages detected!
+ld: drivers/iommu/iommufd/driver.o: in function `iommufd_viommu_find_dev':
+linux/drivers/iommu/iommufd/driver.c:47: undefined reference to
+`lockdep_is_held'
+make[2]: *** [scripts/Makefile.vmlinux:34: vmlinux] Error 1
+make[1]: *** [/home/linaro/iommufd/linux/Makefile:1166: vmlinux] Error 2
+make: *** [Makefile:224: __sub-make] Error 2
