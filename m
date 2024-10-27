@@ -1,142 +1,89 @@
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBCBC13B
-	for <patches@lists.linux.dev>; Sun, 27 Oct 2024 15:02:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6283D51C4A
+	for <patches@lists.linux.dev>; Sun, 27 Oct 2024 16:43:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730041367; cv=none; b=vEe40mV4nyG2CuEBH5e5M9uJn+sNHFgv0L33MdnVSaIw7tDh03eB0D0PjNUzjp9j/O6ED831JwEdhAQrQxUuCBl3BC0YETOije08JJpTww5Idfk0p3KY1ZIdly25lYt3/zlkae/lws08soyaWaf6pfb9J35paq5LYX1nY1ZBOmE=
+	t=1730047417; cv=none; b=Cj8bssQxCMO2SLLFu3SiSQP3rOfAQBVn7tmFr4Z4QzzC99tLDZ2AR3MCRmYEW9krhUwdu2uUw+xMlmOvkwSdOBF6YJg5ylzA8bfDEnltbJ9meXnDcFF3ivbepVx0VCBJBaeTuYrtjQr0RPrcfVeWPp8OUCd7SsOkNTpo4jQe2+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730041367; c=relaxed/simple;
-	bh=YN5uOcCVqLCrU2rPWl/pSKH8JOoi5g+jhmSQm5uMpRE=;
+	s=arc-20240116; t=1730047417; c=relaxed/simple;
+	bh=FToPc9S3BvAs+olZK1wmHntHHxz0Ujj6LAuHXsJCEH0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=M0T+HzgbSx5mBAz7qS1DI5R2mYEYMYeJIoBdb6GYVzzIm0OPZMczmUfgdvUORrCs/NwdQA+LSs2tgG1oDp96sCzc9R1OwOPaOA6mXnhxASvLR1FR8YAMvOiB3VDXBZRXlokl1xqPb0VyPu6RKnv+uJ0f+1EQgbdkzI3I5i3SguU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DKQw65bg; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	 To:Cc:Content-Type; b=KZcjHll7pSp9NwiBVMKC7QkgY+FxI9QaVUS05ybq75ZBCMh1k/eRpzGLhiDcByAmq40M3WaAwT3fNQB4pri0xdlqp5NFiifCmzkcCT9rQOOTNQRyf2JsDSUAg17WqBMbG3i2VWDlmyHX/bBzsuzudkTGYAd1b4p7BLR2bZJ4maQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CcUDEPcq; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DKQw65bg"
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-539e5c15fd3so3094121e87.3
-        for <patches@lists.linux.dev>; Sun, 27 Oct 2024 08:02:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CcUDEPcq"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2e2d1b7bd57so593857a91.1
+        for <patches@lists.linux.dev>; Sun, 27 Oct 2024 09:43:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730041363; x=1730646163; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=x4R7lu/kAshlAJXnNL3llyVtKBCbHq8h1Es4W4nUkAU=;
-        b=DKQw65bgfB5Y68rPbm6cHMIkT7ZKNd2/sdzenNHjsPSIgUDU8mNeufdWxWcSPYIzZa
-         k5lnOQVGolgQIpIBmQ8kgWQXVkUysAc2fvOGyhdPlAKjKO0vPXHq4+aHDt8W5PuJwzXV
-         YYIKU5vD/2II+jKsUajfQE0mj+Vc5XT+ZphikXBtxZF9pdrRh3pBm71qeiNbyUPiMP9m
-         vrkPqlTXPMdwR3KknCgtJXmBk99FU3X7ovUbDzzeKavYoOozpUcdvzrp2nnazvsWNXCh
-         xsaOXAI47NzvaGl81MusmM6gU23KskUa5/2cYSCzRzRsC2jFVR8ADWM2xYxHSgpOoN01
-         Hz+Q==
+        d=gmail.com; s=20230601; t=1730047415; x=1730652215; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FToPc9S3BvAs+olZK1wmHntHHxz0Ujj6LAuHXsJCEH0=;
+        b=CcUDEPcq/6areoGyojD0oPho6Vp7zB6fG56ypkZAR5IPpYlHH1ASUOItUgtsLWZDKz
+         MFIfMoMOhXOwITey5fGhkody+IJSUCk7qEKkZy4/kPQahWrOqyGJSc6DAe6kBDiOg9m1
+         tqFpzPNosk2g0rnuaIkCoujikporEJ2PsVR7QwgcvLHSz/DryDyLTS2x12L+4+5FXHxw
+         gI5b2vGzmfMN1XdEmJv28QIjpB/C1mmwSXPoHKoZxVwCtp6XVC24lE3ZdBxOUlEC0WDS
+         Z30DcA3z76Ca6ZSUvJA7Qd6r5dBDhuer0zSueO0zHiUDwIh5xFGiBP3Fd4ivHfaaj7bR
+         8CgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730041363; x=1730646163;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=x4R7lu/kAshlAJXnNL3llyVtKBCbHq8h1Es4W4nUkAU=;
-        b=SFEp57VGnhVgHfW2RZIHhv0DD59+Gp2zN118h3jGXtWcjKxtFcDScLyS+VzR2uyOHi
-         5xMRTs50qYDZ/uEHMFZMBBWiXl8cNKqgvjjVqHHa0LE3lsHTDjPeh7j0KmW7TiSrz1O4
-         4Q00cmjgM+6UTTT7GrBdQPXQymFx3h+n0hWYkLrQPRhMnnaASqk7LKjcbImqPvhKGfr+
-         I/tpqloYYGmbmmQdxJpeYRAu+/6omMiNjB80683cfaGj6/blug+9UDodJyezy6Er1Obi
-         A5OhMukeSguLOEPj5aT/Vn38zsIacBOlZYiaiNnByAULtP3nQf/tVYy2RfWJPITjpdSu
-         ThLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWXkYHbgIj6l5fy2LZ/YxBaZwVRjB8XWynHKyAyOZt4FcMVEtqSol4ZlRJW92uJpVdOew1YpnV5@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy/6VjnRDeFEQd3yqXeX7lM43n5YdLNcnBWrrDV4ZvsykdGpicg
-	jL30BNeQ8oeZ/B97g3wcC+LROhTjMveRUDW8D7pq8mrJHQpOCe642byXuPipmX5Vcz5CtdLmSCF
-	pjOi28Q2BoHN/7+T++rI4QLDsTIATYQLjf4lv+w==
-X-Google-Smtp-Source: AGHT+IFqLjsyKJ5CxjDNJGvvyW3lXMFUulX6UFQluIj2OcmHgocN09ZljnrI5ISQ8+uIxzhs+el7dmiVvKGjST2wbUc=
-X-Received: by 2002:a05:6512:1092:b0:53b:20a1:1c4a with SMTP id
- 2adb3069b0e04-53b34a19077mr1821924e87.42.1730041363426; Sun, 27 Oct 2024
- 08:02:43 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1730047415; x=1730652215;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FToPc9S3BvAs+olZK1wmHntHHxz0Ujj6LAuHXsJCEH0=;
+        b=NTT0Kt4LJVt2gUHg8oD5UsxVbMWueCp0ey/FB4qKZB4oqYHmdmatsOojMV6344xcb+
+         hyKt5cieyaY5GYntluCrnLAO6jxNk3hKcE35MYh/w7SRy05ziFZJBV3R8Ypt6QiLQaDA
+         7nER4zRUagkkK7UsQFLs0NFNKZT70pe3ZAHm5itQsiaXxisadJ1b1FNci/TLp1BmQSiy
+         lyp2b0sxfez5L3Fmt3KkqAewwPpEXHUbUtfxoQza94I9/f528LsweC0WJRMggnX52Ub+
+         QdKlkYpjS6EVOREG+U1b3U2FGLRYfr3g8v8Ie1CmZwpvkxZEO4dPsD1lNtSWUJAbUfY9
+         Nj0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXX6Dp0s1PfaVUwaTixeogOA6qaeJOgXPv1OaC7YV1ewsKKUiDh0qzTu5FfTEkLTfW8INvZ/Br6@lists.linux.dev
+X-Gm-Message-State: AOJu0YytCqaecFi7vGzW+PtmfhOZYlIFQEJTNiBYmYUJTsPS/V107Jet
+	Xa0Z7xefZSDh769llVklGsah2ojto1a6tqypqrOuAiVAd1eYQIQXohJ3c0cKqlM4+kpVNp9DSSB
+	239Rd05M2tfeIa1UlNQa0v6jxvy0=
+X-Google-Smtp-Source: AGHT+IEt4zTtT+YS5nnZcPgirbh4CGz37SQraslG7OZG6knyttjYn/k8eYR3+m7M84T6Sg7AaLSrP4lE7JfHC6MZuUM=
+X-Received: by 2002:a17:90b:3594:b0:2e2:9026:8bee with SMTP id
+ 98e67ed59e1d1-2e8f12e2bcamr2981552a91.9.1730047414685; Sun, 27 Oct 2024
+ 09:43:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1729897278.git.nicolinc@nvidia.com> <384f7b4333a1f75da09e390902b8f82be21a0dd3.1729897278.git.nicolinc@nvidia.com>
-In-Reply-To: <384f7b4333a1f75da09e390902b8f82be21a0dd3.1729897278.git.nicolinc@nvidia.com>
-From: Zhangfei Gao <zhangfei.gao@linaro.org>
-Date: Sun, 27 Oct 2024 23:02:31 +0800
-Message-ID: <CABQgh9EpGPwdQhv7mepiMGVgR-8NMx5dcXyJ2A92W8ZzQt3bJw@mail.gmail.com>
-Subject: Re: [PATCH v5 07/13] iommufd/viommu: Add iommufd_viommu_find_dev helper
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: jgg@nvidia.com, kevin.tian@intel.com, will@kernel.org, joro@8bytes.org, 
-	suravee.suthikulpanit@amd.com, robin.murphy@arm.com, dwmw2@infradead.org, 
-	baolu.lu@linux.intel.com, shuah@kernel.org, linux-kernel@vger.kernel.org, 
-	iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	linux-kselftest@vger.kernel.org, eric.auger@redhat.com, 
-	jean-philippe@linaro.org, mdf@kernel.org, mshavit@google.com, 
-	shameerali.kolothum.thodi@huawei.com, smostafa@google.com, yi.l.liu@intel.com, 
-	aik@amd.com, patches@lists.linux.dev
+References: <20241027145636.416030-1-ojeda@kernel.org>
+In-Reply-To: <20241027145636.416030-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sun, 27 Oct 2024 17:43:22 +0100
+Message-ID: <CANiq72mAnkzDC+obtFt+i-x2_jkMpKgObJFURu-9ksT6tVHneQ@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: rust: avoid errors with old `rustc`s without LLVM
+ patch version
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Masahiro Yamada <masahiroy@kernel.org>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Thorsten Leemhuis <regressions@leemhuis.info>, 
+	Cameron MacPherson <cameron.macpherson@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, 26 Oct 2024 at 07:51, Nicolin Chen <nicolinc@nvidia.com> wrote:
+On Sun, Oct 27, 2024 at 3:56=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
 >
-> This avoids a bigger trouble of exposing struct iommufd_device and struct
-> iommufd_vdevice in the public header.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> ---
->  include/linux/iommufd.h        |  8 ++++++++
->  drivers/iommu/iommufd/driver.c | 13 +++++++++++++
->  2 files changed, 21 insertions(+)
->
-> diff --git a/include/linux/iommufd.h b/include/linux/iommufd.h
-> index 0287a6d00192..dc174d02132b 100644
-> --- a/include/linux/iommufd.h
-> +++ b/include/linux/iommufd.h
-> @@ -184,6 +184,8 @@ static inline int iommufd_vfio_compat_set_no_iommu(struct iommufd_ctx *ictx)
->  struct iommufd_object *_iommufd_object_alloc(struct iommufd_ctx *ictx,
->                                              size_t size,
->                                              enum iommufd_object_type type);
-> +struct device *iommufd_viommu_find_dev(struct iommufd_viommu *viommu,
-> +                                      unsigned long vdev_id);
->  #else /* !CONFIG_IOMMUFD_DRIVER */
->  static inline struct iommufd_object *
->  _iommufd_object_alloc(struct iommufd_ctx *ictx, size_t size,
-> @@ -191,6 +193,12 @@ _iommufd_object_alloc(struct iommufd_ctx *ictx, size_t size,
->  {
->         return ERR_PTR(-EOPNOTSUPP);
->  }
-> +
-> +static inline struct device *
-> +iommufd_viommu_find_dev(struct iommufd_viommu *viommu, unsigned long vdev_id)
-> +{
-> +       return NULL;
-> +}
->  #endif /* CONFIG_IOMMUFD_DRIVER */
->
->  /*
-> diff --git a/drivers/iommu/iommufd/driver.c b/drivers/iommu/iommufd/driver.c
-> index c0876d3f91c7..3604443f82a1 100644
-> --- a/drivers/iommu/iommufd/driver.c
-> +++ b/drivers/iommu/iommufd/driver.c
-> @@ -36,3 +36,16 @@ struct iommufd_object *_iommufd_object_alloc(struct iommufd_ctx *ictx,
->         return ERR_PTR(rc);
->  }
->  EXPORT_SYMBOL_NS_GPL(_iommufd_object_alloc, IOMMUFD);
-> +
-> +/* Caller should xa_lock(&viommu->vdevs) to protect the return value */
-> +struct device *iommufd_viommu_find_dev(struct iommufd_viommu *viommu,
-> +                                      unsigned long vdev_id)
-> +{
-> +       struct iommufd_vdevice *vdev;
-> +
-> +       lockdep_is_held(&viommu->vdevs.xa_lock);
-> +
-> +       vdev = xa_load(&viommu->vdevs, vdev_id);
-> +       return vdev ? vdev->idev->dev : NULL;
-> +}
+> Thus, instead, just make the match stricter.
 
-Got this error?
+The fix was very quickly confirmed by Cameron in bugzilla -- thanks!
 
-ld: Unexpected GOT/PLT entries detected!
-ld: Unexpected run-time procedure linkages detected!
-ld: drivers/iommu/iommufd/driver.o: in function `iommufd_viommu_find_dev':
-linux/drivers/iommu/iommufd/driver.c:47: undefined reference to
-`lockdep_is_held'
-make[2]: *** [scripts/Makefile.vmlinux:34: vmlinux] Error 1
-make[1]: *** [/home/linaro/iommufd/linux/Makefile:1166: vmlinux] Error 2
-make: *** [Makefile:224: __sub-make] Error 2
+Tested-by: Cameron MacPherson <cameron.macpherson@gmail.com>
+
+Cheers,
+Miguel
