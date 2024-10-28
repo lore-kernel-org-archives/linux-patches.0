@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD4018CC1F;
-	Mon, 28 Oct 2024 06:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FB218CC1F;
+	Mon, 28 Oct 2024 06:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730096872; cv=none; b=haaTW7kdm3rRL5vv1ApN1zN4Cu+vrxUiq5iwEm2Zg8emRxuIJyNDocveNqt9TA5pgnRjE8T16AzxZkFqV6oNjJFXNKJEgoYGk3bxZgdapZa43bcjndYQKipTl3Wo0VRv4c2Fg0bYXqL3yFC3VscFkYBLyB1X9oU9wn5iJNhvgKg=
+	t=1730096875; cv=none; b=ALpXZpCD7CzzYWdMLGwgSBhpzyRXXnl3EjLCxBFiCpwhu6zawAIECxlIIeAcIKg60zvWOkegf2kwqZQGYSuTiCI8jJhQvW7pm+SbLOg3iteobHkvgZsK0Cw2Ghq+g772y2KxtWOfG5rHd6VJGJ5UNwVpWZKcyKGlgJQKcvCUGwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730096872; c=relaxed/simple;
-	bh=Qx+xVRoU52rxlfqLEV8J4l4cwuPGnnIlb6ziwAHwZcA=;
+	s=arc-20240116; t=1730096875; c=relaxed/simple;
+	bh=b1/5Kb1Ufqy3jOu7uLVZRuxVhE+4QxSyhEeOM7UDLbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DYAcknzzd4ETurbGYF2h7Yby1Fqn4PS+S2+RZAVdQyX3OdsYlUTKvmiigCDfM+99cG+cCluCthbV94tdRf57WAH/hSiQh/wSr06oDlzuIhhxvB3hYxwfwdx35J5Shv0JdEqJ6ab4zVGtpt6fkucPblCq7XDHqLnSeu7sDwYoEPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJAMByiO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WaenC+8a/Y1nrM2vT+GN8WG4yIJcrkKowLGFA9rp0RL3at171oouOsdThgGB99ZnMhKU8/chbknyNtqpMIAYi/3NFf3Hmg/r56UFKLGLZnomPwMIsa7JP40vVTOmp6unZ8NzEbwN0TvEle8qkDGfCyfXGFYtBWco+FNfr1+Jj4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2sD3NbJF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJAMByiO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7002FC4CEC3;
-	Mon, 28 Oct 2024 06:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2sD3NbJF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE547C4CEC3;
+	Mon, 28 Oct 2024 06:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730096872;
-	bh=Qx+xVRoU52rxlfqLEV8J4l4cwuPGnnIlb6ziwAHwZcA=;
+	s=korg; t=1730096875;
+	bh=b1/5Kb1Ufqy3jOu7uLVZRuxVhE+4QxSyhEeOM7UDLbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JJAMByiOKZ1ATXw69lc7OphRyQoF5LGTg89oPWA/ICof90OaGFkR7HIcK+/wsN7jQ
-	 4Bebmd9FNlRA6VIoScMc80rQdcH4CtLjhynqyDbpW8yn7r4t7HsWFaFYN7//GFNxam
-	 CrihYWTQgBWesZy59mRxEcUtBuTZTlI+V2g0FPaQ=
+	b=2sD3NbJF1V9nc/bzIjWLFIs4SM95tVfGZewbYk6/1uTfGz1zEWNtpb7ebyFSRpWWb
+	 n2kvpwVEHaYICVQuemWiWwBlyTjhka0UYOjirnEcyQIh5fpAq2J/cd4KrasaIuoWDL
+	 B6jNgMWb+2QZI8K2TQ3o5lMEYCLLYwfDyvsKG7bY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Eric Dumazet <edumazet@google.com>,
+	James Chapman <jchapman@katalix.com>,
+	Tom Parkin <tparkin@katalix.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 23/80] tcp/dccp: Dont use timer_pending() in reqsk_queue_unlink().
-Date: Mon, 28 Oct 2024 07:25:03 +0100
-Message-ID: <20241028062253.271792074@linuxfoundation.org>
+Subject: [PATCH 5.15 24/80] genetlink: hold RCU in genlmsg_mcast()
+Date: Mon, 28 Oct 2024 07:25:04 +0100
+Message-ID: <20241028062253.302888697@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
 References: <20241028062252.611837461@linuxfoundation.org>
@@ -53,178 +54,240 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e8c526f2bdf1845bedaf6a478816a3d06fa78b8f ]
+[ Upstream commit 56440d7ec28d60f8da3bfa09062b3368ff9b16db ]
 
-Martin KaFai Lau reported use-after-free [0] in reqsk_timer_handler().
+While running net selftests with CONFIG_PROVE_RCU_LIST=y I saw
+one lockdep splat [1].
 
-  """
-  We are seeing a use-after-free from a bpf prog attached to
-  trace_tcp_retransmit_synack. The program passes the req->sk to the
-  bpf_sk_storage_get_tracing kernel helper which does check for null
-  before using it.
-  """
+genlmsg_mcast() uses for_each_net_rcu(), and must therefore hold RCU.
 
-The commit 83fccfc3940c ("inet: fix potential deadlock in
-reqsk_queue_unlink()") added timer_pending() in reqsk_queue_unlink() not
-to call del_timer_sync() from reqsk_timer_handler(), but it introduced a
-small race window.
+Instead of letting all callers guard genlmsg_multicast_allns()
+with a rcu_read_lock()/rcu_read_unlock() pair, do it in genlmsg_mcast().
 
-Before the timer is called, expire_timers() calls detach_timer(timer, true)
-to clear timer->entry.pprev and marks it as not pending.
+This also means the @flags parameter is useless, we need to always use
+GFP_ATOMIC.
 
-If reqsk_queue_unlink() checks timer_pending() just after expire_timers()
-calls detach_timer(), TCP will miss del_timer_sync(); the reqsk timer will
-continue running and send multiple SYN+ACKs until it expires.
+[1]
+[10882.424136] =============================
+[10882.424166] WARNING: suspicious RCU usage
+[10882.424309] 6.12.0-rc2-virtme #1156 Not tainted
+[10882.424400] -----------------------------
+[10882.424423] net/netlink/genetlink.c:1940 RCU-list traversed in non-reader section!!
+[10882.424469]
+other info that might help us debug this:
 
-The reported UAF could happen if req->sk is close()d earlier than the timer
-expiration, which is 63s by default.
+[10882.424500]
+rcu_scheduler_active = 2, debug_locks = 1
+[10882.424744] 2 locks held by ip/15677:
+[10882.424791] #0: ffffffffb6b491b0 (cb_lock){++++}-{3:3}, at: genl_rcv (net/netlink/genetlink.c:1219)
+[10882.426334] #1: ffffffffb6b49248 (genl_mutex){+.+.}-{3:3}, at: genl_rcv_msg (net/netlink/genetlink.c:61 net/netlink/genetlink.c:57 net/netlink/genetlink.c:1209)
+[10882.426465]
+stack backtrace:
+[10882.426805] CPU: 14 UID: 0 PID: 15677 Comm: ip Not tainted 6.12.0-rc2-virtme #1156
+[10882.426919] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[10882.427046] Call Trace:
+[10882.427131]  <TASK>
+[10882.427244] dump_stack_lvl (lib/dump_stack.c:123)
+[10882.427335] lockdep_rcu_suspicious (kernel/locking/lockdep.c:6822)
+[10882.427387] genlmsg_multicast_allns (net/netlink/genetlink.c:1940 (discriminator 7) net/netlink/genetlink.c:1977 (discriminator 7))
+[10882.427436] l2tp_tunnel_notify.constprop.0 (net/l2tp/l2tp_netlink.c:119) l2tp_netlink
+[10882.427683] l2tp_nl_cmd_tunnel_create (net/l2tp/l2tp_netlink.c:253) l2tp_netlink
+[10882.427748] genl_family_rcv_msg_doit (net/netlink/genetlink.c:1115)
+[10882.427834] genl_rcv_msg (net/netlink/genetlink.c:1195 net/netlink/genetlink.c:1210)
+[10882.427877] ? __pfx_l2tp_nl_cmd_tunnel_create (net/l2tp/l2tp_netlink.c:186) l2tp_netlink
+[10882.427927] ? __pfx_genl_rcv_msg (net/netlink/genetlink.c:1201)
+[10882.427959] netlink_rcv_skb (net/netlink/af_netlink.c:2551)
+[10882.428069] genl_rcv (net/netlink/genetlink.c:1220)
+[10882.428095] netlink_unicast (net/netlink/af_netlink.c:1332 net/netlink/af_netlink.c:1357)
+[10882.428140] netlink_sendmsg (net/netlink/af_netlink.c:1901)
+[10882.428210] ____sys_sendmsg (net/socket.c:729 (discriminator 1) net/socket.c:744 (discriminator 1) net/socket.c:2607 (discriminator 1))
 
-The scenario would be
-
-  1. inet_csk_complete_hashdance() calls inet_csk_reqsk_queue_drop(),
-     but del_timer_sync() is missed
-
-  2. reqsk timer is executed and scheduled again
-
-  3. req->sk is accept()ed and reqsk_put() decrements rsk_refcnt, but
-     reqsk timer still has another one, and inet_csk_accept() does not
-     clear req->sk for non-TFO sockets
-
-  4. sk is close()d
-
-  5. reqsk timer is executed again, and BPF touches req->sk
-
-Let's not use timer_pending() by passing the caller context to
-__inet_csk_reqsk_queue_drop().
-
-Note that reqsk timer is pinned, so the issue does not happen in most
-use cases. [1]
-
-[0]
-BUG: KFENCE: use-after-free read in bpf_sk_storage_get_tracing+0x2e/0x1b0
-
-Use-after-free read at 0x00000000a891fb3a (in kfence-#1):
-bpf_sk_storage_get_tracing+0x2e/0x1b0
-bpf_prog_5ea3e95db6da0438_tcp_retransmit_synack+0x1d20/0x1dda
-bpf_trace_run2+0x4c/0xc0
-tcp_rtx_synack+0xf9/0x100
-reqsk_timer_handler+0xda/0x3d0
-run_timer_softirq+0x292/0x8a0
-irq_exit_rcu+0xf5/0x320
-sysvec_apic_timer_interrupt+0x6d/0x80
-asm_sysvec_apic_timer_interrupt+0x16/0x20
-intel_idle_irq+0x5a/0xa0
-cpuidle_enter_state+0x94/0x273
-cpu_startup_entry+0x15e/0x260
-start_secondary+0x8a/0x90
-secondary_startup_64_no_verify+0xfa/0xfb
-
-kfence-#1: 0x00000000a72cc7b6-0x00000000d97616d9, size=2376, cache=TCPv6
-
-allocated by task 0 on cpu 9 at 260507.901592s:
-sk_prot_alloc+0x35/0x140
-sk_clone_lock+0x1f/0x3f0
-inet_csk_clone_lock+0x15/0x160
-tcp_create_openreq_child+0x1f/0x410
-tcp_v6_syn_recv_sock+0x1da/0x700
-tcp_check_req+0x1fb/0x510
-tcp_v6_rcv+0x98b/0x1420
-ipv6_list_rcv+0x2258/0x26e0
-napi_complete_done+0x5b1/0x2990
-mlx5e_napi_poll+0x2ae/0x8d0
-net_rx_action+0x13e/0x590
-irq_exit_rcu+0xf5/0x320
-common_interrupt+0x80/0x90
-asm_common_interrupt+0x22/0x40
-cpuidle_enter_state+0xfb/0x273
-cpu_startup_entry+0x15e/0x260
-start_secondary+0x8a/0x90
-secondary_startup_64_no_verify+0xfa/0xfb
-
-freed by task 0 on cpu 9 at 260507.927527s:
-rcu_core_si+0x4ff/0xf10
-irq_exit_rcu+0xf5/0x320
-sysvec_apic_timer_interrupt+0x6d/0x80
-asm_sysvec_apic_timer_interrupt+0x16/0x20
-cpuidle_enter_state+0xfb/0x273
-cpu_startup_entry+0x15e/0x260
-start_secondary+0x8a/0x90
-secondary_startup_64_no_verify+0xfa/0xfb
-
-Fixes: 83fccfc3940c ("inet: fix potential deadlock in reqsk_queue_unlink()")
-Reported-by: Martin KaFai Lau <martin.lau@kernel.org>
-Closes: https://lore.kernel.org/netdev/eb6684d0-ffd9-4bdc-9196-33f690c25824@linux.dev/
-Link: https://lore.kernel.org/netdev/b55e2ca0-42f2-4b7c-b445-6ffd87ca74a0@linux.dev/ [1]
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20241014223312.4254-1-kuniyu@amazon.com
+Fixes: 33f72e6f0c67 ("l2tp : multicast notification to the registered listeners")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: James Chapman <jchapman@katalix.com>
+Cc: Tom Parkin <tparkin@katalix.com>
+Cc: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20241011171217.3166614-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/target/target_core_user.c |  2 +-
+ include/net/genetlink.h           |  3 +--
+ net/l2tp/l2tp_netlink.c           |  4 ++--
+ net/netlink/genetlink.c           | 28 ++++++++++++++--------------
+ net/wireless/nl80211.c            |  8 ++------
+ 5 files changed, 20 insertions(+), 25 deletions(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 75c2f7ffe5be4..63e5aa6d4b0bc 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -791,21 +791,31 @@ static bool reqsk_queue_unlink(struct request_sock *req)
- 		found = __sk_nulls_del_node_init_rcu(req_to_sk(req));
- 		spin_unlock(lock);
+diff --git a/drivers/target/target_core_user.c b/drivers/target/target_core_user.c
+index 1e8e9dd3f482c..7a467b1f9099b 100644
+--- a/drivers/target/target_core_user.c
++++ b/drivers/target/target_core_user.c
+@@ -2129,7 +2129,7 @@ static int tcmu_netlink_event_send(struct tcmu_dev *udev,
  	}
--	if (timer_pending(&req->rsk_timer) && del_timer_sync(&req->rsk_timer))
--		reqsk_put(req);
-+
- 	return found;
- }
  
--bool inet_csk_reqsk_queue_drop(struct sock *sk, struct request_sock *req)
-+static bool __inet_csk_reqsk_queue_drop(struct sock *sk,
-+					struct request_sock *req,
-+					bool from_timer)
+ 	ret = genlmsg_multicast_allns(&tcmu_genl_family, skb, 0,
+-				      TCMU_MCGRP_CONFIG, GFP_KERNEL);
++				      TCMU_MCGRP_CONFIG);
+ 
+ 	/* Wait during an add as the listener may not be up yet */
+ 	if (ret == 0 ||
+diff --git a/include/net/genetlink.h b/include/net/genetlink.h
+index 8043594a7f84a..3cfa33a0aa169 100644
+--- a/include/net/genetlink.h
++++ b/include/net/genetlink.h
+@@ -336,13 +336,12 @@ static inline int genlmsg_multicast(const struct genl_family *family,
+  * @skb: netlink message as socket buffer
+  * @portid: own netlink portid to avoid sending to yourself
+  * @group: offset of multicast group in groups array
+- * @flags: allocation flags
+  *
+  * This function must hold the RTNL or rcu_read_lock().
+  */
+ int genlmsg_multicast_allns(const struct genl_family *family,
+ 			    struct sk_buff *skb, u32 portid,
+-			    unsigned int group, gfp_t flags);
++			    unsigned int group);
+ 
+ /**
+  * genlmsg_unicast - unicast a netlink message
+diff --git a/net/l2tp/l2tp_netlink.c b/net/l2tp/l2tp_netlink.c
+index 96eb91be9238b..f34ca225c2199 100644
+--- a/net/l2tp/l2tp_netlink.c
++++ b/net/l2tp/l2tp_netlink.c
+@@ -115,7 +115,7 @@ static int l2tp_tunnel_notify(struct genl_family *family,
+ 				  NLM_F_ACK, tunnel, cmd);
+ 
+ 	if (ret >= 0) {
+-		ret = genlmsg_multicast_allns(family, msg, 0, 0, GFP_ATOMIC);
++		ret = genlmsg_multicast_allns(family, msg, 0, 0);
+ 		/* We don't care if no one is listening */
+ 		if (ret == -ESRCH)
+ 			ret = 0;
+@@ -143,7 +143,7 @@ static int l2tp_session_notify(struct genl_family *family,
+ 				   NLM_F_ACK, session, cmd);
+ 
+ 	if (ret >= 0) {
+-		ret = genlmsg_multicast_allns(family, msg, 0, 0, GFP_ATOMIC);
++		ret = genlmsg_multicast_allns(family, msg, 0, 0);
+ 		/* We don't care if no one is listening */
+ 		if (ret == -ESRCH)
+ 			ret = 0;
+diff --git a/net/netlink/genetlink.c b/net/netlink/genetlink.c
+index 69b3a6b82f680..789cdc1dbcdf6 100644
+--- a/net/netlink/genetlink.c
++++ b/net/netlink/genetlink.c
+@@ -1089,15 +1089,11 @@ static int genl_ctrl_event(int event, const struct genl_family *family,
+ 	if (IS_ERR(msg))
+ 		return PTR_ERR(msg);
+ 
+-	if (!family->netnsok) {
++	if (!family->netnsok)
+ 		genlmsg_multicast_netns(&genl_ctrl, &init_net, msg, 0,
+ 					0, GFP_KERNEL);
+-	} else {
+-		rcu_read_lock();
+-		genlmsg_multicast_allns(&genl_ctrl, msg, 0,
+-					0, GFP_ATOMIC);
+-		rcu_read_unlock();
+-	}
++	else
++		genlmsg_multicast_allns(&genl_ctrl, msg, 0, 0);
+ 
+ 	return 0;
+ }
+@@ -1441,23 +1437,23 @@ static int __init genl_init(void)
+ 
+ core_initcall(genl_init);
+ 
+-static int genlmsg_mcast(struct sk_buff *skb, u32 portid, unsigned long group,
+-			 gfp_t flags)
++static int genlmsg_mcast(struct sk_buff *skb, u32 portid, unsigned long group)
  {
- 	bool unlinked = reqsk_queue_unlink(req);
+ 	struct sk_buff *tmp;
+ 	struct net *net, *prev = NULL;
+ 	bool delivered = false;
+ 	int err;
  
-+	if (!from_timer && timer_delete_sync(&req->rsk_timer))
-+		reqsk_put(req);
-+
- 	if (unlinked) {
- 		reqsk_queue_removed(&inet_csk(sk)->icsk_accept_queue, req);
- 		reqsk_put(req);
++	rcu_read_lock();
+ 	for_each_net_rcu(net) {
+ 		if (prev) {
+-			tmp = skb_clone(skb, flags);
++			tmp = skb_clone(skb, GFP_ATOMIC);
+ 			if (!tmp) {
+ 				err = -ENOMEM;
+ 				goto error;
+ 			}
+ 			err = nlmsg_multicast(prev->genl_sock, tmp,
+-					      portid, group, flags);
++					      portid, group, GFP_ATOMIC);
+ 			if (!err)
+ 				delivered = true;
+ 			else if (err != -ESRCH)
+@@ -1466,27 +1462,31 @@ static int genlmsg_mcast(struct sk_buff *skb, u32 portid, unsigned long group,
+ 
+ 		prev = net;
  	}
++	err = nlmsg_multicast(prev->genl_sock, skb, portid, group, GFP_ATOMIC);
 +
- 	return unlinked;
- }
++	rcu_read_unlock();
+ 
+-	err = nlmsg_multicast(prev->genl_sock, skb, portid, group, flags);
+ 	if (!err)
+ 		delivered = true;
+ 	else if (err != -ESRCH)
+ 		return err;
+ 	return delivered ? 0 : -ESRCH;
+  error:
++	rcu_read_unlock();
 +
-+bool inet_csk_reqsk_queue_drop(struct sock *sk, struct request_sock *req)
-+{
-+	return __inet_csk_reqsk_queue_drop(sk, req, false);
-+}
- EXPORT_SYMBOL(inet_csk_reqsk_queue_drop);
- 
- void inet_csk_reqsk_queue_drop_and_put(struct sock *sk, struct request_sock *req)
-@@ -898,7 +908,7 @@ static void reqsk_timer_handler(struct timer_list *t)
- 
- 		if (!inet_ehash_insert(req_to_sk(nreq), req_to_sk(oreq), NULL)) {
- 			/* delete timer */
--			inet_csk_reqsk_queue_drop(sk_listener, nreq);
-+			__inet_csk_reqsk_queue_drop(sk_listener, nreq, true);
- 			goto no_ownership;
- 		}
- 
-@@ -924,7 +934,8 @@ static void reqsk_timer_handler(struct timer_list *t)
- 	}
- 
- drop:
--	inet_csk_reqsk_queue_drop_and_put(oreq->rsk_listener, oreq);
-+	__inet_csk_reqsk_queue_drop(sk_listener, oreq, true);
-+	reqsk_put(req);
+ 	kfree_skb(skb);
+ 	return err;
  }
  
- static bool reqsk_queue_hash_req(struct request_sock *req,
+ int genlmsg_multicast_allns(const struct genl_family *family,
+ 			    struct sk_buff *skb, u32 portid,
+-			    unsigned int group, gfp_t flags)
++			    unsigned int group)
+ {
+ 	if (WARN_ON_ONCE(group >= family->n_mcgrps))
+ 		return -EINVAL;
+ 
+ 	group = family->mcgrp_offset + group;
+-	return genlmsg_mcast(skb, portid, group, flags);
++	return genlmsg_mcast(skb, portid, group);
+ }
+ EXPORT_SYMBOL(genlmsg_multicast_allns);
+ 
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index d286a10f35522..457b197e31722 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -16262,10 +16262,8 @@ void nl80211_common_reg_change_event(enum nl80211_commands cmd_id,
+ 
+ 	genlmsg_end(msg, hdr);
+ 
+-	rcu_read_lock();
+ 	genlmsg_multicast_allns(&nl80211_fam, msg, 0,
+-				NL80211_MCGRP_REGULATORY, GFP_ATOMIC);
+-	rcu_read_unlock();
++				NL80211_MCGRP_REGULATORY);
+ 
+ 	return;
+ 
+@@ -16779,10 +16777,8 @@ void nl80211_send_beacon_hint_event(struct wiphy *wiphy,
+ 
+ 	genlmsg_end(msg, hdr);
+ 
+-	rcu_read_lock();
+ 	genlmsg_multicast_allns(&nl80211_fam, msg, 0,
+-				NL80211_MCGRP_REGULATORY, GFP_ATOMIC);
+-	rcu_read_unlock();
++				NL80211_MCGRP_REGULATORY);
+ 
+ 	return;
+ 
 -- 
 2.43.0
 
