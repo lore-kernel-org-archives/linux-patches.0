@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69EB82AF07;
-	Mon, 28 Oct 2024 06:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972882AF07;
+	Mon, 28 Oct 2024 06:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098079; cv=none; b=sUFkDlcVRwBAwg/4h5mJX/Q+OVUWi+U0TFN5fq8dctsmmrv3gFlBT5FvK2p9g+y5/1U7v4d6rlq6mKUrWcXn1DmAEgvQ/GbvFO11C3XX7SN2T0K1DTeHnxpIIkojPJeCMpx0NeA4LGnG54Ey04JAIkk/G73kLSLsYa9kRKKopRU=
+	t=1730098081; cv=none; b=DD8qSsN18KYHSlXB1rpF5xvVj/Lw29Eq+a+osXZryusd8QTlFEmgwETAQI719yguneD7YtJCF8oKZpXD4Yb6Iz3XA92KGe0bpgW0+kQ0TC1f8u73x0FqphaFkqfoLES6TXk6n2ndzLnu+1IB0Cu/WxuFXk9XrINi9zHrTqsrvuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098079; c=relaxed/simple;
-	bh=6xkcYmchiQZMy2jilZ8+4UxyTrq4FrODIrmnzXE3Ia4=;
+	s=arc-20240116; t=1730098081; c=relaxed/simple;
+	bh=1ukqfDLxFlBk8XCzt+5JNNspQdEAzhPDW/bsc4UqPww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+nQCZqXagrzlSodUfwHvcyGdPeu4Ze1sHQNRoZZSYtGVYJPT5T5WzrjA96UwIGCvFEsGBPcTS9kNM/wZLlg6CyUeH3PAioca0/ihC0rYDYUz91o73fPeGSNoigMvGBdJuJxVyShhrv9jNsqEH3iQySSXGUBwCOOxmSaorDkjIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gi3gporc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rFdjXvFnJD/YheD1xbFfBGSmH1rqMAq58pafFirYm9DzGip1X9xH1CbRGu9lnY/2a5BTXNqR2AY7NXyJkmmL08mxxRrpbJwQ1HlNaweyA4WCoGnSVa9lAV25FMfLw/p89fNm+H/ZyOkE9gm/4aHjPpYEP/RIJ+Bf97s3GJcjd68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRRBbqu4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gi3gporc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A3FC4CEC3;
-	Mon, 28 Oct 2024 06:47:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRRBbqu4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38228C4CEC3;
+	Mon, 28 Oct 2024 06:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098079;
-	bh=6xkcYmchiQZMy2jilZ8+4UxyTrq4FrODIrmnzXE3Ia4=;
+	s=korg; t=1730098081;
+	bh=1ukqfDLxFlBk8XCzt+5JNNspQdEAzhPDW/bsc4UqPww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gi3gporcRr7s0hnAIF2cFLcfTAOIoVOd4JWXF+MH8L9z2emBDyBN/SR6s6fGsNdlw
-	 FI3u0PmzeM8C9NOw8WLy3K4qIKxMD2CuZrVAUxMjT7wYcxHTcBuREUfCig9B2m+eFp
-	 v1hVk/bGgC+f+VX27cndQ8yhVpH3oo82ODGI4LAc=
+	b=jRRBbqu4tebgf5mcGZ3z6v1WoRClD5XpWrN34NnWz8EkaapUnR6iWGwlot3VDEhz2
+	 MgBF7XA/b23HhlvcAtSGWXkI4hZeMSDy2MAwcne0FN784+Au27DBIxD0FCQnfsZdj6
+	 caKYSDkBpLGkmZvZuh3FEqObUxNf1jjb6gHN6fNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Wen Gu <guwen@linux.alibaba.com>,
-	Li RongQing <lirongqing@baidu.com>,
-	Simon Horman <horms@kernel.org>,
-	Gerd Bayer <gbayer@linux.ibm.com>,
+	Wang Hai <wanghai38@huawei.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 068/261] net/smc: Fix searching in list of known pnetids in smc_pnet_add_pnetid
-Date: Mon, 28 Oct 2024 07:23:30 +0100
-Message-ID: <20241028062313.737264311@linuxfoundation.org>
+Subject: [PATCH 6.11 069/261] net: xilinx: axienet: fix potential memory leak in axienet_start_xmit()
+Date: Mon, 28 Oct 2024 07:23:31 +0100
+Message-ID: <20241028062313.761041218@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -55,38 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit 82ac39ebd6db0c9f7a97a934bda1e3e101a9d201 ]
+[ Upstream commit 99714e37e8333bbc22496fe80f241d5b35380e83 ]
 
-pnetid of pi (not newly allocated pe) should be compared
+The axienet_start_xmit() returns NETDEV_TX_OK without freeing skb
+in case of dma_map_single() fails, add dev_kfree_skb_any() to fix it.
 
-Fixes: e888a2e8337c ("net/smc: introduce list of pnetids for Ethernet devices")
-Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Wen Gu <guwen@linux.alibaba.com>
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
-Link: https://patch.msgid.link/20241014115321.33234-1-lirongqing@baidu.com
+Fixes: 71791dc8bdea ("net: axienet: Check for DMA mapping errors")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://patch.msgid.link/20241014143704.31938-1-wanghai38@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_pnet.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
-index 2adb92b8c4699..dbcc72b43d0c0 100644
---- a/net/smc/smc_pnet.c
-+++ b/net/smc/smc_pnet.c
-@@ -753,7 +753,7 @@ static int smc_pnet_add_pnetid(struct net *net, u8 *pnetid)
- 
- 	write_lock(&sn->pnetids_ndev.lock);
- 	list_for_each_entry(pi, &sn->pnetids_ndev.list, list) {
--		if (smc_pnet_match(pnetid, pe->pnetid)) {
-+		if (smc_pnet_match(pnetid, pi->pnetid)) {
- 			refcount_inc(&pi->refcnt);
- 			kfree(pe);
- 			goto unlock;
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index 5dbfee4aee43c..0c4c57e7fddc2 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -989,6 +989,7 @@ axienet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ 		if (net_ratelimit())
+ 			netdev_err(ndev, "TX DMA mapping error\n");
+ 		ndev->stats.tx_dropped++;
++		dev_kfree_skb_any(skb);
+ 		return NETDEV_TX_OK;
+ 	}
+ 	desc_set_phys_addr(lp, phys, cur_p);
+@@ -1009,6 +1010,7 @@ axienet_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ 			ndev->stats.tx_dropped++;
+ 			axienet_free_tx_chain(lp, orig_tail_ptr, ii + 1,
+ 					      true, NULL, 0);
++			dev_kfree_skb_any(skb);
+ 			return NETDEV_TX_OK;
+ 		}
+ 		desc_set_phys_addr(lp, phys, cur_p);
 -- 
 2.43.0
 
