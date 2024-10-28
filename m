@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E6918CC1F;
-	Mon, 28 Oct 2024 06:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864AF18CC1F;
+	Mon, 28 Oct 2024 06:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730096900; cv=none; b=Y0f32sOW23Ld4ZlxUeleiyv9LRzdSCOAI7ga2h/T3G8ShHv6yLZLIOypsfrtQGHPQ+8X0f/+O45VfSgMsSVRAvgH6VRCCJSX8LW0ayywH9fapvmkLu+aVn4AYt0sF4vypdB75Zs9HfQCDvTlJNMDS27QhvW86gtLlazB8d/NyRQ=
+	t=1730096902; cv=none; b=Lw6Z8DGvS8+euxuICn/iDEoQ0J7pnpF0r/vXktXMd1PonF1lT5kKMCT5/k5GDaJIo8Ajceqq0fJeGv68w7u88w9OIKgjGGmr2TyDYuqfDYxaBxinfXjbpjxQ+4KO7oGtHdMAk3WKxehDDEkehY/xb+0Y+iklFSM3wIP4uWj8yUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730096900; c=relaxed/simple;
-	bh=2gon24p5GKFjS5wVcV1nqPzoPhNXK2c0jaXS6Qy8cVU=;
+	s=arc-20240116; t=1730096902; c=relaxed/simple;
+	bh=chKyJQdVYTveFt1IPC6BlCbnlUohzFsjYPh1iOtDbyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NYPkg6zutubDJsGu04xOzolrkZvb/niyXlPEBurCfHSVP84GI8CYBm6q+bxqfnvLWw6bpbuiaqdVoytx2ZSn7knB48HAioV33U4rkbDCxGqz5WlsqoGRZxJ140BDK0Uc9vdM/N4+Sp6IjXBzOoy3PQeMi+qEzz/iNT1q7jBtc68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPs5e9/C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GpcysnHxckAVrfFgmufOitdFd2X1oUApiHQpGp3OVOyS8PsNfXi90LfYSsgP/xSAhFblRI9GT7EcKO1zKNPXMhAz1XtC2aL4/VYXGxNdQh2OoGSUar9QdSzEO9erZwpf8D+kX8MmPagb6aOVFEmB7Baez30d8h6q5S0MJa88W9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ej0DWlR1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPs5e9/C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC31AC4CEC3;
-	Mon, 28 Oct 2024 06:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ej0DWlR1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25317C4CEC3;
+	Mon, 28 Oct 2024 06:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730096900;
-	bh=2gon24p5GKFjS5wVcV1nqPzoPhNXK2c0jaXS6Qy8cVU=;
+	s=korg; t=1730096902;
+	bh=chKyJQdVYTveFt1IPC6BlCbnlUohzFsjYPh1iOtDbyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WPs5e9/CpgtNhF1psDO6RhvmUzCBrGX6klu+ElT7+nPT1UBwVqSSirqm37I6ydrRL
-	 W9MwEXf4LyEErYqiC2b50G+Ag9qMi57pqIG/frW63AwbOZHzZtHqiCC/ieKXHNlBVI
-	 lIeom2D9r4xKjZPGkj60+LUaKcuqMo6AGMk35nbs=
+	b=ej0DWlR10rhbXr3uwMFZeh74Xr8E878m4EiAoEvMiRoMCK/DRQ3qk2+w5apKgKvg4
+	 nAEPbEAx59nIVIxNHMOGzWZ1CdY9Wnxpuallu2jL0z2OIJwD2IvI6X8Z1esJsZCJ8k
+	 Gm1OYQlaJlq7vdd+4hzII6cQwGo4b8OQnUvBwcYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@maxima.ru>,
-	Takashi Iwai <tiwai@suse.de>,
+	Anumula Murali Mohan Reddy <anumula@chelsio.com>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 07/80] ALSA: hda/cs8409: Fix possible NULL dereference
-Date: Mon, 28 Oct 2024 07:24:47 +0100
-Message-ID: <20241028062252.825896113@linuxfoundation.org>
+Subject: [PATCH 5.15 08/80] RDMA/cxgb4: Fix RDMA_CM_EVENT_UNREACHABLE error for iWARP
+Date: Mon, 28 Oct 2024 07:24:48 +0100
+Message-ID: <20241028062252.854497027@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
 References: <20241028062252.611837461@linuxfoundation.org>
@@ -51,43 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@maxima.ru>
+From: Anumula Murali Mohan Reddy <anumula@chelsio.com>
 
-[ Upstream commit c9bd4a82b4ed32c6d1c90500a52063e6e341517f ]
+[ Upstream commit c659b405b82ead335bee6eb33f9691bf718e21e8 ]
 
-If snd_hda_gen_add_kctl fails to allocate memory and returns NULL, then
-NULL pointer dereference will occur in the next line.
+ip_dev_find() always returns real net_device address, whether traffic is
+running on a vlan or real device, if traffic is over vlan, filling
+endpoint struture with real ndev and an attempt to send a connect request
+will results in RDMA_CM_EVENT_UNREACHABLE error.  This patch fixes the
+issue by using vlan_dev_real_dev().
 
-Since dolphin_fixups function is a hda_fixup function which is not supposed
-to return any errors, add simple check before dereference, ignore the fail.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 20e507724113 ("ALSA: hda/cs8409: Add support for dolphin")
-Signed-off-by: Murad Masimov <m.masimov@maxima.ru>
-Link: https://patch.msgid.link/20241010221649.1305-1-m.masimov@maxima.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 830662f6f032 ("RDMA/cxgb4: Add support for active and passive open connection with IPv6 address")
+Link: https://patch.msgid.link/r/20241007132311.70593-1-anumula@chelsio.com
+Signed-off-by: Anumula Murali Mohan Reddy <anumula@chelsio.com>
+Signed-off-by: Potnuri Bharat Teja <bharat@chelsio.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_cs8409.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/cxgb4/cm.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/sound/pci/hda/patch_cs8409.c b/sound/pci/hda/patch_cs8409.c
-index abf4eef9afa08..7285220c36f01 100644
---- a/sound/pci/hda/patch_cs8409.c
-+++ b/sound/pci/hda/patch_cs8409.c
-@@ -1237,8 +1237,9 @@ void dolphin_fixups(struct hda_codec *codec, const struct hda_fixup *fix, int ac
- 		kctrl = snd_hda_gen_add_kctl(&spec->gen, "Line Out Playback Volume",
- 					     &cs42l42_dac_volume_mixer);
- 		/* Update Line Out kcontrol template */
--		kctrl->private_value = HDA_COMPOSE_AMP_VAL_OFS(DOLPHIN_HP_PIN_NID, 3, CS8409_CODEC1,
--				       HDA_OUTPUT, CS42L42_VOL_DAC) | HDA_AMP_VAL_MIN_MUTE;
-+		if (kctrl)
-+			kctrl->private_value = HDA_COMPOSE_AMP_VAL_OFS(DOLPHIN_HP_PIN_NID, 3, CS8409_CODEC1,
-+					       HDA_OUTPUT, CS42L42_VOL_DAC) | HDA_AMP_VAL_MIN_MUTE;
- 		cs8409_enable_ur(codec, 0);
- 		snd_hda_codec_set_name(codec, "CS8409/CS42L42");
- 		break;
+diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
+index e6343c89c892e..3efd06d5f7e70 100644
+--- a/drivers/infiniband/hw/cxgb4/cm.c
++++ b/drivers/infiniband/hw/cxgb4/cm.c
+@@ -2086,7 +2086,7 @@ static int import_ep(struct c4iw_ep *ep, int iptype, __u8 *peer_ip,
+ 	err = -ENOMEM;
+ 	if (n->dev->flags & IFF_LOOPBACK) {
+ 		if (iptype == 4)
+-			pdev = ip_dev_find(&init_net, *(__be32 *)peer_ip);
++			pdev = __ip_dev_find(&init_net, *(__be32 *)peer_ip, false);
+ 		else if (IS_ENABLED(CONFIG_IPV6))
+ 			for_each_netdev(&init_net, pdev) {
+ 				if (ipv6_chk_addr(&init_net,
+@@ -2101,12 +2101,12 @@ static int import_ep(struct c4iw_ep *ep, int iptype, __u8 *peer_ip,
+ 			err = -ENODEV;
+ 			goto out;
+ 		}
++		if (is_vlan_dev(pdev))
++			pdev = vlan_dev_real_dev(pdev);
+ 		ep->l2t = cxgb4_l2t_get(cdev->rdev.lldi.l2t,
+ 					n, pdev, rt_tos2priority(tos));
+-		if (!ep->l2t) {
+-			dev_put(pdev);
++		if (!ep->l2t)
+ 			goto out;
+-		}
+ 		ep->mtu = pdev->mtu;
+ 		ep->tx_chan = cxgb4_port_chan(pdev);
+ 		ep->smac_idx = ((struct port_info *)netdev_priv(pdev))->smt_idx;
+@@ -2119,7 +2119,6 @@ static int import_ep(struct c4iw_ep *ep, int iptype, __u8 *peer_ip,
+ 		ep->rss_qid = cdev->rdev.lldi.rxq_ids[
+ 			cxgb4_port_idx(pdev) * step];
+ 		set_tcp_window(ep, (struct port_info *)netdev_priv(pdev));
+-		dev_put(pdev);
+ 	} else {
+ 		pdev = get_real_dev(n->dev);
+ 		ep->l2t = cxgb4_l2t_get(cdev->rdev.lldi.l2t,
 -- 
 2.43.0
 
