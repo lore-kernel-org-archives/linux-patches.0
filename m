@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7355918E04F;
-	Mon, 28 Oct 2024 06:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87F618E74C;
+	Mon, 28 Oct 2024 06:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097263; cv=none; b=fPQezciPO3BXSuhCnXI07IrCYz7rM+pm9XjvjAAUpBoM52/UgNDlQqaqDAEOFAhDuETXnaZGQYwYHWahHbcqp1Dgu8VkWENm4EeHeC457cZ9ZcRalS0UU5Wa/T58ykKMFqh3YsbVyuQLdv/MFJ1r0LjqwXdwyFRl8HH82GJ4Rxs=
+	t=1730097265; cv=none; b=O57vcYVkkRUPtV8JJcB7+s+eYQXENb1DCDvRH4y7VS+HIwlPZI/Yd2V8mdG0RyYrZouXcwtyjTw2CFndaXLVHTtqZaxPwZ/A3H1AIXgYJpOhbTgXKnoxdZj4jRBwCfJN7j6kgf/nwxTkHbm7z1lPCV5ncgxm7ydZ+PCxsxpaHdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097263; c=relaxed/simple;
-	bh=/6Be8YVJdAR8RkqasctKNJ1ZVSY86SnnSfEYvMXQp44=;
+	s=arc-20240116; t=1730097265; c=relaxed/simple;
+	bh=LSuoEjc7JGOHxDj9bLEgwjIqzu+7ciPShPncGpS24oE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=piBiEWNusEYxod76UcCFi6Nik9coVIblugLE8Z615MYI5942hPK+6XEkAE+YgRIwKRcqmKZDqZ2f2LnFI4dqzd10MMukVBe/9bDaGy/d1YFmZCllCT8AQLrVIuSiN67YK+mjryyhizCv7ZrmLodc8LTxTSFldmf6iYaleSY2XQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NHkw6Fw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YmO4mrzC6YoYP6HVJjNCrAYeWw/Yo5VPs0ZslV/PPjA6lhZKtuKLd6CUh0lxd/4ihxb1eHJbtAFfDFn5P4yKOBCuz0M5b0q/pWZrVxG/qfrHhxZSrtWwxMDiH647Sc/5QRzDQkhNZ+QvBu4JDVxqY4iVxA9E9o1+xPguT0eSme8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDXVec5o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NHkw6Fw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA01C4CEC7;
-	Mon, 28 Oct 2024 06:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDXVec5o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A63C4CEC7;
+	Mon, 28 Oct 2024 06:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097263;
-	bh=/6Be8YVJdAR8RkqasctKNJ1ZVSY86SnnSfEYvMXQp44=;
+	s=korg; t=1730097265;
+	bh=LSuoEjc7JGOHxDj9bLEgwjIqzu+7ciPShPncGpS24oE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0NHkw6Fwd8fdDNIwuITDRZaxm5q6UWi4DY/q3155dJ4uby9rMCE4m9rm+F29RkQ6h
-	 pEuDnY566T2jF6kUFDeBiEF9fV5V91TvwrAqFX84/7wc3pr7R8y8ZM4uO5xM1egR7I
-	 AdnusmUYmchWoFqWwoBFX25v9ed24fYarng1wbBg=
+	b=JDXVec5o/MCFanRInRxrObjlkc/b8PRTUqd+mVROnGB8EjyJWvDOI3Qq9/rccliMF
+	 TBJ1orWprFixw3jIUyBlwwy4nMJ75evJv5q3XcCf8wYRL6nUZk008b3tahvDUxnCWN
+	 yHa0gDezYkZeiwiX0Ug0Hk9gwmJCe2iffvbcd09s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/137] net/mlx5: Fix command bitmask initialization
-Date: Mon, 28 Oct 2024 07:24:50 +0100
-Message-ID: <20241028062300.210543223@linuxfoundation.org>
+Subject: [PATCH 6.1 054/137] net/mlx5: Unregister notifier on eswitch init failure
+Date: Mon, 28 Oct 2024 07:24:51 +0100
+Message-ID: <20241028062300.236906074@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -54,98 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit d62b14045c6511a7b2d4948d1a83a4e592deeb05 ]
+[ Upstream commit 1da9cfd6c41c2e6bbe624d0568644e1521c33e12 ]
 
-Command bitmask have a dedicated bit for MANAGE_PAGES command, this bit
-isn't Initialize during command bitmask Initialization, only during
-MANAGE_PAGES.
+It otherwise remains registered and a subsequent attempt at eswitch
+enabling might trigger warnings of the sort:
 
-In addition, mlx5_cmd_trigger_completions() is trying to trigger
-completion for MANAGE_PAGES command as well.
+[  682.589148] ------------[ cut here ]------------
+[  682.590204] notifier callback eswitch_vport_event [mlx5_core] already registered
+[  682.590256] WARNING: CPU: 13 PID: 2660 at kernel/notifier.c:31 notifier_chain_register+0x3e/0x90
+[...snipped]
+[  682.610052] Call Trace:
+[  682.610369]  <TASK>
+[  682.610663]  ? __warn+0x7c/0x110
+[  682.611050]  ? notifier_chain_register+0x3e/0x90
+[  682.611556]  ? report_bug+0x148/0x170
+[  682.611977]  ? handle_bug+0x36/0x70
+[  682.612384]  ? exc_invalid_op+0x13/0x60
+[  682.612817]  ? asm_exc_invalid_op+0x16/0x20
+[  682.613284]  ? notifier_chain_register+0x3e/0x90
+[  682.613789]  atomic_notifier_chain_register+0x25/0x40
+[  682.614322]  mlx5_eswitch_enable_locked+0x1d4/0x3b0 [mlx5_core]
+[  682.614965]  mlx5_eswitch_enable+0xc9/0x100 [mlx5_core]
+[  682.615551]  mlx5_device_enable_sriov+0x25/0x340 [mlx5_core]
+[  682.616170]  mlx5_core_sriov_configure+0x50/0x170 [mlx5_core]
+[  682.616789]  sriov_numvfs_store+0xb0/0x1b0
+[  682.617248]  kernfs_fop_write_iter+0x117/0x1a0
+[  682.617734]  vfs_write+0x231/0x3f0
+[  682.618138]  ksys_write+0x63/0xe0
+[  682.618536]  do_syscall_64+0x4c/0x100
+[  682.618958]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-Hence, in case health error occurred before any MANAGE_PAGES command
-have been invoke (for example, during mlx5_enable_hca()),
-mlx5_cmd_trigger_completions() will try to trigger completion for
-MANAGE_PAGES command, which will result in null-ptr-deref error.[1]
-
-Fix it by Initialize command bitmask correctly.
-
-While at it, re-write the code for better understanding.
-
-[1]
-BUG: KASAN: null-ptr-deref in mlx5_cmd_trigger_completions+0x1db/0x600 [mlx5_core]
-Write of size 4 at addr 0000000000000214 by task kworker/u96:2/12078
-CPU: 10 PID: 12078 Comm: kworker/u96:2 Not tainted 6.9.0-rc2_for_upstream_debug_2024_04_07_19_01 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-Workqueue: mlx5_health0000:08:00.0 mlx5_fw_fatal_reporter_err_work [mlx5_core]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x7e/0xc0
- kasan_report+0xb9/0xf0
- kasan_check_range+0xec/0x190
- mlx5_cmd_trigger_completions+0x1db/0x600 [mlx5_core]
- mlx5_cmd_flush+0x94/0x240 [mlx5_core]
- enter_error_state+0x6c/0xd0 [mlx5_core]
- mlx5_fw_fatal_reporter_err_work+0xf3/0x480 [mlx5_core]
- process_one_work+0x787/0x1490
- ? lockdep_hardirqs_on_prepare+0x400/0x400
- ? pwq_dec_nr_in_flight+0xda0/0xda0
- ? assign_work+0x168/0x240
- worker_thread+0x586/0xd30
- ? rescuer_thread+0xae0/0xae0
- kthread+0x2df/0x3b0
- ? kthread_complete_and_exit+0x20/0x20
- ret_from_fork+0x2d/0x70
- ? kthread_complete_and_exit+0x20/0x20
- ret_from_fork_asm+0x11/0x20
- </TASK>
-
-Fixes: 9b98d395b85d ("net/mlx5: Start health poll at earlier stage of driver load")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 7624e58a8b3a ("net/mlx5: E-switch, register event handler before arming the event")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-index c6ddf51818efe..4a1eb6cd699cb 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -1755,6 +1755,10 @@ static void mlx5_cmd_comp_handler(struct mlx5_core_dev *dev, u64 vec, bool force
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+index 48939c72b5925..9ba825df9be0e 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+@@ -1279,7 +1279,7 @@ int mlx5_eswitch_enable_locked(struct mlx5_eswitch *esw, int num_vfs)
  	}
+ 
+ 	if (err)
+-		goto abort;
++		goto err_esw_enable;
+ 
+ 	esw->fdb_table.flags |= MLX5_ESW_FDB_CREATED;
+ 
+@@ -1293,7 +1293,8 @@ int mlx5_eswitch_enable_locked(struct mlx5_eswitch *esw, int num_vfs)
+ 
+ 	return 0;
+ 
+-abort:
++err_esw_enable:
++	mlx5_eq_notifier_unregister(esw->dev, &esw->nb);
+ 	mlx5_esw_acls_ns_cleanup(esw);
+ 	return err;
  }
- 
-+#define MLX5_MAX_MANAGE_PAGES_CMD_ENT 1
-+#define MLX5_CMD_MASK ((1UL << (cmd->vars.max_reg_cmds + \
-+			   MLX5_MAX_MANAGE_PAGES_CMD_ENT)) - 1)
-+
- static void mlx5_cmd_trigger_completions(struct mlx5_core_dev *dev)
- {
- 	struct mlx5_cmd *cmd = &dev->cmd;
-@@ -1766,7 +1770,7 @@ static void mlx5_cmd_trigger_completions(struct mlx5_core_dev *dev)
- 	/* wait for pending handlers to complete */
- 	mlx5_eq_synchronize_cmd_irq(dev);
- 	spin_lock_irqsave(&dev->cmd.alloc_lock, flags);
--	vector = ~dev->cmd.vars.bitmask & ((1ul << (1 << dev->cmd.vars.log_sz)) - 1);
-+	vector = ~dev->cmd.vars.bitmask & MLX5_CMD_MASK;
- 	if (!vector)
- 		goto no_trig;
- 
-@@ -2301,7 +2305,7 @@ int mlx5_cmd_enable(struct mlx5_core_dev *dev)
- 
- 	cmd->state = MLX5_CMDIF_STATE_DOWN;
- 	cmd->vars.max_reg_cmds = (1 << cmd->vars.log_sz) - 1;
--	cmd->vars.bitmask = (1UL << cmd->vars.max_reg_cmds) - 1;
-+	cmd->vars.bitmask = MLX5_CMD_MASK;
- 
- 	sema_init(&cmd->vars.sem, cmd->vars.max_reg_cmds);
- 	sema_init(&cmd->vars.pages_sem, 1);
 -- 
 2.43.0
 
