@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5238837;
-	Mon, 28 Oct 2024 06:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B418A47;
+	Mon, 28 Oct 2024 06:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097934; cv=none; b=XknJiZfnL9fRKwMQ7vfpWqXGZ2FdBH9Wxj+RqYDd1VelOpEvZCcPaaPN8g1MbFGqHB6MlPPJlvrpFePfCB3aLlw82is9IRgmvjQL1b09OhqztuQW3z4xIgZgjgz3G6A+v3KAd6902j3ZrFsS0GkrbBPUdCuXBtmxdpfpVrrMA+E=
+	t=1730097936; cv=none; b=b8jhZiP7wMiHo/1c4hVhGwdExOpnPQG1sFzgwNXyi4BIaqCtPfRdjtm6bKV0QW7wexYnXyp/K4lejRHN2LHFq5m8UoDNTVgpfwc6EMkrsfzukuoL4OUYeZKR0MnMwZh6VplwnFl6TbETePjBMAFSr5XXfXHrYkTNrM88ilZQy5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097934; c=relaxed/simple;
-	bh=a+3edC4e+hhGH62+UUXFP8hCnpUhumeSnDXrbtN+feE=;
+	s=arc-20240116; t=1730097936; c=relaxed/simple;
+	bh=HRrKAqu3YpHG58t4J+blvF05UhvFgy9yw3tjdxUKbak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ItwlTIqjQvXOapGR9ZHKFtq8Uz8q4sqbftusxKpWuFE7QOm0jyjxYb0Aaf3vhSlMGDj7E47Zq53FIq++sBjDqeS8ipVs7MjpDR04P/U7cjaZQGe6MW2jSVtZE9mkSBrAbwyrYogQSvjEMJoVZ3m8SQ/CVEFGJTkippGRyFWX+1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSpqlfam; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eLp9vuR03/6+5uqBlfKGQFsqUXbmyQraaN9DPbSJ1u3btw9RGHTdFOYLD38b1EdhpFgRHmimvZmzAwqQsnT81hcbkaJLTzIP2ZodMxwAvu7Af/oBdIgRsVCAn0EkBiysOz0Dn0hQ7PvxZu0YoCxicfVm2LrZzdjT00RZSb0LPOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziCYFuzw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSpqlfam"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0368C4CEC3;
-	Mon, 28 Oct 2024 06:45:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziCYFuzw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06B5C4CEC3;
+	Mon, 28 Oct 2024 06:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097933;
-	bh=a+3edC4e+hhGH62+UUXFP8hCnpUhumeSnDXrbtN+feE=;
+	s=korg; t=1730097936;
+	bh=HRrKAqu3YpHG58t4J+blvF05UhvFgy9yw3tjdxUKbak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iSpqlfaml59HYcb8pQ+y6s8bVDTuIU62bAHK2Y1iBslqj2RtscyBDCi5rQzngopdZ
-	 OWhgbnflmr8CK4okkQk86FqgFatJQHcowFOJOPb7FPZcu0lpXAcaE6FD7o0Su4ASfk
-	 TIhjXovsXygEMkKaT0BaL3x15r8eotINRl4Ryp+o=
+	b=ziCYFuzwR6HKsDx/5yE8h095Zl8LaNPWgqM1TT4LsUIdS55GLSKVFVMVXOo+UEg+Q
+	 HeUeAM7eYNYYkmMXrtpTtNWzVnNqd/79UEPTCsWzjAwLOaCd7HJhbvtog/YHFticr2
+	 v40zPqT0BEe/+1FmdxazMirfR2snlKO6gH9BHPsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+985ada84bf055a575c07@syzkaller.appspotmail.com,
+	Aleksa Sarai <cyphar@cyphar.com>,
 	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.6 183/208] nilfs2: fix kernel bug due to missing clearing of buffer delay flag
-Date: Mon, 28 Oct 2024 07:26:03 +0100
-Message-ID: <20241028062311.135674603@linuxfoundation.org>
+Subject: [PATCH 6.6 184/208] openat2: explicitly return -E2BIG for (usize > PAGE_SIZE)
+Date: Mon, 28 Oct 2024 07:26:04 +0100
+Message-ID: <20241028062311.160550952@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -51,55 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Aleksa Sarai <cyphar@cyphar.com>
 
-commit 6ed469df0bfbef3e4b44fca954a781919db9f7ab upstream.
+commit f92f0a1b05698340836229d791b3ffecc71b265a upstream.
 
-Syzbot reported that after nilfs2 reads a corrupted file system image
-and degrades to read-only, the BUG_ON check for the buffer delay flag
-in submit_bh_wbc() may fail, causing a kernel bug.
+While we do currently return -EFAULT in this case, it seems prudent to
+follow the behaviour of other syscalls like clone3. It seems quite
+unlikely that anyone depends on this error code being EFAULT, but we can
+always revert this if it turns out to be an issue.
 
-This is because the buffer delay flag is not cleared when clearing the
-buffer state flags to discard a page/folio or a buffer head. So, fix
-this.
-
-This became necessary when the use of nilfs2's own page clear routine
-was expanded.  This state inconsistency does not occur if the buffer
-is written normally by log writing.
-
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Link: https://lore.kernel.org/r/20241015213300.7114-1-konishi.ryusuke@gmail.com
-Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
-Reported-by: syzbot+985ada84bf055a575c07@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=985ada84bf055a575c07
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # v5.6+
+Fixes: fddb5d430ad9 ("open: introduce openat2(2) syscall")
+Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
+Link: https://lore.kernel.org/r/20241010-extensible-structs-check_fields-v3-3-d2833dfe6edd@cyphar.com
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/page.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/open.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -77,7 +77,8 @@ void nilfs_forget_buffer(struct buffer_h
- 	const unsigned long clear_bits =
- 		(BIT(BH_Uptodate) | BIT(BH_Dirty) | BIT(BH_Mapped) |
- 		 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
--		 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected));
-+		 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
-+		 BIT(BH_Delay));
+--- a/fs/open.c
++++ b/fs/open.c
+@@ -1461,6 +1461,8 @@ SYSCALL_DEFINE4(openat2, int, dfd, const
  
- 	lock_buffer(bh);
- 	set_mask_bits(&bh->b_state, clear_bits, 0);
-@@ -410,7 +411,8 @@ void nilfs_clear_dirty_page(struct page
- 		const unsigned long clear_bits =
- 			(BIT(BH_Uptodate) | BIT(BH_Dirty) | BIT(BH_Mapped) |
- 			 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
--			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected));
-+			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
-+			 BIT(BH_Delay));
+ 	if (unlikely(usize < OPEN_HOW_SIZE_VER0))
+ 		return -EINVAL;
++	if (unlikely(usize > PAGE_SIZE))
++		return -E2BIG;
  
- 		bh = head = page_buffers(page);
- 		do {
+ 	err = copy_struct_from_user(&tmp, sizeof(tmp), how, usize);
+ 	if (err)
 
 
