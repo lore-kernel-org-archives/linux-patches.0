@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C6C8837;
-	Mon, 28 Oct 2024 06:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC25C18DF7D;
+	Mon, 28 Oct 2024 06:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098312; cv=none; b=St55TgAot73MZK4coFQ/Udt93Bj81XrDyhmsWVkhQl75Kzvxbsy9KOY5cgWAvUmy+uBMpXxAgYmn41JWvySQA1+ic8kTSSBdYVQHZazcBOP30Uz5g9sp0rH8wgb0QMQaUuh0lXOGQbOoapPJdx87HV+9nIPpoi0ZoxkPznPANds=
+	t=1730098314; cv=none; b=CtrOI31r4ikjkgOA9N8pF2ullZNmvuIMbQVkjJoFXiadd/uuw6+jqRnss1clONE2SeupEfSsalPnHzmHpKaXPgmBsXnoCtRox3Vq8RyrOU8IM7aTiOZpJwKqy1gf9VoU7H3vL70Gc+RTYb7tLFKz9kPubQkqvOQlSH/6VCeQuuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098312; c=relaxed/simple;
-	bh=QroTJCDtdzH8nLRz7QWDndNwUTI1Xd7BLNB+OcJ0L2U=;
+	s=arc-20240116; t=1730098314; c=relaxed/simple;
+	bh=uoWiSB6CaoDRruGode2gRvKpgkQnPT96w0fUXLgnAC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ske8J9wwzYk0yE1Ji7jmQcI1Mckk0j5Bv0olyXAl2+c6nD29rR3jGaUUsiWTDoZbw48IA8rRH29FZBmbDN6Ht+9FJmInf7Szph+JAaO5VmNTlMZiwqqwpwrpNUzl0gEAoxR7JNESYM4iAN7QH6ikEqspB1JtFJUq1K7ifOBmpAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dkQCIBu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cgvL9IRkZUEigyumhbEJj4preNq4bBPWeXQfZ2H3bzeeLFctpq3QE0DKKNqVFcX2rl3qcX8pRh2Fp4Zghw/PTxTE1Ut587gP2HHgpmJr5E47tRy/OlHX76prmSUxyAYGUQXxf4sttzKyGyDBzN5mI3WOlH2HWqwzPNePvaiQcg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9iEgrgv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dkQCIBu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA254C4CEC3;
-	Mon, 28 Oct 2024 06:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9iEgrgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAB9C4CEC3;
+	Mon, 28 Oct 2024 06:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098312;
-	bh=QroTJCDtdzH8nLRz7QWDndNwUTI1Xd7BLNB+OcJ0L2U=;
+	s=korg; t=1730098314;
+	bh=uoWiSB6CaoDRruGode2gRvKpgkQnPT96w0fUXLgnAC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0dkQCIBu5s1222X9D7vHFJSgvtfWpKcl3HBFi8ZXMfvcLW/grjPPk9PMC4wcdmEDc
-	 wntVbEDmlql3E+xDjQc8hiJTx33vOmogY0w1K/0N3mawJSSAMwJk9J5zUSmKjA9x3i
-	 tTeikbnl1FGVaFkGhd/s6K13/cCREuR/G4AG3VUM=
+	b=k9iEgrgvtru+MXKB3bhc+x6l2eR8ipoFr5fSkS4Qyb9Z2cUrUAS+ns1V0gljninWZ
+	 E1jaKvUJEDKjYcCa81U2XfzKJAGqJ7/Na7zmo/tg1btSmyIYHAzruiuPtjvW6kchf5
+	 LatevzU3AflMh5cY1fZttLO8usO4+7/fj6DZnZyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cochran <richardcochran@gmail.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Anna-Maria Behnsen <anna-maria@linutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 170/261] posix-clock: posix-clock: Fix unbalanced locking in pc_clock_settime()
-Date: Mon, 28 Oct 2024 07:25:12 +0100
-Message-ID: <20241028062316.257128470@linuxfoundation.org>
+Subject: [PATCH 6.11 171/261] Bluetooth: hci_core: Disable works on hci_unregister_dev
+Date: Mon, 28 Oct 2024 07:25:13 +0100
+Message-ID: <20241028062316.280318850@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -53,55 +50,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 6e62807c7fbb3c758d233018caf94dfea9c65dbd ]
+[ Upstream commit 989fa5171f005ecf63440057218d8aeb1795287d ]
 
-If get_clock_desc() succeeds, it calls fget() for the clockid's fd,
-and get the clk->rwsem read lock, so the error path should release
-the lock to make the lock balance and fput the clockid's fd to make
-the refcount balance and release the fd related resource.
+This make use of disable_work_* on hci_unregister_dev since the hci_dev is
+about to be freed new submissions are not disarable.
 
-However the below commit left the error path locked behind resulting in
-unbalanced locking. Check timespec64_valid_strict() before
-get_clock_desc() to fix it, because the "ts" is not changed
-after that.
-
-Fixes: d8794ac20a29 ("posix-clock: Fix missing timespec64 check in pc_clock_settime()")
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Acked-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-[pabeni@redhat.com: fixed commit message typo]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0d151a103775 ("Bluetooth: hci_core: cancel all works upon hci_unregister_dev()")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-clock.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_core.c | 24 +++++++++++++++---------
+ net/bluetooth/hci_sync.c | 12 +++++++++---
+ 2 files changed, 24 insertions(+), 12 deletions(-)
 
-diff --git a/kernel/time/posix-clock.c b/kernel/time/posix-clock.c
-index 6b5d5c0021fae..a6487a9d60853 100644
---- a/kernel/time/posix-clock.c
-+++ b/kernel/time/posix-clock.c
-@@ -310,6 +310,9 @@ static int pc_clock_settime(clockid_t id, const struct timespec64 *ts)
- 	struct posix_clock_desc cd;
- 	int err;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index b2f8f9c5b6106..6e07350817bec 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -1644,12 +1644,12 @@ void hci_adv_instances_clear(struct hci_dev *hdev)
+ 	struct adv_info *adv_instance, *n;
  
-+	if (!timespec64_valid_strict(ts))
-+		return -EINVAL;
-+
- 	err = get_clock_desc(id, &cd);
- 	if (err)
- 		return err;
-@@ -319,9 +322,6 @@ static int pc_clock_settime(clockid_t id, const struct timespec64 *ts)
- 		goto out;
+ 	if (hdev->adv_instance_timeout) {
+-		cancel_delayed_work(&hdev->adv_instance_expire);
++		disable_delayed_work(&hdev->adv_instance_expire);
+ 		hdev->adv_instance_timeout = 0;
  	}
  
--	if (!timespec64_valid_strict(ts))
--		return -EINVAL;
--
- 	if (cd.clk->ops.clock_settime)
- 		err = cd.clk->ops.clock_settime(cd.clk, ts);
- 	else
+ 	list_for_each_entry_safe(adv_instance, n, &hdev->adv_instances, list) {
+-		cancel_delayed_work_sync(&adv_instance->rpa_expired_cb);
++		disable_delayed_work_sync(&adv_instance->rpa_expired_cb);
+ 		list_del(&adv_instance->list);
+ 		kfree(adv_instance);
+ 	}
+@@ -2685,11 +2685,11 @@ void hci_unregister_dev(struct hci_dev *hdev)
+ 	list_del(&hdev->list);
+ 	write_unlock(&hci_dev_list_lock);
+ 
+-	cancel_work_sync(&hdev->rx_work);
+-	cancel_work_sync(&hdev->cmd_work);
+-	cancel_work_sync(&hdev->tx_work);
+-	cancel_work_sync(&hdev->power_on);
+-	cancel_work_sync(&hdev->error_reset);
++	disable_work_sync(&hdev->rx_work);
++	disable_work_sync(&hdev->cmd_work);
++	disable_work_sync(&hdev->tx_work);
++	disable_work_sync(&hdev->power_on);
++	disable_work_sync(&hdev->error_reset);
+ 
+ 	hci_cmd_sync_clear(hdev);
+ 
+@@ -2796,8 +2796,14 @@ static void hci_cancel_cmd_sync(struct hci_dev *hdev, int err)
+ {
+ 	bt_dev_dbg(hdev, "err 0x%2.2x", err);
+ 
+-	cancel_delayed_work_sync(&hdev->cmd_timer);
+-	cancel_delayed_work_sync(&hdev->ncmd_timer);
++	if (hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
++		disable_delayed_work_sync(&hdev->cmd_timer);
++		disable_delayed_work_sync(&hdev->ncmd_timer);
++	} else  {
++		cancel_delayed_work_sync(&hdev->cmd_timer);
++		cancel_delayed_work_sync(&hdev->ncmd_timer);
++	}
++
+ 	atomic_set(&hdev->cmd_cnt, 1);
+ 
+ 	hci_cmd_sync_cancel_sync(hdev, err);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 40ccdef168d7d..ae7a5817883aa 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -5131,9 +5131,15 @@ int hci_dev_close_sync(struct hci_dev *hdev)
+ 
+ 	bt_dev_dbg(hdev, "");
+ 
+-	cancel_delayed_work(&hdev->power_off);
+-	cancel_delayed_work(&hdev->ncmd_timer);
+-	cancel_delayed_work(&hdev->le_scan_disable);
++	if (hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
++		disable_delayed_work(&hdev->power_off);
++		disable_delayed_work(&hdev->ncmd_timer);
++		disable_delayed_work(&hdev->le_scan_disable);
++	} else {
++		cancel_delayed_work(&hdev->power_off);
++		cancel_delayed_work(&hdev->ncmd_timer);
++		cancel_delayed_work(&hdev->le_scan_disable);
++	}
+ 
+ 	hci_cmd_sync_cancel_sync(hdev, ENODEV);
+ 
 -- 
 2.43.0
 
