@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175D518E348;
-	Mon, 28 Oct 2024 06:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A8518C03D;
+	Mon, 28 Oct 2024 06:38:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097490; cv=none; b=uFEO3jkvlY2JcKCx9C0339F370J5xHuWgCwjRmQ7STJRo44uS9XNQCMdjiayr7V0UaFShXE0gZANfYKbDzhaXJutX91SZnk5aZihHgRL0QgDHhT2+VcaxTeC7x0Dpa+aRZRyQfxgAy4QUPlxhTvhFdGsR7/e+3mgD0kWwtfLY+E=
+	t=1730097492; cv=none; b=g5QGEk9eOJjYpo6CPV5OiePrKbFfxFOFQre//usCK1qap/5r2N1k2vWuSVrnCoKRSgfanZ1VQeu79d/CVpZt1o76/5ChkUyBtyrILIk1FVPd6gVjywF6EGTDMSy3aPkjRXHpbO4JyBTFUPN3X4FREYxzUOtUAoTktpc92TTji9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097490; c=relaxed/simple;
-	bh=2nIE7uJr+WmHS9cD4x8CwFfUcFB24Li7JlpjokoxErs=;
+	s=arc-20240116; t=1730097492; c=relaxed/simple;
+	bh=xvuClqpS7sVb8zhWL8bZ5nOcg7AbkmM/EnMWsQwdr1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iSdjm+8goCOO/Wyp7YJEykDqwPb4/hszdrWcNhnrdQtGT8uAi3ldWYho7pg+1SiCxCbtioLXDdctn1jCRyxJnX7hZuqEC6e6mbv5UypedADnzni+DTVMnbiKezmoNa/5SfUxAOZE9qMoBr+Pn6iB1QkZZWgDRGil6ZpV06QlP2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5OSrDq1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FFy+CAe+D2TZKLWEk7tiP0KEwvM2+iP8Dnf2Rm3YhsNz2xoj6kIiOcpHLbUAXVSqC/mYz9ddhJY5PKk/ndu/SZyVykneyzM1MfXVNo4jlTY8zTJDsJaaqUJrbe6zLhnWmAKSOsyRnlgedUav/AELTC0LBPp4JtlnK0htNFoL2G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAKZscu2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5OSrDq1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA74CC4CEC3;
-	Mon, 28 Oct 2024 06:38:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAKZscu2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A34C4CEC3;
+	Mon, 28 Oct 2024 06:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097490;
-	bh=2nIE7uJr+WmHS9cD4x8CwFfUcFB24Li7JlpjokoxErs=;
+	s=korg; t=1730097492;
+	bh=xvuClqpS7sVb8zhWL8bZ5nOcg7AbkmM/EnMWsQwdr1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t5OSrDq1Uezk5w/F4ZkTPPuYGVFw+6WBY5ppg76txjN0yRl4gT75OJVQnz5nlCeMF
-	 /9WXBM8osjQwxtfgeLDHEoreE3qkV3JpXnkjSMW5cXreCHBTcF8hDKUZd6ldscjh2q
-	 /oKXuQi9AijP+BT80wjuFqu6BamxKmGUezQhKRj0=
+	b=yAKZscu2GGtPS3UM+o/LDTPnh9fzSwwDwtOpMokI+DQ7i3aCXN9stEDnnNtNqd9Ae
+	 u0Bm3XeWxIcS1yfNNz0LDEuZnKy98Zlf65q5wUkrHFj8QUZYyE73uBgxazWFOnzX1j
+	 oBLwQiyrWC6ZDiD6rgG1J9qp8xag5ddJHSLet8bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Yafang Shao <laoar.shao@gmail.com>,
+	Song Liu <song@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 016/208] selftests/bpf: Use bpf_link__destroy in fill_link_info tests
-Date: Mon, 28 Oct 2024 07:23:16 +0100
-Message-ID: <20241028062307.058263939@linuxfoundation.org>
+Subject: [PATCH 6.6 017/208] selftests/bpf: Add cookies check for perf_event fill_link_info test
+Date: Mon, 28 Oct 2024 07:23:17 +0100
+Message-ID: <20241028062307.083165221@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -55,130 +54,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 1703612885723869064f18e8816c6f3f87987748 ]
+[ Upstream commit d74179708473c649c653f1db280e29875a532e99 ]
 
-The fill_link_info test keeps skeleton open and just creates
-various links. We are wrongly calling bpf_link__detach after
-each test to close them, we need to call bpf_link__destroy.
+Now that we get cookies for perf_event probes, adding tests
+for cookie for kprobe/uprobe/tracepoint.
+
+The perf_event test needs to be added completely and is coming
+in following change.
 
 Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Yafang Shao <laoar.shao@gmail.com>
-Link: https://lore.kernel.org/bpf/20231125193130.834322-5-jolsa@kernel.org
+Acked-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240119110505.400573-6-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Stable-dep-of: 4538a38f654a ("selftests/bpf: fix perf_event link info name_len assertion")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/prog_tests/fill_link_info.c | 44 ++++++++++---------
- 1 file changed, 23 insertions(+), 21 deletions(-)
+ .../selftests/bpf/prog_tests/fill_link_info.c | 26 +++++++++++++++----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
 diff --git a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
-index 9d768e0837149..7db7f9bd9d58e 100644
+index 7db7f9bd9d58e..9eb93258614f9 100644
 --- a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
 +++ b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
-@@ -140,14 +140,14 @@ static void test_kprobe_fill_link_info(struct test_fill_link_info *skel,
+@@ -30,6 +30,8 @@ static noinline void uprobe_func(void)
+ 	asm volatile ("");
+ }
+ 
++#define PERF_EVENT_COOKIE 0xdeadbeef
++
+ static int verify_perf_link_info(int fd, enum bpf_perf_event_type type, long addr,
+ 				 ssize_t offset, ssize_t entry_offset)
+ {
+@@ -61,6 +63,8 @@ static int verify_perf_link_info(int fd, enum bpf_perf_event_type type, long add
+ 			ASSERT_EQ(info.perf_event.kprobe.addr, addr + entry_offset,
+ 				  "kprobe_addr");
+ 
++		ASSERT_EQ(info.perf_event.kprobe.cookie, PERF_EVENT_COOKIE, "kprobe_cookie");
++
+ 		if (!info.perf_event.kprobe.func_name) {
+ 			ASSERT_EQ(info.perf_event.kprobe.name_len, 0, "name_len");
+ 			info.perf_event.kprobe.func_name = ptr_to_u64(&buf);
+@@ -80,6 +84,8 @@ static int verify_perf_link_info(int fd, enum bpf_perf_event_type type, long add
+ 			goto again;
+ 		}
+ 
++		ASSERT_EQ(info.perf_event.tracepoint.cookie, PERF_EVENT_COOKIE, "tracepoint_cookie");
++
+ 		err = strncmp(u64_to_ptr(info.perf_event.tracepoint.tp_name), TP_NAME,
+ 			      strlen(TP_NAME));
+ 		ASSERT_EQ(err, 0, "cmp_tp_name");
+@@ -95,6 +101,8 @@ static int verify_perf_link_info(int fd, enum bpf_perf_event_type type, long add
+ 			goto again;
+ 		}
+ 
++		ASSERT_EQ(info.perf_event.uprobe.cookie, PERF_EVENT_COOKIE, "uprobe_cookie");
++
+ 		err = strncmp(u64_to_ptr(info.perf_event.uprobe.file_name), UPROBE_FILE,
+ 			      strlen(UPROBE_FILE));
+ 			ASSERT_EQ(err, 0, "cmp_file_name");
+@@ -138,6 +146,7 @@ static void test_kprobe_fill_link_info(struct test_fill_link_info *skel,
+ 	DECLARE_LIBBPF_OPTS(bpf_kprobe_opts, opts,
+ 		.attach_mode = PROBE_ATTACH_MODE_LINK,
  		.retprobe = type == BPF_PERF_EVENT_KRETPROBE,
++		.bpf_cookie = PERF_EVENT_COOKIE,
  	);
  	ssize_t entry_offset = 0;
-+	struct bpf_link *link;
- 	int link_fd, err;
- 
--	skel->links.kprobe_run = bpf_program__attach_kprobe_opts(skel->progs.kprobe_run,
--								 KPROBE_FUNC, &opts);
--	if (!ASSERT_OK_PTR(skel->links.kprobe_run, "attach_kprobe"))
-+	link = bpf_program__attach_kprobe_opts(skel->progs.kprobe_run, KPROBE_FUNC, &opts);
-+	if (!ASSERT_OK_PTR(link, "attach_kprobe"))
- 		return;
- 
--	link_fd = bpf_link__fd(skel->links.kprobe_run);
-+	link_fd = bpf_link__fd(link);
- 	if (!invalid) {
- 		/* See also arch_adjust_kprobe_addr(). */
- 		if (skel->kconfig->CONFIG_X86_KERNEL_IBT)
-@@ -157,39 +157,41 @@ static void test_kprobe_fill_link_info(struct test_fill_link_info *skel,
- 	} else {
- 		kprobe_fill_invalid_user_buffer(link_fd);
- 	}
--	bpf_link__detach(skel->links.kprobe_run);
-+	bpf_link__destroy(link);
- }
+ 	struct bpf_link *link;
+@@ -162,10 +171,13 @@ static void test_kprobe_fill_link_info(struct test_fill_link_info *skel,
  
  static void test_tp_fill_link_info(struct test_fill_link_info *skel)
  {
-+	struct bpf_link *link;
++	DECLARE_LIBBPF_OPTS(bpf_tracepoint_opts, opts,
++		.bpf_cookie = PERF_EVENT_COOKIE,
++	);
+ 	struct bpf_link *link;
  	int link_fd, err;
  
--	skel->links.tp_run = bpf_program__attach_tracepoint(skel->progs.tp_run, TP_CAT, TP_NAME);
--	if (!ASSERT_OK_PTR(skel->links.tp_run, "attach_tp"))
-+	link = bpf_program__attach_tracepoint(skel->progs.tp_run, TP_CAT, TP_NAME);
-+	if (!ASSERT_OK_PTR(link, "attach_tp"))
+-	link = bpf_program__attach_tracepoint(skel->progs.tp_run, TP_CAT, TP_NAME);
++	link = bpf_program__attach_tracepoint_opts(skel->progs.tp_run, TP_CAT, TP_NAME, &opts);
+ 	if (!ASSERT_OK_PTR(link, "attach_tp"))
  		return;
  
--	link_fd = bpf_link__fd(skel->links.tp_run);
-+	link_fd = bpf_link__fd(link);
- 	err = verify_perf_link_info(link_fd, BPF_PERF_EVENT_TRACEPOINT, 0, 0, 0);
- 	ASSERT_OK(err, "verify_perf_link_info");
--	bpf_link__detach(skel->links.tp_run);
-+	bpf_link__destroy(link);
- }
- 
+@@ -178,13 +190,17 @@ static void test_tp_fill_link_info(struct test_fill_link_info *skel)
  static void test_uprobe_fill_link_info(struct test_fill_link_info *skel,
  				       enum bpf_perf_event_type type)
  {
-+	struct bpf_link *link;
++	DECLARE_LIBBPF_OPTS(bpf_uprobe_opts, opts,
++		.retprobe = type == BPF_PERF_EVENT_URETPROBE,
++		.bpf_cookie = PERF_EVENT_COOKIE,
++	);
+ 	struct bpf_link *link;
  	int link_fd, err;
  
--	skel->links.uprobe_run = bpf_program__attach_uprobe(skel->progs.uprobe_run,
--							    type == BPF_PERF_EVENT_URETPROBE,
--							    0, /* self pid */
--							    UPROBE_FILE, uprobe_offset);
--	if (!ASSERT_OK_PTR(skel->links.uprobe_run, "attach_uprobe"))
-+	link = bpf_program__attach_uprobe(skel->progs.uprobe_run,
-+					  type == BPF_PERF_EVENT_URETPROBE,
-+					  0, /* self pid */
-+					  UPROBE_FILE, uprobe_offset);
-+	if (!ASSERT_OK_PTR(link, "attach_uprobe"))
+-	link = bpf_program__attach_uprobe(skel->progs.uprobe_run,
+-					  type == BPF_PERF_EVENT_URETPROBE,
+-					  0, /* self pid */
+-					  UPROBE_FILE, uprobe_offset);
++	link = bpf_program__attach_uprobe_opts(skel->progs.uprobe_run,
++					       0, /* self pid */
++					       UPROBE_FILE, uprobe_offset,
++					       &opts);
+ 	if (!ASSERT_OK_PTR(link, "attach_uprobe"))
  		return;
  
--	link_fd = bpf_link__fd(skel->links.uprobe_run);
-+	link_fd = bpf_link__fd(link);
- 	err = verify_perf_link_info(link_fd, type, 0, uprobe_offset, 0);
- 	ASSERT_OK(err, "verify_perf_link_info");
--	bpf_link__detach(skel->links.uprobe_run);
-+	bpf_link__destroy(link);
- }
- 
- static int verify_kmulti_link_info(int fd, bool retprobe)
-@@ -278,24 +280,24 @@ static void test_kprobe_multi_fill_link_info(struct test_fill_link_info *skel,
- 					     bool retprobe, bool invalid)
- {
- 	LIBBPF_OPTS(bpf_kprobe_multi_opts, opts);
-+	struct bpf_link *link;
- 	int link_fd, err;
- 
- 	opts.syms = kmulti_syms;
- 	opts.cnt = KMULTI_CNT;
- 	opts.retprobe = retprobe;
--	skel->links.kmulti_run = bpf_program__attach_kprobe_multi_opts(skel->progs.kmulti_run,
--								       NULL, &opts);
--	if (!ASSERT_OK_PTR(skel->links.kmulti_run, "attach_kprobe_multi"))
-+	link = bpf_program__attach_kprobe_multi_opts(skel->progs.kmulti_run, NULL, &opts);
-+	if (!ASSERT_OK_PTR(link, "attach_kprobe_multi"))
- 		return;
- 
--	link_fd = bpf_link__fd(skel->links.kmulti_run);
-+	link_fd = bpf_link__fd(link);
- 	if (!invalid) {
- 		err = verify_kmulti_link_info(link_fd, retprobe);
- 		ASSERT_OK(err, "verify_kmulti_link_info");
- 	} else {
- 		verify_kmulti_invalid_user_buffer(link_fd);
- 	}
--	bpf_link__detach(skel->links.kmulti_run);
-+	bpf_link__destroy(link);
- }
- 
- void test_fill_link_info(void)
 -- 
 2.43.0
 
