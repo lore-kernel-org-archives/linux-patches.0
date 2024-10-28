@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED4418E368;
-	Mon, 28 Oct 2024 06:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611F018D65C;
+	Mon, 28 Oct 2024 06:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098160; cv=none; b=iTVDfPkQu27tAAu15CRfp/Y2w2SoaNQAbyLzCMttPHYFiWqXSHR1c+H2U4QmrXW2j0pfxowACjwnaE+5OtH6ReWG8hMixEVKs+50AFcMspOfNvXlxJe9Hxv0/poiNYsjSd7zL1oHikn6yS/ca2RbsNokkg3sKqklhWE4tAG4bng=
+	t=1730098162; cv=none; b=Ixfn8zG1IpqxlkK7pYVUoSb7qIjuBB+cmvUfDhdG2KzUl5fwJaPOWbmBc2lp9W2RwAjSdq2yakim1XWTwhuoGjGXR3GJMxyAVOxp57sn42iwqpLhdZ0d3d6nyYlNTGFOfJiIjhD9xRdqelqvvk9kI/S+vZIafwMpz7KOia17onU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098160; c=relaxed/simple;
-	bh=uMdTrMAmAacO/ZFV+XIz80fDnj3L/BPrb+miaxZ77SU=;
+	s=arc-20240116; t=1730098162; c=relaxed/simple;
+	bh=qmjJ6fL85vyaS8TjD1RbxAxQPRLG+ZEcpuG4GLnBkMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOkzCXJ1bMD5DAEPco9MzszwKerCptwX7bG8vRvOsXYfqQhbXuhRwldpAoDEkgD8+ixsoHjKPFA1nKmp0hBeYS0CbLkWNnFKmK8sn/Ow+riM0YTu/hUa3ffpguVVyYR5PpzKmGUlkapoZjaCy7Xpn2/Kxvw33tXkSyfmKsTnqlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDZrXqh5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IC5Bc+aEgipluaHWYbW6Er24SnOODnF5BZyRKnOxUbQFyig5s+Zqgdn98ZReqofYzbpZpSupif+CKGkd3g7zurF1qG5dwctjm+tYINWbSXry8lQt7m69cQK0R4q92Klttxn1uJECQUT/O2faWiPLMJbyMUz7at9JbytS1+Rduic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGMFiOCv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDZrXqh5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16CAC4CEC3;
-	Mon, 28 Oct 2024 06:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGMFiOCv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A05C4CEC3;
+	Mon, 28 Oct 2024 06:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098160;
-	bh=uMdTrMAmAacO/ZFV+XIz80fDnj3L/BPrb+miaxZ77SU=;
+	s=korg; t=1730098162;
+	bh=qmjJ6fL85vyaS8TjD1RbxAxQPRLG+ZEcpuG4GLnBkMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uDZrXqh51+aenqmtGkQASks7H80VykPiZN9/gCKl853UBNCxrFVNGZk/jO/+4u6Wj
-	 EizKNdyNCW8CzjfuzeGZMgmZD8TxzAGJx0q7d6bOjMOyrPoibP8HhbC6lcGEMRrMpS
-	 VmIssqg+OyJhxgp2VQ8ZFuET7goXB8HFnOWAFHsM=
+	b=RGMFiOCvwRfU7CsUI2flzPVHgWbYOowF+sdF9r0hjCZbQHg8b4NWyPHuoGdA3uUIl
+	 flKlK6k1oEGe/NNfP0fkQldK9/ToyZpii3TTfK2/kSXjlNZhs21MQIv5ff/lq8oxdx
+	 SeK7LqQHJwmMnCmOnAFXyX2D9EGnEQnIq5CBDayI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 056/261] drm/msm: Allocate memory for disp snapshot with kvzalloc()
-Date: Mon, 28 Oct 2024 07:23:18 +0100
-Message-ID: <20241028062313.422204265@linuxfoundation.org>
+Subject: [PATCH 6.11 097/261] net: ethernet: mtk_eth_soc: fix memory corruption during fq dma init
+Date: Mon, 28 Oct 2024 07:23:59 +0100
+Message-ID: <20241028062314.462056291@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -51,55 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit e4a45582db1b792c57bdb52c45958264f7fcfbdc ]
+[ Upstream commit 88806efc034a9830f483963326b99930ad519af1 ]
 
-With the "drm/msm: add a display mmu fault handler" series [1] we saw
-issues in the field where memory allocation was failing when
-allocating space for registers in msm_disp_state_dump_regs().
-Specifically we were seeing an order 5 allocation fail. It's not
-surprising that order 5 allocations will sometimes fail after the
-system has been up and running for a while.
+The loop responsible for allocating up to MTK_FQ_DMA_LENGTH buffers must
+only touch as many descriptors, otherwise it ends up corrupting unrelated
+memory. Fix the loop iteration count accordingly.
 
-There's no need here for contiguous memory. Change the allocation to
-kvzalloc() which should make it much less likely to fail.
-
-[1] https://lore.kernel.org/r/20240628214848.4075651-1-quic_abhinavk@quicinc.com/
-
-Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/619658/
-Link: https://lore.kernel.org/r/20241014093605.2.I72441365ffe91f3dceb17db0a8ec976af8139590@changeid
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: c57e55819443 ("net: ethernet: mtk_eth_soc: handle dma buffer size soc specific")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241015081755.31060-1-nbd@nbd.name
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-index bb149281d31fa..4d55e3cf570f0 100644
---- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-+++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-@@ -26,7 +26,7 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
- 	end_addr = base_addr + aligned_len;
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 16ca427cf4c3f..ed7313c10a052 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -1171,7 +1171,7 @@ static int mtk_init_fq_dma(struct mtk_eth *eth)
+ 		if (unlikely(dma_mapping_error(eth->dma_dev, dma_addr)))
+ 			return -ENOMEM;
  
- 	if (!(*reg))
--		*reg = kzalloc(len_padded, GFP_KERNEL);
-+		*reg = kvzalloc(len_padded, GFP_KERNEL);
+-		for (i = 0; i < cnt; i++) {
++		for (i = 0; i < len; i++) {
+ 			struct mtk_tx_dma_v2 *txd;
  
- 	if (*reg)
- 		dump_addr = *reg;
-@@ -162,7 +162,7 @@ void msm_disp_state_free(void *data)
- 
- 	list_for_each_entry_safe(block, tmp, &disp_state->blocks, node) {
- 		list_del(&block->node);
--		kfree(block->state);
-+		kvfree(block->state);
- 		kfree(block);
- 	}
- 
+ 			txd = eth->scratch_ring + (j * MTK_FQ_DMA_LENGTH + i) * soc->tx.desc_size;
 -- 
 2.43.0
 
