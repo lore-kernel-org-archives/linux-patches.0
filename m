@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263862C697;
-	Mon, 28 Oct 2024 06:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF8C2C697;
+	Mon, 28 Oct 2024 06:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097898; cv=none; b=Yx1lapzUYV855XROVitR7qx49uW7F0XEFzsfi+efD3Ky7jBHEBQ7ADmbMGDPpmiQhi9W22KcxiiJZZJeLAkFVyHX6Al83cejeXvHRGXsM6SMCIxmkUICTAaY1u3ZEBGtCB6fYbiVgMN1abH0BlufHge3wCuJ2/R22Fw/tzOHXMI=
+	t=1730097900; cv=none; b=O7MioHtryW1V27IYGinyc5JjNF0toaE6Qcn19h/5jCWpPbafkD2ZfdZ8rjFb9fR6kdrOWGKCzK15xCns9MczCnAkqQBGVNWeDGDSQfmOGRq6X0WJ1on7oxVMA1mcdGH9aS6G+4tITaW8fa6Za2Pw/81sR9MOdolhHhzbYCUgyJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097898; c=relaxed/simple;
-	bh=IcBIbVcDK8XSdlKOSU9kXVpuSnCoqjuAP59P0+xvsJM=;
+	s=arc-20240116; t=1730097900; c=relaxed/simple;
+	bh=WohzecJNGJXIyCigm8cvxUXFCpXUH6PUSxgknx1o+G4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q3MBZRWlPlOFRxztpPbYQ69RGKbib301POZPeaxSFSZTarH2DMEyDQwqVxr3ta73UmzuOOwriUsrcWoC4HugzuXMrx0PrfwfJYBMyIu32M76q8gHHx0q1lSUWwZNzeTc2yvAK5iMDlwyBYj09VeHI2fSBJJAmNu7TLNL2i0Iipk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aW+pDGVX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BEwmB63qAs4ygjYVMsBqvzOu2EPJT1lEDnL3/bJNFYFOb8ZMpbPu3mBRKonaSh0T1YtnUWk9fwkIBm2JiiGw1uHXimC9TXAbkKTjmlJepH5Alzb4glRMk5eun+husTmTTItsQ8jTxFSw9Em7QR1KkO7h0dwYsBqHUtaBHc+RYso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pNFS+KN0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aW+pDGVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE106C4CEC3;
-	Mon, 28 Oct 2024 06:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNFS+KN0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B05C4CEC3;
+	Mon, 28 Oct 2024 06:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097898;
-	bh=IcBIbVcDK8XSdlKOSU9kXVpuSnCoqjuAP59P0+xvsJM=;
+	s=korg; t=1730097900;
+	bh=WohzecJNGJXIyCigm8cvxUXFCpXUH6PUSxgknx1o+G4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aW+pDGVXl4zDC3r8Ze0Mrc4utBFYsVrUb37Il90+uIbm/U63pCX0hab/NkxuFE8xF
-	 1gOGsgq7zWrt/0g/FfyU6DIYv4yrpME+5t7noj0fgrRF0ZbkvHYuUUpfZpwIoAK08/
-	 UlZfMvJ4dEkxpAwOYURnne3uO3SN+S2qZx1tF/pQ=
+	b=pNFS+KN0+oc2sKQLmpGesZ8esoLOuyCx1LmoTfom43pR0rqYx24V+jIr8Ui5tH7BY
+	 nJScV5uJVQXKr9VWvGpTbLGewZVCvwGDuf6VDNb2oUQmBvef+iAI/9x9hBsxlrq3pa
+	 kOOd8SbDyle3nygbEnIxgCiGVxfgkk1Y0Au3E3kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.6 179/208] drm/amd: Guard against bad data for ATIF ACPI method
-Date: Mon, 28 Oct 2024 07:25:59 +0100
-Message-ID: <20241028062311.042423916@linuxfoundation.org>
+	Sam Sun <samsun1006219@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 197/208] selinux: improve error checking in sel_write_load()
+Date: Mon, 28 Oct 2024 07:26:17 +0100
+Message-ID: <20241028062311.486427318@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -50,75 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Paul Moore <paul@paul-moore.com>
 
-commit bf58f03931fdcf7b3c45cb76ac13244477a60f44 upstream.
+[ Upstream commit 42c773238037c90b3302bf37a57ae3b5c3f6004a ]
 
-If a BIOS provides bad data in response to an ATIF method call
-this causes a NULL pointer dereference in the caller.
+Move our existing input sanity checking to the top of sel_write_load()
+and add a check to ensure the buffer size is non-zero.
 
-```
-? show_regs (arch/x86/kernel/dumpstack.c:478 (discriminator 1))
-? __die (arch/x86/kernel/dumpstack.c:423 arch/x86/kernel/dumpstack.c:434)
-? page_fault_oops (arch/x86/mm/fault.c:544 (discriminator 2) arch/x86/mm/fault.c:705 (discriminator 2))
-? do_user_addr_fault (arch/x86/mm/fault.c:440 (discriminator 1) arch/x86/mm/fault.c:1232 (discriminator 1))
-? acpi_ut_update_object_reference (drivers/acpi/acpica/utdelete.c:642)
-? exc_page_fault (arch/x86/mm/fault.c:1542)
-? asm_exc_page_fault (./arch/x86/include/asm/idtentry.h:623)
-? amdgpu_atif_query_backlight_caps.constprop.0 (drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c:387 (discriminator 2)) amdgpu
-? amdgpu_atif_query_backlight_caps.constprop.0 (drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c:386 (discriminator 1)) amdgpu
-```
+Move a local variable initialization from the declaration to before it
+is used.
 
-It has been encountered on at least one system, so guard for it.
+Minor style adjustments.
 
-Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c9b7c809b89f24e9372a4e7f02d64c950b07fdee)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Sam Sun <samsun1006219@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ security/selinux/selinuxfs.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-@@ -147,6 +147,7 @@ static union acpi_object *amdgpu_atif_ca
- 					   struct acpi_buffer *params)
+diff --git a/security/selinux/selinuxfs.c b/security/selinux/selinuxfs.c
+index 2c23a5a286086..54bc18e8164b3 100644
+--- a/security/selinux/selinuxfs.c
++++ b/security/selinux/selinuxfs.c
+@@ -582,11 +582,18 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
+ 			      size_t count, loff_t *ppos)
+ 
  {
- 	acpi_status status;
-+	union acpi_object *obj;
- 	union acpi_object atif_arg_elements[2];
- 	struct acpi_object_list atif_arg;
- 	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
-@@ -169,16 +170,24 @@ static union acpi_object *amdgpu_atif_ca
+-	struct selinux_fs_info *fsi = file_inode(file)->i_sb->s_fs_info;
++	struct selinux_fs_info *fsi;
+ 	struct selinux_load_state load_state;
+ 	ssize_t length;
+ 	void *data = NULL;
  
- 	status = acpi_evaluate_object(atif->handle, NULL, &atif_arg,
- 				      &buffer);
-+	obj = (union acpi_object *)buffer.pointer;
++	/* no partial writes */
++	if (*ppos)
++		return -EINVAL;
++	/* no empty policies */
++	if (!count)
++		return -EINVAL;
++
+ 	mutex_lock(&selinux_state.policy_mutex);
  
--	/* Fail only if calling the method fails and ATIF is supported */
-+	/* Fail if calling the method fails and ATIF is supported */
- 	if (ACPI_FAILURE(status) && status != AE_NOT_FOUND) {
- 		DRM_DEBUG_DRIVER("failed to evaluate ATIF got %s\n",
- 				 acpi_format_exception(status));
--		kfree(buffer.pointer);
-+		kfree(obj);
- 		return NULL;
+ 	length = avc_has_perm(current_sid(), SECINITSID_SECURITY,
+@@ -594,26 +601,22 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
+ 	if (length)
+ 		goto out;
+ 
+-	/* No partial writes. */
+-	length = -EINVAL;
+-	if (*ppos != 0)
+-		goto out;
+-
+-	length = -ENOMEM;
+ 	data = vmalloc(count);
+-	if (!data)
++	if (!data) {
++		length = -ENOMEM;
+ 		goto out;
+-
+-	length = -EFAULT;
+-	if (copy_from_user(data, buf, count) != 0)
++	}
++	if (copy_from_user(data, buf, count) != 0) {
++		length = -EFAULT;
+ 		goto out;
++	}
+ 
+ 	length = security_load_policy(data, count, &load_state);
+ 	if (length) {
+ 		pr_warn_ratelimited("SELinux: failed to load policy\n");
+ 		goto out;
+ 	}
+-
++	fsi = file_inode(file)->i_sb->s_fs_info;
+ 	length = sel_make_policy_nodes(fsi, load_state.policy);
+ 	if (length) {
+ 		pr_warn_ratelimited("SELinux: failed to initialize selinuxfs\n");
+@@ -622,13 +625,12 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
  	}
  
--	return buffer.pointer;
-+	if (obj->type != ACPI_TYPE_BUFFER) {
-+		DRM_DEBUG_DRIVER("bad object returned from ATIF: %d\n",
-+				 obj->type);
-+		kfree(obj);
-+		return NULL;
-+	}
+ 	selinux_policy_commit(&load_state);
+-
+ 	length = count;
+-
+ 	audit_log(audit_context(), GFP_KERNEL, AUDIT_MAC_POLICY_LOAD,
+ 		"auid=%u ses=%u lsm=selinux res=1",
+ 		from_kuid(&init_user_ns, audit_get_loginuid(current)),
+ 		audit_get_sessionid(current));
 +
-+	return obj;
- }
- 
- /**
+ out:
+ 	mutex_unlock(&selinux_state.policy_mutex);
+ 	vfree(data);
+-- 
+2.43.0
+
 
 
