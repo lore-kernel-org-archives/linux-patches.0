@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFDB18A924;
-	Mon, 28 Oct 2024 06:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69EB82AF07;
+	Mon, 28 Oct 2024 06:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098077; cv=none; b=gq8AixVczp710KTjRbtEC7WER9pkmSnYb4D8DBcptOr9uH8Y8zbsfzJQ81gT1hrNwxw5llzBugsa+1OX0JJK47p1/fR6azgOMDMuQouZT5Sl3Umuef8/6dWHNgnpxXi2tamjttj1qI+mW+HniGjRhtEUsKIHKY+YEtpfUfDjPI0=
+	t=1730098079; cv=none; b=sUFkDlcVRwBAwg/4h5mJX/Q+OVUWi+U0TFN5fq8dctsmmrv3gFlBT5FvK2p9g+y5/1U7v4d6rlq6mKUrWcXn1DmAEgvQ/GbvFO11C3XX7SN2T0K1DTeHnxpIIkojPJeCMpx0NeA4LGnG54Ey04JAIkk/G73kLSLsYa9kRKKopRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098077; c=relaxed/simple;
-	bh=iOyqcBUwFbFz0b3grGicQxve3mnPcXucpVDY2kU6zMQ=;
+	s=arc-20240116; t=1730098079; c=relaxed/simple;
+	bh=6xkcYmchiQZMy2jilZ8+4UxyTrq4FrODIrmnzXE3Ia4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I8X+3/dcZVnhPqrdAfDxjL+1+MqXQJY2jKAHkNVMMLKGrLxNqPu0V1g4dbOGWjpzmxYcBD8byk4fo6Dwr9Zho5D1ElJK66yhYtPgT1bw21vjrhIMzKF4+sPcNZiSenWnDPR7W0zmdcmq3XT0/WszFni/lwjtQ3gpffxCnXljoQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhExhq8f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h+nQCZqXagrzlSodUfwHvcyGdPeu4Ze1sHQNRoZZSYtGVYJPT5T5WzrjA96UwIGCvFEsGBPcTS9kNM/wZLlg6CyUeH3PAioca0/ihC0rYDYUz91o73fPeGSNoigMvGBdJuJxVyShhrv9jNsqEH3iQySSXGUBwCOOxmSaorDkjIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gi3gporc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhExhq8f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C018EC4CEC3;
-	Mon, 28 Oct 2024 06:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gi3gporc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A3FC4CEC3;
+	Mon, 28 Oct 2024 06:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098077;
-	bh=iOyqcBUwFbFz0b3grGicQxve3mnPcXucpVDY2kU6zMQ=;
+	s=korg; t=1730098079;
+	bh=6xkcYmchiQZMy2jilZ8+4UxyTrq4FrODIrmnzXE3Ia4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LhExhq8fJst3KMfO+pgiS3zvIV/2aXZRPmB3i7eUnYv1v8O7qpNBNs9NhQrp2yC/7
-	 qeDLH60ytYzAfarA2lFk5HAiDAX+JuKjkoNKaTS8tng2AWK1UfC3zZTxjDli4wOE/4
-	 VIzAbHd57Yf0j+gVwSTZdUq1iVygcRDQILBxEk9I=
+	b=Gi3gporcRr7s0hnAIF2cFLcfTAOIoVOd4JWXF+MH8L9z2emBDyBN/SR6s6fGsNdlw
+	 FI3u0PmzeM8C9NOw8WLy3K4qIKxMD2CuZrVAUxMjT7wYcxHTcBuREUfCig9B2m+eFp
+	 v1hVk/bGgC+f+VX27cndQ8yhVpH3oo82ODGI4LAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Wen Gu <guwen@linux.alibaba.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Simon Horman <horms@kernel.org>,
+	Gerd Bayer <gbayer@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 067/261] net: ethernet: aeroflex: fix potential memory leak in greth_start_xmit_gbit()
-Date: Mon, 28 Oct 2024 07:23:29 +0100
-Message-ID: <20241028062313.713365112@linuxfoundation.org>
+Subject: [PATCH 6.11 068/261] net/smc: Fix searching in list of known pnetids in smc_pnet_add_pnetid
+Date: Mon, 28 Oct 2024 07:23:30 +0100
+Message-ID: <20241028062313.737264311@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,44 +55,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Hai <wanghai38@huawei.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit cf57b5d7a2aad456719152ecd12007fe031628a3 ]
+[ Upstream commit 82ac39ebd6db0c9f7a97a934bda1e3e101a9d201 ]
 
-The greth_start_xmit_gbit() returns NETDEV_TX_OK without freeing skb
-in case of skb->len being too long, add dev_kfree_skb() to fix it.
+pnetid of pi (not newly allocated pe) should be compared
 
-Fixes: d4c41139df6e ("net: Add Aeroflex Gaisler 10/100/1G Ethernet MAC driver")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
-Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Link: https://patch.msgid.link/20241012110434.49265-1-wanghai38@huawei.com
+Fixes: e888a2e8337c ("net/smc: introduce list of pnetids for Ethernet devices")
+Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Wen Gu <guwen@linux.alibaba.com>
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
+Link: https://patch.msgid.link/20241014115321.33234-1-lirongqing@baidu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/aeroflex/greth.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/smc/smc_pnet.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/aeroflex/greth.c b/drivers/net/ethernet/aeroflex/greth.c
-index 27af7746d645b..adf6f67c5fcba 100644
---- a/drivers/net/ethernet/aeroflex/greth.c
-+++ b/drivers/net/ethernet/aeroflex/greth.c
-@@ -484,7 +484,7 @@ greth_start_xmit_gbit(struct sk_buff *skb, struct net_device *dev)
+diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
+index 2adb92b8c4699..dbcc72b43d0c0 100644
+--- a/net/smc/smc_pnet.c
++++ b/net/smc/smc_pnet.c
+@@ -753,7 +753,7 @@ static int smc_pnet_add_pnetid(struct net *net, u8 *pnetid)
  
- 	if (unlikely(skb->len > MAX_FRAME_SIZE)) {
- 		dev->stats.tx_errors++;
--		goto out;
-+		goto len_error;
- 	}
- 
- 	/* Save skb pointer. */
-@@ -575,6 +575,7 @@ greth_start_xmit_gbit(struct sk_buff *skb, struct net_device *dev)
- map_error:
- 	if (net_ratelimit())
- 		dev_warn(greth->dev, "Could not create TX DMA mapping\n");
-+len_error:
- 	dev_kfree_skb(skb);
- out:
- 	return err;
+ 	write_lock(&sn->pnetids_ndev.lock);
+ 	list_for_each_entry(pi, &sn->pnetids_ndev.list, list) {
+-		if (smc_pnet_match(pnetid, pe->pnetid)) {
++		if (smc_pnet_match(pnetid, pi->pnetid)) {
+ 			refcount_inc(&pi->refcnt);
+ 			kfree(pe);
+ 			goto unlock;
 -- 
 2.43.0
 
