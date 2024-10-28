@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA07118EFCD;
-	Mon, 28 Oct 2024 06:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255F118EFD4;
+	Mon, 28 Oct 2024 06:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097550; cv=none; b=dZCSKcIIjYG1gu52N6xjUgZRTPry+IZDUwzIjhqZe+DJsTmKCA3vYC0ZDuqpDiJHgVXjBH0d1hIxzYioj/U2W/SxVQc7ZbVbAWd3MXzQZ1C/wXwjzjUeTjsiRc9ULgBnZsv9wUyqlABPSrbfPDUJ3ZOhYCtT8Fxkd/aimw5azw4=
+	t=1730097553; cv=none; b=pJ6uGsMCZXws6WtwJRTADnvk2o8ZBUKTKpwXFeXT8fKiIqIKCDku+aYtJ106gRGsoGM0SBTYlIXkDX03gW5B0ATkLQhTAy3rMrNXdDY9wUrs8e7hotxhFVEJyJ9F82DdB3R9zFXpokxRZ0jNceHj3ASYomZO3vVYdXUvYuOf3qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097550; c=relaxed/simple;
-	bh=+mUVeOV+hOd4iQP2VY3GJfKy3yN0RSfHlIKaERt9N/4=;
+	s=arc-20240116; t=1730097553; c=relaxed/simple;
+	bh=W0iaxcirB3oEhRP9luCbBE9GYf7MUWKuV6Viv1070po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTIeAKOEki4oQ7SLHZgvXLN1MHFiORiK/9fWRkcZeRxxrIoXz2G0cXT2DDD7R8g3MaVn8iZxw2KJc2L6ijHEDyxppsj+t/lKOelCkOA603JxWlCrl5XqPFlRCll2A/NzozT03iMHaVIj6GNOhiYUZ++tVf1CEZAiw5lewewXckw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJCPyZ8W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oDVuFhruYKLjtITmoYiLSZf/LSdPCoCNbQy6eQVgWizlXQ6hfg/BidilVYCM/8slAfg/5ARThZUPp/L5e+mgTo1EiT5LXs4Sp52Q1qALmdJ7YdLYPnSP1kRzxKyYmPKhOu1RW53xtfdu4DnmlGqnYYCwP9yCGQF4KrZbixvRjxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBkzxLfD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJCPyZ8W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE8CC4CEC3;
-	Mon, 28 Oct 2024 06:39:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBkzxLfD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B956EC4CEC3;
+	Mon, 28 Oct 2024 06:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097550;
-	bh=+mUVeOV+hOd4iQP2VY3GJfKy3yN0RSfHlIKaERt9N/4=;
+	s=korg; t=1730097553;
+	bh=W0iaxcirB3oEhRP9luCbBE9GYf7MUWKuV6Viv1070po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SJCPyZ8WXqiT6EIvEsZ2SswID6G48u1Q4fcDYWh6eQn4aZJDvX2bFbCFUA8IAPr05
-	 YE0ai50f6a+n+K+/0hxzNo7PNJ/zXPkOv8MxfkCgs76eelnoXO1Z39bnHzvoNyupkB
-	 IJKNCFhdIonBlbcnNAP1Ekux8SechZNn6wYXf0gU=
+	b=uBkzxLfDe415OSA9qMauKIBj3Lxjp7J1dCRs8YciWGMu60z5JKLjVgDA70gcc7Kz8
+	 +w4MRoWdgYcGoPkAl2nomVMYOEbdZWX0/Nh7ku/Gp5nTvg//opdMxJy6VABenhfy+V
+	 fJ2aS41qrJpkLerpExlO76jpqjjcuTlAcwY8Ssbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Jonathan Marek <jonathan@marek.ca>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/208] drm/msm/dpu: check for overflow in _dpu_crtc_setup_lm_bounds()
-Date: Mon, 28 Oct 2024 07:23:42 +0100
-Message-ID: <20241028062307.691691854@linuxfoundation.org>
+Subject: [PATCH 6.6 043/208] drm/msm/dsi: improve/fix dsc pclk calculation
+Date: Mon, 28 Oct 2024 07:23:43 +0100
+Message-ID: <20241028062307.716843656@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -51,80 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit 3a0851b442d1f63ba42ecfa2506d3176cfabf9d4 ]
+[ Upstream commit 24436a540d16ca6a523b8e5441180001c31b6b35 ]
 
-Make _dpu_crtc_setup_lm_bounds() check that CRTC width is not
-overflowing LM requirements. Rename the function accordingly.
+drm_mode_vrefresh() can introduce a large rounding error, avoid it.
 
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Fixes: 7c9e4a554d4a ("drm/msm/dsi: Reduce pclk rate for compression")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/612237/
-Link: https://lore.kernel.org/r/20240903-dpu-mode-config-width-v6-3-617e1ecc4b7a@linaro.org
+Patchwork: https://patchwork.freedesktop.org/patch/618432/
+Link: https://lore.kernel.org/r/20241007050157.26855-1-jonathan@marek.ca
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index e238e4e8116ca..ad57368dc13f0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -722,12 +722,13 @@ void dpu_crtc_complete_commit(struct drm_crtc *crtc)
- 	_dpu_crtc_complete_flip(crtc);
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 77b805eacb1b1..fcfe612416b0b 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -537,7 +537,7 @@ static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mo
+ 
+ 	int new_htotal = mode->htotal - mode->hdisplay + new_hdisplay;
+ 
+-	return new_htotal * mode->vtotal * drm_mode_vrefresh(mode);
++	return mult_frac(mode->clock * 1000u, new_htotal, mode->htotal);
  }
  
--static void _dpu_crtc_setup_lm_bounds(struct drm_crtc *crtc,
-+static int _dpu_crtc_check_and_setup_lm_bounds(struct drm_crtc *crtc,
- 		struct drm_crtc_state *state)
- {
- 	struct dpu_crtc_state *cstate = to_dpu_crtc_state(state);
- 	struct drm_display_mode *adj_mode = &state->adjusted_mode;
- 	u32 crtc_split_width = adj_mode->hdisplay / cstate->num_mixers;
-+	struct dpu_kms *dpu_kms = _dpu_crtc_get_kms(crtc);
- 	int i;
- 
- 	for (i = 0; i < cstate->num_mixers; i++) {
-@@ -738,7 +739,12 @@ static void _dpu_crtc_setup_lm_bounds(struct drm_crtc *crtc,
- 		r->y2 = adj_mode->vdisplay;
- 
- 		trace_dpu_crtc_setup_lm_bounds(DRMID(crtc), i, r);
-+
-+		if (drm_rect_width(r) > dpu_kms->catalog->caps->max_mixer_width)
-+			return -E2BIG;
- 	}
-+
-+	return 0;
- }
- 
- static void _dpu_crtc_get_pcc_coeff(struct drm_crtc_state *state,
-@@ -814,7 +820,7 @@ static void dpu_crtc_atomic_begin(struct drm_crtc *crtc,
- 
- 	DRM_DEBUG_ATOMIC("crtc%d\n", crtc->base.id);
- 
--	_dpu_crtc_setup_lm_bounds(crtc, crtc->state);
-+	_dpu_crtc_check_and_setup_lm_bounds(crtc, crtc->state);
- 
- 	/* encoder will trigger pending mask now */
- 	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
-@@ -1208,8 +1214,11 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
- 	if (crtc_state->active_changed)
- 		crtc_state->mode_changed = true;
- 
--	if (cstate->num_mixers)
--		_dpu_crtc_setup_lm_bounds(crtc, crtc_state);
-+	if (cstate->num_mixers) {
-+		rc = _dpu_crtc_check_and_setup_lm_bounds(crtc, crtc_state);
-+		if (rc)
-+			return rc;
-+	}
- 
- 	/* FIXME: move this to dpu_plane_atomic_check? */
- 	drm_atomic_crtc_state_for_each_plane_state(plane, pstate, crtc_state) {
+ static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode,
 -- 
 2.43.0
 
