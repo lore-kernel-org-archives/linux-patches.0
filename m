@@ -1,156 +1,69 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979241D79B1
-	for <patches@lists.linux.dev>; Mon, 28 Oct 2024 12:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9EC1DE4E9;
+	Mon, 28 Oct 2024 12:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730118034; cv=none; b=u1DAaIcSl1Oq6sxM/UZ/HcoV54zcUkrkAwSwxPQhEl80de+2vOKpKj0XQYq52Rd/6vIzyR0OOhpspOHbp7QhNw4iVnKeU2jEWP2rDRb2+GfVW0Fs8WZW0yEEfuUT2UH80mf71O6GphRTi+STjIPo/7ZetkMu0IDsjK7QklEIHqM=
+	t=1730119337; cv=none; b=XRUtP+W1yfNkiCPgMM/sGwD2uGzXBeypIneBDwGdctR5FVK85f47Fr43DCfVJ9uggPF2bigvX2axkvNOv2QEk1+thZDUstMJb9hZDA1ymMP9nWzp3yJDyncDGt1nBmmsHT2BXmw3GjN5AFfzaMZfmetaRtndf+M/jIE/0E9u4wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730118034; c=relaxed/simple;
-	bh=ZQpUc8rr8drZvAGg91DuY87mkamn5CvVszxJpLlQRhs=;
-	h=From:To:Cc:Date:Message-Id:Subject; b=eYT+tq1/PHMRaLS+ANYKyf2JtL28ZkTqNaj1+G37EVN97uLY0EjffQzL1HTKOzHqLfXM/AC4L8A5Y6FRVlZqzwjmVSp4zj9IuXDvSdrFMNG9CKlVanYT1/6w62csAgDsnYQC/72UhsBYYQ7FgugSrzsmuWE/TQkge7hTqRVqbEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0826C4CEC3
-	for <patches@lists.linux.dev>; Mon, 28 Oct 2024 12:20:33 +0000 (UTC)
-Resent-From: Mark Brown <broonie@kernel.org>
-Resent-Date: Mon, 28 Oct 2024 12:20:30 +0000
-Resent-Message-ID: <Zx-Bjg0esy1lP1H0@sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Mon, 28 Oct 2024 06:11:07 +0000
-Received: from nyc.source.kernel.org ([147.75.193.91])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=ZuRb=RY=everest-semi.com=zhangyi@kernel.org>)
-	id 1t5Iy1-000sO0-2R
-	for broonie@sirena.co.uk; Mon, 28 Oct 2024 06:11:07 +0000
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by nyc.source.kernel.org (Postfix) with ESMTP id 23B6FA417D4
-	for <broonie@sirena.co.uk>; Mon, 28 Oct 2024 06:09:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id EFBCEC4CEE8; Mon, 28 Oct 2024 06:11:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 86D17C4CECD
-	for <broonie@kernel.org>; Mon, 28 Oct 2024 06:10:57 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 86D17C4CECD
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=everest-semi.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=everest-semi.com
-Received: from unknown (HELO zy-virtual-machine.localdomain)([180.172.39.131])
-	by sina.net (10.185.250.30) with ESMTP
-	id 671F29A900006BE1; Mon, 28 Oct 2024 14:05:30 +0800 (CST)
-X-Sender: zhangyi@everest-semi.com
-X-Auth-ID: zhangyi@everest-semi.com
-Authentication-Results: sina.net;
-	 spf=none smtp.mailfrom=zhangyi@everest-semi.com;
-	 dkim=none header.i=none;
-	 dmarc=none action=none header.from=zhangyi@everest-semi.com
-X-SMAIL-MID: AEF74285FCFE4222BA9CFBCC107CB715
-X-SMAIL-UIID: AEF74285FCFE4222BA9CFBCC107CB715-20241028-140530
-From: Zhang Yi <zhangyi@everest-semi.com>
-To: alsa-devel@alsa-project.org,
-	broonie@kernel.org
-Cc: tiwai@suse.com,
-	amadeuszx.slawinski@linux.intel.com,
-	yangxiaohua@everest-semi.com,
-	zhuning@everest-semi.com,
-	zhangyi@everest-semi.com
-Date: Mon, 28 Oct 2024 14:05:29 +0800
-Message-Id: <20241028060529.3359-1-zhangyi@everest-semi.com>
-X-Mailer: git-send-email 2.17.1
-X-SA-Exim-Connect-IP: 147.75.193.91
-X-SA-Exim-Mail-From: SRS0=ZuRb=RY=everest-semi.com=zhangyi@kernel.org
-Subject: [PATCH] ASoC: codecs: ES8326: Modify the configuration of and micbias
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: PkUjUvNGvRKI
+	s=arc-20240116; t=1730119337; c=relaxed/simple;
+	bh=r2wydnfVm8v4NwIeVCJc9UK8GtaBZ4LbV6yLNH7jT/I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=i2wJi9SKsPD8oOQLGL+4mcQ/xSbCMWVI9xcRPAgoce3gHhlQRFQVYBmjKEc8s57+7U66mQZ6oBEJHErVZErsMgokj3R2iva9okWgRkQ3W81NERgDd7t84SfKN7Jv0F2l9V99y8PLEE0KDQcoIqITpO4T0IHueWyS4moFEwNr9QU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X3qzsgTl; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X3qzsgTl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCF9C4CEE7;
+	Mon, 28 Oct 2024 12:42:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730119337;
+	bh=r2wydnfVm8v4NwIeVCJc9UK8GtaBZ4LbV6yLNH7jT/I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=X3qzsgTlGPvQK0RJf9MbQDN5tw0I7yVVfv9VkigUXrGxwr27ciuThvkcTAfAII0PK
+	 a2h/4igxEdU+WA46KXg7TvKgZnfv7ZNRsW5b4HC0PWB/ka+YfqZDPkUeGyuDP3RT1s
+	 IR+0p2hF43XYgVIi2f8c4cbQeya7RUfvctTN7sigJkJr4jRvFGz3oZ7p2KTfbayKWx
+	 fD9W0P5j/cVItyz54WtScM0IJP3bnjA0ASDhWUOYdA58uZcQp7HxZjbFsNhIu1fcLc
+	 1mqwTP4EaEjogsa8nhYsWS+Y7pI455dOj7fT0dxwMqVrbeweKKtiNMbxi2ZaKmj+yT
+	 57ZowrmnRHojg==
+Date: Mon, 28 Oct 2024 08:42:15 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Antony Antony <antony.antony@secunet.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: Re: [PATCH 6.6 133/208] xfrm: Add Direction to the SA in or out
+Message-ID: <Zx-Gp8f9jjxmDsIe@sashalap>
+References: <20241028062306.649733554@linuxfoundation.org>
+ <20241028062309.914261564@linuxfoundation.org>
+ <Zx9wp6atLMR1UcCL@moon.secunet.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <Zx9wp6atLMR1UcCL@moon.secunet.de>
 
-Because we designed a new version of ES8326, the configuration of
-micbias needed to be modified.We tested the new driver,
-on both the new version and the old one. It works well.
+On Mon, Oct 28, 2024 at 12:08:23PM +0100, Antony Antony wrote:
+>On Mon, Oct 28, 2024 at 07:25:13 +0100, Greg Kroah-Hartman wrote:
+>> 6.6-stable review patch.  If anyone has any objections, please let me know.
+>
+>Hi Greg,
+>
+>This patch is a part of a new feature SA direction and it appears the auto
+>patch selector picked one patch out of patch set?
+>I think this patch alone should not be applied to older stable kernel.
 
-Signed-off-by: Zhang Yi <zhangyi@everest-semi.com>
----
- sound/soc/codecs/es8326.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+It was picked up as a dependency:
 
-diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
-index d5362b3be484..aa3e364827c8 100755
---- a/sound/soc/codecs/es8326.c
-+++ b/sound/soc/codecs/es8326.c
-@@ -614,6 +614,10 @@ static int es8326_mute(struct snd_soc_dai *dai, int mute, int direction)
- 		} else {
- 			regmap_update_bits(es8326->regmap,  ES8326_ADC_MUTE,
- 					0x0F, 0x0F);
-+			if (es8326->version > ES8326_VERSION_B) {
-+				regmap_update_bits(es8326->regmap, ES8326_VMIDSEL, 0x40, 0x40);
-+				regmap_update_bits(es8326->regmap, ES8326_ANA_MICBIAS, 0x70, 0x00);
-+			}
- 		}
- 	} else {
- 		if (!es8326->calibrated) {
-@@ -640,6 +644,10 @@ static int es8326_mute(struct snd_soc_dai *dai, int mute, int direction)
- 					ES8326_MUTE_MASK, ~(ES8326_MUTE));
- 		} else {
- 			msleep(300);
-+			if (es8326->version > ES8326_VERSION_B) {
-+				regmap_update_bits(es8326->regmap, ES8326_ANA_MICBIAS, 0x70, 0x50);
-+				regmap_update_bits(es8326->regmap, ES8326_VMIDSEL, 0x40, 0x00);
-+			}
- 			regmap_update_bits(es8326->regmap,  ES8326_ADC_MUTE,
- 					0x0F, 0x00);
- 		}
-@@ -821,7 +829,7 @@ static void es8326_jack_detect_handler(struct work_struct *work)
- 	iface = snd_soc_component_read(comp, ES8326_HPDET_STA);
- 	dev_dbg(comp->dev, "gpio flag %#04x", iface);
- 
--	if ((es8326->jack_remove_retry == 1) && (es8326->version != ES8326_VERSION_B)) {
-+	if ((es8326->jack_remove_retry == 1) && (es8326->version < ES8326_VERSION_B)) {
- 		if (iface & ES8326_HPINSERT_FLAG)
- 			es8326->jack_remove_retry = 2;
- 		else
-@@ -859,7 +867,7 @@ static void es8326_jack_detect_handler(struct work_struct *work)
- 		/*
- 		 * Inverted HPJACK_POL bit to trigger one IRQ to double check HP Removal event
- 		 */
--		if ((es8326->jack_remove_retry == 0) && (es8326->version != ES8326_VERSION_B)) {
-+		if ((es8326->jack_remove_retry == 0) && (es8326->version < ES8326_VERSION_B)) {
- 			es8326->jack_remove_retry = 1;
- 			dev_dbg(comp->dev, "remove event check, invert HPJACK_POL, cnt = %d\n",
- 					es8326->jack_remove_retry);
-@@ -954,7 +962,7 @@ static int es8326_calibrate(struct snd_soc_component *component)
- 	regmap_read(es8326->regmap, ES8326_CHIP_VERSION, &reg);
- 	es8326->version = reg;
- 
--	if ((es8326->version == ES8326_VERSION_B) && (es8326->calibrated == false)) {
-+	if ((es8326->version >= ES8326_VERSION_B) && (es8326->calibrated == false)) {
- 		dev_dbg(component->dev, "ES8326_VERSION_B, calibrating\n");
- 		regmap_write(es8326->regmap, ES8326_CLK_INV, 0xc0);
- 		regmap_write(es8326->regmap, ES8326_CLK_DIV1, 0x03);
-@@ -1047,7 +1055,7 @@ static void es8326_init(struct snd_soc_component *component)
- 	regmap_write(es8326->regmap, ES8326_DAC_VPPSCALE, 0x15);
- 
- 	regmap_write(es8326->regmap, ES8326_HPDET_TYPE, 0x80 |
--			((es8326->version == ES8326_VERSION_B) ?
-+			((es8326->version >= ES8326_VERSION_B) ?
- 			(ES8326_HP_DET_SRC_PIN9 | es8326->jack_pol) :
- 			(ES8326_HP_DET_SRC_PIN9 | es8326->jack_pol | 0x04)));
- 	usleep_range(5000, 10000);
-@@ -1073,6 +1081,10 @@ static void es8326_init(struct snd_soc_component *component)
- 	regmap_write(es8326->regmap, ES8326_ADC1_SRC, 0x44);
- 	regmap_write(es8326->regmap, ES8326_ADC2_SRC, 0x66);
- 	es8326_disable_micbias(es8326->component);
-+	if (es8326->version > ES8326_VERSION_B) {
-+		regmap_update_bits(es8326->regmap, ES8326_ANA_MICBIAS, 0x73, 0x03);
-+		regmap_update_bits(es8326->regmap, ES8326_VMIDSEL, 0x40, 0x40);
-+	}
- 
- 	msleep(200);
- 	regmap_write(es8326->regmap, ES8326_INT_SOURCE, ES8326_INT_SRC_PIN9);
+>> Stable-dep-of: 3f0ab59e6537 ("xfrm: validate new SA's prefixlen using SA family when sel.family is unset")
+
+We can drop it, and the netfilter folks can provide us a backport of the
+fix above?
+
 -- 
-2.17.1
-
+Thanks,
+Sasha
