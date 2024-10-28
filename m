@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8F018DF7D;
-	Mon, 28 Oct 2024 06:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052158837;
+	Mon, 28 Oct 2024 06:53:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098394; cv=none; b=mpyhRYxB77SGe/HoSNSdwMgDlvMFiK5VFFJmtKObJx9Y+9wKefRLrHIsj4IQmin8Flh0/gINFC+d0Wt5K3orBi5rEOY3qZwfnSOwFRqFF4cxs8qD/a0JXDnQwBzAvxraJMY3PSjdyVj+5+U/WZyozsoph+c9YUN6P4AQMAfbuN0=
+	t=1730098397; cv=none; b=p20Bk+3JkhoR4r0mY0UYOnYqbJEBSbUbjwi/WbMA6ZvhPGKk+w95lf8WPWQ5kPDvG7HhwFtClt57N6fAUElJj3zwJmtm7lvAaIC7rYCfncyTsOE/jxrZqNjys32BpiP4bslDySl6a7rJTCI9NVd/h+qUf68EBzWxl7lFNaSZmvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098394; c=relaxed/simple;
-	bh=bpHkTo89F/aoVj2Y++tv0rBasXbuEXJ9gAg3OaLV2sY=;
+	s=arc-20240116; t=1730098397; c=relaxed/simple;
+	bh=eOt8oT9LbDkmljj7xCjq8uEO+DNeJBiExzvaogzspxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mIKYR3FcY2Wrf09K+WjAtBFqTYYvPi6ly/4wRs1/1SuojuYeE4ZaCU8fmyMxMnoNywdIYO23md29zKBsctZqQvrMvrLlZKDdEaIEhvQbSB3yvqMElvhD5OTZKzI8eZ+e6Gu+GzvzqOCQD9EBCl2l57MeJkN2C0gR9RPaB1u1ncM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqTqZ9yS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lfdH91L1wn/3bO8XiYtVMo6Lesu0jfj+ojucHuh386BgPrHAdz9qTGgZcELwc/mCRsjyU8mUhVMZUKBEHk0d+012y4deSzFnHE8UUrwT53xybvw4FqKXE1RPyCyMBJgDyf6K7EDgtwbPZE8DxleIsBwrLYiUHOoCPXPqJVMZzRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkUl8cWq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqTqZ9yS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DACFC4CEC7;
-	Mon, 28 Oct 2024 06:53:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkUl8cWq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D0BC4CEC7;
+	Mon, 28 Oct 2024 06:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098394;
-	bh=bpHkTo89F/aoVj2Y++tv0rBasXbuEXJ9gAg3OaLV2sY=;
+	s=korg; t=1730098396;
+	bh=eOt8oT9LbDkmljj7xCjq8uEO+DNeJBiExzvaogzspxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lqTqZ9ySLyZea4wCk0SM0akGdFWam3NDoEOBCHcQmHCb3oYs0pe5JfVRY4/FjZRYN
-	 kRhLV4Y0Ae+utnWGMoz7ey0XSgeABrGtrdOSZORvUgK9eeoBeudpEv9FD5L38IHsIO
-	 Jap+UEHoa148RwByk72+6Zp0MydZ+jRoWoz1mCpE=
+	b=EkUl8cWqaEODrjSVGr3BMFz5mBxqCauICgbOZNUgJMsbCRlx2uq5lXzybS7Ia9O9N
+	 9QYsOV7rUeroLPryhRkwa0xXQzSBdXtfzKqArl5v3w25MeJiEY9Jhhg3I7ggjeCYYc
+	 TX8hP8DzR+aM8rdypheIvN/ZgUNZu0ypYAuT6UXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>
-Subject: [PATCH 6.11 206/261] perf/x86/rapl: Fix the energy-pkg event for AMD CPUs
-Date: Mon, 28 Oct 2024 07:25:48 +0100
-Message-ID: <20241028062317.232710660@linuxfoundation.org>
+	syzbot+56360f93efa90ff15870@syzkaller.appspotmail.com,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.11 207/261] btrfs: reject ro->rw reconfiguration if there are hard ro requirements
+Date: Mon, 28 Oct 2024 07:25:49 +0100
+Message-ID: <20241028062317.259537745@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -51,148 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 8d72eba1cf8cecd76a2b4c1dd7673c2dc775f514 upstream.
+commit 3c36a72c1d27de6618c1c480c793d9924640f5bb upstream.
 
-After commit:
+[BUG]
+Syzbot reports the following crash:
 
-  63edbaa48a57 ("x86/cpu/topology: Add support for the AMD 0x80000026 leaf")
+  BTRFS info (device loop0 state MCS): disabling free space tree
+  BTRFS info (device loop0 state MCS): clearing compat-ro feature flag for FREE_SPACE_TREE (0x1)
+  BTRFS info (device loop0 state MCS): clearing compat-ro feature flag for FREE_SPACE_TREE_VALID (0x2)
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN NOPTI
+  KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+  RIP: 0010:backup_super_roots fs/btrfs/disk-io.c:1691 [inline]
+  RIP: 0010:write_all_supers+0x97a/0x40f0 fs/btrfs/disk-io.c:4041
+  Call Trace:
+   <TASK>
+   btrfs_commit_transaction+0x1eae/0x3740 fs/btrfs/transaction.c:2530
+   btrfs_delete_free_space_tree+0x383/0x730 fs/btrfs/free-space-tree.c:1312
+   btrfs_start_pre_rw_mount+0xf28/0x1300 fs/btrfs/disk-io.c:3012
+   btrfs_remount_rw fs/btrfs/super.c:1309 [inline]
+   btrfs_reconfigure+0xae6/0x2d40 fs/btrfs/super.c:1534
+   btrfs_reconfigure_for_mount fs/btrfs/super.c:2020 [inline]
+   btrfs_get_tree_subvol fs/btrfs/super.c:2079 [inline]
+   btrfs_get_tree+0x918/0x1920 fs/btrfs/super.c:2115
+   vfs_get_tree+0x90/0x2b0 fs/super.c:1800
+   do_new_mount+0x2be/0xb40 fs/namespace.c:3472
+   do_mount fs/namespace.c:3812 [inline]
+   __do_sys_mount fs/namespace.c:4020 [inline]
+   __se_sys_mount+0x2d6/0x3c0 fs/namespace.c:3997
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-... on AMD processors that support extended CPUID leaf 0x80000026, the
-topology_die_cpumask() and topology_logical_die_id() macros no longer
-return the package cpumask and package ID, instead they return the CCD
-(Core Complex Die) mask and ID respectively.
+[CAUSE]
+To support mounting different subvolume with different RO/RW flags for
+the new mount APIs, btrfs introduced two workaround to support this feature:
 
-This leads to the energy-pkg event scope to be modified to CCD instead of package.
+- Skip mount option/feature checks if we are mounting a different
+  subvolume
 
-So, change the PMU scope for AMD and Hygon back to package.
+- Reconfigure the fs to RW if the initial mount is RO
 
-On a 12 CCD 1 Package AMD Zen4 Genoa machine:
+Combining these two, we can have the following sequence:
 
-  Before:
+- Mount the fs ro,rescue=all,clear_cache,space_cache=v1
+  rescue=all will mark the fs as hard read-only, so no v2 cache clearing
+  will happen.
 
-  $ cat /sys/devices/power/cpumask
-  0,8,16,24,32,40,48,56,64,72,80,88.
+- Mount a subvolume rw of the same fs.
+  We go into btrfs_get_tree_subvol(), but fc_mount() returns EBUSY
+  because our new fc is RW, different from the original fs.
 
-The expected cpumask here is supposed to be just "0", as it is a package
-scope event, only one CPU will be collecting the event for all the CPUs in
-the package.
+  Now we enter btrfs_reconfigure_for_mount(), which switches the RO flag
+  first so that we can grab the existing fs_info.
+  Then we reconfigure the fs to RW.
 
-  After:
+- During reconfiguration, option/features check is skipped
+  This means we will restart the v2 cache clearing, and convert back to
+  v1 cache.
+  This will trigger fs writes, and since the original fs has "rescue=all"
+  option, it skips the csum tree read.
 
-  $ cat /sys/devices/power/cpumask
-  0
+  And eventually causing NULL pointer dereference in super block
+  writeback.
 
-[ mingo: Cleaned up the changelog ]
+[FIX]
+For reconfiguration caused by different subvolume RO/RW flags, ensure we
+always run btrfs_check_options() to ensure we have proper hard RO
+requirements met.
 
-Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20240904100934.3260-1-Dhananjay.Ugwekar@amd.com
+In fact the function btrfs_check_options() doesn't really do many
+complex checks, but hard RO requirement and some feature dependency
+checks, thus there is no special reason not to do the check for mount
+reconfiguration.
+
+Reported-by: syzbot+56360f93efa90ff15870@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/0000000000008c5d090621cb2770@google.com/
+Fixes: f044b318675f ("btrfs: handle the ro->rw transition for mounting different subvolumes")
+CC: stable@vger.kernel.org # 6.8+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/rapl.c |   47 ++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 42 insertions(+), 5 deletions(-)
+ fs/btrfs/super.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/arch/x86/events/rapl.c
-+++ b/arch/x86/events/rapl.c
-@@ -103,6 +103,19 @@ static struct perf_pmu_events_attr event
- 	.event_str	= str,							\
- };
+diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
+index 3f8673f97432..926d7a9ed99d 100644
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -1507,8 +1507,7 @@ static int btrfs_reconfigure(struct fs_context *fc)
+ 	sync_filesystem(sb);
+ 	set_bit(BTRFS_FS_STATE_REMOUNTING, &fs_info->fs_state);
  
-+/*
-+ * RAPL Package energy counter scope:
-+ * 1. AMD/HYGON platforms have a per-PKG package energy counter
-+ * 2. For Intel platforms
-+ *	2.1. CLX-AP is multi-die and its RAPL MSRs are die-scope
-+ *	2.2. Other Intel platforms are single die systems so the scope can be
-+ *	     considered as either pkg-scope or die-scope, and we are considering
-+ *	     them as die-scope.
-+ */
-+#define rapl_pmu_is_pkg_scope()				\
-+	(boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||	\
-+	 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
-+
- struct rapl_pmu {
- 	raw_spinlock_t		lock;
- 	int			n_active;
-@@ -140,9 +153,25 @@ static unsigned int rapl_cntr_mask;
- static u64 rapl_timer_ms;
- static struct perf_msr *rapl_msrs;
+-	if (!mount_reconfigure &&
+-	    !btrfs_check_options(fs_info, &ctx->mount_opt, fc->sb_flags))
++	if (!btrfs_check_options(fs_info, &ctx->mount_opt, fc->sb_flags))
+ 		return -EINVAL;
  
-+/*
-+ * Helper functions to get the correct topology macros according to the
-+ * RAPL PMU scope.
-+ */
-+static inline unsigned int get_rapl_pmu_idx(int cpu)
-+{
-+	return rapl_pmu_is_pkg_scope() ? topology_logical_package_id(cpu) :
-+					 topology_logical_die_id(cpu);
-+}
-+
-+static inline const struct cpumask *get_rapl_pmu_cpumask(int cpu)
-+{
-+	return rapl_pmu_is_pkg_scope() ? topology_core_cpumask(cpu) :
-+					 topology_die_cpumask(cpu);
-+}
-+
- static inline struct rapl_pmu *cpu_to_rapl_pmu(unsigned int cpu)
- {
--	unsigned int rapl_pmu_idx = topology_logical_die_id(cpu);
-+	unsigned int rapl_pmu_idx = get_rapl_pmu_idx(cpu);
- 
- 	/*
- 	 * The unsigned check also catches the '-1' return value for non
-@@ -552,7 +581,7 @@ static int rapl_cpu_offline(unsigned int
- 
- 	pmu->cpu = -1;
- 	/* Find a new cpu to collect rapl events */
--	target = cpumask_any_but(topology_die_cpumask(cpu), cpu);
-+	target = cpumask_any_but(get_rapl_pmu_cpumask(cpu), cpu);
- 
- 	/* Migrate rapl events to the new target */
- 	if (target < nr_cpu_ids) {
-@@ -565,6 +594,11 @@ static int rapl_cpu_offline(unsigned int
- 
- static int rapl_cpu_online(unsigned int cpu)
- {
-+	s32 rapl_pmu_idx = get_rapl_pmu_idx(cpu);
-+	if (rapl_pmu_idx < 0) {
-+		pr_err("topology_logical_(package/die)_id() returned a negative value");
-+		return -EINVAL;
-+	}
- 	struct rapl_pmu *pmu = cpu_to_rapl_pmu(cpu);
- 	int target;
- 
-@@ -579,14 +613,14 @@ static int rapl_cpu_online(unsigned int
- 		pmu->timer_interval = ms_to_ktime(rapl_timer_ms);
- 		rapl_hrtimer_init(pmu);
- 
--		rapl_pmus->pmus[topology_logical_die_id(cpu)] = pmu;
-+		rapl_pmus->pmus[rapl_pmu_idx] = pmu;
- 	}
- 
- 	/*
- 	 * Check if there is an online cpu in the package which collects rapl
- 	 * events already.
- 	 */
--	target = cpumask_any_and(&rapl_cpu_mask, topology_die_cpumask(cpu));
-+	target = cpumask_any_and(&rapl_cpu_mask, get_rapl_pmu_cpumask(cpu));
- 	if (target < nr_cpu_ids)
- 		return 0;
- 
-@@ -675,7 +709,10 @@ static const struct attribute_group *rap
- 
- static int __init init_rapl_pmus(void)
- {
--	int nr_rapl_pmu = topology_max_packages() * topology_max_dies_per_package();
-+	int nr_rapl_pmu = topology_max_packages();
-+
-+	if (!rapl_pmu_is_pkg_scope())
-+		nr_rapl_pmu *= topology_max_dies_per_package();
- 
- 	rapl_pmus = kzalloc(struct_size(rapl_pmus, pmus, nr_rapl_pmu), GFP_KERNEL);
- 	if (!rapl_pmus)
+ 	ret = btrfs_check_features(fs_info, !(fc->sb_flags & SB_RDONLY));
+-- 
+2.47.0
+
 
 
