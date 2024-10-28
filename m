@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF17718E368;
-	Mon, 28 Oct 2024 06:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6322C697;
+	Mon, 28 Oct 2024 06:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097634; cv=none; b=H3Y2Q7JA/lqx0DMfuspvCm0bckQ3aMu5/C92qfuQMwU23Mup6dlVlHy8/6HElxcLJhZm1+hYacNof3leQ7tvlsWEH6RVoXrw3fpt7DiSOBx2ZSMip/j7lXUnlP1/WtfsaeqMbtqo04nYh0GD5JCogK0P4akMCcztF3VYIVrIfqE=
+	t=1730097636; cv=none; b=eJ/SYPfY+byiLnSt6L3LtOxtTvTky/aadUhIlHVbtP3ji/j7Wqm2xyNGonJHK1q3aQ/eat+mzrSRVEekat5cwJ/rFj7J2dkPfguyK2czizc5i2TMgOJ5Gze5W4I+oYqLM94OeRGG/whAjYjrHwVq7ocHir766GWk1S1AmRaiunM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097634; c=relaxed/simple;
-	bh=FujOfzzIYUMJVb9//MFLafzvwpHSKhXoPiZFNwaVrWU=;
+	s=arc-20240116; t=1730097636; c=relaxed/simple;
+	bh=Q8GnSz4kK6Ezu1SVWoQ7pP/TjmxGAo89digEhntLdpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iGXbsKv6tky+URXNqgbwdMjZthqPiSS5uF7WmktKjZw7FV7ocaCOuI2IrkriZ7UYrKhlhTZ/vVw3yS0lnFTPkvhSsnxr0/L30OmlSiiL0kbEHIwQgSlrXVSV7tmrfi9AH0N9qtLBlmZ7TOoywSq6ODozxZIqJL0+ri1mv6w7E8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtMmE+To; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LQQUJdAYZLd27cibkVJFnTbG6+7n3+qrV8faUWlQUn7wecw5CqXgoG/S7Y01bsk9KRsvzEvs6kAJxfai4EozCQu1usi4DGJQgDP7i6BxyYOub5roZZQR63sWXHl/pnBXmv5ine7jr3xVSa5aGwxk4oSEa77jeT+SlN51fTETElw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IXjfuF7C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtMmE+To"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5226EC4CEC3;
-	Mon, 28 Oct 2024 06:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IXjfuF7C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FABC4CEC3;
+	Mon, 28 Oct 2024 06:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097633;
-	bh=FujOfzzIYUMJVb9//MFLafzvwpHSKhXoPiZFNwaVrWU=;
+	s=korg; t=1730097635;
+	bh=Q8GnSz4kK6Ezu1SVWoQ7pP/TjmxGAo89digEhntLdpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JtMmE+TohZ7NLUyASJ0ioSHtBsw6AJznInQOikWZdGsfVspqb619dfsYI0gdLhNRG
-	 9nSgczna/XVsLxGTLpCPNgr6g/zJjTDvZECHyZPAl8vkX2+9V+la7NqPxqSASlu/aI
-	 DM5pXSWbfmYvSj5HvRtyOtGo4qu8Rp8W/2/V5i/o=
+	b=IXjfuF7CGZoKSI/Yxc2D3gelaDMrfsCBwh+/COT3+6WukzpRwaMa3Q4jjVR4dW25m
+	 ynOHvwUDi9xu6s4nHFzU+Fh1LnL8lDOhskNl5bKRHMhIMuF75uuMH4QEZ1cWn0nbDG
+	 ug/vexttq5dk2R3igLwJ2AhzwvxwENpBEWK8XA50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Shay Drory <shayd@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/208] irqchip/renesas-rzg2l: Add support for suspend to RAM
-Date: Mon, 28 Oct 2024 07:24:02 +0100
-Message-ID: <20241028062308.181976283@linuxfoundation.org>
+Subject: [PATCH 6.6 080/208] net/mlx5: Fix command bitmask initialization
+Date: Mon, 28 Oct 2024 07:24:20 +0100
+Message-ID: <20241028062308.617672134@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -45,210 +48,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 74d2ef5f6f4b2437e6292ab2502400e8048db4aa ]
+[ Upstream commit d62b14045c6511a7b2d4948d1a83a4e592deeb05 ]
 
-The irqchip-renesas-rzg2l driver is used on RZ/G3S SoC. RZ/G3S can go into
-deep sleep states where power to different SoC's parts is cut off and RAM
-is switched to self-refresh. The resume from these states is done with the
-help of the bootloader.
+Command bitmask have a dedicated bit for MANAGE_PAGES command, this bit
+isn't Initialize during command bitmask Initialization, only during
+MANAGE_PAGES.
 
-The IA55 IRQ controller needs to be reconfigured when resuming from deep
-sleep state. For this the IA55 registers are cached in suspend and restored
-in resume.
+In addition, mlx5_cmd_trigger_completions() is trying to trigger
+completion for MANAGE_PAGES command as well.
 
-The IA55 IRQ controller is connected to GPIO controller and GIC as follows:
+Hence, in case health error occurred before any MANAGE_PAGES command
+have been invoke (for example, during mlx5_enable_hca()),
+mlx5_cmd_trigger_completions() will try to trigger completion for
+MANAGE_PAGES command, which will result in null-ptr-deref error.[1]
 
-                                      ┌──────────┐          ┌──────────┐
-                                      │          │ SPIX     │          │
-                                      │          ├─────────►│          │
-                                      │          │          │          │
-                                      │          │          │          │
-              ┌────────┐IRQ0-7        │  IA55    │          │  GIC     │
- Pin0 ───────►│        ├─────────────►│          │          │          │
-              │        │              │          │ PPIY     │          │
- ...          │  GPIO  │              │          ├─────────►│          │
-              │        │GPIOINT0-127  │          │          │          │
- PinN ───────►│        ├─────────────►│          │          │          │
-              └────────┘              └──────────┘          └──────────┘
+Fix it by Initialize command bitmask correctly.
 
-where:
-  - Pin0 is the first GPIO controller pin
-  - PinN is the last GPIO controller pin
+While at it, re-write the code for better understanding.
 
-  - SPIX is the SPI interrupt with identifier X
-  - PPIY is the PPI interrupt with identifier Y
+[1]
+BUG: KASAN: null-ptr-deref in mlx5_cmd_trigger_completions+0x1db/0x600 [mlx5_core]
+Write of size 4 at addr 0000000000000214 by task kworker/u96:2/12078
+CPU: 10 PID: 12078 Comm: kworker/u96:2 Not tainted 6.9.0-rc2_for_upstream_debug_2024_04_07_19_01 #1
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+Workqueue: mlx5_health0000:08:00.0 mlx5_fw_fatal_reporter_err_work [mlx5_core]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x7e/0xc0
+ kasan_report+0xb9/0xf0
+ kasan_check_range+0xec/0x190
+ mlx5_cmd_trigger_completions+0x1db/0x600 [mlx5_core]
+ mlx5_cmd_flush+0x94/0x240 [mlx5_core]
+ enter_error_state+0x6c/0xd0 [mlx5_core]
+ mlx5_fw_fatal_reporter_err_work+0xf3/0x480 [mlx5_core]
+ process_one_work+0x787/0x1490
+ ? lockdep_hardirqs_on_prepare+0x400/0x400
+ ? pwq_dec_nr_in_flight+0xda0/0xda0
+ ? assign_work+0x168/0x240
+ worker_thread+0x586/0xd30
+ ? rescuer_thread+0xae0/0xae0
+ kthread+0x2df/0x3b0
+ ? kthread_complete_and_exit+0x20/0x20
+ ret_from_fork+0x2d/0x70
+ ? kthread_complete_and_exit+0x20/0x20
+ ret_from_fork_asm+0x11/0x20
+ </TASK>
 
-Implement suspend/resume functionality with syscore_ops to be able to
-cache/restore the registers after/before the GPIO controller suspend/resume
-functions are invoked.
-
-As the syscore_ops suspend/resume functions do not take any argument make
-the driver private data static so it can be accessed from the
-suspend/resume functions.
-
-The IA55 interrupt controller is resumed before the GPIO controller. As
-GPIO pins could be in an a state which causes spurious interrupts, the
-reconfiguration of the interrupt controller is restricted to restore the
-interrupt type and leave them disabled.
-
-An eventually required interrupt enable operation will be done as part of
-the GPIO controller resume function after restoring the GPIO state.
-
-[ tglx: Massaged changelog ]
-
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20231120111820.87398-8-claudiu.beznea.uj@bp.renesas.com
-Stable-dep-of: d038109ac1c6 ("irqchip/renesas-rzg2l: Fix missing put_device")
+Fixes: 9b98d395b85d ("net/mlx5: Start health poll at earlier stage of driver load")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-renesas-rzg2l.c | 68 ++++++++++++++++++++++++-----
- 1 file changed, 57 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
-index ac925da17876c..00688043697f0 100644
---- a/drivers/irqchip/irq-renesas-rzg2l.c
-+++ b/drivers/irqchip/irq-renesas-rzg2l.c
-@@ -18,6 +18,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/reset.h>
- #include <linux/spinlock.h>
-+#include <linux/syscore_ops.h>
- 
- #define IRQC_IRQ_START			1
- #define IRQC_IRQ_COUNT			8
-@@ -55,17 +56,29 @@
- #define TINT_EXTRACT_HWIRQ(x)           FIELD_GET(GENMASK(15, 0), (x))
- #define TINT_EXTRACT_GPIOINT(x)         FIELD_GET(GENMASK(31, 16), (x))
- 
-+/**
-+ * struct rzg2l_irqc_reg_cache - registers cache (necessary for suspend/resume)
-+ * @iitsr: IITSR register
-+ * @titsr: TITSR registers
-+ */
-+struct rzg2l_irqc_reg_cache {
-+	u32	iitsr;
-+	u32	titsr[2];
-+};
-+
- /**
-  * struct rzg2l_irqc_priv - IRQ controller private data structure
-  * @base:	Controller's base address
-  * @fwspec:	IRQ firmware specific data
-  * @lock:	Lock to serialize access to hardware registers
-+ * @cache:	Registers cache for suspend/resume
-  */
--struct rzg2l_irqc_priv {
-+static struct rzg2l_irqc_priv {
- 	void __iomem			*base;
- 	struct irq_fwspec		fwspec[IRQC_NUM_IRQ];
- 	raw_spinlock_t			lock;
--};
-+	struct rzg2l_irqc_reg_cache	cache;
-+} *rzg2l_irqc_data;
- 
- static struct rzg2l_irqc_priv *irq_data_to_priv(struct irq_data *data)
- {
-@@ -282,6 +295,38 @@ static int rzg2l_irqc_set_type(struct irq_data *d, unsigned int type)
- 	return irq_chip_set_type_parent(d, IRQ_TYPE_LEVEL_HIGH);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+index 48dc4ae87af09..80af0fc7101fd 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
+@@ -1758,6 +1758,10 @@ static void mlx5_cmd_comp_handler(struct mlx5_core_dev *dev, u64 vec, bool force
+ 	}
  }
  
-+static int rzg2l_irqc_irq_suspend(void)
-+{
-+	struct rzg2l_irqc_reg_cache *cache = &rzg2l_irqc_data->cache;
-+	void __iomem *base = rzg2l_irqc_data->base;
++#define MLX5_MAX_MANAGE_PAGES_CMD_ENT 1
++#define MLX5_CMD_MASK ((1UL << (cmd->vars.max_reg_cmds + \
++			   MLX5_MAX_MANAGE_PAGES_CMD_ENT)) - 1)
 +
-+	cache->iitsr = readl_relaxed(base + IITSR);
-+	for (u8 i = 0; i < 2; i++)
-+		cache->titsr[i] = readl_relaxed(base + TITSR(i));
-+
-+	return 0;
-+}
-+
-+static void rzg2l_irqc_irq_resume(void)
-+{
-+	struct rzg2l_irqc_reg_cache *cache = &rzg2l_irqc_data->cache;
-+	void __iomem *base = rzg2l_irqc_data->base;
-+
-+	/*
-+	 * Restore only interrupt type. TSSRx will be restored at the
-+	 * request of pin controller to avoid spurious interrupts due
-+	 * to invalid PIN states.
-+	 */
-+	for (u8 i = 0; i < 2; i++)
-+		writel_relaxed(cache->titsr[i], base + TITSR(i));
-+	writel_relaxed(cache->iitsr, base + IITSR);
-+}
-+
-+static struct syscore_ops rzg2l_irqc_syscore_ops = {
-+	.suspend	= rzg2l_irqc_irq_suspend,
-+	.resume		= rzg2l_irqc_irq_resume,
-+};
-+
- static const struct irq_chip irqc_chip = {
- 	.name			= "rzg2l-irqc",
- 	.irq_eoi		= rzg2l_irqc_eoi,
-@@ -366,7 +411,6 @@ static int rzg2l_irqc_init(struct device_node *node, struct device_node *parent)
- 	struct irq_domain *irq_domain, *parent_domain;
- 	struct platform_device *pdev;
- 	struct reset_control *resetn;
--	struct rzg2l_irqc_priv *priv;
- 	int ret;
+ static void mlx5_cmd_trigger_completions(struct mlx5_core_dev *dev)
+ {
+ 	struct mlx5_cmd *cmd = &dev->cmd;
+@@ -1769,7 +1773,7 @@ static void mlx5_cmd_trigger_completions(struct mlx5_core_dev *dev)
+ 	/* wait for pending handlers to complete */
+ 	mlx5_eq_synchronize_cmd_irq(dev);
+ 	spin_lock_irqsave(&dev->cmd.alloc_lock, flags);
+-	vector = ~dev->cmd.vars.bitmask & ((1ul << (1 << dev->cmd.vars.log_sz)) - 1);
++	vector = ~dev->cmd.vars.bitmask & MLX5_CMD_MASK;
+ 	if (!vector)
+ 		goto no_trig;
  
- 	pdev = of_find_device_by_node(node);
-@@ -379,15 +423,15 @@ static int rzg2l_irqc_init(struct device_node *node, struct device_node *parent)
- 		return -ENODEV;
- 	}
+@@ -2275,7 +2279,7 @@ int mlx5_cmd_enable(struct mlx5_core_dev *dev)
  
--	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
--	if (!priv)
-+	rzg2l_irqc_data = devm_kzalloc(&pdev->dev, sizeof(*rzg2l_irqc_data), GFP_KERNEL);
-+	if (!rzg2l_irqc_data)
- 		return -ENOMEM;
+ 	cmd->state = MLX5_CMDIF_STATE_DOWN;
+ 	cmd->vars.max_reg_cmds = (1 << cmd->vars.log_sz) - 1;
+-	cmd->vars.bitmask = (1UL << cmd->vars.max_reg_cmds) - 1;
++	cmd->vars.bitmask = MLX5_CMD_MASK;
  
--	priv->base = devm_of_iomap(&pdev->dev, pdev->dev.of_node, 0, NULL);
--	if (IS_ERR(priv->base))
--		return PTR_ERR(priv->base);
-+	rzg2l_irqc_data->base = devm_of_iomap(&pdev->dev, pdev->dev.of_node, 0, NULL);
-+	if (IS_ERR(rzg2l_irqc_data->base))
-+		return PTR_ERR(rzg2l_irqc_data->base);
- 
--	ret = rzg2l_irqc_parse_interrupts(priv, node);
-+	ret = rzg2l_irqc_parse_interrupts(rzg2l_irqc_data, node);
- 	if (ret) {
- 		dev_err(&pdev->dev, "cannot parse interrupts: %d\n", ret);
- 		return ret;
-@@ -410,17 +454,19 @@ static int rzg2l_irqc_init(struct device_node *node, struct device_node *parent)
- 		goto pm_disable;
- 	}
- 
--	raw_spin_lock_init(&priv->lock);
-+	raw_spin_lock_init(&rzg2l_irqc_data->lock);
- 
- 	irq_domain = irq_domain_add_hierarchy(parent_domain, 0, IRQC_NUM_IRQ,
- 					      node, &rzg2l_irqc_domain_ops,
--					      priv);
-+					      rzg2l_irqc_data);
- 	if (!irq_domain) {
- 		dev_err(&pdev->dev, "failed to add irq domain\n");
- 		ret = -ENOMEM;
- 		goto pm_put;
- 	}
- 
-+	register_syscore_ops(&rzg2l_irqc_syscore_ops);
-+
- 	return 0;
- 
- pm_put:
+ 	sema_init(&cmd->vars.sem, cmd->vars.max_reg_cmds);
+ 	sema_init(&cmd->vars.pages_sem, 1);
 -- 
 2.43.0
 
