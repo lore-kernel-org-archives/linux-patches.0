@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6C015B10D;
-	Mon, 28 Oct 2024 06:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE0615B10D;
+	Mon, 28 Oct 2024 06:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097716; cv=none; b=j5bduPiolb8Zl8RiRPvEvtfJd4JkE4WfL09nfJPxowMAk8j/b2nzabtIN+TAWPech14HvHkjrZRBsoKhEuadGxap9KBiNM0oruIp0sMsRogByY9NTasvZrww++oS+r+UCyNZrtRx6nA4StNR+Et6tRi0osdHFxlBl5hRm5NR42A=
+	t=1730097719; cv=none; b=mNxWPHhFTfUtLQletaQSmvuwFNUrGEu4u3lkdJNjV+XdY+Gi0rGhZ4lnRNUJMRpyqVgKHMvxMESiG/KTH6NkGxd6RKjJVxwoQSMVFVguBp3iwNcYsluOWnycrPunPpAnK1p8TdcYJwhBVXeCOReNja2ShDUsNmNUFZQ9OXlmtnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097716; c=relaxed/simple;
-	bh=Rgkwp6QhTww7Qrs3g+Kuc10YY9w8RT7r+XBNUBp8CEE=;
+	s=arc-20240116; t=1730097719; c=relaxed/simple;
+	bh=ooKqB93+vL7HTfyInkwELPUbBkZZSTt7jtp4RXZE8/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mWDivyTtjPEKqX4o4jxwvMRQ9mioyieEjPCO5kBAbiznt5uCF8gPWRfhSrxB1PWCewX7X4RXx9eC2mUaoSHv+pgxLWsfOtY+B2sIuEaVFvTPtpvW46V8Eed11dlWzRnHlOaI4sges/Iot++Bpss7WL/pQm9awiYt9OtUglsGISM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hApKCbPr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qrNcAcMTkzBYDfsc1bIYH+XhyAUspAipWYzyT6EPsLdywBBYsC2GjOEGbZWuZpxWhH0XtGkTO8PSXffDP0U6bDsfzIQFdmA1WXo6T/IxduSxHz7DAWwIVcFd7HXttLD8vrUZ8W/Z2jgepfRSvrUCg9kDHCV8YE8JqWHfhAJV/Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mALnjI+d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hApKCbPr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC35C4CEC3;
-	Mon, 28 Oct 2024 06:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mALnjI+d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4723C4CEC3;
+	Mon, 28 Oct 2024 06:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097716;
-	bh=Rgkwp6QhTww7Qrs3g+Kuc10YY9w8RT7r+XBNUBp8CEE=;
+	s=korg; t=1730097718;
+	bh=ooKqB93+vL7HTfyInkwELPUbBkZZSTt7jtp4RXZE8/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hApKCbPrVnbV7dyGR96nKVUHIbzLq+LmcBsDhwsUe7Y64ecOLHiyeclXMsfiEyJbH
-	 x0z8g+jUmhVmpMBJkFdGSsw4NmB2RvCLazTnQncBVmes5fDD83wWPDCPkSSHxqJE35
-	 jHQNlh7hdm8aA29uQVQWy6Ep9MEQChK96lGlsVaI=
+	b=mALnjI+dEO2f2a7/NYZg+KNpk4ZQYuvM2oxoeC6cQvKDEfN8ukbRuuCcAMBSmfbcU
+	 HQFbgUG1RuAtkGSQ68VCIh1nlEC6vmxvO4G0HDpExb+1ArDU3l151QlgdAQ1liz/Gl
+	 uYlkDCdb/chlLgFL+e/rgF1JcX/5GeUboCnLPiu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Klimov <alexey.klimov@linaro.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 117/208] ASoC: codecs: lpass-rx-macro: add missing CDC_RX_BCL_VBAT_RF_PROC2 to default regs values
-Date: Mon, 28 Oct 2024 07:24:57 +0100
-Message-ID: <20241028062309.537402457@linuxfoundation.org>
+Subject: [PATCH 6.6 118/208] ASoC: fsl_sai: Enable FIFO continue on error FCONT bit
+Date: Mon, 28 Oct 2024 07:24:58 +0100
+Message-ID: <20241028062309.560381497@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -51,36 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit e249786b2188107a7c50e7174d35f955a60988a1 ]
+[ Upstream commit 72455e33173c1a00c0ce93d2b0198eb45d5f4195 ]
 
-CDC_RX_BCL_VBAT_RF_PROC1 is listed twice and its default value
-is 0x2a which is overwriten by its next occurence in rx_defaults[].
-The second one should be missing CDC_RX_BCL_VBAT_RF_PROC2 instead
-and its default value is expected 0x0.
+FCONT=1 means On FIFO error, the SAI will continue from the
+same word that caused the FIFO error to set after the FIFO
+warning flag has been cleared.
 
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Link: https://patch.msgid.link/20240925043823.520218-2-alexey.klimov@linaro.org
+Set FCONT bit in control register to avoid the channel swap
+issue after SAI xrun.
+
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/1727676508-22830-1-git-send-email-shengjiu.wang@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/lpass-rx-macro.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/fsl/fsl_sai.c | 5 ++++-
+ sound/soc/fsl/fsl_sai.h | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
-index 29197d34ec099..7e9f0ab914124 100644
---- a/sound/soc/codecs/lpass-rx-macro.c
-+++ b/sound/soc/codecs/lpass-rx-macro.c
-@@ -909,7 +909,7 @@ static const struct reg_default rx_defaults[] = {
- 	{ CDC_RX_BCL_VBAT_PK_EST2, 0x01 },
- 	{ CDC_RX_BCL_VBAT_PK_EST3, 0x40 },
- 	{ CDC_RX_BCL_VBAT_RF_PROC1, 0x2A },
--	{ CDC_RX_BCL_VBAT_RF_PROC1, 0x00 },
-+	{ CDC_RX_BCL_VBAT_RF_PROC2, 0x00 },
- 	{ CDC_RX_BCL_VBAT_TAC1, 0x00 },
- 	{ CDC_RX_BCL_VBAT_TAC2, 0x18 },
- 	{ CDC_RX_BCL_VBAT_TAC3, 0x18 },
+diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
+index 3d202398c5411..aa15f56ca139d 100644
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -604,6 +604,9 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
+ 
+ 	val_cr4 |= FSL_SAI_CR4_FRSZ(slots);
+ 
++	/* Set to avoid channel swap */
++	val_cr4 |= FSL_SAI_CR4_FCONT;
++
+ 	/* Set to output mode to avoid tri-stated data pins */
+ 	if (tx)
+ 		val_cr4 |= FSL_SAI_CR4_CHMOD;
+@@ -690,7 +693,7 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
+ 
+ 	regmap_update_bits(sai->regmap, FSL_SAI_xCR4(tx, ofs),
+ 			   FSL_SAI_CR4_SYWD_MASK | FSL_SAI_CR4_FRSZ_MASK |
+-			   FSL_SAI_CR4_CHMOD_MASK,
++			   FSL_SAI_CR4_CHMOD_MASK | FSL_SAI_CR4_FCONT_MASK,
+ 			   val_cr4);
+ 	regmap_update_bits(sai->regmap, FSL_SAI_xCR5(tx, ofs),
+ 			   FSL_SAI_CR5_WNW_MASK | FSL_SAI_CR5_W0W_MASK |
+diff --git a/sound/soc/fsl/fsl_sai.h b/sound/soc/fsl/fsl_sai.h
+index 550df87b6a068..eba465c2387b6 100644
+--- a/sound/soc/fsl/fsl_sai.h
++++ b/sound/soc/fsl/fsl_sai.h
+@@ -137,6 +137,7 @@
+ 
+ /* SAI Transmit and Receive Configuration 4 Register */
+ 
++#define FSL_SAI_CR4_FCONT_MASK	BIT(28)
+ #define FSL_SAI_CR4_FCONT	BIT(28)
+ #define FSL_SAI_CR4_FCOMB_SHIFT BIT(26)
+ #define FSL_SAI_CR4_FCOMB_SOFT  BIT(27)
 -- 
 2.43.0
 
