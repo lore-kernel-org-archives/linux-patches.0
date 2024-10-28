@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6897D15B10D;
-	Mon, 28 Oct 2024 06:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B469015B10D;
+	Mon, 28 Oct 2024 06:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097768; cv=none; b=LJgPAI48KRsL7j412vO3jnJvcXQgB1ZLSYPfS4Ap2QnzEVVfVCpmnTRGU0lnvMaKpyx0nVfvj0nTJJmiA9xITW1v0eInYik8jFXp0nFNAQFfbRZni28+veUcCeAFxkHBoSIjsC1OxOnELuSagcSY3SddIq+3RsdLgAXkmuo/QfY=
+	t=1730097770; cv=none; b=rVHeTkn05Kwn1CnK58rbtc23i3XqDBABzVhB+lxpM47tpCTAXFSjjS6k2NK/O9DHk5LuW5AHW0u74o4kODKbZ/lMuaGq6Up3CpnPa2LtiXdVQExULgUraNlhxdSWY/U4wM9miyMbHQy0qVPwiyz5RHNGK6W/3SmDWMwromp0rnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097768; c=relaxed/simple;
-	bh=svvvEhcpGywSLI/LXc5481SikhakX6gu4dgZIAMhlLI=;
+	s=arc-20240116; t=1730097770; c=relaxed/simple;
+	bh=wPQNTrJuav//DM/MvaYXRCQJsMrqpsfpL7GFE/iiZ2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2DNxeNsnxytZluElf4Z9AtvOmPrBxjpv3Q/je6LqYXPLUjJhBZiEl+KWMK11qotlOibllTtr/Pll8dWlsmqWnFM2StYP5vTzFowEiKzmah85DPOcaM2tP3L5KYrmeOUBUtOVmxAIBVlBQCPTuguaS9L3KWIlDEI2WJvK38Vx0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ipZWExZw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ncGpoLH0QDwdsWg4q//b86dBPLQJdjUUGrVDv+evIfnzCiC93xftCoASfm4ofQ1Jf5P56DioEEanNmq801zcTz0yYvwpvSJ0qxOhqZLvwAwhdvm4UJxM8jMua3R1SwUUTU2GITLZwf58R4sv/5jw7Su6t8vDYEEklUcuIs8yibM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SffDKKVS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ipZWExZw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7058C4CEC3;
-	Mon, 28 Oct 2024 06:42:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SffDKKVS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04058C4CEC3;
+	Mon, 28 Oct 2024 06:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097768;
-	bh=svvvEhcpGywSLI/LXc5481SikhakX6gu4dgZIAMhlLI=;
+	s=korg; t=1730097770;
+	bh=wPQNTrJuav//DM/MvaYXRCQJsMrqpsfpL7GFE/iiZ2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ipZWExZwHV8s1i6own05/89sNGQk2uX8e9vOKdGSuEsPBhSeSIIG1dTIjuLqmOfO3
-	 WCKETu44vLBAcRC7XwNUkRpm4uOVZQNA2u4SBymeu6dO/D1WQ/lYZJxIrJIen6Mp7y
-	 gCQxnCbEMKvrFFkQWc7HKdALDCHVCeaTAOymYHtY=
+	b=SffDKKVSHRnWA0dhwuMxZdV07UWPKNIq77BWh3tBLvWWl1geYvyeBWByMUBpnajC4
+	 5yFPjWTjZt5VIuU8lWo66eTsKX+BvcTd26tpDTUkA/Xv2EvlZTX1Ppffm4brCjKtl5
+	 PmYYgY7rSQuW8MizQTyChD1/nHHNDhtuseYBGqgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
+	Jakub Boehm <boehm.jakub@gmail.com>,
 	Simon Horman <horms@kernel.org>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 137/208] be2net: fix potential memory leak in be_xmit()
-Date: Mon, 28 Oct 2024 07:25:17 +0100
-Message-ID: <20241028062310.011277186@linuxfoundation.org>
+Subject: [PATCH 6.6 138/208] net: plip: fix break; causing plip to never transmit
+Date: Mon, 28 Oct 2024 07:25:18 +0100
+Message-ID: <20241028062310.034506747@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -53,59 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Hai <wanghai38@huawei.com>
+From: Jakub Boehm <boehm.jakub@gmail.com>
 
-[ Upstream commit e4dd8bfe0f6a23acd305f9b892c00899089bd621 ]
+[ Upstream commit f99cf996ba5a315f8b9f13cc21dff0604a0eb749 ]
 
-The be_xmit() returns NETDEV_TX_OK without freeing skb
-in case of be_xmit_enqueue() fails, add dev_kfree_skb_any() to fix it.
+Since commit
+  71ae2cb30531 ("net: plip: Fix fall-through warnings for Clang")
 
-Fixes: 760c295e0e8d ("be2net: Support for OS2BMC.")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
+plip was not able to send any packets, this patch replaces one
+unintended break; with fallthrough; which was originally missed by
+commit 9525d69a3667 ("net: plip: mark expected switch fall-throughs").
+
+I have verified with a real hardware PLIP connection that everything
+works once again after applying this patch.
+
+Fixes: 71ae2cb30531 ("net: plip: Fix fall-through warnings for Clang")
+Signed-off-by: Jakub Boehm <boehm.jakub@gmail.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Message-ID: <20241015144802.12150-1-wanghai38@huawei.com>
+Message-ID: <20241015-net-plip-tx-fix-v1-1-32d8be1c7e0b@gmail.com>
 Signed-off-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/emulex/benet/be_main.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/plip/plip.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
-index ad862ed7888ac..9d425ece33fd2 100644
---- a/drivers/net/ethernet/emulex/benet/be_main.c
-+++ b/drivers/net/ethernet/emulex/benet/be_main.c
-@@ -1381,10 +1381,8 @@ static netdev_tx_t be_xmit(struct sk_buff *skb, struct net_device *netdev)
- 	be_get_wrb_params_from_skb(adapter, skb, &wrb_params);
+diff --git a/drivers/net/plip/plip.c b/drivers/net/plip/plip.c
+index 40ce8abe69995..6019811920a44 100644
+--- a/drivers/net/plip/plip.c
++++ b/drivers/net/plip/plip.c
+@@ -815,7 +815,7 @@ plip_send_packet(struct net_device *dev, struct net_local *nl,
+ 				return HS_TIMEOUT;
+ 			}
+ 		}
+-		break;
++		fallthrough;
  
- 	wrb_cnt = be_xmit_enqueue(adapter, txo, skb, &wrb_params);
--	if (unlikely(!wrb_cnt)) {
--		dev_kfree_skb_any(skb);
--		goto drop;
--	}
-+	if (unlikely(!wrb_cnt))
-+		goto drop_skb;
- 
- 	/* if os2bmc is enabled and if the pkt is destined to bmc,
- 	 * enqueue the pkt a 2nd time with mgmt bit set.
-@@ -1393,7 +1391,7 @@ static netdev_tx_t be_xmit(struct sk_buff *skb, struct net_device *netdev)
- 		BE_WRB_F_SET(wrb_params.features, OS2BMC, 1);
- 		wrb_cnt = be_xmit_enqueue(adapter, txo, skb, &wrb_params);
- 		if (unlikely(!wrb_cnt))
--			goto drop;
-+			goto drop_skb;
- 		else
- 			skb_get(skb);
- 	}
-@@ -1407,6 +1405,8 @@ static netdev_tx_t be_xmit(struct sk_buff *skb, struct net_device *netdev)
- 		be_xmit_flush(adapter, txo);
- 
- 	return NETDEV_TX_OK;
-+drop_skb:
-+	dev_kfree_skb_any(skb);
- drop:
- 	tx_stats(txo)->tx_drv_drops++;
- 	/* Flush the already enqueued tx requests */
+ 	case PLIP_PK_LENGTH_LSB:
+ 		if (plip_send(nibble_timeout, dev,
 -- 
 2.43.0
 
