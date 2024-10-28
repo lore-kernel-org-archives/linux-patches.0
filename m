@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C05189BAF;
-	Mon, 28 Oct 2024 06:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8754318E04F;
+	Mon, 28 Oct 2024 06:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097622; cv=none; b=Q743mSofD2Lq9bGMnFphpU+SCAMcURXvJJGeOAgbVcCToFQu72Rf7CaypasrULTFDYEeMFHpu0J1hCVCc1NhVDmweI6oHYWa0nec+xhiITpOwaYIEBAed8DDOwJw0d+I8qrB0/edzpHwUlT0t3Q0GCHDd5bGd61MwNDlDYQBnNU=
+	t=1730097624; cv=none; b=PNETKiFGost5zXtfNHcynY0UppNkXhzp2uUDixU3mc6JRyv6dBVSpJRN2TeG7d3F2LD5Ls2G6QL7mh44JCnlQy9AYs+KuBBtAuZH5EOEo8fFYfYeO9/VHV7QKyFI3uxIwFJObncYcLcBMAT2NCZl3n+L3zfxmS7/T96/11IgW14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097622; c=relaxed/simple;
-	bh=VpTBm2xfcBDMgkss87kyoPzmXrF4Wsaan4/LvJy8fPk=;
+	s=arc-20240116; t=1730097624; c=relaxed/simple;
+	bh=kN0GKVAcQ73FxpqvwrHE/6QO32rMm6Mb+MKiC2qt0dU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vbh9E+vUs0kzDQckDhlHs0lzz1l6bqV3RYXCx/RvVvD49Pv00YdzXx0664HrWNAVoLJmxDPYy0hBkx3AzIrzrrpLnds2gmch7/xTIf6svKISoDLo0dpzbv8/d+FUNTlAHSqE2Ue21MzZRc16weEZErZ1azmoAcxFiaf7anB0xug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0BZv5uJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OVC3CjxSFLzBcPxjszuJVywJDgW8cubM1rdo7jFoNI3TySIvfbuMhOObxHqMljXYfioi+I9Zt8uw5vw2dzjTcAnB7HKzQFEsaCtAcxGHotdT98Sj6IAWwWZL47r9kEyh+kow7YMy9MLdNcfGhdv1T4pPm1l7vT3u6EhpreGOlQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8/Dz3m1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0BZv5uJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACD6C4CEC3;
-	Mon, 28 Oct 2024 06:40:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8/Dz3m1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A251C4CEC3;
+	Mon, 28 Oct 2024 06:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097622;
-	bh=VpTBm2xfcBDMgkss87kyoPzmXrF4Wsaan4/LvJy8fPk=;
+	s=korg; t=1730097624;
+	bh=kN0GKVAcQ73FxpqvwrHE/6QO32rMm6Mb+MKiC2qt0dU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P0BZv5uJwx9l0XNrsJm3Jt2UfDRhwZTs1FhL7UHx7NN0F5r1mXYRRC0WHX7384exR
-	 O4INZbcR1HBCgWA4CCQPH1KffVNdzRsWhtGDaQXxMwqo1FzUjeLe3PaJbU56RNKjWf
-	 2NM8s3TRaXvWTWPUlgxJEassJxuEVokybQcCKexI=
+	b=y8/Dz3m1DLfJm0NMTtSeGgPrXQuHEyopqyQcy5sEw6z1uK2eDaIDNKR8YiWdBmnaU
+	 UoY2glMLpyUvVKffp/+7Q13etDPszCsDHX1P1EthOxz5ZEOoX8OUW4G4pYRBsjeZRR
+	 XdxucaRV6TWGIMIJWULrxShvtcjGyTEt1wGrL1aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Tyrone Wu <wudevelops@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Florian Westphal <fw@strlen.de>,
+	Daniel Xu <dxu@dxuuu.xyz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/208] s390: Initialize psw mask in perf_arch_fetch_caller_regs()
-Date: Mon, 28 Oct 2024 07:24:15 +0100
-Message-ID: <20241028062308.494456322@linuxfoundation.org>
+Subject: [PATCH 6.6 076/208] bpf: Fix link info netfilter flags to populate defrag flag
+Date: Mon, 28 Oct 2024 07:24:16 +0100
+Message-ID: <20241028062308.517603959@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -50,36 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Tyrone Wu <wudevelops@gmail.com>
 
-[ Upstream commit 223e7fb979fa06934f1595b6ad0ae1d4ead1147f ]
+[ Upstream commit 92f3715e1eba1d41e55be06159dc3d856b18326d ]
 
-Also initialize regs->psw.mask in perf_arch_fetch_caller_regs().
-This way user_mode(regs) will return false, like it should.
+This fix correctly populates the `bpf_link_info.netfilter.flags` field
+when user passes the `BPF_F_NETFILTER_IP_DEFRAG` flag.
 
-It looks like all current users initialize regs to zero, so that this
-doesn't fix a bug currently. However it is better to not rely on callers
-to do this.
-
-Fixes: 914d52e46490 ("s390: implement perf_arch_fetch_caller_regs")
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 91721c2d02d3 ("netfilter: bpf: Support BPF_F_NETFILTER_IP_DEFRAG in netfilter link")
+Signed-off-by: Tyrone Wu <wudevelops@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Florian Westphal <fw@strlen.de>
+Cc: Daniel Xu <dxu@dxuuu.xyz>
+Link: https://lore.kernel.org/bpf/20241011193252.178997-1-wudevelops@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/perf_event.h | 1 +
- 1 file changed, 1 insertion(+)
+ net/netfilter/nf_bpf_link.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/s390/include/asm/perf_event.h b/arch/s390/include/asm/perf_event.h
-index 9917e2717b2b4..66aff768f8151 100644
---- a/arch/s390/include/asm/perf_event.h
-+++ b/arch/s390/include/asm/perf_event.h
-@@ -73,6 +73,7 @@ struct perf_sf_sde_regs {
- #define SAMPLE_FREQ_MODE(hwc)	(SAMPL_FLAGS(hwc) & PERF_CPUM_SF_FREQ_MODE)
+diff --git a/net/netfilter/nf_bpf_link.c b/net/netfilter/nf_bpf_link.c
+index 0e4beae421f83..96015a59db09e 100644
+--- a/net/netfilter/nf_bpf_link.c
++++ b/net/netfilter/nf_bpf_link.c
+@@ -150,11 +150,12 @@ static int bpf_nf_link_fill_link_info(const struct bpf_link *link,
+ 				      struct bpf_link_info *info)
+ {
+ 	struct bpf_nf_link *nf_link = container_of(link, struct bpf_nf_link, link);
++	const struct nf_defrag_hook *hook = nf_link->defrag_hook;
  
- #define perf_arch_fetch_caller_regs(regs, __ip) do {			\
-+	(regs)->psw.mask = 0;						\
- 	(regs)->psw.addr = (__ip);					\
- 	(regs)->gprs[15] = (unsigned long)__builtin_frame_address(0) -	\
- 		offsetof(struct stack_frame, back_chain);		\
+ 	info->netfilter.pf = nf_link->hook_ops.pf;
+ 	info->netfilter.hooknum = nf_link->hook_ops.hooknum;
+ 	info->netfilter.priority = nf_link->hook_ops.priority;
+-	info->netfilter.flags = 0;
++	info->netfilter.flags = hook ? BPF_F_NETFILTER_IP_DEFRAG : 0;
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
