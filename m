@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF7F1885BE;
-	Mon, 28 Oct 2024 06:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D51118E368;
+	Mon, 28 Oct 2024 06:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098410; cv=none; b=lIcKXSooLMCld5gVrdXNJrzuuTuFiKulxQVd+oXt3jzFz4Io9O3hmMZ+bGNoJOCcI3Es2Mu2avynF7h5q/YW190MNZiCjcVOOhPu04PRH3eWDyMC8Vn4wlvD7bgetoYfVHDLJzM+0R7xsOoQyPK11fY9bbT/pGKiwlmWipXVJH4=
+	t=1730098413; cv=none; b=gS+tRrgho7oeerYkoe/0utZx7MZTU8oSefoXfl2QV9XDhXSBQW1wZKNUKpeFhpsfH8zEFL+HAqPlPTpvWYzajiblSjtOPIMW59dh6dT6eqSRN+fyIGxpjQeXwugrKGfA6im1pmvksay+7waGgsilgU5sWRgaaobPLaqPepHkAro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098410; c=relaxed/simple;
-	bh=jrqEiT4vJg3HEZzYxwJl3OArWjnk94i+aqfdJkQh7bg=;
+	s=arc-20240116; t=1730098413; c=relaxed/simple;
+	bh=UWeaIFBhrfTWww6R6OQg/bzI2Jc63iGINTDckm2UD2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bIqYJGNX1k2u30pd2DI8VpvQ1TkEn8RrUaawAegHIhN2Jo/cK+ASGnejNXh1Mg3uaXvazV1kIL+FdjqubLRv7QA8dZSiqAFIgckUHOWSAfjYXnbpWlgNhRW5jrXQ9RNsCrtzbaiGWQy65w24vsSR+aD7NfNI+lhXqausR6Ej0L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1Gu/+6J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pV7B5Q42Hva1yJmLfPqJmYdtM8YOlO61voOp8vvS1zdnD95DpDzKuu3HgSdp9K/w+CLnromdtAOfrzw2RubvDlj4D/HDIMWDZBMzRm8AVsLLw9DLzSwOnrpzszJATQ0ti+oMa6oaUhuXOTPY2pF+/4EMIMsxllhH5EMmNPSvvzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v2inBFvG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1Gu/+6J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C175C4CEC3;
-	Mon, 28 Oct 2024 06:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2inBFvG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C40C4CEC3;
+	Mon, 28 Oct 2024 06:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098410;
-	bh=jrqEiT4vJg3HEZzYxwJl3OArWjnk94i+aqfdJkQh7bg=;
+	s=korg; t=1730098412;
+	bh=UWeaIFBhrfTWww6R6OQg/bzI2Jc63iGINTDckm2UD2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y1Gu/+6JTNqCrLrFAbGKtJwazyjniagNuvRTO9RA4dHE+bCLeMUxPLANWDEI9LKAB
-	 KHWX3PBpnSOTV2OhvpwYhYRBFGmCM/Lbatt/zw5qn5Z8mo++GvmxjXuYa/9B0IcWIC
-	 DBgalkvxkKjNVJmxoxQ5LqOYRUfWQf7LhwSReBN4=
+	b=v2inBFvGxe1amNaR72dTAQyw6o1Z9jTYqOlSSiUWHXQdktbesWCSIhSxhIM8yUB29
+	 OTH5dfjKWuNG1FK2Je5VyTd2yBYqQco5pT5AFF04xP6cq4QfppOxd0KT2UK/Dly2qw
+	 P/oMzsBuvxHR9LFk+zKDBOPmdCp2a33M1RKe3uCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenghao Yang <me@shenghaoyang.info>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Hou Tao <houtao1@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 179/261] net: dsa: mv88e6xxx: support 4000ps cycle counter period
-Date: Mon, 28 Oct 2024 07:25:21 +0100
-Message-ID: <20241028062316.492501565@linuxfoundation.org>
+Subject: [PATCH 6.11 180/261] bpf: Add the missing BPF_LINK_TYPE invocation for sockmap
+Date: Mon, 28 Oct 2024 07:25:22 +0100
+Message-ID: <20241028062316.517508516@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,86 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shenghao Yang <me@shenghaoyang.info>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 3e65ede526cf4f95636dbc835598d100c7668ab3 ]
+[ Upstream commit c2f803052bc7a7feb2e03befccc8e49b6ff1f5f5 ]
 
-The MV88E6393X family of devices can run its cycle counter off
-an internal 250MHz clock instead of an external 125MHz one.
+There is an out-of-bounds read in bpf_link_show_fdinfo() for the sockmap
+link fd. Fix it by adding the missing BPF_LINK_TYPE invocation for
+sockmap link
 
-Add support for this cycle counter period by adding another set
-of coefficients and lowering the periodic cycle counter read interval
-to compensate for faster overflows at the increased frequency.
+Also add comments for bpf_link_type to prevent missing updates in the
+future.
 
-Otherwise, the PHC runs at 2x real time in userspace and cannot be
-synchronized.
-
-Fixes: de776d0d316f ("net: dsa: mv88e6xxx: add support for mv88e6393x family")
-Signed-off-by: Shenghao Yang <me@shenghaoyang.info>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 699c23f02c65 ("bpf: Add bpf_link support for sk_msg and sk_skb progs")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241024013558.1135167-2-houtao@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/ptp.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ include/linux/bpf_types.h      | 1 +
+ include/uapi/linux/bpf.h       | 3 +++
+ tools/include/uapi/linux/bpf.h | 3 +++
+ 3 files changed, 7 insertions(+)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/ptp.c b/drivers/net/dsa/mv88e6xxx/ptp.c
-index a409b8661fadd..aed4a4b07f34b 100644
---- a/drivers/net/dsa/mv88e6xxx/ptp.c
-+++ b/drivers/net/dsa/mv88e6xxx/ptp.c
-@@ -40,7 +40,7 @@ static const struct mv88e6xxx_cc_coeffs mv88e6xxx_cc_10ns_coeffs = {
- 	.cc_mult_dem = 3125ULL,
- };
+diff --git a/include/linux/bpf_types.h b/include/linux/bpf_types.h
+index 9f2a6b83b49e1..fa78f49d4a9a6 100644
+--- a/include/linux/bpf_types.h
++++ b/include/linux/bpf_types.h
+@@ -146,6 +146,7 @@ BPF_LINK_TYPE(BPF_LINK_TYPE_XDP, xdp)
+ BPF_LINK_TYPE(BPF_LINK_TYPE_NETFILTER, netfilter)
+ BPF_LINK_TYPE(BPF_LINK_TYPE_TCX, tcx)
+ BPF_LINK_TYPE(BPF_LINK_TYPE_NETKIT, netkit)
++BPF_LINK_TYPE(BPF_LINK_TYPE_SOCKMAP, sockmap)
+ #endif
+ #ifdef CONFIG_PERF_EVENTS
+ BPF_LINK_TYPE(BPF_LINK_TYPE_PERF_EVENT, perf)
+diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
+index fea4bca4066c1..b44b3b6c6a8f4 100644
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -1121,6 +1121,9 @@ enum bpf_attach_type {
  
--/* Other families:
-+/* Other families except MV88E6393X in internal clock mode:
-  * Raw timestamps are in units of 8-ns clock periods.
-  *
-  * clkadj = scaled_ppm * 8*2^28 / (10^6 * 2^16)
-@@ -55,6 +55,21 @@ static const struct mv88e6xxx_cc_coeffs mv88e6xxx_cc_8ns_coeffs = {
- 	.cc_mult_dem = 15625ULL
- };
+ #define MAX_BPF_ATTACH_TYPE __MAX_BPF_ATTACH_TYPE
  
-+/* Family MV88E6393X using internal clock:
-+ * Raw timestamps are in units of 4-ns clock periods.
-+ *
-+ * clkadj = scaled_ppm * 4*2^28 / (10^6 * 2^16)
-+ * simplifies to
-+ * clkadj = scaled_ppm * 2^8 / 5^6
++/* Add BPF_LINK_TYPE(type, name) in bpf_types.h to keep bpf_link_type_strs[]
++ * in sync with the definitions below.
 + */
-+#define MV88E6XXX_CC_4NS_SHIFT 28
-+static const struct mv88e6xxx_cc_coeffs mv88e6xxx_cc_4ns_coeffs = {
-+	.cc_shift = MV88E6XXX_CC_4NS_SHIFT,
-+	.cc_mult = 4 << MV88E6XXX_CC_4NS_SHIFT,
-+	.cc_mult_num = 1 << 8,
-+	.cc_mult_dem = 15625ULL
-+};
-+
- #define TAI_EVENT_WORK_INTERVAL msecs_to_jiffies(100)
+ enum bpf_link_type {
+ 	BPF_LINK_TYPE_UNSPEC = 0,
+ 	BPF_LINK_TYPE_RAW_TRACEPOINT = 1,
+diff --git a/tools/include/uapi/linux/bpf.h b/tools/include/uapi/linux/bpf.h
+index 35bcf52dbc652..cf9b43b872f9d 100644
+--- a/tools/include/uapi/linux/bpf.h
++++ b/tools/include/uapi/linux/bpf.h
+@@ -1121,6 +1121,9 @@ enum bpf_attach_type {
  
- #define cc_to_chip(cc) container_of(cc, struct mv88e6xxx_chip, tstamp_cc)
-@@ -110,6 +125,8 @@ mv88e6xxx_cc_coeff_get(struct mv88e6xxx_chip *chip)
- 	}
+ #define MAX_BPF_ATTACH_TYPE __MAX_BPF_ATTACH_TYPE
  
- 	switch (period_ps) {
-+	case 4000:
-+		return &mv88e6xxx_cc_4ns_coeffs;
- 	case 8000:
- 		return &mv88e6xxx_cc_8ns_coeffs;
- 	case 10000:
-@@ -483,10 +500,10 @@ static u64 mv88e6xxx_ptp_clock_read(const struct cyclecounter *cc)
- 	return 0;
- }
- 
--/* With a 125MHz input clock, the 32-bit timestamp counter overflows in ~34.3
-+/* With a 250MHz input clock, the 32-bit timestamp counter overflows in ~17.2
-  * seconds; this task forces periodic reads so that we don't miss any.
-  */
--#define MV88E6XXX_TAI_OVERFLOW_PERIOD (HZ * 16)
-+#define MV88E6XXX_TAI_OVERFLOW_PERIOD (HZ * 8)
- static void mv88e6xxx_ptp_overflow_check(struct work_struct *work)
- {
- 	struct delayed_work *dw = to_delayed_work(work);
++/* Add BPF_LINK_TYPE(type, name) in bpf_types.h to keep bpf_link_type_strs[]
++ * in sync with the definitions below.
++ */
+ enum bpf_link_type {
+ 	BPF_LINK_TYPE_UNSPEC = 0,
+ 	BPF_LINK_TYPE_RAW_TRACEPOINT = 1,
 -- 
 2.43.0
 
