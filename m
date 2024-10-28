@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4826418FDA7;
-	Mon, 28 Oct 2024 06:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBDD18FDB0;
+	Mon, 28 Oct 2024 06:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097346; cv=none; b=r9lojam234O7ayAuarxBoVno3SI4vmS4V5+OoiAR5Qq6x3J7PCVFXgt5/4owMRnmv7W7/X7T8r8mry3A+fgwm5byyr+Bb3yCI0V3sBKfP1B/r2QacWFmGqCje0G0i0xfVaDafn2Iuaw9jzZRFyZ+RrVGsbDktKrfWRyAOJK0wK4=
+	t=1730097348; cv=none; b=SoNxByoD4GUXuZSYxkjmRRr5Zk7KaeW/X5EAIFWFgxSWIW3uVgJVRF34UtyWiSWnADsmq0+5ar0QaXUx56rqjwdHag7BfU6ZOKRVf7U1h46fe/nwQPLhGK3M8222FFJSUvtWfJF+8N30bvpXzwOdRBH+1D7fFeaiu9sOMjfB+6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097346; c=relaxed/simple;
-	bh=H1tttnmm0LRvw8fGTkkZ1+zlj/zVqfMb+oJHbzAX+LU=;
+	s=arc-20240116; t=1730097348; c=relaxed/simple;
+	bh=1ptQ1w+xNMwCiXxzg5jzEovphNSUyDYlvGxZ4YRXe4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RsHUue1Ltl0BEeEbR9gp+KUdn8DXHNzJ0JmiHfVzZzIHcAogx0rAxLnDREAVt72PFwQewHheaEWT0aS6zIzuOt/lB5UCyvokFaUYsRoKvVHX4qe1UeN1gVWs8474upmCK58+Qpe+4D2puqMoSQNroTif9ZiTXU7T1MkrJx1eMD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grXTp2JN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UQ2nw+0PYhGJRKWEcWj3EUFzc2D+E7ePmuY7zmqEDtnhW/M1llcr7b5pn660Ixu/dj5HD3eIrG//GEjCbB1e2d636FMU/of55OL+1m0xvljjTEzS72lSoP8XfunQv0IYeYKl21QFeO/GghtZuupmWf9IWbJo8Fwv3MT4qoLGXTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qFTIS+l3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grXTp2JN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A6DC4CEC3;
-	Mon, 28 Oct 2024 06:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qFTIS+l3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285DAC4CEC3;
+	Mon, 28 Oct 2024 06:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097346;
-	bh=H1tttnmm0LRvw8fGTkkZ1+zlj/zVqfMb+oJHbzAX+LU=;
+	s=korg; t=1730097348;
+	bh=1ptQ1w+xNMwCiXxzg5jzEovphNSUyDYlvGxZ4YRXe4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=grXTp2JNH93CG+O6giakcBq0YMPHLWfxvsRxPQCFHBwlgsRiO28CwLfW/V910S7h2
-	 MOE/XOkmwX+ZX1hHrAmBkRe3lqjDnExSJMCeAJrwCys6JV5uRFxIDM/wYbuJSlDJ2t
-	 1Gge3WvwNzAU0Hl7NLZQczvoxnZuLNQvmOm3BbS8=
+	b=qFTIS+l3zPBSJ1FmOvk0c2TCKYdl2YHOK1zjSdptounf6TRUVzf/hpJxcKFv8kEpR
+	 vDvU2lEMx27q8fPz7c5BQnZcDyMGZGIfSc5UCFKfGP2in1FjVpJvWS92g1L+nstl7+
+	 +d0UDhWoni8hBSWgVoxbNpjg5IARrB3cS/pge9Ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Boehm <boehm.jakub@gmail.com>,
 	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/137] net: plip: fix break; causing plip to never transmit
-Date: Mon, 28 Oct 2024 07:25:27 +0100
-Message-ID: <20241028062301.240185641@linuxfoundation.org>
+Subject: [PATCH 6.1 091/137] octeon_ep: Implement helper for iterating packets in Rx queue
+Date: Mon, 28 Oct 2024 07:25:28 +0100
+Message-ID: <20241028062301.269665159@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -52,43 +54,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Boehm <boehm.jakub@gmail.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit f99cf996ba5a315f8b9f13cc21dff0604a0eb749 ]
+[ Upstream commit bd28df26197b2bd0913bf1b36770836481975143 ]
 
-Since commit
-  71ae2cb30531 ("net: plip: Fix fall-through warnings for Clang")
+The common code with some packet and index manipulations is extracted and
+moved to newly implemented helper to make the code more readable and avoid
+duplication. This is a preparation for skb allocation failure handling.
 
-plip was not able to send any packets, this patch replaces one
-unintended break; with fallthrough; which was originally missed by
-commit 9525d69a3667 ("net: plip: mark expected switch fall-throughs").
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-I have verified with a real hardware PLIP connection that everything
-works once again after applying this patch.
-
-Fixes: 71ae2cb30531 ("net: plip: Fix fall-through warnings for Clang")
-Signed-off-by: Jakub Boehm <boehm.jakub@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Message-ID: <20241015-net-plip-tx-fix-v1-1-32d8be1c7e0b@gmail.com>
+Suggested-by: Simon Horman <horms@kernel.org>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Stable-dep-of: eb592008f79b ("octeon_ep: Add SKB allocation failures handling in __octep_oq_process_rx()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/plip/plip.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/marvell/octeon_ep/octep_rx.c | 55 +++++++++++--------
+ 1 file changed, 32 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/plip/plip.c b/drivers/net/plip/plip.c
-index 40ce8abe69995..6019811920a44 100644
---- a/drivers/net/plip/plip.c
-+++ b/drivers/net/plip/plip.c
-@@ -815,7 +815,7 @@ plip_send_packet(struct net_device *dev, struct net_local *nl,
- 				return HS_TIMEOUT;
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
+index 392d9b0da0d7a..03d46c28a009c 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
+@@ -336,6 +336,30 @@ static int octep_oq_check_hw_for_pkts(struct octep_device *oct,
+ 	return new_pkts;
+ }
+ 
++/**
++ * octep_oq_next_pkt() - Move to the next packet in Rx queue.
++ *
++ * @oq: Octeon Rx queue data structure.
++ * @buff_info: Current packet buffer info.
++ * @read_idx: Current packet index in the ring.
++ * @desc_used: Current packet descriptor number.
++ *
++ * Free the resources associated with a packet.
++ * Increment packet index in the ring and packet descriptor number.
++ */
++static void octep_oq_next_pkt(struct octep_oq *oq,
++			      struct octep_rx_buffer *buff_info,
++			      u32 *read_idx, u32 *desc_used)
++{
++	dma_unmap_page(oq->dev, oq->desc_ring[*read_idx].buffer_ptr,
++		       PAGE_SIZE, DMA_FROM_DEVICE);
++	buff_info->page = NULL;
++	(*read_idx)++;
++	(*desc_used)++;
++	if (*read_idx == oq->max_count)
++		*read_idx = 0;
++}
++
+ /**
+  * __octep_oq_process_rx() - Process hardware Rx queue and push to stack.
+  *
+@@ -365,10 +389,7 @@ static int __octep_oq_process_rx(struct octep_device *oct,
+ 	desc_used = 0;
+ 	for (pkt = 0; pkt < pkts_to_process; pkt++) {
+ 		buff_info = (struct octep_rx_buffer *)&oq->buff_info[read_idx];
+-		dma_unmap_page(oq->dev, oq->desc_ring[read_idx].buffer_ptr,
+-			       PAGE_SIZE, DMA_FROM_DEVICE);
+ 		resp_hw = page_address(buff_info->page);
+-		buff_info->page = NULL;
+ 
+ 		/* Swap the length field that is in Big-Endian to CPU */
+ 		buff_info->len = be64_to_cpu(resp_hw->length);
+@@ -390,36 +411,27 @@ static int __octep_oq_process_rx(struct octep_device *oct,
+ 			 */
+ 			data_offset = OCTEP_OQ_RESP_HW_SIZE;
+ 		}
++
++		octep_oq_next_pkt(oq, buff_info, &read_idx, &desc_used);
++
++		skb = build_skb((void *)resp_hw, PAGE_SIZE);
++		skb_reserve(skb, data_offset);
++
+ 		rx_bytes += buff_info->len;
+ 
+ 		if (buff_info->len <= oq->max_single_buffer_size) {
+-			skb = build_skb((void *)resp_hw, PAGE_SIZE);
+-			skb_reserve(skb, data_offset);
+ 			skb_put(skb, buff_info->len);
+-			read_idx++;
+-			desc_used++;
+-			if (read_idx == oq->max_count)
+-				read_idx = 0;
+ 		} else {
+ 			struct skb_shared_info *shinfo;
+ 			u16 data_len;
+ 
+-			skb = build_skb((void *)resp_hw, PAGE_SIZE);
+-			skb_reserve(skb, data_offset);
+ 			/* Head fragment includes response header(s);
+ 			 * subsequent fragments contains only data.
+ 			 */
+ 			skb_put(skb, oq->max_single_buffer_size);
+-			read_idx++;
+-			desc_used++;
+-			if (read_idx == oq->max_count)
+-				read_idx = 0;
+-
+ 			shinfo = skb_shinfo(skb);
+ 			data_len = buff_info->len - oq->max_single_buffer_size;
+ 			while (data_len) {
+-				dma_unmap_page(oq->dev, oq->desc_ring[read_idx].buffer_ptr,
+-					       PAGE_SIZE, DMA_FROM_DEVICE);
+ 				buff_info = (struct octep_rx_buffer *)
+ 					    &oq->buff_info[read_idx];
+ 				if (data_len < oq->buffer_size) {
+@@ -434,11 +446,8 @@ static int __octep_oq_process_rx(struct octep_device *oct,
+ 						buff_info->page, 0,
+ 						buff_info->len,
+ 						buff_info->len);
+-				buff_info->page = NULL;
+-				read_idx++;
+-				desc_used++;
+-				if (read_idx == oq->max_count)
+-					read_idx = 0;
++
++				octep_oq_next_pkt(oq, buff_info, &read_idx, &desc_used);
  			}
  		}
--		break;
-+		fallthrough;
  
- 	case PLIP_PK_LENGTH_LSB:
- 		if (plip_send(nibble_timeout, dev,
 -- 
 2.43.0
 
