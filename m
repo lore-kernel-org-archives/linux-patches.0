@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F5618E35B;
-	Mon, 28 Oct 2024 06:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC1D18E779;
+	Mon, 28 Oct 2024 06:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097835; cv=none; b=LBdMagf53tIcx4kTbyojsKlxITg8ux5vUmYMAXAbG+eodY1lwsz2lMDv609STatu8fADA+JZXRTrEfwxUEKj1MtDvENUULRqN9DBbJLqpUj9CCqzyNi++oOCHjIbA+mxmkeqRQlJWld35xZSHbTpnBQ4SVxKJ3Uxfgspbdyj5T8=
+	t=1730097837; cv=none; b=j6gU9jVlje2Z/E31XdrbKgntmyxOSW1q4pL4djtN+e95QxzC7C9/NE72Z1oFl4i8AP1iGyudJYyNMS6+Y7Z3Ulqkd629TAUdTUGZDni8HakARbfk1sUh5Z6NUXPzpqRXRWQP43I5L2DPZBQIvezxObP+vxqwZ7ne4k3e5qdQB6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097835; c=relaxed/simple;
-	bh=J0ROFXZCUK78Whzho6Mf7ZE48/T2aqRaRTPZEiroN9g=;
+	s=arc-20240116; t=1730097837; c=relaxed/simple;
+	bh=dBzZx1wITAc54GpB65+c6eQmygu1ya4I2/33tDtqdDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EWMJn4Yvp1xKjW9WY51HbBvKfEGqXjhkYcUFOF/Ut1axZDWgfbaEY1SqAnmh3/dyq1OjUH2ipGFDdJqzVT1Zv7xzgX9ONTw+iTjpmnI5Mtntsq4J5l+NdofFlrxTXJNTtMCmJjA0+kI9RHHmYRQ4+LMEis8Q8zk97aHlelSyoE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V963h0WJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KS2F2okTvdf92Bd6IvL0GQXJx9BIOM+L4+x3jz4M3DkywFzmu5rY6/1t1NIMp3NzE3wLNAD94CMxqnXkbR5gndMcOydS6ILv8eYxyfLG/Mbq4NuWJnOWFtTS6reOBS9OM20lB9UdU3zafOCx4+AnRnkX+bg1Uqp4O5uNQYpkC4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnpM+k7m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V963h0WJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B41FC4CEC3;
-	Mon, 28 Oct 2024 06:43:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnpM+k7m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E25DC4CEE8;
+	Mon, 28 Oct 2024 06:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097835;
-	bh=J0ROFXZCUK78Whzho6Mf7ZE48/T2aqRaRTPZEiroN9g=;
+	s=korg; t=1730097837;
+	bh=dBzZx1wITAc54GpB65+c6eQmygu1ya4I2/33tDtqdDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V963h0WJ+ZTVuI8gAsJKgyZSayjYVQ0nbm9QDkpEC/3O+D9DY0ZhaQEjAatzpbI4R
-	 zv6u40RNN70ARAIMX69O8J+Fwl0B8blkK5VQJH4sTAbUva4YIuu133609U533iZ4QF
-	 NLdNiCMaf+PZPOxSp71kdEFuRjyAqFrZH+jhYDBw=
+	b=PnpM+k7mh8ZjrDlArbeJqM6zc6v62ld3GoFu+NN5o0DQuEumK63iyS0pNAhBoSqHg
+	 8CvFTACWjJZf/BYEHRVkLat6v6tchhl9H8b+dKauNFiYJqSKMPZmSPmwyEVBX56RfG
+	 zNYJA7MyuA6YJ57GMrhNqjKAGscZjCuSFtnR+QYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 168/208] ASoC: rsnd: Fix probe failure on HiHope boards due to endpoint parsing
-Date: Mon, 28 Oct 2024 07:25:48 +0100
-Message-ID: <20241028062310.768648730@linuxfoundation.org>
+Subject: [PATCH 6.6 142/208] fsl/fman: Save device references taken in mac_probe()
+Date: Mon, 28 Oct 2024 07:25:22 +0100
+Message-ID: <20241028062310.130358813@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -52,72 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 9b064d200aa8fee9d1d7ced05d8a617e45966715 ]
+[ Upstream commit efeddd552ec6767e4c8884caa516ac80b65f8823 ]
 
-On the HiHope boards, we have a single port with a single endpoint defined
-as below:
-....
-        rsnd_port: port {
-                rsnd_endpoint: endpoint {
-                        remote-endpoint = <&dw_hdmi0_snd_in>;
+In mac_probe() there are calls to of_find_device_by_node() which takes
+references to of_dev->dev. These references are not saved and not released
+later on error path in mac_probe() and in mac_remove().
 
-                        dai-format = "i2s";
-                        bitclock-master = <&rsnd_endpoint>;
-                        frame-master = <&rsnd_endpoint>;
+Add new fields into mac_device structure to save references taken for
+future use in mac_probe() and mac_remove().
 
-                        playback = <&ssi2>;
-                };
-        };
-....
+This is a preparation for further reference leaks fix.
 
-With commit 547b02f74e4a ("ASoC: rsnd: enable multi Component support for
-Audio Graph Card/Card2"), support for multiple ports was added. This caused
-probe failures on HiHope boards, as the endpoint could not be retrieved due
-to incorrect device node pointers being used.
-
-This patch fixes the issue by updating the `rsnd_dai_of_node()` and
-`rsnd_dai_probe()` functions to use the correct device node pointers based
-on the port names ('port' or 'ports'). It ensures that the endpoint is
-properly parsed for both single and multi-port configurations, restoring
-compatibility with HiHope boards.
-
-Fixes: 547b02f74e4a ("ASoC: rsnd: enable multi Component support for Audio Graph Card/Card2")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/20241010141432.716868-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 1dec67e0d9fb ("fsl/fman: Fix refcount handling of fman-related devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sh/rcar/core.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/freescale/fman/mac.c | 6 ++++--
+ drivers/net/ethernet/freescale/fman/mac.h | 6 +++++-
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/sh/rcar/core.c b/sound/soc/sh/rcar/core.c
-index 1bd7114c472a8..98c7be340a536 100644
---- a/sound/soc/sh/rcar/core.c
-+++ b/sound/soc/sh/rcar/core.c
-@@ -1297,7 +1297,9 @@ static int rsnd_dai_of_node(struct rsnd_priv *priv, int *is_graph)
- 		if (!of_node_name_eq(ports, "ports") &&
- 		    !of_node_name_eq(ports, "port"))
- 			continue;
--		priv->component_dais[i] = of_graph_get_endpoint_count(ports);
-+		priv->component_dais[i] =
-+			of_graph_get_endpoint_count(of_node_name_eq(ports, "ports") ?
-+						    ports : np);
- 		nr += priv->component_dais[i];
- 		i++;
- 		if (i >= RSND_MAX_COMPONENT) {
-@@ -1510,7 +1512,8 @@ static int rsnd_dai_probe(struct rsnd_priv *priv)
- 			if (!of_node_name_eq(ports, "ports") &&
- 			    !of_node_name_eq(ports, "port"))
- 				continue;
--			for_each_endpoint_of_node(ports, dai_np) {
-+			for_each_endpoint_of_node(of_node_name_eq(ports, "ports") ?
-+						  ports : np, dai_np) {
- 				__rsnd_dai_probe(priv, dai_np, dai_np, 0, dai_i);
- 				if (rsnd_is_gen3(priv) || rsnd_is_gen4(priv)) {
- 					rdai = rsnd_rdai_get(priv, dai_i);
+diff --git a/drivers/net/ethernet/freescale/fman/mac.c b/drivers/net/ethernet/freescale/fman/mac.c
+index 9767586b4eb32..9b863db0bf087 100644
+--- a/drivers/net/ethernet/freescale/fman/mac.c
++++ b/drivers/net/ethernet/freescale/fman/mac.c
+@@ -197,6 +197,7 @@ static int mac_probe(struct platform_device *_of_dev)
+ 		err = -EINVAL;
+ 		goto _return_of_node_put;
+ 	}
++	mac_dev->fman_dev = &of_dev->dev;
+ 
+ 	/* Get the FMan cell-index */
+ 	err = of_property_read_u32(dev_node, "cell-index", &val);
+@@ -208,7 +209,7 @@ static int mac_probe(struct platform_device *_of_dev)
+ 	/* cell-index 0 => FMan id 1 */
+ 	fman_id = (u8)(val + 1);
+ 
+-	priv->fman = fman_bind(&of_dev->dev);
++	priv->fman = fman_bind(mac_dev->fman_dev);
+ 	if (!priv->fman) {
+ 		dev_err(dev, "fman_bind(%pOF) failed\n", dev_node);
+ 		err = -ENODEV;
+@@ -284,8 +285,9 @@ static int mac_probe(struct platform_device *_of_dev)
+ 			err = -EINVAL;
+ 			goto _return_of_node_put;
+ 		}
++		mac_dev->fman_port_devs[i] = &of_dev->dev;
+ 
+-		mac_dev->port[i] = fman_port_bind(&of_dev->dev);
++		mac_dev->port[i] = fman_port_bind(mac_dev->fman_port_devs[i]);
+ 		if (!mac_dev->port[i]) {
+ 			dev_err(dev, "dev_get_drvdata(%pOF) failed\n",
+ 				dev_node);
+diff --git a/drivers/net/ethernet/freescale/fman/mac.h b/drivers/net/ethernet/freescale/fman/mac.h
+index fe747915cc737..8b5b43d50f8ef 100644
+--- a/drivers/net/ethernet/freescale/fman/mac.h
++++ b/drivers/net/ethernet/freescale/fman/mac.h
+@@ -19,12 +19,13 @@
+ struct fman_mac;
+ struct mac_priv_s;
+ 
++#define PORT_NUM 2
+ struct mac_device {
+ 	void __iomem		*vaddr;
+ 	struct device		*dev;
+ 	struct resource		*res;
+ 	u8			 addr[ETH_ALEN];
+-	struct fman_port	*port[2];
++	struct fman_port	*port[PORT_NUM];
+ 	struct phylink		*phylink;
+ 	struct phylink_config	phylink_config;
+ 	phy_interface_t		phy_if;
+@@ -52,6 +53,9 @@ struct mac_device {
+ 
+ 	struct fman_mac		*fman_mac;
+ 	struct mac_priv_s	*priv;
++
++	struct device		*fman_dev;
++	struct device		*fman_port_devs[PORT_NUM];
+ };
+ 
+ static inline struct mac_device
 -- 
 2.43.0
 
