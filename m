@@ -1,90 +1,142 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7494D18BBB0;
-	Mon, 28 Oct 2024 04:28:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6615618CC12
+	for <patches@lists.linux.dev>; Mon, 28 Oct 2024 06:11:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730089690; cv=none; b=d3BUfaKm0hwYUAy3ReowdDRQJWQ6Sbwzouk4QTnbslRLuesF88dvp+mA0F9ogRAc7xP2f+/v7wO7R4mh9/pn6SvfIEVhjYD60ck7j0lID7qOc1JdNeIGFBCMcNKPNcuMNkI4qrURz+UgmbYLPhRdwkv0mDxZDi1qAYxgbdOL3nA=
+	t=1730095904; cv=none; b=NSXOMDk0OJQLGe9sQoSuRe1IR5biH9dpkFqMsV4apAEf31IWbc3jz7uH7b9gSa8loQNqJn5uj+jXSr9aA9DAaEiAqhuBwoLmWvXdfLODrzaImY52uq4RqhZj/BIRYEdw6XASeE/mS4EHNpKHNdnRmggWMYQqbHEKOny1jCSV+PE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730089690; c=relaxed/simple;
-	bh=mDuCAI6LSQDh4SG5bqEDz4VLNvrKLfvacIM86++9sRo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R97uerEZR1YyeiX8dYJ97WhxGXLVe+W09CReDylEYBToMRCrUYVyLq+cycdyCpF6UncQ5xdwCWAW+kAK93o688M4S1CcqHF4QE8ZgbMmxJxO54SC9OcWuXREm0uicLPrHq5rR8xRugKYuwhavXFryjtft9/0m67hAUz1RSdRAPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=WUPgRR8U; arc=none smtp.client-ip=90.155.92.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1730095904; c=relaxed/simple;
+	bh=jbuTbPN2jVKzp69xgs5KjAtQm+Zh5HKjy+T4XhAJERw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A0qVuhKzyspT7U/j+USU/D+7PhGDacSpaqOS5tbThL3ASw3MCsdvSLx+3CNP6ZVFvLASlc9rGz3t8J9s5Q9o+LAKZSzrOuGfEh3fPY7v7z18yd36Jr/U+iDWkm/+K6hyAGWwOePAE4fTmK2q8xHE28hupGMH9/n7x4ZG3Pfhswg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J0WzYD2G; arc=none smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="WUPgRR8U"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=Content-Transfer-Encoding:Content-Type
-	:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:
-	Sender:Reply-To:Content-ID:Content-Description;
-	bh=8qxi9dDg0WBqbF2V//P0hAMZo/mIu3S+yaHiB5RbDgg=; b=WUPgRR8Uzd4pw52yJOdsIrrEKi
-	BXBPxwqIzeREW7g7tCClwWlpwTzZGq6AvO4e/pQ+ZVUvo5L2XHQdLlwgoASsvK0WFyHwG8Ow2aF2m
-	BB120cJGDaSCqUqJbzsVpVNlct8pkrAum3DpC8F4R7IBBlZqFntwyjuZ8psUYLgWe7mUpmjWqMH1Z
-	iXvTZ5vjF+ZWqkOjZLyyaRD9tpQEsBn6gL1Chq9xXfZYYpX6ihoa9q2SOPs3a3WbRFamKxrD9pWGB
-	RQWTWi28eOZheW80t2O+jUOviiyPVRGMjLekaAqcU3ztUUbUCwg7xJf4zoXL/7J96cv+CLJhpSPDr
-	4+4a2o2g==;
-Received: from [50.53.2.24] (helo=[192.168.254.17])
-	by desiato.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
-	id 1t5HMB-00000009YD7-2aqK;
-	Mon, 28 Oct 2024 04:28:01 +0000
-Message-ID: <8b13719b-522d-48ec-92fe-6c98d651f947@infradead.org>
-Date: Sun, 27 Oct 2024 21:27:50 -0700
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J0WzYD2G"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2e59746062fso3099766a91.2
+        for <patches@lists.linux.dev>; Sun, 27 Oct 2024 23:11:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730095902; x=1730700702; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jbuTbPN2jVKzp69xgs5KjAtQm+Zh5HKjy+T4XhAJERw=;
+        b=J0WzYD2GjvlcGI0mPQyxOLx8Foo5Hy0AIw06d8DcVTRaOQ++3ANvTgoYY8Y5LKcfMU
+         pwke63IDyCUNhqRjW2lvSEjp2nGv8r7gy9U6RxtCP7QUb2pjx3MlnaUKYA1eliPl2Hwl
+         yQpm6GVEiS9isCoykw/pZfdGSe59REwXlSz3jn/HTWULkegVD2jlBdfGLJiIE9DgAx+B
+         vS2qjF7Vxb6eG9CCRicjqwfmJ4HOmA/XvoUug1H/bnXyh8Z7T0VrtvhOZKrmgVOGbunO
+         X8QrrbwXYE0OR9WaOSOJC2ryaHjXS5CZ3HL0h1T4T47P6wNZFXwsq1w02U9jlR3XLJ6T
+         jJjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730095902; x=1730700702;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jbuTbPN2jVKzp69xgs5KjAtQm+Zh5HKjy+T4XhAJERw=;
+        b=ONNXNqasdZFoAPNM7IJqFqIH1mpQrRgfD19UwhFKVpJq9PCvdFuIbrNr8U0c6LxT19
+         JEUZDfZbkL+DCADyuvTNZXlnX2FT+B4u/TLqvLGea1hp8F7lOrr2dLK0IvtQaGn7k1+d
+         hHtkcuBIvW2hh9DAY+jcvnvQmQHPBfuMMW+uy656z4RZKyBUHAM4O7CcrRqeSbUYRvFR
+         2e3qfdDHZh0LZAO20DpCDloGlfpE0E5wuAyGZ8vLnK628x0EFBICYPV+OAdnr/QvT8mi
+         5bZcZN0U+b/6y33m0hIsGsyuUETBO0blL8KX3Oaj+eC0cHYoJH4ovO8qlBWemv1N2NNa
+         xzPg==
+X-Gm-Message-State: AOJu0YyrDu5/71eN8ANQQ4+fI0zmDTmIg6OprQcCSna2/CUt/1BMauoY
+	RZ6Mrc3Q28EkmXrZr5rWIeZI4mZbZUdYI7nGsTYHL75o13/uMjtBej1KmQ==
+X-Google-Smtp-Source: AGHT+IG3UFg+q/e8fdl3GI/kVoudZOs1rz1KQ3OaB+SGwaxDn06pcGwHTnDQ0u21xR5lV5tr/XuCNw==
+X-Received: by 2002:a17:90a:5601:b0:2e2:e743:7501 with SMTP id 98e67ed59e1d1-2e8f0f533e7mr8222044a91.8.1730095901680;
+        Sun, 27 Oct 2024 23:11:41 -0700 (PDT)
+Received: from archie.me ([103.124.138.155])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e77e5864e6sm8216108a91.47.2024.10.27.23.11.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 27 Oct 2024 23:11:40 -0700 (PDT)
+Received: by archie.me (Postfix, from userid 1000)
+	id CE89E4229D6A; Mon, 28 Oct 2024 13:11:38 +0700 (WIB)
+Date: Mon, 28 Oct 2024 13:11:38 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Randy Dunlap <rdunlap@infradead.org>, linux-doc@vger.kernel.org
+Cc: patches@lists.linux.dev, Jonathan Corbet <corbet@lwn.net>
+Subject: Re: [PATCH] Documentation: admin: reorganize kernel-parameters intro
+Message-ID: <Zx8rGu6Pgy83RLz6@archie.me>
+References: <20241028005356.214369-1-rdunlap@infradead.org>
+ <Zx8ML4Q6GyGPw-sy@archie.me>
+ <8b13719b-522d-48ec-92fe-6c98d651f947@infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Documentation: admin: reorganize kernel-parameters intro
-To: Bagas Sanjaya <bagasdotme@gmail.com>, linux-doc@vger.kernel.org
-Cc: patches@lists.linux.dev, Jonathan Corbet <corbet@lwn.net>
-References: <20241028005356.214369-1-rdunlap@infradead.org>
- <Zx8ML4Q6GyGPw-sy@archie.me>
-Content-Language: en-US
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <Zx8ML4Q6GyGPw-sy@archie.me>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="dHSCKawrK9nG6pkb"
+Content-Disposition: inline
+In-Reply-To: <8b13719b-522d-48ec-92fe-6c98d651f947@infradead.org>
 
 
+--dHSCKawrK9nG6pkb
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 10/27/24 8:59 PM, Bagas Sanjaya wrote:
-> On Sun, Oct 27, 2024 at 05:53:56PM -0700, Randy Dunlap wrote:
->> +This document may not be entirely up to date and comprehensive. The command
->> +"modinfo -p ${modulename}" shows a current list of all parameters of a loadable
->> +module. Loadable modules, after being loaded into the running kernel, also
->> +reveal their parameters in /sys/module/${modulename}/parameters/. Some of these
->> +parameters may be changed at runtime by the command
->> +``echo -n ${value} > /sys/module/${modulename}/parameters/${parm}``.
-> 
-> How can users get support for parameters not documented here? Post to LKML
-> (and hoping that they also Cc: relevant maintainers and mailing list)?
+On Sun, Oct 27, 2024 at 09:27:50PM -0700, Randy Dunlap wrote:
+>=20
+>=20
+> On 10/27/24 8:59 PM, Bagas Sanjaya wrote:
+> > On Sun, Oct 27, 2024 at 05:53:56PM -0700, Randy Dunlap wrote:
+> >> +This document may not be entirely up to date and comprehensive. The c=
+ommand
+> >> +"modinfo -p ${modulename}" shows a current list of all parameters of =
+a loadable
+> >> +module. Loadable modules, after being loaded into the running kernel,=
+ also
+> >> +reveal their parameters in /sys/module/${modulename}/parameters/. Som=
+e of these
+> >> +parameters may be changed at runtime by the command
+> >> +``echo -n ${value} > /sys/module/${modulename}/parameters/${parm}``.
+> >=20
+> > How can users get support for parameters not documented here? Post to L=
+KML
+> > (and hoping that they also Cc: relevant maintainers and mailing list)?
+>=20
+> That's probably the best option currently.
 
-That's probably the best option currently.
+OK.
 
->> +KMG suffixes
->> +~~~~~~~~~~~~
->> +
->> +The [KMG] suffix is commonly described after a number of kernel
->> +parameter values. These 'K', 'M', and 'G' letters represent the _binary_
->> +multipliers 'Kilo', 'Mega', and 'Giga', equaling 2^10, 2^20, and 2^30
->> +bytes respectively. Such letter suffixes can also be entirely omitted.
->> +
-> 
-> Metric suffixes?
+>=20
+> >> +KMG suffixes
+> >> +~~~~~~~~~~~~
+> >> +
+> >> +The [KMG] suffix is commonly described after a number of kernel
+> >> +parameter values. These 'K', 'M', and 'G' letters represent the _bina=
+ry_
+> >> +multipliers 'Kilo', 'Mega', and 'Giga', equaling 2^10, 2^20, and 2^30
+> >> +bytes respectively. Such letter suffixes can also be entirely omitted.
+> >> +
+> >=20
+> > Metric suffixes?
+>=20
+> Hm, it looks like memparse() supports all of these suffixes: K, M, G, T, =
+P, E.
+>=20
+> So the heading could be Metric suffixes along with some changed text.
+>=20
 
-Hm, it looks like memparse() supports all of these suffixes: K, M, G, T, P, E.
+Agreed.
 
-So the heading could be Metric suffixes along with some changed text.
+Thanks.
 
-thanks.
+--=20
+An old man doll... just what I always wanted! - Clara
 
-[waiting for more comments]
+--dHSCKawrK9nG6pkb
+Content-Type: application/pgp-signature; name="signature.asc"
 
--- 
-~Randy
+-----BEGIN PGP SIGNATURE-----
 
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZx8rGgAKCRD2uYlJVVFO
+oz2YAP98uCC3FPwW3EGkHnpcMof/YVq7xRBuMEbJyKq5avR0sAD/SLsSOVuoTORu
+d1HBbAHZnW9Oguk+sac8nimHlSHGPQo=
+=TZ/X
+-----END PGP SIGNATURE-----
+
+--dHSCKawrK9nG6pkb--
