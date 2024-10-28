@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A5C18E348;
-	Mon, 28 Oct 2024 06:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F9318E74D;
+	Mon, 28 Oct 2024 06:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097530; cv=none; b=T1jDuAtXcsVEqcN+pSXzumfL8U/S7xgKCbZRSn97SiVGNuCN1a+rKLXSi8FEYXiYVjax/GuzGGyGoW9XHpSba4dU5rN2mX8e7yJkDobHQA0whxMaXT/rOvPFuonH7f3mE7A1fGygFmh4/AlpsuokJWi1g83rMTNUhDX9B2yC2So=
+	t=1730097533; cv=none; b=guL5CqN0Tp3J+XwNbJF1JcmTCuGdfn6azLSCF/3k7E5S1M/zV5dpEaPYwDIkYpBnBwTaU+Ne76HVPMX4WnkT29riegvK5qIJ+l8idLyki3UDeacMwVkyEpSpagTHgkoOjKHp4BAgrdOagWHNrfgCT5Fykt6M1XyMD8Nco0kaF8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097530; c=relaxed/simple;
-	bh=kM4MaeJsJ0JB223SQATlCmbi+bgLQMkB0YVDgvo7BH8=;
+	s=arc-20240116; t=1730097533; c=relaxed/simple;
+	bh=s/rByy9AX1GuWzCuUX/dYHFNw+rThpjgmkn2/moCBvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ULvA84ywLUCdu+CFIRhlP4CJRN/tkIpcYkMgUHat4fu/UDP0xOwd0c2P4GWRMea1JCmeD22DEGVo/WyAoOhVcWjt6p84CK5kynlOeA+exWRDNWIicnbJZRd0nq87zMe7p7W4X/Duf+bGVnHTA/4USh1mv4GdcrmgHf0Zsotp4k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYs3lGp6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SunZ+6JpHg2bg5PwKyPPKgUa/w04MozKMvzblv0SC13suqpuRV2xKAuR5G1nrx/lSLNVUDPosqpO1kUelB3EiDzrGSqVdcJGvSrflqluocQ3MSWb3MzZ9sj+LQRAd1+KseZD74W2TyhPEFtpZz7xcV6AWh1ocJbV1QQmKcTUd9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vgXIvvD2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYs3lGp6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3638CC4CEC3;
-	Mon, 28 Oct 2024 06:38:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vgXIvvD2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71AE8C4CEC3;
+	Mon, 28 Oct 2024 06:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097530;
-	bh=kM4MaeJsJ0JB223SQATlCmbi+bgLQMkB0YVDgvo7BH8=;
+	s=korg; t=1730097532;
+	bh=s/rByy9AX1GuWzCuUX/dYHFNw+rThpjgmkn2/moCBvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dYs3lGp6yTN3fm0xuqHJ3UdVoKpyXhfnYhD/5rMNcZ1qw/TXBFNL3Stkoz0dmjyra
-	 dOxzQMgs+hhytICUC4FmKEtQel3MZOrPZgBdQkymrSrjn9XCR086ZqROt78zHfLduM
-	 Be3jwmEud/9v2i/3WxvJLvemjhm8SpfdLCrvbtsY=
+	b=vgXIvvD23buathuE6Xoquhe6R7k/AGJmeP2X6QrQh5IdleSjNbtAotmRe/OyVfoei
+	 Z9yhaKaUETiEw6Ds8RSvvJNkMs3OZmvEXIeSKBr8g15137nH4Sn9bZSfZZjmrWFtzR
+	 A+m2o9iIdmzWUz7PcXDWZ5JNjXbt4aMxWh9sq8ZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhishek Mohapatra <abhishek.mohapatra@broadcom.com>,
-	Chandramohan Akula <chandramohan.akula@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 034/208] RDMA/bnxt_re: Fix the max CQ WQEs for older adapters
-Date: Mon, 28 Oct 2024 07:23:34 +0100
-Message-ID: <20241028062307.496930419@linuxfoundation.org>
+Subject: [PATCH 6.6 035/208] RDMA/bnxt_re: Fix out of bound check
+Date: Mon, 28 Oct 2024 07:23:35 +0100
+Message-ID: <20241028062307.521784209@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -53,50 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhishek Mohapatra <abhishek.mohapatra@broadcom.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit ac6df53738b465053d38d491fff87bd7d37fdc07 ]
+[ Upstream commit a9e6e7443922ac0a48243c35d03834c96926bff1 ]
 
-Older adapters doesn't support the MAX CQ WQEs reported by older FW. So
-restrict the value reported to 1M always for older adapters.
+Driver exports pacing stats only on GenP5 and P7 adapters. But while
+parsing the pacing stats, driver has a check for "rdev->dbr_pacing".  This
+caused a trace when KASAN is enabled.
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Link: https://patch.msgid.link/r/1728373302-19530-2-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Abhishek Mohapatra<abhishek.mohapatra@broadcom.com>
-Reviewed-by: Chandramohan Akula <chandramohan.akula@broadcom.com>
+BUG: KASAN: slab-out-of-bounds in bnxt_re_get_hw_stats+0x2b6a/0x2e00 [bnxt_re]
+Write of size 8 at addr ffff8885942a6340 by task modprobe/4809
+
+Fixes: 8b6573ff3420 ("bnxt_re: Update the debug counters for doorbell pacing")
+Link: https://patch.msgid.link/r/1728373302-19530-3-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_sp.c | 2 ++
- drivers/infiniband/hw/bnxt_re/qplib_sp.h | 1 +
- 2 files changed, 3 insertions(+)
+ drivers/infiniband/hw/bnxt_re/hw_counters.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-index c580bf78d4c13..2b73bb433b88c 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-@@ -137,6 +137,8 @@ int bnxt_qplib_get_dev_attr(struct bnxt_qplib_rcfw *rcfw,
- 			    6 : sb->max_sge;
- 	attr->max_cq = le32_to_cpu(sb->max_cq);
- 	attr->max_cq_wqes = le32_to_cpu(sb->max_cqe);
-+	if (!bnxt_qplib_is_chip_gen_p7(rcfw->res->cctx))
-+		attr->max_cq_wqes = min_t(u32, BNXT_QPLIB_MAX_CQ_WQES, attr->max_cq_wqes);
- 	attr->max_cq_sges = attr->max_qp_sges;
- 	attr->max_mr = le32_to_cpu(sb->max_mr);
- 	attr->max_mw = le32_to_cpu(sb->max_mw);
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.h b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-index d33c78b96217a..755765e68eaab 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-@@ -55,6 +55,7 @@ struct bnxt_qplib_dev_attr {
- 	u32				max_qp_wqes;
- 	u32				max_qp_sges;
- 	u32				max_cq;
-+#define BNXT_QPLIB_MAX_CQ_WQES          0xfffff
- 	u32				max_cq_wqes;
- 	u32				max_cq_sges;
- 	u32				max_mr;
+diff --git a/drivers/infiniband/hw/bnxt_re/hw_counters.c b/drivers/infiniband/hw/bnxt_re/hw_counters.c
+index 128651c015956..1e63f80917483 100644
+--- a/drivers/infiniband/hw/bnxt_re/hw_counters.c
++++ b/drivers/infiniband/hw/bnxt_re/hw_counters.c
+@@ -366,7 +366,7 @@ int bnxt_re_ib_get_hw_stats(struct ib_device *ibdev,
+ 				goto done;
+ 			}
+ 		}
+-		if (rdev->pacing.dbr_pacing)
++		if (rdev->pacing.dbr_pacing && bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx))
+ 			bnxt_re_copy_db_pacing_stats(rdev, stats);
+ 	}
+ 
 -- 
 2.43.0
 
