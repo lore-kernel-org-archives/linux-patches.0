@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC25C18DF7D;
-	Mon, 28 Oct 2024 06:51:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A9318DF7D;
+	Mon, 28 Oct 2024 06:51:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098314; cv=none; b=CtrOI31r4ikjkgOA9N8pF2ullZNmvuIMbQVkjJoFXiadd/uuw6+jqRnss1clONE2SeupEfSsalPnHzmHpKaXPgmBsXnoCtRox3Vq8RyrOU8IM7aTiOZpJwKqy1gf9VoU7H3vL70Gc+RTYb7tLFKz9kPubQkqvOQlSH/6VCeQuuQ=
+	t=1730098317; cv=none; b=sczTMENC7ba0ZvsL+psq1UFy+aXnfUsax18qjm/AwFPxjayz1Sv4br4fVk1RerPTV2/BvPOB5gxPXhDHWNI8Ba5Vl7T/lC2vX6/DAkc2jdnZLH5bBh8N2HkAdTVKlhUFRVS9szf9y7wBM6aVfz+JG+8ny0CHrpnJLafuExCrj7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098314; c=relaxed/simple;
-	bh=uoWiSB6CaoDRruGode2gRvKpgkQnPT96w0fUXLgnAC0=;
+	s=arc-20240116; t=1730098317; c=relaxed/simple;
+	bh=FBzZgnNsRRFtBGxOPrNtyod0X7MuWJCtUILmVY+UF/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cgvL9IRkZUEigyumhbEJj4preNq4bBPWeXQfZ2H3bzeeLFctpq3QE0DKKNqVFcX2rl3qcX8pRh2Fp4Zghw/PTxTE1Ut587gP2HHgpmJr5E47tRy/OlHX76prmSUxyAYGUQXxf4sttzKyGyDBzN5mI3WOlH2HWqwzPNePvaiQcg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9iEgrgv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V9AnCsv/V3StRQbJt7CAjUFXiiGFJOqedr2K3hlCUF+ua4PKORxjPrODSaFn0Fyigzo78yKcDeJKd0IU1dEDHXAkNuwCrzJ9UtqjJI+2BKfqVtqErjK+qF3FpXLVg1mhGDjkFHm45m5O3DLU2Jr6F7q3qbzVLnP1aPcUls8wF4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KyKv2yok; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9iEgrgv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAB9C4CEC3;
-	Mon, 28 Oct 2024 06:51:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KyKv2yok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CB2C4CEC3;
+	Mon, 28 Oct 2024 06:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098314;
-	bh=uoWiSB6CaoDRruGode2gRvKpgkQnPT96w0fUXLgnAC0=;
+	s=korg; t=1730098316;
+	bh=FBzZgnNsRRFtBGxOPrNtyod0X7MuWJCtUILmVY+UF/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9iEgrgvtru+MXKB3bhc+x6l2eR8ipoFr5fSkS4Qyb9Z2cUrUAS+ns1V0gljninWZ
-	 E1jaKvUJEDKjYcCa81U2XfzKJAGqJ7/Na7zmo/tg1btSmyIYHAzruiuPtjvW6kchf5
-	 LatevzU3AflMh5cY1fZttLO8usO4+7/fj6DZnZyg=
+	b=KyKv2yok+zU6dJZNn3RpOfA10/wspRKBu4bVQVPmgZvtEWXbSP+TFHZ1vgQnLLFvR
+	 Uj/i3LQNycXEAIaojd92hZE7lhyLDxtW3UwPrLCbtHQhnxBEA53SN9Oqs+1pWE2jH6
+	 mOp3Vupl58eTyFFEZROqEEjEhsDVWgty9yyV9Ij0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+4c0d0c4cde787116d465@syzkaller.appspotmail.com,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 171/261] Bluetooth: hci_core: Disable works on hci_unregister_dev
-Date: Mon, 28 Oct 2024 07:25:13 +0100
-Message-ID: <20241028062316.280318850@linuxfoundation.org>
+Subject: [PATCH 6.11 172/261] Bluetooth: SCO: Fix UAF on sco_sock_timeout
+Date: Mon, 28 Oct 2024 07:25:14 +0100
+Message-ID: <20241028062316.304914995@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,95 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 989fa5171f005ecf63440057218d8aeb1795287d ]
+[ Upstream commit 1bf4470a3939c678fb822073e9ea77a0560bc6bb ]
 
-This make use of disable_work_* on hci_unregister_dev since the hci_dev is
-about to be freed new submissions are not disarable.
+conn->sk maybe have been unlinked/freed while waiting for sco_conn_lock
+so this checks if the conn->sk is still valid by checking if it part of
+sco_sk_list.
 
-Fixes: 0d151a103775 ("Bluetooth: hci_core: cancel all works upon hci_unregister_dev()")
+Reported-by: syzbot+4c0d0c4cde787116d465@syzkaller.appspotmail.com
+Tested-by: syzbot+4c0d0c4cde787116d465@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4c0d0c4cde787116d465
+Fixes: ba316be1b6a0 ("Bluetooth: schedule SCO timeouts with delayed_work")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 24 +++++++++++++++---------
- net/bluetooth/hci_sync.c | 12 +++++++++---
- 2 files changed, 24 insertions(+), 12 deletions(-)
+ include/net/bluetooth/bluetooth.h |  1 +
+ net/bluetooth/af_bluetooth.c      | 22 ++++++++++++++++++++++
+ net/bluetooth/sco.c               | 18 ++++++++++++------
+ 3 files changed, 35 insertions(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index b2f8f9c5b6106..6e07350817bec 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -1644,12 +1644,12 @@ void hci_adv_instances_clear(struct hci_dev *hdev)
- 	struct adv_info *adv_instance, *n;
+diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
+index 5d655e109b2c0..f66bc85c6411d 100644
+--- a/include/net/bluetooth/bluetooth.h
++++ b/include/net/bluetooth/bluetooth.h
+@@ -403,6 +403,7 @@ int  bt_sock_register(int proto, const struct net_proto_family *ops);
+ void bt_sock_unregister(int proto);
+ void bt_sock_link(struct bt_sock_list *l, struct sock *s);
+ void bt_sock_unlink(struct bt_sock_list *l, struct sock *s);
++bool bt_sock_linked(struct bt_sock_list *l, struct sock *s);
+ struct sock *bt_sock_alloc(struct net *net, struct socket *sock,
+ 			   struct proto *prot, int proto, gfp_t prio, int kern);
+ int  bt_sock_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+diff --git a/net/bluetooth/af_bluetooth.c b/net/bluetooth/af_bluetooth.c
+index e39fba5565c5d..0b4d0a8bd3614 100644
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -185,6 +185,28 @@ void bt_sock_unlink(struct bt_sock_list *l, struct sock *sk)
+ }
+ EXPORT_SYMBOL(bt_sock_unlink);
  
- 	if (hdev->adv_instance_timeout) {
--		cancel_delayed_work(&hdev->adv_instance_expire);
-+		disable_delayed_work(&hdev->adv_instance_expire);
- 		hdev->adv_instance_timeout = 0;
- 	}
- 
- 	list_for_each_entry_safe(adv_instance, n, &hdev->adv_instances, list) {
--		cancel_delayed_work_sync(&adv_instance->rpa_expired_cb);
-+		disable_delayed_work_sync(&adv_instance->rpa_expired_cb);
- 		list_del(&adv_instance->list);
- 		kfree(adv_instance);
- 	}
-@@ -2685,11 +2685,11 @@ void hci_unregister_dev(struct hci_dev *hdev)
- 	list_del(&hdev->list);
- 	write_unlock(&hci_dev_list_lock);
- 
--	cancel_work_sync(&hdev->rx_work);
--	cancel_work_sync(&hdev->cmd_work);
--	cancel_work_sync(&hdev->tx_work);
--	cancel_work_sync(&hdev->power_on);
--	cancel_work_sync(&hdev->error_reset);
-+	disable_work_sync(&hdev->rx_work);
-+	disable_work_sync(&hdev->cmd_work);
-+	disable_work_sync(&hdev->tx_work);
-+	disable_work_sync(&hdev->power_on);
-+	disable_work_sync(&hdev->error_reset);
- 
- 	hci_cmd_sync_clear(hdev);
- 
-@@ -2796,8 +2796,14 @@ static void hci_cancel_cmd_sync(struct hci_dev *hdev, int err)
- {
- 	bt_dev_dbg(hdev, "err 0x%2.2x", err);
- 
--	cancel_delayed_work_sync(&hdev->cmd_timer);
--	cancel_delayed_work_sync(&hdev->ncmd_timer);
-+	if (hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
-+		disable_delayed_work_sync(&hdev->cmd_timer);
-+		disable_delayed_work_sync(&hdev->ncmd_timer);
-+	} else  {
-+		cancel_delayed_work_sync(&hdev->cmd_timer);
-+		cancel_delayed_work_sync(&hdev->ncmd_timer);
++bool bt_sock_linked(struct bt_sock_list *l, struct sock *s)
++{
++	struct sock *sk;
++
++	if (!l || !s)
++		return false;
++
++	read_lock(&l->lock);
++
++	sk_for_each(sk, &l->head) {
++		if (s == sk) {
++			read_unlock(&l->lock);
++			return true;
++		}
 +	}
 +
- 	atomic_set(&hdev->cmd_cnt, 1);
++	read_unlock(&l->lock);
++
++	return false;
++}
++EXPORT_SYMBOL(bt_sock_linked);
++
+ void bt_accept_enqueue(struct sock *parent, struct sock *sk, bool bh)
+ {
+ 	const struct cred *old_cred;
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index a5ac160c592eb..1c7252a368669 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -76,6 +76,16 @@ struct sco_pinfo {
+ #define SCO_CONN_TIMEOUT	(HZ * 40)
+ #define SCO_DISCONN_TIMEOUT	(HZ * 2)
  
- 	hci_cmd_sync_cancel_sync(hdev, err);
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 40ccdef168d7d..ae7a5817883aa 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -5131,9 +5131,15 @@ int hci_dev_close_sync(struct hci_dev *hdev)
++static struct sock *sco_sock_hold(struct sco_conn *conn)
++{
++	if (!conn || !bt_sock_linked(&sco_sk_list, conn->sk))
++		return NULL;
++
++	sock_hold(conn->sk);
++
++	return conn->sk;
++}
++
+ static void sco_sock_timeout(struct work_struct *work)
+ {
+ 	struct sco_conn *conn = container_of(work, struct sco_conn,
+@@ -87,9 +97,7 @@ static void sco_sock_timeout(struct work_struct *work)
+ 		sco_conn_unlock(conn);
+ 		return;
+ 	}
+-	sk = conn->sk;
+-	if (sk)
+-		sock_hold(sk);
++	sk = sco_sock_hold(conn);
+ 	sco_conn_unlock(conn);
  
- 	bt_dev_dbg(hdev, "");
+ 	if (!sk)
+@@ -194,9 +202,7 @@ static void sco_conn_del(struct hci_conn *hcon, int err)
  
--	cancel_delayed_work(&hdev->power_off);
--	cancel_delayed_work(&hdev->ncmd_timer);
--	cancel_delayed_work(&hdev->le_scan_disable);
-+	if (hci_dev_test_flag(hdev, HCI_UNREGISTER)) {
-+		disable_delayed_work(&hdev->power_off);
-+		disable_delayed_work(&hdev->ncmd_timer);
-+		disable_delayed_work(&hdev->le_scan_disable);
-+	} else {
-+		cancel_delayed_work(&hdev->power_off);
-+		cancel_delayed_work(&hdev->ncmd_timer);
-+		cancel_delayed_work(&hdev->le_scan_disable);
-+	}
+ 	/* Kill socket */
+ 	sco_conn_lock(conn);
+-	sk = conn->sk;
+-	if (sk)
+-		sock_hold(sk);
++	sk = sco_sock_hold(conn);
+ 	sco_conn_unlock(conn);
  
- 	hci_cmd_sync_cancel_sync(hdev, ENODEV);
- 
+ 	if (sk) {
 -- 
 2.43.0
 
