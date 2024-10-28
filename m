@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED3F8837;
-	Mon, 28 Oct 2024 06:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96C0A47;
+	Mon, 28 Oct 2024 06:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097911; cv=none; b=F0tELTS7KOrYcvqhFedMKu+/YuCCQDG/+Ucmn6y1fnjINiH0Rd8rRG1sYYIFgxeKApGGXZEf1zWWcO+hm1AGtZANT8CdFSNIh9r/Buf+racZK5f/y4rFCiQTio3JoL+f1OfudsKLb7JTMk12yPhWSvqxAlwabD3gsOBYPlbls4k=
+	t=1730097913; cv=none; b=k/t6h9QszYV23QQr4JXTTwz8BiKgKubTkXkJgGZiYSuOYpjE1LFtv110TqhN6iWp8z23YfbiVAyLsolaf1fwltATbwVCKOrnnigDs3ac9jYJnEYddVNgRLzoXHQRgAr8/WqYNcS3ym/4j3RuIQx8sjUpCMXagPWj+xZJT2/8SX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097911; c=relaxed/simple;
-	bh=csecOZndsbpvHnVSLiOVDotcFA2SwFg/KJLt9oxv8U0=;
+	s=arc-20240116; t=1730097913; c=relaxed/simple;
+	bh=IpoNLsA8EB0TX4ViwuT2mPnxXVS130rvOCbcJ2cRcSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FsGJCMS9K5x2j+/hS0nQLFfcJdC6Q4O2piajWFKlYHt2UQNlgi4Mqld8AYM33q5XJzmH6K+Nf/vF1K8bAziSbo0lS+n5JkoS+9c8HOhoeyQo8Hf+/E6Y9YQclqZAhx6iLDgKfHmsGKYM4giO/1Csat57POMy2tarfjryBjs8LyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCc1eJre; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g22raIWCaGicfGjLRz/dKJufWfiAlon2118wU+fkCVFEKORs/Yc5BQVDvGASHDPKDsh8ixRPDb80zZfd1/hAWaAgz0Yl8l7z5lfA+2LZ8fWY9MDNZ94+ur5T9gJzxblF87LYGX/y8ghBDpBHCfcRSqw3t1kAgR1ApicpfeEjWGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fRrd4PYd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCc1eJre"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2697AC4CEC3;
-	Mon, 28 Oct 2024 06:45:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fRrd4PYd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0CEC4CEC3;
+	Mon, 28 Oct 2024 06:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097911;
-	bh=csecOZndsbpvHnVSLiOVDotcFA2SwFg/KJLt9oxv8U0=;
+	s=korg; t=1730097913;
+	bh=IpoNLsA8EB0TX4ViwuT2mPnxXVS130rvOCbcJ2cRcSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCc1eJreKu6LpoRUTr/ntXTndArnsrkDBDsPGKRP7dLehULHeECMUdUFm2StrRiu5
-	 59yFd/eBC9w/9HBbst1EEqR7ffTq8UWUNcG9eMUcG1Owd77Eh6Dq9U2hCD/e2wS8Jh
-	 Rto9CtYdMwoAM+1NmScHorOMA8U0oYpdnRRZOsOQ=
+	b=fRrd4PYdCgN3vMFSJHQGezMCjxGv4TGOtuf6dSYkaTN1SRxRMLCXXT/kRLS+veEUc
+	 DV4FJA52pztFYOk2uWkT4m1AbCLDwqdjPWyjjN6uqT5YnoiHcI5+sLXHTQPANNIiTl
+	 0ZyvDbOLnlv9VeByJZ5cpFAOJ/L/hdPtCMonnefg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	siddharth.manthan@gmail.com,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.6 202/208] platform/x86: dell-wmi: Ignore suspend notifications
-Date: Mon, 28 Oct 2024 07:26:22 +0100
-Message-ID: <20241028062311.619094053@linuxfoundation.org>
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 203/208] ACPI: PRM: Clean up guid type in struct prm_handler_info
+Date: Mon, 28 Oct 2024 07:26:23 +0100
+Message-ID: <20241028062311.644446509@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -46,48 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit a7990957fa53326fe9b47f0349373ed99bb69aaa upstream.
+commit 3d1c651272cf1df8aac7d9b6d92d836d27bed50f upstream.
 
-Some machines like the Dell G15 5155 emit WMI events when
-suspending/resuming. Ignore those WMI events.
+Clang 19 prints a warning when we pass &th->guid to efi_pa_va_lookup():
 
-Tested-by: siddharth.manthan@gmail.com
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Acked-by: Pali Rohár <pali@kernel.org>
-Link: https://lore.kernel.org/r/20241014220529.397390-1-W_Armin@gmx.de
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+drivers/acpi/prmt.c:156:29: error: passing 1-byte aligned argument to
+4-byte aligned parameter 1 of 'efi_pa_va_lookup' may result in an
+unaligned pointer access [-Werror,-Walign-mismatch]
+  156 |                         (void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
+      |                                                  ^
+
+The problem is that efi_pa_va_lookup() takes a efi_guid_t and &th->guid
+is a regular guid_t.  The difference between the two types is the
+alignment.  efi_guid_t is a typedef.
+
+	typedef guid_t efi_guid_t __aligned(__alignof__(u32));
+
+It's possible that this a bug in Clang 19.  Even though the alignment of
+&th->guid is not explicitly specified, it will still end up being aligned
+at 4 or 8 bytes.
+
+Anyway, as Ard points out, it's cleaner to change guid to efi_guid_t type
+and that also makes the warning go away.
+
+Fixes: 088984c8d54c ("ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM handler and context")
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Suggested-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Tested-by: Paul E. McKenney <paulmck@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://patch.msgid.link/3777d71b-9e19-45f4-be4e-17bf4fa7a834@stanley.mountain
+[ rjw: Subject edit ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/dell/dell-wmi-base.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/acpi/prmt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/x86/dell/dell-wmi-base.c
-+++ b/drivers/platform/x86/dell/dell-wmi-base.c
-@@ -264,6 +264,15 @@ static const struct key_entry dell_wmi_k
- 	/*Speaker Mute*/
- 	{ KE_KEY, 0x109, { KEY_MUTE} },
+--- a/drivers/acpi/prmt.c
++++ b/drivers/acpi/prmt.c
+@@ -52,7 +52,7 @@ struct prm_context_buffer {
+ static LIST_HEAD(prm_module_list);
  
-+	/* S2Idle screen off */
-+	{ KE_IGNORE, 0x120, { KEY_RESERVED }},
-+
-+	/* Leaving S4 or S2Idle suspend */
-+	{ KE_IGNORE, 0x130, { KEY_RESERVED }},
-+
-+	/* Entering S2Idle suspend */
-+	{ KE_IGNORE, 0x140, { KEY_RESERVED }},
-+
- 	/* Mic mute */
- 	{ KE_KEY, 0x150, { KEY_MICMUTE } },
- 
+ struct prm_handler_info {
+-	guid_t guid;
++	efi_guid_t guid;
+ 	efi_status_t (__efiapi *handler_addr)(u64, void *);
+ 	u64 static_data_buffer_addr;
+ 	u64 acpi_param_buffer_addr;
 
 
