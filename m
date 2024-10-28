@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1761A15B10D;
-	Mon, 28 Oct 2024 06:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBE815B10D;
+	Mon, 28 Oct 2024 06:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097376; cv=none; b=SLSi12Irt89ITkb59H8MVrz9m45/9TJmwCyA39Gj6//huO0CYE1WxqSu4Rqu2fRzxATOsAbM2AgMxZkjnk+g9D1WGL8DyCBjUsgdgPPnVhxJuHj8P/Hs6eOdxjAdBwG4Tp+Cf31H9QelbnEzIb3C07038bnSx2Q7FVAkqWLC41I=
+	t=1730097378; cv=none; b=WOVYDiHVX6jTPXoL/Mke4fQH43w9dBn8kgb6GzUio9fwyYqdaAoNYrKVGAwhpMivnDx1Q9SYKs4/5IH2USnM1CE5PBEx+pxK6YMIyiIwAinln1sPZ2EBp+knorO2r+dbf7VFyre7xgeIzin60klQdvou7co3TW2OnBdR+OEAlis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097376; c=relaxed/simple;
-	bh=r0s4idhQwps+BkQso/Ih/uY+yQVJ2b4VLZoa9SlwWW4=;
+	s=arc-20240116; t=1730097378; c=relaxed/simple;
+	bh=cN4sYPa8hUgVdF1/VRTh+rqa2ID8sAboKJjkjMI5eg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gmHZ8aSPkE0okKFdVGDzGN5SKIvEO2UNpmKfwq1PqgONKI/6yWovFAzVbJt01ICM6YmeVgLe+B/eVe+pAlvL6ufBGrYn6dq84Mn26FKXc2idkIZ/Cz7zm4oOpRNYaRkP5UpwizUQPHUCMaEd8BcU9E7K4oHIcjP98ONmHasDStk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QuutkKt8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XZMjNgTwwAH/Svoq50I9iO58kBk+cOi+G/FLL4WX/311BoUNhIePoKPsPuBIP/SDfNPgFZoJAxt22Mm55eevZTtiUqsqDWwL4ug3iRrToBX3D4zVw0uxlPXcIF0aMT9fUUwTGbEnywZ40P4MqKXCyukPocpu4pCDHVfbyzn0roQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVtxj/tf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QuutkKt8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE71C4CEC3;
-	Mon, 28 Oct 2024 06:36:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVtxj/tf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB5CEC4CEC3;
+	Mon, 28 Oct 2024 06:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097376;
-	bh=r0s4idhQwps+BkQso/Ih/uY+yQVJ2b4VLZoa9SlwWW4=;
+	s=korg; t=1730097378;
+	bh=cN4sYPa8hUgVdF1/VRTh+rqa2ID8sAboKJjkjMI5eg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QuutkKt8/nL7GT41ceCwEWcwggUAhiu/QHoBlM/KPNGGRbuY1PCjL3Yw2cyhuK5gU
-	 g+jMsfN51ygMUNa4osxsHjDOtrjRys7v88NGDeXIgZnkI0zx31Yg8a2KGdEVrgCEV6
-	 H29L8gUrGiqW8VwXsy0kPuw+t6j5jG1Ht6jAhVqM=
+	b=HVtxj/tf418vH87ZNV9PNpop3R36sPJTeVJnO+z2U0YSLmF5LxtVmcm6QEk2Fj1ed
+	 0T77WF2sdW4DIvCyfL+afQwOnEEsVLymxWd81h+WfYAZxw9qAoC30JzuawwSaqvH2U
+	 zWxyu6Gd9P4yHcCUUfOs1rLz5OW7sjbINyoJVawA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Quadros <rogerq@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	Dhruva Gole <d-gole@ti.com>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 067/137] usb: dwc3: core: Fix system suspend on TI AM62 platforms
-Date: Mon, 28 Oct 2024 07:25:04 +0100
-Message-ID: <20241028062300.610615270@linuxfoundation.org>
+Subject: [PATCH 6.1 068/137] tty/serial: Make ->dcd_change()+uart_handle_dcd_change() status bool active
+Date: Mon, 28 Oct 2024 07:25:05 +0100
+Message-ID: <20241028062300.638911047@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -47,115 +46,172 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roger Quadros <rogerq@kernel.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 705e3ce37bccdf2ed6f848356ff355f480d51a91 ]
+[ Upstream commit 0388a152fc5544be82e736343496f99c4eef8d62 ]
 
-Since commit 6d735722063a ("usb: dwc3: core: Prevent phy suspend during init"),
-system suspend is broken on AM62 TI platforms.
+Convert status parameter for ->dcd_change() and
+uart_handle_dcd_change() to bool which matches to how the parameter is
+used.
 
-Before that commit, both DWC3_GUSB3PIPECTL_SUSPHY and DWC3_GUSB2PHYCFG_SUSPHY
-bits (hence forth called 2 SUSPHY bits) were being set during core
-initialization and even during core re-initialization after a system
-suspend/resume.
+Rename status to active to better describe what the parameter means.
 
-These bits are required to be set for system suspend/resume to work correctly
-on AM62 platforms.
-
-Since that commit, the 2 SUSPHY bits are not set for DEVICE/OTG mode if gadget
-driver is not loaded and started.
-For Host mode, the 2 SUSPHY bits are set before the first system suspend but
-get cleared at system resume during core re-init and are never set again.
-
-This patch resovles these two issues by ensuring the 2 SUSPHY bits are set
-before system suspend and restored to the original state during system resume.
-
-Cc: stable@vger.kernel.org # v6.9+
-Fixes: 6d735722063a ("usb: dwc3: core: Prevent phy suspend during init")
-Link: https://lore.kernel.org/all/1519dbe7-73b6-4afc-bfe3-23f4f75d772f@kernel.org/
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Tested-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Reviewed-by: Dhruva Gole <d-gole@ti.com>
-Link: https://lore.kernel.org/r/20241011-am62-lpm-usb-v3-1-562d445625b5@kernel.org
+Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230117090358.4796-9-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 40d7903386df ("serial: imx: Update mctrl old_status on RTSD interrupt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.c | 19 +++++++++++++++++++
- drivers/usb/dwc3/core.h |  3 +++
- 2 files changed, 22 insertions(+)
+ drivers/pps/clients/pps-ldisc.c  | 6 +++---
+ drivers/tty/serial/serial_core.c | 8 ++++----
+ drivers/tty/serial/sunhv.c       | 8 ++++----
+ include/linux/serial_core.h      | 3 +--
+ include/linux/tty_ldisc.h        | 4 ++--
+ 5 files changed, 14 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index c191716896fc4..22edd8d451da0 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -2131,6 +2131,11 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+diff --git a/drivers/pps/clients/pps-ldisc.c b/drivers/pps/clients/pps-ldisc.c
+index d73c4c2ed4e13..443d6bae19d14 100644
+--- a/drivers/pps/clients/pps-ldisc.c
++++ b/drivers/pps/clients/pps-ldisc.c
+@@ -13,7 +13,7 @@
+ #include <linux/pps_kernel.h>
+ #include <linux/bug.h>
+ 
+-static void pps_tty_dcd_change(struct tty_struct *tty, unsigned int status)
++static void pps_tty_dcd_change(struct tty_struct *tty, bool active)
  {
- 	u32 reg;
+ 	struct pps_device *pps;
+ 	struct pps_event_time ts;
+@@ -29,11 +29,11 @@ static void pps_tty_dcd_change(struct tty_struct *tty, unsigned int status)
+ 		return;
  
-+	dwc->susphy_state = (dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0)) &
-+			    DWC3_GUSB2PHYCFG_SUSPHY) ||
-+			    (dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0)) &
-+			    DWC3_GUSB3PIPECTL_SUSPHY);
-+
- 	switch (dwc->current_dr_role) {
- 	case DWC3_GCTL_PRTCAP_DEVICE:
- 		if (pm_runtime_suspended(dwc->dev))
-@@ -2178,6 +2183,15 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
- 		break;
- 	}
+ 	/* Now do the PPS event report */
+-	pps_event(pps, &ts, status ? PPS_CAPTUREASSERT :
++	pps_event(pps, &ts, active ? PPS_CAPTUREASSERT :
+ 			PPS_CAPTURECLEAR, NULL);
  
-+	if (!PMSG_IS_AUTO(msg)) {
-+		/*
-+		 * TI AM62 platform requires SUSPHY to be
-+		 * enabled for system suspend to work.
-+		 */
-+		if (!dwc->susphy_state)
-+			dwc3_enable_susphy(dwc, true);
-+	}
-+
- 	return 0;
+ 	dev_dbg(pps->dev, "PPS %s at %lu\n",
+-			status ? "assert" : "clear", jiffies);
++			active ? "assert" : "clear", jiffies);
  }
  
-@@ -2240,6 +2254,11 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
- 		break;
+ static int (*alias_n_tty_open)(struct tty_struct *tty);
+diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
+index 58e857fb8deeb..e6994f40974ed 100644
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -3290,11 +3290,11 @@ EXPORT_SYMBOL(uart_match_port);
+ /**
+  * uart_handle_dcd_change - handle a change of carrier detect state
+  * @uport: uart_port structure for the open port
+- * @status: new carrier detect status, nonzero if active
++ * @active: new carrier detect status
+  *
+  * Caller must hold uport->lock.
+  */
+-void uart_handle_dcd_change(struct uart_port *uport, unsigned int status)
++void uart_handle_dcd_change(struct uart_port *uport, bool active)
+ {
+ 	struct tty_port *port = &uport->state->port;
+ 	struct tty_struct *tty = port->tty;
+@@ -3306,7 +3306,7 @@ void uart_handle_dcd_change(struct uart_port *uport, unsigned int status)
+ 		ld = tty_ldisc_ref(tty);
+ 		if (ld) {
+ 			if (ld->ops->dcd_change)
+-				ld->ops->dcd_change(tty, status);
++				ld->ops->dcd_change(tty, active);
+ 			tty_ldisc_deref(ld);
+ 		}
  	}
+@@ -3314,7 +3314,7 @@ void uart_handle_dcd_change(struct uart_port *uport, unsigned int status)
+ 	uport->icount.dcd++;
  
-+	if (!PMSG_IS_AUTO(msg)) {
-+		/* restore SUSPHY state to that before system suspend. */
-+		dwc3_enable_susphy(dwc, dwc->susphy_state);
-+	}
-+
- 	return 0;
- }
+ 	if (uart_dcd_enabled(uport)) {
+-		if (status)
++		if (active)
+ 			wake_up_interruptible(&port->open_wait);
+ 		else if (tty)
+ 			tty_hangup(tty);
+diff --git a/drivers/tty/serial/sunhv.c b/drivers/tty/serial/sunhv.c
+index 1938ba5e98c0e..f0408a4d91ecf 100644
+--- a/drivers/tty/serial/sunhv.c
++++ b/drivers/tty/serial/sunhv.c
+@@ -89,10 +89,10 @@ static int receive_chars_getchar(struct uart_port *port)
  
-diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index e733835c41222..1b496c8e7b809 100644
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -1118,6 +1118,8 @@ struct dwc3_scratchpad_array {
-  * @dis_metastability_quirk: set to disable metastability quirk.
-  * @dis_split_quirk: set to disable split boundary.
-  * @suspended: set to track suspend event due to U3/L2.
-+ * @susphy_state: state of DWC3_GUSB2PHYCFG_SUSPHY + DWC3_GUSB3PIPECTL_SUSPHY
-+ *		  before PM suspend.
-  * @imod_interval: set the interrupt moderation interval in 250ns
-  *			increments or 0 to disable.
-  * @max_cfg_eps: current max number of IN eps used across all USB configs.
-@@ -1341,6 +1343,7 @@ struct dwc3 {
- 	unsigned		dis_split_quirk:1;
- 	unsigned		async_callbacks:1;
- 	unsigned		suspended:1;
-+	unsigned		susphy_state:1;
+ 		if (c == CON_HUP) {
+ 			hung_up = 1;
+-			uart_handle_dcd_change(port, 0);
++			uart_handle_dcd_change(port, false);
+ 		} else if (hung_up) {
+ 			hung_up = 0;
+-			uart_handle_dcd_change(port, 1);
++			uart_handle_dcd_change(port, true);
+ 		}
  
- 	u16			imod_interval;
+ 		if (port->state == NULL) {
+@@ -135,7 +135,7 @@ static int receive_chars_read(struct uart_port *port)
+ 				bytes_read = 1;
+ 			} else if (stat == CON_HUP) {
+ 				hung_up = 1;
+-				uart_handle_dcd_change(port, 0);
++				uart_handle_dcd_change(port, false);
+ 				continue;
+ 			} else {
+ 				/* HV_EWOULDBLOCK, etc.  */
+@@ -145,7 +145,7 @@ static int receive_chars_read(struct uart_port *port)
  
+ 		if (hung_up) {
+ 			hung_up = 0;
+-			uart_handle_dcd_change(port, 1);
++			uart_handle_dcd_change(port, true);
+ 		}
+ 
+ 		if (port->sysrq != 0 &&  *con_read_page) {
+diff --git a/include/linux/serial_core.h b/include/linux/serial_core.h
+index 1c9b3f27f2d36..9b6d91430d3b3 100644
+--- a/include/linux/serial_core.h
++++ b/include/linux/serial_core.h
+@@ -890,8 +890,7 @@ static inline bool uart_softcts_mode(struct uart_port *uport)
+  * The following are helper functions for the low level drivers.
+  */
+ 
+-extern void uart_handle_dcd_change(struct uart_port *uport,
+-		unsigned int status);
++extern void uart_handle_dcd_change(struct uart_port *uport, bool active);
+ extern void uart_handle_cts_change(struct uart_port *uport,
+ 		unsigned int status);
+ 
+diff --git a/include/linux/tty_ldisc.h b/include/linux/tty_ldisc.h
+index dcb61ec11424a..49dc172dedc7f 100644
+--- a/include/linux/tty_ldisc.h
++++ b/include/linux/tty_ldisc.h
+@@ -170,7 +170,7 @@ int ldsem_down_write_nested(struct ld_semaphore *sem, int subclass,
+  *	send, please arise a tasklet or workqueue to do the real data transfer.
+  *	Do not send data in this hook, it may lead to a deadlock.
+  *
+- * @dcd_change: [DRV] ``void ()(struct tty_struct *tty, unsigned int status)``
++ * @dcd_change: [DRV] ``void ()(struct tty_struct *tty, bool active)``
+  *
+  *	Tells the discipline that the DCD pin has changed its status. Used
+  *	exclusively by the %N_PPS (Pulse-Per-Second) line discipline.
+@@ -238,7 +238,7 @@ struct tty_ldisc_ops {
+ 	void	(*receive_buf)(struct tty_struct *tty, const unsigned char *cp,
+ 			       const char *fp, int count);
+ 	void	(*write_wakeup)(struct tty_struct *tty);
+-	void	(*dcd_change)(struct tty_struct *tty, unsigned int status);
++	void	(*dcd_change)(struct tty_struct *tty, bool active);
+ 	int	(*receive_buf2)(struct tty_struct *tty, const unsigned char *cp,
+ 				const char *fp, int count);
+ 	void	(*lookahead_buf)(struct tty_struct *tty, const unsigned char *cp,
 -- 
 2.43.0
 
