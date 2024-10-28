@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F1518A922;
-	Mon, 28 Oct 2024 06:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786512AF07;
+	Mon, 28 Oct 2024 06:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098189; cv=none; b=bnKY8YF1UFpdXbivYpsbCPpQNr5/9ndi2/5uQsDXCz+f6wcI6SApLxIAbk6au8yIyzrV3b7brmxdOK3XcgEPFfuvHz3Tmd5WHhmsQhU2Ft0PKY/X5M9OwIvMxXp4P0G2JTP7yg25Ij7ahgH2P0bJuGx2q8rfQj4zPBzyB+36wvU=
+	t=1730098191; cv=none; b=dk41tGSec0N7GOnnanrEfqflAdw45BSVehPZKRZhC0OIuGDI8jIpPHpYDMQx8sXI0rl4ICKW9yE7ALpWlpAztARJTsRKWqiNq2o52VkhhiYv/JoSpWTlTHwt9Ab4s7BMsRu9NGgx1QZoZgCAkvlTaZLFGC2A6kO8knCitTQgCqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098189; c=relaxed/simple;
-	bh=c0M3kYmdEWIoQkp9dfFFtvZ7HDXzdEGJmQR3HlTN3Rw=;
+	s=arc-20240116; t=1730098191; c=relaxed/simple;
+	bh=sgdCx1knkQh6xtcdSJsuuCgcmS+GMja05BXeo6QrhfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lMA5wyF0FTroiv8OZ5JGhBrhedAI7yRitJBmG9M2RjIsbJ5gAo5PpIu1IpDDPEl3Q2PiM9pg4gwX25Coo09eh72Q3u2VG3Bvx9tkQKxKbGUWnY8w4u57niMemJr2DrswSczrkP/RqxhASY9LlV5FCxMd3Wpduh1anExLg8ozFVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pA0ZEMlH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FO3iLRyirhZKZLhohM6KYuPCAungX8ouuLxg9jIHxg4nXCD/uGpq2AVzADXLOYKZA7eHE2Lg36DwbWufFQ58EahYCCrlEvXR0kHiiCaNCj5264304wUPSSFIKHZGS+fWIBzzB+WhrulmEw65JAm6g7AJ4Y4+BYArBcvUHKfIw6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UF7RC9m2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pA0ZEMlH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC168C4CEC3;
-	Mon, 28 Oct 2024 06:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UF7RC9m2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174A6C4CEC3;
+	Mon, 28 Oct 2024 06:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098189;
-	bh=c0M3kYmdEWIoQkp9dfFFtvZ7HDXzdEGJmQR3HlTN3Rw=;
+	s=korg; t=1730098191;
+	bh=sgdCx1knkQh6xtcdSJsuuCgcmS+GMja05BXeo6QrhfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pA0ZEMlHn6O43eYR15OiOQ1jnCOoNafWaalf1add23kkcMnub/zYO9AVe8yOdFa1d
-	 4d/CVIMVeUZFW5ukGP4SSj9bA5rMA5sazeALhzqF9dMHyveWuYtreZAqntUM/omqru
-	 9iy+RsnYuaBf4/4wYIZXF54m4TfjmzEXW7z/D6zI=
+	b=UF7RC9m2RyykBNnWLplqNUY3TVwDOvmaRqaIA8bAiRlzi23/pCCt9v2xpt3o/UyaY
+	 2daNGuunkk6/6xaJoZc4Ybuyjl0pB8C+mFTJs+tsdheHR4tu2GGpOmEPJV1UmOPN7E
+	 jUYl4yqWrb/lVAgyy94b+CYW4pWU01HHTT4ue+uA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Leo Fu <bfu@redhat.com>,
-	Thomas Huth <thuth@redhat.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Hugh Dickins <hughd@google.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 116/261] mm: dont install PMD mappings when THPs are disabled by the hw/process/vma
-Date: Mon, 28 Oct 2024 07:24:18 +0100
-Message-ID: <20241028062314.936693269@linuxfoundation.org>
+Subject: [PATCH 6.11 117/261] iio: adc: ti-lmp92064: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
+Date: Mon, 28 Oct 2024 07:24:19 +0100
+Message-ID: <20241028062314.962608507@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -60,73 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit 2b0f922323ccfa76219bcaacd35cd50aeaa13592 ]
+[ Upstream commit a985576af824426e33100554a5958a6beda60a13 ]
 
-We (or rather, readahead logic :) ) might be allocating a THP in the
-pagecache and then try mapping it into a process that explicitly disabled
-THP: we might end up installing PMD mappings.
+This driver makes use of triggered buffers, but does not select the
+required modules.
 
-This is a problem for s390x KVM, which explicitly remaps all PMD-mapped
-THPs to be PTE-mapped in s390_enable_sie()->thp_split_mm(), before
-starting the VM.
+Add the missing 'select IIO_BUFFER' and 'select IIO_TRIGGERED_BUFFER'.
 
-For example, starting a VM backed on a file system with large folios
-supported makes the VM crash when the VM tries accessing such a mapping
-using KVM.
-
-Is it also a problem when the HW disabled THP using
-TRANSPARENT_HUGEPAGE_UNSUPPORTED?  At least on x86 this would be the case
-without X86_FEATURE_PSE.
-
-In the future, we might be able to do better on s390x and only disallow
-PMD mappings -- what s390x and likely TRANSPARENT_HUGEPAGE_UNSUPPORTED
-really wants.  For now, fix it by essentially performing the same check as
-would be done in __thp_vma_allowable_orders() or in shmem code, where this
-works as expected, and disallow PMD mappings, making us fallback to PTE
-mappings.
-
-Link: https://lkml.kernel.org/r/20241011102445.934409-3-david@redhat.com
-Fixes: 793917d997df ("mm/readahead: Add large folio readahead")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reported-by: Leo Fu <bfu@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Janosch Frank <frankja@linux.ibm.com>
-Cc: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 6c7bc1d27bb2 ("iio: adc: ti-lmp92064: add buffering support")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20241003-iio-select-v1-6-67c0385197cd@gmail.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/iio/adc/Kconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index cda2c12c500b8..cb66345e398d2 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -4719,6 +4719,15 @@ vm_fault_t do_set_pmd(struct vm_fault *vmf, struct page *page)
- 	pmd_t entry;
- 	vm_fault_t ret = VM_FAULT_FALLBACK;
- 
-+	/*
-+	 * It is too late to allocate a small folio, we already have a large
-+	 * folio in the pagecache: especially s390 KVM cannot tolerate any
-+	 * PMD mappings, but PTE-mapped THP are fine. So let's simply refuse any
-+	 * PMD mappings if THPs are disabled.
-+	 */
-+	if (thp_disabled_by_hw() || vma_thp_disabled(vma, vma->vm_flags))
-+		return ret;
-+
- 	if (!thp_vma_suitable_order(vma, haddr, PMD_ORDER))
- 		return ret;
- 
+diff --git a/drivers/iio/adc/Kconfig b/drivers/iio/adc/Kconfig
+index cceac30e2bb9f..c16316664db38 100644
+--- a/drivers/iio/adc/Kconfig
++++ b/drivers/iio/adc/Kconfig
+@@ -1486,6 +1486,8 @@ config TI_LMP92064
+ 	tristate "Texas Instruments LMP92064 ADC driver"
+ 	depends on SPI
+ 	select REGMAP_SPI
++	select IIO_BUFFER
++	select IIO_TRIGGERED_BUFFER
+ 	help
+ 	  Say yes here to build support for the LMP92064 Precision Current and Voltage
+ 	  sensor.
 -- 
 2.43.0
 
