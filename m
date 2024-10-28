@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0939018E05D;
-	Mon, 28 Oct 2024 06:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E531DFFD;
+	Mon, 28 Oct 2024 06:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097907; cv=none; b=nS8imKPP1/Wnsy5lcEs44l2bCEyA1Mjs28W4LbjxIvW/sn+KHWU5ii44RKIJtSG4de4E4kNOGO6Cj14Q5hx8T8gzqodcwcqjLy5JwgKflKzNd7JtWZiIZJorN8bsiMMvCY05kL4MqJxW5+RU3qv6X3vskus7/7FKbUZQJ6/7HWs=
+	t=1730097909; cv=none; b=X0IRJvMn7oRLcOvVPPt/Eqc6roDiLVipCUpTSTnhLk6tKiP90XmwK8Fcu9Z4FnvHF36+7CeDoShclMMm2KvYsQ9gr3MEChebC8jtRfQgxn88m8yTS3aFWYtxqu4GfW58uEn2w+eFgJTjJagNDkWkP0iGgbhjv/2dkY2RhRFcljI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097907; c=relaxed/simple;
-	bh=R77nVmgTCCXDlAKWoAtx0e4H/UhpwOJ02zQ3JNuCZGA=;
+	s=arc-20240116; t=1730097909; c=relaxed/simple;
+	bh=zq3l2T1JHwnFFvg35hMlsIrm7tTTG+QddcKqBC+qKcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XNRngTL+zE5vZZzROOKdSKSaPCPAThay0MIyvCCNjrsn+ALy26eoI+ibmNOpsfnXXXf7svrM2TziIUFidHsTJH463NogJ2P2clqiSlpNrVwpVYO8qHrVOa3bXbqorrjPMUFx1lyeUWaB6cAzOBlyYSDivfe2Fio4fu3I+hN66h4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0yHpGmv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kC24BmdevG1Ylftf5ogTNfMwSQpmtOiaJF+0TzAB8T5QMaAk4hPeUTrDSGfP163wdu7QOD7DCwqjQe6N5hdAzXmg5YJxVEgyzMFjVmjqGLBjDJSk1KZfXH424OXvJH7ig59FxvAEJAj69JxrTmT4ZmVerrxq8QfzeRT0e8bG8Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpkiwmfJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0yHpGmv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E57FC4CEC3;
-	Mon, 28 Oct 2024 06:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpkiwmfJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D334FC4CEC3;
+	Mon, 28 Oct 2024 06:45:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097906;
-	bh=R77nVmgTCCXDlAKWoAtx0e4H/UhpwOJ02zQ3JNuCZGA=;
+	s=korg; t=1730097909;
+	bh=zq3l2T1JHwnFFvg35hMlsIrm7tTTG+QddcKqBC+qKcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g0yHpGmvZW59yYNVTkXLI9QRtGbpAtNcROTgMN2hZ2uGV0ZDHKS4JnP0DUGUoN2nu
-	 GHst+vh8s3ypB61W5HUbx/kx0N9Z4ww6brqiOIX+D6rxPSTwEHDNNdZf/dWouRPSKI
-	 spajYS/nJfLI8ryUlTZ8gEH3WzUFyag6Kf1ZMDBU=
+	b=OpkiwmfJniz/nq0XJZ8ZE0+41hBTWJR/+vK1mYA57MvfbOUje6TvMd9517YVgciyS
+	 nigPOnRQj0AfK4OF80SoXZSlhj5lub8+0wEQeRa53O2biVjhbUvc3a8W3Pmi9LAWYg
+	 L50vocoFA3yJ7bzhp9fh6VcArrZcOSA50k+xI0X0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lai, Yi" <yi1.lai@linux.intel.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.6 200/208] ata: libata: Set DID_TIME_OUT for commands that actually timed out
-Date: Mon, 28 Oct 2024 07:26:20 +0100
-Message-ID: <20241028062311.565887495@linuxfoundation.org>
+	Zichen Xie <zichenxie0106@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 201/208] ASoC: qcom: Fix NULL Dereference in asoc_qcom_lpass_cpu_platform_probe()
+Date: Mon, 28 Oct 2024 07:26:21 +0100
+Message-ID: <20241028062311.593168129@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -51,72 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Zichen Xie <zichenxie0106@gmail.com>
 
-commit 8e59a2a5459fd9840dbe2cbde85fe154b11e1727 upstream.
+commit 49da1463c9e3d2082276c3e0e2a8b65a88711cd2 upstream.
 
-When ata_qc_complete() schedules a command for EH using
-ata_qc_schedule_eh(), blk_abort_request() will be called, which leads to
-req->q->mq_ops->timeout() / scsi_timeout() being called.
+A devm_kzalloc() in asoc_qcom_lpass_cpu_platform_probe() could
+possibly return NULL pointer. NULL Pointer Dereference may be
+triggerred without addtional check.
+Add a NULL check for the returned pointer.
 
-scsi_timeout(), if the LLDD has no abort handler (libata has no abort
-handler), will set host byte to DID_TIME_OUT, and then call
-scsi_eh_scmd_add() to add the command to EH.
-
-Thus, when commands first enter libata's EH strategy_handler, all the
-commands that have been added to EH will have DID_TIME_OUT set.
-
-Commit e5dd410acb34 ("ata: libata: Clear DID_TIME_OUT for ATA PT commands
-with sense data") clears this bogus DID_TIME_OUT flag for all commands
-that reached libata's EH strategy_handler.
-
-libata has its own flag (AC_ERR_TIMEOUT), that it sets for commands that
-have not received a completion at the time of entering EH.
-
-ata_eh_worth_retry() has no special handling for AC_ERR_TIMEOUT, so by
-default timed out commands will get flag ATA_QCFLAG_RETRY set, and will be
-retried after the port has been reset (ata_eh_link_autopsy() always
-triggers a port reset if any command has AC_ERR_TIMEOUT set).
-
-For a command that has ATA_QCFLAG_RETRY set, while also having an error
-flag set (e.g. AC_ERR_TIMEOUT), ata_eh_finish() will not increment
-scmd->allowed, so the command will at most be retried scmd->allowed number
-of times (which by default is set to 3).
-
-However, scsi_eh_flush_done_q() will only retry commands for which
-scsi_noretry_cmd() returns false.
-
-For a command that has DID_TIME_OUT set, while also having either the
-FAILFAST flag set, or the command being a passthrough command,
-scsi_noretry_cmd() will return true. Thus, such a command will never be
-retried.
-
-Thus, make sure that libata sets SCSI's DID_TIME_OUT flag for commands that
-actually timed out (libata's AC_ERR_TIMEOUT flag), such that timed out
-commands will once again not be retried if they are also a FAILFAST or
-passthrough command.
-
+Fixes: b5022a36d28f ("ASoC: qcom: lpass: Use regmap_field for i2sctl and dmactl registers")
 Cc: stable@vger.kernel.org
-Fixes: e5dd410acb34 ("ata: libata: Clear DID_TIME_OUT for ATA PT commands with sense data")
-Reported-by: Lai, Yi <yi1.lai@linux.intel.com>
-Closes: https://lore.kernel.org/linux-ide/ZxYz871I3Blsi30F@ly-workstation/
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20241023105540.1070012-2-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
+Link: https://patch.msgid.link/20241006205737.8829-1-zichenxie0106@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-eh.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/qcom/lpass-cpu.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -636,6 +636,7 @@ void ata_scsi_cmd_error_handler(struct S
- 			/* the scmd has an associated qc */
- 			if (!(qc->flags & ATA_QCFLAG_EH)) {
- 				/* which hasn't failed yet, timeout */
-+				set_host_byte(scmd, DID_TIME_OUT);
- 				qc->err_mask |= AC_ERR_TIMEOUT;
- 				qc->flags |= ATA_QCFLAG_EH;
- 				nr_timedout++;
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -1246,6 +1246,8 @@ int asoc_qcom_lpass_cpu_platform_probe(s
+ 	/* Allocation for i2sctl regmap fields */
+ 	drvdata->i2sctl = devm_kzalloc(&pdev->dev, sizeof(struct lpaif_i2sctl),
+ 					GFP_KERNEL);
++	if (!drvdata->i2sctl)
++		return -ENOMEM;
+ 
+ 	/* Initialize bitfields for dai I2SCTL register */
+ 	ret = lpass_cpu_init_i2sctl_bitfields(dev, drvdata->i2sctl,
 
 
