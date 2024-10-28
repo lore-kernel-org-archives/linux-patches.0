@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23FC18E350;
-	Mon, 28 Oct 2024 06:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D115318E350;
+	Mon, 28 Oct 2024 06:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097407; cv=none; b=Ux+93au53HVEnE7UOikGblnkJ0dbdL5WoWofEjlj6y5Ezz54L4dKp8oDH/Gkz7iFkcyYQW6b9GI/Av7gBGs4xpHHftLRVPyNhq5rYV21M3ObASQz4hBIyRu4cf6gMJEaSjUlMw7eL+as8NSZtJunCMOtyCDbT5vLX3sXc1R+VKw=
+	t=1730097409; cv=none; b=VNAdvbvyz5P0jpjdCw5lzIyrlRSMt1BCZeO3DZ7OHF07lz1g+AbLDPaDtgFgKJ3rhoQscEfdsJcWTdXtsHggbb7lAseF9hZArV312NN59hvWIhLVPLUjKUA+NrjITmE9oNfPtn9H9G/UHmea4psrZNRugoLXhO5uqF0+EK8Mqhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097407; c=relaxed/simple;
-	bh=WqC2R+goD53iVlJH9hPTPOPvNIFxN1gXuNX1HScLTH4=;
+	s=arc-20240116; t=1730097409; c=relaxed/simple;
+	bh=ch2R8IN5Pzle1PP48N9MSzVCOwKyWViw8xpODRNyMHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MY/BmVDEQ8VW6qFPO8oCuXhkAWq06AgS1LwCximbfIzZWMDKEJTaz1Jm7IoOlVJ7DRCtliKAt4BCPK9m7A3ia5IycV/LZaAtN78TZGaYKAtPt384sx4Bzfjfot+wCbDEEwsjIlxU3r8gKxF4+cGWvcQiWT1pzpKMF44BIHaZVJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNSpWz1R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j1roDiBRtGRRLfyYXeXkL32z21+p+rOA+ZWvxtHtmDslfx+4rghVo9C2hWAf/wYVS+MkxzttbexrcbqgiOTcLe+ksJi7C7zjcp1Jm2/0+payoLC8gDp6l7LnN7dH2u014JXrKMt8rk2YDH1YOI6Ato6DsI6n5w+Hmj7tSwoophY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QR+vyJmm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNSpWz1R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14B1C4CEC3;
-	Mon, 28 Oct 2024 06:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QR+vyJmm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37019C4CEC3;
+	Mon, 28 Oct 2024 06:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097407;
-	bh=WqC2R+goD53iVlJH9hPTPOPvNIFxN1gXuNX1HScLTH4=;
+	s=korg; t=1730097409;
+	bh=ch2R8IN5Pzle1PP48N9MSzVCOwKyWViw8xpODRNyMHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FNSpWz1RRtQ+wbikDjtHE4mFm4YqyXEJmz202DbhOZLg00OwccXGdKf21RTaYvE5P
-	 bTFc4obcKEWqMK6qeRA8xA5D0kobuqA6ogN7lrlDxSl//MucguLNRt1Qi4RBc8g47O
-	 +cEyRzOfpuz0kEtEosX6iqC1m478X9+8qOIKK/O0=
+	b=QR+vyJmm59CJTP5jgaskPgrecGsSO0bOaT8onCkwZF/6hCpfb+PgUIdjCaBVhRvrB
+	 0tIwunU96r2Q5O+VlnXt8CAAuPw0rEuif/deuWp8CCSJBaVox9Vn4D+qEbcirXdEub
+	 JQqIP2+Yxq5NulVcq9ePJ96mLfPSysCcuIu0N7sM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dirk Holten <dirk.holten@gmx.de>,
-	Christian Heusel <christian@heusel.eu>,
+	Koba Ko <kobak@nvidia.com>,
+	"Matthew R. Ochs" <mochs@nvidia.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 118/137] ACPI: resource: Add LG 16T90SP to irq1_level_low_skip_override[]
-Date: Mon, 28 Oct 2024 07:25:55 +0100
-Message-ID: <20241028062302.010426349@linuxfoundation.org>
+Subject: [PATCH 6.1 119/137] ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM handler and context
+Date: Mon, 28 Oct 2024 07:25:56 +0100
+Message-ID: <20241028062302.037182196@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -51,44 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Heusel <christian@heusel.eu>
+From: Koba Ko <kobak@nvidia.com>
 
-commit 53f1a907d36fb3aa02a4d34073bcec25823a6c74 upstream.
+commit 088984c8d54c0053fc4ae606981291d741c5924b upstream.
 
-The LG Gram Pro 16 2-in-1 (2024) the 16T90SP has its keybopard IRQ (1)
-described as ActiveLow in the DSDT, which the kernel overrides to EdgeHigh
-which breaks the keyboard.
+PRMT needs to find the correct type of block to translate the PA-VA
+mapping for EFI runtime services.
 
-Add the 16T90SP to the irq1_level_low_skip_override[] quirk table to fix
-this.
+The issue arises because the PRMT is finding a block of type
+EFI_CONVENTIONAL_MEMORY, which is not appropriate for runtime services
+as described in Section 2.2.2 (Runtime Services) of the UEFI
+Specification [1]. Since the PRM handler is a type of runtime service,
+this causes an exception when the PRM handler is called.
 
-Reported-by: Dirk Holten <dirk.holten@gmx.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219382
+    [Firmware Bug]: Unable to handle paging request in EFI runtime service
+    WARNING: CPU: 22 PID: 4330 at drivers/firmware/efi/runtime-wrappers.c:341
+        __efi_queue_work+0x11c/0x170
+    Call trace:
+
+Let PRMT find a block with EFI_MEMORY_RUNTIME for PRM handler and PRM
+context.
+
+If no suitable block is found, a warning message will be printed, but
+the procedure continues to manage the next PRM handler.
+
+However, if the PRM handler is actually called without proper allocation,
+it would result in a failure during error handling.
+
+By using the correct memory types for runtime services, ensure that the
+PRM handler and the context are properly mapped in the virtual address
+space during runtime, preventing the paging request error.
+
+The issue is really that only memory that has been remapped for runtime
+by the firmware can be used by the PRM handler, and so the region needs
+to have the EFI_MEMORY_RUNTIME attribute.
+
+Link: https://uefi.org/sites/default/files/resources/UEFI_Spec_2_10_Aug29.pdf # [1]
+Fixes: cefc7ca46235 ("ACPI: PRM: implement OperationRegion handler for the PlatformRtMechanism subtype")
 Cc: All applicable <stable@vger.kernel.org>
-Suggested-by: Dirk Holten <dirk.holten@gmx.de>
-Signed-off-by: Christian Heusel <christian@heusel.eu>
-Link: https://patch.msgid.link/20241017-lg-gram-pro-keyboard-v2-1-7c8fbf6ff718@heusel.eu
+Signed-off-by: Koba Ko <kobak@nvidia.com>
+Reviewed-by: Matthew R. Ochs <mochs@nvidia.com>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://patch.msgid.link/20241012205010.4165798-1-kobak@nvidia.com
+[ rjw: Subject and changelog edits ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/resource.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/acpi/prmt.c |   27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -502,6 +502,13 @@ static const struct dmi_system_id tongfa
- 			DMI_MATCH(DMI_BOARD_NAME, "GMxRGxx"),
- 		},
- 	},
-+	{
-+		/* LG Electronics 16T90SP */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LG Electronics"),
-+			DMI_MATCH(DMI_BOARD_NAME, "16T90SP"),
-+		},
-+	},
- 	{ }
+--- a/drivers/acpi/prmt.c
++++ b/drivers/acpi/prmt.c
+@@ -72,17 +72,21 @@ struct prm_module_info {
+ 	struct prm_handler_info handlers[];
  };
  
+-static u64 efi_pa_va_lookup(u64 pa)
++static u64 efi_pa_va_lookup(efi_guid_t *guid, u64 pa)
+ {
+ 	efi_memory_desc_t *md;
+ 	u64 pa_offset = pa & ~PAGE_MASK;
+ 	u64 page = pa & PAGE_MASK;
+ 
+ 	for_each_efi_memory_desc(md) {
+-		if (md->phys_addr < pa && pa < md->phys_addr + PAGE_SIZE * md->num_pages)
++		if ((md->attribute & EFI_MEMORY_RUNTIME) &&
++		    (md->phys_addr < pa && pa < md->phys_addr + PAGE_SIZE * md->num_pages)) {
+ 			return pa_offset + md->virt_addr + page - md->phys_addr;
++		}
+ 	}
+ 
++	pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
++
+ 	return 0;
+ }
+ 
+@@ -148,9 +152,15 @@ acpi_parse_prmt(union acpi_subtable_head
+ 		th = &tm->handlers[cur_handler];
+ 
+ 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
+-		th->handler_addr = (void *)efi_pa_va_lookup(handler_info->handler_address);
+-		th->static_data_buffer_addr = efi_pa_va_lookup(handler_info->static_data_buffer_address);
+-		th->acpi_param_buffer_addr = efi_pa_va_lookup(handler_info->acpi_param_buffer_address);
++		th->handler_addr =
++			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
++
++		th->static_data_buffer_addr =
++			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
++
++		th->acpi_param_buffer_addr =
++			efi_pa_va_lookup(&th->guid, handler_info->acpi_param_buffer_address);
++
+ 	} while (++cur_handler < tm->handler_count && (handler_info = get_next_handler(handler_info)));
+ 
+ 	return 0;
+@@ -253,6 +263,13 @@ static acpi_status acpi_platformrt_space
+ 		if (!handler || !module)
+ 			goto invalid_guid;
+ 
++		if (!handler->handler_addr ||
++		    !handler->static_data_buffer_addr ||
++		    !handler->acpi_param_buffer_addr) {
++			buffer->prm_status = PRM_HANDLER_ERROR;
++			return AE_OK;
++		}
++
+ 		ACPI_COPY_NAMESEG(context.signature, "PRMC");
+ 		context.revision = 0x0;
+ 		context.reserved = 0x0;
 
 
