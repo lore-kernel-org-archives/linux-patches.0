@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB8015B10D;
-	Mon, 28 Oct 2024 06:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8927415B10D;
+	Mon, 28 Oct 2024 06:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097099; cv=none; b=VfLKZ/i54KdYxWQulk2VH8WgQ4gpng6PQ0KhAlTulK4O3oIfXUicIye+qZdX+W2AQDv+4x9OgkYtc1dRoMgYzzIi7RJgeiHWbB84rfCxrEmZ+kXmvvnZOUhrSIvNsFUiY1ZFD6aVxhqfWGtZwD1350X5d6B60+h0RjBzs8tKyQw=
+	t=1730097101; cv=none; b=Py48yWZUCeDP6VHDzFyMpw21giUNZ/UumKYDALVi7Q9WxmNgi274nkUcCB+gWCX5Q/+LX0UXjICc26j1pjx6bg4jMq4v5pkNy4dXndB5ulR86rlGUv9YsMjRBdW+gi2M6pECSK9hTlpgwqT/gwn35/YN8ciVn9iEzoi6Ahgs8kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097099; c=relaxed/simple;
-	bh=9AZpJ8n94KusZ1rpejlXBF3ooo+HMB1xe4s+dTnK+RM=;
+	s=arc-20240116; t=1730097101; c=relaxed/simple;
+	bh=hzrOELiL5gkm6O243wzvamsfqSWp2oldPSGt96TUbkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ViE6voZWHaHEg2LK2LKeB1fjLqqEyNFxNOI552kzFdFyHwlDcERJ04CdCciljkaRVBU78w/yY6wgSPGn1eVwW1a3LDE54wSQLySXZL4KwozNBMvmuyvp1wftX55EARfuhBWEs6A3jpZ4C6ZlMVw2bkIEmyObd/0/hw+qpkuwIgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbmpGuk5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RuU2QSLeTC88kYzEenknwvcXTcyRGbMU9DdO6LT3tDH/hI0g3NMWf6h3y8vkX3BsKDrnrCArnZ+PC3CWkkPLBJ+cGeQWSaeNMlwr6vbHTBn8kibFy6sTj0fSMU683GZq3sQLE7buxJVr+R0GEiFJzxETw3/DIPG6UhMo/grDILU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ty/Jw1F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbmpGuk5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2B4C4CEC7;
-	Mon, 28 Oct 2024 06:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ty/Jw1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D03EC4CECD;
+	Mon, 28 Oct 2024 06:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097099;
-	bh=9AZpJ8n94KusZ1rpejlXBF3ooo+HMB1xe4s+dTnK+RM=;
+	s=korg; t=1730097101;
+	bh=hzrOELiL5gkm6O243wzvamsfqSWp2oldPSGt96TUbkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fbmpGuk5UpA3MiwsbMdFeVWPgHDYCA+UmUCG9d3yWXeQHLmffzliD9GgO2H8L98d+
-	 w23HixW6547yLTakRrfORPjaj3l30MeeRZmh9GqbdZzZDMyQprGu6X8o/S/bayra0Z
-	 Q25nHlLrLBrQrNhClkdGvav/pnqt1D+IwQu7wrQI=
+	b=1ty/Jw1FvJasmAFC7566qvBGX3gd2fh79+pGlqZafE9Qj5QS/I2Se2fLAljuf+Hry
+	 zeOx1rlz1KB6H8C+AAqwiGisxUL86GGYpZhIqE4pRCisxC9LPrfilXUZYfCz3cwIRy
+	 Aib9Y83DzcY8xx77+olmG4AOXBa+a4LXKqJfmBIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cochran <richardcochran@gmail.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Anna-Maria Behnsen <anna-maria@linutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 63/80] posix-clock: posix-clock: Fix unbalanced locking in pc_clock_settime()
-Date: Mon, 28 Oct 2024 07:25:43 +0100
-Message-ID: <20241028062254.365037065@linuxfoundation.org>
+Subject: [PATCH 5.15 64/80] bpf,perf: Fix perf_event_detach_bpf_prog error handling
+Date: Mon, 28 Oct 2024 07:25:44 +0100
+Message-ID: <20241028062254.392692887@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
 References: <20241028062252.611837461@linuxfoundation.org>
@@ -53,55 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 6e62807c7fbb3c758d233018caf94dfea9c65dbd ]
+[ Upstream commit 0ee288e69d033850bc87abe0f9cc3ada24763d7f ]
 
-If get_clock_desc() succeeds, it calls fget() for the clockid's fd,
-and get the clk->rwsem read lock, so the error path should release
-the lock to make the lock balance and fput the clockid's fd to make
-the refcount balance and release the fd related resource.
+Peter reported that perf_event_detach_bpf_prog might skip to release
+the bpf program for -ENOENT error from bpf_prog_array_copy.
 
-However the below commit left the error path locked behind resulting in
-unbalanced locking. Check timespec64_valid_strict() before
-get_clock_desc() to fix it, because the "ts" is not changed
-after that.
+This can't happen because bpf program is stored in perf event and is
+detached and released only when perf event is freed.
 
-Fixes: d8794ac20a29 ("posix-clock: Fix missing timespec64 check in pc_clock_settime()")
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Acked-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-[pabeni@redhat.com: fixed commit message typo]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Let's drop the -ENOENT check and make sure the bpf program is released
+in any case.
+
+Fixes: 170a7e3ea070 ("bpf: bpf_prog_array_copy() should return -ENOENT if exclude_prog not found")
+Reported-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241023200352.3488610-1-jolsa@kernel.org
+
+Closes: https://lore.kernel.org/lkml/20241022111638.GC16066@noisy.programming.kicks-ass.net/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-clock.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/trace/bpf_trace.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/kernel/time/posix-clock.c b/kernel/time/posix-clock.c
-index 8127673bfc45e..05e73d209aa87 100644
---- a/kernel/time/posix-clock.c
-+++ b/kernel/time/posix-clock.c
-@@ -290,6 +290,9 @@ static int pc_clock_settime(clockid_t id, const struct timespec64 *ts)
- 	struct posix_clock_desc cd;
- 	int err;
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index a1dc0ff1962e6..126754b61edc0 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -1790,8 +1790,6 @@ void perf_event_detach_bpf_prog(struct perf_event *event)
  
-+	if (!timespec64_valid_strict(ts))
-+		return -EINVAL;
-+
- 	err = get_clock_desc(id, &cd);
- 	if (err)
- 		return err;
-@@ -299,9 +302,6 @@ static int pc_clock_settime(clockid_t id, const struct timespec64 *ts)
- 		goto out;
- 	}
- 
--	if (!timespec64_valid_strict(ts))
--		return -EINVAL;
--
- 	if (cd.clk->ops.clock_settime)
- 		err = cd.clk->ops.clock_settime(cd.clk, ts);
- 	else
+ 	old_array = bpf_event_rcu_dereference(event->tp_event->prog_array);
+ 	ret = bpf_prog_array_copy(old_array, event->prog, NULL, 0, &new_array);
+-	if (ret == -ENOENT)
+-		goto unlock;
+ 	if (ret < 0) {
+ 		bpf_prog_array_delete_safe(old_array, event->prog);
+ 	} else {
 -- 
 2.43.0
 
