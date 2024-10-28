@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BEE2AF07;
-	Mon, 28 Oct 2024 06:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B164718A92C;
+	Mon, 28 Oct 2024 06:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098500; cv=none; b=mS/2Gs5GzwBhxGOSD6OrH1jcgT1/0GCqLWfespEHDenxQ8fuVXwu4fvO70DBJeIiN9PFsSRjjWbHfUsuFYPR5G2aYTQneSspQfkMT2yMvcYQ8Lyui8gVr2OKUTB1TNFSLrKNeMeMb/n5IE5sWv0e4DHXgYst1lvYEBMEgqOtTXk=
+	t=1730098502; cv=none; b=WknUz54ovh5HxUEnNinjXh+lAb5P/CFgZaIHReSCjQOW5MzKY0i3npF7GIk9cAzgw1ORMu+8eBxUQaov0xY31q0/AZW0gaKZyNS2r2Zd9fx972NcrrsFqGhEwYo4V2YAfZCDdvwukNQ1tYK3C4S8lP5zi2rLOWmEZJdVQYU2XEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098500; c=relaxed/simple;
-	bh=Y6vRBI1Io89n40zrnJSPg2n2wJH4P68Pg7KuI5a9LIs=;
+	s=arc-20240116; t=1730098502; c=relaxed/simple;
+	bh=R9NNrVNQUN4352aDOzl2wqzV07+eSXowpWuUuxICJX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dni7pdnC2aX6EGIrz868nceVmNXQU5cUtBTYrNnDQOV28MrnbwOqemRpuU3ZtACDAGo51BQVwJelPi6hl4ph8aV9/KYLBzYgdXpd10KcmFyzLbWlpIK8nR7y4ZWgJwRE9ZsrucCWrV3gluarH1DfUv51S/kuuE/caTZmUl7yxx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWMoueCS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TuBqo2dBwgaT+7OJ/7kd/UE7q6ztgFSlAeTbG31N2F7gLaFmqFk8rewGwNYqJfoI5WhW+ZX4kUdGtRarx0s5kVbwNJ13wQ5AtAFQ/eislztejyamYl7lsNgXD5YQkkCphy1LyZmtQF0lKTuaPHap9beem5rwceck9qrgoVRsgZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OErq11q1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWMoueCS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1551EC4CEC3;
-	Mon, 28 Oct 2024 06:54:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OErq11q1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BC3C4CEC3;
+	Mon, 28 Oct 2024 06:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098500;
-	bh=Y6vRBI1Io89n40zrnJSPg2n2wJH4P68Pg7KuI5a9LIs=;
+	s=korg; t=1730098502;
+	bh=R9NNrVNQUN4352aDOzl2wqzV07+eSXowpWuUuxICJX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWMoueCSvukaoUudke3ClTRe/Ry6TNGWwFOKr0254QbdGHhmMKhMJk7N143bF0wKJ
-	 +v3cMQmZCywYrGxxR7l/WvDKF4NXXrV6Z9MHFcT1+6YM9Hd68fsGmAQv1Uoy2Kuxen
-	 Q5l1EsQyYavMVzTNAHaDH6DW3xWkrZldsnbt5F0M=
+	b=OErq11q1kTUAtE+0wA0OtiDdj5nBFS6Qv9ztyJc/xsdhohxBCZs6Axt7Py7Vy4trd
+	 2GqXQAubsCNRmYDhOKWfycXsB4Rvbq12Z9Wgtzgja2sREd5frGvo1c/599lgrPi7Ym
+	 dfQ/34z5g2IIXEuBZ7P+xesrMzoJLdMvR4upFIJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksa Sarai <cyphar@cyphar.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.11 217/261] openat2: explicitly return -E2BIG for (usize > PAGE_SIZE)
-Date: Mon, 28 Oct 2024 07:25:59 +0100
-Message-ID: <20241028062317.539562888@linuxfoundation.org>
+	Kirk Swidowski <swidowski@google.com>,
+	Andy Nguyen <theflow@google.com>,
+	3pvd <3pvd@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.11 218/261] KVM: nSVM: Ignore nCR3[4:0] when loading PDPTEs from memory
+Date: Mon, 28 Oct 2024 07:26:00 +0100
+Message-ID: <20241028062317.567686507@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -50,35 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksa Sarai <cyphar@cyphar.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit f92f0a1b05698340836229d791b3ffecc71b265a upstream.
+commit f559b2e9c5c5308850544ab59396b7d53cfc67bd upstream.
 
-While we do currently return -EFAULT in this case, it seems prudent to
-follow the behaviour of other syscalls like clone3. It seems quite
-unlikely that anyone depends on this error code being EFAULT, but we can
-always revert this if it turns out to be an issue.
+Ignore nCR3[4:0] when loading PDPTEs from memory for nested SVM, as bits
+4:0 of CR3 are ignored when PAE paging is used, and thus VMRUN doesn't
+enforce 32-byte alignment of nCR3.
 
-Cc: stable@vger.kernel.org # v5.6+
-Fixes: fddb5d430ad9 ("open: introduce openat2(2) syscall")
-Signed-off-by: Aleksa Sarai <cyphar@cyphar.com>
-Link: https://lore.kernel.org/r/20241010-extensible-structs-check_fields-v3-3-d2833dfe6edd@cyphar.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+In the absolute worst case scenario, failure to ignore bits 4:0 can result
+in an out-of-bounds read, e.g. if the target page is at the end of a
+memslot, and the VMM isn't using guard pages.
+
+Per the APM:
+
+  The CR3 register points to the base address of the page-directory-pointer
+  table. The page-directory-pointer table is aligned on a 32-byte boundary,
+  with the low 5 address bits 4:0 assumed to be 0.
+
+And the SDM's much more explicit:
+
+  4:0    Ignored
+
+Note, KVM gets this right when loading PDPTRs, it's only the nSVM flow
+that is broken.
+
+Fixes: e4e517b4be01 ("KVM: MMU: Do not unconditionally read PDPTE from guest memory")
+Reported-by: Kirk Swidowski <swidowski@google.com>
+Cc: Andy Nguyen <theflow@google.com>
+Cc: 3pvd <3pvd@google.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20241009140838.1036226-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/open.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kvm/svm/nested.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/open.c
-+++ b/fs/open.c
-@@ -1458,6 +1458,8 @@ SYSCALL_DEFINE4(openat2, int, dfd, const
+--- a/arch/x86/kvm/svm/nested.c
++++ b/arch/x86/kvm/svm/nested.c
+@@ -63,8 +63,12 @@ static u64 nested_svm_get_tdp_pdptr(stru
+ 	u64 pdpte;
+ 	int ret;
  
- 	if (unlikely(usize < OPEN_HOW_SIZE_VER0))
- 		return -EINVAL;
-+	if (unlikely(usize > PAGE_SIZE))
-+		return -E2BIG;
- 
- 	err = copy_struct_from_user(&tmp, sizeof(tmp), how, usize);
- 	if (err)
++	/*
++	 * Note, nCR3 is "assumed" to be 32-byte aligned, i.e. the CPU ignores
++	 * nCR3[4:0] when loading PDPTEs from memory.
++	 */
+ 	ret = kvm_vcpu_read_guest_page(vcpu, gpa_to_gfn(cr3), &pdpte,
+-				       offset_in_page(cr3) + index * 8, 8);
++				       (cr3 & GENMASK(11, 5)) + index * 8, 8);
+ 	if (ret)
+ 		return 0;
+ 	return pdpte;
 
 
