@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F7115B10D;
-	Mon, 28 Oct 2024 06:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1761A15B10D;
+	Mon, 28 Oct 2024 06:36:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097373; cv=none; b=oY1A+9MsWvHKROQL6pquVtlLS4WuNOyrTgN6Kcv6KWkMceYbw9DOZieAMqrlq30hHwsXSg9nKlQx497hMb/2D9b7xn5CHoINUjCw7kYIPn7Qp1Kk6z5zDyC5VxAC+JbCm5h6BElutH1sY4uXbNST3MHjsKowy6lGZ+Y/CQIzAFk=
+	t=1730097376; cv=none; b=SLSi12Irt89ITkb59H8MVrz9m45/9TJmwCyA39Gj6//huO0CYE1WxqSu4Rqu2fRzxATOsAbM2AgMxZkjnk+g9D1WGL8DyCBjUsgdgPPnVhxJuHj8P/Hs6eOdxjAdBwG4Tp+Cf31H9QelbnEzIb3C07038bnSx2Q7FVAkqWLC41I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097373; c=relaxed/simple;
-	bh=xMM9HjwStKFZ4jozE2SKekJG2KIYfteiBzxDcC7X0Vg=;
+	s=arc-20240116; t=1730097376; c=relaxed/simple;
+	bh=r0s4idhQwps+BkQso/Ih/uY+yQVJ2b4VLZoa9SlwWW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UcBfOhzJbR3yVzyyJCqX7ySkm780iptnVaQW1A85RGixIh5//uzWtfEYe4OMoWfRaZrG+NW2scE64x9sCOGNRLK0WXB25xkOhrDX1yIa8/D5dl5JOuG9bVjXxppb7ZrSh0wfZXJXEHE8sG2H56VjVdK90q7iGLzl6OsubtpL3Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjNPTizp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gmHZ8aSPkE0okKFdVGDzGN5SKIvEO2UNpmKfwq1PqgONKI/6yWovFAzVbJt01ICM6YmeVgLe+B/eVe+pAlvL6ufBGrYn6dq84Mn26FKXc2idkIZ/Cz7zm4oOpRNYaRkP5UpwizUQPHUCMaEd8BcU9E7K4oHIcjP98ONmHasDStk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QuutkKt8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjNPTizp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61FE6C4CEC3;
-	Mon, 28 Oct 2024 06:36:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QuutkKt8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE71C4CEC3;
+	Mon, 28 Oct 2024 06:36:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097373;
-	bh=xMM9HjwStKFZ4jozE2SKekJG2KIYfteiBzxDcC7X0Vg=;
+	s=korg; t=1730097376;
+	bh=r0s4idhQwps+BkQso/Ih/uY+yQVJ2b4VLZoa9SlwWW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EjNPTizpDWQm9D1MIqxT304GahzBH1jGt3UbqZWZQ2l0E7lfIg7OsE2XC5jA3caEL
-	 ajwt0H6l8g9dwyUxv74WUgwVox1T/qmgZgx4IKyeP9Cg5tJMXXmHOaA+foV8c7luv2
-	 Z/uYBo1Wi6RCtdoLQOEqrYfrhilRoNHjkVN8Ysqo=
+	b=QuutkKt8/nL7GT41ceCwEWcwggUAhiu/QHoBlM/KPNGGRbuY1PCjL3Yw2cyhuK5gU
+	 g+jMsfN51ygMUNa4osxsHjDOtrjRys7v88NGDeXIgZnkI0zx31Yg8a2KGdEVrgCEV6
+	 H29L8gUrGiqW8VwXsy0kPuw+t6j5jG1Ht6jAhVqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Dhruva Gole <d-gole@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/137] XHCI: Separate PORT and CAPs macros into dedicated file
-Date: Mon, 28 Oct 2024 07:25:03 +0100
-Message-ID: <20241028062300.581100133@linuxfoundation.org>
+Subject: [PATCH 6.1 067/137] usb: dwc3: core: Fix system suspend on TI AM62 platforms
+Date: Mon, 28 Oct 2024 07:25:04 +0100
+Message-ID: <20241028062300.610615270@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -50,587 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Roger Quadros <rogerq@kernel.org>
 
-[ Upstream commit c35ba0ac48355df1d11fcce85945f76c42d250ac ]
+[ Upstream commit 705e3ce37bccdf2ed6f848356ff355f480d51a91 ]
 
-Split the PORT and CAPs macro definitions into a separate file to
-facilitate sharing with other files without the need to include the entire
-xhci.h.
+Since commit 6d735722063a ("usb: dwc3: core: Prevent phy suspend during init"),
+system suspend is broken on AM62 TI platforms.
 
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20240124152525.3910311-2-Frank.Li@nxp.com
+Before that commit, both DWC3_GUSB3PIPECTL_SUSPHY and DWC3_GUSB2PHYCFG_SUSPHY
+bits (hence forth called 2 SUSPHY bits) were being set during core
+initialization and even during core re-initialization after a system
+suspend/resume.
+
+These bits are required to be set for system suspend/resume to work correctly
+on AM62 platforms.
+
+Since that commit, the 2 SUSPHY bits are not set for DEVICE/OTG mode if gadget
+driver is not loaded and started.
+For Host mode, the 2 SUSPHY bits are set before the first system suspend but
+get cleared at system resume during core re-init and are never set again.
+
+This patch resovles these two issues by ensuring the 2 SUSPHY bits are set
+before system suspend and restored to the original state during system resume.
+
+Cc: stable@vger.kernel.org # v6.9+
+Fixes: 6d735722063a ("usb: dwc3: core: Prevent phy suspend during init")
+Link: https://lore.kernel.org/all/1519dbe7-73b6-4afc-bfe3-23f4f75d772f@kernel.org/
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Tested-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Reviewed-by: Dhruva Gole <d-gole@ti.com>
+Link: https://lore.kernel.org/r/20241011-am62-lpm-usb-v3-1-562d445625b5@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 705e3ce37bcc ("usb: dwc3: core: Fix system suspend on TI AM62 platforms")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-caps.h |  85 ++++++++++++
- drivers/usb/host/xhci-port.h | 176 +++++++++++++++++++++++
- drivers/usb/host/xhci.h      | 262 +----------------------------------
- 3 files changed, 264 insertions(+), 259 deletions(-)
- create mode 100644 drivers/usb/host/xhci-caps.h
- create mode 100644 drivers/usb/host/xhci-port.h
+ drivers/usb/dwc3/core.c | 19 +++++++++++++++++++
+ drivers/usb/dwc3/core.h |  3 +++
+ 2 files changed, 22 insertions(+)
 
-diff --git a/drivers/usb/host/xhci-caps.h b/drivers/usb/host/xhci-caps.h
-new file mode 100644
-index 0000000000000..9e94cebf4a56d
---- /dev/null
-+++ b/drivers/usb/host/xhci-caps.h
-@@ -0,0 +1,85 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+
-+/* hc_capbase bitmasks */
-+/* bits 7:0 - how long is the Capabilities register */
-+#define HC_LENGTH(p)		XHCI_HC_LENGTH(p)
-+/* bits 31:16	*/
-+#define HC_VERSION(p)		(((p) >> 16) & 0xffff)
-+
-+/* HCSPARAMS1 - hcs_params1 - bitmasks */
-+/* bits 0:7, Max Device Slots */
-+#define HCS_MAX_SLOTS(p)	(((p) >> 0) & 0xff)
-+#define HCS_SLOTS_MASK		0xff
-+/* bits 8:18, Max Interrupters */
-+#define HCS_MAX_INTRS(p)	(((p) >> 8) & 0x7ff)
-+/* bits 24:31, Max Ports - max value is 0x7F = 127 ports */
-+#define HCS_MAX_PORTS(p)	(((p) >> 24) & 0x7f)
-+
-+/* HCSPARAMS2 - hcs_params2 - bitmasks */
-+/* bits 0:3, frames or uframes that SW needs to queue transactions
-+ * ahead of the HW to meet periodic deadlines */
-+#define HCS_IST(p)		(((p) >> 0) & 0xf)
-+/* bits 4:7, max number of Event Ring segments */
-+#define HCS_ERST_MAX(p)		(((p) >> 4) & 0xf)
-+/* bits 21:25 Hi 5 bits of Scratchpad buffers SW must allocate for the HW */
-+/* bit 26 Scratchpad restore - for save/restore HW state - not used yet */
-+/* bits 27:31 Lo 5 bits of Scratchpad buffers SW must allocate for the HW */
-+#define HCS_MAX_SCRATCHPAD(p)   ((((p) >> 16) & 0x3e0) | (((p) >> 27) & 0x1f))
-+
-+/* HCSPARAMS3 - hcs_params3 - bitmasks */
-+/* bits 0:7, Max U1 to U0 latency for the roothub ports */
-+#define HCS_U1_LATENCY(p)	(((p) >> 0) & 0xff)
-+/* bits 16:31, Max U2 to U0 latency for the roothub ports */
-+#define HCS_U2_LATENCY(p)	(((p) >> 16) & 0xffff)
-+
-+/* HCCPARAMS - hcc_params - bitmasks */
-+/* true: HC can use 64-bit address pointers */
-+#define HCC_64BIT_ADDR(p)	((p) & (1 << 0))
-+/* true: HC can do bandwidth negotiation */
-+#define HCC_BANDWIDTH_NEG(p)	((p) & (1 << 1))
-+/* true: HC uses 64-byte Device Context structures
-+ * FIXME 64-byte context structures aren't supported yet.
-+ */
-+#define HCC_64BYTE_CONTEXT(p)	((p) & (1 << 2))
-+/* true: HC has port power switches */
-+#define HCC_PPC(p)		((p) & (1 << 3))
-+/* true: HC has port indicators */
-+#define HCS_INDICATOR(p)	((p) & (1 << 4))
-+/* true: HC has Light HC Reset Capability */
-+#define HCC_LIGHT_RESET(p)	((p) & (1 << 5))
-+/* true: HC supports latency tolerance messaging */
-+#define HCC_LTC(p)		((p) & (1 << 6))
-+/* true: no secondary Stream ID Support */
-+#define HCC_NSS(p)		((p) & (1 << 7))
-+/* true: HC supports Stopped - Short Packet */
-+#define HCC_SPC(p)		((p) & (1 << 9))
-+/* true: HC has Contiguous Frame ID Capability */
-+#define HCC_CFC(p)		((p) & (1 << 11))
-+/* Max size for Primary Stream Arrays - 2^(n+1), where n is bits 12:15 */
-+#define HCC_MAX_PSA(p)		(1 << ((((p) >> 12) & 0xf) + 1))
-+/* Extended Capabilities pointer from PCI base - section 5.3.6 */
-+#define HCC_EXT_CAPS(p)		XHCI_HCC_EXT_CAPS(p)
-+
-+#define CTX_SIZE(_hcc)		(HCC_64BYTE_CONTEXT(_hcc) ? 64 : 32)
-+
-+/* db_off bitmask - bits 0:1 reserved */
-+#define	DBOFF_MASK	(~0x3)
-+
-+/* run_regs_off bitmask - bits 0:4 reserved */
-+#define	RTSOFF_MASK	(~0x1f)
-+
-+/* HCCPARAMS2 - hcc_params2 - bitmasks */
-+/* true: HC supports U3 entry Capability */
-+#define	HCC2_U3C(p)		((p) & (1 << 0))
-+/* true: HC supports Configure endpoint command Max exit latency too large */
-+#define	HCC2_CMC(p)		((p) & (1 << 1))
-+/* true: HC supports Force Save context Capability */
-+#define	HCC2_FSC(p)		((p) & (1 << 2))
-+/* true: HC supports Compliance Transition Capability */
-+#define	HCC2_CTC(p)		((p) & (1 << 3))
-+/* true: HC support Large ESIT payload Capability > 48k */
-+#define	HCC2_LEC(p)		((p) & (1 << 4))
-+/* true: HC support Configuration Information Capability */
-+#define	HCC2_CIC(p)		((p) & (1 << 5))
-+/* true: HC support Extended TBC Capability, Isoc burst count > 65535 */
-+#define	HCC2_ETC(p)		((p) & (1 << 6))
-diff --git a/drivers/usb/host/xhci-port.h b/drivers/usb/host/xhci-port.h
-new file mode 100644
-index 0000000000000..f19efb966d180
---- /dev/null
-+++ b/drivers/usb/host/xhci-port.h
-@@ -0,0 +1,176 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+
-+/* PORTSC - Port Status and Control Register - port_status_base bitmasks */
-+/* true: device connected */
-+#define PORT_CONNECT	(1 << 0)
-+/* true: port enabled */
-+#define PORT_PE		(1 << 1)
-+/* bit 2 reserved and zeroed */
-+/* true: port has an over-current condition */
-+#define PORT_OC		(1 << 3)
-+/* true: port reset signaling asserted */
-+#define PORT_RESET	(1 << 4)
-+/* Port Link State - bits 5:8
-+ * A read gives the current link PM state of the port,
-+ * a write with Link State Write Strobe set sets the link state.
-+ */
-+#define PORT_PLS_MASK	(0xf << 5)
-+#define XDEV_U0		(0x0 << 5)
-+#define XDEV_U1		(0x1 << 5)
-+#define XDEV_U2		(0x2 << 5)
-+#define XDEV_U3		(0x3 << 5)
-+#define XDEV_DISABLED	(0x4 << 5)
-+#define XDEV_RXDETECT	(0x5 << 5)
-+#define XDEV_INACTIVE	(0x6 << 5)
-+#define XDEV_POLLING	(0x7 << 5)
-+#define XDEV_RECOVERY	(0x8 << 5)
-+#define XDEV_HOT_RESET	(0x9 << 5)
-+#define XDEV_COMP_MODE	(0xa << 5)
-+#define XDEV_TEST_MODE	(0xb << 5)
-+#define XDEV_RESUME	(0xf << 5)
-+
-+/* true: port has power (see HCC_PPC) */
-+#define PORT_POWER	(1 << 9)
-+/* bits 10:13 indicate device speed:
-+ * 0 - undefined speed - port hasn't be initialized by a reset yet
-+ * 1 - full speed
-+ * 2 - low speed
-+ * 3 - high speed
-+ * 4 - super speed
-+ * 5-15 reserved
-+ */
-+#define DEV_SPEED_MASK		(0xf << 10)
-+#define	XDEV_FS			(0x1 << 10)
-+#define	XDEV_LS			(0x2 << 10)
-+#define	XDEV_HS			(0x3 << 10)
-+#define	XDEV_SS			(0x4 << 10)
-+#define	XDEV_SSP		(0x5 << 10)
-+#define DEV_UNDEFSPEED(p)	(((p) & DEV_SPEED_MASK) == (0x0<<10))
-+#define DEV_FULLSPEED(p)	(((p) & DEV_SPEED_MASK) == XDEV_FS)
-+#define DEV_LOWSPEED(p)		(((p) & DEV_SPEED_MASK) == XDEV_LS)
-+#define DEV_HIGHSPEED(p)	(((p) & DEV_SPEED_MASK) == XDEV_HS)
-+#define DEV_SUPERSPEED(p)	(((p) & DEV_SPEED_MASK) == XDEV_SS)
-+#define DEV_SUPERSPEEDPLUS(p)	(((p) & DEV_SPEED_MASK) == XDEV_SSP)
-+#define DEV_SUPERSPEED_ANY(p)	(((p) & DEV_SPEED_MASK) >= XDEV_SS)
-+#define DEV_PORT_SPEED(p)	(((p) >> 10) & 0x0f)
-+
-+/* Bits 20:23 in the Slot Context are the speed for the device */
-+#define	SLOT_SPEED_FS		(XDEV_FS << 10)
-+#define	SLOT_SPEED_LS		(XDEV_LS << 10)
-+#define	SLOT_SPEED_HS		(XDEV_HS << 10)
-+#define	SLOT_SPEED_SS		(XDEV_SS << 10)
-+#define	SLOT_SPEED_SSP		(XDEV_SSP << 10)
-+/* Port Indicator Control */
-+#define PORT_LED_OFF	(0 << 14)
-+#define PORT_LED_AMBER	(1 << 14)
-+#define PORT_LED_GREEN	(2 << 14)
-+#define PORT_LED_MASK	(3 << 14)
-+/* Port Link State Write Strobe - set this when changing link state */
-+#define PORT_LINK_STROBE	(1 << 16)
-+/* true: connect status change */
-+#define PORT_CSC	(1 << 17)
-+/* true: port enable change */
-+#define PORT_PEC	(1 << 18)
-+/* true: warm reset for a USB 3.0 device is done.  A "hot" reset puts the port
-+ * into an enabled state, and the device into the default state.  A "warm" reset
-+ * also resets the link, forcing the device through the link training sequence.
-+ * SW can also look at the Port Reset register to see when warm reset is done.
-+ */
-+#define PORT_WRC	(1 << 19)
-+/* true: over-current change */
-+#define PORT_OCC	(1 << 20)
-+/* true: reset change - 1 to 0 transition of PORT_RESET */
-+#define PORT_RC		(1 << 21)
-+/* port link status change - set on some port link state transitions:
-+ *  Transition				Reason
-+ *  ------------------------------------------------------------------------------
-+ *  - U3 to Resume			Wakeup signaling from a device
-+ *  - Resume to Recovery to U0		USB 3.0 device resume
-+ *  - Resume to U0			USB 2.0 device resume
-+ *  - U3 to Recovery to U0		Software resume of USB 3.0 device complete
-+ *  - U3 to U0				Software resume of USB 2.0 device complete
-+ *  - U2 to U0				L1 resume of USB 2.1 device complete
-+ *  - U0 to U0 (???)			L1 entry rejection by USB 2.1 device
-+ *  - U0 to disabled			L1 entry error with USB 2.1 device
-+ *  - Any state to inactive		Error on USB 3.0 port
-+ */
-+#define PORT_PLC	(1 << 22)
-+/* port configure error change - port failed to configure its link partner */
-+#define PORT_CEC	(1 << 23)
-+#define PORT_CHANGE_MASK	(PORT_CSC | PORT_PEC | PORT_WRC | PORT_OCC | \
-+				 PORT_RC | PORT_PLC | PORT_CEC)
-+
-+
-+/* Cold Attach Status - xHC can set this bit to report device attached during
-+ * Sx state. Warm port reset should be perfomed to clear this bit and move port
-+ * to connected state.
-+ */
-+#define PORT_CAS	(1 << 24)
-+/* wake on connect (enable) */
-+#define PORT_WKCONN_E	(1 << 25)
-+/* wake on disconnect (enable) */
-+#define PORT_WKDISC_E	(1 << 26)
-+/* wake on over-current (enable) */
-+#define PORT_WKOC_E	(1 << 27)
-+/* bits 28:29 reserved */
-+/* true: device is non-removable - for USB 3.0 roothub emulation */
-+#define PORT_DEV_REMOVE	(1 << 30)
-+/* Initiate a warm port reset - complete when PORT_WRC is '1' */
-+#define PORT_WR		(1 << 31)
-+
-+/* We mark duplicate entries with -1 */
-+#define DUPLICATE_ENTRY ((u8)(-1))
-+
-+/* Port Power Management Status and Control - port_power_base bitmasks */
-+/* Inactivity timer value for transitions into U1, in microseconds.
-+ * Timeout can be up to 127us.  0xFF means an infinite timeout.
-+ */
-+#define PORT_U1_TIMEOUT(p)	((p) & 0xff)
-+#define PORT_U1_TIMEOUT_MASK	0xff
-+/* Inactivity timer value for transitions into U2 */
-+#define PORT_U2_TIMEOUT(p)	(((p) & 0xff) << 8)
-+#define PORT_U2_TIMEOUT_MASK	(0xff << 8)
-+/* Bits 24:31 for port testing */
-+
-+/* USB2 Protocol PORTSPMSC */
-+#define	PORT_L1S_MASK		7
-+#define	PORT_L1S_SUCCESS	1
-+#define	PORT_RWE		(1 << 3)
-+#define	PORT_HIRD(p)		(((p) & 0xf) << 4)
-+#define	PORT_HIRD_MASK		(0xf << 4)
-+#define	PORT_L1DS_MASK		(0xff << 8)
-+#define	PORT_L1DS(p)		(((p) & 0xff) << 8)
-+#define	PORT_HLE		(1 << 16)
-+#define PORT_TEST_MODE_SHIFT	28
-+
-+/* USB3 Protocol PORTLI  Port Link Information */
-+#define PORT_RX_LANES(p)	(((p) >> 16) & 0xf)
-+#define PORT_TX_LANES(p)	(((p) >> 20) & 0xf)
-+
-+/* USB2 Protocol PORTHLPMC */
-+#define PORT_HIRDM(p)((p) & 3)
-+#define PORT_L1_TIMEOUT(p)(((p) & 0xff) << 2)
-+#define PORT_BESLD(p)(((p) & 0xf) << 10)
-+
-+/* use 512 microseconds as USB2 LPM L1 default timeout. */
-+#define XHCI_L1_TIMEOUT		512
-+
-+/* Set default HIRD/BESL value to 4 (350/400us) for USB2 L1 LPM resume latency.
-+ * Safe to use with mixed HIRD and BESL systems (host and device) and is used
-+ * by other operating systems.
-+ *
-+ * XHCI 1.0 errata 8/14/12 Table 13 notes:
-+ * "Software should choose xHC BESL/BESLD field values that do not violate a
-+ * device's resume latency requirements,
-+ * e.g. not program values > '4' if BLC = '1' and a HIRD device is attached,
-+ * or not program values < '4' if BLC = '0' and a BESL device is attached.
-+ */
-+#define XHCI_DEFAULT_BESL	4
-+
-+/*
-+ * USB3 specification define a 360ms tPollingLFPSTiemout for USB3 ports
-+ * to complete link training. usually link trainig completes much faster
-+ * so check status 10 times with 36ms sleep in places we need to wait for
-+ * polling to complete.
-+ */
-+#define XHCI_PORT_POLLING_LFPS_TIME  36
-diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index bd725a4adbc82..0b526edf636fe 100644
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -23,6 +23,9 @@
- #include	"xhci-ext-caps.h"
- #include "pci-quirks.h"
+diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+index c191716896fc4..22edd8d451da0 100644
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -2131,6 +2131,11 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+ {
+ 	u32 reg;
  
-+#include "xhci-port.h"
-+#include "xhci-caps.h"
++	dwc->susphy_state = (dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0)) &
++			    DWC3_GUSB2PHYCFG_SUSPHY) ||
++			    (dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0)) &
++			    DWC3_GUSB3PIPECTL_SUSPHY);
 +
- /* max buffer size for trace and debug messages */
- #define XHCI_MSG_MAX		500
+ 	switch (dwc->current_dr_role) {
+ 	case DWC3_GCTL_PRTCAP_DEVICE:
+ 		if (pm_runtime_suspended(dwc->dev))
+@@ -2178,6 +2183,15 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+ 		break;
+ 	}
  
-@@ -63,90 +66,6 @@ struct xhci_cap_regs {
- 	/* Reserved up to (CAPLENGTH - 0x1C) */
- };
++	if (!PMSG_IS_AUTO(msg)) {
++		/*
++		 * TI AM62 platform requires SUSPHY to be
++		 * enabled for system suspend to work.
++		 */
++		if (!dwc->susphy_state)
++			dwc3_enable_susphy(dwc, true);
++	}
++
+ 	return 0;
+ }
  
--/* hc_capbase bitmasks */
--/* bits 7:0 - how long is the Capabilities register */
--#define HC_LENGTH(p)		XHCI_HC_LENGTH(p)
--/* bits 31:16	*/
--#define HC_VERSION(p)		(((p) >> 16) & 0xffff)
--
--/* HCSPARAMS1 - hcs_params1 - bitmasks */
--/* bits 0:7, Max Device Slots */
--#define HCS_MAX_SLOTS(p)	(((p) >> 0) & 0xff)
--#define HCS_SLOTS_MASK		0xff
--/* bits 8:18, Max Interrupters */
--#define HCS_MAX_INTRS(p)	(((p) >> 8) & 0x7ff)
--/* bits 24:31, Max Ports - max value is 0x7F = 127 ports */
--#define HCS_MAX_PORTS(p)	(((p) >> 24) & 0x7f)
--
--/* HCSPARAMS2 - hcs_params2 - bitmasks */
--/* bits 0:3, frames or uframes that SW needs to queue transactions
-- * ahead of the HW to meet periodic deadlines */
--#define HCS_IST(p)		(((p) >> 0) & 0xf)
--/* bits 4:7, max number of Event Ring segments */
--#define HCS_ERST_MAX(p)		(((p) >> 4) & 0xf)
--/* bits 21:25 Hi 5 bits of Scratchpad buffers SW must allocate for the HW */
--/* bit 26 Scratchpad restore - for save/restore HW state - not used yet */
--/* bits 27:31 Lo 5 bits of Scratchpad buffers SW must allocate for the HW */
--#define HCS_MAX_SCRATCHPAD(p)   ((((p) >> 16) & 0x3e0) | (((p) >> 27) & 0x1f))
--
--/* HCSPARAMS3 - hcs_params3 - bitmasks */
--/* bits 0:7, Max U1 to U0 latency for the roothub ports */
--#define HCS_U1_LATENCY(p)	(((p) >> 0) & 0xff)
--/* bits 16:31, Max U2 to U0 latency for the roothub ports */
--#define HCS_U2_LATENCY(p)	(((p) >> 16) & 0xffff)
--
--/* HCCPARAMS - hcc_params - bitmasks */
--/* true: HC can use 64-bit address pointers */
--#define HCC_64BIT_ADDR(p)	((p) & (1 << 0))
--/* true: HC can do bandwidth negotiation */
--#define HCC_BANDWIDTH_NEG(p)	((p) & (1 << 1))
--/* true: HC uses 64-byte Device Context structures
-- * FIXME 64-byte context structures aren't supported yet.
-- */
--#define HCC_64BYTE_CONTEXT(p)	((p) & (1 << 2))
--/* true: HC has port power switches */
--#define HCC_PPC(p)		((p) & (1 << 3))
--/* true: HC has port indicators */
--#define HCS_INDICATOR(p)	((p) & (1 << 4))
--/* true: HC has Light HC Reset Capability */
--#define HCC_LIGHT_RESET(p)	((p) & (1 << 5))
--/* true: HC supports latency tolerance messaging */
--#define HCC_LTC(p)		((p) & (1 << 6))
--/* true: no secondary Stream ID Support */
--#define HCC_NSS(p)		((p) & (1 << 7))
--/* true: HC supports Stopped - Short Packet */
--#define HCC_SPC(p)		((p) & (1 << 9))
--/* true: HC has Contiguous Frame ID Capability */
--#define HCC_CFC(p)		((p) & (1 << 11))
--/* Max size for Primary Stream Arrays - 2^(n+1), where n is bits 12:15 */
--#define HCC_MAX_PSA(p)		(1 << ((((p) >> 12) & 0xf) + 1))
--/* Extended Capabilities pointer from PCI base - section 5.3.6 */
--#define HCC_EXT_CAPS(p)		XHCI_HCC_EXT_CAPS(p)
--
--#define CTX_SIZE(_hcc)		(HCC_64BYTE_CONTEXT(_hcc) ? 64 : 32)
--
--/* db_off bitmask - bits 0:1 reserved */
--#define	DBOFF_MASK	(~0x3)
--
--/* run_regs_off bitmask - bits 0:4 reserved */
--#define	RTSOFF_MASK	(~0x1f)
--
--/* HCCPARAMS2 - hcc_params2 - bitmasks */
--/* true: HC supports U3 entry Capability */
--#define	HCC2_U3C(p)		((p) & (1 << 0))
--/* true: HC supports Configure endpoint command Max exit latency too large */
--#define	HCC2_CMC(p)		((p) & (1 << 1))
--/* true: HC supports Force Save context Capability */
--#define	HCC2_FSC(p)		((p) & (1 << 2))
--/* true: HC supports Compliance Transition Capability */
--#define	HCC2_CTC(p)		((p) & (1 << 3))
--/* true: HC support Large ESIT payload Capability > 48k */
--#define	HCC2_LEC(p)		((p) & (1 << 4))
--/* true: HC support Configuration Information Capability */
--#define	HCC2_CIC(p)		((p) & (1 << 5))
--/* true: HC support Extended TBC Capability, Isoc burst count > 65535 */
--#define	HCC2_ETC(p)		((p) & (1 << 6))
--
- /* Number of registers per port */
- #define	NUM_PORT_REGS	4
+@@ -2240,6 +2254,11 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+ 		break;
+ 	}
  
-@@ -292,181 +211,6 @@ struct xhci_op_regs {
- #define CONFIG_CIE		(1 << 9)
- /* bits 10:31 - reserved and should be preserved */
++	if (!PMSG_IS_AUTO(msg)) {
++		/* restore SUSPHY state to that before system suspend. */
++		dwc3_enable_susphy(dwc, dwc->susphy_state);
++	}
++
+ 	return 0;
+ }
  
--/* PORTSC - Port Status and Control Register - port_status_base bitmasks */
--/* true: device connected */
--#define PORT_CONNECT	(1 << 0)
--/* true: port enabled */
--#define PORT_PE		(1 << 1)
--/* bit 2 reserved and zeroed */
--/* true: port has an over-current condition */
--#define PORT_OC		(1 << 3)
--/* true: port reset signaling asserted */
--#define PORT_RESET	(1 << 4)
--/* Port Link State - bits 5:8
-- * A read gives the current link PM state of the port,
-- * a write with Link State Write Strobe set sets the link state.
-- */
--#define PORT_PLS_MASK	(0xf << 5)
--#define XDEV_U0		(0x0 << 5)
--#define XDEV_U1		(0x1 << 5)
--#define XDEV_U2		(0x2 << 5)
--#define XDEV_U3		(0x3 << 5)
--#define XDEV_DISABLED	(0x4 << 5)
--#define XDEV_RXDETECT	(0x5 << 5)
--#define XDEV_INACTIVE	(0x6 << 5)
--#define XDEV_POLLING	(0x7 << 5)
--#define XDEV_RECOVERY	(0x8 << 5)
--#define XDEV_HOT_RESET	(0x9 << 5)
--#define XDEV_COMP_MODE	(0xa << 5)
--#define XDEV_TEST_MODE	(0xb << 5)
--#define XDEV_RESUME	(0xf << 5)
--
--/* true: port has power (see HCC_PPC) */
--#define PORT_POWER	(1 << 9)
--/* bits 10:13 indicate device speed:
-- * 0 - undefined speed - port hasn't be initialized by a reset yet
-- * 1 - full speed
-- * 2 - low speed
-- * 3 - high speed
-- * 4 - super speed
-- * 5-15 reserved
-- */
--#define DEV_SPEED_MASK		(0xf << 10)
--#define	XDEV_FS			(0x1 << 10)
--#define	XDEV_LS			(0x2 << 10)
--#define	XDEV_HS			(0x3 << 10)
--#define	XDEV_SS			(0x4 << 10)
--#define	XDEV_SSP		(0x5 << 10)
--#define DEV_UNDEFSPEED(p)	(((p) & DEV_SPEED_MASK) == (0x0<<10))
--#define DEV_FULLSPEED(p)	(((p) & DEV_SPEED_MASK) == XDEV_FS)
--#define DEV_LOWSPEED(p)		(((p) & DEV_SPEED_MASK) == XDEV_LS)
--#define DEV_HIGHSPEED(p)	(((p) & DEV_SPEED_MASK) == XDEV_HS)
--#define DEV_SUPERSPEED(p)	(((p) & DEV_SPEED_MASK) == XDEV_SS)
--#define DEV_SUPERSPEEDPLUS(p)	(((p) & DEV_SPEED_MASK) == XDEV_SSP)
--#define DEV_SUPERSPEED_ANY(p)	(((p) & DEV_SPEED_MASK) >= XDEV_SS)
--#define DEV_PORT_SPEED(p)	(((p) >> 10) & 0x0f)
--
--/* Bits 20:23 in the Slot Context are the speed for the device */
--#define	SLOT_SPEED_FS		(XDEV_FS << 10)
--#define	SLOT_SPEED_LS		(XDEV_LS << 10)
--#define	SLOT_SPEED_HS		(XDEV_HS << 10)
--#define	SLOT_SPEED_SS		(XDEV_SS << 10)
--#define	SLOT_SPEED_SSP		(XDEV_SSP << 10)
--/* Port Indicator Control */
--#define PORT_LED_OFF	(0 << 14)
--#define PORT_LED_AMBER	(1 << 14)
--#define PORT_LED_GREEN	(2 << 14)
--#define PORT_LED_MASK	(3 << 14)
--/* Port Link State Write Strobe - set this when changing link state */
--#define PORT_LINK_STROBE	(1 << 16)
--/* true: connect status change */
--#define PORT_CSC	(1 << 17)
--/* true: port enable change */
--#define PORT_PEC	(1 << 18)
--/* true: warm reset for a USB 3.0 device is done.  A "hot" reset puts the port
-- * into an enabled state, and the device into the default state.  A "warm" reset
-- * also resets the link, forcing the device through the link training sequence.
-- * SW can also look at the Port Reset register to see when warm reset is done.
-- */
--#define PORT_WRC	(1 << 19)
--/* true: over-current change */
--#define PORT_OCC	(1 << 20)
--/* true: reset change - 1 to 0 transition of PORT_RESET */
--#define PORT_RC		(1 << 21)
--/* port link status change - set on some port link state transitions:
-- *  Transition				Reason
-- *  ------------------------------------------------------------------------------
-- *  - U3 to Resume			Wakeup signaling from a device
-- *  - Resume to Recovery to U0		USB 3.0 device resume
-- *  - Resume to U0			USB 2.0 device resume
-- *  - U3 to Recovery to U0		Software resume of USB 3.0 device complete
-- *  - U3 to U0				Software resume of USB 2.0 device complete
-- *  - U2 to U0				L1 resume of USB 2.1 device complete
-- *  - U0 to U0 (???)			L1 entry rejection by USB 2.1 device
-- *  - U0 to disabled			L1 entry error with USB 2.1 device
-- *  - Any state to inactive		Error on USB 3.0 port
-- */
--#define PORT_PLC	(1 << 22)
--/* port configure error change - port failed to configure its link partner */
--#define PORT_CEC	(1 << 23)
--#define PORT_CHANGE_MASK	(PORT_CSC | PORT_PEC | PORT_WRC | PORT_OCC | \
--				 PORT_RC | PORT_PLC | PORT_CEC)
--
--
--/* Cold Attach Status - xHC can set this bit to report device attached during
-- * Sx state. Warm port reset should be perfomed to clear this bit and move port
-- * to connected state.
-- */
--#define PORT_CAS	(1 << 24)
--/* wake on connect (enable) */
--#define PORT_WKCONN_E	(1 << 25)
--/* wake on disconnect (enable) */
--#define PORT_WKDISC_E	(1 << 26)
--/* wake on over-current (enable) */
--#define PORT_WKOC_E	(1 << 27)
--/* bits 28:29 reserved */
--/* true: device is non-removable - for USB 3.0 roothub emulation */
--#define PORT_DEV_REMOVE	(1 << 30)
--/* Initiate a warm port reset - complete when PORT_WRC is '1' */
--#define PORT_WR		(1 << 31)
--
--/* We mark duplicate entries with -1 */
--#define DUPLICATE_ENTRY ((u8)(-1))
--
--/* Port Power Management Status and Control - port_power_base bitmasks */
--/* Inactivity timer value for transitions into U1, in microseconds.
-- * Timeout can be up to 127us.  0xFF means an infinite timeout.
-- */
--#define PORT_U1_TIMEOUT(p)	((p) & 0xff)
--#define PORT_U1_TIMEOUT_MASK	0xff
--/* Inactivity timer value for transitions into U2 */
--#define PORT_U2_TIMEOUT(p)	(((p) & 0xff) << 8)
--#define PORT_U2_TIMEOUT_MASK	(0xff << 8)
--/* Bits 24:31 for port testing */
--
--/* USB2 Protocol PORTSPMSC */
--#define	PORT_L1S_MASK		7
--#define	PORT_L1S_SUCCESS	1
--#define	PORT_RWE		(1 << 3)
--#define	PORT_HIRD(p)		(((p) & 0xf) << 4)
--#define	PORT_HIRD_MASK		(0xf << 4)
--#define	PORT_L1DS_MASK		(0xff << 8)
--#define	PORT_L1DS(p)		(((p) & 0xff) << 8)
--#define	PORT_HLE		(1 << 16)
--#define PORT_TEST_MODE_SHIFT	28
--
--/* USB3 Protocol PORTLI  Port Link Information */
--#define PORT_RX_LANES(p)	(((p) >> 16) & 0xf)
--#define PORT_TX_LANES(p)	(((p) >> 20) & 0xf)
--
--/* USB2 Protocol PORTHLPMC */
--#define PORT_HIRDM(p)((p) & 3)
--#define PORT_L1_TIMEOUT(p)(((p) & 0xff) << 2)
--#define PORT_BESLD(p)(((p) & 0xf) << 10)
--
--/* use 512 microseconds as USB2 LPM L1 default timeout. */
--#define XHCI_L1_TIMEOUT		512
--
--/* Set default HIRD/BESL value to 4 (350/400us) for USB2 L1 LPM resume latency.
-- * Safe to use with mixed HIRD and BESL systems (host and device) and is used
-- * by other operating systems.
-- *
-- * XHCI 1.0 errata 8/14/12 Table 13 notes:
-- * "Software should choose xHC BESL/BESLD field values that do not violate a
-- * device's resume latency requirements,
-- * e.g. not program values > '4' if BLC = '1' and a HIRD device is attached,
-- * or not program values < '4' if BLC = '0' and a BESL device is attached.
-- */
--#define XHCI_DEFAULT_BESL	4
--
--/*
-- * USB3 specification define a 360ms tPollingLFPSTiemout for USB3 ports
-- * to complete link training. usually link trainig completes much faster
-- * so check status 10 times with 36ms sleep in places we need to wait for
-- * polling to complete.
-- */
--#define XHCI_PORT_POLLING_LFPS_TIME  36
--
- /**
-  * struct xhci_intr_reg - Interrupt Register Set
-  * @irq_pending:	IMAN - Interrupt Management Register.  Used to enable
+diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+index e733835c41222..1b496c8e7b809 100644
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -1118,6 +1118,8 @@ struct dwc3_scratchpad_array {
+  * @dis_metastability_quirk: set to disable metastability quirk.
+  * @dis_split_quirk: set to disable split boundary.
+  * @suspended: set to track suspend event due to U3/L2.
++ * @susphy_state: state of DWC3_GUSB2PHYCFG_SUSPHY + DWC3_GUSB3PIPECTL_SUSPHY
++ *		  before PM suspend.
+  * @imod_interval: set the interrupt moderation interval in 250ns
+  *			increments or 0 to disable.
+  * @max_cfg_eps: current max number of IN eps used across all USB configs.
+@@ -1341,6 +1343,7 @@ struct dwc3 {
+ 	unsigned		dis_split_quirk:1;
+ 	unsigned		async_callbacks:1;
+ 	unsigned		suspended:1;
++	unsigned		susphy_state:1;
+ 
+ 	u16			imod_interval;
+ 
 -- 
 2.43.0
 
