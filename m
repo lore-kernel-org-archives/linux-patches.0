@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020B08837;
-	Mon, 28 Oct 2024 06:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391778837;
+	Mon, 28 Oct 2024 06:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098290; cv=none; b=UGBGo3z8IhWNxPUJe06ced2hTbpRTd4V7VMuK4wcp5vJitXZqyAbCFy/P/R8cN3QTMqDbN3NRhypSghHHA6GQl2GcRnVcFpY/tkq8hNikuB79HA8talmoWpYwrUCrUsCs6V6lYNhtpb7Pz2YM4cCRhdt2AY7/ov0JkRfKB+d10k=
+	t=1730098292; cv=none; b=NJOSAlC9JjK2poU5X5oQvjZWLHmNyo7hW+oiYLgfck07Is2ud0DcJx8k/PLkWAD2RKrSNJs4ljI2D3bjEIxE6FUzYILdGo78Bfnh2EsQ+M9RsWxtOh7Y2CE9YkLQQ3CFFEVtvd840ybCnUsLCNs66TVT5nPPcWGPtPHhjWawV2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098290; c=relaxed/simple;
-	bh=25xlZlWWnyoq4vWPVhzwjx0UGkGsdLW8dtrafMcoyms=;
+	s=arc-20240116; t=1730098292; c=relaxed/simple;
+	bh=GHReMO6uX46rL/aD4K8jRohsyMJoQmkH4QZiYovfi2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cGo6z2FKm+gWP4XJWq5dunTWOGvAqBu/yxhaMpgrjKeQk677Pngxq2GunpU4nReE1uvEpbaMTTOIpUEDGjmeOYz4s8Lbehwq92Iu6wO930chKzd8AI961/lynNLKPVEbEMALibw00knHsHLHw7PjTPuNb4t0sUAENVrjsO23zyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBtY205h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LzfIosK6lUcrIr2JHr0KBDjPIH+zNOxzSLxn4msgic1TbzAISEMxPith2aBlGw/QzOQDUK3hcp5MKJYrumOC5HiokYkLbaYROMxEXzhga9R6nO5AiS7HepeEnqZOm+TIIyCbjnNg9xPbyJ27eYbbwXbFFaCDVHvRkhgKN6mMR8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8ziw9hv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBtY205h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E39C4CEC3;
-	Mon, 28 Oct 2024 06:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8ziw9hv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE005C4CEC3;
+	Mon, 28 Oct 2024 06:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098289;
-	bh=25xlZlWWnyoq4vWPVhzwjx0UGkGsdLW8dtrafMcoyms=;
+	s=korg; t=1730098292;
+	bh=GHReMO6uX46rL/aD4K8jRohsyMJoQmkH4QZiYovfi2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBtY205hcEZQfzShZkM0NQfNIIGhnVuR80YSVvGHpQWvkpPv4USSKVvZxzzOXZUnQ
-	 uCIWT4pqrXOueJ9yPHzKW9DYWiQvtZ1g48HV/bv2KjvV6+tsypbKbaXl5zChTFO227
-	 0geTvghPyb/yZsJ14clkr0mjv3Fcf1P4mE40dFjs=
+	b=d8ziw9hvNhtRatnt4svx2sQJHqFxzjGWJAGrqhM6ZdRH9cfru9YL0yrsTuF6KpcHb
+	 6niyQWZ6gHW32cZtWmzVClLm7pWzzkvNFoGvouMPCBOqDN5Dv1D70RKeT5FzNX0UIK
+	 TF7fIFlnsMYTHoSZIaYiz/t/t+MZe8Glms4mjdYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Greg Thelen <gthelen@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	John Sperbeck <jsperbeck@google.com>
-Subject: [PATCH 6.11 161/261] net: usb: usbnet: fix name regression
-Date: Mon, 28 Oct 2024 07:25:03 +0100
-Message-ID: <20241028062316.041730542@linuxfoundation.org>
+	Hou Tao <houtao1@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 162/261] bpf: Preserve param->string when parsing mount options
+Date: Mon, 28 Oct 2024 07:25:04 +0100
+Message-ID: <20241028062316.064975538@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -53,44 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 8a7d12d674ac6f2147c18f36d1e15f1a48060edf ]
+[ Upstream commit 1f97c03f43fadc407de5b5cb01c07755053e1c22 ]
 
-The fix for MAC addresses broke detection of the naming convention
-because it gave network devices no random MAC before bind()
-was called. This means that the check for the local assignment bit
-was always negative as the address was zeroed from allocation,
-instead of from overwriting the MAC with a unique hardware address.
+In bpf_parse_param(), keep the value of param->string intact so it can
+be freed later. Otherwise, the kmalloc area pointed to by param->string
+will be leaked as shown below:
 
-The correct check for whether bind() has altered the MAC is
-done with is_zero_ether_addr
+unreferenced object 0xffff888118c46d20 (size 8):
+  comm "new_name", pid 12109, jiffies 4295580214
+  hex dump (first 8 bytes):
+    61 6e 79 00 38 c9 5c 7e                          any.8.\~
+  backtrace (crc e1b7f876):
+    [<00000000c6848ac7>] kmemleak_alloc+0x4b/0x80
+    [<00000000de9f7d00>] __kmalloc_node_track_caller_noprof+0x36e/0x4a0
+    [<000000003e29b886>] memdup_user+0x32/0xa0
+    [<0000000007248326>] strndup_user+0x46/0x60
+    [<0000000035b3dd29>] __x64_sys_fsconfig+0x368/0x3d0
+    [<0000000018657927>] x64_sys_call+0xff/0x9f0
+    [<00000000c0cabc95>] do_syscall_64+0x3b/0xc0
+    [<000000002f331597>] entry_SYSCALL_64_after_hwframe+0x4b/0x53
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Reported-by: Greg Thelen <gthelen@google.com>
-Diagnosed-by: John Sperbeck <jsperbeck@google.com>
-Fixes: bab8eb0dd4cb9 ("usbnet: modern method to get random MAC")
-Link: https://patch.msgid.link/20241017071849.389636-1-oneukum@suse.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 6c1752e0b6ca ("bpf: Support symbolic BPF FS delegation mount options")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20241022130133.3798232-1-houtao@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/bpf/inode.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index ee1b5fd7b4919..44179f4e807fc 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1767,7 +1767,8 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 		// can rename the link if it knows better.
- 		if ((dev->driver_info->flags & FLAG_ETHER) != 0 &&
- 		    ((dev->driver_info->flags & FLAG_POINTTOPOINT) == 0 ||
--		     (net->dev_addr [0] & 0x02) == 0))
-+		     /* somebody touched it*/
-+		     !is_zero_ether_addr(net->dev_addr)))
- 			strscpy(net->name, "eth%d", sizeof(net->name));
- 		/* WLAN devices should always be named "wlan%d" */
- 		if ((dev->driver_info->flags & FLAG_WLAN) != 0)
+diff --git a/kernel/bpf/inode.c b/kernel/bpf/inode.c
+index af5d2ffadd70b..00b8dc8ef7385 100644
+--- a/kernel/bpf/inode.c
++++ b/kernel/bpf/inode.c
+@@ -880,7 +880,7 @@ static int bpf_parse_param(struct fs_context *fc, struct fs_parameter *param)
+ 		const struct btf_type *enum_t;
+ 		const char *enum_pfx;
+ 		u64 *delegate_msk, msk = 0;
+-		char *p;
++		char *p, *str;
+ 		int val;
+ 
+ 		/* ignore errors, fallback to hex */
+@@ -911,7 +911,8 @@ static int bpf_parse_param(struct fs_context *fc, struct fs_parameter *param)
+ 			return -EINVAL;
+ 		}
+ 
+-		while ((p = strsep(&param->string, ":"))) {
++		str = param->string;
++		while ((p = strsep(&str, ":"))) {
+ 			if (strcmp(p, "any") == 0) {
+ 				msk |= ~0ULL;
+ 			} else if (find_btf_enum_const(info.btf, enum_t, enum_pfx, p, &val)) {
 -- 
 2.43.0
 
