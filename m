@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CBF8837;
-	Mon, 28 Oct 2024 06:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD0E8837;
+	Mon, 28 Oct 2024 06:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098388; cv=none; b=rUF3VtufbAvCgFlHsl//XXdmBwbKxk7tGTk4iqjJRJCUcYRSJ8lJJAMdZaY7mWF45Ct0uEijRnLT7iRV4f2/4KVSSgHDWEHqyM/YwG883l6DMtwswO3aN+OV08OA0hCVMmEQvBjpch8o6ofxMHnybPQtlSbgJZ+0fIH3LRTTViU=
+	t=1730098390; cv=none; b=BP0u5qqMK1oAR/w197DK+94qa4ogwqbCD/9m+TfyOi2o8U+jBTGHT3SCITEeBGiaSbq+zJYbaCnM+KOmUHqgElEjUPqvI04ltWDuu12AsGA1faos/fInWqF03waJ5kZs8GS2eFgM47GHHH9dvOJ+x1PZ0wnKgIUisPu2ZvWIDVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098388; c=relaxed/simple;
-	bh=GR/4BtaI4GkR5hVpXhWQdaCSZ83i1z/MUI4iBJCIvzI=;
+	s=arc-20240116; t=1730098390; c=relaxed/simple;
+	bh=XyR67GEnlWdhVWkjwNmOQFt8L4KAaOJ5lWsMc0jxICc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B50TSCIAu/6xEGDrRrhzOg/+H2I/YPBkV0bztwxP86KdSng3pCKUlSRYR8IjFMEB5bw5fOrFGpgUk4zDJAY+KZ6dsscDG/WXvYatqgrluqOVCP/Fqjo0p3qeX21YzzyqF3TvdytXbQMDDT1IzalQwnJpkkZvDrEQqS7yV+IInfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lp3CtdmF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jRxvz6APydmvW7LgSXUsBpx1PDrN3ddcgRCEDUtBFHld9c8/UuFKVDC3p3eY+L6t9kG3Sgl/Ml9A72PHOOOVelggTjb7MuwWmubXF8tN9RJXtceuj/g4SbpVD3FMRyOVX0++w5/oa5iIORvOR1DFzFeu68BhAt32CSDSbildT2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHl2tiRk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lp3CtdmF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D13BC4CEC3;
-	Mon, 28 Oct 2024 06:53:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHl2tiRk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D047CC4CEC3;
+	Mon, 28 Oct 2024 06:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098387;
-	bh=GR/4BtaI4GkR5hVpXhWQdaCSZ83i1z/MUI4iBJCIvzI=;
+	s=korg; t=1730098390;
+	bh=XyR67GEnlWdhVWkjwNmOQFt8L4KAaOJ5lWsMc0jxICc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lp3CtdmFGaLGMs/uUbgh+XyI5E29K5+laPLL3aILRMQy+UJ63CbKqXBez3GVH5gv4
-	 4cTjQovurprGvFom4ao4fJ5X2OVpoHlY0+2YxJfTtsMU6dW8x5WU7DoFLe5vAAFInH
-	 Li2G20pqSDTUmHRGEkxOjLPOUmMOi1DJqrTVaoRI=
+	b=wHl2tiRkDOX/coA0xt4lry/lS4z1jMBMmKeSTzuuG6YI4oBLaGla9y89NPN3hhysB
+	 AgS4TEGTT2zwKQESmJTg8U1iJXSslWpAafMDyjZ8mlqDCasnON7FHvEV9o0drlRSWe
+	 A5jxkvqcEOYoYVX0YQXADSSIujrlnShM8HN3GYMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Yue Haibing <yuehaibing@huawei.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.11 203/261] btrfs: fix passing 0 to ERR_PTR in btrfs_search_dir_index_item()
-Date: Mon, 28 Oct 2024 07:25:45 +0100
-Message-ID: <20241028062317.148706679@linuxfoundation.org>
+	Richard Gong <richard.gong@amd.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Yazen Ghannam <yazen.ghannam@amd.com>
+Subject: [PATCH 6.11 204/261] x86/amd_nb: Add new PCI IDs for AMD family 1Ah model 60h-70h
+Date: Mon, 28 Oct 2024 07:25:46 +0100
+Message-ID: <20241028062317.179125352@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -51,59 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yue Haibing <yuehaibing@huawei.com>
+From: Richard Gong <richard.gong@amd.com>
 
-commit 75f49c3dc7b7423d3734f2e4dabe3dac8d064338 upstream.
+commit 0f70fdd42559b4eed8f74bf7389656a8ae3eb5c3 upstream.
 
-The ret may be zero in btrfs_search_dir_index_item() and should not
-passed to ERR_PTR(). Now btrfs_unlink_subvol() is the only caller to
-this, reconstructed it to check ERR_PTR(-ENOENT) while ret >= 0.
+Add new PCI IDs for Device 18h and Function 4 to enable the amd_atl driver
+on those systems.
 
-This fixes smatch warnings:
-
-fs/btrfs/dir-item.c:353
-  btrfs_search_dir_index_item() warn: passing zero to 'ERR_PTR'
-
-Fixes: 9dcbe16fccbb ("btrfs: use btrfs_for_each_slot in btrfs_search_dir_index_item")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Richard Gong <richard.gong@amd.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Link: https://lore.kernel.org/all/20240819123041.915734-1-richard.gong@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/dir-item.c |    4 ++--
- fs/btrfs/inode.c    |    7 ++-----
- 2 files changed, 4 insertions(+), 7 deletions(-)
+ arch/x86/kernel/amd_nb.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/btrfs/dir-item.c
-+++ b/fs/btrfs/dir-item.c
-@@ -347,8 +347,8 @@ btrfs_search_dir_index_item(struct btrfs
- 			return di;
- 	}
- 	/* Adjust return code if the key was not found in the next leaf. */
--	if (ret > 0)
--		ret = 0;
-+	if (ret >= 0)
-+		ret = -ENOENT;
+--- a/arch/x86/kernel/amd_nb.c
++++ b/arch/x86/kernel/amd_nb.c
+@@ -44,6 +44,8 @@
+ #define PCI_DEVICE_ID_AMD_19H_M70H_DF_F4	0x14f4
+ #define PCI_DEVICE_ID_AMD_19H_M78H_DF_F4	0x12fc
+ #define PCI_DEVICE_ID_AMD_1AH_M00H_DF_F4	0x12c4
++#define PCI_DEVICE_ID_AMD_1AH_M60H_DF_F4	0x124c
++#define PCI_DEVICE_ID_AMD_1AH_M70H_DF_F4	0x12bc
+ #define PCI_DEVICE_ID_AMD_MI200_DF_F4		0x14d4
+ #define PCI_DEVICE_ID_AMD_MI300_DF_F4		0x152c
  
- 	return ERR_PTR(ret);
- }
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4339,11 +4339,8 @@ static int btrfs_unlink_subvol(struct bt
- 	 */
- 	if (btrfs_ino(inode) == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID) {
- 		di = btrfs_search_dir_index_item(root, path, dir_ino, &fname.disk_name);
--		if (IS_ERR_OR_NULL(di)) {
--			if (!di)
--				ret = -ENOENT;
--			else
--				ret = PTR_ERR(di);
-+		if (IS_ERR(di)) {
-+			ret = PTR_ERR(di);
- 			btrfs_abort_transaction(trans, ret);
- 			goto out;
- 		}
+@@ -125,6 +127,8 @@ static const struct pci_device_id amd_nb
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M78H_DF_F4) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_CNB17H_F4) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M00H_DF_F4) },
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M60H_DF_F4) },
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M70H_DF_F4) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_MI200_DF_F4) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_MI300_DF_F4) },
+ 	{}
 
 
