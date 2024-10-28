@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716298837;
-	Mon, 28 Oct 2024 06:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECCD8837;
+	Mon, 28 Oct 2024 06:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098332; cv=none; b=cnOYXSWpVJfM7McjY4Q1+p1Gk94twAH1rZ4HUuDyU8xuh6PzoDUXgxzQWYbsFNiDli9pP/By7Wv1v4k/URZ2zOrq05KHhdkYkm4U8JiFfnNGHCcxD3nx69PHdhPJJdTqHQf5M/Nn0jq+SeBD80gfnc2DkaI5okFUf2UcrN0Y70w=
+	t=1730098334; cv=none; b=A05WunzzQpOEn8b/TGaXTzpAM3DJ7/QwkMUYiSuVS0B3ngY1zbvmj5IAG3AewGftB/PNY8yEKuWYWk3YjSZ9vAXGfVPeE78+IRQtA6PUsv4yzCFW7efsBPgJ/FM6WfSnoCZpOpG8YP9iGVRj+7Pcj9/H70uNcl9hw+zVSdJmbGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098332; c=relaxed/simple;
-	bh=fODLZpMmttmYPCf8AhVs5HJpCUbn2uO9gIGq7htEQKw=;
+	s=arc-20240116; t=1730098334; c=relaxed/simple;
+	bh=F3kOO/IZUoHlT8tNRsDYTXwc6EtE/JtqlG4ZTr30AGc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k+Ij57mUW0zefWMVq3nwPBK1peZcm5gFlUNgd0Z0SMjWsTUPFbJslWfPh2v3LxgRYY4ggMFYcZv1YFE/59EkyUGyWSfUuQf8hQqX+Nh2pgTT0+2jKoDWJYkfwVs5mGJ+NxZquTFEngnqtTZpkdDIQC3amomqNmGC5hOp9FHDfA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1ujzd7t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qKcCiwyXOmABptvN9J+M2PgJFmYJzq2hd3d791wDjYCdR+wf9Rkzg/EEKBUA0S9pGmkf+5xaExtjfQ+3zgqoiy5GuqGW/nbRp5bbeUoYmtPqBFleu6+o6o19EblmcxQIJBoZtCurvhiynnQCFCaGDNtCB2zmYjvMjzlmdehkCWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UR3ZdAjL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1ujzd7t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1D0C4CEC3;
-	Mon, 28 Oct 2024 06:52:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UR3ZdAjL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F96CC4CEC3;
+	Mon, 28 Oct 2024 06:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098332;
-	bh=fODLZpMmttmYPCf8AhVs5HJpCUbn2uO9gIGq7htEQKw=;
+	s=korg; t=1730098334;
+	bh=F3kOO/IZUoHlT8tNRsDYTXwc6EtE/JtqlG4ZTr30AGc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E1ujzd7timzRq/p0w/fmJi1G77OJiHrEsks0NU+Dtsq9fYtk3djjfz6pL5j/VupVM
-	 oIXfhlDvPsen2EdRf1GFvv2IQPgMq2cqYyM3UnodBl3ik8QroTIC2SxrPHwhZ2eau4
-	 6I5+tiYgmiHEYCZq+izS1IoyiiSi/K+n3GXMm/cA=
+	b=UR3ZdAjLMJ175OSWnsXmQ3Hf+uaMrk+dgQQK+egiKdwWb1jRgMBOkn/j6Y0cxeafT
+	 0rqQu2LY/+0CphqWnkWuRrksIntYMnnDwLgJ6KP/pXoSQ/3OhdXwpzoZPph4aJcNN8
+	 u8pA++01N+LIbp+WCUsi/I/jkZh2/RmEv5GUrmWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 134/261] cifs: Validate content of NFS reparse point buffer
-Date: Mon, 28 Oct 2024 07:24:36 +0100
-Message-ID: <20241028062315.401367597@linuxfoundation.org>
+Subject: [PATCH 6.11 174/261] bpf,perf: Fix perf_event_detach_bpf_prog error handling
+Date: Mon, 28 Oct 2024 07:25:16 +0100
+Message-ID: <20241028062316.360189833@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -46,78 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 556ac52bb1e76cc28fd30aa117b42989965b3efd ]
+[ Upstream commit 0ee288e69d033850bc87abe0f9cc3ada24763d7f ]
 
-Symlink target location stored in DataBuffer is encoded in UTF-16. So check
-that symlink DataBuffer length is non-zero and even number. And check that
-DataBuffer does not contain UTF-16 null codepoint because Linux cannot
-process symlink with null byte.
+Peter reported that perf_event_detach_bpf_prog might skip to release
+the bpf program for -ENOENT error from bpf_prog_array_copy.
 
-DataBuffer for char and block devices is 8 bytes long as it contains two
-32-bit numbers (major and minor). Add check for this.
+This can't happen because bpf program is stored in perf event and is
+detached and released only when perf event is freed.
 
-DataBuffer buffer for sockets and fifos zero-length. Add checks for this.
+Let's drop the -ENOENT check and make sure the bpf program is released
+in any case.
 
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 170a7e3ea070 ("bpf: bpf_prog_array_copy() should return -ENOENT if exclude_prog not found")
+Reported-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241023200352.3488610-1-jolsa@kernel.org
+
+Closes: https://lore.kernel.org/lkml/20241022111638.GC16066@noisy.programming.kicks-ass.net/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ kernel/trace/bpf_trace.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index ad0e0de9a165d..7429b96a6ae5e 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -330,6 +330,18 @@ static int parse_reparse_posix(struct reparse_posix_data *buf,
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 50c0b1088a9eb..6dbbb3683ab2e 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2306,8 +2306,6 @@ void perf_event_detach_bpf_prog(struct perf_event *event)
  
- 	switch ((type = le64_to_cpu(buf->InodeType))) {
- 	case NFS_SPECFILE_LNK:
-+		if (len == 0 || (len % 2)) {
-+			cifs_dbg(VFS, "srv returned malformed nfs symlink buffer\n");
-+			return -EIO;
-+		}
-+		/*
-+		 * Check that buffer does not contain UTF-16 null codepoint
-+		 * because Linux cannot process symlink with null byte.
-+		 */
-+		if (UniStrnlen((wchar_t *)buf->DataBuffer, len/2) != len/2) {
-+			cifs_dbg(VFS, "srv returned null byte in nfs symlink target location\n");
-+			return -EIO;
-+		}
- 		data->symlink_target = cifs_strndup_from_utf16(buf->DataBuffer,
- 							       len, true,
- 							       cifs_sb->local_nls);
-@@ -340,8 +352,19 @@ static int parse_reparse_posix(struct reparse_posix_data *buf,
- 		break;
- 	case NFS_SPECFILE_CHR:
- 	case NFS_SPECFILE_BLK:
-+		/* DataBuffer for block and char devices contains two 32-bit numbers */
-+		if (len != 8) {
-+			cifs_dbg(VFS, "srv returned malformed nfs buffer for type: 0x%llx\n", type);
-+			return -EIO;
-+		}
-+		break;
- 	case NFS_SPECFILE_FIFO:
- 	case NFS_SPECFILE_SOCK:
-+		/* DataBuffer for fifos and sockets is empty */
-+		if (len != 0) {
-+			cifs_dbg(VFS, "srv returned malformed nfs buffer for type: 0x%llx\n", type);
-+			return -EIO;
-+		}
- 		break;
- 	default:
- 		cifs_dbg(VFS, "%s: unhandled inode type: 0x%llx\n",
+ 	old_array = bpf_event_rcu_dereference(event->tp_event->prog_array);
+ 	ret = bpf_prog_array_copy(old_array, event->prog, NULL, 0, &new_array);
+-	if (ret == -ENOENT)
+-		goto unlock;
+ 	if (ret < 0) {
+ 		bpf_prog_array_delete_safe(old_array, event->prog);
+ 	} else {
 -- 
 2.43.0
 
