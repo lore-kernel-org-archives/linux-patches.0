@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74A018CC1F;
-	Mon, 28 Oct 2024 06:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9F018CC1F;
+	Mon, 28 Oct 2024 06:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730096889; cv=none; b=Xpew0BCVXMQNLO+f/xCU4dZTxOOnDsFt2S+17Azks7ZEaWy/VAjzpqc6+CGWuI/MPkMiHVPiQrJknlGGvsZgwK1qLHdn4kn3/gzSuvpXSkGf+xdszozu0PHB2XsiV1lpD+gvGMlC9bSPYNwXkbGSk/mRTVvlePT2bzx3QU4LKR4=
+	t=1730096891; cv=none; b=dTBHSFvkeJClU6U+SQoAIigX8t7XpP1utp37aoVaH58qfcmrNWvM9gxBExtDEJulvgdbyuGR/xbbOK35m6LE3ifkJ+rqaqqsMWQ1Yu5xip8vnufhca0mOk2x92roqzRVZIaz6qzsfSRohoCuzU93lIM2Bq3QhHl2pCknq3hQ4qA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730096889; c=relaxed/simple;
-	bh=2Mp+f1Ue9vbC1lqLZlvzi9g6eMK5Qw7gD5HRmHP3IVA=;
+	s=arc-20240116; t=1730096891; c=relaxed/simple;
+	bh=SS/L5wTTQldgtLNPE6vswVl4Wth4R2ehHEX/QW0Qrvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WgmPBh4XxrMDJ69NlNIHvFgoxfxNCmMc2g9IGhWEMEebOtk5bv5T97EsbKdGexcptPgAls5SVNSnWKT0BKLCR7jpbxo5ypCsP26uMIWUhNA2i2fGKQnlHvyZfbGABzvCPnXa6SxR4mj1DahCxtOpuamIhMsHVNyJ14ZRiIyjX4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFABQS+A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KCYoREBpLchwrJK1RGztSF/DnmubquPG8Ir+ms6phfUrerJrq9xForbfw9v+jv8MX32UEy4wPb8xn/ZGAetadl7XBcsH4d2toHNbq7GcJdLJD25/iobd/PJStFC02hkMa4V0RzvpsH3WV1ZyREJblZ4DTabwmOuI52u584pYXMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xv1nsjxV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFABQS+A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A7EC4CEC3;
-	Mon, 28 Oct 2024 06:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xv1nsjxV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD640C4CEC3;
+	Mon, 28 Oct 2024 06:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730096888;
-	bh=2Mp+f1Ue9vbC1lqLZlvzi9g6eMK5Qw7gD5HRmHP3IVA=;
+	s=korg; t=1730096891;
+	bh=SS/L5wTTQldgtLNPE6vswVl4Wth4R2ehHEX/QW0Qrvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lFABQS+APyC8fK1+cJ+f2hcclMm/Uc453egPS4wGSFC4n+x4alF4yWSbJ1S5lkGiv
-	 v+kqKezNkEAZCJDR8KtueUWmNY5m1NnTTGzwykOqDShDMNYTxe/15T8ynrtEWunTH8
-	 80k0ELagodKNIomxLFE7lP+9iHvwdOVAi2+Es5Qc=
+	b=xv1nsjxVeJYX/6X6ksesGoTdDZ7dCGNsGx8Q06/kaZbv5K6rsFm7XoyK/Lbmypvdi
+	 Zta5bgkmqDXFcHvlCNZuhDu4989nDIxJMwhhpil2QCDL3PPcwlujOPJiTrMJNA4wKm
+	 kHj8y/LsxKZY5fv1SAIR9eKMAxxVm+LLjd5CPksE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Chandramohan Akula <chandramohan.akula@broadcom.com>,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	junhua huang <huang.junhua@zte.com.cn>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 03/80] RDMA/bnxt_re: Fix incorrect AVID type in WQE structure
-Date: Mon, 28 Oct 2024 07:24:43 +0100
-Message-ID: <20241028062252.711491268@linuxfoundation.org>
+Subject: [PATCH 5.15 30/80] arm64:uprobe fix the uprobe SWBP_INSN in big-endian
+Date: Mon, 28 Oct 2024 07:25:10 +0100
+Message-ID: <20241028062253.465317528@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
 References: <20241028062252.611837461@linuxfoundation.org>
@@ -49,51 +45,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+From: junhua huang <huang.junhua@zte.com.cn>
 
-[ Upstream commit 9ab20f76ae9fad55ebaf36bdff04aea1c2552374 ]
+[ Upstream commit 60f07e22a73d318cddaafa5ef41a10476807cc07 ]
 
-Driver uses internal data structure to construct WQE frame.
-It used avid type as u16 which can accommodate up to 64K AVs.
-When outstanding AVID crosses 64K, driver truncates AVID and
-hence it uses incorrect AVID to WR. This leads to WR failure
-due to invalid AV ID and QP is moved to error state with reason
-set to 19 (INVALID AVID). When RDMA CM path is used, this issue
-hits QP1 and it is moved to error state
+We use uprobe in aarch64_be, which we found the tracee task would exit
+due to SIGILL when we enable the uprobe trace.
+We can see the replace inst from uprobe is not correct in aarch big-endian.
+As in Armv8-A, instruction fetches are always treated as little-endian,
+we should treat the UPROBE_SWBP_INSN as little-endian。
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Link: https://patch.msgid.link/r/1726715161-18941-3-git-send-email-selvin.xavier@broadcom.com
-Reviewed-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Reviewed-by: Chandramohan Akula <chandramohan.akula@broadcom.com>
-Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The test case is as following。
+bash-4.4# ./mqueue_test_aarchbe 1 1 2 1 10 > /dev/null &
+bash-4.4# cd /sys/kernel/debug/tracing/
+bash-4.4# echo 'p:test /mqueue_test_aarchbe:0xc30 %x0 %x1' > uprobe_events
+bash-4.4# echo 1 > events/uprobes/enable
+bash-4.4#
+bash-4.4# ps
+  PID TTY          TIME CMD
+  140 ?        00:00:01 bash
+  237 ?        00:00:00 ps
+[1]+  Illegal instruction     ./mqueue_test_aarchbe 1 1 2 1 100 > /dev/null
+
+which we debug use gdb as following:
+
+bash-4.4# gdb attach 155
+(gdb) disassemble send
+Dump of assembler code for function send:
+   0x0000000000400c30 <+0>:     .inst   0xa00020d4 ; undefined
+   0x0000000000400c34 <+4>:     mov     x29, sp
+   0x0000000000400c38 <+8>:     str     w0, [sp, #28]
+   0x0000000000400c3c <+12>:    strb    w1, [sp, #27]
+   0x0000000000400c40 <+16>:    str     xzr, [sp, #40]
+   0x0000000000400c44 <+20>:    str     xzr, [sp, #48]
+   0x0000000000400c48 <+24>:    add     x0, sp, #0x1b
+   0x0000000000400c4c <+28>:    mov     w3, #0x0                 // #0
+   0x0000000000400c50 <+32>:    mov     x2, #0x1                 // #1
+   0x0000000000400c54 <+36>:    mov     x1, x0
+   0x0000000000400c58 <+40>:    ldr     w0, [sp, #28]
+   0x0000000000400c5c <+44>:    bl      0x405e10 <mq_send>
+   0x0000000000400c60 <+48>:    str     w0, [sp, #60]
+   0x0000000000400c64 <+52>:    ldr     w0, [sp, #60]
+   0x0000000000400c68 <+56>:    ldp     x29, x30, [sp], #64
+   0x0000000000400c6c <+60>:    ret
+End of assembler dump.
+(gdb) info b
+No breakpoints or watchpoints.
+(gdb) c
+Continuing.
+
+Program received signal SIGILL, Illegal instruction.
+0x0000000000400c30 in send ()
+(gdb) x/10x 0x400c30
+0x400c30 <send>:    0xd42000a0   0xfd030091      0xe01f00b9      0xe16f0039
+0x400c40 <send+16>: 0xff1700f9   0xff1b00f9      0xe06f0091      0x03008052
+0x400c50 <send+32>: 0x220080d2   0xe10300aa
+(gdb) disassemble 0x400c30
+Dump of assembler code for function send:
+=> 0x0000000000400c30 <+0>:     .inst   0xa00020d4 ; undefined
+   0x0000000000400c34 <+4>:     mov     x29, sp
+   0x0000000000400c38 <+8>:     str     w0, [sp, #28]
+   0x0000000000400c3c <+12>:    strb    w1, [sp, #27]
+   0x0000000000400c40 <+16>:    str     xzr, [sp, #40]
+
+Signed-off-by: junhua huang <huang.junhua@zte.com.cn>
+Link: https://lore.kernel.org/r/202212021511106844809@zte.com.cn
+Signed-off-by: Will Deacon <will@kernel.org>
+Stable-dep-of: 13f8f1e05f1d ("arm64: probes: Fix uprobes for big-endian kernels")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.h | 2 +-
+ arch/arm64/include/asm/uprobes.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-index 4f1a845f9be6c..57a3dae87f659 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-@@ -169,7 +169,7 @@ struct bnxt_qplib_swqe {
- 			};
- 			u32		q_key;
- 			u32		dst_qp;
--			u16		avid;
-+			u32		avid;
- 		} send;
+diff --git a/arch/arm64/include/asm/uprobes.h b/arch/arm64/include/asm/uprobes.h
+index 315eef654e39a..ba4bff5ca6749 100644
+--- a/arch/arm64/include/asm/uprobes.h
++++ b/arch/arm64/include/asm/uprobes.h
+@@ -12,7 +12,7 @@
  
- 		/* Send Raw Ethernet and QP1 */
+ #define MAX_UINSN_BYTES		AARCH64_INSN_SIZE
+ 
+-#define UPROBE_SWBP_INSN	BRK64_OPCODE_UPROBES
++#define UPROBE_SWBP_INSN	cpu_to_le32(BRK64_OPCODE_UPROBES)
+ #define UPROBE_SWBP_INSN_SIZE	AARCH64_INSN_SIZE
+ #define UPROBE_XOL_SLOT_BYTES	MAX_UINSN_BYTES
+ 
 -- 
 2.43.0
 
