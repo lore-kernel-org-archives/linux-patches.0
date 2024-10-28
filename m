@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6677B2AF07;
-	Mon, 28 Oct 2024 06:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD53B18A922;
+	Mon, 28 Oct 2024 06:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098211; cv=none; b=e1WlOSzDUZR3U/aWV6iJddh2yEQB9UXI77cw+d0Sq8yeO78ft6Is2ri1f4SrsvBKh8PTGMwklI/JSVOV6hnUNmUrrMAp6uOb4ym1VFKdLzKEIXdJH1m753s+N77KoqE3oGUu6NJLG/Sgb6KaOUKdHRWQ8yhY7muAVdTMvAWSFNM=
+	t=1730098213; cv=none; b=TBAvAm4w+N/aWGB1ZOpNF1EBQj0S+ZrmP9qdHPQKlqPCy+Rgc6qSnVjvpvN44Q5AFOackEcyMvg3O/J1szgmgMmhVg4snK0mf9hlKP7cqEMntWcgfXWtTgyZBrIWlTdW1fjnRF779cK8EqDalh5YoYZ5lFJFxcS4cGYWPMMNKtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098211; c=relaxed/simple;
-	bh=p2EARLqc5M91pQIpJK4/6p0ir+F+5L2BURuLveNMv5o=;
+	s=arc-20240116; t=1730098213; c=relaxed/simple;
+	bh=AMiSNsdxD5kM9sTh2/TaccGw7AcdJTNYlNWlLJShzBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FFzKF14Kmw0Dv1OZNutsfusmiSwAvO/8WUeZqVwV5SO7iJgi1qOt4eZCmoIvVCt1V8zVzJ9lJfUl0CxGztMlKyc93X2Evkf4cFxE9siTvubR3kGHuGrj7IPZ0daozYBoonU6EG089SdDKmbO6gEJLHY+27UqbZJlCG2era4vpL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALu7e92Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WxyqYDO+Nfb8VuubHy8Da9qJB7wWvG5HFS3VLodxcbQ8j3mRwo2g5L3Z0bMy7lanofsuAl4nxXnaSl5BoURMxAXHDsOc4bllSeiW3KMpPHrcLf/evx77OxM9ysQjKvsdmqowMfjH7/p3z2reRyip+upUpkyO7JXxS4sH8XP0pvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8mggmsj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALu7e92Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06FEBC4CEC3;
-	Mon, 28 Oct 2024 06:50:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8mggmsj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2CDC4CEC3;
+	Mon, 28 Oct 2024 06:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098211;
-	bh=p2EARLqc5M91pQIpJK4/6p0ir+F+5L2BURuLveNMv5o=;
+	s=korg; t=1730098213;
+	bh=AMiSNsdxD5kM9sTh2/TaccGw7AcdJTNYlNWlLJShzBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ALu7e92ZAQEpbbJ7wULX1dxlWhnFmXQPpXMCT3VHNtViZiCQcO7DrdswgiB4Vvh96
-	 Je1QFzXW2NvZTK578JtMe+koye6vKoDWydEjf9W83Qd1ttJV8MMZEcZeeAn/AEPqU+
-	 50D42l55RH97h0MbOaZTRMw/EGXDqXpMAr409eyk=
+	b=H8mggmsjSR4dSD4kxpf6DLZGDF0MiMYz/CPVBqDT1Z0VO4AIzMOp623q4kPOMRqhJ
+	 n+mOSflaxXasiXI/5zzS5y3G+rsM+U7BhN9wKj1QnSVpq+sheZXGzYUoAMfkku90iI
+	 maNPjTUf3Ig7ar+vVxqmVNu9kklVbzQx1IOpVftQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 099/261] net/mlx5: Fix command bitmask initialization
-Date: Mon, 28 Oct 2024 07:24:01 +0100
-Message-ID: <20241028062314.513646932@linuxfoundation.org>
+Subject: [PATCH 6.11 126/261] arm64: Force position-independent veneers
+Date: Mon, 28 Oct 2024 07:24:28 +0100
+Message-ID: <20241028062315.192998495@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -54,98 +56,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit d62b14045c6511a7b2d4948d1a83a4e592deeb05 ]
+[ Upstream commit 9abe390e689f4f5c23c5f507754f8678431b4f72 ]
 
-Command bitmask have a dedicated bit for MANAGE_PAGES command, this bit
-isn't Initialize during command bitmask Initialization, only during
-MANAGE_PAGES.
+Certain portions of code always need to be position-independent
+regardless of CONFIG_RELOCATABLE, including code which is executed in an
+idmap or which is executed before relocations are applied. In some
+kernel configurations the LLD linker generates position-dependent
+veneers for such code, and when executed these result in early boot-time
+failures.
 
-In addition, mlx5_cmd_trigger_completions() is trying to trigger
-completion for MANAGE_PAGES command as well.
+Marc Zyngier encountered a boot failure resulting from this when
+building a (particularly cursed) configuration with LLVM, as he reported
+to the list:
 
-Hence, in case health error occurred before any MANAGE_PAGES command
-have been invoke (for example, during mlx5_enable_hca()),
-mlx5_cmd_trigger_completions() will try to trigger completion for
-MANAGE_PAGES command, which will result in null-ptr-deref error.[1]
+  https://lore.kernel.org/linux-arm-kernel/86wmjwvatn.wl-maz@kernel.org/
 
-Fix it by Initialize command bitmask correctly.
+In Marc's kernel configuration, the .head.text and .rodata.text sections
+end up more than 128MiB apart, requiring a veneer to branch between the
+two:
 
-While at it, re-write the code for better understanding.
+| [mark@lakrids:~/src/linux]% usekorg 14.1.0 aarch64-linux-objdump -t vmlinux | grep -w _text
+| ffff800080000000 g       .head.text     0000000000000000 _text
+| [mark@lakrids:~/src/linux]% usekorg 14.1.0 aarch64-linux-objdump -t vmlinux | grep -w primary_entry
+| ffff8000889df0e0 g       .rodata.text   000000000000006c primary_entry,
 
-[1]
-BUG: KASAN: null-ptr-deref in mlx5_cmd_trigger_completions+0x1db/0x600 [mlx5_core]
-Write of size 4 at addr 0000000000000214 by task kworker/u96:2/12078
-CPU: 10 PID: 12078 Comm: kworker/u96:2 Not tainted 6.9.0-rc2_for_upstream_debug_2024_04_07_19_01 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-Workqueue: mlx5_health0000:08:00.0 mlx5_fw_fatal_reporter_err_work [mlx5_core]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x7e/0xc0
- kasan_report+0xb9/0xf0
- kasan_check_range+0xec/0x190
- mlx5_cmd_trigger_completions+0x1db/0x600 [mlx5_core]
- mlx5_cmd_flush+0x94/0x240 [mlx5_core]
- enter_error_state+0x6c/0xd0 [mlx5_core]
- mlx5_fw_fatal_reporter_err_work+0xf3/0x480 [mlx5_core]
- process_one_work+0x787/0x1490
- ? lockdep_hardirqs_on_prepare+0x400/0x400
- ? pwq_dec_nr_in_flight+0xda0/0xda0
- ? assign_work+0x168/0x240
- worker_thread+0x586/0xd30
- ? rescuer_thread+0xae0/0xae0
- kthread+0x2df/0x3b0
- ? kthread_complete_and_exit+0x20/0x20
- ret_from_fork+0x2d/0x70
- ? kthread_complete_and_exit+0x20/0x20
- ret_from_fork_asm+0x11/0x20
- </TASK>
+... consequently, LLD inserts a position-dependent veneer for the branch
+from _stext (in .head.text) to primary_entry (in .rodata.text):
 
-Fixes: 9b98d395b85d ("net/mlx5: Start health poll at earlier stage of driver load")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+| ffff800080000000 <_text>:
+| ffff800080000000:       fa405a4d        ccmp    x18, #0x0, #0xd, pl     // pl = nfrst
+| ffff800080000004:       14003fff        b       ffff800080010000 <__AArch64AbsLongThunk_primary_entry>
+...
+| ffff800080010000 <__AArch64AbsLongThunk_primary_entry>:
+| ffff800080010000:       58000050        ldr     x16, ffff800080010008 <__AArch64AbsLongThunk_primary_entry+0x8>
+| ffff800080010004:       d61f0200        br      x16
+| ffff800080010008:       889df0e0        .word   0x889df0e0
+| ffff80008001000c:       ffff8000        .word   0xffff8000
+
+... and as this is executed early in boot before the kernel is mapped in
+TTBR1 this results in a silent boot failure.
+
+Fix this by passing '--pic-veneer' to the linker, which will cause the
+linker to use position-independent veneers, e.g.
+
+| ffff800080000000 <_text>:
+| ffff800080000000:       fa405a4d        ccmp    x18, #0x0, #0xd, pl     // pl = nfrst
+| ffff800080000004:       14003fff        b       ffff800080010000 <__AArch64ADRPThunk_primary_entry>
+...
+| ffff800080010000 <__AArch64ADRPThunk_primary_entry>:
+| ffff800080010000:       f004e3f0        adrp    x16, ffff800089c8f000 <__idmap_text_start>
+| ffff800080010004:       91038210        add     x16, x16, #0xe0
+| ffff800080010008:       d61f0200        br      x16
+
+I've opted to pass '--pic-veneer' unconditionally, as:
+
+* In addition to solving the boot failure, these sequences are generally
+  nicer as they require fewer instructions and don't need to perform
+  data accesses.
+
+* While the position-independent veneer sequences have a limited +/-2GiB
+  range, this is not a new restriction. Even kernels built with
+  CONFIG_RELOCATABLE=n are limited to 2GiB in size as we have several
+  structues using 32-bit relative offsets and PPREL32 relocations, which
+  are similarly limited to +/-2GiB in range. These include extable
+  entries, jump table entries, and alt_instr entries.
+
+* GNU LD defaults to using position-independent veneers, and supports
+  the same '--pic-veneer' option, so this change is not expected to
+  adversely affect GNU LD.
+
+I've tested with GNU LD 2.30 to 2.42 inclusive and LLVM 13.0.1 to 19.1.0
+inclusive, using the kernel.org binaries from:
+
+* https://mirrors.edge.kernel.org/pub/tools/crosstool/
+* https://mirrors.edge.kernel.org/pub/tools/llvm/
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reported-by: Marc Zyngier <maz@kernel.org>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Will Deacon <will@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20240927101838.3061054-1-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/arm64/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-index 20768ef2e9d2b..86d63c5f27ce2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -1760,6 +1760,10 @@ static void mlx5_cmd_comp_handler(struct mlx5_core_dev *dev, u64 vec, bool force
- 	}
- }
+diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
+index f6bc3da1ef110..c8e237b20ef29 100644
+--- a/arch/arm64/Makefile
++++ b/arch/arm64/Makefile
+@@ -10,7 +10,7 @@
+ #
+ # Copyright (C) 1995-2001 by Russell King
  
-+#define MLX5_MAX_MANAGE_PAGES_CMD_ENT 1
-+#define MLX5_CMD_MASK ((1UL << (cmd->vars.max_reg_cmds + \
-+			   MLX5_MAX_MANAGE_PAGES_CMD_ENT)) - 1)
-+
- static void mlx5_cmd_trigger_completions(struct mlx5_core_dev *dev)
- {
- 	struct mlx5_cmd *cmd = &dev->cmd;
-@@ -1771,7 +1775,7 @@ static void mlx5_cmd_trigger_completions(struct mlx5_core_dev *dev)
- 	/* wait for pending handlers to complete */
- 	mlx5_eq_synchronize_cmd_irq(dev);
- 	spin_lock_irqsave(&dev->cmd.alloc_lock, flags);
--	vector = ~dev->cmd.vars.bitmask & ((1ul << (1 << dev->cmd.vars.log_sz)) - 1);
-+	vector = ~dev->cmd.vars.bitmask & MLX5_CMD_MASK;
- 	if (!vector)
- 		goto no_trig;
+-LDFLAGS_vmlinux	:=--no-undefined -X
++LDFLAGS_vmlinux	:=--no-undefined -X --pic-veneer
  
-@@ -2345,7 +2349,7 @@ int mlx5_cmd_enable(struct mlx5_core_dev *dev)
- 
- 	cmd->state = MLX5_CMDIF_STATE_DOWN;
- 	cmd->vars.max_reg_cmds = (1 << cmd->vars.log_sz) - 1;
--	cmd->vars.bitmask = (1UL << cmd->vars.max_reg_cmds) - 1;
-+	cmd->vars.bitmask = MLX5_CMD_MASK;
- 
- 	sema_init(&cmd->vars.sem, cmd->vars.max_reg_cmds);
- 	sema_init(&cmd->vars.pages_sem, 1);
+ ifeq ($(CONFIG_RELOCATABLE), y)
+ # Pass --no-apply-dynamic-relocs to restore pre-binutils-2.27 behaviour
 -- 
 2.43.0
 
