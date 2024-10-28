@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68E58837;
-	Mon, 28 Oct 2024 06:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2986718EFC9;
+	Mon, 28 Oct 2024 06:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098243; cv=none; b=WaNrjQDqYMExWULJoFf6iVO4N+MEe47j7Og1sBuvw7nUa1empN2adJ8UFIbhnvzKPfbeaVDp08oJCdURrdvBQw/SRsH25Ju4tL5UZVO1NXdMrSWAI4roIB038mI4K4QSuM9DhH6TMRc3todjvOD6hK7nh6L0Qo9YC3j8w0zbNG4=
+	t=1730098245; cv=none; b=YBeNRH0EgfRNa1A9iTFFjmMo7bPYPyRTMsIl/0+Xs74jUsCpkWeLDONeReH239DfP2ZwwK5wM9tcUfFZZ32ZX7MV5JA6UE026fA7KdoKjcRz+RLPWvaZ8XmKmKkzoy3sMLVgnU81rI/0PBWJKYNMAQU/B6OZXlbVpm8VdwXSHWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098243; c=relaxed/simple;
-	bh=UuNVwSe8M0zAxTUW1c/LzZErDzg9g/5U8RrYXbz9Tok=;
+	s=arc-20240116; t=1730098245; c=relaxed/simple;
+	bh=dXwnD+X6G/LKRixxaIZpPRyc1hzDfApL0WVOUaY+i5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h32MzrUOrPxAjFVspQwnfOcjUK5bpvSYLXz8VedrsExJngqQJDdNPmaSMSBn+D0E1RbTdw9FRHkwSeXiWp+HQQ6woFNrBb3ZirLx9r+kftVqlvY0rJ3pYtuvjiwF7rznwZqnCKTkViDrXcNiS0+2akUa/QTm8YYibvzCVzfMCvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czhMt+mF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HaOm649r9ig9bxpMkZ7sZJK/alGk1ulcruzuX3dRdNE2rGvDGfk4NLBhYtX2qMgo8R8pCw1L6acSBYWvUb3RFRwHthDRZ8BpTQ+yUkb3uIb9UUULeEMbSmb+rtD27QSjj1TMjdLLm1iLt28UAXwtJpo1nuDCuaieT5MfbQD0ZdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHJ99Jdz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czhMt+mF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8087CC4CEC3;
-	Mon, 28 Oct 2024 06:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHJ99Jdz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE87AC4CECD;
+	Mon, 28 Oct 2024 06:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098242;
-	bh=UuNVwSe8M0zAxTUW1c/LzZErDzg9g/5U8RrYXbz9Tok=;
+	s=korg; t=1730098245;
+	bh=dXwnD+X6G/LKRixxaIZpPRyc1hzDfApL0WVOUaY+i5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=czhMt+mFBjdT2sdJ8oDWoLJAont78imTfw1D1nTTsjecU2FOfr+b/weqGTWOx9Rro
-	 dHIzo9xGb0MAXgVACuunvCXR3eyNVDdUEof2KP1BEdts5Mocntiaj1lTtBcK/uHcGt
-	 1Rz6YjWTvAdadJ9cexUUOKUkMGWk/HNYm7I2W9v8=
+	b=BHJ99JdzMc7BQUxhoEn2jCX7kLKV1X3sidvo84tWOlgw/S1pvPx6Eud/DcUITntin
+	 VaS5mvrzW1NWvi77M3zJrqPtTuSJSz6I0SIM/n3B6fLXhs+6Z6VBANcf+hP9xcuUV0
+	 dIUU1DbCu0hS4erYDhfXCtIRcZa15rVn89OD/7hM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
+	Andrew Sauber <andrew.sauber@isovalent.com>,
+	Nikolay Nikolaev <nikolay.nikolaev@isovalent.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Anton Protopopov <aspsk@isovalent.com>,
+	William Tu <witu@nvidia.com>,
+	Ronak Doshi <ronak.doshi@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 105/261] bpf, vsock: Drop static vsock_bpf_prot initialization
-Date: Mon, 28 Oct 2024 07:24:07 +0100
-Message-ID: <20241028062314.662139213@linuxfoundation.org>
+Subject: [PATCH 6.11 096/261] vmxnet3: Fix packet corruption in vmxnet3_xdp_xmit_frame
+Date: Mon, 28 Oct 2024 07:23:58 +0100
+Message-ID: <20241028062314.436568482@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,43 +56,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 19039f279797efbe044cae41ee216c5fe481fc33 ]
+[ Upstream commit 4678adf94da4a9e9683817b246b58ce15fb81782 ]
 
-vsock_bpf_prot is set up at runtime. Remove the superfluous init.
+Andrew and Nikolay reported connectivity issues with Cilium's service
+load-balancing in case of vmxnet3.
 
-No functional change intended.
+If a BPF program for native XDP adds an encapsulation header such as
+IPIP and transmits the packet out the same interface, then in case
+of vmxnet3 a corrupted packet is being sent and subsequently dropped
+on the path.
 
-Fixes: 634f1a7110b4 ("vsock: support sockmap")
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
+vmxnet3_xdp_xmit_frame() which is called e.g. via vmxnet3_run_xdp()
+through vmxnet3_xdp_xmit_back() calculates an incorrect DMA address:
+
+  page = virt_to_page(xdpf->data);
+  tbi->dma_addr = page_pool_get_dma_addr(page) +
+                  VMXNET3_XDP_HEADROOM;
+  dma_sync_single_for_device(&adapter->pdev->dev,
+                             tbi->dma_addr, buf_size,
+                             DMA_TO_DEVICE);
+
+The above assumes a fixed offset (VMXNET3_XDP_HEADROOM), but the XDP
+BPF program could have moved xdp->data. While the passed buf_size is
+correct (xdpf->len), the dma_addr needs to have a dynamic offset which
+can be calculated as xdpf->data - (void *)xdpf, that is, xdp->data -
+xdp->data_hard_start.
+
+Fixes: 54f00cce1178 ("vmxnet3: Add XDP support.")
+Reported-by: Andrew Sauber <andrew.sauber@isovalent.com>
+Reported-by: Nikolay Nikolaev <nikolay.nikolaev@isovalent.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20241013-vsock-fixes-for-redir-v2-4-d6577bbfe742@rbox.co
+Tested-by: Nikolay Nikolaev <nikolay.nikolaev@isovalent.com>
+Acked-by: Anton Protopopov <aspsk@isovalent.com>
+Cc: William Tu <witu@nvidia.com>
+Cc: Ronak Doshi <ronak.doshi@broadcom.com>
+Link: https://patch.msgid.link/a0888656d7f09028f9984498cc698bb5364d89fc.1728931137.git.daniel@iogearbox.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/vsock_bpf.c | 8 --------
- 1 file changed, 8 deletions(-)
+ drivers/net/vmxnet3/vmxnet3_xdp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/vmw_vsock/vsock_bpf.c b/net/vmw_vsock/vsock_bpf.c
-index c42c5cc18f324..4aa6e74ec2957 100644
---- a/net/vmw_vsock/vsock_bpf.c
-+++ b/net/vmw_vsock/vsock_bpf.c
-@@ -114,14 +114,6 @@ static int vsock_bpf_recvmsg(struct sock *sk, struct msghdr *msg,
- 	return copied;
- }
- 
--/* Copy of original proto with updated sock_map methods */
--static struct proto vsock_bpf_prot = {
--	.close = sock_map_close,
--	.recvmsg = vsock_bpf_recvmsg,
--	.sock_is_readable = sk_msg_is_readable,
--	.unhash = sock_map_unhash,
--};
--
- static void vsock_bpf_rebuild_protos(struct proto *prot, const struct proto *base)
- {
- 	*prot        = *base;
+diff --git a/drivers/net/vmxnet3/vmxnet3_xdp.c b/drivers/net/vmxnet3/vmxnet3_xdp.c
+index a6c787454a1ae..1341374a4588a 100644
+--- a/drivers/net/vmxnet3/vmxnet3_xdp.c
++++ b/drivers/net/vmxnet3/vmxnet3_xdp.c
+@@ -148,7 +148,7 @@ vmxnet3_xdp_xmit_frame(struct vmxnet3_adapter *adapter,
+ 	} else { /* XDP buffer from page pool */
+ 		page = virt_to_page(xdpf->data);
+ 		tbi->dma_addr = page_pool_get_dma_addr(page) +
+-				VMXNET3_XDP_HEADROOM;
++				(xdpf->data - (void *)xdpf);
+ 		dma_sync_single_for_device(&adapter->pdev->dev,
+ 					   tbi->dma_addr, buf_size,
+ 					   DMA_TO_DEVICE);
 -- 
 2.43.0
 
