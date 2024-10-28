@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E17718EFD6;
-	Mon, 28 Oct 2024 06:34:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B1A18EFD4;
+	Mon, 28 Oct 2024 06:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097298; cv=none; b=PjEuKvmC93Euf+hMWGYViUIp3R6KNqBxdr5NhfEjPO7Y+YHuOQ/EDNEDKrWXp+eYzboxTKAv674nRDLMddaA+B++nNi1C69kEuNy3A3dDslk/h6fJjcpNIzu3GapLPPkBI6hdO9dcV68UbeoZVInAwhRKVQnva9W3y55z3On9sU=
+	t=1730097300; cv=none; b=CD3+NHL8guXWJCEc69DztjiEr815DPv23Nfou4ySRDPWClyoIDasELAqYBh1wm6Osz1njBTjeee7aMxm0MG0mrq4Jh6MPmPzEOS5MSRRvdB54mQKDPuQ0+ZEZvuGsTvSWEJNr1FHiBX9SKkpgQkF1qISfI3/5w81IyIsJJIN5X0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097298; c=relaxed/simple;
-	bh=O49dpKvS64nT1RBjfHt/N4EquhI1cwiLeclxc0w/jac=;
+	s=arc-20240116; t=1730097300; c=relaxed/simple;
+	bh=Ze6c0BOWosKtr8hTsw4NHTlRZWNjhtJrs1QQo3qm4o8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sMlyhYRwEP5MpVrbIfXWSoMzYZ6k9eLTpZe+5QV1G987USEOPbFZ9yYwEpSB4jJu2+tHO5btvCgHpnthyAopGJvu+FYp0arsvJw8Qm3eXwz03zLl30fBYOanEdcxmKIVUERY7V9dJxHY3Pjg6rsJxZ6VV/ygvLt0M4aNvKnmCcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldeet0Vo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dc1Rv8JHCJzX/ZS8T+1B614B2bD/2DW2tbA/01G9S7HkdI5l7KN2SdezDUnT7RJa39OlZwcvjek0h4q3nZsMGCMLVoeWKO0Y4ig8w4SB2dRcBd51HfvUKqWKxfVp8hee21kq1wa1o3NMJzRLLPVAKaXH5NaXNJGqxya2XdaDglA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXokfrRN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldeet0Vo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02C2C4CEC3;
-	Mon, 28 Oct 2024 06:34:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXokfrRN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69444C4CEC3;
+	Mon, 28 Oct 2024 06:35:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097298;
-	bh=O49dpKvS64nT1RBjfHt/N4EquhI1cwiLeclxc0w/jac=;
+	s=korg; t=1730097300;
+	bh=Ze6c0BOWosKtr8hTsw4NHTlRZWNjhtJrs1QQo3qm4o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ldeet0Vo7kXS1Km2POklyfTEtOwHf120SgKvIFAyXXUMvRq7ComhG+VRJnIea2Ivc
-	 NJOtexxyOuHP9PNPkJA0n8xqEKYGmKW5PpEKBHDUEcUJganhUbUo102x+vwjvSRd/K
-	 os9DR3UVvKFfGIzfIH8OWQBePwEyWU8sDrU5RShE=
+	b=OXokfrRNH5O4TyoX5NYgdP03tc+WL47l2vXJ0FOk+/RsoxnRRT/i7ba6X9oJ3nIDE
+	 ab3QQzVIPOvqKhiuXiK+dPEEV0168HdXf+zePbm5q7LdLOylLWUargwIBuyZ0cL/Se
+	 wGZusmifY4dJkM4aloWRlSOMqwBfR4TQ2XekjT4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	John Keeping <jkeeping@inmusicbrands.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/137] drm/msm/dpu: make sure phys resources are properly initialized
-Date: Mon, 28 Oct 2024 07:24:20 +0100
-Message-ID: <20241028062259.371035325@linuxfoundation.org>
+Subject: [PATCH 6.1 063/137] usb: gadget: f_uac2: fix non-newline-terminated function name
+Date: Mon, 28 Oct 2024 07:25:00 +0100
+Message-ID: <20241028062300.498285828@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -51,60 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: John Keeping <jkeeping@inmusicbrands.com>
 
-[ Upstream commit bfecbc2cfba9b06d67d9d249c33d92e570e2fa70 ]
+[ Upstream commit e60284b63245b84c3ae352427ed5ff8b79266b91 ]
 
-The commit b954fa6baaca ("drm/msm/dpu: Refactor rm iterator") removed
-zero-init of the hw_ctl array, but didn't change the error condition,
-that checked for hw_ctl[i] being NULL. At the same time because of the
-early returns in case of an error dpu_encoder_phys might be left with
-the resources assigned in the previous state. Rework assigning of hw_pp
-/ hw_ctl to the dpu_encoder_phys in order to make sure they are always
-set correctly.
+Most writes to configfs handle an optional newline, but do not require
+it.  By using the number of bytes written as the limit for scnprintf()
+it is guaranteed that the final character in the buffer will be
+overwritten.
 
-Fixes: b954fa6baaca ("drm/msm/dpu: Refactor rm iterator")
-Suggested-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/612233/
-Link: https://lore.kernel.org/r/20240903-dpu-mode-config-width-v6-1-617e1ecc4b7a@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+This is expected if it is a newline but is undesirable when a string is
+written "as-is" (as libusbgx does, for example).
+
+Update the store function to strip an optional newline, matching the
+behaviour of usb_string_copy().
+
+Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
+Link: https://lore.kernel.org/r/20240708142553.3995022-1-jkeeping@inmusicbrands.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 9499327714de ("usb: gadget: f_uac2: fix return value for UAC2_ATTRIBUTE_STRING store")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/usb/gadget/function/f_uac2.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 1bf41a82cd0f9..ba8f2ba046298 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1106,21 +1106,20 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
- 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
- 		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
- 
--		if (!dpu_enc->hw_pp[i]) {
-+		phys->hw_pp = dpu_enc->hw_pp[i];
-+		if (!phys->hw_pp) {
- 			DPU_ERROR_ENC(dpu_enc,
- 				"no pp block assigned at idx: %d\n", i);
- 			return;
- 		}
- 
--		if (!hw_ctl[i]) {
-+		phys->hw_ctl = i < num_ctl ? to_dpu_hw_ctl(hw_ctl[i]) : NULL;
-+		if (!phys->hw_ctl) {
- 			DPU_ERROR_ENC(dpu_enc,
- 				"no ctl block assigned at idx: %d\n", i);
- 			return;
- 		}
- 
--		phys->hw_pp = dpu_enc->hw_pp[i];
--		phys->hw_ctl = to_dpu_hw_ctl(hw_ctl[i]);
--
- 		phys->cached_mode = crtc_state->adjusted_mode;
- 		if (phys->ops.atomic_mode_set)
- 			phys->ops.atomic_mode_set(phys, crtc_state, conn_state);
+diff --git a/drivers/usb/gadget/function/f_uac2.c b/drivers/usb/gadget/function/f_uac2.c
+index 55a4f07bc9cc1..79d1f87c6cc59 100644
+--- a/drivers/usb/gadget/function/f_uac2.c
++++ b/drivers/usb/gadget/function/f_uac2.c
+@@ -2060,7 +2060,10 @@ static ssize_t f_uac2_opts_##name##_store(struct config_item *item,	\
+ 		goto end;						\
+ 	}								\
+ 									\
+-	ret = scnprintf(opts->name, min(sizeof(opts->name), len),	\
++	if (len && page[len - 1] == '\n')				\
++		len--;							\
++									\
++	ret = scnprintf(opts->name, min(sizeof(opts->name), len + 1),	\
+ 			"%s", page);					\
+ 									\
+ end:									\
 -- 
 2.43.0
 
