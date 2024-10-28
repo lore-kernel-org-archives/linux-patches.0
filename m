@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF2D18D65C;
-	Mon, 28 Oct 2024 06:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C6C8837;
+	Mon, 28 Oct 2024 06:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098310; cv=none; b=VLBNbljc5o6YtcptQ2Vf2H6o6/MSw+vSP2hlfA9RTXOYVQs7OZP7Uu5y1lhm3KABJVrjkQ4DgG/ByljiNIhd8PYUKJEKyF0SOwsrMFLZSycswKZ+r1+zDuux6XtIvcqwKARjNocX5G9M3FCktMK2oaxHgceBsOjoORqQvvRanL8=
+	t=1730098312; cv=none; b=St55TgAot73MZK4coFQ/Udt93Bj81XrDyhmsWVkhQl75Kzvxbsy9KOY5cgWAvUmy+uBMpXxAgYmn41JWvySQA1+ic8kTSSBdYVQHZazcBOP30Uz5g9sp0rH8wgb0QMQaUuh0lXOGQbOoapPJdx87HV+9nIPpoi0ZoxkPznPANds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098310; c=relaxed/simple;
-	bh=3klC5ehf8vSbc3RgE58UgbgupuuekroJuWp7bbQ8w0A=;
+	s=arc-20240116; t=1730098312; c=relaxed/simple;
+	bh=QroTJCDtdzH8nLRz7QWDndNwUTI1Xd7BLNB+OcJ0L2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MpWA5FC651bWZjZLpshPtr/IwWDysk/plAVKcJELfA8wQixBRNVezJuq5bTHJxFXVJxAynusAjy5Jzx6DWwKX0a+mERL+sxnHuprCo42Si+A+4mR/rNilgp06o+KW7OEE0POiMepBaXRe0QRZwzO3ykfyQD06R+7TiRPMaJnfrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ypo3vZoZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ske8J9wwzYk0yE1Ji7jmQcI1Mckk0j5Bv0olyXAl2+c6nD29rR3jGaUUsiWTDoZbw48IA8rRH29FZBmbDN6Ht+9FJmInf7Szph+JAaO5VmNTlMZiwqqwpwrpNUzl0gEAoxR7JNESYM4iAN7QH6ikEqspB1JtFJUq1K7ifOBmpAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dkQCIBu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ypo3vZoZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C54C4CEC3;
-	Mon, 28 Oct 2024 06:51:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dkQCIBu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA254C4CEC3;
+	Mon, 28 Oct 2024 06:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098309;
-	bh=3klC5ehf8vSbc3RgE58UgbgupuuekroJuWp7bbQ8w0A=;
+	s=korg; t=1730098312;
+	bh=QroTJCDtdzH8nLRz7QWDndNwUTI1Xd7BLNB+OcJ0L2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ypo3vZoZnVVUVaQbn119CQP4CYQXYY9pwmZxBSr4H86F5tZaSiDBWB4VfE6bx//bo
-	 b2PMSnFEL8/NH+6DCg4WKEnvTaVH2W+fst01/nHB4kwqz9s956cNS0Q0LfboH7M0jG
-	 cXEwkBdroWPP9S1/0e51Foy3Xae8tR6AEIpwAg7g=
+	b=0dkQCIBu5s1222X9D7vHFJSgvtfWpKcl3HBFi8ZXMfvcLW/grjPPk9PMC4wcdmEDc
+	 wntVbEDmlql3E+xDjQc8hiJTx33vOmogY0w1K/0N3mawJSSAMwJk9J5zUSmKjA9x3i
+	 tTeikbnl1FGVaFkGhd/s6K13/cCREuR/G4AG3VUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Atlas Yu <atlas.yu@canonical.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 169/261] r8169: avoid unsolicited interrupts
-Date: Mon, 28 Oct 2024 07:25:11 +0100
-Message-ID: <20241028062316.232732979@linuxfoundation.org>
+Subject: [PATCH 6.11 170/261] posix-clock: posix-clock: Fix unbalanced locking in pc_clock_settime()
+Date: Mon, 28 Oct 2024 07:25:12 +0100
+Message-ID: <20241028062316.257128470@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -53,47 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 10ce0db787004875f4dba068ea952207d1d8abeb ]
+[ Upstream commit 6e62807c7fbb3c758d233018caf94dfea9c65dbd ]
 
-It was reported that after resume from suspend a PCI error is logged
-and connectivity is broken. Error message is:
-PCI error (cmd = 0x0407, status_errs = 0x0000)
-The message seems to be a red herring as none of the error bits is set,
-and the PCI command register value also is normal. Exception handling
-for a PCI error includes a chip reset what apparently brakes connectivity
-here. The interrupt status bit triggering the PCI error handling isn't
-actually used on PCIe chip versions, so it's not clear why this bit is
-set by the chip. Fix this by ignoring this bit on PCIe chip versions.
+If get_clock_desc() succeeds, it calls fget() for the clockid's fd,
+and get the clk->rwsem read lock, so the error path should release
+the lock to make the lock balance and fput the clockid's fd to make
+the refcount balance and release the fd related resource.
 
-Fixes: 0e4851502f84 ("r8169: merge with version 8.001.00 of Realtek's r8168 driver")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219388
-Tested-by: Atlas Yu <atlas.yu@canonical.com>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/78e2f535-438f-4212-ad94-a77637ac6c9c@gmail.com
+However the below commit left the error path locked behind resulting in
+unbalanced locking. Check timespec64_valid_strict() before
+get_clock_desc() to fix it, because the "ts" is not changed
+after that.
+
+Fixes: d8794ac20a29 ("posix-clock: Fix missing timespec64 check in pc_clock_settime()")
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Acked-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
+[pabeni@redhat.com: fixed commit message typo]
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/time/posix-clock.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 01e18f645c0ed..91a8c62b180ae 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -4669,7 +4669,9 @@ static irqreturn_t rtl8169_interrupt(int irq, void *dev_instance)
- 	if ((status & 0xffff) == 0xffff || !(status & tp->irq_mask))
- 		return IRQ_NONE;
+diff --git a/kernel/time/posix-clock.c b/kernel/time/posix-clock.c
+index 6b5d5c0021fae..a6487a9d60853 100644
+--- a/kernel/time/posix-clock.c
++++ b/kernel/time/posix-clock.c
+@@ -310,6 +310,9 @@ static int pc_clock_settime(clockid_t id, const struct timespec64 *ts)
+ 	struct posix_clock_desc cd;
+ 	int err;
  
--	if (unlikely(status & SYSErr)) {
-+	/* At least RTL8168fp may unexpectedly set the SYSErr bit */
-+	if (unlikely(status & SYSErr &&
-+	    tp->mac_version <= RTL_GIGA_MAC_VER_06)) {
- 		rtl8169_pcierr_interrupt(tp->dev);
++	if (!timespec64_valid_strict(ts))
++		return -EINVAL;
++
+ 	err = get_clock_desc(id, &cd);
+ 	if (err)
+ 		return err;
+@@ -319,9 +322,6 @@ static int pc_clock_settime(clockid_t id, const struct timespec64 *ts)
  		goto out;
  	}
+ 
+-	if (!timespec64_valid_strict(ts))
+-		return -EINVAL;
+-
+ 	if (cd.clk->ops.clock_settime)
+ 		err = cd.clk->ops.clock_settime(cd.clk, ts);
+ 	else
 -- 
 2.43.0
 
