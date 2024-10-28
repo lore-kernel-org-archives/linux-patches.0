@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611E718E35B;
-	Mon, 28 Oct 2024 06:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51260189BAF;
+	Mon, 28 Oct 2024 06:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097869; cv=none; b=WQPW/DH2b66xmSzZDMbApEc5PwhTar0K4LkMXT1bUs/qIBdnlYThOMVkldE1V3Zuh5x5jTdbf8rU48VZuqondaU1TQJDKKwXCKFsTFqGTB8dlmX3MC8csVhPxvL18FNEt9uUGRphoyNV1Td88D0+6pBo+++LvdXdtK6U/bfVL9M=
+	t=1730097871; cv=none; b=SJFhkdjbsD427sjzsPVdTCqQo3u4EEU8/jGV4JOGeN2RdKDh42lMPgLovx4excWhplqsyW4QifqS6O9HGTCJPKiZQJemE/gn69z/+tGjorak2o7pHnDYLeMV9b109t5RNgDLyrKudTAGY4DLxYYtsjxiP1sLhNnvathj/+1ycJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097869; c=relaxed/simple;
-	bh=8keeAWDEHn7iwb0/ZRUVomayuxGClYpoMW2nQw+wwP8=;
+	s=arc-20240116; t=1730097871; c=relaxed/simple;
+	bh=JwQaCFxHf8kRSCKWUP4EBVqF8DFrL02VKGU4qruLEvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UswDt762sloEd5Y7pxoS+JRhOm/A7NnJngPyL2fsaP14qHKEPPPQiFzGYxTACvrL/TfVKQnwdmncwahGmc1GJ2WdXiMWSVca8zxCG32AUbz7u5aZUt1uYPhfLGjg0Bf+yrAsvQiFkaH7XFuCkJTlb+E9vFmDknYX44dye2YAuQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w71+gya6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OWAzNcK56cTyCSnnzvK4BIQQk0fxHx4P/ZE9a9JjFqNtsDOzqSFsa0gtUhy2dDx4wK1MlmM7iXwCmMVo52RUoY6OU24iqDQCmMIS5s6bMrv8rpIOjMcHHvdcsKhrLyEfWvJH7CF6QFvDUzNXPlHn2w2hpqtGx4ykWkFfS8UayxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B5ngi2Hp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w71+gya6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E49C4CEC3;
-	Mon, 28 Oct 2024 06:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5ngi2Hp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77E1C4CEC3;
+	Mon, 28 Oct 2024 06:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097868;
-	bh=8keeAWDEHn7iwb0/ZRUVomayuxGClYpoMW2nQw+wwP8=;
+	s=korg; t=1730097871;
+	bh=JwQaCFxHf8kRSCKWUP4EBVqF8DFrL02VKGU4qruLEvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w71+gya6FyyiMKIPu8P+2H0PjOGDMAok3LJr9QTS4EpNmJgG2Mc9ZRMg+wPO/69QM
-	 6pEMvp6h2XAJBVBaWxW+XlwKX8sTYoQSNhbqtfIY5fvgNDtac5CuMh0+eMJRsX61bC
-	 TWJD7uszTDqlN3AB60uqOL1Nbc4wbvrkmvDMREks=
+	b=B5ngi2Hp6Ut9DOgCf+oy3NNRoFepZUb7+HDd2J+r9bxE4YnoPgsKUar8YNJOZxQaj
+	 vv/NzccRNX5L4YfDYyTL5bI3NXsiBaIY3QZA/A+rZ0UktpcfF5jXPa5pbw9D8Kn6hU
+	 84THqVvBYOjLW3eStZP3XKMyi0ViGC3yr+duIaQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Greg Thelen <gthelen@google.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	John Sperbeck <jsperbeck@google.com>
-Subject: [PATCH 6.6 148/208] net: usb: usbnet: fix name regression
-Date: Mon, 28 Oct 2024 07:25:28 +0100
-Message-ID: <20241028062310.274530503@linuxfoundation.org>
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 139/208] octeon_ep: Implement helper for iterating packets in Rx queue
+Date: Mon, 28 Oct 2024 07:25:19 +0100
+Message-ID: <20241028062310.057952397@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -53,44 +54,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 8a7d12d674ac6f2147c18f36d1e15f1a48060edf ]
+[ Upstream commit bd28df26197b2bd0913bf1b36770836481975143 ]
 
-The fix for MAC addresses broke detection of the naming convention
-because it gave network devices no random MAC before bind()
-was called. This means that the check for the local assignment bit
-was always negative as the address was zeroed from allocation,
-instead of from overwriting the MAC with a unique hardware address.
+The common code with some packet and index manipulations is extracted and
+moved to newly implemented helper to make the code more readable and avoid
+duplication. This is a preparation for skb allocation failure handling.
 
-The correct check for whether bind() has altered the MAC is
-done with is_zero_ether_addr
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Reported-by: Greg Thelen <gthelen@google.com>
-Diagnosed-by: John Sperbeck <jsperbeck@google.com>
-Fixes: bab8eb0dd4cb9 ("usbnet: modern method to get random MAC")
-Link: https://patch.msgid.link/20241017071849.389636-1-oneukum@suse.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Suggested-by: Simon Horman <horms@kernel.org>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Stable-dep-of: eb592008f79b ("octeon_ep: Add SKB allocation failures handling in __octep_oq_process_rx()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../net/ethernet/marvell/octeon_ep/octep_rx.c | 55 +++++++++++--------
+ 1 file changed, 32 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index 4f5a3a4aac89e..9f66c47dc58bc 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1771,7 +1771,8 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 		// can rename the link if it knows better.
- 		if ((dev->driver_info->flags & FLAG_ETHER) != 0 &&
- 		    ((dev->driver_info->flags & FLAG_POINTTOPOINT) == 0 ||
--		     (net->dev_addr [0] & 0x02) == 0))
-+		     /* somebody touched it*/
-+		     !is_zero_ether_addr(net->dev_addr)))
- 			strscpy(net->name, "eth%d", sizeof(net->name));
- 		/* WLAN devices should always be named "wlan%d" */
- 		if ((dev->driver_info->flags & FLAG_WLAN) != 0)
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
+index 3c43f80785285..cfbfad95b0211 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
+@@ -336,6 +336,30 @@ static int octep_oq_check_hw_for_pkts(struct octep_device *oct,
+ 	return new_pkts;
+ }
+ 
++/**
++ * octep_oq_next_pkt() - Move to the next packet in Rx queue.
++ *
++ * @oq: Octeon Rx queue data structure.
++ * @buff_info: Current packet buffer info.
++ * @read_idx: Current packet index in the ring.
++ * @desc_used: Current packet descriptor number.
++ *
++ * Free the resources associated with a packet.
++ * Increment packet index in the ring and packet descriptor number.
++ */
++static void octep_oq_next_pkt(struct octep_oq *oq,
++			      struct octep_rx_buffer *buff_info,
++			      u32 *read_idx, u32 *desc_used)
++{
++	dma_unmap_page(oq->dev, oq->desc_ring[*read_idx].buffer_ptr,
++		       PAGE_SIZE, DMA_FROM_DEVICE);
++	buff_info->page = NULL;
++	(*read_idx)++;
++	(*desc_used)++;
++	if (*read_idx == oq->max_count)
++		*read_idx = 0;
++}
++
+ /**
+  * __octep_oq_process_rx() - Process hardware Rx queue and push to stack.
+  *
+@@ -365,10 +389,7 @@ static int __octep_oq_process_rx(struct octep_device *oct,
+ 	desc_used = 0;
+ 	for (pkt = 0; pkt < pkts_to_process; pkt++) {
+ 		buff_info = (struct octep_rx_buffer *)&oq->buff_info[read_idx];
+-		dma_unmap_page(oq->dev, oq->desc_ring[read_idx].buffer_ptr,
+-			       PAGE_SIZE, DMA_FROM_DEVICE);
+ 		resp_hw = page_address(buff_info->page);
+-		buff_info->page = NULL;
+ 
+ 		/* Swap the length field that is in Big-Endian to CPU */
+ 		buff_info->len = be64_to_cpu(resp_hw->length);
+@@ -390,36 +411,27 @@ static int __octep_oq_process_rx(struct octep_device *oct,
+ 			 */
+ 			data_offset = OCTEP_OQ_RESP_HW_SIZE;
+ 		}
++
++		octep_oq_next_pkt(oq, buff_info, &read_idx, &desc_used);
++
++		skb = build_skb((void *)resp_hw, PAGE_SIZE);
++		skb_reserve(skb, data_offset);
++
+ 		rx_bytes += buff_info->len;
+ 
+ 		if (buff_info->len <= oq->max_single_buffer_size) {
+-			skb = build_skb((void *)resp_hw, PAGE_SIZE);
+-			skb_reserve(skb, data_offset);
+ 			skb_put(skb, buff_info->len);
+-			read_idx++;
+-			desc_used++;
+-			if (read_idx == oq->max_count)
+-				read_idx = 0;
+ 		} else {
+ 			struct skb_shared_info *shinfo;
+ 			u16 data_len;
+ 
+-			skb = build_skb((void *)resp_hw, PAGE_SIZE);
+-			skb_reserve(skb, data_offset);
+ 			/* Head fragment includes response header(s);
+ 			 * subsequent fragments contains only data.
+ 			 */
+ 			skb_put(skb, oq->max_single_buffer_size);
+-			read_idx++;
+-			desc_used++;
+-			if (read_idx == oq->max_count)
+-				read_idx = 0;
+-
+ 			shinfo = skb_shinfo(skb);
+ 			data_len = buff_info->len - oq->max_single_buffer_size;
+ 			while (data_len) {
+-				dma_unmap_page(oq->dev, oq->desc_ring[read_idx].buffer_ptr,
+-					       PAGE_SIZE, DMA_FROM_DEVICE);
+ 				buff_info = (struct octep_rx_buffer *)
+ 					    &oq->buff_info[read_idx];
+ 				if (data_len < oq->buffer_size) {
+@@ -434,11 +446,8 @@ static int __octep_oq_process_rx(struct octep_device *oct,
+ 						buff_info->page, 0,
+ 						buff_info->len,
+ 						buff_info->len);
+-				buff_info->page = NULL;
+-				read_idx++;
+-				desc_used++;
+-				if (read_idx == oq->max_count)
+-					read_idx = 0;
++
++				octep_oq_next_pkt(oq, buff_info, &read_idx, &desc_used);
+ 			}
+ 		}
+ 
 -- 
 2.43.0
 
