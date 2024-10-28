@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6DC18D629;
-	Mon, 28 Oct 2024 06:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21DF15B10D;
+	Mon, 28 Oct 2024 06:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097126; cv=none; b=PpquSdxignNwIY1bNIErCYdOk/qnn3s/53SbJEptHDzK1JPFI9yGV58XWvqD7hzA01tRx8080VaWpFDeRymxFLTMoP4Ls2BoCvk/QljxzXTjWJLQuRMmwzGvVzZo3nYwd3KcxAq3t2egHtRob3TlRq8hiC319yNmUJuK0WMeojM=
+	t=1730097129; cv=none; b=JxJ234xk3htZcFV2Y+Fc/+24cNX7+4GtmH+CxiMPtVCYl0trzj0oWGF2SFYjtTn4REZM5yYsSz72SwYLqAx8wzItpcfJMlEYR8Uwko/4Ui7Oc+/Y3kWdHTfQSgsEcsEr+Jq0BwU6NUFEg+mpURuYzoRcAOekX2lFd9QJ0J1WP1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097126; c=relaxed/simple;
-	bh=PEnxsS8GPdv5zsRDzw4RI5mz1Qn0fiWaOpCOd6Hh74E=;
+	s=arc-20240116; t=1730097129; c=relaxed/simple;
+	bh=dfTYDuhMOBdNzIGQg47DKgxzlRM9HR3knvTizRznSlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FYksI9zNpmykXZLInW3VGC0oSsucxCvMyFt+8OZ0T5qReJZP6okwsnFB6cvS4wNOuLcmTTQboFZI0wxBIKUpniviv80kEK0JZEdmFoC6GtcLDJyOO6mx3KqGuE20ahVz8xkyFtkhoKWRRSSc1jdfUh/NXHBuqwekWJsiPh4TpDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1r2+ZJ2f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kOpz1/UqbkmdeFpBE+CfjmqMIM2Rjw9TnyL6CkrIuLUOeo3zMCsSffz1Fv4RKIV2gvVWcwDj4JhQvqOn4ovkio8jvnylPk77QnXvPfkKMQrRzC4uziHdqyShRLmaWmpfhi2BFyEPS4eh391+JNfML3QODZ76NOH2Y95cGZrXyNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZqFve6Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1r2+ZJ2f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051E8C4CEC7;
-	Mon, 28 Oct 2024 06:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZqFve6Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC78C4CEC7;
+	Mon, 28 Oct 2024 06:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097126;
-	bh=PEnxsS8GPdv5zsRDzw4RI5mz1Qn0fiWaOpCOd6Hh74E=;
+	s=korg; t=1730097128;
+	bh=dfTYDuhMOBdNzIGQg47DKgxzlRM9HR3knvTizRznSlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1r2+ZJ2f6kMr6eRkBGp9MLABR8iKWQr7arhvJ6rVeDxXaS7Vi+uQup6qvCSJ0T8SM
-	 P8/nnriAriYGCK7kg1FTYUw5PhyeQcIBB3fEWJKO3nvYT3lOauT0BCqGDPbz5t84eX
-	 DddIBWjPECGkiIYUPKlSZiyW7OvmQjhNVpd+wIdg=
+	b=GZqFve6YXo7IR72nuUWdoRNW7ebhcG2O7nD1+iBB3fPfgSN9qZHRtnreCc/8Royt8
+	 zebKT4+sRJ/piIs1v+L156IN8mLpA0I2hs7rhmOVWpCKf9FQyvjtzN5I3iYrKD2xBt
+	 3nqiy1GG3x3WQN/2nSxp2fDL/t7uMTid5pCxvXoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 40/80] exec: dont WARN for racy path_noexec check
-Date: Mon, 28 Oct 2024 07:25:20 +0100
-Message-ID: <20241028062253.735097443@linuxfoundation.org>
+Subject: [PATCH 5.15 31/80] arm64: probes: Fix uprobes for big-endian kernels
+Date: Mon, 28 Oct 2024 07:25:11 +0100
+Message-ID: <20241028062253.492228912@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
 References: <20241028062252.611837461@linuxfoundation.org>
@@ -52,98 +52,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mateusz Guzik <mjguzik@gmail.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 0d196e7589cefe207d5d41f37a0a28a1fdeeb7c6 ]
+[ Upstream commit 13f8f1e05f1dc36dbba6cba0ae03354c0dafcde7 ]
 
-Both i_mode and noexec checks wrapped in WARN_ON stem from an artifact
-of the previous implementation. They used to legitimately check for the
-condition, but that got moved up in two commits:
-633fb6ac3980 ("exec: move S_ISREG() check earlier")
-0fd338b2d2cd ("exec: move path_noexec() check earlier")
+The arm64 uprobes code is broken for big-endian kernels as it doesn't
+convert the in-memory instruction encoding (which is always
+little-endian) into the kernel's native endianness before analyzing and
+simulating instructions. This may result in a few distinct problems:
 
-Instead of being removed said checks are WARN_ON'ed instead, which
-has some debug value.
+* The kernel may may erroneously reject probing an instruction which can
+  safely be probed.
 
-However, the spurious path_noexec check is racy, resulting in
-unwarranted warnings should someone race with setting the noexec flag.
+* The kernel may erroneously erroneously permit stepping an
+  instruction out-of-line when that instruction cannot be stepped
+  out-of-line safely.
 
-One can note there is more to perm-checking whether execve is allowed
-and none of the conditions are guaranteed to still hold after they were
-tested for.
+* The kernel may erroneously simulate instruction incorrectly dur to
+  interpretting the byte-swapped encoding.
 
-Additionally this does not validate whether the code path did any perm
-checking to begin with -- it will pass if the inode happens to be
-regular.
+The endianness mismatch isn't caught by the compiler or sparse because:
 
-Keep the redundant path_noexec() check even though it's mindless
-nonsense checking for guarantee that isn't given so drop the WARN.
+* The arch_uprobe::{insn,ixol} fields are encoded as arrays of u8, so
+  the compiler and sparse have no idea these contain a little-endian
+  32-bit value. The core uprobes code populates these with a memcpy()
+  which similarly does not handle endianness.
 
-Reword the commentary and do small tidy ups while here.
+* While the uprobe_opcode_t type is an alias for __le32, both
+  arch_uprobe_analyze_insn() and arch_uprobe_skip_sstep() cast from u8[]
+  to the similarly-named probe_opcode_t, which is an alias for u32.
+  Hence there is no endianness conversion warning.
 
-Signed-off-by: Mateusz Guzik <mjguzik@gmail.com>
-Link: https://lore.kernel.org/r/20240805131721.765484-1-mjguzik@gmail.com
-[brauner: keep redundant path_noexec() check]
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-[cascardo: keep exit label and use it]
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Fix this by changing the arch_uprobe::{insn,ixol} fields to __le32 and
+adding the appropriate __le32_to_cpu() conversions prior to consuming
+the instruction encoding. The core uprobes copies these fields as opaque
+ranges of bytes, and so is unaffected by this change.
+
+At the same time, remove MAX_UINSN_BYTES and consistently use
+AARCH64_INSN_SIZE for clarity.
+
+Tested with the following:
+
+| #include <stdio.h>
+| #include <stdbool.h>
+|
+| #define noinline __attribute__((noinline))
+|
+| static noinline void *adrp_self(void)
+| {
+|         void *addr;
+|
+|         asm volatile(
+|         "       adrp    %x0, adrp_self\n"
+|         "       add     %x0, %x0, :lo12:adrp_self\n"
+|         : "=r" (addr));
+| }
+|
+|
+| int main(int argc, char *argv)
+| {
+|         void *ptr = adrp_self();
+|         bool equal = (ptr == adrp_self);
+|
+|         printf("adrp_self   => %p\n"
+|                "adrp_self() => %p\n"
+|                "%s\n",
+|                adrp_self, ptr, equal ? "EQUAL" : "NOT EQUAL");
+|
+|         return 0;
+| }
+
+.... where the adrp_self() function was compiled to:
+
+| 00000000004007e0 <adrp_self>:
+|   4007e0:       90000000        adrp    x0, 400000 <__ehdr_start>
+|   4007e4:       911f8000        add     x0, x0, #0x7e0
+|   4007e8:       d65f03c0        ret
+
+Before this patch, the ADRP is not recognized, and is assumed to be
+steppable, resulting in corruption of the result:
+
+| # ./adrp-self
+| adrp_self   => 0x4007e0
+| adrp_self() => 0x4007e0
+| EQUAL
+| # echo 'p /root/adrp-self:0x007e0' > /sys/kernel/tracing/uprobe_events
+| # echo 1 > /sys/kernel/tracing/events/uprobes/enable
+| # ./adrp-self
+| adrp_self   => 0x4007e0
+| adrp_self() => 0xffffffffff7e0
+| NOT EQUAL
+
+After this patch, the ADRP is correctly recognized and simulated:
+
+| # ./adrp-self
+| adrp_self   => 0x4007e0
+| adrp_self() => 0x4007e0
+| EQUAL
+| #
+| # echo 'p /root/adrp-self:0x007e0' > /sys/kernel/tracing/uprobe_events
+| # echo 1 > /sys/kernel/tracing/events/uprobes/enable
+| # ./adrp-self
+| adrp_self   => 0x4007e0
+| adrp_self() => 0x4007e0
+| EQUAL
+
+Fixes: 9842ceae9fa8 ("arm64: Add uprobe support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20241008155851.801546-4-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exec.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ arch/arm64/include/asm/uprobes.h   | 8 +++-----
+ arch/arm64/kernel/probes/uprobes.c | 4 ++--
+ 2 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/fs/exec.c b/fs/exec.c
-index 26f0b79cb4f94..8395e7ff7b940 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -142,13 +142,11 @@ SYSCALL_DEFINE1(uselib, const char __user *, library)
- 		goto out;
+diff --git a/arch/arm64/include/asm/uprobes.h b/arch/arm64/include/asm/uprobes.h
+index ba4bff5ca6749..98f29a43bfe89 100644
+--- a/arch/arm64/include/asm/uprobes.h
++++ b/arch/arm64/include/asm/uprobes.h
+@@ -10,11 +10,9 @@
+ #include <asm/insn.h>
+ #include <asm/probes.h>
  
- 	/*
--	 * may_open() has already checked for this, so it should be
--	 * impossible to trip now. But we need to be extra cautious
--	 * and check again at the very end too.
-+	 * Check do_open_execat() for an explanation.
- 	 */
- 	error = -EACCES;
--	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode) ||
--			 path_noexec(&file->f_path)))
-+	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode)) ||
-+	    path_noexec(&file->f_path))
- 		goto exit;
+-#define MAX_UINSN_BYTES		AARCH64_INSN_SIZE
+-
+ #define UPROBE_SWBP_INSN	cpu_to_le32(BRK64_OPCODE_UPROBES)
+ #define UPROBE_SWBP_INSN_SIZE	AARCH64_INSN_SIZE
+-#define UPROBE_XOL_SLOT_BYTES	MAX_UINSN_BYTES
++#define UPROBE_XOL_SLOT_BYTES	AARCH64_INSN_SIZE
  
- 	fsnotify_open(file);
-@@ -919,16 +917,16 @@ static struct file *do_open_execat(int fd, struct filename *name, int flags)
+ typedef u32 uprobe_opcode_t;
  
- 	file = do_filp_open(fd, name, &open_exec_flags);
- 	if (IS_ERR(file))
--		goto out;
-+		return file;
+@@ -23,8 +21,8 @@ struct arch_uprobe_task {
  
- 	/*
--	 * may_open() has already checked for this, so it should be
--	 * impossible to trip now. But we need to be extra cautious
--	 * and check again at the very end too.
-+	 * In the past the regular type check was here. It moved to may_open() in
-+	 * 633fb6ac3980 ("exec: move S_ISREG() check earlier"). Since then it is
-+	 * an invariant that all non-regular files error out before we get here.
- 	 */
- 	err = -EACCES;
--	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode) ||
--			 path_noexec(&file->f_path)))
-+	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode)) ||
-+	    path_noexec(&file->f_path))
- 		goto exit;
+ struct arch_uprobe {
+ 	union {
+-		u8 insn[MAX_UINSN_BYTES];
+-		u8 ixol[MAX_UINSN_BYTES];
++		__le32 insn;
++		__le32 ixol;
+ 	};
+ 	struct arch_probe_insn api;
+ 	bool simulate;
+diff --git a/arch/arm64/kernel/probes/uprobes.c b/arch/arm64/kernel/probes/uprobes.c
+index d49aef2657cdf..a2f137a595fc1 100644
+--- a/arch/arm64/kernel/probes/uprobes.c
++++ b/arch/arm64/kernel/probes/uprobes.c
+@@ -42,7 +42,7 @@ int arch_uprobe_analyze_insn(struct arch_uprobe *auprobe, struct mm_struct *mm,
+ 	else if (!IS_ALIGNED(addr, AARCH64_INSN_SIZE))
+ 		return -EINVAL;
  
- 	err = deny_write_access(file);
-@@ -938,7 +936,6 @@ static struct file *do_open_execat(int fd, struct filename *name, int flags)
- 	if (name->name[0] != '\0')
- 		fsnotify_open(file);
+-	insn = *(probe_opcode_t *)(&auprobe->insn[0]);
++	insn = le32_to_cpu(auprobe->insn);
  
--out:
- 	return file;
+ 	switch (arm_probe_decode_insn(insn, &auprobe->api)) {
+ 	case INSN_REJECTED:
+@@ -108,7 +108,7 @@ bool arch_uprobe_skip_sstep(struct arch_uprobe *auprobe, struct pt_regs *regs)
+ 	if (!auprobe->simulate)
+ 		return false;
  
- exit:
+-	insn = *(probe_opcode_t *)(&auprobe->insn[0]);
++	insn = le32_to_cpu(auprobe->insn);
+ 	addr = instruction_pointer(regs);
+ 
+ 	if (auprobe->api.handler)
 -- 
 2.43.0
 
