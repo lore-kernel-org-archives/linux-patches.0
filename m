@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF4C15B10D;
-	Mon, 28 Oct 2024 06:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0324115B10D;
+	Mon, 28 Oct 2024 06:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097763; cv=none; b=deZFR1vJjAydk4LenhitRx2ReS0zNNtD0LotbY4ae/F1xeCKfWKF0XAVBL+zJQjaH7LXmWGnnkXJTaTI3GSBZXwfV8j7HhaUuxmQwK6IJR6jz8UiCQtxyj3oQS6uFM3UWg7IxR299PFBP7nT3sZUtEYBvK0BNp6Ui4Zj1nbzCgQ=
+	t=1730097766; cv=none; b=CowRQtAyKHs2KS5+v8wuLMx4kacUtTurFNJxZYzleE6OzcATLBtWntdvlr8lYxS52wuNalv2flEbjcJbzI9NqbcWuj9BxRNrooHP4XTo7FTlB+IzL1lmPk5wXcQg3hGtTRYcAlqF7iOEEDoSVYBPoMTOnX39H+cMcZtIvyzkkCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097763; c=relaxed/simple;
-	bh=xZRzH5tpZ1K6lOamqwJNRkm4bjsvgxIs6SVB7668QW0=;
+	s=arc-20240116; t=1730097766; c=relaxed/simple;
+	bh=CtvkeXdPq1eoeh6xEKTH4BZ1E2rK4+9rsbbz7NN4if0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6NqM5islDsGTeIzRRS3K2BIfMhZTFfKrJ6gNKDNqQyhW5wnbjjC+xXV1LuBI/+shqWTpfnY1AAPILhGkJzrVbW7uEks1pAC4cHUW6ioJJYFcD/ey8bttyYjdtaacoLTYi1nQ7Wi1jq8+OGifdHjZ2q/SgJefjuULwe57tGWk3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tenEOuhK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nKkMGrGDJyXa3ITCA8RD9OQ4vxpD4gXQMq4AuxSntwoDqaeJaHQKA31JvamVc/i2K8jJ9Io07jpusRHwKK8TZJEi1P/lGFZTp+GVXbgj2sEVbW253ArDHCHkZwd3stFAWZUWaR2gW/i/RAyYvH38/enAqlWCYLh2gS+zs2Z2VCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SEZ7S0nb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tenEOuhK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1E4C4CEC3;
-	Mon, 28 Oct 2024 06:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SEZ7S0nb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B47C4CEC3;
+	Mon, 28 Oct 2024 06:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097763;
-	bh=xZRzH5tpZ1K6lOamqwJNRkm4bjsvgxIs6SVB7668QW0=;
+	s=korg; t=1730097765;
+	bh=CtvkeXdPq1eoeh6xEKTH4BZ1E2rK4+9rsbbz7NN4if0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tenEOuhKnyQPGWd2gMdgiegNS+zTe9EeG3hXGMFKTOSEfBhakE0wxEnkSr9VhwsVH
-	 Ig7g1cgniOa/ADFvkWCuNke2//gs5QDMRWRoyjeT4h4d2EZxVTPIuBMCDbTWFFh0xQ
-	 WLVgtBFbPSVtEbkyivtBckC/esPw7vMdu+Ei2tp4=
+	b=SEZ7S0nbwXz0uaiERvCjbU3kuaTVpW9PsI5KPkahy+Znqv3pk/+q4jFdyc8cFqds5
+	 iC2V+eLvfok+qWtdAkQlyDcTHpSK8DbjjwqAd0kxXgfbcYmPC65ADYkXSBYpPbl/0p
+	 YPG0j3P2Je5gKK7BbY/v2lJuZvnGGXiobzpCgf14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lai, Yi" <yi1.lai@linux.intel.com>,
-	Florian Westphal <fw@strlen.de>,
-	Eric Dumazet <edumazet@google.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Wang Hai <wanghai38@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 135/208] netfilter: bpf: must hold reference on net namespace
-Date: Mon, 28 Oct 2024 07:25:15 +0100
-Message-ID: <20241028062309.962437525@linuxfoundation.org>
+Subject: [PATCH 6.6 136/208] net/sun3_82586: fix potential memory leak in sun3_82586_send_packet()
+Date: Mon, 28 Oct 2024 07:25:16 +0100
+Message-ID: <20241028062309.987798292@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -53,69 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit 1230fe7ad3974f7bf6c78901473e039b34d4fb1f ]
+[ Upstream commit 2cb3f56e827abb22c4168ad0c1bbbf401bb2f3b8 ]
 
-BUG: KASAN: slab-use-after-free in __nf_unregister_net_hook+0x640/0x6b0
-Read of size 8 at addr ffff8880106fe400 by task repro/72=
-bpf_nf_link_release+0xda/0x1e0
-bpf_link_free+0x139/0x2d0
-bpf_link_release+0x68/0x80
-__fput+0x414/0xb60
+The sun3_82586_send_packet() returns NETDEV_TX_OK without freeing skb
+in case of skb->len being too long, add dev_kfree_skb() to fix it.
 
-Eric says:
- It seems that bpf was able to defer the __nf_unregister_net_hook()
- after exit()/close() time.
- Perhaps a netns reference is missing, because the netns has been
- dismantled/freed already.
- bpf_nf_link_attach() does :
- link->net = net;
- But I do not see a reference being taken on net.
-
-Add such a reference and release it after hook unreg.
-Note that I was unable to get syzbot reproducer to work, so I
-do not know if this resolves this splat.
-
-Fixes: 84601d6ee68a ("bpf: add bpf_link support for BPF_NETFILTER programs")
-Diagnosed-by: Eric Dumazet <edumazet@google.com>
-Reported-by: Lai, Yi <yi1.lai@linux.intel.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Message-ID: <20241015144148.7918-1-wanghai38@huawei.com>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_bpf_link.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/i825xx/sun3_82586.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/netfilter/nf_bpf_link.c b/net/netfilter/nf_bpf_link.c
-index 96015a59db09e..2aad0562a4135 100644
---- a/net/netfilter/nf_bpf_link.c
-+++ b/net/netfilter/nf_bpf_link.c
-@@ -23,6 +23,7 @@ static unsigned int nf_hook_run_bpf(void *bpf_prog, struct sk_buff *skb,
- struct bpf_nf_link {
- 	struct bpf_link link;
- 	struct nf_hook_ops hook_ops;
-+	netns_tracker ns_tracker;
- 	struct net *net;
- 	u32 dead;
- 	const struct nf_defrag_hook *defrag_hook;
-@@ -120,6 +121,7 @@ static void bpf_nf_link_release(struct bpf_link *link)
- 	if (!cmpxchg(&nf_link->dead, 0, 1)) {
- 		nf_unregister_net_hook(nf_link->net, &nf_link->hook_ops);
- 		bpf_nf_disable_defrag(nf_link);
-+		put_net_track(nf_link->net, &nf_link->ns_tracker);
+diff --git a/drivers/net/ethernet/i825xx/sun3_82586.c b/drivers/net/ethernet/i825xx/sun3_82586.c
+index f2d4669c81cf2..58a3d28d938c3 100644
+--- a/drivers/net/ethernet/i825xx/sun3_82586.c
++++ b/drivers/net/ethernet/i825xx/sun3_82586.c
+@@ -1012,6 +1012,7 @@ sun3_82586_send_packet(struct sk_buff *skb, struct net_device *dev)
+ 	if(skb->len > XMIT_BUFF_SIZE)
+ 	{
+ 		printk("%s: Sorry, max. framelength is %d bytes. The length of your frame is %d bytes.\n",dev->name,XMIT_BUFF_SIZE,skb->len);
++		dev_kfree_skb(skb);
+ 		return NETDEV_TX_OK;
  	}
- }
- 
-@@ -258,6 +260,8 @@ int bpf_nf_link_attach(const union bpf_attr *attr, struct bpf_prog *prog)
- 		return err;
- 	}
- 
-+	get_net_track(net, &link->ns_tracker, GFP_KERNEL);
-+
- 	return bpf_link_settle(&link_primer);
- }
  
 -- 
 2.43.0
