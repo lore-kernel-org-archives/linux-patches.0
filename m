@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F4615B10D;
-	Mon, 28 Oct 2024 06:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6DC18D629;
+	Mon, 28 Oct 2024 06:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097124; cv=none; b=Ac4oRNDIWleaHr8s7U8nxk0e/AqgO8aQ4Huxn2T2dc4QNbgTshh2jnShmI0rt4mEmXqf0PCvLSixga47wJPcpLuzM0usEvpkoAoEt83UXrJrgL/fpLSR4EFez6Q3xiEb4FDqpoA7IBKQFQ1o+zEu9n/s0VUWcXw+GQzmj594UsU=
+	t=1730097126; cv=none; b=PpquSdxignNwIY1bNIErCYdOk/qnn3s/53SbJEptHDzK1JPFI9yGV58XWvqD7hzA01tRx8080VaWpFDeRymxFLTMoP4Ls2BoCvk/QljxzXTjWJLQuRMmwzGvVzZo3nYwd3KcxAq3t2egHtRob3TlRq8hiC319yNmUJuK0WMeojM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097124; c=relaxed/simple;
-	bh=DcvNxqgB3o1EJn/6UJV/TmedZEpa7IwekxYqwzqdv+M=;
+	s=arc-20240116; t=1730097126; c=relaxed/simple;
+	bh=PEnxsS8GPdv5zsRDzw4RI5mz1Qn0fiWaOpCOd6Hh74E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rSiSKQlmAl9Fs5BuODJ4ezejvQOj4Ifago4p1vb9DpxW9ph0NSafSDV/m816vwRIbWEPxz4qSP+uIqB7Kl7Rzun265f9T0CFEgw5BWPTHVzwWtRaORXOMB6vjk3ZsH04c0+XOCqN1fKUhtAxdAEkxKauPVeNVel7PdWxel3iPVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0aArDEwu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FYksI9zNpmykXZLInW3VGC0oSsucxCvMyFt+8OZ0T5qReJZP6okwsnFB6cvS4wNOuLcmTTQboFZI0wxBIKUpniviv80kEK0JZEdmFoC6GtcLDJyOO6mx3KqGuE20ahVz8xkyFtkhoKWRRSSc1jdfUh/NXHBuqwekWJsiPh4TpDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1r2+ZJ2f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0aArDEwu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8370C4CEC7;
-	Mon, 28 Oct 2024 06:32:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1r2+ZJ2f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051E8C4CEC7;
+	Mon, 28 Oct 2024 06:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097124;
-	bh=DcvNxqgB3o1EJn/6UJV/TmedZEpa7IwekxYqwzqdv+M=;
+	s=korg; t=1730097126;
+	bh=PEnxsS8GPdv5zsRDzw4RI5mz1Qn0fiWaOpCOd6Hh74E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0aArDEwuoWFZ9fMZ+DvQAgCTvxp909noEyZfpZGvDFVm6MMWZVGevCSF/p/4VEHy4
-	 V3roI5k6flYEAOCD6t2PnfazDAtny70MlYf/WhZ9kM9T46LCpwHLG1PyojP3ZLKDH+
-	 hS5vF+AGlhq6TRmMkrrTY8/jrx+XHJMJarT8XCl0=
+	b=1r2+ZJ2f6kMr6eRkBGp9MLABR8iKWQr7arhvJ6rVeDxXaS7Vi+uQup6qvCSJ0T8SM
+	 P8/nnriAriYGCK7kg1FTYUw5PhyeQcIBB3fEWJKO3nvYT3lOauT0BCqGDPbz5t84eX
+	 DddIBWjPECGkiIYUPKlSZiyW7OvmQjhNVpd+wIdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 39/80] block, bfq: fix procress reference leakage for bfqq in merge chain
-Date: Mon, 28 Oct 2024 07:25:19 +0100
-Message-ID: <20241028062253.709311621@linuxfoundation.org>
+Subject: [PATCH 5.15 40/80] exec: dont WARN for racy path_noexec check
+Date: Mon, 28 Oct 2024 07:25:20 +0100
+Message-ID: <20241028062253.735097443@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
 References: <20241028062252.611837461@linuxfoundation.org>
@@ -45,161 +46,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Mateusz Guzik <mjguzik@gmail.com>
 
-[ Upstream commit 73aeab373557fa6ee4ae0b742c6211ccd9859280 ]
+[ Upstream commit 0d196e7589cefe207d5d41f37a0a28a1fdeeb7c6 ]
 
-Original state:
+Both i_mode and noexec checks wrapped in WARN_ON stem from an artifact
+of the previous implementation. They used to legitimately check for the
+condition, but that got moved up in two commits:
+633fb6ac3980 ("exec: move S_ISREG() check earlier")
+0fd338b2d2cd ("exec: move path_noexec() check earlier")
 
-        Process 1       Process 2       Process 3       Process 4
-         (BIC1)          (BIC2)          (BIC3)          (BIC4)
-          Λ                |               |               |
-           \--------------\ \-------------\ \-------------\|
-                           V               V               V
-          bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
-    ref    0               1               2               4
+Instead of being removed said checks are WARN_ON'ed instead, which
+has some debug value.
 
-After commit 0e456dba86c7 ("block, bfq: choose the last bfqq from merge
-chain in bfq_setup_cooperator()"), if P1 issues a new IO:
+However, the spurious path_noexec check is racy, resulting in
+unwarranted warnings should someone race with setting the noexec flag.
 
-Without the patch:
+One can note there is more to perm-checking whether execve is allowed
+and none of the conditions are guaranteed to still hold after they were
+tested for.
 
-        Process 1       Process 2       Process 3       Process 4
-         (BIC1)          (BIC2)          (BIC3)          (BIC4)
-          Λ                |               |               |
-           \------------------------------\ \-------------\|
-                                           V               V
-          bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
-    ref    0               0               2               4
+Additionally this does not validate whether the code path did any perm
+checking to begin with -- it will pass if the inode happens to be
+regular.
 
-bfqq3 will be used to handle IO from P1, this is not expected, IO
-should be redirected to bfqq4;
+Keep the redundant path_noexec() check even though it's mindless
+nonsense checking for guarantee that isn't given so drop the WARN.
 
-With the patch:
+Reword the commentary and do small tidy ups while here.
 
-          -------------------------------------------
-          |                                         |
-        Process 1       Process 2       Process 3   |   Process 4
-         (BIC1)          (BIC2)          (BIC3)     |    (BIC4)
-                           |               |        |      |
-                            \-------------\ \-------------\|
-                                           V               V
-          bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
-    ref    0               0               2               4
-
-IO is redirected to bfqq4, however, procress reference of bfqq3 is still
-2, while there is only P2 using it.
-
-Fix the problem by calling bfq_merge_bfqqs() for each bfqq in the merge
-chain. Also change bfqq_merge_bfqqs() to return new_bfqq to simplify
-code.
-
-Fixes: 0e456dba86c7 ("block, bfq: choose the last bfqq from merge chain in bfq_setup_cooperator()")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240909134154.954924-3-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Mateusz Guzik <mjguzik@gmail.com>
+Link: https://lore.kernel.org/r/20240805131721.765484-1-mjguzik@gmail.com
+[brauner: keep redundant path_noexec() check]
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[cascardo: keep exit label and use it]
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-iosched.c | 37 +++++++++++++++++--------------------
- 1 file changed, 17 insertions(+), 20 deletions(-)
+ fs/exec.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index b0bdb5197530a..c985c944fa654 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -2981,10 +2981,12 @@ void bfq_release_process_ref(struct bfq_data *bfqd, struct bfq_queue *bfqq)
- 	bfq_put_queue(bfqq);
- }
+diff --git a/fs/exec.c b/fs/exec.c
+index 26f0b79cb4f94..8395e7ff7b940 100644
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -142,13 +142,11 @@ SYSCALL_DEFINE1(uselib, const char __user *, library)
+ 		goto out;
  
--static void
--bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
--		struct bfq_queue *bfqq, struct bfq_queue *new_bfqq)
-+static struct bfq_queue *bfq_merge_bfqqs(struct bfq_data *bfqd,
-+					 struct bfq_io_cq *bic,
-+					 struct bfq_queue *bfqq)
- {
-+	struct bfq_queue *new_bfqq = bfqq->new_bfqq;
-+
- 	bfq_log_bfqq(bfqd, bfqq, "merging with queue %lu",
- 		(unsigned long)new_bfqq->pid);
- 	/* Save weight raising and idle window of the merged queues */
-@@ -3078,6 +3080,8 @@ bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
- 	bfq_reassign_last_bfqq(bfqq, new_bfqq);
- 
- 	bfq_release_process_ref(bfqd, bfqq);
-+
-+	return new_bfqq;
- }
- 
- static bool bfq_allow_bio_merge(struct request_queue *q, struct request *rq,
-@@ -3113,14 +3117,8 @@ static bool bfq_allow_bio_merge(struct request_queue *q, struct request *rq,
- 		 * fulfilled, i.e., bic can be redirected to new_bfqq
- 		 * and bfqq can be put.
- 		 */
--		bfq_merge_bfqqs(bfqd, bfqd->bio_bic, bfqq,
--				new_bfqq);
--		/*
--		 * If we get here, bio will be queued into new_queue,
--		 * so use new_bfqq to decide whether bio and rq can be
--		 * merged.
--		 */
--		bfqq = new_bfqq;
-+		while (bfqq != new_bfqq)
-+			bfqq = bfq_merge_bfqqs(bfqd, bfqd->bio_bic, bfqq);
- 
- 		/*
- 		 * Change also bqfd->bio_bfqq, as
-@@ -5482,9 +5480,7 @@ bfq_do_early_stable_merge(struct bfq_data *bfqd, struct bfq_queue *bfqq,
- 	 * state before killing it.
+ 	/*
+-	 * may_open() has already checked for this, so it should be
+-	 * impossible to trip now. But we need to be extra cautious
+-	 * and check again at the very end too.
++	 * Check do_open_execat() for an explanation.
  	 */
- 	bfqq->bic = bic;
--	bfq_merge_bfqqs(bfqd, bic, bfqq, new_bfqq);
--
--	return new_bfqq;
-+	return bfq_merge_bfqqs(bfqd, bic, bfqq);
- }
+ 	error = -EACCES;
+-	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode) ||
+-			 path_noexec(&file->f_path)))
++	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode)) ||
++	    path_noexec(&file->f_path))
+ 		goto exit;
  
- /*
-@@ -5916,6 +5912,7 @@ static bool __bfq_insert_request(struct bfq_data *bfqd, struct request *rq)
- 	bool waiting, idle_timer_disabled = false;
+ 	fsnotify_open(file);
+@@ -919,16 +917,16 @@ static struct file *do_open_execat(int fd, struct filename *name, int flags)
  
- 	if (new_bfqq) {
-+		struct bfq_queue *old_bfqq = bfqq;
- 		/*
- 		 * Release the request's reference to the old bfqq
- 		 * and make sure one is taken to the shared queue.
-@@ -5931,18 +5928,18 @@ static bool __bfq_insert_request(struct bfq_data *bfqd, struct request *rq)
- 		 * then complete the merge and redirect it to
- 		 * new_bfqq.
- 		 */
--		if (bic_to_bfqq(RQ_BIC(rq), 1) == bfqq)
--			bfq_merge_bfqqs(bfqd, RQ_BIC(rq),
--					bfqq, new_bfqq);
-+		if (bic_to_bfqq(RQ_BIC(rq), 1) == bfqq) {
-+			while (bfqq != new_bfqq)
-+				bfqq = bfq_merge_bfqqs(bfqd, RQ_BIC(rq), bfqq);
-+		}
+ 	file = do_filp_open(fd, name, &open_exec_flags);
+ 	if (IS_ERR(file))
+-		goto out;
++		return file;
  
--		bfq_clear_bfqq_just_created(bfqq);
-+		bfq_clear_bfqq_just_created(old_bfqq);
- 		/*
- 		 * rq is about to be enqueued into new_bfqq,
- 		 * release rq reference on bfqq
- 		 */
--		bfq_put_queue(bfqq);
-+		bfq_put_queue(old_bfqq);
- 		rq->elv.priv[1] = new_bfqq;
--		bfqq = new_bfqq;
- 	}
+ 	/*
+-	 * may_open() has already checked for this, so it should be
+-	 * impossible to trip now. But we need to be extra cautious
+-	 * and check again at the very end too.
++	 * In the past the regular type check was here. It moved to may_open() in
++	 * 633fb6ac3980 ("exec: move S_ISREG() check earlier"). Since then it is
++	 * an invariant that all non-regular files error out before we get here.
+ 	 */
+ 	err = -EACCES;
+-	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode) ||
+-			 path_noexec(&file->f_path)))
++	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode)) ||
++	    path_noexec(&file->f_path))
+ 		goto exit;
  
- 	bfq_update_io_thinktime(bfqd, bfqq);
+ 	err = deny_write_access(file);
+@@ -938,7 +936,6 @@ static struct file *do_open_execat(int fd, struct filename *name, int flags)
+ 	if (name->name[0] != '\0')
+ 		fsnotify_open(file);
+ 
+-out:
+ 	return file;
+ 
+ exit:
 -- 
 2.43.0
 
