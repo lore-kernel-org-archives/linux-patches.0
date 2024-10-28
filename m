@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D960718A922;
-	Mon, 28 Oct 2024 06:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141562AF07;
+	Mon, 28 Oct 2024 06:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098083; cv=none; b=Wya0yEB4HwNz9nbHfmXueRwhAycwruEOGhKJA5gJ7IFtCkMtqmGuN/T4ZrDL6pONisKZHKvKaeQ20UMcGLeVJSn5W40c3C8BNHrJUdX8mWBWM+SRXOlqD7PubzrV1k7MttmSM9dfPqrvI98mSsy2zWXJZ3aYbdd8ozRsWd5OE3o=
+	t=1730098086; cv=none; b=gWOuEGBEkgehUCsSqCw4aJ9nmVWj6/63Of6hNxrFb88B54aGLRNuxkKwlXA+ucOw8wgJRzyJxRBlF9BlxaPIIj7uwOitcazAZ2SFyBc8/Kf3aWabP7ewcp5wbKg2PWv0cky2l6FeRagRwjIz1yN9Fo9n1Tz1AF3uxeK2mn+pwAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098083; c=relaxed/simple;
-	bh=I0lsKYOQLYyAS/Wa8JCISoGAm+J4SjFvocSeOUPoICg=;
+	s=arc-20240116; t=1730098086; c=relaxed/simple;
+	bh=c8m2xdBE71OMWCE/gzaK6znroAlsafQa2xwacAjbvB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z+9vT8+2k4dDCmKFSVSGSKnzXO8MQwnMcJrKDdLDxbyeScCgR8OV1aibcBpM+/MKud5y2DU5fMxKnNStqHyi8lDkGF2s5TcKeDOg7PWHbGX3wAUoVZ88f8ECgOQ1vyuxKtNUJDtZ/3oxp3V+je84uOtKPcPZm3RFbajsn5VHVVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GrxK/fj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pbSDyzMAJ0JTHalHNA5eUKykeqkdQrARxGJtjOkf5VSsYAirpA9wqKMuu5tIC49omCbR6O2Vcd7o6U98ctghlf7a8e5xwq0C22SXAbFOduuYC3++WAN4//FzJoJTNSYVbeSQF3KsLRiT8D1dH5jm0Pi6+rpLymgjaPEgYgW+Mpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+AhvyN8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GrxK/fj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3A2C4CEC3;
-	Mon, 28 Oct 2024 06:48:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+AhvyN8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56B4C4CEC3;
+	Mon, 28 Oct 2024 06:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098083;
-	bh=I0lsKYOQLYyAS/Wa8JCISoGAm+J4SjFvocSeOUPoICg=;
+	s=korg; t=1730098085;
+	bh=c8m2xdBE71OMWCE/gzaK6znroAlsafQa2xwacAjbvB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0GrxK/fj84m5W8rdpvdoTbv6/oLbscjtgt3B+QiBChv5Ls6R9Q1t1BhQ20kJq5puL
-	 QnRYiXc+3+LrFEMJi7vsE7etI6GYV1zSaOOkXl/o3vnlYr4cqw7qAuZzake90ZpIsX
-	 et24Ruym7kG809qNo1b+NlrKDmC/JTLJxAwkEOYI=
+	b=K+AhvyN86r0a0azuheWiKBp/1exGR4dBv3Rt8h9c3ZptG2eibnCQMMXAj71+ZxEVD
+	 aGJIFMv6MwkPdRuh5BDlNDacK17ZwJXeEH6dBYax7/7RQ3EfoSAsthHcwxepvO4H7i
+	 NHZZtcfDRhlNIhzmcDcVOLSOtNrTpnRPDhxZ3lzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Zac Ecob <zacecob@protonmail.com>,
+	Dimitar Kanaliev <dimitar.kanaliev@siteground.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 070/261] net: ethernet: rtsn: fix potential memory leak in rtsn_start_xmit()
-Date: Mon, 28 Oct 2024 07:23:32 +0100
-Message-ID: <20241028062313.786058856@linuxfoundation.org>
+Subject: [PATCH 6.11 071/261] bpf: Fix truncation bug in coerce_reg_to_size_sx()
+Date: Mon, 28 Oct 2024 07:23:33 +0100
+Message-ID: <20241028062313.810467407@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -47,43 +48,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wang Hai <wanghai38@huawei.com>
+From: Dimitar Kanaliev <dimitar.kanaliev@siteground.com>
 
-[ Upstream commit c186b7a7f2387d9e09ad408420570be025b187c5 ]
+[ Upstream commit ae67b9fb8c4e981e929a665dcaa070f4b05ebdb4 ]
 
-The rtsn_start_xmit() returns NETDEV_TX_OK without freeing skb
-in case of skb->len being too long, add dev_kfree_skb_any() to fix it.
+coerce_reg_to_size_sx() updates the register state after a sign-extension
+operation. However, there's a bug in the assignment order of the unsigned
+min/max values, leading to incorrect truncation:
 
-Fixes: b0d3969d2b4d ("net: ethernet: rtsn: Add support for Renesas Ethernet-TSN")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241014144250.38802-1-wanghai38@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  0: (85) call bpf_get_prandom_u32#7    ; R0_w=scalar()
+  1: (57) r0 &= 1                       ; R0_w=scalar(smin=smin32=0,smax=umax=smax32=umax32=1,var_off=(0x0; 0x1))
+  2: (07) r0 += 254                     ; R0_w=scalar(smin=umin=smin32=umin32=254,smax=umax=smax32=umax32=255,var_off=(0xfe; 0x1))
+  3: (bf) r0 = (s8)r0                   ; R0_w=scalar(smin=smin32=-2,smax=smax32=-1,umin=umin32=0xfffffffe,umax=0xffffffff,var_off=(0xfffffffffffffffe; 0x1))
+
+In the current implementation, the unsigned 32-bit min/max values
+(u32_min_value and u32_max_value) are assigned directly from the 64-bit
+signed min/max values (s64_min and s64_max):
+
+  reg->umin_value = reg->u32_min_value = s64_min;
+  reg->umax_value = reg->u32_max_value = s64_max;
+
+Due to the chain assigmnent, this is equivalent to:
+
+  reg->u32_min_value = s64_min;  // Unintended truncation
+  reg->umin_value = reg->u32_min_value;
+  reg->u32_max_value = s64_max;  // Unintended truncation
+  reg->umax_value = reg->u32_max_value;
+
+Fixes: 1f9a1ea821ff ("bpf: Support new sign-extension load insns")
+Reported-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Reported-by: Zac Ecob <zacecob@protonmail.com>
+Signed-off-by: Dimitar Kanaliev <dimitar.kanaliev@siteground.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Reviewed-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Link: https://lore.kernel.org/r/20241014121155.92887-2-dimitar.kanaliev@siteground.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/rtsn.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/verifier.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/rtsn.c b/drivers/net/ethernet/renesas/rtsn.c
-index 0e6cea42f0077..da90adef6b2b7 100644
---- a/drivers/net/ethernet/renesas/rtsn.c
-+++ b/drivers/net/ethernet/renesas/rtsn.c
-@@ -1057,6 +1057,7 @@ static netdev_tx_t rtsn_start_xmit(struct sk_buff *skb, struct net_device *ndev)
- 	if (skb->len >= TX_DS) {
- 		priv->stats.tx_dropped++;
- 		priv->stats.tx_errors++;
-+		dev_kfree_skb_any(skb);
- 		goto out;
- 	}
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index a8d49b2b58e1e..42d6bc5392757 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -6255,10 +6255,10 @@ static void coerce_reg_to_size_sx(struct bpf_reg_state *reg, int size)
  
+ 	/* both of s64_max/s64_min positive or negative */
+ 	if ((s64_max >= 0) == (s64_min >= 0)) {
+-		reg->smin_value = reg->s32_min_value = s64_min;
+-		reg->smax_value = reg->s32_max_value = s64_max;
+-		reg->umin_value = reg->u32_min_value = s64_min;
+-		reg->umax_value = reg->u32_max_value = s64_max;
++		reg->s32_min_value = reg->smin_value = s64_min;
++		reg->s32_max_value = reg->smax_value = s64_max;
++		reg->u32_min_value = reg->umin_value = s64_min;
++		reg->u32_max_value = reg->umax_value = s64_max;
+ 		reg->var_off = tnum_range(s64_min, s64_max);
+ 		return;
+ 	}
 -- 
 2.43.0
 
