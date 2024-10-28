@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5078D8837;
-	Mon, 28 Oct 2024 06:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869A28837;
+	Mon, 28 Oct 2024 06:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098361; cv=none; b=aWFI2aamwriIX8fqAfjAdu+Zh6J6JZgpuHPaCiVEYh6JDRsYdztqnI/iq8p08tUhSo0czpUOsrspbsYhVI25jWbki0UiPTdlONWoX3yeoks5KjESHgSujdrupqr9UP66su1LBEhwWXDGL7A65l4j8Mbuw4RuDmonfzN5lByiGmk=
+	t=1730098363; cv=none; b=sGMzG9T0p0EF+Bo7WjJtizS5UfDULC/wnL+/Vk2uy0aWNGEiS7AarZhfNU/y4MhvTNOJdRd0DMonLb6BiXd/T/ANo04ytdoRtnEY2PM15Ax0cSh+l8fEp1ZczHEQ4wCs+qHELIQ8okeat1zD7h+HB1raHYhX9A1om2qhZQa/b/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098361; c=relaxed/simple;
-	bh=5MMxQU0/BqZz5OrG/7nKrc44FDWoGmpUOTOUlaRXS7M=;
+	s=arc-20240116; t=1730098363; c=relaxed/simple;
+	bh=mA33uTefXfbmyP3/FV6HThqcF5LQ55IVIv+WyM9cvA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZFle67F8+7fevXujF57RncIdgvol15Ld2XFydcEWlqp2ykuBhGIuXjMNn82etaG5DlrXg0K21+7vQA9z6sqd9iYUpV+SaV2UZSmt+7WiyCrjzFDT5VAOFOFln2/WA9sO+qXbWe34aOIN2uOYNqHiGxNN6ip9BSQ72cExnwVSPys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vm5iD2a9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lvp+ddhZNqCmLosC736KfhkUYXul7RMYDD1P5ImbYRtT5TzrsMz266w5grjCKZBi5zSfTKGjI5p0OURHGsNvhokYHz1qywGpUcX7N1Th1LzTYA7vzcMPAYl/TW9ZmyuSpn1qFzFUmNt2bbgyOAGwYFiNM8SubRam0V+OEIyagcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lppiZmOk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vm5iD2a9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6061C4CEC3;
-	Mon, 28 Oct 2024 06:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lppiZmOk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2559BC4CEC3;
+	Mon, 28 Oct 2024 06:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098361;
-	bh=5MMxQU0/BqZz5OrG/7nKrc44FDWoGmpUOTOUlaRXS7M=;
+	s=korg; t=1730098363;
+	bh=mA33uTefXfbmyP3/FV6HThqcF5LQ55IVIv+WyM9cvA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vm5iD2a9m0RsTmFmKZsfirfUyz5V7ycKN8AJkXvRHdMmFEA3lBLFl4Usi0mhk8kq7
-	 tBZQtZsvwfhD89VzwTO7L3N6NmRB51pznoyFsmegaCqdkGuSQ/jvo3NLHMFfhYo7lD
-	 VtnmNHEQkFgpR5fRd7l0pZPOHQUO+flERwmNCb/Q=
+	b=lppiZmOkg4PCd9UCTaO3qZvhnCc6x4xZKlvFEWFOPvBDXPWW+nMvP7Gy4SMwvpTRJ
+	 YUpAiSJCvcc6URuDy7dbJZRvmRrJatomCDQOeNOWpt6OF+HbK4b1nVib67kSJD/PHL
+	 YNNZwbSRuvBSWoMUzPgY0GxTRtKjOhtbaoTWbVhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Yuan Can <yuancan@huawei.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 175/261] bpf: fix do_misc_fixups() for bpf_get_branch_snapshot()
-Date: Mon, 28 Oct 2024 07:25:17 +0100
-Message-ID: <20241028062316.387859903@linuxfoundation.org>
+Subject: [PATCH 6.11 193/261] powercap: dtpm_devfreq: Fix error check against dev_pm_qos_add_request()
+Date: Mon, 28 Oct 2024 07:25:35 +0100
+Message-ID: <20241028062316.866023167@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -53,39 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 9806f283140ef3e4d259b7646bd8c66026bbaac5 ]
+[ Upstream commit 5209d1b654f1db80509040cc694c7814a1b547e3 ]
 
-We need `goto next_insn;` at the end of patching instead of `continue;`.
-It currently works by accident by making verifier re-process patched
-instructions.
+The caller of the function dev_pm_qos_add_request() checks again a non
+zero value but dev_pm_qos_add_request() can return '1' if the request
+already exists. Therefore, the setup function fails while the QoS
+request actually did not failed.
 
-Reported-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Fixes: 314a53623cd4 ("bpf: inline bpf_get_branch_snapshot() helper")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Link: https://lore.kernel.org/r/20241023161916.2896274-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fix that by changing the check against a negative value like all the
+other callers of the function.
+
+Fixes: e44655617317 ("powercap/drivers/dtpm: Add dtpm devfreq with energy model support")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/20241018021205.46460-1-yuancan@huawei.com
+[ rjw: Subject edit ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 2 +-
+ drivers/powercap/dtpm_devfreq.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 62efe7f0aa46f..77b60896200ef 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -20675,7 +20675,7 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
- 			delta    += cnt - 1;
- 			env->prog = prog = new_prog;
- 			insn      = new_prog->insnsi + i + delta;
--			continue;
-+			goto next_insn;
- 		}
- 
- 		/* Implement bpf_kptr_xchg inline */
+diff --git a/drivers/powercap/dtpm_devfreq.c b/drivers/powercap/dtpm_devfreq.c
+index f40bce8176df2..d1dff6ccab120 100644
+--- a/drivers/powercap/dtpm_devfreq.c
++++ b/drivers/powercap/dtpm_devfreq.c
+@@ -178,7 +178,7 @@ static int __dtpm_devfreq_setup(struct devfreq *devfreq, struct dtpm *parent)
+ 	ret = dev_pm_qos_add_request(dev, &dtpm_devfreq->qos_req,
+ 				     DEV_PM_QOS_MAX_FREQUENCY,
+ 				     PM_QOS_MAX_FREQUENCY_DEFAULT_VALUE);
+-	if (ret) {
++	if (ret < 0) {
+ 		pr_err("Failed to add QoS request: %d\n", ret);
+ 		goto out_dtpm_unregister;
+ 	}
 -- 
 2.43.0
 
