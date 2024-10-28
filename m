@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF75D18E03A;
-	Mon, 28 Oct 2024 06:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A7318E743;
+	Mon, 28 Oct 2024 06:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097849; cv=none; b=Ar8tKicMWmo0ts5QGFFEIUQCf1ptztmjuak0EGwgebj54jPHx9ode1qI92CKyKAuHHVV0tbGL2afcMps1Iggt9bvnrfimv6GL/59QyqryRKYl11VGBYpAlB+njlK695ryMmuy7xJkFtAmugfz99MqjadH0AspG4NQAhN9FxYoP8=
+	t=1730097851; cv=none; b=Kzkv7/mfKD/i1yhNtXquoGlTZtufMhDsvCnwnERTXnTDE83TEKLfmm0Lzh0LOoVf2a6Qu1AMxqCU7Ybxro0NkQlY4JglerM1gbqq2KWm4wsPfAxJSCMTUbrefuhnYwoBbiy1Go0zR8FPRhzaV9SdbEJaXC4kdWaOwJ19TgrCaaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097849; c=relaxed/simple;
-	bh=wMcGiDpdvW8j/JpiHCkoes7GAGNtF9q3O1eHvWlEijY=;
+	s=arc-20240116; t=1730097851; c=relaxed/simple;
+	bh=Gq6uneiOL8AnpEeFeBGX6+JhVSPuTQDjTCXRrB7azyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SUuuGR9zvc3TyaH7hcktG8nsEiB8wvLOZsm7ldRvs6MMAHiKA1dum+NHXEtm/BXWTdeb7jggG+QZ/WU5XWcel0wxxavbmnt0HCzSVr0Gk4GtUeqUyqRYWtp3bjB05crWsWc0x/idsw15c8Lf9vjQwEUSTQ8x62nMlK3aED7Jm9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZgBZ639; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hzc1LIXkkO37B2Dv+I1sAhGDc3ihEWuWrVzpIG4ctKulciUKjfZc3KB7yVnb6VbgUOJdtCWRsJ3Q0aasPVCnm/MvCQvP9bIxXj+sq14dw+o3jh8q8Tz/4+Ey6nh2z40vuG6WxiBOu6lnU7DO21sJc8z7HKcBrZhdUj2dOY1waP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yf5u9EYH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZgBZ639"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3A3C4CEC3;
-	Mon, 28 Oct 2024 06:44:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yf5u9EYH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2671C4CEC3;
+	Mon, 28 Oct 2024 06:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097848;
-	bh=wMcGiDpdvW8j/JpiHCkoes7GAGNtF9q3O1eHvWlEijY=;
+	s=korg; t=1730097851;
+	bh=Gq6uneiOL8AnpEeFeBGX6+JhVSPuTQDjTCXRrB7azyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UZgBZ639HnSnElDW674yOQ9PQ0zhl1qXJb/T1+aww+oeDn766GRQsm5TNuyKZfGeb
-	 MXCJJbATE8Q4ehDV6xL0mmaOMZtbe6+X2eoq6+c2mS7RQLJNNUXecBzdzb+aOoiCYs
-	 WHb7Uh4Db0AuhQIz8atNd6bL+UDMgBXP7Ib2zKLs=
+	b=Yf5u9EYHSvNY4pg+JltoeUAEy4zHU6RNbrQJANPLWpqf/vpUyZmvFQ1IZ5/5COoSs
+	 I/rb6Das9C2KBsIVa+WVTfglSngKHLvCFFX29PD3ALGJJ0+Hle0JttKA2WemBFOsRX
+	 50xRWf9FlIUlkJpmnvFjYSKelcOZWGHkiIlFyU9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Haoxiang Li <make24@iscas.ac.cn>,
+	Henrique Carvalho <henrique.carvalho@suse.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 173/208] ALSA: hda/realtek: Update default depop procedure
-Date: Mon, 28 Oct 2024 07:25:53 +0100
-Message-ID: <20241028062310.893164637@linuxfoundation.org>
+Subject: [PATCH 6.6 174/208] smb: client: Handle kstrdup failures for passwords
+Date: Mon, 28 Oct 2024 07:25:54 +0100
+Message-ID: <20241028062310.917099455@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -51,86 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-[ Upstream commit e3ea2757c312e51bbf62ebc434a6f7df1e3a201f ]
+[ Upstream commit 9a5dd61151399ad5a5d69aad28ab164734c1e3bc ]
 
-Old procedure has a chance to meet Headphone no output.
+In smb3_reconfigure(), after duplicating ctx->password and
+ctx->password2 with kstrdup(), we need to check for allocation
+failures.
 
-Fixes: c2d6af53a43f ("ALSA: hda/realtek - Add default procedure for suspend and resume state")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/17b717a0a0b04a77aea4a8ec820cba13@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+If ses->password allocation fails, return -ENOMEM.
+If ses->password2 allocation fails, free ses->password, set it
+to NULL, and return -ENOMEM.
+
+Fixes: c1eb537bf456 ("cifs: allow changing password during remount")
+Reviewed-by: David Howells <dhowells@redhat.com
+Signed-off-by: Haoxiang Li <make24@iscas.ac.cn>
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 38 ++++++++++++++++-------------------
- 1 file changed, 17 insertions(+), 21 deletions(-)
+ fs/smb/client/fs_context.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 07e1547fff2e5..4dc5c7a18d6e7 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -3857,20 +3857,18 @@ static void alc_default_init(struct hda_codec *codec)
- 
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 
--	if (hp_pin_sense)
-+	if (hp_pin_sense) {
- 		msleep(2);
- 
--	snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--
--	if (hp_pin_sense)
--		msleep(85);
-+		snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
- 
--	snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
-+		msleep(75);
- 
--	if (hp_pin_sense)
--		msleep(100);
-+		snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
-+		msleep(75);
-+	}
- }
- 
- static void alc_default_shutup(struct hda_codec *codec)
-@@ -3886,22 +3884,20 @@ static void alc_default_shutup(struct hda_codec *codec)
- 
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 
--	if (hp_pin_sense)
-+	if (hp_pin_sense) {
- 		msleep(2);
- 
--	snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--
--	if (hp_pin_sense)
--		msleep(85);
--
--	if (!spec->no_shutup_pins)
- 		snd_hda_codec_write(codec, hp_pin, 0,
--				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
- 
--	if (hp_pin_sense)
--		msleep(100);
-+		msleep(75);
- 
-+		if (!spec->no_shutup_pins)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+					    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+
-+		msleep(75);
-+	}
- 	alc_auto_setup_eapd(codec, false);
- 	alc_shutup_pins(codec);
- }
+diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
+index 3bbac925d0766..8d7484400fe8e 100644
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -918,8 +918,15 @@ static int smb3_reconfigure(struct fs_context *fc)
+ 	else  {
+ 		kfree_sensitive(ses->password);
+ 		ses->password = kstrdup(ctx->password, GFP_KERNEL);
++		if (!ses->password)
++			return -ENOMEM;
+ 		kfree_sensitive(ses->password2);
+ 		ses->password2 = kstrdup(ctx->password2, GFP_KERNEL);
++		if (!ses->password2) {
++			kfree_sensitive(ses->password);
++			ses->password = NULL;
++			return -ENOMEM;
++		}
+ 	}
+ 	STEAL_STRING(cifs_sb, ctx, domainname);
+ 	STEAL_STRING(cifs_sb, ctx, nodename);
 -- 
 2.43.0
 
