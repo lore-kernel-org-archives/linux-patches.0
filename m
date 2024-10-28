@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562488837;
-	Mon, 28 Oct 2024 06:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FFA08837;
+	Mon, 28 Oct 2024 06:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097927; cv=none; b=n5P/vMW1wPn53ubexl9xt8qgJnzF41oV6q6WZr6DEX7uHyLa09cmjcK4Xd2esM6Zb3WYW3F3WWEqHfjVO9zeqp503/a3VmLhXR/p/VJfSx9KgpCjsRCvOfm+ZZvmlZoFcCLoacJgC/dezplmIyMJH7f64U+qi1CzR60TQApeIQs=
+	t=1730097929; cv=none; b=Tc8ojQ5K4wkW1p82BBLg7zW/YSSOk92ZQ+UtVkz5YR1zJMmF2e8uuAuuH22xotPuR/2aa7sUbOWWpLQED+o2Rgc6S5wnbHwqj6azIz6Fn/yQAmZcC9yMb0FqxsNrdKD/2cjVwDaiNflrxbgUD96z5EMclY0CEIq/woTvFilAZWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097927; c=relaxed/simple;
-	bh=V+YLAFC5i6ULhrkyC56E9FnDYobR2VLRUH4eALv9hHg=;
+	s=arc-20240116; t=1730097929; c=relaxed/simple;
+	bh=zl1d/4TqxWKk/LN7VbKDKBwYQg+cqpf2HreWWSM6W5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2KPQ0FiHvG2gMe/KPM9nc1jSnm35HLD9oBe1UIE/zECiHwp5I21WdZbzyMl4/H5qJC39BicMNzfqQFcAbK9c6yRLe9KbhUigrV4Vd0sF3u3joQF4YHqbDD3IUeX3RYynAvvAlXvx7erv07PA+svdtN0UOXf02dPsLyt+CDxLwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OM6hx9D8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BQlhzHZzyDt19KO/prYeYo5E98GYANXa6fc92fGCjVDRuyOImRGMSbKqAwR+dBhaU1WdfVzgFije+SD5471JVBKhIY5PRwwZtoqAnVl0hYKLDmKZtZ6I1QxDhkE/A509NIEoeWO1xghZ82/511OxD0J9WdcsIEzxyYs3FeZy5VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ab6aESyN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OM6hx9D8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73E4C4CEC3;
-	Mon, 28 Oct 2024 06:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ab6aESyN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9DCC4CEC3;
+	Mon, 28 Oct 2024 06:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097927;
-	bh=V+YLAFC5i6ULhrkyC56E9FnDYobR2VLRUH4eALv9hHg=;
+	s=korg; t=1730097929;
+	bh=zl1d/4TqxWKk/LN7VbKDKBwYQg+cqpf2HreWWSM6W5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OM6hx9D891/XlMqL0a0wd4JRzI9hW9xO2MZ7eqDGxlUGLcw5me04ihUhJp0mWwzBD
-	 5waJWTHPF6gNPiT2AajDjzXofgNo43I3FofI0IipnyCeRccbQLdDFZnqpzSU2QQBtr
-	 gfGcnEG4chcpUSJRsRSlRmvVWk4mNZLK/xEFW/xI=
+	b=Ab6aESyNwj80Ey1WFHt82J8/L9Wn0/RdpB9ud06TrE4yfb2ziwzmuJBjmtCTFum8W
+	 m/JaO+j4nXAxprTTFa1AkJqPhnTnxyBPJtFJzAYPD1PIaW8phPDsuzCPektIr0wwzn
+	 6v5BiUaPMwyuJpwV406rlRHnlJ8ceemaB6SPWZUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	"kernelci.org bot" <bot@kernelci.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.6 208/208] task_work: make TWA_NMI_CURRENT handling conditional on IRQ_WORK
-Date: Mon, 28 Oct 2024 07:26:28 +0100
-Message-ID: <20241028062311.771469998@linuxfoundation.org>
+	Koba Ko <kobak@nvidia.com>,
+	"Matthew R. Ochs" <mochs@nvidia.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.6 181/208] ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM handler and context
+Date: Mon, 28 Oct 2024 07:26:01 +0100
+Message-ID: <20241028062311.089277221@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -54,72 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Koba Ko <kobak@nvidia.com>
 
-commit cec6937dd1aae1b38d147bd190cb895d06cf96d0 upstream.
+commit 088984c8d54c0053fc4ae606981291d741c5924b upstream.
 
-The TWA_NMI_CURRENT handling very much depends on IRQ_WORK, but that
-isn't universally enabled everywhere.
+PRMT needs to find the correct type of block to translate the PA-VA
+mapping for EFI runtime services.
 
-Maybe the IRQ_WORK infrastructure should just be unconditional - x86
-ends up indirectly enabling it through unconditionally enabling
-PERF_EVENTS, for example.  But it also gets enabled by having SMP
-support, or even if you just have PRINTK enabled.
+The issue arises because the PRMT is finding a block of type
+EFI_CONVENTIONAL_MEMORY, which is not appropriate for runtime services
+as described in Section 2.2.2 (Runtime Services) of the UEFI
+Specification [1]. Since the PRM handler is a type of runtime service,
+this causes an exception when the PRM handler is called.
 
-But in the meantime TWA_NMI_CURRENT causes tons of build failures on
-various odd minimal configs.  Which did show up in linux-next, but
-despite that nobody bothered to fix it or even inform me until -rc1 was
-out.
+    [Firmware Bug]: Unable to handle paging request in EFI runtime service
+    WARNING: CPU: 22 PID: 4330 at drivers/firmware/efi/runtime-wrappers.c:341
+        __efi_queue_work+0x11c/0x170
+    Call trace:
 
-Fixes: 466e4d801cd4 ("task_work: Add TWA_NMI_CURRENT as an additional notify mode")
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Reported-by: kernelci.org bot <bot@kernelci.org>
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Let PRMT find a block with EFI_MEMORY_RUNTIME for PRM handler and PRM
+context.
+
+If no suitable block is found, a warning message will be printed, but
+the procedure continues to manage the next PRM handler.
+
+However, if the PRM handler is actually called without proper allocation,
+it would result in a failure during error handling.
+
+By using the correct memory types for runtime services, ensure that the
+PRM handler and the context are properly mapped in the virtual address
+space during runtime, preventing the paging request error.
+
+The issue is really that only memory that has been remapped for runtime
+by the firmware can be used by the PRM handler, and so the region needs
+to have the EFI_MEMORY_RUNTIME attribute.
+
+Link: https://uefi.org/sites/default/files/resources/UEFI_Spec_2_10_Aug29.pdf # [1]
+Fixes: cefc7ca46235 ("ACPI: PRM: implement OperationRegion handler for the PlatformRtMechanism subtype")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Koba Ko <kobak@nvidia.com>
+Reviewed-by: Matthew R. Ochs <mochs@nvidia.com>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://patch.msgid.link/20241012205010.4165798-1-kobak@nvidia.com
+[ rjw: Subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/task_work.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/acpi/prmt.c |   27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
---- a/kernel/task_work.c
-+++ b/kernel/task_work.c
-@@ -6,12 +6,14 @@
+--- a/drivers/acpi/prmt.c
++++ b/drivers/acpi/prmt.c
+@@ -72,17 +72,21 @@ struct prm_module_info {
+ 	struct prm_handler_info handlers[];
+ };
  
- static struct callback_head work_exited; /* all we need is ->next == NULL */
- 
-+#ifdef CONFIG_IRQ_WORK
- static void task_work_set_notify_irq(struct irq_work *entry)
+-static u64 efi_pa_va_lookup(u64 pa)
++static u64 efi_pa_va_lookup(efi_guid_t *guid, u64 pa)
  {
- 	test_and_set_tsk_thread_flag(current, TIF_NOTIFY_RESUME);
- }
- static DEFINE_PER_CPU(struct irq_work, irq_work_NMI_resume) =
- 	IRQ_WORK_INIT_HARD(task_work_set_notify_irq);
-+#endif
+ 	efi_memory_desc_t *md;
+ 	u64 pa_offset = pa & ~PAGE_MASK;
+ 	u64 page = pa & PAGE_MASK;
  
- /**
-  * task_work_add - ask the @task to execute @work->func()
-@@ -59,6 +61,8 @@ int task_work_add(struct task_struct *ta
- 	if (notify == TWA_NMI_CURRENT) {
- 		if (WARN_ON_ONCE(task != current))
- 			return -EINVAL;
-+		if (!IS_ENABLED(CONFIG_IRQ_WORK))
-+			return -EINVAL;
- 	} else {
- 		/*
- 		 * Record the work call stack in order to print it in KASAN
-@@ -92,9 +96,11 @@ int task_work_add(struct task_struct *ta
- 	case TWA_SIGNAL_NO_IPI:
- 		__set_notify_signal(task);
- 		break;
-+#ifdef CONFIG_IRQ_WORK
- 	case TWA_NMI_CURRENT:
- 		irq_work_queue(this_cpu_ptr(&irq_work_NMI_resume));
- 		break;
-+#endif
- 	default:
- 		WARN_ON_ONCE(1);
- 		break;
+ 	for_each_efi_memory_desc(md) {
+-		if (md->phys_addr < pa && pa < md->phys_addr + PAGE_SIZE * md->num_pages)
++		if ((md->attribute & EFI_MEMORY_RUNTIME) &&
++		    (md->phys_addr < pa && pa < md->phys_addr + PAGE_SIZE * md->num_pages)) {
+ 			return pa_offset + md->virt_addr + page - md->phys_addr;
++		}
+ 	}
+ 
++	pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
++
+ 	return 0;
+ }
+ 
+@@ -148,9 +152,15 @@ acpi_parse_prmt(union acpi_subtable_head
+ 		th = &tm->handlers[cur_handler];
+ 
+ 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
+-		th->handler_addr = (void *)efi_pa_va_lookup(handler_info->handler_address);
+-		th->static_data_buffer_addr = efi_pa_va_lookup(handler_info->static_data_buffer_address);
+-		th->acpi_param_buffer_addr = efi_pa_va_lookup(handler_info->acpi_param_buffer_address);
++		th->handler_addr =
++			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
++
++		th->static_data_buffer_addr =
++			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
++
++		th->acpi_param_buffer_addr =
++			efi_pa_va_lookup(&th->guid, handler_info->acpi_param_buffer_address);
++
+ 	} while (++cur_handler < tm->handler_count && (handler_info = get_next_handler(handler_info)));
+ 
+ 	return 0;
+@@ -253,6 +263,13 @@ static acpi_status acpi_platformrt_space
+ 		if (!handler || !module)
+ 			goto invalid_guid;
+ 
++		if (!handler->handler_addr ||
++		    !handler->static_data_buffer_addr ||
++		    !handler->acpi_param_buffer_addr) {
++			buffer->prm_status = PRM_HANDLER_ERROR;
++			return AE_OK;
++		}
++
+ 		ACPI_COPY_NAMESEG(context.signature, "PRMC");
+ 		context.revision = 0x0;
+ 		context.reserved = 0x0;
 
 
