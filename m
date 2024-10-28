@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775CD18EFC9;
-	Mon, 28 Oct 2024 06:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B899C18E37C;
+	Mon, 28 Oct 2024 06:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097224; cv=none; b=dregtdXk4ZU/1iyY2qNBxicX8jIyJBKXvFflqpQQNTuMbi/BI94Ft6GGIH+YRwfE8J6XH0aZBg8awt0Ku8oYfoowijWMJ68OAnNhyrDkESl4stzzaBIPirDOvDQHJNVa1fwKrNnwd+hVi1A7nIVQOBN1PW6VlNGao1tVZX7lGYs=
+	t=1730097226; cv=none; b=PjBUWWN4qkE4dDwT9xnSXvLJxKM6jY2UlhC2v/Y3gzP7Lvi8DaBm1Nss4fUW+bS/rj5m/mTc9grIlEokea+rOBniAO1wLV1H7WLlwttyoYS8FMSz9Kl7vFBm2jZxj3aFBcL/LPbOCGnElheXfFJVUeszb6PJnI/JGq+bPpJZwDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097224; c=relaxed/simple;
-	bh=qSfZWW1Ti0VJtdTZnQB0+OquBJikqJ2G1Ste6aRjZs0=;
+	s=arc-20240116; t=1730097226; c=relaxed/simple;
+	bh=T55sEEFlA5F/umx8mK4PY9vhYREc6Cu8RKw7j4m2yDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kEfY2xJy+tVKyAMb/dY6ThnNVrj2nGyotOAuxSOAbxc9KRE1Hm+isOwvb8UYBOroMw53DyDYeTUFFq2zwJUH0N3RgHNsWquOlXTCngc76w1BzGpwNM5fOVBegsOezoZNW25aktL4stg/rO4uk9trrp5G3yVPoru+tUiNO37n1OU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+1w0BFF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q0oHov2Gr5J1/N7ufXb/XgKuzDnDu3BrnM2aJjhM4oFT3ZCz5zTyCtMr5b44XCi6aSwR7huGUSpOgvR8r+w9HHmJd+TzjKwBkQ3MEfC2/vVLnMexw8QQAJk6V2tT601sHv/LrV5qYqIZO0axRT5EhAOW4zoav7vvauPYpCFd1Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCxKsk40; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+1w0BFF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C9DC4CEC7;
-	Mon, 28 Oct 2024 06:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCxKsk40"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5608FC4CEC7;
+	Mon, 28 Oct 2024 06:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097224;
-	bh=qSfZWW1Ti0VJtdTZnQB0+OquBJikqJ2G1Ste6aRjZs0=;
+	s=korg; t=1730097226;
+	bh=T55sEEFlA5F/umx8mK4PY9vhYREc6Cu8RKw7j4m2yDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I+1w0BFFH+j8q4/LBqBVZUzSXHRFVsugg2wTD9G3j9GWASMzF0wpSC2EVbWMlZT24
-	 P762WN8wjoS0oSvhVzkSdmer/WwA9Jv+ce5661HRV+Yt+OtzlSgDznCxXz57T3FJiV
-	 Dpq3t3wmOUQFC2vCNhvvw0KDyYZ7zNvQolruk/XM=
+	b=bCxKsk40mYcFxwvQ0VBFLzoA2KvADVbxQgQojMtLq7hrld3qHCcY2ApTY55P4/mEp
+	 lCzprK5MJwWghWfi+1rYuxJ4mjns3/itaeHBhAZTi79nf+wLH16ZHdrELJKjyThxkT
+	 tRDmcn/+7927Ytv7p7UnJzu//hx4we1oRPETwajM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/137] irqchip/renesas-rzg2l: Add support for suspend to RAM
-Date: Mon, 28 Oct 2024 07:24:35 +0100
-Message-ID: <20241028062259.785700498@linuxfoundation.org>
+Subject: [PATCH 6.1 039/137] irqchip/renesas-rzg2l: Fix missing put_device
+Date: Mon, 28 Oct 2024 07:24:36 +0100
+Message-ID: <20241028062259.812634441@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -45,206 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
 
-[ Upstream commit 74d2ef5f6f4b2437e6292ab2502400e8048db4aa ]
+[ Upstream commit d038109ac1c6bf619473dda03a16a6de58170f7f ]
 
-The irqchip-renesas-rzg2l driver is used on RZ/G3S SoC. RZ/G3S can go into
-deep sleep states where power to different SoC's parts is cut off and RAM
-is switched to self-refresh. The resume from these states is done with the
-help of the bootloader.
+rzg2l_irqc_common_init() calls of_find_device_by_node(), but the
+corresponding put_device() call is missing.  This also gets reported by
+make coccicheck.
 
-The IA55 IRQ controller needs to be reconfigured when resuming from deep
-sleep state. For this the IA55 registers are cached in suspend and restored
-in resume.
+Make use of the cleanup interfaces from cleanup.h to call into
+__free_put_device(), which in turn calls into put_device when leaving
+function rzg2l_irqc_common_init() and variable "dev" goes out of scope.
 
-The IA55 IRQ controller is connected to GPIO controller and GIC as follows:
+To prevent that the device is put on successful completion, assign NULL to
+"dev" to prevent __free_put_device() from calling into put_device() within
+the successful path.
 
-                                      ┌──────────┐          ┌──────────┐
-                                      │          │ SPIX     │          │
-                                      │          ├─────────►│          │
-                                      │          │          │          │
-                                      │          │          │          │
-              ┌────────┐IRQ0-7        │  IA55    │          │  GIC     │
- Pin0 ───────►│        ├─────────────►│          │          │          │
-              │        │              │          │ PPIY     │          │
- ...          │  GPIO  │              │          ├─────────►│          │
-              │        │GPIOINT0-127  │          │          │          │
- PinN ───────►│        ├─────────────►│          │          │          │
-              └────────┘              └──────────┘          └──────────┘
+"make coccicheck" will still complain about missing put_device() calls,
+but those are false positives now.
 
-where:
-  - Pin0 is the first GPIO controller pin
-  - PinN is the last GPIO controller pin
-
-  - SPIX is the SPI interrupt with identifier X
-  - PPIY is the PPI interrupt with identifier Y
-
-Implement suspend/resume functionality with syscore_ops to be able to
-cache/restore the registers after/before the GPIO controller suspend/resume
-functions are invoked.
-
-As the syscore_ops suspend/resume functions do not take any argument make
-the driver private data static so it can be accessed from the
-suspend/resume functions.
-
-The IA55 interrupt controller is resumed before the GPIO controller. As
-GPIO pins could be in an a state which causes spurious interrupts, the
-reconfiguration of the interrupt controller is restricted to restore the
-interrupt type and leave them disabled.
-
-An eventually required interrupt enable operation will be done as part of
-the GPIO controller resume function after restoring the GPIO state.
-
-[ tglx: Massaged changelog ]
-
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Fixes: 3fed09559cd8 ("irqchip: Add RZ/G2L IA55 Interrupt Controller driver")
+Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20231120111820.87398-8-claudiu.beznea.uj@bp.renesas.com
-Stable-dep-of: d038109ac1c6 ("irqchip/renesas-rzg2l: Fix missing put_device")
+Link: https://lore.kernel.org/all/20241011172003.1242841-1-fabrizio.castro.jz@renesas.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-renesas-rzg2l.c | 68 ++++++++++++++++++++++++-----
- 1 file changed, 57 insertions(+), 11 deletions(-)
+ drivers/irqchip/irq-renesas-rzg2l.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
-index 61502a81dbb54..6905f78855ffa 100644
+index 6905f78855ffa..5df559252c6ef 100644
 --- a/drivers/irqchip/irq-renesas-rzg2l.c
 +++ b/drivers/irqchip/irq-renesas-rzg2l.c
-@@ -18,6 +18,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/reset.h>
- #include <linux/spinlock.h>
-+#include <linux/syscore_ops.h>
- 
- #define IRQC_IRQ_START			1
- #define IRQC_IRQ_COUNT			8
-@@ -55,17 +56,29 @@
- #define TINT_EXTRACT_HWIRQ(x)           FIELD_GET(GENMASK(15, 0), (x))
- #define TINT_EXTRACT_GPIOINT(x)         FIELD_GET(GENMASK(31, 16), (x))
- 
-+/**
-+ * struct rzg2l_irqc_reg_cache - registers cache (necessary for suspend/resume)
-+ * @iitsr: IITSR register
-+ * @titsr: TITSR registers
-+ */
-+struct rzg2l_irqc_reg_cache {
-+	u32	iitsr;
-+	u32	titsr[2];
-+};
-+
- /**
-  * struct rzg2l_irqc_priv - IRQ controller private data structure
-  * @base:	Controller's base address
-  * @fwspec:	IRQ firmware specific data
-  * @lock:	Lock to serialize access to hardware registers
-+ * @cache:	Registers cache for suspend/resume
+@@ -8,6 +8,7 @@
   */
--struct rzg2l_irqc_priv {
-+static struct rzg2l_irqc_priv {
- 	void __iomem			*base;
- 	struct irq_fwspec		fwspec[IRQC_NUM_IRQ];
- 	raw_spinlock_t			lock;
--};
-+	struct rzg2l_irqc_reg_cache	cache;
-+} *rzg2l_irqc_data;
  
- static struct rzg2l_irqc_priv *irq_data_to_priv(struct irq_data *data)
+ #include <linux/bitfield.h>
++#include <linux/cleanup.h>
+ #include <linux/clk.h>
+ #include <linux/err.h>
+ #include <linux/io.h>
+@@ -408,12 +409,12 @@ static int rzg2l_irqc_parse_interrupts(struct rzg2l_irqc_priv *priv,
+ 
+ static int rzg2l_irqc_init(struct device_node *node, struct device_node *parent)
  {
-@@ -282,6 +295,38 @@ static int rzg2l_irqc_set_type(struct irq_data *d, unsigned int type)
- 	return irq_chip_set_type_parent(d, IRQ_TYPE_LEVEL_HIGH);
- }
- 
-+static int rzg2l_irqc_irq_suspend(void)
-+{
-+	struct rzg2l_irqc_reg_cache *cache = &rzg2l_irqc_data->cache;
-+	void __iomem *base = rzg2l_irqc_data->base;
-+
-+	cache->iitsr = readl_relaxed(base + IITSR);
-+	for (u8 i = 0; i < 2; i++)
-+		cache->titsr[i] = readl_relaxed(base + TITSR(i));
-+
-+	return 0;
-+}
-+
-+static void rzg2l_irqc_irq_resume(void)
-+{
-+	struct rzg2l_irqc_reg_cache *cache = &rzg2l_irqc_data->cache;
-+	void __iomem *base = rzg2l_irqc_data->base;
-+
-+	/*
-+	 * Restore only interrupt type. TSSRx will be restored at the
-+	 * request of pin controller to avoid spurious interrupts due
-+	 * to invalid PIN states.
-+	 */
-+	for (u8 i = 0; i < 2; i++)
-+		writel_relaxed(cache->titsr[i], base + TITSR(i));
-+	writel_relaxed(cache->iitsr, base + IITSR);
-+}
-+
-+static struct syscore_ops rzg2l_irqc_syscore_ops = {
-+	.suspend	= rzg2l_irqc_irq_suspend,
-+	.resume		= rzg2l_irqc_irq_resume,
-+};
-+
- static const struct irq_chip irqc_chip = {
- 	.name			= "rzg2l-irqc",
- 	.irq_eoi		= rzg2l_irqc_eoi,
-@@ -366,7 +411,6 @@ static int rzg2l_irqc_init(struct device_node *node, struct device_node *parent)
++	struct platform_device *pdev = of_find_device_by_node(node);
++	struct device *dev __free(put_device) = pdev ? &pdev->dev : NULL;
  	struct irq_domain *irq_domain, *parent_domain;
- 	struct platform_device *pdev;
+-	struct platform_device *pdev;
  	struct reset_control *resetn;
--	struct rzg2l_irqc_priv *priv;
  	int ret;
  
- 	pdev = of_find_device_by_node(node);
-@@ -379,15 +423,15 @@ static int rzg2l_irqc_init(struct device_node *node, struct device_node *parent)
+-	pdev = of_find_device_by_node(node);
+ 	if (!pdev)
  		return -ENODEV;
- 	}
  
--	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
--	if (!priv)
-+	rzg2l_irqc_data = devm_kzalloc(&pdev->dev, sizeof(*rzg2l_irqc_data), GFP_KERNEL);
-+	if (!rzg2l_irqc_data)
- 		return -ENOMEM;
+@@ -467,6 +468,17 @@ static int rzg2l_irqc_init(struct device_node *node, struct device_node *parent)
  
--	priv->base = devm_of_iomap(&pdev->dev, pdev->dev.of_node, 0, NULL);
--	if (IS_ERR(priv->base))
--		return PTR_ERR(priv->base);
-+	rzg2l_irqc_data->base = devm_of_iomap(&pdev->dev, pdev->dev.of_node, 0, NULL);
-+	if (IS_ERR(rzg2l_irqc_data->base))
-+		return PTR_ERR(rzg2l_irqc_data->base);
+ 	register_syscore_ops(&rzg2l_irqc_syscore_ops);
  
--	ret = rzg2l_irqc_parse_interrupts(priv, node);
-+	ret = rzg2l_irqc_parse_interrupts(rzg2l_irqc_data, node);
- 	if (ret) {
- 		dev_err(&pdev->dev, "cannot parse interrupts: %d\n", ret);
- 		return ret;
-@@ -410,17 +454,19 @@ static int rzg2l_irqc_init(struct device_node *node, struct device_node *parent)
- 		goto pm_disable;
- 	}
- 
--	raw_spin_lock_init(&priv->lock);
-+	raw_spin_lock_init(&rzg2l_irqc_data->lock);
- 
- 	irq_domain = irq_domain_add_hierarchy(parent_domain, 0, IRQC_NUM_IRQ,
- 					      node, &rzg2l_irqc_domain_ops,
--					      priv);
-+					      rzg2l_irqc_data);
- 	if (!irq_domain) {
- 		dev_err(&pdev->dev, "failed to add irq domain\n");
- 		ret = -ENOMEM;
- 		goto pm_put;
- 	}
- 
-+	register_syscore_ops(&rzg2l_irqc_syscore_ops);
++	/*
++	 * Prevent the cleanup function from invoking put_device by assigning
++	 * NULL to dev.
++	 *
++	 * make coccicheck will complain about missing put_device calls, but
++	 * those are false positives, as dev will be automatically "put" via
++	 * __free_put_device on the failing path.
++	 * On the successful path we don't actually want to "put" dev.
++	 */
++	dev = NULL;
 +
  	return 0;
  
