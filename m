@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EDD18E74D;
-	Mon, 28 Oct 2024 06:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18F218E37C;
+	Mon, 28 Oct 2024 06:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097606; cv=none; b=Agca8DlfNiIdk3RQgAVXhOeIfnKSPcQ55eXBNgdIthZBsnMA76X4Jc0JFMGbYJYFuTf+XUrrtu+JxMmK2Gkx5rcc0+McqQZ0Mjeu5Ny7W15RrRpQ0HkZJtmc5Vt77rYN7mPK0CnKukyItf3SgCKIwksl1ai8i5BsiZ6JCsGT07g=
+	t=1730097608; cv=none; b=MsNTp6jWV1NmxY1v5xkDKEhP+9n9W86Evu6k9cvUAPNvpxpARpF4KjQkCp5xPX0zbhRxjfpTaRKRrhd+7EKFW1thnfPVfisOXx3JbKFxBIJLzXTHAnc/PzSbBHrr7e3bRYXmuNbJaJsWeHhJcH0kJL60kUvHXzbTpxQvVqzX3Xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097606; c=relaxed/simple;
-	bh=qdRODHI8wre2v6KI0H/NyibbjPgZc/geeXlcLCtg/P8=;
+	s=arc-20240116; t=1730097608; c=relaxed/simple;
+	bh=Rr/T9s1Qf9qRBt5MpoQFC79LoBiiRA3jnbenYpvE+FI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TQf6q/68+OU415ICtlhg6Npa5ay8PHI5CrtEuFBfHVSvsKiYdXRSYKVNIFpNICw7TeVSQ8YnT+v7qF6EWx4G4NmUli6/f8cQwjI1RlrqiJ8BjAsQKsDfzASt7nj7lpWe4ozx/R9GA12GkxQgOFVv2c4dmjrGMmqJqjIUjZvJ5cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4SGPsqL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pC3ChoPrVI9UeSIpt3MM0zqFHJMkyY6Sx10AIsQD/+1zmODAVA3CKROPciBQRy7yXqjqTubnSrdyRNHq8YgxnOxCcs4AYNcT23/IK9jYe/cftSrc1LyhNhHBhVLpCJm5p5+gwqpgzVXfs9txEA/3bJFbhFfzJ+edrv4KOWNK/34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqvFV6qZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4SGPsqL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D5EC4CEC3;
-	Mon, 28 Oct 2024 06:40:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqvFV6qZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732C9C4CEE3;
+	Mon, 28 Oct 2024 06:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097606;
-	bh=qdRODHI8wre2v6KI0H/NyibbjPgZc/geeXlcLCtg/P8=;
+	s=korg; t=1730097608;
+	bh=Rr/T9s1Qf9qRBt5MpoQFC79LoBiiRA3jnbenYpvE+FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4SGPsqLwHN21PV0HptkHY73yMJCf4WVqCnaNMaB3CSZWY3q8knRCilIJPOZdeSNs
-	 YJf97YvwZbAeedsQ2MTrxRPGWgxzhonUxa2JW+EHwgRIk1ltNGqay+/WKuUNvmfJMq
-	 x/JD2bdBzs6YRTyNPrjLceX/kPEwUPEHnvrgfRxM=
+	b=wqvFV6qZht9omITvSgd9wEWtpscAI38WCladyDa9w8dv898xUit8G7MDqbFbSfl8P
+	 42mdH3AdKtBL8Pma6hHaXD56kteFkJPyyaGzIoR9j9U0zqegL4Tytssjt9CIJJgDBD
+	 dejGx3g7Ls37Z5U0k7BBCbcri/I1NoIMA709HT9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/208] iio: frequency: {admv4420,adrf6780}: format Kconfig entries
-Date: Mon, 28 Oct 2024 07:23:21 +0100
-Message-ID: <20241028062307.179601439@linuxfoundation.org>
+Subject: [PATCH 6.6 061/208] irqchip/renesas-rzg2l: Document structure members
+Date: Mon, 28 Oct 2024 07:24:01 +0100
+Message-ID: <20241028062308.157728017@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -51,68 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit 5c9644a683e1690387a476a4f5f6bd5cf9a1d695 ]
+[ Upstream commit b94f455372ad6e6b4da8e8ed9864d9c7daaf54b8 ]
 
-Format the entries of these drivers in the Kconfig, where spaces
-instead of tabs were used.
+Document structure members to follow the requirements specified in
+maintainer-tip, section 4.3.7. Struct declarations and initializers.
 
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20241007-ad2s1210-select-v2-1-7345d228040f@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 6b8e9dbfaed4 ("iio: frequency: admv4420: fix missing select REMAP_SPI in Kconfig")
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20231120111820.87398-5-claudiu.beznea.uj@bp.renesas.com
+Stable-dep-of: d038109ac1c6 ("irqchip/renesas-rzg2l: Fix missing put_device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/frequency/Kconfig | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ drivers/irqchip/irq-renesas-rzg2l.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/iio/frequency/Kconfig b/drivers/iio/frequency/Kconfig
-index 71de6cc4a1584..f7534dd8a8cae 100644
---- a/drivers/iio/frequency/Kconfig
-+++ b/drivers/iio/frequency/Kconfig
-@@ -82,25 +82,25 @@ config ADMV1014
- 	  module will be called admv1014.
+diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
+index 3ea312a27492b..ac925da17876c 100644
+--- a/drivers/irqchip/irq-renesas-rzg2l.c
++++ b/drivers/irqchip/irq-renesas-rzg2l.c
+@@ -55,6 +55,12 @@
+ #define TINT_EXTRACT_HWIRQ(x)           FIELD_GET(GENMASK(15, 0), (x))
+ #define TINT_EXTRACT_GPIOINT(x)         FIELD_GET(GENMASK(31, 16), (x))
  
- config ADMV4420
--       tristate "Analog Devices ADMV4420 K Band Downconverter"
--       depends on SPI
--       help
--         Say yes here to build support for Analog Devices K Band
--         Downconverter with integrated Fractional-N PLL and VCO.
-+	tristate "Analog Devices ADMV4420 K Band Downconverter"
-+	depends on SPI
-+	help
-+	  Say yes here to build support for Analog Devices K Band
-+	  Downconverter with integrated Fractional-N PLL and VCO.
- 
--         To compile this driver as a module, choose M here: the
--         module will be called admv4420.
-+	  To compile this driver as a module, choose M here: the
-+	  module will be called admv4420.
- 
- config ADRF6780
--        tristate "Analog Devices ADRF6780 Microwave Upconverter"
--        depends on SPI
--        depends on COMMON_CLK
--        help
--          Say yes here to build support for Analog Devices ADRF6780
--          5.9 GHz to 23.6 GHz, Wideband, Microwave Upconverter.
--
--          To compile this driver as a module, choose M here: the
--          module will be called adrf6780.
-+	tristate "Analog Devices ADRF6780 Microwave Upconverter"
-+	depends on SPI
-+	depends on COMMON_CLK
-+	help
-+	  Say yes here to build support for Analog Devices ADRF6780
-+	  5.9 GHz to 23.6 GHz, Wideband, Microwave Upconverter.
-+
-+	  To compile this driver as a module, choose M here: the
-+	  module will be called adrf6780.
- 
- endmenu
- endmenu
++/**
++ * struct rzg2l_irqc_priv - IRQ controller private data structure
++ * @base:	Controller's base address
++ * @fwspec:	IRQ firmware specific data
++ * @lock:	Lock to serialize access to hardware registers
++ */
+ struct rzg2l_irqc_priv {
+ 	void __iomem			*base;
+ 	struct irq_fwspec		fwspec[IRQC_NUM_IRQ];
 -- 
 2.43.0
 
