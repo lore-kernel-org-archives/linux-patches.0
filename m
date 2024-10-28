@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A398837;
-	Mon, 28 Oct 2024 06:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D648837;
+	Mon, 28 Oct 2024 06:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098383; cv=none; b=LBUw6LeUXqvHbPvF5c1e4UoxNVrI0jrtdWiOUWlKLNJx96bATdRAa7ROtARoJ62Ct8/YMs6jVv926LEq77OSuBqxu7OBxc94pZQ6a5vXOe3E7vqp/VdHbpNKcZfKplYBJLpv4PJ5aLAe1EaLhjoJmo426xapjjvLHswgeURGxI0=
+	t=1730098385; cv=none; b=LG+auBMxh09IqATurw96cgPjIDha/mY7oFtHKPnnqGhANmOFPzx7TtXHkex2KfKxWU94x+3uleU63et+XV5g+DsJ640QE36iHykDcc3si2efQ4YoWPMydlri8O4f0hKsWt9Bnit5hqeLY9XZ3e/VDKcw5VXIh/JR0EgNaTuovwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098383; c=relaxed/simple;
-	bh=LwvZ+n65uKRjcaxDjt/JHN+RVeD9OtITbEj0nrRQQ74=;
+	s=arc-20240116; t=1730098385; c=relaxed/simple;
+	bh=x03zpb1kTnGrHdtPGgV0QOSV4zwamE+3EXYAtH/uROs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ty2N0IvpbP46poxXMjAgEyigfTdxBRY4lDbPgt9mzphMNjDA8mVE/usdi2BmE3UXLemdpJASH9ck5FsGF14EUmeVYYJ/yP0BF+CHZKW6oEEGsUchjEULlp66y83gDeXVXL1EFjLF5wnlMMsMpVV4FtndrJ0CMSgayzLInrfRRDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yum2DKGD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IadIt0vyoGmtokPr5mFyrVHp3uLVOOH/ChA7Hu5sXXY3oHDr1h5Gb0RKwKUxbuSPsT2Temx6iOTv2T/M8wWfb2rT+4AYaAzjONuj3dVN4bQnkVm8Gc3siLp1CaXuC6dX85wdt0WX+XalurmlLQ7th5Tu1g21wgBBX8RN/+4qL4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izup02ge; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yum2DKGD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22883C4CEC7;
-	Mon, 28 Oct 2024 06:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izup02ge"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61E91C4CEC3;
+	Mon, 28 Oct 2024 06:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098383;
-	bh=LwvZ+n65uKRjcaxDjt/JHN+RVeD9OtITbEj0nrRQQ74=;
+	s=korg; t=1730098385;
+	bh=x03zpb1kTnGrHdtPGgV0QOSV4zwamE+3EXYAtH/uROs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yum2DKGDDecIWKvOxVsMNDYNskjkfI4LhX+5Ya/V7KdjJXweUGfOwtgm7rsR82at1
-	 InItXdJD5LlBp+gco63H/ThdftxAQxv4sUz5Yi/GHDtK7loWQscPgDKajaR0tBkm3S
-	 6//t6mEtrXYnIDSEO/umaCg4dgbeZktyytv8sM04=
+	b=izup02gePcu7pMm0Flu/B7agl86wIqdgLbWAjoNXm9/G8w+uDBWA/mjJacLoa86qQ
+	 nunKSfLBgeXqVBGdvBeKqRhyE/NFMbz+7A9iM+hVbk9w/H+rkSb87vnYecYYBds4hH
+	 2qN0XN1zNzuDJWWArg6tmBE95at9qX27TmYRW9UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Mamedov <rm@romanrm.net>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.11 202/261] btrfs: clear force-compress on remount when compress mount option is given
-Date: Mon, 28 Oct 2024 07:25:44 +0100
-Message-ID: <20241028062317.120060647@linuxfoundation.org>
+	Tim Harvey <tharvey@gateworks.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 176/261] net: dsa: microchip: disable EEE for KSZ879x/KSZ877x/KSZ876x
+Date: Mon, 28 Oct 2024 07:25:18 +0100
+Message-ID: <20241028062316.415053865@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -51,73 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Tim Harvey <tharvey@gateworks.com>
 
-commit 3510e684b8f6a569c2f8b86870da116e2ffeec2d upstream.
+[ Upstream commit ee76eb24343bdd5450eb87572865a4d7fffd335b ]
 
-After the migration to use fs context for processing mount options we had
-a slight change in the semantics for remounting a filesystem that was
-mounted with compress-force. Before we could clear compress-force by
-passing only "-o compress[=algo]" during a remount, but after that change
-that does not work anymore, force-compress is still present and one needs
-to pass "-o compress-force=no,compress[=algo]" to the mount command.
+The well-known errata regarding EEE not being functional on various KSZ
+switches has been refactored a few times. Recently the refactoring has
+excluded several switches that the errata should also apply to.
 
-Example, when running on a kernel 6.8+:
+Disable EEE for additional switches with this errata and provide
+additional comments referring to the public errata document.
 
-  $ mount -o compress-force=zlib:9 /dev/sdi /mnt/sdi
-  $ mount | grep sdi
-  /dev/sdi on /mnt/sdi type btrfs (rw,relatime,compress-force=zlib:9,discard=async,space_cache=v2,subvolid=5,subvol=/)
+The original workaround for the errata was applied with a register
+write to manually disable the EEE feature in MMD 7:60 which was being
+applied for KSZ9477/KSZ9897/KSZ9567 switch ID's.
 
-  $ mount -o remount,compress=zlib:5 /mnt/sdi
-  $ mount | grep sdi
-  /dev/sdi on /mnt/sdi type btrfs (rw,relatime,compress-force=zlib:5,discard=async,space_cache=v2,subvolid=5,subvol=/)
+Then came commit 26dd2974c5b5 ("net: phy: micrel: Move KSZ9477 errata
+fixes to PHY driver") and commit 6068e6d7ba50 ("net: dsa: microchip:
+remove KSZ9477 PHY errata handling") which moved the errata from the
+switch driver to the PHY driver but only for PHY_ID_KSZ9477 (PHY ID)
+however that PHY code was dead code because an entry was never added
+for PHY_ID_KSZ9477 via MODULE_DEVICE_TABLE.
 
-On a 6.7 kernel (or older):
+This was apparently realized much later and commit 54a4e5c16382 ("net:
+phy: micrel: add Microchip KSZ 9477 to the device table") added the
+PHY_ID_KSZ9477 to the PHY driver but as the errata was only being
+applied to PHY_ID_KSZ9477 it's not completely clear what switches
+that relates to.
 
-  $ mount -o compress-force=zlib:9 /dev/sdi /mnt/sdi
-  $ mount | grep sdi
-  /dev/sdi on /mnt/sdi type btrfs (rw,relatime,compress-force=zlib:9,discard=async,space_cache=v2,subvolid=5,subvol=/)
+Later commit 6149db4997f5 ("net: phy: micrel: fix KSZ9477 PHY issues
+after suspend/resume") breaks this again for all but KSZ9897 by only
+applying the errata for that PHY ID.
 
-  $ mount -o remount,compress=zlib:5 /mnt/sdi
-  $ mount | grep sdi
-  /dev/sdi on /mnt/sdi type btrfs (rw,relatime,compress=zlib:5,discard=async,space_cache=v2,subvolid=5,subvol=/)
+Following that this was affected with commit 08c6d8bae48c("net: phy:
+Provide Module 4 KSZ9477 errata (DS80000754C)") which removes
+the blatant register write to MMD 7:60 and replaces it by
+setting phydev->eee_broken_modes = -1 so that the generic phy-c45 code
+disables EEE but this is only done for the KSZ9477_CHIP_ID (Switch ID).
 
-So update btrfs_parse_param() to clear "compress-force" when "compress" is
-given, providing the same semantics as kernel 6.7 and older.
+Lastly commit 0411f73c13af ("net: dsa: microchip: disable EEE for
+KSZ8567/KSZ9567/KSZ9896/KSZ9897.") adds some additional switches
+that were missing to the errata due to the previous changes.
 
-Reported-by: Roman Mamedov <rm@romanrm.net>
-Link: https://lore.kernel.org/linux-btrfs/20241014182416.13d0f8b0@nvm/
-CC: stable@vger.kernel.org # 6.8+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This commit adds an additional set of switches.
+
+Fixes: 0411f73c13af ("net: dsa: microchip: disable EEE for KSZ8567/KSZ9567/KSZ9896/KSZ9897.")
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20241018160658.781564-1-tharvey@gateworks.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/super.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/dsa/microchip/ksz_common.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index 98fa0f382480..3f8673f97432 100644
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -340,6 +340,15 @@ static int btrfs_parse_param(struct fs_context *fc, struct fs_parameter *param)
- 		fallthrough;
- 	case Opt_compress:
- 	case Opt_compress_type:
-+		/*
-+		 * Provide the same semantics as older kernels that don't use fs
-+		 * context, specifying the "compress" option clears
-+		 * "force-compress" without the need to pass
-+		 * "compress-force=[no|none]" before specifying "compress".
-+		 */
-+		if (opt != Opt_compress_force && opt != Opt_compress_force_type)
-+			btrfs_clear_opt(ctx->mount_opt, FORCE_COMPRESS);
-+
- 		if (opt == Opt_compress || opt == Opt_compress_force) {
- 			ctx->compress_type = BTRFS_COMPRESS_ZLIB;
- 			ctx->compress_level = BTRFS_ZLIB_DEFAULT_LEVEL;
+diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
+index 1491099528be8..5ec21bda8ab63 100644
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -2579,26 +2579,27 @@ static u32 ksz_get_phy_flags(struct dsa_switch *ds, int port)
+ 			return MICREL_KSZ8_P1_ERRATA;
+ 		break;
+ 	case KSZ8567_CHIP_ID:
++		/* KSZ8567R Errata DS80000752C Module 4 */
++	case KSZ8765_CHIP_ID:
++	case KSZ8794_CHIP_ID:
++	case KSZ8795_CHIP_ID:
++		/* KSZ879x/KSZ877x/KSZ876x Errata DS80000687C Module 2 */
+ 	case KSZ9477_CHIP_ID:
++		/* KSZ9477S Errata DS80000754A Module 4 */
+ 	case KSZ9567_CHIP_ID:
++		/* KSZ9567S Errata DS80000756A Module 4 */
+ 	case KSZ9896_CHIP_ID:
++		/* KSZ9896C Errata DS80000757A Module 3 */
+ 	case KSZ9897_CHIP_ID:
+-		/* KSZ9477 Errata DS80000754C
+-		 *
+-		 * Module 4: Energy Efficient Ethernet (EEE) feature select must
+-		 * be manually disabled
++		/* KSZ9897R Errata DS80000758C Module 4 */
++		/* Energy Efficient Ethernet (EEE) feature select must be manually disabled
+ 		 *   The EEE feature is enabled by default, but it is not fully
+ 		 *   operational. It must be manually disabled through register
+ 		 *   controls. If not disabled, the PHY ports can auto-negotiate
+ 		 *   to enable EEE, and this feature can cause link drops when
+ 		 *   linked to another device supporting EEE.
+ 		 *
+-		 * The same item appears in the errata for the KSZ9567, KSZ9896,
+-		 * and KSZ9897.
+-		 *
+-		 * A similar item appears in the errata for the KSZ8567, but
+-		 * provides an alternative workaround. For now, use the simple
+-		 * workaround of disabling the EEE feature for this device too.
++		 * The same item appears in the errata for all switches above.
+ 		 */
+ 		return MICREL_NO_EEE;
+ 	}
 -- 
-2.47.0
+2.43.0
 
 
 
