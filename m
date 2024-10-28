@@ -1,157 +1,256 @@
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2050.outbound.protection.outlook.com [40.107.94.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDFFD1DD0C7;
-	Mon, 28 Oct 2024 15:02:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730127724; cv=fail; b=U9f3OKODFfsV06rB0gdNArsJlYi+xF4W0/fwE/oXGetW5TMO+iW/pPcRco277ygkCR07ka9WGkKe2BBldq5yRruVu0cUyllSoQSwVL61pJ2Zc9uLIOvOtBTnTISP2f36Un7xX8MswbLau9wgobNOmN8mNQcf2DAL4lMYZQpUHOw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730127724; c=relaxed/simple;
-	bh=kzHewhwwd8ao1CxsuP+JS1guIUwYEyBD9RK41jRZL0o=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ad5jNQEzVctTTtuaYEey9fgXmgAvbU1RV2ArQKH4hlwC1C7jgIJBZsEcQdSwRN1BoTTAtwGpEtvkJb+3ay1DziO2XJCfE3UT//zVuXwZrF9fNdksNdpPbU6Wk/s97cq/IKFOfbKJcJKWNR7tPTNrnMEMgK7vosxxVGE0RrKiwQE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=IvZJKnoE; arc=fail smtp.client-ip=40.107.94.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27431DD0E9
+	for <patches@lists.linux.dev>; Mon, 28 Oct 2024 15:45:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1730130313; cv=none; b=dW1+9TlTwXXNKa1nzbdrM17UcmgA7B2pXEq45ransWSROVxarAw/GVpELGnDj61hFVih5U3cm+DS57NuHLcV+ONLqbFmN9cvSWHiEgu3qAPSjakcknDNprMFyIFL/fTQPJeDK69rHiO5KCts69GgchahusjRoEtMOzae/XSP8jo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1730130313; c=relaxed/simple;
+	bh=U2QXffbO67R3C2xSt619DnG+5G2mHfdrhPPetMCeFeI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=E1B4OsFiC/VdO2xwy6CGlYjDfQ4fFJNeKCy+V33/q8ceUpvRZ/g6pJHCys01q16Y3HXqoCPSbxukO/517ZnYJGP718hzq7Nl/TnimezF8auUiT/0Q1d3GS/Vx4fzFdK24UKHvpA/I/qKliGt1pWkSpApzDAO9HakfDxJHwVh/yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NRtUmjdk; arc=none smtp.client-ip=209.85.217.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="IvZJKnoE"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uDw0lGCtew3RS7HdFBroYVDfQWC+aoPBi2GNupZDh4v8jyerfacOaYTgAC6BSmHaf8ulgz5+4iSMGotDeR3IGo8yB7eomhXTKKR4B8OCEXlKaVK8SiBhZmSiSkelG1I8vnVoHoHR6yPKktyzEo8T9OqNVDKgr7Gc6m4n3RIPaEF00vJwj3VC+DMhkHOt+NnNxaAmka6pb6lWVjSonx6Qi47CEozxsPjwg00RE1KBIUoAVP9r9aiBbuUFtYSJ3eLpg4AJW6RwQeC/trbHxaLd33L/7SeTXMI1zNLJNfw3oRU+svZQ13us3FmKlFJHPWzfcDQIzLzzcSvx4775JT+Z+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hGY3u7zO+pGvl5JJqmjXHuv6YVHyYlM+a3+QwvODDEo=;
- b=pQ9fdsinwkYdpl91hnkRWjzMmz1vVHi4ahV7kr+WKR5uUJxkpw6/hyUPD2s0WViKagI4hEHXu/LeAAXbIlxJF0Dv4Ld343g0My24k7azZEefVfxyf34J2Re//PZloMUyksgEJFz6GOlKpt11OFNxbDz99uvBrC4wRA5bYrR/VVMlrZR2hZM+XwSzm6rSuEL5TJCpEdUy3bAeeNgi7QRWYNq+x/Z7qm0J2iJxSKBtZ+Cdapha+pcEcz5sjQ0PeFirVn6nPpefrgCfwR9ze4JiA0dc43e0a4DPU5ieohphvvv4PiYx9Ggl+9zBd5FZhVpq8bG91x2pQxmr+ssWTdChNw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=linaro.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hGY3u7zO+pGvl5JJqmjXHuv6YVHyYlM+a3+QwvODDEo=;
- b=IvZJKnoE4D0LoYl9tdAz3jSIpKQ7dH+e5mXofDDiRKX/VAa/O66tvN87OXrB+BcD62+YdBNgAEwxhpHxc6czgC62hMmOPQP3PmMDNPXXrv8uwOICZwjUI1WCRF6148eMXR3ZeEnBNqqSFd7//FtI59oFeG3cYzU9mNn4G4Q3AS4zq8lC2oZxKM+Qnkz8O+EFVNq5HZAJJQCpO/kCoJTAFNONsJMrKJ1EsKbfe7B51m6XGWrXYgljipNc0tUcow1Rs8Czb/LKFUp0AcYOn4g6JKzS+rkXaGwG9QwAq581WQidPjfE7FunsG2NtjDV3h6wE4VrOdsPCxaDvKFE6o3MUA==
-Received: from MW4PR04CA0315.namprd04.prod.outlook.com (2603:10b6:303:82::20)
- by SA3PR12MB8440.namprd12.prod.outlook.com (2603:10b6:806:2f8::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.17; Mon, 28 Oct
- 2024 15:01:54 +0000
-Received: from CO1PEPF000044F4.namprd05.prod.outlook.com
- (2603:10b6:303:82:cafe::9) by MW4PR04CA0315.outlook.office365.com
- (2603:10b6:303:82::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.24 via Frontend
- Transport; Mon, 28 Oct 2024 15:01:54 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CO1PEPF000044F4.mail.protection.outlook.com (10.167.241.74) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8114.16 via Frontend Transport; Mon, 28 Oct 2024 15:01:53 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 28 Oct
- 2024 08:01:28 -0700
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 28 Oct
- 2024 08:01:28 -0700
-Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Mon, 28 Oct 2024 08:01:26 -0700
-Date: Mon, 28 Oct 2024 08:01:24 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Zhangfei Gao <zhangfei.gao@linaro.org>
-CC: <jgg@nvidia.com>, <kevin.tian@intel.com>, <will@kernel.org>,
-	<joro@8bytes.org>, <suravee.suthikulpanit@amd.com>, <robin.murphy@arm.com>,
-	<dwmw2@infradead.org>, <baolu.lu@linux.intel.com>, <shuah@kernel.org>,
-	<linux-kernel@vger.kernel.org>, <iommu@lists.linux.dev>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-kselftest@vger.kernel.org>,
-	<eric.auger@redhat.com>, <jean-philippe@linaro.org>, <mdf@kernel.org>,
-	<mshavit@google.com>, <shameerali.kolothum.thodi@huawei.com>,
-	<smostafa@google.com>, <yi.l.liu@intel.com>, <aik@amd.com>,
-	<patches@lists.linux.dev>
-Subject: Re: [PATCH v5 06/13] iommufd: Allow pt_id to carry viommu_id for
- IOMMU_HWPT_ALLOC
-Message-ID: <Zx+nRJrlmAD/7H8w@Asurada-Nvidia>
-References: <cover.1729897352.git.nicolinc@nvidia.com>
- <4f5ed9d75c23a503ffe672a85cf9010569652794.1729897352.git.nicolinc@nvidia.com>
- <CABQgh9Gkt5tsw+wr_=WeA+m=Kz2xY5Z7aSBNhHCvBG2r=7O3TQ@mail.gmail.com>
- <CABQgh9EgXsyHDzZHK2FMuUw-eu9zeczyMGLTUjS3AKYUHKwwDg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NRtUmjdk"
+Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-4a47cdaf158so1495761137.0
+        for <patches@lists.linux.dev>; Mon, 28 Oct 2024 08:45:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730130310; x=1730735110; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=75XNMAa64Nrib7pgLMg1Z1XYi4OYy86joo0hy0CXwKI=;
+        b=NRtUmjdkqcLb9Z40gRn7IYP+2ftiGx8OxXRjJiVQ0nVUAaCX5VrS2NM5N3INKNqJN4
+         5BJs7Xzgo5TwW6RaPY3ybU996cq2jWO5YbYOuktcrE1dwvIg9BE+cgfeB/m1KjNY9QPd
+         FpGpV1I7Wmvty9dzxkESl1ujgOm97NlmGLt0E4xoSru9pkNDDi088YLKITiU+9KY/TCu
+         9X2W0ep/ZS8x16rEvrCEzhHBQTHTeuona8T0kHYS7CbbD1ZVOzVnU6+kM9rW2El+6FRj
+         qC/FMR4cHPrk7yGynn1e2lWErt+zLpqxEPoDe2bbqhwDJvncNzA/bTOUr7b9/nBLuQ3b
+         frXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730130310; x=1730735110;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=75XNMAa64Nrib7pgLMg1Z1XYi4OYy86joo0hy0CXwKI=;
+        b=rkPnS7TIJKISVIBEtRakc1acTeBoFgespwVklS7wz78q/XBTcOKqiS6tSjo2LwvWT/
+         Faxk8DihMUBem2XqWbbCvAT3vdAFH3RDFZ8AesGEqWh+IzVAegUpiYfevBZCAtw7HraX
+         AnRHJr0EE2KwTSWND2gMlmRGo9a0KsPrBQ3JEvfjj50vCInyEX4uuwx0wYB32RXLyXN4
+         pyYRB5G89cFd5lnJFZB+E4TRhPGPGWKTNTssq8miJ0aPy8O/V/JH+PD3R0J8hwj1WaB1
+         Le8UzC8o6I3R9PzH5EcIBaqDA/uQbsTQbPo/vqBdDCuW2ctJ1Cl7jMaQJcdyvq+aMiv5
+         sZjw==
+X-Forwarded-Encrypted: i=1; AJvYcCUopPraulhRieR6gxsyXZQlFf52xmCOwsaX5MJ0w/HunfiaKY2IzTdM5F16S7y/L7M/udc8Vtwx@lists.linux.dev
+X-Gm-Message-State: AOJu0YzNJZ1n+5OVP0oN7nw1h7spxxKTjhTTaquHJyTQ5isfbgJ9TcP6
+	Tl6/UbJrirbI3qm3F3RPHB/7XYe4MZUbyuF2mEMO8l49Kub210+wk+Rgl+ZCbeCoE2ukkb2hDq1
+	I2YOSkx7BPTUkrXPBzuhW7mFZXU15uunX7LANYw==
+X-Google-Smtp-Source: AGHT+IGLxPJJ2NCoGI8hRsiiwLEAN/a5Dqx+FocGdkHpFfwjM3keyeu4LatSC2h948xtYi1UWvkv7JVZmh/VHgunRi4=
+X-Received: by 2002:a05:6102:2924:b0:4a5:b543:ee64 with SMTP id
+ ada2fe7eead31-4a8cfb5f764mr5871139137.11.1730130309682; Mon, 28 Oct 2024
+ 08:45:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CABQgh9EgXsyHDzZHK2FMuUw-eu9zeczyMGLTUjS3AKYUHKwwDg@mail.gmail.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000044F4:EE_|SA3PR12MB8440:EE_
-X-MS-Office365-Filtering-Correlation-Id: eb5a494b-d0c5-4ef4-a667-08dcf76175d3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|1800799024|36860700013|82310400026|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?jIeIy7r0EuhMQlSmnvUTsz+nH/Prqr5ia26uaD+RXVigo868XhVJs828iJjh?=
- =?us-ascii?Q?MjWTsxzb4/qtDJ6YsCpX5eIkKR7ucMGeEoeyUAmi3sIHi1+/Aaorc5Q78pGD?=
- =?us-ascii?Q?U/9vQMBH9VD/6uRnfwv8hbaLLNkCSSTI1jxHURzmbQQ0U0xR1220zRDT/y34?=
- =?us-ascii?Q?byrU5vOJPEEERrrBtgqhBzuRN2ubliPy6tQOhXEVq7AvCI2WmOP6n8f5fp61?=
- =?us-ascii?Q?x8+EOKeAJfQ+rlGrBRGyZdCVukeTsXsSKbRbY+ZiweJcDrLEjZgB4MloqiUB?=
- =?us-ascii?Q?z1f0Kk/bclVrG6QEg1kAdfO89zuIFDubMjd0l3ac9tDWeJP7l9Ut7U9ZY+5S?=
- =?us-ascii?Q?WiKvMg/fMh5NBheBL0e/Cyrf+24JH1jGtgn1GmfAQ5Mt9/cIkWZP4xlgifvw?=
- =?us-ascii?Q?7cty7I/CDRJpWDf8sanfhR1NUSsB0NTOF1IDQQgD5ELeHKJtPM0ITf+/GyJj?=
- =?us-ascii?Q?hARd9xMkMGqUSxhC4hquhcaFfqHcNy/zy8a4EGSOVmtijpiiHw9HGRfwlZgS?=
- =?us-ascii?Q?JOzfrpZlvIReljMKFTuoombWA1GmwOQJYz+Oa4x41V5bSwHwOw5+pbPMimEM?=
- =?us-ascii?Q?kosLfi3twmjBThXuHPggiKl7VL4V1lCFfcRnYEe4PwdQXpHpQufhyLPJQUUb?=
- =?us-ascii?Q?NaUxpw5NJTx03QCb6oWRUtrQnDWPfkUhy11iOa2vy+Hf+UHD4Hz23BC0ayTj?=
- =?us-ascii?Q?dLZ+Dcqri1CBu7WyZz0JfAZfXfo4vrXyJQFsugaKdZHDHvgH/uFNotc+jpC8?=
- =?us-ascii?Q?4PM+Z3UzTWizsR1X9J3zAYrtap+7ORPcq7VhcyE8AZb1etY/wDRzY2KkcMK4?=
- =?us-ascii?Q?KjRQDieoqkjMtkm0LXD4m3xpNtvM5kuvAlYrqgJV/8mq+/d93OFptWyqbOQA?=
- =?us-ascii?Q?EFcJZtUiX+vhvoMbMvsz5pRmvldzukNni22VBqx+vPq/wrxzhP6RVDDnw2gx?=
- =?us-ascii?Q?v/1jM0e/3kcxipZwy2HAbHteQ0hdij8hcOWBb/JdWbQ7ox1xiFeMvKVLQ1xn?=
- =?us-ascii?Q?IPQgmkU4STSawAgcHCQ/HmDgqQAz2iAKLV13yAEFiNAtzdf5fhNMwrfKcydl?=
- =?us-ascii?Q?Pv8zGkbnn54Qix6aofBMiWGmXZIbyVQri8Z1ELRnrimxIf7Z4/B/gMOiUoIe?=
- =?us-ascii?Q?wH+BVUI6CTADj5M28myipJ0MTFXPrIwQH/UHsT+jGQ7I6UU3powWZmfWf0K1?=
- =?us-ascii?Q?MePAPHHrMsROsJ2/QJf6/439pKGp3feNYvPKatSZbuddiRP6OOPJkdmHrNUc?=
- =?us-ascii?Q?JiDcjuBmneURtQEcJwymO+UtXk60g/okj+hav7UAcjp0wFWATTgUpW4rVTH1?=
- =?us-ascii?Q?CdwT22THWkH+4ybg/s2hYAqCoRDX7NdUdkFQhBKjg+iS/iB0t2ODHNDetg4C?=
- =?us-ascii?Q?HIDNpl8X1nqgURz3jxstRauHAMR6qPc95GNzPen2EGG0YkwmYw=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(36860700013)(82310400026)(376014);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Oct 2024 15:01:53.8898
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: eb5a494b-d0c5-4ef4-a667-08dcf76175d3
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CO1PEPF000044F4.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB8440
+References: <20241028062312.001273460@linuxfoundation.org>
+In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Mon, 28 Oct 2024 21:14:57 +0530
+Message-ID: <CA+G9fYu-tpwX=09=VOjniFnBz3MSXpaHb_gir2AqyNpihERT2Q@mail.gmail.com>
+Subject: Re: [PATCH 6.11 000/261] 6.11.6-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org, Marc Zyngier <maz@kernel.org>, Joey Gouly <joey.gouly@arm.com>, 
+	Suzuki K Poulose <suzuki.poulose@arm.com>, Oliver Upton <oliver.upton@linux.dev>, 
+	Zenghui Yu <yuzenghui@huawei.com>, kvmarm@lists.linux.dev, 
+	Linux ARM <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Oct 28, 2024 at 10:53:38PM +0800, Zhangfei Gao wrote:
-> On Mon, 28 Oct 2024 at 11:24, Zhangfei Gao <zhangfei.gao@linaro.org> wrote:
-> 
-> > By the way, has qemu changed compared with v3?
-> > I still got a hardware error in this version, in check
-> 
-> Found iommufd_viommu_p2-v5 misses some patches,
-> Simply tested ok with iommufd_viommu_p2-v5-with-rmr, (with some hacks)
+On Mon, 28 Oct 2024 at 12:16, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.11.6 release.
+> There are 261 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 30 Oct 2024 06:22:39 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.11.6-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-I see. I put those RMR patches on top of Part-1&2 in v5, v.s.
-Part-1&2 rebasing on RMR patches.
 
-Thanks for testing!
+The selftests: kvm: vgic_init test failed on stable-rc linux-6.11.y,
+also seen on Linux next-20241023 onwards and Linus v6.12-rc5
+on the Graviton4 and rk3399-rock-pi.
 
-Nicolin
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+Test log:
+---------
+# selftests: kvm: vgic_init
+# Random seed: 0x6b8b4567
+# Running GIC_v3 tests.
+# ==== Test Assertion Failure ====
+#   lib/kvm_util.c:727: false
+#   pid=2680 tid=2680 errno=5 - Input/output error
+#      1 0x0000000000404eaf: __vm_mem_region_delete at kvm_util.c:727
+(discriminator 5)
+#      2 0x0000000000405d0f: kvm_vm_free at kvm_util.c:765 (discriminator 12)
+#      3 0x0000000000402d5f: vm_gic_destroy at vgic_init.c:101
+#      4 (inlined by) test_vcpus_then_vgic at vgic_init.c:368
+#      5 (inlined by) run_tests at vgic_init.c:720
+#      6 0x0000000000401a6f: main at vgic_init.c:748
+#      7 0x0000ffff8620773f: ?? ??:0
+#      8 0x0000ffff86207817: ?? ??:0
+#      9 0x0000000000401b6f: _start at ??:?
+#   KVM killed/bugged the VM, check the kernel log for clues
+not ok 9 selftests: kvm: vgic_init # exit=254
+
+Upstream discussion thread on this failures,
+ - https://lore.kernel.org/linux-arm-kernel/20241009183603.3221824-1-maz@kernel.org/
+
+Test failed log:
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.11.y/build/v6.11.4-397-g4ccf0b49d5b6/testrun/25583294/suite/kselftest-kvm/test/kvm_vgic_init/log
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.11.y/build/v6.11.4-397-g4ccf0b49d5b6/testrun/25583294/suite/kselftest-kvm/test/kvm_vgic_init/history/
+
+## Build
+* kernel: 6.11.6-rc1
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+* git commit: 4ccf0b49d5b6ec739a290593658bebd035bb5f10
+* git describe: v6.11.4-397-g4ccf0b49d5b6
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.11.y/build/v6.11.4-397-g4ccf0b49d5b6
+
+## Test Regressions (compared to v6.11.4-136-g96563e3507d7)
+* graviton4-metal, kselftest-kvm
+  - kvm_vgic_init
+
+* rk3399-rock-pi-4b-nvhe, kselftest-kvm
+  - kvm_vgic_init
+
+* rk3399-rock-pi-4b-protected, kselftest-kvm
+  - kvm_vgic_init
+
+* rk3399-rock-pi-4b-vhe, kselftest-kvm
+  - kvm_vgic_init
+
+## Metric Regressions (compared to v6.11.4-136-g96563e3507d7)
+
+## Test Fixes (compared to v6.11.4-136-g96563e3507d7)
+
+## Metric Fixes (compared to v6.11.4-136-g96563e3507d7)
+
+## Test result summary
+total: 143710, pass: 118866, fail: 1602, skip: 23242, xfail: 0
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 131 total, 129 passed, 2 failed
+* arm64: 43 total, 43 passed, 0 failed
+* i386: 18 total, 16 passed, 2 failed
+* mips: 26 total, 25 passed, 1 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 36 total, 35 passed, 1 failed
+* riscv: 16 total, 14 passed, 2 failed
+* s390: 14 total, 13 passed, 1 failed
+* sh: 5 total, 5 passed, 0 failed
+* sparc: 4 total, 3 passed, 1 failed
+* x86_64: 35 total, 35 passed, 0 failed
+
+## Test suites summary
+* boot
+* commands
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-kvm
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-rust
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
