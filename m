@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15FC8837;
-	Mon, 28 Oct 2024 06:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF2D18D65C;
+	Mon, 28 Oct 2024 06:51:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098307; cv=none; b=uxVdBni/0ubC33BFlxJM+12FXzOwhE/bl8b8p39mPkYEgXKvzZ8FFRyCYZ1A37KLEuDrmaF0NyKTck9W5VC0g/9Z6p/hpKwPDBw7yw/lTnZigwcOztwuc+C8x+SRma57fcjOqB9bD3kA2ESKD7bKGk2ht4XyVMtpRuBj1+RHyVw=
+	t=1730098310; cv=none; b=VLBNbljc5o6YtcptQ2Vf2H6o6/MSw+vSP2hlfA9RTXOYVQs7OZP7Uu5y1lhm3KABJVrjkQ4DgG/ByljiNIhd8PYUKJEKyF0SOwsrMFLZSycswKZ+r1+zDuux6XtIvcqwKARjNocX5G9M3FCktMK2oaxHgceBsOjoORqQvvRanL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098307; c=relaxed/simple;
-	bh=mCJz7rnkuHrP/XDF9W4WYNsLzBVPLOMmzK+7NqgK+8I=;
+	s=arc-20240116; t=1730098310; c=relaxed/simple;
+	bh=3klC5ehf8vSbc3RgE58UgbgupuuekroJuWp7bbQ8w0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gjmT/JXIidrPLzRp0sb271UktaYaWfABlvAIaDOtCkUbKjR5dOumpQ/3cBqRwMdQIA4IuhpLmc5MGz6Aqn9akPYCcunnPhG/dU/LvxxV9rCwjEqIVxLOmjmtspDUXZWgengoAdFeY+p9dmqWGXGNq8iy2gDXkmvgkNI3sXWjK/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMcKpWc4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MpWA5FC651bWZjZLpshPtr/IwWDysk/plAVKcJELfA8wQixBRNVezJuq5bTHJxFXVJxAynusAjy5Jzx6DWwKX0a+mERL+sxnHuprCo42Si+A+4mR/rNilgp06o+KW7OEE0POiMepBaXRe0QRZwzO3ykfyQD06R+7TiRPMaJnfrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ypo3vZoZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMcKpWc4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E41BC4CEC3;
-	Mon, 28 Oct 2024 06:51:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ypo3vZoZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C54C4CEC3;
+	Mon, 28 Oct 2024 06:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098307;
-	bh=mCJz7rnkuHrP/XDF9W4WYNsLzBVPLOMmzK+7NqgK+8I=;
+	s=korg; t=1730098309;
+	bh=3klC5ehf8vSbc3RgE58UgbgupuuekroJuWp7bbQ8w0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMcKpWc4jh6QRryTzh6+6Q185ATCndf+xZuXZiP2T+YdL/tnrGxcmYI1zNzOGULBL
-	 SC0ZZt/PlUdbUP7w103AFXosBbJ6C6B5/1JtYLLMlUhtrSKJLOeUGIEEyZEPtfzOBO
-	 XWJTi72Dn0ZIYzUP62odcQPXsDofjEfI92YCumxQ=
+	b=ypo3vZoZnVVUVaQbn119CQP4CYQXYY9pwmZxBSr4H86F5tZaSiDBWB4VfE6bx//bo
+	 b2PMSnFEL8/NH+6DCg4WKEnvTaVH2W+fst01/nHB4kwqz9s956cNS0Q0LfboH7M0jG
+	 cXEwkBdroWPP9S1/0e51Foy3Xae8tR6AEIpwAg7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+	Atlas Yu <atlas.yu@canonical.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 168/261] net: sched: use RCU read-side critical section in taprio_dump()
-Date: Mon, 28 Oct 2024 07:25:10 +0100
-Message-ID: <20241028062316.209491545@linuxfoundation.org>
+Subject: [PATCH 6.11 169/261] r8169: avoid unsolicited interrupts
+Date: Mon, 28 Oct 2024 07:25:11 +0100
+Message-ID: <20241028062316.232732979@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,153 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit b22db8b8befe90b61c98626ca1a2fbb0505e9fe3 ]
+[ Upstream commit 10ce0db787004875f4dba068ea952207d1d8abeb ]
 
-Fix possible use-after-free in 'taprio_dump()' by adding RCU
-read-side critical section there. Never seen on x86 but
-found on a KASAN-enabled arm64 system when investigating
-https://syzkaller.appspot.com/bug?extid=b65e0af58423fc8a73aa:
+It was reported that after resume from suspend a PCI error is logged
+and connectivity is broken. Error message is:
+PCI error (cmd = 0x0407, status_errs = 0x0000)
+The message seems to be a red herring as none of the error bits is set,
+and the PCI command register value also is normal. Exception handling
+for a PCI error includes a chip reset what apparently brakes connectivity
+here. The interrupt status bit triggering the PCI error handling isn't
+actually used on PCIe chip versions, so it's not clear why this bit is
+set by the chip. Fix this by ignoring this bit on PCIe chip versions.
 
-[T15862] BUG: KASAN: slab-use-after-free in taprio_dump+0xa0c/0xbb0
-[T15862] Read of size 4 at addr ffff0000d4bb88f8 by task repro/15862
-[T15862]
-[T15862] CPU: 0 UID: 0 PID: 15862 Comm: repro Not tainted 6.11.0-rc1-00293-gdefaf1a2113a-dirty #2
-[T15862] Hardware name: QEMU QEMU Virtual Machine, BIOS edk2-20240524-5.fc40 05/24/2024
-[T15862] Call trace:
-[T15862]  dump_backtrace+0x20c/0x220
-[T15862]  show_stack+0x2c/0x40
-[T15862]  dump_stack_lvl+0xf8/0x174
-[T15862]  print_report+0x170/0x4d8
-[T15862]  kasan_report+0xb8/0x1d4
-[T15862]  __asan_report_load4_noabort+0x20/0x2c
-[T15862]  taprio_dump+0xa0c/0xbb0
-[T15862]  tc_fill_qdisc+0x540/0x1020
-[T15862]  qdisc_notify.isra.0+0x330/0x3a0
-[T15862]  tc_modify_qdisc+0x7b8/0x1838
-[T15862]  rtnetlink_rcv_msg+0x3c8/0xc20
-[T15862]  netlink_rcv_skb+0x1f8/0x3d4
-[T15862]  rtnetlink_rcv+0x28/0x40
-[T15862]  netlink_unicast+0x51c/0x790
-[T15862]  netlink_sendmsg+0x79c/0xc20
-[T15862]  __sock_sendmsg+0xe0/0x1a0
-[T15862]  ____sys_sendmsg+0x6c0/0x840
-[T15862]  ___sys_sendmsg+0x1ac/0x1f0
-[T15862]  __sys_sendmsg+0x110/0x1d0
-[T15862]  __arm64_sys_sendmsg+0x74/0xb0
-[T15862]  invoke_syscall+0x88/0x2e0
-[T15862]  el0_svc_common.constprop.0+0xe4/0x2a0
-[T15862]  do_el0_svc+0x44/0x60
-[T15862]  el0_svc+0x50/0x184
-[T15862]  el0t_64_sync_handler+0x120/0x12c
-[T15862]  el0t_64_sync+0x190/0x194
-[T15862]
-[T15862] Allocated by task 15857:
-[T15862]  kasan_save_stack+0x3c/0x70
-[T15862]  kasan_save_track+0x20/0x3c
-[T15862]  kasan_save_alloc_info+0x40/0x60
-[T15862]  __kasan_kmalloc+0xd4/0xe0
-[T15862]  __kmalloc_cache_noprof+0x194/0x334
-[T15862]  taprio_change+0x45c/0x2fe0
-[T15862]  tc_modify_qdisc+0x6a8/0x1838
-[T15862]  rtnetlink_rcv_msg+0x3c8/0xc20
-[T15862]  netlink_rcv_skb+0x1f8/0x3d4
-[T15862]  rtnetlink_rcv+0x28/0x40
-[T15862]  netlink_unicast+0x51c/0x790
-[T15862]  netlink_sendmsg+0x79c/0xc20
-[T15862]  __sock_sendmsg+0xe0/0x1a0
-[T15862]  ____sys_sendmsg+0x6c0/0x840
-[T15862]  ___sys_sendmsg+0x1ac/0x1f0
-[T15862]  __sys_sendmsg+0x110/0x1d0
-[T15862]  __arm64_sys_sendmsg+0x74/0xb0
-[T15862]  invoke_syscall+0x88/0x2e0
-[T15862]  el0_svc_common.constprop.0+0xe4/0x2a0
-[T15862]  do_el0_svc+0x44/0x60
-[T15862]  el0_svc+0x50/0x184
-[T15862]  el0t_64_sync_handler+0x120/0x12c
-[T15862]  el0t_64_sync+0x190/0x194
-[T15862]
-[T15862] Freed by task 6192:
-[T15862]  kasan_save_stack+0x3c/0x70
-[T15862]  kasan_save_track+0x20/0x3c
-[T15862]  kasan_save_free_info+0x4c/0x80
-[T15862]  poison_slab_object+0x110/0x160
-[T15862]  __kasan_slab_free+0x3c/0x74
-[T15862]  kfree+0x134/0x3c0
-[T15862]  taprio_free_sched_cb+0x18c/0x220
-[T15862]  rcu_core+0x920/0x1b7c
-[T15862]  rcu_core_si+0x10/0x1c
-[T15862]  handle_softirqs+0x2e8/0xd64
-[T15862]  __do_softirq+0x14/0x20
-
-Fixes: 18cdd2f0998a ("net/sched: taprio: taprio_dump and taprio_change are protected by rtnl_mutex")
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Link: https://patch.msgid.link/20241018051339.418890-2-dmantipov@yandex.ru
+Fixes: 0e4851502f84 ("r8169: merge with version 8.001.00 of Realtek's r8168 driver")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219388
+Tested-by: Atlas Yu <atlas.yu@canonical.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/78e2f535-438f-4212-ad94-a77637ac6c9c@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index 9f4e004cdb8be..8623dc0bafc09 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -2374,9 +2374,6 @@ static int taprio_dump(struct Qdisc *sch, struct sk_buff *skb)
- 	struct tc_mqprio_qopt opt = { 0 };
- 	struct nlattr *nest, *sched_nest;
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index 01e18f645c0ed..91a8c62b180ae 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4669,7 +4669,9 @@ static irqreturn_t rtl8169_interrupt(int irq, void *dev_instance)
+ 	if ((status & 0xffff) == 0xffff || !(status & tp->irq_mask))
+ 		return IRQ_NONE;
  
--	oper = rtnl_dereference(q->oper_sched);
--	admin = rtnl_dereference(q->admin_sched);
--
- 	mqprio_qopt_reconstruct(dev, &opt);
- 
- 	nest = nla_nest_start_noflag(skb, TCA_OPTIONS);
-@@ -2397,18 +2394,23 @@ static int taprio_dump(struct Qdisc *sch, struct sk_buff *skb)
- 	    nla_put_u32(skb, TCA_TAPRIO_ATTR_TXTIME_DELAY, q->txtime_delay))
- 		goto options_error;
- 
-+	rcu_read_lock();
-+
-+	oper = rtnl_dereference(q->oper_sched);
-+	admin = rtnl_dereference(q->admin_sched);
-+
- 	if (oper && taprio_dump_tc_entries(skb, q, oper))
--		goto options_error;
-+		goto options_error_rcu;
- 
- 	if (oper && dump_schedule(skb, oper))
--		goto options_error;
-+		goto options_error_rcu;
- 
- 	if (!admin)
- 		goto done;
- 
- 	sched_nest = nla_nest_start_noflag(skb, TCA_TAPRIO_ATTR_ADMIN_SCHED);
- 	if (!sched_nest)
--		goto options_error;
-+		goto options_error_rcu;
- 
- 	if (dump_schedule(skb, admin))
- 		goto admin_error;
-@@ -2416,11 +2418,15 @@ static int taprio_dump(struct Qdisc *sch, struct sk_buff *skb)
- 	nla_nest_end(skb, sched_nest);
- 
- done:
-+	rcu_read_unlock();
- 	return nla_nest_end(skb, nest);
- 
- admin_error:
- 	nla_nest_cancel(skb, sched_nest);
- 
-+options_error_rcu:
-+	rcu_read_unlock();
-+
- options_error:
- 	nla_nest_cancel(skb, nest);
- 
+-	if (unlikely(status & SYSErr)) {
++	/* At least RTL8168fp may unexpectedly set the SYSErr bit */
++	if (unlikely(status & SYSErr &&
++	    tp->mac_version <= RTL_GIGA_MAC_VER_06)) {
+ 		rtl8169_pcierr_interrupt(tp->dev);
+ 		goto out;
+ 	}
 -- 
 2.43.0
 
