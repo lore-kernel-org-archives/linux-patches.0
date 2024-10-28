@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E67718E03A;
-	Mon, 28 Oct 2024 06:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B1318E354;
+	Mon, 28 Oct 2024 06:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097795; cv=none; b=u0Iw+Ep1Em3iRigDfUS4AcWclgTp74jsvslvVYlKeFLxFCSdoO3xeZyHrTNThFCshkVx2bgZfpm8wvpUWmwxi6F+sxGMcdtRtE/N9/oFEBpgArWyFTgE/uPuaeGvCQQGcCX6byFZX+2A4KlE48ZgfksVc1t9q4AQAbQ+DcSl8dw=
+	t=1730097797; cv=none; b=lzYbsrmmYHfvzinV02jViOnTjS5tvuoR4mOREVyFgIyo6Knqdt3EWrPKQ5ZPLqxRifV3Y9zyx72xe/GUGwOvCbmMIB6g8Ig4gqiYoxThYFRbbEDcDIrdq2DbXNEgh3H8hZuSzZ6DnV7iO/V5Q+OH+f39rzaIxy7tUHxneIwniBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097795; c=relaxed/simple;
-	bh=yzwlwWWpPbFn2uLujSPkNNBlL1ZeZ9UlK7CshMGo/nQ=;
+	s=arc-20240116; t=1730097797; c=relaxed/simple;
+	bh=++RqIgOC//YxDlwdxY+lByvIs5Biw1Bo0pODHYnsqro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RpqPf4rlzb4D/hGQq1Ybna6NaCXzbn1/5JHGgvIBANLNqlIv+89CR1u0nr3FO55rTFIU3MTC5S2+ipxAkeH7ehFM2qaQgxQ1wE/5tkKGED4amz1h9wg8RCYKcqW5ajsq2XVvh4ldYsVVCUkVNrjIf35bYmMpL/3VVOqQHskn1ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SbdFLL3g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YCnNXWyIzv5Gc5CfByYQkyUAIkmEQPn88h6iZ42q9kuvlLwnb6TgMEMiCrizdiErIoaW7Cb8o3FGH2homIP1+RiXGQWrLsr87NmXLTdaTw4jtw/4X4E0FX7EY4TSeiq2UAsezlI9nfMydLFYYL2F0Q+QfRuzXwDBoYEa/9SbJ4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFMut9hr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SbdFLL3g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BB7C4CEC3;
-	Mon, 28 Oct 2024 06:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFMut9hr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00732C4CEC3;
+	Mon, 28 Oct 2024 06:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097795;
-	bh=yzwlwWWpPbFn2uLujSPkNNBlL1ZeZ9UlK7CshMGo/nQ=;
+	s=korg; t=1730097797;
+	bh=++RqIgOC//YxDlwdxY+lByvIs5Biw1Bo0pODHYnsqro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SbdFLL3gNRcB6lzcG5MIJVXDlxugLSkHLYPeAd5nZYMlywWNeTCtw0xpMQPXUtCHI
-	 /utPwaaxmorlb9EKA5hsHe/XvjB6OfVBWqtuRu6psN/8oPGM/dp8q8S/WOvdpXR2wz
-	 e9ikk049n1Ci0lFr2nUM3p4X47Q9BmZY7ZnNVFEo=
+	b=zFMut9hrrYJWShyxBuajwC2FyIWo4q/yrr6DHOMDuzLKyg2JImVkgOAyl08BJX6KK
+	 z3zdM8+ifOH2zollwcyk8ErlxQXlbcyxACo4TUqJsxq81G1YTWzQU8g30cVeDk0k/M
+	 zM6NAshGCBiekapXVbWqQMRWPScfO1oYhgpno7oM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lonial Con <kongln9170@gmail.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 151/208] bpf: Fix overloading of MEM_UNINITs meaning
-Date: Mon, 28 Oct 2024 07:25:31 +0100
-Message-ID: <20241028062310.345950272@linuxfoundation.org>
+Subject: [PATCH 6.6 152/208] bpf: Remove MEM_UNINIT from skb/xdp MTU helpers
+Date: Mon, 28 Oct 2024 07:25:32 +0100
+Message-ID: <20241028062310.370946538@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -55,265 +54,118 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 8ea607330a39184f51737c6ae706db7fdca7628e ]
+[ Upstream commit 14a3d3ef02ba53447d5112a2641aac0d10dc994f ]
 
-Lonial reported an issue in the BPF verifier where check_mem_size_reg()
-has the following code:
+We can now undo parts of 4b3786a6c539 ("bpf: Zero former ARG_PTR_TO_{LONG,INT}
+args in case of error") as discussed in [0].
 
-    if (!tnum_is_const(reg->var_off))
-        /* For unprivileged variable accesses, disable raw
-         * mode so that the program is required to
-         * initialize all the memory that the helper could
-         * just partially fill up.
-         */
-         meta = NULL;
+Given the BPF helpers now have MEM_WRITE tag, the MEM_UNINIT can be cleared.
 
-This means that writes are not checked when the register containing the
-size of the passed buffer has not a fixed size. Through this bug, a BPF
-program can write to a map which is marked as read-only, for example,
-.rodata global maps.
+The mtu_len is an input as well as output argument, meaning, the BPF program
+has to set it to something. It cannot be uninitialized. Therefore, allowing
+uninitialized memory and zeroing it on error would be odd. It was done as
+an interim step in 4b3786a6c539 as the desired behavior could not have been
+expressed before the introduction of MEM_WRITE tag.
 
-The problem is that MEM_UNINIT's initial meaning that "the passed buffer
-to the BPF helper does not need to be initialized" which was added back
-in commit 435faee1aae9 ("bpf, verifier: add ARG_PTR_TO_RAW_STACK type")
-got overloaded over time with "the passed buffer is being written to".
-
-The problem however is that checks such as the above which were added later
-via 06c1c049721a ("bpf: allow helpers access to variable memory") set meta
-to NULL in order force the user to always initialize the passed buffer to
-the helper. Due to the current double meaning of MEM_UNINIT, this bypasses
-verifier write checks to the memory (not boundary checks though) and only
-assumes the latter memory is read instead.
-
-Fix this by reverting MEM_UNINIT back to its original meaning, and having
-MEM_WRITE as an annotation to BPF helpers in order to then trigger the
-BPF verifier checks for writing to memory.
-
-Some notes: check_arg_pair_ok() ensures that for ARG_CONST_SIZE{,_OR_ZERO}
-we can access fn->arg_type[arg - 1] since it must contain a preceding
-ARG_PTR_TO_MEM. For check_mem_reg() the meta argument can be removed
-altogether since we do check both BPF_READ and BPF_WRITE. Same for the
-equivalent check_kfunc_mem_size_reg().
-
-Fixes: 7b3552d3f9f6 ("bpf: Reject writes for PTR_TO_MAP_KEY in check_helper_mem_access")
-Fixes: 97e6d7dab1ca ("bpf: Check PTR_TO_MEM | MEM_RDONLY in check_helper_mem_access")
-Fixes: 15baa55ff5b0 ("bpf/verifier: allow all functions to read user provided context")
-Reported-by: Lonial Con <kongln9170@gmail.com>
+Fixes: 4b3786a6c539 ("bpf: Zero former ARG_PTR_TO_{LONG,INT} args in case of error")
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/a86eb76d-f52f-dee4-e5d2-87e45de3e16f@iogearbox.net [0]
 Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20241021152809.33343-2-daniel@iogearbox.net
+Link: https://lore.kernel.org/r/20241021152809.33343-3-daniel@iogearbox.net
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 73 +++++++++++++++++++++----------------------
- 1 file changed, 35 insertions(+), 38 deletions(-)
+ net/core/filter.c | 42 +++++++++++++++---------------------------
+ 1 file changed, 15 insertions(+), 27 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index f24d570d67ca5..03b5797b8fca9 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -7198,7 +7198,8 @@ static int check_stack_range_initialized(
- }
- 
- static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
--				   int access_size, bool zero_size_allowed,
-+				   int access_size, enum bpf_access_type access_type,
-+				   bool zero_size_allowed,
- 				   struct bpf_call_arg_meta *meta)
+diff --git a/net/core/filter.c b/net/core/filter.c
+index a7d928345b1f4..a2467a7c01f9e 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -6223,24 +6223,16 @@ BPF_CALL_5(bpf_skb_check_mtu, struct sk_buff *, skb,
  {
- 	struct bpf_reg_state *regs = cur_regs(env), *reg = &regs[regno];
-@@ -7210,7 +7211,7 @@ static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
- 		return check_packet_access(env, regno, reg->off, access_size,
- 					   zero_size_allowed);
- 	case PTR_TO_MAP_KEY:
--		if (meta && meta->raw_mode) {
-+		if (access_type == BPF_WRITE) {
- 			verbose(env, "R%d cannot write into %s\n", regno,
- 				reg_type_str(env, reg->type));
- 			return -EACCES;
-@@ -7218,15 +7219,13 @@ static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
- 		return check_mem_region_access(env, regno, reg->off, access_size,
- 					       reg->map_ptr->key_size, false);
- 	case PTR_TO_MAP_VALUE:
--		if (check_map_access_type(env, regno, reg->off, access_size,
--					  meta && meta->raw_mode ? BPF_WRITE :
--					  BPF_READ))
-+		if (check_map_access_type(env, regno, reg->off, access_size, access_type))
- 			return -EACCES;
- 		return check_map_access(env, regno, reg->off, access_size,
- 					zero_size_allowed, ACCESS_HELPER);
- 	case PTR_TO_MEM:
- 		if (type_is_rdonly_mem(reg->type)) {
--			if (meta && meta->raw_mode) {
-+			if (access_type == BPF_WRITE) {
- 				verbose(env, "R%d cannot write into %s\n", regno,
- 					reg_type_str(env, reg->type));
- 				return -EACCES;
-@@ -7237,7 +7236,7 @@ static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
- 					       zero_size_allowed);
- 	case PTR_TO_BUF:
- 		if (type_is_rdonly_mem(reg->type)) {
--			if (meta && meta->raw_mode) {
-+			if (access_type == BPF_WRITE) {
- 				verbose(env, "R%d cannot write into %s\n", regno,
- 					reg_type_str(env, reg->type));
- 				return -EACCES;
-@@ -7265,7 +7264,6 @@ static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
- 		 * Dynamically check it now.
- 		 */
- 		if (!env->ops->convert_ctx_access) {
--			enum bpf_access_type atype = meta && meta->raw_mode ? BPF_WRITE : BPF_READ;
- 			int offset = access_size - 1;
+ 	int ret = BPF_MTU_CHK_RET_FRAG_NEEDED;
+ 	struct net_device *dev = skb->dev;
+-	int skb_len, dev_len;
+-	int mtu = 0;
++	int mtu, dev_len, skb_len;
  
- 			/* Allow zero-byte read from PTR_TO_CTX */
-@@ -7273,7 +7271,7 @@ static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
- 				return zero_size_allowed ? 0 : -EACCES;
+-	if (unlikely(flags & ~(BPF_MTU_CHK_SEGS))) {
+-		ret = -EINVAL;
+-		goto out;
+-	}
+-
+-	if (unlikely(flags & BPF_MTU_CHK_SEGS && (len_diff || *mtu_len))) {
+-		ret = -EINVAL;
+-		goto out;
+-	}
++	if (unlikely(flags & ~(BPF_MTU_CHK_SEGS)))
++		return -EINVAL;
++	if (unlikely(flags & BPF_MTU_CHK_SEGS && (len_diff || *mtu_len)))
++		return -EINVAL;
  
- 			return check_mem_access(env, env->insn_idx, regno, offset, BPF_B,
--						atype, -1, false, false);
-+						access_type, -1, false, false);
- 		}
+ 	dev = __dev_via_ifindex(dev, ifindex);
+-	if (unlikely(!dev)) {
+-		ret = -ENODEV;
+-		goto out;
+-	}
++	if (unlikely(!dev))
++		return -ENODEV;
  
- 		fallthrough;
-@@ -7292,6 +7290,7 @@ static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
+ 	mtu = READ_ONCE(dev->mtu);
+ 	dev_len = mtu + dev->hard_header_len;
+@@ -6275,19 +6267,15 @@ BPF_CALL_5(bpf_xdp_check_mtu, struct xdp_buff *, xdp,
+ 	struct net_device *dev = xdp->rxq->dev;
+ 	int xdp_len = xdp->data_end - xdp->data;
+ 	int ret = BPF_MTU_CHK_RET_SUCCESS;
+-	int mtu = 0, dev_len;
++	int mtu, dev_len;
  
- static int check_mem_size_reg(struct bpf_verifier_env *env,
- 			      struct bpf_reg_state *reg, u32 regno,
-+			      enum bpf_access_type access_type,
- 			      bool zero_size_allowed,
- 			      struct bpf_call_arg_meta *meta)
- {
-@@ -7307,15 +7306,12 @@ static int check_mem_size_reg(struct bpf_verifier_env *env,
- 	 */
- 	meta->msize_max_value = reg->umax_value;
+ 	/* XDP variant doesn't support multi-buffer segment check (yet) */
+-	if (unlikely(flags)) {
+-		ret = -EINVAL;
+-		goto out;
+-	}
++	if (unlikely(flags))
++		return -EINVAL;
  
--	/* The register is SCALAR_VALUE; the access check
--	 * happens using its boundaries.
-+	/* The register is SCALAR_VALUE; the access check happens using
-+	 * its boundaries. For unprivileged variable accesses, disable
-+	 * raw mode so that the program is required to initialize all
-+	 * the memory that the helper could just partially fill up.
- 	 */
- 	if (!tnum_is_const(reg->var_off))
--		/* For unprivileged variable accesses, disable raw
--		 * mode so that the program is required to
--		 * initialize all the memory that the helper could
--		 * just partially fill up.
--		 */
- 		meta = NULL;
+ 	dev = __dev_via_ifindex(dev, ifindex);
+-	if (unlikely(!dev)) {
+-		ret = -ENODEV;
+-		goto out;
+-	}
++	if (unlikely(!dev))
++		return -ENODEV;
  
- 	if (reg->smin_value < 0) {
-@@ -7335,9 +7331,8 @@ static int check_mem_size_reg(struct bpf_verifier_env *env,
- 			regno);
- 		return -EACCES;
- 	}
--	err = check_helper_mem_access(env, regno - 1,
--				      reg->umax_value,
--				      zero_size_allowed, meta);
-+	err = check_helper_mem_access(env, regno - 1, reg->umax_value,
-+				      access_type, zero_size_allowed, meta);
- 	if (!err)
- 		err = mark_chain_precision(env, regno);
- 	return err;
-@@ -7348,13 +7343,11 @@ int check_mem_reg(struct bpf_verifier_env *env, struct bpf_reg_state *reg,
- {
- 	bool may_be_null = type_may_be_null(reg->type);
- 	struct bpf_reg_state saved_reg;
--	struct bpf_call_arg_meta meta;
- 	int err;
- 
- 	if (register_is_null(reg))
- 		return 0;
- 
--	memset(&meta, 0, sizeof(meta));
- 	/* Assuming that the register contains a value check if the memory
- 	 * access is safe. Temporarily save and restore the register's state as
- 	 * the conversion shouldn't be visible to a caller.
-@@ -7364,10 +7357,8 @@ int check_mem_reg(struct bpf_verifier_env *env, struct bpf_reg_state *reg,
- 		mark_ptr_not_null_reg(reg);
- 	}
- 
--	err = check_helper_mem_access(env, regno, mem_size, true, &meta);
--	/* Check access for BPF_WRITE */
--	meta.raw_mode = true;
--	err = err ?: check_helper_mem_access(env, regno, mem_size, true, &meta);
-+	err = check_helper_mem_access(env, regno, mem_size, BPF_READ, true, NULL);
-+	err = err ?: check_helper_mem_access(env, regno, mem_size, BPF_WRITE, true, NULL);
- 
- 	if (may_be_null)
- 		*reg = saved_reg;
-@@ -7393,13 +7384,12 @@ static int check_kfunc_mem_size_reg(struct bpf_verifier_env *env, struct bpf_reg
- 		mark_ptr_not_null_reg(mem_reg);
- 	}
- 
--	err = check_mem_size_reg(env, reg, regno, true, &meta);
--	/* Check access for BPF_WRITE */
--	meta.raw_mode = true;
--	err = err ?: check_mem_size_reg(env, reg, regno, true, &meta);
-+	err = check_mem_size_reg(env, reg, regno, BPF_READ, true, &meta);
-+	err = err ?: check_mem_size_reg(env, reg, regno, BPF_WRITE, true, &meta);
- 
- 	if (may_be_null)
- 		*mem_reg = saved_reg;
+ 	mtu = READ_ONCE(dev->mtu);
+ 	dev_len = mtu + dev->hard_header_len;
+@@ -6299,7 +6287,7 @@ BPF_CALL_5(bpf_xdp_check_mtu, struct xdp_buff *, xdp,
+ 	xdp_len += len_diff; /* minus result pass check */
+ 	if (xdp_len > dev_len)
+ 		ret = BPF_MTU_CHK_RET_FRAG_NEEDED;
+-out:
 +
- 	return err;
+ 	*mtu_len = mtu;
+ 	return ret;
  }
- 
-@@ -8585,9 +8575,8 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
- 			verbose(env, "invalid map_ptr to access map->key\n");
- 			return -EACCES;
- 		}
--		err = check_helper_mem_access(env, regno,
--					      meta->map_ptr->key_size, false,
--					      NULL);
-+		err = check_helper_mem_access(env, regno, meta->map_ptr->key_size,
-+					      BPF_READ, false, NULL);
- 		break;
- 	case ARG_PTR_TO_MAP_VALUE:
- 		if (type_may_be_null(arg_type) && register_is_null(reg))
-@@ -8602,9 +8591,9 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
- 			return -EACCES;
- 		}
- 		meta->raw_mode = arg_type & MEM_UNINIT;
--		err = check_helper_mem_access(env, regno,
--					      meta->map_ptr->value_size, false,
--					      meta);
-+		err = check_helper_mem_access(env, regno, meta->map_ptr->value_size,
-+					      arg_type & MEM_WRITE ? BPF_WRITE : BPF_READ,
-+					      false, meta);
- 		break;
- 	case ARG_PTR_TO_PERCPU_BTF_ID:
- 		if (!reg->btf_id) {
-@@ -8646,7 +8635,9 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
- 		 */
- 		meta->raw_mode = arg_type & MEM_UNINIT;
- 		if (arg_type & MEM_FIXED_SIZE) {
--			err = check_helper_mem_access(env, regno, fn->arg_size[arg], false, meta);
-+			err = check_helper_mem_access(env, regno, fn->arg_size[arg],
-+						      arg_type & MEM_WRITE ? BPF_WRITE : BPF_READ,
-+						      false, meta);
- 			if (err)
- 				return err;
- 			if (arg_type & MEM_ALIGNED)
-@@ -8654,10 +8645,16 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
- 		}
- 		break;
- 	case ARG_CONST_SIZE:
--		err = check_mem_size_reg(env, reg, regno, false, meta);
-+		err = check_mem_size_reg(env, reg, regno,
-+					 fn->arg_type[arg - 1] & MEM_WRITE ?
-+					 BPF_WRITE : BPF_READ,
-+					 false, meta);
- 		break;
- 	case ARG_CONST_SIZE_OR_ZERO:
--		err = check_mem_size_reg(env, reg, regno, true, meta);
-+		err = check_mem_size_reg(env, reg, regno,
-+					 fn->arg_type[arg - 1] & MEM_WRITE ?
-+					 BPF_WRITE : BPF_READ,
-+					 true, meta);
- 		break;
- 	case ARG_PTR_TO_DYNPTR:
- 		err = process_dynptr_func(env, regno, insn_idx, arg_type, 0);
+@@ -6310,7 +6298,7 @@ static const struct bpf_func_proto bpf_skb_check_mtu_proto = {
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type      = ARG_PTR_TO_CTX,
+ 	.arg2_type      = ARG_ANYTHING,
+-	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
++	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_WRITE | MEM_ALIGNED,
+ 	.arg3_size	= sizeof(u32),
+ 	.arg4_type      = ARG_ANYTHING,
+ 	.arg5_type      = ARG_ANYTHING,
+@@ -6322,7 +6310,7 @@ static const struct bpf_func_proto bpf_xdp_check_mtu_proto = {
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type      = ARG_PTR_TO_CTX,
+ 	.arg2_type      = ARG_ANYTHING,
+-	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
++	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_WRITE | MEM_ALIGNED,
+ 	.arg3_size	= sizeof(u32),
+ 	.arg4_type      = ARG_ANYTHING,
+ 	.arg5_type      = ARG_ANYTHING,
 -- 
 2.43.0
 
