@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB402AF07;
-	Mon, 28 Oct 2024 06:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9574718F2E2;
+	Mon, 28 Oct 2024 06:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098153; cv=none; b=boNPOIpQbttFgdWNyHKADvgHaVFWaJM7vvjnMjL7aXJjnw4BAsBf91PEHCNfjMRZXZwjyIEOSMa5m0wKX+9dLwDMqgtL01VHpFzYkJFhEuglwkCSCMMR0jkPYoT9itl2vnEnv3MvFgYyDUo3Nij9fNCGFGj050f4LUvOkkcQ5ko=
+	t=1730098155; cv=none; b=n/NUvH02HXlNIjAdxeIv81+PcZIDcMugg/noBmxCu+Oxg5PhBeOzQ3HNdjLl7EWb2hmGMArSX7f9Ts8TODWyufVcjwlWOUDfbK2sf9V/RI3k27lp5AbfI4qM7bfh5NPCNs8LClU+j4SNDZCkEGuGkG1PrQFrycAUCi4KkGDWm6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098153; c=relaxed/simple;
-	bh=2QamZZ4edvzYjoNdK+/T49yFMQJVgJIW7iw7ZB3Kano=;
+	s=arc-20240116; t=1730098155; c=relaxed/simple;
+	bh=gkrmkOERGDnH6xw0R3/GwoK0ivlh5fiZ2swroANvZYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TIDpgKW6Q9UkUhQEyeQtAgRfsJbYLGqq/FO5nJ2Od2NMClKPjOTQwpBPDO6gJTlOi1D4txiP/bUN+y1DbKzEdvusMJi/e8LKoy1/u/RgT+ujbKDrsWSsgFObFwl7zxFVd4Bx1un3/F+psVrWEtEYXK7vfDS3lHN18EI5OiPeWRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTwlq5c4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hoIHgWK3d9kZQfObqidm9CAwdnGQSdbnnxM3vDwkFq67RIq099bmi0BeTi/AUQioL+e2NjdK8m4AnCQjOkryKMJ+p7zuuUuxRpeqUO2X7gmxpE3ynqtXZICaTcolXj8Nb1mX/A46dHr0eeMYaw33qxDl+UyWtBr1KRupN06fC3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRCb++8i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTwlq5c4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B72C4CECD;
-	Mon, 28 Oct 2024 06:49:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRCb++8i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2D8C4CEC3;
+	Mon, 28 Oct 2024 06:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098153;
-	bh=2QamZZ4edvzYjoNdK+/T49yFMQJVgJIW7iw7ZB3Kano=;
+	s=korg; t=1730098155;
+	bh=gkrmkOERGDnH6xw0R3/GwoK0ivlh5fiZ2swroANvZYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pTwlq5c4G0OgrELslmkBDRg191+2ucbOltxyK4TgkCmqpIylrsuPzqF7U6pzosr4E
-	 P+YeZw+WRM2eVMUbecQPeUklcUA3qyBgsJW8DfGL+yRi/cLW/9JaHcjtoy3FeTPARq
-	 1fklvxbNGhkvuUzmAJVrXGbFpsJGx0vgcVMlyHEA=
+	b=gRCb++8irmX1PHmYBCQrmDdF1mSa2giefggqQ8xCCJZBaNhs/NSvjEUbTaG8y4gUW
+	 wIrYFGq8Xv4x/1zUx/DXfEvnB7dzirWq23gnH5KRCg9FmZ+AwV0FJvvjgP1M/RSo82
+	 kIiewL9FK1MGdCGw5kCBqDYW6kR+H4tNDt5xe5pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Jack Xiao <Jack.Xiao@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 063/261] ring-buffer: Fix reader locking when changing the sub buffer order
-Date: Mon, 28 Oct 2024 07:23:25 +0100
-Message-ID: <20241028062313.609943997@linuxfoundation.org>
+Subject: [PATCH 6.11 064/261] drm/amd/amdgpu: Fix double unlock in amdgpu_mes_add_ring
+Date: Mon, 28 Oct 2024 07:23:26 +0100
+Message-ID: <20241028062313.635269145@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -47,124 +48,184 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 09661f75e75cb6c1d2d8326a70c311d46729235f ]
+[ Upstream commit e7457532cb7167516263150ceae86f36d6ef9683 ]
 
-The function ring_buffer_subbuf_order_set() updates each
-ring_buffer_per_cpu and installs new sub buffers that match the requested
-page order. This operation may be invoked concurrently with readers that
-rely on some of the modified data, such as the head bit (RB_PAGE_HEAD), or
-the ring_buffer_per_cpu.pages and reader_page pointers. However, no
-exclusive access is acquired by ring_buffer_subbuf_order_set(). Modifying
-the mentioned data while a reader also operates on them can then result in
-incorrect memory access and various crashes.
+This patch addresses a double unlock issue in the amdgpu_mes_add_ring
+function. The mutex was being unlocked twice under certain error
+conditions, which could lead to undefined behavior.
 
-Fix the problem by taking the reader_lock when updating a specific
-ring_buffer_per_cpu in ring_buffer_subbuf_order_set().
+The fix ensures that the mutex is unlocked only once before jumping to
+the clean_up_memory label. The unlock operation is moved to just before
+the goto statement within the conditional block that checks the return
+value of amdgpu_ring_init. This prevents the second unlock attempt after
+the clean_up_memory label, which is no longer necessary as the mutex is
+already unlocked by this point in the code flow.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240715145141.5528-1-petr.pavlu@suse.com/
-Link: https://lore.kernel.org/linux-trace-kernel/20241010195849.2f77cc3f@gandalf.local.home/
-Link: https://lore.kernel.org/linux-trace-kernel/20241011112850.17212b25@gandalf.local.home/
+This change resolves the potential double unlock and maintains the
+correct mutex handling throughout the function.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20241015112440.26987-1-petr.pavlu@suse.com
-Fixes: 8e7b58c27b3c ("ring-buffer: Just update the subbuffers when changing their allocation order")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes below:
+Commit d0c423b64765 ("drm/amdgpu/mes: use ring for kernel queue
+submission"), leads to the following Smatch static checker warning:
+
+	drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c:1240 amdgpu_mes_add_ring()
+	warn: double unlock '&adev->mes.mutex_hidden' (orig line 1213)
+
+drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+    1143 int amdgpu_mes_add_ring(struct amdgpu_device *adev, int gang_id,
+    1144                         int queue_type, int idx,
+    1145                         struct amdgpu_mes_ctx_data *ctx_data,
+    1146                         struct amdgpu_ring **out)
+    1147 {
+    1148         struct amdgpu_ring *ring;
+    1149         struct amdgpu_mes_gang *gang;
+    1150         struct amdgpu_mes_queue_properties qprops = {0};
+    1151         int r, queue_id, pasid;
+    1152
+    1153         /*
+    1154          * Avoid taking any other locks under MES lock to avoid circular
+    1155          * lock dependencies.
+    1156          */
+    1157         amdgpu_mes_lock(&adev->mes);
+    1158         gang = idr_find(&adev->mes.gang_id_idr, gang_id);
+    1159         if (!gang) {
+    1160                 DRM_ERROR("gang id %d doesn't exist\n", gang_id);
+    1161                 amdgpu_mes_unlock(&adev->mes);
+    1162                 return -EINVAL;
+    1163         }
+    1164         pasid = gang->process->pasid;
+    1165
+    1166         ring = kzalloc(sizeof(struct amdgpu_ring), GFP_KERNEL);
+    1167         if (!ring) {
+    1168                 amdgpu_mes_unlock(&adev->mes);
+    1169                 return -ENOMEM;
+    1170         }
+    1171
+    1172         ring->ring_obj = NULL;
+    1173         ring->use_doorbell = true;
+    1174         ring->is_mes_queue = true;
+    1175         ring->mes_ctx = ctx_data;
+    1176         ring->idx = idx;
+    1177         ring->no_scheduler = true;
+    1178
+    1179         if (queue_type == AMDGPU_RING_TYPE_COMPUTE) {
+    1180                 int offset = offsetof(struct amdgpu_mes_ctx_meta_data,
+    1181                                       compute[ring->idx].mec_hpd);
+    1182                 ring->eop_gpu_addr =
+    1183                         amdgpu_mes_ctx_get_offs_gpu_addr(ring, offset);
+    1184         }
+    1185
+    1186         switch (queue_type) {
+    1187         case AMDGPU_RING_TYPE_GFX:
+    1188                 ring->funcs = adev->gfx.gfx_ring[0].funcs;
+    1189                 ring->me = adev->gfx.gfx_ring[0].me;
+    1190                 ring->pipe = adev->gfx.gfx_ring[0].pipe;
+    1191                 break;
+    1192         case AMDGPU_RING_TYPE_COMPUTE:
+    1193                 ring->funcs = adev->gfx.compute_ring[0].funcs;
+    1194                 ring->me = adev->gfx.compute_ring[0].me;
+    1195                 ring->pipe = adev->gfx.compute_ring[0].pipe;
+    1196                 break;
+    1197         case AMDGPU_RING_TYPE_SDMA:
+    1198                 ring->funcs = adev->sdma.instance[0].ring.funcs;
+    1199                 break;
+    1200         default:
+    1201                 BUG();
+    1202         }
+    1203
+    1204         r = amdgpu_ring_init(adev, ring, 1024, NULL, 0,
+    1205                              AMDGPU_RING_PRIO_DEFAULT, NULL);
+    1206         if (r)
+    1207                 goto clean_up_memory;
+    1208
+    1209         amdgpu_mes_ring_to_queue_props(adev, ring, &qprops);
+    1210
+    1211         dma_fence_wait(gang->process->vm->last_update, false);
+    1212         dma_fence_wait(ctx_data->meta_data_va->last_pt_update, false);
+    1213         amdgpu_mes_unlock(&adev->mes);
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    1214
+    1215         r = amdgpu_mes_add_hw_queue(adev, gang_id, &qprops, &queue_id);
+    1216         if (r)
+    1217                 goto clean_up_ring;
+                         ^^^^^^^^^^^^^^^^^^
+
+    1218
+    1219         ring->hw_queue_id = queue_id;
+    1220         ring->doorbell_index = qprops.doorbell_off;
+    1221
+    1222         if (queue_type == AMDGPU_RING_TYPE_GFX)
+    1223                 sprintf(ring->name, "gfx_%d.%d.%d", pasid, gang_id, queue_id);
+    1224         else if (queue_type == AMDGPU_RING_TYPE_COMPUTE)
+    1225                 sprintf(ring->name, "compute_%d.%d.%d", pasid, gang_id,
+    1226                         queue_id);
+    1227         else if (queue_type == AMDGPU_RING_TYPE_SDMA)
+    1228                 sprintf(ring->name, "sdma_%d.%d.%d", pasid, gang_id,
+    1229                         queue_id);
+    1230         else
+    1231                 BUG();
+    1232
+    1233         *out = ring;
+    1234         return 0;
+    1235
+    1236 clean_up_ring:
+    1237         amdgpu_ring_fini(ring);
+    1238 clean_up_memory:
+    1239         kfree(ring);
+--> 1240         amdgpu_mes_unlock(&adev->mes);
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    1241         return r;
+    1242 }
+
+Fixes: d0c423b64765 ("drm/amdgpu/mes: use ring for kernel queue submission")
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Hawking Zhang <Hawking.Zhang@amd.com>
+Suggested-by: Jack Xiao <Jack.Xiao@amd.com>
+Reported by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Jack Xiao <Jack.Xiao@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit bfaf1883605fd0c0dbabacd67ed49708470d5ea4)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 44 ++++++++++++++++++++++----------------
- 1 file changed, 26 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index cebd879a30cbd..fb7b092e79313 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -6008,39 +6008,38 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+index 1cb1ec7beefed..2304a13fcb048 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+@@ -1124,8 +1124,10 @@ int amdgpu_mes_add_ring(struct amdgpu_device *adev, int gang_id,
  
- 	for_each_buffer_cpu(buffer, cpu) {
-+		struct buffer_data_page *old_free_data_page;
-+		struct list_head old_pages;
-+		unsigned long flags;
+ 	r = amdgpu_ring_init(adev, ring, 1024, NULL, 0,
+ 			     AMDGPU_RING_PRIO_DEFAULT, NULL);
+-	if (r)
++	if (r) {
++		amdgpu_mes_unlock(&adev->mes);
+ 		goto clean_up_memory;
++	}
  
- 		if (!cpumask_test_cpu(cpu, buffer->cpumask))
- 			continue;
+ 	amdgpu_mes_ring_to_queue_props(adev, ring, &qprops);
  
- 		cpu_buffer = buffer->buffers[cpu];
- 
-+		raw_spin_lock_irqsave(&cpu_buffer->reader_lock, flags);
-+
- 		/* Clear the head bit to make the link list normal to read */
- 		rb_head_page_deactivate(cpu_buffer);
- 
--		/* Now walk the list and free all the old sub buffers */
--		list_for_each_entry_safe(bpage, tmp, cpu_buffer->pages, list) {
--			list_del_init(&bpage->list);
--			free_buffer_page(bpage);
--		}
--		/* The above loop stopped an the last page needing to be freed */
--		bpage = list_entry(cpu_buffer->pages, struct buffer_page, list);
--		free_buffer_page(bpage);
--
--		/* Free the current reader page */
--		free_buffer_page(cpu_buffer->reader_page);
-+		/*
-+		 * Collect buffers from the cpu_buffer pages list and the
-+		 * reader_page on old_pages, so they can be freed later when not
-+		 * under a spinlock. The pages list is a linked list with no
-+		 * head, adding old_pages turns it into a regular list with
-+		 * old_pages being the head.
-+		 */
-+		list_add(&old_pages, cpu_buffer->pages);
-+		list_add(&cpu_buffer->reader_page->list, &old_pages);
- 
- 		/* One page was allocated for the reader page */
- 		cpu_buffer->reader_page = list_entry(cpu_buffer->new_pages.next,
- 						     struct buffer_page, list);
- 		list_del_init(&cpu_buffer->reader_page->list);
- 
--		/* The cpu_buffer pages are a link list with no head */
-+		/* Install the new pages, remove the head from the list */
- 		cpu_buffer->pages = cpu_buffer->new_pages.next;
--		cpu_buffer->new_pages.next->prev = cpu_buffer->new_pages.prev;
--		cpu_buffer->new_pages.prev->next = cpu_buffer->new_pages.next;
--
--		/* Clear the new_pages list */
--		INIT_LIST_HEAD(&cpu_buffer->new_pages);
-+		list_del_init(&cpu_buffer->new_pages);
- 
- 		cpu_buffer->head_page
- 			= list_entry(cpu_buffer->pages, struct buffer_page, list);
-@@ -6049,11 +6048,20 @@ int ring_buffer_subbuf_order_set(struct trace_buffer *buffer, int order)
- 		cpu_buffer->nr_pages = cpu_buffer->nr_pages_to_update;
- 		cpu_buffer->nr_pages_to_update = 0;
- 
--		free_pages((unsigned long)cpu_buffer->free_page, old_order);
-+		old_free_data_page = cpu_buffer->free_page;
- 		cpu_buffer->free_page = NULL;
- 
- 		rb_head_page_activate(cpu_buffer);
- 
-+		raw_spin_unlock_irqrestore(&cpu_buffer->reader_lock, flags);
-+
-+		/* Free old sub buffers */
-+		list_for_each_entry_safe(bpage, tmp, &old_pages, list) {
-+			list_del_init(&bpage->list);
-+			free_buffer_page(bpage);
-+		}
-+		free_pages((unsigned long)old_free_data_page, old_order);
-+
- 		rb_check_pages(cpu_buffer);
- 	}
+@@ -1158,7 +1160,6 @@ int amdgpu_mes_add_ring(struct amdgpu_device *adev, int gang_id,
+ 	amdgpu_ring_fini(ring);
+ clean_up_memory:
+ 	kfree(ring);
+-	amdgpu_mes_unlock(&adev->mes);
+ 	return r;
+ }
  
 -- 
 2.43.0
