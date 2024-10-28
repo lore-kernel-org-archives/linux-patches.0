@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCD618DF83;
-	Mon, 28 Oct 2024 06:54:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8B72AF07;
+	Mon, 28 Oct 2024 06:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098493; cv=none; b=WxfnAv8i1kTlPsHmoRvk5aR2g8vurdLDHU2271Is0z+hfSXqrYSB83PEY36FFoPLkMu27z/tM3yL0NZjwU0FwewCFOTGPYBxsNA8JJN8I9VqMbpNi+Iih/Q+ParaJRe/ndqgQ53PHZjjq0Mp/jXuAQZF/cjmHW66oFzgyGJ6dRc=
+	t=1730098496; cv=none; b=g63MWFJCrUt+9c0Bow0C46Grqi6gEJwG3HPak9zPrK9HxHodw6lNp0xlJh0AAHMyKLF0lTErumNVPtPenvMgdZGmUU7qOYCB5I7ZyVUw8N9lSKcj8tQLHGzvo1p//Y3Yf22WYHhF+HNp+MjmNYl5UDVLnX1kNqKR0zgiJlsed1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098493; c=relaxed/simple;
-	bh=b2/UDEj22HUZEz9Uv5tqnCj7+WyZxNcVdPcnfPOkzLs=;
+	s=arc-20240116; t=1730098496; c=relaxed/simple;
+	bh=SHrWFhB8H0KrJIHY8brPWEeQTdm2j1fTqFJjBKq/nUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tXCIyd6d95WJRDIJgq8zuYS7JZYPv0kcDHO37AFgVoRNshy1z9fwfpBG+iJeB0d1wTjG2VvQC+j2wab7YOtVkZVN2X+0xpyfS/VR/gFO9WwkzdxZH4Airw5Msw69iVmqcFqQUzmHqZKUxGy0Y0AdEBsqB8LEW3thoYr7qMGbeik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KkkKm4px; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=smwaIE/ZiAxo7N/YkQLW3E2Zc04e7pjHFuQ6LxBWOxRkvoYb7vPm+Zwa7MhnY/XGkUC4s/wTdc4UvUFkNMBaFj7PGybcIpxi0OSHSa8lSpCs0JW3N7kVSRNNXj68RdgfzbVPpE4WX+Z/wVz/3E+k3yUrVePmvJkZFElt9MonCzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAS+Cht2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KkkKm4px"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C854C4CEC3;
-	Mon, 28 Oct 2024 06:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAS+Cht2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94CECC4CEC3;
+	Mon, 28 Oct 2024 06:54:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098493;
-	bh=b2/UDEj22HUZEz9Uv5tqnCj7+WyZxNcVdPcnfPOkzLs=;
+	s=korg; t=1730098495;
+	bh=SHrWFhB8H0KrJIHY8brPWEeQTdm2j1fTqFJjBKq/nUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KkkKm4pxB1Jq4GbjE1u8iD4ClTlUrMEMrLRBd2orzc8nXkAA/XhqsTgSeOfe6Fbaf
-	 atKjNHfvksvpAbunZZIck7Y3Uo6oT2DOfms6363ED7xLOMZffM2OHolwXaO6SauZh/
-	 lHJMRHBdkbpCJfrBVDmI6rQTwWLjUtVDgNuc5x2w=
+	b=IAS+Cht2Zb3+Coise9MtcSK+MvmqyZzAQWE/vHM11595pU1uzbECv4tVoEw0Y/c+K
+	 0Z4zLeeRI1fZMGsbsKCUuB/KgP1tI5Gl7OW8HBnCyV7a9ptTHXi7+yXK/UDU1dqYsd
+	 Qj67flKDP9DjmfgMoCKVDKZxKVXAkTEJ61ha2YWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zichen Xie <zichenxie0106@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.11 250/261] ASoC: qcom: Fix NULL Dereference in asoc_qcom_lpass_cpu_platform_probe()
-Date: Mon, 28 Oct 2024 07:26:32 +0100
-Message-ID: <20241028062318.377017942@linuxfoundation.org>
+	Brad Spengler <spender@grsecurity.net>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.11 215/261] fs: dont try and remove empty rbtree node
+Date: Mon, 28 Oct 2024 07:25:57 +0100
+Message-ID: <20241028062317.480482748@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -50,35 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zichen Xie <zichenxie0106@gmail.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 49da1463c9e3d2082276c3e0e2a8b65a88711cd2 upstream.
+commit 229fd15908fe1f99b1de4cde3326e62d1e892611 upstream.
 
-A devm_kzalloc() in asoc_qcom_lpass_cpu_platform_probe() could
-possibly return NULL pointer. NULL Pointer Dereference may be
-triggerred without addtional check.
-Add a NULL check for the returned pointer.
+When copying a namespace we won't have added the new copy into the
+namespace rbtree until after the copy succeeded. Calling free_mnt_ns()
+will try to remove the copy from the rbtree which is invalid. Simply
+free the namespace skeleton directly.
 
-Fixes: b5022a36d28f ("ASoC: qcom: lpass: Use regmap_field for i2sctl and dmactl registers")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
-Link: https://patch.msgid.link/20241006205737.8829-1-zichenxie0106@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20241016-adapter-seilwinde-83c508a7bde1@brauner
+Fixes: 1901c92497bd ("fs: keep an index of current mount namespaces")
+Tested-by: Brad Spengler <spender@grsecurity.net>
+Cc: stable@vger.kernel.org # v6.11+
+Reported-by: Brad Spengler <spender@grsecurity.net>
+Suggested-by: Brad Spengler <spender@grsecurity.net>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/lpass-cpu.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/namespace.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -1242,6 +1242,8 @@ int asoc_qcom_lpass_cpu_platform_probe(s
- 	/* Allocation for i2sctl regmap fields */
- 	drvdata->i2sctl = devm_kzalloc(&pdev->dev, sizeof(struct lpaif_i2sctl),
- 					GFP_KERNEL);
-+	if (!drvdata->i2sctl)
-+		return -ENOMEM;
- 
- 	/* Initialize bitfields for dai I2SCTL register */
- 	ret = lpass_cpu_init_i2sctl_bitfields(dev, drvdata->i2sctl,
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -3917,7 +3917,9 @@ struct mnt_namespace *copy_mnt_ns(unsign
+ 	new = copy_tree(old, old->mnt.mnt_root, copy_flags);
+ 	if (IS_ERR(new)) {
+ 		namespace_unlock();
+-		free_mnt_ns(new_ns);
++		ns_free_inum(&new_ns->ns);
++		dec_mnt_namespaces(new_ns->ucounts);
++		mnt_ns_release(new_ns);
+ 		return ERR_CAST(new);
+ 	}
+ 	if (user_ns != ns->user_ns) {
 
 
