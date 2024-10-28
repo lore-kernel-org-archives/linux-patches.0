@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EB918DF68;
-	Mon, 28 Oct 2024 06:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C9618F2CF;
+	Mon, 28 Oct 2024 06:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097387; cv=none; b=U5mSDRrcDBx5QDO6ljx801qbbC+ogbiR+LRo+UB6X1zWdGTRX658UXDyh+DCArmIPg10WHmNE1r1P9aJY8i+DtAmVEG9s/cUBbU+XiMe+sY0BcK56VPW2fYQZCtae9Jrpcc791LhToprie0I2CQz4PKjw7KYNQdMSphfx6SJtUU=
+	t=1730097389; cv=none; b=L8SxNrMZK8YIu9lmg6V966jnoVKGKv82G9lKsC8yY/jDMRSEFyU5CfjzFSMvAtaW36WfUqJ6itWtOZa/wLBCfismCfjGAicrhP7De6huG3/5nMeZ6EJhKOaBUHPJ4b2tPBkRqO1UkxUnyUFHCG/N9YASo55JjJ4rutdTHZFD4Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097387; c=relaxed/simple;
-	bh=uXM7Ebw2RUvdwmcJmC2fBf9NBmOJKRiQfwLA0efZ8KQ=;
+	s=arc-20240116; t=1730097389; c=relaxed/simple;
+	bh=v5cUK1lp2s0RrMqhLSf7NZUUlvdO7rC50x//51HxHAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eo4pNicC9+Jvzk5KOvrR/Xf7BRn4xI6u9c91ix5ne8b07Jm0OaUfgEuQtRJ0PGXGOTdu3VP0USadN2GBLmQBdeZTci5LJ1f55i3An4a2DFEFvZwjTu8U5tu/FBDNnlpkQsVtbDSFWTx2FoIF4dNrGAvYMKR2gQvUlbi4fUyxaNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMsHwZ6T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ssZYI/QAwLYn0KQJ1Z3O1u6ehcesRXjTRwXigBxULf7oDQEPechzJPiIvNI5gt/eCGs/S3bJJS+gDn+R8s48Ausam9P6C7Rqg4sentLb207CqAQWITlcoY7PC/TWpx+uIkswS6+h7fnjp8cbRibQa7F2NX9wc2lloq45kew/2yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tUU4ACR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMsHwZ6T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E69C4CEC3;
-	Mon, 28 Oct 2024 06:36:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tUU4ACR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB21C4CEC3;
+	Mon, 28 Oct 2024 06:36:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097387;
-	bh=uXM7Ebw2RUvdwmcJmC2fBf9NBmOJKRiQfwLA0efZ8KQ=;
+	s=korg; t=1730097389;
+	bh=v5cUK1lp2s0RrMqhLSf7NZUUlvdO7rC50x//51HxHAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMsHwZ6T3tNUK+RW377ycmtAuxDKZ+AN1FQ7bYgVO3JrUR3aUx6ous46ajp98uoKW
-	 /ZY1shQano/Hwz+9mbg5wbm5S+1Rt0kIQzv8iGUTXGIreJKu3ZBd/D5j08QbDwPmRm
-	 mR8nGJLLFg4j9uqE+QecrIYan+S5K+VmK9DrTsGU=
+	b=2tUU4ACRqV09OHmHwx3yv4gR75d4rw2YkkOa8M3Ikb8plnv8ztjDAh0E9UFW/Dymh
+	 0KoOXYXSqjlWlpjkyFlYOy4kIGVSbjy60x6csLxluQwRBM2K4LDd9ZJa6JnlqJ7DYc
+	 dVhA9xhF3qZ7nxVKNWHbPdcS8nddwVn4WHXc6O6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Gruber <jimmyjgruber@gmail.com>,
-	Yadwinder Singh <yadi.brar01@gmail.com>,
-	Jaswinder Singh <jaswinder.singh@linaro.org>,
-	Ruslan Bilovol <ruslan.bilovol@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	syzbot+b65e0af58423fc8a73aa@syzkaller.appspotmail.com,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/137] usb: gadget: f_uac2: Replace snprintf() with the safer scnprintf() variant
-Date: Mon, 28 Oct 2024 07:24:59 +0100
-Message-ID: <20241028062300.470246508@linuxfoundation.org>
+Subject: [PATCH 6.1 102/137] net: sched: fix use-after-free in taprio_change()
+Date: Mon, 28 Oct 2024 07:25:39 +0100
+Message-ID: <20241028062301.574814796@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -54,65 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lee Jones <lee@kernel.org>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 60034e0aedf507888c4a880f57011bb7f5d7700c ]
+[ Upstream commit f504465970aebb2467da548f7c1efbbf36d0f44b ]
 
-There is a general misunderstanding amongst engineers that {v}snprintf()
-returns the length of the data *actually* encoded into the destination
-array.  However, as per the C99 standard {v}snprintf() really returns
-the length of the data that *would have been* written if there were
-enough space for it.  This misunderstanding has led to buffer-overruns
-in the past.  It's generally considered safer to use the {v}scnprintf()
-variants in their place (or even sprintf() in simple cases).  So let's
-do that.
+In 'taprio_change()', 'admin' pointer may become dangling due to sched
+switch / removal caused by 'advance_sched()', and critical section
+protected by 'q->current_entry_lock' is too small to prevent from such
+a scenario (which causes use-after-free detected by KASAN). Fix this
+by prefer 'rcu_replace_pointer()' over 'rcu_assign_pointer()' to update
+'admin' immediately before an attempt to schedule freeing.
 
-Link: https://lwn.net/Articles/69419/
-Link: https://github.com/KSPP/linux/issues/105
-Cc: James Gruber <jimmyjgruber@gmail.com>
-Cc: Yadwinder Singh <yadi.brar01@gmail.com>
-Cc: Jaswinder Singh <jaswinder.singh@linaro.org>
-Cc: Ruslan Bilovol <ruslan.bilovol@gmail.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20231213164246.1021885-4-lee@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 9499327714de ("usb: gadget: f_uac2: fix return value for UAC2_ATTRIBUTE_STRING store")
+Fixes: a3d43c0d56f1 ("taprio: Add support adding an admin schedule")
+Reported-by: syzbot+b65e0af58423fc8a73aa@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b65e0af58423fc8a73aa
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://patch.msgid.link/20241018051339.418890-1-dmantipov@yandex.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_uac2.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/sched/sch_taprio.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/function/f_uac2.c b/drivers/usb/gadget/function/f_uac2.c
-index 0219cd79493a7..55a4f07bc9cc1 100644
---- a/drivers/usb/gadget/function/f_uac2.c
-+++ b/drivers/usb/gadget/function/f_uac2.c
-@@ -2042,7 +2042,7 @@ static ssize_t f_uac2_opts_##name##_show(struct config_item *item,	\
- 	int result;							\
- 									\
- 	mutex_lock(&opts->lock);					\
--	result = snprintf(page, sizeof(opts->name), "%s", opts->name);	\
-+	result = scnprintf(page, sizeof(opts->name), "%s", opts->name);	\
- 	mutex_unlock(&opts->lock);					\
- 									\
- 	return result;							\
-@@ -2060,7 +2060,7 @@ static ssize_t f_uac2_opts_##name##_store(struct config_item *item,	\
- 		goto end;						\
- 	}								\
- 									\
--	ret = snprintf(opts->name, min(sizeof(opts->name), len),	\
-+	ret = scnprintf(opts->name, min(sizeof(opts->name), len),	\
- 			"%s", page);					\
- 									\
- end:									\
-@@ -2178,7 +2178,7 @@ static struct usb_function_instance *afunc_alloc_inst(void)
- 	opts->req_number = UAC2_DEF_REQ_NUM;
- 	opts->fb_max = FBACK_FAST_MAX;
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index 07f6f5343dd71..212fef2b72f50 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -1681,7 +1681,8 @@ static int taprio_change(struct Qdisc *sch, struct nlattr *opt,
  
--	snprintf(opts->function_name, sizeof(opts->function_name), "Source/Sink");
-+	scnprintf(opts->function_name, sizeof(opts->function_name), "Source/Sink");
+ 		taprio_start_sched(sch, start, new_admin);
  
- 	return &opts->func_inst;
- }
+-		rcu_assign_pointer(q->admin_sched, new_admin);
++		admin = rcu_replace_pointer(q->admin_sched, new_admin,
++					    lockdep_rtnl_is_held());
+ 		if (admin)
+ 			call_rcu(&admin->rcu, taprio_free_sched_cb);
+ 
 -- 
 2.43.0
 
