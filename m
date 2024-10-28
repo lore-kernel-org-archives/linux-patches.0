@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECCD8837;
-	Mon, 28 Oct 2024 06:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210978837;
+	Mon, 28 Oct 2024 06:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098334; cv=none; b=A05WunzzQpOEn8b/TGaXTzpAM3DJ7/QwkMUYiSuVS0B3ngY1zbvmj5IAG3AewGftB/PNY8yEKuWYWk3YjSZ9vAXGfVPeE78+IRQtA6PUsv4yzCFW7efsBPgJ/FM6WfSnoCZpOpG8YP9iGVRj+7Pcj9/H70uNcl9hw+zVSdJmbGc=
+	t=1730098337; cv=none; b=bPmS3sQNuwa84WWtlhuLZJ0bdzg638VaH+6IUPgoH/y7LFnl3+uHdwUmzGDBGFTJALBUva8RQ5LBAU59zMYuG6KcMkPSjC/vND12SV22g0z/3ssQbduHxPbh9TJhJ5NVXxZaDAXBi+2A4QXNecDonu12fmGuO8ScveLY19/9pz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098334; c=relaxed/simple;
-	bh=F3kOO/IZUoHlT8tNRsDYTXwc6EtE/JtqlG4ZTr30AGc=;
+	s=arc-20240116; t=1730098337; c=relaxed/simple;
+	bh=6mqtye1wsMdrlIS6qe3STxMxC/e1VPWZNNTttlxI6o8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKcCiwyXOmABptvN9J+M2PgJFmYJzq2hd3d791wDjYCdR+wf9Rkzg/EEKBUA0S9pGmkf+5xaExtjfQ+3zgqoiy5GuqGW/nbRp5bbeUoYmtPqBFleu6+o6o19EblmcxQIJBoZtCurvhiynnQCFCaGDNtCB2zmYjvMjzlmdehkCWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UR3ZdAjL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dLaChBTue8xP+pKWHiwHesl2IVyEX1uoq0r313QXZ9ucZB9hLdUt16HXracnCbJtVe48LAT87lJ8ntxI+lps4DX26gWkDAIk+XVeb7Qm/B4zQRAYG2LycklKttseuyHn4IMGbNTDf/uhUcJOIP7wZnoLON6shkGfgitg0pq2WVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPMleQQ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UR3ZdAjL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F96CC4CEC3;
-	Mon, 28 Oct 2024 06:52:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPMleQQ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7450CC4CEC3;
+	Mon, 28 Oct 2024 06:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098334;
-	bh=F3kOO/IZUoHlT8tNRsDYTXwc6EtE/JtqlG4ZTr30AGc=;
+	s=korg; t=1730098336;
+	bh=6mqtye1wsMdrlIS6qe3STxMxC/e1VPWZNNTttlxI6o8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UR3ZdAjLMJ175OSWnsXmQ3Hf+uaMrk+dgQQK+egiKdwWb1jRgMBOkn/j6Y0cxeafT
-	 0rqQu2LY/+0CphqWnkWuRrksIntYMnnDwLgJ6KP/pXoSQ/3OhdXwpzoZPph4aJcNN8
-	 u8pA++01N+LIbp+WCUsi/I/jkZh2/RmEv5GUrmWg=
+	b=YPMleQQ+TPA0uEWjBo5sfHtD/JW0v6xi35xd/I7RwLVqeFQEFa5+uPsRO2w/ugjR/
+	 Hm9hADdD5WnSLb6Y8SnDytPFOue9xi7ymkhEE6EA0VFeTJNRlL+ssrvOJHvZ5fdkqr
+	 YxzC5BO8/qbXuBAR2sn6+EnBTrFUsIOJ48ZumDIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 174/261] bpf,perf: Fix perf_event_detach_bpf_prog error handling
-Date: Mon, 28 Oct 2024 07:25:16 +0100
-Message-ID: <20241028062316.360189833@linuxfoundation.org>
+Subject: [PATCH 6.11 183/261] ASoC: loongson: Fix component check failed on FDT systems
+Date: Mon, 28 Oct 2024 07:25:25 +0100
+Message-ID: <20241028062316.593707175@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,44 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Binbin Zhou <zhoubinbin@loongson.cn>
 
-[ Upstream commit 0ee288e69d033850bc87abe0f9cc3ada24763d7f ]
+[ Upstream commit a6134e7b4d4a14e0942f113a6df1d518baa2a0a4 ]
 
-Peter reported that perf_event_detach_bpf_prog might skip to release
-the bpf program for -ENOENT error from bpf_prog_array_copy.
+Add missing snd_soc_dai_link.platforms assignment to avoid
+soc_dai_link_sanity_check() failure.
 
-This can't happen because bpf program is stored in perf event and is
-detached and released only when perf event is freed.
-
-Let's drop the -ENOENT check and make sure the bpf program is released
-in any case.
-
-Fixes: 170a7e3ea070 ("bpf: bpf_prog_array_copy() should return -ENOENT if exclude_prog not found")
-Reported-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241023200352.3488610-1-jolsa@kernel.org
-
-Closes: https://lore.kernel.org/lkml/20241022111638.GC16066@noisy.programming.kicks-ass.net/
+Fixes: d24028606e76 ("ASoC: loongson: Add Loongson ASoC Sound Card Support")
+Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+Link: https://patch.msgid.link/6645888f2f9e8a1d8d799109f867d0f97fd78c58.1728459624.git.zhoubinbin@loongson.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 2 --
- 1 file changed, 2 deletions(-)
+ sound/soc/loongson/loongson_card.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 50c0b1088a9eb..6dbbb3683ab2e 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2306,8 +2306,6 @@ void perf_event_detach_bpf_prog(struct perf_event *event)
+diff --git a/sound/soc/loongson/loongson_card.c b/sound/soc/loongson/loongson_card.c
+index 2c8dbdba27c5f..cc0bb6f9772e1 100644
+--- a/sound/soc/loongson/loongson_card.c
++++ b/sound/soc/loongson/loongson_card.c
+@@ -137,6 +137,7 @@ static int loongson_card_parse_of(struct loongson_card_data *data)
+ 			dev_err(dev, "getting cpu dlc error (%d)\n", ret);
+ 			goto err;
+ 		}
++		loongson_dai_links[i].platforms->of_node = loongson_dai_links[i].cpus->of_node;
  
- 	old_array = bpf_event_rcu_dereference(event->tp_event->prog_array);
- 	ret = bpf_prog_array_copy(old_array, event->prog, NULL, 0, &new_array);
--	if (ret == -ENOENT)
--		goto unlock;
- 	if (ret < 0) {
- 		bpf_prog_array_delete_safe(old_array, event->prog);
- 	} else {
+ 		ret = snd_soc_of_get_dlc(codec, NULL, loongson_dai_links[i].codecs, 0);
+ 		if (ret < 0) {
 -- 
 2.43.0
 
