@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD53B18A922;
-	Mon, 28 Oct 2024 06:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F067718A922;
+	Mon, 28 Oct 2024 06:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098213; cv=none; b=TBAvAm4w+N/aWGB1ZOpNF1EBQj0S+ZrmP9qdHPQKlqPCy+Rgc6qSnVjvpvN44Q5AFOackEcyMvg3O/J1szgmgMmhVg4snK0mf9hlKP7cqEMntWcgfXWtTgyZBrIWlTdW1fjnRF779cK8EqDalh5YoYZ5lFJFxcS4cGYWPMMNKtg=
+	t=1730098216; cv=none; b=sOY3708UJzXLSvuEJoU4knpP0+6945YYegAhMbUTwoq7Qo9spnPgcpRNOBICCJJTM6r1+/Bm7nv2c4q2ghrPxCDoifuNN1T902lYo60jEgUk2ZxjosaQ6+Qt29P0GJiPl7TcyoIb+2u7xYLxWzrw819dc2t/RWfk/3t3SNP1UnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098213; c=relaxed/simple;
-	bh=AMiSNsdxD5kM9sTh2/TaccGw7AcdJTNYlNWlLJShzBY=;
+	s=arc-20240116; t=1730098216; c=relaxed/simple;
+	bh=CdXtI4GiuQ/l1Q/TpMVbOhebb1aP3LGbyTmv8XwKhVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WxyqYDO+Nfb8VuubHy8Da9qJB7wWvG5HFS3VLodxcbQ8j3mRwo2g5L3Z0bMy7lanofsuAl4nxXnaSl5BoURMxAXHDsOc4bllSeiW3KMpPHrcLf/evx77OxM9ysQjKvsdmqowMfjH7/p3z2reRyip+upUpkyO7JXxS4sH8XP0pvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8mggmsj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cid3IPhIjwbUxL/gRoo7+dOSvcB2wi8A60D4fcA9r772z1Qbwv+fiIVv+cok0/E+z9QAWZXpteUwp+IhfVe5XCT8wB1ckEER1G4n567j/bKnQLbvIIY3XeAitgsKziZi+OPpRtS1l3X4bbhr4Scz3xeJgc40ZMEzIRllV/EbXq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccEHhrcJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8mggmsj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2CDC4CEC3;
-	Mon, 28 Oct 2024 06:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccEHhrcJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F91C4CEC3;
+	Mon, 28 Oct 2024 06:50:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098213;
-	bh=AMiSNsdxD5kM9sTh2/TaccGw7AcdJTNYlNWlLJShzBY=;
+	s=korg; t=1730098215;
+	bh=CdXtI4GiuQ/l1Q/TpMVbOhebb1aP3LGbyTmv8XwKhVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8mggmsjSR4dSD4kxpf6DLZGDF0MiMYz/CPVBqDT1Z0VO4AIzMOp623q4kPOMRqhJ
-	 n+mOSflaxXasiXI/5zzS5y3G+rsM+U7BhN9wKj1QnSVpq+sheZXGzYUoAMfkku90iI
-	 maNPjTUf3Ig7ar+vVxqmVNu9kklVbzQx1IOpVftQ=
+	b=ccEHhrcJCxxFwnFZgQiFtgSOLI80eZttLVs1TFPFcMD9dyCB/Vsmt78GRxddAyyq4
+	 jVF9tO6S0HkbCM2mJPbO+jo21P4alCtFfNLYytFDKLTpDOuOMohVQ8ASIxGK35BYdh
+	 iK9FREqF0mTmXPg6FUj+M3oxaUHS30K1dbpDvifM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 126/261] arm64: Force position-independent veneers
-Date: Mon, 28 Oct 2024 07:24:28 +0100
-Message-ID: <20241028062315.192998495@linuxfoundation.org>
+Subject: [PATCH 6.11 127/261] udf: refactor udf_current_aext() to handle error
+Date: Mon, 28 Oct 2024 07:24:29 +0100
+Message-ID: <20241028062315.220186521@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -56,111 +51,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-[ Upstream commit 9abe390e689f4f5c23c5f507754f8678431b4f72 ]
+[ Upstream commit ee703a7068f95764cfb62b57db1d36e465cb9b26 ]
 
-Certain portions of code always need to be position-independent
-regardless of CONFIG_RELOCATABLE, including code which is executed in an
-idmap or which is executed before relocations are applied. In some
-kernel configurations the LLD linker generates position-dependent
-veneers for such code, and when executed these result in early boot-time
-failures.
+As Jan suggested in links below, refactor udf_current_aext() to
+differentiate between error, hit EOF and success, it now takes pointer to
+etype to store the extent type, return 1 when getting etype success,
+return 0 when hitting EOF and return -errno when err.
 
-Marc Zyngier encountered a boot failure resulting from this when
-building a (particularly cursed) configuration with LLVM, as he reported
-to the list:
-
-  https://lore.kernel.org/linux-arm-kernel/86wmjwvatn.wl-maz@kernel.org/
-
-In Marc's kernel configuration, the .head.text and .rodata.text sections
-end up more than 128MiB apart, requiring a veneer to branch between the
-two:
-
-| [mark@lakrids:~/src/linux]% usekorg 14.1.0 aarch64-linux-objdump -t vmlinux | grep -w _text
-| ffff800080000000 g       .head.text     0000000000000000 _text
-| [mark@lakrids:~/src/linux]% usekorg 14.1.0 aarch64-linux-objdump -t vmlinux | grep -w primary_entry
-| ffff8000889df0e0 g       .rodata.text   000000000000006c primary_entry,
-
-... consequently, LLD inserts a position-dependent veneer for the branch
-from _stext (in .head.text) to primary_entry (in .rodata.text):
-
-| ffff800080000000 <_text>:
-| ffff800080000000:       fa405a4d        ccmp    x18, #0x0, #0xd, pl     // pl = nfrst
-| ffff800080000004:       14003fff        b       ffff800080010000 <__AArch64AbsLongThunk_primary_entry>
-...
-| ffff800080010000 <__AArch64AbsLongThunk_primary_entry>:
-| ffff800080010000:       58000050        ldr     x16, ffff800080010008 <__AArch64AbsLongThunk_primary_entry+0x8>
-| ffff800080010004:       d61f0200        br      x16
-| ffff800080010008:       889df0e0        .word   0x889df0e0
-| ffff80008001000c:       ffff8000        .word   0xffff8000
-
-... and as this is executed early in boot before the kernel is mapped in
-TTBR1 this results in a silent boot failure.
-
-Fix this by passing '--pic-veneer' to the linker, which will cause the
-linker to use position-independent veneers, e.g.
-
-| ffff800080000000 <_text>:
-| ffff800080000000:       fa405a4d        ccmp    x18, #0x0, #0xd, pl     // pl = nfrst
-| ffff800080000004:       14003fff        b       ffff800080010000 <__AArch64ADRPThunk_primary_entry>
-...
-| ffff800080010000 <__AArch64ADRPThunk_primary_entry>:
-| ffff800080010000:       f004e3f0        adrp    x16, ffff800089c8f000 <__idmap_text_start>
-| ffff800080010004:       91038210        add     x16, x16, #0xe0
-| ffff800080010008:       d61f0200        br      x16
-
-I've opted to pass '--pic-veneer' unconditionally, as:
-
-* In addition to solving the boot failure, these sequences are generally
-  nicer as they require fewer instructions and don't need to perform
-  data accesses.
-
-* While the position-independent veneer sequences have a limited +/-2GiB
-  range, this is not a new restriction. Even kernels built with
-  CONFIG_RELOCATABLE=n are limited to 2GiB in size as we have several
-  structues using 32-bit relative offsets and PPREL32 relocations, which
-  are similarly limited to +/-2GiB in range. These include extable
-  entries, jump table entries, and alt_instr entries.
-
-* GNU LD defaults to using position-independent veneers, and supports
-  the same '--pic-veneer' option, so this change is not expected to
-  adversely affect GNU LD.
-
-I've tested with GNU LD 2.30 to 2.42 inclusive and LLVM 13.0.1 to 19.1.0
-inclusive, using the kernel.org binaries from:
-
-* https://mirrors.edge.kernel.org/pub/tools/crosstool/
-* https://mirrors.edge.kernel.org/pub/tools/llvm/
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Reported-by: Marc Zyngier <maz@kernel.org>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Will Deacon <will@kernel.org>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20240927101838.3061054-1-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/all/20240912111235.6nr3wuqvktecy3vh@quack3/
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20241001115425.266556-2-zhaomzhao@126.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/inode.c    | 40 ++++++++++++++++++++++++++--------------
+ fs/udf/truncate.c | 10 ++++++++--
+ fs/udf/udfdecl.h  |  5 +++--
+ 3 files changed, 37 insertions(+), 18 deletions(-)
 
-diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
-index f6bc3da1ef110..c8e237b20ef29 100644
---- a/arch/arm64/Makefile
-+++ b/arch/arm64/Makefile
-@@ -10,7 +10,7 @@
- #
- # Copyright (C) 1995-2001 by Russell King
+diff --git a/fs/udf/inode.c b/fs/udf/inode.c
+index 4726a4d014b60..c64c2eff3399a 100644
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -1955,6 +1955,7 @@ int udf_setup_indirect_aext(struct inode *inode, udf_pblk_t block,
+ 	struct extent_position nepos;
+ 	struct kernel_lb_addr neloc;
+ 	int ver, adsize;
++	int err = 0;
  
--LDFLAGS_vmlinux	:=--no-undefined -X
-+LDFLAGS_vmlinux	:=--no-undefined -X --pic-veneer
+ 	if (UDF_I(inode)->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
+ 		adsize = sizeof(struct short_ad);
+@@ -1999,10 +2000,12 @@ int udf_setup_indirect_aext(struct inode *inode, udf_pblk_t block,
+ 	if (epos->offset + adsize > sb->s_blocksize) {
+ 		struct kernel_lb_addr cp_loc;
+ 		uint32_t cp_len;
+-		int cp_type;
++		int8_t cp_type;
  
- ifeq ($(CONFIG_RELOCATABLE), y)
- # Pass --no-apply-dynamic-relocs to restore pre-binutils-2.27 behaviour
+ 		epos->offset -= adsize;
+-		cp_type = udf_current_aext(inode, epos, &cp_loc, &cp_len, 0);
++		err = udf_current_aext(inode, epos, &cp_loc, &cp_len, &cp_type, 0);
++		if (err <= 0)
++			goto err_out;
+ 		cp_len |= ((uint32_t)cp_type) << 30;
+ 
+ 		__udf_add_aext(inode, &nepos, &cp_loc, cp_len, 1);
+@@ -2017,6 +2020,9 @@ int udf_setup_indirect_aext(struct inode *inode, udf_pblk_t block,
+ 	*epos = nepos;
+ 
+ 	return 0;
++err_out:
++	brelse(bh);
++	return err;
+ }
+ 
+ /*
+@@ -2167,9 +2173,12 @@ int8_t udf_next_aext(struct inode *inode, struct extent_position *epos,
+ {
+ 	int8_t etype;
+ 	unsigned int indirections = 0;
++	int ret = 0;
+ 
+-	while ((etype = udf_current_aext(inode, epos, eloc, elen, inc)) ==
+-	       (EXT_NEXT_EXTENT_ALLOCDESCS >> 30)) {
++	while ((ret = udf_current_aext(inode, epos, eloc, elen,
++				       &etype, inc)) > 0) {
++		if (etype != (EXT_NEXT_EXTENT_ALLOCDESCS >> 30))
++			break;
+ 		udf_pblk_t block;
+ 
+ 		if (++indirections > UDF_MAX_INDIR_EXTS) {
+@@ -2190,14 +2199,17 @@ int8_t udf_next_aext(struct inode *inode, struct extent_position *epos,
+ 		}
+ 	}
+ 
+-	return etype;
++	return ret > 0 ? etype : -1;
+ }
+ 
+-int8_t udf_current_aext(struct inode *inode, struct extent_position *epos,
+-			struct kernel_lb_addr *eloc, uint32_t *elen, int inc)
++/*
++ * Returns 1 on success, -errno on error, 0 on hit EOF.
++ */
++int udf_current_aext(struct inode *inode, struct extent_position *epos,
++		     struct kernel_lb_addr *eloc, uint32_t *elen, int8_t *etype,
++		     int inc)
+ {
+ 	int alen;
+-	int8_t etype;
+ 	uint8_t *ptr;
+ 	struct short_ad *sad;
+ 	struct long_ad *lad;
+@@ -2224,8 +2236,8 @@ int8_t udf_current_aext(struct inode *inode, struct extent_position *epos,
+ 	case ICBTAG_FLAG_AD_SHORT:
+ 		sad = udf_get_fileshortad(ptr, alen, &epos->offset, inc);
+ 		if (!sad)
+-			return -1;
+-		etype = le32_to_cpu(sad->extLength) >> 30;
++			return 0;
++		*etype = le32_to_cpu(sad->extLength) >> 30;
+ 		eloc->logicalBlockNum = le32_to_cpu(sad->extPosition);
+ 		eloc->partitionReferenceNum =
+ 				iinfo->i_location.partitionReferenceNum;
+@@ -2234,17 +2246,17 @@ int8_t udf_current_aext(struct inode *inode, struct extent_position *epos,
+ 	case ICBTAG_FLAG_AD_LONG:
+ 		lad = udf_get_filelongad(ptr, alen, &epos->offset, inc);
+ 		if (!lad)
+-			return -1;
+-		etype = le32_to_cpu(lad->extLength) >> 30;
++			return 0;
++		*etype = le32_to_cpu(lad->extLength) >> 30;
+ 		*eloc = lelb_to_cpu(lad->extLocation);
+ 		*elen = le32_to_cpu(lad->extLength) & UDF_EXTENT_LENGTH_MASK;
+ 		break;
+ 	default:
+ 		udf_debug("alloc_type = %u unsupported\n", iinfo->i_alloc_type);
+-		return -1;
++		return -EINVAL;
+ 	}
+ 
+-	return etype;
++	return 1;
+ }
+ 
+ static int udf_insert_aext(struct inode *inode, struct extent_position epos,
+diff --git a/fs/udf/truncate.c b/fs/udf/truncate.c
+index a686c10fd709d..4758ba7b5f51c 100644
+--- a/fs/udf/truncate.c
++++ b/fs/udf/truncate.c
+@@ -188,6 +188,7 @@ int udf_truncate_extents(struct inode *inode)
+ 	loff_t byte_offset;
+ 	int adsize;
+ 	struct udf_inode_info *iinfo = UDF_I(inode);
++	int ret = 0;
+ 
+ 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
+ 		adsize = sizeof(struct short_ad);
+@@ -217,8 +218,8 @@ int udf_truncate_extents(struct inode *inode)
+ 	else
+ 		lenalloc -= sizeof(struct allocExtDesc);
+ 
+-	while ((etype = udf_current_aext(inode, &epos, &eloc,
+-					 &elen, 0)) != -1) {
++	while ((ret = udf_current_aext(inode, &epos, &eloc,
++				       &elen, &etype, 0)) > 0) {
+ 		if (etype == (EXT_NEXT_EXTENT_ALLOCDESCS >> 30)) {
+ 			udf_write_aext(inode, &epos, &neloc, nelen, 0);
+ 			if (indirect_ext_len) {
+@@ -253,6 +254,11 @@ int udf_truncate_extents(struct inode *inode)
+ 		}
+ 	}
+ 
++	if (ret < 0) {
++		brelse(epos.bh);
++		return ret;
++	}
++
+ 	if (indirect_ext_len) {
+ 		BUG_ON(!epos.bh);
+ 		udf_free_blocks(sb, NULL, &epos.block, 0, indirect_ext_len);
+diff --git a/fs/udf/udfdecl.h b/fs/udf/udfdecl.h
+index 88692512a4668..d893db95ac70e 100644
+--- a/fs/udf/udfdecl.h
++++ b/fs/udf/udfdecl.h
+@@ -171,8 +171,9 @@ extern void udf_write_aext(struct inode *, struct extent_position *,
+ extern int8_t udf_delete_aext(struct inode *, struct extent_position);
+ extern int8_t udf_next_aext(struct inode *, struct extent_position *,
+ 			    struct kernel_lb_addr *, uint32_t *, int);
+-extern int8_t udf_current_aext(struct inode *, struct extent_position *,
+-			       struct kernel_lb_addr *, uint32_t *, int);
++extern int udf_current_aext(struct inode *inode, struct extent_position *epos,
++			    struct kernel_lb_addr *eloc, uint32_t *elen,
++			    int8_t *etype, int inc);
+ extern void udf_update_extra_perms(struct inode *inode, umode_t mode);
+ 
+ /* misc.c */
 -- 
 2.43.0
 
