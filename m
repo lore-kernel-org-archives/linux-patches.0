@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DEEF18E368;
-	Mon, 28 Oct 2024 06:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E5318E368;
+	Mon, 28 Oct 2024 06:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097878; cv=none; b=UO7hAtR9UUnKLVkmUY8Vug7x8e4/zKGTytJjeXZ1dwg7tcQWD6vSiL4+VUs9oegQdYDPWcUZuIwticBhqeUQqp2tAa1ZNluH2JGq3RQeluhjETr9hXwb7K4Lv1JHHe9zxw6dde318d4/GVv+7Gg5qNJBimSZGM2ot2ZfyzgW6PU=
+	t=1730097880; cv=none; b=JrQBNrVwqTCYJTCiOU9x99S5l39QqI20AK8IiX9BVZXvFvv2KfR4BQd9fC5oBEJTke6oS5Fpun18Whjf7+OTDxhvubAuHmPTn32Lww04OwFFSG0P5+OVr39eD5prce5s0ys1o9z3TCZlmCQYdLepELNEtloFwzNi0ivvaDS3ueg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097878; c=relaxed/simple;
-	bh=qlSABWMnpy5qWfXktyRat+PJoaYRq+zhqxFETLonDR4=;
+	s=arc-20240116; t=1730097880; c=relaxed/simple;
+	bh=gwyjGZ7gIxawOm9nlsntJXMI31uTP3DY0kV0+A4bqLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ooGKvtLFNhSv06Hf1lD0k8xS1fLSftdS75wU7cyjnbYLD2mHGhVHPG1LSlp8xHjGXSJRCL7golcZcNpNU1U6A9CJylk2dIT19PmpGLGWqs1fQbv0hIc8cme4gKJm3oQbyuIcYRzlt1XGwA/hd15IY2pXmGaVUP+uY9woMLePnv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/QZ4HnW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SHbkUS/Iy1hDAYKOw/ahOdhGoWDumRi8Nqanc69pLDZqZC3NJZmLpV4julRaepvKiM+iHzRbqfDJx1DezoV0rLY1R49DG+0H7DmYOMlo7p836BcdyxwKZjChLeAO9fj9Zzf1g6p8TA3bysN9jVQt+/Tked6TELOgSveLym/w2mI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BjMVf9mV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/QZ4HnW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E88C4CEC3;
-	Mon, 28 Oct 2024 06:44:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BjMVf9mV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D550CC4CEC3;
+	Mon, 28 Oct 2024 06:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097877;
-	bh=qlSABWMnpy5qWfXktyRat+PJoaYRq+zhqxFETLonDR4=;
+	s=korg; t=1730097880;
+	bh=gwyjGZ7gIxawOm9nlsntJXMI31uTP3DY0kV0+A4bqLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/QZ4HnWfNCfFDpHhvK2EmHuxs9PZKhLFHEFt5cgK5gtoqz4nJgChdl8vsR9+hkHO
-	 MObbs02Fqusz+LhRu61EnJLwpygN6xDibezWsfMvkUG0LUqooTaHqtVFHyhsf+nHIG
-	 DIp7WVorh9BRqbo8U4yzjIoWJI+hW1t2KPlc0e1g=
+	b=BjMVf9mVt2XGKmhmF6FWBHIPKr9qZoUILz14sNbH8K9VvRqa7vHkDBHzGagrPt+vc
+	 O7ZU+LDZKQukIQ7V9Kob4q/FTbPlH4V4fUOo3H7c1faqqkie3z0CSH8JYd3qzI9yIE
+	 g+jLUIC7PY43Y+1cWOuLqQjgSgaM4Orty8fz9r4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
-Subject: [PATCH 6.6 188/208] x86/lam: Disable ADDRESS_MASKING in most cases
-Date: Mon, 28 Oct 2024 07:26:08 +0100
-Message-ID: <20241028062311.259897247@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 189/208] ALSA: hda/tas2781: select CRC32 instead of CRC32_SARWATE
+Date: Mon, 28 Oct 2024 07:26:09 +0100
+Message-ID: <20241028062311.285455107@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -52,46 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 3267cb6d3a174ff83d6287dcd5b0047bbd912452 upstream.
+commit 86c96e7289c5758284b562ac7b5c94429f48d2d9 upstream.
 
-Linear Address Masking (LAM) has a weakness related to transient
-execution as described in the SLAM paper[1]. Unless Linear Address
-Space Separation (LASS) is enabled this weakness may be exploitable.
+Fix the kconfig option for the tas2781 HDA driver to select CRC32 rather
+than CRC32_SARWATE.  CRC32_SARWATE is an option from the kconfig
+'choice' that selects the specific CRC32 implementation.  Selecting a
+'choice' option seems to have no effect, but even if it did work, it
+would be incorrect for a random driver to override the user's choice.
+CRC32 is the correct option to select for crc32() to be available.
 
-Until kernel adds support for LASS[2], only allow LAM for COMPILE_TEST,
-or when speculation mitigations have been disabled at compile time,
-otherwise keep LAM disabled.
-
-There are no processors in market that support LAM yet, so currently
-nobody is affected by this issue.
-
-[1] SLAM: https://download.vusec.net/papers/slam_sp24.pdf
-[2] LASS: https://lore.kernel.org/lkml/20230609183632.48706-1-alexander.shishkin@linux.intel.com/
-
-[ dhansen: update SPECULATION_MITIGATIONS -> CPU_MITIGATIONS ]
-
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
-Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/all/5373262886f2783f054256babdf5a98545dc986b.1706068222.git.pawan.kumar.gupta%40linux.intel.com
+Fixes: 5be27f1e3ec9 ("ALSA: hda/tas2781: Add tas2781 HDA driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://patch.msgid.link/20241020175624.7095-1-ebiggers@kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/Kconfig
-+++ b/arch/x86/Kconfig
-@@ -2217,6 +2217,7 @@ config RANDOMIZE_MEMORY_PHYSICAL_PADDING
- config ADDRESS_MASKING
- 	bool "Linear Address Masking support"
- 	depends on X86_64
-+	depends on COMPILE_TEST || !CPU_MITIGATIONS # wait for LASS
+--- a/sound/pci/hda/Kconfig
++++ b/sound/pci/hda/Kconfig
+@@ -173,7 +173,7 @@ config SND_HDA_SCODEC_TAS2781_I2C
+ 	depends on SND_SOC
+ 	select SND_SOC_TAS2781_COMLIB
+ 	select SND_SOC_TAS2781_FMWLIB
+-	select CRC32_SARWATE
++	select CRC32
  	help
- 	  Linear Address Masking (LAM) modifies the checking that is applied
- 	  to 64-bit linear addresses, allowing software to use of the
+ 	  Say Y or M here to include TAS2781 I2C HD-audio side codec support
+ 	  in snd-hda-intel driver, such as ALC287.
 
 
