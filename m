@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A99615B10D;
-	Mon, 28 Oct 2024 06:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165A215B10D;
+	Mon, 28 Oct 2024 06:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097144; cv=none; b=ELQqYUapaWVo+OwELfTtt6Rz9l4JB79CbbCIEp2lhh/d+XR6xyid3h1hZFRzov0YfvEkFi/ckUBnjj57HIScZ1XChySiRXBGZkzYPCZqKF+ybahYRWasc3NZldEsTexDbvGjRXGyZWPKCfPk5TFqsFuQQOyy2JlCKjHE2YuKo4I=
+	t=1730097147; cv=none; b=BWFGXCsiRRPcOQLqS9SwTyC++O3Weqq7RbKJAb8YBz9+pGB0EYJNTLF+ddlYW3yqESu5w27oTsoPHGQVmnSMc4tslfIVnW5gWLZirjoekWhpDniN3UDgzZUtLxszyjUBBAhKoavuI/fWzvIJmhbi6y5Kh9/M93whHLwL42vXfL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097144; c=relaxed/simple;
-	bh=V6LBLNBcIHlbpKOFeutmb/dDuSxnFt8X+qsGaDmyaIQ=;
+	s=arc-20240116; t=1730097147; c=relaxed/simple;
+	bh=S/cxAWbRLfW3VZwqN4RYvFfpfx/ZjUjIOgc+s7uTLng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RKJM4dRZQzPRxGukqElaExmC3ggtUEqbVkkrAvoG1DXjUXaeKAtHLSoRNt5ZkpzQFsC63ut9VWtelHvjtg29QlEcai/OD5iQ3O7sPBptDrZxs9jCXviOplrvMz+u3kjDyzfjQ8DLBRPIAKtiJrb0HqxjsYRUUznJU/tdV1jba0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDXbVsJM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ba0vrU6fT+VtBZ77uA+TDUfVxojYt1BZzzvbxXH9ngQDxD4pGbAE96KW11evjtvoIyK9A7xexTVmmATY/ukA5qnF9bBq2A2+L1Eglz149wksPcx/r5mvWLBkuRbLv+NX9Zc6yXwuZ3pvq0oKu4opA+R+fuN3Py66QWRq1YcGpuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=luzhsx1p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDXbVsJM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A05C4CEC7;
-	Mon, 28 Oct 2024 06:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="luzhsx1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 826EAC4CEC7;
+	Mon, 28 Oct 2024 06:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097144;
-	bh=V6LBLNBcIHlbpKOFeutmb/dDuSxnFt8X+qsGaDmyaIQ=;
+	s=korg; t=1730097146;
+	bh=S/cxAWbRLfW3VZwqN4RYvFfpfx/ZjUjIOgc+s7uTLng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NDXbVsJMaBDZKpJl8qj7TONQ6cPbgtZunhp9gQli7SxEo0q+ql44pUSSl0JSPl/1j
-	 1Y9O24as0dcWb4F+9iKfSaip+JJgkCprQahje7qL2OfsCpdLymj+C0vht43zb71+1B
-	 qzeOUqMO5APwwWvblsJq5Dn8oJ9AJ4E3x6Y6RHyo=
+	b=luzhsx1pfPTpEeRIBXzAl7iFXm8hTuz0Ks4F35onn90l6OS0Emhob7K3ienbVcjBi
+	 L5D7i2CYPDO10TBLeUllgt/kdvOi/TGaN1DK8+gsKu2xAh7VMyHWVDy1chklmMuF7T
+	 MOCB59NeZazgM/bfr4ZZRv33Cg/MS8uxJMdd42m8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Tonofa <b.tonofa@ideco.ru>,
-	Petr Vaganov <p.vaganov@ideco.ru>,
-	Steffen Klassert <steffen.klassert@secunet.com>
-Subject: [PATCH 5.15 75/80] xfrm: fix one more kernel-infoleak in algo dumping
-Date: Mon, 28 Oct 2024 07:25:55 +0100
-Message-ID: <20241028062254.692605336@linuxfoundation.org>
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 76/80] hv_netvsc: Fix VF namespace also in synthetic NIC NETDEV_REGISTER event
+Date: Mon, 28 Oct 2024 07:25:56 +0100
+Message-ID: <20241028062254.723557109@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
 References: <20241028062252.611837461@linuxfoundation.org>
@@ -51,101 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Vaganov <p.vaganov@ideco.ru>
+From: Haiyang Zhang <haiyangz@microsoft.com>
 
-commit 6889cd2a93e1e3606b3f6e958aa0924e836de4d2 upstream.
+commit 4c262801ea60c518b5bebc22a09f5b78b3147da2 upstream.
 
-During fuzz testing, the following issue was discovered:
+The existing code moves VF to the same namespace as the synthetic NIC
+during netvsc_register_vf(). But, if the synthetic device is moved to a
+new namespace after the VF registration, the VF won't be moved together.
 
-BUG: KMSAN: kernel-infoleak in _copy_to_iter+0x598/0x2a30
- _copy_to_iter+0x598/0x2a30
- __skb_datagram_iter+0x168/0x1060
- skb_copy_datagram_iter+0x5b/0x220
- netlink_recvmsg+0x362/0x1700
- sock_recvmsg+0x2dc/0x390
- __sys_recvfrom+0x381/0x6d0
- __x64_sys_recvfrom+0x130/0x200
- x64_sys_call+0x32c8/0x3cc0
- do_syscall_64+0xd8/0x1c0
- entry_SYSCALL_64_after_hwframe+0x79/0x81
+To make the behavior more consistent, add a namespace check for synthetic
+NIC's NETDEV_REGISTER event (generated during its move), and move the VF
+if it is not in the same namespace.
 
-Uninit was stored to memory at:
- copy_to_user_state_extra+0xcc1/0x1e00
- dump_one_state+0x28c/0x5f0
- xfrm_state_walk+0x548/0x11e0
- xfrm_dump_sa+0x1e0/0x840
- netlink_dump+0x943/0x1c40
- __netlink_dump_start+0x746/0xdb0
- xfrm_user_rcv_msg+0x429/0xc00
- netlink_rcv_skb+0x613/0x780
- xfrm_netlink_rcv+0x77/0xc0
- netlink_unicast+0xe90/0x1280
- netlink_sendmsg+0x126d/0x1490
- __sock_sendmsg+0x332/0x3d0
- ____sys_sendmsg+0x863/0xc30
- ___sys_sendmsg+0x285/0x3e0
- __x64_sys_sendmsg+0x2d6/0x560
- x64_sys_call+0x1316/0x3cc0
- do_syscall_64+0xd8/0x1c0
- entry_SYSCALL_64_after_hwframe+0x79/0x81
-
-Uninit was created at:
- __kmalloc+0x571/0xd30
- attach_auth+0x106/0x3e0
- xfrm_add_sa+0x2aa0/0x4230
- xfrm_user_rcv_msg+0x832/0xc00
- netlink_rcv_skb+0x613/0x780
- xfrm_netlink_rcv+0x77/0xc0
- netlink_unicast+0xe90/0x1280
- netlink_sendmsg+0x126d/0x1490
- __sock_sendmsg+0x332/0x3d0
- ____sys_sendmsg+0x863/0xc30
- ___sys_sendmsg+0x285/0x3e0
- __x64_sys_sendmsg+0x2d6/0x560
- x64_sys_call+0x1316/0x3cc0
- do_syscall_64+0xd8/0x1c0
- entry_SYSCALL_64_after_hwframe+0x79/0x81
-
-Bytes 328-379 of 732 are uninitialized
-Memory access of size 732 starts at ffff88800e18e000
-Data copied to user address 00007ff30f48aff0
-
-CPU: 2 PID: 18167 Comm: syz-executor.0 Not tainted 6.8.11 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-
-Fixes copying of xfrm algorithms where some random
-data of the structure fields can end up in userspace.
-Padding in structures may be filled with random (possibly sensitve)
-data and should never be given directly to user-space.
-
-A similar issue was resolved in the commit
-8222d5910dae ("xfrm: Zero padding when dumping algos and encap")
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: c7a5899eb26e ("xfrm: redact SA secret with lockdown confidentiality")
 Cc: stable@vger.kernel.org
-Co-developed-by: Boris Tonofa <b.tonofa@ideco.ru>
-Signed-off-by: Boris Tonofa <b.tonofa@ideco.ru>
-Signed-off-by: Petr Vaganov <p.vaganov@ideco.ru>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: c0a41b887ce6 ("hv_netvsc: move VF to same namespace as netvsc device")
+Suggested-by: Stephen Hemminger <stephen@networkplumber.org>
+Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/1729275922-17595-1-git-send-email-haiyangz@microsoft.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/xfrm/xfrm_user.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/hyperv/netvsc_drv.c |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -887,7 +887,9 @@ static int copy_to_user_auth(struct xfrm
- 	if (!nla)
- 		return -EMSGSIZE;
- 	ap = nla_data(nla);
--	memcpy(ap, auth, sizeof(struct xfrm_algo_auth));
-+	strscpy_pad(ap->alg_name, auth->alg_name, sizeof(ap->alg_name));
-+	ap->alg_key_len = auth->alg_key_len;
-+	ap->alg_trunc_len = auth->alg_trunc_len;
- 	if (redact_secret && auth->alg_key_len)
- 		memset(ap->alg_key, 0, (auth->alg_key_len + 7) / 8);
- 	else
+--- a/drivers/net/hyperv/netvsc_drv.c
++++ b/drivers/net/hyperv/netvsc_drv.c
+@@ -2813,6 +2813,31 @@ static struct  hv_driver netvsc_drv = {
+ 	},
+ };
+ 
++/* Set VF's namespace same as the synthetic NIC */
++static void netvsc_event_set_vf_ns(struct net_device *ndev)
++{
++	struct net_device_context *ndev_ctx = netdev_priv(ndev);
++	struct net_device *vf_netdev;
++	int ret;
++
++	vf_netdev = rtnl_dereference(ndev_ctx->vf_netdev);
++	if (!vf_netdev)
++		return;
++
++	if (!net_eq(dev_net(ndev), dev_net(vf_netdev))) {
++		ret = dev_change_net_namespace(vf_netdev, dev_net(ndev),
++					       "eth%d");
++		if (ret)
++			netdev_err(vf_netdev,
++				   "Cannot move to same namespace as %s: %d\n",
++				   ndev->name, ret);
++		else
++			netdev_info(vf_netdev,
++				    "Moved VF to namespace with: %s\n",
++				    ndev->name);
++	}
++}
++
+ /*
+  * On Hyper-V, every VF interface is matched with a corresponding
+  * synthetic interface. The synthetic interface is presented first
+@@ -2825,6 +2850,11 @@ static int netvsc_netdev_event(struct no
+ 	struct net_device *event_dev = netdev_notifier_info_to_dev(ptr);
+ 	int ret = 0;
+ 
++	if (event_dev->netdev_ops == &device_ops && event == NETDEV_REGISTER) {
++		netvsc_event_set_vf_ns(event_dev);
++		return NOTIFY_DONE;
++	}
++
+ 	ret = check_dev_is_matching_vf(event_dev);
+ 	if (ret != 0)
+ 		return NOTIFY_DONE;
 
 
