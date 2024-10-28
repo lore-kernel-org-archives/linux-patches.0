@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E238837;
-	Mon, 28 Oct 2024 06:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFEE8837;
+	Mon, 28 Oct 2024 06:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098294; cv=none; b=j62I0Ypv5LpADt/smF93jbT8SZPciDlcwrChOnt1A0IxqkyZ0GK8vdN4cKc5p9gbK+KL+e8V50bElvBf1P90pTUrPc1ob0/AFVIP5k92qbx1Ly2mTxy6P5GGAPJBtkLl0I32HgWGsdZlVMy3gyUKY+ZO+hMCB7tUz4sWB63FRmQ=
+	t=1730098296; cv=none; b=iQTIY8xn8UWW+7NpOHLxG8VSjSO0MGPsxDUoW+baXuwizEzHaQnezGUEp7rzG5pQIYuFAV8q8m1dyjmOBiLKehpeNK+bpJmaVyWXMYJBrf7J7kvqQFZtIhJir/e44OR6MKd6AFBZ3AAj3K8kNE+LhVLrte8kZuL+gQbl6XkfP3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098294; c=relaxed/simple;
-	bh=NCNaqjxE8R0AzQBZ/JdEG7jAo12ifSprXNtOKzSnxNg=;
+	s=arc-20240116; t=1730098296; c=relaxed/simple;
+	bh=IZru7iNaXlNS0r9if6A2PrPlPzgADz+QyMvj7yU6ITc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bOqpiB6Brykk4fAhWpcmHcpHFgClUYXnVFmRumvEx8pY4Hi4fsChhQgJqbpR2Ekdof/lGSNSF2c4a6DI+2ACqjActJsXJG3kh5vKKZkNUNGCFmoLUDGwwf1T5cz7gXqAUXR1lHVK1gcnk/NUNieU2N35o0Ve68AZGntaHgvi6k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xeuTBNlj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OHeABwIGZWaesZR8LPWE4d/ua4HJvXALJXutMEgHVQUXlAlmDsvR6mRdgyTu59QdDGfRvdwwAjKI+ez3lo127JaghJO/M5LDRxxLqQ5SNZizrdvP2uVOd4gk6RSmuvV1gY3cywCzxErjbYkEI3H6mzDYLWG293QkP7+gHHtrEy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIymj9NK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xeuTBNlj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B04C4CEC3;
-	Mon, 28 Oct 2024 06:51:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIymj9NK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EAC1C4CEC3;
+	Mon, 28 Oct 2024 06:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098294;
-	bh=NCNaqjxE8R0AzQBZ/JdEG7jAo12ifSprXNtOKzSnxNg=;
+	s=korg; t=1730098296;
+	bh=IZru7iNaXlNS0r9if6A2PrPlPzgADz+QyMvj7yU6ITc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xeuTBNljhZ/hboSD2cBwADsJ+z5EQo+YHuXQPArNuVYVWYkyHdwxoBFcWavxRlf6/
-	 lZk8ekfrI+NiQ6wFutxA1RRMqVy9weBE9oMqXpSfIiomi/TxuCNQ73N5QBEV5b654r
-	 6EFx6eZDPNeX8ln3r3YIisxHlJepZ7BSyKe/hP8Y=
+	b=VIymj9NKVXe6LYXPpYK1QL+DYlaC1UfTxVcSH+ap9H3qPkRnV8DygR7Eib+DvD5/8
+	 hWTEDka1gD+QCdM9MXBTxtWoYxiN2cU/ADi3dKO/gWJebUKMwNORE69tf7dols7SW2
+	 /LE8xJ5Vyl0Jo4Z350bL/EbCSnuVb0yyYEf8EtHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Viktor Malik <vmalik@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Matt Wu <wuqiang.matt@bytedance.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 163/261] bpf: Add MEM_WRITE attribute
-Date: Mon, 28 Oct 2024 07:25:05 +0100
-Message-ID: <20241028062316.087813289@linuxfoundation.org>
+Subject: [PATCH 6.11 137/261] objpool: fix choosing allocation for percpu slots
+Date: Mon, 28 Oct 2024 07:24:39 +0100
+Message-ID: <20241028062315.477268242@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,195 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Viktor Malik <vmalik@redhat.com>
 
-[ Upstream commit 6fad274f06f038c29660aa53fbad14241c9fd976 ]
+[ Upstream commit aff1871bfc81e9dffa7d2a77e67cc5441cc37f81 ]
 
-Add a MEM_WRITE attribute for BPF helper functions which can be used in
-bpf_func_proto to annotate an argument type in order to let the verifier
-know that the helper writes into the memory passed as an argument. In
-the past MEM_UNINIT has been (ab)used for this function, but the latter
-merely tells the verifier that the passed memory can be uninitialized.
+objpool intends to use vmalloc for default (non-atomic) allocations of
+percpu slots and objects. However, the condition checking if GFP flags
+set any bit of GFP_ATOMIC is wrong b/c GFP_ATOMIC is a combination of bits
+(__GFP_HIGH|__GFP_KSWAPD_RECLAIM) and so `pool->gfp & GFP_ATOMIC` will
+be true if either bit is set. Since GFP_ATOMIC and GFP_KERNEL share the
+___GFP_KSWAPD_RECLAIM bit, kmalloc will be used in cases when GFP_KERNEL
+is specified, i.e. in all current usages of objpool.
 
-There have been bugs with overloading the latter but aside from that
-there are also cases where the passed memory is read + written which
-currently cannot be expressed, see also 4b3786a6c539 ("bpf: Zero former
-ARG_PTR_TO_{LONG,INT} args in case of error").
+This may lead to unexpected OOM errors since kmalloc cannot allocate
+large amounts of memory.
 
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20241021152809.33343-1-daniel@iogearbox.net
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 8ea607330a39 ("bpf: Fix overloading of MEM_UNINIT's meaning")
+For instance, objpool is used by fprobe rethook which in turn is used by
+BPF kretprobe.multi and kprobe.session probe types. Trying to attach
+these to all kernel functions with libbpf using
+
+    SEC("kprobe.session/*")
+    int kprobe(struct pt_regs *ctx)
+    {
+        [...]
+    }
+
+fails on objpool slot allocation with ENOMEM.
+
+Fix the condition to truly use vmalloc by default.
+
+Link: https://lore.kernel.org/all/20240826060718.267261-1-vmalik@redhat.com/
+
+Fixes: b4edb8d2d464 ("lib: objpool added: ring-array based lockless MPMC")
+Signed-off-by: Viktor Malik <vmalik@redhat.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Matt Wu <wuqiang.matt@bytedance.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h      | 14 +++++++++++---
- kernel/bpf/helpers.c     | 10 +++++-----
- kernel/bpf/ringbuf.c     |  2 +-
- kernel/bpf/syscall.c     |  2 +-
- kernel/trace/bpf_trace.c |  4 ++--
- net/core/filter.c        |  4 ++--
- 6 files changed, 22 insertions(+), 14 deletions(-)
+ lib/objpool.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index f3e5ce397b8ef..eb1d3a2fe3339 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -635,6 +635,7 @@ enum bpf_type_flag {
- 	 */
- 	PTR_UNTRUSTED		= BIT(6 + BPF_BASE_TYPE_BITS),
- 
-+	/* MEM can be uninitialized. */
- 	MEM_UNINIT		= BIT(7 + BPF_BASE_TYPE_BITS),
- 
- 	/* DYNPTR points to memory local to the bpf program. */
-@@ -700,6 +701,13 @@ enum bpf_type_flag {
- 	 */
- 	MEM_ALIGNED		= BIT(17 + BPF_BASE_TYPE_BITS),
- 
-+	/* MEM is being written to, often combined with MEM_UNINIT. Non-presence
-+	 * of MEM_WRITE means that MEM is only being read. MEM_WRITE without the
-+	 * MEM_UNINIT means that memory needs to be initialized since it is also
-+	 * read.
-+	 */
-+	MEM_WRITE		= BIT(18 + BPF_BASE_TYPE_BITS),
-+
- 	__BPF_TYPE_FLAG_MAX,
- 	__BPF_TYPE_LAST_FLAG	= __BPF_TYPE_FLAG_MAX - 1,
- };
-@@ -758,10 +766,10 @@ enum bpf_arg_type {
- 	ARG_PTR_TO_SOCKET_OR_NULL	= PTR_MAYBE_NULL | ARG_PTR_TO_SOCKET,
- 	ARG_PTR_TO_STACK_OR_NULL	= PTR_MAYBE_NULL | ARG_PTR_TO_STACK,
- 	ARG_PTR_TO_BTF_ID_OR_NULL	= PTR_MAYBE_NULL | ARG_PTR_TO_BTF_ID,
--	/* pointer to memory does not need to be initialized, helper function must fill
--	 * all bytes or clear them in error case.
-+	/* Pointer to memory does not need to be initialized, since helper function
-+	 * fills all bytes or clears them in error case.
- 	 */
--	ARG_PTR_TO_UNINIT_MEM		= MEM_UNINIT | ARG_PTR_TO_MEM,
-+	ARG_PTR_TO_UNINIT_MEM		= MEM_UNINIT | MEM_WRITE | ARG_PTR_TO_MEM,
- 	/* Pointer to valid memory of size known at compile time. */
- 	ARG_PTR_TO_FIXED_SIZE_MEM	= MEM_FIXED_SIZE | ARG_PTR_TO_MEM,
- 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index c9e235807caca..cc8c00864a680 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -111,7 +111,7 @@ const struct bpf_func_proto bpf_map_pop_elem_proto = {
- 	.gpl_only	= false,
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_CONST_MAP_PTR,
--	.arg2_type	= ARG_PTR_TO_MAP_VALUE | MEM_UNINIT,
-+	.arg2_type	= ARG_PTR_TO_MAP_VALUE | MEM_UNINIT | MEM_WRITE,
- };
- 
- BPF_CALL_2(bpf_map_peek_elem, struct bpf_map *, map, void *, value)
-@@ -124,7 +124,7 @@ const struct bpf_func_proto bpf_map_peek_elem_proto = {
- 	.gpl_only	= false,
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_CONST_MAP_PTR,
--	.arg2_type	= ARG_PTR_TO_MAP_VALUE | MEM_UNINIT,
-+	.arg2_type	= ARG_PTR_TO_MAP_VALUE | MEM_UNINIT | MEM_WRITE,
- };
- 
- BPF_CALL_3(bpf_map_lookup_percpu_elem, struct bpf_map *, map, void *, key, u32, cpu)
-@@ -539,7 +539,7 @@ const struct bpf_func_proto bpf_strtol_proto = {
- 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
- 	.arg2_type	= ARG_CONST_SIZE,
- 	.arg3_type	= ARG_ANYTHING,
--	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg4_size	= sizeof(s64),
- };
- 
-@@ -569,7 +569,7 @@ const struct bpf_func_proto bpf_strtoul_proto = {
- 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
- 	.arg2_type	= ARG_CONST_SIZE,
- 	.arg3_type	= ARG_ANYTHING,
--	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg4_size	= sizeof(u64),
- };
- 
-@@ -1745,7 +1745,7 @@ static const struct bpf_func_proto bpf_dynptr_from_mem_proto = {
- 	.arg1_type	= ARG_PTR_TO_UNINIT_MEM,
- 	.arg2_type	= ARG_CONST_SIZE_OR_ZERO,
- 	.arg3_type	= ARG_ANYTHING,
--	.arg4_type	= ARG_PTR_TO_DYNPTR | DYNPTR_TYPE_LOCAL | MEM_UNINIT,
-+	.arg4_type	= ARG_PTR_TO_DYNPTR | DYNPTR_TYPE_LOCAL | MEM_UNINIT | MEM_WRITE,
- };
- 
- BPF_CALL_5(bpf_dynptr_read, void *, dst, u32, len, const struct bpf_dynptr_kern *, src,
-diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
-index de3b681d1d13d..e1cfe890e0be6 100644
---- a/kernel/bpf/ringbuf.c
-+++ b/kernel/bpf/ringbuf.c
-@@ -632,7 +632,7 @@ const struct bpf_func_proto bpf_ringbuf_reserve_dynptr_proto = {
- 	.arg1_type	= ARG_CONST_MAP_PTR,
- 	.arg2_type	= ARG_ANYTHING,
- 	.arg3_type	= ARG_ANYTHING,
--	.arg4_type	= ARG_PTR_TO_DYNPTR | DYNPTR_TYPE_RINGBUF | MEM_UNINIT,
-+	.arg4_type	= ARG_PTR_TO_DYNPTR | DYNPTR_TYPE_RINGBUF | MEM_UNINIT | MEM_WRITE,
- };
- 
- BPF_CALL_2(bpf_ringbuf_submit_dynptr, struct bpf_dynptr_kern *, ptr, u64, flags)
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 26e69d4fc3dad..19b590b5aaec9 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -5973,7 +5973,7 @@ static const struct bpf_func_proto bpf_kallsyms_lookup_name_proto = {
- 	.arg1_type	= ARG_PTR_TO_MEM,
- 	.arg2_type	= ARG_CONST_SIZE_OR_ZERO,
- 	.arg3_type	= ARG_ANYTHING,
--	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg4_size	= sizeof(u64),
- };
- 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index d9bc5ef1cafc3..50c0b1088a9eb 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -1226,7 +1226,7 @@ static const struct bpf_func_proto bpf_get_func_arg_proto = {
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_PTR_TO_CTX,
- 	.arg2_type	= ARG_ANYTHING,
--	.arg3_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg3_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg3_size	= sizeof(u64),
- };
- 
-@@ -1243,7 +1243,7 @@ static const struct bpf_func_proto bpf_get_func_ret_proto = {
- 	.func		= get_func_ret,
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_PTR_TO_CTX,
--	.arg2_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg2_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg2_size	= sizeof(u64),
- };
- 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index b7a5f525e65b8..ddcf35e91a5e4 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -6350,7 +6350,7 @@ static const struct bpf_func_proto bpf_skb_check_mtu_proto = {
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type      = ARG_PTR_TO_CTX,
- 	.arg2_type      = ARG_ANYTHING,
--	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg3_size	= sizeof(u32),
- 	.arg4_type      = ARG_ANYTHING,
- 	.arg5_type      = ARG_ANYTHING,
-@@ -6362,7 +6362,7 @@ static const struct bpf_func_proto bpf_xdp_check_mtu_proto = {
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type      = ARG_PTR_TO_CTX,
- 	.arg2_type      = ARG_ANYTHING,
--	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg3_size	= sizeof(u32),
- 	.arg4_type      = ARG_ANYTHING,
- 	.arg5_type      = ARG_ANYTHING,
+diff --git a/lib/objpool.c b/lib/objpool.c
+index 234f9d0bd081a..fd108fe0d095a 100644
+--- a/lib/objpool.c
++++ b/lib/objpool.c
+@@ -76,7 +76,7 @@ objpool_init_percpu_slots(struct objpool_head *pool, int nr_objs,
+ 		 * mimimal size of vmalloc is one page since vmalloc would
+ 		 * always align the requested size to page size
+ 		 */
+-		if (pool->gfp & GFP_ATOMIC)
++		if ((pool->gfp & GFP_ATOMIC) == GFP_ATOMIC)
+ 			slot = kmalloc_node(size, pool->gfp, cpu_to_node(i));
+ 		else
+ 			slot = __vmalloc_node(size, sizeof(void *), pool->gfp,
 -- 
 2.43.0
 
