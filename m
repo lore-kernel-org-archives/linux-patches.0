@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B17B2AF07;
-	Mon, 28 Oct 2024 06:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9AA2AF07;
+	Mon, 28 Oct 2024 06:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098346; cv=none; b=WEz3p3ujpQyG4MwD3zL0dUtJKFKYgyjrPpvfBRuUZu3D6MkaNG9yfFyvMj71h9mgPfQu6CEyOn97KLMR3LbpkJSy+lLyxLwle13LFaEcADs6pGii+r4eDWfpG7QKcmU9cDGEzbiI3ocjSjmtGBlrA1BJPd9j3ky0+7TkMOD/VV8=
+	t=1730098348; cv=none; b=ZojPdO5fXaG5saP9tXdQdIsqvYZVA2GbemK2lXNrfBIwcHlNjbt3e9TGHwvdpxMYbz63xIB6AluJFu6fe1Y1tTLzDIlyz5Tf/hX2lz4uHrBpqLPEpZCl8u0aBmKU5MUXYx0YOrI0b67CMQHa/r8oyGum98mGLtmJjLNQkmPHf4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098346; c=relaxed/simple;
-	bh=f2TG4ivWerYv6kBndIV6XhLX00vW56oLW9X9YvInfkM=;
+	s=arc-20240116; t=1730098348; c=relaxed/simple;
+	bh=vYYhgohS3KTUPab/DKnjeAHclsO4upWkz3y64J/6HzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yr4WaClxSQnRnZOGXWCLO+ore052pJY/+q6OXWfk2Xccf7PKzTwotlBI5F6pTynWLBc/AjNUcdxXxQl+4O5cj5CMaYwSHE+sPVhwrnXdCaKVMz8fGDr+CkilFKoxP4dR6pOa2rnKHazuH6QEBkYoU3iyxQSq9X2kS7oTMflkdcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gppAdYAt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TBBxmF434THCRkjibs9GhG/fbkabGnVv/t07CC12osH5dkzQY2A2E7vWLqcwmK6dGhNfv83pT+BUNYPhhCYdv5ubF/rdjxacu/vzWBT6srKaiFAuPmicJJda+qzELMZ143lc5foDjfrFZFkVe1QMtQ9iQz/8CefOLopx8vRU+Kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeVVXRmv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gppAdYAt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C87C4CEC3;
-	Mon, 28 Oct 2024 06:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeVVXRmv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE89C4CEC3;
+	Mon, 28 Oct 2024 06:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098345;
-	bh=f2TG4ivWerYv6kBndIV6XhLX00vW56oLW9X9YvInfkM=;
+	s=korg; t=1730098347;
+	bh=vYYhgohS3KTUPab/DKnjeAHclsO4upWkz3y64J/6HzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gppAdYAtbsKdrLeZtWPE/PTJR2XEdoZvGf3tAKNk+SR+WSMhJV39hICS/lCxZF4C/
-	 9y59gMEoEPTw/6Dvm3xeqGk6XjMmPGQ+CAZqsoB5h9+lAPQRv/aWJ36hFcx6DmKdR4
-	 RnA0OFW4/KltL4hNoDiKdKWuIYOsRuIznu0ktCOM=
+	b=MeVVXRmvd6fTFlx6NCvzjHXkyYF+5jIn/K67LQgtkQ/MwmXIBOSm77EMkG/zr3fNF
+	 wC2kqH9bDYW0f+d7QRb1kyx5YdEhc36sFdyVHi61H30tw3BnnjQ1GQNNkBoabwTIK/
+	 rO/Oclt/oAkQj9TElo/ZVwCiYrjDmM7m/9zCGPpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Miklos Szeredi <miklos@szeredi.hu>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 187/261] PCI: Hold rescan lock while adding devices during host probe
-Date: Mon, 28 Oct 2024 07:25:29 +0100
-Message-ID: <20241028062316.704411200@linuxfoundation.org>
+Subject: [PATCH 6.11 188/261] fs: pass offset and result to backing_file end_write() callback
+Date: Mon, 28 Oct 2024 07:25:30 +0100
+Message-ID: <20241028062316.730363244@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -53,61 +52,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit 1d59d474e1cb7d4fdf87dfaf96f44647f13ea590 ]
+[ Upstream commit f03b296e8b516dbd63f57fc9056c1b0da1b9a0ff ]
 
-Since adding the PCI power control code, we may end up with a race between
-the pwrctl platform device rescanning the bus and host controller probe
-functions. The latter need to take the rescan lock when adding devices or
-we may end up in an undefined state having two incompletely added devices
-and hit the following crash when trying to remove the device over sysfs:
+This is needed for extending fuse inode size after fuse passthrough write.
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-  Internal error: Oops: 0000000096000004 [#1] SMP
-  Call trace:
-    __pi_strlen+0x14/0x150
-    kernfs_find_ns+0x80/0x13c
-    kernfs_remove_by_name_ns+0x54/0xf0
-    sysfs_remove_bin_file+0x24/0x34
-    pci_remove_resource_files+0x3c/0x84
-    pci_remove_sysfs_dev_files+0x28/0x38
-    pci_stop_bus_device+0x8c/0xd8
-    pci_stop_bus_device+0x40/0xd8
-    pci_stop_and_remove_bus_device_locked+0x28/0x48
-    remove_store+0x70/0xb0
-    dev_attr_store+0x20/0x38
-    sysfs_kf_write+0x58/0x78
-    kernfs_fop_write_iter+0xe8/0x184
-    vfs_write+0x2dc/0x308
-    ksys_write+0x7c/0xec
-
-Fixes: 4565d2652a37 ("PCI/pwrctl: Add PCI power control core code")
-Link: https://lore.kernel.org/r/20241003084342.27501-1-brgl@bgdev.pl
-Reported-by: Konrad Dybcio <konradybcio@kernel.org>
-Tested-by: Konrad Dybcio <konradybcio@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Suggested-by: Miklos Szeredi <miklos@szeredi.hu>
+Link: https://lore.kernel.org/linux-fsdevel/CAJfpegs=cvZ_NYy6Q_D42XhYS=Sjj5poM1b5TzXzOVvX=R36aA@mail.gmail.com/
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Stable-dep-of: 20121d3f58f0 ("fuse: update inode size after extending passthrough write")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/probe.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/backing-file.c            | 8 ++++----
+ fs/fuse/passthrough.c        | 6 +++---
+ fs/overlayfs/file.c          | 9 +++++++--
+ include/linux/backing-file.h | 2 +-
+ 4 files changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-index e9e56bbb3b59d..d203e23b75620 100644
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -3106,7 +3106,9 @@ int pci_host_probe(struct pci_host_bridge *bridge)
- 	list_for_each_entry(child, &bus->children, node)
- 		pcie_bus_configure_settings(child);
+diff --git a/fs/backing-file.c b/fs/backing-file.c
+index 8860dac58c37e..09a9be945d45e 100644
+--- a/fs/backing-file.c
++++ b/fs/backing-file.c
+@@ -80,7 +80,7 @@ struct backing_aio {
+ 	refcount_t ref;
+ 	struct kiocb *orig_iocb;
+ 	/* used for aio completion */
+-	void (*end_write)(struct file *);
++	void (*end_write)(struct file *, loff_t, ssize_t);
+ 	struct work_struct work;
+ 	long res;
+ };
+@@ -109,7 +109,7 @@ static void backing_aio_cleanup(struct backing_aio *aio, long res)
+ 	struct kiocb *orig_iocb = aio->orig_iocb;
  
-+	pci_lock_rescan_remove();
- 	pci_bus_add_devices(bus);
-+	pci_unlock_rescan_remove();
- 	return 0;
+ 	if (aio->end_write)
+-		aio->end_write(orig_iocb->ki_filp);
++		aio->end_write(orig_iocb->ki_filp, iocb->ki_pos, res);
+ 
+ 	orig_iocb->ki_pos = iocb->ki_pos;
+ 	backing_aio_put(aio);
+@@ -239,7 +239,7 @@ ssize_t backing_file_write_iter(struct file *file, struct iov_iter *iter,
+ 
+ 		ret = vfs_iter_write(file, iter, &iocb->ki_pos, rwf);
+ 		if (ctx->end_write)
+-			ctx->end_write(ctx->user_file);
++			ctx->end_write(ctx->user_file, iocb->ki_pos, ret);
+ 	} else {
+ 		struct backing_aio *aio;
+ 
+@@ -317,7 +317,7 @@ ssize_t backing_file_splice_write(struct pipe_inode_info *pipe,
+ 	revert_creds(old_cred);
+ 
+ 	if (ctx->end_write)
+-		ctx->end_write(ctx->user_file);
++		ctx->end_write(ctx->user_file, ppos ? *ppos : 0, ret);
+ 
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(pci_host_probe);
+diff --git a/fs/fuse/passthrough.c b/fs/fuse/passthrough.c
+index 9666d13884ce5..f0f87d1c9a945 100644
+--- a/fs/fuse/passthrough.c
++++ b/fs/fuse/passthrough.c
+@@ -18,7 +18,7 @@ static void fuse_file_accessed(struct file *file)
+ 	fuse_invalidate_atime(inode);
+ }
+ 
+-static void fuse_file_modified(struct file *file)
++static void fuse_passthrough_end_write(struct file *file, loff_t pos, ssize_t ret)
+ {
+ 	struct inode *inode = file_inode(file);
+ 
+@@ -63,7 +63,7 @@ ssize_t fuse_passthrough_write_iter(struct kiocb *iocb,
+ 	struct backing_file_ctx ctx = {
+ 		.cred = ff->cred,
+ 		.user_file = file,
+-		.end_write = fuse_file_modified,
++		.end_write = fuse_passthrough_end_write,
+ 	};
+ 
+ 	pr_debug("%s: backing_file=0x%p, pos=%lld, len=%zu\n", __func__,
+@@ -110,7 +110,7 @@ ssize_t fuse_passthrough_splice_write(struct pipe_inode_info *pipe,
+ 	struct backing_file_ctx ctx = {
+ 		.cred = ff->cred,
+ 		.user_file = out,
+-		.end_write = fuse_file_modified,
++		.end_write = fuse_passthrough_end_write,
+ 	};
+ 
+ 	pr_debug("%s: backing_file=0x%p, pos=%lld, len=%zu, flags=0x%x\n", __func__,
+diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
+index 1a411cae57ed9..7b085f89e5a15 100644
+--- a/fs/overlayfs/file.c
++++ b/fs/overlayfs/file.c
+@@ -229,6 +229,11 @@ static void ovl_file_modified(struct file *file)
+ 	ovl_copyattr(file_inode(file));
+ }
+ 
++static void ovl_file_end_write(struct file *file, loff_t pos, ssize_t ret)
++{
++	ovl_file_modified(file);
++}
++
+ static void ovl_file_accessed(struct file *file)
+ {
+ 	struct inode *inode, *upperinode;
+@@ -292,7 +297,7 @@ static ssize_t ovl_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 	struct backing_file_ctx ctx = {
+ 		.cred = ovl_creds(inode->i_sb),
+ 		.user_file = file,
+-		.end_write = ovl_file_modified,
++		.end_write = ovl_file_end_write,
+ 	};
+ 
+ 	if (!iov_iter_count(iter))
+@@ -362,7 +367,7 @@ static ssize_t ovl_splice_write(struct pipe_inode_info *pipe, struct file *out,
+ 	struct backing_file_ctx ctx = {
+ 		.cred = ovl_creds(inode->i_sb),
+ 		.user_file = out,
+-		.end_write = ovl_file_modified,
++		.end_write = ovl_file_end_write,
+ 	};
+ 
+ 	inode_lock(inode);
+diff --git a/include/linux/backing-file.h b/include/linux/backing-file.h
+index 4b61b0e577209..2eed0ffb5e8f8 100644
+--- a/include/linux/backing-file.h
++++ b/include/linux/backing-file.h
+@@ -16,7 +16,7 @@ struct backing_file_ctx {
+ 	const struct cred *cred;
+ 	struct file *user_file;
+ 	void (*accessed)(struct file *);
+-	void (*end_write)(struct file *);
++	void (*end_write)(struct file *, loff_t, ssize_t);
+ };
+ 
+ struct file *backing_file_open(const struct path *user_path, int flags,
 -- 
 2.43.0
 
