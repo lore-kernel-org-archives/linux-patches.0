@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E85615B10D;
-	Mon, 28 Oct 2024 06:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6C015B10D;
+	Mon, 28 Oct 2024 06:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097714; cv=none; b=bg+VcfB62fAlHC0LTrmHfWPUS58Spmj5gmQRxvcCo6VfTD0qP7KTX5mJLLtWxFrYN5tstAuipgIAw18wir0HqwA8CwBA9+NUT3RbigKDyB88+AYkBV38v69XFDcQcifMNj2gIIazm9paOkUJEbeC/3nCj5N3YO3W0SsP5G4vqsM=
+	t=1730097716; cv=none; b=j5bduPiolb8Zl8RiRPvEvtfJd4JkE4WfL09nfJPxowMAk8j/b2nzabtIN+TAWPech14HvHkjrZRBsoKhEuadGxap9KBiNM0oruIp0sMsRogByY9NTasvZrww++oS+r+UCyNZrtRx6nA4StNR+Et6tRi0osdHFxlBl5hRm5NR42A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097714; c=relaxed/simple;
-	bh=GL6Ai4ymTdrmM8vI01obQovrdjZDwPNV3CbwuYNmRD8=;
+	s=arc-20240116; t=1730097716; c=relaxed/simple;
+	bh=Rgkwp6QhTww7Qrs3g+Kuc10YY9w8RT7r+XBNUBp8CEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dvcu9CVx5OTWruKbpImLPc0Ocj6id0XD1PZlC0ULL2KAdEv5ypTgH++DFdI3yD5PfY237pEjqyZODpmL/b43tfIKGCwwQbnD2o8wP2lOSm7owpE9uwTixuoMemuO4jV4wVYVifs9wsd96AAzj/Sq1WOMnpoAPZpZYuxa3/sYV6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5hYNMSW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mWDivyTtjPEKqX4o4jxwvMRQ9mioyieEjPCO5kBAbiznt5uCF8gPWRfhSrxB1PWCewX7X4RXx9eC2mUaoSHv+pgxLWsfOtY+B2sIuEaVFvTPtpvW46V8Eed11dlWzRnHlOaI4sges/Iot++Bpss7WL/pQm9awiYt9OtUglsGISM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hApKCbPr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5hYNMSW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D88C4CEC3;
-	Mon, 28 Oct 2024 06:41:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hApKCbPr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC35C4CEC3;
+	Mon, 28 Oct 2024 06:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097714;
-	bh=GL6Ai4ymTdrmM8vI01obQovrdjZDwPNV3CbwuYNmRD8=;
+	s=korg; t=1730097716;
+	bh=Rgkwp6QhTww7Qrs3g+Kuc10YY9w8RT7r+XBNUBp8CEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c5hYNMSWs6KjyPfCso4g9bpKIuJMJ6ILzfpWllR4HnornUvWCEzoUHP/GiYXJnt5Y
-	 ZDIK1775eQxpkvLw6JKQe/WdPbu3hihKq8UjoWB74Xt2C3GyQz7cmYuNyChk0MfzDC
-	 19jh6HXkAoAvKPw+/fUW90f+hfPL852Gxd4NfsK4=
+	b=hApKCbPrVnbV7dyGR96nKVUHIbzLq+LmcBsDhwsUe7Y64ecOLHiyeclXMsfiEyJbH
+	 x0z8g+jUmhVmpMBJkFdGSsw4NmB2RvCLazTnQncBVmes5fDD83wWPDCPkSSHxqJE35
+	 jHQNlh7hdm8aA29uQVQWy6Ep9MEQChK96lGlsVaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lawrence Glanzman <davidglanzman@yahoo.com>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 116/208] ASoC: amd: yc: Add quirk for HP Dragonfly pro one
-Date: Mon, 28 Oct 2024 07:24:56 +0100
-Message-ID: <20241028062309.513652858@linuxfoundation.org>
+Subject: [PATCH 6.6 117/208] ASoC: codecs: lpass-rx-macro: add missing CDC_RX_BCL_VBAT_RF_PROC2 to default regs values
+Date: Mon, 28 Oct 2024 07:24:57 +0100
+Message-ID: <20241028062309.537402457@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -51,38 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lawrence Glanzman <davidglanzman@yahoo.com>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-[ Upstream commit 84e8d59651879b2ff8499bddbbc9549b7f1a646b ]
+[ Upstream commit e249786b2188107a7c50e7174d35f955a60988a1 ]
 
-Adds a quirk entry to enable the mic on HP Dragonfly pro one laptop
+CDC_RX_BCL_VBAT_RF_PROC1 is listed twice and its default value
+is 0x2a which is overwriten by its next occurence in rx_defaults[].
+The second one should be missing CDC_RX_BCL_VBAT_RF_PROC2 instead
+and its default value is expected 0x0.
 
-Signed-off-by: David Lawrence Glanzman <davidglanzman@yahoo.com>
-Link: https://patch.msgid.link/1249c09bd6bf696b59d087a4f546ae397828656c.camel@yahoo.com
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Link: https://patch.msgid.link/20240925043823.520218-2-alexey.klimov@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/soc/codecs/lpass-rx-macro.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 248e3bcbf386b..76f5d926d1eac 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -444,6 +444,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "8A3E"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
-+			DMI_MATCH(DMI_BOARD_NAME, "8A7F"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
+index 29197d34ec099..7e9f0ab914124 100644
+--- a/sound/soc/codecs/lpass-rx-macro.c
++++ b/sound/soc/codecs/lpass-rx-macro.c
+@@ -909,7 +909,7 @@ static const struct reg_default rx_defaults[] = {
+ 	{ CDC_RX_BCL_VBAT_PK_EST2, 0x01 },
+ 	{ CDC_RX_BCL_VBAT_PK_EST3, 0x40 },
+ 	{ CDC_RX_BCL_VBAT_RF_PROC1, 0x2A },
+-	{ CDC_RX_BCL_VBAT_RF_PROC1, 0x00 },
++	{ CDC_RX_BCL_VBAT_RF_PROC2, 0x00 },
+ 	{ CDC_RX_BCL_VBAT_TAC1, 0x00 },
+ 	{ CDC_RX_BCL_VBAT_TAC2, 0x18 },
+ 	{ CDC_RX_BCL_VBAT_TAC3, 0x18 },
 -- 
 2.43.0
 
