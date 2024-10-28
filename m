@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003822C697;
-	Mon, 28 Oct 2024 06:41:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B06D2C697;
+	Mon, 28 Oct 2024 06:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097665; cv=none; b=PTVkYoI0kbRxIkn4iDF2iLqtJHdMa67cdgD7cQ0k5rtYpJbzrLIdOpDpjF+T24cLTsVJ/gyWLRDZyLx5cFGl1nMuf4jZsQCYbqdvPKJ8hoZt4D6KTeOmLHi+Q4gju7pgVMfmmXJZcog9rp2HNIl4cPlkxqk5VervUiB0sYBqBBs=
+	t=1730097667; cv=none; b=gZNGJ9vkHEd0YpMm6ccRzhmaSouhxohmwE9cUUkCkkR+K/q/T2zBW5kQBnUaqdUnVgJh1Z8kS9rGuaY+wMlEXREiiISOr6mavmLaO5y4Y0OEgac/LJO9qwx0xG7A+vmGj7lGQ92ODx8w7UbzCGDratJVxGY7J0j5Ks8WPs1/n7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097665; c=relaxed/simple;
-	bh=5A4FjDgB+Uq3AgiKKBv6JvsvZzsCmFCFmVby+u63Q8I=;
+	s=arc-20240116; t=1730097667; c=relaxed/simple;
+	bh=6/48O118OMVNVVYXmEwj8p1EtnspjVaJGaZ3rM4fPz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r+UwdNTeOfpJe/rQao7Rzz9Eh4MJZaWecPRbnbZXt6BI4PUA8rqO3hlrlxf1g6PqVO9uKS9Ppbe+IR3fN8rTJjsFnL5YGl6Z+lvBPj+Ku5LAdtZW/3JW6rIba6xI12o30yPgPgSix4RVd0rq1dTFhf7Dn/Sj6xfYTDJkk070oaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1jy7my4Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WeoJmi5KDBdeRIRo11RZ7C4fYAEZRom2R8F8LKiamQYPJ4a5EI1wnINvtCKfFVc9gEFTOAIn/IN5uz0o557XxMgfyC3KKEybhQnMPbUs/ubv9zsIU2rQ7GC1ok2nZwc1j+haneJwau7G4Mlpa4KbzXEAM/PsVy4YsyvTmiMlYbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvfeMxgu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jy7my4Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C2F9C4CEC3;
-	Mon, 28 Oct 2024 06:41:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvfeMxgu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCAEFC4CEC3;
+	Mon, 28 Oct 2024 06:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097664;
-	bh=5A4FjDgB+Uq3AgiKKBv6JvsvZzsCmFCFmVby+u63Q8I=;
+	s=korg; t=1730097667;
+	bh=6/48O118OMVNVVYXmEwj8p1EtnspjVaJGaZ3rM4fPz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1jy7my4QxfEsyal7TmuVfkTMiHeOzD4GH7mjxrqwJYMIe8envRIIDXqbL6lheAQas
-	 30eM+XVYS8clmzNqrK7cU6qTj83GAbP8ZvE6wRq98wRJicOUBvHXojY3Asu+V9HUHG
-	 kJ3yvD4cVqt0XhNp92vdrGjHLU76MVfZb4nUqWgw=
+	b=LvfeMxgukbqRzr1EBfJu3ewFAhPtICuHWyYtfHnr2VaXA/OVDXCLzm9OlJSTwAGZD
+	 hitKjJsVRXvg5JVXCh9gRJCP2XSUB9uvkYKY/9AmREEsCBgoghKTKZwjnSkacNcyrl
+	 aBvP9sMGQu+5Tmpq7PUC1XFIU/4HSCObG94NXt9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	David Hildenbrand <david@redhat.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 092/208] mm: convert collapse_huge_page() to use a folio
-Date: Mon, 28 Oct 2024 07:24:32 +0100
-Message-ID: <20241028062308.919434399@linuxfoundation.org>
+Subject: [PATCH 6.6 093/208] mm/khugepaged: use a folio more in collapse_file()
+Date: Mon, 28 Oct 2024 07:24:33 +0100
+Message-ID: <20241028062308.946053707@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -54,62 +57,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 5432726848bb27a01badcbc93b596f39ee6c5ffb ]
+[ Upstream commit b54d60b18e850561e8bdb4264ae740676c3b7658 ]
 
-Replace three calls to compound_head() with one.
+This function is not yet fully converted to the folio API, but this
+removes a few uses of old APIs.
 
-Link: https://lkml.kernel.org/r/20231211162214.2146080-9-willy@infradead.org
+Link: https://lkml.kernel.org/r/20231228085748.1083901-6-willy@infradead.org
 Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 37f0b47c5143 ("mm: khugepaged: fix the arguments order in khugepaged_collapse_file trace point")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/khugepaged.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ mm/khugepaged.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 97cc4ef061832..24d05e0a672dc 100644
+index 24d05e0a672dc..cb6a243688045 100644
 --- a/mm/khugepaged.c
 +++ b/mm/khugepaged.c
-@@ -1088,6 +1088,7 @@ static int collapse_huge_page(struct mm_struct *mm, unsigned long address,
- 	pmd_t *pmd, _pmd;
- 	pte_t *pte;
- 	pgtable_t pgtable;
-+	struct folio *folio;
- 	struct page *hpage;
- 	spinlock_t *pmd_ptl, *pte_ptl;
- 	int result = SCAN_FAIL;
-@@ -1207,13 +1208,13 @@ static int collapse_huge_page(struct mm_struct *mm, unsigned long address,
- 	if (unlikely(result != SCAN_SUCCEED))
- 		goto out_up_write;
+@@ -2124,23 +2124,23 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
+ 		xas_lock_irq(&xas);
+ 	}
  
+-	nr = thp_nr_pages(hpage);
 +	folio = page_folio(hpage);
++	nr = folio_nr_pages(folio);
+ 	if (is_shmem)
+-		__mod_lruvec_page_state(hpage, NR_SHMEM_THPS, nr);
++		__lruvec_stat_mod_folio(folio, NR_SHMEM_THPS, nr);
+ 	else
+-		__mod_lruvec_page_state(hpage, NR_FILE_THPS, nr);
++		__lruvec_stat_mod_folio(folio, NR_FILE_THPS, nr);
+ 
+ 	if (nr_none) {
+-		__mod_lruvec_page_state(hpage, NR_FILE_PAGES, nr_none);
++		__lruvec_stat_mod_folio(folio, NR_FILE_PAGES, nr_none);
+ 		/* nr_none is always 0 for non-shmem. */
+-		__mod_lruvec_page_state(hpage, NR_SHMEM, nr_none);
++		__lruvec_stat_mod_folio(folio, NR_SHMEM, nr_none);
+ 	}
+ 
  	/*
--	 * spin_lock() below is not the equivalent of smp_wmb(), but
--	 * the smp_wmb() inside __SetPageUptodate() can be reused to
--	 * avoid the copy_huge_page writes to become visible after
--	 * the set_pmd_at() write.
-+	 * The smp_wmb() inside __folio_mark_uptodate() ensures the
-+	 * copy_huge_page writes become visible before the set_pmd_at()
-+	 * write.
+ 	 * Mark hpage as uptodate before inserting it into the page cache so
+ 	 * that it isn't mistaken for an fallocated but unwritten page.
  	 */
--	__SetPageUptodate(hpage);
-+	__folio_mark_uptodate(folio);
- 	pgtable = pmd_pgtable(_pmd);
+-	folio = page_folio(hpage);
+ 	folio_mark_uptodate(folio);
+ 	folio_ref_add(folio, HPAGE_PMD_NR - 1);
  
- 	_pmd = mk_huge_pmd(hpage, vma->vm_page_prot);
-@@ -1221,8 +1222,8 @@ static int collapse_huge_page(struct mm_struct *mm, unsigned long address,
+@@ -2150,7 +2150,7 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
  
- 	spin_lock(pmd_ptl);
- 	BUG_ON(!pmd_none(*pmd));
--	page_add_new_anon_rmap(hpage, vma, address);
--	lru_cache_add_inactive_or_unevictable(hpage, vma);
-+	folio_add_new_anon_rmap(folio, vma, address);
-+	folio_add_lru_vma(folio, vma);
- 	pgtable_trans_huge_deposit(mm, pmd, pgtable);
- 	set_pmd_at(mm, address, pmd, _pmd);
- 	update_mmu_cache_pmd(vma, address, pmd);
+ 	/* Join all the small entries into a single multi-index entry. */
+ 	xas_set_order(&xas, start, HPAGE_PMD_ORDER);
+-	xas_store(&xas, hpage);
++	xas_store(&xas, folio);
+ 	WARN_ON_ONCE(xas_error(&xas));
+ 	xas_unlock_irq(&xas);
+ 
+@@ -2161,7 +2161,7 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
+ 	retract_page_tables(mapping, start);
+ 	if (cc && !cc->is_khugepaged)
+ 		result = SCAN_PTE_MAPPED_HUGEPAGE;
+-	unlock_page(hpage);
++	folio_unlock(folio);
+ 
+ 	/*
+ 	 * The collapse has succeeded, so free the old pages.
 -- 
 2.43.0
 
