@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812318837;
-	Mon, 28 Oct 2024 06:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B17B2AF07;
+	Mon, 28 Oct 2024 06:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098343; cv=none; b=jerz9z9hhiFCfz3CP7zwD6ES1UMKB2szAtpxSzAjINfx+4TIEcRQErKKMRgpYT5t94M8JVXoMXoC3sr+MnA3G4VdBFvRjOB7Fp+9gNjTZloWW30ldid6P7PK9N5oRxOm38bjMKu4gvQx/2Bee8HDHEgT2XEhXb+AikirWPusVNs=
+	t=1730098346; cv=none; b=WEz3p3ujpQyG4MwD3zL0dUtJKFKYgyjrPpvfBRuUZu3D6MkaNG9yfFyvMj71h9mgPfQu6CEyOn97KLMR3LbpkJSy+lLyxLwle13LFaEcADs6pGii+r4eDWfpG7QKcmU9cDGEzbiI3ocjSjmtGBlrA1BJPd9j3ky0+7TkMOD/VV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098343; c=relaxed/simple;
-	bh=DSLMIBITShn+0TBF0ugID2Ki7F964EZPZFYkVK7kFJk=;
+	s=arc-20240116; t=1730098346; c=relaxed/simple;
+	bh=f2TG4ivWerYv6kBndIV6XhLX00vW56oLW9X9YvInfkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXsH/fLgd11UUfDSigf1qk6xEs91slE+att+uISRVRQyLGb2L/3dJhXWMZerVqbHSjXH/KzfDIX0Ln+hTqhwm5EpAqCs7TJivvr7f9I0ucfIw6d1AQ174fzn7qmDvR7fX9fnqBV0yy3rqXFAmah7lxTCDoFpzIMKKYcJKZNzCPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKIFJW5Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yr4WaClxSQnRnZOGXWCLO+ore052pJY/+q6OXWfk2Xccf7PKzTwotlBI5F6pTynWLBc/AjNUcdxXxQl+4O5cj5CMaYwSHE+sPVhwrnXdCaKVMz8fGDr+CkilFKoxP4dR6pOa2rnKHazuH6QEBkYoU3iyxQSq9X2kS7oTMflkdcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gppAdYAt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKIFJW5Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2324FC4CEC3;
-	Mon, 28 Oct 2024 06:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gppAdYAt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C87C4CEC3;
+	Mon, 28 Oct 2024 06:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098343;
-	bh=DSLMIBITShn+0TBF0ugID2Ki7F964EZPZFYkVK7kFJk=;
+	s=korg; t=1730098345;
+	bh=f2TG4ivWerYv6kBndIV6XhLX00vW56oLW9X9YvInfkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HKIFJW5Q+4J9VCdI3qg61qcSATpoAAaJHVfgrIh+6SS3RvcAtgszF7it9ZV67+KIy
-	 Tk2pxcR35C07swga1n+4ep++lU8Fr6mzlSmr1nv7qVxdjGa6Yaxa+DPUh/ipgW48ZI
-	 i9uKpXJAB1KchV83ifLYH1OFTdmSrsIe2W4SDFYI=
+	b=gppAdYAtbsKdrLeZtWPE/PTJR2XEdoZvGf3tAKNk+SR+WSMhJV39hICS/lCxZF4C/
+	 9y59gMEoEPTw/6Dvm3xeqGk6XjMmPGQ+CAZqsoB5h9+lAPQRv/aWJ36hFcx6DmKdR4
+	 RnA0OFW4/KltL4hNoDiKdKWuIYOsRuIznu0ktCOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 186/261] ASoC: rsnd: Fix probe failure on HiHope boards due to endpoint parsing
-Date: Mon, 28 Oct 2024 07:25:28 +0100
-Message-ID: <20241028062316.675342489@linuxfoundation.org>
+Subject: [PATCH 6.11 187/261] PCI: Hold rescan lock while adding devices during host probe
+Date: Mon, 28 Oct 2024 07:25:29 +0100
+Message-ID: <20241028062316.704411200@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,72 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 9b064d200aa8fee9d1d7ced05d8a617e45966715 ]
+[ Upstream commit 1d59d474e1cb7d4fdf87dfaf96f44647f13ea590 ]
 
-On the HiHope boards, we have a single port with a single endpoint defined
-as below:
-....
-        rsnd_port: port {
-                rsnd_endpoint: endpoint {
-                        remote-endpoint = <&dw_hdmi0_snd_in>;
+Since adding the PCI power control code, we may end up with a race between
+the pwrctl platform device rescanning the bus and host controller probe
+functions. The latter need to take the rescan lock when adding devices or
+we may end up in an undefined state having two incompletely added devices
+and hit the following crash when trying to remove the device over sysfs:
 
-                        dai-format = "i2s";
-                        bitclock-master = <&rsnd_endpoint>;
-                        frame-master = <&rsnd_endpoint>;
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+  Internal error: Oops: 0000000096000004 [#1] SMP
+  Call trace:
+    __pi_strlen+0x14/0x150
+    kernfs_find_ns+0x80/0x13c
+    kernfs_remove_by_name_ns+0x54/0xf0
+    sysfs_remove_bin_file+0x24/0x34
+    pci_remove_resource_files+0x3c/0x84
+    pci_remove_sysfs_dev_files+0x28/0x38
+    pci_stop_bus_device+0x8c/0xd8
+    pci_stop_bus_device+0x40/0xd8
+    pci_stop_and_remove_bus_device_locked+0x28/0x48
+    remove_store+0x70/0xb0
+    dev_attr_store+0x20/0x38
+    sysfs_kf_write+0x58/0x78
+    kernfs_fop_write_iter+0xe8/0x184
+    vfs_write+0x2dc/0x308
+    ksys_write+0x7c/0xec
 
-                        playback = <&ssi2>;
-                };
-        };
-....
-
-With commit 547b02f74e4a ("ASoC: rsnd: enable multi Component support for
-Audio Graph Card/Card2"), support for multiple ports was added. This caused
-probe failures on HiHope boards, as the endpoint could not be retrieved due
-to incorrect device node pointers being used.
-
-This patch fixes the issue by updating the `rsnd_dai_of_node()` and
-`rsnd_dai_probe()` functions to use the correct device node pointers based
-on the port names ('port' or 'ports'). It ensures that the endpoint is
-properly parsed for both single and multi-port configurations, restoring
-compatibility with HiHope boards.
-
-Fixes: 547b02f74e4a ("ASoC: rsnd: enable multi Component support for Audio Graph Card/Card2")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/20241010141432.716868-1-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 4565d2652a37 ("PCI/pwrctl: Add PCI power control core code")
+Link: https://lore.kernel.org/r/20241003084342.27501-1-brgl@bgdev.pl
+Reported-by: Konrad Dybcio <konradybcio@kernel.org>
+Tested-by: Konrad Dybcio <konradybcio@kernel.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sh/rcar/core.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/pci/probe.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/sh/rcar/core.c b/sound/soc/sh/rcar/core.c
-index 63b3c8bf0fdef..eda8de2264395 100644
---- a/sound/soc/sh/rcar/core.c
-+++ b/sound/soc/sh/rcar/core.c
-@@ -1298,7 +1298,9 @@ static int rsnd_dai_of_node(struct rsnd_priv *priv, int *is_graph)
- 		if (!of_node_name_eq(ports, "ports") &&
- 		    !of_node_name_eq(ports, "port"))
- 			continue;
--		priv->component_dais[i] = of_graph_get_endpoint_count(ports);
-+		priv->component_dais[i] =
-+			of_graph_get_endpoint_count(of_node_name_eq(ports, "ports") ?
-+						    ports : np);
- 		nr += priv->component_dais[i];
- 		i++;
- 		if (i >= RSND_MAX_COMPONENT) {
-@@ -1510,7 +1512,8 @@ static int rsnd_dai_probe(struct rsnd_priv *priv)
- 			if (!of_node_name_eq(ports, "ports") &&
- 			    !of_node_name_eq(ports, "port"))
- 				continue;
--			for_each_endpoint_of_node(ports, dai_np) {
-+			for_each_endpoint_of_node(of_node_name_eq(ports, "ports") ?
-+						  ports : np, dai_np) {
- 				__rsnd_dai_probe(priv, dai_np, dai_np, 0, dai_i);
- 				if (!rsnd_is_gen1(priv) && !rsnd_is_gen2(priv)) {
- 					rdai = rsnd_rdai_get(priv, dai_i);
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index e9e56bbb3b59d..d203e23b75620 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -3106,7 +3106,9 @@ int pci_host_probe(struct pci_host_bridge *bridge)
+ 	list_for_each_entry(child, &bus->children, node)
+ 		pcie_bus_configure_settings(child);
+ 
++	pci_lock_rescan_remove();
+ 	pci_bus_add_devices(bus);
++	pci_unlock_rescan_remove();
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(pci_host_probe);
 -- 
 2.43.0
 
