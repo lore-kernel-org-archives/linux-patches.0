@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1F918C03D;
-	Mon, 28 Oct 2024 06:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7DF18F2C5;
+	Mon, 28 Oct 2024 06:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097243; cv=none; b=Fz3FZ2sTVYPb2lbnNeW26LDZEmhtWIqmN+dvOjRtBVCHjRj8Cxyzpyhec5guLl+SHP+aYvcQfFapzFvOPzvDbNf7893UfpJtBktcZWFkzkkq0tuazDuvXyq7/aoKVlv118Gb5RjaBG5SECsI1Y5pnqqaMKb/FY78k5BtzjokSkM=
+	t=1730097245; cv=none; b=bAgae8/SMepafDnN/phk3qQNQZnuFfwZ+v5gDdmwpRI6VT46ZBeXaFrmKsEEiWIGCbSnuassi3DBd2HPvWDxVpEXQx3PAUfWfwYWjWXIS2tDUxl6Pcu7mtM3WxzFMf32SjhFGBn1ovQGi+/kh5f2e6Y3khYgpk3m1LNapHnwWVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097243; c=relaxed/simple;
-	bh=OgrRwVJduXMH0kPanKrVzVr/QDjxPqubsyZXJfYlWEo=;
+	s=arc-20240116; t=1730097245; c=relaxed/simple;
+	bh=HPBP/lznW4bHmralzpO83mQtJG8Gqd7ZjoQbnNryO84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BjYzCm/mWkyJ8nifz7dHA78HMzOaJrF3DCtuvnghD1smdRe7FzQrwVl1odqSaJVbxnl+P+ITh71hZ/30FCKpzLbVbc4zrgsw+gr9wS4VqoEI3AHYYd9ZzUIgPwj+6X2IHCysKHt6dwfs0SJ3VTOZXgQ1Udj2OnhIuc9FM/CwgKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MgnCQjGf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WAqi74Epp6JM3D8h7ze677hH596NFHqAwXbE1tX2OPb0ENJ/pXyzut/nid65kBSOD05ppg03w3LchSpJV2GCowKYXeVp5rhyLYqLdK/qOn75JkkhLPO+k5ieiivjK+Hk32ORKawcpNDfxsnjAZW1dcMuxL/kW2tqRZazjqn320Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1n75o0a/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MgnCQjGf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4E8C4CEC7;
-	Mon, 28 Oct 2024 06:34:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1n75o0a/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B2FC4CEC7;
+	Mon, 28 Oct 2024 06:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097242;
-	bh=OgrRwVJduXMH0kPanKrVzVr/QDjxPqubsyZXJfYlWEo=;
+	s=korg; t=1730097244;
+	bh=HPBP/lznW4bHmralzpO83mQtJG8Gqd7ZjoQbnNryO84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MgnCQjGfw1iNeqdu0z7DzLS2CdSU6Q4Bw6/b4eHH8w0o127thuc5yMDMBMJA8r7L2
-	 W5ZLrAzrd0TUVtOcoGYBaAM3PzmV6jgMVCyhwBYQKnVJijL3qvKdm70TqeNA4mJuC3
-	 MgpAS2HNtKIcJtQ899fB+mWYfsUnIpOvXvEOrr4w=
+	b=1n75o0a/tcAW2FREFgKwiGN77HvpzslJiIIFASdKJSqjsBgNqH0BepJ9YfRVpnWmW
+	 xQpxUju/a0zxyesRTRw81ELUtu3Wk514S+WPlXWnYwDkrHUH8PlfTmDsLO1/m3JVdZ
+	 nc8Nvj2hfoX0gqjO/NrR2gcNhV13qQCfm7h6/jwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Paul Barker <paul.barker.ct@bp.renesas.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Wang Hai <wanghai38@huawei.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/137] net: ravb: Only advertise Rx/Tx timestamps if hardware supports it
-Date: Mon, 28 Oct 2024 07:24:42 +0100
-Message-ID: <20241028062259.986112302@linuxfoundation.org>
+Subject: [PATCH 6.1 046/137] scsi: target: core: Fix null-ptr-deref in target_alloc_device()
+Date: Mon, 28 Oct 2024 07:24:43 +0100
+Message-ID: <20241028062300.015037350@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -47,78 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit 126e799602f45e9ce1ded03ee9eadda68bf470e0 ]
+[ Upstream commit fca6caeb4a61d240f031914413fcc69534f6dc03 ]
 
-Recent work moving the reporting of Rx software timestamps to the core
-[1] highlighted an issue where hardware time stamping was advertised
-for the platforms where it is not supported.
+There is a null-ptr-deref issue reported by KASAN:
 
-Fix this by covering advertising support for hardware timestamps only if
-the hardware supports it. Due to the Tx implementation in RAVB software
-Tx timestamping is also only considered if the hardware supports
-hardware timestamps. This should be addressed in future, but this fix
-only reflects what the driver currently implements.
+BUG: KASAN: null-ptr-deref in target_alloc_device+0xbc4/0xbe0 [target_core_mod]
+...
+ kasan_report+0xb9/0xf0
+ target_alloc_device+0xbc4/0xbe0 [target_core_mod]
+ core_dev_setup_virtual_lun0+0xef/0x1f0 [target_core_mod]
+ target_core_init_configfs+0x205/0x420 [target_core_mod]
+ do_one_initcall+0xdd/0x4e0
+...
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-1. Commit 277901ee3a26 ("ravb: Remove setting of RX software timestamp")
+In target_alloc_device(), if allocing memory for dev queues fails, then
+dev will be freed by dev->transport->free_device(), but dev->transport
+is not initialized at that time, which will lead to a null pointer
+reference problem.
 
-Fixes: 7e09a052dc4e ("ravb: Exclude gPTP feature support for RZ/G2L")
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Paul Barker <paul.barker.ct@bp.renesas.com>
-Tested-by: Paul Barker <paul.barker.ct@bp.renesas.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Link: https://patch.msgid.link/20241014124343.3875285-1-niklas.soderlund+renesas@ragnatech.se
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixing this bug by freeing dev with hba->backend->ops->free_device().
+
+Fixes: 1526d9f10c61 ("scsi: target: Make state_list per CPU")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Link: https://lore.kernel.org/r/20241011113444.40749-1-wanghai38@huawei.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 25 ++++++++++++------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ drivers/target/target_core_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 96467b8d48b00..705010ea1d568 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1689,20 +1689,19 @@ static int ravb_get_ts_info(struct net_device *ndev,
- 	struct ravb_private *priv = netdev_priv(ndev);
- 	const struct ravb_hw_info *hw_info = priv->info;
+diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
+index 13558cbd9b82e..7be48bfbd42e4 100644
+--- a/drivers/target/target_core_device.c
++++ b/drivers/target/target_core_device.c
+@@ -733,7 +733,7 @@ struct se_device *target_alloc_device(struct se_hba *hba, const char *name)
  
--	info->so_timestamping =
--		SOF_TIMESTAMPING_TX_SOFTWARE |
--		SOF_TIMESTAMPING_TX_HARDWARE |
--		SOF_TIMESTAMPING_RX_HARDWARE |
--		SOF_TIMESTAMPING_RAW_HARDWARE;
--	info->tx_types = (1 << HWTSTAMP_TX_OFF) | (1 << HWTSTAMP_TX_ON);
--	info->rx_filters =
--		(1 << HWTSTAMP_FILTER_NONE) |
--		(1 << HWTSTAMP_FILTER_PTP_V2_L2_EVENT) |
--		(1 << HWTSTAMP_FILTER_ALL);
--	if (hw_info->gptp || hw_info->ccc_gac)
-+	if (hw_info->gptp || hw_info->ccc_gac) {
-+		info->so_timestamping =
-+			SOF_TIMESTAMPING_TX_SOFTWARE |
-+			SOF_TIMESTAMPING_TX_HARDWARE |
-+			SOF_TIMESTAMPING_RX_HARDWARE |
-+			SOF_TIMESTAMPING_RAW_HARDWARE;
-+		info->tx_types = (1 << HWTSTAMP_TX_OFF) | (1 << HWTSTAMP_TX_ON);
-+		info->rx_filters =
-+			(1 << HWTSTAMP_FILTER_NONE) |
-+			(1 << HWTSTAMP_FILTER_PTP_V2_L2_EVENT) |
-+			(1 << HWTSTAMP_FILTER_ALL);
- 		info->phc_index = ptp_clock_index(priv->ptp.clock);
--	else
--		info->phc_index = 0;
-+	}
+ 	dev->queues = kcalloc(nr_cpu_ids, sizeof(*dev->queues), GFP_KERNEL);
+ 	if (!dev->queues) {
+-		dev->transport->free_device(dev);
++		hba->backend->ops->free_device(dev);
+ 		return NULL;
+ 	}
  
- 	return 0;
- }
 -- 
 2.43.0
 
