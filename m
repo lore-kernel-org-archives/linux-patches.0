@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072DF2AF07;
-	Mon, 28 Oct 2024 06:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE20A2AF07;
+	Mon, 28 Oct 2024 06:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098449; cv=none; b=DaEnrkCut0rE/TDI+y527dC5qkRrjiyjYT/L6CsGMV2ahqBEjl03qycXNzP1/Oc9pvP7HQMZrJDm0LnbUCsVjNNWgXMZN/83XhNdKrLUJB1+FxlMoxMmbvRQbDa5xFY1BtS3zkD1pEp1QDXpL/18q7kn26YOvqidS8VOjTX4iEk=
+	t=1730098451; cv=none; b=V8iAQ4fg1lN5b3xYcPGh/fRfpu+tkYOLdGL6w/0erppf2/qSaDdyI2wXVPmmhzB9H+PhSNvZ2SWDY36OoqsVTBK6FENeiPg4V5M5CDrIQHSWDuoFgPzE45UIH/Z9CqkbxxG8+XMn50f5SoUhRiL5jH5OtRY3fXXpB0vthcoj8rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098449; c=relaxed/simple;
-	bh=xzEAn5x6UcaQZHUatRM5lNK5uVSIYeQIkTKW3J6bGtA=;
+	s=arc-20240116; t=1730098451; c=relaxed/simple;
+	bh=AzYby7oLct5q6iyS3pEQ9cLbkiHbl85xX2xQUmfZTCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BXrvarFGjygUsLdw3SYhlflPl04Gixu+LOhCr5MGmIQRn4DCb0mNifu8WKu0Q7TLKTlrK66lBqeEg4yglrkveEPZFnZ2MKvpsxDkjFaSvIac0MGLyF6lSFw9cBb4h34iE9xEHAGhGjrPuFASisXINkDNL3RpXH7JR06aaxQDFhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIyNamZR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PL7BW3faBIRd1Pqen00PtVRuBdpMYI96uDOh1b3dfASsfch1WziCviB9qtc6N+Jw8YI1I2YMqpmq6dBuoXB68Kh/Ej/SC9VxNr/pvNV4LjrToCTZ0XZsaqIjCybfibi26FC4Qp37UIOsOGcpWwx32JNHz9SacZSdSf+zPE+9bSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wugi5fyT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIyNamZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5521DC4CEC3;
-	Mon, 28 Oct 2024 06:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wugi5fyT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0B4C4CECD;
+	Mon, 28 Oct 2024 06:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098448;
-	bh=xzEAn5x6UcaQZHUatRM5lNK5uVSIYeQIkTKW3J6bGtA=;
+	s=korg; t=1730098450;
+	bh=AzYby7oLct5q6iyS3pEQ9cLbkiHbl85xX2xQUmfZTCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VIyNamZRkJhxWv+TclqyMb1OTwX03bmm/l9LjGi+H95eZ3A6lCKJuVqHVWFtAgKBy
-	 oCpynyiGpqyMswhEMuQsQ4Sbd0elmWGTFj4bMZKRzM2RiAvTqu6zULq6ty1aqRKKzK
-	 C9qfFvv5w+QhMe58RNAjVr1Vl+glIEZ5cnPfXZ6Q=
+	b=wugi5fyTz8GNQt+XsQpTOis4qjXbw3tyZ7DarVyaU70V+461aKGO59H0cMcstHIZF
+	 2DEo75/wXVkAdbq0Aoxd7zzcI/3LpQeIrPaBVjwUjSsrvA+QeVjlR7lBN4/M3qwpM3
+	 JGUSn/r1DcN3cTM+VXYe6ukO99PlCwSAelblMdRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.11 231/261] hv_netvsc: Fix VF namespace also in synthetic NIC NETDEV_REGISTER event
-Date: Mon, 28 Oct 2024 07:26:13 +0100
-Message-ID: <20241028062317.905185371@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Song Liu <song@kernel.org>,
+	ValdikSS <iam@valdikss.org.ru>
+Subject: [PATCH 6.11 232/261] md/raid10: fix null ptr dereference in raid10_size()
+Date: Mon, 28 Oct 2024 07:26:14 +0100
+Message-ID: <20241028062317.930439281@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,75 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haiyang Zhang <haiyangz@microsoft.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit 4c262801ea60c518b5bebc22a09f5b78b3147da2 upstream.
+commit 825711e00117fc686ab89ac36a9a7b252dc349c6 upstream.
 
-The existing code moves VF to the same namespace as the synthetic NIC
-during netvsc_register_vf(). But, if the synthetic device is moved to a
-new namespace after the VF registration, the VF won't be moved together.
+In raid10_run() if raid10_set_queue_limits() succeed, the return value
+is set to zero, and if following procedures failed raid10_run() will
+return zero while mddev->private is still NULL, causing null ptr
+dereference in raid10_size().
 
-To make the behavior more consistent, add a namespace check for synthetic
-NIC's NETDEV_REGISTER event (generated during its move), and move the VF
-if it is not in the same namespace.
+Fix the problem by only overwrite the return value if
+raid10_set_queue_limits() failed.
 
+Fixes: 3d8466ba68d4 ("md/raid10: use the atomic queue limit update APIs")
 Cc: stable@vger.kernel.org
-Fixes: c0a41b887ce6 ("hv_netvsc: move VF to same namespace as netvsc device")
-Suggested-by: Stephen Hemminger <stephen@networkplumber.org>
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/1729275922-17595-1-git-send-email-haiyangz@microsoft.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-and-tested-by: ValdikSS <iam@valdikss.org.ru>
+Closes: https://lore.kernel.org/all/0dd96820-fe52-4841-bc58-dbf14d6bfcc8@valdikss.org.ru/
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20241009014914.1682037-1-yukuai1@huaweicloud.com
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/hyperv/netvsc_drv.c |   30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/md/raid10.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/net/hyperv/netvsc_drv.c
-+++ b/drivers/net/hyperv/netvsc_drv.c
-@@ -2797,6 +2797,31 @@ static struct  hv_driver netvsc_drv = {
- 	},
- };
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -4055,9 +4055,12 @@ static int raid10_run(struct mddev *mdde
+ 	}
  
-+/* Set VF's namespace same as the synthetic NIC */
-+static void netvsc_event_set_vf_ns(struct net_device *ndev)
-+{
-+	struct net_device_context *ndev_ctx = netdev_priv(ndev);
-+	struct net_device *vf_netdev;
-+	int ret;
+ 	if (!mddev_is_dm(conf->mddev)) {
+-		ret = raid10_set_queue_limits(mddev);
+-		if (ret)
++		int err = raid10_set_queue_limits(mddev);
 +
-+	vf_netdev = rtnl_dereference(ndev_ctx->vf_netdev);
-+	if (!vf_netdev)
-+		return;
-+
-+	if (!net_eq(dev_net(ndev), dev_net(vf_netdev))) {
-+		ret = dev_change_net_namespace(vf_netdev, dev_net(ndev),
-+					       "eth%d");
-+		if (ret)
-+			netdev_err(vf_netdev,
-+				   "Cannot move to same namespace as %s: %d\n",
-+				   ndev->name, ret);
-+		else
-+			netdev_info(vf_netdev,
-+				    "Moved VF to namespace with: %s\n",
-+				    ndev->name);
-+	}
-+}
-+
- /*
-  * On Hyper-V, every VF interface is matched with a corresponding
-  * synthetic interface. The synthetic interface is presented first
-@@ -2809,6 +2834,11 @@ static int netvsc_netdev_event(struct no
- 	struct net_device *event_dev = netdev_notifier_info_to_dev(ptr);
- 	int ret = 0;
++		if (err) {
++			ret = err;
+ 			goto out_free_conf;
++		}
+ 	}
  
-+	if (event_dev->netdev_ops == &device_ops && event == NETDEV_REGISTER) {
-+		netvsc_event_set_vf_ns(event_dev);
-+		return NOTIFY_DONE;
-+	}
-+
- 	ret = check_dev_is_matching_vf(event_dev);
- 	if (ret != 0)
- 		return NOTIFY_DONE;
+ 	/* need to check that every block has at least one working mirror */
 
 
