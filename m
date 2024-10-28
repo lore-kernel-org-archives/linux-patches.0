@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A0618A924;
-	Mon, 28 Oct 2024 06:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7539E18A924;
+	Mon, 28 Oct 2024 06:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098176; cv=none; b=EBhHRlBn20DtUG3r+EBHY4KwDLiym6U+mjHFwB8lUuHhXLWa48vIOYLffuKqpaHsk+b5JhdC9BDKWESm1Z2ON5JlcjFoC60iPmWSq7+kYH8tEFhUEu5Vn8Nm2B9wVBHhofX3wcYlmpV27YdirgHEyVYUhPeKN6DtjxN98TrDzlQ=
+	t=1730098178; cv=none; b=mqmOSqgvkM+yrflPFabQLLjZnVmxakwFBB2GDUqoOAl0/wQhZgu7phNwETy6fz+Gz7vw8tV4y3QotnlCSwPegOZ/TSzw3GiCpsyleEhPvUYfD/4g46yZtZEkdsf6UQdOoKWG+7MJBlmD48DpYzMMaC95I/vUczHqj5wCtM5HHQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098176; c=relaxed/simple;
-	bh=Qgx/IOt2pU/WCc7WtaySsj4SjOnq0mYVrLXci2rl9d0=;
+	s=arc-20240116; t=1730098178; c=relaxed/simple;
+	bh=CIQFlOh5VqV2moGCnCPiwlhAOsqNp1d4GJqGOnmkphQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gdMOnqmJ5y6O1yQD63jS6IDJi3fA+q45TeCDcxAtW+NvPM7m/OVpXZcA7lnoOpocBo5oxHkcWrR4txjwCLaAaOhzNj3L2/RAOZh9JAC+SwKjPGWXI1ZzzYjvYfXts3LQgsKmri7iQ8CX6K+8KXXVJRuiwbb1GPJSeIR15JwPo7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEGy9yT8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WqZn4zl50IszYGpMCUMhi+3LXmJEfeNVtIW/KGc6w3AfHwACtTDzZydAgUonxm0UP0a+7rFoTqqoR610sacButjfX9jvSUmo/rcJ2kPgdqU+LdyC9gLQGregKsdNKsW/ySX1PYuk2wXucqlfLIAlASf/e1MvEiW3QzfPeoJvcjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xlRZy3Ik; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEGy9yT8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F5EDC4CEC3;
-	Mon, 28 Oct 2024 06:49:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlRZy3Ik"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5378C4CEC3;
+	Mon, 28 Oct 2024 06:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098175;
-	bh=Qgx/IOt2pU/WCc7WtaySsj4SjOnq0mYVrLXci2rl9d0=;
+	s=korg; t=1730098178;
+	bh=CIQFlOh5VqV2moGCnCPiwlhAOsqNp1d4GJqGOnmkphQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gEGy9yT8myjqELJx41Ohrz76XpFSJXzA1spu2IBZfuBHYvNUuv+UJY3P2oUBiOmhC
-	 Fae2aWi9iGRz7hn1Xqm6xa68KO4ptfCPQVdIAgooME3Tz0utYMWrEBRHEk+tdhwqTp
-	 RQyowy5USSk24v87P45rOTYSZZV0ZlQb6wJXJzZw=
+	b=xlRZy3IkJJpg533PIrbCmTzMwtxLXssxnjKvLCSScjlSV31NqRROgiFIwLpQpd8pZ
+	 BwcmpBULYrunP3zZV8/oZ9JpKg0cIfvqrCiYGrkaEyC9NmlXteo6pJPdI2R0/36oKL
+	 rGC8gkNyhQqRdqR3XVl8KIlP0k9MNz7mw88RcW+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 111/261] cdrom: Avoid barrier_nospec() in cdrom_ioctl_media_changed()
-Date: Mon, 28 Oct 2024 07:24:13 +0100
-Message-ID: <20241028062314.811289260@linuxfoundation.org>
+Subject: [PATCH 6.11 112/261] fgraph: Allocate ret_stack_list with proper size
+Date: Mon, 28 Oct 2024 07:24:14 +0100
+Message-ID: <20241028062314.838100910@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -51,42 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit b0bf1afde7c34698cf61422fa8ee60e690dc25c3 ]
+[ Upstream commit fae4078c289a2f24229c0de652249948b1cd6bdb ]
 
-The barrier_nospec() after the array bounds check is overkill and
-painfully slow for arches which implement it.
+The ret_stack_list is an array of ret_stack shadow stacks for the function
+graph usage. When the first function graph is enabled, all tasks in the
+system get a shadow stack. The ret_stack_list is a 32 element array of
+pointers to these shadow stacks. It allocates the shadow stack in batches
+(32 stacks at a time), assigns them to running tasks, and continues until
+all tasks are covered.
 
-Furthermore, most arches don't implement it, so they remain exposed to
-Spectre v1 (which can affect pretty much any CPU with branch
-prediction).
+When the function graph shadow stack changed from an array of
+ftrace_ret_stack structures to an array of longs, the allocation of
+ret_stack_list went from allocating an array of 32 elements to just a
+block defined by SHADOW_STACK_SIZE. Luckily, that's defined as PAGE_SIZE
+and is much more than enough to hold 32 pointers. But it is way overkill
+for the amount needed to allocate.
 
-Instead, clamp the user pointer to a valid range so it's guaranteed to
-be a valid array index even when the bounds check mispredicts.
+Change the allocation of ret_stack_list back to a kcalloc() of
+FTRACE_RETSTACK_ALLOC_SIZE pointers.
 
-Fixes: 8270cb10c068 ("cdrom: Fix spectre-v1 gadget")
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Link: https://lore.kernel.org/r/1d86f4d9d8fba68e5ca64cdeac2451b95a8bf872.1729202937.git.jpoimboe@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20241018215212.23f13f40@rorschach
+Fixes: 42675b723b484 ("function_graph: Convert ret_stack to a series of longs")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cdrom/cdrom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/fgraph.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cdrom/cdrom.c b/drivers/cdrom/cdrom.c
-index 9b0f37d4b9d49..6a99a459b80b2 100644
---- a/drivers/cdrom/cdrom.c
-+++ b/drivers/cdrom/cdrom.c
-@@ -2313,7 +2313,7 @@ static int cdrom_ioctl_media_changed(struct cdrom_device_info *cdi,
- 		return -EINVAL;
+diff --git a/kernel/trace/fgraph.c b/kernel/trace/fgraph.c
+index 43f4e3f57438b..41e7a15dcb50c 100644
+--- a/kernel/trace/fgraph.c
++++ b/kernel/trace/fgraph.c
+@@ -1162,7 +1162,8 @@ static int start_graph_tracing(void)
+ 	unsigned long **ret_stack_list;
+ 	int ret;
  
- 	/* Prevent arg from speculatively bypassing the length check */
--	barrier_nospec();
-+	arg = array_index_nospec(arg, cdi->capacity);
+-	ret_stack_list = kmalloc(SHADOW_STACK_SIZE, GFP_KERNEL);
++	ret_stack_list = kcalloc(FTRACE_RETSTACK_ALLOC_SIZE,
++				 sizeof(*ret_stack_list), GFP_KERNEL);
  
- 	info = kmalloc(sizeof(*info), GFP_KERNEL);
- 	if (!info)
+ 	if (!ret_stack_list)
+ 		return -ENOMEM;
 -- 
 2.43.0
 
