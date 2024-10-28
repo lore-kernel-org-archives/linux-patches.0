@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2860718D649;
-	Mon, 28 Oct 2024 06:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B74824A3;
+	Mon, 28 Oct 2024 06:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098480; cv=none; b=sU0npUKTorQwmJicqsGqbxZdxCIntzItWXRAAF0+SfER7VtpwsK9yhmJqLRNAl0EJDK+c2rtDXWnRyyp679QvQaiB3SrNkGI3GTFIbXNTp2wkwgERlJ1A5XuS4sU3ws2R2vekQFm4dSpBunNWsECKrwaEkxnosg6bwYAHprzyiQ=
+	t=1730098482; cv=none; b=uzxM7bXfD0Wmt9v+Majw9RgWe33GVxqr3qxIqfe5m+/Dsz13Lhkskhy1yy3ROARx30BAd72xy0KIkLhsEa3bV2fw/2MdAwpPvBtNuJ+HWBdRIVMvdeUQDSvE9+TSsw/tMQz/ZeqoHOM4b659Y/Qqpgrfo7zwgNqomzkwmo+D6PY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098480; c=relaxed/simple;
-	bh=eREsLpQ9hBkAlqazPb/ops02i1hG+kVKU9YRDLigXYk=;
+	s=arc-20240116; t=1730098482; c=relaxed/simple;
+	bh=O1BA+/lAoZqoqCCOP56/wt1b4TYv6QiaDTG3YtfQ0Pg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ED5FesfsPEN7ZAJXYaeFhyzWXPTx1e7Mfs8ugY6XJJPzk8UYRZPcJ6G6yX74i5sDaUn1ngZXoXVO9I5ydlMxBvNJ++GuX9KoQnlLhmVrico/LkVKROmXT6M7SGE4viPlh33uFEInNxYxLIRHE/FSzVNpFx5LSXVYnZ9UN47lyrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yw6lK165; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sUgemUznPkajKWXNYOe5RpCego2O5zZDH5IfxnKygYwlYwfWZ9ifr3GELab76DODNSUgEEl4Lv0LVFOdeKCOxTXn51HKZEHP+2oZnewfembmDaUiTWQ0Cj18QGEbPMM7US2SpJ0JVmmX7MOAcZxRA9RiGQ/V/+jdv9dVcLtFCsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OCLiu+MF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yw6lK165"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBEBBC4CEC3;
-	Mon, 28 Oct 2024 06:54:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OCLiu+MF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA8E0C4CEC3;
+	Mon, 28 Oct 2024 06:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098480;
-	bh=eREsLpQ9hBkAlqazPb/ops02i1hG+kVKU9YRDLigXYk=;
+	s=korg; t=1730098482;
+	bh=O1BA+/lAoZqoqCCOP56/wt1b4TYv6QiaDTG3YtfQ0Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yw6lK165VQq/gMG4Ey9vLcG4XIFYNcObFvCVd8XHgN0WHyHE95I5MFYhmR4Fuo5dX
-	 8LffBXs1MSA1D9BFt8436R8z3PHkBTOKscIRdiEEJ+5t2B2EaYoo+RBdbG8/HSuOOX
-	 D0M9Y4Aq4qyd/XR8mI2+4P3UUxaVDuLS8ksDtBz0=
+	b=OCLiu+MF7GUaIXx6zAGR5DiKj0TJETUfEEOGhW3mZ7shuD5jHFzkchZzKS3jXwEqI
+	 NvCDTjbP4QGnuJPZBN3ofReW8fU0grHHv5XY5MCRQAXSv9wjr4JZbL/chB+AYCAFj6
+	 ao90zGq6ZRMVrtxIm8gyaz/sUBZOT5DvEwv8yNkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
 	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.11 244/261] ASoC: SOF: Intel: hda: Handle prepare without close for non-HDA DAIs
-Date: Mon, 28 Oct 2024 07:26:26 +0100
-Message-ID: <20241028062318.229917178@linuxfoundation.org>
+Subject: [PATCH 6.11 245/261] ASoC: SOF: Intel: hda: Always clean up link DMA during stop
+Date: Mon, 28 Oct 2024 07:26:27 +0100
+Message-ID: <20241028062318.253239348@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -56,99 +56,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 
-commit 6e38a7e098d32d128b00b42a536151de9ea1340b upstream.
+commit ab5593793e9088abcddce30ba8e376e31b7285fd upstream.
 
-When a PCM is restarted after a snd_pcm_drain/snd_pcm_drop(), the prepare
-callback will be invoked and the hw_params will be set again. For the
-HDA DAI's, the hw_params function handles this case already but not for
-the non-HDA DAI's. So, add the check for link_prepared to verify if the
-hw_params should be done again or not. Additionally, for SDW DAI's reset
-the PCMSyCM registers as would be done in the case of a start after a
-hw_free.
+This is required to reset the DMA read/write pointers when the stream is
+prepared and restarted after a call to snd_pcm_drain()/snd_pcm_drop().
+Also, now that the stream is reset during stop, do not save LLP registers
+in the case of STOP/suspend to avoid erroneous delay reporting.
 
+Link: https://github.com/thesofproject/sof/issues/9502
 Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
 Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
 All: stable@vger.kernel.org # 6.10.x 6.11.x
-Link: https://patch.msgid.link/20241016032910.14601-3-yung-chuan.liao@linux.intel.com
+Link: https://patch.msgid.link/20241016032910.14601-5-yung-chuan.liao@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/intel/hda-dai.c | 36 +++++++++++++++++++++++++++++++----
- 1 file changed, 32 insertions(+), 4 deletions(-)
+ sound/soc/sof/intel/hda-dai-ops.c |   23 ++++++++++-------------
+ sound/soc/sof/intel/hda-dai.c     |    1 +
+ 2 files changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/sound/soc/sof/intel/hda-dai.c b/sound/soc/sof/intel/hda-dai.c
-index 1c823f9eea57..8cccf38967e7 100644
+--- a/sound/soc/sof/intel/hda-dai-ops.c
++++ b/sound/soc/sof/intel/hda-dai-ops.c
+@@ -346,20 +346,21 @@ static int hda_trigger(struct snd_sof_de
+ 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
+ 		snd_hdac_ext_stream_start(hext_stream);
+ 		break;
+-	case SNDRV_PCM_TRIGGER_SUSPEND:
+-	case SNDRV_PCM_TRIGGER_STOP:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+-		snd_hdac_ext_stream_clear(hext_stream);
+-
+ 		/*
+-		 * Save the LLP registers in case the stream is
+-		 * restarting due PAUSE_RELEASE, or START without a pcm
+-		 * close/open since in this case the LLP register is not reset
+-		 * to 0 and the delay calculation will return with invalid
+-		 * results.
++		 * Save the LLP registers since in case of PAUSE the LLP
++		 * register are not reset to 0, the delay calculation will use
++		 * the saved offsets for compensating the delay calculation.
+ 		 */
+ 		hext_stream->pplcllpl = readl(hext_stream->pplc_addr + AZX_REG_PPLCLLPL);
+ 		hext_stream->pplcllpu = readl(hext_stream->pplc_addr + AZX_REG_PPLCLLPU);
++		snd_hdac_ext_stream_clear(hext_stream);
++		break;
++	case SNDRV_PCM_TRIGGER_SUSPEND:
++	case SNDRV_PCM_TRIGGER_STOP:
++		hext_stream->pplcllpl = 0;
++		hext_stream->pplcllpu = 0;
++		snd_hdac_ext_stream_clear(hext_stream);
+ 		break;
+ 	default:
+ 		dev_err(sdev->dev, "unknown trigger command %d\n", cmd);
+@@ -512,7 +513,6 @@ static const struct hda_dai_widget_dma_o
+ static int hda_ipc3_post_trigger(struct snd_sof_dev *sdev, struct snd_soc_dai *cpu_dai,
+ 				 struct snd_pcm_substream *substream, int cmd)
+ {
+-	struct hdac_ext_stream *hext_stream = hda_get_hext_stream(sdev, cpu_dai, substream);
+ 	struct snd_soc_dapm_widget *w = snd_soc_dai_get_widget(cpu_dai, substream->stream);
+ 
+ 	switch (cmd) {
+@@ -527,9 +527,6 @@ static int hda_ipc3_post_trigger(struct
+ 		if (ret < 0)
+ 			return ret;
+ 
+-		if (cmd == SNDRV_PCM_TRIGGER_STOP)
+-			return hda_link_dma_cleanup(substream, hext_stream, cpu_dai);
+-
+ 		break;
+ 	}
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
 --- a/sound/soc/sof/intel/hda-dai.c
 +++ b/sound/soc/sof/intel/hda-dai.c
-@@ -370,6 +370,13 @@ static int non_hda_dai_hw_params_data(struct snd_pcm_substream *substream,
- 		return -EINVAL;
+@@ -302,6 +302,7 @@ static int __maybe_unused hda_dai_trigge
  	}
  
-+	sdev = widget_to_sdev(w);
-+	hext_stream = ops->get_hext_stream(sdev, cpu_dai, substream);
-+
-+	/* nothing more to do if the link is already prepared */
-+	if (hext_stream && hext_stream->link_prepared)
-+		return 0;
-+
- 	/* use HDaudio stream handling */
- 	ret = hda_dai_hw_params_data(substream, params, cpu_dai, data, flags);
- 	if (ret < 0) {
-@@ -377,7 +384,6 @@ static int non_hda_dai_hw_params_data(struct snd_pcm_substream *substream,
- 		return ret;
- 	}
- 
--	sdev = widget_to_sdev(w);
- 	if (sdev->dspless_mode_selected)
- 		return 0;
- 
-@@ -482,6 +488,31 @@ int sdw_hda_dai_hw_params(struct snd_pcm_substream *substream,
- 	int ret;
- 	int i;
- 
-+	ops = hda_dai_get_ops(substream, cpu_dai);
-+	if (!ops) {
-+		dev_err(cpu_dai->dev, "DAI widget ops not set\n");
-+		return -EINVAL;
-+	}
-+
-+	sdev = widget_to_sdev(w);
-+	hext_stream = ops->get_hext_stream(sdev, cpu_dai, substream);
-+
-+	/* nothing more to do if the link is already prepared */
-+	if (hext_stream && hext_stream->link_prepared)
-+		return 0;
-+
-+	/*
-+	 * reset the PCMSyCM registers to handle a prepare callback when the PCM is restarted
-+	 * due to xruns or after a call to snd_pcm_drain/drop()
-+	 */
-+	ret = hdac_bus_eml_sdw_map_stream_ch(sof_to_bus(sdev), link_id, cpu_dai->id,
-+					     0, 0, substream->stream);
-+	if (ret < 0) {
-+		dev_err(cpu_dai->dev, "%s:  hdac_bus_eml_sdw_map_stream_ch failed %d\n",
-+			__func__, ret);
-+		return ret;
-+	}
-+
- 	data.dai_index = (link_id << 8) | cpu_dai->id;
- 	data.dai_node_id = intel_alh_id;
- 	ret = non_hda_dai_hw_params_data(substream, params, cpu_dai, &data, flags);
-@@ -490,10 +521,7 @@ int sdw_hda_dai_hw_params(struct snd_pcm_substream *substream,
- 		return ret;
- 	}
- 
--	ops = hda_dai_get_ops(substream, cpu_dai);
--	sdev = widget_to_sdev(w);
- 	hext_stream = ops->get_hext_stream(sdev, cpu_dai, substream);
--
- 	if (!hext_stream)
- 		return -ENODEV;
- 
--- 
-2.47.0
-
+ 	switch (cmd) {
++	case SNDRV_PCM_TRIGGER_STOP:
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
+ 		ret = hda_link_dma_cleanup(substream, hext_stream, dai);
+ 		if (ret < 0) {
 
 
