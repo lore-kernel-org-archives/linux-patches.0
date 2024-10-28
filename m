@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE43415B10D;
-	Mon, 28 Oct 2024 06:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18933186E52;
+	Mon, 28 Oct 2024 06:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097103; cv=none; b=uggRhzWs8JfKhT5Gjf+u3kdOc3JXJT+df4w2OdFThgzah/uHu6FJX9YSVUN1SwiOrSKl8TPhCkH4H4fWjE9LdtzRswP0v8mrpcjn/4brQuPqLwVbbZpp7Q4nZ67BuSAeI8lth/N1Tm0iSPZALHLJ5FZqVRas2wBK8nY+3bLE4MU=
+	t=1730097106; cv=none; b=PV9TnE5XSejcum7ksKtOWytZj4z6WH5jZPe1pJ+9enWbyduHakSoS42dYySVMsCLpXAGD0aVwlnTnfmdp+o9t3zdkRWi/40wURuRdrafMhhq/XXv1P53NeldCiN7SdMO7Tb8BzGgQirlX+u8ZkgHeaOjL516d6EM4IDIgoD0W5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097103; c=relaxed/simple;
-	bh=Z0BVdUzqnPINpz/mZKJTUVq6xClEchSsRzZaq8Lsq2Q=;
+	s=arc-20240116; t=1730097106; c=relaxed/simple;
+	bh=8YjcNPllK/UZvQOC2voetfrmWv7Ox+5QjxWur2SntKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YAruGBSPw45ZQqvrpLnEu3FIXT0xyYUGw/+91oim6FndWINCU3VuXrZJ+AcZEPmG/ZYNdTzF0qghrdgzYBlaFH41zI5nngPplr0o5jQENQQpsRDH/HmuU34yotzFiLyjxHWAheFzWLZFWB88P78xuysC5XDkMm/7M4F9ajkSdkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDWLZxcN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=djba6YwOu8N1pkcrZKoSkoxkAaAqXxTiNWtm2Z8xg87rdntJsq2IKsbjb/nSNNtAs3qOnzYTneMs+XwPieshI/cBfagA7bBJ8q1HU+581Z2P3t59tbyHeaM4jPZeWKdeoXDxjs94aN6E8nuuS/8d7v31sp6MzQhT6r3SdMIzcwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ita/U7kD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDWLZxcN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9B5C4CEC7;
-	Mon, 28 Oct 2024 06:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ita/U7kD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0B0C4CEC7;
+	Mon, 28 Oct 2024 06:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097103;
-	bh=Z0BVdUzqnPINpz/mZKJTUVq6xClEchSsRzZaq8Lsq2Q=;
+	s=korg; t=1730097105;
+	bh=8YjcNPllK/UZvQOC2voetfrmWv7Ox+5QjxWur2SntKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VDWLZxcNU02IkE5FHnTdCa543o/xWQcVcS8JyJNdRI1W5exmSdtY+GPlnUoDwgtFe
-	 J+hPnBc3AVkzlk0FuoZL7gMqwaLrkc7+aQI/xMAoxfSUEoBC3Zg5ymOZ2XP1gHPLgw
-	 msijWteG0o2BkbalX9A4KcgA6qU+Y+fBSIzVPzO0=
+	b=Ita/U7kDZsAFyuHiAyMuh+cGeGs5T5SY93DnqEEcTKGlAV9MZa1bH7yJY7K5sD1Ui
+	 HJFJyGZtxl9RU2dWTWOkPpQmnHENOLOaF/TTHyGDByNuDOxfgg5cUp8yUrTHk211nM
+	 p9FjrmQsNXe73BFkNWzaQbxUtu2iUlaOZYg18q0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Shumilin <shum.sdl@nppct.ru>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Kailang Yang <kailang@realtek.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 65/80] ALSA: firewire-lib: Avoid division by zero in apply_constraint_to_size()
-Date: Mon, 28 Oct 2024 07:25:45 +0100
-Message-ID: <20241028062254.419040303@linuxfoundation.org>
+Subject: [PATCH 5.15 66/80] ALSA: hda/realtek: Update default depop procedure
+Date: Mon, 28 Oct 2024 07:25:46 +0100
+Message-ID: <20241028062254.448226557@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
 References: <20241028062252.611837461@linuxfoundation.org>
@@ -52,46 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Shumilin <shum.sdl@nppct.ru>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 72cafe63b35d06b5cfbaf807e90ae657907858da ]
+[ Upstream commit e3ea2757c312e51bbf62ebc434a6f7df1e3a201f ]
 
-The step variable is initialized to zero. It is changed in the loop,
-but if it's not changed it will remain zero. Add a variable check
-before the division.
+Old procedure has a chance to meet Headphone no output.
 
-The observed behavior was introduced by commit 826b5de90c0b
-("ALSA: firewire-lib: fix insufficient PCM rule for period/buffer size"),
-and it is difficult to show that any of the interval parameters will
-satisfy the snd_interval_test() condition with data from the
-amdtp_rate_table[] table.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 826b5de90c0b ("ALSA: firewire-lib: fix insufficient PCM rule for period/buffer size")
-Signed-off-by: Andrey Shumilin <shum.sdl@nppct.ru>
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://patch.msgid.link/20241018060018.1189537-1-shum.sdl@nppct.ru
+Fixes: c2d6af53a43f ("ALSA: hda/realtek - Add default procedure for suspend and resume state")
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/17b717a0a0b04a77aea4a8ec820cba13@realtek.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/firewire/amdtp-stream.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/hda/patch_realtek.c | 38 ++++++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 21 deletions(-)
 
-diff --git a/sound/firewire/amdtp-stream.c b/sound/firewire/amdtp-stream.c
-index 842fe127c5378..b5b3b4d177aaf 100644
---- a/sound/firewire/amdtp-stream.c
-+++ b/sound/firewire/amdtp-stream.c
-@@ -172,6 +172,9 @@ static int apply_constraint_to_size(struct snd_pcm_hw_params *params,
- 			step = max(step, amdtp_syt_intervals[i]);
- 	}
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index d76e0a2618afc..4ce2f042c04e7 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -3848,20 +3848,18 @@ static void alc_default_init(struct hda_codec *codec)
  
-+	if (step == 0)
-+		return -EINVAL;
+ 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
+ 
+-	if (hp_pin_sense)
++	if (hp_pin_sense) {
+ 		msleep(2);
+ 
+-	snd_hda_codec_write(codec, hp_pin, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+-
+-	if (hp_pin_sense)
+-		msleep(85);
++		snd_hda_codec_write(codec, hp_pin, 0,
++				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
+ 
+-	snd_hda_codec_write(codec, hp_pin, 0,
+-			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
++		msleep(75);
+ 
+-	if (hp_pin_sense)
+-		msleep(100);
++		snd_hda_codec_write(codec, hp_pin, 0,
++				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
++		msleep(75);
++	}
+ }
+ 
+ static void alc_default_shutup(struct hda_codec *codec)
+@@ -3877,22 +3875,20 @@ static void alc_default_shutup(struct hda_codec *codec)
+ 
+ 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
+ 
+-	if (hp_pin_sense)
++	if (hp_pin_sense) {
+ 		msleep(2);
+ 
+-	snd_hda_codec_write(codec, hp_pin, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+-
+-	if (hp_pin_sense)
+-		msleep(85);
+-
+-	if (!spec->no_shutup_pins)
+ 		snd_hda_codec_write(codec, hp_pin, 0,
+-				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
++				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+ 
+-	if (hp_pin_sense)
+-		msleep(100);
++		msleep(75);
+ 
++		if (!spec->no_shutup_pins)
++			snd_hda_codec_write(codec, hp_pin, 0,
++					    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
 +
- 	t.min = roundup(s->min, step);
- 	t.max = rounddown(s->max, step);
- 	t.integer = 1;
++		msleep(75);
++	}
+ 	alc_auto_setup_eapd(codec, false);
+ 	alc_shutup_pins(codec);
+ }
 -- 
 2.43.0
 
