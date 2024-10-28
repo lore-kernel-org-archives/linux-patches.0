@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7805E189BAF;
-	Mon, 28 Oct 2024 06:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B3F15B10D;
+	Mon, 28 Oct 2024 06:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097882; cv=none; b=uMBV2VCgFsf26vtEVt0QIXiKfcf+ITSuSf+iH1e+6QUDH3rFnUVoDStZLPrwqGtNIJJJkE4F0tsusw0FwY/QbOkjeWfI7JdEvgTdGfd9moU7Yqj4aRZ4loPH4chx74c+W3/1g38kUwgjthCRFcY3z9YQayM5J9oRH5CSf4/RnD0=
+	t=1730097884; cv=none; b=bzmW2I4D800T39yty2YULmK1zF8ZIWlU6UHNeiFV4mEyMDzxp8MQH9vl1Q8pQbhFVvYwE1To0VvDhMf1UmskD7TQumljynrW7BEA8a20DJHuUpb3cTqHqCYkKE/YtpXvBduiPCVKa34O5mmByHN0cG/NIUcyEZ6g+dvyPIm14kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097882; c=relaxed/simple;
-	bh=9a3FwVbjpM41o6oA4tgaFNqK6ARWZU5xSevjYUrUPHg=;
+	s=arc-20240116; t=1730097884; c=relaxed/simple;
+	bh=0Q4flkUCATTTqcxLc4Rl42dDo/ANYRe/8VceqEYXhVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sQEfKuo9fz5XswZkgaXPvSk0pwX0Ryh+ztk/PQyK4UWwYU0MDL7VWboSZQe17GmwE/TQOoIs7yR1FTsiTUp+30zdaOnd80R1I5V6EpUr5ZEeF6fgBwblPdhwWucgdMj2S8NSGKPkUChBoN2QeKkjpbHYUG36W/4QTUoK3ISq+Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zzhgc22U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AYGEM5abrPa/wt/LtdGkmaHediPnR94lAdrlSenn5H70hZ/qjvkFjl9sM+g2EBo57CPQ1JXHgyprTLmrbmsqTtyc0tcWvRek+1DXCnYnkWyTkBMmoa/IgiEFg1m90ubEvzwtZmxpIPPSEZSZ8rxxpOzwEZnJseHLFonQChekZFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDC8o3k/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zzhgc22U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C91C4CEC3;
-	Mon, 28 Oct 2024 06:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDC8o3k/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EEBC4CEC3;
+	Mon, 28 Oct 2024 06:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097882;
-	bh=9a3FwVbjpM41o6oA4tgaFNqK6ARWZU5xSevjYUrUPHg=;
+	s=korg; t=1730097884;
+	bh=0Q4flkUCATTTqcxLc4Rl42dDo/ANYRe/8VceqEYXhVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zzhgc22UrHEUIrxyMOY96HSUXJn2SHO9hyb7VR+/LqLafJyKd8rpb6P51QkFc9RYR
-	 GGeY63/IYTV86DvH5E3pGR8fpQdr8B+WqrZegtTW7hUFHM206kiB/RIdir+9mrrVty
-	 oJgiKNPiBB20q5kAUSVdWacWeqhnEnbvL4uCKSCA=
+	b=QDC8o3k/GqVxyYH0j9Ag2KYgO19F43/J3j5dzqS1xCZb0gqRlVV1IVDAvZwAmK1et
+	 odbXXWoU+yQ/f46OMzode7kR04Boi8mA0iQyDmStEo+lllegvYwcpER5oUTc+qh6q2
+	 YAakxYPWnPBDqPbA3JWqIpW+IdjfmrmNCSBVPBnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jos=C3=A9=20Relvas?= <josemonsantorelvas@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 190/208] ALSA: hda/realtek: Add subwoofer quirk for Acer Predator G9-593
-Date: Mon, 28 Oct 2024 07:26:10 +0100
-Message-ID: <20241028062311.310088059@linuxfoundation.org>
+	Chao Li <lichao@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 191/208] LoongArch: Get correct cores_per_package for SMT systems
+Date: Mon, 28 Oct 2024 07:26:11 +0100
+Message-ID: <20241028062311.335376401@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -44,75 +44,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: José Relvas <josemonsantorelvas@gmail.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 35fdc6e1c16099078bcbd73a6c8f1733ae7f1909 upstream.
+commit b7296f9d5bf99330063d4bbecc43c9b33fed0137 upstream.
 
-The Acer Predator G9-593 has a 2+1 speaker system which isn't probed
-correctly.
-This patch adds a quirk with the proper pin connections.
+In loongson_sysconf, The "core" of cores_per_node and cores_per_package
+stands for a logical core, which means in a SMT system it stands for a
+thread indeed. This information is gotten from SMBIOS Type4 Structure,
+so in order to get a correct cores_per_package for both SMT and non-SMT
+systems in parse_cpu_table() we should use SMBIOS_THREAD_PACKAGE_OFFSET
+instead of SMBIOS_CORE_PACKAGE_OFFSET.
 
-Note that I do not own this laptop, so I cannot guarantee that this
-fixes the issue.
-Testing was done by other users here:
-https://discussion.fedoraproject.org/t/-/118482
-
-This model appears to have two different dev IDs...
-
-- 0x1177 (as seen on the forum link above)
-- 0x1178 (as seen on https://linux-hardware.org/?probe=127df9999f)
-
-I don't think the audio system was changed between model revisions, so
-the patch applies for both IDs.
-
-Signed-off-by: José Relvas <josemonsantorelvas@gmail.com>
-Link: https://patch.msgid.link/20241020102756.225258-1-josemonsantorelvas@gmail.com
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Reported-by: Chao Li <lichao@loongson.cn>
+Tested-by: Chao Li <lichao@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/loongarch/include/asm/bootinfo.h |    4 ++++
+ arch/loongarch/kernel/setup.c         |    3 ++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7358,6 +7358,7 @@ enum {
- 	ALC286_FIXUP_ACER_AIO_HEADSET_MIC,
- 	ALC256_FIXUP_ASUS_HEADSET_MIC,
- 	ALC256_FIXUP_ASUS_MIC_NO_PRESENCE,
-+	ALC255_FIXUP_PREDATOR_SUBWOOFER,
- 	ALC299_FIXUP_PREDATOR_SPK,
- 	ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE,
- 	ALC289_FIXUP_DELL_SPK1,
-@@ -8705,6 +8706,13 @@ static const struct hda_fixup alc269_fix
- 		.chained = true,
- 		.chain_id = ALC256_FIXUP_ASUS_HEADSET_MODE
- 	},
-+	[ALC255_FIXUP_PREDATOR_SUBWOOFER] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x17, 0x90170151 }, /* use as internal speaker (LFE) */
-+			{ 0x1b, 0x90170152 } /* use as internal speaker (back) */
-+		}
-+	},
- 	[ALC299_FIXUP_PREDATOR_SPK] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -9678,6 +9686,8 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1025, 0x110e, "Acer Aspire ES1-432", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x1166, "Acer Veriton N4640G", ALC269_FIXUP_LIFEBOOK),
- 	SND_PCI_QUIRK(0x1025, 0x1167, "Acer Veriton N6640G", ALC269_FIXUP_LIFEBOOK),
-+	SND_PCI_QUIRK(0x1025, 0x1177, "Acer Predator G9-593", ALC255_FIXUP_PREDATOR_SUBWOOFER),
-+	SND_PCI_QUIRK(0x1025, 0x1178, "Acer Predator G9-593", ALC255_FIXUP_PREDATOR_SUBWOOFER),
- 	SND_PCI_QUIRK(0x1025, 0x1246, "Acer Predator Helios 500", ALC299_FIXUP_PREDATOR_SPK),
- 	SND_PCI_QUIRK(0x1025, 0x1247, "Acer vCopperbox", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
- 	SND_PCI_QUIRK(0x1025, 0x1248, "Acer Veriton N4660G", ALC269VC_FIXUP_ACER_MIC_NO_PRESENCE),
+--- a/arch/loongarch/include/asm/bootinfo.h
++++ b/arch/loongarch/include/asm/bootinfo.h
+@@ -24,6 +24,10 @@ struct loongson_board_info {
+ 	const char *board_vendor;
+ };
+ 
++/*
++ * The "core" of cores_per_node and cores_per_package stands for a
++ * logical core, which means in a SMT system it stands for a thread.
++ */
+ struct loongson_system_configuration {
+ 	int nr_cpus;
+ 	int nr_nodes;
+--- a/arch/loongarch/kernel/setup.c
++++ b/arch/loongarch/kernel/setup.c
+@@ -55,6 +55,7 @@
+ #define SMBIOS_FREQHIGH_OFFSET		0x17
+ #define SMBIOS_FREQLOW_MASK		0xFF
+ #define SMBIOS_CORE_PACKAGE_OFFSET	0x23
++#define SMBIOS_THREAD_PACKAGE_OFFSET	0x25
+ #define LOONGSON_EFI_ENABLE		(1 << 3)
+ 
+ #ifdef CONFIG_EFI
+@@ -129,7 +130,7 @@ static void __init parse_cpu_table(const
+ 	cpu_clock_freq = freq_temp * 1000000;
+ 
+ 	loongson_sysconf.cpuname = (void *)dmi_string_parse(dm, dmi_data[16]);
+-	loongson_sysconf.cores_per_package = *(dmi_data + SMBIOS_CORE_PACKAGE_OFFSET);
++	loongson_sysconf.cores_per_package = *(dmi_data + SMBIOS_THREAD_PACKAGE_OFFSET);
+ 
+ 	pr_info("CpuClock = %llu\n", cpu_clock_freq);
+ }
 
 
