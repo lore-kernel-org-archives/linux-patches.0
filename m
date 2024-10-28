@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C57824A3;
-	Mon, 28 Oct 2024 06:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DA018EFF3;
+	Mon, 28 Oct 2024 06:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098469; cv=none; b=F0ifjcmSpSTtqDOmuYAhvqXXaWSv903RVELaIKhlGFwnBoQOkrkBGkHrHOGKWlvn5dcV1YfsTltDLaXkbOPFkiHeyVLcq9NXUw4ubf09x6eV9PDjiD0Ao2lADxabfTnpWGKfMmbAOKMS7L6IAm2nsh+DyFpZ2gpOVPn0rUdqAY4=
+	t=1730098471; cv=none; b=XYc20HmrijGpRaasFwtlJtXc6Jk3vL7w+pNxUrETDVo8aqje1chOuQO17TQaMi7BE1qOeUjoflhV47GvFCZcdngynI64ogGiBPiHTPL2RNpbeiJ/a6PYgoO2MInIhMVuVXpoM+mCcKYQn7KUVYzrlNbDTRduvLz849vkOWKNJr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098469; c=relaxed/simple;
-	bh=N0TEKEpbDJ4QsO0llCz/MOg4wfffMVa4eqhJSmpgq3M=;
+	s=arc-20240116; t=1730098471; c=relaxed/simple;
+	bh=OAdOKIkFM5GUr/iCQK8zpG06+n1O72wE2e3+ngc4p9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UP+ZUV8zkHPbaCOStKBtQSCgSqJhoG+0SJ/EPV6xJtY7psKqm9qdIVGX6HHKDi6YK7sRV1RgEt3BzeqV3RnNeiqerYL855Z5Je1ObHs0GjGW6wqYzwIMD2T8V7ZhPQWqKX4knc3vZPr3lQ5o0uPcSrzzUp3zz8fV5oA08Tk7a9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0avPTYBO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YHmrzc+qsGiIIroVbdztSvbxIV7Fy5KNEaUyb7cfxlgKtCEo76r8Et76xOu/7Jt0tQfm2xHmDXHHoJFAWPk0ItgNhYnDWmhfyxXtwgusyl1uMCjVmheEj7aHNFANaP+TRa0HJDaDi7rZ12g83PBeZNtvnktQa7SKw9kkQCVVVQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDP88udz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0avPTYBO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8541EC4CEC7;
-	Mon, 28 Oct 2024 06:54:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDP88udz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8208C4CEC3;
+	Mon, 28 Oct 2024 06:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098468;
-	bh=N0TEKEpbDJ4QsO0llCz/MOg4wfffMVa4eqhJSmpgq3M=;
+	s=korg; t=1730098471;
+	bh=OAdOKIkFM5GUr/iCQK8zpG06+n1O72wE2e3+ngc4p9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0avPTYBOiPgClA00FYsVqAo29BbYgOrxojhbKMat4RuigCHy5TH9mLFgERV72i6/N
-	 Ej0rL5BOpb2TaAuWxG3JnSuFt03UEFHk4Ec1TAaXW1D5W4RFcxbnceuRPcMn2akGR0
-	 2EJfbIeJHrrLBLXLkBNRTyatu0H9LRYTp+AOtxW8=
+	b=CDP88udzN3gqE3PD6bbkr9D72E+z1lgW813V5FE39gZpc2LI6QQRQSy+F30UifH89
+	 liGiTqCy3jXS956PFt2tcVTWolTyzgA5/m95e/sxf5/uSf3y3QVo0O6ifuk3ghyzjB
+	 A3C1ymeo6E9JUsuBZYgvDl1p5DcQccKsliCldMEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xinyu Zhang <xizhang@purestorage.com>,
-	Uday Shankar <ushankar@purestorage.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.11 240/261] block: fix sanity checks in blk_rq_map_user_bvec
-Date: Mon, 28 Oct 2024 07:26:22 +0100
-Message-ID: <20241028062318.131269016@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+985ada84bf055a575c07@syzkaller.appspotmail.com,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.11 214/261] nilfs2: fix kernel bug due to missing clearing of buffer delay flag
+Date: Mon, 28 Oct 2024 07:25:56 +0100
+Message-ID: <20241028062317.453386145@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -51,54 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xinyu Zhang <xizhang@purestorage.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 2ff949441802a8d076d9013c7761f63e8ae5a9bd upstream.
+commit 6ed469df0bfbef3e4b44fca954a781919db9f7ab upstream.
 
-blk_rq_map_user_bvec contains a check bytes + bv->bv_len > nr_iter which
-causes unnecessary failures in NVMe passthrough I/O, reproducible as
-follows:
+Syzbot reported that after nilfs2 reads a corrupted file system image
+and degrades to read-only, the BUG_ON check for the buffer delay flag
+in submit_bh_wbc() may fail, causing a kernel bug.
 
-- register a 2 page, page-aligned buffer against a ring
-- use that buffer to do a 1 page io_uring NVMe passthrough read
+This is because the buffer delay flag is not cleared when clearing the
+buffer state flags to discard a page/folio or a buffer head. So, fix
+this.
 
-The second (i = 1) iteration of the loop in blk_rq_map_user_bvec will
-then have nr_iter == 1 page, bytes == 1 page, bv->bv_len == 1 page, so
-the check bytes + bv->bv_len > nr_iter will succeed, causing the I/O to
-fail. This failure is unnecessary, as when the check succeeds, it means
-we've checked the entire buffer that will be used by the request - i.e.
-blk_rq_map_user_bvec should complete successfully. Therefore, terminate
-the loop early and return successfully when the check bytes + bv->bv_len
-> nr_iter succeeds.
+This became necessary when the use of nilfs2's own page clear routine
+was expanded.  This state inconsistency does not occur if the buffer
+is written normally by log writing.
 
-While we're at it, also remove the check that all segments in the bvec
-are single-page. While this seems to be true for all users of the
-function, it doesn't appear to be required anywhere downstream.
-
-CC: stable@vger.kernel.org
-Signed-off-by: Xinyu Zhang <xizhang@purestorage.com>
-Co-developed-by: Uday Shankar <ushankar@purestorage.com>
-Signed-off-by: Uday Shankar <ushankar@purestorage.com>
-Fixes: 37987547932c ("block: extend functionality to map bvec iterator")
-Link: https://lore.kernel.org/r/20241023211519.4177873-1-ushankar@purestorage.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Link: https://lore.kernel.org/r/20241015213300.7114-1-konishi.ryusuke@gmail.com
+Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
+Reported-by: syzbot+985ada84bf055a575c07@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=985ada84bf055a575c07
+Cc: stable@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-map.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/nilfs2/page.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/block/blk-map.c
-+++ b/block/blk-map.c
-@@ -600,9 +600,7 @@ static int blk_rq_map_user_bvec(struct r
- 		if (nsegs >= nr_segs || bytes > UINT_MAX - bv->bv_len)
- 			goto put_bio;
- 		if (bytes + bv->bv_len > nr_iter)
--			goto put_bio;
--		if (bv->bv_offset + bv->bv_len > PAGE_SIZE)
--			goto put_bio;
-+			break;
+--- a/fs/nilfs2/page.c
++++ b/fs/nilfs2/page.c
+@@ -77,7 +77,8 @@ void nilfs_forget_buffer(struct buffer_h
+ 	const unsigned long clear_bits =
+ 		(BIT(BH_Uptodate) | BIT(BH_Dirty) | BIT(BH_Mapped) |
+ 		 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
+-		 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected));
++		 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
++		 BIT(BH_Delay));
  
- 		nsegs++;
- 		bytes += bv->bv_len;
+ 	lock_buffer(bh);
+ 	set_mask_bits(&bh->b_state, clear_bits, 0);
+@@ -414,7 +415,8 @@ void nilfs_clear_folio_dirty(struct foli
+ 		const unsigned long clear_bits =
+ 			(BIT(BH_Uptodate) | BIT(BH_Dirty) | BIT(BH_Mapped) |
+ 			 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
+-			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected));
++			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
++			 BIT(BH_Delay));
+ 
+ 		bh = head;
+ 		do {
 
 
