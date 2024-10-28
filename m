@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4984818E05D;
-	Mon, 28 Oct 2024 06:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A768E18D649;
+	Mon, 28 Oct 2024 06:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098426; cv=none; b=VPezRiLivljHp11jD8gf85p36mC4kPVIrIIhyVZcHn4WcbnI21zBtl+6/Yq6L9pZEtAyy3uYkz2eV5HIx1UKDAZd4tDOMXMfE4hUhjzAQD/W4xHprPozp5hwGv+7dz4z4xH0KK8vsdKViujM7vEWUJnJhziOFAIWmUdPt9TUMi4=
+	t=1730098428; cv=none; b=ZDFMWwvXUsDJvGFfdpjf8hZn0S8ozLAEuIy5AfMiwQL2VCjDYJflzFPufXwASZ1Xsxg0yyE6cxynKzQibNa0R8t5eHjU6Wt4AzKn1Q6LbZLcCEzhZnazCN1Z8nxpAjKrPGETrFC4H8ls55LsZY9vb8uOJ1bgw94yfQ2Ho8+wUkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098426; c=relaxed/simple;
-	bh=6KJF4MLEvWJP+Mv/ttjtipYkQPKyCvmpKiwBsUXINSc=;
+	s=arc-20240116; t=1730098428; c=relaxed/simple;
+	bh=KTgrUmV95vKOaFrjV4Rmq3+u7fJ0AVpO0JKTBiodh28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NgB7rjLJkM4nRN8hS1VuKQ8RFkqCVXoSHSP6mLXb4jEo7+ryV69bBFJAH4jrVmqP430jxg12x580Pb1/pc6Q3rBKoLI0HnqJ9LomD5NudDeMOaGHuepRm1+PjJMx1RpNb3HN4/cxBHb1hBCPcQZygJl1GqY4HTUdFjBPiyQtxBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XW25Ehsf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FLIT+wbHuVFiZLhjGLXCpGxHu/Tdvl5QkIBJLjiG4DbXLfn0iY/8gnaVNnbDRgE7jgO6bWpshR+YF7K1MsSqw9k4MQWVUJuF8XsiblZ/YE7pDiPxfpIP2ugVgA17jdpOKByvttUVgsKYa+/mhqcTSmWvSB4hjBTxyLaZt9peUwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W03ePFKs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XW25Ehsf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAE57C4CEC3;
-	Mon, 28 Oct 2024 06:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W03ePFKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A6AC4CECD;
+	Mon, 28 Oct 2024 06:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098426;
-	bh=6KJF4MLEvWJP+Mv/ttjtipYkQPKyCvmpKiwBsUXINSc=;
+	s=korg; t=1730098428;
+	bh=KTgrUmV95vKOaFrjV4Rmq3+u7fJ0AVpO0JKTBiodh28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XW25Ehsf6BmGlgDnbdEswQo4peEM6qWRLit8kAJd7CnBknhsjtuLM5IEzu55QIIEy
-	 odgpVBkCqBR1FA4n/CKnxKPRHyNhCeqmWYhoVLg4ov8WqT5MGvTrE5wGc2A2XzaF4k
-	 hbyjywuCJxa1yNXQPn0mZjWuRLILCesEKO//6R6o=
+	b=W03ePFKsU7s8ngLHmbrukeRD6MYJWXYbWnVdrBaPXDcVeromC7EJCvLO9mVyrAG2t
+	 aw3SzA0v4H8vYl2DWPTTk9D3tgc/k7SCcrjBvOECXDRIQnuPdRu5oKsENaXjbZqZx+
+	 SogG2qNfCgp8jtbC25Onc5xc1BwUbCIdyosCkhOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edmund Raile <edmund.raile@proton.me>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Subject: [PATCH 6.11 222/261] firewire: core: fix invalid port index for parent device
-Date: Mon, 28 Oct 2024 07:26:04 +0100
-Message-ID: <20241028062317.672640429@linuxfoundation.org>
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>
+Subject: [PATCH 6.11 223/261] x86/lam: Disable ADDRESS_MASKING in most cases
+Date: Mon, 28 Oct 2024 07:26:05 +0100
+Message-ID: <20241028062317.699122010@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -50,50 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-commit f6a6780e0b9bbcf311a727afed06fee533a5e957 upstream.
+commit 3267cb6d3a174ff83d6287dcd5b0047bbd912452 upstream.
 
-In a commit 24b7f8e5cd65 ("firewire: core: use helper functions for self
-ID sequence"), the enumeration over self ID sequence was refactored with
-some helper functions with KUnit tests. These helper functions are
-guaranteed to work expectedly by the KUnit tests, however their application
-includes a mistake to assign invalid value to the index of port connected
-to parent device.
+Linear Address Masking (LAM) has a weakness related to transient
+execution as described in the SLAM paper[1]. Unless Linear Address
+Space Separation (LASS) is enabled this weakness may be exploitable.
 
-This bug affects the case that any extra node devices which has three or
-more ports are connected to 1394 OHCI controller. In the case, the path
-to update the tree cache could hits WARN_ON(), and gets general protection
-fault due to the access to invalid address computed by the invalid value.
+Until kernel adds support for LASS[2], only allow LAM for COMPILE_TEST,
+or when speculation mitigations have been disabled at compile time,
+otherwise keep LAM disabled.
 
-This commit fixes the bug to assign correct port index.
+There are no processors in market that support LAM yet, so currently
+nobody is affected by this issue.
 
-Cc: stable@vger.kernel.org
-Reported-by: Edmund Raile <edmund.raile@proton.me>
-Closes: https://lore.kernel.org/lkml/8a9902a4ece9329af1e1e42f5fea76861f0bf0e8.camel@proton.me/
-Fixes: 24b7f8e5cd65 ("firewire: core: use helper functions for self ID sequence")
-Link: https://lore.kernel.org/r/20241025034137.99317-1-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+[1] SLAM: https://download.vusec.net/papers/slam_sp24.pdf
+[2] LASS: https://lore.kernel.org/lkml/20230609183632.48706-1-alexander.shishkin@linux.intel.com/
+
+[ dhansen: update SPECULATION_MITIGATIONS -> CPU_MITIGATIONS ]
+
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
+Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/all/5373262886f2783f054256babdf5a98545dc986b.1706068222.git.pawan.kumar.gupta%40linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firewire/core-topology.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/firewire/core-topology.c b/drivers/firewire/core-topology.c
-index 6adadb11962e..892b94cfd626 100644
---- a/drivers/firewire/core-topology.c
-+++ b/drivers/firewire/core-topology.c
-@@ -204,7 +204,7 @@ static struct fw_node *build_tree(struct fw_card *card, const u32 *sid, int self
- 				// the node->ports array where the parent node should be.  Later,
- 				// when we handle the parent node, we fix up the reference.
- 				++parent_count;
--				node->color = i;
-+				node->color = port_index;
- 				break;
- 
- 			case PHY_PACKET_SELF_ID_PORT_STATUS_CHILD:
--- 
-2.47.0
-
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -2260,6 +2260,7 @@ config RANDOMIZE_MEMORY_PHYSICAL_PADDING
+ config ADDRESS_MASKING
+ 	bool "Linear Address Masking support"
+ 	depends on X86_64
++	depends on COMPILE_TEST || !CPU_MITIGATIONS # wait for LASS
+ 	help
+ 	  Linear Address Masking (LAM) modifies the checking that is applied
+ 	  to 64-bit linear addresses, allowing software to use of the
 
 
