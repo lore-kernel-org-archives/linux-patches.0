@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4958837;
-	Mon, 28 Oct 2024 06:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9106217109B;
+	Mon, 28 Oct 2024 06:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098144; cv=none; b=juZ9x9vt2imEL3O8L/iMlML3219Ltx1QpFbQnx1NqcF2XeeCRh1tWs+CxZ5tl4BbhlqjDsBUw0K4yH1d4+rh13haHopiG5gjMwEyWea+jtwrBEzio8iD/sv7eXjDDoit/Fapvfo5KWTwRt+TTDMH1GqLprfiWRa0EwZsawgCLwo=
+	t=1730098146; cv=none; b=fSULXpBOh+SG3H3/v5zUu6Rj8koInNWnbr9W0pDxnmxoCkPq2oGiT6Wv/Tx5EXbGS1pZuQY2cfW+196bdeZ6wkVi9E5cKtMe1zl0KYT1StteRfwVzYBQ7FgZSn+HYHALON4ZkTs/swiymc9AKUsrZSbfQgOr/aCoC8b5ZbrPnNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098144; c=relaxed/simple;
-	bh=6PYaXre/ZoHv9b7CKjwZH9BHYNVsjRMRayWktefTU6Q=;
+	s=arc-20240116; t=1730098146; c=relaxed/simple;
+	bh=RL93jTN1q1vLXvRI9FyJvmDMqg1ABQGNuDvhTPEpIjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LE659V5JoHnHUw+DKf+JZMQO4kmuKKQ2n1Jn8glsxjygn2x5NiIg/GpSO6p7yJc90JtUVA6HlAidPaBu6xF8LWOUtGHDPU5akMLl+rYFw25ZGqKIhvSk/Ze52GpG25UblXOqgvnAkpqUtzBS8JwjisXXPr7rX8MsJ8MM9Fm51lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZpuaE+z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s+TAD7Om6LK2B6AA3NUKGAFdqaS6HjjW/c/JFw2ScCL4ivW4ninAsQc8kZaWCyTi+dCJxJMaBAn0aEUIeY/BhH9aCphuxvZK9Ui+7FQyBs+TiUcA+8fObGIhEQU+7qINv29uBwo7ul0yhWb7rN/SyJ8BXOVwoCnMHVgxxIXpZkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVsk0Tnx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZpuaE+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002EDC4CEC3;
-	Mon, 28 Oct 2024 06:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVsk0Tnx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E393C4CEC3;
+	Mon, 28 Oct 2024 06:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098144;
-	bh=6PYaXre/ZoHv9b7CKjwZH9BHYNVsjRMRayWktefTU6Q=;
+	s=korg; t=1730098146;
+	bh=RL93jTN1q1vLXvRI9FyJvmDMqg1ABQGNuDvhTPEpIjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YZpuaE+z/R27RIAoq4D6UrU+YnSpDrnvUi63u6bGaOTRfyc0OWDF0pbSq9KNW9WkE
-	 Cl0jLtShEJ35OX5Ipg3GdfibfSQT9w99/KYUVLw7DYSqzp6yKRDo433TTw7FNtz4Ls
-	 EaQQsnyKIJ3zj8CFunq+z0x2cJAJy8Radsxdubxk=
+	b=yVsk0TnxtjVLjD5UeJSKiAMLHIBSVm32MKMQLb6Zq4ImALO7kC/A+u/SZDlKWd240
+	 J0hoRfvD39Jv1cgDMY8fnSffkT7ZZEJK+GKJfSrX7Ai/6iPejW5nPcmkXw7BpEMUZR
+	 rgDEaEQleUm37UFGsNNoQg756vTHcAa7Lq4/d/2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Oliver Neukum <oneukum@suse.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 095/261] Bluetooth: bnep: fix wild-memory-access in proto_unregister
-Date: Mon, 28 Oct 2024 07:23:57 +0100
-Message-ID: <20241028062314.412517309@linuxfoundation.org>
+Subject: [PATCH 6.11 060/261] net: usb: usbnet: fix race in probe failure
+Date: Mon, 28 Oct 2024 07:23:22 +0100
+Message-ID: <20241028062313.531475217@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -51,48 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 64a90991ba8d4e32e3173ddd83d0b24167a5668c ]
+[ Upstream commit b62f4c186c70aa235fef2da68d07325d85ca3ade ]
 
-There's issue as follows:
-  KASAN: maybe wild-memory-access in range [0xdead...108-0xdead...10f]
-  CPU: 3 UID: 0 PID: 2805 Comm: rmmod Tainted: G        W
-  RIP: 0010:proto_unregister+0xee/0x400
-  Call Trace:
-   <TASK>
-   __do_sys_delete_module+0x318/0x580
-   do_syscall_64+0xc1/0x1d0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The same bug as in the disconnect code path also exists
+in the case of a failure late during the probe process.
+The flag must also be set.
 
-As bnep_init() ignore bnep_sock_init()'s return value, and bnep_sock_init()
-will cleanup all resource. Then when remove bnep module will call
-bnep_sock_cleanup() to cleanup sock's resource.
-To solve above issue just return bnep_sock_init()'s return value in
-bnep_exit().
-
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://patch.msgid.link/20241010131934.1499695-1-oneukum@suse.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/bnep/core.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/usb/usbnet.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
-index ec45f77fce218..344e2e063be68 100644
---- a/net/bluetooth/bnep/core.c
-+++ b/net/bluetooth/bnep/core.c
-@@ -745,8 +745,7 @@ static int __init bnep_init(void)
- 	if (flt[0])
- 		BT_INFO("BNEP filters: %s", flt);
- 
--	bnep_sock_init();
--	return 0;
-+	return bnep_sock_init();
- }
- 
- static void __exit bnep_exit(void)
+diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
+index 2506aa8c603ec..ee1b5fd7b4919 100644
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -1870,6 +1870,7 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
+ 	 * may trigger an error resubmitting itself and, worse,
+ 	 * schedule a timer. So we kill it all just in case.
+ 	 */
++	usbnet_mark_going_away(dev);
+ 	cancel_work_sync(&dev->kevent);
+ 	del_timer_sync(&dev->delay);
+ 	free_netdev(net);
 -- 
 2.43.0
 
