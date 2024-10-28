@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F336218D649;
-	Mon, 28 Oct 2024 06:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9F918E03D;
+	Mon, 28 Oct 2024 06:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098487; cv=none; b=C5rx2UMYsJiM8hWbZxidwl5rHuZPxYFffEVPDCAzQ9lLwrxUG6NBpmya4f1KeBs5jGu4SU/+6hPet5VYBEek+AdsDnqpdnkRaqxsvqL8PxjcC2GtY4wHoCPStEUG4tzrfUx3XzfxV8Ahn5wqVtmENmgN4WRt/pK/EWjH/krNd4Q=
+	t=1730098489; cv=none; b=FF4Q/4gcZh9Ptp2uy4xymRlMwhnnVDhDu39qp+iEIGeLjzX7n7+vn4FrAZ8Owca+I/vbWpoFKRQ+evhq5rYqd5RLE3CbTXUfOLHyK1mCuRVQHQjJm2HoCr+dAbrFJbvwfwNuCbWke+cKkupA2waDeX+meq19pXdEXXVzzBLDvbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098487; c=relaxed/simple;
-	bh=9WnbuzT9v4C17cD7vhX8L8vtyu1Yqyprmc30sXyevmQ=;
+	s=arc-20240116; t=1730098489; c=relaxed/simple;
+	bh=AG9b5hFO3EJi5ekIWW7AqSXt6cDYPSpCEkhOBaob8GI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QyYc+/uxEmK9c/iOkKBGUrufuZf4jJDx07KJsRe4eO0sSGO4SGftN+vrE/XL9/qBizabeuLYGwVskllJD0C0EjgUdkeIlvMC4ISdid8oY9zsOME35RmgCHQHawsTpUFc4Xc/jO9xyGeFy3YiVfEunoGKtfHI+iinR6ProP9sqYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lKeq6BHR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g16Va536YCsE/gO30rcaf0jvQXclewl064zsaJFKONd3jQGkMDTEAizrSc1C8nW1Co3Er6jwsYc8X0uTszDcN1o4NjS28e9e/3Fi7H7/dGk8FBTprE2GDqjBi7UFU0zmNvzvR/nQWzFoZAtWf4+Pp2jgD5w4RotJOD/AZvW0v8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBAToz+B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lKeq6BHR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93685C4CEC3;
-	Mon, 28 Oct 2024 06:54:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBAToz+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF38C4CEC3;
+	Mon, 28 Oct 2024 06:54:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098486;
-	bh=9WnbuzT9v4C17cD7vhX8L8vtyu1Yqyprmc30sXyevmQ=;
+	s=korg; t=1730098489;
+	bh=AG9b5hFO3EJi5ekIWW7AqSXt6cDYPSpCEkhOBaob8GI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKeq6BHRXMgrsF+2OoP4KFL/MPjQj+rfQVKMUpzLimdHzwTl1MYIYqFPyNS8qtCzN
-	 n+h8n080gkMAgg4N6K4syZwBZh0F93rmVpCoerA5eTAVPGrA6+ATTcfksOHQGSHQX/
-	 Ep1aOcuTsJtt11a6QXUp5XHn5Q1TlYTU3qq4uCmQ=
+	b=eBAToz+Bz8BvpiaPi2ySbSS4oP+pf4aqxCNrbx/tlf1i4cmxfPYl9pt9cPdLCh2AK
+	 D/U3W8Kvb49dyCLncK294FYuOESdQvGyalrkJBpGElMOnSuCSaEX17PGsgBMX+vgdr
+	 TLQHGvbNZhPPzXU4LZv608HXVBRLix5oXPq7OlIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Bara <benjamin.bara@skidata.com>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Steev Klimaszewski <steev@kali.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.11 247/261] ASoC: dapm: avoid container_of() to get component
-Date: Mon, 28 Oct 2024 07:26:29 +0100
-Message-ID: <20241028062318.302926744@linuxfoundation.org>
+Subject: [PATCH 6.11 248/261] ASoC: qcom: sc7280: Fix missing Soundwire runtime stream alloc
+Date: Mon, 28 Oct 2024 07:26:30 +0100
+Message-ID: <20241028062318.328406242@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -50,41 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Bara <benjamin.bara@skidata.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 3fe9f5882cf71573516749b0bb687ef88f470d1d upstream.
+commit db7e59e6a39a4d3d54ca8197c796557e6d480b0d upstream.
 
-The current implementation does not work for widgets of DAPMs without
-component, as snd_soc_dapm_to_component() requires it. If the widget is
-directly owned by the card, e.g. as it is the case for the tegra
-implementation, the call leads to UB. Therefore directly access the
-component of the widget's DAPM to be able to check if a component is
-available.
+Commit 15c7fab0e047 ("ASoC: qcom: Move Soundwire runtime stream alloc to
+soundcards") moved the allocation of Soundwire stream runtime from the
+Qualcomm Soundwire driver to each individual machine sound card driver,
+except that it forgot to update SC7280 card.
 
-Fixes: f82eb06a40c8 ("ASoC: tegra: machine: Handle component name prefix")
-Cc: stable@vger.kernel.org # v6.7+
-Signed-off-by: Benjamin Bara <benjamin.bara@skidata.com>
-Link: https://patch.msgid.link/20241008-tegra-dapm-v2-1-5e999cb5f0e7@skidata.com
+Just like for other Qualcomm sound cards using Soundwire, the card
+driver should allocate and release the runtime.  Otherwise sound
+playback will result in a NULL pointer dereference or other effect of
+uninitialized memory accesses (which was confirmed on SDM845 having
+similar issue).
+
+Cc: stable@vger.kernel.org
+Cc: Alexey Klimov <alexey.klimov@linaro.org>
+Cc: Steev Klimaszewski <steev@kali.org>
+Fixes: 15c7fab0e047 ("ASoC: qcom: Move Soundwire runtime stream alloc to soundcards")
+Link: https://lore.kernel.org/r/20241010054109.16938-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20241012101108.129476-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/soc-dapm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/qcom/Kconfig  |    1 +
+ sound/soc/qcom/sc7280.c |   10 +++++++++-
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
---- a/sound/soc/soc-dapm.c
-+++ b/sound/soc/soc-dapm.c
-@@ -2786,10 +2786,10 @@ EXPORT_SYMBOL_GPL(snd_soc_dapm_update_da
+--- a/sound/soc/qcom/Kconfig
++++ b/sound/soc/qcom/Kconfig
+@@ -208,6 +208,7 @@ config SND_SOC_SC7280
+ 	tristate "SoC Machine driver for SC7280 boards"
+ 	depends on I2C && SOUNDWIRE
+ 	select SND_SOC_QCOM_COMMON
++	select SND_SOC_QCOM_SDW
+ 	select SND_SOC_LPASS_SC7280
+ 	select SND_SOC_MAX98357A
+ 	select SND_SOC_WCD938X_SDW
+--- a/sound/soc/qcom/sc7280.c
++++ b/sound/soc/qcom/sc7280.c
+@@ -23,6 +23,7 @@
+ #include "common.h"
+ #include "lpass.h"
+ #include "qdsp6/q6afe.h"
++#include "sdw.h"
  
- int snd_soc_dapm_widget_name_cmp(struct snd_soc_dapm_widget *widget, const char *s)
- {
--	struct snd_soc_component *component = snd_soc_dapm_to_component(widget->dapm);
-+	struct snd_soc_component *component = widget->dapm->component;
- 	const char *wname = widget->name;
+ #define DEFAULT_MCLK_RATE              19200000
+ #define RT5682_PLL_FREQ (48000 * 512)
+@@ -316,6 +317,7 @@ static void sc7280_snd_shutdown(struct s
+ 	struct snd_soc_card *card = rtd->card;
+ 	struct sc7280_snd_data *data = snd_soc_card_get_drvdata(card);
+ 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
++	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
  
--	if (component->name_prefix)
-+	if (component && component->name_prefix)
- 		wname += strlen(component->name_prefix) + 1; /* plus space */
+ 	switch (cpu_dai->id) {
+ 	case MI2S_PRIMARY:
+@@ -333,6 +335,9 @@ static void sc7280_snd_shutdown(struct s
+ 	default:
+ 		break;
+ 	}
++
++	data->sruntime[cpu_dai->id] = NULL;
++	sdw_release_stream(sruntime);
+ }
  
- 	return strcmp(wname, s);
+ static int sc7280_snd_startup(struct snd_pcm_substream *substream)
+@@ -347,6 +352,8 @@ static int sc7280_snd_startup(struct snd
+ 	switch (cpu_dai->id) {
+ 	case MI2S_PRIMARY:
+ 		ret = sc7280_rt5682_init(rtd);
++		if (ret)
++			return ret;
+ 		break;
+ 	case SECONDARY_MI2S_RX:
+ 		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+@@ -360,7 +367,8 @@ static int sc7280_snd_startup(struct snd
+ 	default:
+ 		break;
+ 	}
+-	return ret;
++
++	return qcom_snd_sdw_startup(substream);
+ }
+ 
+ static const struct snd_soc_ops sc7280_ops = {
 
 
