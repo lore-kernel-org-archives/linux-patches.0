@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052158837;
-	Mon, 28 Oct 2024 06:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6B78837;
+	Mon, 28 Oct 2024 06:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098397; cv=none; b=p20Bk+3JkhoR4r0mY0UYOnYqbJEBSbUbjwi/WbMA6ZvhPGKk+w95lf8WPWQ5kPDvG7HhwFtClt57N6fAUElJj3zwJmtm7lvAaIC7rYCfncyTsOE/jxrZqNjys32BpiP4bslDySl6a7rJTCI9NVd/h+qUf68EBzWxl7lFNaSZmvU=
+	t=1730098399; cv=none; b=I65IuL52g8vjuOJO5s02HiHb+KpZoZeAmrm1qPyu8rfJpt6480jQIEisrbaROnttYhc1y2ofUu5tT46e1Yb/H+Y3+ci0WWf/OyFhBQ1PlkIGeSt6Sg8RL+w7AcTaQ32RRLZsfGjteh4svAmWKAiAXeRGK2FqLQpLPfuW5nZtxO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098397; c=relaxed/simple;
-	bh=eOt8oT9LbDkmljj7xCjq8uEO+DNeJBiExzvaogzspxA=;
+	s=arc-20240116; t=1730098399; c=relaxed/simple;
+	bh=OvCboykDMl2+X6Fay/3eR9CCoNWmGnZtLyRJ1NxwZW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lfdH91L1wn/3bO8XiYtVMo6Lesu0jfj+ojucHuh386BgPrHAdz9qTGgZcELwc/mCRsjyU8mUhVMZUKBEHk0d+012y4deSzFnHE8UUrwT53xybvw4FqKXE1RPyCyMBJgDyf6K7EDgtwbPZE8DxleIsBwrLYiUHOoCPXPqJVMZzRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkUl8cWq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IHybxPOZOQOSUZvYHl3i6LWbDTD7Z+t2exrZgZPCrWZNK7mbwGXzR8hXLKoGFXpD0yOiOw+KYbZFd3lOYsmwVDQKoSbxFTGfB78HkVq51dhBoe5OIExrOGHe0/oVssi9WQ2XtpuH+KM+piDUAj9zwBzlcP4AMvF8zLPQVuJa1Co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6RH8RZB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkUl8cWq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D0BC4CEC7;
-	Mon, 28 Oct 2024 06:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6RH8RZB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB24C4CEC3;
+	Mon, 28 Oct 2024 06:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098396;
-	bh=eOt8oT9LbDkmljj7xCjq8uEO+DNeJBiExzvaogzspxA=;
+	s=korg; t=1730098399;
+	bh=OvCboykDMl2+X6Fay/3eR9CCoNWmGnZtLyRJ1NxwZW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EkUl8cWqaEODrjSVGr3BMFz5mBxqCauICgbOZNUgJMsbCRlx2uq5lXzybS7Ia9O9N
-	 9QYsOV7rUeroLPryhRkwa0xXQzSBdXtfzKqArl5v3w25MeJiEY9Jhhg3I7ggjeCYYc
-	 TX8hP8DzR+aM8rdypheIvN/ZgUNZu0ypYAuT6UXQ=
+	b=d6RH8RZBSsq7vOp90PjoEGPdBsu7csZe/YMX479ZS+3CTua+PkDUiohDYrRC13gT9
+	 /RFwRmPlgwOqKWLSapqQcQGaFhnKAXIMywZPrk7XzVdJEEfCDc68wMHJc77LlZgz5/
+	 rsHPFw9IQHckUtPOTMR3rR0od1P2UGVTAIKwyNh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+56360f93efa90ff15870@syzkaller.appspotmail.com,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.11 207/261] btrfs: reject ro->rw reconfiguration if there are hard ro requirements
-Date: Mon, 28 Oct 2024 07:25:49 +0100
-Message-ID: <20241028062317.259537745@linuxfoundation.org>
+Subject: [PATCH 6.11 208/261] btrfs: zoned: fix zone unusable accounting for freed reserved extent
+Date: Mon, 28 Oct 2024 07:25:50 +0100
+Message-ID: <20241028062317.287656615@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,110 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-commit 3c36a72c1d27de6618c1c480c793d9924640f5bb upstream.
+commit bf9821ba4792a0d9a2e72803ae7b4341faf3d532 upstream.
 
-[BUG]
-Syzbot reports the following crash:
+When btrfs reserves an extent and does not use it (e.g, by an error), it
+calls btrfs_free_reserved_extent() to free the reserved extent. In the
+process, it calls btrfs_add_free_space() and then it accounts the region
+bytes as block_group->zone_unusable.
 
-  BTRFS info (device loop0 state MCS): disabling free space tree
-  BTRFS info (device loop0 state MCS): clearing compat-ro feature flag for FREE_SPACE_TREE (0x1)
-  BTRFS info (device loop0 state MCS): clearing compat-ro feature flag for FREE_SPACE_TREE_VALID (0x2)
-  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN NOPTI
-  KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-  RIP: 0010:backup_super_roots fs/btrfs/disk-io.c:1691 [inline]
-  RIP: 0010:write_all_supers+0x97a/0x40f0 fs/btrfs/disk-io.c:4041
-  Call Trace:
-   <TASK>
-   btrfs_commit_transaction+0x1eae/0x3740 fs/btrfs/transaction.c:2530
-   btrfs_delete_free_space_tree+0x383/0x730 fs/btrfs/free-space-tree.c:1312
-   btrfs_start_pre_rw_mount+0xf28/0x1300 fs/btrfs/disk-io.c:3012
-   btrfs_remount_rw fs/btrfs/super.c:1309 [inline]
-   btrfs_reconfigure+0xae6/0x2d40 fs/btrfs/super.c:1534
-   btrfs_reconfigure_for_mount fs/btrfs/super.c:2020 [inline]
-   btrfs_get_tree_subvol fs/btrfs/super.c:2079 [inline]
-   btrfs_get_tree+0x918/0x1920 fs/btrfs/super.c:2115
-   vfs_get_tree+0x90/0x2b0 fs/super.c:1800
-   do_new_mount+0x2be/0xb40 fs/namespace.c:3472
-   do_mount fs/namespace.c:3812 [inline]
-   __do_sys_mount fs/namespace.c:4020 [inline]
-   __se_sys_mount+0x2d6/0x3c0 fs/namespace.c:3997
-   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-   do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+However, it leaves the space_info->bytes_zone_unusable side not updated. As
+a result, ENOSPC can happen while a space_info reservation succeeded. The
+reservation is fine because the freed region is not added in
+space_info->bytes_zone_unusable, leaving that space as "free". OTOH,
+corresponding block group counts it as zone_unusable and its allocation
+pointer is not rewound, we cannot allocate an extent from that block group.
+That will also negate space_info's async/sync reclaim process, and cause an
+ENOSPC error from the extent allocation process.
 
-[CAUSE]
-To support mounting different subvolume with different RO/RW flags for
-the new mount APIs, btrfs introduced two workaround to support this feature:
+Fix that by returning the space to space_info->bytes_zone_unusable.
+Ideally, since a bio is not submitted for this reserved region, we should
+return the space to free space and rewind the allocation pointer. But, it
+needs rework on extent allocation handling, so let it work in this way for
+now.
 
-- Skip mount option/feature checks if we are mounting a different
-  subvolume
-
-- Reconfigure the fs to RW if the initial mount is RO
-
-Combining these two, we can have the following sequence:
-
-- Mount the fs ro,rescue=all,clear_cache,space_cache=v1
-  rescue=all will mark the fs as hard read-only, so no v2 cache clearing
-  will happen.
-
-- Mount a subvolume rw of the same fs.
-  We go into btrfs_get_tree_subvol(), but fc_mount() returns EBUSY
-  because our new fc is RW, different from the original fs.
-
-  Now we enter btrfs_reconfigure_for_mount(), which switches the RO flag
-  first so that we can grab the existing fs_info.
-  Then we reconfigure the fs to RW.
-
-- During reconfiguration, option/features check is skipped
-  This means we will restart the v2 cache clearing, and convert back to
-  v1 cache.
-  This will trigger fs writes, and since the original fs has "rescue=all"
-  option, it skips the csum tree read.
-
-  And eventually causing NULL pointer dereference in super block
-  writeback.
-
-[FIX]
-For reconfiguration caused by different subvolume RO/RW flags, ensure we
-always run btrfs_check_options() to ensure we have proper hard RO
-requirements met.
-
-In fact the function btrfs_check_options() doesn't really do many
-complex checks, but hard RO requirement and some feature dependency
-checks, thus there is no special reason not to do the check for mount
-reconfiguration.
-
-Reported-by: syzbot+56360f93efa90ff15870@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/0000000000008c5d090621cb2770@google.com/
-Fixes: f044b318675f ("btrfs: handle the ro->rw transition for mounting different subvolumes")
-CC: stable@vger.kernel.org # 6.8+
+Fixes: 169e0da91a21 ("btrfs: zoned: track unusable bytes for zones")
+CC: stable@vger.kernel.org # 5.15+
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/super.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/btrfs/block-group.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index 3f8673f97432..926d7a9ed99d 100644
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -1507,8 +1507,7 @@ static int btrfs_reconfigure(struct fs_context *fc)
- 	sync_filesystem(sb);
- 	set_bit(BTRFS_FS_STATE_REMOUNTING, &fs_info->fs_state);
- 
--	if (!mount_reconfigure &&
--	    !btrfs_check_options(fs_info, &ctx->mount_opt, fc->sb_flags))
-+	if (!btrfs_check_options(fs_info, &ctx->mount_opt, fc->sb_flags))
- 		return -EINVAL;
- 
- 	ret = btrfs_check_features(fs_info, !(fc->sb_flags & SB_RDONLY));
--- 
-2.47.0
-
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -3819,6 +3819,8 @@ void btrfs_free_reserved_bytes(struct bt
+ 	spin_lock(&cache->lock);
+ 	if (cache->ro)
+ 		space_info->bytes_readonly += num_bytes;
++	else if (btrfs_is_zoned(cache->fs_info))
++		space_info->bytes_zone_unusable += num_bytes;
+ 	cache->reserved -= num_bytes;
+ 	space_info->bytes_reserved -= num_bytes;
+ 	space_info->max_extent_size = 0;
 
 
