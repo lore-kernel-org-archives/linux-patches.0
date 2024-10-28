@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DED6189BAF;
-	Mon, 28 Oct 2024 06:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8893F2C697;
+	Mon, 28 Oct 2024 06:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097658; cv=none; b=mBIUwOUXmSD8k6xqbQ8oleLl6Xqn1Z1zHPbhUMIgU9nb7cFxl2UohNWX/B5d4uSC1UiNx9+2/047bsytp4D2/tJCWqKZhenSaAZ2E6TEF22fGanw8beEqtOz84V58YGNa57iDlBV1DB2OGHsXnjOJCkCCBmpt2qzvH0/LLAU+1o=
+	t=1730097660; cv=none; b=IoZ4DMP0TXniHK17WhOY8NSSH+8ydSr7dgJECmzYC6/+wHrM+qWzDJdUelmcsCT4MiAxY29/EQZKekNwseh4p97altVJTgKI253+lFU/Lxz9+RrdG0ElVnJ8uOkYQ05kpiHESCKjojXccT5AyVDms81FnLt8vNkIq66r1apESo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097658; c=relaxed/simple;
-	bh=HpJ8pDKB103+YIFFqTM7hhjS7u70JYDo2fSDZCVK21E=;
+	s=arc-20240116; t=1730097660; c=relaxed/simple;
+	bh=fhax/LK1yMF6yVs+V4kMj4mYRNP0xXXH/HQfmq9w05Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a5bTtw82AXw5bvVVrIu6lgIjQEDrM98kWZ2Ybz1y3IA5KVxY/9QjenrlYiOFFnmjww6eZrisUXqqMuToDskVkYpB4wO3yM20rKQjC+sOFyawsB9PDaL6VDN8fWMKUa0K7/GCOytUl2csyCM7WLPF6obGsa0waEkxAXk5mPdmAvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cISw2Jed; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJmfhF8pJBRx1aZaLgoICfeHQwu17GH0xSjDpbh/eE3Tu6fRqpDCBuBfnh1zrzRni0/JZkcAXHhO4GfwULHKsvVjxsoJNSr/nRVQMOy4estns15VCHhqWyaHiBwWaqgQ2dLcicsn7HfeVfQEAaOHj3GaQEHedwtLlzPz54QVuhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPcAFzPy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cISw2Jed"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DF4C4CEC3;
-	Mon, 28 Oct 2024 06:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPcAFzPy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29741C4CEC3;
+	Mon, 28 Oct 2024 06:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097658;
-	bh=HpJ8pDKB103+YIFFqTM7hhjS7u70JYDo2fSDZCVK21E=;
+	s=korg; t=1730097660;
+	bh=fhax/LK1yMF6yVs+V4kMj4mYRNP0xXXH/HQfmq9w05Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cISw2Jed3doke1g/k2QYwBLFwK2magaheg/m/AxRTewt0zgwXhMEuJwLLVB76M7Ji
-	 2lkcGMwdSvB8MW2tVWwezo26u4+8eTfy7iZqajCKrj7xdLZeHqWJJSimEtF6J/VPGK
-	 +ZsoU31WgBOLJhdT1mldPycz6SVXINJGxLLTVuH0=
+	b=tPcAFzPymY71qv460NV6H0MjPc948PgzwhOjkYrLEhqb1KanCo5gzGkajSDvVXING
+	 HlYDxExik8XGP3wFOSV1HqOy2hbaquYFI4/2DUbmvyyJAeyGiEuiFNRrWOwgNDaQzu
+	 vyvBnxZmhwjmaAx7Juao9Jz/FyDl8HFF5Pu7EPp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/208] irqchip/renesas-rzg2l: Fix missing put_device
-Date: Mon, 28 Oct 2024 07:24:03 +0100
-Message-ID: <20241028062308.206718466@linuxfoundation.org>
+Subject: [PATCH 6.6 090/208] cdrom: Avoid barrier_nospec() in cdrom_ioctl_media_changed()
+Date: Mon, 28 Oct 2024 07:24:30 +0100
+Message-ID: <20241028062308.866498546@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -51,79 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit d038109ac1c6bf619473dda03a16a6de58170f7f ]
+[ Upstream commit b0bf1afde7c34698cf61422fa8ee60e690dc25c3 ]
 
-rzg2l_irqc_common_init() calls of_find_device_by_node(), but the
-corresponding put_device() call is missing.  This also gets reported by
-make coccicheck.
+The barrier_nospec() after the array bounds check is overkill and
+painfully slow for arches which implement it.
 
-Make use of the cleanup interfaces from cleanup.h to call into
-__free_put_device(), which in turn calls into put_device when leaving
-function rzg2l_irqc_common_init() and variable "dev" goes out of scope.
+Furthermore, most arches don't implement it, so they remain exposed to
+Spectre v1 (which can affect pretty much any CPU with branch
+prediction).
 
-To prevent that the device is put on successful completion, assign NULL to
-"dev" to prevent __free_put_device() from calling into put_device() within
-the successful path.
+Instead, clamp the user pointer to a valid range so it's guaranteed to
+be a valid array index even when the bounds check mispredicts.
 
-"make coccicheck" will still complain about missing put_device() calls,
-but those are false positives now.
-
-Fixes: 3fed09559cd8 ("irqchip: Add RZ/G2L IA55 Interrupt Controller driver")
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20241011172003.1242841-1-fabrizio.castro.jz@renesas.com
+Fixes: 8270cb10c068 ("cdrom: Fix spectre-v1 gadget")
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://lore.kernel.org/r/1d86f4d9d8fba68e5ca64cdeac2451b95a8bf872.1729202937.git.jpoimboe@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-renesas-rzg2l.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/cdrom/cdrom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
-index 00688043697f0..5a7836186fd41 100644
---- a/drivers/irqchip/irq-renesas-rzg2l.c
-+++ b/drivers/irqchip/irq-renesas-rzg2l.c
-@@ -8,6 +8,7 @@
-  */
+diff --git a/drivers/cdrom/cdrom.c b/drivers/cdrom/cdrom.c
+index 01f46caf1f88b..54b80911f3e28 100644
+--- a/drivers/cdrom/cdrom.c
++++ b/drivers/cdrom/cdrom.c
+@@ -2313,7 +2313,7 @@ static int cdrom_ioctl_media_changed(struct cdrom_device_info *cdi,
+ 		return -EINVAL;
  
- #include <linux/bitfield.h>
-+#include <linux/cleanup.h>
- #include <linux/clk.h>
- #include <linux/err.h>
- #include <linux/io.h>
-@@ -408,12 +409,12 @@ static int rzg2l_irqc_parse_interrupts(struct rzg2l_irqc_priv *priv,
+ 	/* Prevent arg from speculatively bypassing the length check */
+-	barrier_nospec();
++	arg = array_index_nospec(arg, cdi->capacity);
  
- static int rzg2l_irqc_init(struct device_node *node, struct device_node *parent)
- {
-+	struct platform_device *pdev = of_find_device_by_node(node);
-+	struct device *dev __free(put_device) = pdev ? &pdev->dev : NULL;
- 	struct irq_domain *irq_domain, *parent_domain;
--	struct platform_device *pdev;
- 	struct reset_control *resetn;
- 	int ret;
- 
--	pdev = of_find_device_by_node(node);
- 	if (!pdev)
- 		return -ENODEV;
- 
-@@ -467,6 +468,17 @@ static int rzg2l_irqc_init(struct device_node *node, struct device_node *parent)
- 
- 	register_syscore_ops(&rzg2l_irqc_syscore_ops);
- 
-+	/*
-+	 * Prevent the cleanup function from invoking put_device by assigning
-+	 * NULL to dev.
-+	 *
-+	 * make coccicheck will complain about missing put_device calls, but
-+	 * those are false positives, as dev will be automatically "put" via
-+	 * __free_put_device on the failing path.
-+	 * On the successful path we don't actually want to "put" dev.
-+	 */
-+	dev = NULL;
-+
- 	return 0;
- 
- pm_put:
+ 	info = kmalloc(sizeof(*info), GFP_KERNEL);
+ 	if (!info)
 -- 
 2.43.0
 
