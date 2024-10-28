@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC82D824A3;
-	Mon, 28 Oct 2024 06:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E042AF07;
+	Mon, 28 Oct 2024 06:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098460; cv=none; b=g/0rgZyInFb7bUJXMzp+TJUUbDJnqtSJIqeqeuF0r2LRRbQW0jDb9el21aI7Am+3afEM+HaX0wZ8ncFQoQmdkSQ1PhgNPp0TigWKzj8gjRkSYCsGRT0OYWkrV2bXO+TKig9o0waxS54bpU7O/2p8whmPVrSxrolizouB1vPJFvI=
+	t=1730098462; cv=none; b=R7A4BRZ9ibaRrh9hQiw0wVMmr5isyoD2KX2tlxFdRhTwoCGiT+s15i0Z1KcYkzQQ5nqAsPm5tLq3YgFT9021lBWxBa1Lt7vsLFlV7Gw3fn1FTl1ewKVY+6iYTkuztKiDh6Vloh4+EQdfhGRqGFpCdGxr5HhJBH60n9F8gfq+XPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098460; c=relaxed/simple;
-	bh=uIFigDd9Mg7S0pmCa0FvLm2WXw8I8ehEezrMhwGbS64=;
+	s=arc-20240116; t=1730098462; c=relaxed/simple;
+	bh=SuTpHmX6G3XYhQztPJVPFVGiKEM88DsUP9VOcJhPk/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HKN41/AzLWrC02CWiwB2Ojd3ne4SmrU+RYN1erLzYJYwHGo5eYCDL2GukmLSL+ubtGEE9upnUwfHqSvHGDI2qX3Adms/nG7cZjoMuQKzZZAg0z3ZG80DrISNwyHD1plonVqzSXev+TTsoPO1L0c/VqzFNOxONBwz80usHavJYOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNZeHdra; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VbVYk0Yql66HUZhlfwYy+uF53LAvuK015uVGkAn5ld/XwiYn0L77uDFKvNYvotktQe5Wag8dwKfrwL7UvbNwBcbT2/epWhamS3EoW8U8hKr8+hcYXgckeAOuP6EewHrMFVg/+eGeT5rGAUu2n3AeOdWUqLTHjaDlD+OH7Y4FYPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0aU5m4/I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNZeHdra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E015C4CEC3;
-	Mon, 28 Oct 2024 06:54:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0aU5m4/I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A52C4CEC3;
+	Mon, 28 Oct 2024 06:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098459;
-	bh=uIFigDd9Mg7S0pmCa0FvLm2WXw8I8ehEezrMhwGbS64=;
+	s=korg; t=1730098462;
+	bh=SuTpHmX6G3XYhQztPJVPFVGiKEM88DsUP9VOcJhPk/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JNZeHdrazvgLd8IWA6bUqjUJvZm+A4HoddrRtcrNqTmuzTnphMnJV4adp/OX70lrz
-	 aLw54YaOQTt1Ol0IR8VSfHDc6ir/2CDoNev8qOkx+MfhyS9925kqvXvO1wPGku65OO
-	 shJ8WefqrwPTM4yaPjucaK3ZahKzVG23Xsb+80ms=
+	b=0aU5m4/IdTnDAfzdSl3VYTE3ZbZUZaZpza2FgFbI0pnbivdyysyY98yJgQO/0sVSb
+	 lF+f70UKOn2Yjh5erPU+ciBqu9V70x0hG1GgWyMKX/ksduixYZliVo5bl29xDRBtN2
+	 PcaGoaiyN3ZfxkShroj8ij5RY+taAN1b1ZTluSvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Li Huafei <lihuafei1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 236/261] fgraph: Fix missing unlock in register_ftrace_graph()
-Date: Mon, 28 Oct 2024 07:26:18 +0100
-Message-ID: <20241028062318.033207381@linuxfoundation.org>
+Subject: [PATCH 6.11 237/261] fgraph: Change the name of cpuhp state to "fgraph:online"
+Date: Mon, 28 Oct 2024 07:26:19 +0100
+Message-ID: <20241028062318.058301006@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -54,67 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Huafei <lihuafei1@huawei.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit bd3734db86e01e20dd239a40b419059a0ce9c901 ]
+[ Upstream commit a574e7f80e86c740e241c762923f50077b2c2a30 ]
 
-Use guard(mutex)() to acquire and automatically release ftrace_lock,
-fixing the issue of not unlocking when calling cpuhp_setup_state()
-fails.
+The cpuhp state name given to cpuhp_setup_state() is "fgraph_idle_init"
+which doesn't really conform to the names that are used for cpu hotplug
+setups. Instead rename it to "fgraph:online" to be in line with other
+states.
 
-Fixes smatch warning:
-
-kernel/trace/fgraph.c:1317 register_ftrace_graph() warn: inconsistent returns '&ftrace_lock'.
-
-Link: https://lore.kernel.org/20241024155917.1019580-1-lihuafei1@huawei.com
-Fixes: 2c02f7375e65 ("fgraph: Use CPU hotplug mechanism to initialize idle shadow stacks")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202410220121.wxg0olfd-lkp@intel.com/
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Li Huafei <lihuafei1@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/20241024222944.473d88c5@rorschach.local.home
+Suggested-by: Masami Hiramatsu <mhiramat@kernel.org>
+Fixes: 2c02f7375e658 ("fgraph: Use CPU hotplug mechanism to initialize idle shadow stacks")
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/fgraph.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ kernel/trace/fgraph.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/trace/fgraph.c b/kernel/trace/fgraph.c
-index 41e7a15dcb50c..cd1c2946018c8 100644
+index cd1c2946018c8..69e226a48daa9 100644
 --- a/kernel/trace/fgraph.c
 +++ b/kernel/trace/fgraph.c
-@@ -1252,7 +1252,7 @@ int register_ftrace_graph(struct fgraph_ops *gops)
- 	int ret = 0;
- 	int i = -1;
- 
--	mutex_lock(&ftrace_lock);
-+	guard(mutex)(&ftrace_lock);
+@@ -1255,7 +1255,7 @@ int register_ftrace_graph(struct fgraph_ops *gops)
+ 	guard(mutex)(&ftrace_lock);
  
  	if (!fgraph_initialized) {
- 		ret = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "fgraph_idle_init",
-@@ -1273,10 +1273,8 @@ int register_ftrace_graph(struct fgraph_ops *gops)
- 	}
- 
- 	i = fgraph_lru_alloc_index();
--	if (i < 0 || WARN_ON_ONCE(fgraph_array[i] != &fgraph_stub)) {
--		ret = -ENOSPC;
--		goto out;
--	}
-+	if (i < 0 || WARN_ON_ONCE(fgraph_array[i] != &fgraph_stub))
-+		return -ENOSPC;
- 	gops->idx = i;
- 
- 	ftrace_graph_active++;
-@@ -1313,8 +1311,6 @@ int register_ftrace_graph(struct fgraph_ops *gops)
- 		gops->saved_func = NULL;
- 		fgraph_lru_release_index(i);
- 	}
--out:
--	mutex_unlock(&ftrace_lock);
- 	return ret;
- }
- 
+-		ret = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "fgraph_idle_init",
++		ret = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "fgraph:online",
+ 					fgraph_cpu_init, NULL);
+ 		if (ret < 0) {
+ 			pr_warn("fgraph: Error to init cpu hotplug support\n");
 -- 
 2.43.0
 
