@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C2515B10D;
-	Mon, 28 Oct 2024 06:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC7E15B10D;
+	Mon, 28 Oct 2024 06:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097815; cv=none; b=Ymxf1t0LKoUhSaqBfi+Qxbn9AlkNqbA6ASGzKICE5DmddJ+OsT6xIFDg4WsCpK5mY6bL8AkfekoXTbI9LbWO77VGA6UZSCcr36sSiGItK9hrRQCkQg1iIKc3Se84kIfAvTijkZ9YMibGQ/UiU9tQn4Yqr3f0MntFRE4k/2itk4c=
+	t=1730097817; cv=none; b=Nv6YF0iFsTjFdCnYSs4FOMbF59mY6p0mwqwMf2xWcDShDwTvS7ZZWN6AipVEuQMLgHvu6KyHsSDr71RT2+ycyHFKG8ATLX8eCRApj3O83JSo13I2wVniovJtJanauEbbujnWovH/a5mFqPun1WqRrmm22gmiLCMydVg0p3XFpvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097815; c=relaxed/simple;
-	bh=2ZPZwM0AfavPZ0KmV4B5yIGJI1uA9DLGBbket/wUzwI=;
+	s=arc-20240116; t=1730097817; c=relaxed/simple;
+	bh=YtFGpKQzb7mgSF6joCvQA9GxHzMCp4YgwDi0yCzS4+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fRRxGXxKCWeBMQTFrs+yRzqQsYg+S1Q1jhClB44A3Ln0RxIjs++3lFdJZXPRsYC7frPDiI4Q1IdsyCW2JHUFcNutfpy5I3HxGOe3e/O1eym40ofC/S0kCbOuABV/BzBTyI0cIsQQah+Gkmzo6BMn9g88YS10HDNKjsF/TcARupE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxF0a5bW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RwFqC9LDqQvutn42VtzS65pT4G9WqXBMSSXzzWSa2aEpTACasK1DO2tAPEoJzYHqq/i0C9Y+l4uoz7mVEXogTkY68iQE+X5Rarcwa2BGoCpYwD1hf3/iV+B6YA2XydSIVcmTJkZsJNF8Cw6L+SlQH9Em8vrUDw/XK7yRY9+hDho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZYmC1E6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxF0a5bW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EF1C4CEC3;
-	Mon, 28 Oct 2024 06:43:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZYmC1E6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307F8C4CEC3;
+	Mon, 28 Oct 2024 06:43:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097815;
-	bh=2ZPZwM0AfavPZ0KmV4B5yIGJI1uA9DLGBbket/wUzwI=;
+	s=korg; t=1730097817;
+	bh=YtFGpKQzb7mgSF6joCvQA9GxHzMCp4YgwDi0yCzS4+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxF0a5bWyXnADUL/35eGmjtq7/LsHf/uTodjkznAN0k1hWj2db/ofKPwaJhBb7kma
-	 q0nSiyMhapBrYgEbcfKwW2huzxhIDFDBD3XsjPu3ImwWyMCfuZP11Qx/4DPU2ASenV
-	 UomYivAbm/XkqJYAepTJGcA9KoRXVjrKc95o/uN4=
+	b=yZYmC1E6z0bjo0+Fn8uDH1ZIEjDrU2Ut+COn6gLCTM91DXn4m2Dvw6yN/dR21NxUA
+	 3XBce98yJsX/gsmFnATo2aWX2TXhBr7rUc74a64e1MX/MX42zS/0gsmJ0WL7j9NQyF
+	 YVGi8YIrIENUfwGQVv03ebe8KtUvRT9sUm3z/TUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 159/208] Bluetooth: ISO: Fix UAF on iso_sock_timeout
-Date: Mon, 28 Oct 2024 07:25:39 +0100
-Message-ID: <20241028062310.543954228@linuxfoundation.org>
+Subject: [PATCH 6.6 160/208] bpf,perf: Fix perf_event_detach_bpf_prog error handling
+Date: Mon, 28 Oct 2024 07:25:40 +0100
+Message-ID: <20241028062310.568612113@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -50,64 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 246b435ad668596aa0e2bbb9d491b6413861211a ]
+[ Upstream commit 0ee288e69d033850bc87abe0f9cc3ada24763d7f ]
 
-conn->sk maybe have been unlinked/freed while waiting for iso_conn_lock
-so this checks if the conn->sk is still valid by checking if it part of
-iso_sk_list.
+Peter reported that perf_event_detach_bpf_prog might skip to release
+the bpf program for -ENOENT error from bpf_prog_array_copy.
 
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This can't happen because bpf program is stored in perf event and is
+detached and released only when perf event is freed.
+
+Let's drop the -ENOENT check and make sure the bpf program is released
+in any case.
+
+Fixes: 170a7e3ea070 ("bpf: bpf_prog_array_copy() should return -ENOENT if exclude_prog not found")
+Reported-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241023200352.3488610-1-jolsa@kernel.org
+
+Closes: https://lore.kernel.org/lkml/20241022111638.GC16066@noisy.programming.kicks-ass.net/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ kernel/trace/bpf_trace.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 9b365fb44fac6..c2c80d6000836 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -90,6 +90,16 @@ static struct sock *iso_get_sock_listen(bdaddr_t *src, bdaddr_t *dst,
- #define ISO_CONN_TIMEOUT	(HZ * 40)
- #define ISO_DISCONN_TIMEOUT	(HZ * 2)
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index ecc86a595b754..9064f75de7e46 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2217,8 +2217,6 @@ void perf_event_detach_bpf_prog(struct perf_event *event)
  
-+static struct sock *iso_sock_hold(struct iso_conn *conn)
-+{
-+	if (!conn || !bt_sock_linked(&iso_sk_list, conn->sk))
-+		return NULL;
-+
-+	sock_hold(conn->sk);
-+
-+	return conn->sk;
-+}
-+
- static void iso_sock_timeout(struct work_struct *work)
- {
- 	struct iso_conn *conn = container_of(work, struct iso_conn,
-@@ -97,9 +107,7 @@ static void iso_sock_timeout(struct work_struct *work)
- 	struct sock *sk;
- 
- 	iso_conn_lock(conn);
--	sk = conn->sk;
--	if (sk)
--		sock_hold(sk);
-+	sk = iso_sock_hold(conn);
- 	iso_conn_unlock(conn);
- 
- 	if (!sk)
-@@ -217,9 +225,7 @@ static void iso_conn_del(struct hci_conn *hcon, int err)
- 
- 	/* Kill socket */
- 	iso_conn_lock(conn);
--	sk = conn->sk;
--	if (sk)
--		sock_hold(sk);
-+	sk = iso_sock_hold(conn);
- 	iso_conn_unlock(conn);
- 
- 	if (sk) {
+ 	old_array = bpf_event_rcu_dereference(event->tp_event->prog_array);
+ 	ret = bpf_prog_array_copy(old_array, event->prog, NULL, 0, &new_array);
+-	if (ret == -ENOENT)
+-		goto unlock;
+ 	if (ret < 0) {
+ 		bpf_prog_array_delete_safe(old_array, event->prog);
+ 	} else {
 -- 
 2.43.0
 
