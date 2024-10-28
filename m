@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD1B15B10D;
-	Mon, 28 Oct 2024 06:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F72D15B10D;
+	Mon, 28 Oct 2024 06:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097442; cv=none; b=BkCOjnopNhRCtMZFe2O+C4LS1Vrey1jFGZThhiKUQq8FLx9ScjaCiuk10Xm6qRutwLIkinIPRJd9wxG0TRjFir13MF440ExoeantAATi8a907YcJ9Pzfi75pCF2VTIJ+AiOTl5mSKrI3k4IPrlB//ZsUyywxH55A9Os7wb1eya4=
+	t=1730097445; cv=none; b=E0Csj6wETkLrC1KUreifGor3Vq93zsA9DXn91eMPgYwzIYC/Adfnh5AIyF12OtCqQ99ZKYI4g5X9UlwWktrOpRyoSN9hlVXYht7QArdwjPfars+Iftf72KbDsyhMESGpCg2HU9vRGcCKFlSvwO1iInyWzZlBckPq7F5YqlIUUoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097442; c=relaxed/simple;
-	bh=Bh+Csoz2sM1MgOkkd/nEGTYP7EJ5KPtc6uCWneGoYS8=;
+	s=arc-20240116; t=1730097445; c=relaxed/simple;
+	bh=9xPJHNpDSfI4Rib/SdRIGyNGBuOUXL1H4Tg7QyiLAFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kz9KBWrsLqyGfy+jbEFh0LGTlV1agSl7zKClfyDDmlMYyoZSA6LFzxRE9c8NAb3aLJ1LtkRPZ2EUjSYXAdr1NuksKNRjHqCW4lXoShPWRK+ZndWdMkrjt3VLtet4q+XAipAmbqUYkuqSMrCzNmGoZl6/XQ2i30XcImzB0UsspBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pF5t4Lbr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i/q6lvWCq3mp30JuozuX6ZidqwPSqJHbS6fT+2aqGU4mErl+atP7eXlXBhvGTNKUDKOtBIsG0OxYhPiEErLVPARFC1ar1FGCqUGh6Cm9Ki+TK6LU1mOrnWI/sd/naGl4lftZysdrQqo8g+T6F9b2uTgdHSGI7UYozEP8msgbwrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BvExk9Vv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pF5t4Lbr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70403C4CEC3;
-	Mon, 28 Oct 2024 06:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BvExk9Vv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A33EAC4CEC3;
+	Mon, 28 Oct 2024 06:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097442;
-	bh=Bh+Csoz2sM1MgOkkd/nEGTYP7EJ5KPtc6uCWneGoYS8=;
+	s=korg; t=1730097444;
+	bh=9xPJHNpDSfI4Rib/SdRIGyNGBuOUXL1H4Tg7QyiLAFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pF5t4LbrfRB1JOtJdn0JZ2GyacFHdra/pPfhsTYfXpvuwz9Gqg6qfjMsTrVKprXdv
-	 qJosPJtVnNKqnnQfSYPK2awCOjziSg/iauUfHo6GSu+5rbLlcOhMXwbdZqwrgjO07g
-	 2weQosfHCwXFUHXSNchV1PDHDftfUgbC8qEwcNl8=
+	b=BvExk9VvlNlGHDllcZdMuTILP9OcPO5eN2t2KmZy7qWv4lLQt61/hfyQn4Xk9teAN
+	 Z9CnottYWbD2uT9oeydM3ZOtpaMYoQlbNU9xNa3MwBEIyI9NXe3xwEZgOMofx1vMpP
+	 mXgoThUyN90piIn1hUFgcz/um5i2XJqHR71OlN2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Peter Hurley <peter@hurleysoftware.com>,
-	Tomas Krcka <krckatom@amazon.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 131/137] serial: protect uart_port_dtr_rts() in uart_shutdown() too
-Date: Mon, 28 Oct 2024 07:26:08 +0100
-Message-ID: <20241028062302.364261299@linuxfoundation.org>
+	Alex Michel <alex.michel@wiedemann-group.com>,
+	Andrew Lunn <andrew@lunn.ch>
+Subject: [PATCH 6.1 132/137] net: phy: dp83822: Fix reset pin definitions
+Date: Mon, 28 Oct 2024 07:26:09 +0100
+Message-ID: <20241028062302.390732194@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -52,67 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Michel Alex <Alex.Michel@wiedemann-group.com>
 
-[ Upstream commit 602babaa84d627923713acaf5f7e9a4369e77473 ]
+commit de96f6a3003513c796bbe4e23210a446913f5c00 upstream.
 
-Commit af224ca2df29 (serial: core: Prevent unsafe uart port access, part
-3) added few uport == NULL checks. It added one to uart_shutdown(), so
-the commit assumes, uport can be NULL in there. But right after that
-protection, there is an unprotected "uart_port_dtr_rts(uport, false);"
-call. That is invoked only if HUPCL is set, so I assume that is the
-reason why we do not see lots of these reports.
+This change fixes a rare issue where the PHY fails to detect a link
+due to incorrect reset behavior.
 
-Or it cannot be NULL at this point at all for some reason :P.
+The SW_RESET definition was incorrectly assigned to bit 14, which is the
+Digital Restart bit according to the datasheet. This commit corrects
+SW_RESET to bit 15 and assigns DIG_RESTART to bit 14 as per the
+datasheet specifications.
 
-Until the above is investigated, stay on the safe side and move this
-dereference to the if too.
+The SW_RESET define is only used in the phy_reset function, which fully
+re-initializes the PHY after the reset is performed. The change in the
+bit definitions should not have any negative impact on the functionality
+of the PHY.
 
-I got this inconsistency from Coverity under CID 1585130. Thanks.
+v2:
+- added Fixes tag
+- improved commit message
 
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Cc: Peter Hurley <peter@hurleysoftware.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://lore.kernel.org/r/20240805102046.307511-3-jirislaby@kernel.org
+Cc: stable@vger.kernel.org
+Fixes: 5dc39fd5ef35 ("net: phy: DP83822: Add ability to advertise Fiber connection")
+Signed-off-by: Alex Michel <alex.michel@wiedemann-group.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Message-ID: <AS1P250MB0608A798661549BF83C4B43EA9462@AS1P250MB0608.EURP250.PROD.OUTLOOK.COM>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[Adapted over commit 5701cb8bf50e ("tty: Call ->dtr_rts() parameter
-active consistently") not in the tree]
-Signed-off-by: Tomas Krcka <krckatom@amazon.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial_core.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/net/phy/dp83822.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
-index c91e3195dc207..19a53801ff9ee 100644
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -339,14 +339,16 @@ static void uart_shutdown(struct tty_struct *tty, struct uart_state *state)
- 		/*
- 		 * Turn off DTR and RTS early.
- 		 */
--		if (uport && uart_console(uport) && tty) {
--			uport->cons->cflag = tty->termios.c_cflag;
--			uport->cons->ispeed = tty->termios.c_ispeed;
--			uport->cons->ospeed = tty->termios.c_ospeed;
--		}
-+		if (uport) {
-+			if (uart_console(uport) && tty) {
-+				uport->cons->cflag = tty->termios.c_cflag;
-+				uport->cons->ispeed = tty->termios.c_ispeed;
-+				uport->cons->ospeed = tty->termios.c_ospeed;
-+			}
+--- a/drivers/net/phy/dp83822.c
++++ b/drivers/net/phy/dp83822.c
+@@ -40,8 +40,8 @@
+ /* Control Register 2 bits */
+ #define DP83822_FX_ENABLE	BIT(14)
  
--		if (!tty || C_HUPCL(tty))
--			uart_port_dtr_rts(uport, 0);
-+			if (!tty || C_HUPCL(tty))
-+				uart_port_dtr_rts(uport, 0);
-+		}
+-#define DP83822_HW_RESET	BIT(15)
+-#define DP83822_SW_RESET	BIT(14)
++#define DP83822_SW_RESET	BIT(15)
++#define DP83822_DIG_RESTART	BIT(14)
  
- 		uart_port_shutdown(port);
- 	}
--- 
-2.43.0
-
+ /* PHY STS bits */
+ #define DP83822_PHYSTS_DUPLEX			BIT(2)
 
 
