@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCB718E350;
-	Mon, 28 Oct 2024 06:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B510189BAF;
+	Mon, 28 Oct 2024 06:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097647; cv=none; b=mZpl/OAdyhMbUyJb/uBKwaVOm6LJf6fcDqbmVhoji0b0ql+Dl9gPG3dcwtDEGctwDsDiu7AGwGW9dQTGRLqszEfo3nJh1LgIIsV9PLjcNQbYo/79Q23p0JHS31cRSAeZJlv/siB5ewTBccR0kYvwkWYAfiOc3Z2Deb9U9qt1G5Y=
+	t=1730097649; cv=none; b=nuNG1FLgCe2YL81CU9XqU+v68TEwJCdjYsQNhhUb+uAUq54iJgBQ8BKnYeLFMUVCCcHz0Neqkx1NBVlSzm9kBtNaO0Y9WzVkSLrpenWThl1ZksvYltH4Mv1MPhK4FNx12OwCaD4N/QxFbRnZW9MIi0UhJLmcu1pgEN/rx+fdfwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097647; c=relaxed/simple;
-	bh=RQuHn53MK7qMSyRZJ0dbU+D31qrfcBDbc84t2i9cYl0=;
+	s=arc-20240116; t=1730097649; c=relaxed/simple;
+	bh=nHuvYLmIBHqNetFU4U2Pw9NfrPWz5zAoS6pxXu1m0TQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EPj9kvHcBLVUDaVcwPJyLON6822m4srtrjDFRtw4lG0aA7qOMtR1AZ0XnWpMFKOkN8u9MQ/z6Jk3fIUDBEW7DIzGmDDqV/E7jYR1q5aE3R1LGAhEpCn24qPbMjU9AQrnZ7e0FBU5Q7tQQ9ab3DP3CRHVN+exNunfj8z96BrkDls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VauEwr87; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Al9oDiyonCrHdRTxvKPbW18mq9Heh4qCxYvqbVt5rPr6UrpJ0bGL0TGSE9Za5NajocKeV3MqWyBOhDwtuWHmHKt35wyJzdT+WJ87VI1yvKNGU3brpsf+T5XYy28dAwNf7Mcwci7PlWb5+zfJ7iXgcGxFcKbt7ocJYphMoMXjWeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNUNdk5V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VauEwr87"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6548C4CEC3;
-	Mon, 28 Oct 2024 06:40:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNUNdk5V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E500C4CEC3;
+	Mon, 28 Oct 2024 06:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097647;
-	bh=RQuHn53MK7qMSyRZJ0dbU+D31qrfcBDbc84t2i9cYl0=;
+	s=korg; t=1730097649;
+	bh=nHuvYLmIBHqNetFU4U2Pw9NfrPWz5zAoS6pxXu1m0TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VauEwr87u9lmvrTtaRahwGGcXF4wlmKkTI0ifBff1n3X3c6zwEsFGPBoNszdkkDDv
-	 yV+mpt2RLhUzKpwECpEuZ4WLdBhT1uUHI3DnIwNMhyl0Mh1e+lnukCPhS5kKI0DNdN
-	 aCtJWc/VCBDCD5ic23IHcchdzBrG3rYR2dYFjf3g=
+	b=RNUNdk5VzjMCuEYqB29TFgc2yBcEt2vicid17cSTf3wvv7eTC/RfpbiJ37iM+QQ6a
+	 5bpGQx32wlZKQOpvHtOUE0iJyZrrFQDwKme2ozNXUdaLzCEjuulabLzMD1BvH4j27k
+	 d1eiMZXIQrxl+MCidTwl9oizZMj/xqHZwvUCqOd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
+	Andrea Parri <parri.andrea@gmail.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 085/208] bpf, vsock: Drop static vsock_bpf_prot initialization
-Date: Mon, 28 Oct 2024 07:24:25 +0100
-Message-ID: <20241028062308.747788544@linuxfoundation.org>
+Subject: [PATCH 6.6 086/208] riscv, bpf: Make BPF_CMPXCHG fully ordered
+Date: Mon, 28 Oct 2024 07:24:26 +0100
+Message-ID: <20241028062308.771135648@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -46,49 +47,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 19039f279797efbe044cae41ee216c5fe481fc33 ]
+[ Upstream commit e59db0623f6955986d1be0880b351a1f56e7fd6d ]
 
-vsock_bpf_prot is set up at runtime. Remove the superfluous init.
+According to the prototype formal BPF memory consistency model
+discussed e.g. in [1] and following the ordering properties of
+the C/in-kernel macro atomic_cmpxchg(), a BPF atomic operation
+with the BPF_CMPXCHG modifier is fully ordered.  However, the
+current RISC-V JIT lowerings fail to meet such memory ordering
+property.  This is illustrated by the following litmus test:
 
-No functional change intended.
+BPF BPF__MP+success_cmpxchg+fence
+{
+ 0:r1=x; 0:r3=y; 0:r5=1;
+ 1:r2=y; 1:r4=f; 1:r7=x;
+}
+ P0                               | P1                                         ;
+ *(u64 *)(r1 + 0) = 1             | r1 = *(u64 *)(r2 + 0)                      ;
+ r2 = cmpxchg_64 (r3 + 0, r4, r5) | r3 = atomic_fetch_add((u64 *)(r4 + 0), r5) ;
+                                  | r6 = *(u64 *)(r7 + 0)                      ;
+exists (1:r1=1 /\ 1:r6=0)
 
-Fixes: 634f1a7110b4 ("vsock: support sockmap")
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
+whose "exists" clause is not satisfiable according to the BPF
+memory model.  Using the current RISC-V JIT lowerings, the test
+can be mapped to the following RISC-V litmus test:
+
+RISCV RISCV__MP+success_cmpxchg+fence
+{
+ 0:x1=x; 0:x3=y; 0:x5=1;
+ 1:x2=y; 1:x4=f; 1:x7=x;
+}
+ P0                 | P1                          ;
+ sd x5, 0(x1)       | ld x1, 0(x2)                ;
+ L00:               | amoadd.d.aqrl x3, x5, 0(x4) ;
+ lr.d x2, 0(x3)     | ld x6, 0(x7)                ;
+ bne x2, x4, L01    |                             ;
+ sc.d x6, x5, 0(x3) |                             ;
+ bne x6, x4, L00    |                             ;
+ fence rw, rw       |                             ;
+ L01:               |                             ;
+exists (1:x1=1 /\ 1:x6=0)
+
+where the two stores in P0 can be reordered.  Update the RISC-V
+JIT lowerings/implementation of BPF_CMPXCHG to emit an SC with
+RELEASE ("rl") annotation in order to meet the expected memory
+ordering guarantees.  The resulting RISC-V JIT lowerings of
+BPF_CMPXCHG match the RISC-V lowerings of the C atomic_cmpxchg().
+
+Other lowerings were fixed via 20a759df3bba ("riscv, bpf: make
+some atomic operations fully ordered").
+
+Fixes: dd642ccb45ec ("riscv, bpf: Implement more atomic operations for RV64")
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20241013-vsock-fixes-for-redir-v2-4-d6577bbfe742@rbox.co
+Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
+Acked-by: Björn Töpel <bjorn@kernel.org>
+Link: https://lpc.events/event/18/contributions/1949/attachments/1665/3441/bpfmemmodel.2024.09.19p.pdf [1]
+Link: https://lore.kernel.org/bpf/20241017143628.2673894-1-parri.andrea@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/vsock_bpf.c | 8 --------
- 1 file changed, 8 deletions(-)
+ arch/riscv/net/bpf_jit_comp64.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/vmw_vsock/vsock_bpf.c b/net/vmw_vsock/vsock_bpf.c
-index c42c5cc18f324..4aa6e74ec2957 100644
---- a/net/vmw_vsock/vsock_bpf.c
-+++ b/net/vmw_vsock/vsock_bpf.c
-@@ -114,14 +114,6 @@ static int vsock_bpf_recvmsg(struct sock *sk, struct msghdr *msg,
- 	return copied;
- }
- 
--/* Copy of original proto with updated sock_map methods */
--static struct proto vsock_bpf_prot = {
--	.close = sock_map_close,
--	.recvmsg = vsock_bpf_recvmsg,
--	.sock_is_readable = sk_msg_is_readable,
--	.unhash = sock_map_unhash,
--};
--
- static void vsock_bpf_rebuild_protos(struct proto *prot, const struct proto *base)
- {
- 	*prot        = *base;
+diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
+index 2f041b5cea970..26eeb39736319 100644
+--- a/arch/riscv/net/bpf_jit_comp64.c
++++ b/arch/riscv/net/bpf_jit_comp64.c
+@@ -555,8 +555,8 @@ static void emit_atomic(u8 rd, u8 rs, s16 off, s32 imm, bool is64,
+ 		     rv_lr_w(r0, 0, rd, 0, 0), ctx);
+ 		jmp_offset = ninsns_rvoff(8);
+ 		emit(rv_bne(RV_REG_T2, r0, jmp_offset >> 1), ctx);
+-		emit(is64 ? rv_sc_d(RV_REG_T3, rs, rd, 0, 0) :
+-		     rv_sc_w(RV_REG_T3, rs, rd, 0, 0), ctx);
++		emit(is64 ? rv_sc_d(RV_REG_T3, rs, rd, 0, 1) :
++		     rv_sc_w(RV_REG_T3, rs, rd, 0, 1), ctx);
+ 		jmp_offset = ninsns_rvoff(-6);
+ 		emit(rv_bne(RV_REG_T3, 0, jmp_offset >> 1), ctx);
+ 		emit(rv_fence(0x3, 0x3), ctx);
 -- 
 2.43.0
 
