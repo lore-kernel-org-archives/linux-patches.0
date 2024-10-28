@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FFA08837;
-	Mon, 28 Oct 2024 06:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BF18837;
+	Mon, 28 Oct 2024 06:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097929; cv=none; b=Tc8ojQ5K4wkW1p82BBLg7zW/YSSOk92ZQ+UtVkz5YR1zJMmF2e8uuAuuH22xotPuR/2aa7sUbOWWpLQED+o2Rgc6S5wnbHwqj6azIz6Fn/yQAmZcC9yMb0FqxsNrdKD/2cjVwDaiNflrxbgUD96z5EMclY0CEIq/woTvFilAZWw=
+	t=1730097932; cv=none; b=uV25bFVms8YCfgSd3Kq9+KeBCMSGIawTIZz9p5J5+OcpyM5C3p8ERIm8wu+vAqcipqL75RC44jobI48U2pASeDfYs/kq7LfJdke4PCOdP8N43SxLm4tACqgY99JrrbesuEWXROTO9y4wDrQKCNVshprI7ajO4A1qnlBrfVrCrbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097929; c=relaxed/simple;
-	bh=zl1d/4TqxWKk/LN7VbKDKBwYQg+cqpf2HreWWSM6W5U=;
+	s=arc-20240116; t=1730097932; c=relaxed/simple;
+	bh=zUCn558kPo7zellLIxqarRHK8DX9AOzcA4dukhVivlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BQlhzHZzyDt19KO/prYeYo5E98GYANXa6fc92fGCjVDRuyOImRGMSbKqAwR+dBhaU1WdfVzgFije+SD5471JVBKhIY5PRwwZtoqAnVl0hYKLDmKZtZ6I1QxDhkE/A509NIEoeWO1xghZ82/511OxD0J9WdcsIEzxyYs3FeZy5VY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ab6aESyN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LCw2zhx8HAUeanR67LTOQI9uocLG+ZAw239wXJf+B6Zuici9dqTAMKXGQ7mx2ba803mNwib+gS6atthCv6+f+bPBmFs6DN1fuKC2NgXMyWpBgqelPKFmGnHtH/TUpAdAHfWJmv6/XQIopc3sdXMXxGPcF7GLU4fzSI2a0cMyrbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNgKf2Pi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ab6aESyN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9DCC4CEC3;
-	Mon, 28 Oct 2024 06:45:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNgKf2Pi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67895C4CEC7;
+	Mon, 28 Oct 2024 06:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097929;
-	bh=zl1d/4TqxWKk/LN7VbKDKBwYQg+cqpf2HreWWSM6W5U=;
+	s=korg; t=1730097931;
+	bh=zUCn558kPo7zellLIxqarRHK8DX9AOzcA4dukhVivlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ab6aESyNwj80Ey1WFHt82J8/L9Wn0/RdpB9ud06TrE4yfb2ziwzmuJBjmtCTFum8W
-	 m/JaO+j4nXAxprTTFa1AkJqPhnTnxyBPJtFJzAYPD1PIaW8phPDsuzCPektIr0wwzn
-	 6v5BiUaPMwyuJpwV406rlRHnlJ8ceemaB6SPWZUU=
+	b=eNgKf2PiYwtUp34QrjWi8qUYQYvfmXW4PQ/1RsRFrRLagg2LzetAgMdcQ2v1cFXlN
+	 a1Lv4XV9zzB2EFFhdeGnIk4sTAIZ+Ou3kHKpdLky+K4lE1ueiVknM/vUI8EArgL4l4
+	 5XZPquMD44HaLNs9Qj2SgTmpYe19vJBzprB/ZH28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koba Ko <kobak@nvidia.com>,
-	"Matthew R. Ochs" <mochs@nvidia.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Shubham Panwar <shubiisp8@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 181/208] ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM handler and context
-Date: Mon, 28 Oct 2024 07:26:01 +0100
-Message-ID: <20241028062311.089277221@linuxfoundation.org>
+Subject: [PATCH 6.6 182/208] ACPI: button: Add DMI quirk for Samsung Galaxy Book2 to fix initial lid detection issue
+Date: Mon, 28 Oct 2024 07:26:02 +0100
+Message-ID: <20241028062311.112559024@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -53,114 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koba Ko <kobak@nvidia.com>
+From: Shubham Panwar <shubiisp8@gmail.com>
 
-commit 088984c8d54c0053fc4ae606981291d741c5924b upstream.
+commit 8fa73ee44daefc884c53a25158c25a4107eb5a94 upstream.
 
-PRMT needs to find the correct type of block to translate the PA-VA
-mapping for EFI runtime services.
+Add a DMI quirk for Samsung Galaxy Book2 to fix an initial lid state
+detection issue.
 
-The issue arises because the PRMT is finding a block of type
-EFI_CONVENTIONAL_MEMORY, which is not appropriate for runtime services
-as described in Section 2.2.2 (Runtime Services) of the UEFI
-Specification [1]. Since the PRM handler is a type of runtime service,
-this causes an exception when the PRM handler is called.
+The _LID device incorrectly returns the lid status as "closed" during
+boot, causing the system to enter a suspend loop right after booting.
 
-    [Firmware Bug]: Unable to handle paging request in EFI runtime service
-    WARNING: CPU: 22 PID: 4330 at drivers/firmware/efi/runtime-wrappers.c:341
-        __efi_queue_work+0x11c/0x170
-    Call trace:
+The quirk ensures that the correct lid state is reported initially,
+preventing the system from immediately suspending after startup.  It
+only addresses the initial lid state detection and ensures proper
+system behavior upon boot.
 
-Let PRMT find a block with EFI_MEMORY_RUNTIME for PRM handler and PRM
-context.
-
-If no suitable block is found, a warning message will be printed, but
-the procedure continues to manage the next PRM handler.
-
-However, if the PRM handler is actually called without proper allocation,
-it would result in a failure during error handling.
-
-By using the correct memory types for runtime services, ensure that the
-PRM handler and the context are properly mapped in the virtual address
-space during runtime, preventing the paging request error.
-
-The issue is really that only memory that has been remapped for runtime
-by the firmware can be used by the PRM handler, and so the region needs
-to have the EFI_MEMORY_RUNTIME attribute.
-
-Link: https://uefi.org/sites/default/files/resources/UEFI_Spec_2_10_Aug29.pdf # [1]
-Fixes: cefc7ca46235 ("ACPI: PRM: implement OperationRegion handler for the PlatformRtMechanism subtype")
+Signed-off-by: Shubham Panwar <shubiisp8@gmail.com>
+Link: https://patch.msgid.link/20241020095045.6036-2-shubiisp8@gmail.com
+[ rjw: Changelog edits ]
 Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Koba Ko <kobak@nvidia.com>
-Reviewed-by: Matthew R. Ochs <mochs@nvidia.com>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://patch.msgid.link/20241012205010.4165798-1-kobak@nvidia.com
-[ rjw: Subject and changelog edits ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/prmt.c |   27 ++++++++++++++++++++++-----
- 1 file changed, 22 insertions(+), 5 deletions(-)
+ drivers/acpi/button.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/acpi/prmt.c
-+++ b/drivers/acpi/prmt.c
-@@ -72,17 +72,21 @@ struct prm_module_info {
- 	struct prm_handler_info handlers[];
+--- a/drivers/acpi/button.c
++++ b/drivers/acpi/button.c
+@@ -130,6 +130,17 @@ static const struct dmi_system_id dmi_li
+ 		},
+ 		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
+ 	},
++	{
++		/*
++		 * Samsung galaxybook2 ,initial _LID device notification returns
++		 * lid closed.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "SAMSUNG ELECTRONICS CO., LTD."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "750XED"),
++		},
++		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
++	},
+ 	{}
  };
  
--static u64 efi_pa_va_lookup(u64 pa)
-+static u64 efi_pa_va_lookup(efi_guid_t *guid, u64 pa)
- {
- 	efi_memory_desc_t *md;
- 	u64 pa_offset = pa & ~PAGE_MASK;
- 	u64 page = pa & PAGE_MASK;
- 
- 	for_each_efi_memory_desc(md) {
--		if (md->phys_addr < pa && pa < md->phys_addr + PAGE_SIZE * md->num_pages)
-+		if ((md->attribute & EFI_MEMORY_RUNTIME) &&
-+		    (md->phys_addr < pa && pa < md->phys_addr + PAGE_SIZE * md->num_pages)) {
- 			return pa_offset + md->virt_addr + page - md->phys_addr;
-+		}
- 	}
- 
-+	pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
-+
- 	return 0;
- }
- 
-@@ -148,9 +152,15 @@ acpi_parse_prmt(union acpi_subtable_head
- 		th = &tm->handlers[cur_handler];
- 
- 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
--		th->handler_addr = (void *)efi_pa_va_lookup(handler_info->handler_address);
--		th->static_data_buffer_addr = efi_pa_va_lookup(handler_info->static_data_buffer_address);
--		th->acpi_param_buffer_addr = efi_pa_va_lookup(handler_info->acpi_param_buffer_address);
-+		th->handler_addr =
-+			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
-+
-+		th->static_data_buffer_addr =
-+			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
-+
-+		th->acpi_param_buffer_addr =
-+			efi_pa_va_lookup(&th->guid, handler_info->acpi_param_buffer_address);
-+
- 	} while (++cur_handler < tm->handler_count && (handler_info = get_next_handler(handler_info)));
- 
- 	return 0;
-@@ -253,6 +263,13 @@ static acpi_status acpi_platformrt_space
- 		if (!handler || !module)
- 			goto invalid_guid;
- 
-+		if (!handler->handler_addr ||
-+		    !handler->static_data_buffer_addr ||
-+		    !handler->acpi_param_buffer_addr) {
-+			buffer->prm_status = PRM_HANDLER_ERROR;
-+			return AE_OK;
-+		}
-+
- 		ACPI_COPY_NAMESEG(context.signature, "PRMC");
- 		context.revision = 0x0;
- 		context.reserved = 0x0;
 
 
