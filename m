@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2115815B10D;
-	Mon, 28 Oct 2024 06:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AD7415B10D;
+	Mon, 28 Oct 2024 06:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097154; cv=none; b=dotRMk/fhTpQUsivfveojmu/eAZy5+K9vgZJ9mdKg/f+zUVaKCFY0g03yT4tbdY+jPFcucgAPCZyUFQzYBUSmoMORXBri14Bw3Q0zDSwjdec9ID0MFkCP3zd1t+9Q7ArOSA7kyZPgTPs1+ysNS17K5R9MTYowlrGkbhGXgoaP9U=
+	t=1730097156; cv=none; b=Amis6f25+muzLSLCbjebgPwktOKw7c8P901GgbdgfGiT/2RMTOYpFVyj8/fF87s2MhSu8/T3Fx1q/OLkswN/sS5cUm+1ovgX24GAcQc2bMa+W28KUXyprobtGUXbwT7myyxghad+/zFw15dMuJcbkMi4M6mrg4XBcmEriu+HLSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097154; c=relaxed/simple;
-	bh=JbxUPpF0xxmAT6ReJ2ouS/6Je1PWCrzdpgjpjy8c4eY=;
+	s=arc-20240116; t=1730097156; c=relaxed/simple;
+	bh=M2A3m6ia6pLsmBRJHqKd0PljowX1RR46bXkemKRlqQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WSysK4QFz2p2xDxEQRQsHwi4LDm7HQEAKnaMAu5EtsGdCLuGc1xebq1T8TGY+tn9zVgcdt8vNhvHf78bNjOPfy4UgOQVOCsyEjq0TbJbdG0pV9b00ksXkvrcoJsZaf2P9G7CM7qz9Rf+sRmzND54H2LyWseg6kXjDWwmYqpZiic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07CRYfwZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q9xqI9urLQzwb7s3+abQ+nTp6mC6abbgfYdsy1Uud2xiPGNtWupggh0MmM4Eo9cy+Ji4Nx9dKdwVQPFGTIjmNtJP2Q2kYEx1F9WbBAko/OpZ/mNEE6YIwkJLeSTweyVVH/zEjCFCbx74DJ++DPpaLFKwSTP1eEYicPfw1nUBZlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxZUV30F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07CRYfwZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F27C4CEC7;
-	Mon, 28 Oct 2024 06:32:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxZUV30F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF654C4CEC7;
+	Mon, 28 Oct 2024 06:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097154;
-	bh=JbxUPpF0xxmAT6ReJ2ouS/6Je1PWCrzdpgjpjy8c4eY=;
+	s=korg; t=1730097156;
+	bh=M2A3m6ia6pLsmBRJHqKd0PljowX1RR46bXkemKRlqQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=07CRYfwZEAq9AxdGO6gIOTO+OD6moLwXUNxX/cdDJIgWiGrZJCZ0ZCBQSEGQXL5lz
-	 /IQuOJ4/GjafyNbOxsTl1sqttw+DyXtFV+bwCZf3FweTJ3yLVaLu7RM9qEFZbwA9oz
-	 mmNXJG0AHgGUjQRybmpUFV76uvNuDt6U6dRtErTU=
+	b=hxZUV30F3FAw/E3JieZqUSBOPXUNNvsD0zyMNMBrZs+VHK70zVo8hbm7/FMAclcj3
+	 FBVR79TwBK0s43mkGwvCK56sod4mmLuanfF3tgOAY8aRUgv52g1aE0072DDPAoXtmh
+	 cl919GON9lzn6kJgDlgbjlyWHeGAuh3zsR0mKmCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Michel <alex.michel@wiedemann-group.com>,
-	Andrew Lunn <andrew@lunn.ch>
-Subject: [PATCH 5.15 79/80] net: phy: dp83822: Fix reset pin definitions
-Date: Mon, 28 Oct 2024 07:25:59 +0100
-Message-ID: <20241028062254.805814568@linuxfoundation.org>
+	Shubham Panwar <shubiisp8@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 70/80] ACPI: button: Add DMI quirk for Samsung Galaxy Book2 to fix initial lid detection issue
+Date: Mon, 28 Oct 2024 07:25:50 +0100
+Message-ID: <20241028062254.555544397@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
 References: <20241028062252.611837461@linuxfoundation.org>
@@ -50,50 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michel Alex <Alex.Michel@wiedemann-group.com>
+From: Shubham Panwar <shubiisp8@gmail.com>
 
-commit de96f6a3003513c796bbe4e23210a446913f5c00 upstream.
+commit 8fa73ee44daefc884c53a25158c25a4107eb5a94 upstream.
 
-This change fixes a rare issue where the PHY fails to detect a link
-due to incorrect reset behavior.
+Add a DMI quirk for Samsung Galaxy Book2 to fix an initial lid state
+detection issue.
 
-The SW_RESET definition was incorrectly assigned to bit 14, which is the
-Digital Restart bit according to the datasheet. This commit corrects
-SW_RESET to bit 15 and assigns DIG_RESTART to bit 14 as per the
-datasheet specifications.
+The _LID device incorrectly returns the lid status as "closed" during
+boot, causing the system to enter a suspend loop right after booting.
 
-The SW_RESET define is only used in the phy_reset function, which fully
-re-initializes the PHY after the reset is performed. The change in the
-bit definitions should not have any negative impact on the functionality
-of the PHY.
+The quirk ensures that the correct lid state is reported initially,
+preventing the system from immediately suspending after startup.  It
+only addresses the initial lid state detection and ensures proper
+system behavior upon boot.
 
-v2:
-- added Fixes tag
-- improved commit message
-
-Cc: stable@vger.kernel.org
-Fixes: 5dc39fd5ef35 ("net: phy: DP83822: Add ability to advertise Fiber connection")
-Signed-off-by: Alex Michel <alex.michel@wiedemann-group.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Message-ID: <AS1P250MB0608A798661549BF83C4B43EA9462@AS1P250MB0608.EURP250.PROD.OUTLOOK.COM>
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Shubham Panwar <shubiisp8@gmail.com>
+Link: https://patch.msgid.link/20241020095045.6036-2-shubiisp8@gmail.com
+[ rjw: Changelog edits ]
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/dp83822.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/button.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/net/phy/dp83822.c
-+++ b/drivers/net/phy/dp83822.c
-@@ -40,8 +40,8 @@
- /* Control Register 2 bits */
- #define DP83822_FX_ENABLE	BIT(14)
+--- a/drivers/acpi/button.c
++++ b/drivers/acpi/button.c
+@@ -130,6 +130,17 @@ static const struct dmi_system_id dmi_li
+ 		},
+ 		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
+ 	},
++	{
++		/*
++		 * Samsung galaxybook2 ,initial _LID device notification returns
++		 * lid closed.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "SAMSUNG ELECTRONICS CO., LTD."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "750XED"),
++		},
++		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
++	},
+ 	{}
+ };
  
--#define DP83822_HW_RESET	BIT(15)
--#define DP83822_SW_RESET	BIT(14)
-+#define DP83822_SW_RESET	BIT(15)
-+#define DP83822_DIG_RESTART	BIT(14)
- 
- /* PHY STS bits */
- #define DP83822_PHYSTS_DUPLEX			BIT(2)
 
 
