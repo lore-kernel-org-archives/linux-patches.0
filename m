@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5325A18E04F;
-	Mon, 28 Oct 2024 06:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9344F18E04F;
+	Mon, 28 Oct 2024 06:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097575; cv=none; b=etc20fhLrBNIEMDa59xRPDtck2f5fQXF/h2/QQRxGMbKrOhU3edke4f2LK6aGcXxElKSLEZHqWeCfbHinWLc+qJTScUake7Ovpf7GZzpuMbv+ARIULSlY5P3iR+O+evGwUbxB/I3N6vgkIBj8CQc5KyoZcnv/l45Ge4NlWQPvRQ=
+	t=1730097577; cv=none; b=srKTr8v5PkVY0cArnef/NfJ/nLBAOzoyS6qTS9anzR8y3ltBH5Lgsy7fmltyAntMGJI795evnWNFU50TWpJUO3SFqF9wWHB+p25CSHINbSMp/CyuEJhVlZ8EW6rdfqvkwtlOmUxpZdAi6c/f4AUKzTHO3cG99jcHMbz033JcHpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097575; c=relaxed/simple;
-	bh=xqdiWWUV82H+T9T5LjSfaZ4zFSGyO9vmEsngRLvWUmM=;
+	s=arc-20240116; t=1730097577; c=relaxed/simple;
+	bh=WIfYuyTNXfGaON5JsAPkMLRUaGatOh1+lSXJoBaRCOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tXlyOUXMCb/vkKHKAgIvE2siHeiXDjUNcAYysKHsVJOuZiwLeBuZfteJQaDi9o2Zlmg8n3WHth5xnwZ8Sxayi9+vq3Dnde4Rgvmrfty2eOZiudZ2REt8LCvXk/9wSGHdN5zatkrXRIYAPKFETr2QkFtvbX/37mZGTtDJ9EcPmds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMgI830x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cs7/n8HpiMq1z/39mlxkbNkT6h9o1ExeEHQp2io4dHs7ZGTzEqAQNu6fyeYxB9iqic9dHT3ZbcaGkk9jqQKlWZwpDja6HCdzZnu/IXtkhX+BASg53zzdLVTuI4D5xnNclEKYz2nAGYKLH+B8JS0Ee003nKxDy5wanZ4LBxA2XPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IbfkiJXR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMgI830x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F1DC4CEC3;
-	Mon, 28 Oct 2024 06:39:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IbfkiJXR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA17C4CEC3;
+	Mon, 28 Oct 2024 06:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097575;
-	bh=xqdiWWUV82H+T9T5LjSfaZ4zFSGyO9vmEsngRLvWUmM=;
+	s=korg; t=1730097577;
+	bh=WIfYuyTNXfGaON5JsAPkMLRUaGatOh1+lSXJoBaRCOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qMgI830xlxy/MvBHk+fcDsxAme61uAwx6UPvzStJUhYv+K5Dw11RiO6B67UbMkYRJ
-	 n8jXQic6GrQQvLjQgDojDbUrIPo2ASctO5BvzKeU9hincLKcdvp5IWoD/nH+rjkR2C
-	 iLl3ecM1uch1LeyfzgDbvGP4jmWc/n5kH/cglPcM=
+	b=IbfkiJXRUh7qkcCpbrcxyPa3WNwJQoJ2CYioNmF19Nb0O390zpja06egATxfubED4
+	 Ky7lOP0bjmOzAXdivsTf4Q4a5cEWfwiQvVLxwFNPxOc5i1TZRgDb0B2LwI1KsrTGlu
+	 3l7raNlzIRvzkWtGBXl3nIgjb3HsttzhYV6g+R4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Jack Xiao <Jack.Xiao@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/208] drm/amd/amdgpu: Fix double unlock in amdgpu_mes_add_ring
-Date: Mon, 28 Oct 2024 07:23:52 +0100
-Message-ID: <20241028062307.939387954@linuxfoundation.org>
+Subject: [PATCH 6.6 053/208] macsec: dont increment counters for an unrelated SA
+Date: Mon, 28 Oct 2024 07:23:53 +0100
+Message-ID: <20241028062307.962782550@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -48,184 +46,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit e7457532cb7167516263150ceae86f36d6ef9683 ]
+[ Upstream commit cf58aefb1332db322060cad4a330d5f9292b0f41 ]
 
-This patch addresses a double unlock issue in the amdgpu_mes_add_ring
-function. The mutex was being unlocked twice under certain error
-conditions, which could lead to undefined behavior.
+On RX, we shouldn't be incrementing the stats for an arbitrary SA in
+case the actual SA hasn't been set up. Those counters are intended to
+track packets for their respective AN when the SA isn't currently
+configured. Due to the way MACsec is implemented, we don't keep
+counters unless the SA is configured, so we can't track those packets,
+and those counters will remain at 0.
 
-The fix ensures that the mutex is unlocked only once before jumping to
-the clean_up_memory label. The unlock operation is moved to just before
-the goto statement within the conditional block that checks the return
-value of amdgpu_ring_init. This prevents the second unlock attempt after
-the clean_up_memory label, which is no longer necessary as the mutex is
-already unlocked by this point in the code flow.
+The RXSC's stats keeps track of those packets without telling us which
+AN they belonged to. We could add counters for non-existent SAs, and
+then find a way to integrate them in the dump to userspace, but I
+don't think it's worth the effort.
 
-This change resolves the potential double unlock and maintains the
-correct mutex handling throughout the function.
-
-Fixes below:
-Commit d0c423b64765 ("drm/amdgpu/mes: use ring for kernel queue
-submission"), leads to the following Smatch static checker warning:
-
-	drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c:1240 amdgpu_mes_add_ring()
-	warn: double unlock '&adev->mes.mutex_hidden' (orig line 1213)
-
-drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-    1143 int amdgpu_mes_add_ring(struct amdgpu_device *adev, int gang_id,
-    1144                         int queue_type, int idx,
-    1145                         struct amdgpu_mes_ctx_data *ctx_data,
-    1146                         struct amdgpu_ring **out)
-    1147 {
-    1148         struct amdgpu_ring *ring;
-    1149         struct amdgpu_mes_gang *gang;
-    1150         struct amdgpu_mes_queue_properties qprops = {0};
-    1151         int r, queue_id, pasid;
-    1152
-    1153         /*
-    1154          * Avoid taking any other locks under MES lock to avoid circular
-    1155          * lock dependencies.
-    1156          */
-    1157         amdgpu_mes_lock(&adev->mes);
-    1158         gang = idr_find(&adev->mes.gang_id_idr, gang_id);
-    1159         if (!gang) {
-    1160                 DRM_ERROR("gang id %d doesn't exist\n", gang_id);
-    1161                 amdgpu_mes_unlock(&adev->mes);
-    1162                 return -EINVAL;
-    1163         }
-    1164         pasid = gang->process->pasid;
-    1165
-    1166         ring = kzalloc(sizeof(struct amdgpu_ring), GFP_KERNEL);
-    1167         if (!ring) {
-    1168                 amdgpu_mes_unlock(&adev->mes);
-    1169                 return -ENOMEM;
-    1170         }
-    1171
-    1172         ring->ring_obj = NULL;
-    1173         ring->use_doorbell = true;
-    1174         ring->is_mes_queue = true;
-    1175         ring->mes_ctx = ctx_data;
-    1176         ring->idx = idx;
-    1177         ring->no_scheduler = true;
-    1178
-    1179         if (queue_type == AMDGPU_RING_TYPE_COMPUTE) {
-    1180                 int offset = offsetof(struct amdgpu_mes_ctx_meta_data,
-    1181                                       compute[ring->idx].mec_hpd);
-    1182                 ring->eop_gpu_addr =
-    1183                         amdgpu_mes_ctx_get_offs_gpu_addr(ring, offset);
-    1184         }
-    1185
-    1186         switch (queue_type) {
-    1187         case AMDGPU_RING_TYPE_GFX:
-    1188                 ring->funcs = adev->gfx.gfx_ring[0].funcs;
-    1189                 ring->me = adev->gfx.gfx_ring[0].me;
-    1190                 ring->pipe = adev->gfx.gfx_ring[0].pipe;
-    1191                 break;
-    1192         case AMDGPU_RING_TYPE_COMPUTE:
-    1193                 ring->funcs = adev->gfx.compute_ring[0].funcs;
-    1194                 ring->me = adev->gfx.compute_ring[0].me;
-    1195                 ring->pipe = adev->gfx.compute_ring[0].pipe;
-    1196                 break;
-    1197         case AMDGPU_RING_TYPE_SDMA:
-    1198                 ring->funcs = adev->sdma.instance[0].ring.funcs;
-    1199                 break;
-    1200         default:
-    1201                 BUG();
-    1202         }
-    1203
-    1204         r = amdgpu_ring_init(adev, ring, 1024, NULL, 0,
-    1205                              AMDGPU_RING_PRIO_DEFAULT, NULL);
-    1206         if (r)
-    1207                 goto clean_up_memory;
-    1208
-    1209         amdgpu_mes_ring_to_queue_props(adev, ring, &qprops);
-    1210
-    1211         dma_fence_wait(gang->process->vm->last_update, false);
-    1212         dma_fence_wait(ctx_data->meta_data_va->last_pt_update, false);
-    1213         amdgpu_mes_unlock(&adev->mes);
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-    1214
-    1215         r = amdgpu_mes_add_hw_queue(adev, gang_id, &qprops, &queue_id);
-    1216         if (r)
-    1217                 goto clean_up_ring;
-                         ^^^^^^^^^^^^^^^^^^
-
-    1218
-    1219         ring->hw_queue_id = queue_id;
-    1220         ring->doorbell_index = qprops.doorbell_off;
-    1221
-    1222         if (queue_type == AMDGPU_RING_TYPE_GFX)
-    1223                 sprintf(ring->name, "gfx_%d.%d.%d", pasid, gang_id, queue_id);
-    1224         else if (queue_type == AMDGPU_RING_TYPE_COMPUTE)
-    1225                 sprintf(ring->name, "compute_%d.%d.%d", pasid, gang_id,
-    1226                         queue_id);
-    1227         else if (queue_type == AMDGPU_RING_TYPE_SDMA)
-    1228                 sprintf(ring->name, "sdma_%d.%d.%d", pasid, gang_id,
-    1229                         queue_id);
-    1230         else
-    1231                 BUG();
-    1232
-    1233         *out = ring;
-    1234         return 0;
-    1235
-    1236 clean_up_ring:
-    1237         amdgpu_ring_fini(ring);
-    1238 clean_up_memory:
-    1239         kfree(ring);
---> 1240         amdgpu_mes_unlock(&adev->mes);
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-    1241         return r;
-    1242 }
-
-Fixes: d0c423b64765 ("drm/amdgpu/mes: use ring for kernel queue submission")
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Hawking Zhang <Hawking.Zhang@amd.com>
-Suggested-by: Jack Xiao <Jack.Xiao@amd.com>
-Reported by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Jack Xiao <Jack.Xiao@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit bfaf1883605fd0c0dbabacd67ed49708470d5ea4)
+Fixes: 91ec9bd57f35 ("macsec: Fix traffic counters/statistics")
+Reported-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/f5ac92aaa5b89343232615f4c03f9f95042c6aa0.1728657709.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/macsec.c | 18 ------------------
+ 1 file changed, 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-index c5c55e132af21..5e3abdd0805b6 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-@@ -1053,8 +1053,10 @@ int amdgpu_mes_add_ring(struct amdgpu_device *adev, int gang_id,
- 
- 	r = amdgpu_ring_init(adev, ring, 1024, NULL, 0,
- 			     AMDGPU_RING_PRIO_DEFAULT, NULL);
--	if (r)
-+	if (r) {
-+		amdgpu_mes_unlock(&adev->mes);
- 		goto clean_up_memory;
-+	}
- 
- 	amdgpu_mes_ring_to_queue_props(adev, ring, &qprops);
- 
-@@ -1087,7 +1089,6 @@ int amdgpu_mes_add_ring(struct amdgpu_device *adev, int gang_id,
- 	amdgpu_ring_fini(ring);
- clean_up_memory:
- 	kfree(ring);
--	amdgpu_mes_unlock(&adev->mes);
- 	return r;
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 778fb77c5a937..2ada8baf815b1 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -151,19 +151,6 @@ static struct macsec_rx_sa *macsec_rxsa_get(struct macsec_rx_sa __rcu *ptr)
+ 	return sa;
  }
+ 
+-static struct macsec_rx_sa *macsec_active_rxsa_get(struct macsec_rx_sc *rx_sc)
+-{
+-	struct macsec_rx_sa *sa = NULL;
+-	int an;
+-
+-	for (an = 0; an < MACSEC_NUM_AN; an++)	{
+-		sa = macsec_rxsa_get(rx_sc->sa[an]);
+-		if (sa)
+-			break;
+-	}
+-	return sa;
+-}
+-
+ static void free_rx_sc_rcu(struct rcu_head *head)
+ {
+ 	struct macsec_rx_sc *rx_sc = container_of(head, struct macsec_rx_sc, rcu_head);
+@@ -1205,15 +1192,12 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 		/* If validateFrames is Strict or the C bit in the
+ 		 * SecTAG is set, discard
+ 		 */
+-		struct macsec_rx_sa *active_rx_sa = macsec_active_rxsa_get(rx_sc);
+ 		if (hdr->tci_an & MACSEC_TCI_C ||
+ 		    secy->validate_frames == MACSEC_VALIDATE_STRICT) {
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsNotUsingSA++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
+ 			DEV_STATS_INC(secy->netdev, rx_errors);
+-			if (active_rx_sa)
+-				this_cpu_inc(active_rx_sa->stats->InPktsNotUsingSA);
+ 			goto drop_nosa;
+ 		}
+ 
+@@ -1223,8 +1207,6 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 		u64_stats_update_begin(&rxsc_stats->syncp);
+ 		rxsc_stats->stats.InPktsUnusedSA++;
+ 		u64_stats_update_end(&rxsc_stats->syncp);
+-		if (active_rx_sa)
+-			this_cpu_inc(active_rx_sa->stats->InPktsUnusedSA);
+ 		goto deliver;
+ 	}
  
 -- 
 2.43.0
