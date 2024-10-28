@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8162C697;
-	Mon, 28 Oct 2024 06:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026242C697;
+	Mon, 28 Oct 2024 06:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097588; cv=none; b=nQJRSdg3j5PkElGwcd228PYxd3M4KJdWb6h7QRXT3KHv60O8/lxvZWrTiVc2wwtdY9ioGlAX2n7TT5K8WZFp2XLJ8TcqB3dJLqslOu34L6Xb6Llo3sTU7sD6vnZy3oYOLICikV/2bJC35JAqDfzF5TNWWWx2UDJYKNzUn7Mv1ZA=
+	t=1730097591; cv=none; b=KARHY2PYIVfkiTuppPaqB6yvgSRKKTGSN/65wHXr3RLHIdBGxyNmthVupYh0ER5vSHO47mDfEgaLBAJANv2mpwsAdeTfWAE+IjoDjIUWCjvo2H63u4xGkR4LozRRAqFsqkzC5zFGkQwbW/W8fdNzETggTS/3Bb5ZcAlKDJ6otxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097588; c=relaxed/simple;
-	bh=utKjMbNYSAvEiTUvHuMgUfG7YbTSlHO81jWOBZWbTB8=;
+	s=arc-20240116; t=1730097591; c=relaxed/simple;
+	bh=CIhdBmEToAOqUfz29ttJ0Xwc4V+XIf6YY6wzTPUSG3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ia3oL+aw5OKG4VF19CHlKSRp5IMg/aTDRvpaYcnX4QtM/M7Eln4VSwHmZlNfEUY76jF9R7LmvCQ61pRGabrLxcN+qfq21unIerV802+ay8OvyYRpKxcuHpK3ckJKnGpHfJRSYs+9nzZknBfnmJsgGxmZL43l4Xlg6+c3Iux8O3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7JA6Sjd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eR1YyfknYXs2kyjVlr1HJ2sSch27UT6nHRfXk50G7TSFpxO+cYM7XJ37EiX/4fzSTPgRk+WUwshD5gG7qgbWtTt2yBBANct53jNipH7yuf5x+8wFxfLw64riMbn1B3IZD3qhAfJ9+ZyWWhMWNUmY0otHVKIlM4qEzls+9DrYNns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/6clBRl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7JA6Sjd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B499C4CEC3;
-	Mon, 28 Oct 2024 06:39:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/6clBRl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F55C4CEC3;
+	Mon, 28 Oct 2024 06:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097588;
-	bh=utKjMbNYSAvEiTUvHuMgUfG7YbTSlHO81jWOBZWbTB8=;
+	s=korg; t=1730097590;
+	bh=CIhdBmEToAOqUfz29ttJ0Xwc4V+XIf6YY6wzTPUSG3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o7JA6Sjd/NJ4Mk/ArCQHwyyHB7fBJifHm/98Ooyzsaxa9LySpYXjUCW3KMVp9uBmF
-	 IcDW9aetr51VXdpfdEs1fZh4hpSLpSCRHTYe3mghS5z0tDO0aS/fYuaN0Du1XCioCn
-	 kq1RO4puyBsf3X1RXtNwerYi5s+MiVPkPj101Pg8=
+	b=a/6clBRloAd4qu4B81AIA8F/eeUqPKQx5QXvwJzdVxAd8mGkx61G+KCCAaK7LPUBB
+	 StjbtUZMQhbHe7UU9L9Ssiyo+vbdT6RKI93YsUlIYIsmUbyDcrVAxh7icZs+XV6t2S
+	 J1edH4zEtj928etXpsPN0WBpPsZFkKgyXpW8t8fY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Zac Ecob <zacecob@protonmail.com>,
-	Dimitar Kanaliev <dimitar.kanaliev@siteground.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Wang Hai <wanghai38@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/208] bpf: Fix truncation bug in coerce_reg_to_size_sx()
-Date: Mon, 28 Oct 2024 07:23:58 +0100
-Message-ID: <20241028062308.084694705@linuxfoundation.org>
+Subject: [PATCH 6.6 059/208] net: systemport: fix potential memory leak in bcm_sysport_xmit()
+Date: Mon, 28 Oct 2024 07:23:59 +0100
+Message-ID: <20241028062308.110062596@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -54,65 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dimitar Kanaliev <dimitar.kanaliev@siteground.com>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit ae67b9fb8c4e981e929a665dcaa070f4b05ebdb4 ]
+[ Upstream commit c401ed1c709948e57945485088413e1bb5e94bd1 ]
 
-coerce_reg_to_size_sx() updates the register state after a sign-extension
-operation. However, there's a bug in the assignment order of the unsigned
-min/max values, leading to incorrect truncation:
+The bcm_sysport_xmit() returns NETDEV_TX_OK without freeing skb
+in case of dma_map_single() fails, add dev_kfree_skb() to fix it.
 
-  0: (85) call bpf_get_prandom_u32#7    ; R0_w=scalar()
-  1: (57) r0 &= 1                       ; R0_w=scalar(smin=smin32=0,smax=umax=smax32=umax32=1,var_off=(0x0; 0x1))
-  2: (07) r0 += 254                     ; R0_w=scalar(smin=umin=smin32=umin32=254,smax=umax=smax32=umax32=255,var_off=(0xfe; 0x1))
-  3: (bf) r0 = (s8)r0                   ; R0_w=scalar(smin=smin32=-2,smax=smax32=-1,umin=umin32=0xfffffffe,umax=0xffffffff,var_off=(0xfffffffffffffffe; 0x1))
-
-In the current implementation, the unsigned 32-bit min/max values
-(u32_min_value and u32_max_value) are assigned directly from the 64-bit
-signed min/max values (s64_min and s64_max):
-
-  reg->umin_value = reg->u32_min_value = s64_min;
-  reg->umax_value = reg->u32_max_value = s64_max;
-
-Due to the chain assigmnent, this is equivalent to:
-
-  reg->u32_min_value = s64_min;  // Unintended truncation
-  reg->umin_value = reg->u32_min_value;
-  reg->u32_max_value = s64_max;  // Unintended truncation
-  reg->umax_value = reg->u32_max_value;
-
-Fixes: 1f9a1ea821ff ("bpf: Support new sign-extension load insns")
-Reported-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Reported-by: Zac Ecob <zacecob@protonmail.com>
-Signed-off-by: Dimitar Kanaliev <dimitar.kanaliev@siteground.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Reviewed-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Link: https://lore.kernel.org/r/20241014121155.92887-2-dimitar.kanaliev@siteground.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 80105befdb4b ("net: systemport: add Broadcom SYSTEMPORT Ethernet MAC driver")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Link: https://patch.msgid.link/20241014145115.44977-1-wanghai38@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/broadcom/bcmsysport.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index d1050479cbb33..28b09ca5525f0 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -6143,10 +6143,10 @@ static void coerce_reg_to_size_sx(struct bpf_reg_state *reg, int size)
- 
- 	/* both of s64_max/s64_min positive or negative */
- 	if ((s64_max >= 0) == (s64_min >= 0)) {
--		reg->smin_value = reg->s32_min_value = s64_min;
--		reg->smax_value = reg->s32_max_value = s64_max;
--		reg->umin_value = reg->u32_min_value = s64_min;
--		reg->umax_value = reg->u32_max_value = s64_max;
-+		reg->s32_min_value = reg->smin_value = s64_min;
-+		reg->s32_max_value = reg->smax_value = s64_max;
-+		reg->u32_min_value = reg->umin_value = s64_min;
-+		reg->u32_max_value = reg->umax_value = s64_max;
- 		reg->var_off = tnum_range(s64_min, s64_max);
- 		return;
+diff --git a/drivers/net/ethernet/broadcom/bcmsysport.c b/drivers/net/ethernet/broadcom/bcmsysport.c
+index bf1611cce974a..49e890a7e04a3 100644
+--- a/drivers/net/ethernet/broadcom/bcmsysport.c
++++ b/drivers/net/ethernet/broadcom/bcmsysport.c
+@@ -1359,6 +1359,7 @@ static netdev_tx_t bcm_sysport_xmit(struct sk_buff *skb,
+ 		netif_err(priv, tx_err, dev, "DMA map failed at %p (len=%d)\n",
+ 			  skb->data, skb_len);
+ 		ret = NETDEV_TX_OK;
++		dev_kfree_skb_any(skb);
+ 		goto out;
  	}
+ 
 -- 
 2.43.0
 
