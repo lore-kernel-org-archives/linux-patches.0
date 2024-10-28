@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8868837;
-	Mon, 28 Oct 2024 06:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FADA8837;
+	Mon, 28 Oct 2024 06:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098281; cv=none; b=q19U9G93UDqc0GuLzemtK64EmsDZb3HCqLQ272W7lwgG4x8TUzqfdWZCI2blP8iJYQKNIIa8U0q1QvFgvQXJqh8JqC3gqorxL+2VWi8/HQRCw9niOMwik3FUHYy4r/F5+MJsuCj9dwvoSApx17PGSNc7MPVmWm9XsNtc+5TcED0=
+	t=1730098283; cv=none; b=c5YRQv8tpLC8QmRTQ7BZCJ+1NPVAPW10JL9fy3WRFh3KrHnJGAlZtl3itwGIip66yby1gWXKEZNne6jeN/V+Qe8l9T02nm4CWncxA7c4OMmG9p3ReemwSBZAVycIDGjaxqKH9fsZpew7odAMSpQWv09Ry6hfNhiKtMArYGhDzXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098281; c=relaxed/simple;
-	bh=T7AiUCfFa68Hu3Yt53wpDXjMnZygg+gSeqHp3EPA4kQ=;
+	s=arc-20240116; t=1730098283; c=relaxed/simple;
+	bh=mwin5plFwmAI2PsiO29dY8ZH2KmN8Y60zhB4kBa1+Bw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tphQhV+kuYeeb+1FcnNIy0fRrj05poMNdiBLzbLSn5gWMbyb57NrQZ9Ds0YZHia2EpshYTkIuOvirzObU2bhzUceQoOKG4KK9brvZCpn/Tux5LGwHrzA0O0+ctUw8Enol06mRNu+iXQ1UBuXXaRblONwSBJvSm91HBXAp5WVDok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0XKvvyK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P4orzA611wIFHxv2JxJKu0My9iuGLDOArGkJnefuXIvYk5NArzIuZeP3TcGbH2snQn64M0woV5pjrHT8Bel14fw5JfuG9cu5/VcnY5dlF4ijZTvhlc9rTZxeyRg7cX2xPofvORm4WOb9IsNPGtVH7eFxuVRdkF72F264sUCsHsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNDfTr7L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0XKvvyK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FC3C4CEC3;
-	Mon, 28 Oct 2024 06:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNDfTr7L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB75FC4CEC3;
+	Mon, 28 Oct 2024 06:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098280;
-	bh=T7AiUCfFa68Hu3Yt53wpDXjMnZygg+gSeqHp3EPA4kQ=;
+	s=korg; t=1730098283;
+	bh=mwin5plFwmAI2PsiO29dY8ZH2KmN8Y60zhB4kBa1+Bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P0XKvvyKzB5bv3f39ghT6bn+/ZKAUCW9wD3Ed7hGic7TVAG0688TEMUf03iK5XALG
-	 xQ935dwkZMPnnlk93gVAk/1OlYgcq+u6PVWa4IZAQR3AAasfSZCgA5XOdifxbOtRuD
-	 J/+j/9V7Q/urkv64Zq0j/2oUXmRzDAlPzemt4vR8=
+	b=FNDfTr7LCfpzXn1MBytJNFJ8EEJVnQvCs/ElHn5PydCSN5bhHnmv01G3UHavlLXEn
+	 M4nSDO5MAvqpj10aRiAGQ/zK5sfwO4nny5KS/nEIhN4SEaTFmpj4rEehGsb1/TYZVz
+	 oFXv6V3iZgSRdW9uWxu8/WIiWbVMlJqoVQVJouBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Loic Poulain <loic.poulain@linaro.org>,
-	Simon Horman <horms@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 157/261] net: wwan: fix global oob in wwan_rtnl_policy
-Date: Mon, 28 Oct 2024 07:24:59 +0100
-Message-ID: <20241028062315.953148325@linuxfoundation.org>
+Subject: [PATCH 6.11 158/261] net: fix races in netdev_tx_sent_queue()/dev_watchdog()
+Date: Mon, 28 Oct 2024 07:25:00 +0100
+Message-ID: <20241028062315.975052857@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -47,111 +47,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 47dd5447cab8ce30a847a0337d5341ae4c7476a7 ]
+[ Upstream commit 95ecba62e2fd201bcdcca636f5d774f1cd4f1458 ]
 
-The variable wwan_rtnl_link_ops assign a *bigger* maxtype which leads to
-a global out-of-bounds read when parsing the netlink attributes. Exactly
-same bug cause as the oob fixed in commit b33fb5b801c6 ("net: qualcomm:
-rmnet: fix global oob in rmnet_policy").
+Some workloads hit the infamous dev_watchdog() message:
 
-==================================================================
-BUG: KASAN: global-out-of-bounds in validate_nla lib/nlattr.c:388 [inline]
-BUG: KASAN: global-out-of-bounds in __nla_validate_parse+0x19d7/0x29a0 lib/nlattr.c:603
-Read of size 1 at addr ffffffff8b09cb60 by task syz.1.66276/323862
+"NETDEV WATCHDOG: eth0 (xxxx): transmit queue XX timed out"
 
-CPU: 0 PID: 323862 Comm: syz.1.66276 Not tainted 6.1.70 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x177/0x231 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:284 [inline]
- print_report+0x14f/0x750 mm/kasan/report.c:395
- kasan_report+0x139/0x170 mm/kasan/report.c:495
- validate_nla lib/nlattr.c:388 [inline]
- __nla_validate_parse+0x19d7/0x29a0 lib/nlattr.c:603
- __nla_parse+0x3c/0x50 lib/nlattr.c:700
- nla_parse_nested_deprecated include/net/netlink.h:1269 [inline]
- __rtnl_newlink net/core/rtnetlink.c:3514 [inline]
- rtnl_newlink+0x7bc/0x1fd0 net/core/rtnetlink.c:3623
- rtnetlink_rcv_msg+0x794/0xef0 net/core/rtnetlink.c:6122
- netlink_rcv_skb+0x1de/0x420 net/netlink/af_netlink.c:2508
- netlink_unicast_kernel net/netlink/af_netlink.c:1326 [inline]
- netlink_unicast+0x74b/0x8c0 net/netlink/af_netlink.c:1352
- netlink_sendmsg+0x882/0xb90 net/netlink/af_netlink.c:1874
- sock_sendmsg_nosec net/socket.c:716 [inline]
- __sock_sendmsg net/socket.c:728 [inline]
- ____sys_sendmsg+0x5cc/0x8f0 net/socket.c:2499
- ___sys_sendmsg+0x21c/0x290 net/socket.c:2553
- __sys_sendmsg net/socket.c:2582 [inline]
- __do_sys_sendmsg net/socket.c:2591 [inline]
- __se_sys_sendmsg+0x19e/0x270 net/socket.c:2589
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x45/0x90 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f67b19a24ad
-RSP: 002b:00007f67b17febb8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-RAX: ffffffffffffffda RBX: 00007f67b1b45f80 RCX: 00007f67b19a24ad
-RDX: 0000000000000000 RSI: 0000000020005e40 RDI: 0000000000000004
-RBP: 00007f67b1a1e01d R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007ffd2513764f R14: 00007ffd251376e0 R15: 00007f67b17fed40
- </TASK>
+It seems possible to hit this even for perfectly normal
+BQL enabled drivers:
 
-The buggy address belongs to the variable:
- wwan_rtnl_policy+0x20/0x40
+1) Assume a TX queue was idle for more than dev->watchdog_timeo
+   (5 seconds unless changed by the driver)
 
-The buggy address belongs to the physical page:
-page:ffffea00002c2700 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0xb09c
-flags: 0xfff00000001000(reserved|node=0|zone=1|lastcpupid=0x7ff)
-raw: 00fff00000001000 ffffea00002c2708 ffffea00002c2708 0000000000000000
-raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-page_owner info is not present (never set?)
+2) Assume a big packet is sent, exceeding current BQL limit.
 
-Memory state around the buggy address:
- ffffffff8b09ca00: 05 f9 f9 f9 05 f9 f9 f9 00 01 f9 f9 00 01 f9 f9
- ffffffff8b09ca80: 00 00 00 05 f9 f9 f9 f9 00 00 03 f9 f9 f9 f9 f9
->ffffffff8b09cb00: 00 00 00 00 05 f9 f9 f9 00 00 00 00 f9 f9 f9 f9
-                                                       ^
- ffffffff8b09cb80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-==================================================================
+3) Driver ndo_start_xmit() puts the packet in TX ring,
+   and netdev_tx_sent_queue() is called.
 
-According to the comment of `nla_parse_nested_deprecated`, use correct size
-`IFLA_WWAN_MAX` here to fix this issue.
+4) QUEUE_STATE_STACK_XOFF could be set from netdev_tx_sent_queue()
+   before txq->trans_start has been written.
 
-Fixes: 88b710532e53 ("wwan: add interface creation support")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20241015131621.47503-1-linma@zju.edu.cn
+5) txq->trans_start is written later, from netdev_start_xmit()
+
+    if (rc == NETDEV_TX_OK)
+          txq_trans_update(txq)
+
+dev_watchdog() running on another cpu could read the old
+txq->trans_start, and then see QUEUE_STATE_STACK_XOFF, because 5)
+did not happen yet.
+
+To solve the issue, write txq->trans_start right before one XOFF bit
+is set :
+
+- _QUEUE_STATE_DRV_XOFF from netif_tx_stop_queue()
+- __QUEUE_STATE_STACK_XOFF from netdev_tx_sent_queue()
+
+>From dev_watchdog(), we have to read txq->state before txq->trans_start.
+
+Add memory barriers to enforce correct ordering.
+
+In the future, we could avoid writing over txq->trans_start for normal
+operations, and rename this field to txq->xoff_start_time.
+
+Fixes: bec251bc8b6a ("net: no longer stop all TX queues in dev_watchdog()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://patch.msgid.link/20241015194118.3951657-1-edumazet@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/wwan_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/netdevice.h | 12 ++++++++++++
+ net/sched/sch_generic.c   |  8 +++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wwan/wwan_core.c b/drivers/net/wwan/wwan_core.c
-index 17431f1b1a0c0..65a7ed4d67660 100644
---- a/drivers/net/wwan/wwan_core.c
-+++ b/drivers/net/wwan/wwan_core.c
-@@ -1038,7 +1038,7 @@ static const struct nla_policy wwan_rtnl_policy[IFLA_WWAN_MAX + 1] = {
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index b26954dc9ed77..93548d71cf697 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -3336,6 +3336,12 @@ static inline void netif_tx_wake_all_queues(struct net_device *dev)
  
- static struct rtnl_link_ops wwan_rtnl_link_ops __read_mostly = {
- 	.kind = "wwan",
--	.maxtype = __IFLA_WWAN_MAX,
-+	.maxtype = IFLA_WWAN_MAX,
- 	.alloc = wwan_rtnl_alloc,
- 	.validate = wwan_rtnl_validate,
- 	.newlink = wwan_rtnl_newlink,
+ static __always_inline void netif_tx_stop_queue(struct netdev_queue *dev_queue)
+ {
++	/* Paired with READ_ONCE() from dev_watchdog() */
++	WRITE_ONCE(dev_queue->trans_start, jiffies);
++
++	/* This barrier is paired with smp_mb() from dev_watchdog() */
++	smp_mb__before_atomic();
++
+ 	/* Must be an atomic op see netif_txq_try_stop() */
+ 	set_bit(__QUEUE_STATE_DRV_XOFF, &dev_queue->state);
+ }
+@@ -3462,6 +3468,12 @@ static inline void netdev_tx_sent_queue(struct netdev_queue *dev_queue,
+ 	if (likely(dql_avail(&dev_queue->dql) >= 0))
+ 		return;
+ 
++	/* Paired with READ_ONCE() from dev_watchdog() */
++	WRITE_ONCE(dev_queue->trans_start, jiffies);
++
++	/* This barrier is paired with smp_mb() from dev_watchdog() */
++	smp_mb__before_atomic();
++
+ 	set_bit(__QUEUE_STATE_STACK_XOFF, &dev_queue->state);
+ 
+ 	/*
+diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
+index 2af24547a82c4..38ec18f73de43 100644
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -512,9 +512,15 @@ static void dev_watchdog(struct timer_list *t)
+ 				struct netdev_queue *txq;
+ 
+ 				txq = netdev_get_tx_queue(dev, i);
+-				trans_start = READ_ONCE(txq->trans_start);
+ 				if (!netif_xmit_stopped(txq))
+ 					continue;
++
++				/* Paired with WRITE_ONCE() + smp_mb...() in
++				 * netdev_tx_sent_queue() and netif_tx_stop_queue().
++				 */
++				smp_mb();
++				trans_start = READ_ONCE(txq->trans_start);
++
+ 				if (time_after(jiffies, trans_start + dev->watchdog_timeo)) {
+ 					timedout_ms = jiffies_to_msecs(jiffies - trans_start);
+ 					atomic_long_inc(&txq->trans_timeout);
 -- 
 2.43.0
 
