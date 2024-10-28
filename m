@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B34B18C03D;
-	Mon, 28 Oct 2024 06:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9619818C03D;
+	Mon, 28 Oct 2024 06:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097501; cv=none; b=OsKD2tzta48Wk5vAW+FifWsRLa58GGYSGeeDve/7IetV+ZaxErepmN594nt0KGLijQA85YzXW4h03FDwGulCm9Js3UhxyzgLymL39ewqfpRDNcC4AaDW4CD3s49Ff2Ts/A+vB9k6SRvMo2EoaS9+A+NwkbnsvVfKqqa1ggcW8DA=
+	t=1730097503; cv=none; b=Tzo8APbUPIWUiCIbkz7TNaTjb4UqkZv03yBIZHhP/hxXzNvsix+SxJeU+3mOP0PW3+DQYPL3m8mEA+H7fBKRoGUj3xwyrvfK0HKzdR8iCjKFXjehM4WEHXidR7m0UYH18+ykmGzKVvEN6ZJPkt3l3Q66ORnogdnYR27dfOIh/hY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097501; c=relaxed/simple;
-	bh=Xb6GExwADol7koVSq/1qU74muGAiKZs1VracmWWMxic=;
+	s=arc-20240116; t=1730097503; c=relaxed/simple;
+	bh=RKYaXSEx+jX3OvC89qVTy1f8SB43jMNheZraKgUqpw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MX6a+2aqFm4mgGcpriM5FIgR2OQnJmMRwOoeMBIarv3KYpjwgR/PMXlM7h91E3VOtozWc8VKlKPYUnU/w/+xH/TPNoYiIegmbcRGYPWB0+ISFkjrv9yqv0DR5eMtrBlNJ/W4JUabW3GhEoCi8m7VhM7muSPwLFeZ7cquf66rKzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZ/6iofZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sZiU8mG8kjJi+VKljdMXhaTnTaiR9sHtLnfMPxjT86MUZK8qW/W6Sj8qLA4K1BrquQSSr/LI7pHMx2nK24mX346syY2sNavn4TTZm/LmWuq2KHGkEomGuNQFgGJ+Az7px0Uj84Tb1obT55n/k+rhhbiCbCwGW+/ZrZCAoZg2mEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVcdMyAy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZ/6iofZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B560C4CEC3;
-	Mon, 28 Oct 2024 06:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVcdMyAy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372FCC4CEC3;
+	Mon, 28 Oct 2024 06:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097501;
-	bh=Xb6GExwADol7koVSq/1qU74muGAiKZs1VracmWWMxic=;
+	s=korg; t=1730097503;
+	bh=RKYaXSEx+jX3OvC89qVTy1f8SB43jMNheZraKgUqpw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gZ/6iofZ7A6VKeLa4gGeay6OoSBlM5ryBbyuTSRl49ZtOOoFh8HdT0krb+olPdjPr
-	 t1eD5WuKR3/XbOvAhh4ZpsxhKgU3nT5eks85YZ5pbOQPDG9X+30jZgYmF1n8bG6eyw
-	 WOS7OIQ0iaiVSxnL+jvz2xVz2GC4Iju8NeOnJzik=
+	b=yVcdMyAyWpilA+Geoc+I+q5uVJtXXD/8/0AlytkKw/IfFjQrXMyB2yubVLmivH30V
+	 tW3QVU6XngAcxOucr4sWJRFs4F385CVvakOnas7SoZzHI/6KD0eoMKG2OgN8UPfOqr
+	 VrjjtMa8jhzWHqvqDZe+8Fr8DWmTn4LDCTMX+fuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Sundberg <simon.sundberg@kau.se>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Florian Kauer <florian.kauer@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/208] bpf: fix kfunc btf caching for modules
-Date: Mon, 28 Oct 2024 07:23:20 +0100
-Message-ID: <20241028062307.155315180@linuxfoundation.org>
+Subject: [PATCH 6.6 003/208] bpf: devmap: provide rxq after redirect
+Date: Mon, 28 Oct 2024 07:23:03 +0100
+Message-ID: <20241028062306.737586768@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -55,77 +54,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Florian Kauer <florian.kauer@linutronix.de>
 
-[ Upstream commit 6cb86a0fdece87e126323ec1bb19deb16a52aedf ]
+[ Upstream commit ca9984c5f0ab3690d98b13937b2485a978c8dd73 ]
 
-The verifier contains a cache for looking up module BTF objects when
-calling kfuncs defined in modules. This cache uses a 'struct
-bpf_kfunc_btf_tab', which contains a sorted list of BTF objects that
-were already seen in the current verifier run, and the BTF objects are
-looked up by the offset stored in the relocated call instruction using
-bsearch().
+rxq contains a pointer to the device from where
+the redirect happened. Currently, the BPF program
+that was executed after a redirect via BPF_MAP_TYPE_DEVMAP*
+does not have it set.
 
-The first time a given offset is seen, the module BTF is loaded from the
-file descriptor passed in by libbpf, and stored into the cache. However,
-there's a bug in the code storing the new entry: it stores a pointer to
-the new cache entry, then calls sort() to keep the cache sorted for the
-next lookup using bsearch(), and then returns the entry that was just
-stored through the stored pointer. However, because sort() modifies the
-list of entries in place *by value*, the stored pointer may no longer
-point to the right entry, in which case the wrong BTF object will be
-returned.
+This is particularly bad since accessing ingress_ifindex, e.g.
 
-The end result of this is an intermittent bug where, if a BPF program
-calls two functions with the same signature in two different modules,
-the function from the wrong module may sometimes end up being called.
-Whether this happens depends on the order of the calls in the BPF
-program (as that affects whether sort() reorders the array of BTF
-objects), making it especially hard to track down. Simon, credited as
-reporter below, spent significant effort analysing and creating a
-reproducer for this issue. The reproducer is added as a selftest in a
-subsequent patch.
+SEC("xdp")
+int prog(struct xdp_md *pkt)
+{
+        return bpf_redirect_map(&dev_redirect_map, 0, 0);
+}
 
-The fix is straight forward: simply don't use the stored pointer after
-calling sort(). Since we already have an on-stack pointer to the BTF
-object itself at the point where the function return, just use that, and
-populate it from the cache entry in the branch where the lookup
-succeeds.
+SEC("xdp/devmap")
+int prog_after_redirect(struct xdp_md *pkt)
+{
+        bpf_printk("ifindex %i", pkt->ingress_ifindex);
+        return XDP_PASS;
+}
 
-Fixes: 2357672c54c3 ("bpf: Introduce BPF support for kernel module function calls")
-Reported-by: Simon Sundberg <simon.sundberg@kau.se>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/r/20241010-fix-kfunc-btf-caching-for-modules-v2-1-745af6c1af98@redhat.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+depends on access to rxq, so a NULL pointer gets dereferenced:
+
+<1>[  574.475170] BUG: kernel NULL pointer dereference, address: 0000000000000000
+<1>[  574.475188] #PF: supervisor read access in kernel mode
+<1>[  574.475194] #PF: error_code(0x0000) - not-present page
+<6>[  574.475199] PGD 0 P4D 0
+<4>[  574.475207] Oops: Oops: 0000 [#1] PREEMPT SMP NOPTI
+<4>[  574.475217] CPU: 4 UID: 0 PID: 217 Comm: kworker/4:1 Not tainted 6.11.0-rc5-reduced-00859-g780801200300 #23
+<4>[  574.475226] Hardware name: Intel(R) Client Systems NUC13ANHi7/NUC13ANBi7, BIOS ANRPL357.0026.2023.0314.1458 03/14/2023
+<4>[  574.475231] Workqueue: mld mld_ifc_work
+<4>[  574.475247] RIP: 0010:bpf_prog_5e13354d9cf5018a_prog_after_redirect+0x17/0x3c
+<4>[  574.475257] Code: cc cc cc cc cc cc cc 80 00 00 00 cc cc cc cc cc cc cc cc f3 0f 1e fa 0f 1f 44 00 00 66 90 55 48 89 e5 f3 0f 1e fa 48 8b 57 20 <48> 8b 52 00 8b 92 e0 00 00 00 48 bf f8 a6 d5 c4 5d a0 ff ff be 0b
+<4>[  574.475263] RSP: 0018:ffffa62440280c98 EFLAGS: 00010206
+<4>[  574.475269] RAX: ffffa62440280cd8 RBX: 0000000000000001 RCX: 0000000000000000
+<4>[  574.475274] RDX: 0000000000000000 RSI: ffffa62440549048 RDI: ffffa62440280ce0
+<4>[  574.475278] RBP: ffffa62440280c98 R08: 0000000000000002 R09: 0000000000000001
+<4>[  574.475281] R10: ffffa05dc8b98000 R11: ffffa05f577fca40 R12: ffffa05dcab24000
+<4>[  574.475285] R13: ffffa62440280ce0 R14: ffffa62440549048 R15: ffffa62440549000
+<4>[  574.475289] FS:  0000000000000000(0000) GS:ffffa05f4f700000(0000) knlGS:0000000000000000
+<4>[  574.475294] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+<4>[  574.475298] CR2: 0000000000000000 CR3: 000000025522e000 CR4: 0000000000f50ef0
+<4>[  574.475303] PKRU: 55555554
+<4>[  574.475306] Call Trace:
+<4>[  574.475313]  <IRQ>
+<4>[  574.475318]  ? __die+0x23/0x70
+<4>[  574.475329]  ? page_fault_oops+0x180/0x4c0
+<4>[  574.475339]  ? skb_pp_cow_data+0x34c/0x490
+<4>[  574.475346]  ? kmem_cache_free+0x257/0x280
+<4>[  574.475357]  ? exc_page_fault+0x67/0x150
+<4>[  574.475368]  ? asm_exc_page_fault+0x26/0x30
+<4>[  574.475381]  ? bpf_prog_5e13354d9cf5018a_prog_after_redirect+0x17/0x3c
+<4>[  574.475386]  bq_xmit_all+0x158/0x420
+<4>[  574.475397]  __dev_flush+0x30/0x90
+<4>[  574.475407]  veth_poll+0x216/0x250 [veth]
+<4>[  574.475421]  __napi_poll+0x28/0x1c0
+<4>[  574.475430]  net_rx_action+0x32d/0x3a0
+<4>[  574.475441]  handle_softirqs+0xcb/0x2c0
+<4>[  574.475451]  do_softirq+0x40/0x60
+<4>[  574.475458]  </IRQ>
+<4>[  574.475461]  <TASK>
+<4>[  574.475464]  __local_bh_enable_ip+0x66/0x70
+<4>[  574.475471]  __dev_queue_xmit+0x268/0xe40
+<4>[  574.475480]  ? selinux_ip_postroute+0x213/0x420
+<4>[  574.475491]  ? alloc_skb_with_frags+0x4a/0x1d0
+<4>[  574.475502]  ip6_finish_output2+0x2be/0x640
+<4>[  574.475512]  ? nf_hook_slow+0x42/0xf0
+<4>[  574.475521]  ip6_finish_output+0x194/0x300
+<4>[  574.475529]  ? __pfx_ip6_finish_output+0x10/0x10
+<4>[  574.475538]  mld_sendpack+0x17c/0x240
+<4>[  574.475548]  mld_ifc_work+0x192/0x410
+<4>[  574.475557]  process_one_work+0x15d/0x380
+<4>[  574.475566]  worker_thread+0x29d/0x3a0
+<4>[  574.475573]  ? __pfx_worker_thread+0x10/0x10
+<4>[  574.475580]  ? __pfx_worker_thread+0x10/0x10
+<4>[  574.475587]  kthread+0xcd/0x100
+<4>[  574.475597]  ? __pfx_kthread+0x10/0x10
+<4>[  574.475606]  ret_from_fork+0x31/0x50
+<4>[  574.475615]  ? __pfx_kthread+0x10/0x10
+<4>[  574.475623]  ret_from_fork_asm+0x1a/0x30
+<4>[  574.475635]  </TASK>
+<4>[  574.475637] Modules linked in: veth br_netfilter bridge stp llc iwlmvm x86_pkg_temp_thermal iwlwifi efivarfs nvme nvme_core
+<4>[  574.475662] CR2: 0000000000000000
+<4>[  574.475668] ---[ end trace 0000000000000000 ]---
+
+Therefore, provide it to the program by setting rxq properly.
+
+Fixes: cb261b594b41 ("bpf: Run devmap xdp_prog on flush instead of bulk enqueue")
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Signed-off-by: Florian Kauer <florian.kauer@linutronix.de>
+Acked-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/r/20240911-devel-koalo-fix-ingress-ifindex-v4-1-5c643ae10258@linutronix.de
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/bpf/devmap.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 3032a464d31bb..d1050479cbb33 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2799,10 +2799,16 @@ static struct btf *__find_kfunc_desc_btf(struct bpf_verifier_env *env,
- 		b->module = mod;
- 		b->offset = offset;
+diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
+index 69e78dc4bb18e..96b0345f76c2c 100644
+--- a/kernel/bpf/devmap.c
++++ b/kernel/bpf/devmap.c
+@@ -322,9 +322,11 @@ static int dev_map_hash_get_next_key(struct bpf_map *map, void *key,
  
-+		/* sort() reorders entries by value, so b may no longer point
-+		 * to the right entry after this
-+		 */
- 		sort(tab->descs, tab->nr_descs, sizeof(tab->descs[0]),
- 		     kfunc_btf_cmp_by_off, NULL);
-+	} else {
-+		btf = b->btf;
+ static int dev_map_bpf_prog_run(struct bpf_prog *xdp_prog,
+ 				struct xdp_frame **frames, int n,
+-				struct net_device *dev)
++				struct net_device *tx_dev,
++				struct net_device *rx_dev)
+ {
+-	struct xdp_txq_info txq = { .dev = dev };
++	struct xdp_txq_info txq = { .dev = tx_dev };
++	struct xdp_rxq_info rxq = { .dev = rx_dev };
+ 	struct xdp_buff xdp;
+ 	int i, nframes = 0;
+ 
+@@ -335,6 +337,7 @@ static int dev_map_bpf_prog_run(struct bpf_prog *xdp_prog,
+ 
+ 		xdp_convert_frame_to_buff(xdpf, &xdp);
+ 		xdp.txq = &txq;
++		xdp.rxq = &rxq;
+ 
+ 		act = bpf_prog_run_xdp(xdp_prog, &xdp);
+ 		switch (act) {
+@@ -349,7 +352,7 @@ static int dev_map_bpf_prog_run(struct bpf_prog *xdp_prog,
+ 			bpf_warn_invalid_xdp_action(NULL, xdp_prog, act);
+ 			fallthrough;
+ 		case XDP_ABORTED:
+-			trace_xdp_exception(dev, xdp_prog, act);
++			trace_xdp_exception(tx_dev, xdp_prog, act);
+ 			fallthrough;
+ 		case XDP_DROP:
+ 			xdp_return_frame_rx_napi(xdpf);
+@@ -377,7 +380,7 @@ static void bq_xmit_all(struct xdp_dev_bulk_queue *bq, u32 flags)
  	}
--	return b->btf;
-+
-+	return btf;
- }
  
- void bpf_free_kfunc_btf_tab(struct bpf_kfunc_btf_tab *tab)
+ 	if (bq->xdp_prog) {
+-		to_send = dev_map_bpf_prog_run(bq->xdp_prog, bq->q, cnt, dev);
++		to_send = dev_map_bpf_prog_run(bq->xdp_prog, bq->q, cnt, dev, bq->dev_rx);
+ 		if (!to_send)
+ 			goto out;
+ 	}
 -- 
 2.43.0
 
