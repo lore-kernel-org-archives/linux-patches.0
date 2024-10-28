@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D991718E37C;
-	Mon, 28 Oct 2024 06:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88CA18E37C;
+	Mon, 28 Oct 2024 06:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097217; cv=none; b=suLOifrknQqtxpqB7m1F3juWy+YU9gbHhk/MYoeFuPkjtVZ0UI2PrRfheetMqPVD0rkc8TswvnPL3PrZTHQuEI6TV+92ArOezyAJJ+83wa235RaPwOlzYzfdn/g855eCLMFvzBm0cdT4GDLCJSyeemqv51oqhvyPCRJVHzLQVNg=
+	t=1730097219; cv=none; b=N5Ax/gef6pudfrq2vjrsMcT+8H9gKnfQ98vX8o3cvzhDUbgf9KR11Pc7dLritcz6+slKiU62HpB1x8FwM5t6Z/LYC0s3gGafZUX9gO89QY8z9JfeK44boQYtw8s1jPQe/eQDP0JPSHQuXzcJRz5yRlmlz1+lPUUVR6+DGKeDVcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097217; c=relaxed/simple;
-	bh=ukMEKbwS1EbOS6HiDq/GWxJyeBCUzINhn7IJ3VdqLKc=;
+	s=arc-20240116; t=1730097219; c=relaxed/simple;
+	bh=YUcrdvQjPTAmtmQxoYiE7PWc0DMWJYq0r+JLMxmyDRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jz0UanXKPX2GkimlW8Snes4mfeQ7khNzjrdm+Jmy+QbIHzvp37kOq4aBhyFyvAv8sQiSwBvPkBjLz2lyntbaEOto/Ur6DaCEenmCDmm9GcdacK51bgqdJa7p+K9ylMAYElPEH/luz/vmOsILEOXxF/IsPXdj7O0L5tA4sUyroRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDchz5/U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cEhjQ/gviRQZ52StDMX3HqpU54nKFXC82BBhydfoNWeYSmAObyH75YXB+Vow7o0U4P0lZ7bNNT6jwJPgWispfTTzHNkh+xVjGaFHl55dKywsxNMecjIY93Ys0ZkWzEfY3irJDiA8KEAfluWIg4rbvpbMMnrCtLMClSX+X/WiyfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8rCs/RK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDchz5/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D640C4CEC7;
-	Mon, 28 Oct 2024 06:33:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8rCs/RK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754D2C4CEC7;
+	Mon, 28 Oct 2024 06:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097217;
-	bh=ukMEKbwS1EbOS6HiDq/GWxJyeBCUzINhn7IJ3VdqLKc=;
+	s=korg; t=1730097219;
+	bh=YUcrdvQjPTAmtmQxoYiE7PWc0DMWJYq0r+JLMxmyDRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eDchz5/UdsQt3/FZHwpaeHhZIOpG/VAhrgkqHa7IQTCpAB9XfhUg3PLW9IZpwPfSW
-	 ZCm4tD0ODLM0gxiz1dI/YOZeTdRB6+PYAJcP3UqqHv4QZLqs4aeHVHF8RFMVYGVEhm
-	 SpdZ8zEdXtEH9J12KLgNy6M1tsZvL5iTZHS3JI6s=
+	b=n8rCs/RKEDSW2E5wHe7WOOlurPqA7m3j89ts0y5jh1fixu9w5ayRkwkBo2RhAC6Kj
+	 SfbkjlRg0QC5EdCC/MsFNhI1ljJp3ykKZzUcwpbhFD9Koi/AZfuDUM5jHwIp+I7ECR
+	 L0rAXKK8HUtyAd6Ll+H7+1Xy4lkIrT/Bxn2ubuyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/137] net: systemport: fix potential memory leak in bcm_sysport_xmit()
-Date: Mon, 28 Oct 2024 07:24:32 +0100
-Message-ID: <20241028062259.706543084@linuxfoundation.org>
+Subject: [PATCH 6.1 036/137] irqchip/renesas-rzg2l: Align struct member names to tabs
+Date: Mon, 28 Oct 2024 07:24:33 +0100
+Message-ID: <20241028062259.733443782@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -51,34 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Hai <wanghai38@huawei.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-[ Upstream commit c401ed1c709948e57945485088413e1bb5e94bd1 ]
+[ Upstream commit 02f6507640173addeeb3af035d2c6f0b3cff1567 ]
 
-The bcm_sysport_xmit() returns NETDEV_TX_OK without freeing skb
-in case of dma_map_single() fails, add dev_kfree_skb() to fix it.
+Align struct member names to tabs to follow the requirements from
+maintainer-tip file. 3 tabs were used at the moment as the next commits
+will add a new member which requires 3 tabs for a better view.
 
-Fixes: 80105befdb4b ("net: systemport: add Broadcom SYSTEMPORT Ethernet MAC driver")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
-Link: https://patch.msgid.link/20241014145115.44977-1-wanghai38@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20231120111820.87398-4-claudiu.beznea.uj@bp.renesas.com
+Stable-dep-of: d038109ac1c6 ("irqchip/renesas-rzg2l: Fix missing put_device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bcmsysport.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/irqchip/irq-renesas-rzg2l.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bcmsysport.c b/drivers/net/ethernet/broadcom/bcmsysport.c
-index 425d6ccd5413a..1693f6c60efc7 100644
---- a/drivers/net/ethernet/broadcom/bcmsysport.c
-+++ b/drivers/net/ethernet/broadcom/bcmsysport.c
-@@ -1348,6 +1348,7 @@ static netdev_tx_t bcm_sysport_xmit(struct sk_buff *skb,
- 		netif_err(priv, tx_err, dev, "DMA map failed at %p (len=%d)\n",
- 			  skb->data, skb_len);
- 		ret = NETDEV_TX_OK;
-+		dev_kfree_skb_any(skb);
- 		goto out;
- 	}
+diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
+index 70279ca7e6278..884379f207d50 100644
+--- a/drivers/irqchip/irq-renesas-rzg2l.c
++++ b/drivers/irqchip/irq-renesas-rzg2l.c
+@@ -56,9 +56,9 @@
+ #define TINT_EXTRACT_GPIOINT(x)         FIELD_GET(GENMASK(31, 16), (x))
  
+ struct rzg2l_irqc_priv {
+-	void __iomem *base;
+-	struct irq_fwspec fwspec[IRQC_NUM_IRQ];
+-	raw_spinlock_t lock;
++	void __iomem			*base;
++	struct irq_fwspec		fwspec[IRQC_NUM_IRQ];
++	raw_spinlock_t			lock;
+ };
+ 
+ static struct rzg2l_irqc_priv *irq_data_to_priv(struct irq_data *data)
 -- 
 2.43.0
 
