@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A883918F2DF;
-	Mon, 28 Oct 2024 06:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491D218FC84;
+	Mon, 28 Oct 2024 06:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097249; cv=none; b=MN4s0xI2iQpoXn3eq8gOdSF1mBYPATGAoTsuKHeSy65v/ylB09Q54PF1XglXXxQ5r6f0tMUByCxmahFYfiKNj24UQS5v4C1CFMrsbKLJG4Po/oHgWxXx0S+ahBDFIxhyKz27cDPA9KpVFFNt2o2u5sqNI12tuITzU1Uk1XwjGJM=
+	t=1730097252; cv=none; b=mO5F9yAd6E00e9qc0BA9uj6GYp3/a/GPnWdGTqMvkrxQhEv14LXvs2m1yG/3e6iLlxfxkX4w5RkUo5z1WrvZ7TtFqn7SaBkHi7iPMBCdbm0ifuTxocYwDDIvtGCeoQFFyXCRAvqzyGe83QWTTo3t7LYAcUDo9I5rOesv9/KdRHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097249; c=relaxed/simple;
-	bh=d1byy/q8zWR7rRgI1+dIRkuuj8duRbNFJUNo6BGPX7Q=;
+	s=arc-20240116; t=1730097252; c=relaxed/simple;
+	bh=T78wH5QcuEKYNuaL74OQSKhMwTuA7XRRO73q4+QXy6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C+3kMmw6q/GkxGRJcSEYTOZQpcswuErq9oPmmTS0KUoa0uJFqG+j838frh6oB/4zHg4uL/P1qIxkX8KF+b6PKJ0a5jsNZj9s9bRh9icCcsw2fOZi0c2YLdoFDnUBQt6pM0h9VZzqo7oWxKGN2NhniZtt8QRfcUi6/C+M3dtQkeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQ99pn4e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s7F5qUgoVYGb3LqoDk59Bg202V6FvPDH5+zCejiAklSlFivGV25sqzFZLHK+QPL/4iY1GAPtR8GNeKlbZcfAjLcPLMqA844UM3ls4kpKEH8yGnN9sjnW8NUAz7rfwQvcK9c/f6RUYl+jMOhZ0CJnLc1hFpk5K97eeuqm5xDP/Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MSAoMtIj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQ99pn4e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4410BC4CEC7;
-	Mon, 28 Oct 2024 06:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MSAoMtIj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83400C4CEC7;
+	Mon, 28 Oct 2024 06:34:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097249;
-	bh=d1byy/q8zWR7rRgI1+dIRkuuj8duRbNFJUNo6BGPX7Q=;
+	s=korg; t=1730097251;
+	bh=T78wH5QcuEKYNuaL74OQSKhMwTuA7XRRO73q4+QXy6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hQ99pn4eXmGq7Hgo9VBdYgZ/6XLkNFt2ub3OhPw6WQ/s8rQmETrvceF0NoDIBQKlB
-	 PQg2uic2sujm7vuysynGtjQBcUQxv5jxtKwgVdUu8jwbUgE3hbXed1zW61h/Fpd+D9
-	 GWVpj7hE9R2UYeXq5dB3giR4qJ2wE2u7sZx4wYM8=
+	b=MSAoMtIjWvDb0XCeZ7csQsfKM+BujoQnILo0ZHaAMoHtH4SfE8VydwOHJ3jXIYHlY
+	 u2aFwDZPZfK0V7g4QcfVUTVBiKi+POY3r6qTJD9ZslKvYKZeVXFm74PCBjtDqcT0jL
+	 Bid1iQaTKpU68YRT2r3TPimEMlA1GhRlZ/qmPLGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 048/137] usb: typec: altmode should keep reference to parent
-Date: Mon, 28 Oct 2024 07:24:45 +0100
-Message-ID: <20241028062300.070179210@linuxfoundation.org>
+Subject: [PATCH 6.1 049/137] s390: Initialize psw mask in perf_arch_fetch_caller_regs()
+Date: Mon, 28 Oct 2024 07:24:46 +0100
+Message-ID: <20241028062300.100100405@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -52,128 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit befab3a278c59db0cc88c8799638064f6d3fd6f8 ]
+[ Upstream commit 223e7fb979fa06934f1595b6ad0ae1d4ead1147f ]
 
-The altmode device release refers to its parent device, but without keeping
-a reference to it.
+Also initialize regs->psw.mask in perf_arch_fetch_caller_regs().
+This way user_mode(regs) will return false, like it should.
 
-When registering the altmode, get a reference to the parent and put it in
-the release function.
+It looks like all current users initialize regs to zero, so that this
+doesn't fix a bug currently. However it is better to not rely on callers
+to do this.
 
-Before this fix, when using CONFIG_DEBUG_KOBJECT_RELEASE, we see issues
-like this:
-
-[   43.572860] kobject: 'port0.0' (ffff8880057ba008): kobject_release, parent 0000000000000000 (delayed 3000)
-[   43.573532] kobject: 'port0.1' (ffff8880057bd008): kobject_release, parent 0000000000000000 (delayed 1000)
-[   43.574407] kobject: 'port0' (ffff8880057b9008): kobject_release, parent 0000000000000000 (delayed 3000)
-[   43.575059] kobject: 'port1.0' (ffff8880057ca008): kobject_release, parent 0000000000000000 (delayed 4000)
-[   43.575908] kobject: 'port1.1' (ffff8880057c9008): kobject_release, parent 0000000000000000 (delayed 4000)
-[   43.576908] kobject: 'typec' (ffff8880062dbc00): kobject_release, parent 0000000000000000 (delayed 4000)
-[   43.577769] kobject: 'port1' (ffff8880057bf008): kobject_release, parent 0000000000000000 (delayed 3000)
-[   46.612867] ==================================================================
-[   46.613402] BUG: KASAN: slab-use-after-free in typec_altmode_release+0x38/0x129
-[   46.614003] Read of size 8 at addr ffff8880057b9118 by task kworker/2:1/48
-[   46.614538]
-[   46.614668] CPU: 2 UID: 0 PID: 48 Comm: kworker/2:1 Not tainted 6.12.0-rc1-00138-gedbae730ad31 #535
-[   46.615391] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-[   46.616042] Workqueue: events kobject_delayed_cleanup
-[   46.616446] Call Trace:
-[   46.616648]  <TASK>
-[   46.616820]  dump_stack_lvl+0x5b/0x7c
-[   46.617112]  ? typec_altmode_release+0x38/0x129
-[   46.617470]  print_report+0x14c/0x49e
-[   46.617769]  ? rcu_read_unlock_sched+0x56/0x69
-[   46.618117]  ? __virt_addr_valid+0x19a/0x1ab
-[   46.618456]  ? kmem_cache_debug_flags+0xc/0x1d
-[   46.618807]  ? typec_altmode_release+0x38/0x129
-[   46.619161]  kasan_report+0x8d/0xb4
-[   46.619447]  ? typec_altmode_release+0x38/0x129
-[   46.619809]  ? process_scheduled_works+0x3cb/0x85f
-[   46.620185]  typec_altmode_release+0x38/0x129
-[   46.620537]  ? process_scheduled_works+0x3cb/0x85f
-[   46.620907]  device_release+0xaf/0xf2
-[   46.621206]  kobject_delayed_cleanup+0x13b/0x17a
-[   46.621584]  process_scheduled_works+0x4f6/0x85f
-[   46.621955]  ? __pfx_process_scheduled_works+0x10/0x10
-[   46.622353]  ? hlock_class+0x31/0x9a
-[   46.622647]  ? lock_acquired+0x361/0x3c3
-[   46.622956]  ? move_linked_works+0x46/0x7d
-[   46.623277]  worker_thread+0x1ce/0x291
-[   46.623582]  ? __kthread_parkme+0xc8/0xdf
-[   46.623900]  ? __pfx_worker_thread+0x10/0x10
-[   46.624236]  kthread+0x17e/0x190
-[   46.624501]  ? kthread+0xfb/0x190
-[   46.624756]  ? __pfx_kthread+0x10/0x10
-[   46.625015]  ret_from_fork+0x20/0x40
-[   46.625268]  ? __pfx_kthread+0x10/0x10
-[   46.625532]  ret_from_fork_asm+0x1a/0x30
-[   46.625805]  </TASK>
-[   46.625953]
-[   46.626056] Allocated by task 678:
-[   46.626287]  kasan_save_stack+0x24/0x44
-[   46.626555]  kasan_save_track+0x14/0x2d
-[   46.626811]  __kasan_kmalloc+0x3f/0x4d
-[   46.627049]  __kmalloc_noprof+0x1bf/0x1f0
-[   46.627362]  typec_register_port+0x23/0x491
-[   46.627698]  cros_typec_probe+0x634/0xbb6
-[   46.628026]  platform_probe+0x47/0x8c
-[   46.628311]  really_probe+0x20a/0x47d
-[   46.628605]  device_driver_attach+0x39/0x72
-[   46.628940]  bind_store+0x87/0xd7
-[   46.629213]  kernfs_fop_write_iter+0x1aa/0x218
-[   46.629574]  vfs_write+0x1d6/0x29b
-[   46.629856]  ksys_write+0xcd/0x13b
-[   46.630128]  do_syscall_64+0xd4/0x139
-[   46.630420]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   46.630820]
-[   46.630946] Freed by task 48:
-[   46.631182]  kasan_save_stack+0x24/0x44
-[   46.631493]  kasan_save_track+0x14/0x2d
-[   46.631799]  kasan_save_free_info+0x3f/0x4d
-[   46.632144]  __kasan_slab_free+0x37/0x45
-[   46.632474]  kfree+0x1d4/0x252
-[   46.632725]  device_release+0xaf/0xf2
-[   46.633017]  kobject_delayed_cleanup+0x13b/0x17a
-[   46.633388]  process_scheduled_works+0x4f6/0x85f
-[   46.633764]  worker_thread+0x1ce/0x291
-[   46.634065]  kthread+0x17e/0x190
-[   46.634324]  ret_from_fork+0x20/0x40
-[   46.634621]  ret_from_fork_asm+0x1a/0x30
-
-Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241004123738.2964524-1-cascardo@igalia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 914d52e46490 ("s390: implement perf_arch_fetch_caller_regs")
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/class.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/s390/include/asm/perf_event.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/typec/class.c b/drivers/usb/typec/class.c
-index ce83f558fe447..3d44e181dbb50 100644
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -503,6 +503,7 @@ static void typec_altmode_release(struct device *dev)
- 		typec_altmode_put_partner(alt);
+diff --git a/arch/s390/include/asm/perf_event.h b/arch/s390/include/asm/perf_event.h
+index b9da71632827f..ea340b9018398 100644
+--- a/arch/s390/include/asm/perf_event.h
++++ b/arch/s390/include/asm/perf_event.h
+@@ -75,6 +75,7 @@ struct perf_sf_sde_regs {
+ #define SAMPLE_FREQ_MODE(hwc)	(SAMPL_FLAGS(hwc) & PERF_CPUM_SF_FREQ_MODE)
  
- 	altmode_id_remove(alt->adev.dev.parent, alt->id);
-+	put_device(alt->adev.dev.parent);
- 	kfree(alt);
- }
- 
-@@ -552,6 +553,8 @@ typec_register_altmode(struct device *parent,
- 	alt->adev.dev.type = &typec_altmode_dev_type;
- 	dev_set_name(&alt->adev.dev, "%s.%u", dev_name(parent), id);
- 
-+	get_device(alt->adev.dev.parent);
-+
- 	/* Link partners and plugs with the ports */
- 	if (!is_port)
- 		typec_altmode_set_partner(alt);
+ #define perf_arch_fetch_caller_regs(regs, __ip) do {			\
++	(regs)->psw.mask = 0;						\
+ 	(regs)->psw.addr = (__ip);					\
+ 	(regs)->gprs[15] = (unsigned long)__builtin_frame_address(0) -	\
+ 		offsetof(struct stack_frame, back_chain);		\
 -- 
 2.43.0
 
