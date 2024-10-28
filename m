@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF31190056;
-	Mon, 28 Oct 2024 06:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D619818A922;
+	Mon, 28 Oct 2024 06:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098001; cv=none; b=TmLhnu7YE/pHw60281piX2uvMIf3JLCSdF8N5OEd+r8FdXCTiKD4sJv551c07ulzYpS+IrI8pqUaPvCu2O8xd++8KbxLsjGfEOkYzaBk5bfIu0dxYCpnuf6s5TD3yiJlCK4CoX+hu33zckFTpEo8ZQZIpn14hEFdBFd46aTCgK4=
+	t=1730098002; cv=none; b=CRVH+mQdZI2oil4WtC7WBk7FbMTcbbPN58zX6ZnXVCsdybVEIu2jmvLEAmx0EF7IwPSw4Nq64Uuu4UTj1CJT7m6nf+nbR2yWn4yu6/mBXWDkz8V106Kr4wsCb8Luc+eH1aQDk13FLtr951WJqI5/ecpqlXIhyGu6poPfxA8VeME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098001; c=relaxed/simple;
-	bh=jYIZAwP9Tyv0trArJqb662ABP4owD5KQ/CZ5fnTEgWE=;
+	s=arc-20240116; t=1730098002; c=relaxed/simple;
+	bh=7oNexWLR4dhJVSk7tRDMf8hDtECDQ6UuHZcBMgBlp+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OSCRBGkXS3GanRB02tlHemZAMBVhZlLI6vyf/+6VBBVWLQbDS8Svv2bZBVjCaCznfrX0oM1QkGZb4eNvgzxF/7bV/aza2wlWSnvP69UFgtca9VVQGBc456WP4sti43/fzWoPq3PRF6A2Wvr5M0+tkfHPLlqjPd2o4QzD4QT4pEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTTa5prL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LmAn23AsH2HJqxtSLvjs+kCZLiMjJJ8pzZ8VYkKGlz8vFRDX3DI/OGE+Bpbii6y+lgOYczRbvJd8cOQTkqea/BmwqN/rWJAo//zWwHs1RpmSKncshIXwOAqftt+b3xgJHZZCK+v3VSw+TOyBxSwmdjWQqZcaLJOF6NhUMUK4s9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFp+AU9s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTTa5prL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 451C3C4CECD;
-	Mon, 28 Oct 2024 06:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFp+AU9s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A5FC4CEC3;
+	Mon, 28 Oct 2024 06:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098000;
-	bh=jYIZAwP9Tyv0trArJqb662ABP4owD5KQ/CZ5fnTEgWE=;
+	s=korg; t=1730098002;
+	bh=7oNexWLR4dhJVSk7tRDMf8hDtECDQ6UuHZcBMgBlp+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BTTa5prLNFkl68etH6+1DUkt59qhGWiOkbJLvkThXOP8ahpa3b3XO2+J/1Y89YbFK
-	 VnYsxZFLI29YgWoSRl/QjG6/3u3byrmYokhyWjnC39FqKJUWvXFDtNBh6vW+nxfdMl
-	 i+4+T+xGDpDx9tnGLYDoQ6HNa7fGvhjj3z1TKH/c=
+	b=dFp+AU9smUk1eU0Qd9xPoi2xsE39bXYBGlYjbmbOd8ZiTzcle9FTBnY0o/uwAFTJg
+	 /ytJeQxkAP5sW/g4PpZRthjoz457f4DK+CLnkgc8Ef0mEhjJ2Mo6B7pGheXaMhFw4B
+	 sWzcpTfnJsH5/ix7tA0HemQHXsN21ZwfZbLwdHvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Breno Leitao <leitao@debian.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 034/261] RDMA/srpt: Make slab cache names unique
-Date: Mon, 28 Oct 2024 07:22:56 +0100
-Message-ID: <20241028062312.866888939@linuxfoundation.org>
+Subject: [PATCH 6.11 035/261] elevator: do not request_module if elevator exists
+Date: Mon, 28 Oct 2024 07:22:57 +0100
+Message-ID: <20241028062312.891339046@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,193 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 4d784c042d164f10fc809e2338457036cd7c653d ]
+[ Upstream commit b4ff6e93bfd0093ce3ffc7322e89fbaa8300488f ]
 
-Since commit 4c39529663b9 ("slab: Warn on duplicate cache names when
-DEBUG_VM=y"), slab complains about duplicate cache names. Hence this
-patch. The approach is as follows:
-- Maintain an xarray with the slab size as index and a reference count
-  and a kmem_cache pointer as contents. Use srpt-${slab_size} as kmem
-  cache name.
-- Use 512-byte alignment for all slabs instead of only for some of the
-  slabs.
-- Increment the reference count instead of calling kmem_cache_create().
-- Decrement the reference count instead of calling kmem_cache_destroy().
+Whenever an I/O elevator is changed, the system attempts to load a
+module for the new elevator. This occurs regardless of whether the
+elevator is already loaded or built directly into the kernel. This
+behavior introduces unnecessary overhead and potential issues.
 
-Fixes: 5dabcd0456d7 ("RDMA/srpt: Add support for immediate data")
-Link: https://patch.msgid.link/r/20241009210048.4122518-1-bvanassche@acm.org
-Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Closes: https://lore.kernel.org/linux-block/xpe6bea7rakpyoyfvspvin2dsozjmjtjktpph7rep3h25tv7fb@ooz4cu5z6bq6/
-Suggested-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+This makes the operation slower, and more error-prone. For instance,
+making the problem fixed by [1] visible for users that doesn't even rely
+on modules being available through modules.
+
+Do not try to load the ioscheduler if it is already visible.
+
+This change brings two main benefits: it improves the performance of
+elevator changes, and it reduces the likelihood of errors occurring
+during this process.
+
+[1] Commit e3accac1a976 ("block: Fix elv_iosched_local_module handling of "none" scheduler")
+
+Fixes: 734e1a860312 ("block: Prevent deadlocks when switching elevators")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://lore.kernel.org/r/20241011170122.3880087-1-leitao@debian.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srpt/ib_srpt.c | 80 +++++++++++++++++++++++----
- 1 file changed, 68 insertions(+), 12 deletions(-)
+ block/elevator.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
-index 9632afbd727b6..5dfb4644446ba 100644
---- a/drivers/infiniband/ulp/srpt/ib_srpt.c
-+++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
-@@ -68,6 +68,8 @@ MODULE_LICENSE("Dual BSD/GPL");
- static u64 srpt_service_guid;
- static DEFINE_SPINLOCK(srpt_dev_lock);	/* Protects srpt_dev_list. */
- static LIST_HEAD(srpt_dev_list);	/* List of srpt_device structures. */
-+static DEFINE_MUTEX(srpt_mc_mutex);	/* Protects srpt_memory_caches. */
-+static DEFINE_XARRAY(srpt_memory_caches); /* See also srpt_memory_cache_entry */
+diff --git a/block/elevator.c b/block/elevator.c
+index 4122026b11f1a..8f155512bcd84 100644
+--- a/block/elevator.c
++++ b/block/elevator.c
+@@ -709,13 +709,21 @@ int elv_iosched_load_module(struct gendisk *disk, const char *buf,
+ 			    size_t count)
+ {
+ 	char elevator_name[ELV_NAME_MAX];
++	struct elevator_type *found;
++	const char *name;
  
- static unsigned srp_max_req_size = DEFAULT_MAX_REQ_SIZE;
- module_param(srp_max_req_size, int, 0444);
-@@ -105,6 +107,63 @@ static void srpt_recv_done(struct ib_cq *cq, struct ib_wc *wc);
- static void srpt_send_done(struct ib_cq *cq, struct ib_wc *wc);
- static void srpt_process_wait_list(struct srpt_rdma_ch *ch);
+ 	if (!elv_support_iosched(disk->queue))
+ 		return -EOPNOTSUPP;
  
-+/* Type of the entries in srpt_memory_caches. */
-+struct srpt_memory_cache_entry {
-+	refcount_t ref;
-+	struct kmem_cache *c;
-+};
+ 	strscpy(elevator_name, buf, sizeof(elevator_name));
++	name = strstrip(elevator_name);
+ 
+-	request_module("%s-iosched", strstrip(elevator_name));
++	spin_lock(&elv_list_lock);
++	found = __elevator_find(name);
++	spin_unlock(&elv_list_lock);
 +
-+static struct kmem_cache *srpt_cache_get(unsigned int object_size)
-+{
-+	struct srpt_memory_cache_entry *e;
-+	char name[32];
-+	void *res;
-+
-+	guard(mutex)(&srpt_mc_mutex);
-+	e = xa_load(&srpt_memory_caches, object_size);
-+	if (e) {
-+		refcount_inc(&e->ref);
-+		return e->c;
-+	}
-+	snprintf(name, sizeof(name), "srpt-%u", object_size);
-+	e = kmalloc(sizeof(*e), GFP_KERNEL);
-+	if (!e)
-+		return NULL;
-+	refcount_set(&e->ref, 1);
-+	e->c = kmem_cache_create(name, object_size, /*align=*/512, 0, NULL);
-+	if (!e->c)
-+		goto free_entry;
-+	res = xa_store(&srpt_memory_caches, object_size, e, GFP_KERNEL);
-+	if (xa_is_err(res))
-+		goto destroy_cache;
-+	return e->c;
-+
-+destroy_cache:
-+	kmem_cache_destroy(e->c);
-+
-+free_entry:
-+	kfree(e);
-+	return NULL;
-+}
-+
-+static void srpt_cache_put(struct kmem_cache *c)
-+{
-+	struct srpt_memory_cache_entry *e = NULL;
-+	unsigned long object_size;
-+
-+	guard(mutex)(&srpt_mc_mutex);
-+	xa_for_each(&srpt_memory_caches, object_size, e)
-+		if (e->c == c)
-+			break;
-+	if (WARN_ON_ONCE(!e))
-+		return;
-+	if (!refcount_dec_and_test(&e->ref))
-+		return;
-+	WARN_ON_ONCE(xa_erase(&srpt_memory_caches, object_size) != e);
-+	kmem_cache_destroy(e->c);
-+	kfree(e);
-+}
-+
- /*
-  * The only allowed channel state changes are those that change the channel
-  * state into a state with a higher numerical value. Hence the new > prev test.
-@@ -2119,13 +2178,13 @@ static void srpt_release_channel_work(struct work_struct *w)
- 			     ch->sport->sdev, ch->rq_size,
- 			     ch->rsp_buf_cache, DMA_TO_DEVICE);
++	if (!found)
++		request_module("%s-iosched", name);
  
--	kmem_cache_destroy(ch->rsp_buf_cache);
-+	srpt_cache_put(ch->rsp_buf_cache);
- 
- 	srpt_free_ioctx_ring((struct srpt_ioctx **)ch->ioctx_recv_ring,
- 			     sdev, ch->rq_size,
- 			     ch->req_buf_cache, DMA_FROM_DEVICE);
- 
--	kmem_cache_destroy(ch->req_buf_cache);
-+	srpt_cache_put(ch->req_buf_cache);
- 
- 	kref_put(&ch->kref, srpt_free_ch);
- }
-@@ -2245,8 +2304,7 @@ static int srpt_cm_req_recv(struct srpt_device *const sdev,
- 	INIT_LIST_HEAD(&ch->cmd_wait_list);
- 	ch->max_rsp_size = ch->sport->port_attrib.srp_max_rsp_size;
- 
--	ch->rsp_buf_cache = kmem_cache_create("srpt-rsp-buf", ch->max_rsp_size,
--					      512, 0, NULL);
-+	ch->rsp_buf_cache = srpt_cache_get(ch->max_rsp_size);
- 	if (!ch->rsp_buf_cache)
- 		goto free_ch;
- 
-@@ -2280,8 +2338,7 @@ static int srpt_cm_req_recv(struct srpt_device *const sdev,
- 		alignment_offset = round_up(imm_data_offset, 512) -
- 			imm_data_offset;
- 		req_sz = alignment_offset + imm_data_offset + srp_max_req_size;
--		ch->req_buf_cache = kmem_cache_create("srpt-req-buf", req_sz,
--						      512, 0, NULL);
-+		ch->req_buf_cache = srpt_cache_get(req_sz);
- 		if (!ch->req_buf_cache)
- 			goto free_rsp_ring;
- 
-@@ -2478,7 +2535,7 @@ static int srpt_cm_req_recv(struct srpt_device *const sdev,
- 			     ch->req_buf_cache, DMA_FROM_DEVICE);
- 
- free_recv_cache:
--	kmem_cache_destroy(ch->req_buf_cache);
-+	srpt_cache_put(ch->req_buf_cache);
- 
- free_rsp_ring:
- 	srpt_free_ioctx_ring((struct srpt_ioctx **)ch->ioctx_ring,
-@@ -2486,7 +2543,7 @@ static int srpt_cm_req_recv(struct srpt_device *const sdev,
- 			     ch->rsp_buf_cache, DMA_TO_DEVICE);
- 
- free_rsp_cache:
--	kmem_cache_destroy(ch->rsp_buf_cache);
-+	srpt_cache_put(ch->rsp_buf_cache);
- 
- free_ch:
- 	if (rdma_cm_id)
-@@ -3055,7 +3112,7 @@ static void srpt_free_srq(struct srpt_device *sdev)
- 	srpt_free_ioctx_ring((struct srpt_ioctx **)sdev->ioctx_ring, sdev,
- 			     sdev->srq_size, sdev->req_buf_cache,
- 			     DMA_FROM_DEVICE);
--	kmem_cache_destroy(sdev->req_buf_cache);
-+	srpt_cache_put(sdev->req_buf_cache);
- 	sdev->srq = NULL;
- }
- 
-@@ -3082,8 +3139,7 @@ static int srpt_alloc_srq(struct srpt_device *sdev)
- 	pr_debug("create SRQ #wr= %d max_allow=%d dev= %s\n", sdev->srq_size,
- 		 sdev->device->attrs.max_srq_wr, dev_name(&device->dev));
- 
--	sdev->req_buf_cache = kmem_cache_create("srpt-srq-req-buf",
--						srp_max_req_size, 0, 0, NULL);
-+	sdev->req_buf_cache = srpt_cache_get(srp_max_req_size);
- 	if (!sdev->req_buf_cache)
- 		goto free_srq;
- 
-@@ -3105,7 +3161,7 @@ static int srpt_alloc_srq(struct srpt_device *sdev)
  	return 0;
- 
- free_cache:
--	kmem_cache_destroy(sdev->req_buf_cache);
-+	srpt_cache_put(sdev->req_buf_cache);
- 
- free_srq:
- 	ib_destroy_srq(srq);
+ }
 -- 
 2.43.0
 
