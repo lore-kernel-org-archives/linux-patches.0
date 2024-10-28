@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB6B18E744;
-	Mon, 28 Oct 2024 06:36:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC90F18E35B;
+	Mon, 28 Oct 2024 06:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097400; cv=none; b=bly0dedPJKOkbuEK6PlU3lI5Ct9kZBvLpRp09LLVii67S7mifGEb2pBpWR1e7qPxnSDrRB2F6FYzM79appjdbvSh+wz4z8CcyBTva3T4zs6XeWviy3wx9+hPHbMWEaDRcpD8EBRbCGefHm8WrIXFRK5LqJfExf2AfNqRkISzgok=
+	t=1730097402; cv=none; b=R5PuJwjOl9Nwr63xlQjMTyZtC1A5suFsksYKiS+TvEx5ZUBBufk0gLUDLtxZ5q7fg4vmkuwp5m606reRz4AhVGos1GtNDSpm1SQPVWnOxZIHgJXsJImQO2FIXreKSYI/uIJEZXnfFUHnghKOL52L+rrnW9asSYj+ZEtDX542lTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097400; c=relaxed/simple;
-	bh=qcoOVpAUIz0Eam5d4BSnw1O3RGaf1KtdjTLIWqmOMD8=;
+	s=arc-20240116; t=1730097402; c=relaxed/simple;
+	bh=sR4Vswl97Y+AZsUhLSF2jY7No8FzqPp8fXpZnEE2Ye4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B0/tEeqCZT41Ig9qKJJB7XYPuEkwzAxRZLOgpl9gx3wLcanwGUZszFH+25yX8x5+BbImGOVyI35yz9wJx3OieHgbVnHrLtIbNs0QqOh+fXArhIzDxZHBSGJxgWRIedj62Y7Nu647t0+nBNhdEcM2aRWgqqp3VW/DAjLQMptePPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=024QJC9J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u8sREBL7gV6gfmoWkWwFFmez+jrpmhtluC6z0rzY5xHYcc19QvD95duvZW5XSHGZ09zLBiTKyo2A2Tlraz1IwwGZSTic7Dw/ck+2SdhRixAa7uOQHxLELYhx7WWbUFkf8ydrC/+oGhoNBHGmZuQKd2vKbE0riO/8YhBVHXsxqXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zN+HLtMK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="024QJC9J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B91EC4CEC3;
-	Mon, 28 Oct 2024 06:36:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zN+HLtMK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE36C4CEC3;
+	Mon, 28 Oct 2024 06:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097400;
-	bh=qcoOVpAUIz0Eam5d4BSnw1O3RGaf1KtdjTLIWqmOMD8=;
+	s=korg; t=1730097402;
+	bh=sR4Vswl97Y+AZsUhLSF2jY7No8FzqPp8fXpZnEE2Ye4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=024QJC9J61S4ds73sVstybgWRHOHDZ7Tc5Jqv/+nRL2D3kY4kIK4e1s/Z/NRE0UoE
-	 HmMXGJYTdm9mBQf2sO8S3jgIVslHo/JRjZkS9p00dL+rja2tQ2nKasf2VniYcwpc3m
-	 WfE13qtbsw21G5fc8YLoE9SB1C1S//52YuIsYAw4=
+	b=zN+HLtMK41a9F16tqSyRWw2ee8he//cKoWyxkO88z6f/OmIkYlWsjhAmebJkT7+hz
+	 WRY7lfVwh+3DJk/RMODBL2H3mniKNsQalXtvENYVo238uI2Fx3wzaJKngKkX3wUiBS
+	 CCudaRtWFyh+M7ObOlF79oVXEe4dsb2rfeBKyOJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Yue Haibing <yuehaibing@huawei.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 115/137] btrfs: fix passing 0 to ERR_PTR in btrfs_search_dir_index_item()
-Date: Mon, 28 Oct 2024 07:25:52 +0100
-Message-ID: <20241028062301.924208050@linuxfoundation.org>
+Subject: [PATCH 6.1 116/137] btrfs: zoned: fix zone unusable accounting for freed reserved extent
+Date: Mon, 28 Oct 2024 07:25:53 +0100
+Message-ID: <20241028062301.955352165@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -51,59 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yue Haibing <yuehaibing@huawei.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-commit 75f49c3dc7b7423d3734f2e4dabe3dac8d064338 upstream.
+commit bf9821ba4792a0d9a2e72803ae7b4341faf3d532 upstream.
 
-The ret may be zero in btrfs_search_dir_index_item() and should not
-passed to ERR_PTR(). Now btrfs_unlink_subvol() is the only caller to
-this, reconstructed it to check ERR_PTR(-ENOENT) while ret >= 0.
+When btrfs reserves an extent and does not use it (e.g, by an error), it
+calls btrfs_free_reserved_extent() to free the reserved extent. In the
+process, it calls btrfs_add_free_space() and then it accounts the region
+bytes as block_group->zone_unusable.
 
-This fixes smatch warnings:
+However, it leaves the space_info->bytes_zone_unusable side not updated. As
+a result, ENOSPC can happen while a space_info reservation succeeded. The
+reservation is fine because the freed region is not added in
+space_info->bytes_zone_unusable, leaving that space as "free". OTOH,
+corresponding block group counts it as zone_unusable and its allocation
+pointer is not rewound, we cannot allocate an extent from that block group.
+That will also negate space_info's async/sync reclaim process, and cause an
+ENOSPC error from the extent allocation process.
 
-fs/btrfs/dir-item.c:353
-  btrfs_search_dir_index_item() warn: passing zero to 'ERR_PTR'
+Fix that by returning the space to space_info->bytes_zone_unusable.
+Ideally, since a bio is not submitted for this reserved region, we should
+return the space to free space and rewind the allocation pointer. But, it
+needs rework on extent allocation handling, so let it work in this way for
+now.
 
-Fixes: 9dcbe16fccbb ("btrfs: use btrfs_for_each_slot in btrfs_search_dir_index_item")
-CC: stable@vger.kernel.org # 6.1+
+Fixes: 169e0da91a21 ("btrfs: zoned: track unusable bytes for zones")
+CC: stable@vger.kernel.org # 5.15+
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/dir-item.c |    4 ++--
- fs/btrfs/inode.c    |    7 ++-----
- 2 files changed, 4 insertions(+), 7 deletions(-)
+ fs/btrfs/block-group.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/btrfs/dir-item.c
-+++ b/fs/btrfs/dir-item.c
-@@ -341,8 +341,8 @@ btrfs_search_dir_index_item(struct btrfs
- 			return di;
- 	}
- 	/* Adjust return code if the key was not found in the next leaf. */
--	if (ret > 0)
--		ret = 0;
-+	if (ret >= 0)
-+		ret = -ENOENT;
- 
- 	return ERR_PTR(ret);
- }
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4532,11 +4532,8 @@ static int btrfs_unlink_subvol(struct bt
- 	 */
- 	if (btrfs_ino(inode) == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID) {
- 		di = btrfs_search_dir_index_item(root, path, dir_ino, &fname.disk_name);
--		if (IS_ERR_OR_NULL(di)) {
--			if (!di)
--				ret = -ENOENT;
--			else
--				ret = PTR_ERR(di);
-+		if (IS_ERR(di)) {
-+			ret = PTR_ERR(di);
- 			btrfs_abort_transaction(trans, ret);
- 			goto out;
- 		}
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -3562,6 +3562,8 @@ void btrfs_free_reserved_bytes(struct bt
+ 	spin_lock(&cache->lock);
+ 	if (cache->ro)
+ 		space_info->bytes_readonly += num_bytes;
++	else if (btrfs_is_zoned(cache->fs_info))
++		space_info->bytes_zone_unusable += num_bytes;
+ 	cache->reserved -= num_bytes;
+ 	space_info->bytes_reserved -= num_bytes;
+ 	space_info->max_extent_size = 0;
 
 
