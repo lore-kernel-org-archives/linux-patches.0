@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E4715B10D;
-	Mon, 28 Oct 2024 06:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D341815B10D;
+	Mon, 28 Oct 2024 06:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097772; cv=none; b=dVQlwV8KxMJ6JHSLpYUrWRmhbtbAbr7rzl/P+XzPYCdJvnQhuAcfczH8ERFtFYHRPWJj0AJRsr6vgNf50x+ASuqS+In4F1zmNnpFacJB6bUSYSai006H9YA7qkzVoCM1PEQj7Zfal6I5xLj8hYd1fOAF+1OoW4bzg2jFEBBu79M=
+	t=1730097774; cv=none; b=V+b2RDsH/wtF58950B5Djh1wVeIXCDIGmSFE+1gtgQcPRa16wo9enO+vSfKDIXKoVBrboYb5iSlvMOesVkk3kvkB+/nyErtAHNQBbM1C34Htiw28vYzDmFg60xR98cIgk5/IE9jl2kN8JRpIJPlNIyLtzatZsIDPQGpX0+XkzoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097772; c=relaxed/simple;
-	bh=WYkxWD+TqtTfkP75AcrjM6G9eJieZecFohxIrp0OJGg=;
+	s=arc-20240116; t=1730097774; c=relaxed/simple;
+	bh=qBncWh9pN0menQ+SXVucsX1E4A4Fnzuew+R50KOHbzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AU9T9aKpTUSHgMpnv2jgGSW+xIYJN6sqIXCGCF+3C4VIilPjI8U/21miJO+M1ys1x62xmkIvSPHFYBUrbeNHQ0+jstxyr4IZD27mxdHMnYxA9e2W5MQeZpHgDzWTNJyxTUx32aT80+z2HmPze98HdK6vAA5/9G27vDEOfzyNvnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6c/5Dqz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h0ttsjuoAgbMTFm9TBara3d6RzwelQm9/1iLkZ9R8jAg4usv+S0hU2rSJ9o6cBSJt7L7ZadCq6gc4gOEPMV+v//riEOuvhMwSslKH88rq06agrl533bjjeC6T06rpL+3FejTbsCdXaY2iNeqCjgy959Men5qqBVxhUpjjP+tdn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrHXy2/T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6c/5Dqz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3662DC4CEC3;
-	Mon, 28 Oct 2024 06:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrHXy2/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72424C4CEC3;
+	Mon, 28 Oct 2024 06:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097772;
-	bh=WYkxWD+TqtTfkP75AcrjM6G9eJieZecFohxIrp0OJGg=;
+	s=korg; t=1730097774;
+	bh=qBncWh9pN0menQ+SXVucsX1E4A4Fnzuew+R50KOHbzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6c/5Dqz3WxnS6Y2l1BhG9HxK16RmtGYtZMUnAIWG0k+vIOVpxzAdkU75lzOB97LX
-	 T9qS9UOF8zexl0EBlI/TpMq9VX9Pc8LlPqer4RA2j1kvQO5xw8+ZEAgAiAJ2raz8lY
-	 F8O1qXnG5laDovH5grIu1ji3sYmW199FNuvQJaPc=
+	b=nrHXy2/T8mhuyIEBMrmyZ6YjwVkMHAGF5XUOcjo1QEhOsX5mlrzhhR8BM8WlHrKka
+	 2pjGeu68v3pMLQ3hX2Ros4CKgI0XaFVrUdvD3IuHX5COvwHPhmt1AIM5fovkxg/Jx3
+	 JGfQQ621ueEg/ShER/l8xq3qFAlSit3NFgeU+sy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <jkeeping@inmusicbrands.com>,
+	stable <stable@kernel.org>,
+	Kevin Groeneveld <kgroeneveld@lenbrook.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 103/208] usb: gadget: f_uac2: fix non-newline-terminated function name
-Date: Mon, 28 Oct 2024 07:24:43 +0100
-Message-ID: <20241028062309.196053173@linuxfoundation.org>
+Subject: [PATCH 6.6 104/208] usb: gadget: f_uac2: fix return value for UAC2_ATTRIBUTE_STRING store
+Date: Mon, 28 Oct 2024 07:24:44 +0100
+Message-ID: <20241028062309.220437978@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -50,46 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Kevin Groeneveld <kgroeneveld@lenbrook.com>
 
-[ Upstream commit e60284b63245b84c3ae352427ed5ff8b79266b91 ]
+[ Upstream commit 9499327714de7bc5cf6c792112c1474932d8ad31 ]
 
-Most writes to configfs handle an optional newline, but do not require
-it.  By using the number of bytes written as the limit for scnprintf()
-it is guaranteed that the final character in the buffer will be
-overwritten.
+The configfs store callback should return the number of bytes consumed
+not the total number of bytes we actually stored. These could differ if
+for example the passed in string had a newline we did not store.
 
-This is expected if it is a newline but is undesirable when a string is
-written "as-is" (as libusbgx does, for example).
+If the returned value does not match the number of bytes written the
+writer might assume a failure or keep trying to write the remaining bytes.
 
-Update the store function to strip an optional newline, matching the
-behaviour of usb_string_copy().
+For example the following command will hang trying to write the final
+newline over and over again (tested on bash 2.05b):
 
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Link: https://lore.kernel.org/r/20240708142553.3995022-1-jkeeping@inmusicbrands.com
+  echo foo > function_name
+
+Fixes: 993a44fa85c1 ("usb: gadget: f_uac2: allow changing interface name via configfs")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Kevin Groeneveld <kgroeneveld@lenbrook.com>
+Link: https://lore.kernel.org/r/20241006232637.4267-1-kgroeneveld@lenbrook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 9499327714de ("usb: gadget: f_uac2: fix return value for UAC2_ATTRIBUTE_STRING store")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_uac2.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_uac2.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/usb/gadget/function/f_uac2.c b/drivers/usb/gadget/function/f_uac2.c
-index 55a4f07bc9cc1..79d1f87c6cc59 100644
+index 79d1f87c6cc59..b3dc5f5164f42 100644
 --- a/drivers/usb/gadget/function/f_uac2.c
 +++ b/drivers/usb/gadget/function/f_uac2.c
-@@ -2060,7 +2060,10 @@ static ssize_t f_uac2_opts_##name##_store(struct config_item *item,	\
- 		goto end;						\
- 	}								\
+@@ -2052,7 +2052,7 @@ static ssize_t f_uac2_opts_##name##_store(struct config_item *item,	\
+ 					  const char *page, size_t len)	\
+ {									\
+ 	struct f_uac2_opts *opts = to_f_uac2_opts(item);		\
+-	int ret = 0;							\
++	int ret = len;							\
  									\
--	ret = scnprintf(opts->name, min(sizeof(opts->name), len),	\
-+	if (len && page[len - 1] == '\n')				\
-+		len--;							\
-+									\
-+	ret = scnprintf(opts->name, min(sizeof(opts->name), len + 1),	\
- 			"%s", page);					\
+ 	mutex_lock(&opts->lock);					\
+ 	if (opts->refcnt) {						\
+@@ -2063,8 +2063,8 @@ static ssize_t f_uac2_opts_##name##_store(struct config_item *item,	\
+ 	if (len && page[len - 1] == '\n')				\
+ 		len--;							\
+ 									\
+-	ret = scnprintf(opts->name, min(sizeof(opts->name), len + 1),	\
+-			"%s", page);					\
++	scnprintf(opts->name, min(sizeof(opts->name), len + 1),		\
++		  "%s", page);						\
  									\
  end:									\
+ 	mutex_unlock(&opts->lock);					\
 -- 
 2.43.0
 
