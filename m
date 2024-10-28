@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F72D15B10D;
-	Mon, 28 Oct 2024 06:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3F015B10D;
+	Mon, 28 Oct 2024 06:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097445; cv=none; b=E0Csj6wETkLrC1KUreifGor3Vq93zsA9DXn91eMPgYwzIYC/Adfnh5AIyF12OtCqQ99ZKYI4g5X9UlwWktrOpRyoSN9hlVXYht7QArdwjPfars+Iftf72KbDsyhMESGpCg2HU9vRGcCKFlSvwO1iInyWzZlBckPq7F5YqlIUUoM=
+	t=1730097447; cv=none; b=IF2au7Qa5gok+pGML4744Vwowo1CBMTzpfWeNYWOM0JQLq2jupqHVuV642HMg0v4PWaxSel7CdiUSj9dL44cSwxgNCQ2naQupXOozuva3tLliZd4eDmEMrw17vLjyXI4ssNHCouBqtnKVh13fbaBMZT+faircoGBobegGwO5iw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097445; c=relaxed/simple;
-	bh=9xPJHNpDSfI4Rib/SdRIGyNGBuOUXL1H4Tg7QyiLAFY=;
+	s=arc-20240116; t=1730097447; c=relaxed/simple;
+	bh=iKmY3qgZBsG6FcMQPEtK7zQvKJnE1rAiwiwFzGEPpMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i/q6lvWCq3mp30JuozuX6ZidqwPSqJHbS6fT+2aqGU4mErl+atP7eXlXBhvGTNKUDKOtBIsG0OxYhPiEErLVPARFC1ar1FGCqUGh6Cm9Ki+TK6LU1mOrnWI/sd/naGl4lftZysdrQqo8g+T6F9b2uTgdHSGI7UYozEP8msgbwrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BvExk9Vv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g1At2lcCmbv0M+dhFoUBU5/j+5OnNIBl4CetGFDhipbgW4NMQOdEfHHJtIE3xvS+0ThpafMEsQ/UCRIFRh6u5XgK/W6YPW7m+MiWRAXOBR6xujmNduVuIkvSmLo6lTxm8/f+I83eVmoKMvTLzmv8Z8TCfAn+kZo7+XHnX6CuTMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJaKfd1A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BvExk9Vv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A33EAC4CEC3;
-	Mon, 28 Oct 2024 06:37:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJaKfd1A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB48C4CEC3;
+	Mon, 28 Oct 2024 06:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097444;
-	bh=9xPJHNpDSfI4Rib/SdRIGyNGBuOUXL1H4Tg7QyiLAFY=;
+	s=korg; t=1730097447;
+	bh=iKmY3qgZBsG6FcMQPEtK7zQvKJnE1rAiwiwFzGEPpMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BvExk9VvlNlGHDllcZdMuTILP9OcPO5eN2t2KmZy7qWv4lLQt61/hfyQn4Xk9teAN
-	 Z9CnottYWbD2uT9oeydM3ZOtpaMYoQlbNU9xNa3MwBEIyI9NXe3xwEZgOMofx1vMpP
-	 mXgoThUyN90piIn1hUFgcz/um5i2XJqHR71OlN2w=
+	b=vJaKfd1AUP1Zfc6NXlWi9dE797AwLz/vahyl9sjvfZKXPihoU2nPAYJLmr2f9McjO
+	 k2lShTIpRpXoESUOX1kewKWvupYYJ0VSreCL9+boIKhjxGPdMsY47HezJe0jv0ML9u
+	 o6tUE4dDEj/QBNvRb9f3VqfowftMUamoxixRQaN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Michel <alex.michel@wiedemann-group.com>,
-	Andrew Lunn <andrew@lunn.ch>
-Subject: [PATCH 6.1 132/137] net: phy: dp83822: Fix reset pin definitions
-Date: Mon, 28 Oct 2024 07:26:09 +0100
-Message-ID: <20241028062302.390732194@linuxfoundation.org>
+	Xinyu Zhang <xizhang@purestorage.com>,
+	Uday Shankar <ushankar@purestorage.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 133/137] block: fix sanity checks in blk_rq_map_user_bvec
+Date: Mon, 28 Oct 2024 07:26:10 +0100
+Message-ID: <20241028062302.417517724@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -50,50 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michel Alex <Alex.Michel@wiedemann-group.com>
+From: Xinyu Zhang <xizhang@purestorage.com>
 
-commit de96f6a3003513c796bbe4e23210a446913f5c00 upstream.
+commit 2ff949441802a8d076d9013c7761f63e8ae5a9bd upstream.
 
-This change fixes a rare issue where the PHY fails to detect a link
-due to incorrect reset behavior.
+blk_rq_map_user_bvec contains a check bytes + bv->bv_len > nr_iter which
+causes unnecessary failures in NVMe passthrough I/O, reproducible as
+follows:
 
-The SW_RESET definition was incorrectly assigned to bit 14, which is the
-Digital Restart bit according to the datasheet. This commit corrects
-SW_RESET to bit 15 and assigns DIG_RESTART to bit 14 as per the
-datasheet specifications.
+- register a 2 page, page-aligned buffer against a ring
+- use that buffer to do a 1 page io_uring NVMe passthrough read
 
-The SW_RESET define is only used in the phy_reset function, which fully
-re-initializes the PHY after the reset is performed. The change in the
-bit definitions should not have any negative impact on the functionality
-of the PHY.
+The second (i = 1) iteration of the loop in blk_rq_map_user_bvec will
+then have nr_iter == 1 page, bytes == 1 page, bv->bv_len == 1 page, so
+the check bytes + bv->bv_len > nr_iter will succeed, causing the I/O to
+fail. This failure is unnecessary, as when the check succeeds, it means
+we've checked the entire buffer that will be used by the request - i.e.
+blk_rq_map_user_bvec should complete successfully. Therefore, terminate
+the loop early and return successfully when the check bytes + bv->bv_len
+> nr_iter succeeds.
 
-v2:
-- added Fixes tag
-- improved commit message
+While we're at it, also remove the check that all segments in the bvec
+are single-page. While this seems to be true for all users of the
+function, it doesn't appear to be required anywhere downstream.
 
-Cc: stable@vger.kernel.org
-Fixes: 5dc39fd5ef35 ("net: phy: DP83822: Add ability to advertise Fiber connection")
-Signed-off-by: Alex Michel <alex.michel@wiedemann-group.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Message-ID: <AS1P250MB0608A798661549BF83C4B43EA9462@AS1P250MB0608.EURP250.PROD.OUTLOOK.COM>
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+CC: stable@vger.kernel.org
+Signed-off-by: Xinyu Zhang <xizhang@purestorage.com>
+Co-developed-by: Uday Shankar <ushankar@purestorage.com>
+Signed-off-by: Uday Shankar <ushankar@purestorage.com>
+Fixes: 37987547932c ("block: extend functionality to map bvec iterator")
+Link: https://lore.kernel.org/r/20241023211519.4177873-1-ushankar@purestorage.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/dp83822.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/blk-map.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/net/phy/dp83822.c
-+++ b/drivers/net/phy/dp83822.c
-@@ -40,8 +40,8 @@
- /* Control Register 2 bits */
- #define DP83822_FX_ENABLE	BIT(14)
+--- a/block/blk-map.c
++++ b/block/blk-map.c
+@@ -597,9 +597,7 @@ static int blk_rq_map_user_bvec(struct r
+ 		if (nsegs >= nr_segs || bytes > UINT_MAX - bv->bv_len)
+ 			goto put_bio;
+ 		if (bytes + bv->bv_len > nr_iter)
+-			goto put_bio;
+-		if (bv->bv_offset + bv->bv_len > PAGE_SIZE)
+-			goto put_bio;
++			break;
  
--#define DP83822_HW_RESET	BIT(15)
--#define DP83822_SW_RESET	BIT(14)
-+#define DP83822_SW_RESET	BIT(15)
-+#define DP83822_DIG_RESTART	BIT(14)
- 
- /* PHY STS bits */
- #define DP83822_PHYSTS_DUPLEX			BIT(2)
+ 		nsegs++;
+ 		bytes += bv->bv_len;
 
 
