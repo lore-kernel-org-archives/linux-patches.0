@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16072AF07;
-	Mon, 28 Oct 2024 06:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D0F2AF07;
+	Mon, 28 Oct 2024 06:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098511; cv=none; b=Uru9vszOViIJ1Qi/XDC7sXINqHbOaBuOgoOC2kwk7BohCvAAjyeaowpi4jCoG66zQ5vir8r05NUv7oJlmq4Pgfej8gvZZEmiXbuYg+VG9QqNif8YtcW3RUk4wJ34ZrXnXGfYabYLwYBHH1QWuaIOt/VkSoqDIShg8xERnMnskY0=
+	t=1730098513; cv=none; b=sFLuXXtJetxDFAACgTn4Ic+6Oi5RqW3Sg+ydssLod9yDXAuCnFMOugjXCl+dc/NezOzK4DULllkJWbgKap9akU44oiCf+Y25hs7GT50ZTu69Cl50Iv7s5NMxPM0ED9t31vHduZa0nOPN40Qp3qchHc9enrb/32XBwdzmM9u54YE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098511; c=relaxed/simple;
-	bh=Q6cpx5RdZN5gegGY5VOUjOXnqr04zC42B0RI21qfZoU=;
+	s=arc-20240116; t=1730098513; c=relaxed/simple;
+	bh=ypXm9Ud+ZwbKuI4aKS5Dw50Jw71+SRm2ZiuXfOmahjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oktSgh3fwDm6tg5M1HgRQ4tom96TNJTGvTB85qvZO+PLJZQLlaKM1Cci5e1CdLvSudPxccMxPR+DUIQNwq3um5mvAwPbA68d+OSNlsElPajcf6RT0t8O8rLWxuvLpj2LLyQ1lMQ7PoVsl2mF6jbUNDEshbROYc7xBVbVKw0DS8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wYK3xVWf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NwcSUy9PmbhyAr3xIHs3k/ctIEQn8b72p6Ifkq+hfM5doagX8prFC1I0jtD4/GISv2Bf6gZZWU2soGeZURcnLDi4qg5zcw0HR+l+gv7bFp477NUt8j4s3PXTK2of0LsLLpclsqZ87R7z4M1J4TYO62M0FSbCudj/gDVFFtzE9jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBAzuo58; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wYK3xVWf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41054C4CEC3;
-	Mon, 28 Oct 2024 06:55:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBAzuo58"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C6BC4CEC3;
+	Mon, 28 Oct 2024 06:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098511;
-	bh=Q6cpx5RdZN5gegGY5VOUjOXnqr04zC42B0RI21qfZoU=;
+	s=korg; t=1730098513;
+	bh=ypXm9Ud+ZwbKuI4aKS5Dw50Jw71+SRm2ZiuXfOmahjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wYK3xVWfpIHKaf7dMf1pXa0b3d+/xHl/OuzuRnIWnSHZZ9VslRJfq5I5PuC3lCU88
-	 JZNtfR6oDf4BLzuFnWi0/gaMvzV2LEQ0IarSbB/M3jl/yzgEVOP57TIy3+ahkFsRHl
-	 YsuAyeRaHic5WVUcCpJb37jL0vXAcN3xgyrf6tMo=
+	b=HBAzuo58OZGVre+LxaA0cJbILU7sIZcAfWbTekGbCQJoExh/RlzjJy1+5H+bIGSA3
+	 I0LOnoLIQLdDonmyqyElrMED8QE7prQK+ZE7iLbaVitGfPTPcTJJB6dmZM1M8ntUgN
+	 Zwes4Rm8lPHIY93NQ6A4TckbK+OiWKsuEjMnkh/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 6.11 252/261] Revert "fs/9p: remove redundant pointer v9ses"
-Date: Mon, 28 Oct 2024 07:26:34 +0100
-Message-ID: <20241028062318.422163907@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.11 261/261] ASoC: qcom: Select missing common Soundwire module code on SDM845
+Date: Mon, 28 Oct 2024 07:26:43 +0100
+Message-ID: <20241028062318.622277699@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -50,64 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit fedd06210b14febfa69e09d0721746749ea9ea20 upstream.
+commit b930d8647869802a0d430aae6b1b05c3acb24a41 upstream.
 
-This reverts commit 10211b4a23cf4a3df5c11a10e5b3d371f16a906f.
+SDM845 sound card driver uses qcom_snd_sdw_startup() from the common
+Soundwire module, so select it to fix build failures:
 
-This is a requirement to revert commit 724a08450f74 ("fs/9p: simplify
-iget to remove unnecessary paths"), see that revert for details.
+  ERROR: modpost: "qcom_snd_sdw_startup" [sound/soc/qcom/snd-soc-sdm845.ko] undefined!
 
-Fixes: 724a08450f74 ("fs/9p: simplify iget to remove unnecessary paths")
-Reported-by: Will Deacon <will@kernel.org>
-Link: https://lkml.kernel.org/r/20240923100508.GA32066@willie-the-truck
-Cc: stable@vger.kernel.org # v6.9+
-Message-ID: <20241024-revert_iget-v1-2-4cac63d25f72@codewreck.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: d0e806b0cc62 ("ASoC: qcom: sdm845: add missing soundwire runtime stream alloc")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20241012100957.129103-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/9p/vfs_inode_dotl.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/qcom/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
-index 55dde186041a..2b313fe7003e 100644
---- a/fs/9p/vfs_inode_dotl.c
-+++ b/fs/9p/vfs_inode_dotl.c
-@@ -297,6 +297,7 @@ static int v9fs_vfs_mkdir_dotl(struct mnt_idmap *idmap,
- 			       umode_t omode)
- {
- 	int err;
-+	struct v9fs_session_info *v9ses;
- 	struct p9_fid *fid = NULL, *dfid = NULL;
- 	kgid_t gid;
- 	const unsigned char *name;
-@@ -306,6 +307,7 @@ static int v9fs_vfs_mkdir_dotl(struct mnt_idmap *idmap,
- 	struct posix_acl *dacl = NULL, *pacl = NULL;
- 
- 	p9_debug(P9_DEBUG_VFS, "name %pd\n", dentry);
-+	v9ses = v9fs_inode2v9ses(dir);
- 
- 	omode |= S_IFDIR;
- 	if (dir->i_mode & S_ISGID)
-@@ -737,6 +739,7 @@ v9fs_vfs_mknod_dotl(struct mnt_idmap *idmap, struct inode *dir,
- 	kgid_t gid;
- 	const unsigned char *name;
- 	umode_t mode;
-+	struct v9fs_session_info *v9ses;
- 	struct p9_fid *fid = NULL, *dfid = NULL;
- 	struct inode *inode;
- 	struct p9_qid qid;
-@@ -746,6 +749,7 @@ v9fs_vfs_mknod_dotl(struct mnt_idmap *idmap, struct inode *dir,
- 		 dir->i_ino, dentry, omode,
- 		 MAJOR(rdev), MINOR(rdev));
- 
-+	v9ses = v9fs_inode2v9ses(dir);
- 	dfid = v9fs_parent_fid(dentry);
- 	if (IS_ERR(dfid)) {
- 		err = PTR_ERR(dfid);
--- 
-2.47.0
-
+--- a/sound/soc/qcom/Kconfig
++++ b/sound/soc/qcom/Kconfig
+@@ -157,6 +157,7 @@ config SND_SOC_SDM845
+ 	depends on COMMON_CLK
+ 	select SND_SOC_QDSP6
+ 	select SND_SOC_QCOM_COMMON
++	select SND_SOC_QCOM_SDW
+ 	select SND_SOC_RT5663
+ 	select SND_SOC_MAX98927
+ 	imply SND_SOC_CROS_EC_CODEC
 
 
