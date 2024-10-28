@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0F718E35B;
-	Mon, 28 Oct 2024 06:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E67718E03A;
+	Mon, 28 Oct 2024 06:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097793; cv=none; b=q+QKTwTxHpTeOkQJb1vOW8tNulh3KdS1wSKasUcfbQkhJ1zfZm/KgLd+ppzCDbL0wsugwL5+3a/kmjmUadjZsoVhtifcEbjB5bMInYwE/k5DVgY/JN21eWuY+H4CqQSPz4jG6uzcDLjqM+jyk5y/AugXn83Mj2xg7exgJyZ65kA=
+	t=1730097795; cv=none; b=u0Iw+Ep1Em3iRigDfUS4AcWclgTp74jsvslvVYlKeFLxFCSdoO3xeZyHrTNThFCshkVx2bgZfpm8wvpUWmwxi6F+sxGMcdtRtE/N9/oFEBpgArWyFTgE/uPuaeGvCQQGcCX6byFZX+2A4KlE48ZgfksVc1t9q4AQAbQ+DcSl8dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097793; c=relaxed/simple;
-	bh=i/7HG7mlXVwWn8yUYinDWqlsmdtZTMfddQxtj5LWs1g=;
+	s=arc-20240116; t=1730097795; c=relaxed/simple;
+	bh=yzwlwWWpPbFn2uLujSPkNNBlL1ZeZ9UlK7CshMGo/nQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m8vK3LjBZrWa45MMQeLdxXn50zmj5WL36pJpQzb2kQGwVq+K5UNh7iEFX7NJveBE3AOv+uan8RnbXX5pqMxOoZrWQLU8WyxQgRzgcmUARp8tR4KnsHNcWDzbR5xAYGZNEFQdIqPUoo3nes+EGczKZguYe60A7Y8qq9eoVZIV/cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AC/rsdx/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RpqPf4rlzb4D/hGQq1Ybna6NaCXzbn1/5JHGgvIBANLNqlIv+89CR1u0nr3FO55rTFIU3MTC5S2+ipxAkeH7ehFM2qaQgxQ1wE/5tkKGED4amz1h9wg8RCYKcqW5ajsq2XVvh4ldYsVVCUkVNrjIf35bYmMpL/3VVOqQHskn1ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SbdFLL3g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AC/rsdx/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8576CC4CEC3;
-	Mon, 28 Oct 2024 06:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SbdFLL3g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BB7C4CEC3;
+	Mon, 28 Oct 2024 06:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097792;
-	bh=i/7HG7mlXVwWn8yUYinDWqlsmdtZTMfddQxtj5LWs1g=;
+	s=korg; t=1730097795;
+	bh=yzwlwWWpPbFn2uLujSPkNNBlL1ZeZ9UlK7CshMGo/nQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AC/rsdx/ZZyNBiUVD5RMFwtgjaHxXDpGnVn27hUijH6BWi8qAoYtmpZ4uiaKj8MSJ
-	 Qk/aVW5q2qCyleOKF/Jjs20oAz63X63i+xVx6gfJwlxgMQRpYcWOgR90X8nsAuSdRZ
-	 6uy2LXcCCMYrGk4EE3oaKEa6yFcoDBxq99bPuX/s=
+	b=SbdFLL3gNRcB6lzcG5MIJVXDlxugLSkHLYPeAd5nZYMlywWNeTCtw0xpMQPXUtCHI
+	 /utPwaaxmorlb9EKA5hsHe/XvjB6OfVBWqtuRu6psN/8oPGM/dp8q8S/WOvdpXR2wz
+	 e9ikk049n1Ci0lFr2nUM3p4X47Q9BmZY7ZnNVFEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lonial Con <kongln9170@gmail.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 150/208] bpf: Add MEM_WRITE attribute
-Date: Mon, 28 Oct 2024 07:25:30 +0100
-Message-ID: <20241028062310.321738812@linuxfoundation.org>
+Subject: [PATCH 6.6 151/208] bpf: Fix overloading of MEM_UNINITs meaning
+Date: Mon, 28 Oct 2024 07:25:31 +0100
+Message-ID: <20241028062310.345950272@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -54,193 +55,265 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 6fad274f06f038c29660aa53fbad14241c9fd976 ]
+[ Upstream commit 8ea607330a39184f51737c6ae706db7fdca7628e ]
 
-Add a MEM_WRITE attribute for BPF helper functions which can be used in
-bpf_func_proto to annotate an argument type in order to let the verifier
-know that the helper writes into the memory passed as an argument. In
-the past MEM_UNINIT has been (ab)used for this function, but the latter
-merely tells the verifier that the passed memory can be uninitialized.
+Lonial reported an issue in the BPF verifier where check_mem_size_reg()
+has the following code:
 
-There have been bugs with overloading the latter but aside from that
-there are also cases where the passed memory is read + written which
-currently cannot be expressed, see also 4b3786a6c539 ("bpf: Zero former
-ARG_PTR_TO_{LONG,INT} args in case of error").
+    if (!tnum_is_const(reg->var_off))
+        /* For unprivileged variable accesses, disable raw
+         * mode so that the program is required to
+         * initialize all the memory that the helper could
+         * just partially fill up.
+         */
+         meta = NULL;
 
+This means that writes are not checked when the register containing the
+size of the passed buffer has not a fixed size. Through this bug, a BPF
+program can write to a map which is marked as read-only, for example,
+.rodata global maps.
+
+The problem is that MEM_UNINIT's initial meaning that "the passed buffer
+to the BPF helper does not need to be initialized" which was added back
+in commit 435faee1aae9 ("bpf, verifier: add ARG_PTR_TO_RAW_STACK type")
+got overloaded over time with "the passed buffer is being written to".
+
+The problem however is that checks such as the above which were added later
+via 06c1c049721a ("bpf: allow helpers access to variable memory") set meta
+to NULL in order force the user to always initialize the passed buffer to
+the helper. Due to the current double meaning of MEM_UNINIT, this bypasses
+verifier write checks to the memory (not boundary checks though) and only
+assumes the latter memory is read instead.
+
+Fix this by reverting MEM_UNINIT back to its original meaning, and having
+MEM_WRITE as an annotation to BPF helpers in order to then trigger the
+BPF verifier checks for writing to memory.
+
+Some notes: check_arg_pair_ok() ensures that for ARG_CONST_SIZE{,_OR_ZERO}
+we can access fn->arg_type[arg - 1] since it must contain a preceding
+ARG_PTR_TO_MEM. For check_mem_reg() the meta argument can be removed
+altogether since we do check both BPF_READ and BPF_WRITE. Same for the
+equivalent check_kfunc_mem_size_reg().
+
+Fixes: 7b3552d3f9f6 ("bpf: Reject writes for PTR_TO_MAP_KEY in check_helper_mem_access")
+Fixes: 97e6d7dab1ca ("bpf: Check PTR_TO_MEM | MEM_RDONLY in check_helper_mem_access")
+Fixes: 15baa55ff5b0 ("bpf/verifier: allow all functions to read user provided context")
+Reported-by: Lonial Con <kongln9170@gmail.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20241021152809.33343-1-daniel@iogearbox.net
+Link: https://lore.kernel.org/r/20241021152809.33343-2-daniel@iogearbox.net
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 8ea607330a39 ("bpf: Fix overloading of MEM_UNINIT's meaning")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h      | 14 +++++++++++---
- kernel/bpf/helpers.c     | 10 +++++-----
- kernel/bpf/ringbuf.c     |  2 +-
- kernel/bpf/syscall.c     |  2 +-
- kernel/trace/bpf_trace.c |  4 ++--
- net/core/filter.c        |  4 ++--
- 6 files changed, 22 insertions(+), 14 deletions(-)
+ kernel/bpf/verifier.c | 73 +++++++++++++++++++++----------------------
+ 1 file changed, 35 insertions(+), 38 deletions(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index 1e05cc80e0485..5a27fd533fabc 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -616,6 +616,7 @@ enum bpf_type_flag {
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index f24d570d67ca5..03b5797b8fca9 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -7198,7 +7198,8 @@ static int check_stack_range_initialized(
+ }
+ 
+ static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
+-				   int access_size, bool zero_size_allowed,
++				   int access_size, enum bpf_access_type access_type,
++				   bool zero_size_allowed,
+ 				   struct bpf_call_arg_meta *meta)
+ {
+ 	struct bpf_reg_state *regs = cur_regs(env), *reg = &regs[regno];
+@@ -7210,7 +7211,7 @@ static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
+ 		return check_packet_access(env, regno, reg->off, access_size,
+ 					   zero_size_allowed);
+ 	case PTR_TO_MAP_KEY:
+-		if (meta && meta->raw_mode) {
++		if (access_type == BPF_WRITE) {
+ 			verbose(env, "R%d cannot write into %s\n", regno,
+ 				reg_type_str(env, reg->type));
+ 			return -EACCES;
+@@ -7218,15 +7219,13 @@ static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
+ 		return check_mem_region_access(env, regno, reg->off, access_size,
+ 					       reg->map_ptr->key_size, false);
+ 	case PTR_TO_MAP_VALUE:
+-		if (check_map_access_type(env, regno, reg->off, access_size,
+-					  meta && meta->raw_mode ? BPF_WRITE :
+-					  BPF_READ))
++		if (check_map_access_type(env, regno, reg->off, access_size, access_type))
+ 			return -EACCES;
+ 		return check_map_access(env, regno, reg->off, access_size,
+ 					zero_size_allowed, ACCESS_HELPER);
+ 	case PTR_TO_MEM:
+ 		if (type_is_rdonly_mem(reg->type)) {
+-			if (meta && meta->raw_mode) {
++			if (access_type == BPF_WRITE) {
+ 				verbose(env, "R%d cannot write into %s\n", regno,
+ 					reg_type_str(env, reg->type));
+ 				return -EACCES;
+@@ -7237,7 +7236,7 @@ static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
+ 					       zero_size_allowed);
+ 	case PTR_TO_BUF:
+ 		if (type_is_rdonly_mem(reg->type)) {
+-			if (meta && meta->raw_mode) {
++			if (access_type == BPF_WRITE) {
+ 				verbose(env, "R%d cannot write into %s\n", regno,
+ 					reg_type_str(env, reg->type));
+ 				return -EACCES;
+@@ -7265,7 +7264,6 @@ static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
+ 		 * Dynamically check it now.
+ 		 */
+ 		if (!env->ops->convert_ctx_access) {
+-			enum bpf_access_type atype = meta && meta->raw_mode ? BPF_WRITE : BPF_READ;
+ 			int offset = access_size - 1;
+ 
+ 			/* Allow zero-byte read from PTR_TO_CTX */
+@@ -7273,7 +7271,7 @@ static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
+ 				return zero_size_allowed ? 0 : -EACCES;
+ 
+ 			return check_mem_access(env, env->insn_idx, regno, offset, BPF_B,
+-						atype, -1, false, false);
++						access_type, -1, false, false);
+ 		}
+ 
+ 		fallthrough;
+@@ -7292,6 +7290,7 @@ static int check_helper_mem_access(struct bpf_verifier_env *env, int regno,
+ 
+ static int check_mem_size_reg(struct bpf_verifier_env *env,
+ 			      struct bpf_reg_state *reg, u32 regno,
++			      enum bpf_access_type access_type,
+ 			      bool zero_size_allowed,
+ 			      struct bpf_call_arg_meta *meta)
+ {
+@@ -7307,15 +7306,12 @@ static int check_mem_size_reg(struct bpf_verifier_env *env,
  	 */
- 	PTR_UNTRUSTED		= BIT(6 + BPF_BASE_TYPE_BITS),
+ 	meta->msize_max_value = reg->umax_value;
  
-+	/* MEM can be uninitialized. */
- 	MEM_UNINIT		= BIT(7 + BPF_BASE_TYPE_BITS),
- 
- 	/* DYNPTR points to memory local to the bpf program. */
-@@ -681,6 +682,13 @@ enum bpf_type_flag {
+-	/* The register is SCALAR_VALUE; the access check
+-	 * happens using its boundaries.
++	/* The register is SCALAR_VALUE; the access check happens using
++	 * its boundaries. For unprivileged variable accesses, disable
++	 * raw mode so that the program is required to initialize all
++	 * the memory that the helper could just partially fill up.
  	 */
- 	MEM_ALIGNED		= BIT(17 + BPF_BASE_TYPE_BITS),
+ 	if (!tnum_is_const(reg->var_off))
+-		/* For unprivileged variable accesses, disable raw
+-		 * mode so that the program is required to
+-		 * initialize all the memory that the helper could
+-		 * just partially fill up.
+-		 */
+ 		meta = NULL;
  
-+	/* MEM is being written to, often combined with MEM_UNINIT. Non-presence
-+	 * of MEM_WRITE means that MEM is only being read. MEM_WRITE without the
-+	 * MEM_UNINIT means that memory needs to be initialized since it is also
-+	 * read.
-+	 */
-+	MEM_WRITE		= BIT(18 + BPF_BASE_TYPE_BITS),
+ 	if (reg->smin_value < 0) {
+@@ -7335,9 +7331,8 @@ static int check_mem_size_reg(struct bpf_verifier_env *env,
+ 			regno);
+ 		return -EACCES;
+ 	}
+-	err = check_helper_mem_access(env, regno - 1,
+-				      reg->umax_value,
+-				      zero_size_allowed, meta);
++	err = check_helper_mem_access(env, regno - 1, reg->umax_value,
++				      access_type, zero_size_allowed, meta);
+ 	if (!err)
+ 		err = mark_chain_precision(env, regno);
+ 	return err;
+@@ -7348,13 +7343,11 @@ int check_mem_reg(struct bpf_verifier_env *env, struct bpf_reg_state *reg,
+ {
+ 	bool may_be_null = type_may_be_null(reg->type);
+ 	struct bpf_reg_state saved_reg;
+-	struct bpf_call_arg_meta meta;
+ 	int err;
+ 
+ 	if (register_is_null(reg))
+ 		return 0;
+ 
+-	memset(&meta, 0, sizeof(meta));
+ 	/* Assuming that the register contains a value check if the memory
+ 	 * access is safe. Temporarily save and restore the register's state as
+ 	 * the conversion shouldn't be visible to a caller.
+@@ -7364,10 +7357,8 @@ int check_mem_reg(struct bpf_verifier_env *env, struct bpf_reg_state *reg,
+ 		mark_ptr_not_null_reg(reg);
+ 	}
+ 
+-	err = check_helper_mem_access(env, regno, mem_size, true, &meta);
+-	/* Check access for BPF_WRITE */
+-	meta.raw_mode = true;
+-	err = err ?: check_helper_mem_access(env, regno, mem_size, true, &meta);
++	err = check_helper_mem_access(env, regno, mem_size, BPF_READ, true, NULL);
++	err = err ?: check_helper_mem_access(env, regno, mem_size, BPF_WRITE, true, NULL);
+ 
+ 	if (may_be_null)
+ 		*reg = saved_reg;
+@@ -7393,13 +7384,12 @@ static int check_kfunc_mem_size_reg(struct bpf_verifier_env *env, struct bpf_reg
+ 		mark_ptr_not_null_reg(mem_reg);
+ 	}
+ 
+-	err = check_mem_size_reg(env, reg, regno, true, &meta);
+-	/* Check access for BPF_WRITE */
+-	meta.raw_mode = true;
+-	err = err ?: check_mem_size_reg(env, reg, regno, true, &meta);
++	err = check_mem_size_reg(env, reg, regno, BPF_READ, true, &meta);
++	err = err ?: check_mem_size_reg(env, reg, regno, BPF_WRITE, true, &meta);
+ 
+ 	if (may_be_null)
+ 		*mem_reg = saved_reg;
 +
- 	__BPF_TYPE_FLAG_MAX,
- 	__BPF_TYPE_LAST_FLAG	= __BPF_TYPE_FLAG_MAX - 1,
- };
-@@ -738,10 +746,10 @@ enum bpf_arg_type {
- 	ARG_PTR_TO_SOCKET_OR_NULL	= PTR_MAYBE_NULL | ARG_PTR_TO_SOCKET,
- 	ARG_PTR_TO_STACK_OR_NULL	= PTR_MAYBE_NULL | ARG_PTR_TO_STACK,
- 	ARG_PTR_TO_BTF_ID_OR_NULL	= PTR_MAYBE_NULL | ARG_PTR_TO_BTF_ID,
--	/* pointer to memory does not need to be initialized, helper function must fill
--	 * all bytes or clear them in error case.
-+	/* Pointer to memory does not need to be initialized, since helper function
-+	 * fills all bytes or clears them in error case.
- 	 */
--	ARG_PTR_TO_UNINIT_MEM		= MEM_UNINIT | ARG_PTR_TO_MEM,
-+	ARG_PTR_TO_UNINIT_MEM		= MEM_UNINIT | MEM_WRITE | ARG_PTR_TO_MEM,
- 	/* Pointer to valid memory of size known at compile time. */
- 	ARG_PTR_TO_FIXED_SIZE_MEM	= MEM_FIXED_SIZE | ARG_PTR_TO_MEM,
+ 	return err;
+ }
  
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index 3dba5bb294d8e..41d62405c8521 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -110,7 +110,7 @@ const struct bpf_func_proto bpf_map_pop_elem_proto = {
- 	.gpl_only	= false,
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_CONST_MAP_PTR,
--	.arg2_type	= ARG_PTR_TO_MAP_VALUE | MEM_UNINIT,
-+	.arg2_type	= ARG_PTR_TO_MAP_VALUE | MEM_UNINIT | MEM_WRITE,
- };
- 
- BPF_CALL_2(bpf_map_peek_elem, struct bpf_map *, map, void *, value)
-@@ -123,7 +123,7 @@ const struct bpf_func_proto bpf_map_peek_elem_proto = {
- 	.gpl_only	= false,
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_CONST_MAP_PTR,
--	.arg2_type	= ARG_PTR_TO_MAP_VALUE | MEM_UNINIT,
-+	.arg2_type	= ARG_PTR_TO_MAP_VALUE | MEM_UNINIT | MEM_WRITE,
- };
- 
- BPF_CALL_3(bpf_map_lookup_percpu_elem, struct bpf_map *, map, void *, key, u32, cpu)
-@@ -538,7 +538,7 @@ const struct bpf_func_proto bpf_strtol_proto = {
- 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
- 	.arg2_type	= ARG_CONST_SIZE,
- 	.arg3_type	= ARG_ANYTHING,
--	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg4_size	= sizeof(s64),
- };
- 
-@@ -568,7 +568,7 @@ const struct bpf_func_proto bpf_strtoul_proto = {
- 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
- 	.arg2_type	= ARG_CONST_SIZE,
- 	.arg3_type	= ARG_ANYTHING,
--	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg4_size	= sizeof(u64),
- };
- 
-@@ -1607,7 +1607,7 @@ static const struct bpf_func_proto bpf_dynptr_from_mem_proto = {
- 	.arg1_type	= ARG_PTR_TO_UNINIT_MEM,
- 	.arg2_type	= ARG_CONST_SIZE_OR_ZERO,
- 	.arg3_type	= ARG_ANYTHING,
--	.arg4_type	= ARG_PTR_TO_DYNPTR | DYNPTR_TYPE_LOCAL | MEM_UNINIT,
-+	.arg4_type	= ARG_PTR_TO_DYNPTR | DYNPTR_TYPE_LOCAL | MEM_UNINIT | MEM_WRITE,
- };
- 
- BPF_CALL_5(bpf_dynptr_read, void *, dst, u32, len, const struct bpf_dynptr_kern *, src,
-diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
-index 238d9b206bbde..246559c3e93d0 100644
---- a/kernel/bpf/ringbuf.c
-+++ b/kernel/bpf/ringbuf.c
-@@ -632,7 +632,7 @@ const struct bpf_func_proto bpf_ringbuf_reserve_dynptr_proto = {
- 	.arg1_type	= ARG_CONST_MAP_PTR,
- 	.arg2_type	= ARG_ANYTHING,
- 	.arg3_type	= ARG_ANYTHING,
--	.arg4_type	= ARG_PTR_TO_DYNPTR | DYNPTR_TYPE_RINGBUF | MEM_UNINIT,
-+	.arg4_type	= ARG_PTR_TO_DYNPTR | DYNPTR_TYPE_RINGBUF | MEM_UNINIT | MEM_WRITE,
- };
- 
- BPF_CALL_2(bpf_ringbuf_submit_dynptr, struct bpf_dynptr_kern *, ptr, u64, flags)
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index b43302c80cac5..8a1cadc1ff9dd 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -5689,7 +5689,7 @@ static const struct bpf_func_proto bpf_kallsyms_lookup_name_proto = {
- 	.arg1_type	= ARG_PTR_TO_MEM,
- 	.arg2_type	= ARG_CONST_SIZE_OR_ZERO,
- 	.arg3_type	= ARG_ANYTHING,
--	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg4_size	= sizeof(u64),
- };
- 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index bbdc4199748bd..ecc86a595b754 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -1220,7 +1220,7 @@ static const struct bpf_func_proto bpf_get_func_arg_proto = {
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_PTR_TO_CTX,
- 	.arg2_type	= ARG_ANYTHING,
--	.arg3_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg3_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg3_size	= sizeof(u64),
- };
- 
-@@ -1237,7 +1237,7 @@ static const struct bpf_func_proto bpf_get_func_ret_proto = {
- 	.func		= get_func_ret,
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type	= ARG_PTR_TO_CTX,
--	.arg2_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg2_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg2_size	= sizeof(u64),
- };
- 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index bbb1432488430..a7d928345b1f4 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -6310,7 +6310,7 @@ static const struct bpf_func_proto bpf_skb_check_mtu_proto = {
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type      = ARG_PTR_TO_CTX,
- 	.arg2_type      = ARG_ANYTHING,
--	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg3_size	= sizeof(u32),
- 	.arg4_type      = ARG_ANYTHING,
- 	.arg5_type      = ARG_ANYTHING,
-@@ -6322,7 +6322,7 @@ static const struct bpf_func_proto bpf_xdp_check_mtu_proto = {
- 	.ret_type	= RET_INTEGER,
- 	.arg1_type      = ARG_PTR_TO_CTX,
- 	.arg2_type      = ARG_ANYTHING,
--	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
-+	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
- 	.arg3_size	= sizeof(u32),
- 	.arg4_type      = ARG_ANYTHING,
- 	.arg5_type      = ARG_ANYTHING,
+@@ -8585,9 +8575,8 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
+ 			verbose(env, "invalid map_ptr to access map->key\n");
+ 			return -EACCES;
+ 		}
+-		err = check_helper_mem_access(env, regno,
+-					      meta->map_ptr->key_size, false,
+-					      NULL);
++		err = check_helper_mem_access(env, regno, meta->map_ptr->key_size,
++					      BPF_READ, false, NULL);
+ 		break;
+ 	case ARG_PTR_TO_MAP_VALUE:
+ 		if (type_may_be_null(arg_type) && register_is_null(reg))
+@@ -8602,9 +8591,9 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
+ 			return -EACCES;
+ 		}
+ 		meta->raw_mode = arg_type & MEM_UNINIT;
+-		err = check_helper_mem_access(env, regno,
+-					      meta->map_ptr->value_size, false,
+-					      meta);
++		err = check_helper_mem_access(env, regno, meta->map_ptr->value_size,
++					      arg_type & MEM_WRITE ? BPF_WRITE : BPF_READ,
++					      false, meta);
+ 		break;
+ 	case ARG_PTR_TO_PERCPU_BTF_ID:
+ 		if (!reg->btf_id) {
+@@ -8646,7 +8635,9 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
+ 		 */
+ 		meta->raw_mode = arg_type & MEM_UNINIT;
+ 		if (arg_type & MEM_FIXED_SIZE) {
+-			err = check_helper_mem_access(env, regno, fn->arg_size[arg], false, meta);
++			err = check_helper_mem_access(env, regno, fn->arg_size[arg],
++						      arg_type & MEM_WRITE ? BPF_WRITE : BPF_READ,
++						      false, meta);
+ 			if (err)
+ 				return err;
+ 			if (arg_type & MEM_ALIGNED)
+@@ -8654,10 +8645,16 @@ static int check_func_arg(struct bpf_verifier_env *env, u32 arg,
+ 		}
+ 		break;
+ 	case ARG_CONST_SIZE:
+-		err = check_mem_size_reg(env, reg, regno, false, meta);
++		err = check_mem_size_reg(env, reg, regno,
++					 fn->arg_type[arg - 1] & MEM_WRITE ?
++					 BPF_WRITE : BPF_READ,
++					 false, meta);
+ 		break;
+ 	case ARG_CONST_SIZE_OR_ZERO:
+-		err = check_mem_size_reg(env, reg, regno, true, meta);
++		err = check_mem_size_reg(env, reg, regno,
++					 fn->arg_type[arg - 1] & MEM_WRITE ?
++					 BPF_WRITE : BPF_READ,
++					 true, meta);
+ 		break;
+ 	case ARG_PTR_TO_DYNPTR:
+ 		err = process_dynptr_func(env, regno, insn_idx, arg_type, 0);
 -- 
 2.43.0
 
