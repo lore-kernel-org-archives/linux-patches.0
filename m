@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0CF18DF8B;
-	Mon, 28 Oct 2024 06:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49C718E047;
+	Mon, 28 Oct 2024 06:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730096850; cv=none; b=rkfySvxRLlxu4uLEyVb29uX3kPyuNGYKVCRK7FQFIhxudpWrgtggqNrS5ECi1huE5ROsutGx+wkGcAflZIU1hWRZu5yBlWOg3+GoK2Eiz0EO06O56QRZTwjXBLtx/5itIERAoDSrMdL6gCqhOPvkYTZFBUkT7wfqDWEOdTMrk14=
+	t=1730096852; cv=none; b=DqvfdmoucdFAG5O4H918S/1xcoedQhvNMhR5bU4Gr/nnxLfDjkBoE1Z//cJXRvCSw3zycyX/yz5U+T7PDlsYANrhCfKOctpBpxUjGREwIjcsFzH5te+jFCOH50cHH8qJfqBauiv4Zck+3eGrJI5cJ0xcOwBJpmW2SbmxivpNJs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730096850; c=relaxed/simple;
-	bh=Z1iJAxZXJ6ijQD1KpnDHjkGf1nr5SiaWS62VL5uR8Ak=;
+	s=arc-20240116; t=1730096852; c=relaxed/simple;
+	bh=6/3IaVe3ahmf2frgNKy5h7UwzuYmUyYlk/6WoYa0jJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cc3W3jRe+nZzH2ATwPsdHJe6mYTqqJfpw1RqrR7tv6XiDnFoMCu+/8whdZi+RRLZ+9RwZM+pFtRb08KmyohGwhBlRVss5MIkcNXxbpcyEI0a/wr9JtjJz8ATKX5WKoAqsOXQcYjsibyPS6WtuPF5UgwkXLjVBOKEgJxIxRW8M2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUhzVxmq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mfa7UCmGyjI4xwgTw1SuTsVGJuoXDhjCq6BqVO/Th5Mehe0C4eb9WCN9jg721w7qNdlIidX9IQNGMqvj3O1UbGbEZde7AVHnK4wGbzG7+v6pc6P5zY1uR7iN3y7izhR/T0njVtkYChEO/i73NfJpXnO0HzPXXlpjbqwBLVHg/yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KghWFGBD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUhzVxmq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32448C4CEC3;
-	Mon, 28 Oct 2024 06:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KghWFGBD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DCA1C4CEC3;
+	Mon, 28 Oct 2024 06:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730096849;
-	bh=Z1iJAxZXJ6ijQD1KpnDHjkGf1nr5SiaWS62VL5uR8Ak=;
+	s=korg; t=1730096851;
+	bh=6/3IaVe3ahmf2frgNKy5h7UwzuYmUyYlk/6WoYa0jJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YUhzVxmqFFwBLuNq0B4seLmi9VUPEvkT/PKPYvszyqN/r6OqmwyI/ynuZQaeBD9Gl
-	 tnaCzNEk3WqTwa2G8xEhXUI8W9ecDUp/dIcDUYbMNXAtD593H8a578yVxkHhEuZqsc
-	 7hMmAO2IqOZI3jDzUgDveYhZKNroA+D23oRcYnv0=
+	b=KghWFGBD0aZ01OSJ+Cdc/ZEq1bvcQ5Fa10SQ83tjAGf7QwL2teRqW3cNgr8nNb+gU
+	 u3gGX7vWrb+3vMvgoE9tU706v8tHdQxdVWOEQULvpS4QormDZwMj7e1kWtQGFaNFU4
+	 Ou7ZQVpMi3M/0BQVbfT5I47axGQnG58EEJvD1bzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Douglas Anderson <dianders@chromium.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 14/80] drm/msm: Avoid NULL dereference in msm_disp_state_print_regs()
-Date: Mon, 28 Oct 2024 07:24:54 +0100
-Message-ID: <20241028062253.019032131@linuxfoundation.org>
+Subject: [PATCH 5.15 15/80] drm/msm: Allocate memory for disp snapshot with kvzalloc()
+Date: Mon, 28 Oct 2024 07:24:55 +0100
+Message-ID: <20241028062253.043813496@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
 References: <20241028062252.611837461@linuxfoundation.org>
@@ -53,75 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 293f53263266bc4340d777268ab4328a97f041fa ]
+[ Upstream commit e4a45582db1b792c57bdb52c45958264f7fcfbdc ]
 
-If the allocation in msm_disp_state_dump_regs() failed then
-`block->state` can be NULL. The msm_disp_state_print_regs() function
-_does_ have code to try to handle it with:
+With the "drm/msm: add a display mmu fault handler" series [1] we saw
+issues in the field where memory allocation was failing when
+allocating space for registers in msm_disp_state_dump_regs().
+Specifically we were seeing an order 5 allocation fail. It's not
+surprising that order 5 allocations will sometimes fail after the
+system has been up and running for a while.
 
-  if (*reg)
-    dump_addr = *reg;
+There's no need here for contiguous memory. Change the allocation to
+kvzalloc() which should make it much less likely to fail.
 
-...but since "dump_addr" is initialized to NULL the above is actually
-a noop. The code then goes on to dereference `dump_addr`.
-
-Make the function print "Registers not stored" when it sees a NULL to
-solve this. Since we're touching the code, fix
-msm_disp_state_print_regs() not to pointlessly take a double-pointer
-and properly mark the pointer as `const`.
+[1] https://lore.kernel.org/r/20240628214848.4075651-1-quic_abhinavk@quicinc.com/
 
 Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/619657/
-Link: https://lore.kernel.org/r/20241014093605.1.Ia1217cecec9ef09eb3c6d125360cc6c8574b0e73@changeid
+Patchwork: https://patchwork.freedesktop.org/patch/619658/
+Link: https://lore.kernel.org/r/20241014093605.2.I72441365ffe91f3dceb17db0a8ec976af8139590@changeid
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-index 8746ceae8fca9..06f2f5a5e267e 100644
+index 06f2f5a5e267e..badafcd61998f 100644
 --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
 +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-@@ -46,20 +46,21 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
- 	}
- }
+@@ -24,7 +24,7 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
+ 	end_addr = base_addr + aligned_len;
  
--static void msm_disp_state_print_regs(u32 **reg, u32 len, void __iomem *base_addr,
--		struct drm_printer *p)
-+static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
-+		void __iomem *base_addr, struct drm_printer *p)
- {
- 	int i;
--	u32 *dump_addr = NULL;
- 	void __iomem *addr;
- 	u32 num_rows;
+ 	if (!(*reg))
+-		*reg = kzalloc(len_padded, GFP_KERNEL);
++		*reg = kvzalloc(len_padded, GFP_KERNEL);
  
-+	if (!dump_addr) {
-+		drm_printf(p, "Registers not stored\n");
-+		return;
-+	}
-+
- 	addr = base_addr;
- 	num_rows = len / REG_DUMP_ALIGN;
+ 	if (*reg)
+ 		dump_addr = *reg;
+@@ -155,7 +155,7 @@ void msm_disp_state_free(void *data)
  
--	if (*reg)
--		dump_addr = *reg;
--
- 	for (i = 0; i < num_rows; i++) {
- 		drm_printf(p, "0x%lx : %08x %08x %08x %08x\n",
- 				(unsigned long)(addr - base_addr),
-@@ -86,7 +87,7 @@ void msm_disp_state_print(struct msm_disp_state *state, struct drm_printer *p)
- 
- 	list_for_each_entry_safe(block, tmp, &state->blocks, node) {
- 		drm_printf(p, "====================%s================\n", block->name);
--		msm_disp_state_print_regs(&block->state, block->size, block->base_addr, p);
-+		msm_disp_state_print_regs(block->state, block->size, block->base_addr, p);
+ 	list_for_each_entry_safe(block, tmp, &disp_state->blocks, node) {
+ 		list_del(&block->node);
+-		kfree(block->state);
++		kvfree(block->state);
+ 		kfree(block);
  	}
  
- 	drm_printf(p, "===================dpu drm state================\n");
 -- 
 2.43.0
 
