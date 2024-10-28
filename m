@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91902AF07;
-	Mon, 28 Oct 2024 06:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C53618EFD6;
+	Mon, 28 Oct 2024 06:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098148; cv=none; b=UpU2/oZq/AJkMLiSc/6HlXCA5hCY6minaewVnFrsqAPK91r4MJ8egNaxYikTkIwEUhtC/Ht72bgqDhKVkcvzVym8YMfvjVQsQvANxAleiTv0DqStB4MsYKM3F+IYeqPnF2y0ytW9f0p8LFBwl/iU40WSfwQEOtatXqIG6m46bIk=
+	t=1730098151; cv=none; b=U99zd89rcqxeCRs7+3QGPFiETAtmnuDl1Q885HFA3o/2vcbjI1TXhm7JEkGiUu8YWslclP/4oHK2FhaHkNlwNZMeyv1+E/xfszsusN2XmfEYOPkTo49olCEOTyiKXAg+0oNLMOfp1wpLFyKJjH/hc2a5tk8t/m/ZM0H9CFIexkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098148; c=relaxed/simple;
-	bh=qdv3MrGmrzToV/C9onyWWxQQeZjTOl8abDpeGuOggT8=;
+	s=arc-20240116; t=1730098151; c=relaxed/simple;
+	bh=3xxyeSgNR5lb68Mn6vyMFP//A+BiyiwPoZej5esfIZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XrEbF5/qblUa9B+Dp1vk0qpZIUlYzbuQZ3I2dMaqJcHxhDEAEJ6QjRCl+hfAHXbIXuyV4mafTqlQoy+Qu72DIBWFPfPagc+zW0RNfvUvoNFb6a/voTND/Dk35qBVfCPrHVIHDV9sNey0SJML6N48Z117trC7kwwzw3Q5QM+Mrhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKYjyIG3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PoSvRLZ5hLQNIJWlbb78in7+aDDivZadA1gPjCRgmwd1Jm/EVEj9HaeYXMpOsrjKOPf7bc7mOa6n86y8N8XtM3hVeXGTL3vipZbjqIxRppFeVRXnpsRBFthR2DGDge1O/Ut/Xa9Nddk8/Fq793/HEFS4wyDkjE5QzjfTMOAl+kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFsJcwyr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKYjyIG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671AEC4CEC3;
-	Mon, 28 Oct 2024 06:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFsJcwyr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDF8C4AF0B;
+	Mon, 28 Oct 2024 06:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098148;
-	bh=qdv3MrGmrzToV/C9onyWWxQQeZjTOl8abDpeGuOggT8=;
+	s=korg; t=1730098151;
+	bh=3xxyeSgNR5lb68Mn6vyMFP//A+BiyiwPoZej5esfIZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKYjyIG3+tWsxHpuP69qulotB3Beq6MEQby8npHzWs5Awl4PGsSX+067D8jp8cctF
-	 FDynhlh2D6rMN0y+auaEfDHqi2ye9ve2KydZqt+QdhNqkIg2EEPybYTFT1CRgqMkrG
-	 9s+0cFEa5CtvuiSPiK9G3BQX77J3IURWa9Xvnqsk=
+	b=bFsJcwyrxrbLQKopjNiGHquF7LS2XCfklwN0MdBSmvw7PDoOwMCiq9/BIur1/C2ZZ
+	 Cm5tRnV0DPX9HCs6uV0F77/GEhsB6mb0DsVyOHageIXVi5i0ASbL14CmPb96jIlTZZ
+	 T+KOhSINvksa8NVQq0RiGngMWTec2tcpGcaPHkgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paritosh Dixit <paritoshd@nvidia.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 061/261] net: stmmac: dwmac-tegra: Fix link bring-up sequence
-Date: Mon, 28 Oct 2024 07:23:23 +0100
-Message-ID: <20241028062313.558202569@linuxfoundation.org>
+Subject: [PATCH 6.11 062/261] octeontx2-af: Fix potential integer overflows on integer shifts
+Date: Mon, 28 Oct 2024 07:23:24 +0100
+Message-ID: <20241028062313.584126118@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -51,89 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paritosh Dixit <paritoshd@nvidia.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 1cff6ff302f5703a627f9ee1d99131161ea2683e ]
+[ Upstream commit 637c4f6fe40befa04f19c38b5d15429cbb9191d9 ]
 
-The Tegra MGBE driver sometimes fails to initialize, reporting the
-following error, and as a result, it is unable to acquire an IP
-address with DHCP:
+The left shift int 32 bit integer constants 1 is evaluated using 32 bit
+arithmetic and then assigned to a 64 bit unsigned integer. In the case
+where the shift is 32 or more this can lead to an overflow. Avoid this
+by shifting using the BIT_ULL macro instead.
 
- tegra-mgbe 6800000.ethernet: timeout waiting for link to become ready
-
-As per the recommendation from the Tegra hardware design team, fix this
-issue by:
-- clearing the PHY_RDY bit before setting the CDR_RESET bit and then
-setting PHY_RDY bit before clearing CDR_RESET bit. This ensures valid
-data is present at UPHY RX inputs before starting the CDR lock.
-- adding the required delays when bringing up the UPHY lane. Note we
-need to use delays here because there is no alternative, such as
-polling, for these cases. Using the usleep_range() instead of ndelay()
-as sleeping is preferred over busy wait loop.
-
-Without this change we would see link failures on boot sometimes as
-often as 1 in 5 boots. With this fix we have not observed any failures
-in over 1000 boots.
-
-Fixes: d8ca113724e7 ("net: stmmac: tegra: Add MGBE support")
-Signed-off-by: Paritosh Dixit <paritoshd@nvidia.com>
-Link: https://patch.msgid.link/20241010142908.602712-1-paritoshd@nvidia.com
+Fixes: 019aba04f08c ("octeontx2-af: Modify SMQ flush sequence to drop packets")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20241010154519.768785-1-colin.i.king@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
-index 362f85136c3ef..6fdd94c8919ec 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
-@@ -127,10 +127,12 @@ static int mgbe_uphy_lane_bringup_serdes_up(struct net_device *ndev, void *mgbe_
- 	value &= ~XPCS_WRAP_UPHY_RX_CONTROL_AUX_RX_IDDQ;
- 	writel(value, mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index 82832a24fbd86..da69350c6f765 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -2411,7 +2411,7 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
+ 				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link));
+ 		if (!(cfg & BIT_ULL(12)))
+ 			continue;
+-		bmap |= (1 << i);
++		bmap |= BIT_ULL(i);
+ 		cfg &= ~BIT_ULL(12);
+ 		rvu_write64(rvu, blkaddr,
+ 			    NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link), cfg);
+@@ -2432,7 +2432,7 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
  
-+	usleep_range(10, 20);  /* 50ns min delay needed as per HW design */
- 	value = readl(mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
- 	value &= ~XPCS_WRAP_UPHY_RX_CONTROL_RX_SLEEP;
- 	writel(value, mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
- 
-+	usleep_range(10, 20);  /* 500ns min delay needed as per HW design */
- 	value = readl(mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
- 	value |= XPCS_WRAP_UPHY_RX_CONTROL_RX_CAL_EN;
- 	writel(value, mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
-@@ -143,22 +145,30 @@ static int mgbe_uphy_lane_bringup_serdes_up(struct net_device *ndev, void *mgbe_
- 		return err;
- 	}
- 
-+	usleep_range(10, 20);  /* 50ns min delay needed as per HW design */
- 	value = readl(mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
- 	value |= XPCS_WRAP_UPHY_RX_CONTROL_RX_DATA_EN;
- 	writel(value, mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
- 
- 	value = readl(mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
--	value |= XPCS_WRAP_UPHY_RX_CONTROL_RX_CDR_RESET;
-+	value &= ~XPCS_WRAP_UPHY_RX_CONTROL_RX_PCS_PHY_RDY;
- 	writel(value, mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
- 
-+	usleep_range(10, 20);  /* 50ns min delay needed as per HW design */
- 	value = readl(mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
--	value &= ~XPCS_WRAP_UPHY_RX_CONTROL_RX_CDR_RESET;
-+	value |= XPCS_WRAP_UPHY_RX_CONTROL_RX_CDR_RESET;
- 	writel(value, mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
- 
-+	usleep_range(10, 20);  /* 50ns min delay needed as per HW design */
- 	value = readl(mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
- 	value |= XPCS_WRAP_UPHY_RX_CONTROL_RX_PCS_PHY_RDY;
- 	writel(value, mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
- 
-+	msleep(30);  /* 30ms delay needed as per HW design */
-+	value = readl(mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
-+	value &= ~XPCS_WRAP_UPHY_RX_CONTROL_RX_CDR_RESET;
-+	writel(value, mgbe->xpcs + XPCS_WRAP_UPHY_RX_CONTROL);
-+
- 	err = readl_poll_timeout(mgbe->xpcs + XPCS_WRAP_IRQ_STATUS, value,
- 				 value & XPCS_WRAP_IRQ_STATUS_PCS_LINK_STS,
- 				 500, 500 * 2000);
+ 	/* Set NIX_AF_TL3_TL2_LINKX_CFG[ENA] for the TL3/TL2 queue */
+ 	for (i = 0; i < (rvu->hw->cgx_links + rvu->hw->lbk_links); i++) {
+-		if (!(bmap & (1 << i)))
++		if (!(bmap & BIT_ULL(i)))
+ 			continue;
+ 		cfg = rvu_read64(rvu, blkaddr,
+ 				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link));
 -- 
 2.43.0
 
