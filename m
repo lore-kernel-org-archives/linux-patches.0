@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF9318D65C;
-	Mon, 28 Oct 2024 06:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594B618D65C;
+	Mon, 28 Oct 2024 06:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097985; cv=none; b=Jej6Z5KUhbRarJ4YN3oHLUlqFTRt8Wg8G5VGDXTXQ1DhwhEJJA8Luwrm9lO8uaCbBhklBV4PpEdzPjTP2mIMp8usUm1VmmecbBcwkKxaiDJjYp1pFpJwcUg3UeCq03LKIV/mylRSOsHXnqifmgmYHxeTThrG8FP9ULM0lVMbE+w=
+	t=1730097987; cv=none; b=KQs1xtJ4xpIa/ya8yLqfpf+CXmOWrZKOl9rExKX1wB3MXvpng4NF0u+k2gbyKydekNEZ4mqk9KNhg291jSdneGsVHQouKwm94xpOlzPANLmpDFGARaIkXWIvRv+vt9Gs39D71Xj4uvj5eTz/RmRj3jMNQs1cB8CyNmug6pD+aJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097985; c=relaxed/simple;
-	bh=pDjZ2UXNt4SzsO6h7t2Eomn23eJnw40kxVgwAThOpM0=;
+	s=arc-20240116; t=1730097987; c=relaxed/simple;
+	bh=9d0grcQthTRY0gBLkpaN6DH2CzlbTtGXUw/tvCkFiW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H8Qhol5HKJT/eGnQ5d3WHs8UU47qbDAV4eDJtoodEJgIxkukjJUFqyWFMzHNek5sZBPv1OaaEkpS8nw/PgKvIw0iDOp9yCLXFvWOn1B7Dxe/5r0r7ClyqlFB6YR0gaqN4PUP9zmLD1ZVsG2hcjZvUZsopbE6UGX4v9eIAucZzCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FzV1KOLV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AUpD5vtQuzUIkLWYgkwbsZ4t1U4//OB6lWLAX/jZjw+OmCBHISgWpRwVFDtRr5AJe5X3DPdmbWOSVCA1lYhxLvg6lNDUYWbedIfl2Lp2DsL0382ExD59y6K3BSNA+FBGKXjFAoJEWuosx7TevLkKs0bZq4CYdBoPqFltQgGsdW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEDggf8I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FzV1KOLV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C228AC4CEC3;
-	Mon, 28 Oct 2024 06:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEDggf8I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE0DFC4CECD;
+	Mon, 28 Oct 2024 06:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097985;
-	bh=pDjZ2UXNt4SzsO6h7t2Eomn23eJnw40kxVgwAThOpM0=;
+	s=korg; t=1730097987;
+	bh=9d0grcQthTRY0gBLkpaN6DH2CzlbTtGXUw/tvCkFiW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FzV1KOLVZT3aXnjOqGm24u+5vKNhl0t7ne5KFODR8ZnEH+F9IHiJCAWyUamx9+nlb
-	 btMVoQ6MFwROc4BpEk0p9s45laEc0KBIVTLaiXTN8R+oiAH3/ruXMsYuDd3ffNOPvs
-	 YS9E58MWzEtQ+Lgx2YjgSn2rSFv8DHMwkcYQN55A=
+	b=hEDggf8I3xKN25plWz9ib7kPC4E9/BhhlRwbcdULYNWqk6krAXc4XmfEE8VUmcC+P
+	 V95epWt2wjKl33SaEs5X0fK6lOJ8RcU2tol01YRBuLAVrkPMlJijJvAoCHlt0JWE38
+	 3oYiIlITJMpPL9NUuB3bDs1i0ZJi8lsvaMCzVllk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
+	Tyrone Wu <wudevelops@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 027/261] selftests/bpf: Fix cross-compiling urandom_read
-Date: Mon, 28 Oct 2024 07:22:49 +0100
-Message-ID: <20241028062312.697044221@linuxfoundation.org>
+Subject: [PATCH 6.11 028/261] bpf: Fix unpopulated path_size when uprobe_multi fields unset
+Date: Mon, 28 Oct 2024 07:22:50 +0100
+Message-ID: <20241028062312.721723478@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -51,39 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Tyrone Wu <wudevelops@gmail.com>
 
-[ Upstream commit fd526e121c4d6f71aed82d21a8b8277b03e60b43 ]
+[ Upstream commit ad6b5b6ea9b764018249285a4fe0a2226bef4caa ]
 
-Linking of urandom_read and liburandom_read.so prefers LLVM's 'ld.lld' but
-falls back to using 'ld' if unsupported. However, this fallback discards
-any existing makefile macro for LD and can break cross-compilation.
+Previously when retrieving `bpf_link_info.uprobe_multi` with `path` and
+`path_size` fields unset, the `path_size` field is not populated
+(remains 0). This behavior was inconsistent with how other input/output
+string buffer fields work, as the field should be populated in cases
+when:
+- both buffer and length are set (currently works as expected)
+- both buffer and length are unset (not working as expected)
 
-Fix by changing the fallback to use the target linker $(LD), passed via
-'-fuse-ld=' using an absolute path rather than a linker "flavour".
+This patch now fills the `path_size` field when `path` and `path_size`
+are unset.
 
-Fixes: 08c79c9cd67f ("selftests/bpf: Don't force lld on non-x86 architectures")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
+Fixes: e56fdbfb06e2 ("bpf: Add link_info support for uprobe multi link")
+Signed-off-by: Tyrone Wu <wudevelops@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241009040720.635260-1-tony.ambardar@gmail.com
+Link: https://lore.kernel.org/bpf/20241011000803.681190-1-wudevelops@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/bpf_trace.c | 36 +++++++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 19 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
-index 848fffa250227..555fd34c6e1fc 100644
---- a/tools/testing/selftests/bpf/Makefile
-+++ b/tools/testing/selftests/bpf/Makefile
-@@ -221,7 +221,7 @@ $(OUTPUT)/%:%.c
- ifeq ($(SRCARCH),$(filter $(SRCARCH),x86 riscv))
- LLD := lld
- else
--LLD := ld
-+LLD := $(shell command -v $(LD))
- endif
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index add26dc27d7e3..d9bc5ef1cafc3 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -3222,7 +3222,8 @@ static int bpf_uprobe_multi_link_fill_link_info(const struct bpf_link *link,
+ 	struct bpf_uprobe_multi_link *umulti_link;
+ 	u32 ucount = info->uprobe_multi.count;
+ 	int err = 0, i;
+-	long left;
++	char *p, *buf;
++	long left = 0;
  
- # Filter out -static for liburandom_read.so and its dependent targets so that static builds
+ 	if (!upath ^ !upath_size)
+ 		return -EINVAL;
+@@ -3236,26 +3237,23 @@ static int bpf_uprobe_multi_link_fill_link_info(const struct bpf_link *link,
+ 	info->uprobe_multi.pid = umulti_link->task ?
+ 				 task_pid_nr_ns(umulti_link->task, task_active_pid_ns(current)) : 0;
+ 
+-	if (upath) {
+-		char *p, *buf;
+-
+-		upath_size = min_t(u32, upath_size, PATH_MAX);
+-
+-		buf = kmalloc(upath_size, GFP_KERNEL);
+-		if (!buf)
+-			return -ENOMEM;
+-		p = d_path(&umulti_link->path, buf, upath_size);
+-		if (IS_ERR(p)) {
+-			kfree(buf);
+-			return PTR_ERR(p);
+-		}
+-		upath_size = buf + upath_size - p;
+-		left = copy_to_user(upath, p, upath_size);
++	upath_size = upath_size ? min_t(u32, upath_size, PATH_MAX) : PATH_MAX;
++	buf = kmalloc(upath_size, GFP_KERNEL);
++	if (!buf)
++		return -ENOMEM;
++	p = d_path(&umulti_link->path, buf, upath_size);
++	if (IS_ERR(p)) {
+ 		kfree(buf);
+-		if (left)
+-			return -EFAULT;
+-		info->uprobe_multi.path_size = upath_size;
++		return PTR_ERR(p);
+ 	}
++	upath_size = buf + upath_size - p;
++
++	if (upath)
++		left = copy_to_user(upath, p, upath_size);
++	kfree(buf);
++	if (left)
++		return -EFAULT;
++	info->uprobe_multi.path_size = upath_size;
+ 
+ 	if (!uoffsets && !ucookies && !uref_ctr_offsets)
+ 		return 0;
 -- 
 2.43.0
 
