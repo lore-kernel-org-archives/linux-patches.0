@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336AF18E04F;
-	Mon, 28 Oct 2024 06:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E85615B10D;
+	Mon, 28 Oct 2024 06:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097712; cv=none; b=UXw8CahH4wtDIwktnePx9lTczPA1up32l5uTZQCDX63FUfxTzMJOaags5t0QrF9SHHsFXRPZPXo/ERA06u6iXzwSIqlOSH7LsEYduPNGdEwJzxCLcRU1OX3AMwWOBFGNlYh6W9l5knwMrlWCsPzrILfAZtN7av6k68L2xhHFLXc=
+	t=1730097714; cv=none; b=bg+VcfB62fAlHC0LTrmHfWPUS58Spmj5gmQRxvcCo6VfTD0qP7KTX5mJLLtWxFrYN5tstAuipgIAw18wir0HqwA8CwBA9+NUT3RbigKDyB88+AYkBV38v69XFDcQcifMNj2gIIazm9paOkUJEbeC/3nCj5N3YO3W0SsP5G4vqsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097712; c=relaxed/simple;
-	bh=/JPw4/PPk5Je3pYF0TXNeJn8MFtDKXtTHUIg6yDQ7sM=;
+	s=arc-20240116; t=1730097714; c=relaxed/simple;
+	bh=GL6Ai4ymTdrmM8vI01obQovrdjZDwPNV3CbwuYNmRD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FiDMzef7m9s+iRqxm/HYbBLm2UOOTfjFa5Bh5LTEItwoVK13JQzwg6y//32JnTviAKijn7svVAgXBzp1J8KyBQNHm4c9S7hqGph2qyeq8wZzyIwMi+jJyd6zYUx7eR+RqXO7iqqyrfCBSDlfaCpZYVEg4clw/mIzhgp6Q4kV91k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lscQfeOh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dvcu9CVx5OTWruKbpImLPc0Ocj6id0XD1PZlC0ULL2KAdEv5ypTgH++DFdI3yD5PfY237pEjqyZODpmL/b43tfIKGCwwQbnD2o8wP2lOSm7owpE9uwTixuoMemuO4jV4wVYVifs9wsd96AAzj/Sq1WOMnpoAPZpZYuxa3/sYV6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5hYNMSW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lscQfeOh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77EAC4CEC3;
-	Mon, 28 Oct 2024 06:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5hYNMSW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D88C4CEC3;
+	Mon, 28 Oct 2024 06:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097712;
-	bh=/JPw4/PPk5Je3pYF0TXNeJn8MFtDKXtTHUIg6yDQ7sM=;
+	s=korg; t=1730097714;
+	bh=GL6Ai4ymTdrmM8vI01obQovrdjZDwPNV3CbwuYNmRD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lscQfeOh9+RbRGwW2VAFJzdGoX/j9R5jZzYlkcLe3MVSJHNBQ4pQ+EBNb/N+QLr7X
-	 +64zldyHXaBlig5EBIkKI7dBfSrqDrDxmTgzUtKgqprAO5hLvWZJwfgN51TSmMqPWK
-	 UkIQq+Y5B5UdSzUQ3TcZyjZNh34KnvmPBhqqsA+s=
+	b=c5hYNMSWs6KjyPfCso4g9bpKIuJMJ6ILzfpWllR4HnornUvWCEzoUHP/GiYXJnt5Y
+	 ZDIK1775eQxpkvLw6JKQe/WdPbu3hihKq8UjoWB74Xt2C3GyQz7cmYuNyChk0MfzDC
+	 19jh6HXkAoAvKPw+/fUW90f+hfPL852Gxd4NfsK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	David Lawrence Glanzman <davidglanzman@yahoo.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 115/208] drm/vboxvideo: Replace fake VLA at end of vbva_mouse_pointer_shape with real VLA
-Date: Mon, 28 Oct 2024 07:24:55 +0100
-Message-ID: <20241028062309.490441106@linuxfoundation.org>
+Subject: [PATCH 6.6 116/208] ASoC: amd: yc: Add quirk for HP Dragonfly pro one
+Date: Mon, 28 Oct 2024 07:24:56 +0100
+Message-ID: <20241028062309.513652858@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -51,69 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: David Lawrence Glanzman <davidglanzman@yahoo.com>
 
-[ Upstream commit d92b90f9a54d9300a6e883258e79f36dab53bfae ]
+[ Upstream commit 84e8d59651879b2ff8499bddbbc9549b7f1a646b ]
 
-Replace the fake VLA at end of the vbva_mouse_pointer_shape shape with
-a real VLA to fix a "memcpy: detected field-spanning write error" warning:
+Adds a quirk entry to enable the mic on HP Dragonfly pro one laptop
 
-[   13.319813] memcpy: detected field-spanning write (size 16896) of single field "p->data" at drivers/gpu/drm/vboxvideo/hgsmi_base.c:154 (size 4)
-[   13.319841] WARNING: CPU: 0 PID: 1105 at drivers/gpu/drm/vboxvideo/hgsmi_base.c:154 hgsmi_update_pointer_shape+0x192/0x1c0 [vboxvideo]
-[   13.320038] Call Trace:
-[   13.320173]  hgsmi_update_pointer_shape [vboxvideo]
-[   13.320184]  vbox_cursor_atomic_update [vboxvideo]
-
-Note as mentioned in the added comment it seems the original length
-calculation for the allocated and send hgsmi buffer is 4 bytes too large.
-Changing this is not the goal of this patch, so this behavior is kept.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240827104523.17442-1-hdegoede@redhat.com
+Signed-off-by: David Lawrence Glanzman <davidglanzman@yahoo.com>
+Link: https://patch.msgid.link/1249c09bd6bf696b59d087a4f546ae397828656c.camel@yahoo.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vboxvideo/hgsmi_base.c | 10 +++++++++-
- drivers/gpu/drm/vboxvideo/vboxvideo.h  |  4 +---
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/vboxvideo/hgsmi_base.c b/drivers/gpu/drm/vboxvideo/hgsmi_base.c
-index 8c041d7ce4f1b..87dccaecc3e57 100644
---- a/drivers/gpu/drm/vboxvideo/hgsmi_base.c
-+++ b/drivers/gpu/drm/vboxvideo/hgsmi_base.c
-@@ -139,7 +139,15 @@ int hgsmi_update_pointer_shape(struct gen_pool *ctx, u32 flags,
- 		flags |= VBOX_MOUSE_POINTER_VISIBLE;
- 	}
- 
--	p = hgsmi_buffer_alloc(ctx, sizeof(*p) + pixel_len, HGSMI_CH_VBVA,
-+	/*
-+	 * The 4 extra bytes come from switching struct vbva_mouse_pointer_shape
-+	 * from having a 4 bytes fixed array at the end to using a proper VLA
-+	 * at the end. These 4 extra bytes were not subtracted from sizeof(*p)
-+	 * before the switch to the VLA, so this way the behavior is unchanged.
-+	 * Chances are these 4 extra bytes are not necessary but they are kept
-+	 * to avoid regressions.
-+	 */
-+	p = hgsmi_buffer_alloc(ctx, sizeof(*p) + pixel_len + 4, HGSMI_CH_VBVA,
- 			       VBVA_MOUSE_POINTER_SHAPE);
- 	if (!p)
- 		return -ENOMEM;
-diff --git a/drivers/gpu/drm/vboxvideo/vboxvideo.h b/drivers/gpu/drm/vboxvideo/vboxvideo.h
-index f60d82504da02..79ec8481de0e4 100644
---- a/drivers/gpu/drm/vboxvideo/vboxvideo.h
-+++ b/drivers/gpu/drm/vboxvideo/vboxvideo.h
-@@ -351,10 +351,8 @@ struct vbva_mouse_pointer_shape {
- 	 * Bytes in the gap between the AND and the XOR mask are undefined.
- 	 * XOR mask scanlines have no gap between them and size of XOR mask is:
- 	 * xor_len = width * 4 * height.
--	 *
--	 * Preallocate 4 bytes for accessing actual data as p->data.
- 	 */
--	u8 data[4];
-+	u8 data[];
- } __packed;
- 
- /* pointer is visible */
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 248e3bcbf386b..76f5d926d1eac 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -444,6 +444,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "8A3E"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_BOARD_NAME, "8A7F"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.43.0
 
