@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51260189BAF;
-	Mon, 28 Oct 2024 06:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C0D189BAF;
+	Mon, 28 Oct 2024 06:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097871; cv=none; b=SJFhkdjbsD427sjzsPVdTCqQo3u4EEU8/jGV4JOGeN2RdKDh42lMPgLovx4excWhplqsyW4QifqS6O9HGTCJPKiZQJemE/gn69z/+tGjorak2o7pHnDYLeMV9b109t5RNgDLyrKudTAGY4DLxYYtsjxiP1sLhNnvathj/+1ycJY=
+	t=1730097873; cv=none; b=gGJhhV4CyEylsXFtEKeZLU0Nrsv/8jLlH4AxBdU3cWs15C7M0mgIpXlkCMcTQlKvHL3lxpPkERZumLIa0xM4k0Q7mwm44xmR6B0cwkKN30l7kDYvMq9kQczm9/JiT3Z03VoofUI8H7BA0CxHcVaMvYvTVYooZgMAAw6r4rYcmfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097871; c=relaxed/simple;
-	bh=JwQaCFxHf8kRSCKWUP4EBVqF8DFrL02VKGU4qruLEvs=;
+	s=arc-20240116; t=1730097873; c=relaxed/simple;
+	bh=dsWio33Drwzik5WnpTYz9YagzYTn66G2otewksKRuWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OWAzNcK56cTyCSnnzvK4BIQQk0fxHx4P/ZE9a9JjFqNtsDOzqSFsa0gtUhy2dDx4wK1MlmM7iXwCmMVo52RUoY6OU24iqDQCmMIS5s6bMrv8rpIOjMcHHvdcsKhrLyEfWvJH7CF6QFvDUzNXPlHn2w2hpqtGx4ykWkFfS8UayxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B5ngi2Hp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V2dZAFeEFaS0KircQb5oXr8XTUZtFO40hM3kGCL3s3DQQs4rn9v2s37eNIks5JNEn/ambVN6jyzgWFVb+pbA7ormKK/jrEKNbrLirLUI/0meAEAjir1Eai0uLUueZuuscjDnV6bsZ+XW8r+bK//9/SJz/p1fXaUGy9ZLeOBoRKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAvcbJBe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5ngi2Hp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77E1C4CEC3;
-	Mon, 28 Oct 2024 06:44:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAvcbJBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2538CC4CEC3;
+	Mon, 28 Oct 2024 06:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097871;
-	bh=JwQaCFxHf8kRSCKWUP4EBVqF8DFrL02VKGU4qruLEvs=;
+	s=korg; t=1730097873;
+	bh=dsWio33Drwzik5WnpTYz9YagzYTn66G2otewksKRuWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B5ngi2Hp6Ut9DOgCf+oy3NNRoFepZUb7+HDd2J+r9bxE4YnoPgsKUar8YNJOZxQaj
-	 vv/NzccRNX5L4YfDYyTL5bI3NXsiBaIY3QZA/A+rZ0UktpcfF5jXPa5pbw9D8Kn6hU
-	 84THqVvBYOjLW3eStZP3XKMyi0ViGC3yr+duIaQo=
+	b=jAvcbJBeJybDTq3scuR0+M0eOml2jhdeezE8kS0NPYUZulHokhhM2xesA84Xtce1D
+	 TKcptzIe5ADUfxkvPhvKtENRcTNwAsJUIMAAZ9EXX+GGt7b7Z0pd4LT6hpurbm4RRK
+	 7VoOW9MlwEbxdSvA+bkZmyQjoA83kl7NGC8B/AmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 139/208] octeon_ep: Implement helper for iterating packets in Rx queue
-Date: Mon, 28 Oct 2024 07:25:19 +0100
-Message-ID: <20241028062310.057952397@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 178/208] btrfs: zoned: fix zone unusable accounting for freed reserved extent
+Date: Mon, 28 Oct 2024 07:25:58 +0100
+Message-ID: <20241028062311.014402404@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -54,132 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit bd28df26197b2bd0913bf1b36770836481975143 ]
+commit bf9821ba4792a0d9a2e72803ae7b4341faf3d532 upstream.
 
-The common code with some packet and index manipulations is extracted and
-moved to newly implemented helper to make the code more readable and avoid
-duplication. This is a preparation for skb allocation failure handling.
+When btrfs reserves an extent and does not use it (e.g, by an error), it
+calls btrfs_free_reserved_extent() to free the reserved extent. In the
+process, it calls btrfs_add_free_space() and then it accounts the region
+bytes as block_group->zone_unusable.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+However, it leaves the space_info->bytes_zone_unusable side not updated. As
+a result, ENOSPC can happen while a space_info reservation succeeded. The
+reservation is fine because the freed region is not added in
+space_info->bytes_zone_unusable, leaving that space as "free". OTOH,
+corresponding block group counts it as zone_unusable and its allocation
+pointer is not rewound, we cannot allocate an extent from that block group.
+That will also negate space_info's async/sync reclaim process, and cause an
+ENOSPC error from the extent allocation process.
 
-Suggested-by: Simon Horman <horms@kernel.org>
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Stable-dep-of: eb592008f79b ("octeon_ep: Add SKB allocation failures handling in __octep_oq_process_rx()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix that by returning the space to space_info->bytes_zone_unusable.
+Ideally, since a bio is not submitted for this reserved region, we should
+return the space to free space and rewind the allocation pointer. But, it
+needs rework on extent allocation handling, so let it work in this way for
+now.
+
+Fixes: 169e0da91a21 ("btrfs: zoned: track unusable bytes for zones")
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/marvell/octeon_ep/octep_rx.c | 55 +++++++++++--------
- 1 file changed, 32 insertions(+), 23 deletions(-)
+ fs/btrfs/block-group.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
-index 3c43f80785285..cfbfad95b0211 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
-@@ -336,6 +336,30 @@ static int octep_oq_check_hw_for_pkts(struct octep_device *oct,
- 	return new_pkts;
- }
- 
-+/**
-+ * octep_oq_next_pkt() - Move to the next packet in Rx queue.
-+ *
-+ * @oq: Octeon Rx queue data structure.
-+ * @buff_info: Current packet buffer info.
-+ * @read_idx: Current packet index in the ring.
-+ * @desc_used: Current packet descriptor number.
-+ *
-+ * Free the resources associated with a packet.
-+ * Increment packet index in the ring and packet descriptor number.
-+ */
-+static void octep_oq_next_pkt(struct octep_oq *oq,
-+			      struct octep_rx_buffer *buff_info,
-+			      u32 *read_idx, u32 *desc_used)
-+{
-+	dma_unmap_page(oq->dev, oq->desc_ring[*read_idx].buffer_ptr,
-+		       PAGE_SIZE, DMA_FROM_DEVICE);
-+	buff_info->page = NULL;
-+	(*read_idx)++;
-+	(*desc_used)++;
-+	if (*read_idx == oq->max_count)
-+		*read_idx = 0;
-+}
-+
- /**
-  * __octep_oq_process_rx() - Process hardware Rx queue and push to stack.
-  *
-@@ -365,10 +389,7 @@ static int __octep_oq_process_rx(struct octep_device *oct,
- 	desc_used = 0;
- 	for (pkt = 0; pkt < pkts_to_process; pkt++) {
- 		buff_info = (struct octep_rx_buffer *)&oq->buff_info[read_idx];
--		dma_unmap_page(oq->dev, oq->desc_ring[read_idx].buffer_ptr,
--			       PAGE_SIZE, DMA_FROM_DEVICE);
- 		resp_hw = page_address(buff_info->page);
--		buff_info->page = NULL;
- 
- 		/* Swap the length field that is in Big-Endian to CPU */
- 		buff_info->len = be64_to_cpu(resp_hw->length);
-@@ -390,36 +411,27 @@ static int __octep_oq_process_rx(struct octep_device *oct,
- 			 */
- 			data_offset = OCTEP_OQ_RESP_HW_SIZE;
- 		}
-+
-+		octep_oq_next_pkt(oq, buff_info, &read_idx, &desc_used);
-+
-+		skb = build_skb((void *)resp_hw, PAGE_SIZE);
-+		skb_reserve(skb, data_offset);
-+
- 		rx_bytes += buff_info->len;
- 
- 		if (buff_info->len <= oq->max_single_buffer_size) {
--			skb = build_skb((void *)resp_hw, PAGE_SIZE);
--			skb_reserve(skb, data_offset);
- 			skb_put(skb, buff_info->len);
--			read_idx++;
--			desc_used++;
--			if (read_idx == oq->max_count)
--				read_idx = 0;
- 		} else {
- 			struct skb_shared_info *shinfo;
- 			u16 data_len;
- 
--			skb = build_skb((void *)resp_hw, PAGE_SIZE);
--			skb_reserve(skb, data_offset);
- 			/* Head fragment includes response header(s);
- 			 * subsequent fragments contains only data.
- 			 */
- 			skb_put(skb, oq->max_single_buffer_size);
--			read_idx++;
--			desc_used++;
--			if (read_idx == oq->max_count)
--				read_idx = 0;
--
- 			shinfo = skb_shinfo(skb);
- 			data_len = buff_info->len - oq->max_single_buffer_size;
- 			while (data_len) {
--				dma_unmap_page(oq->dev, oq->desc_ring[read_idx].buffer_ptr,
--					       PAGE_SIZE, DMA_FROM_DEVICE);
- 				buff_info = (struct octep_rx_buffer *)
- 					    &oq->buff_info[read_idx];
- 				if (data_len < oq->buffer_size) {
-@@ -434,11 +446,8 @@ static int __octep_oq_process_rx(struct octep_device *oct,
- 						buff_info->page, 0,
- 						buff_info->len,
- 						buff_info->len);
--				buff_info->page = NULL;
--				read_idx++;
--				desc_used++;
--				if (read_idx == oq->max_count)
--					read_idx = 0;
-+
-+				octep_oq_next_pkt(oq, buff_info, &read_idx, &desc_used);
- 			}
- 		}
- 
--- 
-2.43.0
-
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -3794,6 +3794,8 @@ void btrfs_free_reserved_bytes(struct bt
+ 	spin_lock(&cache->lock);
+ 	if (cache->ro)
+ 		space_info->bytes_readonly += num_bytes;
++	else if (btrfs_is_zoned(cache->fs_info))
++		space_info->bytes_zone_unusable += num_bytes;
+ 	cache->reserved -= num_bytes;
+ 	space_info->bytes_reserved -= num_bytes;
+ 	space_info->max_extent_size = 0;
 
 
