@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1749018C03D;
-	Mon, 28 Oct 2024 06:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2FE18DF68;
+	Mon, 28 Oct 2024 06:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097303; cv=none; b=mE68TCXJmVe+YniPcRwW14ZgnAgqyTu8i0iknAqURPYc3jfVCFUvKN0Mc7usYG+bHmcqFrphP7IgAYwIvad9ViIQiw+umPPxGyEYiL2kU1V2ae9PdPjqsygtHdtkGUXYrd3BSk/L60rhnCjeK7Jd3pwR7pikrWbh5Z8N2un2azA=
+	t=1730097305; cv=none; b=UnFCdMtMz4OfoY1vLbOMgseguL8I62J5fcJ1A/2Nsa94sJoVEaxLqRQeUv8NsSfoM4ADZmPG0EXeixNvOXhIlpSCGmGLqdAgvGiYVeAFPCusp8av/Q9fQr+nLeRu6nMofGieDQ/2rolnhnNfXnU5drtYZi5AUDSMleCVxEpCXxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097303; c=relaxed/simple;
-	bh=NcHwSd2158fZ/fpsKhTgQqQwXXcDEK3mZPjIEl0ZoEo=;
+	s=arc-20240116; t=1730097305; c=relaxed/simple;
+	bh=y8MSHOYx24aZ3HiP5q8cLqWcSAOsTCk4gmAfUg9g8Q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mr87GjPsq5MgiS5bovXvn5Ej9rxMLGMuzhkbUUcs15UiB96MUxewgGOZQSASB1cdrpkdae9g9ZjhN2H7h4w7hCQGZYJk81+WuSrc7bLHzlV0K9noD3tp74Piu7Y2iKR/y87jmVTWJYMAsDbGITPYwMUR75zhhyHxQ1Qfi2NmioA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rku9fENs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gg/9O3GsJeBzc4cjuhF/C6vNAgIC6iNL5zn2Mgw5pMWt6mVUxR0u5cI2hjNahNQ9xJPyBw6ABVWMgosD/R40M9yI/tSNuaCQIr9YrLUJySUlfJnhw8xj8NQXfNmNhL2rT3HDBhiq3k44CBJVuO/OG+k1FgpLmuEb2UYOJQciHbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRk6Hh+L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rku9fENs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D53C4CEC3;
-	Mon, 28 Oct 2024 06:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRk6Hh+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CD0C4CEC3;
+	Mon, 28 Oct 2024 06:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097303;
-	bh=NcHwSd2158fZ/fpsKhTgQqQwXXcDEK3mZPjIEl0ZoEo=;
+	s=korg; t=1730097305;
+	bh=y8MSHOYx24aZ3HiP5q8cLqWcSAOsTCk4gmAfUg9g8Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rku9fENsPPKebSWTracqjxFDpfLDpotAn8PHZuJipskJE+DaXzBFbUrZgRJ40tNvX
-	 7j1LbP/NwKzr6bqOdFnVhe5Rp2jTrV1PsusvGu5OW8ayE8H5Ho7qdmGr1Kbfslm9kA
-	 DuCZ50WTOzQEmTKr24eBnfeAa7rCDS9U5+kvxWZQ=
+	b=XRk6Hh+Lm2o7CpiU5nYCIUCxEpKrt0Buz5/B0dBTH/yO1rEM+Pt/E7uuxdBoRBD8x
+	 4qKNsZOVmBsGOapp7ScbrgOUWcptij5ecozZ4RiY9j/wk952K1jB1mKnTjgxNN1zHD
+	 wtzINLwfJBJBPtWASZqJgFzB9EIoOzIbTxXR/Iw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/137] exec: dont WARN for racy path_noexec check
-Date: Mon, 28 Oct 2024 07:25:09 +0100
-Message-ID: <20241028062300.750446184@linuxfoundation.org>
+Subject: [PATCH 6.1 073/137] fs/ntfs3: Add more attributes checks in mi_enum_attr()
+Date: Mon, 28 Oct 2024 07:25:10 +0100
+Message-ID: <20241028062300.776820907@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -52,98 +51,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mateusz Guzik <mjguzik@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 0d196e7589cefe207d5d41f37a0a28a1fdeeb7c6 ]
+[ Upstream commit 013ff63b649475f0ee134e2c8d0c8e65284ede50 ]
 
-Both i_mode and noexec checks wrapped in WARN_ON stem from an artifact
-of the previous implementation. They used to legitimately check for the
-condition, but that got moved up in two commits:
-633fb6ac3980 ("exec: move S_ISREG() check earlier")
-0fd338b2d2cd ("exec: move path_noexec() check earlier")
-
-Instead of being removed said checks are WARN_ON'ed instead, which
-has some debug value.
-
-However, the spurious path_noexec check is racy, resulting in
-unwarranted warnings should someone race with setting the noexec flag.
-
-One can note there is more to perm-checking whether execve is allowed
-and none of the conditions are guaranteed to still hold after they were
-tested for.
-
-Additionally this does not validate whether the code path did any perm
-checking to begin with -- it will pass if the inode happens to be
-regular.
-
-Keep the redundant path_noexec() check even though it's mindless
-nonsense checking for guarantee that isn't given so drop the WARN.
-
-Reword the commentary and do small tidy ups while here.
-
-Signed-off-by: Mateusz Guzik <mjguzik@gmail.com>
-Link: https://lore.kernel.org/r/20240805131721.765484-1-mjguzik@gmail.com
-[brauner: keep redundant path_noexec() check]
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-[cascardo: keep exit label and use it]
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+CVE: CVE-2023-45896
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exec.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ fs/ntfs3/record.c | 67 ++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 54 insertions(+), 13 deletions(-)
 
-diff --git a/fs/exec.c b/fs/exec.c
-index 65d3ebc24fd34..a42c9b8b070d7 100644
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -141,13 +141,11 @@ SYSCALL_DEFINE1(uselib, const char __user *, library)
- 		goto out;
+diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
+index 1351fb02e1401..7ab4527105729 100644
+--- a/fs/ntfs3/record.c
++++ b/fs/ntfs3/record.c
+@@ -193,8 +193,9 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ {
+ 	const struct MFT_REC *rec = mi->mrec;
+ 	u32 used = le32_to_cpu(rec->used);
+-	u32 t32, off, asize;
++	u32 t32, off, asize, prev_type;
+ 	u16 t16;
++	u64 data_size, alloc_size, tot_size;
  
- 	/*
--	 * may_open() has already checked for this, so it should be
--	 * impossible to trip now. But we need to be extra cautious
--	 * and check again at the very end too.
-+	 * Check do_open_execat() for an explanation.
- 	 */
- 	error = -EACCES;
--	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode) ||
--			 path_noexec(&file->f_path)))
-+	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode)) ||
-+	    path_noexec(&file->f_path))
- 		goto exit;
+ 	if (!attr) {
+ 		u32 total = le32_to_cpu(rec->total);
+@@ -213,6 +214,7 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 		if (!is_rec_inuse(rec))
+ 			return NULL;
  
- 	fsnotify_open(file);
-@@ -927,16 +925,16 @@ static struct file *do_open_execat(int fd, struct filename *name, int flags)
++		prev_type = 0;
+ 		attr = Add2Ptr(rec, off);
+ 	} else {
+ 		/* Check if input attr inside record. */
+@@ -226,6 +228,11 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 			return NULL;
+ 		}
  
- 	file = do_filp_open(fd, name, &open_exec_flags);
- 	if (IS_ERR(file))
--		goto out;
-+		return file;
++		/* Overflow check. */
++		if (off + asize < off)
++			return NULL;
++
++		prev_type = le32_to_cpu(attr->type);
+ 		attr = Add2Ptr(attr, asize);
+ 		off += asize;
+ 	}
+@@ -245,7 +252,11 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
  
- 	/*
--	 * may_open() has already checked for this, so it should be
--	 * impossible to trip now. But we need to be extra cautious
--	 * and check again at the very end too.
-+	 * In the past the regular type check was here. It moved to may_open() in
-+	 * 633fb6ac3980 ("exec: move S_ISREG() check earlier"). Since then it is
-+	 * an invariant that all non-regular files error out before we get here.
- 	 */
- 	err = -EACCES;
--	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode) ||
--			 path_noexec(&file->f_path)))
-+	if (WARN_ON_ONCE(!S_ISREG(file_inode(file)->i_mode)) ||
-+	    path_noexec(&file->f_path))
- 		goto exit;
+ 	/* 0x100 is last known attribute for now. */
+ 	t32 = le32_to_cpu(attr->type);
+-	if ((t32 & 0xf) || (t32 > 0x100))
++	if (!t32 || (t32 & 0xf) || (t32 > 0x100))
++		return NULL;
++
++	/* attributes in record must be ordered by type */
++	if (t32 < prev_type)
+ 		return NULL;
  
- 	err = deny_write_access(file);
-@@ -946,7 +944,6 @@ static struct file *do_open_execat(int fd, struct filename *name, int flags)
- 	if (name->name[0] != '\0')
- 		fsnotify_open(file);
+ 	/* Check overflow and boundary. */
+@@ -254,16 +265,15 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
  
--out:
- 	return file;
+ 	/* Check size of attribute. */
+ 	if (!attr->non_res) {
++		/* Check resident fields. */
+ 		if (asize < SIZEOF_RESIDENT)
+ 			return NULL;
  
- exit:
+ 		t16 = le16_to_cpu(attr->res.data_off);
+-
+ 		if (t16 > asize)
+ 			return NULL;
+ 
+-		t32 = le32_to_cpu(attr->res.data_size);
+-		if (t16 + t32 > asize)
++		if (t16 + le32_to_cpu(attr->res.data_size) > asize)
+ 			return NULL;
+ 
+ 		if (attr->name_len &&
+@@ -274,21 +284,52 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 		return attr;
+ 	}
+ 
+-	/* Check some nonresident fields. */
+-	if (attr->name_len &&
+-	    le16_to_cpu(attr->name_off) + sizeof(short) * attr->name_len >
+-		    le16_to_cpu(attr->nres.run_off)) {
++	/* Check nonresident fields. */
++	if (attr->non_res != 1)
+ 		return NULL;
+-	}
+ 
+-	if (attr->nres.svcn || !is_attr_ext(attr)) {
++	t16 = le16_to_cpu(attr->nres.run_off);
++	if (t16 > asize)
++		return NULL;
++
++	t32 = sizeof(short) * attr->name_len;
++	if (t32 && le16_to_cpu(attr->name_off) + t32 > t16)
++		return NULL;
++
++	/* Check start/end vcn. */
++	if (le64_to_cpu(attr->nres.svcn) > le64_to_cpu(attr->nres.evcn) + 1)
++		return NULL;
++
++	data_size = le64_to_cpu(attr->nres.data_size);
++	if (le64_to_cpu(attr->nres.valid_size) > data_size)
++		return NULL;
++
++	alloc_size = le64_to_cpu(attr->nres.alloc_size);
++	if (data_size > alloc_size)
++		return NULL;
++
++	t32 = mi->sbi->cluster_mask;
++	if (alloc_size & t32)
++		return NULL;
++
++	if (!attr->nres.svcn && is_attr_ext(attr)) {
++		/* First segment of sparse/compressed attribute */
++		if (asize + 8 < SIZEOF_NONRESIDENT_EX)
++			return NULL;
++
++		tot_size = le64_to_cpu(attr->nres.total_size);
++		if (tot_size & t32)
++			return NULL;
++
++		if (tot_size > alloc_size)
++			return NULL;
++	} else {
+ 		if (asize + 8 < SIZEOF_NONRESIDENT)
+ 			return NULL;
+ 
+ 		if (attr->nres.c_unit)
+ 			return NULL;
+-	} else if (asize + 8 < SIZEOF_NONRESIDENT_EX)
+-		return NULL;
++	}
+ 
+ 	return attr;
+ }
 -- 
 2.43.0
 
