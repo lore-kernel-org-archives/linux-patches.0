@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8927415B10D;
-	Mon, 28 Oct 2024 06:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE43415B10D;
+	Mon, 28 Oct 2024 06:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097101; cv=none; b=Py48yWZUCeDP6VHDzFyMpw21giUNZ/UumKYDALVi7Q9WxmNgi274nkUcCB+gWCX5Q/+LX0UXjICc26j1pjx6bg4jMq4v5pkNy4dXndB5ulR86rlGUv9YsMjRBdW+gi2M6pECSK9hTlpgwqT/gwn35/YN8ciVn9iEzoi6Ahgs8kY=
+	t=1730097103; cv=none; b=uggRhzWs8JfKhT5Gjf+u3kdOc3JXJT+df4w2OdFThgzah/uHu6FJX9YSVUN1SwiOrSKl8TPhCkH4H4fWjE9LdtzRswP0v8mrpcjn/4brQuPqLwVbbZpp7Q4nZ67BuSAeI8lth/N1Tm0iSPZALHLJ5FZqVRas2wBK8nY+3bLE4MU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097101; c=relaxed/simple;
-	bh=hzrOELiL5gkm6O243wzvamsfqSWp2oldPSGt96TUbkc=;
+	s=arc-20240116; t=1730097103; c=relaxed/simple;
+	bh=Z0BVdUzqnPINpz/mZKJTUVq6xClEchSsRzZaq8Lsq2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuU2QSLeTC88kYzEenknwvcXTcyRGbMU9DdO6LT3tDH/hI0g3NMWf6h3y8vkX3BsKDrnrCArnZ+PC3CWkkPLBJ+cGeQWSaeNMlwr6vbHTBn8kibFy6sTj0fSMU683GZq3sQLE7buxJVr+R0GEiFJzxETw3/DIPG6UhMo/grDILU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ty/Jw1F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YAruGBSPw45ZQqvrpLnEu3FIXT0xyYUGw/+91oim6FndWINCU3VuXrZJ+AcZEPmG/ZYNdTzF0qghrdgzYBlaFH41zI5nngPplr0o5jQENQQpsRDH/HmuU34yotzFiLyjxHWAheFzWLZFWB88P78xuysC5XDkMm/7M4F9ajkSdkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDWLZxcN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ty/Jw1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D03EC4CECD;
-	Mon, 28 Oct 2024 06:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDWLZxcN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B9B5C4CEC7;
+	Mon, 28 Oct 2024 06:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097101;
-	bh=hzrOELiL5gkm6O243wzvamsfqSWp2oldPSGt96TUbkc=;
+	s=korg; t=1730097103;
+	bh=Z0BVdUzqnPINpz/mZKJTUVq6xClEchSsRzZaq8Lsq2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ty/Jw1FvJasmAFC7566qvBGX3gd2fh79+pGlqZafE9Qj5QS/I2Se2fLAljuf+Hry
-	 zeOx1rlz1KB6H8C+AAqwiGisxUL86GGYpZhIqE4pRCisxC9LPrfilXUZYfCz3cwIRy
-	 Aib9Y83DzcY8xx77+olmG4AOXBa+a4LXKqJfmBIA=
+	b=VDWLZxcNU02IkE5FHnTdCa543o/xWQcVcS8JyJNdRI1W5exmSdtY+GPlnUoDwgtFe
+	 J+hPnBc3AVkzlk0FuoZL7gMqwaLrkc7+aQI/xMAoxfSUEoBC3Zg5ymOZ2XP1gHPLgw
+	 msijWteG0o2BkbalX9A4KcgA6qU+Y+fBSIzVPzO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Andrey Shumilin <shum.sdl@nppct.ru>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 64/80] bpf,perf: Fix perf_event_detach_bpf_prog error handling
-Date: Mon, 28 Oct 2024 07:25:44 +0100
-Message-ID: <20241028062254.392692887@linuxfoundation.org>
+Subject: [PATCH 5.15 65/80] ALSA: firewire-lib: Avoid division by zero in apply_constraint_to_size()
+Date: Mon, 28 Oct 2024 07:25:45 +0100
+Message-ID: <20241028062254.419040303@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
 References: <20241028062252.611837461@linuxfoundation.org>
@@ -52,44 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Andrey Shumilin <shum.sdl@nppct.ru>
 
-[ Upstream commit 0ee288e69d033850bc87abe0f9cc3ada24763d7f ]
+[ Upstream commit 72cafe63b35d06b5cfbaf807e90ae657907858da ]
 
-Peter reported that perf_event_detach_bpf_prog might skip to release
-the bpf program for -ENOENT error from bpf_prog_array_copy.
+The step variable is initialized to zero. It is changed in the loop,
+but if it's not changed it will remain zero. Add a variable check
+before the division.
 
-This can't happen because bpf program is stored in perf event and is
-detached and released only when perf event is freed.
+The observed behavior was introduced by commit 826b5de90c0b
+("ALSA: firewire-lib: fix insufficient PCM rule for period/buffer size"),
+and it is difficult to show that any of the interval parameters will
+satisfy the snd_interval_test() condition with data from the
+amdtp_rate_table[] table.
 
-Let's drop the -ENOENT check and make sure the bpf program is released
-in any case.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 170a7e3ea070 ("bpf: bpf_prog_array_copy() should return -ENOENT if exclude_prog not found")
-Reported-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241023200352.3488610-1-jolsa@kernel.org
-
-Closes: https://lore.kernel.org/lkml/20241022111638.GC16066@noisy.programming.kicks-ass.net/
+Fixes: 826b5de90c0b ("ALSA: firewire-lib: fix insufficient PCM rule for period/buffer size")
+Signed-off-by: Andrey Shumilin <shum.sdl@nppct.ru>
+Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Link: https://patch.msgid.link/20241018060018.1189537-1-shum.sdl@nppct.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 2 --
- 1 file changed, 2 deletions(-)
+ sound/firewire/amdtp-stream.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index a1dc0ff1962e6..126754b61edc0 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -1790,8 +1790,6 @@ void perf_event_detach_bpf_prog(struct perf_event *event)
+diff --git a/sound/firewire/amdtp-stream.c b/sound/firewire/amdtp-stream.c
+index 842fe127c5378..b5b3b4d177aaf 100644
+--- a/sound/firewire/amdtp-stream.c
++++ b/sound/firewire/amdtp-stream.c
+@@ -172,6 +172,9 @@ static int apply_constraint_to_size(struct snd_pcm_hw_params *params,
+ 			step = max(step, amdtp_syt_intervals[i]);
+ 	}
  
- 	old_array = bpf_event_rcu_dereference(event->tp_event->prog_array);
- 	ret = bpf_prog_array_copy(old_array, event->prog, NULL, 0, &new_array);
--	if (ret == -ENOENT)
--		goto unlock;
- 	if (ret < 0) {
- 		bpf_prog_array_delete_safe(old_array, event->prog);
- 	} else {
++	if (step == 0)
++		return -EINVAL;
++
+ 	t.min = roundup(s->min, step);
+ 	t.max = rounddown(s->max, step);
+ 	t.integer = 1;
 -- 
 2.43.0
 
