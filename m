@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770F318E34F;
-	Mon, 28 Oct 2024 06:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEDDB18E34F;
+	Mon, 28 Oct 2024 06:35:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097339; cv=none; b=a/640+HtNDGpkvtjFKmx+bigbrZo2mBwuRWpWTrBZBtBMrhbeTFNqDRWoy6WEW24QNGSsN267B1S8/VkXZliipXvI3nNgDKnLYg+DLEZX44fykxEDzCAHVn6lolu/fm3dxayMnt1rch1rFrooNlKYYJfd3adc+zBlEzjomAy7+c=
+	t=1730097341; cv=none; b=MLLVubjzFgbz3k6r/tf5IJ9fPwzS4EIoIUliNP/rlOo6HLrZJYDT2c072KV6A9tP7mIZh8SzlbGzv8ldTSSsl/caAFen8TDBF2+DPM4hiSf0fM/sqLz3i0axNPIuWr3Jdk1OkseQhScT+kpRKYtXJxInfVmqpouykHQ9RFnxoJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097339; c=relaxed/simple;
-	bh=wMakWQJavgKPlPTC9KqLs7DrL90LEKEcy9XPPOPn5Es=;
+	s=arc-20240116; t=1730097341; c=relaxed/simple;
+	bh=4V3+6i/GAgxmXZmD4f8ZhnPCfe75uFpd+qoyeBis4bM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dC3mmb782FALeXRewsU+5YO/Occ5zgQDnf/HxN9pdqGMOPm2Z7OWMKJuebwS5ySfonUEkHP6//vQ/6uxoCbzb6RiCgs6wYt0On02B+5ih9v68x0kkSKfVHrb3MbnwzSR6JZvoF49NVgDX5EROXfXhKslmZNCPP8zSfotjSX6qZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXD96YPM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mc7BHlQ7rDLU5mH3oAxurkH+2+mIH0ZjzIurruIfEDrej6Ugqp8w1DMju9qC/7Dxlzo8BHDqw717km9hvx1H5I+fPkTyHeVKo5rmOt6G1p5TRSon06Wq1SJo3xQoUYI4sVx2yIfXNeZsfrvLkIryxoeJ9wncSYQu0hFFuOGudIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z735+V+G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXD96YPM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1746EC4CEC3;
-	Mon, 28 Oct 2024 06:35:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z735+V+G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DEBDC4CEC3;
+	Mon, 28 Oct 2024 06:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097339;
-	bh=wMakWQJavgKPlPTC9KqLs7DrL90LEKEcy9XPPOPn5Es=;
+	s=korg; t=1730097341;
+	bh=4V3+6i/GAgxmXZmD4f8ZhnPCfe75uFpd+qoyeBis4bM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pXD96YPMs0DGttplWO9I4KYSr2wdb/Rj/xB+6ZJs07WBEgYr1AD4AbDYmawrSMAqy
-	 hFh7GVnpP30BQpV5yFBKKfcKzAc8R56MWuYts4J5JqW7uWSi3Y/xcZIttDg90S9wIS
-	 brtJzfc7FoKyP3y+HccI2LQXxQWOHjf6vRknwXxo=
+	b=Z735+V+GmvusFUme7LaXTgAUrogtzFyyX8Y/QOCaqKRzBMzY0diGOtvILmf4A5LOM
+	 EfoEHiOWfe9HGCci0YKbXtGAqG260epqDOzJjaA3n42mSYvehZv3x8A0+YyDM7dkAT
+	 fVlg4JaHfxc/r8w54tc1Ol+NhfLbwAJEY5Hkmukw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eyal Birger <eyal.birger@gmail.com>,
-	Antony Antony <antony.antony@secunet.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Wang Hai <wanghai38@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/137] xfrm: respect ip protocols rules criteria when performing dst lookups
-Date: Mon, 28 Oct 2024 07:25:24 +0100
-Message-ID: <20241028062301.158898207@linuxfoundation.org>
+Subject: [PATCH 6.1 088/137] net/sun3_82586: fix potential memory leak in sun3_82586_send_packet()
+Date: Mon, 28 Oct 2024 07:25:25 +0100
+Message-ID: <20241028062301.184393139@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -52,96 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eyal Birger <eyal.birger@gmail.com>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit b8469721034300bbb6dec5b4bf32492c95e16a0c ]
+[ Upstream commit 2cb3f56e827abb22c4168ad0c1bbbf401bb2f3b8 ]
 
-The series in the "fixes" tag added the ability to consider L4 attributes
-in routing rules.
+The sun3_82586_send_packet() returns NETDEV_TX_OK without freeing skb
+in case of skb->len being too long, add dev_kfree_skb() to fix it.
 
-The dst lookup on the outer packet of encapsulated traffic in the xfrm
-code was not adapted to this change, thus routing behavior that relies
-on L4 information is not respected.
-
-Pass the ip protocol information when performing dst lookups.
-
-Fixes: a25724b05af0 ("Merge branch 'fib_rules-support-sport-dport-and-proto-match'")
-Signed-off-by: Eyal Birger <eyal.birger@gmail.com>
-Tested-by: Antony Antony <antony.antony@secunet.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Message-ID: <20241015144148.7918-1-wanghai38@huawei.com>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xfrm.h      |  2 ++
- net/ipv4/xfrm4_policy.c |  2 ++
- net/ipv6/xfrm6_policy.c |  3 +++
- net/xfrm/xfrm_policy.c  | 15 +++++++++++++++
- 4 files changed, 22 insertions(+)
+ drivers/net/ethernet/i825xx/sun3_82586.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/net/xfrm.h b/include/net/xfrm.h
-index 55ea15ccd5327..bf670929622dc 100644
---- a/include/net/xfrm.h
-+++ b/include/net/xfrm.h
-@@ -333,6 +333,8 @@ struct xfrm_dst_lookup_params {
- 	xfrm_address_t *saddr;
- 	xfrm_address_t *daddr;
- 	u32 mark;
-+	__u8 ipproto;
-+	union flowi_uli uli;
- };
- 
- struct net_device;
-diff --git a/net/ipv4/xfrm4_policy.c b/net/ipv4/xfrm4_policy.c
-index 9ac9ed9738068..76f3f38b110f2 100644
---- a/net/ipv4/xfrm4_policy.c
-+++ b/net/ipv4/xfrm4_policy.c
-@@ -30,6 +30,8 @@ static struct dst_entry *__xfrm4_dst_lookup(struct flowi4 *fl4,
- 	fl4->flowi4_mark = params->mark;
- 	if (params->saddr)
- 		fl4->saddr = params->saddr->a4;
-+	fl4->flowi4_proto = params->ipproto;
-+	fl4->uli = params->uli;
- 
- 	rt = __ip_route_output_key(params->net, fl4);
- 	if (!IS_ERR(rt))
-diff --git a/net/ipv6/xfrm6_policy.c b/net/ipv6/xfrm6_policy.c
-index 6e3e0f1bd81c9..8c1092ff3fe2e 100644
---- a/net/ipv6/xfrm6_policy.c
-+++ b/net/ipv6/xfrm6_policy.c
-@@ -37,6 +37,9 @@ static struct dst_entry *xfrm6_dst_lookup(const struct xfrm_dst_lookup_params *p
- 	if (params->saddr)
- 		memcpy(&fl6.saddr, params->saddr, sizeof(fl6.saddr));
- 
-+	fl6.flowi4_proto = params->ipproto;
-+	fl6.uli = params->uli;
-+
- 	dst = ip6_route_output(params->net, NULL, &fl6);
- 
- 	err = dst->error;
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index adb12f428be30..a022f49846879 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -296,6 +296,21 @@ static inline struct dst_entry *xfrm_dst_lookup(struct xfrm_state *x,
- 	params.tos = tos;
- 	params.oif = oif;
- 	params.mark = mark;
-+	params.ipproto = x->id.proto;
-+	if (x->encap) {
-+		switch (x->encap->encap_type) {
-+		case UDP_ENCAP_ESPINUDP:
-+			params.ipproto = IPPROTO_UDP;
-+			params.uli.ports.sport = x->encap->encap_sport;
-+			params.uli.ports.dport = x->encap->encap_dport;
-+			break;
-+		case TCP_ENCAP_ESPINTCP:
-+			params.ipproto = IPPROTO_TCP;
-+			params.uli.ports.sport = x->encap->encap_sport;
-+			params.uli.ports.dport = x->encap->encap_dport;
-+			break;
-+		}
-+	}
- 
- 	dst = __xfrm_dst_lookup(family, &params);
+diff --git a/drivers/net/ethernet/i825xx/sun3_82586.c b/drivers/net/ethernet/i825xx/sun3_82586.c
+index 72d3b5328ebb4..54c83e66bf78b 100644
+--- a/drivers/net/ethernet/i825xx/sun3_82586.c
++++ b/drivers/net/ethernet/i825xx/sun3_82586.c
+@@ -1011,6 +1011,7 @@ sun3_82586_send_packet(struct sk_buff *skb, struct net_device *dev)
+ 	if(skb->len > XMIT_BUFF_SIZE)
+ 	{
+ 		printk("%s: Sorry, max. framelength is %d bytes. The length of your frame is %d bytes.\n",dev->name,XMIT_BUFF_SIZE,skb->len);
++		dev_kfree_skb(skb);
+ 		return NETDEV_TX_OK;
+ 	}
  
 -- 
 2.43.0
