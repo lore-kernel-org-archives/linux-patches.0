@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3018518DF68;
-	Mon, 28 Oct 2024 06:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175D518E348;
+	Mon, 28 Oct 2024 06:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097488; cv=none; b=YFt7C4O6QCTlNSs3ekFRW2LewByxkvuUiG+Khv7Ai0N+NqPUyrsXXH6SWYxMxyqBk7LgiYseMm77aajcWazFtC9lAPCZtf7LEhAfEW1fQdn3hFI9cfjnqBPLYJE5LSNcD3R9g8mw85nUf1xUqDwLCEBcAhDqg2QkiHgWJh+ufB4=
+	t=1730097490; cv=none; b=uFEO3jkvlY2JcKCx9C0339F370J5xHuWgCwjRmQ7STJRo44uS9XNQCMdjiayr7V0UaFShXE0gZANfYKbDzhaXJutX91SZnk5aZihHgRL0QgDHhT2+VcaxTeC7x0Dpa+aRZRyQfxgAy4QUPlxhTvhFdGsR7/e+3mgD0kWwtfLY+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097488; c=relaxed/simple;
-	bh=rlLpASJxwf2vnndc4uZWy61h0eTWXMuUNT4c7nPNyN0=;
+	s=arc-20240116; t=1730097490; c=relaxed/simple;
+	bh=2nIE7uJr+WmHS9cD4x8CwFfUcFB24Li7JlpjokoxErs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYjZw9h0wRVmDitCEwpeUIqMP4at0d8VQAD3D3qsgu48Rul7XmI3dA5ymoQWYksrF1dmkCaQqpCe35TsyzlVxRBpjJjEeEFSfTTD2Xhe7k2rosYjr9Ebb0lnrV0DIGMXW0mawNzIMkf8oodqzPKB7e2QniWsEFQ7ZZRnQ8HOSPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BB+Q9ySS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iSdjm+8goCOO/Wyp7YJEykDqwPb4/hszdrWcNhnrdQtGT8uAi3ldWYho7pg+1SiCxCbtioLXDdctn1jCRyxJnX7hZuqEC6e6mbv5UypedADnzni+DTVMnbiKezmoNa/5SfUxAOZE9qMoBr+Pn6iB1QkZZWgDRGil6ZpV06QlP2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5OSrDq1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BB+Q9ySS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A33C4CEC3;
-	Mon, 28 Oct 2024 06:38:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5OSrDq1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA74CC4CEC3;
+	Mon, 28 Oct 2024 06:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097487;
-	bh=rlLpASJxwf2vnndc4uZWy61h0eTWXMuUNT4c7nPNyN0=;
+	s=korg; t=1730097490;
+	bh=2nIE7uJr+WmHS9cD4x8CwFfUcFB24Li7JlpjokoxErs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BB+Q9ySSuBqqMGirp5XLl1mUBx/ITCtgYtFAtoA/Si5611blDxYaurFCmgLKyXmuz
-	 d5ii5LqMGUYMpu8CGL9pWEBq6L9XDidE0++UO3LU23KhXgt27J1O+hZpMovlTjSKoF
-	 toATSNSl7NPwSWNc5uHO7iy/h3OfyM/ApH53r7rE=
+	b=t5OSrDq1Uezk5w/F4ZkTPPuYGVFw+6WBY5ppg76txjN0yRl4gT75OJVQnz5nlCeMF
+	 /9WXBM8osjQwxtfgeLDHEoreE3qkV3JpXnkjSMW5cXreCHBTcF8hDKUZd6ldscjh2q
+	 /oKXuQi9AijP+BT80wjuFqu6BamxKmGUezQhKRj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyrone Wu <wudevelops@gmail.com>,
 	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Yafang Shao <laoar.shao@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/208] bpf: fix unpopulated name_len field in perf_event link info
-Date: Mon, 28 Oct 2024 07:23:15 +0100
-Message-ID: <20241028062307.033315165@linuxfoundation.org>
+Subject: [PATCH 6.6 016/208] selftests/bpf: Use bpf_link__destroy in fill_link_info tests
+Date: Mon, 28 Oct 2024 07:23:16 +0100
+Message-ID: <20241028062307.058263939@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -53,126 +53,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tyrone Wu <wudevelops@gmail.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 4deecdd29cf29844c7bd164d72dc38d2e672f64e ]
+[ Upstream commit 1703612885723869064f18e8816c6f3f87987748 ]
 
-Previously when retrieving `bpf_link_info.perf_event` for
-kprobe/uprobe/tracepoint, the `name_len` field was not populated by the
-kernel, leaving it to reflect the value initially set by the user. This
-behavior was inconsistent with how other input/output string buffer
-fields function (e.g. `raw_tracepoint.tp_name_len`).
+The fill_link_info test keeps skeleton open and just creates
+various links. We are wrongly calling bpf_link__detach after
+each test to close them, we need to call bpf_link__destroy.
 
-This patch fills `name_len` with the actual size of the string name.
-
-Fixes: 1b715e1b0ec5 ("bpf: Support ->fill_link_info for perf_event")
-Signed-off-by: Tyrone Wu <wudevelops@gmail.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
 Acked-by: Yafang Shao <laoar.shao@gmail.com>
-Link: https://lore.kernel.org/r/20241008164312.46269-1-wudevelops@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://lore.kernel.org/bpf/20231125193130.834322-5-jolsa@kernel.org
+Stable-dep-of: 4538a38f654a ("selftests/bpf: fix perf_event link info name_len assertion")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 29 ++++++++++++++++++++++-------
- 1 file changed, 22 insertions(+), 7 deletions(-)
+ .../selftests/bpf/prog_tests/fill_link_info.c | 44 ++++++++++---------
+ 1 file changed, 23 insertions(+), 21 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 1d04d098f57db..b43302c80cac5 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -3442,15 +3442,16 @@ static void bpf_perf_link_dealloc(struct bpf_link *link)
+diff --git a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
+index 9d768e0837149..7db7f9bd9d58e 100644
+--- a/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
++++ b/tools/testing/selftests/bpf/prog_tests/fill_link_info.c
+@@ -140,14 +140,14 @@ static void test_kprobe_fill_link_info(struct test_fill_link_info *skel,
+ 		.retprobe = type == BPF_PERF_EVENT_KRETPROBE,
+ 	);
+ 	ssize_t entry_offset = 0;
++	struct bpf_link *link;
+ 	int link_fd, err;
+ 
+-	skel->links.kprobe_run = bpf_program__attach_kprobe_opts(skel->progs.kprobe_run,
+-								 KPROBE_FUNC, &opts);
+-	if (!ASSERT_OK_PTR(skel->links.kprobe_run, "attach_kprobe"))
++	link = bpf_program__attach_kprobe_opts(skel->progs.kprobe_run, KPROBE_FUNC, &opts);
++	if (!ASSERT_OK_PTR(link, "attach_kprobe"))
+ 		return;
+ 
+-	link_fd = bpf_link__fd(skel->links.kprobe_run);
++	link_fd = bpf_link__fd(link);
+ 	if (!invalid) {
+ 		/* See also arch_adjust_kprobe_addr(). */
+ 		if (skel->kconfig->CONFIG_X86_KERNEL_IBT)
+@@ -157,39 +157,41 @@ static void test_kprobe_fill_link_info(struct test_fill_link_info *skel,
+ 	} else {
+ 		kprobe_fill_invalid_user_buffer(link_fd);
+ 	}
+-	bpf_link__detach(skel->links.kprobe_run);
++	bpf_link__destroy(link);
  }
  
- static int bpf_perf_link_fill_common(const struct perf_event *event,
--				     char __user *uname, u32 ulen,
-+				     char __user *uname, u32 *ulenp,
- 				     u64 *probe_offset, u64 *probe_addr,
- 				     u32 *fd_type, unsigned long *missed)
+ static void test_tp_fill_link_info(struct test_fill_link_info *skel)
  {
- 	const char *buf;
--	u32 prog_id;
-+	u32 prog_id, ulen;
- 	size_t len;
- 	int err;
++	struct bpf_link *link;
+ 	int link_fd, err;
  
-+	ulen = *ulenp;
- 	if (!ulen ^ !uname)
- 		return -EINVAL;
+-	skel->links.tp_run = bpf_program__attach_tracepoint(skel->progs.tp_run, TP_CAT, TP_NAME);
+-	if (!ASSERT_OK_PTR(skel->links.tp_run, "attach_tp"))
++	link = bpf_program__attach_tracepoint(skel->progs.tp_run, TP_CAT, TP_NAME);
++	if (!ASSERT_OK_PTR(link, "attach_tp"))
+ 		return;
  
-@@ -3458,10 +3459,17 @@ static int bpf_perf_link_fill_common(const struct perf_event *event,
- 				      probe_offset, probe_addr, missed);
- 	if (err)
- 		return err;
-+
-+	if (buf) {
-+		len = strlen(buf);
-+		*ulenp = len + 1;
-+	} else {
-+		*ulenp = 1;
-+	}
- 	if (!uname)
- 		return 0;
-+
- 	if (buf) {
--		len = strlen(buf);
- 		err = bpf_copy_to_user(uname, buf, ulen, len);
- 		if (err)
- 			return err;
-@@ -3486,7 +3494,7 @@ static int bpf_perf_link_fill_kprobe(const struct perf_event *event,
- 
- 	uname = u64_to_user_ptr(info->perf_event.kprobe.func_name);
- 	ulen = info->perf_event.kprobe.name_len;
--	err = bpf_perf_link_fill_common(event, uname, ulen, &offset, &addr,
-+	err = bpf_perf_link_fill_common(event, uname, &ulen, &offset, &addr,
- 					&type, &missed);
- 	if (err)
- 		return err;
-@@ -3494,7 +3502,7 @@ static int bpf_perf_link_fill_kprobe(const struct perf_event *event,
- 		info->perf_event.type = BPF_PERF_EVENT_KRETPROBE;
- 	else
- 		info->perf_event.type = BPF_PERF_EVENT_KPROBE;
--
-+	info->perf_event.kprobe.name_len = ulen;
- 	info->perf_event.kprobe.offset = offset;
- 	info->perf_event.kprobe.missed = missed;
- 	if (!kallsyms_show_value(current_cred()))
-@@ -3516,7 +3524,7 @@ static int bpf_perf_link_fill_uprobe(const struct perf_event *event,
- 
- 	uname = u64_to_user_ptr(info->perf_event.uprobe.file_name);
- 	ulen = info->perf_event.uprobe.name_len;
--	err = bpf_perf_link_fill_common(event, uname, ulen, &offset, &addr,
-+	err = bpf_perf_link_fill_common(event, uname, &ulen, &offset, &addr,
- 					&type, NULL);
- 	if (err)
- 		return err;
-@@ -3525,6 +3533,7 @@ static int bpf_perf_link_fill_uprobe(const struct perf_event *event,
- 		info->perf_event.type = BPF_PERF_EVENT_URETPROBE;
- 	else
- 		info->perf_event.type = BPF_PERF_EVENT_UPROBE;
-+	info->perf_event.uprobe.name_len = ulen;
- 	info->perf_event.uprobe.offset = offset;
- 	info->perf_event.uprobe.cookie = event->bpf_cookie;
- 	return 0;
-@@ -3550,12 +3559,18 @@ static int bpf_perf_link_fill_tracepoint(const struct perf_event *event,
- {
- 	char __user *uname;
- 	u32 ulen;
-+	int err;
- 
- 	uname = u64_to_user_ptr(info->perf_event.tracepoint.tp_name);
- 	ulen = info->perf_event.tracepoint.name_len;
-+	err = bpf_perf_link_fill_common(event, uname, &ulen, NULL, NULL, NULL, NULL);
-+	if (err)
-+		return err;
-+
- 	info->perf_event.type = BPF_PERF_EVENT_TRACEPOINT;
-+	info->perf_event.tracepoint.name_len = ulen;
- 	info->perf_event.tracepoint.cookie = event->bpf_cookie;
--	return bpf_perf_link_fill_common(event, uname, ulen, NULL, NULL, NULL, NULL);
-+	return 0;
+-	link_fd = bpf_link__fd(skel->links.tp_run);
++	link_fd = bpf_link__fd(link);
+ 	err = verify_perf_link_info(link_fd, BPF_PERF_EVENT_TRACEPOINT, 0, 0, 0);
+ 	ASSERT_OK(err, "verify_perf_link_info");
+-	bpf_link__detach(skel->links.tp_run);
++	bpf_link__destroy(link);
  }
  
- static int bpf_perf_link_fill_perf_event(const struct perf_event *event,
+ static void test_uprobe_fill_link_info(struct test_fill_link_info *skel,
+ 				       enum bpf_perf_event_type type)
+ {
++	struct bpf_link *link;
+ 	int link_fd, err;
+ 
+-	skel->links.uprobe_run = bpf_program__attach_uprobe(skel->progs.uprobe_run,
+-							    type == BPF_PERF_EVENT_URETPROBE,
+-							    0, /* self pid */
+-							    UPROBE_FILE, uprobe_offset);
+-	if (!ASSERT_OK_PTR(skel->links.uprobe_run, "attach_uprobe"))
++	link = bpf_program__attach_uprobe(skel->progs.uprobe_run,
++					  type == BPF_PERF_EVENT_URETPROBE,
++					  0, /* self pid */
++					  UPROBE_FILE, uprobe_offset);
++	if (!ASSERT_OK_PTR(link, "attach_uprobe"))
+ 		return;
+ 
+-	link_fd = bpf_link__fd(skel->links.uprobe_run);
++	link_fd = bpf_link__fd(link);
+ 	err = verify_perf_link_info(link_fd, type, 0, uprobe_offset, 0);
+ 	ASSERT_OK(err, "verify_perf_link_info");
+-	bpf_link__detach(skel->links.uprobe_run);
++	bpf_link__destroy(link);
+ }
+ 
+ static int verify_kmulti_link_info(int fd, bool retprobe)
+@@ -278,24 +280,24 @@ static void test_kprobe_multi_fill_link_info(struct test_fill_link_info *skel,
+ 					     bool retprobe, bool invalid)
+ {
+ 	LIBBPF_OPTS(bpf_kprobe_multi_opts, opts);
++	struct bpf_link *link;
+ 	int link_fd, err;
+ 
+ 	opts.syms = kmulti_syms;
+ 	opts.cnt = KMULTI_CNT;
+ 	opts.retprobe = retprobe;
+-	skel->links.kmulti_run = bpf_program__attach_kprobe_multi_opts(skel->progs.kmulti_run,
+-								       NULL, &opts);
+-	if (!ASSERT_OK_PTR(skel->links.kmulti_run, "attach_kprobe_multi"))
++	link = bpf_program__attach_kprobe_multi_opts(skel->progs.kmulti_run, NULL, &opts);
++	if (!ASSERT_OK_PTR(link, "attach_kprobe_multi"))
+ 		return;
+ 
+-	link_fd = bpf_link__fd(skel->links.kmulti_run);
++	link_fd = bpf_link__fd(link);
+ 	if (!invalid) {
+ 		err = verify_kmulti_link_info(link_fd, retprobe);
+ 		ASSERT_OK(err, "verify_kmulti_link_info");
+ 	} else {
+ 		verify_kmulti_invalid_user_buffer(link_fd);
+ 	}
+-	bpf_link__detach(skel->links.kmulti_run);
++	bpf_link__destroy(link);
+ }
+ 
+ void test_fill_link_info(void)
 -- 
 2.43.0
 
