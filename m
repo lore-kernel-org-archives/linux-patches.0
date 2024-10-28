@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F318C15B10D;
-	Mon, 28 Oct 2024 06:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380BF18E36C;
+	Mon, 28 Oct 2024 06:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097463; cv=none; b=Z9wxgq8kJXBX5BxQck3OuQ292im3nbCbWoUQclXpfsju/vfinjUoRwbLxInXmn+AUTxRrWGGJtz4EofJw7xBBNvUb0pnPab3hV+PItOMc15uMIuiyzhdC2VMW7dJ9P/P6tV8LksxbOOB31brAfssZriwgv7HafeKIoq0hyquiCc=
+	t=1730097465; cv=none; b=APuuN7sQvvoTESaz1JB/CDrSv64GqP3sztmj5eZ0/T8miNN03bFB+QFmCAHYPAORZ/903GEskQQJ4wUvnnWAUCq+lY8rLt0sL7naX6Yg/rFNEG5x3kgYXCgQn4tkh7iSLgtkFWQVwpeRzPY45ifCqAQoW2zzLDaWtlfS2jrB9Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097463; c=relaxed/simple;
-	bh=T7y5af1uAyjpEfREG+/TLgvR9pPdCFhiWtsBM7E37EE=;
+	s=arc-20240116; t=1730097465; c=relaxed/simple;
+	bh=MLoETPwR2ZUmvN+qd4iAQ2bEbPTpXIAxn4Rv8aAPKOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhrG3A4Pic4BqALmgPjNkIfNL7vCUTJuhDVaR/Qd/zmoF5S9b52MaPGKzI0mEolpupW71f5pdmw3jnGjb1hS/5wXX4vOEWB4Bp4mPd9QtIfoklPIndF3+Jo691irfMoZvUHX0LAneDvdyG1De86xx86b/Vz2CWjb1Nc4/2D8VxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLibwTfX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cTS1/vVMA9bCcQu1YFJXuGcImV4MuXli0NDLnKCry532Q9HzFSk/SnRqTZ8PBknUKhfNqh81dWOXk+QaiSNdPNi1iHg0QZgoyZepBwm++EwD1nBa27ScZmY4r96cJMFE7Ao0aovJeA7H6zfotz7Wv/H5kALHaihZK6P5CVKGxyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6OwVKc0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLibwTfX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94342C4CEC3;
-	Mon, 28 Oct 2024 06:37:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6OwVKc0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB5A4C4CEE8;
+	Mon, 28 Oct 2024 06:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097462;
-	bh=T7y5af1uAyjpEfREG+/TLgvR9pPdCFhiWtsBM7E37EE=;
+	s=korg; t=1730097465;
+	bh=MLoETPwR2ZUmvN+qd4iAQ2bEbPTpXIAxn4Rv8aAPKOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lLibwTfXAUzQDSbBAkO0HdZhpRRveko5adUO5FhprwvgWLKuyWEEzizGXSqRG4Pfb
-	 gLrsQjZ7sCFHgs1r5EHGuMeRlSNDAfSwN0pGefK+8ws8hLPQCgjUXingYHLK963rZ7
-	 M2ncnC16QIrbbDFPVGJaqUryju7vXe9EoSUmoztQ=
+	b=e6OwVKc0qiSWtuvO7hxA5urhFSoSNGilPWWoWmDYdkvzSVCKhvAfU4UODRutPF/Yd
+	 yonn4T/1gNrQVVzOTUniBUcHGq46c652olnBUBojRq91ZrPvt7CBAvEbnYcEtYNmXX
+	 /qHKAk0peTn7RIlFyJe/0zmm9mqT+FlEesYMz5SY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/137] bpf,perf: Fix perf_event_detach_bpf_prog error handling
-Date: Mon, 28 Oct 2024 07:25:44 +0100
-Message-ID: <20241028062301.708317392@linuxfoundation.org>
+Subject: [PATCH 6.1 108/137] ASoC: dt-bindings: davinci-mcasp: Fix interrupts property
+Date: Mon, 28 Oct 2024 07:25:45 +0100
+Message-ID: <20241028062301.734503334@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -52,44 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 0ee288e69d033850bc87abe0f9cc3ada24763d7f ]
+[ Upstream commit 17d8adc4cd5181c13c1041b197b76efc09eaf8a8 ]
 
-Peter reported that perf_event_detach_bpf_prog might skip to release
-the bpf program for -ENOENT error from bpf_prog_array_copy.
+My understanding of the interrupts property is that it can either be:
+1/ - TX
+2/ - TX
+   - RX
+3/ - Common/combined.
 
-This can't happen because bpf program is stored in perf event and is
-detached and released only when perf event is freed.
+There are very little chances that either:
+   - TX
+   - Common/combined
+or even
+   - TX
+   - RX
+   - Common/combined
+could be a thing.
 
-Let's drop the -ENOENT check and make sure the bpf program is released
-in any case.
+Looking at the interrupt-names definition (which uses oneOf instead of
+anyOf), it makes indeed little sense to use anyOf in the interrupts
+definition. I believe this is just a mistake, hence let's fix it.
 
-Fixes: 170a7e3ea070 ("bpf: bpf_prog_array_copy() should return -ENOENT if exclude_prog not found")
-Reported-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241023200352.3488610-1-jolsa@kernel.org
-
-Closes: https://lore.kernel.org/lkml/20241022111638.GC16066@noisy.programming.kicks-ass.net/
+Fixes: 8be90641a0bb ("ASoC: dt-bindings: davinci-mcasp: convert McASP bindings to yaml schema")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20241001204749.390054-1-miquel.raynal@bootlin.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 2 --
- 1 file changed, 2 deletions(-)
+ .../devicetree/bindings/sound/davinci-mcasp-audio.yaml          | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 3fdde232eaa92..583961a9e539a 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2179,8 +2179,6 @@ void perf_event_detach_bpf_prog(struct perf_event *event)
+diff --git a/Documentation/devicetree/bindings/sound/davinci-mcasp-audio.yaml b/Documentation/devicetree/bindings/sound/davinci-mcasp-audio.yaml
+index f46c66bc6b2d8..b181f7481a951 100644
+--- a/Documentation/devicetree/bindings/sound/davinci-mcasp-audio.yaml
++++ b/Documentation/devicetree/bindings/sound/davinci-mcasp-audio.yaml
+@@ -102,7 +102,7 @@ properties:
+     default: 2
  
- 	old_array = bpf_event_rcu_dereference(event->tp_event->prog_array);
- 	ret = bpf_prog_array_copy(old_array, event->prog, NULL, 0, &new_array);
--	if (ret == -ENOENT)
--		goto unlock;
- 	if (ret < 0) {
- 		bpf_prog_array_delete_safe(old_array, event->prog);
- 	} else {
+   interrupts:
+-    anyOf:
++    oneOf:
+       - minItems: 1
+         items:
+           - description: TX interrupt
 -- 
 2.43.0
 
