@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8B72AF07;
-	Mon, 28 Oct 2024 06:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCCB2AF07;
+	Mon, 28 Oct 2024 06:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098496; cv=none; b=g63MWFJCrUt+9c0Bow0C46Grqi6gEJwG3HPak9zPrK9HxHodw6lNp0xlJh0AAHMyKLF0lTErumNVPtPenvMgdZGmUU7qOYCB5I7ZyVUw8N9lSKcj8tQLHGzvo1p//Y3Yf22WYHhF+HNp+MjmNYl5UDVLnX1kNqKR0zgiJlsed1Y=
+	t=1730098498; cv=none; b=oOoYezdmPUFy87rwGyT5crEMS/7NwnGYBWZrnJGUi7xIuYr74fvhr4gPQi5lTVs6JGGikmJwTAlMDc22HQClRvl8up6z4CxO4QNOWVrsqw8krWVMprB6cW00Y/TjSe0LxWekPLDK6jEwYporan4GqZdu3lm6I9hdVG9YSE7g94M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098496; c=relaxed/simple;
-	bh=SHrWFhB8H0KrJIHY8brPWEeQTdm2j1fTqFJjBKq/nUg=;
+	s=arc-20240116; t=1730098498; c=relaxed/simple;
+	bh=Gl/UWyEGULqNxH0REwABOMvAmYKvtDpbpAzXneuQNCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=smwaIE/ZiAxo7N/YkQLW3E2Zc04e7pjHFuQ6LxBWOxRkvoYb7vPm+Zwa7MhnY/XGkUC4s/wTdc4UvUFkNMBaFj7PGybcIpxi0OSHSa8lSpCs0JW3N7kVSRNNXj68RdgfzbVPpE4WX+Z/wVz/3E+k3yUrVePmvJkZFElt9MonCzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAS+Cht2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZoDs1dCG8tClkBnjDZxO1Qze2FsEjeVS46Suin0xD2T9ZCj9bnCxhsqD0XC5QYPa4gjs0o49NXjnfxO9dV1z2+DAd0agvRiBtPOLtjafeDXLyqZFTtG0sLE+DQyF4xO5jSRQ0K9DfzUtThp4bOADXM+ReJEx+7Xi1KBpISFKj6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWPh7m4P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAS+Cht2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94CECC4CEC3;
-	Mon, 28 Oct 2024 06:54:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWPh7m4P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF23AC4CEC3;
+	Mon, 28 Oct 2024 06:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098495;
-	bh=SHrWFhB8H0KrJIHY8brPWEeQTdm2j1fTqFJjBKq/nUg=;
+	s=korg; t=1730098498;
+	bh=Gl/UWyEGULqNxH0REwABOMvAmYKvtDpbpAzXneuQNCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IAS+Cht2Zb3+Coise9MtcSK+MvmqyZzAQWE/vHM11595pU1uzbECv4tVoEw0Y/c+K
-	 0Z4zLeeRI1fZMGsbsKCUuB/KgP1tI5Gl7OW8HBnCyV7a9ptTHXi7+yXK/UDU1dqYsd
-	 Qj67flKDP9DjmfgMoCKVDKZxKVXAkTEJ61ha2YWc=
+	b=BWPh7m4PFmksAWTI4wJV2wmtAiVUORkpuR6GXSjMBLczxWwPZNlanlOgZ5GFoH6vX
+	 hsSD8yoOxxxhCnRSERoGaotR7NwMbxSNyOvu0josMPjTtslvydf9qysCB8BrKo52uj
+	 T5zS4VWZVFZwf2R0kzsJ6FllRKbiu156Kc704TEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brad Spengler <spender@grsecurity.net>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.11 215/261] fs: dont try and remove empty rbtree node
-Date: Mon, 28 Oct 2024 07:25:57 +0100
-Message-ID: <20241028062317.480482748@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.11 216/261] xfs: dont fail repairs on metadata files with no attr fork
+Date: Mon, 28 Oct 2024 07:25:58 +0100
+Message-ID: <20241028062317.511289669@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -50,39 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 229fd15908fe1f99b1de4cde3326e62d1e892611 upstream.
+commit af8512c5277d17aae09be5305daa9118d2fa8881 upstream.
 
-When copying a namespace we won't have added the new copy into the
-namespace rbtree until after the copy succeeded. Calling free_mnt_ns()
-will try to remove the copy from the rbtree which is invalid. Simply
-free the namespace skeleton directly.
+Fix a minor bug where we fail repairs on metadata files that do not have
+attr forks because xrep_metadata_inode_subtype doesn't filter ENOENT.
 
-Link: https://lore.kernel.org/r/20241016-adapter-seilwinde-83c508a7bde1@brauner
-Fixes: 1901c92497bd ("fs: keep an index of current mount namespaces")
-Tested-by: Brad Spengler <spender@grsecurity.net>
-Cc: stable@vger.kernel.org # v6.11+
-Reported-by: Brad Spengler <spender@grsecurity.net>
-Suggested-by: Brad Spengler <spender@grsecurity.net>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 5a8e07e799721b ("xfs: repair the inode core and forks of a metadata inode")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/repair.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -3917,7 +3917,9 @@ struct mnt_namespace *copy_mnt_ns(unsign
- 	new = copy_tree(old, old->mnt.mnt_root, copy_flags);
- 	if (IS_ERR(new)) {
- 		namespace_unlock();
--		free_mnt_ns(new_ns);
-+		ns_free_inum(&new_ns->ns);
-+		dec_mnt_namespaces(new_ns->ucounts);
-+		mnt_ns_release(new_ns);
- 		return ERR_CAST(new);
- 	}
- 	if (user_ns != ns->user_ns) {
+--- a/fs/xfs/scrub/repair.c
++++ b/fs/xfs/scrub/repair.c
+@@ -1084,9 +1084,11 @@ xrep_metadata_inode_forks(
+ 		return error;
+ 
+ 	/* Make sure the attr fork looks ok before we delete it. */
+-	error = xrep_metadata_inode_subtype(sc, XFS_SCRUB_TYPE_BMBTA);
+-	if (error)
+-		return error;
++	if (xfs_inode_hasattr(sc->ip)) {
++		error = xrep_metadata_inode_subtype(sc, XFS_SCRUB_TYPE_BMBTA);
++		if (error)
++			return error;
++	}
+ 
+ 	/* Clear the reflink flag since metadata never shares. */
+ 	if (xfs_is_reflink_inode(sc->ip)) {
 
 
