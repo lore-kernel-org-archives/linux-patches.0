@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AFB18E04F;
-	Mon, 28 Oct 2024 06:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E32118E374;
+	Mon, 28 Oct 2024 06:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097742; cv=none; b=DXKtnShjXlYHMD3VSh0EwMYmbRVPBnOj59ax1d5b592mnmZCcxolfuTSDbolZdiKS82+o52f1tWtABOyEMJsMMfv+SgG1/9CRvLwENZgmSNAiAaJ3R0hnl8I/B6a0nt7gFvF/cwrdhfjInO3sArSds8GokkXLQvMTYRfCjGX/h0=
+	t=1730097745; cv=none; b=u/bW5srTrnX45kSMF9SkwYtZBpbYggpwzed22R2I6NTjSUThzhCqYQjWoQ6CX3osVqwmw5/LQMG8j2gWoyfzCX/6w772OnJuIlyJ+IO/mr1KcQwhgAo8s5gMHqJHjrReAx+AW5bxNUGljWrg9k5Zo23teFVjR+Bc1BO4JHDyeoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097742; c=relaxed/simple;
-	bh=Hy2LOGRGU2WUAdVPDiOiSHhLK+U4f74ep2hdMtGqckg=;
+	s=arc-20240116; t=1730097745; c=relaxed/simple;
+	bh=zTN2OE+szvuaUtBU9IU+3/He7aHGqq4frPiYsdqv4gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZAJ3cTYjr2Z4gMAyBn6Uf820zo+HDUwgWQ38/s+D3mcMowdu9tZwTpKIIU8I6VYrkG+kb2xlqSfcIrF/ATYq8+Ua7LKGtSlo4DnzUuukzCT/h2D3r2MytrnlLbxXYhuz40gY6R6xm1fcxpROQqkQBLZh8C2H+l9S0VlBX0Py//I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4Y+ScZz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LTr95Zmv86TYMAgn+G5ohh8f5hqsmRk5kYXRDvkRgTiO2bF2/aJDw7VGk3BQ1S0+KvKP7wU1GE96SxIXQSqVQCalyuSH/JKUraQ72sz7qk8tIYWmHRBQlEBHLM9j5hrFxoqg06KKdHWGLfOpwz1su7QdfIHAKrBgjFhzRzgJ5CI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R/5omt40; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4Y+ScZz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7EFC4CEC3;
-	Mon, 28 Oct 2024 06:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R/5omt40"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2520C4CEC3;
+	Mon, 28 Oct 2024 06:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097741;
-	bh=Hy2LOGRGU2WUAdVPDiOiSHhLK+U4f74ep2hdMtGqckg=;
+	s=korg; t=1730097745;
+	bh=zTN2OE+szvuaUtBU9IU+3/He7aHGqq4frPiYsdqv4gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V4Y+ScZzTfAvxdHJAoa8qe9BIl/UmaMUdGRyl7uArQEifxC5LQwqKR2eM3MYh5O8g
-	 EOkjNOQ8tGdHsPaJo9BKK1DIGVsLx2TM3IOmRI0uGUKqhoj/jup20P1Q4lQBGeXHaA
-	 XmA7NRqt9pcys850Qvyh9Y6D78ewwR8DugYZ4el0=
+	b=R/5omt401qbmP3V4IZc15+0A5nDUqCKYBDX1gcuToTzQoyrXDuSH0+2kZJDOGrN+L
+	 rhg0s6WlaMqhNggxVvm3fsQJlj608yMGlKce+pvEUNdrbG7MAg9ENTNrpaBOTHF83o
+	 zgU5wZulw73IB8IVy1cevTFluJWdMx+8naLBhzpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 127/208] LoongArch: Dont crash in stack_top() for tasks without vDSO
-Date: Mon, 28 Oct 2024 07:25:07 +0100
-Message-ID: <20241028062309.770191983@linuxfoundation.org>
+Subject: [PATCH 6.6 128/208] jfs: Fix sanity check in dbMount
+Date: Mon, 28 Oct 2024 07:25:08 +0100
+Message-ID: <20241028062309.794852242@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -45,69 +44,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Dave Kleikamp <dave.kleikamp@oracle.com>
 
-[ Upstream commit 134475a9ab8487527238d270639a8cb74c10aab2 ]
+[ Upstream commit 67373ca8404fe57eb1bb4b57f314cff77ce54932 ]
 
-Not all tasks have a vDSO mapped, for example kthreads never do. If such
-a task ever ends up calling stack_top(), it will derefence the NULL vdso
-pointer and crash.
+MAXAG is a legitimate value for bmp->db_numag
 
-This can for example happen when using kunit:
+Fixes: e63866a47556 ("jfs: fix out-of-bounds in dbNextAG() and diAlloc()")
 
-	[<9000000000203874>] stack_top+0x58/0xa8
-	[<90000000002956cc>] arch_pick_mmap_layout+0x164/0x220
-	[<90000000003c284c>] kunit_vm_mmap_init+0x108/0x12c
-	[<90000000003c1fbc>] __kunit_add_resource+0x38/0x8c
-	[<90000000003c2704>] kunit_vm_mmap+0x88/0xc8
-	[<9000000000410b14>] usercopy_test_init+0xbc/0x25c
-	[<90000000003c1db4>] kunit_try_run_case+0x5c/0x184
-	[<90000000003c3d54>] kunit_generic_run_threadfn_adapter+0x24/0x48
-	[<900000000022e4bc>] kthread+0xc8/0xd4
-	[<9000000000200ce8>] ret_from_kernel_thread+0xc/0xa4
-
-Fixes: 803b0fc5c3f2 ("LoongArch: Add process management")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/process.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ fs/jfs/jfs_dmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/kernel/process.c b/arch/loongarch/kernel/process.c
-index f2ff8b5d591e4..6e58f65455c7c 100644
---- a/arch/loongarch/kernel/process.c
-+++ b/arch/loongarch/kernel/process.c
-@@ -293,13 +293,15 @@ unsigned long stack_top(void)
- {
- 	unsigned long top = TASK_SIZE & PAGE_MASK;
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 974ecf5e0d952..3ab410059dc20 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -187,7 +187,7 @@ int dbMount(struct inode *ipbmap)
+ 	}
  
--	/* Space for the VDSO & data page */
--	top -= PAGE_ALIGN(current->thread.vdso->size);
--	top -= VVAR_SIZE;
--
--	/* Space to randomize the VDSO base */
--	if (current->flags & PF_RANDOMIZE)
--		top -= VDSO_RANDOMIZE_SIZE;
-+	if (current->thread.vdso) {
-+		/* Space for the VDSO & data page */
-+		top -= PAGE_ALIGN(current->thread.vdso->size);
-+		top -= VVAR_SIZE;
-+
-+		/* Space to randomize the VDSO base */
-+		if (current->flags & PF_RANDOMIZE)
-+			top -= VDSO_RANDOMIZE_SIZE;
-+	}
- 
- 	return top;
- }
+ 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
+-	if (!bmp->db_numag || bmp->db_numag >= MAXAG) {
++	if (!bmp->db_numag || bmp->db_numag > MAXAG) {
+ 		err = -EINVAL;
+ 		goto err_release_metapage;
+ 	}
 -- 
 2.43.0
 
