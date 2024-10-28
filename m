@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9942AF07;
-	Mon, 28 Oct 2024 06:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B830318E35B;
+	Mon, 28 Oct 2024 06:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098419; cv=none; b=UWvDnr36sCk3zT4fkEvLVHttKYfp4T5RqnfA2UWapWrmjf3pnQLqc+ihkR18WlZoWCucK7RsN6x8Ob35E8raT+JMqXH+9GgoCuVru9+xs1ZpHLhiTcxxWllr9/X9zI+e6TuIY/SvxzGUggGITjR6I+e16iAP/qtIHCzOLp1+kko=
+	t=1730098421; cv=none; b=jDurJjN32xUazkrrUNenwP2ElxVIdL2vj+/gx1JgWUWnSALq+/r4CHXpYYlxvRyWTS4KwDluu3L4DWWh8ZFtA7/l8Zd1ocMUIU37/UTfDqcQ/Th4ccVu+dSk+UhsEF+gCymHQXXyfXna+Uk9MUAlL6gN10hFcC5RkNzodMCwrTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098419; c=relaxed/simple;
-	bh=kPkM6C4gAKOYBW1QQ8bhkp9K7LXp4PxsNiZMrCrDijk=;
+	s=arc-20240116; t=1730098421; c=relaxed/simple;
+	bh=6ah3P2m9d9HOtSM7IFMOZUH6C8s3mM3ExWkR0MkcDiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T5jxWAwfxhIH5KAgMPrqrnO0d8nhyYk5WfsnslwZBtMOiDb6LMNelJr0HecQmj5bbEzjDaHKWbRSAFDqK53cfxYmkqvCx/p6UrNbXLiX3WIOjZpL0lcaAbOweUrgFcej5C6Q+PuAtxdjXnRi3fTib/6NJyjRB89+VOq6svFBQ1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yU8hlDAV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g9u/nR0Uw1paU3F40vllWJ5paP4xDFLeiyrrBjtK/bGT1V/qnOQZ5ecfxBrDnkWYaQ5TuM47VazeMSpkTrxL8L0jDBypDXydJRkWk/SlPmwc8p91Xo7RjoChRTs46hmxigtsfnciBiesaaP/KhU7W8KbOx0lE8LO/GjxHLX7f6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D570pZuT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yU8hlDAV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D924C4CEC3;
-	Mon, 28 Oct 2024 06:53:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D570pZuT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5442FC4CEC3;
+	Mon, 28 Oct 2024 06:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098419;
-	bh=kPkM6C4gAKOYBW1QQ8bhkp9K7LXp4PxsNiZMrCrDijk=;
+	s=korg; t=1730098421;
+	bh=6ah3P2m9d9HOtSM7IFMOZUH6C8s3mM3ExWkR0MkcDiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yU8hlDAVYIterxU3eWKy2Z7oxxLuW6jYiCoHlmyLlVUpDtZzcBZtOvnChvv3W75lC
-	 NxwecOiwqxHBG1EkHDkx2k5iDsECS9PP5n898JPRgEqwbokBH0CZXhIWYsMCAnhaLr
-	 WhUcL0JF/OcPYaM+VMBhNPQ1GTghLZpUft+lwdNQ=
+	b=D570pZuTwoQv/YbmvGGQ1pT4bXM3X0R/bEnPHm8IZ+DlgX5RtZ72gFYSTn74e6mV2
+	 SQ2a6KL1GVxpTTIXL41zaGb3zJuaLuG6JH64vVrdbveBxAG7FfpnNlE0M35aGPZCEw
+	 r0eU87rIMg2brMODHfMTz75EaakOxYQoV/8oIyK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 173/261] Bluetooth: ISO: Fix UAF on iso_sock_timeout
-Date: Mon, 28 Oct 2024 07:25:15 +0100
-Message-ID: <20241028062316.331838252@linuxfoundation.org>
+	Koba Ko <kobak@nvidia.com>,
+	"Matthew R. Ochs" <mochs@nvidia.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.11 212/261] ACPI: PRM: Find EFI_MEMORY_RUNTIME block for PRM handler and context
+Date: Mon, 28 Oct 2024 07:25:54 +0100
+Message-ID: <20241028062317.398516177@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -50,66 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Koba Ko <kobak@nvidia.com>
 
-[ Upstream commit 246b435ad668596aa0e2bbb9d491b6413861211a ]
+commit 088984c8d54c0053fc4ae606981291d741c5924b upstream.
 
-conn->sk maybe have been unlinked/freed while waiting for iso_conn_lock
-so this checks if the conn->sk is still valid by checking if it part of
-iso_sk_list.
+PRMT needs to find the correct type of block to translate the PA-VA
+mapping for EFI runtime services.
 
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The issue arises because the PRMT is finding a block of type
+EFI_CONVENTIONAL_MEMORY, which is not appropriate for runtime services
+as described in Section 2.2.2 (Runtime Services) of the UEFI
+Specification [1]. Since the PRM handler is a type of runtime service,
+this causes an exception when the PRM handler is called.
+
+    [Firmware Bug]: Unable to handle paging request in EFI runtime service
+    WARNING: CPU: 22 PID: 4330 at drivers/firmware/efi/runtime-wrappers.c:341
+        __efi_queue_work+0x11c/0x170
+    Call trace:
+
+Let PRMT find a block with EFI_MEMORY_RUNTIME for PRM handler and PRM
+context.
+
+If no suitable block is found, a warning message will be printed, but
+the procedure continues to manage the next PRM handler.
+
+However, if the PRM handler is actually called without proper allocation,
+it would result in a failure during error handling.
+
+By using the correct memory types for runtime services, ensure that the
+PRM handler and the context are properly mapped in the virtual address
+space during runtime, preventing the paging request error.
+
+The issue is really that only memory that has been remapped for runtime
+by the firmware can be used by the PRM handler, and so the region needs
+to have the EFI_MEMORY_RUNTIME attribute.
+
+Link: https://uefi.org/sites/default/files/resources/UEFI_Spec_2_10_Aug29.pdf # [1]
+Fixes: cefc7ca46235 ("ACPI: PRM: implement OperationRegion handler for the PlatformRtMechanism subtype")
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Koba Ko <kobak@nvidia.com>
+Reviewed-by: Matthew R. Ochs <mochs@nvidia.com>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://patch.msgid.link/20241012205010.4165798-1-kobak@nvidia.com
+[ rjw: Subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/iso.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/acpi/prmt.c |   27 ++++++++++++++++++++++-----
+ 1 file changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index c9eefb43bf47e..7a83e400ac77a 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -93,6 +93,16 @@ static struct sock *iso_get_sock(bdaddr_t *src, bdaddr_t *dst,
- #define ISO_CONN_TIMEOUT	(HZ * 40)
- #define ISO_DISCONN_TIMEOUT	(HZ * 2)
+--- a/drivers/acpi/prmt.c
++++ b/drivers/acpi/prmt.c
+@@ -72,17 +72,21 @@ struct prm_module_info {
+ 	struct prm_handler_info handlers[] __counted_by(handler_count);
+ };
  
-+static struct sock *iso_sock_hold(struct iso_conn *conn)
-+{
-+	if (!conn || !bt_sock_linked(&iso_sk_list, conn->sk))
-+		return NULL;
-+
-+	sock_hold(conn->sk);
-+
-+	return conn->sk;
-+}
-+
- static void iso_sock_timeout(struct work_struct *work)
+-static u64 efi_pa_va_lookup(u64 pa)
++static u64 efi_pa_va_lookup(efi_guid_t *guid, u64 pa)
  {
- 	struct iso_conn *conn = container_of(work, struct iso_conn,
-@@ -100,9 +110,7 @@ static void iso_sock_timeout(struct work_struct *work)
- 	struct sock *sk;
+ 	efi_memory_desc_t *md;
+ 	u64 pa_offset = pa & ~PAGE_MASK;
+ 	u64 page = pa & PAGE_MASK;
  
- 	iso_conn_lock(conn);
--	sk = conn->sk;
--	if (sk)
--		sock_hold(sk);
-+	sk = iso_sock_hold(conn);
- 	iso_conn_unlock(conn);
+ 	for_each_efi_memory_desc(md) {
+-		if (md->phys_addr < pa && pa < md->phys_addr + PAGE_SIZE * md->num_pages)
++		if ((md->attribute & EFI_MEMORY_RUNTIME) &&
++		    (md->phys_addr < pa && pa < md->phys_addr + PAGE_SIZE * md->num_pages)) {
+ 			return pa_offset + md->virt_addr + page - md->phys_addr;
++		}
+ 	}
  
- 	if (!sk)
-@@ -209,9 +217,7 @@ static void iso_conn_del(struct hci_conn *hcon, int err)
++	pr_warn("Failed to find VA for GUID: %pUL, PA: 0x%llx", guid, pa);
++
+ 	return 0;
+ }
  
- 	/* Kill socket */
- 	iso_conn_lock(conn);
--	sk = conn->sk;
--	if (sk)
--		sock_hold(sk);
-+	sk = iso_sock_hold(conn);
- 	iso_conn_unlock(conn);
+@@ -148,9 +152,15 @@ acpi_parse_prmt(union acpi_subtable_head
+ 		th = &tm->handlers[cur_handler];
  
- 	if (sk) {
--- 
-2.43.0
-
+ 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
+-		th->handler_addr = (void *)efi_pa_va_lookup(handler_info->handler_address);
+-		th->static_data_buffer_addr = efi_pa_va_lookup(handler_info->static_data_buffer_address);
+-		th->acpi_param_buffer_addr = efi_pa_va_lookup(handler_info->acpi_param_buffer_address);
++		th->handler_addr =
++			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
++
++		th->static_data_buffer_addr =
++			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
++
++		th->acpi_param_buffer_addr =
++			efi_pa_va_lookup(&th->guid, handler_info->acpi_param_buffer_address);
++
+ 	} while (++cur_handler < tm->handler_count && (handler_info = get_next_handler(handler_info)));
+ 
+ 	return 0;
+@@ -253,6 +263,13 @@ static acpi_status acpi_platformrt_space
+ 		if (!handler || !module)
+ 			goto invalid_guid;
+ 
++		if (!handler->handler_addr ||
++		    !handler->static_data_buffer_addr ||
++		    !handler->acpi_param_buffer_addr) {
++			buffer->prm_status = PRM_HANDLER_ERROR;
++			return AE_OK;
++		}
++
+ 		ACPI_COPY_NAMESEG(context.signature, "PRMC");
+ 		context.revision = 0x0;
+ 		context.reserved = 0x0;
 
 
