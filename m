@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D2718E37C;
-	Mon, 28 Oct 2024 06:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6612818E37C;
+	Mon, 28 Oct 2024 06:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097842; cv=none; b=dC3xKXP+RChGYrII/6j3eI40/1A34vGp59q+dBQTkF4rroQjMRTMg7lQM3TiBKzFZVjAL59LDViCp1XiVq9IDlqt/awW3XNohl6C1oTuyD5AFP8JUoN25a1PO8eZfT8ZrWj+jP+oZcrTahq6V74qFOX5gxwb3I8j5V9BdISeLCI=
+	t=1730097844; cv=none; b=G3hcEwU9v2tQO1J2sNduJMtCYBiRI496fK3++I0lzPeyrlLe6Epu5grB87E4XhygJwuoh9hGlMXiXC2MctE4Hnp1pXHguNch1wJzVBJQPf14+D6HTRiCkACVRH5RuYV9srjPKmgEDMZdStJLtTUJhRn5MddqjLWWaxQ5X8v+wAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097842; c=relaxed/simple;
-	bh=ycUkMyPh9Ds/OsqYMVRp2aPF5OMUPwZ/8wxW3+3K07Q=;
+	s=arc-20240116; t=1730097844; c=relaxed/simple;
+	bh=30AYUa07JSkdioJyu0m1MszhFaxz0SZxjhvwYEonTF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GmnF52zM37IxksVVoXVqKqZOt0FzSS4ywaWIHGDE6d5M9aYtoxPNVFPKy5VEI6uRSndG1XhYfyegakhaugNHlhiTlSR+QRt4TEk9YazPF14F8JFsP6T8cRyIsSv7CayKx9CSkZK5mLtEbvg27VokVieSgYvHrgZJzXkg0q+csRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbC+fiIk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oBHXtPeApDpEnrgdIxdDgww0f0cYpnYq0tdsK2dNmCrrIM+2it0wPsd+O46j5pjuXaAD+meWPcY/XbTzDVyXO+pX8AKDlNe3XCV5aQCxVueGBfZSlKX9L9np58UACHWsQKAkqwPJUTy4qd9DLBVS6jU90yhCByom9wFmuL9SV7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpNyRUs7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbC+fiIk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB56EC4CEC3;
-	Mon, 28 Oct 2024 06:44:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpNyRUs7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0756EC4CEC3;
+	Mon, 28 Oct 2024 06:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097842;
-	bh=ycUkMyPh9Ds/OsqYMVRp2aPF5OMUPwZ/8wxW3+3K07Q=;
+	s=korg; t=1730097844;
+	bh=30AYUa07JSkdioJyu0m1MszhFaxz0SZxjhvwYEonTF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BbC+fiIkApjYstNERYZJ55mqgIJpj/1q8punLT6jYeqGqH2awCCIe9etBu2/JndZW
-	 F4hAzboKdOVvFRTWcOjVbyRsiyGwPDcwzkWBYBXOLpnNE0e7nhV6JptPBhFIl87X4S
-	 y8EV55EMLIbWATWdNK8Kx6pM4izsCzid3qcRgyUA=
+	b=GpNyRUs7hTONlIRptxVPt12MkpgwicyO/vPEbyRuOBFrO94HPgf17a9m2mis+PucN
+	 7QTMlB1FwTyKTCDC41/j2BS1LhClP0moEGLkOyxWXBBzW7a3IMvetb8A2xCJ8nu7ub
+	 AeCxGYUeoVRuo5ZpVZ4m6IxnvhFsWmSWi2fqgwUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Shumilin <shum.sdl@nppct.ru>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yuan Can <yuancan@huawei.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 170/208] ALSA: firewire-lib: Avoid division by zero in apply_constraint_to_size()
-Date: Mon, 28 Oct 2024 07:25:50 +0100
-Message-ID: <20241028062310.817157134@linuxfoundation.org>
+Subject: [PATCH 6.6 171/208] powercap: dtpm_devfreq: Fix error check against dev_pm_qos_add_request()
+Date: Mon, 28 Oct 2024 07:25:51 +0100
+Message-ID: <20241028062310.842725680@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -52,46 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Shumilin <shum.sdl@nppct.ru>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 72cafe63b35d06b5cfbaf807e90ae657907858da ]
+[ Upstream commit 5209d1b654f1db80509040cc694c7814a1b547e3 ]
 
-The step variable is initialized to zero. It is changed in the loop,
-but if it's not changed it will remain zero. Add a variable check
-before the division.
+The caller of the function dev_pm_qos_add_request() checks again a non
+zero value but dev_pm_qos_add_request() can return '1' if the request
+already exists. Therefore, the setup function fails while the QoS
+request actually did not failed.
 
-The observed behavior was introduced by commit 826b5de90c0b
-("ALSA: firewire-lib: fix insufficient PCM rule for period/buffer size"),
-and it is difficult to show that any of the interval parameters will
-satisfy the snd_interval_test() condition with data from the
-amdtp_rate_table[] table.
+Fix that by changing the check against a negative value like all the
+other callers of the function.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 826b5de90c0b ("ALSA: firewire-lib: fix insufficient PCM rule for period/buffer size")
-Signed-off-by: Andrey Shumilin <shum.sdl@nppct.ru>
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://patch.msgid.link/20241018060018.1189537-1-shum.sdl@nppct.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: e44655617317 ("powercap/drivers/dtpm: Add dtpm devfreq with energy model support")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/20241018021205.46460-1-yuancan@huawei.com
+[ rjw: Subject edit ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/firewire/amdtp-stream.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/powercap/dtpm_devfreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/firewire/amdtp-stream.c b/sound/firewire/amdtp-stream.c
-index 5f0f8d9c08d1e..8c6254ff143eb 100644
---- a/sound/firewire/amdtp-stream.c
-+++ b/sound/firewire/amdtp-stream.c
-@@ -172,6 +172,9 @@ static int apply_constraint_to_size(struct snd_pcm_hw_params *params,
- 			step = max(step, amdtp_syt_intervals[i]);
+diff --git a/drivers/powercap/dtpm_devfreq.c b/drivers/powercap/dtpm_devfreq.c
+index 612c3b59dd5be..0ca53db7a90eb 100644
+--- a/drivers/powercap/dtpm_devfreq.c
++++ b/drivers/powercap/dtpm_devfreq.c
+@@ -166,7 +166,7 @@ static int __dtpm_devfreq_setup(struct devfreq *devfreq, struct dtpm *parent)
+ 	ret = dev_pm_qos_add_request(dev, &dtpm_devfreq->qos_req,
+ 				     DEV_PM_QOS_MAX_FREQUENCY,
+ 				     PM_QOS_MAX_FREQUENCY_DEFAULT_VALUE);
+-	if (ret) {
++	if (ret < 0) {
+ 		pr_err("Failed to add QoS request: %d\n", ret);
+ 		goto out_dtpm_unregister;
  	}
- 
-+	if (step == 0)
-+		return -EINVAL;
-+
- 	t.min = roundup(s->min, step);
- 	t.max = rounddown(s->max, step);
- 	t.integer = 1;
 -- 
 2.43.0
 
