@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326322AF07;
-	Mon, 28 Oct 2024 06:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EF98837;
+	Mon, 28 Oct 2024 06:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098051; cv=none; b=WzdCzR15NJfKSOQV8dL9iXUOx4X95AOModJjcZsOk/KFMfQiupI8mGKYPnloq/H5UFqH7KictGO4ZV4zh0f7Lkw0rU58oId4hJklcoo3dPfW2WwjvhF72S1z04NvH5nzTZLA2HIQww6v2iue0j245AqlgODInvdxWyPP+2MLu7Y=
+	t=1730098054; cv=none; b=YxUC2PqqJdED1ix8rR2akbKNpXg4x1KBD31Z6T7SEoeDQLbEgYyBelYzJlFJ56Ustei82lSK2V2dl9p3NBL4SDW7o45nGJMZ+uGJW5XidnUV6RLI+pbJaOrg7XKUEnodFKVKAMLeRXpr6NcufHJjEm922GPe0rVABvr3CmW6IVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098051; c=relaxed/simple;
-	bh=4euNk9mePrjF3dapGjaKAjLqXovsYwCHgC4f2m1K708=;
+	s=arc-20240116; t=1730098054; c=relaxed/simple;
+	bh=qyFlKVMBjnhGadEqmkAzWyW9zeXsNuSi51+T8kjSo6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZTQMsCasW1YYOef2a1rXQF2SzzHuLETZOx9NJXhokQ1TYwJpwchz4/A0XZJ09aK8AlKPiD+vkO5Xcy6U8HPT/cqc5jBnqO9PanwbtuVP+F5UCaobHdn13bqyRur6a7fpGnibihoHFn90o2wi5SymZA5142h9F5wki6nnBqxq2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vD3QoDZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBPUJkUpR2jaIRRMksQSjbrmjQUHTvSp6JizuOfSmgEHYFqSbUQciixxICcxJqLAp3zbyPSSEJPP6eZoR3pviKDXF566NctJSP8fWos27/2Ss+HwoTeE4rMzfHa8AhaZmQ1u5FbB2+FBH5muI8kwmlUjOoxtynPVqcb99nHWsxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9ldZRRB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vD3QoDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A76C4CEC3;
-	Mon, 28 Oct 2024 06:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9ldZRRB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC56C4CEC3;
+	Mon, 28 Oct 2024 06:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098051;
-	bh=4euNk9mePrjF3dapGjaKAjLqXovsYwCHgC4f2m1K708=;
+	s=korg; t=1730098054;
+	bh=qyFlKVMBjnhGadEqmkAzWyW9zeXsNuSi51+T8kjSo6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1vD3QoDZz6EDjlHqNHMNSfHzF/IDS5V6JoNQgT3kk46lpe0oCx/RL5CGl+na2I6xy
-	 AQtXqKst39b9KslmN0urUblgDS692nfiyvMso12oQxLte4g36vzUgRuzvSMOAUzXwu
-	 TiZ5y/N7Mz20ZgyikndXhdb9LCfHwYjItVORAccs=
+	b=F9ldZRRBT5mkOOP5Dpw2A0njyLNgMwEcoINYse52dVbjuMLal1jVcrCoJA4M/ZahG
+	 2yHI3+8+80BLa6rfvYrHE5P/01us/Ro4zi0OkWLEQx1RhtHc3hozElYd2QsmWGNlkc
+	 tAcN9SXwlqhO9m9QHA98cQuN+wBA4a9/r7Q6ZGv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Marek <jonathan@marek.ca>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 054/261] drm/msm/dsi: fix 32-bit signed integer extension in pclk_rate calculation
-Date: Mon, 28 Oct 2024 07:23:16 +0100
-Message-ID: <20241028062313.368521599@linuxfoundation.org>
+Subject: [PATCH 6.11 055/261] drm/msm: Avoid NULL dereference in msm_disp_state_print_regs()
+Date: Mon, 28 Oct 2024 07:23:17 +0100
+Message-ID: <20241028062313.393627097@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,44 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Marek <jonathan@marek.ca>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 358b762400bd94db2a14a72dfcef74c7da6bd845 ]
+[ Upstream commit 293f53263266bc4340d777268ab4328a97f041fa ]
 
-When (mode->clock * 1000) is larger than (1<<31), int to unsigned long
-conversion will sign extend the int to 64 bits and the pclk_rate value
-will be incorrect.
+If the allocation in msm_disp_state_dump_regs() failed then
+`block->state` can be NULL. The msm_disp_state_print_regs() function
+_does_ have code to try to handle it with:
 
-Fix this by making the result of the multiplication unsigned.
+  if (*reg)
+    dump_addr = *reg;
 
-Note that above (1<<32) would still be broken and require more changes, but
-its unlikely anyone will need that anytime soon.
+...but since "dump_addr" is initialized to NULL the above is actually
+a noop. The code then goes on to dereference `dump_addr`.
 
-Fixes: c4d8cfe516dc ("drm/msm/dsi: add implementation for helper functions")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Make the function print "Registers not stored" when it sees a NULL to
+solve this. Since we're touching the code, fix
+msm_disp_state_print_regs() not to pointlessly take a double-pointer
+and properly mark the pointer as `const`.
+
+Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/618434/
-Link: https://lore.kernel.org/r/20241007050157.26855-2-jonathan@marek.ca
+Patchwork: https://patchwork.freedesktop.org/patch/619657/
+Link: https://lore.kernel.org/r/20241014093605.1.Ia1217cecec9ef09eb3c6d125360cc6c8574b0e73@changeid
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 1205aa398e445..a98d24b7cb00b 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -550,7 +550,7 @@ static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode,
+diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+index add72bbc28b17..bb149281d31fa 100644
+--- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
++++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+@@ -48,20 +48,21 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
+ 	}
+ }
+ 
+-static void msm_disp_state_print_regs(u32 **reg, u32 len, void __iomem *base_addr,
+-		struct drm_printer *p)
++static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
++		void __iomem *base_addr, struct drm_printer *p)
  {
- 	unsigned long pclk_rate;
+ 	int i;
+-	u32 *dump_addr = NULL;
+ 	void __iomem *addr;
+ 	u32 num_rows;
  
--	pclk_rate = mode->clock * 1000;
-+	pclk_rate = mode->clock * 1000u;
++	if (!dump_addr) {
++		drm_printf(p, "Registers not stored\n");
++		return;
++	}
++
+ 	addr = base_addr;
+ 	num_rows = len / REG_DUMP_ALIGN;
  
- 	if (dsc)
- 		pclk_rate = dsi_adjust_pclk_for_compression(mode, dsc);
+-	if (*reg)
+-		dump_addr = *reg;
+-
+ 	for (i = 0; i < num_rows; i++) {
+ 		drm_printf(p, "0x%lx : %08x %08x %08x %08x\n",
+ 				(unsigned long)(addr - base_addr),
+@@ -89,7 +90,7 @@ void msm_disp_state_print(struct msm_disp_state *state, struct drm_printer *p)
+ 
+ 	list_for_each_entry_safe(block, tmp, &state->blocks, node) {
+ 		drm_printf(p, "====================%s================\n", block->name);
+-		msm_disp_state_print_regs(&block->state, block->size, block->base_addr, p);
++		msm_disp_state_print_regs(block->state, block->size, block->base_addr, p);
+ 	}
+ 
+ 	drm_printf(p, "===================dpu drm state================\n");
 -- 
 2.43.0
 
