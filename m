@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56DA18FDB0;
-	Mon, 28 Oct 2024 06:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9F018E34F;
+	Mon, 28 Oct 2024 06:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097350; cv=none; b=aKxljjbVnzSuwzrD3hf1dqL6IIAzCioO4wbLhGR3wqthiZc9tOIiggtjuOamArNiXZGCAHs3LhiboizSp4xyqqFrKcntmGF/L+XFjtPMZTm+L4gLzx7rYTpNO4NSd/otPPMqncAl4AN8DwnrOctJeOjUoY1DfASC/7xN9K0Sgd8=
+	t=1730097353; cv=none; b=Kp8CG61yPrCbTRWatxFYw51OyOMLP1ZHA1R0zbKEBffDo943IyuG574R7uRb6AlLHYU6OI/DqyHT2ltBux9to3fxC3ol/dAm8hlNWCXNZvRX1mn+qVGJDQ24AQP/Z4VXz4NevEqB0iP3MQcDzQwhGgCcls+6FlwjPpC0fRY+Qs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097350; c=relaxed/simple;
-	bh=dLGbq/FkL4StWC+6d2xxkdksQhRl+GswuEfmpqZOgUU=;
+	s=arc-20240116; t=1730097353; c=relaxed/simple;
+	bh=1sCZGgI9CpzAE2sSiw3DjFEst2BGsuu1q0JItKFNtAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=py3aq/HiNK1KSBA68e6k6aYbzPf7nl4jr/mjf+OgDBvi6KomMwMV/nxlyiuu/bShd+gE3xZB3W80XS6MrL8G6SEsLfESAeZ1Z/OKYiNpwyOwWBBwZZu1f8BiRa6PS1lvIeHMOExoqkyJOdbEcItCZwTQQ8WVaqYzmhYQaAdUvaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFtingV6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JE7GCvZMKMa2AjNMvDvcrVZ7MciBuvvBEDusUC0Q9R80RS1oYJRbAk004L+FY3uwMO058JrXhxFlNUYzaWCoBWTwUh9v6TTPHKIfBzl5QWKh9SC7kanU2eZWx7Na0VCP0gLzHB0/0XF2IbIsPSELPgfM6qt9DAzLrde/7sPe4+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJRSw3mZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFtingV6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66813C4CEC3;
-	Mon, 28 Oct 2024 06:35:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJRSw3mZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3276C4CEC3;
+	Mon, 28 Oct 2024 06:35:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097350;
-	bh=dLGbq/FkL4StWC+6d2xxkdksQhRl+GswuEfmpqZOgUU=;
+	s=korg; t=1730097352;
+	bh=1sCZGgI9CpzAE2sSiw3DjFEst2BGsuu1q0JItKFNtAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nFtingV6GkX1SLuo5RMyScAy/l3L8h/rJlBWpiGvb/PZPuCRAOfkeNwMxoQ/TXngz
-	 yFGJI1J6Z4Du58VH9miSlHqM3d1V/2AOOMvO7QwohJzU6LZm3wsauH41FZaVh/5Lgr
-	 WIxFmTB/sfyQyoE3Z3yj8eZ0IXHgDcSrbKJx728s=
+	b=fJRSw3mZEGcfRZ9sRMTB8npN/wsc+khyArl+epqR98K+zENvBVse1F4l+x8KNS+Ct
+	 7cFYwe04HQt9kAHx/ipqQnZ3buzxFi5E/oLV+fqEuaJp6Hu4lSoEPHjiGyIsfxTS1v
+	 QsPrhWhJ6nXXlbM+GTh2pZQPZb4yc2CwFFfEHDIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Elson Roy Serrao <quic_eserrao@quicinc.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/137] usb: gadget: Add function wakeup support
-Date: Mon, 28 Oct 2024 07:25:02 +0100
-Message-ID: <20241028062300.552528901@linuxfoundation.org>
+Subject: [PATCH 6.1 092/137] octeon_ep: Add SKB allocation failures handling in __octep_oq_process_rx()
+Date: Mon, 28 Oct 2024 07:25:29 +0100
+Message-ID: <20241028062301.299943731@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -51,124 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Elson Roy Serrao <quic_eserrao@quicinc.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit f0db885fb05d35befa81896db6b19eb3ee9ccdfe ]
+[ Upstream commit eb592008f79be52ccef88cd9a5249b3fc0367278 ]
 
-USB3.2 spec section 9.2.5.4 quotes that a function may signal that
-it wants to exit from Function Suspend by sending a Function
-Wake Notification to the host if it is enabled for function
-remote wakeup. Add an api in composite layer that can be used
-by the function drivers to support this feature. Also expose
-a gadget op so that composite layer can trigger a wakeup request
-to the UDC driver.
+build_skb() returns NULL in case of a memory allocation failure so handle
+it inside __octep_oq_process_rx() to avoid NULL pointer dereference.
 
-Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
-Link: https://lore.kernel.org/r/1679694482-16430-4-git-send-email-quic_eserrao@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 705e3ce37bcc ("usb: dwc3: core: Fix system suspend on TI AM62 platforms")
+__octep_oq_process_rx() is called during NAPI polling by the driver. If
+skb allocation fails, keep on pulling packets out of the Rx DMA queue: we
+shouldn't break the polling immediately and thus falsely indicate to the
+octep_napi_poll() that the Rx pressure is going down. As there is no
+associated skb in this case, don't process the packets and don't push them
+up the network stack - they are skipped.
+
+Helper function is implemented to unmmap/flush all the fragment buffers
+used by the dropped packet. 'alloc_failures' counter is incremented to
+mark the skb allocation error in driver statistics.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 37d79d059606 ("octeon_ep: add Tx/Rx processing and interrupt support")
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/composite.c | 40 ++++++++++++++++++++++++++++++++++
- include/linux/usb/composite.h  |  6 +++++
- include/linux/usb/gadget.h     |  1 +
- 3 files changed, 47 insertions(+)
+ .../net/ethernet/marvell/octeon_ep/octep_rx.c | 27 +++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/drivers/usb/gadget/composite.c b/drivers/usb/gadget/composite.c
-index f10e43a948fd8..db66242b2918a 100644
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -490,6 +490,46 @@ int usb_interface_id(struct usb_configuration *config,
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
+index 03d46c28a009c..4f3c1187a6e82 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
+@@ -360,6 +360,27 @@ static void octep_oq_next_pkt(struct octep_oq *oq,
+ 		*read_idx = 0;
  }
- EXPORT_SYMBOL_GPL(usb_interface_id);
  
 +/**
-+ * usb_func_wakeup - sends function wake notification to the host.
-+ * @func: function that sends the remote wakeup notification.
++ * octep_oq_drop_rx() - Free the resources associated with a packet.
 + *
-+ * Applicable to devices operating at enhanced superspeed when usb
-+ * functions are put in function suspend state and armed for function
-+ * remote wakeup. On completion, function wake notification is sent. If
-+ * the device is in low power state it tries to bring the device to active
-+ * state before sending the wake notification. Since it is a synchronous
-+ * call, caller must take care of not calling it in interrupt context.
-+ * For devices operating at lower speeds  returns negative errno.
++ * @oq: Octeon Rx queue data structure.
++ * @buff_info: Current packet buffer info.
++ * @read_idx: Current packet index in the ring.
++ * @desc_used: Current packet descriptor number.
 + *
-+ * Returns zero on success, else negative errno.
 + */
-+int usb_func_wakeup(struct usb_function *func)
++static void octep_oq_drop_rx(struct octep_oq *oq,
++			     struct octep_rx_buffer *buff_info,
++			     u32 *read_idx, u32 *desc_used)
 +{
-+	struct usb_gadget	*gadget = func->config->cdev->gadget;
-+	int			id;
++	int data_len = buff_info->len - oq->max_single_buffer_size;
 +
-+	if (!gadget->ops->func_wakeup)
-+		return -EOPNOTSUPP;
-+
-+	if (!func->func_wakeup_armed) {
-+		ERROR(func->config->cdev, "not armed for func remote wakeup\n");
-+		return -EINVAL;
-+	}
-+
-+	for (id = 0; id < MAX_CONFIG_INTERFACES; id++)
-+		if (func->config->interface[id] == func)
-+			break;
-+
-+	if (id == MAX_CONFIG_INTERFACES) {
-+		ERROR(func->config->cdev, "Invalid function\n");
-+		return -EINVAL;
-+	}
-+
-+	return gadget->ops->func_wakeup(gadget, id);
++	while (data_len > 0) {
++		octep_oq_next_pkt(oq, buff_info, read_idx, desc_used);
++		data_len -= oq->buffer_size;
++	};
 +}
-+EXPORT_SYMBOL_GPL(usb_func_wakeup);
 +
- static u8 encode_bMaxPower(enum usb_device_speed speed,
- 		struct usb_configuration *c)
- {
-diff --git a/include/linux/usb/composite.h b/include/linux/usb/composite.h
-index 9783b9107d76b..d759208e0a6ce 100644
---- a/include/linux/usb/composite.h
-+++ b/include/linux/usb/composite.h
-@@ -149,6 +149,9 @@ struct usb_os_desc_table {
-  *	GetStatus() request when the recipient is Interface.
-  * @func_suspend: callback to be called when
-  *	SetFeature(FUNCTION_SUSPEND) is reseived
-+ * @func_suspended: Indicates whether the function is in function suspend state.
-+ * @func_wakeup_armed: Indicates whether the function is armed by the host for
-+ *	wakeup signaling.
+ /**
+  * __octep_oq_process_rx() - Process hardware Rx queue and push to stack.
   *
-  * A single USB function uses one or more interfaces, and should in most
-  * cases support operation at both full and high speeds.  Each function is
-@@ -219,6 +222,8 @@ struct usb_function {
- 	int			(*get_status)(struct usb_function *);
- 	int			(*func_suspend)(struct usb_function *,
- 						u8 suspend_opt);
-+	bool			func_suspended;
-+	bool			func_wakeup_armed;
- 	/* private: */
- 	/* internals */
- 	struct list_head		list;
-@@ -240,6 +245,7 @@ int config_ep_by_speed_and_alt(struct usb_gadget *g, struct usb_function *f,
+@@ -415,6 +436,12 @@ static int __octep_oq_process_rx(struct octep_device *oct,
+ 		octep_oq_next_pkt(oq, buff_info, &read_idx, &desc_used);
  
- int config_ep_by_speed(struct usb_gadget *g, struct usb_function *f,
- 			struct usb_ep *_ep);
-+int usb_func_wakeup(struct usb_function *func);
+ 		skb = build_skb((void *)resp_hw, PAGE_SIZE);
++		if (!skb) {
++			octep_oq_drop_rx(oq, buff_info,
++					 &read_idx, &desc_used);
++			oq->stats.alloc_failures++;
++			continue;
++		}
+ 		skb_reserve(skb, data_offset);
  
- #define	MAX_CONFIG_INTERFACES		16	/* arbitrary; max 255 */
- 
-diff --git a/include/linux/usb/gadget.h b/include/linux/usb/gadget.h
-index 5bec668b41dcd..705b76f8dddb2 100644
---- a/include/linux/usb/gadget.h
-+++ b/include/linux/usb/gadget.h
-@@ -309,6 +309,7 @@ struct usb_udc;
- struct usb_gadget_ops {
- 	int	(*get_frame)(struct usb_gadget *);
- 	int	(*wakeup)(struct usb_gadget *);
-+	int	(*func_wakeup)(struct usb_gadget *gadget, int intf_id);
- 	int	(*set_remote_wakeup)(struct usb_gadget *, int set);
- 	int	(*set_selfpowered) (struct usb_gadget *, int is_selfpowered);
- 	int	(*vbus_session) (struct usb_gadget *, int is_active);
+ 		rx_bytes += buff_info->len;
 -- 
 2.43.0
 
