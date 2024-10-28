@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433A0A47;
-	Mon, 28 Oct 2024 06:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D228A47;
+	Mon, 28 Oct 2024 06:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097967; cv=none; b=BDksa0qCkrvYN0603a4n+DZKfMkScmP9z5J5Hh9SRA1xcLVITf/Yubg8MIwnMOwAn2R/2c6s5fttOg5/fgpH3TVsnIJd8FlJHKIuUUhT0Y3Moos+Mo17O3mHd4lty4AE/D+JEYxlU4wHIjVNSGG3K76Li2EeUyuPpgmWuiFila0=
+	t=1730097969; cv=none; b=CcUCnci+HwZZ0GxhdPs2FEa7YVQWssmdBQhFBoS8RB3h6m1u8SXeh6dwJ18BXqfTIReuyfZf/uBpILpolamr56kyW7XX/vgWeQBNVOh3wVSO4Qv8LdLLwFqgPzWrUU53asNHPsNcoFd2lL2MpMZfzxITMkxK0ZUGDuv5U7No+8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097967; c=relaxed/simple;
-	bh=pPaJbsg6ylaN8T6/fKBFcluBL8/NboAFsAHyVSwA9KI=;
+	s=arc-20240116; t=1730097969; c=relaxed/simple;
+	bh=L8n2BL8D9YtKgn9Y5EKr8TdYXnmQ6qlVqEdvyYg3sDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9mE6K7IytTtBN7piErKRvgfbpynbCFajE8KLUMBMmS73PK6TlMo2z2W3Hw16FFJa/foAznVUWJsXwkfuFivuE4JFIsMN9/iwgAchwZA9dxND4UyrEG/T61Hcnhn9D2JoG8UBJyMzUeqBEEQjhYJ0ftrOoDnMPOxvXkMJc9ijLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNmJbjFZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bLXFcmDIyx3Gf+7ARecRxom4wLWYw+bgfXGMjCGvO6fgySGrA236gcw0MBfPkWH9evdU4iwVGU22ARdVj7SLdxKjVXzbNh6MwR5bnSULPQfnYWLZsoyakCDGFywkWf08IusSEsY/Yaarsnwg5v1cxJaqXVbxmW+IKIC6+/LqLwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzFZIeGg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNmJbjFZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88B1C4CEC3;
-	Mon, 28 Oct 2024 06:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzFZIeGg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B116C4CEC3;
+	Mon, 28 Oct 2024 06:46:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097967;
-	bh=pPaJbsg6ylaN8T6/fKBFcluBL8/NboAFsAHyVSwA9KI=;
+	s=korg; t=1730097969;
+	bh=L8n2BL8D9YtKgn9Y5EKr8TdYXnmQ6qlVqEdvyYg3sDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hNmJbjFZM/iIrREHf+meHBrv3INBiTWzX7s5wJtsWCi5pRy1RVGf3BDhAUzNb/WjO
-	 hFoqn/Ojb1V3Cy3pqpcQV/npZaRe/WpybRSkXy2n5ljOTRmHvOcNEhqj5afYWw9+rV
-	 gb+Me8Sg9X/j/hGTfu6Q2N3K5vNb7YqPTg3ETzmQ=
+	b=mzFZIeGgAcBr4/1VYdxRaFw7hM91iKPtGQGJleF8e69ypqdNX/CTXMHKQLVafr5J/
+	 irjUvjyHEamtQEC6umrtWTjg/4A5DfVZcD3NsdfWujOacv7HRiyJsBCVUA+ggW6FBd
+	 wgOrSu76Qi0dYSlXJOuA/54ZyJAOUeAGhXx7p3/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lonial Con <kongln9170@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	syzbot+cca39e6e84a367a7e6f6@syzkaller.appspotmail.com,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 004/261] bpf: sync_linked_regs() must preserve subreg_def
-Date: Mon, 28 Oct 2024 07:22:26 +0100
-Message-ID: <20241028062312.121180262@linuxfoundation.org>
+Subject: [PATCH 6.11 005/261] bpf: Make sure internal and UAPI bpf_redirect flags dont overlap
+Date: Mon, 28 Oct 2024 07:22:27 +0100
+Message-ID: <20241028062312.147089563@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -47,83 +46,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-[ Upstream commit e9bd9c498cb0f5843996dbe5cbce7a1836a83c70 ]
+[ Upstream commit 09d88791c7cd888d5195c84733caf9183dcfbd16 ]
 
-Range propagation must not affect subreg_def marks, otherwise the
-following example is rewritten by verifier incorrectly when
-BPF_F_TEST_RND_HI32 flag is set:
+The bpf_redirect_info is shared between the SKB and XDP redirect paths,
+and the two paths use the same numeric flag values in the ri->flags
+field (specifically, BPF_F_BROADCAST == BPF_F_NEXTHOP). This means that
+if skb bpf_redirect_neigh() is used with a non-NULL params argument and,
+subsequently, an XDP redirect is performed using the same
+bpf_redirect_info struct, the XDP path will get confused and end up
+crashing, which syzbot managed to trigger.
 
-  0: call bpf_ktime_get_ns                   call bpf_ktime_get_ns
-  1: r0 &= 0x7fffffff       after verifier   r0 &= 0x7fffffff
-  2: w1 = w0                rewrites         w1 = w0
-  3: if w0 < 10 goto +0     -------------->  r11 = 0x2f5674a6     (r)
-  4: r1 >>= 32                               r11 <<= 32           (r)
-  5: r0 = r1                                 r1 |= r11            (r)
-  6: exit;                                   if w0 < 0xa goto pc+0
-                                             r1 >>= 32
-                                             r0 = r1
-                                             exit
+With the stack-allocated bpf_redirect_info, the structure is no longer
+shared between the SKB and XDP paths, so the crash doesn't happen
+anymore. However, different code paths using identically-numbered flag
+values in the same struct field still seems like a bit of a mess, so
+this patch cleans that up by moving the flag definitions together and
+redefining the three flags in BPF_F_REDIRECT_INTERNAL to not overlap
+with the flags used for XDP. It also adds a BUILD_BUG_ON() check to make
+sure the overlap is not re-introduced by mistake.
 
-(or zero extension of w1 at (2) is missing for architectures that
- require zero extension for upper register half).
-
-The following happens w/o this patch:
-- r0 is marked as not a subreg at (0);
-- w1 is marked as subreg at (2);
-- w1 subreg_def is overridden at (3) by copy_register_state();
-- w1 is read at (5) but mark_insn_zext() does not mark (2)
-  for zero extension, because w1 subreg_def is not set;
-- because of BPF_F_TEST_RND_HI32 flag verifier inserts random
-  value for hi32 bits of (2) (marked (r));
-- this random value is read at (5).
-
-Fixes: 75748837b7e5 ("bpf: Propagate scalar ranges through register assignments.")
-Reported-by: Lonial Con <kongln9170@gmail.com>
-Signed-off-by: Lonial Con <kongln9170@gmail.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Fixes: e624d4ed4aa8 ("xdp: Extend xdp_redirect_map with broadcast support")
+Reported-by: syzbot+cca39e6e84a367a7e6f6@syzkaller.appspotmail.com
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Closes: https://lore.kernel.org/bpf/7e2aa30a62d740db182c170fdd8f81c596df280d.camel@gmail.com
-Link: https://lore.kernel.org/bpf/20240924210844.1758441-1-eddyz87@gmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cca39e6e84a367a7e6f6
+Link: https://lore.kernel.org/bpf/20240920125625.59465-1-toke@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ include/uapi/linux/bpf.h | 13 +++++--------
+ net/core/filter.c        |  8 +++++---
+ 2 files changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index d5215cb1747f1..5c5dea5e137e7 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -15140,8 +15140,12 @@ static void find_equal_scalars(struct bpf_verifier_state *vstate,
- 			continue;
- 		if ((!(reg->id & BPF_ADD_CONST) && !(known_reg->id & BPF_ADD_CONST)) ||
- 		    reg->off == known_reg->off) {
-+			s32 saved_subreg_def = reg->subreg_def;
+diff --git a/include/uapi/linux/bpf.h b/include/uapi/linux/bpf.h
+index 35bcf52dbc652..fea4bca4066c1 100644
+--- a/include/uapi/linux/bpf.h
++++ b/include/uapi/linux/bpf.h
+@@ -6046,11 +6046,6 @@ enum {
+ 	BPF_F_MARK_ENFORCE		= (1ULL << 6),
+ };
+ 
+-/* BPF_FUNC_clone_redirect and BPF_FUNC_redirect flags. */
+-enum {
+-	BPF_F_INGRESS			= (1ULL << 0),
+-};
+-
+ /* BPF_FUNC_skb_set_tunnel_key and BPF_FUNC_skb_get_tunnel_key flags. */
+ enum {
+ 	BPF_F_TUNINFO_IPV6		= (1ULL << 0),
+@@ -6197,10 +6192,12 @@ enum {
+ 	BPF_F_BPRM_SECUREEXEC	= (1ULL << 0),
+ };
+ 
+-/* Flags for bpf_redirect_map helper */
++/* Flags for bpf_redirect and bpf_redirect_map helpers */
+ enum {
+-	BPF_F_BROADCAST		= (1ULL << 3),
+-	BPF_F_EXCLUDE_INGRESS	= (1ULL << 4),
++	BPF_F_INGRESS		= (1ULL << 0), /* used for skb path */
++	BPF_F_BROADCAST		= (1ULL << 3), /* used for XDP path */
++	BPF_F_EXCLUDE_INGRESS	= (1ULL << 4), /* used for XDP path */
++#define BPF_F_REDIRECT_FLAGS (BPF_F_INGRESS | BPF_F_BROADCAST | BPF_F_EXCLUDE_INGRESS)
+ };
+ 
+ #define __bpf_md_ptr(type, name)	\
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 0e719c7c43bb7..b7a5f525e65b8 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2437,9 +2437,9 @@ static int __bpf_redirect_neigh(struct sk_buff *skb, struct net_device *dev,
+ 
+ /* Internal, non-exposed redirect flags. */
+ enum {
+-	BPF_F_NEIGH	= (1ULL << 1),
+-	BPF_F_PEER	= (1ULL << 2),
+-	BPF_F_NEXTHOP	= (1ULL << 3),
++	BPF_F_NEIGH	= (1ULL << 16),
++	BPF_F_PEER	= (1ULL << 17),
++	BPF_F_NEXTHOP	= (1ULL << 18),
+ #define BPF_F_REDIRECT_INTERNAL	(BPF_F_NEIGH | BPF_F_PEER | BPF_F_NEXTHOP)
+ };
+ 
+@@ -2449,6 +2449,8 @@ BPF_CALL_3(bpf_clone_redirect, struct sk_buff *, skb, u32, ifindex, u64, flags)
+ 	struct sk_buff *clone;
+ 	int ret;
+ 
++	BUILD_BUG_ON(BPF_F_REDIRECT_INTERNAL & BPF_F_REDIRECT_FLAGS);
 +
- 			copy_register_state(reg, known_reg);
-+			reg->subreg_def = saved_subreg_def;
- 		} else {
-+			s32 saved_subreg_def = reg->subreg_def;
- 			s32 saved_off = reg->off;
+ 	if (unlikely(flags & (~(BPF_F_INGRESS) | BPF_F_REDIRECT_INTERNAL)))
+ 		return -EINVAL;
  
- 			fake_reg.type = SCALAR_VALUE;
-@@ -15154,6 +15158,7 @@ static void find_equal_scalars(struct bpf_verifier_state *vstate,
- 			 * otherwise another find_equal_scalars() will be incorrect.
- 			 */
- 			reg->off = saved_off;
-+			reg->subreg_def = saved_subreg_def;
- 
- 			scalar32_min_max_add(reg, &fake_reg);
- 			scalar_min_max_add(reg, &fake_reg);
 -- 
 2.43.0
 
