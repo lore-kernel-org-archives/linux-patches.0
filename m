@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB1618E350;
-	Mon, 28 Oct 2024 06:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DD318E348;
+	Mon, 28 Oct 2024 06:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097514; cv=none; b=kfmYmQP6fFHvs2cMmXdwSAglcIyUNsgcsbFBCOVAIRAotBrB2eEVRA8L2OTDUdrFSX+gYLvbBelg92oAkLX+4Rwpev8cigcHhdQ9PVhicq58Pzn5jZf+ZI4m9g/8dqDUcz+Ya6OtsJR9MWrJVrcX1zQ/86l9THjhHGlawEJ0AFQ=
+	t=1730097517; cv=none; b=XT8Y9yKAhkPpw5UZm/RH5pJzcEvrPWAxD38Ir34hUx/Ievi1pXFQlxjzPkJKRA0hR0d8dEbaWYBZhLYKte7I/iQqZQavpBZ/ejxuOmJROIFlGcOySraegcEdZoSHnBWb5VJi7Th+2uT3wOOY9DJuOgUYxmTjjYcsx/4CTge/NI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097514; c=relaxed/simple;
-	bh=AHTBypOv4snPwgS/aXzp2uDZ8JQKAPJ4RAVMALkOt/U=;
+	s=arc-20240116; t=1730097517; c=relaxed/simple;
+	bh=05/oJvxDdTeZaVwyWHp/DyoDlH3cgObtWZkudRlW4iY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WeRiaGoMo8eaEY8GLnU/Bp8aCLPv28B0Ycv9dPJzOFgYxAbCEs+f7kVN5sH548GA4+7Nlh6vQNjTWfK3Fu18JyCcuzRxCfD5U8biEFfCy80/Hzl6D3hQ5FU6jOfOo/CJEsTptDapvitY99SBuJbwecuuNxqCWmjWcVi/k0a+Roc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U0O6fdC9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jAE2mjgfNVul9ovmuLJgOPglpNF14ijoSfEgh4YXRbYaEK66gLn1zRFsMRC6SgxSnu7wYNrW2sUtv5TBsZxQxeaK61Thtu0+sxU7HKADVXdwSnSBtoTaTDB9pFZgi2E6OYiy5ZHY6EgOcjpXKi6kS+ZST5hmG0xHYFHJ88imHuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F68LeRA6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U0O6fdC9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7D0C4CEC3;
-	Mon, 28 Oct 2024 06:38:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F68LeRA6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80903C4CEC3;
+	Mon, 28 Oct 2024 06:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097514;
-	bh=AHTBypOv4snPwgS/aXzp2uDZ8JQKAPJ4RAVMALkOt/U=;
+	s=korg; t=1730097516;
+	bh=05/oJvxDdTeZaVwyWHp/DyoDlH3cgObtWZkudRlW4iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U0O6fdC9fhScdOc4S7WjenxPcBSVwh5IF/NIfxT9PxJEEJfN3HCuaherioISbpSbf
-	 4B/kET+EeqEhDesyOaIC0/31F0CsRxCfThv+IaDOwb+guDEyLGw0ECd+VdaOyrt7er
-	 VYp4AuVGBUDVjA0FseQkI6jPUyZD4ySpti4NnFD8=
+	b=F68LeRA6qrndBuAyk8tQfaBTHo9izCJvcrhUjjzvNrOXfK6Rq2b+YVBiLUSX5Gfv6
+	 A6Qg9h7fbnZ962wgZmKQi66/gdvXfYtHqoriFFg4TmW4GTcC96gpml+JItQHEnU0og
+	 +ytWK+zABIxzMDQUIAx+ih1n2q2zep94IwDYfg1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Chandramohan Akula <chandramohan.akula@broadcom.com>,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
 	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 008/208] RDMA/bnxt_re: Fix incorrect AVID type in WQE structure
-Date: Mon, 28 Oct 2024 07:23:08 +0100
-Message-ID: <20241028062306.861241881@linuxfoundation.org>
+Subject: [PATCH 6.6 009/208] RDMA/bnxt_re: Add a check for memory allocation
+Date: Mon, 28 Oct 2024 07:23:09 +0100
+Message-ID: <20241028062306.887444446@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -55,45 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 9ab20f76ae9fad55ebaf36bdff04aea1c2552374 ]
+[ Upstream commit c5c1ae73b7741fa3b58e6e001b407825bb971225 ]
 
-Driver uses internal data structure to construct WQE frame.
-It used avid type as u16 which can accommodate up to 64K AVs.
-When outstanding AVID crosses 64K, driver truncates AVID and
-hence it uses incorrect AVID to WR. This leads to WR failure
-due to invalid AV ID and QP is moved to error state with reason
-set to 19 (INVALID AVID). When RDMA CM path is used, this issue
-hits QP1 and it is moved to error state
+__alloc_pbl() can return error when memory allocation fails.
+Driver is not checking the status on one of the instances.
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Link: https://patch.msgid.link/r/1726715161-18941-3-git-send-email-selvin.xavier@broadcom.com
+Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
+Link: https://patch.msgid.link/r/1726715161-18941-4-git-send-email-selvin.xavier@broadcom.com
 Reviewed-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Reviewed-by: Chandramohan Akula <chandramohan.akula@broadcom.com>
-Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
 Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/qplib_res.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-index a6f38d8f12efe..56ddff96b5083 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-@@ -169,7 +169,7 @@ struct bnxt_qplib_swqe {
- 			};
- 			u32		q_key;
- 			u32		dst_qp;
--			u16		avid;
-+			u32		avid;
- 		} send;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+index ae2bde34e785b..47406ab8879c1 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+@@ -244,6 +244,8 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
+ 			sginfo.pgsize = npde * pg_size;
+ 			sginfo.npages = 1;
+ 			rc = __alloc_pbl(res, &hwq->pbl[PBL_LVL_0], &sginfo);
++			if (rc)
++				goto fail;
  
- 		/* Send Raw Ethernet and QP1 */
+ 			/* Alloc PBL pages */
+ 			sginfo.npages = npbl;
 -- 
 2.43.0
 
