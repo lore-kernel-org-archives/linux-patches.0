@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58922AF07;
-	Mon, 28 Oct 2024 06:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40232AF07;
+	Mon, 28 Oct 2024 06:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098439; cv=none; b=UQuG+u6Ti+XvANeN/BLQru15S/8cSgpzvUOBMUXvH9dUqRa/8lM0Eif5TVLdriNpJbRAs4p8T0qjCIv3P66Qk2dTGPHyMnW5erc2Mo6mfi7H4Mo8Hdhoy2xEttOHg3lvnlk7eMvuS6Wngu8Y1PZHYxlDKoHM1KAaWlZ9am2cZqA=
+	t=1730098442; cv=none; b=CC6uvorv8O/g0bkHn9VacfgYIq6igeiI7iaDTeOoq1uzu4NHCni2Nwj0gQIv2npEHD21BW5r4sRSTEn8i1FzF1vjm7iEnIrGflZuZtWlhNNxjba+L6Qn4CyclN6eKZd38vp7/65M/WQDspquJCgZnhrgAo16v/oHTezGVcgLwhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098439; c=relaxed/simple;
-	bh=HR2ubYf+VZa3+pZoUex4Zn4Mn65Gk02g7tTijz6kepg=;
+	s=arc-20240116; t=1730098442; c=relaxed/simple;
+	bh=FHs/J0EKQEXvxNFfbVPalYoYztR9TpXRWoP8TNLVGSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r04V3kKNejHXYdvBbmmoS80JAXJKZKsrXWhcukV6xODJNZpfdz+PdMPTiRuKK0wDPWxK1PU7LIndwa84S6mKS8MLsw8Or8pQCrmTd1rYJQSBOPlvQ/Csz07w1sbK07vx09p6d3tWxVDd1CegLkkNmNuKuvUfYsudVIG3SWGEWPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p4kjQ7vx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=quPv6w3wjYz2NmKG+7QiPbEtYQ0voBiTL3U9QLKtlsqhObcnvJa0F10QPAXII7mI0Y2VApdiGZ93187E1EVC62fQI5hPtAcvxjM38wJfB9sFOsa/h8lEzOT50nv51AabcnM1/r8IOrYAj1bLnu7mEph/WtpVLQZE7x8JrbX/Ho0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7FF4Yg+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p4kjQ7vx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52958C4CEC3;
-	Mon, 28 Oct 2024 06:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7FF4Yg+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EA1C4CEC3;
+	Mon, 28 Oct 2024 06:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098439;
-	bh=HR2ubYf+VZa3+pZoUex4Zn4Mn65Gk02g7tTijz6kepg=;
+	s=korg; t=1730098441;
+	bh=FHs/J0EKQEXvxNFfbVPalYoYztR9TpXRWoP8TNLVGSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p4kjQ7vxO74a5sJCTuhFpno8NLxZDLAc9AHOIefo4506ecYObbqQb6UmHIjhIMXvn
-	 cRpoJi1DGoYzRaOZxFEXQv2L1RwzaDUhTZ7WJBqc3rssMo/uhoQInpbVariFrdFIOp
-	 oUHxfUtOvh4B/gv0VLwKso00aYvMH4RLRVeRc1i8=
+	b=P7FF4Yg+OE3AhMH5TLpp6aYeItuQjBFaMVA+sBkxE5RdlYeiMKMjqN1XQX+5YWmsE
+	 9q03phq+Jadkfr0mHazt74QVkLFmRvFkuKeS4F7qCsKdMMCz/+T1o06K8KA97+mvQx
+	 Z0ApjWcwnED0iVPsgBdliEXEn7/GMt/l23adnsKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Kanglong Wang <wangkanglong@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.11 228/261] LoongArch: Enable IRQ if do_ale() triggered in irq-enabled context
-Date: Mon, 28 Oct 2024 07:26:10 +0100
-Message-ID: <20241028062317.828376439@linuxfoundation.org>
+Subject: [PATCH 6.11 229/261] LoongArch: Make KASAN usable for variable cpu_vabits
+Date: Mon, 28 Oct 2024 07:26:11 +0100
+Message-ID: <20241028062317.854209753@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,68 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 69cc6fad5df4ce652d969be69acc60e269e5eea1 upstream.
+commit 3c252263be801f937f56b4bcd8e8e2b5307c1ce5 upstream.
 
-Unaligned access exception can be triggered in irq-enabled context such
-as user mode, in this case do_ale() may call get_user() which may cause
-sleep. Then we will get:
+Currently, KASAN on LoongArch assume the CPU VA bits is 48, which is
+true for Loongson-3 series, but not for Loongson-2 series (only 40 or
+lower), this patch fix that issue and make KASAN usable for variable
+cpu_vabits.
 
- BUG: sleeping function called from invalid context at arch/loongarch/kernel/access-helper.h:7
- in_atomic(): 0, irqs_disabled(): 1, non_block: 0, pid: 129, name: modprobe
- preempt_count: 0, expected: 0
- RCU nest depth: 0, expected: 0
- CPU: 0 UID: 0 PID: 129 Comm: modprobe Tainted: G        W          6.12.0-rc1+ #1723
- Tainted: [W]=WARN
- Stack : 9000000105e0bd48 0000000000000000 9000000003803944 9000000105e08000
-         9000000105e0bc70 9000000105e0bc78 0000000000000000 0000000000000000
-         9000000105e0bc78 0000000000000001 9000000185e0ba07 9000000105e0b890
-         ffffffffffffffff 9000000105e0bc78 73924b81763be05b 9000000100194500
-         000000000000020c 000000000000000a 0000000000000000 0000000000000003
-         00000000000023f0 00000000000e1401 00000000072f8000 0000007ffbb0e260
-         0000000000000000 0000000000000000 9000000005437650 90000000055d5000
-         0000000000000000 0000000000000003 0000007ffbb0e1f0 0000000000000000
-         0000005567b00490 0000000000000000 9000000003803964 0000007ffbb0dfec
-         00000000000000b0 0000000000000007 0000000000000003 0000000000071c1d
-         ...
- Call Trace:
- [<9000000003803964>] show_stack+0x64/0x1a0
- [<9000000004c57464>] dump_stack_lvl+0x74/0xb0
- [<9000000003861ab4>] __might_resched+0x154/0x1a0
- [<900000000380c96c>] emulate_load_store_insn+0x6c/0xf60
- [<9000000004c58118>] do_ale+0x78/0x180
- [<9000000003801bc8>] handle_ale+0x128/0x1e0
-
-So enable IRQ if unaligned access exception is triggered in irq-enabled
-context to fix it.
+Solution is very simple: Just define XRANGE_SHADOW_SHIFT which means
+valid address length from VA_BITS to min(cpu_vabits, VA_BITS).
 
 Cc: stable@vger.kernel.org
-Reported-by: Binbin Zhou <zhoubinbin@loongson.cn>
+Signed-off-by: Kanglong Wang <wangkanglong@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/traps.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/loongarch/include/asm/kasan.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/loongarch/kernel/traps.c
-+++ b/arch/loongarch/kernel/traps.c
-@@ -555,6 +555,9 @@ asmlinkage void noinstr do_ale(struct pt
- #else
- 	unsigned int *pc;
+--- a/arch/loongarch/include/asm/kasan.h
++++ b/arch/loongarch/include/asm/kasan.h
+@@ -16,7 +16,7 @@
+ #define XRANGE_SHIFT (48)
  
-+	if (regs->csr_prmd & CSR_PRMD_PIE)
-+		local_irq_enable();
-+
- 	perf_sw_event(PERF_COUNT_SW_ALIGNMENT_FAULTS, 1, regs, regs->csr_badvaddr);
- 
- 	/*
-@@ -579,6 +582,8 @@ sigbus:
- 	die_if_kernel("Kernel ale access", regs);
- 	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *)regs->csr_badvaddr);
- out:
-+	if (regs->csr_prmd & CSR_PRMD_PIE)
-+		local_irq_disable();
- #endif
- 	irqentry_exit(regs, state);
- }
+ /* Valid address length */
+-#define XRANGE_SHADOW_SHIFT	(PGDIR_SHIFT + PAGE_SHIFT - 3)
++#define XRANGE_SHADOW_SHIFT	min(cpu_vabits, VA_BITS)
+ /* Used for taking out the valid address */
+ #define XRANGE_SHADOW_MASK	GENMASK_ULL(XRANGE_SHADOW_SHIFT - 1, 0)
+ /* One segment whole address space size */
 
 
