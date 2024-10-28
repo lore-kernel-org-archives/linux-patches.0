@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38098837;
-	Mon, 28 Oct 2024 06:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7750D18F2DB;
+	Mon, 28 Oct 2024 06:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098011; cv=none; b=ohrkCCQMgKeXTR+8moWZPvFRgaQsg1qpC3BUzbTBBtoOi28NXR77kSUGtRaJ+F3XTIzr+TmevaaP73BFPvdIvO80IqRAGsCGwKIOWOkxVqeeyN/RDtMoxGqmMM0smQX3YtszW/j7bF2fyL8Xx6O69wOVfzr7MMULbej/ySvbtwI=
+	t=1730098014; cv=none; b=RHgMra7+xYKHQR7NolmFY+eXUbJDyIdpKwWH752bEYvD2A8wUWafPaMlyHFVh2/TveqI2nIFv0Rc+HhDwAxni8gqEkRtP/MCZCU6N/4/tcw5SyNegQgps0i7kQ+uuaihgeXinA1aPQiz/kHge1W/Yfskbe9uTkZ1FXAc2+pHNcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098011; c=relaxed/simple;
-	bh=Wu8BTip+5SawOtJE/PexleDtdTlKCNil4sYIzIJ7IT4=;
+	s=arc-20240116; t=1730098014; c=relaxed/simple;
+	bh=ECBTRyWiP9tGuczLwGWIPeGOYIIBQvc72G2GpSWtP1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ak7ATSHL7ebitCf4uwgsoA8qHQKn9HrW04sw0TrEK9J9ITDi71uupvdAbmjKmF+xRizBX4xeGmFigg8YfHF/yBccbHDAwA1cJ6BioPZ2CbCrEDkoy/rS5OYlzY1aLhPdMMTyxOBMec8UHgon482RnfHvOlsQGWwYgdP0Ro7u/FU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZstMUj7J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CgT7oWaTxP8a3DX39G9LUxnWGzVOB5Yv7aRrc32HmJlLwGMa1BeS6wR67Q4KUUgoAopyu0pYqq4RH6ba/DkbWap4dI7ihFOOYza5ZkdxqwYOlyW4H94GctHC74v7+mijE1EstoPLQHfqZxR8p4igdME9agpe/sUgzj5RJ4tLYpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v8iwHyTt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZstMUj7J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A656C4CEC3;
-	Mon, 28 Oct 2024 06:46:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v8iwHyTt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6287C4CEC3;
+	Mon, 28 Oct 2024 06:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098011;
-	bh=Wu8BTip+5SawOtJE/PexleDtdTlKCNil4sYIzIJ7IT4=;
+	s=korg; t=1730098013;
+	bh=ECBTRyWiP9tGuczLwGWIPeGOYIIBQvc72G2GpSWtP1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZstMUj7JWkcacaGf1uJQ7wLS5CRtw5rDX8Hcn6bH+nHSG4MS+WH7odEUbteV/hGMy
-	 J9Jmfg4UkAJKptM/WEtTRgZko8epGOJ0shQBQoXlG6585Ixp1CgUvJiTytBG+4o1IS
-	 VYq6tBgIiMzRhY8UeuJwtId2hz78P7gA4TMdORlw=
+	b=v8iwHyTtNu5OlrolR3wR6gy8zmNuuNUAsw7KDRtQpyQsxa/g1XdIjDSEA0DY2lQPF
+	 mKvVYAjEyiUlH3wqIHqqC7Y6I8HLiz12xO3uNg/RoGFN+ylINMPz/L9/8X0sIpuJbj
+	 YjuN0/sTxPnoTIEGqz/7GmoOA8iasNf0P78qdqJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Abhishek Mohapatra <abhishek.mohapatra@broadcom.com>,
+	Chandramohan Akula <chandramohan.akula@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 038/261] net: sparx5: fix source port register when mirroring
-Date: Mon, 28 Oct 2024 07:23:00 +0100
-Message-ID: <20241028062312.964462593@linuxfoundation.org>
+Subject: [PATCH 6.11 039/261] RDMA/bnxt_re: Fix the max CQ WQEs for older adapters
+Date: Mon, 28 Oct 2024 07:23:01 +0100
+Message-ID: <20241028062312.989190529@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,63 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Abhishek Mohapatra <abhishek.mohapatra@broadcom.com>
 
-[ Upstream commit 8a6be4bd6fb319cee63d228e37c8dda5fd1eb74a ]
+[ Upstream commit ac6df53738b465053d38d491fff87bd7d37fdc07 ]
 
-When port mirroring is added to a port, the bit position of the source
-port, needs to be written to the register ANA_AC_PROBE_PORT_CFG.  This
-register is replicated for n_ports > 32, and therefore we need to derive
-the correct register from the port number.
+Older adapters doesn't support the MAX CQ WQEs reported by older FW. So
+restrict the value reported to 1M always for older adapters.
 
-Before this patch, we wrongly calculate the register from portno /
-BITS_PER_BYTE, where the divisor ought to be 32, causing any port >=8 to
-be written to the wrong register. We fix this, by using do_div(), where
-the dividend is the register, the remainder is the bit position and the
-divisor is now 32.
-
-Fixes: 4e50d72b3b95 ("net: sparx5: add port mirroring implementation")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20241009-mirroring-fix-v1-1-9ec962301989@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Link: https://patch.msgid.link/r/1728373302-19530-2-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Abhishek Mohapatra<abhishek.mohapatra@broadcom.com>
+Reviewed-by: Chandramohan Akula <chandramohan.akula@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/microchip/sparx5/sparx5_mirror.c    | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_sp.c | 2 ++
+ drivers/infiniband/hw/bnxt_re/qplib_sp.h | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_mirror.c b/drivers/net/ethernet/microchip/sparx5/sparx5_mirror.c
-index 15db423be4aa6..459a53676ae96 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_mirror.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_mirror.c
-@@ -31,10 +31,10 @@ static u64 sparx5_mirror_port_get(struct sparx5 *sparx5, u32 idx)
- /* Add port to mirror (only front ports) */
- static void sparx5_mirror_port_add(struct sparx5 *sparx5, u32 idx, u32 portno)
- {
--	u32 val, reg = portno;
-+	u64 reg = portno;
-+	u32 val;
- 
--	reg = portno / BITS_PER_BYTE;
--	val = BIT(portno % BITS_PER_BYTE);
-+	val = BIT(do_div(reg, 32));
- 
- 	if (reg == 0)
- 		return spx5_rmw(val, val, sparx5, ANA_AC_PROBE_PORT_CFG(idx));
-@@ -45,10 +45,10 @@ static void sparx5_mirror_port_add(struct sparx5 *sparx5, u32 idx, u32 portno)
- /* Delete port from mirror (only front ports) */
- static void sparx5_mirror_port_del(struct sparx5 *sparx5, u32 idx, u32 portno)
- {
--	u32 val, reg = portno;
-+	u64 reg = portno;
-+	u32 val;
- 
--	reg = portno / BITS_PER_BYTE;
--	val = BIT(portno % BITS_PER_BYTE);
-+	val = BIT(do_div(reg, 32));
- 
- 	if (reg == 0)
- 		return spx5_rmw(0, val, sparx5, ANA_AC_PROBE_PORT_CFG(idx));
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+index 9328db92fa6db..8e59422dd137e 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+@@ -137,6 +137,8 @@ int bnxt_qplib_get_dev_attr(struct bnxt_qplib_rcfw *rcfw,
+ 			    6 : sb->max_sge;
+ 	attr->max_cq = le32_to_cpu(sb->max_cq);
+ 	attr->max_cq_wqes = le32_to_cpu(sb->max_cqe);
++	if (!bnxt_qplib_is_chip_gen_p7(rcfw->res->cctx))
++		attr->max_cq_wqes = min_t(u32, BNXT_QPLIB_MAX_CQ_WQES, attr->max_cq_wqes);
+ 	attr->max_cq_sges = attr->max_qp_sges;
+ 	attr->max_mr = le32_to_cpu(sb->max_mr);
+ 	attr->max_mw = le32_to_cpu(sb->max_mw);
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.h b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
+index 16a67d70a6fc4..2f16f3db093ea 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_sp.h
++++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
+@@ -55,6 +55,7 @@ struct bnxt_qplib_dev_attr {
+ 	u32				max_qp_wqes;
+ 	u32				max_qp_sges;
+ 	u32				max_cq;
++#define BNXT_QPLIB_MAX_CQ_WQES          0xfffff
+ 	u32				max_cq_wqes;
+ 	u32				max_cq_sges;
+ 	u32				max_mr;
 -- 
 2.43.0
 
