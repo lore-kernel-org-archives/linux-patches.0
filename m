@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4AC18FC89;
-	Mon, 28 Oct 2024 06:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6197218F2CF;
+	Mon, 28 Oct 2024 06:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097526; cv=none; b=ITXCZO/nCkmFrtN31xqSVmY+iuxKGJJWXGY6RCrE82suggz7bX5ep96dc4xAQkBM3YlCsLpm4zvMY50Ukc8RjawFKkd7KkjI5kF39DBftwVTVNGmvDK4O5RBkRCAeiTI7qvbsxOWeovwvy3WhQ56A1vl8OlZEne1WXmrmrLRutg=
+	t=1730097528; cv=none; b=cEj98J3RfpeNqFrtwqX8YO3JTSfQjy+QgKK2yAmZmEJBo2+TVLd3lWYV4pDjNoxkhPGNEZ0M4sA9U4Wsd86lkzf6fzjYG2edsnChfZdHUmwjWP+GD9mOvbYQaIWh3UzBeBJHh8PzZ9rvIYjV3B/FMin+ZcKXmX+OV0FzquSWRbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097526; c=relaxed/simple;
-	bh=TNfdy5WtjmRvbsPzp6IiO8kQbSYVm+VtruONcHCRv/k=;
+	s=arc-20240116; t=1730097528; c=relaxed/simple;
+	bh=WVKk1wuYl0zIWZrE76JXuYsHsHDOt/KNUWgkjFuwerk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oc28Giaxyd/Kmh9Lq7JDteRxPWTvTsQuRU041dWOWEMuGnNH5aqU3DRSK0BzpM2uw0WojLPe1JLJXi0JZK0jqyqSGax1XM3llerARvMBARek8Qq/SAwpJJCbqJRV9/y1l2qbUWv0J14p+uQKH+YutV+Hg98CpgpMrSGBPjoXQQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hmi2X4ul; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hrKeCLlccDHMbR5CA379GWl/JhXyxB1ODX3tcQOb9OKJ83zum0gtCUdJbCjKA2xpoXUZEatC9iPg6lEbFqxI+jPOdIxlaNbWKChrnVA/09077o2ZPi82cpEV9uNYbxSGaVrNguKYjpiPscku7+sGFGMxju/7Qu0Ha2IXh1jwq20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNq7zHIb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hmi2X4ul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93A5C4CEC3;
-	Mon, 28 Oct 2024 06:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNq7zHIb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01379C4CEC3;
+	Mon, 28 Oct 2024 06:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097526;
-	bh=TNfdy5WtjmRvbsPzp6IiO8kQbSYVm+VtruONcHCRv/k=;
+	s=korg; t=1730097528;
+	bh=WVKk1wuYl0zIWZrE76JXuYsHsHDOt/KNUWgkjFuwerk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hmi2X4ulLKGT3+eec4TVc8ypUPB5o91QtOf+osWJf4lWsRLLJLbw6DbMqyJysxwTp
-	 P/TTu6v/Bj1tJKcqtVlTBbvfmPj8GpBq6aUlS/x9SwKPQVzbzYP0ZtrItX5e6nT9dm
-	 oD4B2BCKQtpK/rBIRdtCP7mT0hlgjpOfbmx4lKx8=
+	b=PNq7zHIbbbIgRi25CrhzR1Zyg1E56G1dXLMYBEcY+OZc3XAbepqUHDT6ty92Y5WML
+	 T6Of+LyqBjCT/miesaFc/1z8LBpQKSoHGG4WRiKDQM5x5f/L6741jObpBuKVkcXl/d
+	 8kPIfEW93CKO++qF1Qi1pHHdTgke+RBkfLwWgAUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/208] ipv4: give an IPv4 dev to blackhole_netdev
-Date: Mon, 28 Oct 2024 07:23:32 +0100
-Message-ID: <20241028062307.448678472@linuxfoundation.org>
+Subject: [PATCH 6.6 033/208] RDMA/bnxt_re: Support new 5760X P7 devices
+Date: Mon, 28 Oct 2024 07:23:33 +0100
+Message-ID: <20241028062307.473380287@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -52,110 +51,307 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit 22600596b6756b166fd052d5facb66287e6f0bad ]
+[ Upstream commit 1801d87b3598b173bce3fbf15c5517796f38db96 ]
 
-After commit 8d7017fd621d ("blackhole_netdev: use blackhole_netdev to
-invalidate dst entries"), blackhole_netdev was introduced to invalidate
-dst cache entries on the TX path whenever the cache times out or is
-flushed.
+Add basic support for 5760X P7 devices. Add new chip
+revisions. The first version support is similar to
+the existing P5 adapters. Extend the current support
+for P5 adapters to P7 also.
 
-When two UDP sockets (sk1 and sk2) send messages to the same destination
-simultaneously, they are using the same dst cache. If the dst cache is
-invalidated on one path (sk2) while the other (sk1) is still transmitting,
-sk1 may try to use the invalid dst entry.
-
-         CPU1                   CPU2
-
-      udp_sendmsg(sk1)       udp_sendmsg(sk2)
-      udp_send_skb()
-      ip_output()
-                                             <--- dst timeout or flushed
-                             dst_dev_put()
-      ip_finish_output2()
-      ip_neigh_for_gw()
-
-This results in a scenario where ip_neigh_for_gw() returns -EINVAL because
-blackhole_dev lacks an in_dev, which is needed to initialize the neigh in
-arp_constructor(). This error is then propagated back to userspace,
-breaking the UDP application.
-
-The patch fixes this issue by assigning an in_dev to blackhole_dev for
-IPv4, similar to what was done for IPv6 in commit e5f80fcf869a ("ipv6:
-give an IPv6 dev to blackhole_netdev"). This ensures that even when the
-dst entry is invalidated with blackhole_dev, it will not fail to create
-the neigh entry.
-
-As devinet_init() is called ealier than blackhole_netdev_init() in system
-booting, it can not assign the in_dev to blackhole_dev in devinet_init().
-As Paolo suggested, add a separate late_initcall() in devinet.c to ensure
-inet_blackhole_dev_init() is called after blackhole_netdev_init().
-
-Fixes: 8d7017fd621d ("blackhole_netdev: use blackhole_netdev to invalidate dst entries")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/3000792d45ca44e16c785ebe2b092e610e5b3df1.1728499633.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://lore.kernel.org/r/1701946060-13931-2-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: ac6df53738b4 ("RDMA/bnxt_re: Fix the max CQ WQEs for older adapters")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/devinet.c | 35 +++++++++++++++++++++++++----------
- 1 file changed, 25 insertions(+), 10 deletions(-)
+ drivers/infiniband/hw/bnxt_re/hw_counters.c |  4 ++--
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c    | 10 +++++-----
+ drivers/infiniband/hw/bnxt_re/main.c        | 14 +++++++-------
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c    |  4 ++--
+ drivers/infiniband/hw/bnxt_re/qplib_rcfw.c  |  2 +-
+ drivers/infiniband/hw/bnxt_re/qplib_res.c   |  2 +-
+ drivers/infiniband/hw/bnxt_re/qplib_res.h   | 20 +++++++++++++++++---
+ drivers/infiniband/hw/bnxt_re/qplib_sp.c    |  6 +++---
+ 8 files changed, 38 insertions(+), 24 deletions(-)
 
-diff --git a/net/ipv4/devinet.c b/net/ipv4/devinet.c
-index cb0c80328eebf..4822f68edbf08 100644
---- a/net/ipv4/devinet.c
-+++ b/net/ipv4/devinet.c
-@@ -283,17 +283,19 @@ static struct in_device *inetdev_init(struct net_device *dev)
- 	/* Account for reference dev->ip_ptr (below) */
- 	refcount_set(&in_dev->refcnt, 1);
- 
--	err = devinet_sysctl_register(in_dev);
--	if (err) {
--		in_dev->dead = 1;
--		neigh_parms_release(&arp_tbl, in_dev->arp_parms);
--		in_dev_put(in_dev);
--		in_dev = NULL;
--		goto out;
-+	if (dev != blackhole_netdev) {
-+		err = devinet_sysctl_register(in_dev);
-+		if (err) {
-+			in_dev->dead = 1;
-+			neigh_parms_release(&arp_tbl, in_dev->arp_parms);
-+			in_dev_put(in_dev);
-+			in_dev = NULL;
-+			goto out;
-+		}
-+		ip_mc_init_dev(in_dev);
-+		if (dev->flags & IFF_UP)
-+			ip_mc_up(in_dev);
+diff --git a/drivers/infiniband/hw/bnxt_re/hw_counters.c b/drivers/infiniband/hw/bnxt_re/hw_counters.c
+index 93572405d6fae..128651c015956 100644
+--- a/drivers/infiniband/hw/bnxt_re/hw_counters.c
++++ b/drivers/infiniband/hw/bnxt_re/hw_counters.c
+@@ -371,7 +371,7 @@ int bnxt_re_ib_get_hw_stats(struct ib_device *ibdev,
  	}
--	ip_mc_init_dev(in_dev);
--	if (dev->flags & IFF_UP)
--		ip_mc_up(in_dev);
  
- 	/* we can receive as soon as ip_ptr is set -- do this last */
- 	rcu_assign_pointer(dev->ip_ptr, in_dev);
-@@ -332,6 +334,19 @@ static void inetdev_destroy(struct in_device *in_dev)
- 	in_dev_put(in_dev);
+ done:
+-	return bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx) ?
++	return bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx) ?
+ 		BNXT_RE_NUM_EXT_COUNTERS : BNXT_RE_NUM_STD_COUNTERS;
  }
  
-+static int __init inet_blackhole_dev_init(void)
-+{
-+	int err = 0;
-+
-+	rtnl_lock();
-+	if (!inetdev_init(blackhole_netdev))
-+		err = -ENOMEM;
-+	rtnl_unlock();
-+
-+	return err;
-+}
-+late_initcall(inet_blackhole_dev_init);
-+
- int inet_addr_onlink(struct in_device *in_dev, __be32 a, __be32 b)
+@@ -381,7 +381,7 @@ struct rdma_hw_stats *bnxt_re_ib_alloc_hw_port_stats(struct ib_device *ibdev,
+ 	struct bnxt_re_dev *rdev = to_bnxt_re_dev(ibdev, ibdev);
+ 	int num_counters = 0;
+ 
+-	if (bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx))
++	if (bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx))
+ 		num_counters = BNXT_RE_NUM_EXT_COUNTERS;
+ 	else
+ 		num_counters = BNXT_RE_NUM_STD_COUNTERS;
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index b4d3e7dfc939f..f2eaecef7570c 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -1023,7 +1023,7 @@ static int bnxt_re_init_user_qp(struct bnxt_re_dev *rdev, struct bnxt_re_pd *pd,
+ 	bytes = (qplib_qp->sq.max_wqe * qplib_qp->sq.wqe_size);
+ 	/* Consider mapping PSN search memory only for RC QPs. */
+ 	if (qplib_qp->type == CMDQ_CREATE_QP_TYPE_RC) {
+-		psn_sz = bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx) ?
++		psn_sz = bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx) ?
+ 						   sizeof(struct sq_psn_search_ext) :
+ 						   sizeof(struct sq_psn_search);
+ 		psn_nume = (qplib_qp->wqe_mode == BNXT_QPLIB_WQE_MODE_STATIC) ?
+@@ -1234,7 +1234,7 @@ static void bnxt_re_adjust_gsi_rq_attr(struct bnxt_re_qp *qp)
+ 	qplqp = &qp->qplib_qp;
+ 	dev_attr = &rdev->dev_attr;
+ 
+-	if (!bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx)) {
++	if (!bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx)) {
+ 		qplqp->rq.max_sge = dev_attr->max_qp_sges;
+ 		if (qplqp->rq.max_sge > dev_attr->max_qp_sges)
+ 			qplqp->rq.max_sge = dev_attr->max_qp_sges;
+@@ -1301,7 +1301,7 @@ static void bnxt_re_adjust_gsi_sq_attr(struct bnxt_re_qp *qp,
+ 	qplqp = &qp->qplib_qp;
+ 	dev_attr = &rdev->dev_attr;
+ 
+-	if (!bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx)) {
++	if (!bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx)) {
+ 		entries = bnxt_re_init_depth(init_attr->cap.max_send_wr + 1, uctx);
+ 		qplqp->sq.max_wqe = min_t(u32, entries,
+ 					  dev_attr->max_qp_wqes + 1);
+@@ -1328,7 +1328,7 @@ static int bnxt_re_init_qp_type(struct bnxt_re_dev *rdev,
+ 		goto out;
+ 	}
+ 
+-	if (bnxt_qplib_is_chip_gen_p5(chip_ctx) &&
++	if (bnxt_qplib_is_chip_gen_p5_p7(chip_ctx) &&
+ 	    init_attr->qp_type == IB_QPT_GSI)
+ 		qptype = CMDQ_CREATE_QP_TYPE_GSI;
+ out:
+@@ -1527,7 +1527,7 @@ int bnxt_re_create_qp(struct ib_qp *ib_qp, struct ib_qp_init_attr *qp_init_attr,
+ 		goto fail;
+ 
+ 	if (qp_init_attr->qp_type == IB_QPT_GSI &&
+-	    !(bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx))) {
++	    !(bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx))) {
+ 		rc = bnxt_re_create_gsi_qp(qp, pd, qp_init_attr);
+ 		if (rc == -ENODEV)
+ 			goto qp_destroy;
+diff --git a/drivers/infiniband/hw/bnxt_re/main.c b/drivers/infiniband/hw/bnxt_re/main.c
+index c173d0ffc6293..594cc6aa7b79d 100644
+--- a/drivers/infiniband/hw/bnxt_re/main.c
++++ b/drivers/infiniband/hw/bnxt_re/main.c
+@@ -128,7 +128,7 @@ static void bnxt_re_set_drv_mode(struct bnxt_re_dev *rdev, u8 mode)
+ 	struct bnxt_qplib_chip_ctx *cctx;
+ 
+ 	cctx = rdev->chip_ctx;
+-	cctx->modes.wqe_mode = bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx) ?
++	cctx->modes.wqe_mode = bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx) ?
+ 			       mode : BNXT_QPLIB_WQE_MODE_STATIC;
+ 	if (bnxt_re_hwrm_qcaps(rdev))
+ 		dev_err(rdev_to_dev(rdev),
+@@ -218,7 +218,7 @@ static void bnxt_re_limit_pf_res(struct bnxt_re_dev *rdev)
+ 	ctx->srqc_count = min_t(u32, BNXT_RE_MAX_SRQC_COUNT,
+ 				attr->max_srq);
+ 	ctx->cq_count = min_t(u32, BNXT_RE_MAX_CQ_COUNT, attr->max_cq);
+-	if (!bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx))
++	if (!bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx))
+ 		for (i = 0; i < MAX_TQM_ALLOC_REQ; i++)
+ 			rdev->qplib_ctx.tqm_ctx.qcount[i] =
+ 			rdev->dev_attr.tqm_alloc_reqs[i];
+@@ -267,7 +267,7 @@ static void bnxt_re_set_resource_limits(struct bnxt_re_dev *rdev)
+ 	memset(&rdev->qplib_ctx.vf_res, 0, sizeof(struct bnxt_qplib_vf_res));
+ 	bnxt_re_limit_pf_res(rdev);
+ 
+-	num_vfs =  bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx) ?
++	num_vfs =  bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx) ?
+ 			BNXT_RE_GEN_P5_MAX_VF : rdev->num_vfs;
+ 	if (num_vfs)
+ 		bnxt_re_limit_vf_res(&rdev->qplib_ctx, num_vfs);
+@@ -279,7 +279,7 @@ static void bnxt_re_vf_res_config(struct bnxt_re_dev *rdev)
+ 	if (test_bit(BNXT_RE_FLAG_ERR_DEVICE_DETACHED, &rdev->flags))
+ 		return;
+ 	rdev->num_vfs = pci_sriov_get_totalvfs(rdev->en_dev->pdev);
+-	if (!bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx)) {
++	if (!bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx)) {
+ 		bnxt_re_set_resource_limits(rdev);
+ 		bnxt_qplib_set_func_resources(&rdev->qplib_res, &rdev->rcfw,
+ 					      &rdev->qplib_ctx);
+@@ -1074,7 +1074,7 @@ static int bnxt_re_cqn_handler(struct bnxt_qplib_nq *nq,
+ #define BNXT_RE_GEN_P5_VF_NQ_DB		0x4000
+ static u32 bnxt_re_get_nqdb_offset(struct bnxt_re_dev *rdev, u16 indx)
  {
- 	const struct in_ifaddr *ifa;
+-	return bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx) ?
++	return bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx) ?
+ 		(rdev->is_virtfn ? BNXT_RE_GEN_P5_VF_NQ_DB :
+ 				   BNXT_RE_GEN_P5_PF_NQ_DB) :
+ 				   rdev->en_dev->msix_entries[indx].db_offset;
+@@ -1539,7 +1539,7 @@ static int bnxt_re_dev_init(struct bnxt_re_dev *rdev, u8 wqe_mode)
+ 	bnxt_re_set_resource_limits(rdev);
+ 
+ 	rc = bnxt_qplib_alloc_ctx(&rdev->qplib_res, &rdev->qplib_ctx, 0,
+-				  bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx));
++				  bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx));
+ 	if (rc) {
+ 		ibdev_err(&rdev->ibdev,
+ 			  "Failed to allocate QPLIB context: %#x\n", rc);
+@@ -1662,7 +1662,7 @@ static void bnxt_re_setup_cc(struct bnxt_re_dev *rdev, bool enable)
+ 		return;
+ 
+ 	/* Currently enabling only for GenP5 adapters */
+-	if (!bnxt_qplib_is_chip_gen_p5(rdev->chip_ctx))
++	if (!bnxt_qplib_is_chip_gen_p5_p7(rdev->chip_ctx))
+ 		return;
+ 
+ 	if (enable) {
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index 3b28878f62062..4ee11cb4f2bd3 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -995,7 +995,7 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
+ 
+ 	/* SQ */
+ 	if (qp->type == CMDQ_CREATE_QP_TYPE_RC) {
+-		psn_sz = bnxt_qplib_is_chip_gen_p5(res->cctx) ?
++		psn_sz = bnxt_qplib_is_chip_gen_p5_p7(res->cctx) ?
+ 			 sizeof(struct sq_psn_search_ext) :
+ 			 sizeof(struct sq_psn_search);
+ 
+@@ -1649,7 +1649,7 @@ static void bnxt_qplib_fill_psn_search(struct bnxt_qplib_qp *qp,
+ 	flg_npsn = ((swq->next_psn << SQ_PSN_SEARCH_NEXT_PSN_SFT) &
+ 		     SQ_PSN_SEARCH_NEXT_PSN_MASK);
+ 
+-	if (bnxt_qplib_is_chip_gen_p5(qp->cctx)) {
++	if (bnxt_qplib_is_chip_gen_p5_p7(qp->cctx)) {
+ 		psns_ext->opcode_start_psn = cpu_to_le32(op_spsn);
+ 		psns_ext->flags_next_psn = cpu_to_le32(flg_npsn);
+ 		psns_ext->start_slot_idx = cpu_to_le16(swq->slot_idx);
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
+index 5680fe8b890ad..3ffaef0c26519 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
+@@ -852,7 +852,7 @@ int bnxt_qplib_init_rcfw(struct bnxt_qplib_rcfw *rcfw,
+ 	 */
+ 	if (is_virtfn)
+ 		goto skip_ctx_setup;
+-	if (bnxt_qplib_is_chip_gen_p5(rcfw->res->cctx))
++	if (bnxt_qplib_is_chip_gen_p5_p7(rcfw->res->cctx))
+ 		goto config_vf_res;
+ 
+ 	lvl = ctx->qpc_tbl.level;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+index 47406ab8879c1..1fdffd6a0f480 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+@@ -807,7 +807,7 @@ static int bnxt_qplib_alloc_dpi_tbl(struct bnxt_qplib_res *res,
+ 	dpit = &res->dpi_tbl;
+ 	reg = &dpit->wcreg;
+ 
+-	if (!bnxt_qplib_is_chip_gen_p5(res->cctx)) {
++	if (!bnxt_qplib_is_chip_gen_p5_p7(res->cctx)) {
+ 		/* Offest should come from L2 driver */
+ 		dbr_offset = dev_attr->l2_db_size;
+ 		dpit->ucreg.offset = dbr_offset;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.h b/drivers/infiniband/hw/bnxt_re/qplib_res.h
+index 534db462216ac..f9e7aa3757cfb 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.h
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.h
+@@ -44,6 +44,9 @@ extern const struct bnxt_qplib_gid bnxt_qplib_gid_zero;
+ #define CHIP_NUM_57508		0x1750
+ #define CHIP_NUM_57504		0x1751
+ #define CHIP_NUM_57502		0x1752
++#define CHIP_NUM_58818          0xd818
++#define CHIP_NUM_57608          0x1760
++
+ 
+ struct bnxt_qplib_drv_modes {
+ 	u8	wqe_mode;
+@@ -296,6 +299,12 @@ struct bnxt_qplib_res {
+ 	struct bnxt_qplib_db_pacing_data *pacing_data;
+ };
+ 
++static inline bool bnxt_qplib_is_chip_gen_p7(struct bnxt_qplib_chip_ctx *cctx)
++{
++	return (cctx->chip_num == CHIP_NUM_58818 ||
++		cctx->chip_num == CHIP_NUM_57608);
++}
++
+ static inline bool bnxt_qplib_is_chip_gen_p5(struct bnxt_qplib_chip_ctx *cctx)
+ {
+ 	return (cctx->chip_num == CHIP_NUM_57508 ||
+@@ -303,15 +312,20 @@ static inline bool bnxt_qplib_is_chip_gen_p5(struct bnxt_qplib_chip_ctx *cctx)
+ 		cctx->chip_num == CHIP_NUM_57502);
+ }
+ 
++static inline bool bnxt_qplib_is_chip_gen_p5_p7(struct bnxt_qplib_chip_ctx *cctx)
++{
++	return bnxt_qplib_is_chip_gen_p5(cctx) || bnxt_qplib_is_chip_gen_p7(cctx);
++}
++
+ static inline u8 bnxt_qplib_get_hwq_type(struct bnxt_qplib_res *res)
+ {
+-	return bnxt_qplib_is_chip_gen_p5(res->cctx) ?
++	return bnxt_qplib_is_chip_gen_p5_p7(res->cctx) ?
+ 					HWQ_TYPE_QUEUE : HWQ_TYPE_L2_CMPL;
+ }
+ 
+ static inline u8 bnxt_qplib_get_ring_type(struct bnxt_qplib_chip_ctx *cctx)
+ {
+-	return bnxt_qplib_is_chip_gen_p5(cctx) ?
++	return bnxt_qplib_is_chip_gen_p5_p7(cctx) ?
+ 	       RING_ALLOC_REQ_RING_TYPE_NQ :
+ 	       RING_ALLOC_REQ_RING_TYPE_ROCE_CMPL;
+ }
+@@ -488,7 +502,7 @@ static inline void bnxt_qplib_ring_nq_db(struct bnxt_qplib_db_info *info,
+ 	u32 type;
+ 
+ 	type = arm ? DBC_DBC_TYPE_NQ_ARM : DBC_DBC_TYPE_NQ;
+-	if (bnxt_qplib_is_chip_gen_p5(cctx))
++	if (bnxt_qplib_is_chip_gen_p5_p7(cctx))
+ 		bnxt_qplib_ring_db(info, type);
+ 	else
+ 		bnxt_qplib_ring_db32(info, arm);
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+index a27b685151647..c580bf78d4c13 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+@@ -59,7 +59,7 @@ static bool bnxt_qplib_is_atomic_cap(struct bnxt_qplib_rcfw *rcfw)
+ {
+ 	u16 pcie_ctl2 = 0;
+ 
+-	if (!bnxt_qplib_is_chip_gen_p5(rcfw->res->cctx))
++	if (!bnxt_qplib_is_chip_gen_p5_p7(rcfw->res->cctx))
+ 		return false;
+ 
+ 	pcie_capability_read_word(rcfw->pdev, PCI_EXP_DEVCTL2, &pcie_ctl2);
+@@ -133,7 +133,7 @@ int bnxt_qplib_get_dev_attr(struct bnxt_qplib_rcfw *rcfw,
+ 	 * reporting the max number
+ 	 */
+ 	attr->max_qp_wqes -= BNXT_QPLIB_RESERVED_QP_WRS + 1;
+-	attr->max_qp_sges = bnxt_qplib_is_chip_gen_p5(rcfw->res->cctx) ?
++	attr->max_qp_sges = bnxt_qplib_is_chip_gen_p5_p7(rcfw->res->cctx) ?
+ 			    6 : sb->max_sge;
+ 	attr->max_cq = le32_to_cpu(sb->max_cq);
+ 	attr->max_cq_wqes = le32_to_cpu(sb->max_cqe);
+@@ -934,7 +934,7 @@ int bnxt_qplib_modify_cc(struct bnxt_qplib_res *res,
+ 	req->inactivity_th = cpu_to_le16(cc_param->inact_th);
+ 
+ 	/* For chip gen P5 onwards fill extended cmd and header */
+-	if (bnxt_qplib_is_chip_gen_p5(res->cctx)) {
++	if (bnxt_qplib_is_chip_gen_p5_p7(res->cctx)) {
+ 		struct roce_tlv *hdr;
+ 		u32 payload;
+ 		u32 chunks;
 -- 
 2.43.0
 
