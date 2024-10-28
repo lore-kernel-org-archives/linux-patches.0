@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C2C18E778;
-	Mon, 28 Oct 2024 06:34:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B2019048F;
+	Mon, 28 Oct 2024 06:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097284; cv=none; b=SuaKWC2Bieux2bDAuUzfzFAWWy9b/Gi3l1cLbFtlVIgIvzPTijdkD3jn+B8Dev0F79omkL4WBNMUgwIQK8icyPYYjhDVFKLi2YtADSujptTRdrxzaZqeuC3SfXqOQx9ksKktAKSylGG56lRvkVtlJk4Nzj/1dvlbJG3b9y0CNgM=
+	t=1730097286; cv=none; b=jlJTsKqItUB8C7IM10RsXK0sb+tvOYTjSmvGtimnLGOTBY2v/Qt/zTDgyaN5VUNfhcpMAWmn12H6v201Syo69mo9nqlxPJV5bm+OCe2VDjgYz6NZGDwNHMFM1spOn9747Bqt9KhoTGilFnbY5REKMIwzZqcEfQnE0jfLogjNpVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097284; c=relaxed/simple;
-	bh=JFCj0FQxO/I67ZlNjlT9LnZmt4ddTAk4b16pKiSpAwM=;
+	s=arc-20240116; t=1730097286; c=relaxed/simple;
+	bh=hpxTOt3YQ3IxwawnAJ4KCYYJD7a/HzNy5lgESytHT8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PQ/RweonUXCEmR4C+uFg+ypHVrwC6p8oTNM2ZxugTDnYLNgG7tGj8Qcul06cLKaCgEjiw1V3s3WmmFQeVXOzdOJHQLipcjFd2cDyyLwUy+wIoPQCk/5gvblibyWncOB+3LADHX8biCnzShdlmawfOXvRvyX+XrdHaaV6q5tfIHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/87lgH/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O2G7lX+8qlZyc5lIl8p7tNqGIOhseDxPxw5hlgai4yLNmz3vqEXEVIwCDbFFctYG/U9KZyYbjsmdRWRyxlCbv8KVT3qzUA+DNZj+I6P8g0bIWn988p/vKhk5m45uC//7HIumCj5VUD5Mi4glw3vMnVuO4tUSlgnJSjJiGRmtpHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDXxGf42; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/87lgH/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2B0C4CEC3;
-	Mon, 28 Oct 2024 06:34:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDXxGf42"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D28DC4CEC3;
+	Mon, 28 Oct 2024 06:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097284;
-	bh=JFCj0FQxO/I67ZlNjlT9LnZmt4ddTAk4b16pKiSpAwM=;
+	s=korg; t=1730097286;
+	bh=hpxTOt3YQ3IxwawnAJ4KCYYJD7a/HzNy5lgESytHT8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i/87lgH/2FbkZDvcfcXjwGm7qlSHNu2laV+RUsgiwpB6JJhySHZMQSO8l+XHRebEW
-	 Uj3mdxoUKWZ7RDwWlvE4B4c4YM+4qgn9mDtB2s9XN5pupACBTtIwmA9KjePB+EfFwl
-	 y0Ltr6kD0tkZ0JCdq58uyS4C9LBCUdu2KeP2xNWw=
+	b=NDXxGf42x5CYVrLhxBohrW+NWvtGUimBg0smzYmWdtiVd3rW8FMRRuFU/xILeYb7r
+	 3w1KLPhgtXG3iWK0iyh6+C//+mvgoLf0wk6FDQxz3Xmp7fCKIePB2NH3TpXySO4yly
+	 bkaVFdqAkH+xyhlXWxhaBnCFvZV0r3XGVZxsxjCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 027/137] net: usb: usbnet: fix race in probe failure
-Date: Mon, 28 Oct 2024 07:24:24 +0100
-Message-ID: <20241028062259.478996683@linuxfoundation.org>
+Subject: [PATCH 6.1 028/137] octeontx2-af: Fix potential integer overflows on integer shifts
+Date: Mon, 28 Oct 2024 07:24:25 +0100
+Message-ID: <20241028062259.510080245@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -51,35 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit b62f4c186c70aa235fef2da68d07325d85ca3ade ]
+[ Upstream commit 637c4f6fe40befa04f19c38b5d15429cbb9191d9 ]
 
-The same bug as in the disconnect code path also exists
-in the case of a failure late during the probe process.
-The flag must also be set.
+The left shift int 32 bit integer constants 1 is evaluated using 32 bit
+arithmetic and then assigned to a 64 bit unsigned integer. In the case
+where the shift is 32 or more this can lead to an overflow. Avoid this
+by shifting using the BIT_ULL macro instead.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://patch.msgid.link/20241010131934.1499695-1-oneukum@suse.com
+Fixes: 019aba04f08c ("octeontx2-af: Modify SMQ flush sequence to drop packets")
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20241010154519.768785-1-colin.i.king@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index bd0b807db751d..ce587a12b894c 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1869,6 +1869,7 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 	 * may trigger an error resubmitting itself and, worse,
- 	 * schedule a timer. So we kill it all just in case.
- 	 */
-+	usbnet_mark_going_away(dev);
- 	cancel_work_sync(&dev->kevent);
- 	del_timer_sync(&dev->delay);
- 	free_percpu(net->tstats);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+index 7ed0eb9bd4ed2..95a8ccd18a4f7 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
+@@ -2279,7 +2279,7 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
+ 				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link));
+ 		if (!(cfg & BIT_ULL(12)))
+ 			continue;
+-		bmap |= (1 << i);
++		bmap |= BIT_ULL(i);
+ 		cfg &= ~BIT_ULL(12);
+ 		rvu_write64(rvu, blkaddr,
+ 			    NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link), cfg);
+@@ -2300,7 +2300,7 @@ static int nix_smq_flush(struct rvu *rvu, int blkaddr,
+ 
+ 	/* Set NIX_AF_TL3_TL2_LINKX_CFG[ENA] for the TL3/TL2 queue */
+ 	for (i = 0; i < (rvu->hw->cgx_links + rvu->hw->lbk_links); i++) {
+-		if (!(bmap & (1 << i)))
++		if (!(bmap & BIT_ULL(i)))
+ 			continue;
+ 		cfg = rvu_read64(rvu, blkaddr,
+ 				 NIX_AF_TL3_TL2X_LINKX_CFG(tl2_tl3_link_schq, link));
 -- 
 2.43.0
 
