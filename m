@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248918837;
-	Mon, 28 Oct 2024 06:52:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE708837;
+	Mon, 28 Oct 2024 06:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098355; cv=none; b=U1fLPF96XfD32dPsYeefaJWMH99Kp6ieiqJVNCFm0GlhCLHBoNvkH+jb7++F7mliShbk5Zcxhbd2j77M7sraz0LxPVB+rHisInw0l5Z3/ZGJGY2JRlG74yET+O508Nj3sxnDpUb5+KDLIv5r7Nw0wddtUQbP0xfmKV7S5K4CbL8=
+	t=1730098358; cv=none; b=QBNL7CtNn3jKPKK4z7Ck25CasXUcmYc8LCd5O0xqh+GgGCw1gm/wA0RQ7FWZyUhMKGlCaC2ZvS3JZQOIn4cYzItbOsxGqzo4Q2yU7Sq4aRiLhTURzeOB/seDOJCMPZ+BeOnJRMGpufnNUbeRwdFPTSFuOS3v0LLYBU65HDHgy0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098355; c=relaxed/simple;
-	bh=CavhDw2DsEUv1+rqOA/jnhrRFkXYzoXjjzw/2gNATts=;
+	s=arc-20240116; t=1730098358; c=relaxed/simple;
+	bh=SoP9QrcbI2mTgZ8pUsH5Ejy1moyqJRvgtYDuuhbAkgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RzCBKbAOdN1+90DhkNmg/atTyiNXrksXIb+MS62OLRnyAqIwTkpGTBbamWbCq+ffjgUfCyzzDlxGMe5k5MKaz0ejoMCpCTx3RLcCuimhqkvX+TVTK4qS7MaIALSZS2jIGCPCKUDC0kFUHTjTRssmTbaUM21WAlRNgRiAsbtOOXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dY2iG28; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sxObQ7f0HDsyZii0bpyxQ/JFkG22/DZnsD1oLwr5EfoRJqfT68tdoMHpL/DVCYk63et4maRywl1mOjbBypj5ndiJKADj5RAMIZcOw3OMYnSwZZeg5DokeawJnJ6PuE7FUW3+6nKDW0Icog0eEY3VeokCCjaQFS+WW/GcyFuKbTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Se0q4Nu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dY2iG28"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822FCC4CECD;
-	Mon, 28 Oct 2024 06:52:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Se0q4Nu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34585C4CEC3;
+	Mon, 28 Oct 2024 06:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098355;
-	bh=CavhDw2DsEUv1+rqOA/jnhrRFkXYzoXjjzw/2gNATts=;
+	s=korg; t=1730098358;
+	bh=SoP9QrcbI2mTgZ8pUsH5Ejy1moyqJRvgtYDuuhbAkgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0dY2iG28Xi2a0w5sADRlzUUwQtsGEmsO+dIM/LflPJcaMHjKq2rmWHnBtSjx0F9b6
-	 hdsf9pBhfa112qKv2A6VBp6ffJsNEy/7hvPKvqQkzqhJzt6vJyXcn5YV2ZoSXJJVh8
-	 zDWTaEc6hxhuCLhdyg7xtpogiABGtCux0Zv9hP3g=
+	b=0Se0q4NuaHv2YkkNR/Q8Y76SWNmQLH7ATkQ1mGW/3s51+nzIjWSSoPwdMarp78raX
+	 8JjPIzDnuPJzrIRJfO05vsAyT3od7DRrJjClnWJ9yotaAsR+DfXOi11+gVBymyt4ki
+	 6LGDzvs8R/6ARoYbdzuin1UoV3mdpHbvG8Jrh62s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Shumilin <shum.sdl@nppct.ru>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 191/261] ALSA: firewire-lib: Avoid division by zero in apply_constraint_to_size()
-Date: Mon, 28 Oct 2024 07:25:33 +0100
-Message-ID: <20241028062316.811919009@linuxfoundation.org>
+Subject: [PATCH 6.11 192/261] fbdev: wm8505fb: select CONFIG_FB_IOMEM_FOPS
+Date: Mon, 28 Oct 2024 07:25:34 +0100
+Message-ID: <20241028062316.838444519@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,46 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Shumilin <shum.sdl@nppct.ru>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 72cafe63b35d06b5cfbaf807e90ae657907858da ]
+[ Upstream commit 51521d2e2c35959cc70a62ccddf694965e29c950 ]
 
-The step variable is initialized to zero. It is changed in the loop,
-but if it's not changed it will remain zero. Add a variable check
-before the division.
+The fb_io_mmap() function is used in the file operations but
+not enabled in all configurations unless FB_IOMEM_FOPS gets
+selected:
 
-The observed behavior was introduced by commit 826b5de90c0b
-("ALSA: firewire-lib: fix insufficient PCM rule for period/buffer size"),
-and it is difficult to show that any of the interval parameters will
-satisfy the snd_interval_test() condition with data from the
-amdtp_rate_table[] table.
+ld.lld-20: error: undefined symbol: fb_io_mmap
+   referenced by wm8505fb.c
+   drivers/video/fbdev/wm8505fb.o:(wm8505fb_ops) in archive vmlinux.a
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 826b5de90c0b ("ALSA: firewire-lib: fix insufficient PCM rule for period/buffer size")
-Signed-off-by: Andrey Shumilin <shum.sdl@nppct.ru>
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://patch.msgid.link/20241018060018.1189537-1-shum.sdl@nppct.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 11754a504608 ("fbdev/wm8505fb: Initialize fb_ops to fbdev I/O-memory helpers")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/firewire/amdtp-stream.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/video/fbdev/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/firewire/amdtp-stream.c b/sound/firewire/amdtp-stream.c
-index c827d7d8d8003..ea3a7d69f1c46 100644
---- a/sound/firewire/amdtp-stream.c
-+++ b/sound/firewire/amdtp-stream.c
-@@ -172,6 +172,9 @@ static int apply_constraint_to_size(struct snd_pcm_hw_params *params,
- 			step = max(step, amdtp_syt_intervals[i]);
- 	}
- 
-+	if (step == 0)
-+		return -EINVAL;
-+
- 	t.min = roundup(s->min, step);
- 	t.max = rounddown(s->max, step);
- 	t.integer = 1;
+diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
+index ea36c6956bf36..1af0ccf7967ab 100644
+--- a/drivers/video/fbdev/Kconfig
++++ b/drivers/video/fbdev/Kconfig
+@@ -1374,6 +1374,7 @@ config FB_VT8500
+ config FB_WM8505
+ 	bool "Wondermedia WM8xxx-series frame buffer support"
+ 	depends on (FB = y) && HAS_IOMEM && (ARCH_VT8500 || COMPILE_TEST)
++	select FB_IOMEM_FOPS
+ 	select FB_SYS_FILLRECT if (!FB_WMT_GE_ROPS)
+ 	select FB_SYS_COPYAREA if (!FB_WMT_GE_ROPS)
+ 	select FB_SYS_IMAGEBLIT
 -- 
 2.43.0
 
