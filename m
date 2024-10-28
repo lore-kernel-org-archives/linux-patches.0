@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC1D18E779;
-	Mon, 28 Oct 2024 06:43:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB3218EFD2;
+	Mon, 28 Oct 2024 06:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097837; cv=none; b=j6gU9jVlje2Z/E31XdrbKgntmyxOSW1q4pL4djtN+e95QxzC7C9/NE72Z1oFl4i8AP1iGyudJYyNMS6+Y7Z3Ulqkd629TAUdTUGZDni8HakARbfk1sUh5Z6NUXPzpqRXRWQP43I5L2DPZBQIvezxObP+vxqwZ7ne4k3e5qdQB6w=
+	t=1730097840; cv=none; b=ee0RFKLl5QVALlRzf0t2i1ktqLzahOrPaE2nGE6Se2eAiYCW4eh+cyBUokIwMSAPnN7qWkrS33ClcCdwJUwxTY2H06yEE8OneqRnj9VpJzOgBmw/zk7MH14Eq+kw6zpJnbOa2Fu+fHgO26mlPv57Llg4w0RiOpfCJrdT6rwIhVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097837; c=relaxed/simple;
-	bh=dBzZx1wITAc54GpB65+c6eQmygu1ya4I2/33tDtqdDo=;
+	s=arc-20240116; t=1730097840; c=relaxed/simple;
+	bh=SdYHPNP6hJEwuoCZ1yQxxaEH9ReiZ9s+JWYYFN0M0+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KS2F2okTvdf92Bd6IvL0GQXJx9BIOM+L4+x3jz4M3DkywFzmu5rY6/1t1NIMp3NzE3wLNAD94CMxqnXkbR5gndMcOydS6ILv8eYxyfLG/Mbq4NuWJnOWFtTS6reOBS9OM20lB9UdU3zafOCx4+AnRnkX+bg1Uqp4O5uNQYpkC4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnpM+k7m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R1L2WPXPyUmS0ifbMw+hcB7BuR+hPmQ0TmZXaX4hkL99Mqy5N7cW2+cdrl2j4ROHY4e+KH4SZ4kUFkthmXm6dE/aZ+IU8p0r0n2oOiMKdmOKYX+vx5ismH7qfsl9np/KLhdf5Zg7t1ZUgSOKSEyVKKjS1kDiRYz1pGw8vmcBJSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FK+ZFyyG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnpM+k7m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E25DC4CEE8;
-	Mon, 28 Oct 2024 06:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FK+ZFyyG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89062C4CEC3;
+	Mon, 28 Oct 2024 06:43:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097837;
-	bh=dBzZx1wITAc54GpB65+c6eQmygu1ya4I2/33tDtqdDo=;
+	s=korg; t=1730097839;
+	bh=SdYHPNP6hJEwuoCZ1yQxxaEH9ReiZ9s+JWYYFN0M0+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PnpM+k7mh8ZjrDlArbeJqM6zc6v62ld3GoFu+NN5o0DQuEumK63iyS0pNAhBoSqHg
-	 8CvFTACWjJZf/BYEHRVkLat6v6tchhl9H8b+dKauNFiYJqSKMPZmSPmwyEVBX56RfG
-	 zNYJA7MyuA6YJ57GMrhNqjKAGscZjCuSFtnR+QYA=
+	b=FK+ZFyyG8ulD8WiCZEozRWBjE7oepjb1H7i08CunuDkQYbB/qouvSCXsFkXdNBKlN
+	 dIcsNBjzZ61z60OHNfSB4i7Dkga3hbVdlGrUtEESrA6n43ELdLL31pIC4LBUzKIVBV
+	 EI1Oz3ShN7BYNrDz+Q1+wZzeHF78318HR/cfqDVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chancel Liu <chancel.liu@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 142/208] fsl/fman: Save device references taken in mac_probe()
-Date: Mon, 28 Oct 2024 07:25:22 +0100
-Message-ID: <20241028062310.130358813@linuxfoundation.org>
+Subject: [PATCH 6.6 169/208] ASoC: fsl_micfil: Add a flag to distinguish with different volume control types
+Date: Mon, 28 Oct 2024 07:25:49 +0100
+Message-ID: <20241028062310.792741459@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -51,89 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Chancel Liu <chancel.liu@nxp.com>
 
-[ Upstream commit efeddd552ec6767e4c8884caa516ac80b65f8823 ]
+[ Upstream commit da95e891dd5d5de6c5ebc010bd028a2e028de093 ]
 
-In mac_probe() there are calls to of_find_device_by_node() which takes
-references to of_dev->dev. These references are not saved and not released
-later on error path in mac_probe() and in mac_remove().
+On i.MX8MM the register of volume control has positive and negative
+values. It is different from other platforms like i.MX8MP and i.MX93
+which only have positive values. Add a volume_sx flag to use SX_TLV
+volume control for this kind of platform. Use common TLV volume control
+for other platforms.
 
-Add new fields into mac_device structure to save references taken for
-future use in mac_probe() and mac_remove().
-
-This is a preparation for further reference leaks fix.
-
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 1dec67e0d9fb ("fsl/fman: Fix refcount handling of fman-related devices")
+Fixes: cdfa92eb90f5 ("ASoC: fsl_micfil: Correct the number of steps on SX controls")
+Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Link: https://patch.msgid.link/20241017071507.2577786-1-chancel.liu@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fman/mac.c | 6 ++++--
- drivers/net/ethernet/freescale/fman/mac.h | 6 +++++-
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 43 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 42 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fman/mac.c b/drivers/net/ethernet/freescale/fman/mac.c
-index 9767586b4eb32..9b863db0bf087 100644
---- a/drivers/net/ethernet/freescale/fman/mac.c
-+++ b/drivers/net/ethernet/freescale/fman/mac.c
-@@ -197,6 +197,7 @@ static int mac_probe(struct platform_device *_of_dev)
- 		err = -EINVAL;
- 		goto _return_of_node_put;
- 	}
-+	mac_dev->fman_dev = &of_dev->dev;
- 
- 	/* Get the FMan cell-index */
- 	err = of_property_read_u32(dev_node, "cell-index", &val);
-@@ -208,7 +209,7 @@ static int mac_probe(struct platform_device *_of_dev)
- 	/* cell-index 0 => FMan id 1 */
- 	fman_id = (u8)(val + 1);
- 
--	priv->fman = fman_bind(&of_dev->dev);
-+	priv->fman = fman_bind(mac_dev->fman_dev);
- 	if (!priv->fman) {
- 		dev_err(dev, "fman_bind(%pOF) failed\n", dev_node);
- 		err = -ENODEV;
-@@ -284,8 +285,9 @@ static int mac_probe(struct platform_device *_of_dev)
- 			err = -EINVAL;
- 			goto _return_of_node_put;
- 		}
-+		mac_dev->fman_port_devs[i] = &of_dev->dev;
- 
--		mac_dev->port[i] = fman_port_bind(&of_dev->dev);
-+		mac_dev->port[i] = fman_port_bind(mac_dev->fman_port_devs[i]);
- 		if (!mac_dev->port[i]) {
- 			dev_err(dev, "dev_get_drvdata(%pOF) failed\n",
- 				dev_node);
-diff --git a/drivers/net/ethernet/freescale/fman/mac.h b/drivers/net/ethernet/freescale/fman/mac.h
-index fe747915cc737..8b5b43d50f8ef 100644
---- a/drivers/net/ethernet/freescale/fman/mac.h
-+++ b/drivers/net/ethernet/freescale/fman/mac.h
-@@ -19,12 +19,13 @@
- struct fman_mac;
- struct mac_priv_s;
- 
-+#define PORT_NUM 2
- struct mac_device {
- 	void __iomem		*vaddr;
- 	struct device		*dev;
- 	struct resource		*res;
- 	u8			 addr[ETH_ALEN];
--	struct fman_port	*port[2];
-+	struct fman_port	*port[PORT_NUM];
- 	struct phylink		*phylink;
- 	struct phylink_config	phylink_config;
- 	phy_interface_t		phy_if;
-@@ -52,6 +53,9 @@ struct mac_device {
- 
- 	struct fman_mac		*fman_mac;
- 	struct mac_priv_s	*priv;
-+
-+	struct device		*fman_dev;
-+	struct device		*fman_port_devs[PORT_NUM];
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index 0d37edb70261c..9407179af5d57 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -67,6 +67,7 @@ struct fsl_micfil_soc_data {
+ 	bool imx;
+ 	bool use_edma;
+ 	bool use_verid;
++	bool volume_sx;
+ 	u64  formats;
  };
  
- static inline struct mac_device
+@@ -76,6 +77,7 @@ static struct fsl_micfil_soc_data fsl_micfil_imx8mm = {
+ 	.fifo_depth = 8,
+ 	.dataline =  0xf,
+ 	.formats = SNDRV_PCM_FMTBIT_S16_LE,
++	.volume_sx = true,
+ };
+ 
+ static struct fsl_micfil_soc_data fsl_micfil_imx8mp = {
+@@ -84,6 +86,7 @@ static struct fsl_micfil_soc_data fsl_micfil_imx8mp = {
+ 	.fifo_depth = 32,
+ 	.dataline =  0xf,
+ 	.formats = SNDRV_PCM_FMTBIT_S32_LE,
++	.volume_sx = false,
+ };
+ 
+ static struct fsl_micfil_soc_data fsl_micfil_imx93 = {
+@@ -94,6 +97,7 @@ static struct fsl_micfil_soc_data fsl_micfil_imx93 = {
+ 	.formats = SNDRV_PCM_FMTBIT_S32_LE,
+ 	.use_edma = true,
+ 	.use_verid = true,
++	.volume_sx = false,
+ };
+ 
+ static const struct of_device_id fsl_micfil_dt_ids[] = {
+@@ -317,7 +321,26 @@ static int hwvad_detected(struct snd_kcontrol *kcontrol,
+ 	return 0;
+ }
+ 
+-static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
++static const struct snd_kcontrol_new fsl_micfil_volume_controls[] = {
++	SOC_SINGLE_TLV("CH0 Volume", REG_MICFIL_OUT_CTRL,
++		       MICFIL_OUTGAIN_CHX_SHIFT(0), 0xF, 0, gain_tlv),
++	SOC_SINGLE_TLV("CH1 Volume", REG_MICFIL_OUT_CTRL,
++		       MICFIL_OUTGAIN_CHX_SHIFT(1), 0xF, 0, gain_tlv),
++	SOC_SINGLE_TLV("CH2 Volume", REG_MICFIL_OUT_CTRL,
++		       MICFIL_OUTGAIN_CHX_SHIFT(2), 0xF, 0, gain_tlv),
++	SOC_SINGLE_TLV("CH3 Volume", REG_MICFIL_OUT_CTRL,
++		       MICFIL_OUTGAIN_CHX_SHIFT(3), 0xF, 0, gain_tlv),
++	SOC_SINGLE_TLV("CH4 Volume", REG_MICFIL_OUT_CTRL,
++		       MICFIL_OUTGAIN_CHX_SHIFT(4), 0xF, 0, gain_tlv),
++	SOC_SINGLE_TLV("CH5 Volume", REG_MICFIL_OUT_CTRL,
++		       MICFIL_OUTGAIN_CHX_SHIFT(5), 0xF, 0, gain_tlv),
++	SOC_SINGLE_TLV("CH6 Volume", REG_MICFIL_OUT_CTRL,
++		       MICFIL_OUTGAIN_CHX_SHIFT(6), 0xF, 0, gain_tlv),
++	SOC_SINGLE_TLV("CH7 Volume", REG_MICFIL_OUT_CTRL,
++		       MICFIL_OUTGAIN_CHX_SHIFT(7), 0xF, 0, gain_tlv),
++};
++
++static const struct snd_kcontrol_new fsl_micfil_volume_sx_controls[] = {
+ 	SOC_SINGLE_SX_TLV("CH0 Volume", REG_MICFIL_OUT_CTRL,
+ 			  MICFIL_OUTGAIN_CHX_SHIFT(0), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH1 Volume", REG_MICFIL_OUT_CTRL,
+@@ -334,6 +357,9 @@ static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
+ 			  MICFIL_OUTGAIN_CHX_SHIFT(6), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH7 Volume", REG_MICFIL_OUT_CTRL,
+ 			  MICFIL_OUTGAIN_CHX_SHIFT(7), 0x8, 0xF, gain_tlv),
++};
++
++static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
+ 	SOC_ENUM_EXT("MICFIL Quality Select",
+ 		     fsl_micfil_quality_enum,
+ 		     micfil_quality_get, micfil_quality_set),
+@@ -801,6 +827,20 @@ static int fsl_micfil_dai_probe(struct snd_soc_dai *cpu_dai)
+ 	return 0;
+ }
+ 
++static int fsl_micfil_component_probe(struct snd_soc_component *component)
++{
++	struct fsl_micfil *micfil = snd_soc_component_get_drvdata(component);
++
++	if (micfil->soc->volume_sx)
++		snd_soc_add_component_controls(component, fsl_micfil_volume_sx_controls,
++					       ARRAY_SIZE(fsl_micfil_volume_sx_controls));
++	else
++		snd_soc_add_component_controls(component, fsl_micfil_volume_controls,
++					       ARRAY_SIZE(fsl_micfil_volume_controls));
++
++	return 0;
++}
++
+ static const struct snd_soc_dai_ops fsl_micfil_dai_ops = {
+ 	.probe		= fsl_micfil_dai_probe,
+ 	.startup	= fsl_micfil_startup,
+@@ -821,6 +861,7 @@ static struct snd_soc_dai_driver fsl_micfil_dai = {
+ 
+ static const struct snd_soc_component_driver fsl_micfil_component = {
+ 	.name		= "fsl-micfil-dai",
++	.probe		= fsl_micfil_component_probe,
+ 	.controls       = fsl_micfil_snd_controls,
+ 	.num_controls   = ARRAY_SIZE(fsl_micfil_snd_controls),
+ 	.legacy_dai_naming      = 1,
 -- 
 2.43.0
 
