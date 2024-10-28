@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069C318FC75;
-	Mon, 28 Oct 2024 06:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3650218A922;
+	Mon, 28 Oct 2024 06:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097994; cv=none; b=MZedK+EK0WFumL7lipLWPEFks+USxp2D5yCpsyzaOQ6fCrcPRQ+iIQoHb+Tlzyqkkl0ttcj0kIh+ekWwVoJsPR4RFnHkVQ2jWijvEXmSGd9stie1thrqLDnjBpF6av9MipKXwKJckwtydvmxvAhiDkAOTbDV+JN2+u+DBL/iWKI=
+	t=1730097996; cv=none; b=JwPCmXs7FIt6w2IzzB72C/hLOImvMrU+eEL81D3MkEkG4gJo+ZghJe0iAOyMi3soJqiq1Xr8zq/wEVXyZGZUruguI9uMaMBtgBx29LvfXT52Sj96CM5gkxdifuPuPPu0Nvp2SGqsqWJ7mFD2X5cz1X6FK3rhzj/pOwmSDl1tRBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097994; c=relaxed/simple;
-	bh=Gx8C1yNPKMDCTUVIMjYgV2rDDEtfn9tsjEWhrCCiBE4=;
+	s=arc-20240116; t=1730097996; c=relaxed/simple;
+	bh=VHL+YW7Sddjn0RidKF+AlfNT8NoX0Mli4sRw8jjQe8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BgRY8MpD5rEmreoo2mGVs8SIUn4XXsY9KFyYq7RE9kuMa0dgb/cDGcvtmaqK1oSLIAoXC5YnStihdF3l0DFRxzHB/6qFTH8g7TxpElZwBg5WzSKf7pq9teaPYfKj8GXIIwrV9z9P2zEYSmH1up6AGzUzqy/w+xUwaQjLEUuU7MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExfMwItr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IPw1FZRBv7i9pFBXsTMQ8eumsRgmZLubYZCXCJEUUp5izpizXPfcB2/SKLBv0fUxm3X4jMXasT0jgmt5Six+AgKDh02PYBNzeWRrRSYEAm/Qv9kTuvjnvYFcfzCaW5aM7AvbRnPYQkZdtX6dU1pjzFFuVAApRJdPno3tB3E0L0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=la39pcXq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExfMwItr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9977AC4CECD;
-	Mon, 28 Oct 2024 06:46:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="la39pcXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6F1C4CEC3;
+	Mon, 28 Oct 2024 06:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097993;
-	bh=Gx8C1yNPKMDCTUVIMjYgV2rDDEtfn9tsjEWhrCCiBE4=;
+	s=korg; t=1730097996;
+	bh=VHL+YW7Sddjn0RidKF+AlfNT8NoX0Mli4sRw8jjQe8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ExfMwItrKdzSfqg0FlXl+kvpZLFGkpBweq3k0qnX8w++0BB1u8dW1X8oPrR9LgIZS
-	 y3cs1HYTS1ETdSxbyPRlFpn4bJGOo+JeGCNsPTNO/Pw0hTW5UhAyHSXg1nnCBNiRyG
-	 FGXcE7WyS47nO28OtPz6w2FqENzSeoxDDU4n+vP8=
+	b=la39pcXqFjWs8WholYsccyuzyS6R4r+Nls1DGM7PUV4AsDdYoArs+u5o6fgf9lBl0
+	 uAyMEqIXtO6ooRyQjxib8yXMcMGUozKlw8Tq1eMNRxxRjzUT0G8ol/vcJEXKeewZcz
+	 rWthYH57/LdEgdJ8OkWw6F/TJoHOTZvfO/A/xs2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Anumula Murali Mohan Reddy <anumula@chelsio.com>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 031/261] firmware: arm_scmi: Fix the double free in scmi_debugfs_common_setup()
-Date: Mon, 28 Oct 2024 07:22:53 +0100
-Message-ID: <20241028062312.793340338@linuxfoundation.org>
+Subject: [PATCH 6.11 032/261] RDMA/cxgb4: Fix RDMA_CM_EVENT_UNREACHABLE error for iWARP
+Date: Mon, 28 Oct 2024 07:22:54 +0100
+Message-ID: <20241028062312.817932922@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -46,52 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: Anumula Murali Mohan Reddy <anumula@chelsio.com>
 
-[ Upstream commit 39b13dce1a91cdfc3bec9238f9e89094551bd428 ]
+[ Upstream commit c659b405b82ead335bee6eb33f9691bf718e21e8 ]
 
-Clang static checker(scan-build) throws below warning：
-  |  drivers/firmware/arm_scmi/driver.c:line 2915, column 2
-  |        Attempt to free released memory.
+ip_dev_find() always returns real net_device address, whether traffic is
+running on a vlan or real device, if traffic is over vlan, filling
+endpoint struture with real ndev and an attempt to send a connect request
+will results in RDMA_CM_EVENT_UNREACHABLE error.  This patch fixes the
+issue by using vlan_dev_real_dev().
 
-When devm_add_action_or_reset() fails, scmi_debugfs_common_cleanup()
-will run twice which causes double free of 'dbg->name'.
-
-Remove the redundant scmi_debugfs_common_cleanup() to fix this problem.
-
-Fixes: c3d4aed763ce ("firmware: arm_scmi: Populate a common SCMI debugfs root")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-Message-Id: <20241011104001.1546476-1-suhui@nfschina.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: 830662f6f032 ("RDMA/cxgb4: Add support for active and passive open connection with IPv6 address")
+Link: https://patch.msgid.link/r/20241007132311.70593-1-anumula@chelsio.com
+Signed-off-by: Anumula Murali Mohan Reddy <anumula@chelsio.com>
+Signed-off-by: Potnuri Bharat Teja <bharat@chelsio.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/infiniband/hw/cxgb4/cm.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 6b6957f4743fe..dc09f2d755f41 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -2902,10 +2902,8 @@ static struct scmi_debug_info *scmi_debugfs_common_setup(struct scmi_info *info)
- 	dbg->top_dentry = top_dentry;
- 
- 	if (devm_add_action_or_reset(info->dev,
--				     scmi_debugfs_common_cleanup, dbg)) {
--		scmi_debugfs_common_cleanup(dbg);
-+				     scmi_debugfs_common_cleanup, dbg))
- 		return NULL;
--	}
- 
- 	return dbg;
- }
+diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
+index b3757c6a0457a..8d753e6e0c719 100644
+--- a/drivers/infiniband/hw/cxgb4/cm.c
++++ b/drivers/infiniband/hw/cxgb4/cm.c
+@@ -2086,7 +2086,7 @@ static int import_ep(struct c4iw_ep *ep, int iptype, __u8 *peer_ip,
+ 	err = -ENOMEM;
+ 	if (n->dev->flags & IFF_LOOPBACK) {
+ 		if (iptype == 4)
+-			pdev = ip_dev_find(&init_net, *(__be32 *)peer_ip);
++			pdev = __ip_dev_find(&init_net, *(__be32 *)peer_ip, false);
+ 		else if (IS_ENABLED(CONFIG_IPV6))
+ 			for_each_netdev(&init_net, pdev) {
+ 				if (ipv6_chk_addr(&init_net,
+@@ -2101,12 +2101,12 @@ static int import_ep(struct c4iw_ep *ep, int iptype, __u8 *peer_ip,
+ 			err = -ENODEV;
+ 			goto out;
+ 		}
++		if (is_vlan_dev(pdev))
++			pdev = vlan_dev_real_dev(pdev);
+ 		ep->l2t = cxgb4_l2t_get(cdev->rdev.lldi.l2t,
+ 					n, pdev, rt_tos2priority(tos));
+-		if (!ep->l2t) {
+-			dev_put(pdev);
++		if (!ep->l2t)
+ 			goto out;
+-		}
+ 		ep->mtu = pdev->mtu;
+ 		ep->tx_chan = cxgb4_port_chan(pdev);
+ 		ep->smac_idx = ((struct port_info *)netdev_priv(pdev))->smt_idx;
+@@ -2119,7 +2119,6 @@ static int import_ep(struct c4iw_ep *ep, int iptype, __u8 *peer_ip,
+ 		ep->rss_qid = cdev->rdev.lldi.rxq_ids[
+ 			cxgb4_port_idx(pdev) * step];
+ 		set_tcp_window(ep, (struct port_info *)netdev_priv(pdev));
+-		dev_put(pdev);
+ 	} else {
+ 		pdev = get_real_dev(n->dev);
+ 		ep->l2t = cxgb4_l2t_get(cdev->rdev.lldi.l2t,
 -- 
 2.43.0
 
