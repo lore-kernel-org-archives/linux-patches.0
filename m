@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D3F18DF83;
-	Mon, 28 Oct 2024 06:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C57824A3;
+	Mon, 28 Oct 2024 06:54:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098467; cv=none; b=giFyC0DcDhOoLL8bPmVWJmLQEujxQFLpQ4xQzZvd//xMOrbpKy8jPAS7bETtjjPdtLwo51amkiPNwNXgs14gdqPhiatz3dk/OnjQBLU7V5WeooYeDmlgtlnTTkWtVFLDkl8Yf8aDFyhcUFOrzdrL1YuYPxmur1kIFAGz8GSW14U=
+	t=1730098469; cv=none; b=F0ifjcmSpSTtqDOmuYAhvqXXaWSv903RVELaIKhlGFwnBoQOkrkBGkHrHOGKWlvn5dcV1YfsTltDLaXkbOPFkiHeyVLcq9NXUw4ubf09x6eV9PDjiD0Ao2lADxabfTnpWGKfMmbAOKMS7L6IAm2nsh+DyFpZ2gpOVPn0rUdqAY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098467; c=relaxed/simple;
-	bh=6gWFOONaAKLA1kPpAhCur7BCD2y0Pfr65ow1hCGjxbM=;
+	s=arc-20240116; t=1730098469; c=relaxed/simple;
+	bh=N0TEKEpbDJ4QsO0llCz/MOg4wfffMVa4eqhJSmpgq3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NWftSy3Z/FCLj29s6gvrjHXdv64iBuOy1NlAWi6Eksdyebg26Tfc8MlkKM+0miGp0J4RrTpgOkU0iUU7viriz83M23WucFf8LTZzlmi1NFwvXde9dPDl6IhMe49ACKaSoeVcCxEFiB5qug3MlZzL1ghfbXXmw/Zsq7U1mBDVXu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Idwe++0i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UP+ZUV8zkHPbaCOStKBtQSCgSqJhoG+0SJ/EPV6xJtY7psKqm9qdIVGX6HHKDi6YK7sRV1RgEt3BzeqV3RnNeiqerYL855Z5Je1ObHs0GjGW6wqYzwIMD2T8V7ZhPQWqKX4knc3vZPr3lQ5o0uPcSrzzUp3zz8fV5oA08Tk7a9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0avPTYBO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Idwe++0i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E8FEC4CEC3;
-	Mon, 28 Oct 2024 06:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0avPTYBO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8541EC4CEC7;
+	Mon, 28 Oct 2024 06:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098466;
-	bh=6gWFOONaAKLA1kPpAhCur7BCD2y0Pfr65ow1hCGjxbM=;
+	s=korg; t=1730098468;
+	bh=N0TEKEpbDJ4QsO0llCz/MOg4wfffMVa4eqhJSmpgq3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Idwe++0iCrV5iHTSIR9LhTWOYY4IG76wPEQd3NgdIdKmt4Mdgu2yARbksiP7jdzAi
-	 R9rOBrxg47Lemifgm+Jn9KovjWEpoAnxylBYCq5mh8Xld1mR5U2Iu92Eg0FWlCCT1c
-	 xcxbgScOCe8L5GeGCADroC8gUmWZvu/fjJ6hHRE8=
+	b=0avPTYBOiPgClA00FYsVqAo29BbYgOrxojhbKMat4RuigCHy5TH9mLFgERV72i6/N
+	 Ej0rL5BOpb2TaAuWxG3JnSuFt03UEFHk4Ec1TAaXW1D5W4RFcxbnceuRPcMn2akGR0
+	 2EJfbIeJHrrLBLXLkBNRTyatu0H9LRYTp+AOtxW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.11 239/261] nfsd: fix race between laundromat and free_stateid
-Date: Mon, 28 Oct 2024 07:26:21 +0100
-Message-ID: <20241028062318.108190242@linuxfoundation.org>
+	Xinyu Zhang <xizhang@purestorage.com>,
+	Uday Shankar <ushankar@purestorage.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.11 240/261] block: fix sanity checks in blk_rq_map_user_bvec
+Date: Mon, 28 Oct 2024 07:26:22 +0100
+Message-ID: <20241028062318.131269016@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -50,194 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Xinyu Zhang <xizhang@purestorage.com>
 
-commit 8dd91e8d31febf4d9cca3ae1bb4771d33ae7ee5a upstream.
+commit 2ff949441802a8d076d9013c7761f63e8ae5a9bd upstream.
 
-There is a race between laundromat handling of revoked delegations
-and a client sending free_stateid operation. Laundromat thread
-finds that delegation has expired and needs to be revoked so it
-marks the delegation stid revoked and it puts it on a reaper list
-but then it unlock the state lock and the actual delegation revocation
-happens without the lock. Once the stid is marked revoked a racing
-free_stateid processing thread does the following (1) it calls
-list_del_init() which removes it from the reaper list and (2) frees
-the delegation stid structure. The laundromat thread ends up not
-calling the revoke_delegation() function for this particular delegation
-but that means it will no release the lock lease that exists on
-the file.
+blk_rq_map_user_bvec contains a check bytes + bv->bv_len > nr_iter which
+causes unnecessary failures in NVMe passthrough I/O, reproducible as
+follows:
 
-Now, a new open for this file comes in and ends up finding that
-lease list isn't empty and calls nfsd_breaker_owns_lease() which ends
-up trying to derefence a freed delegation stateid. Leading to the
-followint use-after-free KASAN warning:
+- register a 2 page, page-aligned buffer against a ring
+- use that buffer to do a 1 page io_uring NVMe passthrough read
 
-kernel: ==================================================================
-kernel: BUG: KASAN: slab-use-after-free in nfsd_breaker_owns_lease+0x140/0x160 [nfsd]
-kernel: Read of size 8 at addr ffff0000e73cd0c8 by task nfsd/6205
-kernel:
-kernel: CPU: 2 UID: 0 PID: 6205 Comm: nfsd Kdump: loaded Not tainted 6.11.0-rc7+ #9
-kernel: Hardware name: Apple Inc. Apple Virtualization Generic Platform, BIOS 2069.0.0.0.0 08/03/2024
-kernel: Call trace:
-kernel: dump_backtrace+0x98/0x120
-kernel: show_stack+0x1c/0x30
-kernel: dump_stack_lvl+0x80/0xe8
-kernel: print_address_description.constprop.0+0x84/0x390
-kernel: print_report+0xa4/0x268
-kernel: kasan_report+0xb4/0xf8
-kernel: __asan_report_load8_noabort+0x1c/0x28
-kernel: nfsd_breaker_owns_lease+0x140/0x160 [nfsd]
-kernel: nfsd_file_do_acquire+0xb3c/0x11d0 [nfsd]
-kernel: nfsd_file_acquire_opened+0x84/0x110 [nfsd]
-kernel: nfs4_get_vfs_file+0x634/0x958 [nfsd]
-kernel: nfsd4_process_open2+0xa40/0x1a40 [nfsd]
-kernel: nfsd4_open+0xa08/0xe80 [nfsd]
-kernel: nfsd4_proc_compound+0xb8c/0x2130 [nfsd]
-kernel: nfsd_dispatch+0x22c/0x718 [nfsd]
-kernel: svc_process_common+0x8e8/0x1960 [sunrpc]
-kernel: svc_process+0x3d4/0x7e0 [sunrpc]
-kernel: svc_handle_xprt+0x828/0xe10 [sunrpc]
-kernel: svc_recv+0x2cc/0x6a8 [sunrpc]
-kernel: nfsd+0x270/0x400 [nfsd]
-kernel: kthread+0x288/0x310
-kernel: ret_from_fork+0x10/0x20
+The second (i = 1) iteration of the loop in blk_rq_map_user_bvec will
+then have nr_iter == 1 page, bytes == 1 page, bv->bv_len == 1 page, so
+the check bytes + bv->bv_len > nr_iter will succeed, causing the I/O to
+fail. This failure is unnecessary, as when the check succeeds, it means
+we've checked the entire buffer that will be used by the request - i.e.
+blk_rq_map_user_bvec should complete successfully. Therefore, terminate
+the loop early and return successfully when the check bytes + bv->bv_len
+> nr_iter succeeds.
 
-This patch proposes a fixed that's based on adding 2 new additional
-stid's sc_status values that help coordinate between the laundromat
-and other operations (nfsd4_free_stateid() and nfsd4_delegreturn()).
+While we're at it, also remove the check that all segments in the bvec
+are single-page. While this seems to be true for all users of the
+function, it doesn't appear to be required anywhere downstream.
 
-First to make sure, that once the stid is marked revoked, it is not
-removed by the nfsd4_free_stateid(), the laundromat take a reference
-on the stateid. Then, coordinating whether the stid has been put
-on the cl_revoked list or we are processing FREE_STATEID and need to
-make sure to remove it from the list, each check that state and act
-accordingly. If laundromat has added to the cl_revoke list before
-the arrival of FREE_STATEID, then nfsd4_free_stateid() knows to remove
-it from the list. If nfsd4_free_stateid() finds that operations arrived
-before laundromat has placed it on cl_revoke list, it marks the state
-freed and then laundromat will no longer add it to the list.
-
-Also, for nfsd4_delegreturn() when looking for the specified stid,
-we need to access stid that are marked removed or freeable, it means
-the laundromat has started processing it but hasn't finished and this
-delegreturn needs to return nfserr_deleg_revoked and not
-nfserr_bad_stateid. The latter will not trigger a FREE_STATEID and the
-lack of it will leave this stid on the cl_revoked list indefinitely.
-
-Fixes: 2d4a532d385f ("nfsd: ensure that clp->cl_revoked list is protected by clp->cl_lock")
 CC: stable@vger.kernel.org
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Xinyu Zhang <xizhang@purestorage.com>
+Co-developed-by: Uday Shankar <ushankar@purestorage.com>
+Signed-off-by: Uday Shankar <ushankar@purestorage.com>
+Fixes: 37987547932c ("block: extend functionality to map bvec iterator")
+Link: https://lore.kernel.org/r/20241023211519.4177873-1-ushankar@purestorage.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |   48 ++++++++++++++++++++++++++++++++++++++++--------
- fs/nfsd/state.h     |    2 ++
- 2 files changed, 42 insertions(+), 8 deletions(-)
+ block/blk-map.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -1358,21 +1358,47 @@ static void destroy_delegation(struct nf
- 		destroy_unhashed_deleg(dp);
- }
+--- a/block/blk-map.c
++++ b/block/blk-map.c
+@@ -600,9 +600,7 @@ static int blk_rq_map_user_bvec(struct r
+ 		if (nsegs >= nr_segs || bytes > UINT_MAX - bv->bv_len)
+ 			goto put_bio;
+ 		if (bytes + bv->bv_len > nr_iter)
+-			goto put_bio;
+-		if (bv->bv_offset + bv->bv_len > PAGE_SIZE)
+-			goto put_bio;
++			break;
  
-+/**
-+ * revoke_delegation - perform nfs4 delegation structure cleanup
-+ * @dp: pointer to the delegation
-+ *
-+ * This function assumes that it's called either from the administrative
-+ * interface (nfsd4_revoke_states()) that's revoking a specific delegation
-+ * stateid or it's called from a laundromat thread (nfsd4_landromat()) that
-+ * determined that this specific state has expired and needs to be revoked
-+ * (both mark state with the appropriate stid sc_status mode). It is also
-+ * assumed that a reference was taken on the @dp state.
-+ *
-+ * If this function finds that the @dp state is SC_STATUS_FREED it means
-+ * that a FREE_STATEID operation for this stateid has been processed and
-+ * we can proceed to removing it from recalled list. However, if @dp state
-+ * isn't marked SC_STATUS_FREED, it means we need place it on the cl_revoked
-+ * list and wait for the FREE_STATEID to arrive from the client. At the same
-+ * time, we need to mark it as SC_STATUS_FREEABLE to indicate to the
-+ * nfsd4_free_stateid() function that this stateid has already been added
-+ * to the cl_revoked list and that nfsd4_free_stateid() is now responsible
-+ * for removing it from the list. Inspection of where the delegation state
-+ * in the revocation process is protected by the clp->cl_lock.
-+ */
- static void revoke_delegation(struct nfs4_delegation *dp)
- {
- 	struct nfs4_client *clp = dp->dl_stid.sc_client;
- 
- 	WARN_ON(!list_empty(&dp->dl_recall_lru));
-+	WARN_ON_ONCE(!(dp->dl_stid.sc_status &
-+		     (SC_STATUS_REVOKED | SC_STATUS_ADMIN_REVOKED)));
- 
- 	trace_nfsd_stid_revoke(&dp->dl_stid);
- 
--	if (dp->dl_stid.sc_status &
--	    (SC_STATUS_REVOKED | SC_STATUS_ADMIN_REVOKED)) {
--		spin_lock(&clp->cl_lock);
--		refcount_inc(&dp->dl_stid.sc_count);
--		list_add(&dp->dl_recall_lru, &clp->cl_revoked);
--		spin_unlock(&clp->cl_lock);
-+	spin_lock(&clp->cl_lock);
-+	if (dp->dl_stid.sc_status & SC_STATUS_FREED) {
-+		list_del_init(&dp->dl_recall_lru);
-+		goto out;
- 	}
-+	list_add(&dp->dl_recall_lru, &clp->cl_revoked);
-+	dp->dl_stid.sc_status |= SC_STATUS_FREEABLE;
-+out:
-+	spin_unlock(&clp->cl_lock);
- 	destroy_unhashed_deleg(dp);
- }
- 
-@@ -1781,6 +1807,7 @@ void nfsd4_revoke_states(struct net *net
- 					mutex_unlock(&stp->st_mutex);
- 					break;
- 				case SC_TYPE_DELEG:
-+					refcount_inc(&stid->sc_count);
- 					dp = delegstateid(stid);
- 					spin_lock(&state_lock);
- 					if (!unhash_delegation_locked(
-@@ -6544,6 +6571,7 @@ nfs4_laundromat(struct nfsd_net *nn)
- 		dp = list_entry (pos, struct nfs4_delegation, dl_recall_lru);
- 		if (!state_expired(&lt, dp->dl_time))
- 			break;
-+		refcount_inc(&dp->dl_stid.sc_count);
- 		unhash_delegation_locked(dp, SC_STATUS_REVOKED);
- 		list_add(&dp->dl_recall_lru, &reaplist);
- 	}
-@@ -7161,7 +7189,9 @@ nfsd4_free_stateid(struct svc_rqst *rqst
- 			s->sc_status |= SC_STATUS_CLOSED;
- 			spin_unlock(&s->sc_lock);
- 			dp = delegstateid(s);
--			list_del_init(&dp->dl_recall_lru);
-+			if (s->sc_status & SC_STATUS_FREEABLE)
-+				list_del_init(&dp->dl_recall_lru);
-+			s->sc_status |= SC_STATUS_FREED;
- 			spin_unlock(&cl->cl_lock);
- 			nfs4_put_stid(s);
- 			ret = nfs_ok;
-@@ -7491,7 +7521,9 @@ nfsd4_delegreturn(struct svc_rqst *rqstp
- 	if ((status = fh_verify(rqstp, &cstate->current_fh, S_IFREG, 0)))
- 		return status;
- 
--	status = nfsd4_lookup_stateid(cstate, stateid, SC_TYPE_DELEG, 0, &s, nn);
-+	status = nfsd4_lookup_stateid(cstate, stateid, SC_TYPE_DELEG,
-+				      SC_STATUS_REVOKED | SC_STATUS_FREEABLE,
-+				      &s, nn);
- 	if (status)
- 		goto out;
- 	dp = delegstateid(s);
---- a/fs/nfsd/state.h
-+++ b/fs/nfsd/state.h
-@@ -113,6 +113,8 @@ struct nfs4_stid {
- /* For a deleg stateid kept around only to process free_stateid's: */
- #define SC_STATUS_REVOKED	BIT(1)
- #define SC_STATUS_ADMIN_REVOKED	BIT(2)
-+#define SC_STATUS_FREEABLE	BIT(3)
-+#define SC_STATUS_FREED		BIT(4)
- 	unsigned short		sc_status;
- 
- 	struct list_head	sc_cp_list;
+ 		nsegs++;
+ 		bytes += bv->bv_len;
 
 
