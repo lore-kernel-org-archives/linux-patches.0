@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3008837;
-	Mon, 28 Oct 2024 06:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5668837;
+	Mon, 28 Oct 2024 06:52:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098377; cv=none; b=JseSHfDs8JiGX6BPNKDteN5k1ClFAqbTqEwVHaUtAc4OOOcsIbOoV6ekn/5YqTzXQel8hfXRVmzakTlfK8GDZas6fLoJAYAaQAOx655SBWWafO7ix8X6aG3NphDE7UfRUpInmbjGKuEq4nszEVnbqRfBZ0FsuurKh3nD0s+9oxg=
+	t=1730098379; cv=none; b=NfTur7M94R6wzt/8P41AXgTWcs4yhI/hYlAjnxRQ5uRB3Nd5CgExS5S0Qo0tQ1kAZ86BNiF4v6QEDEW9Z22SLXfgeMTGOH91RDdxAfvukHLdVGQUNq12IzqkhhkAxweWPkJqhc8VUzfFZVKviKtxZBDlcE3nDLHmZfadZ4t2gJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098377; c=relaxed/simple;
-	bh=Y62o9pfJPSvZgrFzX7ECjpcUbZsHI68zBMODjN9x/Qs=;
+	s=arc-20240116; t=1730098379; c=relaxed/simple;
+	bh=R5RNW7JZoxAIrVvyiweZaq4448vKRxAtGIOgT+TnRj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pp8HxKHwd2Isv6KG906+uGtfVa9AsUNj43sJXyIpf6OARL70JaK2km4ogWjK5NcUGfWQKeQzt05t47ezXitBofylnVvnxMNFft5PC05amXhoOT2ltlfrBNKJ2XPX5bLSftwfFjX1Vf8NUQCSyLcxCcjGs7rMIMpl9DCZlwO/LgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snpL/4Ul; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nrDDm8egG2tAs0hp8UESQtOYNzzHoVHeYjgFqBFwizp8sbgHEf86xuC9A0S9N8UbpS5jmHWwU+IU+ZhjoQYJFCaVunZ9+PrETAf5zjCxmbCYhvAEKXues3Tl8zA1w0GBXze6kNx3K39f/9XxmlL8+iz2b2c9v8JsNa2krnxSEbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khpLoq/y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snpL/4Ul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D830C4CEC3;
-	Mon, 28 Oct 2024 06:52:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khpLoq/y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B641FC4CEC3;
+	Mon, 28 Oct 2024 06:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098376;
-	bh=Y62o9pfJPSvZgrFzX7ECjpcUbZsHI68zBMODjN9x/Qs=;
+	s=korg; t=1730098379;
+	bh=R5RNW7JZoxAIrVvyiweZaq4448vKRxAtGIOgT+TnRj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=snpL/4UlyYn0re+9i2ljbbon9CIb6+3XO5oyfZFpu2SWrjNgrYXbImuS1SkXCYFsz
-	 7aw8kepXnZy95QCcdXao3ui6YMC1w1rGZUTMvGvB25K0/6GaNTbSU68XXOFfUIFDBv
-	 O54OKK7M2pJR4Rj7VCHsqJshC0gNyDclXLo0uIN0=
+	b=khpLoq/yNCXNX1QUtg8fcMODD8gHWiJGsHTgjIKODScUJyAUw0kYIhQlp5LS783+R
+	 j18zlHyCS30YibzNCTV83e7zGnsDDeShm03qAouUNBJqAkU9ir1ACM1M/nKacvLH4m
+	 aOT1pnlyPp+swnNilJ0Hm97kzL2vnSMyp2cabd2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	liwei <liwei728@huawei.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 199/261] PCI/pwrctl: Abandon QCom WCN probe on pre-pwrseq device-trees
-Date: Mon, 28 Oct 2024 07:25:41 +0100
-Message-ID: <20241028062317.036492406@linuxfoundation.org>
+Subject: [PATCH 6.11 200/261] cpufreq: CPPC: fix perf_to_khz/khz_to_perf conversion exception
+Date: Mon, 28 Oct 2024 07:25:42 +0100
+Message-ID: <20241028062317.063213821@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,142 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: liwei <liwei728@huawei.com>
 
-[ Upstream commit ad783b9f8e78572fff3b04b6caee7bea3821eea8 ]
+[ Upstream commit d93df29bdab133b85e94b3c328e7fe26a0ebd56c ]
 
-Old device trees for some platforms already define wifi nodes for the WCN
-family of chips since before power sequencing was added upstream.
+When the nominal_freq recorded by the kernel is equal to the lowest_freq,
+and the frequency adjustment operation is triggered externally, there is
+a logic error in cppc_perf_to_khz()/cppc_khz_to_perf(), resulting in perf
+and khz conversion errors.
 
-These nodes don't consume the regulator outputs from the PMU, and if we
-allow this driver to bind to one of such "incomplete" nodes, we'll see a
-kernel log error about the infinite probe deferral.
+Fix this by adding a branch processing logic when nominal_freq is equal
+to lowest_freq.
 
-Extend the driver by adding a platform data struct matched against the
-compatible. This struct contains the pwrseq target string as well as a
-validation function called right after entering probe().
-
-For Qualcomm WCN models, check the existence of the regulator supply
-property that indicates the DT is already using power sequencing and return
--ENODEV if it's not there, indicating to the driver model that the device
-should not be bound to the pwrctl driver.
-
-Link: https://lore.kernel.org/r/20241007092447.18616-1-brgl@bgdev.pl
-Fixes: 6140d185a43d ("PCI/pwrctl: Add a PCI power control driver for power sequenced devices")
-Reported-by: Johan Hovold <johan@kernel.org>
-Closes: https://lore.kernel.org/all/Zv565olMDDGHyYVt@hovoldconsulting.com/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: ec1c7ad47664 ("cpufreq: CPPC: Fix performance/frequency conversion")
+Signed-off-by: liwei <liwei728@huawei.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://patch.msgid.link/20241024022952.2627694-1-liwei728@huawei.com
+[ rjw: Subject and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pwrctl/pci-pwrctl-pwrseq.c | 55 +++++++++++++++++++++++---
- 1 file changed, 50 insertions(+), 5 deletions(-)
+ drivers/acpi/cppc_acpi.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/pwrctl/pci-pwrctl-pwrseq.c b/drivers/pci/pwrctl/pci-pwrctl-pwrseq.c
-index a23a4312574b9..0e6bd47671c2e 100644
---- a/drivers/pci/pwrctl/pci-pwrctl-pwrseq.c
-+++ b/drivers/pci/pwrctl/pci-pwrctl-pwrseq.c
-@@ -6,9 +6,9 @@
- #include <linux/device.h>
- #include <linux/mod_devicetable.h>
- #include <linux/module.h>
--#include <linux/of.h>
- #include <linux/pci-pwrctl.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/pwrseq/consumer.h>
- #include <linux/slab.h>
- #include <linux/types.h>
-@@ -18,6 +18,40 @@ struct pci_pwrctl_pwrseq_data {
- 	struct pwrseq_desc *pwrseq;
- };
+diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
+index 5b06e236aabef..ed91dfd4fdca7 100644
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -1916,9 +1916,15 @@ unsigned int cppc_perf_to_khz(struct cppc_perf_caps *caps, unsigned int perf)
+ 	u64 mul, div;
  
-+struct pci_pwrctl_pwrseq_pdata {
-+	const char *target;
-+	/*
-+	 * Called before doing anything else to perform device-specific
-+	 * verification between requesting the power sequencing handle.
-+	 */
-+	int (*validate_device)(struct device *dev);
-+};
-+
-+static int pci_pwrctl_pwrseq_qcm_wcn_validate_device(struct device *dev)
-+{
-+	/*
-+	 * Old device trees for some platforms already define wifi nodes for
-+	 * the WCN family of chips since before power sequencing was added
-+	 * upstream.
-+	 *
-+	 * These nodes don't consume the regulator outputs from the PMU, and
-+	 * if we allow this driver to bind to one of such "incomplete" nodes,
-+	 * we'll see a kernel log error about the indefinite probe deferral.
-+	 *
-+	 * Check the existence of the regulator supply that exists on all
-+	 * WCN models before moving forward.
-+	 */
-+	if (!device_property_present(dev, "vddaon-supply"))
-+		return -ENODEV;
-+
-+	return 0;
-+}
-+
-+static const struct pci_pwrctl_pwrseq_pdata pci_pwrctl_pwrseq_qcom_wcn_pdata = {
-+	.target = "wlan",
-+	.validate_device = pci_pwrctl_pwrseq_qcm_wcn_validate_device,
-+};
-+
- static void devm_pci_pwrctl_pwrseq_power_off(void *data)
+ 	if (caps->lowest_freq && caps->nominal_freq) {
+-		mul = caps->nominal_freq - caps->lowest_freq;
++		/* Avoid special case when nominal_freq is equal to lowest_freq */
++		if (caps->lowest_freq == caps->nominal_freq) {
++			mul = caps->nominal_freq;
++			div = caps->nominal_perf;
++		} else {
++			mul = caps->nominal_freq - caps->lowest_freq;
++			div = caps->nominal_perf - caps->lowest_perf;
++		}
+ 		mul *= KHZ_PER_MHZ;
+-		div = caps->nominal_perf - caps->lowest_perf;
+ 		offset = caps->nominal_freq * KHZ_PER_MHZ -
+ 			 div64_u64(caps->nominal_perf * mul, div);
+ 	} else {
+@@ -1939,11 +1945,17 @@ unsigned int cppc_khz_to_perf(struct cppc_perf_caps *caps, unsigned int freq)
  {
- 	struct pwrseq_desc *pwrseq = data;
-@@ -27,15 +61,26 @@ static void devm_pci_pwrctl_pwrseq_power_off(void *data)
+ 	s64 retval, offset = 0;
+ 	static u64 max_khz;
+-	u64  mul, div;
++	u64 mul, div;
  
- static int pci_pwrctl_pwrseq_probe(struct platform_device *pdev)
- {
-+	const struct pci_pwrctl_pwrseq_pdata *pdata;
- 	struct pci_pwrctl_pwrseq_data *data;
- 	struct device *dev = &pdev->dev;
- 	int ret;
- 
-+	pdata = device_get_match_data(dev);
-+	if (!pdata || !pdata->target)
-+		return -EINVAL;
-+
-+	if (pdata->validate_device) {
-+		ret = pdata->validate_device(dev);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
- 	if (!data)
- 		return -ENOMEM;
- 
--	data->pwrseq = devm_pwrseq_get(dev, of_device_get_match_data(dev));
-+	data->pwrseq = devm_pwrseq_get(dev, pdata->target);
- 	if (IS_ERR(data->pwrseq))
- 		return dev_err_probe(dev, PTR_ERR(data->pwrseq),
- 				     "Failed to get the power sequencer\n");
-@@ -64,17 +109,17 @@ static const struct of_device_id pci_pwrctl_pwrseq_of_match[] = {
- 	{
- 		/* ATH11K in QCA6390 package. */
- 		.compatible = "pci17cb,1101",
--		.data = "wlan",
-+		.data = &pci_pwrctl_pwrseq_qcom_wcn_pdata,
- 	},
- 	{
- 		/* ATH11K in WCN6855 package. */
- 		.compatible = "pci17cb,1103",
--		.data = "wlan",
-+		.data = &pci_pwrctl_pwrseq_qcom_wcn_pdata,
- 	},
- 	{
- 		/* ATH12K in WCN7850 package. */
- 		.compatible = "pci17cb,1107",
--		.data = "wlan",
-+		.data = &pci_pwrctl_pwrseq_qcom_wcn_pdata,
- 	},
- 	{ }
- };
+ 	if (caps->lowest_freq && caps->nominal_freq) {
+-		mul = caps->nominal_perf - caps->lowest_perf;
+-		div = caps->nominal_freq - caps->lowest_freq;
++		/* Avoid special case when nominal_freq is equal to lowest_freq */
++		if (caps->lowest_freq == caps->nominal_freq) {
++			mul = caps->nominal_perf;
++			div = caps->nominal_freq;
++		} else {
++			mul = caps->nominal_perf - caps->lowest_perf;
++			div = caps->nominal_freq - caps->lowest_freq;
++		}
+ 		/*
+ 		 * We don't need to convert to kHz for computing offset and can
+ 		 * directly use nominal_freq and lowest_freq as the div64_u64
 -- 
 2.43.0
 
