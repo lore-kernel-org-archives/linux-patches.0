@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9619818C03D;
-	Mon, 28 Oct 2024 06:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB3F18EFD6;
+	Mon, 28 Oct 2024 06:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097503; cv=none; b=Tzo8APbUPIWUiCIbkz7TNaTjb4UqkZv03yBIZHhP/hxXzNvsix+SxJeU+3mOP0PW3+DQYPL3m8mEA+H7fBKRoGUj3xwyrvfK0HKzdR8iCjKFXjehM4WEHXidR7m0UYH18+ykmGzKVvEN6ZJPkt3l3Q66ORnogdnYR27dfOIh/hY=
+	t=1730097505; cv=none; b=l+m/bhg1QMTn2ETpWJTiege6Ui3bGFQUhetEuFhf2YJ2ZvCkW/pmwbtbh0HgGJ1++gvkKKiS0lU02ZC6JXNXy69XMljH87r5pjy1XT79kl1JYAsDpzQjeAx87EwIPEwmJzpoQErNyMiCyZAFo1dSTbXe6nreLf0bzn3m+wiF81k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097503; c=relaxed/simple;
-	bh=RKYaXSEx+jX3OvC89qVTy1f8SB43jMNheZraKgUqpw0=;
+	s=arc-20240116; t=1730097505; c=relaxed/simple;
+	bh=AM62Q4Qz+lfhLx1rjg8VP2GWseNUxhs38MOswTtJi3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sZiU8mG8kjJi+VKljdMXhaTnTaiR9sHtLnfMPxjT86MUZK8qW/W6Sj8qLA4K1BrquQSSr/LI7pHMx2nK24mX346syY2sNavn4TTZm/LmWuq2KHGkEomGuNQFgGJ+Az7px0Uj84Tb1obT55n/k+rhhbiCbCwGW+/ZrZCAoZg2mEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVcdMyAy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gO5jlAop/oIEkgUt5rLKcsoq43Mf1YeYky3GVgBweczpYdF1TfaSJQ+PcxQ0dY3DDL5OGXzC44uJA5tyV7rfASIHOJVc0wvJw9XedLGdMSQBA16jrU0GavpfE0oNt+bLa/+hSDxAysorQ8yVqSkgPN1oDl1rdp8gM84kIORpbzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtwTtgKW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVcdMyAy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372FCC4CEC3;
-	Mon, 28 Oct 2024 06:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtwTtgKW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BAA2C4CEC3;
+	Mon, 28 Oct 2024 06:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097503;
-	bh=RKYaXSEx+jX3OvC89qVTy1f8SB43jMNheZraKgUqpw0=;
+	s=korg; t=1730097505;
+	bh=AM62Q4Qz+lfhLx1rjg8VP2GWseNUxhs38MOswTtJi3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yVcdMyAyWpilA+Geoc+I+q5uVJtXXD/8/0AlytkKw/IfFjQrXMyB2yubVLmivH30V
-	 tW3QVU6XngAcxOucr4sWJRFs4F385CVvakOnas7SoZzHI/6KD0eoMKG2OgN8UPfOqr
-	 VrjjtMa8jhzWHqvqDZe+8Fr8DWmTn4LDCTMX+fuM=
+	b=mtwTtgKWDDTqVKp29AMpGyQW3oozEXaqqsY+5d9pRzeoEF4Usv2jn1oBaYE31WTDP
+	 dvc0JzCYokX3F+S/BUNlX7su9zkTNRksJU2GnidjQtI32HbjtX7wnQ0j4VFNpsunHr
+	 mz+kMD53BVFuITKKGAsr9FShTRi5CDdD2YadWEMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Florian Kauer <florian.kauer@linutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 003/208] bpf: devmap: provide rxq after redirect
-Date: Mon, 28 Oct 2024 07:23:03 +0100
-Message-ID: <20241028062306.737586768@linuxfoundation.org>
+Subject: [PATCH 6.6 004/208] cpufreq/amd-pstate: Fix amd_pstate mode switch on shared memory systems
+Date: Mon, 28 Oct 2024 07:23:04 +0100
+Message-ID: <20241028062306.761902710@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -47,158 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Kauer <florian.kauer@linutronix.de>
+From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
 
-[ Upstream commit ca9984c5f0ab3690d98b13937b2485a978c8dd73 ]
+[ Upstream commit c10e50a469b5ec91eabf653526a22bdce03a9bca ]
 
-rxq contains a pointer to the device from where
-the redirect happened. Currently, the BPF program
-that was executed after a redirect via BPF_MAP_TYPE_DEVMAP*
-does not have it set.
+While switching the driver mode between active and passive, Collaborative
+Processor Performance Control (CPPC) is disabled in
+amd_pstate_unregister_driver(). But, it is not enabled back while registering
+the new driver (passive or active). This leads to the new driver mode not
+working correctly, so enable it back in amd_pstate_register_driver().
 
-This is particularly bad since accessing ingress_ifindex, e.g.
-
-SEC("xdp")
-int prog(struct xdp_md *pkt)
-{
-        return bpf_redirect_map(&dev_redirect_map, 0, 0);
-}
-
-SEC("xdp/devmap")
-int prog_after_redirect(struct xdp_md *pkt)
-{
-        bpf_printk("ifindex %i", pkt->ingress_ifindex);
-        return XDP_PASS;
-}
-
-depends on access to rxq, so a NULL pointer gets dereferenced:
-
-<1>[  574.475170] BUG: kernel NULL pointer dereference, address: 0000000000000000
-<1>[  574.475188] #PF: supervisor read access in kernel mode
-<1>[  574.475194] #PF: error_code(0x0000) - not-present page
-<6>[  574.475199] PGD 0 P4D 0
-<4>[  574.475207] Oops: Oops: 0000 [#1] PREEMPT SMP NOPTI
-<4>[  574.475217] CPU: 4 UID: 0 PID: 217 Comm: kworker/4:1 Not tainted 6.11.0-rc5-reduced-00859-g780801200300 #23
-<4>[  574.475226] Hardware name: Intel(R) Client Systems NUC13ANHi7/NUC13ANBi7, BIOS ANRPL357.0026.2023.0314.1458 03/14/2023
-<4>[  574.475231] Workqueue: mld mld_ifc_work
-<4>[  574.475247] RIP: 0010:bpf_prog_5e13354d9cf5018a_prog_after_redirect+0x17/0x3c
-<4>[  574.475257] Code: cc cc cc cc cc cc cc 80 00 00 00 cc cc cc cc cc cc cc cc f3 0f 1e fa 0f 1f 44 00 00 66 90 55 48 89 e5 f3 0f 1e fa 48 8b 57 20 <48> 8b 52 00 8b 92 e0 00 00 00 48 bf f8 a6 d5 c4 5d a0 ff ff be 0b
-<4>[  574.475263] RSP: 0018:ffffa62440280c98 EFLAGS: 00010206
-<4>[  574.475269] RAX: ffffa62440280cd8 RBX: 0000000000000001 RCX: 0000000000000000
-<4>[  574.475274] RDX: 0000000000000000 RSI: ffffa62440549048 RDI: ffffa62440280ce0
-<4>[  574.475278] RBP: ffffa62440280c98 R08: 0000000000000002 R09: 0000000000000001
-<4>[  574.475281] R10: ffffa05dc8b98000 R11: ffffa05f577fca40 R12: ffffa05dcab24000
-<4>[  574.475285] R13: ffffa62440280ce0 R14: ffffa62440549048 R15: ffffa62440549000
-<4>[  574.475289] FS:  0000000000000000(0000) GS:ffffa05f4f700000(0000) knlGS:0000000000000000
-<4>[  574.475294] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-<4>[  574.475298] CR2: 0000000000000000 CR3: 000000025522e000 CR4: 0000000000f50ef0
-<4>[  574.475303] PKRU: 55555554
-<4>[  574.475306] Call Trace:
-<4>[  574.475313]  <IRQ>
-<4>[  574.475318]  ? __die+0x23/0x70
-<4>[  574.475329]  ? page_fault_oops+0x180/0x4c0
-<4>[  574.475339]  ? skb_pp_cow_data+0x34c/0x490
-<4>[  574.475346]  ? kmem_cache_free+0x257/0x280
-<4>[  574.475357]  ? exc_page_fault+0x67/0x150
-<4>[  574.475368]  ? asm_exc_page_fault+0x26/0x30
-<4>[  574.475381]  ? bpf_prog_5e13354d9cf5018a_prog_after_redirect+0x17/0x3c
-<4>[  574.475386]  bq_xmit_all+0x158/0x420
-<4>[  574.475397]  __dev_flush+0x30/0x90
-<4>[  574.475407]  veth_poll+0x216/0x250 [veth]
-<4>[  574.475421]  __napi_poll+0x28/0x1c0
-<4>[  574.475430]  net_rx_action+0x32d/0x3a0
-<4>[  574.475441]  handle_softirqs+0xcb/0x2c0
-<4>[  574.475451]  do_softirq+0x40/0x60
-<4>[  574.475458]  </IRQ>
-<4>[  574.475461]  <TASK>
-<4>[  574.475464]  __local_bh_enable_ip+0x66/0x70
-<4>[  574.475471]  __dev_queue_xmit+0x268/0xe40
-<4>[  574.475480]  ? selinux_ip_postroute+0x213/0x420
-<4>[  574.475491]  ? alloc_skb_with_frags+0x4a/0x1d0
-<4>[  574.475502]  ip6_finish_output2+0x2be/0x640
-<4>[  574.475512]  ? nf_hook_slow+0x42/0xf0
-<4>[  574.475521]  ip6_finish_output+0x194/0x300
-<4>[  574.475529]  ? __pfx_ip6_finish_output+0x10/0x10
-<4>[  574.475538]  mld_sendpack+0x17c/0x240
-<4>[  574.475548]  mld_ifc_work+0x192/0x410
-<4>[  574.475557]  process_one_work+0x15d/0x380
-<4>[  574.475566]  worker_thread+0x29d/0x3a0
-<4>[  574.475573]  ? __pfx_worker_thread+0x10/0x10
-<4>[  574.475580]  ? __pfx_worker_thread+0x10/0x10
-<4>[  574.475587]  kthread+0xcd/0x100
-<4>[  574.475597]  ? __pfx_kthread+0x10/0x10
-<4>[  574.475606]  ret_from_fork+0x31/0x50
-<4>[  574.475615]  ? __pfx_kthread+0x10/0x10
-<4>[  574.475623]  ret_from_fork_asm+0x1a/0x30
-<4>[  574.475635]  </TASK>
-<4>[  574.475637] Modules linked in: veth br_netfilter bridge stp llc iwlmvm x86_pkg_temp_thermal iwlwifi efivarfs nvme nvme_core
-<4>[  574.475662] CR2: 0000000000000000
-<4>[  574.475668] ---[ end trace 0000000000000000 ]---
-
-Therefore, provide it to the program by setting rxq properly.
-
-Fixes: cb261b594b41 ("bpf: Run devmap xdp_prog on flush instead of bulk enqueue")
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Florian Kauer <florian.kauer@linutronix.de>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/r/20240911-devel-koalo-fix-ingress-ifindex-v4-1-5c643ae10258@linutronix.de
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 3ca7bc818d8c ("cpufreq: amd-pstate: Add guided mode control support via sysfs")
+Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20241004122303.94283-1-Dhananjay.Ugwekar@amd.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/devmap.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
-index 69e78dc4bb18e..96b0345f76c2c 100644
---- a/kernel/bpf/devmap.c
-+++ b/kernel/bpf/devmap.c
-@@ -322,9 +322,11 @@ static int dev_map_hash_get_next_key(struct bpf_map *map, void *key,
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index f461f99eb040c..8c16d67b98bfe 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -1061,11 +1061,21 @@ static int amd_pstate_register_driver(int mode)
+ 		return -EINVAL;
  
- static int dev_map_bpf_prog_run(struct bpf_prog *xdp_prog,
- 				struct xdp_frame **frames, int n,
--				struct net_device *dev)
-+				struct net_device *tx_dev,
-+				struct net_device *rx_dev)
- {
--	struct xdp_txq_info txq = { .dev = dev };
-+	struct xdp_txq_info txq = { .dev = tx_dev };
-+	struct xdp_rxq_info rxq = { .dev = rx_dev };
- 	struct xdp_buff xdp;
- 	int i, nframes = 0;
- 
-@@ -335,6 +337,7 @@ static int dev_map_bpf_prog_run(struct bpf_prog *xdp_prog,
- 
- 		xdp_convert_frame_to_buff(xdpf, &xdp);
- 		xdp.txq = &txq;
-+		xdp.rxq = &rxq;
- 
- 		act = bpf_prog_run_xdp(xdp_prog, &xdp);
- 		switch (act) {
-@@ -349,7 +352,7 @@ static int dev_map_bpf_prog_run(struct bpf_prog *xdp_prog,
- 			bpf_warn_invalid_xdp_action(NULL, xdp_prog, act);
- 			fallthrough;
- 		case XDP_ABORTED:
--			trace_xdp_exception(dev, xdp_prog, act);
-+			trace_xdp_exception(tx_dev, xdp_prog, act);
- 			fallthrough;
- 		case XDP_DROP:
- 			xdp_return_frame_rx_napi(xdpf);
-@@ -377,7 +380,7 @@ static void bq_xmit_all(struct xdp_dev_bulk_queue *bq, u32 flags)
+ 	cppc_state = mode;
++
++	ret = amd_pstate_enable(true);
++	if (ret) {
++		pr_err("failed to enable cppc during amd-pstate driver registration, return %d\n",
++		       ret);
++		amd_pstate_driver_cleanup();
++		return ret;
++	}
++
+ 	ret = cpufreq_register_driver(current_pstate_driver);
+ 	if (ret) {
+ 		amd_pstate_driver_cleanup();
+ 		return ret;
  	}
++
+ 	return 0;
+ }
  
- 	if (bq->xdp_prog) {
--		to_send = dev_map_bpf_prog_run(bq->xdp_prog, bq->q, cnt, dev);
-+		to_send = dev_map_bpf_prog_run(bq->xdp_prog, bq->q, cnt, dev, bq->dev_rx);
- 		if (!to_send)
- 			goto out;
- 	}
 -- 
 2.43.0
 
