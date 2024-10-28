@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C218A18EFC8;
-	Mon, 28 Oct 2024 06:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB6B18E744;
+	Mon, 28 Oct 2024 06:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097398; cv=none; b=pSu8tL7Z2JT424YylnRpB4W+RAKkPv4fhxk2cumqmz9fIVlsZZZH9ryjQM2COmZMxKnqv32GMZ5rGCWWx+1WNC7fgUvqnbNmTY9UgqBN0tB6NQq29iLXGHcp8cEfv8q0X1UH405w7s/80n2cHlun0ONOU9LFxtq+j5k/nDkpUwU=
+	t=1730097400; cv=none; b=bly0dedPJKOkbuEK6PlU3lI5Ct9kZBvLpRp09LLVii67S7mifGEb2pBpWR1e7qPxnSDrRB2F6FYzM79appjdbvSh+wz4z8CcyBTva3T4zs6XeWviy3wx9+hPHbMWEaDRcpD8EBRbCGefHm8WrIXFRK5LqJfExf2AfNqRkISzgok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097398; c=relaxed/simple;
-	bh=8k8AAvvMdiGoDU6bz5QtfHPANWAilmrIJ56rSQrO8dg=;
+	s=arc-20240116; t=1730097400; c=relaxed/simple;
+	bh=qcoOVpAUIz0Eam5d4BSnw1O3RGaf1KtdjTLIWqmOMD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ksv3pyHlrxhas/GtXUm/QVK299dEDyQPZxL+g5lmmZv0NK7v0tlaJxMJtOSQ+DuHZTYukR1xqQpeoJaRjgvr4bRgPj57qJzPrGOX3djhcetE1Tui/i+WLek3XpoXE2LiHhS3GTTiqweH7tQm7OwTzbeWWZMEeLN6k8eh2517l9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmUV8kU3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B0/tEeqCZT41Ig9qKJJB7XYPuEkwzAxRZLOgpl9gx3wLcanwGUZszFH+25yX8x5+BbImGOVyI35yz9wJx3OieHgbVnHrLtIbNs0QqOh+fXArhIzDxZHBSGJxgWRIedj62Y7Nu647t0+nBNhdEcM2aRWgqqp3VW/DAjLQMptePPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=024QJC9J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmUV8kU3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F839C4CEC3;
-	Mon, 28 Oct 2024 06:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="024QJC9J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B91EC4CEC3;
+	Mon, 28 Oct 2024 06:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097398;
-	bh=8k8AAvvMdiGoDU6bz5QtfHPANWAilmrIJ56rSQrO8dg=;
+	s=korg; t=1730097400;
+	bh=qcoOVpAUIz0Eam5d4BSnw1O3RGaf1KtdjTLIWqmOMD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HmUV8kU30N0U2GSuHvYYWJYPhXzTFebCeQuGCW9ptKsY2cktTL8MMnumzyzpgkiGN
-	 r/29XiGGpfwkN1R/pdU5t+Xvzd7qQNFj6ZiUYd2utmnIe36b73gLbAjMHAbgeKEOVW
-	 Qre99yc/BRW2zS58yichY9edLLiHDXgRXkTM6358=
+	b=024QJC9J61S4ds73sVstybgWRHOHDZ7Tc5Jqv/+nRL2D3kY4kIK4e1s/Z/NRE0UoE
+	 HmMXGJYTdm9mBQf2sO8S3jgIVslHo/JRjZkS9p00dL+rja2tQ2nKasf2VniYcwpc3m
+	 WfE13qtbsw21G5fc8YLoE9SB1C1S//52YuIsYAw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	liwei <liwei728@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 114/137] cpufreq: CPPC: fix perf_to_khz/khz_to_perf conversion exception
-Date: Mon, 28 Oct 2024 07:25:51 +0100
-Message-ID: <20241028062301.897548374@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Yue Haibing <yuehaibing@huawei.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 115/137] btrfs: fix passing 0 to ERR_PTR in btrfs_search_dir_index_item()
+Date: Mon, 28 Oct 2024 07:25:52 +0100
+Message-ID: <20241028062301.924208050@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062258.708872330@linuxfoundation.org>
 References: <20241028062258.708872330@linuxfoundation.org>
@@ -52,74 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: liwei <liwei728@huawei.com>
+From: Yue Haibing <yuehaibing@huawei.com>
 
-[ Upstream commit d93df29bdab133b85e94b3c328e7fe26a0ebd56c ]
+commit 75f49c3dc7b7423d3734f2e4dabe3dac8d064338 upstream.
 
-When the nominal_freq recorded by the kernel is equal to the lowest_freq,
-and the frequency adjustment operation is triggered externally, there is
-a logic error in cppc_perf_to_khz()/cppc_khz_to_perf(), resulting in perf
-and khz conversion errors.
+The ret may be zero in btrfs_search_dir_index_item() and should not
+passed to ERR_PTR(). Now btrfs_unlink_subvol() is the only caller to
+this, reconstructed it to check ERR_PTR(-ENOENT) while ret >= 0.
 
-Fix this by adding a branch processing logic when nominal_freq is equal
-to lowest_freq.
+This fixes smatch warnings:
 
-Fixes: ec1c7ad47664 ("cpufreq: CPPC: Fix performance/frequency conversion")
-Signed-off-by: liwei <liwei728@huawei.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Link: https://patch.msgid.link/20241024022952.2627694-1-liwei728@huawei.com
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+fs/btrfs/dir-item.c:353
+  btrfs_search_dir_index_item() warn: passing zero to 'ERR_PTR'
+
+Fixes: 9dcbe16fccbb ("btrfs: use btrfs_for_each_slot in btrfs_search_dir_index_item")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/cppc_acpi.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ fs/btrfs/dir-item.c |    4 ++--
+ fs/btrfs/inode.c    |    7 ++-----
+ 2 files changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index 8d4b72488eb5e..3d9326172af49 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -1718,9 +1718,15 @@ unsigned int cppc_perf_to_khz(struct cppc_perf_caps *caps, unsigned int perf)
- 	u64 mul, div;
+--- a/fs/btrfs/dir-item.c
++++ b/fs/btrfs/dir-item.c
+@@ -341,8 +341,8 @@ btrfs_search_dir_index_item(struct btrfs
+ 			return di;
+ 	}
+ 	/* Adjust return code if the key was not found in the next leaf. */
+-	if (ret > 0)
+-		ret = 0;
++	if (ret >= 0)
++		ret = -ENOENT;
  
- 	if (caps->lowest_freq && caps->nominal_freq) {
--		mul = caps->nominal_freq - caps->lowest_freq;
-+		/* Avoid special case when nominal_freq is equal to lowest_freq */
-+		if (caps->lowest_freq == caps->nominal_freq) {
-+			mul = caps->nominal_freq;
-+			div = caps->nominal_perf;
-+		} else {
-+			mul = caps->nominal_freq - caps->lowest_freq;
-+			div = caps->nominal_perf - caps->lowest_perf;
-+		}
- 		mul *= KHZ_PER_MHZ;
--		div = caps->nominal_perf - caps->lowest_perf;
- 		offset = caps->nominal_freq * KHZ_PER_MHZ -
- 			 div64_u64(caps->nominal_perf * mul, div);
- 	} else {
-@@ -1741,11 +1747,17 @@ unsigned int cppc_khz_to_perf(struct cppc_perf_caps *caps, unsigned int freq)
- {
- 	s64 retval, offset = 0;
- 	static u64 max_khz;
--	u64  mul, div;
-+	u64 mul, div;
- 
- 	if (caps->lowest_freq && caps->nominal_freq) {
--		mul = caps->nominal_perf - caps->lowest_perf;
--		div = caps->nominal_freq - caps->lowest_freq;
-+		/* Avoid special case when nominal_freq is equal to lowest_freq */
-+		if (caps->lowest_freq == caps->nominal_freq) {
-+			mul = caps->nominal_perf;
-+			div = caps->nominal_freq;
-+		} else {
-+			mul = caps->nominal_perf - caps->lowest_perf;
-+			div = caps->nominal_freq - caps->lowest_freq;
-+		}
- 		/*
- 		 * We don't need to convert to kHz for computing offset and can
- 		 * directly use nominal_freq and lowest_freq as the div64_u64
--- 
-2.43.0
-
+ 	return ERR_PTR(ret);
+ }
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -4532,11 +4532,8 @@ static int btrfs_unlink_subvol(struct bt
+ 	 */
+ 	if (btrfs_ino(inode) == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID) {
+ 		di = btrfs_search_dir_index_item(root, path, dir_ino, &fname.disk_name);
+-		if (IS_ERR_OR_NULL(di)) {
+-			if (!di)
+-				ret = -ENOENT;
+-			else
+-				ret = PTR_ERR(di);
++		if (IS_ERR(di)) {
++			ret = PTR_ERR(di);
+ 			btrfs_abort_transaction(trans, ret);
+ 			goto out;
+ 		}
 
 
