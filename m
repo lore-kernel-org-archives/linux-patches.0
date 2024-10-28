@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E0818E03A;
-	Mon, 28 Oct 2024 06:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE5B15B10D;
+	Mon, 28 Oct 2024 06:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097703; cv=none; b=GTgXjfi+6tBp6KXNdNjf8TqjThqyA0+98dIjWZSCkH0Mo9YRad5nlb5Y33aHYtSQV0jD2+lm4rjSXKjplcisgBt973GoDPONK5ZtZz9ng7ZCc4LZ37cM9JMw3sb8NgIM22yDZaDc/9YrgtixIVJza32Hd3er6Z8BRxGx7Fn6BSI=
+	t=1730097705; cv=none; b=ZTFOClx+fA+LdkVPJGDHjYboB3a/SQmXozYdRgnohCCHf2blBeCjYkIdSN9s5HIcImWPO2LwxTO+kR2GNQJXeXMOFcKto9IpFe221yzFvGO9RKjxWbd3128HHEAUXs54KTec+hB+SzxoSY0hQbxv1KmI47ehjoRUlw/X1RUY4LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097703; c=relaxed/simple;
-	bh=h6WzeSPZBwmxJzKR4qYX6BoXvvGelif527fUMj3NjOM=;
+	s=arc-20240116; t=1730097705; c=relaxed/simple;
+	bh=gTO/Jxpat3+yd/v5HklZIi/RsrxW7hRMx0TYLo6kl28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BDSldrNYzLsDOWdCsWmufHaHXU+FVJIqx8EB9OLsA3Mg5JgeNLX77fPebc42368U/SDasgXNrTwzok6Hby1g5sWOfNjJSBEqiBvePt8maFX7yyYWeiCPFfk4DLlbX7kB18Ou4omHTd54y4wY5/L7bE66Z+ZQ28ol0hx42H4Q93k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=un/3B3zG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g8d3uS2b15GoVti/GiFpOH8osgnTJ7CAkFlf7CcOVFp9KvTysr5f0utAJd1hDXWGWMihCYuadP0Po3L/Tx6G2wglCTa4opPfdOghO262YLkDLMZ64k7ginkkbDSh5X7JnJuWlFhR7nIlGvAE9YnH2vo5079mAvhLiUEtXtrlkZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MqxAmQjR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="un/3B3zG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8A0C4CEC3;
-	Mon, 28 Oct 2024 06:41:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MqxAmQjR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB01C4CEC3;
+	Mon, 28 Oct 2024 06:41:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097703;
-	bh=h6WzeSPZBwmxJzKR4qYX6BoXvvGelif527fUMj3NjOM=;
+	s=korg; t=1730097705;
+	bh=gTO/Jxpat3+yd/v5HklZIi/RsrxW7hRMx0TYLo6kl28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=un/3B3zGT+ZiEKovTpr4MQcf1a7mBNh0GwkoT5BSzZQ43QPkTJ2uvBOJFrPckK080
-	 OvALkSqdJKBXRnn7u1vCdRiXh7TYeGpkxDWAdkrvq1LHOdZWGh+9YcPnuRQGcWH6Vs
-	 u0nB/Jc583t6astUQEXLY6iMO31GAUEDHEr7eJOY=
+	b=MqxAmQjRXFJUFNOvxxvILaNUHruBDngKB0rcZHgpYUMcUci784bSAWlEOHxMl32KS
+	 e521h1A0TvLJ3AHyP03j6DdPPrSCr0yyKQvG625udQV+MOzeHNO66jCJByxUKkbdRf
+	 4oMzP5L+Q0XUDGrzmzKZJWBNI23yF93k7avrrmEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 111/208] uprobes: prepare uprobe args buffer lazily
-Date: Mon, 28 Oct 2024 07:24:51 +0100
-Message-ID: <20241028062309.391594665@linuxfoundation.org>
+Subject: [PATCH 6.6 112/208] uprobes: prevent mutex_lock() under rcu_read_lock()
+Date: Mon, 28 Oct 2024 07:24:52 +0100
+Message-ID: <20241028062309.415389381@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062306.649733554@linuxfoundation.org>
 References: <20241028062306.649733554@linuxfoundation.org>
@@ -46,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -55,258 +54,127 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 1b8f85defbc82e2eb8f27c5f6060ea507ad4d5a3 ]
+[ Upstream commit 699646734ab51bf5b1cd4a7a30c20074f6e74f6e ]
 
-uprobe_cpu_buffer and corresponding logic to store uprobe args into it
-are used for uprobes/uretprobes that are created through tracefs or
-perf events.
+Recent changes made uprobe_cpu_buffer preparation lazy, and moved it
+deeper into __uprobe_trace_func(). This is problematic because
+__uprobe_trace_func() is called inside rcu_read_lock()/rcu_read_unlock()
+block, which then calls prepare_uprobe_buffer() -> uprobe_buffer_get() ->
+mutex_lock(&ucb->mutex), leading to a splat about using mutex under
+non-sleepable RCU:
 
-BPF is yet another user of uprobe/uretprobe infrastructure, but doesn't
-need uprobe_cpu_buffer and associated data. For BPF-only use cases this
-buffer handling and preparation is a pure overhead. At the same time,
-BPF-only uprobe/uretprobe usage is very common in practice. Also, for
-a lot of cases applications are very senstivie to performance overheads,
-as they might be tracing a very high frequency functions like
-malloc()/free(), so every bit of performance improvement matters.
+  BUG: sleeping function called from invalid context at kernel/locking/mutex.c:585
+   in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 98231, name: stress-ng-sigq
+   preempt_count: 0, expected: 0
+   RCU nest depth: 1, expected: 0
+   ...
+   Call Trace:
+    <TASK>
+    dump_stack_lvl+0x3d/0xe0
+    __might_resched+0x24c/0x270
+    ? prepare_uprobe_buffer+0xd5/0x1d0
+    __mutex_lock+0x41/0x820
+    ? ___perf_sw_event+0x206/0x290
+    ? __perf_event_task_sched_in+0x54/0x660
+    ? __perf_event_task_sched_in+0x54/0x660
+    prepare_uprobe_buffer+0xd5/0x1d0
+    __uprobe_trace_func+0x4a/0x140
+    uprobe_dispatcher+0x135/0x280
+    ? uprobe_dispatcher+0x94/0x280
+    uprobe_notify_resume+0x650/0xec0
+    ? atomic_notifier_call_chain+0x21/0x110
+    ? atomic_notifier_call_chain+0xf8/0x110
+    irqentry_exit_to_user_mode+0xe2/0x1e0
+    asm_exc_int3+0x35/0x40
+   RIP: 0033:0x7f7e1d4da390
+   Code: 33 04 00 0f 1f 80 00 00 00 00 f3 0f 1e fa b9 01 00 00 00 e9 b2 fc ff ff 66 90 f3 0f 1e fa 31 c9 e9 a5 fc ff ff 0f 1f 44 00 00 <cc> 0f 1e fa b8 27 00 00 00 0f 05 c3 0f 1f 40 00 f3 0f 1e fa b8 6e
+   RSP: 002b:00007ffd2abc3608 EFLAGS: 00000246
+   RAX: 0000000000000000 RBX: 0000000076d325f1 RCX: 0000000000000000
+   RDX: 0000000076d325f1 RSI: 000000000000000a RDI: 00007ffd2abc3690
+   RBP: 000000000000000a R08: 00017fb700000000 R09: 00017fb700000000
+   R10: 00017fb700000000 R11: 0000000000000246 R12: 0000000000017ff2
+   R13: 00007ffd2abc3610 R14: 0000000000000000 R15: 00007ffd2abc3780
+    </TASK>
 
-All that is to say that this uprobe_cpu_buffer preparation is an
-unnecessary overhead that each BPF user of uprobes/uretprobe has to pay.
-This patch is changing this by making uprobe_cpu_buffer preparation
-optional. It will happen only if either tracefs-based or perf event-based
-uprobe/uretprobe consumer is registered for given uprobe/uretprobe. For
-BPF-only use cases this step will be skipped.
+Luckily, it's easy to fix by moving prepare_uprobe_buffer() to be called
+slightly earlier: into uprobe_trace_func() and uretprobe_trace_func(), outside
+of RCU locked section. This still keeps this buffer preparation lazy and helps
+avoid the overhead when it's not needed. E.g., if there is only BPF uprobe
+handler installed on a given uprobe, buffer won't be initialized.
 
-We used uprobe/uretprobe benchmark which is part of BPF selftests (see [0])
-to estimate the improvements. We have 3 uprobe and 3 uretprobe
-scenarios, which vary an instruction that is replaced by uprobe: nop
-(fastest uprobe case), `push rbp` (typical case), and non-simulated
-`ret` instruction (slowest case). Benchmark thread is constantly calling
-user space function in a tight loop. User space function has attached
-BPF uprobe or uretprobe program doing nothing but atomic counter
-increments to count number of triggering calls. Benchmark emits
-throughput in millions of executions per second.
+Note, the other user of prepare_uprobe_buffer(), __uprobe_perf_func(), is not
+affected, as it doesn't prepare buffer under RCU read lock.
 
-BEFORE these changes
-====================
-uprobe-nop     :    2.657 ± 0.024M/s
-uprobe-push    :    2.499 ± 0.018M/s
-uprobe-ret     :    1.100 ± 0.006M/s
-uretprobe-nop  :    1.356 ± 0.004M/s
-uretprobe-push :    1.317 ± 0.019M/s
-uretprobe-ret  :    0.785 ± 0.007M/s
+Link: https://lore.kernel.org/all/20240521053017.3708530-1-andrii@kernel.org/
 
-AFTER these changes
-===================
-uprobe-nop     :    2.732 ± 0.022M/s (+2.8%)
-uprobe-push    :    2.621 ± 0.016M/s (+4.9%)
-uprobe-ret     :    1.105 ± 0.007M/s (+0.5%)
-uretprobe-nop  :    1.396 ± 0.007M/s (+2.9%)
-uretprobe-push :    1.347 ± 0.008M/s (+2.3%)
-uretprobe-ret  :    0.800 ± 0.006M/s (+1.9)
-
-So the improvements on this particular machine seems to be between 2% and 5%.
-
-  [0] https://github.com/torvalds/linux/blob/master/tools/testing/selftests/bpf/benchs/bench_trigger.c
-
-Reviewed-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/all/20240318181728.2795838-3-andrii@kernel.org/
-
+Fixes: 1b8f85defbc8 ("uprobes: prepare uprobe args buffer lazily")
+Reported-by: Breno Leitao <leitao@debian.org>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Stable-dep-of: 373b9338c972 ("uprobe: avoid out-of-bounds memory access of fetching args")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_uprobe.c | 49 +++++++++++++++++++++----------------
- 1 file changed, 28 insertions(+), 21 deletions(-)
+ kernel/trace/trace_uprobe.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/kernel/trace/trace_uprobe.c b/kernel/trace/trace_uprobe.c
-index 58506c9632eae..6c2ab0e316d6a 100644
+index 6c2ab0e316d6a..0d52588329b29 100644
 --- a/kernel/trace/trace_uprobe.c
 +++ b/kernel/trace/trace_uprobe.c
-@@ -941,15 +941,21 @@ static struct uprobe_cpu_buffer *uprobe_buffer_get(void)
- 
- static void uprobe_buffer_put(struct uprobe_cpu_buffer *ucb)
- {
-+	if (!ucb)
-+		return;
- 	mutex_unlock(&ucb->mutex);
- }
- 
- static struct uprobe_cpu_buffer *prepare_uprobe_buffer(struct trace_uprobe *tu,
--						       struct pt_regs *regs)
-+						       struct pt_regs *regs,
-+						       struct uprobe_cpu_buffer **ucbp)
- {
- 	struct uprobe_cpu_buffer *ucb;
- 	int dsize, esize;
- 
-+	if (*ucbp)
-+		return *ucbp;
-+
- 	esize = SIZEOF_TRACE_ENTRY(is_ret_probe(tu));
- 	dsize = __get_data_size(&tu->tp, regs, NULL);
- 
-@@ -958,22 +964,25 @@ static struct uprobe_cpu_buffer *prepare_uprobe_buffer(struct trace_uprobe *tu,
- 
- 	store_trace_args(ucb->buf, &tu->tp, regs, NULL, esize, dsize);
- 
-+	*ucbp = ucb;
- 	return ucb;
- }
+@@ -970,19 +970,17 @@ static struct uprobe_cpu_buffer *prepare_uprobe_buffer(struct trace_uprobe *tu,
  
  static void __uprobe_trace_func(struct trace_uprobe *tu,
  				unsigned long func, struct pt_regs *regs,
--				struct uprobe_cpu_buffer *ucb,
-+				struct uprobe_cpu_buffer **ucbp,
+-				struct uprobe_cpu_buffer **ucbp,
++				struct uprobe_cpu_buffer *ucb,
  				struct trace_event_file *trace_file)
  {
  	struct uprobe_trace_entry_head *entry;
  	struct trace_event_buffer fbuffer;
-+	struct uprobe_cpu_buffer *ucb;
+-	struct uprobe_cpu_buffer *ucb;
  	void *data;
  	int size, esize;
  	struct trace_event_call *call = trace_probe_event_call(&tu->tp);
  
  	WARN_ON(call != trace_file->event_call);
  
-+	ucb = prepare_uprobe_buffer(tu, regs, ucbp);
+-	ucb = prepare_uprobe_buffer(tu, regs, ucbp);
  	if (WARN_ON_ONCE(ucb->dsize > PAGE_SIZE))
  		return;
  
-@@ -1002,7 +1011,7 @@ static void __uprobe_trace_func(struct trace_uprobe *tu,
- 
- /* uprobe handler */
- static int uprobe_trace_func(struct trace_uprobe *tu, struct pt_regs *regs,
--			     struct uprobe_cpu_buffer *ucb)
-+			     struct uprobe_cpu_buffer **ucbp)
+@@ -1014,13 +1012,16 @@ static int uprobe_trace_func(struct trace_uprobe *tu, struct pt_regs *regs,
+ 			     struct uprobe_cpu_buffer **ucbp)
  {
  	struct event_file_link *link;
- 
-@@ -1011,7 +1020,7 @@ static int uprobe_trace_func(struct trace_uprobe *tu, struct pt_regs *regs,
- 
- 	rcu_read_lock();
- 	trace_probe_for_each_link_rcu(link, &tu->tp)
--		__uprobe_trace_func(tu, 0, regs, ucb, link->file);
-+		__uprobe_trace_func(tu, 0, regs, ucbp, link->file);
- 	rcu_read_unlock();
- 
- 	return 0;
-@@ -1019,13 +1028,13 @@ static int uprobe_trace_func(struct trace_uprobe *tu, struct pt_regs *regs,
- 
- static void uretprobe_trace_func(struct trace_uprobe *tu, unsigned long func,
- 				 struct pt_regs *regs,
--				 struct uprobe_cpu_buffer *ucb)
-+				 struct uprobe_cpu_buffer **ucbp)
- {
- 	struct event_file_link *link;
- 
- 	rcu_read_lock();
- 	trace_probe_for_each_link_rcu(link, &tu->tp)
--		__uprobe_trace_func(tu, func, regs, ucb, link->file);
-+		__uprobe_trace_func(tu, func, regs, ucbp, link->file);
- 	rcu_read_unlock();
- }
- 
-@@ -1353,10 +1362,11 @@ static bool uprobe_perf_filter(struct uprobe_consumer *uc,
- 
- static void __uprobe_perf_func(struct trace_uprobe *tu,
- 			       unsigned long func, struct pt_regs *regs,
--			       struct uprobe_cpu_buffer *ucb)
-+			       struct uprobe_cpu_buffer **ucbp)
- {
- 	struct trace_event_call *call = trace_probe_event_call(&tu->tp);
- 	struct uprobe_trace_entry_head *entry;
 +	struct uprobe_cpu_buffer *ucb;
- 	struct hlist_head *head;
- 	void *data;
- 	int size, esize;
-@@ -1374,6 +1384,7 @@ static void __uprobe_perf_func(struct trace_uprobe *tu,
  
- 	esize = SIZEOF_TRACE_ENTRY(is_ret_probe(tu));
+ 	if (is_ret_probe(tu))
+ 		return 0;
  
 +	ucb = prepare_uprobe_buffer(tu, regs, ucbp);
- 	size = esize + ucb->dsize;
- 	size = ALIGN(size + sizeof(u32), sizeof(u64)) - sizeof(u32);
- 	if (WARN_ONCE(size > PERF_MAX_TRACE_SIZE, "profile buffer not large enough"))
-@@ -1410,21 +1421,21 @@ static void __uprobe_perf_func(struct trace_uprobe *tu,
++
+ 	rcu_read_lock();
+ 	trace_probe_for_each_link_rcu(link, &tu->tp)
+-		__uprobe_trace_func(tu, 0, regs, ucbp, link->file);
++		__uprobe_trace_func(tu, 0, regs, ucb, link->file);
+ 	rcu_read_unlock();
  
- /* uprobe profile handler */
- static int uprobe_perf_func(struct trace_uprobe *tu, struct pt_regs *regs,
--			    struct uprobe_cpu_buffer *ucb)
-+			    struct uprobe_cpu_buffer **ucbp)
- {
- 	if (!uprobe_perf_filter(&tu->consumer, 0, current->mm))
- 		return UPROBE_HANDLER_REMOVE;
- 
- 	if (!is_ret_probe(tu))
--		__uprobe_perf_func(tu, 0, regs, ucb);
-+		__uprobe_perf_func(tu, 0, regs, ucbp);
  	return 0;
+@@ -1031,10 +1032,13 @@ static void uretprobe_trace_func(struct trace_uprobe *tu, unsigned long func,
+ 				 struct uprobe_cpu_buffer **ucbp)
+ {
+ 	struct event_file_link *link;
++	struct uprobe_cpu_buffer *ucb;
++
++	ucb = prepare_uprobe_buffer(tu, regs, ucbp);
+ 
+ 	rcu_read_lock();
+ 	trace_probe_for_each_link_rcu(link, &tu->tp)
+-		__uprobe_trace_func(tu, func, regs, ucbp, link->file);
++		__uprobe_trace_func(tu, func, regs, ucb, link->file);
+ 	rcu_read_unlock();
  }
  
- static void uretprobe_perf_func(struct trace_uprobe *tu, unsigned long func,
- 				struct pt_regs *regs,
--				struct uprobe_cpu_buffer *ucb)
-+				struct uprobe_cpu_buffer **ucbp)
- {
--	__uprobe_perf_func(tu, func, regs, ucb);
-+	__uprobe_perf_func(tu, func, regs, ucbp);
- }
- 
- int bpf_get_uprobe_info(const struct perf_event *event, u32 *fd_type,
-@@ -1489,7 +1500,7 @@ static int uprobe_dispatcher(struct uprobe_consumer *con, struct pt_regs *regs)
- {
- 	struct trace_uprobe *tu;
- 	struct uprobe_dispatch_data udd;
--	struct uprobe_cpu_buffer *ucb;
-+	struct uprobe_cpu_buffer *ucb = NULL;
- 	int ret = 0;
- 
- 	tu = container_of(con, struct trace_uprobe, consumer);
-@@ -1503,14 +1514,12 @@ static int uprobe_dispatcher(struct uprobe_consumer *con, struct pt_regs *regs)
- 	if (WARN_ON_ONCE(!uprobe_cpu_buffer))
- 		return 0;
- 
--	ucb = prepare_uprobe_buffer(tu, regs);
--
- 	if (trace_probe_test_flag(&tu->tp, TP_FLAG_TRACE))
--		ret |= uprobe_trace_func(tu, regs, ucb);
-+		ret |= uprobe_trace_func(tu, regs, &ucb);
- 
- #ifdef CONFIG_PERF_EVENTS
- 	if (trace_probe_test_flag(&tu->tp, TP_FLAG_PROFILE))
--		ret |= uprobe_perf_func(tu, regs, ucb);
-+		ret |= uprobe_perf_func(tu, regs, &ucb);
- #endif
- 	uprobe_buffer_put(ucb);
- 	return ret;
-@@ -1521,7 +1530,7 @@ static int uretprobe_dispatcher(struct uprobe_consumer *con,
- {
- 	struct trace_uprobe *tu;
- 	struct uprobe_dispatch_data udd;
--	struct uprobe_cpu_buffer *ucb;
-+	struct uprobe_cpu_buffer *ucb = NULL;
- 
- 	tu = container_of(con, struct trace_uprobe, consumer);
- 
-@@ -1533,14 +1542,12 @@ static int uretprobe_dispatcher(struct uprobe_consumer *con,
- 	if (WARN_ON_ONCE(!uprobe_cpu_buffer))
- 		return 0;
- 
--	ucb = prepare_uprobe_buffer(tu, regs);
--
- 	if (trace_probe_test_flag(&tu->tp, TP_FLAG_TRACE))
--		uretprobe_trace_func(tu, func, regs, ucb);
-+		uretprobe_trace_func(tu, func, regs, &ucb);
- 
- #ifdef CONFIG_PERF_EVENTS
- 	if (trace_probe_test_flag(&tu->tp, TP_FLAG_PROFILE))
--		uretprobe_perf_func(tu, func, regs, ucb);
-+		uretprobe_perf_func(tu, func, regs, &ucb);
- #endif
- 	uprobe_buffer_put(ucb);
- 	return 0;
 -- 
 2.43.0
 
