@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D2615B10D;
-	Mon, 28 Oct 2024 06:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D2F15B10D;
+	Mon, 28 Oct 2024 06:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730097110; cv=none; b=GbJ8FYjJ0paWKc4LRDpV/Zi93s39AB1zYF4Ix+SXvQF1q4ZhxZYINRv8lZGfQDd8rDpG22VH0VX8PNIGiH68VTFt38LIrUUQWUCw5o3wL6aFPnQFjC3muXndASCLqij69xDwd53fIL5zOMNtDa2Z1+1TwS8RTC9elS062DLq6Qc=
+	t=1730097113; cv=none; b=DKWN/gjUQvdxWvURMlKaAg5zEMWu8TcSWBrdmInrb2ZuAybGgWyQGrdyG9JMKp1iT8m40if6sz1tUCeukdBCJgubdLI/YQtHo9I7yQKEXKXtsAG3TnUkkR90LFYpoIh8JO7B44B9rY9YiC7pHSwxFqxY9u6NSO0q4fS/uU8yrLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730097110; c=relaxed/simple;
-	bh=GSymZeRmLYM/1Tv/lBu6QLfd+to9oHTQtY6/k9IZ52o=;
+	s=arc-20240116; t=1730097113; c=relaxed/simple;
+	bh=1o3Um/3Z7OL/2b5+/P6zKyqYPXrCEjd1AGKtkAulcPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ijc3UsaLV3MaxXceKaya8kcha6BjAvTWp6jkdZj+mup5nEFiClD3RdI8zAtKnPJhbuyOD71IeZk+tDN0CuB67dRd1hMuhmj6cqTzPKAcQy7JbUB6+w4PShAmFWS1dBhLnsu40WlrNasK0G+EUM+EnrxAKd5v02L+bWNCvyWpu20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rj09ps4C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DhA73hlD87bI2Frid+A4ra2O6k2mmz0H66FT59jUyMMK9ydjMRQ5OQDGtF7a0S1gtIy/3gwZLoPHrbAo87feGjMWB28YF7jaL44lOB+LodAezIGYHaRGoG0CiJu+70mIjj5W+qJq7EJUhe9d2VK//pSidIcu8CRTWb2og+NH1Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6TI8KoQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rj09ps4C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BFDC4CEC7;
-	Mon, 28 Oct 2024 06:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6TI8KoQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CBEC4CEC7;
+	Mon, 28 Oct 2024 06:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730097110;
-	bh=GSymZeRmLYM/1Tv/lBu6QLfd+to9oHTQtY6/k9IZ52o=;
+	s=korg; t=1730097112;
+	bh=1o3Um/3Z7OL/2b5+/P6zKyqYPXrCEjd1AGKtkAulcPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rj09ps4CXOZUK8x0hZmAR9iyFR59NikZYXJ9iOTaoaEePzbnNzkR4t8kY077G5OWE
-	 hgrzlo95AtJd6RKZpN9TYcdtCATqsHtug683rFWQWz7spCbjzEg5jlpU36gwLwmYMi
-	 ggdfiniOs5sYRczj9qZU/Y7drJZF4jW9LCxPC/hI=
+	b=t6TI8KoQ229PiZN52sFtFcNQKPDmy9l2Z5jOKEfCyyUWgW4MjzZLwGn2Y3oWR/Grd
+	 Fe2PX4gwSlGGjCvcBAoi2zdDY4dZSvbbuIcufe4BerjihFdHO2lcjFz7MYuTqkV22+
+	 EzG2hOMIFi23P7dvSCSp+X3hjTuw0g2t/di5f5cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 5.15 68/80] drm/amd: Guard against bad data for ATIF ACPI method
-Date: Mon, 28 Oct 2024 07:25:48 +0100
-Message-ID: <20241028062254.501790493@linuxfoundation.org>
+	Dirk Holten <dirk.holten@gmx.de>,
+	Christian Heusel <christian@heusel.eu>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 69/80] ACPI: resource: Add LG 16T90SP to irq1_level_low_skip_override[]
+Date: Mon, 28 Oct 2024 07:25:49 +0100
+Message-ID: <20241028062254.528167591@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
 References: <20241028062252.611837461@linuxfoundation.org>
@@ -50,75 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Christian Heusel <christian@heusel.eu>
 
-commit bf58f03931fdcf7b3c45cb76ac13244477a60f44 upstream.
+commit 53f1a907d36fb3aa02a4d34073bcec25823a6c74 upstream.
 
-If a BIOS provides bad data in response to an ATIF method call
-this causes a NULL pointer dereference in the caller.
+The LG Gram Pro 16 2-in-1 (2024) the 16T90SP has its keybopard IRQ (1)
+described as ActiveLow in the DSDT, which the kernel overrides to EdgeHigh
+which breaks the keyboard.
 
-```
-? show_regs (arch/x86/kernel/dumpstack.c:478 (discriminator 1))
-? __die (arch/x86/kernel/dumpstack.c:423 arch/x86/kernel/dumpstack.c:434)
-? page_fault_oops (arch/x86/mm/fault.c:544 (discriminator 2) arch/x86/mm/fault.c:705 (discriminator 2))
-? do_user_addr_fault (arch/x86/mm/fault.c:440 (discriminator 1) arch/x86/mm/fault.c:1232 (discriminator 1))
-? acpi_ut_update_object_reference (drivers/acpi/acpica/utdelete.c:642)
-? exc_page_fault (arch/x86/mm/fault.c:1542)
-? asm_exc_page_fault (./arch/x86/include/asm/idtentry.h:623)
-? amdgpu_atif_query_backlight_caps.constprop.0 (drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c:387 (discriminator 2)) amdgpu
-? amdgpu_atif_query_backlight_caps.constprop.0 (drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c:386 (discriminator 1)) amdgpu
-```
+Add the 16T90SP to the irq1_level_low_skip_override[] quirk table to fix
+this.
 
-It has been encountered on at least one system, so guard for it.
-
-Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c9b7c809b89f24e9372a4e7f02d64c950b07fdee)
-Cc: stable@vger.kernel.org
+Reported-by: Dirk Holten <dirk.holten@gmx.de>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219382
+Cc: All applicable <stable@vger.kernel.org>
+Suggested-by: Dirk Holten <dirk.holten@gmx.de>
+Signed-off-by: Christian Heusel <christian@heusel.eu>
+Link: https://patch.msgid.link/20241017-lg-gram-pro-keyboard-v2-1-7c8fbf6ff718@heusel.eu
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/acpi/resource.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-@@ -108,6 +108,7 @@ static union acpi_object *amdgpu_atif_ca
- 					   struct acpi_buffer *params)
- {
- 	acpi_status status;
-+	union acpi_object *obj;
- 	union acpi_object atif_arg_elements[2];
- 	struct acpi_object_list atif_arg;
- 	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
-@@ -130,16 +131,24 @@ static union acpi_object *amdgpu_atif_ca
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -505,6 +505,13 @@ static const struct dmi_system_id tongfa
+ 			DMI_MATCH(DMI_BOARD_NAME, "GMxRGxx"),
+ 		},
+ 	},
++	{
++		/* LG Electronics 16T90SP */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LG Electronics"),
++			DMI_MATCH(DMI_BOARD_NAME, "16T90SP"),
++		},
++	},
+ 	{ }
+ };
  
- 	status = acpi_evaluate_object(atif->handle, NULL, &atif_arg,
- 				      &buffer);
-+	obj = (union acpi_object *)buffer.pointer;
- 
--	/* Fail only if calling the method fails and ATIF is supported */
-+	/* Fail if calling the method fails and ATIF is supported */
- 	if (ACPI_FAILURE(status) && status != AE_NOT_FOUND) {
- 		DRM_DEBUG_DRIVER("failed to evaluate ATIF got %s\n",
- 				 acpi_format_exception(status));
--		kfree(buffer.pointer);
-+		kfree(obj);
- 		return NULL;
- 	}
- 
--	return buffer.pointer;
-+	if (obj->type != ACPI_TYPE_BUFFER) {
-+		DRM_DEBUG_DRIVER("bad object returned from ATIF: %d\n",
-+				 obj->type);
-+		kfree(obj);
-+		return NULL;
-+	}
-+
-+	return obj;
- }
- 
- /**
 
 
