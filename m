@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE20A2AF07;
-	Mon, 28 Oct 2024 06:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D28B824A3;
+	Mon, 28 Oct 2024 06:54:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730098451; cv=none; b=V8iAQ4fg1lN5b3xYcPGh/fRfpu+tkYOLdGL6w/0erppf2/qSaDdyI2wXVPmmhzB9H+PhSNvZ2SWDY36OoqsVTBK6FENeiPg4V5M5CDrIQHSWDuoFgPzE45UIH/Z9CqkbxxG8+XMn50f5SoUhRiL5jH5OtRY3fXXpB0vthcoj8rg=
+	t=1730098453; cv=none; b=kADsAUhve8bbqSlUo5ud6y+8v2DG3NGz6Q7UR9WAgMq5SOzc4IiYdI01zLHKNssWQqQgmrb72cpulZPcPyC5E31TUt8JIMsPKAMf3wzXdgfMWNCk+QRbv7PSvHspqTXD2Wf0FIDIxUDgLeKzE5BQFaVRo0/pm5/9B1zt+aUcIz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730098451; c=relaxed/simple;
-	bh=AzYby7oLct5q6iyS3pEQ9cLbkiHbl85xX2xQUmfZTCY=;
+	s=arc-20240116; t=1730098453; c=relaxed/simple;
+	bh=9LEDWVIA61+782YjdnP9LfAdZ/KQLlhoNjS/I2FDg+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PL7BW3faBIRd1Pqen00PtVRuBdpMYI96uDOh1b3dfASsfch1WziCviB9qtc6N+Jw8YI1I2YMqpmq6dBuoXB68Kh/Ej/SC9VxNr/pvNV4LjrToCTZ0XZsaqIjCybfibi26FC4Qp37UIOsOGcpWwx32JNHz9SacZSdSf+zPE+9bSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wugi5fyT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TgbdV83SDLFVuLnnCaD9lcRJqjshlbgvr/0XYJLRKBPSG4Bd8/g9mJcB+SOfgcndKZs2z+HBCPErORUM5oUZ/XtL//I+pa6ZdhUSVJr6e9SrvdL6rcUY7mKNPHloRfhau7UZHCXOg5TlvtrCWnLKguq2Cie2VafIhxuOotUmJ60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9L+7HEY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wugi5fyT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0B4C4CECD;
-	Mon, 28 Oct 2024 06:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9L+7HEY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0726C4CEC3;
+	Mon, 28 Oct 2024 06:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730098450;
-	bh=AzYby7oLct5q6iyS3pEQ9cLbkiHbl85xX2xQUmfZTCY=;
+	s=korg; t=1730098453;
+	bh=9LEDWVIA61+782YjdnP9LfAdZ/KQLlhoNjS/I2FDg+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wugi5fyTz8GNQt+XsQpTOis4qjXbw3tyZ7DarVyaU70V+461aKGO59H0cMcstHIZF
-	 2DEo75/wXVkAdbq0Aoxd7zzcI/3LpQeIrPaBVjwUjSsrvA+QeVjlR7lBN4/M3qwpM3
-	 JGUSn/r1DcN3cTM+VXYe6ukO99PlCwSAelblMdRg=
+	b=K9L+7HEY5Ksu8pcadGBB2Cr7vtZDfSbbA0RHiyq9RyM6cjIkG0Wdk/CkzaYq8CTKL
+	 J7Thzw1Y34GGfjJOwWk9R3U0TgTu1egPcUEbvFo9aarEybyib1aG65Rg0TFrG9d3RS
+	 /ViwTfuGuwWfZ7/yw3iMv6KucAruNYciOIk3fS38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Song Liu <song@kernel.org>,
-	ValdikSS <iam@valdikss.org.ru>
-Subject: [PATCH 6.11 232/261] md/raid10: fix null ptr dereference in raid10_size()
-Date: Mon, 28 Oct 2024 07:26:14 +0100
-Message-ID: <20241028062317.930439281@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.11 233/261] drm/bridge: Fix assignment of the of_node of the parent to aux bridge
+Date: Mon, 28 Oct 2024 07:26:15 +0100
+Message-ID: <20241028062317.954794404@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
 References: <20241028062312.001273460@linuxfoundation.org>
@@ -52,47 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-commit 825711e00117fc686ab89ac36a9a7b252dc349c6 upstream.
+commit 85e444a68126a631221ae32c63fce882bb18a262 upstream.
 
-In raid10_run() if raid10_set_queue_limits() succeed, the return value
-is set to zero, and if following procedures failed raid10_run() will
-return zero while mddev->private is still NULL, causing null ptr
-dereference in raid10_size().
+The assignment of the of_node to the aux bridge needs to mark the
+of_node as reused as well, otherwise resource providers like pinctrl will
+report a gpio as already requested by a different device when both pinconf
+and gpios property are present.
+Fix that by using the device_set_of_node_from_dev() helper instead.
 
-Fix the problem by only overwrite the return value if
-raid10_set_queue_limits() failed.
-
-Fixes: 3d8466ba68d4 ("md/raid10: use the atomic queue limit update APIs")
-Cc: stable@vger.kernel.org
-Reported-and-tested-by: ValdikSS <iam@valdikss.org.ru>
-Closes: https://lore.kernel.org/all/0dd96820-fe52-4841-bc58-dbf14d6bfcc8@valdikss.org.ru/
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20241009014914.1682037-1-yukuai1@huaweicloud.com
-Signed-off-by: Song Liu <song@kernel.org>
+Fixes: 6914968a0b52 ("drm/bridge: properly refcount DT nodes in aux bridge drivers")
+Cc: stable@vger.kernel.org      # 6.8
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241018-drm-aux-bridge-mark-of-node-reused-v2-1-aeed1b445c7d@linaro.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241018-drm-aux-bridge-mark-of-node-reused-v2-1-aeed1b445c7d@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid10.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/aux-bridge.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -4055,9 +4055,12 @@ static int raid10_run(struct mddev *mdde
- 	}
+--- a/drivers/gpu/drm/bridge/aux-bridge.c
++++ b/drivers/gpu/drm/bridge/aux-bridge.c
+@@ -58,9 +58,10 @@ int drm_aux_bridge_register(struct devic
+ 	adev->id = ret;
+ 	adev->name = "aux_bridge";
+ 	adev->dev.parent = parent;
+-	adev->dev.of_node = of_node_get(parent->of_node);
+ 	adev->dev.release = drm_aux_bridge_release;
  
- 	if (!mddev_is_dm(conf->mddev)) {
--		ret = raid10_set_queue_limits(mddev);
--		if (ret)
-+		int err = raid10_set_queue_limits(mddev);
++	device_set_of_node_from_dev(&adev->dev, parent);
 +
-+		if (err) {
-+			ret = err;
- 			goto out_free_conf;
-+		}
- 	}
- 
- 	/* need to check that every block has at least one working mirror */
+ 	ret = auxiliary_device_init(adev);
+ 	if (ret) {
+ 		ida_free(&drm_aux_bridge_ida, adev->id);
 
 
