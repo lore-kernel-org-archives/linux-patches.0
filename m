@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E3D152E1C;
-	Mon, 28 Oct 2024 06:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D96152E1C;
+	Mon, 28 Oct 2024 06:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730096952; cv=none; b=k5nH57sUkgCfg6Z64tRYDLQxyoHzCJqXGEOupnrRzvpxXtMd5kpQZ6Cca9ceKxz762lA97Sq8bBHygY5G3/jRngCJu2OsbibpP7snR3jEuOoQHhm4L9GD5abDEkB2sWzIVO2fHC0ufDyuCG+T8PHpoQ7Sk+RTy6U3ppL4TEnBBg=
+	t=1730096954; cv=none; b=XkgOMCxLYiny3e+ecT/y6YmSzByjjJGQpnNblcV1G53GEZbEzvl85o8XVRhHFljpYPQBWsC0db8LPIRbQToCWMf19w0strdeptUNKkgQcBrwP6JxQUW+RJxOMRFrn+LFBihs1GNCQmBDWHlHwEfwnEpygEdPjLQky306fGogNS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730096952; c=relaxed/simple;
-	bh=sLNdEQ+FtFjH5ZpzcghUra0ocye529uvoKqHYEkdsu8=;
+	s=arc-20240116; t=1730096954; c=relaxed/simple;
+	bh=Lb9WN120CIaKDp1irBFbV+7adFo8p07a/XOmpuJr4h4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E2MQU58N3xaKZjKGXFxu6TM4VsA43SQjlycHO5oRPgOxDI6+0PeBXc4+MDXdz+gvcbn7XwzII4rUbwQ9hvTCQx3GYKy6RbCNAzizDB+rkxACVCs+z1uuah3DvdprXlV+uwnyUITy8g/j5d67YIO9GVZelhBmFV0e+Aj8JxQNkYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nfWKAmg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qaQYYINxGke/Wbe0iUCD5W/MF5uNup1q/hJo8qbluek5av+SqIAO2pHlv9cwtJe8yY7obzeK0efCMNSmfgkUiNEDb+HOe49Xt7+gdIh7PX/OkwYwLbf3GPEjLBUveQywjWOt2bqzTtfe0GyVuKEy8iGhWUpw+gqRRx3zHqQKq/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDvtuoTz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nfWKAmg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA0EC4CEC3;
-	Mon, 28 Oct 2024 06:29:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDvtuoTz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27DE8C4CEC3;
+	Mon, 28 Oct 2024 06:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730096952;
-	bh=sLNdEQ+FtFjH5ZpzcghUra0ocye529uvoKqHYEkdsu8=;
+	s=korg; t=1730096954;
+	bh=Lb9WN120CIaKDp1irBFbV+7adFo8p07a/XOmpuJr4h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0nfWKAmgojgBwcL6LihdqOP+ISrO14SFC7iJE8qSJQWr8a71cipC6wGJPTtGw/oPZ
-	 W6hqWeI8d+xPJ/VgOiZHO1ZGHYx/kbaMkyaIdhgUdUFuksvnXNOXoxoWFn3JlYtl2S
-	 r9Ugy81pEQEOk1mB7O3oheTlTEuAVg+EBPD4yKL0=
+	b=oDvtuoTzMideKX2qaQTLaoW2Vevool2Q1Jy6sqI6G5z+0rRelj/tUEKqUKc+T3VWb
+	 nYMUO8DzK+Xm8L17ZypAkNQj6x2O+PJETEPBHPZzwtx4F79K7EDvK/0aNf6ZVzItYU
+	 pIq2Sie330+xso68jNDWA0mp5EKqmjrBVcXM+H6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ignat Korchagin <ignat@cloudflare.com>,
-	Ilya Katsnelson <me@0upti.me>,
-	=?UTF-8?q?Krzysztof=20Ol=C4=99dzki?= <ole@ans.pl>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Lin Ma <linma@zju.edu.cn>,
+	Loic Poulain <loic.poulain@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 58/80] netfilter: xtables: fix typo causing some targets not to load on IPv6
-Date: Mon, 28 Oct 2024 07:25:38 +0100
-Message-ID: <20241028062254.227317174@linuxfoundation.org>
+Subject: [PATCH 5.15 59/80] net: wwan: fix global oob in wwan_rtnl_policy
+Date: Mon, 28 Oct 2024 07:25:39 +0100
+Message-ID: <20241028062254.253690710@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
 References: <20241028062252.611837461@linuxfoundation.org>
@@ -47,76 +47,111 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 306ed1728e8438caed30332e1ab46b28c25fe3d8 ]
+[ Upstream commit 47dd5447cab8ce30a847a0337d5341ae4c7476a7 ]
 
-- There is no NFPROTO_IPV6 family for mark and NFLOG.
-- TRACE is also missing module autoload with NFPROTO_IPV6.
+The variable wwan_rtnl_link_ops assign a *bigger* maxtype which leads to
+a global out-of-bounds read when parsing the netlink attributes. Exactly
+same bug cause as the oob fixed in commit b33fb5b801c6 ("net: qualcomm:
+rmnet: fix global oob in rmnet_policy").
 
-This results in ip6tables failing to restore a ruleset. This issue has been
-reported by several users providing incomplete patches.
+==================================================================
+BUG: KASAN: global-out-of-bounds in validate_nla lib/nlattr.c:388 [inline]
+BUG: KASAN: global-out-of-bounds in __nla_validate_parse+0x19d7/0x29a0 lib/nlattr.c:603
+Read of size 1 at addr ffffffff8b09cb60 by task syz.1.66276/323862
 
-Very similar to Ilya Katsnelson's patch including a missing chunk in the
-TRACE extension.
+CPU: 0 PID: 323862 Comm: syz.1.66276 Not tainted 6.1.70 #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x177/0x231 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:284 [inline]
+ print_report+0x14f/0x750 mm/kasan/report.c:395
+ kasan_report+0x139/0x170 mm/kasan/report.c:495
+ validate_nla lib/nlattr.c:388 [inline]
+ __nla_validate_parse+0x19d7/0x29a0 lib/nlattr.c:603
+ __nla_parse+0x3c/0x50 lib/nlattr.c:700
+ nla_parse_nested_deprecated include/net/netlink.h:1269 [inline]
+ __rtnl_newlink net/core/rtnetlink.c:3514 [inline]
+ rtnl_newlink+0x7bc/0x1fd0 net/core/rtnetlink.c:3623
+ rtnetlink_rcv_msg+0x794/0xef0 net/core/rtnetlink.c:6122
+ netlink_rcv_skb+0x1de/0x420 net/netlink/af_netlink.c:2508
+ netlink_unicast_kernel net/netlink/af_netlink.c:1326 [inline]
+ netlink_unicast+0x74b/0x8c0 net/netlink/af_netlink.c:1352
+ netlink_sendmsg+0x882/0xb90 net/netlink/af_netlink.c:1874
+ sock_sendmsg_nosec net/socket.c:716 [inline]
+ __sock_sendmsg net/socket.c:728 [inline]
+ ____sys_sendmsg+0x5cc/0x8f0 net/socket.c:2499
+ ___sys_sendmsg+0x21c/0x290 net/socket.c:2553
+ __sys_sendmsg net/socket.c:2582 [inline]
+ __do_sys_sendmsg net/socket.c:2591 [inline]
+ __se_sys_sendmsg+0x19e/0x270 net/socket.c:2589
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x45/0x90 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f67b19a24ad
+RSP: 002b:00007f67b17febb8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00007f67b1b45f80 RCX: 00007f67b19a24ad
+RDX: 0000000000000000 RSI: 0000000020005e40 RDI: 0000000000000004
+RBP: 00007f67b1a1e01d R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007ffd2513764f R14: 00007ffd251376e0 R15: 00007f67b17fed40
+ </TASK>
 
-Fixes: 0bfcb7b71e73 ("netfilter: xtables: avoid NFPROTO_UNSPEC where needed")
-Reported-by: Ignat Korchagin <ignat@cloudflare.com>
-Reported-by: Ilya Katsnelson <me@0upti.me>
-Reported-by: Krzysztof Olędzki <ole@ans.pl>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The buggy address belongs to the variable:
+ wwan_rtnl_policy+0x20/0x40
+
+The buggy address belongs to the physical page:
+page:ffffea00002c2700 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0xb09c
+flags: 0xfff00000001000(reserved|node=0|zone=1|lastcpupid=0x7ff)
+raw: 00fff00000001000 ffffea00002c2708 ffffea00002c2708 0000000000000000
+raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+page_owner info is not present (never set?)
+
+Memory state around the buggy address:
+ ffffffff8b09ca00: 05 f9 f9 f9 05 f9 f9 f9 00 01 f9 f9 00 01 f9 f9
+ ffffffff8b09ca80: 00 00 00 05 f9 f9 f9 f9 00 00 03 f9 f9 f9 f9 f9
+>ffffffff8b09cb00: 00 00 00 00 05 f9 f9 f9 00 00 00 00 f9 f9 f9 f9
+                                                       ^
+ ffffffff8b09cb80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+==================================================================
+
+According to the comment of `nla_parse_nested_deprecated`, use correct size
+`IFLA_WWAN_MAX` here to fix this issue.
+
+Fixes: 88b710532e53 ("wwan: add interface creation support")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241015131621.47503-1-linma@zju.edu.cn
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_NFLOG.c | 2 +-
- net/netfilter/xt_TRACE.c | 1 +
- net/netfilter/xt_mark.c  | 2 +-
- 3 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wwan/wwan_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/xt_NFLOG.c b/net/netfilter/xt_NFLOG.c
-index d80abd6ccaf8f..6dcf4bc7e30b2 100644
---- a/net/netfilter/xt_NFLOG.c
-+++ b/net/netfilter/xt_NFLOG.c
-@@ -79,7 +79,7 @@ static struct xt_target nflog_tg_reg[] __read_mostly = {
- 	{
- 		.name       = "NFLOG",
- 		.revision   = 0,
--		.family     = NFPROTO_IPV4,
-+		.family     = NFPROTO_IPV6,
- 		.checkentry = nflog_tg_check,
- 		.destroy    = nflog_tg_destroy,
- 		.target     = nflog_tg,
-diff --git a/net/netfilter/xt_TRACE.c b/net/netfilter/xt_TRACE.c
-index f3fa4f11348cd..a642ff09fc8e8 100644
---- a/net/netfilter/xt_TRACE.c
-+++ b/net/netfilter/xt_TRACE.c
-@@ -49,6 +49,7 @@ static struct xt_target trace_tg_reg[] __read_mostly = {
- 		.target		= trace_tg,
- 		.checkentry	= trace_tg_check,
- 		.destroy	= trace_tg_destroy,
-+		.me		= THIS_MODULE,
- 	},
- #endif
- };
-diff --git a/net/netfilter/xt_mark.c b/net/netfilter/xt_mark.c
-index f76fe04fc9a4e..65b965ca40ea7 100644
---- a/net/netfilter/xt_mark.c
-+++ b/net/netfilter/xt_mark.c
-@@ -62,7 +62,7 @@ static struct xt_target mark_tg_reg[] __read_mostly = {
- 	{
- 		.name           = "MARK",
- 		.revision       = 2,
--		.family         = NFPROTO_IPV4,
-+		.family         = NFPROTO_IPV6,
- 		.target         = mark_tg,
- 		.targetsize     = sizeof(struct xt_mark_tginfo2),
- 		.me             = THIS_MODULE,
+diff --git a/drivers/net/wwan/wwan_core.c b/drivers/net/wwan/wwan_core.c
+index d293ab6880448..a83de4e3c189c 100644
+--- a/drivers/net/wwan/wwan_core.c
++++ b/drivers/net/wwan/wwan_core.c
+@@ -927,7 +927,7 @@ static const struct nla_policy wwan_rtnl_policy[IFLA_WWAN_MAX + 1] = {
+ 
+ static struct rtnl_link_ops wwan_rtnl_link_ops __read_mostly = {
+ 	.kind = "wwan",
+-	.maxtype = __IFLA_WWAN_MAX,
++	.maxtype = IFLA_WWAN_MAX,
+ 	.alloc = wwan_rtnl_alloc,
+ 	.validate = wwan_rtnl_validate,
+ 	.newlink = wwan_rtnl_newlink,
 -- 
 2.43.0
 
