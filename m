@@ -1,58 +1,123 @@
-Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73F6120402F;
-	Tue, 29 Oct 2024 08:56:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730192203; cv=none; b=RL3UGgaDk/rcPc86sMcA8vW1Zq4zLElSFjok9A3EFrOhBiez+/rb3eahpgqJRwnFU/goSYK/V9kXHqGPmgiPLEoTjoA8Bm+p8XrZbjS93xlvwofudcgErpKTUoUueDUJSuxPTi5xCwDa9/B3DpG546xLnjDCqOLW85ruWmIeoHI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730192203; c=relaxed/simple;
-	bh=4Y+sSXKbkwF4OkdfHxx50k3m2tUxfOIngRvPj3uA6MA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lpBOEhdFURLzyYI13ILzfV1Gtkab5grniOTe0HL91ETMcBGyf4rmddj/8VCSULvJx1OhZLUPHOuDoRRBWMj8Wes73baLqAK3KaQROmAz0t6/Gu0nHbQZrYEPAFAjGzQQYux9RWJ3nq8LCv5WrwSTfgn5KrLcxrUImjD6xc93wJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=4kwF9o9H; arc=none smtp.client-ip=85.214.250.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="4kwF9o9H"
-Received: from 8bytes.org (p549219d2.dip0.t-ipconnect.de [84.146.25.210])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.8bytes.org (Postfix) with ESMTPSA id 465F52A8D41;
-	Tue, 29 Oct 2024 09:56:40 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
-	s=default; t=1730192200;
-	bh=4Y+sSXKbkwF4OkdfHxx50k3m2tUxfOIngRvPj3uA6MA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=4kwF9o9HwWYnyMQyCJNQ+A2Hepu6c6XfofPalxcKdIVU0YQVv2tnwG18io7wdW4YV
-	 EmI09wKMY+MRPaWtW77W/0x1kX8uiz3OMbyaQae5FcCpPcWat7L+NBl7OJnJunfgN0
-	 YN1aOpOBbw0E/zL8rglPnsRomklKeda116E0NBbH9IsBJIh2A7RoKS2GWT4jxtrTmG
-	 3ftcQDS8xw/qYPEDyHiuhJR9kgolBGvQK/wqsKKZcWjgEtngLXXfhsrd7aHyE8lurE
-	 SgS2JiEVqYQbCsgKH5ScbyErKOJ+OXrXY9OmlEJjkmcLnIWS6DxzcGtZiwDp9D+0NK
-	 h9NmvkqzusWrw==
-Date: Tue, 29 Oct 2024 09:56:39 +0100
-From: Joerg Roedel <joro@8bytes.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Robin Murphy <robin.murphy@arm.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Will Deacon <will@kernel.org>,
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] iommu/amd: Fix corruption when mapping large pages from 0
-Message-ID: <ZyCjRyXXRwc6QjVa@8bytes.org>
-References: <0-v1-27ab08d646a1+29-amd_0map_jgg@nvidia.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043D7204011
+	for <patches@lists.linux.dev>; Tue, 29 Oct 2024 08:57:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1730192255; cv=pass; b=CCnQUE25iI9YpXnIRQ8UUuCWrWuHi+FOp0XOUYbt+noB8LanM35AC+Na+L+8rFKVGU391CXIKy6x2Y1GM1vKOp3HcD0Z5G/DRca3wS7jfdjf2l9s5bZBeoNiMnHvsdMQI1218E8mDW3e4VfdFMGaHYNLUHSGZL43vZcX8KKmgCs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1730192255; c=relaxed/simple;
+	bh=TGzGyc7wuss4IjaAV7A09QofoUxmcaatq/kxmxw++p0=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=ZmE+8zjglToUDHUTy+dDl3LQQ1SZney45aUGaTb0L3IF58PaE1rK0oxmW4acYPkuOQ/MXjp+8oESH8aOWkkOM3aCwJ0k6dWWt6YqU+d3q9WsLbp01sFnqb2UdtrLWBFJL5TVaWRgN6MMb7DiJORBWED51cpomAh6hTTsGCY+6eQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=bqPbX2WV; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="bqPbX2WV"
+ARC-Seal: i=1; a=rsa-sha256; t=1730192238; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=TlcSX0GaJV2En//r2bsvmOaKmbjQnrSsRc9/fkFLtLhFfyykLj+j91QPFMV6JLW/caOeg+8h+ZIM4wwThVQhHAe+kwviLG6OGDhcA32v+NbHJgRIHGIwH/5k3LWuDeuucL96CEJ8c01OueselSE9qrWo1pGPmGWxZqRQbyl4xpw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1730192238; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=xKmGpAx2FimZ5UjrjCZxGHkEp76bSM/aSSUIPKGDye4=; 
+	b=HG6HzL+3m3u7Kdf2plHxi2uOt7TmlAq0sX2jUTKnyvnvG+bsUSHjMIlZB0eYVRjZn+A9/OvVYtevjHOdUZwaoamcXPUO16jQ22sfWwvu+jAR6dp7mE75m7psDxXwtTmVI46Ns9tj53onEO1gX5XQXnTGj1LJjVnIisT0xq+KxfE=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
+	dmarc=pass header.from=<Usama.Anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1730192238;
+	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=xKmGpAx2FimZ5UjrjCZxGHkEp76bSM/aSSUIPKGDye4=;
+	b=bqPbX2WVQKXAFYqv34SLfdIOzeP31MIKLC073HoJwhPqLI/1fOb9FVt7Iz/sbmKW
+	gKeTvHcR28H/RlqnzfT1dz0sCcASLpyh5HUFaD/j5Nbz5xAnQl9mn2w4otHRCGNPwWE
+	UaeCpkH0lQ1u7kCXnmAjLhteTpIlKBoi1ehlTSWE=
+Received: by mx.zohomail.com with SMTPS id 1730192236971732.3164999476212;
+	Tue, 29 Oct 2024 01:57:16 -0700 (PDT)
+Message-ID: <4086facb-67a7-4a9b-826e-aaedd99110c2@collabora.com>
+Date: Tue, 29 Oct 2024 13:57:05 +0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0-v1-27ab08d646a1+29-amd_0map_jgg@nvidia.com>
+User-Agent: Mozilla Thunderbird
+Cc: Usama.Anjum@collabora.com, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.11 000/261] 6.11.6-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+References: <20241028062312.001273460@linuxfoundation.org>
+Content-Language: en-US
+From: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
+In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 
-On Fri, Oct 18, 2024 at 02:12:19PM -0300, Jason Gunthorpe wrote:
->  drivers/iommu/amd/io_pgtable.c | 11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
+On 10/28/24 11:22 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.11.6 release.
+> There are 261 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 30 Oct 2024 06:22:39 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.11.6-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
+> -------------
 
-Applied, thanks.
+Hi,
+
+Please find the KernelCI report below :-
+
+
+OVERVIEW
+
+    Builds: 24 passed, 0 failed
+
+    Boot tests: 48 passed, 0 failed
+
+    CI systems: maestro
+
+REVISION
+
+    Commit
+        name: 
+        hash: e9c8d9f95b232eef9e9293ddda9af144dc511270
+    Checked out from
+        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
+
+
+BUILDS
+
+    No new build failures found
+
+BOOT TESTS
+
+    No new boot failures found
+
+See complete and up-to-date report at:
+ https://kcidb.kernelci.org/d/revision/revision?orgId=1&var-datasource=edquppk2ghfcwc&var-git_commit_hash=e9c8d9f95b232eef9e9293ddda9af144dc511270&var-patchset_hash=&var-origin=maestro&var-build_architecture=All&var-build_config_name=All&var-test_path=boot
+
+Tested-by: kernelci.org bot <bot@kernelci.org>
+
+Thanks,
+KernelCI team
+
