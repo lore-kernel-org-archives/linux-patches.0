@@ -1,112 +1,86 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C5D206E9C;
-	Tue, 29 Oct 2024 16:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA821CC16A;
+	Tue, 29 Oct 2024 16:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730219849; cv=none; b=QiQHa5Z5QBHzWqUW8RwnP2NceB2HbJE8Hvah9l37VtpCqqpTLwiqGVsp5S10tM7irHfKyqmbOAp9qUHaBNO9q4xM16Rc4ULNZTLWUMMnyLt7NbzrS95Y2USDBKxtcP08ZHiw5iVv7uR112MmGqAA06yUV9EbWDGhg0bxyPMaKbc=
+	t=1730219942; cv=none; b=XRYPE3m3zhIzK54o9zZwXVS5q9CD5Q9cwLP7ka79QeQSPRrb/0IdpMueDDMwH5WdqiT0ms04o7YsqvULxak90hHZLG5NrlF6qF90cebWs1OrjJSt6JIxihEKC4GINb3ZLmm3/9O/g7/nYJBlASgCH6Ip3wnuxfwWAkvTJUvBDNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730219849; c=relaxed/simple;
-	bh=+c1Cdp2Qi900fZqjndS23O6mVIhc4meucV2B7f/buwo=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=HVt+T2rGvqXR76qzpt0Rv1Tmb0SjJNmyzE9vo8XA5vKI2UYKBDKxnS7mSakpxTZCGa+EmpJfHmRgnYdHGgy3xkuSVxjcgEkRqWpKdoR9gU9PwNwGBdT3sPm6Vdy+F7DVLB7p75i1yFSZKOPK3OejfZ3H7gL6w+9GdmaCmER/V0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i8cfdqn2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1730219942; c=relaxed/simple;
+	bh=FgFt+nUEU5jTtnV7+2px6chrOJx6kodCC14Li0aeAnY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ofi/WEG1hl9FLNIDjX+Q+djYmIG5ybAJVYh19utCOYbYbHltFwTROCfdm9500McaeXJkEqDCZNkqj5ig0dN88Ylcp95UkQ8ScFvjGVl2jokA8IlzSn7hUfAriEVUZEdyo63akYXk1IOa7jMOyiUxVTcMPdwaCGCJkUsaEYSnlNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p3Y9M/8l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i8cfdqn2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA672C4CEE8;
-	Tue, 29 Oct 2024 16:37:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p3Y9M/8l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D97C4CECD;
+	Tue, 29 Oct 2024 16:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730219848;
-	bh=+c1Cdp2Qi900fZqjndS23O6mVIhc4meucV2B7f/buwo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=i8cfdqn2aPe1m9ln2zYoVTErh0Kw1KHNfuZ5S/3hOB9UE2e0sa6BuKuKlmHMDtEzg
-	 lWYwq8m7wXzjT1kXCezx5QOeUOjxMAOx0ESgSUZlJvWXldcBRl4IRD2Q6Rdxh5AKok
-	 +9vQrTHKaTeaVdlUqyWdqDPXukJSl/l4tNFkl71346FolwrskJrKc8EHHDQwyb/R38
-	 aIxvLKKxtxP+5b6Fptjb1/8UeOAHFSgwFec7fliBifBKu4flptcZiz3jD9akqLk1nY
-	 dLXgqHFKDzCJjwN5Z8DmvJDW3HENU0yedaAAqhcGH9wFtw8WIcJPFxkD98HpfNcU1F
-	 k6YukU7CDsjKw==
-Date: Tue, 29 Oct 2024 11:37:27 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: linux-pci@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Steffen Dirkwinkel <me@steffen.cc>, patches@lists.linux.dev,
-	Vidya Sagar <vidyas@nvidia.com>
-Subject: Re: [PATCH rc] PCI: Fix pci_enable_acs() support for the ACS quirks
-Message-ID: <20241029163727.GA1162043@bhelgaas>
+	s=k20201202; t=1730219941;
+	bh=FgFt+nUEU5jTtnV7+2px6chrOJx6kodCC14Li0aeAnY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=p3Y9M/8lI4PqiizhCf46Mkk7w5tJJBDDoIV+7kAyFipfTcZdcNUBsep2Ex6Y+dU04
+	 /RzCN9wo9Vt9o0R+J5ZBw9Im9D1GWop47zFy8f4MXMJxf+aODpnU5UnPlFJnVCB9i5
+	 /1olrGUrMllFFCXWssN3XISX2gHzJI/OUlJrBET0ZS6tsbl7PSPu2nhdydq9EZs8vR
+	 9f1y3vSP9/5ClNQ7YI2UiduTPXcwOIIENkT9tfr3TxBYi30asMkCKkprgis5ZMZL6e
+	 dp39yuIuu8GIFwd1qbntx1UAm7hxJOzS6k5IpVJTnJRaCcwyZROyFuPXO2dVNXuvhK
+	 406tHJ5svioRQ==
+Date: Tue, 29 Oct 2024 12:38:59 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Antony Antony <antony.antony@secunet.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: Re: [PATCH 6.6 133/208] xfrm: Add Direction to the SA in or out
+Message-ID: <ZyEPo8A7LREpkkhQ@sashalap>
+References: <20241028062306.649733554@linuxfoundation.org>
+ <20241028062309.914261564@linuxfoundation.org>
+ <Zx9wp6atLMR1UcCL@moon.secunet.de>
+ <Zx-Gp8f9jjxmDsIe@sashalap>
+ <ZyC2Ow9usJkkpxjU@moon.secunet.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <0-v1-f96b686c625b+124-pci_acs_quirk_fix_jgg@nvidia.com>
+In-Reply-To: <ZyC2Ow9usJkkpxjU@moon.secunet.de>
 
-On Wed, Oct 16, 2024 at 08:52:33PM -0300, Jason Gunthorpe wrote:
-> There are ACS quirks that hijack the normal ACS processing and deliver to
-> to special quirk code. The enable path needs to call
-> pci_dev_specific_enable_acs() and then pci_dev_specific_acs_enabled() will
-> report the hidden ACS state controlled by the quirk.
-> 
-> The recent rework got this out of order and we should try to call
-> pci_dev_specific_enable_acs() regardless of any actual ACS support in the
-> device.
-> 
-> As before command line parameters that effect standard PCI ACS don't
-> interact with the quirk versions, including the new config_acs= option.
-> 
-> Fixes: 47c8846a49ba ("PCI: Extend ACS configurability")
-> Reported-by: Jiri Slaby <jirislaby@kernel.org>
-> Closes: https://lore.kernel.org/all/e89107da-ac99-4d3a-9527-a4df9986e120@kernel.org
-> Closes: https://bugzilla.suse.com/show_bug.cgi?id=1229019
-> Tested-by: Steffen Dirkwinkel <me@steffen.cc>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+On Tue, Oct 29, 2024 at 11:18:04AM +0100, Antony Antony wrote:
+>On Mon, Oct 28, 2024 at 08:42:15 -0400, Sasha Levin wrote:
+>> On Mon, Oct 28, 2024 at 12:08:23PM +0100, Antony Antony wrote:
+>> > On Mon, Oct 28, 2024 at 07:25:13 +0100, Greg Kroah-Hartman wrote:
+>> > > 6.6-stable review patch.  If anyone has any objections, please let me know.
+>> >
+>> > Hi Greg,
+>> >
+>> > This patch is a part of a new feature SA direction and it appears the auto
+>> > patch selector picked one patch out of patch set?
+>> > I think this patch alone should not be applied to older stable kernel.
+>>
+>> It was picked up as a dependency:
+>
+>I understand how it got selected, however, please drop
+>a4a87fa4e96c ("xfrm: Add Direction to the SA in or out") from backports.
+>
+>>
+>> > > Stable-dep-of: 3f0ab59e6537 ("xfrm: validate new SA's prefixlen using SA family when sel.family is unset")
+>
+>this is good fix to have in stable kernels
+>
+>>
+>> We can drop it, and the netfilter folks can provide us a backport of the
+>> fix above?
+>
+>It is an ipsec sub system patch.
+>Here is a backport. I compile tested it on 6.6. It will also apply to linx-6.1.y
+>To apply to older ones kernels, use -3.
 
-Applied to pci/for-linus for v6.12, thanks for the ping.
+I've replaced what we had in the queue with your backport, thanks!
 
-> ---
->  drivers/pci/pci.c | 14 +++++++++-----
->  1 file changed, 9 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-> index 7d85c04fbba2ae..225a6cd2e9ca3b 100644
-> --- a/drivers/pci/pci.c
-> +++ b/drivers/pci/pci.c
-> @@ -1067,8 +1067,15 @@ static void pci_std_enable_acs(struct pci_dev *dev, struct pci_acs *caps)
->  static void pci_enable_acs(struct pci_dev *dev)
->  {
->  	struct pci_acs caps;
-> +	bool enable_acs = false;
->  	int pos;
->  
-> +	/* If an iommu is present we start with kernel default caps */
-> +	if (pci_acs_enable) {
-> +		if (pci_dev_specific_enable_acs(dev))
-> +			enable_acs = true;
-> +	}
-> +
->  	pos = dev->acs_cap;
->  	if (!pos)
->  		return;
-> @@ -1077,11 +1084,8 @@ static void pci_enable_acs(struct pci_dev *dev)
->  	pci_read_config_word(dev, pos + PCI_ACS_CTRL, &caps.ctrl);
->  	caps.fw_ctrl = caps.ctrl;
->  
-> -	/* If an iommu is present we start with kernel default caps */
-> -	if (pci_acs_enable) {
-> -		if (pci_dev_specific_enable_acs(dev))
-> -			pci_std_enable_acs(dev, &caps);
-> -	}
-> +	if (enable_acs)
-> +		pci_std_enable_acs(dev, &caps);
->  
->  	/*
->  	 * Always apply caps from the command line, even if there is no iommu.
-> 
-> base-commit: dc5006cfcf62bea88076a587344ba5e00e66d1c6
-> -- 
-> 2.46.2
-> 
+-- 
+Thanks,
+Sasha
