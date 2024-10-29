@@ -1,119 +1,148 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5251D20514E;
-	Tue, 29 Oct 2024 11:37:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD227464;
+	Tue, 29 Oct 2024 11:40:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730201851; cv=none; b=L3+52HnCCpAbxMxhGiCEnIyu7gZF3HqFgwmKXfZ8EtZ4BSaZfTk6GTFDJazxkSuNiSRfqZah4eUcovo6VStQ7uMuQxThPHiKIVc6vwL9rcCDXbQ8HSs14BeoSGy7V+r5LbU5oX76+T3v1FlSdgU8oqa+YZE1S/M4ED/QQtqVeLg=
+	t=1730202058; cv=none; b=HUMoQMh7v9GX50WyqVstqddNpPVveLkFgYwQ4NYGFswK14u5v0xH2pT4P+1wYP5A9oGNlB0dg/InYEfWkFGIwuGSj6Bgwnh+gfGcelp8E1Y4cIug+JT3qcOi+cOmTr80w2eK0C2BciGZFRI6JFGK/4A/W0LoaYWeMsE6P348CXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730201851; c=relaxed/simple;
-	bh=o2E1FQYdtO20CbBV3qYSi9WtW0hUwUhugtlkNPHSqD4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dGFa5WfA7M1lvDMpjUmfiQllWhseMFhhfAsIdjcuF/wFQtGwPbisbAnpJh1b0j5qKq06pI3+RwzVQHi1Wr8gYbm7vvuRsxoiG8OmPfr88OrQg7ewPb58XvcnFyt2WR4SZ1njB6FXVsydMJbEvaWy2e7ht/XbUSM9wx3UKwYsGnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=a3uzFKdp; arc=none smtp.client-ip=212.227.126.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
+	s=arc-20240116; t=1730202058; c=relaxed/simple;
+	bh=381JEAKnbz7sVs3cmaS/BOoExIQYQV7M+X2a2z7oSf0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bClMRZCvQJpG1GJCN0k5sIwqIqXFYGo6yFjKm1V27ztJTeo05B3gSVObO3ozwIpPAcx/78LQne6kACrwKWZbFkSghkMZScJhNMv5Jh09mSYb/MKruwCwuOW1ROt5B32KMP+GimHtZ9Swdmo22069RodDaqu8FQj+/yLciKgRUJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ceOJa5Oq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="a3uzFKdp"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
-	s=s1-ionos; t=1730201801; x=1730806601; i=christian@heusel.eu;
-	bh=uPx/693D1KOpsC75//Rzve20O6pDdXOCslY44UXj3UY=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=a3uzFKdpOOt14foID4PhT1BsUt5A0v8QljsNVCUuy1AG/+rBtwZM3Vqfsf8P8D8B
-	 /oHKm0lPhAyB7QH6smn8ACK0XEZ7+kVknYY1FMkXHo2AiUFKOZoSnlT2YlAkav5BW
-	 xfbQKaRGSsOs9basaTQkICnL5pXZ2lqsRro4W/LDKnp2XZKKpM774nP3AZqYbzTEV
-	 r8FETuy/+O2oLrC8FUFCSMOTiWyxH6SDwjgOiU+H4XDgNnBkCP07iNr14Z7JtgcZN
-	 n+MG21EvdV8HoXDs8Ik83RlydH7Zs2DXRxbh4OvCX3/ybhWTPiQKSTdZ5jGSs87c4
-	 0rzlsLa1rJJKI2J4VQ==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from localhost ([141.70.80.5]) by mrelayeu.kundenserver.de (mreue009
- [212.227.15.167]) with ESMTPSA (Nemesis) id 1MfYHQ-1tlPw91vJY-00jaHv; Tue, 29
- Oct 2024 12:36:41 +0100
-Date: Tue, 29 Oct 2024 12:36:39 +0100
-From: Christian Heusel <christian@heusel.eu>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.11 000/261] 6.11.6-rc1 review
-Message-ID: <dc2297a1-aa4e-410c-b4a8-ded53a4a96a1@heusel.eu>
-References: <20241028062312.001273460@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ceOJa5Oq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5512C4CEE5;
+	Tue, 29 Oct 2024 11:40:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730202058;
+	bh=381JEAKnbz7sVs3cmaS/BOoExIQYQV7M+X2a2z7oSf0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ceOJa5OqAk9v0O7BRbX7XvvM2t7ozx0pxI7UjPZPlw5AtIomgQHTkqj59fODoUurx
+	 zzXL+zt1f9R62r5OkLys8jq4cQwTLGA5BdJ4/8snf29Om4ymB4H1OV7rG4g7WX+Pzd
+	 9nq9HC2Zx9w/1qy+38UNzjsBuWwnRqh6jgTCqg3lf3YZG5nKOMbu7059QWk0R5SDgS
+	 33CCRS3owTTU/vl6At+LM5VZrtZusiIqHA7LjbUdqJ03BM0Zxc0RsUzQfHaIq4/UZ6
+	 Lptbf/jeMVMkgQQck+HPJYWAumpVKMme2DjPHqAUs3TJTOOKmYE5XTzw8DBgrcvpUI
+	 5Swl0tmXRXimA==
+Message-ID: <ba1da208-22d8-4145-826f-9cfdc5c18eee@kernel.org>
+Date: Tue, 29 Oct 2024 12:40:54 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="25aaetkewxcot6dh"
-Content-Disposition: inline
-In-Reply-To: <20241028062312.001273460@linuxfoundation.org>
-X-Provags-ID: V03:K1:WIuvLVObM+VfqWn6SLKPhk5tdVFYSxFfqVmKE3oroCCtr5V3KKh
- RBBt5nPhCgyoXyaWF56Zh3v+KHwP4IV7bNMCGJTky/XCVzUb4BAYNij6bOlrxOuoS5nt2cB
- u5HNxu1kQpHkFPFDx2ZXff+xIt/DtvnRVfQoquYzUqmjJW+/mlV5YTogimmNVtBq0kOiV7m
- A6at6VnFVliIsRYIxHGeg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:63jAJymAGVo=;2PI09+GH+HHCSVCrYKZBEPwt33F
- oAHeoHmQK7dN4VZj2n/Lx9oPVyiXwk/oKv3PQVSKqdRabohlXS9tUx+MIrIE9RfgTiceVqI8I
- zoqh/DrTK35IgnSpCR/LCs0Zl1ui09Qy8h7HGT7ucJvvxhxXGPvvGAEOOMi7wqdpRNLkwSwwn
- w5n6QyJrhpOtq9SwkSRBwlqHWlYVXjuzixsujAYkUFZ0q+XaEn6/biS+6sQS2WShgA5LD9e1D
- fDTLzHRM1D725Qn4Uf238rIstYWj5FyuCz2++O3hlauckD8Ie69d5Wf/cz/2aeWO+ffklC0Me
- 2P0nnI5wwK+q/3Rv3z10riEhD9zmhGVOYi9rHetHScusVje833lduudZLSEhmCIDOPnOnywbI
- RQUkXiOEbsZu1FQ07YZffbjNQFihWpbYE4u+7TndaaHcBQF99Hb16RWaXZSYyHPRE1sUPTvjg
- OJOH8IK9MrgaUCRQ05DV9ty/bBr0DfW6ETjR6mojuSLsNIF8j7oLOWqDe9RLYQDGkuM1RRwD+
- cZm+EEYxyh4Tlcon5ItsQga+67nWqksWNTg5IZ+LhIWD0NSQHe/X/IiMfrolokq4wXA8Nsfp+
- nd1rmM/BdBpHXdU9R+VR7uh1w1ON2Lo0bZGjBKp4epp4FQDKBa7TovZflKDX4eDm2C0yKHsLD
- Nfas25zj0enoJ2x0hs5ulduXOHfHFw+Ei3J5EaRb0IaiZ/TiuMqeupF8lTihi8+rKuwXyyysv
- 6OAH6Fg8H9mKwvbDf5V75cJnAKtcxY5zg==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 068/137] tty/serial: Make
+ ->dcd_change()+uart_handle_dcd_change() status bool active
+To: Sasha Levin <sashal@kernel.org>, Jiri Slaby <jirislaby@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, Rodolfo Giometti <giometti@enneenne.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+References: <20241028062258.708872330@linuxfoundation.org>
+ <20241028062300.638911047@linuxfoundation.org>
+ <b80395aa-5e1a-4f9c-b801-34d0e1f96977@kernel.org> <ZyDGgPiAJBVWNJ18@sashalap>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <ZyDGgPiAJBVWNJ18@sashalap>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+On 29. 10. 24, 12:26, Sasha Levin wrote:
+> On Tue, Oct 29, 2024 at 06:59:55AM +0100, Jiri Slaby wrote:
+>> On 28. 10. 24, 7:25, Greg Kroah-Hartman wrote:
+>>> 6.1-stable review patch.  If anyone has any objections, please let me 
+>>> know.
+>>>
+>>> ------------------
+>>>
+>>> From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+>>>
+>>> [ Upstream commit 0388a152fc5544be82e736343496f99c4eef8d62 ]
+>>>
+>>> Convert status parameter for ->dcd_change() and
+>>> uart_handle_dcd_change() to bool which matches to how the parameter is
+>>> used.
+>>>
+>>> Rename status to active to better describe what the parameter means.
+>>>
+>>> Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+>>> Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+>>> Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+>>> Link: https://lore.kernel.org/r/20230117090358.4796-9- 
+>>> ilpo.jarvinen@linux.intel.com
+>>> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>>> Stable-dep-of: 40d7903386df ("serial: imx: Update mctrl old_status on 
+>>> RTSD interrupt")
+>>
+>> As I wrote earlier, why is this Stable-dep-of that one?
+> 
+> Here's the dependency chain:
+> 
+> 40d7903386df ("serial: imx: Update mctrl old_status on RTSD interrupt")
+> 968d64578ec9 ("serial: Make uart_handle_cts_change() status param bool 
+> active")
+> 0388a152fc55 ("tty/serial: Make ->dcd_change()+uart_handle_dcd_change() 
+> status bool active")
+> 
+> If you go to 6.1.y, and try to apply them in that order you'll see that
+> it applies cleanly. If you try to apply just the last one you'll hit a
+> conflict.
 
---25aaetkewxcot6dh
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 6.11 000/261] 6.11.6-rc1 review
-MIME-Version: 1.0
+Oh, well, so instead of taking two irrelevant and potentially dangerous 
+patches (0388a152fc55 + 968d64578ec9), this simple context fix should 
+have been in place:
+-       uart_handle_cts_change(&sport->port, !!usr1);
++       uart_handle_cts_change(&sport->port, usr1);
 
-On 24/10/28 07:22AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.11.6 release.
-> There are 261 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 30 Oct 2024 06:22:39 +0000.
-> Anything received after that time might be too late.
->
+Right?
 
-Tested-by: Christian Heusel <christian@heusel.eu>
+thanks,
+-- 
+js
+suse labs
 
-Tested on a ThinkPad E14 Gen 3 with a AMD Ryzen 5 5500U CPU and on the
-Steam Deck (LCD variant).=20
-
---25aaetkewxcot6dh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmcgyMcACgkQwEfU8yi1
-JYUrxw//aTJQRwtT6aLo2u3LUsuB4oC24QnzP0j6S8npCogqDQPFrTFLvBTdf1Sj
-Kg+BDVwShNg5Nc3pNG4VABEsVmrOWGhyZ9OaCZfPI+XXwuTJu/HWMCE1ja/3flo1
-maIEY9QBVRyjmvJH5jgD3h+q4VIYLUJ0h8oJDgrAudxOMPsQFOxpZqmgaGtUnOQM
-b+ngYsV0fifzyiL3BwpHAt+EDtE+qLx8KQaKI0os8S1bbSBESGFvK624rlmZLVzS
-TQsSGu+eOBqhGPgv8DwZ7AlIegw8MkTkToKTDW/MUVJ3m9dx+KOWUScN3qvZgFB7
-ycTl+hS174+9XrJRaS0pXBAe5kry8c2xrnzjQ1p6xoWnICTC+x0IGy9lhXi7nO16
-GYSfvhE5103WcMkXiLlvIPo1pUcKLv2JuKd/RLe+/LjzSeqDeK0BSSQwWDK6vJ4s
-QlmLtqpNNID+GaZNcs819yzxqpW2hOdqTQirLvX8LUJAUJeZqSGaJ/y0Om1RAvyh
-C7mUGzqzT1lTfezFk/Ug1Wct2tx9IAYwPaKbit644ACElqDVMA0dyOl+7Y4BFCEY
-7kBFv2yyRM3rCdzpNJskWmbuXDD+YK1hXSpbfPBBMNbm9vYNzweqO4+90KrGmUFm
-m/WpbaL2Fxy03m9JWwZ1gqZpIV6ZI/Vu0OqFo5U+MMYk71WdcEs=
-=41HY
------END PGP SIGNATURE-----
-
---25aaetkewxcot6dh--
