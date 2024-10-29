@@ -1,217 +1,203 @@
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A547B20262D
-	for <patches@lists.linux.dev>; Tue, 29 Oct 2024 07:34:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730187275; cv=none; b=bcYtWsGemIXdvAhYqLsU7bfBjJ25/h8ZF0Lh7DIGzLEgL6x8owbjIRtuv+oKOQrqtp2fZ+dr6LzCaAuz72ds/BrwQ1nTsHKcZlVTIhDUdDti60VbARBnH78ghlIx337CCtNdALsQpxEiZzUEk36my5NOYRo8ix+qflEOKaiPZ/Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730187275; c=relaxed/simple;
-	bh=5OfryaVqe/7qDVCKSYnz2mq60YQhL4bY0IP5WlW8nXs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U/49o1P+jZMLr8fexOZPHFphX3Dc1jAoYukMriFmPCW8bwrt+P/zphaH3SfUzGzmqDeDbm8xAyLUA7n4+QkZYxCnULBw1CF5203eLtqL59ENmu3CsECDyOzu6zdbPUJrVN6OrgidmEqR9iETiJiDHAfvDu/Qwwd/54oyAeXwYjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ayH4xXAO; arc=none smtp.client-ip=209.85.222.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45AE201027;
+	Tue, 29 Oct 2024 08:19:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1730189968; cv=fail; b=iMqLJeE6A4yamQ/SAD9d1Od+AaZc9o0YQpt5mY871pZFZAfSKxmbb/aLB6lmYUbqBtQOnJmKylK43vGRHtIn8NOP9E+mBjiypzWAxaReHFvGK8OgpYw4csWxFto6S+OOYc87uYq3cD+NUdA7aCEoEhoDBQVOyuK6SwQ5G+kI9us=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1730189968; c=relaxed/simple;
+	bh=zsKvR2wu6K64D4KhxP/42myAxogUujW50MePOsPJA+A=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=jrlqNabRnlvhgXif/bdszLJVzHLDxejZXDvnwuLXFbsMJgPrPXDRcmc+ERV3oe34RfaNvA2w0BeGk2zZbHQcyZx6AmEujusHZWLHEv95pjMdWnVouYHGwLbDAvy2Q3O359HpB4B5jX3SRvmmKtQ/U9xdYKaajJ0snxKHpkIVLI8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Pqzci5TN; arc=fail smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ayH4xXAO"
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-851e191d541so1469246241.1
-        for <patches@lists.linux.dev>; Tue, 29 Oct 2024 00:34:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1730187272; x=1730792072; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sS0iMBhICcFdQ7QgGswZXvWgJWVKFrZg1DQxHYILa+E=;
-        b=ayH4xXAOvS0yvFm+w9gLl89mE92UXZw2Zo3GL8jpNs+z/pM4prnLWMUDlXzZYB4bqm
-         KJKdJW5LlJ7Q0Ym/g0m9tzWcLqwqqmF7uVLh9gaen0uMegCaTlNsKWJzjvOXVhxkShcP
-         nH6Wv46aTWPYH03rllLStQIuDNHfXGA8u1yIml61SfQmtHIN/c+0VER6vDKiDFYCN1Ih
-         DgLc0W+jN58Ry+fMqdYtB0MpIMmTh3Lrbfhs9pyqCX7Y6L/uj8TgoHaoLz0oAEJSe271
-         jaZtMB85qA2JYxUwuU934ViShdj9kLr2/TLv/mhwch0kGhI+YKB92NR07ayIjMdhjGAU
-         n6hA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730187272; x=1730792072;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sS0iMBhICcFdQ7QgGswZXvWgJWVKFrZg1DQxHYILa+E=;
-        b=QNwXDc3OEWnYd78wj0kLwrimrG6gnXg24mAqQNcR9Tp/Zk5j7mqmPM+5QUiUbnIeqr
-         jU+6elX9e8panEeMTYZFbd4vODUtrFzOTkwTaWMCDnNggEWLr3oWUaBf/H+6qYer2ih5
-         qOvnSDnVJejPSz832E7LQXgaLWxst/VRehNLJDHbAajbj3qCGe2mcP3t8rK4EjZ+mbbc
-         9uXwOFvCrnay5zOX5e1zmId52SM3PIh+ZWtJmMJqPY0+3AfGmeGSwQGBVaJbRdZNa9bB
-         n4Xu5N8FJcAMj2vudsvy7yTw64jsmNGbRtmEK1RqrSMq8mhOggWNbOL+O2wBOyjt+/zs
-         z8cg==
-X-Forwarded-Encrypted: i=1; AJvYcCVjhau+kqe5GZxrYH7mUB+ZUzUu73JeW0enp1bXb7XhyMQ5X1aQ+lUdz+XOUCBj8rt09tmi6p1y@lists.linux.dev
-X-Gm-Message-State: AOJu0YzxX3PTfxbKKYe5923exhEzzrvimpX+2e1S0/CTJoKEtZlqlc4x
-	1ZSeRrG61uF035XsnO0n/ffhCOS+JpY/nAxQeJMnzrW/EP2pvfUizDFeL1DmrF4iVUBdTBvJMM8
-	wsxb3SxhUEENsRROvMdPuhFssAUnA1xKNvTht6Q==
-X-Google-Smtp-Source: AGHT+IHIPQQyza4Vs8m5RkTZ6ceQM7vTaMw8NB2Mj1CsFFSgoaiLpyCaWgB2VKizchlhCrVaX8asmpmcnXw0uGJ65W0=
-X-Received: by 2002:a05:6102:3e92:b0:493:c3b2:b5ba with SMTP id
- ada2fe7eead31-4a8cfb2b0c2mr10071510137.6.1730187272352; Tue, 29 Oct 2024
- 00:34:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Pqzci5TN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1730189965; x=1761725965;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=zsKvR2wu6K64D4KhxP/42myAxogUujW50MePOsPJA+A=;
+  b=Pqzci5TNVH+M2nHr6fvk+BzYdQRer9oZxw1X9fHjSeX+Yl0GrlGbTlVy
+   /NS7BZFBonwTfILegHWUnVhBUsnRzAgu2OR/SCcAIqE/tB+QeSoVMahM1
+   AQVGCGHayY2DgUId4POd/77AKkMv+Vbra64+vyLnTEXWeIiUBjlrpt6UO
+   zp/dPc9yU0EeRMJZh6kvAEN4lP/4IHR6JTci5/3grUk10dfMt75nPGehB
+   FoABWM0P5RaTvCfCm+b95IFnHKZyQ51r1U70OZHmTsqLN2qaxFTNqlrF4
+   JzBQwc8IJNiAnhQ2XxxBIoOHI9YN3IWCPDZgT5VjDDcHBuCVK1GJgbNZO
+   Q==;
+X-CSE-ConnectionGUID: WSd46BqNRSqpU+3UJTWxTA==
+X-CSE-MsgGUID: pGUtgDDJRGOPppHTgo3SNw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11239"; a="41212463"
+X-IronPort-AV: E=Sophos;i="6.11,241,1725346800"; 
+   d="scan'208";a="41212463"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2024 01:19:24 -0700
+X-CSE-ConnectionGUID: irouw2GrRRGuERDhYiOjfA==
+X-CSE-MsgGUID: V2C3XqsqRiazSk1x7WvT2Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,241,1725346800"; 
+   d="scan'208";a="82211387"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+  by fmviesa010.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 29 Oct 2024 01:19:24 -0700
+Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Tue, 29 Oct 2024 01:19:22 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Tue, 29 Oct 2024 01:19:22 -0700
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.170)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 29 Oct 2024 01:19:22 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=thaNdBK7fiWJo03pvB91Gvm3EProG4Ngysx0i5jaXuX3s8IHSkH98JhBsGSxerLCw0LNTx7XHPqeRFexXpbWv99u5e+LiJMebMoQPTBqypVzKuWnXcgY1CufZAiLHXWL09mFXYsw7u4pWs3/Vu7AY5EXtYyCFbNP3fNtzEFI9ObM2IfSQrQXr9Oq5BD3F3W+2IbyUAPo53e4TuNl3HHN5ThLsjehxYGp0vINumA2OO/CGIhu83AOaFtrVV7b9jm1F8mw7EONnhhJKsSuUBRs/llobJ8z3mUQN6MCJFQ6OUt+w3+ehtYbt1QvBgjLXJncd7Eoazsl6Qlm4UwsJko2dw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zsKvR2wu6K64D4KhxP/42myAxogUujW50MePOsPJA+A=;
+ b=XeX94zX/1SeepxNgEtldAcLOnxf5oAPYh6xnTSYYvkBqLe6uy59/I7hZ/p6L1yEDYbcfPPt/8Y+yU1UB/Zz0WXyMmuBq6YPEoBNOhnfFza9PpgCyWpEPZ1s2CkKDvRzlgbPTjNiAh8QFoy54HRgZ5iZ78vA6eSXKiz1aXwuwnaeqVls0UAKRjrFklJVwpYSZD+jqE1uD7lgG3bX6Na0QbpBMcauaYcriSIatbi+9PqH0fRBPRQ9IJpqs2ftWRW6sLMjns2ZTNKLIM5lq5ktyI92C+0yY/HkGmypMKGCagQXt0r1uwBISHaXw7wllAQ0G11sZ6huvfpyzAoqj2kuwtg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
+ by MW5PR11MB5785.namprd11.prod.outlook.com (2603:10b6:303:197::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8069.27; Tue, 29 Oct
+ 2024 08:19:19 +0000
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1]) by BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1%6]) with mapi id 15.20.8093.025; Tue, 29 Oct 2024
+ 08:19:17 +0000
+From: "Tian, Kevin" <kevin.tian@intel.com>
+To: Nicolin Chen <nicolinc@nvidia.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+	"will@kernel.org" <will@kernel.org>
+CC: "joro@8bytes.org" <joro@8bytes.org>, "suravee.suthikulpanit@amd.com"
+	<suravee.suthikulpanit@amd.com>, "robin.murphy@arm.com"
+	<robin.murphy@arm.com>, "dwmw2@infradead.org" <dwmw2@infradead.org>,
+	"baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>, "shuah@kernel.org"
+	<shuah@kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, "iommu@lists.linux.dev"
+	<iommu@lists.linux.dev>, "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, "linux-kselftest@vger.kernel.org"
+	<linux-kselftest@vger.kernel.org>, "eric.auger@redhat.com"
+	<eric.auger@redhat.com>, "jean-philippe@linaro.org"
+	<jean-philippe@linaro.org>, "mdf@kernel.org" <mdf@kernel.org>,
+	"mshavit@google.com" <mshavit@google.com>,
+	"shameerali.kolothum.thodi@huawei.com"
+	<shameerali.kolothum.thodi@huawei.com>, "smostafa@google.com"
+	<smostafa@google.com>, "Liu, Yi L" <yi.l.liu@intel.com>, "aik@amd.com"
+	<aik@amd.com>, "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: RE: [PATCH v5 02/13] iommufd/selftest: Add IOMMU_VDEVICE_ALLOC test
+ coverage
+Thread-Topic: [PATCH v5 02/13] iommufd/selftest: Add IOMMU_VDEVICE_ALLOC test
+ coverage
+Thread-Index: AQHbJzjJGHWG+R1oR0eGJ7dvq1rna7KdZ/jg
+Date: Tue, 29 Oct 2024 08:19:17 +0000
+Message-ID: <BN9PR11MB5276AF3CE6E70F13C7BBF0968C4B2@BN9PR11MB5276.namprd11.prod.outlook.com>
+References: <cover.1729897278.git.nicolinc@nvidia.com>
+ <fab524b7054fc38d71b6d7a46f90e1f97538d2eb.1729897278.git.nicolinc@nvidia.com>
+In-Reply-To: <fab524b7054fc38d71b6d7a46f90e1f97538d2eb.1729897278.git.nicolinc@nvidia.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|MW5PR11MB5785:EE_
+x-ms-office365-filtering-correlation-id: ee4e2d40-27d6-4ffa-71c8-08dcf7f261f8
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024|38070700018;
+x-microsoft-antispam-message-info: =?us-ascii?Q?5B/ZKMYhxMrnLrDcjyutXG9Z0WSNjxQNnronoKoz+gSA/JvoeGQ4Af13Jb/9?=
+ =?us-ascii?Q?7nlCYnw8TmvujMVvvQa5stFgR6Lof74GGjrmSV3m8SN6EVYX1/NYjSyUlIJm?=
+ =?us-ascii?Q?ojQAJ4Uy79mVd9CBPa4iv/IWerdAMaYj5OlG9/g6mMu5jI7OHn6SkA2dCMxT?=
+ =?us-ascii?Q?5aQiD1GTeOBKgZhqoRFMNIpOx8gh/tWtA80qwr8r35xg5bMSRd4f5kLc3+mu?=
+ =?us-ascii?Q?DVJCXJC0SLrd7ZLomSkFDTF6oJ0gLmwUBhUqzF7etr5GAy++UPrtODVns3xJ?=
+ =?us-ascii?Q?FcNNQOvpONGQ1Mz6AQ9Bmv7Gkgc+VUEI5fLrhk5ltKpqzTF3kI14LhboXj3y?=
+ =?us-ascii?Q?z55g07JPB04v/Q8FH5oSO2v1BTF26slozs1UTGlKmY/zUvJCnYFILckhhoLc?=
+ =?us-ascii?Q?giNuB0f8848n6vv4VsmHPKTavJH2eJFBVmwQBIBLYe7CEW4i9d41/vY8s25N?=
+ =?us-ascii?Q?D5RvqCO/FyohcuYj83i3x1hbhUS54L7K0UjcoX/A8LCP23Iqk+tMtd7CWp9F?=
+ =?us-ascii?Q?GEl5A+G5INsIBxEMeikSI9FWOk06A+AfMZweATmepydMPrxMUthigwgks1En?=
+ =?us-ascii?Q?fPBSKlbIe1e/KNLXwIoZ9pBiNMgovwjSpJQczSMd3juZo3QhIaM/O5zP6spJ?=
+ =?us-ascii?Q?iDnil+52Uo8h5yUo6X9TYugXsOEHTXOUOLRWIz7fecUp+ySkLJOabYJmzRIZ?=
+ =?us-ascii?Q?ZZ24b74ZJQ24F9RBt2PkcvhZuULMeRF88Ac+ezAr2p3/cpog/rvTL3bIkaJo?=
+ =?us-ascii?Q?4Imj82OMLBphVcpO41nzNVECZx6k9ynXaGvOClTe6ZD95vmM6X8mA6bura1e?=
+ =?us-ascii?Q?FbVj1aB/HpTL+7FH+LsAEnZ+OqxmcIASzTZHJE8xVXhIeQD3cFbtihTTK8be?=
+ =?us-ascii?Q?hDR6e5lwbnxHzhIEr4XC45QhiB6sK5c0Jex/FfsmjzSKF+9KZfbab/a11CW3?=
+ =?us-ascii?Q?Ml5BEujHV/iHNLurTa55gXv8VYpd2w2KZpJfo92H9dfM8ngEZ3vZfS5+ww3r?=
+ =?us-ascii?Q?UVv0q5cfOnW7SxInyjWZ6l1AG0jo1eFjVHJMNvWD8gB0ZXP/1c9ZMr2wcGhP?=
+ =?us-ascii?Q?iUnn674FTdgEf80UhG1eC1VEpDJGahnXoOpJst1RBeZc0Drt4WCByJhHULtC?=
+ =?us-ascii?Q?MH1yVXIJ6iy4pZU7Bo7/2f0+SqN4TF2PlIJZiuRciWqp+PKRF4Az5vk0vl5d?=
+ =?us-ascii?Q?ZjonuRb6B30Eta8YbBNVrQaMWorkmM/1MhhyN6Ua/B1h0/Pbf/ECmzsp4nDs?=
+ =?us-ascii?Q?orAs2USuYM+uM5UNHGS58/k59eNI396z9G6BA55aQHrSkEHXy3vJuZaw9qFE?=
+ =?us-ascii?Q?i9t+k0ci6ymbj9/xsJ2VdItEKVvKeOdVrYnoNjhUt3XIx9oCTVO6pmH9KY1c?=
+ =?us-ascii?Q?7lg2iUs=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?9crFKV3kN2pagA51T0drG4QVnjsMAPfFr8GqLUjeZAOtN1Tkv7ULwMirOuBy?=
+ =?us-ascii?Q?m1E1+7fNlrX8Gbzqk7WhDqDGhQQU3KpoIbyWpEry7XwFUDI4yHTjrIFBRh8K?=
+ =?us-ascii?Q?/cwn1m1Gu5fi1yx/hoprE4y5PDLDB8pECufFIYD0x1apv22TE4tAc2BPZhst?=
+ =?us-ascii?Q?3rDFg8WsZi2i/jjVSZfx1LRJY6pLxdFstrbRJlmMDKq5IULF4qhs62oZ+Uxy?=
+ =?us-ascii?Q?C0XkO/mqgX7X+t14wuARkyB52SkoHVMKx9ae/eSwimPiK9GD6H1M4JlHexlU?=
+ =?us-ascii?Q?hBH2cwyXhJ6oPPSMwR/tevVlI90vvwr/tDnv0aw3rA2kJKCE2W0sG0OG6qcS?=
+ =?us-ascii?Q?j8/YjbY4IVg4LkrvOe5joSn4diq5aaLwq5Ruamuqhg8zSBP2swblanim6TBD?=
+ =?us-ascii?Q?VreCWj931P3FmdJ3b9K2rGcG9HIFPstLl++9Rwr0wQoSMBE6X3HjvVQ7tJ+j?=
+ =?us-ascii?Q?/8Wj6aLecGek5JvV7ySSRkdHyAwFlt1HJoQUDlmA9vh8OnpsU6HyDo5C14hA?=
+ =?us-ascii?Q?rTMFaiJpSrfs1VWq3mSVipjNwOPkcVjz3M2esvPMjUr5rd1yePQLF0l2/xW+?=
+ =?us-ascii?Q?tL473q0D/Bf+nYN2zxbW/3lZMyjlVVjd1EDIRziWbBukcH44ySKhSSmjVOZ2?=
+ =?us-ascii?Q?1C0JqaVM4J/qFQmsZQ25ZVhC0AwbTan3gc7y6OvsXkfR/XIPCIUBkSjVbB08?=
+ =?us-ascii?Q?ThaeilnrpYRpZUShDxVw9C4P66l03LXmwV+Au3e7C35SQaT9HXjIYJTQsjT4?=
+ =?us-ascii?Q?s4z/lC6FCIvoE7PRJKUOYELS+MEBvRLOqUUOeGsBvbX9j/O63vL1HuGBR/2v?=
+ =?us-ascii?Q?fAzB30fFB1ZB4ZLUqwKPokzYM7qJ68FFnH5dGp563UvzWv89SJkKnm6fe6Wz?=
+ =?us-ascii?Q?H8DNc/NaaQkKd286XN3zJgCUVkmVimA0AdSVA93qrBreyRt0FSgrxrxrEaUk?=
+ =?us-ascii?Q?A8/3IKpxn35E51DSck55jYr5yu3ha5l2CFbqncDxEp7UA9OcviJ8UV7j+uEu?=
+ =?us-ascii?Q?nPZHKvOW0KvXdzD6/BSSZ/8ax8AVEWBUdzECEwhEgb7JuPyH0PuzJ6WW7FOM?=
+ =?us-ascii?Q?I0Ng57lvnUovJzb0mv8E2xfDgfWYUNnydwkwlSR7FIt7VAHAeHUiEn5Ys49H?=
+ =?us-ascii?Q?fz5RVeOo3JSVBiEoCj2hxeCYn/nXmwuvz7vhCoN5OX4ijsIsZ/IbDe5KSZGl?=
+ =?us-ascii?Q?chcYQjQjqrQTE+lpqo9tTLzoXto3x7VZUQrBib0aImcIySR5bSzEY2y4XZc2?=
+ =?us-ascii?Q?UDKf14/Lk0ZItjJ5Ubdap4U25lACTeD6ZNJRApqxuOxpCdaS1fxd2LKgRenr?=
+ =?us-ascii?Q?5nF+83DUOSGeb48eFiSFEe7Xpw0KukTv92QZ+dGXkMavcjwgzjZebkZLvD2M?=
+ =?us-ascii?Q?8YGkev03bJfY3o0HdysRYVJYPDqygsuV7lsJUz3x19n/3rQKFS3T/xOZiitX?=
+ =?us-ascii?Q?RgXyx2jePXrhb+M73XL4ggEECaAYZs/xQwFXpuYg2VXlvTb5e5hMwDcJoGer?=
+ =?us-ascii?Q?wQezXJBPYV5uvIx/vncgHC4xNWq9/JvFHA6W+MaEa8IDy/YCgYARsfLIGDqk?=
+ =?us-ascii?Q?7Z7x3hJJs8O0vPgdb7O1lMn0fdyXPodKRO+bW4T5?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241028062252.611837461@linuxfoundation.org>
-In-Reply-To: <20241028062252.611837461@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 29 Oct 2024 13:04:20 +0530
-Message-ID: <CA+G9fYssH1ZMstdHPMGtD6+VmJnVYTZL8hPPyRWEEf7Vasm2Tg@mail.gmail.com>
-Subject: Re: [PATCH 5.15 00/80] 5.15.170-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ee4e2d40-27d6-4ffa-71c8-08dcf7f261f8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Oct 2024 08:19:17.7051
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ZGfoHosDkPuLR8Q6zQzFX9XvQLBIWNuLlVeR1Y1EDrZuSodnSc1vRDm3ItuC6XdW46TWHVVEfOe6QY3n4mey1Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR11MB5785
+X-OriginatorOrg: intel.com
 
-On Mon, 28 Oct 2024 at 11:58, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.15.170 release.
-> There are 80 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 30 Oct 2024 06:22:39 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.15.170-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Saturday, October 26, 2024 7:51 AM
+>=20
+> Add a vdevice_alloc op to the viommu mock_viommu_ops for the coverage
+> of
+> IOMMU_VIOMMU_TYPE_SELFTEST allocations. Then, add a vdevice_alloc
+> TEST_F
+> to cover the IOMMU_VDEVICE_ALLOC ioctl.
+>=20
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 
-
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
-
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-## Build
-* kernel: 5.15.170-rc1
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
-rc.git
-* git commit: cebe213d2a87dfac79e970b8902e0c80cfffae9b
-* git describe: v5.15.168-164-gcebe213d2a87
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
-.168-164-gcebe213d2a87
-
-## Test Regressions (compared to v5.15.168-83-g4d74f086d8cf)
-
-## Metric Regressions (compared to v5.15.168-83-g4d74f086d8cf)
-
-## Test Fixes (compared to v5.15.168-83-g4d74f086d8cf)
-
-## Metric Fixes (compared to v5.15.168-83-g4d74f086d8cf)
-
-## Test result summary
-total: 68730, pass: 51797, fail: 1825, skip: 15012, xfail: 96
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 102 total, 102 passed, 0 failed
-* arm64: 29 total, 29 passed, 0 failed
-* i386: 23 total, 23 passed, 0 failed
-* mips: 22 total, 22 passed, 0 failed
-* parisc: 3 total, 3 passed, 0 failed
-* powerpc: 24 total, 24 passed, 0 failed
-* riscv: 8 total, 8 passed, 0 failed
-* s390: 9 total, 9 passed, 0 failed
-* sh: 10 total, 10 passed, 0 failed
-* sparc: 6 total, 6 passed, 0 failed
-* x86_64: 25 total, 25 passed, 0 failed
-
-## Test suites summary
-* boot
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-filesystems-epoll
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-kcmp
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-mincore
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-watchdog
-* kselftest-x86
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
