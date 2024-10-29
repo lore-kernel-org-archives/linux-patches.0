@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B13920720D
-	for <patches@lists.linux.dev>; Tue, 29 Oct 2024 17:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FEE20721E
+	for <patches@lists.linux.dev>; Tue, 29 Oct 2024 17:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730222926; cv=none; b=Fwa5GDB7gBCoVDyheS5uDpb4XX1oO1PPDEuKVxsWfJ/FCMF6ltuVi5oF5dMs6122ZQ/KhYLVhJt1zwZP87dwNqmRJtE1/MEneWXB9YrSe4iU2EIbzYl5rN1FBsQDAiBLMFbgKCBiQIGecXlZAzqVmqMRD7rcP63Ikd4FCMD3428=
+	t=1730222926; cv=none; b=l0d2hBUK8KrpTjIkkm/B42cd5mnBVtKpIr+Jx37+GmA7XMBxU1cwEV4MiTDnZ87XycEusJo99WsoTG+nxXDanetKydTOdF/Uc7kvMagTckzhSgrR5oRQJqYte9gIVV/kIuFvszi0D1RLvXNse9Ef1BwkudmKZhsPXAhyLipxS1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1730222926; c=relaxed/simple;
-	bh=v+xCJOJVDhdzdFGOhm7Qwh+e7FfyEjIfLSDzmGGOMgQ=;
+	bh=miXmdTqCp2YZmLRjd/Hq5yASIhebLezdHmtBpTOcFW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X0JFhGviJUQYbgUaNe5M0EISGzq4iONYpxtNavEtvSvktg47QuTsheHWDPtqQNFwKGET47wPtWKa8RN23avz1FG24EVNi5Tx4R2q1aXJuAuJiTWidNwLf3/xT1M2xdmgoIX/anq+UnqiiuULIvHJUAG210WZkoHfSXTn4AfTgZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hs873iJA; arc=none smtp.client-ip=192.198.163.16
+	 MIME-Version; b=GN/Tl/esVWGtr1v9LcFxNOlBw4Pn+luvVBCdEfxrGfTRYVWcfTF7WkQGNrz2DDVm2lYEhar+JNy8tf6nAFkh9S6mBZoETHIv2/EFoKt8lFVfdwUpykd9+nALVc0b5nF0RCcwV8edRxfahH4baTC2ntT7FILFHrNHLLVloDxAMZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Bcg3q6ql; arc=none smtp.client-ip=192.198.163.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hs873iJA"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Bcg3q6ql"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1730222922; x=1761758922;
+  t=1730222923; x=1761758923;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=v+xCJOJVDhdzdFGOhm7Qwh+e7FfyEjIfLSDzmGGOMgQ=;
-  b=hs873iJAWrfLFejv1z1za4r7Y9MWHExBT+6unb+keVOZd7kjI5dnFnFj
-   OPbocuYiP3WUsTFHSawx3RWRY8+ib3BbcbTCYWHbw2mjo6wJsCNy9XhGh
-   EV3CrAYdFb5za1QUoKXEY/F/z23R6xiwbSKK3ZCNLgDb16h0vdTWVqD9H
-   0gg3Gt+cE70OU5ZNxVuoI37QZD2cOg4bhbTVgnxdw2n/VCk3ZN8XQM0kF
-   zG2OQsYn3pMNzeUYXnlvKRDrpLSQfFakdUwJsG2ndFg7IMwKAVa+oviV0
-   tTzEzzTGYIcX71YHMFHbOEYzbQ9NjbqmIP3oKuM6kOLNx7hag8vfUWzvg
+  bh=miXmdTqCp2YZmLRjd/Hq5yASIhebLezdHmtBpTOcFW8=;
+  b=Bcg3q6qlqZ3OvrEH1LcUEE0wEhSOioRarBaX4xP2G9Jpj9pHUZY+Kuen
+   c8soBv9eBrVsixHfPd/xF/CbI/j72th2LWx/Asbv0jaumZBBo7CqPrAhF
+   Try2SYL9KlMF0UliC2ZiJs4Gtt9KRnsLvokO4y57dziy1olYVyA0z/X1Z
+   +5It+09iQqmLVBSyUIk+WntJPtVVcU39G12SzpknLSuQqdq4g08PTqCpl
+   +FH5lP8jqjx8DmIgq5JUbQV8XysJ1CeeFgfARmHyuHZf45Yvj9i5NYb3t
+   mNGqBUWswSSRKzCCHcve47I2J/0Ah6S5HYs2Rkt9hVsYXeggx8VAKdGEK
    Q==;
-X-CSE-ConnectionGUID: mvfc7LTbS1qk9XM+TkXXgw==
-X-CSE-MsgGUID: nWF6/vDGTGe1802E279NmQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11240"; a="17515667"
+X-CSE-ConnectionGUID: k4olgGmXTJuWJl7g1UBFMw==
+X-CSE-MsgGUID: 0EDUpiShSOCJz4zAxl5JLg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11240"; a="17515678"
 X-IronPort-AV: E=Sophos;i="6.11,241,1725346800"; 
-   d="scan'208";a="17515667"
+   d="scan'208";a="17515678"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
   by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2024 10:28:39 -0700
-X-CSE-ConnectionGUID: YbGM6yPjRA+TbtWKUmg+QQ==
-X-CSE-MsgGUID: apXHOrM1RPSSX9LhriNZUA==
+X-CSE-ConnectionGUID: hKlsxY9cSCierr3EPk7ONw==
+X-CSE-MsgGUID: d3m9/S7TS7WFH6LcqPhbpg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.11,241,1725346800"; 
-   d="scan'208";a="81585603"
+   d="scan'208";a="81585606"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
   by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2024 10:28:39 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -59,9 +59,9 @@ Cc: James Morse <james.morse@arm.com>,
 	linux-doc@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v8 3/7] x86/resctrl: Refactor mbm_update()
-Date: Tue, 29 Oct 2024 10:28:28 -0700
-Message-ID: <20241029172832.93963-4-tony.luck@intel.com>
+Subject: [PATCH v8 4/7] x86/resctrl: Relax checks for mba_MBps mount option
+Date: Tue, 29 Oct 2024 10:28:29 -0700
+Message-ID: <20241029172832.93963-5-tony.luck@intel.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241029172832.93963-1-tony.luck@intel.com>
 References: <20241029172832.93963-1-tony.luck@intel.com>
@@ -73,109 +73,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Computing memory bandwidth for all enabled events resulted in
-identical code blocks for total and local bandwidth in mbm_update().
-
-Refactor with a helper function to eliminate code duplication.
-
-No functional change.
+This option may be used with any memory bandwidth monitoring event.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/monitor.c | 69 ++++++++++-----------------
- 1 file changed, 24 insertions(+), 45 deletions(-)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index 3ef339e405c2..1b6cb3bbc008 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -829,62 +829,41 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_mon_domain *dom_mbm)
- 	resctrl_arch_update_one(r_mba, dom_mba, closid, CDP_NONE, new_msr_val);
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index dbfb9d11f3f8..5034a3dd0430 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -2345,7 +2345,7 @@ static bool supports_mba_mbps(void)
+ 	struct rdt_resource *rmbm = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
+ 
+-	return (is_mbm_local_enabled() &&
++	return (is_mbm_enabled() &&
+ 		r->alloc_capable && is_mba_linear() &&
+ 		r->ctrl_scope == rmbm->mon_scope);
  }
- 
--static void mbm_update(struct rdt_resource *r, struct rdt_mon_domain *d,
--		       u32 closid, u32 rmid)
-+static void mbm_update_one_event(struct rdt_resource *r, struct rdt_mon_domain *d,
-+				 u32 closid, u32 rmid, enum resctrl_event_id evtid)
- {
- 	struct rmid_read rr = {0};
- 
- 	rr.r = r;
- 	rr.d = d;
-+	rr.evtid = evtid;
-+	rr.arch_mon_ctx = resctrl_arch_mon_ctx_alloc(rr.r, rr.evtid);
-+	if (IS_ERR(rr.arch_mon_ctx)) {
-+		pr_warn_ratelimited("Failed to allocate monitor context: %ld",
-+				    PTR_ERR(rr.arch_mon_ctx));
-+		return;
-+	}
-+
-+	__mon_event_count(closid, rmid, &rr);
-+
-+	if (is_mba_sc(NULL))
-+		mbm_bw_count(closid, rmid, &rr);
-+
-+	resctrl_arch_mon_ctx_free(rr.r, rr.evtid, rr.arch_mon_ctx);
-+}
- 
-+static void mbm_update(struct rdt_resource *r, struct rdt_mon_domain *d,
-+		       u32 closid, u32 rmid)
-+{
- 	/*
- 	 * This is protected from concurrent reads from user
- 	 * as both the user and we hold the global mutex.
- 	 */
--	if (is_mbm_total_enabled()) {
--		rr.evtid = QOS_L3_MBM_TOTAL_EVENT_ID;
--		rr.val = 0;
--		rr.arch_mon_ctx = resctrl_arch_mon_ctx_alloc(rr.r, rr.evtid);
--		if (IS_ERR(rr.arch_mon_ctx)) {
--			pr_warn_ratelimited("Failed to allocate monitor context: %ld",
--					    PTR_ERR(rr.arch_mon_ctx));
--			return;
--		}
--
--		__mon_event_count(closid, rmid, &rr);
--
--		/*
--		 * Call the MBA software controller only for the
--		 * control groups and when user has enabled
--		 * the software controller explicitly.
--		 */
--		if (is_mba_sc(NULL))
--			mbm_bw_count(closid, rmid, &rr);
--
--		resctrl_arch_mon_ctx_free(rr.r, rr.evtid, rr.arch_mon_ctx);
--	}
--	if (is_mbm_local_enabled()) {
--		rr.evtid = QOS_L3_MBM_LOCAL_EVENT_ID;
--		rr.val = 0;
--		rr.arch_mon_ctx = resctrl_arch_mon_ctx_alloc(rr.r, rr.evtid);
--		if (IS_ERR(rr.arch_mon_ctx)) {
--			pr_warn_ratelimited("Failed to allocate monitor context: %ld",
--					    PTR_ERR(rr.arch_mon_ctx));
--			return;
--		}
--
--		__mon_event_count(closid, rmid, &rr);
--
--		/*
--		 * Call the MBA software controller only for the
--		 * control groups and when user has enabled
--		 * the software controller explicitly.
--		 */
--		if (is_mba_sc(NULL))
--			mbm_bw_count(closid, rmid, &rr);
-+	if (is_mbm_total_enabled())
-+		mbm_update_one_event(r, d, closid, rmid, QOS_L3_MBM_TOTAL_EVENT_ID);
- 
--		resctrl_arch_mon_ctx_free(rr.r, rr.evtid, rr.arch_mon_ctx);
--	}
-+	if (is_mbm_local_enabled())
-+		mbm_update_one_event(r, d, closid, rmid, QOS_L3_MBM_LOCAL_EVENT_ID);
- }
- 
- /*
+@@ -2772,7 +2772,7 @@ static int rdt_parse_param(struct fs_context *fc, struct fs_parameter *param)
+ 		ctx->enable_cdpl2 = true;
+ 		return 0;
+ 	case Opt_mba_mbps:
+-		msg = "mba_MBps requires local MBM and linear scale MBA at L3 scope";
++		msg = "mba_MBps requires MBM and linear scale MBA at L3 scope";
+ 		if (!supports_mba_mbps())
+ 			return invalfc(fc, msg);
+ 		ctx->enable_mba_mbps = true;
 -- 
 2.47.0
 
