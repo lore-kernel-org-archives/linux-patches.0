@@ -1,130 +1,122 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E7C1CC17A;
-	Tue, 29 Oct 2024 18:03:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAE6143C69;
+	Tue, 29 Oct 2024 18:16:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730225007; cv=none; b=SaC99y8bf/JpkjtFijDxF1xzaId3dppdoV4iXldQgcTa/0KjHtms1fYOtWKw+i9HDodbHpXcYdGSCP2udMBI3YuEeiBjq7YyjVw+/5RAkqZLzTFKXz9tyEiO5rj82RCP8+pMqHemUQSSEmetTRAf6qrMHK/nwqG7BQlbFLwwc9Q=
+	t=1730225780; cv=none; b=ohsyelU66HHnwyle7bdTPFET4EGtdNfKFMXYOiAAS7HK8F4IGDQbQdkRr4co+faaD+A85i/qi5cHDHSo8r5RV2Pd/RGpNSRZ34iRqECS+xgH3Xeti1L4fljXVLUhRbZoFwUlw5wKGwB43wmS9wpv7pdLJhwRpy20gM87vDsKOfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730225007; c=relaxed/simple;
-	bh=C/GT3/MV2r2ZFBy8la1FZVSQ41bIaf1c7/loELK6fWY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=p8ZfYy1DRawFx5JnQnd6CfEWBXgegFGFb8MuPefSw6eKg5y+z085LfpMsg0QOkJtE8vdYq9rXZWbDOJbn4Yrm+5A1+bJ6GcqVylpMvcxD2eSs+zTZPu6Tz0QHdu61R/qMzQDu6D2pkWAiyjYafFF0w4DY2t8DoDhrPw3Ppim9Mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=ND5lZs3n; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1730225780; c=relaxed/simple;
+	bh=h/W+10MsplW2v1+o0mJGvMzXwQ1SiArm3GGYR2TcSz0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oUfvclhqFg/ddIQ/eR0oBQgmQHnNENB9g7kz93nctwN+FO4A2fsmsK1fYUIMiOpfDD02tXth/6ilLLIn9kxBxReg9j2bygVjhj+UQbJEGDqa3JJks90K0FBcO/glZHcUqY9iVadofbewb6ntwZDwC3kP0rEoIfeKBC/SlGF/j6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YRnBadkG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="ND5lZs3n"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=lwbJmh1PCl4h+C9x95tF2TgfKWDeqqY9+Q5LABG3WUQ=; b=ND5lZs3nf8RPSKRSA48epip7WN
-	QBiINdDqPV/J4uBzg/c8uqxWyOoQRH8PrVBvu8fhKOP4M4hjOwWSmC+RPoVXFh+HiexaSrIPX9a/X
-	s5TTMekEHssMglS1XcsYX94hqC0zrMeAHzABdFMEByLPIAlMewFUyvNFTeEVpYot+nCUt4NxoTCw9
-	J+V5Y1lBYl8VNKFKQO3d18RoZMqJLS/Ny/E/7YfyyLfL8APgcbIZkexaXo9Q/6X113F0aYaYVzKiH
-	1smUB6UyhHd9d3VrYU3LdALaBlnConj7la+/iflG3LLZYgZV6lZU8cpgeF7OGuaT6FhQmWsbLqpNG
-	TMI/GmzA==;
-Received: from [50.53.2.24] (helo=bombadil.infradead.org)
-	by bombadil.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
-	id 1t5qYt-0000000FRPw-1aBx;
-	Tue, 29 Oct 2024 18:03:23 +0000
-From: Randy Dunlap <rdunlap@infradead.org>
-To: linux-doc@vger.kernel.org
-Cc: patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Bagas Sanjaya <bagasdotme@gmail.com>
-Subject: [PATCH v2] Documentation: admin: reorganize kernel-parameters intro
-Date: Tue, 29 Oct 2024 11:03:20 -0700
-Message-ID: <20241029180320.412629-1-rdunlap@infradead.org>
-X-Mailer: git-send-email 2.47.0
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YRnBadkG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84350C4CECD;
+	Tue, 29 Oct 2024 18:16:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730225779;
+	bh=h/W+10MsplW2v1+o0mJGvMzXwQ1SiArm3GGYR2TcSz0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YRnBadkGj/UfYKc4eZD1UvrqnXfGSBc1jHPSFAijs7IL4izeg/gEfntn9KldBFgDs
+	 kZEiXAXLHalZ/LW/Yvtt5BLh2Ap0haJiVpoIhxlkv1AGFmrtm8hBi3ntsygY4CXUf1
+	 y1lbm8BAYdPIvyrNG6bGDaAyj7hUpZg9CxjMFOC0zl7lspyJ0plkOyM2O11XnXAS9k
+	 81NMaO/fnX1fZsEF04oDosNXSr0bjREyIcJDGqLXpUIrFak1w/yAOSh7czfZNKMdN7
+	 ksIAwT37MCB4ovok+6dmBSxCvXDzjoipX2074HJ2aoFxqsq4G1Em3ntkLshsipbzuz
+	 54s40WihhAMZA==
+Date: Tue, 29 Oct 2024 14:16:17 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Jiri Slaby <jirislaby@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Rodolfo Giometti <giometti@enneenne.com>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: Re: [PATCH 6.1 068/137] tty/serial: Make
+ ->dcd_change()+uart_handle_dcd_change() status bool active
+Message-ID: <ZyEmce1_x7tiEdF_@sashalap>
+References: <20241028062258.708872330@linuxfoundation.org>
+ <20241028062300.638911047@linuxfoundation.org>
+ <b80395aa-5e1a-4f9c-b801-34d0e1f96977@kernel.org>
+ <ZyDGgPiAJBVWNJ18@sashalap>
+ <ba1da208-22d8-4145-826f-9cfdc5c18eee@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <ba1da208-22d8-4145-826f-9cfdc5c18eee@kernel.org>
 
-Reorganize the introduction to the kernel-parameters file to place
-related paragraphs together:
+On Tue, Oct 29, 2024 at 12:40:54PM +0100, Jiri Slaby wrote:
+>On 29. 10. 24, 12:26, Sasha Levin wrote:
+>>On Tue, Oct 29, 2024 at 06:59:55AM +0100, Jiri Slaby wrote:
+>>>On 28. 10. 24, 7:25, Greg Kroah-Hartman wrote:
+>>>>6.1-stable review patch.  If anyone has any objections, please 
+>>>>let me know.
+>>>>
+>>>>------------------
+>>>>
+>>>>From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+>>>>
+>>>>[ Upstream commit 0388a152fc5544be82e736343496f99c4eef8d62 ]
+>>>>
+>>>>Convert status parameter for ->dcd_change() and
+>>>>uart_handle_dcd_change() to bool which matches to how the parameter is
+>>>>used.
+>>>>
+>>>>Rename status to active to better describe what the parameter means.
+>>>>
+>>>>Acked-by: Rodolfo Giometti <giometti@enneenne.com>
+>>>>Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+>>>>Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+>>>>Link: https://lore.kernel.org/r/20230117090358.4796-9- 
+>>>>ilpo.jarvinen@linux.intel.com
+>>>>Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>>>>Stable-dep-of: 40d7903386df ("serial: imx: Update mctrl 
+>>>>old_status on RTSD interrupt")
+>>>
+>>>As I wrote earlier, why is this Stable-dep-of that one?
+>>
+>>Here's the dependency chain:
+>>
+>>40d7903386df ("serial: imx: Update mctrl old_status on RTSD interrupt")
+>>968d64578ec9 ("serial: Make uart_handle_cts_change() status param 
+>>bool active")
+>>0388a152fc55 ("tty/serial: Make 
+>>->dcd_change()+uart_handle_dcd_change() status bool active")
+>>
+>>If you go to 6.1.y, and try to apply them in that order you'll see that
+>>it applies cleanly. If you try to apply just the last one you'll hit a
+>>conflict.
+>
+>Oh, well, so instead of taking two irrelevant and potentially 
+>dangerous patches (0388a152fc55 + 968d64578ec9), this simple context 
+>fix should have been in place:
+>-       uart_handle_cts_change(&sport->port, !!usr1);
+>+       uart_handle_cts_change(&sport->port, usr1);
+>
+>Right?
 
-- move module info together and near the beginning
-- add a Special Handling section for dashes, underscores, double quotes,
-  cpu lists, and metric (KMG) suffixes. Expand the KMG suffixes to
-  include TPE as well.
-- add a Kernel Build Options section
+No :)
 
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Bagas Sanjaya <bagasdotme@gmail.com>
----
- Documentation/admin-guide/kernel-parameters.rst |   36 ++++++++------
- 1 file changed, 23 insertions(+), 13 deletions(-)
+1. If we make changes like the above, future patches that touch that
+code simply fail to backport, no one cares enough to fix them up, and
+older trees stop getting those fixes. Staying aligned with upstream
+means less work in the longer term.
 
---- linux-next-20241025.orig/Documentation/admin-guide/kernel-parameters.rst
-+++ linux-next-20241025/Documentation/admin-guide/kernel-parameters.rst
-@@ -27,6 +27,16 @@ kernel command line (/proc/cmdline) and
- when it loads a module, so the kernel command line can be used for
- loadable modules too.
- 
-+This document may not be entirely up to date and comprehensive. The command
-+"modinfo -p ${modulename}" shows a current list of all parameters of a loadable
-+module. Loadable modules, after being loaded into the running kernel, also
-+reveal their parameters in /sys/module/${modulename}/parameters/. Some of these
-+parameters may be changed at runtime by the command
-+``echo -n ${value} > /sys/module/${modulename}/parameters/${parm}``.
-+
-+Special handling
-+----------------
-+
- Hyphens (dashes) and underscores are equivalent in parameter names, so::
- 
- 	log_buf_len=1M print-fatal-signals=1
-@@ -39,8 +49,8 @@ Double-quotes can be used to protect spa
- 
- 	param="spaces in here"
- 
--cpu lists:
------------
-+cpu lists
-+~~~~~~~~~
- 
- Some kernel parameters take a list of CPUs as a value, e.g.  isolcpus,
- nohz_full, irqaffinity, rcu_nocbs.  The format of this list is:
-@@ -82,12 +92,17 @@ so that "nohz_full=all" is the equivalen
- The semantics of "N" and "all" is supported on a level of bitmaps and holds for
- all users of bitmap_parselist().
- 
--This document may not be entirely up to date and comprehensive. The command
--"modinfo -p ${modulename}" shows a current list of all parameters of a loadable
--module. Loadable modules, after being loaded into the running kernel, also
--reveal their parameters in /sys/module/${modulename}/parameters/. Some of these
--parameters may be changed at runtime by the command
--``echo -n ${value} > /sys/module/${modulename}/parameters/${parm}``.
-+Metric suffixes
-+~~~~~~~~~~~~~~~
-+
-+The [KMG] suffix is commonly described after a number of kernel
-+parameter values. 'K', 'M', 'G', 'T', 'P', and 'E' suffixes are allowed.
-+These letters represent the _binary_ multipliers 'Kilo', 'Mega', 'Giga',
-+'Tera', 'Peta', and 'Exa', equaling 2^10, 2^20, 2^30, 2^40, 2^50, and
-+2^60 bytes respectively. Such letter suffixes can also be entirely omitted.
-+
-+Kernel Build Options
-+--------------------
- 
- The parameters listed below are only valid if certain kernel build options
- were enabled and if respective hardware is present. This list should be kept
-@@ -212,10 +227,5 @@ a fixed number of characters. This limit
- and is between 256 and 4096 characters. It is defined in the file
- ./include/uapi/asm-generic/setup.h as COMMAND_LINE_SIZE.
- 
--Finally, the [KMG] suffix is commonly described after a number of kernel
--parameter values. These 'K', 'M', and 'G' letters represent the _binary_
--multipliers 'Kilo', 'Mega', and 'Giga', equaling 2^10, 2^20, and 2^30
--bytes respectively. Such letter suffixes can also be entirely omitted:
--
- .. include:: kernel-parameters.txt
-    :literal:
+2. Is that everything that's needed for the fix? Maybe? I don't know...
+I'm not a TTY expert, I'm not sure that that fix is correct, nor do I
+have no way to test that. Do you really trust me that much around your
+subsystem? :)
+
+3. We simply don't scale to doing this for every conflict over the (too
+many) trees we support. At some point we need to trust our automation,
+CI, and testers to catch issues with the "extra" patches we backport.
+
+-- 
+Thanks,
+Sasha
