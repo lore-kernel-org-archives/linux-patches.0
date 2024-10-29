@@ -1,217 +1,455 @@
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2057.outbound.protection.outlook.com [40.107.223.57])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591D119A2A2;
-	Tue, 29 Oct 2024 19:45:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.57
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730231124; cv=fail; b=hxiMp4lFnEQbnEcHIYcLVBUZlKg7lzqHnEpnqFWfx6nM3oYHY9m2yCNabSh072Tqds8sXXIeRo6OfdNcWs6N0zox1MqcfMwW/uXpOUCKIu2xiuNPfQjDai3wdqGeBlO+7Vx1w5xEOwXsn+SI8HxtQuNIPSGd2nmj4VTJLls+EHU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730231124; c=relaxed/simple;
-	bh=uh8pGbMM9rwjwe03xWhhpzpqOYs+UmZ635Lnl7I7ffc=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G/lur8aEHsoQ1TV+XTHyidhVrWHNy00MjKPuXOtdVH2l3l5aXPGkqwMKn+5Zmrq/6mOHpgKHIOuyasbG+dFvjas/mfgrVgLEa77Ar/w2RpMGwYyaTZUHfh3yN5pddtwEtwIc3XwhAmG2YQ/82QwgSyNSO5M2zTfHcE6AE9anYZM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=G5SH8D/R; arc=fail smtp.client-ip=40.107.223.57
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AF31E0DDF
+	for <patches@lists.linux.dev>; Tue, 29 Oct 2024 20:15:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1730232956; cv=none; b=Sd4CcHuc+cdLrNIMoHikOsCBob5eIiVT9/aEH1l6BVdb1bBvtC63OrTTTlYfINmGQkmcQDi/yA60UPHc5/52bE8fZJ6jn4/0nxl5dHfyKkK7yNCfvjuAaPZW8IXN58YTwsYsmYIhmvSF3Lf6YfIl/h1fMraFU3QSJGxeRJBTF6k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1730232956; c=relaxed/simple;
+	bh=p2q3CmSHX9eWKUp6uO+aazZAtxPSV3aT24xCH7eTJuE=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=T/gbL6sbDba5o7QsBs5XgMDV4GTzSZL7+zz9xRxjw8W+uxSbZcHmp6L+bAhe8951qCICZQj4rlzrbkck02ZXuO2C14jxbjFHlWuQHl6AdgukoXSnKqiGxE+J6tJSMmjKmB1mjEsseKHkUMg2qHf4u1yBoMOKyFL/MhDQ89hl7yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=eXUgoDu6; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="G5SH8D/R"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SbnNNbjHP8q/8xqIj9YN/QPmdFKJxj93hu0yxb1EdRI+18J5SAzwYD0TBh9Vk7jWRTSUM54KrSyogZQerADqYgJOS579VLfb2MwyDeFFAjUWoG7L4IRVFX6G0lu509Wscic5M9ha/H7yd3XOy5JKGke2niEBS808FkaYMkGUSnk4ZEODiucccCU6R1Cvk43n6MpwC92uoEygHQfzavR21C//pf7LCol95BKefSJb/I++SwpmArr4TdCZItjkdM+uGv+m0GkjjF9vsi097DnUfWsmpW5TFxFlNUroZWLQPYDoUFu1j5KJjzDh9vYp9mpJlYhErzR8l6BkSOsqgHQsGw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HTNfiLPPcdrO+70VKB6ARFDh1FK4P0rcLaNpBMXz0rI=;
- b=SqaGZOptr1f+lLxndWMItwuj0IoBz6Nrsl2RlCvfiDVpSOMajeoK8wHN1XhV3/+8yazaHtsENBm4ZRwvc1LHdpxJQoB7s1MGDmvkHfsYHii6rtKapJYpgjxcs3PyH1P6CSOqE5oMuViVme9lp/RNZqTk2uwrryMsx5jqzJmyigCsqxrQkH6nJqWJLhpiR5ddOBxYb0ahVwLAtgtKVbeuqlzdPBiwgWZpngmdQSxCcfu0wY5k0py0Mht51jl/6AaVHgBJK99TMQ45g3kS9PDtYiD83hcFHSEpbuUm2YIGv3BXHSXRDCHQO3rMSKF7aMIntgJ7Jf9dBPsV9i8jAMtyxg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=amd.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HTNfiLPPcdrO+70VKB6ARFDh1FK4P0rcLaNpBMXz0rI=;
- b=G5SH8D/RQfig/reyK1CealhAK6Xm917yA6xmSWYaeo7WwAeG1Vp+yUraFbPiFkzRUHFy6taaP/3I78t9cxrwFmGdWvxjseojUDXjny1o7w118pAgm751jFZpe4UpxVj5waT0jQ+EMIt1b5CAnbK9AoAenI8QgUmVyfXzRZD+GEgt+fh8oQonePxymxTKTy+WFe1iExE3vhVdIrTAlrMG3fKQ4TE8RTomx2IZQ3TerWJPKVDMDV0ZbipKpCyuPLTYtuEd9+JGuXE/Yy9GVas3y3jsjXjWS3E+VUhk0JzJS/mBnY9k7PnbCr7Vdexsh6HLdSi1i4iVplToXTMkzNv1lw==
-Received: from CH5P223CA0022.NAMP223.PROD.OUTLOOK.COM (2603:10b6:610:1f3::12)
- by PH7PR12MB6443.namprd12.prod.outlook.com (2603:10b6:510:1f9::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8048.22; Tue, 29 Oct
- 2024 19:45:17 +0000
-Received: from CH3PEPF00000009.namprd04.prod.outlook.com
- (2603:10b6:610:1f3:cafe::4d) by CH5P223CA0022.outlook.office365.com
- (2603:10b6:610:1f3::12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.17 via Frontend
- Transport; Tue, 29 Oct 2024 19:45:17 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- CH3PEPF00000009.mail.protection.outlook.com (10.167.244.36) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8114.16 via Frontend Transport; Tue, 29 Oct 2024 19:45:16 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 29 Oct
- 2024 12:45:04 -0700
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Tue, 29 Oct 2024 12:45:03 -0700
-Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com
- (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Tue, 29 Oct 2024 12:45:02 -0700
-Date: Tue, 29 Oct 2024 12:45:01 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: <kevin.tian@intel.com>, <will@kernel.org>, <joro@8bytes.org>,
-	<suravee.suthikulpanit@amd.com>, <robin.murphy@arm.com>,
-	<dwmw2@infradead.org>, <baolu.lu@linux.intel.com>, <shuah@kernel.org>,
-	<linux-kernel@vger.kernel.org>, <iommu@lists.linux.dev>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-kselftest@vger.kernel.org>,
-	<eric.auger@redhat.com>, <jean-philippe@linaro.org>, <mdf@kernel.org>,
-	<mshavit@google.com>, <shameerali.kolothum.thodi@huawei.com>,
-	<smostafa@google.com>, <yi.l.liu@intel.com>, <aik@amd.com>,
-	<zhangfei.gao@linaro.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH v5 05/13] iommufd: Allow hwpt_id to carry viommu_id for
- IOMMU_HWPT_INVALIDATE
-Message-ID: <ZyE7PUFGfnMOfMVe@Asurada-Nvidia>
-References: <cover.1729897278.git.nicolinc@nvidia.com>
- <6b8bb8f2319bf26ead928321f609105e4e5eecf4.1729897278.git.nicolinc@nvidia.com>
- <20241029190941.GN209124@nvidia.com>
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="eXUgoDu6"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6e35f08e23eso53313817b3.2
+        for <patches@lists.linux.dev>; Tue, 29 Oct 2024 13:15:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1730232952; x=1730837752; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=17J8IGvHqY3jfkh+HrxHOL56E85HwWRmn8ZfYdfPDaI=;
+        b=eXUgoDu63UBlvxSF2THgd+oRsuaRo/DPswvDod14i6jkgucpyGRw9SB0NsbkU6wWrs
+         vLno54d3/upn14FNjICFDRxSAlth37Gx+KhMiqWDXKYI9P06KZO+WR/qkWfk1E06UqyY
+         nUoXCu1Cgk2r7h/h+7zbbrOCuwyczqbn+8Hm0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730232952; x=1730837752;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=17J8IGvHqY3jfkh+HrxHOL56E85HwWRmn8ZfYdfPDaI=;
+        b=rplRg9k6kdkJH8XUvJ/DS7Sca72URY4PbZzrWfEX6uFcmn/RfnnBog7j7QdPl95OEu
+         dr3I14ncjMAZbPTTwmkBpdcMQT1mcGx+lzCX7X6ykBytw6gsuW98XxaekYhy4z/kTNZ/
+         ZqF2Gh5XIf4nESJcZB2n41vUMUTLOMhegnFKzCrGBODZWfGOvZ8QIOzUQQMVd4keBg0h
+         +pGWH6p6bDKukViGygWxItioo+zM8s3O7Niyk9IzW7m7JMjiecZZAAFUMi9DyBZ0dabP
+         AE77jWOoYiscC9HpHOf4k1DRzoWVsk/ZgQcoBw5+r198ajvniQBTtKqYrvFbqBVJgCY0
+         asJw==
+X-Forwarded-Encrypted: i=1; AJvYcCWYBGwVm2b6lH8eThrSgsXivBBXtLuMyPH3UjPVjxdfY4f/f+7PRZMh+TE0RWn5qaZFThoWU8I3@lists.linux.dev
+X-Gm-Message-State: AOJu0YzlRmHHPHVaZ/IIH46dLwofMtJdDDIz4lZg56BseuJ3hqIsnyri
+	WBAbKPjzfo4jmuosSkNBRJ8sFmexVgypDY9UOGfaEDhwOJAuiQPFcRdCBgW8CEa+mOaoqYpkKdj
+	JotmlqwxjBnS8mxMIwtcDTg/EcYf+KaGSe1AF
+X-Google-Smtp-Source: AGHT+IEMjC38XOmCugV3WBwPmaFFgGQnEcKkb/ILj+IwdYe2pYXJXvIJHeT/gECFay1Ki726FJyLKH4jgjuzCxzyYI8=
+X-Received: by 2002:a05:690c:5:b0:6e3:29ae:a3a5 with SMTP id
+ 00721157ae682-6e9d8b001eamr136117397b3.34.1730232952121; Tue, 29 Oct 2024
+ 13:15:52 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 29 Oct 2024 13:15:51 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20241029190941.GN209124@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PEPF00000009:EE_|PH7PR12MB6443:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4ab79341-3fb3-462f-0da4-08dcf85236df
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|1800799024|82310400026|376014|7416014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?xY8BZvy7+sy6MD0J1Rut+tUkY92+ovjS5HMbIcEkgjp37AxKGnN1phPKn7Pg?=
- =?us-ascii?Q?ErpEF2KK/wn1vC1g9t5WFadWntTWQhqzwdpWZCS/CoGT+ZZFj2NnMs9A84fS?=
- =?us-ascii?Q?STKsXyjOFEG6iYLwIo5cXUGe2F2OQYcbi4u3HO11hxKfqLdx/lqroByrmbSV?=
- =?us-ascii?Q?xiRXbR5MHUQpVLQRW2dbBDwIrF7Bn0F/EuvtrmUmRSmsPZ11AwhR9lrKXrYP?=
- =?us-ascii?Q?5UlQxxstiQXXOH0hyCsyooP1tkAjw80oNj9P42kvyGBPm53np/ZtLOe3/gu4?=
- =?us-ascii?Q?7+9jP1lG49GLLjr7IrTIVu4EHycYH77KXSCEv/VU1OHOlVrN4Mcj9Yb5m1JG?=
- =?us-ascii?Q?Foys4wVWpV1dSgHQ6AlkrV98Y/ke9wH99vS6aRp5VredmIpTLBoIigrsjKz2?=
- =?us-ascii?Q?zxh/rNGMpqif8rG6HtupufYgVtLqgEdU0drnEsTsKKlPeq3ThhZg8dNov1uw?=
- =?us-ascii?Q?G5k3djL2r6piPw5h42Gphzemey8tavNQaN5B0o7URSCiwH84Yol8dVgjZQFW?=
- =?us-ascii?Q?mV4wjZYAfoh3X72hkSpifPDjEADW3an+/1ONQRWzD9zvatEMPJzlKNAk8/cq?=
- =?us-ascii?Q?XMvXyHLONv66UxeHACfy8nHV15IY2ZFa/rUjiAiEZWcSrYyk9z0GS2BZ0F4h?=
- =?us-ascii?Q?TXcH8WDYX4Iy1Xpt4Qx0LUf6dvr8aKSbtCPIAaSaW+hBAK6/FRxc40qpvWan?=
- =?us-ascii?Q?LtnECzBQtxLCAl69Wh6diEWd5Xf1muK4NHcT/su7MY3mu1mFGkyXgWFJTHFd?=
- =?us-ascii?Q?aoJYtqsQ6ZWEiA34I572co8HNQDsBfJlrN/uF9hnWnro81Nqrmwbzqa+venR?=
- =?us-ascii?Q?TG3YUU7p0KbyXHQRFgmss1JyiIf4QfQDZH0QXmqaS0aideYwhBPMtAL5+sX8?=
- =?us-ascii?Q?MXumUF5ppXYagf08/PX558F2TjwUvhjN4yNYTs1wWrSfYvAPbtr4A8A9dDGq?=
- =?us-ascii?Q?PRzBW7tMtlj2dLMXKhqFLtuiYaNanpCXkp64qNLg+VWdw2dhHx05uv3PY/hi?=
- =?us-ascii?Q?MBSPNuRfHvgcuNsPvey+WyDFvmNY+kMSSzGpHwvQ9jwMhsUp/5PL2n8L71y/?=
- =?us-ascii?Q?4USYkT598zTiiTjIp8rSOEf3cSVmKgNNAhwo2hcxDuuWVUazdeevg7/hX/bP?=
- =?us-ascii?Q?woIrmZGwWaruxo3vBhuZYpkdb7LcsJENnBXdDpL+qrq6zo2GA5dGSRzHjHVc?=
- =?us-ascii?Q?AEoXSoLYeE9B0LN/yUNSaTSIdv9LrbFeRM237eyZ0OLubiPxr5QjIyCU1Tk5?=
- =?us-ascii?Q?UPN61NvRLTAjSi+6w/bcoR45wfYcjcbPOxY2geokyK0WuXkuh1tXf+T9G2q0?=
- =?us-ascii?Q?P6EVtfrx35FgAnx2EQ5EFEjGnR9W73eHhuLGlihsNtA+iePcRBh0kGEhUfWD?=
- =?us-ascii?Q?q3dg+ktImeW5cmx3UR7dGKrUQXzpBbhLwmYqjZBbFpBA47CRrQ=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(1800799024)(82310400026)(376014)(7416014);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Oct 2024 19:45:16.9955
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4ab79341-3fb3-462f-0da4-08dcf85236df
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CH3PEPF00000009.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6443
+In-Reply-To: <lf7y7wpuca6kzqcglgs5d443iusf7xjocum4adi7t3npfavccx@zgsp37oyztme>
+References: <20240901040658.157425-1-swboyd@chromium.org> <20240901040658.157425-16-swboyd@chromium.org>
+ <phdcjgqqpjpruxp7v2mw446q73xr3eg4wfgfbjw5tasgr2pgg2@77swbk47b2tg>
+ <CAE-0n514QMaQC2yjKP8bZqyfbv6B3AQm=+NJ87vxo6NdYiL03A@mail.gmail.com> <lf7y7wpuca6kzqcglgs5d443iusf7xjocum4adi7t3npfavccx@zgsp37oyztme>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Tue, 29 Oct 2024 13:15:51 -0700
+Message-ID: <CAE-0n53-KmOS3zXmJPvOOZ7xxkek9-S=oBExgaY0PDnt_HjdNw@mail.gmail.com>
+Subject: Re: [PATCH v4 15/18] dt-bindings: usb: Add ports to
+ google,cros-ec-typec for DP altmode
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: chrome-platform@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, devicetree@vger.kernel.org, 
+	Douglas Anderson <dianders@chromium.org>, Pin-yen Lin <treapking@chromium.org>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Benson Leung <bleung@chromium.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Daniel Vetter <daniel@ffwll.ch>, David Airlie <airlied@gmail.com>, 
+	dri-devel@lists.freedesktop.org, Guenter Roeck <groeck@chromium.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Lee Jones <lee@kernel.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Prashant Malani <pmalani@chromium.org>, 
+	Robert Foss <rfoss@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Tzung-Bi Shih <tzungbi@kernel.org>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Daniel Scally <djrscally@gmail.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Ivan Orlov <ivan.orlov0322@gmail.com>, 
+	linux-acpi@vger.kernel.org, linux-usb@vger.kernel.org, 
+	Mika Westerberg <mika.westerberg@linux.intel.com>, 
+	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, 
+	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Oct 29, 2024 at 04:09:41PM -0300, Jason Gunthorpe wrote:
-> On Fri, Oct 25, 2024 at 04:50:34PM -0700, Nicolin Chen wrote:
-> > @@ -497,17 +497,35 @@ int iommufd_hwpt_invalidate(struct iommufd_ucmd *ucmd)
-> >  		goto out;
-> >  	}
-> >  
-> > -	hwpt = iommufd_get_hwpt_nested(ucmd, cmd->hwpt_id);
-> > -	if (IS_ERR(hwpt)) {
-> > -		rc = PTR_ERR(hwpt);
-> > +	pt_obj = iommufd_get_object(ucmd->ictx, cmd->hwpt_id, IOMMUFD_OBJ_ANY);
-> > +	if (IS_ERR(pt_obj)) {
-> > +		rc = PTR_ERR(pt_obj);
-> >  		goto out;
-> >  	}
-> > +	if (pt_obj->type == IOMMUFD_OBJ_HWPT_NESTED) {
-> > +		struct iommufd_hw_pagetable *hwpt =
-> > +			container_of(pt_obj, struct iommufd_hw_pagetable, obj);
-> > +
-> > +		rc = hwpt->domain->ops->cache_invalidate_user(hwpt->domain,
-> > +							      &data_array);
-> > +	} else if (pt_obj->type == IOMMUFD_OBJ_VIOMMU) {
-> > +		struct iommufd_viommu *viommu =
-> > +			container_of(pt_obj, struct iommufd_viommu, obj);
-> > +
-> > +		if (!viommu->ops || !viommu->ops->cache_invalidate) {
-> > +			rc = -EOPNOTSUPP;
-> > +			goto out_put_pt;
-> > +		}
-> > +		rc = viommu->ops->cache_invalidate(viommu, &data_array);
-> > +	} else {
-> > +		rc = -EINVAL;
-> > +		goto out_put_pt;
-> > +	}
-> 
-> Given the test in iommufd_viommu_alloc_hwpt_nested() is:
-> 
-> 	if (WARN_ON_ONCE(hwpt->domain->type != IOMMU_DOMAIN_NESTED ||
-> 			 (!viommu->ops->cache_invalidate &&
-> 			  !hwpt->domain->ops->cache_invalidate_user)))
-> 			  {
-> 
-> We will crash if the user passes a viommu allocated domain as
-> IOMMUFD_OBJ_HWPT_NESTED since the above doesn't check it.
+Quoting Dmitry Baryshkov (2024-10-25 03:49:36)
+> On Tue, Oct 22, 2024 at 06:15:47PM -0700, Stephen Boyd wrote:
+> > Quoting Dmitry Baryshkov (2024-09-20 02:38:53)
+> > > On Sat, Aug 31, 2024 at 09:06:53PM GMT, Stephen Boyd wrote:
+>
+> >
+> > Either way the problem seems to be that I need to associate one
+> > drm_bridge with two displayport altmode drivers and pass some fwnode
+> > handle to drm_connector_oob_hotplug_event() in a way that we can map
+> > that back to the right output endpoint in the DP bridge graph. That
+> > seems to imply that we need to pass the fwnode for the usb-c-connector
+> > in addition to the fwnode for the drm_bridge, so that the drm_bridge
+> > code can look at its DT graph and find the remote node connected.
+> > Basically something like this:
+> >
+> >   void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
+> >                                        struct fwnode_handle
+> > *usb_connector_fwnode,
+> >                                        enum drm_connector_status status)
+> >
+> > (We might as well also pass the number of lanes here)
+>
+> I think this is a bit of an overkill.
+>
+> The drm_connector_oob_hotplug_event() is fine as it is, it gets
+> "fwnode_handle to report the event on".
 
-Ah, that was missed.
+Ok. I understand that drm_*() shouldn't know about USB or type-c in
+general.
 
-> I suggest we put the required if (ops..) -EOPNOTSUPP above and remove
-> the ops->cache_invalidate checks from both WARN_ONs.
+>
+> What needs to be changed (in my humble opinion) is the
+> drm_connector_find_by_fwnode() function (or likely a new function is to
+> be added): if it can not find drm_connector for the passed fwnode, it
+> should look it up on the parent, then on parent's parent, etc, until we
+> actually find the drm_connector (good) or we reach the root (sad).
+>
+> And finally after getting the drm_connector, the oob_hotplug_event()
+> callback should also receive the fwnode argument. This way the connector
+> (or the bridge) can identify the fwnode (aka usb-c-connector in our
+> case) that caused the event.
+>
+> WDYT?
 
-Ack. I will add hwpt->domain->ops check:
----------------------------------------------------------------------
-	if (pt_obj->type == IOMMUFD_OBJ_HWPT_NESTED) {
-		struct iommufd_hw_pagetable *hwpt =
-			container_of(pt_obj, struct iommufd_hw_pagetable, obj);
-	
-		if (!hwpt->domain->ops ||
-		    !hwpt->domain->ops->cache_invalidate_user) {
-			rc = -EOPNOTSUPP;
-			goto out_put_pt;
-		}
-		rc = hwpt->domain->ops->cache_invalidate_user(hwpt->domain,
-							      &data_array);
-	} else if (pt_obj->type == IOMMUFD_OBJ_VIOMMU) {
-		struct iommufd_viommu *viommu =
-			container_of(pt_obj, struct iommufd_viommu, obj);
-	
-		if (!viommu->ops || !viommu->ops->cache_invalidate) {
-			rc = -EOPNOTSUPP;
-			goto out_put_pt;
-		}
-		rc = viommu->ops->cache_invalidate(viommu, &data_array);
-	} else {
----------------------------------------------------------------------
+Ok I think I'm following along. The dp->connector_fwnode in
+displayport.c will always be the usb-c-connector node in your example?
+And that will search for the connector or bridge associated with that
+usb-c-connector node. Then when it comes time to call
+drm_connector_oob_hotplug_event() it will take the usb-c-connector
+fwnode as 'connector_fwnode' and in that function we'll make
+drm_connector_find_by_fwnode() implement the parent walk? The
+cros-ec-typec compatible node will register a drm_bridge in all cases,
+and that is the parent of the usb-c-connector node, so the walk will end
+there.
 
-Thanks
-Nicolin
+Then you want to pass the usb-c-connector fwnode to
+connector->funcs->oob_hotplug_event()? So
+drm_bridge_connector_oob_hotplug_event() changes to also get the
+usb-c-connector fwnode. This plan should work.
+
+At this point we need to tell the DP bridge, like IT6505, that it's one
+or the other output endpoints that it should use, but we haven't
+directly connected the usb-c-connector to the output ports of IT6505
+because drm_of_find_panel_or_bridge() can't find the parent of the
+usb-c-connector if we connect the DP bridge to the usb-c-connector
+graphs. We'll need a way for the bridge to know which output port is
+connected to a usb-c-connector fwnode. Some sort of API like
+
+ fwnode_graph_get_endpoint_connected_to_fwnode(bridge_fwnode, usb_c_fwnode)
+
+that takes the bridge fwnode and traverses the graph to find the
+endpoint in that's connected to 'usb_c_fwnode'. That traversal API will
+need help from the intermediate node, cros-ec-typec, so maybe it is
+better as a drm_bridge API that uses some new drm_bridge_funcs callback.
+This way IT6505 can ask the bridge chain which output DP endpoint is
+actually associated with the connector fwnode it gets from the
+oob_hotplug_event() callback.
+
+Here's the two DT snippets that I've ended up with:
+
+typec {
+        compatible = "google,cros-ec-typec";
+
+        ports {
+                port@0 {
+                        reg = <0>;
+                        typec_dp_in: endpoint {
+                                 remote-endpoint = <&usb_1_qmp_phy_out_dp>;
+                        };
+                };
+
+                port@1 {
+                        reg = <1>;
+                        typec_usb0_in: endpoint@0 {
+                                 reg = <0>;
+                                 remote-endpoint = <&usb_hub_dfp1_ss>;
+                        };
+                        typec_usb1_in: endpoint@1 {
+                                 reg = <1>;
+                                 remote-endpoint = <&usb_hub_dfp2_ss>;
+                        };
+                }
+
+                // This port is not really needed because we know the
+		// mapping from input ports to usb-c-connectors
+                port@2 {
+                        reg = <2>;
+                        typec0_out: endpoint@0 {
+                                 reg = <0>;
+                                 remote-endpoint = <&usb_c0_ss_in>;
+                        };
+                        typec1_out: endpoint@1 {
+                                 reg = <1>;
+                                 remote-endpoint = <&usb_c1_ss_in>;
+                        };
+                }
+        };
+
+        usb_c0: connector@0 {
+                compatible = "usb-c-connector";
+                reg = <0>;
+
+                ports {
+                        port@0 {
+                                reg = <0>;
+                                usb_c0_hs_in: endpoint {
+                                        remote-endpoint = <&usb_hub_dfp1_hs>;
+                                };
+                        };
+
+                        port@1 {
+                                reg = <1>;
+                                usb_c0_ss_in: endpoint {
+                                        remote-endpoint = <&typec0_out>;
+                                };
+                        };
+                };
+        };
+
+        usb_c1: connector@1 {
+                compatible = "usb-c-connector";
+                reg = <1>;
+
+                ports {
+                        port@0 {
+                                reg = <0>;
+                                usb_c1_hs_in: endpoint {
+                                        remote-endpoint = <&usb_hub_dfp2_hs>;
+                                };
+                        };
+
+                        port@1 {
+                                reg = <1>;
+                                usb_c1_ss_in: endpoint {
+                                        remote-endpoint = <&typec1_out>;
+                                };
+                        };
+                };
+        };
+};
+
+&usb_1_qmpphy {
+        ports {
+                port@0 {
+                        endpoint@0 {
+                                data-lanes = <0 1>;
+                                // this might go to USB-3 hub
+                        };
+
+                        usb_1_qmp_phy_out_dp: endpoint@1 {
+                                remote-endpoint = <&typec_dp_in>;
+                                data-lanes = <2 3>;
+                        };
+                }
+        };
+};
+
+-------
+
+typec {
+        ports {
+                port@0 {
+                        reg = <0>;
+                        typec_dp0_in: endpoint@0 {
+                                 reg = <0>;
+                                 remote-endpoint = <&dp_bridge_out_0>;
+                        };
+                        typec_dp1_in: endpoint@1 {
+                                 reg = <1>;
+                                 remote-endpoint = <&dp_bridge_out_1>;
+                        };
+                };
+
+                port@1 {
+                        reg = <1>;
+                        typec_usb0_in: endpoint@0 {
+                                 reg = <0>;
+                                 remote-endpoint = <&usb_hub_0_ss>;
+                        };
+                        typec_usb1_in: endpoint@1 {
+                                 reg = <1>;
+                                 remote-endpoint = <&usb_hub_1_ss>;
+                        };
+                }
+        };
+
+        connector@0 {
+                port@1 {
+                        endpoint@0 {
+                                remote-endpoint = <&usb_hub_0_hs>;
+                        };
+                };
+        };
+
+        connector@1 {
+                port@1 {
+                        endpoint@0 {
+                                remote-endpoint = <&usb_hub_1_hs>;
+                        };
+                };
+        };
+};
+
+dp_bridge {
+        ports {
+                port@1 {
+                        dp_bridge_out_0: endpoint@0 {
+                                remote-endpoint = <&typec_dp0_in>;
+                                data-lanes = <0 1>;
+                        };
+
+                        dp_bridge_out_1: endpoint@1 {
+                                remote-endpoint = <&typec_dp1_in>;
+                                data-lanes = <2 3>;
+                        };
+                };
+        };
+};
+
+-------
+
+I wonder about a case where we may take two lanes and connect them to a
+usb-c-connector and then take the other two lanes and send them through
+a mux to two more usb-c-connectors. I think we'll need another property
+in that case that indicates which input DP endpoints correspond to the
+usb-c-connector nodes.
+
+typec {
+        ports {
+                port@0 {
+                        reg = <0>;
+                        typec_dp0_in: endpoint@0 {
+                                 reg = <0>;
+                                 remote-endpoint = <&dp_bridge_out_0>;
+                        };
+                        typec_dp1_in: endpoint@1 {
+                                 reg = <1>;
+                                 remote-endpoint = <&dp_bridge_out_1>;
+                        };
+                };
+
+                port@1 {
+                        reg = <1>;
+                        typec_usb0_in: endpoint@0 {
+                                 reg = <0>;
+                                 remote-endpoint = <&usb_hub_0_ss>;
+                        };
+                        typec_usb1_in: endpoint@1 {
+                                 reg = <1>;
+                                 remote-endpoint = <&usb_hub_1_ss>;
+                        };
+                        typec_usb2_in: endpoint@2 {
+                                 reg = <2>;
+                                 remote-endpoint = <&usb_hub_2_ss>;
+                        };
+                }
+        };
+
+	dp-2-usb-mapping = <0 0>, <1 1>, <1 2>;
+};
+
+This property would indicate dp endpoint 0 goes to usb-c-connector 0
+while dp endpoint 1 goes to usb-c-connector 1 and 2. I don't have this
+hardware but I could see how someone might do this by adding another mux
+that the EC controls. I don't want to design a binding and have to
+rework it in the future to handle this new case. I hope adding a new
+property, or getting more information from the EC firmware, will be
+sufficient to describe the linkage between the DP endpoint and the
+connectors managed by the cros-ec-typec device.
+
+>
+> > Corsola could work with this design, but we'll need to teach
+> > dp_altmode_probe() to look for the drm_bridge elsewhere besides as the
+> > parent of the usb-c-connector node. That implies using the 'displayport'
+> > property in the cros-ec-typec node or teaching dp_altmode_probe() to
+> > look for the port@1/endpoint@1 remote-endpoint handle in the
+> > usb-c-connector graph.
+> >
+> > Assuming the bindings you've presented here are fine and good and I got
+> > over the differences between Trogdor and Corsola, then I can make mostly
+> > everything work with the drm_connector_oob_hotplug_event() signature
+> > change from above and some tweaks to dp_altmode_probe() to look for
+> > port@1/endpoint@1 first because that's the "logical" DP input endpoint
+> > in the usb-c-connector binding's graph. Great! The final roadblock I'm
+> > at is that HPD doesn't work on Trogdor, so I can't signal HPD through
+> > the typec framework.
+>
+> Hmm, I thought that a normal DP's HPD GPIO works on the trogdor. Was I
+> misunderstanding it? But then we don't know, which USB-C connector
+> triggered the HPD...
+
+By HPD not working on Trogdor I mean that the EC doesn't tell the kernel
+about the state of HPD for a usb-c-connector in software. Instead, HPD
+is signaled directly to the DP controller in hardware via a GPIO. It is
+as you suspect, we don't know which USB-C connector has HPD unless we
+read the mux controlled by the EC and combine that with what the DP
+driver knows about the state of the HPD pin.
+
+>
+> > This series fixes that problem by "capturing" HPD state from the
+> > upstream drm_bridge, e.g. msm_dp, by hooking the struct
+> > drm_bridge_funcs::hpd_notify() path and injecting HPD into the typec
+> > messages received from the EC. That's a workaround to make the typec
+> > framework see HPD state changes that are otherwise invisible to the
+> > kernel. Newer firmwares actually tell us the state of HPD properly, but
+> > even then we have to read a gpio mux controlled by the EC to figure out
+> > which usb-c-connector is actually muxing DP when HPD changes on either
+> > typec_port. Having a drm_bridge in cros-ec-typec helped here because we
+> > could hook this path and signal HPD if we knew the firmware was fixed.
+> > If we don't have the drm_bridge anymore, I'm lost how to do this.
+>
+> It's probably okay to add one, but let me think if we can work without
+> it. Can we make EC driver listen for that single HPD GPIO (by making it
+> an actual GPIO rather than "dp_hot") and then react to it?
+
+I don't know how we handle the attention message, HPD_IRQ, because
+that's a short pulse that the kernel may miss when this is a GPIO that
+has to be triggered when both falling and rising. When the pin goes
+directly to the DP controller this is fine because the hardware can
+detect that. Similarly, when the EC sends the message about an HPD_IRQ
+we can replay that into the type-c framework and signal attention
+through drm_connector_oob_hotplug_event()/hpd_notify() paths.
+
+>
+> >
+> > Maybe the right answer here is to introduce a drm_connector_dp_typec
+> > structure that is created by the TCPM (cros-ec-typec) that sets a new
+> > DRM_BRIDGE_OP_DP_TYPEC bridge op flag? And then teach
+> > drm_bridge_connector about this new flag, similar to the HDMI one. The
+> > drm_bridge could implement some function that maps the typec_port
+> > (usb-c-connector) to the upstream drm_bridge (ANX7625) graph port,
+> > possibly all in drm_bridge_connector_oob_hotplug_event() so that nothing
+> > else really changes. It could also let us keep hooking the hpd_notify()
+> > path for the workaround needed on Trogdor. And finally it may let us
+> > harmonize the two DT bindings so that we only have one port@1/endpoint
+> > node in the usb-c-connector.
+>
+> I think we have lightly discussed adding drm_connector_displayport, so
+> that part is okay. But my gut feeling is that there should be no _typec
+> part in thart picture. The DRM framework shouldn't need to know all the
+> Type-C details.
+>
+
+Alright, got it.
