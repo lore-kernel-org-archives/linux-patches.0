@@ -1,88 +1,89 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76D53D0A4;
-	Wed, 30 Oct 2024 13:33:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE30E1E573B;
+	Wed, 30 Oct 2024 16:15:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730295229; cv=none; b=eAoibBvZv8RRgGV865kiHBx2qn9qUmltTXHGZ1t2g7M0iV0kA96d814WL851C2Epjj7b2TdHKRCAuJQv/sEohicA9lZ88ax7kSM0GqxOz6cCLz+1hMTxFRlF3vAoT7/CwlEIpiBiLoGoGTrcNabraZ3pTFir0+4Dd+zPZRkHPU0=
+	t=1730304901; cv=none; b=hf5oAa+AA3DrGFir1+H8jTe2y8JTTUVwQER3ZjvUjrT2k52y53aQfouzyKV7p+zcFfBYmAQQutGKYZxguFERD4ochIG5mfo69FCoDDk0xipBD51rznTmtxOKeYuYxlBPxcsbPc3iGhMbo/7LuLzFKurfsNISrt3oM+s0j4nDeWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730295229; c=relaxed/simple;
-	bh=0hzVmSoIPIfT1E3L18ipoalsx/laSXZLH2Jym00CjNM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dTx5A0/S88qXYo58jlrVVSXYMI7yWsG9xPHMjn46FAyLaGP7tzqqbluenLviu5yKKyW/k/Djfhswug3PvZBRVmoxtHyh1yoTD18gSmLXvisDhjfRehs+OXxp0mdlY+mM0tAd6CjKBz7YOeycB/58r30tgWyXcmLAFVj4bzvm0kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=metux@gmx.de header.b=BF4AVrex; arc=none smtp.client-ip=212.227.15.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1730304901; c=relaxed/simple;
+	bh=N9werbf4NPq4LiWt3uHpAOCcksOcVaD4UmVzrTm7pkQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=byZBlXfppWDkEHrSSEudO0u6Qjhz3otOU+J/Ch1gELjlzxwkLV8toXcW5cqcyv2MmoBEmQTepRPDfNFPA3bn8S+BDJQDf1TSGH0W+y8YDGcDFAOdR0mdVVLTgH2DhjenmDfy5M4EDRSl6NYs2vawyca24k1QIV9XrK3PCb/+XVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RgjWmxk+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=metux@gmx.de header.b="BF4AVrex"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1730295220; x=1730900020; i=metux@gmx.de;
-	bh=0hzVmSoIPIfT1E3L18ipoalsx/laSXZLH2Jym00CjNM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=BF4AVrexW929lMpaB6D/0mvscPLRsE6MkcoyQKK0k52bJZ6g/N/4a/ynMrwrTpqG
-	 mIYQyfFSkXZ2P9YhmTQDbExRoyP290LiQqZ4nd1SjVK1Ko9kIzJYoptbUtAh9ylCD
-	 aqQSCdEn83/xdDJdc+BFrinVnoTFmUbcdtRb66eWKjIl0t/J+okXhIT3+8uPnLTDq
-	 DsMs9vba3iA0nQfbSd9y7yytsUE26yVNkTrrn/gSBII5GORpvO0RlzLmF6voxfd6X
-	 xS74JfxWaWLjjrSXTt3s0cBbsg7UC7fr0hvlFqs59lxOpuLHDWT45WonTBL6ngVuD
-	 RG+8GVdBhfjrLQvf1g==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.1.178] ([95.114.207.188]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mlw3N-1tWMtT1gOp-00qbUt; Wed, 30
- Oct 2024 14:33:40 +0100
-Message-ID: <380d9a2d-957e-43fa-a59a-fe2a0e716ec5@gmx.de>
-Date: Wed, 30 Oct 2024 14:34:22 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RgjWmxk+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB6DCC4CECE;
+	Wed, 30 Oct 2024 16:15:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1730304901;
+	bh=N9werbf4NPq4LiWt3uHpAOCcksOcVaD4UmVzrTm7pkQ=;
+	h=From:Subject:Date:To:Cc:From;
+	b=RgjWmxk+Ta/ZUEDhcnH9C0C5ZRjgiyQzdT+5BmFk7ppgAL8Us4vjU9vKAeZ/FeTXQ
+	 yMbrwccUMzIck74xpvaiyL2kauWNWEdOVT2ZOJk89fh3s5eDnNtTP7KPuVB42IRYff
+	 MjzkCg8hqwlhnb1dGmgEjMc4ooUTPS9OeTcz2IQP4ndjgVYPbtHcsoEeRnPoSPAeL8
+	 zErMvqG5Mx55yaHiQXzw281/tDBJ8Ad5NquUG0EG4SMf7QqX1ZC6/4kVHd3hXwCPdM
+	 mdINHTwUqJuKg5JnJKQz7vDUuv6Yr/NAzv/u+dWjeci3GdfqkevEGHsLm7y8rR9tfk
+	 nbo87a8Tzoicg==
+From: Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 0/2] kprobes: Adjustments for __counted_by addition
+Date: Wed, 30 Oct 2024 09:14:47 -0700
+Message-Id: <20241030-kprobes-fix-counted-by-annotation-v1-0-8f266001fad0@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Remove some entries due to various
- compliance requirements.
-To: James Bottomley <James.Bottomley@HansenPartnership.com>,
- geert@linux-m68k.org
-Cc: gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <7ee74c1b5b589619a13c6318c9fbd0d6ac7c334a.camel@HansenPartnership.com>
-Content-Language: tl
-From: metux <metux@gmx.de>
-In-Reply-To: <7ee74c1b5b589619a13c6318c9fbd0d6ac7c334a.camel@HansenPartnership.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:9p0u9Hqk4fTogFMrQLZCmUdTnLNdIf/I0gHAIaimBe+wNqWZ7iZ
- ZDSuG9ICFR33/+UKoXNjVt8P9QIyDgah+wNBbOwffmUQ892anKkjs1IqOVUp2Wnp2ouB8bq
- 40eMz0uM0mhrJcIh1K+md2NcwpD8gGYw3ls6j7q40XJtNSyxVvNWG+DBeWT1Us8IGnKv+5/
- TWUT7RX5LsoT/2e+0RjcQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:l8hZDc0jzcE=;99jN54kvdg6DHSR4y/gDYJyDD8S
- F/tvHSNW7q+qgFkZfPXbrGyRUEmubX9y9pIgO6QnMyHiKjCIBOxdTniz4bqQx6nDihuw+73E5
- Tvllv4J6JqFqO6eLuyaHJ7vuYOGopsutphQdZstS+aXgkpz01r1jm0uUB2NOuNUm9IzGnINlI
- d3QOptFChmTNydFXWTEtVPU5tZ6v2Zc4ix+xcx1RzyAOuNsajkhy0Bd7PROv3lW12Js3D9WTg
- 0+6HX4V7wVXVeFYfBKAc5k7gapVG/ldYCXm5jnB6jJYePunmKkFssMhFZ6uIEs5VxFCBQB8fV
- lPoAaR7vjhd+WcKW2o1pp10gDhrZkKaqRlIjcRxD9DE3qz/3N6BepIeJACQAAMKV+gO/WygkO
- m0gXevynpTJi8JY/KD0UZRALutdFC/qId/lxw3ODQ5Gpx9D8vkWmpGz0K/6xqzqQi/ImFcqWE
- ev7DX+xtGtjAbMwtXz0aVRGiqCMLg7HFR+TYFF8dWGWffChki2llBHJ+QxxzCGuG3WaoM0mcG
- RNHIf1TYWPz0yZI1ZXjtvCfFjS2IKcXUsGJCUMhj3z2BttDtSAZ9271lvfC+oLA3EcH4YAlLy
- /QWQv55bB/NpPsq/9SbAi7OzOpZNuvRV8pMJ3ICJY8LgZ/Sf/TE4I9gk/j/0S3VIx7loa+5D2
- Sy8ssWzOu78N3dhEYat6xDZhRMom73l7liSNmFtR/3jUe1m5ckPtBEv/NWTIwFk0KYIgcaIf+
- csYoGFNTLLTd/sT779Ic7jiIC0JcoF7nTHJi/kubumdptAPyecDo30n4JDXkU3Pjy+l0RpbHe
- C6A9xzNuI4UpDrdh3IgRBtGQ==
+X-B4-Tracking: v=1; b=H4sIAHdbImcC/x2N0QqDMAxFf0XyvIBGhblfGXtobdQwSKXthiL+u
+ 8HHA/fcc0DmJJzhVR2Q+C9Zoho0jwrGxenMKMEYqKauqWnA75qi54yTbDjGnxYO6Hd0qrG4Yja
+ GwH7oiZ6+JbCfNbGN78b7c54XfUuhw3MAAAA=
+X-Change-ID: 20241029-kprobes-fix-counted-by-annotation-ddeb95228b32
+To: Masami Hiramatsu <mhiramat@kernel.org>, 
+ Naveen N Rao <naveen@kernel.org>, 
+ Anil S Keshavamurthy <anil.s.keshavamurthy@intel.com>, 
+ "David S. Miller" <davem@davemloft.net>
+Cc: Kees Cook <kees@kernel.org>, 
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+ Jinjie Ruan <ruanjinjie@huawei.com>, linux-kernel@vger.kernel.org, 
+ linux-trace-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=950; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=N9werbf4NPq4LiWt3uHpAOCcksOcVaD4UmVzrTm7pkQ=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDOlK0c1zP6c6qvn8SU5i3coa33LcfIrFhcmXy+e/Vb7i9
+ dY0ZDdbRykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZjILndGho9Fpz/e0/l7TZK1
+ efu2K27/aw7M+Hg0m+f70uuNHzfv+MTO8D/6nNjpRy2lnJe+OTyR+CN4aDHn5S18WnMu3F21gFn
+ slTIjAA==
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 24.10.24 17:39, James Bottomley wrote:
+Hi all,
 
-> The documentation Greg is looking for (which a group of Lawyers at the
-> LF will verify) is that someone in the removed list doesn't actually
-> work for an OFAC SDN sanctioned entity.
+This series addresses the issues that I brought up at [1]. The first
+change is the actual functional fix and the second change is something I
+noticed while auditing this code, which is related but tangential to the
+actual fix, since the current code has a correct calculation.
 
-Aha, guilty until proven otherwise ?
+This resolves the issue for me when testing both clang 19 and GCC 15
+(tip of tree, which is the only version that has __counted_by support).
 
-Is that how things are handled in the "land of the free" ?
+[1]: https://lore.kernel.org/20241022205557.GA3004519@thelio-3990X/
 
+---
+Nathan Chancellor (2):
+      kprobes: Fix __get_insn_slot() after __counted_by annotation
+      kprobes: Use struct_size() in __get_insn_slot()
 
---mtx
+ kernel/kprobes.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+---
+base-commit: b5f348cbce367d5dcd34bf2b6c02c39a5be3fb97
+change-id: 20241029-kprobes-fix-counted-by-annotation-ddeb95228b32
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
