@@ -1,188 +1,221 @@
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2059.outbound.protection.outlook.com [40.107.93.59])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0563D6B;
-	Wed, 30 Oct 2024 04:05:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.59
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730261136; cv=fail; b=E+x9ZrxUGelEyvLBFtJVEqQ5H+jGZ5ENAok1xJHCgBXGdi4sLGeg8kf0o+kL4OHRmQoTh9PfzZMQyqsaUMEk6s/Z2Utp87V31Fms2sqrTQT/l0c+GsRxnwekl8XsH860Wg7XeVvF7G3y+/Kh2Vi/mDorA5SIbRmZyh7datXwPOk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730261136; c=relaxed/simple;
-	bh=VY9D/HEP6CJcW5DHCcQbMumdP1fG2K9AvurPHERJqjU=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SAvRRG+1UhlBxOtsnjKzSAZmRSagtUF8iSZsAT2KUwf9RsnxGg5KFCL0AXclHSaLVYCGbRcziz6MiUw2sEz3oytkf/0JZxUOUejtJJvJ+SPucFwjjJ7Ih8TbO6rWXJhQCXYW0vT9jAp4ln8PIjOtNzt88FaT6O7zCaX+40dISfs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=BmoWAwBn; arc=fail smtp.client-ip=40.107.93.59
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75304194143
+	for <patches@lists.linux.dev>; Wed, 30 Oct 2024 04:06:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1730261191; cv=none; b=MqCg0IPLKVQqfGNSPnVsjorEnRBkvbSuAfPSr88JH4hQLbVh0YxPeaLbe8fSqhN4onEoX/DTssfIOFGlPj82MPfEcjsvbNdItmymZnZVVtOLDjGKEL7+THp7XhfrHdbaatMrFsy752ITDQc1a7XUJFeOOJFT+gPqJQv6h2dqvtY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1730261191; c=relaxed/simple;
+	bh=632XpUZRsR5/aU6sbXBuVov/ZpV5a8Ycg2UuG1IRfFU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UYaYTz334xMXk7Rk7vv0zT5RNp+8KF35RTXHeEMIxCXD1pMiGsiy0SkiE+6FgoncCXgpZmllGBg5n+H9ufTFGw2/pMP3QiXJHVwoDXV//jYXRwwYlSENp6myjdsLQ+amteQXrKgqX4aVwVBMmwJr1lcGGAsjcxIFkeDR56+o8FE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=GMJoN0sU; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="BmoWAwBn"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xZogCzycnlsFWVPZr3SIh9s8HRVrvOTFbc+ug8o8u7AATk+9bhsUjDZYhcJenGfkJq7vS1R/LE7hHeM/ffVgeqC0L70QsrVpnQEpGc4gRSxeRSZqvTvQ2ZOo2rCR+8x0+QArR2/jlrnnD1vBz4dy3OpkBDzo5De9mG9qnCwbfx8lBOqJshmKowDOg1GGc4oSOVa45C39L3XKdN/MfhF+utPKFHP91+LLRFNRpHUO458TD0thPLm/siFv9cPBA8oBdEez95UE8W/pyxLWq4fwBhUjvhpUFY1hiBhjRKoikxE1uZ9Z32XWS/lNx8wHBZU+quPDA7vzh2bDHa6D2k8UwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jJWMssJ/Q+/91OnGV38k9jXgxPwQ5XSXZB4E1kzlKg4=;
- b=KCcR7yzyfCy9xWmHL2XqaruSEiU/YNoHDA/J6Acuot/goRjkuCT7swpTPfJkM/d2zH0OSzL6wPgOWnzhH3dR6AW5JLd+OxAQ6Rjpwz85Y0m+SMeyFZ724K3QXSz5VwPiFWt6wropV57BDxztF6DNyxyEEDt3cZDaWbzLdAhuhwKj71c8nWsH+4sB51NN3hHGSTy9ZPqegO0gXvr6vwFuivxuxpTZWzt8FgQu/ELkb6gfz5aPQRhPBKZRKRHmu7lDGDpmfwQVorJnoJndovpFPLKqh/4+x81MasMFKO/WSYje9LTNtAMfP2xoajFY/a9Bpym6MllfRPpOq11sAw73vA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=amd.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jJWMssJ/Q+/91OnGV38k9jXgxPwQ5XSXZB4E1kzlKg4=;
- b=BmoWAwBnG5w3V9oqMUmjgQUBiE5bOjKzU1zpUaET/idEld1ZzvONWLwQrC1IGp24EDWLossrVT8qRR7YiJm4QsANHys/o27yeOjIzBSf7WAeusyACyJr9W3pEEmLT8xiIVhSJxpudBy/s2fHWe1BVmaCCVCtFdJQ9XL65/vXwLQ2DAbsbCHJVnv2PFRweMeOGlTBsDdkEfZoRPueiRovvcgC9vJwCpJy1LmluCn/PFZQ0lfwBa7i8hgi/SScK7nRGF8fj7cRphQ53OsDLVE1ult6Sy0BCB+aALXFbx0EwcX81zOnikcIfC4r01TyE33eru2EhJ8kUI/KYzqEqGbVeA==
-Received: from CH2PR05CA0051.namprd05.prod.outlook.com (2603:10b6:610:38::28)
- by CH3PR12MB9430.namprd12.prod.outlook.com (2603:10b6:610:1cd::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.32; Wed, 30 Oct
- 2024 04:05:26 +0000
-Received: from DS3PEPF000099DA.namprd04.prod.outlook.com
- (2603:10b6:610:38:cafe::85) by CH2PR05CA0051.outlook.office365.com
- (2603:10b6:610:38::28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.14 via Frontend
- Transport; Wed, 30 Oct 2024 04:05:26 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- DS3PEPF000099DA.mail.protection.outlook.com (10.167.17.11) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8114.16 via Frontend Transport; Wed, 30 Oct 2024 04:05:26 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 29 Oct
- 2024 21:05:17 -0700
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Tue, 29 Oct 2024 21:05:17 -0700
-Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com
- (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Tue, 29 Oct 2024 21:05:16 -0700
-Date: Tue, 29 Oct 2024 21:05:14 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: <kevin.tian@intel.com>, <will@kernel.org>, <joro@8bytes.org>,
-	<suravee.suthikulpanit@amd.com>, <robin.murphy@arm.com>,
-	<dwmw2@infradead.org>, <baolu.lu@linux.intel.com>, <shuah@kernel.org>,
-	<linux-kernel@vger.kernel.org>, <iommu@lists.linux.dev>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-kselftest@vger.kernel.org>,
-	<eric.auger@redhat.com>, <jean-philippe@linaro.org>, <mdf@kernel.org>,
-	<mshavit@google.com>, <shameerali.kolothum.thodi@huawei.com>,
-	<smostafa@google.com>, <yi.l.liu@intel.com>, <aik@amd.com>,
-	<zhangfei.gao@linaro.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH v5 03/13] iommufd: Add iommufd_verify_unfinalized_object
-Message-ID: <ZyGwemWwixBA+VIh@Asurada-Nvidia>
-References: <cover.1729897352.git.nicolinc@nvidia.com>
- <e99946ea0128370349373c94339d465397946137.1729897352.git.nicolinc@nvidia.com>
- <20241029144907.GB209124@nvidia.com>
- <ZyEKvcpgUsS1nCEg@Asurada-Nvidia>
- <20241029185558.GZ6956@nvidia.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="GMJoN0sU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1730261188;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=I6Fn1Bf3LTxjm3Pi7bGgRNx/dCat7AxttwP16Rp3WAQ=;
+	b=GMJoN0sUrYthfqD+CsV/HB7YqEIKsM9bWEzZaQC74+e2JdsYdr9iWfKlASAIGalXfYiRP0
+	vU7D6v5SmTZ4x4flkU9JKoGgp4QeyG1HLGRG/CJNDBSubAgk/fUdJCy43xOL1A1p5rzWMX
+	a5CZNBj1cpNuSKnoliz9xOlHMmVt72Q=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-596-8FB1B4IBN9-khLTkWWSYcg-1; Wed, 30 Oct 2024 00:06:27 -0400
+X-MC-Unique: 8FB1B4IBN9-khLTkWWSYcg-1
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7b154948b29so1079949385a.0
+        for <patches@lists.linux.dev>; Tue, 29 Oct 2024 21:06:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730261186; x=1730865986;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=I6Fn1Bf3LTxjm3Pi7bGgRNx/dCat7AxttwP16Rp3WAQ=;
+        b=aZSlVTHo7DJ4tO1XtIrS5Wldqt9NmUc+mIEiUqyjvoXEQBUsgjKETBkIQ0qpeKCLZn
+         8k0U69uOZyuUOZNamVVRKkISd0rkfVUjlCFEh1fSTZ22LMKZuntXyBQcS9H8wDgaJ9KO
+         ywZn61k/vaYHu22S4Dg7Do2P7f7WFSECiRb5PZsVWglDnEHX5kGQDG7QPUBV5YG3hxaK
+         K00bEk0Lk535dPM04yecmEJo4j1vchLbp4z+gIKFVs+8BdsV5XpeIPp750JGeS51akQR
+         mBoV5OlYDvyUj06QjZFTs6ZDFwgENOUg5R1Hw93fQtQWqCoZfbWgk2ZOHfBFwdpxQgWI
+         +Xyg==
+X-Forwarded-Encrypted: i=1; AJvYcCVW6/mUSvWndi1NLqk63K/uQP5AKrdpVnt05cSqtTQhH+4exJxMlKVwjChPC9F8L5QrHi8Sz4YE@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyl7sU5JXFvl9ClKY/vDpy+GGw0Dx71piEBEKQFzYYmFjxKNHcL
+	rIpxCVvdezjZhZMiHmSVKvkEfGGp9EL04dCa67VIKKJVnM2u3gKraAqVk26P9FJ8NwyIXVYy8OS
+	Fyij+ckry6p/JX/NSHXrV/CtHiroBwGg8fjez53n8T0MrhiVMeovVsak=
+X-Received: by 2002:a05:620a:1a84:b0:7a9:b456:c5e6 with SMTP id af79cd13be357-7b193f35bf3mr1894408285a.42.1730261186700;
+        Tue, 29 Oct 2024 21:06:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHrx1mmIynIiSGSVPWiqtshULFjxIn2aPt/C14LDu8Kq33y8t5ez+1+bvieZGhRPfYYDYfiJQ==
+X-Received: by 2002:a05:620a:1a84:b0:7a9:b456:c5e6 with SMTP id af79cd13be357-7b193f35bf3mr1894405985a.42.1730261186319;
+        Tue, 29 Oct 2024 21:06:26 -0700 (PDT)
+Received: from [192.168.40.163] ([70.105.235.240])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7b18d2ca347sm481562385a.71.2024.10.29.21.06.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Oct 2024 21:06:25 -0700 (PDT)
+Message-ID: <469bcbeb-97e0-4fc4-9c2b-b86c59dbe24a@redhat.com>
+Date: Wed, 30 Oct 2024 00:06:08 -0400
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20241029185558.GZ6956@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF000099DA:EE_|CH3PR12MB9430:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7dc2ede6-c6fc-4393-121a-08dcf89815f9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|36860700013|376014|7416014|82310400026;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?3d3l6xe8v/8ksQgJ5J2EMOUVAoeeJxNQ902m+7ukIvPxJPf56zL0oBx9gyuf?=
- =?us-ascii?Q?Vp+eUVWBOGwHGzcWt/qcYGdJRxZ1+LBS7Q9tqgsn1NHDayxnLRDNfTA1QQic?=
- =?us-ascii?Q?fBzl05G4a318Js/COMNX7tCht/evk70IoXk/AgvRwqvU0p+Bs9l6C9NqV6oR?=
- =?us-ascii?Q?O8VAchGWwVDADxHkiV7ZlkmFnxJTAdj/fsI9NeR26wfNojxduZVE1wipIiXH?=
- =?us-ascii?Q?Jap2a8jUQob/awXxT8ZpGsf+UWIEvcuuQXSjinnIqNzL6QRWo75ThBVuCu5j?=
- =?us-ascii?Q?E1FPlkBilzl1YWemfaKV/IgBxmNd+SeflRgDUIOsxiSBShh86K6c/mwe+bT3?=
- =?us-ascii?Q?cVuipU3qDvunSo1zQi/E+YMki2SYqEKlRTGjH8LodQRnjweGhVJh/RHYKyxr?=
- =?us-ascii?Q?avwPRcpLoY870li30fSM0IypUEJRRnTuReHUALITy4201frPTiFV3p8L+GvY?=
- =?us-ascii?Q?jjMdyyN1p6BlxltMTm1Ht5DmAgDXOZm9hOsR+XHmu8j00+iQPKdr+IUqcmeQ?=
- =?us-ascii?Q?ibr0C1fL7sRAKsJPkkBBrx3Xv3PMvIn3WxJKvRsJUyILWEzJMoIXKFWv+EAf?=
- =?us-ascii?Q?27552FcLWw3o+717hsux3q4RwcMuPb3CHKq4y47co49GttKH9iLE0kl9BA2k?=
- =?us-ascii?Q?+G/2ZqMZctCsS7lwA2k/JiSNrdUucypDKk7OymKAH7EUzTxT1rBSQVbuUB88?=
- =?us-ascii?Q?6B4Id6Mpt1OYAvUEotQ5LodWHp1iL9oXBg47TU2oZ2DTqP+0bbUtEVRPIGtV?=
- =?us-ascii?Q?ruPqn69d5OdhqTKgqnNo2V/lyaTOYUeQAATruSbMIh8SLifgAMoe0pfes8BM?=
- =?us-ascii?Q?AsiV2jr4wozc1rCe4T4I/eYSbs8jAw7xU9DALvZQlXO6gHMVAG6mMx4Hfiro?=
- =?us-ascii?Q?YbcSfw9yyAUvpu6bPSxCqXebmLhWUXwpCsQkufSdKWgTKlxvBbKncoztOAYA?=
- =?us-ascii?Q?UxZV1aFPI2SgwA6Uv4fupH35rSJSUseL/Prz9j9SlqPGR488728vlx2QKNTm?=
- =?us-ascii?Q?xTzA9NNcZJsEulkRsgA3xSdSb/9fHl3bcKzrPxgaSE9dfE4N1+ViAsJdHZ9N?=
- =?us-ascii?Q?nsCUEleWg+tiODbi1Hm7IbgW8qL4RR3kKZ1R4ziDqV8NFiNZ4UvyUUMhpvm/?=
- =?us-ascii?Q?DmakgD6x3mGNFTxI+pTnjZuz2eDqtBhlGgLrcDtUKk41Hk8G1Vy8nMjPRuQW?=
- =?us-ascii?Q?7HWB3/4wRKp3nLyr6g4/ryWjhyBySgi/+HjwAXENzgxrF+XkKALdFphNe25J?=
- =?us-ascii?Q?qcfOCakD+oNRi6tb+JXcnAm2jR3mNy7zTq70jkqFCu5cJfHnfSZHLxd/1j1t?=
- =?us-ascii?Q?bXidIRlNz2Rc5B8FGcnfgtnmomfXs1BgkpPe5saIlS8tY0oGtWRw7ikuzoCb?=
- =?us-ascii?Q?OE7JFJ1axHXgqZLRn3GPG2bIiew78pb3J4uo2SPq5zSWNe2VjQ=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(1800799024)(36860700013)(376014)(7416014)(82310400026);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Oct 2024 04:05:26.5879
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7dc2ede6-c6fc-4393-121a-08dcf89815f9
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DS3PEPF000099DA.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9430
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/9] Initial support for SMMUv3 nested translation
+To: Jason Gunthorpe <jgg@nvidia.com>, acpica-devel@lists.linux.dev,
+ Hanjun Guo <guohanjun@huawei.com>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
+ kvm@vger.kernel.org, Len Brown <lenb@kernel.org>,
+ linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Robert Moore <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>,
+ Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Moritz Fischer <mdf@kernel.org>, Michael Shavit <mshavit@google.com>,
+ Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+ "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Mostafa Saleh <smostafa@google.com>
+References: <0-v3-e2e16cd7467f+2a6a1-smmuv3_nesting_jgg@nvidia.com>
+From: Donald Dutile <ddutile@redhat.com>
+In-Reply-To: <0-v3-e2e16cd7467f+2a6a1-smmuv3_nesting_jgg@nvidia.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Oct 29, 2024 at 03:55:58PM -0300, Jason Gunthorpe wrote:
-> On Tue, Oct 29, 2024 at 09:18:05AM -0700, Nicolin Chen wrote:
-> > I think we'd need the same change in iommufd_object_abort() too.
+
+
+On 10/9/24 12:23 PM, Jason Gunthorpe wrote:
+> This brings support for the IOMMFD ioctls:
 > 
-> Makes sense
+>   - IOMMU_GET_HW_INFO
+>   - IOMMU_HWPT_ALLOC_NEST_PARENT
+>   - IOMMU_DOMAIN_NESTED
+>   - ops->enforce_cache_coherency()
+> 
+> This is quite straightforward as the nested STE can just be built in the
+> special NESTED domain op and fed through the generic update machinery.
+> 
+> The design allows the user provided STE fragment to control several
+> aspects of the translation, including putting the STE into a "virtual
+> bypass" or a aborting state. This duplicates functionality available by
+> other means, but it allows trivially preserving the VMID in the STE as we
+> eventually move towards the vIOMMU owning the VMID.
+> 
+> Nesting support requires the system to either support S2FWB or the
+> stronger CANWBS ACPI flag. This is to ensure the VM cannot bypass the
+> cache and view incoherent data, currently VFIO lacks any cache flushing
+> that would make this safe.
+> 
+> Yan has a series to add some of the needed infrastructure for VFIO cache
+> flushing here:
+> 
+>   https://lore.kernel.org/linux-iommu/20240507061802.20184-1-yan.y.zhao@intel.com/
+> 
+> Which may someday allow relaxing this further.
+> 
+> Remove VFIO_TYPE1_NESTING_IOMMU since it was never used and superseded by
+> this.
+> 
+> This is the first series in what will be several to complete nesting
+> support. At least:
+>   - IOMMU_RESV_SW_MSI related fixups
+>      https://lore.kernel.org/linux-iommu/cover.1722644866.git.nicolinc@nvidia.com/
+>   - vIOMMU object support to allow ATS and CD invalidations
+>      https://lore.kernel.org/linux-iommu/cover.1723061377.git.nicolinc@nvidia.com/
+>   - vCMDQ hypervisor support for direct invalidation queue assignment
+>      https://lore.kernel.org/linux-iommu/cover.1712978212.git.nicolinc@nvidia.com/
+>   - KVM pinned VMID using vIOMMU for vBTM
+>      https://lore.kernel.org/linux-iommu/20240208151837.35068-1-shameerali.kolothum.thodi@huawei.com/
+>   - Cross instance S2 sharing
+>   - Virtual Machine Structure using vIOMMU (for vMPAM?)
+>   - Fault forwarding support through IOMMUFD's fault fd for vSVA
+> 
+> The vIOMMU series is essential to allow the invalidations to be processed
+> for the CD as well.
+> 
+> It is enough to allow qemu work to progress.
+> 
+> This is on github: https://github.com/jgunthorpe/linux/commits/smmuv3_nesting
+> 
+> v3:
+>   - Rebase on v6.12-rc2
+>   - Revise commit messages
+>   - Consolidate CANWB checks into arm_smmu_master_canwbs()
+>   - Add CONFIG_ARM_SMMU_V3_IOMMUFD to compile out iommufd only features
+>     like nesting
+>   - Shift code into arm-smmu-v3-iommufd.c
+>   - Add missed IS_ERR check
+>   - Add S2FWB to arm_smmu_get_ste_used()
+>   - Fixup quirks checks
+>   - Drop ARM_SMMU_FEAT_COHERENCY checks for S2FWB
+>   - Limit S2FWB to S2 Nesting Parent domains "just in case"
+> v2: https://patch.msgid.link/r/0-v2-621370057090+91fec-smmuv3_nesting_jgg@nvidia.com
+>   - Revise commit messages
+>   - Guard S2FWB support with ARM_SMMU_FEAT_COHERENCY, since it doesn't make
+>     sense to use S2FWB to enforce coherency on inherently non-coherent hardware.
+>   - Add missing IO_PGTABLE_QUIRK_ARM_S2FWB validation
+>   - Include formal ACPIA commit for IORT built using
+>     generate/linux/gen-patch.sh
+>   - Use FEAT_NESTING to block creating a NESTING_PARENT
+>   - Use an abort STE instead of non-valid if the user requests a non-valid
+>     vSTE
+>   - Consistently use 'nest_parent' for naming variables
+>   - Use the right domain for arm_smmu_remove_master_domain() when it
+>     removes the master
+>   - Join bitfields together
+>   - Drop arm_smmu_cache_invalidate_user patch, invalidation will
+>     exclusively go via viommu
+> v1: https://patch.msgid.link/r/0-v1-54e734311a7f+14f72-smmuv3_nesting_jgg@nvidia.com
+> 
+> Jason Gunthorpe (6):
+>    vfio: Remove VFIO_TYPE1_NESTING_IOMMU
+>    iommu/arm-smmu-v3: Report IOMMU_CAP_ENFORCE_CACHE_COHERENCY for CANWBS
+>    iommu/arm-smmu-v3: Implement IOMMU_HWPT_ALLOC_NEST_PARENT
+>    iommu/arm-smmu-v3: Expose the arm_smmu_attach interface
+>    iommu/arm-smmu-v3: Support IOMMU_DOMAIN_NESTED
+>    iommu/arm-smmu-v3: Use S2FWB for NESTED domains
+> 
+> Nicolin Chen (3):
+>    ACPICA: IORT: Update for revision E.f
+>    ACPI/IORT: Support CANWBS memory access flag
+>    iommu/arm-smmu-v3: Support IOMMU_GET_HW_INFO via struct
+>      arm_smmu_hw_info
+> 
+>   drivers/acpi/arm64/iort.c                     |  13 ++
+>   drivers/iommu/Kconfig                         |   9 +
+>   drivers/iommu/arm/arm-smmu-v3/Makefile        |   1 +
+>   .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     | 204 ++++++++++++++++++
+>   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   | 114 ++++++----
+>   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  83 ++++++-
+>   drivers/iommu/arm/arm-smmu/arm-smmu.c         |  16 --
+>   drivers/iommu/io-pgtable-arm.c                |  27 ++-
+>   drivers/iommu/iommu.c                         |  10 -
+>   drivers/iommu/iommufd/vfio_compat.c           |   7 +-
+>   drivers/vfio/vfio_iommu_type1.c               |  12 +-
+>   include/acpi/actbl2.h                         |   3 +-
+>   include/linux/io-pgtable.h                    |   2 +
+>   include/linux/iommu.h                         |   5 +-
+>   include/uapi/linux/iommufd.h                  |  55 +++++
+>   include/uapi/linux/vfio.h                     |   2 +-
+>   16 files changed, 465 insertions(+), 98 deletions(-)
+>   create mode 100644 drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+> 
+> 
+> base-commit: 8cf0b93919e13d1e8d4466eb4080a4c4d9d66d7b
 
-I found xa_cmpxchg() does xas_result to its returning value, which
-turns XA_ZERO_ENTRY into NULL failing our intended verifications.
+Apologies for the delay; quite a few spec bits to lookup, as well as some SMMU refresh-ing on my part.
 
-So, I replaced that further with xas_store:
------------------------------------------------------------------
-@@ -41,20 +41,26 @@ static struct miscdevice vfio_misc_dev;
- void iommufd_object_finalize(struct iommufd_ctx *ictx,
-                             struct iommufd_object *obj)
- {
-+       XA_STATE(xas, &ictx->objects, obj->id);
-        void *old;
+Reviewed-by: Donald Dutile <ddutile@redhat.com>
 
--       old = xa_store(&ictx->objects, obj->id, obj, GFP_KERNEL);
--       /* obj->id was returned from xa_alloc() so the xa_store() cannot fail */
--       WARN_ON(old);
-+       xa_lock(&ictx->objects);
-+       old = xas_store(&xas, obj);
-+       xa_unlock(&ictx->objects);
-+       /* obj->id was returned from xa_alloc() so the xas_store() cannot fail */
-+       WARN_ON(old != XA_ZERO_ENTRY);
- }
-
- /* Undo _iommufd_object_alloc() if iommufd_object_finalize() was not called */
- void iommufd_object_abort(struct iommufd_ctx *ictx, struct iommufd_object *obj)
- {
-+       XA_STATE(xas, &ictx->objects, obj->id);
-        void *old;
-
--       old = xa_erase(&ictx->objects, obj->id);
--       WARN_ON(old);
-+       xa_lock(&ictx->objects);
-+       old = xas_store(&xas, NULL);
-+       xa_unlock(&ictx->objects);
-+       WARN_ON(old != XA_ZERO_ENTRY);
-        kfree(obj);
- }
------------------------------------------------------------------
-
-Thanks
-Nicolin
