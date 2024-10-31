@@ -1,47 +1,47 @@
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2063.outbound.protection.outlook.com [40.107.96.63])
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2046.outbound.protection.outlook.com [40.107.102.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE09928379;
-	Thu, 31 Oct 2024 00:21:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.96.63
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9411DDF5;
+	Thu, 31 Oct 2024 00:21:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.102.46
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730334075; cv=fail; b=jlxMDHFJlbVgp0tPPWnmMwdj+ICW4zBmeERN+KmQQ1JoEZOUV/Hwwh+z4j7ud5R88F2vjlq52gn9BPl4PQ1imXcIwOV0KBYrhxMvFAKJnHxkXpXFBUrQwYBnfyGLT+LAKhjk9gGZehfiCpim/mTzfy6TmEzIKGAO+BBPhvvVR1c=
+	t=1730334075; cv=fail; b=mVtBbne0nSG6J1QqydlyuRz78+F2tF5b65/aIpcT176Lfs3qyEuN0Hw2ULd2uRefi/TrmZoEyIz4o9h4p/7jvxytmBOb6q5gKyDzbwAJc/0URMcQALUKJEDx9pcwtfKiMlWgFki+t5jG/Uhvf06LEswOgkvTwzKnNwfq5e/uaKw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1730334075; c=relaxed/simple;
-	bh=jewXdDk09Ypxy6hXyuUMs6QuZJcDwSFQtpFffJCPPbc=;
+	bh=4gnVYg0A50ewjHLsVmVpLCJH5jqeQzLZuw5gxfHHa6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=qRWcXcfM9/pHbNoZ9wN5zzqh4XuqPEb/Kr04mnJsC//zVMiOn6X8Xi661zfuhPAyWEPQ1b5FeBViXAElkpOVxog5MykZdc+N0P1RiScPrKIyWAdvXUQVi5gU4CPIGMEIGsP3NVZU/1B+Dht22GZhrXVX124mGrDLeesZC183P64=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Vp6rLy6E; arc=fail smtp.client-ip=40.107.96.63
+	 Content-Type:MIME-Version; b=FeJVtt2Ul/4XEyJyfI2+/WnM3lsrZKOjjs1hIqATJDFL7N7BGmbCHhesEpL0cJERh9ozWw0m+6SYXRCqU0WdK9TBK1Ocn/Z7+ODY1fr96hYChRhoGjKZW5v/GsCwSoxcymoCOi2FE2LK+m8dSjQfMF//jhCwwBGQ+3E/Lek95Q0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=mxTpaVCQ; arc=fail smtp.client-ip=40.107.102.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Vp6rLy6E"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="mxTpaVCQ"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=r4V/tqfLXVbMgMy2j8qqogO5HArJdI1LDFSx9HdYmh8hdLC/HKlPnx+GnVc9g9xbxr9XPUesq30vU59HdmKPN5m7snVLokctSZ1bFYJsdMhz0JUQcaxrVXX10y8pQTlGsE8XmXhexzQiMgQNwyXffZW4y/O+Zdw4STk9gzVwfbiz/wWoYPGwHSOLEPtvW86btWf4jVx9425jAzcRRthbpkQ0UH9+k4IKrPxQO8fNIiNdd6bAsH6j0FJmIsKaOTt64it+Sg/dMD8X21MX0QqNNxc+M4qEX989naFMmA6D9Zj+QKa1tamc5pbLTaU70s7LwvvYwUbVBg3atdt5lcamPw==
+ b=l7coIbGxOpfZYyDaXGB8roXiMofuxrutgvi+E4huCNzNHRg6s3TtKAwOd6/KuVnyxuvDDyFJ+7yOW4PLjKFi5TYtyNBhlo0AZ3df0R/zOmqSKN2M/6ClCjOP22hPZ8Crhd6yULErdZ48JpQT22HNF2wVX+Qw3ln21RQqKFl6kRdIipMn2QQbiPT8e1wt8rE2r3Fa9XKvaXvcCEH74imMQ0oNmjpzZsDQbcgqLpwMU4iRhh3ORAaUohj8gED5cS4AyueI1Vak4EB86Ffjau4C2ln5wbdUR0non2E+1dusZzqlFhCSPedvwrpx+DuTExFr8hTvEUIXJ4+DHqx4rmObew==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rQRHfPftorME/58aDpfc57GcioAVlyZuojbIq3ySi6A=;
- b=QAyfUxqCZ9/Y5Y4hF2V8hbw2EeUHrEhHbz0lw3kdaGSIDVEWJ2+bV/qC7sZEmkTPIkyBz/gN0CknYeFS7kNxNeQoCzGH8U/7dz0z6xUflYKRYey/bLuwt0ZfgAKUZBIhriqvSdYxYhQxNR4JDjwzZFgDQ1q40APmSpIXyvDPKFEf/b/YHL/zwruZU9Zvie3mwy6YRQgoHBunP1+JjWq9UCQgTD+KnOPTkTl+fmAM60jgx8zytOYbQ+AS3ZWbG9U/kE+KOzx8KiplEf8dK2zIMJodsTcCq3Iu3YYkvOcdgDNkZvpcvItU2Ppg5Q0byYuR7CGlf7aR86GJvFtRdJaaJw==
+ bh=TEirjwDWpVAo/uB4HBcpYrUlvEoqnTQaJ16GVCbR8aw=;
+ b=cOVrgEPi06esqPDmv9c/GEQi9y5ImGM9eLxEo9GSTlCmib+dgOs9o/N6GBJLR4WNHZh7Er3YTxiPl7sfcnyFdZal1GDPJiXuqeA5blM26XfbFUojECtB6oegYtmMZAWE+lyqtUvA5s7K+7NjVeICwJpF/boQEsdK4X1q0MbSS+C6ZHuXL7Ca6r7OrlXziwRzOfOFZXF3jngngxtFUm2LkW+Fp2MK0Uo/5QSAn/GNDAyp4bkaHDigwDka5CeVHTxe14zrWTo4A17T7czleY3Ao0/phRHCeRFOWDp54Z04q1pWgSD/le1QOz0HFicDhNCtfL8DZSFM/G4jjJal0T6iQQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rQRHfPftorME/58aDpfc57GcioAVlyZuojbIq3ySi6A=;
- b=Vp6rLy6EOFVL0T6GJBGNSPfSWUs3CnE9/3swO76sRuAxI+OBMnwCIxPiJzXG03fk97oUGXDCjW4N6f9xUm+LI3aw0Yp6KmeObX+JWrBfVSXSGljTo626dFuxz5ZJLcbn9ITFUFDhf/3cH02alFpoLsPF2ubeThL0sv/NZ6/MdITcyIp3k3WngxKkW7iAM+k1YWhejxXcvZaoAgyqQ1iPmCIPC6wYD7buOE1PfSoDbofl+iGtoBeRtysOaJD2O36rx22Dsz2W4wQZc2qf4JixPy84kS/tB6N6G+DG0xI6N7sUW3hszeAJuMxfuzCpIilcAbHqLgCmeTmMK1LTizhjCg==
+ bh=TEirjwDWpVAo/uB4HBcpYrUlvEoqnTQaJ16GVCbR8aw=;
+ b=mxTpaVCQSdok+ec++OgmWeLf68Dp3dArIbsPD1R4ahCCMcZH/LU55SggsqnqY0easCRCy7N/DoJ/iKOepEXL7bSQzJmlwd+sqGQW9KzefVPMGh3XX19pdGfqyGP1BA555WSCCj5rWk5+wDbmXkgY5rmdzHfNSIbP37CyIjHwfZmSVmv9HIrIcuaodAvpDj6D1Js7GdSl0ffdBPD+O4gxjg0MTz3mzSLFMpnAVJOoTtX7yWn/wB2qQMi1olj9602y1rOk4p2Jwb3z0A68mF4CgrnRNLhLTLafGGc331uEFKTg6B4e7aj5PX1+2Qne002GurRzt29FYXu7f8pGXPTb/g==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
  by DM4PR12MB7573.namprd12.prod.outlook.com (2603:10b6:8:10f::22) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.32; Thu, 31 Oct
- 2024 00:20:58 +0000
+ 2024 00:20:59 +0000
 Received: from CH3PR12MB8659.namprd12.prod.outlook.com
  ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
  ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8093.018; Thu, 31 Oct 2024
- 00:20:58 +0000
+ 00:20:59 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: acpica-devel@lists.linux.dev,
 	iommu@lists.linux.dev,
@@ -70,15 +70,15 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
 	Mostafa Saleh <smostafa@google.com>
-Subject: [PATCH v4 12/12] iommu/arm-smmu-v3: Support IOMMU_HWPT_INVALIDATE using a VIOMMU object
-Date: Wed, 30 Oct 2024 21:20:56 -0300
-Message-ID: <12-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com>
+Subject: [PATCH v4 09/12] iommu/arm-smmu-v3: Support IOMMU_DOMAIN_NESTED
+Date: Wed, 30 Oct 2024 21:20:53 -0300
+Message-ID: <9-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com>
 In-Reply-To: <0-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BN9PR03CA0275.namprd03.prod.outlook.com
- (2603:10b6:408:f5::10) To CH3PR12MB8659.namprd12.prod.outlook.com
+X-ClientProxiedBy: BL1P223CA0017.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:208:2c4::22) To CH3PR12MB8659.namprd12.prod.outlook.com
  (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -88,340 +88,450 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|DM4PR12MB7573:EE_
-X-MS-Office365-Filtering-Correlation-Id: a250627b-ff5b-48f0-2132-08dcf941e3f1
+X-MS-Office365-Filtering-Correlation-Id: 33b96003-75de-42bf-cff9-08dcf941e401
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|376014|7416014|366016|1800799024|921020;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?6VNd+NcAg3V9iuuAzlqVpUdLfuzq/27/3YVyjizotvJ0G5JJWizge9TzBy5S?=
- =?us-ascii?Q?L7YCHOx+RiGUvMLYsG979LQAVKTfUXw8qpVVvMUjWSZbx0JZYk9FlAljE3rd?=
- =?us-ascii?Q?wxTT124r0LGprHITt4/nKFasT1El9Elnq38AwWjH4cx/p/fvL918XAhBqX3c?=
- =?us-ascii?Q?MLkQVGvdpO0HtS3jYlP3ygbNI4YIDMkjcL8+HtHPvVZGLdxtVTEXOlOZBGwT?=
- =?us-ascii?Q?//6IA/wT2u6ZOYu4TQRozAXft7BcxZMvup2aleZwnb7y25zjivk+Dqy4c90N?=
- =?us-ascii?Q?Dp2WGLHtQWt1cTdG67VaJWcN65lB7PoZsT02c7A8bdfiTscM2SmPUokmr2Kw?=
- =?us-ascii?Q?SFlMQvhp6b37g69E7THGfAL7VTS5z5cjfffBzLAhOK22sESswvBoSwa0ZUvO?=
- =?us-ascii?Q?1Av7a/hhasjzONHqMdzEf97M0cmHH1sCtk3FdtJAWyyox6u5DBBljfKCiNCf?=
- =?us-ascii?Q?GO3qQMet0EJhVB0UnopEfpCvZhFcGCp/u3uULMV44NvKk1Z9CnbZ1KXXO3l4?=
- =?us-ascii?Q?naU2a4lclHRaSHgLYffsGv2LR/PfoNJCOryLuIYkPJhaQ6Ye184EyTd8Au7S?=
- =?us-ascii?Q?/3zbjIcNJQZV0eQWbNF/7TmDbNqls+4QVMGvb+D059cVKvNhTG17bKi94Ezt?=
- =?us-ascii?Q?sHDFFW/qPHsSkT0iVZL3do4Bqmof98n3omVWjI8Ak2a/F/vpXBL7k2HHNSRw?=
- =?us-ascii?Q?hw6VWtq4b5XNMxSkstt2kDIjbO4NeCqUM6fR81lcRVAed3bsYyVY4HWBAt5j?=
- =?us-ascii?Q?NcaAh5wa/O9A4xChT+vbsPV/OdJvc3aPk9OsA1QA42inauDulLgGREBSwkhC?=
- =?us-ascii?Q?9bWMYCyP3j5PEI0QxIIjV1buw1XU35z/L8Pdyvrwz7QOLFvvNF4mBhDPeMvt?=
- =?us-ascii?Q?LpvlgnpvH2zay6pPZbN6rLIkYdGOCXuE0bdojQjkAoRGB8K0Ri0aZIIR+Lia?=
- =?us-ascii?Q?/XBheDqXViertCPa2IDWc0jDPcgIq64FZ4V3BdL5pNqK4idUD5TsS+fLCd1W?=
- =?us-ascii?Q?igc2ltZHUU8rNucd+mIuwQkfKvaLx3++WbrLgIahgYkyTqzEFxujywwFAyVm?=
- =?us-ascii?Q?86wBgMzWEn9O/UbWvAXrU5EjHwSchlk7mto3LGKqScQ5GrJFomQKYsxesTaN?=
- =?us-ascii?Q?zYJHF+bP81QwHnBp2eymLcJa+2o7oTws/gsusEEdkOLjgJqiP/x6vl/YwyNf?=
- =?us-ascii?Q?rjTob/00TrdOK9Lrm2ZLA2qaTYsWkaNiUjANbwXqU0AqrCUQI/UZIPshcyY/?=
- =?us-ascii?Q?d4OVSEYHzd5e15YCtJQapmRUZpAa34cBGg7NEuJzuU9p2QPJk2A0qzO312zO?=
- =?us-ascii?Q?WG/xsMtvkSYvQ0Yr3sxiuVvDqtS6kUeMDPn5zi7MroLDu+W+wMOXHn4GjpJa?=
- =?us-ascii?Q?TETC8ws=3D?=
+	=?us-ascii?Q?KECJ3rE2fVNiq0f4HNcDYgWQOa6xim8dwakBcfonvyyfkNdhCdbhzK4GocSw?=
+ =?us-ascii?Q?vTJ5V6X1pU8n0w+MKDLtilhPj++7dKI3dXpLc1eEKzL95MOVheBQ4RkRHuHK?=
+ =?us-ascii?Q?GodPqwtogINlTaz3PxembAsADl0Gla/03MDqMDGoh+D4LS1r+Hm8hEPwTB8G?=
+ =?us-ascii?Q?7UGk4rxI3eA3bRn/li4+B/cs5U8+gxWYikmpEV7CPbbBRrYrgqn04uUywL3C?=
+ =?us-ascii?Q?jfny6RuqeDh69hrVX731ESxZd7520WWreenBpuG4fNq5IRet0Y7aYUOWY29O?=
+ =?us-ascii?Q?msw/K9DMBhpHFgMzdJ2drJmojxZ3RBN225Ds0xTU0UaMeZM+CslMewwngWmb?=
+ =?us-ascii?Q?zTpckV7x+WQ/gj2MOLpPNEhtuxy3MZSWWKztM+1y7VO2/W7pXuQZCidFUseT?=
+ =?us-ascii?Q?XUEWCx7SRAfe1q/Hapzy1zsRTBqhljQ6jCGU9A8GsX7RC3n+gOY6kYfUipla?=
+ =?us-ascii?Q?tmkWYwcypPG4O3NjVbEja8kC6wdgGf8kqbt//ij/7aKcSehB5rmzkhMk+n67?=
+ =?us-ascii?Q?Zd7KRJDUNmXzl2x6hzSxqqQ12ylyxxR5LVjgJIDa6zOTAg7zVF05T77PDrsc?=
+ =?us-ascii?Q?ECeJp8QnuQ0uAP4K5wOdX4+aISdm+6DKAxmbiH0oPh+MDMAqRDsPjexUlM1c?=
+ =?us-ascii?Q?ApmU/fMhk6j2PVZOcQZK9TfMKc7HieJVy7MKHHysBUoYXf5mKuM9JXTPV/jX?=
+ =?us-ascii?Q?4hqfRv74QovQoTMAYZNDjdG6sxPlYNTdQmEU0OvrKg1x8pIaD0PLG80hO5HP?=
+ =?us-ascii?Q?9yFOTiag43wpdfxSieqY65n/hVarwjthCCGBmIwaagPVZ7vHntJvTI7weaDx?=
+ =?us-ascii?Q?T3O6eyqr/B38u49wzvC2YpFnQ2ZQpYXdA1WGNF5PtsfzmbR7fCDJqmkkNa96?=
+ =?us-ascii?Q?hC5ys+y7lUORR3M0IYGbxgpxvJdEW76XVmQWH02HMBBju84Ny72ouAO8JANB?=
+ =?us-ascii?Q?AutVPxWCt6yoJQFaGhz67gzfMv62JuVehLYjYI0Y8UlVLOEb572qVrjKGS4U?=
+ =?us-ascii?Q?y5hTzawWxCZLOLxT5tehY2H8jQqD0UVo+xHrJ66OhFlsfD9kr24VlwQMmkq4?=
+ =?us-ascii?Q?WKBYWHXleHfaXmX+jhleX3WmxSTi3BGNQEakHItM32g04tiXx/iV1KnvDJ35?=
+ =?us-ascii?Q?PB3NTJNOsnnyLVE2OzDgEW1htEzA5ul/8fcguGOVHsheeA9Ia71pHRXZwVCa?=
+ =?us-ascii?Q?PoNfclLo7O//ba9mw5FUFkTGGXiZ8kemnSdfE7NDdwKUHat4PvCBptOZDHEj?=
+ =?us-ascii?Q?+ewiWzNgQKyH3jtIrmxHh5/AT7UL7wXqxPNdGrwwZ9qEEa2YicXNCOipPefJ?=
+ =?us-ascii?Q?P4QexK2/KpMKsIwWU3t8gb6WsegTPNTUwVtOeb5VPgX88BhaRID/hfJJQt6/?=
+ =?us-ascii?Q?qILCcJ0=3D?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(921020);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?U/AIEd0S8lI69ZQU4yErwElz9YbvdIJa2F1KYh6eBe9EbA7Aot3tbMGt/Psx?=
- =?us-ascii?Q?qBaLXkD5lk4IMrXmwykA1a3pA0eaj3j2m5bTajVoU4calz6EsrVN9ctAeGVA?=
- =?us-ascii?Q?Ezgn6A7qFCFTqPA7AqaDhc6MH+MiWEm/PNcpkkQhUPbPeoBE0+DYAekHZTW9?=
- =?us-ascii?Q?CZdcIzICkX1039poBRs1J8Zg78OxuA7W/1CpOClkI9QsOjT9hlSpzgEa1Cne?=
- =?us-ascii?Q?xhxvV89aW4fbJ44t+UuF2CRyFxgT071d37BzyWN9toUfuWc3PDtH8BOVbMHP?=
- =?us-ascii?Q?SrVM5Iim0TJ7Qxf4DT7d07J/hHL8o2WuJIKTfFmL2tkr/pY4hvdsCxf7aWow?=
- =?us-ascii?Q?qnV8RojDpqEa6Z6Kj6JqjH8rK0E7mQOEWzkrEZ8LcivjW3+AWmTaorDfqt20?=
- =?us-ascii?Q?K2vu/mNd9JlPIkO/wAxbybKlFljiZWfUfY9eLP1chlACGJpCh6b/lNoJ2PNx?=
- =?us-ascii?Q?LDlg+xytTBRXC3CdCr71mta1yqRFuZMPELbwddaXK6C8/qhgGBCS+OZ+36go?=
- =?us-ascii?Q?SlU0h6Z1+3WWGstJlypvHoIwv3a74gjBaFS4tfhUmSbvh0EebFvAggwM62Ss?=
- =?us-ascii?Q?3DQRHuarAeEqSR3VgQGnlda/TkFHuJvR82JnXM4fTAnNRkuycZ03N3SDI5KI?=
- =?us-ascii?Q?lIUfrfhr/JrKyI2PB4XIKKINKT7B4/f0BiOxhow2cdyiRU6wTwSSR1DKcxxb?=
- =?us-ascii?Q?QucbZBsLW/hHIFJTQRAzgum48VXcumD2Dto+pK9AP6bfgUQx7VfidABp9CN3?=
- =?us-ascii?Q?oI2Q9uEpviCfNX7bWTaTdPuJSkRHk1PhkPjP21qypcwf6ZMQTUECQGXKWXU5?=
- =?us-ascii?Q?pHVmkGfMVRyQtR5tF/PN9xPCLlnIGPLJiO2an2e92atr3kcvo0Xde/FS4C1M?=
- =?us-ascii?Q?U16jLbKPVLRxcJ/67E0J+MD87uzvcwenIikvHRcLUmwVLLxB/u1e/oCN3F8A?=
- =?us-ascii?Q?/rkLg101cwJR8K2BJsWOMN2rQ3MGHYztStQLwigpBKrbBIwJohmzxclF3/tM?=
- =?us-ascii?Q?v2gdF61AijCqIUit6vYM41+4Ig1unEfhJXv/qoBOG2XfhOuInLO0Lq0OVIRp?=
- =?us-ascii?Q?LSrBQg5r1dDhgyzjxuSSzfmAdtkXgA8Vdag7g93bV3wO2SuAXhvWVFsdvOev?=
- =?us-ascii?Q?vu8u/sigda+IirxTZP9sMsA4QOv9jGYemSpdaejSSDuGdck6Z3xqt8nCNRMJ?=
- =?us-ascii?Q?tcMDP21jqnSzvPTwjkuFVKWTGM45gf6jK1B3jo+5Mc3KCvjPOaQ61Z11PFc4?=
- =?us-ascii?Q?Gj9SRzq1DPKR0pgKnO/QDms1yr5RSwORd5DiIOwBuB/qQKxlL9CEfX3wXl7W?=
- =?us-ascii?Q?ZRCaax11HztgmQQt3tVe4y28mtK3LeU9XIdhLQg75mX/V0RRC8T3NDvxJ18P?=
- =?us-ascii?Q?XZh6bRmiw/+pAtMPvZoVg4qgOCro7wXwVlSYPIeeKkiX0jhpv1D0kHfWPSDa?=
- =?us-ascii?Q?cOfreNgsfPZm4fUN++BGHi/6Ir91ifyIxZubJlqkA0JRYCj3X3Np1kq9LePm?=
- =?us-ascii?Q?+zcM/fdSV1QDFxtnHB4JnA1PW00umTO5oqYCuaoIkDyfSjgoo00kGDPFWVWy?=
- =?us-ascii?Q?PBWoi6S+f91xx6YR6ws=3D?=
+	=?us-ascii?Q?dRfK25YT9rnyP1orPrzEPz/1tAuc9R43coLhuFYVeH55nrKLk04XDQFBEacq?=
+ =?us-ascii?Q?0/Apo1reZ5YDonKGPnROn1sgF4L1qkTCNwO/qEIIfAlRsg/60+IRWcx2eaEl?=
+ =?us-ascii?Q?JwFlnov7Dl3PY6i/eKTXbacKZ+4uE94dUj8WnghZMhiBrGzmI5hWv82uXkIO?=
+ =?us-ascii?Q?xI/f4JSwOW2PwTbQnSvrThFbI8lE2Rk+LT5fM7ZvzeWvmVRIHILIhlkZTbET?=
+ =?us-ascii?Q?ylh3J6G/BrkTusV/9GO/fjhjXXJ0wHRZrmrt/IOkZe4BVnNaEKYT9OSFHwM9?=
+ =?us-ascii?Q?Hy5yw4k+Sz3J23Y9k5gxRrK571u3GkWXHTB6cgipOsrc5wUkqeRi+lFuYAeS?=
+ =?us-ascii?Q?dW+PeUE5F5Badh4C1onh1w6/XlbS7nZa5Sw0JUYF+MqJS6TBimm9NT/wU37x?=
+ =?us-ascii?Q?0q2vMcQMi8+TRiRu2EgptxdyaU+gQ8pXLqVeLWoh6HXsVGKWI6liXSzzGUnV?=
+ =?us-ascii?Q?PuhWupm6agVkb/jAoQueeVybisGsETYjmMBXkow/BXM9FyM4SUh0R/78muUQ?=
+ =?us-ascii?Q?ed0tUCdFJbRELjbtdPsLyI5Wrch5fbiK8GvHWJluNP1/zchNFtraasGYOkDs?=
+ =?us-ascii?Q?Wcv3x8HGQn3hUZ1sbxogFBNucCTMGZ0jkeY9YO47PZZISqK0XU3LX9ZqxHd4?=
+ =?us-ascii?Q?U3P/Csw9dW3rmAUBZfJVfBrb6fFLKpSxOHHB4BM8HY5fDPmZFdqSggEy9Fu1?=
+ =?us-ascii?Q?yyEIQqEGyu3zJckTN3YDwxzBn6P9BdOcIzX+rvFaoPc6CIxPC4qgZaj4uFwG?=
+ =?us-ascii?Q?ZzablaLvdu24T/H1+bxORgmCwI7E6E3M/zWoec6X9yXWVrxC7+NhEKtNpNlv?=
+ =?us-ascii?Q?z6PLYw58KP/YmBXE0/w/yIXDVCFSrCWSKFZKGG8Ln5Psi5F4erwb5aOV1Jhd?=
+ =?us-ascii?Q?vuTjM8X/pSxi5KvfQmq5+ok+r/gRoXfSHYeGZORSzDbdjCmV0HRtJJvjA2qk?=
+ =?us-ascii?Q?mkE+yC0JIuZeOLBZQJQBLE0880Gb2jOTtM/Q4V8Ly/nhFm7xB27h+ZRgry1Q?=
+ =?us-ascii?Q?HdnD0zt3PDHAN4GGXQhAa0fX8GGmm+hLurZqsQ0kfAz9t26QCD6JlgV1In0h?=
+ =?us-ascii?Q?bneyceGR8qgoyLhpXTOO1QRt1ixWPPqM1kAQ1lmG6lLBD4T9Gzmx5QcGnc2r?=
+ =?us-ascii?Q?4Ar/0AYgtwOUr8Cjv8RkQ95/4Bg8lST6DB696QwbHVAECevmfQarJYRTbZ+Y?=
+ =?us-ascii?Q?sMypOXBuudltcknxi/4CoooX9+ssiZP5xDgG/Gcu4YFDgPCO5O+Vfk9k8xoy?=
+ =?us-ascii?Q?qlW11+7+/Hr9/xCf8zuSPdvpr2v2kEklTV/ekojvRJVFxQ2fij9icpghHBS5?=
+ =?us-ascii?Q?rNY6dY0Pr0aaiEp7fFh5yb6UD7Evu8PDGLBP1S13J/x/lKJyA2/Wmm8r6jri?=
+ =?us-ascii?Q?UQFZeU3YRmF5OKL9j5vddksKlQ5aSUXKm7qtqcdDgf959wY+4fc2RHPd5NeV?=
+ =?us-ascii?Q?MIvaPT1KQweSqrJk7iOPYFAg/FMC/duut8m5TkaI3XGFP23JzeB9RHeRiyzU?=
+ =?us-ascii?Q?ldNE7j+bZ5+rmAiXKwJL22/Yt8my9S9efRQYq6C+6AVTR7y3ZurdpRlOE7Bv?=
+ =?us-ascii?Q?I6c596xhCcixbVCbN4s=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a250627b-ff5b-48f0-2132-08dcf941e3f1
+X-MS-Exchange-CrossTenant-Network-Message-Id: 33b96003-75de-42bf-cff9-08dcf941e401
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2024 00:20:57.4587
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Oct 2024 00:20:57.5479
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XaeoloZJaFe+WphM+iJsnCyVF+T5m64kxEgkJTER4ORtxlDgu2QDEtTAoPKKU3S+
+X-MS-Exchange-CrossTenant-UserPrincipalName: NNXxoFccfusp84Nf5mkyTqjz/4rGGJiFI5D70KNUIHRuB1XeIbWNvgvKVm0iki0I
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7573
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+For SMMUv3 a IOMMU_DOMAIN_NESTED is composed of a S2 iommu_domain acting
+as the parent and a user provided STE fragment that defines the CD table
+and related data with addresses translated by the S2 iommu_domain.
 
-Implement the vIOMMU's cache_invalidate op for user space to invalidate
-the IOTLB entries, Device ATS and CD entries that are cached by hardware.
+The kernel only permits userspace to control certain allowed bits of the
+STE that are safe for user/guest control.
 
-Add struct iommu_viommu_arm_smmuv3_invalidate defining invalidation
-entries that are simply in the native format of a 128-bit TLBI
-command. Scan those commands against the permitted command list and fix
-their VMID/SID fields to match what is stored in the vIOMMU.
+IOTLB maintenance is a bit subtle here, the S1 implicitly includes the S2
+translation, but there is no way of knowing which S1 entries refer to a
+range of S2.
 
-Co-developed-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Co-developed-by: Jason Gunthorpe <jgg@nvidia.com>
+For the IOTLB we follow ARM's guidance and issue a CMDQ_OP_TLBI_NH_ALL to
+flush all ASIDs from the VMID after flushing the S2 on any change to the
+S2.
+
+The IOMMU_DOMAIN_NESTED can only be created from inside a VIOMMU as the
+invalidation path relies on the VIOMMU to translate virtual stream ID used
+in the invalidation commands for the CD table and ATS.
+
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Reviewed-by: Donald Dutile <ddutile@redhat.com>
 Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     | 134 ++++++++++++++++++
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   |   6 +-
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |   5 +
- include/uapi/linux/iommufd.h                  |  24 ++++
- 4 files changed, 166 insertions(+), 3 deletions(-)
+ .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     | 157 ++++++++++++++++++
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   |  17 +-
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   |  26 +++
+ include/uapi/linux/iommufd.h                  |  20 +++
+ 4 files changed, 219 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-index ab515706d48463..2cfa1557817bc1 100644
+index 60dd9e90759571..0b9fffc5b2f09b 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-@@ -209,8 +209,134 @@ arm_vsmmu_alloc_domain_nested(struct iommufd_viommu *viommu, u32 flags,
- 	return &nested_domain->domain;
+@@ -30,7 +30,164 @@ void *arm_smmu_hw_info(struct device *dev, u32 *length, u32 *type)
+ 	return info;
  }
  
-+static int arm_vsmmu_vsid_to_sid(struct arm_vsmmu *vsmmu, u32 vsid, u32 *sid)
++static void arm_smmu_make_nested_cd_table_ste(
++	struct arm_smmu_ste *target, struct arm_smmu_master *master,
++	struct arm_smmu_nested_domain *nested_domain, bool ats_enabled)
 +{
-+	struct arm_smmu_master *master;
-+	struct device *dev;
-+	int ret = 0;
++	arm_smmu_make_s2_domain_ste(
++		target, master, nested_domain->vsmmu->s2_parent, ats_enabled);
 +
-+	xa_lock(&vsmmu->core.vdevs);
-+	dev = iommufd_viommu_find_dev(&vsmmu->core, (unsigned long)vsid);
-+	if (!dev) {
-+		ret = -EIO;
-+		goto unlock;
-+	}
-+	master = dev_iommu_priv_get(dev);
-+
-+	/* At this moment, iommufd only supports PCI device that has one SID */
-+	if (sid)
-+		*sid = master->streams[0].id;
-+unlock:
-+	xa_unlock(&vsmmu->core.vdevs);
-+	return ret;
++	target->data[0] = cpu_to_le64(STRTAB_STE_0_V |
++				      FIELD_PREP(STRTAB_STE_0_CFG,
++						 STRTAB_STE_0_CFG_NESTED));
++	target->data[0] |= nested_domain->ste[0] &
++			   ~cpu_to_le64(STRTAB_STE_0_CFG);
++	target->data[1] |= nested_domain->ste[1];
 +}
 +
-+/* This is basically iommu_viommu_arm_smmuv3_invalidate in u64 for conversion */
-+struct arm_vsmmu_invalidation_cmd {
-+	union {
-+		u64 cmd[2];
-+		struct iommu_viommu_arm_smmuv3_invalidate ucmd;
-+	};
-+};
-+
 +/*
-+ * Convert, in place, the raw invalidation command into an internal format that
-+ * can be passed to arm_smmu_cmdq_issue_cmdlist(). Internally commands are
-+ * stored in CPU endian.
-+ *
-+ * Enforce the VMID or SID on the command.
++ * Create a physical STE from the virtual STE that userspace provided when it
++ * created the nested domain. Using the vSTE userspace can request:
++ * - Non-valid STE
++ * - Abort STE
++ * - Bypass STE (install the S2, no CD table)
++ * - CD table STE (install the S2 and the userspace CD table)
 + */
-+static int arm_vsmmu_convert_user_cmd(struct arm_vsmmu *vsmmu,
-+				      struct arm_vsmmu_invalidation_cmd *cmd)
++static void arm_smmu_make_nested_domain_ste(
++	struct arm_smmu_ste *target, struct arm_smmu_master *master,
++	struct arm_smmu_nested_domain *nested_domain, bool ats_enabled)
 +{
-+	/* Commands are le64 stored in u64 */
-+	cmd->cmd[0] = le64_to_cpu(cmd->ucmd.cmd[0]);
-+	cmd->cmd[1] = le64_to_cpu(cmd->ucmd.cmd[1]);
++	unsigned int cfg =
++		FIELD_GET(STRTAB_STE_0_CFG, le64_to_cpu(nested_domain->ste[0]));
 +
-+	switch (cmd->cmd[0] & CMDQ_0_OP) {
-+	case CMDQ_OP_TLBI_NSNH_ALL:
-+		/* Convert to NH_ALL */
-+		cmd->cmd[0] = CMDQ_OP_TLBI_NH_ALL |
-+			      FIELD_PREP(CMDQ_TLBI_0_VMID, vsmmu->vmid);
-+		cmd->cmd[1] = 0;
-+		break;
-+	case CMDQ_OP_TLBI_NH_VA:
-+	case CMDQ_OP_TLBI_NH_VAA:
-+	case CMDQ_OP_TLBI_NH_ALL:
-+	case CMDQ_OP_TLBI_NH_ASID:
-+		cmd->cmd[0] &= ~CMDQ_TLBI_0_VMID;
-+		cmd->cmd[0] |= FIELD_PREP(CMDQ_TLBI_0_VMID, vsmmu->vmid);
-+		break;
-+	case CMDQ_OP_ATC_INV:
-+	case CMDQ_OP_CFGI_CD:
-+	case CMDQ_OP_CFGI_CD_ALL: {
-+		u32 sid, vsid = FIELD_GET(CMDQ_CFGI_0_SID, cmd->cmd[0]);
++	/*
++	 * Userspace can request a non-valid STE through the nesting interface.
++	 * We relay that into an abort physical STE with the intention that
++	 * C_BAD_STE for this SID can be generated to userspace.
++	 */
++	if (!(nested_domain->ste[0] & cpu_to_le64(STRTAB_STE_0_V)))
++		cfg = STRTAB_STE_0_CFG_ABORT;
 +
-+		if (arm_vsmmu_vsid_to_sid(vsmmu, vsid, &sid))
-+			return -EIO;
-+		cmd->cmd[0] &= ~CMDQ_CFGI_0_SID;
-+		cmd->cmd[0] |= FIELD_PREP(CMDQ_CFGI_0_SID, sid);
++	switch (cfg) {
++	case STRTAB_STE_0_CFG_S1_TRANS:
++		arm_smmu_make_nested_cd_table_ste(target, master, nested_domain,
++						  ats_enabled);
 +		break;
-+	}
++	case STRTAB_STE_0_CFG_BYPASS:
++		arm_smmu_make_s2_domain_ste(target, master,
++					    nested_domain->vsmmu->s2_parent,
++					    ats_enabled);
++		break;
++	case STRTAB_STE_0_CFG_ABORT:
 +	default:
-+		return -EIO;
++		arm_smmu_make_abort_ste(target);
++		break;
 +	}
++}
++
++static int arm_smmu_attach_dev_nested(struct iommu_domain *domain,
++				      struct device *dev)
++{
++	struct arm_smmu_nested_domain *nested_domain =
++		to_smmu_nested_domain(domain);
++	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
++	struct arm_smmu_attach_state state = {
++		.master = master,
++		.old_domain = iommu_get_domain_for_dev(dev),
++		.ssid = IOMMU_NO_PASID,
++		/* Currently invalidation of ATC is not supported */
++		.disable_ats = true,
++	};
++	struct arm_smmu_ste ste;
++	int ret;
++
++	if (nested_domain->vsmmu->smmu != master->smmu)
++		return -EINVAL;
++	if (arm_smmu_ssids_in_use(&master->cd_table))
++		return -EBUSY;
++
++	mutex_lock(&arm_smmu_asid_lock);
++	ret = arm_smmu_attach_prepare(&state, domain);
++	if (ret) {
++		mutex_unlock(&arm_smmu_asid_lock);
++		return ret;
++	}
++
++	arm_smmu_make_nested_domain_ste(&ste, master, nested_domain,
++					state.ats_enabled);
++	arm_smmu_install_ste_for_dev(master, &ste);
++	arm_smmu_attach_commit(&state);
++	mutex_unlock(&arm_smmu_asid_lock);
 +	return 0;
 +}
 +
-+static int arm_vsmmu_cache_invalidate(struct iommufd_viommu *viommu,
-+				      struct iommu_user_data_array *array)
++static void arm_smmu_domain_nested_free(struct iommu_domain *domain)
++{
++	kfree(to_smmu_nested_domain(domain));
++}
++
++static const struct iommu_domain_ops arm_smmu_nested_ops = {
++	.attach_dev = arm_smmu_attach_dev_nested,
++	.free = arm_smmu_domain_nested_free,
++};
++
++static int arm_smmu_validate_vste(struct iommu_hwpt_arm_smmuv3 *arg)
++{
++	unsigned int cfg;
++
++	if (!(arg->ste[0] & cpu_to_le64(STRTAB_STE_0_V))) {
++		memset(arg->ste, 0, sizeof(arg->ste));
++		return 0;
++	}
++
++	/* EIO is reserved for invalid STE data. */
++	if ((arg->ste[0] & ~STRTAB_STE_0_NESTING_ALLOWED) ||
++	    (arg->ste[1] & ~STRTAB_STE_1_NESTING_ALLOWED))
++		return -EIO;
++
++	cfg = FIELD_GET(STRTAB_STE_0_CFG, le64_to_cpu(arg->ste[0]));
++	if (cfg != STRTAB_STE_0_CFG_ABORT && cfg != STRTAB_STE_0_CFG_BYPASS &&
++	    cfg != STRTAB_STE_0_CFG_S1_TRANS)
++		return -EIO;
++	return 0;
++}
++
++static struct iommu_domain *
++arm_vsmmu_alloc_domain_nested(struct iommufd_viommu *viommu, u32 flags,
++			      const struct iommu_user_data *user_data)
 +{
 +	struct arm_vsmmu *vsmmu = container_of(viommu, struct arm_vsmmu, core);
-+	struct arm_smmu_device *smmu = vsmmu->smmu;
-+	struct arm_vsmmu_invalidation_cmd *last;
-+	struct arm_vsmmu_invalidation_cmd *cmds;
-+	struct arm_vsmmu_invalidation_cmd *cur;
-+	struct arm_vsmmu_invalidation_cmd *end;
++	struct arm_smmu_nested_domain *nested_domain;
++	struct iommu_hwpt_arm_smmuv3 arg;
 +	int ret;
 +
-+	cmds = kcalloc(array->entry_num, sizeof(*cmds), GFP_KERNEL);
-+	if (!cmds)
-+		return -ENOMEM;
-+	cur = cmds;
-+	end = cmds + array->entry_num;
++	if (flags)
++		return ERR_PTR(-EOPNOTSUPP);
 +
-+	static_assert(sizeof(*cmds) == 2 * sizeof(u64));
-+	ret = iommu_copy_struct_from_full_user_array(
-+		cmds, sizeof(*cmds), array,
-+		IOMMU_VIOMMU_INVALIDATE_DATA_ARM_SMMUV3);
++	ret = iommu_copy_struct_from_user(&arg, user_data,
++					  IOMMU_HWPT_DATA_ARM_SMMUV3, ste);
 +	if (ret)
-+		goto out;
++		return ERR_PTR(ret);
 +
-+	last = cmds;
-+	while (cur != end) {
-+		ret = arm_vsmmu_convert_user_cmd(vsmmu, cur);
-+		if (ret)
-+			goto out;
++	ret = arm_smmu_validate_vste(&arg);
++	if (ret)
++		return ERR_PTR(ret);
 +
-+		/* FIXME work in blocks of CMDQ_BATCH_ENTRIES and copy each block? */
-+		cur++;
-+		if (cur != end && (cur - last) != CMDQ_BATCH_ENTRIES - 1)
-+			continue;
++	nested_domain = kzalloc(sizeof(*nested_domain), GFP_KERNEL_ACCOUNT);
++	if (!nested_domain)
++		return ERR_PTR(-ENOMEM);
 +
-+		/* FIXME always uses the main cmdq rather than trying to group by type */
-+		ret = arm_smmu_cmdq_issue_cmdlist(smmu, &smmu->cmdq, last->cmd,
-+						  cur - last, true);
-+		if (ret) {
-+			cur--;
-+			goto out;
-+		}
-+		last = cur;
-+	}
-+out:
-+	array->entry_num = cur - cmds;
-+	kfree(cmds);
-+	return ret;
++	nested_domain->domain.type = IOMMU_DOMAIN_NESTED;
++	nested_domain->domain.ops = &arm_smmu_nested_ops;
++	nested_domain->vsmmu = vsmmu;
++	nested_domain->ste[0] = arg.ste[0];
++	nested_domain->ste[1] = arg.ste[1] & ~cpu_to_le64(STRTAB_STE_1_EATS);
++
++	return &nested_domain->domain;
 +}
 +
  static const struct iommufd_viommu_ops arm_vsmmu_ops = {
- 	.alloc_domain_nested = arm_vsmmu_alloc_domain_nested,
-+	.cache_invalidate = arm_vsmmu_cache_invalidate,
++	.alloc_domain_nested = arm_vsmmu_alloc_domain_nested,
  };
  
  struct iommufd_viommu *arm_vsmmu_alloc(struct device *dev,
-@@ -233,6 +359,14 @@ struct iommufd_viommu *arm_vsmmu_alloc(struct device *dev,
- 	if (s2_parent->smmu != master->smmu)
- 		return ERR_PTR(-EINVAL);
- 
-+	/*
-+	 * FORCE_SYNC is not set with FEAT_NESTING. Some study of the exact HW
-+	 * defect is needed to determine if arm_vsmmu_cache_invalidate() needs
-+	 * any change to remove this.
-+	 */
-+	if (WARN_ON(smmu->options & ARM_SMMU_OPT_CMDQ_FORCE_SYNC))
-+		return ERR_PTR(-EOPNOTSUPP);
-+
- 	/*
- 	 * Must support some way to prevent the VM from bypassing the cache
- 	 * because VFIO currently does not do any cache maintenance. canwbs
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index b47f80224781ba..2a9f2d1d3ed910 100644
+index c425fb923eb3de..53f12b9d78ab21 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -766,9 +766,9 @@ static void arm_smmu_cmdq_write_entries(struct arm_smmu_cmdq *cmdq, u64 *cmds,
-  *   insert their own list of commands then all of the commands from one
-  *   CPU will appear before any of the commands from the other CPU.
-  */
--static int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
--				       struct arm_smmu_cmdq *cmdq,
--				       u64 *cmds, int n, bool sync)
-+int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
-+				struct arm_smmu_cmdq *cmdq, u64 *cmds, int n,
-+				bool sync)
- {
- 	u64 cmd_sync[CMDQ_ENT_DWORDS];
- 	u32 prod;
+@@ -295,6 +295,7 @@ static int arm_smmu_cmdq_build_cmd(u64 *cmd, struct arm_smmu_cmdq_ent *ent)
+ 	case CMDQ_OP_TLBI_NH_ASID:
+ 		cmd[0] |= FIELD_PREP(CMDQ_TLBI_0_ASID, ent->tlbi.asid);
+ 		fallthrough;
++	case CMDQ_OP_TLBI_NH_ALL:
+ 	case CMDQ_OP_TLBI_S12_VMALL:
+ 		cmd[0] |= FIELD_PREP(CMDQ_TLBI_0_VMID, ent->tlbi.vmid);
+ 		break;
+@@ -2230,6 +2231,15 @@ static void arm_smmu_tlb_inv_range_domain(unsigned long iova, size_t size,
+ 	}
+ 	__arm_smmu_tlb_inv_range(&cmd, iova, size, granule, smmu_domain);
+ 
++	if (smmu_domain->nest_parent) {
++		/*
++		 * When the S2 domain changes all the nested S1 ASIDs have to be
++		 * flushed too.
++		 */
++		cmd.opcode = CMDQ_OP_TLBI_NH_ALL;
++		arm_smmu_cmdq_issue_cmd_with_sync(smmu_domain->smmu, &cmd);
++	}
++
+ 	/*
+ 	 * Unfortunately, this can't be leaf-only since we may have
+ 	 * zapped an entire table.
+@@ -2644,6 +2654,8 @@ to_smmu_domain_devices(struct iommu_domain *domain)
+ 	if ((domain->type & __IOMMU_DOMAIN_PAGING) ||
+ 	    domain->type == IOMMU_DOMAIN_SVA)
+ 		return to_smmu_domain(domain);
++	if (domain->type == IOMMU_DOMAIN_NESTED)
++		return to_smmu_nested_domain(domain)->vsmmu->s2_parent;
+ 	return NULL;
+ }
+ 
+@@ -2716,7 +2728,8 @@ int arm_smmu_attach_prepare(struct arm_smmu_attach_state *state,
+ 		 * enabled if we have arm_smmu_domain, those always have page
+ 		 * tables.
+ 		 */
+-		state->ats_enabled = arm_smmu_ats_supported(master);
++		state->ats_enabled = !state->disable_ats &&
++				     arm_smmu_ats_supported(master);
+ 	}
+ 
+ 	if (smmu_domain) {
+@@ -3122,6 +3135,7 @@ arm_smmu_domain_alloc_user(struct device *dev, u32 flags,
+ 			goto err_free;
+ 		}
+ 		smmu_domain->stage = ARM_SMMU_DOMAIN_S2;
++		smmu_domain->nest_parent = true;
+ 	}
+ 
+ 	smmu_domain->domain.type = IOMMU_DOMAIN_UNMANAGED;
+@@ -3518,6 +3532,7 @@ static struct iommu_ops arm_smmu_ops = {
+ 	.page_response		= arm_smmu_page_response,
+ 	.def_domain_type	= arm_smmu_def_domain_type,
+ 	.viommu_alloc		= arm_vsmmu_alloc,
++	.user_pasid_table	= 1,
+ 	.pgsize_bitmap		= -1UL, /* Restricted during device attach */
+ 	.owner			= THIS_MODULE,
+ 	.default_domain_ops = &(const struct iommu_domain_ops) {
 diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 01c1d16dc0c81a..af25f092303f10 100644
+index 3b8013afcec0de..3fabe187ea7815 100644
 --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
 +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -529,6 +529,7 @@ struct arm_smmu_cmdq_ent {
- 		#define CMDQ_OP_TLBI_NH_ALL     0x10
+@@ -244,6 +244,7 @@ static inline u32 arm_smmu_strtab_l2_idx(u32 sid)
+ #define STRTAB_STE_0_CFG_BYPASS		4
+ #define STRTAB_STE_0_CFG_S1_TRANS	5
+ #define STRTAB_STE_0_CFG_S2_TRANS	6
++#define STRTAB_STE_0_CFG_NESTED		7
+ 
+ #define STRTAB_STE_0_S1FMT		GENMASK_ULL(5, 4)
+ #define STRTAB_STE_0_S1FMT_LINEAR	0
+@@ -295,6 +296,15 @@ static inline u32 arm_smmu_strtab_l2_idx(u32 sid)
+ 
+ #define STRTAB_STE_3_S2TTB_MASK		GENMASK_ULL(51, 4)
+ 
++/* These bits can be controlled by userspace for STRTAB_STE_0_CFG_NESTED */
++#define STRTAB_STE_0_NESTING_ALLOWED                                         \
++	cpu_to_le64(STRTAB_STE_0_V | STRTAB_STE_0_CFG | STRTAB_STE_0_S1FMT | \
++		    STRTAB_STE_0_S1CTXPTR_MASK | STRTAB_STE_0_S1CDMAX)
++#define STRTAB_STE_1_NESTING_ALLOWED                            \
++	cpu_to_le64(STRTAB_STE_1_S1DSS | STRTAB_STE_1_S1CIR |   \
++		    STRTAB_STE_1_S1COR | STRTAB_STE_1_S1CSH |   \
++		    STRTAB_STE_1_S1STALLD)
++
+ /*
+  * Context descriptors.
+  *
+@@ -514,6 +524,7 @@ struct arm_smmu_cmdq_ent {
+ 			};
+ 		} cfgi;
+ 
++		#define CMDQ_OP_TLBI_NH_ALL     0x10
  		#define CMDQ_OP_TLBI_NH_ASID	0x11
  		#define CMDQ_OP_TLBI_NH_VA	0x12
-+		#define CMDQ_OP_TLBI_NH_VAA	0x13
  		#define CMDQ_OP_TLBI_EL2_ALL	0x20
- 		#define CMDQ_OP_TLBI_EL2_ASID	0x21
- 		#define CMDQ_OP_TLBI_EL2_VA	0x22
-@@ -951,6 +952,10 @@ void arm_smmu_attach_commit(struct arm_smmu_attach_state *state);
- void arm_smmu_install_ste_for_dev(struct arm_smmu_master *master,
- 				  const struct arm_smmu_ste *target);
+@@ -815,10 +826,18 @@ struct arm_smmu_domain {
+ 	struct list_head		devices;
+ 	spinlock_t			devices_lock;
+ 	bool				enforce_cache_coherency : 1;
++	bool				nest_parent : 1;
  
-+int arm_smmu_cmdq_issue_cmdlist(struct arm_smmu_device *smmu,
-+				struct arm_smmu_cmdq *cmdq, u64 *cmds, int n,
-+				bool sync);
-+
- #ifdef CONFIG_ARM_SMMU_V3_SVA
- bool arm_smmu_sva_supported(struct arm_smmu_device *smmu);
- bool arm_smmu_master_sva_supported(struct arm_smmu_master *master);
-diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
-index 125b51b78ad8f9..2a492e054fb7c9 100644
---- a/include/uapi/linux/iommufd.h
-+++ b/include/uapi/linux/iommufd.h
-@@ -688,9 +688,11 @@ struct iommu_hwpt_get_dirty_bitmap {
-  * enum iommu_hwpt_invalidate_data_type - IOMMU HWPT Cache Invalidation
-  *                                        Data Type
-  * @IOMMU_HWPT_INVALIDATE_DATA_VTD_S1: Invalidation data for VTD_S1
-+ * @IOMMU_VIOMMU_INVALIDATE_DATA_ARM_SMMUV3: Invalidation data for ARM SMMUv3
-  */
- enum iommu_hwpt_invalidate_data_type {
- 	IOMMU_HWPT_INVALIDATE_DATA_VTD_S1 = 0,
-+	IOMMU_VIOMMU_INVALIDATE_DATA_ARM_SMMUV3 = 1,
+ 	struct mmu_notifier		mmu_notifier;
  };
  
- /**
-@@ -729,6 +731,28 @@ struct iommu_hwpt_vtd_s1_invalidate {
++struct arm_smmu_nested_domain {
++	struct iommu_domain domain;
++	struct arm_vsmmu *vsmmu;
++
++	__le64 ste[2];
++};
++
+ /* The following are exposed for testing purposes. */
+ struct arm_smmu_entry_writer_ops;
+ struct arm_smmu_entry_writer {
+@@ -863,6 +882,12 @@ static inline struct arm_smmu_domain *to_smmu_domain(struct iommu_domain *dom)
+ 	return container_of(dom, struct arm_smmu_domain, domain);
+ }
+ 
++static inline struct arm_smmu_nested_domain *
++to_smmu_nested_domain(struct iommu_domain *dom)
++{
++	return container_of(dom, struct arm_smmu_nested_domain, domain);
++}
++
+ extern struct xarray arm_smmu_asid_xa;
+ extern struct mutex arm_smmu_asid_lock;
+ 
+@@ -909,6 +934,7 @@ struct arm_smmu_attach_state {
+ 	struct iommu_domain *old_domain;
+ 	struct arm_smmu_master *master;
+ 	bool cd_needs_ats;
++	bool disable_ats;
+ 	ioasid_t ssid;
+ 	/* Resulting state */
+ 	bool ats_enabled;
+diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
+index 27c5117db985b2..47ee35ce050b63 100644
+--- a/include/uapi/linux/iommufd.h
++++ b/include/uapi/linux/iommufd.h
+@@ -396,6 +396,26 @@ struct iommu_hwpt_vtd_s1 {
  	__u32 __reserved;
  };
  
 +/**
-+ * struct iommu_viommu_arm_smmuv3_invalidate - ARM SMMUv3 cahce invalidation
-+ *         (IOMMU_VIOMMU_INVALIDATE_DATA_ARM_SMMUV3)
-+ * @cmd: 128-bit cache invalidation command that runs in SMMU CMDQ.
-+ *       Must be little-endian.
++ * struct iommu_hwpt_arm_smmuv3 - ARM SMMUv3 nested STE
++ *                                (IOMMU_HWPT_DATA_ARM_SMMUV3)
 + *
-+ * Supported command list only when passing in a vIOMMU via @hwpt_id:
-+ *     CMDQ_OP_TLBI_NSNH_ALL
-+ *     CMDQ_OP_TLBI_NH_VA
-+ *     CMDQ_OP_TLBI_NH_VAA
-+ *     CMDQ_OP_TLBI_NH_ALL
-+ *     CMDQ_OP_TLBI_NH_ASID
-+ *     CMDQ_OP_ATC_INV
-+ *     CMDQ_OP_CFGI_CD
-+ *     CMDQ_OP_CFGI_CD_ALL
++ * @ste: The first two double words of the user space Stream Table Entry for
++ *       the translation. Must be little-endian.
++ *       Allowed fields: (Refer to "5.2 Stream Table Entry" in SMMUv3 HW Spec)
++ *       - word-0: V, Cfg, S1Fmt, S1ContextPtr, S1CDMax
++ *       - word-1: S1DSS, S1CIR, S1COR, S1CSH, S1STALLD
 + *
-+ * -EIO will be returned if the command is not supported.
++ * -EIO will be returned if @ste is not legal or contains any non-allowed field.
++ * Cfg can be used to select a S1, Bypass or Abort configuration. A Bypass
++ * nested domain will translate the same as the nesting parent. The S1 will
++ * install a Context Descriptor Table pointing at userspace memory translated
++ * by the nesting parent.
 + */
-+struct iommu_viommu_arm_smmuv3_invalidate {
-+	__aligned_le64 cmd[2];
++struct iommu_hwpt_arm_smmuv3 {
++	__aligned_le64 ste[2];
 +};
 +
  /**
-  * struct iommu_hwpt_invalidate - ioctl(IOMMU_HWPT_INVALIDATE)
-  * @size: sizeof(struct iommu_hwpt_invalidate)
+  * enum iommu_hwpt_data_type - IOMMU HWPT Data Type
+  * @IOMMU_HWPT_DATA_NONE: no data
 -- 
 2.43.0
 
