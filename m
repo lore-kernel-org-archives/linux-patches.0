@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A77D15820C;
-	Fri,  1 Nov 2024 11:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB8816F900;
+	Fri,  1 Nov 2024 11:58:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730462087; cv=none; b=LRGwBqznDq9JtJL1zS6KdXo2WfVRMNZv1V5IoFdVjAcQDedOZMNuZs0PGFbxniyJBeREzWrM0oHMhxveBOBSYseHgmHkN5oVMH83+ftJyjpjtbCpGArsCgWVbnzqmyc6THWmx5uPX8H8yILXrMwU5ndUJiXADjYxri/Z7sl4a4A=
+	t=1730462314; cv=none; b=VN4xW3ZFOLohUBo5JJ8EbM3jTetmf8D8+fqpoRT3vE0UfCDfAEccV1CK0E+pkCWbuilftE2CC2vbbcMwDi0lRCdYobu1M8992BrzTrmnDv6Jxi9uZHV2M8MWKcSpD/K6f3qLclZhKUdTIOI7B+ZdFFAVEIzuZMhQum+yq94i+/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730462087; c=relaxed/simple;
-	bh=RKKjaRT+TZqTjTNYJpQRRQla0KpA6rUkiKLNa5Za6jM=;
+	s=arc-20240116; t=1730462314; c=relaxed/simple;
+	bh=wQJd1QeaY5fZACRK8ZUHBa2nukVJlXs5K5OJXkkqg1M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dqm9yyH92jotfSMTsqbz6KAibF1yxEkBerI600v27t/W0/qB/ssg0GiRwTJc8gX9J6cAgVk9P3txur/pcoIrZ7V9/rI8mcvrqencs1zR1RSTo80P+i0c17c/HeAT4TygaFQGc+q4n5WbEPyjPfn3KLh2CqsUrFGsY5RnDKiPLpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fyl3yIsK; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=VAMIeDVEasUpAfAix2bOmP+3SOkKISr9RptmwXntAPgkcErzq8FZR1czGCgQckLWgQ9iKASJPC4O1Zj4PN2yl8fnWEX3p166lRXsgxxl7dAy572l9hTkAdKP7N/wJK8aH+3/RWtYL9FpEAdsa5ESdXExFxuOEYND0gUX1K4RnN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LcPIH2tV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fyl3yIsK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1A3C4CECD;
-	Fri,  1 Nov 2024 11:54:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LcPIH2tV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6AF2C4CECD;
+	Fri,  1 Nov 2024 11:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730462086;
-	bh=RKKjaRT+TZqTjTNYJpQRRQla0KpA6rUkiKLNa5Za6jM=;
+	s=k20201202; t=1730462314;
+	bh=wQJd1QeaY5fZACRK8ZUHBa2nukVJlXs5K5OJXkkqg1M=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Fyl3yIsKzmdaDBfHqMByrFzmiPgh/aFJwAuRsQGSy7+4zPF3jWywWPOAxG0nus5CB
-	 LJxMNeegqqs7xYA5fi8NkJh+eO9g2yTw2USFMDhF/PYJSAgxGDkmhPkPNZLu5ZDLDa
-	 t7AdNvdn2Jg9M5XUZbR04fsBdsxxPVqdQ7Byw+GjK+UKM2oizoL3Zu9qpxRQp1BzR3
-	 CgksJaAM7nKj8PzfhRNlqu/PEgFsKgHpPcUPlxFtp1RIbUJWXq1sbKE0rXdYnzcvQ1
-	 uDWVH53Vi/4mSKlryP9ogtRQgTzsBEjGy+JEJIpEWuZ1WEm6ZGUrK/GvsqjIFuSz8t
-	 TKmg0tPAHlLjA==
-Date: Fri, 1 Nov 2024 11:54:40 +0000
+	b=LcPIH2tVnxOVyM+MqcErAO1FrH3NGliUPH2ix6SZspJbwRQ8na/OibDZ7bPQXeY2C
+	 wQNMZhW2B1UOQ7XXRd1N39J7f/fqMzo21s/DKvSmoYosGhseHaMde/KdQ49w40feG5
+	 7/vk5ynrSBMsvynwbpysOJDxGY2aiUf45fbT8t3EkllFzThkRDM+RUtqRzm/al7O2N
+	 7vKy6KL35pUoR0ywzEWmURuYc2qTdG1PKOAjv3daNRCEMG5e1xRPuVxsBnYpGQ0KYM
+	 v9MQQPtnAGcL5OBZG9Gf51VITUR0tViQ2sBW0LC0g4jv3rVcol9qgBCh+DnPHqis3B
+	 gVXUJlgKjHKEg==
+Date: Fri, 1 Nov 2024 11:58:29 +0000
 From: Will Deacon <will@kernel.org>
 To: Jason Gunthorpe <jgg@nvidia.com>
 Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
@@ -36,10 +36,8 @@ Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
 	dri-devel@lists.freedesktop.org, Liviu Dudau <liviu.dudau@arm.com>,
 	patches@lists.linux.dev, Steven Price <steven.price@arm.com>
 Subject: Re: [PATCH] iommu/io-pgtable-arm: Remove split on unmap behavior
-Message-ID: <20241101115439.GA8518@willie-the-truck>
+Message-ID: <20241101115828.GB8518@willie-the-truck>
 References: <0-v1-8c5f369ec2e5+75-arm_no_split_jgg@nvidia.com>
- <20241024130550.GE30704@willie-the-truck>
- <20241024134411.GA6956@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,108 +46,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241024134411.GA6956@nvidia.com>
+In-Reply-To: <0-v1-8c5f369ec2e5+75-arm_no_split_jgg@nvidia.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Hi Jason,
+On Fri, Oct 18, 2024 at 02:19:26PM -0300, Jason Gunthorpe wrote:
+> Of the page table implementations (AMD v1/2, VT-D SS, ARM32, DART)
+> arm_lpae is unique in how it handles partial unmap of large IOPTEs.
+> 
+> All other drivers will unmap the large IOPTE and return it's length.  For
+> example if a 2M IOPTE is present and the first 4K is requested to be
+> unmapped then unmap will remove the whole 2M and report 2M as the result.
+> 
+> arm_lpae instead replaces the IOPTE with a table of smaller IOPTEs, unmaps
+> the 4K and returns 4k. This is actually an illegal/non-hitless operation
+> on at least SMMUv3 because of the BBM level 0 rules.
+> 
+> Long ago VFIO could trigger a path like this, today I know of no user of
+> this functionality.
+> 
+> Given it doesn't work fully correctly on SMMUv3 and would create
+> portability problems if any user depends on it, remove the unique support
+> in arm_lpae and align with the expected iommu interface.
+> 
+> Outside the iommu users, this will potentially effect io_pgtable users of
+> ARM_32_LPAE_S1, ARM_32_LPAE_S2, ARM_64_LPAE_S1, ARM_64_LPAE_S2, and
+> ARM_MALI_LPAE formats.
+> 
+> Cc: Boris Brezillon <boris.brezillon@collabora.com>
+> Cc: Steven Price <steven.price@arm.com>
+> Cc: Liviu Dudau <liviu.dudau@arm.com>
+> Cc: dri-devel@lists.freedesktop.org
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/io-pgtable-arm.c | 72 +++-------------------------------
+>  1 file changed, 6 insertions(+), 66 deletions(-)
+> 
+> I don't know anything in the iommu space that needs this, and this is the only
+> page table implementation in iommu that does it.
 
-On Thu, Oct 24, 2024 at 10:44:11AM -0300, Jason Gunthorpe wrote:
-> On Thu, Oct 24, 2024 at 02:05:53PM +0100, Will Deacon wrote:
-> 
-> > My recollection is hazy, but I seem to remember VFIO using the largest
-> > page sizes in the IOMMU 'pgsize_bitmap' for map() requests but then
-> > using the smallest page size for unmap() requests, so you'd end up
-> > cracking block mappings when tearing down a VM with assigne devices.
-> >
-> > Is this what you're referring to when you say?
-> 
-> Sounds like it, but I'm really hazy on the long ago history here.
-> 
-> >   > Long ago VFIO could trigger a path like this, today I know of no user of
-> >   > this functionality.
-> > 
-> > If so, please can you provide a reference to the patch that moved VFIO
-> > off that problematic behaviour?
-> 
-> Looking more deeply, I'm not really sure VFIO ever required this.
-> 
-> vfio commit 166fd7d94afd ("vfio: hugepage support for
-> vfio_iommu_type1") is the thing that added the huge page support, and
-> it called map like:
-> 
-> +               ret = iommu_map(iommu->domain, iova,
-> +                               (phys_addr_t)pfn << PAGE_SHIFT,
-> +                               npage << PAGE_SHIFT, prot);
-> 
-> But then the unmap path still looked like:
-> 
-> +               unmapped = iommu_unmap(iommu->domain, iova, PAGE_SIZE);
-> +               unlocked += vfio_unpin_pages(phys >> PAGE_SHIFT,
-> +                                            unmapped >> PAGE_SHIFT,
-> +                                            dma->prot, false);
-> 
-> So at that time it was relying on the "unmap smaller gives the larger
-> size" trick that we see Intel and AMD implementing today. No
-> requirement for split, but the ARM split code could be triggered.
+I think the v7s code does it as well, so please can you apply the same
+treatment to arm_v7s_split_blk_unmap()?
 
-Urgh, I'm not sure I was ever fully aware of that "trick". That's really
-horrible!
+> @@ -678,12 +618,12 @@ static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
+>  
+>  		return i * size;
+>  	} else if (iopte_leaf(pte, lvl, iop->fmt)) {
+> -		/*
+> -		 * Insert a table at the next level to map the old region,
+> -		 * minus the part we want to unmap
+> -		 */
+> -		return arm_lpae_split_blk_unmap(data, gather, iova, size, pte,
+> -						lvl + 1, ptep, pgcount);
+> +		/* Unmap the entire large IOPTE and return its size */
+> +		size = ARM_LPAE_BLOCK_SIZE(lvl, data);
 
-> Next came the introduction of VFIO_TYPE1v2_IOMMU which eliminated the
-> ability for userspace to request splitting a mapping. Userspace can
-> only unmap what userspace maps. commit 1ef3e2bc0422
-> ("vfio/iommu_type1: Multi-IOMMU domain support")
-> 
->     To do this, our DMA tracking needs to change.  We currently try to
->     coalesce user mappings into as few tracking entries as possible.  The
->     problem then becomes that we lose granularity of user mappings.  We've
->     never guaranteed that a user is able to unmap at a finer granularity
->     than the original mapping, but we must honor the granularity of the
->     original mapping.  This coalescing code is therefore removed, allowing
->     only unmaps covering complete maps.  The change in accounting is
->     fairly small here, a typical QEMU VM will start out with roughly a
->     dozen entries, so it's arguable if this coalescing was ever needed.
-> 
-> That blocked any requirement for splitting driven by the uAPI. Noting
-> uAPI based splitting never worked right and AFAICT AMD didn't
-> implement split at the time.
-> 
-> Finally, commit 6fe1010d6d9c ("vfio/type1: DMA unmap chunking")
-> changed the unmap loop to this:
-> 
-> -               unmapped = iommu_unmap(domain->domain, iova, PAGE_SIZE);
-> +               /*
-> +                * To optimize for fewer iommu_unmap() calls, each of which
-> +                * may require hardware cache flushing, try to find the
-> +                * largest contiguous physical memory chunk to unmap.
-> +                */
-> +               for (len = PAGE_SIZE;
-> +                    !domain->fgsp && iova + len < end; len += PAGE_SIZE) {
-> +                       next = iommu_iova_to_phys(domain->domain, iova + len);
-> +                       if (next != phys + len)
-> +                               break;
-> +               }
-> +
-> +               unmapped = iommu_unmap(domain->domain, iova, len);
-> 
-> fgsp=true is only possible on AMD, and this loop effectively
-> guarantees that the iommu driver will never see a partial huge page
-> unmap as the size is discovered via iommu_iova_to_phys() before
-> calling unmap.
-
-Talking to Robin, he reminded me of:
-
-7c6d90e2bb1a ("iommu/io-pgtable-arm: Fix iova_to_phys for block entries")
-
-which looks like it fixes a bug which would've defeated the VFIO chunking
-in your snippet above.
-
-But we're all good now, so I'm in favour of dropping this. Let's just
-cram some of this history into the commit message so we know why we're
-happy to do so.
-
-Lemme go look at the actual diff now...
-
-Cheers,
+If I understand your other message correctly, we shouldn't actually get
+into this situation any more, right? In which case, can we WARN_ONCE()
+and return 0 instead? Over-unmapping is filthy!
 
 Will
