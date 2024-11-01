@@ -1,100 +1,78 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3931DA53;
-	Fri,  1 Nov 2024 16:34:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57401CDA35
+	for <patches@lists.linux.dev>; Fri,  1 Nov 2024 18:07:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730478846; cv=none; b=ATkP38g0YpnF9GDRjchF/StvHBeiUQ9QBAf/XUOTRkFxeR1jPsmsuVZ8qsm0co+U5lD8frQU86ca+psF2wfR2PRajgS5ZvAgKIva12scK4UTmoEY7lRuNrf/Xz8raF2E3sso5Ws/dMkNqopyWHkvoUAsBy9Jol3xvve4NXQk2jE=
+	t=1730484465; cv=none; b=WcjT6IdsuWPx2UdKgaRo2BJqcg8R3YtdkWHNC8h1pc9Y6PlvZ8tv3S6t2S1RVvRNwrAq9NXklQzJOQdG6pVdqWCdRmIDtB19UKhL8bU2tSde6u9TWZakOw4Or1pdCovYbPkdjbvZssNyN5B42jCVpcOqCY0qzRo38gGPPh57dRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730478846; c=relaxed/simple;
-	bh=Ikj84yJ51LEfFhFpQlvLIMVUXtEQQsi5c2QpoOJD3yE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=N1dKvH+gZw4+Iuf3K7EnPtMxsHngpH7j4nmHVeczYNGKRCUMtrazI93Aw7TUSR0VVP42f9eTH2RsqUiblFG9T32j96QvSWDlpkkSKSrW8Vk2a0P0ImaN/EqI6tBh/ni7xSvN7hSlqyRvrVVz+vXzvU8kDnoke9xG8/OzifZnSwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ty6dMvF9; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1730484465; c=relaxed/simple;
+	bh=4ht9G50SlYlr7BPTCuy+KjNotHQlLEXbSKghIYlF3TI=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:Cc:To; b=f4u33muNSuOUb3YTcPh2CCT1M+OVB8xdHT59LrIh/Xw1yjZNT3qWXqFkurxHM0+LDTUYKPdNXY2Y6RFEUO5DgxVVCCezDhqxf+vUzzCPGf7I/ZijOziV+ubIWKXuvnLM9/ar3J0YKEWj1hhyJBWkaA/jSl6xdzQqHqJIZDU3F7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IeTjMRf3; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ty6dMvF9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3EBC4CED3;
-	Fri,  1 Nov 2024 16:34:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730478846;
-	bh=Ikj84yJ51LEfFhFpQlvLIMVUXtEQQsi5c2QpoOJD3yE=;
-	h=From:Date:Subject:To:Cc:From;
-	b=ty6dMvF9oGRTyguG7cHtfdEXLJjzpcKMMqAhtDhup6paN5AL8zciCIpR9wg45uaFp
-	 sJyPwMq3iB9nqEMQoa7Jp7ePy3511YeA2k8IhnXaVYx+B+kx/3Jv+tKSCjhn8ThbLg
-	 C9fIyW3YNAMoYPqDX2nn8jQ7KfJ7/fMMLZSAolsAbwhRC7FWCrI/Dqv4SlfotuxHvk
-	 guYBa5onaoUYDvK6/fDG/lHbUbMz3KA0Vnp+MK9qNGLcjtZj6NXOd8DiKYVEkEn4lg
-	 /2A/gkL8ezRzfflPG0lVPSMS2JEhgOf418v34/GL7TW/RYZOWQtCHpDVzDhYoo//nq
-	 HH3r8A0hAMz2A==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Fri, 01 Nov 2024 09:33:05 -0700
-Subject: [PATCH] irqchip/mips-gic: Fix selection of
- GENERIC_IRQ_EFFECTIVE_AFF_MASK
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IeTjMRf3"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a9a156513a1so365254166b.0
+        for <patches@lists.linux.dev>; Fri, 01 Nov 2024 11:07:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730484462; x=1731089262; darn=lists.linux.dev;
+        h=to:cc:message-id:date:subject:mime-version:from
+         :content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4ht9G50SlYlr7BPTCuy+KjNotHQlLEXbSKghIYlF3TI=;
+        b=IeTjMRf33wk4JCSqSxouJvi52RDC6er2jHUO6PO/zwNF6zMq5v/AwtpJc9bL6mdqZB
+         YkWZ5BAAPtls104nIN0R5CYg80Dbo1kc4gMy49Hn1kZQZcEFoTk01SuMRPQK5I7WRlZ5
+         eF3LuGSpVSyUjpFh2uvR4b2FdvGkZeZkOPQq3zau6FLnZZZJULUT9NUnjnnByhFWuJWs
+         F4M1AZev/9kN0UzNNgXgs/zi/owhEP5SIOCl6J9Vx44bpgOBt3Ck6JsbOdDqx+s5h5Xn
+         9gPYLkyNBjtVTo1P1DgTf2IRMETV8HgwCLukLEb5kopjVhNHFJ+oYorECNF3yJWTpMrP
+         jcQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730484462; x=1731089262;
+        h=to:cc:message-id:date:subject:mime-version:from
+         :content-transfer-encoding:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4ht9G50SlYlr7BPTCuy+KjNotHQlLEXbSKghIYlF3TI=;
+        b=xBQSruqwTT/+21sgRrsR0YYC51neb9C0yjh5GhrZOYzZG10Ybd1G8Kb4lWuSrGOc5a
+         /9V1NBY3b94b08YPnfKtdaOieGA5EhVHZtlRaqYDOH71sJ91jdlT+IcKFlZlFGPDViWv
+         6+uhbpFrtvjn3PU9J6uGH8oNogoNByK5bqcGjo9Ab3h6s0fdH1qKYbrXwqE4q9fIzBd8
+         32BYM1EYeK4B2w1mExwg4gWbUFSCn+QZ34aSPWFDfuM4tCsDBKmJPD7547Iuzof/iMMh
+         pMzqqUEbQacsmEiuqLXJ3fPXbSAvU7GleZBlrh06QEQhE/RzexUUO3HB5l/VgU4fgkhX
+         sUtg==
+X-Forwarded-Encrypted: i=1; AJvYcCVjZN0SqbDnnC/gnrZ6NwfNmxL5uVlkqDoDFA2Sa27ny4OPWzeVYqbzeTtKSQKB/axRLAXih/ix@lists.linux.dev
+X-Gm-Message-State: AOJu0YxkmrkKGVO/1U4ZG7Cq1sYJbwdrt/LJk+m7OZfTQ0qD/jEh9125
+	nKDgfXsW1foWytEjzrz/k9FoVcQYQ4LkOdUAyK57rrY2oaI1yeKA
+X-Google-Smtp-Source: AGHT+IGIND0a2w6FiSMiKhuFQgaTuS9zBQtQXZDnUefy8qn1grI0b0CwYI+KoEZhLJXD0lzwYEpKAQ==
+X-Received: by 2002:a17:907:8686:b0:a99:4615:f58c with SMTP id a640c23a62f3a-a9de5d6eb9emr2496049866b.2.1730484461854;
+        Fri, 01 Nov 2024 11:07:41 -0700 (PDT)
+Received: from smtpclient.apple ([102.209.109.30])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9e56494052sm211690766b.29.2024.11.01.11.07.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Nov 2024 11:07:41 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+From: Ivan Fay <ivanfay99@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241101-mips-fix-generic_irq_effective_aff_mask-select-v1-1-d94db6e0de0d@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAMACJWcC/x2N0QrCMBAEf6Xcswe5IH3wV0RCSDf10MaakyKU/
- ruHj7MwszsZusLoMuzUsanpqznIaaByz20G6+RMMcSzSBBedDWu+uUZzdWStL8TakX56IaUa01
- Ltgcbnj7xOIYMiVMRieTRtcPl/+H1dhw/OePV/oAAAAA=
-X-Change-ID: 20241101-mips-fix-generic_irq_effective_aff_mask-select-660ae12dc112
-To: Thomas Gleixner <tglx@linutronix.de>
-Cc: Chao-ying Fu <cfu@wavecomp.com>, Paul Burton <paulburton@kernel.org>, 
- Dragan Mladjenovic <dragan.mladjenovic@syrmia.com>, 
- Aleksandar Rikalo <arikalo@gmail.com>, linux-kernel@vger.kernel.org, 
- linux-mips@vger.kernel.org, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1311; i=nathan@kernel.org;
- h=from:subject:message-id; bh=Ikj84yJ51LEfFhFpQlvLIMVUXtEQQsi5c2QpoOJD3yE=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDOmqTH9lrFZw6poycItPd/0S/SvczPTXvBWm593WzLQR5
- KnhY/PrKGVhEONikBVTZKl+rHrc0HDOWcYbpybBzGFlAhnCwMUpABN5qcfwV6677P+V6lL1Qif3
- lh0VLJG1javf7Sqzns5X489YmNr4gZHhoOhX7ufZPXUS2fffbAjgC3np4iFdcUb3Meel2Qv5vsR
- zAgA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH 6.6 000/213] 6.6.57-rc1 review
+Date: Fri, 1 Nov 2024 21:07:39 +0300
+Message-Id: <D1C54175-3397-4EB5-9130-8D4889D4818D@gmail.com>
+Cc: akpm@linux-foundation.org, allen.lkml@gmail.com, broonie@kernel.org,
+ conor@kernel.org, f.fainelli@gmail.com, jonathanh@nvidia.com,
+ linux-kernel@vger.kernel.org, linux@roeck-us.net,
+ lkft-triage@lists.linaro.org, patches@kernelci.org, patches@lists.linux.dev,
+ pavel@denx.de, rwarsow@gmx.de, shuah@kernel.org, srw@sladewatkins.net,
+ stable@vger.kernel.org, sudipm.mukherjee@gmail.com,
+ torvalds@linux-foundation.org
+To: gregkh@linuxfoundation.org
+X-Mailer: iPhone Mail (20H350)
 
-Without SMP enabled (such as in allnoconfig), there is a Kconfig warning
-because CONFIG_IRQ_EFFECTIVE_AFF_MASK is unconditionally selected by
-CONFIG_MIPS_GIC:
 
-  WARNING: unmet direct dependencies detected for GENERIC_IRQ_EFFECTIVE_AFF_MASK
-    Depends on [n]: SMP [=n]
-    Selected by [y]:
-    - MIPS_GIC [=y]
 
-Add a dependency on SMP to the selection, which matches all other
-selections of CONFIG_IRQ_EFFECTIVE_AFF_MASK.
-
-Fixes: 322a90638768 ("irqchip/mips-gic: Multi-cluster support")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/irqchip/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
-index f20adf759d401089576ef963437017d4f1f495de..ef0fa6975dab9502efda80cdc0c5e21c251f4abd 100644
---- a/drivers/irqchip/Kconfig
-+++ b/drivers/irqchip/Kconfig
-@@ -352,7 +352,7 @@ config KEYSTONE_IRQ
- 
- config MIPS_GIC
- 	bool
--	select GENERIC_IRQ_EFFECTIVE_AFF_MASK
-+	select GENERIC_IRQ_EFFECTIVE_AFF_MASK if SMP
- 	select GENERIC_IRQ_IPI if SMP
- 	select IRQ_DOMAIN_HIERARCHY
- 	select MIPS_CM
-
----
-base-commit: d1cb1437b785f312d63f447e2e79ff768e7ccc29
-change-id: 20241101-mips-fix-generic_irq_effective_aff_mask-select-660ae12dc112
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Sent from my iPhone
