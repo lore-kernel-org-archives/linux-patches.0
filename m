@@ -1,49 +1,49 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C1A156C72
-	for <patches@lists.linux.dev>; Fri,  1 Nov 2024 22:40:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF171D07B9
+	for <patches@lists.linux.dev>; Fri,  1 Nov 2024 22:57:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730500826; cv=none; b=LjLbS5uMQXRrBHic44OnYVJg8982t71cYVGbx0njcQTZ0QzfUcw0YZX4u4NyrNLWxhAp5zd5P/YtkFuJt28w73QUqJuYNlQZ74UQyhEyw1WAVMaL2di0TUlpw+SQ/eS5DNzW2AyRBduykAR/TEyoyNjfoquULbZoc0tXo4MQemc=
+	t=1730501840; cv=none; b=sCRAGNxcXgfefgfH1qta3pMAqnB2J9FukxH3qyKap1ZnMOqCENpb5iOEZR1NnCRe1YS2D+xDiNpArEzz8ASrOW6izlJaWx+MEH1oP2QfR4Vf1Yw1AMzG5LQPnzC9/dX2P4V1D5MEbf+YJHKPGWkb6dvNkJ5Bi+3fWZfqQVgc068=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730500826; c=relaxed/simple;
-	bh=sMW1iMQ4lLqWN3HqoFgf6CYTcFcZSa67VJDpiJOY6+o=;
+	s=arc-20240116; t=1730501840; c=relaxed/simple;
+	bh=vmT7+CCFd/QZK9Eg99Oxk4g7E1EEhZ7GyXf1q1Wh8Fo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M5PGtpGIzJu5EIECpTRMNTj+s+UxJRrQcf2y7ovH+n09VckdEQt3sAPSOIzSsyb0MvHpnzBHdlJU78pkHQg09tlIJHLOMGn708BqR+d6x4c6MqqhZIDsAqanWPAsv9PTzM5k5nKCXtV1JmCzEeDd8JSfMmxnPeZ/fSRxJuVH2PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KYjSc3XC; arc=none smtp.client-ip=198.175.65.15
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lu4rqcN1900LrXCOOhalBT7ykTm3DZgPhg+k/dUsKJn5Aixwr+XSdaWbosVZAbpflzMc4vetzTY5UHiQAJ3SWpEuCWtM4TwFL/xu/SThuzz1wWfeS+E/y9/iI9cj4VNaUX7WKQYu6pEe8Td3UzyU8mNeujaJ+vwKbnEO8YhSZ1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=T+xl5H+B; arc=none smtp.client-ip=192.198.163.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KYjSc3XC"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="T+xl5H+B"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1730500825; x=1762036825;
+  t=1730501838; x=1762037838;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=sMW1iMQ4lLqWN3HqoFgf6CYTcFcZSa67VJDpiJOY6+o=;
-  b=KYjSc3XCPAzvQWlaMHd+cgvlY9kvBg6Dau5HMtd9q6rxnaMA/+5yP8Jx
-   pSZzPjYkDC05KP10kDPvk/73EGpX6PRHo/w4gjT8ozCoLZyxYUFkKXM11
-   iGbQOroyJ+SNBAt6LaHOwiKujhcxeUBKbMb7DI8swJIZWYHs2ze5E/C6J
-   rClVBtPVBqDmENYA/rzGNQI5Z6Vz6w29vcD1pe9h0k8U2ClbFyerrCVMo
-   kt5EbXJj34Kt/VfA/029g/pkdyTWwE9U1bqjlbomj+Pk5MGsD0c1b3SZ1
-   BRHBCyK2HjuQee0gnyUFEiYcrfhAPHRHfuyRYStiNvj9PfDqy58JIUAWC
+  bh=vmT7+CCFd/QZK9Eg99Oxk4g7E1EEhZ7GyXf1q1Wh8Fo=;
+  b=T+xl5H+Bz0+4UWy7OjVC1fCmMmNTXs8u6wkDiE2PW1GYn6JB2RFB1lgo
+   pDNJ+nXG2NSL2+JmKFvuy17/dO6JlkLKWnkUMSDPy8mPq6kVNpF63X4V4
+   1LsfSG+ZcpuXEjzdJxJk7e0Vnvt9KVFXQkmjDna3uZyFH3i4h1XNCG06N
+   3wT6hoFkJVj5bKQwLVnnDRuxkExkrfOCkrFUUslu8xSQ1BL8U9wruLXfd
+   7DjCvNhghosrYRNny1k4dDgiybLwLvFk8fiE9cx9uPlztEVSpr79dhe1n
+   yg0cUgpAFFrrRhjtFKw/bqGkaGk1t/WrHJUYRjMBncnL8PVhXupKaf+ZS
    g==;
-X-CSE-ConnectionGUID: jYwLwY+CQaekUyutsj7SDA==
-X-CSE-MsgGUID: SExNoHWUTmSDrfGLQU/B8Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="33971628"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
-   d="scan'208";a="33971628"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2024 15:40:24 -0700
-X-CSE-ConnectionGUID: MVxzXCWySY2A3JHFUc4O8w==
-X-CSE-MsgGUID: 7btia7agTySAFPD1MCQDlw==
+X-CSE-ConnectionGUID: JtWdW6XURleVm15ULy5vMw==
+X-CSE-MsgGUID: 3jVwTRFrQLizCx8ohTTXsg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11243"; a="17903889"
+X-IronPort-AV: E=Sophos;i="6.11,251,1725346800"; 
+   d="scan'208";a="17903889"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2024 15:57:18 -0700
+X-CSE-ConnectionGUID: QGEVpm9pRQ22GCOLu70Gvg==
+X-CSE-MsgGUID: PX4AfcU+QOW4DzsD+Yyw9w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.11,251,1725346800"; 
-   d="scan'208";a="87032201"
+   d="scan'208";a="83919244"
 Received: from agluck-desk3.sc.intel.com (HELO agluck-desk3) ([172.25.222.70])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2024 15:40:22 -0700
-Date: Fri, 1 Nov 2024 15:40:21 -0700
+  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Nov 2024 15:57:17 -0700
+Date: Fri, 1 Nov 2024 15:57:15 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghua.yu@intel.com>
 Cc: Reinette Chatre <reinette.chatre@intel.com>,
@@ -57,12 +57,11 @@ Cc: Reinette Chatre <reinette.chatre@intel.com>,
 	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
 	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: Re: [PATCH v8 1/7] x86/resctrl: Prepare for per-ctrl_mon group
- mba_MBps control
-Message-ID: <ZyVY1UdOCu7ZPVsw@agluck-desk3>
+Subject: Re: [PATCH v8 3/7] x86/resctrl: Refactor mbm_update()
+Message-ID: <ZyVcy-7BkqO6Vcr6@agluck-desk3>
 References: <20241029172832.93963-1-tony.luck@intel.com>
- <20241029172832.93963-2-tony.luck@intel.com>
- <f6205054-c29e-97d6-67d3-dd3544a01dec@intel.com>
+ <20241029172832.93963-4-tony.luck@intel.com>
+ <2ed76893-ac65-d9a2-aeea-c927ebd2a1e8@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -71,36 +70,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f6205054-c29e-97d6-67d3-dd3544a01dec@intel.com>
+In-Reply-To: <2ed76893-ac65-d9a2-aeea-c927ebd2a1e8@intel.com>
 
-On Fri, Nov 01, 2024 at 03:03:32PM -0700, Fenghua Yu wrote:
-> > diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-> > index b681c2e07dbf..5b55a7ac7013 100644
-> > --- a/arch/x86/kernel/cpu/resctrl/core.c
-> > +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> > @@ -958,6 +958,11 @@ static __init bool get_rdt_mon_resources(void)
-> >   	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_LOCAL))
-> >   		rdt_mon_features |= (1 << QOS_L3_MBM_LOCAL_EVENT_ID);
-> > +	if (rdt_mon_features & (1 << QOS_L3_MBM_LOCAL_EVENT_ID))
+On Fri, Nov 01, 2024 at 03:08:27PM -0700, Fenghua Yu wrote:
+> > -		/*
+> > -		 * Call the MBA software controller only for the
+> > -		 * control groups and when user has enabled
+> > -		 * the software controller explicitly.
+> > -		 */
 > 
-> Please change this check to:
+> Same comment was added in patch 2 but is removed in the helper. Maybe it's
+> better to add back the comment in the helper.
 > 
-> 	if (is_mbm_local_enabled())
-> 
-> > +		mba_mbps_default_event = QOS_L3_MBM_LOCAL_EVENT_ID;
-> > +	else if (rdt_mon_features & (1 << QOS_L3_MBM_TOTAL_EVENT_ID))
-> 
-> and this check to:
-> 
-> 	else if (is_mbm_total_enabled())
-> 
-> > +		mba_mbps_default_event = QOS_L3_MBM_TOTAL_EVENT_ID;
-> > +
+> > -		if (is_mba_sc(NULL))
+> > -			mbm_bw_count(closid, rmid, &rr);
 
-You are correct. I had a moment of amnesia and forgot those
-helpers existed and just pasted the expressions used to set
-each of the bits in rdt_mon_features.
+In patch 2 I cut & pasted the comment along with the code from
+the if (is_mbm_local()) {...}  clause into the if (is_mbm_total()) { ... }
+clause. Maybe to make it more obvious that the code was duplicated.
 
-I will change as you suggest.
+But I had doubts about the usefulness/accuracy when making the
+helper function.
+
+Breaking the comment into pieces:
+
+    "Call the MBA software controller"
+
+This code isn't calling the "controller". To me that's the
+update_mba_bw() function that adjusts the MBA values. The
+call to mbm_bw_count() is simply computing the bandwidth.
+
+    "only for the control groups"
+
+while this is true, the test in the code here "if (is_mba_sc(NULL))"
+isn't making any checks about control groups.
+
+    "and when user has enabled the software controller"
+
+Accurate.
+
+    "explicitly"
+
+Redundant (or confusing, there is no "implicit" way to enable
+the s/w controller).
+
+
+If a comment is needed (and I'm not convinced that it is)
+maybe something like:
+
+	/*
+	 * If the software controller controller is enabled, compute the
+	 * bandwidth for this event id.
+	 */
 
 -Tony
