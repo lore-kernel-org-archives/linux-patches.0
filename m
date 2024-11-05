@@ -1,225 +1,131 @@
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2065.outbound.protection.outlook.com [40.107.93.65])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A28B1D517E;
-	Mon,  4 Nov 2024 20:09:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.65
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730750998; cv=fail; b=Ourap5sysQ83LcFzQ9hMwfWlFhrEWnGimIGw/Ur+sShfUQbnkniR0quY2KqgoJuxZz/oYFoi9DliVDwnQmkBGdYkwa4FwVQX36NpEHZAf3GbVZQB02WqUqOarIVtTRGP5pj0BcFtqc9MKl8BOuAjrn/A4BcziB5HXakg4O3R34o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730750998; c=relaxed/simple;
-	bh=8bBJkD4Sl14dioFFRnhSpIENL546R40X7k8NFdWaV4M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=tlhVt0tQ61HJDvXxAOldUP/V0znFY49IQVI+UwuZH8vFRtvvABdy1G0SY3M1jx0t1xsdTm9cdesKtDZRLkL9Kcj+fJyp+c5u+oKam0Xpg7nu6+Monep37ebHgvS7DV1sYZHkxn7wHB3jcjN/KBsn/lAY2rKzgTfzdH3Hrg+TkoI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=AkSAEiXq; arc=fail smtp.client-ip=40.107.93.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E183BB22;
+	Tue,  5 Nov 2024 03:47:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1730778427; cv=none; b=lhj43yb/U5bh1AHM2jTvyLtHMH98d7cs1rSL8hsbEbS+cKUpff8F2NaVzdSuhTiX+G1ukCRNrC1Is5BJEljeEeY9Gpy62GUcztTG0gDnTqOiMva7eLbz7IuU+uchhEoLnOvyjIY8iUv0KYyfFZ/dpPouKyNuiJwG2GAwAcPubS0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1730778427; c=relaxed/simple;
+	bh=2JD/SF3RDU/EAWXGkUkiGo50LDNAryP1U70AYzXZvO0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AWrkYwUlrjheEIzrOnyZ218ohKuSazKQBPp8IuKmymUNRlANSy+IwDANipWlRIEjzMTigj7SmiHqXc76ateaKlg8yqwm6Vl6mJSoOaOlllFY62VDLI6RWnAfSB3Lc52ytHg6Dnl53eRByYlGvnCnujZuUvT0dlSmG771Pzv90JY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dB2yrUAI; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="AkSAEiXq"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IJj4luLHSG5q2M+6Ve3J8al1wiUDrntv24hASx30BZ7Ip+oc7bZE4jsflqgs/BbSRd8tU1RsBm9N0WZ4Yk2SmNnPWMhgxiWHFSZNN/I7tMwviscJCmP7FvuzqJ+F8PGuwZe/I5h83cwKj0R4Q/5zfW6Z9ryg0qVFmJCWrBFoCsVxD8R+NAIQr7U55Rjo0Ci+0kigLl7Gmsgv8UZeb8O7S9TU7Tj85uyJLo4HddKOIxmZXC6GTw/VLDrgsUqbFmeGlSBb7p6jV8M3Ai/NBGA/cPRUqVywqXKLltFzHRp1wGPaeR44cmzew+rZjfxmuwOvsC7V17Fsd21nKCZidPClEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kPLWgQ2yDRzMkV6OcgVMVP0RLZWjivp2NnMBne+OR54=;
- b=cvRxPfpB/XIMX0oyn+z8uhfWUuZXL9hYhj66c5/tsewEY5N8Qb6mIBmzTVjyIjd6/Q+ydFYIHqprzA+TdqpJEENHKB9zddi+bjWZ2qR0xKhteBpPwbO0wt1gcAc8ETE++FGDrBEEWkzeIWyWYTVw/dDY9mvNXgSdbGhVRg6FNegcUV99vhhh67eHim9/lgsfkJUn/bNla8C1tLJOZILM4bJLP8CquvyTTYJy2mkCNpWC5J2kMlfT3YhKP/TETXzCJYOuzlMFIat/+EeG6r8UPNdUlGO66h8lqjl8a5cAeUDr0tf4c2YHR0MrLxHhkjTlga0NBRxDCXkhQMIHaLOrqA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kPLWgQ2yDRzMkV6OcgVMVP0RLZWjivp2NnMBne+OR54=;
- b=AkSAEiXqJWJq+BDVqlJUj6qB7rbrEhq/dx/wtnnoeOfI5SNzTcLCoGdu3lQ68i3ZwGgx7kb7sHhzAHxLp0MOPoCIptRDITKiCD98bVIsWE+EDMGQQJGBw5edOvb6oA5TjXkHvSQMadwEVRfEkIsdPoaybwmyXPYLjmSwr7qi6xusmgugfvQh/32ALxG+jfiEpuea1zpjZrHnai2l5Wmbel56LqY7EaYwEnSsxgFHjSKVzR5i2UDwORVpw89977Hz1mjbDz3nexb+e7KIV4w/cKKm6qXKg+a3+W+XhZEgiGxItB4FUXtP5gOjLhUU+94WVQyaI7u6TtcFc3nJETW3BA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by CH3PR12MB7524.namprd12.prod.outlook.com (2603:10b6:610:146::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8114.30; Mon, 4 Nov
- 2024 20:09:53 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8114.015; Mon, 4 Nov 2024
- 20:09:52 +0000
-Date: Mon, 4 Nov 2024 16:09:51 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Robin Murphy <robin.murphy@arm.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org, Will Deacon <will@kernel.org>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dB2yrUAI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1730778425; x=1762314425;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=2JD/SF3RDU/EAWXGkUkiGo50LDNAryP1U70AYzXZvO0=;
+  b=dB2yrUAIXsjqSI2UC7LFdcSwUp3uLFEAMXu25/e72SBN2Uw1FX0Y4KH9
+   Rx2RydBBc5bWXyXSLBMLVfmXPefsGZSRQbCajBN6WNLSbbUxN9MrKzAvb
+   j+h6nvGRBR1xWgODin3N5CuWV/tg4VJILtQ0szuzFn38YqvsrgrPQFjFX
+   Lg4NsN5aEoeqRyB53Sgosb8uHnGu17SUByDSAxoM5mMBvWNBNR8r9bwBl
+   g34AIpW+1HoI9j6bz8cRmh7FOSf/F4QC+Zs5eZqecGDdehx0VNZBLECur
+   2rG8369RIfGw6aiKdBPnWUxiYPjWx3qfUKXmf9ESgrFxtKlYa4E7jU2Ud
+   w==;
+X-CSE-ConnectionGUID: xvbGfP8VRHGLTRW1tYKfCA==
+X-CSE-MsgGUID: PR/6Zc31SSeoqNIkRjuc0Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11246"; a="29924994"
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; 
+   d="scan'208";a="29924994"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Nov 2024 19:47:04 -0800
+X-CSE-ConnectionGUID: l5goev/0QASn+AOycwOZzg==
+X-CSE-MsgGUID: dmiN3I2oQNi4+gFw6oTIJw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,259,1725346800"; 
+   d="scan'208";a="88366034"
+Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
+  by fmviesa005.fm.intel.com with ESMTP; 04 Nov 2024 19:47:01 -0800
+Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1t8AWx-000lZl-1v;
+	Tue, 05 Nov 2024 03:46:59 +0000
+Date: Tue, 5 Nov 2024 11:46:27 +0800
+From: kernel test robot <lkp@intel.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, Boris Brezillon <bbrezillon@kernel.org>,
 	dri-devel@lists.freedesktop.org, Liviu Dudau <liviu.dudau@arm.com>,
 	patches@lists.linux.dev, Steven Price <steven.price@arm.com>
-Subject: Re: [PATCH v2 2/3] iommu/io-pgtable-arm-v7s: Remove split on unmap
- behavior
-Message-ID: <20241104200951.GE10193@nvidia.com>
-References: <2-v2-fd55d00a60b2+c69-arm_no_split_jgg@nvidia.com>
- <cf17dc41-f72a-4d90-a78d-2d90fa0ac243@arm.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cf17dc41-f72a-4d90-a78d-2d90fa0ac243@arm.com>
-X-ClientProxiedBy: BL1PR13CA0440.namprd13.prod.outlook.com
- (2603:10b6:208:2c3::25) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+Subject: Re: [PATCH v2 3/3] iommu: Add a kdoc to iommu_unmap()
+Message-ID: <202411051125.mlgeWlEm-lkp@intel.com>
+References: <3-v2-fd55d00a60b2+c69-arm_no_split_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|CH3PR12MB7524:EE_
-X-MS-Office365-Filtering-Correlation-Id: eca2d32c-a0ec-425f-543c-08dcfd0ca4b8
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?Akl7Qp7VQI8Sdlogde5qkZ2j13Y5vKVi4Jez5AWTjYwuFL5TKbH695dz9Fhb?=
- =?us-ascii?Q?1GPod08c750Fe6tsTwcUPZobfOy5dDiwVUlHl6WqmVuwFOVyT7q4UVan3S3T?=
- =?us-ascii?Q?JH6KoyYtgkRoR5c/hrqVPYyQAQ+j3Jd/4hoVRbtwOslzFWda3L/2yytKa+DZ?=
- =?us-ascii?Q?3nbySuj7CKCeUPuN4lFdl0HbMXhnutd6bI/rGV7GVk7llEhj2kAWypa0RB20?=
- =?us-ascii?Q?vCnZC8U4K9ySEKWtjcIW++ACEtuNGY7hDoqRi00nR9CA7/d/4RRY1TLGbZjF?=
- =?us-ascii?Q?j390aUww2pg1AdmcwwYhAYLrhpIqfaLaQQlKDF9ejz+NqND9oSvO0wxeUOlI?=
- =?us-ascii?Q?kZWkYwKMQAKYyP7ChtbxGfwAJ3r2JZO7WNXYYu/TlLGJs7mQNxAcouOsVib4?=
- =?us-ascii?Q?qBwgOFhgYVJc4YSCCxk5Wqj5VKFPl4rlA12UC4TlWdW2KT0l56dHRkVhU/OX?=
- =?us-ascii?Q?CUS+kVqa3+5TUU1xijvbG42sju2cfW8fkK+Kr4lYoQp4vx5Ih8XoVz/xiUuG?=
- =?us-ascii?Q?Cv0CxMGoEJSNFnOS9+UG2anY0pxCDphkOlXqB72Za+R5+vQFC5fJSsNX8EV8?=
- =?us-ascii?Q?oMcAVB6NlkU3HrZjwGcPK4SFSKVfHxWs6x9TgF5v3ah216h/k/ZFwQ44grb8?=
- =?us-ascii?Q?yXIwyGl3p5VESAx7g8J8LSzn4n2AtN+tCdYWZh6CHdOC0iaceVNKT6QlV4mY?=
- =?us-ascii?Q?lFE/fdXHliGPBvb/bpVQYlc/l++tYrgyB1pEdPRfwvhTDuIHBhl3VQV0rmHl?=
- =?us-ascii?Q?+MoXfFsyfZ1JjkKjaQ2v9IDEBtQvaMtL16gkXWo8B4YGi0HfaBkgcYKozyyo?=
- =?us-ascii?Q?SQ7TYh/P7cA4TQrrgB8s4lycYLuImgsAi/jVD5Rro9Tg76snj4Viwvp8RyKd?=
- =?us-ascii?Q?vVMt8wFflhljSDRSd+ZFW7NgoHz0WJVzcLZRjyfMvZ22SiQWXIncUbhorjN2?=
- =?us-ascii?Q?68UsKIa7pZtIgtjgIXNCNQOGeAIwUlt3DGx0sgtmmeJEjoGL86pfJU7vCVHl?=
- =?us-ascii?Q?UVKfx7YmQe/CPDvqsbf4o4HCixjmDVXFFb5OMMj98mY4ReS76E6FNN1UgK8B?=
- =?us-ascii?Q?m8U7x6Wv9d6Uk2nV2gvpMUK3sK/yo647Ufw5HkUGtOoCKRMAOc7QXwTRX/Uc?=
- =?us-ascii?Q?9s7wbnKPubTrFlDW0q8uVczNqqDsurmdYS9PhfOaF5yvouzhpxvfHFTJ3FM4?=
- =?us-ascii?Q?3zw8iis7Bdh1TyeQZXph2VcVIP/CXhNmM2Zbyqyg+T+NrqUYSjFqqpy9xgDR?=
- =?us-ascii?Q?BxIjEy4IvivcBQTfbzjmLkLp0y8OK/8dXdSlZqxevXzO0Xmcxku7eow6Jzla?=
- =?us-ascii?Q?EeKr2uAErwBEVxPh2DCfk8/n?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?BQ1YSiScQn6k2AKS7LhGX/LG+X5fT5aq4sHMod9BHDnnYE+Xk7/AnHLzfczP?=
- =?us-ascii?Q?4Xgy7RRtHMYnlBM+GSHLNmLWCyhYf3q/u0ExoX+q1en1tgce4iEWlLEv/Em+?=
- =?us-ascii?Q?acvT+8LDcjKvHPcXzyITU7wj7k1xesBMb6js+HWwv1G6Z35fxYzbAxb1R3OR?=
- =?us-ascii?Q?CCgr1lvK0pu5t/yW4vWNpPG3UUABAd9FQlG11HLvjgRhxwc6Lqfg+X8lTIqc?=
- =?us-ascii?Q?XFW+JOvOUDTqGn04BCcZ9PciXQXBQvm61Szv3LLDAvAD/fWbZ7aYGwkRQLhq?=
- =?us-ascii?Q?qWt+6uLNKvppQLEpH9AANPNlfTrls1MhnEAvcnknyW8dNkOwFryun/cgUQ6m?=
- =?us-ascii?Q?c1ntcqHCcxGtAtJNk0Pa8W5nRruyzfoas9d6RGbStuTO5qc4h2xQbISYfUyz?=
- =?us-ascii?Q?N8DyilJauc+0KL90bm2iq9m9vU4Sf60zHd5VxDvfAU+ohIkKbxDj/JQLF6Q+?=
- =?us-ascii?Q?djL4HjCfh51tS4URXNPeMbhc9DssrnJWLbzgp6wQ0UBvxJQoi38MWg75JIWM?=
- =?us-ascii?Q?2Ey90cNFaYTkQ/vs/adUc58muU6UA5vj2izFLI/narP6K+6DK/TemEzIN/TU?=
- =?us-ascii?Q?PkdHUJaX9FnGq0IxAS1+ioKlkkJhAYFyxQixIoQX32NZBqGu+H5zJG17P79I?=
- =?us-ascii?Q?bJz8skia7kVZh9xvDChrlSyULFYCuw0Sr1IO03q37vpCvH6lFdsjGk8AKNbf?=
- =?us-ascii?Q?YZolwm2t87smelGxeiixWSWzGQbJLIMqfmV4WfMpQwuE3ZzlHBR21RleUs7a?=
- =?us-ascii?Q?9dzex/SFfFi3VMEzaxRRAbVVgCcpQjhtKNX1A3N+7gyBqs0WG3iyUVPfrMMT?=
- =?us-ascii?Q?xSOFaK+Qbrn/kjWBnlcSbt5SaKno3oil+gV9AQnge9MJ48UFneUoEG7tZuK5?=
- =?us-ascii?Q?jJZTVaWh9+JADpDqhqMpjlQpeW7mjxxpl2/SuFmxpoNNgB7DPifuIny7laO3?=
- =?us-ascii?Q?GJy1JwBABaMSXvARBH2rjNrVkh13Gg6OoEVfCCxq3MTWZ2uWGhwNvM8l/iyQ?=
- =?us-ascii?Q?CjRG7pYs9xPhVAj0fAAI6TaFN9PPJwka4TMYqs/S5tYTTLFcH7xXkJyH71tk?=
- =?us-ascii?Q?F/jIRrRYcPxCnPqFqz6aMdNuyRVNWF4AA8R+ICqavwlk5xX+D2JFto+PpuEZ?=
- =?us-ascii?Q?GNk+KykHmLGKCZoG4THXukMGnJzTlt8AVmrJjPkzyRiyRnx6Tmh284NS5/q8?=
- =?us-ascii?Q?l5JiQoJ6FTbTSSRz4LgAXRVe1E4jPZaLdCJFXjSb4+WIX0bAIO11eMUwaJvF?=
- =?us-ascii?Q?zSNc1j3MeWReSlQvKwyAzMyu42vxiT+i1OsdmxehDsR3u0EP0AaF1Ev9xEcV?=
- =?us-ascii?Q?jeh/MWs3xrbk60YSQPyWimr9xTeQVMvTXhDq4hyO01eIGRi/5lwqNyxDLFUJ?=
- =?us-ascii?Q?y9/+rPmJd/6w4u6AVEfo8ZPl/zAUdqtgUCwAD13+05If0Qr9QoXTrTpQEim4?=
- =?us-ascii?Q?fhWeIOpdyFTjtE/L6A+nFRvEPqrmHZ72SN1fxmMhiOBOS0FKgAi6K0gtL3jD?=
- =?us-ascii?Q?2if8d65ZN3g0aPpfYFgC8MtYuAIPphwjeFrR3GhWPyxoGangaTBipxX7OldJ?=
- =?us-ascii?Q?pQQ6AmkdX7vBLZWx3Ds=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eca2d32c-a0ec-425f-543c-08dcfd0ca4b8
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2024 20:09:52.7129
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BtL5rPJZt7n4NBK0pAhz4iB9d+eqUD4ElapXaUgjs+77HYmrws+jT+qlaIDGAZt+
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7524
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3-v2-fd55d00a60b2+c69-arm_no_split_jgg@nvidia.com>
 
-On Mon, Nov 04, 2024 at 07:53:46PM +0000, Robin Murphy wrote:
-> On 2024-11-04 5:41 pm, Jason Gunthorpe wrote:
-> > A minority of page table implementations (arm_lpae, armv7) are unique in
-> > how they handle partial unmap of large IOPTEs.
-> > 
-> > Other implementations will unmap the large IOPTE and return it's
-> > length. For example if a 2M IOPTE is present and the first 4K is requested
-> > to be unmapped then unmap will remove the whole 2M and report 2M as the
-> > result.
-> > 
-> > armv7 instead will break up contiguous entries and replace an entry with a
-> > whole table so it can unmap the requested 4k.
-> > 
-> > This seems copied from the arm_lpae implementation, which was analyzed
-> > here:
-> > 
-> >   https://lore.kernel.org/all/20241024134411.GA6956@nvidia.com/
-> > 
-> > Bring consistency to the implementations and remove this unused
-> > functionality.
-> > 
-> > There are no uses outside iommu, this effects the ARM_V7S drivers
-> > msm_iommu, mtk_iommu, and arm-smmmu.
-> > 
-> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> > ---
-> >   drivers/iommu/io-pgtable-arm-v7s.c | 125 +----------------------------
-> >   1 file changed, 4 insertions(+), 121 deletions(-)
-> 
-> Yikes, I'd forgotten quite how much horribleness was devoted to this,
-> despite it being the "simpler" non-recursive one...
+Hi Jason,
 
-Yes, it is the contiguous page support that makes it so complex..
+kernel test robot noticed the following build warnings:
 
-> However, there are also "partial unmap" cases in both sets of selftests, so
-> I think there's still a bit more to remove yet :)
+[auto build test WARNING on 8e929cb546ee42c9a61d24fae60605e9e3192354]
 
-Sneaky, I got it thanks
+url:    https://github.com/intel-lab-lkp/linux/commits/Jason-Gunthorpe/iommu-io-pgtable-arm-Remove-split-on-unmap-behavior/20241105-014356
+base:   8e929cb546ee42c9a61d24fae60605e9e3192354
+patch link:    https://lore.kernel.org/r/3-v2-fd55d00a60b2%2Bc69-arm_no_split_jgg%40nvidia.com
+patch subject: [PATCH v2 3/3] iommu: Add a kdoc to iommu_unmap()
+config: x86_64-rhel-8.3 (https://download.01.org/0day-ci/archive/20241105/202411051125.mlgeWlEm-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241105/202411051125.mlgeWlEm-lkp@intel.com/reproduce)
 
-Runs OK now:
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202411051125.mlgeWlEm-lkp@intel.com/
 
-arm-v7s io-pgtable: self test ok
-arm-lpae io-pgtable: selftest: pgsize_bitmap 0x40201000, IAS 32
+All warnings (new ones prefixed by >>):
 
-Jason
+>> drivers/iommu/iommu.c:2605: warning: Function parameter or struct member 'size' not described in 'iommu_unmap'
+>> drivers/iommu/iommu.c:2605: warning: Excess function parameter 'len' description in 'iommu_unmap'
 
---- a/drivers/iommu/io-pgtable-arm-v7s.c
-+++ b/drivers/iommu/io-pgtable-arm-v7s.c
-@@ -819,7 +819,7 @@ static int __init arm_v7s_do_selftests(void)
- 		.quirks = IO_PGTABLE_QUIRK_ARM_NS,
- 		.pgsize_bitmap = SZ_4K | SZ_64K | SZ_1M | SZ_16M,
- 	};
--	unsigned int iova, size, iova_start;
-+	unsigned int iova, size;
- 	unsigned int i, loopnr = 0;
- 	size_t mapped;
- 
-@@ -871,25 +871,6 @@ static int __init arm_v7s_do_selftests(void)
- 		loopnr++;
- 	}
- 
--	/* Partial unmap */
--	i = 1;
--	size = 1UL << __ffs(cfg.pgsize_bitmap);
--	while (i < loopnr) {
--		iova_start = i * SZ_16M;
--		if (ops->unmap_pages(ops, iova_start + size, size, 1, NULL) != size)
--			return __FAIL(ops);
--
--		/* Remap of partial unmap */
--		if (ops->map_pages(ops, iova_start + size, size, size, 1,
--				   IOMMU_READ, GFP_KERNEL, &mapped))
--			return __FAIL(ops);
--
--		if (ops->iova_to_phys(ops, iova_start + size + 42)
--		    != (size + 42))
--			return __FAIL(ops);
--		i++;
--	}
--
- 	/* Full unmap */
- 	iova = 0;
- 	for_each_set_bit(i, &cfg.pgsize_bitmap, BITS_PER_LONG) {
+
+vim +2605 drivers/iommu/iommu.c
+
+add02cfdc9bc29 drivers/iommu/iommu.c Joerg Roedel    2017-08-23  2588  
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2589  /**
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2590   * iommu_unmap() - Remove mappings from a range of IOVA
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2591   * @domain: Domain to manipulate
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2592   * @iova: IO virtual address to start
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2593   * @len: Length of the range starting from @iova
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2594   *
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2595   * iommu_unmap() will remove a translation created by iommu_map(). It cannot
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2596   * subdivide a mapping created by iommu_map(), so it should be called with IOVA
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2597   * ranges that match what was passed to iommu_map(). The range can aggregate
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2598   * contiguous iommu_map() calls so long as no individual range is split.
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2599   *
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2600   * Returns: Number of bytes of IOVA unmapped. iova + res will be the point
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2601   * unmapping stopped.
+6aa7e03e9dd8b5 drivers/iommu/iommu.c Jason Gunthorpe 2024-11-04  2602   */
+add02cfdc9bc29 drivers/iommu/iommu.c Joerg Roedel    2017-08-23  2603  size_t iommu_unmap(struct iommu_domain *domain,
+add02cfdc9bc29 drivers/iommu/iommu.c Joerg Roedel    2017-08-23  2604  		   unsigned long iova, size_t size)
+add02cfdc9bc29 drivers/iommu/iommu.c Joerg Roedel    2017-08-23 @2605  {
+a7d20dc19d9ea7 drivers/iommu/iommu.c Will Deacon     2019-07-02  2606  	struct iommu_iotlb_gather iotlb_gather;
+a7d20dc19d9ea7 drivers/iommu/iommu.c Will Deacon     2019-07-02  2607  	size_t ret;
+a7d20dc19d9ea7 drivers/iommu/iommu.c Will Deacon     2019-07-02  2608  
+a7d20dc19d9ea7 drivers/iommu/iommu.c Will Deacon     2019-07-02  2609  	iommu_iotlb_gather_init(&iotlb_gather);
+a7d20dc19d9ea7 drivers/iommu/iommu.c Will Deacon     2019-07-02  2610  	ret = __iommu_unmap(domain, iova, size, &iotlb_gather);
+aae4c8e27bd756 drivers/iommu/iommu.c Tom Murphy      2020-08-17  2611  	iommu_iotlb_sync(domain, &iotlb_gather);
+a7d20dc19d9ea7 drivers/iommu/iommu.c Will Deacon     2019-07-02  2612  
+a7d20dc19d9ea7 drivers/iommu/iommu.c Will Deacon     2019-07-02  2613  	return ret;
+add02cfdc9bc29 drivers/iommu/iommu.c Joerg Roedel    2017-08-23  2614  }
+cefc53c7f49424 drivers/base/iommu.c  Joerg Roedel    2010-01-08  2615  EXPORT_SYMBOL_GPL(iommu_unmap);
+1460432cb513f0 drivers/iommu/iommu.c Alex Williamson 2011-10-21  2616  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
