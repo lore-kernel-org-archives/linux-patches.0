@@ -1,60 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FD91D516F;
-	Tue,  5 Nov 2024 16:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DEB1D90A4;
+	Tue,  5 Nov 2024 16:59:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730825318; cv=none; b=ERDNomZcxnjETe4XdItTbw78dAvZWd3Bq+bY7IPkF9A6sLP5tzmKp18po/agIhN4U6aCmVPMgK3xCKfuiVAsDCzl2CI9KRyerfzzUlMG4VspV+oRvR9QFoGGtPy1zlJxhSiuDTsI9YwE4m1U1cLR5uyWv0uJRFb1AwtIwH1yPgk=
+	t=1730825989; cv=none; b=rK35diPsVON84XVBWXJWamIayt9wCjQUz8+bsx3YPDwKmoxMtj8BatJIiNeUJfkjJfjOWCLI7LA+poBkeGHU/spr75I/rR8ySwhFlsDY++9UmvjFe8AQmzgzMZPUeqLAx2XIDsHuB5bkjbaGgxHSzM4c/D1sktvGVFfDvFKpcpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730825318; c=relaxed/simple;
-	bh=C6Hk6/eHmDS2AcJbkrwiislpkRQ+Eud/EQoVHtBaVi4=;
+	s=arc-20240116; t=1730825989; c=relaxed/simple;
+	bh=dXzzyTpKChnv8xjtW59R25y4rKYjWCOZ+MrqN2ID5r4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jav1RawW/cg6gfohV/NDvzLMoSp9qrSLsp6i3a2VN14LaZouhcBIg/TXIsTI6qH8C6rO/qdQKT+ZltvLKDalLtXjQ8TAyPOWTwU2v9Z7ebRNA9AxVZahbM1Jl7emPZQfdJ0W5kB0OCyoVWP1nGFtujNad/hq4qpn4+8rXGhE0oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rmtn0Fc+; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ib5IwuHhbeZCUAY8XjWRcniXxpWPdoBwP3fBEF/n1DRBzqGPI9sm1THdQFFieKFlm9Iz59PmlVIJLMRSG/VyTJcQm6H+ZZz7Rth8PV3yj6ZdTjEdDcsLnsfruiU0STjfUO1XfBVU6TU/XLp712FkZY2zd0s8QOLJrgK0WD/1YIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MQdyGYYK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rmtn0Fc+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75888C4CECF;
-	Tue,  5 Nov 2024 16:48:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MQdyGYYK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00F0C4CECF;
+	Tue,  5 Nov 2024 16:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730825318;
-	bh=C6Hk6/eHmDS2AcJbkrwiislpkRQ+Eud/EQoVHtBaVi4=;
+	s=k20201202; t=1730825988;
+	bh=dXzzyTpKChnv8xjtW59R25y4rKYjWCOZ+MrqN2ID5r4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rmtn0Fc+AfgQDPMBkouiMKC3eMbKISVCgolNAoUN/NA08NJsrDiDA9CHq+EyGxYSX
-	 x2ht6NAKiLYE7I83LKoVjs7jg+WAKplOum+cjLQwPnx6QE9f02LK28NYh1DXSPoCIc
-	 V2jJkCSywBTrXd5witeNe/+Mem8bo9sJiXuA6P+kvoMMIBSHTeozVamDGGbscZz8rq
-	 PsqlL2kps4ABTYU7rNalIhA4+bFroEHsgrPpcKIHDt4XA+9J0K5MhGl6Jy0ZFq24yK
-	 YPX0YKXKx4Bnece0a0viT+b8tEQ2HwOFXJfdcO2IFpDmtcJjlCjHkk1rJw7Zj2OCDK
-	 qwTGI0NNtQgBw==
-Date: Tue, 5 Nov 2024 16:48:29 +0000
+	b=MQdyGYYKJ2oarUM+0KYSzq1hEB6aeZPBgZeuW9VVMJzOR/EKO9TxKEzhv5PmyBYNR
+	 VgL3g9nq50B150Qs+/DPD4muL4glTnulkDkF5fRtyYGUgbCrgDzzgvwf2M1oQtWqos
+	 8XhS/tn0j0FSxbOZTEeukWve9yRXragWtcoKC3jdmZV/d9uPy2wg6EB1ydZz8U1Obe
+	 gMOuoqK2XglFhGSdX86oRvYfnjGW+S5O8/5iZWNv9T+GqT2OHi8gXnMgTxKE/qgK8d
+	 ffX4Y/+VFvIUiUOWk1L5Ky2G++HqpPdSXTcskbOg8BsY3SJMN2s/fZ1M3r32ugeKfU
+	 qqmu4OUKrRZiQ==
+Date: Tue, 5 Nov 2024 16:59:43 +0000
 From: Will Deacon <will@kernel.org>
 To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: acpica-devel@lists.linux.dev, iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
-	kvm@vger.kernel.org, Len Brown <lenb@kernel.org>,
-	linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Robert Moore <robert.moore@intel.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Donald Dutile <ddutile@redhat.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Moritz Fischer <mdf@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
-	Mostafa Saleh <smostafa@google.com>
-Subject: Re: [PATCH v4 00/12] Initial support for SMMUv3 nested translation
-Message-ID: <20241105164829.GA12923@willie-the-truck>
-References: <0-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com>
- <20241101121849.GD8518@willie-the-truck>
- <20241101132503.GU10193@nvidia.com>
+Cc: Robin Murphy <robin.murphy@arm.com>, iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	dri-devel@lists.freedesktop.org, Liviu Dudau <liviu.dudau@arm.com>,
+	patches@lists.linux.dev, Steven Price <steven.price@arm.com>
+Subject: Re: [PATCH v2 2/3] iommu/io-pgtable-arm-v7s: Remove split on unmap
+ behavior
+Message-ID: <20241105165942.GB12923@willie-the-truck>
+References: <2-v2-fd55d00a60b2+c69-arm_no_split_jgg@nvidia.com>
+ <cf17dc41-f72a-4d90-a78d-2d90fa0ac243@arm.com>
+ <20241104200951.GE10193@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -63,46 +49,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241101132503.GU10193@nvidia.com>
+In-Reply-To: <20241104200951.GE10193@nvidia.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Hi Jason,
-
-On Fri, Nov 01, 2024 at 10:25:03AM -0300, Jason Gunthorpe wrote:
-> On Fri, Nov 01, 2024 at 12:18:50PM +0000, Will Deacon wrote:
-> > On Wed, Oct 30, 2024 at 09:20:44PM -0300, Jason Gunthorpe wrote:
-> > > [This is now based on Nicolin's iommufd patches for vIOMMU and will need
-> > > to go through the iommufd tree, please ack]
-> > 
-> > Can't we separate out the SMMUv3 driver changes? They shouldn't depend on
-> > Nicolin's work afaict.
+On Mon, Nov 04, 2024 at 04:09:51PM -0400, Jason Gunthorpe wrote:
+> Runs OK now:
 > 
-> We can put everything before "iommu/arm-smmu-v3: Support
-> IOMMU_VIOMMU_ALLOC" directly on a rc and share a branch with your tree.
+> arm-v7s io-pgtable: self test ok
+> arm-lpae io-pgtable: selftest: pgsize_bitmap 0x40201000, IAS 32
 > 
-> That patch and following all depend on Nicolin's work, as they rely on
-> the VIOMMU due to how different ARM is from Intel.
+> Jason
 > 
-> How about you take these patches:
-> 
->  [PATCH v4 01/12] vfio: Remove VFIO_TYPE1_NESTING_IOMMU
->  [PATCH v4 02/12] ACPICA: IORT: Update for revision E.f
->  [PATCH v4 03/12] ACPI/IORT: Support CANWBS memory access flag
->  [PATCH v4 04/12] iommu/arm-smmu-v3: Report IOMMU_CAP_ENFORCE_CACHE_COHERENCY for CANWBS
->  [PATCH v4 05/12] iommu/arm-smmu-v3: Support IOMMU_GET_HW_INFO via struct arm_smmu_hw_info
->  [PATCH v4 06/12] iommu/arm-smmu-v3: Implement IOMMU_HWPT_ALLOC_NEST_PARENT
->  [PATCH v4 07/12] iommu/arm-smmu-v3: Expose the arm_smmu_attach interface
-> 
-> Onto a branch.
+> --- a/drivers/iommu/io-pgtable-arm-v7s.c
+> +++ b/drivers/iommu/io-pgtable-arm-v7s.c
+> @@ -819,7 +819,7 @@ static int __init arm_v7s_do_selftests(void)
+>  		.quirks = IO_PGTABLE_QUIRK_ARM_NS,
+>  		.pgsize_bitmap = SZ_4K | SZ_64K | SZ_1M | SZ_16M,
+>  	};
+> -	unsigned int iova, size, iova_start;
+> +	unsigned int iova, size;
+>  	unsigned int i, loopnr = 0;
+>  	size_t mapped;
+>  
+> @@ -871,25 +871,6 @@ static int __init arm_v7s_do_selftests(void)
+>  		loopnr++;
+>  	}
+>  
+> -	/* Partial unmap */
+> -	i = 1;
+> -	size = 1UL << __ffs(cfg.pgsize_bitmap);
+> -	while (i < loopnr) {
+> -		iova_start = i * SZ_16M;
+> -		if (ops->unmap_pages(ops, iova_start + size, size, 1, NULL) != size)
+> -			return __FAIL(ops);
+> -
+> -		/* Remap of partial unmap */
+> -		if (ops->map_pages(ops, iova_start + size, size, size, 1,
+> -				   IOMMU_READ, GFP_KERNEL, &mapped))
+> -			return __FAIL(ops);
+> -
+> -		if (ops->iova_to_phys(ops, iova_start + size + 42)
+> -		    != (size + 42))
+> -			return __FAIL(ops);
+> -		i++;
+> -	}
+> -
+>  	/* Full unmap */
+>  	iova = 0;
+>  	for_each_set_bit(i, &cfg.pgsize_bitmap, BITS_PER_LONG) {
 
-I've pushed these onto a new branch in the IOMMU tree:
-
-	iommufd/arm-smmuv3-nested
-
-However, please can you give it a day or two to get some exposure in
--next before you merge that into iommufd? I'll ping back here later in
-the week.
-
-Cheers,
+Yup, and you can do the same for the other selftest in io-pgtable-arm.c
 
 Will
