@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0391DF726;
-	Wed,  6 Nov 2024 12:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F941D173F;
+	Wed,  6 Nov 2024 12:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895662; cv=none; b=ryUbIQjW/vtltTkjYGDyfJfrF0hO/VugXkfsfpucZpsjxC39Ga6Oak1usAPUnBOlXb7IidTpg3BedEssQ6Vqjdsjo4JJ80C2+3VRPzb8t3uMe97rZG4zeNdpIt8lb/L2VHq+YBRAh9V1SMjEFaEHYOTgDAul+TfxbLCAyi9j8B4=
+	t=1730895665; cv=none; b=X1ME3w59GEwgDePoBFezbCjr2jdRRHAu7haNjcwPWjfJa04K1mC9ijSKkof+7ElBmFOpGEdQYq24L4sW74MVMXMrQX4OljrQkmmksW9IokOb7C+riSM5Xy0SE3S3cbNPkOueuL4O88zFQdaRZttxb7QFoA9xUp4Nk7WzADUNZFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895662; c=relaxed/simple;
-	bh=SSuHhA7gYqAb40T3XqcGL4bkl4hO+X7M3vxAPWyeJG8=;
+	s=arc-20240116; t=1730895665; c=relaxed/simple;
+	bh=2uIztKdyxXvUSkdytC4h6jnEOeGdTLWNTgXWdi+OzT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVyLSFYZ7gFHVax764aYJyWxxPRnb0r9WzqW/3tT0i1RPZmsVo327Po9VNERurqyKzKuXaypJbpVGzDqH/YfRUNIEV7Toh5tB2FvJRdh8+Jgfw1PpHGZVRMBfyPxXstxqto9IznoDepT3CpiQZakNDo0UoUCNNDLFgLQ4DpBTvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZwAYBY7g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lIH/V/Y7pYy5amHS/37rk8d6TQIe7X4NEAek3nKXykIZaNAxJEwYM2NCs1UybE5rOaB/2JCpjUi0ZipO/2wr54eDHWKcFl5Q+4jGihs4QLtJFP5GZwoucHQDBN5IlHOgb1k0utjHQY3ximlK4AGGR2fsDrbNvGb4Nh8lLrBLGj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5bp+0Du; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZwAYBY7g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA98BC4CECD;
-	Wed,  6 Nov 2024 12:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5bp+0Du"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D327C4CECD;
+	Wed,  6 Nov 2024 12:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895662;
-	bh=SSuHhA7gYqAb40T3XqcGL4bkl4hO+X7M3vxAPWyeJG8=;
+	s=korg; t=1730895665;
+	bh=2uIztKdyxXvUSkdytC4h6jnEOeGdTLWNTgXWdi+OzT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZwAYBY7goPnX16foSuiW59MJ165EQ/O4kip1nw1hLed80S8I73iEq4CTSLf0U/iE5
-	 ZmYkrzefB6XCi1Diq0ObDpaAuGqjV/e1iTQ/bz8vsbi48zc8yZIzC7R+wmhHCKX9wi
-	 PfSnAf96UcKjRePY89nOOdC+AYBxREGHlpeHEYXM=
+	b=L5bp+0Du3tbRvvCEnjeSGWAksLRLdc0TrBbXSJkpABRx9hXp7/drbm74jylqL7DUh
+	 ic+v3HGupoFaiB2lZ3xLaYBTOJLWdKJMAHFe6XAFxdVu8/mdWp7NoOmQ1vBoXza/z0
+	 j31ADENc18b2ld5UL5hZ9A8a1kvSUQnBL6G7Mbyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Benjamin B. Frost" <benjamin@geanix.com>,
-	Lars Melin <larsm17@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.19 286/350] USB: serial: option: add support for Quectel EG916Q-GL
-Date: Wed,  6 Nov 2024 13:03:34 +0100
-Message-ID: <20241106120327.906090606@linuxfoundation.org>
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 295/350] RDMA/bnxt_re: Return more meaningful error
+Date: Wed,  6 Nov 2024 13:03:43 +0100
+Message-ID: <20241106120328.103901032@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,73 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin B. Frost <benjamin@geanix.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-commit 540eff5d7faf0c9330ec762da49df453263f7676 upstream.
+[ Upstream commit 98647df0178df215b8239c5c365537283b2852a6 ]
 
-Add Quectel EM916Q-GL with product ID 0x6007
+When the HWRM command fails, driver currently returns -EFAULT(Bad
+address). This does not look correct.
 
-T:  Bus=01 Lev=02 Prnt=02 Port=01 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=6007 Rev= 2.00
-S:  Manufacturer=Quectel
-S:  Product=EG916Q-GL
-C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=200mA
-A:  FirstIf#= 4 IfCount= 2 Cls=02(comm.) Sub=06 Prot=00
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=84(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
-E:  Ad=88(I) Atr=03(Int.) MxPS=  32 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-I:* If#= 5 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Modified to return -EIO(I/O error).
 
-MI_00 Quectel USB Diag Port
-MI_01 Quectel USB NMEA Port
-MI_02 Quectel USB AT Port
-MI_03 Quectel USB Modem Port
-MI_04 Quectel USB Net Port
-
-Signed-off-by: Benjamin B. Frost <benjamin@geanix.com>
-Reviewed-by: Lars Melin <larsm17@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cc1ec769b87c ("RDMA/bnxt_re: Fixing the Control path command and response handling")
+Fixes: 65288a22ddd8 ("RDMA/bnxt_re: use shadow qd while posting non blocking rcfw command")
+Link: https://patch.msgid.link/r/1728373302-19530-5-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -279,6 +279,7 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_EG912Y			0x6001
- #define QUECTEL_PRODUCT_EC200S_CN		0x6002
- #define QUECTEL_PRODUCT_EC200A			0x6005
-+#define QUECTEL_PRODUCT_EG916Q			0x6007
- #define QUECTEL_PRODUCT_EM061K_LWW		0x6008
- #define QUECTEL_PRODUCT_EM061K_LCN		0x6009
- #define QUECTEL_PRODUCT_EC200T			0x6026
-@@ -1270,6 +1271,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200S_CN, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200T, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG912Y, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG916Q, 0xff, 0x00, 0x00) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
+index 8b3b5fdc19bbb..092cc11428f56 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
+@@ -234,7 +234,7 @@ int bnxt_qplib_rcfw_send_message(struct bnxt_qplib_rcfw *rcfw,
+ 		/* failed with status */
+ 		dev_err(&rcfw->pdev->dev, "QPLIB: cmdq[%#x]=%#x status %#x",
+ 			cookie, opcode, evnt->status);
+-		rc = -EFAULT;
++		rc = -EIO;
+ 	}
  
- 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
+ 	return rc;
+-- 
+2.43.0
+
 
 
