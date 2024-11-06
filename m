@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FBE31E0B84;
-	Wed,  6 Nov 2024 13:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478171E0B84;
+	Wed,  6 Nov 2024 13:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898542; cv=none; b=Dk7WzQnyf58oyykPXDW3roC/7jnHuzfSL8gpQZ2n2Uw6SeeI63bCJyFtHg+Pc7fvONOUzsh0NZP7JwbCGy54c94y+BDWQ6/7INLkvDKqY82H9YqqQG3sJ6iqGFEmzzo3iABq3RI9nqyyk2yRQn8uiVZfC9uZnbitbaxJcVvuPRU=
+	t=1730898545; cv=none; b=qQNwbF4MzfnwyTwJm4HI1G606su/Xo2DoT6nGNVeqiVax2e5ZWiA18Q50n07wEjCwsBCgD2OFphhY9ee/sSwKcVDRMX4XqDiLJKhrTtYbvXtaDGo+QlV3Gywsl8e+fwnFON+4J35HjxYvbHsgatwMmNPcrc4UlgkjjCQ/CTmyco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898542; c=relaxed/simple;
-	bh=WjhvC65vtgyja0bzu5MikGHgiw89ac/I8LMKsBRKnt0=;
+	s=arc-20240116; t=1730898545; c=relaxed/simple;
+	bh=vP7m7r8GDsf3ow4zzV9kVLvMg6EmeiLY7jtlKxtMH8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Br5tgMyG6o4WNgRL9KTiBJU0O4uwzA1cEjt160dhBO6V9GmQJXKE66n4TBqUcgfVkyWkf6YTBx+a8U7A/ehydCy4sWN3GFZUmKAbLNGnRSOe6HqO2HjJCO05MiuWURNNvKyX91VYRRtEJdZgjrDiPwcN/YNXMR0D47NkOSE/OOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDDVD276; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CAKZlhHibc0bMbcmoN4+uNuGvpS7nTTljge9j6gG96rq22JFEyLLDJcz0wET5NuWc696gEh/hKf/i/p6peW38TCmlnbXbfP9tKrJkgNr/J2RJgX1wbgcV+3NgQnuKHk/zm7XTwoxfq0RiGo5BdFwJZ1fsIXNkatZC8dp1PNNdIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUy7ZUoh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDDVD276"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA648C4CED3;
-	Wed,  6 Nov 2024 13:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUy7ZUoh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA07FC4CED3;
+	Wed,  6 Nov 2024 13:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898542;
-	bh=WjhvC65vtgyja0bzu5MikGHgiw89ac/I8LMKsBRKnt0=;
+	s=korg; t=1730898545;
+	bh=vP7m7r8GDsf3ow4zzV9kVLvMg6EmeiLY7jtlKxtMH8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iDDVD276ukp917dtb0Opm//VLuEwEUIdB1xfzHLaSlu/lvtQLACPkJ1UrQEC5Ptp+
-	 ywVoIM04TN0yRVnzyBrAJCoNF2MddBOQ7S2Xts92sa40BvVczlgbs1tG/PPJmKoIBG
-	 KoE5aYCUH9jlcRbD0UIcVVuGEiadyMr7SjqbxtC0=
+	b=aUy7ZUohYsAaPNjBy1PwiE+0RpX9/PwIf1FgXC9h7SUOwXjrOTZVKk6p0zzrgshWN
+	 fTVl5py005K43f5escxhMlQOWVQQmuvA6ZMQ8+fFH7yFziJtdlesGNr6lezRcF8ihT
+	 oBIMaAwQndaTHb67APDFuJecUFEQorPZQzObToiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Jerry Zuo <jerry.zuo@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 226/462] drm/amd/display: Check stream before comparing them
-Date: Wed,  6 Nov 2024 13:01:59 +0100
-Message-ID: <20241106120337.103314286@linuxfoundation.org>
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 5.4 267/462] clk: rockchip: fix error for unknown clocks
+Date: Wed,  6 Nov 2024 13:02:40 +0100
+Message-ID: <20241106120338.124086372@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -54,41 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 35ff747c86767937ee1e0ca987545b7eed7a0810 ]
+commit 12fd64babaca4dc09d072f63eda76ba44119816a upstream.
 
-[WHAT & HOW]
-amdgpu_dm can pass a null stream to dc_is_stream_unchanged. It is
-necessary to check for null before dereferencing them.
+There is a clk == NULL check after the switch to check for
+unsupported clk types. Since clk is re-assigned in a loop,
+this check is useless right now for anything but the first
+round. Let's fix this up by assigning clk = NULL in the
+loop before the switch statement.
 
-This fixes 1 FORWARD_NULL issue reported by Coverity.
-
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a245fecbb806 ("clk: rockchip: add basic infrastructure for clock branches")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+[added fixes + stable-cc]
+Link: https://lore.kernel.org/r/20240325193609.237182-6-sebastian.reichel@collabora.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/rockchip/clk.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-index 2f56684780eb5..b498f2f485820 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -1542,6 +1542,8 @@ static bool are_stream_backends_same(
- bool dc_is_stream_unchanged(
- 	struct dc_stream_state *old_stream, struct dc_stream_state *stream)
+--- a/drivers/clk/rockchip/clk.c
++++ b/drivers/clk/rockchip/clk.c
+@@ -439,12 +439,13 @@ void __init rockchip_clk_register_branch
+ 				      struct rockchip_clk_branch *list,
+ 				      unsigned int nr_clk)
  {
-+	if (!old_stream || !stream)
-+		return false;
+-	struct clk *clk = NULL;
++	struct clk *clk;
+ 	unsigned int idx;
+ 	unsigned long flags;
  
- 	if (!are_stream_backends_same(old_stream, stream))
- 		return false;
--- 
-2.43.0
-
+ 	for (idx = 0; idx < nr_clk; idx++, list++) {
+ 		flags = list->flags;
++		clk = NULL;
+ 
+ 		/* catch simple muxes */
+ 		switch (list->branch_type) {
 
 
