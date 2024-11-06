@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76381DED58;
-	Wed,  6 Nov 2024 12:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22E21DE8B4;
+	Wed,  6 Nov 2024 12:17:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895418; cv=none; b=NcOVbilhRH7XKZrvWyABnkTW90hpvQEGlExOjVFwyQgss0nolbg39HxafWeXbDW9xwJgq2D7JaUnSQFw1oHR/gbX5dhL6yX/c9X36EIbrisOxmGookPQLmbuBOs7nBM6K+RkSe1kFCmTUSc8ck1J4zXpr7Yho3uzeIZrzSYfW9A=
+	t=1730895421; cv=none; b=In1QchVa6XhzB2LHG05HBgYDrjVK9Mj2YLPUa83pVT5vv4a+a8LcQUkv1/LmAhA3cJlM4YaHUfcTuRj5QA0+HMFYogV2B7IoVE2h/LO/cduGIIaOsrrkk7nvVSqK05djsj+mJKMf+0G1P4vd0muUDPFcwI2L4L9RJibZkpuAMRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895418; c=relaxed/simple;
-	bh=YYLJFaylWGUoDlZsXmtUwKQV8hHGZr6IyJAiRJr0IP0=;
+	s=arc-20240116; t=1730895421; c=relaxed/simple;
+	bh=BYQUKSimcMVtuYaBR33o3NVMMRQtRfeDQ+9MnxC7h2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NsD4F6V9u9OP6YSXSebO3Q0eqefszgzCbAOETJV+GOnn3yV7jBL9Rr5VTNCHlw9Pd69C08SKmOyloeKD6TgCyyyw7BNCmodW/xtaqkkbw0p7XKbZgJMMa2eldKzEvFOSMEmMoFrtNKuTQ2CoB8idYAfq7c3sKaqYNFVQhulZ6E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyRs1HGQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GT+A//wmJAtYO2bl8SU58gENWqwx8EA8zX+1gTelmDQvvzYWk2SBmey9gSjZQ6igN7E9vdGTFRwmqf9I7OXo/2lCZu9tqM1mnqZJYhnqXQx1/j/dE1opxZUqyD6otXZXlhhhNjdtUKrMRSTbJR5quYLlTYDXWIodJTUSabdaftg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cgliCFoa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyRs1HGQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26625C4CECD;
-	Wed,  6 Nov 2024 12:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgliCFoa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E384C4CECD;
+	Wed,  6 Nov 2024 12:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895418;
-	bh=YYLJFaylWGUoDlZsXmtUwKQV8hHGZr6IyJAiRJr0IP0=;
+	s=korg; t=1730895421;
+	bh=BYQUKSimcMVtuYaBR33o3NVMMRQtRfeDQ+9MnxC7h2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vyRs1HGQoTi/c9zSHBfr/74igfvpGKsernNHzoQusKUrQf4xbeIeuoiRzZZN13MaI
-	 GU7A7jsz+yjITu6of71l27xvFuGjoIy5GcADLZMvRncHGdHYkvdESWv4VCcfwwmcqk
-	 sIWPtl4nR9Chkso/910EGei3p9ryDnOWK9lMDrLw=
+	b=cgliCFoaJAsIvLdUCkTTU00sX0pOfiaTz64FmVIFS9RQIly4GaPlXnrrGf6AI6YI8
+	 slnxhXN2LIW5PXqQMpKIwc2WF3NFfQkS63mtgM76ip662tPmVznpfBUfPgxKAynATG
+	 AqpoLPP3biGYiSPKLgVmnPwAfWwQ8ymlItpiogr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 175/350] scsi: aacraid: Rearrange order of struct aac_srb_unit
-Date: Wed,  6 Nov 2024 13:01:43 +0100
-Message-ID: <20241106120325.253335312@linuxfoundation.org>
+Subject: [PATCH 4.19 176/350] drm/radeon/r100: Handle unknown family in r100_cp_init_microcode()
+Date: Wed,  6 Nov 2024 13:01:44 +0100
+Message-ID: <20241106120325.277344930@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -45,116 +45,142 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 6e5860b0ad4934baee8c7a202c02033b2631bb44 ]
+[ Upstream commit c6dbab46324b1742b50dc2fb5c1fee2c28129439 ]
 
-struct aac_srb_unit contains struct aac_srb, which contains struct sgmap,
-which ends in a (currently) "fake" (1-element) flexible array.  Converting
-this to a flexible array is needed so that runtime bounds checking won't
-think the array is fixed size (i.e. under CONFIG_FORTIFY_SOURCE=y and/or
-CONFIG_UBSAN_BOUNDS=y), as other parts of aacraid use struct sgmap as a
-flexible array.
+With -Werror:
 
-It is not legal to have a flexible array in the middle of a structure, so
-it either needs to be split up or rearranged so that it is at the end of
-the structure. Luckily, struct aac_srb_unit, which is exclusively
-consumed/updated by aac_send_safw_bmic_cmd(), does not depend on member
-ordering.
+    In function ‘r100_cp_init_microcode’,
+	inlined from ‘r100_cp_init’ at drivers/gpu/drm/radeon/r100.c:1136:7:
+    include/linux/printk.h:465:44: error: ‘%s’ directive argument is null [-Werror=format-overflow=]
+      465 | #define printk(fmt, ...) printk_index_wrap(_printk, fmt, ##__VA_ARGS__)
+	  |                                            ^
+    include/linux/printk.h:437:17: note: in definition of macro ‘printk_index_wrap’
+      437 |                 _p_func(_fmt, ##__VA_ARGS__);                           \
+	  |                 ^~~~~~~
+    include/linux/printk.h:508:9: note: in expansion of macro ‘printk’
+      508 |         printk(KERN_ERR pr_fmt(fmt), ##__VA_ARGS__)
+	  |         ^~~~~~
+    drivers/gpu/drm/radeon/r100.c:1062:17: note: in expansion of macro ‘pr_err’
+     1062 |                 pr_err("radeon_cp: Failed to load firmware \"%s\"\n", fw_name);
+	  |                 ^~~~~~
 
-The values set in the on-stack struct aac_srb_unit instance "srbu" by the
-only two callers, aac_issue_safw_bmic_identify() and
-aac_get_safw_ciss_luns(), do not contain anything in srbu.srb.sgmap.sg, and
-they both implicitly initialize srbu.srb.sgmap.count to 0 during
-memset(). For example:
+Fix this by converting the if/else if/... construct into a proper
+switch() statement with a default to handle the error case.
 
-        memset(&srbu, 0, sizeof(struct aac_srb_unit));
+As a bonus, the generated code is ca. 100 bytes smaller (with gcc 11.4.0
+targeting arm32).
 
-        srbcmd = &srbu.srb;
-        srbcmd->flags   = cpu_to_le32(SRB_DataIn);
-        srbcmd->cdb[0]  = CISS_REPORT_PHYSICAL_LUNS;
-        srbcmd->cdb[1]  = 2; /* extended reporting */
-        srbcmd->cdb[8]  = (u8)(datasize >> 8);
-        srbcmd->cdb[9]  = (u8)(datasize);
-
-        rcode = aac_send_safw_bmic_cmd(dev, &srbu, phys_luns, datasize);
-
-During aac_send_safw_bmic_cmd(), a separate srb is mapped into DMA, and has
-srbu.srb copied into it:
-
-        srb = fib_data(fibptr);
-        memcpy(srb, &srbu->srb, sizeof(struct aac_srb));
-
-Only then is srb.sgmap.count written and srb->sg populated:
-
-        srb->count              = cpu_to_le32(xfer_len);
-
-        sg64 = (struct sgmap64 *)&srb->sg;
-        sg64->count             = cpu_to_le32(1);
-        sg64->sg[0].addr[1]     = cpu_to_le32(upper_32_bits(addr));
-        sg64->sg[0].addr[0]     = cpu_to_le32(lower_32_bits(addr));
-        sg64->sg[0].count       = cpu_to_le32(xfer_len);
-
-But this is happening in the DMA memory, not in srbu.srb. An attempt to
-copy the changes back to srbu does happen:
-
-        /*
-         * Copy the updated data for other dumping or other usage if
-         * needed
-         */
-        memcpy(&srbu->srb, srb, sizeof(struct aac_srb));
-
-But this was never correct: the sg64 (3 u32s) overlap of srb.sg (2 u32s)
-always meant that srbu.srb would have held truncated information and any
-attempt to walk srbu.srb.sg.sg based on the value of srbu.srb.sg.count
-would result in attempting to parse past the end of srbu.srb.sg.sg[0] into
-srbu.srb_reply.
-
-After getting a reply from hardware, the reply is copied into
-srbu.srb_reply:
-
-        srb_reply = (struct aac_srb_reply *)fib_data(fibptr);
-        memcpy(&srbu->srb_reply, srb_reply, sizeof(struct aac_srb_reply));
-
-This has always been fixed-size, so there's no issue here. It is worth
-noting that the two callers _never check_ srbu contents -- neither
-srbu.srb nor srbu.srb_reply is examined. (They depend on the mapped
-xfer_buf instead.)
-
-Therefore, the ordering of members in struct aac_srb_unit does not matter,
-and the flexible array member can moved to the end.
-
-(Additionally, the two memcpy()s that update srbu could be entirely
-removed as they are never consumed, but I left that as-is.)
-
-Signed-off-by: Kees Cook <kees@kernel.org>
-Link: https://lore.kernel.org/r/20240711215739.208776-1-kees@kernel.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aacraid/aacraid.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/r100.c | 70 ++++++++++++++++++++++-------------
+ 1 file changed, 45 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/scsi/aacraid/aacraid.h b/drivers/scsi/aacraid/aacraid.h
-index 074760f210145..135e3f39c895c 100644
---- a/drivers/scsi/aacraid/aacraid.h
-+++ b/drivers/scsi/aacraid/aacraid.h
-@@ -2037,8 +2037,8 @@ struct aac_srb_reply
- };
+diff --git a/drivers/gpu/drm/radeon/r100.c b/drivers/gpu/drm/radeon/r100.c
+index 15241b80e9d21..444a135158bdc 100644
+--- a/drivers/gpu/drm/radeon/r100.c
++++ b/drivers/gpu/drm/radeon/r100.c
+@@ -999,45 +999,65 @@ static int r100_cp_init_microcode(struct radeon_device *rdev)
  
- struct aac_srb_unit {
--	struct aac_srb		srb;
- 	struct aac_srb_reply	srb_reply;
-+	struct aac_srb		srb;
- };
+ 	DRM_DEBUG_KMS("\n");
  
- /*
+-	if ((rdev->family == CHIP_R100) || (rdev->family == CHIP_RV100) ||
+-	    (rdev->family == CHIP_RV200) || (rdev->family == CHIP_RS100) ||
+-	    (rdev->family == CHIP_RS200)) {
++	switch (rdev->family) {
++	case CHIP_R100:
++	case CHIP_RV100:
++	case CHIP_RV200:
++	case CHIP_RS100:
++	case CHIP_RS200:
+ 		DRM_INFO("Loading R100 Microcode\n");
+ 		fw_name = FIRMWARE_R100;
+-	} else if ((rdev->family == CHIP_R200) ||
+-		   (rdev->family == CHIP_RV250) ||
+-		   (rdev->family == CHIP_RV280) ||
+-		   (rdev->family == CHIP_RS300)) {
++		break;
++
++	case CHIP_R200:
++	case CHIP_RV250:
++	case CHIP_RV280:
++	case CHIP_RS300:
+ 		DRM_INFO("Loading R200 Microcode\n");
+ 		fw_name = FIRMWARE_R200;
+-	} else if ((rdev->family == CHIP_R300) ||
+-		   (rdev->family == CHIP_R350) ||
+-		   (rdev->family == CHIP_RV350) ||
+-		   (rdev->family == CHIP_RV380) ||
+-		   (rdev->family == CHIP_RS400) ||
+-		   (rdev->family == CHIP_RS480)) {
++		break;
++
++	case CHIP_R300:
++	case CHIP_R350:
++	case CHIP_RV350:
++	case CHIP_RV380:
++	case CHIP_RS400:
++	case CHIP_RS480:
+ 		DRM_INFO("Loading R300 Microcode\n");
+ 		fw_name = FIRMWARE_R300;
+-	} else if ((rdev->family == CHIP_R420) ||
+-		   (rdev->family == CHIP_R423) ||
+-		   (rdev->family == CHIP_RV410)) {
++		break;
++
++	case CHIP_R420:
++	case CHIP_R423:
++	case CHIP_RV410:
+ 		DRM_INFO("Loading R400 Microcode\n");
+ 		fw_name = FIRMWARE_R420;
+-	} else if ((rdev->family == CHIP_RS690) ||
+-		   (rdev->family == CHIP_RS740)) {
++		break;
++
++	case CHIP_RS690:
++	case CHIP_RS740:
+ 		DRM_INFO("Loading RS690/RS740 Microcode\n");
+ 		fw_name = FIRMWARE_RS690;
+-	} else if (rdev->family == CHIP_RS600) {
++		break;
++
++	case CHIP_RS600:
+ 		DRM_INFO("Loading RS600 Microcode\n");
+ 		fw_name = FIRMWARE_RS600;
+-	} else if ((rdev->family == CHIP_RV515) ||
+-		   (rdev->family == CHIP_R520) ||
+-		   (rdev->family == CHIP_RV530) ||
+-		   (rdev->family == CHIP_R580) ||
+-		   (rdev->family == CHIP_RV560) ||
+-		   (rdev->family == CHIP_RV570)) {
++		break;
++
++	case CHIP_RV515:
++	case CHIP_R520:
++	case CHIP_RV530:
++	case CHIP_R580:
++	case CHIP_RV560:
++	case CHIP_RV570:
+ 		DRM_INFO("Loading R500 Microcode\n");
+ 		fw_name = FIRMWARE_R520;
++		break;
++
++	default:
++		DRM_ERROR("Unsupported Radeon family %u\n", rdev->family);
++		return -EINVAL;
+ 	}
+ 
+ 	err = request_firmware(&rdev->me_fw, fw_name, rdev->dev);
 -- 
 2.43.0
 
