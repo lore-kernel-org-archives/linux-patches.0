@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335391E00AB;
-	Wed,  6 Nov 2024 13:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F3C1DFE1E;
+	Wed,  6 Nov 2024 13:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899141; cv=none; b=pXbHKcFKc73cvoT4tdc217VlQIE1c4H3dHotpkLUwYUD6ZTXZKLKIjajLfhLyuJOy8L1YAuT1WyxDicvYPn8lyHPyXVcgY3tIfS2tTa6HP6/a9QDtjr0x/4yaHy/JhmWiPU577/ZlGIHNc392zAAIIhkQ5tGOmFajpbFTB2Cb9Q=
+	t=1730899144; cv=none; b=uRnFUFz0hsfphEYEwaiYNCwkB4YDGxSssCisCXWADNKBi8nyn8oZ/ltnDza99zi8+fi+0z7WIOlkB4lPsWdrvHdKMEFwzFNVA30VYoWU8Sy0/0A002E+PrKbcGlkcZwH8pXZQOp0C8Xx+nvoY4/scUVs6eW+0OI05yVOd6iVyq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899141; c=relaxed/simple;
-	bh=eFeWUI0mYH/y6bt/QBCUao+dZDH7J4fRVGV+VKs8DNI=;
+	s=arc-20240116; t=1730899144; c=relaxed/simple;
+	bh=Jxvu7JJbnvY4sABwvWtlvoAvHCAc4oQPHIxBtIDfPKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c5l9pwjbwCpP14rdJdNr0ZDc8wUdgkXis4cGJZI1MzEZ+pCPNSIQvsV+UQmHvOgGut5W3GAGpHl+N49yPZsBgq6WpRKazs1AubxL02Le13RZRTQlIf5LVlKDzOaYFqd1u8ObbYOx858JZBDGgTuXwjxakFmf9a3KZkEC1CWWk1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bb/8huDC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B6fehV7AYhpOP4t1atnmrV65QGmdC5KfRc1HeaRduft4hpeHGm3Ihk3CBr2xYz/nLfe2lEqyjxCfu6QWzPlUA+JKCKdQ6nXc9AHy3nfpHirhWDvPkwqyutJw+gxFqe7t1Amgpo5WThaUHE+Nz2aAhF9eIPoB2OK3HxtU7xzuq7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NhWVOQBm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bb/8huDC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD20EC4CED3;
-	Wed,  6 Nov 2024 13:19:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhWVOQBm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EEEC4CED3;
+	Wed,  6 Nov 2024 13:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899141;
-	bh=eFeWUI0mYH/y6bt/QBCUao+dZDH7J4fRVGV+VKs8DNI=;
+	s=korg; t=1730899144;
+	bh=Jxvu7JJbnvY4sABwvWtlvoAvHCAc4oQPHIxBtIDfPKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bb/8huDCCOBgLkGKvpk7sB8HzRz1i927PvUsp6Al08LtWgghP7fwQjlPP6Eg0T4Ee
-	 +mTHN4ySscD6EfRonq5xxOYBP2GzLe9XwbgYe/Br5L4MJfLRL7h+ZR+0nfqsCAWUyb
-	 bx8DSlu4s6B+iFPkh+skkNBz94o4ggXyVToyFPFM=
+	b=NhWVOQBmD1BMzombZzIUzIdlg3F3JzA4zn3ycwW9V/UtE6zc1zd466LvVLHQoMzjR
+	 MuJ2iR28+31gkxRCDFjDa7UmL0SYNqQpmil1YgP+nZ+b/o4gfAWB/EHRiD2EqWUph+
+	 8Dqvan9CscW/+O+VU88VokJwUbwqZG663rPfZrpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Luca Coelho <luciano.coelho@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 13/73] mac80211: do drv_reconfig_complete() before restarting all
-Date: Wed,  6 Nov 2024 13:05:17 +0100
-Message-ID: <20241106120300.356440553@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 5.15 02/73] ksmbd: fix user-after-free from session log off
+Date: Wed,  6 Nov 2024 13:05:06 +0100
+Message-ID: <20241106120300.032987470@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120259.955073160@linuxfoundation.org>
 References: <20241106120259.955073160@linuxfoundation.org>
@@ -51,66 +52,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 13dee10b30c058ee2c58c5da00339cc0d4201aa6 ]
+[ Upstream commit 7aa8804c0b67b3cb263a472d17f2cb50d7f1a930 ]
 
-When we reconfigure, the driver might do some things to complete
-the reconfiguration. It's strange and could be broken in some
-cases because we restart other works (e.g. remain-on-channel and
-TX) before this happens, yet only start queues later.
+There is racy issue between smb2 session log off and smb2 session setup.
+It will cause user-after-free from session log off.
+This add session_lock when setting SMB2_SESSION_EXPIRED and referece
+count to session struct not to free session while it is being used.
 
-Change this to do the reconfig complete when reconfiguration is
-actually complete, not when we've already started doing other
-things again.
-
-For iwlwifi, this should fix a race where the reconfig can race
-with TX, for ath10k and ath11k that also use this it won't make
-a difference because they just start queues there, and mac80211
-also stopped the queues and will restart them later as before.
-
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
-Link: https://lore.kernel.org/r/iwlwifi.20211129152938.cab99f22fe19.Iefe494687f15fd85f77c1b989d1149c8efdfdc36@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 07a6e3b78a65 ("wifi: iwlwifi: mvm: Fix response handling in iwl_mvm_send_recovery_cmd()")
+Cc: stable@vger.kernel.org # v5.15+
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-25282
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/util.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/ksmbd/mgmt/user_session.c | 26 +++++++++++++++++++++-----
+ fs/ksmbd/mgmt/user_session.h |  4 ++++
+ fs/ksmbd/server.c            |  2 ++
+ fs/ksmbd/smb2pdu.c           |  8 +++++++-
+ 4 files changed, 34 insertions(+), 6 deletions(-)
 
-diff --git a/net/mac80211/util.c b/net/mac80211/util.c
-index ef7b6d88ee00c..28676a305916c 100644
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -2656,6 +2656,13 @@ int ieee80211_reconfig(struct ieee80211_local *local)
- 		mutex_unlock(&local->sta_mtx);
+diff --git a/fs/ksmbd/mgmt/user_session.c b/fs/ksmbd/mgmt/user_session.c
+index 15f68ee050894..844db95e66511 100644
+--- a/fs/ksmbd/mgmt/user_session.c
++++ b/fs/ksmbd/mgmt/user_session.c
+@@ -176,9 +176,10 @@ static void ksmbd_expire_session(struct ksmbd_conn *conn)
+ 
+ 	down_write(&conn->session_lock);
+ 	xa_for_each(&conn->sessions, id, sess) {
+-		if (sess->state != SMB2_SESSION_VALID ||
+-		    time_after(jiffies,
+-			       sess->last_active + SMB2_SESSION_TIMEOUT)) {
++		if (atomic_read(&sess->refcnt) == 0 &&
++		    (sess->state != SMB2_SESSION_VALID ||
++		     time_after(jiffies,
++			       sess->last_active + SMB2_SESSION_TIMEOUT))) {
+ 			xa_erase(&conn->sessions, sess->id);
+ 			hash_del(&sess->hlist);
+ 			ksmbd_session_destroy(sess);
+@@ -268,8 +269,6 @@ struct ksmbd_session *ksmbd_session_lookup_slowpath(unsigned long long id)
+ 
+ 	down_read(&sessions_table_lock);
+ 	sess = __session_lookup(id);
+-	if (sess)
+-		sess->last_active = jiffies;
+ 	up_read(&sessions_table_lock);
+ 
+ 	return sess;
+@@ -288,6 +287,22 @@ struct ksmbd_session *ksmbd_session_lookup_all(struct ksmbd_conn *conn,
+ 	return sess;
+ }
+ 
++void ksmbd_user_session_get(struct ksmbd_session *sess)
++{
++	atomic_inc(&sess->refcnt);
++}
++
++void ksmbd_user_session_put(struct ksmbd_session *sess)
++{
++	if (!sess)
++		return;
++
++	if (atomic_read(&sess->refcnt) <= 0)
++		WARN_ON(1);
++	else
++		atomic_dec(&sess->refcnt);
++}
++
+ struct preauth_session *ksmbd_preauth_session_alloc(struct ksmbd_conn *conn,
+ 						    u64 sess_id)
+ {
+@@ -356,6 +371,7 @@ static struct ksmbd_session *__session_create(int protocol)
+ 	xa_init(&sess->rpc_handle_list);
+ 	sess->sequence_number = 1;
+ 	rwlock_init(&sess->tree_conns_lock);
++	atomic_set(&sess->refcnt, 1);
+ 
+ 	ret = __init_smb2_session(sess);
+ 	if (ret)
+diff --git a/fs/ksmbd/mgmt/user_session.h b/fs/ksmbd/mgmt/user_session.h
+index 63cb08fffde84..ce91b1d698e71 100644
+--- a/fs/ksmbd/mgmt/user_session.h
++++ b/fs/ksmbd/mgmt/user_session.h
+@@ -61,6 +61,8 @@ struct ksmbd_session {
+ 	struct ksmbd_file_table		file_table;
+ 	unsigned long			last_active;
+ 	rwlock_t			tree_conns_lock;
++
++	atomic_t			refcnt;
+ };
+ 
+ static inline int test_session_flag(struct ksmbd_session *sess, int bit)
+@@ -101,4 +103,6 @@ void ksmbd_release_tree_conn_id(struct ksmbd_session *sess, int id);
+ int ksmbd_session_rpc_open(struct ksmbd_session *sess, char *rpc_name);
+ void ksmbd_session_rpc_close(struct ksmbd_session *sess, int id);
+ int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id);
++void ksmbd_user_session_get(struct ksmbd_session *sess);
++void ksmbd_user_session_put(struct ksmbd_session *sess);
+ #endif /* __USER_SESSION_MANAGEMENT_H__ */
+diff --git a/fs/ksmbd/server.c b/fs/ksmbd/server.c
+index 63b01f7d97031..09ebcf39d5bcb 100644
+--- a/fs/ksmbd/server.c
++++ b/fs/ksmbd/server.c
+@@ -238,6 +238,8 @@ static void __handle_ksmbd_work(struct ksmbd_work *work,
+ 	} while (is_chained == true);
+ 
+ send:
++	if (work->sess)
++		ksmbd_user_session_put(work->sess);
+ 	if (work->tcon)
+ 		ksmbd_tree_connect_put(work->tcon);
+ 	smb3_preauth_hash_rsp(work);
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 089dc2f51229a..54f7cf7a98b2b 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -606,8 +606,10 @@ int smb2_check_user_session(struct ksmbd_work *work)
+ 
+ 	/* Check for validity of user session */
+ 	work->sess = ksmbd_session_lookup_all(conn, sess_id);
+-	if (work->sess)
++	if (work->sess) {
++		ksmbd_user_session_get(work->sess);
+ 		return 1;
++	}
+ 	ksmbd_debug(SMB, "Invalid user session, Uid %llu\n", sess_id);
+ 	return -ENOENT;
+ }
+@@ -1761,6 +1763,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 		}
+ 
+ 		conn->binding = true;
++		ksmbd_user_session_get(sess);
+ 	} else if ((conn->dialect < SMB30_PROT_ID ||
+ 		    server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL) &&
+ 		   (req->Flags & SMB2_SESSION_REQ_FLAG_BINDING)) {
+@@ -1787,6 +1790,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 		}
+ 
+ 		conn->binding = false;
++		ksmbd_user_session_get(sess);
+ 	}
+ 	work->sess = sess;
+ 
+@@ -2235,7 +2239,9 @@ int smb2_session_logoff(struct ksmbd_work *work)
  	}
  
-+	/*
-+	 * If this is for hw restart things are still running.
-+	 * We may want to change that later, however.
-+	 */
-+	if (local->open_count && (!suspended || reconfig_due_to_wowlan))
-+		drv_reconfig_complete(local, IEEE80211_RECONFIG_TYPE_RESTART);
-+
- 	if (local->in_reconfig) {
- 		local->in_reconfig = false;
- 		barrier();
-@@ -2674,13 +2681,6 @@ int ieee80211_reconfig(struct ieee80211_local *local)
- 					IEEE80211_QUEUE_STOP_REASON_SUSPEND,
- 					false);
+ 	ksmbd_destroy_file_table(&sess->file_table);
++	down_write(&conn->session_lock);
+ 	sess->state = SMB2_SESSION_EXPIRED;
++	up_write(&conn->session_lock);
  
--	/*
--	 * If this is for hw restart things are still running.
--	 * We may want to change that later, however.
--	 */
--	if (local->open_count && (!suspended || reconfig_due_to_wowlan))
--		drv_reconfig_complete(local, IEEE80211_RECONFIG_TYPE_RESTART);
--
- 	if (!suspended)
- 		return 0;
- 
+ 	ksmbd_free_user(sess->user);
+ 	sess->user = NULL;
 -- 
 2.43.0
 
