@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A651E1322;
-	Wed,  6 Nov 2024 12:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5538D1F1303;
+	Wed,  6 Nov 2024 12:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897592; cv=none; b=DyjMzGbZ1KzvLLWEw8Ogf3rxYmO3MLshhrgu7yl3H1JCGCOTwIlzBmByURVAl/9tKD5Zp2EUpIAqMQ3u3V+35y5CYVbqM4YjP0rCBIJO9+hmDjMkPQ0CSJJRK9zab8S2YZppFv5h3vQpWzc1ijd47DK8zETK+GeqfeVBqLOsdA8=
+	t=1730897595; cv=none; b=prk1owi87MK8epe2EqbHHJ4wzxYaPsTOXeoo/ucHO6N0eKBQCYXtbj9FJoFS7PLAiEYAcAdll5tN75RQnzDMd0EC/6rGF8ikdrvEhIzoIEfhuYPKUV0GCHOPyKZOWv2yq6gF9sv3K43WN5GUSljgfKvpr6Lncbyar0DaIGwZwfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897592; c=relaxed/simple;
-	bh=I6CHDy2ARDx+FHmWLyoMnN6BQcfZkoaCmjRpzmlR12M=;
+	s=arc-20240116; t=1730897595; c=relaxed/simple;
+	bh=7l3BuBgy3XZTn8+59Nnah4AsFxkLkUt/bBZ9+2QJjRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cfgKiIpiPgefujxkfZIbV49Dtqr+vwVnx3A4tJQI6vxClIE2RmsGoCy5M1YM0GReYJhCGMqwgVVW7rFKy9IeUvZV5/J6bMKDOuvs7wZEWTXh9ag40D0CwUJUcEhdYzsHvy43AStqgiFXsgW9IHS3jrGloMp+23+ZubhDYENYjlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9oc66HI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b0b5uyhGhUhSFg/KFtGb1YnsO4/USuAM82s2q2NxlXs638aYX/ZIa5ZnoNMTcHzn+FqQuuPtBLrvsqE0Y1FaDGjv/5d26lrkPQuCrzy1457C5oMX4fsbpdUPruahln8OpTFqEMWjpzk5kkjab7Pk5sBCMRk5njfUC2I+jnQAOm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/mNjaFU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9oc66HI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE451C4CECD;
-	Wed,  6 Nov 2024 12:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/mNjaFU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0762C4CECD;
+	Wed,  6 Nov 2024 12:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897592;
-	bh=I6CHDy2ARDx+FHmWLyoMnN6BQcfZkoaCmjRpzmlR12M=;
+	s=korg; t=1730897595;
+	bh=7l3BuBgy3XZTn8+59Nnah4AsFxkLkUt/bBZ9+2QJjRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9oc66HItWzVDxDDawAflsMniKMDRsqg7ocmDezWypvtt893FQzqKhlG7entBp8jf
-	 S+MLy4e7NfqsZKswXHGBh1c3q3Iqeb309SQfZNAA6lkqh1v3OBzW39tQWPkdD54HFe
-	 qEqNmlkkV3FzFYhNt9rYVCKJMgKTCaaVvrG0gc8U=
+	b=c/mNjaFUq0gKtMBzr38E0qKNiwZeSOzxMmUTy9JLOa1KOtfx5fcQHTN/VYmwxmggx
+	 2lKYGuo3PhwGiEihCJNo98H8AoQy0H36qrPtoY5RcwuTfjhsSLcLY6QUQrRkYQNyAA
+	 MXp8qrnsPmgAN9fU2FBJbrgfJMrpM0i9WZ6q+YI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wladislav Wiebe <wladislav.kw@gmail.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	"Herton R. Krzesinski" <herton@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 104/151] tools/mm: -Werror fixes in page-types/slabinfo
-Date: Wed,  6 Nov 2024 13:04:52 +0100
-Message-ID: <20241106120311.736887947@linuxfoundation.org>
+	Gil Fine <gil.fine@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.6 105/151] thunderbolt: Honor TMU requirements in the domain when setting TMU mode
+Date: Wed,  6 Nov 2024 13:04:53 +0100
+Message-ID: <20241106120311.765116049@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -46,94 +44,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wladislav Wiebe <wladislav.kw@gmail.com>
+From: Gil Fine <gil.fine@linux.intel.com>
 
-commit ece5897e5a10fcd56a317e32f2dc7219f366a5a8 upstream.
+commit 3cea8af2d1a9ae5869b47c3dabe3b20f331f3bbd upstream.
 
-Commit e6d2c436ff693 ("tools/mm: allow users to provide additional
-cflags/ldflags") passes now CFLAGS to Makefile.  With this, build systems
-with default -Werror enabled found:
+Currently, when configuring TMU (Time Management Unit) mode of a given
+router, we take into account only its own TMU requirements ignoring
+other routers in the domain. This is problematic if the router we are
+configuring has lower TMU requirements than what is already configured
+in the domain.
 
-slabinfo.c:1300:25: error: ignoring return value of 'chdir'
-declared with attribute 'warn_unused_result' [-Werror=unused-result]
-                         chdir("..");
-                         ^~~~~~~~~~~
-page-types.c:397:35: error: format '%lu' expects argument of type
-'long unsigned int', but argument 2 has type 'uint64_t'
-{aka 'long long unsigned int'} [-Werror=format=]
-                         printf("%lu\t", mapcnt0);
-                                 ~~^     ~~~~~~~
-..
+In the scenario below, we have a host router with two USB4 ports: A and
+B. Port A connected to device router #1 (which supports CL states) and
+existing DisplayPort tunnel, thus, the TMU mode is HiFi uni-directional.
 
-Fix page-types by using PRIu64 for uint64_t prints and check in slabinfo
-for return code on chdir("..").
+1. Initial topology
 
-Link: https://lkml.kernel.org/r/c1ceb507-94bc-461c-934d-c19b77edd825@gmail.com
-Fixes: e6d2c436ff69 ("tools/mm: allow users to provide additional cflags/ldflags")
-Signed-off-by: Wladislav Wiebe <wladislav.kw@gmail.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Herton R. Krzesinski <herton@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+          [Host]
+         A/
+         /
+ [Device #1]
+   /
+Monitor
+
+2. Plug in device #2 (that supports CL states) to downstream port B of
+   the host router
+
+         [Host]
+        A/    B\
+        /       \
+ [Device #1]    [Device #2]
+   /
+Monitor
+
+The TMU mode on port B and port A will be configured to LowRes which is
+not what we want and will cause monitor to start flickering.
+
+To address this we first scan the domain and search for any router
+configured to HiFi uni-directional mode, and if found, configure TMU
+mode of the given router to HiFi uni-directional as well.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/mm/page-types.c |    9 +++++----
- tools/mm/slabinfo.c   |    4 +++-
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ drivers/thunderbolt/tb.c |   48 +++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 42 insertions(+), 6 deletions(-)
 
---- a/tools/mm/page-types.c
-+++ b/tools/mm/page-types.c
-@@ -22,6 +22,7 @@
- #include <time.h>
- #include <setjmp.h>
- #include <signal.h>
-+#include <inttypes.h>
- #include <sys/types.h>
- #include <sys/errno.h>
- #include <sys/fcntl.h>
-@@ -392,9 +393,9 @@ static void show_page_range(unsigned lon
- 		if (opt_file)
- 			printf("%lx\t", voff);
- 		if (opt_list_cgroup)
--			printf("@%llu\t", (unsigned long long)cgroup0);
-+			printf("@%" PRIu64 "\t", cgroup0);
- 		if (opt_list_mapcnt)
--			printf("%lu\t", mapcnt0);
-+			printf("%" PRIu64 "\t", mapcnt0);
- 		printf("%lx\t%lx\t%s\n",
- 				index, count, page_flag_name(flags0));
- 	}
-@@ -420,9 +421,9 @@ static void show_page(unsigned long voff
- 	if (opt_file)
- 		printf("%lx\t", voffset);
- 	if (opt_list_cgroup)
--		printf("@%llu\t", (unsigned long long)cgroup);
-+		printf("@%" PRIu64 "\t", cgroup)
- 	if (opt_list_mapcnt)
--		printf("%lu\t", mapcnt);
-+		printf("%" PRIu64 "\t", mapcnt);
- 
- 	printf("%lx\t%s\n", offset, page_flag_name(flags));
+--- a/drivers/thunderbolt/tb.c
++++ b/drivers/thunderbolt/tb.c
+@@ -383,6 +383,24 @@ static void tb_increase_tmu_accuracy(str
+ 	device_for_each_child(&sw->dev, NULL, tb_increase_switch_tmu_accuracy);
  }
---- a/tools/mm/slabinfo.c
-+++ b/tools/mm/slabinfo.c
-@@ -1297,7 +1297,9 @@ static void read_slab_dir(void)
- 			slab->cpu_partial_free = get_obj("cpu_partial_free");
- 			slab->alloc_node_mismatch = get_obj("alloc_node_mismatch");
- 			slab->deactivate_bypass = get_obj("deactivate_bypass");
--			chdir("..");
-+			if (chdir(".."))
-+				fatal("Unable to chdir from slab ../%s\n",
-+				      slab->name);
- 			if (slab->name[0] == ':')
- 				alias_targets++;
- 			slab++;
+ 
++static int tb_switch_tmu_hifi_uni_required(struct device *dev, void *not_used)
++{
++	struct tb_switch *sw = tb_to_switch(dev);
++
++	if (sw && tb_switch_tmu_is_enabled(sw) &&
++	    tb_switch_tmu_is_configured(sw, TB_SWITCH_TMU_MODE_HIFI_UNI))
++		return 1;
++
++	return device_for_each_child(dev, NULL,
++				     tb_switch_tmu_hifi_uni_required);
++}
++
++static bool tb_tmu_hifi_uni_required(struct tb *tb)
++{
++	return device_for_each_child(&tb->dev, NULL,
++				     tb_switch_tmu_hifi_uni_required) == 1;
++}
++
+ static int tb_enable_tmu(struct tb_switch *sw)
+ {
+ 	int ret;
+@@ -397,12 +415,30 @@ static int tb_enable_tmu(struct tb_switc
+ 	ret = tb_switch_tmu_configure(sw,
+ 			TB_SWITCH_TMU_MODE_MEDRES_ENHANCED_UNI);
+ 	if (ret == -EOPNOTSUPP) {
+-		if (tb_switch_clx_is_enabled(sw, TB_CL1))
+-			ret = tb_switch_tmu_configure(sw,
+-					TB_SWITCH_TMU_MODE_LOWRES);
+-		else
+-			ret = tb_switch_tmu_configure(sw,
+-					TB_SWITCH_TMU_MODE_HIFI_BI);
++		if (tb_switch_clx_is_enabled(sw, TB_CL1)) {
++			/*
++			 * Figure out uni-directional HiFi TMU requirements
++			 * currently in the domain. If there are no
++			 * uni-directional HiFi requirements we can put the TMU
++			 * into LowRes mode.
++			 *
++			 * Deliberately skip bi-directional HiFi links
++			 * as these work independently of other links
++			 * (and they do not allow any CL states anyway).
++			 */
++			if (tb_tmu_hifi_uni_required(sw->tb))
++				ret = tb_switch_tmu_configure(sw,
++						TB_SWITCH_TMU_MODE_HIFI_UNI);
++			else
++				ret = tb_switch_tmu_configure(sw,
++						TB_SWITCH_TMU_MODE_LOWRES);
++		} else {
++			ret = tb_switch_tmu_configure(sw, TB_SWITCH_TMU_MODE_HIFI_BI);
++		}
++
++		/* If not supported, fallback to bi-directional HiFi */
++		if (ret == -EOPNOTSUPP)
++			ret = tb_switch_tmu_configure(sw, TB_SWITCH_TMU_MODE_HIFI_BI);
+ 	}
+ 	if (ret)
+ 		return ret;
 
 
