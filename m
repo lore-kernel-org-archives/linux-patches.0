@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6B01E00AB;
-	Wed,  6 Nov 2024 13:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E9F54765;
+	Wed,  6 Nov 2024 13:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899094; cv=none; b=aIw7PdTFNRcUSbtsgdHrtkCIAdzh/xq6kkPY6Y0QAUwQ1qhedijMaI/hmAiSs5MYR4EcoJ5Q5zsfEpV1O3g+35E6bpRFPwU0dTytFGQu1t0oBVcZLiWIAQn1uZZ/BDGM7PeKBkYK+1SRc9GU6Qz7csH3Go56uEoN1qvEt+Uyt3g=
+	t=1730899097; cv=none; b=TUZnE+8xTbk/RtTfBEFl/bw/oZ2nmrLvb50xyAUw2VBRxE43kzIbS+bRfKCIiOQ1gNpM5M53cc/Fia1OHjkLpFQkMe96ybqVYLUQV1MDafw9tZuKjiHorNIN1d6o3DucaXjkbVYm+6dFYwPxt7/fqFhtPG38o8f+fFekRXkp7c0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899094; c=relaxed/simple;
-	bh=P6f8oBgPnbwky/kWVy8MHsnKuavRoyC3TPKqmbTGrdk=;
+	s=arc-20240116; t=1730899097; c=relaxed/simple;
+	bh=ozgyNJ/9Hmdz/kGsY/ziSCDULa4UdbdcFUQYjgAt3sE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=egUNVrweNd+GeBnam+JLOIo6UXk8kosMTR93/lffxWQoBH/kLxQts01jPJSPMcrv4iyTwYOa7lMVaa/ZPeFnaO00YAjAoTNvd/objX4pxdzbBmrYxWMKA2Js0Qe4XMf42n+LZkx+TwjB5Fo/qIvvpCUiZaUQ9bLstWhA3fccPiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWzSxatN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xen85IdtAYOMlawS+01bkl1IqnnqPIHQUvS2hKsl0JQYRR/F0Qpg7VraGOF7V+R/PZD2UJ3KTkXeaQs8+XZHGNxb7jJNCjxFBtnVtYNZrZB6905OSPF0jJezRpqfaf0ymLPpz8n/iGZkmQtFDzWJTIGyfhj+wVual4FZsh8NPWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrbzTb23; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWzSxatN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 740B8C4CECD;
-	Wed,  6 Nov 2024 13:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrbzTb23"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D5E1C4CECD;
+	Wed,  6 Nov 2024 13:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899093;
-	bh=P6f8oBgPnbwky/kWVy8MHsnKuavRoyC3TPKqmbTGrdk=;
+	s=korg; t=1730899096;
+	bh=ozgyNJ/9Hmdz/kGsY/ziSCDULa4UdbdcFUQYjgAt3sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jWzSxatNF5kusPKXNFVqwjFg8/hbgJWbxZvc3SLmyoYSuV9vKjEutH9DQVRxtUra1
-	 TvR3590FVhFmef4uoxfqPSNXc0/BUUQo5SBE37epg+68mTSuQE/h6d02sMf3IucC0o
-	 1RkL+Cs61tA9JlvrIP5ofg4NtHzLd/hfZ+etF77A=
+	b=UrbzTb2365KCe1N1/5sNbElIqdEQxbbxEXISEdJ3tQoIva4AaDZvYEJFlN6T2TMR2
+	 T+YSe5zhN/dyIEqrR0Wy8vVZY76JwXs+Dt9LaqPgs+K/nKU34vK14dbVkkE1H/nbsJ
+	 OWTm78DbcjgBaypFyta29dGojgmwd3eYV4mtGMYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	syzbot <syzkaller@googlegroup.com>,
-	Hugh Dickins <hughd@google.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 458/462] mm: shmem: fix data-race in shmem_getattr()
-Date: Wed,  6 Nov 2024 13:05:51 +0100
-Message-ID: <20241106120342.815846198@linuxfoundation.org>
+	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>
+Subject: [PATCH 5.4 459/462] Revert "drm/mipi-dsi: Set the fwnode for mipi_dsi_device"
+Date: Wed,  6 Nov 2024 13:05:52 +0100
+Message-ID: <20241106120342.840494585@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -53,96 +49,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: "Jason-JH.Lin" <jason-jh.lin@mediatek.com>
 
-commit d949d1d14fa281ace388b1de978e8f2cd52875cf upstream.
+This reverts commit 22b8ac608af5b8a859ed9dc0b15f31dea26cdbb0 which is
+commit a26cc2934331b57b5a7164bff344f0a2ec245fc0 upstream.
 
-I got the following KCSAN report during syzbot testing:
+Reason for revert:
+1. The commit [1] does not land on linux-5.15, so this patch does not
+fix anything.
 
-==================================================================
-BUG: KCSAN: data-race in generic_fillattr / inode_set_ctime_current
+2. Since the fw_devlink improvements series [2] does not land on
+linux-5.15, using device_set_fwnode() causes the panel to flash during
+bootup.
 
-write to 0xffff888102eb3260 of 4 bytes by task 6565 on cpu 1:
- inode_set_ctime_to_ts include/linux/fs.h:1638 [inline]
- inode_set_ctime_current+0x169/0x1d0 fs/inode.c:2626
- shmem_mknod+0x117/0x180 mm/shmem.c:3443
- shmem_create+0x34/0x40 mm/shmem.c:3497
- lookup_open fs/namei.c:3578 [inline]
- open_last_lookups fs/namei.c:3647 [inline]
- path_openat+0xdbc/0x1f00 fs/namei.c:3883
- do_filp_open+0xf7/0x200 fs/namei.c:3913
- do_sys_openat2+0xab/0x120 fs/open.c:1416
- do_sys_open fs/open.c:1431 [inline]
- __do_sys_openat fs/open.c:1447 [inline]
- __se_sys_openat fs/open.c:1442 [inline]
- __x64_sys_openat+0xf3/0x120 fs/open.c:1442
- x64_sys_call+0x1025/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:258
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Incorrect link management may lead to incorrect device initialization,
+affecting firmware node links and consumer relationships.
+The fwnode setting of panel to the DSI device would cause a DSI
+initialization error without series[2], so this patch was reverted to
+avoid using the incomplete fw_devlink functionality.
 
-read to 0xffff888102eb3260 of 4 bytes by task 3498 on cpu 0:
- inode_get_ctime_nsec include/linux/fs.h:1623 [inline]
- inode_get_ctime include/linux/fs.h:1629 [inline]
- generic_fillattr+0x1dd/0x2f0 fs/stat.c:62
- shmem_getattr+0x17b/0x200 mm/shmem.c:1157
- vfs_getattr_nosec fs/stat.c:166 [inline]
- vfs_getattr+0x19b/0x1e0 fs/stat.c:207
- vfs_statx_path fs/stat.c:251 [inline]
- vfs_statx+0x134/0x2f0 fs/stat.c:315
- vfs_fstatat+0xec/0x110 fs/stat.c:341
- __do_sys_newfstatat fs/stat.c:505 [inline]
- __se_sys_newfstatat+0x58/0x260 fs/stat.c:499
- __x64_sys_newfstatat+0x55/0x70 fs/stat.c:499
- x64_sys_call+0x141f/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:263
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[1] commit 3fb16866b51d ("driver core: fw_devlink: Make cycle detection more robust")
+[2] Link: https://lore.kernel.org/all/20230207014207.1678715-1-saravanak@google.com
 
-value changed: 0x2755ae53 -> 0x27ee44d3
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 UID: 0 PID: 3498 Comm: udevd Not tainted 6.11.0-rc6-syzkaller-00326-gd1f2d51b711a-dirty #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
-==================================================================
-
-When calling generic_fillattr(), if you don't hold read lock, data-race
-will occur in inode member variables, which can cause unexpected
-behavior.
-
-Since there is no special protection when shmem_getattr() calls
-generic_fillattr(), data-race occurs by functions such as shmem_unlink()
-or shmem_mknod(). This can cause unexpected results, so commenting it out
-is not enough.
-
-Therefore, when calling generic_fillattr() from shmem_getattr(), it is
-appropriate to protect the inode using inode_lock_shared() and
-inode_unlock_shared() to prevent data-race.
-
-Link: https://lkml.kernel.org/r/20240909123558.70229-1-aha310510@gmail.com
-Fixes: 44a30220bc0a ("shmem: recalculate file inode when fstat")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Reported-by: syzbot <syzkaller@googlegroup.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org # 5.15.169
+Cc: stable@vger.kernel.org # 5.10.228
+Cc: stable@vger.kernel.org # 5.4.284
+Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shmem.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_mipi_dsi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1011,7 +1011,9 @@ static int shmem_getattr(const struct pa
- 		shmem_recalc_inode(inode);
- 		spin_unlock_irq(&info->lock);
+--- a/drivers/gpu/drm/drm_mipi_dsi.c
++++ b/drivers/gpu/drm/drm_mipi_dsi.c
+@@ -221,7 +221,7 @@ mipi_dsi_device_register_full(struct mip
+ 		return dsi;
  	}
-+	inode_lock_shared(inode);
- 	generic_fillattr(inode, stat);
-+	inode_unlock_shared(inode);
  
- 	if (is_huge_enabled(sb_info))
- 		stat->blksize = HPAGE_PMD_SIZE;
+-	device_set_node(&dsi->dev, of_fwnode_handle(info->node));
++	dsi->dev.of_node = info->node;
+ 	dsi->channel = info->channel;
+ 	strlcpy(dsi->name, info->type, sizeof(dsi->name));
+ 
 
 
