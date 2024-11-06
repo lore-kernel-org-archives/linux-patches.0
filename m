@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E763D1DFE38;
-	Wed,  6 Nov 2024 13:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61411E0496;
+	Wed,  6 Nov 2024 13:14:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898894; cv=none; b=t2h/m72TAbwthGZfhD0/gwkcvrY1Ms0ub/dgVdBnnvnBqQzlI1Y6CopJXMuEUQid2ypp1P6Go88re3mC+3LnrSEFwN4iS3eDyUhKUWi2y6TOBz8TpYD7Z9rU8A8evcWm7ZsDpA51Dk71TJ1wnucO8/CmPHwy6C0iorefULUujJw=
+	t=1730898896; cv=none; b=ag3OtQoaVT1Bc1dt2BRmg21NiXHmqadGrzqtrgMCXyiBUdvcf3kYl1SAPlveFiZYk1sTEs2lHma018IGRn5nPYB7wR87YgKTF7sN0/LA7oeh5xxdOpszNd4FnjK5I9BSHq0VrNnQY/f4c8AJ85lSAYczmvRCLMGHfvXYkvLY4nM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898894; c=relaxed/simple;
-	bh=QRMOJmNTDSvo54EG3NJwHiYMN3owKhMrpHqYwHBWXu8=;
+	s=arc-20240116; t=1730898896; c=relaxed/simple;
+	bh=y/ZwcQ30jn8WfaUrni9rH8aPijmUwp8aPsoE/GhhWSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfjEFHl30ZAZyj77eVdMY6GFgzWDivxgM/R+hCpJf9DWpZeRqDblcnvR9cdRkOTX7/sEHJTBrLNMSjGIZRIqj09PGN0s+I/2NOXQI/aGrp5A51Mg1td7RrsPZ408HXKeW+5G38QPDbCavSoGjvJlt2wP1Rz7SuM8RhuO+N1XTRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Et2jIJKo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HpIbzSz3KtxzWdmeUW1npNlTfP0FfIJD7A2gZdq8V+b2RudWgJEgzrU9bOzkbC3VNkiawpa+u4Iuh/UQehaoeNQjsmy+k8nWhYWJRjHYQkWAZmzdFE6CdXL7e5jcWVojqH4XkIhIMXruu9hZwVGDD8qvMSpWu+LSPgponimcWk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRVy/DIk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Et2jIJKo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D83CC4CECD;
-	Wed,  6 Nov 2024 13:14:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRVy/DIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BBFC4CECD;
+	Wed,  6 Nov 2024 13:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898893;
-	bh=QRMOJmNTDSvo54EG3NJwHiYMN3owKhMrpHqYwHBWXu8=;
+	s=korg; t=1730898896;
+	bh=y/ZwcQ30jn8WfaUrni9rH8aPijmUwp8aPsoE/GhhWSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Et2jIJKokT7PTcqx59E/HW0H4Iv4zJTq9t36wR3Qh1upeq9DmLNpP6rsjbIsAV7AD
-	 edvpgU1M2CtRT78SXQxjTD24L6ClT2tTKG12CXHYvHFYWZCJzFfpJU2lCtF0ghj2n7
-	 hL288YJi6Wo7bpWjjDXzbnvDiIw/HxFQnN608Eso=
+	b=hRVy/DIkm3GDkVPt/l6Q9xIBcXbVowojZpCstoGu4GJjvE5h8MIX/6xrFAVMGQrBk
+	 OlLAZJBeO5bKseeQEIV3KlfNexYUc3VWo0Rn4qiCALomkmS2zaH9HuEP6GTmcgAZfm
+	 l+zFQoFx22L3WdARz8KP5NOj5JjODBgVHjcLAN9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Greear <greearb@candelatech.com>,
-	Mathy Vanhoef <Mathy.Vanhoef@kuleuven.be>,
-	Sven Eckelmann <sven@narfation.org>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.4 384/462] mac80211: Fix NULL ptr deref for injected rate info
-Date: Wed,  6 Nov 2024 13:04:37 +0100
-Message-ID: <20241106120341.006121527@linuxfoundation.org>
+	Wang Hai <wanghai38@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 393/462] net: systemport: fix potential memory leak in bcm_sysport_xmit()
+Date: Wed,  6 Nov 2024 13:04:46 +0100
+Message-ID: <20241106120341.233601439@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,165 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathy Vanhoef <Mathy.Vanhoef@kuleuven.be>
+From: Wang Hai <wanghai38@huawei.com>
 
-commit bddc0c411a45d3718ac535a070f349be8eca8d48 upstream.
+[ Upstream commit c401ed1c709948e57945485088413e1bb5e94bd1 ]
 
-The commit cb17ed29a7a5 ("mac80211: parse radiotap header when selecting Tx
-queue") moved the code to validate the radiotap header from
-ieee80211_monitor_start_xmit to ieee80211_parse_tx_radiotap. This made is
-possible to share more code with the new Tx queue selection code for
-injected frames. But at the same time, it now required the call of
-ieee80211_parse_tx_radiotap at the beginning of functions which wanted to
-handle the radiotap header. And this broke the rate parser for radiotap
-header parser.
+The bcm_sysport_xmit() returns NETDEV_TX_OK without freeing skb
+in case of dma_map_single() fails, add dev_kfree_skb() to fix it.
 
-The radiotap parser for rates is operating most of the time only on the
-data in the actual radiotap header. But for the 802.11a/b/g rates, it must
-also know the selected band from the chandef information. But this
-information is only written to the ieee80211_tx_info at the end of the
-ieee80211_monitor_start_xmit - long after ieee80211_parse_tx_radiotap was
-already called. The info->band information was therefore always 0
-(NL80211_BAND_2GHZ) when the parser code tried to access it.
-
-For a 5GHz only device, injecting a frame with 802.11a rates would cause a
-NULL pointer dereference because local->hw.wiphy->bands[NL80211_BAND_2GHZ]
-would most likely have been NULL when the radiotap parser searched for the
-correct rate index of the driver.
-
-Cc: stable@vger.kernel.org
-Reported-by: Ben Greear <greearb@candelatech.com>
-Fixes: cb17ed29a7a5 ("mac80211: parse radiotap header when selecting Tx queue")
-Signed-off-by: Mathy Vanhoef <Mathy.Vanhoef@kuleuven.be>
-[sven@narfation.org: added commit message]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Link: https://lore.kernel.org/r/20210530133226.40587-1-sven@narfation.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 80105befdb4b ("net: systemport: add Broadcom SYSTEMPORT Ethernet MAC driver")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Link: https://patch.msgid.link/20241014145115.44977-1-wanghai38@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mac80211.h |    8 ++++++-
- net/mac80211/tx.c      |   52 +++++++++++++++++++++++++++++++++----------------
- 2 files changed, 43 insertions(+), 17 deletions(-)
+ drivers/net/ethernet/broadcom/bcmsysport.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -6135,7 +6135,13 @@ bool ieee80211_tx_prepare_skb(struct iee
- 			      int band, struct ieee80211_sta **sta);
+diff --git a/drivers/net/ethernet/broadcom/bcmsysport.c b/drivers/net/ethernet/broadcom/bcmsysport.c
+index 5a2094a281e15..4db355a0c7868 100644
+--- a/drivers/net/ethernet/broadcom/bcmsysport.c
++++ b/drivers/net/ethernet/broadcom/bcmsysport.c
+@@ -1316,6 +1316,7 @@ static netdev_tx_t bcm_sysport_xmit(struct sk_buff *skb,
+ 		netif_err(priv, tx_err, dev, "DMA map failed at %p (len=%d)\n",
+ 			  skb->data, skb_len);
+ 		ret = NETDEV_TX_OK;
++		dev_kfree_skb_any(skb);
+ 		goto out;
+ 	}
  
- /**
-- * Sanity-check and parse the radiotap header of injected frames
-+ * ieee80211_parse_tx_radiotap - Sanity-check and parse the radiotap header
-+ *				 of injected frames.
-+ *
-+ * To accurately parse and take into account rate and retransmission fields,
-+ * you must initialize the chandef field in the ieee80211_tx_info structure
-+ * of the skb before calling this function.
-+ *
-  * @skb: packet injected by userspace
-  * @dev: the &struct device of this 802.11 device
-  */
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2034,6 +2034,26 @@ void ieee80211_xmit(struct ieee80211_sub
- 	ieee80211_tx(sdata, sta, skb, false, txdata_flags);
- }
- 
-+static bool ieee80211_validate_radiotap_len(struct sk_buff *skb)
-+{
-+	struct ieee80211_radiotap_header *rthdr =
-+		(struct ieee80211_radiotap_header *)skb->data;
-+
-+	/* check for not even having the fixed radiotap header part */
-+	if (unlikely(skb->len < sizeof(struct ieee80211_radiotap_header)))
-+		return false; /* too short to be possibly valid */
-+
-+	/* is it a header version we can trust to find length from? */
-+	if (unlikely(rthdr->it_version))
-+		return false; /* only version 0 is supported */
-+
-+	/* does the skb contain enough to deliver on the alleged length? */
-+	if (unlikely(skb->len < ieee80211_get_radiotap_len(skb->data)))
-+		return false; /* skb too short for claimed rt header extent */
-+
-+	return true;
-+}
-+
- bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
- 				 struct net_device *dev)
- {
-@@ -2042,8 +2062,6 @@ bool ieee80211_parse_tx_radiotap(struct
- 	struct ieee80211_radiotap_header *rthdr =
- 		(struct ieee80211_radiotap_header *) skb->data;
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
--	struct ieee80211_supported_band *sband =
--		local->hw.wiphy->bands[info->band];
- 	int ret = ieee80211_radiotap_iterator_init(&iterator, rthdr, skb->len,
- 						   NULL);
- 	u16 txflags;
-@@ -2056,17 +2074,8 @@ bool ieee80211_parse_tx_radiotap(struct
- 	u8 vht_mcs = 0, vht_nss = 0;
- 	int i;
- 
--	/* check for not even having the fixed radiotap header part */
--	if (unlikely(skb->len < sizeof(struct ieee80211_radiotap_header)))
--		return false; /* too short to be possibly valid */
--
--	/* is it a header version we can trust to find length from? */
--	if (unlikely(rthdr->it_version))
--		return false; /* only version 0 is supported */
--
--	/* does the skb contain enough to deliver on the alleged length? */
--	if (unlikely(skb->len < ieee80211_get_radiotap_len(skb->data)))
--		return false; /* skb too short for claimed rt header extent */
-+	if (!ieee80211_validate_radiotap_len(skb))
-+		return false;
- 
- 	info->flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT |
- 		       IEEE80211_TX_CTL_DONTFRAG;
-@@ -2192,6 +2201,9 @@ bool ieee80211_parse_tx_radiotap(struct
- 		return false;
- 
- 	if (rate_found) {
-+		struct ieee80211_supported_band *sband =
-+			local->hw.wiphy->bands[info->band];
-+
- 		info->control.flags |= IEEE80211_TX_CTRL_RATE_INJECT;
- 
- 		for (i = 0; i < IEEE80211_TX_MAX_RATES; i++) {
-@@ -2205,7 +2217,7 @@ bool ieee80211_parse_tx_radiotap(struct
- 		} else if (rate_flags & IEEE80211_TX_RC_VHT_MCS) {
- 			ieee80211_rate_set_vht(info->control.rates, vht_mcs,
- 					       vht_nss);
--		} else {
-+		} else if (sband) {
- 			for (i = 0; i < sband->n_bitrates; i++) {
- 				if (rate * 5 != sband->bitrates[i].bitrate)
- 					continue;
-@@ -2242,8 +2254,8 @@ netdev_tx_t ieee80211_monitor_start_xmit
- 	info->flags = IEEE80211_TX_CTL_REQ_TX_STATUS |
- 		      IEEE80211_TX_CTL_INJECTED;
- 
--	/* Sanity-check and process the injection radiotap header */
--	if (!ieee80211_parse_tx_radiotap(skb, dev))
-+	/* Sanity-check the length of the radiotap header */
-+	if (!ieee80211_validate_radiotap_len(skb))
- 		goto fail;
- 
- 	/* we now know there is a radiotap header with a length we can use */
-@@ -2356,6 +2368,14 @@ netdev_tx_t ieee80211_monitor_start_xmit
- 
- 	info->band = chandef->chan->band;
- 
-+	/*
-+	 * Process the radiotap header. This will now take into account the
-+	 * selected chandef above to accurately set injection rates and
-+	 * retransmissions.
-+	 */
-+	if (!ieee80211_parse_tx_radiotap(skb, dev))
-+		goto fail_rcu;
-+
- 	/* remove the injection radiotap header */
- 	skb_pull(skb, len_rthdr);
- 
+-- 
+2.43.0
+
 
 
