@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F761DF73C;
-	Wed,  6 Nov 2024 12:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33A01DF73B;
+	Wed,  6 Nov 2024 12:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895692; cv=none; b=qm7N55IP9Z7Op4dv/bN4rGZVpjo+Ej5sWlBYXu7NHdhdptzAIK1I9Pu6EYIGr8z4bRMkKVe/QVehY3x2diH4uhjaGtS23oyvFt3iM6J2qvYQ2bibMDEIwkFu2tCjVhaomZp8n8MUv0E1Svyo4svDY0mg9IZleLFFmE32pF03vlI=
+	t=1730895694; cv=none; b=XPO12XpY6P57+Jm6mwZpvVi7pesQJUpSNe6hVYIwmu2YC8YqJsby9/bd6xNBegGv6nqFVeECkwNOvcvT+0CpObW52MUYZsfUFMky+9riLbrWJeIRVRoElQLl3oVDjGTWlDNsS7Hno6BQSbiHzL/KcxzY+zGd5x7ya2JnhdjE5H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895692; c=relaxed/simple;
-	bh=ZaFDuHmYEwd5jlZKm+vb3396+ZreoqV/nnnulB27xlA=;
+	s=arc-20240116; t=1730895694; c=relaxed/simple;
+	bh=Xkzq+Ee2SRid4+KkQAxoRqQa8lCBaqIKWNweTU7Og3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UU5SL6ga0dd78KDVo2gnsUuGxL5j5Lsrj50ZZeJvJiIMYk0IhFX0ym4mhKbz5OxPBoNIyufmfL1x/gPAguXvzVlFVkvlmTgcAXrl8vFrX3Ob1nMYoLl77Q68igqUBvSza2Y0TB9hxXQGiBIRtZecfgg09dHhOYgmEpgWxB4rPh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBOH318Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bei0HQJ7KX6MT8/Kfwss8SiHCHR6uK4ZzNhZlbrGeu70oj4vJ53IedSEEohT33ElwSIrvx297eay2W+IMCN7SvZUGPVDQqy1vZTP/urHnd2EOZnPWbqdikyKQksScCZesNHFPqZq1iAy+2IxAcJ0u38w91qwei69SxiALmz40fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UwF21DVy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBOH318Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B98EC4CECD;
-	Wed,  6 Nov 2024 12:21:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwF21DVy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572ECC4CED4;
+	Wed,  6 Nov 2024 12:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895691;
-	bh=ZaFDuHmYEwd5jlZKm+vb3396+ZreoqV/nnnulB27xlA=;
+	s=korg; t=1730895694;
+	bh=Xkzq+Ee2SRid4+KkQAxoRqQa8lCBaqIKWNweTU7Og3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TBOH318Q3gJLTNEn+EXwZxhN39xmIotmPR069eVfhcaF/dXZgTyt2uwLyWBBbBo0V
-	 pMtCpmFVj9CBvrEankvA4mVQYnbW16O9jkVz4wUCCmyylJYVQFByGs4UcC6hcMtw4o
-	 /slz3K6FsKUPtUBpsrc39ZfCsqUjUtaesrxCTJAY=
+	b=UwF21DVyVUiRwpJ+8u4SNTbskGR39b3ettmeoqCH253TEpJ1XFrg8sZQAeC+2n/w+
+	 UYl0goEW3ViskpWD/CnyO5ia+7O5emuwiLcv2Wul38WDqadP2NLK64a541fpBnPZ7h
+	 bU+K51DIm8KTrzhhNySvw0P9ddged2fpVFeMyGP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janis Schoetterl-Glausch <scgl@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 304/350] KVM: s390: gaccess: Refactor gpa and length calculation
-Date: Wed,  6 Nov 2024 13:03:52 +0100
-Message-ID: <20241106120328.301262657@linuxfoundation.org>
+	Daniele Palmas <dnlplm@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 4.19 287/350] USB: serial: option: add Telit FN920C04 MBIM compositions
+Date: Wed,  6 Nov 2024 13:03:35 +0100
+Message-ID: <20241106120327.928098433@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -53,93 +50,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janis Schoetterl-Glausch <scgl@linux.ibm.com>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-[ Upstream commit 416e7f0c9d613bf84e182eba9547ae8f9f5bfa4c ]
+commit 6d951576ee16430822a8dee1e5c54d160e1de87d upstream.
 
-Improve readability by renaming the length variable and
-not calculating the offset manually.
+Add the following Telit FN920C04 compositions:
 
-Signed-off-by: Janis Schoetterl-Glausch <scgl@linux.ibm.com>
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-Id: <20211126164549.7046-2-scgl@linux.ibm.com>
-Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
-Stable-dep-of: e8061f06185b ("KVM: s390: gaccess: Check if guest address is in memslot")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+0x10a2: MBIM + tty (AT/NMEA) + tty (AT) + tty (diag)
+T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 17 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10a2 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=92c4c4d8
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x10a7: MBIM + tty (AT) + tty (AT) + tty (diag)
+T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 18 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10a7 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=92c4c4d8
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x10aa: MBIM + tty (AT) + tty (diag) + DPL (data packet logging) + adb
+T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 15 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10aa Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN920
+S:  SerialNumber=92c4c4d8
+C:  #Ifs= 6 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/gaccess.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ drivers/usb/serial/option.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/s390/kvm/gaccess.c b/arch/s390/kvm/gaccess.c
-index 07d30ffcfa412..b184749ffc5ae 100644
---- a/arch/s390/kvm/gaccess.c
-+++ b/arch/s390/kvm/gaccess.c
-@@ -831,8 +831,9 @@ int access_guest(struct kvm_vcpu *vcpu, unsigned long ga, u8 ar, void *data,
- 		 unsigned long len, enum gacc_mode mode)
- {
- 	psw_t *psw = &vcpu->arch.sie_block->gpsw;
--	unsigned long _len, nr_pages, gpa, idx;
-+	unsigned long nr_pages, gpa, idx;
- 	unsigned long pages_array[2];
-+	unsigned int fragment_len;
- 	unsigned long *pages;
- 	int need_ipte_lock;
- 	union asce asce;
-@@ -855,15 +856,15 @@ int access_guest(struct kvm_vcpu *vcpu, unsigned long ga, u8 ar, void *data,
- 		ipte_lock(vcpu);
- 	rc = guest_page_range(vcpu, ga, ar, pages, nr_pages, asce, mode);
- 	for (idx = 0; idx < nr_pages && !rc; idx++) {
--		gpa = *(pages + idx) + (ga & ~PAGE_MASK);
--		_len = min(PAGE_SIZE - (gpa & ~PAGE_MASK), len);
-+		gpa = pages[idx] + offset_in_page(ga);
-+		fragment_len = min(PAGE_SIZE - offset_in_page(gpa), len);
- 		if (mode == GACC_STORE)
--			rc = kvm_write_guest(vcpu->kvm, gpa, data, _len);
-+			rc = kvm_write_guest(vcpu->kvm, gpa, data, fragment_len);
- 		else
--			rc = kvm_read_guest(vcpu->kvm, gpa, data, _len);
--		len -= _len;
--		ga += _len;
--		data += _len;
-+			rc = kvm_read_guest(vcpu->kvm, gpa, data, fragment_len);
-+		len -= fragment_len;
-+		ga += fragment_len;
-+		data += fragment_len;
- 	}
- 	if (need_ipte_lock)
- 		ipte_unlock(vcpu);
-@@ -875,19 +876,20 @@ int access_guest(struct kvm_vcpu *vcpu, unsigned long ga, u8 ar, void *data,
- int access_guest_real(struct kvm_vcpu *vcpu, unsigned long gra,
- 		      void *data, unsigned long len, enum gacc_mode mode)
- {
--	unsigned long _len, gpa;
-+	unsigned int fragment_len;
-+	unsigned long gpa;
- 	int rc = 0;
- 
- 	while (len && !rc) {
- 		gpa = kvm_s390_real_to_abs(vcpu, gra);
--		_len = min(PAGE_SIZE - (gpa & ~PAGE_MASK), len);
-+		fragment_len = min(PAGE_SIZE - offset_in_page(gpa), len);
- 		if (mode)
--			rc = write_guest_abs(vcpu, gpa, data, _len);
-+			rc = write_guest_abs(vcpu, gpa, data, fragment_len);
- 		else
--			rc = read_guest_abs(vcpu, gpa, data, _len);
--		len -= _len;
--		gra += _len;
--		data += _len;
-+			rc = read_guest_abs(vcpu, gpa, data, fragment_len);
-+		len -= fragment_len;
-+		gra += fragment_len;
-+		data += fragment_len;
- 	}
- 	return rc;
- }
--- 
-2.43.0
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1382,10 +1382,16 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(0) | RSVD(1) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a0, 0xff),	/* Telit FN20C04 (rmnet) */
+ 	  .driver_info = RSVD(0) | NCTRL(3) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a2, 0xff),	/* Telit FN920C04 (MBIM) */
++	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a4, 0xff),	/* Telit FN20C04 (rmnet) */
+ 	  .driver_info = RSVD(0) | NCTRL(3) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a7, 0xff),	/* Telit FN920C04 (MBIM) */
++	  .driver_info = NCTRL(4) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a9, 0xff),	/* Telit FN20C04 (rmnet) */
+ 	  .driver_info = RSVD(0) | NCTRL(2) | RSVD(3) | RSVD(4) },
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10aa, 0xff),	/* Telit FN920C04 (MBIM) */
++	  .driver_info = NCTRL(3) | RSVD(4) | RSVD(5) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910),
+ 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(3) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910_DUAL_MODEM),
 
 
