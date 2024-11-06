@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615D91DF756;
-	Wed,  6 Nov 2024 12:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D214198E96;
+	Wed,  6 Nov 2024 12:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896424; cv=none; b=OGOkPtfujqCOrrV9iop7w/PU1AH/LRCyNatKVQjku43LGUu8/KfVzBXJopSUD1dDr/vJoDKGy6MRIyW0baA1pTvh2eQAeDBPRBCyOgyVAsl4YkPgWKMjgheeh8vwCgojkQ5Dj6iBQYFRSuX+6JonYA0Tgv3IuhDgqoBVhnYrsTU=
+	t=1730896427; cv=none; b=hxXGiMcu3jeqPJWh4C4CTpXdgmi3pGLgSKqe7dVx5FyVu/kTPAJYABbvYWiBR0AuY2VPJitGc7gxRGgIbx39ez1tWBHARriVIO+f4SUXwcYNnHqKt6VjrAo2Ps9R/tOLK8u6pTtfoIzVI0/ZodkbrUkEp4fOEACGrdmuVwbil5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896424; c=relaxed/simple;
-	bh=0tWiqgKWg1fGSBQ0YSWFigxSMuQAcRUsIpWvNVM+BMc=;
+	s=arc-20240116; t=1730896427; c=relaxed/simple;
+	bh=4OG3QqFtdzhKGCexZt/gZXUjzQdX7lPlUiGOAPEtkgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bncGlRDDkWa6GWazEU4EUAkqtx1FljNOLJH4JG67o5ZPF+Hc8xMPg07y81Uf2TQj48vv+pv2FWgf35hdvdKoGbNgVuu0+3BeOpGtLqHTfjGVCNfrjJX5yhSJGlOvA2LYZCzpH5EZCYF0RUw3lpWe3fZRtEdAPgLXrwPj0PhXbzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pBuP3Nyb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X0YUjhxQZv5p5L2BR3N4FEG1bgFVIUK3uc0F/kIUJgvVL9cCcqLHhRL4qDPKnlG4VFoEPwStNw/wxJSDarGYkEf4v7wyccI9fzNmqLTJO6Snv2q/LKGQONS7C/pyiaNTveKv1ZpA0EUhGrLocSglomM7bOne41boYjK1Cd1WiJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PqB1UXPR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pBuP3Nyb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC182C4CECD;
-	Wed,  6 Nov 2024 12:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PqB1UXPR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7921C4CECD;
+	Wed,  6 Nov 2024 12:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896424;
-	bh=0tWiqgKWg1fGSBQ0YSWFigxSMuQAcRUsIpWvNVM+BMc=;
+	s=korg; t=1730896427;
+	bh=4OG3QqFtdzhKGCexZt/gZXUjzQdX7lPlUiGOAPEtkgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pBuP3NybOBoTOwtng4GvrDt3LhcofDsv34MO5rJtkMI+LuGUwC7SHsoOmF/aKKiX/
-	 AiCMvVoKKqkOWQ2GQYisj3o7YISFlvus5AEh3PNkP71+pj5DpxlksECZfUlbBc7Jjw
-	 8g0sy4+UZ2ePz38pf0EFOU+K/vBhawBEx1hzNi8I=
+	b=PqB1UXPRi7qBuWvTQVBAOzD/pnWYXOInF1TI4WWQouILbhllrFQUdHVCIl4vCvqnd
+	 nkZZn3D1ttzkU6o4Sipyrg/4I0/sv21eYjnD7ihaALGf7PjqXoZji1BW7rIrYnC/mV
+	 tmMx0YF6wMd2mqKQKT1WFGzy5J1oNk9MCVuPOKrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Chunyan Zhang <zhangchunyan@iscas.ac.cn>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 160/245] riscv: Remove duplicated GET_RM
-Date: Wed,  6 Nov 2024 13:03:33 +0100
-Message-ID: <20241106120323.172727723@linuxfoundation.org>
+Subject: [PATCH 6.11 161/245] scsi: ufs: core: Fix another deadlock during RTC update
+Date: Wed,  6 Nov 2024 13:03:34 +0100
+Message-ID: <20241106120323.199405208@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,36 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit 164f66de6bb6ef454893f193c898dc8f1da6d18b ]
+[ Upstream commit cb7e509c4e0197f63717fee54fb41c4990ba8d3a ]
 
-The macro GET_RM defined twice in this file, one can be removed.
+If ufshcd_rtc_work calls ufshcd_rpm_put_sync() and the pm's usage_count
+is 0, we will enter the runtime suspend callback.  However, the runtime
+suspend callback will wait to flush ufshcd_rtc_work, causing a deadlock.
 
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
-Fixes: 956d705dd279 ("riscv: Unaligned load/store handling for M_MODE")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20241008094141.549248-3-zhangchunyan@iscas.ac.cn
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Replace ufshcd_rpm_put_sync() with ufshcd_rpm_put() to avoid the
+deadlock.
+
+Fixes: 6bf999e0eb41 ("scsi: ufs: core: Add UFS RTC support")
+Cc: stable@vger.kernel.org #6.11.x
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20241024015453.21684-1-peter.wang@mediatek.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps_misaligned.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/ufs/core/ufshcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
-index d4fd8af7aaf5a..1b9867136b610 100644
---- a/arch/riscv/kernel/traps_misaligned.c
-+++ b/arch/riscv/kernel/traps_misaligned.c
-@@ -136,8 +136,6 @@
- #define REG_PTR(insn, pos, regs)	\
- 	(ulong *)((ulong)(regs) + REG_OFFSET(insn, pos))
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 09408642a6efb..83567388a7b58 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -8224,7 +8224,7 @@ static void ufshcd_update_rtc(struct ufs_hba *hba)
  
--#define GET_RM(insn)			(((insn) >> 12) & 7)
--
- #define GET_RS1(insn, regs)		(*REG_PTR(insn, SH_RS1, regs))
- #define GET_RS2(insn, regs)		(*REG_PTR(insn, SH_RS2, regs))
- #define GET_RS1S(insn, regs)		(*REG_PTR(RVC_RS1S(insn), 0, regs))
+ 	err = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_WRITE_ATTR, QUERY_ATTR_IDN_SECONDS_PASSED,
+ 				0, 0, &val);
+-	ufshcd_rpm_put_sync(hba);
++	ufshcd_rpm_put(hba);
+ 
+ 	if (err)
+ 		dev_err(hba->dev, "%s: Failed to update rtc %d\n", __func__, err);
 -- 
 2.43.0
 
