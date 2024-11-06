@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99C41DFE3A;
-	Wed,  6 Nov 2024 12:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53061FB884;
+	Wed,  6 Nov 2024 12:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897650; cv=none; b=kaC7nrJuKjbaZj8qaCfg8FLYbOMrZzALDk3oxHk3PcZXTPdQqMkoL59U2eJvhGa7MUKpQv39HodWAg6simOq69l7j+T+N0akzQLQZzpmIN5MpCsYV+KWcbD+vW+Iwzy2Donkvy2+gWFsTXodioZMgxKSI+A0IveNtnmJS84tKcc=
+	t=1730897653; cv=none; b=AVVwF9sjw/Za+ugNBXqHNNS+qNBjkDyoe4fGfBTope5NljjQP7uWVDSINGDNf7W+oL+q2WfRC7ZYpYG0Kj+zx7fkCUShCZvPSxGYfV5yJi3nLL0+uch7qQe8d7ssUsAqatDJp1UXvPzDcfPcohChEJUAh/zN6YyILH8mYcgUO+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897650; c=relaxed/simple;
-	bh=bk4mXl/StBnSqeD28Djb6SZlRoXtLgCmsTcB9UmhhFs=;
+	s=arc-20240116; t=1730897653; c=relaxed/simple;
+	bh=hdKP+sbmKTpbLJzkpznaTg1f/2yfYPCQ2zyLv6z3MPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YN+RJl4VRLTtealqhOfh2Dy1W7tNEgweXoCoATQsPhG0CBwM9aQcoSO+crcUQj/mujieeRn/f/Sf8MVF25oU1wZUhn501K6JaKiGmFeYllJQ7hb2HpVECbKFzz0GWcUvs0xQZEGVJdLrJSBsoNLdcSL7dK6kpRoi8vcIMsmlx30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2M9gt5El; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W97caMqPKpL7VcpTBcrjk1i2R3ahxpIgQlZtG8oFhzYin2+98JFI93hcu0AJ1X1kEbGmTbES7fGMCArb0TBku2dxZIw7HTszSrQvQibVMeb15WsF8w0nO5yZXAzzgL7dtB/mTcrtowph2uBxmWP2OetQcM0znnigwpJXVcaukzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuOf6/wS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2M9gt5El"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC6BC4CED4;
-	Wed,  6 Nov 2024 12:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuOf6/wS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA1FC4CECD;
+	Wed,  6 Nov 2024 12:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897649;
-	bh=bk4mXl/StBnSqeD28Djb6SZlRoXtLgCmsTcB9UmhhFs=;
+	s=korg; t=1730897652;
+	bh=hdKP+sbmKTpbLJzkpznaTg1f/2yfYPCQ2zyLv6z3MPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2M9gt5ElR01ALwPAPDm3Peh1U2FRajharG3Uw2IMShx6XKgsg7vkNJ/gom78UyX5T
-	 iHftG/vhtOEmNaXuiYWjdiCXTIKy58kQ/UfnwBNSy4b2n2MtkgrHapNJ0gJYotpIaM
-	 Paw6YkE3UkoOGlE+c2QBKiibP1y9pe3hYoPsSKuQ=
+	b=zuOf6/wSz8XZtecoGwxUeoEOHJ2qNjTLhSLeWs1ispLkI+kd0BBtNZOY2J0j/U8BN
+	 KgbSoM37yEATMv//cQOPyTZ3KJmchK3Aajce0LmjA44z9N73KumhaQueQZGL/ODJLd
+	 AIfsL7xa3jss1moKq9ICLNs8WGz5PEpwYom6O2Xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Rohit Agarwal <rohiagar@chromium.org>,
-	Brian Geffon <bgeffon@google.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomasw@gmail.com>,
+	Matt Fleming <mfleming@cloudflare.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Michal Hocko <mhocko@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 125/151] mei: use kvmalloc for read buffer
-Date: Wed,  6 Nov 2024 13:05:13 +0100
-Message-ID: <20241106120312.307160902@linuxfoundation.org>
+Subject: [PATCH 6.6 126/151] mm/page_alloc: let GFP_ATOMIC order-0 allocs access highatomic reserves
+Date: Wed,  6 Nov 2024 13:05:14 +0100
+Message-ID: <20241106120312.332938413@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -54,53 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Matt Fleming <mfleming@cloudflare.com>
 
-[ Upstream commit 4adf613e01bf99e1739f6ff3e162ad5b7d578d1a ]
+[ Upstream commit 281dd25c1a018261a04d1b8bf41a0674000bfe38 ]
 
-Read buffer is allocated according to max message size, reported by
-the firmware and may reach 64K in systems with pxp client.
-Contiguous 64k allocation may fail under memory pressure.
-Read buffer is used as in-driver message storage and not required
-to be contiguous.
-Use kvmalloc to allow kernel to allocate non-contiguous memory.
+Under memory pressure it's possible for GFP_ATOMIC order-0 allocations to
+fail even though free pages are available in the highatomic reserves.
+GFP_ATOMIC allocations cannot trigger unreserve_highatomic_pageblock()
+since it's only run from reclaim.
 
-Fixes: 3030dc056459 ("mei: add wrapper for queuing control commands.")
-Cc: stable <stable@kernel.org>
-Reported-by: Rohit Agarwal <rohiagar@chromium.org>
-Closes: https://lore.kernel.org/all/20240813084542.2921300-1-rohiagar@chromium.org/
-Tested-by: Brian Geffon <bgeffon@google.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Acked-by: Tomas Winkler <tomasw@gmail.com>
-Link: https://lore.kernel.org/r/20241015123157.2337026-1-alexander.usyskin@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Given that such allocations will pass the watermarks in
+__zone_watermark_unusable_free(), it makes sense to fallback to highatomic
+reserves the same way that ALLOC_OOM can.
+
+This fixes order-0 page allocation failures observed on Cloudflare's fleet
+when handling network packets:
+
+  kswapd1: page allocation failure: order:0, mode:0x820(GFP_ATOMIC),
+  nodemask=(null),cpuset=/,mems_allowed=0-7
+  CPU: 10 PID: 696 Comm: kswapd1 Kdump: loaded Tainted: G           O 6.6.43-CUSTOM #1
+  Hardware name: MACHINE
+  Call Trace:
+   <IRQ>
+   dump_stack_lvl+0x3c/0x50
+   warn_alloc+0x13a/0x1c0
+   __alloc_pages_slowpath.constprop.0+0xc9d/0xd10
+   __alloc_pages+0x327/0x340
+   __napi_alloc_skb+0x16d/0x1f0
+   bnxt_rx_page_skb+0x96/0x1b0 [bnxt_en]
+   bnxt_rx_pkt+0x201/0x15e0 [bnxt_en]
+   __bnxt_poll_work+0x156/0x2b0 [bnxt_en]
+   bnxt_poll+0xd9/0x1c0 [bnxt_en]
+   __napi_poll+0x2b/0x1b0
+   bpf_trampoline_6442524138+0x7d/0x1000
+   __napi_poll+0x5/0x1b0
+   net_rx_action+0x342/0x740
+   handle_softirqs+0xcf/0x2b0
+   irq_exit_rcu+0x6c/0x90
+   sysvec_apic_timer_interrupt+0x72/0x90
+   </IRQ>
+
+[mfleming@cloudflare.com: update comment]
+  Link: https://lkml.kernel.org/r/20241015125158.3597702-1-matt@readmodwrite.com
+Link: https://lkml.kernel.org/r/20241011120737.3300370-1-matt@readmodwrite.com
+Link: https://lore.kernel.org/all/CAGis_TWzSu=P7QJmjD58WWiu3zjMTVKSzdOwWE8ORaGytzWJwQ@mail.gmail.com/
+Fixes: 1d91df85f399 ("mm/page_alloc: handle a missing case for memalloc_nocma_{save/restore} APIs")
+Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
+Suggested-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/client.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/page_alloc.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/misc/mei/client.c b/drivers/misc/mei/client.c
-index 32f2287823184..699fa2362ed4d 100644
---- a/drivers/misc/mei/client.c
-+++ b/drivers/misc/mei/client.c
-@@ -321,7 +321,7 @@ void mei_io_cb_free(struct mei_cl_cb *cb)
- 		return;
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index edb32635037f4..1bbbf2f8b7e4c 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -2658,12 +2658,12 @@ struct page *rmqueue_buddy(struct zone *preferred_zone, struct zone *zone,
+ 			page = __rmqueue(zone, order, migratetype, alloc_flags);
  
- 	list_del(&cb->list);
--	kfree(cb->buf.data);
-+	kvfree(cb->buf.data);
- 	kfree(cb->ext_hdr);
- 	kfree(cb);
- }
-@@ -497,7 +497,7 @@ struct mei_cl_cb *mei_cl_alloc_cb(struct mei_cl *cl, size_t length,
- 	if (length == 0)
- 		return cb;
+ 			/*
+-			 * If the allocation fails, allow OOM handling access
+-			 * to HIGHATOMIC reserves as failing now is worse than
+-			 * failing a high-order atomic allocation in the
+-			 * future.
++			 * If the allocation fails, allow OOM handling and
++			 * order-0 (atomic) allocs access to HIGHATOMIC
++			 * reserves as failing now is worse than failing a
++			 * high-order atomic allocation in the future.
+ 			 */
+-			if (!page && (alloc_flags & ALLOC_OOM))
++			if (!page && (alloc_flags & (ALLOC_OOM|ALLOC_NON_BLOCK)))
+ 				page = __rmqueue_smallest(zone, order, MIGRATE_HIGHATOMIC);
  
--	cb->buf.data = kmalloc(roundup(length, MEI_SLOT_SIZE), GFP_KERNEL);
-+	cb->buf.data = kvmalloc(roundup(length, MEI_SLOT_SIZE), GFP_KERNEL);
- 	if (!cb->buf.data) {
- 		mei_io_cb_free(cb);
- 		return NULL;
+ 			if (!page) {
 -- 
 2.43.0
 
