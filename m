@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAEF1DF736;
-	Wed,  6 Nov 2024 12:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514771DF736;
+	Wed,  6 Nov 2024 12:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895839; cv=none; b=D56OcEcrCIBIBIRTbejF/FgSAen6hjrlNKO4geE9PSuNy+9v1SfVHxJwQ+VGqQCeiXG5LYtP4vNhGNS1/Kub41cs6B6De6u8b2Ot/cBx0K7kU20NbXtmqNBbfuCqENxV4GLBAhl/stgoaWv2NGy03x/CITLNGoKKFGu+xmMWKnM=
+	t=1730895842; cv=none; b=UkwuF/oZQwOq6A3z+W258mQGMFnt9gPZg2bNu3ekVRWTAHr+z3uUOLnyJzPufHgV2o+s+vpNgnUM/wqblM4RKiLh+LEKt1YfZTdahmtdfQFeeCtmm4IBtw8Cn5wPuzsdSqN5HGJWRxxnbtEoQcbt7z4ACYzGsph3unrtRU9+dmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895839; c=relaxed/simple;
-	bh=9Yc5cuSV+2Nbo7mNRmEy430ECOvNpY2crLO9WmpbnWs=;
+	s=arc-20240116; t=1730895842; c=relaxed/simple;
+	bh=/JKGTXHiBnKx4O2bZ3qPTE4/yKD//2czpkD2OPtGiYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f6z4xgsnRF0tNfvOU0QBa5vgF2QKXZWUzw0i7ivqIOvKxZal6r0yft2SwMqntcbl1He/EdwXrTJ3p8E3SAopgCcEXO2bQfYeSHql6lS3+Y0lWCHgwl/n+rQ1nr8X1qmnN+GceQebG/J1sM/tRQ/+hcpeDMNfM533Wa/pEG8NZdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7uknraj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rkeFdSeg4v87X/nDaUWre2uhsvFIFx9nd0Un+AWd5zPZK0a5iPy/twXlIdM2LNhT5l48qr3u1CXofth8BuLBkNd4Vgeh0DRbJ/QyebeYTvnyUHTCGrwOadUeQ5oEUsI7RB/TskQcy4KeOoTYaT3+JyfmF7CSJkiHMuvIWBERrl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSU/WCBt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7uknraj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3AAC4CECD;
-	Wed,  6 Nov 2024 12:23:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSU/WCBt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A169C4CECD;
+	Wed,  6 Nov 2024 12:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895838;
-	bh=9Yc5cuSV+2Nbo7mNRmEy430ECOvNpY2crLO9WmpbnWs=;
+	s=korg; t=1730895841;
+	bh=/JKGTXHiBnKx4O2bZ3qPTE4/yKD//2czpkD2OPtGiYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t7uknrajm7S9UMrsgUEs/vYQz0Uo499gvo/gebZrcZQIHV2b4m4hRjNTlQvB8VcSO
-	 IA2HQvlb6RMynaq8QWaYxM8C4iTbtzoSWmS3u27xchDPzvBsQhB9U6DvBEnPZL/m5C
-	 zMsiD9w13m7lrT/EoJHD/Z5oSUiGpIRs13vbeTU8=
+	b=fSU/WCBt5K3eXkFZLf5pLVeYIGRxyWDrDc4UlODQfuGj6V3KlN8+r9ENwCSYzeOTi
+	 +XnMX83ADoWezO1GafZ7jwnGpNZMkhYv/MIGmzCUH7CkO2w3j9dham3XCWv2jE4aIk
+	 6q8NC+IFFXrkxicYkkGLn6Iv/IbxzYLwGj4QHGsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wander Lairson Costa <wander@redhat.com>,
-	Yuying Ma <yuma@redhat.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Simon Horman <simon.horman@netronome.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 328/350] igb: Disable threaded IRQ for igb_msix_other
-Date: Wed,  6 Nov 2024 13:04:16 +0100
-Message-ID: <20241106120328.830089279@linuxfoundation.org>
+Subject: [PATCH 4.19 329/350] gtp: simplify error handling code in gtp_encap_enable()
+Date: Wed,  6 Nov 2024 13:04:17 +0100
+Message-ID: <20241106120328.851876268@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -56,77 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 338c4d3902feb5be49bfda530a72c7ab860e2c9f ]
+[ Upstream commit b289ba5e07105548b8219695e5443d807a825eb8 ]
 
-During testing of SR-IOV, Red Hat QE encountered an issue where the
-ip link up command intermittently fails for the igbvf interfaces when
-using the PREEMPT_RT variant. Investigation revealed that
-e1000_write_posted_mbx returns an error due to the lack of an ACK
-from e1000_poll_for_ack.
+'gtp_encap_disable_sock(sk)' handles the case where sk is NULL, so there
+is no need to test it before calling the function.
 
-The underlying issue arises from the fact that IRQs are threaded by
-default under PREEMPT_RT. While the exact hardware details are not
-available, it appears that the IRQ handled by igb_msix_other must
-be processed before e1000_poll_for_ack times out. However,
-e1000_write_posted_mbx is called with preemption disabled, leading
-to a scenario where the IRQ is serviced only after the failure of
-e1000_write_posted_mbx.
+This saves a few line of code.
 
-To resolve this, we set IRQF_NO_THREAD for the affected interrupt,
-ensuring that the kernel handles it immediately, thereby preventing
-the aforementioned error.
-
-Reproducer:
-
-    #!/bin/bash
-
-    # echo 2 > /sys/class/net/ens14f0/device/sriov_numvfs
-    ipaddr_vlan=3
-    nic_test=ens14f0
-    vf=${nic_test}v0
-
-    while true; do
-	    ip link set ${nic_test} mtu 1500
-	    ip link set ${vf} mtu 1500
-	    ip link set $vf up
-	    ip link set ${nic_test} vf 0 vlan ${ipaddr_vlan}
-	    ip addr add 172.30.${ipaddr_vlan}.1/24 dev ${vf}
-	    ip addr add 2021:db8:${ipaddr_vlan}::1/64 dev ${vf}
-	    if ! ip link show $vf | grep 'state UP'; then
-		    echo 'Error found'
-		    break
-	    fi
-	    ip link set $vf down
-    done
-
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
-Reported-by: Yuying Ma <yuma@redhat.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Simon Horman <simon.horman@netronome.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 7515e37bce5c ("gtp: allow -1 to be specified as file description from userspace")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/gtp.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index 3a65dccc08ba8..5867e2db17fd5 100644
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -943,7 +943,7 @@ static int igb_request_msix(struct igb_adapter *adapter)
- 	int i, err = 0, vector = 0, free_vector = 0;
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 733cafb0888f6..8ad324ef99a2b 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -865,8 +865,7 @@ static int gtp_encap_enable(struct gtp_dev *gtp, struct nlattr *data[])
  
- 	err = request_irq(adapter->msix_entries[vector].vector,
--			  igb_msix_other, 0, netdev->name, adapter);
-+			  igb_msix_other, IRQF_NO_THREAD, netdev->name, adapter);
- 	if (err)
- 		goto err_out;
- 
+ 		sk1u = gtp_encap_enable_socket(fd1, UDP_ENCAP_GTP1U, gtp);
+ 		if (IS_ERR(sk1u)) {
+-			if (sk0)
+-				gtp_encap_disable_sock(sk0);
++			gtp_encap_disable_sock(sk0);
+ 			return PTR_ERR(sk1u);
+ 		}
+ 	}
+@@ -874,10 +873,8 @@ static int gtp_encap_enable(struct gtp_dev *gtp, struct nlattr *data[])
+ 	if (data[IFLA_GTP_ROLE]) {
+ 		role = nla_get_u32(data[IFLA_GTP_ROLE]);
+ 		if (role > GTP_ROLE_SGSN) {
+-			if (sk0)
+-				gtp_encap_disable_sock(sk0);
+-			if (sk1u)
+-				gtp_encap_disable_sock(sk1u);
++			gtp_encap_disable_sock(sk0);
++			gtp_encap_disable_sock(sk1u);
+ 			return -EINVAL;
+ 		}
+ 	}
 -- 
 2.43.0
 
