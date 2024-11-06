@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CBA1DFDB2;
-	Wed,  6 Nov 2024 12:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C0D1DFDB2;
+	Wed,  6 Nov 2024 12:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895963; cv=none; b=oPncGmb3g6wtJ1SiHFf0jB7xbKriC1IYa7dclgWl7VBEz6IvESKV1P2m0gQOzW/IU/a7rKBsUZIK6IhwNqDHrXQ+dLvSdZpjZKOR9gCWJzG7/S7QJ3aTWggRkjqc09PALzsXONzwsxsOTN96gx+y5tvI7Y9YELynJ+DfbYvZUY0=
+	t=1730895966; cv=none; b=i5VyFOWrb4V4Aio52jlMIAdCn0Yxrzj5J55xFOB1oEVtkh64WADQB+9iq0m7MXFZKSZAdHOzhF48cH/19vINcS0pthsnhMifERnn2oMRU64mU1+9Lh3g7N2ro8WcRwgLi4TaYnCmISW6KhSh+SbU2k1S2LNcR+axnDkLaY08uAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895963; c=relaxed/simple;
-	bh=02kXFyCj4+d5VnWCxIeFqZQplt90Xn1RKyKbTf0lEAI=;
+	s=arc-20240116; t=1730895966; c=relaxed/simple;
+	bh=W7kpHVh2V/NOpRhM7wtSSO0eUPZGmLX0Ft290FDTP7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kyDBi5lo/bw7+0qGLo6y5rMN8DOXd3rqtSArSWYWiUzwjxPlG/lbKJN/zoYCp1x88t973GSNldMIMVv9eX6MabZcMKLmw6xOVrDFfzD1FbrffsMMKn0NCgTcApziZlB5ccE+iHOvmroXXymcD6ff9MNnaG+Fp3ilIufOTnCotmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yhpXM/rA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TukwXZGMBCzucmzp1bDOiyr0habVn5YSt3QvlNZcbyRfibYI/62SZEPztfgLYAIMCPLauLJ1w3iFolZGAU2qCmK5sMLfTPnKiBC3MGKee2M9MoHdhIyy2nv4yJ+L51ywNhsPRaYCjuL8AFo34ceYlXSkfDjJsr9Z58mSHWCWZSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCAOSUou; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhpXM/rA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E11EC4CECD;
-	Wed,  6 Nov 2024 12:26:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCAOSUou"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506ADC4CECD;
+	Wed,  6 Nov 2024 12:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895962;
-	bh=02kXFyCj4+d5VnWCxIeFqZQplt90Xn1RKyKbTf0lEAI=;
+	s=korg; t=1730895965;
+	bh=W7kpHVh2V/NOpRhM7wtSSO0eUPZGmLX0Ft290FDTP7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yhpXM/rAYi0qSuMPo22xDN3YmW74+QSb5VgBVxk08cP0t6gsK0cU//iGCTQu0P4XO
-	 /SSKuHxCFeFGD4IBKpxDWbnSf1VIPam5Piy6unkoiyilmJBbPZ26mQnxtp7HRLcRYz
-	 D34Rp6/F7+WN0OI9SmWBnpj0VAs4X6kS+Rstk4W8=
+	b=kCAOSUouiHP7CVVO56SYrjw+/Ur+6YmZ8oGj09PBLwZSLzqLIgGmotzvaFmLWg0nT
+	 2A8eakH7TDI2pH8gTvPjML8WgubGT3IreSByENatNYSjHsLkwBntz8SP8Qo+FcJ0Ol
+	 /UPJSfl6TutnTdcgxoGBeFw6kkP/WnbNTq/6VvOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	=?UTF-8?q?Martin-=C3=89ric=20Racine?= <martin-eric.racine@iki.fi>,
+	Ben Hutchings <ben@decadent.org.uk>,
+	Brandon Nielsen <nielsenb@jetfuse.net>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 008/245] scsi: scsi_debug: Fix do_device_access() handling of unexpected SG copy length
-Date: Wed,  6 Nov 2024 13:01:01 +0100
-Message-ID: <20241106120319.449499887@linuxfoundation.org>
+Subject: [PATCH 6.11 009/245] wifi: iwlegacy: Fix "field-spanning write" warning in il_enqueue_hcmd()
+Date: Wed,  6 Nov 2024 13:01:02 +0100
+Message-ID: <20241106120319.473879944@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -47,70 +48,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Garry <john.g.garry@oracle.com>
+From: Ben Hutchings <ben@decadent.org.uk>
 
-[ Upstream commit d28d17a845600dd9f7de241de9b1528a1b138716 ]
+[ Upstream commit d4cdc46ca16a5c78b36c5b9b6ad8cac09d6130a0 ]
 
-If the sg_copy_buffer() call returns less than sdebug_sector_size, then
-we drop out of the copy loop. However, we still report that we copied
-the full expected amount, which is not proper.
+iwlegacy uses command buffers with a payload size of 320
+bytes (default) or 4092 bytes (huge).  The struct il_device_cmd type
+describes the default buffers and there is no separate type describing
+the huge buffers.
 
-Fix by keeping a running total and return that value.
+The il_enqueue_hcmd() function works with both default and huge
+buffers, and has a memcpy() to the buffer payload.  The size of
+this copy may exceed 320 bytes when using a huge buffer, which
+now results in a run-time warning:
 
-Fixes: 84f3a3c01d70 ("scsi: scsi_debug: Atomic write support")
-Reported-by: Colin Ian King <colin.i.king@gmail.com>
-Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/r/20241018101655.4207-1-john.g.garry@oracle.com
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Colin Ian King <colin.i.king@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+    memcpy: detected field-spanning write (size 1014) of single field "&out_cmd->cmd.payload" at drivers/net/wireless/intel/iwlegacy/common.c:3170 (size 320)
+
+To fix this:
+
+- Define a new struct type for huge buffers, with a correctly sized
+  payload field
+- When using a huge buffer in il_enqueue_hcmd(), cast the command
+  buffer pointer to that type when looking up the payload field
+
+Reported-by: Martin-Éric Racine <martin-eric.racine@iki.fi>
+References: https://bugs.debian.org/1062421
+References: https://bugzilla.kernel.org/show_bug.cgi?id=219124
+Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
+Fixes: 54d9469bc515 ("fortify: Add run-time WARN for cross-field memcpy()")
+Tested-by: Martin-Éric Racine <martin-eric.racine@iki.fi>
+Tested-by: Brandon Nielsen <nielsenb@jetfuse.net>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/ZuIhQRi/791vlUhE@decadent.org.uk
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/net/wireless/intel/iwlegacy/common.c | 13 ++++++++++++-
+ drivers/net/wireless/intel/iwlegacy/common.h | 12 ++++++++++++
+ 2 files changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index a9d8a9c62663e..e41698218e62f 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -3652,7 +3652,7 @@ static int do_device_access(struct sdeb_store_info *sip, struct scsi_cmnd *scp,
- 	enum dma_data_direction dir;
- 	struct scsi_data_buffer *sdb = &scp->sdb;
- 	u8 *fsp;
--	int i;
-+	int i, total = 0;
+diff --git a/drivers/net/wireless/intel/iwlegacy/common.c b/drivers/net/wireless/intel/iwlegacy/common.c
+index 9d33a66a49b59..4616293ec0cf4 100644
+--- a/drivers/net/wireless/intel/iwlegacy/common.c
++++ b/drivers/net/wireless/intel/iwlegacy/common.c
+@@ -3122,6 +3122,7 @@ il_enqueue_hcmd(struct il_priv *il, struct il_host_cmd *cmd)
+ 	struct il_cmd_meta *out_meta;
+ 	dma_addr_t phys_addr;
+ 	unsigned long flags;
++	u8 *out_payload;
+ 	u32 idx;
+ 	u16 fix_size;
  
- 	/*
- 	 * Even though reads are inherently atomic (in this driver), we expect
-@@ -3689,18 +3689,16 @@ static int do_device_access(struct sdeb_store_info *sip, struct scsi_cmnd *scp,
- 		   fsp + (block * sdebug_sector_size),
- 		   sdebug_sector_size, sg_skip, do_write);
- 		sdeb_data_sector_unlock(sip, do_write);
--		if (ret != sdebug_sector_size) {
--			ret += (i * sdebug_sector_size);
-+		total += ret;
-+		if (ret != sdebug_sector_size)
- 			break;
--		}
- 		sg_skip += sdebug_sector_size;
- 		if (++block >= sdebug_store_sectors)
- 			block = 0;
- 	}
--	ret = num * sdebug_sector_size;
- 	sdeb_data_unlock(sip, atomic);
+@@ -3157,6 +3158,16 @@ il_enqueue_hcmd(struct il_priv *il, struct il_host_cmd *cmd)
+ 	out_cmd = txq->cmd[idx];
+ 	out_meta = &txq->meta[idx];
  
--	return ret;
-+	return total;
- }
++	/* The payload is in the same place in regular and huge
++	 * command buffers, but we need to let the compiler know when
++	 * we're using a larger payload buffer to avoid "field-
++	 * spanning write" warnings at run-time for huge commands.
++	 */
++	if (cmd->flags & CMD_SIZE_HUGE)
++		out_payload = ((struct il_device_cmd_huge *)out_cmd)->cmd.payload;
++	else
++		out_payload = out_cmd->cmd.payload;
++
+ 	if (WARN_ON(out_meta->flags & CMD_MAPPED)) {
+ 		spin_unlock_irqrestore(&il->hcmd_lock, flags);
+ 		return -ENOSPC;
+@@ -3170,7 +3181,7 @@ il_enqueue_hcmd(struct il_priv *il, struct il_host_cmd *cmd)
+ 		out_meta->callback = cmd->callback;
  
- /* Returns number of bytes copied or -1 if error. */
+ 	out_cmd->hdr.cmd = cmd->id;
+-	memcpy(&out_cmd->cmd.payload, cmd->data, cmd->len);
++	memcpy(out_payload, cmd->data, cmd->len);
+ 
+ 	/* At this point, the out_cmd now has all of the incoming cmd
+ 	 * information */
+diff --git a/drivers/net/wireless/intel/iwlegacy/common.h b/drivers/net/wireless/intel/iwlegacy/common.h
+index 69687fcf963fc..027dae5619a37 100644
+--- a/drivers/net/wireless/intel/iwlegacy/common.h
++++ b/drivers/net/wireless/intel/iwlegacy/common.h
+@@ -560,6 +560,18 @@ struct il_device_cmd {
+ 
+ #define TFD_MAX_PAYLOAD_SIZE (sizeof(struct il_device_cmd))
+ 
++/**
++ * struct il_device_cmd_huge
++ *
++ * For use when sending huge commands.
++ */
++struct il_device_cmd_huge {
++	struct il_cmd_header hdr;	/* uCode API */
++	union {
++		u8 payload[IL_MAX_CMD_SIZE - sizeof(struct il_cmd_header)];
++	} __packed cmd;
++} __packed;
++
+ struct il_host_cmd {
+ 	const void *data;
+ 	unsigned long reply_page;
 -- 
 2.43.0
 
