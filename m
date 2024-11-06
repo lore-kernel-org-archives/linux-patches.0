@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BCFE1DED4F;
-	Wed,  6 Nov 2024 12:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AE0198E96;
+	Wed,  6 Nov 2024 12:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896349; cv=none; b=VUAn+gcaIXiNfN6U5AFE7eHJfbqfjoHL2BA/dGVfhxVU5hH53smXWt6DJG1VduAySdJk5caK9bMgL0pLUs0HxbIpC8hD/Nv/JGzIcbKwrQ23lzIOQDx9UyZ9brX2m09XL0X/pXxrnx3Dmg4N/S61gmhx8MTbEk00fDIZk7d60rs=
+	t=1730896352; cv=none; b=jFcikHFEjQJGyO7wp+u8aTzLB0U/Cjbe8iADVL+vDwe5uAYuk7BNXRPCyF49P8rX4oLhqLUP/U6rDRkKuOud9ALdNxCj3hAkUdT9pQZFXkS2iv4yWCK4FTt+HUZ9LuXroQiObyqxBD9o+2M9Vp4U111ybMKSKqJZZoH2QuPY9vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896349; c=relaxed/simple;
-	bh=1sbgPlohlBhrJdNL9IKhlj0rVbBurNy8KypT8lDIDWU=;
+	s=arc-20240116; t=1730896352; c=relaxed/simple;
+	bh=x5Ryqz3IzcgO3oZ6R+vwDqz6Ynj2spMjZB4U8vIYVZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xw67gXxAQe1iHGpn/KL9Y6tZ9Zgn0xbnY4u1eh3j8PSUO65ox2tw9WtCQ51ioo6nxDbJJ4kGIjlOLcKkEJ4Ce00O2mDU3iCoVAZiDhOo4RFPgK4/y3JkR3LD/YR/ECXGnuO/Ov0sdOniBBANX3/BvNXoMZZKmZnkGkBi70bYTBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQOCUcqv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cUKAWqsYHafKBcZit55ZcaHUA+GT1w81R8HmKQlzsWHiiN7+Od4idzWi9T7R+tvZYh6XgTYP0iJ3AhO5fyc5ZJDPFM1WeQk8S7wuCOKtGCj9vT/a7PqTU/Mn6BeYJfnW7/YltxrsUFe3R+Y0GASK+zeFYq+bmm26uzQknp0jjYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rK0Kmnb6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQOCUcqv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183FAC4CECD;
-	Wed,  6 Nov 2024 12:32:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rK0Kmnb6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A2CC4CECD;
+	Wed,  6 Nov 2024 12:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896349;
-	bh=1sbgPlohlBhrJdNL9IKhlj0rVbBurNy8KypT8lDIDWU=;
+	s=korg; t=1730896352;
+	bh=x5Ryqz3IzcgO3oZ6R+vwDqz6Ynj2spMjZB4U8vIYVZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hQOCUcqvdVickyF4N5kJqqqiky2dfYnmOk8/y1N0PzVXCTW9pC0GCD+yehLJnH2NR
-	 AO5gvjUL7X4WcOdKNFzCZphzPO2QK0hInBjYRBcEO9ngy3e/JN/F/tSIFRWkrL0YzI
-	 gfXGYgwU3Tr5YsRJnEDCM7n+3fY76QmlOopRebE4=
+	b=rK0Kmnb6bRmVIgsw90wh1BFDOH43bk+G61Q/rZQEq8+ppAhqXMskTxo9Kz6cxSr9p
+	 mWTJQ+nHMVYcA1XbIGCXDWHl3MO1pH0mb5i9ab0TgD4Tk2B1dWIWTatvmnatUGcmsF
+	 5c3PgNqDVDC/h5wX4dMK6SKztn88+S3dKYwbUbqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Rohit Agarwal <rohiagar@chromium.org>,
-	Brian Geffon <bgeffon@google.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomasw@gmail.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Jann Horn <jannh@google.com>,
+	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 173/245] mei: use kvmalloc for read buffer
-Date: Wed,  6 Nov 2024 13:03:46 +0100
-Message-ID: <20241106120323.496244920@linuxfoundation.org>
+Subject: [PATCH 6.11 174/245] fork: do not invoke uffd on fork if error occurs
+Date: Wed,  6 Nov 2024 13:03:47 +0100
+Message-ID: <20241106120323.519951776@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -49,58 +53,161 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Message-ID: <20241106120347.BGpuneB6xhKwe4eef97T8kj8GVmxJALQFf3918TtKlg@z>
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-[ Upstream commit 4adf613e01bf99e1739f6ff3e162ad5b7d578d1a ]
+[ Upstream commit f64e67e5d3a45a4a04286c47afade4b518acd47b ]
 
-Read buffer is allocated according to max message size, reported by
-the firmware and may reach 64K in systems with pxp client.
-Contiguous 64k allocation may fail under memory pressure.
-Read buffer is used as in-driver message storage and not required
-to be contiguous.
-Use kvmalloc to allow kernel to allocate non-contiguous memory.
+Patch series "fork: do not expose incomplete mm on fork".
 
-Fixes: 3030dc056459 ("mei: add wrapper for queuing control commands.")
-Cc: stable <stable@kernel.org>
-Reported-by: Rohit Agarwal <rohiagar@chromium.org>
-Closes: https://lore.kernel.org/all/20240813084542.2921300-1-rohiagar@chromium.org/
-Tested-by: Brian Geffon <bgeffon@google.com>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Acked-by: Tomas Winkler <tomasw@gmail.com>
-Link: https://lore.kernel.org/r/20241015123157.2337026-1-alexander.usyskin@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+During fork we may place the virtual memory address space into an
+inconsistent state before the fork operation is complete.
+
+In addition, we may encounter an error during the fork operation that
+indicates that the virtual memory address space is invalidated.
+
+As a result, we should not be exposing it in any way to external machinery
+that might interact with the mm or VMAs, machinery that is not designed to
+deal with incomplete state.
+
+We specifically update the fork logic to defer khugepaged and ksm to the
+end of the operation and only to be invoked if no error arose, and
+disallow uffd from observing fork events should an error have occurred.
+
+This patch (of 2):
+
+Currently on fork we expose the virtual address space of a process to
+userland unconditionally if uffd is registered in VMAs, regardless of
+whether an error arose in the fork.
+
+This is performed in dup_userfaultfd_complete() which is invoked
+unconditionally, and performs two duties - invoking registered handlers
+for the UFFD_EVENT_FORK event via dup_fctx(), and clearing down
+userfaultfd_fork_ctx objects established in dup_userfaultfd().
+
+This is problematic, because the virtual address space may not yet be
+correctly initialised if an error arose.
+
+The change in commit d24062914837 ("fork: use __mt_dup() to duplicate
+maple tree in dup_mmap()") makes this more pertinent as we may be in a
+state where entries in the maple tree are not yet consistent.
+
+We address this by, on fork error, ensuring that we roll back state that
+we would otherwise expect to clean up through the event being handled by
+userland and perform the memory freeing duty otherwise performed by
+dup_userfaultfd_complete().
+
+We do this by implementing a new function, dup_userfaultfd_fail(), which
+performs the same loop, only decrementing reference counts.
+
+Note that we perform mmgrab() on the parent and child mm's, however
+userfaultfd_ctx_put() will mmdrop() this once the reference count drops to
+zero, so we will avoid memory leaks correctly here.
+
+Link: https://lkml.kernel.org/r/cover.1729014377.git.lorenzo.stoakes@oracle.com
+Link: https://lkml.kernel.org/r/d3691d58bb58712b6fb3df2be441d175bd3cdf07.1729014377.git.lorenzo.stoakes@oracle.com
+Fixes: d24062914837 ("fork: use __mt_dup() to duplicate maple tree in dup_mmap()")
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reported-by: Jann Horn <jannh@google.com>
+Reviewed-by: Jann Horn <jannh@google.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Linus Torvalds <torvalds@linuxfoundation.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/client.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/userfaultfd.c              | 28 ++++++++++++++++++++++++++++
+ include/linux/userfaultfd_k.h |  5 +++++
+ kernel/fork.c                 |  5 ++++-
+ 3 files changed, 37 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/misc/mei/client.c b/drivers/misc/mei/client.c
-index 9d090fa07516f..be011cef12e5d 100644
---- a/drivers/misc/mei/client.c
-+++ b/drivers/misc/mei/client.c
-@@ -321,7 +321,7 @@ void mei_io_cb_free(struct mei_cl_cb *cb)
- 		return;
- 
- 	list_del(&cb->list);
--	kfree(cb->buf.data);
-+	kvfree(cb->buf.data);
- 	kfree(cb->ext_hdr);
- 	kfree(cb);
+diff --git a/fs/userfaultfd.c b/fs/userfaultfd.c
+index 27a3e9285fbf6..2f302da629cb4 100644
+--- a/fs/userfaultfd.c
++++ b/fs/userfaultfd.c
+@@ -731,6 +731,34 @@ void dup_userfaultfd_complete(struct list_head *fcs)
+ 	}
  }
-@@ -497,7 +497,7 @@ struct mei_cl_cb *mei_cl_alloc_cb(struct mei_cl *cl, size_t length,
- 	if (length == 0)
- 		return cb;
  
--	cb->buf.data = kmalloc(roundup(length, MEI_SLOT_SIZE), GFP_KERNEL);
-+	cb->buf.data = kvmalloc(roundup(length, MEI_SLOT_SIZE), GFP_KERNEL);
- 	if (!cb->buf.data) {
- 		mei_io_cb_free(cb);
- 		return NULL;
++void dup_userfaultfd_fail(struct list_head *fcs)
++{
++	struct userfaultfd_fork_ctx *fctx, *n;
++
++	/*
++	 * An error has occurred on fork, we will tear memory down, but have
++	 * allocated memory for fctx's and raised reference counts for both the
++	 * original and child contexts (and on the mm for each as a result).
++	 *
++	 * These would ordinarily be taken care of by a user handling the event,
++	 * but we are no longer doing so, so manually clean up here.
++	 *
++	 * mm tear down will take care of cleaning up VMA contexts.
++	 */
++	list_for_each_entry_safe(fctx, n, fcs, list) {
++		struct userfaultfd_ctx *octx = fctx->orig;
++		struct userfaultfd_ctx *ctx = fctx->new;
++
++		atomic_dec(&octx->mmap_changing);
++		VM_BUG_ON(atomic_read(&octx->mmap_changing) < 0);
++		userfaultfd_ctx_put(octx);
++		userfaultfd_ctx_put(ctx);
++
++		list_del(&fctx->list);
++		kfree(fctx);
++	}
++}
++
+ void mremap_userfaultfd_prep(struct vm_area_struct *vma,
+ 			     struct vm_userfaultfd_ctx *vm_ctx)
+ {
+diff --git a/include/linux/userfaultfd_k.h b/include/linux/userfaultfd_k.h
+index a12bcf042551e..f4a45a37229ad 100644
+--- a/include/linux/userfaultfd_k.h
++++ b/include/linux/userfaultfd_k.h
+@@ -249,6 +249,7 @@ static inline bool vma_can_userfault(struct vm_area_struct *vma,
+ 
+ extern int dup_userfaultfd(struct vm_area_struct *, struct list_head *);
+ extern void dup_userfaultfd_complete(struct list_head *);
++void dup_userfaultfd_fail(struct list_head *);
+ 
+ extern void mremap_userfaultfd_prep(struct vm_area_struct *,
+ 				    struct vm_userfaultfd_ctx *);
+@@ -332,6 +333,10 @@ static inline void dup_userfaultfd_complete(struct list_head *l)
+ {
+ }
+ 
++static inline void dup_userfaultfd_fail(struct list_head *l)
++{
++}
++
+ static inline void mremap_userfaultfd_prep(struct vm_area_struct *vma,
+ 					   struct vm_userfaultfd_ctx *ctx)
+ {
+diff --git a/kernel/fork.c b/kernel/fork.c
+index dbf3c5d81df3b..6423ce60b8f97 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -775,7 +775,10 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
+ 	mmap_write_unlock(mm);
+ 	flush_tlb_mm(oldmm);
+ 	mmap_write_unlock(oldmm);
+-	dup_userfaultfd_complete(&uf);
++	if (!retval)
++		dup_userfaultfd_complete(&uf);
++	else
++		dup_userfaultfd_fail(&uf);
+ fail_uprobe_end:
+ 	uprobe_end_dup_mmap();
+ 	return retval;
 -- 
 2.43.0
 
