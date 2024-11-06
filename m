@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C211FB3EC;
-	Wed,  6 Nov 2024 12:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2C91FB3F6;
+	Wed,  6 Nov 2024 12:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896714; cv=none; b=odQY/Y0WL17sQgFMW0YTozEBPwSSQCSQ9npqz4t9jqcFiy6oIipZmJ4OtwPfUcN4pkjkT3PAHAoJL7swCuxg3fnZR85E3Hdqj8ijmKvaqwk7ujEZx9Ei8q5KsKSaoFMC8qe1cjY7m47bKPWZcMwqTRCjuejt+yiNjZX2R4fT9sc=
+	t=1730896718; cv=none; b=pO8d83/aHZ9eZUiJbyuI27OzQyp/h6AaGfmkM3NOvdPPFeN8/3AF7qn5h2jl9T1abeeRV3FYw8ddDPh2mmwRTS3NTzVpRb07GWTGOwN3Mmi1Q6c9L0b/bH6qXilm00MOWQWtsh8n2sDe5/vdWgzWqKjXsfEREltWOFbmKLpgjkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896714; c=relaxed/simple;
-	bh=Eh1ygb2QOP89KLcmWAG6G2WLDfNkHCU3A45e4SK2Cpc=;
+	s=arc-20240116; t=1730896718; c=relaxed/simple;
+	bh=FYsy2ysYqU2Qi5cUEBp2qWFn1XumS2j8LX7HZCcm+u4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F6OHChZbcOANPaN9na65dy9FzLMsa/g49u+pvZpoQe5MHO4kBQMbDTqDVdeKq3mLeIEmzod+q3h5zyhUyxj0Csm/403eYjL0/NoebnqQsKSf/aoY9lsXV5h5u4MKaN83MGGW+JvsgKvS8VB5aYgj2eNNjPsfILfS0ExQ8+ZHSWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=np+dvDTo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WpirO16qqqzpfp3ZnGDXxhcEuCJGuw/R5Y6MGcjWqz34nF6vxB9Wg8iVpPklZBSVq1XDSinnMF57yFX8YbCeGEcdSZWgQQjN2ssq1iVkEcpGyz14a5dwFIYEJD/SViZssnxokQfWAvJBvbH+pwqJpkKsEQ2M/o15R77fJP3AlPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGrD2idZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="np+dvDTo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18F0C4CED3;
-	Wed,  6 Nov 2024 12:38:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGrD2idZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B88BC4CECD;
+	Wed,  6 Nov 2024 12:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896714;
-	bh=Eh1ygb2QOP89KLcmWAG6G2WLDfNkHCU3A45e4SK2Cpc=;
+	s=korg; t=1730896717;
+	bh=FYsy2ysYqU2Qi5cUEBp2qWFn1XumS2j8LX7HZCcm+u4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=np+dvDTocJCeF2htSOtBWOGAsmO2gqtM6n6Ybc1Inl56nOtYdNtQGBjErcedrj74F
-	 h/AeYuopVjE6aQWTZwCFaRbicg3rZQW7krfQK8zal0OKgPj1OnVGKhKxl8JC3fhLHl
-	 Mns2ZtQCnrXNqEYucl/RzeRihoI3pk/CSWQce53w=
+	b=AGrD2idZVm3BzEbvQRxO4OE0QV+N7ux+Zk/OsGZag6+bLx/ikKBFRZIEywwfq6GWO
+	 isSIMjkL/CtqfgvNSmVH1/sDmin8p7cvjRYI66tmLJTsuYnCItGKHz8gBd6Bv32JLK
+	 M/3MECMYm4a5VKMBU0UxslkUwGr3gmq3oU8uxqD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kirk Swidowski <swidowski@google.com>,
-	Andy Nguyen <theflow@google.com>,
-	3pvd <3pvd@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5.10 048/110] KVM: nSVM: Ignore nCR3[4:0] when loading PDPTEs from memory
-Date: Wed,  6 Nov 2024 13:04:14 +0100
-Message-ID: <20241106120304.529873068@linuxfoundation.org>
+	=?UTF-8?q?Jos=C3=A9=20Relvas?= <josemonsantorelvas@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 049/110] ALSA: hda/realtek: Add subwoofer quirk for Acer Predator G9-593
+Date: Wed,  6 Nov 2024 13:04:15 +0100
+Message-ID: <20241106120304.556245416@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -47,65 +44,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: José Relvas <josemonsantorelvas@gmail.com>
 
-commit f559b2e9c5c5308850544ab59396b7d53cfc67bd upstream.
+commit 35fdc6e1c16099078bcbd73a6c8f1733ae7f1909 upstream.
 
-Ignore nCR3[4:0] when loading PDPTEs from memory for nested SVM, as bits
-4:0 of CR3 are ignored when PAE paging is used, and thus VMRUN doesn't
-enforce 32-byte alignment of nCR3.
+The Acer Predator G9-593 has a 2+1 speaker system which isn't probed
+correctly.
+This patch adds a quirk with the proper pin connections.
 
-In the absolute worst case scenario, failure to ignore bits 4:0 can result
-in an out-of-bounds read, e.g. if the target page is at the end of a
-memslot, and the VMM isn't using guard pages.
+Note that I do not own this laptop, so I cannot guarantee that this
+fixes the issue.
+Testing was done by other users here:
+https://discussion.fedoraproject.org/t/-/118482
 
-Per the APM:
+This model appears to have two different dev IDs...
 
-  The CR3 register points to the base address of the page-directory-pointer
-  table. The page-directory-pointer table is aligned on a 32-byte boundary,
-  with the low 5 address bits 4:0 assumed to be 0.
+- 0x1177 (as seen on the forum link above)
+- 0x1178 (as seen on https://linux-hardware.org/?probe=127df9999f)
 
-And the SDM's much more explicit:
+I don't think the audio system was changed between model revisions, so
+the patch applies for both IDs.
 
-  4:0    Ignored
-
-Note, KVM gets this right when loading PDPTRs, it's only the nSVM flow
-that is broken.
-
-Fixes: e4e517b4be01 ("KVM: MMU: Do not unconditionally read PDPTE from guest memory")
-Reported-by: Kirk Swidowski <swidowski@google.com>
-Cc: Andy Nguyen <theflow@google.com>
-Cc: 3pvd <3pvd@google.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20241009140838.1036226-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: José Relvas <josemonsantorelvas@gmail.com>
+Link: https://patch.msgid.link/20241020102756.225258-1-josemonsantorelvas@gmail.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -75,8 +75,12 @@ static u64 nested_svm_get_tdp_pdptr(stru
- 	u64 pdpte;
- 	int ret;
- 
-+	/*
-+	 * Note, nCR3 is "assumed" to be 32-byte aligned, i.e. the CPU ignores
-+	 * nCR3[4:0] when loading PDPTEs from memory.
-+	 */
- 	ret = kvm_vcpu_read_guest_page(vcpu, gpa_to_gfn(cr3), &pdpte,
--				       offset_in_page(cr3) + index * 8, 8);
-+				       (cr3 & GENMASK(11, 5)) + index * 8, 8);
- 	if (ret)
- 		return 0;
- 	return pdpte;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -6966,6 +6966,7 @@ enum {
+ 	ALC286_FIXUP_ACER_AIO_HEADSET_MIC,
+ 	ALC256_FIXUP_ASUS_HEADSET_MIC,
+ 	ALC256_FIXUP_ASUS_MIC_NO_PRESENCE,
++	ALC255_FIXUP_PREDATOR_SUBWOOFER,
+ 	ALC299_FIXUP_PREDATOR_SPK,
+ 	ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE,
+ 	ALC289_FIXUP_DELL_SPK2,
+@@ -8200,6 +8201,13 @@ static const struct hda_fixup alc269_fix
+ 		.chained = true,
+ 		.chain_id = ALC256_FIXUP_ASUS_HEADSET_MODE
+ 	},
++	[ALC255_FIXUP_PREDATOR_SUBWOOFER] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x17, 0x90170151 }, /* use as internal speaker (LFE) */
++			{ 0x1b, 0x90170152 } /* use as internal speaker (back) */
++		}
++	},
+ 	[ALC299_FIXUP_PREDATOR_SPK] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -8932,6 +8940,8 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1025, 0x110e, "Acer Aspire ES1-432", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x1166, "Acer Veriton N4640G", ALC269_FIXUP_LIFEBOOK),
+ 	SND_PCI_QUIRK(0x1025, 0x1167, "Acer Veriton N6640G", ALC269_FIXUP_LIFEBOOK),
++	SND_PCI_QUIRK(0x1025, 0x1177, "Acer Predator G9-593", ALC255_FIXUP_PREDATOR_SUBWOOFER),
++	SND_PCI_QUIRK(0x1025, 0x1178, "Acer Predator G9-593", ALC255_FIXUP_PREDATOR_SUBWOOFER),
+ 	SND_PCI_QUIRK(0x1025, 0x1246, "Acer Predator Helios 500", ALC299_FIXUP_PREDATOR_SPK),
+ 	SND_PCI_QUIRK(0x1025, 0x1247, "Acer vCopperbox", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
+ 	SND_PCI_QUIRK(0x1025, 0x1248, "Acer Veriton N4660G", ALC269VC_FIXUP_ACER_MIC_NO_PRESENCE),
 
 
