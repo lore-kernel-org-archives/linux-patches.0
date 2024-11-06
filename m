@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFDB1DED58;
-	Wed,  6 Nov 2024 12:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBC71DE4EA;
+	Wed,  6 Nov 2024 12:27:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896045; cv=none; b=bDeZEJaaqrC+FnxqTrGr/3aIp4YxItgSDQkSeFo9hajsp7QCq/afElUQRNO3O1rrbtYhvs6g7ILXo9y4xE63BMcyAzj4tO3WG4B7UuXBbYfF/dyp4mObrc9ruGJUvIrm30REVmHD82QAT0qWdGnDsyeg7chp16ZK5h1bxXEucQM=
+	t=1730896048; cv=none; b=M5ci45zPidcocwwyQugAjnEUFxOpbN5XWytVHjvSMtNGcA0ESbYIiDMX+Dkd0QL+vKjCIehYcBJWspSJQ0+OX5rvaVF7Lv2i+uhbwC5e8kZQqyL87tC+Wp2LLrdhqoA1UVf2xlmvGFMCnN/2h+2TjvZDCYiVNbjROko4AqjHTkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896045; c=relaxed/simple;
-	bh=mfqrF43Pllih8y9OxZmjZJdPtltXQEyg2TDG470a59c=;
+	s=arc-20240116; t=1730896048; c=relaxed/simple;
+	bh=8nOoQJ7WV6a8GI9n9rLo6VRqoa1b2Z+LV5ohDrXYneU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aKUYyV8kPB+nuexXmvUn8sC4ZuoxM0xC1EIN8gA4I2vAF70NbYaVvB2EEcZe/PQsw5HLzjWUsgdXLjaaI1D7Jc+HKBYwPSYm2ApEaGkgFXUzxs+UrFjKSJ3wG1iojZ3ZIRjF3b+1vYaiL5yPuIThQaCy+kmV8tPjWfRTJKvkbRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHAwG+zL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h8hquswTAx8u0KytUtUOva8IqnIlLrAshyyUB+8d4ckPRecQuscahOsdpfVcZSD33AVpyP/oc+71wAhk4qSa/6JCMDuj3Hhg8OcKvRVE1TOq7D47slfozfCiaIcB/0kjTSbcZMPbmhTpx7lNoWgdpwtY1GJZddI8U7tnXusi1kQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aoz3sMdh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHAwG+zL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874CCC4CECD;
-	Wed,  6 Nov 2024 12:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aoz3sMdh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D18C4CED4;
+	Wed,  6 Nov 2024 12:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896044;
-	bh=mfqrF43Pllih8y9OxZmjZJdPtltXQEyg2TDG470a59c=;
+	s=korg; t=1730896047;
+	bh=8nOoQJ7WV6a8GI9n9rLo6VRqoa1b2Z+LV5ohDrXYneU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dHAwG+zLTT6ivHEgA0NmmirllmzzHgeIQyliFZcxrzJMe2cen/O2dUJ9UzgzgUo5J
-	 n7iM6tvOUyszl+XbrDDa84TFQx+J76fU7Zbno+e2r7muRWhublwvepv0aAzQkCpST4
-	 4tqVRX+98DAKUORHVJ6m3PHgfCY3jj3JjwtRUHw0=
+	b=aoz3sMdh4uufRVJ92CrVgAZBV3tSql9BcKGSQ8zNEZz5SDAQFvwfMowxW771c/3A5
+	 40GEROTW6n3c3Gt+QWTO2hZIN5JmSUpaDLuGX0DkgajLtPZu2jSIsxhQkNy4h+TcA1
+	 Y3/IPkZfIGi5DinGPOGqbBJFnH7Ysgyh4iO+g7Rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
-	CK Hu <ck.hu@mediatek.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	CK Hu <ck.hu@mediatek.com>,
 	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 070/245] drm/mediatek: ovl: Remove the color format comment for ovl_fmt_convert()
-Date: Wed,  6 Nov 2024 13:02:03 +0100
-Message-ID: <20241106120320.929119023@linuxfoundation.org>
+Subject: [PATCH 6.11 071/245] drm/mediatek: Fix color format MACROs in OVL
+Date: Wed,  6 Nov 2024 13:02:04 +0100
+Message-ID: <20241106120320.951919968@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -53,40 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Hsin-Te Yuan <yuanhsinte@chromium.org>
 
-[ Upstream commit 41607c3ceb0e527e0985387bc41bbf291dc9a3d8 ]
+[ Upstream commit 655c6c1b7afe6d29f386f415594ee643e5e3d755 ]
 
-Since we changed MACROs to be consistent with DRM input color format
-naming, the comment for ovl_fmt_conver() is no longer needed.
+In commit 9f428b95ac89 ("drm/mediatek: Add new color format MACROs in
+OVL"), some new color formats are defined in the MACROs to make the
+switch statement more concise. That commit was intended to be a no-op
+cleanup. However, there are typos in these formats MACROs, which cause
+the return value to be incorrect. Fix the typos to ensure the return
+value remains unchanged.
 
 Fixes: 9f428b95ac89 ("drm/mediatek: Add new color format MACROs in OVL")
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
 Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20241009034646.13143-4-jason-jh.lin@mediatek.com/
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20241016-color-v3-1-e0f5f44a72d8@chromium.org/
 Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_disp_ovl.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_disp_ovl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/mediatek/mtk_disp_ovl.c b/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
-index 9d6d9fd8342e4..4221206b994f1 100644
+index 4221206b994f1..064d03598ea2e 100644
 --- a/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
 +++ b/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
-@@ -379,11 +379,6 @@ void mtk_ovl_layer_off(struct device *dev, unsigned int idx,
- 
- static unsigned int ovl_fmt_convert(struct mtk_disp_ovl *ovl, unsigned int fmt)
- {
--	/* The return value in switch "MEM_MODE_INPUT_FORMAT_XXX"
--	 * is defined in mediatek HW data sheet.
--	 * The alphabet order in XXX is no relation to data
--	 * arrangement in memory.
--	 */
- 	switch (fmt) {
- 	default:
- 	case DRM_FORMAT_RGB565:
+@@ -61,8 +61,8 @@
+ #define OVL_CON_CLRFMT_RGB	(1 << 12)
+ #define OVL_CON_CLRFMT_ARGB8888	(2 << 12)
+ #define OVL_CON_CLRFMT_RGBA8888	(3 << 12)
+-#define OVL_CON_CLRFMT_ABGR8888	(OVL_CON_CLRFMT_RGBA8888 | OVL_CON_BYTE_SWAP)
+-#define OVL_CON_CLRFMT_BGRA8888	(OVL_CON_CLRFMT_ARGB8888 | OVL_CON_BYTE_SWAP)
++#define OVL_CON_CLRFMT_ABGR8888	(OVL_CON_CLRFMT_ARGB8888 | OVL_CON_BYTE_SWAP)
++#define OVL_CON_CLRFMT_BGRA8888	(OVL_CON_CLRFMT_RGBA8888 | OVL_CON_BYTE_SWAP)
+ #define OVL_CON_CLRFMT_UYVY	(4 << 12)
+ #define OVL_CON_CLRFMT_YUYV	(5 << 12)
+ #define OVL_CON_CLRFMT_RGB565(ovl)	((ovl)->data->fmt_rgb565_is_0 ? \
 -- 
 2.43.0
 
