@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10CB1DE4CA;
-	Wed,  6 Nov 2024 12:59:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F313E1DE4CA;
+	Wed,  6 Nov 2024 12:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897947; cv=none; b=Nnea5zj47+GJCtKobfpE1Toi57djJFupBt6YBl0obPxjt2axHSY/AWQ4x3CZp6vSI0ueeuReH8HNSsx6sOIz5PBIfbrE60Ava1uDNY/9fdw/NxRmuFZwVoBB37YUCtu3csn+kWsLfsFPAUkJPB89Dfq+aKLrZ8ZtbcBGNy8xdEQ=
+	t=1730897950; cv=none; b=HxNMXt6N+Uovv/JU/fuA8ujgsypNGoGJkXXkeGBcitZtvA3ga6smw4wDDW/OBL/YC96NpElzDIMw1Z9xJgPXIJaecFM8cK6mQb4tlEMGLZtxPqt9ZuS3ESVXnv66j5yXfTE65qzwHLbmFuRWVHVHLK1/lhQMyyznogxd/EkTpw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897947; c=relaxed/simple;
-	bh=MGM1I3O6NHlRJRseQs/CNFvxkrnNh+iOqFrb/loFEBU=;
+	s=arc-20240116; t=1730897950; c=relaxed/simple;
+	bh=J1P8sr+pCyz8p5G1V7/zD4dkv5SdPFsVjAC2JR8Dqgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gPk9NN43maBYG2hSgx3NVSckDVfeqFodW/4XiZ8Px4XL1AtpdYleIUmgKzxoHTevso3CkrYE9SS67She6GTFUFa/zrwZZLsXcNW3qRn5ST/M+2Md7+eP1uAAF/1QLdNUhLYrkqJonTD0zI7ZW9hAxbMC5crWFUPCyObMS2QDax4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehnntVl0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZQ8lY4LkQsNPsDg76y08TY+paAaoF1cA9D8elDL1pADfFLtqEos+CMzqhAaHd6OQ3g4KzhdNPskYZwi8+F9nhRDo93B4Y7lpPSL+Ts/P85ltm+T20PcAGWhNU8hgEQ8fmIGXWlBBSb+dF8uIbR20fo31bX4KnkAx19SFUnFdg3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jI/1Mx8/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehnntVl0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E67E0C4CED4;
-	Wed,  6 Nov 2024 12:59:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jI/1Mx8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762BCC4CED4;
+	Wed,  6 Nov 2024 12:59:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897946;
-	bh=MGM1I3O6NHlRJRseQs/CNFvxkrnNh+iOqFrb/loFEBU=;
+	s=korg; t=1730897949;
+	bh=J1P8sr+pCyz8p5G1V7/zD4dkv5SdPFsVjAC2JR8Dqgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ehnntVl0wiPfyCzP46h9zqEpznsooOiwKl4yXviVc3b6Q+E3zE7P04pxezYg6J9PG
-	 ohqlrUOzcnVPnf4CTIazb79PgICEYbDosp77fdmwlGOfAusbB+0jKC+isq3+iuNVRm
-	 5gxcD5sM9PYf2T6iAL5j0eGWo1uKs+OsTcldHnco=
+	b=jI/1Mx8/xLtUXwzRDMZIUZXg0ajJwrMV1XGZfKQv0CTbSYvO7vHRmemlbYXsZa6nj
+	 caWLIdG+vCia2p+f3FhhIygzylKe7F5rW5vUVYxTBm+0BCxCPHWQ0OvrVcnOmikTmL
+	 jB02t/1ZPGsZKzzLga/sxTs+FXAIjJF2PImNFK2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Iliopoulos <ailiop@suse.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Christian Brauner <christian.brauner@ubuntu.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Deepa Dinamani <deepa.kernel@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 036/462] mount: warn only once about timestamp range expiration
-Date: Wed,  6 Nov 2024 12:58:49 +0100
-Message-ID: <20241106120332.412614720@linuxfoundation.org>
+Subject: [PATCH 5.4 037/462] fs/namespace: fnic: Switch to use %ptTd
+Date: Wed,  6 Nov 2024 12:58:50 +0100
+Message-ID: <20241106120332.437898313@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -57,71 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anthony Iliopoulos <ailiop@suse.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit a128b054ce029554a4a52fc3abb8c1df8bafcaef ]
+[ Upstream commit 74e60b8b2f0fe3702710e648a31725ee8224dbdf ]
 
-Commit f8b92ba67c5d ("mount: Add mount warning for impending timestamp
-expiry") introduced a mount warning regarding filesystem timestamp
-limits, that is printed upon each writable mount or remount.
+Use %ptTd instead of open-coded variant to print contents
+of time64_t type in human readable form.
 
-This can result in a lot of unnecessary messages in the kernel log in
-setups where filesystems are being frequently remounted (or mounted
-multiple times).
-
-Avoid this by setting a superblock flag which indicates that the warning
-has been emitted at least once for any particular mount, as suggested in
-[1].
-
-Link: https://lore.kernel.org/CAHk-=wim6VGnxQmjfK_tDg6fbHYKL4EFkmnTjVr9QnRqjDBAeA@mail.gmail.com/ [1]
-Link: https://lkml.kernel.org/r/20220119202934.26495-1-ailiop@suse.com
-Signed-off-by: Anthony Iliopoulos <ailiop@suse.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Acked-by: Christian Brauner <christian.brauner@ubuntu.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Deepa Dinamani <deepa.kernel@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
 Stable-dep-of: 4bcda1eaf184 ("mount: handle OOM on mnt_warn_timestamp_expiry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/namespace.c     | 2 ++
- include/linux/fs.h | 1 +
- 2 files changed, 3 insertions(+)
+ fs/namespace.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
 diff --git a/fs/namespace.c b/fs/namespace.c
-index 5782cd55dfdbb..3d8fbafc980ba 100644
+index 3d8fbafc980ba..f1c0e0a705621 100644
 --- a/fs/namespace.c
 +++ b/fs/namespace.c
-@@ -2492,6 +2492,7 @@ static void mnt_warn_timestamp_expiry(struct path *mountpoint, struct vfsmount *
- 	struct super_block *sb = mnt->mnt_sb;
- 
- 	if (!__mnt_is_readonly(mnt) &&
-+	   (!(sb->s_iflags & SB_I_TS_EXPIRY_WARNED)) &&
+@@ -2496,15 +2496,12 @@ static void mnt_warn_timestamp_expiry(struct path *mountpoint, struct vfsmount *
  	   (ktime_get_real_seconds() + TIME_UPTIME_SEC_MAX > sb->s_time_max)) {
  		char *buf = (char *)__get_free_page(GFP_KERNEL);
  		char *mntpath = buf ? d_path(mountpoint, buf, PAGE_SIZE) : ERR_PTR(-ENOMEM);
-@@ -2506,6 +2507,7 @@ static void mnt_warn_timestamp_expiry(struct path *mountpoint, struct vfsmount *
- 			tm.tm_year+1900, (unsigned long long)sb->s_time_max);
+-		struct tm tm;
+ 
+-		time64_to_tm(sb->s_time_max, 0, &tm);
+-
+-		pr_warn("%s filesystem being %s at %s supports timestamps until %04ld (0x%llx)\n",
++		pr_warn("%s filesystem being %s at %s supports timestamps until %ptTd (0x%llx)\n",
+ 			sb->s_type->name,
+ 			is_mounted(mnt) ? "remounted" : "mounted",
+-			mntpath,
+-			tm.tm_year+1900, (unsigned long long)sb->s_time_max);
++			mntpath, &sb->s_time_max,
++			(unsigned long long)sb->s_time_max);
  
  		free_page((unsigned long)buf);
-+		sb->s_iflags |= SB_I_TS_EXPIRY_WARNED;
- 	}
- }
- 
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index b21fdce37c37a..c0967df137152 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -1408,6 +1408,7 @@ extern int send_sigurg(struct fown_struct *fown);
- 
- #define SB_I_SKIP_SYNC	0x00000100	/* Skip superblock at global sync */
- #define SB_I_PERSB_BDI	0x00000200	/* has a per-sb bdi */
-+#define SB_I_TS_EXPIRY_WARNED 0x00000400 /* warned about timestamp range expiry */
- 
- /* Possible states of 'frozen' field */
- enum {
+ 		sb->s_iflags |= SB_I_TS_EXPIRY_WARNED;
 -- 
 2.43.0
 
