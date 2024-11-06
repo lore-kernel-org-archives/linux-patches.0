@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D7A1DF25E;
-	Wed,  6 Nov 2024 12:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A63B1DF74E;
+	Wed,  6 Nov 2024 12:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895573; cv=none; b=f1DT8v+ShKWwgoFBvsrPqejM8P8XY8fF4O7jV+z4tKsGxIPs+gUpzub0EbzJcfgGKunqCTRgXokk9TSAhmm2d0sgVtcMqFgzamjnVxUkr0FJ0RX3mQ9i/QduSHv/QKl4qKRwM60Gpa/aIVJlCO75gzLePJYGYjG3RoYph0HaC7Y=
+	t=1730895576; cv=none; b=dExskdgGoyTgjNofPAtyAwcmQmjOBf3jG17hqdNHW+gc57VfXrF6P3Fw150u+kNN4J9iTRpAv66QbBO+WIKwc/9xALiGBRfzK/XGWXhsDOwv84In5ot1Dbe2X04uWzisIaPjIrVJUmZQYg4qAKSgYhY6+1gNs7hshbASq7KG1IU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895573; c=relaxed/simple;
-	bh=fSXyV27UBmr2iWXva1/6uhPygbdz5QsI6wvQkpYvkoY=;
+	s=arc-20240116; t=1730895576; c=relaxed/simple;
+	bh=A6suKevHJJlRbumE3Bx514/fUmEIxCerCp40N2gpqcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iqE6vlL3ua2zhJcUTk+H3kV6HoeCU4sulqSr3zYaFbLA2g2fJTrZ02ukDFkH7gN0SGGjCaHeC1mRsCRvBfygh5fwfrSBKB7UqBd5xTz8VOkmlcAazkyobnwpEsFMFJNzSNW4aRB8SFmxPF2vS6hQ3P+OkbNsF/vEm435MdVfrgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zU7DUVR3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MhanAWP5zBjmVeUo2+L4UxcDg5NB+ljXzaABTYrQt9dRwIvC/2GiUm1rG2Xytmb+p+hPIbqzsXWn0yVVS45K58+Ccid+bELAqQcPGecIWfjUV5EU4196LIweJsdGtgJ8KJNkDRB2i+qHrsNAP98Os6Qciw78N9x2clkH4+YvNSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRa37vD4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zU7DUVR3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E58EC4CECD;
-	Wed,  6 Nov 2024 12:19:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRa37vD4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0462C4CECD;
+	Wed,  6 Nov 2024 12:19:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895573;
-	bh=fSXyV27UBmr2iWXva1/6uhPygbdz5QsI6wvQkpYvkoY=;
+	s=korg; t=1730895576;
+	bh=A6suKevHJJlRbumE3Bx514/fUmEIxCerCp40N2gpqcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zU7DUVR3mxJ8KpIMx7112cMB+jYrF+Uc94b8ArjreYFLTwcmlJVhw5Ugece2FIPPw
-	 5Mc5IbyQrKu1bi2PQDL26BHn8I0LTzBDtbncc/sUOZs8rBMqhft6BvOIjhAwCH0De7
-	 WTx2nbi36nOz0Y+zE50knU0GP9+fI4UtvcgoL4H8=
+	b=DRa37vD4wX4QS6BWaRq4Hb5wr6QeLQ56Kvw/wOgH/tn0UDNjTutfrASngJifYRQgh
+	 /z9XSwv32J5SFt3lLP5qJiZ4xEcV9+B4drtx63JI7cqUs1jtPSUIBVQIoc9HPj/eHZ
+	 1VD4ptcFE++XWtPz/TKdcOFFR5MhEYPIjLO6mH54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	Jose Alberto Reguero <jose.alberto.reguero@gmail.com>,
 	stable <stable@kernel.org>
-Subject: [PATCH 4.19 264/350] Revert "usb: yurex: Replace snprintf() with the safer scnprintf() variant"
-Date: Wed,  6 Nov 2024 13:03:12 +0100
-Message-ID: <20241106120327.419408451@linuxfoundation.org>
+Subject: [PATCH 4.19 265/350] usb: xhci: Fix problem with xhci resume from suspend
+Date: Wed,  6 Nov 2024 13:03:13 +0100
+Message-ID: <20241106120327.444117390@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -50,67 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Jose Alberto Reguero <jose.alberto.reguero@gmail.com>
 
-commit 71c717cd8a2e180126932cc6851ff21c1d04d69a upstream.
+commit d44238d8254a36249d576c96473269dbe500f5e4 upstream.
 
-This reverts commit 86b20af11e84c26ae3fde4dcc4f490948e3f8035.
+I have a ASUS PN51 S mini pc that has two xhci devices. One from AMD,
+and other from ASMEDIA. The one from ASMEDIA have problems when resume
+from suspend, and keep broken until unplug the  power cord. I use this
+kernel parameter: xhci-hcd.quirks=128 and then it works ok. I make a
+path to reset only the ASMEDIA xhci.
 
-This patch leads to passing 0 to simple_read_from_buffer()
-as a fifth argument, turning the read method into a nop.
-The change is fundamentally flawed, as it breaks the driver.
-
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Signed-off-by: Jose Alberto Reguero <jose.alberto.reguero@gmail.com>
 Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20241007094004.242122-1-oneukum@suse.com
+Link: https://lore.kernel.org/r/20240919184202.22249-1-jose.alberto.reguero@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/yurex.c |   19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ drivers/usb/host/xhci-pci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/misc/yurex.c
-+++ b/drivers/usb/misc/yurex.c
-@@ -34,8 +34,6 @@
- #define YUREX_BUF_SIZE		8
- #define YUREX_WRITE_TIMEOUT	(HZ*2)
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -55,6 +55,7 @@
+ #define PCI_DEVICE_ID_ASMEDIA_1042A_XHCI		0x1142
+ #define PCI_DEVICE_ID_ASMEDIA_1142_XHCI			0x1242
+ #define PCI_DEVICE_ID_ASMEDIA_2142_XHCI			0x2142
++#define PCI_DEVICE_ID_ASMEDIA_3042_XHCI			0x3042
+ #define PCI_DEVICE_ID_ASMEDIA_3242_XHCI			0x3242
  
--#define MAX_S64_STRLEN 20 /* {-}922337203685477580{7,8} */
--
- /* table of devices that work with this driver */
- static struct usb_device_id yurex_table[] = {
- 	{ USB_DEVICE(YUREX_VENDOR_ID, YUREX_PRODUCT_ID) },
-@@ -404,7 +402,8 @@ static ssize_t yurex_read(struct file *f
- {
- 	struct usb_yurex *dev;
- 	int len = 0;
--	char in_buffer[MAX_S64_STRLEN];
-+	char in_buffer[20];
-+	unsigned long flags;
+ static const char hcd_name[] = "xhci_hcd";
+@@ -272,6 +273,10 @@ static void xhci_pci_quirks(struct devic
+ 		pdev->device == PCI_DEVICE_ID_ASMEDIA_1042A_XHCI)
+ 		xhci->quirks |= XHCI_ASMEDIA_MODIFY_FLOWCONTROL;
  
- 	dev = file->private_data;
- 
-@@ -414,16 +413,14 @@ static ssize_t yurex_read(struct file *f
- 		return -ENODEV;
- 	}
- 
--	if (WARN_ON_ONCE(dev->bbu > S64_MAX || dev->bbu < S64_MIN)) {
--		mutex_unlock(&dev->io_mutex);
--		return -EIO;
--	}
--
--	spin_lock_irq(&dev->lock);
--	scnprintf(in_buffer, MAX_S64_STRLEN, "%lld\n", dev->bbu);
--	spin_unlock_irq(&dev->lock);
-+	spin_lock_irqsave(&dev->lock, flags);
-+	len = snprintf(in_buffer, 20, "%lld\n", dev->bbu);
-+	spin_unlock_irqrestore(&dev->lock, flags);
- 	mutex_unlock(&dev->io_mutex);
- 
-+	if (WARN_ON_ONCE(len >= sizeof(in_buffer)))
-+		return -EIO;
++	if (pdev->vendor == PCI_VENDOR_ID_ASMEDIA &&
++	    pdev->device == PCI_DEVICE_ID_ASMEDIA_3042_XHCI)
++		xhci->quirks |= XHCI_RESET_ON_RESUME;
 +
- 	return simple_read_from_buffer(buffer, count, ppos, in_buffer, len);
- }
+ 	if (pdev->vendor == PCI_VENDOR_ID_TI && pdev->device == 0x8241)
+ 		xhci->quirks |= XHCI_LIMIT_ENDPOINT_INTERVAL_7;
  
 
 
