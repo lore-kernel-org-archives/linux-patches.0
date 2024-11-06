@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0216088F;
-	Wed,  6 Nov 2024 12:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B970A6088F;
+	Wed,  6 Nov 2024 12:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896321; cv=none; b=mjcFTErsgxirM2wBTrQI97T2BN8evKldxlV7RiNckgUDfPvXqQVtbYwU8BggVVM8tt7d6FEJzChk3pR1uV3xtRC6o3rkqMg7clNxFXnd/lPHr9HavLNhYudCKIGLzGUFGJe4SgoEz2exAHW3XjQdQg7YkYZcumVwy5vT9QD/VIo=
+	t=1730896324; cv=none; b=V3lz9Hbq9cbkmFhi1TD9wHXo+/FnGBUUoozY+v279DQl+n29JqtRv79iaieeHwgM0ukVmbMIet6DTdiK1zSy+4OJuGWF+aLXLZvkP//9oZKkq2+hu3aEhKJ5Kk2LLukyMcuicrFHz9ctWYhqZZLDhtWIZ4rwgm50WqvHCHLql2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896321; c=relaxed/simple;
-	bh=32Xkm0kEa02eyNZOR08qX0HpV2RVP7W2Srr1PieYNMo=;
+	s=arc-20240116; t=1730896324; c=relaxed/simple;
+	bh=r/cmbpsgHmAN08/LNey/peE0xEzDmx5Ka+cFpZtug/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e8quDqqAaFTo5nHV4XTbWVX/nQjFLDbBuaOPhd2ixSa9j8O6rhJOX/aF9m5Ol0MAc7DEKF922sOZfttkkhnq21h+5bmqoba6oflPvYpTddxMPWogue93df6WkPAHDkswgtYd6967kMDOW+QNBRS3pQV9ujktobH4e1GEckvEWPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0CpE2vUb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IvMUufBGSBZt9/m/ELavpgUEZ5uxcB3AqntbTv7DgsWqQCKtmGbyihatmgaE3toei1uDuTkoHAYwex9eFS0gLcLVBS+ieZXiD72b1wbvwXWqQbjDUTnBT1OViTM91FoJHDWZMgJwwUfD+H3ZuQJ+k6TUSZjmOYOjlfEq2Ov96l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vomwRn9r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0CpE2vUb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448DDC4CECD;
-	Wed,  6 Nov 2024 12:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vomwRn9r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BB5C4CECD;
+	Wed,  6 Nov 2024 12:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896321;
-	bh=32Xkm0kEa02eyNZOR08qX0HpV2RVP7W2Srr1PieYNMo=;
+	s=korg; t=1730896324;
+	bh=r/cmbpsgHmAN08/LNey/peE0xEzDmx5Ka+cFpZtug/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0CpE2vUb58Ypx1ZKo6ZiTFFYONm5I+0CcC/OsIfngMHx/63GjgpH2g1RvZIxUpakY
-	 UXdCoKo4Km6xLDt7N+nQmM6VTX+CR6pG3zr6J6qQXH6yhdx06v0Iq2Ud3cVFUPjVsi
-	 Dkb9M3IqTJDSWWvkG7utoxKeLrFPpmypqQcWgK8k=
+	b=vomwRn9rhJuVnWr9gLPU9DbG2yaOQzjZBzh/La/teqUvBeh2HNeSUoCetwJt0US17
+	 cOwYwpLJpqTRwREP94NU+tTKKYIQ0lYYqY2UkodaeqlitzvO2XYxwNq+2sWPVWLU/h
+	 uRmAFYNDiFCD05RMiMEfPVYmn2Mfgnq8EMMTlaRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Segall <bsegall@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 165/245] posix-cpu-timers: Clear TICK_DEP_BIT_POSIX_TIMER on clone
-Date: Wed,  6 Nov 2024 13:03:38 +0100
-Message-ID: <20241106120323.298359694@linuxfoundation.org>
+Subject: [PATCH 6.11 166/245] iov_iter: fix copy_page_from_iter_atomic() if KMAP_LOCAL_FORCE_MAP
+Date: Wed,  6 Nov 2024 13:03:39 +0100
+Message-ID: <20241106120323.323872436@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,90 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Segall <bsegall@google.com>
+From: Hugh Dickins <hughd@google.com>
 
-[ Upstream commit b5413156bad91dc2995a5c4eab1b05e56914638a ]
+[ Upstream commit c749d9b7ebbc5716af7a95f7768634b30d9446ec ]
 
-When cloning a new thread, its posix_cputimers are not inherited, and
-are cleared by posix_cputimers_init(). However, this does not clear the
-tick dependency it creates in tsk->tick_dep_mask, and the handler does
-not reach the code to clear the dependency if there were no timers to
-begin with.
+generic/077 on x86_32 CONFIG_DEBUG_KMAP_LOCAL_FORCE_MAP=y with highmem,
+on huge=always tmpfs, issues a warning and then hangs (interruptibly):
 
-Thus if a thread has a cputimer running before clone/fork, all
-descendants will prevent nohz_full unless they create a cputimer of
-their own.
+WARNING: CPU: 5 PID: 3517 at mm/highmem.c:622 kunmap_local_indexed+0x62/0xc9
+CPU: 5 UID: 0 PID: 3517 Comm: cp Not tainted 6.12.0-rc4 #2
+...
+copy_page_from_iter_atomic+0xa6/0x5ec
+generic_perform_write+0xf6/0x1b4
+shmem_file_write_iter+0x54/0x67
 
-Fix this by entirely clearing the tick_dep_mask in copy_process().
-(There is currently no inherited state that needs a tick dependency)
+Fix copy_page_from_iter_atomic() by limiting it in that case
+(include/linux/skbuff.h skb_frag_must_loop() does similar).
 
-Process-wide timers do not have this problem because fork does not copy
-signal_struct as a baseline, it creates one from scratch.
+But going forward, perhaps CONFIG_DEBUG_KMAP_LOCAL_FORCE_MAP is too
+surprising, has outlived its usefulness, and should just be removed?
 
-Fixes: b78783000d5c ("posix-cpu-timers: Migrate to use new tick dependency mask model")
-Signed-off-by: Ben Segall <bsegall@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Fixes: 908a1ad89466 ("iov_iter: Handle compound highmem pages in copy_page_from_iter_atomic()")
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Link: https://lore.kernel.org/r/dd5f0c89-186e-18e1-4f43-19a60f5a9774@google.com
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/xm26o737bq8o.fsf@google.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/tick.h | 8 ++++++++
- kernel/fork.c        | 2 ++
- 2 files changed, 10 insertions(+)
+ lib/iov_iter.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/tick.h b/include/linux/tick.h
-index 72744638c5b0f..99c9c5a7252aa 100644
---- a/include/linux/tick.h
-+++ b/include/linux/tick.h
-@@ -251,12 +251,19 @@ static inline void tick_dep_set_task(struct task_struct *tsk,
- 	if (tick_nohz_full_enabled())
- 		tick_nohz_dep_set_task(tsk, bit);
- }
-+
- static inline void tick_dep_clear_task(struct task_struct *tsk,
- 				       enum tick_dep_bits bit)
+diff --git a/lib/iov_iter.c b/lib/iov_iter.c
+index 4a6a9f419bd7e..b892894228b03 100644
+--- a/lib/iov_iter.c
++++ b/lib/iov_iter.c
+@@ -461,6 +461,8 @@ size_t copy_page_from_iter_atomic(struct page *page, size_t offset,
+ 		size_t bytes, struct iov_iter *i)
  {
- 	if (tick_nohz_full_enabled())
- 		tick_nohz_dep_clear_task(tsk, bit);
+ 	size_t n, copied = 0;
++	bool uses_kmap = IS_ENABLED(CONFIG_DEBUG_KMAP_LOCAL_FORCE_MAP) ||
++			 PageHighMem(page);
+ 
+ 	if (!page_copy_sane(page, offset, bytes))
+ 		return 0;
+@@ -471,7 +473,7 @@ size_t copy_page_from_iter_atomic(struct page *page, size_t offset,
+ 		char *p;
+ 
+ 		n = bytes - copied;
+-		if (PageHighMem(page)) {
++		if (uses_kmap) {
+ 			page += offset / PAGE_SIZE;
+ 			offset %= PAGE_SIZE;
+ 			n = min_t(size_t, n, PAGE_SIZE - offset);
+@@ -482,7 +484,7 @@ size_t copy_page_from_iter_atomic(struct page *page, size_t offset,
+ 		kunmap_atomic(p);
+ 		copied += n;
+ 		offset += n;
+-	} while (PageHighMem(page) && copied != bytes && n > 0);
++	} while (uses_kmap && copied != bytes && n > 0);
+ 
+ 	return copied;
  }
-+
-+static inline void tick_dep_init_task(struct task_struct *tsk)
-+{
-+	atomic_set(&tsk->tick_dep_mask, 0);
-+}
-+
- static inline void tick_dep_set_signal(struct task_struct *tsk,
- 				       enum tick_dep_bits bit)
- {
-@@ -290,6 +297,7 @@ static inline void tick_dep_set_task(struct task_struct *tsk,
- 				     enum tick_dep_bits bit) { }
- static inline void tick_dep_clear_task(struct task_struct *tsk,
- 				       enum tick_dep_bits bit) { }
-+static inline void tick_dep_init_task(struct task_struct *tsk) { }
- static inline void tick_dep_set_signal(struct task_struct *tsk,
- 				       enum tick_dep_bits bit) { }
- static inline void tick_dep_clear_signal(struct signal_struct *signal,
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 6b97fb2ac4af5..dbf3c5d81df3b 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -104,6 +104,7 @@
- #include <linux/rseq.h>
- #include <uapi/linux/pidfd.h>
- #include <linux/pidfs.h>
-+#include <linux/tick.h>
- 
- #include <asm/pgalloc.h>
- #include <linux/uaccess.h>
-@@ -2290,6 +2291,7 @@ __latent_entropy struct task_struct *copy_process(
- 	acct_clear_integrals(p);
- 
- 	posix_cputimers_init(&p->posix_cputimers);
-+	tick_dep_init_task(p);
- 
- 	p->io_context = NULL;
- 	audit_set_context(p, NULL);
 -- 
 2.43.0
 
