@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E22E1DED49;
-	Wed,  6 Nov 2024 12:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB321DED49;
+	Wed,  6 Nov 2024 12:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895618; cv=none; b=P8aaXod9uTB/XO69PfrgShEOkhnImlaectofkI7l0e+Gx0kHWSzqJ/2A7H1DJxmSP891Ja8zkWbrIm9UxaC+XhmBRaIlPH7PryktlyBsIxU9uISIhgugArAi4J8fFK3wwQ0mC8AcxtTWWAXFootZ3gEckTBqqppm9404jyd/UcI=
+	t=1730895621; cv=none; b=SIaIBTvHsYniGm1f+3sGpiEJfdcU5QnctgdlFd1/e1UFMmHswMhNYXnMNbik14htVwLQ7aqNLp861CNrhTI4yEtFRhewfQwjZX6q8k/I5tFIKJvf8OiHl7QIig85nq5zqlsLq90JfkeqqBBDPzN5+G1sWIz3+Qxnp3Worrso6L0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895618; c=relaxed/simple;
-	bh=pzIpMMR9OhRFMRyJ8QKMzALy5hlhMU7GQav0Mx2tsik=;
+	s=arc-20240116; t=1730895621; c=relaxed/simple;
+	bh=YlP2E6xFY6vhHcFdw3pVf7irA320JHEUxZjalBtPuCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c0+ArKzsPrv/gAfGbmqrnzYLuQuM3EWxjoOs1kQD9wNQeXK68bFXhNiQmhysn8CsFUpoMQYoWCIbslbiX1lWlLdDxdOxu/aXofVcTWeao8pmIt0fDkPppBN4uwcP2GOm6alvV1vK1ZJz0aoWGgGh8Hto+0BLflm33ikj/LeWr/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZBm469e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gfft7tWA1j8B3Pll/Lrvl/Hrxd9Lutjn7gqzgZ9PnfOuOlUme6QCFVVz9b33t9Ez9inwcjILcwRCXdIGJZPXhFInsGk7xOUH+uUONFrrOhFsfRy5DYX4FeTPidQpLGQ8L0kYZ6XX0Mg47DAnVXwn84gBY3Qh45B4oyGlqyypqMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PxH4dCQO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZBm469e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C5EC4CECD;
-	Wed,  6 Nov 2024 12:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PxH4dCQO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 748C2C4CED3;
+	Wed,  6 Nov 2024 12:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895617;
-	bh=pzIpMMR9OhRFMRyJ8QKMzALy5hlhMU7GQav0Mx2tsik=;
+	s=korg; t=1730895620;
+	bh=YlP2E6xFY6vhHcFdw3pVf7irA320JHEUxZjalBtPuCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qZBm469eQ0NshpN9HA96U1o3wdyBJk4nxomQLdQbcYZPTwHOG8SYcdARTJhpHIVwt
-	 JIho9jDw+MSNwtqzvDFE2TwyYjm1SqunHvA/b79H9ovw4G/sJal7npNUpKDqmmyu4a
-	 oyPMIlC/HAWRma/8oH/ykczNk+WhRRDWop8QXlgo=
+	b=PxH4dCQOMDYfFQn5zdD7gCdNLpvh0V0mmbpf8QgBDkgojb7iK2Vs4eRlAsY5xX+Yq
+	 vmXMJhF1lwgtkxsH2T7lFImgdhpGHDKVPqqQuTASC3PCARXa5tRuxkMHX8VX1wttPq
+	 fizTzSMtyuj+v2tfC0Yt53mm1GZSnTNCRvZaz5R8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkatesh Srinivas <venkateshs@chromium.org>,
-	Jim Mattson <jmattson@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	stable@kernel.org
-Subject: [PATCH 4.19 277/350] x86/cpufeatures: Define X86_FEATURE_AMD_IBPB_RET
-Date: Wed,  6 Nov 2024 13:03:25 +0100
-Message-ID: <20241106120327.709051926@linuxfoundation.org>
+	Nikolay Kuratov <kniv@yandex-team.ru>,
+	Zack Rusin <zack.rusin@broadcom.com>
+Subject: [PATCH 4.19 278/350] drm/vmwgfx: Handle surface check failure correctly
+Date: Wed,  6 Nov 2024 13:03:26 +0100
+Message-ID: <20241106120327.729855829@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -54,46 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jim Mattson <jmattson@google.com>
+From: Nikolay Kuratov <kniv@yandex-team.ru>
 
-commit ff898623af2ed564300752bba83a680a1e4fec8d upstream.
+commit 26498b8d54373d31a621d7dec95c4bd842563b3b upstream.
 
-AMD's initial implementation of IBPB did not clear the return address
-predictor. Beginning with Zen4, AMD's IBPB *does* clear the return address
-predictor. This behavior is enumerated by CPUID.80000008H:EBX.IBPB_RET[30].
+Currently if condition (!bo and !vmw_kms_srf_ok()) was met
+we go to err_out with ret == 0.
+err_out dereferences vfb if ret == 0, but in our case vfb is still NULL.
 
-Define X86_FEATURE_AMD_IBPB_RET for use in KVM_GET_SUPPORTED_CPUID,
-when determining cross-vendor capabilities.
+Fix this by assigning sensible error to ret.
 
-Suggested-by: Venkatesh Srinivas <venkateshs@chromium.org>
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: <stable@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE
+
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Cc: stable@vger.kernel.org
+Fixes: 810b3e1683d0 ("drm/vmwgfx: Support topology greater than texture size")
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241002122429.1981822-1-kniv@yandex-team.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpufeatures.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -216,7 +216,7 @@
- #define X86_FEATURE_SPEC_STORE_BYPASS_DISABLE	( 7*32+23) /* "" Disable Speculative Store Bypass. */
- #define X86_FEATURE_LS_CFG_SSBD		( 7*32+24)  /* "" AMD SSBD implementation via LS_CFG MSR */
- #define X86_FEATURE_IBRS		( 7*32+25) /* Indirect Branch Restricted Speculation */
--#define X86_FEATURE_IBPB		( 7*32+26) /* Indirect Branch Prediction Barrier */
-+#define X86_FEATURE_IBPB		( 7*32+26) /* "ibpb" Indirect Branch Prediction Barrier without a guaranteed RSB flush */
- #define X86_FEATURE_STIBP		( 7*32+27) /* Single Thread Indirect Branch Predictors */
- #define X86_FEATURE_ZEN			( 7*32+28) /* "" CPU is AMD family 0x17 (Zen) */
- #define X86_FEATURE_L1TF_PTEINV		( 7*32+29) /* "" L1TF workaround PTE inversion */
-@@ -306,6 +306,7 @@
- #define X86_FEATURE_VIRT_SSBD		(13*32+25) /* Virtualized Speculative Store Bypass Disable */
- #define X86_FEATURE_AMD_SSB_NO		(13*32+26) /* "" Speculative Store Bypass is fixed in hardware. */
- #define X86_FEATURE_BTC_NO		(13*32+29) /* "" Not vulnerable to Branch Type Confusion */
-+#define X86_FEATURE_AMD_IBPB_RET	(13*32+30) /* "" IBPB clears return address predictor */
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+@@ -1468,6 +1468,7 @@ static struct drm_framebuffer *vmw_kms_f
+ 		DRM_ERROR("Surface size cannot exceed %dx%d",
+ 			dev_priv->texture_max_width,
+ 			dev_priv->texture_max_height);
++		ret = -EINVAL;
+ 		goto err_out;
+ 	}
  
- /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX), word 14 */
- #define X86_FEATURE_DTHERM		(14*32+ 0) /* Digital Thermal Sensor */
 
 
