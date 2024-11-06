@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9F21F7079;
-	Wed,  6 Nov 2024 12:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C8E1E25F8;
+	Wed,  6 Nov 2024 12:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896965; cv=none; b=D+QWBMPqb7kDwu3G1zKRxgux6sgD0E2USdQLk4571KF9LTTmUwvyf02fcDmuAhRdoqmIu6q+/n//oYoJI4+qjO5dWBlyxq0UM4j0mUECKDl2h3dad1hZMAgn7/jsyncE4xkYFdEjzNMeISQChCqaSV0QhoVfdvYNwIYLFbFktc0=
+	t=1730896968; cv=none; b=liUVOSAXL9cBupFKantEFa3oA8IhvsU0LvAUoJWxwkcsiEljxk2dIOAkI/UosKC/mepzw306ii93Ku7wdXSiLNLClbMzBJyJDEgIEcC6hOAVk8imTCcsCYrnVxVtVaQN1y1lW5abXwDLUtlszv3FZXPTAApBDA5XyXP1b3yTO0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896965; c=relaxed/simple;
-	bh=8qZL4rDnxblA+lpiaoy2JAfeq+XJplfOMMHHeblh54Y=;
+	s=arc-20240116; t=1730896968; c=relaxed/simple;
+	bh=HS6+UJ4aHwUjwZE9j/9tAMsV1BfBDJAbNnlSH/hvnng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YTuUeyn0gmuT9rzyww3yCwAU90/uVuimjHuxQtskVGVjvMHp9qk41WmjCHENGBEkG/18v3yPjH4d6PwBCWDu2n8ZD9kx8S2Q0R4mxHFBUbVNd1B3VMVOW3IlFPVBQPqlk+eXK9l2VKqM+ggxsJ5kZWu+9hpB8ORDzuXc7FL6mi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiuEwbad; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BKcfJCtILicfG5pJ7CIvoyk1gTaTG8vmG66GYMa99JxFZilTuIO9jx6lBdWdIGsVSnt2gzHIoGV4FoOEXveVR2m/uSjvYxdoYlW4dhe6bhWhuC9jkcvsR8s/H+OuWdfz+atCRpmv4uYYrGbphmOKTypUwIufXAACLZGBR62OBbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=st2LfaJ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiuEwbad"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25987C4CED3;
-	Wed,  6 Nov 2024 12:42:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="st2LfaJ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BEBDC4CED4;
+	Wed,  6 Nov 2024 12:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896965;
-	bh=8qZL4rDnxblA+lpiaoy2JAfeq+XJplfOMMHHeblh54Y=;
+	s=korg; t=1730896968;
+	bh=HS6+UJ4aHwUjwZE9j/9tAMsV1BfBDJAbNnlSH/hvnng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xiuEwbadf81mm/r0lfbDSFRdvJitXAGHy8815Ohso3HdcnC1P7uMQ5M+jaczXZ7r5
-	 Bktjslv0KYn3iCEpNZfcCtETRCspkAG0Xs19LaaOxqw3RAQJYVeTIX0lNuqFPHD5Ej
-	 pNstGqdZN0LrlDQyQOECI5dUIcpgD3LeGPnqJCsI=
+	b=st2LfaJ9/tIdOcnytRMVzujWf686uFFhehj3YHzNAU0NWCvYDqUWj2HJOakwoS21v
+	 NrAGM72qd6DvS5+SFK225qwleeoOtnfXAoMm1VhkGY5V9vPAU3KqFe7TqJDELiCnic
+	 MmuB/iru02ovjwA+Ek2x8NGtE7t3CrMpAU3NR/UQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Chris Mi <cmi@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Suraj Jaiswal <quic_jsuraj@quicinc.com>,
+	Furong Xu <0x1207@gmail.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
 	Simon Horman <horms@kernel.org>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/126] macsec: Fix use-after-free while sending the offloading packet
-Date: Wed,  6 Nov 2024 13:03:42 +0100
-Message-ID: <20241106120306.669367267@linuxfoundation.org>
+Subject: [PATCH 6.1 022/126] net: stmmac: TSO: Fix unbalanced DMA map/unmap for non-paged SKB data
+Date: Wed,  6 Nov 2024 13:03:43 +0100
+Message-ID: <20241106120306.695722994@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -56,120 +54,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Furong Xu <0x1207@gmail.com>
 
-[ Upstream commit f1e54d11b210b53d418ff1476c6b58a2f434dfc0 ]
+[ Upstream commit 66600fac7a984dea4ae095411f644770b2561ede ]
 
-KASAN reports the following UAF. The metadata_dst, which is used to
-store the SCI value for macsec offload, is already freed by
-metadata_dst_free() in macsec_free_netdev(), while driver still use it
-for sending the packet.
+In case the non-paged data of a SKB carries protocol header and protocol
+payload to be transmitted on a certain platform that the DMA AXI address
+width is configured to 40-bit/48-bit, or the size of the non-paged data
+is bigger than TSO_MAX_BUFF_SIZE on a certain platform that the DMA AXI
+address width is configured to 32-bit, then this SKB requires at least
+two DMA transmit descriptors to serve it.
 
-To fix this issue, dst_release() is used instead to release
-metadata_dst. So it is not freed instantly in macsec_free_netdev() if
-still referenced by skb.
+For example, three descriptors are allocated to split one DMA buffer
+mapped from one piece of non-paged data:
+    dma_desc[N + 0],
+    dma_desc[N + 1],
+    dma_desc[N + 2].
+Then three elements of tx_q->tx_skbuff_dma[] will be allocated to hold
+extra information to be reused in stmmac_tx_clean():
+    tx_q->tx_skbuff_dma[N + 0],
+    tx_q->tx_skbuff_dma[N + 1],
+    tx_q->tx_skbuff_dma[N + 2].
+Now we focus on tx_q->tx_skbuff_dma[entry].buf, which is the DMA buffer
+address returned by DMA mapping call. stmmac_tx_clean() will try to
+unmap the DMA buffer _ONLY_IF_ tx_q->tx_skbuff_dma[entry].buf
+is a valid buffer address.
 
- BUG: KASAN: slab-use-after-free in mlx5e_xmit+0x1e8f/0x4190 [mlx5_core]
- Read of size 2 at addr ffff88813e42e038 by task kworker/7:2/714
- [...]
- Workqueue: mld mld_ifc_work
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x51/0x60
-  print_report+0xc1/0x600
-  kasan_report+0xab/0xe0
-  mlx5e_xmit+0x1e8f/0x4190 [mlx5_core]
-  dev_hard_start_xmit+0x120/0x530
-  sch_direct_xmit+0x149/0x11e0
-  __qdisc_run+0x3ad/0x1730
-  __dev_queue_xmit+0x1196/0x2ed0
-  vlan_dev_hard_start_xmit+0x32e/0x510 [8021q]
-  dev_hard_start_xmit+0x120/0x530
-  __dev_queue_xmit+0x14a7/0x2ed0
-  macsec_start_xmit+0x13e9/0x2340
-  dev_hard_start_xmit+0x120/0x530
-  __dev_queue_xmit+0x14a7/0x2ed0
-  ip6_finish_output2+0x923/0x1a70
-  ip6_finish_output+0x2d7/0x970
-  ip6_output+0x1ce/0x3a0
-  NF_HOOK.constprop.0+0x15f/0x190
-  mld_sendpack+0x59a/0xbd0
-  mld_ifc_work+0x48a/0xa80
-  process_one_work+0x5aa/0xe50
-  worker_thread+0x79c/0x1290
-  kthread+0x28f/0x350
-  ret_from_fork+0x2d/0x70
-  ret_from_fork_asm+0x11/0x20
-  </TASK>
+The expected behavior that saves DMA buffer address of this non-paged
+data to tx_q->tx_skbuff_dma[entry].buf is:
+    tx_q->tx_skbuff_dma[N + 0].buf = NULL;
+    tx_q->tx_skbuff_dma[N + 1].buf = NULL;
+    tx_q->tx_skbuff_dma[N + 2].buf = dma_map_single();
+Unfortunately, the current code misbehaves like this:
+    tx_q->tx_skbuff_dma[N + 0].buf = dma_map_single();
+    tx_q->tx_skbuff_dma[N + 1].buf = NULL;
+    tx_q->tx_skbuff_dma[N + 2].buf = NULL;
 
- Allocated by task 3922:
-  kasan_save_stack+0x20/0x40
-  kasan_save_track+0x10/0x30
-  __kasan_kmalloc+0x77/0x90
-  __kmalloc_noprof+0x188/0x400
-  metadata_dst_alloc+0x1f/0x4e0
-  macsec_newlink+0x914/0x1410
-  __rtnl_newlink+0xe08/0x15b0
-  rtnl_newlink+0x5f/0x90
-  rtnetlink_rcv_msg+0x667/0xa80
-  netlink_rcv_skb+0x12c/0x360
-  netlink_unicast+0x551/0x770
-  netlink_sendmsg+0x72d/0xbd0
-  __sock_sendmsg+0xc5/0x190
-  ____sys_sendmsg+0x52e/0x6a0
-  ___sys_sendmsg+0xeb/0x170
-  __sys_sendmsg+0xb5/0x140
-  do_syscall_64+0x4c/0x100
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+On the stmmac_tx_clean() side, when dma_desc[N + 0] is closed by the
+DMA engine, tx_q->tx_skbuff_dma[N + 0].buf is a valid buffer address
+obviously, then the DMA buffer will be unmapped immediately.
+There may be a rare case that the DMA engine does not finish the
+pending dma_desc[N + 1], dma_desc[N + 2] yet. Now things will go
+horribly wrong, DMA is going to access a unmapped/unreferenced memory
+region, corrupted data will be transmited or iommu fault will be
+triggered :(
 
- Freed by task 4011:
-  kasan_save_stack+0x20/0x40
-  kasan_save_track+0x10/0x30
-  kasan_save_free_info+0x37/0x50
-  poison_slab_object+0x10c/0x190
-  __kasan_slab_free+0x11/0x30
-  kfree+0xe0/0x290
-  macsec_free_netdev+0x3f/0x140
-  netdev_run_todo+0x450/0xc70
-  rtnetlink_rcv_msg+0x66f/0xa80
-  netlink_rcv_skb+0x12c/0x360
-  netlink_unicast+0x551/0x770
-  netlink_sendmsg+0x72d/0xbd0
-  __sock_sendmsg+0xc5/0x190
-  ____sys_sendmsg+0x52e/0x6a0
-  ___sys_sendmsg+0xeb/0x170
-  __sys_sendmsg+0xb5/0x140
-  do_syscall_64+0x4c/0x100
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+In contrast, the for-loop that maps SKB fragments behaves perfectly
+as expected, and that is how the driver should do for both non-paged
+data and paged frags actually.
 
-Fixes: 0a28bfd4971f ("net/macsec: Add MACsec skb_metadata_dst Tx Data path support")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Chris Mi <cmi@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+This patch corrects DMA map/unmap sequences by fixing the array index
+for tx_q->tx_skbuff_dma[entry].buf when assigning DMA buffer address.
+
+Tested and verified on DWXGMAC CORE 3.20a
+
+Reported-by: Suraj Jaiswal <quic_jsuraj@quicinc.com>
+Fixes: f748be531d70 ("stmmac: support new GMAC4")
+Signed-off-by: Furong Xu <0x1207@gmail.com>
+Reviewed-by: Hariprasad Kelam <hkelam@marvell.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20241021100309.234125-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20241021061023.2162701-1-0x1207@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 22 ++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 3a19d6f0e0dd8..c007e262daf7d 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -3726,8 +3726,7 @@ static void macsec_free_netdev(struct net_device *dev)
- {
- 	struct macsec_dev *macsec = macsec_priv(dev);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 93630840309e7..045e57c444fd7 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4183,11 +4183,6 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	if (dma_mapping_error(priv->device, des))
+ 		goto dma_map_err;
  
--	if (macsec->secy.tx_sc.md_dst)
--		metadata_dst_free(macsec->secy.tx_sc.md_dst);
-+	dst_release(&macsec->secy.tx_sc.md_dst->dst);
- 	free_percpu(macsec->stats);
- 	free_percpu(macsec->secy.tx_sc.stats);
+-	tx_q->tx_skbuff_dma[first_entry].buf = des;
+-	tx_q->tx_skbuff_dma[first_entry].len = skb_headlen(skb);
+-	tx_q->tx_skbuff_dma[first_entry].map_as_page = false;
+-	tx_q->tx_skbuff_dma[first_entry].buf_type = STMMAC_TXBUF_T_SKB;
+-
+ 	if (priv->dma_cap.addr64 <= 32) {
+ 		first->des0 = cpu_to_le32(des);
  
+@@ -4206,6 +4201,23 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 
+ 	stmmac_tso_allocator(priv, des, tmp_pay_len, (nfrags == 0), queue);
+ 
++	/* In case two or more DMA transmit descriptors are allocated for this
++	 * non-paged SKB data, the DMA buffer address should be saved to
++	 * tx_q->tx_skbuff_dma[].buf corresponding to the last descriptor,
++	 * and leave the other tx_q->tx_skbuff_dma[].buf as NULL to guarantee
++	 * that stmmac_tx_clean() does not unmap the entire DMA buffer too early
++	 * since the tail areas of the DMA buffer can be accessed by DMA engine
++	 * sooner or later.
++	 * By saving the DMA buffer address to tx_q->tx_skbuff_dma[].buf
++	 * corresponding to the last descriptor, stmmac_tx_clean() will unmap
++	 * this DMA buffer right after the DMA engine completely finishes the
++	 * full buffer transmission.
++	 */
++	tx_q->tx_skbuff_dma[tx_q->cur_tx].buf = des;
++	tx_q->tx_skbuff_dma[tx_q->cur_tx].len = skb_headlen(skb);
++	tx_q->tx_skbuff_dma[tx_q->cur_tx].map_as_page = false;
++	tx_q->tx_skbuff_dma[tx_q->cur_tx].buf_type = STMMAC_TXBUF_T_SKB;
++
+ 	/* Prepare fragments */
+ 	for (i = 0; i < nfrags; i++) {
+ 		const skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
 -- 
 2.43.0
 
