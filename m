@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546461DE8A2;
-	Wed,  6 Nov 2024 12:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A751922DB;
+	Wed,  6 Nov 2024 12:15:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895350; cv=none; b=WFYhtMkgfsJK+0XHC84J6hk5fPHqq38qrkNfPqPLmIrvtMmNZT6TDgvtRd9/s+oM8KeQDt2wXZIhUT+dmHK2/3gUSfl+FG2vXvkcPVklcAyfvuzsltsKkzAnfTztnqsBnSGI21wSbtHlNWtOLuZAnHcE4jh+/aRg3CQ+I5Fd3JU=
+	t=1730895353; cv=none; b=HDebIV+oMnFfPVSiV29WCwse3IA0TaEFXyY4/IWqOc6sEGHwD36c3BzqSWorTN05sPDo9ll9dfPzRKPPRypCkoLvkF3OEsgjl01bTqxaKtHbjniOkWMZveTi8Q+4uXVx/r2VbC7/eZvij4PVNIA51Lm6JnUgWSOo/rGD5X3/aIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895350; c=relaxed/simple;
-	bh=0MKfJR2N5nZQiMADHSpEEYKzsKySVXX6f7TTG/PpXL0=;
+	s=arc-20240116; t=1730895353; c=relaxed/simple;
+	bh=AS81y26eVlgUsmw5W3S6/JDgeA5vsXbvMMD4+BQ8zig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=auXb+FMDDMRajirSUPi8ybPK3Sp0BQn1bM8v/1skzBKKk7EQXvGTt42IsbZ/HPDqQJ7TUZ7B1yffXfpiQjjFSEoDAAxYKcL14lNo1HD75JDZxxvq7pEBrg4cD2aIcCHaM+w0P3LQ1fR6EE0OqYMZt47XCvKcfSiu3fOWVf3jojA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inhuS4Tk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=idzNMokmYa5aTF2h32CsUnNrvkBqj5pnvnsFs8ICelVy6+Zs5XlubmL3r3/CGwT8ff59+wulEl3a8evhfOcYrBz1azI67c9iNNdgk2QeXdisMR6QVm5YwO4aZ1lOTsaKyWfuDoB2jsEHcxORajh5wEj0AN3Y+CMXzOWI6uqEoFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOBpcdQw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inhuS4Tk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAE9C4CECD;
-	Wed,  6 Nov 2024 12:15:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOBpcdQw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBA0C4CECD;
+	Wed,  6 Nov 2024 12:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895350;
-	bh=0MKfJR2N5nZQiMADHSpEEYKzsKySVXX6f7TTG/PpXL0=;
+	s=korg; t=1730895353;
+	bh=AS81y26eVlgUsmw5W3S6/JDgeA5vsXbvMMD4+BQ8zig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=inhuS4TkWwxlVoeuHLGcIg0FuHeps0WslTmTzCef7iKoiolOuF7wdjLqEGFR3QPqn
-	 jOdDWNhWI0LXL40nTRL54tNAfM7pYGgiWHHh3Soimn19T3ZP5vPJfzxVEeT7PT4JYq
-	 MxlNNlLb5sRWVN/ubNdcu8voEitrtnCNg9la2upY=
+	b=uOBpcdQw7w15S1O8dZf8zN+xBRUl3j+WstkHGwDTYf6dqeJaDLML2KDbmaKh5Wl9f
+	 YtIvOwzm6RNqb6WinjlZL7HDz5o7HPwTF8Y076sw6qippjL8bAB73A7eHOquEIFZV+
+	 23NaSTHJBnIkA9LeB4cmG3nnKEKGQsSj+ju/JtDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 4.19 188/350] ext4: no need to continue when the number of entries is 1
-Date: Wed,  6 Nov 2024 13:01:56 +0100
-Message-ID: <20241106120325.598920889@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.19 189/350] ext4: propagate errors from ext4_find_extent() in ext4_insert_range()
+Date: Wed,  6 Nov 2024 13:01:57 +0100
+Message-ID: <20241106120325.626148095@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,33 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 1a00a393d6a7fb1e745a41edd09019bd6a0ad64c upstream.
+commit 369c944ed1d7c3fb7b35f24e4735761153afe7b3 upstream.
 
-Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
-Reported-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ae688d469e36fb5138d0
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reported-and-tested-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/tencent_BE7AEE6C7C2D216CB8949CE8E6EE7ECC2C0A@qq.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Even though ext4_find_extent() returns an error, ext4_insert_range() still
+returns 0. This may confuse the user as to why fallocate returns success,
+but the contents of the file are not as expected. So propagate the error
+returned by ext4_find_extent() to avoid inconsistencies.
+
+Fixes: 331573febb6a ("ext4: Add support FALLOC_FL_INSERT_RANGE for fallocate")
 Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/20240822023545.1994557-11-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/extents.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -1832,7 +1832,7 @@ static struct ext4_dir_entry_2 *do_split
- 		split = count/2;
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -5731,6 +5731,7 @@ int ext4_insert_range(struct inode *inod
+ 	path = ext4_find_extent(inode, offset_lblk, NULL, 0);
+ 	if (IS_ERR(path)) {
+ 		up_write(&EXT4_I(inode)->i_data_sem);
++		ret = PTR_ERR(path);
+ 		goto out_stop;
+ 	}
  
- 	hash2 = map[split].hash;
--	continued = hash2 == map[split - 1].hash;
-+	continued = split > 0 ? hash2 == map[split - 1].hash : 0;
- 	dxtrace(printk(KERN_INFO "Split block %lu at %x, %i/%i\n",
- 			(unsigned long)dx_get_block(frame->at),
- 					hash2, split, count-split));
 
 
