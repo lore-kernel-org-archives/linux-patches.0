@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBCB1DF26B;
-	Wed,  6 Nov 2024 12:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A4C1DF726;
+	Wed,  6 Nov 2024 12:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895668; cv=none; b=g5n9RIFI9pxkSgwxtKn7UAK84eZ9pxsfrGCEcPwVZNTwfRJy/Acwq3s9sgdu5GW5u3o0UT5ilY4Kzlg6d1u7BObxjGnXeAhcoutekbO7rr1OYd703OZEZQI12CUhxiGkN/1HCSN08EQ0YKpEI/hf5LA0h6AJtCYJIMFTFbBcmt4=
+	t=1730895671; cv=none; b=fho2WcNbP2TRnmAhnx92LSkPYPyIQkfmpb/5Yu14JD46GTTLV2c0bS5jrcoeTLghGFIsY14NTcsQt4lZOVer5OtoSRuGtLIYmBtuMaJYARRicdTzhhZ8ZV/K/inmzwzVnDlGXJcX5AZFE+SR6Y/TYWf5hxx9cmoSRB/xf8nDqy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895668; c=relaxed/simple;
-	bh=za4hLLcq5kRj/fHnVm21o8n8iYDMCQcribV/yVi6KQo=;
+	s=arc-20240116; t=1730895671; c=relaxed/simple;
+	bh=XPI4VUzj/4UGHb2PNiaYIYrU8hqkBdyKks+aD097fsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pj+vey2Vb5CGn3wtLNU7Qc1CGyC1qg1UjTtNr8FT7vFOUKnqexC2eyE80NcJCWKnrqmN6Uxfa1qHkGCoZ8TEDuJJw95GU3+xLhpVtLt5q9BVLvol0/Yk9YRJznIwQdRVHjcycajhjxWRSpObeZgBdwX7Oje6L9KGAoQBgseymxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5DiDFsH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=euzCMgMYK50A8HZkVLLF9+cDpm30o/Amu+LjfDsgtaQuBUsCitNsAgxhVze+9RZBpXMKM3OlQK7xaJrSomxD9JrmWhbzhsQAOkCs8eS/OKfWCv8cx0q7j8q93Usq3iEVXntwTlOlVAMUWmcpZmrHW2Yepg0+mHtCWFw6JC5RiHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ErsVHl9y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5DiDFsH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9659AC4CECD;
-	Wed,  6 Nov 2024 12:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErsVHl9y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CA6C4CECD;
+	Wed,  6 Nov 2024 12:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895668;
-	bh=za4hLLcq5kRj/fHnVm21o8n8iYDMCQcribV/yVi6KQo=;
+	s=korg; t=1730895671;
+	bh=XPI4VUzj/4UGHb2PNiaYIYrU8hqkBdyKks+aD097fsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z5DiDFsHoZ/qlb1ipTEyjPRotFfmr4TceazOzatbswpEkLpeFbHbX//l2ZxB/CK/8
-	 Do8dZ/z9NFXrR+Alf87pmCuYGemXJX8tT5P+8EOC4tlBO4gxsFKqEw0T9LjbQSq0sw
-	 aZA2NoMPpnzLsE5mOtZ3604ucIzkIR6Q0nXx3OnA=
+	b=ErsVHl9yClhiM8fYS7B3g2fs5uviGE1MzpStcmM2OIGziu8M8E71ktXFphqlHvoj+
+	 A8TQ5GpAfwg5UxgjbD/N7++JH+V5YM0O47rGKm9ZzJvb3AHOyb2Dml7fn3qLL7YlaD
+	 1gx+F6APMljY5gTltsqAnFyqaTCgqOQt5DjNj4MI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Marek <jonathan@marek.ca>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 296/350] drm/msm/dsi: fix 32-bit signed integer extension in pclk_rate calculation
-Date: Wed,  6 Nov 2024 13:03:44 +0100
-Message-ID: <20241106120328.125042129@linuxfoundation.org>
+Subject: [PATCH 4.19 297/350] macsec: dont increment counters for an unrelated SA
+Date: Wed,  6 Nov 2024 13:03:45 +0100
+Message-ID: <20241106120328.147547435@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,44 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Marek <jonathan@marek.ca>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 358b762400bd94db2a14a72dfcef74c7da6bd845 ]
+[ Upstream commit cf58aefb1332db322060cad4a330d5f9292b0f41 ]
 
-When (mode->clock * 1000) is larger than (1<<31), int to unsigned long
-conversion will sign extend the int to 64 bits and the pclk_rate value
-will be incorrect.
+On RX, we shouldn't be incrementing the stats for an arbitrary SA in
+case the actual SA hasn't been set up. Those counters are intended to
+track packets for their respective AN when the SA isn't currently
+configured. Due to the way MACsec is implemented, we don't keep
+counters unless the SA is configured, so we can't track those packets,
+and those counters will remain at 0.
 
-Fix this by making the result of the multiplication unsigned.
+The RXSC's stats keeps track of those packets without telling us which
+AN they belonged to. We could add counters for non-existent SAs, and
+then find a way to integrate them in the dump to userspace, but I
+don't think it's worth the effort.
 
-Note that above (1<<32) would still be broken and require more changes, but
-its unlikely anyone will need that anytime soon.
-
-Fixes: c4d8cfe516dc ("drm/msm/dsi: add implementation for helper functions")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/618434/
-Link: https://lore.kernel.org/r/20241007050157.26855-2-jonathan@marek.ca
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fixes: 91ec9bd57f35 ("macsec: Fix traffic counters/statistics")
+Reported-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/f5ac92aaa5b89343232615f4c03f9f95042c6aa0.1728657709.git.sd@queasysnail.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/macsec.c | 18 ------------------
+ 1 file changed, 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 5f4dd3659bf96..137c0ec1b5772 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -671,7 +671,7 @@ static u32 dsi_get_pclk_rate(struct msm_dsi_host *msm_host, bool is_dual_dsi)
- 	struct drm_display_mode *mode = msm_host->mode;
- 	u32 pclk_rate;
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 54b19977fb675..d870a168caba0 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -322,19 +322,6 @@ static struct macsec_rx_sa *macsec_rxsa_get(struct macsec_rx_sa __rcu *ptr)
+ 	return sa;
+ }
  
--	pclk_rate = mode->clock * 1000;
-+	pclk_rate = mode->clock * 1000u;
+-static struct macsec_rx_sa *macsec_active_rxsa_get(struct macsec_rx_sc *rx_sc)
+-{
+-	struct macsec_rx_sa *sa = NULL;
+-	int an;
+-
+-	for (an = 0; an < MACSEC_NUM_AN; an++)	{
+-		sa = macsec_rxsa_get(rx_sc->sa[an]);
+-		if (sa)
+-			break;
+-	}
+-	return sa;
+-}
+-
+ static void free_rx_sc_rcu(struct rcu_head *head)
+ {
+ 	struct macsec_rx_sc *rx_sc = container_of(head, struct macsec_rx_sc, rcu_head);
+@@ -1206,15 +1193,12 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 		/* If validateFrames is Strict or the C bit in the
+ 		 * SecTAG is set, discard
+ 		 */
+-		struct macsec_rx_sa *active_rx_sa = macsec_active_rxsa_get(rx_sc);
+ 		if (hdr->tci_an & MACSEC_TCI_C ||
+ 		    secy->validate_frames == MACSEC_VALIDATE_STRICT) {
+ 			u64_stats_update_begin(&rxsc_stats->syncp);
+ 			rxsc_stats->stats.InPktsNotUsingSA++;
+ 			u64_stats_update_end(&rxsc_stats->syncp);
+ 			DEV_STATS_INC(secy->netdev, rx_errors);
+-			if (active_rx_sa)
+-				this_cpu_inc(active_rx_sa->stats->InPktsNotUsingSA);
+ 			goto drop_nosa;
+ 		}
  
- 	/*
- 	 * For dual DSI mode, the current DRM mode has the complete width of the
+@@ -1224,8 +1208,6 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
+ 		u64_stats_update_begin(&rxsc_stats->syncp);
+ 		rxsc_stats->stats.InPktsUnusedSA++;
+ 		u64_stats_update_end(&rxsc_stats->syncp);
+-		if (active_rx_sa)
+-			this_cpu_inc(active_rx_sa->stats->InPktsUnusedSA);
+ 		goto deliver;
+ 	}
+ 
 -- 
 2.43.0
 
