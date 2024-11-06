@@ -1,86 +1,180 @@
-Received: from pegase2.c-s.fr (pegase2.c-s.fr [93.17.235.10])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0851D54EE;
-	Wed,  6 Nov 2024 08:56:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=93.17.235.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E701DEFF4;
+	Wed,  6 Nov 2024 12:06:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730883368; cv=none; b=cQZs2B0ueU+/o3Ga+zPcY7I6iKb0Pah/tKh66dF2RRJr+EYY1NEQtgnJFud37mZtfcXDNG8yUPHfkLnRIllfaLnKFmgQISisherhBbSGySnL0moZ84Jx0oegjozfEFG5RcRnMWDRnVWGO8kClERRy7pch6yRFH2dJaWDl9yzb4k=
+	t=1730894812; cv=none; b=lxm7JwrdJpJiM+nv2HKTQL8V3f+66959LUw4yjShbGHo/uebD5VO6OAoGu4Vbr/AFjf41gTGzJZTcML44CeKLMct34hKnyl65Gnc2TfQroTgMSSGgYxdpK3m1DTbiNeGz2IVZ6kdYRBbGI7p0tr7HcxqDlAEnLDA4C9HlIdxMVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730883368; c=relaxed/simple;
-	bh=Y0dQB1ZgQx+DrmGc6ZBFECmZ51gAbPGgkwCJb99SIM4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FHUWIAoTKJ5SNJ8K84ZzCxwdiGurL/A1BIhcRhqjMUAiZGLmpUMCI4v7PNy6lMl5GBrkwSFVGPGX3ASshW0VbPz0hzduBNCbzzfcqb2+rTwGYdnw6sCcqIyUXr7a2S9r68TNgoRZADif/UkEtTNu2aRe0pUG6aH8nr3Kdw8+BJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu; spf=pass smtp.mailfrom=csgroup.eu; arc=none smtp.client-ip=93.17.235.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=csgroup.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=csgroup.eu
-Received: from localhost (mailhub3.si.c-s.fr [172.26.127.67])
-	by localhost (Postfix) with ESMTP id 4XjzZR0Ldwz9sRr;
-	Wed,  6 Nov 2024 09:55:59 +0100 (CET)
-X-Virus-Scanned: amavisd-new at c-s.fr
-Received: from pegase2.c-s.fr ([172.26.127.65])
-	by localhost (pegase2.c-s.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5HmlH4RdKwyO; Wed,  6 Nov 2024 09:55:58 +0100 (CET)
-Received: from messagerie.si.c-s.fr (messagerie.si.c-s.fr [192.168.25.192])
-	by pegase2.c-s.fr (Postfix) with ESMTP id 4XjzZQ6gnwz9sRk;
-	Wed,  6 Nov 2024 09:55:58 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by messagerie.si.c-s.fr (Postfix) with ESMTP id D44F78B77B;
-	Wed,  6 Nov 2024 09:55:58 +0100 (CET)
-X-Virus-Scanned: amavisd-new at c-s.fr
-Received: from messagerie.si.c-s.fr ([127.0.0.1])
-	by localhost (messagerie.si.c-s.fr [127.0.0.1]) (amavisd-new, port 10023)
-	with ESMTP id oCC65t6-tMXu; Wed,  6 Nov 2024 09:55:58 +0100 (CET)
-Received: from [192.168.232.93] (unknown [192.168.232.93])
-	by messagerie.si.c-s.fr (Postfix) with ESMTP id B3A5C8B77A;
-	Wed,  6 Nov 2024 09:55:58 +0100 (CET)
-Message-ID: <884cf694-09c7-4082-a6b1-6de987025bf8@csgroup.eu>
-Date: Wed, 6 Nov 2024 09:55:58 +0100
+	s=arc-20240116; t=1730894812; c=relaxed/simple;
+	bh=HOgOvCWXAACyuS2iSxOS3wm+74GE3vSf7jTlqppDZpw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=huGk2szS4li+eaiYeVLILfx1V469UvwcuybcwkN1SC0ZNOSDlrNNMW1o3gvwrEvKniCaUinZ2rDy9wsbnt0Gm1c4xuoUbAS7cgknZzT4ALstVJcFsq/G6mXD2lOYW6Wxoozi16v56Y7zuuAflfs25RlsnGpbDcTYKt9/uJ0FERk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PJ8m6Fgl; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PJ8m6Fgl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27D3C4CECD;
+	Wed,  6 Nov 2024 12:06:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1730894812;
+	bh=HOgOvCWXAACyuS2iSxOS3wm+74GE3vSf7jTlqppDZpw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=PJ8m6Fgl415x0Z+pD1qWMZr2//dAkWqng2TMYW11AuKcmenZi6d/QJfJvfui46jRt
+	 ID1O6jRXzqN8nZ4rw0grH1hwxbHl+UxIpVtS5Q1wOPNRxyF0yR2wpThfiEZ4g/oXDU
+	 JV0gFXrRmZMbkwMoiRG3Pt7xav/BrX8kwlS65dPM=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Beniamin Bia <beniamin.bia@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 001/350] staging: iio: frequency: ad9833: Get frequency value statically
+Date: Wed,  6 Nov 2024 12:58:49 +0100
+Message-ID: <20241106120320.904133443@linuxfoundation.org>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
+References: <20241106120320.865793091@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] powerpc/vdso: Drop -mstack-protector-guard flags in
- 32-bit files with clang
-To: Nathan Chancellor <nathan@kernel.org>,
- Michael Ellerman <mpe@ellerman.id.au>
-Cc: linuxppc-dev@lists.ozlabs.org, llvm@lists.linux.dev,
- patches@lists.linux.dev, stable@vger.kernel.org
-References: <20241030-powerpc-vdso-drop-stackp-flags-clang-v1-1-d95e7376d29c@kernel.org>
-Content-Language: fr-FR
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
-In-Reply-To: <20241030-powerpc-vdso-drop-stackp-flags-clang-v1-1-d95e7376d29c@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
+4.19-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Beniamin Bia <biabeniamin@gmail.com>
+
+[ Upstream commit 80109c32348d7b2e85def9efc3f9524fb166569d ]
+
+The values from platform data were replaced by statically values.
+This was just a intermediate step of taking this driver out of staging and
+load data from device tree.
+
+Signed-off-by: Beniamin Bia <beniamin.bia@analog.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: b48aa9917589 ("staging: iio: frequency: ad9834: Validate frequency parameter value")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/staging/iio/frequency/ad9834.c | 21 +++++++------------
+ drivers/staging/iio/frequency/ad9834.h | 28 --------------------------
+ 2 files changed, 7 insertions(+), 42 deletions(-)
+
+diff --git a/drivers/staging/iio/frequency/ad9834.c b/drivers/staging/iio/frequency/ad9834.c
+index 4c6d4043903e..f6b36eedd48e 100644
+--- a/drivers/staging/iio/frequency/ad9834.c
++++ b/drivers/staging/iio/frequency/ad9834.c
+@@ -389,16 +389,11 @@ static const struct iio_info ad9833_info = {
+ 
+ static int ad9834_probe(struct spi_device *spi)
+ {
+-	struct ad9834_platform_data *pdata = dev_get_platdata(&spi->dev);
+ 	struct ad9834_state *st;
+ 	struct iio_dev *indio_dev;
+ 	struct regulator *reg;
+ 	int ret;
+ 
+-	if (!pdata) {
+-		dev_dbg(&spi->dev, "no platform data?\n");
+-		return -ENODEV;
+-	}
+ 
+ 	reg = devm_regulator_get(&spi->dev, "avdd");
+ 	if (IS_ERR(reg))
+@@ -418,7 +413,7 @@ static int ad9834_probe(struct spi_device *spi)
+ 	spi_set_drvdata(spi, indio_dev);
+ 	st = iio_priv(indio_dev);
+ 	mutex_init(&st->lock);
+-	st->mclk = pdata->mclk;
++	st->mclk = 25000000;
+ 	st->spi = spi;
+ 	st->devid = spi_get_device_id(spi)->driver_data;
+ 	st->reg = reg;
+@@ -454,11 +449,9 @@ static int ad9834_probe(struct spi_device *spi)
+ 	spi_message_add_tail(&st->freq_xfer[1], &st->freq_msg);
+ 
+ 	st->control = AD9834_B28 | AD9834_RESET;
++	st->control |= AD9834_DIV2;
+ 
+-	if (!pdata->en_div2)
+-		st->control |= AD9834_DIV2;
+-
+-	if (!pdata->en_signbit_msb_out && (st->devid == ID_AD9834))
++	if (st->devid == ID_AD9834)
+ 		st->control |= AD9834_SIGN_PIB;
+ 
+ 	st->data = cpu_to_be16(AD9834_REG_CMD | st->control);
+@@ -468,19 +461,19 @@ static int ad9834_probe(struct spi_device *spi)
+ 		goto error_disable_reg;
+ 	}
+ 
+-	ret = ad9834_write_frequency(st, AD9834_REG_FREQ0, pdata->freq0);
++	ret = ad9834_write_frequency(st, AD9834_REG_FREQ0, 1000000);
+ 	if (ret)
+ 		goto error_disable_reg;
+ 
+-	ret = ad9834_write_frequency(st, AD9834_REG_FREQ1, pdata->freq1);
++	ret = ad9834_write_frequency(st, AD9834_REG_FREQ1, 5000000);
+ 	if (ret)
+ 		goto error_disable_reg;
+ 
+-	ret = ad9834_write_phase(st, AD9834_REG_PHASE0, pdata->phase0);
++	ret = ad9834_write_phase(st, AD9834_REG_PHASE0, 512);
+ 	if (ret)
+ 		goto error_disable_reg;
+ 
+-	ret = ad9834_write_phase(st, AD9834_REG_PHASE1, pdata->phase1);
++	ret = ad9834_write_phase(st, AD9834_REG_PHASE1, 1024);
+ 	if (ret)
+ 		goto error_disable_reg;
+ 
+diff --git a/drivers/staging/iio/frequency/ad9834.h b/drivers/staging/iio/frequency/ad9834.h
+index ae620f38eb49..da7e83ceedad 100644
+--- a/drivers/staging/iio/frequency/ad9834.h
++++ b/drivers/staging/iio/frequency/ad9834.h
+@@ -8,32 +8,4 @@
+ #ifndef IIO_DDS_AD9834_H_
+ #define IIO_DDS_AD9834_H_
+ 
+-/*
+- * TODO: struct ad7887_platform_data needs to go into include/linux/iio
+- */
+-
+-/**
+- * struct ad9834_platform_data - platform specific information
+- * @mclk:		master clock in Hz
+- * @freq0:		power up freq0 tuning word in Hz
+- * @freq1:		power up freq1 tuning word in Hz
+- * @phase0:		power up phase0 value [0..4095] correlates with 0..2PI
+- * @phase1:		power up phase1 value [0..4095] correlates with 0..2PI
+- * @en_div2:		digital output/2 is passed to the SIGN BIT OUT pin
+- * @en_signbit_msb_out:	the MSB (or MSB/2) of the DAC data is connected to the
+- *			SIGN BIT OUT pin. en_div2 controls whether it is the MSB
+- *			or MSB/2 that is output. if en_signbit_msb_out=false,
+- *			the on-board comparator is connected to SIGN BIT OUT
+- */
+-
+-struct ad9834_platform_data {
+-	unsigned int		mclk;
+-	unsigned int		freq0;
+-	unsigned int		freq1;
+-	unsigned short		phase0;
+-	unsigned short		phase1;
+-	bool			en_div2;
+-	bool			en_signbit_msb_out;
+-};
+-
+ #endif /* IIO_DDS_AD9834_H_ */
+-- 
+2.43.0
 
 
-Le 30/10/2024 à 19:41, Nathan Chancellor a écrit :
-> Under certain conditions, the 64-bit '-mstack-protector-guard' flags may
-> end up in the 32-bit vDSO flags, resulting in build failures due to the
-> structure of clang's argument parsing of the stack protector options,
-> which validates the arguments of the stack protector guard flags
-> unconditionally in the frontend, choking on the 64-bit values when
-> targeting 32-bit:
-> 
->    clang: error: invalid value 'r13' in 'mstack-protector-guard-reg=', expected one of: r2
->    clang: error: invalid value 'r13' in 'mstack-protector-guard-reg=', expected one of: r2
->    make[3]: *** [arch/powerpc/kernel/vdso/Makefile:85: arch/powerpc/kernel/vdso/vgettimeofday-32.o] Error 1
->    make[3]: *** [arch/powerpc/kernel/vdso/Makefile:87: arch/powerpc/kernel/vdso/vgetrandom-32.o] Error 1
-> 
-> Remove these flags by adding them to the CC32FLAGSREMOVE variable, which
-> already handles situations similar to this. Additionally, reformat and
-> align a comment better for the expanding CONFIG_CC_IS_CLANG block.
 
-Is the problem really exclusively for 32-bit VDSO on 64-bit kernel ?
-In any case, it is just wrong to have anything related to stack 
-protection in VDSO, for this reason we have the following in Makefile:
-
-ccflags-y += $(call cc-option, -fno-stack-protector)
-
-If it is not enough, should we have more complete ?
-
-Christophe
