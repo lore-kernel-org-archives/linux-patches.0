@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF451DE8B4;
-	Wed,  6 Nov 2024 12:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCEBA1DF254;
+	Wed,  6 Nov 2024 12:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895427; cv=none; b=X4RDDIupO8gc8rjX0DWJUVWJjakbBjfjoeChWeyz9ZAc/YF2iRSklctOFgY6RWf0Qpt4ueJoPRzAq8a38KjQhS9CXyR834INxSwwoUv0QF1TmMt8WWOR5DyvqQJLaRJ7yOxD6+2jFQmYagYDq0YHISErnDOu0qUE+J4ZR4If8NM=
+	t=1730895430; cv=none; b=d06U/vB148B7fwn5wUXaM7x0TMUkHcGIQej0ed/VwFx6RQWw+QoFe2kSBh7+8Tj5ncf+PV6HHOgWusf5MLXdGwjyyhcvSyZ/gMubYr6s7Cpm/jIaUsw4zEKnEaRgmhsWxkwd5w/rDkgUuevaUrGLKAudPFoywDhXC7k8fezHt5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895427; c=relaxed/simple;
-	bh=Npq0ejoPEzmE8HYcOO/rj+Akm9i6hopjFbLy5SrmgSA=;
+	s=arc-20240116; t=1730895430; c=relaxed/simple;
+	bh=7zKF38gBuyE29DEL1siYIxeN5EtNrKVh8/t7nARVPwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mpGrxdrrqJV1unZpBcMgOmI3EItUppRsRIC8PgHiBRUhwTzd8h28mmDBEJMB3RggsO6hFVlrG4tQFYMfJiUzugiUCjBrsWrYrDhdjCWvfwOdK96H2CXPqpUGP8sT3ZRrfEAU6VIwhWBGaMWRGi/mtnKR4gkENWl6dBjT2PQNsck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ngjUfCaz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HbIGLUrMuxIXz7YHQQKBqNc6dSuXEwAEmYbnZFUU3QNiGB411zYcxjiRhHM2La78KdoEhkfZOa8IpHIgtsG4Y8rbSoBNsKDUQAPN1zvUXoI6SAzX+eZi/HCTvEoyrghvSjXfd/+r2QoEbSy+zyFHP3EDNbrCtgxnfZwoQnn5fDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8YF8bx0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ngjUfCaz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26871C4CECD;
-	Wed,  6 Nov 2024 12:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8YF8bx0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1055BC4CECD;
+	Wed,  6 Nov 2024 12:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895427;
-	bh=Npq0ejoPEzmE8HYcOO/rj+Akm9i6hopjFbLy5SrmgSA=;
+	s=korg; t=1730895430;
+	bh=7zKF38gBuyE29DEL1siYIxeN5EtNrKVh8/t7nARVPwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ngjUfCazgLoICKxaW2fjxP8WcYNAnW1iV9D+I7JWiu3ZloUAna8691u3Dalc7Q3+P
-	 SJEGgN4ZvLohFrz7PBYcD7v85AGsX1esyezB8AlKWvpPH5m7P05youjAfZsItK226h
-	 YaEhZrAXDqhqR4t+U9XgACtV3ZiCQOTNPhiZw4I4=
+	b=N8YF8bx05KeSzt4KYW1Lyx1qdB6DjOrHbpSFbFFsyjbV7kgbmDTmzlM/EBeu7rYV/
+	 CnYATNU1tyQKgJozOOlV/I2e6ZrGl9j/e4EqUs/NEeTx/b++snuiLPFnY6+b1Y66Bb
+	 E09KBLgfgg71DYn5b54S4UDJ/QDBmzPmhkhVGkd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e38d703eeb410b17b473@syzkaller.appspotmail.com,
-	Remington Brasga <rbrasga@uci.edu>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 168/350] jfs: UBSAN: shift-out-of-bounds in dbFindBits
-Date: Wed,  6 Nov 2024 13:01:36 +0100
-Message-ID: <20241106120325.075232910@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 4.19 208/350] media: venus: fix use after free bug in venus_remove due to race condition
+Date: Wed,  6 Nov 2024 13:02:16 +0100
+Message-ID: <20241106120326.124322145@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,35 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remington Brasga <rbrasga@uci.edu>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit b0b2fc815e514221f01384f39fbfbff65d897e1c ]
+commit c5a85ed88e043474161bbfe54002c89c1cb50ee2 upstream.
 
-Fix issue with UBSAN throwing shift-out-of-bounds warning.
+in venus_probe, core->work is bound with venus_sys_error_handler, which is
+used to handle error. The code use core->sys_err_done to make sync work.
+The core->work is started in venus_event_notify.
 
-Reported-by: syzbot+e38d703eeb410b17b473@syzkaller.appspotmail.com
-Signed-off-by: Remington Brasga <rbrasga@uci.edu>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If we call venus_remove, there might be an unfished work. The possible
+sequence is as follows:
+
+CPU0                  CPU1
+
+                     |venus_sys_error_handler
+venus_remove         |
+hfi_destroy	 		 |
+venus_hfi_destroy	 |
+kfree(hdev);	     |
+                     |hfi_reinit
+					 |venus_hfi_queues_reinit
+                     |//use hdev
+
+Fix it by canceling the work in venus_remove.
+
+Cc: stable@vger.kernel.org
+Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/jfs_dmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/venus/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 1128bcdf5024a..9f731847ae634 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -3097,7 +3097,7 @@ static int dbFindBits(u32 word, int l2nb)
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -348,6 +348,7 @@ static int venus_remove(struct platform_
+ 	struct device *dev = core->dev;
+ 	int ret;
  
- 	/* scan the word for nb free bits at nb alignments.
- 	 */
--	for (bitno = 0; mask != 0; bitno += nb, mask >>= nb) {
-+	for (bitno = 0; mask != 0; bitno += nb, mask = (mask >> nb)) {
- 		if ((mask & word) == mask)
- 			break;
- 	}
--- 
-2.43.0
-
++	cancel_delayed_work_sync(&core->work);
+ 	ret = pm_runtime_get_sync(dev);
+ 	WARN_ON(ret < 0);
+ 
 
 
