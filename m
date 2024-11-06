@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F901F4708;
-	Wed,  6 Nov 2024 12:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C671F4298;
+	Wed,  6 Nov 2024 12:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897644; cv=none; b=T3XxhIf2Pu6AQCR23DibZ5T9rZh6d7SS0BRrV5U77mOAwyV/gxHbMB1CqXp0q8PJ+qK9Uxx3Qy2hCg7KRKRXE9EoH0hLRqdtvaek2+jpmzDbiQrJ45WcsRfnS9vQYTQj6GOaOSynQNy+ZOn0Jwh6TaMqVFJ1GyryDpUfgekDuqA=
+	t=1730897646; cv=none; b=DlZ1eJAmvAWB2RJtFv3BvxrSR/n7PP5TIjknLw1fnQWwNqqZIIxcE15GVHv4+aoMDHyb4bk+oJUtNDzbuyOgaiHRcGkLwdadboofCyM254KElRuXKo6NYD3sS4Sr11EjVYJmuZx8ziloYnp7Xusd6gKo1caJW/E/x5+Vrzdz7Lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897644; c=relaxed/simple;
-	bh=qbFPHYFPAK14Rj8LuFImtwjZmXKiX6ModhTIKpDZ0OA=;
+	s=arc-20240116; t=1730897646; c=relaxed/simple;
+	bh=CmjDuqW+1mjFav0uaNyTroAZ95f2SO8NuA6jjf/ptKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szbvYzq/qf3R+id/xLaViNSIYqiBSQ2fawSktu6gblWT4gvEO4+mQUsN2UZZMzg0YnClJvZ//OOI66kfb9V84/iMrvU56E4luuucLEDbTWYlDW2SIG3PaVYQznXREDT+zY88NOhbdQwC+b/N4nqulhXAg0tO3gwjQc+zuC7dd4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCXfMQTA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ClZs90KcrLd2BiMO3F6lCcpgWdfbJ4AXA0i6XTF68JvwZEzAqU5OV6veqRSBPM4hxRrNXYJgBRnHzR/0z1Ej6eCzq2+uL0/ep+qZ6A/KwZnef2B0NNAvHRfAxX1x0EO/AgkWCCrgLnEGpgXrzTnDDdvzdYqsFKhRXaOPpy1/Pxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvjdBtkV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCXfMQTA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EA5C4CECD;
-	Wed,  6 Nov 2024 12:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvjdBtkV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E464C4CED4;
+	Wed,  6 Nov 2024 12:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897643;
-	bh=qbFPHYFPAK14Rj8LuFImtwjZmXKiX6ModhTIKpDZ0OA=;
+	s=korg; t=1730897646;
+	bh=CmjDuqW+1mjFav0uaNyTroAZ95f2SO8NuA6jjf/ptKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCXfMQTAArEj/YIeuGwbxN17/DJOQiMo9oTSzWhr/KLxAi6xcktjf+xnquugO9v5j
-	 Tsdhl3zhdB72hcdEXPk3Ifq05ffQZRU4/TNt9arBmjQ0s9MeAcpceB1SsRPfL6E2DH
-	 ALzegXqMtDnfa7K4zUAbBWIE5baI7aMxxt8DYeZQ=
+	b=WvjdBtkV7f53oRR4/PY1tDFZBFZRb58/DdawU2ovPsai111JlL2xChVdwIjngMc97
+	 BtGMqhy1KT0oX8ms6NEphCL7aaYOOSdkfL9tH5yTsJc8jm4WCIMCBy8rpBJ5TXwEJT
+	 GOcykKlJbfKuQ7FvRS7/C92Nigz8ESkLGllwDejc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Christian Brauner <brauner@kernel.org>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/151] iov_iter: fix copy_page_from_iter_atomic() if KMAP_LOCAL_FORCE_MAP
-Date: Wed,  6 Nov 2024 13:05:11 +0100
-Message-ID: <20241106120312.250634648@linuxfoundation.org>
+Subject: [PATCH 6.6 124/151] mptcp: init: protect sched with rcu_read_lock
+Date: Wed,  6 Nov 2024 13:05:12 +0100
+Message-ID: <20241106120312.278947048@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -52,68 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugh Dickins <hughd@google.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit c749d9b7ebbc5716af7a95f7768634b30d9446ec ]
+[ Upstream commit 3deb12c788c385e17142ce6ec50f769852fcec65 ]
 
-generic/077 on x86_32 CONFIG_DEBUG_KMAP_LOCAL_FORCE_MAP=y with highmem,
-on huge=always tmpfs, issues a warning and then hangs (interruptibly):
+Enabling CONFIG_PROVE_RCU_LIST with its dependence CONFIG_RCU_EXPERT
+creates this splat when an MPTCP socket is created:
 
-WARNING: CPU: 5 PID: 3517 at mm/highmem.c:622 kunmap_local_indexed+0x62/0xc9
-CPU: 5 UID: 0 PID: 3517 Comm: cp Not tainted 6.12.0-rc4 #2
-...
-copy_page_from_iter_atomic+0xa6/0x5ec
-generic_perform_write+0xf6/0x1b4
-shmem_file_write_iter+0x54/0x67
+  =============================
+  WARNING: suspicious RCU usage
+  6.12.0-rc2+ #11 Not tainted
+  -----------------------------
+  net/mptcp/sched.c:44 RCU-list traversed in non-reader section!!
 
-Fix copy_page_from_iter_atomic() by limiting it in that case
-(include/linux/skbuff.h skb_frag_must_loop() does similar).
+  other info that might help us debug this:
 
-But going forward, perhaps CONFIG_DEBUG_KMAP_LOCAL_FORCE_MAP is too
-surprising, has outlived its usefulness, and should just be removed?
+  rcu_scheduler_active = 2, debug_locks = 1
+  no locks held by mptcp_connect/176.
 
-Fixes: 908a1ad89466 ("iov_iter: Handle compound highmem pages in copy_page_from_iter_atomic()")
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Link: https://lore.kernel.org/r/dd5f0c89-186e-18e1-4f43-19a60f5a9774@google.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+  stack backtrace:
+  CPU: 0 UID: 0 PID: 176 Comm: mptcp_connect Not tainted 6.12.0-rc2+ #11
+  Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+  Call Trace:
+   <TASK>
+   dump_stack_lvl (lib/dump_stack.c:123)
+   lockdep_rcu_suspicious (kernel/locking/lockdep.c:6822)
+   mptcp_sched_find (net/mptcp/sched.c:44 (discriminator 7))
+   mptcp_init_sock (net/mptcp/protocol.c:2867 (discriminator 1))
+   ? sock_init_data_uid (arch/x86/include/asm/atomic.h:28)
+   inet_create.part.0.constprop.0 (net/ipv4/af_inet.c:386)
+   ? __sock_create (include/linux/rcupdate.h:347 (discriminator 1))
+   __sock_create (net/socket.c:1576)
+   __sys_socket (net/socket.c:1671)
+   ? __pfx___sys_socket (net/socket.c:1712)
+   ? do_user_addr_fault (arch/x86/mm/fault.c:1419 (discriminator 1))
+   __x64_sys_socket (net/socket.c:1728)
+   do_syscall_64 (arch/x86/entry/common.c:52 (discriminator 1))
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+That's because when the socket is initialised, rcu_read_lock() is not
+used despite the explicit comment written above the declaration of
+mptcp_sched_find() in sched.c. Adding the missing lock/unlock avoids the
+warning.
+
+Fixes: 1730b2b2c5a5 ("mptcp: add sched in mptcp_sock")
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/523
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241021-net-mptcp-sched-lock-v1-1-637759cf061c@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/iov_iter.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/mptcp/protocol.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/lib/iov_iter.c b/lib/iov_iter.c
-index 27234a820eeb3..a4bb47efafe37 100644
---- a/lib/iov_iter.c
-+++ b/lib/iov_iter.c
-@@ -570,6 +570,8 @@ size_t copy_page_from_iter_atomic(struct page *page, size_t offset,
- 		size_t bytes, struct iov_iter *i)
- {
- 	size_t n, copied = 0;
-+	bool uses_kmap = IS_ENABLED(CONFIG_DEBUG_KMAP_LOCAL_FORCE_MAP) ||
-+			 PageHighMem(page);
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 8cdd4ec152e7b..cd6f8d655c185 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2823,8 +2823,10 @@ static int mptcp_init_sock(struct sock *sk)
+ 	if (unlikely(!net->mib.mptcp_statistics) && !mptcp_mib_alloc(net))
+ 		return -ENOMEM;
  
- 	if (!page_copy_sane(page, offset, bytes))
- 		return 0;
-@@ -580,7 +582,7 @@ size_t copy_page_from_iter_atomic(struct page *page, size_t offset,
- 		char *p;
++	rcu_read_lock();
+ 	ret = mptcp_init_sched(mptcp_sk(sk),
+ 			       mptcp_sched_find(mptcp_get_scheduler(net)));
++	rcu_read_unlock();
+ 	if (ret)
+ 		return ret;
  
- 		n = bytes - copied;
--		if (PageHighMem(page)) {
-+		if (uses_kmap) {
- 			page += offset / PAGE_SIZE;
- 			offset %= PAGE_SIZE;
- 			n = min_t(size_t, n, PAGE_SIZE - offset);
-@@ -594,7 +596,7 @@ size_t copy_page_from_iter_atomic(struct page *page, size_t offset,
- 		kunmap_atomic(p);
- 		copied += n;
- 		offset += n;
--	} while (PageHighMem(page) && copied != bytes && n > 0);
-+	} while (uses_kmap && copied != bytes && n > 0);
- 
- 	return copied;
- }
 -- 
 2.43.0
 
