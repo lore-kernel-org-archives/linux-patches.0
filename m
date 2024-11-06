@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976521E04A6;
-	Wed,  6 Nov 2024 13:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4ED1DFE1E;
+	Wed,  6 Nov 2024 13:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898420; cv=none; b=AwlfdF1BY2XXj25F4emqZQmexZB3ZPs7BTxSg3cvIYS53V60wGfVAZxrR5ruNr3+bbaWIup1xXZeMCvO3fIcv6NVO15ITP83xUXurBlchRnXo/lsLN5BsoP6b8hzRGm2osPmU8Js/2BJ9keG0Lys08F3qE8Ch/wwNCjH4nzLwMs=
+	t=1730898423; cv=none; b=JBnauJPbX/Ctsvh1136mZjxeOKToKF+i37KncKcuZkApvt30orAvVHDHSHSjbhkRh5mwrbgmlTQ5ujsSKbhyFVRxHrqeftDJt1pmn9eck2PvLqSfUGYOWmFQLC9OlAF0VFe0c5sDDzof+pV6Slf03AzPv27pC0p5NwQkrIt/K50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898420; c=relaxed/simple;
-	bh=Jr1HD/EmXCZWn9nTa50OtWzV9DSsv03wKFo975lgZPw=;
+	s=arc-20240116; t=1730898423; c=relaxed/simple;
+	bh=OEC/1xf/50cr+WXvtVpX6TdZKrulgGxe4+TGaepuj5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fyFH+rK/qH5fHZz28YkBELZkpA4Qi/jxFisvOWdwpl8SPNa/Ijx1vd/dDC0fZmbRS6OyWyZpLnQz0HYCACjQds4/Yb3o2vJnWCpmtgdR7MP+Yi0prMaImyh9ufKmSnz9QfoNhoAFrFWr2ZHau6dPyMQWmMrneC5Z694YpmvPMlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGYFMlEO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=az5Lj/xUmQy9pXtsBMyxAXkyR2fpNettCWF3ZqWJwLTREANAhdll+c3cdV0KhJOwBztdv+US2rCgJg9AGapQpZrESQzM29wRXvq26cX+f+UuzCvS8fMzMHjCHxj0liZoc6tcj/zM/qNPaZWhk0RUKb78E3eV9ivcZanoVw5w4ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtomloAP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGYFMlEO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F109C4CECD;
-	Wed,  6 Nov 2024 13:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtomloAP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16251C4CECD;
+	Wed,  6 Nov 2024 13:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898420;
-	bh=Jr1HD/EmXCZWn9nTa50OtWzV9DSsv03wKFo975lgZPw=;
+	s=korg; t=1730898423;
+	bh=OEC/1xf/50cr+WXvtVpX6TdZKrulgGxe4+TGaepuj5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DGYFMlEOqZAzJolWLq8jj4dL80zGuCB8BGEUlwTXZLdfALfE4FyCWnIO4wW01+Czn
-	 Yrv0e8qO9Ndmo2Pt6P46fSi4KzQLfng8W9jgRh2wqHwBHNmivwjbDD/BdP3KUs5bUU
-	 pYI48RRU+RfrjfR0qf1+wOw9l3HCR+kg3fseYCeQ=
+	b=HtomloAPCf+oVZ47L52m7cBXNaxZyYBi3dXqLfnhNJ/TT1JVjb5oHGOHhXa9nIVFp
+	 lzr157i2jmvLknEeyEVjZpYYxixmtihWXBp6CnQFmxElggMB4rW/LBUdjBbICZqhk0
+	 O5GmkW+Q2O5xTdXedhl6lhPGs/yvf5pkx+BR8WCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.4 196/462] ice: Adjust over allocation of memory in ice_sched_add_root_node() and ice_sched_add_node()
-Date: Wed,  6 Nov 2024 13:01:29 +0100
-Message-ID: <20241106120336.356785183@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 187/462] net: add more sanity checks to qdisc_pkt_len_init()
+Date: Wed,  6 Nov 2024 13:01:20 +0100
+Message-ID: <20241106120336.133793273@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -54,58 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 62fdaf9e8056e9a9e6fe63aa9c816ec2122d60c6 ]
+[ Upstream commit ab9a9a9e9647392a19e7a885b08000e89c86b535 ]
 
-In ice_sched_add_root_node() and ice_sched_add_node() there are calls to
-devm_kcalloc() in order to allocate memory for array of pointers to
-'ice_sched_node' structure. But incorrect types are used as sizeof()
-arguments in these calls (structures instead of pointers) which leads to
-over allocation of memory.
+One path takes care of SKB_GSO_DODGY, assuming
+skb->len is bigger than hdr_len.
 
-Adjust over allocation of memory by correcting types in devm_kcalloc()
-sizeof() arguments.
+virtio_net_hdr_to_skb() does not fully dissect TCP headers,
+it only make sure it is at least 20 bytes.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+It is possible for an user to provide a malicious 'GSO' packet,
+total length of 80 bytes.
 
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+- 20 bytes of IPv4 header
+- 60 bytes TCP header
+- a small gso_size like 8
+
+virtio_net_hdr_to_skb() would declare this packet as a normal
+GSO packet, because it would see 40 bytes of payload,
+bigger than gso_size.
+
+We need to make detect this case to not underflow
+qdisc_skb_cb(skb)->pkt_len.
+
+Fixes: 1def9238d4aa ("net_sched: more precise pkt_len computation")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_sched.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/core/dev.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_sched.c b/drivers/net/ethernet/intel/ice/ice_sched.c
-index 2fde9653a608f..d1c0ccee879bc 100644
---- a/drivers/net/ethernet/intel/ice/ice_sched.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sched.c
-@@ -27,9 +27,8 @@ ice_sched_add_root_node(struct ice_port_info *pi,
- 	if (!root)
- 		return ICE_ERR_NO_MEMORY;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 5e75359acd0c5..8f2f14df3610b 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3383,10 +3383,14 @@ static void qdisc_pkt_len_init(struct sk_buff *skb)
+ 				hdr_len += sizeof(struct udphdr);
+ 		}
  
--	/* coverity[suspicious_sizeof] */
- 	root->children = devm_kcalloc(ice_hw_to_dev(hw), hw->max_children[0],
--				      sizeof(*root), GFP_KERNEL);
-+				      sizeof(*root->children), GFP_KERNEL);
- 	if (!root->children) {
- 		devm_kfree(ice_hw_to_dev(hw), root);
- 		return ICE_ERR_NO_MEMORY;
-@@ -181,10 +180,9 @@ ice_sched_add_node(struct ice_port_info *pi, u8 layer,
- 	if (!node)
- 		return ICE_ERR_NO_MEMORY;
- 	if (hw->max_children[layer]) {
--		/* coverity[suspicious_sizeof] */
- 		node->children = devm_kcalloc(ice_hw_to_dev(hw),
- 					      hw->max_children[layer],
--					      sizeof(*node), GFP_KERNEL);
-+					      sizeof(*node->children), GFP_KERNEL);
- 		if (!node->children) {
- 			devm_kfree(ice_hw_to_dev(hw), node);
- 			return ICE_ERR_NO_MEMORY;
+-		if (shinfo->gso_type & SKB_GSO_DODGY)
+-			gso_segs = DIV_ROUND_UP(skb->len - hdr_len,
+-						shinfo->gso_size);
++		if (unlikely(shinfo->gso_type & SKB_GSO_DODGY)) {
++			int payload = skb->len - hdr_len;
+ 
++			/* Malicious packet. */
++			if (payload <= 0)
++				return;
++			gso_segs = DIV_ROUND_UP(payload, shinfo->gso_size);
++		}
+ 		qdisc_skb_cb(skb)->pkt_len += (gso_segs - 1) * hdr_len;
+ 	}
+ }
 -- 
 2.43.0
 
