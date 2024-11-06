@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C6A1DFD87;
-	Wed,  6 Nov 2024 12:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DDA4207F;
+	Wed,  6 Nov 2024 12:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896209; cv=none; b=Z/GC+6uzQ4FB4jqoDZqARMbgNbGiRX8z9hGN05MXRAd2aLC5m1JT2ZsfpzZLNyAYwwp3fvdJfwY8l9Em+wzFhBub08GYucfd+4H4h1JJDFwYwk8BpJMhP+njIU3nI9MqnRamwWLZPoMH73EvFqsbu3Fnz7F3++ekXyFb97WF50c=
+	t=1730896212; cv=none; b=HofGvYp9g+eMgIBeIisoSCfbazbA601sHRh9GS00zMtED4z12wqm+55+P0w2nOGwreanWfURzgAv8WX13SPdtnlHYKB2DOVzTAYnCynZQ52t8+R68EmtaMOOImXi7ISCA3ft56BEnjAI4jmdVhjm3vdYUCNo+QhNCCZ0Kl1KDq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896209; c=relaxed/simple;
-	bh=KAjCgcroxrBk+ExlUHExIq7JU6GkCrov3hqA2tP8cSY=;
+	s=arc-20240116; t=1730896212; c=relaxed/simple;
+	bh=7Xrf1lWUc4e4FhfMkIHCC2N/sURic1yJNu7rnDUHGek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pli4JmTE0t4hDouDh7bDe0nMibr46cCIHtOLJc4lWFRZT4+VesFCd7Wj+rTY8RFw8uKtCJhqO9l+7up4nwLkeKqeXQvBYB833U24ac68/Y+PAehPhaG/2xswpNA9g1txaAROmlQcVbmbSJqlCEB1XsucQfsxaFWNmdl9u/Gjkfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKwKopyn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hVMP4U2kCtHMf9DLSEtAPsTzKhA/D2AwdZuPgsT3CQMksxUq3iQv0afrKRv0mm2NkcTYcLbZ8awZQAqAaGemFg02s+sO47nu0dkZe0wfQHm6Cd/Z+ow3YKn9biJ7x/CoXKZase4vCqv0S6Zh5/ZP8E77TaHSGgl+cBh2mQi3vac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TTyMrd+w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKwKopyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0C2C4CED3;
-	Wed,  6 Nov 2024 12:30:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TTyMrd+w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8C7C4CED3;
+	Wed,  6 Nov 2024 12:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896209;
-	bh=KAjCgcroxrBk+ExlUHExIq7JU6GkCrov3hqA2tP8cSY=;
+	s=korg; t=1730896212;
+	bh=7Xrf1lWUc4e4FhfMkIHCC2N/sURic1yJNu7rnDUHGek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HKwKopynNraX+3qUkTNg0FoGGU2sZBNmKP4GGiLtqT/MWa3UxPhOnWNAU40e94fzc
-	 5dVNmh6GFEmz8AXDVh5+jkX45uBSHrDeVgHYc4/gGfrtE9/YbUV5ypdfMvIKP3dK/J
-	 91BCs+RQAPBp9ECKnjBGGu0EyTajE06i5GF48/Pg=
+	b=TTyMrd+wNOjIso59J7r72d+KQ4ZJQS0rNuqqwwduay8XmPHPuWyIO/2gkzxofebfT
+	 2Ikqh+uhSjAxw3rd5+TGSiTNv4OI8QQ63g0WThnDCr2O6QPNvJ1+XssEK2jT9jTSA0
+	 64KK+bqeu6itjvvkG4mUqWdd9YgTrzKSDaKA2k00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zicheng Qu <quzicheng@huawei.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Julien Stephan <jstephan@baylibre.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.11 127/245] staging: iio: frequency: ad9832: fix division by zero in ad9832_calc_freqreg()
-Date: Wed,  6 Nov 2024 13:03:00 +0100
-Message-ID: <20241106120322.349590342@linuxfoundation.org>
+Subject: [PATCH 6.11 128/245] dt-bindings: iio: adc: ad7380: fix ad7380-4 reference supply
+Date: Wed,  6 Nov 2024 13:03:01 +0100
+Message-ID: <20241106120322.374488062@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,49 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zicheng Qu <quzicheng@huawei.com>
+From: Julien Stephan <jstephan@baylibre.com>
 
-commit 6bd301819f8f69331a55ae2336c8b111fc933f3d upstream.
+commit fbe5956e8809f04e9121923db0b6d1b94f2b93ba upstream.
 
-In the ad9832_write_frequency() function, clk_get_rate() might return 0.
-This can lead to a division by zero when calling ad9832_calc_freqreg().
-The check if (fout > (clk_get_rate(st->mclk) / 2)) does not protect
-against the case when fout is 0. The ad9832_write_frequency() function
-is called from ad9832_write(), and fout is derived from a text buffer,
-which can contain any value.
+ad7380-4 is the only device from ad738x family that doesn't have an
+internal reference. Moreover its external reference is called REFIN in
+the datasheet while all other use REFIO as an optional external
+reference. If refio-supply is omitted the internal reference is
+used.
 
-Link: https://lore.kernel.org/all/2024100904-CVE-2024-47663-9bdc@gregkh/
-Fixes: ea707584bac1 ("Staging: IIO: DDS: AD9832 / AD9835 driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20241022134354.574614-1-quzicheng@huawei.com
+Fix the binding by adding refin-supply and makes it required for
+ad7380-4 only.
+
+Fixes: 1a291cc8ee17 ("dt-bindings: iio: adc: ad7380: add support for ad738x-4 4 channels variants")
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Signed-off-by: Julien Stephan <jstephan@baylibre.com>
+Link: https://patch.msgid.link/20241022-ad7380-fix-supplies-v3-1-f0cefe1b7fa6@baylibre.com
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/iio/frequency/ad9832.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/iio/adc/adi,ad7380.yaml |   21 ++++++++++++++
+ 1 file changed, 21 insertions(+)
 
---- a/drivers/staging/iio/frequency/ad9832.c
-+++ b/drivers/staging/iio/frequency/ad9832.c
-@@ -129,12 +129,15 @@ static unsigned long ad9832_calc_freqreg
- static int ad9832_write_frequency(struct ad9832_state *st,
- 				  unsigned int addr, unsigned long fout)
- {
-+	unsigned long clk_freq;
- 	unsigned long regval;
+--- a/Documentation/devicetree/bindings/iio/adc/adi,ad7380.yaml
++++ b/Documentation/devicetree/bindings/iio/adc/adi,ad7380.yaml
+@@ -54,6 +54,10 @@ properties:
+       A 2.5V to 3.3V supply for the external reference voltage. When omitted,
+       the internal 2.5V reference is used.
  
--	if (fout > (clk_get_rate(st->mclk) / 2))
-+	clk_freq = clk_get_rate(st->mclk);
++  refin-supply:
++    description:
++      A 2.5V to 3.3V supply for external reference voltage, for ad7380-4 only.
 +
-+	if (!clk_freq || fout > (clk_freq / 2))
- 		return -EINVAL;
+   aina-supply:
+     description:
+       The common mode voltage supply for the AINA- pin on pseudo-differential
+@@ -122,6 +126,23 @@ allOf:
+         ainc-supply: false
+         aind-supply: false
  
--	regval = ad9832_calc_freqreg(clk_get_rate(st->mclk), fout);
-+	regval = ad9832_calc_freqreg(clk_freq, fout);
- 
- 	st->freq_data[0] = cpu_to_be16((AD9832_CMD_FRE8BITSW << CMD_SHIFT) |
- 					(addr << ADD_SHIFT) |
++  # ad7380-4 uses refin-supply as external reference.
++  # All other chips from ad738x family use refio as optional external reference.
++  # When refio-supply is omitted, internal reference is used.
++  - if:
++      properties:
++        compatible:
++          enum:
++            - adi,ad7380-4
++    then:
++      properties:
++        refio-supply: false
++      required:
++        - refin-supply
++    else:
++      properties:
++        refin-supply: false
++
+ examples:
+   - |
+     #include <dt-bindings/interrupt-controller/irq.h>
 
 
