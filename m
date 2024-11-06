@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A211DED58;
-	Wed,  6 Nov 2024 12:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6F51DF986;
+	Wed,  6 Nov 2024 12:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896074; cv=none; b=IApdzOs5wzI+T6WHXanaOXSS2xduJuuB1qxywApjVojL7leYTbNk6f409rJ6Q0Mqp3FzfbofE6nzdyZveZonTzhePqjzs9RhO2b1sv1Zskh1l/YMTAx/TXzyjo8w2C1OTof5Wae1Y03QE9Z454dRG513cubenMolsNdK4EwBE1s=
+	t=1730896077; cv=none; b=DlKE9t2KzOFXa9Ghu3Fz4AknGvGZ6/mUIJ7WKxh00dXyAfiz+aGbTI3ZThaUiByMkma7f+mEDuIBlF1q+Pm52NZsBmzAWuNtBRnanVNJjzp+JzGqtgkcIXq+La6BYiOZIpdfdQHzKQcrLOt9jlaaITqKK/IZAxsutpeH5g8wbiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896074; c=relaxed/simple;
-	bh=ZpWzVzom94SMIvaRIfCrZ23pBi5ZkjKsuU93HdzkYM8=;
+	s=arc-20240116; t=1730896077; c=relaxed/simple;
+	bh=Xz43xTj29Rl+ZVsgSUjK2omOlA09yI7wQSDpkrTIelY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mUaj6WJvPnGO53UoeePZ61cChMmg+W5ZujopH9kzdY0vJX8UVDr26IHzQgkNWjojidKYFkMqTf56+2KSjQeRFXh/zzZ6tdY3a+8pAudmBnJ7RPG54ONWzWhArPP8d/fGvepWY7YkhYHZqA3/sLofr24soA6sIc3MDDBsIocJfHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8PjuiCf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nXdY9iiNHsoZLb9ESEwF1TAhs/P7doMeImY3ynrzQBNs/N3o+ozxryCrduCK52BVtxPkM2xk9VRaScjz/gqTZrZDcpyxF8pq7i2cFvRl6wwVh7VHeNRt//GvdY9GR/CvkkRkWBy3N+iK5GRNJXrIstxiQghclTJ9r1F9B7A0Joc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QngcRAEC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8PjuiCf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28A3C4CECD;
-	Wed,  6 Nov 2024 12:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QngcRAEC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E846AC4CECD;
+	Wed,  6 Nov 2024 12:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896074;
-	bh=ZpWzVzom94SMIvaRIfCrZ23pBi5ZkjKsuU93HdzkYM8=;
+	s=korg; t=1730896077;
+	bh=Xz43xTj29Rl+ZVsgSUjK2omOlA09yI7wQSDpkrTIelY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q8PjuiCfQuc8Y6at1VLpx/7VWFZm3dUUBAEfmmg0nDiiymjloQOpI9mhERLXu6NyH
-	 5ijiZT8Y8m8mxp5sxL5D+f4gLUAwpI1kcPs5iDT2iyMIYvoXhwDpROU+1cqJ3UspUL
-	 70kMIGcj9cobQlFSw3ocD2c9ocLzyn60rn2BbR9k=
+	b=QngcRAECFxckDlnEijA5SoE7qpW1Z0IBqNYuRoQrl+AEonJeMIFYHETYuUmQtcShR
+	 lTqSHOw/0lDVd+ExrcVRbattVfwqnU2de4fL69j1hAQn7kSKym0V2UhiESqo/jUKmL
+	 a4ekaz7RHnR/0UppWo7YjrAMqb66qeTLkmWR+mBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 045/245] Bluetooth: hci: fix null-ptr-deref in hci_read_supported_codecs
-Date: Wed,  6 Nov 2024 13:01:38 +0100
-Message-ID: <20241106120320.336495111@linuxfoundation.org>
+Subject: [PATCH 6.11 046/245] bpf: Free dynamically allocated bits in bpf_iter_bits_destroy()
+Date: Wed,  6 Nov 2024 13:01:39 +0100
+Message-ID: <20241106120320.360706570@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -51,105 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 1e67d8641813f1876a42eeb4f532487b8a7fb0a8 ]
+[ Upstream commit 101ccfbabf4738041273ce64e2b116cf440dea13 ]
 
-Fix __hci_cmd_sync_sk() to return not NULL for unknown opcodes.
+bpf_iter_bits_destroy() uses "kit->nr_bits <= 64" to check whether the
+bits are dynamically allocated. However, the check is incorrect and may
+cause a kmemleak as shown below:
 
-__hci_cmd_sync_sk() returns NULL if a command returns a status event.
-However, it also returns NULL where an opcode doesn't exist in the
-hci_cc table because hci_cmd_complete_evt() assumes status = skb->data[0]
-for unknown opcodes.
-This leads to null-ptr-deref in cmd_sync for HCI_OP_READ_LOCAL_CODECS as
-there is no hci_cc for HCI_OP_READ_LOCAL_CODECS, which always assumes
-status = skb->data[0].
+unreferenced object 0xffff88812628c8c0 (size 32):
+  comm "swapper/0", pid 1, jiffies 4294727320
+  hex dump (first 32 bytes):
+	b0 c1 55 f5 81 88 ff ff f0 f0 f0 f0 f0 f0 f0 f0  ..U...........
+	f0 f0 f0 f0 f0 f0 f0 f0 00 00 00 00 00 00 00 00  ..............
+  backtrace (crc 781e32cc):
+	[<00000000c452b4ab>] kmemleak_alloc+0x4b/0x80
+	[<0000000004e09f80>] __kmalloc_node_noprof+0x480/0x5c0
+	[<00000000597124d6>] __alloc.isra.0+0x89/0xb0
+	[<000000004ebfffcd>] alloc_bulk+0x2af/0x720
+	[<00000000d9c10145>] prefill_mem_cache+0x7f/0xb0
+	[<00000000ff9738ff>] bpf_mem_alloc_init+0x3e2/0x610
+	[<000000008b616eac>] bpf_global_ma_init+0x19/0x30
+	[<00000000fc473efc>] do_one_initcall+0xd3/0x3c0
+	[<00000000ec81498c>] kernel_init_freeable+0x66a/0x940
+	[<00000000b119f72f>] kernel_init+0x20/0x160
+	[<00000000f11ac9a7>] ret_from_fork+0x3c/0x70
+	[<0000000004671da4>] ret_from_fork_asm+0x1a/0x30
 
-KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
-CPU: 1 PID: 2000 Comm: kworker/u9:5 Not tainted 6.9.0-ga6bcb805883c-dirty #10
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-Workqueue: hci7 hci_power_on
-RIP: 0010:hci_read_supported_codecs+0xb9/0x870 net/bluetooth/hci_codec.c:138
-Code: 08 48 89 ef e8 b8 c1 8f fd 48 8b 75 00 e9 96 00 00 00 49 89 c6 48 ba 00 00 00 00 00 fc ff df 4c 8d 60 70 4c 89 e3 48 c1 eb 03 <0f> b6 04 13 84 c0 0f 85 82 06 00 00 41 83 3c 24 02 77 0a e8 bf 78
-RSP: 0018:ffff888120bafac8 EFLAGS: 00010212
-RAX: 0000000000000000 RBX: 000000000000000e RCX: ffff8881173f0040
-RDX: dffffc0000000000 RSI: ffffffffa58496c0 RDI: ffff88810b9ad1e4
-RBP: ffff88810b9ac000 R08: ffffffffa77882a7 R09: 1ffffffff4ef1054
-R10: dffffc0000000000 R11: fffffbfff4ef1055 R12: 0000000000000070
-R13: 0000000000000000 R14: 0000000000000000 R15: ffff88810b9ac000
-FS:  0000000000000000(0000) GS:ffff8881f6c00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f6ddaa3439e CR3: 0000000139764003 CR4: 0000000000770ef0
-PKRU: 55555554
-Call Trace:
- <TASK>
- hci_read_local_codecs_sync net/bluetooth/hci_sync.c:4546 [inline]
- hci_init_stage_sync net/bluetooth/hci_sync.c:3441 [inline]
- hci_init4_sync net/bluetooth/hci_sync.c:4706 [inline]
- hci_init_sync net/bluetooth/hci_sync.c:4742 [inline]
- hci_dev_init_sync net/bluetooth/hci_sync.c:4912 [inline]
- hci_dev_open_sync+0x19a9/0x2d30 net/bluetooth/hci_sync.c:4994
- hci_dev_do_open net/bluetooth/hci_core.c:483 [inline]
- hci_power_on+0x11e/0x560 net/bluetooth/hci_core.c:1015
- process_one_work kernel/workqueue.c:3267 [inline]
- process_scheduled_works+0x8ef/0x14f0 kernel/workqueue.c:3348
- worker_thread+0x91f/0xe50 kernel/workqueue.c:3429
- kthread+0x2cb/0x360 kernel/kthread.c:388
- ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+That is because nr_bits will be set as zero in bpf_iter_bits_next()
+after all bits have been iterated.
 
-Fixes: abfeea476c68 ("Bluetooth: hci_sync: Convert MGMT_OP_START_DISCOVERY")
+Fix the issue by setting kit->bit to kit->nr_bits instead of setting
+kit->nr_bits to zero when the iteration completes in
+bpf_iter_bits_next(). In addition, use "!nr_bits || bits >= nr_bits" to
+check whether the iteration is complete and still use "nr_bits > 64" to
+indicate whether bits are dynamically allocated. The "!nr_bits" check is
+necessary because bpf_iter_bits_new() may fail before setting
+kit->nr_bits, and this condition will stop the iteration early instead
+of accessing the zeroed or freed kit->bits.
 
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Considering the initial value of kit->bits is -1 and the type of
+kit->nr_bits is unsigned int, change the type of kit->nr_bits to int.
+The potential overflow problem will be handled in the following patch.
+
+Fixes: 4665415975b0 ("bpf: Add bits iterator")
+Acked-by: Yafang Shao <laoar.shao@gmail.com>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/20241030100516.3633640-2-houtao@huaweicloud.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ kernel/bpf/helpers.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index ae7a5817883aa..c0203a2b51075 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -206,6 +206,12 @@ struct sk_buff *__hci_cmd_sync_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
- 		return ERR_PTR(err);
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index cc8c00864a680..a4521d2606b6b 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -2835,7 +2835,7 @@ struct bpf_iter_bits_kern {
+ 		unsigned long *bits;
+ 		unsigned long bits_copy;
+ 	};
+-	u32 nr_bits;
++	int nr_bits;
+ 	int bit;
+ } __aligned(8);
+ 
+@@ -2909,17 +2909,16 @@ bpf_iter_bits_new(struct bpf_iter_bits *it, const u64 *unsafe_ptr__ign, u32 nr_w
+ __bpf_kfunc int *bpf_iter_bits_next(struct bpf_iter_bits *it)
+ {
+ 	struct bpf_iter_bits_kern *kit = (void *)it;
+-	u32 nr_bits = kit->nr_bits;
++	int bit = kit->bit, nr_bits = kit->nr_bits;
+ 	const unsigned long *bits;
+-	int bit;
+ 
+-	if (nr_bits == 0)
++	if (!nr_bits || bit >= nr_bits)
+ 		return NULL;
+ 
+ 	bits = nr_bits == 64 ? &kit->bits_copy : kit->bits;
+-	bit = find_next_bit(bits, nr_bits, kit->bit + 1);
++	bit = find_next_bit(bits, nr_bits, bit + 1);
+ 	if (bit >= nr_bits) {
+-		kit->nr_bits = 0;
++		kit->bit = bit;
+ 		return NULL;
  	}
  
-+	/* If command return a status event skb will be set to NULL as there are
-+	 * no parameters.
-+	 */
-+	if (!skb)
-+		return ERR_PTR(-ENODATA);
-+
- 	return skb;
- }
- EXPORT_SYMBOL(__hci_cmd_sync_sk);
-@@ -255,6 +261,11 @@ int __hci_cmd_sync_status_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
- 	u8 status;
- 
- 	skb = __hci_cmd_sync_sk(hdev, opcode, plen, param, event, timeout, sk);
-+
-+	/* If command return a status event, skb will be set to -ENODATA */
-+	if (skb == ERR_PTR(-ENODATA))
-+		return 0;
-+
- 	if (IS_ERR(skb)) {
- 		if (!event)
- 			bt_dev_err(hdev, "Opcode 0x%4.4x failed: %ld", opcode,
-@@ -262,13 +273,6 @@ int __hci_cmd_sync_status_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
- 		return PTR_ERR(skb);
- 	}
- 
--	/* If command return a status event skb will be set to NULL as there are
--	 * no parameters, in case of failure IS_ERR(skb) would have be set to
--	 * the actual error would be found with PTR_ERR(skb).
--	 */
--	if (!skb)
--		return 0;
--
- 	status = skb->data[0];
- 
- 	kfree_skb(skb);
 -- 
 2.43.0
 
