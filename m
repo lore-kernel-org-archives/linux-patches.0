@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2C91FB3F6;
-	Wed,  6 Nov 2024 12:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB4C1EE03D;
+	Wed,  6 Nov 2024 12:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896718; cv=none; b=pO8d83/aHZ9eZUiJbyuI27OzQyp/h6AaGfmkM3NOvdPPFeN8/3AF7qn5h2jl9T1abeeRV3FYw8ddDPh2mmwRTS3NTzVpRb07GWTGOwN3Mmi1Q6c9L0b/bH6qXilm00MOWQWtsh8n2sDe5/vdWgzWqKjXsfEREltWOFbmKLpgjkk=
+	t=1730896722; cv=none; b=CgQ2CiyPcDCm+iNGijCAyY2Fwkw5CIjwEbn0rzw5ixluaBoC5FFncV3AxzT36IcUZRIakLejQgVSU+eNyvMnEnE1tIqCbcrXS2L1CaMfs7nyOkbmBXSvw5mr/b8x6ZX/wSlQ1NR6d4ClBYG67W3eoDEvVnczMI1nFbyOe7HLzRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896718; c=relaxed/simple;
-	bh=FYsy2ysYqU2Qi5cUEBp2qWFn1XumS2j8LX7HZCcm+u4=;
+	s=arc-20240116; t=1730896722; c=relaxed/simple;
+	bh=QHi052u74O7obAzswvrx1o9+ND5EU4Em6V9PEuwop48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WpirO16qqqzpfp3ZnGDXxhcEuCJGuw/R5Y6MGcjWqz34nF6vxB9Wg8iVpPklZBSVq1XDSinnMF57yFX8YbCeGEcdSZWgQQjN2ssq1iVkEcpGyz14a5dwFIYEJD/SViZssnxokQfWAvJBvbH+pwqJpkKsEQ2M/o15R77fJP3AlPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGrD2idZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lwm+z9u08B4UQ/DKnIVKonTgykorj/2u5FLQmKJKgdWLrt078dEc2dHHBkya5s+Vjn0ofdVfkwND/Ex3/I9v5JC/IFWcG+y95hQSH4RJFffJkAIj+9RppQ/QAVDmDOyJ2ntwiZDclrWjxlyBhVKGdS3sDO2OkdHF4JRrnhWT8C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOO8JppH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGrD2idZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B88BC4CECD;
-	Wed,  6 Nov 2024 12:38:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOO8JppH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E6FC4CED6;
+	Wed,  6 Nov 2024 12:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896717;
-	bh=FYsy2ysYqU2Qi5cUEBp2qWFn1XumS2j8LX7HZCcm+u4=;
+	s=korg; t=1730896721;
+	bh=QHi052u74O7obAzswvrx1o9+ND5EU4Em6V9PEuwop48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGrD2idZVm3BzEbvQRxO4OE0QV+N7ux+Zk/OsGZag6+bLx/ikKBFRZIEywwfq6GWO
-	 isSIMjkL/CtqfgvNSmVH1/sDmin8p7cvjRYI66tmLJTsuYnCItGKHz8gBd6Bv32JLK
-	 M/3MECMYm4a5VKMBU0UxslkUwGr3gmq3oU8uxqD8=
+	b=nOO8JppHowH5f0ZJBcF987mqZLdNNzNoA5NZ/yILVFHx76uyJdhWuMUggLibzoZ+U
+	 RWWPLDZZxfWfZ4AV1cBV5n/bi6cFokV3Xil/6sleBuLher+BgCDBCdVWc5gJXISdOC
+	 VS0w/+ycPoqDn9EX5ZVY06JaMmo4I7K0p+tCxiww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jos=C3=A9=20Relvas?= <josemonsantorelvas@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 049/110] ALSA: hda/realtek: Add subwoofer quirk for Acer Predator G9-593
-Date: Wed,  6 Nov 2024 13:04:15 +0100
-Message-ID: <20241106120304.556245416@linuxfoundation.org>
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 050/110] hv_netvsc: Fix VF namespace also in synthetic NIC NETDEV_REGISTER event
+Date: Wed,  6 Nov 2024 13:04:16 +0100
+Message-ID: <20241106120304.582807734@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -44,75 +46,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: José Relvas <josemonsantorelvas@gmail.com>
+From: Haiyang Zhang <haiyangz@microsoft.com>
 
-commit 35fdc6e1c16099078bcbd73a6c8f1733ae7f1909 upstream.
+commit 4c262801ea60c518b5bebc22a09f5b78b3147da2 upstream.
 
-The Acer Predator G9-593 has a 2+1 speaker system which isn't probed
-correctly.
-This patch adds a quirk with the proper pin connections.
+The existing code moves VF to the same namespace as the synthetic NIC
+during netvsc_register_vf(). But, if the synthetic device is moved to a
+new namespace after the VF registration, the VF won't be moved together.
 
-Note that I do not own this laptop, so I cannot guarantee that this
-fixes the issue.
-Testing was done by other users here:
-https://discussion.fedoraproject.org/t/-/118482
+To make the behavior more consistent, add a namespace check for synthetic
+NIC's NETDEV_REGISTER event (generated during its move), and move the VF
+if it is not in the same namespace.
 
-This model appears to have two different dev IDs...
-
-- 0x1177 (as seen on the forum link above)
-- 0x1178 (as seen on https://linux-hardware.org/?probe=127df9999f)
-
-I don't think the audio system was changed between model revisions, so
-the patch applies for both IDs.
-
-Signed-off-by: José Relvas <josemonsantorelvas@gmail.com>
-Link: https://patch.msgid.link/20241020102756.225258-1-josemonsantorelvas@gmail.com
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Fixes: c0a41b887ce6 ("hv_netvsc: move VF to same namespace as netvsc device")
+Suggested-by: Stephen Hemminger <stephen@networkplumber.org>
+Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/1729275922-17595-1-git-send-email-haiyangz@microsoft.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/hyperv/netvsc_drv.c |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -6966,6 +6966,7 @@ enum {
- 	ALC286_FIXUP_ACER_AIO_HEADSET_MIC,
- 	ALC256_FIXUP_ASUS_HEADSET_MIC,
- 	ALC256_FIXUP_ASUS_MIC_NO_PRESENCE,
-+	ALC255_FIXUP_PREDATOR_SUBWOOFER,
- 	ALC299_FIXUP_PREDATOR_SPK,
- 	ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE,
- 	ALC289_FIXUP_DELL_SPK2,
-@@ -8200,6 +8201,13 @@ static const struct hda_fixup alc269_fix
- 		.chained = true,
- 		.chain_id = ALC256_FIXUP_ASUS_HEADSET_MODE
+--- a/drivers/net/hyperv/netvsc_drv.c
++++ b/drivers/net/hyperv/netvsc_drv.c
+@@ -2789,6 +2789,31 @@ static struct  hv_driver netvsc_drv = {
  	},
-+	[ALC255_FIXUP_PREDATOR_SUBWOOFER] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x17, 0x90170151 }, /* use as internal speaker (LFE) */
-+			{ 0x1b, 0x90170152 } /* use as internal speaker (back) */
-+		}
-+	},
- 	[ALC299_FIXUP_PREDATOR_SPK] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -8932,6 +8940,8 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1025, 0x110e, "Acer Aspire ES1-432", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x1166, "Acer Veriton N4640G", ALC269_FIXUP_LIFEBOOK),
- 	SND_PCI_QUIRK(0x1025, 0x1167, "Acer Veriton N6640G", ALC269_FIXUP_LIFEBOOK),
-+	SND_PCI_QUIRK(0x1025, 0x1177, "Acer Predator G9-593", ALC255_FIXUP_PREDATOR_SUBWOOFER),
-+	SND_PCI_QUIRK(0x1025, 0x1178, "Acer Predator G9-593", ALC255_FIXUP_PREDATOR_SUBWOOFER),
- 	SND_PCI_QUIRK(0x1025, 0x1246, "Acer Predator Helios 500", ALC299_FIXUP_PREDATOR_SPK),
- 	SND_PCI_QUIRK(0x1025, 0x1247, "Acer vCopperbox", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
- 	SND_PCI_QUIRK(0x1025, 0x1248, "Acer Veriton N4660G", ALC269VC_FIXUP_ACER_MIC_NO_PRESENCE),
+ };
+ 
++/* Set VF's namespace same as the synthetic NIC */
++static void netvsc_event_set_vf_ns(struct net_device *ndev)
++{
++	struct net_device_context *ndev_ctx = netdev_priv(ndev);
++	struct net_device *vf_netdev;
++	int ret;
++
++	vf_netdev = rtnl_dereference(ndev_ctx->vf_netdev);
++	if (!vf_netdev)
++		return;
++
++	if (!net_eq(dev_net(ndev), dev_net(vf_netdev))) {
++		ret = dev_change_net_namespace(vf_netdev, dev_net(ndev),
++					       "eth%d");
++		if (ret)
++			netdev_err(vf_netdev,
++				   "Cannot move to same namespace as %s: %d\n",
++				   ndev->name, ret);
++		else
++			netdev_info(vf_netdev,
++				    "Moved VF to namespace with: %s\n",
++				    ndev->name);
++	}
++}
++
+ /*
+  * On Hyper-V, every VF interface is matched with a corresponding
+  * synthetic interface. The synthetic interface is presented first
+@@ -2801,6 +2826,11 @@ static int netvsc_netdev_event(struct no
+ 	struct net_device *event_dev = netdev_notifier_info_to_dev(ptr);
+ 	int ret = 0;
+ 
++	if (event_dev->netdev_ops == &device_ops && event == NETDEV_REGISTER) {
++		netvsc_event_set_vf_ns(event_dev);
++		return NOTIFY_DONE;
++	}
++
+ 	ret = check_dev_is_matching_vf(event_dev);
+ 	if (ret != 0)
+ 		return NOTIFY_DONE;
 
 
