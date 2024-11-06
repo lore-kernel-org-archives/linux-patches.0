@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD691E7C1A;
-	Wed,  6 Nov 2024 13:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66EDB1DED7C;
+	Wed,  6 Nov 2024 13:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898432; cv=none; b=MWcbQQ6+rlPL0zETrW/ydLqSzNWQr7iWw+PUtm6yQnjsvKSRlmAtA3a29+xacYgvgoUFVztaZsjYRB0njnrr//zdU+pJESBr31lZ3qpNgibgHDv9o4IeAuvVOWq7IHAB/7qz4d938+w/H5NUihp00bObG0fQMdl8QClu45CgF0I=
+	t=1730898435; cv=none; b=VSswb3WvEq7bL4VE507rfyzmPbheDCSrQb1I2Qwbfi63DNG4URWM7tXCEzW0YNFQNQjBcpKNdUqYPT5UUO8JI2aGzAQdLbLuJtYk1JcKABl4lQ3gq4gNZmaf4/yumIWvm8+Ek3sjfkuDJjtv2I2VzLAxVSxJnKjHo8SGHzB3ULM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898432; c=relaxed/simple;
-	bh=Rmmrn2U8OlulyhJUFqYl8wwe23V92GxEnzeL1WSH48g=;
+	s=arc-20240116; t=1730898435; c=relaxed/simple;
+	bh=jFGDoxgl9nrTY0oZ8u3w6de3kSLRS7+qdOYwi0Kafkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QhtjUNQmpz7VjEIA4jweoeoymJaNmahnYlhEIa/znpWUcHoVN9a+CK/4LrAt0twReCtHIkAB/BIZAqrMA+6ws0yC/yEVfnnv5LX4G6juL+jZ4MYMv5W/xHrbNQF23MgU6o/z/j1lpTn7V4fsc2fDiZwC5lEIja5y1OVezkqm6LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTWhFCyf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bcQQOFVORwu6YEui7H45Np+B2k4B6aAMCmKIm2cMGpxEAcTV6EHl4MwloEOaF8+JUslvDpjKmSDrAZGXAAQDHiYtsmzPo8wLSNTDmW/qAGRulX27hDeUf2818uaRdlerPcxFtu1qTCtwkEykBxYcIhpsycbzVids9DedYn+w/W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRMk7Uit; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTWhFCyf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FB5C4CECD;
-	Wed,  6 Nov 2024 13:07:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRMk7Uit"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E3CC4CECD;
+	Wed,  6 Nov 2024 13:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898432;
-	bh=Rmmrn2U8OlulyhJUFqYl8wwe23V92GxEnzeL1WSH48g=;
+	s=korg; t=1730898435;
+	bh=jFGDoxgl9nrTY0oZ8u3w6de3kSLRS7+qdOYwi0Kafkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nTWhFCyf1Ew/HjxttrCwtdJih6GQmthWFOc4AcE+mz0FlhNj5Om0ukcvhI/x+Ta6I
-	 BVonCeLb1IHgY1CpHK2uBua2YA3tw8SlQsQswEcv8D5nMS6vb20esMqTVZE8DJwF1s
-	 kwq1umT7+ajQTf8dgfT3n10foqU7ORUIuycC0QVQ=
+	b=DRMk7UitwvG/R+Y/tu3d/8O5NcuJA+gj22NqPa684sjwL+dhtWBEzRYY5tM+0FTe7
+	 ZD5njrqc/Sg2YaNh2AqFrOPtpP9S2S/yX0ZEkUp/SOce/h7s2wxGbU3RoR5Hufp62l
+	 jcIevnhWSotOQOoTe2Ehh3HUAmly9bzF90W2TCnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 237/462] selftests: vDSO: fix vDSO symbols lookup for powerpc64
-Date: Wed,  6 Nov 2024 13:02:10 +0100
-Message-ID: <20241106120337.377093034@linuxfoundation.org>
+	Alain Volmat <alain.volmat@foss.st.com>,
+	Marek Vasut <marex@denx.de>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 5.4 238/462] i2c: stm32f7: Do not prepare/unprepare clock during runtime suspend/resume
+Date: Wed,  6 Nov 2024 13:02:11 +0100
+Message-ID: <20241106120337.400807014@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,108 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit ba83b3239e657469709d15dcea5f9b65bf9dbf34 ]
+commit 048bbbdbf85e5e00258dfb12f5e368f908801d7b upstream.
 
-On powerpc64, following tests fail locating vDSO functions:
+In case there is any sort of clock controller attached to this I2C bus
+controller, for example Versaclock or even an AIC32x4 I2C codec, then
+an I2C transfer triggered from the clock controller clk_ops .prepare
+callback may trigger a deadlock on drivers/clk/clk.c prepare_lock mutex.
 
-  ~ # ./vdso_test_abi
-  TAP version 13
-  1..16
-  # [vDSO kselftest] VDSO_VERSION: LINUX_2.6.15
-  # Couldn't find __kernel_gettimeofday
-  ok 1 # SKIP __kernel_gettimeofday
-  # clock_id: CLOCK_REALTIME
-  # Couldn't find __kernel_clock_gettime
-  ok 2 # SKIP __kernel_clock_gettime CLOCK_REALTIME
-  # Couldn't find __kernel_clock_getres
-  ok 3 # SKIP __kernel_clock_getres CLOCK_REALTIME
-  ...
-  # Couldn't find __kernel_time
-  ok 16 # SKIP __kernel_time
-  # Totals: pass:0 fail:0 xfail:0 xpass:0 skip:16 error:0
+This is because the clock controller first grabs the prepare_lock mutex
+and then performs the prepare operation, including its I2C access. The
+I2C access resumes this I2C bus controller via .runtime_resume callback,
+which calls clk_prepare_enable(), which attempts to grab the prepare_lock
+mutex again and deadlocks.
 
-  ~ # ./vdso_test_getrandom
-  __kernel_getrandom is missing!
+Since the clock are already prepared since probe() and unprepared in
+remove(), use simple clk_enable()/clk_disable() calls to enable and
+disable the clock on runtime suspend and resume, to avoid hitting the
+prepare_lock mutex.
 
-  ~ # ./vdso_test_gettimeofday
-  Could not find __kernel_gettimeofday
-
-  ~ # ./vdso_test_getcpu
-  Could not find __kernel_getcpu
-
-On powerpc64, as shown below by readelf, vDSO functions symbols have
-type NOTYPE, so also accept that type when looking for symbols.
-
-$ powerpc64-linux-gnu-readelf -a arch/powerpc/kernel/vdso/vdso64.so.dbg
-ELF Header:
-  Magic:   7f 45 4c 46 02 02 01 00 00 00 00 00 00 00 00 00
-  Class:                             ELF64
-  Data:                              2's complement, big endian
-  Version:                           1 (current)
-  OS/ABI:                            UNIX - System V
-  ABI Version:                       0
-  Type:                              DYN (Shared object file)
-  Machine:                           PowerPC64
-  Version:                           0x1
-...
-
-Symbol table '.dynsym' contains 12 entries:
-   Num:    Value          Size Type    Bind   Vis      Ndx Name
-     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND
-     1: 0000000000000524    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     2: 00000000000005f0    36 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     3: 0000000000000578    68 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     4: 0000000000000000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.15
-     5: 00000000000006c0    48 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     6: 0000000000000614   172 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     7: 00000000000006f0    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     8: 000000000000047c    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     9: 0000000000000454    12 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-    10: 00000000000004d0    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-    11: 00000000000005bc    52 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-
-Symbol table '.symtab' contains 56 entries:
-   Num:    Value          Size Type    Bind   Vis      Ndx Name
-...
-    45: 0000000000000000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.15
-    46: 00000000000006c0    48 NOTYPE  GLOBAL DEFAULT    8 __kernel_getcpu
-    47: 0000000000000524    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_clock_getres
-    48: 00000000000005f0    36 NOTYPE  GLOBAL DEFAULT    8 __kernel_get_tbfreq
-    49: 000000000000047c    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_gettimeofday
-    50: 0000000000000614   172 NOTYPE  GLOBAL DEFAULT    8 __kernel_sync_dicache
-    51: 00000000000006f0    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_getrandom
-    52: 0000000000000454    12 NOTYPE  GLOBAL DEFAULT    8 __kernel_sigtram[...]
-    53: 0000000000000578    68 NOTYPE  GLOBAL DEFAULT    8 __kernel_time
-    54: 00000000000004d0    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_clock_g[...]
-    55: 00000000000005bc    52 NOTYPE  GLOBAL DEFAULT    8 __kernel_get_sys[...]
-
-Fixes: 98eedc3a9dbf ("Document the vDSO and add a reference parser")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Acked-by: Alain Volmat <alain.volmat@foss.st.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Fixes: 4e7bca6fc07b ("i2c: i2c-stm32f7: add PM Runtime support")
+Cc: <stable@vger.kernel.org> # v5.0+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/vDSO/parse_vdso.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-stm32f7.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/vDSO/parse_vdso.c b/tools/testing/selftests/vDSO/parse_vdso.c
-index 9ef3ad3789c17..540f9a284e9f0 100644
---- a/tools/testing/selftests/vDSO/parse_vdso.c
-+++ b/tools/testing/selftests/vDSO/parse_vdso.c
-@@ -238,7 +238,8 @@ void *vdso_sym(const char *version, const char *name)
- 		ELF(Sym) *sym = &vdso_info.symtab[chain];
+--- a/drivers/i2c/busses/i2c-stm32f7.c
++++ b/drivers/i2c/busses/i2c-stm32f7.c
+@@ -2070,7 +2070,7 @@ static int stm32f7_i2c_runtime_suspend(s
+ 	struct stm32f7_i2c_dev *i2c_dev = dev_get_drvdata(dev);
  
- 		/* Check for a defined global or weak function w/ right name. */
--		if (ELF64_ST_TYPE(sym->st_info) != STT_FUNC)
-+		if (ELF64_ST_TYPE(sym->st_info) != STT_FUNC &&
-+		    ELF64_ST_TYPE(sym->st_info) != STT_NOTYPE)
- 			continue;
- 		if (ELF64_ST_BIND(sym->st_info) != STB_GLOBAL &&
- 		    ELF64_ST_BIND(sym->st_info) != STB_WEAK)
--- 
-2.43.0
-
+ 	if (!stm32f7_i2c_is_slave_registered(i2c_dev))
+-		clk_disable_unprepare(i2c_dev->clk);
++		clk_disable(i2c_dev->clk);
+ 
+ 	return 0;
+ }
+@@ -2081,9 +2081,9 @@ static int stm32f7_i2c_runtime_resume(st
+ 	int ret;
+ 
+ 	if (!stm32f7_i2c_is_slave_registered(i2c_dev)) {
+-		ret = clk_prepare_enable(i2c_dev->clk);
++		ret = clk_enable(i2c_dev->clk);
+ 		if (ret) {
+-			dev_err(dev, "failed to prepare_enable clock\n");
++			dev_err(dev, "failed to enable clock\n");
+ 			return ret;
+ 		}
+ 	}
 
 
