@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE751DF272;
-	Wed,  6 Nov 2024 12:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3981DF24A;
+	Wed,  6 Nov 2024 12:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895585; cv=none; b=RHQ3rMG1GPwy6n+t7MBvtwulXF1smG/MTpvtWz9vMuRFL6Lt5DWO0/hMp8QEZsQW/9stlnnHDXv2mEXhAUpeOfkzD6zri24f71bO2NLioi+GEbMp8Y6UA0bpdEoCCJ/ED3Yglkt2x/Ch4U46k5QT5ZC+yb1f0Q2LgDubnoZ7Dxs=
+	t=1730895588; cv=none; b=F/48Hmm6BEmR2XbyxbCvsLzWhqc8WtvKmzY30fjhpZwpSmLR7sjyv1YtqiIpS26PQ9hv0mxsXFZKXQmGN/4InHNq4k/Qa38Tn3+0cZy0lbVLNrnr3O1vdLdrsn14wB0BjPWToCeJ4ZkPRHzXb1tFso6zhnAK3iXnour1RUcuaBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895585; c=relaxed/simple;
-	bh=PRqVRxrbYSpRHU/UZ8K1hCgEA+2nmiYfxsizmlQafzw=;
+	s=arc-20240116; t=1730895588; c=relaxed/simple;
+	bh=YmsD9JYBDeGrAL8wXQU/CUoiy5eFzYjdG2y4KBGnay8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wc3GcXEZDAqJh+jr6DPcBxdx2HZI2h8vGt6Dap7Dy6ebCy6vkfNS7IzG8hs2sTULrdL1wu9UtBk0Xs27vfTKgcs/lINLi6Sz9jDRzsHGHtxFdLLntXOn+qyZ9CCmsSMXpmUUtAGNbK89aKHSHMV0wa13m8PKDn5ttvgl+6Tac/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7/E7fV2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=boooR+iEES2CQ8vk3L6IZ1NN5x+UmpjYMbeeiP7hlfxHQGzgIv6WGW6IdDyZ7pvDz9w/O4HKFS2lItPloFbJZBUUh/X12ifaQyt5TQMgYawu/x8Ch4FZd6gvTLvyLfc0TmepInXitwtnDTQpyKjDyN+ZzxzwxarERZNnjFOJyuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qdtqq9mf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7/E7fV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BC8C4CECD;
-	Wed,  6 Nov 2024 12:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qdtqq9mf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E8BC4CECD;
+	Wed,  6 Nov 2024 12:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895585;
-	bh=PRqVRxrbYSpRHU/UZ8K1hCgEA+2nmiYfxsizmlQafzw=;
+	s=korg; t=1730895588;
+	bh=YmsD9JYBDeGrAL8wXQU/CUoiy5eFzYjdG2y4KBGnay8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c7/E7fV23DsOfjeP7bkTGbkwSYDCVJUBCjRaMSSz93yk/RJQJoKyZEgVJGDhTkHKv
-	 LuA25pQUQupJSbHnOdyi7OSmuJJvhnlkhoHsDoW/Z6GyG/YSSeGkh4ZJxqssmD8nfb
-	 adjcsdXaGSy/33yVru4nvEnbSlWCigj5Ryp++3BQ=
+	b=Qdtqq9mfkc1U4Qafp5tXNCHw6uhRPUnRZbUVcHFXEkLnnypkgkoifbCpfHPykxp+b
+	 YsY3cBmleV7AVnNG+CZMibmPwnycdRUvFCzdnb0ZxofPwG10a638nwCu/Y3F6knEUr
+	 RZIOZBMufDiVutK8SeCaiRKFSAW/8QM3clz4g+wA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anastasia Kovaleva <a.kovaleva@yadro.com>,
-	Dmitry Bogdanov <d.bogdanov@yadro.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 267/350] net: Fix an unsafe loop on the list
-Date: Wed,  6 Nov 2024 13:03:15 +0100
-Message-ID: <20241106120327.490444721@linuxfoundation.org>
+Subject: [PATCH 4.19 268/350] posix-clock: Fix missing timespec64 check in pc_clock_settime()
+Date: Wed,  6 Nov 2024 13:03:16 +0100
+Message-ID: <20241106120327.513472441@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,60 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anastasia Kovaleva <a.kovaleva@yadro.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 1dae9f1187189bc09ff6d25ca97ead711f7e26f9 upstream.
+commit d8794ac20a299b647ba9958f6d657051fc51a540 upstream.
 
-The kernel may crash when deleting a genetlink family if there are still
-listeners for that family:
+As Andrew pointed out, it will make sense that the PTP core
+checked timespec64 struct's tv_sec and tv_nsec range before calling
+ptp->info->settime64().
 
-Oops: Kernel access of bad area, sig: 11 [#1]
-  ...
-  NIP [c000000000c080bc] netlink_update_socket_mc+0x3c/0xc0
-  LR [c000000000c0f764] __netlink_clear_multicast_users+0x74/0xc0
-  Call Trace:
-__netlink_clear_multicast_users+0x74/0xc0
-genl_unregister_family+0xd4/0x2d0
+As the man manual of clock_settime() said, if tp.tv_sec is negative or
+tp.tv_nsec is outside the range [0..999,999,999], it should return EINVAL,
+which include dynamic clocks which handles PTP clock, and the condition is
+consistent with timespec64_valid(). As Thomas suggested, timespec64_valid()
+only check the timespec is valid, but not ensure that the time is
+in a valid range, so check it ahead using timespec64_valid_strict()
+in pc_clock_settime() and return -EINVAL if not valid.
 
-Change the unsafe loop on the list to a safe one, because inside the
-loop there is an element removal from this list.
+There are some drivers that use tp->tv_sec and tp->tv_nsec directly to
+write registers without validity checks and assume that the higher layer
+has checked it, which is dangerous and will benefit from this, such as
+hclge_ptp_settime(), igb_ptp_settime_i210(), _rcar_gen4_ptp_settime(),
+and some drivers can remove the checks of itself.
 
-Fixes: b8273570f802 ("genetlink: fix netns vs. netlink table locking (2)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anastasia Kovaleva <a.kovaleva@yadro.com>
-Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20241003104431.12391-1-a.kovaleva@yadro.com
+Fixes: 0606f422b453 ("posix clocks: Introduce dynamic clocks")
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Suggested-by: Andrew Lunn <andrew@lunn.ch>
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://patch.msgid.link/20241009072302.1754567-2-ruanjinjie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sock.h       |    2 ++
- net/netlink/af_netlink.c |    3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ kernel/time/posix-clock.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -764,6 +764,8 @@ static inline void sk_add_bind_node(stru
- 	hlist_for_each_entry_safe(__sk, tmp, list, sk_node)
- #define sk_for_each_bound(__sk, list) \
- 	hlist_for_each_entry(__sk, list, sk_bind_node)
-+#define sk_for_each_bound_safe(__sk, tmp, list) \
-+	hlist_for_each_entry_safe(__sk, tmp, list, sk_bind_node)
+--- a/kernel/time/posix-clock.c
++++ b/kernel/time/posix-clock.c
+@@ -312,6 +312,9 @@ static int pc_clock_settime(clockid_t id
+ 		goto out;
+ 	}
  
- /**
-  * sk_for_each_entry_offset_rcu - iterate over a list at a given struct offset
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -2145,8 +2145,9 @@ void __netlink_clear_multicast_users(str
- {
- 	struct sock *sk;
- 	struct netlink_table *tbl = &nl_table[ksk->sk_protocol];
-+	struct hlist_node *tmp;
- 
--	sk_for_each_bound(sk, &tbl->mc_list)
-+	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list)
- 		netlink_update_socket_mc(nlk_sk(sk), group, 0);
- }
- 
++	if (!timespec64_valid_strict(ts))
++		return -EINVAL;
++
+ 	if (cd.clk->ops.clock_settime)
+ 		err = cd.clk->ops.clock_settime(cd.clk, ts);
+ 	else
 
 
