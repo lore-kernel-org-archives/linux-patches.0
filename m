@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C811FCC52;
-	Wed,  6 Nov 2024 12:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB3E1F4FCF;
+	Wed,  6 Nov 2024 12:56:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897785; cv=none; b=kZRY4H8XSXDSqGb/KpsJCZx0POzj8K0rYBKZQsMVFt6i9hrYmrQi7XOrisig+TZzHVfTVZTu1Z6ajcCzd5lSQ7ihDMZLr7cfBsYy9UFAACBDjBebKd9cVBFqp6Vk2uWoJfOJ9YRKIKvs/Crl3h1S89uek3vMe/nGmLeW22cqwQE=
+	t=1730897788; cv=none; b=RyWROqPpF6xdpnVvh8X1ylPgrnxFr05gFzCJVc2Ve4P+kiPYN0WY8W9Akq/1YQ4tmiGj8MmBp5Wfhw0SbNWx6XO1l5iDKa+p9Ujm3a5MQzq5XWOsFjoahyAXfwB+/lCg+yowV9mVFRUDjki3mV7hWKjnBh6xr7xd0iUF1J3XHhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897785; c=relaxed/simple;
-	bh=1U+XVtdfDLsPjpQt0LIyhGKWak64cigvm3SDS6q88s0=;
+	s=arc-20240116; t=1730897788; c=relaxed/simple;
+	bh=yJ5mPHVwwm3Jn7I5X7Dr1P2YtLqHTaeRgUDcKY0a73c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b81xlY5zQNWPbMo0iiZ+TUQr99y9EwkL1SJoty/XvQQhpMR6QIR9WZfkIFaNnN+MxNZVC5sKPQfPscwDA4L17oUfmV7Ze4cO0bwj5L4+Z4L72Ki+ivcWZCh2F57BZkttEqFProptV8DJfowxg2S78oiPZ1JTaLLTphTu7JGCzdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mKwISALe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WO5VL3yD6eX4WOjg3iw9jNkDp3r+vuqZBGTlU/BE67bkYWUHkUSCiyyAoAIuXMEsqLfhn0e9mi2wYzSJ0AzqOZwaG1S3kj5R0bMxVJc2mtgSidQbE7aAci+jukUpg5zIrjy214JJT+8hYKJ5rJQ+9u7GbNSN+r+Qs5oHRLeSel8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZklcOGO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKwISALe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01EA7C4CECD;
-	Wed,  6 Nov 2024 12:56:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZklcOGO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE563C4CED3;
+	Wed,  6 Nov 2024 12:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897785;
-	bh=1U+XVtdfDLsPjpQt0LIyhGKWak64cigvm3SDS6q88s0=;
+	s=korg; t=1730897788;
+	bh=yJ5mPHVwwm3Jn7I5X7Dr1P2YtLqHTaeRgUDcKY0a73c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mKwISALeEko30iCZxdOCzhIjurQEJ84WaFJKl1howPTLoz51o6B6UsiMLoobF03ca
-	 N5NiuvaSRJ6dNKEy14XCPFlmxMxi7TT1kfYsp86zSVRp9G4yU7R839GmyHdbT+Bw1W
-	 gAfGVWgVJuKMOxlnArfm1xwVB1cicEbMHHqGFVNo=
+	b=jZklcOGO5znaB5sadUhar5C2oQtWND2U+1CtYFO5juTPa4nMV6b776A6nX4pICOoJ
+	 MULx7yBZ6cLHWhYuKa7nJpRcnzi5CT6VpaMYyv2pkKzKyXWsxcB+VKMxBWMMJAy9KG
+	 ggIL/D/7ogP48OIS4HfXUDOUAnXYU/yi9R1URT6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gabay <daniel.gabay@intel.com>,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Moon Yeounsu <yyyynoom@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 019/462] wifi: iwlwifi: mvm: fix iwl_mvm_max_scan_ie_fw_cmd_room()
-Date: Wed,  6 Nov 2024 12:58:32 +0100
-Message-ID: <20241106120331.984097296@linuxfoundation.org>
+Subject: [PATCH 5.4 002/462] net: ethernet: use ip_hdrlen() instead of bit shift
+Date: Wed,  6 Nov 2024 12:58:15 +0100
+Message-ID: <20241106120331.565118655@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -53,56 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Gabay <daniel.gabay@intel.com>
+From: Moon Yeounsu <yyyynoom@gmail.com>
 
-[ Upstream commit 916a5d9c5354c426220a0a6533a5e8ea1287d6ea ]
+[ Upstream commit 9a039eeb71a42c8b13408a1976e300f3898e1be0 ]
 
-Driver creates also the WFA TPC element, consider that in the
-calculation.
+`ip_hdr(skb)->ihl << 2` is the same as `ip_hdrlen(skb)`
+Therefore, we should use a well-defined function not a bit shift
+to find the header length.
 
-Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
-Reviewed-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240825191257.e710ce446b7f.I2715c6742e9c3d160e2ba41bc4b35de370d2ce34@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+It also compresses two lines to a single line.
+
+Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
+Reviewed-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/jme.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index 3bce3b59a12b1..55292e9b15c15 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -93,6 +93,8 @@
- /* adaptive dwell default APs number in social channels (1, 6, 11) */
- #define IWL_SCAN_ADWELL_DEFAULT_N_APS_SOCIAL 10
- 
-+#define WFA_TPC_IE_LEN	9
+diff --git a/drivers/net/ethernet/jme.c b/drivers/net/ethernet/jme.c
+index 25aa400e2e3c..773ec50d515b 100644
+--- a/drivers/net/ethernet/jme.c
++++ b/drivers/net/ethernet/jme.c
+@@ -947,15 +947,13 @@ jme_udpsum(struct sk_buff *skb)
+ 	if (skb->protocol != htons(ETH_P_IP))
+ 		return csum;
+ 	skb_set_network_header(skb, ETH_HLEN);
+-	if ((ip_hdr(skb)->protocol != IPPROTO_UDP) ||
+-	    (skb->len < (ETH_HLEN +
+-			(ip_hdr(skb)->ihl << 2) +
+-			sizeof(struct udphdr)))) {
 +
- struct iwl_mvm_scan_timing_params {
- 	u32 suspend_time;
- 	u32 max_out_time;
-@@ -378,8 +380,8 @@ static int iwl_mvm_max_scan_ie_fw_cmd_room(struct iwl_mvm *mvm)
- 
- 	max_probe_len = SCAN_OFFLOAD_PROBE_REQ_SIZE;
- 
--	/* we create the 802.11 header and SSID element */
--	max_probe_len -= 24 + 2;
-+	/* we create the 802.11 header SSID element and WFA TPC element */
-+	max_probe_len -= 24 + 2 + WFA_TPC_IE_LEN;
- 
- 	/* DS parameter set element is added on 2.4GHZ band if required */
- 	if (iwl_mvm_rrm_scan_needed(mvm))
-@@ -776,8 +778,6 @@ static u8 *iwl_mvm_copy_and_insert_ds_elem(struct iwl_mvm *mvm, const u8 *ies,
- 	return newpos;
- }
- 
--#define WFA_TPC_IE_LEN	9
--
- static void iwl_mvm_add_tpc_report_ie(u8 *pos)
- {
- 	pos[0] = WLAN_EID_VENDOR_SPECIFIC;
++	if (ip_hdr(skb)->protocol != IPPROTO_UDP ||
++	    skb->len < (ETH_HLEN + ip_hdrlen(skb) + sizeof(struct udphdr))) {
+ 		skb_reset_network_header(skb);
+ 		return csum;
+ 	}
+-	skb_set_transport_header(skb,
+-			ETH_HLEN + (ip_hdr(skb)->ihl << 2));
++	skb_set_transport_header(skb, ETH_HLEN + ip_hdrlen(skb));
+ 	csum = udp_hdr(skb)->check;
+ 	skb_reset_transport_header(skb);
+ 	skb_reset_network_header(skb);
 -- 
 2.43.0
 
