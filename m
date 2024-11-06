@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57B71F4FDF;
-	Wed,  6 Nov 2024 12:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D1C1F4FD3;
+	Wed,  6 Nov 2024 12:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897756; cv=none; b=LfCzBF0zr7XVhMp7sku7y6aJBWZwfkfokKAgZoeHrl0yLRlWCqrRKFiSQkOnWf5bBT6HX0y2yI+vf6yAX2ZvXyc+gW+lnH8LX1sDkNZgVIJryiaLnPnizcbKgsnAmprdiD2RKSTTMe1YbRcdFN777B89emKMUdca9WBI8t/f2dA=
+	t=1730897758; cv=none; b=XwoyCSbyI6Y7L+gmB3m3l50VtFh7jokKrt2ridm75/Fo1GmsXHnRgU769NwSI/jWQq3bZr/0v8GrpBPjU3ke8rx7pNzPUR/7pfYEmVF50Dgvgn4FbnozbsHcb6Da2pzCsA11ikCqwcQxFlW7FWNhHZo7Vc1QKqlrrlJZzFGkKaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897756; c=relaxed/simple;
-	bh=Kdmt3kYue1LTsJIKifwz9FlX2JElqqDwoR/5UXi6gg0=;
+	s=arc-20240116; t=1730897758; c=relaxed/simple;
+	bh=q8AtBbs4eFh/ezg4lQvcwkPthP0HeWRc0YLxAeRP4sI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kvJPW6Nt8MQR85HQl086aOjj9Y2Mt1dFyCFxxmm2w3+EUDxZ9bTYp065q0A4b9Oh1VBh0UZyrYpJC7Ee9Bc4QdvtHSyWOGDmFofCNAu6YYd8BCPszX4kbrKS9oReN62l+9aIH1evGRreSjtClQ1grucrW6YNPGCrgZ3/d1sS4fE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17zwdEMG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NdVtrs3PNUAxwcUW12xlxbZZC4++jZWOQGRbKw4l3HuiDsblZ41FFsqlGfyJn+O6k4hbnFLSBdx4cPCN8hMWyc02/DAWep+Kw0HKt7dPi8DOotma3tURhSbhk4xFpLblGPfA4uEc36fxRovehFMqvv6Pb92UsveYtVIZWsNRDls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jv6WXHO7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17zwdEMG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68694C4CECD;
-	Wed,  6 Nov 2024 12:55:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jv6WXHO7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ADDDC4CECD;
+	Wed,  6 Nov 2024 12:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897755;
-	bh=Kdmt3kYue1LTsJIKifwz9FlX2JElqqDwoR/5UXi6gg0=;
+	s=korg; t=1730897758;
+	bh=q8AtBbs4eFh/ezg4lQvcwkPthP0HeWRc0YLxAeRP4sI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=17zwdEMGJwzojvj7zW52Fy2aoKISjuLfjjbEmG9TxSS6uAXJxq2h7KG3D4E/jkcYk
-	 JlXzUheE4dWHD0c91g8vrmMIY/ASGVGVvlRhOUQpUQFMnThrZVPGJRogtEJVvZPvw/
-	 qTDPO/u4Yqf+QWmfexmynarBuz0Q18Tvz+vtoCnQ=
+	b=jv6WXHO7FZXJ/PiD9KWrrC+yBHfZqDqstw2wv3dduAj17onCN+3Mz9UCm1+uif540
+	 cARmbC+jf30NJzes01tuMPA8b+eNKroYg+ntRJbtGt6zQ5pvzwF/7BLe+u2+U/FzEd
+	 ozoLuqAKolhjjJIyyx+NuhaNxEpqrV5WOokfnEOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Foster Snowhill <forst@pen.gy>,
-	Georgi Valkov <gvalkov@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 001/462] usbnet: ipheth: fix carrier detection in modes 1 and 4
-Date: Wed,  6 Nov 2024 12:58:14 +0100
-Message-ID: <20241106120331.539992973@linuxfoundation.org>
+	stable@kernel.org,
+	Han Xu <han.xu@nxp.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.4 010/462] spi: nxp-fspi: fix the KASAN report out-of-bounds bug
+Date: Wed,  6 Nov 2024 12:58:23 +0100
+Message-ID: <20241106120331.760895233@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,80 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Foster Snowhill <forst@pen.gy>
+From: Han Xu <han.xu@nxp.com>
 
-[ Upstream commit 67927a1b255d883881be9467508e0af9a5e0be9d ]
+commit 2a8787c1cdc7be24fdd8953ecd1a8743a1006235 upstream.
 
-Apart from the standard "configurations", "interfaces" and "alternate
-interface settings" in USB, iOS devices also have a notion of
-"modes". In different modes, the device exposes a different set of
-available configurations.
+Change the memcpy length to fix the out-of-bounds issue when writing the
+data that is not 4 byte aligned to TX FIFO.
 
-Depending on the iOS version, and depending on the current mode, the
-length and contents of the carrier state control message differs:
+To reproduce the issue, write 3 bytes data to NOR chip.
 
-* 1 byte (seen on iOS 4.2.1, 8.4):
-    * 03: carrier off (mode 0)
-    * 04: carrier on (mode 0)
-* 3 bytes (seen on iOS 10.3.4, 15.7.6):
-    * 03 03 03: carrier off (mode 0)
-    * 04 04 03: carrier on (mode 0)
-* 4 bytes (seen on iOS 16.5, 17.6):
-    * 03 03 03 00: carrier off (mode 0)
-    * 04 03 03 00: carrier off (mode 1)
-    * 06 03 03 00: carrier off (mode 4)
-    * 04 04 03 04: carrier on (mode 0 and 1)
-    * 06 04 03 04: carrier on (mode 4)
+dd if=3b of=/dev/mtd0
+[   36.926103] ==================================================================
+[   36.933409] BUG: KASAN: slab-out-of-bounds in nxp_fspi_exec_op+0x26ec/0x2838
+[   36.940514] Read of size 4 at addr ffff00081037c2a0 by task dd/455
+[   36.946721]
+[   36.948235] CPU: 3 UID: 0 PID: 455 Comm: dd Not tainted 6.11.0-rc5-gc7b0e37c8434 #1070
+[   36.956185] Hardware name: Freescale i.MX8QM MEK (DT)
+[   36.961260] Call trace:
+[   36.963723]  dump_backtrace+0x90/0xe8
+[   36.967414]  show_stack+0x18/0x24
+[   36.970749]  dump_stack_lvl+0x78/0x90
+[   36.974451]  print_report+0x114/0x5cc
+[   36.978151]  kasan_report+0xa4/0xf0
+[   36.981670]  __asan_report_load_n_noabort+0x1c/0x28
+[   36.986587]  nxp_fspi_exec_op+0x26ec/0x2838
+[   36.990800]  spi_mem_exec_op+0x8ec/0xd30
+[   36.994762]  spi_mem_no_dirmap_read+0x190/0x1e0
+[   36.999323]  spi_mem_dirmap_write+0x238/0x32c
+[   37.003710]  spi_nor_write_data+0x220/0x374
+[   37.007932]  spi_nor_write+0x110/0x2e8
+[   37.011711]  mtd_write_oob_std+0x154/0x1f0
+[   37.015838]  mtd_write_oob+0x104/0x1d0
+[   37.019617]  mtd_write+0xb8/0x12c
+[   37.022953]  mtdchar_write+0x224/0x47c
+[   37.026732]  vfs_write+0x1e4/0x8c8
+[   37.030163]  ksys_write+0xec/0x1d0
+[   37.033586]  __arm64_sys_write+0x6c/0x9c
+[   37.037539]  invoke_syscall+0x6c/0x258
+[   37.041327]  el0_svc_common.constprop.0+0x160/0x22c
+[   37.046244]  do_el0_svc+0x44/0x5c
+[   37.049589]  el0_svc+0x38/0x78
+[   37.052681]  el0t_64_sync_handler+0x13c/0x158
+[   37.057077]  el0t_64_sync+0x190/0x194
+[   37.060775]
+[   37.062274] Allocated by task 455:
+[   37.065701]  kasan_save_stack+0x2c/0x54
+[   37.069570]  kasan_save_track+0x20/0x3c
+[   37.073438]  kasan_save_alloc_info+0x40/0x54
+[   37.077736]  __kasan_kmalloc+0xa0/0xb8
+[   37.081515]  __kmalloc_noprof+0x158/0x2f8
+[   37.085563]  mtd_kmalloc_up_to+0x120/0x154
+[   37.089690]  mtdchar_write+0x130/0x47c
+[   37.093469]  vfs_write+0x1e4/0x8c8
+[   37.096901]  ksys_write+0xec/0x1d0
+[   37.100332]  __arm64_sys_write+0x6c/0x9c
+[   37.104287]  invoke_syscall+0x6c/0x258
+[   37.108064]  el0_svc_common.constprop.0+0x160/0x22c
+[   37.112972]  do_el0_svc+0x44/0x5c
+[   37.116319]  el0_svc+0x38/0x78
+[   37.119401]  el0t_64_sync_handler+0x13c/0x158
+[   37.123788]  el0t_64_sync+0x190/0x194
+[   37.127474]
+[   37.128977] The buggy address belongs to the object at ffff00081037c2a0
+[   37.128977]  which belongs to the cache kmalloc-8 of size 8
+[   37.141177] The buggy address is located 0 bytes inside of
+[   37.141177]  allocated 3-byte region [ffff00081037c2a0, ffff00081037c2a3)
+[   37.153465]
+[   37.154971] The buggy address belongs to the physical page:
+[   37.160559] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x89037c
+[   37.168596] flags: 0xbfffe0000000000(node=0|zone=2|lastcpupid=0x1ffff)
+[   37.175149] page_type: 0xfdffffff(slab)
+[   37.179021] raw: 0bfffe0000000000 ffff000800002500 dead000000000122 0000000000000000
+[   37.186788] raw: 0000000000000000 0000000080800080 00000001fdffffff 0000000000000000
+[   37.194553] page dumped because: kasan: bad access detected
+[   37.200144]
+[   37.201647] Memory state around the buggy address:
+[   37.206460]  ffff00081037c180: fa fc fc fc fa fc fc fc fa fc fc fc fa fc fc fc
+[   37.213701]  ffff00081037c200: fa fc fc fc 05 fc fc fc 03 fc fc fc 02 fc fc fc
+[   37.220946] >ffff00081037c280: 06 fc fc fc 03 fc fc fc fc fc fc fc fc fc fc fc
+[   37.228186]                                ^
+[   37.232473]  ffff00081037c300: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   37.239718]  ffff00081037c380: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   37.246962] ==================================================================
+[   37.254394] Disabling lock debugging due to kernel taint
+0+1 records in
+0+1 records out
+3 bytes copied, 0.335911 s, 0.0 kB/s
 
-Before this change, the driver always used the first byte of the
-response to determine carrier state.
-
->From this larger sample, the first byte seems to indicate the number of
-available USB configurations in the current mode (with the exception of
-the default mode 0), and in some cases (namely mode 1 and 4) does not
-correlate with the carrier state.
-
-Previous logic erroneously counted `04 03 03 00` as "carrier on" and
-`06 04 03 04` as "carrier off" on iOS versions that support mode 1 and
-mode 4 respectively.
-
-Only modes 0, 1 and 4 expose the USB Ethernet interfaces necessary for
-the ipheth driver.
-
-Check the second byte of the control message where possible, and fall
-back to checking the first byte on older iOS versions.
-
-Signed-off-by: Foster Snowhill <forst@pen.gy>
-Tested-by: Georgi Valkov <gvalkov@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a5356aef6a90 ("spi: spi-mem: Add driver for NXP FlexSPI controller")
+Cc: stable@kernel.org
+Signed-off-by: Han Xu <han.xu@nxp.com>
+Link: https://patch.msgid.link/20240911211146.3337068-1-han.xu@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/ipheth.c | 5 +++--
+ drivers/spi/spi-nxp-fspi.c |    5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/ipheth.c b/drivers/net/usb/ipheth.c
-index 05576f66f73d..4a6f9dc71dfb 100644
---- a/drivers/net/usb/ipheth.c
-+++ b/drivers/net/usb/ipheth.c
-@@ -253,13 +253,14 @@ static int ipheth_carrier_set(struct ipheth_device *dev)
- 			0x02, /* index */
- 			dev->ctrl_buf, IPHETH_CTRL_BUF_SIZE,
- 			IPHETH_CTRL_TIMEOUT);
--	if (retval < 0) {
-+	if (retval <= 0) {
- 		dev_err(&dev->intf->dev, "%s: usb_control_msg: %d\n",
- 			__func__, retval);
- 		return retval;
- 	}
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -679,14 +679,15 @@ static void nxp_fspi_fill_txfifo(struct
+ 	if (i < op->data.nbytes) {
+ 		u32 data = 0;
+ 		int j;
++		int remaining = op->data.nbytes - i;
+ 		/* Wait for TXFIFO empty */
+ 		ret = fspi_readl_poll_tout(f, f->iobase + FSPI_INTR,
+ 					   FSPI_INTR_IPTXWE, 0,
+ 					   POLL_TOUT, true);
+ 		WARN_ON(ret);
  
--	if (dev->ctrl_buf[0] == IPHETH_CARRIER_ON) {
-+	if ((retval == 1 && dev->ctrl_buf[0] == IPHETH_CARRIER_ON) ||
-+	    (retval >= 2 && dev->ctrl_buf[1] == IPHETH_CARRIER_ON)) {
- 		netif_carrier_on(dev->net);
- 		if (dev->tx_urb->status != -EINPROGRESS)
- 			netif_wake_queue(dev->net);
--- 
-2.43.0
-
+-		for (j = 0; j < ALIGN(op->data.nbytes - i, 4); j += 4) {
+-			memcpy(&data, buf + i + j, 4);
++		for (j = 0; j < ALIGN(remaining, 4); j += 4) {
++			memcpy(&data, buf + i + j, min_t(int, 4, remaining - j));
+ 			fspi_writel(f, data, base + FSPI_TFDR + j);
+ 		}
+ 		fspi_writel(f, FSPI_INTR_IPTXWE, base + FSPI_INTR);
 
 
