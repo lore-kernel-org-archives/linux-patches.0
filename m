@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B681EE033;
-	Wed,  6 Nov 2024 12:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCE21EF0A4;
+	Wed,  6 Nov 2024 12:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897325; cv=none; b=DA/T0u9cpeHLY5XqOz3yBxjaD4S/eLAyZmGSgVIM1xKTNwyDSK5CS2yVRBbMqvIsdMJYIC/lIwardWzcXF2mdIGVqFttajdOCh46uSGX8mi8cdyXEWpYcoPupmP6Buf14impdTU5mYNs5iT9II0HkWgmGXRVskfsaKEF9P994vA=
+	t=1730897328; cv=none; b=blVsRoeoAgQhcpd7OZWTQm8Bf9oaqIh7uWtBca09xK9oKSyJ5frekyf/qMNbumA1P+g/Flebryz1VsASrJBhod9bzCzapyP80tSepqdf0vzqHNvTRURi8Taei6sEkdTHWym4Eie7B5QxRMqYETZF4zNM3vkT9WHqX4qp/sW01jU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897325; c=relaxed/simple;
-	bh=AXOkrvIVA5EV85Cvbb1Y3bp2eT7vaNezLigplpb8kWE=;
+	s=arc-20240116; t=1730897328; c=relaxed/simple;
+	bh=2j3nyefYzmERmLyvVg0R8p9+9eCW5wxl27fZQQPEdcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sorp0hcfQM+hJ8jREzHTMh2B+mzq9Id0J8XeaOHS91FaA+mwo/VAyJ2mfa85cHIEE1ip+jSsXqvnyX7afJZt4GZW3Bd055tK6A1o7ZwNP5p3smSf/aeOdm9+IRIOSUUF6hR9+Cbg8vJqh10zivwaPWqhApocNtJxMEan9vJG+jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v107AZ2q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sJgst+bg2EA06LTvTb8q3K01eaWS+0cd4P6zDr+i7Vjzab9whqlm83+26KzXe43R25T1lJVEl317+wT0kEkZVuSZ3m/7EDtR8ULvgw5zfml0fhBu7rii37BsGtAlP5NBjXPkzzahh4DOZOhxmVG+e1PAJmCkSwrNgbdOmR0KaA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTAXCcND; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v107AZ2q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A570C4CECD;
-	Wed,  6 Nov 2024 12:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTAXCcND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB69C4CECD;
+	Wed,  6 Nov 2024 12:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897324;
-	bh=AXOkrvIVA5EV85Cvbb1Y3bp2eT7vaNezLigplpb8kWE=;
+	s=korg; t=1730897327;
+	bh=2j3nyefYzmERmLyvVg0R8p9+9eCW5wxl27fZQQPEdcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v107AZ2qrNSrNPRioCFx7UzuFhnwUsYhZWH9cqKTd2T3kVNvE9SlXNGBMElkHfrgJ
-	 rroV7wePOzikwQmeW/bU5H7k+nQGAgHfSQGFFbNn/nYFK44yco+81cGIQPF8ftaw2c
-	 q757pr8HGDPkipnv5gRY954eQvjnzwcd6ETMjd8k=
+	b=aTAXCcNDK8g+BIc2WulCuLd74IzbXSJ/3ZFqgjkSXHgMDFowbr9vk6fUMYesNaIeq
+	 TdvqF6wQz71PgwQiF7Op4ToGygBmgzJfc0MSFjZzZ33qPionpoxcicKHtSyR2tJHjT
+	 P6+TJT92KAvgB7DOKxfJiF5x6HjNH9zCsbBH+740=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 016/151] RDMA/bnxt_re: synchronize the qp-handle table array
-Date: Wed,  6 Nov 2024 13:03:24 +0100
-Message-ID: <20241106120309.287541207@linuxfoundation.org>
+Subject: [PATCH 6.6 017/151] wifi: iwlwifi: mvm: disconnect station vifs if recovery failed
+Date: Wed,  6 Nov 2024 13:03:25 +0100
+Message-ID: <20241106120309.311860711@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -52,108 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 76d3ddff7153cc0bcc14a63798d19f5d0693ea71 ]
+[ Upstream commit e50a88e5cb8792cc416866496288c5f4d1eb4b1f ]
 
-There is a race between the CREQ tasklet and destroy qp when accessing the
-qp-handle table. There is a chance of reading a valid qp-handle in the
-CREQ tasklet handler while the QP is already moving ahead with the
-destruction.
+This will allow to reconnect immediately instead of leaving the
+connection in a limbo state.
 
-Fixing this race by implementing a table-lock to synchronize the access.
-
-Fixes: f218d67ef004 ("RDMA/bnxt_re: Allow posting when QPs are in error")
-Fixes: 84cf229f4001 ("RDMA/bnxt_re: Fix the qp table indexing")
-Link: https://patch.msgid.link/r/1728912975-19346-3-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240128084842.e90531cd3a36.Iebdc9483983c0d8497f9dcf9d79ec37332a5fdcc@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 07a6e3b78a65 ("wifi: iwlwifi: mvm: Fix response handling in iwl_mvm_send_recovery_cmd()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.c   |  4 ++++
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 13 +++++++++----
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.h |  2 ++
- 3 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/fw.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-index 4ee11cb4f2bd3..b624c255eee6f 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -1513,9 +1513,11 @@ int bnxt_qplib_destroy_qp(struct bnxt_qplib_res *res,
- 	u32 tbl_indx;
- 	int rc;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+index 51f396287dc69..4bc395a5731b2 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
+@@ -1394,6 +1394,13 @@ void iwl_mvm_get_acpi_tables(struct iwl_mvm *mvm)
  
-+	spin_lock_bh(&rcfw->tbl_lock);
- 	tbl_indx = map_qp_id_to_tbl_indx(qp->id, rcfw);
- 	rcfw->qp_tbl[tbl_indx].qp_id = BNXT_QPLIB_QP_ID_INVALID;
- 	rcfw->qp_tbl[tbl_indx].qp_handle = NULL;
-+	spin_unlock_bh(&rcfw->tbl_lock);
+ #endif /* CONFIG_ACPI */
  
- 	bnxt_qplib_rcfw_cmd_prep((struct cmdq_base *)&req,
- 				 CMDQ_BASE_OPCODE_DESTROY_QP,
-@@ -1526,8 +1528,10 @@ int bnxt_qplib_destroy_qp(struct bnxt_qplib_res *res,
- 				sizeof(resp), 0);
- 	rc = bnxt_qplib_rcfw_send_message(rcfw, &msg);
- 	if (rc) {
-+		spin_lock_bh(&rcfw->tbl_lock);
- 		rcfw->qp_tbl[tbl_indx].qp_id = qp->id;
- 		rcfw->qp_tbl[tbl_indx].qp_handle = qp;
-+		spin_unlock_bh(&rcfw->tbl_lock);
- 		return rc;
- 	}
- 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index ca26b88a0a80f..e82bd37158ad6 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -634,17 +634,21 @@ static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
- 	case CREQ_QP_EVENT_EVENT_QP_ERROR_NOTIFICATION:
- 		err_event = (struct creq_qp_error_notification *)qp_event;
- 		qp_id = le32_to_cpu(err_event->xid);
-+		spin_lock(&rcfw->tbl_lock);
- 		tbl_indx = map_qp_id_to_tbl_indx(qp_id, rcfw);
- 		qp = rcfw->qp_tbl[tbl_indx].qp_handle;
-+		if (!qp) {
-+			spin_unlock(&rcfw->tbl_lock);
-+			break;
++static void iwl_mvm_disconnect_iterator(void *data, u8 *mac,
++					struct ieee80211_vif *vif)
++{
++	if (vif->type == NL80211_IFTYPE_STATION)
++		ieee80211_hw_restart_disconnect(vif);
++}
++
+ void iwl_mvm_send_recovery_cmd(struct iwl_mvm *mvm, u32 flags)
+ {
+ 	u32 error_log_size = mvm->fw->ucode_capa.error_log_size;
+@@ -1438,10 +1445,15 @@ void iwl_mvm_send_recovery_cmd(struct iwl_mvm *mvm, u32 flags)
+ 	/* skb respond is only relevant in ERROR_RECOVERY_UPDATE_DB */
+ 	if (flags & ERROR_RECOVERY_UPDATE_DB) {
+ 		resp = le32_to_cpu(*(__le32 *)host_cmd.resp_pkt->data);
+-		if (resp)
++		if (resp) {
+ 			IWL_ERR(mvm,
+ 				"Failed to send recovery cmd blob was invalid %d\n",
+ 				resp);
++
++			ieee80211_iterate_interfaces(mvm->hw, 0,
++						     iwl_mvm_disconnect_iterator,
++						     mvm);
 +		}
-+		bnxt_qplib_mark_qp_error(qp);
-+		rc = rcfw->creq.aeq_handler(rcfw, qp_event, qp);
-+		spin_unlock(&rcfw->tbl_lock);
- 		dev_dbg(&pdev->dev, "Received QP error notification\n");
- 		dev_dbg(&pdev->dev,
- 			"qpid 0x%x, req_err=0x%x, resp_err=0x%x\n",
- 			qp_id, err_event->req_err_state_reason,
- 			err_event->res_err_state_reason);
--		if (!qp)
--			break;
--		bnxt_qplib_mark_qp_error(qp);
--		rc = rcfw->creq.aeq_handler(rcfw, qp_event, qp);
- 		break;
- 	default:
- 		/*
-@@ -973,6 +977,7 @@ int bnxt_qplib_alloc_rcfw_channel(struct bnxt_qplib_res *res,
- 			       GFP_KERNEL);
- 	if (!rcfw->qp_tbl)
- 		goto fail;
-+	spin_lock_init(&rcfw->tbl_lock);
+ 	}
+ }
  
- 	rcfw->max_timeout = res->cctx->hwrm_cmd_max_timeout;
- 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-index 45996e60a0d03..07779aeb75759 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-@@ -224,6 +224,8 @@ struct bnxt_qplib_rcfw {
- 	struct bnxt_qplib_crsqe		*crsqe_tbl;
- 	int qp_tbl_size;
- 	struct bnxt_qplib_qp_node *qp_tbl;
-+	/* To synchronize the qp-handle hash table */
-+	spinlock_t			tbl_lock;
- 	u64 oos_prev;
- 	u32 init_oos_stats;
- 	u32 cmdq_depth;
 -- 
 2.43.0
 
