@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878B21F428D;
-	Wed,  6 Nov 2024 12:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FD71F428D;
+	Wed,  6 Nov 2024 12:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897524; cv=none; b=Jo9/gnZwo96qYo0TKejiNfKa6K2+eeVosdV70pHFbsM5No7txP90b9FlkQVpoK4SdoBdWvgynf7r0yj3231nZ3f9CvAmTbuMbRMBo1z0gXInEPn2DVuFjj+VqwuNxoDnOiTIcQvdUmM5QL7UmTge4cfkWuCWMCzEvDC1m7pJFq0=
+	t=1730897527; cv=none; b=sGOOUtqX0dFyiZRvFIl8fRDQLokklkJcHrtbrecmejqWljLlqVu3DPrKTcSE6muENGSL1QxCJK3S9tGzTVnSE/DWLZLVK8w8kXshTx621TjYWM0l2ju2PIv2LAW2/CRTKZYLoyjHFCbP5aA3ZkFZPfvhbrdDMYRQhT8hvzRrGrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897524; c=relaxed/simple;
-	bh=Q+n3u6ZEKXxyhc7B9UUO+mQj0+NiMYJ+LEaEppTomFI=;
+	s=arc-20240116; t=1730897527; c=relaxed/simple;
+	bh=ISIuu03VBuvaijttqByDt2g2VnA8d5faw1UnvsZVdM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3SedZeEYA5sA373gFdfqL+HynjmrI/pfNoMA8rrpZSaJXRqX4ouL8DimO1GKfr5+FY9kVhQYxhy5Ntil1wocj2wwvWX4QgQnXsaKKKmRNweLQejdiKOJSY0vekdLSOGVJcZvXtSzquk+EEvp6sbH2nV+DILTjjmCWjPe5Gv+lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1AoMz9Ol; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KqLshNX7CiB5B6czoU8r47CLhaY7yjcg2Gh2fsPpY5cA53zbnRWD5bTB8YISRglrHZL/F3H16XNvh23z5+HcRW3f0Mx1MWcgdZBpMK/zNcxYoyYF5LJNamChlfGmc1eUoHcIFEfoJQv3uGzlJgOo2sm1WUnKwtzORxnS9baFQk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=az9tN0cB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1AoMz9Ol"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E737C4CECD;
-	Wed,  6 Nov 2024 12:52:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="az9tN0cB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFCF6C4CECD;
+	Wed,  6 Nov 2024 12:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897524;
-	bh=Q+n3u6ZEKXxyhc7B9UUO+mQj0+NiMYJ+LEaEppTomFI=;
+	s=korg; t=1730897527;
+	bh=ISIuu03VBuvaijttqByDt2g2VnA8d5faw1UnvsZVdM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1AoMz9Ol3Gv4QN/bROnCINCKoFSZkDSuc4MYpxFjgSfbsPhqfwKO+6N+erVe/IwB9
-	 RuHatRMazpGpUiKUUQFAeBMH+JqHX3fv765ZyOhKIjUDjHYz3DnHs8QtdVtAg0HvB+
-	 W9ZuILUk1h5hcsgOedDIn7YlBA+V59Y72/bvp1EM=
+	b=az9tN0cBMGUlSMzmzDQOWx7C6dKu5M8zKQ3CrosHQWZ536ioDkjMVY/eRSmIFHaLK
+	 1S0HJnxcUwcmAfqo3FTeKiN97vkURkBPqAJ6KA7C2lKUvFfwtmrl0ykfTNcmPW+p0M
+	 ybLEHA2i9mNByt+3xS4trtnEWchkNgW2ZSG/PEoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Subject: [PATCH 6.6 083/151] usb: typec: fix unreleased fwnode_handle in typec_port_register_altmodes()
-Date: Wed,  6 Nov 2024 13:04:31 +0100
-Message-ID: <20241106120311.145172321@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.6 084/151] usb: typec: qcom-pmic-typec: use fwnode_handle_put() to release fwnodes
+Date: Wed,  6 Nov 2024 13:04:32 +0100
+Message-ID: <20241106120311.175905629@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -52,33 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 9581acb91eaf5bbe70086bbb6fca808220d358ba upstream.
+commit 7f02b8a5b602098f2901166e7e4d583acaed872a upstream.
 
-The 'altmodes_node' fwnode_handle is never released after it is no
-longer required, which leaks the resource.
+The right function to release a fwnode acquired via
+device_get_named_child_node() is fwnode_handle_put(), and not
+fwnode_remove_software_node(), as no software node is being handled.
 
-Add the required call to fwnode_handle_put() when 'altmodes_node' is no
-longer required.
+Replace the calls to fwnode_remove_software_node() with
+fwnode_handle_put() in qcom_pmic_typec_probe() and
+qcom_pmic_typec_remove().
 
 Cc: stable@vger.kernel.org
-Fixes: 7b458a4c5d73 ("usb: typec: Add typec_port_register_altmodes()")
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20241021-typec-class-fwnode_handle_put-v2-1-3281225d3d27@gmail.com
+Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241020-qcom_pmic_typec-fwnode_remove-v2-1-7054f3d2e215@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/class.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -2194,6 +2194,7 @@ void typec_port_register_altmodes(struct
- 		altmodes[index] = alt;
- 		index++;
- 	}
-+	fwnode_handle_put(altmodes_node);
- }
- EXPORT_SYMBOL_GPL(typec_port_register_altmodes);
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+@@ -268,7 +268,7 @@ static int qcom_pmic_typec_probe(struct
+ 	return 0;
  
+ fwnode_remove:
+-	fwnode_remove_software_node(tcpm->tcpc.fwnode);
++	fwnode_handle_put(tcpm->tcpc.fwnode);
+ 
+ 	return ret;
+ }
+@@ -280,7 +280,7 @@ static void qcom_pmic_typec_remove(struc
+ 	qcom_pmic_typec_pdphy_stop(tcpm->pmic_typec_pdphy);
+ 	qcom_pmic_typec_port_stop(tcpm->pmic_typec_port);
+ 	tcpm_unregister_port(tcpm->tcpm_port);
+-	fwnode_remove_software_node(tcpm->tcpc.fwnode);
++	fwnode_handle_put(tcpm->tcpc.fwnode);
+ }
+ 
+ static struct pmic_typec_pdphy_resources pm8150b_pdphy_res = {
 
 
