@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C581EE005;
-	Wed,  6 Nov 2024 13:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFDF646;
+	Wed,  6 Nov 2024 13:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898023; cv=none; b=tmI1IwahyxWCypwWtYgKgQBnjNS++JoeP/xoZ33bMy4GXtwU7kwXaVaLeQRnUqIU5+lZNerx6pCf1zUkDrbYbAzEnpdKngpJICKR0lEcUa0YzqdYt+7D4uIRI1m29SorAUX3Yvzo9jE8MoTgv7gWBhHg39pGbxYQM9KOlAkr5ug=
+	t=1730898026; cv=none; b=lLHCIu5aicCi9MhQQP/9VE4YfEJHOzCRuEPHeY8Dk6SjoIZ5KTZ9bEc7g3SkhuM7o4M6vowoYsmrMpfEtZ342Oql2Ksn3mVYa+OVtQiHIIsrCJrSjbxeMp2T5CPfiTTRzhavB/aJDRnfEJ3mOh3tzsnqHi0IQ5A9PqS5UczoZa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898023; c=relaxed/simple;
-	bh=9CjO1K6QVPIkl/WkCKJ9l7A1C0qtbi5uw4UYW5/eWfI=;
+	s=arc-20240116; t=1730898026; c=relaxed/simple;
+	bh=izLJgiYWsUkDBuWGARK4eHYdGxYNFXNXCEXmzh50eKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JGOSji3p6PAXiJzMXOXMd+IyVORZd/n9Me/kQfZBQKlSMcxkihwpxdw+7EAugJzVsTbmGPM3i8Xv+MaNOlziERULm78mQOt6/WHN42VkwQp64nBzmFXgQo/OM6M5KsclbyzVfKuuri+HfR0PJ2YJ11n4LwMMa6wqlpoeMWi8Xnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNAGtaYm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NuZXxWPIArmGDsAVJm05wHG4el/EadAlAsxImFSnQrZN5s+IMHmSwQ3DhZoDuX421dTUdRKqX0ymUDJ1s1qdPMduqEkbFuM9Uobf6/DfFrCOHdqt88Aa8vUTb0GqkjxXEuMVUKGFJ1eAitE0maGm3yI5GzOPT+txxpc0P1sok/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wh/tS9Er; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNAGtaYm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56548C4CECD;
-	Wed,  6 Nov 2024 13:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wh/tS9Er"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 520C9C4CECD;
+	Wed,  6 Nov 2024 13:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898023;
-	bh=9CjO1K6QVPIkl/WkCKJ9l7A1C0qtbi5uw4UYW5/eWfI=;
+	s=korg; t=1730898026;
+	bh=izLJgiYWsUkDBuWGARK4eHYdGxYNFXNXCEXmzh50eKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CNAGtaYmA3XLjekaNz1YtLyCdMvOuBGPpnqQ6qmrEUOfsgVIVwMO3EVW9b0YOJ9Vt
-	 f+lBzwm/2/ShnGbh2vO8HoXxKUN/Iv4KRUCX07cW9H//2+YxhUFnrL3uZ3HsqA1tY/
-	 2j6j9acJRxMsE7ISAV6kMPurEBAl7t/4kYoJ4KJU=
+	b=wh/tS9ErB5WqtzExNk97qNf8rVBKU3Q2UW/sJyklVx/kF8yIDpmK3+ucMH4OAUkTA
+	 lcXVGaLkCLhydHng2G75N4TWA9IpKrLYmNmS8nFaBz9nNaYRyK0fL7dHO1u/tQCY76
+	 X+xZp2BFzK6gYnisS/t6PXnmEnFgvUZ2WVQtxuPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawei Ye <jiawei.ye@foxmail.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 097/462] smackfs: Use rcu_assign_pointer() to ensure safe assignment in smk_set_cipso
-Date: Wed,  6 Nov 2024 12:59:50 +0100
-Message-ID: <20241106120333.904844189@linuxfoundation.org>
+Subject: [PATCH 5.4 098/462] ext4: avoid negative min_clusters in find_group_orlov()
+Date: Wed,  6 Nov 2024 12:59:51 +0100
+Message-ID: <20241106120333.929483077@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,46 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawei Ye <jiawei.ye@foxmail.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 2749749afa071f8a0e405605de9da615e771a7ce ]
+[ Upstream commit bb0a12c3439b10d88412fd3102df5b9a6e3cd6dc ]
 
-In the `smk_set_cipso` function, the `skp->smk_netlabel.attr.mls.cat`
-field is directly assigned to a new value without using the appropriate
-RCU pointer assignment functions. According to RCU usage rules, this is
-illegal and can lead to unpredictable behavior, including data
-inconsistencies and impossible-to-diagnose memory corruption issues.
+min_clusters is signed integer and will be converted to unsigned
+integer when compared with unsigned number stats.free_clusters.
+If min_clusters is negative, it will be converted to a huge unsigned
+value in which case all groups may not meet the actual desired free
+clusters.
+Set negative min_clusters to 0 to avoid unexpected behavior.
 
-This possible bug was identified using a static analysis tool developed
-by myself, specifically designed to detect RCU-related issues.
-
-To address this, the assignment is now done using rcu_assign_pointer(),
-which ensures that the pointer assignment is done safely, with the
-necessary memory barriers and synchronization. This change prevents
-potential RCU dereference issues by ensuring that the `cat` field is
-safely updated while still adhering to RCU's requirements.
-
-Fixes: 0817534ff9ea ("smackfs: Fix use-after-free in netlbl_catmap_walk()")
-Signed-off-by: Jiawei Ye <jiawei.ye@foxmail.com>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Link: https://patch.msgid.link/20240820132234.2759926-4-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smackfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/ialloc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
-index a71975ea88a94..ddb0a292802ef 100644
---- a/security/smack/smackfs.c
-+++ b/security/smack/smackfs.c
-@@ -920,7 +920,7 @@ static ssize_t smk_set_cipso(struct file *file, const char __user *buf,
- 	rc = smk_netlbl_mls(maplevel, mapcatset, &ncats, SMK_CIPSOLEN);
- 	if (rc >= 0) {
- 		old_cat = skp->smk_netlabel.attr.mls.cat;
--		skp->smk_netlabel.attr.mls.cat = ncats.attr.mls.cat;
-+		rcu_assign_pointer(skp->smk_netlabel.attr.mls.cat, ncats.attr.mls.cat);
- 		skp->smk_netlabel.attr.mls.lvl = ncats.attr.mls.lvl;
- 		synchronize_rcu();
- 		netlbl_catmap_free(old_cat);
+diff --git a/fs/ext4/ialloc.c b/fs/ext4/ialloc.c
+index cbde5a096c7bf..48e4406fd59a3 100644
+--- a/fs/ext4/ialloc.c
++++ b/fs/ext4/ialloc.c
+@@ -505,6 +505,8 @@ static int find_group_orlov(struct super_block *sb, struct inode *parent,
+ 	if (min_inodes < 1)
+ 		min_inodes = 1;
+ 	min_clusters = avefreec - EXT4_CLUSTERS_PER_GROUP(sb)*flex_size / 4;
++	if (min_clusters < 0)
++		min_clusters = 0;
+ 
+ 	/*
+ 	 * Start looking in the flex group where we last allocated an
 -- 
 2.43.0
 
