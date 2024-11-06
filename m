@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFA41F9A8C;
-	Wed,  6 Nov 2024 12:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC221F9ECF;
+	Wed,  6 Nov 2024 12:38:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896693; cv=none; b=p+BM2UYPqStARhV60WQ9bbIEo1nyc8CY3fp6YgeIpGsddpJz42teiL5M14kmWIGgFywxce6hZ17rlhCaOXp7Ns0GZDEfIKviWOZgXwGWioFGv7RIB3PA9qzYlLpV6ZPsHveZN5a/qJ+2ZxeVzJx5TgLOFfSXWNxt4boAOQrWG4k=
+	t=1730896696; cv=none; b=oDTOasVpehAeOIUx14OqpqhQTszaYBxEDkgrbRs5RnChXt7v3QvAxoNHZTWQjbHIsTHS1739Y5EUJH1qK3PpStQqFJXW5eDg9Bs13urnAvuYxJm2oMLsojQTJQH751kSvUAzqZgSZyyEGFE+K3bcKIYja1I5ZhNgVdZCjm0yYOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896693; c=relaxed/simple;
-	bh=7GWTWRgHJjCCRBJ/R1TcG5us2woWagZqUHRhO5sVD9U=;
+	s=arc-20240116; t=1730896696; c=relaxed/simple;
+	bh=c2ugABkgiGNFv6KIVk/hBWJKeDinn+z7/qEufZGU0mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=scuI8ZvjKbeqgZFpm9pYUa2yvS/9iwP0WCYeyT6Gt4xtLh3yGt060g8RM+zfDXq2yw5tTOApu+c3w7Ejphcri1v/AuKsIT3lOfnder2XtExwnz4dpKe9p3CJthUqtizph3nGtZymzWwfZyNRthjIVxO/Om1lvK36PLRIkX6xG7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MaZiR8G3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o35SKgVoHDBd1BK0JRS/g/cehHqV448lUVm5ZFcXn9UnZ15EFndefVNAx5GoQPHe7KIX2i6fc4AQNLuNgPiNfz81sBDr24l8Fm6ciuHEV5xq1RQrZ6owoTAQxYRjugVPvXDUP4nPg3+rfvN70dLgb/BPwUxlMzkk3dBYM87+ocg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aiXWLgVj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MaZiR8G3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12576C4CED4;
-	Wed,  6 Nov 2024 12:38:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aiXWLgVj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 061CFC4CECD;
+	Wed,  6 Nov 2024 12:38:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896693;
-	bh=7GWTWRgHJjCCRBJ/R1TcG5us2woWagZqUHRhO5sVD9U=;
+	s=korg; t=1730896696;
+	bh=c2ugABkgiGNFv6KIVk/hBWJKeDinn+z7/qEufZGU0mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MaZiR8G3Bet/A6OsAUuOUYtJOz89CCq0QDwvfshgg7FQsUc5RYslW1H22ifh5d62a
-	 zEqseve6yaxVagTy5U1YtCopRgw8ikOInWpO+9vGLCnPBTW/VrLr/4F73j/DeV57kK
-	 VT7xLhICl+O7fDruUirEpt2FcG0/WPNPPxyDZDbE=
+	b=aiXWLgVjNh2BXeIpOgB/Ac7+T2AMPl/0XSrNws8wzMiqZQJYr3lUHds/N32Py/Usn
+	 tzxapFN+DqOe7O6LK/KpAaiZqTFn1V93fHxoj6UgLW9woxGNYsMAIyIvSNZM2+zdgz
+	 TcUgOv7s0xPqCVwcYgR4ndJCTpXklUjb70ffoG+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 042/110] ALSA: hda/realtek: Update default depop procedure
-Date: Wed,  6 Nov 2024 13:04:08 +0100
-Message-ID: <20241106120304.363960693@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 5.10 043/110] drm/amd: Guard against bad data for ATIF ACPI method
+Date: Wed,  6 Nov 2024 13:04:09 +0100
+Message-ID: <20241106120304.391823106@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -51,88 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit e3ea2757c312e51bbf62ebc434a6f7df1e3a201f ]
+commit bf58f03931fdcf7b3c45cb76ac13244477a60f44 upstream.
 
-Old procedure has a chance to meet Headphone no output.
+If a BIOS provides bad data in response to an ATIF method call
+this causes a NULL pointer dereference in the caller.
 
-Fixes: c2d6af53a43f ("ALSA: hda/realtek - Add default procedure for suspend and resume state")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/17b717a0a0b04a77aea4a8ec820cba13@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+```
+? show_regs (arch/x86/kernel/dumpstack.c:478 (discriminator 1))
+? __die (arch/x86/kernel/dumpstack.c:423 arch/x86/kernel/dumpstack.c:434)
+? page_fault_oops (arch/x86/mm/fault.c:544 (discriminator 2) arch/x86/mm/fault.c:705 (discriminator 2))
+? do_user_addr_fault (arch/x86/mm/fault.c:440 (discriminator 1) arch/x86/mm/fault.c:1232 (discriminator 1))
+? acpi_ut_update_object_reference (drivers/acpi/acpica/utdelete.c:642)
+? exc_page_fault (arch/x86/mm/fault.c:1542)
+? asm_exc_page_fault (./arch/x86/include/asm/idtentry.h:623)
+? amdgpu_atif_query_backlight_caps.constprop.0 (drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c:387 (discriminator 2)) amdgpu
+? amdgpu_atif_query_backlight_caps.constprop.0 (drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c:386 (discriminator 1)) amdgpu
+```
+
+It has been encountered on at least one system, so guard for it.
+
+Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c9b7c809b89f24e9372a4e7f02d64c950b07fdee)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c | 38 ++++++++++++++++-------------------
- 1 file changed, 17 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 05a2442cfc656..2ccc1f7e424db 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -3789,20 +3789,18 @@ static void alc_default_init(struct hda_codec *codec)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+@@ -87,6 +87,7 @@ static union acpi_object *amdgpu_atif_ca
+ 					   struct acpi_buffer *params)
+ {
+ 	acpi_status status;
++	union acpi_object *obj;
+ 	union acpi_object atif_arg_elements[2];
+ 	struct acpi_object_list atif_arg;
+ 	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
+@@ -109,16 +110,24 @@ static union acpi_object *amdgpu_atif_ca
  
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
+ 	status = acpi_evaluate_object(atif->handle, NULL, &atif_arg,
+ 				      &buffer);
++	obj = (union acpi_object *)buffer.pointer;
  
--	if (hp_pin_sense)
-+	if (hp_pin_sense) {
- 		msleep(2);
+-	/* Fail only if calling the method fails and ATIF is supported */
++	/* Fail if calling the method fails and ATIF is supported */
+ 	if (ACPI_FAILURE(status) && status != AE_NOT_FOUND) {
+ 		DRM_DEBUG_DRIVER("failed to evaluate ATIF got %s\n",
+ 				 acpi_format_exception(status));
+-		kfree(buffer.pointer);
++		kfree(obj);
+ 		return NULL;
+ 	}
  
--	snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--
--	if (hp_pin_sense)
--		msleep(85);
-+		snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
- 
--	snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
-+		msleep(75);
- 
--	if (hp_pin_sense)
--		msleep(100);
-+		snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
-+		msleep(75);
+-	return buffer.pointer;
++	if (obj->type != ACPI_TYPE_BUFFER) {
++		DRM_DEBUG_DRIVER("bad object returned from ATIF: %d\n",
++				 obj->type);
++		kfree(obj);
++		return NULL;
 +	}
- }
- 
- static void alc_default_shutup(struct hda_codec *codec)
-@@ -3818,22 +3816,20 @@ static void alc_default_shutup(struct hda_codec *codec)
- 
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 
--	if (hp_pin_sense)
-+	if (hp_pin_sense) {
- 		msleep(2);
- 
--	snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--
--	if (hp_pin_sense)
--		msleep(85);
--
--	if (!spec->no_shutup_pins)
- 		snd_hda_codec_write(codec, hp_pin, 0,
--				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
- 
--	if (hp_pin_sense)
--		msleep(100);
-+		msleep(75);
- 
-+		if (!spec->no_shutup_pins)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+					    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
 +
-+		msleep(75);
-+	}
- 	alc_auto_setup_eapd(codec, false);
- 	alc_shutup_pins(codec);
++	return obj;
  }
--- 
-2.43.0
-
+ 
+ /**
 
 
