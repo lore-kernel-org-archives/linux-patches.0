@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C44F1DEFF5;
-	Wed,  6 Nov 2024 12:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149731DEFF5;
+	Wed,  6 Nov 2024 12:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895036; cv=none; b=FsTwM9wNO9fjRYLsyI27VO2bGTIkpTovTgGfJoGhK/7FVL7Z2Wfqq02kW9TsUAXcEJEGlF3LSbwGz6onFOeMAOrethdAGRTQvBsmBNyTjWWX1woOmmyYNKteTxibhC725NhjaNxcPaFg3BT3rvNINeCv6nXnq+LS3azYwu/rasU=
+	t=1730895039; cv=none; b=kAjs7vYzgP3t15N1JVjM5IU5ysONF8yFUMoTIghjA7u7f8pb6Dzb3NKyq2UnQZnLVIfVIqKBEu5lEEp2J9wo56wfvUDbwNaXjBc7xwzM7a+c64Ym+8Wiq7klNnqhkJVgM3RH4b2NfbgRDbGr3OwFbg+gpaoIpru7dy6530dwhFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895036; c=relaxed/simple;
-	bh=1V0iJwsAKZXnpuTVGWT0fgrQHx6bHcsbkhKFuP95MFE=;
+	s=arc-20240116; t=1730895039; c=relaxed/simple;
+	bh=Y6x6EI/ZUEWMM4NYeR33pWBG0k4/eMQrjlTI6/RxI18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dcMSzOqsqu//4DFSMqXXsJskmxj+7Ux56LqQXULvGPYGK9mwfGIHEBw5zB0WE3c4upiotjaYshDkmqgjYzw9KcHUqwPf1jOvFF61MMIe5tFzI1/kwQe/UFpx7VXgxe9mipXEwETZ2kJDljrebPCPci3eqQCeAQuthpfiCantSQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKrOGZm6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tv9h8aN5N7+VLz0tcuRHoxLa0qrRIpiDxOW9mNyIRg1MIuCRgA0NeR+ZSqUAHvSwR1I+B/HzF9AfZ371At5/b6ra0LTOpErNiDzUNoSfzUbE7CK1T+Ep3ZWOru2y5Ok9V2MSoL2n1EMbBgnuZPn/+xmyzH4ujvBDy0qewwfYIfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9dGQrpE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKrOGZm6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BF4C4CED2;
-	Wed,  6 Nov 2024 12:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9dGQrpE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEEEC4CECD;
+	Wed,  6 Nov 2024 12:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895036;
-	bh=1V0iJwsAKZXnpuTVGWT0fgrQHx6bHcsbkhKFuP95MFE=;
+	s=korg; t=1730895038;
+	bh=Y6x6EI/ZUEWMM4NYeR33pWBG0k4/eMQrjlTI6/RxI18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WKrOGZm6PoCiqgXt4IpsEikIwC1F8ZNggMOZfah+DEVMTuaaLCRCwLx2sKZscbIms
-	 QDpzjNX8qSAE35CVjDVztv6+a/bRwHY9k6G7hlc3Hm6BjIMUTEwLUOtrnJn9ZHUcgp
-	 gIEOmFqMY12gVcqwRJ7rd+DzX2M1gYPKQ+uc/Iwk=
+	b=b9dGQrpETQ/2Awl2PEQneDlKXWZ5VDH1O8u+KI9asCueS5KE4Ll2vq3KH8wx7cZUh
+	 EqnfUsTWIOWlvquml6MyBPe3lfmqRIGxSQbGCTNqJLy+WENP5xXxh8yIQ5ErZroIm/
+	 hwt+EjHDgq3x2BIad6+9xx5jkDKNrm7cieEqCSWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Junlin Li <make24@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 082/350] clk: rockchip: Set parent rate for DCLK_VOP clock on RK3228
-Date: Wed,  6 Nov 2024 13:00:10 +0100
-Message-ID: <20241106120322.923445387@linuxfoundation.org>
+Subject: [PATCH 4.19 083/350] drivers: media: dvb-frontends/rtl2832: fix an out-of-bounds write error
+Date: Wed,  6 Nov 2024 13:00:11 +0100
+Message-ID: <20241106120322.946444611@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,40 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Junlin Li <make24@iscas.ac.cn>
 
-[ Upstream commit 1d34b9757523c1ad547bd6d040381f62d74a3189 ]
+[ Upstream commit 8ae06f360cfaca2b88b98ca89144548b3186aab1 ]
 
-Similar to DCLK_LCDC on RK3328, the DCLK_VOP on RK3228 is typically
-parented by the hdmiphy clk and it is expected that the DCLK_VOP and
-hdmiphy clk rate are kept in sync.
+Ensure index in rtl2832_pid_filter does not exceed 31 to prevent
+out-of-bounds access.
 
-Use CLK_SET_RATE_PARENT and CLK_SET_RATE_NO_REPARENT flags, same as used
-on RK3328, to make full use of all possible supported display modes.
+dev->filters is a 32-bit value, so set_bit and clear_bit functions should
+only operate on indices from 0 to 31. If index is 32, it will attempt to
+access a non-existent 33rd bit, leading to out-of-bounds access.
+Change the boundary check from index > 32 to index >= 32 to resolve this
+issue.
 
-Fixes: 0a9d4ac08ebc ("clk: rockchip: set the clock ids for RK3228 VOP")
-Fixes: 307a2e9ac524 ("clk: rockchip: add clock controller for rk3228")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20240615170417.3134517-3-jonas@kwiboo.se
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Junlin Li <make24@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 4b01e01a81b6 ("[media] rtl2832: implement PID filter")
+[hverkuil: added fixes tag, rtl2830_pid_filter -> rtl2832_pid_filter in logmsg]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/rockchip/clk-rk3228.c | 2 +-
+ drivers/media/dvb-frontends/rtl2832.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/rockchip/clk-rk3228.c b/drivers/clk/rockchip/clk-rk3228.c
-index 8d11d76e1db7c..811f0d43ee90b 100644
---- a/drivers/clk/rockchip/clk-rk3228.c
-+++ b/drivers/clk/rockchip/clk-rk3228.c
-@@ -415,7 +415,7 @@ static struct rockchip_clk_branch rk3228_clk_branches[] __initdata = {
- 			RK2928_CLKSEL_CON(29), 0, 3, DFLAGS),
- 	DIV(0, "sclk_vop_pre", "sclk_vop_src", 0,
- 			RK2928_CLKSEL_CON(27), 8, 8, DFLAGS),
--	MUX(DCLK_VOP, "dclk_vop", mux_dclk_vop_p, 0,
-+	MUX(DCLK_VOP, "dclk_vop", mux_dclk_vop_p, CLK_SET_RATE_PARENT | CLK_SET_RATE_NO_REPARENT,
- 			RK2928_CLKSEL_CON(27), 1, 1, MFLAGS),
+diff --git a/drivers/media/dvb-frontends/rtl2832.c b/drivers/media/dvb-frontends/rtl2832.c
+index 7cad4e985315a..608bd2a81633d 100644
+--- a/drivers/media/dvb-frontends/rtl2832.c
++++ b/drivers/media/dvb-frontends/rtl2832.c
+@@ -995,7 +995,7 @@ static int rtl2832_pid_filter(struct dvb_frontend *fe, u8 index, u16 pid,
+ 		index, pid, onoff, dev->slave_ts);
  
- 	FACTOR(0, "xin12m", "xin24m", 0, 1, 2),
+ 	/* skip invalid PIDs (0x2000) */
+-	if (pid > 0x1fff || index > 32)
++	if (pid > 0x1fff || index >= 32)
+ 		return 0;
+ 
+ 	if (onoff)
 -- 
 2.43.0
 
