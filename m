@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A724C1EC009;
-	Wed,  6 Nov 2024 12:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918A81EBA12;
+	Wed,  6 Nov 2024 12:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897082; cv=none; b=l/RR2UVi948uqwpcZW8DxC3gIua68DFvH8EtWcI126WEAbo/dG87yAqa7v3ZzNe5qNnYKIgfx7nYfHr4uLI6geqG7F7Kt1Gf+SQ4gjr2PLOwcAZTjIrb6k+gQ3fc5Bp3DsLKEa2GhWPRSJLBPrfiPNj7iVWs6JvUPf+3jEJ6v9c=
+	t=1730897085; cv=none; b=pOjzRmVxpb4vyaUH7J5Nu149Jabavw/7Xza4lLe4w08FMHi+bOVxsEnS0oYAXgM+bPYc5p2dbYaEnMlahvuuNkdKEIw81vxU88syHJza3P3atwUQKVQPDCD9Op9yD0csyBTQZkXO/7bB5LPhUe05/usV+GNzzExQtNXZr69D5vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897082; c=relaxed/simple;
-	bh=lxYN9RJBj1hwvhgtM39/ohOZQRLOuoiWNJam7UaH1eI=;
+	s=arc-20240116; t=1730897085; c=relaxed/simple;
+	bh=JjYP8P2LK93XZmkhj2Tro5GpKmTb9plLhVhZl+zprI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QfnFuExmaTQR1tP3X54+fW2uJ90TTTZGGA86EYBvBvAZm6Yd4ZuRRQ7O4J5V4Q96wHBoc+RnjXD5FeK8VnLJ3JWSPIqausrm7SPmUXJZ0ryQzlm9R0SOyQTy1PkG7eP9qOKnxRsZSluzdKJlyKCBCOT/6MSWvXRiVaypHbjGOYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lz5TUc7z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cVNcOh9NxcCxoOrUC9bUvFpGFZkypTolOcJa0dMQ5MoEJb4Hu8t9xhe4O+6oZjwF7zkqbB7G5GmcKhuoHlyVJuzBWkVhNEecBjmSCir9tyaYSV0i2aWnhOZmGguAItxTsGnFdZmwpPsChiYw8AEbPX2/wjraDczAyluf+irfJz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoAxpadl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lz5TUc7z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D964C4CECD;
-	Wed,  6 Nov 2024 12:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoAxpadl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18949C4CED5;
+	Wed,  6 Nov 2024 12:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897082;
-	bh=lxYN9RJBj1hwvhgtM39/ohOZQRLOuoiWNJam7UaH1eI=;
+	s=korg; t=1730897085;
+	bh=JjYP8P2LK93XZmkhj2Tro5GpKmTb9plLhVhZl+zprI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lz5TUc7zr90cSXrTbz7bwMp0OjqoNV7nn8gJJtbRx2fsdhoMrB9C5ZogdNhG8oBx/
-	 nu/s6nPdeHiRwrnScEcjyF9edk5Sn2WltKVKzZ9TBWazm7EsJT8iqVSrhFGGOyOt3C
-	 ZN1wRdsTxe+2/7MFswaOFEU19ssL1IbDlMVQbsdg=
+	b=QoAxpadlXZr2ip0GEcIPX+FQGf4Z8RZktLq0YH+KeOJs0kAeTn9Cv79lb7APsuBG5
+	 UY7nQbembixtFi4JkS9YsAvbxTlkSLTEAi6bb3T40+HaLXRPKBTnW7d795QGE9W1Y1
+	 ERWBON2hmsk8aLRkcwbJHzM5Aakxg5qq9oklfTfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dimitri Sivanich <sivanich@hpe.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Marcello Sylvester Bauer <marcello.bauer@9elements.com>,
+	Marcello Sylvester Bauer <sylv@sylv.io>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/126] misc: sgi-gru: Dont disable preemption in GRU driver
-Date: Wed,  6 Nov 2024 13:04:21 +0100
-Message-ID: <20241106120307.716470146@linuxfoundation.org>
+Subject: [PATCH 6.1 061/126] usb: gadget: dummy_hcd: Switch to hrtimer transfer scheduler
+Date: Wed,  6 Nov 2024 13:04:22 +0100
+Message-ID: <20241106120307.745307334@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -51,94 +52,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dimitri Sivanich <sivanich@hpe.com>
+From: Marcello Sylvester Bauer <sylv@sylv.io>
 
-[ Upstream commit b983b271662bd6104d429b0fd97af3333ba760bf ]
+[ Upstream commit a7f3813e589fd8e2834720829a47b5eb914a9afe ]
 
-Disabling preemption in the GRU driver is unnecessary, and clashes with
-sleeping locks in several code paths.  Remove preempt_disable and
-preempt_enable from the GRU driver.
+The dummy_hcd transfer scheduler assumes that the internal kernel timer
+frequency is set to 1000Hz to give a polling interval of 1ms. Reducing
+the timer frequency will result in an anti-proportional reduction in
+transfer performance. Switch to a hrtimer to decouple this association.
 
-Signed-off-by: Dimitri Sivanich <sivanich@hpe.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Marcello Sylvester Bauer <marcello.bauer@9elements.com>
+Signed-off-by: Marcello Sylvester Bauer <sylv@sylv.io>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/57a1c2180ff74661600e010c234d1dbaba1d0d46.1712843963.git.sylv@sylv.io
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/sgi-gru/grukservices.c | 2 --
- drivers/misc/sgi-gru/grumain.c      | 4 ----
- drivers/misc/sgi-gru/grutlbpurge.c  | 2 --
- 3 files changed, 8 deletions(-)
+ drivers/usb/gadget/udc/dummy_hcd.c | 35 +++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/misc/sgi-gru/grukservices.c b/drivers/misc/sgi-gru/grukservices.c
-index fa1f5a632e7fc..093b0459a8a00 100644
---- a/drivers/misc/sgi-gru/grukservices.c
-+++ b/drivers/misc/sgi-gru/grukservices.c
-@@ -258,7 +258,6 @@ static int gru_get_cpu_resources(int dsr_bytes, void **cb, void **dsr)
- 	int lcpu;
+diff --git a/drivers/usb/gadget/udc/dummy_hcd.c b/drivers/usb/gadget/udc/dummy_hcd.c
+index 899ac9f9c2796..4f9c6e86456fe 100644
+--- a/drivers/usb/gadget/udc/dummy_hcd.c
++++ b/drivers/usb/gadget/udc/dummy_hcd.c
+@@ -30,7 +30,7 @@
+ #include <linux/slab.h>
+ #include <linux/errno.h>
+ #include <linux/init.h>
+-#include <linux/timer.h>
++#include <linux/hrtimer.h>
+ #include <linux/list.h>
+ #include <linux/interrupt.h>
+ #include <linux/platform_device.h>
+@@ -240,7 +240,7 @@ enum dummy_rh_state {
+ struct dummy_hcd {
+ 	struct dummy			*dum;
+ 	enum dummy_rh_state		rh_state;
+-	struct timer_list		timer;
++	struct hrtimer			timer;
+ 	u32				port_status;
+ 	u32				old_status;
+ 	unsigned long			re_timeout;
+@@ -1302,8 +1302,8 @@ static int dummy_urb_enqueue(
+ 		urb->error_count = 1;		/* mark as a new urb */
  
- 	BUG_ON(dsr_bytes > GRU_NUM_KERNEL_DSR_BYTES);
--	preempt_disable();
- 	bs = gru_lock_kernel_context(-1);
- 	lcpu = uv_blade_processor_id();
- 	*cb = bs->kernel_cb + lcpu * GRU_HANDLE_STRIDE;
-@@ -272,7 +271,6 @@ static int gru_get_cpu_resources(int dsr_bytes, void **cb, void **dsr)
- static void gru_free_cpu_resources(void *cb, void *dsr)
+ 	/* kick the scheduler, it'll do the rest */
+-	if (!timer_pending(&dum_hcd->timer))
+-		mod_timer(&dum_hcd->timer, jiffies + 1);
++	if (!hrtimer_active(&dum_hcd->timer))
++		hrtimer_start(&dum_hcd->timer, ms_to_ktime(1), HRTIMER_MODE_REL);
+ 
+  done:
+ 	spin_unlock_irqrestore(&dum_hcd->dum->lock, flags);
+@@ -1324,7 +1324,7 @@ static int dummy_urb_dequeue(struct usb_hcd *hcd, struct urb *urb, int status)
+ 	rc = usb_hcd_check_unlink_urb(hcd, urb, status);
+ 	if (!rc && dum_hcd->rh_state != DUMMY_RH_RUNNING &&
+ 			!list_empty(&dum_hcd->urbp_list))
+-		mod_timer(&dum_hcd->timer, jiffies);
++		hrtimer_start(&dum_hcd->timer, ns_to_ktime(0), HRTIMER_MODE_REL);
+ 
+ 	spin_unlock_irqrestore(&dum_hcd->dum->lock, flags);
+ 	return rc;
+@@ -1778,7 +1778,7 @@ static int handle_control_request(struct dummy_hcd *dum_hcd, struct urb *urb,
+  * drivers except that the callbacks are invoked from soft interrupt
+  * context.
+  */
+-static void dummy_timer(struct timer_list *t)
++static enum hrtimer_restart dummy_timer(struct hrtimer *t)
  {
- 	gru_unlock_kernel_context(uv_numa_blade_id());
--	preempt_enable();
- }
- 
- /*
-diff --git a/drivers/misc/sgi-gru/grumain.c b/drivers/misc/sgi-gru/grumain.c
-index 4eb4b94551390..d2b2e39783d06 100644
---- a/drivers/misc/sgi-gru/grumain.c
-+++ b/drivers/misc/sgi-gru/grumain.c
-@@ -941,10 +941,8 @@ vm_fault_t gru_fault(struct vm_fault *vmf)
- 
- again:
- 	mutex_lock(&gts->ts_ctxlock);
--	preempt_disable();
- 
- 	if (gru_check_context_placement(gts)) {
--		preempt_enable();
- 		mutex_unlock(&gts->ts_ctxlock);
- 		gru_unload_context(gts, 1);
- 		return VM_FAULT_NOPAGE;
-@@ -953,7 +951,6 @@ vm_fault_t gru_fault(struct vm_fault *vmf)
- 	if (!gts->ts_gru) {
- 		STAT(load_user_context);
- 		if (!gru_assign_gru_context(gts)) {
--			preempt_enable();
- 			mutex_unlock(&gts->ts_ctxlock);
- 			set_current_state(TASK_INTERRUPTIBLE);
- 			schedule_timeout(GRU_ASSIGN_DELAY);  /* true hack ZZZ */
-@@ -969,7 +966,6 @@ vm_fault_t gru_fault(struct vm_fault *vmf)
- 				vma->vm_page_prot);
+ 	struct dummy_hcd	*dum_hcd = from_timer(dum_hcd, t, timer);
+ 	struct dummy		*dum = dum_hcd->dum;
+@@ -1809,8 +1809,6 @@ static void dummy_timer(struct timer_list *t)
+ 		break;
  	}
  
--	preempt_enable();
- 	mutex_unlock(&gts->ts_ctxlock);
+-	/* FIXME if HZ != 1000 this will probably misbehave ... */
+-
+ 	/* look at each urb queued by the host side driver */
+ 	spin_lock_irqsave(&dum->lock, flags);
  
- 	return VM_FAULT_NOPAGE;
-diff --git a/drivers/misc/sgi-gru/grutlbpurge.c b/drivers/misc/sgi-gru/grutlbpurge.c
-index 10921cd2608df..1107dd3e2e9fa 100644
---- a/drivers/misc/sgi-gru/grutlbpurge.c
-+++ b/drivers/misc/sgi-gru/grutlbpurge.c
-@@ -65,7 +65,6 @@ static struct gru_tlb_global_handle *get_lock_tgh_handle(struct gru_state
- 	struct gru_tlb_global_handle *tgh;
- 	int n;
+@@ -1818,7 +1816,7 @@ static void dummy_timer(struct timer_list *t)
+ 		dev_err(dummy_dev(dum_hcd),
+ 				"timer fired with no URBs pending?\n");
+ 		spin_unlock_irqrestore(&dum->lock, flags);
+-		return;
++		return HRTIMER_NORESTART;
+ 	}
+ 	dum_hcd->next_frame_urbp = NULL;
  
--	preempt_disable();
- 	if (uv_numa_blade_id() == gru->gs_blade_id)
- 		n = get_on_blade_tgh(gru);
- 	else
-@@ -79,7 +78,6 @@ static struct gru_tlb_global_handle *get_lock_tgh_handle(struct gru_state
- static void get_unlock_tgh_handle(struct gru_tlb_global_handle *tgh)
- {
- 	unlock_tgh_handle(tgh);
--	preempt_enable();
+@@ -1996,10 +1994,12 @@ static void dummy_timer(struct timer_list *t)
+ 		dum_hcd->udev = NULL;
+ 	} else if (dum_hcd->rh_state == DUMMY_RH_RUNNING) {
+ 		/* want a 1 msec delay here */
+-		mod_timer(&dum_hcd->timer, jiffies + msecs_to_jiffies(1));
++		hrtimer_start(&dum_hcd->timer, ms_to_ktime(1), HRTIMER_MODE_REL);
+ 	}
+ 
+ 	spin_unlock_irqrestore(&dum->lock, flags);
++
++	return HRTIMER_NORESTART;
  }
  
- /*
+ /*-------------------------------------------------------------------------*/
+@@ -2388,7 +2388,7 @@ static int dummy_bus_resume(struct usb_hcd *hcd)
+ 		dum_hcd->rh_state = DUMMY_RH_RUNNING;
+ 		set_link_state(dum_hcd);
+ 		if (!list_empty(&dum_hcd->urbp_list))
+-			mod_timer(&dum_hcd->timer, jiffies);
++			hrtimer_start(&dum_hcd->timer, ns_to_ktime(0), HRTIMER_MODE_REL);
+ 		hcd->state = HC_STATE_RUNNING;
+ 	}
+ 	spin_unlock_irq(&dum_hcd->dum->lock);
+@@ -2466,7 +2466,8 @@ static DEVICE_ATTR_RO(urbs);
+ 
+ static int dummy_start_ss(struct dummy_hcd *dum_hcd)
+ {
+-	timer_setup(&dum_hcd->timer, dummy_timer, 0);
++	hrtimer_init(&dum_hcd->timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
++	dum_hcd->timer.function = dummy_timer;
+ 	dum_hcd->rh_state = DUMMY_RH_RUNNING;
+ 	dum_hcd->stream_en_ep = 0;
+ 	INIT_LIST_HEAD(&dum_hcd->urbp_list);
+@@ -2495,7 +2496,8 @@ static int dummy_start(struct usb_hcd *hcd)
+ 		return dummy_start_ss(dum_hcd);
+ 
+ 	spin_lock_init(&dum_hcd->dum->lock);
+-	timer_setup(&dum_hcd->timer, dummy_timer, 0);
++	hrtimer_init(&dum_hcd->timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
++	dum_hcd->timer.function = dummy_timer;
+ 	dum_hcd->rh_state = DUMMY_RH_RUNNING;
+ 
+ 	INIT_LIST_HEAD(&dum_hcd->urbp_list);
+@@ -2514,8 +2516,11 @@ static int dummy_start(struct usb_hcd *hcd)
+ 
+ static void dummy_stop(struct usb_hcd *hcd)
+ {
+-	device_remove_file(dummy_dev(hcd_to_dummy_hcd(hcd)), &dev_attr_urbs);
+-	dev_info(dummy_dev(hcd_to_dummy_hcd(hcd)), "stopped\n");
++	struct dummy_hcd	*dum_hcd = hcd_to_dummy_hcd(hcd);
++
++	hrtimer_cancel(&dum_hcd->timer);
++	device_remove_file(dummy_dev(dum_hcd), &dev_attr_urbs);
++	dev_info(dummy_dev(dum_hcd), "stopped\n");
+ }
+ 
+ /*-------------------------------------------------------------------------*/
 -- 
 2.43.0
 
