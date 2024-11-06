@@ -1,114 +1,82 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B99691DF251;
-	Wed,  6 Nov 2024 12:23:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C841DFE06;
+	Wed,  6 Nov 2024 12:23:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895797; cv=none; b=LJ3HK/tKLIV8vDoC/jBUtB3xA6YkVvyVLwU4tMI1wFBhv5AGFJ6e74J0oGJi5rtgv9rI6CmGjz2JL59fh9v5+RlV48a0uj8qCX5J05htfxbqS+y/EqS0egW66t5aOmsKaZ7JHyiLknWxODoc79ne7a/0Ew+zwyJy6Fs/c6lSoZg=
+	t=1730895799; cv=none; b=YaqdyUgT4lyAychVCz7VVu6ZnMh8/5mnyCUlGWjy4uzcZIjwJEIS9uYFeJvUpyD6tu+fc1XbYl0KRVfWgx8gaKJ68xT6KQp/EJX3EmB9TRXplYhwsclvXxrSoWL88qbE/0tkFCTyqv27iM5OAu+rjBAHALg7AmX2fHEvVRyrrdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895797; c=relaxed/simple;
-	bh=LOcx39WpVkgfByGcE2LRb/j3Yp/QZsre70eNEo5cn4U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZATViSbhxNkdIQFkq4GttlexRha0yrXI7N4H5UrqpfKIEz6FQYTK7tZ1vhIJMLRK3egd1ZLwOlWwE0AA1lYbBqomZf0MgIcotIaLiZAgXWqcQjoRtDzclvjL8IkP6j8iDJeQLHt62qCV6GZeVWvwmEyjPzW29sgwjltat868Vh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ALW6Vj6G; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730895799; c=relaxed/simple;
+	bh=Yq/NfmAk4yagtDZxArKRqJtdWqsCTmY3CrSUuqxGcgE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=f1aW+cu1rBOezT8l8E+pjoqwgansyh6iN8baKbRuB44wpwtxJGOHuGpXH6AORWP2sJcUOPooexYIpRyr1Pg8+p4xspwftr3Yby+Cb74tTZaj2B29SCb9E51kBu6F2Ytpo3RCgTKJ2FHJ8nKxLB3xnycC5rfXnmeWGKkgLUCER0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUgTdUH8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ALW6Vj6G"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-720be27db74so639851b3a.1;
-        Wed, 06 Nov 2024 04:23:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730895795; x=1731500595; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LOcx39WpVkgfByGcE2LRb/j3Yp/QZsre70eNEo5cn4U=;
-        b=ALW6Vj6GGqze9XvVZx9JEzSw7cKMLMzPSSX5nPfFb3PIk9DuyvkKFdA69FqlAUX/tq
-         vfNnGEPrwKvtwqDGNj3BpMO2pvLCBu4qjczz2x0U2A/4Wi7MGzcDo3XDzFibnPnJ5xT/
-         Z9VjHCnr50lBhOxV069Y9Qh57f7PIFDEwPN0l7ytuhT11BQDWUptdJCD/Qn7TaZdYSkn
-         3QQVHHSiOITrQ2P3tk1Atd4HP/9vm3dpBkh1hRjhKjSw7ltsW8uDH8Q3zzElL6+XEFQ6
-         zBMhz2+MvOWKPUvvclBJCeR+o/W2wGHkZnDFjnjf86QvYgN+wy1C4YMI6QGVHSRGQrjw
-         okWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730895795; x=1731500595;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LOcx39WpVkgfByGcE2LRb/j3Yp/QZsre70eNEo5cn4U=;
-        b=nkvt7vX3YmD6Fd+iUM0alWRQophWETBaMD4hxtBqaU527Az5ooQ0oPCW0bc9TRRt5i
-         f/X3bUnvQ63s8bAMdOYGS22UPjF+hRY4TGnmJegnyB8kOQRa6T6pxOJU5qY9VRXhF9gE
-         Q/Pm5qTYRkeQZ+B31mVR3wm7yJbtfl8ihBRHNXU9GRh/L5a/TjsbJJCVGWwOAJJmhWQR
-         Xk3H36uv1N2oib+Ii9pTufSrcb5B0JDHnftBAk5yApJz1C+4pg3JjvX9CKmJY/vVRR1O
-         s5I/Vw2reDXyjhhHhuRGVWzfNA3hkK8LN4AWbE9/jJRVy4hzQATXNtol5RKTDargevS/
-         TpDg==
-X-Forwarded-Encrypted: i=1; AJvYcCU2mO7ye4MgF5wVAB3zwVCJD6DMUA3nC903IZANzVIezm+i7B3cDnl7tTOr+lebpa6V6v4PtGqzDQ==@lists.linux.dev, AJvYcCWgLeZMN+6me8hcG26MlNCfLbu/rvFLRC95egXlsFim/KhERQ08ifQtHcRmAbHvEV8wNvbzLA==@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw1qcTieh//z/Mjo14P8/UxPkHbgeRUhlJqjNiKRgLxgMn+HTsj
-	4cFCcPqWUX7xElbYxjLFjyZZv6V3msE+FNpEINozk16V6HJg0AXd
-X-Google-Smtp-Source: AGHT+IHlm62VXnUBPd59sCVU+HT7bAgeu3hCGilmSCgsLu4geYKqabYoClmdsAEnS+JE+O9J3JzzKg==
-X-Received: by 2002:a05:6a00:2d9f:b0:71e:60d9:910d with SMTP id d2e1a72fcca58-723f79bb0f7mr4043502b3a.6.1730895794957;
-        Wed, 06 Nov 2024 04:23:14 -0800 (PST)
-Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-720bc2eb3cfsm11545357b3a.151.2024.11.06.04.23.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Nov 2024 04:23:14 -0800 (PST)
-Received: by archie.me (Postfix, from userid 1000)
-	id 6E2A9447D1DB; Wed, 06 Nov 2024 19:23:11 +0700 (WIB)
-Date: Wed, 6 Nov 2024 19:23:11 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com,
-	kevin.tian@intel.com, corbet@lwn.net
-Cc: joro@8bytes.org, suravee.suthikulpanit@amd.com, will@kernel.org,
-	robin.murphy@arm.com, dwmw2@infradead.org, shuah@kernel.org,
-	iommu@lists.linux.dev, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org,
-	baolu.lu@linux.intel.com, eric.auger@redhat.com,
-	jean-philippe@linaro.org, mdf@kernel.org, mshavit@google.com,
-	shameerali.kolothum.thodi@huawei.com, smostafa@google.com,
-	yi.l.liu@intel.com, aik@amd.com, zhangfei.gao@linaro.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v7 10/10] Documentation: userspace-api: iommufd: Update
- vDEVICE
-Message-ID: <Zytfr7p_EpJhJn41@archie.me>
-References: <cover.1730836308.git.nicolinc@nvidia.com>
- <e1ff278b7163909b2641ae04ff364bb41d2a2a2e.1730836308.git.nicolinc@nvidia.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUgTdUH8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EE8C4CED3;
+	Wed,  6 Nov 2024 12:23:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1730895799;
+	bh=Yq/NfmAk4yagtDZxArKRqJtdWqsCTmY3CrSUuqxGcgE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=AUgTdUH8Nh5MzL8wRsuLaINTvQpNKmMvpnx/56ZjbKi0OeaegULLh/sHNbRsw2H3D
+	 72A4ojrfBkDSSd9uGeHKwDBXSMVNiV0x9FuEpe8s1oJF+0G086x5mbswzSWrakM8Ov
+	 UycReIkDQIKUWZwHq0LTDm/O4SdlSMG506VCGJVs=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Zijun Hu <quic_zijuhu@quicinc.com>
+Subject: [PATCH 4.19 340/350] usb: phy: Fix API devm_usb_put_phy() can not release the phy
+Date: Wed,  6 Nov 2024 13:04:28 +0100
+Message-ID: <20241106120329.097885213@linuxfoundation.org>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
+References: <20241106120320.865793091@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="syaj6gmswHEiPKJ3"
-Content-Disposition: inline
-In-Reply-To: <e1ff278b7163909b2641ae04ff364bb41d2a2a2e.1730836308.git.nicolinc@nvidia.com>
+Content-Transfer-Encoding: 8bit
+
+4.19-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Zijun Hu <quic_zijuhu@quicinc.com>
+
+commit fdce49b5da6e0fb6d077986dec3e90ef2b094b50 upstream.
+
+For devm_usb_put_phy(), its comment says it needs to invoke usb_put_phy()
+to release the phy, but it does not do that actually, so it can not fully
+undo what the API devm_usb_get_phy() does, that is wrong, fixed by using
+devres_release() instead of devres_destroy() within the API.
+
+Fixes: cedf8602373a ("usb: phy: move bulk of otg/otg.c to phy/phy.c")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20241020-usb_phy_fix-v1-1-7f79243b8e1e@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/usb/phy/phy.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/drivers/usb/phy/phy.c
++++ b/drivers/usb/phy/phy.c
+@@ -579,7 +579,7 @@ void devm_usb_put_phy(struct device *dev
+ {
+ 	int r;
+ 
+-	r = devres_destroy(dev, devm_usb_phy_release, devm_usb_phy_match, phy);
++	r = devres_release(dev, devm_usb_phy_release, devm_usb_phy_match, phy);
+ 	dev_WARN_ONCE(dev, r, "couldn't find PHY resource\n");
+ }
+ EXPORT_SYMBOL_GPL(devm_usb_put_phy);
 
 
---syaj6gmswHEiPKJ3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Nov 05, 2024 at 12:05:18PM -0800, Nicolin Chen wrote:
-> With the introduction of the new object and its infrastructure, update the
-> doc and the vIOMMU graph to reflect that.
->=20
-
-The docs LGTM, thanks!
-
-Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---syaj6gmswHEiPKJ3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZytfqgAKCRD2uYlJVVFO
-oxifAQDdYsaaemlGOg+HrwqFiJ4FGcIBJuGbdcKG/6uUBE3M+QD9HxxzagI26xbd
-JHDxjJmzYXAcyjOWhV8j58xav3gTZgU=
-=8SqO
------END PGP SIGNATURE-----
-
---syaj6gmswHEiPKJ3--
