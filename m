@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839221F4296;
-	Wed,  6 Nov 2024 13:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7125B1E0DF0;
+	Wed,  6 Nov 2024 13:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898224; cv=none; b=OI3DY7BqWCT6xSEm6D7oIREW50CIGU1z/1c1N9OEmblyuJINB6qLHKXk4QNag9EsqEl3UBReMwzrR62ODbgNNqPE/28ybWTSQLz1JUXVXalRs9vcah05oWaQI3QDUiOcdS6R3ikvVBPueQ3QwH7lgi26qBb0b1rn9AkhjtteQ8I=
+	t=1730898227; cv=none; b=BWHIHsSTJsnms6W0VXDyD9oSVuCxzAagx1W+n8RYU4TuJKqUhHzi1zLT0COyGZMURVJQtyI+jdDVASYojb8EYAIlytkiDSJXl7md7y1O/0xNgDFY6H2A2ZIXL/N1ls7LjItri2SeQ9xbqRryn1+3SO8IzRnvdDyq7xhHSFN0/II=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898224; c=relaxed/simple;
-	bh=fKPuP9k2fY4WQ0a5Lb/wEuU6CL35bp+0A4wzWm6Ib/w=;
+	s=arc-20240116; t=1730898227; c=relaxed/simple;
+	bh=gXWHiTPPTibq+5oS2VzVu7h850hQr2Mt9JtulyM/L3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WZ+ojZU6jBQrx2vnOKWp3pO2IS6o338OYATnoRQHoTQXiujhCir8oqkx/NWf6gD6vFEkwgf+WX3hFb13WuWKlo1QSRsVKqw4s6p5h5MhjawyY0My5FnXsI8MdXGwEz6nAoX79R1AlmmR5E3mphe8Fy8i/Tc9+olrAzziru30qmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyZ4yXpR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hSj1RQvwG29H9ey0EemokYxqtEzHnK7k66SrmMMh8k7FqLm5eYxCUsmxftlc+ZkcZrEwHDCA0Md3g3rVJQdZAHfqZdFVrOI6Gvjbl6MhAI3lhm4ddULaKppUZETZb5Us5Eh1cZqxfh2FW8iYMvWdgGXX40Kqra2nRbK/uF+vLRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEPK5IYc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyZ4yXpR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A0CEC4CECD;
-	Wed,  6 Nov 2024 13:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEPK5IYc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E478FC4CECD;
+	Wed,  6 Nov 2024 13:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898224;
-	bh=fKPuP9k2fY4WQ0a5Lb/wEuU6CL35bp+0A4wzWm6Ib/w=;
+	s=korg; t=1730898227;
+	bh=gXWHiTPPTibq+5oS2VzVu7h850hQr2Mt9JtulyM/L3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HyZ4yXpRXrSGR6xoXOn1D7RAIAFTB+y9C/JtAYPfEHmVOEE9i+Iet/mZ4SGbR6ygd
-	 M1Y7lDlYs38gh4AiMaPFO3EDlOWV7bXMq2mhWLycbYeZemNO74T6/7Af/r4TdAAdUt
-	 F577GFhOiewTNIi9v8iSkjeljE9UbhhhNw14CYqU=
+	b=tEPK5IYcqQ4TfOSr356bRuBQt4q9jULxhDitY7tfMAyb/kqr84AxCHktatcXXf2jv
+	 GJ4MXr4a+UBWboycwaa9TOPzCtZX/SdOIdI/2vOARaLShm3Vnn86WROck9SjDre8o1
+	 OpKkr8JkZrgnP+sqU5BrPtOiWVy/7Z37aFRHHB9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.4 149/462] ACPI: sysfs: validate return type of _STR method
-Date: Wed,  6 Nov 2024 13:00:42 +0100
-Message-ID: <20241106120335.191894837@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Rodolfo Giometti <giometti@enneenne.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 167/462] pps: remove usage of the deprecated ida_simple_xx() API
+Date: Wed,  6 Nov 2024 13:01:00 +0100
+Message-ID: <20241106120335.646412984@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -44,45 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 4bb1e7d027413835b086aed35bc3f0713bc0f72b upstream.
+[ Upstream commit 55dbc5b5174d0e7d1fa397d05aa4cb145e8b887e ]
 
-Only buffer objects are valid return values of _STR.
+ida_alloc() and ida_free() should be preferred to the deprecated
+ida_simple_get() and ida_simple_remove().
 
-If something else is returned description_show() will access invalid
-memory.
+This is less verbose.
 
-Fixes: d1efe3c324ea ("ACPI: Add new sysfs interface to export device description")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://patch.msgid.link/20240709-acpi-sysfs-groups-v2-1-058ab0667fa8@weissschuh.net
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/9f681747d446b874952a892491387d79ffe565a9.1713089394.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: Rodolfo Giometti <giometti@enneenne.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 62c5a01a5711 ("pps: add an error check in parport_attach")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/device_sysfs.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/pps/clients/pps_parport.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/acpi/device_sysfs.c
-+++ b/drivers/acpi/device_sysfs.c
-@@ -533,8 +533,9 @@ int acpi_device_setup_files(struct acpi_
- 	 * If device has _STR, 'description' file is created
- 	 */
- 	if (acpi_has_method(dev->handle, "_STR")) {
--		status = acpi_evaluate_object(dev->handle, "_STR",
--					NULL, &buffer);
-+		status = acpi_evaluate_object_typed(dev->handle, "_STR",
-+						    NULL, &buffer,
-+						    ACPI_TYPE_BUFFER);
- 		if (ACPI_FAILURE(status))
- 			buffer.pointer = NULL;
- 		dev->pnp.str_obj = buffer.pointer;
+diff --git a/drivers/pps/clients/pps_parport.c b/drivers/pps/clients/pps_parport.c
+index 7a41fb7b0decf..4bb3678c7e451 100644
+--- a/drivers/pps/clients/pps_parport.c
++++ b/drivers/pps/clients/pps_parport.c
+@@ -144,7 +144,7 @@ static void parport_attach(struct parport *port)
+ 		return;
+ 	}
+ 
+-	index = ida_simple_get(&pps_client_index, 0, 0, GFP_KERNEL);
++	index = ida_alloc(&pps_client_index, GFP_KERNEL);
+ 	memset(&pps_client_cb, 0, sizeof(pps_client_cb));
+ 	pps_client_cb.private = device;
+ 	pps_client_cb.irq_func = parport_irq;
+@@ -184,7 +184,7 @@ static void parport_attach(struct parport *port)
+ err_unregister_dev:
+ 	parport_unregister_device(device->pardev);
+ err_free:
+-	ida_simple_remove(&pps_client_index, index);
++	ida_free(&pps_client_index, index);
+ 	kfree(device);
+ }
+ 
+@@ -204,7 +204,7 @@ static void parport_detach(struct parport *port)
+ 	pps_unregister_source(device->pps);
+ 	parport_release(pardev);
+ 	parport_unregister_device(pardev);
+-	ida_simple_remove(&pps_client_index, device->index);
++	ida_free(&pps_client_index, device->index);
+ 	kfree(device);
+ }
+ 
+-- 
+2.43.0
+
 
 
