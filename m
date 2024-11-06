@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE2D1CC89D;
-	Wed,  6 Nov 2024 13:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C874646;
+	Wed,  6 Nov 2024 13:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899122; cv=none; b=Fb42d6zx85Izc6j1WzdLx6fkiAIn/E7gkstO1Ev5hhG0SZo6nFOT/JUiHAzvki1JZjGEjy+ggnNRwPxUmqAYVgwq32BaFNNEv81IEvKzOuq4IEU4tAJL03PExsqXOiud0NPO3z/rFI8jxDcTjizFZp5/yTTdfyTkBaejjN3hkNA=
+	t=1730899123; cv=none; b=OWbvp41IjWA9/XKVr6FaJKsRlcMQmJ0u4OnO3jqaorS+GOOeRk3BgubxGYAK00MLEI4q2HbeNAXscWdrrCPmLlPuimhpQs6Vj2XUUQweCh16vrUE8DL9hgqUWYsFxZQrtUqyQPbTUmmw7soHwYf1w97ZNvP9VyTSSEqH+Prx6gQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899122; c=relaxed/simple;
-	bh=x9of6KxYTPzmdwtdYZH9TgbSUOmqczw4hoPWzRrh7BI=;
+	s=arc-20240116; t=1730899123; c=relaxed/simple;
+	bh=X6sGs1nydibkYbVtb/cxlJ3QHSqasaAbpXBFS9+Z61Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L6fPG/O9ZWL7sY48mBrCHW+kIRmyQuCDgUAwLX7r2MAlemVRQ8Lpe6RIPo0hCMCdqUy23VPP1JrZ/BS8neGJchd457WPL1uYY5jxqHj5/pNTo+tsO0PR5u8JFLqq5plXonheW3ozh4V9jr0oo53nd5lmyTF5foGohyoYJkGdl60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bl49O8Tw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lizmSf8zn9ByIzitBjqrZDgbSVN7+U91wdSvG8gSbgqe4BgkzHZaWxQaD3qV3OBXul5/psZuXDWt4t0PaNObzmdDc9ZSNPDW37Wa09ML+tv8ZEKeMyjTSaGmFdLsT3yCvV0EvleNxbsvEUIapJS/zULv/9IEtLZAUO5360NnM4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6bxa6uY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bl49O8Tw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05EEDC4CECD;
-	Wed,  6 Nov 2024 13:18:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6bxa6uY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3383C4CECD;
+	Wed,  6 Nov 2024 13:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899120;
-	bh=x9of6KxYTPzmdwtdYZH9TgbSUOmqczw4hoPWzRrh7BI=;
+	s=korg; t=1730899123;
+	bh=X6sGs1nydibkYbVtb/cxlJ3QHSqasaAbpXBFS9+Z61Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bl49O8Tw21BE/1qzzOV+eEcXs/v9zke/RGG8uYVJyhvYgbLH6Sx8vwr+++ruCGAdC
-	 Nud2IFh+UrjU0TmhHEfnZTKP5kx2mjnBFzy9hVXzgsj+OJsX4A7D+ShuLRs/MRwv8y
-	 Zfo+gnvaNH+74m2w8xZMoOCbkB2O/22X44S5X1G8=
+	b=U6bxa6uYyRUFU48NHgcfwSdrNfjTtDx+20ROMsiKrLxQi+6P4dW5jXViKZLuXHe2K
+	 CKSLQ5l8gtFx9e4W84K3+ZSPtaS1GP4it++W9Uy7QlhjKeMCEQRmm69B5CqNCL9pMJ
+	 JBVBNyacZaQa423zYSrIEVsZbANKHR4w4OeIp4Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sam Sun <samsun1006219@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 432/462] ASoC: cs42l51: Fix some error handling paths in cs42l51_probe()
-Date: Wed,  6 Nov 2024 13:05:25 +0100
-Message-ID: <20241106120342.179466650@linuxfoundation.org>
+Subject: [PATCH 5.4 423/462] selinux: improve error checking in sel_write_load()
+Date: Wed,  6 Nov 2024 13:05:16 +0100
+Message-ID: <20241106120341.962622589@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,54 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Paul Moore <paul@paul-moore.com>
 
-[ Upstream commit d221b844ee79823ffc29b7badc4010bdb0960224 ]
+[ Upstream commit 42c773238037c90b3302bf37a57ae3b5c3f6004a ]
 
-If devm_gpiod_get_optional() fails, we need to disable previously enabled
-regulators, as done in the other error handling path of the function.
+Move our existing input sanity checking to the top of sel_write_load()
+and add a check to ensure the buffer size is non-zero.
 
-Also, gpiod_set_value_cansleep(, 1) needs to be called to undo a
-potential gpiod_set_value_cansleep(, 0).
-If the "reset" gpio is not defined, this additional call is just a no-op.
+Move a local variable initialization from the declaration to before it
+is used.
 
-This behavior is the same as the one already in the .remove() function.
+Minor style adjustments.
 
-Fixes: 11b9cd748e31 ("ASoC: cs42l51: add reset management")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/a5e5f4b9fb03f46abd2c93ed94b5c395972ce0d1.1729975570.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Sam Sun <samsun1006219@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+[cascardo: keep fsi initialization at its declaration point as it is used earlier]
+[cascardo: keep check for 64MiB size limit]
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l51.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ security/selinux/selinuxfs.c | 31 +++++++++++++++++--------------
+ 1 file changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/codecs/cs42l51.c b/sound/soc/codecs/cs42l51.c
-index 07371e32167c8..7fa0a849e65f4 100644
---- a/sound/soc/codecs/cs42l51.c
-+++ b/sound/soc/codecs/cs42l51.c
-@@ -740,8 +740,10 @@ int cs42l51_probe(struct device *dev, struct regmap *regmap)
+diff --git a/security/selinux/selinuxfs.c b/security/selinux/selinuxfs.c
+index e9eaff90cbccd..fd6282fa9c39f 100644
+--- a/security/selinux/selinuxfs.c
++++ b/security/selinux/selinuxfs.c
+@@ -535,6 +535,16 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
+ 	ssize_t length;
+ 	void *data = NULL;
  
- 	cs42l51->reset_gpio = devm_gpiod_get_optional(dev, "reset",
- 						      GPIOD_OUT_LOW);
--	if (IS_ERR(cs42l51->reset_gpio))
--		return PTR_ERR(cs42l51->reset_gpio);
-+	if (IS_ERR(cs42l51->reset_gpio)) {
-+		ret = PTR_ERR(cs42l51->reset_gpio);
-+		goto error;
++	/* no partial writes */
++	if (*ppos)
++		return -EINVAL;
++	/* no empty policies */
++	if (!count)
++		return -EINVAL;
++
++	if (count > 64 * 1024 * 1024)
++		return -EFBIG;
++
+ 	mutex_lock(&fsi->mutex);
+ 
+ 	length = avc_has_perm(&selinux_state,
+@@ -543,23 +553,15 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
+ 	if (length)
+ 		goto out;
+ 
+-	/* No partial writes. */
+-	length = -EINVAL;
+-	if (*ppos != 0)
+-		goto out;
+-
+-	length = -EFBIG;
+-	if (count > 64 * 1024 * 1024)
+-		goto out;
+-
+-	length = -ENOMEM;
+ 	data = vmalloc(count);
+-	if (!data)
++	if (!data) {
++		length = -ENOMEM;
+ 		goto out;
+-
+-	length = -EFAULT;
+-	if (copy_from_user(data, buf, count) != 0)
++	}
++	if (copy_from_user(data, buf, count) != 0) {
++		length = -EFAULT;
+ 		goto out;
 +	}
  
- 	if (cs42l51->reset_gpio) {
- 		dev_dbg(dev, "Release reset gpio\n");
-@@ -773,6 +775,7 @@ int cs42l51_probe(struct device *dev, struct regmap *regmap)
- 	return 0;
- 
- error:
-+	gpiod_set_value_cansleep(cs42l51->reset_gpio, 1);
- 	regulator_bulk_disable(ARRAY_SIZE(cs42l51->supplies),
- 			       cs42l51->supplies);
- 	return ret;
+ 	length = security_load_policy(fsi->state, data, count);
+ 	if (length) {
+@@ -578,6 +580,7 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
+ 		"auid=%u ses=%u lsm=selinux res=1",
+ 		from_kuid(&init_user_ns, audit_get_loginuid(current)),
+ 		audit_get_sessionid(current));
++
+ out:
+ 	mutex_unlock(&fsi->mutex);
+ 	vfree(data);
 -- 
 2.43.0
 
