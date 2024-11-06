@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF5B1DF267;
-	Wed,  6 Nov 2024 12:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA871DED5F;
+	Wed,  6 Nov 2024 12:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895439; cv=none; b=GiIgio0GccoKBtbOqJYQ46WJpQBkGydJiINAdZ4iESgijuP2FfvMLIL8aCQLIhEfywZDpAn1sfss4xWCL2i6G9DE2fdiS7zxf/nHqCK26jq5gQ3j7Cp6DfG0OEeeum6Pyr9Fa9Q3FyU/olBwm2ACoznzLEz3gx8FkYCz2x9V9tY=
+	t=1730895442; cv=none; b=vGN5VsqKGdbhj/hp9bMmUNoIG6dCiFVvFG4QJGybfYugxQMyGaGlMfRLTKm728Jyr08N/YGLYAs+O0eIP59DK9RdpQqPwjQR4QXmMSIXruFDuhtGpB7q3Trln5fJ9Y35eTEA789PBASEhVGC2zuFKpD+x+6ielN7TcCp0SkkFZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895439; c=relaxed/simple;
-	bh=OXu6mgXQY17Rzv7+JsfZSPgsxVRqLZjVTQ+HhOWs1Lc=;
+	s=arc-20240116; t=1730895442; c=relaxed/simple;
+	bh=OJWJThqya4GhS53vWJ+TDdJLYMjK0/CNLcFhnSs+GNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LIsv5Vtktr58zucSHPOGJwWT3cKqQ/s3yNWnxBNc2M5VPINxwgRMJC+5K6HODLiHGv74oVa53xOzyhzTm9sn7KMny4isDptJk5V01iVbWMTXge1IlCcs4YGp91uf/QY5sURgWuV9Sm1VRjtoPc2oOcIpyiUsgrnFT6H22yvNEww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYXXPpZM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OqCZCZY2MpyVxQo2ioFXogJF9AqI+dYfWO9TYAYqvejtEFwUPdDLHzdP3adQZB/ymyYfdjdvYm8sQM7NulqEbCLMoxVXbI43+QRRDwTvLwaxu7wpA4+3W++w7zmy5EDigjAokLn6fAl9kKHDlsOCoY1vGG+DtQZjMMoMfAHFt+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PX+1Ufjs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYXXPpZM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5DD6C4CECD;
-	Wed,  6 Nov 2024 12:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PX+1Ufjs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83ADC4CECD;
+	Wed,  6 Nov 2024 12:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895439;
-	bh=OXu6mgXQY17Rzv7+JsfZSPgsxVRqLZjVTQ+HhOWs1Lc=;
+	s=korg; t=1730895442;
+	bh=OJWJThqya4GhS53vWJ+TDdJLYMjK0/CNLcFhnSs+GNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kYXXPpZMto4dWAi86nD2j9/K+fhwD/ENRvbZ+rQ9ygHlhpqtzdWCJdefN9zLhA1JD
-	 c4GalsSSlrRAD7uMUTbBn60vQQ6UO+QeznqAncYQHGtKzHeTrZkrlc6R3qBmPOrLaD
-	 z/o2JDKB0ddInNZjmUPRz5uFaeNAoKPlbV9dvQvI=
+	b=PX+1Ufjs0WGbFhzTRx699Wu1kiym59e71bzhOHq5Tq143RsetiWPph/y2bQyRlvmf
+	 heMF6wvx5o/byDJKQR1/PRXsBlNPUr98YtmQpjXzfW6gouB5ntlKGEa7xPIXXvIhbC
+	 RfigNg+WVoOEnNR8IVt4fFuJbFispUqGpJ2AizWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	James Morse <james.morse@arm.com>,
 	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 219/350] arm64: errata: Expand speculative SSBS workaround once more
-Date: Wed,  6 Nov 2024 13:02:27 +0100
-Message-ID: <20241106120326.408990825@linuxfoundation.org>
+Subject: [PATCH 4.19 220/350] uprobes: fix kernel info leak via "[uprobes]" vma
+Date: Wed,  6 Nov 2024 13:02:28 +0100
+Message-ID: <20241106120326.433920602@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -53,110 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 081eb7932c2b244f63317a982c5e3990e2c7fbdd ]
+commit 34820304cc2cd1804ee1f8f3504ec77813d29c8e upstream.
 
-A number of Arm Ltd CPUs suffer from errata whereby an MSR to the SSBS
-special-purpose register does not affect subsequent speculative
-instructions, permitting speculative store bypassing for a window of
-time.
+xol_add_vma() maps the uninitialized page allocated by __create_xol_area()
+into userspace. On some architectures (x86) this memory is readable even
+without VM_READ, VM_EXEC results in the same pgprot_t as VM_EXEC|VM_READ,
+although this doesn't really matter, debugger can read this memory anyway.
 
-We worked around this for a number of CPUs in commits:
+Link: https://lore.kernel.org/all/20240929162047.GA12611@redhat.com/
 
-* 7187bb7d0b5c7dfa ("arm64: errata: Add workaround for Arm errata 3194386 and 3312417")
-* 75b3c43eab594bfb ("arm64: errata: Expand speculative SSBS workaround")
-* 145502cac7ea70b5 ("arm64: errata: Expand speculative SSBS workaround (again)")
-
-Since then, a (hopefully final) batch of updates have been published,
-with two more affected CPUs. For the affected CPUs the existing
-mitigation is sufficient, as described in their respective Software
-Developer Errata Notice (SDEN) documents:
-
-* Cortex-A715 (MP148) SDEN v15.0, erratum 3456084
-  https://developer.arm.com/documentation/SDEN-2148827/1500/
-
-* Neoverse-N3 (MP195) SDEN v5.0, erratum 3456111
-  https://developer.arm.com/documentation/SDEN-3050973/0500/
-
-Enable the existing mitigation by adding the relevant MIDRs to
-erratum_spec_ssbs_list, and update silicon-errata.rst and the
-Kconfig text accordingly.
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20240930111705.3352047-3-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-[ Mark: fix conflict in silicon-errata.rst, handle move and rename ]
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reported-by: Will Deacon <will@kernel.org>
+Fixes: d4b3b6384f98 ("uprobes/core: Allocate XOL slots for uprobes use")
+Cc: stable@vger.kernel.org
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/arm64/silicon-errata.txt | 2 ++
- arch/arm64/Kconfig                     | 2 ++
- arch/arm64/kernel/cpu_errata.c         | 2 ++
- 3 files changed, 6 insertions(+)
+ kernel/events/uprobes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/arm64/silicon-errata.txt b/Documentation/arm64/silicon-errata.txt
-index eab3b0cf0dbe9..a67ba12ffa035 100644
---- a/Documentation/arm64/silicon-errata.txt
-+++ b/Documentation/arm64/silicon-errata.txt
-@@ -66,6 +66,7 @@ stable kernels.
- | ARM            | Cortex-A78      | #3324344        | ARM64_ERRATUM_3194386       |
- | ARM            | Cortex-A78C     | #3324346,3324347| ARM64_ERRATUM_3194386       |
- | ARM            | Cortex-A710     | #3324338        | ARM64_ERRATUM_3194386       |
-+| ARM            | Cortex-A715     | #3456084        | ARM64_ERRATUM_3194386       |
- | ARM            | Cortex-A720     | #3456091        | ARM64_ERRATUM_3194386       |
- | ARM            | Cortex-A725     | #3456106        | ARM64_ERRATUM_3194386       |
- | ARM            | Cortex-X1       | #3324344        | ARM64_ERRATUM_3194386       |
-@@ -77,6 +78,7 @@ stable kernels.
- | ARM            | Neoverse-N1     | #1542419        | ARM64_ERRATUM_1542419       |
- | ARM            | Neoverse-N1     | #3324349        | ARM64_ERRATUM_3194386       |
- | ARM            | Neoverse-N2     | #3324339        | ARM64_ERRATUM_3194386       |
-+| ARM            | Neoverse-N3     | #3456111        | ARM64_ERRATUM_3194386       |
- | ARM            | Neoverse-V1     | #3324341        | ARM64_ERRATUM_3194386       |
- | ARM            | Neoverse-V2     | #3324336        | ARM64_ERRATUM_3194386       |
- | ARM            | Neoverse-V3     | #3312417        | ARM64_ERRATUM_3194386       |
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 15c7a2b6e491e..5fa1b1d3172e9 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -543,6 +543,7 @@ config ARM64_ERRATUM_3194386
- 	  * ARM Cortex-A78C erratum 3324346
- 	  * ARM Cortex-A78C erratum 3324347
- 	  * ARM Cortex-A710 erratam 3324338
-+	  * ARM Cortex-A715 errartum 3456084
- 	  * ARM Cortex-A720 erratum 3456091
- 	  * ARM Cortex-A725 erratum 3456106
- 	  * ARM Cortex-X1 erratum 3324344
-@@ -553,6 +554,7 @@ config ARM64_ERRATUM_3194386
- 	  * ARM Cortex-X925 erratum 3324334
- 	  * ARM Neoverse-N1 erratum 3324349
- 	  * ARM Neoverse N2 erratum 3324339
-+	  * ARM Neoverse-N3 erratum 3456111
- 	  * ARM Neoverse-V1 erratum 3324341
- 	  * ARM Neoverse V2 erratum 3324336
- 	  * ARM Neoverse-V3 erratum 3312417
-diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
-index e87f8d60075d7..a92530a8d7fcd 100644
---- a/arch/arm64/kernel/cpu_errata.c
-+++ b/arch/arm64/kernel/cpu_errata.c
-@@ -714,6 +714,7 @@ static const struct midr_range erratum_spec_ssbs_list[] = {
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A78),
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A78C),
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A710),
-+	MIDR_ALL_VERSIONS(MIDR_CORTEX_A715),
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A720),
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_A725),
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_X1),
-@@ -724,6 +725,7 @@ static const struct midr_range erratum_spec_ssbs_list[] = {
- 	MIDR_ALL_VERSIONS(MIDR_CORTEX_X925),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
-+	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N3),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V2),
- 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V3),
+diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+index 3361da45e1db7..3ca91daddc9f5 100644
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -1198,7 +1198,7 @@ static struct xol_area *__create_xol_area(unsigned long vaddr)
+ 
+ 	area->xol_mapping.name = "[uprobes]";
+ 	area->xol_mapping.pages = area->pages;
+-	area->pages[0] = alloc_page(GFP_HIGHUSER);
++	area->pages[0] = alloc_page(GFP_HIGHUSER | __GFP_ZERO);
+ 	if (!area->pages[0])
+ 		goto free_bitmap;
+ 	area->pages[1] = NULL;
 -- 
 2.43.0
 
