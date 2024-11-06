@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBA91DFD9D;
-	Wed,  6 Nov 2024 12:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509AD198E96;
+	Wed,  6 Nov 2024 12:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896301; cv=none; b=ujA2zAReH+mcKYGefIoA1/DmdEjSGeN2ER+gIdsE0VjjLqH70lJbtA+qOMn5UEvbHXruxcbIbuJuP/XGvYzn2HABVQpFEwS9km5DZNZMoTmzlgyPVyX4+AkUhQWKZ5KAJw57zZsgugHi3Fn+bAPNAOyFrdbpbXaCL8TqG44DPMI=
+	t=1730896304; cv=none; b=u+zSlKLBTRHWI9Uvgq7uz/wAUelFFgCy8NRoLxL7h8WnpaxknfDRYqAFDEDlBOZvIneoxxuSXhlYPPCdzt9rUI5tmRCgi/icjYyfN5B+20KqqhYgaNf7LvOblUxJjZwmpFoofsI8Lj5qtu4NzYC1WIqcTbWwISGziSBszP+6DDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896301; c=relaxed/simple;
-	bh=UoL/97lqYSaqYkeBR6yN8I9Dz8wn7WBbWwHBR/kvaps=;
+	s=arc-20240116; t=1730896304; c=relaxed/simple;
+	bh=oTHhREzhJF2B3IEdlczyzRG8Suwr6xdpGcObvjdnCY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M0wGwR8mOYDwjeX/jXmOMxWU6rf9VONBWE54hPfwVzVsjzq+9tg1WXVvJRRn/pwpc2exTdaE2MJ0zEgk5HfI6rQhPv438gp4NPBqr1rh61p3BKcuvQcQozauHzq4GHjI0Az0mUclxhODMeee5iVnmLcxQC+IJ8+nBFyituu1RCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=roWvFbpB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pDmx8ikIAFU63pqc1rXA0YOBaLshr4ijv/Vz60p4mUrcUImXFhZ4/AYRAZhC1Z2+sMf3dCpByNH9uiK16pkjicVlsnYVRsYgENkUxw40bCOIu7LyfiZTS6eZK3kn77Rq2q8Vp1dui171ZKDAfjPOe4w48wf3yG9JVTM396JQgS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7z+6JVE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="roWvFbpB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC02C4CECD;
-	Wed,  6 Nov 2024 12:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7z+6JVE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F39AC4CECD;
+	Wed,  6 Nov 2024 12:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896301;
-	bh=UoL/97lqYSaqYkeBR6yN8I9Dz8wn7WBbWwHBR/kvaps=;
+	s=korg; t=1730896304;
+	bh=oTHhREzhJF2B3IEdlczyzRG8Suwr6xdpGcObvjdnCY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=roWvFbpB32ZX+0SfdHXj4TAmwWjQGbT8FaKndqra92QkX2PDzGxgr8XugAHRNVPLq
-	 mHex8uKfH6nQbv74nfbj+2+PlsueLjPzjf6gYZPwq/IIP/6tWgAbc55uFWUHC8GCnb
-	 o/3GdXpcBGn0+XB/FYDUuJx5w4DYQAE2z9vwbyoE=
+	b=J7z+6JVE3OAGCZwD9HZp0CZIfoBPfmBlJPnsM8CG7u/6EZjXfLBjmrsRwQyLpFRUK
+	 ehQD35xXYu32S1W/Y9x2QfQBVM9a6f1kHkRtapzwWdrlwgNi57OqmpmK6fdM8u6qIP
+	 J2UPu348PsdHrpIlb5ICAK0ZSLVjNrRAcweU29Sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Liaw <edliaw@google.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Peter Xu <peterx@redhat.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 121/245] Revert "selftests/mm: replace atomic_bool with pthread_barrier_t"
-Date: Wed,  6 Nov 2024 13:02:54 +0100
-Message-ID: <20241106120322.200852289@linuxfoundation.org>
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.11 122/245] wifi: mac80211: do not pass a stopped vif to the driver in .get_txpower
+Date: Wed,  6 Nov 2024 13:02:55 +0100
+Message-ID: <20241106120322.225752384@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -53,114 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Liaw <edliaw@google.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit 3673167a3a07f25b3f06754d69f406edea65543a upstream.
+commit 393b6bc174b0dd21bb2a36c13b36e62fc3474a23 upstream.
 
-This reverts commit e61ef21e27e8deed8c474e9f47f4aa7bc37e138c.
+Avoid potentially crashing in the driver because of uninitialized private data
 
-uffd_poll_thread may be called by other tests that do not initialize the
-pthread_barrier, so this approach is not correct.  This will revert to
-using atomic_bool instead.
-
-Link: https://lkml.kernel.org/r/20241018171734.2315053-3-edliaw@google.com
-Fixes: e61ef21e27e8 ("selftests/mm: replace atomic_bool with pthread_barrier_t")
-Signed-off-by: Edward Liaw <edliaw@google.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 5b3dc42b1b0d ("mac80211: add support for driver tx power reporting")
+Cc: stable@vger.kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20241002095630.22431-1-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/uffd-common.c     |    5 ++---
- tools/testing/selftests/mm/uffd-common.h     |    3 ++-
- tools/testing/selftests/mm/uffd-unit-tests.c |   14 ++++++--------
- 3 files changed, 10 insertions(+), 12 deletions(-)
+ net/mac80211/cfg.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/mm/uffd-common.c
-+++ b/tools/testing/selftests/mm/uffd-common.c
-@@ -18,7 +18,7 @@ bool test_uffdio_wp = true;
- unsigned long long *count_verify;
- uffd_test_ops_t *uffd_test_ops;
- uffd_test_case_ops_t *uffd_test_case_ops;
--pthread_barrier_t ready_for_fork;
-+atomic_bool ready_for_fork;
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -3138,7 +3138,8 @@ static int ieee80211_get_tx_power(struct
+ 	struct ieee80211_local *local = wiphy_priv(wiphy);
+ 	struct ieee80211_sub_if_data *sdata = IEEE80211_WDEV_TO_SUB_IF(wdev);
  
- static int uffd_mem_fd_create(off_t mem_size, bool hugetlb)
- {
-@@ -519,8 +519,7 @@ void *uffd_poll_thread(void *arg)
- 	pollfd[1].fd = pipefd[cpu*2];
- 	pollfd[1].events = POLLIN;
+-	if (local->ops->get_txpower)
++	if (local->ops->get_txpower &&
++	    (sdata->flags & IEEE80211_SDATA_IN_DRIVER))
+ 		return drv_get_txpower(local, sdata, dbm);
  
--	/* Ready for parent thread to fork */
--	pthread_barrier_wait(&ready_for_fork);
-+	ready_for_fork = true;
- 
- 	for (;;) {
- 		ret = poll(pollfd, 2, -1);
---- a/tools/testing/selftests/mm/uffd-common.h
-+++ b/tools/testing/selftests/mm/uffd-common.h
-@@ -33,6 +33,7 @@
- #include <inttypes.h>
- #include <stdint.h>
- #include <sys/random.h>
-+#include <stdatomic.h>
- 
- #include "../kselftest.h"
- #include "vm_util.h"
-@@ -104,7 +105,7 @@ extern bool map_shared;
- extern bool test_uffdio_wp;
- extern unsigned long long *count_verify;
- extern volatile bool test_uffdio_copy_eexist;
--extern pthread_barrier_t ready_for_fork;
-+extern atomic_bool ready_for_fork;
- 
- extern uffd_test_ops_t anon_uffd_test_ops;
- extern uffd_test_ops_t shmem_uffd_test_ops;
---- a/tools/testing/selftests/mm/uffd-unit-tests.c
-+++ b/tools/testing/selftests/mm/uffd-unit-tests.c
-@@ -774,7 +774,7 @@ static void uffd_sigbus_test_common(bool
- 	char c;
- 	struct uffd_args args = { 0 };
- 
--	pthread_barrier_init(&ready_for_fork, NULL, 2);
-+	ready_for_fork = false;
- 
- 	fcntl(uffd, F_SETFL, uffd_flags | O_NONBLOCK);
- 
-@@ -791,9 +791,8 @@ static void uffd_sigbus_test_common(bool
- 	if (pthread_create(&uffd_mon, NULL, uffd_poll_thread, &args))
- 		err("uffd_poll_thread create");
- 
--	/* Wait for child thread to start before forking */
--	pthread_barrier_wait(&ready_for_fork);
--	pthread_barrier_destroy(&ready_for_fork);
-+	while (!ready_for_fork)
-+		; /* Wait for the poll_thread to start executing before forking */
- 
- 	pid = fork();
- 	if (pid < 0)
-@@ -834,7 +833,7 @@ static void uffd_events_test_common(bool
- 	char c;
- 	struct uffd_args args = { 0 };
- 
--	pthread_barrier_init(&ready_for_fork, NULL, 2);
-+	ready_for_fork = false;
- 
- 	fcntl(uffd, F_SETFL, uffd_flags | O_NONBLOCK);
- 	if (uffd_register(uffd, area_dst, nr_pages * page_size,
-@@ -845,9 +844,8 @@ static void uffd_events_test_common(bool
- 	if (pthread_create(&uffd_mon, NULL, uffd_poll_thread, &args))
- 		err("uffd_poll_thread create");
- 
--	/* Wait for child thread to start before forking */
--	pthread_barrier_wait(&ready_for_fork);
--	pthread_barrier_destroy(&ready_for_fork);
-+	while (!ready_for_fork)
-+		; /* Wait for the poll_thread to start executing before forking */
- 
- 	pid = fork();
- 	if (pid < 0)
+ 	if (local->emulate_chanctx)
 
 
