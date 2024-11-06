@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98301DED58;
-	Wed,  6 Nov 2024 12:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84AC1D2784;
+	Wed,  6 Nov 2024 12:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896012; cv=none; b=CJzpYAtNn8TPlajjbpKXbQHEm8gHKwLXmMlpVJxTAlPrpJOieBju93cH9LrnbobX3NgBtY+03v7vEuaLqyns2BPYwHNYR2COKl+HxQjJOpuU1zDcLudQ4swMXjhJbq7reDbplf+ZjbIGO68Kc2ctVTBcJhGyeYQ84KJJvIkoQXM=
+	t=1730896015; cv=none; b=SE1oZYUcrK+cswPuTMk5k9EHD75WgPk1Mq6MDwgoP6yGk5uRm0HhJhmTx2zfiM8qIsNySbRej4CXyNG+FsJGeSExSIB0qy5I3ala2z4Ss1H4kMWvYphqpjlkW76QBIWiEH7koXB81rSEyvsbB33K7zdfY0WfKwAO9jixdssvpdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896012; c=relaxed/simple;
-	bh=0U3XUqH3A5ouYA9Juk7pjqRvx2c69tQbZYhP9mf2jfg=;
+	s=arc-20240116; t=1730896015; c=relaxed/simple;
+	bh=Yr4r69HQnoaR9z+gufNVtBUx1HKbnFFM6wVZqU010to=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/H4VbrYnKGhpOhs/1wJO8mGEPwfDjpStCU6G/ThBewEeWOaGDvTPjHPbwI+oFuY8LmYPkeiTINTb+Qtq0VDKLnvpyHRU3YoSmfW8Dn5yeMihkJ563U1782Zs1jpuKulpqbs4uGn57lYJAsjj7QEC7OdibYj+X2nH6unIC+QeiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvhL75Hv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kLVRbrE12Y54dE8P2uOrbevbi2vcq9phvm+JbLmevI8t8UI9/8wkecZPbE6G8wXEDplKumKlYup1WlW0EulYXwgjfGb6+c/VyqUA76bJxoEe725GG4SToE4e/U7b7BVeY+3MjIbTpOEZoPKsCdN9Z6PKc0jp+BntBFgJMStxubU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXEXWL+f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvhL75Hv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D716C4CECD;
-	Wed,  6 Nov 2024 12:26:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXEXWL+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B94AC4CECD;
+	Wed,  6 Nov 2024 12:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896012;
-	bh=0U3XUqH3A5ouYA9Juk7pjqRvx2c69tQbZYhP9mf2jfg=;
+	s=korg; t=1730896015;
+	bh=Yr4r69HQnoaR9z+gufNVtBUx1HKbnFFM6wVZqU010to=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pvhL75HvWBSgCnV45Riam630AkO238xxedVKAPoDv3WXU99fGta5fwIYYV5p3uQ/P
-	 u9AOWTm7fJvP5iKYqojFMnsLLr/umqh9NKUroUp/jrQoYJbEOgR/BEYPsWPvyrW4sb
-	 9H9tGW+BY9krDM3VzNwX0mzVCxHEKKm9sURoX6Qw=
+	b=mXEXWL+fwwsoRDF1WjXaeBKJd+2yp/dbGmZLwNrKbxW+P5J94Ea9zW2y6pd+Op9J6
+	 y41AayqmjrxaDqksCzKB0hogSxgCh5ohKHLz9JArB5WcJTb6sxNeHkPy1XCzwc9Src
+	 tX8orrHRuGYd1FxyUWVizyETFZUpo4ktP40O0iOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 060/245] fsdax: remove zeroing code from dax_unshare_iter
-Date: Wed,  6 Nov 2024 13:01:53 +0100
-Message-ID: <20241106120320.685604600@linuxfoundation.org>
+Subject: [PATCH 6.11 061/245] fsdax: dax_unshare_iter needs to copy entire blocks
+Date: Wed,  6 Nov 2024 13:01:54 +0100
+Message-ID: <20241106120320.709516859@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -55,51 +55,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 95472274b6fed8f2d30fbdda304e12174b3d4099 ]
+[ Upstream commit 50793801fc7f6d08def48754fb0f0706b0cfc394 ]
 
-Remove the code in dax_unshare_iter that zeroes the destination memory
-because it's not necessary.
+The code that copies data from srcmap to iomap in dax_unshare_iter is
+very very broken, which bfoster's recent fsx changes have exposed.
 
-If srcmap is unwritten, we don't have to do anything because that
-unwritten extent came from the regular file mapping, and unwritten
-extents cannot be shared.  The same applies to holes.
+If the pos and len passed to dax_file_unshare are not aligned to an
+fsblock boundary, the iter pos and length in the _iter function will
+reflect this unalignment.
 
-Furthermore, zeroing to unshare a mapping is just plain wrong because
-unsharing means copy on write, and we should be copying data.
+dax_iomap_direct_access always returns a pointer to the start of the
+kmapped fsdax page, even if its pos argument is in the middle of that
+page.  This is catastrophic for data integrity when iter->pos is not
+aligned to a page, because daddr/saddr do not point to the same byte in
+the file as iter->pos.  Hence we corrupt user data by copying it to the
+wrong place.
 
-This is effectively a revert of commit 13dd4e04625f ("fsdax: unshare:
-zero destination if srcmap is HOLE or UNWRITTEN")
+If iter->pos + iomap_length() in the _iter function not aligned to a
+page, then we fail to copy a full block, and only partially populate the
+destination block.  This is catastrophic for data confidentiality
+because we expose stale pmem contents.
+
+Fix both of these issues by aligning copy_pos/copy_len to a page
+boundary (remember, this is fsdax so 1 fsblock == 1 base page) so that
+we always copy full blocks.
+
+We're not done yet -- there's no call to invalidate_inode_pages2_range,
+so programs that have the file range mmap'd will continue accessing the
+old memory mapping after the file metadata updates have completed.
+
+Be careful with the return value -- if the unshare succeeds, we still
+need to return the number of bytes that the iomap iter thinks we're
+operating on.
 
 Cc: ruansy.fnst@fujitsu.com
+Fixes: d984648e428b ("fsdax,xfs: port unshare to fsdax")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Link: https://lore.kernel.org/r/172796813311.1131942.16033376284752798632.stgit@frogsfrogsfrogs
+Link: https://lore.kernel.org/r/172796813328.1131942.16777025316348797355.stgit@frogsfrogsfrogs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 50793801fc7f ("fsdax: dax_unshare_iter needs to copy entire blocks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dax.c | 8 --------
- 1 file changed, 8 deletions(-)
+ fs/dax.c | 34 +++++++++++++++++++++++++++-------
+ 1 file changed, 27 insertions(+), 7 deletions(-)
 
 diff --git a/fs/dax.c b/fs/dax.c
-index 5064eefb1c1e4..9fbbdaa784b43 100644
+index 9fbbdaa784b43..21b47402b3dca 100644
 --- a/fs/dax.c
 +++ b/fs/dax.c
-@@ -1276,14 +1276,6 @@ static s64 dax_unshare_iter(struct iomap_iter *iter)
+@@ -1262,26 +1262,46 @@ static s64 dax_unshare_iter(struct iomap_iter *iter)
+ {
+ 	struct iomap *iomap = &iter->iomap;
+ 	const struct iomap *srcmap = iomap_iter_srcmap(iter);
+-	loff_t pos = iter->pos;
+-	loff_t length = iomap_length(iter);
++	loff_t copy_pos = iter->pos;
++	u64 copy_len = iomap_length(iter);
++	u32 mod;
+ 	int id = 0;
+ 	s64 ret = 0;
+ 	void *daddr = NULL, *saddr = NULL;
+ 
+ 	if (!iomap_want_unshare_iter(iter))
+-		return length;
++		return iomap_length(iter);
++
++	/*
++	 * Extend the file range to be aligned to fsblock/pagesize, because
++	 * we need to copy entire blocks, not just the byte range specified.
++	 * Invalidate the mapping because we're about to CoW.
++	 */
++	mod = offset_in_page(copy_pos);
++	if (mod) {
++		copy_len += mod;
++		copy_pos -= mod;
++	}
++
++	mod = offset_in_page(copy_pos + copy_len);
++	if (mod)
++		copy_len += PAGE_SIZE - mod;
++
++	invalidate_inode_pages2_range(iter->inode->i_mapping,
++				      copy_pos >> PAGE_SHIFT,
++				      (copy_pos + copy_len - 1) >> PAGE_SHIFT);
+ 
+ 	id = dax_read_lock();
+-	ret = dax_iomap_direct_access(iomap, pos, length, &daddr, NULL);
++	ret = dax_iomap_direct_access(iomap, copy_pos, copy_len, &daddr, NULL);
  	if (ret < 0)
  		goto out_unlock;
  
--	/* zero the distance if srcmap is HOLE or UNWRITTEN */
--	if (srcmap->flags & IOMAP_F_SHARED || srcmap->type == IOMAP_UNWRITTEN) {
--		memset(daddr, 0, length);
--		dax_flush(iomap->dax_dev, daddr, length);
--		ret = length;
--		goto out_unlock;
--	}
--
- 	ret = dax_iomap_direct_access(srcmap, pos, length, &saddr, NULL);
+-	ret = dax_iomap_direct_access(srcmap, pos, length, &saddr, NULL);
++	ret = dax_iomap_direct_access(srcmap, copy_pos, copy_len, &saddr, NULL);
  	if (ret < 0)
  		goto out_unlock;
+ 
+-	if (copy_mc_to_kernel(daddr, saddr, length) == 0)
+-		ret = length;
++	if (copy_mc_to_kernel(daddr, saddr, copy_len) == 0)
++		ret = iomap_length(iter);
+ 	else
+ 		ret = -EIO;
+ 
 -- 
 2.43.0
 
