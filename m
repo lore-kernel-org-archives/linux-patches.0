@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01A61E008C;
-	Wed,  6 Nov 2024 12:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5231EF921;
+	Wed,  6 Nov 2024 12:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896613; cv=none; b=bxOPrA+YSegvMVK4XPAHU4l8kCl7v9YOenzN7k3jBB2PCNzPcSSBF0+4ZQqhiUGpvv5FUNqSkp7Fx3852TeZbcmYKJRoablMWDCXsdNczoFaW5sDxKI/LJm1dTbKPVONyCADckuYi+L6ohyV/0ngDv2BnyYndlT4wOD3PgfVXOU=
+	t=1730896616; cv=none; b=dJiaeZ7FMDDOi28dh7Zt+DSRfYXgDzQXRjeAu++5s6irgtPIAKVkJQqrHKzXoCHTQKkej9r3pBPTVSDU2LhfOvP/4mbUEA/2b23tNdpOED9P6ZU5aq9g2d5cy3g1Pe9x2D4TnYzAMNVlMfhJV0SUKD2nEqgbAKdoHNjapVZKZFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896613; c=relaxed/simple;
-	bh=RNOF8zo7DZNa6kN1Sq64Cz3KYEQW91eB5EHmSd3iHqY=;
+	s=arc-20240116; t=1730896616; c=relaxed/simple;
+	bh=b55fsNhlKQCTiG9Rkz3qAqTBBDb0QyYLNhfahS5fT4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AlEfn8Qy9rvvcLB1V80AcSrWgspMAwsSYF/x8mv1kTmqiXpty9JW79rAn9q9Ko5JUkH9hsjU5KMpjvLsfeLHUSwa6VfBkZWdLMR1B6ZsJUi7zJ2xqE2xchgBUfSbTewvGge27Edlo/pv3J2+byTnLTBRZn8I80FR3AI4g82pHS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBP4pDgW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mf1sgwXwQNvVUrY0X+XqN0x6ub1mXkT+OQMjEDn4qsy65viO0lHWz8dLQ0SE4S+nri6stV2k1cN1y6LQo2ztFNzL4DlEyDYDdEoIDR5+h8kaadEAM4mo9IE0xnlICTqu2bpImgE2hewqJAIv32FH6/Os+Vd5yKg+lYdbNmcC5xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+erRUAM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBP4pDgW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD223C4CED5;
-	Wed,  6 Nov 2024 12:36:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+erRUAM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB44C4CED5;
+	Wed,  6 Nov 2024 12:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896613;
-	bh=RNOF8zo7DZNa6kN1Sq64Cz3KYEQW91eB5EHmSd3iHqY=;
+	s=korg; t=1730896616;
+	bh=b55fsNhlKQCTiG9Rkz3qAqTBBDb0QyYLNhfahS5fT4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBP4pDgWKg9aMEvifZ2FvEpkd9O6pY3DLYfa5r25DHf+ccnSM7VWXmmODyQ6unhkK
-	 WW6+CpRJMr4lzOmrXDaUBebbWniRzpoVsClP/tUBytmakFgzk0L/wMPERpTFxh9BBh
-	 qMEV4zrjEi+hTC05ck3CkBNAvnWRA+r/jkFR5NHM=
+	b=j+erRUAMRVAaLA/CygkmhHowgMyzwgny5l/JhbAi3RPelN2deESWLO/0/fgzFzuXy
+	 GyjbIUQt8Lqlwpfg5EJuj8nPoM9GYZ1igRTSOsdAKmGw0N0FVdzuAob7WimTTNk1EH
+	 BMegqKOic7W8ZUb2cJEeVPgxjOty5tIFapwBFjeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/110] smb: client: fix OOBs when building SMB2_IOCTL request
-Date: Wed,  6 Nov 2024 13:03:41 +0100
-Message-ID: <20241106120303.580130128@linuxfoundation.org>
+Subject: [PATCH 5.10 016/110] usb: typec: altmode should keep reference to parent
+Date: Wed,  6 Nov 2024 13:03:42 +0100
+Message-ID: <20241106120303.608468649@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -52,105 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit 1ab60323c5201bef25f2a3dc0ccc404d9aca77f1 ]
+[ Upstream commit befab3a278c59db0cc88c8799638064f6d3fd6f8 ]
 
-When using encryption, either enforced by the server or when using
-'seal' mount option, the client will squash all compound request buffers
-down for encryption into a single iov in smb2_set_next_command().
+The altmode device release refers to its parent device, but without keeping
+a reference to it.
 
-SMB2_ioctl_init() allocates a small buffer (448 bytes) to hold the
-SMB2_IOCTL request in the first iov, and if the user passes an input
-buffer that is greater than 328 bytes, smb2_set_next_command() will
-end up writing off the end of @rqst->iov[0].iov_base as shown below:
+When registering the altmode, get a reference to the parent and put it in
+the release function.
 
-  mount.cifs //srv/share /mnt -o ...,seal
-  ln -s $(perl -e "print('a')for 1..1024") /mnt/link
+Before this fix, when using CONFIG_DEBUG_KOBJECT_RELEASE, we see issues
+like this:
 
-  BUG: KASAN: slab-out-of-bounds in
-  smb2_set_next_command.cold+0x1d6/0x24c [cifs]
-  Write of size 4116 at addr ffff8881148fcab8 by task ln/859
+[   43.572860] kobject: 'port0.0' (ffff8880057ba008): kobject_release, parent 0000000000000000 (delayed 3000)
+[   43.573532] kobject: 'port0.1' (ffff8880057bd008): kobject_release, parent 0000000000000000 (delayed 1000)
+[   43.574407] kobject: 'port0' (ffff8880057b9008): kobject_release, parent 0000000000000000 (delayed 3000)
+[   43.575059] kobject: 'port1.0' (ffff8880057ca008): kobject_release, parent 0000000000000000 (delayed 4000)
+[   43.575908] kobject: 'port1.1' (ffff8880057c9008): kobject_release, parent 0000000000000000 (delayed 4000)
+[   43.576908] kobject: 'typec' (ffff8880062dbc00): kobject_release, parent 0000000000000000 (delayed 4000)
+[   43.577769] kobject: 'port1' (ffff8880057bf008): kobject_release, parent 0000000000000000 (delayed 3000)
+[   46.612867] ==================================================================
+[   46.613402] BUG: KASAN: slab-use-after-free in typec_altmode_release+0x38/0x129
+[   46.614003] Read of size 8 at addr ffff8880057b9118 by task kworker/2:1/48
+[   46.614538]
+[   46.614668] CPU: 2 UID: 0 PID: 48 Comm: kworker/2:1 Not tainted 6.12.0-rc1-00138-gedbae730ad31 #535
+[   46.615391] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
+[   46.616042] Workqueue: events kobject_delayed_cleanup
+[   46.616446] Call Trace:
+[   46.616648]  <TASK>
+[   46.616820]  dump_stack_lvl+0x5b/0x7c
+[   46.617112]  ? typec_altmode_release+0x38/0x129
+[   46.617470]  print_report+0x14c/0x49e
+[   46.617769]  ? rcu_read_unlock_sched+0x56/0x69
+[   46.618117]  ? __virt_addr_valid+0x19a/0x1ab
+[   46.618456]  ? kmem_cache_debug_flags+0xc/0x1d
+[   46.618807]  ? typec_altmode_release+0x38/0x129
+[   46.619161]  kasan_report+0x8d/0xb4
+[   46.619447]  ? typec_altmode_release+0x38/0x129
+[   46.619809]  ? process_scheduled_works+0x3cb/0x85f
+[   46.620185]  typec_altmode_release+0x38/0x129
+[   46.620537]  ? process_scheduled_works+0x3cb/0x85f
+[   46.620907]  device_release+0xaf/0xf2
+[   46.621206]  kobject_delayed_cleanup+0x13b/0x17a
+[   46.621584]  process_scheduled_works+0x4f6/0x85f
+[   46.621955]  ? __pfx_process_scheduled_works+0x10/0x10
+[   46.622353]  ? hlock_class+0x31/0x9a
+[   46.622647]  ? lock_acquired+0x361/0x3c3
+[   46.622956]  ? move_linked_works+0x46/0x7d
+[   46.623277]  worker_thread+0x1ce/0x291
+[   46.623582]  ? __kthread_parkme+0xc8/0xdf
+[   46.623900]  ? __pfx_worker_thread+0x10/0x10
+[   46.624236]  kthread+0x17e/0x190
+[   46.624501]  ? kthread+0xfb/0x190
+[   46.624756]  ? __pfx_kthread+0x10/0x10
+[   46.625015]  ret_from_fork+0x20/0x40
+[   46.625268]  ? __pfx_kthread+0x10/0x10
+[   46.625532]  ret_from_fork_asm+0x1a/0x30
+[   46.625805]  </TASK>
+[   46.625953]
+[   46.626056] Allocated by task 678:
+[   46.626287]  kasan_save_stack+0x24/0x44
+[   46.626555]  kasan_save_track+0x14/0x2d
+[   46.626811]  __kasan_kmalloc+0x3f/0x4d
+[   46.627049]  __kmalloc_noprof+0x1bf/0x1f0
+[   46.627362]  typec_register_port+0x23/0x491
+[   46.627698]  cros_typec_probe+0x634/0xbb6
+[   46.628026]  platform_probe+0x47/0x8c
+[   46.628311]  really_probe+0x20a/0x47d
+[   46.628605]  device_driver_attach+0x39/0x72
+[   46.628940]  bind_store+0x87/0xd7
+[   46.629213]  kernfs_fop_write_iter+0x1aa/0x218
+[   46.629574]  vfs_write+0x1d6/0x29b
+[   46.629856]  ksys_write+0xcd/0x13b
+[   46.630128]  do_syscall_64+0xd4/0x139
+[   46.630420]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[   46.630820]
+[   46.630946] Freed by task 48:
+[   46.631182]  kasan_save_stack+0x24/0x44
+[   46.631493]  kasan_save_track+0x14/0x2d
+[   46.631799]  kasan_save_free_info+0x3f/0x4d
+[   46.632144]  __kasan_slab_free+0x37/0x45
+[   46.632474]  kfree+0x1d4/0x252
+[   46.632725]  device_release+0xaf/0xf2
+[   46.633017]  kobject_delayed_cleanup+0x13b/0x17a
+[   46.633388]  process_scheduled_works+0x4f6/0x85f
+[   46.633764]  worker_thread+0x1ce/0x291
+[   46.634065]  kthread+0x17e/0x190
+[   46.634324]  ret_from_fork+0x20/0x40
+[   46.634621]  ret_from_fork_asm+0x1a/0x30
 
-  CPU: 1 UID: 0 PID: 859 Comm: ln Not tainted 6.12.0-rc3 #1
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
-  1.16.3-2.fc40 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x5d/0x80
-   ? smb2_set_next_command.cold+0x1d6/0x24c [cifs]
-   print_report+0x156/0x4d9
-   ? smb2_set_next_command.cold+0x1d6/0x24c [cifs]
-   ? __virt_addr_valid+0x145/0x310
-   ? __phys_addr+0x46/0x90
-   ? smb2_set_next_command.cold+0x1d6/0x24c [cifs]
-   kasan_report+0xda/0x110
-   ? smb2_set_next_command.cold+0x1d6/0x24c [cifs]
-   kasan_check_range+0x10f/0x1f0
-   __asan_memcpy+0x3c/0x60
-   smb2_set_next_command.cold+0x1d6/0x24c [cifs]
-   smb2_compound_op+0x238c/0x3840 [cifs]
-   ? kasan_save_track+0x14/0x30
-   ? kasan_save_free_info+0x3b/0x70
-   ? vfs_symlink+0x1a1/0x2c0
-   ? do_symlinkat+0x108/0x1c0
-   ? __pfx_smb2_compound_op+0x10/0x10 [cifs]
-   ? kmem_cache_free+0x118/0x3e0
-   ? cifs_get_writable_path+0xeb/0x1a0 [cifs]
-   smb2_get_reparse_inode+0x423/0x540 [cifs]
-   ? __pfx_smb2_get_reparse_inode+0x10/0x10 [cifs]
-   ? rcu_is_watching+0x20/0x50
-   ? __kmalloc_noprof+0x37c/0x480
-   ? smb2_create_reparse_symlink+0x257/0x490 [cifs]
-   ? smb2_create_reparse_symlink+0x38f/0x490 [cifs]
-   smb2_create_reparse_symlink+0x38f/0x490 [cifs]
-   ? __pfx_smb2_create_reparse_symlink+0x10/0x10 [cifs]
-   ? find_held_lock+0x8a/0xa0
-   ? hlock_class+0x32/0xb0
-   ? __build_path_from_dentry_optional_prefix+0x19d/0x2e0 [cifs]
-   cifs_symlink+0x24f/0x960 [cifs]
-   ? __pfx_make_vfsuid+0x10/0x10
-   ? __pfx_cifs_symlink+0x10/0x10 [cifs]
-   ? make_vfsgid+0x6b/0xc0
-   ? generic_permission+0x96/0x2d0
-   vfs_symlink+0x1a1/0x2c0
-   do_symlinkat+0x108/0x1c0
-   ? __pfx_do_symlinkat+0x10/0x10
-   ? strncpy_from_user+0xaa/0x160
-   __x64_sys_symlinkat+0xb9/0xf0
-   do_syscall_64+0xbb/0x1d0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x7f08d75c13bb
-
-Reported-by: David Howells <dhowells@redhat.com>
-Fixes: e77fe73c7e38 ("cifs: we can not use small padding iovs together with encryption")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241004123738.2964524-1-cascardo@igalia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2pdu.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/typec/class.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/cifs/smb2pdu.c b/fs/cifs/smb2pdu.c
-index aa3211d8cce3b..03651cc6b7a5b 100644
---- a/fs/cifs/smb2pdu.c
-+++ b/fs/cifs/smb2pdu.c
-@@ -2961,6 +2961,15 @@ SMB2_ioctl_init(struct cifs_tcon *tcon, struct TCP_Server_Info *server,
- 		return rc;
+diff --git a/drivers/usb/typec/class.c b/drivers/usb/typec/class.c
+index 7fa95e7012446..dec83edb09de2 100644
+--- a/drivers/usb/typec/class.c
++++ b/drivers/usb/typec/class.c
+@@ -430,6 +430,7 @@ static void typec_altmode_release(struct device *dev)
+ 		typec_altmode_put_partner(alt);
  
- 	if (indatalen) {
-+		unsigned int len;
+ 	altmode_id_remove(alt->adev.dev.parent, alt->id);
++	put_device(alt->adev.dev.parent);
+ 	kfree(alt);
+ }
+ 
+@@ -479,6 +480,8 @@ typec_register_altmode(struct device *parent,
+ 	alt->adev.dev.type = &typec_altmode_dev_type;
+ 	dev_set_name(&alt->adev.dev, "%s.%u", dev_name(parent), id);
+ 
++	get_device(alt->adev.dev.parent);
 +
-+		if (WARN_ON_ONCE(smb3_encryption_required(tcon) &&
-+				 (check_add_overflow(total_len - 1,
-+						     ALIGN(indatalen, 8), &len) ||
-+				  len > MAX_CIFS_SMALL_BUFFER_SIZE))) {
-+			cifs_small_buf_release(req);
-+			return -EIO;
-+		}
- 		/*
- 		 * indatalen is usually small at a couple of bytes max, so
- 		 * just allocate through generic pool
+ 	/* Link partners and plugs with the ports */
+ 	if (!is_port)
+ 		typec_altmode_set_partner(alt);
 -- 
 2.43.0
 
