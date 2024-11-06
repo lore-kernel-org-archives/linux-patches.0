@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5081EF0A3;
-	Wed,  6 Nov 2024 13:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD5A1EF93B;
+	Wed,  6 Nov 2024 13:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898533; cv=none; b=Z2xoyhd/7r+yVvs4PkOTnFAD00HH1B4iMg2U9x8hBduct5brDffwpLxwOe+1PFUgqsCp3+ZKZ6XCWzIUHs75EaBA+mv3vvw5iZuxT4+ANzCcfML+9nTkCpe2VnKtd8uarLKpvfYiasY9YJP76h5vodzH9+sjwBAjj2l9fhL1pB0=
+	t=1730898536; cv=none; b=qhE1zEtK8x3TsP5elvayCGC7CbpqdRrA0wYqXdSckuX34pcxESN8m5XEBrJI5aokMqTjk7KessgZ8Fuakjb1tOojJDCWSdrQ+gFbMDSsNV8dD0saJ19NIuO98B8WelY80jsTM0cONwGmWEC6HC6ndcJcoAWM5f1RHpDQWcIgjm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898533; c=relaxed/simple;
-	bh=zCJ+vcBlMZrU6gA9HkSfVzmatjMrNnMJd7k1VIbKJIo=;
+	s=arc-20240116; t=1730898536; c=relaxed/simple;
+	bh=K0Y2TmZsN4d1H6m5vCBZ7hL0rLmiDVGqAQHOINLOYWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n8AnhjIkBWXtoZfAC4B0e8aO+wfeLTDLpv/l+ZFw3g0Don9digOB13+hBq6twOI3Sa7y4+4fhtmWRa6zFzom+HXrbsgTdv3Dx3x7Jx6Uovvn/K1O+f4NaY5nGWZXNRfFEpP3K12RUJgr9rZVeJQHo/nb5x8HG95RTH5n+ZJhTkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bw0afWHj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dWG4uif2W4X8BPjxz3xOnw1xNN5AqyvMKKvOIPWcoqxkpA/ocRxkmiyVpbP8/EWjV5wPy4vkIZ5GSAsJCSpj7PTKrDcZyf6qvk4g/ouDGFZeSMbDUJBzMG7+DoeP2PKkNmVU+9x2ZXVM+DXAlmxvLua7ET3/OmAsMYX+mLApvwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RlIxew49; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bw0afWHj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1949C4CED4;
-	Wed,  6 Nov 2024 13:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RlIxew49"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB755C4CED3;
+	Wed,  6 Nov 2024 13:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898533;
-	bh=zCJ+vcBlMZrU6gA9HkSfVzmatjMrNnMJd7k1VIbKJIo=;
+	s=korg; t=1730898536;
+	bh=K0Y2TmZsN4d1H6m5vCBZ7hL0rLmiDVGqAQHOINLOYWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bw0afWHjVR1jaAdoau/u7Kx1MM8+q19GObLPnsNjzocL5XL0nOWbs5OQTRVFRuaUW
-	 RHQjqAHsE+IiLNKHMCCn4g+qRBxJiOnQ/SDHrEQlQaz62TWtGjb+9/y6Y0aHbWUC/V
-	 hbHgHYu2SQ7SytX+CIotWpQJ3KCJnMo6AWIj02Z4=
+	b=RlIxew4997f9ALx9zV2LwCsfm3s9EWhCuLZB7BFrPQ9xfqzY+12XhfkfELTXBi8tn
+	 T1G8SpqnMdTfOI0RKlWzoBDhRrwo8n6bnwJ9UZK/g1juw8Al5Lo3EYa6esw2VSvzlr
+	 hUxq2dJFkxlYrJdJ18NS2pDh+QYfcyyFT5FHuWsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Mikhail Ukhin <mish.uxin2012@yandex.ru>,
+	Artem Sadovnikov <ancowi69@gmail.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 233/462] ext4: ext4_search_dir should return a proper error
-Date: Wed,  6 Nov 2024 13:02:06 +0100
-Message-ID: <20241106120337.278124300@linuxfoundation.org>
+Subject: [PATCH 5.4 234/462] ext4: fix i_data_sem unlock order in ext4_ind_migrate()
+Date: Wed,  6 Nov 2024 13:02:07 +0100
+Message-ID: <20241106120337.302608839@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,84 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Artem Sadovnikov <ancowi69@gmail.com>
 
-[ Upstream commit cd69f8f9de280e331c9e6ff689ced0a688a9ce8f ]
+[ Upstream commit cc749e61c011c255d81b192a822db650c68b313f ]
 
-ext4_search_dir currently returns -1 in case of a failure, while it returns
-0 when the name is not found. In such failure cases, it should return an
-error code instead.
+Fuzzing reports a possible deadlock in jbd2_log_wait_commit.
 
-This becomes even more important when ext4_find_inline_entry returns an
-error code as well in the next commit.
+This issue is triggered when an EXT4_IOC_MIGRATE ioctl is set to require
+synchronous updates because the file descriptor is opened with O_SYNC.
+This can lead to the jbd2_journal_stop() function calling
+jbd2_might_wait_for_commit(), potentially causing a deadlock if the
+EXT4_IOC_MIGRATE call races with a write(2) system call.
 
--EFSCORRUPTED seems appropriate as such error code as these failures would
-be caused by unexpected record lengths and is in line with other instances
-of ext4_check_dir_entry failures.
+This problem only arises when CONFIG_PROVE_LOCKING is enabled. In this
+case, the jbd2_might_wait_for_commit macro locks jbd2_handle in the
+jbd2_journal_stop function while i_data_sem is locked. This triggers
+lockdep because the jbd2_journal_start function might also lock the same
+jbd2_handle simultaneously.
 
-In the case of ext4_dx_find_entry, the current use of ERR_BAD_DX_DIR was
-left as is to reduce the risk of regressions.
+Found by Linux Verification Center (linuxtesting.org) with syzkaller.
 
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Link: https://patch.msgid.link/20240821152324.3621860-2-cascardo@igalia.com
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Co-developed-by: Mikhail Ukhin <mish.uxin2012@yandex.ru>
+Signed-off-by: Mikhail Ukhin <mish.uxin2012@yandex.ru>
+Signed-off-by: Artem Sadovnikov <ancowi69@gmail.com>
+Rule: add
+Link: https://lore.kernel.org/stable/20240404095000.5872-1-mish.uxin2012%40yandex.ru
+Link: https://patch.msgid.link/20240829152210.2754-1-ancowi69@gmail.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/namei.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ fs/ext4/migrate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
-index e4fbc0f07eed2..dd795e10486b2 100644
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -1417,7 +1417,7 @@ static inline bool ext4_match(const struct inode *parent,
- }
- 
- /*
-- * Returns 0 if not found, -1 on failure, and 1 on success
-+ * Returns 0 if not found, -EFSCORRUPTED on failure, and 1 on success
-  */
- int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
- 		    struct inode *dir, struct ext4_filename *fname,
-@@ -1438,7 +1438,7 @@ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
- 			 * a full check */
- 			if (ext4_check_dir_entry(dir, NULL, de, bh, search_buf,
- 						 buf_size, offset))
--				return -1;
-+				return -EFSCORRUPTED;
- 			*res_dir = de;
- 			return 1;
- 		}
-@@ -1446,7 +1446,7 @@ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
- 		de_len = ext4_rec_len_from_disk(de->rec_len,
- 						dir->i_sb->s_blocksize);
- 		if (de_len <= 0)
--			return -1;
-+			return -EFSCORRUPTED;
- 		offset += de_len;
- 		de = (struct ext4_dir_entry_2 *) ((char *) de + de_len);
- 	}
-@@ -1596,8 +1596,10 @@ static struct buffer_head *__ext4_find_entry(struct inode *dir,
- 			goto cleanup_and_exit;
- 		} else {
- 			brelse(bh);
--			if (i < 0)
-+			if (i < 0) {
-+				ret = ERR_PTR(i);
- 				goto cleanup_and_exit;
-+			}
- 		}
- 	next:
- 		if (++block >= nblocks)
-@@ -1691,7 +1693,7 @@ static struct buffer_head * ext4_dx_find_entry(struct inode *dir,
- 		if (retval == 1)
- 			goto success;
- 		brelse(bh);
--		if (retval == -1) {
-+		if (retval < 0) {
- 			bh = ERR_PTR(ERR_BAD_DX_DIR);
- 			goto errout;
- 		}
+diff --git a/fs/ext4/migrate.c b/fs/ext4/migrate.c
+index dbba3c3a2f064..ebee8c94b5fe6 100644
+--- a/fs/ext4/migrate.c
++++ b/fs/ext4/migrate.c
+@@ -678,8 +678,8 @@ int ext4_ind_migrate(struct inode *inode)
+ 		ei->i_data[i] = cpu_to_le32(blk++);
+ 	ext4_mark_inode_dirty(handle, inode);
+ errout:
+-	ext4_journal_stop(handle);
+ 	up_write(&EXT4_I(inode)->i_data_sem);
++	ext4_journal_stop(handle);
+ out_unlock:
+ 	percpu_up_write(&sbi->s_writepages_rwsem);
+ 	return ret;
 -- 
 2.43.0
 
