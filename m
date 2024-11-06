@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F23D1D5AD7;
-	Wed,  6 Nov 2024 12:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152CA1D5AD7;
+	Wed,  6 Nov 2024 12:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895095; cv=none; b=LnDtep4gKFByRy9fbL2XQBdADXZhFzXeeFgNvsTATgwiXfb57eM0UyVgSupuBUqCwSuy0tKNEVX2304Xir/wMBYpSSQqSKuVjml+thY+E+4yL4mkySaNEvK8X5tCkvr3VmIv/y/nOnDGHYW1XbgiCxYnAuajefMophYw1LlsWLE=
+	t=1730895098; cv=none; b=U5cGUB1HQoaUzndmPl4zjEKajqsVndwww3b5AfhCLok0aijqQ56f2lbnFyZTqMkrgJzNq66opzVfhFkGumJClUBhecYdgEuFL2pDoEcM/PIZ/hQ97p96XUbtVlRBXXYbEWG3F5q83YUTR0KVAe59u+dZpLHcu8c2Tw0oVZ6sqm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895095; c=relaxed/simple;
-	bh=/boesxifv2ikMLdW8ANrTha/pucyNhKEoaBOWkWgiOw=;
+	s=arc-20240116; t=1730895098; c=relaxed/simple;
+	bh=rpDNKZFAEhCXBcbK4blpk+p8FQePYRj5BYVP3e6AlXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lMA80xdabvRWxwvhmzZ4aHTu68ylrjty2ABEfE2LKuV3bK9nkTCzv87BKbi67SqLGzRiNhfrSH7ZVjq/VM8KABeR89FsZrjGbksyTm7+5h4fWWy5R0tpvQI/HamghRbrBu3IO/h772KZCknJX4SkxZNCm2sh4vif2ZUhfN9CGSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SlLhingj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G7bqnBuM2PSZsr/D/7YKlFgGue+IXO/cF4cldb/YngXeO6L9v0UREMSXVG4CZY0ERZ9USisFZmCCV5myk14IEEBCjqKxypBlsMmoWfDFhv3HHmbZNJeErxE2MVWm3U3hRGTk1YyZrS8cui5YkMQ+2yu1+OaeUqoPj9uA50qDUdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCqFGVth; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlLhingj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9989C4CECD;
-	Wed,  6 Nov 2024 12:11:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCqFGVth"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925ECC4CECD;
+	Wed,  6 Nov 2024 12:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895095;
-	bh=/boesxifv2ikMLdW8ANrTha/pucyNhKEoaBOWkWgiOw=;
+	s=korg; t=1730895098;
+	bh=rpDNKZFAEhCXBcbK4blpk+p8FQePYRj5BYVP3e6AlXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlLhingjUvBg5rZxPS4fA1o691zBOlt16265THsu71kcA7DkDX6i0dISaVNefG41q
-	 G4+4SvhBRu1AF0UgLmgTPwiK9Sw28+zCneaiqfmM7WCuN1DjiodqhomLdKNc/ACSNb
-	 47DoEymbSfEXfCgpS2Hzl8piydnABlQrUnBoCVZY=
+	b=iCqFGVthlseq9mExxjJ3xCwQ3DupqqWm6f3YbHNrdFUqyKW13zUgVrTAXtIMO7YbQ
+	 9JFEMFCquBwsTs+miPMncr8tZ1tw16JTJ2VDl5K+f9E6DdAWeAn8QrPf3/NxmnFJjm
+	 sk+aDzXpqrai/R2928+jdRBNYG6MrijpWhc+5f5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youssef Samir <quic_yabdulra@quicinc.com>,
-	Jeffery Hugo <quic_jhugo@quicinc.com>,
-	Carl Vanderlip <quic_carlv@quicinc.com>,
-	Chris Lew <quic_clew@quicinc.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 104/350] net: qrtr: Update packets cloning when broadcasting
-Date: Wed,  6 Nov 2024 13:00:32 +0100
-Message-ID: <20241106120323.471549041@linuxfoundation.org>
+Subject: [PATCH 4.19 105/350] netfilter: ctnetlink: compile ctnetlink_label_size with CONFIG_NF_CONNTRACK_EVENTS
+Date: Wed,  6 Nov 2024 13:00:33 +0100
+Message-ID: <20241106120323.496711529@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -54,49 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youssef Samir <quic_yabdulra@quicinc.com>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit f011b313e8ebd5b7abd8521b5119aecef403de45 ]
+[ Upstream commit e1f1ee0e9ad8cbe660f5c104e791c5f1a7cf4c31 ]
 
-When broadcasting data to multiple nodes via MHI, using skb_clone()
-causes all nodes to receive the same header data. This can result in
-packets being discarded by endpoints, leading to lost data.
+Only provide ctnetlink_label_size when it is used,
+which is when CONFIG_NF_CONNTRACK_EVENTS is configured.
 
-This issue occurs when a socket is closed, and a QRTR_TYPE_DEL_CLIENT
-packet is broadcasted. All nodes receive the same destination node ID,
-causing the node connected to the client to discard the packet and
-remain unaware of the client's deletion.
+Flagged by clang-18 W=1 builds as:
 
-Replace skb_clone() with pskb_copy(), to create a separate copy of
-the header for each sk_buff.
+.../nf_conntrack_netlink.c:385:19: warning: unused function 'ctnetlink_label_size' [-Wunused-function]
+  385 | static inline int ctnetlink_label_size(const struct nf_conn *ct)
+      |                   ^~~~~~~~~~~~~~~~~~~~
 
-Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
-Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
-Reviewed-by: Jeffery Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Reviewed-by: Chris Lew <quic_clew@quicinc.com>
-Link: https://patch.msgid.link/20240916170858.2382247-1-quic_yabdulra@quicinc.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The condition on CONFIG_NF_CONNTRACK_LABELS being removed by
+this patch guards compilation of non-trivial implementations
+of ctnetlink_dump_labels() and ctnetlink_label_size().
+
+However, this is not necessary as each of these functions
+will always return 0 if CONFIG_NF_CONNTRACK_LABELS is not defined
+as each function starts with the equivalent of:
+
+	struct nf_conn_labels *labels = nf_ct_labels_find(ct);
+
+	if (!labels)
+		return 0;
+
+And nf_ct_labels_find always returns NULL if CONFIG_NF_CONNTRACK_LABELS
+is not enabled.  So I believe that the compiler optimises the code away
+in such cases anyway.
+
+Found by inspection.
+Compile tested only.
+
+Originally splitted in two patches, Pablo Neira Ayuso collapsed them and
+added Fixes: tag.
+
+Fixes: 0ceabd83875b ("netfilter: ctnetlink: deliver labels to userspace")
+Link: https://lore.kernel.org/netfilter-devel/20240909151712.GZ2097826@kernel.org/
+Signed-off-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/qrtr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_netlink.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
-index 128d0a48478d1..890a8fe51a9af 100644
---- a/net/qrtr/qrtr.c
-+++ b/net/qrtr/qrtr.c
-@@ -718,7 +718,7 @@ static int qrtr_bcast_enqueue(struct qrtr_node *node, struct sk_buff *skb,
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -359,7 +359,7 @@ nla_put_failure:
+ #define ctnetlink_dump_secctx(a, b) (0)
+ #endif
  
- 	mutex_lock(&qrtr_node_lock);
- 	list_for_each_entry(node, &qrtr_all_nodes, item) {
--		skbn = skb_clone(skb, GFP_KERNEL);
-+		skbn = pskb_copy(skb, GFP_KERNEL);
- 		if (!skbn)
- 			break;
- 		skb_set_owner_w(skbn, skb->sk);
--- 
-2.43.0
-
+-#ifdef CONFIG_NF_CONNTRACK_LABELS
++#ifdef CONFIG_NF_CONNTRACK_EVENTS
+ static inline int ctnetlink_label_size(const struct nf_conn *ct)
+ {
+ 	struct nf_conn_labels *labels = nf_ct_labels_find(ct);
+@@ -368,6 +368,7 @@ static inline int ctnetlink_label_size(c
+ 		return 0;
+ 	return nla_total_size(sizeof(labels->bits));
+ }
++#endif
+ 
+ static int
+ ctnetlink_dump_labels(struct sk_buff *skb, const struct nf_conn *ct)
+@@ -388,10 +389,6 @@ ctnetlink_dump_labels(struct sk_buff *sk
+ 
+ 	return 0;
+ }
+-#else
+-#define ctnetlink_dump_labels(a, b) (0)
+-#define ctnetlink_label_size(a)	(0)
+-#endif
+ 
+ #define master_tuple(ct) &(ct->master->tuplehash[IP_CT_DIR_ORIGINAL].tuple)
+ 
 
 
