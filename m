@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B3A1F4725;
-	Wed,  6 Nov 2024 13:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B981F8EE3;
+	Wed,  6 Nov 2024 13:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898278; cv=none; b=E2quw/CGL9hxVL9TaGE3ubww97XOaj/Bw+54GZu/uJG9FU8yO27/wbsbZII2NYoRX+yn8BArGQ4ur9hoZBfTUAVyV83Y3z6K1F6bliL8VRqs4m4WXOpFO17rzYpjgWrFWTIFNadcPwcZQ6TOzg9XNb62Yry1GWt9nfail+RatbY=
+	t=1730898281; cv=none; b=DxMpRgf3mhUms2aPHotZJuUp9Nb6aHp4iJJYHzYFA4bk1PvIApS5gjL4YNFScQvAwCInCmOUN47FyP0+huxF3cUxRKdX/HnOAHK45NFA6DuuZHjcb5YOVFxhJ1VR8ql4s3ltwTb6P62VK+TtSt7U4Q8LWzLrqSpUf0e1Rm+untM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898278; c=relaxed/simple;
-	bh=0Refu1hYEJFEnLFCfQibOM9ztpSr0nTUmW3ZVLaDnqo=;
+	s=arc-20240116; t=1730898281; c=relaxed/simple;
+	bh=etJPoxsTpfL/csH+qVzAaXrqoEmV3NS40oC+sPizABw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaMQfvg9PUc1sNlksjdfxjhvCUrYjcvBPEedtqQxTbF62AM1d3QZwYHivnnozq9D/2xaw6lqW8QciLVBFTkUTAOUqeH9/sh0SC7Pfk+9iAg7kBgUoRg9Ht6fEUFNTv5+CMXuIuulrK78t2cRfFx6fro/BROHHVT+h7cHT085xCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVj8jSk6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n06hzSDE4mve2yY6YXcW+S0uIkEfIENqL4yHl4gaaJ+c/CUGKlCOonuC/A44rCafWcn8QoHnys6/xWUzdzikopjN3NAnXCLL9lPh0jTQkwQvVQ6/B7MowIIXYIfMuTstiv3q674yqjEAyhirzcUvmbinCfZ+WRkM8d4z9pxdeJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMAwRERq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVj8jSk6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998AAC4CECD;
-	Wed,  6 Nov 2024 13:04:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMAwRERq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C85AC4CECD;
+	Wed,  6 Nov 2024 13:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898278;
-	bh=0Refu1hYEJFEnLFCfQibOM9ztpSr0nTUmW3ZVLaDnqo=;
+	s=korg; t=1730898281;
+	bh=etJPoxsTpfL/csH+qVzAaXrqoEmV3NS40oC+sPizABw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZVj8jSk6yeBlToXtiaX6LqPQ6ekvI2vLQ81uiBRfvzTm1bAV/5ksElETvuBy4Kuha
-	 TWlPM3fqhvDjdgA78kKVPI5L/92F2PbQGap8bxZHXyyLoxn/3CJrIh3MWeiv/qLR6q
-	 usWyh6TkfjGkXbJJ7SpIn1iNMB1lQxbDiDIbEY3Y=
+	b=cMAwRERqrN3JAE0mKpqD4HGHiIg0PoS2F2YNrgA2xB2wgnYl35tu4gTjV1ZOxXe1C
+	 Jq04vocr7ore4gH6Fc8b7mEzM/sxm0S5/cpTPGnQLKo8yxBjs1a6Mwyh9ALy1YbZo2
+	 PY05qdsoJTISil77+8QPmruB2r4/BbhPZGIO6Ucg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 183/462] Bluetooth: btmrvl_sdio: Refactor irq wakeup
-Date: Wed,  6 Nov 2024 13:01:16 +0100
-Message-ID: <20241106120336.036455892@linuxfoundation.org>
+Subject: [PATCH 5.4 184/462] Bluetooth: btmrvl: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Wed,  6 Nov 2024 13:01:17 +0100
+Message-ID: <20241106120336.060914310@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,76 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit e660b3510eb4b3c06ce1188a1d305b6f653106fc ]
+[ Upstream commit 7b1ab460592ca818e7b52f27cd3ec86af79220d1 ]
 
-Use device_init_wakeup to allow the Bluetooth dev to wake the system
-from suspend. Currently, the device can wake the system but no
-power/wakeup entry is created in sysfs to allow userspace to disable
-wakeup.
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
-Signed-off-by: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Stable-dep-of: 7b1ab460592c ("Bluetooth: btmrvl: Use IRQF_NO_AUTOEN flag in request_irq()")
+Fixes: bb7f4f0bcee6 ("btmrvl: add platform specific wakeup interrupt support")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmrvl_sdio.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btmrvl_sdio.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/bluetooth/btmrvl_sdio.c b/drivers/bluetooth/btmrvl_sdio.c
-index 4c7978cb1786f..cfb9f9db44a0d 100644
+index cfb9f9db44a0d..be7145d43570f 100644
 --- a/drivers/bluetooth/btmrvl_sdio.c
 +++ b/drivers/bluetooth/btmrvl_sdio.c
-@@ -111,6 +111,9 @@ static int btmrvl_sdio_probe_of(struct device *dev,
+@@ -105,7 +105,7 @@ static int btmrvl_sdio_probe_of(struct device *dev,
+ 		} else {
+ 			ret = devm_request_irq(dev, cfg->irq_bt,
+ 					       btmrvl_wake_irq_bt,
+-					       0, "bt_wake", card);
++					       IRQF_NO_AUTOEN, "bt_wake", card);
+ 			if (ret) {
+ 				dev_err(dev,
  					"Failed to request irq_bt %d (%d)\n",
- 					cfg->irq_bt, ret);
- 			}
-+
-+			/* Configure wakeup (enabled by default) */
-+			device_init_wakeup(dev, true);
- 			disable_irq(cfg->irq_bt);
+@@ -114,7 +114,6 @@ static int btmrvl_sdio_probe_of(struct device *dev,
+ 
+ 			/* Configure wakeup (enabled by default) */
+ 			device_init_wakeup(dev, true);
+-			disable_irq(cfg->irq_bt);
  		}
  	}
-@@ -1654,6 +1657,7 @@ static void btmrvl_sdio_remove(struct sdio_func *func)
- 							MODULE_SHUTDOWN_REQ);
- 				btmrvl_sdio_disable_host_int(card);
- 			}
-+
- 			BT_DBG("unregister dev");
- 			card->priv->surprise_removed = true;
- 			btmrvl_sdio_unregister_dev(card);
-@@ -1690,7 +1694,8 @@ static int btmrvl_sdio_suspend(struct device *dev)
- 	}
  
- 	/* Enable platform specific wakeup interrupt */
--	if (card->plt_wake_cfg && card->plt_wake_cfg->irq_bt >= 0) {
-+	if (card->plt_wake_cfg && card->plt_wake_cfg->irq_bt >= 0 &&
-+	    device_may_wakeup(dev)) {
- 		card->plt_wake_cfg->wake_by_bt = false;
- 		enable_irq(card->plt_wake_cfg->irq_bt);
- 		enable_irq_wake(card->plt_wake_cfg->irq_bt);
-@@ -1707,7 +1712,8 @@ static int btmrvl_sdio_suspend(struct device *dev)
- 			BT_ERR("HS not activated, suspend failed!");
- 			/* Disable platform specific wakeup interrupt */
- 			if (card->plt_wake_cfg &&
--			    card->plt_wake_cfg->irq_bt >= 0) {
-+			    card->plt_wake_cfg->irq_bt >= 0 &&
-+			    device_may_wakeup(dev)) {
- 				disable_irq_wake(card->plt_wake_cfg->irq_bt);
- 				disable_irq(card->plt_wake_cfg->irq_bt);
- 			}
-@@ -1767,7 +1773,8 @@ static int btmrvl_sdio_resume(struct device *dev)
- 	hci_resume_dev(hcidev);
- 
- 	/* Disable platform specific wakeup interrupt */
--	if (card->plt_wake_cfg && card->plt_wake_cfg->irq_bt >= 0) {
-+	if (card->plt_wake_cfg && card->plt_wake_cfg->irq_bt >= 0 &&
-+	    device_may_wakeup(dev)) {
- 		disable_irq_wake(card->plt_wake_cfg->irq_bt);
- 		disable_irq(card->plt_wake_cfg->irq_bt);
- 		if (card->plt_wake_cfg->wake_by_bt)
 -- 
 2.43.0
 
