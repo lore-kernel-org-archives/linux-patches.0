@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE851E1A27;
-	Wed,  6 Nov 2024 12:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D9F1E0E13;
+	Wed,  6 Nov 2024 12:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897744; cv=none; b=Kv1L+JhdTw98kPztZ6D+yzvpiax5UUr1guzB9z31+23kwnaxYGu6kp8ZMai/O0TIorU7a8FAxBndyPM6E/ypU2lgoksop9U9YnyUTv7q86iQaNIYxFXn4dJKzlqXtd+k1klVjQC/mnBCAER4zyyC8l3K5nBNYf20VhNsgQmDRQ0=
+	t=1730897747; cv=none; b=f6oqxl8D6FYudzMgh/ulQbMtznXwveDRnIMHMyNCDwHR4yDpTloGZSPtSD1wxDTcb+5vfaPPllrGqCINJurwcZUC7qWtH9bhtOXd24q+i/ltxxzHLcqnJuU6aw9DLQlk5pp+AXkfLHHqIhGiqnRGJ7geN+PiNbJeXFkVs2Y2oPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897744; c=relaxed/simple;
-	bh=mXLY+fiz24fK57FuGxA+78/Im1P1Y4ZteShMYDDniXA=;
+	s=arc-20240116; t=1730897747; c=relaxed/simple;
+	bh=Xpfey6w8TSf8eWkZ5MqGFgpsK8j9rPqsVomM1SJbBuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UbXcScR9S+XmwRRdKPAuw7W0HCEFl+SFHHdW+EkpE8wk2oCBzHmYDi5pMjLW9Dcv83GZtQLyr8t/5Dt4Fd+sbRvfI23nH4qQRSKawJaJCDtgMM+37HDsNDkH2K9NWtmzMJDsPvCqCBIQLEBajrLgdmKuKO+KTxavXVjb9rd6+LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukemfsWc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uG7yZrtghGFrTlCKxsGrVN9a5LRuVIeGShvgJaEMuQFQwc8r27WEO5hiOgZm/PNcsS3RSBcR0ARb24w1LfEPCDhbAtvUfKz3ZeKZZ6v9IcykKTg69sYbK8DosoS1dTTN/m9hw1ueFYi2LuntIftqLCl0PBMTKlZ3jBWe8JIw7DI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2dyFd04; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukemfsWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F01C4CECD;
-	Wed,  6 Nov 2024 12:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2dyFd04"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE935C4CECD;
+	Wed,  6 Nov 2024 12:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897744;
-	bh=mXLY+fiz24fK57FuGxA+78/Im1P1Y4ZteShMYDDniXA=;
+	s=korg; t=1730897747;
+	bh=Xpfey6w8TSf8eWkZ5MqGFgpsK8j9rPqsVomM1SJbBuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ukemfsWcPOFwkhWHDbbwl2k+2/MhDUftyLSddM+IWNlQ045w3iV4unr5lclp8MfhD
-	 tV5VcdewqLyrXgHHVlHyJ6VdwglLSjuUdmsmHR/DuYjlRTSUvOrdXJ2mBcyQgkSrBP
-	 2XALP/wVdoPQMkQk5nXgFBPxf44g4sHhPRQPa0TI=
+	b=U2dyFd04zCaB/nSiDHAJO/UwuGPKWLUlfFqOWiYgc3wDKZgn9dPDpvcNvC390HMV1
+	 XisGh+3xcmdvLP7plmM9cQKde/sf6DMMkozN5sweO/Dl3Hu+PNyG4ySbSz7Z7dXxNv
+	 KDvsmYr6evtyt8CbIkP+ge/ureuQN5pO5GL4z4OQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Chunyan Zhang <zhangchunyan@iscas.ac.cn>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Gregory Price <gourry@gourry.net>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Ira Weiny <ira.weiny@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 119/151] riscv: Remove duplicated GET_RM
-Date: Wed,  6 Nov 2024 13:05:07 +0100
-Message-ID: <20241106120312.139781023@linuxfoundation.org>
+Subject: [PATCH 6.6 120/151] cxl/port: Fix cxl_bus_rescan() vs bus_rescan_devices()
+Date: Wed,  6 Nov 2024 13:05:08 +0100
+Message-ID: <20241106120312.167960445@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -52,36 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 164f66de6bb6ef454893f193c898dc8f1da6d18b ]
+[ Upstream commit 3d6ebf16438de5d712030fefbb4182b46373d677 ]
 
-The macro GET_RM defined twice in this file, one can be removed.
+It turns out since its original introduction, pre-2.6.12,
+bus_rescan_devices() has skipped devices that might be in the process of
+attaching or detaching from their driver. For CXL this behavior is
+unwanted and expects that cxl_bus_rescan() is a probe barrier.
 
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
-Fixes: 956d705dd279 ("riscv: Unaligned load/store handling for M_MODE")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20241008094141.549248-3-zhangchunyan@iscas.ac.cn
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+That behavior is simple enough to achieve with bus_for_each_dev() paired
+with call to device_attach(), and it is unclear why bus_rescan_devices()
+took the position of lockless consumption of dev->driver which is racy.
+
+The "Fixes:" but no "Cc: stable" on this patch reflects that the issue
+is merely by inspection since the bug that triggered the discovery of
+this potential problem [1] is fixed by other means.  However, a stable
+backport should do no harm.
+
+Fixes: 8dd2bc0f8e02 ("cxl/mem: Add the cxl_mem driver")
+Link: http://lore.kernel.org/20241004212504.1246-1-gourry@gourry.net [1]
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Tested-by: Gregory Price <gourry@gourry.net>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Link: https://patch.msgid.link/172964781104.81806.4277549800082443769.stgit@dwillia2-xfh.jf.intel.com
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/traps_misaligned.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/cxl/core/port.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
-index e867fe465164e..edae2735ebe34 100644
---- a/arch/riscv/kernel/traps_misaligned.c
-+++ b/arch/riscv/kernel/traps_misaligned.c
-@@ -132,8 +132,6 @@
- #define REG_PTR(insn, pos, regs)	\
- 	(ulong *)((ulong)(regs) + REG_OFFSET(insn, pos))
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index c67cc8c9d5cc6..7f28d1021fa99 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -1969,11 +1969,18 @@ static void cxl_bus_remove(struct device *dev)
  
--#define GET_RM(insn)			(((insn) >> 12) & 7)
--
- #define GET_RS1(insn, regs)		(*REG_PTR(insn, SH_RS1, regs))
- #define GET_RS2(insn, regs)		(*REG_PTR(insn, SH_RS2, regs))
- #define GET_RS1S(insn, regs)		(*REG_PTR(RVC_RS1S(insn), 0, regs))
+ static struct workqueue_struct *cxl_bus_wq;
+ 
+-static void cxl_bus_rescan_queue(struct work_struct *w)
++static int cxl_rescan_attach(struct device *dev, void *data)
+ {
+-	int rc = bus_rescan_devices(&cxl_bus_type);
++	int rc = device_attach(dev);
++
++	dev_vdbg(dev, "rescan: %s\n", rc ? "attach" : "detached");
+ 
+-	pr_debug("CXL bus rescan result: %d\n", rc);
++	return 0;
++}
++
++static void cxl_bus_rescan_queue(struct work_struct *w)
++{
++	bus_for_each_dev(&cxl_bus_type, NULL, NULL, cxl_rescan_attach);
+ }
+ 
+ void cxl_bus_rescan(void)
 -- 
 2.43.0
 
