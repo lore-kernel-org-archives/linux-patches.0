@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F15A1DFDB8;
-	Wed,  6 Nov 2024 12:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619BE1DDA15;
+	Wed,  6 Nov 2024 12:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896112; cv=none; b=sYBEArZ6PTInlRoDX0OjY58dVBXtaogupmLuwVkvytbDZGa/Kk4MlYXFlCragfsqk6cNCq8biYhec2bPtGUNQWtN+F5OlJmvrQI6IT9iK6o7m3dLNw78fRxUFUIPevSFhupSUqY+vXp0WO4QeMsbL0k+Qm1QJOo10N91BkkmEM8=
+	t=1730896115; cv=none; b=pewnu2hgq1dmTuwR9YvDLrkwXpTye+bBNlnir5kR0SIDld+a7a4TPQwhH/lSkDk4DOLYIkNWqLLQYBZf3fkBfckz+fqD67azFvZG1QBMGV+AHXj8ehdJOD9J/wBcLnsHh4sPzXlaheMUoTsR7DA0bPJD0Ne3HbuKlcB2fq0MIBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896112; c=relaxed/simple;
-	bh=SMMmRBB7723ogr1sS7PgbhqvwGFfeLxGw0+f4Qm6t+A=;
+	s=arc-20240116; t=1730896115; c=relaxed/simple;
+	bh=Dh52sPhpcg4nyUdDwlqZ3vZP8EXVdNyEUDzhHLfC7J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UvFrmo8ibQsFB5NiRSWjrIb4EGLhukfSvj/5z2I8RGvqpwfId34QX5/AyGAIOqixyN7y+6VdSBBFqluFAWD9lk63BbOoYQOOHUQYWnO9GNtgYSfxbedHhrquS/6gIgGALOtENw+DIFhsvjg1/zxu26gmnq24Ib6U6TqyLKYtXEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4i2vHcS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OVmVriycbQ2IMnECQfDvNEJXnjYJGe6t9+spbsgzcTcHTFkI/l0J5dhjgSo0E7ps/hm+Gpcx66wC9WHfHvbReaqCtFPbdsUS2maY+k816zRH0iiSysAqXXP+Ox4ajwwgyjI0wSKLoGLNxloxtElVB8QRIc8zpfvGgR4OsKNutD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CK4mZy0c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4i2vHcS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F44C4CED6;
-	Wed,  6 Nov 2024 12:28:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CK4mZy0c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BCFC4CECD;
+	Wed,  6 Nov 2024 12:28:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896112;
-	bh=SMMmRBB7723ogr1sS7PgbhqvwGFfeLxGw0+f4Qm6t+A=;
+	s=korg; t=1730896115;
+	bh=Dh52sPhpcg4nyUdDwlqZ3vZP8EXVdNyEUDzhHLfC7J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k4i2vHcSWm1cpMlXm54hXONfKB0g29Q9ACqFLVn8wZhhXUxSz9+jtwKJilXv1EY9m
-	 UqcX6qC8OzWL2EBW+PBzxlGg9+08I2bl7B9/sbAuz6ZCw21Iacr5WKAwjeuejWhr6k
-	 bu6/k0NBMLD5ZmEotpQGbq3scDk+avMdqu8maBz4=
+	b=CK4mZy0ceRe3VCMy6q9o8A1tA7KO1yhz+0+4J8jByUURUgxre/V6qsZ5bktuVpohd
+	 iC39OnmLcrNjglZW+FnS5gjn1gDqpI/Y8tpTDX0dP0mBmehkRWDCBMYl3OnoSfHXUx
+	 kTalpm3Kt55lWXIKQB7IVA8xKeoRKeS6dlYWWufw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 094/245] cifs: Fix creating native symlinks pointing to current or parent directory
-Date: Wed,  6 Nov 2024 13:02:27 +0100
-Message-ID: <20241106120321.524013056@linuxfoundation.org>
+Subject: [PATCH 6.11 095/245] ACPI: resource: Fold Asus Vivobook Pro N6506M* DMI quirks together
+Date: Wed,  6 Nov 2024 13:02:28 +0100
+Message-ID: <20241106120321.547183252@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -45,70 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 63271b7d569fbe924bccc7dadc17d3d07a4e5f7a ]
+[ Upstream commit 1af7e441feb08cdaab8f4a320577ed0bba1f5896 ]
 
-Calling 'ln -s . symlink' or 'ln -s .. symlink' creates symlink pointing to
-some object name which ends with U+F029 unicode codepoint. This is because
-trailing dot in the object name is replaced by non-ASCII unicode codepoint.
+Asus Vivobook Pro 15 OLED comes in 3 N6506M* models:
 
-So Linux SMB client currently is not able to create native symlink pointing
-to current or parent directory on Windows SMB server which can be read by
-either on local Windows server or by any other SMB client which does not
-implement compatible-reverse character replacement.
+N6506MU: Intel Ultra 9 185H, 3K OLED, RTX4060
+N6506MV: Intel Ultra 7 155H, 3K OLED, RTX4050
+N6506MJ: Intel Ultra 7 155H, FHD OLED, RTX3050
 
-Fix this problem in cifsConvertToUTF16() function which is doing that
-character replacement. Function comment already says that it does not need
-to handle special cases '.' and '..', but after introduction of native
-symlinks in reparse point form, this handling is needed.
+Fold the 3 DMI quirks for these into a single quirk to reduce the number
+of quirks.
 
-Note that this change depends on the previous change
-"cifs: Improve creating native symlinks pointing to directory".
-
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20241005212819.354681-5-hdegoede@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifs_unicode.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/acpi/resource.c | 18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
 
-diff --git a/fs/smb/client/cifs_unicode.c b/fs/smb/client/cifs_unicode.c
-index 79d99a9139441..4cc6e0896fad3 100644
---- a/fs/smb/client/cifs_unicode.c
-+++ b/fs/smb/client/cifs_unicode.c
-@@ -484,10 +484,21 @@ cifsConvertToUTF16(__le16 *target, const char *source, int srclen,
- 			/**
- 			 * Remap spaces and periods found at the end of every
- 			 * component of the path. The special cases of '.' and
--			 * '..' do not need to be dealt with explicitly because
--			 * they are addressed in namei.c:link_path_walk().
-+			 * '..' are need to be handled because of symlinks.
-+			 * They are treated as non-end-of-string to avoid
-+			 * remapping and breaking symlinks pointing to . or ..
- 			 **/
--			if ((i == srclen - 1) || (source[i+1] == '\\'))
-+			if ((i == 0 || source[i-1] == '\\') &&
-+			    source[i] == '.' &&
-+			    (i == srclen-1 || source[i+1] == '\\'))
-+				end_of_string = false; /* "." case */
-+			else if (i >= 1 &&
-+				 (i == 1 || source[i-2] == '\\') &&
-+				 source[i-1] == '.' &&
-+				 source[i] == '.' &&
-+				 (i == srclen-1 || source[i+1] == '\\'))
-+				end_of_string = false; /* ".." case */
-+			else if ((i == srclen - 1) || (source[i+1] == '\\'))
- 				end_of_string = true;
- 			else
- 				end_of_string = false;
+diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
+index a904bf9a7f7db..42c490149a431 100644
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -511,24 +511,10 @@ static const struct dmi_system_id irq1_level_low_skip_override[] = {
+ 		},
+ 	},
+ 	{
+-		/* Asus Vivobook Pro N6506MV */
++		/* Asus Vivobook Pro N6506M* */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+-			DMI_MATCH(DMI_BOARD_NAME, "N6506MV"),
+-		},
+-	},
+-	{
+-		/* Asus Vivobook Pro N6506MU */
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+-			DMI_MATCH(DMI_BOARD_NAME, "N6506MU"),
+-		},
+-	},
+-	{
+-		/* Asus Vivobook Pro N6506MJ */
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+-			DMI_MATCH(DMI_BOARD_NAME, "N6506MJ"),
++			DMI_MATCH(DMI_BOARD_NAME, "N6506M"),
+ 		},
+ 	},
+ 	{
 -- 
 2.43.0
 
