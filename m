@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A770754765;
-	Wed,  6 Nov 2024 13:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDF154765;
+	Wed,  6 Nov 2024 13:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898979; cv=none; b=LxrpNSAKp3qNa/FCO9sBZILegkLrVqtDmGgwZXO8ylJVm5tj9STmj+I1E0idf1520EfExFW1VjlKQxsTqHiLSFZe6IZeyaDddQiU8m3ae/8B/g6CifZswhRvrRd6qcv1zw25gm5C1wRCs/NjNWSqaB8Vv6ww6TKmxT7TzodJPb4=
+	t=1730898982; cv=none; b=R4nYuYgcwi/MFIr6mLq2DAadAl9+sLw9oSPu7UIHgvEY/EcIHFNa/+iis1p1TZpRxD74Rum1ITOQAx0tIK4CzXhFJl5xTv+P/Uhv/0+uQQGNCO+sZOtCNINs2FSGHjpnjgONwJiK4hP0ywWly3PyTD58q+UJIXXNteh+jfXlijc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898979; c=relaxed/simple;
-	bh=yeqCz5wXm9U1ygrKYdJqtpi+Tyd0IilpoCN5BYcqAH0=;
+	s=arc-20240116; t=1730898982; c=relaxed/simple;
+	bh=meTliNa0z++TCe4t3OBSoy1Bbu0v6FgyO1150xzl8FU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S6aun7mYKDd4Dm96zjcAd61zk00177CsSK7bKWXVsded+PUT1++QSh8EAy7cKsQ/Xt6/5BNC06AnkOYnlhnwRMRoe14PNsYUBX+Q15a6W7r9DpDHNOGJHUEWD4L3gwvHY90UaWCpIYOFUIYSqc6KpCBbZeUuPQvlVJvq4luJ8Qw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1QJcSAp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OiZnQ6zLzgQ+IHaHcRortlhYUdU4x9pswP10ueQG8+thXh13lXd0LBF2f+R+CdpSROfxjarCaeYKysCfl7rIsT072i9ZMla/CdNh1nFMlVfQ8iESZRQJIeioPBu1QJhmsgDZp93VlIGAYA/hjcn3ZB3sKrvvTmvTgcGwloRM1+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0/EIYHs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1QJcSAp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F35C4CECD;
-	Wed,  6 Nov 2024 13:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0/EIYHs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17792C4CECD;
+	Wed,  6 Nov 2024 13:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898979;
-	bh=yeqCz5wXm9U1ygrKYdJqtpi+Tyd0IilpoCN5BYcqAH0=;
+	s=korg; t=1730898982;
+	bh=meTliNa0z++TCe4t3OBSoy1Bbu0v6FgyO1150xzl8FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y1QJcSApTaotVhKIxJTYjOWtSgsNpYZq93G9PwqdfpQ/xBm1huzQmfESUVMg9KLbW
-	 o+lnthAf3mnZ4uX1nDLHUpXad18kQsIe+391srWLuHSyaqfy18Z9bAeqh9XrbewiKE
-	 G4kdUvatMRZuKoDBhlL6XoUOGsis2btASKRHGIMs=
+	b=y0/EIYHsFx+soVxAXSrgbHZ0gXnLyy+RVkPNryB7l14XGZymIJW0JqUI4cDNncKyd
+	 QNU15OwYlzchLoT4gIuIfq4l/CDATNeFb6mOvPvB/aKijEzvw8dflHDb0UDfuIZur3
+	 9XDYOLKsXTC09ibLbPaY9gVDmRgWAqoGlZJmMBwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubham Panwar <shubiisp8@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.4 419/462] ACPI: button: Add DMI quirk for Samsung Galaxy Book2 to fix initial lid detection issue
-Date: Wed,  6 Nov 2024 13:05:12 +0100
-Message-ID: <20241106120341.864273627@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+985ada84bf055a575c07@syzkaller.appspotmail.com,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.4 420/462] nilfs2: fix kernel bug due to missing clearing of buffer delay flag
+Date: Wed,  6 Nov 2024 13:05:13 +0100
+Message-ID: <20241106120341.889262769@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -50,50 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shubham Panwar <shubiisp8@gmail.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 8fa73ee44daefc884c53a25158c25a4107eb5a94 upstream.
+commit 6ed469df0bfbef3e4b44fca954a781919db9f7ab upstream.
 
-Add a DMI quirk for Samsung Galaxy Book2 to fix an initial lid state
-detection issue.
+Syzbot reported that after nilfs2 reads a corrupted file system image
+and degrades to read-only, the BUG_ON check for the buffer delay flag
+in submit_bh_wbc() may fail, causing a kernel bug.
 
-The _LID device incorrectly returns the lid status as "closed" during
-boot, causing the system to enter a suspend loop right after booting.
+This is because the buffer delay flag is not cleared when clearing the
+buffer state flags to discard a page/folio or a buffer head. So, fix
+this.
 
-The quirk ensures that the correct lid state is reported initially,
-preventing the system from immediately suspending after startup.  It
-only addresses the initial lid state detection and ensures proper
-system behavior upon boot.
+This became necessary when the use of nilfs2's own page clear routine
+was expanded.  This state inconsistency does not occur if the buffer
+is written normally by log writing.
 
-Signed-off-by: Shubham Panwar <shubiisp8@gmail.com>
-Link: https://patch.msgid.link/20241020095045.6036-2-shubiisp8@gmail.com
-[ rjw: Changelog edits ]
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Link: https://lore.kernel.org/r/20241015213300.7114-1-konishi.ryusuke@gmail.com
+Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
+Reported-by: syzbot+985ada84bf055a575c07@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=985ada84bf055a575c07
+Cc: stable@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/button.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/nilfs2/page.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/acpi/button.c
-+++ b/drivers/acpi/button.c
-@@ -111,6 +111,17 @@ static const struct dmi_system_id lid_bl
- 		},
- 		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
- 	},
-+	{
-+		/*
-+		 * Samsung galaxybook2 ,initial _LID device notification returns
-+		 * lid closed.
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "SAMSUNG ELECTRONICS CO., LTD."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "750XED"),
-+		},
-+		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
-+	},
- 	{}
- };
+--- a/fs/nilfs2/page.c
++++ b/fs/nilfs2/page.c
+@@ -78,7 +78,8 @@ void nilfs_forget_buffer(struct buffer_h
+ 	const unsigned long clear_bits =
+ 		(BIT(BH_Uptodate) | BIT(BH_Dirty) | BIT(BH_Mapped) |
+ 		 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
+-		 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected));
++		 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
++		 BIT(BH_Delay));
  
+ 	lock_buffer(bh);
+ 	set_mask_bits(&bh->b_state, clear_bits, 0);
+@@ -410,7 +411,8 @@ void nilfs_clear_dirty_page(struct page
+ 		const unsigned long clear_bits =
+ 			(BIT(BH_Uptodate) | BIT(BH_Dirty) | BIT(BH_Mapped) |
+ 			 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
+-			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected));
++			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
++			 BIT(BH_Delay));
+ 
+ 		bh = head = page_buffers(page);
+ 		do {
 
 
