@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1781DFE10;
-	Wed,  6 Nov 2024 13:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2B31DFE10;
+	Wed,  6 Nov 2024 13:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898805; cv=none; b=IqFQyLqkGbalpOyd3VAlSem7az3jgo7QVDa8WDCFHk/DU2ReMpJ+chDoxsMzjnm8ZXTxsqo07QKyO3ceGGDYMiuj1kh3rnEhR/Di+lpNOIrIUqUjwlqkgEqK+xfNRpthe7In3W7IKmGW3so103hI5koWsHwOLLI5ue6F+cBtWro=
+	t=1730898808; cv=none; b=udyXIWxr55uac3pUXYqwqJmQmOd5/kSUQI5i/t59b7SclguiZeB6e/a+FuY3MXrwdnjKYZ4EXdt6Sl9QDWV998fSWB8KJl3tvyeqOrFtdfK15q18vCLOO1bh3NDcd8ddUO0p1UnAFTuYTv2LFPDdqeKjn1ocC2Ss7UXYBLeWOv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898805; c=relaxed/simple;
-	bh=2sjpqsHgovd0H6ONBNbID5JgOoY4EChB/7p9e2v0OHg=;
+	s=arc-20240116; t=1730898808; c=relaxed/simple;
+	bh=Ab2X+s+Sw8Vhh7YSXfb7zjh51oP1BqR7CVpLBgTNqWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tMA2pWAL81QrIEcAtQFxbr5O8AKNTZ7uTG9cj6PzYZQpn1ya0hAUE9XHeNRzp10DnF8gKNHrJpoG+rdYW9A3ZgUsBv1Lm5rsa2HMmIAL5KQl9gvzrt/uDl/crCuuW6frF5eVY8nE4s9BLeP0FBikAZzBP2fhCTJNRDBm5QsRXRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qk7X+3jT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UPgw+h594Q+EqziZGGRUwNLka26un7VA2z8QbvvubXb1JY09fnFlYjgAEnsSjAc48ghYyx3Xkh91S2kY2L52RMAYW3m529reKcGKUutmDkdGoLunlmIU+M7iYiAfuixMMSsEvwWgAIr7SLryt461L6hLHGJzEApOWJn+E+Biq38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rY85EPKo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qk7X+3jT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 974D6C4CED4;
-	Wed,  6 Nov 2024 13:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rY85EPKo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8599AC4CECD;
+	Wed,  6 Nov 2024 13:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898805;
-	bh=2sjpqsHgovd0H6ONBNbID5JgOoY4EChB/7p9e2v0OHg=;
+	s=korg; t=1730898807;
+	bh=Ab2X+s+Sw8Vhh7YSXfb7zjh51oP1BqR7CVpLBgTNqWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qk7X+3jTKM2HYkemYJTEOX3579KaxI+asU0vp82M5voXiSzLDFsIzYYt+GW0q77wZ
-	 Wy/wskUd8U0ALpfTpK9+1A4n6nIRGO54XIvYDTE8BUVI6S8EUsk1hOhRT53tUvAuZC
-	 qckjjJ9kwNF8C8ovPugYOi0KTMhdIL7a7E47+E6Q=
+	b=rY85EPKoDRBvWzAhQGgMF6GXhHd4m88xuGDeRtnlRWKxq1cFIN2FAAO2YGM1yrJZX
+	 Od6VAm03/kGDYqGSM8NUKX8TxcUw2NbC/fj65Jo+NilbZ1XYfv9epGHerSaOF++xGH
+	 t4UzO8YDhRqRYXONQNcwUfpCjWgMrDB5HQeAFFBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 5.4 362/462] s390/sclp_vt220: Convert newlines to CRLF instead of LFCR
-Date: Wed,  6 Nov 2024 13:04:15 +0100
-Message-ID: <20241106120340.470584275@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.4 345/462] Revert "usb: yurex: Replace snprintf() with the safer scnprintf() variant"
+Date: Wed,  6 Nov 2024 13:03:58 +0100
+Message-ID: <20241106120340.047575932@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -45,59 +44,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit dee3df68ab4b00fff6bdf9fc39541729af37307c upstream.
+commit 71c717cd8a2e180126932cc6851ff21c1d04d69a upstream.
 
-According to the VT220 specification the possible character combinations
-sent on RETURN are only CR or CRLF [0].
+This reverts commit 86b20af11e84c26ae3fde4dcc4f490948e3f8035.
 
-	The Return key sends either a CR character (0/13) or a CR
-	character (0/13) and an LF character (0/10), depending on the
-	set/reset state of line feed/new line mode (LNM).
+This patch leads to passing 0 to simple_read_from_buffer()
+as a fifth argument, turning the read method into a nop.
+The change is fundamentally flawed, as it breaks the driver.
 
-The sclp/vt220 driver however uses LFCR. This can confuse tools, for
-example the kunit runner.
-
-Link: https://vt100.net/docs/vt220-rm/chapter3.html#S3.2
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Link: https://lore.kernel.org/r/20241014-s390-kunit-v1-2-941defa765a6@linutronix.de
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20241007094004.242122-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/char/sclp_vt220.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/misc/yurex.c |   19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
---- a/drivers/s390/char/sclp_vt220.c
-+++ b/drivers/s390/char/sclp_vt220.c
-@@ -325,7 +325,7 @@ sclp_vt220_add_msg(struct sclp_vt220_req
- 	buffer = (void *) ((addr_t) sccb + sccb->header.length);
+--- a/drivers/usb/misc/yurex.c
++++ b/drivers/usb/misc/yurex.c
+@@ -34,8 +34,6 @@
+ #define YUREX_BUF_SIZE		8
+ #define YUREX_WRITE_TIMEOUT	(HZ*2)
  
- 	if (convertlf) {
--		/* Perform Linefeed conversion (0x0a -> 0x0a 0x0d)*/
-+		/* Perform Linefeed conversion (0x0a -> 0x0d 0x0a)*/
- 		for (from=0, to=0;
- 		     (from < count) && (to < sclp_vt220_space_left(request));
- 		     from++) {
-@@ -334,8 +334,8 @@ sclp_vt220_add_msg(struct sclp_vt220_req
- 			/* Perform conversion */
- 			if (c == 0x0a) {
- 				if (to + 1 < sclp_vt220_space_left(request)) {
--					((unsigned char *) buffer)[to++] = c;
- 					((unsigned char *) buffer)[to++] = 0x0d;
-+					((unsigned char *) buffer)[to++] = c;
- 				} else
- 					break;
+-#define MAX_S64_STRLEN 20 /* {-}922337203685477580{7,8} */
+-
+ /* table of devices that work with this driver */
+ static struct usb_device_id yurex_table[] = {
+ 	{ USB_DEVICE(YUREX_VENDOR_ID, YUREX_PRODUCT_ID) },
+@@ -404,7 +402,8 @@ static ssize_t yurex_read(struct file *f
+ {
+ 	struct usb_yurex *dev;
+ 	int len = 0;
+-	char in_buffer[MAX_S64_STRLEN];
++	char in_buffer[20];
++	unsigned long flags;
+ 
+ 	dev = file->private_data;
+ 
+@@ -414,16 +413,14 @@ static ssize_t yurex_read(struct file *f
+ 		return -ENODEV;
+ 	}
+ 
+-	if (WARN_ON_ONCE(dev->bbu > S64_MAX || dev->bbu < S64_MIN)) {
+-		mutex_unlock(&dev->io_mutex);
+-		return -EIO;
+-	}
+-
+-	spin_lock_irq(&dev->lock);
+-	scnprintf(in_buffer, MAX_S64_STRLEN, "%lld\n", dev->bbu);
+-	spin_unlock_irq(&dev->lock);
++	spin_lock_irqsave(&dev->lock, flags);
++	len = snprintf(in_buffer, 20, "%lld\n", dev->bbu);
++	spin_unlock_irqrestore(&dev->lock, flags);
+ 	mutex_unlock(&dev->io_mutex);
+ 
++	if (WARN_ON_ONCE(len >= sizeof(in_buffer)))
++		return -EIO;
++
+ 	return simple_read_from_buffer(buffer, count, ppos, in_buffer, len);
+ }
  
 
 
