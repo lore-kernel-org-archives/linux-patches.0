@@ -1,47 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1822C1DE3B8;
-	Wed,  6 Nov 2024 12:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7081DE3B8;
+	Wed,  6 Nov 2024 12:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896373; cv=none; b=LV4g+30iJ5GVlmgCdsLDBkMZW/ynnT3ekrxKD51taQPcnw7fiwa3ctP01DiWzIwUR802bezp1A2/CBErHSa08JmB5wp592VJ3E51KiBQ2hCFCg83F0lBG1EBx+ff5sbDkRkDR+q8Lfnhi8a2AtNAbuIhFmTIUWkcHxIbVtNKago=
+	t=1730896376; cv=none; b=eMrC468PrmjIgsJZ78anngx/d2FmknXFembqhWan7dzPdzZysVrwQSgWv0Gbc4ZgncN7LL8zu0Fkd0TPqaPIlI0bpkDZhag20DlTReMtxgl+xwi9UOK1eJfUcb0kB+/vhxrNXL59EMrcYIrOZsrhO2rl8raXrYoLRpJIuDI7gWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896373; c=relaxed/simple;
-	bh=XK/MXnSqlYrlBhr0evEVNBb1Q76H+3LLeD7i7rLO+8w=;
+	s=arc-20240116; t=1730896376; c=relaxed/simple;
+	bh=W8VCOSJpp21VMG53nEPsjHDd1LQzVAjn7L6XfYHCR7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HLWxvTueO3k7ITQeBsLICyWF1QXuk10KvgNyDgXQdi/4aRpaxr74hh26bXTEWz1jMCaACtlwAS8ByqkArmDtzPmmh37bCUF/Q0yC3T8QgwYps5yZKWzQ8BYXpjh8lU8OriLQMz1xa3xyD+tsqfUTv1SHXX0eGW85hhFCzPMRsCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPx2IVGS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hZ2cXjKIh/EdCcq6nO56Yixe7/9WRrUrazUZiXgAkqbmjnr1IEjKlIsGVjUaE6qSKf2KSnsCuznLQUVdAh2BR/QykVOSXzRODqi0OeyF8OWZDY17sDFeNCaWz73bhtykVrCXETS1twLzJb9DLgMUtg2hn2D1jn4MXmCj/SPez4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTZFWben; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPx2IVGS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618CAC4CECD;
-	Wed,  6 Nov 2024 12:32:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTZFWben"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 848ADC4CED4;
+	Wed,  6 Nov 2024 12:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896373;
-	bh=XK/MXnSqlYrlBhr0evEVNBb1Q76H+3LLeD7i7rLO+8w=;
+	s=korg; t=1730896375;
+	bh=W8VCOSJpp21VMG53nEPsjHDd1LQzVAjn7L6XfYHCR7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yPx2IVGS5Un4qdYL46sAL2irwuFKGmBr69BGlv6JQqV8p5ed2Yw92V+Y4ptl5QUS1
-	 qBPkA9rpUYzq00zVe5VDYaawcmo8D5UYkBj11ZU29Fy80rw/HpTBE0a/XDHzdOWNnM
-	 qlsl8/aGNpZ6KApkAyCXZYZ90C5c5PP/WaPQmxJw=
+	b=YTZFWbenX/1ZjhJEPqqQBG6kW6+fwRZSYHyNcqmSth2MDJpQn2kUP53xHoq5zKSsI
+	 zcZW8bRQE2ToWcjmPjBx8cvtVoSRQJV1A6DDzQIM1+NcW05Ll1IwfXnarHAjR6LxoF
+	 cvT4pc5IBrpmkmG+VOoSSq8O/4eZLzx2IjY9ZNAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Baoquan He <bhe@redhat.com>,
-	AKASHI Takahiro <takahiro.akashi@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Dung Cao <dung@os.amperecomputing.com>,
+	Matt Johnston <matt@codeconstruct.com.au>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 180/245] resource,kexec: walk_system_ram_res_rev must retain resource flags
-Date: Wed,  6 Nov 2024 13:03:53 +0100
-Message-ID: <20241106120323.667789854@linuxfoundation.org>
+Subject: [PATCH 6.11 181/245] mctp i2c: handle NULL header address
+Date: Wed,  6 Nov 2024 13:03:54 +0100
+Message-ID: <20241106120323.692854983@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -54,122 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Matt Johnston <matt@codeconstruct.com.au>
 
-[ Upstream commit b125a0def25a082ae944c9615208bf359abdb61c ]
+[ Upstream commit 01e215975fd80af81b5b79f009d49ddd35976c13 ]
 
-walk_system_ram_res_rev() erroneously discards resource flags when passing
-the information to the callback.
+daddr can be NULL if there is no neighbour table entry present,
+in that case the tx packet should be dropped.
 
-This causes systems with IORESOURCE_SYSRAM_DRIVER_MANAGED memory to have
-these resources selected during kexec to store kexec buffers if that
-memory happens to be at placed above normal system ram.
+saddr will usually be set by MCTP core, but check for NULL in case a
+packet is transmitted by a different protocol.
 
-This leads to undefined behavior after reboot.  If the kexec buffer is
-never touched, nothing happens.  If the kexec buffer is touched, it could
-lead to a crash (like below) or undefined behavior.
-
-Tested on a system with CXL memory expanders with driver managed memory,
-TPM enabled, and CONFIG_IMA_KEXEC=y.  Adding printk's showed the flags
-were being discarded and as a result the check for
-IORESOURCE_SYSRAM_DRIVER_MANAGED passes.
-
-find_next_iomem_res: name(System RAM (kmem))
-		     start(10000000000)
-		     end(1034fffffff)
-		     flags(83000200)
-
-locate_mem_hole_top_down: start(10000000000) end(1034fffffff) flags(0)
-
-[.] BUG: unable to handle page fault for address: ffff89834ffff000
-[.] #PF: supervisor read access in kernel mode
-[.] #PF: error_code(0x0000) - not-present page
-[.] PGD c04c8bf067 P4D c04c8bf067 PUD c04c8be067 PMD 0
-[.] Oops: 0000 [#1] SMP
-[.] RIP: 0010:ima_restore_measurement_list+0x95/0x4b0
-[.] RSP: 0018:ffffc900000d3a80 EFLAGS: 00010286
-[.] RAX: 0000000000001000 RBX: 0000000000000000 RCX: ffff89834ffff000
-[.] RDX: 0000000000000018 RSI: ffff89834ffff000 RDI: ffff89834ffff018
-[.] RBP: ffffc900000d3ba0 R08: 0000000000000020 R09: ffff888132b8a900
-[.] R10: 4000000000000000 R11: 000000003a616d69 R12: 0000000000000000
-[.] R13: ffffffff8404ac28 R14: 0000000000000000 R15: ffff89834ffff000
-[.] FS:  0000000000000000(0000) GS:ffff893d44640000(0000) knlGS:0000000000000000
-[.] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[.] ata5: SATA link down (SStatus 0 SControl 300)
-[.] CR2: ffff89834ffff000 CR3: 000001034d00f001 CR4: 0000000000770ef0
-[.] PKRU: 55555554
-[.] Call Trace:
-[.]  <TASK>
-[.]  ? __die+0x78/0xc0
-[.]  ? page_fault_oops+0x2a8/0x3a0
-[.]  ? exc_page_fault+0x84/0x130
-[.]  ? asm_exc_page_fault+0x22/0x30
-[.]  ? ima_restore_measurement_list+0x95/0x4b0
-[.]  ? template_desc_init_fields+0x317/0x410
-[.]  ? crypto_alloc_tfm_node+0x9c/0xc0
-[.]  ? init_ima_lsm+0x30/0x30
-[.]  ima_load_kexec_buffer+0x72/0xa0
-[.]  ima_init+0x44/0xa0
-[.]  __initstub__kmod_ima__373_1201_init_ima7+0x1e/0xb0
-[.]  ? init_ima_lsm+0x30/0x30
-[.]  do_one_initcall+0xad/0x200
-[.]  ? idr_alloc_cyclic+0xaa/0x110
-[.]  ? new_slab+0x12c/0x420
-[.]  ? new_slab+0x12c/0x420
-[.]  ? number+0x12a/0x430
-[.]  ? sysvec_apic_timer_interrupt+0xa/0x80
-[.]  ? asm_sysvec_apic_timer_interrupt+0x16/0x20
-[.]  ? parse_args+0xd4/0x380
-[.]  ? parse_args+0x14b/0x380
-[.]  kernel_init_freeable+0x1c1/0x2b0
-[.]  ? rest_init+0xb0/0xb0
-[.]  kernel_init+0x16/0x1a0
-[.]  ret_from_fork+0x2f/0x40
-[.]  ? rest_init+0xb0/0xb0
-[.]  ret_from_fork_asm+0x11/0x20
-[.]  </TASK>
-
-Link: https://lore.kernel.org/all/20231114091658.228030-1-bhe@redhat.com/
-Link: https://lkml.kernel.org/r/20241017190347.5578-1-gourry@gourry.net
-Fixes: 7acf164b259d ("resource: add walk_system_ram_res_rev()")
-Signed-off-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Acked-by: Baoquan He <bhe@redhat.com>
-Cc: AKASHI Takahiro <takahiro.akashi@linaro.org>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>
-Cc: "Huang, Ying" <ying.huang@intel.com>
-Cc: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Cc: Mika Westerberg <mika.westerberg@linux.intel.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: f5b8abf9fc3d ("mctp i2c: MCTP I2C binding driver")
+Cc: stable@vger.kernel.org
+Reported-by: Dung Cao <dung@os.amperecomputing.com>
+Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241022-mctp-i2c-null-dest-v3-1-e929709956c5@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/resource.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/mctp/mctp-i2c.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/resource.c b/kernel/resource.c
-index 1681ab5012e12..4f3df25176caa 100644
---- a/kernel/resource.c
-+++ b/kernel/resource.c
-@@ -460,9 +460,7 @@ int walk_system_ram_res_rev(u64 start, u64 end, void *arg,
- 			rams_size += 16;
- 		}
+diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
+index 4dc057c121f5d..e70fb66879941 100644
+--- a/drivers/net/mctp/mctp-i2c.c
++++ b/drivers/net/mctp/mctp-i2c.c
+@@ -588,6 +588,9 @@ static int mctp_i2c_header_create(struct sk_buff *skb, struct net_device *dev,
+ 	if (len > MCTP_I2C_MAXMTU)
+ 		return -EMSGSIZE;
  
--		rams[i].start = res.start;
--		rams[i++].end = res.end;
--
-+		rams[i++] = res;
- 		start = res.end + 1;
- 	}
++	if (!daddr || !saddr)
++		return -EINVAL;
++
+ 	lldst = *((u8 *)daddr);
+ 	llsrc = *((u8 *)saddr);
  
 -- 
 2.43.0
