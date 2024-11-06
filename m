@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2DA1F76D4;
-	Wed,  6 Nov 2024 13:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CE11EE01A;
+	Wed,  6 Nov 2024 13:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898059; cv=none; b=rpwlPDA0fKcTT1qXS3L101XCI6jNRt4sE5Vn3Yq8ZglFGoJGHY5dtJP8RQhROODnkt0pmuhH8dLkqvPMq6l1CT8nzFMdTEGyCUpJw/JUTCpGseaYK6Y9s7MljayGRmRnz39DvxtAaz7NyFMjEwRPsBy04dx9lb1qQrxxUdW4Dig=
+	t=1730898062; cv=none; b=ZJ+7Jsnlacj9lObF+XR6IjOFppdeD5hTJYiikq/GGna65LIn79rEHVaJ1PwaeLM4E3fGL0HhnmzBfGQ0uKppnr2iYgAYE4l0uO5LSI+aw9Ii1SM9lULByygMD2c6Kt7UCHATw5YuRg4En9q8iBq+hGGybhH3emkT3B13S3QiUeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898059; c=relaxed/simple;
-	bh=K45Aln9kHyQLWmOEXVSlNg0lvF+wTuiCX8LHeVOo7sU=;
+	s=arc-20240116; t=1730898062; c=relaxed/simple;
+	bh=wTqCusAVtKAK3tiSEnesdOv5oN4uQR3/hXwba1cpaKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oZqisayUl3iM2gj7pefeZd1RFLZxySzeHprskQ+PT3ViJldd3Ep7pptIyKkaKwj2FLeU1D+s0XtrI42xlwfWNOqQ761dhV4OB13P2SLaXtMu9vNHYdCVmP/l3lHty97BruT0/ouyyGh/ZunXhEX5Hh4BiUTNVn2R55DvGE486tA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agq+j676; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ouEdMKqg6ODyus7N0nc0THuUXp1W9+ltZ5MW92krddYre9eyRqaml+bgaL+XcjqpCNIOm/By6oq22h5K4JZbxkeOf4T7uV555PNG1wl5jL5uPolqmX/izxTgE/lxytovYjyGa3BnTTrzlcZw2xYrWJOHLHmi9W/OJbPePH+zYO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ck5vzG6o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agq+j676"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8DB0C4CEFC;
-	Wed,  6 Nov 2024 13:00:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ck5vzG6o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE9A5C4CECD;
+	Wed,  6 Nov 2024 13:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898059;
-	bh=K45Aln9kHyQLWmOEXVSlNg0lvF+wTuiCX8LHeVOo7sU=;
+	s=korg; t=1730898062;
+	bh=wTqCusAVtKAK3tiSEnesdOv5oN4uQR3/hXwba1cpaKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=agq+j676RVVvo8N81HPVzktIQwUdAsjeKzwk+66CR12U/3Gs48LlZ6nX5AZfQtQsL
-	 fNEM4zIZiV7UJcUPW/hgN+bsDDS+HcXwZSym1d1b3KzZA97ZJ3kfI4k+WBUW2S6X3n
-	 eOuvi4lh7G4rmbccs/UVGxtU0FxPwQ+AkadSXFs8=
+	b=ck5vzG6oYeOjfdSPr5QvxgM28GkJn5xGRHnm+VV/fZqXxgUJLazHgx+ByPo4TFkaW
+	 fV/2wlwQEk6vJrRihlAM0r50t1lrXkGhf2YPK0b8Ga3ezuPrdrt2AhD3qyGZt4IZL3
+	 wxeQPJq8Cqn0d7yEbTg4J5geBgAIRk6QZw8I+6bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Alex Bee <knaerzche@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 073/462] drm/radeon: properly handle vbios fake edid sizing
-Date: Wed,  6 Nov 2024 12:59:26 +0100
-Message-ID: <20241106120333.312626334@linuxfoundation.org>
+Subject: [PATCH 5.4 074/462] drm/rockchip: vop: Allow 4096px width scaling
+Date: Wed,  6 Nov 2024 12:59:27 +0100
+Message-ID: <20241106120333.336607457@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -45,81 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Alex Bee <knaerzche@gmail.com>
 
-[ Upstream commit 17c6baff3d5f65c8da164137a58742541a060b2f ]
+[ Upstream commit 0ef968d91a20b5da581839f093f98f7a03a804f7 ]
 
-The comment in the vbios structure says:
-// = 128 means EDID length is 128 bytes, otherwise the EDID length = ucFakeEDIDLength*128
+There is no reason to limit VOP scaling to 3840px width, the limit of
+RK3288, when there are newer VOP versions that support 4096px width.
 
-This fake edid struct has not been used in a long time, so I'm
-not sure if there were actually any boards out there with a non-128 byte
-EDID, but align the code with the comment.
+Change to enforce a maximum of 4096px width plane scaling, the maximum
+supported output width of the VOP versions supported by this driver.
 
-Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
-Reported-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lists.freedesktop.org/archives/amd-gfx/2024-June/109964.html
-Fixes: c324acd5032f ("drm/radeon/kms: parse the extended LCD info block")
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 4c156c21c794 ("drm/rockchip: vop: support plane scale")
+Signed-off-by: Alex Bee <knaerzche@gmail.com>
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240615170417.3134517-4-jonas@kwiboo.se
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_atombios.c | 29 +++++++++++++-----------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_atombios.c b/drivers/gpu/drm/radeon/radeon_atombios.c
-index 2b3f702ef8c9b..657fb1362419d 100644
---- a/drivers/gpu/drm/radeon/radeon_atombios.c
-+++ b/drivers/gpu/drm/radeon/radeon_atombios.c
-@@ -1730,26 +1730,29 @@ struct radeon_encoder_atom_dig *radeon_atombios_get_lvds_info(struct
- 					fake_edid_record = (ATOM_FAKE_EDID_PATCH_RECORD *)record;
- 					if (fake_edid_record->ucFakeEDIDLength) {
- 						struct edid *edid;
--						int edid_size =
--							max((int)EDID_LENGTH, (int)fake_edid_record->ucFakeEDIDLength);
--						edid = kmalloc(edid_size, GFP_KERNEL);
-+						int edid_size;
-+
-+						if (fake_edid_record->ucFakeEDIDLength == 128)
-+							edid_size = fake_edid_record->ucFakeEDIDLength;
-+						else
-+							edid_size = fake_edid_record->ucFakeEDIDLength * 128;
-+						edid = kmemdup(&fake_edid_record->ucFakeEDIDString[0],
-+							       edid_size, GFP_KERNEL);
- 						if (edid) {
--							memcpy((u8 *)edid, (u8 *)&fake_edid_record->ucFakeEDIDString[0],
--							       fake_edid_record->ucFakeEDIDLength);
--
- 							if (drm_edid_is_valid(edid)) {
- 								rdev->mode_info.bios_hardcoded_edid = edid;
- 								rdev->mode_info.bios_hardcoded_edid_size = edid_size;
--							} else
-+							} else {
- 								kfree(edid);
-+							}
- 						}
-+						record += struct_size(fake_edid_record,
-+								      ucFakeEDIDString,
-+								      edid_size);
-+					} else {
-+						/* empty fake edid record must be 3 bytes long */
-+						record += sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
- 					}
--					record += fake_edid_record->ucFakeEDIDLength ?
--						  struct_size(fake_edid_record,
--							      ucFakeEDIDString,
--							      fake_edid_record->ucFakeEDIDLength) :
--						  /* empty fake edid record must be 3 bytes long */
--						  sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
- 					break;
- 				case LCD_PANEL_RESOLUTION_RECORD_TYPE:
- 					panel_res_record = (ATOM_PANEL_RESOLUTION_PATCH_RECORD *)record;
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+index f2edb94214761..20da0c993039a 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+@@ -333,8 +333,8 @@ static void scl_vop_cal_scl_fac(struct vop *vop, const struct vop_win_data *win,
+ 	if (info->is_yuv)
+ 		is_yuv = true;
+ 
+-	if (dst_w > 3840) {
+-		DRM_DEV_ERROR(vop->dev, "Maximum dst width (3840) exceeded\n");
++	if (dst_w > 4096) {
++		DRM_DEV_ERROR(vop->dev, "Maximum dst width (4096) exceeded\n");
+ 		return;
+ 	}
+ 
 -- 
 2.43.0
 
