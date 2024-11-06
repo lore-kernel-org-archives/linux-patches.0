@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41D61DE8B4;
-	Wed,  6 Nov 2024 12:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69101DE8B4;
+	Wed,  6 Nov 2024 12:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895397; cv=none; b=fByNXk29XmoTxiaAzT/bkh1ISPJdd4VPaHkGOSzX/856gjRtAX3HdP86fsPP+LC38lKWRpOClntozYkG9KYglfTw+Fs28UvmHNUeVWCaXwE4VJabDrQLxX6giI4zLAFNY2hWHeB3poBMDJl61rEyVJxgL4Lm0lX3nl7hU7Yt158=
+	t=1730895400; cv=none; b=SRHoYfujtGuuXEQ4jl7VHCw8BcNb9tf9DRuiNhZnCE0VohifRIGc7BWl5/LxtAdSdwpUjA8Jj9qC5UHttXOWFpDTnMNkFvRfyoyvCkf+1KoRxSbbCSTGIgSr+/UXouSpDT2Xa5nfZh+667uSdnHpO5OTS00juVI73W2lAAizXYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895397; c=relaxed/simple;
-	bh=tKUNg8hjOcXR4UAQEw9XLMQBWi/cF/GqjHB7VgAq+AY=;
+	s=arc-20240116; t=1730895400; c=relaxed/simple;
+	bh=poe0ReoIWAmjIvIR/xHIIiNIbKHxNO9NwNez5Dd70KI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d9NhTgIoySrZTb1vwm36EOvKsLRsKlc8VIX5PtujOOEK3d+QhZapbP6X/dPX10nZVXj0+6GDISuHixplVTHB/8xBA8294OUlSMQLFwafACjpTJDwJDW7OOecwxuHn7A3X3cecb9pD9+g6RP5VBsPbLuI+HCb5Sh+OedtS03SkQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0ot1Rt5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iWPQXThhlPlnH5mcNYaBdAvPCfT7wvyBDMmk4JdidsVe5zz7sEYRAmyvuMzawETDNH9ZcoRhnogf7gFO3edkXY3LYC+tSAX+xTypXZS2Q5XrcNz2aV77ZQ3vIQmF7zZgAe5xP9cpCaXcAPpdqn5Av+m7mkXcrG8G5BvRCOpR02E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkaTRdy0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0ot1Rt5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A940C4CECD;
-	Wed,  6 Nov 2024 12:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkaTRdy0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2FCC4CECD;
+	Wed,  6 Nov 2024 12:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895397;
-	bh=tKUNg8hjOcXR4UAQEw9XLMQBWi/cF/GqjHB7VgAq+AY=;
+	s=korg; t=1730895400;
+	bh=poe0ReoIWAmjIvIR/xHIIiNIbKHxNO9NwNez5Dd70KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o0ot1Rt5lCKylVFW9PHBhoQ51hJHCbrtvT7jpnzhHT2JX/crZ6BHYhGpXmbTgw93A
-	 RxQHWKZ/6F97YBhdjMiSRJysh2GDYtFsahhfBgI7x3UpBWJ2jvSWf0Pm3kbyDe2YA2
-	 ooMUSrF7ZziAAowdVkIVyaT3rs/i1yqiSz3GjOEQ=
+	b=HkaTRdy00mA88Y4WYqDc7wZKKoSEBjFr7q+KpBTm9VXlKNpSSOnuhdVVa54Fsh3CP
+	 C0oAof5Ct5ZMEWByYmigHIVn1FEtiDUNHUAb3VXCLGFTjcPSDvApSYzm0r78bogxXW
+	 e8sE5Wyl5PVfiu22Yk8LepyNBZwlJ0QRUC/mA8+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 203/350] ocfs2: fix possible null-ptr-deref in ocfs2_set_buffer_uptodate
-Date: Wed,  6 Nov 2024 13:02:11 +0100
-Message-ID: <20241106120325.994240166@linuxfoundation.org>
+	Jisheng Zhang <jszhang@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 4.19 204/350] riscv: define ILLEGAL_POINTER_VALUE for 64bit
+Date: Wed,  6 Nov 2024 13:02:12 +0100
+Message-ID: <20241106120326.022133448@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -58,45 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-commit 33b525cef4cff49e216e4133cc48452e11c0391e upstream.
+commit 5c178472af247c7b50f962495bb7462ba453b9fb upstream.
 
-When doing cleanup, if flags without OCFS2_BH_READAHEAD, it may trigger
-NULL pointer dereference in the following ocfs2_set_buffer_uptodate() if
-bh is NULL.
+This is used in poison.h for poison pointer offset. Based on current
+SV39, SV48 and SV57 vm layout, 0xdead000000000000 is a proper value
+that is not mappable, this can avoid potentially turning an oops to
+an expolit.
 
-Link: https://lkml.kernel.org/r/20240902023636.1843422-3-joseph.qi@linux.alibaba.com
-Fixes: cf76c78595ca ("ocfs2: don't put and assigning null to bh allocated outside")
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: Heming Zhao <heming.zhao@suse.com>
-Suggested-by: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>	[4.20+]
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Fixes: fbe934d69eb7 ("RISC-V: Build Infrastructure")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240705170210.3236-1-jszhang@kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/buffer_head_io.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/riscv/Kconfig |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/ocfs2/buffer_head_io.c
-+++ b/fs/ocfs2/buffer_head_io.c
-@@ -404,7 +404,8 @@ read_failure:
- 		/* Always set the buffer in the cache, even if it was
- 		 * a forced read, or read-ahead which hasn't yet
- 		 * completed. */
--		ocfs2_set_buffer_uptodate(ci, bh);
-+		if (bh)
-+			ocfs2_set_buffer_uptodate(ci, bh);
- 	}
- 	ocfs2_metadata_cache_io_unlock(ci);
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -84,6 +84,11 @@ config GENERIC_CSUM
+ config GENERIC_HWEIGHT
+ 	def_bool y
  
++config ILLEGAL_POINTER_VALUE
++	hex
++	default 0 if 32BIT
++	default 0xdead000000000000 if 64BIT
++
+ config PGTABLE_LEVELS
+ 	int
+ 	default 3 if 64BIT
 
 
