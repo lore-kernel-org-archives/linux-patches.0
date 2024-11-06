@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECEC1E048F;
-	Wed,  6 Nov 2024 12:56:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661501E0491;
+	Wed,  6 Nov 2024 12:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897800; cv=none; b=M8Q3XlyshY3cVuXug/8zKOGBmh2BxUWIz3Z2OnKc5QWipiRpDOOPwKgeqYf+eBUjCbYd8hIFrHpRY1RUjvYoummgilOYppapiCe2jE52s+yTANepsj0JlnXY6X3Ur0SeLrhohzWDn3Fg2QWFncPQhpU1yDclWzqn3Fjl+Srzd+c=
+	t=1730897803; cv=none; b=G0Q+CEdZW636ROL1YHAkBJw+KT7rtFGsV3bXUOSBMqrEUiu3EoBGX2VqSUcdDOO/08If+k3N2h2wG7nGJPHORzQJ8fEuSaWwMvWdM2JSzZ8UYWmVLA2vmgsTEuqoPi4Y51TZFIrPhvr7qbL1sR08quusSN389eBktXrle0z9DD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897800; c=relaxed/simple;
-	bh=bT43pmgXCqtoUy/XhG8XvYQO1rtM3s3gFYvN0GCTwEo=;
+	s=arc-20240116; t=1730897803; c=relaxed/simple;
+	bh=9aQpn1TdKqCW49hx8dO0tOHevx/LZLD6tWcIcoaAxsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uZ9oYpjhfE6LLOlrcNJsgzcTNd4iSk0gQF6GTRN4FYnHdpgVMHLjRJrwwQWOevfjFjf7vZm8AVJZ9sPe+c/5v6JkcwlhocRO53pctgIB/nG9E1bCaiL6DNGX/Te8coT55D2YmgMHBflXkXqUR8MRtHiqWz55eqOtTFjmF3EFWoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LO2/4+l4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VfpmBmIukn1Qz2tWIW+E306v8U88zYUVzYqac47YfIhfaF1hBldJX0NYF8PaabwfPUOeDgDpFHnplkP2tU0tkINcxkfbE+JZlQ2y7zAZw6oPVMohW1qCmgNtGOfZiLM1iotdizhu18xRHXEyNHEM4kJHKuAROj3bRHdo6KEUfWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kNDMIpEq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LO2/4+l4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE27C4CECD;
-	Wed,  6 Nov 2024 12:56:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kNDMIpEq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF1AC4CECD;
+	Wed,  6 Nov 2024 12:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897800;
-	bh=bT43pmgXCqtoUy/XhG8XvYQO1rtM3s3gFYvN0GCTwEo=;
+	s=korg; t=1730897803;
+	bh=9aQpn1TdKqCW49hx8dO0tOHevx/LZLD6tWcIcoaAxsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LO2/4+l4e9zObe5IEt3zg2URrXbmZd5uUqLP14SnVKchtOC15bOzly2SWA+EY1zih
-	 5Neyk/kTpZceF0WbHd40lF1xf9qOjpBA/Ti8CJkXQZG9XfORPgaLMKGuKy/MgsJGGs
-	 QJJo5UCJ2GM36H+QWgX8F+Fi6YQkjk6AkyjSYT1c=
+	b=kNDMIpEq5Zj9H2pAYIUUtS62587HF8YDilfxl4QX9/6VXs81Syivejh2qM73Sn678
+	 2U8NjgqcfmAAXzr3k7kQMVRE2XJOIuFTZlxZTLLMx1W3XpmEvPQXhmjBHgWwMIMNHA
+	 zM4+xlynius+E2tjkAf2piwvE13gwD5SOqK7UXRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chen <liaochen4@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Roman Kisel <romank@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 023/462] spi: bcm63xx: Enable module autoloading
-Date: Wed,  6 Nov 2024 12:58:36 +0100
-Message-ID: <20241106120332.085995103@linuxfoundation.org>
+Subject: [PATCH 5.4 024/462] x86/hyperv: Set X86_FEATURE_TSC_KNOWN_FREQ when Hyper-V provides frequency
+Date: Wed,  6 Nov 2024 12:58:37 +0100
+Message-ID: <20241106120332.112660716@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,33 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liao Chen <liaochen4@huawei.com>
+From: Michael Kelley <mhklinux@outlook.com>
 
-[ Upstream commit 709df70a20e990d262c473ad9899314039e8ec82 ]
+[ Upstream commit 8fcc514809de41153b43ccbe1a0cdf7f72b78e7e ]
 
-Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded based
-on the alias from of_device_id table.
+A Linux guest on Hyper-V gets the TSC frequency from a synthetic MSR, if
+available. In this case, set X86_FEATURE_TSC_KNOWN_FREQ so that Linux
+doesn't unnecessarily do refined TSC calibration when setting up the TSC
+clocksource.
 
-Signed-off-by: Liao Chen <liaochen4@huawei.com>
-Link: https://patch.msgid.link/20240831094231.795024-1-liaochen4@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+With this change, a message such as this is no longer output during boot
+when the TSC is used as the clocksource:
+
+[    1.115141] tsc: Refined TSC clocksource calibration: 2918.408 MHz
+
+Furthermore, the guest and host will have exactly the same view of the
+TSC frequency, which is important for features such as the TSC deadline
+timer that are emulated by the Hyper-V host.
+
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Roman Kisel <romank@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20240606025559.1631-1-mhklinux@outlook.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20240606025559.1631-1-mhklinux@outlook.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm63xx.c | 1 +
+ arch/x86/kernel/cpu/mshyperv.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
-index ff27596168732..104e3e6e056d7 100644
---- a/drivers/spi/spi-bcm63xx.c
-+++ b/drivers/spi/spi-bcm63xx.c
-@@ -481,6 +481,7 @@ static const struct of_device_id bcm63xx_spi_of_match[] = {
- 	{ .compatible = "brcm,bcm6358-spi", .data = &bcm6358_spi_reg_offsets },
- 	{ },
- };
-+MODULE_DEVICE_TABLE(of, bcm63xx_spi_of_match);
+diff --git a/arch/x86/kernel/cpu/mshyperv.c b/arch/x86/kernel/cpu/mshyperv.c
+index 51d95c4b692c3..cebbcc6c36ae5 100644
+--- a/arch/x86/kernel/cpu/mshyperv.c
++++ b/arch/x86/kernel/cpu/mshyperv.c
+@@ -256,6 +256,7 @@ static void __init ms_hyperv_init_platform(void)
+ 	    ms_hyperv.misc_features & HV_FEATURE_FREQUENCY_MSRS_AVAILABLE) {
+ 		x86_platform.calibrate_tsc = hv_get_tsc_khz;
+ 		x86_platform.calibrate_cpu = hv_get_tsc_khz;
++		setup_force_cpu_cap(X86_FEATURE_TSC_KNOWN_FREQ);
+ 	}
  
- static int bcm63xx_spi_probe(struct platform_device *pdev)
- {
+ 	if (ms_hyperv.hints & HV_X64_ENLIGHTENED_VMCS_RECOMMENDED) {
 -- 
 2.43.0
 
