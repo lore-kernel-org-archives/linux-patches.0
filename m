@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E038C1E103C;
-	Wed,  6 Nov 2024 13:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9B01E1A25;
+	Wed,  6 Nov 2024 13:06:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898400; cv=none; b=qZfGtqQAL1tQ9R5k6NvVPAStg8RzdbJPNgCyQSeRrt8COoSnhMy0KO8iu68QmV2t9jYXW2BGgBop5zZ33CprQOpVu+/QY2YInlTM+d2Uzq10QE+0RKGKsKL1Frkn0b1PTs7pof8dImqixyC4amJt73G7ZqiI//wzUgDrxMQW7T8=
+	t=1730898402; cv=none; b=sgFrOgQjhsx5XkXFo/fzAbgI98kmrq1CXlgba8dK9UJIYR1o54drjim+wyuEHe6UfENdVkoOQnOEbv9SffHMO0CrFt/5tvLNtSmpCTySRNLdycch0LuaU+Jmmxg58M0KhuxNucI2+E3nHMEjnw9JP6B9Ao7mT4Mvp0KwD5zMtK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898400; c=relaxed/simple;
-	bh=gURm09B3k6j57uoS508bTkLSbfkgRHjYnX5cx4Y7u5Q=;
+	s=arc-20240116; t=1730898402; c=relaxed/simple;
+	bh=b2vVDA7m37YMNeTWlv/bYw2QmT5XM2Ed2RE70Lr3YSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+ZUVuaKZ+Yeu3bnRFrFdlhZwyXS72htwKgbhxzha5tLC+5HuuTnQLBbutyjdfJbYz/yQHJSFg/uLJWrPNp8Fuwl7fNJGVBnp3p4EMP4cScIG7+6FXALxRHGp5UlTObBhPtBFac6uVDaPZt4eLIrSHHG0j9HW6zIqpy0MSdeGRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UMFC4Rj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LVNCUNexvols34UrnIOz8Ccgy8+P9R2HOpf3YmsNzS1L1K1PVny7IeYyYUfnvZ21N+syOCs5leLmJq4g6gItHBgPt7+kkzlq3muPl5D2MxbDzRaZqeNasDIGTIQshxKDnmGJc44E1OLsn7yuGHvS5C4km5U4yisZBnSzulf13pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTrTHTi3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UMFC4Rj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DB4C4CECD;
-	Wed,  6 Nov 2024 13:06:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTrTHTi3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E20C4CECD;
+	Wed,  6 Nov 2024 13:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898399;
-	bh=gURm09B3k6j57uoS508bTkLSbfkgRHjYnX5cx4Y7u5Q=;
+	s=korg; t=1730898402;
+	bh=b2vVDA7m37YMNeTWlv/bYw2QmT5XM2Ed2RE70Lr3YSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2UMFC4RjQvvsCIvNui5zdurJMJIFdcmIl+Z4J/OWQ1nOjxO/4syLL/Z6Zq2b0ME+T
-	 J44+8LLjMgQmmZEeaCdbd9DI5X0sJE5Kpqb6tydxyurpZotsYg1Ndw5szQnWNGshlc
-	 JguTA5I+/EBMgyMwQJ/Tu3QiO2UHtD+buquHOo4w=
+	b=WTrTHTi3b2HPKfx5XfQA1xl2wCPEmmX+001+ZQa1RYQYN+mivavwJZAeRnDpcCHTp
+	 mbECf1W3PaPov/x35naahIxlMhgOBHMzXfhkvnJTxDvig2PcDkFhcc2v+smtMnTtI1
+	 bMpzJ278R2eB/ug9H1CB0EtfjamBOd7/L928zqVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
+	syzbot+02341e0daa42a15ce130@syzkaller.appspotmail.com,
+	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
 	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
-Subject: [PATCH 5.4 224/462] jfs: check if leafidx greater than num leaves per dmap tree
-Date: Wed,  6 Nov 2024 13:01:57 +0100
-Message-ID: <20241106120337.053300383@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 225/462] jfs: Fix uninit-value access of new_ea in ea_buffer
+Date: Wed,  6 Nov 2024 13:01:58 +0100
+Message-ID: <20241106120337.078524611@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,50 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-[ Upstream commit d64ff0d2306713ff084d4b09f84ed1a8c75ecc32 ]
+[ Upstream commit 2b59ffad47db1c46af25ccad157bb3b25147c35c ]
 
-syzbot report a out of bounds in dbSplit, it because dmt_leafidx greater
-than num leaves per dmap tree, add a checking for dmt_leafidx in dbFindLeaf.
+syzbot reports that lzo1x_1_do_compress is using uninit-value:
 
-Shaggy:
-Modified sanity check to apply to control pages as well as leaf pages.
+=====================================================
+BUG: KMSAN: uninit-value in lzo1x_1_do_compress+0x19f9/0x2510 lib/lzo/lzo1x_compress.c:178
 
-Reported-and-tested-by: syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=dca05492eff41f604890
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+...
+
+Uninit was stored to memory at:
+ ea_put fs/jfs/xattr.c:639 [inline]
+
+...
+
+Local variable ea_buf created at:
+ __jfs_setxattr+0x5d/0x1ae0 fs/jfs/xattr.c:662
+ __jfs_xattr_set+0xe6/0x1f0 fs/jfs/xattr.c:934
+
+=====================================================
+
+The reason is ea_buf->new_ea is not initialized properly.
+
+Fix this by using memset to empty its content at the beginning
+in ea_get().
+
+Reported-by: syzbot+02341e0daa42a15ce130@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=02341e0daa42a15ce130
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/jfs/xattr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index ab90c7561e20c..01cdfe7891b94 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -3006,9 +3006,10 @@ static void dbAdjTree(dmtree_t *tp, int leafno, int newval, bool is_ctl)
- static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
- {
- 	int ti, n = 0, k, x = 0;
--	int max_size;
-+	int max_size, max_idx;
+diff --git a/fs/jfs/xattr.c b/fs/jfs/xattr.c
+index aea5531559c06..4ebee6e4dc1f9 100644
+--- a/fs/jfs/xattr.c
++++ b/fs/jfs/xattr.c
+@@ -434,6 +434,8 @@ static int ea_get(struct inode *inode, struct ea_buffer *ea_buf, int min_size)
+ 	int rc;
+ 	int quota_allocation = 0;
  
- 	max_size = is_ctl ? CTLTREESIZE : TREESIZE;
-+	max_idx = is_ctl ? LPERCTL : LPERDMAP;
- 
- 	/* first check the root of the tree to see if there is
- 	 * sufficient free space.
-@@ -3040,6 +3041,8 @@ static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
- 		 */
- 		assert(n < 4);
- 	}
-+	if (le32_to_cpu(tp->dmt_leafidx) >= max_idx)
-+		return -ENOSPC;
- 
- 	/* set the return to the leftmost leaf describing sufficient
- 	 * free space.
++	memset(&ea_buf->new_ea, 0, sizeof(ea_buf->new_ea));
++
+ 	/* When fsck.jfs clears a bad ea, it doesn't clear the size */
+ 	if (ji->ea.flag == 0)
+ 		ea_size = 0;
 -- 
 2.43.0
 
