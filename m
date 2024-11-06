@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF0C1E201E;
-	Wed,  6 Nov 2024 13:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46BC1E1C33;
+	Wed,  6 Nov 2024 13:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898358; cv=none; b=rqzvqhZqMt7SGJFG1eW+dAII0gR57HfD208cDsxIt29cflSxYlQdJvfa3Kk37kZY9xiep15gcKM4yBd+to5kUPW1x34clFeQ+wSwR/ebWT2EI2/262W1W0i4ohcWlo4aYwz/JLmUBo8t9FTrT5kCY7oSfslecBIrCYFcyc5DXWk=
+	t=1730898361; cv=none; b=WYA4P/bMn2jK7mi7+EqSYdMUE9Y9mDheDE325Zw+TtksxieZUyq3bw/PErsRLZeWPWMh5niDBAV39gD2Lclhy7GyXYgF66Ajjje2DDAv4LNHv6F2eqHSy3kgR4vlG8qPDLlxrcmuAnxXBt/IutOAMpTUxxbOokxiYBwExCoABag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898358; c=relaxed/simple;
-	bh=QQ+5bjneJWHk4D0/GwpLtZyTW+PKas/BxABLZW6YxeQ=;
+	s=arc-20240116; t=1730898361; c=relaxed/simple;
+	bh=8KrkiP5AmAMS67l880TO3YYqGqrGcz8E7p/shQgyzKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XhpM3xLQ8r24ysGknyOiOu2vK86UeBz+fOpAw5DM2KykXdB20eqsKk8IqBiivbLAGxEaq7Ycx0ovskCzZ03N02HrC7pH/M0p63aT4xTEydsIAC0UAhrdG3RvVO8oA+doP/ToeLAzVXUmR1PTLJV95qgyuS00nBu3kxbmde8x2H8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPLMfGSK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lubBAr2miHMjqeaJhPGCzu+EWp0N6vWfEda8dy6xwbyuePzlQXs0IWs4UFt90jRD1g2p6vc87qyjmrQolXHTygOZs0Z93CZAVbcqF+h3VKLtUV/xQqptE191q8U+NXZf2DlMfvS71cPLWxTHTTGkOEVPOD/S62L3nfSAnyrROtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2oBnONX6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPLMfGSK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE56BC4CECD;
-	Wed,  6 Nov 2024 13:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2oBnONX6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A999FC4CECD;
+	Wed,  6 Nov 2024 13:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898358;
-	bh=QQ+5bjneJWHk4D0/GwpLtZyTW+PKas/BxABLZW6YxeQ=;
+	s=korg; t=1730898361;
+	bh=8KrkiP5AmAMS67l880TO3YYqGqrGcz8E7p/shQgyzKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NPLMfGSKdsZwRlVdNV0IizZcI7q8F1O3zoW9EJK+Ue1WoakeXMdd7iGr+nET7Jz+V
-	 QE75xwZZCcez2HJCohHleli+pPaTtLdttCQv7uUfgXd089Z1iXOFB6vAk5Erme3jW4
-	 Ywt5hpZ5GN/drrTW32swHAdoc9RMZ5PIV2qKsrpo=
+	b=2oBnONX6Dc04AxXKZCckfvpWn39CscpuucPeFeCv3pqr3Vtiuu7JTRr/CByr1PbJA
+	 j6TkS8LhMqR9w0In+GK23s7IyCZp3f5/tJYDk2djlX/cfx9uV0KNkMhsmPaMCU7dWV
+	 jBXj1R3HQSgzd5KwQgrdkNa9NVf+5i2hb7kafrlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Doug Anderson <dianders@chromium.org>,
+	Jeff Xu <jeffxu@google.com>,
+	Jann Horn <jannh@google.com>,
+	Kees Cook <kees@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Adrian Ratiu <adrian.ratiu@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 211/462] ACPICA: iasl: handle empty connection_node
-Date: Wed,  6 Nov 2024 13:01:44 +0100
-Message-ID: <20241106120336.730560868@linuxfoundation.org>
+Subject: [PATCH 5.4 212/462] proc: add config & param to block forcing mem writes
+Date: Wed,  6 Nov 2024 13:01:45 +0100
+Message-ID: <20241106120336.755509642@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,34 +57,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+From: Adrian Ratiu <adrian.ratiu@collabora.com>
 
-[ Upstream commit a0a2459b79414584af6c46dd8c6f866d8f1aa421 ]
+[ Upstream commit 41e8149c8892ed1962bd15350b3c3e6e90cba7f4 ]
 
-ACPICA commit 6c551e2c9487067d4b085333e7fe97e965a11625
+This adds a Kconfig option and boot param to allow removing
+the FOLL_FORCE flag from /proc/pid/mem write calls because
+it can be abused.
 
-Link: https://github.com/acpica/acpica/commit/6c551e2c
-Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The traditional forcing behavior is kept as default because
+it can break GDB and some other use cases.
+
+Previously we tried a more sophisticated approach allowing
+distributions to fine-tune /proc/pid/mem behavior, however
+that got NAK-ed by Linus [1], who prefers this simpler
+approach with semantics also easier to understand for users.
+
+Link: https://lore.kernel.org/lkml/CAHk-=wiGWLChxYmUA5HrT5aopZrB7_2VTa0NLZcxORgkUe5tEQ@mail.gmail.com/ [1]
+Cc: Doug Anderson <dianders@chromium.org>
+Cc: Jeff Xu <jeffxu@google.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
+Link: https://lore.kernel.org/r/20240802080225.89408-1-adrian.ratiu@collabora.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/exprep.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../admin-guide/kernel-parameters.txt         | 10 +++
+ fs/proc/base.c                                | 61 ++++++++++++++++++-
+ security/Kconfig                              | 32 ++++++++++
+ 3 files changed, 102 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/exprep.c b/drivers/acpi/acpica/exprep.c
-index 85f799c9c25c4..512a15d77d75f 100644
---- a/drivers/acpi/acpica/exprep.c
-+++ b/drivers/acpi/acpica/exprep.c
-@@ -437,6 +437,9 @@ acpi_status acpi_ex_prep_field_value(struct acpi_create_field_info *info)
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 6143c4cb7e984..9975dcab99c35 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -3812,6 +3812,16 @@
+ 	printk.time=	Show timing data prefixed to each printk message line
+ 			Format: <bool>  (1/Y/y=enable, 0/N/n=disable)
  
- 		if (info->connection_node) {
- 			second_desc = info->connection_node->object;
-+			if (second_desc == NULL) {
-+				break;
-+			}
- 			if (!(second_desc->common.flags & AOPOBJ_DATA_VALID)) {
- 				status =
- 				    acpi_ds_get_buffer_arguments(second_desc);
++	proc_mem.force_override= [KNL]
++			Format: {always | ptrace | never}
++			Traditionally /proc/pid/mem allows memory permissions to be
++			overridden without restrictions. This option may be set to
++			restrict that. Can be one of:
++			- 'always': traditional behavior always allows mem overrides.
++			- 'ptrace': only allow mem overrides for active ptracers.
++			- 'never':  never allow mem overrides.
++			If not specified, default is the CONFIG_PROC_MEM_* choice.
++
+ 	processor.max_cstate=	[HW,ACPI]
+ 			Limit processor to maximum C-state
+ 			max_cstate=9 overrides any DMI blacklist limit.
+diff --git a/fs/proc/base.c b/fs/proc/base.c
+index 77a3eb7c39f54..34e15da39fdf3 100644
+--- a/fs/proc/base.c
++++ b/fs/proc/base.c
+@@ -86,6 +86,7 @@
+ #include <linux/elf.h>
+ #include <linux/pid_namespace.h>
+ #include <linux/user_namespace.h>
++#include <linux/fs_parser.h>
+ #include <linux/fs_struct.h>
+ #include <linux/slab.h>
+ #include <linux/sched/autogroup.h>
+@@ -113,6 +114,40 @@
+ static u8 nlink_tid __ro_after_init;
+ static u8 nlink_tgid __ro_after_init;
+ 
++enum proc_mem_force {
++	PROC_MEM_FORCE_ALWAYS,
++	PROC_MEM_FORCE_PTRACE,
++	PROC_MEM_FORCE_NEVER
++};
++
++static enum proc_mem_force proc_mem_force_override __ro_after_init =
++	IS_ENABLED(CONFIG_PROC_MEM_NO_FORCE) ? PROC_MEM_FORCE_NEVER :
++	IS_ENABLED(CONFIG_PROC_MEM_FORCE_PTRACE) ? PROC_MEM_FORCE_PTRACE :
++	PROC_MEM_FORCE_ALWAYS;
++
++static const struct constant_table proc_mem_force_table[] __initconst = {
++	{ "always", PROC_MEM_FORCE_ALWAYS },
++	{ "ptrace", PROC_MEM_FORCE_PTRACE },
++	{ "never", PROC_MEM_FORCE_NEVER },
++	{ }
++};
++
++static int __init early_proc_mem_force_override(char *buf)
++{
++	if (!buf)
++		return -EINVAL;
++
++	/*
++	 * lookup_constant() defaults to proc_mem_force_override to preseve
++	 * the initial Kconfig choice in case an invalid param gets passed.
++	 */
++	proc_mem_force_override = lookup_constant(proc_mem_force_table,
++						  buf, proc_mem_force_override);
++
++	return 0;
++}
++early_param("proc_mem.force_override", early_proc_mem_force_override);
++
+ struct pid_entry {
+ 	const char *name;
+ 	unsigned int len;
+@@ -822,6 +857,28 @@ static int mem_open(struct inode *inode, struct file *file)
+ 	return ret;
+ }
+ 
++static bool proc_mem_foll_force(struct file *file, struct mm_struct *mm)
++{
++	struct task_struct *task;
++	bool ptrace_active = false;
++
++	switch (proc_mem_force_override) {
++	case PROC_MEM_FORCE_NEVER:
++		return false;
++	case PROC_MEM_FORCE_PTRACE:
++		task = get_proc_task(file_inode(file));
++		if (task) {
++			ptrace_active =	READ_ONCE(task->ptrace) &&
++					READ_ONCE(task->mm) == mm &&
++					READ_ONCE(task->parent) == current;
++			put_task_struct(task);
++		}
++		return ptrace_active;
++	default:
++		return true;
++	}
++}
++
+ static ssize_t mem_rw(struct file *file, char __user *buf,
+ 			size_t count, loff_t *ppos, int write)
+ {
+@@ -842,7 +899,9 @@ static ssize_t mem_rw(struct file *file, char __user *buf,
+ 	if (!mmget_not_zero(mm))
+ 		goto free;
+ 
+-	flags = FOLL_FORCE | (write ? FOLL_WRITE : 0);
++	flags = write ? FOLL_WRITE : 0;
++	if (proc_mem_foll_force(file, mm))
++		flags |= FOLL_FORCE;
+ 
+ 	while (count > 0) {
+ 		size_t this_len = min_t(size_t, count, PAGE_SIZE);
+diff --git a/security/Kconfig b/security/Kconfig
+index 52e5109f2c1b6..b3dff990c326a 100644
+--- a/security/Kconfig
++++ b/security/Kconfig
+@@ -19,6 +19,38 @@ config SECURITY_DMESG_RESTRICT
+ 
+ 	  If you are unsure how to answer this question, answer N.
+ 
++choice
++	prompt "Allow /proc/pid/mem access override"
++	default PROC_MEM_ALWAYS_FORCE
++	help
++	  Traditionally /proc/pid/mem allows users to override memory
++	  permissions for users like ptrace, assuming they have ptrace
++	  capability.
++
++	  This allows people to limit that - either never override, or
++	  require actual active ptrace attachment.
++
++	  Defaults to the traditional behavior (for now)
++
++config PROC_MEM_ALWAYS_FORCE
++	bool "Traditional /proc/pid/mem behavior"
++	help
++	  This allows /proc/pid/mem accesses to override memory mapping
++	  permissions if you have ptrace access rights.
++
++config PROC_MEM_FORCE_PTRACE
++	bool "Require active ptrace() use for access override"
++	help
++	  This allows /proc/pid/mem accesses to override memory mapping
++	  permissions for active ptracers like gdb.
++
++config PROC_MEM_NO_FORCE
++	bool "Never"
++	help
++	  Never override memory mapping permissions
++
++endchoice
++
+ config SECURITY
+ 	bool "Enable different security models"
+ 	depends on SYSFS
 -- 
 2.43.0
 
