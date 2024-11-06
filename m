@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD631DFDB3;
-	Wed,  6 Nov 2024 13:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2469A1DFDB3;
+	Wed,  6 Nov 2024 13:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898168; cv=none; b=C00//KjHFRx0e5aSovas/SKEkv6i8DvmaDjFiSF26KvHo7aaWYwuZ7LQD0XxkyWoR3TMeCXGYHkC74+ZsY2vd2aThuWd9bZOArRg4uM0EX8pHyMMJNxVe7WI64IOPpT6ZGJRXX/5E2b7LwvhNph6YO/LCZ8bEwfpPrvPaXn0AWA=
+	t=1730898171; cv=none; b=B6FAlhaXAi3Y9i5qjJmaTtTtWp8PIhr/WrsMxYc4vkPlogVFbUG+uwWCOD1MIr+KGSg/pOe9HzZA3kpf0EhIuMrMdjKtcP8efYr3RiOdHOjD0Tj9KAf6jeL5OIBacAN9XnHH76OIycL2pk6ZGsQwAU4kLeP6YIrILo3lMcPH4NM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898168; c=relaxed/simple;
-	bh=Xr0oogi400ciQc6EJ0kfcMAukdSHUTpkY5lcBa/2kMM=;
+	s=arc-20240116; t=1730898171; c=relaxed/simple;
+	bh=/+0JMurz63sAElEaQNxnu3ehbQLBYnYxUd/BeR85Bws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JeCwi0GXIDIQ26B3QCtiuZQ+Zjr3GZlfRO1LW7kUrP6Dxw+/ZXSsheUJDl4qMeMqHolw1eMSbDY09Xvw1LLzThlPWQJQlKlsThtqlWxJqU5VxHXJwEnjFfJCXb1ILmwUx6Fq++3lImStlb7owUBA53b4qM2lpTAjZJnYYP2Wtvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7nuDmQ9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RTrssE8sCOpSyEhDWv3Y+1NQaBpw7t4ON2gcMtqtTD20Jtur8D+6pR08c50Ky6EIZ8S9TMyQuwpK8ZzefFn8DlpwxDUt8KqPDJe1XT5kOeX8t1t6DLmRyCyHmCYUxedQWcP6fM9dyNhzJs3w8VY0tAzyi3Lhp07qBfGau4ItKrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZHW8rZb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7nuDmQ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC96DC4CECD;
-	Wed,  6 Nov 2024 13:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZHW8rZb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0EC1C4CECD;
+	Wed,  6 Nov 2024 13:02:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898168;
-	bh=Xr0oogi400ciQc6EJ0kfcMAukdSHUTpkY5lcBa/2kMM=;
+	s=korg; t=1730898171;
+	bh=/+0JMurz63sAElEaQNxnu3ehbQLBYnYxUd/BeR85Bws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j7nuDmQ93tSJiwjRSNQx2tO+7Giw5aYbf3BVFTMwYAsnEZfTEpGuvky3LuYUh5T9O
-	 HKrSRY2hHPhBACYmbcEltV82AAkX/A2XT46XduKOpIEs1IBMT3pR8vFm3kLyMd+vMz
-	 Rild2SSRQQX5r54PIBq41Zqi3csPaB6qiFWSeJV8=
+	b=HZHW8rZbGNWmAmPgoX0cUlz+L20jFeL3djFeMBckAmLcLtQ5HC70LOgpz139r8GVo
+	 AKkZaoOIHnYCR5ydB8hO23l/x5WkwyYi8IuVaXSY08ni5n0uqvSlpk2ErEEdvuqbNj
+	 E+kcQR4Qj9/agJAMpCXPp4ZFoalVRg/X6ph93rUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jim Quinlan <james.quinlan@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH 5.4 146/462] tty: rp2: Fix reset with non forgiving PCIe host bridges
-Date: Wed,  6 Nov 2024 13:00:39 +0100
-Message-ID: <20241106120335.118346236@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 111/462] PCI: keystone: Fix if-statement expression in ks_pcie_quirk()
+Date: Wed,  6 Nov 2024 13:00:04 +0100
+Message-ID: <20241106120334.247373651@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -45,50 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit f16dd10ba342c429b1e36ada545fb36d4d1f0e63 upstream.
+[ Upstream commit 6188a1c762eb9bbd444f47696eda77a5eae6207a ]
 
-The write to RP2_GLOBAL_CMD followed by an immediate read of
-RP2_GLOBAL_CMD in rp2_reset_asic() is intented to flush out the write,
-however by then the device is already in reset and cannot respond to a
-memory cycle access.
+This code accidentally uses && where || was intended.  It potentially
+results in a NULL dereference.
 
-On platforms such as the Raspberry Pi 4 and others using the
-pcie-brcmstb.c driver, any memory access to a device that cannot respond
-is met with a fatal system error, rather than being substituted with all
-1s as is usually the case on PC platforms.
+Thus, fix the if-statement expression to use the correct condition.
 
-Swapping the delay and the read ensures that the device has finished
-resetting before we attempt to read from it.
-
-Fixes: 7d9f49afa451 ("serial: rp2: New driver for Comtrol RocketPort 2 cards")
-Cc: stable <stable@kernel.org>
-Suggested-by: Jim Quinlan <james.quinlan@broadcom.com>
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20240906225435.707837-1-florian.fainelli@broadcom.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 86f271f22bbb ("PCI: keystone: Add workaround for Errata #i2037 (AM65x SR 1.0)")
+Link: https://lore.kernel.org/linux-pci/1b762a93-e1b2-4af3-8c04-c8843905c279@stanley.mountain
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/rp2.c |    2 +-
+ drivers/pci/controller/dwc/pci-keystone.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/rp2.c
-+++ b/drivers/tty/serial/rp2.c
-@@ -600,8 +600,8 @@ static void rp2_reset_asic(struct rp2_ca
- 	u32 clk_cfg;
+diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+index a16fe2a558c7a..b28d3c4205fe4 100644
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -595,7 +595,7 @@ static void ks_pcie_quirk(struct pci_dev *dev)
+ 	 */
+ 	if (pci_match_id(am6_pci_devids, bridge)) {
+ 		bridge_dev = pci_get_host_bridge_device(dev);
+-		if (!bridge_dev && !bridge_dev->parent)
++		if (!bridge_dev || !bridge_dev->parent)
+ 			return;
  
- 	writew(1, base + RP2_GLOBAL_CMD);
--	readw(base + RP2_GLOBAL_CMD);
- 	msleep(100);
-+	readw(base + RP2_GLOBAL_CMD);
- 	writel(0, base + RP2_CLK_PRESCALER);
- 
- 	/* TDM clock configuration */
+ 		ks_pcie = dev_get_drvdata(bridge_dev->parent);
+-- 
+2.43.0
+
 
 
