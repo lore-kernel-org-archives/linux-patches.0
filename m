@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66DB1E0DF0;
-	Wed,  6 Nov 2024 13:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5AC1E048E;
+	Wed,  6 Nov 2024 13:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899161; cv=none; b=P/e7CpjpWN3t3jvxPdamziGP723lFI9Fvbn4BhQYiE7AgPtb1YTYsp7ibbY2DwcdC+kyU0muWthjemd80YdxDqsFOIc2xdSugUlxp8mNvRsEkVD+l51vjl/DepujlYwixuV5LoSFtbziV7zUG9Ngy7dCtKUWV6/XUDC74RFbjfE=
+	t=1730899164; cv=none; b=gnZDxH8uWETOgOq4Gk0aKF4k2KEa8Zhf1zkxRZJQNuHdS+XHuE2n50P9YjlBs2IQxbXm6nj+m6RsAe2qHzZDMVPLHWj2lIrR96+l7lMyLVT2VtKi/aiwCoT4NYuhMTMw0tcYn1FfbXS9ppgfZsI8hBdVz+cL1zI3Wt4JbOZ8FrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899161; c=relaxed/simple;
-	bh=UqhOTZEk8f4USS66NQc70tf7AyK/nEIFWQuzB9BvER0=;
+	s=arc-20240116; t=1730899164; c=relaxed/simple;
+	bh=sBqWhvb5NpfxxTJj0ljzc2anXJo/173n19xQQ7Rd6ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZ1ZEXfaRkBiagEUGCf9/ULlgWA2mIal3hVL1aj6NnipaRB3OcIlJZvJ2Xc2U03MKyvDm6RYi/2aANSGpeMrUZmarcyvfxGAQDVIq9FfYbhZHqwTmudzYo3qomeVnUQlBCjilxjWP3+dmDzlHzKO3rCORUZdSZuihfyDw3OomM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OR1XNL9S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PrutEW+mBEvwXCWaCN5NA461Bo0zsXgkqG1APkWhSSo7DHyJfG17b6vbfBoCkKMvFfRXHSS1FY9K9hgJP/rwwt8yQvmTIgjGW+y5dflwrfpg34ChRsJa5SXeGDSwcOq09lUTheX769zWnTIQiVE+wufcNv7Axvkol1vVtmpkOY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bT+/RleN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OR1XNL9S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3AEC4CED3;
-	Wed,  6 Nov 2024 13:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bT+/RleN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4125DC4CECD;
+	Wed,  6 Nov 2024 13:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899161;
-	bh=UqhOTZEk8f4USS66NQc70tf7AyK/nEIFWQuzB9BvER0=;
+	s=korg; t=1730899164;
+	bh=sBqWhvb5NpfxxTJj0ljzc2anXJo/173n19xQQ7Rd6ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OR1XNL9SlIBKrnhI5Ys96M3tnK2qMeeCqJUX493qC1SsiPix3Wvz2U1e7ai07fBCd
-	 MrLUfokmR+7awDSZ1g9rQGOOHS+IjcUHg4Ks8OgSMhYmfSLaIIvktkWJTH/sL9JfWb
-	 kZjZ/syJk6jGlMEJdVPtL0305FQvhHXPXXi6+Y24=
+	b=bT+/RleNXkSgrI++luGU8YH+1USfr71DOBgWKyaSHOKQqUm10M2Tzd3YMYy415eIn
+	 dtO1Eqq1qegW3aEzbbDK67PWnLfHHrQxWe+cWy7D3m3P+jqT4mlfHzF0Ip+f3hDHsL
+	 vtbdhMHilN3+HLTmoLDi2vtg/SP9HdLw/b5zdpSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 08/73] wifi: mac80211: skip non-uploaded keys in ieee80211_iter_keys
-Date: Wed,  6 Nov 2024 13:05:12 +0100
-Message-ID: <20241106120300.211061377@linuxfoundation.org>
+Subject: [PATCH 5.15 09/73] wifi: brcm80211: BRCM_TRACING should depend on TRACING
+Date: Wed,  6 Nov 2024 13:05:13 +0100
+Message-ID: <20241106120300.242985549@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120259.955073160@linuxfoundation.org>
 References: <20241106120259.955073160@linuxfoundation.org>
@@ -51,92 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-[ Upstream commit 52009b419355195912a628d0a9847922e90c348c ]
+[ Upstream commit b73b2069528f90ec49d5fa1010a759baa2c2be05 ]
 
-Sync iterator conditions with ieee80211_iter_keys_rcu.
+When tracing is disabled, there is no point in asking the user about
+enabling Broadcom wireless device tracing.
 
-Fixes: 830af02f24fb ("mac80211: allow driver to iterate keys")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20241006153630.87885-1-nbd@nbd.name
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: f5c4f10852d42012 ("brcm80211: Allow trace support to be enabled separately from debug")
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/81a29b15eaacc1ac1fb421bdace9ac0c3385f40f.1727179742.git.geert@linux-m68k.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/key.c | 42 +++++++++++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mac80211/key.c b/net/mac80211/key.c
-index 7b427e39831bd..c755e3b332de0 100644
---- a/net/mac80211/key.c
-+++ b/net/mac80211/key.c
-@@ -918,6 +918,26 @@ void ieee80211_reenable_keys(struct ieee80211_sub_if_data *sdata)
- 	mutex_unlock(&sdata->local->key_mtx);
- }
- 
-+static void
-+ieee80211_key_iter(struct ieee80211_hw *hw,
-+		   struct ieee80211_vif *vif,
-+		   struct ieee80211_key *key,
-+		   void (*iter)(struct ieee80211_hw *hw,
-+				struct ieee80211_vif *vif,
-+				struct ieee80211_sta *sta,
-+				struct ieee80211_key_conf *key,
-+				void *data),
-+		   void *iter_data)
-+{
-+	/* skip keys of station in removal process */
-+	if (key->sta && key->sta->removed)
-+		return;
-+	if (!(key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE))
-+		return;
-+	iter(hw, vif, key->sta ? &key->sta->sta : NULL,
-+	     &key->conf, iter_data);
-+}
-+
- void ieee80211_iter_keys(struct ieee80211_hw *hw,
- 			 struct ieee80211_vif *vif,
- 			 void (*iter)(struct ieee80211_hw *hw,
-@@ -937,16 +957,13 @@ void ieee80211_iter_keys(struct ieee80211_hw *hw,
- 	if (vif) {
- 		sdata = vif_to_sdata(vif);
- 		list_for_each_entry_safe(key, tmp, &sdata->key_list, list)
--			iter(hw, &sdata->vif,
--			     key->sta ? &key->sta->sta : NULL,
--			     &key->conf, iter_data);
-+			ieee80211_key_iter(hw, vif, key, iter, iter_data);
- 	} else {
- 		list_for_each_entry(sdata, &local->interfaces, list)
- 			list_for_each_entry_safe(key, tmp,
- 						 &sdata->key_list, list)
--				iter(hw, &sdata->vif,
--				     key->sta ? &key->sta->sta : NULL,
--				     &key->conf, iter_data);
-+				ieee80211_key_iter(hw, &sdata->vif, key,
-+						   iter, iter_data);
- 	}
- 	mutex_unlock(&local->key_mtx);
- }
-@@ -964,17 +981,8 @@ _ieee80211_iter_keys_rcu(struct ieee80211_hw *hw,
- {
- 	struct ieee80211_key *key;
- 
--	list_for_each_entry_rcu(key, &sdata->key_list, list) {
--		/* skip keys of station in removal process */
--		if (key->sta && key->sta->removed)
--			continue;
--		if (!(key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE))
--			continue;
--
--		iter(hw, &sdata->vif,
--		     key->sta ? &key->sta->sta : NULL,
--		     &key->conf, iter_data);
--	}
-+	list_for_each_entry_rcu(key, &sdata->key_list, list)
-+		ieee80211_key_iter(hw, &sdata->vif, key, iter, iter_data);
- }
- 
- void ieee80211_iter_keys_rcu(struct ieee80211_hw *hw,
+diff --git a/drivers/net/wireless/broadcom/brcm80211/Kconfig b/drivers/net/wireless/broadcom/brcm80211/Kconfig
+index 5bf2318763c55..8f51099e15c90 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/Kconfig
++++ b/drivers/net/wireless/broadcom/brcm80211/Kconfig
+@@ -23,6 +23,7 @@ source "drivers/net/wireless/broadcom/brcm80211/brcmfmac/Kconfig"
+ config BRCM_TRACING
+ 	bool "Broadcom device tracing"
+ 	depends on BRCMSMAC || BRCMFMAC
++	depends on TRACING
+ 	help
+ 	  If you say Y here, the Broadcom wireless drivers will register
+ 	  with ftrace to dump event information into the trace ringbuffer.
 -- 
 2.43.0
 
