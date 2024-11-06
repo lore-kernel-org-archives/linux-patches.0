@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36321EABB4;
-	Wed,  6 Nov 2024 12:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819191E7C1A;
+	Wed,  6 Nov 2024 12:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897039; cv=none; b=p8QN/QHTVl1UX/Vn9BZ1PZW+YJ0W9XHEJo8Lw46kwr2hwCy19dUPIi43RR3XRClsdbM9gZAbfGUnQKapit93sj88eDgFzFUAEDCiV6k3ywe6SHHspVVYAiSDZhf6UWnO5Rcp05fYhe/IDwpzmLBoDbZxY3fasEa/i49C9qm7IOg=
+	t=1730897041; cv=none; b=Wy05tRa93DxusTdF3+TS/d/pOVC4fUlsfk+mxVSUfjnz7dDV1rkCZzoH2awz6EWNQTDPtOkYWzyvqiLMQ2BCFz3r+4pr4b2oDPxzwCKvxOACxCc+RYNQ66dzA67C0H0yrRRIsY1L+/KE8EimJt/7FV1x+uyLsp6+rCoK5iCVKis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897039; c=relaxed/simple;
-	bh=FlHciFbl1I1pKNJNHGpf10elFhrQ9oiu+FZWVrP9wB4=;
+	s=arc-20240116; t=1730897041; c=relaxed/simple;
+	bh=ZCLbWahdkw8VpA/eM9lWqK6wQGnwIAJZCeox8yC2Ync=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rjtykiMpaENKCTWqSEVabWnq4ZpW7lbO9S8DO138eEIOX4JsRSDvKa+pfqr3XdJIGk9eoo9RsvEsYDeCA9HvduTnv/wk8X0dpG4wc78Dm+ukJH31Kn5UtPTab1G48pceAqNBGUbQiC/8pYdlVspJ78A0ffy3gZaQmj64f3nbDDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E+7de2fs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qvBjXRdfukxdH8B10orVTi20e0KTmYnC4pbMTpOi0Xy5oE3A3Hhx4DB/JbKGVaY8jT/AC9moLenFucBXp0kLOKoAtcX+d0e4lWG3YwcXXXxY22q4ooHWz2JLLsWmAMUfqRZxbJcjKJRYuadSJnw8STp6nIwxulzvZV/VRkm2D18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHcfxiGy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+7de2fs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFB7C4CECD;
-	Wed,  6 Nov 2024 12:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHcfxiGy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F02C4CECD;
+	Wed,  6 Nov 2024 12:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897038;
-	bh=FlHciFbl1I1pKNJNHGpf10elFhrQ9oiu+FZWVrP9wB4=;
+	s=korg; t=1730897041;
+	bh=ZCLbWahdkw8VpA/eM9lWqK6wQGnwIAJZCeox8yC2Ync=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E+7de2fseZ5J/ChLJvrujg8y+Liv184vPMgZsfQ1NoOcknR/nYBPc2GI2dNZc+IT6
-	 /t4a+aKRDSwD/l4XlDWqURroFLC8NIWaZEWfq+m9+ioVPxhRarSUHOG9Kj67PdzyrP
-	 XvllDSCQvpMbZZ6mZ6R74gnM49xTz3VopfQoCvCM=
+	b=EHcfxiGyuq7C3FYcMSQS6RuHKtaBeEJutCfItYVJ+ySbk1H22cyEZbXrAb+bYZIX5
+	 4D7Ni/NPNjVmeKLrf3Y9K/8/v774BisAxU5vMvyPuXEZ9k2TSvqvizM0R4eRIoYRty
+	 zDrx1VcoysehBDQAlssLgL5w3jPMQ4pWSMmZy9DI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alexander Potapenko <glider@google.com>,
+	syzbot+908886656a02769af987@syzkaller.appspotmail.com,
 	Andrey Konovalov <andreyknvl@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dan Li <ashimida@linux.alibaba.com>,
-	Kees Cook <keescook@chromium.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Andrew Pinski <pinskia@gmail.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Marco Elver <elver@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Uros Bizjak <ubizjak@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/126] compiler-gcc: remove attribute support check for `__no_sanitize_address__`
-Date: Wed,  6 Nov 2024 13:04:07 +0100
-Message-ID: <20241106120307.350423796@linuxfoundation.org>
+Subject: [PATCH 6.1 047/126] kasan: Fix Software Tag-Based KASAN with GCC
+Date: Wed,  6 Nov 2024 13:04:08 +0100
+Message-ID: <20241106120307.376227428@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -61,48 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit ae37a9a2c2d0960d643d782b426ea1aa9c05727a ]
+[ Upstream commit 894b00a3350c560990638bdf89bdf1f3d5491950 ]
 
-The attribute was added in GCC 4.8, while the minimum GCC version
-supported by the kernel is GCC 5.1.
+Per [1], -fsanitize=kernel-hwaddress with GCC currently does not disable
+instrumentation in functions with __attribute__((no_sanitize_address)).
 
-Therefore, remove the check.
+However, __attribute__((no_sanitize("hwaddress"))) does correctly
+disable instrumentation. Use it instead.
 
-Link: https://godbolt.org/z/84v56vcn8
-Link: https://lkml.kernel.org/r/20221021115956.9947-2-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Dan Li <ashimida@linux.alibaba.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Uros Bizjak <ubizjak@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 894b00a3350c ("kasan: Fix Software Tag-Based KASAN with GCC")
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117196 [1]
+Link: https://lore.kernel.org/r/000000000000f362e80620e27859@google.com
+Link: https://lore.kernel.org/r/ZvFGwKfoC4yVjN_X@J2N7QTR9R3
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218854
+Reported-by: syzbot+908886656a02769af987@syzkaller.appspotmail.com
+Tested-by: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrew Pinski <pinskia@gmail.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Marco Elver <elver@google.com>
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Fixes: 7b861a53e46b ("kasan: Bump required compiler version")
+Link: https://lore.kernel.org/r/20241021120013.3209481-1-elver@google.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/compiler-gcc.h | 4 ----
- 1 file changed, 4 deletions(-)
+ include/linux/compiler-gcc.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/include/linux/compiler-gcc.h b/include/linux/compiler-gcc.h
-index e6474899250d5..b6050483ba421 100644
+index b6050483ba421..74dc72b2c3a74 100644
 --- a/include/linux/compiler-gcc.h
 +++ b/include/linux/compiler-gcc.h
-@@ -102,11 +102,7 @@
+@@ -102,7 +102,11 @@
  #define __noscs __attribute__((__no_sanitize__("shadow-call-stack")))
  #endif
  
--#if __has_attribute(__no_sanitize_address__)
++#ifdef __SANITIZE_HWADDRESS__
++#define __no_sanitize_address __attribute__((__no_sanitize__("hwaddress")))
++#else
  #define __no_sanitize_address __attribute__((__no_sanitize_address__))
--#else
--#define __no_sanitize_address
--#endif
++#endif
  
  #if defined(__SANITIZE_THREAD__) && __has_attribute(__no_sanitize_thread__)
  #define __no_sanitize_thread __attribute__((__no_sanitize_thread__))
