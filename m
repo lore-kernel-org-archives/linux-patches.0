@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9671E1C38;
-	Wed,  6 Nov 2024 12:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC951F4FD3;
+	Wed,  6 Nov 2024 12:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897767; cv=none; b=HCp0Yc5MR9A9elZ+FdDucYvuD102B4AenSIDBZ+M8eZ1HT1xy1Um3DPggOHw0OWPYnWrYJJNb04AZyI4bUT2PiGgMHad/3r1y4lYehdqfcnzuIMpruDqXXzFZh0P/BRgSrIhB1MwVfGpVWRUwH4VfQdTApQ8tm8l1oyl4hMsEEA=
+	t=1730897770; cv=none; b=BrirE7IHbc/DZKNOg6no1XfF2sRRjngNDruDvDcVSai3FgjIQrc9vjjU2RxOE1uKXJQfHCABGYWKWn1havZTJuyTEYIlPgrAQUqbP3YpUjIDFMmLlM074isftBQ/Rdz3otQQY9w1Bxm+TA7ugxy5/UfcYhfI8VLMV+elpI4PLgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897767; c=relaxed/simple;
-	bh=zZJQ6y00Y06at/mzRddhDjTfLk8ZjlZUPZsGzQqUdGI=;
+	s=arc-20240116; t=1730897770; c=relaxed/simple;
+	bh=iwOOCXkIxKPH4yCSQsKPMIILVojDZjqlgwuNqckfyjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PkYJ+fYbvmiwKiinJFjYTVblmIdFWyT3gwOR3AoUpmg7sLpMzwIWeQ/YQap/rQCiKNgHOBwGOgluPShy9v/uM2uTtFagkkXlI0Q+g80gdXQSx7svjCGKgj1jOLcoT9E+PYbsrNbHi+AhCyB57rI9RjtZAT6OAZZcE8U5lYFhZRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TstVRIAj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s74hsM0F3wSOG8GXUhdxuqJeRlxmjZbkJW04t8wf9XqF5UEG5tRydd3jZhYGhV5Fb1LWFMFrv2DY7hlZBPZCPwqmk3aqp7MV864TmYrfQu7u8GomQ2taMHA85UNe0EWjShfw6gfA0KCpjSQwZza1Vo7fRAYJBVgitf4IOCI63Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PqDHGIrP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TstVRIAj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22623C4CECD;
-	Wed,  6 Nov 2024 12:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PqDHGIrP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E12FC4CECD;
+	Wed,  6 Nov 2024 12:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897767;
-	bh=zZJQ6y00Y06at/mzRddhDjTfLk8ZjlZUPZsGzQqUdGI=;
+	s=korg; t=1730897770;
+	bh=iwOOCXkIxKPH4yCSQsKPMIILVojDZjqlgwuNqckfyjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TstVRIAj0CY8gc2wZUziWrDpp/lsadCC2IDj5cbFCMfXI+O0Koza8USIzo7QmJGv4
-	 y7Uv7yXSpxV0iibNs0gtCPnQhnsavYtPb5m3bZ4XmGoExbZm8b1APVCf4K2ZaZ+/X0
-	 jdDVetpAV9mdEKRqZqlpPnp3ywXo4L8s8/mSrp0c=
+	b=PqDHGIrPmbOqm2yt4f9YJ1zp4JbWdfSZkEN6rHNKEH5WKrfdy8EltXKdiDFVuTsjr
+	 q03yIBDJOfKLav5p+SS3rk4zFRCk77KaCtKRDG8inMZ3nN8NWqm2/a5HjUWaBN6XMt
+	 oFx4tYQQULCU2XJRnJ9zV6jycxmnCTepKkCm6/FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongbo Li <lihongbo22@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 013/462] ASoC: allow module autoloading for table db1200_pids
-Date: Wed,  6 Nov 2024 12:58:26 +0100
-Message-ID: <20241106120331.834116138@linuxfoundation.org>
+Subject: [PATCH 5.4 014/462] ALSA: hda/realtek - Fixed ALC256 headphone no sound
+Date: Wed,  6 Nov 2024 12:58:27 +0100
+Message-ID: <20241106120331.859640754@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,33 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongbo Li <lihongbo22@huawei.com>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 0e9fdab1e8df490354562187cdbb8dec643eae2c ]
+[ Upstream commit 9b82ff1362f50914c8292902e07be98a9f59d33d ]
 
-Add MODULE_DEVICE_TABLE(), so modules could be properly
-autoloaded based on the alias from platform_device_id table.
+Dell platform, plug headphone or headset, it had a chance to get no
+sound from headphone.
+Replace depop procedure will solve this issue.
 
-Signed-off-by: Hongbo Li <lihongbo22@huawei.com>
-Link: https://patch.msgid.link/20240821061955.2273782-2-lihongbo22@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/bb8e2de30d294dc287944efa0667685a@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/au1x/db1200.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_realtek.c | 50 ++++++++++++++++++++++++++---------
+ 1 file changed, 37 insertions(+), 13 deletions(-)
 
-diff --git a/sound/soc/au1x/db1200.c b/sound/soc/au1x/db1200.c
-index d6b692fff29a2..cdde5ba2ec351 100644
---- a/sound/soc/au1x/db1200.c
-+++ b/sound/soc/au1x/db1200.c
-@@ -44,6 +44,7 @@ static const struct platform_device_id db1200_pids[] = {
- 	},
- 	{},
- };
-+MODULE_DEVICE_TABLE(platform, db1200_pids);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index dddf3f55cb13b..33e4db337efd8 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -4622,6 +4622,30 @@ static void alc269_fixup_hp_line1_mic1_led(struct hda_codec *codec,
+ 	}
+ }
  
- /*-------------------------  AC97 PART  ---------------------------*/
++static void alc_hp_mute_disable(struct hda_codec *codec, unsigned int delay)
++{
++	if (delay <= 0)
++		delay = 75;
++	snd_hda_codec_write(codec, 0x21, 0,
++		    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
++	msleep(delay);
++	snd_hda_codec_write(codec, 0x21, 0,
++		    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
++	msleep(delay);
++}
++
++static void alc_hp_enable_unmute(struct hda_codec *codec, unsigned int delay)
++{
++	if (delay <= 0)
++		delay = 75;
++	snd_hda_codec_write(codec, 0x21, 0,
++		    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
++	msleep(delay);
++	snd_hda_codec_write(codec, 0x21, 0,
++		    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
++	msleep(delay);
++}
++
+ static const struct coef_fw alc225_pre_hsmode[] = {
+ 	UPDATE_COEF(0x4a, 1<<8, 0),
+ 	UPDATE_COEFEX(0x57, 0x05, 1<<14, 0),
+@@ -4717,6 +4741,7 @@ static void alc_headset_mode_unplugged(struct hda_codec *codec)
+ 	case 0x10ec0236:
+ 	case 0x10ec0256:
+ 	case 0x19e58326:
++		alc_hp_mute_disable(codec, 75);
+ 		alc_process_coef_fw(codec, coef0256);
+ 		break;
+ 	case 0x10ec0234:
+@@ -4988,6 +5013,7 @@ static void alc_headset_mode_default(struct hda_codec *codec)
+ 		alc_write_coef_idx(codec, 0x45, 0xc089);
+ 		msleep(50);
+ 		alc_process_coef_fw(codec, coef0256);
++		alc_hp_enable_unmute(codec, 75);
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
+@@ -5085,6 +5111,7 @@ static void alc_headset_mode_ctia(struct hda_codec *codec)
+ 	case 0x10ec0256:
+ 	case 0x19e58326:
+ 		alc_process_coef_fw(codec, coef0256);
++		alc_hp_enable_unmute(codec, 75);
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
+@@ -5200,6 +5227,7 @@ static void alc_headset_mode_omtp(struct hda_codec *codec)
+ 	case 0x10ec0256:
+ 	case 0x19e58326:
+ 		alc_process_coef_fw(codec, coef0256);
++		alc_hp_enable_unmute(codec, 75);
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
+@@ -5300,25 +5328,21 @@ static void alc_determine_headset_type(struct hda_codec *codec)
+ 		alc_write_coef_idx(codec, 0x06, 0x6104);
+ 		alc_write_coefex_idx(codec, 0x57, 0x3, 0x09a3);
  
+-		snd_hda_codec_write(codec, 0x21, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+-		msleep(80);
+-		snd_hda_codec_write(codec, 0x21, 0,
+-			    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
+-
+ 		alc_process_coef_fw(codec, coef0255);
+ 		msleep(300);
+ 		val = alc_read_coef_idx(codec, 0x46);
+ 		is_ctia = (val & 0x0070) == 0x0070;
+-
++		if (!is_ctia) {
++			alc_write_coef_idx(codec, 0x45, 0xe089);
++			msleep(100);
++			val = alc_read_coef_idx(codec, 0x46);
++			if ((val & 0x0070) == 0x0070)
++				is_ctia = false;
++			else
++				is_ctia = true;
++		}
+ 		alc_write_coefex_idx(codec, 0x57, 0x3, 0x0da3);
+ 		alc_update_coefex_idx(codec, 0x57, 0x5, 1<<14, 0);
+-
+-		snd_hda_codec_write(codec, 0x21, 0,
+-			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
+-		msleep(80);
+-		snd_hda_codec_write(codec, 0x21, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
 -- 
 2.43.0
 
