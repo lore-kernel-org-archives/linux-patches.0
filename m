@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B981F8EE3;
-	Wed,  6 Nov 2024 13:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0F51F4FC6;
+	Wed,  6 Nov 2024 13:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898281; cv=none; b=DxMpRgf3mhUms2aPHotZJuUp9Nb6aHp4iJJYHzYFA4bk1PvIApS5gjL4YNFScQvAwCInCmOUN47FyP0+huxF3cUxRKdX/HnOAHK45NFA6DuuZHjcb5YOVFxhJ1VR8ql4s3ltwTb6P62VK+TtSt7U4Q8LWzLrqSpUf0e1Rm+untM=
+	t=1730898284; cv=none; b=XlkuUV8Yp14hwfHwW1J1NQyI7Pa2EDNpXby8115UrDMBzOAmWy6YKoc55ALBMTEhEKCYCHM/0PesWv5fiSShyOcB61g89pjiUGM5fy7OiSF6e8pB0mo+pLA2TxMM+CVI/88fOvliTC8cQdtG7RI9SJ9fu+RkP1ib8xcv0+gPCAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898281; c=relaxed/simple;
-	bh=etJPoxsTpfL/csH+qVzAaXrqoEmV3NS40oC+sPizABw=;
+	s=arc-20240116; t=1730898284; c=relaxed/simple;
+	bh=Mh5XyRHyNV5vNgUlkZe2j8JTi56Ks6iqNOLD26bvInE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n06hzSDE4mve2yY6YXcW+S0uIkEfIENqL4yHl4gaaJ+c/CUGKlCOonuC/A44rCafWcn8QoHnys6/xWUzdzikopjN3NAnXCLL9lPh0jTQkwQvVQ6/B7MowIIXYIfMuTstiv3q674yqjEAyhirzcUvmbinCfZ+WRkM8d4z9pxdeJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cMAwRERq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F4UAkyWP176yaMLLNgE0xtQ52/MaXthQ/KcKMllsZ4zcAYeh/t/rgt/OZAkwdlbrUVkGOeRJFKtPptC3FRpbl9vaeU6QjmPn/c67b5dYKCthe9DRHjasXbZzFSHOo/TU5H7DKlQi/gf7eghP4cNkIAI3LOiaJRoXK9I4iyjCrLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D0XviMLx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cMAwRERq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C85AC4CECD;
-	Wed,  6 Nov 2024 13:04:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D0XviMLx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC9CC4CECD;
+	Wed,  6 Nov 2024 13:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898281;
-	bh=etJPoxsTpfL/csH+qVzAaXrqoEmV3NS40oC+sPizABw=;
+	s=korg; t=1730898284;
+	bh=Mh5XyRHyNV5vNgUlkZe2j8JTi56Ks6iqNOLD26bvInE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cMAwRERqrN3JAE0mKpqD4HGHiIg0PoS2F2YNrgA2xB2wgnYl35tu4gTjV1ZOxXe1C
-	 Jq04vocr7ore4gH6Fc8b7mEzM/sxm0S5/cpTPGnQLKo8yxBjs1a6Mwyh9ALy1YbZo2
-	 PY05qdsoJTISil77+8QPmruB2r4/BbhPZGIO6Ucg=
+	b=D0XviMLxg0Z4zKRhm/I++HSjoWCUlibs3n0UdxTedr8DDbX+VHnIy5VatEZXjIOuj
+	 7gzfqGPnGlvVUOIy04FvQchgb1pfO/dcBBs1VqfBCglGWu1qKynHAT0ZY8ZYMCc2a4
+	 1pekWv3Hl0IaCDDm+2lVxTzLAnwUKxrzLXzYtgeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 184/462] Bluetooth: btmrvl: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Wed,  6 Nov 2024 13:01:17 +0100
-Message-ID: <20241106120336.060914310@linuxfoundation.org>
+Subject: [PATCH 5.4 185/462] net: ethernet: lantiq_etop: fix memory disclosure
+Date: Wed,  6 Nov 2024 13:01:18 +0100
+Message-ID: <20241106120336.084685280@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,43 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit 7b1ab460592ca818e7b52f27cd3ec86af79220d1 ]
+[ Upstream commit 45c0de18ff2dc9af01236380404bbd6a46502c69 ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+When applying padding, the buffer is not zeroed, which results in memory
+disclosure. The mentioned data is observed on the wire. This patch uses
+skb_put_padto() to pad Ethernet frames properly. The mentioned function
+zeroes the expanded buffer.
 
-Fixes: bb7f4f0bcee6 ("btmrvl: add platform specific wakeup interrupt support")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+In case the packet cannot be padded it is silently dropped. Statistics
+are also not incremented. This driver does not support statistics in the
+old 32-bit format or the new 64-bit format. These will be added in the
+future. In its current form, the patch should be easily backported to
+stable versions.
+
+Ethernet MACs on Amazon-SE and Danube cannot do padding of the packets
+in hardware, so software padding must be applied.
+
+Fixes: 504d4721ee8e ("MIPS: Lantiq: Add ethernet driver")
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20240923214949.231511-2-olek2@wp.pl
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmrvl_sdio.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/lantiq_etop.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btmrvl_sdio.c b/drivers/bluetooth/btmrvl_sdio.c
-index cfb9f9db44a0d..be7145d43570f 100644
---- a/drivers/bluetooth/btmrvl_sdio.c
-+++ b/drivers/bluetooth/btmrvl_sdio.c
-@@ -105,7 +105,7 @@ static int btmrvl_sdio_probe_of(struct device *dev,
- 		} else {
- 			ret = devm_request_irq(dev, cfg->irq_bt,
- 					       btmrvl_wake_irq_bt,
--					       0, "bt_wake", card);
-+					       IRQF_NO_AUTOEN, "bt_wake", card);
- 			if (ret) {
- 				dev_err(dev,
- 					"Failed to request irq_bt %d (%d)\n",
-@@ -114,7 +114,6 @@ static int btmrvl_sdio_probe_of(struct device *dev,
+diff --git a/drivers/net/ethernet/lantiq_etop.c b/drivers/net/ethernet/lantiq_etop.c
+index 932796080c7f7..5121e175f313f 100644
+--- a/drivers/net/ethernet/lantiq_etop.c
++++ b/drivers/net/ethernet/lantiq_etop.c
+@@ -464,7 +464,9 @@ ltq_etop_tx(struct sk_buff *skb, struct net_device *dev)
+ 	unsigned long flags;
+ 	u32 byte_offset;
  
- 			/* Configure wakeup (enabled by default) */
- 			device_init_wakeup(dev, true);
--			disable_irq(cfg->irq_bt);
- 		}
- 	}
+-	len = skb->len < ETH_ZLEN ? ETH_ZLEN : skb->len;
++	if (skb_put_padto(skb, ETH_ZLEN))
++		return NETDEV_TX_OK;
++	len = skb->len;
  
+ 	if ((desc->ctl & (LTQ_DMA_OWN | LTQ_DMA_C)) || ch->skb[ch->dma.desc]) {
+ 		netdev_err(dev, "tx ring full\n");
 -- 
 2.43.0
 
