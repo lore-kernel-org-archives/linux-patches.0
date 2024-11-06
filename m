@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAA21E0DBD;
-	Wed,  6 Nov 2024 13:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014881E0DBD;
+	Wed,  6 Nov 2024 13:11:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898675; cv=none; b=dp18o8o/jhKOx38BYm8Fz9w9Fte8BbtZii7JxgmQ5+FmJyGwEVLzSewqnkCuwgA8M9j7pQtQpn1n/bmuLRKCAjFyuAq44ijoFuBRiv/NICF1ftqq7CXhAf9mHSIib5PgQnBx82OQ0H1176ylRllYW0nHi6++MvWCTGDH/mGGTQ0=
+	t=1730898678; cv=none; b=i8H5JajJ4eNREwde1RnJ7/C1E9AEDv03PzQ1CVJwRZX4A13PO94orwP6YxL1eRjShpWYdXJAvNFr6IWXj3sYJ1PtEFr/xw9LmE7kz60nnJtY5iqGzbayBTOYWKceKWtw9t38IaPe9G8Z32hBjiLrkmd9cMqbd+54+sc8KCt0DME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898675; c=relaxed/simple;
-	bh=eXsv5yWI+heAXZ7C2W03xBXAEnqQAd4dq1smuGXZmmY=;
+	s=arc-20240116; t=1730898678; c=relaxed/simple;
+	bh=BUsowi3QMYCEZnladAyy0SGKKQXif84Um55CnQ3z3WQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TQkptipUIr6w5CCNHmrgZTvnHx+FYczFVWLIrxMoJxjOSHPzNBvoMBetG31sYsuJi5NIyx4x6MZblW/aMjRdUAL/yqRdoniJXcQo+1wmfwBnmu9gYHSXRKLKJFbn8PLtDzSEhVXgGtSvu/N43WXJECx8X1+1cHBOG4k5udoc8xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksqiNmw+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RdfcWGm72fKMtt8SYs/wt/Yq1vuV9tqNQS0N25sWrWRbDwiX7ntRTX3/jxNsLprDGytVCsKknAb6ez3LXjrVi1NiODBXxnSOdaUs+PDEOSOxQUmSSwwKj6/YN4ZrfDzmH7lf9nt1D4EOcqJe8HVIJm2PSSDmTdJ8sTtAZUtnlmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tERqiwCW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksqiNmw+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B68CC4CED3;
-	Wed,  6 Nov 2024 13:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tERqiwCW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD40C4CECD;
+	Wed,  6 Nov 2024 13:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898674;
-	bh=eXsv5yWI+heAXZ7C2W03xBXAEnqQAd4dq1smuGXZmmY=;
+	s=korg; t=1730898677;
+	bh=BUsowi3QMYCEZnladAyy0SGKKQXif84Um55CnQ3z3WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ksqiNmw+DBwgOB7bEt1iMEbftwfQIJvPtNGRXoFwrkqegweQ4yQNDL5yd0eD2ghKv
-	 G/lctlFTaIIOz0s1Tbt9tavRwCujC5Y4RoBZE4Sr+n0yQmruhc/Jp2mj+xD+H2uDh6
-	 pkl7J2kvzyDQcViB96TcVPfyRHtDwEQUwHZ4wTFQ=
+	b=tERqiwCWAAQWtFwhy0vOJb+4ixxDUAavNeSEUcj2ZNlbb8qE2rl498hxWxunom1oP
+	 BkIIBWmKCwG32gfpv62dFnxOTZbCBGJYTiX3fq7xxbr9mADeFma2nJjJmkpLJymHSb
+	 3SxRqOG/H3nCfY4BwD/7fZGbG1NX2ptcw+TYxzRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Jun <zhujun2@cmss.chinamobile.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 318/462] tools/iio: Add memory allocation failure check for trigger_name
-Date: Wed,  6 Nov 2024 13:03:31 +0100
-Message-ID: <20241106120339.380778898@linuxfoundation.org>
+Subject: [PATCH 5.4 319/462] driver core: bus: Return -EIO instead of 0 when show/store invalid bus attribute
+Date: Wed,  6 Nov 2024 13:03:32 +0100
+Message-ID: <20241106120339.405139958@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,36 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Jun <zhujun2@cmss.chinamobile.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 3c6b818b097dd6932859bcc3d6722a74ec5931c1 ]
+[ Upstream commit c0fd973c108cdc22a384854bc4b3e288a9717bb2 ]
 
-Added a check to handle memory allocation failure for `trigger_name`
-and return `-ENOMEM`.
+Return -EIO instead of 0 for below erroneous bus attribute operations:
+ - read a bus attribute without show().
+ - write a bus attribute without store().
 
-Signed-off-by: Zhu Jun <zhujun2@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20240828093129.3040-1-zhujun2@cmss.chinamobile.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20240724-bus_fix-v2-1-5adbafc698fb@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/iio/iio_generic_buffer.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/base/bus.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
-index 2fd10eab75b53..5ef09ac6e7cf7 100644
---- a/tools/iio/iio_generic_buffer.c
-+++ b/tools/iio/iio_generic_buffer.c
-@@ -479,6 +479,10 @@ int main(int argc, char **argv)
- 			return -ENOMEM;
- 		}
- 		trigger_name = malloc(IIO_MAX_NAME_LENGTH);
-+		if (!trigger_name) {
-+			ret = -ENOMEM;
-+			goto error;
-+		}
- 		ret = read_sysfs_string("name", trig_dev_name, trigger_name);
- 		free(trig_dev_name);
- 		if (ret < 0) {
+diff --git a/drivers/base/bus.c b/drivers/base/bus.c
+index 7d7d28f498edd..f970a40a2f7ad 100644
+--- a/drivers/base/bus.c
++++ b/drivers/base/bus.c
+@@ -103,7 +103,8 @@ static ssize_t bus_attr_show(struct kobject *kobj, struct attribute *attr,
+ {
+ 	struct bus_attribute *bus_attr = to_bus_attr(attr);
+ 	struct subsys_private *subsys_priv = to_subsys_private(kobj);
+-	ssize_t ret = 0;
++	/* return -EIO for reading a bus attribute without show() */
++	ssize_t ret = -EIO;
+ 
+ 	if (bus_attr->show)
+ 		ret = bus_attr->show(subsys_priv->bus, buf);
+@@ -115,7 +116,8 @@ static ssize_t bus_attr_store(struct kobject *kobj, struct attribute *attr,
+ {
+ 	struct bus_attribute *bus_attr = to_bus_attr(attr);
+ 	struct subsys_private *subsys_priv = to_subsys_private(kobj);
+-	ssize_t ret = 0;
++	/* return -EIO for writing a bus attribute without store() */
++	ssize_t ret = -EIO;
+ 
+ 	if (bus_attr->store)
+ 		ret = bus_attr->store(subsys_priv->bus, buf, count);
 -- 
 2.43.0
 
