@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF301DF24A;
-	Wed,  6 Nov 2024 12:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3E21DF75C;
+	Wed,  6 Nov 2024 12:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895558; cv=none; b=U797O03bl2RI4W8WCC4PRfXZnUTybVDWOevKT+cdA4Wkoh/SAkUAlspDhahJb61ND7ZXUx6CCu+BqNT4s8YqnEha+g+otCvEZvUQNw8czm2jSn4xPeMvnfNlAL5zxad/D4FY+xRsWgMxpl1Oy7NKKY6z3mVV/7Lfx+XNfIz7I7A=
+	t=1730895561; cv=none; b=ptoRJREaZ0uuCcgDf93aOYUqflYPEV+87zdibGAXHw33CoLFZy13pjs0G3pqw38KfQew6Jze3heKJRnPi/zeYCThpD1sCWyZO7R4jcSwDAgCRmLfKQXkoEZqzrcHQAAxur2ozeaajjdkM0lDpevPDc1p2o2dN2Ks8/Z4OnF2nYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895558; c=relaxed/simple;
-	bh=6Yp+WD0j4NhzUO3v4AQu0cRz9E0GdYPoXKP1L+IRck4=;
+	s=arc-20240116; t=1730895561; c=relaxed/simple;
+	bh=E/UNVJyjsl/VhsniNZklILcZM6WihF19/MuPRGU2cRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXA1JkLxd9LLZFBVyAQkdPWtmrOIlvpcLT4nTVax6QNsK+NI5qrPQwlpg4vmMvZq09m4/DhS5dUsCQpIB6znU9NePqvjwrUP5QFGPoFSAP3kRPiH+A9qGNao2SRus39pYNHWVUBLkH2+NI2zC6AAmmPmuvhTLeuFMgWY1/3lyxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgnYialL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sTiXTSqMqgVpSHukxQ+ig6Ifkg3vOW0lURy1o4XKBZpS4Gi3KXCrhRVIjAZJjnG8pOJS+3IAAY4eLqdSv3Bt5QYb2dmrZC/raUxh9bw+cCROt4/G8ccusKbp2taHoadeXUvA7V3ONSUp31hVqEitTwf4krkCASgT/Q7mJpXlyz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BR9fx78A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgnYialL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29A25C4CECD;
-	Wed,  6 Nov 2024 12:19:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BR9fx78A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A52DC4AF0B;
+	Wed,  6 Nov 2024 12:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895558;
-	bh=6Yp+WD0j4NhzUO3v4AQu0cRz9E0GdYPoXKP1L+IRck4=;
+	s=korg; t=1730895561;
+	bh=E/UNVJyjsl/VhsniNZklILcZM6WihF19/MuPRGU2cRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rgnYialLrrYRwu/Jg6Eyvp0exW/4sOJjM0bN2K7mQrtk3hYN+bk0JTGPLqg8QMDFc
-	 6eVbWjDzX55Os9amAHUxLgo5miA2OxiTS2E8FvzYOvzWotv0l3LQ2DGNmvwqGXMcSZ
-	 aNY6AaTsLNZf9WCjlY8WgiPc9Ahk1Fq9URJL+QA0=
+	b=BR9fx78ARlGXGeYfL/txQhfoKgX1AJhQ0pITx6ni3IpgxdyMRafvP5pVMqEaYV68o
+	 g+hjdgGRUDuZnlb1pmPyVe5BBxityqfSsbDklgusqwL8otfewbPaxW6o+oLkslhYKL
+	 5IpV7tEXS6gEdMkMy7OTdBfsLug1qebEOYEQgdZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
+	syzbot+1d121645899e7692f92a@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 259/350] net: ibm: emac: mal: fix wrong goto
-Date: Wed,  6 Nov 2024 13:03:07 +0100
-Message-ID: <20241106120327.305503460@linuxfoundation.org>
+Subject: [PATCH 4.19 260/350] ppp: fix ppp_async_encode() illegal access
+Date: Wed,  6 Nov 2024 13:03:08 +0100
+Message-ID: <20241106120327.328361395@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,34 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 08c8acc9d8f3f70d62dd928571368d5018206490 ]
+[ Upstream commit 40dddd4b8bd08a69471efd96107a4e1c73fabefc ]
 
-dcr_map is called in the previous if and therefore needs to be unmapped.
+syzbot reported an issue in ppp_async_encode() [1]
 
-Fixes: 1ff0fcfcb1a6 ("ibm_newemac: Fix new MAL feature handling")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://patch.msgid.link/20241007235711.5714-1-rosenp@gmail.com
+In this case, pppoe_sendmsg() is called with a zero size.
+Then ppp_async_encode() is called with an empty skb.
+
+BUG: KMSAN: uninit-value in ppp_async_encode drivers/net/ppp/ppp_async.c:545 [inline]
+ BUG: KMSAN: uninit-value in ppp_async_push+0xb4f/0x2660 drivers/net/ppp/ppp_async.c:675
+  ppp_async_encode drivers/net/ppp/ppp_async.c:545 [inline]
+  ppp_async_push+0xb4f/0x2660 drivers/net/ppp/ppp_async.c:675
+  ppp_async_send+0x130/0x1b0 drivers/net/ppp/ppp_async.c:634
+  ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2280 [inline]
+  ppp_input+0x1f1/0xe60 drivers/net/ppp/ppp_generic.c:2304
+  pppoe_rcv_core+0x1d3/0x720 drivers/net/ppp/pppoe.c:379
+  sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1113
+  __release_sock+0x1da/0x330 net/core/sock.c:3072
+  release_sock+0x6b/0x250 net/core/sock.c:3626
+  pppoe_sendmsg+0x2b8/0xb90 drivers/net/ppp/pppoe.c:903
+  sock_sendmsg_nosec net/socket.c:729 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:744
+  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
+  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
+  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
+  __do_sys_sendmmsg net/socket.c:2771 [inline]
+  __se_sys_sendmmsg net/socket.c:2768 [inline]
+  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
+  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Uninit was created at:
+  slab_post_alloc_hook mm/slub.c:4092 [inline]
+  slab_alloc_node mm/slub.c:4135 [inline]
+  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4187
+  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:587
+  __alloc_skb+0x363/0x7b0 net/core/skbuff.c:678
+  alloc_skb include/linux/skbuff.h:1322 [inline]
+  sock_wmalloc+0xfe/0x1a0 net/core/sock.c:2732
+  pppoe_sendmsg+0x3a7/0xb90 drivers/net/ppp/pppoe.c:867
+  sock_sendmsg_nosec net/socket.c:729 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:744
+  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
+  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
+  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
+  __do_sys_sendmmsg net/socket.c:2771 [inline]
+  __se_sys_sendmmsg net/socket.c:2768 [inline]
+  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
+  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+CPU: 1 UID: 0 PID: 5411 Comm: syz.1.14 Not tainted 6.12.0-rc1-syzkaller-00165-g360c1f1f24c6 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+1d121645899e7692f92a@syzkaller.appspotmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241009185802.3763282-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/emac/mal.c | 2 +-
+ drivers/net/ppp/ppp_async.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ibm/emac/mal.c b/drivers/net/ethernet/ibm/emac/mal.c
-index fff09dcf9e346..9b3ba4db3222f 100644
---- a/drivers/net/ethernet/ibm/emac/mal.c
-+++ b/drivers/net/ethernet/ibm/emac/mal.c
-@@ -581,7 +581,7 @@ static int mal_probe(struct platform_device *ofdev)
- 		printk(KERN_ERR "%pOF: Support for 405EZ not enabled!\n",
- 				ofdev->dev.of_node);
- 		err = -ENODEV;
--		goto fail;
-+		goto fail_unmap;
- #endif
- 	}
+diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
+index fb1e28a298929..14e8ad3f93544 100644
+--- a/drivers/net/ppp/ppp_async.c
++++ b/drivers/net/ppp/ppp_async.c
+@@ -555,7 +555,7 @@ ppp_async_encode(struct asyncppp *ap)
+ 	 * and 7 (code-reject) must be sent as though no options
+ 	 * had been negotiated.
+ 	 */
+-	islcp = proto == PPP_LCP && 1 <= data[2] && data[2] <= 7;
++	islcp = proto == PPP_LCP && count >= 3 && 1 <= data[2] && data[2] <= 7;
  
+ 	if (i == 0) {
+ 		if (islcp)
 -- 
 2.43.0
 
