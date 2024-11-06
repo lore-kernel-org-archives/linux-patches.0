@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8B91F6672;
-	Wed,  6 Nov 2024 12:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B6A1F667B;
+	Wed,  6 Nov 2024 12:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896643; cv=none; b=WAzIpSDOVKDoTNxGCqbm167l7BdVAEBeNeRozir17qCUVZofVQ4/en2Ve6GDYXLFkH/TdGhDhmaJCRFpLyesaEWiFXArOraM+am6h3i5nNzFkJKWjGTCGGML9CgQa4RJzzli7e8y2jck5nQaPf8aF87jFB93Fa57k1SjNEn0YRg=
+	t=1730896646; cv=none; b=SsSPep04TJqAGKdpm0PbMsAiBT/E5da1ObruoeTlPNbiQoQIkbjjgKY7S1ZGx41c9qXdUGhsUzzdXtBUJDr5Vh5VLSpG7rDxxG4ZAa1aVYZJ5Uj3XVQAulz+VMcSkA/wK9nFbwOD+65g6VQGLOUcBw7M7KJIGcpsLGGY7M9doi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896643; c=relaxed/simple;
-	bh=KQ0Af49HGrGEqhcVjCkWlPw7CSbLOXk/mMcyL1HAheM=;
+	s=arc-20240116; t=1730896646; c=relaxed/simple;
+	bh=U7p9NqYk6eyBim1hd5Fg2AHCNh2EgeAPI/dY6dWzjdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fc9hdnepXRFkfurIRfHCu6rgqiGYg568kZngJCyo9xcHJVuyTW5b6iTW6lQuHAaxJEr8d7haevM7ROA/Bk4sf7le8FKxLLcB/yJWmL2ft+dvFuqavrHV/2zXJr77shSL3xhuF1VDqn7e7AYhjzdAUbE+UIxWmlD69gHJ6Tom4fU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JWU58xKY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Akf8TnBBWqpMavnRW1hOG8vb3xGmpIGpmnceedPPxDFklC1wr2olFSBZVOli1zYwv/Dj1WkGgHfuyQF5+woyJpKSAOOub67voTwRnTv3olIDbA1ROAHmWmmqh0X1ZAfbdxVRF+FmR2+gxdT0/IOWSPWRKM+7uBMiyrwhvJe5zEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogOKzu29; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JWU58xKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74DF0C4CED8;
-	Wed,  6 Nov 2024 12:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogOKzu29"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765DFC4CECD;
+	Wed,  6 Nov 2024 12:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896642;
-	bh=KQ0Af49HGrGEqhcVjCkWlPw7CSbLOXk/mMcyL1HAheM=;
+	s=korg; t=1730896645;
+	bh=U7p9NqYk6eyBim1hd5Fg2AHCNh2EgeAPI/dY6dWzjdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JWU58xKYkRcexWW0roOTIq3RmjPfJS9NuP20/wx4b5wueIuqwCUpe4RGECzMuRaX0
-	 mJYKGwyg3+6M1Lckcxf9tn5V1GMq/obH9pkA18zw4rhdeCGjKQRNly6UaZeGYNe1Pv
-	 iSxo6wZ2nM06VknD/ewrQkvLRnwrmc9/k48PevgA=
+	b=ogOKzu29A9Eh8iErJxZS7djA6iEyYU7GXADVvlt4kLq2Kolz1DeVfYMlBwXIlnfVG
+	 hLDlK5quOVd4MJ8GOVQB0B10Cqe0rRrcM9jVgvEPsuUdug+50J1LKuXkDX9zvNRteJ
+	 3xzMonqltvFGzVOZ3VnTvrnSlqBmVUxfe1ptTArA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nico Boehr <nrb@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 024/110] KVM: s390: gaccess: Check if guest address is in memslot
-Date: Wed,  6 Nov 2024 13:03:50 +0100
-Message-ID: <20241106120303.833455227@linuxfoundation.org>
+Subject: [PATCH 5.10 025/110] block, bfq: fix procress reference leakage for bfqq in merge chain
+Date: Wed,  6 Nov 2024 13:03:51 +0100
+Message-ID: <20241106120303.861634649@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -46,129 +45,150 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nico Boehr <nrb@linux.ibm.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit e8061f06185be0a06a73760d6526b8b0feadfe52 ]
+[ Upstream commit 73aeab373557fa6ee4ae0b742c6211ccd9859280 ]
 
-Previously, access_guest_page() did not check whether the given guest
-address is inside of a memslot. This is not a problem, since
-kvm_write_guest_page/kvm_read_guest_page return -EFAULT in this case.
+Original state:
 
-However, -EFAULT is also returned when copy_to/from_user fails.
+        Process 1       Process 2       Process 3       Process 4
+         (BIC1)          (BIC2)          (BIC3)          (BIC4)
+          Λ                |               |               |
+           \--------------\ \-------------\ \-------------\|
+                           V               V               V
+          bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
+    ref    0               1               2               4
 
-When emulating a guest instruction, the address being outside a memslot
-usually means that an addressing exception should be injected into the
-guest.
+After commit 0e456dba86c7 ("block, bfq: choose the last bfqq from merge
+chain in bfq_setup_cooperator()"), if P1 issues a new IO:
 
-Failure in copy_to/from_user however indicates that something is wrong
-in userspace and hence should be handled there.
+Without the patch:
 
-To be able to distinguish these two cases, return PGM_ADDRESSING in
-access_guest_page() when the guest address is outside guest memory. In
-access_guest_real(), populate vcpu->arch.pgm.code such that
-kvm_s390_inject_prog_cond() can be used in the caller for injecting into
-the guest (if applicable).
+        Process 1       Process 2       Process 3       Process 4
+         (BIC1)          (BIC2)          (BIC3)          (BIC4)
+          Λ                |               |               |
+           \------------------------------\ \-------------\|
+                                           V               V
+          bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
+    ref    0               0               2               4
 
-Since this adds a new return value to access_guest_page(), we need to make
-sure that other callers are not confused by the new positive return value.
+bfqq3 will be used to handle IO from P1, this is not expected, IO
+should be redirected to bfqq4;
 
-There are the following users of access_guest_page():
-- access_guest_with_key() does the checking itself (in
-  guest_range_to_gpas()), so this case should never happen. Even if, the
-  handling is set up properly.
-- access_guest_real() just passes the return code to its callers, which
-  are:
-    - read_guest_real() - see below
-    - write_guest_real() - see below
+With the patch:
 
-There are the following users of read_guest_real():
-- ar_translation() in gaccess.c which already returns PGM_*
-- setup_apcb10(), setup_apcb00(), setup_apcb11() in vsie.c which always
-  return -EFAULT on read_guest_read() nonzero return - no change
-- shadow_crycb(), handle_stfle() always present this as validity, this
-  could be handled better but doesn't change current behaviour - no change
+          -------------------------------------------
+          |                                         |
+        Process 1       Process 2       Process 3   |   Process 4
+         (BIC1)          (BIC2)          (BIC3)     |    (BIC4)
+                           |               |        |      |
+                            \-------------\ \-------------\|
+                                           V               V
+          bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
+    ref    0               0               2               4
 
-There are the following users of write_guest_real():
-- kvm_s390_store_status_unloaded() always returns -EFAULT on
-  write_guest_real() failure.
+IO is redirected to bfqq4, however, procress reference of bfqq3 is still
+2, while there is only P2 using it.
 
-Fixes: 2293897805c2 ("KVM: s390: add architecture compliant guest access functions")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nico Boehr <nrb@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240917151904.74314-2-nrb@linux.ibm.com
-Acked-by: Janosch Frank <frankja@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fix the problem by calling bfq_merge_bfqqs() for each bfqq in the merge
+chain. Also change bfqq_merge_bfqqs() to return new_bfqq to simplify
+code.
+
+Fixes: 0e456dba86c7 ("block, bfq: choose the last bfqq from merge chain in bfq_setup_cooperator()")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20240909134154.954924-3-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/gaccess.c |  4 ++++
- arch/s390/kvm/gaccess.h | 14 ++++++++------
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ block/bfq-iosched.c | 33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
-diff --git a/arch/s390/kvm/gaccess.c b/arch/s390/kvm/gaccess.c
-index 164f96ba61dd2..5a880e2545243 100644
---- a/arch/s390/kvm/gaccess.c
-+++ b/arch/s390/kvm/gaccess.c
-@@ -873,6 +873,8 @@ static int access_guest_page(struct kvm *kvm, enum gacc_mode mode, gpa_t gpa,
- 	const gfn_t gfn = gpa_to_gfn(gpa);
- 	int rc;
- 
-+	if (!gfn_to_memslot(kvm, gfn))
-+		return PGM_ADDRESSING;
- 	if (mode == GACC_STORE)
- 		rc = kvm_write_guest_page(kvm, gfn, data, offset, len);
- 	else
-@@ -936,6 +938,8 @@ int access_guest_real(struct kvm_vcpu *vcpu, unsigned long gra,
- 		gra += fragment_len;
- 		data += fragment_len;
- 	}
-+	if (rc > 0)
-+		vcpu->arch.pgm.code = rc;
- 	return rc;
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 515e3c1a54759..c1600e3ac3339 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -2774,10 +2774,12 @@ void bfq_release_process_ref(struct bfq_data *bfqd, struct bfq_queue *bfqq)
+ 	bfq_put_queue(bfqq);
  }
  
-diff --git a/arch/s390/kvm/gaccess.h b/arch/s390/kvm/gaccess.h
-index 7c72a5e3449f8..8ed2d6c7404ff 100644
---- a/arch/s390/kvm/gaccess.h
-+++ b/arch/s390/kvm/gaccess.h
-@@ -344,11 +344,12 @@ int read_guest_abs(struct kvm_vcpu *vcpu, unsigned long gpa, void *data,
-  * @len: number of bytes to copy
-  *
-  * Copy @len bytes from @data (kernel space) to @gra (guest real address).
-- * It is up to the caller to ensure that the entire guest memory range is
-- * valid memory before calling this function.
-  * Guest low address and key protection are not checked.
-  *
-- * Returns zero on success or -EFAULT on error.
-+ * Returns zero on success, -EFAULT when copying from @data failed, or
-+ * PGM_ADRESSING in case @gra is outside a memslot. In this case, pgm check info
-+ * is also stored to allow injecting into the guest (if applicable) using
-+ * kvm_s390_inject_prog_cond().
-  *
-  * If an error occurs data may have been copied partially to guest memory.
-  */
-@@ -367,11 +368,12 @@ int write_guest_real(struct kvm_vcpu *vcpu, unsigned long gra, void *data,
-  * @len: number of bytes to copy
-  *
-  * Copy @len bytes from @gra (guest real address) to @data (kernel space).
-- * It is up to the caller to ensure that the entire guest memory range is
-- * valid memory before calling this function.
-  * Guest key protection is not checked.
-  *
-- * Returns zero on success or -EFAULT on error.
-+ * Returns zero on success, -EFAULT when copying to @data failed, or
-+ * PGM_ADRESSING in case @gra is outside a memslot. In this case, pgm check info
-+ * is also stored to allow injecting into the guest (if applicable) using
-+ * kvm_s390_inject_prog_cond().
-  *
-  * If an error occurs data may have been copied partially to kernel space.
-  */
+-static void
+-bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
+-		struct bfq_queue *bfqq, struct bfq_queue *new_bfqq)
++static struct bfq_queue *bfq_merge_bfqqs(struct bfq_data *bfqd,
++					 struct bfq_io_cq *bic,
++					 struct bfq_queue *bfqq)
+ {
++	struct bfq_queue *new_bfqq = bfqq->new_bfqq;
++
+ 	bfq_log_bfqq(bfqd, bfqq, "merging with queue %lu",
+ 		(unsigned long)new_bfqq->pid);
+ 	/* Save weight raising and idle window of the merged queues */
+@@ -2845,6 +2847,8 @@ bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
+ 	new_bfqq->pid = -1;
+ 	bfqq->bic = NULL;
+ 	bfq_release_process_ref(bfqd, bfqq);
++
++	return new_bfqq;
+ }
+ 
+ static bool bfq_allow_bio_merge(struct request_queue *q, struct request *rq,
+@@ -2880,14 +2884,8 @@ static bool bfq_allow_bio_merge(struct request_queue *q, struct request *rq,
+ 		 * fulfilled, i.e., bic can be redirected to new_bfqq
+ 		 * and bfqq can be put.
+ 		 */
+-		bfq_merge_bfqqs(bfqd, bfqd->bio_bic, bfqq,
+-				new_bfqq);
+-		/*
+-		 * If we get here, bio will be queued into new_queue,
+-		 * so use new_bfqq to decide whether bio and rq can be
+-		 * merged.
+-		 */
+-		bfqq = new_bfqq;
++		while (bfqq != new_bfqq)
++			bfqq = bfq_merge_bfqqs(bfqd, bfqd->bio_bic, bfqq);
+ 
+ 		/*
+ 		 * Change also bqfd->bio_bfqq, as
+@@ -5444,6 +5442,7 @@ static bool __bfq_insert_request(struct bfq_data *bfqd, struct request *rq)
+ 	bool waiting, idle_timer_disabled = false;
+ 
+ 	if (new_bfqq) {
++		struct bfq_queue *old_bfqq = bfqq;
+ 		/*
+ 		 * Release the request's reference to the old bfqq
+ 		 * and make sure one is taken to the shared queue.
+@@ -5459,18 +5458,18 @@ static bool __bfq_insert_request(struct bfq_data *bfqd, struct request *rq)
+ 		 * then complete the merge and redirect it to
+ 		 * new_bfqq.
+ 		 */
+-		if (bic_to_bfqq(RQ_BIC(rq), 1) == bfqq)
+-			bfq_merge_bfqqs(bfqd, RQ_BIC(rq),
+-					bfqq, new_bfqq);
++		if (bic_to_bfqq(RQ_BIC(rq), 1) == bfqq) {
++			while (bfqq != new_bfqq)
++				bfqq = bfq_merge_bfqqs(bfqd, RQ_BIC(rq), bfqq);
++		}
+ 
+-		bfq_clear_bfqq_just_created(bfqq);
++		bfq_clear_bfqq_just_created(old_bfqq);
+ 		/*
+ 		 * rq is about to be enqueued into new_bfqq,
+ 		 * release rq reference on bfqq
+ 		 */
+-		bfq_put_queue(bfqq);
++		bfq_put_queue(old_bfqq);
+ 		rq->elv.priv[1] = new_bfqq;
+-		bfqq = new_bfqq;
+ 	}
+ 
+ 	bfq_update_io_thinktime(bfqd, bfqq);
 -- 
 2.43.0
 
