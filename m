@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8CF1DEFF4;
-	Wed,  6 Nov 2024 12:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED891DF73B;
+	Wed,  6 Nov 2024 12:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894903; cv=none; b=CxjvUuc1yjovch0U3KT/wv5JRUennADUdzZXghfrhfeyAtfSHyvuM58Lj5EwSozUadcCYT+t/kHGGweuhC/fksnjKsZbYFA2Ja8U010AHtIXUt5dOQNwkFlJx/s3VU9wkvJRexmhKsNLVken/0H/iT4EeB1ptoiQhQGozrfJf6s=
+	t=1730894907; cv=none; b=aH+ViBAz4DWWaDXNQeIBdAjq8RduwryPEIOzT7arJl1LlUSuvQt2ma6/LGR7jW/xV6e81+ZKQNDhOQJErlIxa1+uSsVslqhcWmWKeGL1ZLyVP2PEFexb+qQdWziDY/LLL/Hcvn720WXZv4GKW62KKqzoUD/3zdNNs0QWTVZXJLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894903; c=relaxed/simple;
-	bh=TtYmwPGlOJBSBjzSkAOqOyjjrYsBETpHLm7ThcvPYZg=;
+	s=arc-20240116; t=1730894907; c=relaxed/simple;
+	bh=P9EmB/CixudQDHyfpLj1yOgnGHa8bZq6tDf5CwMpzhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KrHuEDbAzeIJxi3GML3y415YIVbmxxidGysKavqSisOaa2JzMC2bsfzJRZthb+VT9M1gEdZVku6dwcZ3cVFftFwbB9320HQ0QAtAbkHONbSHdhZ6UmwHvQBfQqZ6C4QIRdP3h7T78m5tEQX+fMHax3MbC1WZUkyBfDBHYdBRcWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JmvPv5Qs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RnT4FhzJ2kyJuwrmLz3J7FOG95Y5AD1DwfZNs07Nf68KEv87HH8dGXOZwSTjqhJoCV2p03Pt8wf4NrIWO2ii905LR24BPcTJV067Wiv2p3Yeo9GSEgLP8l4fWn8MIVshXHMkH6yucP3gL2B72g3NEVKehHIpX/hazGJInsftTEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RONPAWWj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JmvPv5Qs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230A4C4CECD;
-	Wed,  6 Nov 2024 12:08:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RONPAWWj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F85EC4CECD;
+	Wed,  6 Nov 2024 12:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894903;
-	bh=TtYmwPGlOJBSBjzSkAOqOyjjrYsBETpHLm7ThcvPYZg=;
+	s=korg; t=1730894906;
+	bh=P9EmB/CixudQDHyfpLj1yOgnGHa8bZq6tDf5CwMpzhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JmvPv5QsgX0+7grj94dcH35FUWbrzha78cErdjYaBUWi0DXhMst/L3uhcWukKCcVd
-	 oWNVEFaWnYyhaHl1ttOycp1/l8WK3JwLTeXgTHeKj6+8vEO1Bi5yAJ96UZTHNtI1n9
-	 wjVCM5Uox+wFovAYeRbMURx6QCM05D9ktHTRCjNA=
+	b=RONPAWWjb1W0wLJUZSNBjDfhHmxFf4tpDmJpAFaAjEhmVSP86YFIjRUWMv/B+pj/H
+	 v0nVtY3O6loGf6A/yrab+JVfiPdklMEKKViqbw6kMIehSz1SGqkwMUBCeIuWaH4/FP
+	 p/S8432YHFnl7PzvaKdD3H6on1GhaQb+quE+kRac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 038/350] block, bfq: choose the last bfqq from merge chain in bfq_setup_cooperator()
-Date: Wed,  6 Nov 2024 12:59:26 +0100
-Message-ID: <20241106120321.826385595@linuxfoundation.org>
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 4.19 012/350] soundwire: stream: Revert "soundwire: stream: fix programming slave ports for non-continous port maps"
+Date: Wed,  6 Nov 2024 12:59:00 +0100
+Message-ID: <20241106120321.175334558@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -45,64 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 0e456dba86c7f9a19792204a044835f1ca2c8dbb ]
+commit 233a95fd574fde1c375c486540a90304a2d2d49f upstream.
 
-Consider the following merge chain:
+This reverts commit ab8d66d132bc8f1992d3eb6cab8d32dda6733c84 because it
+breaks codecs using non-continuous masks in source and sink ports.  The
+commit missed the point that port numbers are not used as indices for
+iterating over prop.sink_ports or prop.source_ports.
 
-Process 1       Process 2       Process 3	Process 4
- (BIC1)          (BIC2)          (BIC3)		 (BIC4)
-  Λ                |               |               |
-   \--------------\ \-------------\ \-------------\|
-                   V               V		   V
-  bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
+Soundwire core and existing codecs expect that the array passed as
+prop.sink_ports and prop.source_ports is continuous.  The port mask still
+might be non-continuous, but that's unrelated.
 
-IO from Process 1 will get bfqf2 from BIC1 first, then
-bfq_setup_cooperator() will found bfqq2 already merged to bfqq3 and then
-handle this IO from bfqq3. However, the merge chain can be much deeper
-and bfqq3 can be merged to other bfqq as well.
-
-Fix this problem by iterating to the last bfqq in
-bfq_setup_cooperator().
-
-Fixes: 36eca8948323 ("block, bfq: add Early Queue Merge (EQM)")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240902130329.3787024-3-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Closes: https://lore.kernel.org/all/b6c75eee-761d-44c8-8413-2a5b34ee2f98@linux.intel.com/
+Fixes: ab8d66d132bc ("soundwire: stream: fix programming slave ports for non-continous port maps")
+Acked-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20240909164746.136629-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bfq-iosched.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/soundwire/stream.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 1479e8d6fede2..3ed6584496f34 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -2226,8 +2226,12 @@ bfq_setup_cooperator(struct bfq_data *bfqd, struct bfq_queue *bfqq,
- 	struct bfq_queue *in_service_bfqq, *new_bfqq;
+--- a/drivers/soundwire/stream.c
++++ b/drivers/soundwire/stream.c
+@@ -1232,18 +1232,18 @@ struct sdw_dpn_prop *sdw_get_slave_dpn_p
+ 				unsigned int port_num)
+ {
+ 	struct sdw_dpn_prop *dpn_prop;
+-	unsigned long mask;
++	u8 num_ports;
+ 	int i;
  
- 	/* if a merge has already been setup, then proceed with that first */
--	if (bfqq->new_bfqq)
--		return bfqq->new_bfqq;
-+	new_bfqq = bfqq->new_bfqq;
-+	if (new_bfqq) {
-+		while (new_bfqq->new_bfqq)
-+			new_bfqq = new_bfqq->new_bfqq;
-+		return new_bfqq;
-+	}
+ 	if (direction == SDW_DATA_DIR_TX) {
+-		mask = slave->prop.source_ports;
++		num_ports = hweight32(slave->prop.source_ports);
+ 		dpn_prop = slave->prop.src_dpn_prop;
+ 	} else {
+-		mask = slave->prop.sink_ports;
++		num_ports = hweight32(slave->prop.sink_ports);
+ 		dpn_prop = slave->prop.sink_dpn_prop;
+ 	}
  
- 	/*
- 	 * Prevent bfqq from being merged if it has been created too
--- 
-2.43.0
-
+-	for_each_set_bit(i, &mask, 32) {
++	for (i = 0; i < num_ports; i++) {
+ 		if (dpn_prop[i].num == port_num)
+ 			return &dpn_prop[i];
+ 	}
 
 
