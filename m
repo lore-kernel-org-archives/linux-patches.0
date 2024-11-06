@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3C21EBA12;
-	Wed,  6 Nov 2024 12:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2EC1F80B2;
+	Wed,  6 Nov 2024 12:45:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897103; cv=none; b=O03TMjC+a6m0XsbBBbJvf62qJGOG0Ga2ze9EmBtC+ANqlxV+3Y3jhdZ88rGV6kw8DGJaaAQvLPtyWJ/DusFtMXF6T0nk7R2QrydNB1uX7D5/VtlCVyuA/22jnsIuAJmp00cuccKVaHAJbEhoPDFfotWI1982Q62xNQcwGo9wPjI=
+	t=1730897106; cv=none; b=hHnxbYhImBZDyNq5gKha7FlIYQtyeo5Xas9khmmECU0RXs5mz/2SZA2iWBISketIiQVcK5AFlOB2+Gq0w9Wemk0Z+HwmnF+0fUdUh+uFQnz8dMOs7AEfQNrNnw7rBY+BhHKZaE+kcqdqDwteXiEkflR0iOVnJqvtkAxFgX9E27o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897103; c=relaxed/simple;
-	bh=D6XkY6vWJwhcPwcyJ/ihBpuNIxW1MKh59w3ZkV2igrs=;
+	s=arc-20240116; t=1730897106; c=relaxed/simple;
+	bh=Db4+9+IYgjCallxSpYrdtOCYaD0xmXsEQI89OVRNZBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4WtLGg9YXueCH66LyBsMrQZAqkD3LrQPpL9msAC93hSwFsQpvd7Bzny5DJV+FOStN5MW8t+7Pum3j0h5toWtWswievMb7y754dYqruoUq13bFKoQlo2wONKzOP4wDibuzXsfu76ChezJxYgncc6524jCk/holQwkDIq4fGZYlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J67RQh0I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q2kfOk2FwjdohCEM3iCu02ai7unrV74dIr6mBRzzzZ9p5SfpTrfexS6hvh8fitOWmbHRgHvEDT0nECSIw1Ba+aPqi8Eh04OISMzg28L6L/p7Mzzc1TtfvAvZr1MUO6p65FypD56YHeg+4IE0+9crt/iBAJOh15XHKrmwziBdZKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRuWveAY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J67RQh0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F49C4CECD;
-	Wed,  6 Nov 2024 12:45:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRuWveAY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A274CC4CECD;
+	Wed,  6 Nov 2024 12:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897103;
-	bh=D6XkY6vWJwhcPwcyJ/ihBpuNIxW1MKh59w3ZkV2igrs=;
+	s=korg; t=1730897106;
+	bh=Db4+9+IYgjCallxSpYrdtOCYaD0xmXsEQI89OVRNZBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J67RQh0IJKgI6I6qb1L9VhLBxeiZ3NMxShMW4DBDP1Se17qZneQcc9HwWzVLgbe1A
-	 QXCzR1Q8JWFgrb4bhAHMiaDH6LFFky239VP8pYch8ZOqSGSRC6PTj49FkWujOIyV7+
-	 9Xw1qxsNQ5y4oghgRNPud4NweEcttPaAm2sdo9oU=
+	b=KRuWveAYku8qLFebGVwk0sf9cMJAUGh3DgnDMxCcG90Fe9D98gYHyFmZXDjX080Sc
+	 Bw/p9hdb3JnpsICPWL/4v9GKU9I7lEOYOUwh8qmnozrbB062yAiNMYgNshHLSnZKjA
+	 EP4j9Q+ddibgD8vCizqbLNjeljhg7egqi6z52Fmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongren Zheng <i@zenithal.me>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Zongmin Zhou <zhouzongmin@kylinos.cn>
-Subject: [PATCH 6.1 066/126] usbip: tools: Fix detach_port() invalid port error path
-Date: Wed,  6 Nov 2024 13:04:27 +0100
-Message-ID: <20241106120307.872900728@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>
+Subject: [PATCH 6.1 067/126] usb: phy: Fix API devm_usb_put_phy() can not release the phy
+Date: Wed,  6 Nov 2024 13:04:28 +0100
+Message-ID: <20241106120307.898183133@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -51,33 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zongmin Zhou <zhouzongmin@kylinos.cn>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit e7cd4b811c9e019f5acbce85699c622b30194c24 upstream.
+commit fdce49b5da6e0fb6d077986dec3e90ef2b094b50 upstream.
 
-The detach_port() doesn't return error
-when detach is attempted on an invalid port.
+For devm_usb_put_phy(), its comment says it needs to invoke usb_put_phy()
+to release the phy, but it does not do that actually, so it can not fully
+undo what the API devm_usb_get_phy() does, that is wrong, fixed by using
+devres_release() instead of devres_destroy() within the API.
 
-Fixes: 40ecdeb1a187 ("usbip: usbip_detach: fix to check for invalid ports")
+Fixes: cedf8602373a ("usb: phy: move bulk of otg/otg.c to phy/phy.c")
 Cc: stable@vger.kernel.org
-Reviewed-by: Hongren Zheng <i@zenithal.me>
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
-Link: https://lore.kernel.org/r/20241024022700.1236660-1-min_halo@163.com
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20241020-usb_phy_fix-v1-1-7f79243b8e1e@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/usb/usbip/src/usbip_detach.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/phy/phy.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/usb/usbip/src/usbip_detach.c
-+++ b/tools/usb/usbip/src/usbip_detach.c
-@@ -68,6 +68,7 @@ static int detach_port(char *port)
- 	}
+--- a/drivers/usb/phy/phy.c
++++ b/drivers/usb/phy/phy.c
+@@ -628,7 +628,7 @@ void devm_usb_put_phy(struct device *dev
+ {
+ 	int r;
  
- 	if (!found) {
-+		ret = -1;
- 		err("Invalid port %s > maxports %d",
- 			port, vhci_driver->nports);
- 		goto call_driver_close;
+-	r = devres_destroy(dev, devm_usb_phy_release, devm_usb_phy_match, phy);
++	r = devres_release(dev, devm_usb_phy_release, devm_usb_phy_match, phy);
+ 	dev_WARN_ONCE(dev, r, "couldn't find PHY resource\n");
+ }
+ EXPORT_SYMBOL_GPL(devm_usb_put_phy);
 
 
