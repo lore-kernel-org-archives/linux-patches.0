@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795C24207F;
-	Wed,  6 Nov 2024 12:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42644207F;
+	Wed,  6 Nov 2024 12:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896262; cv=none; b=SNNDYodOZglYxxgVF8M0RAme/AeSbyfMNz2GGm3NdjQie1dZtiDYqKaIJyCA/XVPE3LE/hUXIRDvXqbmastK92RXb5p9ZUO7Y7t5sXkFULWwXNhvhKML28zJqcZ6bhp8zdJQp8hTkTx4WHZ/aXf9j79CDYCGRoh8WZWtUwkRMY4=
+	t=1730896265; cv=none; b=drFwCRv00c9DRTWUTlYx5In5aeA7ZxBbLevVFS9tmV+VxQM3g37aKA/OQGD94g46zSBDwzz4AbxyVEFIZ0nxVt9PLg/KHVsX6VgdRD7SRgitrKswLT+NaaNeQXvYTaU441+39nWyuou1co03fs13H889MQ9N1j74UaXN8su7iEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896262; c=relaxed/simple;
-	bh=4Lqv67WK/agUJU9p1dm/pMwrrQRdHu/UIrZ3hQsQIGA=;
+	s=arc-20240116; t=1730896265; c=relaxed/simple;
+	bh=DaNMUW5Ny6bFxEOPFb4y4xBWm/aTrXVDS/pABY1bXkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4SO6YAI4IbWVfy9XNdAlqQJ0+ScH6o/ZQw/Rb+r1+BB6SFxZVJASjfopLjVeZviKjGs7dswlzEAFsPQvee5ebRe1gPcaTE/ohzgDCwIER53eC5hT7O4lSJ6+dNUks0aESkHFAc4J4vrxtYNze6orvR0D2pLa8Bs7gaQpRKOtho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXWrV82t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oVAfslFF9oAJxLAHuU0fNKXCcP5HP5/prNPWanFkz5sMzqKnV5kmhgVj4eH9rna5n1J7mGUH52q/avHc8wrhEXh1/4FSaUZyl/1+mQWACa4blt1FTfMRV9gJtBD1e0aecZqsjvgXAx/wyfx2J2R/1XB8P9YXtZcns2c+anfhMDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGIC96sT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXWrV82t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C82BBC4CECD;
-	Wed,  6 Nov 2024 12:31:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGIC96sT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F194EC4CECD;
+	Wed,  6 Nov 2024 12:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896262;
-	bh=4Lqv67WK/agUJU9p1dm/pMwrrQRdHu/UIrZ3hQsQIGA=;
+	s=korg; t=1730896265;
+	bh=DaNMUW5Ny6bFxEOPFb4y4xBWm/aTrXVDS/pABY1bXkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PXWrV82tp5Ub7hXVWuJmj9pRlsX5CKHcnt08onUp9E7AbzsYsyQpu0xpIPnFNMn+M
-	 1ArYhekPbdRBBR+sElXLMS4bgmCGc99IFZDWD7OLP4XSHL83bL4GPGmDgA3G1+rDdl
-	 vNAo8HQ5lhCTTt5VysSzqH+LKhrk+yQVyZ4mhcxs=
+	b=FGIC96sTz42OBi0hKX8W75XTwY4z8/DQQJzx1hYNB1PiRvCYS9VcckRj5lGwxuoci
+	 zVkujXsYsy6N29gZzRELKDItdXQk1JQ0H0t0MkCbJfmXIYQF8J5aIsY8VLxjtnqd7L
+	 41u2GwE7YptNgatXDb9lbmSB/jm8qoLZH//Kv94w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Alejandro Lucero <alucerop@amd.com>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.11 144/245] cxl/port: Fix CXL port initialization order when the subsystem is built-in
-Date: Wed,  6 Nov 2024 13:03:17 +0100
-Message-ID: <20241106120322.771576419@linuxfoundation.org>
+	Georg Gottleuber <ggo@tuxedocomputers.com>,
+	Ben Chuang <ben.chuang@genesyslogic.com.tw>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.11 145/245] mmc: sdhci-pci-gli: GL9767: Fix low power mode on the set clock function
+Date: Wed,  6 Nov 2024 13:03:18 +0100
+Message-ID: <20241106120322.797621072@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -58,121 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Ben Chuang <ben.chuang@genesyslogic.com.tw>
 
-commit 6575b268157f37929948a8d1f3bafb3d7c055bc1 upstream.
+commit 8c68b5656e55e9324875881f1000eb4ee3603a87 upstream.
 
-When the CXL subsystem is built-in the module init order is determined
-by Makefile order. That order violates expectations. The expectation is
-that cxl_acpi and cxl_mem can race to attach. If cxl_acpi wins the race,
-cxl_mem will find the enabled CXL root ports it needs. If cxl_acpi loses
-the race it will retrigger cxl_mem to attach via cxl_bus_rescan(). That
-flow only works if cxl_acpi can assume ports are enabled immediately
-upon cxl_acpi_probe() return. That in turn can only happen in the
-CONFIG_CXL_ACPI=y case if the cxl_port driver is registered before
-cxl_acpi_probe() runs.
+On sdhci_gl9767_set_clock(), the vendor header space(VHS) is read-only
+after calling gl9767_disable_ssc_pll() and gl9767_set_ssc_pll_205mhz().
+So the low power negotiation mode cannot be enabled again.
+Introduce gl9767_set_low_power_negotiation() function to fix it.
 
-Fix up the order to prevent initialization failures. Ensure that
-cxl_port is built-in when cxl_acpi is also built-in, arrange for
-Makefile order to resolve the subsys_initcall() order of cxl_port and
-cxl_acpi, and arrange for Makefile order to resolve the
-device_initcall() (module_init()) order of the remaining objects.
+The explanation process is as below.
 
-As for what contributed to this not being found earlier, the CXL
-regression environment, cxl_test, builds all CXL functionality as a
-module to allow to symbol mocking and other dynamic reload tests.  As a
-result there is no regression coverage for the built-in case.
+static void sdhci_gl9767_set_clock()
+{
+	...
+        gl9767_vhs_write();
+        ...
+	value |= PCIE_GLI_9767_CFG_LOW_PWR_OFF;
+        pci_write_config_dword(pdev, PCIE_GLI_9767_CFG, value); <--- (a)
 
-Reported-by: Gregory Price <gourry@gourry.net>
-Closes: http://lore.kernel.org/20241004212504.1246-1-gourry@gourry.net
-Tested-by: Gregory Price <gourry@gourry.net>
-Fixes: 8dd2bc0f8e02 ("cxl/mem: Add the cxl_mem driver")
+        gl9767_disable_ssc_pll(); <--- (b)
+        sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
+
+        if (clock == 0)
+                return;  <-- (I)
+
+	...
+        if (clock == 200000000 && ios->timing == MMC_TIMING_UHS_SDR104) {
+		...
+                gl9767_set_ssc_pll_205mhz(); <--- (c)
+        }
+	...
+	value &= ~PCIE_GLI_9767_CFG_LOW_PWR_OFF;
+        pci_write_config_dword(pdev, PCIE_GLI_9767_CFG, value); <-- (II)
+        gl9767_vhs_read();
+}
+
+(a) disable low power negotiation mode. When return on (I), the low power
+mode is disabled.  After (b) and (c), VHS is read-only, the low power mode
+cannot be enabled on (II).
+
+Reported-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+Fixes: d2754355512e ("mmc: sdhci-pci-gli: Set SDR104's clock to 205MHz and enable SSC for GL9767")
+Signed-off-by: Ben Chuang <ben.chuang@genesyslogic.com.tw>
+Tested-by: Georg Gottleuber <ggo@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Alison Schofield <alison.schofield@intel.com>
-Cc: Vishal Verma <vishal.l.verma@intel.com>
-Cc: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Tested-by: Alejandro Lucero <alucerop@amd.com>
-Reviewed-by: Alejandro Lucero <alucerop@amd.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/172988474904.476062.7961350937442459266.stgit@dwillia2-xfh.jf.intel.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Message-ID: <20241025060017.1663697-1-benchuanggli@gmail.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/Kconfig  |    1 +
- drivers/cxl/Makefile |   20 ++++++++++++++------
- drivers/cxl/port.c   |   17 ++++++++++++++++-
- 3 files changed, 31 insertions(+), 7 deletions(-)
+ drivers/mmc/host/sdhci-pci-gli.c |   35 +++++++++++++++++++++--------------
+ 1 file changed, 21 insertions(+), 14 deletions(-)
 
---- a/drivers/cxl/Kconfig
-+++ b/drivers/cxl/Kconfig
-@@ -60,6 +60,7 @@ config CXL_ACPI
- 	default CXL_BUS
- 	select ACPI_TABLE_LIB
- 	select ACPI_HMAT
-+	select CXL_PORT
- 	help
- 	  Enable support for host managed device memory (HDM) resources
- 	  published by a platform's ACPI CXL memory layout description.  See
---- a/drivers/cxl/Makefile
-+++ b/drivers/cxl/Makefile
-@@ -1,13 +1,21 @@
- # SPDX-License-Identifier: GPL-2.0
-+
-+# Order is important here for the built-in case:
-+# - 'core' first for fundamental init
-+# - 'port' before platform root drivers like 'acpi' so that CXL-root ports
-+#   are immediately enabled
-+# - 'mem' and 'pmem' before endpoint drivers so that memdevs are
-+#   immediately enabled
-+# - 'pci' last, also mirrors the hardware enumeration hierarchy
- obj-y += core/
--obj-$(CONFIG_CXL_PCI) += cxl_pci.o
--obj-$(CONFIG_CXL_MEM) += cxl_mem.o
-+obj-$(CONFIG_CXL_PORT) += cxl_port.o
- obj-$(CONFIG_CXL_ACPI) += cxl_acpi.o
- obj-$(CONFIG_CXL_PMEM) += cxl_pmem.o
--obj-$(CONFIG_CXL_PORT) += cxl_port.o
-+obj-$(CONFIG_CXL_MEM) += cxl_mem.o
-+obj-$(CONFIG_CXL_PCI) += cxl_pci.o
+--- a/drivers/mmc/host/sdhci-pci-gli.c
++++ b/drivers/mmc/host/sdhci-pci-gli.c
+@@ -892,28 +892,40 @@ static void gl9767_disable_ssc_pll(struc
+ 	gl9767_vhs_read(pdev);
+ }
  
--cxl_mem-y := mem.o
--cxl_pci-y := pci.o
-+cxl_port-y := port.o
- cxl_acpi-y := acpi.o
- cxl_pmem-y := pmem.o security.o
--cxl_port-y := port.o
-+cxl_mem-y := mem.o
-+cxl_pci-y := pci.o
---- a/drivers/cxl/port.c
-+++ b/drivers/cxl/port.c
-@@ -208,7 +208,22 @@ static struct cxl_driver cxl_port_driver
- 	},
- };
++static void gl9767_set_low_power_negotiation(struct pci_dev *pdev, bool enable)
++{
++	u32 value;
++
++	gl9767_vhs_write(pdev);
++
++	pci_read_config_dword(pdev, PCIE_GLI_9767_CFG, &value);
++	if (enable)
++		value &= ~PCIE_GLI_9767_CFG_LOW_PWR_OFF;
++	else
++		value |= PCIE_GLI_9767_CFG_LOW_PWR_OFF;
++	pci_write_config_dword(pdev, PCIE_GLI_9767_CFG, value);
++
++	gl9767_vhs_read(pdev);
++}
++
+ static void sdhci_gl9767_set_clock(struct sdhci_host *host, unsigned int clock)
+ {
+ 	struct sdhci_pci_slot *slot = sdhci_priv(host);
+ 	struct mmc_ios *ios = &host->mmc->ios;
+ 	struct pci_dev *pdev;
+-	u32 value;
+ 	u16 clk;
  
--module_cxl_driver(cxl_port_driver);
-+static int __init cxl_port_init(void)
-+{
-+	return cxl_driver_register(&cxl_port_driver);
-+}
-+/*
-+ * Be ready to immediately enable ports emitted by the platform CXL root
-+ * (e.g. cxl_acpi) when CONFIG_CXL_PORT=y.
-+ */
-+subsys_initcall(cxl_port_init);
-+
-+static void __exit cxl_port_exit(void)
-+{
-+	cxl_driver_unregister(&cxl_port_driver);
-+}
-+module_exit(cxl_port_exit);
-+
- MODULE_DESCRIPTION("CXL: Port enumeration and services");
- MODULE_LICENSE("GPL v2");
- MODULE_IMPORT_NS(CXL);
+ 	pdev = slot->chip->pdev;
+ 	host->mmc->actual_clock = 0;
+ 
+-	gl9767_vhs_write(pdev);
+-
+-	pci_read_config_dword(pdev, PCIE_GLI_9767_CFG, &value);
+-	value |= PCIE_GLI_9767_CFG_LOW_PWR_OFF;
+-	pci_write_config_dword(pdev, PCIE_GLI_9767_CFG, value);
+-
++	gl9767_set_low_power_negotiation(pdev, false);
+ 	gl9767_disable_ssc_pll(pdev);
+ 	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
+ 
+-	if (clock == 0)
++	if (clock == 0) {
++		gl9767_set_low_power_negotiation(pdev, true);
+ 		return;
++	}
+ 
+ 	clk = sdhci_calc_clk(host, clock, &host->mmc->actual_clock);
+ 	if (clock == 200000000 && ios->timing == MMC_TIMING_UHS_SDR104) {
+@@ -922,12 +934,7 @@ static void sdhci_gl9767_set_clock(struc
+ 	}
+ 
+ 	sdhci_enable_clk(host, clk);
+-
+-	pci_read_config_dword(pdev, PCIE_GLI_9767_CFG, &value);
+-	value &= ~PCIE_GLI_9767_CFG_LOW_PWR_OFF;
+-	pci_write_config_dword(pdev, PCIE_GLI_9767_CFG, value);
+-
+-	gl9767_vhs_read(pdev);
++	gl9767_set_low_power_negotiation(pdev, true);
+ }
+ 
+ static void gli_set_9767(struct sdhci_host *host)
 
 
