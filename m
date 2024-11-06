@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB971DE3B8;
-	Wed,  6 Nov 2024 12:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BE61DE3B8;
+	Wed,  6 Nov 2024 12:09:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894974; cv=none; b=XvU3X3lU+mMHlu5277ZFXZra+E/Ds9ndfkWb236UvpQmbsd0FCGa/uXP2GYAHzYtaO7xP4CXMwHTiACip6TGMLZnFSzkXdh+yNpWJurE+07Rl0WU/Xk/wJ0cXHpmqOhn7xYqrKebDUsSoHB4xki+7Q/j5xiijg4FozoPK/eg3Jw=
+	t=1730894977; cv=none; b=rjtMBrby4OXnAAtW0eQOfqAuyuPhuhyCVxtXIF6Q0wDjKwpXE8Vg5xXtAh8y/XH4T9gTltNI2A4sD7KGUq8jfNaJPaqLzAk0NrBBGK+YS2qw2M4fu1GIE9pPl9+r9Yc28b9TErLTsIrxlUydLQX7y7p6GtckXkb4MuURal9fj64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894974; c=relaxed/simple;
-	bh=R5/V3Q2dTBZZy5qZKSEknTni53372Z6bn6vLI18/adM=;
+	s=arc-20240116; t=1730894977; c=relaxed/simple;
+	bh=7jD7jt9H4xy1EXHds1sc522IHIs61GY9j8IzW0dLuM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CHEMrtOPjY+WRbCfL/5lJnFJshUA8uGHXhkHcvEy3U4VSuMtafWAO9yoH45BqcjgEH9aMRDwVeUJydkeNPxGFfzR7BHB/vyecg/lXP0BlqtTGNDliyEkaiPL2UHYWs/CryX5lLxZIoJhnQdwnVZUG21/+cLIhz8zEvq+XGIgqU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FPUSATlk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tcm3xhxeHp8PgDOkjEQFHt66eg2P1HRv88CH4PJh/CC7hWk8KXhbDmLO1hDJY9TjYupfwseSvoxjn8TLiHRb4loR0dHmWbQSKIiPEr5ZCGboYM/tZsW56Rd9aRTO45Jphu5fiCFT3oeB2A7UBqL5FVrOjzOvYGlH4BL+KMIYTtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCg/+bbw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FPUSATlk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7566C4CECD;
-	Wed,  6 Nov 2024 12:09:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCg/+bbw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CB3C4CECD;
+	Wed,  6 Nov 2024 12:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894974;
-	bh=R5/V3Q2dTBZZy5qZKSEknTni53372Z6bn6vLI18/adM=;
+	s=korg; t=1730894977;
+	bh=7jD7jt9H4xy1EXHds1sc522IHIs61GY9j8IzW0dLuM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FPUSATlkqZ9x0r/pRaw0KzwoXzeG/0nXwhw0COD7pNKpDi4jf/F4BYSeroLp/KiFA
-	 j5LKrSVJZphE+HJgaPLHbgEBXMoU+ev80wuk1+zES5ivvjeGUlacWxZiJ8pnxPoWiz
-	 lWtbjpvDN7OItd9Z5Uuvasx8BHquowJiXGeWoEdg=
+	b=UCg/+bbwVYiFmvhjWrA6VrReAEzaNsptTWEhV+FfCEZ8jjpCLPQTh+twn+Mn7Oh4S
+	 IsAVBYqu4yWtti8P3fJ4iCDv7wqSc7fL9/qSGjQ0knfNvXzGsBnRvxCribO5gFbRUO
+	 ZmLh4Toq0HQh9BBjF3gYZ1Az62Qqpph8pfo+Z4aA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Juergen Gross <jgross@suse.com>,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
-	Jan Beulich <jbeulich@suse.com>,
+	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+	Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 063/350] xen: use correct end address of kernel for conflict checking
-Date: Wed,  6 Nov 2024 12:59:51 +0100
-Message-ID: <20241106120322.447186555@linuxfoundation.org>
+Subject: [PATCH 4.19 064/350] xen/swiotlb: simplify range_straddles_page_boundary()
+Date: Wed,  6 Nov 2024 12:59:52 +0100
+Message-ID: <20241106120322.475167698@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -46,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
@@ -55,44 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit fac1bceeeb04886fc2ee952672e6e6c85ce41dca ]
+[ Upstream commit bf70726668c6116aa4976e0cc87f470be6268a2f ]
 
-When running as a Xen PV dom0 the kernel is loaded by the hypervisor
-using a different memory map than that of the host. In order to
-minimize the required changes in the kernel, the kernel adapts its
-memory map to that of the host. In order to do that it is checking
-for conflicts of its load address with the host memory map.
-
-Unfortunately the tested memory range does not include the .brk
-area, which might result in crashes or memory corruption when this
-area does conflict with the memory map of the host.
-
-Fix the test by using the _end label instead of __bss_stop.
-
-Fixes: 808fdb71936c ("xen: check for kernel memory conflicting with memory layout")
+range_straddles_page_boundary() is open coding several macros from
+include/xen/page.h. Use those instead. Additionally there is no need
+to have check_pages_physically_contiguous() as a separate function as
+it is used only once, so merge it into range_straddles_page_boundary().
 
 Signed-off-by: Juergen Gross <jgross@suse.com>
-Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Reviewed-by: Boris Ostrovsky <boris.ostrovsky@oracle.com>
+Acked-by: Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
+Stable-dep-of: 9f40ec84a797 ("xen/swiotlb: add alignment check for dma buffers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/setup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/swiotlb-xen.c | 28 ++++++----------------------
+ 1 file changed, 6 insertions(+), 22 deletions(-)
 
-diff --git a/arch/x86/xen/setup.c b/arch/x86/xen/setup.c
-index 075ed47993bbf..69fd1134b7fcf 100644
---- a/arch/x86/xen/setup.c
-+++ b/arch/x86/xen/setup.c
-@@ -862,7 +862,7 @@ char * __init xen_memory_setup(void)
- 	 * to relocating (and even reusing) pages with kernel text or data.
- 	 */
- 	if (xen_is_e820_reserved(__pa_symbol(_text),
--			__pa_symbol(__bss_stop) - __pa_symbol(_text))) {
-+				 __pa_symbol(_end) - __pa_symbol(_text))) {
- 		xen_raw_console_write("Xen hypervisor allocated kernel memory conflicts with E820 map\n");
- 		BUG();
- 	}
+diff --git a/drivers/xen/swiotlb-xen.c b/drivers/xen/swiotlb-xen.c
+index 3d9997595d900..2f4d4e36c7b36 100644
+--- a/drivers/xen/swiotlb-xen.c
++++ b/drivers/xen/swiotlb-xen.c
+@@ -94,34 +94,18 @@ static inline dma_addr_t xen_virt_to_bus(void *address)
+ 	return xen_phys_to_bus(virt_to_phys(address));
+ }
+ 
+-static int check_pages_physically_contiguous(unsigned long xen_pfn,
+-					     unsigned int offset,
+-					     size_t length)
++static inline int range_straddles_page_boundary(phys_addr_t p, size_t size)
+ {
+-	unsigned long next_bfn;
+-	int i;
+-	int nr_pages;
++	unsigned long next_bfn, xen_pfn = XEN_PFN_DOWN(p);
++	unsigned int i, nr_pages = XEN_PFN_UP(xen_offset_in_page(p) + size);
+ 
+ 	next_bfn = pfn_to_bfn(xen_pfn);
+-	nr_pages = (offset + length + XEN_PAGE_SIZE-1) >> XEN_PAGE_SHIFT;
+ 
+-	for (i = 1; i < nr_pages; i++) {
++	for (i = 1; i < nr_pages; i++)
+ 		if (pfn_to_bfn(++xen_pfn) != ++next_bfn)
+-			return 0;
+-	}
+-	return 1;
+-}
++			return 1;
+ 
+-static inline int range_straddles_page_boundary(phys_addr_t p, size_t size)
+-{
+-	unsigned long xen_pfn = XEN_PFN_DOWN(p);
+-	unsigned int offset = p & ~XEN_PAGE_MASK;
+-
+-	if (offset + size <= XEN_PAGE_SIZE)
+-		return 0;
+-	if (check_pages_physically_contiguous(xen_pfn, offset, size))
+-		return 0;
+-	return 1;
++	return 0;
+ }
+ 
+ static int is_xen_swiotlb_buffer(dma_addr_t dma_addr)
 -- 
 2.43.0
 
