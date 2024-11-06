@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74061DF737;
-	Wed,  6 Nov 2024 12:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24B71DE8B4;
+	Wed,  6 Nov 2024 12:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895412; cv=none; b=fi3qJJ3H53feu6/FQZIWECA9sn1Vgbye+3vU7k3gthlIL6Y/lhYE3Ue8TBp1vAWmlz2hq+6os8GkbPiJabpk5GDuq4QviK9ufvY0lpqEqMnOZPxdPCqQGKA01qwWtwXfu2SKdQV6N3UXiBy6cxB/ShnC9M3MG+jV1uhcmwAOMrA=
+	t=1730895416; cv=none; b=iCRiStb+cQGvbUr2uYCtzGmdeLuIkpPAigI+hsb2JIObmQmzJ9Ecnk6NX1f8uiZvCr1VRE/Uqdnc9V5IekF6DpVSSBQNXNuU/8DjegLElMqfmuFt9t4bR8AoElCoNDN6CJXWb/nHzvPtTSWOaB7hE2ii65deHQ17x40YY1aVK+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895412; c=relaxed/simple;
-	bh=koGCBV2mZCi8Dm23ziEP1INuRViYi1RGwRZNEL5xyKU=;
+	s=arc-20240116; t=1730895416; c=relaxed/simple;
+	bh=aTNd+vEpKYiby4qmFdqyeiB8NEK0Z/BaTK/oSdCRb5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lGM+eV42gbobiFZkUgpgQ0/7O9kblCjkS2qrh0GenbtM/qdFnt6Y/fg87tXzrCBg8Y93MTuw10/Zq7MnxYIsYNDdDRf8NpzD7Uc+rTzFFCaHjz4Tn/eeyl18+o6axcZnQFXI/DopbaKL+bLRTyfCIudiEpf7jxM4RKwRv0pZtM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j2QoyqAK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OgSWcBDOtQP7atJ43gPJgQQq0JpsHdo4Q5OGAbkP7nuIHO0B9yUqGAzHn3QKS7FEPfwnIWMmY4d64LCAnGH3oPBUyNfamyR31HqVuSGbo/eFcLSvXx1K6vbd75KfwmrRi/Cvk4ClzzAZ2xPzGFrX8+gBsE37XbPIxdzZVCbln+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FitWLrZi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2QoyqAK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE14C4CED7;
-	Wed,  6 Nov 2024 12:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FitWLrZi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 355BDC4CECD;
+	Wed,  6 Nov 2024 12:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895412;
-	bh=koGCBV2mZCi8Dm23ziEP1INuRViYi1RGwRZNEL5xyKU=;
+	s=korg; t=1730895415;
+	bh=aTNd+vEpKYiby4qmFdqyeiB8NEK0Z/BaTK/oSdCRb5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j2QoyqAK7WQfpSKuhvCj+Qlk/z5vOQ8lkbsqlDbkT8YrMEbSp5dHM6gR2VwmPdBC2
-	 eJWbZVgUW+J4j/dSeNpTyjmyHlNtcLPLfp+iwhG2+4ar0Vb+pcb8AVL9QOy6EjhkWC
-	 E6SydfgtbENlUZejNT00i4uuvVCsUb74jmEu2yrA=
+	b=FitWLrZi87/7gvnzwjcQ5jvw2mb1cLHNE6/8zq3x8g48yg6tCmKzHunRD9xeNfiGE
+	 i2+aWHQvngcQOutfrLG/MAhF8YMbzAuUqRX9CCei70jl+OIvgDOqZ1ICL+/sSKeM8f
+	 pYJoCpxJ8C8V/lyrwFecuW4AMGMl6qx1Sk9YRIFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 173/350] drm/amd/display: Fix index out of bounds in degamma hardware format translation
-Date: Wed,  6 Nov 2024 13:01:41 +0100
-Message-ID: <20241106120325.202016564@linuxfoundation.org>
+Subject: [PATCH 4.19 174/350] drm/printer: Allow NULL data in devcoredump printer
+Date: Wed,  6 Nov 2024 13:01:42 +0100
+Message-ID: <20241106120325.227808322@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -58,52 +52,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit b7e99058eb2e86aabd7a10761e76cae33d22b49f ]
+[ Upstream commit 53369581dc0c68a5700ed51e1660f44c4b2bb524 ]
 
-Fixes index out of bounds issue in
-`cm_helper_translate_curve_to_degamma_hw_format` function. The issue
-could occur when the index 'i' exceeds the number of transfer function
-points (TRANSFER_FUNC_POINTS).
+We want to determine the size of the devcoredump before writing it out.
+To that end, we will run the devcoredump printer with NULL data to get
+the size, alloc data based on the generated offset, then run the
+devcorecump again with a valid data pointer to print.  This necessitates
+not writing data to the data pointer on the initial pass, when it is
+NULL.
 
-The fix adds a check to ensure 'i' is within bounds before accessing the
-transfer function points. If 'i' is out of bounds the function returns
-false to indicate an error.
+v5:
+ - Better commit message (Jonathan)
+ - Add kerenl doc with examples (Jani)
 
-Reported by smatch:
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:594 cm_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.red' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:595 cm_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.green' 1025 <= s32max
-drivers/gpu/drm/amd/amdgpu/../display/dc/dcn10/dcn10_cm_common.c:596 cm_helper_translate_curve_to_degamma_hw_format() error: buffer overflow 'output_tf->tf_pts.blue' 1025 <= s32max
-
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Acked-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240801154118.2547543-3-matthew.brost@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_print.c | 13 +++++----
+ include/drm/drm_print.h     | 54 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 61 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-index 67a3ba49234ee..ad42470613441 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_cm_common.c
-@@ -482,6 +482,8 @@ bool cm_helper_translate_curve_to_degamma_hw_format(
- 				i += increment) {
- 			if (j == hw_points - 1)
- 				break;
-+			if (i >= TRANSFER_FUNC_POINTS)
-+				return false;
- 			rgb_resulted[j].red = output_tf->tf_pts.red[i];
- 			rgb_resulted[j].green = output_tf->tf_pts.green[i];
- 			rgb_resulted[j].blue = output_tf->tf_pts.blue[i];
+diff --git a/drivers/gpu/drm/drm_print.c b/drivers/gpu/drm/drm_print.c
+index 0e7fc3e7dfb48..711a1b329879f 100644
+--- a/drivers/gpu/drm/drm_print.c
++++ b/drivers/gpu/drm/drm_print.c
+@@ -54,8 +54,9 @@ void __drm_puts_coredump(struct drm_printer *p, const char *str)
+ 			copy = iterator->remain;
+ 
+ 		/* Copy out the bit of the string that we need */
+-		memcpy(iterator->data,
+-			str + (iterator->start - iterator->offset), copy);
++		if (iterator->data)
++			memcpy(iterator->data,
++			       str + (iterator->start - iterator->offset), copy);
+ 
+ 		iterator->offset = iterator->start + copy;
+ 		iterator->remain -= copy;
+@@ -64,7 +65,8 @@ void __drm_puts_coredump(struct drm_printer *p, const char *str)
+ 
+ 		len = min_t(ssize_t, strlen(str), iterator->remain);
+ 
+-		memcpy(iterator->data + pos, str, len);
++		if (iterator->data)
++			memcpy(iterator->data + pos, str, len);
+ 
+ 		iterator->offset += len;
+ 		iterator->remain -= len;
+@@ -94,8 +96,9 @@ void __drm_printfn_coredump(struct drm_printer *p, struct va_format *vaf)
+ 	if ((iterator->offset >= iterator->start) && (len < iterator->remain)) {
+ 		ssize_t pos = iterator->offset - iterator->start;
+ 
+-		snprintf(((char *) iterator->data) + pos,
+-			iterator->remain, "%pV", vaf);
++		if (iterator->data)
++			snprintf(((char *) iterator->data) + pos,
++				 iterator->remain, "%pV", vaf);
+ 
+ 		iterator->offset += len;
+ 		iterator->remain -= len;
+diff --git a/include/drm/drm_print.h b/include/drm/drm_print.h
+index f3e6eed3e79c6..fbf6dc19c1322 100644
+--- a/include/drm/drm_print.h
++++ b/include/drm/drm_print.h
+@@ -111,7 +111,8 @@ drm_vprintf(struct drm_printer *p, const char *fmt, va_list *va)
+ 
+ /**
+  * struct drm_print_iterator - local struct used with drm_printer_coredump
+- * @data: Pointer to the devcoredump output buffer
++ * @data: Pointer to the devcoredump output buffer, can be NULL if using
++ * drm_printer_coredump to determine size of devcoredump
+  * @start: The offset within the buffer to start writing
+  * @remain: The number of bytes to write for this iteration
+  */
+@@ -156,6 +157,57 @@ struct drm_print_iterator {
+  *			coredump_read, ...)
+  *	}
+  *
++ * The above example has a time complexity of O(N^2), where N is the size of the
++ * devcoredump. This is acceptable for small devcoredumps but scales poorly for
++ * larger ones.
++ *
++ * Another use case for drm_coredump_printer is to capture the devcoredump into
++ * a saved buffer before the dev_coredump() callback. This involves two passes:
++ * one to determine the size of the devcoredump and another to print it to a
++ * buffer. Then, in dev_coredump(), copy from the saved buffer into the
++ * devcoredump read buffer.
++ *
++ * For example::
++ *
++ *	char *devcoredump_saved_buffer;
++ *
++ *	ssize_t __coredump_print(char *buffer, ssize_t count, ...)
++ *	{
++ *		struct drm_print_iterator iter;
++ *		struct drm_printer p;
++ *
++ *		iter.data = buffer;
++ *		iter.start = 0;
++ *		iter.remain = count;
++ *
++ *		p = drm_coredump_printer(&iter);
++ *
++ *		drm_printf(p, "foo=%d\n", foo);
++ *		...
++ *		return count - iter.remain;
++ *	}
++ *
++ *	void coredump_print(...)
++ *	{
++ *		ssize_t count;
++ *
++ *		count = __coredump_print(NULL, INT_MAX, ...);
++ *		devcoredump_saved_buffer = kvmalloc(count, GFP_KERNEL);
++ *		__coredump_print(devcoredump_saved_buffer, count, ...);
++ *	}
++ *
++ *	void coredump_read(char *buffer, loff_t offset, size_t count,
++ *			   void *data, size_t datalen)
++ *	{
++ *		...
++ *		memcpy(buffer, devcoredump_saved_buffer + offset, count);
++ *		...
++ *	}
++ *
++ * The above example has a time complexity of O(N*2), where N is the size of the
++ * devcoredump. This scales better than the previous example for larger
++ * devcoredumps.
++ *
+  * RETURNS:
+  * The &drm_printer object
+  */
 -- 
 2.43.0
 
