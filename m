@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A56A646;
-	Wed,  6 Nov 2024 13:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C0E1DFE3A;
+	Wed,  6 Nov 2024 13:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899222; cv=none; b=YmvwxJQ5rg//jmPc9d+ebBiklpiH4WuUqvNyj/ORwCwpOlS3hLLroeZQv/kGmfTvqbrFZKukmufvC/RZmfdfz7LZRipkBvN/WKI3eFSS4imB3I/Zaz4E1reQ/qkMNbcWDoD15S64OwO++yJ7pmKlRgpuYoYlD6kptBvu8m89DUE=
+	t=1730899225; cv=none; b=ZihWKIJV3SvEMmIxU6KzR+meAQQqXdCvAkHr+t9mx7MirTeerXpJNIMAjJgg+xihvcjIMUwpaoxfBi6yeGQNG+1n0L6JiVdyqtpKHaQPg7mJUlUuRddLVszeXndE6AcljTDnTSGi2it+preffEf8lIvV1k5gTVdAPYTaaGSIxaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899222; c=relaxed/simple;
-	bh=AcKZlEgHW6ijQn3Ukn/3wTDhGOOu21b9TKVIdcwA2V4=;
+	s=arc-20240116; t=1730899225; c=relaxed/simple;
+	bh=lFDYbLToVFfKe3gwvjG7bzo1jbHK8rzUbJd1fMauEp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qNWR2dCeNEc529oh/CiLtl71O3AEPUL6cA4D+mdD3GZjYKsbX6tzRfW5c7egbxPMR2u447ZrdgeE2pcWnzQORKEaSFPgu04SSo4JLgiz1dadrwKFiY0fvvtIl4CQdSZ//b7WTN2cvHYgCU5cTg7+bBpq7cY26QcHjkk2ru42i1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7fA31K/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gAOWIV729W1g/vy1wLPWCUGfd9DgvgU5/Kkk106fGg6nQhpHJ8j5hmFlPu2ni5uFO2HudN8HHdZvG2dDKbyJbWtsCFURjBDg+S+yUkP04BmqqT5pAWgLftj4HbkRs6zyQlwf3xiaGcM+LEUABnXei+9vasp9P+Zr0/WIuzyj9sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEpIDYaY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7fA31K/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51C30C4CECD;
-	Wed,  6 Nov 2024 13:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEpIDYaY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DE0C4CECD;
+	Wed,  6 Nov 2024 13:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899221;
-	bh=AcKZlEgHW6ijQn3Ukn/3wTDhGOOu21b9TKVIdcwA2V4=;
+	s=korg; t=1730899224;
+	bh=lFDYbLToVFfKe3gwvjG7bzo1jbHK8rzUbJd1fMauEp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r7fA31K/VRQz4j224km6phV9uU+YNSEu5ASNOHKTs1f/i9L8HNn+IcTsRv23ca5VZ
-	 4b0Kq1SF5l2DsXC9QNL7L+qp/ozSrhkmT/ci0vE4AfXDaLq7LlUpzVGyICHmdq4JjW
-	 nkeuEgQolw3SiF0EmZ7y+38Av2ucqYSidHsWBgbc=
+	b=BEpIDYaY/rqPwvsfgwTHto8qiMrfQokK3QtoW6R8Z0Vp/j6zaYxIU7wPuhwODQNyD
+	 FCmPshbWaREuydd1ywFoniTblRjd+E6M6bv+Y8F3mouePKbVLX8O0rCC4LtBqcWuMl
+	 BH5+ndlkBa714v4Zy2wbRCkjsD31JbIf94Ig84bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>
-Subject: [PATCH 5.15 39/73] usb: phy: Fix API devm_usb_put_phy() can not release the phy
-Date: Wed,  6 Nov 2024 13:05:43 +0100
-Message-ID: <20241106120301.131295116@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Subject: [PATCH 5.15 40/73] usb: typec: fix unreleased fwnode_handle in typec_port_register_altmodes()
+Date: Wed,  6 Nov 2024 13:05:44 +0100
+Message-ID: <20241106120301.158331166@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120259.955073160@linuxfoundation.org>
 References: <20241106120259.955073160@linuxfoundation.org>
@@ -49,34 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit fdce49b5da6e0fb6d077986dec3e90ef2b094b50 upstream.
+commit 9581acb91eaf5bbe70086bbb6fca808220d358ba upstream.
 
-For devm_usb_put_phy(), its comment says it needs to invoke usb_put_phy()
-to release the phy, but it does not do that actually, so it can not fully
-undo what the API devm_usb_get_phy() does, that is wrong, fixed by using
-devres_release() instead of devres_destroy() within the API.
+The 'altmodes_node' fwnode_handle is never released after it is no
+longer required, which leaks the resource.
 
-Fixes: cedf8602373a ("usb: phy: move bulk of otg/otg.c to phy/phy.c")
+Add the required call to fwnode_handle_put() when 'altmodes_node' is no
+longer required.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20241020-usb_phy_fix-v1-1-7f79243b8e1e@quicinc.com
+Fixes: 7b458a4c5d73 ("usb: typec: Add typec_port_register_altmodes()")
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20241021-typec-class-fwnode_handle_put-v2-1-3281225d3d27@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/phy/phy.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/class.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/phy/phy.c
-+++ b/drivers/usb/phy/phy.c
-@@ -628,7 +628,7 @@ void devm_usb_put_phy(struct device *dev
- {
- 	int r;
- 
--	r = devres_destroy(dev, devm_usb_phy_release, devm_usb_phy_match, phy);
-+	r = devres_release(dev, devm_usb_phy_release, devm_usb_phy_match, phy);
- 	dev_WARN_ONCE(dev, r, "couldn't find PHY resource\n");
+--- a/drivers/usb/typec/class.c
++++ b/drivers/usb/typec/class.c
+@@ -2026,6 +2026,7 @@ void typec_port_register_altmodes(struct
+ 		altmodes[index] = alt;
+ 		index++;
+ 	}
++	fwnode_handle_put(altmodes_node);
  }
- EXPORT_SYMBOL_GPL(devm_usb_put_phy);
+ EXPORT_SYMBOL_GPL(typec_port_register_altmodes);
+ 
 
 
