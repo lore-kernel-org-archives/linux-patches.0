@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC851D173F;
-	Wed,  6 Nov 2024 12:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C971D173F;
+	Wed,  6 Nov 2024 12:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895632; cv=none; b=Bxv9i+kj8PjRMXQZRfkY/60Ve2pj0ZPm8dVSeZd/irR3OsHS3oRE7q/gJNgWT3WILrlNx2YROHzyT+LWrekMZhdVWJ1BUipTL4X1kQYPz/f3tz+dEhNj4JmmDw3A9ulB4oRus/LA5PxqFUDWp5cIiqW7JKgO5hTNEv418L++ozA=
+	t=1730895635; cv=none; b=Yhc0i5l+NloWKOvjMMzYFwhlRvSlJrE8V/KTnJSlDn665gjtXkjdnjsuu890LuScjnL18W6o1ZroMKN6Fhw86iPBZF5zD4aqYfDv79pzsvuPzQ9VYff4r1sWWXORJ6XOSSn2g5WgIYGQ8so8qVnNNumqd/Lr3Ch+vFocl4c2pJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895632; c=relaxed/simple;
-	bh=NNy9J3RUhR+09Ad4+IWgnz0nPeWmrY1U92M2uXJrD00=;
+	s=arc-20240116; t=1730895635; c=relaxed/simple;
+	bh=5XnFK6Xb+ynsJoW5Wc42qrAHyJDb4fpR/9n+wM9qXSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=razhg5n34hQxcu7KouTzgexvCgHdlxC2EDNa0mWBY+qLa0rbAIy70SypG9KF1hfYyqpvemCXS7i0q3j9StMK2clP8nmygJAOtcmEidcZdF7iYYDZCzQsx2YWKLbSi5ajq9/KjTQwx9WYehPIWHjaoHoSnVY6UUIWJRDN4ChcNkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I2J2T/gj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eOVXHAQR2jt8xFYqaLTR4zYl0ra2gDEjcoAc4W8TDrOjMsx8xW0hBTwixmqqs9tjlucEjuWB2Se1rwUhshUC1Yyr2WnLc6LulsRuqhpQKQjl6Llemmv2YXUF6DzTmdtr8xa/ulCuunl5rK27FykKD8bfH1umNTKis+f72KYAMd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5LGOumr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I2J2T/gj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E34C4CECD;
-	Wed,  6 Nov 2024 12:20:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5LGOumr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BCDC4CECD;
+	Wed,  6 Nov 2024 12:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895632;
-	bh=NNy9J3RUhR+09Ad4+IWgnz0nPeWmrY1U92M2uXJrD00=;
+	s=korg; t=1730895635;
+	bh=5XnFK6Xb+ynsJoW5Wc42qrAHyJDb4fpR/9n+wM9qXSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I2J2T/gjsVsJi/ZrjFw4q/JhcoC4wf6TvidmREBp10J+bygZbm0mbX3DtLa7jyOCH
-	 aqU6Mwcpbcw6KXezTI71ZeeBo0KJRr0ZQSIsPZGpNXkfidqDenmsCneRUuTOOcQ6BD
-	 h6VO2hChr698ppkV0Ps7cNojyFrglx3T9EYFkJy8=
+	b=M5LGOumro9DK2szF5ZJXJEVy62Az/eEQ8RUwdujABaH7P4/QpPnKKGe/4UrdPv0Ar
+	 DOU/fNRojUVsBosfAoqGnY5M9kAOL4gTYIkXL99QYtoEtRuvUh7Rg1iPEXaQbPk7XK
+	 zxCyzzSL6q4A5a9h2xZn5uIpIsURc+4lG1smQe6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Gedenryd <emil.gedenryd@axis.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.19 282/350] iio: light: opt3001: add missing full-scale range value
-Date: Wed,  6 Nov 2024 13:03:30 +0100
-Message-ID: <20241106120327.819225227@linuxfoundation.org>
+	Aaron Thompson <dev@aaront.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 4.19 283/350] Bluetooth: Remove debugfs directory on module init failure
+Date: Wed,  6 Nov 2024 13:03:31 +0100
+Message-ID: <20241106120327.841098890@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,41 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Gedenryd <emil.gedenryd@axis.com>
+From: Aaron Thompson <dev@aaront.org>
 
-commit 530688e39c644543b71bdd9cb45fdfb458a28eaa upstream.
+commit 1db4564f101b47188c1b71696bd342ef09172b22 upstream.
 
-The opt3001 driver uses predetermined full-scale range values to
-determine what exponent to use for event trigger threshold values.
-The problem is that one of the values specified in the datasheet is
-missing from the implementation. This causes larger values to be
-scaled down to an incorrect exponent, effectively reducing the
-maximum settable threshold value by a factor of 2.
+If bt_init() fails, the debugfs directory currently is not removed. If
+the module is loaded again after that, the debugfs directory is not set
+up properly due to the existing directory.
 
-Add missing full-scale range array value.
+  # modprobe bluetooth
+  # ls -laF /sys/kernel/debug/bluetooth
+  total 0
+  drwxr-xr-x  2 root root 0 Sep 27 14:26 ./
+  drwx------ 31 root root 0 Sep 27 14:25 ../
+  -r--r--r--  1 root root 0 Sep 27 14:26 l2cap
+  -r--r--r--  1 root root 0 Sep 27 14:26 sco
+  # modprobe -r bluetooth
+  # ls -laF /sys/kernel/debug/bluetooth
+  ls: cannot access '/sys/kernel/debug/bluetooth': No such file or directory
+  #
 
-Fixes: 94a9b7b1809f ("iio: light: add support for TI's opt3001 light sensor")
-Signed-off-by: Emil Gedenryd <emil.gedenryd@axis.com>
-Cc: <Stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240913-add_opt3002-v2-1-69e04f840360@axis.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+  # modprobe bluetooth
+  modprobe: ERROR: could not insert 'bluetooth': Invalid argument
+  # dmesg | tail -n 6
+  Bluetooth: Core ver 2.22
+  NET: Registered PF_BLUETOOTH protocol family
+  Bluetooth: HCI device and connection manager initialized
+  Bluetooth: HCI socket layer initialized
+  Bluetooth: Faking l2cap_init() failure for testing
+  NET: Unregistered PF_BLUETOOTH protocol family
+  # ls -laF /sys/kernel/debug/bluetooth
+  total 0
+  drwxr-xr-x  2 root root 0 Sep 27 14:31 ./
+  drwx------ 31 root root 0 Sep 27 14:26 ../
+  #
+
+  # modprobe bluetooth
+  # dmesg | tail -n 7
+  Bluetooth: Core ver 2.22
+  debugfs: Directory 'bluetooth' with parent '/' already present!
+  NET: Registered PF_BLUETOOTH protocol family
+  Bluetooth: HCI device and connection manager initialized
+  Bluetooth: HCI socket layer initialized
+  Bluetooth: L2CAP socket layer initialized
+  Bluetooth: SCO socket layer initialized
+  # ls -laF /sys/kernel/debug/bluetooth
+  total 0
+  drwxr-xr-x  2 root root 0 Sep 27 14:31 ./
+  drwx------ 31 root root 0 Sep 27 14:26 ../
+  #
+
+Cc: stable@vger.kernel.org
+Fixes: ffcecac6a738 ("Bluetooth: Create root debugfs directory during module init")
+Signed-off-by: Aaron Thompson <dev@aaront.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/opt3001.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/af_bluetooth.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/light/opt3001.c
-+++ b/drivers/iio/light/opt3001.c
-@@ -146,6 +146,10 @@ static const struct opt3001_scale opt300
- 		.val2 = 400000,
- 	},
- 	{
-+		.val = 41932,
-+		.val2 = 800000,
-+	},
-+	{
- 		.val = 83865,
- 		.val2 = 600000,
- 	},
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -781,6 +781,7 @@ cleanup_sysfs:
+ 	bt_sysfs_cleanup();
+ cleanup_led:
+ 	bt_leds_cleanup();
++	debugfs_remove_recursive(bt_debugfs);
+ 	return err;
+ }
+ 
 
 
