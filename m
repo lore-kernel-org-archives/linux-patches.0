@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081C91DF251;
-	Wed,  6 Nov 2024 12:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8101DF986;
+	Wed,  6 Nov 2024 12:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896385; cv=none; b=l5KNsZLwHqC97sU4eLwfBlvYihWNXQpjtplXQj4QIFzLTwxbvunuO0UKdIzbL1U+dcfklxkEqXB+4rvwxHgrgHXDFYJipWY5r8MYdlm7AVFmrlf7yIkoarwHeHr4/JhrJ9NM2+KHsXhSL5k9FERoEVvGrw2w7xO3NEUq09VioRg=
+	t=1730896388; cv=none; b=An1bV1SMHYpJ821beVPKSQv3w9ZxWkKyBI1L8qY5egGxdcp5jYfHCFILF7vfL4s3ZMjx+cZD8tCGHIeoBtIUValXQ8FtlgH7uzVUEESKu7sbPoOehKvI7xHhf+vzwdsdtiBI3SnEIZnE9YaNJpJS52WLE/cOewJltP3wR9WBlO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896385; c=relaxed/simple;
-	bh=H6/wMgXF3PuiOCy8dxlQVqbxaR8a/2prFiXygUMtXAE=;
+	s=arc-20240116; t=1730896388; c=relaxed/simple;
+	bh=HRvfZsiyLt/YhGMsad1UV29z58AvLitfeqmwS2WrH84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxPB1+Ru0qiHoDZmCkUihysx1Lruwp1B/cjtKG5o3nWkkBudks8ov0QGOPp9GdAe4t6NxxBzQrqm71Ne5kZnzmMxjriKq2gZlo6ha/Q2V8up/Ga6VQlLZe5Cs6wjPAgFC4wimcYnxUGefBUbHgeFRHXah5NcZrtEIb8CcEonjFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvn6nMGu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HZr2lsCvqOT8WrjkigHijlVXws/22XkYYZZSKNap/jI5jIu+FjgxbhoLl8A/mhuaeZ4dtaX8y20Y+iJYJxQA+W2em8H1gMMgzNCaDOO+Kc8Bnhmi4Jx7UpY2X0F3obe8ghX7Ebuf1n1gGx224oLQZlXYLRoqClK4fGa3b8PFvNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X52Ca8i0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvn6nMGu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C578C4CECD;
-	Wed,  6 Nov 2024 12:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X52Ca8i0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69AF5C4CECD;
+	Wed,  6 Nov 2024 12:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896384;
-	bh=H6/wMgXF3PuiOCy8dxlQVqbxaR8a/2prFiXygUMtXAE=;
+	s=korg; t=1730896387;
+	bh=HRvfZsiyLt/YhGMsad1UV29z58AvLitfeqmwS2WrH84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jvn6nMGuYyrN/r+vsHyG0bPV44htZZhq3V6hDgcIR8b4yc/GwLLnvYre4gfDHbkMU
-	 pu0gyhwoXGg5XPX4nnt1eZR4JZrG29beytmilXnN0/ASkY9JwV4lT0RUSLkNaJ456V
-	 DDJDJolFhfoEcCttWe8iVb5cmBj3YNo+MJY2QJG4=
+	b=X52Ca8i0+rLGWKBghwCwSZXnoJ8ZZqMU5pvFDibFyAZVgYi2ER/36pkyKZ7sYHxKp
+	 NzbHTk4Agag06D30RUTvj6RE/36gb58XdnCdk1VTikKLnJ2obDcyg5vevZNreL+hIt
+	 Sg2rdQwRJ4Vfdh/vWgubsfQMEsQIWp1uCvxXFBkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4125a3c514e3436a02e6@syzkaller.appspotmail.com,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	WangYuli <wangyuli@uniontech.com>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 184/245] xfs: fix finding a last resort AG in xfs_filestream_pick_ag
-Date: Wed,  6 Nov 2024 13:03:57 +0100
-Message-ID: <20241106120323.769244798@linuxfoundation.org>
+Subject: [PATCH 6.11 158/245] riscv: Use %u to format the output of cpu
+Date: Wed,  6 Nov 2024 13:03:31 +0100
+Message-ID: <20241106120323.123680283@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -53,119 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit dc60992ce76fbc2f71c2674f435ff6bde2108028 ]
+[ Upstream commit e0872ab72630dada3ae055bfa410bf463ff1d1e0 ]
 
-When the main loop in xfs_filestream_pick_ag fails to find a suitable
-AG it tries to just pick the online AG.  But the loop for that uses
-args->pag as loop iterator while the later code expects pag to be
-set.  Fix this by reusing the max_pag case for this last resort, and
-also add a check for impossible case of no AG just to make sure that
-the uninitialized pag doesn't even escape in theory.
+'cpu' is an unsigned integer, so its conversion specifier should
+be %u, not %d.
 
-Reported-by: syzbot+4125a3c514e3436a02e6@syzkaller.appspotmail.com
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Tested-by: syzbot+4125a3c514e3436a02e6@syzkaller.appspotmail.com
-Fixes: f8f1ed1ab3baba ("xfs: return a referenced perag from filestreams allocator")
-Cc: <stable@vger.kernel.org> # v6.3
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Suggested-by: Wentao Guan <guanwentao@uniontech.com>
+Suggested-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Link: https://lore.kernel.org/all/alpine.DEB.2.21.2409122309090.40372@angie.orcam.me.uk/
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Tested-by: Charlie Jenkins <charlie@rivosinc.com>
+Fixes: f1e58583b9c7 ("RISC-V: Support cpu hotplug")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/4C127DEECDA287C8+20241017032010.96772-1-wangyuli@uniontech.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_filestream.c | 23 ++++++++++++-----------
- fs/xfs/xfs_trace.h      | 15 +++++----------
- 2 files changed, 17 insertions(+), 21 deletions(-)
+ arch/riscv/kernel/cpu-hotplug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/xfs/xfs_filestream.c b/fs/xfs/xfs_filestream.c
-index e3aaa05555978..88bd23ce74cde 100644
---- a/fs/xfs/xfs_filestream.c
-+++ b/fs/xfs/xfs_filestream.c
-@@ -64,7 +64,7 @@ xfs_filestream_pick_ag(
- 	struct xfs_perag	*pag;
- 	struct xfs_perag	*max_pag = NULL;
- 	xfs_extlen_t		minlen = *longest;
--	xfs_extlen_t		free = 0, minfree, maxfree = 0;
-+	xfs_extlen_t		minfree, maxfree = 0;
- 	xfs_agnumber_t		agno;
- 	bool			first_pass = true;
- 	int			err;
-@@ -107,7 +107,6 @@ xfs_filestream_pick_ag(
- 			     !(flags & XFS_PICK_USERDATA) ||
- 			     (flags & XFS_PICK_LOWSPACE))) {
- 				/* Break out, retaining the reference on the AG. */
--				free = pag->pagf_freeblks;
- 				break;
- 			}
- 		}
-@@ -150,23 +149,25 @@ xfs_filestream_pick_ag(
- 		 * grab.
- 		 */
- 		if (!max_pag) {
--			for_each_perag_wrap(args->mp, 0, start_agno, args->pag)
-+			for_each_perag_wrap(args->mp, 0, start_agno, pag) {
-+				max_pag = pag;
- 				break;
--			atomic_inc(&args->pag->pagf_fstrms);
--			*longest = 0;
--		} else {
--			pag = max_pag;
--			free = maxfree;
--			atomic_inc(&pag->pagf_fstrms);
-+			}
-+
-+			/* Bail if there are no AGs at all to select from. */
-+			if (!max_pag)
-+				return -ENOSPC;
- 		}
-+
-+		pag = max_pag;
-+		atomic_inc(&pag->pagf_fstrms);
- 	} else if (max_pag) {
- 		xfs_perag_rele(max_pag);
- 	}
- 
--	trace_xfs_filestream_pick(pag, pino, free);
-+	trace_xfs_filestream_pick(pag, pino);
- 	args->pag = pag;
- 	return 0;
--
+diff --git a/arch/riscv/kernel/cpu-hotplug.c b/arch/riscv/kernel/cpu-hotplug.c
+index 28b58fc5ad199..a1e38ecfc8be2 100644
+--- a/arch/riscv/kernel/cpu-hotplug.c
++++ b/arch/riscv/kernel/cpu-hotplug.c
+@@ -58,7 +58,7 @@ void arch_cpuhp_cleanup_dead_cpu(unsigned int cpu)
+ 	if (cpu_ops->cpu_is_stopped)
+ 		ret = cpu_ops->cpu_is_stopped(cpu);
+ 	if (ret)
+-		pr_warn("CPU%d may not have stopped: %d\n", cpu, ret);
++		pr_warn("CPU%u may not have stopped: %d\n", cpu, ret);
  }
  
- static struct xfs_inode *
-diff --git a/fs/xfs/xfs_trace.h b/fs/xfs/xfs_trace.h
-index 180ce697305a9..f681a195a7441 100644
---- a/fs/xfs/xfs_trace.h
-+++ b/fs/xfs/xfs_trace.h
-@@ -691,8 +691,8 @@ DEFINE_FILESTREAM_EVENT(xfs_filestream_lookup);
- DEFINE_FILESTREAM_EVENT(xfs_filestream_scan);
- 
- TRACE_EVENT(xfs_filestream_pick,
--	TP_PROTO(struct xfs_perag *pag, xfs_ino_t ino, xfs_extlen_t free),
--	TP_ARGS(pag, ino, free),
-+	TP_PROTO(struct xfs_perag *pag, xfs_ino_t ino),
-+	TP_ARGS(pag, ino),
- 	TP_STRUCT__entry(
- 		__field(dev_t, dev)
- 		__field(xfs_ino_t, ino)
-@@ -703,14 +703,9 @@ TRACE_EVENT(xfs_filestream_pick,
- 	TP_fast_assign(
- 		__entry->dev = pag->pag_mount->m_super->s_dev;
- 		__entry->ino = ino;
--		if (pag) {
--			__entry->agno = pag->pag_agno;
--			__entry->streams = atomic_read(&pag->pagf_fstrms);
--		} else {
--			__entry->agno = NULLAGNUMBER;
--			__entry->streams = 0;
--		}
--		__entry->free = free;
-+		__entry->agno = pag->pag_agno;
-+		__entry->streams = atomic_read(&pag->pagf_fstrms);
-+		__entry->free = pag->pagf_freeblks;
- 	),
- 	TP_printk("dev %d:%d ino 0x%llx agno 0x%x streams %d free %d",
- 		  MAJOR(__entry->dev), MINOR(__entry->dev),
+ /*
 -- 
 2.43.0
 
