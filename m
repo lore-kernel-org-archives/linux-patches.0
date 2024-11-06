@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8B51FB8B1;
-	Wed,  6 Nov 2024 12:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67ACB1F4FC4;
+	Wed,  6 Nov 2024 12:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897676; cv=none; b=GjTtBNxmmDLAEJLHRdDtf4ObDc2ajwBbM1UU5Yv+UMzz89FWkoQNbuOSM+nC9RdfIXeXrLG/kJmTco/U8yzyI0iSgmQJ0ebsiSNgZVcEiPINEcLlecCbgF/ToXF8Dpml7NeBtE/cpWkGtdkG3cizKKEwF2BBXVDzOAMkmn875ds=
+	t=1730897679; cv=none; b=V+6pTDTZcdQR1Mrxfj31LwKpcjQo09O/KqZ/adg8LGnZV1b8sLeWM0aIpyqFc7ZzhcbqiGC5iZjNKM6towPwSMzGCoNznARRHCS1Cd75K4R7ksSrhhA4BubqGLCfqHNVHjZ6Ya6HONVtGRCH37JTk4INYjVyfnD2vtU6dOlqAgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897676; c=relaxed/simple;
-	bh=fT9luClZJO8VOzAKeoFzM0bFg9FJryw+q/RPtFpaPms=;
+	s=arc-20240116; t=1730897679; c=relaxed/simple;
+	bh=pBLZwon3VTf454YYCbZ16MFhlW/5YUDmu7Au+/uPyS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qpsxpCb8DcvrwT/8sjm8y3rIAmQdlgmqLMAQjxHszAyc6HjGzd/0aj0q1hM0v/0PwDYzwsDsY6d/4RT+ubFuOI1fes14jCdgRHXZDwKltyj6AA/IcrEgVpBHe/HHL0JxDsi9PWX4kZrYt40ZyoCHviLV9WswgkIlzSarsMZQRVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mcm0jjv+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UMQgo+JylPOLhCaL9DEwUwFrfbSPoX/+2EPI5IN3DTookiQDrb44SbTV8A7CEPUpQafZ6AZjgdVqJcf9miJHUx4iBERO6yHIdKb7vZ/bDbkJOyiv2d3n9FhJkOOQM2I9Cfgxsoks8FBhVWMIvN1QZFp6A6h2mcoMW9RMqW0mtcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKMcm7FC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mcm0jjv+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9756CC4CECD;
-	Wed,  6 Nov 2024 12:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKMcm7FC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86533C4CECD;
+	Wed,  6 Nov 2024 12:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897676;
-	bh=fT9luClZJO8VOzAKeoFzM0bFg9FJryw+q/RPtFpaPms=;
+	s=korg; t=1730897678;
+	bh=pBLZwon3VTf454YYCbZ16MFhlW/5YUDmu7Au+/uPyS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mcm0jjv+uWJ6Y+PAKNFLSfAKLvs2fIdyp99kxCAELWbRwwgpQQ3DgEGJu61ySCzq8
-	 OpFftW7Nm615wf3O43AwDAuTthH7akGnjZOcRZjAPsaQsFc6cTugIduF7wTTEpggul
-	 nIgY9mPrBURL9req5VJmC5/Hrhkw8hNvmx7ZV7oo=
+	b=dKMcm7FCVcecH60dweppGKHuV1hZCcJw5XUOi2iwaVpFBEge3iJz5kYUUZPiyYAZg
+	 UJQ+8vyJo43taynZu3vz2OCzhBugCPf4zfbbaOka8q7GgYP0RJKUSVjR+5T1uxoz/c
+	 mBdTVlHv/ghSG+ItG4CC+QbcUDTjV8B8NWrs6oF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoffer Sandberg <cs@tuxedo.de>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Vitaliy Shevtsov <v.shevtsov@maxima.ru>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 133/151] ALSA: hda/realtek: Fix headset mic on TUXEDO Stellaris 16 Gen6 mb1
-Date: Wed,  6 Nov 2024 13:05:21 +0100
-Message-ID: <20241106120312.520229344@linuxfoundation.org>
+Subject: [PATCH 6.6 134/151] nvmet-auth: assign dh_key to NULL after kfree_sensitive
+Date: Wed,  6 Nov 2024 13:05:22 +0100
+Message-ID: <20241106120312.544703197@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -52,34 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoffer Sandberg <cs@tuxedo.de>
+From: Vitaliy Shevtsov <v.shevtsov@maxima.ru>
 
-[ Upstream commit e49370d769e71456db3fbd982e95bab8c69f73e8 ]
+[ Upstream commit d2f551b1f72b4c508ab9298419f6feadc3b5d791 ]
 
-Quirk is needed to enable headset microphone on missing pin 0x19.
+ctrl->dh_key might be used across multiple calls to nvmet_setup_dhgroup()
+for the same controller. So it's better to nullify it after release on
+error path in order to avoid double free later in nvmet_destroy_auth().
 
-Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241029151653.80726-2-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Found by Linux Verification Center (linuxtesting.org) with Svace.
+
+Fixes: 7a277c37d352 ("nvmet-auth: Diffie-Hellman key exchange support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Vitaliy Shevtsov <v.shevtsov@maxima.ru>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
+ drivers/nvme/target/auth.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 62747d77cd9ab..3c48036fdf0b0 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10403,6 +10403,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1d05, 0x115c, "TongFang GMxTGxx", ALC269_FIXUP_NO_SHUTUP),
- 	SND_PCI_QUIRK(0x1d05, 0x121b, "TongFang GMxAGxx", ALC269_FIXUP_NO_SHUTUP),
- 	SND_PCI_QUIRK(0x1d05, 0x1387, "TongFang GMxIXxx", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1d05, 0x1409, "TongFang GMxIXxx", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
- 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
+diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
+index aacc05ec00c2b..74791078fdebc 100644
+--- a/drivers/nvme/target/auth.c
++++ b/drivers/nvme/target/auth.c
+@@ -101,6 +101,7 @@ int nvmet_setup_dhgroup(struct nvmet_ctrl *ctrl, u8 dhgroup_id)
+ 			pr_debug("%s: ctrl %d failed to generate private key, err %d\n",
+ 				 __func__, ctrl->cntlid, ret);
+ 			kfree_sensitive(ctrl->dh_key);
++			ctrl->dh_key = NULL;
+ 			return ret;
+ 		}
+ 		ctrl->dh_keysize = crypto_kpp_maxsize(ctrl->dh_tfm);
 -- 
 2.43.0
 
