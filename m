@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0181F7544;
-	Wed,  6 Nov 2024 12:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB501E909B;
+	Wed,  6 Nov 2024 12:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896995; cv=none; b=mjSy/15G2QgLz4NmFb/k4/Y+em5gN7pFtkd9PksRt/fFmEJp+MZ7MUUqIdXs7OSAkUVNeHMYk/Y7F0OLhlKn8/932tR4wmZgKNitpFZFT9sJm0RsvQK8q7gWu7FFlb36jQ7Lf2nBzNnkKe00vqLh11ExrkvoZDsks9+hfK1wM2o=
+	t=1730896998; cv=none; b=IQ+MWHtbClJA8G0GjX2K78WKLr4UE9hzLH2B48u/usjgT0kwaVQK3dK3ZscON2qnRYxIx/x2bs/s0FYprKW/o9Q9LATNrJCQnkkSVo5eJs2TAI8S+x+jcuOTUvc3nj4t1ma+1zx3RPfHIP2UtH9VoAv3Z7+I5QJSnWsaDJgCVRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896995; c=relaxed/simple;
-	bh=zMTFDaKmoyAhut2tEYf2ZRDwKrvC+MHZmgtLHvMiiCM=;
+	s=arc-20240116; t=1730896998; c=relaxed/simple;
+	bh=mPg4mOjwrtL73Cl4keWQpGgcdI6OjsBSkYNRlp7ySI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qHPZaFB6Fe8g+P6J0f9bzoT0HMGKUEeqpM0O674WwpMp2OhiGV6FT9SwlMaXUE2YGDm7GhpBlKvLaxwZO/9BQ3cKlRVO/mj4l2u59PrKZU2CnmtRnZ2/+4E7NqaUaKpvHyOexkOQKQlzeinLxzo3Bdp3104utS3WhKQ1WW3uqUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4/GRs/s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dPAmMu5JcBsX5OrzuYLAnWXFoNsHyGiZxtrG8HO5y0z/xh5gmop+gsldlPgMd90I8CNd5oYbPBHTsr1preKlQc9YO0C0hVt/QLhoefR5X9xSe6er/MER9w+Q4zx6ert5oQ1TYpW3gwiMdbsDqrnf8+z24wC0/LuT3RsIcC7GiqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHx5f4tx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4/GRs/s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91771C4CECD;
-	Wed,  6 Nov 2024 12:43:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHx5f4tx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85076C4CECD;
+	Wed,  6 Nov 2024 12:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896995;
-	bh=zMTFDaKmoyAhut2tEYf2ZRDwKrvC+MHZmgtLHvMiiCM=;
+	s=korg; t=1730896997;
+	bh=mPg4mOjwrtL73Cl4keWQpGgcdI6OjsBSkYNRlp7ySI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4/GRs/sX11AYKlLFkFB3G7hTdfDQvdCvTVVS0jP0d6UMyotOnhityBQl1V6aE9U9
-	 E+4Lb/nKoj7JAL+2qgoFmzUFZPTFDrVtFJzJgHpSCmo6K5A5AQQD1kdnQmTRLYAFjb
-	 w1awekfhCnQQemsf8Vc8dbrAsJpElJsswcSihBv8=
+	b=aHx5f4txAlBXphqzrgVw4i3YSLc8FPWMZ0KwWo3425kc+d7NSB6FiA6AZYkf3N5yl
+	 ojPjPQXpZHbp1ntHlPFen9OxdnbeQywr3l2uE7QBuXGZ40YvD67Ga2oI0akD8XSVjU
+	 t7RuXkDLSQDT/8Fpr3qlOObDzB0T8t0rttWh23pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sungwoo Kim <iam@sung-woo.kim>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/126] netfilter: nf_reject_ipv6: fix potential crash in nf_send_reset6()
-Date: Wed,  6 Nov 2024 13:03:51 +0100
-Message-ID: <20241106120306.919966321@linuxfoundation.org>
+Subject: [PATCH 6.1 031/126] Bluetooth: hci: fix null-ptr-deref in hci_read_supported_codecs
+Date: Wed,  6 Nov 2024 13:03:52 +0100
+Message-ID: <20241106120306.949460086@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -52,131 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Sungwoo Kim <iam@sung-woo.kim>
 
-[ Upstream commit 4ed234fe793f27a3b151c43d2106df2ff0d81aac ]
+[ Upstream commit 1e67d8641813f1876a42eeb4f532487b8a7fb0a8 ]
 
-I got a syzbot report without a repro [1] crashing in nf_send_reset6()
+Fix __hci_cmd_sync_sk() to return not NULL for unknown opcodes.
 
-I think the issue is that dev->hard_header_len is zero, and we attempt
-later to push an Ethernet header.
+__hci_cmd_sync_sk() returns NULL if a command returns a status event.
+However, it also returns NULL where an opcode doesn't exist in the
+hci_cc table because hci_cmd_complete_evt() assumes status = skb->data[0]
+for unknown opcodes.
+This leads to null-ptr-deref in cmd_sync for HCI_OP_READ_LOCAL_CODECS as
+there is no hci_cc for HCI_OP_READ_LOCAL_CODECS, which always assumes
+status = skb->data[0].
 
-Use LL_MAX_HEADER, as other functions in net/ipv6/netfilter/nf_reject_ipv6.c.
-
-[1]
-
-skbuff: skb_under_panic: text:ffffffff89b1d008 len:74 put:14 head:ffff88803123aa00 data:ffff88803123a9f2 tail:0x3c end:0x140 dev:syz_tun
- kernel BUG at net/core/skbuff.c:206 !
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
-CPU: 0 UID: 0 PID: 7373 Comm: syz.1.568 Not tainted 6.12.0-rc2-syzkaller-00631-g6d858708d465 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
- RIP: 0010:skb_panic net/core/skbuff.c:206 [inline]
- RIP: 0010:skb_under_panic+0x14b/0x150 net/core/skbuff.c:216
-Code: 0d 8d 48 c7 c6 60 a6 29 8e 48 8b 54 24 08 8b 0c 24 44 8b 44 24 04 4d 89 e9 50 41 54 41 57 41 56 e8 ba 30 38 02 48 83 c4 20 90 <0f> 0b 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3
-RSP: 0018:ffffc900045269b0 EFLAGS: 00010282
-RAX: 0000000000000088 RBX: dffffc0000000000 RCX: cd66dacdc5d8e800
-RDX: 0000000000000000 RSI: 0000000000000200 RDI: 0000000000000000
-RBP: ffff88802d39a3d0 R08: ffffffff8174afec R09: 1ffff920008a4ccc
-R10: dffffc0000000000 R11: fffff520008a4ccd R12: 0000000000000140
-R13: ffff88803123aa00 R14: ffff88803123a9f2 R15: 000000000000003c
-FS:  00007fdbee5ff6c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
+KASAN: null-ptr-deref in range [0x0000000000000070-0x0000000000000077]
+CPU: 1 PID: 2000 Comm: kworker/u9:5 Not tainted 6.9.0-ga6bcb805883c-dirty #10
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Workqueue: hci7 hci_power_on
+RIP: 0010:hci_read_supported_codecs+0xb9/0x870 net/bluetooth/hci_codec.c:138
+Code: 08 48 89 ef e8 b8 c1 8f fd 48 8b 75 00 e9 96 00 00 00 49 89 c6 48 ba 00 00 00 00 00 fc ff df 4c 8d 60 70 4c 89 e3 48 c1 eb 03 <0f> b6 04 13 84 c0 0f 85 82 06 00 00 41 83 3c 24 02 77 0a e8 bf 78
+RSP: 0018:ffff888120bafac8 EFLAGS: 00010212
+RAX: 0000000000000000 RBX: 000000000000000e RCX: ffff8881173f0040
+RDX: dffffc0000000000 RSI: ffffffffa58496c0 RDI: ffff88810b9ad1e4
+RBP: ffff88810b9ac000 R08: ffffffffa77882a7 R09: 1ffffffff4ef1054
+R10: dffffc0000000000 R11: fffffbfff4ef1055 R12: 0000000000000070
+R13: 0000000000000000 R14: 0000000000000000 R15: ffff88810b9ac000
+FS:  0000000000000000(0000) GS:ffff8881f6c00000(0000) knlGS:0000000000000000
 CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000000 CR3: 000000005d322000 CR4: 00000000003526f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+CR2: 00007f6ddaa3439e CR3: 0000000139764003 CR4: 0000000000770ef0
+PKRU: 55555554
 Call Trace:
  <TASK>
-  skb_push+0xe5/0x100 net/core/skbuff.c:2636
-  eth_header+0x38/0x1f0 net/ethernet/eth.c:83
-  dev_hard_header include/linux/netdevice.h:3208 [inline]
-  nf_send_reset6+0xce6/0x1270 net/ipv6/netfilter/nf_reject_ipv6.c:358
-  nft_reject_inet_eval+0x3b9/0x690 net/netfilter/nft_reject_inet.c:48
-  expr_call_ops_eval net/netfilter/nf_tables_core.c:240 [inline]
-  nft_do_chain+0x4ad/0x1da0 net/netfilter/nf_tables_core.c:288
-  nft_do_chain_inet+0x418/0x6b0 net/netfilter/nft_chain_filter.c:161
-  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
-  nf_hook_slow+0xc3/0x220 net/netfilter/core.c:626
-  nf_hook include/linux/netfilter.h:269 [inline]
-  NF_HOOK include/linux/netfilter.h:312 [inline]
-  br_nf_pre_routing_ipv6+0x63e/0x770 net/bridge/br_netfilter_ipv6.c:184
-  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
-  nf_hook_bridge_pre net/bridge/br_input.c:277 [inline]
-  br_handle_frame+0x9fd/0x1530 net/bridge/br_input.c:424
-  __netif_receive_skb_core+0x13e8/0x4570 net/core/dev.c:5562
-  __netif_receive_skb_one_core net/core/dev.c:5666 [inline]
-  __netif_receive_skb+0x12f/0x650 net/core/dev.c:5781
-  netif_receive_skb_internal net/core/dev.c:5867 [inline]
-  netif_receive_skb+0x1e8/0x890 net/core/dev.c:5926
-  tun_rx_batched+0x1b7/0x8f0 drivers/net/tun.c:1550
-  tun_get_user+0x3056/0x47e0 drivers/net/tun.c:2007
-  tun_chr_write_iter+0x10d/0x1f0 drivers/net/tun.c:2053
-  new_sync_write fs/read_write.c:590 [inline]
-  vfs_write+0xa6d/0xc90 fs/read_write.c:683
-  ksys_write+0x183/0x2b0 fs/read_write.c:736
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fdbeeb7d1ff
-Code: 89 54 24 18 48 89 74 24 10 89 7c 24 08 e8 c9 8d 02 00 48 8b 54 24 18 48 8b 74 24 10 41 89 c0 8b 7c 24 08 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 31 44 89 c7 48 89 44 24 08 e8 1c 8e 02 00 48
-RSP: 002b:00007fdbee5ff000 EFLAGS: 00000293 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 00007fdbeed36058 RCX: 00007fdbeeb7d1ff
-RDX: 000000000000008e RSI: 0000000020000040 RDI: 00000000000000c8
-RBP: 00007fdbeebf12be R08: 0000000000000000 R09: 0000000000000000
-R10: 000000000000008e R11: 0000000000000293 R12: 0000000000000000
-R13: 0000000000000000 R14: 00007fdbeed36058 R15: 00007ffc38de06e8
- </TASK>
+ hci_read_local_codecs_sync net/bluetooth/hci_sync.c:4546 [inline]
+ hci_init_stage_sync net/bluetooth/hci_sync.c:3441 [inline]
+ hci_init4_sync net/bluetooth/hci_sync.c:4706 [inline]
+ hci_init_sync net/bluetooth/hci_sync.c:4742 [inline]
+ hci_dev_init_sync net/bluetooth/hci_sync.c:4912 [inline]
+ hci_dev_open_sync+0x19a9/0x2d30 net/bluetooth/hci_sync.c:4994
+ hci_dev_do_open net/bluetooth/hci_core.c:483 [inline]
+ hci_power_on+0x11e/0x560 net/bluetooth/hci_core.c:1015
+ process_one_work kernel/workqueue.c:3267 [inline]
+ process_scheduled_works+0x8ef/0x14f0 kernel/workqueue.c:3348
+ worker_thread+0x91f/0xe50 kernel/workqueue.c:3429
+ kthread+0x2cb/0x360 kernel/kthread.c:388
+ ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
 
-Fixes: c8d7b98bec43 ("netfilter: move nf_send_resetX() code to nf_reject_ipvX modules")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: abfeea476c68 ("Bluetooth: hci_sync: Convert MGMT_OP_START_DISCOVERY")
+
+Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/netfilter/nf_reject_ipv6.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ net/bluetooth/hci_sync.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index 4e0976534648c..e4776bd2ed89b 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -268,12 +268,12 @@ static int nf_reject6_fill_skb_dst(struct sk_buff *skb_in)
- void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 		    int hook)
- {
--	struct sk_buff *nskb;
--	struct tcphdr _otcph;
--	const struct tcphdr *otcph;
--	unsigned int otcplen, hh_len;
- 	const struct ipv6hdr *oip6h = ipv6_hdr(oldskb);
- 	struct dst_entry *dst = NULL;
-+	const struct tcphdr *otcph;
-+	struct sk_buff *nskb;
-+	struct tcphdr _otcph;
-+	unsigned int otcplen;
- 	struct flowi6 fl6;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 0cc187ff35874..c368235202b25 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -200,6 +200,12 @@ struct sk_buff *__hci_cmd_sync_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 		return ERR_PTR(err);
+ 	}
  
- 	if ((!(ipv6_addr_type(&oip6h->saddr) & IPV6_ADDR_UNICAST)) ||
-@@ -312,9 +312,8 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
- 	if (IS_ERR(dst))
- 		return;
++	/* If command return a status event skb will be set to NULL as there are
++	 * no parameters.
++	 */
++	if (!skb)
++		return ERR_PTR(-ENODATA);
++
+ 	return skb;
+ }
+ EXPORT_SYMBOL(__hci_cmd_sync_sk);
+@@ -249,6 +255,11 @@ int __hci_cmd_sync_status_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 	u8 status;
  
--	hh_len = (dst->dev->hard_header_len + 15)&~15;
--	nskb = alloc_skb(hh_len + 15 + dst->header_len + sizeof(struct ipv6hdr)
--			 + sizeof(struct tcphdr) + dst->trailer_len,
-+	nskb = alloc_skb(LL_MAX_HEADER + sizeof(struct ipv6hdr) +
-+			 sizeof(struct tcphdr) + dst->trailer_len,
- 			 GFP_ATOMIC);
+ 	skb = __hci_cmd_sync_sk(hdev, opcode, plen, param, event, timeout, sk);
++
++	/* If command return a status event, skb will be set to -ENODATA */
++	if (skb == ERR_PTR(-ENODATA))
++		return 0;
++
+ 	if (IS_ERR(skb)) {
+ 		if (!event)
+ 			bt_dev_err(hdev, "Opcode 0x%4.4x failed: %ld", opcode,
+@@ -256,13 +267,6 @@ int __hci_cmd_sync_status_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 		return PTR_ERR(skb);
+ 	}
  
- 	if (!nskb) {
-@@ -327,7 +326,7 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+-	/* If command return a status event skb will be set to NULL as there are
+-	 * no parameters, in case of failure IS_ERR(skb) would have be set to
+-	 * the actual error would be found with PTR_ERR(skb).
+-	 */
+-	if (!skb)
+-		return 0;
+-
+ 	status = skb->data[0];
  
- 	nskb->mark = fl6.flowi6_mark;
- 
--	skb_reserve(nskb, hh_len + dst->header_len);
-+	skb_reserve(nskb, LL_MAX_HEADER);
- 	nf_reject_ip6hdr_put(nskb, oldskb, IPPROTO_TCP, ip6_dst_hoplimit(dst));
- 	nf_reject_ip6_tcphdr_put(nskb, oldskb, otcph, otcplen);
- 
+ 	kfree_skb(skb);
 -- 
 2.43.0
 
