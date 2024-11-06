@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67CD1F4298;
-	Wed,  6 Nov 2024 13:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68D31F4298;
+	Wed,  6 Nov 2024 13:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898842; cv=none; b=eD3WgBbjaVqyPMi3o11CuR/WHfMdZ0Gzk3jZ2C7VJSm+ACnszOE50yWMHohSTUsifToUWAv9jaWECM+7OP302lDh4OkYKO3rU8J20op0JAHeLflXzTm36jQGKM9016qoZ6d5JE4iYGofRvVNmPI3To76wcd4fl3XkOCxAb9wgI4=
+	t=1730898846; cv=none; b=XGxZTMFhfb3OGomBblu3inJm82E5E7c9cOVOVfGjeIscW8kyr7NYw+scTSwgsQrpcMxyxVTA4cbIMZPNELKyT8fLjvNqc8p9/BZRcIDL4Jj4FBxS4GBRO7vrnXXyz1RwagrBlH1KOEeaMdmbMmdWAwy06m4nORcxfn13FJsqtV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898842; c=relaxed/simple;
-	bh=T4OIWkDdJGOP6NidLkGwOwl8O6aDMuvw5+an22rn9KM=;
+	s=arc-20240116; t=1730898846; c=relaxed/simple;
+	bh=dLSTJVH0CuecPRxV6lYLglqOeTUcVYeRM7vGIQ++t8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ts48jcGdSJOYrBeH7DjDTAYjGtog0pkoNJ0zfpFkz+5IogmcvkFvS41r003POkHVnaUFiyaqFmrvNSMp8rTOtgffzp34xNSfiRbVn0FOpnKVxcaDhIuVDRjjtrUqp68I4oVFBoqZtah4wJVfkDT7KwKx6lhg1TeAtafywEfNKhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdDijRPY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mDJTfGgBKnAjSOcyFaz6fpzhrJg7qJyRcBf+a++Aa0HHSsYFXIXmqt2oDCRcJJSbxshAx5EAO19PJSJPnqQjMy2su6ETHqTABnZlnjOf//HXgxUJXlH07YsRrlYMMG1VtNLfkrG+Ibc7GpMTV5gu5uQTfGALP86vLm6bO282VXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pr1TeVQ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdDijRPY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD20C4CECD;
-	Wed,  6 Nov 2024 13:14:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pr1TeVQ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BB11C4CECD;
+	Wed,  6 Nov 2024 13:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898842;
-	bh=T4OIWkDdJGOP6NidLkGwOwl8O6aDMuvw5+an22rn9KM=;
+	s=korg; t=1730898845;
+	bh=dLSTJVH0CuecPRxV6lYLglqOeTUcVYeRM7vGIQ++t8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdDijRPY7PHlfgGEIthYZNtLtyIGrL2VqBG5lISVqhBYb+zgMM0zPEyCiH7sowC3e
-	 xtIXwP/2sx+tGSfhaAZMqKnjlq/OI+EYRz5xRLUqy4EPJtm6sdQqcb2jyXd81W23Tp
-	 mFQVKvclRsFOJBYlt3fcevOQQ7FdejXYMzDTuEtY=
+	b=Pr1TeVQ/xlU1vFmTAWxzyIKLAPvvaw+dBagR9UmLDwC7WoDc6GQcOF6MPF06j7QjP
+	 An5P+tjgGHx+RMZUEvs7+wFupeL5fnSjnWrXffVGVZESg1ny+6l+RFg9DHQrapgXJK
+	 xGzXrGVjdAumqR74M7iL/mqhWMklpDUZSv+2nn4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 373/462] iio: adc: ti-ads124s08: add missing select IIO_(TRIGGERED_)BUFFER in Kconfig
-Date: Wed,  6 Nov 2024 13:04:26 +0100
-Message-ID: <20241106120340.738474006@linuxfoundation.org>
+	Aaron Thompson <dev@aaront.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.4 374/462] Bluetooth: Remove debugfs directory on module init failure
+Date: Wed,  6 Nov 2024 13:04:27 +0100
+Message-ID: <20241106120340.762690215@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,35 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Aaron Thompson <dev@aaront.org>
 
-commit eb143d05def52bc6d193e813018e5fa1a0e47c77 upstream.
+commit 1db4564f101b47188c1b71696bd342ef09172b22 upstream.
 
-This driver makes use of triggered buffers, but does not select the
-required modules.
+If bt_init() fails, the debugfs directory currently is not removed. If
+the module is loaded again after that, the debugfs directory is not set
+up properly due to the existing directory.
 
-Add the missing 'select IIO_BUFFER' and 'select IIO_TRIGGERED_BUFFER'.
+  # modprobe bluetooth
+  # ls -laF /sys/kernel/debug/bluetooth
+  total 0
+  drwxr-xr-x  2 root root 0 Sep 27 14:26 ./
+  drwx------ 31 root root 0 Sep 27 14:25 ../
+  -r--r--r--  1 root root 0 Sep 27 14:26 l2cap
+  -r--r--r--  1 root root 0 Sep 27 14:26 sco
+  # modprobe -r bluetooth
+  # ls -laF /sys/kernel/debug/bluetooth
+  ls: cannot access '/sys/kernel/debug/bluetooth': No such file or directory
+  #
 
-Fixes: e717f8c6dfec ("iio: adc: Add the TI ads124s08 ADC code")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20241003-iio-select-v1-3-67c0385197cd@gmail.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+  # modprobe bluetooth
+  modprobe: ERROR: could not insert 'bluetooth': Invalid argument
+  # dmesg | tail -n 6
+  Bluetooth: Core ver 2.22
+  NET: Registered PF_BLUETOOTH protocol family
+  Bluetooth: HCI device and connection manager initialized
+  Bluetooth: HCI socket layer initialized
+  Bluetooth: Faking l2cap_init() failure for testing
+  NET: Unregistered PF_BLUETOOTH protocol family
+  # ls -laF /sys/kernel/debug/bluetooth
+  total 0
+  drwxr-xr-x  2 root root 0 Sep 27 14:31 ./
+  drwx------ 31 root root 0 Sep 27 14:26 ../
+  #
+
+  # modprobe bluetooth
+  # dmesg | tail -n 7
+  Bluetooth: Core ver 2.22
+  debugfs: Directory 'bluetooth' with parent '/' already present!
+  NET: Registered PF_BLUETOOTH protocol family
+  Bluetooth: HCI device and connection manager initialized
+  Bluetooth: HCI socket layer initialized
+  Bluetooth: L2CAP socket layer initialized
+  Bluetooth: SCO socket layer initialized
+  # ls -laF /sys/kernel/debug/bluetooth
+  total 0
+  drwxr-xr-x  2 root root 0 Sep 27 14:31 ./
+  drwx------ 31 root root 0 Sep 27 14:26 ../
+  #
+
+Cc: stable@vger.kernel.org
+Fixes: ffcecac6a738 ("Bluetooth: Create root debugfs directory during module init")
+Signed-off-by: Aaron Thompson <dev@aaront.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/Kconfig |    2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/af_bluetooth.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/adc/Kconfig
-+++ b/drivers/iio/adc/Kconfig
-@@ -992,6 +992,8 @@ config TI_ADS8688
- config TI_ADS124S08
- 	tristate "Texas Instruments ADS124S08"
- 	depends on SPI && OF
-+	select IIO_BUFFER
-+	select IIO_TRIGGERED_BUFFER
- 	help
- 	  If you say yes here you get support for Texas Instruments ADS124S08
- 	  and ADS124S06 ADC chips
+--- a/net/bluetooth/af_bluetooth.c
++++ b/net/bluetooth/af_bluetooth.c
+@@ -773,6 +773,7 @@ cleanup_sysfs:
+ 	bt_sysfs_cleanup();
+ cleanup_led:
+ 	bt_leds_cleanup();
++	debugfs_remove_recursive(bt_debugfs);
+ 	return err;
+ }
+ 
 
 
