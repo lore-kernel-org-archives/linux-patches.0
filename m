@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14ECF1F6680;
-	Wed,  6 Nov 2024 12:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365A01F667F;
+	Wed,  6 Nov 2024 12:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897889; cv=none; b=doa2Y3qNYw7EmBz0OxyhdMaymAT5D9FozRMkKYMd+Kfvjhd4KeVtxCrWStZwuxwo4ViGP+N8zBOOTqIq2qiMUyZ4YxLxYXDoxD8W365YEiS3ozwqdcY2Ez1nbNXwZmRjUui6gUwwGa5/vzgqBLf4eukbVzx0aL9LUL8kRI1zJJM=
+	t=1730897892; cv=none; b=Roiaz5GBeU8PQ485w9w9ZcwNPFHKVdveEiu50cKRoSLlJE2wBd02s54UOLLqsDWZGmKCtszIWjE09elocVJABuuzkqoiZRgjPRS/8Sc30lhUY1OEL3kuLEoamc6cQpCj9uoEofbogOEJf7XgcpzqTH5y6leHN5CbRdmql0Q6yaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897889; c=relaxed/simple;
-	bh=YfWz/vCQdpmRl8BEA2Esj2SzqPoqbWJfaQa/XYD+4wc=;
+	s=arc-20240116; t=1730897892; c=relaxed/simple;
+	bh=YSG5PpJlHRschbLZFyUjuz31ETKrbwq6nHlNKedMW0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jqc9S4A/KpOG56g4ifvgEkUE4J1OLqdQiUZXNsOuahCfWEIVOCAVNNpJsf7CnhsrDZBXWm+tSGFVuUq2wncZyrJ4GTmeLcqcf0ZeXO9sm/eau7RiS9i+IQz2+yLVnD5ckP+v7R5O6cbnT5Z+sstQMd+4hll9fTDDW9JHICKgXu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+1Sl6Gv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FgsIJJTlBOzvB5Gf02ZMmp//gDJ1RpFtdPjTM9Ze8DCSiCiw5ReYmYnS5ODOnhg/FQ7iNPw3+lvZzLYz2JumeT+gbrIFGflly+IBoA8coEr9REIFtFcdKa3zMtgz6XGON2vAzt+oIzuHbTWS1wnSrkhz2/6IsDR1uY6WRGWuFAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=huRSLn2u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+1Sl6Gv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8988AC4CECD;
-	Wed,  6 Nov 2024 12:58:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="huRSLn2u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74F92C4CECD;
+	Wed,  6 Nov 2024 12:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897888;
-	bh=YfWz/vCQdpmRl8BEA2Esj2SzqPoqbWJfaQa/XYD+4wc=;
+	s=korg; t=1730897892;
+	bh=YSG5PpJlHRschbLZFyUjuz31ETKrbwq6nHlNKedMW0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+1Sl6GvNOAkCFZ6lc1wdraNKjMq+1+rf7a93HdbOeHxCndnpYRKRa2uUpIEThHAF
-	 jiUpFAVKwAeGpJIhcwenNM/+dxLx376vjQcFBVmd4m+oJEFLNqldZ5aDPTnabHLtBW
-	 WUgKvuTF1WL2Fd2y7m6tAeWJ4vnDeqiKpC+j2JNk=
+	b=huRSLn2u/KITTf3pF+jbvw6MZ3QbIaRwosLiYXrdV2jfEm+60PX1Usv7rxE6jBiuM
+	 WPLYvhzLyuzhr2S0r88DY7+nVJyjaj13PqHtkmKuz8k2IdREoGj2EjZE16qJADibw8
+	 zrJdOID7pOwz1lyHppDq8ro/HVavSVaVsNFR+8uY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yu Kuai <yukuai3@huawei.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 053/462] block, bfq: choose the last bfqq from merge chain in bfq_setup_cooperator()
-Date: Wed,  6 Nov 2024 12:59:06 +0100
-Message-ID: <20241106120332.826616192@linuxfoundation.org>
+Subject: [PATCH 5.4 054/462] block, bfq: dont break merge chain in bfq_split_bfqq()
+Date: Wed,  6 Nov 2024 12:59:07 +0100
+Message-ID: <20241106120332.851826172@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -54,53 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 0e456dba86c7f9a19792204a044835f1ca2c8dbb ]
+[ Upstream commit 42c306ed723321af4003b2a41bb73728cab54f85 ]
 
-Consider the following merge chain:
+Consider the following scenario:
 
-Process 1       Process 2       Process 3	Process 4
- (BIC1)          (BIC2)          (BIC3)		 (BIC4)
-  Λ                |               |               |
-   \--------------\ \-------------\ \-------------\|
-                   V               V		   V
-  bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
+    Process 1       Process 2       Process 3       Process 4
+     (BIC1)          (BIC2)          (BIC3)          (BIC4)
+      Λ               |               |                |
+       \-------------\ \-------------\ \--------------\|
+                      V               V                V
+      bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
+ref    0              1               2                4
 
-IO from Process 1 will get bfqf2 from BIC1 first, then
-bfq_setup_cooperator() will found bfqq2 already merged to bfqq3 and then
-handle this IO from bfqq3. However, the merge chain can be much deeper
-and bfqq3 can be merged to other bfqq as well.
+If Process 1 issue a new IO and bfqq2 is found, and then bfq_init_rq()
+decide to spilt bfqq2 by bfq_split_bfqq(). Howerver, procress reference
+of bfqq2 is 1 and bfq_split_bfqq() just clear the coop flag, which will
+break the merge chain.
 
-Fix this problem by iterating to the last bfqq in
-bfq_setup_cooperator().
+Expected result: caller will allocate a new bfqq for BIC1
+
+    Process 1       Process 2       Process 3       Process 4
+     (BIC1)          (BIC2)          (BIC3)          (BIC4)
+                      |               |                |
+                       \-------------\ \--------------\|
+                                      V                V
+      bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
+ref    0              0               1                3
+
+Since the condition is only used for the last bfqq4 when the previous
+bfqq2 and bfqq3 are already splited. Fix the problem by checking if
+bfqq is the last one in the merge chain as well.
 
 Fixes: 36eca8948323 ("block, bfq: add Early Queue Merge (EQM)")
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240902130329.3787024-3-yukuai1@huaweicloud.com
+Link: https://lore.kernel.org/r/20240902130329.3787024-4-yukuai1@huaweicloud.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-iosched.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ block/bfq-iosched.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 6ed6ff0864fd2..015c1879edd2a 100644
+index 015c1879edd2a..897a3aae12b80 100644
 --- a/block/bfq-iosched.c
 +++ b/block/bfq-iosched.c
-@@ -2610,8 +2610,12 @@ bfq_setup_cooperator(struct bfq_data *bfqd, struct bfq_queue *bfqq,
- 	struct bfq_queue *in_service_bfqq, *new_bfqq;
+@@ -5994,7 +5994,7 @@ bfq_split_bfqq(struct bfq_io_cq *bic, struct bfq_queue *bfqq)
+ {
+ 	bfq_log_bfqq(bfqq->bfqd, bfqq, "splitting queue");
  
- 	/* if a merge has already been setup, then proceed with that first */
--	if (bfqq->new_bfqq)
--		return bfqq->new_bfqq;
-+	new_bfqq = bfqq->new_bfqq;
-+	if (new_bfqq) {
-+		while (new_bfqq->new_bfqq)
-+			new_bfqq = new_bfqq->new_bfqq;
-+		return new_bfqq;
-+	}
- 
- 	/*
- 	 * Do not perform queue merging if the device is non
+-	if (bfqq_process_refs(bfqq) == 1) {
++	if (bfqq_process_refs(bfqq) == 1 && !bfqq->new_bfqq) {
+ 		bfqq->pid = current->pid;
+ 		bfq_clear_bfqq_coop(bfqq);
+ 		bfq_clear_bfqq_split_coop(bfqq);
 -- 
 2.43.0
 
