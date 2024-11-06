@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4B21DED58;
-	Wed,  6 Nov 2024 12:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192DE1DED58;
+	Wed,  6 Nov 2024 12:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895942; cv=none; b=H5WEjTsytJVr5EOqK5MeQCMOw8+y5S8qieEJmjWXy/A324uwHEJA2ueeyiUp5FPGJ1fhq+GsQLqqItVAvNqu1s9lcwR1jId787dHooy1kox8zJjUI0gnxqSNum2MsrByNWBLfsQtIgsFPktKM8udx5Srs1ALBpLxPye0pSA5XEI=
+	t=1730895945; cv=none; b=jdSO0cO1W8h1qSSVtPqDaeHKplTIM3gqMm7CsVdqeXbaaMet0pSG8nGL2LERdHvabvozHRFWdgAcLwJQiXYkJFmxC2SmNaWuYeNpwS5HbMKvFXFe3ZQqkMZq8cvOe+TG5fweNcNE9IdYc8PQVMNhg0RbPa+JukFc+v1Ka8PkEIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895942; c=relaxed/simple;
-	bh=a8vzpWF8BOFgBft0N6/wyGz/fUgfXS8wdbytspuLy8g=;
+	s=arc-20240116; t=1730895945; c=relaxed/simple;
+	bh=6tGvwHdsKvt7EAAgihkQ6lwn38Z6OaYxzTGDwyFMAZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rCy2/jWT8u/McTq+527AnmL6DZQK6iV8KXf0R1lsvZayyUfuY/WtCdlc1roxJABphM096ngAuqwUx8+tSV37nMbofbD+Let1T13nFgd5NsR67JZdD4zxVliwD46s8V+YjBIRy4YLZieGICotn+aFJkX7fSJMfHhsGLsb2dECi0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BK9HxQfz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mDFBe5eNYAGDatKeGgQlr2p8ojJn0rINMSXv078s2X1jE8EhCdnWxwYk907wfABuMEvslUneq/V+QRkLQHt/wB9f2EdDxHNeX9QCFo4YznP2kH08noGYbw2tq8Uy92BOa0p7hVIrT8iBnorcY7z2fa5NZ10bDtsq7ceY977FN9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Jxu4+LL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BK9HxQfz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BA6C4CECD;
-	Wed,  6 Nov 2024 12:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Jxu4+LL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9323CC4CECD;
+	Wed,  6 Nov 2024 12:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895942;
-	bh=a8vzpWF8BOFgBft0N6/wyGz/fUgfXS8wdbytspuLy8g=;
+	s=korg; t=1730895945;
+	bh=6tGvwHdsKvt7EAAgihkQ6lwn38Z6OaYxzTGDwyFMAZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BK9HxQfzRk/3um9dNeJ1sp4v4c5ADJuE+mkwvcXK52HhWcqfy63oakLL1uLmEHSJi
-	 eVSk2WubUnSzZnQl/7Ckctoffv/9L/7hk1kZYBI7XEUXs1Pdj2hAQzMomb6aMj6xPy
-	 mulNvZ3OwN0nZ5W+GmKBp+WjqbaYc1TO0DvZvhM4=
+	b=2Jxu4+LLEN/ZXxCTlxkJ38pIdOmFq39zYoa8JMMdUXqO4dAZWyPsbdOQ4TmXcq5ew
+	 Ny8vhRu2FhrTiyYqteMGp+ChLWuuTci0hR2BnhaDGtvPnlwD+6CepY3k6YTWqC2QKF
+	 CO2hIbN0QEY4ZgvqVmdm9TQP6+JWXnQhoEVS1z+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Pau Espin Pedrol <pespin@sysmocom.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Oliver Smith <osmith@sysmocom.de>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 035/245] ipv4: ip_tunnel: Fix suspicious RCU usage warning in ip_tunnel_find()
-Date: Wed,  6 Nov 2024 13:01:28 +0100
-Message-ID: <20241106120320.090025493@linuxfoundation.org>
+Subject: [PATCH 6.11 036/245] gtp: allow -1 to be specified as file description from userspace
+Date: Wed,  6 Nov 2024 13:01:29 +0100
+Message-ID: <20241106120320.113403467@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,76 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 90e0569dd3d32f4f4d2ca691d3fa5a8a14a13c12 ]
+[ Upstream commit 7515e37bce5c428a56a9b04ea7e96b3f53f17150 ]
 
-The per-netns IP tunnel hash table is protected by the RTNL mutex and
-ip_tunnel_find() is only called from the control path where the mutex is
-taken.
+Existing user space applications maintained by the Osmocom project are
+breaking since a recent fix that addresses incorrect error checking.
 
-Add a lockdep expression to hlist_for_each_entry_rcu() in
-ip_tunnel_find() in order to validate that the mutex is held and to
-silence the suspicious RCU usage warning [1].
+Restore operation for user space programs that specify -1 as file
+descriptor to skip GTPv0 or GTPv1 only sockets.
 
-[1]
-WARNING: suspicious RCU usage
-6.12.0-rc3-custom-gd95d9a31aceb #139 Not tainted
------------------------------
-net/ipv4/ip_tunnel.c:221 RCU-list traversed in non-reader section!!
-
-other info that might help us debug this:
-
-rcu_scheduler_active = 2, debug_locks = 1
-1 lock held by ip/362:
- #0: ffffffff86fc7cb0 (rtnl_mutex){+.+.}-{3:3}, at: rtnetlink_rcv_msg+0x377/0xf60
-
-stack backtrace:
-CPU: 12 UID: 0 PID: 362 Comm: ip Not tainted 6.12.0-rc3-custom-gd95d9a31aceb #139
-Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
-Call Trace:
- <TASK>
- dump_stack_lvl+0xba/0x110
- lockdep_rcu_suspicious.cold+0x4f/0xd6
- ip_tunnel_find+0x435/0x4d0
- ip_tunnel_newlink+0x517/0x7a0
- ipgre_newlink+0x14c/0x170
- __rtnl_newlink+0x1173/0x19c0
- rtnl_newlink+0x6c/0xa0
- rtnetlink_rcv_msg+0x3cc/0xf60
- netlink_rcv_skb+0x171/0x450
- netlink_unicast+0x539/0x7f0
- netlink_sendmsg+0x8c1/0xd80
- ____sys_sendmsg+0x8f9/0xc20
- ___sys_sendmsg+0x197/0x1e0
- __sys_sendmsg+0x122/0x1f0
- do_syscall_64+0xbb/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: c54419321455 ("GRE: Refactor GRE tunneling code.")
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241023123009.749764-1-idosch@nvidia.com
+Fixes: defd8b3c37b0 ("gtp: fix a potential NULL pointer dereference")
+Reported-by: Pau Espin Pedrol <pespin@sysmocom.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Tested-by: Oliver Smith <osmith@sysmocom.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241022144825.66740-1-pablo@netfilter.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_tunnel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/gtp.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
-index 5cffad42fe8ca..49937878d5e8a 100644
---- a/net/ipv4/ip_tunnel.c
-+++ b/net/ipv4/ip_tunnel.c
-@@ -217,7 +217,7 @@ static struct ip_tunnel *ip_tunnel_find(struct ip_tunnel_net *itn,
+diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
+index 2e94d10348cce..4cb925321785e 100644
+--- a/drivers/net/gtp.c
++++ b/drivers/net/gtp.c
+@@ -1702,20 +1702,24 @@ static int gtp_encap_enable(struct gtp_dev *gtp, struct nlattr *data[])
+ 		return -EINVAL;
  
- 	ip_tunnel_flags_copy(flags, parms->i_flags);
+ 	if (data[IFLA_GTP_FD0]) {
+-		u32 fd0 = nla_get_u32(data[IFLA_GTP_FD0]);
++		int fd0 = nla_get_u32(data[IFLA_GTP_FD0]);
  
--	hlist_for_each_entry_rcu(t, head, hash_node) {
-+	hlist_for_each_entry_rcu(t, head, hash_node, lockdep_rtnl_is_held()) {
- 		if (local == t->parms.iph.saddr &&
- 		    remote == t->parms.iph.daddr &&
- 		    link == READ_ONCE(t->parms.link) &&
+-		sk0 = gtp_encap_enable_socket(fd0, UDP_ENCAP_GTP0, gtp);
+-		if (IS_ERR(sk0))
+-			return PTR_ERR(sk0);
++		if (fd0 >= 0) {
++			sk0 = gtp_encap_enable_socket(fd0, UDP_ENCAP_GTP0, gtp);
++			if (IS_ERR(sk0))
++				return PTR_ERR(sk0);
++		}
+ 	}
+ 
+ 	if (data[IFLA_GTP_FD1]) {
+-		u32 fd1 = nla_get_u32(data[IFLA_GTP_FD1]);
++		int fd1 = nla_get_u32(data[IFLA_GTP_FD1]);
+ 
+-		sk1u = gtp_encap_enable_socket(fd1, UDP_ENCAP_GTP1U, gtp);
+-		if (IS_ERR(sk1u)) {
+-			gtp_encap_disable_sock(sk0);
+-			return PTR_ERR(sk1u);
++		if (fd1 >= 0) {
++			sk1u = gtp_encap_enable_socket(fd1, UDP_ENCAP_GTP1U, gtp);
++			if (IS_ERR(sk1u)) {
++				gtp_encap_disable_sock(sk0);
++				return PTR_ERR(sk1u);
++			}
+ 		}
+ 	}
+ 
 -- 
 2.43.0
 
