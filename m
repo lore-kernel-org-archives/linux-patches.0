@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4801F6687;
-	Wed,  6 Nov 2024 12:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3067D1E04A6;
+	Wed,  6 Nov 2024 12:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897895; cv=none; b=otOS28kSvWcZ1hE99hiFgpSvZ3TxvjsiV7jMZ2gUinRpopfqhAWC8LN44kjGV2ksr4GZ/j2I7r0Y2ugUygRG7pg6HWkYhMQrCaMtpp+hhmSCP9YWqPJ5qmz1DgQerlFn2YMy8jTH3o30T2IhZjWAuHOj/lvx4AlFffj+E65J8Ok=
+	t=1730897898; cv=none; b=euKjB38L1r3GTpytYaeed1zVsE64aK9QUt8GZawUPP3qGOEM6iLJhdJrCcJ1eBDapRKSgNdIacZH9MHVG3VZo8QAKSwXLgfiWcUips2Q07jMfRzymoj1fl8DMmYCpHnr5XuPgwSa0IRU4oYBO3HMyZbzKxEpm05auQmWguiT27s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897895; c=relaxed/simple;
-	bh=vLqfXKpkXuqzxQ0MFY482nIJNixMTJ0RZvS+rUZKYq0=;
+	s=arc-20240116; t=1730897898; c=relaxed/simple;
+	bh=TrzHEsEMaxBLisw91Jma+qELbL4Y1TYnVtPIpEkhuvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jco1REQH/eLxYjn6kFYtrJHyCDtq4Thwx8FIZZb/0F0sD9HFHDr4DG3ps8cTw/A7bOdEutMT1wRnjlu1Te5w956IMedwfP8Xf8gRd4t7laVbqs8jkIvyp2ZwZWlXH4wUrGlvH4CiWrdK0R4n7tgJpwibWr29NyaGTT/fIunMCMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7wKCX6R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pjGcviuzM/gjxFYn3gxo/EzsTFJea8RuYxPySqjq+LhAAhF8fVpT3MSymy1rqNwWNJ2T88v2k7HlWpaSVQ7K58wDB03EpZw1RDz0s9PbQ3VS25lwcwpmUJOChWSFSo2rJvCz9Nug4/p29rm36jbTmn2DPH+ZQyfFnefP3a3TkuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRIm2dt1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7wKCX6R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90133C4CED4;
-	Wed,  6 Nov 2024 12:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRIm2dt1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB08CC4CED3;
+	Wed,  6 Nov 2024 12:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897895;
-	bh=vLqfXKpkXuqzxQ0MFY482nIJNixMTJ0RZvS+rUZKYq0=;
+	s=korg; t=1730897898;
+	bh=TrzHEsEMaxBLisw91Jma+qELbL4Y1TYnVtPIpEkhuvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7wKCX6RIE51tI9kzYlTAzflq0IY5XePEIQS1abfppGdPur3X/aTwd3TMeSS67SP0
-	 IsXPCXw2VWgKTJhHL64TE1qeBIPcGYBcn16Q2d9jzXIXzsj9et/k84niSzN5vbBIxJ
-	 twCx0otFw3mR8VliaXbs73SNR8hNOZvaJqCuuSfo=
+	b=JRIm2dt1go/2XGhgWuPdBksDPUy/6ISRhpolpRu6II/QjlCugJzrqlq49BsebwNCW
+	 d9+3rlUirECGg3teShfvOHedjUKTxNpBvEEl+FpmZq1YlDxhV6ydEiiEM/s0wjAWUf
+	 cypmn5WVPJIb2r2F4h1dT6d7St/zXaglsChwhc2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 055/462] spi: ppc4xx: handle irq_of_parse_and_map() errors
-Date: Wed,  6 Nov 2024 12:59:08 +0100
-Message-ID: <20241106120332.877068210@linuxfoundation.org>
+Subject: [PATCH 5.4 056/462] spi: ppc4xx: Avoid returning 0 when failed to parse and map IRQ
+Date: Wed,  6 Nov 2024 12:59:09 +0100
+Message-ID: <20241106120332.900675333@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,37 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 0f245463b01ea254ae90e1d0389e90b0e7d8dc75 ]
+[ Upstream commit 7781f1d120fec8624fc654eda900fc8748262082 ]
 
-Zero and negative number is not a valid IRQ for in-kernel code and the
-irq_of_parse_and_map() function returns zero on error.  So this check for
-valid IRQs should only accept values > 0.
+0 is incorrect error code when failed to parse and map IRQ.
+Replace OF specific old API for IRQ retrieval with a generic
+one to fix this issue.
 
-Fixes: 44dab88e7cc9 ("spi: add spi_ppc4xx driver")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Link: https://patch.msgid.link/20240724084047.1506084-1-make24@iscas.ac.cn
+Fixes: 0f245463b01e ("spi: ppc4xx: handle irq_of_parse_and_map() errors")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20240814144525.2648450-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-ppc4xx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-ppc4xx.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/spi/spi-ppc4xx.c b/drivers/spi/spi-ppc4xx.c
-index 738a1e4e445e2..9e72ee73c2f61 100644
+index 9e72ee73c2f61..2b844594a9e6d 100644
 --- a/drivers/spi/spi-ppc4xx.c
 +++ b/drivers/spi/spi-ppc4xx.c
-@@ -492,6 +492,9 @@ static int spi_ppc4xx_of_probe(struct platform_device *op)
+@@ -26,7 +26,6 @@
+ #include <linux/errno.h>
+ #include <linux/wait.h>
+ #include <linux/of_address.h>
+-#include <linux/of_irq.h>
+ #include <linux/of_platform.h>
+ #include <linux/of_gpio.h>
+ #include <linux/interrupt.h>
+@@ -491,9 +490,10 @@ static int spi_ppc4xx_of_probe(struct platform_device *op)
+ 	}
  
  	/* Request IRQ */
- 	hw->irqnum = irq_of_parse_and_map(np, 0);
-+	if (hw->irqnum <= 0)
-+		goto free_host;
-+
+-	hw->irqnum = irq_of_parse_and_map(np, 0);
+-	if (hw->irqnum <= 0)
++	ret = platform_get_irq(op, 0);
++	if (ret < 0)
+ 		goto free_host;
++	hw->irqnum = ret;
+ 
  	ret = request_irq(hw->irqnum, spi_ppc4xx_int,
  			  0, "spi_ppc4xx_of", (void *)hw);
- 	if (ret) {
 -- 
 2.43.0
 
