@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019FB1D416E;
-	Wed,  6 Nov 2024 12:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20E51DED40;
+	Wed,  6 Nov 2024 12:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895330; cv=none; b=fyvg1s4HyxuBIXhVZd/9I5pnJ9R1WbajO8dLz/oW35AJBJxZYUg08zopDg92fSi5bG8CHoEPRI8nJIOSfUi7OOFdRUCN7+QnvW3fAXobhDKe9tcMdL8/SWnF6aIhsLDmpuVkkg7Yoq4CuDDPPWM03XjBL+bFvCFD/cMGSUd9Mv8=
+	t=1730895333; cv=none; b=IgomDF4bqMgp4WaNDu/8rL/+KCX56L/MDzZUP3g/Q7cwyBZTbhdk6hcOXrwnL3an0CosZtbx0iuL88+V8BLozsWdqriWgvZ9rnVHpGcONa8tOweNOP/bQLZvz8C+9OAB81P2nbcD/Z3PE+PGmTAtzJtnSSqccszv+BP95B/oODk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895330; c=relaxed/simple;
-	bh=BaFfI2b+Y34jl6+QTSee7XhNv9usAXdenjKkARFLI0I=;
+	s=arc-20240116; t=1730895333; c=relaxed/simple;
+	bh=qTQ3S5bh7Tde7ABu+v+yIyH4pSyf25JL2WmouV1M9VM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aakgw/Amlsx3CkRo6JbiDscjSC+OesKQOumMH02qBRciNpbbMlD4Mz9jf3cf9Q1i1qPUSHXXZTdMt2lI0cy72ZZk7ShCL+28H/UaMTKXtyXyxNt4xELr3+UsKIM9/jeQvwJKBOvvVYlVHbcybi7ICJwa6AJWC7g2swf47FBjBSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0/MdqeW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TRdVzR7627+lvU78abrMAwvsjnxPeU9e9A1+LE0x6fUqILaivFb3KPiYBettln6kxRoPRodFWYK+nbSmlb8a9Yv+YC2DbLXO6nFduh0ZcIyDXMWPIniFZrTWwvkBK6KuX8BU8Rvu56xH4by0fFn36qmbMqjzDlvOKKZOxBPJK8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xxi3wb4R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0/MdqeW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3490DC4CED4;
-	Wed,  6 Nov 2024 12:15:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xxi3wb4R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F43C4CECD;
+	Wed,  6 Nov 2024 12:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895329;
-	bh=BaFfI2b+Y34jl6+QTSee7XhNv9usAXdenjKkARFLI0I=;
+	s=korg; t=1730895332;
+	bh=qTQ3S5bh7Tde7ABu+v+yIyH4pSyf25JL2WmouV1M9VM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y0/MdqeW2gIIEgaDl3BhYEnrydgmDYOoMuLTvzeugN6VtRtaw1MH7qdF5DfmBc9oU
-	 bAs9t7D6lxPsGscQjHEGV3mFFcyXFAFeUPoZvH0LNFovn2kj8aShJWGv4x3VK2oDad
-	 XrICM+cXP0NCPQ3LtE5FkcbSQNG2BUpT2iPNf7xg=
+	b=Xxi3wb4RYpW80v1i5zLalVKlLTpw1M/MHQl7ZTk50StVYQ8Ha9Y2Vix0JQkDBz/j2
+	 /sVDGmNADUwe7p6hg79H2b025DnedhE1njRCzzqKrl/C3ah720SWxar0nt8WfupQVV
+	 o5WRVlOGrC6SS1fnvghAcLe90WWKAgeuQGHedb7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 182/350] selftests: vDSO: fix vDSO symbols lookup for powerpc64
-Date: Wed,  6 Nov 2024 13:01:50 +0100
-Message-ID: <20241106120325.438309817@linuxfoundation.org>
+	Robert Hancock <robert.hancock@calian.com>,
+	Manikanta Guntupalli <manikanta.guntupalli@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 4.19 183/350] i2c: xiic: Wait for TX empty to avoid missed TX NAKs
+Date: Wed,  6 Nov 2024 13:01:51 +0100
+Message-ID: <20241106120325.464220306@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,108 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Robert Hancock <robert.hancock@calian.com>
 
-[ Upstream commit ba83b3239e657469709d15dcea5f9b65bf9dbf34 ]
+commit 521da1e9225450bd323db5fa5bca942b1dc485b7 upstream.
 
-On powerpc64, following tests fail locating vDSO functions:
+Frequently an I2C write will be followed by a read, such as a register
+address write followed by a read of the register value. In this driver,
+when the TX FIFO half empty interrupt was raised and it was determined
+that there was enough space in the TX FIFO to send the following read
+command, it would do so without waiting for the TX FIFO to actually
+empty.
 
-  ~ # ./vdso_test_abi
-  TAP version 13
-  1..16
-  # [vDSO kselftest] VDSO_VERSION: LINUX_2.6.15
-  # Couldn't find __kernel_gettimeofday
-  ok 1 # SKIP __kernel_gettimeofday
-  # clock_id: CLOCK_REALTIME
-  # Couldn't find __kernel_clock_gettime
-  ok 2 # SKIP __kernel_clock_gettime CLOCK_REALTIME
-  # Couldn't find __kernel_clock_getres
-  ok 3 # SKIP __kernel_clock_getres CLOCK_REALTIME
-  ...
-  # Couldn't find __kernel_time
-  ok 16 # SKIP __kernel_time
-  # Totals: pass:0 fail:0 xfail:0 xpass:0 skip:16 error:0
+Unfortunately it appears that in some cases this can result in a NAK
+that was raised by the target device on the write, such as due to an
+unsupported register address, being ignored and the subsequent read
+being done anyway. This can potentially put the I2C bus into an
+invalid state and/or result in invalid read data being processed.
 
-  ~ # ./vdso_test_getrandom
-  __kernel_getrandom is missing!
+To avoid this, once a message has been fully written to the TX FIFO,
+wait for the TX FIFO empty interrupt before moving on to the next
+message, to ensure NAKs are handled properly.
 
-  ~ # ./vdso_test_gettimeofday
-  Could not find __kernel_gettimeofday
-
-  ~ # ./vdso_test_getcpu
-  Could not find __kernel_getcpu
-
-On powerpc64, as shown below by readelf, vDSO functions symbols have
-type NOTYPE, so also accept that type when looking for symbols.
-
-$ powerpc64-linux-gnu-readelf -a arch/powerpc/kernel/vdso/vdso64.so.dbg
-ELF Header:
-  Magic:   7f 45 4c 46 02 02 01 00 00 00 00 00 00 00 00 00
-  Class:                             ELF64
-  Data:                              2's complement, big endian
-  Version:                           1 (current)
-  OS/ABI:                            UNIX - System V
-  ABI Version:                       0
-  Type:                              DYN (Shared object file)
-  Machine:                           PowerPC64
-  Version:                           0x1
-...
-
-Symbol table '.dynsym' contains 12 entries:
-   Num:    Value          Size Type    Bind   Vis      Ndx Name
-     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND
-     1: 0000000000000524    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     2: 00000000000005f0    36 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     3: 0000000000000578    68 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     4: 0000000000000000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.15
-     5: 00000000000006c0    48 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     6: 0000000000000614   172 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     7: 00000000000006f0    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     8: 000000000000047c    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-     9: 0000000000000454    12 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-    10: 00000000000004d0    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-    11: 00000000000005bc    52 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
-
-Symbol table '.symtab' contains 56 entries:
-   Num:    Value          Size Type    Bind   Vis      Ndx Name
-...
-    45: 0000000000000000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.15
-    46: 00000000000006c0    48 NOTYPE  GLOBAL DEFAULT    8 __kernel_getcpu
-    47: 0000000000000524    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_clock_getres
-    48: 00000000000005f0    36 NOTYPE  GLOBAL DEFAULT    8 __kernel_get_tbfreq
-    49: 000000000000047c    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_gettimeofday
-    50: 0000000000000614   172 NOTYPE  GLOBAL DEFAULT    8 __kernel_sync_dicache
-    51: 00000000000006f0    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_getrandom
-    52: 0000000000000454    12 NOTYPE  GLOBAL DEFAULT    8 __kernel_sigtram[...]
-    53: 0000000000000578    68 NOTYPE  GLOBAL DEFAULT    8 __kernel_time
-    54: 00000000000004d0    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_clock_g[...]
-    55: 00000000000005bc    52 NOTYPE  GLOBAL DEFAULT    8 __kernel_get_sys[...]
-
-Fixes: 98eedc3a9dbf ("Document the vDSO and add a reference parser")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e1d5b6598cdc ("i2c: Add support for Xilinx XPS IIC Bus Interface")
+Signed-off-by: Robert Hancock <robert.hancock@calian.com>
+Cc: <stable@vger.kernel.org> # v2.6.34+
+Reviewed-by: Manikanta Guntupalli <manikanta.guntupalli@amd.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/vDSO/parse_vdso.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-xiic.c |   19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/vDSO/parse_vdso.c b/tools/testing/selftests/vDSO/parse_vdso.c
-index 9ef3ad3789c17..540f9a284e9f0 100644
---- a/tools/testing/selftests/vDSO/parse_vdso.c
-+++ b/tools/testing/selftests/vDSO/parse_vdso.c
-@@ -238,7 +238,8 @@ void *vdso_sym(const char *version, const char *name)
- 		ELF(Sym) *sym = &vdso_info.symtab[chain];
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -478,14 +478,17 @@ static irqreturn_t xiic_process(int irq,
+ 			goto out;
+ 		}
  
- 		/* Check for a defined global or weak function w/ right name. */
--		if (ELF64_ST_TYPE(sym->st_info) != STT_FUNC)
-+		if (ELF64_ST_TYPE(sym->st_info) != STT_FUNC &&
-+		    ELF64_ST_TYPE(sym->st_info) != STT_NOTYPE)
- 			continue;
- 		if (ELF64_ST_BIND(sym->st_info) != STB_GLOBAL &&
- 		    ELF64_ST_BIND(sym->st_info) != STB_WEAK)
--- 
-2.43.0
-
+-		xiic_fill_tx_fifo(i2c);
+-
+-		/* current message sent and there is space in the fifo */
+-		if (!xiic_tx_space(i2c) && xiic_tx_fifo_space(i2c) >= 2) {
++		if (xiic_tx_space(i2c)) {
++			xiic_fill_tx_fifo(i2c);
++		} else {
++			/* current message fully written */
+ 			dev_dbg(i2c->adap.dev.parent,
+ 				"%s end of message sent, nmsgs: %d\n",
+ 				__func__, i2c->nmsgs);
+-			if (i2c->nmsgs > 1) {
++			/* Don't move onto the next message until the TX FIFO empties,
++			 * to ensure that a NAK is not missed.
++			 */
++			if (i2c->nmsgs > 1 && (pend & XIIC_INTR_TX_EMPTY_MASK)) {
+ 				i2c->nmsgs--;
+ 				i2c->tx_msg++;
+ 				xfer_more = 1;
+@@ -496,11 +499,7 @@ static irqreturn_t xiic_process(int irq,
+ 					"%s Got TX IRQ but no more to do...\n",
+ 					__func__);
+ 			}
+-		} else if (!xiic_tx_space(i2c) && (i2c->nmsgs == 1))
+-			/* current frame is sent and is last,
+-			 * make sure to disable tx half
+-			 */
+-			xiic_irq_dis(i2c, XIIC_INTR_TX_HALF_MASK);
++		}
+ 	}
+ out:
+ 	dev_dbg(i2c->adap.dev.parent, "%s clr: 0x%x\n", __func__, clr);
 
 
