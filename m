@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB101D2F42;
-	Wed,  6 Nov 2024 13:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34FC1E1036;
+	Wed,  6 Nov 2024 13:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898734; cv=none; b=HKxpy0ecVHn61ySwdxM+wmpLIcvXeWnYH66+IDtkdFJVGoh4VUsFs37StJLFBElhg09QCKsfKaM0pBp0nRCPcns3rCRI2IfptxtXUoXFbpYV/E6W7as0h/lOfqpMcvtVzZLIROvYol9lMQNZNWmzf4jT5+sx5VtYzZgHYKTZH3s=
+	t=1730898737; cv=none; b=ChiTTVTp1VJQnMmnZk5kPc2WtHpjMexuYwsXRg7iA+39mAbgLDJjil2CEmIHO6LjVWitHlCFTJe59dRqiXAS0QNa2u+cGZpISZm+R1sZD/GloJN9hnnUkzJC7Tpo8JjyD6WkweNZA33U6NRosv5e3J1VqfHpZ5ibsS3KkveIR48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898734; c=relaxed/simple;
-	bh=3b/MJfX9ANi7ePujyFz06nsDkaKC8n1LMoWSzQCiI/o=;
+	s=arc-20240116; t=1730898737; c=relaxed/simple;
+	bh=sdWJhOgqmCyu+lFMUdaJaFoQat6LQKb5dR+6L/Jh52o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6b4kuhbFcjL6H4JRMmdqGR/BH91vZE7r/2C/pZLE6BPDWNdCzb3d262GS/fFU7FSidqcoj663snPbM0i95kQlmYDuRwoKyPyhd77CnWXfWg573NoGF6JkepZVFSovqZMZqvOwsELKW7hbwXMo15vphqAGGOHl8lHvA7rG+KtGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=luWXYqJw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G4T9a1yNnqy33H9JjFKGNws7Wjt4entIz6+AC2AzxCHCqNUa/9wwhSJJ9zhOmLaIqyYapi1aWVZVeLw0nlC5jzAVCzKeDQDfxK4bUZ/fyjkgHS1yeMUvGhVYqzCWqOmZ09fzA94/I9lxwnCKMT+7heJDVxYqLp2JcGFTsTdMnW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNCCHhak; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="luWXYqJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77BF7C4CECD;
-	Wed,  6 Nov 2024 13:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNCCHhak"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1FBC4CECD;
+	Wed,  6 Nov 2024 13:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898733;
-	bh=3b/MJfX9ANi7ePujyFz06nsDkaKC8n1LMoWSzQCiI/o=;
+	s=korg; t=1730898736;
+	bh=sdWJhOgqmCyu+lFMUdaJaFoQat6LQKb5dR+6L/Jh52o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=luWXYqJw6HC19poc6uJQdxBKwc69aaVHSpeAqbayNO6wOc8xRjO5acY7RJ7Y/y9tP
-	 ONIQBpHGZFSq9JhrIg5uBaruQl4EN7DshfbcxyXJzaMoldCM6E/W3bI58A8sWQVLwl
-	 d8+rTTHUZcWfkph7BwwlhnSW41FGR06p2Jg9AJxA=
+	b=FNCCHhakgZqRDKGMZ+/Wh5umtLnaB+vJuCVrWogc8CUcIyJG4bzy3UxUwyk+oGasH
+	 mTinuxJXbv2HF+ZgCyO76aUmJI/5/KWGqALCmaIyUozIRHOcKmHFy1eUocNYXjd7bM
+	 zTNpeBq9DiEfRMGGTXvynRNhIcqkCWPhATjMCC+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1d121645899e7692f92a@syzkaller.appspotmail.com,
+	syzbot+2ada1bc857496353be5a@syzkaller.appspotmail.com,
 	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 336/462] ppp: fix ppp_async_encode() illegal access
-Date: Wed,  6 Nov 2024 13:03:49 +0100
-Message-ID: <20241106120339.824646948@linuxfoundation.org>
+Subject: [PATCH 5.4 337/462] slip: make slhc_remember() more robust against malicious packets
+Date: Wed,  6 Nov 2024 13:03:50 +0100
+Message-ID: <20241106120339.849314331@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -55,20 +54,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 40dddd4b8bd08a69471efd96107a4e1c73fabefc ]
+[ Upstream commit 7d3fce8cbe3a70a1c7c06c9b53696be5d5d8dd5c ]
 
-syzbot reported an issue in ppp_async_encode() [1]
+syzbot found that slhc_remember() was missing checks against
+malicious packets [1].
 
-In this case, pppoe_sendmsg() is called with a zero size.
-Then ppp_async_encode() is called with an empty skb.
+slhc_remember() only checked the size of the packet was at least 20,
+which is not good enough.
 
-BUG: KMSAN: uninit-value in ppp_async_encode drivers/net/ppp/ppp_async.c:545 [inline]
- BUG: KMSAN: uninit-value in ppp_async_push+0xb4f/0x2660 drivers/net/ppp/ppp_async.c:675
-  ppp_async_encode drivers/net/ppp/ppp_async.c:545 [inline]
-  ppp_async_push+0xb4f/0x2660 drivers/net/ppp/ppp_async.c:675
-  ppp_async_send+0x130/0x1b0 drivers/net/ppp/ppp_async.c:634
-  ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2280 [inline]
-  ppp_input+0x1f1/0xe60 drivers/net/ppp/ppp_generic.c:2304
+We need to make sure the packet includes the IPv4 and TCP header
+that are supposed to be carried.
+
+Add iph and th pointers to make the code more readable.
+
+[1]
+
+BUG: KMSAN: uninit-value in slhc_remember+0x2e8/0x7b0 drivers/net/slip/slhc.c:666
+  slhc_remember+0x2e8/0x7b0 drivers/net/slip/slhc.c:666
+  ppp_receive_nonmp_frame+0xe45/0x35e0 drivers/net/ppp/ppp_generic.c:2455
+  ppp_receive_frame drivers/net/ppp/ppp_generic.c:2372 [inline]
+  ppp_do_recv+0x65f/0x40d0 drivers/net/ppp/ppp_generic.c:2212
+  ppp_input+0x7dc/0xe60 drivers/net/ppp/ppp_generic.c:2327
   pppoe_rcv_core+0x1d3/0x720 drivers/net/ppp/pppoe.c:379
   sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1113
   __release_sock+0x1da/0x330 net/core/sock.c:3072
@@ -88,9 +94,9 @@ BUG: KMSAN: uninit-value in ppp_async_encode drivers/net/ppp/ppp_async.c:545 [in
  entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
 Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:4092 [inline]
-  slab_alloc_node mm/slub.c:4135 [inline]
-  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4187
+  slab_post_alloc_hook mm/slub.c:4091 [inline]
+  slab_alloc_node mm/slub.c:4134 [inline]
+  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4186
   kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:587
   __alloc_skb+0x363/0x7b0 net/core/skbuff.c:678
   alloc_skb include/linux/skbuff.h:1322 [inline]
@@ -109,33 +115,105 @@ Uninit was created at:
   do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
  entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-CPU: 1 UID: 0 PID: 5411 Comm: syz.1.14 Not tainted 6.12.0-rc1-syzkaller-00165-g360c1f1f24c6 #0
+CPU: 0 UID: 0 PID: 5460 Comm: syz.2.33 Not tainted 6.12.0-rc2-syzkaller-00006-g87d6aab2389e #0
 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+1d121645899e7692f92a@syzkaller.appspotmail.com
+Fixes: b5451d783ade ("slip: Move the SLIP drivers")
+Reported-by: syzbot+2ada1bc857496353be5a@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/670646db.050a0220.3f80e.0027.GAE@google.com/T/#u
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20241009185802.3763282-1-edumazet@google.com
+Link: https://patch.msgid.link/20241009091132.2136321-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_async.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/slip/slhc.c | 57 ++++++++++++++++++++++++-----------------
+ 1 file changed, 34 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
-index 34c31d6da734c..c41eeecb5a106 100644
---- a/drivers/net/ppp/ppp_async.c
-+++ b/drivers/net/ppp/ppp_async.c
-@@ -551,7 +551,7 @@ ppp_async_encode(struct asyncppp *ap)
- 	 * and 7 (code-reject) must be sent as though no options
- 	 * had been negotiated.
- 	 */
--	islcp = proto == PPP_LCP && 1 <= data[2] && data[2] <= 7;
-+	islcp = proto == PPP_LCP && count >= 3 && 1 <= data[2] && data[2] <= 7;
+diff --git a/drivers/net/slip/slhc.c b/drivers/net/slip/slhc.c
+index f78ceba42e57e..603a29f3905ba 100644
+--- a/drivers/net/slip/slhc.c
++++ b/drivers/net/slip/slhc.c
+@@ -643,46 +643,57 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
+ int
+ slhc_remember(struct slcompress *comp, unsigned char *icp, int isize)
+ {
+-	struct cstate *cs;
+-	unsigned ihl;
+-
++	const struct tcphdr *th;
+ 	unsigned char index;
++	struct iphdr *iph;
++	struct cstate *cs;
++	unsigned int ihl;
  
- 	if (i == 0) {
- 		if (islcp)
+-	if(isize < 20) {
+-		/* The packet is shorter than a legal IP header */
++	/* The packet is shorter than a legal IP header.
++	 * Also make sure isize is positive.
++	 */
++	if (isize < (int)sizeof(struct iphdr)) {
++runt:
+ 		comp->sls_i_runt++;
+-		return slhc_toss( comp );
++		return slhc_toss(comp);
+ 	}
++	iph = (struct iphdr *)icp;
+ 	/* Peek at the IP header's IHL field to find its length */
+-	ihl = icp[0] & 0xf;
+-	if(ihl < 20 / 4){
+-		/* The IP header length field is too small */
+-		comp->sls_i_runt++;
+-		return slhc_toss( comp );
+-	}
+-	index = icp[9];
+-	icp[9] = IPPROTO_TCP;
++	ihl = iph->ihl;
++	/* The IP header length field is too small,
++	 * or packet is shorter than the IP header followed
++	 * by minimal tcp header.
++	 */
++	if (ihl < 5 || isize < ihl * 4 + sizeof(struct tcphdr))
++		goto runt;
++
++	index = iph->protocol;
++	iph->protocol = IPPROTO_TCP;
+ 
+ 	if (ip_fast_csum(icp, ihl)) {
+ 		/* Bad IP header checksum; discard */
+ 		comp->sls_i_badcheck++;
+-		return slhc_toss( comp );
++		return slhc_toss(comp);
+ 	}
+-	if(index > comp->rslot_limit) {
++	if (index > comp->rslot_limit) {
+ 		comp->sls_i_error++;
+ 		return slhc_toss(comp);
+ 	}
+-
++	th = (struct tcphdr *)(icp + ihl * 4);
++	if (th->doff < sizeof(struct tcphdr) / 4)
++		goto runt;
++	if (isize < ihl * 4 + th->doff * 4)
++		goto runt;
+ 	/* Update local state */
+ 	cs = &comp->rstate[comp->recv_current = index];
+ 	comp->flags &=~ SLF_TOSS;
+-	memcpy(&cs->cs_ip,icp,20);
+-	memcpy(&cs->cs_tcp,icp + ihl*4,20);
++	memcpy(&cs->cs_ip, iph, sizeof(*iph));
++	memcpy(&cs->cs_tcp, th, sizeof(*th));
+ 	if (ihl > 5)
+-	  memcpy(cs->cs_ipopt, icp + sizeof(struct iphdr), (ihl - 5) * 4);
+-	if (cs->cs_tcp.doff > 5)
+-	  memcpy(cs->cs_tcpopt, icp + ihl*4 + sizeof(struct tcphdr), (cs->cs_tcp.doff - 5) * 4);
+-	cs->cs_hsize = ihl*2 + cs->cs_tcp.doff*2;
++	  memcpy(cs->cs_ipopt, &iph[1], (ihl - 5) * 4);
++	if (th->doff > 5)
++	  memcpy(cs->cs_tcpopt, &th[1], (th->doff - 5) * 4);
++	cs->cs_hsize = ihl*2 + th->doff*2;
+ 	cs->initialized = true;
+ 	/* Put headers back on packet
+ 	 * Neither header checksum is recalculated
 -- 
 2.43.0
 
