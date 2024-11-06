@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94811E1037;
-	Wed,  6 Nov 2024 12:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7FB1DE3B5;
+	Wed,  6 Nov 2024 12:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897577; cv=none; b=HlUQY97cDePI+b9HF3TcsinfbVd5f69BjJH7/xPEVzhxHz+FcdOrEHkHCWucxhqK0NVIPG9Ym47v9C5cT+2k3Yjgs8ghzm400kpbhmCCf7dj7s3QgM+psCW6umd4/7HluNlvYBUjlwHzkbgfyMR+KJ1AcdRnq5/p9liVfh2F/sU=
+	t=1730897580; cv=none; b=ZPN0lEutqBz4uzivfVyukjou51awnwTg1O0dDRvkBpxXW/0sXTv3ymWbIElqURyov8xWX4vmbxJVaZjBs7z9JTdPPSMvQ30N3UIZo+M+cJ/6z2Cre2I6SMHcKIdDbwXD8+3uRVbKaosjeJ4hR1k34zg9ntHJElPZswu13KRDIVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897577; c=relaxed/simple;
-	bh=4m4WENZWwyr01K6itWog8klejy0MOmEL3nO4ZjXH2Mk=;
+	s=arc-20240116; t=1730897580; c=relaxed/simple;
+	bh=40MB7IAzBkELym/I2avv0RcCyPd+NAHkleNBVM+Q9xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJFJiI9Jp81RhCeif+pzes7TE4qpLlfsEtBwBRmp8+aIjajmPIxmq8guWU+MmgggJTgHSbczFfEn8jPmjyvRnhIRBYF2OZ93VYuXKjM/WlI6NsP4bF9DZhKPsAeNnzdVWjXzRxNeYmERkXhfgDlBMqRrzmXVkH0AnW5y/1AaSu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQZ/dgsB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DK9eta3mGvCxmgpEeqclnaNopo4mlQuXcUa455Hjz1Q3fv9pN0BZUsXlOoxNBWTU4/AlcNA+Vcn2tTvJkz8NqZjRYZI/0V7ol/+YsDd0AJjNc9L2+xvAiWRptV1IvQpSsQhz29YAKfemlnYjrnAgIfX/pFm0Q29Ca7iaQKLjzeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRzCzZN7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQZ/dgsB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3132AC4CECD;
-	Wed,  6 Nov 2024 12:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRzCzZN7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F487C4CECD;
+	Wed,  6 Nov 2024 12:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897577;
-	bh=4m4WENZWwyr01K6itWog8klejy0MOmEL3nO4ZjXH2Mk=;
+	s=korg; t=1730897580;
+	bh=40MB7IAzBkELym/I2avv0RcCyPd+NAHkleNBVM+Q9xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQZ/dgsBojDo/jPkvy9EUFCmBwry1EK5fW0p1bMvUIbtrl+oktm13Ilb38uEX5HZJ
-	 C0+rB60cNMDwWMbis/hnyqH1YJA/TkI2LGIo+kmzt0TlRtrpHeTzVwxMF5AGHWFTI0
-	 XA6b7fwQYCVn13vwgcGPoS6z5u7BXS5m0i6wQ4Yc=
+	b=gRzCzZN7dNFE2hhp5zo5SAWxKeke9pJ5nnWtxxELURpEOO7CdmnnChzy58EPxrW5t
+	 hz8Dj9BeJa4v8+BhO4RzOZytRW9xTcJowSKilzk6UG+/RXkORsM7slNbba5LauS2Sq
+	 jf1WSEi6nWP51Mwzaqf5NcGxeC00ZxZ4ath+nH5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 100/151] iio: light: veml6030: fix microlux value calculation
-Date: Wed,  6 Nov 2024 13:04:48 +0100
-Message-ID: <20241106120311.625985643@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+9ef37ac20608f4836256@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 101/151] nilfs2: fix potential deadlock with newly created symlinks
+Date: Wed,  6 Nov 2024 13:04:49 +0100
+Message-ID: <20241106120311.658119967@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -50,42 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 63dd163cd61dda6f38343776b42331cc6b7e56e0 upstream.
+commit b3a033e3ecd3471248d474ef263aadc0059e516a upstream.
 
-The raw value conversion to obtain a measurement in lux as
-INT_PLUS_MICRO does not calculate the decimal part properly to display
-it as micro (in this case microlux). It only calculates the module to
-obtain the decimal part from a resolution that is 10000 times the
-provided in the datasheet (0.5376 lux/cnt for the veml6030). The
-resulting value must still be multiplied by 100 to make it micro.
+Syzbot reported that page_symlink(), called by nilfs_symlink(), triggers
+memory reclamation involving the filesystem layer, which can result in
+circular lock dependencies among the reader/writer semaphore
+nilfs->ns_segctor_sem, s_writers percpu_rwsem (intwrite) and the
+fs_reclaim pseudo lock.
 
-This bug was introduced with the original implementation of the driver.
+This is because after commit 21fc61c73c39 ("don't put symlink bodies in
+pagecache into highmem"), the gfp flags of the page cache for symbolic
+links are overwritten to GFP_KERNEL via inode_nohighmem().
 
-Only the illuminance channel is fixed becuase the scale is non sensical
-for the intensity channels anyway.
+This is not a problem for symlinks read from the backing device, because
+the __GFP_FS flag is dropped after inode_nohighmem() is called.  However,
+when a new symlink is created with nilfs_symlink(), the gfp flags remain
+overwritten to GFP_KERNEL.  Then, memory allocation called from
+page_symlink() etc.  triggers memory reclamation including the FS layer,
+which may call nilfs_evict_inode() or nilfs_dirty_inode().  And these can
+cause a deadlock if they are called while nilfs->ns_segctor_sem is held:
 
-Cc: stable@vger.kernel.org
-Fixes: 7b779f573c48 ("iio: light: add driver for veml6030 ambient light sensor")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20241016-veml6030-fix-processed-micro-v1-1-4a5644796437@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fix this issue by dropping the __GFP_FS flag from the page cache GFP flags
+of newly created symlinks in the same way that nilfs_new_inode() and
+__nilfs_read_inode() do, as a workaround until we adopt nofs allocation
+scope consistently or improve the locking constraints.
+
+Link: https://lkml.kernel.org/r/20241020050003.4308-1-konishi.ryusuke@gmail.com
+Fixes: 21fc61c73c39 ("don't put symlink bodies in pagecache into highmem")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+9ef37ac20608f4836256@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9ef37ac20608f4836256
+Tested-by: syzbot+9ef37ac20608f4836256@syzkaller.appspotmail.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/veml6030.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/namei.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iio/light/veml6030.c
-+++ b/drivers/iio/light/veml6030.c
-@@ -522,7 +522,7 @@ static int veml6030_read_raw(struct iio_
- 			}
- 			if (mask == IIO_CHAN_INFO_PROCESSED) {
- 				*val = (reg * data->cur_resolution) / 10000;
--				*val2 = (reg * data->cur_resolution) % 10000;
-+				*val2 = (reg * data->cur_resolution) % 10000 * 100;
- 				return IIO_VAL_INT_PLUS_MICRO;
- 			}
- 			*val = reg;
+--- a/fs/nilfs2/namei.c
++++ b/fs/nilfs2/namei.c
+@@ -157,6 +157,9 @@ static int nilfs_symlink(struct mnt_idma
+ 	/* slow symlink */
+ 	inode->i_op = &nilfs_symlink_inode_operations;
+ 	inode_nohighmem(inode);
++	mapping_set_gfp_mask(inode->i_mapping,
++			     mapping_gfp_constraint(inode->i_mapping,
++						    ~__GFP_FS));
+ 	inode->i_mapping->a_ops = &nilfs_aops;
+ 	err = page_symlink(inode, symname, l);
+ 	if (err)
 
 
