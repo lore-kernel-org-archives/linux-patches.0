@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D861B1E0DBD;
-	Wed,  6 Nov 2024 12:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714041F4FBC;
+	Wed,  6 Nov 2024 12:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897729; cv=none; b=qRuxNdqgGjVhiVZUhOh7J3CALgQEgZyLWp8BlRNlrURxiCxrms52glcPN6KRrlj9ikdj87OALdiYaF/stg+uNSZGWH+q7E4OOC584LzqROmQ1MTAHeDSEgSpwikm8pMn/OeMraHz70mmS/uMdQRJjcou6aczqPzh9+sEwBVzWiM=
+	t=1730897732; cv=none; b=tPS1urz1xdV/FbgEb12VDFNcqFVdLxX8EFDtyEAXjGAm7YgWFOwI0pg0TTmriDZu9Q7KikCZvf6lWgRcs8FQfyZXWB3Jz+eBwPo02916PziCriwhcM3kDo2DMC92nfydJzy+b0BM/IXJVAigElA2m7GD6aNh0D/sfpPd9H5cc3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897729; c=relaxed/simple;
-	bh=sg2QtBR24a8HeL+Xmseki2WdS+jF4vNkLMWtYeYUrEE=;
+	s=arc-20240116; t=1730897732; c=relaxed/simple;
+	bh=SuRbsDMMX8NpMK0YgUe7cm6E7YgQg6Zob0mfhkjhJfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MnLXmkk/mCM4a3z5Qg/sDwiVAK94w6tpfaSpTFOFc3q3YJ7UZXNIICZ5fkf9O1egyKhzZx0AsmhZNnAexync4HMay7KtebNQWGhzZ28B4+1n1BtoYzej6fkU8iFUeYGBqmyYgUMIut16Jsf3yYxQ4+AgeKqUaVEaN7lUkJUVMFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJwHnq4e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MwON35tbz5kEoPLxl4I6r4R+n06tJFJhTADl01xIVSn5hZR6MwWVH4P/iTONcGbSMky3mlBw/HCSE3fTuKn9zmwh2nyzczc0R06zBhE3APjf9/VLJ8bpsUIB/ow091Qj6ZGEfhvVa67USi52AZXUD0dvQqUcD/DP0LJY1iiMmek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lNgeU1U+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJwHnq4e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C28C0C4CECD;
-	Wed,  6 Nov 2024 12:55:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lNgeU1U+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E995AC4CECD;
+	Wed,  6 Nov 2024 12:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897729;
-	bh=sg2QtBR24a8HeL+Xmseki2WdS+jF4vNkLMWtYeYUrEE=;
+	s=korg; t=1730897732;
+	bh=SuRbsDMMX8NpMK0YgUe7cm6E7YgQg6Zob0mfhkjhJfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vJwHnq4eoU+HQ4OBM1Knnb89tz6ho1bi1PZTIZXSV3kIpWkjOadLbWkv0imbdrw3o
-	 dwfUe3Wl1i+txXHjzZolku+TO44nt/vQKHFOA3XAGzhKYG2AlYBY3/TEXvxJBkhkFT
-	 7MeO3hsK2k7uItpZCNwAt0WHcRG4CBxjbJM5MFs4=
+	b=lNgeU1U+0SkuXpFbu10k6ONzJZP9kTy6WUynQSejES5g5FE1wsz6ad/0aVjuetq9c
+	 2ftA7gppwGVSmEhbSUPl8GPeBIHmtM5pWfXGj/JlgFI0wPO306qCj0s9PrhCSuwFlm
+	 PtsRA5ANGU/KuYZ2a66NkZJS8CmPj6ZIQyMwxjDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Xiangyu Chen <xiangyu.chen@windriver.com>
-Subject: [PATCH 6.6 150/151] drm/amd/display: Add null checks for stream and plane before dereferencing
-Date: Wed,  6 Nov 2024 13:05:38 +0100
-Message-ID: <20241106120312.972217351@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 115/151] ALSA: hda/realtek: Limit internal Mic boost on Dell platform
+Date: Wed,  6 Nov 2024 13:05:03 +0100
+Message-ID: <20241106120312.032143798@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -60,53 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Kailang Yang <kailang@realtek.com>
 
-commit 15c2990e0f0108b9c3752d7072a97d45d4283aea upstream.
+[ Upstream commit 78e7be018784934081afec77f96d49a2483f9188 ]
 
-This commit adds null checks for the 'stream' and 'plane' variables in
-the dcn30_apply_idle_power_optimizations function. These variables were
-previously assumed to be null at line 922, but they were used later in
-the code without checking if they were null. This could potentially lead
-to a null pointer dereference, which would cause a crash.
+Dell want to limit internal Mic boost on all Dell platform.
 
-The null checks ensure that 'stream' and 'plane' are not null before
-they are used, preventing potential crashes.
-
-Fixes the below static smatch checker:
-drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dcn30/dcn30_hwseq.c:938 dcn30_apply_idle_power_optimizations() error: we previously assumed 'stream' could be null (see line 922)
-drivers/gpu/drm/amd/amdgpu/../display/dc/hwss/dcn30/dcn30_hwseq.c:940 dcn30_apply_idle_power_optimizations() error: we previously assumed 'plane' could be null (see line 922)
-
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Cc: Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Hersen Wu <hersenxs.wu@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[Xiangyu: Modified file path to backport this commit]
-Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/561fc5f5eff04b6cbd79ed173cd1c1db@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/pci/hda/patch_realtek.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-@@ -735,6 +735,9 @@ bool dcn30_apply_idle_power_optimization
- 			stream = dc->current_state->streams[0];
- 			plane = (stream ? dc->current_state->stream_status[0].plane_states[0] : NULL);
- 
-+			if (!stream || !plane)
-+				return false;
-+
- 			if (stream && plane) {
- 				cursor_cache_enable = stream->cursor_position.enable &&
- 						plane->address.grph.cursor_cache_addr.quad_part;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 9be5a5c509f09..bf504744ae2a3 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -7234,6 +7234,7 @@ enum {
+ 	ALC286_FIXUP_SONY_MIC_NO_PRESENCE,
+ 	ALC269_FIXUP_PINCFG_NO_HP_TO_LINEOUT,
+ 	ALC269_FIXUP_DELL1_MIC_NO_PRESENCE,
++	ALC269_FIXUP_DELL1_LIMIT_INT_MIC_BOOST,
+ 	ALC269_FIXUP_DELL2_MIC_NO_PRESENCE,
+ 	ALC269_FIXUP_DELL3_MIC_NO_PRESENCE,
+ 	ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
+@@ -7268,6 +7269,7 @@ enum {
+ 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
+ 	ALC255_FIXUP_ASUS_MIC_NO_PRESENCE,
+ 	ALC255_FIXUP_DELL1_MIC_NO_PRESENCE,
++	ALC255_FIXUP_DELL1_LIMIT_INT_MIC_BOOST,
+ 	ALC255_FIXUP_DELL2_MIC_NO_PRESENCE,
+ 	ALC255_FIXUP_HEADSET_MODE,
+ 	ALC255_FIXUP_HEADSET_MODE_NO_HP_MIC,
+@@ -7760,6 +7762,12 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC269_FIXUP_HEADSET_MODE
+ 	},
++	[ALC269_FIXUP_DELL1_LIMIT_INT_MIC_BOOST] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc269_fixup_limit_int_mic_boost,
++		.chained = true,
++		.chain_id = ALC269_FIXUP_DELL1_MIC_NO_PRESENCE
++	},
+ 	[ALC269_FIXUP_DELL2_MIC_NO_PRESENCE] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -8040,6 +8048,12 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC255_FIXUP_HEADSET_MODE
+ 	},
++	[ALC255_FIXUP_DELL1_LIMIT_INT_MIC_BOOST] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc269_fixup_limit_int_mic_boost,
++		.chained = true,
++		.chain_id = ALC255_FIXUP_DELL1_MIC_NO_PRESENCE
++	},
+ 	[ALC255_FIXUP_DELL2_MIC_NO_PRESENCE] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -10482,6 +10496,7 @@ static const struct hda_model_fixup alc269_fixup_models[] = {
+ 	{.id = ALC269_FIXUP_DELL2_MIC_NO_PRESENCE, .name = "dell-headset-dock"},
+ 	{.id = ALC269_FIXUP_DELL3_MIC_NO_PRESENCE, .name = "dell-headset3"},
+ 	{.id = ALC269_FIXUP_DELL4_MIC_NO_PRESENCE, .name = "dell-headset4"},
++	{.id = ALC269_FIXUP_DELL4_MIC_NO_PRESENCE_QUIET, .name = "dell-headset4-quiet"},
+ 	{.id = ALC283_FIXUP_CHROME_BOOK, .name = "alc283-dac-wcaps"},
+ 	{.id = ALC283_FIXUP_SENSE_COMBO_JACK, .name = "alc283-sense-combo"},
+ 	{.id = ALC292_FIXUP_TPT440_DOCK, .name = "tpt440-dock"},
+@@ -11033,16 +11048,16 @@ static const struct snd_hda_pin_quirk alc269_fallback_pin_fixup_tbl[] = {
+ 	SND_HDA_PIN_QUIRK(0x10ec0289, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
+ 		{0x19, 0x40000000},
+ 		{0x1b, 0x40000000}),
+-	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
++	SND_HDA_PIN_QUIRK(0x10ec0295, 0x1028, "Dell", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE_QUIET,
+ 		{0x19, 0x40000000},
+ 		{0x1b, 0x40000000}),
+ 	SND_HDA_PIN_QUIRK(0x10ec0256, 0x1028, "Dell", ALC255_FIXUP_DELL1_MIC_NO_PRESENCE,
+ 		{0x19, 0x40000000},
+ 		{0x1a, 0x40000000}),
+-	SND_HDA_PIN_QUIRK(0x10ec0236, 0x1028, "Dell", ALC255_FIXUP_DELL1_MIC_NO_PRESENCE,
++	SND_HDA_PIN_QUIRK(0x10ec0236, 0x1028, "Dell", ALC255_FIXUP_DELL1_LIMIT_INT_MIC_BOOST,
+ 		{0x19, 0x40000000},
+ 		{0x1a, 0x40000000}),
+-	SND_HDA_PIN_QUIRK(0x10ec0274, 0x1028, "Dell", ALC274_FIXUP_DELL_AIO_LINEOUT_VERB,
++	SND_HDA_PIN_QUIRK(0x10ec0274, 0x1028, "Dell", ALC269_FIXUP_DELL1_LIMIT_INT_MIC_BOOST,
+ 		{0x19, 0x40000000},
+ 		{0x1a, 0x40000000}),
+ 	SND_HDA_PIN_QUIRK(0x10ec0256, 0x1043, "ASUS", ALC2XX_FIXUP_HEADSET_MIC,
+-- 
+2.43.0
+
 
 
