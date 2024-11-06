@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFE81D5AD7;
-	Wed,  6 Nov 2024 12:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC51B1DE8A2;
+	Wed,  6 Nov 2024 12:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895101; cv=none; b=AlKxrL0rqqhA/sE3e3j4basw1D/hVSiM2g0PseMGkb5Eblysl7YSwAWrSQ6WW8z/i5+tYA3xD+FrgyIFfxlsn77VxcOlDy9zUWFdEWHkGIJ5OShf1LDlbyBVCDmL5JLOf5IHZWJQR7StaYECeSTr28FIYP0Pq3tdPplp3J5ci60=
+	t=1730895103; cv=none; b=uGcNEOl//pegaTly0H6w1M3qDMSWkx4Fy1ZZWh0E961iQ0PBAX6zmvwPKJ++7XNJNaDzEwoYA1qSXd9dPgmqc6euPQaAz5rIrxl6G80QkI54+9LQmqU2LdIZSMWiISSbTRN0A+qaeKL6BxasZrTIGhmc6T8fdmfqwpo+MT3KRjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895101; c=relaxed/simple;
-	bh=V6yUbYcXrkEevjRTx63yR+5SbcTHZ8w+JkG2ZWVb7Gk=;
+	s=arc-20240116; t=1730895103; c=relaxed/simple;
+	bh=LTP79omZWN9pixJ2bEWBhf+jqEhiHM8xB4CkSR4+nZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LWk93Ei5mraYe6n7hXee3jxmF5Nr6R5i/qizgio3O5ZujDjcOnR/6SV3Xe4pfeLEoIbdYrFwiwnKLMWR9GZIyTWDxoIDwwq+qy5C6BdpV+TrLzpu7dLFVOZD9lU189z9zyZq7RuivUSCuWEJYohur4ZZa+lu5WynRU5q3om8BTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHenF7tT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hFVazwWgwEDQ+n+S2g0OEjiu+Vuulc1u8Tejg2FjmkWoDBt4OB0WoC1uOcE6+cwqd/jznDaOC9xM2k3kPkxl+LwKq8s3ZK9uIcCd/766vsMBn45DwkqjlzuXw5mgjv/goG+cai06FpsgZb944zZCaSZpg0pjYFZWuyB2Y7jOLZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0SW/9/QJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHenF7tT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7838BC4CECD;
-	Wed,  6 Nov 2024 12:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SW/9/QJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A62C4CECD;
+	Wed,  6 Nov 2024 12:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895100;
-	bh=V6yUbYcXrkEevjRTx63yR+5SbcTHZ8w+JkG2ZWVb7Gk=;
+	s=korg; t=1730895103;
+	bh=LTP79omZWN9pixJ2bEWBhf+jqEhiHM8xB4CkSR4+nZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PHenF7tT6a3sqjiA7Gaft8Xy0SVVexhgUJEY03f3sZd/5se1TIzhpDo8PRGARXt1i
-	 d2HWlpLcTopMyrYyJuppQH4q4RGZ1Oy5u14r7UohWNBurDVTg47/GXqIHYxZfmyr0J
-	 GwmeSHA5UddP+KvOl88MB5GTKbHn3JN8gCcxZPE0=
+	b=0SW/9/QJf/mMYNpoS1Kgc3TKypedpWRieJ27AAfQ2mxXaZAXkNYDWZQzY2fPv+uNJ
+	 vAozFQbhDv2Ji5sKUMuu9RPrUjg7sZAOQSTYc2l4kxDOh1En7aH9/Mq3oBqQyWK7ZI
+	 MQg1sHs669xVrbpZpEj9WOG+T0Q+ww2oo88R18O4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hailey Mothershead <hailmo@amazon.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
-Subject: [PATCH 4.19 106/350] crypto: aead,cipher - zeroize key buffer after use
-Date: Wed,  6 Nov 2024 13:00:34 +0100
-Message-ID: <20241106120323.519951776@linuxfoundation.org>
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 4.19 107/350] Remove *.orig pattern from .gitignore
+Date: Wed,  6 Nov 2024 13:00:35 +0100
+Message-ID: <20241106120323.546491534@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,47 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hailey Mothershead <hailmo@amazon.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-commit 23e4099bdc3c8381992f9eb975c79196d6755210 upstream.
+commit 76be4f5a784533c71afbbb1b8f2963ef9e2ee258 upstream.
 
-I.G 9.7.B for FIPS 140-3 specifies that variables temporarily holding
-cryptographic information should be zeroized once they are no longer
-needed. Accomplish this by using kfree_sensitive for buffers that
-previously held the private key.
+Commit 3f1b0e1f2875 (".gitignore update") added *.orig and *.rej
+patterns to .gitignore in v2.6.23. The commit message didn't give a
+rationale. Later on, commit 1f5d3a6b6532 ("Remove *.rej pattern from
+.gitignore") removed the *.rej pattern in v2.6.26, on the rationale that
+*.rej files indicated something went really wrong and should not be
+ignored.
 
-Signed-off-by: Hailey Mothershead <hailmo@amazon.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+The *.rej files are now shown by `git status`, which helps located
+conflicts when applying patches and lowers the probability that they
+will go unnoticed. It is however still easy to overlook the *.orig files
+which slowly polute the source tree. That's not as big of a deal as not
+noticing a conflict, but it's still not nice.
+
+Drop the *.orig pattern from .gitignore to avoid this and help keep the
+source tree clean.
+
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+[masahiroy@kernel.org:
+I do not have a strong opinion about this. Perhaps some people may have
+a different opinion.
+
+If you are someone who wants to ignore *.orig, it is likely you would
+want to do so across all projects. Then, $XDG_CONFIG_HOME/git/ignore
+would be more suitable for your needs. gitignore(5) suggests, "Patterns
+which a user wants Git to ignore in all situations generally go into a
+file specified by core.excludesFile in the user's ~/.gitconfig".
+
+Please note that you cannot do the opposite; if *.orig is ignored by
+the project's .gitignore, you cannot override the decision because
+$XDG_CONFIG_HOME/git/ignore has a lower priority.
+
+If *.orig is sitting on the fence, I'd leave it to the users. ]
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/aead.c   |    3 +--
- crypto/cipher.c |    3 +--
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ .gitignore |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/crypto/aead.c
-+++ b/crypto/aead.c
-@@ -45,8 +45,7 @@ static int setkey_unaligned(struct crypt
- 	alignbuffer = (u8 *)ALIGN((unsigned long)buffer, alignmask + 1);
- 	memcpy(alignbuffer, key, keylen);
- 	ret = crypto_aead_alg(tfm)->setkey(tfm, alignbuffer, keylen);
--	memset(alignbuffer, 0, keylen);
--	kfree(buffer);
-+	kzfree(buffer);
- 	return ret;
- }
+--- a/.gitignore
++++ b/.gitignore
+@@ -114,7 +114,6 @@ GTAGS
+ # id-utils files
+ ID
  
---- a/crypto/cipher.c
-+++ b/crypto/cipher.c
-@@ -38,8 +38,7 @@ static int setkey_unaligned(struct crypt
- 	alignbuffer = (u8 *)ALIGN((unsigned long)buffer, alignmask + 1);
- 	memcpy(alignbuffer, key, keylen);
- 	ret = cia->cia_setkey(tfm, alignbuffer, keylen);
--	memset(alignbuffer, 0, keylen);
--	kfree(buffer);
-+	kzfree(buffer);
- 	return ret;
+-*.orig
+ *~
+ \#*#
  
- }
 
 
