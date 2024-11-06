@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D227F1EC017;
-	Wed,  6 Nov 2024 12:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87DA1F9AA7;
+	Wed,  6 Nov 2024 12:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897315; cv=none; b=h4DDtQ+q3iU2Q392rAPXZmM8dDYu2ebStmxOmvL3nJ0Uzn7DWpJIPKDoo12AfWsA4k5aGZkGQSkRLom+l32tnVFTgOjf8Dm0HOI22NJNjfP2URUeS1aDGEFTEjyahrR0j8mrxka9OZkzk0Us9So10i2h2JjZUXP/JazYnl6efnA=
+	t=1730897318; cv=none; b=FEJPBYTjdNEwnAkP5pdcbKFREHK6H1qyc340faa+xR/h/thH6BC7DKDp/qhT57i9jfh2boIcZ1S+XgR9jajnqWT9nNMVbM/QAKHvQOnnCQD9PPLFkG+jqKm2R8uMGcIaG/21tGdEtKZM4hScUvPj+wG2FFcNDi8ayCa+pXQEptk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897315; c=relaxed/simple;
-	bh=OJuOKpMC4IoypASuQ2XHLbIjvpOvSTzwKyhKNIYU4oI=;
+	s=arc-20240116; t=1730897318; c=relaxed/simple;
+	bh=SF94qhWKaRhgLCF8FJzvRsXAs5+40ppN7nzQtEqNclQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S+PB1WseptFDmJ+8EhOxyzx0Xu0eF/OV97BdUiC60IsepTJUAdFUUphABu9+kCwTojf5AslPTPm1ssea0sRcpuK+3jlw8E+pLpjsKi3g/MO+tRcVQHjwkSYBE+eokK4GIk0wGEF0+1aD/9nnJPzBSnVKAXdqpm4qCm9GaJMVvgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eO5D3ojX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gBYngDNFNHIhONh8XqL3cWxx1MFO2ask2VzC9d6dDZ+LdeiJ9srkcyMLiQY/vvppK4wYN+7LpWwwbh9TRPbBw5i25OQhGCcB8MAfU8Y1Ib3cHehelNABmy0KmkfYeN9QA24HmXkS/BqGPLc6AnflWVM9eNOhhehKM+waMbEZONg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYHVgx2r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eO5D3ojX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5882AC4CECD;
-	Wed,  6 Nov 2024 12:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYHVgx2r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6DBC4CECD;
+	Wed,  6 Nov 2024 12:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897315;
-	bh=OJuOKpMC4IoypASuQ2XHLbIjvpOvSTzwKyhKNIYU4oI=;
+	s=korg; t=1730897318;
+	bh=SF94qhWKaRhgLCF8FJzvRsXAs5+40ppN7nzQtEqNclQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eO5D3ojXabRp+jVXWXyiayngfgmM+pIQB09dXqDLu8gPBfzHgCDqa2rzELjvhrpqK
-	 M/RVdvge/Ez1CieZEQKg0hMlyFQT8ooR9kSS5si/NMvJl7kWKDyGkrtqH9qtTcgqc3
-	 P3nK7D6WFDQUHHQLfqq0sXHye5NlsYCGj78D36MQ=
+	b=zYHVgx2rIXquu6Q8id3rYV/R1LbL81HwM3binuiM/sR6FqhfRQa5KE2OUziNoc/BC
+	 w19UXCGvHTkqfdc06q7jmmKbVhiOLc++Ley/BMp7KKCO5omaZPHFJLBVOrugF0/aut
+	 r1SbY7rCR7KTs1jHSBsptnwIdZIt6CYrV9166lY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/151] RDMA/cxgb4: Dump vendor specific QP details
-Date: Wed,  6 Nov 2024 13:03:21 +0100
-Message-ID: <20241106120309.203640522@linuxfoundation.org>
+Subject: [PATCH 6.6 014/151] RDMA/mlx5: Round max_rd_atomic/max_dest_rd_atomic up instead of down
+Date: Wed,  6 Nov 2024 13:03:22 +0100
+Message-ID: <20241106120309.229363416@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -52,36 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit 89f8c6f197f480fe05edf91eb9359d5425869d04 ]
+[ Upstream commit 78ed28e08e74da6265e49e19206e1bcb8b9a7f0d ]
 
-Restore the missing functionality to dump vendor specific QP details,
-which was mistakenly removed in the commit mentioned in Fixes line.
+After the cited commit below max_dest_rd_atomic and max_rd_atomic values
+are being rounded down to the next power of 2. As opposed to the old
+behavior and mlx4 driver where they used to be rounded up instead.
 
-Fixes: 5cc34116ccec ("RDMA: Add dedicated QP resource tracker function")
-Link: https://patch.msgid.link/r/ed9844829135cfdcac7d64285688195a5cd43f82.1728323026.git.leonro@nvidia.com
-Reported-by: Dr. David Alan Gilbert <linux@treblig.org>
-Closes: https://lore.kernel.org/all/Zv_4qAxuC0dLmgXP@gallifrey
+In order to stay consistent with older code and other drivers, revert to
+using fls round function which rounds up to the next power of 2.
+
+Fixes: f18e26af6aba ("RDMA/mlx5: Convert modify QP to use MLX5_SET macros")
+Link: https://patch.msgid.link/r/d85515d6ef21a2fa8ef4c8293dce9b58df8a6297.1728550179.git.leon@kernel.org
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
 Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/cxgb4/provider.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/mlx5/qp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/cxgb4/provider.c b/drivers/infiniband/hw/cxgb4/provider.c
-index 246b739ddb2b2..9008584946c62 100644
---- a/drivers/infiniband/hw/cxgb4/provider.c
-+++ b/drivers/infiniband/hw/cxgb4/provider.c
-@@ -474,6 +474,7 @@ static const struct ib_device_ops c4iw_dev_ops = {
- 	.fill_res_cq_entry = c4iw_fill_res_cq_entry,
- 	.fill_res_cm_id_entry = c4iw_fill_res_cm_id_entry,
- 	.fill_res_mr_entry = c4iw_fill_res_mr_entry,
-+	.fill_res_qp_entry = c4iw_fill_res_qp_entry,
- 	.get_dev_fw_str = get_dev_fw_str,
- 	.get_dma_mr = c4iw_get_dma_mr,
- 	.get_hw_stats = c4iw_get_mib,
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index 2340baaba8e67..93d9b15cbbb98 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -4272,14 +4272,14 @@ static int __mlx5_ib_modify_qp(struct ib_qp *ibqp,
+ 		MLX5_SET(qpc, qpc, retry_count, attr->retry_cnt);
+ 
+ 	if (attr_mask & IB_QP_MAX_QP_RD_ATOMIC && attr->max_rd_atomic)
+-		MLX5_SET(qpc, qpc, log_sra_max, ilog2(attr->max_rd_atomic));
++		MLX5_SET(qpc, qpc, log_sra_max, fls(attr->max_rd_atomic - 1));
+ 
+ 	if (attr_mask & IB_QP_SQ_PSN)
+ 		MLX5_SET(qpc, qpc, next_send_psn, attr->sq_psn);
+ 
+ 	if (attr_mask & IB_QP_MAX_DEST_RD_ATOMIC && attr->max_dest_rd_atomic)
+ 		MLX5_SET(qpc, qpc, log_rra_max,
+-			 ilog2(attr->max_dest_rd_atomic));
++			 fls(attr->max_dest_rd_atomic - 1));
+ 
+ 	if (attr_mask & (IB_QP_ACCESS_FLAGS | IB_QP_MAX_DEST_RD_ATOMIC)) {
+ 		err = set_qpc_atomic_flags(qp, attr, attr_mask, qpc);
 -- 
 2.43.0
 
