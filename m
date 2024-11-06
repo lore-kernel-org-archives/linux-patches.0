@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5271DF24A;
-	Wed,  6 Nov 2024 12:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B43E1DED49;
+	Wed,  6 Nov 2024 12:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895594; cv=none; b=PJvsS07IR7PsUzel/Gtr42gVtTV78JxFh2CIwJNuxWQPLJE8XVI9zHSZStg757NMWV7AvyhKxFQXFace3EemKSE/Bv7QYnpBt2vGtT/ksBK6cGAEJYGefYRHvI+A+lZUHk5J81LEaZNKST2z0TkBx+STP0b1jzmCCE4AEP8A8bM=
+	t=1730895597; cv=none; b=GbUGZ7nsKG4FXAe6lfk9lm9GwQManbbLdgEMatNoobhnDB6CSOIHNa+r1DoNJDHS9ncP0+Rr6dp/oSDdilZtfXWKSJ2v1gMJYmHDkB2iM3ZWQPSPlGyMdyPaoqvet4ln2+VFfKPkWoX66ut9+7hQSscFkAE4oA6iCrhoDZHWrHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895594; c=relaxed/simple;
-	bh=miE8BaOh0c3aUp4FGKJ9zqHzFZJgQjYXtuNt60VC1ok=;
+	s=arc-20240116; t=1730895597; c=relaxed/simple;
+	bh=M6V6N0SSDcV+vxlk83zbYWExEWP2TnFvUyXQGryck0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4o7TsgTIyUvXjLga66FCVwEr1uh3mm4SPkTLS7FJhcKWDEVFnjAgHgCsQwFLRNQMCxTu+sPVEcVn4BDspsrNn76iSyOemZ0aOENft8X8wcPP2LbqPwIdYJIFSjoqMi4baX/sTZlRuMUgWsGWNlJSLYbx4jPH5mVAbZUnlVBWug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZsFptAin; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qHiFt+OOanBNcAoqvmM1itpTBhlZUOy+NWGcpoEST837qC4zjXBbV02cuIdAS4895/hWJDeLQGcqs0lKnzWWW2g9r2gEPXafjo87jnFH5Qqigwfx9ExG+ICN2eUUKMcdlmXe9eAD/4IIurhu4IyMu9fz0e4LQ0ntsVLOseByZkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tH9W50X9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZsFptAin"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14764C4CECD;
-	Wed,  6 Nov 2024 12:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tH9W50X9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC706C4CED3;
+	Wed,  6 Nov 2024 12:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895594;
-	bh=miE8BaOh0c3aUp4FGKJ9zqHzFZJgQjYXtuNt60VC1ok=;
+	s=korg; t=1730895597;
+	bh=M6V6N0SSDcV+vxlk83zbYWExEWP2TnFvUyXQGryck0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZsFptAinO/CcDQ2VlSRCzhrF/Z9TbmHfqs1LxWy8xBgRa9FpEhMG6QpCRLD9V+33j
-	 BboC/DFLuqVtGnN07HD8C9RHmUOYXujPZWhqO/SPBEiO56f/3eYULgZOU2cVXWy0Un
-	 KDavs7Dm44UTIUSxiQJkA4ZG1xBcIEBQvl0pkpHE=
+	b=tH9W50X90IGSOEKiIgnc5vnDR82VUyokilyllFteyyBv8rR7i99S0YDw9EBUIbcH+
+	 2YVdrH2O2uDh8gEZHHvmmGXs/MP0JWnPRy1ndH3yXpbqZEyURJkzpg4mbNW8Pvkboj
+	 nelSci5vhK8WGWYAhCX/52nlknipCdxEyiA/E9Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 4.19 270/350] arm64: probes: Fix simulate_ldr*_literal()
-Date: Wed,  6 Nov 2024 13:03:18 +0100
-Message-ID: <20241106120327.559409149@linuxfoundation.org>
+	SiyuLi <siyuli@glenfly.com>,
+	WangYuli <wangyuli@uniontech.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.19 271/350] PCI: Add function 0 DMA alias quirk for Glenfly Arise chip
+Date: Wed,  6 Nov 2024 13:03:19 +0100
+Message-ID: <20241106120327.579269148@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,79 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-commit 50f813e57601c22b6f26ced3193b9b94d70a2640 upstream.
+commit 9246b487ab3c3b5993aae7552b7a4c541cc14a49 upstream.
 
-The simulate_ldr_literal() code always loads a 64-bit quantity, and when
-simulating a 32-bit load into a 'W' register, it discards the most
-significant 32 bits. For big-endian kernels this means that the relevant
-bits are discarded, and the value returned is the the subsequent 32 bits
-in memory (i.e. the value at addr + 4).
+Add DMA support for audio function of Glenfly Arise chip, which uses
+Requester ID of function 0.
 
-Additionally, simulate_ldr_literal() and simulate_ldrsw_literal() use a
-plain C load, which the compiler may tear or elide (e.g. if the target
-is the zero register). Today this doesn't happen to matter, but it may
-matter in future if trampoline code uses a LDR (literal) or LDRSW
-(literal).
-
-Update simulate_ldr_literal() and simulate_ldrsw_literal() to use an
-appropriately-sized READ_ONCE() to perform the access, which avoids
-these problems.
-
-Fixes: 39a67d49ba35 ("arm64: kprobes instruction simulation support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20241008155851.801546-3-mark.rutland@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/CA2BBD087345B6D1+20240823095708.3237375-1-wangyuli@uniontech.com
+Signed-off-by: SiyuLi <siyuli@glenfly.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+[bhelgaas: lower-case hex to match local code, drop unused Device IDs]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/probes/simulate-insn.c |   18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ drivers/pci/quirks.c    |    4 ++++
+ include/linux/pci_ids.h |    2 ++
+ 2 files changed, 6 insertions(+)
 
---- a/arch/arm64/kernel/probes/simulate-insn.c
-+++ b/arch/arm64/kernel/probes/simulate-insn.c
-@@ -178,17 +178,15 @@ simulate_tbz_tbnz(u32 opcode, long addr,
- void __kprobes
- simulate_ldr_literal(u32 opcode, long addr, struct pt_regs *regs)
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -4044,6 +4044,10 @@ static void quirk_dma_func0_alias(struct
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_RICOH, 0xe832, quirk_dma_func0_alias);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_RICOH, 0xe476, quirk_dma_func0_alias);
+ 
++/* Some Glenfly chips use function 0 as the PCIe Requester ID for DMA */
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_GLENFLY, 0x3d40, quirk_dma_func0_alias);
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_GLENFLY, 0x3d41, quirk_dma_func0_alias);
++
+ static void quirk_dma_func1_alias(struct pci_dev *dev)
  {
--	u64 *load_addr;
-+	unsigned long load_addr;
- 	int xn = opcode & 0x1f;
--	int disp;
+ 	if (PCI_FUNC(dev->devfn) != 1)
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -2647,6 +2647,8 @@
+ #define PCI_DEVICE_ID_DCI_PCCOM8	0x0002
+ #define PCI_DEVICE_ID_DCI_PCCOM2	0x0004
  
--	disp = ldr_displacement(opcode);
--	load_addr = (u64 *) (addr + disp);
-+	load_addr = addr + ldr_displacement(opcode);
- 
- 	if (opcode & (1 << 30))	/* x0-x30 */
--		set_x_reg(regs, xn, *load_addr);
-+		set_x_reg(regs, xn, READ_ONCE(*(u64 *)load_addr));
- 	else			/* w0-w30 */
--		set_w_reg(regs, xn, *load_addr);
-+		set_w_reg(regs, xn, READ_ONCE(*(u32 *)load_addr));
- 
- 	instruction_pointer_set(regs, instruction_pointer(regs) + 4);
- }
-@@ -196,14 +194,12 @@ simulate_ldr_literal(u32 opcode, long ad
- void __kprobes
- simulate_ldrsw_literal(u32 opcode, long addr, struct pt_regs *regs)
- {
--	s32 *load_addr;
-+	unsigned long load_addr;
- 	int xn = opcode & 0x1f;
--	int disp;
- 
--	disp = ldr_displacement(opcode);
--	load_addr = (s32 *) (addr + disp);
-+	load_addr = addr + ldr_displacement(opcode);
- 
--	set_x_reg(regs, xn, *load_addr);
-+	set_x_reg(regs, xn, READ_ONCE(*(s32 *)load_addr));
- 
- 	instruction_pointer_set(regs, instruction_pointer(regs) + 4);
- }
++#define PCI_VENDOR_ID_GLENFLY		0x6766
++
+ #define PCI_VENDOR_ID_INTEL		0x8086
+ #define PCI_DEVICE_ID_INTEL_EESSC	0x0008
+ #define PCI_DEVICE_ID_INTEL_PXHD_0	0x0320
 
 
