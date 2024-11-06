@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB9F1EF08E;
-	Wed,  6 Nov 2024 12:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F281EF092;
+	Wed,  6 Nov 2024 12:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897304; cv=none; b=GBS10i0lwBohZ/sQxh24m5hHgW7imR7hfTP9sE3El6RHY34mSkqzHqcSlY6NkOo70eBCV6b1Q0R/WEJJW8YAy5fB/00FTQcZYtaCVIovvnBWoi4LLum2cv4aQ7LzmCFNVHmiqEJMweKSpF7nH0vZXXV2D8xwhRP9hPL0ZgRjJFQ=
+	t=1730897307; cv=none; b=fFQsSnUUBviWRA9FrWkKzsqWpfND5HVdwG2uR2/PoXKOqq6JCbba4mj8EDO41Rh8uVXQA0UK72dR/lDc7QSB1aKqIy2mtUJCDd4y20CB3djUym2jNkyf+HTYYq3HusXOHVAvM7ZZ48x6UdbhWJUuslVNBtRNAFaW4Qv97Tbc2KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897304; c=relaxed/simple;
-	bh=DHTxNp4sCUiU9l4pkrouOboEbHb81B/vVvBThnEUuDQ=;
+	s=arc-20240116; t=1730897307; c=relaxed/simple;
+	bh=w38eJx8AUCs9VMu6dTxHt6pj/H93b5RjIbz9Wr5390s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PCSrRBoo5RrqUluwSmR9bzbuM82/ycANnSsUMWsRmPFsD0Y82972GXrivLpXl3Hy56/WCUfqoFS2WOAfXVhJCCxLBj4KhtZR1SAOp/QaFaYPwALtgt6ABx4AMBkWiL0zaXmSCQ4beEKnW80nrw2xGGDl86zGiW860UrYjBo258Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9xRcKaI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kx/53eevKA7YO4wOxr6ZUr/DqMCa7thF9767RneSTRvPUPENYz9Ob8xCTIiibppjhfZflo/jvmh/Fej7SchU7JNWMUTMWZw/1TmtxWmnt1NZniuyo9hOdMkq/NCiaNXqMPskhI7fQlQlCloIdfBxT73WtyA+4dZIhn+2FRylSYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vdrzcIIb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9xRcKaI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C99C4CECD;
-	Wed,  6 Nov 2024 12:48:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vdrzcIIb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79332C4CECD;
+	Wed,  6 Nov 2024 12:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897303;
-	bh=DHTxNp4sCUiU9l4pkrouOboEbHb81B/vVvBThnEUuDQ=;
+	s=korg; t=1730897306;
+	bh=w38eJx8AUCs9VMu6dTxHt6pj/H93b5RjIbz9Wr5390s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B9xRcKaIB2DsYdtqkTMlynZB3JlGtD98FXVYwBynxIGqqfIj2Z4vFJtW+BTQ7D+Px
-	 513lUvqsJvjefcXxDygZ+YkI46nC2QFQtnv8/qbBhmm467a2+zvNdmNstd6NLoa1vO
-	 8Q8tyiwlhlFwDywa/EnPBYHE2iQsqC3ylQH7FRQ8=
+	b=vdrzcIIbZo9+cYZbOR1+yfQkENmu3cNBA90tay45Q5karg01o4evcMCl4Ha6gS58J
+	 XYBlumtRleTa93YSkS2jAPbr2boXBTmhj2Q8M3xjkDJwfLm2HTqy4knWFleoAF42HN
+	 OUoEDAQK0ZnsnTROy2vYkaFe1d8/70xQq3kYNSHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Lukasz Luba <lukasz.luba@arm.com>
-Subject: [PATCH 6.6 001/151] thermal: core: Make thermal_zone_device_unregister() return after freeing the zone
-Date: Wed,  6 Nov 2024 13:03:09 +0100
-Message-ID: <20241106120308.881358118@linuxfoundation.org>
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 010/151] wifi: mac80211: skip non-uploaded keys in ieee80211_iter_keys
+Date: Wed,  6 Nov 2024 13:03:18 +0100
+Message-ID: <20241106120309.123402662@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -52,83 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 4649620d9404d3aceb25891c24bab77143e3f21c ]
+[ Upstream commit 52009b419355195912a628d0a9847922e90c348c ]
 
-Make thermal_zone_device_unregister() wait until all of the references
-to the given thermal zone object have been dropped and free it before
-returning.
+Sync iterator conditions with ieee80211_iter_keys_rcu.
 
-This guarantees that when thermal_zone_device_unregister() returns,
-there is no leftover activity regarding the thermal zone in question
-which is required by some of its callers (for instance, modular driver
-code that wants to know when it is safe to let the module go away).
-
-Subsequently, this will allow some confusing device_is_registered()
-checks to be dropped from the thermal sysfs and core code.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-and-tested-by: Lukasz Luba <lukasz.luba@arm.com>
-Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Stable-dep-of: 827a07525c09 ("thermal: core: Free tzp copy along with the thermal zone")
+Fixes: 830af02f24fb ("mac80211: allow driver to iterate keys")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20241006153630.87885-1-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 6 +++++-
- include/linux/thermal.h        | 2 ++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ net/mac80211/key.c | 42 +++++++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index dee3022539cf7..5a9068e8f050d 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -800,7 +800,7 @@ static void thermal_release(struct device *dev)
- 		tz = to_thermal_zone(dev);
- 		thermal_zone_destroy_device_groups(tz);
- 		mutex_destroy(&tz->lock);
--		kfree(tz);
-+		complete(&tz->removal);
- 	} else if (!strncmp(dev_name(dev), "cooling_device",
- 			    sizeof("cooling_device") - 1)) {
- 		cdev = to_cooling_device(dev);
-@@ -1294,6 +1294,7 @@ thermal_zone_device_register_with_trips(const char *type, struct thermal_trip *t
- 	INIT_LIST_HEAD(&tz->thermal_instances);
- 	ida_init(&tz->ida);
- 	mutex_init(&tz->lock);
-+	init_completion(&tz->removal);
- 	id = ida_alloc(&thermal_tz_ida, GFP_KERNEL);
- 	if (id < 0) {
- 		result = id;
-@@ -1480,6 +1481,9 @@ void thermal_zone_device_unregister(struct thermal_zone_device *tz)
- 	put_device(&tz->device);
- 
- 	thermal_notify_tz_delete(tz_id);
-+
-+	wait_for_completion(&tz->removal);
-+	kfree(tz);
+diff --git a/net/mac80211/key.c b/net/mac80211/key.c
+index a2db0585dce0d..f5f1eb87797a4 100644
+--- a/net/mac80211/key.c
++++ b/net/mac80211/key.c
+@@ -989,6 +989,26 @@ void ieee80211_reenable_keys(struct ieee80211_sub_if_data *sdata)
+ 	mutex_unlock(&sdata->local->key_mtx);
  }
- EXPORT_SYMBOL_GPL(thermal_zone_device_unregister);
  
-diff --git a/include/linux/thermal.h b/include/linux/thermal.h
-index 4012f440bfdcc..2e9d18ba46531 100644
---- a/include/linux/thermal.h
-+++ b/include/linux/thermal.h
-@@ -115,6 +115,7 @@ struct thermal_cooling_device {
-  * @id:		unique id number for each thermal zone
-  * @type:	the thermal zone device type
-  * @device:	&struct device for this thermal zone
-+ * @removal:	removal completion
-  * @trip_temp_attrs:	attributes for trip points for sysfs: trip temperature
-  * @trip_type_attrs:	attributes for trip points for sysfs: trip type
-  * @trip_hyst_attrs:	attributes for trip points for sysfs: trip hysteresis
-@@ -156,6 +157,7 @@ struct thermal_zone_device {
- 	int id;
- 	char type[THERMAL_NAME_LENGTH];
- 	struct device device;
-+	struct completion removal;
- 	struct attribute_group trips_attribute_group;
- 	struct thermal_attr *trip_temp_attrs;
- 	struct thermal_attr *trip_type_attrs;
++static void
++ieee80211_key_iter(struct ieee80211_hw *hw,
++		   struct ieee80211_vif *vif,
++		   struct ieee80211_key *key,
++		   void (*iter)(struct ieee80211_hw *hw,
++				struct ieee80211_vif *vif,
++				struct ieee80211_sta *sta,
++				struct ieee80211_key_conf *key,
++				void *data),
++		   void *iter_data)
++{
++	/* skip keys of station in removal process */
++	if (key->sta && key->sta->removed)
++		return;
++	if (!(key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE))
++		return;
++	iter(hw, vif, key->sta ? &key->sta->sta : NULL,
++	     &key->conf, iter_data);
++}
++
+ void ieee80211_iter_keys(struct ieee80211_hw *hw,
+ 			 struct ieee80211_vif *vif,
+ 			 void (*iter)(struct ieee80211_hw *hw,
+@@ -1008,16 +1028,13 @@ void ieee80211_iter_keys(struct ieee80211_hw *hw,
+ 	if (vif) {
+ 		sdata = vif_to_sdata(vif);
+ 		list_for_each_entry_safe(key, tmp, &sdata->key_list, list)
+-			iter(hw, &sdata->vif,
+-			     key->sta ? &key->sta->sta : NULL,
+-			     &key->conf, iter_data);
++			ieee80211_key_iter(hw, vif, key, iter, iter_data);
+ 	} else {
+ 		list_for_each_entry(sdata, &local->interfaces, list)
+ 			list_for_each_entry_safe(key, tmp,
+ 						 &sdata->key_list, list)
+-				iter(hw, &sdata->vif,
+-				     key->sta ? &key->sta->sta : NULL,
+-				     &key->conf, iter_data);
++				ieee80211_key_iter(hw, &sdata->vif, key,
++						   iter, iter_data);
+ 	}
+ 	mutex_unlock(&local->key_mtx);
+ }
+@@ -1035,17 +1052,8 @@ _ieee80211_iter_keys_rcu(struct ieee80211_hw *hw,
+ {
+ 	struct ieee80211_key *key;
+ 
+-	list_for_each_entry_rcu(key, &sdata->key_list, list) {
+-		/* skip keys of station in removal process */
+-		if (key->sta && key->sta->removed)
+-			continue;
+-		if (!(key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE))
+-			continue;
+-
+-		iter(hw, &sdata->vif,
+-		     key->sta ? &key->sta->sta : NULL,
+-		     &key->conf, iter_data);
+-	}
++	list_for_each_entry_rcu(key, &sdata->key_list, list)
++		ieee80211_key_iter(hw, &sdata->vif, key, iter, iter_data);
+ }
+ 
+ void ieee80211_iter_keys_rcu(struct ieee80211_hw *hw,
 -- 
 2.43.0
 
