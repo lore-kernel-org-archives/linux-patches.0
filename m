@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F297DA7F;
-	Wed,  6 Nov 2024 12:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591217DA7F;
+	Wed,  6 Nov 2024 12:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896361; cv=none; b=PiaMmS2w/dR4D2TdYMjiez25fIukAnkUAZCdL42i+hE2EETsL45EAa1C7UZUhGFvsfZLEnw8VLaVlwNdzoPrn+U/UL4vHkpe5SLY+9O/ADNMeSdwMid84ks7obxBlqhynvE+hyT0fnlf/XBRFOCk83yL8qOygmHTBv0MGl7XoZQ=
+	t=1730896364; cv=none; b=rQ0C21qKn7DVM2k1vZWGHAjp6uIPm+Gr9MTS1o7AERq4WXsCYcfEkhz+1Mcwdgc+/hiXWWIrCgedDMlri/N9B5vv5eEeOMt0QmuZ6Yn/O2K1ndmBg7uwGf+A+gSu+dT3pSW8hJu5xjdMscaDvzeoBUXA90gg970tmN6aZCaw68I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896361; c=relaxed/simple;
-	bh=g9gw8P4YtUt6Jb3hUfIw7pqS0hzCblkIAuiTOZdRdaU=;
+	s=arc-20240116; t=1730896364; c=relaxed/simple;
+	bh=uGZcHt9jdj0G81cu3giiV7ty5ezP5g1ILd9SS04ixsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RpqogDLiX35URKFvR1jajrbb4YMozKCKJJCuECWdlJMzjgxzqB7qiePzbY4QFdI61mWCPZAh9ArU84lblhluqJ6yiir6oIfpis23sCb1ogKTtFrq+6iqgCwP60ddrw/8KzShPuc3lWEy9dfrLWUf+kvgUvoODDlOfDu04SfDRYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O4nX0k38; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QLGrT1oqpwuAoB12DMFK4tN2hh4oj5BJw8Zco5bGmEExd3KMPmk654cD3PoQ/I84CpgNkvj7j+xMwQvDuTlJN/30k1hsLK7pMJcK+zin/73mb92ee+TgE2rbLCH0suUXqT4vchCeWVtHs+5OI8rhwWTbVHMXK6I3XhTzQR9iFn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIwGI8ab; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O4nX0k38"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2545C4CECD;
-	Wed,  6 Nov 2024 12:32:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIwGI8ab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E26C4CECD;
+	Wed,  6 Nov 2024 12:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896361;
-	bh=g9gw8P4YtUt6Jb3hUfIw7pqS0hzCblkIAuiTOZdRdaU=;
+	s=korg; t=1730896364;
+	bh=uGZcHt9jdj0G81cu3giiV7ty5ezP5g1ILd9SS04ixsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O4nX0k38N4Vha/41tulTjpR1COUeyps27nQhvQKiMtrckU+ThA0HcAMfXIN9Mi1QU
-	 TaBxkqQxoNBY7UB+ACqncxV6jVbuiH8QQ0IdIjebEJvffqZg9dFxNJ6NjpYsBdS+Pw
-	 U5bbbqYOPkGZABg3l0l1WY2NFaIeHXv6u1XTRuoc=
+	b=rIwGI8abBQwoAkVFledOWIyFD6QgWMmNyyhsll1CqT5MV7GIyA267zK6t4UKpRNtS
+	 qoQ5y25Tap4NTL7cie0GyWLPpsAEmxdjg9sepWoerbTKYISgfLXfsfjZvXwtbYQ69C
+	 HYTVTCGpCwDOL9r4Fczqtd51kxuM1kQ4zhZuEnhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Fleming <mfleming@cloudflare.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Michal Hocko <mhocko@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Gatlin Newhouse <gatlin.newhouse@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 176/245] mm/page_alloc: let GFP_ATOMIC order-0 allocs access highatomic reserves
-Date: Wed,  6 Nov 2024 13:03:49 +0100
-Message-ID: <20241106120323.570324244@linuxfoundation.org>
+Subject: [PATCH 6.11 177/245] x86/traps: Enable UBSAN traps on x86
+Date: Wed,  6 Nov 2024 13:03:50 +0100
+Message-ID: <20241106120323.594037037@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -54,85 +53,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Fleming <mfleming@cloudflare.com>
+From: Gatlin Newhouse <gatlin.newhouse@gmail.com>
 
-[ Upstream commit 281dd25c1a018261a04d1b8bf41a0674000bfe38 ]
+[ Upstream commit 7424fc6b86c8980a87169e005f5cd4438d18efe6 ]
 
-Under memory pressure it's possible for GFP_ATOMIC order-0 allocations to
-fail even though free pages are available in the highatomic reserves.
-GFP_ATOMIC allocations cannot trigger unreserve_highatomic_pageblock()
-since it's only run from reclaim.
+Currently ARM64 extracts which specific sanitizer has caused a trap via
+encoded data in the trap instruction. Clang on x86 currently encodes the
+same data in the UD1 instruction but x86 handle_bug() and
+is_valid_bugaddr() currently only look at UD2.
 
-Given that such allocations will pass the watermarks in
-__zone_watermark_unusable_free(), it makes sense to fallback to highatomic
-reserves the same way that ALLOC_OOM can.
+Bring x86 to parity with ARM64, similar to commit 25b84002afb9 ("arm64:
+Support Clang UBSAN trap codes for better reporting"). See the llvm
+links for information about the code generation.
 
-This fixes order-0 page allocation failures observed on Cloudflare's fleet
-when handling network packets:
+Enable the reporting of UBSAN sanitizer details on x86 compiled with clang
+when CONFIG_UBSAN_TRAP=y by analysing UD1 and retrieving the type immediate
+which is encoded by the compiler after the UD1.
 
-  kswapd1: page allocation failure: order:0, mode:0x820(GFP_ATOMIC),
-  nodemask=(null),cpuset=/,mems_allowed=0-7
-  CPU: 10 PID: 696 Comm: kswapd1 Kdump: loaded Tainted: G           O 6.6.43-CUSTOM #1
-  Hardware name: MACHINE
-  Call Trace:
-   <IRQ>
-   dump_stack_lvl+0x3c/0x50
-   warn_alloc+0x13a/0x1c0
-   __alloc_pages_slowpath.constprop.0+0xc9d/0xd10
-   __alloc_pages+0x327/0x340
-   __napi_alloc_skb+0x16d/0x1f0
-   bnxt_rx_page_skb+0x96/0x1b0 [bnxt_en]
-   bnxt_rx_pkt+0x201/0x15e0 [bnxt_en]
-   __bnxt_poll_work+0x156/0x2b0 [bnxt_en]
-   bnxt_poll+0xd9/0x1c0 [bnxt_en]
-   __napi_poll+0x2b/0x1b0
-   bpf_trampoline_6442524138+0x7d/0x1000
-   __napi_poll+0x5/0x1b0
-   net_rx_action+0x342/0x740
-   handle_softirqs+0xcf/0x2b0
-   irq_exit_rcu+0x6c/0x90
-   sysvec_apic_timer_interrupt+0x72/0x90
-   </IRQ>
+[ tglx: Simplified it by moving the printk() into handle_bug() ]
 
-[mfleming@cloudflare.com: update comment]
-  Link: https://lkml.kernel.org/r/20241015125158.3597702-1-matt@readmodwrite.com
-Link: https://lkml.kernel.org/r/20241011120737.3300370-1-matt@readmodwrite.com
-Link: https://lore.kernel.org/all/CAGis_TWzSu=P7QJmjD58WWiu3zjMTVKSzdOwWE8ORaGytzWJwQ@mail.gmail.com/
-Fixes: 1d91df85f399 ("mm/page_alloc: handle a missing case for memalloc_nocma_{save/restore} APIs")
-Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
-Suggested-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Gatlin Newhouse <gatlin.newhouse@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/all/20240724000206.451425-1-gatlin.newhouse@gmail.com
+Link: https://github.com/llvm/llvm-project/commit/c5978f42ec8e9#diff-bb68d7cd885f41cfc35843998b0f9f534adb60b415f647109e597ce448e92d9f
+Link: https://github.com/llvm/llvm-project/blob/main/llvm/lib/Target/X86/X86InstrSystem.td#L27
+Stable-dep-of: 1db272864ff2 ("x86/traps: move kmsan check after instrumentation_begin")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/x86/include/asm/bug.h | 12 ++++++++
+ arch/x86/kernel/traps.c    | 59 ++++++++++++++++++++++++++++++++++----
+ include/linux/ubsan.h      |  5 ++++
+ lib/Kconfig.ubsan          |  4 +--
+ 4 files changed, 73 insertions(+), 7 deletions(-)
 
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 91ace8ca97e21..ec459522c2934 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -2874,12 +2874,12 @@ struct page *rmqueue_buddy(struct zone *preferred_zone, struct zone *zone,
- 			page = __rmqueue(zone, order, migratetype, alloc_flags);
+diff --git a/arch/x86/include/asm/bug.h b/arch/x86/include/asm/bug.h
+index a3ec87d198ac8..806649c7f23dc 100644
+--- a/arch/x86/include/asm/bug.h
++++ b/arch/x86/include/asm/bug.h
+@@ -13,6 +13,18 @@
+ #define INSN_UD2	0x0b0f
+ #define LEN_UD2		2
  
- 			/*
--			 * If the allocation fails, allow OOM handling access
--			 * to HIGHATOMIC reserves as failing now is worse than
--			 * failing a high-order atomic allocation in the
--			 * future.
-+			 * If the allocation fails, allow OOM handling and
-+			 * order-0 (atomic) allocs access to HIGHATOMIC
-+			 * reserves as failing now is worse than failing a
-+			 * high-order atomic allocation in the future.
- 			 */
--			if (!page && (alloc_flags & ALLOC_OOM))
-+			if (!page && (alloc_flags & (ALLOC_OOM|ALLOC_NON_BLOCK)))
- 				page = __rmqueue_smallest(zone, order, MIGRATE_HIGHATOMIC);
++/*
++ * In clang we have UD1s reporting UBSAN failures on X86, 64 and 32bit.
++ */
++#define INSN_ASOP		0x67
++#define OPCODE_ESCAPE		0x0f
++#define SECOND_BYTE_OPCODE_UD1	0xb9
++#define SECOND_BYTE_OPCODE_UD2	0x0b
++
++#define BUG_NONE		0xffff
++#define BUG_UD1			0xfffe
++#define BUG_UD2			0xfffd
++
+ #ifdef CONFIG_GENERIC_BUG
  
- 			if (!page) {
+ #ifdef CONFIG_X86_32
+diff --git a/arch/x86/kernel/traps.c b/arch/x86/kernel/traps.c
+index 4fa0b17e5043a..415881607c5df 100644
+--- a/arch/x86/kernel/traps.c
++++ b/arch/x86/kernel/traps.c
+@@ -42,6 +42,7 @@
+ #include <linux/hardirq.h>
+ #include <linux/atomic.h>
+ #include <linux/iommu.h>
++#include <linux/ubsan.h>
+ 
+ #include <asm/stacktrace.h>
+ #include <asm/processor.h>
+@@ -91,6 +92,47 @@ __always_inline int is_valid_bugaddr(unsigned long addr)
+ 	return *(unsigned short *)addr == INSN_UD2;
+ }
+ 
++/*
++ * Check for UD1 or UD2, accounting for Address Size Override Prefixes.
++ * If it's a UD1, get the ModRM byte to pass along to UBSan.
++ */
++__always_inline int decode_bug(unsigned long addr, u32 *imm)
++{
++	u8 v;
++
++	if (addr < TASK_SIZE_MAX)
++		return BUG_NONE;
++
++	v = *(u8 *)(addr++);
++	if (v == INSN_ASOP)
++		v = *(u8 *)(addr++);
++	if (v != OPCODE_ESCAPE)
++		return BUG_NONE;
++
++	v = *(u8 *)(addr++);
++	if (v == SECOND_BYTE_OPCODE_UD2)
++		return BUG_UD2;
++
++	if (!IS_ENABLED(CONFIG_UBSAN_TRAP) || v != SECOND_BYTE_OPCODE_UD1)
++		return BUG_NONE;
++
++	/* Retrieve the immediate (type value) for the UBSAN UD1 */
++	v = *(u8 *)(addr++);
++	if (X86_MODRM_RM(v) == 4)
++		addr++;
++
++	*imm = 0;
++	if (X86_MODRM_MOD(v) == 1)
++		*imm = *(u8 *)addr;
++	else if (X86_MODRM_MOD(v) == 2)
++		*imm = *(u32 *)addr;
++	else
++		WARN_ONCE(1, "Unexpected MODRM_MOD: %u\n", X86_MODRM_MOD(v));
++
++	return BUG_UD1;
++}
++
++
+ static nokprobe_inline int
+ do_trap_no_signal(struct task_struct *tsk, int trapnr, const char *str,
+ 		  struct pt_regs *regs,	long error_code)
+@@ -216,6 +258,8 @@ static inline void handle_invalid_op(struct pt_regs *regs)
+ static noinstr bool handle_bug(struct pt_regs *regs)
+ {
+ 	bool handled = false;
++	int ud_type;
++	u32 imm;
+ 
+ 	/*
+ 	 * Normally @regs are unpoisoned by irqentry_enter(), but handle_bug()
+@@ -223,7 +267,8 @@ static noinstr bool handle_bug(struct pt_regs *regs)
+ 	 * irqentry_enter().
+ 	 */
+ 	kmsan_unpoison_entry_regs(regs);
+-	if (!is_valid_bugaddr(regs->ip))
++	ud_type = decode_bug(regs->ip, &imm);
++	if (ud_type == BUG_NONE)
+ 		return handled;
+ 
+ 	/*
+@@ -236,10 +281,14 @@ static noinstr bool handle_bug(struct pt_regs *regs)
+ 	 */
+ 	if (regs->flags & X86_EFLAGS_IF)
+ 		raw_local_irq_enable();
+-	if (report_bug(regs->ip, regs) == BUG_TRAP_TYPE_WARN ||
+-	    handle_cfi_failure(regs) == BUG_TRAP_TYPE_WARN) {
+-		regs->ip += LEN_UD2;
+-		handled = true;
++	if (ud_type == BUG_UD2) {
++		if (report_bug(regs->ip, regs) == BUG_TRAP_TYPE_WARN ||
++		    handle_cfi_failure(regs) == BUG_TRAP_TYPE_WARN) {
++			regs->ip += LEN_UD2;
++			handled = true;
++		}
++	} else if (IS_ENABLED(CONFIG_UBSAN_TRAP)) {
++		pr_crit("%s at %pS\n", report_ubsan_failure(regs, imm), (void *)regs->ip);
+ 	}
+ 	if (regs->flags & X86_EFLAGS_IF)
+ 		raw_local_irq_disable();
+diff --git a/include/linux/ubsan.h b/include/linux/ubsan.h
+index bff7445498ded..d8219cbe09ff8 100644
+--- a/include/linux/ubsan.h
++++ b/include/linux/ubsan.h
+@@ -4,6 +4,11 @@
+ 
+ #ifdef CONFIG_UBSAN_TRAP
+ const char *report_ubsan_failure(struct pt_regs *regs, u32 check_type);
++#else
++static inline const char *report_ubsan_failure(struct pt_regs *regs, u32 check_type)
++{
++	return NULL;
++}
+ #endif
+ 
+ #endif
+diff --git a/lib/Kconfig.ubsan b/lib/Kconfig.ubsan
+index bdda600f8dfbe..1d4aa7a83b3a5 100644
+--- a/lib/Kconfig.ubsan
++++ b/lib/Kconfig.ubsan
+@@ -29,8 +29,8 @@ config UBSAN_TRAP
+ 
+ 	  Also note that selecting Y will cause your kernel to Oops
+ 	  with an "illegal instruction" error with no further details
+-	  when a UBSAN violation occurs. (Except on arm64, which will
+-	  report which Sanitizer failed.) This may make it hard to
++	  when a UBSAN violation occurs. (Except on arm64 and x86, which
++	  will report which Sanitizer failed.) This may make it hard to
+ 	  determine whether an Oops was caused by UBSAN or to figure
+ 	  out the details of a UBSAN violation. It makes the kernel log
+ 	  output less useful for bug reports.
 -- 
 2.43.0
 
