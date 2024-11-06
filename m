@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24855171C9;
-	Wed,  6 Nov 2024 12:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90F61DE3B8;
+	Wed,  6 Nov 2024 12:31:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896316; cv=none; b=t1DLJX/6II8WZEsHCnQqQyh7ZukcX5taWHa4NJjg88TBprmIEJ9FcI2BKvFYmKxEiWUR/JI2U0XHPYqIi9vW3QkcA/AwLizEDHcG9ddtJLSRQ1ptuDlk49eMBeLm8WTno+NlFfBwQ9PevvF1VU2wZB00VoA/jxxdrW1o+8rlfHA=
+	t=1730896318; cv=none; b=asop3O1q6ic5X/3atqmZpm1F1Gj7CuqO2nnSEN/kj0BQw3xKXgfU5iw9/Np08sMKM2rcRvvBzksiSINguPBx/ktIYbqZzXZ0M32h7yH0JkH23YPcDueWkxQOyZu6DWhnGRYcIU0vU6+50HHqcPdCh8qbSN0rexYAOjN1RiIxlcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896316; c=relaxed/simple;
-	bh=gna4QCP5O/0HWCtHsoFYRuNWJvpFevwwoxnkvaywOxs=;
+	s=arc-20240116; t=1730896318; c=relaxed/simple;
+	bh=hROys7sl4KMGKt1GuuyyHmTEtQ3lBRqPBiRNilE73I4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zn/3VIudZYNa5vatoceJOOi+a7lOkJCzlzpah66M1CahbDtYN8BS0J2WSAevxt+ju6TAzjqcw5V1DxHpZrp8q+TvI2i2OUDlGWNATWEqgdeByzjLcK1V6vTgLOGkCSWv7+5qtpv7Vc2koVPyQDL4V8jikr8z0GoWbmGJT8wuTyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vq0NS2sg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cvcqORv026+kU/G/44P7/eJCauwK33AJLN44FuzscozwniPUCwFxjzbe1YQy+BWWFbq18km0JIDHnXm4M3DvZKj4kjNOlcvYvIlM4+u4OVNF64jbaXYbj799q9xxkdizQ8u2os9zTFHvOnviQVxKVQ4+aIbVD3GZskWt97U6ZlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7oSzN4I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vq0NS2sg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55236C4CED3;
-	Wed,  6 Nov 2024 12:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7oSzN4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E06AC4CECD;
+	Wed,  6 Nov 2024 12:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896315;
-	bh=gna4QCP5O/0HWCtHsoFYRuNWJvpFevwwoxnkvaywOxs=;
+	s=korg; t=1730896318;
+	bh=hROys7sl4KMGKt1GuuyyHmTEtQ3lBRqPBiRNilE73I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vq0NS2sgbNA9b49N2zWB7Dj8WwgXtZrckvH2mmQ7tAaTo8HLIMvtIAxpeeLQ66Jsm
-	 8s7f/i5jkxSn/b2AIlN84xjbFXjaoeZkeLtsNFIFmxPns/Rd3dUvUOqhA2Ml/RwyQ8
-	 Fq9AbgguEujlSmQoYmgxjVRdxsXPUsSQJfVetERs=
+	b=t7oSzN4IwItbXoK3J7yGmN6xn7QZyFrf3om4tIPb9CssZqaxP3+2fKlkITgdhX2Uy
+	 IX6g26wMqRfiWPrVmq/Fg15PTHX7a+CmElwo4N634le2goymI9vQeWpu+5WPA/0p8o
+	 YPnul6VqBciYhdvYz038kW0/5p5o9oz+SKtiYot4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faisal Hassan <quic_faisalh@quicinc.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.11 116/245] xhci: Fix Link TRB DMA in command ring stopped completion event
-Date: Wed,  6 Nov 2024 13:02:49 +0100
-Message-ID: <20241106120322.074365461@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 156/245] riscv: efi: Set NX compat flag in PE/COFF header
+Date: Wed,  6 Nov 2024 13:03:29 +0100
+Message-ID: <20241106120323.070242201@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -50,64 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Faisal Hassan <quic_faisalh@quicinc.com>
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-commit 075919f6df5dd82ad0b1894898b315fbb3c29b84 upstream.
+[ Upstream commit d41373a4b910961df5a5e3527d7bde6ad45ca438 ]
 
-During the aborting of a command, the software receives a command
-completion event for the command ring stopped, with the TRB pointing
-to the next TRB after the aborted command.
+The IMAGE_DLLCHARACTERISTICS_NX_COMPAT informs the firmware that the
+EFI binary does not rely on pages that are both executable and
+writable.
 
-If the command we abort is located just before the Link TRB in the
-command ring, then during the 'command ring stopped' completion event,
-the xHC gives the Link TRB in the event's cmd DMA, which causes a
-mismatch in handling command completion event.
+The flag is used by some distro versions of GRUB to decide if the EFI
+binary may be executed.
 
-To address this situation, move the 'command ring stopped' completion
-event check slightly earlier, since the specific command it stopped
-on isn't of significant concern.
+As the Linux kernel neither has RWX sections nor needs RWX pages for
+relocation we should set the flag.
 
-Fixes: 7f84eef0dafb ("USB: xhci: No-op command queueing and irq handler.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Faisal Hassan <quic_faisalh@quicinc.com>
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20241022155631.1185-1-quic_faisalh@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Reviewed-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Fixes: cb7d2dd5612a ("RISC-V: Add PE/COFF header for EFI stub")
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20240929140233.211800-1-heinrich.schuchardt@canonical.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ arch/riscv/kernel/efi-header.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1718,6 +1718,14 @@ static void handle_cmd_completion(struct
- 
- 	trace_xhci_handle_command(xhci->cmd_ring, &cmd_trb->generic);
- 
-+	cmd_comp_code = GET_COMP_CODE(le32_to_cpu(event->status));
-+
-+	/* If CMD ring stopped we own the trbs between enqueue and dequeue */
-+	if (cmd_comp_code == COMP_COMMAND_RING_STOPPED) {
-+		complete_all(&xhci->cmd_ring_stop_completion);
-+		return;
-+	}
-+
- 	cmd_dequeue_dma = xhci_trb_virt_to_dma(xhci->cmd_ring->deq_seg,
- 			cmd_trb);
- 	/*
-@@ -1734,14 +1742,6 @@ static void handle_cmd_completion(struct
- 
- 	cancel_delayed_work(&xhci->cmd_timer);
- 
--	cmd_comp_code = GET_COMP_CODE(le32_to_cpu(event->status));
--
--	/* If CMD ring stopped we own the trbs between enqueue and dequeue */
--	if (cmd_comp_code == COMP_COMMAND_RING_STOPPED) {
--		complete_all(&xhci->cmd_ring_stop_completion);
--		return;
--	}
--
- 	if (cmd->command_trb != xhci->cmd_ring->dequeue) {
- 		xhci_err(xhci,
- 			 "Command completion event does not match command\n");
+diff --git a/arch/riscv/kernel/efi-header.S b/arch/riscv/kernel/efi-header.S
+index 515b2dfbca75b..c5f17c2710b58 100644
+--- a/arch/riscv/kernel/efi-header.S
++++ b/arch/riscv/kernel/efi-header.S
+@@ -64,7 +64,7 @@ extra_header_fields:
+ 	.long	efi_header_end - _start			// SizeOfHeaders
+ 	.long	0					// CheckSum
+ 	.short	IMAGE_SUBSYSTEM_EFI_APPLICATION		// Subsystem
+-	.short	0					// DllCharacteristics
++	.short	IMAGE_DLL_CHARACTERISTICS_NX_COMPAT	// DllCharacteristics
+ 	.quad	0					// SizeOfStackReserve
+ 	.quad	0					// SizeOfStackCommit
+ 	.quad	0					// SizeOfHeapReserve
+-- 
+2.43.0
+
 
 
