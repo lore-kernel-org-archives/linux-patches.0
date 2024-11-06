@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEBF1DFE35;
-	Wed,  6 Nov 2024 13:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7AA1E0E1F;
+	Wed,  6 Nov 2024 13:13:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898814; cv=none; b=nnEh5gssLgejFqN1R+uGxm64elgHQjq3WmBut0/HXjqfMaK/vHvllh8g5F6NhJr1wyHVwF73GL3DjVKiw9c8tOC3vo5vaxEW441WrUZvH1HkTqRRl0uXLHpZ/1sKVN3Sh07a/9t2AyS3maEeRv3yssgsVtQFGmTcjez3zkKAMPs=
+	t=1730898816; cv=none; b=Ps/ttySlwBUHY2flnhNfdIZYHmfYPF3T/BXATUZvesuOxMIdRrWnJU+tHqxRWo3vY1vwg01aJEClCa/CFpr7Kr+Qk/WTpnxhdATqwODsDMAv+mCt4xEgMcHCpmOkzYLiIlkkIBrwRmtoyAp3ildbf3aHWDDNVoKAYMfiqmg9Pdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898814; c=relaxed/simple;
-	bh=TRAf+4oOHzftquO8F9MCdbUkzz23+J9tTdBZZ/9EQ8A=;
+	s=arc-20240116; t=1730898816; c=relaxed/simple;
+	bh=LTEjF+i/RnyN4k/8+8SPGLPLNRgcEyWWDNdU77zbk4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3WT1MDR4k69oNsxwYKFyJgkiJ2oMbtePQVB28JXUKm0pINLVGqAKMQpM7wEzoiF1rUZVFaMj97YjErEe/nQWbrwD/3a1Ds8d2IGUoZr6TKmwzmAF6CEwlk3J7u1neCDR6uO8r2AQJzhWzURRjtkhjJVw0gRH7jiG8ILQa/3OKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YgD/HHVU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EzAPfUyFMaV9SJ3oZJALIpLypW63rr1u2EMSTriDRHBcQQ8pqh7F+BmcnfCoDKmmHJ1TSAo4Z8g7t+RgFFZQgFf0SVBdDVxpGqQRaxzf3S1+y62ATqDi1BWTn4P2m5laWF0iFMOWpgGerlZQuQP3OTBHcpHJwh7rDmX1z9BiOm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocW3dtIF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YgD/HHVU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFD3C4CECD;
-	Wed,  6 Nov 2024 13:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocW3dtIF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432BDC4CECD;
+	Wed,  6 Nov 2024 13:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898813;
-	bh=TRAf+4oOHzftquO8F9MCdbUkzz23+J9tTdBZZ/9EQ8A=;
+	s=korg; t=1730898816;
+	bh=LTEjF+i/RnyN4k/8+8SPGLPLNRgcEyWWDNdU77zbk4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YgD/HHVUItprqeKaUDycOQizx7OdwebsLWl0psnH0ovSZDF606Z4KY5Z6jHRHNlZH
-	 i4z5tC4j6tkXFEygHVOwQGzVC6N+4/shaomIIl31Q/nl6Ndly+iLakMBvda/huWrU7
-	 5TyZjbcgSA2XaRiIKeRdmZqIBWp8ELWFdCLafi3k=
+	b=ocW3dtIFg/kc4qfmrdT+exOhDjEUWSO9gks666S092h41zzo7tig+jN4SlCXokWtF
+	 5KwVcTfo8EX3J8tQ5fpTgImNuryLW2DrLsdi1Ga3pOVaCiu1LK5K5A4pnDhBwcuh6/
+	 1g1gxstZeOU5OwwNzQjUzUPK4aOyNT39ckSfXi14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkatesh Srinivas <venkateshs@chromium.org>,
-	Jim Mattson <jmattson@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	stable@kernel.org
-Subject: [PATCH 5.4 364/462] x86/cpufeatures: Define X86_FEATURE_AMD_IBPB_RET
-Date: Wed,  6 Nov 2024 13:04:17 +0100
-Message-ID: <20241106120340.519624591@linuxfoundation.org>
+	Omar Sandoval <osandov@fb.com>,
+	Tejun Heo <tj@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.4 365/462] blk-rq-qos: fix crash on rq_qos_wait vs. rq_qos_wake_function race
+Date: Wed,  6 Nov 2024 13:04:18 +0100
+Message-ID: <20241106120340.545175327@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -54,46 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jim Mattson <jmattson@google.com>
+From: Omar Sandoval <osandov@fb.com>
 
-commit ff898623af2ed564300752bba83a680a1e4fec8d upstream.
+commit e972b08b91ef48488bae9789f03cfedb148667fb upstream.
 
-AMD's initial implementation of IBPB did not clear the return address
-predictor. Beginning with Zen4, AMD's IBPB *does* clear the return address
-predictor. This behavior is enumerated by CPUID.80000008H:EBX.IBPB_RET[30].
+We're seeing crashes from rq_qos_wake_function that look like this:
 
-Define X86_FEATURE_AMD_IBPB_RET for use in KVM_GET_SUPPORTED_CPUID,
-when determining cross-vendor capabilities.
+  BUG: unable to handle page fault for address: ffffafe180a40084
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  PGD 100000067 P4D 100000067 PUD 10027c067 PMD 10115d067 PTE 0
+  Oops: Oops: 0002 [#1] PREEMPT SMP PTI
+  CPU: 17 UID: 0 PID: 0 Comm: swapper/17 Not tainted 6.12.0-rc3-00013-geca631b8fe80 #11
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+  RIP: 0010:_raw_spin_lock_irqsave+0x1d/0x40
+  Code: 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa 0f 1f 44 00 00 41 54 9c 41 5c fa 65 ff 05 62 97 30 4c 31 c0 ba 01 00 00 00 <f0> 0f b1 17 75 0a 4c 89 e0 41 5c c3 cc cc cc cc 89 c6 e8 2c 0b 00
+  RSP: 0018:ffffafe180580ca0 EFLAGS: 00010046
+  RAX: 0000000000000000 RBX: ffffafe180a3f7a8 RCX: 0000000000000011
+  RDX: 0000000000000001 RSI: 0000000000000003 RDI: ffffafe180a40084
+  RBP: 0000000000000000 R08: 00000000001e7240 R09: 0000000000000011
+  R10: 0000000000000028 R11: 0000000000000888 R12: 0000000000000002
+  R13: ffffafe180a40084 R14: 0000000000000000 R15: 0000000000000003
+  FS:  0000000000000000(0000) GS:ffff9aaf1f280000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: ffffafe180a40084 CR3: 000000010e428002 CR4: 0000000000770ef0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  PKRU: 55555554
+  Call Trace:
+   <IRQ>
+   try_to_wake_up+0x5a/0x6a0
+   rq_qos_wake_function+0x71/0x80
+   __wake_up_common+0x75/0xa0
+   __wake_up+0x36/0x60
+   scale_up.part.0+0x50/0x110
+   wb_timer_fn+0x227/0x450
+   ...
 
-Suggested-by: Venkatesh Srinivas <venkateshs@chromium.org>
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: <stable@kernel.org>
+So rq_qos_wake_function() calls wake_up_process(data->task), which calls
+try_to_wake_up(), which faults in raw_spin_lock_irqsave(&p->pi_lock).
+
+p comes from data->task, and data comes from the waitqueue entry, which
+is stored on the waiter's stack in rq_qos_wait(). Analyzing the core
+dump with drgn, I found that the waiter had already woken up and moved
+on to a completely unrelated code path, clobbering what was previously
+data->task. Meanwhile, the waker was passing the clobbered garbage in
+data->task to wake_up_process(), leading to the crash.
+
+What's happening is that in between rq_qos_wake_function() deleting the
+waitqueue entry and calling wake_up_process(), rq_qos_wait() is finding
+that it already got a token and returning. The race looks like this:
+
+rq_qos_wait()                           rq_qos_wake_function()
+==============================================================
+prepare_to_wait_exclusive()
+                                        data->got_token = true;
+                                        list_del_init(&curr->entry);
+if (data.got_token)
+        break;
+finish_wait(&rqw->wait, &data.wq);
+  ^- returns immediately because
+     list_empty_careful(&wq_entry->entry)
+     is true
+... return, go do something else ...
+                                        wake_up_process(data->task)
+                                          (NO LONGER VALID!)-^
+
+Normally, finish_wait() is supposed to synchronize against the waker.
+But, as noted above, it is returning immediately because the waitqueue
+entry has already been removed from the waitqueue.
+
+The bug is that rq_qos_wake_function() is accessing the waitqueue entry
+AFTER deleting it. Note that autoremove_wake_function() wakes the waiter
+and THEN deletes the waitqueue entry, which is the proper order.
+
+Fix it by swapping the order. We also need to use
+list_del_init_careful() to match the list_empty_careful() in
+finish_wait().
+
+Fixes: 38cfb5a45ee0 ("blk-wbt: improve waking of tasks")
+Cc: stable@vger.kernel.org
+Signed-off-by: Omar Sandoval <osandov@fb.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/d3bee2463a67b1ee597211823bf7ad3721c26e41.1729014591.git.osandov@fb.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/cpufeatures.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ block/blk-rq-qos.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/cpufeatures.h
-+++ b/arch/x86/include/asm/cpufeatures.h
-@@ -217,7 +217,7 @@
- #define X86_FEATURE_SPEC_STORE_BYPASS_DISABLE	( 7*32+23) /* "" Disable Speculative Store Bypass. */
- #define X86_FEATURE_LS_CFG_SSBD		( 7*32+24)  /* "" AMD SSBD implementation via LS_CFG MSR */
- #define X86_FEATURE_IBRS		( 7*32+25) /* Indirect Branch Restricted Speculation */
--#define X86_FEATURE_IBPB		( 7*32+26) /* Indirect Branch Prediction Barrier */
-+#define X86_FEATURE_IBPB		( 7*32+26) /* "ibpb" Indirect Branch Prediction Barrier without a guaranteed RSB flush */
- #define X86_FEATURE_STIBP		( 7*32+27) /* Single Thread Indirect Branch Predictors */
- #define X86_FEATURE_ZEN			( 7*32+28) /* "" CPU is AMD family 0x17 (Zen) */
- #define X86_FEATURE_L1TF_PTEINV		( 7*32+29) /* "" L1TF workaround PTE inversion */
-@@ -308,6 +308,7 @@
- #define X86_FEATURE_VIRT_SSBD		(13*32+25) /* Virtualized Speculative Store Bypass Disable */
- #define X86_FEATURE_AMD_SSB_NO		(13*32+26) /* "" Speculative Store Bypass is fixed in hardware. */
- #define X86_FEATURE_BTC_NO		(13*32+29) /* "" Not vulnerable to Branch Type Confusion */
-+#define X86_FEATURE_AMD_IBPB_RET	(13*32+30) /* "" IBPB clears return address predictor */
+--- a/block/blk-rq-qos.c
++++ b/block/blk-rq-qos.c
+@@ -225,8 +225,8 @@ static int rq_qos_wake_function(struct w
  
- /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX), word 14 */
- #define X86_FEATURE_DTHERM		(14*32+ 0) /* Digital Thermal Sensor */
+ 	data->got_token = true;
+ 	smp_wmb();
+-	list_del_init(&curr->entry);
+ 	wake_up_process(data->task);
++	list_del_init_careful(&curr->entry);
+ 	return 1;
+ }
+ 
 
 
