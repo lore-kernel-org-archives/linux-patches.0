@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F11B1F7544;
-	Wed,  6 Nov 2024 13:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEEC1EF95B;
+	Wed,  6 Nov 2024 13:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898272; cv=none; b=lVPdlNwYJToIMHuyb+6dh77Ov6QA7WcCWRzHyWx3rAgXBUNCAEErvH8UV+VYwOH4qJQm11DFP4AkjpSECYGmRJ28Agz1xyGEGmKSWaE5YzoHSyOJKrfPF+wzz9RGSwOk/8C66YN4yZ1cOJ7MDIV+JqYzNGfZ9FbrwUipK7p611A=
+	t=1730898275; cv=none; b=BWqYxwXCWNbpZ0XD+2a/NjfACp+RvMyTjKI7Hq89ILSD0d63seYfMFfhEhR3AwEvIsNY0BuWcq68jfW4BL7qs9pqahUEqbicK/oiZVnTMmnq1HzoXAiIEmPaYwATlg6VFPSEX9yDIIlV2RlYy/HEDhEDS/FrgTn1gxnKW+DIRHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898272; c=relaxed/simple;
-	bh=qtbkfxOkquK1cDACGTm8BlaYgGRJwHWUAzaPBKjuzmA=;
+	s=arc-20240116; t=1730898275; c=relaxed/simple;
+	bh=heZWE+jXmcxCRBnOpujdTPjJXtipIj/jMytCVZTt6pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipzvaIZKqILgNe3jOtF5rxicDBwxwR3/MHNRJXOmNFP8X1MUb/x9Q8v9rPf1akjqD1lyCT/b/iGv2gCR5hv3uTaq5jRLcHccmZJiF9ocF/ejOccYGGL4/rFwAcvu7/asrK19aZA7uS8CzHGLyacvMAc7oHAHKAe66YneJM/m8Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFmy44FM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Loz0zzX6ljEwo6Ms/pvn0AngjbEWuk0RELAxn/mJTrDox8L6lqYKG3+ObqM6DLBNkrLDon3RWygJpQyeCXWMO33JCIs20QYNHtaeav0tuMVEI//YwqzOJTXlnsIolbZmIXmnOprOPxBhs1QfWBaFnqTMTKcFTIyXWKSp26rrx48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGWi+lPT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFmy44FM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4DA8C4CECD;
-	Wed,  6 Nov 2024 13:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGWi+lPT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C828C4CECD;
+	Wed,  6 Nov 2024 13:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898272;
-	bh=qtbkfxOkquK1cDACGTm8BlaYgGRJwHWUAzaPBKjuzmA=;
+	s=korg; t=1730898275;
+	bh=heZWE+jXmcxCRBnOpujdTPjJXtipIj/jMytCVZTt6pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lFmy44FMMI50NiIjLvdH32Y9zc1TbJ8VkJ7r4S2nBR19bEikM19jIek+ieyh5PWLd
-	 8AK8FpVw6JZjjXgpg9PwqupY6RkZ5P3IjKD72ezvAFbs7jNwX8PDD//CR36OCoD36r
-	 6/fLQE6Virg8UykXv0FJcWr2kgPnmh+E1mEprtcw=
+	b=jGWi+lPT7dbbxHKfS+pg2VORoZz0PadRn0hGTh+M5kIe3N1HsWlBEiVI8w0jAhtub
+	 0flkbllCAuvcASwq1fmsQypCBYmTEENLFBqjP9sECWObJ/h7Sccv5LwgvEl9kGbQSC
+	 3WnT9y1TRvl0ptnFiL08Fpts526Nqw2D/l/MU3dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 181/462] net: ieee802154: mcr20a: Use IRQF_NO_AUTOEN flag in request_irq()
-Date: Wed,  6 Nov 2024 13:01:14 +0100
-Message-ID: <20241106120335.987756331@linuxfoundation.org>
+Subject: [PATCH 5.4 182/462] netfilter: nf_tables: prevent nf_skb_duplicated corruption
+Date: Wed,  6 Nov 2024 13:01:15 +0100
+Message-ID: <20241106120336.012709855@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,46 +52,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 09573b1cc76e7ff8f056ab29ea1cdc152ec8c653 ]
+[ Upstream commit 92ceba94de6fb4cee2bf40b485979c342f44a492 ]
 
-disable_irq() after request_irq() still has a time gap in which
-interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-disable IRQ auto-enable when request IRQ.
+syzbot found that nf_dup_ipv4() or nf_dup_ipv6() could write
+per-cpu variable nf_skb_duplicated in an unsafe way [1].
 
-Fixes: 8c6ad9cc5157 ("ieee802154: Add NXP MCR20A IEEE 802.15.4 transceiver driver")
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/20240911094234.1922418-1-ruanjinjie@huawei.com
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+Disabling preemption as hinted by the splat is not enough,
+we have to disable soft interrupts as well.
+
+[1]
+BUG: using __this_cpu_write() in preemptible [00000000] code: syz.4.282/6316
+ caller is nf_dup_ipv4+0x651/0x8f0 net/ipv4/netfilter/nf_dup_ipv4.c:87
+CPU: 0 UID: 0 PID: 6316 Comm: syz.4.282 Not tainted 6.11.0-rc7-syzkaller-00104-g7052622fccb1 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:93 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:119
+  check_preemption_disabled+0x10e/0x120 lib/smp_processor_id.c:49
+  nf_dup_ipv4+0x651/0x8f0 net/ipv4/netfilter/nf_dup_ipv4.c:87
+  nft_dup_ipv4_eval+0x1db/0x300 net/ipv4/netfilter/nft_dup_ipv4.c:30
+  expr_call_ops_eval net/netfilter/nf_tables_core.c:240 [inline]
+  nft_do_chain+0x4ad/0x1da0 net/netfilter/nf_tables_core.c:288
+  nft_do_chain_ipv4+0x202/0x320 net/netfilter/nft_chain_filter.c:23
+  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+  nf_hook_slow+0xc3/0x220 net/netfilter/core.c:626
+  nf_hook+0x2c4/0x450 include/linux/netfilter.h:269
+  NF_HOOK_COND include/linux/netfilter.h:302 [inline]
+  ip_output+0x185/0x230 net/ipv4/ip_output.c:433
+  ip_local_out net/ipv4/ip_output.c:129 [inline]
+  ip_send_skb+0x74/0x100 net/ipv4/ip_output.c:1495
+  udp_send_skb+0xacf/0x1650 net/ipv4/udp.c:981
+  udp_sendmsg+0x1c21/0x2a60 net/ipv4/udp.c:1269
+  sock_sendmsg_nosec net/socket.c:730 [inline]
+  __sock_sendmsg+0x1a6/0x270 net/socket.c:745
+  ____sys_sendmsg+0x525/0x7d0 net/socket.c:2597
+  ___sys_sendmsg net/socket.c:2651 [inline]
+  __sys_sendmmsg+0x3b2/0x740 net/socket.c:2737
+  __do_sys_sendmmsg net/socket.c:2766 [inline]
+  __se_sys_sendmmsg net/socket.c:2763 [inline]
+  __x64_sys_sendmmsg+0xa0/0xb0 net/socket.c:2763
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f4ce4f7def9
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f4ce5d4a038 EFLAGS: 00000246 ORIG_RAX: 0000000000000133
+RAX: ffffffffffffffda RBX: 00007f4ce5135f80 RCX: 00007f4ce4f7def9
+RDX: 0000000000000001 RSI: 0000000020005d40 RDI: 0000000000000006
+RBP: 00007f4ce4ff0b76 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 00007f4ce5135f80 R15: 00007ffd4cbc6d68
+ </TASK>
+
+Fixes: d877f07112f1 ("netfilter: nf_tables: add nft_dup expression")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/mcr20a.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/ipv4/netfilter/nf_dup_ipv4.c | 7 +++++--
+ net/ipv6/netfilter/nf_dup_ipv6.c | 7 +++++--
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ieee802154/mcr20a.c b/drivers/net/ieee802154/mcr20a.c
-index 383231b854642..16474990dc01e 100644
---- a/drivers/net/ieee802154/mcr20a.c
-+++ b/drivers/net/ieee802154/mcr20a.c
-@@ -1311,16 +1311,13 @@ mcr20a_probe(struct spi_device *spi)
- 		irq_type = IRQF_TRIGGER_FALLING;
+diff --git a/net/ipv4/netfilter/nf_dup_ipv4.c b/net/ipv4/netfilter/nf_dup_ipv4.c
+index 6cc5743c553a0..9a21175693db5 100644
+--- a/net/ipv4/netfilter/nf_dup_ipv4.c
++++ b/net/ipv4/netfilter/nf_dup_ipv4.c
+@@ -52,8 +52,9 @@ void nf_dup_ipv4(struct net *net, struct sk_buff *skb, unsigned int hooknum,
+ {
+ 	struct iphdr *iph;
  
- 	ret = devm_request_irq(&spi->dev, spi->irq, mcr20a_irq_isr,
--			       irq_type, dev_name(&spi->dev), lp);
-+			       irq_type | IRQF_NO_AUTOEN, dev_name(&spi->dev), lp);
- 	if (ret) {
- 		dev_err(&spi->dev, "could not request_irq for mcr20a\n");
- 		ret = -ENODEV;
- 		goto free_dev;
++	local_bh_disable();
+ 	if (this_cpu_read(nf_skb_duplicated))
+-		return;
++		goto out;
+ 	/*
+ 	 * Copy the skb, and route the copy. Will later return %XT_CONTINUE for
+ 	 * the original skb, which should continue on its way as if nothing has
+@@ -61,7 +62,7 @@ void nf_dup_ipv4(struct net *net, struct sk_buff *skb, unsigned int hooknum,
+ 	 */
+ 	skb = pskb_copy(skb, GFP_ATOMIC);
+ 	if (skb == NULL)
+-		return;
++		goto out;
+ 
+ #if IS_ENABLED(CONFIG_NF_CONNTRACK)
+ 	/* Avoid counting cloned packets towards the original connection. */
+@@ -90,6 +91,8 @@ void nf_dup_ipv4(struct net *net, struct sk_buff *skb, unsigned int hooknum,
+ 	} else {
+ 		kfree_skb(skb);
  	}
++out:
++	local_bh_enable();
+ }
+ EXPORT_SYMBOL_GPL(nf_dup_ipv4);
  
--	/* disable_irq by default and wait for starting hardware */
--	disable_irq(spi->irq);
--
- 	ret = ieee802154_register_hw(hw);
- 	if (ret) {
- 		dev_crit(&spi->dev, "ieee802154_register_hw failed\n");
+diff --git a/net/ipv6/netfilter/nf_dup_ipv6.c b/net/ipv6/netfilter/nf_dup_ipv6.c
+index a0a2de30be3e7..0c39c77fe8a8a 100644
+--- a/net/ipv6/netfilter/nf_dup_ipv6.c
++++ b/net/ipv6/netfilter/nf_dup_ipv6.c
+@@ -47,11 +47,12 @@ static bool nf_dup_ipv6_route(struct net *net, struct sk_buff *skb,
+ void nf_dup_ipv6(struct net *net, struct sk_buff *skb, unsigned int hooknum,
+ 		 const struct in6_addr *gw, int oif)
+ {
++	local_bh_disable();
+ 	if (this_cpu_read(nf_skb_duplicated))
+-		return;
++		goto out;
+ 	skb = pskb_copy(skb, GFP_ATOMIC);
+ 	if (skb == NULL)
+-		return;
++		goto out;
+ 
+ #if IS_ENABLED(CONFIG_NF_CONNTRACK)
+ 	nf_reset_ct(skb);
+@@ -69,6 +70,8 @@ void nf_dup_ipv6(struct net *net, struct sk_buff *skb, unsigned int hooknum,
+ 	} else {
+ 		kfree_skb(skb);
+ 	}
++out:
++	local_bh_enable();
+ }
+ EXPORT_SYMBOL_GPL(nf_dup_ipv6);
+ 
 -- 
 2.43.0
 
