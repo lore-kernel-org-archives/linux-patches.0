@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E871D2784;
-	Wed,  6 Nov 2024 12:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79A91DED58;
+	Wed,  6 Nov 2024 12:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896021; cv=none; b=nEUWcMbj6zSBUyXfNVHWwEUvoXYvBXtpFhlE3eeyfTweVv1Zhti+GPOIRNnI79PY54ztjYTFrcbhtBd3WqOww0p54isERgQEHu8MujKRR8E8tNDA7srIwyLnbl2NPYL3IMxjwXU1jsSxSfiWvoWIBQ8qRhrmejrg/EdClfNNImQ=
+	t=1730896024; cv=none; b=sjbZbR8ZfzW+dXnA1+bsYhsBZH5wuV1dv3JflRk9XGobwaXLIe8xOkEYDrbQSag5C8bTbb2Fd31MQQgBCY8G0CdMVF8IXyYQfkbfAuEZTSU7++3Svot1oOdoIjN0IApLlvNw9CaBpiro3R5+KpzpMJ2OL1f1xrKHWmGoNertatI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896021; c=relaxed/simple;
-	bh=tuKrpcj7ZGjgh/hfz7LPmqu5VBDDwidoOS+zIDgdeUY=;
+	s=arc-20240116; t=1730896024; c=relaxed/simple;
+	bh=zLs9yJvZ9b8TPhARydtbZs/NgH0oA2GX7uhAA1Psdk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bdp7/FfF8Meo/LzBpEiy/uR68MVerzW8g9wh5Oh8tIHKEe7QQ72GT72iy5kJ4vNh5My4t6gxSGXR8Adh8VMf9GOWzUMgVqN7R4Ti3BcViJ1Q9TP7T+AVf23w5IKtAmkHAYR9o91xQqdaC4bUnBuqD1giAbh8FOXmCb7e3kCGahM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KH+cybDr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=US+3jJg8y4YxlqZBhJ2lFRLakllZXJjpN5KXhSiOMjMq1WLZuaFq1Vmx3ZavglpMF3DorxiMlP+eeVfFuOMwuMuUTpQAYwr6UST2mllDJ+QAsVIsAx6xNCaZ2KhJ+LXlYE9qIAn2/T12AXWka0GK9Xr0sN9d8LVRbrGpe6uY1k0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrZEKele; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KH+cybDr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281E4C4CECD;
-	Wed,  6 Nov 2024 12:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrZEKele"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB10C4CECD;
+	Wed,  6 Nov 2024 12:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896021;
-	bh=tuKrpcj7ZGjgh/hfz7LPmqu5VBDDwidoOS+zIDgdeUY=;
+	s=korg; t=1730896024;
+	bh=zLs9yJvZ9b8TPhARydtbZs/NgH0oA2GX7uhAA1Psdk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KH+cybDrmocV6Tk75vZIJpxzDJqhrz1aWaDF+EgUPiS/QtLwfesPHTa5IVSZYmAa1
-	 C3KStZ9ajqlm/0/73mrWPldXgGzZtfVHgpDOHXQFjMMVE+zc1bSsHkCpZX3pMNa/SB
-	 AX+1WPgnkvPXKhVabDMEJ30t/5DBlH5EyIypyc4s=
+	b=lrZEKelemfn+8fJZ4hsM9P81uSh8SJ9Jlwv5ZjwdVdP+4oBnqGUyuG1qxFFbbN5VA
+	 00UaowaSbfPZdQ97LjqA4uY3uzz7Ht7koJ6gc71A+/GWvr8qT/X+R2Jn3P+RMjyTAb
+	 fhmW03NY5yfAh67zL9LDaE4PCZJYpIWEJzPG0EyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+908886656a02769af987@syzkaller.appspotmail.com,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrew Pinski <pinskia@gmail.com>,
-	Mark Rutland <mark.rutland@arm.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	James Morse <james.morse@arm.com>,
 	Will Deacon <will@kernel.org>,
-	Marco Elver <elver@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 063/245] kasan: Fix Software Tag-Based KASAN with GCC
-Date: Wed,  6 Nov 2024 13:01:56 +0100
-Message-ID: <20241106120320.756228876@linuxfoundation.org>
+Subject: [PATCH 6.11 064/245] firmware: arm_sdei: Fix the input parameter of cpuhp_remove_state()
+Date: Wed,  6 Nov 2024 13:01:57 +0100
+Message-ID: <20241106120320.782220101@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -55,51 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 894b00a3350c560990638bdf89bdf1f3d5491950 ]
+[ Upstream commit c83212d79be2c9886d3e6039759ecd388fd5fed1 ]
 
-Per [1], -fsanitize=kernel-hwaddress with GCC currently does not disable
-instrumentation in functions with __attribute__((no_sanitize_address)).
+In sdei_device_freeze(), the input parameter of cpuhp_remove_state() is
+passed as 'sdei_entry_point' by mistake. Change it to 'sdei_hp_state'.
 
-However, __attribute__((no_sanitize("hwaddress"))) does correctly
-disable instrumentation. Use it instead.
-
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117196 [1]
-Link: https://lore.kernel.org/r/000000000000f362e80620e27859@google.com
-Link: https://lore.kernel.org/r/ZvFGwKfoC4yVjN_X@J2N7QTR9R3
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218854
-Reported-by: syzbot+908886656a02769af987@syzkaller.appspotmail.com
-Tested-by: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrew Pinski <pinskia@gmail.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Marco Elver <elver@google.com>
-Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
-Fixes: 7b861a53e46b ("kasan: Bump required compiler version")
-Link: https://lore.kernel.org/r/20241021120013.3209481-1-elver@google.com
+Fixes: d2c48b2387eb ("firmware: arm_sdei: Fix sleep from invalid context BUG")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Reviewed-by: James Morse <james.morse@arm.com>
+Link: https://lore.kernel.org/r/20241016084740.183353-1-wangxiongfeng2@huawei.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/compiler-gcc.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/firmware/arm_sdei.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/compiler-gcc.h b/include/linux/compiler-gcc.h
-index f805adaa316e9..cd6f9aae311fc 100644
---- a/include/linux/compiler-gcc.h
-+++ b/include/linux/compiler-gcc.h
-@@ -80,7 +80,11 @@
- #define __noscs __attribute__((__no_sanitize__("shadow-call-stack")))
- #endif
+diff --git a/drivers/firmware/arm_sdei.c b/drivers/firmware/arm_sdei.c
+index 285fe7ad490d1..3e8051fe82965 100644
+--- a/drivers/firmware/arm_sdei.c
++++ b/drivers/firmware/arm_sdei.c
+@@ -763,7 +763,7 @@ static int sdei_device_freeze(struct device *dev)
+ 	int err;
  
-+#ifdef __SANITIZE_HWADDRESS__
-+#define __no_sanitize_address __attribute__((__no_sanitize__("hwaddress")))
-+#else
- #define __no_sanitize_address __attribute__((__no_sanitize_address__))
-+#endif
+ 	/* unregister private events */
+-	cpuhp_remove_state(sdei_entry_point);
++	cpuhp_remove_state(sdei_hp_state);
  
- #if defined(__SANITIZE_THREAD__)
- #define __no_sanitize_thread __attribute__((__no_sanitize_thread__))
+ 	err = sdei_unregister_shared();
+ 	if (err)
 -- 
 2.43.0
 
