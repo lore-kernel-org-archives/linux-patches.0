@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755821EE033;
-	Wed,  6 Nov 2024 12:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABA31FBC98;
+	Wed,  6 Nov 2024 12:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896724; cv=none; b=IbF98rpqe6Y17iepcI32Yss5FDJLQYCoq14kwIKYJmPAkZJi+OuDQgWQdrfd3wi0RKxv7WJ45FklhGqoSH4wf5fzbCHXlh6lHGlkcgJweoRUXMR0f6qQ1h89YLOLRTtHjzW5G40LeOvCC03lTu8d57TVNmmgn1mODonemnl1Ssk=
+	t=1730896727; cv=none; b=jWyl+e/Jg/uZDjkw58uu7kxPpHGMm+XixFENjzOzMOMDxv77uMlQky8QNzwTn58HHS8Sr9y1o2rsBSYR1OOtQ5WivGuGw1NgpD/WQSsX+iLCin6YcMQhgNnAK9ltyg+g02zhOfQKhiqZ/m4RrZ45qks4EVehwwhbUdcod+vmYMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896724; c=relaxed/simple;
-	bh=oDq5gwZTQFD5zRCA0zHrZd/TWb6fTmAZ2yQf7K2p1YM=;
+	s=arc-20240116; t=1730896727; c=relaxed/simple;
+	bh=bpbushGaSTt0Gtn986VK6bsQom6eUKaheto3zOomrXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DTjahW/mAqffEEJFNg9nmoTn1bOX2JNlw1KsDEq+rQ1O9kQsX2vvM9NlrTseAIFQufhiORu98PGP2uKqreHbCoFGxJs/adcZtUXJrgN4wJ/vgV2mvwNAJ0K94A+7VS5i9fa0V/JRTDt9f78uLFgj3CWMSjYHZNSEsVWvZQwJH4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15Y3xjAd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bZye37mpz3/kcH1FG/YnqFXeqErAx0LCMWLfpxY7dzXDJpYtlpDHxqKu2TujWj+yOdHlPoFeCE9sG6p2iqZrHgZoWGNfcwlbKK+RUQGMh203+lqj9O24bk2SuPWvDIhPSFtUZY99mE5IAT0uJWUd1wLyNpv/tFiKjHq4W0Korug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEsqkzgI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15Y3xjAd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE1CC4CED3;
-	Wed,  6 Nov 2024 12:38:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEsqkzgI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E820FC4CECD;
+	Wed,  6 Nov 2024 12:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896724;
-	bh=oDq5gwZTQFD5zRCA0zHrZd/TWb6fTmAZ2yQf7K2p1YM=;
+	s=korg; t=1730896727;
+	bh=bpbushGaSTt0Gtn986VK6bsQom6eUKaheto3zOomrXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=15Y3xjAdmL6zF60jCmU/qDyJIKMpFb1LGnckhY/rpd2hKsdICleA1Dy1tJBiMuGH7
-	 XJ6SG6i2a+0fu2qJglFKMn6dmaMODEZzTOdA0sYmv4x+1r5BXdZYgg3EfjngZzEKyK
-	 Vp7pXkzEhNNtz7uhcDg7zT8wXPM/k6/IqBwjRsHI=
+	b=vEsqkzgIl9BABHlaBaOPtdF0v2o04WYC9Ix6P4bzeTmkrZhpDoUs0Mb9wPKgRFHKF
+	 nXHOlE6OhEyv6Ogfqf2e1EEHRyyIr0t3FMrVBOJyyNGRRZU5m6LCNfq1lUqzsL97Eu
+	 HUQp7+BRd4RNM7fImcERWhUdqCFVGXPczYyfPqq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Sun <samsun1006219@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Peter Hurley <peter@hurleysoftware.com>,
+	Tomas Krcka <krckatom@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 051/110] selinux: improve error checking in sel_write_load()
-Date: Wed,  6 Nov 2024 13:04:17 +0100
-Message-ID: <20241106120304.612299124@linuxfoundation.org>
+Subject: [PATCH 5.10 052/110] serial: protect uart_port_dtr_rts() in uart_shutdown() too
+Date: Wed,  6 Nov 2024 13:04:18 +0100
+Message-ID: <20241106120304.638333092@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -52,93 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moore <paul@paul-moore.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit 42c773238037c90b3302bf37a57ae3b5c3f6004a ]
+[ Upstream commit 602babaa84d627923713acaf5f7e9a4369e77473 ]
 
-Move our existing input sanity checking to the top of sel_write_load()
-and add a check to ensure the buffer size is non-zero.
+Commit af224ca2df29 (serial: core: Prevent unsafe uart port access, part
+3) added few uport == NULL checks. It added one to uart_shutdown(), so
+the commit assumes, uport can be NULL in there. But right after that
+protection, there is an unprotected "uart_port_dtr_rts(uport, false);"
+call. That is invoked only if HUPCL is set, so I assume that is the
+reason why we do not see lots of these reports.
 
-Move a local variable initialization from the declaration to before it
-is used.
+Or it cannot be NULL at this point at all for some reason :P.
 
-Minor style adjustments.
+Until the above is investigated, stay on the safe side and move this
+dereference to the if too.
 
-Reported-by: Sam Sun <samsun1006219@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-[cascardo: keep fsi initialization at its declaration point as it is used earlier]
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+I got this inconsistency from Coverity under CID 1585130. Thanks.
+
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Cc: Peter Hurley <peter@hurleysoftware.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20240805102046.307511-3-jirislaby@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[Adapted over commit 5701cb8bf50e ("tty: Call ->dtr_rts() parameter
+active consistently") not in the tree]
+Signed-off-by: Tomas Krcka <krckatom@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/selinux/selinuxfs.c | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/tty/serial/serial_core.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/security/selinux/selinuxfs.c b/security/selinux/selinuxfs.c
-index d893c2280f595..7415f49a3d81e 100644
---- a/security/selinux/selinuxfs.c
-+++ b/security/selinux/selinuxfs.c
-@@ -620,6 +620,13 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
- 	ssize_t length;
- 	void *data = NULL;
+diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
+index c7adcf97e2a33..6d7d448d0fbf5 100644
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -286,14 +286,16 @@ static void uart_shutdown(struct tty_struct *tty, struct uart_state *state)
+ 		/*
+ 		 * Turn off DTR and RTS early.
+ 		 */
+-		if (uport && uart_console(uport) && tty) {
+-			uport->cons->cflag = tty->termios.c_cflag;
+-			uport->cons->ispeed = tty->termios.c_ispeed;
+-			uport->cons->ospeed = tty->termios.c_ospeed;
+-		}
++		if (uport) {
++			if (uart_console(uport) && tty) {
++				uport->cons->cflag = tty->termios.c_cflag;
++				uport->cons->ispeed = tty->termios.c_ispeed;
++				uport->cons->ospeed = tty->termios.c_ospeed;
++			}
  
-+	/* no partial writes */
-+	if (*ppos)
-+		return -EINVAL;
-+	/* no empty policies */
-+	if (!count)
-+		return -EINVAL;
-+
- 	mutex_lock(&fsi->state->policy_mutex);
+-		if (!tty || C_HUPCL(tty))
+-			uart_port_dtr_rts(uport, 0);
++			if (!tty || C_HUPCL(tty))
++				uart_port_dtr_rts(uport, 0);
++		}
  
- 	length = avc_has_perm(&selinux_state,
-@@ -628,26 +635,21 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
- 	if (length)
- 		goto out;
- 
--	/* No partial writes. */
--	length = -EINVAL;
--	if (*ppos != 0)
--		goto out;
--
--	length = -ENOMEM;
- 	data = vmalloc(count);
--	if (!data)
-+	if (!data) {
-+		length = -ENOMEM;
- 		goto out;
--
--	length = -EFAULT;
--	if (copy_from_user(data, buf, count) != 0)
-+	}
-+	if (copy_from_user(data, buf, count) != 0) {
-+		length = -EFAULT;
- 		goto out;
-+	}
- 
- 	length = security_load_policy(fsi->state, data, count, &load_state);
- 	if (length) {
- 		pr_warn_ratelimited("SELinux: failed to load policy\n");
- 		goto out;
+ 		uart_port_shutdown(port);
  	}
--
- 	length = sel_make_policy_nodes(fsi, load_state.policy);
- 	if (length) {
- 		selinux_policy_cancel(fsi->state, &load_state);
-@@ -655,13 +657,12 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
- 	}
- 
- 	selinux_policy_commit(fsi->state, &load_state);
--
- 	length = count;
--
- 	audit_log(audit_context(), GFP_KERNEL, AUDIT_MAC_POLICY_LOAD,
- 		"auid=%u ses=%u lsm=selinux res=1",
- 		from_kuid(&init_user_ns, audit_get_loginuid(current)),
- 		audit_get_sessionid(current));
-+
- out:
- 	mutex_unlock(&fsi->state->policy_mutex);
- 	vfree(data);
 -- 
 2.43.0
 
