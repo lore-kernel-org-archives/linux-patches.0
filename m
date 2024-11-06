@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39CF1E907E;
-	Wed,  6 Nov 2024 13:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EA51E907E;
+	Wed,  6 Nov 2024 13:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898754; cv=none; b=h4fxBdCHJRcoVGWmYgI5PPvnN8UeXg8GjvYdg6lvXZIJr/9KAFlP+WtLSvGho8yYMPKPiSWgg+neMt1GsXUf01axYEhmDjbaklWHX/j9jkf0J/qX3FmK2eBsxF2OA4qFRT7GQa8fBaS488pL2T6BG0WFemm8R6E0gie8JibseVk=
+	t=1730898757; cv=none; b=k5No0tH6h7YJNrQhnvcaAO5pmVBY+FjpT+nlFlNl9UQWfwAgRYZgDOOqIBt1Ci7TYZ4POLMVYnK8qQKOEtfuUynkua/KmU4/jhu0vtBKwLrkhG2N3+yHKFw9iw0ciFZfe5pGYgl82si5yzQVebd2/1saXsjMYnLeNZbbzVRONXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898754; c=relaxed/simple;
-	bh=nWEJdMDJwwMvIz1mmCyBhDa8KxkeiHZN5cMd3vPpZzE=;
+	s=arc-20240116; t=1730898757; c=relaxed/simple;
+	bh=/JOqA1VDwYjdvspWW0ZTC/DFOCc23K29AxIIeviSrTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DZnY2/K14Do8vSbYehJnJxn+qcyfhrwVFsNf0BufJ57I5skDRaq3eBjOhDQ7tYB/S0iqo7sJf+7b7rcq50vKizbbei9TMpwTiEzgCz7u/CULHP0qYZiyiWnyhmGVhy/Xd6kGvXuBnHZA0ukhvbC8O4H2muGHFdVz6BF8DBdT11k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2udCG43; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tOLHdbdud8Ej5/+uR9RV2/Kp3I3mdP6fBkbFuAnvb927fRsh59rw5yeDlSDmeOkWGPuZPsQLQ9akUY9U5LZ3drKJJ8pmnASx+KQuC5RryGwSuSx4/4CHaHGGPpVRSZwtEFLdt7DLlaz+FifW+uDNGDEnZpWpxu9Hks3bdXP27dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Snb86RK0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2udCG43"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE50C4CECD;
-	Wed,  6 Nov 2024 13:12:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Snb86RK0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DFADC4CECD;
+	Wed,  6 Nov 2024 13:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898754;
-	bh=nWEJdMDJwwMvIz1mmCyBhDa8KxkeiHZN5cMd3vPpZzE=;
+	s=korg; t=1730898757;
+	bh=/JOqA1VDwYjdvspWW0ZTC/DFOCc23K29AxIIeviSrTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M2udCG431i0WOJUaLrdjSzPqrmFNIq0+ysvWW8V8NkEe7kYUiCi6ujKqZ4ycobE/y
-	 yEDVvO/Kpyt59MHl+5sQ9dj+X3jtnF9exFbJ+3oHkXUpo4FCcsdAGVHS5UVWLfHzBL
-	 FfD/4HSnmHLlVZ2zZvdy+yBXwGwhOMI4JukjI2HY=
+	b=Snb86RK0+pSdi1oFTHlBimaFSb6rU9GobPfnJzA9ug2c/JH+Hwj57QOINh5XxU2UY
+	 4iRvcgJtQQjtoW9TGS65ZovgfRKA5b5/NrTrUgCzCajF81XR02rULqT+Tlh87VsDjG
+	 El2uYArPHjPJK9mC1SDMZK8m/w/FEj0MTxFxOB2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	"John Warthog9 Hawley (Tenstorrent)" <warthog9@eaglescrag.net>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 308/462] ktest.pl: Avoid false positives with grub2 skip regex
-Date: Wed,  6 Nov 2024 13:03:21 +0100
-Message-ID: <20241106120339.135025223@linuxfoundation.org>
+Subject: [PATCH 5.4 309/462] clk: bcm: bcm53573: fix OF node leak in init
+Date: Wed,  6 Nov 2024 13:03:22 +0100
+Message-ID: <20241106120339.158475622@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,50 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Jordan <daniel.m.jordan@oracle.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 2351e8c65404aabc433300b6bf90c7a37e8bbc4d ]
+[ Upstream commit f92d67e23b8caa81f6322a2bad1d633b00ca000e ]
 
-Some distros have grub2 config files with the lines
+Driver code is leaking OF node reference from of_get_parent() in
+bcm53573_ilp_init().  Usage of of_get_parent() is not needed in the
+first place, because the parent node will not be freed while we are
+processing given node (triggered by CLK_OF_DECLARE()).  Thus fix the
+leak by accessing parent directly, instead of of_get_parent().
 
-    if [ x"${feature_menuentry_id}" = xy ]; then
-      menuentry_id_option="--id"
-    else
-      menuentry_id_option=""
-    fi
-
-which match the skip regex defined for grub2 in get_grub_index():
-
-    $skip = '^\s*menuentry';
-
-These false positives cause the grub number to be higher than it
-should be, and the wrong kernel can end up booting.
-
-Grub documents the menuentry command with whitespace between it and the
-title, so make the skip regex reflect this.
-
-Link: https://lore.kernel.org/20240904175530.84175-1-daniel.m.jordan@oracle.com
-Signed-off-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Acked-by: John 'Warthog9' Hawley (Tenstorrent) <warthog9@eaglescrag.net>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240826065801.17081-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl | 2 +-
+ drivers/clk/bcm/clk-bcm53573-ilp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
-index d36612c620981..e7adb429018b2 100755
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -1954,7 +1954,7 @@ sub get_grub_index {
-     } elsif ($reboot_type eq "grub2") {
- 	$command = "cat $grub_file";
- 	$target = '^\s*menuentry.*' . $grub_menu_qt;
--	$skip = '^\s*menuentry';
-+	$skip = '^\s*menuentry\s';
- 	$submenu = '^\s*submenu\s';
-     } elsif ($reboot_type eq "grub2bls") {
-         $command = $grub_bls_get;
+diff --git a/drivers/clk/bcm/clk-bcm53573-ilp.c b/drivers/clk/bcm/clk-bcm53573-ilp.c
+index 84f2af736ee8a..83ef41d618be3 100644
+--- a/drivers/clk/bcm/clk-bcm53573-ilp.c
++++ b/drivers/clk/bcm/clk-bcm53573-ilp.c
+@@ -112,7 +112,7 @@ static void bcm53573_ilp_init(struct device_node *np)
+ 		goto err_free_ilp;
+ 	}
+ 
+-	ilp->regmap = syscon_node_to_regmap(of_get_parent(np));
++	ilp->regmap = syscon_node_to_regmap(np->parent);
+ 	if (IS_ERR(ilp->regmap)) {
+ 		err = PTR_ERR(ilp->regmap);
+ 		goto err_free_ilp;
 -- 
 2.43.0
 
