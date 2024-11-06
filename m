@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9721DFDB1;
-	Wed,  6 Nov 2024 12:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4AB1DF251;
+	Wed,  6 Nov 2024 12:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895812; cv=none; b=BEhD586uA1zhlzIjfysBsgfGrzwGd7hb0E6YvnTbYouUeunQqF9driYyLUhZvQaqUGVGPgdgdczYl4aumKvElzNbUknNQvm8iEHLl+7NGvZDuqWHRMxR/qUGOpdIcMbkAN9epycPLgKPpBcAkzEFtr0MgvP3/P7/6OZQO6yMUNk=
+	t=1730895815; cv=none; b=BS5A8aBLmaCeHy58udRxehxlgjlBSNJgBCPTIhAEJYhlubpcrJpWMMrA1jGmEzzbhxfALs3ftiTz19GBATyX4+WqX8C4mW+7lm6xfHS6OwKjJJJ/5VHNDNGaRT7+yUCzm1I8esxQURoU8EFcsh/82uczDBvSAdgBh1qI6xKVW7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895812; c=relaxed/simple;
-	bh=wqh7cr3gcXPxnETKVmco4gWXcTSmBQ6DphbtQCyNqWQ=;
+	s=arc-20240116; t=1730895815; c=relaxed/simple;
+	bh=wQeXe/fd8sz6yIE/Qjpq0U8uo4+e84aW5n3c7OhC1Yg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WioQjrMEXBirmiz9vyt+euPNhfqnTJIq0VhIqJUYOBs5lEHAc4hfeLpK++0qrhBwHCBQs8u2nod+QtiBN9sfkqKxaYlBLDwGhC+hZ9YgVtNAtsBDlxqmiURNRrnMJC5X/P4pxKk+onIzBgn+f28JzT2ErfJ1RTZI33sc5jCATms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AV01xSlQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d80j8ZkJ3ofNgrtyi0ePrR6GOSKuCNa7JI4FPrFkNENYcTeaGAZO9PmCWtkUNrcooSYJgvF9Wb8Z2OFXHDYazkYtsCM3zNMGwqm/UNtDGSaoCVH5iCE9aE2zR9jGLPNOhQByEtLrVTfGtD8xUAPRYROGMlgqVKADorpgENUJ6Is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQrT1A2n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AV01xSlQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2EE3C4AF0C;
-	Wed,  6 Nov 2024 12:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQrT1A2n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1FB0C4CED3;
+	Wed,  6 Nov 2024 12:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895812;
-	bh=wqh7cr3gcXPxnETKVmco4gWXcTSmBQ6DphbtQCyNqWQ=;
+	s=korg; t=1730895815;
+	bh=wQeXe/fd8sz6yIE/Qjpq0U8uo4+e84aW5n3c7OhC1Yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AV01xSlQzW9mL652Zk7rJnypcK4M8WpAVWHMWsJPxBqYlz3gFx/eMaKMbN+LQXOzj
-	 9HXG+ch1CGwTGdtk1jVL5vR552Edb0uUaIxnxUNEEbNvEzeKZ5lf+yrbSA3GY7FLWT
-	 jLW6BKwaI6qkSRqWLsGjUHJsE3TEwckb264hFyo4=
+	b=nQrT1A2nOjOQd8/erRkc4iX3EhbCu40x8Ng4+0hPtwNEvYoNo/O1tI+k7/MOW6OWZ
+	 QbCyo2l+bEngsA2fQJSuJ5qN7viMysdU1cAuJ5ttEDce/SHOSpNk9/VzXIDqjT5+Qp
+	 JHGmIUzJgt1COJyJmku1GYvocwETry9t5Ba3FZl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 326/350] cgroup: Fix potential overflow issue when checking max_depth
-Date: Wed,  6 Nov 2024 13:04:14 +0100
-Message-ID: <20241106120328.787568438@linuxfoundation.org>
+	Manikanta Pubbisetty <quic_mpubbise@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>
+Subject: [PATCH 4.19 344/350] wifi: ath10k: Fix memory leak in management tx
+Date: Wed,  6 Nov 2024 13:04:32 +0100
+Message-ID: <20241106120329.189660084@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -46,63 +44,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
 
-[ Upstream commit 3cc4e13bb1617f6a13e5e6882465984148743cf4 ]
+commit e15d84b3bba187aa372dff7c58ce1fd5cb48a076 upstream.
 
-cgroup.max.depth is the maximum allowed descent depth below the current
-cgroup. If the actual descent depth is equal or larger, an attempt to
-create a new child cgroup will fail. However due to the cgroup->max_depth
-is of int type and having the default value INT_MAX, the condition
-'level > cgroup->max_depth' will never be satisfied, and it will cause
-an overflow of the level after it reaches to INT_MAX.
+In the current logic, memory is allocated for storing the MSDU context
+during management packet TX but this memory is not being freed during
+management TX completion. Similar leaks are seen in the management TX
+cleanup logic.
 
-Fix it by starting the level from 0 and using '>=' instead.
+Kmemleak reports this problem as below,
 
-It's worth mentioning that this issue is unlikely to occur in reality,
-as it's impossible to have a depth of INT_MAX hierarchy, but should be
-be avoided logically.
+unreferenced object 0xffffff80b64ed250 (size 16):
+  comm "kworker/u16:7", pid 148, jiffies 4294687130 (age 714.199s)
+  hex dump (first 16 bytes):
+    00 2b d8 d8 80 ff ff ff c4 74 e9 fd 07 00 00 00  .+.......t......
+  backtrace:
+    [<ffffffe6e7b245dc>] __kmem_cache_alloc_node+0x1e4/0x2d8
+    [<ffffffe6e7adde88>] kmalloc_trace+0x48/0x110
+    [<ffffffe6bbd765fc>] ath10k_wmi_tlv_op_gen_mgmt_tx_send+0xd4/0x1d8 [ath10k_core]
+    [<ffffffe6bbd3eed4>] ath10k_mgmt_over_wmi_tx_work+0x134/0x298 [ath10k_core]
+    [<ffffffe6e78d5974>] process_scheduled_works+0x1ac/0x400
+    [<ffffffe6e78d60b8>] worker_thread+0x208/0x328
+    [<ffffffe6e78dc890>] kthread+0x100/0x1c0
+    [<ffffffe6e78166c0>] ret_from_fork+0x10/0x20
 
-Fixes: 1a926e0bbab8 ("cgroup: implement hierarchy limits")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Free the memory during completion and cleanup to fix the leak.
+
+Protect the mgmt_pending_tx idr_remove() operation in
+ath10k_wmi_tlv_op_cleanup_mgmt_tx_send() using ar->data_lock similar to
+other instances.
+
+Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.2.0-01387-QCAHLSWMTPLZ-1
+
+Fixes: dc405152bb64 ("ath10k: handle mgmt tx completion event")
+Fixes: c730c477176a ("ath10k: Remove msdu from idr when management pkt send fails")
+Cc: stable@vger.kernel.org
+Signed-off-by: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
+Link: https://patch.msgid.link/20241015064103.6060-1-quic_mpubbise@quicinc.com
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cgroup.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath10k/wmi-tlv.c |    7 ++++++-
+ drivers/net/wireless/ath/ath10k/wmi.c     |    2 ++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index 30c0588067029..4ab74d06be194 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -5104,7 +5104,7 @@ static bool cgroup_check_hierarchy_limits(struct cgroup *parent)
+--- a/drivers/net/wireless/ath/ath10k/wmi-tlv.c
++++ b/drivers/net/wireless/ath/ath10k/wmi-tlv.c
+@@ -2655,9 +2655,14 @@ ath10k_wmi_tlv_op_cleanup_mgmt_tx_send(s
+ 				       struct sk_buff *msdu)
  {
- 	struct cgroup *cgroup;
- 	int ret = false;
--	int level = 1;
-+	int level = 0;
+ 	struct ath10k_skb_cb *cb = ATH10K_SKB_CB(msdu);
++	struct ath10k_mgmt_tx_pkt_addr *pkt_addr;
+ 	struct ath10k_wmi *wmi = &ar->wmi;
  
- 	lockdep_assert_held(&cgroup_mutex);
+-	idr_remove(&wmi->mgmt_pending_tx, cb->msdu_id);
++	spin_lock_bh(&ar->data_lock);
++	pkt_addr = idr_remove(&wmi->mgmt_pending_tx, cb->msdu_id);
++	spin_unlock_bh(&ar->data_lock);
++
++	kfree(pkt_addr);
  
-@@ -5112,7 +5112,7 @@ static bool cgroup_check_hierarchy_limits(struct cgroup *parent)
- 		if (cgroup->nr_descendants >= cgroup->max_descendants)
- 			goto fail;
+ 	return 0;
+ }
+--- a/drivers/net/wireless/ath/ath10k/wmi.c
++++ b/drivers/net/wireless/ath/ath10k/wmi.c
+@@ -2362,6 +2362,7 @@ static int wmi_process_mgmt_tx_comp(stru
+ 	dma_unmap_single(ar->dev, pkt_addr->paddr,
+ 			 msdu->len, DMA_TO_DEVICE);
+ 	info = IEEE80211_SKB_CB(msdu);
++	kfree(pkt_addr);
  
--		if (level > cgroup->max_depth)
-+		if (level >= cgroup->max_depth)
- 			goto fail;
+ 	if (status)
+ 		info->flags &= ~IEEE80211_TX_STAT_ACK;
+@@ -9233,6 +9234,7 @@ static int ath10k_wmi_mgmt_tx_clean_up_p
+ 	dma_unmap_single(ar->dev, pkt_addr->paddr,
+ 			 msdu->len, DMA_TO_DEVICE);
+ 	ieee80211_free_txskb(ar->hw, msdu);
++	kfree(pkt_addr);
  
- 		level++;
--- 
-2.43.0
-
+ 	return 0;
+ }
 
 
