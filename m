@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4EE1E0B73;
-	Wed,  6 Nov 2024 12:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2D21E1335;
+	Wed,  6 Nov 2024 12:23:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895806; cv=none; b=iE5W9To1q0lT3UjfukTfPDo4pGEp8OYADp6J5aekpht/RxqaqOVsATfU7dus+LuOisn7QDIt8lX0LHkRXxzTzm025qDk1gep387/f4GPgLEDAwVwP3cuDuY6lXzRv/8ctlt+I3j9eBQGPp38ckCABsxP9kg9ye36EKtOpo3DWBs=
+	t=1730895809; cv=none; b=kwQ/6ZHfN3aJ+12heu0mNPd7EdYNqZ4cyCTWCSvH9yMGDLRSuOnxH7wNCZlMTtgDAF2fbHyq3uoWl2iD2f2dMm4dBcDWcDMSS5eq3hRpR4j1xjcTtGKtDWunzKopIcxzQtt+M8VzaL9aZmNOGJPxN8B6z3OO8na+L89kR3JagsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895806; c=relaxed/simple;
-	bh=iy+LlTG9VrkQBT96/L+74/ek4HJ42GuGxeyDtxvKfH8=;
+	s=arc-20240116; t=1730895809; c=relaxed/simple;
+	bh=pUEDvzTWGkwAxZTbalL4vJlZhJ8YohlS933FiEplwss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZFt1/sR8Za51QQRTeDCDCo2XSA12gYIKTgKosFUT67y8edGsi1MlfMBYF5spump0xymFIFBFkWPVuGovExd6+I0K8LOYpdTTzmNcAdEGS9qoJQY5yslssMls4cS4qpsmQ4aUsEsn7shn8bSAZ6mcNXIvRiSUYKyVEj1vfyDkp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTKHCEKi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PRY1jpCYxo2hAD/yyg3Z4edXFY7eeLjnWDm5x2KotPOAhz0Tvkr0X1RehmcJrEyJne6/GQ3QXh5iG18yX0FNv6vpbVQCdEBzQsyjEUR0+qPrN+V51ZqP7NIjYUTX3QW3f3X6Y10XGGPDgCyuwsXZWvhvihtWys4mFRCq+dMDDoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLZtt2x5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTKHCEKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1496C4AF0B;
-	Wed,  6 Nov 2024 12:23:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLZtt2x5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6DCC4CED4;
+	Wed,  6 Nov 2024 12:23:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895806;
-	bh=iy+LlTG9VrkQBT96/L+74/ek4HJ42GuGxeyDtxvKfH8=;
+	s=korg; t=1730895809;
+	bh=pUEDvzTWGkwAxZTbalL4vJlZhJ8YohlS933FiEplwss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LTKHCEKiVPk8nCQNCKFPrTdcjEgZM5m+NKD9HMa8RXOQxgi7SQZwrcay91AZ7Fr4Z
-	 CeB/69rN7YMbXMR7DZXsB4t24PFxFQjcYnPKvj9WEPlxX+qx6MN6bd8f9pu6Y373sl
-	 +6rANMl34XkEHq3CkGmNxaGZ+EDq9hRRR3Lpzk10=
+	b=RLZtt2x5Z2zRZncJlVi3xjUaRlf1TW+iXB9Dym9GxLyXgfydBLFtBsZmuzN68EOAw
+	 IXOgjyf+kWHECpQHPa0xUHfcIsY8cuadblC2v4+YEJ5ShBYGoEGdwGXt992eht2h1B
+	 w0MOkMwI894oCcyEHf0bfaGQxEin6pV0+t30zVN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ashish Sangwan <a.sangwan@samsung.com>,
-	Namjae Jeon <namjae.jeon@samsung.com>,
-	Dirk Behme <dirk.behme@de.bosch.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 4.19 342/350] Revert "driver core: Fix uevent_show() vs driver detach race"
-Date: Wed,  6 Nov 2024 13:04:30 +0100
-Message-ID: <20241106120329.144034449@linuxfoundation.org>
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 4.19 343/350] wifi: mac80211: do not pass a stopped vif to the driver in .get_txpower
+Date: Wed,  6 Nov 2024 13:04:31 +0100
+Message-ID: <20241106120329.166470892@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -54,94 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit 9a71892cbcdb9d1459c84f5a4c722b14354158a5 upstream.
+commit 393b6bc174b0dd21bb2a36c13b36e62fc3474a23 upstream.
 
-This reverts commit 15fffc6a5624b13b428bb1c6e9088e32a55eb82c.
+Avoid potentially crashing in the driver because of uninitialized private data
 
-This commit causes a regression, so revert it for now until it can come
-back in a way that works for everyone.
-
-Link: https://lore.kernel.org/all/172790598832.1168608.4519484276671503678.stgit@dwillia2-xfh.jf.intel.com/
-Fixes: 15fffc6a5624 ("driver core: Fix uevent_show() vs driver detach race")
-Cc: stable <stable@kernel.org>
-Cc: Ashish Sangwan <a.sangwan@samsung.com>
-Cc: Namjae Jeon <namjae.jeon@samsung.com>
-Cc: Dirk Behme <dirk.behme@de.bosch.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Dan Williams <dan.j.williams@intel.com>
+Fixes: 5b3dc42b1b0d ("mac80211: add support for driver tx power reporting")
+Cc: stable@vger.kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20241002095630.22431-1-nbd@nbd.name
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c   |   13 +++++--------
- drivers/base/module.c |    4 ----
- 2 files changed, 5 insertions(+), 12 deletions(-)
+ net/mac80211/cfg.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -24,7 +24,6 @@
- #include <linux/mutex.h>
- #include <linux/pm_runtime.h>
- #include <linux/netdevice.h>
--#include <linux/rcupdate.h>
- #include <linux/sched/signal.h>
- #include <linux/sysfs.h>
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -2443,7 +2443,8 @@ static int ieee80211_get_tx_power(struct
+ 	struct ieee80211_local *local = wiphy_priv(wiphy);
+ 	struct ieee80211_sub_if_data *sdata = IEEE80211_WDEV_TO_SUB_IF(wdev);
  
-@@ -1138,7 +1137,6 @@ static int dev_uevent(struct kset *kset,
- 		      struct kobj_uevent_env *env)
- {
- 	struct device *dev = kobj_to_dev(kobj);
--	struct device_driver *driver;
- 	int retval = 0;
+-	if (local->ops->get_txpower)
++	if (local->ops->get_txpower &&
++	    (sdata->flags & IEEE80211_SDATA_IN_DRIVER))
+ 		return drv_get_txpower(local, sdata, dbm);
  
- 	/* add device node properties if present */
-@@ -1167,12 +1165,8 @@ static int dev_uevent(struct kset *kset,
- 	if (dev->type && dev->type->name)
- 		add_uevent_var(env, "DEVTYPE=%s", dev->type->name);
- 
--	/* Synchronize with module_remove_driver() */
--	rcu_read_lock();
--	driver = READ_ONCE(dev->driver);
--	if (driver)
--		add_uevent_var(env, "DRIVER=%s", driver->name);
--	rcu_read_unlock();
-+	if (dev->driver)
-+		add_uevent_var(env, "DRIVER=%s", dev->driver->name);
- 
- 	/* Add common DT information about the device */
- 	of_device_uevent(dev, env);
-@@ -1242,8 +1236,11 @@ static ssize_t uevent_show(struct device
- 	if (!env)
- 		return -ENOMEM;
- 
-+	/* Synchronize with really_probe() */
-+	device_lock(dev);
- 	/* let the kset specific function add its keys */
- 	retval = kset->uevent_ops->uevent(kset, &dev->kobj, env);
-+	device_unlock(dev);
- 	if (retval)
- 		goto out;
- 
---- a/drivers/base/module.c
-+++ b/drivers/base/module.c
-@@ -7,7 +7,6 @@
- #include <linux/errno.h>
- #include <linux/slab.h>
- #include <linux/string.h>
--#include <linux/rcupdate.h>
- #include "base.h"
- 
- static char *make_driver_name(struct device_driver *drv)
-@@ -78,9 +77,6 @@ void module_remove_driver(struct device_
- 	if (!drv)
- 		return;
- 
--	/* Synchronize with dev_uevent() */
--	synchronize_rcu();
--
- 	sysfs_remove_link(&drv->p->kobj, "module");
- 
- 	if (drv->owner)
+ 	if (!local->use_chanctx)
 
 
