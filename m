@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15681E1C33;
-	Wed,  6 Nov 2024 12:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2CF1E0E13;
+	Wed,  6 Nov 2024 12:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897777; cv=none; b=i/HX/on/PzY8pSGJncOnd+zW+8NWAAYhzatwom+kSe+NDGCry0cGBSLpI1lfdkTfXQ9o31jehtzgKkbIH+ok98fTrHFREeyAN/v0N+fZDO1/DpGN32QjEshuRqDuyrlV15BUzZY6LA0kd6kvzK91Rd+vEBgH8+HSnsD2SAKKMUk=
+	t=1730897779; cv=none; b=c/QBR6u8IPCkR0B1ZIQCNTqP3AxvZbIkQJL7nZZbUXy6vBtOucEiqztxEAHIvPvyFtUUpjT29O2z2m8uKwOZSo8I5CykFz40eaIDVZIuyEgINPcNSuxl6v+OsgdMMmjyMhTmOWLmsDOvWefkRccY4eGjVu8lRPYXQ+0bgWJdDJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897777; c=relaxed/simple;
-	bh=Sj+FIswdoGNSXjQExOGbIVENQJtjIjx4qdgrB+QE0D0=;
+	s=arc-20240116; t=1730897779; c=relaxed/simple;
+	bh=4wj37cJix7pzKH+GAIWxBNgJGZtrb2IFRoaUSzuPSdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEaBgM2CBVkVt+7oNo+oRYNTpwWaXGYDu8QRzG2ou0ue66mqpuGpE3iKtwJ4ticQeSJGlnzOthpoR4bpmh/KoRqwPy0IaobRwJLKlIUQedzUKCsvOBDZBQFVao+ePWAZPC9GMYD9TotOz0vamzrqydAUME9VvuK55q0TDPxKhTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vZ1eNOR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XC+Hg9pk7MJmQeDkc2ZNZSmI45jp5FobvxOPrrvLb9o8w+DMqFPTvjwIlDYFMD+H+sGpWC+7wYE39MdtPv0MpQvnEdOYLhkZ7zxRQUbX6Brx7ZczkBzn2oo5jWoZjAdUto5xYAr5ddPrx6i9/FFlqm/qGSzhMnzHAvH85+W2uUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHq/c2K7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vZ1eNOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D94DC4CECD;
-	Wed,  6 Nov 2024 12:56:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHq/c2K7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229BCC4CECD;
+	Wed,  6 Nov 2024 12:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897776;
-	bh=Sj+FIswdoGNSXjQExOGbIVENQJtjIjx4qdgrB+QE0D0=;
+	s=korg; t=1730897779;
+	bh=4wj37cJix7pzKH+GAIWxBNgJGZtrb2IFRoaUSzuPSdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2vZ1eNOR2kR/fhBUcIi1JdFzrnaBsASsY2iUB2LISCvMrdGa86FamZxO/GDx8SOiH
-	 ZbHJBpobwS6eoc1zsPOHIitk/B3pL9nciJLABrLVmmwPWIKerJ/kYJbLCYm4xrPJmT
-	 o4vxfaRpD7TS22gyohhWbgPgrFuRwlXsh+9VLaUY=
+	b=iHq/c2K7qO82/M3YWZU/LlCEuDOllaKfhGu7WWXKeRNpdurlTIMWRUKMwrBYIqyYd
+	 /z83I1OFydTphURwzwiGYhC6i9p9McsAlRwyL463uBiWCBV0Z/KxW2gZfxSWEFxZzw
+	 F8RL4hy0q4eJ5Ho2V3mEaJ8AOiUrcXAZAEZjUUOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Blocher <thomas.blocher@ek-dev.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Mike Rapoport <rppt@kernel.org>,
+	Wei Yang <richard.weiyang@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 016/462] pinctrl: at91: make it work with current gpiolib
-Date: Wed,  6 Nov 2024 12:58:29 +0100
-Message-ID: <20241106120331.909509806@linuxfoundation.org>
+Subject: [PATCH 5.4 017/462] microblaze: dont treat zero reserved memory regions as error
+Date: Wed,  6 Nov 2024 12:58:30 +0100
+Message-ID: <20241106120331.934924002@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,49 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Blocher <thomas.blocher@ek-dev.de>
+From: Mike Rapoport <rppt@kernel.org>
 
-[ Upstream commit 752f387faaae0ae2e84d3f496922524785e77d60 ]
+[ Upstream commit 0075df288dd8a7abfe03b3766176c393063591dd ]
 
-pinctrl-at91 currently does not support the gpio-groups devicetree
-property and has no pin-range.
-Because of this at91 gpios stopped working since patch
-commit 2ab73c6d8323fa1e ("gpio: Support GPIO controllers without pin-ranges")
-This was discussed in the patches
-commit fc328a7d1fcce263 ("gpio: Revert regression in sysfs-gpio (gpiolib.c)")
-commit 56e337f2cf132632 ("Revert "gpio: Revert regression in sysfs-gpio (gpiolib.c)"")
+Before commit 721f4a6526da ("mm/memblock: remove empty dummy entry") the
+check for non-zero of memblock.reserved.cnt in mmu_init() would always
+be true either because  memblock.reserved.cnt is initialized to 1 or
+because there were memory reservations earlier.
 
-As a workaround manually set pin-range via gpiochip_add_pin_range() until
-a) pinctrl-at91 is reworked to support devicetree gpio-groups
-b) another solution as mentioned in
-commit 56e337f2cf132632 ("Revert "gpio: Revert regression in sysfs-gpio (gpiolib.c)"")
-is found
+The removal of dummy empty entry in memblock caused this check to fail
+because now memblock.reserved.cnt is initialized to 0.
 
-Signed-off-by: Thomas Blocher <thomas.blocher@ek-dev.de>
-Link: https://lore.kernel.org/5b992862-355d-f0de-cd3d-ff99e67a4ff1@ek-dev.de
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Remove the check for non-zero of memblock.reserved.cnt because it's
+perfectly fine to have an empty memblock.reserved array that early in
+boot.
+
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Mike Rapoport <rppt@kernel.org>
+Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20240729053327.4091459-1-rppt@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-at91.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/microblaze/mm/init.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-at91.c b/drivers/pinctrl/pinctrl-at91.c
-index 39a55fd85b192..4e6e151db11f2 100644
---- a/drivers/pinctrl/pinctrl-at91.c
-+++ b/drivers/pinctrl/pinctrl-at91.c
-@@ -1398,8 +1398,11 @@ static int at91_pinctrl_probe(struct platform_device *pdev)
+diff --git a/arch/microblaze/mm/init.c b/arch/microblaze/mm/init.c
+index a015a951c8b78..0a190c55577e6 100644
+--- a/arch/microblaze/mm/init.c
++++ b/arch/microblaze/mm/init.c
+@@ -276,11 +276,6 @@ asmlinkage void __init mmu_init(void)
+ {
+ 	unsigned int kstart, ksize;
  
- 	/* We will handle a range of GPIO pins */
- 	for (i = 0; i < gpio_banks; i++)
--		if (gpio_chips[i])
-+		if (gpio_chips[i]) {
- 			pinctrl_add_gpio_range(info->pctl, &gpio_chips[i]->range);
-+			gpiochip_add_pin_range(&gpio_chips[i]->chip, dev_name(info->pctl->dev), 0,
-+				gpio_chips[i]->range.pin_base, gpio_chips[i]->range.npins);
-+		}
- 
- 	dev_info(&pdev->dev, "initialized AT91 pinctrl driver\n");
- 
+-	if (!memblock.reserved.cnt) {
+-		pr_emerg("Error memory count\n");
+-		machine_restart(NULL);
+-	}
+-
+ 	if ((u32) memblock.memory.regions[0].size < 0x400000) {
+ 		pr_emerg("Memory must be greater than 4MB\n");
+ 		machine_restart(NULL);
 -- 
 2.43.0
 
