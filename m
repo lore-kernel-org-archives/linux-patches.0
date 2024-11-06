@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A4C1DF726;
-	Wed,  6 Nov 2024 12:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7371DF726;
+	Wed,  6 Nov 2024 12:21:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895671; cv=none; b=fho2WcNbP2TRnmAhnx92LSkPYPyIQkfmpb/5Yu14JD46GTTLV2c0bS5jrcoeTLghGFIsY14NTcsQt4lZOVer5OtoSRuGtLIYmBtuMaJYARRicdTzhhZ8ZV/K/inmzwzVnDlGXJcX5AZFE+SR6Y/TYWf5hxx9cmoSRB/xf8nDqy0=
+	t=1730895674; cv=none; b=MA4NkeHpS3aFACiqPcShd3XAMg/aJlti4MCV0hjL/tNvE8AKbK8hOiTOdiGV0wrATjMy3WciymolY4kxj8MXGX77JI3d8y2p4s6a7U/RJZIPkImyCHfUY2TY430LsjpJ1jRTOHnHyRCyzV1qR/WCKSwgsqV//uFDTK1GE+3zjq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895671; c=relaxed/simple;
-	bh=XPI4VUzj/4UGHb2PNiaYIYrU8hqkBdyKks+aD097fsE=;
+	s=arc-20240116; t=1730895674; c=relaxed/simple;
+	bh=2KA22ImCm2U9VN/Ak1p3kjFs6ioyL6iUV4e9XgqfzoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=euzCMgMYK50A8HZkVLLF9+cDpm30o/Amu+LjfDsgtaQuBUsCitNsAgxhVze+9RZBpXMKM3OlQK7xaJrSomxD9JrmWhbzhsQAOkCs8eS/OKfWCv8cx0q7j8q93Usq3iEVXntwTlOlVAMUWmcpZmrHW2Yepg0+mHtCWFw6JC5RiHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ErsVHl9y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WpjORwXjw3yhF4iSK1jybFP4BDW6jzqeO0buvroms2eODvj/Cbvro54cjVweIOvV2Z+4z3id4TGILqCPG+2+j9VgajNlQXgZUqAyL+GexcPqjyO3YqBy27Bq0KYE5O/NnFJBOVKeBC9XyQEbFoUJRCk0pKyazApkhgcWn6rb2a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o33oKpYX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErsVHl9y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CA6C4CECD;
-	Wed,  6 Nov 2024 12:21:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o33oKpYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C38C4CECD;
+	Wed,  6 Nov 2024 12:21:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895671;
-	bh=XPI4VUzj/4UGHb2PNiaYIYrU8hqkBdyKks+aD097fsE=;
+	s=korg; t=1730895673;
+	bh=2KA22ImCm2U9VN/Ak1p3kjFs6ioyL6iUV4e9XgqfzoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ErsVHl9yClhiM8fYS7B3g2fs5uviGE1MzpStcmM2OIGziu8M8E71ktXFphqlHvoj+
-	 A8TQ5GpAfwg5UxgjbD/N7++JH+V5YM0O47rGKm9ZzJvb3AHOyb2Dml7fn3qLL7YlaD
-	 1gx+F6APMljY5gTltsqAnFyqaTCgqOQt5DjNj4MI=
+	b=o33oKpYXnC0FGjnSWLGh7m4Fkn3Pe4EQupN4J55bncZ2zmCJEP8jSOYOF3OxJpqJC
+	 D86BrFmJVmPQQlVirMrvxP7Ju9czlAK4iEp2g5oiaJL8DJEmi93+Ibst+PwBgIEnsk
+	 4ckOWzlmJw/JiSrQPnM1XwFbB/KLTSMhQ7kePgeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
+	Wang Hai <wanghai38@huawei.com>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 297/350] macsec: dont increment counters for an unrelated SA
-Date: Wed,  6 Nov 2024 13:03:45 +0100
-Message-ID: <20241106120328.147547435@linuxfoundation.org>
+Subject: [PATCH 4.19 298/350] net: ethernet: aeroflex: fix potential memory leak in greth_start_xmit_gbit()
+Date: Wed,  6 Nov 2024 13:03:46 +0100
+Message-ID: <20241106120328.169457904@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,81 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit cf58aefb1332db322060cad4a330d5f9292b0f41 ]
+[ Upstream commit cf57b5d7a2aad456719152ecd12007fe031628a3 ]
 
-On RX, we shouldn't be incrementing the stats for an arbitrary SA in
-case the actual SA hasn't been set up. Those counters are intended to
-track packets for their respective AN when the SA isn't currently
-configured. Due to the way MACsec is implemented, we don't keep
-counters unless the SA is configured, so we can't track those packets,
-and those counters will remain at 0.
+The greth_start_xmit_gbit() returns NETDEV_TX_OK without freeing skb
+in case of skb->len being too long, add dev_kfree_skb() to fix it.
 
-The RXSC's stats keeps track of those packets without telling us which
-AN they belonged to. We could add counters for non-existent SAs, and
-then find a way to integrate them in the dump to userspace, but I
-don't think it's worth the effort.
-
-Fixes: 91ec9bd57f35 ("macsec: Fix traffic counters/statistics")
-Reported-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/f5ac92aaa5b89343232615f4c03f9f95042c6aa0.1728657709.git.sd@queasysnail.net
+Fixes: d4c41139df6e ("net: Add Aeroflex Gaisler 10/100/1G Ethernet MAC driver")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Reviewed-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Link: https://patch.msgid.link/20241012110434.49265-1-wanghai38@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macsec.c | 18 ------------------
- 1 file changed, 18 deletions(-)
+ drivers/net/ethernet/aeroflex/greth.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
-index 54b19977fb675..d870a168caba0 100644
---- a/drivers/net/macsec.c
-+++ b/drivers/net/macsec.c
-@@ -322,19 +322,6 @@ static struct macsec_rx_sa *macsec_rxsa_get(struct macsec_rx_sa __rcu *ptr)
- 	return sa;
- }
+diff --git a/drivers/net/ethernet/aeroflex/greth.c b/drivers/net/ethernet/aeroflex/greth.c
+index 4df8da8f5e7e3..59690330d81ca 100644
+--- a/drivers/net/ethernet/aeroflex/greth.c
++++ b/drivers/net/ethernet/aeroflex/greth.c
+@@ -488,7 +488,7 @@ greth_start_xmit_gbit(struct sk_buff *skb, struct net_device *dev)
  
--static struct macsec_rx_sa *macsec_active_rxsa_get(struct macsec_rx_sc *rx_sc)
--{
--	struct macsec_rx_sa *sa = NULL;
--	int an;
--
--	for (an = 0; an < MACSEC_NUM_AN; an++)	{
--		sa = macsec_rxsa_get(rx_sc->sa[an]);
--		if (sa)
--			break;
--	}
--	return sa;
--}
--
- static void free_rx_sc_rcu(struct rcu_head *head)
- {
- 	struct macsec_rx_sc *rx_sc = container_of(head, struct macsec_rx_sc, rcu_head);
-@@ -1206,15 +1193,12 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 		/* If validateFrames is Strict or the C bit in the
- 		 * SecTAG is set, discard
- 		 */
--		struct macsec_rx_sa *active_rx_sa = macsec_active_rxsa_get(rx_sc);
- 		if (hdr->tci_an & MACSEC_TCI_C ||
- 		    secy->validate_frames == MACSEC_VALIDATE_STRICT) {
- 			u64_stats_update_begin(&rxsc_stats->syncp);
- 			rxsc_stats->stats.InPktsNotUsingSA++;
- 			u64_stats_update_end(&rxsc_stats->syncp);
- 			DEV_STATS_INC(secy->netdev, rx_errors);
--			if (active_rx_sa)
--				this_cpu_inc(active_rx_sa->stats->InPktsNotUsingSA);
- 			goto drop_nosa;
- 		}
- 
-@@ -1224,8 +1208,6 @@ static rx_handler_result_t macsec_handle_frame(struct sk_buff **pskb)
- 		u64_stats_update_begin(&rxsc_stats->syncp);
- 		rxsc_stats->stats.InPktsUnusedSA++;
- 		u64_stats_update_end(&rxsc_stats->syncp);
--		if (active_rx_sa)
--			this_cpu_inc(active_rx_sa->stats->InPktsUnusedSA);
- 		goto deliver;
+ 	if (unlikely(skb->len > MAX_FRAME_SIZE)) {
+ 		dev->stats.tx_errors++;
+-		goto out;
++		goto len_error;
  	}
  
+ 	/* Save skb pointer. */
+@@ -579,6 +579,7 @@ greth_start_xmit_gbit(struct sk_buff *skb, struct net_device *dev)
+ map_error:
+ 	if (net_ratelimit())
+ 		dev_warn(greth->dev, "Could not create TX DMA mapping\n");
++len_error:
+ 	dev_kfree_skb(skb);
+ out:
+ 	return err;
 -- 
 2.43.0
 
