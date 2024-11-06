@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BDB1F429C;
-	Wed,  6 Nov 2024 12:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373F21E00AF;
+	Wed,  6 Nov 2024 12:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897548; cv=none; b=OXn7VvrR6u/EcY8krl96CHB/0D+oPpPv57PE3DrjM1FcRKRfB20mrG7dJAMfR+mx62TDy7ws92LuDIFW7VuI2HCKEhSVVL7tZshqRMAX3m2yOsomZ4pYmWoc5UjXKCdYV3iqFlYOrVLWd+CToCR3ZzNWWfpAEELwmN6PYZNmgzg=
+	t=1730897551; cv=none; b=X+pTgF1oC7cf8aqLFAls+T4rGHCR+DHQZ9Habln3iZDqeXwwhY0jiHWHjMm5zFMpNvB6dd77Kx9EU7hZljcxp11Pob6kONoOsGlQgZVUAM+B+YOKjwFD+ZsmyLU0AaLsnyo5bL9xVpu0wTkyhxU+6+ieui/y8HEuwz3r8Xsc1Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897548; c=relaxed/simple;
-	bh=GnXqGs2j03QtY9grWr6b1xIEXz/rgbTMPjoaOaM4xMU=;
+	s=arc-20240116; t=1730897551; c=relaxed/simple;
+	bh=a1oGouZm+owF+YeDcJr385s8DDEUnDJ/7UlE1hbU9Qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qc1oiEpzkhOAVk2jCac5QB4Plf9dBe+ZBdf970DRbl1SG3t1ilM9/13/WnnHf+Z2vy8+hKfC0y99To7mP7VrmOj5dtQxaDLDKoqbxzvElDUtgQkG0jcJiqym9MYmXHSZCPK4hw4dzRUSMbYGT0+KBydHfdVxl5l2SPMbjDi3Jdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c3cgyV4I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UC4HYv5xeXPYqsHI6/F6Na5ZwahJ90ukqJJOSzGvUgr0sob2ztGePlmxD6b/R2iTzr+UWSq6LU6eJIy1PfNDk6rgKAiuBgMCmt7swVPbwNiAgCijTgkF+U1RRjo5XL2FQSN09xgKPXLYpKQyZ4ixTiD9iy/8L4SY8XzF085SMLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tONd4pr+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c3cgyV4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94729C4CECD;
-	Wed,  6 Nov 2024 12:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tONd4pr+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F27C4CECD;
+	Wed,  6 Nov 2024 12:52:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897548;
-	bh=GnXqGs2j03QtY9grWr6b1xIEXz/rgbTMPjoaOaM4xMU=;
+	s=korg; t=1730897551;
+	bh=a1oGouZm+owF+YeDcJr385s8DDEUnDJ/7UlE1hbU9Qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c3cgyV4IHOnOJB5hJpBxBdgZK0SsyvQzg1l+1BZWDTP7cEwMXTvegvOL52Q2Adokc
-	 J2iKZWGBJBeofu+sRrV8i0C/0qwc5kujg92bbAw47YfZYgd03WbEyR/nEI2rtnimUc
-	 ioGZhNY7+g9/L2qDltAmRD7fbdwlWORXs3cdFY/c=
+	b=tONd4pr+lpNRyJHgUIciR6t9+/KOMdIQnjZ/2KyUl28qxGF9FnesfKroE81y+TZ97
+	 NslvFfzlJ1csjd/qvpulmNwJk8DABLC8RmbsjDREYc+ZyMuEpoYbHnA2Nj6C6zZ5o3
+	 rAuXKTtEOILBBZRM6TlGupBOYn/pFYeaWFX7tuas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Liaw <edliaw@google.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Peter Xu <peterx@redhat.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 091/151] Revert "selftests/mm: replace atomic_bool with pthread_barrier_t"
-Date: Wed,  6 Nov 2024 13:04:39 +0100
-Message-ID: <20241106120311.376731802@linuxfoundation.org>
+	syzbot+2388cdaeb6b10f0c13ac@syzkaller.appspotmail.com,
+	syzbot+17ca2339e34a1d863aad@syzkaller.appspotmail.com,
+	syzbot+c793a7eca38803212c61@syzkaller.appspotmail.com,
+	syzbot+1e6e0b916b211bee1bd6@syzkaller.appspotmail.com,
+	kernel test robot <oliver.sang@intel.com>,
+	Marcello Sylvester Bauer <sylv@sylv.io>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	syzbot+edd9fe0d3a65b14588d5@syzkaller.appspotmail.com,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 074/151] usb: gadget: dummy_hcd: execute hrtimer callback in softirq context
+Date: Wed,  6 Nov 2024 13:04:22 +0100
+Message-ID: <20241106120310.885706497@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -53,114 +57,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Liaw <edliaw@google.com>
+From: Andrey Konovalov <andreyknvl@gmail.com>
 
-commit 3673167a3a07f25b3f06754d69f406edea65543a upstream.
+[ Upstream commit 9313d139aa25e572d860f6f673b73a20f32d7f93 ]
 
-This reverts commit e61ef21e27e8deed8c474e9f47f4aa7bc37e138c.
+Commit a7f3813e589f ("usb: gadget: dummy_hcd: Switch to hrtimer transfer
+scheduler") switched dummy_hcd to use hrtimer and made the timer's
+callback be executed in the hardirq context.
 
-uffd_poll_thread may be called by other tests that do not initialize the
-pthread_barrier, so this approach is not correct.  This will revert to
-using atomic_bool instead.
+With that change, __usb_hcd_giveback_urb now gets executed in the hardirq
+context, which causes problems for KCOV and KMSAN.
 
-Link: https://lkml.kernel.org/r/20241018171734.2315053-3-edliaw@google.com
-Fixes: e61ef21e27e8 ("selftests/mm: replace atomic_bool with pthread_barrier_t")
-Signed-off-by: Edward Liaw <edliaw@google.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+One problem is that KCOV now is unable to collect coverage from
+the USB code that gets executed from the dummy_hcd's timer callback,
+as KCOV cannot collect coverage in the hardirq context.
+
+Another problem is that the dummy_hcd hrtimer might get triggered in the
+middle of a softirq with KCOV remote coverage collection enabled, and that
+causes a WARNING in KCOV, as reported by syzbot. (I sent a separate patch
+to shut down this WARNING, but that doesn't fix the other two issues.)
+
+Finally, KMSAN appears to ignore tracking memory copying operations
+that happen in the hardirq context, which causes false positive
+kernel-infoleaks, as reported by syzbot.
+
+Change the hrtimer in dummy_hcd to execute the callback in the softirq
+context.
+
+Reported-by: syzbot+2388cdaeb6b10f0c13ac@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2388cdaeb6b10f0c13ac
+Reported-by: syzbot+17ca2339e34a1d863aad@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=17ca2339e34a1d863aad
+Reported-by: syzbot+c793a7eca38803212c61@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=c793a7eca38803212c61
+Reported-by: syzbot+1e6e0b916b211bee1bd6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1e6e0b916b211bee1bd6
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202406141323.413a90d2-lkp@intel.com
+Fixes: a7f3813e589f ("usb: gadget: dummy_hcd: Switch to hrtimer transfer scheduler")
+Cc: stable@vger.kernel.org
+Acked-by: Marcello Sylvester Bauer <sylv@sylv.io>
+Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
+Reported-by: syzbot+edd9fe0d3a65b14588d5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=edd9fe0d3a65b14588d5
+Link: https://lore.kernel.org/r/20240904013051.4409-1-andrey.konovalov@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/uffd-common.c     |    5 ++---
- tools/testing/selftests/mm/uffd-common.h     |    3 ++-
- tools/testing/selftests/mm/uffd-unit-tests.c |   14 ++++++--------
- 3 files changed, 10 insertions(+), 12 deletions(-)
+ drivers/usb/gadget/udc/dummy_hcd.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/tools/testing/selftests/mm/uffd-common.c
-+++ b/tools/testing/selftests/mm/uffd-common.c
-@@ -17,7 +17,7 @@ bool map_shared;
- bool test_uffdio_wp = true;
- unsigned long long *count_verify;
- uffd_test_ops_t *uffd_test_ops;
--pthread_barrier_t ready_for_fork;
-+atomic_bool ready_for_fork;
+diff --git a/drivers/usb/gadget/udc/dummy_hcd.c b/drivers/usb/gadget/udc/dummy_hcd.c
+index f37b0d8386c1a..ff7bee78bcc49 100644
+--- a/drivers/usb/gadget/udc/dummy_hcd.c
++++ b/drivers/usb/gadget/udc/dummy_hcd.c
+@@ -1304,7 +1304,8 @@ static int dummy_urb_enqueue(
  
- static int uffd_mem_fd_create(off_t mem_size, bool hugetlb)
+ 	/* kick the scheduler, it'll do the rest */
+ 	if (!hrtimer_active(&dum_hcd->timer))
+-		hrtimer_start(&dum_hcd->timer, ns_to_ktime(DUMMY_TIMER_INT_NSECS), HRTIMER_MODE_REL);
++		hrtimer_start(&dum_hcd->timer, ns_to_ktime(DUMMY_TIMER_INT_NSECS),
++				HRTIMER_MODE_REL_SOFT);
+ 
+  done:
+ 	spin_unlock_irqrestore(&dum_hcd->dum->lock, flags);
+@@ -1325,7 +1326,7 @@ static int dummy_urb_dequeue(struct usb_hcd *hcd, struct urb *urb, int status)
+ 	rc = usb_hcd_check_unlink_urb(hcd, urb, status);
+ 	if (!rc && dum_hcd->rh_state != DUMMY_RH_RUNNING &&
+ 			!list_empty(&dum_hcd->urbp_list))
+-		hrtimer_start(&dum_hcd->timer, ns_to_ktime(0), HRTIMER_MODE_REL);
++		hrtimer_start(&dum_hcd->timer, ns_to_ktime(0), HRTIMER_MODE_REL_SOFT);
+ 
+ 	spin_unlock_irqrestore(&dum_hcd->dum->lock, flags);
+ 	return rc;
+@@ -1995,7 +1996,8 @@ static enum hrtimer_restart dummy_timer(struct hrtimer *t)
+ 		dum_hcd->udev = NULL;
+ 	} else if (dum_hcd->rh_state == DUMMY_RH_RUNNING) {
+ 		/* want a 1 msec delay here */
+-		hrtimer_start(&dum_hcd->timer, ns_to_ktime(DUMMY_TIMER_INT_NSECS), HRTIMER_MODE_REL);
++		hrtimer_start(&dum_hcd->timer, ns_to_ktime(DUMMY_TIMER_INT_NSECS),
++				HRTIMER_MODE_REL_SOFT);
+ 	}
+ 
+ 	spin_unlock_irqrestore(&dum->lock, flags);
+@@ -2389,7 +2391,7 @@ static int dummy_bus_resume(struct usb_hcd *hcd)
+ 		dum_hcd->rh_state = DUMMY_RH_RUNNING;
+ 		set_link_state(dum_hcd);
+ 		if (!list_empty(&dum_hcd->urbp_list))
+-			hrtimer_start(&dum_hcd->timer, ns_to_ktime(0), HRTIMER_MODE_REL);
++			hrtimer_start(&dum_hcd->timer, ns_to_ktime(0), HRTIMER_MODE_REL_SOFT);
+ 		hcd->state = HC_STATE_RUNNING;
+ 	}
+ 	spin_unlock_irq(&dum_hcd->dum->lock);
+@@ -2467,7 +2469,7 @@ static DEVICE_ATTR_RO(urbs);
+ 
+ static int dummy_start_ss(struct dummy_hcd *dum_hcd)
  {
-@@ -508,8 +508,7 @@ void *uffd_poll_thread(void *arg)
- 	pollfd[1].fd = pipefd[cpu*2];
- 	pollfd[1].events = POLLIN;
+-	hrtimer_init(&dum_hcd->timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
++	hrtimer_init(&dum_hcd->timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
+ 	dum_hcd->timer.function = dummy_timer;
+ 	dum_hcd->rh_state = DUMMY_RH_RUNNING;
+ 	dum_hcd->stream_en_ep = 0;
+@@ -2497,7 +2499,7 @@ static int dummy_start(struct usb_hcd *hcd)
+ 		return dummy_start_ss(dum_hcd);
  
--	/* Ready for parent thread to fork */
--	pthread_barrier_wait(&ready_for_fork);
-+	ready_for_fork = true;
+ 	spin_lock_init(&dum_hcd->dum->lock);
+-	hrtimer_init(&dum_hcd->timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
++	hrtimer_init(&dum_hcd->timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL_SOFT);
+ 	dum_hcd->timer.function = dummy_timer;
+ 	dum_hcd->rh_state = DUMMY_RH_RUNNING;
  
- 	for (;;) {
- 		ret = poll(pollfd, 2, -1);
---- a/tools/testing/selftests/mm/uffd-common.h
-+++ b/tools/testing/selftests/mm/uffd-common.h
-@@ -33,6 +33,7 @@
- #include <inttypes.h>
- #include <stdint.h>
- #include <sys/random.h>
-+#include <stdatomic.h>
- 
- #include "../kselftest.h"
- #include "vm_util.h"
-@@ -98,7 +99,7 @@ extern bool map_shared;
- extern bool test_uffdio_wp;
- extern unsigned long long *count_verify;
- extern volatile bool test_uffdio_copy_eexist;
--extern pthread_barrier_t ready_for_fork;
-+extern atomic_bool ready_for_fork;
- 
- extern uffd_test_ops_t anon_uffd_test_ops;
- extern uffd_test_ops_t shmem_uffd_test_ops;
---- a/tools/testing/selftests/mm/uffd-unit-tests.c
-+++ b/tools/testing/selftests/mm/uffd-unit-tests.c
-@@ -770,7 +770,7 @@ static void uffd_sigbus_test_common(bool
- 	char c;
- 	struct uffd_args args = { 0 };
- 
--	pthread_barrier_init(&ready_for_fork, NULL, 2);
-+	ready_for_fork = false;
- 
- 	fcntl(uffd, F_SETFL, uffd_flags | O_NONBLOCK);
- 
-@@ -787,9 +787,8 @@ static void uffd_sigbus_test_common(bool
- 	if (pthread_create(&uffd_mon, NULL, uffd_poll_thread, &args))
- 		err("uffd_poll_thread create");
- 
--	/* Wait for child thread to start before forking */
--	pthread_barrier_wait(&ready_for_fork);
--	pthread_barrier_destroy(&ready_for_fork);
-+	while (!ready_for_fork)
-+		; /* Wait for the poll_thread to start executing before forking */
- 
- 	pid = fork();
- 	if (pid < 0)
-@@ -830,7 +829,7 @@ static void uffd_events_test_common(bool
- 	char c;
- 	struct uffd_args args = { 0 };
- 
--	pthread_barrier_init(&ready_for_fork, NULL, 2);
-+	ready_for_fork = false;
- 
- 	fcntl(uffd, F_SETFL, uffd_flags | O_NONBLOCK);
- 	if (uffd_register(uffd, area_dst, nr_pages * page_size,
-@@ -841,9 +840,8 @@ static void uffd_events_test_common(bool
- 	if (pthread_create(&uffd_mon, NULL, uffd_poll_thread, &args))
- 		err("uffd_poll_thread create");
- 
--	/* Wait for child thread to start before forking */
--	pthread_barrier_wait(&ready_for_fork);
--	pthread_barrier_destroy(&ready_for_fork);
-+	while (!ready_for_fork)
-+		; /* Wait for the poll_thread to start executing before forking */
- 
- 	pid = fork();
- 	if (pid < 0)
+-- 
+2.43.0
+
 
 
