@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BEB1EE000;
-	Wed,  6 Nov 2024 12:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FF01F8EE2;
+	Wed,  6 Nov 2024 12:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897174; cv=none; b=mJIxhj7O0LymUMXdg3GhAnuNc48IldzAYzAJKjMaFz1wmBDouYVnKT7/V1BCColedWK12CiuCL18wQanQvL0M1zKs2FDCDilcmQk+CWacDV1oRcpAe2VOuNqOyG8w0pIZx42IZgIvRkcnfAQBdm3KNo1hTgCrbDzl0wDq4YZD5I=
+	t=1730897176; cv=none; b=C0IlIktn4cgiPFtAOujlEx2p6bqdSFD3TD5bgEtE8g0comx4rXt0uESvirHxB/k5d6yjMVVFxxdFnErCKqugK3iywmDAn++wfumlXcRecZppUnsfMRTLEF0TzLCgudW/AUtbk1sDHe5H4bP/g2Clysm9UGquPQBbkbbrWObD6Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897174; c=relaxed/simple;
-	bh=2NtUrv9ChmTUalaRZQl7vpGktFezvnbqoD41Q5OWFK0=;
+	s=arc-20240116; t=1730897176; c=relaxed/simple;
+	bh=MOXMkAh6d0ZruBnrK7+RuVH4x0ZJddS8JQL2Fwjp4zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hnu0Y2uHPAjH5t30Mn8tFIth9NCDZ/Y63gqngLzrtTBBZzC3hTdI+meltgXIVpR1PQRYk0SR/cAM10nenexj75Il4ifZYAuvES0w3ARcmYRGQTA3wIlFw9F04Z5MQfFBOGvklU3EiB/s/KDVHFzZhv+k8x4aC++753xmiI14EBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFkzuESp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s8+cHWybI0Tu3P77DyVDd9vWiAB872SE2wMKpqSB3iA6PFjGkCmedu30VmG166Me2wkLsRnlJ5SzF9U+GSqzf1/BIKLdUpiCQOv7eKVWoccs+FoD5bFk1j5kLIIDtw7DljGZRie6HsSzYp/AgNFMc4IaQRmNtbFMIFLaYMk9k9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbeVxlPZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFkzuESp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76114C4CECD;
-	Wed,  6 Nov 2024 12:46:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbeVxlPZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 581BFC4CECD;
+	Wed,  6 Nov 2024 12:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897173;
-	bh=2NtUrv9ChmTUalaRZQl7vpGktFezvnbqoD41Q5OWFK0=;
+	s=korg; t=1730897176;
+	bh=MOXMkAh6d0ZruBnrK7+RuVH4x0ZJddS8JQL2Fwjp4zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fFkzuESpUkY4Y6NTcXe3Ld+cLKrD8CNO/pkX2o7T5621+EzGQVlEixGC5fLhQsBJ6
-	 1ukzsEni0nyjneUXnohhfEA73M6Zc2JxZRWQeip/uAGtD5LJna80C7at/iitDg9NlC
-	 1PHGOkKxFapGBnTWNInRAUHTKuivTtBnrBMKwysk=
+	b=TbeVxlPZPA62iQASfOS0ziGsn31S87T4kM/g+HACHbS46642sJTK9hx1d8odjhQ7T
+	 /Z/VOuP9QRqsk9mAFfc3snYf9NBa3ceZrqqQvBWjNs0hpXWVqgh/1iXIf0zdPBwOMX
+	 Zz4vYsQaXW5leG9U2+EDq8C9AhZJDP3wFAuIVHsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -35,9 +35,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thierry Reding <thierry.reding@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/126] mm/page_alloc: treat RT tasks similar to __GFP_HIGH
-Date: Wed,  6 Nov 2024 13:04:52 +0100
-Message-ID: <20241106120308.530528229@linuxfoundation.org>
+Subject: [PATCH 6.1 092/126] mm/page_alloc: explicitly record high-order atomic allocations in alloc_flags
+Date: Wed,  6 Nov 2024 13:04:53 +0100
+Message-ID: <20241106120308.555174241@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -58,25 +58,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Mel Gorman <mgorman@techsingularity.net>
 
-[ Upstream commit c988dcbecf3fd5430921eaa3fe9054754f76d185 ]
+[ Upstream commit eb2e2b425c6984ca8034448a3f2c680622bd3d4d ]
 
-RT tasks are allowed to dip below the min reserve but ALLOC_HARDER is
-typically combined with ALLOC_MIN_RESERVE so RT tasks are a little
-unusual.  While there is some justification for allowing RT tasks access
-to memory reserves, there is a strong chance that a RT task that is also
-under memory pressure is at risk of missing deadlines anyway.  Relax how
-much reserves an RT task can access by treating it the same as __GFP_HIGH
-allocations.
+A high-order ALLOC_HARDER allocation is assumed to be atomic.  While that
+is accurate, it changes later in the series.  In preparation, explicitly
+record high-order atomic allocations in gfp_to_alloc_flags().
 
-Note that in a future kernel release that the RT special casing will be
-removed.  Hard realtime tasks should be locking down resources in advance
-and ensuring enough memory is available.  Even a soft-realtime task like
-audio or video live decoding which cannot jitter should be allocating both
-memory and any disk space required up-front before the recording starts
-instead of relying on reserves.  At best, reserve access will only delay
-the problem by a very short interval.
-
-Link: https://lkml.kernel.org/r/20230113111217.14134-3-mgorman@techsingularity.net
+Link: https://lkml.kernel.org/r/20230113111217.14134-4-mgorman@techsingularity.net
 Signed-off-by: Mel Gorman <mgorman@techsingularity.net>
 Acked-by: Vlastimil Babka <vbabka@suse.cz>
 Acked-by: Michal Hocko <mhocko@suse.com>
@@ -87,22 +75,102 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 281dd25c1a01 ("mm/page_alloc: let GFP_ATOMIC order-0 allocs access highatomic reserves")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/internal.h   |  1 +
+ mm/page_alloc.c | 29 +++++++++++++++++++++++------
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
+diff --git a/mm/internal.h b/mm/internal.h
+index 1be79a5147549..f0f6198462cc1 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -765,6 +765,7 @@ unsigned int reclaim_clean_pages_from_list(struct zone *zone,
+ #else
+ #define ALLOC_NOFRAGMENT	  0x0
+ #endif
++#define ALLOC_HIGHATOMIC	0x200 /* Allows access to MIGRATE_HIGHATOMIC */
+ #define ALLOC_KSWAPD		0x800 /* allow waking of kswapd, __GFP_KSWAPD_RECLAIM set */
+ 
+ enum ttu_flags;
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index f5b870780d3fd..e78ab23eb1743 100644
+index e78ab23eb1743..8e1f4d779b26c 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -4854,7 +4854,7 @@ gfp_to_alloc_flags(gfp_t gfp_mask)
+@@ -3713,10 +3713,20 @@ struct page *rmqueue_buddy(struct zone *preferred_zone, struct zone *zone,
+ 		 * reserved for high-order atomic allocation, so order-0
+ 		 * request should skip it.
  		 */
- 		alloc_flags &= ~ALLOC_CPUSET;
- 	} else if (unlikely(rt_task(current)) && in_task())
--		alloc_flags |= ALLOC_HARDER;
-+		alloc_flags |= ALLOC_MIN_RESERVE;
+-		if (order > 0 && alloc_flags & ALLOC_HARDER)
++		if (alloc_flags & ALLOC_HIGHATOMIC)
+ 			page = __rmqueue_smallest(zone, order, MIGRATE_HIGHATOMIC);
+ 		if (!page) {
+ 			page = __rmqueue(zone, order, migratetype, alloc_flags);
++
++			/*
++			 * If the allocation fails, allow OOM handling access
++			 * to HIGHATOMIC reserves as failing now is worse than
++			 * failing a high-order atomic allocation in the
++			 * future.
++			 */
++			if (!page && (alloc_flags & ALLOC_OOM))
++				page = __rmqueue_smallest(zone, order, MIGRATE_HIGHATOMIC);
++
+ 			if (!page) {
+ 				spin_unlock_irqrestore(&zone->lock, flags);
+ 				return NULL;
+@@ -4030,8 +4040,10 @@ bool __zone_watermark_ok(struct zone *z, unsigned int order, unsigned long mark,
+ 			return true;
+ 		}
+ #endif
+-		if (alloc_harder && !free_area_empty(area, MIGRATE_HIGHATOMIC))
++		if ((alloc_flags & (ALLOC_HIGHATOMIC|ALLOC_OOM)) &&
++		    !free_area_empty(area, MIGRATE_HIGHATOMIC)) {
+ 			return true;
++		}
+ 	}
+ 	return false;
+ }
+@@ -4293,7 +4305,7 @@ get_page_from_freelist(gfp_t gfp_mask, unsigned int order, int alloc_flags,
+ 			 * If this is a high-order atomic allocation then check
+ 			 * if the pageblock should be reserved for the future
+ 			 */
+-			if (unlikely(order && (alloc_flags & ALLOC_HARDER)))
++			if (unlikely(alloc_flags & ALLOC_HIGHATOMIC))
+ 				reserve_highatomic_pageblock(page, zone, order);
  
- 	alloc_flags = gfp_to_alloc_flags_cma(gfp_mask, alloc_flags);
+ 			return page;
+@@ -4820,7 +4832,7 @@ static void wake_all_kswapds(unsigned int order, gfp_t gfp_mask,
+ }
  
+ static inline unsigned int
+-gfp_to_alloc_flags(gfp_t gfp_mask)
++gfp_to_alloc_flags(gfp_t gfp_mask, unsigned int order)
+ {
+ 	unsigned int alloc_flags = ALLOC_WMARK_MIN | ALLOC_CPUSET;
+ 
+@@ -4846,8 +4858,13 @@ gfp_to_alloc_flags(gfp_t gfp_mask)
+ 		 * Not worth trying to allocate harder for __GFP_NOMEMALLOC even
+ 		 * if it can't schedule.
+ 		 */
+-		if (!(gfp_mask & __GFP_NOMEMALLOC))
++		if (!(gfp_mask & __GFP_NOMEMALLOC)) {
+ 			alloc_flags |= ALLOC_HARDER;
++
++			if (order > 0)
++				alloc_flags |= ALLOC_HIGHATOMIC;
++		}
++
+ 		/*
+ 		 * Ignore cpuset mems for GFP_ATOMIC rather than fail, see the
+ 		 * comment for __cpuset_node_allowed().
+@@ -5056,7 +5073,7 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
+ 	 * kswapd needs to be woken up, and to avoid the cost of setting up
+ 	 * alloc_flags precisely. So we do that now.
+ 	 */
+-	alloc_flags = gfp_to_alloc_flags(gfp_mask);
++	alloc_flags = gfp_to_alloc_flags(gfp_mask, order);
+ 
+ 	/*
+ 	 * We need to recalculate the starting point for the zonelist iterator
 -- 
 2.43.0
 
