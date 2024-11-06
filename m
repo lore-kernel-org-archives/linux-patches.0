@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED0B1DF24B;
-	Wed,  6 Nov 2024 12:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74B61DED58;
+	Wed,  6 Nov 2024 12:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895924; cv=none; b=JDTmSdGJoZuqIeS0yhs3z88dLNjOMCc5LVZa78+vsGAsENBG7mY12CdHiq2aphBndex+25fZRGU046H9MGpI9FZgKGXbtJf1Z+nee6Ij4iVvnbnDtJi0iOuCfGNvpwlv0vpSgkvBG0SOLoPbj3ZcSU1nA2sM1Ny4a1tItsEwX4I=
+	t=1730895927; cv=none; b=ek75j3N4TUl8dmj0oyClEAfMAqEA38dGkU6tRv4NDagXvyHFX/5+tlfPlU6KVIPh8YUj3CAjJRwtZFgC7svuKFrl0FVOxbASb+sxuowpI1mbT+Ltf7/wIrscb84F7XV5TKyKmIomekfXJaV4N6CWjKIhyA+ShdSULDOTTvdYK9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895924; c=relaxed/simple;
-	bh=JdaL0tCPLl0iYP3TKNTf692K2xzyIIo2fV0W1+YQa78=;
+	s=arc-20240116; t=1730895927; c=relaxed/simple;
+	bh=7oznihawD9c5e+4wOcQPLTJVy10phO5BJ7Lo/9USejU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QcjQ6KsWP8wOry7KTb3OybgHqtwsuWncNkBXCBULINM90HpWtNHYpnDnOjWCDt0QYYJ8eCnjlvWBMB+CLQX4+y1bOFM+r1FZuYWgPUAD1lfXSA/BEOQp6G2SOE7eoxnnuHoVpg78EW60m7XFo/w9L1kOpotIdt9U7cD3szjqNK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n67Y5QkE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZmYUSbWUSnhJwBihqqXOBe6JFS0wVVoR35VzJT/Xjp9iyof0sNQKNd9eGoTIEZBWgDU3e1HmMIeRwwQpO7zDfllk+lWXZf4UOiVjlIuQ/iIyg/MAbNXjb+x8vfv/0HIVn3hM8ZBHCL9iBsWGjXzXpuksQ2xmAmzr/f+MR0P3QUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gj/Hie5L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n67Y5QkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2126C4CECD;
-	Wed,  6 Nov 2024 12:25:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gj/Hie5L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7517C4CECD;
+	Wed,  6 Nov 2024 12:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895924;
-	bh=JdaL0tCPLl0iYP3TKNTf692K2xzyIIo2fV0W1+YQa78=;
+	s=korg; t=1730895927;
+	bh=7oznihawD9c5e+4wOcQPLTJVy10phO5BJ7Lo/9USejU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n67Y5QkEDxSWecbssDPATIZXY8Q9sJ66uFz+7xWwm5hzG45iXQiWE3U0oe7KH/IXK
-	 gMqCkeFBUus5rn8IluiHH1SvtOA6fClLBRxFmNujF40Z++icZDh1m/NG1CDn/mTLlU
-	 WpgY7jytrNfKaVRJ0AXKvFAcBR3xapu5cvQkaUes=
+	b=gj/Hie5Lf70lqFlm8So4BEjNBnk+kwa7dvLO7NVor8omWNHXy19ME4iqWRDjWRbl9
+	 N2nFioVzDSg3CqU/p29ktlEMNQgDNojOP3YIwKCxMiV1g3SY9T/xCV6h8PZL+9A+Kl
+	 7DgHL7oI386xoQ2W8qMJRsc0VojU8xG9TPOzU9Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
+	Wander Lairson Costa <wander@redhat.com>,
+	Yuying Ma <yuma@redhat.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 003/245] cgroup: Fix potential overflow issue when checking max_depth
-Date: Wed,  6 Nov 2024 13:00:56 +0100
-Message-ID: <20241106120319.326880101@linuxfoundation.org>
+Subject: [PATCH 6.11 030/245] igb: Disable threaded IRQ for igb_msix_other
+Date: Wed,  6 Nov 2024 13:01:23 +0100
+Message-ID: <20241106120319.970840571@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -46,61 +50,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit 3cc4e13bb1617f6a13e5e6882465984148743cf4 ]
+[ Upstream commit 338c4d3902feb5be49bfda530a72c7ab860e2c9f ]
 
-cgroup.max.depth is the maximum allowed descent depth below the current
-cgroup. If the actual descent depth is equal or larger, an attempt to
-create a new child cgroup will fail. However due to the cgroup->max_depth
-is of int type and having the default value INT_MAX, the condition
-'level > cgroup->max_depth' will never be satisfied, and it will cause
-an overflow of the level after it reaches to INT_MAX.
+During testing of SR-IOV, Red Hat QE encountered an issue where the
+ip link up command intermittently fails for the igbvf interfaces when
+using the PREEMPT_RT variant. Investigation revealed that
+e1000_write_posted_mbx returns an error due to the lack of an ACK
+from e1000_poll_for_ack.
 
-Fix it by starting the level from 0 and using '>=' instead.
+The underlying issue arises from the fact that IRQs are threaded by
+default under PREEMPT_RT. While the exact hardware details are not
+available, it appears that the IRQ handled by igb_msix_other must
+be processed before e1000_poll_for_ack times out. However,
+e1000_write_posted_mbx is called with preemption disabled, leading
+to a scenario where the IRQ is serviced only after the failure of
+e1000_write_posted_mbx.
 
-It's worth mentioning that this issue is unlikely to occur in reality,
-as it's impossible to have a depth of INT_MAX hierarchy, but should be
-be avoided logically.
+To resolve this, we set IRQF_NO_THREAD for the affected interrupt,
+ensuring that the kernel handles it immediately, thereby preventing
+the aforementioned error.
 
-Fixes: 1a926e0bbab8 ("cgroup: implement hierarchy limits")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Reproducer:
+
+    #!/bin/bash
+
+    # echo 2 > /sys/class/net/ens14f0/device/sriov_numvfs
+    ipaddr_vlan=3
+    nic_test=ens14f0
+    vf=${nic_test}v0
+
+    while true; do
+	    ip link set ${nic_test} mtu 1500
+	    ip link set ${vf} mtu 1500
+	    ip link set $vf up
+	    ip link set ${nic_test} vf 0 vlan ${ipaddr_vlan}
+	    ip addr add 172.30.${ipaddr_vlan}.1/24 dev ${vf}
+	    ip addr add 2021:db8:${ipaddr_vlan}::1/64 dev ${vf}
+	    if ! ip link show $vf | grep 'state UP'; then
+		    echo 'Error found'
+		    break
+	    fi
+	    ip link set $vf down
+    done
+
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
+Reported-by: Yuying Ma <yuma@redhat.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index c8e4b62b436a4..6ba7dd2ab771d 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -5722,7 +5722,7 @@ static bool cgroup_check_hierarchy_limits(struct cgroup *parent)
- {
- 	struct cgroup *cgroup;
- 	int ret = false;
--	int level = 1;
-+	int level = 0;
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index f1d0881687233..b83df5f94b1f5 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -907,7 +907,7 @@ static int igb_request_msix(struct igb_adapter *adapter)
+ 	int i, err = 0, vector = 0, free_vector = 0;
  
- 	lockdep_assert_held(&cgroup_mutex);
+ 	err = request_irq(adapter->msix_entries[vector].vector,
+-			  igb_msix_other, 0, netdev->name, adapter);
++			  igb_msix_other, IRQF_NO_THREAD, netdev->name, adapter);
+ 	if (err)
+ 		goto err_out;
  
-@@ -5730,7 +5730,7 @@ static bool cgroup_check_hierarchy_limits(struct cgroup *parent)
- 		if (cgroup->nr_descendants >= cgroup->max_descendants)
- 			goto fail;
- 
--		if (level > cgroup->max_depth)
-+		if (level >= cgroup->max_depth)
- 			goto fail;
- 
- 		level++;
 -- 
 2.43.0
 
