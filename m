@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3CA1FBCBC;
-	Wed,  6 Nov 2024 12:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F9E1F4FCA;
+	Wed,  6 Nov 2024 12:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897711; cv=none; b=ZYfqopKQkF+lbOyA+BguTExAjeCXWvuBAGP+FbvCZ7/FLNepR9lKRlP+HmDxFbqdAoOp85HrF2oTT9jYiOQxzFdrzGcm445u6Gb977FcyY/S1RxzsxPg4mqS8Ns1nIMa2epA7We1ePFItYBcsROZTQxT98LS7iCyKvFUKZXskbI=
+	t=1730897714; cv=none; b=bLxUEHEQB8hJOsZa0cp1mzFBTQDw4go4+Wg0iaSU0iiuQFt60FnjU45G50AfLfPIMCIMkTFowUguzOiXbRxr2uPm0YJOQHX3nNFk7hfdkPV/G5gvY6Pzj5qq0YGI1HaJRV98dDDQ8xQsJlvi1IsOtiBGiH2yAmLf+f7JViItGrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897711; c=relaxed/simple;
-	bh=2NyOVKEx2qr7yKhRPYOtZq2yFrDAVH2ccsDeXaH5GCk=;
+	s=arc-20240116; t=1730897714; c=relaxed/simple;
+	bh=kiFHUA1mWArAIGJOCe30E4nQbsx27aat82dB7Kl8Qtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PdnKLivBXZ80lhV2iNvgWpt1gUV1snD+ek5b3CBl4mvcFdKarYt1tvNRHn4+6FoOLOVEnkjKPOeQmBwYa732VOmorAwHOV+7ACn2WBTGXEEAo1o9uczgfkCxSi3bNrWKd/ETqLEbqJGTlu5ODTkYKhhfkwK+mprgdSA5kyeG41s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZOSef5D2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bNOz0xDoVhRt6RHcFCNm+lRckrtjfb+4cR4Z63qRAy9ixP8Nm1nt5bFxTUlLxU3ZBqPc2uQ/XjIdtpxjoTlT8RX62vhCD2ABkSTj2zlwzGvgQirqbjU4NyRgTIZvNtrQ10JZ1OqKzX7KR0YrpCNDznDRC5hc22tljOOTwYWG8aM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLPYyfof; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZOSef5D2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E766FC4CECD;
-	Wed,  6 Nov 2024 12:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLPYyfof"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD79C4CECD;
+	Wed,  6 Nov 2024 12:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897711;
-	bh=2NyOVKEx2qr7yKhRPYOtZq2yFrDAVH2ccsDeXaH5GCk=;
+	s=korg; t=1730897714;
+	bh=kiFHUA1mWArAIGJOCe30E4nQbsx27aat82dB7Kl8Qtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZOSef5D2Axu11A4Pd6P2MWAOd/s0eQoa2oyZkDRsFGDBJdNH1Bp42Ea2X/2sgOlQP
-	 9PXufVA34jF6bWTsh8C2ss1eNM/KuF6c+IrinjZzPaAHM1QAqcqnFLDgRhWnLk1zix
-	 a1iTSdz26w7VVELxXNpmImAKsIY5p2mLYuGZ5Pb4=
+	b=YLPYyfofFrrXShMt2fn3d1zta0yORUiKStK4bGpXkyL4hMCIh6Q23rxdRiJ2le4uK
+	 roJdr6YUA2ZSMqShl0uC2DHrHhKfNEnaAd21QpX6NPDrsqypaxWlhRSrgCh0DjObZA
+	 A3umYBpU7jDV9xCxKQ95THyzNTuG7AmzYKD5AB4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Leo Fu <bfu@redhat.com>,
-	Thomas Huth <thuth@redhat.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Janosch Frank <frankja@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Hugh Dickins <hughd@google.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 144/151] mm: dont install PMD mappings when THPs are disabled by the hw/process/vma
-Date: Wed,  6 Nov 2024 13:05:32 +0100
-Message-ID: <20241106120312.811917353@linuxfoundation.org>
+	Hartmut Birr <e9hack@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Michael Walle <mwalle@kernel.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Esben Haabendal <esben@geanix.com>,
+	Pratyush Yadav <pratyush@kernel.org>
+Subject: [PATCH 6.6 145/151] mtd: spi-nor: winbond: fix w25q128 regression
+Date: Wed,  6 Nov 2024 13:05:33 +0100
+Message-ID: <20241106120312.839326216@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -59,71 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Michael Walle <mwalle@kernel.org>
 
-commit 2b0f922323ccfa76219bcaacd35cd50aeaa13592 upstream.
+commit d35df77707bf5ae1221b5ba1c8a88cf4fcdd4901 upstream.
 
-We (or rather, readahead logic :) ) might be allocating a THP in the
-pagecache and then try mapping it into a process that explicitly disabled
-THP: we might end up installing PMD mappings.
+Commit 83e824a4a595 ("mtd: spi-nor: Correct flags for Winbond w25q128")
+removed the flags for non-SFDP devices. It was assumed that it wasn't in
+use anymore. This wasn't true. Add the no_sfdp_flags as well as the size
+again.
 
-This is a problem for s390x KVM, which explicitly remaps all PMD-mapped
-THPs to be PTE-mapped in s390_enable_sie()->thp_split_mm(), before
-starting the VM.
+We add the additional flags for dual and quad read because they have
+been reported to work properly by Hartmut using both older and newer
+versions of this flash, the similar flashes with 64Mbit and 256Mbit
+already have these flags and because it will (luckily) trigger our
+legacy SFDP parsing, so newer versions with SFDP support will still get
+the parameters from the SFDP tables.
 
-For example, starting a VM backed on a file system with large folios
-supported makes the VM crash when the VM tries accessing such a mapping
-using KVM.
-
-Is it also a problem when the HW disabled THP using
-TRANSPARENT_HUGEPAGE_UNSUPPORTED?  At least on x86 this would be the case
-without X86_FEATURE_PSE.
-
-In the future, we might be able to do better on s390x and only disallow
-PMD mappings -- what s390x and likely TRANSPARENT_HUGEPAGE_UNSUPPORTED
-really wants.  For now, fix it by essentially performing the same check as
-would be done in __thp_vma_allowable_orders() or in shmem code, where this
-works as expected, and disallow PMD mappings, making us fallback to PTE
-mappings.
-
-Link: https://lkml.kernel.org/r/20241011102445.934409-3-david@redhat.com
-Fixes: 793917d997df ("mm/readahead: Add large folio readahead")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reported-by: Leo Fu <bfu@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: Janosch Frank <frankja@linux.ibm.com>
-Cc: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: David Hildenbrand <david@redhat.com>
+Reported-by: Hartmut Birr <e9hack@gmail.com>
+Closes: https://lore.kernel.org/r/CALxbwRo_-9CaJmt7r7ELgu+vOcgk=xZcGHobnKf=oT2=u4d4aA@mail.gmail.com/
+Fixes: 83e824a4a595 ("mtd: spi-nor: Correct flags for Winbond w25q128")
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Acked-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reviewed-by: Esben Haabendal <esben@geanix.com>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
+Link: https://lore.kernel.org/r/20240621120929.2670185-1-mwalle@kernel.org
+Link: https://lore.kernel.org/r/20240621120929.2670185-1-mwalle@kernel.org
+[Backported to v6.6 - vastly different due to upstream changes]
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/mtd/spi-nor/winbond.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -4293,6 +4293,15 @@ vm_fault_t do_set_pmd(struct vm_fault *v
- 	pmd_t entry;
- 	vm_fault_t ret = VM_FAULT_FALLBACK;
- 
-+	/*
-+	 * It is too late to allocate a small folio, we already have a large
-+	 * folio in the pagecache: especially s390 KVM cannot tolerate any
-+	 * PMD mappings, but PTE-mapped THP are fine. So let's simply refuse any
-+	 * PMD mappings if THPs are disabled.
-+	 */
-+	if (thp_disabled_by_hw() || vma_thp_disabled(vma, vma->vm_flags))
-+		return ret;
-+
- 	if (!transhuge_vma_suitable(vma, haddr))
- 		return ret;
- 
+--- a/drivers/mtd/spi-nor/winbond.c
++++ b/drivers/mtd/spi-nor/winbond.c
+@@ -120,9 +120,10 @@ static const struct flash_info winbond_n
+ 		NO_SFDP_FLAGS(SECT_4K) },
+ 	{ "w25q80bl", INFO(0xef4014, 0, 64 * 1024,  16)
+ 		NO_SFDP_FLAGS(SECT_4K) },
+-	{ "w25q128", INFO(0xef4018, 0, 0, 0)
+-		PARSE_SFDP
+-		FLAGS(SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB) },
++	{ "w25q128", INFO(0xef4018, 0, 64 * 1024, 256)
++		FLAGS(SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB)
++		NO_SFDP_FLAGS(SECT_4K | SPI_NOR_DUAL_READ |
++			      SPI_NOR_QUAD_READ) },
+ 	{ "w25q256", INFO(0xef4019, 0, 64 * 1024, 512)
+ 		NO_SFDP_FLAGS(SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ)
+ 		.fixups = &w25q256_fixups },
 
 
