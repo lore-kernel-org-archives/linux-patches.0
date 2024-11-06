@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328C01DFD9D;
-	Wed,  6 Nov 2024 13:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B01D1E0E1F;
+	Wed,  6 Nov 2024 13:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898239; cv=none; b=m5XKUDdgc85XUjueqkJpq+EQhxoPBhkSMOvHEV7fDLzLjFgwXW+ZcU5zV/fHvM7Km9DwG+1f/NhWDlXlYi9SUO9G5dWlq1PONfoPTvJZnv1xnODFvsyoRl3kLnBDs7AerOf55k+haux748XcyK70JbnRLRl2Lo7LeZsJtORodbQ=
+	t=1730898242; cv=none; b=ZiuejZJ40Eb3AdxhbPQGEqNGkB6DClbTRDvVvIwyQAjmLIdsDv4fSs4uf4TDdrgQzvWgUnpxEmvWPNsC2WlgRVntP+gX0uq3n7DavpzcTuCVyYE1LJvFcXRXZ5uQWsVNEZX6kGSmt9hRhMAUOYkYr+8cOLpVxK+TeEblf6cK4GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898239; c=relaxed/simple;
-	bh=YrAfItaFt/Zw0uzSLPpY+v9qxQVa9g0mh2UkeC9gRKU=;
+	s=arc-20240116; t=1730898242; c=relaxed/simple;
+	bh=Pd/bmRVhbI6xyGxM4oBH7c2TONgq+EHpXiBhX7/uT0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pQEzXw5QXdCO8YmdC6UKuEYSXp7r7Or5792ei8m/XNhMl36/GnHtV1Xby/95JFrNuedSI43sacjF7yO53cm7EeY9nwyTmK3xgRLSRN2FqhFs+zLqMZUG9bBxpASFEAAiiKKQO9IdizWMCaXh2M7iGawXRfnOhKG5PxutDNEOPPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TsxJorCr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FQYMvQEcw6DV/HhBQvOkomPVrr8IoHiiLsuLtJAYxRl+xc2PaTZr+n2FVj/TWuIAQtXbUh4kMZ3CAQcKRIvvWUwci22X/0mP4tdxOo4p2ZMUFQ32k+cAld+/RxtmyYnzMgk+aAYL9rbpAZsz6S6MKOYa4qOWcINzqq4nBYisnXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tSg+FUHb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TsxJorCr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FEFC4CED3;
-	Wed,  6 Nov 2024 13:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tSg+FUHb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949D6C4CECD;
+	Wed,  6 Nov 2024 13:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898239;
-	bh=YrAfItaFt/Zw0uzSLPpY+v9qxQVa9g0mh2UkeC9gRKU=;
+	s=korg; t=1730898242;
+	bh=Pd/bmRVhbI6xyGxM4oBH7c2TONgq+EHpXiBhX7/uT0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TsxJorCr/ODA1U7ifLYzIH+gUEstJ2ieDG8m8ZOQnfSKzqBDTmIzemYjbZXNgvh1F
-	 w/Jjg6I1MbvVFeyJuNcfVj2GJSpkbhlPo0AN3uImzLOBmYtSfn5PGq9VtsxwTUKf26
-	 YIM7ZXcgJhafrH9zrPrdkx748THqpIZAj14wcANE=
+	b=tSg+FUHb/lsjMHKnjFwadbCeRvEfAZ562QaIKyoufYWDsEFJjtfdGnosmUCk7g3if
+	 lo9qUd2nDpS0ogyQx+cX29vPbOprBngJq9t3br7IGL9uFNpv+OC9rnbfO6bINSDBLd
+	 ZaPUIRp58hINst/Hi76DHGESQMUsJtrH1LYWtwXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.4 171/462] i2c: isch: Add missed else
-Date: Wed,  6 Nov 2024 13:01:04 +0100
-Message-ID: <20241106120335.743774111@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 5.4 172/462] usb: yurex: Fix inconsistent locking bug in yurex_read()
+Date: Wed,  6 Nov 2024 13:01:05 +0100
+Message-ID: <20241106120335.770459908@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -50,34 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-commit 1db4da55070d6a2754efeb3743f5312fc32f5961 upstream.
+commit e7d3b9f28654dbfce7e09f8028210489adaf6a33 upstream.
 
-In accordance with the existing comment and code analysis
-it is quite likely that there is a missed 'else' when adapter
-times out. Add it.
+Unlock before returning on the error path.
 
-Fixes: 5bc1200852c3 ("i2c: Add Intel SCH SMBus support")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: <stable@vger.kernel.org> # v2.6.27+
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Fixes: 86b20af11e84 ("usb: yurex: Replace snprintf() with the safer scnprintf() variant")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202312170252.3udgrIcP-lkp@intel.com/
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Link: https://lore.kernel.org/r/20231219063639.450994-1-harshit.m.mogalapalli@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-isch.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/usb/misc/yurex.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-isch.c
-+++ b/drivers/i2c/busses/i2c-isch.c
-@@ -99,8 +99,7 @@ static int sch_transaction(void)
- 	if (retries > MAX_RETRIES) {
- 		dev_err(&sch_adapter.dev, "SMBus Timeout!\n");
- 		result = -ETIMEDOUT;
--	}
--	if (temp & 0x04) {
-+	} else if (temp & 0x04) {
- 		result = -EIO;
- 		dev_dbg(&sch_adapter.dev, "Bus collision! SMBus may be "
- 			"locked until next hard reset. (sorry!)\n");
+--- a/drivers/usb/misc/yurex.c
++++ b/drivers/usb/misc/yurex.c
+@@ -414,8 +414,10 @@ static ssize_t yurex_read(struct file *f
+ 		return -ENODEV;
+ 	}
+ 
+-	if (WARN_ON_ONCE(dev->bbu > S64_MAX || dev->bbu < S64_MIN))
++	if (WARN_ON_ONCE(dev->bbu > S64_MAX || dev->bbu < S64_MIN)) {
++		mutex_unlock(&dev->io_mutex);
+ 		return -EIO;
++	}
+ 
+ 	spin_lock_irq(&dev->lock);
+ 	scnprintf(in_buffer, MAX_S64_STRLEN, "%lld\n", dev->bbu);
 
 
