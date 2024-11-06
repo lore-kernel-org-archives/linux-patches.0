@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816431F4FD8;
-	Wed,  6 Nov 2024 13:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5E31F4FCE;
+	Wed,  6 Nov 2024 13:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898340; cv=none; b=iyjOHPB+UBeJ08BgKU6GGllpE6tTY89F65nbYiMYBZio9Ur23RzkGhQKKL1PWk0dRPUMUg3QsfFSQhP2Hvb5hysCB9pXKW+9aKUuhJOxWyDg1uItQ9cewsvmDMehyEJKcgvLmleY5E3eMV1GTPF/tNWz1vekXvTQ++GscVbN07E=
+	t=1730898343; cv=none; b=kRnhVJL1C6kk7+mtqabWOR8f/aBp+I2Sv1Uu2zApsQ9JuwlGapmhI37xJt7yPyvpABU9xudPhIOLXf01G6hxRw2bjwvCcWxAMtxqRY+mtQx4g5AO6B+VaXUkGztSwaa0L7JU20yzPsY+MDgAoC5NOYrQWmbImZrAhuKRDc8MLgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898340; c=relaxed/simple;
-	bh=bsEGQy0pPmSg1gf79rSWogxQ8Z7L0asaWIMI3I9xGus=;
+	s=arc-20240116; t=1730898343; c=relaxed/simple;
+	bh=zUVhxGhuNWTRBNluesvZi4v9UBBktpsqenrefDCAkLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DWJv6QOliCHPTFQOem+buGmTf14CbuqQiYOT3bXWniblYp9O0DpPiH+feKwS+/URcO0o4UhwBSqeQkxiIVoOrVb+KwvJCpXV89Izq9qw/0QPD8dJ+PaSNXE2sq7r7EklhaCKHv/T4rEvszxsaIwL/xLeNoO7xql6DlK9nWRD+rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ool/an6f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ck9gHHlkNQojzTvK4PmomeJhgc5EXeF6NWkb0fi02M9nv0GIg3M2Fy3AnCHccxsjoqOVHttUWsQGbV+V45DgibUFdHM4t9r6bbQL9nvodzGGLy/zdr9w8Iz/E35hfTNCRzmSq6VRwWr/NYQtHY+qnbSW/rZz0+F/FIUYpa1tt5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t13WJVOc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ool/an6f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF672C4CED6;
-	Wed,  6 Nov 2024 13:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t13WJVOc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA72EC4CECD;
+	Wed,  6 Nov 2024 13:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898340;
-	bh=bsEGQy0pPmSg1gf79rSWogxQ8Z7L0asaWIMI3I9xGus=;
+	s=korg; t=1730898343;
+	bh=zUVhxGhuNWTRBNluesvZi4v9UBBktpsqenrefDCAkLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ool/an6fQpbvn1rG0+qYV8E6FraKcv/6J4SnvnfyOBif+lsPYSU9NNiG9jpiDs69I
-	 HFRlV1EIk7xDRXnYI8mxxyrjCInOsDpy7SCTJgyPCOvFPUV7pI9frLwYyNrbFEiGyp
-	 uT5jJ2eOldO+tjhFq6kbeTFrNLnQwyku/Qmi+KRE=
+	b=t13WJVOcDPE8ypM/3nc+x7Ee4YDY0ItZHLVEhm8CKSMtfml3m6jg2HubN+F4sdiem
+	 91ycC31Vq7TBBaZ0TU9n0RRyIWqgb/zA59lm/8HKWBzatLXM2zIWj6QIkBLHQeKkRo
+	 KhJ9FYiWwaPAlp9nO2Ee6eL13ffDsKN1jQjIDN2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Simon Horman <horms@kernel.org>,
+	syzbot+f4e0f821e3a3b7cee51d@syzkaller.appspotmail.com,
+	Xin Long <lucien.xin@gmail.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 206/462] tipc: guard against string buffer overrun
-Date: Wed,  6 Nov 2024 13:01:39 +0100
-Message-ID: <20241106120336.606751405@linuxfoundation.org>
+Subject: [PATCH 5.4 189/462] sctp: set sk_state back to CLOSED if autobind fails in sctp_listen_start
+Date: Wed,  6 Nov 2024 13:01:22 +0100
+Message-ID: <20241106120336.183076985@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,51 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 6555a2a9212be6983d2319d65276484f7c5f431a ]
+[ Upstream commit 8beee4d8dee76b67c75dc91fd8185d91e845c160 ]
 
-Smatch reports that copying media_name and if_name to name_parts may
-overwrite the destination.
+In sctp_listen_start() invoked by sctp_inet_listen(), it should set the
+sk_state back to CLOSED if sctp_autobind() fails due to whatever reason.
 
- .../bearer.c:166 bearer_name_validate() error: strcpy() 'media_name' too large for 'name_parts->media_name' (32 vs 16)
- .../bearer.c:167 bearer_name_validate() error: strcpy() 'if_name' too large for 'name_parts->if_name' (1010102 vs 16)
+Otherwise, next time when calling sctp_inet_listen(), if sctp_sk(sk)->reuse
+is already set via setsockopt(SCTP_REUSE_PORT), sctp_sk(sk)->bind_hash will
+be dereferenced as sk_state is LISTENING, which causes a crash as bind_hash
+is NULL.
 
-This does seem to be the case so guard against this possibility by using
-strscpy() and failing if truncation occurs.
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  RIP: 0010:sctp_inet_listen+0x7f0/0xa20 net/sctp/socket.c:8617
+  Call Trace:
+   <TASK>
+   __sys_listen_socket net/socket.c:1883 [inline]
+   __sys_listen+0x1b7/0x230 net/socket.c:1894
+   __do_sys_listen net/socket.c:1902 [inline]
 
-Introduced by commit b97bf3fd8f6a ("[TIPC] Initial merge")
-
-Compile tested only.
-
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240801-tipic-overrun-v2-1-c5b869d1f074@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5e8f3f703ae4 ("sctp: simplify sctp listening code")
+Reported-by: syzbot+f4e0f821e3a3b7cee51d@syzkaller.appspotmail.com
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Link: https://patch.msgid.link/a93e655b3c153dc8945d7a812e6d8ab0d52b7aa0.1727729391.git.lucien.xin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/bearer.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/sctp/socket.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
-index a0bc919e4e473..dc5c6b1e97910 100644
---- a/net/tipc/bearer.c
-+++ b/net/tipc/bearer.c
-@@ -160,8 +160,12 @@ static int bearer_name_validate(const char *name,
- 
- 	/* return bearer name components, if necessary */
- 	if (name_parts) {
--		strcpy(name_parts->media_name, media_name);
--		strcpy(name_parts->if_name, if_name);
-+		if (strscpy(name_parts->media_name, media_name,
-+			    TIPC_MAX_MEDIA_NAME) < 0)
-+			return 0;
-+		if (strscpy(name_parts->if_name, if_name,
-+			    TIPC_MAX_IF_NAME) < 0)
-+			return 0;
- 	}
- 	return 1;
- }
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 614130ff6ba06..eef807edd61da 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -8396,8 +8396,10 @@ static int sctp_listen_start(struct sock *sk, int backlog)
+ 	 */
+ 	inet_sk_set_state(sk, SCTP_SS_LISTENING);
+ 	if (!ep->base.bind_addr.port) {
+-		if (sctp_autobind(sk))
++		if (sctp_autobind(sk)) {
++			inet_sk_set_state(sk, SCTP_SS_CLOSED);
+ 			return -EAGAIN;
++		}
+ 	} else {
+ 		if (sctp_get_port(sk, inet_sk(sk)->inet_num)) {
+ 			inet_sk_set_state(sk, SCTP_SS_CLOSED);
 -- 
 2.43.0
 
