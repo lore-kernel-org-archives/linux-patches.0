@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8810B1DF721;
-	Wed,  6 Nov 2024 12:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717321DED49;
+	Wed,  6 Nov 2024 12:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895650; cv=none; b=bg8UU0axU3RVwiaR2X0Zbl5eph2e/BN+ZJVS+6gUpGupntp9z91iM5doCmXuTnybwu069PRd2/hZOIyO2iE3WbFKLJt9G8CGkT/hFWUftFsOd33IZVVLsY3mK255aKzYo0JokaGpTwGyQtN2eos3vr7L4xGiRdeEZKjzflp+gdI=
+	t=1730895653; cv=none; b=mRrm42Hjj1mJL7pwyA6ljPDrJgLWUPULmMz4CDiySuiVV9LE0ROEfIuWNETpVaolCouZ5jzAHUYD2/DxYb/1pvhKqOI7asj3Ckpa1RKEGeuhlTAZQtThcplH1o1At0GWoeSwMp4xmo0X7B9eBrieRV+jfTpV3mVImydUHDycTjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895650; c=relaxed/simple;
-	bh=v5F+563hjCvszJjSX5bsTAgP+sSoJIr1Yze9zURPAJk=;
+	s=arc-20240116; t=1730895653; c=relaxed/simple;
+	bh=BDQi3SApF0gx7xJhxJaXfdnhXDepMiuaudDowHZufO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tCDxh6z3vDiQlIXuXen9Hl+tnX+JlvNvV8Cj2/Jd3NNU2qMcBDXFXhPhUSbn9JhvDfclzwSGcX4P8s5j+RMC7MY/EubGRj5IOCOxVP38jfQo/iINYt5O9yhErwi40acnNtMS1eK2hFt5qHD4A/lRovglMcPP6OYkC/7mvaZLISA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XCXyHLMr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HZ7Db85m96AnFBwRadKcD9pRpg9eyUCI3Y6xKmq6um3oYFBD5nKH8X6+wNuL3cs39R13ZADGLWSBwIl2Gq4wJMai7ayKHCr6b37Z4h9a7UP6YXBJG5Wg1aVIqWHSqkxHwhjbW+prPQVAscjmf2ypolnG9afIedcvUrOP7qilQHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgFiTj1o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCXyHLMr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DBFCC4CECD;
-	Wed,  6 Nov 2024 12:20:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgFiTj1o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED670C4CECD;
+	Wed,  6 Nov 2024 12:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895650;
-	bh=v5F+563hjCvszJjSX5bsTAgP+sSoJIr1Yze9zURPAJk=;
+	s=korg; t=1730895653;
+	bh=BDQi3SApF0gx7xJhxJaXfdnhXDepMiuaudDowHZufO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XCXyHLMrcQg0xxKxjBwH8qvqqjhRgPhSYgRmtWPNryiAuNF4Cfjy5x1cKxIsxObH8
-	 x8E4HVYTkCr4xGCWcdT5AnyOP/lAncBV7wzI/W4I2sum9wvW4Q/a8SBD/0k0EID4qv
-	 3LQSUAx0wEIDIcvaXUNrS9maHBeOBLyIRWZWX2kw=
+	b=wgFiTj1oiUicv5qfHxx3WpfFNgnyKk1008UWreKX+kEOjRjfuMu1RJ/zIiPOEq9Lw
+	 z0YsO3fLrywf3bY4yWCuavrHcxSA/Z64b9dFYYMKy0aYqTeVIF/j9O/0d8sBHVuCbS
+	 nj1wlXnYMd6O9ntWiYzZeAX2eaT0xux36HrWCX9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Billy Tsai <billy_tsai@aspeedtech.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Phil Edworthy <phil.edworthy@renesas.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 253/350] gpio: aspeed: Add the flush write to ensure the write complete.
-Date: Wed,  6 Nov 2024 13:03:01 +0100
-Message-ID: <20241106120327.164205041@linuxfoundation.org>
+Subject: [PATCH 4.19 254/350] clk: Add (devm_)clk_get_optional() functions
+Date: Wed,  6 Nov 2024 13:03:02 +0100
+Message-ID: <20241106120327.186603490@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,42 +53,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Billy Tsai <billy_tsai@aspeedtech.com>
+From: Phil Edworthy <phil.edworthy@renesas.com>
 
-[ Upstream commit 1bb5a99e1f3fd27accb804aa0443a789161f843c ]
+[ Upstream commit 60b8f0ddf1a927ef02141a6610fd52575134f821 ]
 
-Performing a dummy read ensures that the register write operation is fully
-completed, mitigating any potential bus delays that could otherwise impact
-the frequency of bitbang usage. E.g., if the JTAG application uses GPIO to
-control the JTAG pins (TCK, TMS, TDI, TDO, and TRST), and the application
-sets the TCK clock to 1 MHz, the GPIO's high/low transitions will rely on
-a delay function to ensure the clock frequency does not exceed 1 MHz.
-However, this can lead to rapid toggling of the GPIO because the write
-operation is POSTed and does not wait for a bus acknowledgment.
+This adds clk_get_optional() and devm_clk_get_optional() functions to get
+optional clocks.
 
-Fixes: 361b79119a4b ("gpio: Add Aspeed driver")
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-Link: https://lore.kernel.org/r/20241008081450.1490955-2-billy_tsai@aspeedtech.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+They behave the same as (devm_)clk_get() except where there is no clock
+producer. In this case, instead of returning -ENOENT, the function
+returns NULL. This makes error checking simpler and allows
+clk_prepare_enable, etc to be called on the returned reference
+without additional checks.
+
+Signed-off-by: Phil Edworthy <phil.edworthy@renesas.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Russell King <linux@armlinux.org.uk>
+[sboyd@kernel.org: Document in devres.txt]
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: a6191a3d1811 ("gpio: aspeed: Use devm_clk api to manage clock source")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-aspeed.c | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/driver-model/devres.txt |  1 +
+ drivers/clk/clk-devres.c              | 11 ++++++++
+ include/linux/clk.h                   | 36 +++++++++++++++++++++++++++
+ 3 files changed, 48 insertions(+)
 
-diff --git a/drivers/gpio/gpio-aspeed.c b/drivers/gpio/gpio-aspeed.c
-index ba1cd971d50b6..5cc80678ac352 100644
---- a/drivers/gpio/gpio-aspeed.c
-+++ b/drivers/gpio/gpio-aspeed.c
-@@ -407,6 +407,8 @@ static void __aspeed_gpio_set(struct gpio_chip *gc, unsigned int offset,
- 	gpio->dcache[GPIO_BANK(offset)] = reg;
+diff --git a/Documentation/driver-model/devres.txt b/Documentation/driver-model/devres.txt
+index 43681ca0837f8..5a2d8c7ce2474 100644
+--- a/Documentation/driver-model/devres.txt
++++ b/Documentation/driver-model/devres.txt
+@@ -235,6 +235,7 @@ certainly invest a bit more effort into libata core layer).
  
- 	iowrite32(reg, addr);
-+	/* Flush write */
-+	ioread32(addr);
+ CLOCK
+   devm_clk_get()
++  devm_clk_get_optional()
+   devm_clk_put()
+   devm_clk_hw_register()
+   devm_of_clk_add_hw_provider()
+diff --git a/drivers/clk/clk-devres.c b/drivers/clk/clk-devres.c
+index d854e26a8ddbc..a062389ccd3d5 100644
+--- a/drivers/clk/clk-devres.c
++++ b/drivers/clk/clk-devres.c
+@@ -34,6 +34,17 @@ struct clk *devm_clk_get(struct device *dev, const char *id)
+ }
+ EXPORT_SYMBOL(devm_clk_get);
+ 
++struct clk *devm_clk_get_optional(struct device *dev, const char *id)
++{
++	struct clk *clk = devm_clk_get(dev, id);
++
++	if (clk == ERR_PTR(-ENOENT))
++		return NULL;
++
++	return clk;
++}
++EXPORT_SYMBOL(devm_clk_get_optional);
++
+ struct clk_bulk_devres {
+ 	struct clk_bulk_data *clks;
+ 	int num_clks;
+diff --git a/include/linux/clk.h b/include/linux/clk.h
+index 0a2382d3f68c8..55b08adaaa3c1 100644
+--- a/include/linux/clk.h
++++ b/include/linux/clk.h
+@@ -388,6 +388,17 @@ int __must_check devm_clk_bulk_get(struct device *dev, int num_clks,
+  */
+ struct clk *devm_clk_get(struct device *dev, const char *id);
+ 
++/**
++ * devm_clk_get_optional - lookup and obtain a managed reference to an optional
++ *			   clock producer.
++ * @dev: device for clock "consumer"
++ * @id: clock consumer ID
++ *
++ * Behaves the same as devm_clk_get() except where there is no clock producer.
++ * In this case, instead of returning -ENOENT, the function returns NULL.
++ */
++struct clk *devm_clk_get_optional(struct device *dev, const char *id);
++
+ /**
+  * devm_get_clk_from_child - lookup and obtain a managed reference to a
+  *			     clock producer from child node.
+@@ -655,6 +666,12 @@ static inline struct clk *devm_clk_get(struct device *dev, const char *id)
+ 	return NULL;
  }
  
- static void aspeed_gpio_set(struct gpio_chip *gc, unsigned int offset,
++static inline struct clk *devm_clk_get_optional(struct device *dev,
++						const char *id)
++{
++	return NULL;
++}
++
+ static inline int __must_check devm_clk_bulk_get(struct device *dev, int num_clks,
+ 						 struct clk_bulk_data *clks)
+ {
+@@ -774,6 +791,25 @@ static inline void clk_bulk_disable_unprepare(int num_clks,
+ 	clk_bulk_unprepare(num_clks, clks);
+ }
+ 
++/**
++ * clk_get_optional - lookup and obtain a reference to an optional clock
++ *		      producer.
++ * @dev: device for clock "consumer"
++ * @id: clock consumer ID
++ *
++ * Behaves the same as clk_get() except where there is no clock producer. In
++ * this case, instead of returning -ENOENT, the function returns NULL.
++ */
++static inline struct clk *clk_get_optional(struct device *dev, const char *id)
++{
++	struct clk *clk = clk_get(dev, id);
++
++	if (clk == ERR_PTR(-ENOENT))
++		return NULL;
++
++	return clk;
++}
++
+ #if defined(CONFIG_OF) && defined(CONFIG_COMMON_CLK)
+ struct clk *of_clk_get(struct device_node *np, int index);
+ struct clk *of_clk_get_by_name(struct device_node *np, const char *name);
 -- 
 2.43.0
 
