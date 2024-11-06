@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB4C1EE03D;
-	Wed,  6 Nov 2024 12:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755821EE033;
+	Wed,  6 Nov 2024 12:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896722; cv=none; b=CgQ2CiyPcDCm+iNGijCAyY2Fwkw5CIjwEbn0rzw5ixluaBoC5FFncV3AxzT36IcUZRIakLejQgVSU+eNyvMnEnE1tIqCbcrXS2L1CaMfs7nyOkbmBXSvw5mr/b8x6ZX/wSlQ1NR6d4ClBYG67W3eoDEvVnczMI1nFbyOe7HLzRo=
+	t=1730896724; cv=none; b=IbF98rpqe6Y17iepcI32Yss5FDJLQYCoq14kwIKYJmPAkZJi+OuDQgWQdrfd3wi0RKxv7WJ45FklhGqoSH4wf5fzbCHXlh6lHGlkcgJweoRUXMR0f6qQ1h89YLOLRTtHjzW5G40LeOvCC03lTu8d57TVNmmgn1mODonemnl1Ssk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896722; c=relaxed/simple;
-	bh=QHi052u74O7obAzswvrx1o9+ND5EU4Em6V9PEuwop48=;
+	s=arc-20240116; t=1730896724; c=relaxed/simple;
+	bh=oDq5gwZTQFD5zRCA0zHrZd/TWb6fTmAZ2yQf7K2p1YM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lwm+z9u08B4UQ/DKnIVKonTgykorj/2u5FLQmKJKgdWLrt078dEc2dHHBkya5s+Vjn0ofdVfkwND/Ex3/I9v5JC/IFWcG+y95hQSH4RJFffJkAIj+9RppQ/QAVDmDOyJ2ntwiZDclrWjxlyBhVKGdS3sDO2OkdHF4JRrnhWT8C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOO8JppH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DTjahW/mAqffEEJFNg9nmoTn1bOX2JNlw1KsDEq+rQ1O9kQsX2vvM9NlrTseAIFQufhiORu98PGP2uKqreHbCoFGxJs/adcZtUXJrgN4wJ/vgV2mvwNAJ0K94A+7VS5i9fa0V/JRTDt9f78uLFgj3CWMSjYHZNSEsVWvZQwJH4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15Y3xjAd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOO8JppH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E6FC4CED6;
-	Wed,  6 Nov 2024 12:38:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15Y3xjAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE1CC4CED3;
+	Wed,  6 Nov 2024 12:38:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896721;
-	bh=QHi052u74O7obAzswvrx1o9+ND5EU4Em6V9PEuwop48=;
+	s=korg; t=1730896724;
+	bh=oDq5gwZTQFD5zRCA0zHrZd/TWb6fTmAZ2yQf7K2p1YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nOO8JppHowH5f0ZJBcF987mqZLdNNzNoA5NZ/yILVFHx76uyJdhWuMUggLibzoZ+U
-	 RWWPLDZZxfWfZ4AV1cBV5n/bi6cFokV3Xil/6sleBuLher+BgCDBCdVWc5gJXISdOC
-	 VS0w/+ycPoqDn9EX5ZVY06JaMmo4I7K0p+tCxiww=
+	b=15Y3xjAdmL6zF60jCmU/qDyJIKMpFb1LGnckhY/rpd2hKsdICleA1Dy1tJBiMuGH7
+	 XJ6SG6i2a+0fu2qJglFKMn6dmaMODEZzTOdA0sYmv4x+1r5BXdZYgg3EfjngZzEKyK
+	 Vp7pXkzEhNNtz7uhcDg7zT8wXPM/k6/IqBwjRsHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 050/110] hv_netvsc: Fix VF namespace also in synthetic NIC NETDEV_REGISTER event
-Date: Wed,  6 Nov 2024 13:04:16 +0100
-Message-ID: <20241106120304.582807734@linuxfoundation.org>
+	Sam Sun <samsun1006219@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 051/110] selinux: improve error checking in sel_write_load()
+Date: Wed,  6 Nov 2024 13:04:17 +0100
+Message-ID: <20241106120304.612299124@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -52,75 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haiyang Zhang <haiyangz@microsoft.com>
+From: Paul Moore <paul@paul-moore.com>
 
-commit 4c262801ea60c518b5bebc22a09f5b78b3147da2 upstream.
+[ Upstream commit 42c773238037c90b3302bf37a57ae3b5c3f6004a ]
 
-The existing code moves VF to the same namespace as the synthetic NIC
-during netvsc_register_vf(). But, if the synthetic device is moved to a
-new namespace after the VF registration, the VF won't be moved together.
+Move our existing input sanity checking to the top of sel_write_load()
+and add a check to ensure the buffer size is non-zero.
 
-To make the behavior more consistent, add a namespace check for synthetic
-NIC's NETDEV_REGISTER event (generated during its move), and move the VF
-if it is not in the same namespace.
+Move a local variable initialization from the declaration to before it
+is used.
 
-Cc: stable@vger.kernel.org
-Fixes: c0a41b887ce6 ("hv_netvsc: move VF to same namespace as netvsc device")
-Suggested-by: Stephen Hemminger <stephen@networkplumber.org>
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/1729275922-17595-1-git-send-email-haiyangz@microsoft.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Minor style adjustments.
+
+Reported-by: Sam Sun <samsun1006219@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+[cascardo: keep fsi initialization at its declaration point as it is used earlier]
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hyperv/netvsc_drv.c |   30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ security/selinux/selinuxfs.c | 27 ++++++++++++++-------------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
---- a/drivers/net/hyperv/netvsc_drv.c
-+++ b/drivers/net/hyperv/netvsc_drv.c
-@@ -2789,6 +2789,31 @@ static struct  hv_driver netvsc_drv = {
- 	},
- };
+diff --git a/security/selinux/selinuxfs.c b/security/selinux/selinuxfs.c
+index d893c2280f595..7415f49a3d81e 100644
+--- a/security/selinux/selinuxfs.c
++++ b/security/selinux/selinuxfs.c
+@@ -620,6 +620,13 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
+ 	ssize_t length;
+ 	void *data = NULL;
  
-+/* Set VF's namespace same as the synthetic NIC */
-+static void netvsc_event_set_vf_ns(struct net_device *ndev)
-+{
-+	struct net_device_context *ndev_ctx = netdev_priv(ndev);
-+	struct net_device *vf_netdev;
-+	int ret;
++	/* no partial writes */
++	if (*ppos)
++		return -EINVAL;
++	/* no empty policies */
++	if (!count)
++		return -EINVAL;
 +
-+	vf_netdev = rtnl_dereference(ndev_ctx->vf_netdev);
-+	if (!vf_netdev)
-+		return;
-+
-+	if (!net_eq(dev_net(ndev), dev_net(vf_netdev))) {
-+		ret = dev_change_net_namespace(vf_netdev, dev_net(ndev),
-+					       "eth%d");
-+		if (ret)
-+			netdev_err(vf_netdev,
-+				   "Cannot move to same namespace as %s: %d\n",
-+				   ndev->name, ret);
-+		else
-+			netdev_info(vf_netdev,
-+				    "Moved VF to namespace with: %s\n",
-+				    ndev->name);
-+	}
-+}
-+
- /*
-  * On Hyper-V, every VF interface is matched with a corresponding
-  * synthetic interface. The synthetic interface is presented first
-@@ -2801,6 +2826,11 @@ static int netvsc_netdev_event(struct no
- 	struct net_device *event_dev = netdev_notifier_info_to_dev(ptr);
- 	int ret = 0;
+ 	mutex_lock(&fsi->state->policy_mutex);
  
-+	if (event_dev->netdev_ops == &device_ops && event == NETDEV_REGISTER) {
-+		netvsc_event_set_vf_ns(event_dev);
-+		return NOTIFY_DONE;
+ 	length = avc_has_perm(&selinux_state,
+@@ -628,26 +635,21 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
+ 	if (length)
+ 		goto out;
+ 
+-	/* No partial writes. */
+-	length = -EINVAL;
+-	if (*ppos != 0)
+-		goto out;
+-
+-	length = -ENOMEM;
+ 	data = vmalloc(count);
+-	if (!data)
++	if (!data) {
++		length = -ENOMEM;
+ 		goto out;
+-
+-	length = -EFAULT;
+-	if (copy_from_user(data, buf, count) != 0)
 +	}
++	if (copy_from_user(data, buf, count) != 0) {
++		length = -EFAULT;
+ 		goto out;
++	}
+ 
+ 	length = security_load_policy(fsi->state, data, count, &load_state);
+ 	if (length) {
+ 		pr_warn_ratelimited("SELinux: failed to load policy\n");
+ 		goto out;
+ 	}
+-
+ 	length = sel_make_policy_nodes(fsi, load_state.policy);
+ 	if (length) {
+ 		selinux_policy_cancel(fsi->state, &load_state);
+@@ -655,13 +657,12 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
+ 	}
+ 
+ 	selinux_policy_commit(fsi->state, &load_state);
+-
+ 	length = count;
+-
+ 	audit_log(audit_context(), GFP_KERNEL, AUDIT_MAC_POLICY_LOAD,
+ 		"auid=%u ses=%u lsm=selinux res=1",
+ 		from_kuid(&init_user_ns, audit_get_loginuid(current)),
+ 		audit_get_sessionid(current));
 +
- 	ret = check_dev_is_matching_vf(event_dev);
- 	if (ret != 0)
- 		return NOTIFY_DONE;
+ out:
+ 	mutex_unlock(&fsi->state->policy_mutex);
+ 	vfree(data);
+-- 
+2.43.0
+
 
 
