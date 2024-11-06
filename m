@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3225B1DF726;
-	Wed,  6 Nov 2024 12:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD041DF721;
+	Wed,  6 Nov 2024 12:20:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895609; cv=none; b=Ng8gbQGzW/FNwFe0ARUqNHnlHMIKC1n8ymeps/seetGnUvKCnbvAA+YUx1j0ZWleoqZGnIE7SkLb+gTU/dl2gazS3meKqZl35EcTGreeBlA65iwlKRKi4SzNxrdLvXciJOcgWRtIw8wnhah89SHWbzUrYj0SU9N0R3965J4TOVY=
+	t=1730895612; cv=none; b=lCpFYTI7BlV6LeezMV2Jj0yfKfdtD0GbnEPIj4cYCY0SCefk1HUml6ZmRqYtqoQB8wvPTf+Z2PNH1/IpGVvgK5WvmH/CfvGRJ2QH3+7K3ufZ1nufPMpzDwacVjtRoqdAw0g2qFtxAUxCowlCekODrb/LQQ7chydn8DvGnra96hU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895609; c=relaxed/simple;
-	bh=Zf/JrKA0heXWA/SKb+zO3Jqh7e1u9P82ET/gquVOkwY=;
+	s=arc-20240116; t=1730895612; c=relaxed/simple;
+	bh=TECVM5jZ8Yvyoy+N7oaFx3FlU7wgfV28zMIy8fW0J/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sc33OsMZNT2DZCN00aSoYpm2etuzYGldvQOSGzbaqWcdR/+pA0Smth9TyizcfdIYkJi3G155iNmboQatvM5mmS/77vySUcYWyU468JIwubjiucfzgeJY5eQsbzIw9R1QBdTiA6Eh3HnVWVhvABs3kgLHR15Hum7kePZqoLjHbbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgE7ry1E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j+81kc4vXGpUGOA7iIbLaLBq3OFQ7ohoHkHMV7VhQyzkLtbZC6LK3uqIOx6XwkhSHOZIM+SF6bCwPh4WxHVzV9uUCcFcXhYbEwS6mTBM/9HXNE65esBZw5nXbNbkkMQEBBEzZR5hXo7MLYER8zUeXo/J1e4qs199bN1kOiM/Nkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJRD6oKa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgE7ry1E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB84C4CECD;
-	Wed,  6 Nov 2024 12:20:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJRD6oKa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D31C4CED6;
+	Wed,  6 Nov 2024 12:20:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895609;
-	bh=Zf/JrKA0heXWA/SKb+zO3Jqh7e1u9P82ET/gquVOkwY=;
+	s=korg; t=1730895612;
+	bh=TECVM5jZ8Yvyoy+N7oaFx3FlU7wgfV28zMIy8fW0J/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bgE7ry1EEaVxtJuhLLa1dn2i3Io1W5DtgREhafkcpdtoAE1C1GhS6BQKp6ZsLYT/+
-	 oQ4vBY7ScPVglIs8JujV4o2C7XQBN8nKIHuaEKghxNvtSdIBEUItaMVNzKkqSvNo/L
-	 2/v7rAS2bfDk8zFWBoOICO4Z8t0HqX/hLk88SPiQ=
+	b=pJRD6oKaUfFY3ehXAvWC7QjKJRFcQSzpvFPFLrWWY38BYkWe3PLLD6EDFnS5wcieS
+	 O2gmwxSLRODeTdqBFGfUmI8+UDpWZVBK6YU+srn7J7ALK43KXh8Qn9REnaPvlcnhc1
+	 7RW2rRqJaAF6Kqc4sZ1vcUHjtRd3WKF98Ib31V1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 4.19 275/350] s390/sclp_vt220: Convert newlines to CRLF instead of LFCR
-Date: Wed,  6 Nov 2024 13:03:23 +0100
-Message-ID: <20241106120327.665200120@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 249/350] SUNRPC: Fix integer overflow in decode_rc_list()
+Date: Wed,  6 Nov 2024 13:02:57 +0100
+Message-ID: <20241106120327.075095662@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -45,59 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit dee3df68ab4b00fff6bdf9fc39541729af37307c upstream.
+[ Upstream commit 6dbf1f341b6b35bcc20ff95b6b315e509f6c5369 ]
 
-According to the VT220 specification the possible character combinations
-sent on RETURN are only CR or CRLF [0].
+The math in "rc_list->rcl_nrefcalls * 2 * sizeof(uint32_t)" could have an
+integer overflow.  Add bounds checking on rc_list->rcl_nrefcalls to fix
+that.
 
-	The Return key sends either a CR character (0/13) or a CR
-	character (0/13) and an LF character (0/10), depending on the
-	set/reset state of line feed/new line mode (LNM).
-
-The sclp/vt220 driver however uses LFCR. This can confuse tools, for
-example the kunit runner.
-
-Link: https://vt100.net/docs/vt220-rm/chapter3.html#S3.2
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Link: https://lore.kernel.org/r/20241014-s390-kunit-v1-2-941defa765a6@linutronix.de
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4aece6a19cf7 ("nfs41: cb_sequence xdr implementation")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/char/sclp_vt220.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/callback_xdr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/s390/char/sclp_vt220.c
-+++ b/drivers/s390/char/sclp_vt220.c
-@@ -325,7 +325,7 @@ sclp_vt220_add_msg(struct sclp_vt220_req
- 	buffer = (void *) ((addr_t) sccb + sccb->header.length);
+diff --git a/fs/nfs/callback_xdr.c b/fs/nfs/callback_xdr.c
+index 38dc33c537ab6..8f8b3a7868e8d 100644
+--- a/fs/nfs/callback_xdr.c
++++ b/fs/nfs/callback_xdr.c
+@@ -372,6 +372,8 @@ static __be32 decode_rc_list(struct xdr_stream *xdr,
  
- 	if (convertlf) {
--		/* Perform Linefeed conversion (0x0a -> 0x0a 0x0d)*/
-+		/* Perform Linefeed conversion (0x0a -> 0x0d 0x0a)*/
- 		for (from=0, to=0;
- 		     (from < count) && (to < sclp_vt220_space_left(request));
- 		     from++) {
-@@ -334,8 +334,8 @@ sclp_vt220_add_msg(struct sclp_vt220_req
- 			/* Perform conversion */
- 			if (c == 0x0a) {
- 				if (to + 1 < sclp_vt220_space_left(request)) {
--					((unsigned char *) buffer)[to++] = c;
- 					((unsigned char *) buffer)[to++] = 0x0d;
-+					((unsigned char *) buffer)[to++] = c;
- 				} else
- 					break;
- 
+ 	rc_list->rcl_nrefcalls = ntohl(*p++);
+ 	if (rc_list->rcl_nrefcalls) {
++		if (unlikely(rc_list->rcl_nrefcalls > xdr->buf->len))
++			goto out;
+ 		p = xdr_inline_decode(xdr,
+ 			     rc_list->rcl_nrefcalls * 2 * sizeof(uint32_t));
+ 		if (unlikely(p == NULL))
+-- 
+2.43.0
+
 
 
