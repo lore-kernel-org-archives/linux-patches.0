@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318BB1F9A86;
-	Wed,  6 Nov 2024 12:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3421F942D;
+	Wed,  6 Nov 2024 12:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897280; cv=none; b=kOFg76NpNMruMQ/7ntrEGtCzEf6Rbvtvu0R77jCBbsV9ITPA2Tf32l9wuAITM0dDzwI/6f4uFmg9Tq895k8m1z6Fj8Gk3yERu4cOkiKach1bCP0YeWS46VWibSsyC76v+lytNY2mCsy/kUKI9v5ak9av5dZIOrUp2rhJot1k1zg=
+	t=1730897283; cv=none; b=CKsPjHovi9wtoWkIBYExIPNrXs03LAvbjNsTQoNxzAupSy5U4NQOfJhiTjrSO2VBpOrc+zT5pY8djSBET2dD+CJf5IEnlIioeaR+nRg+0W+vKalVV9YP7ubltdOn2Owot0Tl+uC9aQZAj5Eglrm3Ehsywz3UQuBBfhQIFfDEUSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897280; c=relaxed/simple;
-	bh=ECruLPH+vgsi1dNZHVSx69mXL7yTe/5l3AbNLxhpDwE=;
+	s=arc-20240116; t=1730897283; c=relaxed/simple;
+	bh=7IpPHdrze9VdTkvlvngnj0YHac0TVXXOtf50/WEMFp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gNGIFC6SYG9iux+ytoGkDV6+3OSybXHioxtlTmQ1Feyb/J0bi62eE5ocWolOUkPcOPeynP5ZEvti+69OpNs83bY25yk2lgir6Fv4cDotDzGiBQALwxGoHG2TY+HJ19V5eGt3jcycRDurreZ36MCyUNF9+6S/KVwrfQIW6iEP8Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGY8hdcJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aROagX5wW39kn8xwHPkBxszajBca0A7f+cRJwQHmKsqrjrUv8Ly6+JuK0kzonb/gUFszSQ3XpH8WN5YpK0wDw/mMOzh1+ZQK2j3Y870oaL+98oek2OlnUlhby8lXs5XjtUsmeL/onfaPhzpqdazMR+pC46OS0zbKZgWKvzhnqDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6libibw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGY8hdcJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59F8C4CECD;
-	Wed,  6 Nov 2024 12:47:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6libibw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F798C4CECD;
+	Wed,  6 Nov 2024 12:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897280;
-	bh=ECruLPH+vgsi1dNZHVSx69mXL7yTe/5l3AbNLxhpDwE=;
+	s=korg; t=1730897283;
+	bh=7IpPHdrze9VdTkvlvngnj0YHac0TVXXOtf50/WEMFp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lGY8hdcJiTEOfuq+aWRdFCdqNxP28HuSoC9+sXgXWLhCr80a362vuB4UquRsAlqpa
-	 8YHuGqY0MUPmsVbEoFx6aO1X+ojaoGr5/GWfRQVPbByzaWkPIUobHCtCPDRFjlbsA2
-	 2YvMZFVWb9ySrS16RbMd8tkbTYJHOY3yY3JeYy3Y=
+	b=d6libibwnab7hpr2J5C4nUiQgfzJvOMvH0H/Uaya5NYdbh4vrfKRJOhe1ZBazJzLO
+	 nPA9kF4YSU+AfY99QvI3d5unXHqzPS4xnZ9ZhkPW5vfV5izJr86810iMd4ZlLjZYkO
+	 UzLizr/VmsRC81oyKXRLikiLczSWwNkbZ1szCJnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 114/126] io_uring: always lock __io_cqring_overflow_flush
-Date: Wed,  6 Nov 2024 13:05:15 +0100
-Message-ID: <20241106120309.139145097@linuxfoundation.org>
+	Robert Gill <rtgill82@gmail.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Brian Gerst <brgerst@gmail.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 6.1 115/126] x86/bugs: Use code segment selector for VERW operand
+Date: Wed,  6 Nov 2024 13:05:16 +0100
+Message-ID: <20241106120309.164236348@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -50,57 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-Commit 8d09a88ef9d3cb7d21d45c39b7b7c31298d23998 upstream.
+commit e4d2102018542e3ae5e297bc6e229303abff8a0f upstream.
 
-Conditional locking is never great, in case of
-__io_cqring_overflow_flush(), which is a slow path, it's not justified.
-Don't handle IOPOLL separately, always grab uring_lock for overflow
-flushing.
+Robert Gill reported below #GP in 32-bit mode when dosemu software was
+executing vm86() system call:
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/162947df299aa12693ac4b305dacedab32ec7976.1712708261.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+  general protection fault: 0000 [#1] PREEMPT SMP
+  CPU: 4 PID: 4610 Comm: dosemu.bin Not tainted 6.6.21-gentoo-x86 #1
+  Hardware name: Dell Inc. PowerEdge 1950/0H723K, BIOS 2.7.0 10/30/2010
+  EIP: restore_all_switch_stack+0xbe/0xcf
+  EAX: 00000000 EBX: 00000000 ECX: 00000000 EDX: 00000000
+  ESI: 00000000 EDI: 00000000 EBP: 00000000 ESP: ff8affdc
+  DS: 0000 ES: 0000 FS: 0000 GS: 0033 SS: 0068 EFLAGS: 00010046
+  CR0: 80050033 CR2: 00c2101c CR3: 04b6d000 CR4: 000406d0
+  Call Trace:
+   show_regs+0x70/0x78
+   die_addr+0x29/0x70
+   exc_general_protection+0x13c/0x348
+   exc_bounds+0x98/0x98
+   handle_exception+0x14d/0x14d
+   exc_bounds+0x98/0x98
+   restore_all_switch_stack+0xbe/0xcf
+   exc_bounds+0x98/0x98
+   restore_all_switch_stack+0xbe/0xcf
+
+This only happens in 32-bit mode when VERW based mitigations like MDS/RFDS
+are enabled. This is because segment registers with an arbitrary user value
+can result in #GP when executing VERW. Intel SDM vol. 2C documents the
+following behavior for VERW instruction:
+
+  #GP(0) - If a memory operand effective address is outside the CS, DS, ES,
+	   FS, or GS segment limit.
+
+CLEAR_CPU_BUFFERS macro executes VERW instruction before returning to user
+space. Use %cs selector to reference VERW operand. This ensures VERW will
+not #GP for an arbitrary user %ds.
+
+[ mingo: Fixed the SOB chain. ]
+
+Fixes: a0e2dab44d22 ("x86/entry_32: Add VERW just before userspace transition")
+Reported-by: Robert Gill <rtgill82@gmail.com>
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com
+Cc: stable@vger.kernel.org # 5.10+
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218707
+Closes: https://lore.kernel.org/all/8c77ccfd-d561-45a1-8ed5-6b75212c7a58@leemhuis.info/
+Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
+Suggested-by: Brian Gerst <brgerst@gmail.com>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/x86/include/asm/nospec-branch.h |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -593,6 +593,8 @@ static bool __io_cqring_overflow_flush(s
- 	bool all_flushed;
- 	size_t cqe_size = sizeof(struct io_uring_cqe);
- 
-+	lockdep_assert_held(&ctx->uring_lock);
-+
- 	if (!force && __io_cqring_events(ctx) == ctx->cq_entries)
- 		return false;
- 
-@@ -647,12 +649,9 @@ static bool io_cqring_overflow_flush(str
- 	bool ret = true;
- 
- 	if (test_bit(IO_CHECK_CQ_OVERFLOW_BIT, &ctx->check_cq)) {
--		/* iopoll syncs against uring_lock, not completion_lock */
--		if (ctx->flags & IORING_SETUP_IOPOLL)
--			mutex_lock(&ctx->uring_lock);
-+		mutex_lock(&ctx->uring_lock);
- 		ret = __io_cqring_overflow_flush(ctx, false);
--		if (ctx->flags & IORING_SETUP_IOPOLL)
--			mutex_unlock(&ctx->uring_lock);
-+		mutex_unlock(&ctx->uring_lock);
- 	}
- 
- 	return ret;
-@@ -1405,6 +1404,8 @@ static int io_iopoll_check(struct io_rin
- 	int ret = 0;
- 	unsigned long check_cq;
- 
-+	lockdep_assert_held(&ctx->uring_lock);
-+
- 	if (!io_allowed_run_tw(ctx))
- 		return -EEXIST;
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -211,7 +211,16 @@
+  */
+ .macro CLEAR_CPU_BUFFERS
+ 	ALTERNATIVE "jmp .Lskip_verw_\@", "", X86_FEATURE_CLEAR_CPU_BUF
+-	verw _ASM_RIP(mds_verw_sel)
++#ifdef CONFIG_X86_64
++	verw mds_verw_sel(%rip)
++#else
++	/*
++	 * In 32bit mode, the memory operand must be a %cs reference. The data
++	 * segments may not be usable (vm86 mode), and the stack segment may not
++	 * be flat (ESPFIX32).
++	 */
++	verw %cs:mds_verw_sel
++#endif
+ .Lskip_verw_\@:
+ .endm
  
 
 
