@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B731CCB5F;
-	Wed,  6 Nov 2024 13:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871C01CCB5F;
+	Wed,  6 Nov 2024 13:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899292; cv=none; b=dBZXMAeGB0BdbCHM0jDReWyutc6omlz9GhgoxSKuuoIn22szu/FCq9/wGb6lnuKNKP/S9nGKBYq1r8j0uDWYb9aIoXg9wNi4MvJd53OykJOWLk9vyqqzoTt6elF6UMLa/qbwDPqi5Fum9d1uFciWHe4Lqesh2+VKFjGnzTFm65o=
+	t=1730899295; cv=none; b=tI9YCnvFXpqKNJKGvfPghFdWkF+vsRgRjWWRvg9Ty/FP10I4DpoKVM6JceYXv8x4OWjfdWdedId+VkuLMZ6d6A6qkTilpskivWrwUC1fZShzEsOKaGxephYGMKGyA96xlY7rksVnYb2VqIej6BLdBcGQ0Rz8dmR/nHTkTSM8BmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899292; c=relaxed/simple;
-	bh=5XiAO6yltwbxj2u/fguORInEodbqYkJ6rb8pCWh/tio=;
+	s=arc-20240116; t=1730899295; c=relaxed/simple;
+	bh=Lv0pFotLrsb4fXif2OcUBGzxNg4h8CE5VF8mbZlZHa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LRKwH9Yoo85LzSkCWldeTyDUftB32orx+gcU+MgQSiXwq2zT3Xd4DM7FVYi7tlnxZXVrPtxXPuZ/WvvY7HMjnPBu0vfesIbcib6AaSQI1Nzhn8N8Jvmy9+Vofq5id8EMOKwDFOhxOxbD/wKgxHoKsgliRhFzsFyYDY687iuomv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hdv8Ozma; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tLq+X9U60zzYJztevUrD7WQM2zSSkOwLIPuNe1Obv1d5gZkwbfYsedqG0PPXphjs1t3lVC2vFr/eoofO5FyyaCIJlh0ILa3LK0q5iofi49om/fRxxLwNKyVBVu8IDGbQnpPKSD6FDes1BcK9kVTx9IUJ9xziv2dBcI5UpzvZ50o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v1YT7Gf4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hdv8Ozma"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5DBEC4CECD;
-	Wed,  6 Nov 2024 13:21:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v1YT7Gf4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79066C4CECD;
+	Wed,  6 Nov 2024 13:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899292;
-	bh=5XiAO6yltwbxj2u/fguORInEodbqYkJ6rb8pCWh/tio=;
+	s=korg; t=1730899295;
+	bh=Lv0pFotLrsb4fXif2OcUBGzxNg4h8CE5VF8mbZlZHa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hdv8OzmaMO+YPLsvf06tV6WhBkzCrAafzExZzEwcma56JbIHPA8rdkkeYaan60+Bd
-	 CI2l0sCYYjFkWEdTFgXtw4iyl1IHdAHA29zmGbDC8DYzVl5YKGX3ZKpxV09ggDpWSZ
-	 Qa8muQfXnmanJJJHxF8aIyq0TdmBaQ/L7YMHAz9I=
+	b=v1YT7Gf4cr1SC8GZ18CmsgTS/EzN8znJbH8hoV6gummQvgno/1gua6DKxYWBQ93wN
+	 L/ZkkjzwY32vhbBLtRwwvic0urc0VjKDj4I2RXJzYG64mD0AYobWq/1NAjSgh6725E
+	 u8ze0GQ0OmkGiLOP7109U+yruAFopvoyPv/ZHOWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Fleming <mfleming@cloudflare.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Michal Hocko <mhocko@kernel.org>,
+	Edward Adam Davis <eadavis@qq.com>,
+	syzbot+81092778aac03460d6b7@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Mark Fasheh <mark@fasheh.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 64/73] mm/page_alloc: let GFP_ATOMIC order-0 allocs access highatomic reserves
-Date: Wed,  6 Nov 2024 13:06:08 +0100
-Message-ID: <20241106120301.862530583@linuxfoundation.org>
+Subject: [PATCH 5.15 65/73] ocfs2: pass u64 to ocfs2_truncate_inline maybe overflow
+Date: Wed,  6 Nov 2024 13:06:09 +0100
+Message-ID: <20241106120301.890453548@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120259.955073160@linuxfoundation.org>
 References: <20241106120259.955073160@linuxfoundation.org>
@@ -54,85 +59,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Fleming <mfleming@cloudflare.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 281dd25c1a018261a04d1b8bf41a0674000bfe38 ]
+[ Upstream commit bc0a2f3a73fcdac651fca64df39306d1e5ebe3b0 ]
 
-Under memory pressure it's possible for GFP_ATOMIC order-0 allocations to
-fail even though free pages are available in the highatomic reserves.
-GFP_ATOMIC allocations cannot trigger unreserve_highatomic_pageblock()
-since it's only run from reclaim.
+Syzbot reported a kernel BUG in ocfs2_truncate_inline.  There are two
+reasons for this: first, the parameter value passed is greater than
+ocfs2_max_inline_data_with_xattr, second, the start and end parameters of
+ocfs2_truncate_inline are "unsigned int".
 
-Given that such allocations will pass the watermarks in
-__zone_watermark_unusable_free(), it makes sense to fallback to highatomic
-reserves the same way that ALLOC_OOM can.
+So, we need to add a sanity check for byte_start and byte_len right before
+ocfs2_truncate_inline() in ocfs2_remove_inode_range(), if they are greater
+than ocfs2_max_inline_data_with_xattr return -EINVAL.
 
-This fixes order-0 page allocation failures observed on Cloudflare's fleet
-when handling network packets:
-
-  kswapd1: page allocation failure: order:0, mode:0x820(GFP_ATOMIC),
-  nodemask=(null),cpuset=/,mems_allowed=0-7
-  CPU: 10 PID: 696 Comm: kswapd1 Kdump: loaded Tainted: G           O 6.6.43-CUSTOM #1
-  Hardware name: MACHINE
-  Call Trace:
-   <IRQ>
-   dump_stack_lvl+0x3c/0x50
-   warn_alloc+0x13a/0x1c0
-   __alloc_pages_slowpath.constprop.0+0xc9d/0xd10
-   __alloc_pages+0x327/0x340
-   __napi_alloc_skb+0x16d/0x1f0
-   bnxt_rx_page_skb+0x96/0x1b0 [bnxt_en]
-   bnxt_rx_pkt+0x201/0x15e0 [bnxt_en]
-   __bnxt_poll_work+0x156/0x2b0 [bnxt_en]
-   bnxt_poll+0xd9/0x1c0 [bnxt_en]
-   __napi_poll+0x2b/0x1b0
-   bpf_trampoline_6442524138+0x7d/0x1000
-   __napi_poll+0x5/0x1b0
-   net_rx_action+0x342/0x740
-   handle_softirqs+0xcf/0x2b0
-   irq_exit_rcu+0x6c/0x90
-   sysvec_apic_timer_interrupt+0x72/0x90
-   </IRQ>
-
-[mfleming@cloudflare.com: update comment]
-  Link: https://lkml.kernel.org/r/20241015125158.3597702-1-matt@readmodwrite.com
-Link: https://lkml.kernel.org/r/20241011120737.3300370-1-matt@readmodwrite.com
-Link: https://lore.kernel.org/all/CAGis_TWzSu=P7QJmjD58WWiu3zjMTVKSzdOwWE8ORaGytzWJwQ@mail.gmail.com/
-Fixes: 1d91df85f399 ("mm/page_alloc: handle a missing case for memalloc_nocma_{save/restore} APIs")
-Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
-Suggested-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Michal Hocko <mhocko@kernel.org>
+Link: https://lkml.kernel.org/r/tencent_D48DB5122ADDAEDDD11918CFB68D93258C07@qq.com
+Fixes: 1afc32b95233 ("ocfs2: Write support for inline data")
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Reported-by: syzbot+81092778aac03460d6b7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=81092778aac03460d6b7
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/ocfs2/file.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 404cee30dcc26..6a64a75184888 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -3620,12 +3620,12 @@ struct page *rmqueue_buddy(struct zone *preferred_zone, struct zone *zone,
- 			page = __rmqueue(zone, order, migratetype, alloc_flags);
+diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
+index 403c71a485c7c..fc1e929ae0381 100644
+--- a/fs/ocfs2/file.c
++++ b/fs/ocfs2/file.c
+@@ -1787,6 +1787,14 @@ int ocfs2_remove_inode_range(struct inode *inode,
+ 		return 0;
  
- 			/*
--			 * If the allocation fails, allow OOM handling access
--			 * to HIGHATOMIC reserves as failing now is worse than
--			 * failing a high-order atomic allocation in the
--			 * future.
-+			 * If the allocation fails, allow OOM handling and
-+			 * order-0 (atomic) allocs access to HIGHATOMIC
-+			 * reserves as failing now is worse than failing a
-+			 * high-order atomic allocation in the future.
- 			 */
--			if (!page && (alloc_flags & ALLOC_OOM))
-+			if (!page && (alloc_flags & (ALLOC_OOM|ALLOC_NON_BLOCK)))
- 				page = __rmqueue_smallest(zone, order, MIGRATE_HIGHATOMIC);
- 
- 			if (!page) {
+ 	if (OCFS2_I(inode)->ip_dyn_features & OCFS2_INLINE_DATA_FL) {
++		int id_count = ocfs2_max_inline_data_with_xattr(inode->i_sb, di);
++
++		if (byte_start > id_count || byte_start + byte_len > id_count) {
++			ret = -EINVAL;
++			mlog_errno(ret);
++			goto out;
++		}
++
+ 		ret = ocfs2_truncate_inline(inode, di_bh, byte_start,
+ 					    byte_start + byte_len, 0);
+ 		if (ret) {
 -- 
 2.43.0
 
