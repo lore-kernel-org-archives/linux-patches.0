@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6712B1FC7D6;
-	Wed,  6 Nov 2024 12:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C541FC7F4;
+	Wed,  6 Nov 2024 12:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896742; cv=none; b=AlPwVMKH38oZgNJH0CEsmPxhYwA2ZJRT3XexuMLwS6Lib35uaoldCT+fHyBvxl/SlD+W04vUhx2LwZZ9yoNOi+kyv4g/b0S6uMOOnDaRl8Yapn3jQtEhDO0aQLM5Te9hj/ReOHEZ+N1UtMyDAzQ0Nsxg/HADt0sqDsvwatydTNM=
+	t=1730896745; cv=none; b=hY6GT3t3ZfhM9Wzd1sFrA7gosLsFq5t/o1nRpb9RFBI7bd1aqYUJ8Tca0ZlM7CrjnF+U2iSG6yQpYPCAbgUyDasiJvSscYpL6U3ClEJmyuTbeLdbsLe64azUE291FfOEDDQ3ijiREfJ6Ke6SthMHjsyvk8SID+DaU/6ebHM0020=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896742; c=relaxed/simple;
-	bh=ECdRK8CSBi+t5xcNBaAKzSCOSaUDdrSDul3bgijm2uE=;
+	s=arc-20240116; t=1730896745; c=relaxed/simple;
+	bh=EeEgVEjiD6zErx1YOiRPF5zqRq8zLyviw/RUevcQ60w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aSLeSwU2jpnr+3FfL3ECluFe3psLW5UoV4BdcYoPX4KAyGVUIqO7WQhwIvt4PwSEOGMtfjMbEKfPK5Oen7BcUxRp66FoFO/huq3lv4ShtbGAyvJySrS4zqQzh2w3ObaOOwWErBeifNg5y/4zg+BNgh31RlF9qw5uPfxXJ8sLBrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6dI9D3l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZHGoS9Uu4GVSlX1M1qFLiT4SoDuweeC3pBfzbzE3vV8jV7sSerrOfhAG+VJujepVPU00A41ckQERfndqh3/InquZi2ZJxWHyGv+voV/eS9FYyLhrmnQryUhdzc8H0Xt/risYAyMjz+dCsxysfvNlbUC+vtpQ9wppgBGBiZnbLnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5/rnZZ8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6dI9D3l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE89AC4CED3;
-	Wed,  6 Nov 2024 12:39:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5/rnZZ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49A0C4CECD;
+	Wed,  6 Nov 2024 12:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896742;
-	bh=ECdRK8CSBi+t5xcNBaAKzSCOSaUDdrSDul3bgijm2uE=;
+	s=korg; t=1730896745;
+	bh=EeEgVEjiD6zErx1YOiRPF5zqRq8zLyviw/RUevcQ60w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B6dI9D3lxN6QBn+N3Jd1cVsq+bCVXSg0xgkIkMgaAtdmDPgPV6bmUbVkkq3RPc45T
-	 LvJ3Z4m7enoOYnSn+6io2vT8/PGcJGGdsddMyX6Se/3EKUzA1O2UmvpwZLACYSZitf
-	 Vk/KM9QwxkvIHlKHicbccWP1ypBV3mJbYbk7jMZY=
+	b=Y5/rnZZ81BuvGVUWNudaEGigDTqoaf+cmThcRG8V+9PpELEC2Kh7UHL2iKkzaewOX
+	 UxXda/Kprl71iJ54zAAkiTgifmG9YWBohKfavxDKpKhZaPyFYp964CgCs+T3Map89z
+	 xvcXJoOxZu0q3QOZThwQDilDNU+yRk81ZLqa142U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
+	Kees Cook <keescook@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Ralph Campbell <rcampbell@nvidia.com>,
+	Jason Gunthorpe <jgg@mellanox.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/110] arm64: Force position-independent veneers
-Date: Wed,  6 Nov 2024 13:03:56 +0100
-Message-ID: <20241106120304.012202334@linuxfoundation.org>
+Subject: [PATCH 5.10 057/110] selftests/mm: fix incorrect buffer->mirror size in hmm2 double_map test
+Date: Wed,  6 Nov 2024 13:04:23 +0100
+Message-ID: <20241106120304.774982038@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -50,117 +54,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Donet Tom <donettom@linux.ibm.com>
 
-[ Upstream commit 9abe390e689f4f5c23c5f507754f8678431b4f72 ]
+[ Upstream commit 76503e1fa1a53ef041a120825d5ce81c7fe7bdd7 ]
 
-Certain portions of code always need to be position-independent
-regardless of CONFIG_RELOCATABLE, including code which is executed in an
-idmap or which is executed before relocations are applied. In some
-kernel configurations the LLD linker generates position-dependent
-veneers for such code, and when executed these result in early boot-time
-failures.
+The hmm2 double_map test was failing due to an incorrect buffer->mirror
+size.  The buffer->mirror size was 6, while buffer->ptr size was 6 *
+PAGE_SIZE.  The test failed because the kernel's copy_to_user function was
+attempting to copy a 6 * PAGE_SIZE buffer to buffer->mirror.  Since the
+size of buffer->mirror was incorrect, copy_to_user failed.
 
-Marc Zyngier encountered a boot failure resulting from this when
-building a (particularly cursed) configuration with LLVM, as he reported
-to the list:
+This patch corrects the buffer->mirror size to 6 * PAGE_SIZE.
 
-  https://lore.kernel.org/linux-arm-kernel/86wmjwvatn.wl-maz@kernel.org/
+Test Result without this patch
+==============================
+ #  RUN           hmm2.hmm2_device_private.double_map ...
+ # hmm-tests.c:1680:double_map:Expected ret (-14) == 0 (0)
+ # double_map: Test terminated by assertion
+ #          FAIL  hmm2.hmm2_device_private.double_map
+ not ok 53 hmm2.hmm2_device_private.double_map
 
-In Marc's kernel configuration, the .head.text and .rodata.text sections
-end up more than 128MiB apart, requiring a veneer to branch between the
-two:
+Test Result with this patch
+===========================
+ #  RUN           hmm2.hmm2_device_private.double_map ...
+ #            OK  hmm2.hmm2_device_private.double_map
+ ok 53 hmm2.hmm2_device_private.double_map
 
-| [mark@lakrids:~/src/linux]% usekorg 14.1.0 aarch64-linux-objdump -t vmlinux | grep -w _text
-| ffff800080000000 g       .head.text     0000000000000000 _text
-| [mark@lakrids:~/src/linux]% usekorg 14.1.0 aarch64-linux-objdump -t vmlinux | grep -w primary_entry
-| ffff8000889df0e0 g       .rodata.text   000000000000006c primary_entry,
-
-... consequently, LLD inserts a position-dependent veneer for the branch
-from _stext (in .head.text) to primary_entry (in .rodata.text):
-
-| ffff800080000000 <_text>:
-| ffff800080000000:       fa405a4d        ccmp    x18, #0x0, #0xd, pl     // pl = nfrst
-| ffff800080000004:       14003fff        b       ffff800080010000 <__AArch64AbsLongThunk_primary_entry>
-...
-| ffff800080010000 <__AArch64AbsLongThunk_primary_entry>:
-| ffff800080010000:       58000050        ldr     x16, ffff800080010008 <__AArch64AbsLongThunk_primary_entry+0x8>
-| ffff800080010004:       d61f0200        br      x16
-| ffff800080010008:       889df0e0        .word   0x889df0e0
-| ffff80008001000c:       ffff8000        .word   0xffff8000
-
-... and as this is executed early in boot before the kernel is mapped in
-TTBR1 this results in a silent boot failure.
-
-Fix this by passing '--pic-veneer' to the linker, which will cause the
-linker to use position-independent veneers, e.g.
-
-| ffff800080000000 <_text>:
-| ffff800080000000:       fa405a4d        ccmp    x18, #0x0, #0xd, pl     // pl = nfrst
-| ffff800080000004:       14003fff        b       ffff800080010000 <__AArch64ADRPThunk_primary_entry>
-...
-| ffff800080010000 <__AArch64ADRPThunk_primary_entry>:
-| ffff800080010000:       f004e3f0        adrp    x16, ffff800089c8f000 <__idmap_text_start>
-| ffff800080010004:       91038210        add     x16, x16, #0xe0
-| ffff800080010008:       d61f0200        br      x16
-
-I've opted to pass '--pic-veneer' unconditionally, as:
-
-* In addition to solving the boot failure, these sequences are generally
-  nicer as they require fewer instructions and don't need to perform
-  data accesses.
-
-* While the position-independent veneer sequences have a limited +/-2GiB
-  range, this is not a new restriction. Even kernels built with
-  CONFIG_RELOCATABLE=n are limited to 2GiB in size as we have several
-  structues using 32-bit relative offsets and PPREL32 relocations, which
-  are similarly limited to +/-2GiB in range. These include extable
-  entries, jump table entries, and alt_instr entries.
-
-* GNU LD defaults to using position-independent veneers, and supports
-  the same '--pic-veneer' option, so this change is not expected to
-  adversely affect GNU LD.
-
-I've tested with GNU LD 2.30 to 2.42 inclusive and LLVM 13.0.1 to 19.1.0
-inclusive, using the kernel.org binaries from:
-
-* https://mirrors.edge.kernel.org/pub/tools/crosstool/
-* https://mirrors.edge.kernel.org/pub/tools/llvm/
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Reported-by: Marc Zyngier <maz@kernel.org>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Will Deacon <will@kernel.org>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20240927101838.3061054-1-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lkml.kernel.org/r/20240927050752.51066-1-donettom@linux.ibm.com
+Fixes: fee9f6d1b8df ("mm/hmm/test: add selftests for HMM")
+Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Jérôme Glisse <jglisse@redhat.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Cc: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Ralph Campbell <rcampbell@nvidia.com>
+Cc: Jason Gunthorpe <jgg@mellanox.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/Makefile | 2 +-
+ tools/testing/selftests/vm/hmm-tests.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
-index 485b7dbd4f9e3..96dcddc358c78 100644
---- a/arch/arm64/Makefile
-+++ b/arch/arm64/Makefile
-@@ -10,7 +10,7 @@
- #
- # Copyright (C) 1995-2001 by Russell King
+diff --git a/tools/testing/selftests/vm/hmm-tests.c b/tools/testing/selftests/vm/hmm-tests.c
+index 426dccc08f906..738c34eb50afc 100644
+--- a/tools/testing/selftests/vm/hmm-tests.c
++++ b/tools/testing/selftests/vm/hmm-tests.c
+@@ -1474,7 +1474,7 @@ TEST_F(hmm2, double_map)
  
--LDFLAGS_vmlinux	:=--no-undefined -X
-+LDFLAGS_vmlinux	:=--no-undefined -X --pic-veneer
+ 	buffer->fd = -1;
+ 	buffer->size = size;
+-	buffer->mirror = malloc(npages);
++	buffer->mirror = malloc(size);
+ 	ASSERT_NE(buffer->mirror, NULL);
  
- ifeq ($(CONFIG_RELOCATABLE), y)
- # Pass --no-apply-dynamic-relocs to restore pre-binutils-2.27 behaviour
+ 	/* Reserve a range of addresses. */
 -- 
 2.43.0
 
