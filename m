@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E301F8F19;
-	Wed,  6 Nov 2024 13:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE961F8F12;
+	Wed,  6 Nov 2024 13:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898290; cv=none; b=emBhA5pMQIGMXcRajPTl28lNMohVsWv6SMW9yatxnKQoF5iMoVgDaLr2aiMdafumZ6BUHu4/2tS4lcaj+4GbrjD8Fm9JY/Bps0NiIO5iPnbPgIEbKgaHu9VBlYsoASvxqKn+r053lhjJd4B+0nSHfsQWJBLqrobLEQxE0TbiaL4=
+	t=1730898293; cv=none; b=QuWjgBZ3pLl8WzJdYy5zPerI1TDDWviNuz6I1b41U1g3Nm0Pu2H8nhNa0WqewHqyvR3cyLoAHyUAaaOuowxJwYXRcENuT+Xb3WSKFcgUt8cMJuSyP7RemNGNiSosV5f74lyUQxjhDGaPo8suHqmZlr0BYRh4IscKbTO94W0zypk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898290; c=relaxed/simple;
-	bh=egn0knBhAhZ1xGxDoGB5ATeXpnh/Kc5HxaKp95wFTaE=;
+	s=arc-20240116; t=1730898293; c=relaxed/simple;
+	bh=LKua+wULvQp+/i3fDfWwzddSVHUmHb1Z2NIBSHhJwk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EhsweL0/y0EeYxOmMRheePHtfqedxBUIMuRSgzYUyBqzE9GgyfYzH9Bx2vODbD8w1nPLuHNiiAVf3tzwiXh5hv1l0r+WwW4HuxOAajn+ttSbDoAvE4C+AKmg6JnjmkozAx4Qh5AsAgJosoORczcPkq5+vjmSLtp6U7yya7P6QT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OuvKy89x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OxTyLmX7VKKYsEd3lN72BsUomeu//qahdqta/Gas44/jeQ791UGFtSy6XqGP/LHUFOKGzMwz2zI1w7kVPXnE0X94eqNRgQeFE4/C/dIARFTwMWvCQwM4/4SirTAo0xSzxogDsufFBjCYGXIQtPqlDD9H9vecnq8YybCfDi68FG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SN8FAKxD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuvKy89x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB08FC4CED4;
-	Wed,  6 Nov 2024 13:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SN8FAKxD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8857CC4CECD;
+	Wed,  6 Nov 2024 13:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898290;
-	bh=egn0knBhAhZ1xGxDoGB5ATeXpnh/Kc5HxaKp95wFTaE=;
+	s=korg; t=1730898292;
+	bh=LKua+wULvQp+/i3fDfWwzddSVHUmHb1Z2NIBSHhJwk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OuvKy89xOjLQzRjutnUm/CtUd8cPD/X3msfDj4rPdVnWRIjbMF6YoXQwohtdxxLEx
-	 +f/pa/YeU0oCFDj77g7WRyUpDqYW6FnBfdYRva1OhKsNjsecvYumPqGE1HleVmHlx6
-	 ZZNi71ktR+xyf6bwAed3lIG4W3J2/bvberQatDoQ=
+	b=SN8FAKxDmssJCsu8SkhCSCqkJWEVXmVd52ZBfKEGBhosbqQ58FgtqA+rOxYX//9xP
+	 ZWB3+K4cBaY0xGY9HjiejRqA6hNGateXaPbvWyhCvMnyC9KEavMx27YZlJQxc1Ri4l
+	 4pIajVi8SAhmjfQHVuyIU9uMA4FUkj78TNsezly0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 5.4 151/462] wifi: rtw88: 8822c: Fix reported RX band width
-Date: Wed,  6 Nov 2024 13:00:44 +0100
-Message-ID: <20241106120335.243179153@linuxfoundation.org>
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.4 152/462] debugobjects: Fix conditions in fill_pool()
+Date: Wed,  6 Nov 2024 13:00:45 +0100
+Message-ID: <20241106120335.268230035@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -50,58 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-commit a71ed5898dfae68262f79277915d1dfe34586bc6 upstream.
+commit 684d28feb8546d1e9597aa363c3bfcf52fe250b7 upstream.
 
-"iw dev wlp2s0 station dump" shows incorrect rx bitrate:
+fill_pool() uses 'obj_pool_min_free' to decide whether objects should be
+handed back to the kmem cache. But 'obj_pool_min_free' records the lowest
+historical value of the number of objects in the object pool and not the
+minimum number of objects which should be kept in the pool.
 
-tx bitrate:     866.7 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 2
-rx bitrate:     86.7 MBit/s VHT-MCS 9 VHT-NSS 1
+Use 'debug_objects_pool_min_level' instead, which holds the minimum number
+which was scaled to the number of CPUs at boot time.
 
-This is because the RX band width is calculated incorrectly. Fix the
-calculation according to the phydm_rxsc_2_bw() function from the
-official drivers.
+[ tglx: Massage change log ]
 
-After:
-
-tx bitrate:     866.7 MBit/s VHT-MCS 9 80MHz short GI VHT-NSS 2
-rx bitrate:     390.0 MBit/s VHT-MCS 9 80MHz VHT-NSS 1
-
-It also works correctly with the AP configured for 20 MHz and 40 MHz.
-
-Tested with RTL8822CE.
-
+Fixes: d26bf5056fc0 ("debugobjects: Reduce number of pool_lock acquisitions in fill_pool()")
+Fixes: 36c4ead6f6df ("debugobjects: Add global free list and the counter")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/bca8949b-e2bd-4515-98fd-70d3049a0097@gmail.com
+Link: https://lore.kernel.org/all/20240904133944.2124-3-thunder.leizhen@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/rtw8822c.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ lib/debugobjects.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8822c.c
-@@ -1655,12 +1655,14 @@ static void query_phy_status_page1(struc
- 	else
- 		rxsc = GET_PHY_STAT_P1_HT_RXSC(phy_status);
- 
--	if (rxsc >= 9 && rxsc <= 12)
-+	if (rxsc == 0)
-+		bw = rtwdev->hal.current_band_width;
-+	else if (rxsc >= 1 && rxsc <= 8)
-+		bw = RTW_CHANNEL_WIDTH_20;
-+	else if (rxsc >= 9 && rxsc <= 12)
- 		bw = RTW_CHANNEL_WIDTH_40;
--	else if (rxsc >= 13)
--		bw = RTW_CHANNEL_WIDTH_80;
- 	else
--		bw = RTW_CHANNEL_WIDTH_20;
-+		bw = RTW_CHANNEL_WIDTH_80;
- 
- 	pkt_stat->rx_power[RF_PATH_A] = GET_PHY_STAT_P1_PWDB_A(phy_status) - 110;
- 	pkt_stat->rx_power[RF_PATH_B] = GET_PHY_STAT_P1_PWDB_B(phy_status) - 110;
+--- a/lib/debugobjects.c
++++ b/lib/debugobjects.c
+@@ -143,13 +143,14 @@ static void fill_pool(void)
+ 	 * READ_ONCE()s pair with the WRITE_ONCE()s in pool_lock critical
+ 	 * sections.
+ 	 */
+-	while (READ_ONCE(obj_nr_tofree) && (READ_ONCE(obj_pool_free) < obj_pool_min_free)) {
++	while (READ_ONCE(obj_nr_tofree) &&
++	       READ_ONCE(obj_pool_free) < debug_objects_pool_min_level) {
+ 		raw_spin_lock_irqsave(&pool_lock, flags);
+ 		/*
+ 		 * Recheck with the lock held as the worker thread might have
+ 		 * won the race and freed the global free list already.
+ 		 */
+-		while (obj_nr_tofree && (obj_pool_free < obj_pool_min_free)) {
++		while (obj_nr_tofree && (obj_pool_free < debug_objects_pool_min_level)) {
+ 			obj = hlist_entry(obj_to_free.first, typeof(*obj), node);
+ 			hlist_del(&obj->node);
+ 			WRITE_ONCE(obj_nr_tofree, obj_nr_tofree - 1);
 
 
