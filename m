@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992B01F130F;
-	Wed,  6 Nov 2024 13:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07DB1DFDB3;
+	Wed,  6 Nov 2024 13:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898156; cv=none; b=hsaQ01L/ZtXWtwZPTD9nUvk1HzZ4nQmhxolC2jYQZDraEYg+s1pd/RpzE+Utyrid5f6jISwKBCvlcJLyG3yGRqnDJUhK8K77AAuDT7fCMJ1TfeDLul4CjnPft2k6qtKgXgHKjjcSxhNZ7JNQOyZnU7zsCUrfOkyAQ0ItjummFqI=
+	t=1730898159; cv=none; b=hIRkBzyIyUDXjbTus3/yhOe2BCmgCX/hUY7Bn4gpZob433xfTEK7hEg+o4KUVYex27+s8EclBrBqRssHQkPYdT1gfSFb2fojwDkR00IieRs3nMqJZlMVDjNZiM9j2QcPIJ46CX/JGrcSB0pGCymhi0sqhzzdSlYFWwJU3naC0jU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898156; c=relaxed/simple;
-	bh=4Y6p3RRoplX+aMXu6W7ATF+CNpPghRThYDNu+sKTLL8=;
+	s=arc-20240116; t=1730898159; c=relaxed/simple;
+	bh=Ko9MA9+9WCqfDcJGorsRm1GIpUO9v31LFMrGjthD3Kw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d7RDgBqPmW/ZbC0sQ2UvGot2diJo1rjdBb+NEAfzoZo0sSgAnRyUtiGcYHpzNC6HRweA05Xwy5qJlvIlPk1CMb+eZR/5m5izH2bWSbVkD1bsXifot60Xyj55pdLnNUvP1eVDaRIh/DVSKr3kphRsSFqDKrmKPgCPBfV2SFp1NAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uipfyNdM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fnn7iSgkjBwHSG8sfR4vh1ehTsxvyqE89vnUJTHp0DrUVBClC/IVlf2ExRPstveG1Xk5dlkV5zMBV7a065qQnpLGK108/VDPbaHT3t+Fkxl4JzyoI+Y1xW92GjzEpx0ySICwfFN0B4KbPSWK1uwBsF+Nd/DrGZnCls3o2NspLnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wM8SxLLX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uipfyNdM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22909C4CED3;
-	Wed,  6 Nov 2024 13:02:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wM8SxLLX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D405C4CECD;
+	Wed,  6 Nov 2024 13:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898156;
-	bh=4Y6p3RRoplX+aMXu6W7ATF+CNpPghRThYDNu+sKTLL8=;
+	s=korg; t=1730898159;
+	bh=Ko9MA9+9WCqfDcJGorsRm1GIpUO9v31LFMrGjthD3Kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uipfyNdM0n1AHkgKRQ7bOLnN9FVddirxRYaMsMxT2gTxUiNwrtGFw9u3/597abVJ2
-	 REWdZn6GqCuksRV7qp77o7HzT87pYm+Ycz0rXqpCulAW6rAYkKSikn6Yrd1JuNgAnK
-	 ruF4k3NzH4X8VnNL3QZeC5RzGJHVofmluVt16ruE=
+	b=wM8SxLLXErGF6f9wW4LSBNWvCNSEjV/fAuWmMVGakpO4Np6uUjLY44iyC3y3bdMot
+	 HeHS7z+g1sAi12MzcMKjugM1TO/xmDxUjlC0msHbCODg7+xl43HxG2P1YdryBcRaPF
+	 5MgdGQQ57+eRz/pEVOFgptWo2rV7yfq3Y5MD8avM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 5.4 142/462] USB: appledisplay: close race between probe and completion handler
-Date: Wed,  6 Nov 2024 13:00:35 +0100
-Message-ID: <20241106120335.019195845@linuxfoundation.org>
+Subject: [PATCH 5.4 143/462] USB: misc: cypress_cy7c63: check for short transfer
+Date: Wed,  6 Nov 2024 13:00:36 +0100
+Message-ID: <20241106120335.043159158@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,64 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Oliver Neukum <oneukum@suse.com>
 
-commit 8265d06b7794493d82c5c21a12d7ba43eccc30cb upstream.
+commit 49cd2f4d747eeb3050b76245a7f72aa99dbd3310 upstream.
 
-There is a small window during probing when IO is running
-but the backlight is not registered. Processing events
-during that time will crash. The completion handler
-needs to check for a backlight before scheduling work.
+As we process the second byte of a control transfer, transfers
+of less than 2 bytes must be discarded.
 
-The bug is as old as the driver.
+This bug is as old as the driver.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
+SIgned-off-by: Oliver Neukum <oneukum@suse.com>
 CC: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240912123317.1026049-1-oneukum@suse.com
+Link: https://lore.kernel.org/r/20240912125449.1030536-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/appledisplay.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/usb/misc/cypress_cy7c63.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/misc/appledisplay.c
-+++ b/drivers/usb/misc/appledisplay.c
-@@ -107,7 +107,12 @@ static void appledisplay_complete(struct
- 	case ACD_BTN_BRIGHT_UP:
- 	case ACD_BTN_BRIGHT_DOWN:
- 		pdata->button_pressed = 1;
--		schedule_delayed_work(&pdata->work, 0);
-+		/*
-+		 * there is a window during which no device
-+		 * is registered
-+		 */
-+		if (pdata->bd )
-+			schedule_delayed_work(&pdata->work, 0);
- 		break;
- 	case ACD_BTN_NONE:
- 	default:
-@@ -202,6 +207,7 @@ static int appledisplay_probe(struct usb
- 	const struct usb_device_id *id)
- {
- 	struct backlight_properties props;
-+	struct backlight_device *backlight;
- 	struct appledisplay *pdata;
- 	struct usb_device *udev = interface_to_usbdev(iface);
- 	struct usb_endpoint_descriptor *endpoint;
-@@ -272,13 +278,14 @@ static int appledisplay_probe(struct usb
- 	memset(&props, 0, sizeof(struct backlight_properties));
- 	props.type = BACKLIGHT_RAW;
- 	props.max_brightness = 0xff;
--	pdata->bd = backlight_device_register(bl_name, NULL, pdata,
-+	backlight = backlight_device_register(bl_name, NULL, pdata,
- 					      &appledisplay_bl_data, &props);
--	if (IS_ERR(pdata->bd)) {
-+	if (IS_ERR(backlight)) {
- 		dev_err(&iface->dev, "Backlight registration failed\n");
--		retval = PTR_ERR(pdata->bd);
-+		retval = PTR_ERR(backlight);
- 		goto error;
- 	}
-+	pdata->bd = backlight;
+--- a/drivers/usb/misc/cypress_cy7c63.c
++++ b/drivers/usb/misc/cypress_cy7c63.c
+@@ -88,6 +88,9 @@ static int vendor_command(struct cypress
+ 				 USB_DIR_IN | USB_TYPE_VENDOR | USB_RECIP_OTHER,
+ 				 address, data, iobuf, CYPRESS_MAX_REQSIZE,
+ 				 USB_CTRL_GET_TIMEOUT);
++	/* we must not process garbage */
++	if (retval < 2)
++		goto err_buf;
  
- 	/* Try to get brightness */
- 	brightness = appledisplay_bl_get_brightness(pdata->bd);
+ 	/* store returned data (more READs to be added) */
+ 	switch (request) {
+@@ -107,6 +110,7 @@ static int vendor_command(struct cypress
+ 			break;
+ 	}
+ 
++err_buf:
+ 	kfree(iobuf);
+ error:
+ 	return retval;
 
 
