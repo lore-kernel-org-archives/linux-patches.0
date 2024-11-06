@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F6D1D416E;
-	Wed,  6 Nov 2024 12:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF26B1D416E;
+	Wed,  6 Nov 2024 12:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895139; cv=none; b=gcCy1/DUYiPwDGXnUL/1sYipTxdnTbznKq/0sT3OGLZZK2pW4fvbl8Jr2YS/qw6DowxkoI+YRoxrfHhCBCyNkM6d3rjy4Ra6XNObstJOznReFOkxGEttpe5tgGos3BEC/WxywPDPJK8xz1FVpEVCdnhYRhJE96zTxmiKDB9uTK4=
+	t=1730895142; cv=none; b=mH3R48fzmHR8pKR2Odc8v3UGRv1d9EU8gIOJ9ngW/CY1GTAE69f1fsUePX5gEoVyDALNvTScVA6sOA2hM6QWSDPVb4VFdr4fDsmPXaMMfn7IBpT21XzbnYIHQ/KhvPmrqK5iU1DDqvVOy0CkT+X3OcFWHKralXhNTyTnwLhdaS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895139; c=relaxed/simple;
-	bh=y4Oc5Yd9pM4ProhXTNNhQTos1SHSBQchzpBEZnbHfn8=;
+	s=arc-20240116; t=1730895142; c=relaxed/simple;
+	bh=f7tu5ws+MwtGir73hC0DdVP+ByFH+pbauwxOfhrd6KE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7I+RqPBeBmeY36Z9VXIl5QgWPx077ebDudLUtFXeLs3huQpoxeIqeUCdSCXSmAPQwVbugy0329CB9Oi34d+/V0fXPZ3aF58cX+QLzMkS2ksfQC7ACsDiK/608AHO+bAMvYSKLU8GdabjKdBGCgjP1lPv9EH+ZPs0YLkJDykhjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLGCIj2C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=azsSCIsJJ+gwjmr3saLYuUqy9JwtaXgFFvUNpEKL27j9EiNctHXlxX0u2CeWksKufgSOGECZOxMZTMZQ3DRWWMZdkkmDmsAIlfmIvEFgXWGghhiMzTRMhlWbIycFMQ9gH3JZjnIq4y+7Pecv/Mvd7/yq7irBtO9QuQulGRfkpKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wV09sw4A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLGCIj2C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2320BC4CECD;
-	Wed,  6 Nov 2024 12:12:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wV09sw4A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D907C4CECD;
+	Wed,  6 Nov 2024 12:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895139;
-	bh=y4Oc5Yd9pM4ProhXTNNhQTos1SHSBQchzpBEZnbHfn8=;
+	s=korg; t=1730895142;
+	bh=f7tu5ws+MwtGir73hC0DdVP+ByFH+pbauwxOfhrd6KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NLGCIj2CrVUMMpeeLNX44KBYIT+Kjdgsg1SMW/qwJvCjMOw5W1n53rL55NMneKyEN
-	 fcBJm6N1tt7jNYw8ctS0hfjwmWS9j3piJomfok0+GL97KhIyd4RMh5ZVd4JqFS32yX
-	 bmITaSKykrp2nuSxY3bidQAlHMoK98SSTvzZoB9Y=
+	b=wV09sw4AwntbQZV3CcLspJrHKEr8FVv/OeQ/Vp3TMFprDXg7KjNAkhWJOohmnU9C4
+	 NPfwXlQwzM1nucH8a6u+bNpsyXUAzNYZCAvp9eoxTg27n3IneF/dNDr3yFMRimVE4f
+	 Y+VtBwRqn199QwxIyzrnRazP2FSajwnCkF9wgk2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Lobanov <m.lobanov@rosalinux.ru>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 091/350] RDMA/cxgb4: Added NULL check for lookup_atid
-Date: Wed,  6 Nov 2024 13:00:19 +0100
-Message-ID: <20241106120323.147142555@linuxfoundation.org>
+	syzbot+67ba3c42bcbb4665d3ad@syzkaller.appspotmail.com,
+	Julian Sun <sunjunchao2870@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 4.19 118/350] vfs: fix race between evice_inodes() and find_inode()&iput()
+Date: Wed,  6 Nov 2024 13:00:46 +0100
+Message-ID: <20241106120323.819094853@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,52 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Lobanov <m.lobanov@rosalinux.ru>
+From: Julian Sun <sunjunchao2870@gmail.com>
 
-[ Upstream commit e766e6a92410ca269161de059fff0843b8ddd65f ]
+commit 88b1afbf0f6b221f6c5bb66cc80cd3b38d696687 upstream.
 
-The lookup_atid() function can return NULL if the ATID is
-invalid or does not exist in the identifier table, which
-could lead to dereferencing a null pointer without a
-check in the `act_establish()` and `act_open_rpl()` functions.
-Add a NULL check to prevent null pointer dereferencing.
+Hi, all
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Recently I noticed a bug[1] in btrfs, after digged it into
+and I believe it'a race in vfs.
 
-Fixes: cfdda9d76436 ("RDMA/cxgb4: Add driver for Chelsio T4 RNIC")
-Signed-off-by: Mikhail Lobanov <m.lobanov@rosalinux.ru>
-Link: https://patch.msgid.link/20240912145844.77516-1-m.lobanov@rosalinux.ru
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Let's assume there's a inode (ie ino 261) with i_count 1 is
+called by iput(), and there's a concurrent thread calling
+generic_shutdown_super().
+
+cpu0:                              cpu1:
+iput() // i_count is 1
+  ->spin_lock(inode)
+  ->dec i_count to 0
+  ->iput_final()                    generic_shutdown_super()
+    ->__inode_add_lru()               ->evict_inodes()
+      // cause some reason[2]           ->if (atomic_read(inode->i_count)) continue;
+      // return before                  // inode 261 passed the above check
+      // list_lru_add_obj()             // and then schedule out
+   ->spin_unlock()
+// note here: the inode 261
+// was still at sb list and hash list,
+// and I_FREEING|I_WILL_FREE was not been set
+
+btrfs_iget()
+  // after some function calls
+  ->find_inode()
+    // found the above inode 261
+    ->spin_lock(inode)
+   // check I_FREEING|I_WILL_FREE
+   // and passed
+      ->__iget()
+    ->spin_unlock(inode)                // schedule back
+                                        ->spin_lock(inode)
+                                        // check (I_NEW|I_FREEING|I_WILL_FREE) flags,
+                                        // passed and set I_FREEING
+iput()                                  ->spin_unlock(inode)
+  ->spin_lock(inode)			  ->evict()
+  // dec i_count to 0
+  ->iput_final()
+    ->spin_unlock()
+    ->evict()
+
+Now, we have two threads simultaneously evicting
+the same inode, which may trigger the BUG(inode->i_state & I_CLEAR)
+statement both within clear_inode() and iput().
+
+To fix the bug, recheck the inode->i_count after holding i_lock.
+Because in the most scenarios, the first check is valid, and
+the overhead of spin_lock() can be reduced.
+
+If there is any misunderstanding, please let me know, thanks.
+
+[1]: https://lore.kernel.org/linux-btrfs/000000000000eabe1d0619c48986@google.com/
+[2]: The reason might be 1. SB_ACTIVE was removed or 2. mapping_shrinkable()
+return false when I reproduced the bug.
+
+Reported-by: syzbot+67ba3c42bcbb4665d3ad@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=67ba3c42bcbb4665d3ad
+CC: stable@vger.kernel.org
+Fixes: 63997e98a3be ("split invalidate_inodes()")
+Signed-off-by: Julian Sun <sunjunchao2870@gmail.com>
+Link: https://lore.kernel.org/r/20240823130730.658881-1-sunjunchao2870@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/cxgb4/cm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/inode.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
-index e8d2135df22db..f9ea863a80885 100644
---- a/drivers/infiniband/hw/cxgb4/cm.c
-+++ b/drivers/infiniband/hw/cxgb4/cm.c
-@@ -1180,6 +1180,8 @@ static int act_establish(struct c4iw_dev *dev, struct sk_buff *skb)
- 	int ret;
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -616,6 +616,10 @@ again:
+ 			continue;
  
- 	ep = lookup_atid(t, atid);
-+	if (!ep)
-+		return -EINVAL;
- 
- 	pr_debug("ep %p tid %u snd_isn %u rcv_isn %u\n", ep, tid,
- 		 be32_to_cpu(req->snd_isn), be32_to_cpu(req->rcv_isn));
-@@ -2235,6 +2237,9 @@ static int act_open_rpl(struct c4iw_dev *dev, struct sk_buff *skb)
- 	int ret = 0;
- 
- 	ep = lookup_atid(t, atid);
-+	if (!ep)
-+		return -EINVAL;
-+
- 	la = (struct sockaddr_in *)&ep->com.local_addr;
- 	ra = (struct sockaddr_in *)&ep->com.remote_addr;
- 	la6 = (struct sockaddr_in6 *)&ep->com.local_addr;
--- 
-2.43.0
-
+ 		spin_lock(&inode->i_lock);
++		if (atomic_read(&inode->i_count)) {
++			spin_unlock(&inode->i_lock);
++			continue;
++		}
+ 		if (inode->i_state & (I_NEW | I_FREEING | I_WILL_FREE)) {
+ 			spin_unlock(&inode->i_lock);
+ 			continue;
 
 
