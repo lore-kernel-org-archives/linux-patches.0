@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EA51E907E;
-	Wed,  6 Nov 2024 13:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9AA1E0DA1;
+	Wed,  6 Nov 2024 13:12:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898757; cv=none; b=k5No0tH6h7YJNrQhnvcaAO5pmVBY+FjpT+nlFlNl9UQWfwAgRYZgDOOqIBt1Ci7TYZ4POLMVYnK8qQKOEtfuUynkua/KmU4/jhu0vtBKwLrkhG2N3+yHKFw9iw0ciFZfe5pGYgl82si5yzQVebd2/1saXsjMYnLeNZbbzVRONXc=
+	t=1730898760; cv=none; b=A/lovrL7JeprjiI9YaftwAnC4XOSjXmIvsQh/3oVIAcca4ywcPqfCAu4dJ6n5yunYcMTSWOZ84ffzunP/nMixmQYMCADiDKvCM0D8Pqo0h2PhPkb5YBGeW9NPi8VJBDzLhojsFvoFY6VIoLnQ1BttfXvpYh1tdSKBYlaIilGPMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898757; c=relaxed/simple;
-	bh=/JOqA1VDwYjdvspWW0ZTC/DFOCc23K29AxIIeviSrTc=;
+	s=arc-20240116; t=1730898760; c=relaxed/simple;
+	bh=hXC8nRbukWbMMOTEA75JLCUQ7B/iAIIF7hsyBfNRbeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tOLHdbdud8Ej5/+uR9RV2/Kp3I3mdP6fBkbFuAnvb927fRsh59rw5yeDlSDmeOkWGPuZPsQLQ9akUY9U5LZ3drKJJ8pmnASx+KQuC5RryGwSuSx4/4CHaHGGPpVRSZwtEFLdt7DLlaz+FifW+uDNGDEnZpWpxu9Hks3bdXP27dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Snb86RK0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XxwnwM0Z+/JE1eCwweWAXKbEkZeAMwnGKuxiyAUWo5D1IMZPYr7lHJzble8p7ateYBWIkkHLJeYUmDYqFq1l1ndgG6g+VoOCjHLC1pQuBwnLdKpumxIubd05HKwJsS9ndOr6rlM7ThKP+1tQ+LjzeobkATtPoRiASrOMtQtovkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hco6qW+X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Snb86RK0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DFADC4CECD;
-	Wed,  6 Nov 2024 13:12:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hco6qW+X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A800C4CECD;
+	Wed,  6 Nov 2024 13:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898757;
-	bh=/JOqA1VDwYjdvspWW0ZTC/DFOCc23K29AxIIeviSrTc=;
+	s=korg; t=1730898760;
+	bh=hXC8nRbukWbMMOTEA75JLCUQ7B/iAIIF7hsyBfNRbeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Snb86RK0+pSdi1oFTHlBimaFSb6rU9GobPfnJzA9ug2c/JH+Hwj57QOINh5XxU2UY
-	 4iRvcgJtQQjtoW9TGS65ZovgfRKA5b5/NrTrUgCzCajF81XR02rULqT+Tlh87VsDjG
-	 El2uYArPHjPJK9mC1SDMZK8m/w/FEj0MTxFxOB2o=
+	b=Hco6qW+XMw+4Wurjr381PFGf+DrMzEuz9RHgh/uh+6a4ju/+7hxIBgzn9PXecxUkS
+	 bKQY3JGzcKUpmHS1N9ze4rtkxXwWqk9A+bFjsMxD6VjeXc/DbvfjneE4EM+9sC+ZOO
+	 Wov6uaZrCc6QJzfwi5Y6z/072fIPIKmbOVaESVpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Subramanian Ananthanarayanan <quic_skananth@quicinc.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 309/462] clk: bcm: bcm53573: fix OF node leak in init
-Date: Wed,  6 Nov 2024 13:03:22 +0100
-Message-ID: <20241106120339.158475622@linuxfoundation.org>
+Subject: [PATCH 5.4 310/462] PCI: Add ACS quirk for Qualcomm SA8775P
+Date: Wed,  6 Nov 2024 13:03:23 +0100
+Message-ID: <20241106120339.182105304@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -45,43 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Subramanian Ananthanarayanan <quic_skananth@quicinc.com>
 
-[ Upstream commit f92d67e23b8caa81f6322a2bad1d633b00ca000e ]
+[ Upstream commit 026f84d3fa62d215b11cbeb5a5d97df941e93b5c ]
 
-Driver code is leaking OF node reference from of_get_parent() in
-bcm53573_ilp_init().  Usage of of_get_parent() is not needed in the
-first place, because the parent node will not be freed while we are
-processing given node (triggered by CLK_OF_DECLARE()).  Thus fix the
-leak by accessing parent directly, instead of of_get_parent().
+The Qualcomm SA8775P root ports don't advertise an ACS capability, but they
+do provide ACS-like features to disable peer transactions and validate bus
+numbers in requests.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240826065801.17081-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Thus, add an ACS quirk for the SA8775P.
+
+Link: https://lore.kernel.org/linux-pci/20240906052228.1829485-1-quic_skananth@quicinc.com
+Signed-off-by: Subramanian Ananthanarayanan <quic_skananth@quicinc.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/bcm/clk-bcm53573-ilp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/bcm/clk-bcm53573-ilp.c b/drivers/clk/bcm/clk-bcm53573-ilp.c
-index 84f2af736ee8a..83ef41d618be3 100644
---- a/drivers/clk/bcm/clk-bcm53573-ilp.c
-+++ b/drivers/clk/bcm/clk-bcm53573-ilp.c
-@@ -112,7 +112,7 @@ static void bcm53573_ilp_init(struct device_node *np)
- 		goto err_free_ilp;
- 	}
- 
--	ilp->regmap = syscon_node_to_regmap(of_get_parent(np));
-+	ilp->regmap = syscon_node_to_regmap(np->parent);
- 	if (IS_ERR(ilp->regmap)) {
- 		err = PTR_ERR(ilp->regmap);
- 		goto err_free_ilp;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 3bc7058404156..1e846b62feba5 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -4957,6 +4957,8 @@ static const struct pci_dev_acs_enabled {
+ 	/* QCOM QDF2xxx root ports */
+ 	{ PCI_VENDOR_ID_QCOM, 0x0400, pci_quirk_qcom_rp_acs },
+ 	{ PCI_VENDOR_ID_QCOM, 0x0401, pci_quirk_qcom_rp_acs },
++	/* QCOM SA8775P root port */
++	{ PCI_VENDOR_ID_QCOM, 0x0115, pci_quirk_qcom_rp_acs },
+ 	/* HXT SD4800 root ports. The ACS design is same as QCOM QDF2xxx */
+ 	{ PCI_VENDOR_ID_HXT, 0x0401, pci_quirk_qcom_rp_acs },
+ 	/* Intel PCH root ports */
 -- 
 2.43.0
 
