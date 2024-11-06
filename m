@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCEBA1DF254;
-	Wed,  6 Nov 2024 12:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7587C1DF249;
+	Wed,  6 Nov 2024 12:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895430; cv=none; b=d06U/vB148B7fwn5wUXaM7x0TMUkHcGIQej0ed/VwFx6RQWw+QoFe2kSBh7+8Tj5ncf+PV6HHOgWusf5MLXdGwjyyhcvSyZ/gMubYr6s7Cpm/jIaUsw4zEKnEaRgmhsWxkwd5w/rDkgUuevaUrGLKAudPFoywDhXC7k8fezHt5s=
+	t=1730895433; cv=none; b=QJpm6dWVV0gua8+0zNDBTnfllOtEPUMmk13x0IP7GzzQCdv4hAWDNqvijiH4dYPWdz8LSbEI0/yIG1Yf7hUTgXxxFado3WIAvc2iCTF/nlJScP0oZqjCbH7oWxcNOuV8E545XZVltLXYE5FYwgVrTb0OKkuSAQn7B4Gek/ZyVGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895430; c=relaxed/simple;
-	bh=7zKF38gBuyE29DEL1siYIxeN5EtNrKVh8/t7nARVPwQ=;
+	s=arc-20240116; t=1730895433; c=relaxed/simple;
+	bh=pJIrqatPnOw7XqObTRvFo0WUaSlOHeEOSZGEOHIsQJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HbIGLUrMuxIXz7YHQQKBqNc6dSuXEwAEmYbnZFUU3QNiGB411zYcxjiRhHM2La78KdoEhkfZOa8IpHIgtsG4Y8rbSoBNsKDUQAPN1zvUXoI6SAzX+eZi/HCTvEoyrghvSjXfd/+r2QoEbSy+zyFHP3EDNbrCtgxnfZwoQnn5fDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8YF8bx0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MYwWLdCOuS4W+dN+CiLxUeh+bT6vyCcz6zMGZfa4/KlbXYDTN8HusLHA94CDcjuTEBcZMVbUvjps8xnfxrOeGuowgWtU1KwC60xfNAExVyAGMkNGJa1isgqVPO4ylnjioJAPw/D3KWWTDgDDumB7u68WF3tr++FiYYmXL0s/0g8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=on/Ign6v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8YF8bx0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1055BC4CECD;
-	Wed,  6 Nov 2024 12:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="on/Ign6v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F19C4CECD;
+	Wed,  6 Nov 2024 12:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895430;
-	bh=7zKF38gBuyE29DEL1siYIxeN5EtNrKVh8/t7nARVPwQ=;
+	s=korg; t=1730895433;
+	bh=pJIrqatPnOw7XqObTRvFo0WUaSlOHeEOSZGEOHIsQJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N8YF8bx05KeSzt4KYW1Lyx1qdB6DjOrHbpSFbFFsyjbV7kgbmDTmzlM/EBeu7rYV/
-	 CnYATNU1tyQKgJozOOlV/I2e6ZrGl9j/e4EqUs/NEeTx/b++snuiLPFnY6+b1Y66Bb
-	 E09KBLgfgg71DYn5b54S4UDJ/QDBmzPmhkhVGkd8=
+	b=on/Ign6v7qp3qcyA7qE6EPNBVX5EjVSgX9tiQl04bz2E5RTxCL3JArUntsjDo4TWl
+	 U3gsriO+FAMP2eYyv0opJUHnUNKeDB6iIE37SoWnQJCyo9BfNVIeC1jJmI+BQAABG8
+	 1Y3WEVLUOkvqPs+4WmZhFkaq9k4ni3+1MQiBRwnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 4.19 208/350] media: venus: fix use after free bug in venus_remove due to race condition
-Date: Wed,  6 Nov 2024 13:02:16 +0100
-Message-ID: <20241106120326.124322145@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	James Morse <james.morse@arm.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 217/350] arm64: Add Cortex-715 CPU part definition
+Date: Wed,  6 Nov 2024 13:02:25 +0100
+Message-ID: <20241106120326.359631125@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,50 +57,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-commit c5a85ed88e043474161bbfe54002c89c1cb50ee2 upstream.
+[ Upstream commit 07e39e60bbf0ccd5f895568e1afca032193705c0 ]
 
-in venus_probe, core->work is bound with venus_sys_error_handler, which is
-used to handle error. The code use core->sys_err_done to make sync work.
-The core->work is started in venus_event_notify.
+Add the CPU Partnumbers for the new Arm designs.
 
-If we call venus_remove, there might be an unfished work. The possible
-sequence is as follows:
-
-CPU0                  CPU1
-
-                     |venus_sys_error_handler
-venus_remove         |
-hfi_destroy	 		 |
-venus_hfi_destroy	 |
-kfree(hdev);	     |
-                     |hfi_reinit
-					 |venus_hfi_queues_reinit
-                     |//use hdev
-
-Fix it by canceling the work in venus_remove.
-
-Cc: stable@vger.kernel.org
-Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-kernel@vger.kernel.org
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20221116140915.356601-2-anshuman.khandual@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+[ Mark: Trivial backport ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/include/asm/cputype.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -348,6 +348,7 @@ static int venus_remove(struct platform_
- 	struct device *dev = core->dev;
- 	int ret;
- 
-+	cancel_delayed_work_sync(&core->work);
- 	ret = pm_runtime_get_sync(dev);
- 	WARN_ON(ret < 0);
- 
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index f8be4d7ecde28..e3df8b0c067bf 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -86,6 +86,7 @@
+ #define ARM_CPU_PART_CORTEX_A78		0xD41
+ #define ARM_CPU_PART_CORTEX_X1		0xD44
+ #define ARM_CPU_PART_CORTEX_A710	0xD47
++#define ARM_CPU_PART_CORTEX_A715	0xD4D
+ #define ARM_CPU_PART_CORTEX_X2		0xD48
+ #define ARM_CPU_PART_NEOVERSE_N2	0xD49
+ #define ARM_CPU_PART_CORTEX_A78C	0xD4B
+@@ -130,6 +131,7 @@
+ #define MIDR_CORTEX_A78	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78)
+ #define MIDR_CORTEX_X1	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1)
+ #define MIDR_CORTEX_A710 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A710)
++#define MIDR_CORTEX_A715 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A715)
+ #define MIDR_CORTEX_X2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X2)
+ #define MIDR_NEOVERSE_N2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N2)
+ #define MIDR_CORTEX_A78C	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78C)
+-- 
+2.43.0
+
 
 
