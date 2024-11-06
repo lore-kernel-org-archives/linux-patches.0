@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6E8171CD;
-	Wed,  6 Nov 2024 12:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168C51D416E;
+	Wed,  6 Nov 2024 12:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895321; cv=none; b=nBdkeRfZJle8nPnM58B4D1SYvBdfc3oUVSvVx/Czb4LUG+Di/WvHq/LnHlVALVOkzEbQ8kZShwEYcwpMmx/lq2d9f9VikJFYI9qc1wAfhUfMgjoWPNAtTW+0Sq03554b1GmXs6KsMg52T7TUv7bNKoozXkzZbmR278M8CXdK7eI=
+	t=1730895324; cv=none; b=Qcftmyzcu9r6kCvup3IzmMFUHKYjNCopCMmxDdHvgU7rJsZoUE6/fb4tlRb5Dl4CVGpa2o7zStb+s/7ADmOCZKv1eyLIGGMZHJydeeLLb3z27hsUT2S6zTKqYJ4eHm0F1RHmTWVlKmV1GgmjdvUZADXsDMj6BCzO1lyvnYMcSjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895321; c=relaxed/simple;
-	bh=7VZYTFrpoq1DDy7+iqNRZxeO261X6j+Xgr2m6MFregw=;
+	s=arc-20240116; t=1730895324; c=relaxed/simple;
+	bh=kpZkit8wV3IbUgzs4IWeMz7mTq+hhyssSsykMpq2y6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I5cnEqT989VMLyAQm7Gm2aA9kwAdfEdFX4bOxnl7WQwTHd/2tYWP6b7WukZxQwcT+OTXGoy/MwwCIjk9gDDay9B2ahIppm/d4zkQfgVaoUJphKxtvrlUfa36BiE1Znx0hE2+NqQrsN0QCJbvNCfyXhs2yYFpIL9oI5BCr3yv2Gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBMu3rKc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lB/82fDdmbmQyK9QGbi0zrVPwReObGA6aHP5R+73IHWyRH1UuEcYCEqCMn8QLrufOnHoiMaclEkk9N6u9YtP4GWaLkmcRUZJoNbX0XG3na0bjF3vBOgy4DzJx26uR1Ruc1g7GMQduDk0DLngTMPRLMsU5o/39Gro4zbCzkQRvCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wc4aaoAi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBMu3rKc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C354C4CECD;
-	Wed,  6 Nov 2024 12:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wc4aaoAi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FCCCC4CECD;
+	Wed,  6 Nov 2024 12:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895320;
-	bh=7VZYTFrpoq1DDy7+iqNRZxeO261X6j+Xgr2m6MFregw=;
+	s=korg; t=1730895323;
+	bh=kpZkit8wV3IbUgzs4IWeMz7mTq+hhyssSsykMpq2y6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBMu3rKcqi08X0mhSA5sn+XMujVwhFioqt2RVrlf3+CrVH9QGZHGYsDWyN5j0XGAK
-	 Ue3aLTsBRWrp7fJ8l6C2oXYK5pKJ14p2zUXAzBsv7CtBkZW2e5kJK+EPLnd/GuAwac
-	 EEFYuBhiwOtSlAbkgeemWFG2SWjBROyXlV1stcL8=
+	b=wc4aaoAiDBTdxFJtGSNQyJ6s8mz5dJWGaO5n421MDtB0vGV1Cki59kJhx50jWfWk/
+	 7h57rTAIOTN1+O0+aUXMGljzcheB/hpQ6TGnwalvnrXTYCb64bTuXQhhAtnLk98HDA
+	 G+MJSB88wVxOScQbP5KVTz8cIiQhrC059hipJ4Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Mikhail Ukhin <mish.uxin2012@yandex.ru>,
-	Artem Sadovnikov <ancowi69@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 179/350] ext4: fix i_data_sem unlock order in ext4_ind_migrate()
-Date: Wed,  6 Nov 2024 13:01:47 +0100
-Message-ID: <20241106120325.353991202@linuxfoundation.org>
+Subject: [PATCH 4.19 180/350] spi: s3c64xx: fix timeout counters in flush_fifo
+Date: Wed,  6 Nov 2024 13:01:48 +0100
+Message-ID: <20241106120325.379499195@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -53,53 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Sadovnikov <ancowi69@gmail.com>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-[ Upstream commit cc749e61c011c255d81b192a822db650c68b313f ]
+[ Upstream commit 68a16708d2503b6303d67abd43801e2ca40c208d ]
 
-Fuzzing reports a possible deadlock in jbd2_log_wait_commit.
+In the s3c64xx_flush_fifo() code, the loops counter is post-decremented
+in the do { } while(test && loops--) condition. This means the loops is
+left at the unsigned equivalent of -1 if the loop times out. The test
+after will never pass as if tests for loops == 0.
 
-This issue is triggered when an EXT4_IOC_MIGRATE ioctl is set to require
-synchronous updates because the file descriptor is opened with O_SYNC.
-This can lead to the jbd2_journal_stop() function calling
-jbd2_might_wait_for_commit(), potentially causing a deadlock if the
-EXT4_IOC_MIGRATE call races with a write(2) system call.
-
-This problem only arises when CONFIG_PROVE_LOCKING is enabled. In this
-case, the jbd2_might_wait_for_commit macro locks jbd2_handle in the
-jbd2_journal_stop function while i_data_sem is locked. This triggers
-lockdep because the jbd2_journal_start function might also lock the same
-jbd2_handle simultaneously.
-
-Found by Linux Verification Center (linuxtesting.org) with syzkaller.
-
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Co-developed-by: Mikhail Ukhin <mish.uxin2012@yandex.ru>
-Signed-off-by: Mikhail Ukhin <mish.uxin2012@yandex.ru>
-Signed-off-by: Artem Sadovnikov <ancowi69@gmail.com>
-Rule: add
-Link: https://lore.kernel.org/stable/20240404095000.5872-1-mish.uxin2012%40yandex.ru
-Link: https://patch.msgid.link/20240829152210.2754-1-ancowi69@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Fixes: 230d42d422e7 ("spi: Add s3c64xx SPI Controller driver")
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20240924134009.116247-2-ben.dooks@codethink.co.uk
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/migrate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-s3c64xx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/migrate.c b/fs/ext4/migrate.c
-index 4a72583c75593..9f73c2f7f9492 100644
---- a/fs/ext4/migrate.c
-+++ b/fs/ext4/migrate.c
-@@ -678,8 +678,8 @@ int ext4_ind_migrate(struct inode *inode)
- 		ei->i_data[i] = cpu_to_le32(blk++);
- 	ext4_mark_inode_dirty(handle, inode);
- errout:
--	ext4_journal_stop(handle);
- 	up_write(&EXT4_I(inode)->i_data_sem);
-+	ext4_journal_stop(handle);
- out_unlock:
- 	percpu_up_write(&sbi->s_writepages_rwsem);
- 	return ret;
+diff --git a/drivers/spi/spi-s3c64xx.c b/drivers/spi/spi-s3c64xx.c
+index d9420561236c2..108a087a2777c 100644
+--- a/drivers/spi/spi-s3c64xx.c
++++ b/drivers/spi/spi-s3c64xx.c
+@@ -211,7 +211,7 @@ static void s3c64xx_flush_fifo(struct s3c64xx_spi_driver_data *sdd)
+ 	loops = msecs_to_loops(1);
+ 	do {
+ 		val = readl(regs + S3C64XX_SPI_STATUS);
+-	} while (TX_FIFO_LVL(val, sdd) && loops--);
++	} while (TX_FIFO_LVL(val, sdd) && --loops);
+ 
+ 	if (loops == 0)
+ 		dev_warn(&sdd->pdev->dev, "Timed out flushing TX FIFO\n");
+@@ -224,7 +224,7 @@ static void s3c64xx_flush_fifo(struct s3c64xx_spi_driver_data *sdd)
+ 			readl(regs + S3C64XX_SPI_RX_DATA);
+ 		else
+ 			break;
+-	} while (loops--);
++	} while (--loops);
+ 
+ 	if (loops == 0)
+ 		dev_warn(&sdd->pdev->dev, "Timed out flushing RX FIFO\n");
 -- 
 2.43.0
 
