@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9391DF24B;
-	Wed,  6 Nov 2024 12:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E173B1DED58;
+	Wed,  6 Nov 2024 12:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895954; cv=none; b=WuPum9yNTq4Sb+OCG5hBH8EoqWPmPeu4eht2a3pFF+EuQXZPXtyYYHPBTuTYp4G8AwQ7IlruC1hFwy2XkT10rzND0eSN/aQ6UWxS42ymGU+4Ga3X9VyXIupqhE7AKXXH6vX7f0ye2XfmPjjotDrBbwGpO11NZmzorhzCLe8NoYs=
+	t=1730895957; cv=none; b=QjA7KGDeKK9knWqHmayE7kXGNVoHpW4g9UBIDL3osvJbEqfWwbcYXk2nQEKUBv1k4KVO5hES2NQszPwz52lN3FLKHMmDJZ2OYL1+g/FazYik/P22/GSC5/2lY9kpjzvTw+Aoa7FMwr3r4hepMQ5GsfSFg4logyCd9G//WPMr+vQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895954; c=relaxed/simple;
-	bh=KePHUj2f/ZWIPHroLTvUsfbyFhVZr799O7g3fzSShCA=;
+	s=arc-20240116; t=1730895957; c=relaxed/simple;
+	bh=zHUjsY9f+bVuymnLtzpYTllfKiglAG4CcvU612ToRKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eqX+ny0PsA9+ZMn8Eh2D/RLz6GrtFnc4V+g4fXc8DY7qPQMWYR6qpQ0fQMML+b8gbdnTdDPE0FXxy4CPJ8G8Ys4dwyWGWc73h/jIwIXtAzuY0px/01rt+Cu4a/O0WWcx1ZqqXKYYbBJrIwV80unwr2XESvq++gMMt0mbpX11Xco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5zVfEfR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lyFk1el+4ZdW9qjn9YJlXHNrOhq2LbLvTQ2Joy8f2WvsOWzz0hROOWGL9eEX127BAulj3JKY9KtaQD8N4c6SRJ2pztP1RG/RiHhil/L7JlnEY6qqhzXCzQWJoGT99fXUIyQq3NLnNFljE7HmqQ+NAnzKWREbC40xdSp30i76O1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLV/N/aH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5zVfEfR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74356C4CECD;
-	Wed,  6 Nov 2024 12:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLV/N/aH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6897BC4CECD;
+	Wed,  6 Nov 2024 12:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895953;
-	bh=KePHUj2f/ZWIPHroLTvUsfbyFhVZr799O7g3fzSShCA=;
+	s=korg; t=1730895956;
+	bh=zHUjsY9f+bVuymnLtzpYTllfKiglAG4CcvU612ToRKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M5zVfEfRnhnOtzqkXz8WJi7lj2tIeQPl9CQYgHL4vnbjXV0zwxpF0FdTMY4TGFRQC
-	 G17fgoGYx6xPNsIpC8e2dFeyW9bCQ4jOsSh9O98P6Cg6usZMuXA9VK4A8xrUWVPTsB
-	 /GerCZw1ADe4cBoUjsVH3QMwYnyIUMn/XU/JNkOM=
+	b=pLV/N/aHSRaDCRzndnKHikWL2BIONilKPT4eUoqVyRCB//aBVYEtH7vhmydlXpnP/
+	 i+os+EsWrw/EemxCZXz0sN5cfF6bIH9D/TX+SZfDlNOaz3BWewZF27bKn8JNmJs4ZB
+	 V1MA08aWf2O6VbWDBu38z+2GOM05s+Rbt3yh1Jjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Howard Chu <howardchu95@gmail.com>,
+	jslaby@suse.cz,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 005/245] slub/kunit: fix a WARNING due to unwrapped __kmalloc_cache_noprof
-Date: Wed,  6 Nov 2024 13:00:58 +0100
-Message-ID: <20241106120319.376694538@linuxfoundation.org>
+Subject: [PATCH 6.11 006/245] perf trace: Fix non-listed archs in the syscalltbl routines
+Date: Wed,  6 Nov 2024 13:00:59 +0100
+Message-ID: <20241106120319.401530518@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -51,52 +56,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Jiri Slaby <jslaby@suse.cz>
 
-[ Upstream commit 2b059d0d1e624adc6e69a754bc48057f8bf459dc ]
+[ Upstream commit 5d35634ecc2d2c3938bd7dc23df0ad046da1b303 ]
 
-'modprobe slub_kunit' will have a warning as shown below. The root cause
-is that __kmalloc_cache_noprof was directly used, which resulted in no
-alloc_tag being allocated. This caused current->alloc_tag to be null,
-leading to a warning in alloc_tag_add_check.
+This fixes a build breakage on 32-bit arm, where the
+syscalltbl__id_at_idx() function was missing.
 
-Let's add an alloc_hook layer to __kmalloc_cache_noprof specifically
-within lib/slub_kunit.c, which is the only user of this internal slub
-function outside kmalloc implementation itself.
+Committer notes:
 
-[58162.947016] WARNING: CPU: 2 PID: 6210 at
-./include/linux/alloc_tag.h:125 alloc_tagging_slab_alloc_hook+0x268/0x27c
-[58162.957721] Call trace:
-[58162.957919]  alloc_tagging_slab_alloc_hook+0x268/0x27c
-[58162.958286]  __kmalloc_cache_noprof+0x14c/0x344
-[58162.958615]  test_kmalloc_redzone_access+0x50/0x10c [slub_kunit]
-[58162.959045]  kunit_try_run_case+0x74/0x184 [kunit]
-[58162.959401]  kunit_generic_run_threadfn_adapter+0x2c/0x4c [kunit]
-[58162.959841]  kthread+0x10c/0x118
-[58162.960093]  ret_from_fork+0x10/0x20
-[58162.960363] ---[ end trace 0000000000000000 ]---
+Generating a proper syscall table from a copy of
+arch/arm/tools/syscall.tbl ends up being too big a patch for this rc
+stage, I started doing it but while testing noticed some other problems
+with using BPF to collect pointer args on arm7 (32-bit) will maybe
+continue trying to make it work on the next cycle...
 
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Fixes: a0a44d9175b3 ("mm, slab: don't wrap internal functions with alloc_hooks()")
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Fixes: 7a2fb5619cc1fb53 ("perf trace: Fix iteration of syscall ids in syscalltbl->entries")
+Suggested-by: Howard Chu <howardchu95@gmail.com>
+Signed-off-by: <jslaby@suse.cz>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Howard Chu <howardchu95@gmail.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/lkml/3a592835-a14f-40be-8961-c0cee7720a94@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/slub_kunit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/syscalltbl.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/lib/slub_kunit.c b/lib/slub_kunit.c
-index e6667a28c0149..af5b9c41d5b30 100644
---- a/lib/slub_kunit.c
-+++ b/lib/slub_kunit.c
-@@ -140,7 +140,7 @@ static void test_kmalloc_redzone_access(struct kunit *test)
+diff --git a/tools/perf/util/syscalltbl.c b/tools/perf/util/syscalltbl.c
+index 0dd26b991b3fb..351da249f1cc6 100644
+--- a/tools/perf/util/syscalltbl.c
++++ b/tools/perf/util/syscalltbl.c
+@@ -42,6 +42,11 @@ static const char *const *syscalltbl_native = syscalltbl_mips_n64;
+ #include <asm/syscalls.c>
+ const int syscalltbl_native_max_id = SYSCALLTBL_LOONGARCH_MAX_ID;
+ static const char *const *syscalltbl_native = syscalltbl_loongarch;
++#else
++const int syscalltbl_native_max_id = 0;
++static const char *const syscalltbl_native[] = {
++	[0] = "unknown",
++};
+ #endif
+ 
+ struct syscall {
+@@ -178,6 +183,11 @@ int syscalltbl__id(struct syscalltbl *tbl, const char *name)
+ 	return audit_name_to_syscall(name, tbl->audit_machine);
+ }
+ 
++int syscalltbl__id_at_idx(struct syscalltbl *tbl __maybe_unused, int idx)
++{
++	return idx;
++}
++
+ int syscalltbl__strglobmatch_next(struct syscalltbl *tbl __maybe_unused,
+ 				  const char *syscall_glob __maybe_unused, int *idx __maybe_unused)
  {
- 	struct kmem_cache *s = test_kmem_cache_create("TestSlub_RZ_kmalloc", 32,
- 				SLAB_KMALLOC|SLAB_STORE_USER|SLAB_RED_ZONE);
--	u8 *p = __kmalloc_cache_noprof(s, GFP_KERNEL, 18);
-+	u8 *p = alloc_hooks(__kmalloc_cache_noprof(s, GFP_KERNEL, 18));
- 
- 	kasan_disable_current();
- 
 -- 
 2.43.0
 
