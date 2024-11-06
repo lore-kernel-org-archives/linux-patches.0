@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D20A1DE2CF;
-	Wed,  6 Nov 2024 13:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114551E906B;
+	Wed,  6 Nov 2024 13:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898906; cv=none; b=BXsOoc3sqY478nAlZVLINxcFenyZhcK83tBuAGkl1NYGvE5HvmVmMg0F74a1nvXMtw3e+VExv170N0TzFTrIIlQQ2FVB6wXr9B9rIjhy0pYmG3VRbKbWR1Ef7ixFR+UodckeNJBnPvLXawGvu8WlhQSkABfaYpAxFT8ttMmevCo=
+	t=1730898909; cv=none; b=aGeP7/dt4ENgAbCfiE4fnSn23OZhDHm+l+j8RokruoD5tbVuCl/0PClsLcRdv2pu1yKQ3nBdFCoghHlPlsK/Qj23tQ3TADtPsjDOn9kziZn05OgXR9oEl7keW7OaLjrgFYkKLMOH8yzyFZgnUyOzu40kHxENJrMoUsB66v31/YU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898906; c=relaxed/simple;
-	bh=Z+l9ChJYgiIoZBbLLSGvVyJR6jlG7zIava7imY4NwV0=;
+	s=arc-20240116; t=1730898909; c=relaxed/simple;
+	bh=ScAn4b4QbPCs26JUGuzCWnPEDE4u4/rnVotZ33B0RtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fNJsGzkzQUthWSKpzSVY1N8WBHZE6Xx9aGV/1+COsyqM09bp8kcCfqEXn0s1nDjbDEXF1fqkbHoSulTjq1Pmk+rWsm7FE4BgLUYBTH6m8HdEvXcDIGiYRoJNK8bIowZXjlXcol3yshXMEwgBBSy0H3LNa8i6H3Ki+NADfJwn0hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PhMYYUVE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cJFAhX+Osf17JpxdLxVE3y7CqdJbzspFJYHdm7WsF2A420pgxXbxQKLwzGs3Yu3uQ7EhSVxB7zThsTHU5aN/EDfpxA15ps0z88j6+xUijnKOrawOA7LVxN4ZhmQwEYh0dsHnmSxOBVgXYndAqIWBz9XVFoFrYOY2RzktRkitp7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXhG+PHZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PhMYYUVE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0F8C4CECD;
-	Wed,  6 Nov 2024 13:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXhG+PHZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50281C4CECD;
+	Wed,  6 Nov 2024 13:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898905;
-	bh=Z+l9ChJYgiIoZBbLLSGvVyJR6jlG7zIava7imY4NwV0=;
+	s=korg; t=1730898908;
+	bh=ScAn4b4QbPCs26JUGuzCWnPEDE4u4/rnVotZ33B0RtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PhMYYUVEZoPiCdhKGIIvplzG8mqb1XOnNJDjxAeo1j3IJkPjh3E5+y4DUlcQU0FzX
-	 QnvNHaEKEsTQIOMdbbVIC9F20T3hlocaL3l9DgERGnVUncC7MaqrZGBEc1exwMUyw0
-	 urbpN53OMaKiXL/fM2kRNiq7kS8HuYVANA7oRCEU=
+	b=nXhG+PHZEPKXKfJIfCnsRSWkpw1P3GAy9JQWXWBqH85nEIeePEb1aPu6TQw9qiH8t
+	 G1w0meMJO5YlvptIOI1ayc0belc1mnS74/Sk9fQXkwWIZqVqnf1iGXYwkZuB8ep0iN
+	 wdGlLf48sk2xI+yi6MdkGJ6imkbnZ2iK2of6p3nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Ye Bin <yebin10@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 396/462] usb: typec: altmode should keep reference to parent
-Date: Wed,  6 Nov 2024 13:04:49 +0100
-Message-ID: <20241106120341.306111151@linuxfoundation.org>
+Subject: [PATCH 5.4 397/462] Bluetooth: bnep: fix wild-memory-access in proto_unregister
+Date: Wed,  6 Nov 2024 13:04:50 +0100
+Message-ID: <20241106120341.330254934@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,128 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit befab3a278c59db0cc88c8799638064f6d3fd6f8 ]
+[ Upstream commit 64a90991ba8d4e32e3173ddd83d0b24167a5668c ]
 
-The altmode device release refers to its parent device, but without keeping
-a reference to it.
+There's issue as follows:
+  KASAN: maybe wild-memory-access in range [0xdead...108-0xdead...10f]
+  CPU: 3 UID: 0 PID: 2805 Comm: rmmod Tainted: G        W
+  RIP: 0010:proto_unregister+0xee/0x400
+  Call Trace:
+   <TASK>
+   __do_sys_delete_module+0x318/0x580
+   do_syscall_64+0xc1/0x1d0
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-When registering the altmode, get a reference to the parent and put it in
-the release function.
+As bnep_init() ignore bnep_sock_init()'s return value, and bnep_sock_init()
+will cleanup all resource. Then when remove bnep module will call
+bnep_sock_cleanup() to cleanup sock's resource.
+To solve above issue just return bnep_sock_init()'s return value in
+bnep_exit().
 
-Before this fix, when using CONFIG_DEBUG_KOBJECT_RELEASE, we see issues
-like this:
-
-[   43.572860] kobject: 'port0.0' (ffff8880057ba008): kobject_release, parent 0000000000000000 (delayed 3000)
-[   43.573532] kobject: 'port0.1' (ffff8880057bd008): kobject_release, parent 0000000000000000 (delayed 1000)
-[   43.574407] kobject: 'port0' (ffff8880057b9008): kobject_release, parent 0000000000000000 (delayed 3000)
-[   43.575059] kobject: 'port1.0' (ffff8880057ca008): kobject_release, parent 0000000000000000 (delayed 4000)
-[   43.575908] kobject: 'port1.1' (ffff8880057c9008): kobject_release, parent 0000000000000000 (delayed 4000)
-[   43.576908] kobject: 'typec' (ffff8880062dbc00): kobject_release, parent 0000000000000000 (delayed 4000)
-[   43.577769] kobject: 'port1' (ffff8880057bf008): kobject_release, parent 0000000000000000 (delayed 3000)
-[   46.612867] ==================================================================
-[   46.613402] BUG: KASAN: slab-use-after-free in typec_altmode_release+0x38/0x129
-[   46.614003] Read of size 8 at addr ffff8880057b9118 by task kworker/2:1/48
-[   46.614538]
-[   46.614668] CPU: 2 UID: 0 PID: 48 Comm: kworker/2:1 Not tainted 6.12.0-rc1-00138-gedbae730ad31 #535
-[   46.615391] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.15.0-1 04/01/2014
-[   46.616042] Workqueue: events kobject_delayed_cleanup
-[   46.616446] Call Trace:
-[   46.616648]  <TASK>
-[   46.616820]  dump_stack_lvl+0x5b/0x7c
-[   46.617112]  ? typec_altmode_release+0x38/0x129
-[   46.617470]  print_report+0x14c/0x49e
-[   46.617769]  ? rcu_read_unlock_sched+0x56/0x69
-[   46.618117]  ? __virt_addr_valid+0x19a/0x1ab
-[   46.618456]  ? kmem_cache_debug_flags+0xc/0x1d
-[   46.618807]  ? typec_altmode_release+0x38/0x129
-[   46.619161]  kasan_report+0x8d/0xb4
-[   46.619447]  ? typec_altmode_release+0x38/0x129
-[   46.619809]  ? process_scheduled_works+0x3cb/0x85f
-[   46.620185]  typec_altmode_release+0x38/0x129
-[   46.620537]  ? process_scheduled_works+0x3cb/0x85f
-[   46.620907]  device_release+0xaf/0xf2
-[   46.621206]  kobject_delayed_cleanup+0x13b/0x17a
-[   46.621584]  process_scheduled_works+0x4f6/0x85f
-[   46.621955]  ? __pfx_process_scheduled_works+0x10/0x10
-[   46.622353]  ? hlock_class+0x31/0x9a
-[   46.622647]  ? lock_acquired+0x361/0x3c3
-[   46.622956]  ? move_linked_works+0x46/0x7d
-[   46.623277]  worker_thread+0x1ce/0x291
-[   46.623582]  ? __kthread_parkme+0xc8/0xdf
-[   46.623900]  ? __pfx_worker_thread+0x10/0x10
-[   46.624236]  kthread+0x17e/0x190
-[   46.624501]  ? kthread+0xfb/0x190
-[   46.624756]  ? __pfx_kthread+0x10/0x10
-[   46.625015]  ret_from_fork+0x20/0x40
-[   46.625268]  ? __pfx_kthread+0x10/0x10
-[   46.625532]  ret_from_fork_asm+0x1a/0x30
-[   46.625805]  </TASK>
-[   46.625953]
-[   46.626056] Allocated by task 678:
-[   46.626287]  kasan_save_stack+0x24/0x44
-[   46.626555]  kasan_save_track+0x14/0x2d
-[   46.626811]  __kasan_kmalloc+0x3f/0x4d
-[   46.627049]  __kmalloc_noprof+0x1bf/0x1f0
-[   46.627362]  typec_register_port+0x23/0x491
-[   46.627698]  cros_typec_probe+0x634/0xbb6
-[   46.628026]  platform_probe+0x47/0x8c
-[   46.628311]  really_probe+0x20a/0x47d
-[   46.628605]  device_driver_attach+0x39/0x72
-[   46.628940]  bind_store+0x87/0xd7
-[   46.629213]  kernfs_fop_write_iter+0x1aa/0x218
-[   46.629574]  vfs_write+0x1d6/0x29b
-[   46.629856]  ksys_write+0xcd/0x13b
-[   46.630128]  do_syscall_64+0xd4/0x139
-[   46.630420]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   46.630820]
-[   46.630946] Freed by task 48:
-[   46.631182]  kasan_save_stack+0x24/0x44
-[   46.631493]  kasan_save_track+0x14/0x2d
-[   46.631799]  kasan_save_free_info+0x3f/0x4d
-[   46.632144]  __kasan_slab_free+0x37/0x45
-[   46.632474]  kfree+0x1d4/0x252
-[   46.632725]  device_release+0xaf/0xf2
-[   46.633017]  kobject_delayed_cleanup+0x13b/0x17a
-[   46.633388]  process_scheduled_works+0x4f6/0x85f
-[   46.633764]  worker_thread+0x1ce/0x291
-[   46.634065]  kthread+0x17e/0x190
-[   46.634324]  ret_from_fork+0x20/0x40
-[   46.634621]  ret_from_fork_asm+0x1a/0x30
-
-Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241004123738.2964524-1-cascardo@igalia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/class.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/bnep/core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/usb/typec/class.c b/drivers/usb/typec/class.c
-index 371e010e0e859..c30740165b364 100644
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -471,6 +471,7 @@ static void typec_altmode_release(struct device *dev)
- 		typec_altmode_put_partner(alt);
+diff --git a/net/bluetooth/bnep/core.c b/net/bluetooth/bnep/core.c
+index 089160361dded..d05beafd29527 100644
+--- a/net/bluetooth/bnep/core.c
++++ b/net/bluetooth/bnep/core.c
+@@ -745,8 +745,7 @@ static int __init bnep_init(void)
+ 	if (flt[0])
+ 		BT_INFO("BNEP filters: %s", flt);
  
- 	altmode_id_remove(alt->adev.dev.parent, alt->id);
-+	put_device(alt->adev.dev.parent);
- 	kfree(alt);
+-	bnep_sock_init();
+-	return 0;
++	return bnep_sock_init();
  }
  
-@@ -520,6 +521,8 @@ typec_register_altmode(struct device *parent,
- 	alt->adev.dev.type = &typec_altmode_dev_type;
- 	dev_set_name(&alt->adev.dev, "%s.%u", dev_name(parent), id);
- 
-+	get_device(alt->adev.dev.parent);
-+
- 	/* Link partners and plugs with the ports */
- 	if (is_port)
- 		BLOCKING_INIT_NOTIFIER_HEAD(&alt->nh);
+ static void __exit bnep_exit(void)
 -- 
 2.43.0
 
