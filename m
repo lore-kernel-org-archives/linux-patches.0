@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D05B1DF756;
-	Wed,  6 Nov 2024 12:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D391DF251;
+	Wed,  6 Nov 2024 12:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895998; cv=none; b=PRos8BHNaZQIkXdy23vbCyUi1wUuJu2WUiJjHPvi/dsYQ+52DzgijJ6HyeGnkiVW24q/Iq7vl8mYNBVPG8EOVStnlYZjBNfGsaBi4ZwcWtXL2dWcapHWgopDq7eLJoDEGj2Q0IafdNDQJZWztz+GSjg1TJOXPyaKyIWQWxrrDPw=
+	t=1730896001; cv=none; b=fEqRe1T2rU5I1YRUGvFdN5ZZ1ztHwXxtUix68daY56068qSxZutWzOqls4btjOJi9mnHSrisiZlJSO73AeD9ESetkXwUm5yZdtELFb8YiUPiBNuqlQBkPHttiTVEiaGN/v1T4oIBfc+j8qvCVpHcOe63J+1paaSQ6mA6x62HVjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895998; c=relaxed/simple;
-	bh=rh9eS6AEbIRn3xFZfamEP9GXih31orkJJH+zy4YBrMQ=;
+	s=arc-20240116; t=1730896001; c=relaxed/simple;
+	bh=EvGonwRU37Y0J6Si/LPiMpwPrTjwLnAlSl/fa3V6WMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jTZmVpQriNyI2P3/Bx5EWQEQBgcD6mKDk/esLkZ3pmyrYzEaSicBBJPH3HjkDzURyEQVMtjpa88SLDycEQeJrcTXOEMy22SZMV5pzhooFL+wkY0AKTTtWuu+GhdaBJI7IvSd2JnDSGwhBdVQvNt4tQUjBQK83WPCCT0k3xEO+/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6suKDDY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gNMqs5j/fmj+YdE/WDEfR3HDoq8dfKsmPWZWlzz7kZNNpCTCQ889UlOWRYpst30vLTUpqdRpADyViVsr29oBILx1Ab1694vLkNqeEz29g9sICBEpb/ZEKZ5YdIDFes+KXFU0KbaVcmnjZZbR6IrfvGVYyEhf+hwN1xAE4UNTVVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJJ8CaZD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6suKDDY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C2DC4CECD;
-	Wed,  6 Nov 2024 12:26:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJJ8CaZD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A301FC4CECD;
+	Wed,  6 Nov 2024 12:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895998;
-	bh=rh9eS6AEbIRn3xFZfamEP9GXih31orkJJH+zy4YBrMQ=;
+	s=korg; t=1730896001;
+	bh=EvGonwRU37Y0J6Si/LPiMpwPrTjwLnAlSl/fa3V6WMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6suKDDYK4Vfn1AZq5442p9yX7U55xsEoY0CrJtwIo3vkSbBJOCCA7gXoPW5B123+
-	 NabgVD46qg0A0ECHBgpnclMKLRlp/vgts25kkOfIbkajYOu6YENGt5mA2Uop4TN9DH
-	 X1ZNjCTK2xPN1IMslyGIhRGd7YUyztmGG+GIasfA=
+	b=WJJ8CaZDQq9Rz0W4pw2JgKt21m/C4ggXZOh8voObBNN6eaO+uzV641TKo7x3tOGZ7
+	 U3wSyCRhdCLOKAY7QfifkqNMAjIypG2ta9AIhxNOR5ATyh5ZjdJhCAYU1mrJfBWuiA
+	 kDxnkUnvLTiZr2/HPr4/i+8AV2ZOVarbGjin1o0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d121e098da06af416d23@syzkaller.appspotmail.com,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 056/245] bpf, test_run: Fix LIVE_FRAME frame update after a page has been recycled
-Date: Wed,  6 Nov 2024 13:01:49 +0100
-Message-ID: <20241106120320.593132782@linuxfoundation.org>
+Subject: [PATCH 6.11 057/245] iomap: improve shared block detection in iomap_unshare_iter
+Date: Wed,  6 Nov 2024 13:01:50 +0100
+Message-ID: <20241106120320.616048895@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -48,53 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit c40dd8c4732551605712985bc5b7045094c6458d ]
+[ Upstream commit b53fdb215d13f8e9c29541434bf2d14dac8bcbdc ]
 
-The test_run code detects whether a page has been modified and
-re-initialises the xdp_frame structure if it has, using
-xdp_update_frame_from_buff(). However, xdp_update_frame_from_buff()
-doesn't touch frame->mem, so that wasn't correctly re-initialised, which
-led to the pages from page_pool not being returned correctly. Syzbot
-noticed this as a memory leak.
+Currently iomap_unshare_iter relies on the IOMAP_F_SHARED flag to detect
+blocks to unshare.  This is reasonable, but IOMAP_F_SHARED is also useful
+for the file system to do internal book keeping for out of place writes.
+XFS used to that, until it got removed in commit 72a048c1056a
+("xfs: only set IOMAP_F_SHARED when providing a srcmap to a write")
+because unshare for incorrectly unshare such blocks.
 
-Fix this by also copying the frame->mem structure when re-initialising
-the frame, like we do on initialisation of a new page from page_pool.
+Add an extra safeguard by checking the explicitly provided srcmap instead
+of the fallback to the iomap for valid data, as that catches the case
+where we'd just copy from the same place we'd write to easily, allowing
+to reinstate setting IOMAP_F_SHARED for all XFS writes that go to the
+COW fork.
 
-Fixes: e5995bc7e2ba ("bpf, test_run: fix crashes due to XDP frame overwriting/corruption")
-Fixes: b530e9e1063e ("bpf: Add "live packet" mode for XDP in BPF_PROG_RUN")
-Reported-by: syzbot+d121e098da06af416d23@syzkaller.appspotmail.com
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: syzbot+d121e098da06af416d23@syzkaller.appspotmail.com
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://lore.kernel.org/bpf/20241030-test-run-mem-fix-v1-1-41e88e8cae43@redhat.com
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20240910043949.3481298-3-hch@lst.de
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 50793801fc7f ("fsdax: dax_unshare_iter needs to copy entire blocks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/iomap/buffered-io.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index 6d7a442ceb89b..501ec4249fedc 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -246,6 +246,7 @@ static void reset_ctx(struct xdp_page_head *head)
- 	head->ctx.data_meta = head->orig_ctx.data_meta;
- 	head->ctx.data_end = head->orig_ctx.data_end;
- 	xdp_update_frame_from_buff(&head->ctx, head->frame);
-+	head->frame->mem = head->orig_ctx.rxq->mem;
- }
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 8e6edb6628183..d38e52a645888 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -1337,16 +1337,25 @@ EXPORT_SYMBOL_GPL(iomap_file_buffered_write_punch_delalloc);
+ static loff_t iomap_unshare_iter(struct iomap_iter *iter)
+ {
+ 	struct iomap *iomap = &iter->iomap;
+-	const struct iomap *srcmap = iomap_iter_srcmap(iter);
+ 	loff_t pos = iter->pos;
+ 	loff_t length = iomap_length(iter);
+ 	loff_t written = 0;
  
- static int xdp_recv_frames(struct xdp_frame **frames, int nframes,
+-	/* don't bother with blocks that are not shared to start with */
++	/* Don't bother with blocks that are not shared to start with. */
+ 	if (!(iomap->flags & IOMAP_F_SHARED))
+ 		return length;
+-	/* don't bother with holes or unwritten extents */
+-	if (srcmap->type == IOMAP_HOLE || srcmap->type == IOMAP_UNWRITTEN)
++
++	/*
++	 * Don't bother with holes or unwritten extents.
++	 *
++	 * Note that we use srcmap directly instead of iomap_iter_srcmap as
++	 * unsharing requires providing a separate source map, and the presence
++	 * of one is a good indicator that unsharing is needed, unlike
++	 * IOMAP_F_SHARED which can be set for any data that goes into the COW
++	 * fork for XFS.
++	 */
++	if (iter->srcmap.type == IOMAP_HOLE ||
++	    iter->srcmap.type == IOMAP_UNWRITTEN)
+ 		return length;
+ 
+ 	do {
 -- 
 2.43.0
 
