@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81AF1E0084;
-	Wed,  6 Nov 2024 12:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2EA1EC00E;
+	Wed,  6 Nov 2024 12:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896687; cv=none; b=gRXfzj6P2Psm9nkDKnUX+9MUHiMISHo/pxEcWi3NL+TJN89XQHDq7FoEVOrixGm+WQXbOYPum2dDTBx8zckxj3m6PQHl1nyPNYgjOePyH93LCsT0tQCT1+eYbiQipUr3bXLezVkeE7uszrmKcfEnoRJEUsyAj4apyefH2A90kjs=
+	t=1730896691; cv=none; b=k6TvVeK/+PoTUnzVfprM8Z6J3+7yqRLuQ8/MbM8L05SAgeWmHoNkOsFG/fCOfNqSfOHa1+Cq+XCj9EmjuuBeEvgGV0dRapr6S6uzXc2rOmDYnjWn8AHHC1524YpUt76dkRMfiZmyNIkUCf/oHbscw61ry7I6Lc75oQRFsooYEBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896687; c=relaxed/simple;
-	bh=Xflp0jSJdLU01o8pew/1Jdppq6xfEHgsQ1G1r9amHFw=;
+	s=arc-20240116; t=1730896691; c=relaxed/simple;
+	bh=t07wsVdDbaDed3NcNiJ3FNQ0DGvb+gk0LYdl4sZ6LMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BcKJo6LHIF5q5SstQ9ae8ATBYu2W9BaAgS0q1nQoZp+RoNa2h/rfKoAAxtM7ifrOTwWKSDoiV2wAfP/bg2cy0ttHOkR9KLPIPLfS5iY458UNl3oQ18VYz3RAzIp/cA/1gDFLOvIY6YUpiJl0oqivxJZY4XzVf/sT2OtPNz/6+WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdlD5a9o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SaBIpiMfLC6djjPUxVkJhSM6VFm/ClSzj2x0fOy1bR0H2kR17aaTUgl8jArf2SjY72UT5eIBcAF86b/NyTOLwB2OEL5cFfalRCtoJuw5XoMct2yGKr/aiqP/zQGS/xe3RbG7bPu08DXgZzgI9i26qrq8dS6VX29LZe160RLXfV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPl7gPwj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdlD5a9o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E524C4CECD;
-	Wed,  6 Nov 2024 12:38:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPl7gPwj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FBC5C4CECD;
+	Wed,  6 Nov 2024 12:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896687;
-	bh=Xflp0jSJdLU01o8pew/1Jdppq6xfEHgsQ1G1r9amHFw=;
+	s=korg; t=1730896690;
+	bh=t07wsVdDbaDed3NcNiJ3FNQ0DGvb+gk0LYdl4sZ6LMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cdlD5a9on9qWdl8kIEbaTVr9H+ipxIRfqhwKjtWWWX24Eh1YrO6vVJG3aidR8vZRk
-	 tw5TxfidZxa/GoUn64XUlvOeHbW9FPy3mByOC5qCc3/tVILAiosqLa0f6R5KoERJ/x
-	 lIKhBWiSB7TNMBcKZHNQZQpa3N3bCj/gp4+ftMBI=
+	b=LPl7gPwj0Ejs3l8foYfls9BMMYpQpGbIWqo34J7VT+vk/3B5Ab9uOJp7q2Ar9uc7W
+	 OcdzdZuKANj4a/XgtNGkdDj9jlpgMtBHlTVfYazJgvNKWLI8vIq4tham2Yot5fTSa7
+	 MV6PLsC/fobbpbXB0ApYj1NE/n0bXmo2YyWelsxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cochran <richardcochran@gmail.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Anna-Maria Behnsen <anna-maria@linutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Andrey Shumilin <shum.sdl@nppct.ru>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 040/110] posix-clock: posix-clock: Fix unbalanced locking in pc_clock_settime()
-Date: Wed,  6 Nov 2024 13:04:06 +0100
-Message-ID: <20241106120304.307654090@linuxfoundation.org>
+Subject: [PATCH 5.10 041/110] ALSA: firewire-lib: Avoid division by zero in apply_constraint_to_size()
+Date: Wed,  6 Nov 2024 13:04:07 +0100
+Message-ID: <20241106120304.334927601@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -53,55 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Andrey Shumilin <shum.sdl@nppct.ru>
 
-[ Upstream commit 6e62807c7fbb3c758d233018caf94dfea9c65dbd ]
+[ Upstream commit 72cafe63b35d06b5cfbaf807e90ae657907858da ]
 
-If get_clock_desc() succeeds, it calls fget() for the clockid's fd,
-and get the clk->rwsem read lock, so the error path should release
-the lock to make the lock balance and fput the clockid's fd to make
-the refcount balance and release the fd related resource.
+The step variable is initialized to zero. It is changed in the loop,
+but if it's not changed it will remain zero. Add a variable check
+before the division.
 
-However the below commit left the error path locked behind resulting in
-unbalanced locking. Check timespec64_valid_strict() before
-get_clock_desc() to fix it, because the "ts" is not changed
-after that.
+The observed behavior was introduced by commit 826b5de90c0b
+("ALSA: firewire-lib: fix insufficient PCM rule for period/buffer size"),
+and it is difficult to show that any of the interval parameters will
+satisfy the snd_interval_test() condition with data from the
+amdtp_rate_table[] table.
 
-Fixes: d8794ac20a29 ("posix-clock: Fix missing timespec64 check in pc_clock_settime()")
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Acked-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-[pabeni@redhat.com: fixed commit message typo]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 826b5de90c0b ("ALSA: firewire-lib: fix insufficient PCM rule for period/buffer size")
+Signed-off-by: Andrey Shumilin <shum.sdl@nppct.ru>
+Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Link: https://patch.msgid.link/20241018060018.1189537-1-shum.sdl@nppct.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-clock.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/firewire/amdtp-stream.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/time/posix-clock.c b/kernel/time/posix-clock.c
-index 8127673bfc45e..05e73d209aa87 100644
---- a/kernel/time/posix-clock.c
-+++ b/kernel/time/posix-clock.c
-@@ -290,6 +290,9 @@ static int pc_clock_settime(clockid_t id, const struct timespec64 *ts)
- 	struct posix_clock_desc cd;
- 	int err;
- 
-+	if (!timespec64_valid_strict(ts))
-+		return -EINVAL;
-+
- 	err = get_clock_desc(id, &cd);
- 	if (err)
- 		return err;
-@@ -299,9 +302,6 @@ static int pc_clock_settime(clockid_t id, const struct timespec64 *ts)
- 		goto out;
+diff --git a/sound/firewire/amdtp-stream.c b/sound/firewire/amdtp-stream.c
+index 7a282d8e71485..bd272ab2048e4 100644
+--- a/sound/firewire/amdtp-stream.c
++++ b/sound/firewire/amdtp-stream.c
+@@ -163,6 +163,9 @@ static int apply_constraint_to_size(struct snd_pcm_hw_params *params,
+ 			step = max(step, amdtp_syt_intervals[i]);
  	}
  
--	if (!timespec64_valid_strict(ts))
--		return -EINVAL;
--
- 	if (cd.clk->ops.clock_settime)
- 		err = cd.clk->ops.clock_settime(cd.clk, ts);
- 	else
++	if (step == 0)
++		return -EINVAL;
++
+ 	t.min = roundup(s->min, step);
+ 	t.max = rounddown(s->max, step);
+ 	t.integer = 1;
 -- 
 2.43.0
 
