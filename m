@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424C91E0DFD;
-	Wed,  6 Nov 2024 12:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A2C1EF080;
+	Wed,  6 Nov 2024 12:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897542; cv=none; b=iPF6mz7dXlumvBUEBSopqu+F/FHZ1GGGa7NbA0J7u112ixzY1DlOH8FXlsd/UYNNFsBc5MlJP0l7EBQ7yojug8YwxFt2Qn/HQWeDck++mO8t54/ofoys2KFdiOdXrvW04GkOCZJ2LIFBj6TV28oETZlzhAM/s4K9q8TYePIDE5w=
+	t=1730897545; cv=none; b=LkKW3M1jPLfL0BIgnMICXgm7TW8QxPM+J5Rs/dVoCODyorw8dGq+HgKiLvDwe6MS8FA2A5SdFswzIVZj6sin8HQ6LoTidA5w8fKLPrShK7mFdaIAAt/g9K6Vpl3b13fahC44APIj8RZsBiY4CeNxxhN8manher1Opk/T6glO81I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897542; c=relaxed/simple;
-	bh=nARz/Pet3FI15A7l9Dc9wrOfZzNthy+HQGNld95ZFFU=;
+	s=arc-20240116; t=1730897545; c=relaxed/simple;
+	bh=0kzl131ivLMwKJgew6enX+op9w6Z6h9p1IveNeNsfzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZU2RbA5NltOS+LWwrs8AxVoHQP5THgkkutmldg70CgmriL3ape+sLxd9/25PTOHissKNCrZTiFtHaL073XvU3x0udDosh+xh5pSoAY+YEBdgEV1u3H11uS02r8i2UoYE3zP9SO159DNR/afSKvHf36Sfjqydczw8MhJGgN+ebc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZMv1Ost; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h0Zqph3xoU5UZcaogNKuZ5jHyv02RPPb2rqJxwmjyGq5V1rqsp2OD9R7GjfwCvecy8zgu6W7f6q38jh57P/BV2NijcUFepBar2gBnHbQTV6/lai1Dk6ipqkv9WC3eZPoXFOJ+66ybHLas/GaplUTT5VWPpzJs5y0c/iYB+Fe/h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Iy1fWnn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZMv1Ost"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E895C4CECD;
-	Wed,  6 Nov 2024 12:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Iy1fWnn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE4BC4CECD;
+	Wed,  6 Nov 2024 12:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897542;
-	bh=nARz/Pet3FI15A7l9Dc9wrOfZzNthy+HQGNld95ZFFU=;
+	s=korg; t=1730897545;
+	bh=0kzl131ivLMwKJgew6enX+op9w6Z6h9p1IveNeNsfzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WZMv1OstsJ/JRQuktgLV/h+fOHYp5a+Obq/th8+SH/Kh2JwTwZD8X/+tSIqnyAJAP
-	 zNq1+Q5Sojhsi2kWjaqJfBz2ZPx/yoaSvADMZQYWavGDVPicIZmCCtT0cMnHyCW0Xx
-	 EX50p73+4hBJkmZbAiiDr1ZLe/V8YsqbugiamNKM=
+	b=1Iy1fWnnkwDLO4dAKgUC7/BoXNvUnxLnICn2B2l8n7FD/d6kH0nX1ENfHQUIV1vU/
+	 ChvR1X/CTFT0+ij5Nc1xkPpmmnr3QcMbQwX42irB7nJMVv4PW8B/o3D/NFazioYLxy
+	 16U68DOVbJuJTyRjmTJEZH3+e1lNVjBIEMrdkIF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ashish Sangwan <a.sangwan@samsung.com>,
-	Namjae Jeon <namjae.jeon@samsung.com>,
-	Dirk Behme <dirk.behme@de.bosch.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.6 089/151] Revert "driver core: Fix uevent_show() vs driver detach race"
-Date: Wed,  6 Nov 2024 13:04:37 +0100
-Message-ID: <20241106120311.316159223@linuxfoundation.org>
+	Edward Liaw <edliaw@google.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Peter Xu <peterx@redhat.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 090/151] Revert "selftests/mm: fix deadlock for fork after pthread_create on ARM"
+Date: Wed,  6 Nov 2024 13:04:38 +0100
+Message-ID: <20241106120311.351226183@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -54,94 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Edward Liaw <edliaw@google.com>
 
-commit 9a71892cbcdb9d1459c84f5a4c722b14354158a5 upstream.
+commit 5bb1f4c9340e01003b00b94d539eadb0da88f48e upstream.
 
-This reverts commit 15fffc6a5624b13b428bb1c6e9088e32a55eb82c.
+Patch series "selftests/mm: revert pthread_barrier change"
 
-This commit causes a regression, so revert it for now until it can come
-back in a way that works for everyone.
+On Android arm, pthread_create followed by a fork caused a deadlock in
+the case where the fork required work to be completed by the created
+thread.
 
-Link: https://lore.kernel.org/all/172790598832.1168608.4519484276671503678.stgit@dwillia2-xfh.jf.intel.com/
-Fixes: 15fffc6a5624 ("driver core: Fix uevent_show() vs driver detach race")
-Cc: stable <stable@kernel.org>
-Cc: Ashish Sangwan <a.sangwan@samsung.com>
-Cc: Namjae Jeon <namjae.jeon@samsung.com>
-Cc: Dirk Behme <dirk.behme@de.bosch.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Dan Williams <dan.j.williams@intel.com>
+The previous patches incorrectly assumed that the parent would
+always initialize the pthread_barrier for the child thread.  This
+reverts the change and replaces the fix for wp-fork-with-event with the
+original use of atomic_bool.
+
+
+This patch (of 3):
+
+This reverts commit e142cc87ac4ec618f2ccf5f68aedcd6e28a59d9d.
+
+fork_event_consumer may be called by other tests that do not initialize
+the pthread_barrier, so this approach is not correct.  The subsequent
+patch will revert to using atomic_bool instead.
+
+Link: https://lkml.kernel.org/r/20241018171734.2315053-1-edliaw@google.com
+Link: https://lkml.kernel.org/r/20241018171734.2315053-2-edliaw@google.com
+Fixes: e142cc87ac4e ("fix deadlock for fork after pthread_create on ARM")
+Signed-off-by: Edward Liaw <edliaw@google.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c   |   13 +++++--------
- drivers/base/module.c |    4 ----
- 2 files changed, 5 insertions(+), 12 deletions(-)
+ tools/testing/selftests/mm/uffd-unit-tests.c |    7 -------
+ 1 file changed, 7 deletions(-)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -25,7 +25,6 @@
- #include <linux/mutex.h>
- #include <linux/pm_runtime.h>
- #include <linux/netdevice.h>
--#include <linux/rcupdate.h>
- #include <linux/sched/signal.h>
- #include <linux/sched/mm.h>
- #include <linux/string_helpers.h>
-@@ -2566,7 +2565,6 @@ static const char *dev_uevent_name(const
- static int dev_uevent(const struct kobject *kobj, struct kobj_uevent_env *env)
- {
- 	const struct device *dev = kobj_to_dev(kobj);
--	struct device_driver *driver;
- 	int retval = 0;
+--- a/tools/testing/selftests/mm/uffd-unit-tests.c
++++ b/tools/testing/selftests/mm/uffd-unit-tests.c
+@@ -237,9 +237,6 @@ static void *fork_event_consumer(void *d
+ 	fork_event_args *args = data;
+ 	struct uffd_msg msg = { 0 };
  
- 	/* add device node properties if present */
-@@ -2595,12 +2593,8 @@ static int dev_uevent(const struct kobje
- 	if (dev->type && dev->type->name)
- 		add_uevent_var(env, "DEVTYPE=%s", dev->type->name);
- 
--	/* Synchronize with module_remove_driver() */
--	rcu_read_lock();
--	driver = READ_ONCE(dev->driver);
--	if (driver)
--		add_uevent_var(env, "DRIVER=%s", driver->name);
--	rcu_read_unlock();
-+	if (dev->driver)
-+		add_uevent_var(env, "DRIVER=%s", dev->driver->name);
- 
- 	/* Add common DT information about the device */
- 	of_device_uevent(dev, env);
-@@ -2670,8 +2664,11 @@ static ssize_t uevent_show(struct device
- 	if (!env)
- 		return -ENOMEM;
- 
-+	/* Synchronize with really_probe() */
-+	device_lock(dev);
- 	/* let the kset specific function add its keys */
- 	retval = kset->uevent_ops->uevent(&dev->kobj, env);
-+	device_unlock(dev);
- 	if (retval)
- 		goto out;
- 
---- a/drivers/base/module.c
-+++ b/drivers/base/module.c
-@@ -7,7 +7,6 @@
- #include <linux/errno.h>
- #include <linux/slab.h>
- #include <linux/string.h>
--#include <linux/rcupdate.h>
- #include "base.h"
- 
- static char *make_driver_name(struct device_driver *drv)
-@@ -102,9 +101,6 @@ void module_remove_driver(struct device_
- 	if (!drv)
- 		return;
- 
--	/* Synchronize with dev_uevent() */
--	synchronize_rcu();
+-	/* Ready for parent thread to fork */
+-	pthread_barrier_wait(&ready_for_fork);
 -
- 	sysfs_remove_link(&drv->p->kobj, "module");
+ 	/* Read until a full msg received */
+ 	while (uffd_read_msg(args->parent_uffd, &msg));
  
- 	if (drv->owner)
+@@ -307,12 +304,8 @@ static int pagemap_test_fork(int uffd, b
+ 
+ 	/* Prepare a thread to resolve EVENT_FORK */
+ 	if (with_event) {
+-		pthread_barrier_init(&ready_for_fork, NULL, 2);
+ 		if (pthread_create(&thread, NULL, fork_event_consumer, &args))
+ 			err("pthread_create()");
+-		/* Wait for child thread to start before forking */
+-		pthread_barrier_wait(&ready_for_fork);
+-		pthread_barrier_destroy(&ready_for_fork);
+ 	}
+ 
+ 	child = fork();
 
 
