@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972001F426A;
-	Wed,  6 Nov 2024 12:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0911EF93D;
+	Wed,  6 Nov 2024 12:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897512; cv=none; b=Xdfm/ncVpKdHKkJpkgZjF0L6/A3TsyzwMVVieFr42WfmFXZWtAfFBsDw0e1MU1TvwtThssKPRZ8PIWdmpld2oaliKy4C8Rn4k8MkIxzvkrPQnoPSKvBChm+dUtbYKVtwlSMVsXfeSxiaWKLRsK05YHE5DfJA4jfiSiD2UnsBiT4=
+	t=1730897515; cv=none; b=KqQID7o/6yiNgcVxzaWsbz16GLDfMjK4OGEQS2Uee7NYxgb7PMQD0X86oKNarnaDwWYvM1hMB0e/5iGnI5eqMbtzz+mjAbeD0mrqRxZYmYkXMBoeh3zhxtSO+qawCteGyOu4dQ8VBBd3DPjjZ6PBx5pbpsR3W2PioioLcjY03U4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897512; c=relaxed/simple;
-	bh=GrfMnHdWVkSn60rWybw59t0kBKu6Bp63wnPQtMuaNo0=;
+	s=arc-20240116; t=1730897515; c=relaxed/simple;
+	bh=zy/DBtbCej+GH6CJnXF1wJ29iVdH6EYD37/UupkIJXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UWDHcLzbDYoEn1WKYZmJJqAr7T9NM87MvL6c6iiqG40xubBy0CmZlZ+UuTtnFQLiWVkG1O1zi85KM7R554ih55UBWP1FUXHfEU0Fm8UIuUCSgkx9GF9MdbHQiTbGy/MdnW/uqEBwoVwkyd6f/dV/+cAiKwdbNa80c4WIkteFGts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smHHwrS4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ls8I/+xCvmj/mGf/NDgXx50w3msAwoFKXCGXjw2Q14efMq0Gpy4vUJ5P9HM0tNJaqO9tPrQo5OCMr+pVF88B+QEG8bZRIboW1CnREo1toG6y9GJUdsuGYjuOpISGcb+8JlDYjA7zG2HNUT53hstyG83fiDvz7tB9IJzMZjTNgBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsnHD0HY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smHHwrS4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E821C4CECD;
-	Wed,  6 Nov 2024 12:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsnHD0HY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09382C4CECD;
+	Wed,  6 Nov 2024 12:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897512;
-	bh=GrfMnHdWVkSn60rWybw59t0kBKu6Bp63wnPQtMuaNo0=;
+	s=korg; t=1730897515;
+	bh=zy/DBtbCej+GH6CJnXF1wJ29iVdH6EYD37/UupkIJXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smHHwrS4oS+vzNCmCwLKnMdCVny/tSzbQU82+Y+NvNoGK9UuoUFhiElgVIMZXCMJn
-	 fa717CM0IltjJ1FMkigBDWbyaXJ+2iWJyNcNU3oR/pM7kQtdonBV90D1V15gxrzEFv
-	 WtXpa9qv2ENwpoPsRtcQ+BFydVrD+wxxAlobKfrE=
+	b=WsnHD0HYbFUCS+TnvoOoVIhvNVSeDLH/K4e1WwEEYA7pcXYEsne6xWerLQKjT5X5+
+	 g1YCgZCC+Op3EA/Qn6yGFOjp3KUdZtB9CWX/JQ7o2pTWmAIPNZ/W9gr5X8ez9FxoGp
+	 2skefN+n8rQ+sHKEktJF3aEaZZ/bLEBKFnPl6hPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	Wang Liang <wangliang74@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 041/151] iomap: improve shared block detection in iomap_unshare_iter
-Date: Wed,  6 Nov 2024 13:03:49 +0100
-Message-ID: <20241106120309.962841697@linuxfoundation.org>
+Subject: [PATCH 6.6 032/151] net: fix crash when config small gso_max_size/gso_ipv4_max_size
+Date: Wed,  6 Nov 2024 13:03:40 +0100
+Message-ID: <20241106120309.722217166@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -52,67 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit b53fdb215d13f8e9c29541434bf2d14dac8bcbdc ]
+[ Upstream commit 9ab5cf19fb0e4680f95e506d6c544259bf1111c4 ]
 
-Currently iomap_unshare_iter relies on the IOMAP_F_SHARED flag to detect
-blocks to unshare.  This is reasonable, but IOMAP_F_SHARED is also useful
-for the file system to do internal book keeping for out of place writes.
-XFS used to that, until it got removed in commit 72a048c1056a
-("xfs: only set IOMAP_F_SHARED when providing a srcmap to a write")
-because unshare for incorrectly unshare such blocks.
+Config a small gso_max_size/gso_ipv4_max_size will lead to an underflow
+in sk_dst_gso_max_size(), which may trigger a BUG_ON crash,
+because sk->sk_gso_max_size would be much bigger than device limits.
+Call Trace:
+tcp_write_xmit
+    tso_segs = tcp_init_tso_segs(skb, mss_now);
+        tcp_set_skb_tso_segs
+            tcp_skb_pcount_set
+                // skb->len = 524288, mss_now = 8
+                // u16 tso_segs = 524288/8 = 65535 -> 0
+                tso_segs = DIV_ROUND_UP(skb->len, mss_now)
+    BUG_ON(!tso_segs)
+Add check for the minimum value of gso_max_size and gso_ipv4_max_size.
 
-Add an extra safeguard by checking the explicitly provided srcmap instead
-of the fallback to the iomap for valid data, as that catches the case
-where we'd just copy from the same place we'd write to easily, allowing
-to reinstate setting IOMAP_F_SHARED for all XFS writes that go to the
-COW fork.
-
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20240910043949.3481298-3-hch@lst.de
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 50793801fc7f ("fsdax: dax_unshare_iter needs to copy entire blocks")
+Fixes: 46e6b992c250 ("rtnetlink: allow GSO maximums to be set on device creation")
+Fixes: 9eefedd58ae1 ("net: add gso_ipv4_max_size and gro_ipv4_max_size per device")
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241023035213.517386-1-wangliang74@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ net/core/rtnetlink.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index aedaad4c37d75..7db9bb0d15184 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -1273,16 +1273,25 @@ EXPORT_SYMBOL_GPL(iomap_file_buffered_write_punch_delalloc);
- static loff_t iomap_unshare_iter(struct iomap_iter *iter)
- {
- 	struct iomap *iomap = &iter->iomap;
--	const struct iomap *srcmap = iomap_iter_srcmap(iter);
- 	loff_t pos = iter->pos;
- 	loff_t length = iomap_length(iter);
- 	loff_t written = 0;
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index c76c54879fddd..4acde7067519e 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -1984,7 +1984,7 @@ static const struct nla_policy ifla_policy[IFLA_MAX+1] = {
+ 	[IFLA_NUM_TX_QUEUES]	= { .type = NLA_U32 },
+ 	[IFLA_NUM_RX_QUEUES]	= { .type = NLA_U32 },
+ 	[IFLA_GSO_MAX_SEGS]	= { .type = NLA_U32 },
+-	[IFLA_GSO_MAX_SIZE]	= { .type = NLA_U32 },
++	[IFLA_GSO_MAX_SIZE]	= NLA_POLICY_MIN(NLA_U32, MAX_TCP_HEADER + 1),
+ 	[IFLA_PHYS_PORT_ID]	= { .type = NLA_BINARY, .len = MAX_PHYS_ITEM_ID_LEN },
+ 	[IFLA_CARRIER_CHANGES]	= { .type = NLA_U32 },  /* ignored */
+ 	[IFLA_PHYS_SWITCH_ID]	= { .type = NLA_BINARY, .len = MAX_PHYS_ITEM_ID_LEN },
+@@ -2009,7 +2009,7 @@ static const struct nla_policy ifla_policy[IFLA_MAX+1] = {
+ 	[IFLA_TSO_MAX_SIZE]	= { .type = NLA_REJECT },
+ 	[IFLA_TSO_MAX_SEGS]	= { .type = NLA_REJECT },
+ 	[IFLA_ALLMULTI]		= { .type = NLA_REJECT },
+-	[IFLA_GSO_IPV4_MAX_SIZE]	= { .type = NLA_U32 },
++	[IFLA_GSO_IPV4_MAX_SIZE]	= NLA_POLICY_MIN(NLA_U32, MAX_TCP_HEADER + 1),
+ 	[IFLA_GRO_IPV4_MAX_SIZE]	= { .type = NLA_U32 },
+ };
  
--	/* don't bother with blocks that are not shared to start with */
-+	/* Don't bother with blocks that are not shared to start with. */
- 	if (!(iomap->flags & IOMAP_F_SHARED))
- 		return length;
--	/* don't bother with holes or unwritten extents */
--	if (srcmap->type == IOMAP_HOLE || srcmap->type == IOMAP_UNWRITTEN)
-+
-+	/*
-+	 * Don't bother with holes or unwritten extents.
-+	 *
-+	 * Note that we use srcmap directly instead of iomap_iter_srcmap as
-+	 * unsharing requires providing a separate source map, and the presence
-+	 * of one is a good indicator that unsharing is needed, unlike
-+	 * IOMAP_F_SHARED which can be set for any data that goes into the COW
-+	 * fork for XFS.
-+	 */
-+	if (iter->srcmap.type == IOMAP_HOLE ||
-+	    iter->srcmap.type == IOMAP_UNWRITTEN)
- 		return length;
- 
- 	do {
 -- 
 2.43.0
 
