@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0231FEFBF;
-	Wed,  6 Nov 2024 12:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184271F1301;
+	Wed,  6 Nov 2024 12:39:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896757; cv=none; b=guCYeUKNM11v50dxVU1sWmAx6H1L8aM/Q50r6BJSYa0PVr1oiXP29EvIpf1JMyC9ZIpjdVq6WtuwcYrHGmIBg/KpuJj/FltxArHRryduYaBWXbSG3xf+SAzLFXS1HfwvyVYCa8Ik4+8q3uv84riHeOE5uIJYm9v/aIQwjTzCgEY=
+	t=1730896761; cv=none; b=hRnjlqIOVV9iL/6wX/CqgdnDH3c1m6cREbEvne16Q+uSAFuje4w37B7ySkAqfX1Craft6gIUIkurDyq/Dmgz49mh1OqmSMFCG6mZRENGxLghaMM351XRMAdvRQeXdrjwiBL2XmMdSn016K5tqmAWRuWAjttwuGaEcRDTm8KUqc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896757; c=relaxed/simple;
-	bh=UR3hx/+PvkbfTZLgFCb81wDZAfCVheJACu+/p0/nKEM=;
+	s=arc-20240116; t=1730896761; c=relaxed/simple;
+	bh=Us11hKd/Z+kKz4ZR8TO4m5gAWPQgjQl2xvkoSZQF5Gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fSwkH2Xa1NOL/hwxA0SoQTuDY8eSZpZoZSSDc9RxDQ+l1QlvnVt3IEwrkTQeaAWZdVBpoZtaIW6w3kA4PfNWnUiE59bT5k6+INg84SrEYG8TW1qA//Ebrn5kNG42E3+hg74lDwOwJP6SwVXEfTka7bxh7+A3Rm3ZGX1nPaWV7k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DX4XB1vt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aZrmKDFCxc30MIOhNiSadq1DMVuT244mtpHUJmBiU5r8TLSVfsFPHGJMnv4j8T1oTzhxvGzQo7MCPsP33cC32Jz4Oq81mZyIhHQtw5RbAxl0Zxmafp1kCXy3BLWv15Kzr97UQnjnmfDTVGUk1wGBMDalb6aob7eT63YnWfxOSQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxQ7uBWz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DX4XB1vt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F223C4CED8;
-	Wed,  6 Nov 2024 12:39:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxQ7uBWz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D2BC4CECD;
+	Wed,  6 Nov 2024 12:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896757;
-	bh=UR3hx/+PvkbfTZLgFCb81wDZAfCVheJACu+/p0/nKEM=;
+	s=korg; t=1730896760;
+	bh=Us11hKd/Z+kKz4ZR8TO4m5gAWPQgjQl2xvkoSZQF5Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DX4XB1vtrowurdznaMqCosBOSugzoTwbtsTjfsOnET4BS2nmXSo+eJgL5eJORmo0P
-	 xyW4LPtYTP+11yjuqIMeVrX1PvWLbHSdFi544PEgUCjLzRv5HCVp37U6PBM4cBXu8Z
-	 S1+hVb1Y6F6nNWGg9ImnikQdQ4vHFgQ+4u39dTYg=
+	b=JxQ7uBWzrsxS9VQHPzJroi318A51qn+SkCWcV1cM8dCiyxah5+6WCkJZD3/X9iPxE
+	 BX9ZOa1zkE7sfgL8ArryHa7jRh9dC4xUjusLtZWu/xkOoNsOxoNOvWVAwJe2YYcdQo
+	 5UWowCY4l1HxqFI3LOI+2CKr6qbxNKgIdToQBd1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 061/110] wifi: brcm80211: BRCM_TRACING should depend on TRACING
-Date: Wed,  6 Nov 2024 13:04:27 +0100
-Message-ID: <20241106120304.881323916@linuxfoundation.org>
+Subject: [PATCH 5.10 062/110] RDMA/cxgb4: Dump vendor specific QP details
+Date: Wed,  6 Nov 2024 13:04:28 +0100
+Message-ID: <20241106120304.907500360@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -52,35 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert@linux-m68k.org>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit b73b2069528f90ec49d5fa1010a759baa2c2be05 ]
+[ Upstream commit 89f8c6f197f480fe05edf91eb9359d5425869d04 ]
 
-When tracing is disabled, there is no point in asking the user about
-enabling Broadcom wireless device tracing.
+Restore the missing functionality to dump vendor specific QP details,
+which was mistakenly removed in the commit mentioned in Fixes line.
 
-Fixes: f5c4f10852d42012 ("brcm80211: Allow trace support to be enabled separately from debug")
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/81a29b15eaacc1ac1fb421bdace9ac0c3385f40f.1727179742.git.geert@linux-m68k.org
+Fixes: 5cc34116ccec ("RDMA: Add dedicated QP resource tracker function")
+Link: https://patch.msgid.link/r/ed9844829135cfdcac7d64285688195a5cd43f82.1728323026.git.leonro@nvidia.com
+Reported-by: Dr. David Alan Gilbert <linux@treblig.org>
+Closes: https://lore.kernel.org/all/Zv_4qAxuC0dLmgXP@gallifrey
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/Kconfig | 1 +
+ drivers/infiniband/hw/cxgb4/provider.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/Kconfig b/drivers/net/wireless/broadcom/brcm80211/Kconfig
-index 5bf2318763c55..8f51099e15c90 100644
---- a/drivers/net/wireless/broadcom/brcm80211/Kconfig
-+++ b/drivers/net/wireless/broadcom/brcm80211/Kconfig
-@@ -23,6 +23,7 @@ source "drivers/net/wireless/broadcom/brcm80211/brcmfmac/Kconfig"
- config BRCM_TRACING
- 	bool "Broadcom device tracing"
- 	depends on BRCMSMAC || BRCMFMAC
-+	depends on TRACING
- 	help
- 	  If you say Y here, the Broadcom wireless drivers will register
- 	  with ftrace to dump event information into the trace ringbuffer.
+diff --git a/drivers/infiniband/hw/cxgb4/provider.c b/drivers/infiniband/hw/cxgb4/provider.c
+index 8138c57a1e43b..2824511e20ade 100644
+--- a/drivers/infiniband/hw/cxgb4/provider.c
++++ b/drivers/infiniband/hw/cxgb4/provider.c
+@@ -472,6 +472,7 @@ static const struct ib_device_ops c4iw_dev_ops = {
+ 	.fill_res_cq_entry = c4iw_fill_res_cq_entry,
+ 	.fill_res_cm_id_entry = c4iw_fill_res_cm_id_entry,
+ 	.fill_res_mr_entry = c4iw_fill_res_mr_entry,
++	.fill_res_qp_entry = c4iw_fill_res_qp_entry,
+ 	.get_dev_fw_str = get_dev_fw_str,
+ 	.get_dma_mr = c4iw_get_dma_mr,
+ 	.get_hw_stats = c4iw_get_mib,
 -- 
 2.43.0
 
