@@ -1,48 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED711F668B;
-	Wed,  6 Nov 2024 12:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD801E103C;
+	Wed,  6 Nov 2024 12:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896915; cv=none; b=kwJxVu1pjhynidjByAiju1pVvHPqTJZAvti+afzaeXn59rXtbQBl67J/Eheo1JlWf5a5RXU2jIRzhg6dBLJdr/9U8FOaVidhslRPWsW2SGZdKO8hQbBNtOtK3s7CGGh49giw7af1EF2PHsUnYqiKJPNWVPzJEjHORyrhim0qGFw=
+	t=1730896919; cv=none; b=fREChC/biOUOpT7Dx1DK0ymWFb5+DFCd++LJ5IO3EVd7ArrcOz9MVrr57hrF5GwB1Q9MTkSVpvEO3G7PpEsRUh8UAXwEMWU2cakMN72CnkFZOArLxkJyiK1R8IwQxPvzkxgXH5AU/kAsUs2/TXYaKUzaWL+xWOLrvitEGLGxtZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896915; c=relaxed/simple;
-	bh=E1NCKsHxS4/6m6q++bQlHDZJ2yo1eXhJuWu7df64KWw=;
+	s=arc-20240116; t=1730896919; c=relaxed/simple;
+	bh=QkR0aqquTWBx21Gjz94942pWOE7B1qLJS/tm7cAgoFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gQLoIxv7uLg8qRtAMFy9zbfNdhRDVsyx0iAeCZo6h8RLzU5kEYveu7aJmDy/TdPoQ6txL1fvX8uis6EHxf35YJ9oisbfq2oyBq1OX0OJy6jI5g4NM4VKRsaLFFmC8oAGbRM7e2AAVyxQOYjhORFKqmdkF5K9eyd2u1L3MM+6VZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wqL2qifA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KPY7qbzfGX93S/i2NA9icxspLwm/UglP0btZ9DAmRTyRgZnTo2jOjsij7U1yXJIi9OzAgCecholfNPgoXNh3jCxKSikvnwlnFnIW/VdKQ1ibxL5UmoT8uzvES/ue5EjRCwUxpQ+nAaVtzC/ROKO4dFiAWxaOwu8v83tEOTLl6vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gp9WCeug; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wqL2qifA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241B2C4CECD;
-	Wed,  6 Nov 2024 12:41:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gp9WCeug"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B64DC4CECD;
+	Wed,  6 Nov 2024 12:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896915;
-	bh=E1NCKsHxS4/6m6q++bQlHDZJ2yo1eXhJuWu7df64KWw=;
+	s=korg; t=1730896918;
+	bh=QkR0aqquTWBx21Gjz94942pWOE7B1qLJS/tm7cAgoFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wqL2qifARG3MCas9FjetkQvmLPtE6Yxow/RCNNWKQf+1ZlqHC7zQjjoJc53B5XSHM
-	 ByIMaiiVi5nBceyKuSAFqVK9JWe5az1NcJqn3zenFQ0UJHlhHTgHaA90Y5dG8BjymV
-	 mFEs5s0m6FT0BEKmlTtq4MqG8vDmF/sFy/UVn80U=
+	b=Gp9WCeugcdmiLxmy+ATV5YkhuVbgr0jsJms+YN2P2itRGh7563NqHGWGeGP4HaYHJ
+	 SFKW3DUO+8xr527/n7YXmPDKJYIwuF7I70DY07RpH5onnfnDh2JKkGvXmlU/Ddflo8
+	 ywYoM0IHkj+3IAHIYpf6D9MUDEH9y3cTiWhFIMq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Noralf=20Tr=C3=B8nnes?= <noralf@tronnes.org>,
-	Eric Anholt <eric@anholt.net>,
-	Rob Herring <robh@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	dri-devel@lists.freedesktop.org,
-	"Wachowski, Karol" <karol.wachowski@intel.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Artem Sdvizhkov <raclesdv@gmail.com>
-Subject: [PATCH 5.10 108/110] drm/shmem-helper: Fix BUG_ON() on mmap(PROT_WRITE, MAP_PRIVATE)
-Date: Wed,  6 Nov 2024 13:05:14 +0100
-Message-ID: <20241106120306.155669246@linuxfoundation.org>
+	syzbot+955da2d57931604ee691@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>
+Subject: [PATCH 5.10 109/110] vt: prevent kernel-infoleak in con_font_get()
+Date: Wed,  6 Nov 2024 13:05:15 +0100
+Message-ID: <20241106120306.187887869@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -55,72 +44,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wachowski, Karol <karol.wachowski@intel.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 39bc27bd688066a63e56f7f64ad34fae03fbe3b8 upstream.
+commit f956052e00de211b5c9ebaa1958366c23f82ee9e upstream.
 
-Lack of check for copy-on-write (COW) mapping in drm_gem_shmem_mmap
-allows users to call mmap with PROT_WRITE and MAP_PRIVATE flag
-causing a kernel panic due to BUG_ON in vmf_insert_pfn_prot:
-BUG_ON((vma->vm_flags & VM_PFNMAP) && is_cow_mapping(vma->vm_flags));
+font.data may not initialize all memory spaces depending on the implementation
+of vc->vc_sw->con_font_get. This may cause info-leak, so to prevent this, it
+is safest to modify it to initialize the allocated memory space to 0, and it
+generally does not affect the overall performance of the system.
 
-Return -EINVAL early if COW mapping is detected.
-
-This bug affects all drm drivers using default shmem helpers.
-It can be reproduced by this simple example:
-void *ptr = mmap(0, size, PROT_WRITE, MAP_PRIVATE, fd, mmap_offset);
-ptr[0] = 0;
-
-Fixes: 2194a63a818d ("drm: Add library for shmem backed GEM objects")
-Cc: Noralf Trønnes <noralf@tronnes.org>
-Cc: Eric Anholt <eric@anholt.net>
-Cc: Rob Herring <robh@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v5.2+
-Signed-off-by: Wachowski, Karol <karol.wachowski@intel.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240520100514.925681-1-jacek.lawrynowicz@linux.intel.com
-[ Artem: bp to fix CVE-2024-39497, in order to adapt this patch to branch 5.10
-  add header file mm/internal.h]
-Signed-off-by: Artem Sdvizhkov <raclesdv@gmail.com>
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+955da2d57931604ee691@syzkaller.appspotmail.com
+Fixes: 05e2600cb0a4 ("VT: Bump font size limitation to 64x128 pixels")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Link: https://lore.kernel.org/r/20241010174619.59662-1-aha310510@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_gem_shmem_helper.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/tty/vt/vt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_gem_shmem_helper.c
-+++ b/drivers/gpu/drm/drm_gem_shmem_helper.c
-@@ -17,6 +17,8 @@
- #include <drm/drm_prime.h>
- #include <drm/drm_print.h>
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -4603,7 +4603,7 @@ static int con_font_get(struct vc_data *
+ 	int c;
  
-+#include "../../../mm/internal.h"   /* is_cow_mapping() */
-+
- /**
-  * DOC: overview
-  *
-@@ -630,6 +632,9 @@ int drm_gem_shmem_mmap(struct drm_gem_ob
- 		return ret;
- 	}
- 
-+	if (is_cow_mapping(vma->vm_flags))
-+		return -EINVAL;
-+
- 	shmem = to_drm_gem_shmem_obj(obj);
- 
- 	ret = drm_gem_shmem_get_pages(shmem);
+ 	if (op->data) {
+-		font.data = kmalloc(max_font_size, GFP_KERNEL);
++		font.data = kzalloc(max_font_size, GFP_KERNEL);
+ 		if (!font.data)
+ 			return -ENOMEM;
+ 	} else
 
 
