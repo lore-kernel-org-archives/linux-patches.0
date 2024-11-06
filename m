@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B3D1DF27C;
-	Wed,  6 Nov 2024 12:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486EF1DF27C;
+	Wed,  6 Nov 2024 12:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895523; cv=none; b=tzYWo8ozVvsi9LV9z5CA5k3gmXIOd2l8Ngk+DG3SIldtworYeZVdrG5uBoEnAUAiCb5+PJPDfTCgIIkK5fryczLRlelvAJGOpiW2NmXXIwoJiPmVe6k7UAyuAcyEMJIX1ryLgcyxpoE5sx17JT9ZLy4damFuN7/3NtP1Pe7/GAo=
+	t=1730895526; cv=none; b=CGtPI+t4OsXDSfGSFOqDJUjPbMju6i2vS8E05oF3xnEEJ/QdfxFjIgU+xbl9zmw74LsH9HHYgb/KYc5S3whjyUyfbFxmXFyuW8TSP9io9pF84gMHVnFzehgqOUzbll8zXKFBuyAr6130ee6jUCVYA3R3iVQP2SLq5KgqQLY7Xus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895523; c=relaxed/simple;
-	bh=4h1jDiHkwEGEa01tvs8hyqyAlAHRvSZlOhKUduQ8+fw=;
+	s=arc-20240116; t=1730895526; c=relaxed/simple;
+	bh=/vFXNICDyKzFLj9jQKUyuJp/VscH80P8VFXvSlVqNeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VoM2YLfZ122nr3d2kyMc583r9dkSVg1tqNgUlxi5WtHs5xePhec8K5SNBIWQLm+wkVkshipzc0PHXN3yq7SFusYnKhgj6RiCiKq50OiXw6pwAu4BUuNEEUTLbqOb0VSsAT9utLXjXgIx1bV0y3Lk0lZ0TWhd4raR6PoIn6J5qAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VnLzn9+C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Owaacz2dffpDG05nUY02uPrPEgUJOAGZ72b4DyNrA3QBiFGNo/kKOSYme/HZ4oDCXySy0DuxwyAzcUz2ISnWhZN0dPzl72tt4LTQ5fiiJcl5QoarwWycD6hyUirpWjPA+jveMYFugyrXPko+0BmAWzKk7pU+V79X808vlRwNggY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTEx5g30; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnLzn9+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77DBC4CECD;
-	Wed,  6 Nov 2024 12:18:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTEx5g30"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABBAC4CECD;
+	Wed,  6 Nov 2024 12:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895523;
-	bh=4h1jDiHkwEGEa01tvs8hyqyAlAHRvSZlOhKUduQ8+fw=;
+	s=korg; t=1730895526;
+	bh=/vFXNICDyKzFLj9jQKUyuJp/VscH80P8VFXvSlVqNeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VnLzn9+Cj1ChewpI2wXlLuTbHBHB4/KtM1UAgvIEVFAEcz4rMJyeTQQlJ80BVQsRy
-	 ixnSTJ3NT9i/5k4+nCazkXqFdGXzytslwmCDiXzN3/TbcOmwgD+6u9A9+s/yJ2x3Q1
-	 T6y94zbDuy341/QmP+2nkUfJ72J2QPmsn/MAFgdk=
+	b=YTEx5g30hM8ikYlpX7Y2WsWtnnIhPjrOYetNR0+jBf7NZ8YGglb9cZlcjWmPEa9MT
+	 v2n+6/5zNa4Clj3V3JTDq+Zk3bli//cTDqLKzqUxmmlhm9S3wLbvJEEWYtwtLFDUp9
+	 JfrBut1dtYxlnQ7Pb1aEo69KV6dAypHz2RkKxa8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Jun <zhujun2@cmss.chinamobile.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 245/350] tools/iio: Add memory allocation failure check for trigger_name
-Date: Wed,  6 Nov 2024 13:02:53 +0100
-Message-ID: <20241106120326.986125197@linuxfoundation.org>
+	Nuno Sa <nuno.sa@analog.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 4.19 211/350] Input: adp5589-keys - fix adp5589_gpio_get_value()
+Date: Wed,  6 Nov 2024 13:02:19 +0100
+Message-ID: <20241106120326.204825960@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,38 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Jun <zhujun2@cmss.chinamobile.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit 3c6b818b097dd6932859bcc3d6722a74ec5931c1 ]
+commit c684771630e64bc39bddffeb65dd8a6612a6b249 upstream.
 
-Added a check to handle memory allocation failure for `trigger_name`
-and return `-ENOMEM`.
+The adp5589 seems to have the same behavior as similar devices as
+explained in commit 910a9f5636f5 ("Input: adp5588-keys - get value from
+data out when dir is out").
 
-Signed-off-by: Zhu Jun <zhujun2@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20240828093129.3040-1-zhujun2@cmss.chinamobile.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Basically, when the gpio is set as output we need to get the value from
+ADP5589_GPO_DATA_OUT_A register instead of ADP5589_GPI_STATUS_A.
+
+Fixes: 9d2e173644bb ("Input: ADP5589 - new driver for I2C Keypad Decoder and I/O Expander")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20241001-b4-dev-adp5589-fw-conversion-v1-2-fca0149dfc47@analog.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/iio/iio_generic_buffer.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/input/keyboard/adp5589-keys.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/tools/iio/iio_generic_buffer.c b/tools/iio/iio_generic_buffer.c
-index ca9f33fa51c9f..e8cf3dc8de72c 100644
---- a/tools/iio/iio_generic_buffer.c
-+++ b/tools/iio/iio_generic_buffer.c
-@@ -483,6 +483,10 @@ int main(int argc, char **argv)
- 			return -ENOMEM;
- 		}
- 		trigger_name = malloc(IIO_MAX_NAME_LENGTH);
-+		if (!trigger_name) {
-+			ret = -ENOMEM;
-+			goto error;
-+		}
- 		ret = read_sysfs_string("name", trig_dev_name, trigger_name);
- 		free(trig_dev_name);
- 		if (ret < 0) {
--- 
-2.43.0
-
+--- a/drivers/input/keyboard/adp5589-keys.c
++++ b/drivers/input/keyboard/adp5589-keys.c
+@@ -390,10 +390,17 @@ static int adp5589_gpio_get_value(struct
+ 	struct adp5589_kpad *kpad = gpiochip_get_data(chip);
+ 	unsigned int bank = kpad->var->bank(kpad->gpiomap[off]);
+ 	unsigned int bit = kpad->var->bit(kpad->gpiomap[off]);
++	int val;
+ 
+-	return !!(adp5589_read(kpad->client,
+-			       kpad->var->reg(ADP5589_GPI_STATUS_A) + bank) &
+-			       bit);
++	mutex_lock(&kpad->gpio_lock);
++	if (kpad->dir[bank] & bit)
++		val = kpad->dat_out[bank];
++	else
++		val = adp5589_read(kpad->client,
++				   kpad->var->reg(ADP5589_GPI_STATUS_A) + bank);
++	mutex_unlock(&kpad->gpio_lock);
++
++	return !!(val & bit);
+ }
+ 
+ static void adp5589_gpio_set_value(struct gpio_chip *chip,
 
 
