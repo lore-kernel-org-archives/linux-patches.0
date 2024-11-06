@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3721DF260;
-	Wed,  6 Nov 2024 12:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1B51DF24E;
+	Wed,  6 Nov 2024 12:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895271; cv=none; b=rS0MPM+yj/K0noQmXXrJdK2Yjt7uCnx60+ILLaASzYn1mLgKXVnEdOByVtAW4pNTCo8hssYyGBrbM38jIP0qbTtiNfOBgXDmCj9bWM0IZWkp7UUnlkEKiBYtMYxNxVZoBx3aNNS+X3F7E42HB6JvisKCzxkEHUGaqzIykqkV/O8=
+	t=1730895273; cv=none; b=kFN0wv4105/gS69gUZVcOHQ8OL6p0ZhkQ8HDmrox8hF2oMKFUlfKqwmWdI0/e7mzxoBeMXVynsbj47Hhh8vFBwvzWjZj+TK+gvi0AIDbZQ8uXD1KoWkDXpkzOgBa0wyezWA30EDNJn4Jl9IGCTiiui9yDOcIv37XNWhQluXHi+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895271; c=relaxed/simple;
-	bh=6lH8lOjiIH/0eYM90d/dyeBfrkwj171xE9bQ/qe9MM4=;
+	s=arc-20240116; t=1730895273; c=relaxed/simple;
+	bh=hk6N5AncAHChmPCXGRiHstbr9gXkj6ajwyO/npDOX8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4F937JGlb2hIxmlaqFP4/EG6n1Z8QXKcpa8NES5UvYM3N5KzHR7wbMPgeOc+X56tsv5aCkvCDxQHFvG/T/Ryoa+anX5TudQRvU/wcwC1hKoJjl2F0+1cIJCMrJoNlVC2zTf99tDzF0RF72MyrYB1oKnLEhq+se5dkL51pByEsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ruuatcOQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=blbXUcD08cyopDEFLGdOGB0wed4uWpa8jiyFCS45mMF+jGFepriMjYVui1GgSiIlJivbUa311MVisgR2D/v2BMj+jzEaFcnKnZQBwE1UMxbGPIL1IsiPFAkRi0EF+dKYD710+uwmFElkwcT+lv/IN7UoATRfXiLw6eNmV4xCrb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VC2WymeQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ruuatcOQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3705CC4CECD;
-	Wed,  6 Nov 2024 12:14:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VC2WymeQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35695C4CECD;
+	Wed,  6 Nov 2024 12:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895270;
-	bh=6lH8lOjiIH/0eYM90d/dyeBfrkwj171xE9bQ/qe9MM4=;
+	s=korg; t=1730895273;
+	bh=hk6N5AncAHChmPCXGRiHstbr9gXkj6ajwyO/npDOX8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ruuatcOQYk7HymU42UEKKloQ57DD6p+uvGKO4614jN3pKtdtqLDPt2tAUFrQaK58G
-	 eO5hcAWGXfyromF6pb+Ni8vQBsSjDL6myzP87WdD9lC6fE2O7pZGYqqf33yqylQSB4
-	 P8ekNG6nXHOjGZsNbnNifmLWM/gpDTPZZN7NnIOQ=
+	b=VC2WymeQ+05uZmokCbC/AkxzhAvv3LuAI6SL8s0gLRLDV3OH+xQEuF9YB1mhlk9wC
+	 WOz1lobBjqCxSU5ZZHPOSagRKYLJp+ZfsJ4rKsUd7lauTnAdmq9yP3LO3szSwaqxKv
+	 FE+dWW4JKq60ZdjyvncfeKOyxllkqbtoom4c6bzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Brian Norris <briannorris@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 160/350] ACPICA: iasl: handle empty connection_node
-Date: Wed,  6 Nov 2024 13:01:28 +0100
-Message-ID: <20241106120324.872670902@linuxfoundation.org>
+Subject: [PATCH 4.19 161/350] wifi: mwifiex: Fix memcpy() field-spanning write warning in mwifiex_cmd_802_11_scan_ext()
+Date: Wed,  6 Nov 2024 13:01:29 +0100
+Message-ID: <20241106120324.897049771@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,34 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit a0a2459b79414584af6c46dd8c6f866d8f1aa421 ]
+[ Upstream commit 498365e52bebcbc36a93279fe7e9d6aec8479cee ]
 
-ACPICA commit 6c551e2c9487067d4b085333e7fe97e965a11625
+Replace one-element array with a flexible-array member in
+`struct host_cmd_ds_802_11_scan_ext`.
 
-Link: https://github.com/acpica/acpica/commit/6c551e2c
-Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+With this, fix the following warning:
+
+elo 16 17:51:58 surfacebook kernel: ------------[ cut here ]------------
+elo 16 17:51:58 surfacebook kernel: memcpy: detected field-spanning write (size 243) of single field "ext_scan->tlv_buffer" at drivers/net/wireless/marvell/mwifiex/scan.c:2239 (size 1)
+elo 16 17:51:58 surfacebook kernel: WARNING: CPU: 0 PID: 498 at drivers/net/wireless/marvell/mwifiex/scan.c:2239 mwifiex_cmd_802_11_scan_ext+0x83/0x90 [mwifiex]
+
+Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Closes: https://lore.kernel.org/linux-hardening/ZsZNgfnEwOcPdCly@black.fi.intel.com/
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/ZsZa5xRcsLq9D+RX@elsanto
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/exprep.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/marvell/mwifiex/fw.h   | 2 +-
+ drivers/net/wireless/marvell/mwifiex/scan.c | 3 +--
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/acpica/exprep.c b/drivers/acpi/acpica/exprep.c
-index 228feeea555f1..91143bcfe0904 100644
---- a/drivers/acpi/acpica/exprep.c
-+++ b/drivers/acpi/acpica/exprep.c
-@@ -437,6 +437,9 @@ acpi_status acpi_ex_prep_field_value(struct acpi_create_field_info *info)
+diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
+index 3e3134bcc2b06..bfa482cf464ff 100644
+--- a/drivers/net/wireless/marvell/mwifiex/fw.h
++++ b/drivers/net/wireless/marvell/mwifiex/fw.h
+@@ -1590,7 +1590,7 @@ struct host_cmd_ds_802_11_scan_rsp {
  
- 		if (info->connection_node) {
- 			second_desc = info->connection_node->object;
-+			if (second_desc == NULL) {
-+				break;
-+			}
- 			if (!(second_desc->common.flags & AOPOBJ_DATA_VALID)) {
- 				status =
- 				    acpi_ds_get_buffer_arguments(second_desc);
+ struct host_cmd_ds_802_11_scan_ext {
+ 	u32   reserved;
+-	u8    tlv_buffer[1];
++	u8    tlv_buffer[];
+ } __packed;
+ 
+ struct mwifiex_ie_types_bss_mode {
+diff --git a/drivers/net/wireless/marvell/mwifiex/scan.c b/drivers/net/wireless/marvell/mwifiex/scan.c
+index 4f0e78ae3dbd0..0cbdd5a930d83 100644
+--- a/drivers/net/wireless/marvell/mwifiex/scan.c
++++ b/drivers/net/wireless/marvell/mwifiex/scan.c
+@@ -2570,8 +2570,7 @@ int mwifiex_ret_802_11_scan_ext(struct mwifiex_private *priv,
+ 	ext_scan_resp = &resp->params.ext_scan;
+ 
+ 	tlv = (void *)ext_scan_resp->tlv_buffer;
+-	buf_left = le16_to_cpu(resp->size) - (sizeof(*ext_scan_resp) + S_DS_GEN
+-					      - 1);
++	buf_left = le16_to_cpu(resp->size) - (sizeof(*ext_scan_resp) + S_DS_GEN);
+ 
+ 	while (buf_left >= sizeof(struct mwifiex_ie_types_header)) {
+ 		type = le16_to_cpu(tlv->type);
 -- 
 2.43.0
 
