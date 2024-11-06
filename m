@@ -1,40 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA8B1F76AD;
-	Wed,  6 Nov 2024 12:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6FD1EABA1;
+	Wed,  6 Nov 2024 12:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897032; cv=none; b=sBNUWCmUJM9hdk8GxzJQn06/OTvjw5JdVGDFVGAnIkroGNIlm9jYIxKJjfoh6iSCqLHdRO8F4tWLxTuc4oJlYHW/i8Yc1fcHx07OHgiFbDD/lCv/3VbWMSQDqyN78ODk64MuG4jvp8u2BP2vimYgaln+ngLyEK3ZVMZrC/hhfjk=
+	t=1730897035; cv=none; b=nR+JDgSMLmiAIr3PhK8kRriTNoIINutjL7JDXK2PqqOiejkY4mSlllvtj47/y/itya/SLbKY9ytTjusZrIf1M083sFHfJNbLY0yShaX2wdSKUWidbFPrJnZEOM5ZcfhLulmiqInH7rv9al7uhIvp/nAOTX2BBPuw2Ax4EYAo03A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897032; c=relaxed/simple;
-	bh=bolEM6u1OYbYW7F7uY4lLki8qDACiQ5UqOza+fQiBVc=;
+	s=arc-20240116; t=1730897035; c=relaxed/simple;
+	bh=CcpT3ygnMOFoIn++BT0g8+IL11Pr7GjX44rahjfR0sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K4P5NME6k078zi5t5LMuOg/4cf9PVScqHCNCurEQMR0IoXcc2840ywF21e5BM++8ou8wdUigdz3BPg6M+M4y0h5q65JW0bo+Eb6XCF0tJCo2upqDf6DmqLYz4GUYEFYpKKoCNDsxIgXdQ/bA43cIdP/2dGDHAC7iBuj7i4t7WPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xThr3np; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EU9nBNuqnB5mSKtE+iLCQYcUrhAC116+8+Cf6+sJNZNwobUKNPMPh14SY7Cp6XuB0YiQKOLmH1sHmgFYN0eknJVopSuy5BE/poQZhQ6ikWBD1nBbW6rKAIvVTLsfrMhybBlsTP2J+04DEMroWBQ/lSVU9tsXorTgGvgdBguyC2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/VQMr3R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xThr3np"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31208C4CECD;
-	Wed,  6 Nov 2024 12:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/VQMr3R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE618C4CECD;
+	Wed,  6 Nov 2024 12:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897032;
-	bh=bolEM6u1OYbYW7F7uY4lLki8qDACiQ5UqOza+fQiBVc=;
+	s=korg; t=1730897035;
+	bh=CcpT3ygnMOFoIn++BT0g8+IL11Pr7GjX44rahjfR0sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0xThr3np4Yg0udjmzObzAzB5TDI4NR8M5ChWbZNNekp4j8Hi2BCysW83TPiR/Lc1a
-	 YJOshvtDmuRQhqGXtzKZg1j5F7M9NrUeEDW0ZgdY3TuZQF/LGWXKcu//XwOe4kPXin
-	 8q6CNlul4tPnXBhPIX26Smxz2AGU76Q5TCjbB2Do=
+	b=y/VQMr3RpgCUhstjTMzrMjHwNItOL9d1OznQU09lNOBs3nWg6WE24Y1p52f3xHmS0
+	 XEGAX1sYZt2hzXUESsQ745/Y0jcwq+fGiox2VhlJz5LHpxeEGisP15HMwALX493CvE
+	 LilROGkbBH098+Xesrglfxz9+C1/gCHHZWGNFoHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Brian Foster <bfoster@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Marco Elver <elver@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dan Li <ashimida@linux.alibaba.com>,
+	Kees Cook <keescook@chromium.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/126] iomap: turn iomap_want_unshare_iter into an inline function
-Date: Wed,  6 Nov 2024 13:04:05 +0100
-Message-ID: <20241106120307.299570471@linuxfoundation.org>
+Subject: [PATCH 6.1 045/126] compiler-gcc: be consistent with underscores use for `no_sanitize`
+Date: Wed,  6 Nov 2024 13:04:06 +0100
+Message-ID: <20241106120307.325248248@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -47,100 +55,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit 6db388585e486c0261aeef55f8bc63a9b45756c0 ]
+[ Upstream commit 6e2be1f2ebcea42ed6044432f72f32434e60b34d ]
 
-iomap_want_unshare_iter currently sits in fs/iomap/buffered-io.c, which
-depends on CONFIG_BLOCK.  It is also in used in fs/dax.c whіch has no
-such dependency.  Given that it is a trivial check turn it into an inline
-in include/linux/iomap.h to fix the DAX && !BLOCK build.
+Patch series "compiler-gcc: be consistent with underscores use for
+`no_sanitize`".
 
-Fixes: 6ef6a0e821d3 ("iomap: share iomap_unshare_iter predicate code with fsdax")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20241015041350.118403-1-hch@lst.de
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+This patch (of 5):
+
+Other macros that define shorthands for attributes in e.g.
+`compiler_attributes.h` and elsewhere use underscores.
+
+Link: https://lkml.kernel.org/r/20221021115956.9947-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Dan Li <ashimida@linux.alibaba.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 894b00a3350c ("kasan: Fix Software Tag-Based KASAN with GCC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 17 -----------------
- include/linux/iomap.h  | 20 +++++++++++++++++++-
- 2 files changed, 19 insertions(+), 18 deletions(-)
+ include/linux/compiler-gcc.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 876273db711d1..47f44b02c17de 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -1084,23 +1084,6 @@ int iomap_file_buffered_write_punch_delalloc(struct inode *inode,
- }
- EXPORT_SYMBOL_GPL(iomap_file_buffered_write_punch_delalloc);
+diff --git a/include/linux/compiler-gcc.h b/include/linux/compiler-gcc.h
+index 149a520515e1d..e6474899250d5 100644
+--- a/include/linux/compiler-gcc.h
++++ b/include/linux/compiler-gcc.h
+@@ -103,25 +103,25 @@
+ #endif
  
--bool iomap_want_unshare_iter(const struct iomap_iter *iter)
--{
--	/*
--	 * Don't bother with blocks that are not shared to start with; or
--	 * mappings that cannot be shared, such as inline data, delalloc
--	 * reservations, holes or unwritten extents.
--	 *
--	 * Note that we use srcmap directly instead of iomap_iter_srcmap as
--	 * unsharing requires providing a separate source map, and the presence
--	 * of one is a good indicator that unsharing is needed, unlike
--	 * IOMAP_F_SHARED which can be set for any data that goes into the COW
--	 * fork for XFS.
--	 */
--	return (iter->iomap.flags & IOMAP_F_SHARED) &&
--		iter->srcmap.type == IOMAP_MAPPED;
--}
--
- static loff_t iomap_unshare_iter(struct iomap_iter *iter)
- {
- 	struct iomap *iomap = &iter->iomap;
-diff --git a/include/linux/iomap.h b/include/linux/iomap.h
-index 0a37b54e24926..1de65d5d79d4d 100644
---- a/include/linux/iomap.h
-+++ b/include/linux/iomap.h
-@@ -251,6 +251,25 @@ static inline const struct iomap *iomap_iter_srcmap(const struct iomap_iter *i)
- 	return &i->iomap;
- }
+ #if __has_attribute(__no_sanitize_address__)
+-#define __no_sanitize_address __attribute__((no_sanitize_address))
++#define __no_sanitize_address __attribute__((__no_sanitize_address__))
+ #else
+ #define __no_sanitize_address
+ #endif
  
-+/*
-+ * Check if the range needs to be unshared for a FALLOC_FL_UNSHARE_RANGE
-+ * operation.
-+ *
-+ * Don't bother with blocks that are not shared to start with; or mappings that
-+ * cannot be shared, such as inline data, delalloc reservations, holes or
-+ * unwritten extents.
-+ *
-+ * Note that we use srcmap directly instead of iomap_iter_srcmap as unsharing
-+ * requires providing a separate source map, and the presence of one is a good
-+ * indicator that unsharing is needed, unlike IOMAP_F_SHARED which can be set
-+ * for any data that goes into the COW fork for XFS.
-+ */
-+static inline bool iomap_want_unshare_iter(const struct iomap_iter *iter)
-+{
-+	return (iter->iomap.flags & IOMAP_F_SHARED) &&
-+		iter->srcmap.type == IOMAP_MAPPED;
-+}
-+
- ssize_t iomap_file_buffered_write(struct kiocb *iocb, struct iov_iter *from,
- 		const struct iomap_ops *ops);
- int iomap_file_buffered_write_punch_delalloc(struct inode *inode,
-@@ -264,7 +283,6 @@ bool iomap_release_folio(struct folio *folio, gfp_t gfp_flags);
- void iomap_invalidate_folio(struct folio *folio, size_t offset, size_t len);
- int iomap_file_unshare(struct inode *inode, loff_t pos, loff_t len,
- 		const struct iomap_ops *ops);
--bool iomap_want_unshare_iter(const struct iomap_iter *iter);
- int iomap_zero_range(struct inode *inode, loff_t pos, loff_t len,
- 		bool *did_zero, const struct iomap_ops *ops);
- int iomap_truncate_page(struct inode *inode, loff_t pos, bool *did_zero,
+ #if defined(__SANITIZE_THREAD__) && __has_attribute(__no_sanitize_thread__)
+-#define __no_sanitize_thread __attribute__((no_sanitize_thread))
++#define __no_sanitize_thread __attribute__((__no_sanitize_thread__))
+ #else
+ #define __no_sanitize_thread
+ #endif
+ 
+ #if __has_attribute(__no_sanitize_undefined__)
+-#define __no_sanitize_undefined __attribute__((no_sanitize_undefined))
++#define __no_sanitize_undefined __attribute__((__no_sanitize_undefined__))
+ #else
+ #define __no_sanitize_undefined
+ #endif
+ 
+ #if defined(CONFIG_KCOV) && __has_attribute(__no_sanitize_coverage__)
+-#define __no_sanitize_coverage __attribute__((no_sanitize_coverage))
++#define __no_sanitize_coverage __attribute__((__no_sanitize_coverage__))
+ #else
+ #define __no_sanitize_coverage
+ #endif
 -- 
 2.43.0
 
