@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33511DD0C8;
-	Wed,  6 Nov 2024 12:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019FB1D416E;
+	Wed,  6 Nov 2024 12:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895326; cv=none; b=dC5mdT4HPBF2LQdVvNKlOLW4+rLSKEwbILo8UjvXHDAxMr73zwZivQRCWDfFIoy2417WDtwNGllXlRhevD4GaSjkf9IExhsh/QC/CXcH+ZB9GNjs4MJG20eq7PgDocy2yc0KqM/Q5jaLXQg45E5ZJSjrnwCfwndJ0sB/7T64eiI=
+	t=1730895330; cv=none; b=fyvg1s4HyxuBIXhVZd/9I5pnJ9R1WbajO8dLz/oW35AJBJxZYUg08zopDg92fSi5bG8CHoEPRI8nJIOSfUi7OOFdRUCN7+QnvW3fAXobhDKe9tcMdL8/SWnF6aIhsLDmpuVkkg7Yoq4CuDDPPWM03XjBL+bFvCFD/cMGSUd9Mv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895326; c=relaxed/simple;
-	bh=WSxNaOkKGepFnJRNgstK5TTmIIzUpaYO+F/jE6Id9KY=;
+	s=arc-20240116; t=1730895330; c=relaxed/simple;
+	bh=BaFfI2b+Y34jl6+QTSee7XhNv9usAXdenjKkARFLI0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q5dPzJfIoIhimKrx9kgjYrwK+47jb+NlSoT8QBqudy+9F3SWuOy61MJ+26wj691S97GYfLLQ+U+VXKbABJt7tbHyZ1Rjebu9U5C+M47LObGhRfTdk21nnEmHSdBpKq1STkm7dXgDaBQ64l4xzkvcmyrQs6EceWFyrXdiCe3biZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6eQpzIJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aakgw/Amlsx3CkRo6JbiDscjSC+OesKQOumMH02qBRciNpbbMlD4Mz9jf3cf9Q1i1qPUSHXXZTdMt2lI0cy72ZZk7ShCL+28H/UaMTKXtyXyxNt4xELr3+UsKIM9/jeQvwJKBOvvVYlVHbcybi7ICJwa6AJWC7g2swf47FBjBSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0/MdqeW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6eQpzIJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FFDC4CECD;
-	Wed,  6 Nov 2024 12:15:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0/MdqeW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3490DC4CED4;
+	Wed,  6 Nov 2024 12:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895326;
-	bh=WSxNaOkKGepFnJRNgstK5TTmIIzUpaYO+F/jE6Id9KY=;
+	s=korg; t=1730895329;
+	bh=BaFfI2b+Y34jl6+QTSee7XhNv9usAXdenjKkARFLI0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o6eQpzIJfRlhCc4wjHqX4UCHqGZelMpdg8cQTef3fCW3iFYLvUodV+QcsA6yCpFVT
-	 Iu40CCk/bUktLJtpyovIatm6RSfrQ75ocqxZlw7CPuitKt1MO1InKzIyctOaDMFtmq
-	 Or6YT+erPhx3d+W9w9vHpuBvqd8u8ttfaSabS0Fw=
+	b=Y0/MdqeW2gIIEgaDl3BhYEnrydgmDYOoMuLTvzeugN6VtRtaw1MH7qdF5DfmBc9oU
+	 bAs9t7D6lxPsGscQjHEGV3mFFcyXFAFeUPoZvH0LNFovn2kj8aShJWGv4x3VK2oDad
+	 XrICM+cXP0NCPQ3LtE5FkcbSQNG2BUpT2iPNf7xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sinadin Shan <sinadin.shan@oracle.com>,
-	Yifei Liu <yifei.l.liu@oracle.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Shuah Khan <skhan@linuxfoundation.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 181/350] selftests: breakpoints: use remaining time to check if suspend succeed
-Date: Wed,  6 Nov 2024 13:01:49 +0100
-Message-ID: <20241106120325.410352421@linuxfoundation.org>
+Subject: [PATCH 4.19 182/350] selftests: vDSO: fix vDSO symbols lookup for powerpc64
+Date: Wed,  6 Nov 2024 13:01:50 +0100
+Message-ID: <20241106120325.438309817@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,84 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifei Liu <yifei.l.liu@oracle.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit c66be905cda24fb782b91053b196bd2e966f95b7 ]
+[ Upstream commit ba83b3239e657469709d15dcea5f9b65bf9dbf34 ]
 
-step_after_suspend_test fails with device busy error while
-writing to /sys/power/state to start suspend. The test believes
-it failed to enter suspend state with
+On powerpc64, following tests fail locating vDSO functions:
 
-$ sudo ./step_after_suspend_test
-TAP version 13
-Bail out! Failed to enter Suspend state
+  ~ # ./vdso_test_abi
+  TAP version 13
+  1..16
+  # [vDSO kselftest] VDSO_VERSION: LINUX_2.6.15
+  # Couldn't find __kernel_gettimeofday
+  ok 1 # SKIP __kernel_gettimeofday
+  # clock_id: CLOCK_REALTIME
+  # Couldn't find __kernel_clock_gettime
+  ok 2 # SKIP __kernel_clock_gettime CLOCK_REALTIME
+  # Couldn't find __kernel_clock_getres
+  ok 3 # SKIP __kernel_clock_getres CLOCK_REALTIME
+  ...
+  # Couldn't find __kernel_time
+  ok 16 # SKIP __kernel_time
+  # Totals: pass:0 fail:0 xfail:0 xpass:0 skip:16 error:0
 
-However, in the kernel message, I indeed see the system get
-suspended and then wake up later.
+  ~ # ./vdso_test_getrandom
+  __kernel_getrandom is missing!
 
-[611172.033108] PM: suspend entry (s2idle)
-[611172.044940] Filesystems sync: 0.006 seconds
-[611172.052254] Freezing user space processes
-[611172.059319] Freezing user space processes completed (elapsed 0.001 seconds)
-[611172.067920] OOM killer disabled.
-[611172.072465] Freezing remaining freezable tasks
-[611172.080332] Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
-[611172.089724] printk: Suspending console(s) (use no_console_suspend to debug)
-[611172.117126] serial 00:03: disabled
-some other hardware get reconnected
-[611203.136277] OOM killer enabled.
-[611203.140637] Restarting tasks ...
-[611203.141135] usb 1-8.1: USB disconnect, device number 7
-[611203.141755] done.
-[611203.155268] random: crng reseeded on system resumption
-[611203.162059] PM: suspend exit
+  ~ # ./vdso_test_gettimeofday
+  Could not find __kernel_gettimeofday
 
-After investigation, I noticed that for the code block
-if (write(power_state_fd, "mem", strlen("mem")) != strlen("mem"))
-	ksft_exit_fail_msg("Failed to enter Suspend state\n");
+  ~ # ./vdso_test_getcpu
+  Could not find __kernel_getcpu
 
-The write will return -1 and errno is set to 16 (device busy).
-It should be caused by the write function is not successfully returned
-before the system suspend and the return value get messed when waking up.
-As a result, It may be better to check the time passed of those few
-instructions to determine whether the suspend is executed correctly for
-it is pretty hard to execute those few lines for 5 seconds.
+On powerpc64, as shown below by readelf, vDSO functions symbols have
+type NOTYPE, so also accept that type when looking for symbols.
 
-The timer to wake up the system is set to expire after 5 seconds and
-no re-arm. If the timer remaining time is 0 second and 0 nano secomd,
-it means the timer expired and wake the system up. Otherwise, the system
-could be considered to enter the suspend state failed if there is any
-remaining time.
+$ powerpc64-linux-gnu-readelf -a arch/powerpc/kernel/vdso/vdso64.so.dbg
+ELF Header:
+  Magic:   7f 45 4c 46 02 02 01 00 00 00 00 00 00 00 00 00
+  Class:                             ELF64
+  Data:                              2's complement, big endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              DYN (Shared object file)
+  Machine:                           PowerPC64
+  Version:                           0x1
+...
 
-After appling this patch, the test would not fail for it believes the
-system does not go to suspend by mistake. It now could continue to the
-rest part of the test after suspend.
+Symbol table '.dynsym' contains 12 entries:
+   Num:    Value          Size Type    Bind   Vis      Ndx Name
+     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND
+     1: 0000000000000524    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     2: 00000000000005f0    36 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     3: 0000000000000578    68 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     4: 0000000000000000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.15
+     5: 00000000000006c0    48 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     6: 0000000000000614   172 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     7: 00000000000006f0    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     8: 000000000000047c    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+     9: 0000000000000454    12 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+    10: 00000000000004d0    84 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
+    11: 00000000000005bc    52 NOTYPE  GLOBAL DEFAULT    8 __[...]@@LINUX_2.6.15
 
-Fixes: bfd092b8c272 ("selftests: breakpoint: add step_after_suspend_test")
-Reported-by: Sinadin Shan <sinadin.shan@oracle.com>
-Signed-off-by: Yifei Liu <yifei.l.liu@oracle.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Symbol table '.symtab' contains 56 entries:
+   Num:    Value          Size Type    Bind   Vis      Ndx Name
+...
+    45: 0000000000000000     0 OBJECT  GLOBAL DEFAULT  ABS LINUX_2.6.15
+    46: 00000000000006c0    48 NOTYPE  GLOBAL DEFAULT    8 __kernel_getcpu
+    47: 0000000000000524    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_clock_getres
+    48: 00000000000005f0    36 NOTYPE  GLOBAL DEFAULT    8 __kernel_get_tbfreq
+    49: 000000000000047c    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_gettimeofday
+    50: 0000000000000614   172 NOTYPE  GLOBAL DEFAULT    8 __kernel_sync_dicache
+    51: 00000000000006f0    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_getrandom
+    52: 0000000000000454    12 NOTYPE  GLOBAL DEFAULT    8 __kernel_sigtram[...]
+    53: 0000000000000578    68 NOTYPE  GLOBAL DEFAULT    8 __kernel_time
+    54: 00000000000004d0    84 NOTYPE  GLOBAL DEFAULT    8 __kernel_clock_g[...]
+    55: 00000000000005bc    52 NOTYPE  GLOBAL DEFAULT    8 __kernel_get_sys[...]
+
+Fixes: 98eedc3a9dbf ("Document the vDSO and add a reference parser")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/breakpoints/step_after_suspend_test.c  | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/testing/selftests/vDSO/parse_vdso.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/breakpoints/step_after_suspend_test.c b/tools/testing/selftests/breakpoints/step_after_suspend_test.c
-index f82dcc1f8841e..67a2aaf1f9d94 100644
---- a/tools/testing/selftests/breakpoints/step_after_suspend_test.c
-+++ b/tools/testing/selftests/breakpoints/step_after_suspend_test.c
-@@ -161,7 +161,10 @@ void suspend(void)
- 	if (err < 0)
- 		ksft_exit_fail_msg("timerfd_settime() failed\n");
+diff --git a/tools/testing/selftests/vDSO/parse_vdso.c b/tools/testing/selftests/vDSO/parse_vdso.c
+index 9ef3ad3789c17..540f9a284e9f0 100644
+--- a/tools/testing/selftests/vDSO/parse_vdso.c
++++ b/tools/testing/selftests/vDSO/parse_vdso.c
+@@ -238,7 +238,8 @@ void *vdso_sym(const char *version, const char *name)
+ 		ELF(Sym) *sym = &vdso_info.symtab[chain];
  
--	if (write(power_state_fd, "mem", strlen("mem")) != strlen("mem"))
-+	system("(echo mem > /sys/power/state) 2> /dev/null");
-+
-+	timerfd_gettime(timerfd, &spec);
-+	if (spec.it_value.tv_sec != 0 || spec.it_value.tv_nsec != 0)
- 		ksft_exit_fail_msg("Failed to enter Suspend state\n");
- 
- 	close(timerfd);
+ 		/* Check for a defined global or weak function w/ right name. */
+-		if (ELF64_ST_TYPE(sym->st_info) != STT_FUNC)
++		if (ELF64_ST_TYPE(sym->st_info) != STT_FUNC &&
++		    ELF64_ST_TYPE(sym->st_info) != STT_NOTYPE)
+ 			continue;
+ 		if (ELF64_ST_BIND(sym->st_info) != STB_GLOBAL &&
+ 		    ELF64_ST_BIND(sym->st_info) != STB_WEAK)
 -- 
 2.43.0
 
