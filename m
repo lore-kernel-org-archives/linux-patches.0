@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127D71E0E19;
-	Wed,  6 Nov 2024 13:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5131E00AF;
+	Wed,  6 Nov 2024 13:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898201; cv=none; b=kbZ9A5s6ovPBnGYHjqvhFlJeORjm0/jHW/FFQ9bG9TknqWHES5pSN8GbMFFcPP7A/5EC21hzyJ7VQuam85FQxnh8+TAGT+oM8gfm7W6TvadNCmr5mxO5ODMW3GqCjn4FmKR4eH1T6ao+NC0am5ZG9xgGl3qLOfwm6fz2LeliIOs=
+	t=1730898204; cv=none; b=jsiqtNgreRFtYXHeyFXBOMtmPy1ea477VI124jPzozXb9eCZAVqdj4TBMpw+xpuvRgDBGRLvog/3jQ0gpHxkJ5Hmjj9cKr9WkxPEVVI8VXX89f2bzZ5MusY++fMn9jTlHKS76NQdNbIsdVElpLkU40DiRVXAKOFYhkq+y8xP3b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898201; c=relaxed/simple;
-	bh=fv0ULXOghuFMb4yM0Pb8b95L2ww2eDCfpjjwmvrTmuc=;
+	s=arc-20240116; t=1730898204; c=relaxed/simple;
+	bh=fu17rlq8vUruVMbYd/KOd40bN/tuoJ4J7GTJtKE/cHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDsp8ZaHCJ4IA32Le2eTQZb2T2Tid4Z+T2dbVLstLwx/EQ6Z8rvvY0ZJYOY7CREYM4HHnEOJ2olbsLHT53pv4VA6Nz9e+z2boQyLvJC0C+FiKbABcFUm6D1WDtwAWqGXzfiQdcf2+ii5O+LMop3TJL76hP5N2T8p/RONgQ/gJhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjSHfuhO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R+i1LGpLuyWZKOmPciRAVr5ytthS7XuOjMowRm4lVEVq/0rzecfKvdMHHU2CcJh9RBPJYGGc+OPoZ+RXA8E/7bnCN/hQ3GnOdEKdmxstjJae3DZJXhNRGKx1BkbNOW41HZr6hSs1x8eed+av5E4CBPdaeCY2N1B9fMw0nVqh0CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxUtCnBp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjSHfuhO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA2DC4CECD;
-	Wed,  6 Nov 2024 13:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxUtCnBp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799C2C4CED3;
+	Wed,  6 Nov 2024 13:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898200;
-	bh=fv0ULXOghuFMb4yM0Pb8b95L2ww2eDCfpjjwmvrTmuc=;
+	s=korg; t=1730898203;
+	bh=fu17rlq8vUruVMbYd/KOd40bN/tuoJ4J7GTJtKE/cHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gjSHfuhOSoqFeYvD3+UYh8th8IOGaF7kG/nzn+e7kyFkr0kBXHI7PrBm+e00vHivr
-	 ZCDKbFqa5wbMtrUKy7RgS8VVDO+GNKO07rZdHyhveYdGTOJGOK3nyTWPEn/UokQsgO
-	 guR1/N1FlLzEO4CGQ/rz4+5LAxcXLnx4eyEtyP08=
+	b=WxUtCnBpYsePNeoXrHTxPo3Hx4BAqgQAQH42I3gjm7Vvj1lxhdSijrOnK6qMaMcOH
+	 qSWhJAS9TgGlY/GZV/ORh4VsGps6pbKNdSRJObqChdBUDFmJVuONy/jAiaOpM+hST9
+	 m/HkHQqbtvBhpKwPhMtaQSqmGOW5RqwUqCjio0Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Stable@vger.kernel.org,
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
 	Jerome Brunet <jbrunet@baylibre.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 159/462] ASoC: meson: axg: extract sound card utils
-Date: Wed,  6 Nov 2024 13:00:52 +0100
-Message-ID: <20241106120335.450181670@linuxfoundation.org>
+Subject: [PATCH 5.4 160/462] ASoC: meson: axg-card: fix use-after-free
+Date: Wed,  6 Nov 2024 13:00:53 +0100
+Message-ID: <20241106120335.474442996@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,1046 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-[ Upstream commit aa9c3b7273a58b5d9b2c1161b76b5fc8ea8c159b ]
+[ Upstream commit 4f9a71435953f941969a4f017e2357db62d85a86 ]
 
-This prepares the addition of the GX SoC family sound card driver.
-The GX sound card, while slightly different, will be similar to the
-AXG one. The purpose of this change is to share the utils common to
-both sound card driver.
+Buffer 'card->dai_link' is reallocated in 'meson_card_reallocate_links()',
+so move 'pad' pointer initialization after this function when memory is
+already reallocated.
 
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://lore.kernel.org/r/20200213155159.3235792-8-jbrunet@baylibre.com
+Kasan bug report:
+
+==================================================================
+BUG: KASAN: slab-use-after-free in axg_card_add_link+0x76c/0x9bc
+Read of size 8 at addr ffff000000e8b260 by task modprobe/356
+
+CPU: 0 PID: 356 Comm: modprobe Tainted: G O 6.9.12-sdkernel #1
+Call trace:
+ dump_backtrace+0x94/0xec
+ show_stack+0x18/0x24
+ dump_stack_lvl+0x78/0x90
+ print_report+0xfc/0x5c0
+ kasan_report+0xb8/0xfc
+ __asan_load8+0x9c/0xb8
+ axg_card_add_link+0x76c/0x9bc [snd_soc_meson_axg_sound_card]
+ meson_card_probe+0x344/0x3b8 [snd_soc_meson_card_utils]
+ platform_probe+0x8c/0xf4
+ really_probe+0x110/0x39c
+ __driver_probe_device+0xb8/0x18c
+ driver_probe_device+0x108/0x1d8
+ __driver_attach+0xd0/0x25c
+ bus_for_each_dev+0xe0/0x154
+ driver_attach+0x34/0x44
+ bus_add_driver+0x134/0x294
+ driver_register+0xa8/0x1e8
+ __platform_driver_register+0x44/0x54
+ axg_card_pdrv_init+0x20/0x1000 [snd_soc_meson_axg_sound_card]
+ do_one_initcall+0xdc/0x25c
+ do_init_module+0x10c/0x334
+ load_module+0x24c4/0x26cc
+ init_module_from_file+0xd4/0x128
+ __arm64_sys_finit_module+0x1f4/0x41c
+ invoke_syscall+0x60/0x188
+ el0_svc_common.constprop.0+0x78/0x13c
+ do_el0_svc+0x30/0x40
+ el0_svc+0x38/0x78
+ el0t_64_sync_handler+0x100/0x12c
+ el0t_64_sync+0x190/0x194
+
+Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://patch.msgid.link/20240911142425.598631-1-avkrasnov@salutedevices.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 4f9a71435953 ("ASoC: meson: axg-card: fix 'use-after-free'")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/Kconfig            |   4 +
- sound/soc/meson/Makefile           |   2 +
- sound/soc/meson/axg-card.c         | 403 ++---------------------------
- sound/soc/meson/meson-card-utils.c | 385 +++++++++++++++++++++++++++
- sound/soc/meson/meson-card.h       |  55 ++++
- 5 files changed, 473 insertions(+), 376 deletions(-)
- create mode 100644 sound/soc/meson/meson-card-utils.c
- create mode 100644 sound/soc/meson/meson-card.h
+ sound/soc/meson/axg-card.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/meson/Kconfig b/sound/soc/meson/Kconfig
-index f9188274f6b0f..ce15de42945b5 100644
---- a/sound/soc/meson/Kconfig
-+++ b/sound/soc/meson/Kconfig
-@@ -50,6 +50,7 @@ config SND_MESON_AXG_TDMOUT
- config SND_MESON_AXG_SOUND_CARD
- 	tristate "Amlogic AXG Sound Card Support"
- 	select SND_MESON_AXG_TDM_INTERFACE
-+	select SND_MESON_CARD_UTILS
- 	imply SND_MESON_AXG_FRDDR
- 	imply SND_MESON_AXG_TODDR
- 	imply SND_MESON_AXG_TDMIN
-@@ -85,6 +86,9 @@ config SND_MESON_AXG_PDM
- 	  Select Y or M to add support for PDM input embedded
- 	  in the Amlogic AXG SoC family
- 
-+config SND_MESON_CARD_UTILS
-+       tristate
-+
- config SND_MESON_CODEC_GLUE
- 	tristate
- 
-diff --git a/sound/soc/meson/Makefile b/sound/soc/meson/Makefile
-index 529a807b3f376..6e248260617fe 100644
---- a/sound/soc/meson/Makefile
-+++ b/sound/soc/meson/Makefile
-@@ -11,6 +11,7 @@ snd-soc-meson-axg-sound-card-objs := axg-card.o
- snd-soc-meson-axg-spdifin-objs := axg-spdifin.o
- snd-soc-meson-axg-spdifout-objs := axg-spdifout.o
- snd-soc-meson-axg-pdm-objs := axg-pdm.o
-+snd-soc-meson-card-utils-objs := meson-card-utils.o
- snd-soc-meson-codec-glue-objs := meson-codec-glue.o
- snd-soc-meson-g12a-tohdmitx-objs := g12a-tohdmitx.o
- 
-@@ -25,5 +26,6 @@ obj-$(CONFIG_SND_MESON_AXG_SOUND_CARD) += snd-soc-meson-axg-sound-card.o
- obj-$(CONFIG_SND_MESON_AXG_SPDIFIN) += snd-soc-meson-axg-spdifin.o
- obj-$(CONFIG_SND_MESON_AXG_SPDIFOUT) += snd-soc-meson-axg-spdifout.o
- obj-$(CONFIG_SND_MESON_AXG_PDM) += snd-soc-meson-axg-pdm.o
-+obj-$(CONFIG_SND_MESON_CARD_UTILS) += snd-soc-meson-card-utils.o
- obj-$(CONFIG_SND_MESON_CODEC_GLUE) += snd-soc-meson-codec-glue.o
- obj-$(CONFIG_SND_MESON_G12A_TOHDMITX) += snd-soc-meson-g12a-tohdmitx.o
 diff --git a/sound/soc/meson/axg-card.c b/sound/soc/meson/axg-card.c
-index 7126344017fa6..6bb3a8f0a788d 100644
+index 6bb3a8f0a788d..a369c18531876 100644
 --- a/sound/soc/meson/axg-card.c
 +++ b/sound/soc/meson/axg-card.c
-@@ -9,11 +9,7 @@
- #include <sound/soc-dai.h>
- 
- #include "axg-tdm.h"
--
--struct axg_card {
--	struct snd_soc_card card;
--	void **link_data;
--};
-+#include "meson-card.h"
- 
- struct axg_dai_link_tdm_mask {
- 	u32 tx;
-@@ -41,161 +37,15 @@ static const struct snd_soc_pcm_stream codec_params = {
- 	.channels_max = 8,
- };
- 
--#define PREFIX "amlogic,"
--
--static int axg_card_reallocate_links(struct axg_card *priv,
--				     unsigned int num_links)
--{
--	struct snd_soc_dai_link *links;
--	void **ldata;
--
--	links = krealloc(priv->card.dai_link,
--			 num_links * sizeof(*priv->card.dai_link),
--			 GFP_KERNEL | __GFP_ZERO);
--	ldata = krealloc(priv->link_data,
--			 num_links * sizeof(*priv->link_data),
--			 GFP_KERNEL | __GFP_ZERO);
--
--	if (!links || !ldata) {
--		dev_err(priv->card.dev, "failed to allocate links\n");
--		return -ENOMEM;
--	}
--
--	priv->card.dai_link = links;
--	priv->link_data = ldata;
--	priv->card.num_links = num_links;
--	return 0;
--}
--
--static int axg_card_parse_dai(struct snd_soc_card *card,
--			      struct device_node *node,
--			      struct device_node **dai_of_node,
--			      const char **dai_name)
--{
--	struct of_phandle_args args;
--	int ret;
--
--	if (!dai_name || !dai_of_node || !node)
--		return -EINVAL;
--
--	ret = of_parse_phandle_with_args(node, "sound-dai",
--					 "#sound-dai-cells", 0, &args);
--	if (ret) {
--		if (ret != -EPROBE_DEFER)
--			dev_err(card->dev, "can't parse dai %d\n", ret);
--		return ret;
--	}
--	*dai_of_node = args.np;
--
--	return snd_soc_get_dai_name(&args, dai_name);
--}
--
--static int axg_card_set_link_name(struct snd_soc_card *card,
--				  struct snd_soc_dai_link *link,
--				  struct device_node *node,
--				  const char *prefix)
--{
--	char *name = devm_kasprintf(card->dev, GFP_KERNEL, "%s.%s",
--				    prefix, node->full_name);
--	if (!name)
--		return -ENOMEM;
--
--	link->name = name;
--	link->stream_name = name;
--
--	return 0;
--}
--
--static void axg_card_clean_references(struct axg_card *priv)
--{
--	struct snd_soc_card *card = &priv->card;
--	struct snd_soc_dai_link *link;
--	struct snd_soc_dai_link_component *codec;
--	struct snd_soc_aux_dev *aux;
--	int i, j;
--
--	if (card->dai_link) {
--		for_each_card_prelinks(card, i, link) {
--			if (link->cpus)
--				of_node_put(link->cpus->of_node);
--			for_each_link_codecs(link, j, codec)
--				of_node_put(codec->of_node);
--		}
--	}
--
--	if (card->aux_dev) {
--		for_each_card_pre_auxs(card, i, aux)
--			of_node_put(aux->dlc.of_node);
--	}
--
--	kfree(card->dai_link);
--	kfree(priv->link_data);
--}
--
--static int axg_card_add_aux_devices(struct snd_soc_card *card)
--{
--	struct device_node *node = card->dev->of_node;
--	struct snd_soc_aux_dev *aux;
--	int num, i;
--
--	num = of_count_phandle_with_args(node, "audio-aux-devs", NULL);
--	if (num == -ENOENT) {
--		/*
--		 * It is ok to have no auxiliary devices but for this card it
--		 * is a strange situtation. Let's warn the about it.
--		 */
--		dev_warn(card->dev, "card has no auxiliary devices\n");
--		return 0;
--	} else if (num < 0) {
--		dev_err(card->dev, "error getting auxiliary devices: %d\n",
--			num);
--		return num;
--	}
--
--	aux = devm_kcalloc(card->dev, num, sizeof(*aux), GFP_KERNEL);
--	if (!aux)
--		return -ENOMEM;
--	card->aux_dev = aux;
--	card->num_aux_devs = num;
--
--	for_each_card_pre_auxs(card, i, aux) {
--		aux->dlc.of_node =
--			of_parse_phandle(node, "audio-aux-devs", i);
--		if (!aux->dlc.of_node)
--			return -EINVAL;
--	}
--
--	return 0;
--}
--
- static int axg_card_tdm_be_hw_params(struct snd_pcm_substream *substream,
- 				     struct snd_pcm_hw_params *params)
- {
- 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
--	struct axg_card *priv = snd_soc_card_get_drvdata(rtd->card);
-+	struct meson_card *priv = snd_soc_card_get_drvdata(rtd->card);
- 	struct axg_dai_link_tdm_data *be =
- 		(struct axg_dai_link_tdm_data *)priv->link_data[rtd->num];
--	struct snd_soc_dai *codec_dai;
--	unsigned int mclk;
--	int ret, i;
--
--	if (be->mclk_fs) {
--		mclk = params_rate(params) * be->mclk_fs;
--
--		for_each_rtd_codec_dai(rtd, i, codec_dai) {
--			ret = snd_soc_dai_set_sysclk(codec_dai, 0, mclk,
--						     SND_SOC_CLOCK_IN);
--			if (ret && ret != -ENOTSUPP)
--				return ret;
--		}
--
--		ret = snd_soc_dai_set_sysclk(rtd->cpu_dai, 0, mclk,
--					     SND_SOC_CLOCK_OUT);
--		if (ret && ret != -ENOTSUPP)
--			return ret;
--	}
- 
--	return 0;
-+	return meson_card_i2s_set_sysclk(substream, params, be->mclk_fs);
- }
- 
- static const struct snd_soc_ops axg_card_tdm_be_ops = {
-@@ -204,7 +54,7 @@ static const struct snd_soc_ops axg_card_tdm_be_ops = {
- 
- static int axg_card_tdm_dai_init(struct snd_soc_pcm_runtime *rtd)
- {
--	struct axg_card *priv = snd_soc_card_get_drvdata(rtd->card);
-+	struct meson_card *priv = snd_soc_card_get_drvdata(rtd->card);
- 	struct axg_dai_link_tdm_data *be =
- 		(struct axg_dai_link_tdm_data *)priv->link_data[rtd->num];
- 	struct snd_soc_dai *codec_dai;
-@@ -234,7 +84,7 @@ static int axg_card_tdm_dai_init(struct snd_soc_pcm_runtime *rtd)
- 
- static int axg_card_tdm_dai_lb_init(struct snd_soc_pcm_runtime *rtd)
- {
--	struct axg_card *priv = snd_soc_card_get_drvdata(rtd->card);
-+	struct meson_card *priv = snd_soc_card_get_drvdata(rtd->card);
- 	struct axg_dai_link_tdm_data *be =
- 		(struct axg_dai_link_tdm_data *)priv->link_data[rtd->num];
- 	int ret;
-@@ -253,14 +103,14 @@ static int axg_card_tdm_dai_lb_init(struct snd_soc_pcm_runtime *rtd)
- static int axg_card_add_tdm_loopback(struct snd_soc_card *card,
+@@ -104,7 +104,7 @@ static int axg_card_add_tdm_loopback(struct snd_soc_card *card,
  				     int *index)
  {
--	struct axg_card *priv = snd_soc_card_get_drvdata(card);
-+	struct meson_card *priv = snd_soc_card_get_drvdata(card);
- 	struct snd_soc_dai_link *pad = &card->dai_link[*index];
+ 	struct meson_card *priv = snd_soc_card_get_drvdata(card);
+-	struct snd_soc_dai_link *pad = &card->dai_link[*index];
++	struct snd_soc_dai_link *pad;
  	struct snd_soc_dai_link *lb;
  	struct snd_soc_dai_link_component *dlc;
  	int ret;
- 
- 	/* extend links */
--	ret = axg_card_reallocate_links(priv, card->num_links + 1);
-+	ret = meson_card_reallocate_links(card, card->num_links + 1);
+@@ -114,6 +114,7 @@ static int axg_card_add_tdm_loopback(struct snd_soc_card *card,
  	if (ret)
  		return ret;
  
-@@ -304,32 +154,6 @@ static int axg_card_add_tdm_loopback(struct snd_soc_card *card,
- 	return 0;
- }
++	pad = &card->dai_link[*index];
+ 	lb = &card->dai_link[*index + 1];
  
--static unsigned int axg_card_parse_daifmt(struct device_node *node,
--					  struct device_node *cpu_node)
--{
--	struct device_node *bitclkmaster = NULL;
--	struct device_node *framemaster = NULL;
--	unsigned int daifmt;
--
--	daifmt = snd_soc_of_parse_daifmt(node, PREFIX,
--					 &bitclkmaster, &framemaster);
--	daifmt &= ~SND_SOC_DAIFMT_MASTER_MASK;
--
--	/* If no master is provided, default to cpu master */
--	if (!bitclkmaster || bitclkmaster == cpu_node) {
--		daifmt |= (!framemaster || framemaster == cpu_node) ?
--			SND_SOC_DAIFMT_CBS_CFS : SND_SOC_DAIFMT_CBS_CFM;
--	} else {
--		daifmt |= (!framemaster || framemaster == cpu_node) ?
--			SND_SOC_DAIFMT_CBM_CFS : SND_SOC_DAIFMT_CBM_CFM;
--	}
--
--	of_node_put(bitclkmaster);
--	of_node_put(framemaster);
--
--	return daifmt;
--}
--
- static int axg_card_parse_cpu_tdm_slots(struct snd_soc_card *card,
- 					struct snd_soc_dai_link *link,
- 					struct device_node *node,
-@@ -424,7 +248,7 @@ static int axg_card_parse_tdm(struct snd_soc_card *card,
- 			      struct device_node *node,
- 			      int *index)
- {
--	struct axg_card *priv = snd_soc_card_get_drvdata(card);
-+	struct meson_card *priv = snd_soc_card_get_drvdata(card);
- 	struct snd_soc_dai_link *link = &card->dai_link[*index];
- 	struct axg_dai_link_tdm_data *be;
- 	int ret;
-@@ -438,7 +262,7 @@ static int axg_card_parse_tdm(struct snd_soc_card *card,
- 	/* Setup tdm link */
- 	link->ops = &axg_card_tdm_be_ops;
- 	link->init = axg_card_tdm_dai_init;
--	link->dai_fmt = axg_card_parse_daifmt(node, link->cpus->of_node);
-+	link->dai_fmt = meson_card_parse_daifmt(node, link->cpus->of_node);
- 
- 	of_property_read_u32(node, "mclk-fs", &be->mclk_fs);
- 
-@@ -462,97 +286,24 @@ static int axg_card_parse_tdm(struct snd_soc_card *card,
- 	return 0;
- }
- 
--static int axg_card_set_be_link(struct snd_soc_card *card,
--				struct snd_soc_dai_link *link,
--				struct device_node *node)
--{
--	struct snd_soc_dai_link_component *codec;
--	struct device_node *np;
--	int ret, num_codecs;
--
--	link->no_pcm = 1;
--	link->dpcm_playback = 1;
--	link->dpcm_capture = 1;
--
--	num_codecs = of_get_child_count(node);
--	if (!num_codecs) {
--		dev_err(card->dev, "be link %s has no codec\n",
--			node->full_name);
--		return -EINVAL;
--	}
--
--	codec = devm_kcalloc(card->dev, num_codecs, sizeof(*codec), GFP_KERNEL);
--	if (!codec)
--		return -ENOMEM;
--
--	link->codecs = codec;
--	link->num_codecs = num_codecs;
--
--	for_each_child_of_node(node, np) {
--		ret = axg_card_parse_dai(card, np, &codec->of_node,
--					 &codec->dai_name);
--		if (ret) {
--			of_node_put(np);
--			return ret;
--		}
--
--		codec++;
--	}
--
--	ret = axg_card_set_link_name(card, link, node, "be");
--	if (ret)
--		dev_err(card->dev, "error setting %pOFn link name\n", np);
--
--	return ret;
--}
--
--static int axg_card_set_fe_link(struct snd_soc_card *card,
--				struct snd_soc_dai_link *link,
--				struct device_node *node,
--				bool is_playback)
--{
--	struct snd_soc_dai_link_component *codec;
--
--	codec = devm_kzalloc(card->dev, sizeof(*codec), GFP_KERNEL);
--	if (!codec)
--		return -ENOMEM;
--
--	link->codecs = codec;
--	link->num_codecs = 1;
--
--	link->dynamic = 1;
--	link->dpcm_merged_format = 1;
--	link->dpcm_merged_chan = 1;
--	link->dpcm_merged_rate = 1;
--	link->codecs->dai_name = "snd-soc-dummy-dai";
--	link->codecs->name = "snd-soc-dummy";
--
--	if (is_playback)
--		link->dpcm_playback = 1;
--	else
--		link->dpcm_capture = 1;
--
--	return axg_card_set_link_name(card, link, node, "fe");
--}
--
- static int axg_card_cpu_is_capture_fe(struct device_node *np)
- {
--	return of_device_is_compatible(np, PREFIX "axg-toddr");
-+	return of_device_is_compatible(np, DT_PREFIX "axg-toddr");
- }
- 
- static int axg_card_cpu_is_playback_fe(struct device_node *np)
- {
--	return of_device_is_compatible(np, PREFIX "axg-frddr");
-+	return of_device_is_compatible(np, DT_PREFIX "axg-frddr");
- }
- 
- static int axg_card_cpu_is_tdm_iface(struct device_node *np)
- {
--	return of_device_is_compatible(np, PREFIX "axg-tdm-iface");
-+	return of_device_is_compatible(np, DT_PREFIX "axg-tdm-iface");
- }
- 
- static int axg_card_cpu_is_codec(struct device_node *np)
- {
--	return of_device_is_compatible(np, PREFIX "g12a-tohdmitx");
-+	return of_device_is_compatible(np, DT_PREFIX "g12a-tohdmitx");
- }
- 
- static int axg_card_add_link(struct snd_soc_card *card, struct device_node *np,
-@@ -569,17 +320,17 @@ static int axg_card_add_link(struct snd_soc_card *card, struct device_node *np,
- 	dai_link->cpus = cpu;
- 	dai_link->num_cpus = 1;
- 
--	ret = axg_card_parse_dai(card, np, &dai_link->cpus->of_node,
--				 &dai_link->cpus->dai_name);
-+	ret = meson_card_parse_dai(card, np, &dai_link->cpus->of_node,
-+				   &dai_link->cpus->dai_name);
- 	if (ret)
- 		return ret;
- 
- 	if (axg_card_cpu_is_playback_fe(dai_link->cpus->of_node))
--		ret = axg_card_set_fe_link(card, dai_link, np, true);
-+		ret = meson_card_set_fe_link(card, dai_link, np, true);
- 	else if (axg_card_cpu_is_capture_fe(dai_link->cpus->of_node))
--		ret = axg_card_set_fe_link(card, dai_link, np, false);
-+		ret = meson_card_set_fe_link(card, dai_link, np, false);
- 	else
--		ret = axg_card_set_be_link(card, dai_link, np);
-+		ret = meson_card_set_be_link(card, dai_link, np);
- 
- 	if (ret)
- 		return ret;
-@@ -592,121 +343,21 @@ static int axg_card_add_link(struct snd_soc_card *card, struct device_node *np,
- 	return ret;
- }
- 
--static int axg_card_add_links(struct snd_soc_card *card)
--{
--	struct axg_card *priv = snd_soc_card_get_drvdata(card);
--	struct device_node *node = card->dev->of_node;
--	struct device_node *np;
--	int num, i, ret;
--
--	num = of_get_child_count(node);
--	if (!num) {
--		dev_err(card->dev, "card has no links\n");
--		return -EINVAL;
--	}
--
--	ret = axg_card_reallocate_links(priv, num);
--	if (ret)
--		return ret;
--
--	i = 0;
--	for_each_child_of_node(node, np) {
--		ret = axg_card_add_link(card, np, &i);
--		if (ret) {
--			of_node_put(np);
--			return ret;
--		}
--
--		i++;
--	}
--
--	return 0;
--}
--
--static int axg_card_parse_of_optional(struct snd_soc_card *card,
--				      const char *propname,
--				      int (*func)(struct snd_soc_card *c,
--						  const char *p))
--{
--	/* If property is not provided, don't fail ... */
--	if (!of_property_read_bool(card->dev->of_node, propname))
--		return 0;
--
--	/* ... but do fail if it is provided and the parsing fails */
--	return func(card, propname);
--}
-+static const struct meson_card_match_data axg_card_match_data = {
-+	.add_link = axg_card_add_link,
-+};
- 
- static const struct of_device_id axg_card_of_match[] = {
--	{ .compatible = "amlogic,axg-sound-card", },
--	{}
-+	{
-+		.compatible = "amlogic,axg-sound-card",
-+		.data = &axg_card_match_data,
-+	}, {}
- };
- MODULE_DEVICE_TABLE(of, axg_card_of_match);
- 
--static int axg_card_probe(struct platform_device *pdev)
--{
--	struct device *dev = &pdev->dev;
--	struct axg_card *priv;
--	int ret;
--
--	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
--	if (!priv)
--		return -ENOMEM;
--
--	platform_set_drvdata(pdev, priv);
--	snd_soc_card_set_drvdata(&priv->card, priv);
--
--	priv->card.owner = THIS_MODULE;
--	priv->card.dev = dev;
--
--	ret = snd_soc_of_parse_card_name(&priv->card, "model");
--	if (ret < 0)
--		return ret;
--
--	ret = axg_card_parse_of_optional(&priv->card, "audio-routing",
--					 snd_soc_of_parse_audio_routing);
--	if (ret) {
--		dev_err(dev, "error while parsing routing\n");
--		return ret;
--	}
--
--	ret = axg_card_parse_of_optional(&priv->card, "audio-widgets",
--					 snd_soc_of_parse_audio_simple_widgets);
--	if (ret) {
--		dev_err(dev, "error while parsing widgets\n");
--		return ret;
--	}
--
--	ret = axg_card_add_links(&priv->card);
--	if (ret)
--		goto out_err;
--
--	ret = axg_card_add_aux_devices(&priv->card);
--	if (ret)
--		goto out_err;
--
--	ret = devm_snd_soc_register_card(dev, &priv->card);
--	if (ret)
--		goto out_err;
--
--	return 0;
--
--out_err:
--	axg_card_clean_references(priv);
--	return ret;
--}
--
--static int axg_card_remove(struct platform_device *pdev)
--{
--	struct axg_card *priv = platform_get_drvdata(pdev);
--
--	axg_card_clean_references(priv);
--
--	return 0;
--}
--
- static struct platform_driver axg_card_pdrv = {
--	.probe = axg_card_probe,
--	.remove = axg_card_remove,
-+	.probe = meson_card_probe,
-+	.remove = meson_card_remove,
- 	.driver = {
- 		.name = "axg-sound-card",
- 		.of_match_table = axg_card_of_match,
-diff --git a/sound/soc/meson/meson-card-utils.c b/sound/soc/meson/meson-card-utils.c
-new file mode 100644
-index 0000000000000..a70d244ef88b6
---- /dev/null
-+++ b/sound/soc/meson/meson-card-utils.c
-@@ -0,0 +1,385 @@
-+// SPDX-License-Identifier: GPL-2.0
-+//
-+// Copyright (c) 2020 BayLibre, SAS.
-+// Author: Jerome Brunet <jbrunet@baylibre.com>
-+
-+#include <linux/module.h>
-+#include <linux/of_platform.h>
-+#include <sound/soc.h>
-+
-+#include "meson-card.h"
-+
-+int meson_card_i2s_set_sysclk(struct snd_pcm_substream *substream,
-+			      struct snd_pcm_hw_params *params,
-+			      unsigned int mclk_fs)
-+{
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *codec_dai;
-+	unsigned int mclk;
-+	int ret, i;
-+
-+	if (!mclk_fs)
-+		return 0;
-+
-+	mclk = params_rate(params) * mclk_fs;
-+
-+	for_each_rtd_codec_dai(rtd, i, codec_dai) {
-+		ret = snd_soc_dai_set_sysclk(codec_dai, 0, mclk,
-+					     SND_SOC_CLOCK_IN);
-+		if (ret && ret != -ENOTSUPP)
-+			return ret;
-+	}
-+
-+	ret = snd_soc_dai_set_sysclk(rtd->cpu_dai, 0, mclk,
-+				     SND_SOC_CLOCK_OUT);
-+	if (ret && ret != -ENOTSUPP)
-+		return ret;
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(meson_card_i2s_set_sysclk);
-+
-+int meson_card_reallocate_links(struct snd_soc_card *card,
-+				unsigned int num_links)
-+{
-+	struct meson_card *priv = snd_soc_card_get_drvdata(card);
-+	struct snd_soc_dai_link *links;
-+	void **ldata;
-+
-+	links = krealloc(priv->card.dai_link,
-+			 num_links * sizeof(*priv->card.dai_link),
-+			 GFP_KERNEL | __GFP_ZERO);
-+	ldata = krealloc(priv->link_data,
-+			 num_links * sizeof(*priv->link_data),
-+			 GFP_KERNEL | __GFP_ZERO);
-+
-+	if (!links || !ldata) {
-+		dev_err(priv->card.dev, "failed to allocate links\n");
-+		return -ENOMEM;
-+	}
-+
-+	priv->card.dai_link = links;
-+	priv->link_data = ldata;
-+	priv->card.num_links = num_links;
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(meson_card_reallocate_links);
-+
-+int meson_card_parse_dai(struct snd_soc_card *card,
-+			 struct device_node *node,
-+			 struct device_node **dai_of_node,
-+			 const char **dai_name)
-+{
-+	struct of_phandle_args args;
-+	int ret;
-+
-+	if (!dai_name || !dai_of_node || !node)
-+		return -EINVAL;
-+
-+	ret = of_parse_phandle_with_args(node, "sound-dai",
-+					 "#sound-dai-cells", 0, &args);
-+	if (ret) {
-+		if (ret != -EPROBE_DEFER)
-+			dev_err(card->dev, "can't parse dai %d\n", ret);
-+		return ret;
-+	}
-+	*dai_of_node = args.np;
-+
-+	return snd_soc_get_dai_name(&args, dai_name);
-+}
-+EXPORT_SYMBOL_GPL(meson_card_parse_dai);
-+
-+static int meson_card_set_link_name(struct snd_soc_card *card,
-+				    struct snd_soc_dai_link *link,
-+				    struct device_node *node,
-+				    const char *prefix)
-+{
-+	char *name = devm_kasprintf(card->dev, GFP_KERNEL, "%s.%s",
-+				    prefix, node->full_name);
-+	if (!name)
-+		return -ENOMEM;
-+
-+	link->name = name;
-+	link->stream_name = name;
-+
-+	return 0;
-+}
-+
-+unsigned int meson_card_parse_daifmt(struct device_node *node,
-+				     struct device_node *cpu_node)
-+{
-+	struct device_node *bitclkmaster = NULL;
-+	struct device_node *framemaster = NULL;
-+	unsigned int daifmt;
-+
-+	daifmt = snd_soc_of_parse_daifmt(node, DT_PREFIX,
-+					 &bitclkmaster, &framemaster);
-+	daifmt &= ~SND_SOC_DAIFMT_MASTER_MASK;
-+
-+	/* If no master is provided, default to cpu master */
-+	if (!bitclkmaster || bitclkmaster == cpu_node) {
-+		daifmt |= (!framemaster || framemaster == cpu_node) ?
-+			SND_SOC_DAIFMT_CBS_CFS : SND_SOC_DAIFMT_CBS_CFM;
-+	} else {
-+		daifmt |= (!framemaster || framemaster == cpu_node) ?
-+			SND_SOC_DAIFMT_CBM_CFS : SND_SOC_DAIFMT_CBM_CFM;
-+	}
-+
-+	of_node_put(bitclkmaster);
-+	of_node_put(framemaster);
-+
-+	return daifmt;
-+}
-+EXPORT_SYMBOL_GPL(meson_card_parse_daifmt);
-+
-+int meson_card_set_be_link(struct snd_soc_card *card,
-+			   struct snd_soc_dai_link *link,
-+			   struct device_node *node)
-+{
-+	struct snd_soc_dai_link_component *codec;
-+	struct device_node *np;
-+	int ret, num_codecs;
-+
-+	link->no_pcm = 1;
-+	link->dpcm_playback = 1;
-+	link->dpcm_capture = 1;
-+
-+	num_codecs = of_get_child_count(node);
-+	if (!num_codecs) {
-+		dev_err(card->dev, "be link %s has no codec\n",
-+			node->full_name);
-+		return -EINVAL;
-+	}
-+
-+	codec = devm_kcalloc(card->dev, num_codecs, sizeof(*codec), GFP_KERNEL);
-+	if (!codec)
-+		return -ENOMEM;
-+
-+	link->codecs = codec;
-+	link->num_codecs = num_codecs;
-+
-+	for_each_child_of_node(node, np) {
-+		ret = meson_card_parse_dai(card, np, &codec->of_node,
-+					   &codec->dai_name);
-+		if (ret) {
-+			of_node_put(np);
-+			return ret;
-+		}
-+
-+		codec++;
-+	}
-+
-+	ret = meson_card_set_link_name(card, link, node, "be");
-+	if (ret)
-+		dev_err(card->dev, "error setting %pOFn link name\n", np);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(meson_card_set_be_link);
-+
-+int meson_card_set_fe_link(struct snd_soc_card *card,
-+			   struct snd_soc_dai_link *link,
-+			   struct device_node *node,
-+			   bool is_playback)
-+{
-+	struct snd_soc_dai_link_component *codec;
-+
-+	codec = devm_kzalloc(card->dev, sizeof(*codec), GFP_KERNEL);
-+	if (!codec)
-+		return -ENOMEM;
-+
-+	link->codecs = codec;
-+	link->num_codecs = 1;
-+
-+	link->dynamic = 1;
-+	link->dpcm_merged_format = 1;
-+	link->dpcm_merged_chan = 1;
-+	link->dpcm_merged_rate = 1;
-+	link->codecs->dai_name = "snd-soc-dummy-dai";
-+	link->codecs->name = "snd-soc-dummy";
-+
-+	if (is_playback)
-+		link->dpcm_playback = 1;
-+	else
-+		link->dpcm_capture = 1;
-+
-+	return meson_card_set_link_name(card, link, node, "fe");
-+}
-+EXPORT_SYMBOL_GPL(meson_card_set_fe_link);
-+
-+static int meson_card_add_links(struct snd_soc_card *card)
-+{
-+	struct meson_card *priv = snd_soc_card_get_drvdata(card);
-+	struct device_node *node = card->dev->of_node;
-+	struct device_node *np;
-+	int num, i, ret;
-+
-+	num = of_get_child_count(node);
-+	if (!num) {
-+		dev_err(card->dev, "card has no links\n");
-+		return -EINVAL;
-+	}
-+
-+	ret = meson_card_reallocate_links(card, num);
-+	if (ret)
-+		return ret;
-+
-+	i = 0;
-+	for_each_child_of_node(node, np) {
-+		ret = priv->match_data->add_link(card, np, &i);
-+		if (ret) {
-+			of_node_put(np);
-+			return ret;
-+		}
-+
-+		i++;
-+	}
-+
-+	return 0;
-+}
-+
-+static int meson_card_parse_of_optional(struct snd_soc_card *card,
-+					const char *propname,
-+					int (*func)(struct snd_soc_card *c,
-+						    const char *p))
-+{
-+	/* If property is not provided, don't fail ... */
-+	if (!of_property_read_bool(card->dev->of_node, propname))
-+		return 0;
-+
-+	/* ... but do fail if it is provided and the parsing fails */
-+	return func(card, propname);
-+}
-+
-+static int meson_card_add_aux_devices(struct snd_soc_card *card)
-+{
-+	struct device_node *node = card->dev->of_node;
-+	struct snd_soc_aux_dev *aux;
-+	int num, i;
-+
-+	num = of_count_phandle_with_args(node, "audio-aux-devs", NULL);
-+	if (num == -ENOENT) {
-+		return 0;
-+	} else if (num < 0) {
-+		dev_err(card->dev, "error getting auxiliary devices: %d\n",
-+			num);
-+		return num;
-+	}
-+
-+	aux = devm_kcalloc(card->dev, num, sizeof(*aux), GFP_KERNEL);
-+	if (!aux)
-+		return -ENOMEM;
-+	card->aux_dev = aux;
-+	card->num_aux_devs = num;
-+
-+	for_each_card_pre_auxs(card, i, aux) {
-+		aux->dlc.of_node =
-+			of_parse_phandle(node, "audio-aux-devs", i);
-+		if (!aux->dlc.of_node)
-+			return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
-+static void meson_card_clean_references(struct meson_card *priv)
-+{
-+	struct snd_soc_card *card = &priv->card;
-+	struct snd_soc_dai_link *link;
-+	struct snd_soc_dai_link_component *codec;
-+	struct snd_soc_aux_dev *aux;
-+	int i, j;
-+
-+	if (card->dai_link) {
-+		for_each_card_prelinks(card, i, link) {
-+			if (link->cpus)
-+				of_node_put(link->cpus->of_node);
-+			for_each_link_codecs(link, j, codec)
-+				of_node_put(codec->of_node);
-+		}
-+	}
-+
-+	if (card->aux_dev) {
-+		for_each_card_pre_auxs(card, i, aux)
-+			of_node_put(aux->dlc.of_node);
-+	}
-+
-+	kfree(card->dai_link);
-+	kfree(priv->link_data);
-+}
-+
-+int meson_card_probe(struct platform_device *pdev)
-+{
-+	const struct meson_card_match_data *data;
-+	struct device *dev = &pdev->dev;
-+	struct meson_card *priv;
-+	int ret;
-+
-+	data = of_device_get_match_data(dev);
-+	if (!data) {
-+		dev_err(dev, "failed to match device\n");
-+		return -ENODEV;
-+	}
-+
-+	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	platform_set_drvdata(pdev, priv);
-+	snd_soc_card_set_drvdata(&priv->card, priv);
-+
-+	priv->card.owner = THIS_MODULE;
-+	priv->card.dev = dev;
-+	priv->match_data = data;
-+
-+	ret = snd_soc_of_parse_card_name(&priv->card, "model");
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = meson_card_parse_of_optional(&priv->card, "audio-routing",
-+					   snd_soc_of_parse_audio_routing);
-+	if (ret) {
-+		dev_err(dev, "error while parsing routing\n");
-+		return ret;
-+	}
-+
-+	ret = meson_card_parse_of_optional(&priv->card, "audio-widgets",
-+					   snd_soc_of_parse_audio_simple_widgets);
-+	if (ret) {
-+		dev_err(dev, "error while parsing widgets\n");
-+		return ret;
-+	}
-+
-+	ret = meson_card_add_links(&priv->card);
-+	if (ret)
-+		goto out_err;
-+
-+	ret = meson_card_add_aux_devices(&priv->card);
-+	if (ret)
-+		goto out_err;
-+
-+	ret = devm_snd_soc_register_card(dev, &priv->card);
-+	if (ret)
-+		goto out_err;
-+
-+	return 0;
-+
-+out_err:
-+	meson_card_clean_references(priv);
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(meson_card_probe);
-+
-+int meson_card_remove(struct platform_device *pdev)
-+{
-+	struct meson_card *priv = platform_get_drvdata(pdev);
-+
-+	meson_card_clean_references(priv);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(meson_card_remove);
-+
-+MODULE_DESCRIPTION("Amlogic Sound Card Utils");
-+MODULE_AUTHOR("Jerome Brunet <jbrunet@baylibre.com>");
-+MODULE_LICENSE("GPL v2");
-diff --git a/sound/soc/meson/meson-card.h b/sound/soc/meson/meson-card.h
-new file mode 100644
-index 0000000000000..74314071c80db
---- /dev/null
-+++ b/sound/soc/meson/meson-card.h
-@@ -0,0 +1,55 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (c) 2020 BayLibre, SAS.
-+ * Author: Jerome Brunet <jbrunet@baylibre.com>
-+ */
-+
-+#ifndef _MESON_SND_CARD_H
-+#define _MESON_SND_CARD_H
-+
-+struct device_node;
-+struct platform_device;
-+
-+struct snd_soc_card;
-+struct snd_pcm_substream;
-+struct snd_pcm_hw_params;
-+
-+#define DT_PREFIX "amlogic,"
-+
-+struct meson_card_match_data {
-+	int (*add_link)(struct snd_soc_card *card,
-+			struct device_node *node,
-+			int *index);
-+};
-+
-+struct meson_card {
-+	const struct meson_card_match_data *match_data;
-+	struct snd_soc_card card;
-+	void **link_data;
-+};
-+
-+unsigned int meson_card_parse_daifmt(struct device_node *node,
-+				     struct device_node *cpu_node);
-+
-+int meson_card_i2s_set_sysclk(struct snd_pcm_substream *substream,
-+			      struct snd_pcm_hw_params *params,
-+			      unsigned int mclk_fs);
-+
-+int meson_card_reallocate_links(struct snd_soc_card *card,
-+				unsigned int num_links);
-+int meson_card_parse_dai(struct snd_soc_card *card,
-+			 struct device_node *node,
-+			 struct device_node **dai_of_node,
-+			 const char **dai_name);
-+int meson_card_set_be_link(struct snd_soc_card *card,
-+			   struct snd_soc_dai_link *link,
-+			   struct device_node *node);
-+int meson_card_set_fe_link(struct snd_soc_card *card,
-+			   struct snd_soc_dai_link *link,
-+			   struct device_node *node,
-+			   bool is_playback);
-+
-+int meson_card_probe(struct platform_device *pdev);
-+int meson_card_remove(struct platform_device *pdev);
-+
-+#endif /* _MESON_SND_CARD_H */
+ 	lb->name = devm_kasprintf(card->dev, GFP_KERNEL, "%s-lb", pad->name);
 -- 
 2.43.0
 
