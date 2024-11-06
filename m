@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564461DFE3B;
-	Wed,  6 Nov 2024 12:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8561EC01D;
+	Wed,  6 Nov 2024 12:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897153; cv=none; b=aP3oc/C8OuMarFqTLO+xhRLX+RM3FA9hZEIMmOFujWffI7Phlz3RDWjIjp8OLXF3bsy5XXSqMhBndEyEqAfu6DynsEaMpG81AfdWYBSjk8F20kr/l5gK+tPfO3GGb/jYit4v5HeMYufe+PUTdffRwcJOiTcREu5MNrHkSKzJ4qg=
+	t=1730897156; cv=none; b=PlF5fPjva6EdIIu+hZc3VcrVbKhFFgD7An3qCQjfctrEERCqinYtvfpJNHrVqh+Btou6bpMqkwEI9Kf63cDj54w/7BmAf/lsTiG9PxDY0B9GYQaDtyHBU8kJnFh7ew88EjxaUkWqjQXjTCHRlumHAGh+5bxkp5LqRu1Vrlt//CU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897153; c=relaxed/simple;
-	bh=+pdeKJdhpjJeDNLzzOj2exJrMBoUDTsiiH45BSuKOdY=;
+	s=arc-20240116; t=1730897156; c=relaxed/simple;
+	bh=BleMKODxLlZ3aM14fcPK3y8Z6RpiDxZNw2UttvROD7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AxYrvjr2nokeuAoN7Nih197e2aw1hjKDqo3hbLm9+3hRLIAzY6wZMMaHQwmZdpAW5M0dsMbqdgbH2e1zpOKXLEI++Op7cguR82LrLypgS6AUX4l5bmBVtD1zkHFkQw1Xk+2yvEf+HGkFuwHurFEgpn6JKU2c4aOlW4VBKQaKXOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=coO7Izbx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HjHgD6AqPhcUkt5ITdUrV46IqBJNEVeojWNNe5I5Z1Gcrgqiy3XLL5FLwBsSj30O28ZlLgK7m6CX4Q4SGtPWnYBIgLCsYd3u6tV+JBr7UWQoR990URTGZfZBIRf9cNyYuMvpP4Bt/CyUSYrAY9M1cHEhcgI+VBIXoEvalMqbViw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkP/GxEN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="coO7Izbx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83FCC4CECD;
-	Wed,  6 Nov 2024 12:45:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkP/GxEN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03C4C4CECD;
+	Wed,  6 Nov 2024 12:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897153;
-	bh=+pdeKJdhpjJeDNLzzOj2exJrMBoUDTsiiH45BSuKOdY=;
+	s=korg; t=1730897156;
+	bh=BleMKODxLlZ3aM14fcPK3y8Z6RpiDxZNw2UttvROD7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=coO7IzbxQNh1iLp2vv9ghOn2lkVquCPUQaxpEmuS+0qCz6nEjVkEiJikKctq7epiM
-	 OPBdDb5SEOZzW3a/KuGIwWxG5Fyzsn88ia8Dyp1ariDkNqhtkiE3cVmyfENlEeOURN
-	 ZwpVJlaz/C6gr6FwcLwsZ+q5BmJiy9DrSXYKqNEs=
+	b=pkP/GxENUUtX/K3LoHVi81FpzEbSYvi1ZNyG8N+RFGsBS5vUHa+NBTUZftiWKlYHa
+	 HpC9gPJY5ZgyDHV2xcaiq02vWfKczgdV2wvcLZENw5l5SZWj0Xa41Xycnvbyr3fnQX
+	 ROotoxnZoyDsaLFYfzJojPGFncgWUeaYfaISZXgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	WangYuli <wangyuli@uniontech.com>,
-	Charlie Jenkins <charlie@rivosinc.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Chunyan Zhang <zhangchunyan@iscas.ac.cn>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/126] riscv: Use %u to format the output of cpu
-Date: Wed,  6 Nov 2024 13:04:46 +0100
-Message-ID: <20241106120308.372175406@linuxfoundation.org>
+Subject: [PATCH 6.1 086/126] riscv: Remove unused GENERATING_ASM_OFFSETS
+Date: Wed,  6 Nov 2024 13:04:47 +0100
+Message-ID: <20241106120308.397696459@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -54,41 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
 
-[ Upstream commit e0872ab72630dada3ae055bfa410bf463ff1d1e0 ]
+[ Upstream commit 46d4e5ac6f2f801f97bcd0ec82365969197dc9b1 ]
 
-'cpu' is an unsigned integer, so its conversion specifier should
-be %u, not %d.
+The macro is not used in the current version of kernel, it looks like
+can be removed to avoid a build warning:
 
-Suggested-by: Wentao Guan <guanwentao@uniontech.com>
-Suggested-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Link: https://lore.kernel.org/all/alpine.DEB.2.21.2409122309090.40372@angie.orcam.me.uk/
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
-Tested-by: Charlie Jenkins <charlie@rivosinc.com>
-Fixes: f1e58583b9c7 ("RISC-V: Support cpu hotplug")
+../arch/riscv/kernel/asm-offsets.c: At top level:
+../arch/riscv/kernel/asm-offsets.c:7: warning: macro "GENERATING_ASM_OFFSETS" is not used [-Wunused-macros]
+    7 | #define GENERATING_ASM_OFFSETS
+
+Fixes: 9639a44394b9 ("RISC-V: Provide a cleaner raw_smp_processor_id()")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/4C127DEECDA287C8+20241017032010.96772-1-wangyuli@uniontech.com
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Tested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20241008094141.549248-2-zhangchunyan@iscas.ac.cn
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/cpu-hotplug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/asm-offsets.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/riscv/kernel/cpu-hotplug.c b/arch/riscv/kernel/cpu-hotplug.c
-index f7a832e3a1d1d..462b3631663f9 100644
---- a/arch/riscv/kernel/cpu-hotplug.c
-+++ b/arch/riscv/kernel/cpu-hotplug.c
-@@ -65,7 +65,7 @@ void __cpu_die(unsigned int cpu)
- 	if (cpu_ops[cpu]->cpu_is_stopped)
- 		ret = cpu_ops[cpu]->cpu_is_stopped(cpu);
- 	if (ret)
--		pr_warn("CPU%d may not have stopped: %d\n", cpu, ret);
-+		pr_warn("CPU%u may not have stopped: %d\n", cpu, ret);
- }
+diff --git a/arch/riscv/kernel/asm-offsets.c b/arch/riscv/kernel/asm-offsets.c
+index df9444397908d..1ecafbcee9a0a 100644
+--- a/arch/riscv/kernel/asm-offsets.c
++++ b/arch/riscv/kernel/asm-offsets.c
+@@ -4,8 +4,6 @@
+  * Copyright (C) 2017 SiFive
+  */
  
- /*
+-#define GENERATING_ASM_OFFSETS
+-
+ #include <linux/kbuild.h>
+ #include <linux/mm.h>
+ #include <linux/sched.h>
 -- 
 2.43.0
 
