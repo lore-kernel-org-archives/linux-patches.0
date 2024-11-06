@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F712038C3;
-	Wed,  6 Nov 2024 12:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B7A1F4FCE;
+	Wed,  6 Nov 2024 12:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896821; cv=none; b=fRkLIhzpi9OwceD84HZH0rhaPenv6AdlnlmH9J4JCu0nsYLOCin5RYPueUP03PZxnS9V59o+RsLnz8BH/Dq9uZOURbWD/jTGmIBrGXF/gLmXm3f3pJDZ8c9dTyCihiaGD3mDyLO1Ucjf9NjxwMxE/YHyoCNFI8kXZMopiPOXkRU=
+	t=1730896824; cv=none; b=ZT3ROtl1EvTtIBsBMbSoDM3GMOn+dVMrZObBpS0WwrWVKe/e7wI2P1BkBWz09JJSNin8Fh0FbcDjrkSsghJX7jDrIFY/105c4syb1EOQtDKy1D2FiaT9fMRKl71hlSzXIha0uBnNG7z9LkqcskTrb8Gk7czpk5d+ZakGoYW05Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896821; c=relaxed/simple;
-	bh=QCe2Qm+wT7yHR0I/d2Rk90CUccq+h9CtfFuJvdUQNmg=;
+	s=arc-20240116; t=1730896824; c=relaxed/simple;
+	bh=xRbehLLNjlt5GQF9gKax/awK1jbtcO+44cywhVn3tZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Likfj6aLZdEsvntf5FJ7zRUkF+4TqPRzxxaLBpf2WQwdDHsktZgttdFJovcK9xsmO2PTbm8PwY0xQ90iZB98iFjbxzmDLHbeDDzOdyWy95Gf7zONVheGAzaGLeVsrhtSimTmtWBeGsCwO/izoMtDkiZd3xPa1dU7V05A0LQi4qY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/vP5QA6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GmF1uxKpFwCovhxE2Eye3DUGQS+A6Iadho65+Kk2mck9dnJT4uGqDn2xOedoHCeAVAdTeGtgiVV6fpjEs1gdfkFclz+qoiq4Ww5zOciVr1E33omxCCM8ZQJNYBOyWUr3RiGT8J2H3ZfA6R5OWiqkdY+6489AIMrpqgzT7+1xEfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0JSQeQ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/vP5QA6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A58C4CED6;
-	Wed,  6 Nov 2024 12:40:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0JSQeQ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE2FC4CECD;
+	Wed,  6 Nov 2024 12:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896821;
-	bh=QCe2Qm+wT7yHR0I/d2Rk90CUccq+h9CtfFuJvdUQNmg=;
+	s=korg; t=1730896824;
+	bh=xRbehLLNjlt5GQF9gKax/awK1jbtcO+44cywhVn3tZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/vP5QA6rBdsAEYEQoLezpHk50heW7UcAx7nWBkxIfY65c6eVKY/9/cSXqoMwhklH
-	 sy/R4brPFl2IVAvsL5qqIq+jFGG/fx2wyAz99AoW4ulxXr5fjdFC6SiXQODPFv8UCs
-	 EWuT8EcKBnr+wtrVymLsFQFrHWU65yUQLVAVaPn4=
+	b=L0JSQeQ0bMGPzdjNTMh7D5ytNQTgmZqn+EBoJiP4LfEg9SkodV3qCVvV4Mskdbpz2
+	 nYEYyKuc5HOyhBA0JRHyXmUN+4J+eopi+pVtpj3huV1wqUcYh0Ref6djJSPfoCJIhH
+	 YyCFAVrm/DdJxjr9NwMi8hMltY1Tc7WBrn1y9kmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dimitri Sivanich <sivanich@hpe.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 084/110] misc: sgi-gru: Dont disable preemption in GRU driver
-Date: Wed,  6 Nov 2024 13:04:50 +0100
-Message-ID: <20241106120305.509078902@linuxfoundation.org>
+	Hongren Zheng <i@zenithal.me>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Zongmin Zhou <zhouzongmin@kylinos.cn>
+Subject: [PATCH 5.10 085/110] usbip: tools: Fix detach_port() invalid port error path
+Date: Wed,  6 Nov 2024 13:04:51 +0100
+Message-ID: <20241106120305.536900947@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -51,96 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dimitri Sivanich <sivanich@hpe.com>
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
 
-[ Upstream commit b983b271662bd6104d429b0fd97af3333ba760bf ]
+commit e7cd4b811c9e019f5acbce85699c622b30194c24 upstream.
 
-Disabling preemption in the GRU driver is unnecessary, and clashes with
-sleeping locks in several code paths.  Remove preempt_disable and
-preempt_enable from the GRU driver.
+The detach_port() doesn't return error
+when detach is attempted on an invalid port.
 
-Signed-off-by: Dimitri Sivanich <sivanich@hpe.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 40ecdeb1a187 ("usbip: usbip_detach: fix to check for invalid ports")
+Cc: stable@vger.kernel.org
+Reviewed-by: Hongren Zheng <i@zenithal.me>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Link: https://lore.kernel.org/r/20241024022700.1236660-1-min_halo@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/sgi-gru/grukservices.c | 2 --
- drivers/misc/sgi-gru/grumain.c      | 4 ----
- drivers/misc/sgi-gru/grutlbpurge.c  | 2 --
- 3 files changed, 8 deletions(-)
+ tools/usb/usbip/src/usbip_detach.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/misc/sgi-gru/grukservices.c b/drivers/misc/sgi-gru/grukservices.c
-index 0ea923fe6371b..e2bdba4742930 100644
---- a/drivers/misc/sgi-gru/grukservices.c
-+++ b/drivers/misc/sgi-gru/grukservices.c
-@@ -258,7 +258,6 @@ static int gru_get_cpu_resources(int dsr_bytes, void **cb, void **dsr)
- 	int lcpu;
- 
- 	BUG_ON(dsr_bytes > GRU_NUM_KERNEL_DSR_BYTES);
--	preempt_disable();
- 	bs = gru_lock_kernel_context(-1);
- 	lcpu = uv_blade_processor_id();
- 	*cb = bs->kernel_cb + lcpu * GRU_HANDLE_STRIDE;
-@@ -272,7 +271,6 @@ static int gru_get_cpu_resources(int dsr_bytes, void **cb, void **dsr)
- static void gru_free_cpu_resources(void *cb, void *dsr)
- {
- 	gru_unlock_kernel_context(uv_numa_blade_id());
--	preempt_enable();
- }
- 
- /*
-diff --git a/drivers/misc/sgi-gru/grumain.c b/drivers/misc/sgi-gru/grumain.c
-index e2325e3d077ea..4f7a0f8472556 100644
---- a/drivers/misc/sgi-gru/grumain.c
-+++ b/drivers/misc/sgi-gru/grumain.c
-@@ -941,10 +941,8 @@ vm_fault_t gru_fault(struct vm_fault *vmf)
- 
- again:
- 	mutex_lock(&gts->ts_ctxlock);
--	preempt_disable();
- 
- 	if (gru_check_context_placement(gts)) {
--		preempt_enable();
- 		mutex_unlock(&gts->ts_ctxlock);
- 		gru_unload_context(gts, 1);
- 		return VM_FAULT_NOPAGE;
-@@ -953,7 +951,6 @@ vm_fault_t gru_fault(struct vm_fault *vmf)
- 	if (!gts->ts_gru) {
- 		STAT(load_user_context);
- 		if (!gru_assign_gru_context(gts)) {
--			preempt_enable();
- 			mutex_unlock(&gts->ts_ctxlock);
- 			set_current_state(TASK_INTERRUPTIBLE);
- 			schedule_timeout(GRU_ASSIGN_DELAY);  /* true hack ZZZ */
-@@ -969,7 +966,6 @@ vm_fault_t gru_fault(struct vm_fault *vmf)
- 				vma->vm_page_prot);
+--- a/tools/usb/usbip/src/usbip_detach.c
++++ b/tools/usb/usbip/src/usbip_detach.c
+@@ -68,6 +68,7 @@ static int detach_port(char *port)
  	}
  
--	preempt_enable();
- 	mutex_unlock(&gts->ts_ctxlock);
- 
- 	return VM_FAULT_NOPAGE;
-diff --git a/drivers/misc/sgi-gru/grutlbpurge.c b/drivers/misc/sgi-gru/grutlbpurge.c
-index 10921cd2608df..1107dd3e2e9fa 100644
---- a/drivers/misc/sgi-gru/grutlbpurge.c
-+++ b/drivers/misc/sgi-gru/grutlbpurge.c
-@@ -65,7 +65,6 @@ static struct gru_tlb_global_handle *get_lock_tgh_handle(struct gru_state
- 	struct gru_tlb_global_handle *tgh;
- 	int n;
- 
--	preempt_disable();
- 	if (uv_numa_blade_id() == gru->gs_blade_id)
- 		n = get_on_blade_tgh(gru);
- 	else
-@@ -79,7 +78,6 @@ static struct gru_tlb_global_handle *get_lock_tgh_handle(struct gru_state
- static void get_unlock_tgh_handle(struct gru_tlb_global_handle *tgh)
- {
- 	unlock_tgh_handle(tgh);
--	preempt_enable();
- }
- 
- /*
--- 
-2.43.0
-
+ 	if (!found) {
++		ret = -1;
+ 		err("Invalid port %s > maxports %d",
+ 			port, vhci_driver->nports);
+ 		goto call_driver_close;
 
 
