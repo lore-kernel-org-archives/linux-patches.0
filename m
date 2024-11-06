@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57E41DF24B;
-	Wed,  6 Nov 2024 12:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B731DF24B;
+	Wed,  6 Nov 2024 12:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895989; cv=none; b=Z39bDK5jrMQi5q0Ss8OZc7tmASo6UEpz5X2SKafIafZBHUF7Ci7S6bzMj7xHdGh3zAl7mnCGUIJLnIKcw47hpWN2kCu+1ZqnqAg94Db5fZKY5pl6uSEsV+CyUdf3eq0fitZKsRNcYROlSAiSilgogwAHoi1BydZqOy9wghiP3ek=
+	t=1730895992; cv=none; b=Rxn4w01qlSaZ0OP4xNpP3/rHs+i9e68i7tQvGlWLoESED9NwU4wWFIMdKXRNp43v/Btt9G1mdR/FAJweBS9uJ1nF6lbEsh3ly543C6QAlNJRqSGu2Pr1rV5UjlvZ5wyrH4rBCbTWnqdlxAfYTZvPkq/JgOskJOWf+dghmqQFlAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895989; c=relaxed/simple;
-	bh=2T+6taziXigTwlpuDjvBFmWCaoC3ZCIU8YPnK41MF8M=;
+	s=arc-20240116; t=1730895992; c=relaxed/simple;
+	bh=Wesyq9kjfm383SzGkMYX6/E/kVC5z1FC3MnGguLfA4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVCOgb2iK3jx+5KxPFcB1e16xwLzGnw6h6sMGQJe9U/lGyKu01StiPKNJusw28+hJL5yEDD87Jdnyn4EfayJ8Dfuocvm+Suapz4p0AbhqEVqCEB0Z/wHEzkgieV4lYZF7+zpfiI/vnKH2YGtfwntDlnpVrDQkeHcuTP58ZLHRYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVd6+KGr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s+NRYn0u2g1BCdGayyX73WZ95Y9ccAY0xoThF/DiOY4yfd1EWYm0UVjGb+Z2ps2uo7o2/8NPsZAnn0HptAuGZjMe8AjYEQk4VRjVK8cM9HrCI/WJFYaAhgPhx4Am8BF19YP0I2wcTLDUIwj9DrmDlNv5ubgguacInZbsdSoxoek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jInpjO98; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVd6+KGr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E679EC4CECD;
-	Wed,  6 Nov 2024 12:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jInpjO98"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D04AFC4CECD;
+	Wed,  6 Nov 2024 12:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895989;
-	bh=2T+6taziXigTwlpuDjvBFmWCaoC3ZCIU8YPnK41MF8M=;
+	s=korg; t=1730895992;
+	bh=Wesyq9kjfm383SzGkMYX6/E/kVC5z1FC3MnGguLfA4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GVd6+KGrgkrpZr0J3M/+86abSMc4o3/nvaNPNy3tVIEtrdU0/pkGvMCwcEiBMNsJH
-	 padhixA27sPPzqTizQh32ZMvnM5+voP8fjnhXDGT7TyJs02hsUKC8uyJUKhIJUxFTh
-	 yWWRC1/11XVInkw6BYfWDpkKrDmkk0zUU7Dm4Ygo=
+	b=jInpjO98j/SLqSeFyi0aFYKVaDYSQq2wlVM70WogjEgWvzJn1aZr4W9WHa+6KLXbw
+	 5p++HjlpvxuYCm+Oph/AQX0m/zCTU8Gh5O7lk3PzAgOe1v8H/C/7eQwJCtOg5IQHS8
+	 OtmdAs9dzexVc4XE63n77nb02eEQTZeF8xrXP7As=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maksym Yaremchuk <maksymy@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 053/245] mlxsw: spectrum_ipip: Fix memory leak when changing remote IPv6 address
-Date: Wed,  6 Nov 2024 13:01:46 +0100
-Message-ID: <20241106120320.523478531@linuxfoundation.org>
+Subject: [PATCH 6.11 054/245] net: ethernet: mtk_wed: fix path of MT7988 WO firmware
+Date: Wed,  6 Nov 2024 13:01:47 +0100
+Message-ID: <20241106120320.546294911@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -53,130 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit 12ae97c531fcd3bfd774d4dfeaeac23eafe24280 ]
+[ Upstream commit 637f41476384c76d3cd7dcf5947caf2c8b8d7a9b ]
 
-The device stores IPv6 addresses that are used for encapsulation in
-linear memory that is managed by the driver.
+linux-firmware commit 808cba84 ("mtk_wed: add firmware for mt7988
+Wireless Ethernet Dispatcher") added mt7988_wo_{0,1}.bin in the
+'mediatek/mt7988' directory while driver current expects the files in
+the 'mediatek' directory.
 
-Changing the remote address of an ip6gre net device never worked
-properly, but since cited commit the following reproducer [1] would
-result in a warning [2] and a memory leak [3]. The problem is that the
-new remote address is never added by the driver to its hash table (and
-therefore the device) and the old address is never removed from it.
+Change path in the driver header now that the firmware has been added.
 
-Fix by programming the new address when the configuration of the ip6gre
-net device changes and removing the old one. If the address did not
-change, then the above would result in increasing the reference count of
-the address and then decreasing it.
-
-[1]
- # ip link add name bla up type ip6gre local 2001:db8:1::1 remote 2001:db8:2::1 tos inherit ttl inherit
- # ip link set dev bla type ip6gre remote 2001:db8:3::1
- # ip link del dev bla
- # devlink dev reload pci/0000:01:00.0
-
-[2]
-WARNING: CPU: 0 PID: 1682 at drivers/net/ethernet/mellanox/mlxsw/spectrum.c:3002 mlxsw_sp_ipv6_addr_put+0x140/0x1d0
-Modules linked in:
-CPU: 0 UID: 0 PID: 1682 Comm: ip Not tainted 6.12.0-rc3-custom-g86b5b55bc835 #151
-Hardware name: Nvidia SN5600/VMOD0013, BIOS 5.13 05/31/2023
-RIP: 0010:mlxsw_sp_ipv6_addr_put+0x140/0x1d0
-[...]
-Call Trace:
- <TASK>
- mlxsw_sp_router_netdevice_event+0x55f/0x1240
- notifier_call_chain+0x5a/0xd0
- call_netdevice_notifiers_info+0x39/0x90
- unregister_netdevice_many_notify+0x63e/0x9d0
- rtnl_dellink+0x16b/0x3a0
- rtnetlink_rcv_msg+0x142/0x3f0
- netlink_rcv_skb+0x50/0x100
- netlink_unicast+0x242/0x390
- netlink_sendmsg+0x1de/0x420
- ____sys_sendmsg+0x2bd/0x320
- ___sys_sendmsg+0x9a/0xe0
- __sys_sendmsg+0x7a/0xd0
- do_syscall_64+0x9e/0x1a0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-[3]
-unreferenced object 0xffff898081f597a0 (size 32):
-  comm "ip", pid 1626, jiffies 4294719324
-  hex dump (first 32 bytes):
-    20 01 0d b8 00 02 00 00 00 00 00 00 00 00 00 01   ...............
-    21 49 61 83 80 89 ff ff 00 00 00 00 01 00 00 00  !Ia.............
-  backtrace (crc fd9be911):
-    [<00000000df89c55d>] __kmalloc_cache_noprof+0x1da/0x260
-    [<00000000ff2a1ddb>] mlxsw_sp_ipv6_addr_kvdl_index_get+0x281/0x340
-    [<000000009ddd445d>] mlxsw_sp_router_netdevice_event+0x47b/0x1240
-    [<00000000743e7757>] notifier_call_chain+0x5a/0xd0
-    [<000000007c7b9e13>] call_netdevice_notifiers_info+0x39/0x90
-    [<000000002509645d>] register_netdevice+0x5f7/0x7a0
-    [<00000000c2e7d2a9>] ip6gre_newlink_common.isra.0+0x65/0x130
-    [<0000000087cd6d8d>] ip6gre_newlink+0x72/0x120
-    [<000000004df7c7cc>] rtnl_newlink+0x471/0xa20
-    [<0000000057ed632a>] rtnetlink_rcv_msg+0x142/0x3f0
-    [<0000000032e0d5b5>] netlink_rcv_skb+0x50/0x100
-    [<00000000908bca63>] netlink_unicast+0x242/0x390
-    [<00000000cdbe1c87>] netlink_sendmsg+0x1de/0x420
-    [<0000000011db153e>] ____sys_sendmsg+0x2bd/0x320
-    [<000000003b6d53eb>] ___sys_sendmsg+0x9a/0xe0
-    [<00000000cae27c62>] __sys_sendmsg+0x7a/0xd0
-
-Fixes: cf42911523e0 ("mlxsw: spectrum_ipip: Use common hash table for IPv6 address mapping")
-Reported-by: Maksym Yaremchuk <maksymy@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/e91012edc5a6cb9df37b78fd377f669381facfcb.1729866134.git.petrm@nvidia.com
+Fixes: e2f64db13aa1 ("net: ethernet: mtk_wed: introduce WED support for MT7988")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/Zxz0GWTR5X5LdWPe@pidgin.makrotopia.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlxsw/spectrum_ipip.c   | 26 +++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_wed_wo.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_ipip.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_ipip.c
-index d761a1235994c..7ea798a4949e2 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_ipip.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_ipip.c
-@@ -481,11 +481,33 @@ mlxsw_sp_ipip_ol_netdev_change_gre6(struct mlxsw_sp *mlxsw_sp,
- 				    struct mlxsw_sp_ipip_entry *ipip_entry,
- 				    struct netlink_ext_ack *extack)
- {
-+	u32 new_kvdl_index, old_kvdl_index = ipip_entry->dip_kvdl_index;
-+	struct in6_addr old_addr6 = ipip_entry->parms.daddr.addr6;
- 	struct mlxsw_sp_ipip_parms new_parms;
-+	int err;
+diff --git a/drivers/net/ethernet/mediatek/mtk_wed_wo.h b/drivers/net/ethernet/mediatek/mtk_wed_wo.h
+index 87a67fa3868d3..c01b1e8428f6d 100644
+--- a/drivers/net/ethernet/mediatek/mtk_wed_wo.h
++++ b/drivers/net/ethernet/mediatek/mtk_wed_wo.h
+@@ -91,8 +91,8 @@ enum mtk_wed_dummy_cr_idx {
+ #define MT7981_FIRMWARE_WO	"mediatek/mt7981_wo.bin"
+ #define MT7986_FIRMWARE_WO0	"mediatek/mt7986_wo_0.bin"
+ #define MT7986_FIRMWARE_WO1	"mediatek/mt7986_wo_1.bin"
+-#define MT7988_FIRMWARE_WO0	"mediatek/mt7988_wo_0.bin"
+-#define MT7988_FIRMWARE_WO1	"mediatek/mt7988_wo_1.bin"
++#define MT7988_FIRMWARE_WO0	"mediatek/mt7988/mt7988_wo_0.bin"
++#define MT7988_FIRMWARE_WO1	"mediatek/mt7988/mt7988_wo_1.bin"
  
- 	new_parms = mlxsw_sp_ipip_netdev_parms_init_gre6(ipip_entry->ol_dev);
--	return mlxsw_sp_ipip_ol_netdev_change_gre(mlxsw_sp, ipip_entry,
--						  &new_parms, extack);
-+
-+	err = mlxsw_sp_ipv6_addr_kvdl_index_get(mlxsw_sp,
-+						&new_parms.daddr.addr6,
-+						&new_kvdl_index);
-+	if (err)
-+		return err;
-+	ipip_entry->dip_kvdl_index = new_kvdl_index;
-+
-+	err = mlxsw_sp_ipip_ol_netdev_change_gre(mlxsw_sp, ipip_entry,
-+						 &new_parms, extack);
-+	if (err)
-+		goto err_change_gre;
-+
-+	mlxsw_sp_ipv6_addr_put(mlxsw_sp, &old_addr6);
-+
-+	return 0;
-+
-+err_change_gre:
-+	ipip_entry->dip_kvdl_index = old_kvdl_index;
-+	mlxsw_sp_ipv6_addr_put(mlxsw_sp, &new_parms.daddr.addr6);
-+	return err;
- }
- 
- static int
+ #define MTK_WO_MCU_CFG_LS_BASE				0
+ #define MTK_WO_MCU_CFG_LS_HW_VER_ADDR			(MTK_WO_MCU_CFG_LS_BASE + 0x000)
 -- 
 2.43.0
 
