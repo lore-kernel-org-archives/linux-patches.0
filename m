@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AF81DF98C;
-	Wed,  6 Nov 2024 12:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223A81DF98C;
+	Wed,  6 Nov 2024 12:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896442; cv=none; b=T28tYfIm23ew+qAof8eWcnbCDV4RC0xoF/hG741DYIXKhE2uvuxzrkxwZG7xLaT6gJFUUNE70aiaD6bn4JQxp2O86gMdLJjV6wYzNBpTQtoahtDs2z/L13rnNMyPiPsVeTCntqa9yvJBhxQJ+U553CU5+uTLcEGcJqnEFV5VE5Q=
+	t=1730896445; cv=none; b=a42OzaRKIRm36a66xJlf+cTipMtgxOfd6Htcdw4V0dkjcjPwp8Sl7KQ8yMoBfM8mDVuCK+NfplGnNE4h2N1u79PA9a875lM2Fo6kbPfIciQ6P/bx4bR+tS0MJDg2mXjO9qGNFJnRqNHv1CNqbdGVSumoWMcGTUV9djVGndwhXRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896442; c=relaxed/simple;
-	bh=6GI1qszzcv2hxGdh/yy2/5JTWwVBk0wAn9aoZGirvA4=;
+	s=arc-20240116; t=1730896445; c=relaxed/simple;
+	bh=28DNzc9ndE7w33c6uknGSzl5A9ikmllB2d8S+a25Bp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YEt8AwHyZZ0VObI5yVLAy4o4PaWW5VfWyh8xHMkSb5ldXsLu3nq7huTMOEd5BCupJsW6tvb+OUpCS6POZzWA3lJuH605y4cvmQG8a8tBy8naLWgdcAwS+WUDYvnxUSRrFsQPsUieGQvJEClnfMyA1YzI6bu88SRHsuM4oCCtATM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5JYrMQo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YIY+gdYgU+OFBro3rAHp7SRnV+VkXp+Wj3Ftwa8p9SNiDDwI3WIdOQp/tOoZurH3mBslfogORpYuCBbW7qx88K3bzT6c266T8EzRm9g7oXh1xv2ofNQyjdEOAAOAIFSMYRN9Dxx5HQIpSm/KLFJXWLUY7wpiRmjeguJ0R5Qj8wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2bmF5CyV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5JYrMQo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99273C4CECD;
-	Wed,  6 Nov 2024 12:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2bmF5CyV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DD6C4CED4;
+	Wed,  6 Nov 2024 12:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896442;
-	bh=6GI1qszzcv2hxGdh/yy2/5JTWwVBk0wAn9aoZGirvA4=;
+	s=korg; t=1730896445;
+	bh=28DNzc9ndE7w33c6uknGSzl5A9ikmllB2d8S+a25Bp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5JYrMQoDHbMIBEI1A64KwGECdkhGkTKv72inPV+tPOs9fs41MV6DU8TmgUkalW10
-	 X3gxPDdd4DxbR/ccPlN9Y/SV7MK0dFp1GHrUwCoZMpOwzyHzyvHYu2g+5ttZmwiJb7
-	 srCG2QwanVoci/mMCwLNILX9TL2p0yoLzXO2gQpM=
+	b=2bmF5CyVnRaKJd0AkdObhfgcJnvEG3SjlNcGU8EYDtS57zN4xIwV7Dbmx70y2ddg0
+	 Yom8mp0whbmxZHy0GIZtucx8J/5HWnqSbmaDxPrH9BpyBN4FEUcIYC72c0QAHW+jz4
+	 c4w9CbkHsTZBgjNHuHS7aOYooKsND0alqsN8xxXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Zanoni <paulo.r.zanoni@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Yu Zhao <yuzhao@google.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Lance Yang <ioworker0@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 196/245] drm/xe: Dont short circuit TDR on jobs not started
-Date: Wed,  6 Nov 2024 13:04:09 +0100
-Message-ID: <20241106120324.068687075@linuxfoundation.org>
+Subject: [PATCH 6.11 205/245] mm: multi-gen LRU: ignore non-leaf pmd_young for force_scan=true
+Date: Wed,  6 Nov 2024 13:04:18 +0100
+Message-ID: <20241106120324.291084148@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,81 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Yuanchu Xie <yuanchu@google.com>
 
-[ Upstream commit fe05cee4d9533892210e1ee90147175d87e7c053 ]
+[ Upstream commit bceeeaed4817ba7ad9013b4116c97220a60fcf7c ]
 
-Short circuiting TDR on jobs not started is an optimization which is not
-required. On LNL we are facing an issue where jobs do not get scheduled
-by the GuC if it misses a GGTT page update. When this occurs let the TDR
-fire, toggle the scheduling which may get the job unstuck, and print a
-warning message. If the TDR fires twice on job that hasn't started,
-timeout the job.
+When non-leaf pmd accessed bits are available, MGLRU page table walks can
+clear the non-leaf pmd accessed bit and ignore the accessed bit on the pte
+if it's on a different node, skipping a generation update as well.  If
+another scan occurs on the same node as said skipped pte.
 
-v2:
- - Add warning message (Paulo)
- - Add fixes tag (Paulo)
- - Timeout job which hasn't started after TDR firing twice
-v3:
- - Include local change
-v4:
- - Short circuit check_timeout on job not started
- - use warn level rather than notice (Paulo)
+The non-leaf pmd accessed bit might remain cleared and the pte accessed
+bits won't be checked.  While this is sufficient for reclaim-driven aging,
+where the goal is to select a reasonably cold page, the access can be
+missed when aging proactively for workingset estimation of a node/memcg.
 
-Fixes: 7ddb9403dd74 ("drm/xe: Sample ctx timestamp to determine if jobs have timed out")
-Cc: stable@vger.kernel.org
-Cc: Paulo Zanoni <paulo.r.zanoni@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241025214330.2010521-2-matthew.brost@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 35d25a4a0012e690ef0cc4c5440231176db595cc)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+In more detail, get_pfn_folio returns NULL if the folio's nid != node
+under scanning, so the page table walk skips processing of said pte.  Now
+the pmd_young flag on this pmd is cleared, and if none of the pte's are
+accessed before another scan occurs on the folio's node, the pmd_young
+check fails and the pte accessed bit is skipped.
+
+Since force_scan disables various other optimizations, we check force_scan
+to ignore the non-leaf pmd accessed bit.
+
+Link: https://lkml.kernel.org/r/20240813163759.742675-1-yuanchu@google.com
+Signed-off-by: Yuanchu Xie <yuanchu@google.com>
+Acked-by: Yu Zhao <yuzhao@google.com>
+Cc: "Huang, Ying" <ying.huang@intel.com>
+Cc: Lance Yang <ioworker0@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: ddd6d8e975b1 ("mm: multi-gen LRU: remove MM_LEAF_OLD and MM_NONLEAF_TOTAL stats")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_submit.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ mm/vmscan.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_submit.c b/drivers/gpu/drm/xe/xe_guc_submit.c
-index dfd809e7bbd25..cbdd44567d107 100644
---- a/drivers/gpu/drm/xe/xe_guc_submit.c
-+++ b/drivers/gpu/drm/xe/xe_guc_submit.c
-@@ -989,12 +989,22 @@ static void xe_guc_exec_queue_lr_cleanup(struct work_struct *w)
- static bool check_timeout(struct xe_exec_queue *q, struct xe_sched_job *job)
- {
- 	struct xe_gt *gt = guc_to_gt(exec_queue_to_guc(q));
--	u32 ctx_timestamp = xe_lrc_ctx_timestamp(q->lrc[0]);
--	u32 ctx_job_timestamp = xe_lrc_ctx_job_timestamp(q->lrc[0]);
-+	u32 ctx_timestamp, ctx_job_timestamp;
- 	u32 timeout_ms = q->sched_props.job_timeout_ms;
- 	u32 diff;
- 	u64 running_time_ms;
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 128f307da6eea..b1f88638c5ab4 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -3456,7 +3456,7 @@ static void walk_pmd_range_locked(pud_t *pud, unsigned long addr, struct vm_area
+ 			goto next;
  
-+	if (!xe_sched_job_started(job)) {
-+		xe_gt_warn(gt, "Check job timeout: seqno=%u, lrc_seqno=%u, guc_id=%d, not started",
-+			   xe_sched_job_seqno(job), xe_sched_job_lrc_seqno(job),
-+			   q->guc->id);
-+
-+		return xe_sched_invalidate_job(job, 2);
-+	}
-+
-+	ctx_timestamp = xe_lrc_ctx_timestamp(q->lrc[0]);
-+	ctx_job_timestamp = xe_lrc_ctx_job_timestamp(q->lrc[0]);
-+
- 	/*
- 	 * Counter wraps at ~223s at the usual 19.2MHz, be paranoid catch
- 	 * possible overflows with a high timeout.
-@@ -1120,10 +1130,6 @@ guc_exec_queue_timedout_job(struct drm_sched_job *drm_job)
- 		exec_queue_killed_or_banned_or_wedged(q) ||
- 		exec_queue_destroyed(q);
+ 		if (!pmd_trans_huge(pmd[i])) {
+-			if (should_clear_pmd_young())
++			if (!walk->force_scan && should_clear_pmd_young())
+ 				pmdp_test_and_clear_young(vma, addr, pmd + i);
+ 			goto next;
+ 		}
+@@ -3543,7 +3543,7 @@ static void walk_pmd_range(pud_t *pud, unsigned long start, unsigned long end,
  
--	/* Job hasn't started, can't be timed out */
--	if (!skip_timeout_check && !xe_sched_job_started(job))
--		goto rearm;
--
- 	/*
- 	 * XXX: Sampling timeout doesn't work in wedged mode as we have to
- 	 * modify scheduling state to read timestamp. We could read the
+ 		walk->mm_stats[MM_NONLEAF_TOTAL]++;
+ 
+-		if (should_clear_pmd_young()) {
++		if (!walk->force_scan && should_clear_pmd_young()) {
+ 			if (!pmd_young(val))
+ 				continue;
+ 
 -- 
 2.43.0
 
