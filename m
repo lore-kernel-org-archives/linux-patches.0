@@ -1,97 +1,224 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501BA208988
-	for <patches@lists.linux.dev>; Wed,  6 Nov 2024 18:59:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E38791D63D5;
+	Wed,  6 Nov 2024 21:05:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730919556; cv=none; b=uj/yco7q5LnmNlyuyK8T85P08b2fI7DwX77j5komWxmJl+RCwpFFc2faekklxaM/skhrIPEKx0IPTNfJIVSm6ffJHq1gnizhl8XFtKotC3rz06rWrDtfnUvz0OGEE/y03I9IbNPinOQhbWBMKPLuc95m9SCy9bYEJLJNoBnt4h4=
+	t=1730927135; cv=none; b=D26NCiTnBPZdTnOK6IYJQIwu1QMNi7YUiQs2/rRDR+tMXLauLhav3/LZdXXKTr5VpmYdu7dPCC0xSuwV7eceRvYJzSq5njue8c5dPtosKst3eGihHex9OmtcKhMxTNVVBnSyXRneG5DTvzOD6sIf1Yoyzqajj964lDtIGaCbnJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730919556; c=relaxed/simple;
-	bh=fPkbnEtILsrm7fBv+gVTn8aiRWCGWwF4GT3/vtF1utc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=p5EMOybWzJQqOW4hOnuUjHLD0GFvTElHndPONDOQLMCckUt5pJKXdYIZpygkkh1bwT5eFsyN46J5hG1ig2vaaNIR68zJ53Zp+8k3RRv0YkKbCrcqvsVdjVElD0H+pnVvTRerDX8hC+Un6xtFZDw6owEXvgnZzx713dlHX0Jg4SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B6T5N342; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B6T5N342"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2e56750bb13so15385a91.2
-        for <patches@lists.linux.dev>; Wed, 06 Nov 2024 10:59:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730919554; x=1731524354; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pfyYHlZiiHlOJ55Ga/XIjofB2OSEpcClJAHmvQ8Zg1s=;
-        b=B6T5N3423HukmqE10zKeFkKfEy51rrQIvImxoxkeGm8XWEL3PMGvmCGAAPIVo7APZP
-         YqSH2LR3qq1cPUbF/EHBj0SGfEv2TYD1hd9YnIb6Kj+SLr5LjRwx+BOmS2ApFIxp2/eC
-         wzn7Ee2HvwYANHUH7/AjJw8YybwS9kRbC5mE+qpaPUjXKjfINJHChU9FyrqIyNyGQ6nu
-         0XKUV3fauPtjWvCIIFT9YX4hbbBmYhCjFoM953UmwsdQe0Dr2hXm8tJxslED1Wo8IWeQ
-         QjV9mvYdRaywnug09PkrB98lcrJBYcGKDGTNclsdUS6fYd9gBGtsfZHCEzR6qhwmwmwA
-         C9Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730919554; x=1731524354;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pfyYHlZiiHlOJ55Ga/XIjofB2OSEpcClJAHmvQ8Zg1s=;
-        b=jbdzGfsQVLqJM7m7UVY5GIlq8JwTbpg740CNj17hTtpO41c8QZDAXcIq8/Sw9MKVy3
-         3hfeirdqAJf6YQ3chbBpeIRvzUvKVS2knj+17ZlxjN/UR/W2wXD3k2+7Aux3W9u2sr0b
-         u43ucZJS+A4VLt18cFUoWn15dpe+uKc2t21POlOApcBr1/P8scT38S9Tr0snzo1vs9cC
-         ofhuczdNOTbFWXQKeXQlywYHc8LIZ3lbT+fbrfOdaxwFbQab4a2pnzUwAvhFVsxbIIOc
-         RtIR2o/lBDcO36Su4RdRAAdSpAiQCcwXDhpqJ0qJfjTlEVS3qSDhsiLMK1psNuQvowR6
-         mOLw==
-X-Forwarded-Encrypted: i=1; AJvYcCVJbJwbhlue+AwcmGhLbolCtHZ9WwXJnRXG4x1O6RaaQM1ftqaWz9Znyo1nPH6TNB6tKxngf12W@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyj9DancliPoI2cRvrzB9aqi4qI63DRUg8jA/zlo1o2ipym6n4n
-	CBXUDcTNWavJLNZY9z+/xyylm4Dz+UOBXdyKWk6yoHQVscXWV6PHngR6OhwLp0cVQSuKWYPDyNN
-	8/I4XDw/bN1ZDeeguXimftv1rHsQ=
-X-Google-Smtp-Source: AGHT+IFv/9wDlQ5Gely1DQOECBzo8gp5c3KiyzJWairSWFXE0bi3KYn8VYndGnT2orM2I8hGeGgB5IeH+L8Zd7su7Vk=
-X-Received: by 2002:a17:90b:1a90:b0:2e2:c04b:da94 with SMTP id
- 98e67ed59e1d1-2e9a4b246c9mr178569a91.5.1730919554594; Wed, 06 Nov 2024
- 10:59:14 -0800 (PST)
+	s=arc-20240116; t=1730927135; c=relaxed/simple;
+	bh=V5zGA+7TTCtQX65iL5fAXX3VQZwwLwuD0wSMEpDbyLo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QbZ5sYhnTk7WL3Hum6h7sGSpdAI1iD1zxvecBlIxArfhzhAAnvoP4fd66hgPZqPCe4tyVWwzgBas5A85g5YqkMpCq6o8x1QuYevZ5zr+oGkK9c4DkXPbnJxyg36V4YIDBM62NkNsRBxQ4nVfnyWjTrbrdyzrFYGyCje/NFNuYLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C19D7497;
+	Wed,  6 Nov 2024 13:06:01 -0800 (PST)
+Received: from [10.57.90.5] (unknown [10.57.90.5])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 920813F66E;
+	Wed,  6 Nov 2024 13:05:27 -0800 (PST)
+Message-ID: <2a0e69e3-63ba-475b-a5a9-0863ad0f2bf8@arm.com>
+Date: Wed, 6 Nov 2024 21:05:26 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241106120303.135636370@linuxfoundation.org> <20241106120305.369505633@linuxfoundation.org>
-In-Reply-To: <20241106120305.369505633@linuxfoundation.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 6 Nov 2024 19:59:02 +0100
-Message-ID: <CANiq72=a-qCB++wQjx9bZKdHfNg3Lj-1HMmjf1usdHSzAbTYZg@mail.gmail.com>
-Subject: Re: [PATCH 5.10 079/110] compiler-gcc: remove attribute support check
- for `__no_sanitize_address__`
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Miguel Ojeda <ojeda@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
-	Alexander Potapenko <glider@google.com>, Andrey Konovalov <andreyknvl@gmail.com>, Arnd Bergmann <arnd@arndb.de>, 
-	Dan Li <ashimida@linux.alibaba.com>, Kees Cook <keescook@chromium.org>, 
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>, Marco Elver <elver@google.com>, 
-	Nick Desaulniers <ndesaulniers@google.com>, Uros Bizjak <ubizjak@gmail.com>, 
-	Andrew Morton <akpm@linux-foundation.org>, Sasha Levin <sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 05/12] iommu/arm-smmu-v3: Support IOMMU_GET_HW_INFO via
+ struct arm_smmu_hw_info
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Will Deacon <will@kernel.org>, acpica-devel@lists.linux.dev,
+ iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+ Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
+ Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Robert Moore <robert.moore@intel.com>, Sudeep Holla <sudeep.holla@arm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Donald Dutile <ddutile@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ Hanjun Guo <guohanjun@huawei.com>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Jerry Snitselaar <jsnitsel@redhat.com>, Moritz Fischer <mdf@kernel.org>,
+ Michael Shavit <mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ patches@lists.linux.dev, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Mostafa Saleh <smostafa@google.com>
+References: <0-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com>
+ <5-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com>
+ <20241104114723.GA11511@willie-the-truck> <20241104124102.GX10193@nvidia.com>
+ <8a5940b0-08f3-48b1-9498-f09f0527a964@arm.com>
+ <20241106180531.GA520535@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <20241106180531.GA520535@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 6, 2024 at 1:40=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> The attribute was added in GCC 4.8, while the minimum GCC version
-> supported by the kernel is GCC 5.1.
->
-> Therefore, remove the check.
+On 2024-11-06 6:05 pm, Jason Gunthorpe wrote:
+> On Wed, Nov 06, 2024 at 04:37:53PM +0000, Robin Murphy wrote:
+>> On 2024-11-04 12:41 pm, Jason Gunthorpe wrote:
+>>> On Mon, Nov 04, 2024 at 11:47:24AM +0000, Will Deacon wrote:
+>>>>> +/**
+>>>>> + * struct iommu_hw_info_arm_smmuv3 - ARM SMMUv3 hardware information
+>>>>> + *                                   (IOMMU_HW_INFO_TYPE_ARM_SMMUV3)
+>>>>> + *
+>>>>> + * @flags: Must be set to 0
+>>>>> + * @__reserved: Must be 0
+>>>>> + * @idr: Implemented features for ARM SMMU Non-secure programming interface
+>>>>> + * @iidr: Information about the implementation and implementer of ARM SMMU,
+>>>>> + *        and architecture version supported
+>>>>> + * @aidr: ARM SMMU architecture version
+>>>>> + *
+>>>>> + * For the details of @idr, @iidr and @aidr, please refer to the chapters
+>>>>> + * from 6.3.1 to 6.3.6 in the SMMUv3 Spec.
+>>>>> + *
+>>>>> + * User space should read the underlying ARM SMMUv3 hardware information for
+>>>>> + * the list of supported features.
+>>>>> + *
+>>>>> + * Note that these values reflect the raw HW capability, without any insight if
+>>>>> + * any required kernel driver support is present. Bits may be set indicating the
+>>>>> + * HW has functionality that is lacking kernel software support, such as BTM. If
+>>>>> + * a VMM is using this information to construct emulated copies of these
+>>>>> + * registers it should only forward bits that it knows it can support.
+>>
+>> But how *is* a VMM supposed to know what it can support?
+> 
+> I answered a related question to Mostafa with an example:
+> 
+> https://lore.kernel.org/linux-iommu/20240903235532.GJ3773488@nvidia.com/
+> 
+> "global" capabilities that are enabled directly from the CD entry
+> would follow the pattern.
+> 
+>> Are they all expected to grovel the host devicetree/ACPI tables and
+>> maintain their own knowledge of implementation errata to understand
+>> what's actually usable?
+> 
+> No, VMMs are expected to only implement base line features we have
+> working today and not blindly add new features based only HW registers
+> reported here.
+> 
+> Each future capability we want to enable at the VMM needs an analysis:
+> 
+>   1) Does it require kernel SW changes, ie like BTM? Then it needs a
+>      kernel_capabilities bit to say the kernel SW exists
+>   2) Does it require data from ACPI/DT/etc? Then it needs a
+>      kernel_capabilities bit
+>   3) Does it need to be "turned on" per VM, ie with a VMS enablement?
+>      Then it needs a new request flag in ALLOC_VIOMMU
+>   4) Otherwise it can be read directly from the idr[] array
+> 
+> This is why the comment above is so stern that the VMM "should only
+> forward bits that it knows it can support".
 
-This is fine for 6.1 in the other thread, but for 5.10 here, it may
-not be immediately obvious it is: GCC 5.1 is not the minimum there,
-but 4.9, since these two are in e.g. v5.10.228:
+So... you're saying this patch is in fact broken, or at least uselessly 
+incomplete, since VMMs aren't allowed to emulate a vSMMU at all without 
+first consulting some other interface which does not exist? Great.
 
-    0bddd227f3dc ("Documentation: update for gcc 4.9 requirement")
-    6ec4476ac825 ("Raise gcc version requirement to 4.9")
+>> S2 tables it its own business. AFAICS, unless the VMM wants to do some
+>> fiddly CD shadowing, it's going to be kinda hard to prevent the SMMU seeing
+>> a guest CD with CD.HA and/or CD.HD set if the guest expects S1 HTTU to work.
+> 
+> If the VMM wrongly indicates HTTU support to the VM, because it
+> wrongly inspected those bits in the idr report, then it is just
+> broken.
 
-So the patch should still be good to apply, but just noting that down.
+What do you mean? We could have a system right now where the hardware is 
+configured with SMMU_IDR0.HTTU=2, but it turned out that atomics were 
+broken in the interconnect so firmware sets the IORT "HTTU override" 
+field is set to 0. We know about that in the kernel, but all a VMM sees 
+is iommu_hw_info_arm_smmuv3.idr[0] indicating HTTU=2. If it is "broken" 
+to take the only information available at face value, assume HTTU is 
+available, and reflect that in a vSMMU interface, then what is the 
+correct thing to do, other than to not dare emulate a vSMMU at all, in 
+fear of a sternly worded comment?
 
-Thanks!
+>> I would say it does. Advertising a feature when we already know it's not
+>> usable at all puts a non-trivial and unnecessary burden on the VMM and VM to
+>> then have to somehow derive that information from other sources, at the risk
+>> of being confused by unexpected behaviour if they don't.
+> 
+> That is not the purpose here, the register report is not to be used as
+> "advertising features". It describes details of the raw HW that the
+> VMM may need to use *some* of the fields.
+> 
+> There are quite a few fields that fit #4 today: OAS, VAX, GRAN, BBML,
+> CD2L, etc.
+> 
+> Basically we will pass most of the bits and mask a few. If we get the
+> masking wrong and pass something we shouldn't, then we've improved
+> nothing compared to this proposal. I think we are likely to get the
+> masking wrong :)
 
-Cheers,
-Miguel
+Seriously? A simple inverse of the feature detection the kernel driver 
+already does for its own needs, implemented once in the same place, is hard?
+
+Compared to maintaining the exact same information within the driver but 
+in some new different form, and also maintaining it in the UAPI, and 
+having every VMM ever all do the same work to put the two together, and 
+always be up to date with the right UAPI, and never ever let any field 
+slip through as-is, especially not all the ones which were RES0 at time 
+of writing, enforced by a sternly worded comment? Why yes, of course I 
+can see how that's trivially easy and carries no risk whatsoever.
+
+>> We sanitise CPU ID registers for userspace and KVM, so I see no compelling
+>> reason for SMMU ID registers to be different.
+> 
+> We discussed this already:
+> 
+> https://lore.kernel.org/linux-iommu/20240904120103.GB3915968@nvidia.com
+> 
+> It is a false comparison, for KVM the kernel is responsible to control
+> the CPU ID registers. Reporting the registers the VM sees to the VMM
+> makes alot of sense. For SMMU the VMM exclusively controls the VM's ID
+> registers.
+
+Pointing out that two things are different is a false comparison because 
+they are different, by virtue of your choice to make them different? 
+Please try making sense.
+
+Your tautology still does not offer any reasoning against doing the 
+logical thing and following the same basic pattern: the kernel uses the 
+ID register mechanism itself to advertise the set of features it's 
+able/willing to support, by sanitising the values it offers to the VMM, 
+combining the notions of hardware and kernel support where the 
+distinction is irrelevant anyway. The VMM is then still free to take 
+those values and hide more features, or potentially add any that it is 
+capable of emulating without the kernel's help, and advertise that final 
+set to the VM. Obviously there are significant *implementation* 
+differences, most notably that the latter VMM->VM part doesn't need to 
+involve IOMMUFD at all since MMIO register emulation can stay entirely 
+in userspace, whereas for CPU system registers the final VM-visible 
+values need to be plugged back in to KVM for it to handle the traps.
+
+We are all asking you to explain why you think doing the kernel->VMM 
+advertisement naturally and intuitively is somehow bad, and forcing VMMs 
+to instead rely on a more complex, fragile, and crucially non-existent 
+additional interface is better. You should take "We discussed this 
+already" as more of a clue to yourself than to me - if 4 different 
+people have all said the exact same thing in so many words, perhaps 
+there's something in it...
+
+And in case I need to spell it out with less sarcasm, "we'll get masking 
+wrong in the kernel" only implies "we'll get kernel_capabilities wrong 
+in the kernel (and elsewhere)", so it's clearly not a useful argument to 
+keep repeating. Besides, as KVM + sysfs + MRS emulation shows, we're 
+pretty experienced at masking ID registers in the kernel. It's not hard 
+to do it right in a robust manner, where particularly with the nature of 
+SMMU features, the only real risk might be forgetting to expose 
+something new once we do actually support it.
+
+> If you still feel strongly about this please let me know by Friday and
+> I will drop the idr[] array from this cycle. We can continue to
+> discuss a solution for the next cycle.
+
+It already can't work as-is, I don't see how making it even more broken 
+would help. IMO it doesn't seem like a good idea to be merging UAPI at 
+all while it's still clearly incomplete and by its own definition unusable.
+
+Thanks,
+Robin.
