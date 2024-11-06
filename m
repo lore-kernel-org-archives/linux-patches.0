@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0032B1DF252;
-	Wed,  6 Nov 2024 12:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9391DF24B;
+	Wed,  6 Nov 2024 12:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895951; cv=none; b=mhPdmRdTs3dFMfpRQdy+x70zUc6Cn5H9l+8HD7+0l4rK/T3UTZtieNpGsPtn+UMvzPZmhgHJq565Mt2t+r6qLxqENcb64+q1sQypCQSJGH+PCqTAtEfLaArwcQHEka3hLXOE6bP+FApbA8Lt3Nk7MuJWuOG/giJqWvXWYlyfBUI=
+	t=1730895954; cv=none; b=WuPum9yNTq4Sb+OCG5hBH8EoqWPmPeu4eht2a3pFF+EuQXZPXtyYYHPBTuTYp4G8AwQ7IlruC1hFwy2XkT10rzND0eSN/aQ6UWxS42ymGU+4Ga3X9VyXIupqhE7AKXXH6vX7f0ye2XfmPjjotDrBbwGpO11NZmzorhzCLe8NoYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895951; c=relaxed/simple;
-	bh=eR+R1e0kwLrWpPnOkUC+7b13PpmDdEXPm5qUTZVx0/E=;
+	s=arc-20240116; t=1730895954; c=relaxed/simple;
+	bh=KePHUj2f/ZWIPHroLTvUsfbyFhVZr799O7g3fzSShCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptUO/fz+N9BK3dKjvPdSYuebfFK0GixsjMW/QXKFk7KJWXFrYy6MlAgwphQggFzFR35jjuCeIlio8Onhueiw4eOZv04pwvov+Ip1LP3xw2P2jzw1vWY+EvbGqQ8peZJUNcJftr3WEfsjoMqdFbIp8wwZXY5G1TrPXU8JnNR7uz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j91JaHqV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eqX+ny0PsA9+ZMn8Eh2D/RLz6GrtFnc4V+g4fXc8DY7qPQMWYR6qpQ0fQMML+b8gbdnTdDPE0FXxy4CPJ8G8Ys4dwyWGWc73h/jIwIXtAzuY0px/01rt+Cu4a/O0WWcx1ZqqXKYYbBJrIwV80unwr2XESvq++gMMt0mbpX11Xco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5zVfEfR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j91JaHqV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B04BC4CECD;
-	Wed,  6 Nov 2024 12:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5zVfEfR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74356C4CECD;
+	Wed,  6 Nov 2024 12:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895950;
-	bh=eR+R1e0kwLrWpPnOkUC+7b13PpmDdEXPm5qUTZVx0/E=;
+	s=korg; t=1730895953;
+	bh=KePHUj2f/ZWIPHroLTvUsfbyFhVZr799O7g3fzSShCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j91JaHqVkxPSjic8pYgNWth71n12PxZ9G7n7ZvjWrMAIjvVfVTcV9mfROaRa+KB08
-	 Iib5EjMNZ/goGbmkkc6hvuEv4Y4KpGh1tzipjSTM2bC58phnHvaNGVMf6puiaAcLUf
-	 AULc9Z4uQwVR/cRfnKmnivUAVig9Ugw9zNA+nyfY=
+	b=M5zVfEfRnhnOtzqkXz8WJi7lj2tIeQPl9CQYgHL4vnbjXV0zwxpF0FdTMY4TGFRQC
+	 G17fgoGYx6xPNsIpC8e2dFeyW9bCQ4jOsSh9O98P6Cg6usZMuXA9VK4A8xrUWVPTsB
+	 /GerCZw1ADe4cBoUjsVH3QMwYnyIUMn/XU/JNkOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 004/245] spi: geni-qcom: Fix boot warning related to pm_runtime and devres
-Date: Wed,  6 Nov 2024 13:00:57 +0100
-Message-ID: <20241106120319.351159236@linuxfoundation.org>
+Subject: [PATCH 6.11 005/245] slub/kunit: fix a WARNING due to unwrapped __kmalloc_cache_noprof
+Date: Wed,  6 Nov 2024 13:00:58 +0100
+Message-ID: <20241106120319.376694538@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -53,85 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georgi Djakov <djakov@kernel.org>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit d0ccf760a405d243a49485be0a43bd5b66ed17e2 ]
+[ Upstream commit 2b059d0d1e624adc6e69a754bc48057f8bf459dc ]
 
-During boot, users sometimes observe the following warning:
+'modprobe slub_kunit' will have a warning as shown below. The root cause
+is that __kmalloc_cache_noprof was directly used, which resulted in no
+alloc_tag being allocated. This caused current->alloc_tag to be null,
+leading to a warning in alloc_tag_add_check.
 
-[7.841431] WARNING: CPU: 4 PID: 492 at
-drivers/interconnect/core.c:685 __icc_enable
-(drivers/interconnect/core.c:685 (discriminator 7))
-[..]
-[7.841541] Call trace:
-[7.841542] __icc_enable (drivers/interconnect/core.c:685 (discriminator 7))
-[7.841545] icc_disable (drivers/interconnect/core.c:708)
-[7.841547] geni_icc_disable (drivers/soc/qcom/qcom-geni-se.c:862)
-[7.841553] spi_geni_runtime_suspend+0x3c/0x4c spi_geni_qcom
+Let's add an alloc_hook layer to __kmalloc_cache_noprof specifically
+within lib/slub_kunit.c, which is the only user of this internal slub
+function outside kmalloc implementation itself.
 
-This occurs when the spi-geni driver receives an -EPROBE_DEFER error
-from spi_geni_grab_gpi_chan(), causing devres to start releasing all
-resources as shown below:
+[58162.947016] WARNING: CPU: 2 PID: 6210 at
+./include/linux/alloc_tag.h:125 alloc_tagging_slab_alloc_hook+0x268/0x27c
+[58162.957721] Call trace:
+[58162.957919]  alloc_tagging_slab_alloc_hook+0x268/0x27c
+[58162.958286]  __kmalloc_cache_noprof+0x14c/0x344
+[58162.958615]  test_kmalloc_redzone_access+0x50/0x10c [slub_kunit]
+[58162.959045]  kunit_try_run_case+0x74/0x184 [kunit]
+[58162.959401]  kunit_generic_run_threadfn_adapter+0x2c/0x4c [kunit]
+[58162.959841]  kthread+0x10c/0x118
+[58162.960093]  ret_from_fork+0x10/0x20
+[58162.960363] ---[ end trace 0000000000000000 ]---
 
-[7.138679] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_icc_release (8 bytes)
-[7.138751] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_icc_release (8 bytes)
-[7.138827] geni_spi 880000.spi: DEVRES REL ffff800081443800 pm_runtime_disable_action (16 bytes)
-[7.139494] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_pm_opp_config_release (16 bytes)
-[7.139512] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_spi_release_controller (8 bytes)
-[7.139516] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_clk_release (16 bytes)
-[7.139519] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_ioremap_release (8 bytes)
-[7.139524] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_region_release (24 bytes)
-[7.139527] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_kzalloc_release (22 bytes)
-[7.139530] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_pinctrl_release (8 bytes)
-[7.139539] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_kzalloc_release (40 bytes)
-
-The issue here is that pm_runtime_disable_action() results in a call to
-spi_geni_runtime_suspend(), which attempts to suspend the device and
-disable an interconnect path that devm_icc_release() has just released.
-
-Resolve this by calling geni_icc_get() before enabling runtime PM. This
-approach ensures that when devres releases resources in reverse order,
-it will start with pm_runtime_disable_action(), suspending the device,
-and then proceed to free the remaining resources.
-
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/r/CA+G9fYtsjFtddG8i+k-SpV8U6okL0p4zpsTiwGfNH5GUA8dWAA@mail.gmail.com
-Fixes: 89e362c883c6 ("spi: geni-qcom: Undo runtime PM changes at driver exit time")
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
-Link: https://patch.msgid.link/20241008231615.430073-1-djakov@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Fixes: a0a44d9175b3 ("mm, slab: don't wrap internal functions with alloc_hooks()")
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-geni-qcom.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ lib/slub_kunit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 6f4057330444d..fa967be4f9a17 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -1108,6 +1108,11 @@ static int spi_geni_probe(struct platform_device *pdev)
- 	init_completion(&mas->tx_reset_done);
- 	init_completion(&mas->rx_reset_done);
- 	spin_lock_init(&mas->lock);
-+
-+	ret = geni_icc_get(&mas->se, NULL);
-+	if (ret)
-+		return ret;
-+
- 	pm_runtime_use_autosuspend(&pdev->dev);
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, 250);
- 	ret = devm_pm_runtime_enable(dev);
-@@ -1117,9 +1122,6 @@ static int spi_geni_probe(struct platform_device *pdev)
- 	if (device_property_read_bool(&pdev->dev, "spi-slave"))
- 		spi->target = true;
+diff --git a/lib/slub_kunit.c b/lib/slub_kunit.c
+index e6667a28c0149..af5b9c41d5b30 100644
+--- a/lib/slub_kunit.c
++++ b/lib/slub_kunit.c
+@@ -140,7 +140,7 @@ static void test_kmalloc_redzone_access(struct kunit *test)
+ {
+ 	struct kmem_cache *s = test_kmem_cache_create("TestSlub_RZ_kmalloc", 32,
+ 				SLAB_KMALLOC|SLAB_STORE_USER|SLAB_RED_ZONE);
+-	u8 *p = __kmalloc_cache_noprof(s, GFP_KERNEL, 18);
++	u8 *p = alloc_hooks(__kmalloc_cache_noprof(s, GFP_KERNEL, 18));
  
--	ret = geni_icc_get(&mas->se, NULL);
--	if (ret)
--		return ret;
- 	/* Set the bus quota to a reasonable value for register access */
- 	mas->se.icc_paths[GENI_TO_CORE].avg_bw = Bps_to_icc(CORE_2X_50_MHZ);
- 	mas->se.icc_paths[CPU_TO_GENI].avg_bw = GENI_DEFAULT_BW;
+ 	kasan_disable_current();
+ 
 -- 
 2.43.0
 
