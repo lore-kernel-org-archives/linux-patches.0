@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B711DF24D;
-	Wed,  6 Nov 2024 12:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B151DF24E;
+	Wed,  6 Nov 2024 12:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894889; cv=none; b=YsRFf6fzCdopcFLykAzp9JkIjHssgYddA1q3CF9pAzeaquZbdVzMcsqLZtLAMVB6/9RckKoDa2jWnD2NhtfQOF7qJFGcAuhFWBlgPoSLxIZa+LLgWYfKLYIxHKF5f6CklNErRJrHIYhCHcTmmgEsYJwbLPDtQxWWughgvqHsV+k=
+	t=1730894892; cv=none; b=DpF5e7xHk5b4XhmABrz0I1MdrcHpbW3kArvoIInesMqiSeg2XQAE59XhSoA/YHkaGXKAFYC2f/DPRk269zCSVCPpt6pVks8/qTPvI9hXOwFos6/HkbUz3QOADKPQ0wsE+rIPLRI0taP1kq9+WnkaDe7o2Wl4V8iyAxCrIoI2t60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894889; c=relaxed/simple;
-	bh=+fwIoVPk+oWWNS82mXLD4lf6cTbe4tZ3O8AdwAonA2M=;
+	s=arc-20240116; t=1730894892; c=relaxed/simple;
+	bh=1j0FbNtYGZic4dXTBRjkpMoON2cm8L1VZXjvaDjs9k8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uFU6Ffq3QpM78aNHQu2NUgL2iZ/pI1MSRX0pqYewPf6dd0JjLDyJHETY/Zf/I25exvsbXgwc8FOTZbjKoGKyDQh0eDZnpe7PgCqM9IfooXxxX6OK5Jxhct4sursz8nrFLsjiBR32ZdijEyoUQgtUbFD9dOgsYyAJcUYdH+F9OGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zg47b0+0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pumOzF2mqfk5L2qKQxfUNubP18+vzumLv7xEkRPKZNSGosX4JnYY5VXoqK8upG0xL4VZwU4g9nAt1/oa6uM7ManWt5Vwtmwk/pXoZbVCrUmREE5tp6DMJuWWc+Z2p0TSZ57a04Q9+Lh7MsC6rB+FubjIxsy6gcqwTeN5F7TpIN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGHfJ/Ge; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zg47b0+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C12DC4CECD;
-	Wed,  6 Nov 2024 12:08:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGHfJ/Ge"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B08C4CECD;
+	Wed,  6 Nov 2024 12:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894888;
-	bh=+fwIoVPk+oWWNS82mXLD4lf6cTbe4tZ3O8AdwAonA2M=;
+	s=korg; t=1730894891;
+	bh=1j0FbNtYGZic4dXTBRjkpMoON2cm8L1VZXjvaDjs9k8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zg47b0+0XnDZSmUYNldIUG6OgT/MlIsK3U+JFj8k2vei55QKJdAKOzxCPIqnUmWla
-	 X1PK+7rLjdk0pO0qbb1uQs+1Y18V9EuKPtxAoEveFbI05L52dyTwwRke6SnamOz7mv
-	 GFN8XuC2LQvUckxEdOyQDAPlONcbZz8XFr5VfpZI=
+	b=EGHfJ/Ge0cyTlkEBDhP18Q2t9YbvTdPoFVrdomygZ3WPUTxXXpvka3to7IIDZ12Ys
+	 QaAj/lIZEnf2F1G0Sd6wod9poYzAedofZEZtq7xyeoLe7HQxfT0X0uLRy9I0QrLxW9
+	 2NAw4M96z3Zjz1oEVyvJzNXIDlkoaqFWtABb3J9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+1a3986bbd3169c307819@syzkaller.appspotmail.com,
 	Dmitry Antipov <dmantipov@yandex.ru>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 033/350] wifi: cfg80211: fix two more possible UBSAN-detected off-by-one errors
-Date: Wed,  6 Nov 2024 12:59:21 +0100
-Message-ID: <20241106120321.699368042@linuxfoundation.org>
+Subject: [PATCH 4.19 034/350] wifi: mac80211: use two-phase skb reclamation in ieee80211_do_stop()
+Date: Wed,  6 Nov 2024 12:59:22 +0100
+Message-ID: <20241106120321.724391616@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -53,52 +54,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 15ea13b1b1fbf6364d4cd568e65e4c8479632999 ]
+[ Upstream commit 9d301de12da6e1bb069a9835c38359b8e8135121 ]
 
-Although not reproduced in practice, these two cases may be
-considered by UBSAN as off-by-one errors. So fix them in the
-same way as in commit a26a5107bc52 ("wifi: cfg80211: fix UBSAN
-noise in cfg80211_wext_siwscan()").
+Since '__dev_queue_xmit()' should be called with interrupts enabled,
+the following backtrace:
 
-Fixes: 807f8a8c3004 ("cfg80211/nl80211: add support for scheduled scans")
-Fixes: 5ba63533bbf6 ("cfg80211: fix alignment problem in scan request")
+ieee80211_do_stop()
+ ...
+ spin_lock_irqsave(&local->queue_stop_reason_lock, flags)
+ ...
+ ieee80211_free_txskb()
+  ieee80211_report_used_skb()
+   ieee80211_report_ack_skb()
+    cfg80211_mgmt_tx_status_ext()
+     nl80211_frame_tx_status()
+      genlmsg_multicast_netns()
+       genlmsg_multicast_netns_filtered()
+        nlmsg_multicast_filtered()
+	 netlink_broadcast_filtered()
+	  do_one_broadcast()
+	   netlink_broadcast_deliver()
+	    __netlink_sendskb()
+	     netlink_deliver_tap()
+	      __netlink_deliver_tap_skb()
+	       dev_queue_xmit()
+	        __dev_queue_xmit() ; with IRQS disabled
+ ...
+ spin_unlock_irqrestore(&local->queue_stop_reason_lock, flags)
+
+issues the warning (as reported by syzbot reproducer):
+
+WARNING: CPU: 2 PID: 5128 at kernel/softirq.c:362 __local_bh_enable_ip+0xc3/0x120
+
+Fix this by implementing a two-phase skb reclamation in
+'ieee80211_do_stop()', where actual work is performed
+outside of a section with interrupts disabled.
+
+Fixes: 5061b0c2b906 ("mac80211: cooperate more with network namespaces")
+Reported-by: syzbot+1a3986bbd3169c307819@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1a3986bbd3169c307819
 Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Link: https://patch.msgid.link/20240909090806.1091956-1-dmantipov@yandex.ru
+Link: https://patch.msgid.link/20240906123151.351647-1-dmantipov@yandex.ru
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 3 ++-
- net/wireless/sme.c     | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ net/mac80211/iface.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index ebd8449f2fcf1..f3f01ab1abd38 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -7578,7 +7578,8 @@ nl80211_parse_sched_scan(struct wiphy *wiphy, struct wireless_dev *wdev,
- 		return ERR_PTR(-ENOMEM);
- 
- 	if (n_ssids)
--		request->ssids = (void *)&request->channels[n_channels];
-+		request->ssids = (void *)request +
-+			struct_size(request, channels, n_channels);
- 	request->n_ssids = n_ssids;
- 	if (ie_len) {
- 		if (n_ssids)
-diff --git a/net/wireless/sme.c b/net/wireless/sme.c
-index ebc73faa8fb18..4e6afb765e815 100644
---- a/net/wireless/sme.c
-+++ b/net/wireless/sme.c
-@@ -116,7 +116,8 @@ static int cfg80211_conn_scan(struct wireless_dev *wdev)
- 		n_channels = i;
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 358028a09ce4d..433083cc15331 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -798,6 +798,7 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata,
+ {
+ 	struct ieee80211_local *local = sdata->local;
+ 	unsigned long flags;
++	struct sk_buff_head freeq;
+ 	struct sk_buff *skb, *tmp;
+ 	u32 hw_reconf_flags = 0;
+ 	int i, flushed;
+@@ -996,18 +997,32 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata,
+ 		skb_queue_purge(&sdata->skb_queue);
  	}
- 	request->n_channels = n_channels;
--	request->ssids = (void *)&request->channels[n_channels];
-+	request->ssids = (void *)request +
-+		struct_size(request, channels, n_channels);
- 	request->n_ssids = 1;
  
- 	memcpy(request->ssids[0].ssid, wdev->conn->params.ssid,
++	/*
++	 * Since ieee80211_free_txskb() may issue __dev_queue_xmit()
++	 * which should be called with interrupts enabled, reclamation
++	 * is done in two phases:
++	 */
++	__skb_queue_head_init(&freeq);
++
++	/* unlink from local queues... */
+ 	spin_lock_irqsave(&local->queue_stop_reason_lock, flags);
+ 	for (i = 0; i < IEEE80211_MAX_QUEUES; i++) {
+ 		skb_queue_walk_safe(&local->pending[i], skb, tmp) {
+ 			struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+ 			if (info->control.vif == &sdata->vif) {
+ 				__skb_unlink(skb, &local->pending[i]);
+-				ieee80211_free_txskb(&local->hw, skb);
++				__skb_queue_tail(&freeq, skb);
+ 			}
+ 		}
+ 	}
+ 	spin_unlock_irqrestore(&local->queue_stop_reason_lock, flags);
+ 
++	/* ... and perform actual reclamation with interrupts enabled. */
++	skb_queue_walk_safe(&freeq, skb, tmp) {
++		__skb_unlink(skb, &freeq);
++		ieee80211_free_txskb(&local->hw, skb);
++	}
++
+ 	if (sdata->vif.type == NL80211_IFTYPE_AP_VLAN)
+ 		ieee80211_txq_remove_vlan(local, sdata);
+ 
 -- 
 2.43.0
 
