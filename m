@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946D918C00E;
-	Wed,  6 Nov 2024 12:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7A818C00E;
+	Wed,  6 Nov 2024 12:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896138; cv=none; b=g84uzGo4rH01M6/M5NyO+yXDggob/Hmh6+qXh/3E0edeMGCLgzimVXkLMGsPzfwSoDVcIDtMYTw2QpjAcqsaK9EeT02rmeTvtTauq7+q4orp3nGY++8KzC18KQK30SdRkwjIv1UcpkPSNpVRG+QXtcvufRoXiizJph2jaHvRXgo=
+	t=1730896141; cv=none; b=iogv0vaeP6ONQIJ5btZQ8IziTZX4cCRu3IXIFM6sgI/UO1Sd1vU4be2aX5XKYHsS+dIkTaVz1kQj53byUheEN6Rz6kfiRSfJZE+WYJE+4Rorx37p9DkZodrRELBQI84mxBFE86rRWNYIayO9hWpVqFO2ytUVkHrhrU2IVvm9/cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896138; c=relaxed/simple;
-	bh=tMRnWglhvRkuWySe2zFEGqBqftBIRiLEnqbHdQgDfO0=;
+	s=arc-20240116; t=1730896141; c=relaxed/simple;
+	bh=yAdDY4AptvFIBCEyk5xQ26SeyI+a891UHVyVB9gm8ZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SDZaNAhf5BwKnPx51WqLW/Q8OwjKQ8Duf2SCsPTBfIyLrg1fLfkS6bGjYD+PgxiDRagXSaR+8PE+vBld507qE2j3vmdJnKH+VT7+2qJpSxWhqcsExKR7B8173UMVWhx5vsapR0yNGSWe+rJ5NBqppe0wHqCSoXUMlriyHIFnHoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVV/jlFF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jt0SziLfX9bkXkM10v75LV83zq2OQqYSfKSK1j8c4v9lo3rOBN9hEu/Nw3oe9fxG1S/GGGHPQbtsbGWw5I+0k8hsWIOd2GT5KOEJ/Cil18MvDiORfOjh3D9jiibtHW8x3UEcWYDRwoGqUrwgOxtoa3HU3amAI9mOucE8JEznUTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cgngmUx2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVV/jlFF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF39C4CECD;
-	Wed,  6 Nov 2024 12:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgngmUx2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05640C4CECD;
+	Wed,  6 Nov 2024 12:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896138;
-	bh=tMRnWglhvRkuWySe2zFEGqBqftBIRiLEnqbHdQgDfO0=;
+	s=korg; t=1730896141;
+	bh=yAdDY4AptvFIBCEyk5xQ26SeyI+a891UHVyVB9gm8ZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iVV/jlFFlpisozSd2G8QztoTXfNm4NXrw6vwDb0L3kbYTJXSHX7xbgAfVHGO3RR2A
-	 OLsqv2u15P1B43FzIDrLgiZ39ta+7Rkr4PMlKb7HC19Tveh9yHV1ervJ2uCLKpYgDR
-	 XEWPrbjR9iViGDCc7H9jciKtwATzT0Kkbbk3dkDo=
+	b=cgngmUx22mV1/VCLmC3EleqfY/z8CMklC1syVS9X32FAAeW7I/0G7NckB4gJCzh+d
+	 kFiRoVbd1ThSp9s6naG79OspQYbSrChLLZBu/sGkcp1ha9+dIFmWfd+z0HmMq0iGpY
+	 o2TRq28aEgRTvE9/E/85+QV0EHg3Dp2CzxFy1v/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Olga Kornievskaia <okorniev@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 102/245] NFSD: Initialize struct nfsd4_copy earlier
-Date: Wed,  6 Nov 2024 13:02:35 +0100
-Message-ID: <20241106120321.725587229@linuxfoundation.org>
+Subject: [PATCH 6.11 103/245] NFSD: Never decrement pending_async_copies on error
+Date: Wed,  6 Nov 2024 13:02:36 +0100
+Message-ID: <20241106120321.752292023@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -54,41 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 63fab04cbd0f96191b6e5beedc3b643b01c15889 ]
+[ Upstream commit 8286f8b622990194207df9ab852e0f87c60d35e9 ]
 
-Ensure the refcount and async_copies fields are initialized early.
-cleanup_async_copy() will reference these fields if an error occurs
-in nfsd4_copy(). If they are not correctly initialized, at the very
-least, a refcount underflow occurs.
+The error flow in nfsd4_copy() calls cleanup_async_copy(), which
+already decrements nn->pending_async_copies.
 
 Reported-by: Olga Kornievskaia <okorniev@redhat.com>
 Fixes: aadc3bbea163 ("NFSD: Limit the number of concurrent async COPY operations")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Tested-by: Olga Kornievskaia <okorniev@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfsd/nfs4proc.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 5768b2ff1d1d1..81a1e3bf06b97 100644
+index 81a1e3bf06b97..8b78d493e301f 100644
 --- a/fs/nfsd/nfs4proc.c
 +++ b/fs/nfsd/nfs4proc.c
-@@ -1838,14 +1838,14 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- 		if (!async_copy)
- 			goto out_err;
- 		async_copy->cp_nn = nn;
-+		INIT_LIST_HEAD(&async_copy->copies);
-+		refcount_set(&async_copy->refcount, 1);
+@@ -1842,10 +1842,8 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		refcount_set(&async_copy->refcount, 1);
  		/* Arbitrary cap on number of pending async copy operations */
  		if (atomic_inc_return(&nn->pending_async_copies) >
- 				(int)rqstp->rq_pool->sp_nrthreads) {
- 			atomic_dec(&nn->pending_async_copies);
+-				(int)rqstp->rq_pool->sp_nrthreads) {
+-			atomic_dec(&nn->pending_async_copies);
++				(int)rqstp->rq_pool->sp_nrthreads)
  			goto out_err;
- 		}
--		INIT_LIST_HEAD(&async_copy->copies);
--		refcount_set(&async_copy->refcount, 1);
+-		}
  		async_copy->cp_src = kmalloc(sizeof(*async_copy->cp_src), GFP_KERNEL);
  		if (!async_copy->cp_src)
  			goto out_err;
