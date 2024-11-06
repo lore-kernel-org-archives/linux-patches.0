@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8CE1DF992;
-	Wed,  6 Nov 2024 12:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C401DFE25;
+	Wed,  6 Nov 2024 12:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896565; cv=none; b=MTjkqBmYNoo7FSLhpuApqaP02Ssc25bQK/EpKkme4D3iaJU7VkF3HQHNRmiRHLyq6sl3/8QGOcpZ5T+YgGfD6nSF5oQ58dRj8BgVCJeNGvxVOmY7xhK+VZYLkC56oAzfahl0Nmh+Y4lnzImkIR0N0ivL3tyMdAiNGJBrbhNUT68=
+	t=1730896568; cv=none; b=qrmPUrgHjGVHxs36svBu8luX10JXQ261uXXeprRDmitMLftWQTsBxHM9mmYNgT5nWE1iu+lVEwtbir6vxZOwxyP7pyelXjcGUKTJMoVEJUeIXSCWVC5d/U/YJFrRl1FKDIWkiuHUixpc+avATo7+i5h7qPyar9HWchFEM2Zo/4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896565; c=relaxed/simple;
-	bh=ZIcg5deJz95cjLrw/Jm6ksG/YxH/gyBWioMDyyNGIjQ=;
+	s=arc-20240116; t=1730896568; c=relaxed/simple;
+	bh=0SmdqOLdbx1J/FB83drLD60suDBMHSalQM4rQ6UulH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iq9oSZv43ZqNAV7/vS77sUlX0OMbHFDLbEVleQUK9vfnK+HmUGWWDsuFNcaZEIQ9c9PpJZ13lPA2LoG6Dlhp943mjKsLJDVg+y1ioj2XmzyCjmun3GV1WGvAdFAdWIjAhbRLV22cozKpH4hYpuErZoFiHT4zldUAZW0XHKsTZ3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gz9DOFnx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bmgKUyf/u/pHZMqjBi3CeoFd05Ih2g54S0RJyrfX4dvTK5ht0IuiquNdLHWkqUxEVHI2Sxfpffn8GwTUyFk22MpJ0yLDih0VsrWeRjkY35c5ApIPcaNjKq6h4HczSIK7GhCMpyc30To+vr8GNo2RYaqxKXaAZrVMpqbILkOy2m0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7eVb+9R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gz9DOFnx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4AC8C4CECD;
-	Wed,  6 Nov 2024 12:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7eVb+9R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7F4C4CECD;
+	Wed,  6 Nov 2024 12:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896565;
-	bh=ZIcg5deJz95cjLrw/Jm6ksG/YxH/gyBWioMDyyNGIjQ=;
+	s=korg; t=1730896568;
+	bh=0SmdqOLdbx1J/FB83drLD60suDBMHSalQM4rQ6UulH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gz9DOFnx2AvJfmGlfvnlLjnho0TOQa+jRkEl1T+rr5eLCgZ+Tr5lINJHXBLzZ4Z+g
-	 TIklMHgOTmalo7Sti4VC3jtJnaxC7aTmAd7aih/XNDgnUxo1ZPkvIlEdft3TlCCalw
-	 1GG7GumhNkCt+cFK2v3oDvvZATRFakrc0cVNXGeQ=
+	b=Q7eVb+9RSghn62NuR/0DmxM/T/qK0BEnoBaOEd8s7lxurS9yCumK664RZzSeBXiV7
+	 HjWdYIoJR/BDQLot8sK+Hhl3iQZe9PWNXJCm4BojCCgdFPFq39WZaq2IwsvhgQC2V/
+	 eJCKdmGs12YKWA6JdWwZhXenyRVIegbwDkW3XS8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>
-Subject: [PATCH 6.11 245/245] drm/amdgpu: handle default profile on on devices without fullscreen 3D
-Date: Wed,  6 Nov 2024 13:04:58 +0100
-Message-ID: <20241106120325.302774561@linuxfoundation.org>
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>
+Subject: [PATCH 6.11 236/245] drm/xe: Move enable host l2 VRAM post MCR init
+Date: Wed,  6 Nov 2024 13:04:49 +0100
+Message-ID: <20241106120325.075446624@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -51,51 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Tejas Upadhyay <tejas.upadhyay@intel.com>
 
-commit 7c210ca5a2d72868e5a052fc533d5dcb7e070f89 upstream.
+commit ab0d6ef864c5fa820e894ee1a07f861e63851664 upstream.
 
-Some devices do not support fullscreen 3D.
+xe_gt_enable_host_l2_vram() is reading the XE2_GAMREQSTRM_CTRL register
+that is currently missing the MCR annotation. However, just adding the
+annotation doesn't work as this function is called before MCR handling
+is initialized in xe_gt_mcr_init().
 
-v2: Make the check generic.
+xe_gt_enable_host_l2_vram() is used to implement WA 16023588340 that
+needs to be done as early as possible during initialization in order to
+be effective since the MMIO writes impact it. In the failure scenario,
+driver would simply not be able to bind successfully.
 
-Fixes: ec1aab7816b0 ("drm/amdgpu/swsmu: default to fullscreen 3D profile for dGPUs")
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Kenneth Feng <kenneth.feng@amd.com>
-Cc: Lijo Lazar <lijo.lazar@amd.com>
-(cherry picked from commit 1cdd67510e54e3832f14a885dbf5858584558650)
+Moving xe_gt_enable_host_l2_vram() later, after MCR initialization is
+done, only incurs a few additional HW accesses, particularly when
+loading GuC for hwconfig. Binding/unbinding the driver 100 times in BMG
+still works so it should be ok to start handling the WA a little bit
+later. This is sufficient to allow adding the MCR annotation to
+XE2_GAMREQSTRM_CTRL.
+
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240814095614.909774-2-tejas.upadhyay@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_gt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-@@ -1234,6 +1234,14 @@ static void smu_init_xgmi_plpd_mode(stru
- 	}
- }
+--- a/drivers/gpu/drm/xe/xe_gt.c
++++ b/drivers/gpu/drm/xe/xe_gt.c
+@@ -555,7 +555,6 @@ int xe_gt_init_hwconfig(struct xe_gt *gt
  
-+static bool smu_is_workload_profile_available(struct smu_context *smu,
-+					      u32 profile)
-+{
-+	if (profile >= PP_SMC_POWER_PROFILE_COUNT)
-+		return false;
-+	return smu->workload_map && smu->workload_map[profile].valid_mapping;
-+}
-+
- static int smu_sw_init(void *handle)
- {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
-@@ -1265,7 +1273,8 @@ static int smu_sw_init(void *handle)
- 	smu->workload_prority[PP_SMC_POWER_PROFILE_COMPUTE] = 5;
- 	smu->workload_prority[PP_SMC_POWER_PROFILE_CUSTOM] = 6;
+ 	xe_gt_mcr_init_early(gt);
+ 	xe_pat_init(gt);
+-	xe_gt_enable_host_l2_vram(gt);
  
--	if (smu->is_apu)
-+	if (smu->is_apu ||
-+	    !smu_is_workload_profile_available(smu, PP_SMC_POWER_PROFILE_FULLSCREEN3D))
- 		smu->workload_mask = 1 << smu->workload_prority[PP_SMC_POWER_PROFILE_BOOTUP_DEFAULT];
- 	else
- 		smu->workload_mask = 1 << smu->workload_prority[PP_SMC_POWER_PROFILE_FULLSCREEN3D];
+ 	err = xe_uc_init(&gt->uc);
+ 	if (err)
+@@ -567,6 +566,7 @@ int xe_gt_init_hwconfig(struct xe_gt *gt
+ 
+ 	xe_gt_topology_init(gt);
+ 	xe_gt_mcr_init(gt);
++	xe_gt_enable_host_l2_vram(gt);
+ 
+ out_fw:
+ 	xe_force_wake_put(gt_to_fw(gt), XE_FW_GT);
 
 
