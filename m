@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA251EC012;
-	Wed,  6 Nov 2024 13:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCC313AD11;
+	Wed,  6 Nov 2024 13:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898941; cv=none; b=LMSqK1Zwxpx9D+s+ci0bf4hqmAigeZ0HETCO6qXGbEi0K2vF4x6EcyROSi2xz10sW063g+qdSyaWPrJKmMRCKOSaSoGmmlK54eigdFbZOy2jhswF6PKiJdBTyVltDYXE+vv4K/WHIiYwo/dlZX/ihZ0Y8stYWWWcheuH3m/6IOQ=
+	t=1730898944; cv=none; b=dUAw1/HAo5cC7dvhr1lT/7AxJDGb0Gv3lffdoH3UlqMNyBuzhxvmy2RGA4YlC05kIiNxjgNGfJNBmxNyrt47V3ZqvSoLtfQ/imPaQHL7t2hyBJNJ4Muh7a0VQ8aFSEUTOoguIamHAOCrIE0tqXH1bNSn4WJ18Ic9BLomEpbfzC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898941; c=relaxed/simple;
-	bh=t8gItfgTXcNe0ov2nbUhcJNbSAlqYvSVyZSt9kTuHdQ=;
+	s=arc-20240116; t=1730898944; c=relaxed/simple;
+	bh=914iGohhaNqac4wz4q02EVLq88qNIGdb0PqfiCDvDKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X9TcoDdJxf2RDLMWqXYYMms394CtFj1z/n4AqlGOdDi4VtVtdE7q/6kzy7pkAuHC7O6UsBBulWX2eCvJxjc++ZoghJ3eKEdPgeDQS3QI072+M3TY6tyRceJkSTZtgMUn7ZHKgiy2cnMwlq4DlPm1UeMpAnta5OVO4PtudWxjf9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHHoRc9q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QczBmBt3lB3NcsQN8htOmx3EXYFHmuJ7rYjGenPyXUuq8JK+UHd0e6e4jNKCgbALGEx9Ou/pYS4ZXBIhJBk7ruXfITcwuxRkYOGwBaYQb/qWffgiPvaNLc9MSkgq0tDZlvjlESmBSvbhFPsJg8Wog7Wswy9/7C8T3CtFNDEjoC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkH9thPf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHHoRc9q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DFDC4CECD;
-	Wed,  6 Nov 2024 13:15:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkH9thPf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF83FC4CECD;
+	Wed,  6 Nov 2024 13:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898941;
-	bh=t8gItfgTXcNe0ov2nbUhcJNbSAlqYvSVyZSt9kTuHdQ=;
+	s=korg; t=1730898944;
+	bh=914iGohhaNqac4wz4q02EVLq88qNIGdb0PqfiCDvDKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHHoRc9qAPbSN38d95a/ngMKlOpABuyLKR7QH8UroQfNeatgwTYVlxqvthdFyMNk+
-	 vpShtcn+jOAoCwknUNg77nBiXVrBPvdt9aG/9cL9lXeq8/6TNrQLS6HuaX7GuHO5J5
-	 ahpQGrU2W8GiYcSXUk1rNzRHAknu4+MNFMsV5pOc=
+	b=ZkH9thPfeYiiSpUZIAwcwz6APagzI0e/RvNTaq4q+zsDhQgg8/8XRFOshbmX1Ucjg
+	 lKi+EmUrzzw84aZNlGZATPlEh/X9jAPErU3CHeRzJSIcRB0JUi0B2LT25rRTB+3A42
+	 TdzNHF+aepP6fj/IgRWl24du5iVbIcFekZxjwHVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Wang Hai <wanghai38@huawei.com>,
+	Simon Horman <horms@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 407/462] tracing: Consider the NULL character when validating the event length
-Date: Wed,  6 Nov 2024 13:05:00 +0100
-Message-ID: <20241106120341.575749777@linuxfoundation.org>
+Subject: [PATCH 5.4 408/462] net/sun3_82586: fix potential memory leak in sun3_82586_send_packet()
+Date: Wed,  6 Nov 2024 13:05:01 +0100
+Message-ID: <20241106120341.601146164@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,40 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit 0b6e2e22cb23105fcb171ab92f0f7516c69c8471 ]
+[ Upstream commit 2cb3f56e827abb22c4168ad0c1bbbf401bb2f3b8 ]
 
-strlen() returns a string length excluding the null byte. If the string
-length equals to the maximum buffer length, the buffer will have no
-space for the NULL terminating character.
+The sun3_82586_send_packet() returns NETDEV_TX_OK without freeing skb
+in case of skb->len being too long, add dev_kfree_skb() to fix it.
 
-This commit checks this condition and returns failure for it.
-
-Link: https://lore.kernel.org/all/20241007144724.920954-1-leo.yan@arm.com/
-
-Fixes: dec65d79fd26 ("tracing/probe: Check event name length correctly")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Message-ID: <20241015144148.7918-1-wanghai38@huawei.com>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_probe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/i825xx/sun3_82586.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/trace/trace_probe.c b/kernel/trace/trace_probe.c
-index 476a685c6b6cf..0fef4bf83172c 100644
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -256,7 +256,7 @@ int traceprobe_parse_event_name(const char **pevent, const char **pgroup,
- 	if (len == 0) {
- 		trace_probe_log_err(offset, NO_EVENT_NAME);
- 		return -EINVAL;
--	} else if (len > MAX_EVENT_NAME_LEN) {
-+	} else if (len >= MAX_EVENT_NAME_LEN) {
- 		trace_probe_log_err(offset, EVENT_TOO_LONG);
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/i825xx/sun3_82586.c b/drivers/net/ethernet/i825xx/sun3_82586.c
+index e0c9fee4e1e65..7948d59b96282 100644
+--- a/drivers/net/ethernet/i825xx/sun3_82586.c
++++ b/drivers/net/ethernet/i825xx/sun3_82586.c
+@@ -1015,6 +1015,7 @@ sun3_82586_send_packet(struct sk_buff *skb, struct net_device *dev)
+ 	if(skb->len > XMIT_BUFF_SIZE)
+ 	{
+ 		printk("%s: Sorry, max. framelength is %d bytes. The length of your frame is %d bytes.\n",dev->name,XMIT_BUFF_SIZE,skb->len);
++		dev_kfree_skb(skb);
+ 		return NETDEV_TX_OK;
  	}
+ 
 -- 
 2.43.0
 
