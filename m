@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6370E1DF738;
-	Wed,  6 Nov 2024 12:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512E91DF738;
+	Wed,  6 Nov 2024 12:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897661; cv=none; b=YV/8vutHtPiFNxLDXtMFn6jcG1FGmTiY+eF2gsQaCn4GkVaW0c6MCVmKtAVplXHijJwp94EB+Z5I1q1j8ITzgPCybRA73Dr0GF69JU0LXA9WelgOWMDT5Ewvqwpp3+lJQVezjlorLD5NE1c/tI518DKnwnEZIb107ZHDaT/XgJ8=
+	t=1730897664; cv=none; b=fh/9Sh+jhW9oZPJhXevxMbuVlc+1uOUOq/9xn3TyERP1yDU/TEbxMjJuhYvauDmuzxG1ysBBUEjyIyA28HHuI2fsnFaJeHSwFqK8k2omqwD0HtETLBoRmwSW4S7jvyTuW6zxkDM4P9WfCD34uq5p9yD6vY524x0wl1UsshMAFVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897661; c=relaxed/simple;
-	bh=We6hmUjHq2TpseopGPsCIO9oM9rrUKFFzCHXT8dhlrc=;
+	s=arc-20240116; t=1730897664; c=relaxed/simple;
+	bh=HCpSsB2seNVdNDMZCuiSioulxMlEQ3E+R9OJv35KNpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HBKCXDlpt+6G+XyUsK8NolHDG3GOMp/9mkCRjTX27tkDD1tEd4BFNEYqTacEu1KHqpUdjH4UMKON2uxNxoNBnr8Qgky3PZ1HwUdef2KUA3rRefTmY74W2JLZrYRU4B8Xa5PV0YEBfV3jck57qi7P4o0aRfychDlblwvpA94wvQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBgxTK1V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NlS+GDar0begM+8fYRhL/if+PBwfyRnPJ8kf7AEVkNBSYGDiWJz6gIpJPg7kcEeaCVmwVliXe8GGno+b64sIGqvEgR7u608SwhY8pR92qty71azgXeJmTmYFqpOeWn6kZbo54/vKzZ/GyAMMBGiIcDHABAY4B9FkME0TZ5PMgKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0Yce1zH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBgxTK1V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7224C4CECD;
-	Wed,  6 Nov 2024 12:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0Yce1zH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA466C4CECD;
+	Wed,  6 Nov 2024 12:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897661;
-	bh=We6hmUjHq2TpseopGPsCIO9oM9rrUKFFzCHXT8dhlrc=;
+	s=korg; t=1730897664;
+	bh=HCpSsB2seNVdNDMZCuiSioulxMlEQ3E+R9OJv35KNpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zBgxTK1VAbzqprHbtb8FXl5Q2/flNyuPvLqKKVlUc909qkyEffb58nomp7UIGmE63
-	 uBwjTQkJ0Jgy5/UFOGYBs4JIBZbOxQDQ94UfFPsBezidTaVNqOx9YsLsi91vLzmitg
-	 0CcUNFyg/PNuqLAd2a8tT0CVbwW87rB4epfdOmRo=
+	b=S0Yce1zHfGBn/jAJuiBiBxQ/MgCz93dyfbFnAlCgLJ+4I6WUYx5Hka5BxVTG9t+ef
+	 z1+OP1IMT5Zz4ZkUUTITNU4+LqMTwRInoRU2V7MfuJQasExb1JH/TZFPc/dOMz6DgD
+	 NkP6YFPWIuaGtbiwVSNv1Uy5nU/MpDcrKbSNYzXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	syzbot+81092778aac03460d6b7@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Mark Fasheh <mark@fasheh.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Dung Cao <dung@os.amperecomputing.com>,
+	Matt Johnston <matt@codeconstruct.com.au>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 129/151] ocfs2: pass u64 to ocfs2_truncate_inline maybe overflow
-Date: Wed,  6 Nov 2024 13:05:17 +0100
-Message-ID: <20241106120312.412655046@linuxfoundation.org>
+Subject: [PATCH 6.6 130/151] mctp i2c: handle NULL header address
+Date: Wed,  6 Nov 2024 13:05:18 +0100
+Message-ID: <20241106120312.440467592@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -59,58 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Matt Johnston <matt@codeconstruct.com.au>
 
-[ Upstream commit bc0a2f3a73fcdac651fca64df39306d1e5ebe3b0 ]
+[ Upstream commit 01e215975fd80af81b5b79f009d49ddd35976c13 ]
 
-Syzbot reported a kernel BUG in ocfs2_truncate_inline.  There are two
-reasons for this: first, the parameter value passed is greater than
-ocfs2_max_inline_data_with_xattr, second, the start and end parameters of
-ocfs2_truncate_inline are "unsigned int".
+daddr can be NULL if there is no neighbour table entry present,
+in that case the tx packet should be dropped.
 
-So, we need to add a sanity check for byte_start and byte_len right before
-ocfs2_truncate_inline() in ocfs2_remove_inode_range(), if they are greater
-than ocfs2_max_inline_data_with_xattr return -EINVAL.
+saddr will usually be set by MCTP core, but check for NULL in case a
+packet is transmitted by a different protocol.
 
-Link: https://lkml.kernel.org/r/tencent_D48DB5122ADDAEDDD11918CFB68D93258C07@qq.com
-Fixes: 1afc32b95233 ("ocfs2: Write support for inline data")
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reported-by: syzbot+81092778aac03460d6b7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=81092778aac03460d6b7
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: f5b8abf9fc3d ("mctp i2c: MCTP I2C binding driver")
+Cc: stable@vger.kernel.org
+Reported-by: Dung Cao <dung@os.amperecomputing.com>
+Signed-off-by: Matt Johnston <matt@codeconstruct.com.au>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241022-mctp-i2c-null-dest-v3-1-e929709956c5@codeconstruct.com.au
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/file.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/mctp/mctp-i2c.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
-index 8bbe4a2b48a2a..aa39d5d2d94f1 100644
---- a/fs/ocfs2/file.c
-+++ b/fs/ocfs2/file.c
-@@ -1783,6 +1783,14 @@ int ocfs2_remove_inode_range(struct inode *inode,
- 		return 0;
+diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
+index b37a9e4bade4a..20b8d7d528baf 100644
+--- a/drivers/net/mctp/mctp-i2c.c
++++ b/drivers/net/mctp/mctp-i2c.c
+@@ -547,6 +547,9 @@ static int mctp_i2c_header_create(struct sk_buff *skb, struct net_device *dev,
+ 	if (len > MCTP_I2C_MAXMTU)
+ 		return -EMSGSIZE;
  
- 	if (OCFS2_I(inode)->ip_dyn_features & OCFS2_INLINE_DATA_FL) {
-+		int id_count = ocfs2_max_inline_data_with_xattr(inode->i_sb, di);
++	if (!daddr || !saddr)
++		return -EINVAL;
 +
-+		if (byte_start > id_count || byte_start + byte_len > id_count) {
-+			ret = -EINVAL;
-+			mlog_errno(ret);
-+			goto out;
-+		}
-+
- 		ret = ocfs2_truncate_inline(inode, di_bh, byte_start,
- 					    byte_start + byte_len, 0);
- 		if (ret) {
+ 	lldst = *((u8 *)daddr);
+ 	llsrc = *((u8 *)saddr);
+ 
 -- 
 2.43.0
 
