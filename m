@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3FB1EABA6;
-	Wed,  6 Nov 2024 12:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA951E909B;
+	Wed,  6 Nov 2024 12:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897005; cv=none; b=rZE1QAXA313RFpT5kEEtNzsDayf5OOmUA5dYJbWOjStgDE8H0WTbzFw9uKq7JDmBNDY+bNV6fRHociy1nijwTlg6tCyg5KW8wtx8w+YsZDY5UL1rvwUN79c5UXordwecsGSEfIS6zKtIgU/yC2IdAK+8wR7cldziJtDWTWCGnHM=
+	t=1730897007; cv=none; b=m5frbaZMhLFZdLiMnQNBY44Pv24fpPrrNm6ofGx7doQSZm1/CJqFZJwc160HnOjSD/uTqA/FjqZUITxe9d3QYC8TAJdKIa2fqw3KZZIFGkAEt/+3sWcscudxj54AFoUncVmtunk2B+ahCIxxwEf+wBPzAiD6gYuYHS+mFh5U5Y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897005; c=relaxed/simple;
-	bh=eO54PAidThfIffiwJT9kSmvw+pHdtT0vQYGH2rPObgU=;
+	s=arc-20240116; t=1730897007; c=relaxed/simple;
+	bh=fTdNdLUKtvyJUG9nKbmIPUghjs1Q8Zzp9j+CrkL1N50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BKq7dA7xrVyfIJtQSbf6WCJkBFd2kPstOlRlac990bL3jCeJGpei6yTH5Xm7Nym6xxpyQWZ5sU97v7Ti7cga+5/Mwy3nLTgUfLW5jIMAWd27WW1pagEhLPpIu1pW5nQsKCcOB6GG0kI3GwMWrDQuAklSfu9NtNW4PX8MFOWDbOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHHoAbET; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=APFKhVy5aA+c58sQ9ot4jZCV1qCHDWL19UH3QEm3NEeKw1Jea5Z0FIhj2OC16r5ZbDMymlRh14xhVSEroWpU0T2CAK6e2QSOrS0jJNUOiORWiqLZxP0vTD7OOZ0Yi6bCDTq+kdODIDV6bwFQK5revhClU1dQp1+ZSsngQArmBV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j19miaAJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHHoAbET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA56C4CECD;
-	Wed,  6 Nov 2024 12:43:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j19miaAJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14A27C4CECD;
+	Wed,  6 Nov 2024 12:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897004;
-	bh=eO54PAidThfIffiwJT9kSmvw+pHdtT0vQYGH2rPObgU=;
+	s=korg; t=1730897007;
+	bh=fTdNdLUKtvyJUG9nKbmIPUghjs1Q8Zzp9j+CrkL1N50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHHoAbETqgZzD66/Djq/1tpSQO5KwsdP7eT0Nx9vus5VUyFJc61kaPrMz7igJdyzP
-	 Bq6KXifwcnixPwPBoNG4g+UawOAeSzmEIwoR+wLjlGD2JIpDaUgG+7HaIo9MM7fMVg
-	 iDwr2xzTjEXv11VQ1tRv8vSG/mjAvjwvm4G/JqvU=
+	b=j19miaAJhklrW9k6lJpMW4RakNtg3yzSt7+fE+Z17FOo5lDd9IR/LpQv//rcj0AdH
+	 RenWMw9//a02fN+Y8Hl78p5MH0xS62aD2jQfDQdPE0WZ9r/Zu5RIUal3t5LRiCrvwV
+	 /w8glIa7JkvqQ1PVuFeulrUquD0gsv1OrfNjY8kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -38,9 +38,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 005/126] fs/proc/kcore: avoid bounce buffer for ktext data
-Date: Wed,  6 Nov 2024 13:03:26 +0100
-Message-ID: <20241106120306.205868368@linuxfoundation.org>
+Subject: [PATCH 6.1 006/126] fs/proc/kcore: convert read_kcore() to read_kcore_iter()
+Date: Wed,  6 Nov 2024 13:03:27 +0100
+Message-ID: <20241106120306.235846553@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -61,42 +61,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Stoakes <lstoakes@gmail.com>
 
-[ Upstream commit 2e1c0170771e6bf31bc785ea43a44e6e85e36268 ]
+[ Upstream commit 46c0d6d0904a10785faabee53fe53ee1aa718fea ]
 
-Patch series "convert read_kcore(), vread() to use iterators", v8.
+For the time being we still use a bounce buffer for vread(), however in
+the next patch we will convert this to interact directly with the iterator
+and eliminate the bounce buffer altogether.
 
-While reviewing Baoquan's recent changes to permit vread() access to
-vm_map_ram regions of vmalloc allocations, Willy pointed out [1] that it
-would be nice to refactor vread() as a whole, since its only user is
-read_kcore() and the existing form of vread() necessitates the use of a
-bounce buffer.
-
-This patch series does exactly that, as well as adjusting how we read the
-kernel text section to avoid the use of a bounce buffer in this case as
-well.
-
-This has been tested against the test case which motivated Baoquan's
-changes in the first place [2] which continues to function correctly, as
-do the vmalloc self tests.
-
-This patch (of 4):
-
-Commit df04abfd181a ("fs/proc/kcore.c: Add bounce buffer for ktext data")
-introduced the use of a bounce buffer to retrieve kernel text data for
-/proc/kcore in order to avoid failures arising from hardened user copies
-enabled by CONFIG_HARDENED_USERCOPY in check_kernel_text_object().
-
-We can avoid doing this if instead of copy_to_user() we use
-_copy_to_user() which bypasses the hardening check.  This is more
-efficient than using a bounce buffer and simplifies the code.
-
-We do so as part an overall effort to eliminate bounce buffer usage in the
-function with an eye to converting it an iterator read.
-
-Link: https://lkml.kernel.org/r/cover.1679566220.git.lstoakes@gmail.com
-Link: https://lore.kernel.org/all/Y8WfDSRkc%2FOHP3oD@casper.infradead.org/ [1]
-Link: https://lore.kernel.org/all/87ilk6gos2.fsf@oracle.com/T/#u [2]
-Link: https://lkml.kernel.org/r/fd39b0bfa7edc76d360def7d034baaee71d90158.1679511146.git.lstoakes@gmail.com
+Link: https://lkml.kernel.org/r/ebe12c8d70eebd71f487d80095605f3ad0d1489c.1679511146.git.lstoakes@gmail.com
 Signed-off-by: Lorenzo Stoakes <lstoakes@gmail.com>
 Reviewed-by: David Hildenbrand <david@redhat.com>
 Reviewed-by: Baoquan He <bhe@redhat.com>
@@ -110,38 +81,165 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 3d5854d75e31 ("fs/proc/kcore.c: allow translation of physical memory addresses")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/kcore.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ fs/proc/kcore.c | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
 diff --git a/fs/proc/kcore.c b/fs/proc/kcore.c
-index 590ecb79ad8b6..786e5e90f670c 100644
+index 786e5e90f670c..2aff567abe1e3 100644
 --- a/fs/proc/kcore.c
 +++ b/fs/proc/kcore.c
-@@ -542,19 +542,12 @@ read_kcore(struct file *file, char __user *buffer, size_t buflen, loff_t *fpos)
+@@ -25,7 +25,7 @@
+ #include <linux/memblock.h>
+ #include <linux/init.h>
+ #include <linux/slab.h>
+-#include <linux/uaccess.h>
++#include <linux/uio.h>
+ #include <asm/io.h>
+ #include <linux/list.h>
+ #include <linux/ioport.h>
+@@ -309,9 +309,12 @@ static void append_kcore_note(char *notes, size_t *i, const char *name,
+ }
+ 
+ static ssize_t
+-read_kcore(struct file *file, char __user *buffer, size_t buflen, loff_t *fpos)
++read_kcore_iter(struct kiocb *iocb, struct iov_iter *iter)
+ {
++	struct file *file = iocb->ki_filp;
+ 	char *buf = file->private_data;
++	loff_t *fpos = &iocb->ki_pos;
++
+ 	size_t phdrs_offset, notes_offset, data_offset;
+ 	size_t page_offline_frozen = 1;
+ 	size_t phdrs_len, notes_len;
+@@ -319,6 +322,7 @@ read_kcore(struct file *file, char __user *buffer, size_t buflen, loff_t *fpos)
+ 	size_t tsz;
+ 	int nphdr;
+ 	unsigned long start;
++	size_t buflen = iov_iter_count(iter);
+ 	size_t orig_buflen = buflen;
+ 	int ret = 0;
+ 
+@@ -357,12 +361,11 @@ read_kcore(struct file *file, char __user *buffer, size_t buflen, loff_t *fpos)
+ 		};
+ 
+ 		tsz = min_t(size_t, buflen, sizeof(struct elfhdr) - *fpos);
+-		if (copy_to_user(buffer, (char *)&ehdr + *fpos, tsz)) {
++		if (copy_to_iter((char *)&ehdr + *fpos, tsz, iter) != tsz) {
+ 			ret = -EFAULT;
+ 			goto out;
+ 		}
+ 
+-		buffer += tsz;
+ 		buflen -= tsz;
+ 		*fpos += tsz;
+ 	}
+@@ -399,15 +402,14 @@ read_kcore(struct file *file, char __user *buffer, size_t buflen, loff_t *fpos)
+ 		}
+ 
+ 		tsz = min_t(size_t, buflen, phdrs_offset + phdrs_len - *fpos);
+-		if (copy_to_user(buffer, (char *)phdrs + *fpos - phdrs_offset,
+-				 tsz)) {
++		if (copy_to_iter((char *)phdrs + *fpos - phdrs_offset, tsz,
++				 iter) != tsz) {
+ 			kfree(phdrs);
+ 			ret = -EFAULT;
+ 			goto out;
+ 		}
+ 		kfree(phdrs);
+ 
+-		buffer += tsz;
+ 		buflen -= tsz;
+ 		*fpos += tsz;
+ 	}
+@@ -449,14 +451,13 @@ read_kcore(struct file *file, char __user *buffer, size_t buflen, loff_t *fpos)
+ 				  min(vmcoreinfo_size, notes_len - i));
+ 
+ 		tsz = min_t(size_t, buflen, notes_offset + notes_len - *fpos);
+-		if (copy_to_user(buffer, notes + *fpos - notes_offset, tsz)) {
++		if (copy_to_iter(notes + *fpos - notes_offset, tsz, iter) != tsz) {
+ 			kfree(notes);
+ 			ret = -EFAULT;
+ 			goto out;
+ 		}
+ 		kfree(notes);
+ 
+-		buffer += tsz;
+ 		buflen -= tsz;
+ 		*fpos += tsz;
+ 	}
+@@ -498,7 +499,7 @@ read_kcore(struct file *file, char __user *buffer, size_t buflen, loff_t *fpos)
+ 		}
+ 
+ 		if (!m) {
+-			if (clear_user(buffer, tsz)) {
++			if (iov_iter_zero(tsz, iter) != tsz) {
+ 				ret = -EFAULT;
+ 				goto out;
+ 			}
+@@ -509,14 +510,14 @@ read_kcore(struct file *file, char __user *buffer, size_t buflen, loff_t *fpos)
+ 		case KCORE_VMALLOC:
+ 			vread(buf, (char *)start, tsz);
+ 			/* we have to zero-fill user buffer even if no read */
+-			if (copy_to_user(buffer, buf, tsz)) {
++			if (copy_to_iter(buf, tsz, iter) != tsz) {
+ 				ret = -EFAULT;
+ 				goto out;
+ 			}
+ 			break;
+ 		case KCORE_USER:
+ 			/* User page is handled prior to normal kernel page: */
+-			if (copy_to_user(buffer, (char *)start, tsz)) {
++			if (copy_to_iter((char *)start, tsz, iter) != tsz) {
+ 				ret = -EFAULT;
+ 				goto out;
+ 			}
+@@ -532,7 +533,7 @@ read_kcore(struct file *file, char __user *buffer, size_t buflen, loff_t *fpos)
+ 			 */
+ 			if (!page || PageOffline(page) ||
+ 			    is_page_hwpoison(page) || !pfn_is_ram(pfn)) {
+-				if (clear_user(buffer, tsz)) {
++				if (iov_iter_zero(tsz, iter) != tsz) {
+ 					ret = -EFAULT;
+ 					goto out;
+ 				}
+@@ -542,17 +543,17 @@ read_kcore(struct file *file, char __user *buffer, size_t buflen, loff_t *fpos)
  		case KCORE_VMEMMAP:
  		case KCORE_TEXT:
  			/*
--			 * Using bounce buffer to bypass the
--			 * hardened user copy kernel text checks.
-+			 * We use _copy_to_user() to bypass usermode hardening
-+			 * which would otherwise prevent this operation.
+-			 * We use _copy_to_user() to bypass usermode hardening
++			 * We use _copy_to_iter() to bypass usermode hardening
+ 			 * which would otherwise prevent this operation.
  			 */
--			if (copy_from_kernel_nofault(buf, (void *)start, tsz)) {
--				if (clear_user(buffer, tsz)) {
--					ret = -EFAULT;
--					goto out;
--				}
--			} else {
--				if (copy_to_user(buffer, buf, tsz)) {
--					ret = -EFAULT;
--					goto out;
--				}
-+			if (_copy_to_user(buffer, (char *)start, tsz)) {
-+				ret = -EFAULT;
-+				goto out;
+-			if (_copy_to_user(buffer, (char *)start, tsz)) {
++			if (_copy_to_iter((char *)start, tsz, iter) != tsz) {
+ 				ret = -EFAULT;
+ 				goto out;
  			}
  			break;
  		default:
+ 			pr_warn_once("Unhandled KCORE type: %d\n", m->type);
+-			if (clear_user(buffer, tsz)) {
++			if (iov_iter_zero(tsz, iter) != tsz) {
+ 				ret = -EFAULT;
+ 				goto out;
+ 			}
+@@ -560,7 +561,6 @@ read_kcore(struct file *file, char __user *buffer, size_t buflen, loff_t *fpos)
+ skip:
+ 		buflen -= tsz;
+ 		*fpos += tsz;
+-		buffer += tsz;
+ 		start += tsz;
+ 		tsz = (buflen > PAGE_SIZE ? PAGE_SIZE : buflen);
+ 	}
+@@ -604,7 +604,7 @@ static int release_kcore(struct inode *inode, struct file *file)
+ }
+ 
+ static const struct proc_ops kcore_proc_ops = {
+-	.proc_read	= read_kcore,
++	.proc_read_iter	= read_kcore_iter,
+ 	.proc_open	= open_kcore,
+ 	.proc_release	= release_kcore,
+ 	.proc_lseek	= default_llseek,
 -- 
 2.43.0
 
