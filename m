@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CEE1EF941;
-	Wed,  6 Nov 2024 13:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BAE1F4273;
+	Wed,  6 Nov 2024 13:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898799; cv=none; b=V5n/y9fVEB4iDZcSBXbx6HYE/Q9fcmGe0viWAo2gusBZXjiFj6r6hHkm3pMV2yZ+SZUGlCaReizn0sh3EdyEUTFxPjUEvC8CCaO6HQMnUd/vIQCKsc84tCNdI91lIIFht0HWzNEjclaVfEA4MaAsqFd7SFqPtjVVGLAtynyTyow=
+	t=1730898802; cv=none; b=tDmYqkQDhozHKBZ1jeM29cVhHHph53yT4G1qN65M2fzlijO3ZJSC2UQOAt9KadszupRXnIJzDCb9YlKSdO4v//TfVWhoLRh55fARh5d40lcso4wC/qAY8/xood05zw0+MGnrerc91IlYvgvx/EkY9Ck5zYtaN8M5YtT120ed6us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898799; c=relaxed/simple;
-	bh=71jrIEHRXuvAOqqWxRPDlmwb3MF9OGofd96iX0ko924=;
+	s=arc-20240116; t=1730898802; c=relaxed/simple;
+	bh=DnNCdXsLn4AC1TYtQVocQtB/z6rnEmBi9CXKUQenZ1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QJIf6efJbq4W70mrmlrK0iW6ufc81H3d9wmydvyOK5nK79Ad/C4eQU4ai4qNkaeSNaRP6uyfQ78wlL1FmxX43ZdHetAIWG+RHdbO13YUgN2Qwl2BKU2uGKUviam9sDm3+G+SbyywVrspX2b21VjnxIlGCT2+B+Nt0TlV2dj/WnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEV82oYf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gwCP6/WT1zsxvb7XKr5Rzd3CuhUAMIjvs7UyH/JEoGkrOtcKN5TxpuQizIRKGWyW9GCsMAY5zyjpwDSTLsD2BqZFxwBUyHdf5QTljbJXkuNYJtDdDUOyW5sIJ+FdvqJsHKTZAhyjqqVlmIYPpiJGhCqzRq6QJNOkeUa3AyjtlrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oHffP+p4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEV82oYf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9AEC4CECD;
-	Wed,  6 Nov 2024 13:13:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oHffP+p4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25CCC4CED3;
+	Wed,  6 Nov 2024 13:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898799;
-	bh=71jrIEHRXuvAOqqWxRPDlmwb3MF9OGofd96iX0ko924=;
+	s=korg; t=1730898802;
+	bh=DnNCdXsLn4AC1TYtQVocQtB/z6rnEmBi9CXKUQenZ1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NEV82oYf1layjNPYPgOuBJl16bQjKB/dJ73PMjc12HEEQnbu1odBCCbPhWAJ5vF32
-	 mGguX6R7tf5JOS/itoJNIE1F9MYWqHkI4zwY3srMoqeczqZnf6ZdOoHasXPHHpohHS
-	 wj8YL9p8GjJFHEfA3uF6t9vpArF2ArEdeN25SHG4=
+	b=oHffP+p4gLGDLmMqeheYA7In6Zl6I2CENpx74cEVFTDSkH9cBw9V53/VjiZ3r2cD7
+	 7FwJlD3jBjs8j1toBYlQkvYQOQAOnVXAqT8WD5okrowQzGULJqc8CUJwthBDNA+0oU
+	 Py9ESPf8TzKaJyG/MwZwnY/f7/5lj9U/BKSVDnpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Sherry Yang <sherry.yang@oracle.com>
-Subject: [PATCH 5.4 360/462] wifi: mac80211: fix potential key use-after-free
-Date: Wed,  6 Nov 2024 13:04:13 +0100
-Message-ID: <20241106120340.422328766@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Saeed Mirzamohammadi <saeed.mirzamohammadi@oracle.com>
+Subject: [PATCH 5.4 361/462] KVM: Fix a data race on last_boosted_vcpu in kvm_vcpu_on_spin()
+Date: Wed,  6 Nov 2024 13:04:14 +0100
+Message-ID: <20241106120340.446575845@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,58 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 31db78a4923ef5e2008f2eed321811ca79e7f71b upstream.
+commit 49f683b41f28918df3e51ddc0d928cb2e934ccdb upstream.
 
-When ieee80211_key_link() is called by ieee80211_gtk_rekey_add()
-but returns 0 due to KRACK protection (identical key reinstall),
-ieee80211_gtk_rekey_add() will still return a pointer into the
-key, in a potential use-after-free. This normally doesn't happen
-since it's only called by iwlwifi in case of WoWLAN rekey offload
-which has its own KRACK protection, but still better to fix, do
-that by returning an error code and converting that to success on
-the cfg80211 boundary only, leaving the error for bad callers of
-ieee80211_gtk_rekey_add().
+Use {READ,WRITE}_ONCE() to access kvm->last_boosted_vcpu to ensure the
+loads and stores are atomic.  In the extremely unlikely scenario the
+compiler tears the stores, it's theoretically possible for KVM to attempt
+to get a vCPU using an out-of-bounds index, e.g. if the write is split
+into multiple 8-bit stores, and is paired with a 32-bit load on a VM with
+257 vCPUs:
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: fdf7cb4185b6 ("mac80211: accept key reinstall without changing anything")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[ Sherry: bp to fix CVE-2023-52530, resolved minor conflicts in
-  net/mac80211/cfg.c because of context change due to missing commit
-  23a5f0af6ff4 ("wifi: mac80211: remove cipher scheme support")
-  ccdde7c74ffd ("wifi: mac80211: properly implement MLO key handling")]
-Signed-off-by: Sherry Yang <sherry.yang@oracle.com>
+  CPU0                              CPU1
+  last_boosted_vcpu = 0xff;
+
+                                    (last_boosted_vcpu = 0x100)
+                                    last_boosted_vcpu[15:8] = 0x01;
+  i = (last_boosted_vcpu = 0x1ff)
+                                    last_boosted_vcpu[7:0] = 0x00;
+
+  vcpu = kvm->vcpu_array[0x1ff];
+
+As detected by KCSAN:
+
+  BUG: KCSAN: data-race in kvm_vcpu_on_spin [kvm] / kvm_vcpu_on_spin [kvm]
+
+  write to 0xffffc90025a92344 of 4 bytes by task 4340 on cpu 16:
+  kvm_vcpu_on_spin (arch/x86/kvm/../../../virt/kvm/kvm_main.c:4112) kvm
+  handle_pause (arch/x86/kvm/vmx/vmx.c:5929) kvm_intel
+  vmx_handle_exit (arch/x86/kvm/vmx/vmx.c:?
+		 arch/x86/kvm/vmx/vmx.c:6606) kvm_intel
+  vcpu_run (arch/x86/kvm/x86.c:11107 arch/x86/kvm/x86.c:11211) kvm
+  kvm_arch_vcpu_ioctl_run (arch/x86/kvm/x86.c:?) kvm
+  kvm_vcpu_ioctl (arch/x86/kvm/../../../virt/kvm/kvm_main.c:?) kvm
+  __se_sys_ioctl (fs/ioctl.c:52 fs/ioctl.c:904 fs/ioctl.c:890)
+  __x64_sys_ioctl (fs/ioctl.c:890)
+  x64_sys_call (arch/x86/entry/syscall_64.c:33)
+  do_syscall_64 (arch/x86/entry/common.c:?)
+  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+  read to 0xffffc90025a92344 of 4 bytes by task 4342 on cpu 4:
+  kvm_vcpu_on_spin (arch/x86/kvm/../../../virt/kvm/kvm_main.c:4069) kvm
+  handle_pause (arch/x86/kvm/vmx/vmx.c:5929) kvm_intel
+  vmx_handle_exit (arch/x86/kvm/vmx/vmx.c:?
+			arch/x86/kvm/vmx/vmx.c:6606) kvm_intel
+  vcpu_run (arch/x86/kvm/x86.c:11107 arch/x86/kvm/x86.c:11211) kvm
+  kvm_arch_vcpu_ioctl_run (arch/x86/kvm/x86.c:?) kvm
+  kvm_vcpu_ioctl (arch/x86/kvm/../../../virt/kvm/kvm_main.c:?) kvm
+  __se_sys_ioctl (fs/ioctl.c:52 fs/ioctl.c:904 fs/ioctl.c:890)
+  __x64_sys_ioctl (fs/ioctl.c:890)
+  x64_sys_call (arch/x86/entry/syscall_64.c:33)
+  do_syscall_64 (arch/x86/entry/common.c:?)
+  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+  value changed: 0x00000012 -> 0x00000000
+
+Fixes: 217ece6129f2 ("KVM: use yield_to instead of sleep in kvm_vcpu_on_spin")
+Cc: stable@vger.kernel.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://lore.kernel.org/r/20240510092353.2261824-1-leitao@debian.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Saeed Mirzamohammadi <saeed.mirzamohammadi@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/cfg.c |    3 +++
- net/mac80211/key.c |    2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ virt/kvm/kvm_main.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -491,6 +491,9 @@ static int ieee80211_add_key(struct wiph
- 		sta->cipher_scheme = cs;
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -2714,12 +2714,13 @@ void kvm_vcpu_on_spin(struct kvm_vcpu *m
+ {
+ 	struct kvm *kvm = me->kvm;
+ 	struct kvm_vcpu *vcpu;
+-	int last_boosted_vcpu = me->kvm->last_boosted_vcpu;
++	int last_boosted_vcpu;
+ 	int yielded = 0;
+ 	int try = 3;
+ 	int pass;
+ 	int i;
  
- 	err = ieee80211_key_link(key, sdata, sta);
-+	/* KRACK protection, shouldn't happen but just silently accept key */
-+	if (err == -EALREADY)
-+		err = 0;
++	last_boosted_vcpu = READ_ONCE(kvm->last_boosted_vcpu);
+ 	kvm_vcpu_set_in_spin_loop(me, true);
+ 	/*
+ 	 * We boost the priority of a VCPU that is runnable but not
+@@ -2749,7 +2750,7 @@ void kvm_vcpu_on_spin(struct kvm_vcpu *m
  
-  out_unlock:
- 	mutex_unlock(&local->sta_mtx);
---- a/net/mac80211/key.c
-+++ b/net/mac80211/key.c
-@@ -808,7 +808,7 @@ int ieee80211_key_link(struct ieee80211_
- 	 */
- 	if (ieee80211_key_identical(sdata, old_key, key)) {
- 		ieee80211_key_free_unused(key);
--		ret = 0;
-+		ret = -EALREADY;
- 		goto out;
- 	}
- 
+ 			yielded = kvm_vcpu_yield_to(vcpu);
+ 			if (yielded > 0) {
+-				kvm->last_boosted_vcpu = i;
++				WRITE_ONCE(kvm->last_boosted_vcpu, i);
+ 				break;
+ 			} else if (yielded < 0) {
+ 				try--;
 
 
