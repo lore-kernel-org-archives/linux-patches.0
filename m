@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77101EC019;
-	Wed,  6 Nov 2024 13:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9F51EC019;
+	Wed,  6 Nov 2024 13:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898107; cv=none; b=QfKFHJu4esLd21Xo8v1Szh2KyUaZl24c0VEUz9K/5jtq38PKctdGBgFUfMWlGXqWvV40klTZZz/ix4NB4Pcm6utTQjp2YkyVMKK1D7VWX166lSsWtM381H8bnLU6qaThxAu+iLaGWZE9Kdi0tB+GWMLWh/muPq4Qp9kMDL2RFBY=
+	t=1730898110; cv=none; b=CJHaRLzvw2GOvlFA7pTfSzQgtLfMAhMaFdM5N6CxcrA1LX4CBokMC+XnyXJjTCF/EkAwufk2j3U4eTP4TYnKyb37j7f3fK5MISraI46RTVBKZ0JzY3XxGBK+EkOvTq38aNa8fcheTRnDy+VHACM4qaWa8jx4A96OF1MiR+gNW7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898107; c=relaxed/simple;
-	bh=pVLKGvD7sEOsydIYTTfT2abDWa0b7ap7FpRgetbWHZk=;
+	s=arc-20240116; t=1730898110; c=relaxed/simple;
+	bh=hB6FbMtr8VuJrqNGqDtJMDAZ1h5UqN0WN2x9brAHFv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MLCriDipwtyQ5WumTTRwHTvMlFddbghYhw3KfauvPY0MgOYlIv5N5lIq4cmjlGzgn4Wzqu+Yt0RMpMvC5bMywPzzo/oTxUUX1TOx/5dhovhykYI9LWDQ6qs9ET7lbk2SjSQCbz/O8Dhpoflp6RMXpbLo+sHiSUYOzd5eiE6CqiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDJYNmLG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uaKyqzjjVvMatfe6sL+v2mXwDQw2L5/mo6vz/ypqirTcvtp8XpoVMvBD50WPn5ZGvQh8D2Qt/DUevHeDNqX/DRq9SBomsq4Lar4MOO/DCXiBqJcaskbgB9PuX0ZAFgkbyqpnS8A67i+xhQudJXe+xyawBvAPOU8pYb5jPdi4hps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6Twp/FI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDJYNmLG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEA9C4CECD;
-	Wed,  6 Nov 2024 13:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6Twp/FI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85331C4CED3;
+	Wed,  6 Nov 2024 13:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898106;
-	bh=pVLKGvD7sEOsydIYTTfT2abDWa0b7ap7FpRgetbWHZk=;
+	s=korg; t=1730898109;
+	bh=hB6FbMtr8VuJrqNGqDtJMDAZ1h5UqN0WN2x9brAHFv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDJYNmLGa9WtjzviG0ZKEprYqk+Xh5oF14mXQGU6DObjkSRs76PjhSX4i1BXBd4jc
-	 WrFSB+mlG1zt42ymOCIW82oglK6cw92h9JuPx5/KzJcQURLagNg0q2mx1mzYlkUxEo
-	 udiB32zd+My4rEuqkbSjSv4VcA4EHsA2YcTAyQ70=
+	b=s6Twp/FISrXHwG3ViEKaRGstASZG9o1wlDFNIRS7ftAZ8mFx6qRBM+WD9s3I96iWe
+	 p1GbiYOJGIAMv9crVEyaRuznCITD+XcKfXqmatDvBGweHe2yQyFEqHTojdO3bP+QKr
+	 mr8+M34ZOCNCEQAHkkRPjfdYkmdFJtyiceZ1+oOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junlin Li <make24@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 109/462] drivers: media: dvb-frontends/rtl2832: fix an out-of-bounds write error
-Date: Wed,  6 Nov 2024 13:00:02 +0100
-Message-ID: <20241106120334.200255577@linuxfoundation.org>
+Subject: [PATCH 5.4 127/462] f2fs: fix to update i_ctime in __f2fs_setxattr()
+Date: Wed,  6 Nov 2024 13:00:20 +0100
+Message-ID: <20241106120334.644758833@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,41 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junlin Li <make24@iscas.ac.cn>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 8ae06f360cfaca2b88b98ca89144548b3186aab1 ]
+[ Upstream commit 8874ad7dae8d91d24cc87c545c0073b3b2da5688 ]
 
-Ensure index in rtl2832_pid_filter does not exceed 31 to prevent
-out-of-bounds access.
+generic/728       - output mismatch (see /media/fstests/results//generic/728.out.bad)
+    --- tests/generic/728.out	2023-07-19 07:10:48.362711407 +0000
+    +++ /media/fstests/results//generic/728.out.bad	2023-07-19 08:39:57.000000000 +0000
+     QA output created by 728
+    +Expected ctime to change after setxattr.
+    +Expected ctime to change after removexattr.
+     Silence is golden
+    ...
+    (Run 'diff -u /media/fstests/tests/generic/728.out /media/fstests/results//generic/728.out.bad'  to see the entire diff)
+generic/729        1s
 
-dev->filters is a 32-bit value, so set_bit and clear_bit functions should
-only operate on indices from 0 to 31. If index is 32, it will attempt to
-access a non-existent 33rd bit, leading to out-of-bounds access.
-Change the boundary check from index > 32 to index >= 32 to resolve this
-issue.
+It needs to update i_ctime after {set,remove}xattr, fix it.
 
-Signed-off-by: Junlin Li <make24@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Fixes: 4b01e01a81b6 ("[media] rtl2832: implement PID filter")
-[hverkuil: added fixes tag, rtl2830_pid_filter -> rtl2832_pid_filter in logmsg]
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: aaf8c0b9ae04 ("f2fs: reduce expensive checkpoint trigger frequency")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/rtl2832.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/xattr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/rtl2832.c b/drivers/media/dvb-frontends/rtl2832.c
-index e5bffaaeed38a..1c3e572cad3fd 100644
---- a/drivers/media/dvb-frontends/rtl2832.c
-+++ b/drivers/media/dvb-frontends/rtl2832.c
-@@ -982,7 +982,7 @@ static int rtl2832_pid_filter(struct dvb_frontend *fe, u8 index, u16 pid,
- 		index, pid, onoff, dev->slave_ts);
+diff --git a/fs/f2fs/xattr.c b/fs/f2fs/xattr.c
+index 95b2c05a7035d..1e0fc35887f5d 100644
+--- a/fs/f2fs/xattr.c
++++ b/fs/f2fs/xattr.c
+@@ -737,17 +737,17 @@ static int __f2fs_setxattr(struct inode *inode, int index,
+ 	if (index == F2FS_XATTR_INDEX_ENCRYPTION &&
+ 			!strcmp(name, F2FS_XATTR_NAME_ENCRYPTION_CONTEXT))
+ 		f2fs_set_encrypted_inode(inode);
+-	f2fs_mark_inode_dirty_sync(inode, true);
+ 	if (!error && S_ISDIR(inode->i_mode))
+ 		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_CP);
  
- 	/* skip invalid PIDs (0x2000) */
--	if (pid > 0x1fff || index > 32)
-+	if (pid > 0x1fff || index >= 32)
- 		return 0;
+ same:
+ 	if (is_inode_flag_set(inode, FI_ACL_MODE)) {
+ 		inode->i_mode = F2FS_I(inode)->i_acl_mode;
+-		inode->i_ctime = current_time(inode);
+ 		clear_inode_flag(inode, FI_ACL_MODE);
+ 	}
  
- 	if (onoff)
++	inode->i_ctime = current_time(inode);
++	f2fs_mark_inode_dirty_sync(inode, true);
+ exit:
+ 	kvfree(base_addr);
+ 	return error;
 -- 
 2.43.0
 
