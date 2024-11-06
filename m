@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E431DF254;
-	Wed,  6 Nov 2024 12:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3B41DF252;
+	Wed,  6 Nov 2024 12:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895253; cv=none; b=u/M7lM5is02w9D5Ku4MGM78aMpvAjSpyzM1Qp4IWnBUQ3Sp0fPS8njsi9yl5qf6i2d9bnITAZsRqmF5AIyWMcTUf/2bkiAgficuS54GR+kvWX9gflZA8SEC6WASOZpGsFWg5rPhwzGzxbjVybf/7gV62KAPTSjValvdcd3HyiOM=
+	t=1730895255; cv=none; b=GwNU/TRGcL5AP+T5zVOzB0Ety6/D9Oyl5v520mDLC65iGdae0MazvKGnSMh9MTaej3LsobvhILmVvAL32zRLdQxHbvOcDk9lAvoiomXxOHrtNx/C1jgCnui6Vp+VoSsdI5FQX0VMQSFx/4fSKY8mtpCv5fVzDYFaLx832z5XE1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895253; c=relaxed/simple;
-	bh=KLLgt7zVSsNtqxXUwnw26C08FPUMn5b14VFbeEQSWwE=;
+	s=arc-20240116; t=1730895255; c=relaxed/simple;
+	bh=nlYQQ/XL20tmdxwBzo5mhUVO3/3AGKtqlpVdQbOfwxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kkIbCQ2/bl9JQYwTXTYmUXGXWl0zppCufGGb001SXycW9suf3DyR7UCF3KxXB7oa+unV+7/Bhx79JfuYaRnugTK+FIitA7f1mcpkKsu97HZUiZuZcOoShW9nHwQULJmo9wRN4tj9Q/GZsUZgQbrs0LSU2zqb1ZwL5rV38gRYK1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZYhlAFP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DiT6r8L9rAGq/Zoya+uvqyur0cPb8UqrbDjmLyY0vPfzd3c8HeFKRkcQu2USuvEf1hQ4JiixJxUAnahFB7xmX2tI2lwNyafVU6OKXTck2WRAQ0sAlmqNIYGFAzGsjTsZ0YBwNYleCAq8iNZqzhMLol8TevSl9KbmM2hn73ZmOlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wh8zbkGo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZYhlAFP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1BCC4CECD;
-	Wed,  6 Nov 2024 12:14:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wh8zbkGo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AAD2C4CED2;
+	Wed,  6 Nov 2024 12:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895252;
-	bh=KLLgt7zVSsNtqxXUwnw26C08FPUMn5b14VFbeEQSWwE=;
+	s=korg; t=1730895255;
+	bh=nlYQQ/XL20tmdxwBzo5mhUVO3/3AGKtqlpVdQbOfwxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VZYhlAFPXzyt29Nn0uA6EbJl91iPnswXWH1eh69mMbRmvGKc2K6vH89KxXtJvBMr7
-	 5fUcs9yhhe/O4DGVXMScjhrhpLick0DMO1znx3XhM2C1GZVc7VuleBplBl8uekQANA
-	 o6Hc+/NXRYd7cSnFsG69P7GjccoFL+VvXNOXWYUY=
+	b=wh8zbkGoZb9qETwUoxZy6LTIOpHuWwlBpK+ywMcC5w+ZOoQ88JJKhsL53CDThAF45
+	 hyD5vJI3ISOriLt6xcmYbVDV5lWbXjgqegs4wQyJnAz9g1/MXjph48tCPAcWq84lSP
+	 rVvHSoGkonnYicS/EczSGk24wE3qf+/2X2rJoZQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
 	Simon Horman <horms@kernel.org>,
+	Marcin Wojtas <marcin.s.wojtas@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 155/350] tipc: guard against string buffer overrun
-Date: Wed,  6 Nov 2024 13:01:23 +0100
-Message-ID: <20241106120324.749050220@linuxfoundation.org>
+Subject: [PATCH 4.19 156/350] net: mvpp2: Increase size of queue_name buffer
+Date: Wed,  6 Nov 2024 13:01:24 +0100
+Message-ID: <20241106120324.772574232@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -53,49 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit 6555a2a9212be6983d2319d65276484f7c5f431a ]
+[ Upstream commit 91d516d4de48532d967a77967834e00c8c53dfe6 ]
 
-Smatch reports that copying media_name and if_name to name_parts may
-overwrite the destination.
+Increase size of queue_name buffer from 30 to 31 to accommodate
+the largest string written to it. This avoids truncation in
+the possibly unlikely case where the string is name is the
+maximum size.
 
- .../bearer.c:166 bearer_name_validate() error: strcpy() 'media_name' too large for 'name_parts->media_name' (32 vs 16)
- .../bearer.c:167 bearer_name_validate() error: strcpy() 'if_name' too large for 'name_parts->if_name' (1010102 vs 16)
+Flagged by gcc-14:
 
-This does seem to be the case so guard against this possibility by using
-strscpy() and failing if truncation occurs.
+  .../mvpp2_main.c: In function 'mvpp2_probe':
+  .../mvpp2_main.c:7636:32: warning: 'snprintf' output may be truncated before the last format character [-Wformat-truncation=]
+   7636 |                  "stats-wq-%s%s", netdev_name(priv->port_list[0]->dev),
+        |                                ^
+  .../mvpp2_main.c:7635:9: note: 'snprintf' output between 10 and 31 bytes into a destination of size 30
+   7635 |         snprintf(priv->queue_name, sizeof(priv->queue_name),
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   7636 |                  "stats-wq-%s%s", netdev_name(priv->port_list[0]->dev),
+        |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   7637 |                  priv->port_count > 1 ? "+" : "");
+        |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Introduced by commit b97bf3fd8f6a ("[TIPC] Initial merge")
+Introduced by commit 118d6298f6f0 ("net: mvpp2: add ethtool GOP statistics").
+I am not flagging this as a bug as I am not aware that it is one.
 
 Compile tested only.
 
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240801-tipic-overrun-v2-1-c5b869d1f074@kernel.org
+Reviewed-by: Marcin Wojtas <marcin.s.wojtas@gmail.com>
+Link: https://patch.msgid.link/20240806-mvpp2-namelen-v1-1-6dc773653f2f@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/bearer.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
-index c7686ff00f5bc..5ceb7d489686f 100644
---- a/net/tipc/bearer.c
-+++ b/net/tipc/bearer.c
-@@ -158,8 +158,12 @@ static int bearer_name_validate(const char *name,
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
+index 23f60bc5d48f5..57fbfef336657 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2.h
+@@ -756,7 +756,7 @@ struct mvpp2 {
+ 	unsigned int max_port_rxqs;
  
- 	/* return bearer name components, if necessary */
- 	if (name_parts) {
--		strcpy(name_parts->media_name, media_name);
--		strcpy(name_parts->if_name, if_name);
-+		if (strscpy(name_parts->media_name, media_name,
-+			    TIPC_MAX_MEDIA_NAME) < 0)
-+			return 0;
-+		if (strscpy(name_parts->if_name, if_name,
-+			    TIPC_MAX_IF_NAME) < 0)
-+			return 0;
- 	}
- 	return 1;
- }
+ 	/* Workqueue to gather hardware statistics */
+-	char queue_name[30];
++	char queue_name[31];
+ 	struct workqueue_struct *stats_queue;
+ 
+ 	/* Debugfs root entry */
 -- 
 2.43.0
 
