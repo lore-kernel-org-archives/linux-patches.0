@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907E21E0DB1;
-	Wed,  6 Nov 2024 13:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686051DF738;
+	Wed,  6 Nov 2024 13:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898831; cv=none; b=b21LiM4rsM86QfKA8LQwRqR0LwFnzBry4YF9vEZLcDRaYqJePu631GdS5cqannS6XZ838Jj3pnScipIkoFOoGDph6bdRGu7d/YTnLDz1EagRGLF0IDOlFuBsMPvUgMm0pRzztEWpRTIqYSSGgBpfM7CLOGGFE1OaxIvYWVUWE1I=
+	t=1730898834; cv=none; b=ZBHlkVOgIrTUsTMStap4OyKVNeswoLfG2awAJEhr/ROAcuc3aF+ekm6HWhTdJwkxBbD1zw/8R0rTwUOYfb5TpXcVsCKVzT5v/5YQXb90I7B+1fXuoARnXoHrMuTjX/iM7lpPdu8b1B04j3kJk9pczutEQM963bLbt9XMqwECjb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898831; c=relaxed/simple;
-	bh=fX4DqWs7BgLWt83JFt3vTqURaJqYAp9+83IK1D65Lys=;
+	s=arc-20240116; t=1730898834; c=relaxed/simple;
+	bh=IX/4BNyhTibNH/pz59G5xGta4hoTfa07ovtTtgGT/i8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rV35jexS/rv9/5eWKXQfRI/lTyZvH7ZCkmhpD6gwNkfFt4xUZaHbLo9PFYghRpAWB1xGctxkb0iyJ+jQjhNvpzZ0VxvliKHumwN9EE/QfGZb6aD8f1SQqgXIUzd3hNX5e0X8QhqF5ksTuhoGI7LTVwLogKZ1xijFsVe1FuoEqTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVoGSe6V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pXjViSHS9UDhg/t4cu85nWFCW7KsxtjIgMk5mwHdQ1AF5AoQtQZxIJcgTZlRKvBfKgGSE6cwvBeh0AWFK9xNTiuJN6Wz9rJ3FfaQDeo4Wq4elFRL1LcLAfvyVfOAFZKZBgK/V8Z/WrkYozvs8zvONncNi4UocwqGLB1P/FmhnMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITCtjMXz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVoGSe6V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDE9C4CECD;
-	Wed,  6 Nov 2024 13:13:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITCtjMXz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20DCC4CECD;
+	Wed,  6 Nov 2024 13:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898831;
-	bh=fX4DqWs7BgLWt83JFt3vTqURaJqYAp9+83IK1D65Lys=;
+	s=korg; t=1730898834;
+	bh=IX/4BNyhTibNH/pz59G5xGta4hoTfa07ovtTtgGT/i8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MVoGSe6VtKWjSviqznN5xSvZOM7i0gQwXSUkzSiriQlWtXE03pmzGmT1JvUywHFi9
-	 qvjvq+L9n6h6Mw+1rg2i+VZDnI7wzFWdksKwk61cZr6ftdipShJDzsTUw92pnSqYG1
-	 CEz/cx68MKWy5UrK8r7dlwXSBVjeSIXMQD0pIM7I=
+	b=ITCtjMXzLXHPAe+m4sKBFWnOgB1QZJadK/8nuCPrt3xWYdD4e/upK/4VyxF391JJ4
+	 95pFZpMRBYhbi+8qJH6EtD1/j+Qei5F0F+FzMiX73Ziu16h44sI6iUK3ll6fLr5TyF
+	 cNtqsNJPkpJQeMTJzUkcv1sSU6ZeRqbXTpOqtTg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Emil Gedenryd <emil.gedenryd@axis.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 370/462] iio: hid-sensors: Fix an error handling path in _hid_sensor_set_report_latency()
-Date: Wed,  6 Nov 2024 13:04:23 +0100
-Message-ID: <20241106120340.665010891@linuxfoundation.org>
+Subject: [PATCH 5.4 371/462] iio: light: opt3001: add missing full-scale range value
+Date: Wed,  6 Nov 2024 13:04:24 +0100
+Message-ID: <20241106120340.691670567@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,34 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Emil Gedenryd <emil.gedenryd@axis.com>
 
-commit 3a29b84cf7fbf912a6ab1b9c886746f02b74ea25 upstream.
+commit 530688e39c644543b71bdd9cb45fdfb458a28eaa upstream.
 
-If hid_sensor_set_report_latency() fails, the error code should be returned
-instead of a value likely to be interpreted as 'success'.
+The opt3001 driver uses predetermined full-scale range values to
+determine what exponent to use for event trigger threshold values.
+The problem is that one of the values specified in the datasheet is
+missing from the implementation. This causes larger values to be
+scaled down to an incorrect exponent, effectively reducing the
+maximum settable threshold value by a factor of 2.
 
-Fixes: 138bc7969c24 ("iio: hid-sensor-hub: Implement batch mode")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/c50640665f091a04086e5092cf50f73f2055107a.1727980825.git.christophe.jaillet@wanadoo.fr
+Add missing full-scale range array value.
+
+Fixes: 94a9b7b1809f ("iio: light: add support for TI's opt3001 light sensor")
+Signed-off-by: Emil Gedenryd <emil.gedenryd@axis.com>
 Cc: <Stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240913-add_opt3002-v2-1-69e04f840360@axis.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/common/hid-sensors/hid-sensor-trigger.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/light/opt3001.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/iio/common/hid-sensors/hid-sensor-trigger.c
-+++ b/drivers/iio/common/hid-sensors/hid-sensor-trigger.c
-@@ -33,7 +33,7 @@ static ssize_t _hid_sensor_set_report_la
- 	latency = integer * 1000 + fract / 1000;
- 	ret = hid_sensor_set_report_latency(attrb, latency);
- 	if (ret < 0)
--		return len;
-+		return ret;
- 
- 	attrb->latency_ms = hid_sensor_get_report_latency(attrb);
- 
+--- a/drivers/iio/light/opt3001.c
++++ b/drivers/iio/light/opt3001.c
+@@ -138,6 +138,10 @@ static const struct opt3001_scale opt300
+ 		.val2 = 400000,
+ 	},
+ 	{
++		.val = 41932,
++		.val2 = 800000,
++	},
++	{
+ 		.val = 83865,
+ 		.val2 = 600000,
+ 	},
 
 
