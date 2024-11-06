@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5962E1F668E;
-	Wed,  6 Nov 2024 13:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA111F668F;
+	Wed,  6 Nov 2024 13:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898636; cv=none; b=OL5Y7LxPJpCbmGK3D7aP7LlwjM2ylwsQBZw96EF3rtNuUz0Fp8RnUvyWkursLlTonVVyjCMErruFN6UUAtDB16Abd8mx8ZdmSCQRnMQ5aVB6ppb6zyneKYe3G6l25XRFDYJbhhSlbVpxVJTWEXg4AFNQfatjFQp2EhfQADnexDE=
+	t=1730898639; cv=none; b=phyj120hHEIvKuFWosk+4MyoBga52/OL6UtNLOny+6qGXw15Rop63ix3AMn/wEHYCIqjElzQx60PpUlNV2hfef/UgQ5D0whZnTvqZPxIDCk+UUvVgF5x2ZKpwua0RLeQEy9+wOtkcaZdxRH4XUQ9NIr8vVf4gf26JHsp7gcp3xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898636; c=relaxed/simple;
-	bh=TtaYoFdB52ErsYi4nBWWAjDRCgEIhOmPKGUcOvCbhNI=;
+	s=arc-20240116; t=1730898639; c=relaxed/simple;
+	bh=u0pjIDXfMAYUqcbjLfwmpO3MjLFVSVRJIO4Rjjc8yqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6M4FXqKhb43dYetLfCOkKec2B5377bX9UicgrR7Q+Fz4e5n9OgQe8q/jvO5VQpoTuFYyHWEKaxIJJyZuxH6mkd8yjKyMAvXh4YfX+MSGlmScksps8kmmfB1LlcizNFWs12uRPFB0V0UHamlJHXnTU9Xvo5Z+HF+WYXqBgqS1cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ku06WTdX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UX7c5GXJxa/nUrSCdMlh5zmq+zoOa0uLd61iyAoRFSyjq8x6B1iqcpu1Fx/9lbyTH9uGrEFHPVDkkl/h3IQbKJuugSRHIMrP8sdWRcJ8tEQCkGr520whpycRlQMmxgi0pepXmvtHxKGK5e2cPmy5H/vb3Jm0iGBoUu72pwn/0WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9nunUaS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ku06WTdX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D080BC4CECD;
-	Wed,  6 Nov 2024 13:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9nunUaS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA373C4CECD;
+	Wed,  6 Nov 2024 13:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898636;
-	bh=TtaYoFdB52ErsYi4nBWWAjDRCgEIhOmPKGUcOvCbhNI=;
+	s=korg; t=1730898639;
+	bh=u0pjIDXfMAYUqcbjLfwmpO3MjLFVSVRJIO4Rjjc8yqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ku06WTdX9bvOm4B/oMt5el6IUnczTZfh76M0Bz/JduACM/zZTEPWB7QF82yjncCr3
-	 61sWuPPbyYvSLhuE3XTaU8RsfQEoQBoaV7JgpmTjGD04poCoMHWfwkaAcSXvi7iHzC
-	 p4JNOzXVufxOT0DHzcVd2MOCdcnPNCLORDFOnvFc=
+	b=A9nunUaSMcLi6C8hLj6xc1iUq/aVnf2ftmYXwLWM0wvDOWjlmuuF0QsWMSPg9LO/Q
+	 Fxo+sQ99wm6h840rjwhhJBIrlrBvurCjOHgc7Y5F0xr1dD+4RjVmJPBpAlNtFYKQJ2
+	 QVkBe888hY/AkUrJzzLAbKyQa/NW44h37aR0cw/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinke Han <jinkehan@didiglobal.com>,
-	Tao Chen <chen.dylane@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 303/462] bpf: Check percpu map value size first
-Date: Wed,  6 Nov 2024 13:03:16 +0100
-Message-ID: <20241106120339.012315202@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 5.4 270/462] media: venus: fix use after free bug in venus_remove due to race condition
+Date: Wed,  6 Nov 2024 13:02:43 +0100
+Message-ID: <20241106120338.196640014@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -53,59 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Chen <chen.dylane@gmail.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 1d244784be6b01162b732a5a7d637dfc024c3203 ]
+commit c5a85ed88e043474161bbfe54002c89c1cb50ee2 upstream.
 
-Percpu map is often used, but the map value size limit often ignored,
-like issue: https://github.com/iovisor/bcc/issues/2519. Actually,
-percpu map value size is bound by PCPU_MIN_UNIT_SIZE, so we
-can check the value size whether it exceeds PCPU_MIN_UNIT_SIZE first,
-like percpu map of local_storage. Maybe the error message seems clearer
-compared with "cannot allocate memory".
+in venus_probe, core->work is bound with venus_sys_error_handler, which is
+used to handle error. The code use core->sys_err_done to make sync work.
+The core->work is started in venus_event_notify.
 
-Signed-off-by: Jinke Han <jinkehan@didiglobal.com>
-Signed-off-by: Tao Chen <chen.dylane@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240910144111.1464912-2-chen.dylane@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If we call venus_remove, there might be an unfished work. The possible
+sequence is as follows:
+
+CPU0                  CPU1
+
+                     |venus_sys_error_handler
+venus_remove         |
+hfi_destroy	 		 |
+venus_hfi_destroy	 |
+kfree(hdev);	     |
+                     |hfi_reinit
+					 |venus_hfi_queues_reinit
+                     |//use hdev
+
+Fix it by canceling the work in venus_remove.
+
+Cc: stable@vger.kernel.org
+Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/arraymap.c | 3 +++
- kernel/bpf/hashtab.c  | 3 +++
- 2 files changed, 6 insertions(+)
+ drivers/media/platform/qcom/venus/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
-index 81ed9b79f4019..af90c4498e80e 100644
---- a/kernel/bpf/arraymap.c
-+++ b/kernel/bpf/arraymap.c
-@@ -64,6 +64,9 @@ int array_map_alloc_check(union bpf_attr *attr)
- 		 * access the elements.
- 		 */
- 		return -E2BIG;
-+	/* percpu map value size is bound by PCPU_MIN_UNIT_SIZE */
-+	if (percpu && round_up(attr->value_size, 8) > PCPU_MIN_UNIT_SIZE)
-+		return -E2BIG;
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -347,6 +347,7 @@ static int venus_remove(struct platform_
+ 	struct device *dev = core->dev;
+ 	int ret;
  
- 	return 0;
- }
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index 34c4f709b1ede..0d14a2a11463a 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -288,6 +288,9 @@ static int htab_map_alloc_check(union bpf_attr *attr)
- 		 * kmalloc-able later in htab_map_update_elem()
- 		 */
- 		return -E2BIG;
-+	/* percpu map value size is bound by PCPU_MIN_UNIT_SIZE */
-+	if (percpu && round_up(attr->value_size, 8) > PCPU_MIN_UNIT_SIZE)
-+		return -E2BIG;
++	cancel_delayed_work_sync(&core->work);
+ 	ret = pm_runtime_get_sync(dev);
+ 	WARN_ON(ret < 0);
  
- 	return 0;
- }
--- 
-2.43.0
-
 
 
