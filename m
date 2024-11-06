@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CE81E25F7;
-	Wed,  6 Nov 2024 12:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112331E103C;
+	Wed,  6 Nov 2024 12:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896904; cv=none; b=nKiAaysAxzfuV017LheTgbpqq6cZJmLtzlY0+7+DQGPwORFWHNY/XESycU0tqUjeFpkpGZDCynqpfLO9qTQGX4jTqV5VYkDjEoaGVrdaaIXrRGWPZEQQhW2O5ryge6kfGYxOUoJ9mnqEasaX5xXzqZdmicpTDH4ENQ4H4Uc/wdM=
+	t=1730896907; cv=none; b=Yn/8vKgeyUyM+1QKYRCgyiJS9KZEBpsbz3tQsc4dAD4YVViBMTRK2OIxSfEeDmEQhZjgG0bZM+aQuyv6QKrBZ5SRqVS1OgZfqWBTsM3KuFF0jYFkzw8aAaSxxOV/aRQcMzi0HxONoXIW+Zka/cqf8eEdcW9mcwtVa7hmJ+QZKgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896904; c=relaxed/simple;
-	bh=Vz2QSFuVaRx8lsSJ9B4L+2OWmKq88eNcz2S96bUYryA=;
+	s=arc-20240116; t=1730896907; c=relaxed/simple;
+	bh=n74kcTbRRW60wEIO7aDFwFAioc1XBba6rxVe+/Kf28Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZJcDMowMkYgStBPK4/M3+kPM6HsnQGHRZ1J+LaQ+cuAFPsLBRP2F93G3HQy5aaBNLeXxSl0mjuuFoGvYy8+pRTZunHu0bHtWqGwJuZLBUfIeyWzcJzXOjet0oAlC9ZOO/gmuUfM/lAoZD5glK7jmN/wkVSrO+x6qK0Uug1aKeYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RInJiJux; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cK4GSL6oGr6I1ui2UV8F0A2ae/Yhrt15V+ewAu78JDMcmyKCtiOCXmfpYR+31wYH7QlxcF59p8LJl5BrfmXIMkyW3ggJMnQfIm9Wx7QMOy4EaMYess+uDnJs1iEhAtTMe9BDIYLiWVN2RsnOGOThi9SGKV1lcHpB9q3K8n+7764=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZ0cnA+B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RInJiJux"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD61C4CECD;
-	Wed,  6 Nov 2024 12:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZ0cnA+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C826C4CECD;
+	Wed,  6 Nov 2024 12:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896904;
-	bh=Vz2QSFuVaRx8lsSJ9B4L+2OWmKq88eNcz2S96bUYryA=;
+	s=korg; t=1730896906;
+	bh=n74kcTbRRW60wEIO7aDFwFAioc1XBba6rxVe+/Kf28Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RInJiJuxMqGPt88ysZ70cLxGvZHm5K28RY13o/t39jSiu0CBglEppgVtZ31k4cslc
-	 MF1d61vHmXczPswqbzFJROU88MjRPipLD62d3sFX5ajn2MSLHRtuZEBSJNM5HWIATs
-	 /EE1MexNr5sOzBEo8ZiZVWg/b+Y+8ODisQb+TwlY=
+	b=WZ0cnA+BuYd/JlFau6o6I9rU22BKERvb9tGsaQdSZsQKdtPwhE0weybe/QWx9DTEY
+	 yjqK9QwPBYdDOzeQhXWBpZ/028iXj07oEfdZTWTi6MBJYCqzqJZ/CZKQwS/aNyBRxJ
+	 v6ZVUYziGk/tdp1I7IfUiPVUQGqYJ5erA+nnBNuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Byeonguk Jeong <jungbu2855@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@kernel.org>,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Alexander Duyck <alexander.duyck@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 074/110] bpf: Fix out-of-bounds write in trie_get_next_key()
-Date: Wed,  6 Nov 2024 13:04:40 +0100
-Message-ID: <20241106120305.232861437@linuxfoundation.org>
+Subject: [PATCH 5.10 075/110] net: support ip generic csum processing in skb_csum_hwoffload_help
+Date: Wed,  6 Nov 2024 13:04:41 +0100
+Message-ID: <20241106120305.259960414@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -47,49 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Byeonguk Jeong <jungbu2855@gmail.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 13400ac8fb80c57c2bfb12ebd35ee121ce9b4d21 ]
+[ Upstream commit 62fafcd63139920eb25b3fbf154177ce3e6f3232 ]
 
-trie_get_next_key() allocates a node stack with size trie->max_prefixlen,
-while it writes (trie->max_prefixlen + 1) nodes to the stack when it has
-full paths from the root to leaves. For example, consider a trie with
-max_prefixlen is 8, and the nodes with key 0x00/0, 0x00/1, 0x00/2, ...
-0x00/8 inserted. Subsequent calls to trie_get_next_key with _key with
-.prefixlen = 8 make 9 nodes be written on the node stack with size 8.
+NETIF_F_IP|IPV6_CSUM feature flag indicates UDP and TCP csum offload
+while NETIF_F_HW_CSUM feature flag indicates ip generic csum offload
+for HW, which includes not only for TCP/UDP csum, but also for other
+protocols' csum like GRE's.
 
-Fixes: b471f2f1de8b ("bpf: implement MAP_GET_NEXT_KEY command for LPM_TRIE map")
-Signed-off-by: Byeonguk Jeong <jungbu2855@gmail.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@kernel.org>
-Tested-by: Hou Tao <houtao1@huawei.com>
-Acked-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/Zxx384ZfdlFYnz6J@localhost.localdomain
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+However, in skb_csum_hwoffload_help() it only checks features against
+NETIF_F_CSUM_MASK(NETIF_F_HW|IP|IPV6_CSUM). So if it's a non TCP/UDP
+packet and the features doesn't support NETIF_F_HW_CSUM, but supports
+NETIF_F_IP|IPV6_CSUM only, it would still return 0 and leave the HW
+to do csum.
+
+This patch is to support ip generic csum processing by checking
+NETIF_F_HW_CSUM for all protocols, and check (NETIF_F_IP_CSUM |
+NETIF_F_IPV6_CSUM) only for TCP and UDP.
+
+Note that we're using skb->csum_offset to check if it's a TCP/UDP
+proctol, this might be fragile. However, as Alex said, for now we
+only have a few L4 protocols that are requesting Tx csum offload,
+we'd better fix this until a new protocol comes with a same csum
+offset.
+
+v1->v2:
+  - not extend skb->csum_not_inet, but use skb->csum_offset to tell
+    if it's an UDP/TCP csum packet.
+v2->v3:
+  - add a note in the changelog, as Willem suggested.
+
+Suggested-by: Alexander Duyck <alexander.duyck@gmail.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 04c20a9356f2 ("net: skip offload for NETIF_F_IPV6_CSUM if ipv6 header contains extension")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/lpm_trie.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/dev.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
-index 3c2d8722d45b3..8370b391f1d6c 100644
---- a/kernel/bpf/lpm_trie.c
-+++ b/kernel/bpf/lpm_trie.c
-@@ -655,7 +655,7 @@ static int trie_get_next_key(struct bpf_map *map, void *_key, void *_next_key)
- 	if (!key || key->prefixlen > trie->max_prefixlen)
- 		goto find_leftmost;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 5edab9328d5e0..6f04bb2ac4932 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3647,7 +3647,18 @@ int skb_csum_hwoffload_help(struct sk_buff *skb,
+ 		return !!(features & NETIF_F_SCTP_CRC) ? 0 :
+ 			skb_crc32c_csum_help(skb);
  
--	node_stack = kmalloc_array(trie->max_prefixlen,
-+	node_stack = kmalloc_array(trie->max_prefixlen + 1,
- 				   sizeof(struct lpm_trie_node *),
- 				   GFP_ATOMIC | __GFP_NOWARN);
- 	if (!node_stack)
+-	return !!(features & NETIF_F_CSUM_MASK) ? 0 : skb_checksum_help(skb);
++	if (features & NETIF_F_HW_CSUM)
++		return 0;
++
++	if (features & (NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM)) {
++		switch (skb->csum_offset) {
++		case offsetof(struct tcphdr, check):
++		case offsetof(struct udphdr, check):
++			return 0;
++		}
++	}
++
++	return skb_checksum_help(skb);
+ }
+ EXPORT_SYMBOL(skb_csum_hwoffload_help);
+ 
 -- 
 2.43.0
 
