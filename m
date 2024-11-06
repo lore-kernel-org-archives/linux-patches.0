@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9AD1DF24A;
-	Wed,  6 Nov 2024 12:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2091DF24A;
+	Wed,  6 Nov 2024 12:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895050; cv=none; b=d8V+dy04SyHzSViM+FWvUSHlB1MTQ54qvY2CA4TtMFhQQ4VUG7qtHTdUnHW935sjlrqF/BwgVjEYVkG42m+D9P9jxT9WRmsvmo4AGwNkfMkyJwkRQ/EtH58rH+1xque4moYJM76dFmjadE+VoMvuvLd5r5DsV5qzs5+X9UVKCAc=
+	t=1730895053; cv=none; b=BIO5SYbJ6FwYtzXVeZmhUmABE3WOiknm4lemxUj8yJNCWVssNcosbzKWccOf4J0W9bqkFl4Vbzg/VOps2di+ChMO04nhH3PiA4R3vSXLp9wlPkDeHcqzUiv1Vxq5g1qfKtnBkVOaC/SQJJ1hHksdQgzE7oqehpmT4Bfi+yh81Ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895050; c=relaxed/simple;
-	bh=jk+lFSJiIYhV5W2sc9v5muOJgS/PleZ06Eauk9zhstY=;
+	s=arc-20240116; t=1730895053; c=relaxed/simple;
+	bh=8P9/0hM8fz8HmQnfrlWrT1T9ccHEHpQMLKpEyTxE/eQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGTp0PCW52Uykw191+jgyerPIZw1Cb226gFrvMjceQ2XTSdSJWIDxG+P/rVWVcbRe+4zjaCDUFRt9udEG4EH3ThZl/dz4F4ga75W7yHtb/CtMHYKfuqdPg6/tKLN4Lz9SF8RYJYsrqi2HzmtvCGAx4xOta2zYnSjfLfGes1rU2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=apmwNka7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bccBm8OYuCpzXU3+f4H+OkJXU2O3bxyaBwkD2yN9lwwsMwjSfNR0AnvVYwbXWcAZ8cC9cQd4ycmHstdkzGXxcfTFfBUX2Ylq8NDhuvuOkFXitHd+NKb5SUHmfetQIipLAjOhhnYShNe81sCSEmGwjqT2+7/YAJvABpUABcvfMMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0cPUpjjY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="apmwNka7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C2E9C4CED3;
-	Wed,  6 Nov 2024 12:10:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0cPUpjjY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E5DC4CECD;
+	Wed,  6 Nov 2024 12:10:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895050;
-	bh=jk+lFSJiIYhV5W2sc9v5muOJgS/PleZ06Eauk9zhstY=;
+	s=korg; t=1730895053;
+	bh=8P9/0hM8fz8HmQnfrlWrT1T9ccHEHpQMLKpEyTxE/eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=apmwNka78VgvLVH2u/j7K9UzAPX3sLG+46/2D12g7NUQB4+rpk0tkKTHkHwjg/iu1
-	 +CMMUV8hhyftk613h0ooB1EdRtg3plZdYvK5jT5fGggY14PgWvS1cwmxP+9pF/vDg/
-	 dlSHPrV2ajjUgH5/IS4XahykkFDI6sQRio1JPRH4=
+	b=0cPUpjjYCpcVHlCkv+xg8bszMhNYjx8Q4MNE+FjQHUNbPd4Cz+NbItMhrOr03YltZ
+	 AVCvMd5hUey03wmnQbeKpPpHCbM0Sv+pbO28ORRcJpVP9AcIFVS529zcaDXR367A/n
+	 VJFLTCZ7iMDTmj/awlQMiKaOak4zHQumxzUOOa50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 087/350] pinctrl: single: fix missing error code in pcs_probe()
-Date: Wed,  6 Nov 2024 13:00:15 +0100
-Message-ID: <20241106120323.046053300@linuxfoundation.org>
+Subject: [PATCH 4.19 053/350] drm/amdgpu: properly handle vbios fake edid sizing
+Date: Wed,  6 Nov 2024 12:59:41 +0100
+Message-ID: <20241106120322.201641845@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -45,41 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit cacd8cf79d7823b07619865e994a7916fcc8ae91 ]
+[ Upstream commit 8155566a26b8d6c1dd914f06a0c652e4e2f2adf1 ]
 
-If pinctrl_enable() fails in pcs_probe(), it should return the error code.
+The comment in the vbios structure says:
+// = 128 means EDID length is 128 bytes, otherwise the EDID length = ucFakeEDIDLength*128
 
-Fixes: 8f773bfbdd42 ("pinctrl: single: fix possible memory leak when pinctrl_enable() fails")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/20240819024625.154441-1-yangyingliang@huaweicloud.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+This fake edid struct has not been used in a long time, so I'm
+not sure if there were actually any boards out there with a non-128 byte
+EDID, but align the code with the comment.
+
+Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
+Reported-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lists.freedesktop.org/archives/amd-gfx/2024-June/109964.html
+Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/amdgpu/atombios_encoders.c    | 29 ++++++++++---------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index 86691841efc01..004410e58e54b 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -1898,7 +1898,8 @@ static int pcs_probe(struct platform_device *pdev)
- 
- 	dev_info(pcs->dev, "%i pins, size %u\n", pcs->desc.npins, pcs->size);
- 
--	if (pinctrl_enable(pcs->pctl))
-+	ret = pinctrl_enable(pcs->pctl);
-+	if (ret)
- 		goto free;
- 
- 	return 0;
+diff --git a/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c b/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
+index 9de266a1bfbe0..251975697d69d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
++++ b/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
+@@ -2095,26 +2095,29 @@ amdgpu_atombios_encoder_get_lcd_info(struct amdgpu_encoder *encoder)
+ 					fake_edid_record = (ATOM_FAKE_EDID_PATCH_RECORD *)record;
+ 					if (fake_edid_record->ucFakeEDIDLength) {
+ 						struct edid *edid;
+-						int edid_size =
+-							max((int)EDID_LENGTH, (int)fake_edid_record->ucFakeEDIDLength);
+-						edid = kmalloc(edid_size, GFP_KERNEL);
++						int edid_size;
++
++						if (fake_edid_record->ucFakeEDIDLength == 128)
++							edid_size = fake_edid_record->ucFakeEDIDLength;
++						else
++							edid_size = fake_edid_record->ucFakeEDIDLength * 128;
++						edid = kmemdup(&fake_edid_record->ucFakeEDIDString[0],
++							       edid_size, GFP_KERNEL);
+ 						if (edid) {
+-							memcpy((u8 *)edid, (u8 *)&fake_edid_record->ucFakeEDIDString[0],
+-							       fake_edid_record->ucFakeEDIDLength);
+-
+ 							if (drm_edid_is_valid(edid)) {
+ 								adev->mode_info.bios_hardcoded_edid = edid;
+ 								adev->mode_info.bios_hardcoded_edid_size = edid_size;
+-							} else
++							} else {
+ 								kfree(edid);
++							}
+ 						}
++						record += struct_size(fake_edid_record,
++								      ucFakeEDIDString,
++								      edid_size);
++					} else {
++						/* empty fake edid record must be 3 bytes long */
++						record += sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
+ 					}
+-					record += fake_edid_record->ucFakeEDIDLength ?
+-						  struct_size(fake_edid_record,
+-							      ucFakeEDIDString,
+-							      fake_edid_record->ucFakeEDIDLength) :
+-						  /* empty fake edid record must be 3 bytes long */
+-						  sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
+ 					break;
+ 				case LCD_PANEL_RESOLUTION_RECORD_TYPE:
+ 					panel_res_record = (ATOM_PANEL_RESOLUTION_PATCH_RECORD *)record;
 -- 
 2.43.0
 
