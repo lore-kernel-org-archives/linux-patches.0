@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F9118C00E;
-	Wed,  6 Nov 2024 12:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FF618C00E;
+	Wed,  6 Nov 2024 12:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896101; cv=none; b=AYmqAkEzI9/KV4KmwmzPa7mYcY93Nulu+7eITkCHt/Xq03b+K9Dj3RNjn35psDsUV7rnG2a5EXTKiKSw57fxiAXACbA9TeTSk3iZA3Gobut8r0Uz5QDtx522HJJysAg+N/ctEcPW7PDM1TrILWE3sdf4hx6HcUYN4u3WPJZQFXg=
+	t=1730896104; cv=none; b=nK2mjdDqTyRiWEfFCN3idocbsIhnlt24/bDnbByM/SAXqfCgHRm/ZDYr139lY4+2imNh/VBFpnKBsw2AswNJzIXPm4CYGCFFkNKLvpTjilCnU2YXJzb0tkFLncgUCH9zZ9JAAfJYywe53PfGmXgvxRxEcP8xnAEJw/UPxvX/+9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896101; c=relaxed/simple;
-	bh=ZrNuHz7JOWvkkf0z1N6txNCTs0oMZArIodHrsskDXhw=;
+	s=arc-20240116; t=1730896104; c=relaxed/simple;
+	bh=vYNq2/a19aAUElB1u2muOe/8wIUWzf6oolp949gx2Xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TO4y4RQVgCcxEL9FRx+xDNaQOB+1S9o6elF33VN6WKvs6rh2t9wPrfTVSKyDR+ZWMH6n8f/zqhgv30sgeL38ekAGaOaC7ilpfcHFpqeOuj4P+y+lHfu3pkjFYyQdMY2/1pBEG1o+3AkVL2muYLFgsfY89ydo7Xza2Nsfdi0pTe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FmlwGrIm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RSfxbkEwB0rBmJgrwRrrokO+nF15lnGL7fefleKf4wSLi+slTlGqKk0EVzsq/A2yg+6shJvPUuOcPElisIfW+9iNfEFJOEeV9uOYgnQy0PEMhNXdq7ZT+y5HmmtmOyyDNKZji2WCUBTJ+bIFRSDM3zN8LS7oNN9oxPpb5FjaV4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Nnmfmzo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FmlwGrIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82348C4CECD;
-	Wed,  6 Nov 2024 12:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Nnmfmzo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B721C4CECD;
+	Wed,  6 Nov 2024 12:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896100;
-	bh=ZrNuHz7JOWvkkf0z1N6txNCTs0oMZArIodHrsskDXhw=;
+	s=korg; t=1730896104;
+	bh=vYNq2/a19aAUElB1u2muOe/8wIUWzf6oolp949gx2Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FmlwGrImTpGpbnrL6PipG7qESjj6jxWsw9Lw9Be1MuYwfncWfwUyzqUXRDGYIXcoC
-	 sigxf5uHEPSpCy5SNCse8RLPwOvqk/SmYxaQoPdf9yBGLPL/+QWwGdiIJw+4z7eOLg
-	 YRXIakDMlKxiIax73+HKIrEzAo6n76mUwWUwiVAo=
+	b=0Nnmfmzory4QZ5N9NDJ9qxyQXCAZ7mB4vo3jmqOZDH3+Lza+DZ+5JbrcwACZbTlJB
+	 l8/NHeTqLVA05PFzUkvYQzcFlk8CPw1cxIEnq34R4iEUmpQD4O528YeksHYbvwx4K1
+	 tGOTQpwVxAVdLwQX0BkLU2T1o8wtf+dW7AtEtED4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guilherme Giacomo Simoes <trintaeoitogc@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
+	Benjamin Marzinski <bmarzins@redhat.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 091/245] rust: device: change the from_raw() function
-Date: Wed,  6 Nov 2024 13:02:24 +0100
-Message-ID: <20241106120321.447759782@linuxfoundation.org>
+Subject: [PATCH 6.11 092/245] scsi: scsi_transport_fc: Allow setting rport state to current state
+Date: Wed,  6 Nov 2024 13:02:25 +0100
+Message-ID: <20241106120321.473589534@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,74 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guilherme Giacomo Simoes <trintaeoitogc@gmail.com>
+From: Benjamin Marzinski <bmarzins@redhat.com>
 
-[ Upstream commit cc4332afb5631b0e9d2ce5699b7f4b7caf743526 ]
+[ Upstream commit d539a871ae47a1f27a609a62e06093fa69d7ce99 ]
 
-The function Device::from_raw() increments a refcount by a call to
-bindings::get_device(ptr). This can be confused because usually
-from_raw() functions don't increment a refcount.
-Hence, rename Device::from_raw() to avoid confuion with other "from_raw"
-semantics.
+The only input fc_rport_set_marginal_state() currently accepts is
+"Marginal" when port_state is "Online", and "Online" when the port_state
+is "Marginal". It should also allow setting port_state to its current
+state, either "Marginal or "Online".
 
-The new name of function should be "get_device" to be consistent with
-the function get_device() already exist in .c files.
-
-This function body also changed, because the `into()` will convert the
-`&'a Device` into `ARef<Device>` and also call `inc_ref` from the
-`AlwaysRefCounted` trait implemented for Device.
-
-Signed-off-by: Guilherme Giacomo Simoes <trintaeoitogc@gmail.com>
-Acked-by: Danilo Krummrich <dakr@kernel.org>
-Closes: https://github.com/Rust-for-Linux/linux/issues/1088
-Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
-Link: https://lore.kernel.org/r/20241001205603.106278-1-trintaeoitogc@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
+Link: https://lore.kernel.org/r/20240917230643.966768-1-bmarzins@redhat.com
+Reviewed-by: Ewan D. Milne <emilne@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/kernel/device.rs   | 15 +++------------
- rust/kernel/firmware.rs |  2 +-
- 2 files changed, 4 insertions(+), 13 deletions(-)
+ drivers/scsi/scsi_transport_fc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/rust/kernel/device.rs b/rust/kernel/device.rs
-index 851018eef885e..c8199ee079eff 100644
---- a/rust/kernel/device.rs
-+++ b/rust/kernel/device.rs
-@@ -51,18 +51,9 @@ impl Device {
-     ///
-     /// It must also be ensured that `bindings::device::release` can be called from any thread.
-     /// While not officially documented, this should be the case for any `struct device`.
--    pub unsafe fn from_raw(ptr: *mut bindings::device) -> ARef<Self> {
--        // SAFETY: By the safety requirements, ptr is valid.
--        // Initially increase the reference count by one to compensate for the final decrement once
--        // this newly created `ARef<Device>` instance is dropped.
--        unsafe { bindings::get_device(ptr) };
--
--        // CAST: `Self` is a `repr(transparent)` wrapper around `bindings::device`.
--        let ptr = ptr.cast::<Self>();
--
--        // SAFETY: `ptr` is valid by the safety requirements of this function. By the above call to
--        // `bindings::get_device` we also own a reference to the underlying `struct device`.
--        unsafe { ARef::from_raw(ptr::NonNull::new_unchecked(ptr)) }
-+    pub unsafe fn get_device(ptr: *mut bindings::device) -> ARef<Self> {
-+        // SAFETY: By the safety requirements ptr is valid
-+        unsafe { Self::as_ref(ptr) }.into()
-     }
- 
-     /// Obtain the raw `struct device *`.
-diff --git a/rust/kernel/firmware.rs b/rust/kernel/firmware.rs
-index dee5b4b18aec4..13a374a5cdb74 100644
---- a/rust/kernel/firmware.rs
-+++ b/rust/kernel/firmware.rs
-@@ -44,7 +44,7 @@ fn request_nowarn() -> Self {
- ///
- /// # fn no_run() -> Result<(), Error> {
- /// # // SAFETY: *NOT* safe, just for the example to get an `ARef<Device>` instance
--/// # let dev = unsafe { Device::from_raw(core::ptr::null_mut()) };
-+/// # let dev = unsafe { Device::get_device(core::ptr::null_mut()) };
- ///
- /// let fw = Firmware::request(c_str!("path/to/firmware.bin"), &dev)?;
- /// let blob = fw.data();
+diff --git a/drivers/scsi/scsi_transport_fc.c b/drivers/scsi/scsi_transport_fc.c
+index 7d088b8da0757..2270732b353c8 100644
+--- a/drivers/scsi/scsi_transport_fc.c
++++ b/drivers/scsi/scsi_transport_fc.c
+@@ -1255,7 +1255,7 @@ static ssize_t fc_rport_set_marginal_state(struct device *dev,
+ 		 */
+ 		if (rport->port_state == FC_PORTSTATE_ONLINE)
+ 			rport->port_state = port_state;
+-		else
++		else if (port_state != rport->port_state)
+ 			return -EINVAL;
+ 	} else if (port_state == FC_PORTSTATE_ONLINE) {
+ 		/*
+@@ -1265,7 +1265,7 @@ static ssize_t fc_rport_set_marginal_state(struct device *dev,
+ 		 */
+ 		if (rport->port_state == FC_PORTSTATE_MARGINAL)
+ 			rport->port_state = port_state;
+-		else
++		else if (port_state != rport->port_state)
+ 			return -EINVAL;
+ 	} else
+ 		return -EINVAL;
 -- 
 2.43.0
 
