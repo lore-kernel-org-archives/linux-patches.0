@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F121D1E909B;
-	Wed,  6 Nov 2024 12:43:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EAC41F7558;
+	Wed,  6 Nov 2024 12:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897014; cv=none; b=UMYe7gJw10Zv2G/VFgg3+plkfhiko1V95s07k6tz8ogZ2oSI65ugCrifK+dlLCk2PYD6bfIksITR72y/LDC+RXqqSHTazmo4TLDzfX3oxKkYXZG20jeTM8V2WKjbvw1uHucfVAf21dMzTYEKumlfpXXvlsh1pymHa/lHx4sEbaY=
+	t=1730897016; cv=none; b=RyZ1mlSP9vObasXOJOj4WlSAt6N4kfgP/duga+rDHNSV27H0zbJesANSnuWlt60b5IyvauPfdMeh0o2+huV2ymd9zgdPKqsHxAC8Wwi3mBG7tn53SFITTAZIgOenDMkheIVIvk6a8F1m3pIgMnRb9if259wMU1gAcKLVjGAAI8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897014; c=relaxed/simple;
-	bh=VxIUSFcd+iEZBrjcSYFDjSRpLwGEkhRMgnFTfT4CwXw=;
+	s=arc-20240116; t=1730897016; c=relaxed/simple;
+	bh=f6nMTBPrv7dR79CX45tG9dmwwZk7XVereCjocqO/y58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wi3v3WQiJATuaTKNvES969RmVB1ZPLR+LX6kgHfFtYxJJ1V7Ivc/6hbGB/7sBhANGrlXzxgUft2mZ1WASf2Sp04Agx1XvKVWBwH3pDjnaAGRFvHEBvz9yyGnmn1MoVf++qxqS8+vr+AvFesfk28qxeEJUqX0088bHCjtBNJBj3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dw6PCFUx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=svW0jV+bXXc+6Z5VGv+xC7y08UiGx+PQuPRZ/f3p4XwY9g0l6Et48dXezRkEd9k0l/U5TUcFYME0Sv01d/QEfqRtYxFOUSABfpZMU/uw5k0MENz9eD7OKkrSAWokVS/85LRFevQ00hpv37Wz0I9ir78FDBnbg669qxRfV2nbICo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ew9GboXN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dw6PCFUx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34904C4CED3;
-	Wed,  6 Nov 2024 12:43:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ew9GboXN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234CCC4CED4;
+	Wed,  6 Nov 2024 12:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897013;
-	bh=VxIUSFcd+iEZBrjcSYFDjSRpLwGEkhRMgnFTfT4CwXw=;
+	s=korg; t=1730897016;
+	bh=f6nMTBPrv7dR79CX45tG9dmwwZk7XVereCjocqO/y58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dw6PCFUx0mSQiPLEaRlkoRhzlG5vAMOBUkmuNr8AiorbhC+O9KrKqWEcrYYolA1wU
-	 NTxp8ETJ0m7oovaFH8wMAmEeYDc4SFuTcerD23KpkJQ1/Sb8VA89cO9f7E/HOenzPM
-	 rFuVlcWH5am40+q0Zn0WA1AjavartO9YjrGKjys8=
+	b=Ew9GboXNI6og8UDPGcYgl4nG85ZrRH78L+ZTbUliye/k0bcbgCXjtJlBbqamNOz0f
+	 U+gAPeEEvSB//Z07lAc91Xu/kzcNtcUHevkpmBvl9prH/ADXR5S/oXD5uU2rtbPm40
+	 h1hRsx2mNopa4RJuv6wNjxU6sTDLIrS/Qv/g5m4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/126] fs/proc/kcore.c: allow translation of physical memory addresses
-Date: Wed,  6 Nov 2024 13:03:29 +0100
-Message-ID: <20241106120306.292454731@linuxfoundation.org>
+Subject: [PATCH 6.1 009/126] cgroup: Fix potential overflow issue when checking max_depth
+Date: Wed,  6 Nov 2024 13:03:30 +0100
+Message-ID: <20241106120306.322196642@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -47,133 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 3d5854d75e3187147613130561b58f0b06166172 ]
+[ Upstream commit 3cc4e13bb1617f6a13e5e6882465984148743cf4 ]
 
-When /proc/kcore is read an attempt to read the first two pages results in
-HW-specific page swap on s390 and another (so called prefix) pages are
-accessed instead.  That leads to a wrong read.
+cgroup.max.depth is the maximum allowed descent depth below the current
+cgroup. If the actual descent depth is equal or larger, an attempt to
+create a new child cgroup will fail. However due to the cgroup->max_depth
+is of int type and having the default value INT_MAX, the condition
+'level > cgroup->max_depth' will never be satisfied, and it will cause
+an overflow of the level after it reaches to INT_MAX.
 
-Allow architecture-specific translation of memory addresses using
-kc_xlate_dev_mem_ptr() and kc_unxlate_dev_mem_ptr() callbacks similarily
-to /dev/mem xlate_dev_mem_ptr() and unxlate_dev_mem_ptr() callbacks.  That
-way an architecture can deal with specific physical memory ranges.
+Fix it by starting the level from 0 and using '>=' instead.
 
-Re-use the existing /dev/mem callback implementation on s390, which
-handles the described prefix pages swapping correctly.
+It's worth mentioning that this issue is unlikely to occur in reality,
+as it's impossible to have a depth of INT_MAX hierarchy, but should be
+be avoided logically.
 
-For other architectures the default callback is basically NOP.  It is
-expected the condition (vaddr == __va(__pa(vaddr))) always holds true for
-KCORE_RAM memory type.
-
-Link: https://lkml.kernel.org/r/20240930122119.1651546-1-agordeev@linux.ibm.com
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1a926e0bbab8 ("cgroup: implement hierarchy limits")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Michal Koutný <mkoutny@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/io.h |  2 ++
- fs/proc/kcore.c            | 36 ++++++++++++++++++++++++++++++++++--
- 2 files changed, 36 insertions(+), 2 deletions(-)
+ kernel/cgroup/cgroup.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/include/asm/io.h b/arch/s390/include/asm/io.h
-index e3882b012bfa4..70e679d87984b 100644
---- a/arch/s390/include/asm/io.h
-+++ b/arch/s390/include/asm/io.h
-@@ -16,8 +16,10 @@
- #include <asm/pci_io.h>
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index f6656fd410d0f..2ca4aeb21a440 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -5707,7 +5707,7 @@ static bool cgroup_check_hierarchy_limits(struct cgroup *parent)
+ {
+ 	struct cgroup *cgroup;
+ 	int ret = false;
+-	int level = 1;
++	int level = 0;
  
- #define xlate_dev_mem_ptr xlate_dev_mem_ptr
-+#define kc_xlate_dev_mem_ptr xlate_dev_mem_ptr
- void *xlate_dev_mem_ptr(phys_addr_t phys);
- #define unxlate_dev_mem_ptr unxlate_dev_mem_ptr
-+#define kc_unxlate_dev_mem_ptr unxlate_dev_mem_ptr
- void unxlate_dev_mem_ptr(phys_addr_t phys, void *addr);
+ 	lockdep_assert_held(&cgroup_mutex);
  
- #define IO_SPACE_LIMIT 0
-diff --git a/fs/proc/kcore.c b/fs/proc/kcore.c
-index 87a46f2d84195..a2d430549012f 100644
---- a/fs/proc/kcore.c
-+++ b/fs/proc/kcore.c
-@@ -51,6 +51,20 @@ static struct proc_dir_entry *proc_root_kcore;
- #define	kc_offset_to_vaddr(o) ((o) + PAGE_OFFSET)
- #endif
+@@ -5715,7 +5715,7 @@ static bool cgroup_check_hierarchy_limits(struct cgroup *parent)
+ 		if (cgroup->nr_descendants >= cgroup->max_descendants)
+ 			goto fail;
  
-+#ifndef kc_xlate_dev_mem_ptr
-+#define kc_xlate_dev_mem_ptr kc_xlate_dev_mem_ptr
-+static inline void *kc_xlate_dev_mem_ptr(phys_addr_t phys)
-+{
-+	return __va(phys);
-+}
-+#endif
-+#ifndef kc_unxlate_dev_mem_ptr
-+#define kc_unxlate_dev_mem_ptr kc_unxlate_dev_mem_ptr
-+static inline void kc_unxlate_dev_mem_ptr(phys_addr_t phys, void *virt)
-+{
-+}
-+#endif
-+
- static LIST_HEAD(kclist_head);
- static DECLARE_RWSEM(kclist_lock);
- static int kcore_need_update = 1;
-@@ -474,6 +488,8 @@ read_kcore_iter(struct kiocb *iocb, struct iov_iter *iter)
- 	while (buflen) {
- 		struct page *page;
- 		unsigned long pfn;
-+		phys_addr_t phys;
-+		void *__start;
+-		if (level > cgroup->max_depth)
++		if (level >= cgroup->max_depth)
+ 			goto fail;
  
- 		/*
- 		 * If this is the first iteration or the address is not within
-@@ -523,7 +539,8 @@ read_kcore_iter(struct kiocb *iocb, struct iov_iter *iter)
- 			}
- 			break;
- 		case KCORE_RAM:
--			pfn = __pa(start) >> PAGE_SHIFT;
-+			phys = __pa(start);
-+			pfn =  phys >> PAGE_SHIFT;
- 			page = pfn_to_online_page(pfn);
- 
- 			/*
-@@ -542,13 +559,28 @@ read_kcore_iter(struct kiocb *iocb, struct iov_iter *iter)
- 			fallthrough;
- 		case KCORE_VMEMMAP:
- 		case KCORE_TEXT:
-+			if (m->type == KCORE_RAM) {
-+				__start = kc_xlate_dev_mem_ptr(phys);
-+				if (!__start) {
-+					ret = -ENOMEM;
-+					if (iov_iter_zero(tsz, iter) != tsz)
-+						ret = -EFAULT;
-+					goto out;
-+				}
-+			} else {
-+				__start = (void *)start;
-+			}
-+
- 			/*
- 			 * Sadly we must use a bounce buffer here to be able to
- 			 * make use of copy_from_kernel_nofault(), as these
- 			 * memory regions might not always be mapped on all
- 			 * architectures.
- 			 */
--			if (copy_from_kernel_nofault(buf, (void *)start, tsz)) {
-+			ret = copy_from_kernel_nofault(buf, __start, tsz);
-+			if (m->type == KCORE_RAM)
-+				kc_unxlate_dev_mem_ptr(phys, __start);
-+			if (ret) {
- 				if (iov_iter_zero(tsz, iter) != tsz) {
- 					ret = -EFAULT;
- 					goto out;
+ 		level++;
 -- 
 2.43.0
 
