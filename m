@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7E41E0DB1;
-	Wed,  6 Nov 2024 12:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6611EF95B;
+	Wed,  6 Nov 2024 12:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896625; cv=none; b=WFvBEKpT5OIIhbNlm6E+I3T6ztUldSWejeTojilp3ZCqlBbFpw/xfQeAdMz+m+RaNxD1+hsmIaOeXCBN9q0NUuc9MJgAAb4CR9sX92Gd+449gaWJEDFa53EPwwItHYk2fJvupzy/SVN6Hb9idv7jQ7og4yZTM14QflG0eh8cYYs=
+	t=1730896628; cv=none; b=HnAU7adljSnvGf8eP75rMyubHW7rTlkjqliNPrUhwq5niai49DMdkbdO7iAMdalGM6Q/CKzC8I9AJN4zN/Uog9V+9L6gwHU8+JEqPsYUjw/MIJ2YP+/Co1/Lx0AIUI2CLw4IQHI05VVjW4t2rrJ54XS+mRTFnBxy4Tsbqj2/aEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896625; c=relaxed/simple;
-	bh=dTLJr4JKhhPO/eUA2Ky4AvcPEq+Q1eTUJBjiAQJbhto=;
+	s=arc-20240116; t=1730896628; c=relaxed/simple;
+	bh=1Rlk/7/RshM4q6k+whdEJKT/t23jJEU4rIjsk9xo5Xg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IDw8hUbluWdyo9GeUeiiU4T1Gw20uH6eHjtPAmp1VIZP1ccha0ZVJGLRT8KWuqszj2af6ldLrHWP/1mntzBcJaVpdn+IoxM8gypJ2FRR/siSwb4Ju8lhH27CsjOXQr25GOuth+oO7GCr+cqt2NTexTUJsftUERdI6QYtErECrbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7OG/VWC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nlMnlBgiJmCaLNI0N32CBN8HqJF5u91ThT5LjrpdUFKYFGVuzE+EhJNer8bj5wMLKVckypje0Fe+v7l9C1FFpAbHjIh2+CPmtWJ0PBzqh2e9LGeO54rhZUMdNamH37VntQSHhV5Yfb/Pt9afG7DZ6q9QsAv6KlWmYjYtHlUaJ0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGrJhfBc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7OG/VWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FE3C4CED4;
-	Wed,  6 Nov 2024 12:37:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGrJhfBc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2A9C4CECD;
+	Wed,  6 Nov 2024 12:37:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896625;
-	bh=dTLJr4JKhhPO/eUA2Ky4AvcPEq+Q1eTUJBjiAQJbhto=;
+	s=korg; t=1730896628;
+	bh=1Rlk/7/RshM4q6k+whdEJKT/t23jJEU4rIjsk9xo5Xg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7OG/VWCXF7DDTbmyNf0o5hm88+ZURshqeP2fKRrM2D4yom8HYFztUeDLpheRjo+k
-	 3LAY4MAO5erkzC5V4B7RRIVXCceNd8yTVIAgPx8JGrpDUC6PPoDcM/s3+x+oVjiLnB
-	 ldlICVg90mPnBm2EGzsPbVKbLSKtNDkSbEi8Yllo=
+	b=KGrJhfBcBU6Nca8exlcj1K50YDFJ7YQ1CcJ3W+asf0q7SQ3NVkx99An6Q0ORmQuJk
+	 K1CjhWqLmsBsGjC3l8g5A04tiY0WDQ9PEURhTJRUkod50rvLJP/PthbCMdMegKm307
+	 ZXx/7LJCgPMCVjpHr5FNkPY+niQebIfyXW83K6pI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	junhua huang <huang.junhua@zte.com.cn>,
-	Will Deacon <will@kernel.org>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/110] arm64:uprobe fix the uprobe SWBP_INSN in big-endian
-Date: Wed,  6 Nov 2024 13:03:45 +0100
-Message-ID: <20241106120303.692048763@linuxfoundation.org>
+Subject: [PATCH 5.10 002/110] RDMA/bnxt_re: Add a check for memory allocation
+Date: Wed,  6 Nov 2024 13:03:28 +0100
+Message-ID: <20241106120303.210108692@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -45,98 +47,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: junhua huang <huang.junhua@zte.com.cn>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 60f07e22a73d318cddaafa5ef41a10476807cc07 ]
+[ Upstream commit c5c1ae73b7741fa3b58e6e001b407825bb971225 ]
 
-We use uprobe in aarch64_be, which we found the tracee task would exit
-due to SIGILL when we enable the uprobe trace.
-We can see the replace inst from uprobe is not correct in aarch big-endian.
-As in Armv8-A, instruction fetches are always treated as little-endian,
-we should treat the UPROBE_SWBP_INSN as little-endian。
+__alloc_pbl() can return error when memory allocation fails.
+Driver is not checking the status on one of the instances.
 
-The test case is as following。
-bash-4.4# ./mqueue_test_aarchbe 1 1 2 1 10 > /dev/null &
-bash-4.4# cd /sys/kernel/debug/tracing/
-bash-4.4# echo 'p:test /mqueue_test_aarchbe:0xc30 %x0 %x1' > uprobe_events
-bash-4.4# echo 1 > events/uprobes/enable
-bash-4.4#
-bash-4.4# ps
-  PID TTY          TIME CMD
-  140 ?        00:00:01 bash
-  237 ?        00:00:00 ps
-[1]+  Illegal instruction     ./mqueue_test_aarchbe 1 1 2 1 100 > /dev/null
-
-which we debug use gdb as following:
-
-bash-4.4# gdb attach 155
-(gdb) disassemble send
-Dump of assembler code for function send:
-   0x0000000000400c30 <+0>:     .inst   0xa00020d4 ; undefined
-   0x0000000000400c34 <+4>:     mov     x29, sp
-   0x0000000000400c38 <+8>:     str     w0, [sp, #28]
-   0x0000000000400c3c <+12>:    strb    w1, [sp, #27]
-   0x0000000000400c40 <+16>:    str     xzr, [sp, #40]
-   0x0000000000400c44 <+20>:    str     xzr, [sp, #48]
-   0x0000000000400c48 <+24>:    add     x0, sp, #0x1b
-   0x0000000000400c4c <+28>:    mov     w3, #0x0                 // #0
-   0x0000000000400c50 <+32>:    mov     x2, #0x1                 // #1
-   0x0000000000400c54 <+36>:    mov     x1, x0
-   0x0000000000400c58 <+40>:    ldr     w0, [sp, #28]
-   0x0000000000400c5c <+44>:    bl      0x405e10 <mq_send>
-   0x0000000000400c60 <+48>:    str     w0, [sp, #60]
-   0x0000000000400c64 <+52>:    ldr     w0, [sp, #60]
-   0x0000000000400c68 <+56>:    ldp     x29, x30, [sp], #64
-   0x0000000000400c6c <+60>:    ret
-End of assembler dump.
-(gdb) info b
-No breakpoints or watchpoints.
-(gdb) c
-Continuing.
-
-Program received signal SIGILL, Illegal instruction.
-0x0000000000400c30 in send ()
-(gdb) x/10x 0x400c30
-0x400c30 <send>:    0xd42000a0   0xfd030091      0xe01f00b9      0xe16f0039
-0x400c40 <send+16>: 0xff1700f9   0xff1b00f9      0xe06f0091      0x03008052
-0x400c50 <send+32>: 0x220080d2   0xe10300aa
-(gdb) disassemble 0x400c30
-Dump of assembler code for function send:
-=> 0x0000000000400c30 <+0>:     .inst   0xa00020d4 ; undefined
-   0x0000000000400c34 <+4>:     mov     x29, sp
-   0x0000000000400c38 <+8>:     str     w0, [sp, #28]
-   0x0000000000400c3c <+12>:    strb    w1, [sp, #27]
-   0x0000000000400c40 <+16>:    str     xzr, [sp, #40]
-
-Signed-off-by: junhua huang <huang.junhua@zte.com.cn>
-Link: https://lore.kernel.org/r/202212021511106844809@zte.com.cn
-Signed-off-by: Will Deacon <will@kernel.org>
-Stable-dep-of: 13f8f1e05f1d ("arm64: probes: Fix uprobes for big-endian kernels")
+Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
+Link: https://patch.msgid.link/r/1726715161-18941-4-git-send-email-selvin.xavier@broadcom.com
+Reviewed-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/uprobes.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/qplib_res.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/include/asm/uprobes.h b/arch/arm64/include/asm/uprobes.h
-index 315eef654e39a..ba4bff5ca6749 100644
---- a/arch/arm64/include/asm/uprobes.h
-+++ b/arch/arm64/include/asm/uprobes.h
-@@ -12,7 +12,7 @@
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+index 123ea759f2826..2861a2bbea6e4 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+@@ -243,6 +243,8 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
+ 			sginfo.pgsize = npde * pg_size;
+ 			sginfo.npages = 1;
+ 			rc = __alloc_pbl(res, &hwq->pbl[PBL_LVL_0], &sginfo);
++			if (rc)
++				goto fail;
  
- #define MAX_UINSN_BYTES		AARCH64_INSN_SIZE
- 
--#define UPROBE_SWBP_INSN	BRK64_OPCODE_UPROBES
-+#define UPROBE_SWBP_INSN	cpu_to_le32(BRK64_OPCODE_UPROBES)
- #define UPROBE_SWBP_INSN_SIZE	AARCH64_INSN_SIZE
- #define UPROBE_XOL_SLOT_BYTES	MAX_UINSN_BYTES
- 
+ 			/* Alloc PBL pages */
+ 			sginfo.npages = npbl;
 -- 
 2.43.0
 
