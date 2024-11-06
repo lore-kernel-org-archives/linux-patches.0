@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1F754765;
-	Wed,  6 Nov 2024 13:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5328854765;
+	Wed,  6 Nov 2024 13:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898988; cv=none; b=Lbc60cVvNp4rJRNawv6vV2zLUDXkMK+sNEibyhrLi++eOJBlro9nNnEQB9J7cwCRHXONIASZA6Ug+bZXfFKVdxdkGPBo9qV19HwiNalnyv+Usqynr2hFAVLRNP3dQXwn73Ir8gclSbHsHk/WaKmCYiihHC+244lRS7nMgD3Y4eA=
+	t=1730898991; cv=none; b=npfsfwo0U3Ni5fS94IuSiMMbXgRtOEWjfmfeQl1mtJ4jyJvGiUIdDkA9KlsfWGwzE24zxPzdBGaa8y28mpLxn7irazOZPBp/8sN/rc2zNGqugfDID0lNwGzscNe8vUWn2xLJdRBQYlQy/MhC/ijx7JWxMt0DHBbgERSx3PhLiP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898988; c=relaxed/simple;
-	bh=pu7NONszcEuj8SIFkd42kGVv4JzVZ0AWlL1VdIm6B5Q=;
+	s=arc-20240116; t=1730898991; c=relaxed/simple;
+	bh=5hp6BSZbxZj2Pr+QPPZZs67WB8/x2xvYNNb8anOXj0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qGrjGaiQbDgFankjO5cA4hghWE3y2QX/xNo4QQ2DajeEZTzXnPbxdlYln22DaoEO5ifMzlM8F4nLEJLqbT5Dx3sZHxDq91JelCbcZZVAw31aOgTUXZotyZA+ZPGgRgaj+3OSE2d7m44EWlf7cFp1mGmpmU7gUKmFSN/MdDCj6WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BAJDc4KB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jkMG1OZm/28mkuueAQ1ENzEB/2obOb0SoOJg/AWckMtTYs8OKA9g//N5HHoJaOlLot2+bIJPSOgcExx+yE56dOoHP7KlyqQ2BfE7fNSdlFXIv0CTgboSXebj/+QMkU4HNen4as843N/5rzsguB5tV+ghb9zn4V08hcC2juzMUjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X2ww7kbv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BAJDc4KB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1FB7C4CECD;
-	Wed,  6 Nov 2024 13:16:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X2ww7kbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFF2C4CECD;
+	Wed,  6 Nov 2024 13:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898988;
-	bh=pu7NONszcEuj8SIFkd42kGVv4JzVZ0AWlL1VdIm6B5Q=;
+	s=korg; t=1730898991;
+	bh=5hp6BSZbxZj2Pr+QPPZZs67WB8/x2xvYNNb8anOXj0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BAJDc4KBQgeBBCPkr6zR8GDv5thOfU8zfVYBhqMFbiw9kRIhQq8DRCkiR5Qu1Mk3+
-	 vHDwaUr+1KiL6eDPqlaQE6XnSf7haSZJMFPI2Ld0M8y643zsOe4iHQAdXwPurooftV
-	 c0NUiIxNi0grzxQpFoZ6L3z16fh3WG2C9FWVAHGk=
+	b=X2ww7kbv6327mB9PpAucBP9WUSAr9mUJQn2Efigd0uo4iazRmxemGurhc3K1M+Ym1
+	 /gtlWnlAkybGXbAS53ClkJa/DHxUUcNSa7doA0HOzddwqRnqqS8OEaCEgICeTUx22o
+	 OhX2+aGV2eoDH6kg5orEO8cYcF8VfZjNd0sFu4G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Hemminger <stephen@networkplumber.org>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.4 422/462] hv_netvsc: Fix VF namespace also in synthetic NIC NETDEV_REGISTER event
-Date: Wed,  6 Nov 2024 13:05:15 +0100
-Message-ID: <20241106120341.938423002@linuxfoundation.org>
+	Anumula Murali Mohan Reddy <anumula@chelsio.com>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 387/462] RDMA/cxgb4: Fix RDMA_CM_EVENT_UNREACHABLE error for iWARP
+Date: Wed,  6 Nov 2024 13:04:40 +0100
+Message-ID: <20241106120341.084072643@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,75 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haiyang Zhang <haiyangz@microsoft.com>
+From: Anumula Murali Mohan Reddy <anumula@chelsio.com>
 
-commit 4c262801ea60c518b5bebc22a09f5b78b3147da2 upstream.
+[ Upstream commit c659b405b82ead335bee6eb33f9691bf718e21e8 ]
 
-The existing code moves VF to the same namespace as the synthetic NIC
-during netvsc_register_vf(). But, if the synthetic device is moved to a
-new namespace after the VF registration, the VF won't be moved together.
+ip_dev_find() always returns real net_device address, whether traffic is
+running on a vlan or real device, if traffic is over vlan, filling
+endpoint struture with real ndev and an attempt to send a connect request
+will results in RDMA_CM_EVENT_UNREACHABLE error.  This patch fixes the
+issue by using vlan_dev_real_dev().
 
-To make the behavior more consistent, add a namespace check for synthetic
-NIC's NETDEV_REGISTER event (generated during its move), and move the VF
-if it is not in the same namespace.
-
-Cc: stable@vger.kernel.org
-Fixes: c0a41b887ce6 ("hv_netvsc: move VF to same namespace as netvsc device")
-Suggested-by: Stephen Hemminger <stephen@networkplumber.org>
-Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/1729275922-17595-1-git-send-email-haiyangz@microsoft.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 830662f6f032 ("RDMA/cxgb4: Add support for active and passive open connection with IPv6 address")
+Link: https://patch.msgid.link/r/20241007132311.70593-1-anumula@chelsio.com
+Signed-off-by: Anumula Murali Mohan Reddy <anumula@chelsio.com>
+Signed-off-by: Potnuri Bharat Teja <bharat@chelsio.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hyperv/netvsc_drv.c |   30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ drivers/infiniband/hw/cxgb4/cm.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/net/hyperv/netvsc_drv.c
-+++ b/drivers/net/hyperv/netvsc_drv.c
-@@ -2540,6 +2540,31 @@ static struct  hv_driver netvsc_drv = {
- 	},
- };
- 
-+/* Set VF's namespace same as the synthetic NIC */
-+static void netvsc_event_set_vf_ns(struct net_device *ndev)
-+{
-+	struct net_device_context *ndev_ctx = netdev_priv(ndev);
-+	struct net_device *vf_netdev;
-+	int ret;
-+
-+	vf_netdev = rtnl_dereference(ndev_ctx->vf_netdev);
-+	if (!vf_netdev)
-+		return;
-+
-+	if (!net_eq(dev_net(ndev), dev_net(vf_netdev))) {
-+		ret = dev_change_net_namespace(vf_netdev, dev_net(ndev),
-+					       "eth%d");
-+		if (ret)
-+			netdev_err(vf_netdev,
-+				   "Cannot move to same namespace as %s: %d\n",
-+				   ndev->name, ret);
-+		else
-+			netdev_info(vf_netdev,
-+				    "Moved VF to namespace with: %s\n",
-+				    ndev->name);
-+	}
-+}
-+
- /*
-  * On Hyper-V, every VF interface is matched with a corresponding
-  * synthetic interface. The synthetic interface is presented first
-@@ -2552,6 +2577,11 @@ static int netvsc_netdev_event(struct no
- 	struct net_device *event_dev = netdev_notifier_info_to_dev(ptr);
- 	int ret = 0;
- 
-+	if (event_dev->netdev_ops == &device_ops && event == NETDEV_REGISTER) {
-+		netvsc_event_set_vf_ns(event_dev);
-+		return NOTIFY_DONE;
-+	}
-+
- 	ret = check_dev_is_matching_vf(event_dev);
- 	if (ret != 0)
- 		return NOTIFY_DONE;
+diff --git a/drivers/infiniband/hw/cxgb4/cm.c b/drivers/infiniband/hw/cxgb4/cm.c
+index 01750eb5458e0..38e2fbf84e276 100644
+--- a/drivers/infiniband/hw/cxgb4/cm.c
++++ b/drivers/infiniband/hw/cxgb4/cm.c
+@@ -2086,7 +2086,7 @@ static int import_ep(struct c4iw_ep *ep, int iptype, __u8 *peer_ip,
+ 	err = -ENOMEM;
+ 	if (n->dev->flags & IFF_LOOPBACK) {
+ 		if (iptype == 4)
+-			pdev = ip_dev_find(&init_net, *(__be32 *)peer_ip);
++			pdev = __ip_dev_find(&init_net, *(__be32 *)peer_ip, false);
+ 		else if (IS_ENABLED(CONFIG_IPV6))
+ 			for_each_netdev(&init_net, pdev) {
+ 				if (ipv6_chk_addr(&init_net,
+@@ -2101,12 +2101,12 @@ static int import_ep(struct c4iw_ep *ep, int iptype, __u8 *peer_ip,
+ 			err = -ENODEV;
+ 			goto out;
+ 		}
++		if (is_vlan_dev(pdev))
++			pdev = vlan_dev_real_dev(pdev);
+ 		ep->l2t = cxgb4_l2t_get(cdev->rdev.lldi.l2t,
+ 					n, pdev, rt_tos2priority(tos));
+-		if (!ep->l2t) {
+-			dev_put(pdev);
++		if (!ep->l2t)
+ 			goto out;
+-		}
+ 		ep->mtu = pdev->mtu;
+ 		ep->tx_chan = cxgb4_port_chan(pdev);
+ 		ep->smac_idx = ((struct port_info *)netdev_priv(pdev))->smt_idx;
+@@ -2119,7 +2119,6 @@ static int import_ep(struct c4iw_ep *ep, int iptype, __u8 *peer_ip,
+ 		ep->rss_qid = cdev->rdev.lldi.rxq_ids[
+ 			cxgb4_port_idx(pdev) * step];
+ 		set_tcp_window(ep, (struct port_info *)netdev_priv(pdev));
+-		dev_put(pdev);
+ 	} else {
+ 		pdev = get_real_dev(n->dev);
+ 		ep->l2t = cxgb4_l2t_get(cdev->rdev.lldi.l2t,
+-- 
+2.43.0
+
 
 
