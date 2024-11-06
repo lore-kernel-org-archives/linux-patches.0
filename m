@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7431E0084;
-	Wed,  6 Nov 2024 12:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7051E0084;
+	Wed,  6 Nov 2024 12:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897933; cv=none; b=XyBf6WIBSqGXB5+xqRikWD7C+5LVKdkBujJa3lj8vhtw069YwuEGjnchwhdxoHVDtqH+de8gR5fI5MhkzRt5IhIJGpXVp8NC7TVNjSfh67XVey8RObXHNBrzamFCWcRUDHM4Ed5vMed20mN9d12NnnnshrtWU/1srwCL3KqxnKM=
+	t=1730897937; cv=none; b=jqI3Dwo0zfddJVJGPmOAZQt81ItS7oF7EM27mKIQYr8pz+sksBqmjizXYRiGyRNOTNb4Tj3m+XADKfsSYVoD22HTBNnnj6Qz3PupO1Q19T/gqIVAYpWoZTtxUsvFBxBLpJZ7FEgHRE0zsUSQcP3SKpKn7sOOgSHWbg9naJsiWFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897933; c=relaxed/simple;
-	bh=wHL9kh0tHuCfWPvRjrwJy3AuHqE5w4GP5nZy6nd+6YI=;
+	s=arc-20240116; t=1730897937; c=relaxed/simple;
+	bh=lyGGvb3jKhzhfSn9ipy2XplSGuP08IVLD0hexZSWilk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJdPHaDfQNzSGeZDOrRoJCtm7p1TjWeRwCnVNS+IaDXOLS8bhdEJs0RHmNYm+s2fhNdPS0NpUsOHz6Y7hKpeE5ZyjH3jmVnyRAwGtVHZ9cTfFC4UfNQmJw6OhuMxT5BbOUewLVFjjIgq61msD5eR7S3PUwFRppWEiTlchVfHGec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMUon+4b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LQGUFQt/A1u3GLj5KHnwFr2Mp5uxWpWlNC8lMi6f0a3PWPO4a+4aMRNk0ohDOyNYa5jPv2A4oGMylrMyxGrJ6cNZW3aK1Sf6R98pxIeNZakVxdVsdJQrXnESGph4ssKAtUG4vSSZ/ngVF2me92Q1daBXGub2jfHwwVL9WqDEPS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scSF9IFN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMUon+4b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3124AC4CECD;
-	Wed,  6 Nov 2024 12:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scSF9IFN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2731AC4CECD;
+	Wed,  6 Nov 2024 12:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897933;
-	bh=wHL9kh0tHuCfWPvRjrwJy3AuHqE5w4GP5nZy6nd+6YI=;
+	s=korg; t=1730897936;
+	bh=lyGGvb3jKhzhfSn9ipy2XplSGuP08IVLD0hexZSWilk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xMUon+4b8JS0zb1fPqJikhqOVwRWgGriejnwo+Lua2ohmtSm1xqySP63+2OQvaohP
-	 8EijVQJBrdrN3Ya/1yRihDssawRsDD0WBoqDQv7V/7S7dw1OBlS08W36cAMd5Nb5wB
-	 Shzvvh8GRQUXBkMbpdNBhsBJlRgld62JJtje6HZQ=
+	b=scSF9IFNNTBLpKQZJhjNoKCbuNRk+7Q8XKNf1lRA9+g1jAIOg1fPpKa6s/5QHhjZf
+	 Vf8nroqrMqQHD5CBrfewhlEWLzXOihfAUg+w+TOOsOQF01EQXIhNeiLuVj/kelLWiK
+	 tSJKiV5Xz+gN9e3RsBJ1ieAHykPxkP4WmImxu9Oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Minjie Du <duminjie@vivo.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 032/462] ACPI: PMIC: Remove unneeded check in tps68470_pmic_opregion_probe()
-Date: Wed,  6 Nov 2024 12:58:45 +0100
-Message-ID: <20241106120332.314129219@linuxfoundation.org>
+Subject: [PATCH 5.4 033/462] wifi: ath9k: fix parameter check in ath9k_init_debug()
+Date: Wed,  6 Nov 2024 12:58:46 +0100
+Message-ID: <20241106120332.338445161@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -47,53 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Minjie Du <duminjie@vivo.com>
 
-[ Upstream commit 07442c46abad1d50ac82af5e0f9c5de2732c4592 ]
+[ Upstream commit 6edb4ba6fb5b946d112259f54f4657f82eb71e89 ]
 
-In tps68470_pmic_opregion_probe() pointer 'dev' is compared to NULL which
-is useless.
+Make IS_ERR() judge the debugfs_create_dir() function return
+in ath9k_init_debug()
 
-Fix this issue by removing unneeded check.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: e13452ac3790 ("ACPI / PMIC: Add TI PMIC TPS68470 operation region driver")
-Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Link: https://patch.msgid.link/20240730225339.13165-1-amishin@t-argos.ru
-[ rjw: Subject edit ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Minjie Du <duminjie@vivo.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230712114740.13226-1-duminjie@vivo.com
+Stable-dep-of: f6ffe7f01847 ("wifi: ath9k: Remove error checks when creating debugfs entries")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pmic/tps68470_pmic.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath9k/debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/pmic/tps68470_pmic.c b/drivers/acpi/pmic/tps68470_pmic.c
-index ebd03e4729555..0d1a82eeb4b0b 100644
---- a/drivers/acpi/pmic/tps68470_pmic.c
-+++ b/drivers/acpi/pmic/tps68470_pmic.c
-@@ -376,10 +376,8 @@ static int tps68470_pmic_opregion_probe(struct platform_device *pdev)
- 	struct tps68470_pmic_opregion *opregion;
- 	acpi_status status;
+diff --git a/drivers/net/wireless/ath/ath9k/debug.c b/drivers/net/wireless/ath/ath9k/debug.c
+index 8d98347e0ddff..42f404119912f 100644
+--- a/drivers/net/wireless/ath/ath9k/debug.c
++++ b/drivers/net/wireless/ath/ath9k/debug.c
+@@ -1371,7 +1371,7 @@ int ath9k_init_debug(struct ath_hw *ah)
  
--	if (!dev || !tps68470_regmap) {
--		dev_warn(dev, "dev or regmap is NULL\n");
--		return -EINVAL;
--	}
-+	if (!tps68470_regmap)
-+		return dev_err_probe(dev, -EINVAL, "regmap is missing\n");
+ 	sc->debug.debugfs_phy = debugfs_create_dir("ath9k",
+ 						   sc->hw->wiphy->debugfsdir);
+-	if (!sc->debug.debugfs_phy)
++	if (IS_ERR(sc->debug.debugfs_phy))
+ 		return -ENOMEM;
  
- 	if (!handle) {
- 		dev_warn(dev, "acpi handle is NULL\n");
+ #ifdef CONFIG_ATH_DEBUG
 -- 
 2.43.0
 
