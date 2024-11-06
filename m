@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4051D1E0B7C;
-	Wed,  6 Nov 2024 12:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DBC1E0B7C;
+	Wed,  6 Nov 2024 12:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897444; cv=none; b=Jp+INHJojY2je26y3PJkb7Ve3x1Szh+k+6K+W9y3qYnm8TBWpe4DU8Gu22ecT53dfzfc1BvhHn0b8H61N6SxsJVbceHHLCPuXFdmbID2VOH6Os1SA4mjzzNIseFfUBAYFrxq4LGz5woKOOlEpANz0xEap0CBY1qw/QhFGEy9rGM=
+	t=1730897447; cv=none; b=QFhjk3aWLnhHGWN+x8iuZQGhPC4wJDnFNYl4vA6z1NSfTb6GeuSQNGSPBrUx+ATyltV0JwYwOX5Oc45FzPnX02jlWMhSxciPIMQwYjawyX2y5qT4+XBWngLkpSXCBSQoGLg8t+EMDqLRWLBQ7aykLfZbnsr6ryFQNzDXRbTL9jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897444; c=relaxed/simple;
-	bh=LvjJwXzF5fo+ZZqBCCeZB0DidVc+viR77YRPcZznd+w=;
+	s=arc-20240116; t=1730897447; c=relaxed/simple;
+	bh=GPnnOKSp57biSLO6PLAG82Qp0Atta0wB7MafzQ/9VRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jsGGwDu6XXSRAE3m1EYTPcMMDlWvQoCx5dcLvPxUp0wkYvUvqc63iHSMhdeDOymSGwht7kFiiPObNUkUri0M6kFIUQ+FucXZcFFwwyP/zf0np8VOKWFHcL+y4gwEd2pXOjec60Bn29wfLDf4GPBOUVL4u8uqslJvp5iT9PdPtds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFAmc989; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VvfRFAak/EnOpVlEv+cYe88lk+VGr3sEZWxnAU0cUtYMRyJ+yOZgRZ5PEtTTlhissQr8NpTmlFKQSiQI8AkCI/4H+5P0MRkWhsEjufYCwjeHaAgwE905pWZnW7/rMAnw4ljISrG4Po/rRrl9xcLN4z65/chAJZOoBQSoso5DhQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INMpPCUH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFAmc989"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97B9C4CECD;
-	Wed,  6 Nov 2024 12:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INMpPCUH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7AFC4CECD;
+	Wed,  6 Nov 2024 12:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897444;
-	bh=LvjJwXzF5fo+ZZqBCCeZB0DidVc+viR77YRPcZznd+w=;
+	s=korg; t=1730897447;
+	bh=GPnnOKSp57biSLO6PLAG82Qp0Atta0wB7MafzQ/9VRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pFAmc989W4bs+vp1A9WBP+mzh3uEBsB0DqshqpBok8gMCj7OBXzAt04OqK08K2CyB
-	 br/xX4EWxf+V5A0Pr7l4DJqYj5jX1mk+Nr+o7aY/FN5NAsQLI5Anmp5hRPX0PFsgA6
-	 a+5Xp5gKG+5OoF8uPS1Fc8++6Xc659vR7uDCpEik=
+	b=INMpPCUHuJVNsl+IqNuB5/d0g9pHIzbS7Vysxqf712hg8ztRt4jW7VhDeKcrTUvTQ
+	 DiATjsSveLIPm8vULe5IvAsADJ9Hb3ktGw7jKoKtdhCpl7JlVuj2gsDB0PWhLJXBzF
+	 cXhXzGAtaJuRByvfUZQAYRqJnqM7+VipjsRqg7qQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lei lu <llfamsec@gmail.com>,
+	Andrew Ballance <andrewjballance@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/151] ntfs3: Add bounds checking to mi_enum_attr()
-Date: Wed,  6 Nov 2024 13:04:03 +0100
-Message-ID: <20241106120310.346886356@linuxfoundation.org>
+Subject: [PATCH 6.6 056/151] fs/ntfs3: Check if more than chunk-size bytes are written
+Date: Wed,  6 Nov 2024 13:04:04 +0100
+Message-ID: <20241106120310.379487290@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -51,70 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: lei lu <llfamsec@gmail.com>
+From: Andrew Ballance <andrewjballance@gmail.com>
 
-[ Upstream commit 556bdf27c2dd5c74a9caacbe524b943a6cd42d99 ]
+[ Upstream commit 9931122d04c6d431b2c11b5bb7b10f28584067f0 ]
 
-Added bounds checking to make sure that every attr don't stray beyond
-valid memory region.
+A incorrectly formatted chunk may decompress into
+more than LZNT_CHUNK_SIZE bytes and a index out of bounds
+will occur in s_max_off.
 
-Signed-off-by: lei lu <llfamsec@gmail.com>
+Signed-off-by: Andrew Ballance <andrewjballance@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/record.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ fs/ntfs3/lznt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
-index 6c76503edc200..2a375247b3c09 100644
---- a/fs/ntfs3/record.c
-+++ b/fs/ntfs3/record.c
-@@ -223,28 +223,19 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
- 		prev_type = 0;
- 		attr = Add2Ptr(rec, off);
- 	} else {
--		/* Check if input attr inside record. */
-+		/*
-+		 * We don't need to check previous attr here. There is
-+		 * a bounds checking in the previous round.
-+		 */
- 		off = PtrOffset(rec, attr);
--		if (off >= used)
--			return NULL;
+diff --git a/fs/ntfs3/lznt.c b/fs/ntfs3/lznt.c
+index 4aae598d6d884..fdc9b2ebf3410 100644
+--- a/fs/ntfs3/lznt.c
++++ b/fs/ntfs3/lznt.c
+@@ -236,6 +236,9 @@ static inline ssize_t decompress_chunk(u8 *unc, u8 *unc_end, const u8 *cmpr,
  
- 		asize = le32_to_cpu(attr->size);
--		if (asize < SIZEOF_RESIDENT) {
--			/* Impossible 'cause we should not return such attribute. */
--			return NULL;
--		}
--
--		/* Overflow check. */
--		if (off + asize < off)
--			return NULL;
- 
- 		prev_type = le32_to_cpu(attr->type);
- 		attr = Add2Ptr(attr, asize);
- 		off += asize;
- 	}
- 
--	asize = le32_to_cpu(attr->size);
--
- 	/* Can we use the first field (attr->type). */
- 	if (off + 8 > used) {
- 		static_assert(ALIGN(sizeof(enum ATTR_TYPE), 8) == 8);
-@@ -265,6 +256,12 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
- 	if (t32 < prev_type)
- 		return NULL;
- 
-+	asize = le32_to_cpu(attr->size);
-+	if (asize < SIZEOF_RESIDENT) {
-+		/* Impossible 'cause we should not return such attribute. */
-+		return NULL;
-+	}
-+
- 	/* Check overflow and boundary. */
- 	if (off + asize < off || off + asize > used)
- 		return NULL;
+ 	/* Do decompression until pointers are inside range. */
+ 	while (up < unc_end && cmpr < cmpr_end) {
++		// return err if more than LZNT_CHUNK_SIZE bytes are written
++		if (up - unc > LZNT_CHUNK_SIZE)
++			return -EINVAL;
+ 		/* Correct index */
+ 		while (unc + s_max_off[index] < up)
+ 			index += 1;
 -- 
 2.43.0
 
