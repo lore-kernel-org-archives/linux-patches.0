@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E021DE3B8;
-	Wed,  6 Nov 2024 12:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B711DF24D;
+	Wed,  6 Nov 2024 12:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894886; cv=none; b=fz0AgrKJD+Gwo1HbKnCatzVYe3EUkaxvJaxbbYBQIBGO1kaDpAd/usadc0VQTM6Bh+ICw6Be8DH58PrwAQlXWy6YKo3gESQeEIJu58EE6xYshkA+xSVdrwK46BSvvkeWtEKpMguhP/V77qH+KqrHWRZiR6uu8J4VHKIICZY7ZDE=
+	t=1730894889; cv=none; b=YsRFf6fzCdopcFLykAzp9JkIjHssgYddA1q3CF9pAzeaquZbdVzMcsqLZtLAMVB6/9RckKoDa2jWnD2NhtfQOF7qJFGcAuhFWBlgPoSLxIZa+LLgWYfKLYIxHKF5f6CklNErRJrHIYhCHcTmmgEsYJwbLPDtQxWWughgvqHsV+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894886; c=relaxed/simple;
-	bh=bCtFF9KB0IJOS/sIJdEJIQYUcT416mFGU7TIODj/DwQ=;
+	s=arc-20240116; t=1730894889; c=relaxed/simple;
+	bh=+fwIoVPk+oWWNS82mXLD4lf6cTbe4tZ3O8AdwAonA2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U4gNIgIEXmO5SzjQ31dD2SLwELVHUiGREWQysqROzza4G27VIrSuskFBXW2w/JJgHZlBrlq2mr+OxT9bmN3nfx+/VisZ4zNakl42d+vR/G03JEiz8fmOuqFE4BhR3m8GK5QGMXVWbsBhPAr7kLHy8hpHmPL+E0sSmUpTFzByLkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrcUC/ET; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uFU6Ffq3QpM78aNHQu2NUgL2iZ/pI1MSRX0pqYewPf6dd0JjLDyJHETY/Zf/I25exvsbXgwc8FOTZbjKoGKyDQh0eDZnpe7PgCqM9IfooXxxX6OK5Jxhct4sursz8nrFLsjiBR32ZdijEyoUQgtUbFD9dOgsYyAJcUYdH+F9OGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zg47b0+0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrcUC/ET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8DAC4CECD;
-	Wed,  6 Nov 2024 12:08:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zg47b0+0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C12DC4CECD;
+	Wed,  6 Nov 2024 12:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894885;
-	bh=bCtFF9KB0IJOS/sIJdEJIQYUcT416mFGU7TIODj/DwQ=;
+	s=korg; t=1730894888;
+	bh=+fwIoVPk+oWWNS82mXLD4lf6cTbe4tZ3O8AdwAonA2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LrcUC/ETaobQoaXLKn0yS36H5p11ibePJyMnFtywpIQS/s3Vj7b7Dk59V+nIVPQ70
-	 /NHbxWkBmv8P8W56Kp6OYYaX99sIDO/l8e/P4+f3QEWiu011EPw2ds6qRIXV2A7RTs
-	 ZdrX4hHVrAde+cdVojFxdyYIaX3PBPQusFaJP0a8=
+	b=zg47b0+0XnDZSmUYNldIUG6OgT/MlIsK3U+JFj8k2vei55QKJdAKOzxCPIqnUmWla
+	 X1PK+7rLjdk0pO0qbb1uQs+1Y18V9EuKPtxAoEveFbI05L52dyTwwRke6SnamOz7mv
+	 GFN8XuC2LQvUckxEdOyQDAPlONcbZz8XFr5VfpZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Antipov <dmantipov@yandex.ru>,
-	Kees Cook <kees@kernel.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 032/350] wifi: cfg80211: fix UBSAN noise in cfg80211_wext_siwscan()
-Date: Wed,  6 Nov 2024 12:59:20 +0100
-Message-ID: <20241106120321.674708970@linuxfoundation.org>
+Subject: [PATCH 4.19 033/350] wifi: cfg80211: fix two more possible UBSAN-detected off-by-one errors
+Date: Wed,  6 Nov 2024 12:59:21 +0100
+Message-ID: <20241106120321.699368042@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -54,65 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit a26a5107bc52922cf5f67361e307ad66547b51c7 ]
+[ Upstream commit 15ea13b1b1fbf6364d4cd568e65e4c8479632999 ]
 
-Looking at https://syzkaller.appspot.com/bug?extid=1a3986bbd3169c307819
-and running reproducer with CONFIG_UBSAN_BOUNDS, I've noticed the
-following:
+Although not reproduced in practice, these two cases may be
+considered by UBSAN as off-by-one errors. So fix them in the
+same way as in commit a26a5107bc52 ("wifi: cfg80211: fix UBSAN
+noise in cfg80211_wext_siwscan()").
 
-[ T4985] UBSAN: array-index-out-of-bounds in net/wireless/scan.c:3479:25
-[ T4985] index 164 is out of range for type 'struct ieee80211_channel *[]'
-<...skipped...>
-[ T4985] Call Trace:
-[ T4985]  <TASK>
-[ T4985]  dump_stack_lvl+0x1c2/0x2a0
-[ T4985]  ? __pfx_dump_stack_lvl+0x10/0x10
-[ T4985]  ? __pfx__printk+0x10/0x10
-[ T4985]  __ubsan_handle_out_of_bounds+0x127/0x150
-[ T4985]  cfg80211_wext_siwscan+0x11a4/0x1260
-<...the rest is not too useful...>
-
-Even if we do 'creq->n_channels = n_channels' before 'creq->ssids =
-(void *)&creq->channels[n_channels]', UBSAN treats the latter as
-off-by-one error. Fix this by using pointer arithmetic rather than
-an expression with explicit array indexing and use convenient
-'struct_size()' to simplify the math here and in 'kzalloc()' above.
-
+Fixes: 807f8a8c3004 ("cfg80211/nl80211: add support for scheduled scans")
 Fixes: 5ba63533bbf6 ("cfg80211: fix alignment problem in scan request")
 Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Reviewed-by: Kees Cook <kees@kernel.org>
-Link: https://patch.msgid.link/20240905150400.126386-1-dmantipov@yandex.ru
-[fix coding style for multi-line calculation]
+Link: https://patch.msgid.link/20240909090806.1091956-1-dmantipov@yandex.ru
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/wireless/nl80211.c | 3 ++-
+ net/wireless/sme.c     | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index 0dc27703443c8..4c6c333011e02 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -1414,8 +1414,8 @@ int cfg80211_wext_siwscan(struct net_device *dev,
- 		n_channels = ieee80211_get_num_supported_channels(wiphy);
- 	}
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index ebd8449f2fcf1..f3f01ab1abd38 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -7578,7 +7578,8 @@ nl80211_parse_sched_scan(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 		return ERR_PTR(-ENOMEM);
  
--	creq = kzalloc(sizeof(*creq) + sizeof(struct cfg80211_ssid) +
--		       n_channels * sizeof(void *),
-+	creq = kzalloc(struct_size(creq, channels, n_channels) +
-+		       sizeof(struct cfg80211_ssid),
- 		       GFP_ATOMIC);
- 	if (!creq) {
- 		err = -ENOMEM;
-@@ -1425,7 +1425,7 @@ int cfg80211_wext_siwscan(struct net_device *dev,
- 	creq->wiphy = wiphy;
- 	creq->wdev = dev->ieee80211_ptr;
- 	/* SSIDs come after channels */
--	creq->ssids = (void *)&creq->channels[n_channels];
-+	creq->ssids = (void *)creq + struct_size(creq, channels, n_channels);
- 	creq->n_channels = n_channels;
- 	creq->n_ssids = 1;
- 	creq->scan_start = jiffies;
+ 	if (n_ssids)
+-		request->ssids = (void *)&request->channels[n_channels];
++		request->ssids = (void *)request +
++			struct_size(request, channels, n_channels);
+ 	request->n_ssids = n_ssids;
+ 	if (ie_len) {
+ 		if (n_ssids)
+diff --git a/net/wireless/sme.c b/net/wireless/sme.c
+index ebc73faa8fb18..4e6afb765e815 100644
+--- a/net/wireless/sme.c
++++ b/net/wireless/sme.c
+@@ -116,7 +116,8 @@ static int cfg80211_conn_scan(struct wireless_dev *wdev)
+ 		n_channels = i;
+ 	}
+ 	request->n_channels = n_channels;
+-	request->ssids = (void *)&request->channels[n_channels];
++	request->ssids = (void *)request +
++		struct_size(request, channels, n_channels);
+ 	request->n_ssids = 1;
+ 
+ 	memcpy(request->ssids[0].ssid, wdev->conn->params.ssid,
 -- 
 2.43.0
 
