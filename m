@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1281E0E1F;
-	Wed,  6 Nov 2024 12:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0331FB3F6;
+	Wed,  6 Nov 2024 12:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897619; cv=none; b=B4P9Pj+hUU/FwiyjnbXQxJo7vrHVgZ2iHrn2NL8GO+pdDXe9qCwtX/ZY99iAOOojdh6PmZm7psKj+IbhacaRIAapmquzmlErUp4swBjQ7mJeV7+PN6MCHVZPKHdrg7VhjtL6SLtOpt6qSvI4OPnSHgaAlhGj7qkVb8MUXasu1Ck=
+	t=1730897622; cv=none; b=g6+CqH3CNTa9dlWczk/IRwnyagC3S5mcggs8r0UOMeWcfaeFr2Ls9D4Es8I/4jU1LGMyQGlgNAK2EG/ex5UwkiGdI0Yqh2fPL+XLsevMulDHf8FfiBVPAe5r7fexWyrdJfqz2huVy8y921G4RUeAV5FQ+teMTW8bGNLRymQzmQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897619; c=relaxed/simple;
-	bh=7ifTCB3M6HrjVXWuHTztjoX24kKCNIDImunVzeO/vCw=;
+	s=arc-20240116; t=1730897622; c=relaxed/simple;
+	bh=skMJod+cE2uJpzFfF10SxXCDW9LyIOwhe0L6USQNotg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNizgnUGHPvnSeHP2PZd5YJzdIQVikOxF9yt2loPDZI2TCsxRqFNJVsjpKJfrQ4KwOj7xOxOq4y7OCju1syBZ2x+MFa01ZE+sBXVAXePS5MjEkKwHPUVhKd72qowR6y9Lol2jb8+A7iRhzqxmd8ilxHQm8YK92WPoU55fGWe5sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtQHSoWC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uBnYpe/F8okcvXKSuHi2ws458XR6Ep7pXkEXAVmZfQzAf9h1ZEQdbFU9qFHy5XOX/e9tN+0QuSBu9lTi8lj8L+ebrL6XJL1VS5RY0q/ePOBkYe4HukVpEWUkTDBaGALZMrE84CiLYHFNaXHKVPSSfuCuyCB/2nz1p+t/v3/HLh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NU6Jof/f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtQHSoWC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFF0C4CECD;
-	Wed,  6 Nov 2024 12:53:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NU6Jof/f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6336EC4CECD;
+	Wed,  6 Nov 2024 12:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897618;
-	bh=7ifTCB3M6HrjVXWuHTztjoX24kKCNIDImunVzeO/vCw=;
+	s=korg; t=1730897621;
+	bh=skMJod+cE2uJpzFfF10SxXCDW9LyIOwhe0L6USQNotg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KtQHSoWCcKgZ1t3rf/GiX/50RIxoSv1IiWlXIuXqYKAuliURnAMyUSfftJzP/x3OO
-	 DT2dlDDmTZtpHXtkqzNnsH5LWnKA4y2kM4eRnZ0moP7ReQ3w5UNuXEo+j4208ew7R7
-	 eLNU2GNjIfxEUZRh04I19hVG74gH8hxwjEWGM9Wk=
+	b=NU6Jof/ff9smRtjFdbfRUpHCrWIN3IZUZRB8tcVo5WDR6UDyotbsyefta27QrHSxZ
+	 0v5ElQ++AsyTozR6kYKDK2PO4d5MeweQVyLjRPnnsUjNGDJdeG0PMqK0qSwTlCqBmK
+	 WSJIHDQVbSfgUsmPZRTPsElc0gbFTHtUVBB8xQ8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
+	Zhixu Liu <zhixu.liu@gmail.com>,
+	Zqiang <qiang.zhang1211@gmail.com>,
+	Neeraj Upadhyay <neeraj.upadhyay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 078/151] rcu-tasks: Initialize data to eliminate RCU-tasks/do_exit() deadlocks
-Date: Wed,  6 Nov 2024 13:04:26 +0100
-Message-ID: <20241106120311.000301310@linuxfoundation.org>
+Subject: [PATCH 6.6 079/151] rcu-tasks: Fix access non-existent percpu rtpcp variable in rcu_tasks_need_gpcb()
+Date: Wed,  6 Nov 2024 13:04:27 +0100
+Message-ID: <20241106120311.029079133@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -54,82 +52,259 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Zqiang <qiang.zhang1211@gmail.com>
 
-[ Upstream commit 46faf9d8e1d52e4a91c382c6c72da6bd8e68297b ]
+[ Upstream commit fd70e9f1d85f5323096ad313ba73f5fe3d15ea41 ]
 
-Holding a mutex across synchronize_rcu_tasks() and acquiring
-that same mutex in code called from do_exit() after its call to
-exit_tasks_rcu_start() but before its call to exit_tasks_rcu_stop()
-results in deadlock.  This is by design, because tasks that are far
-enough into do_exit() are no longer present on the tasks list, making
-it a bit difficult for RCU Tasks to find them, let alone wait on them
-to do a voluntary context switch.  However, such deadlocks are becoming
-more frequent.  In addition, lockdep currently does not detect such
-deadlocks and they can be difficult to reproduce.
+For kernels built with CONFIG_FORCE_NR_CPUS=y, the nr_cpu_ids is
+defined as NR_CPUS instead of the number of possible cpus, this
+will cause the following system panic:
 
-In addition, if a task voluntarily context switches during that time
-(for example, if it blocks acquiring a mutex), then this task is in an
-RCU Tasks quiescent state.  And with some adjustments, RCU Tasks could
-just as well take advantage of that fact.
+smpboot: Allowing 4 CPUs, 0 hotplug CPUs
+...
+setup_percpu: NR_CPUS:512 nr_cpumask_bits:512 nr_cpu_ids:512 nr_node_ids:1
+...
+BUG: unable to handle page fault for address: ffffffff9911c8c8
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 0 PID: 15 Comm: rcu_tasks_trace Tainted: G W
+6.6.21 #1 5dc7acf91a5e8e9ac9dcfc35bee0245691283ea6
+RIP: 0010:rcu_tasks_need_gpcb+0x25d/0x2c0
+RSP: 0018:ffffa371c00a3e60 EFLAGS: 00010082
+CR2: ffffffff9911c8c8 CR3: 000000040fa20005 CR4: 00000000001706f0
+Call Trace:
+<TASK>
+? __die+0x23/0x80
+? page_fault_oops+0xa4/0x180
+? exc_page_fault+0x152/0x180
+? asm_exc_page_fault+0x26/0x40
+? rcu_tasks_need_gpcb+0x25d/0x2c0
+? __pfx_rcu_tasks_kthread+0x40/0x40
+rcu_tasks_one_gp+0x69/0x180
+rcu_tasks_kthread+0x94/0xc0
+kthread+0xe8/0x140
+? __pfx_kthread+0x40/0x40
+ret_from_fork+0x34/0x80
+? __pfx_kthread+0x40/0x40
+ret_from_fork_asm+0x1b/0x80
+</TASK>
 
-This commit therefore initializes the data structures that will be needed
-to rely on these quiescent states and to eliminate these deadlocks.
+Considering that there may be holes in the CPU numbers, use the
+maximum possible cpu number, instead of nr_cpu_ids, for configuring
+enqueue and dequeue limits.
 
-Link: https://lore.kernel.org/all/20240118021842.290665-1-chenzhongjin@huawei.com/
+[ neeraj.upadhyay: Fix htmldocs build error reported by Stephen Rothwell ]
 
-Reported-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reported-by: Yang Jihong <yangjihong1@huawei.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Tested-by: Yang Jihong <yangjihong1@huawei.com>
-Tested-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Stable-dep-of: fd70e9f1d85f ("rcu-tasks: Fix access non-existent percpu rtpcp variable in rcu_tasks_need_gpcb()")
+Closes: https://lore.kernel.org/linux-input/CALMA0xaTSMN+p4xUXkzrtR5r6k7hgoswcaXx7baR_z9r5jjskw@mail.gmail.com/T/#u
+Reported-by: Zhixu Liu <zhixu.liu@gmail.com>
+Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
+Signed-off-by: Neeraj Upadhyay <neeraj.upadhyay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/init_task.c   | 1 +
- kernel/fork.c      | 1 +
- kernel/rcu/tasks.h | 2 ++
- 3 files changed, 4 insertions(+)
+ kernel/rcu/tasks.h | 82 ++++++++++++++++++++++++++++++----------------
+ 1 file changed, 53 insertions(+), 29 deletions(-)
 
-diff --git a/init/init_task.c b/init/init_task.c
-index ff6c4b9bfe6b1..fd9e27185e23a 100644
---- a/init/init_task.c
-+++ b/init/init_task.c
-@@ -152,6 +152,7 @@ struct task_struct init_task
- 	.rcu_tasks_holdout = false,
- 	.rcu_tasks_holdout_list = LIST_HEAD_INIT(init_task.rcu_tasks_holdout_list),
- 	.rcu_tasks_idle_cpu = -1,
-+	.rcu_tasks_exit_list = LIST_HEAD_INIT(init_task.rcu_tasks_exit_list),
- #endif
- #ifdef CONFIG_TASKS_TRACE_RCU
- 	.trc_reader_nesting = 0,
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 32ffbc1c96bae..9098284720e38 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -1973,6 +1973,7 @@ static inline void rcu_copy_process(struct task_struct *p)
- 	p->rcu_tasks_holdout = false;
- 	INIT_LIST_HEAD(&p->rcu_tasks_holdout_list);
- 	p->rcu_tasks_idle_cpu = -1;
-+	INIT_LIST_HEAD(&p->rcu_tasks_exit_list);
- #endif /* #ifdef CONFIG_TASKS_RCU */
- #ifdef CONFIG_TASKS_TRACE_RCU
- 	p->trc_reader_nesting = 0;
 diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index 7ac3c8af075fc..4eae3b1bda70e 100644
+index 4eae3b1bda70e..3fcd9f92d3861 100644
 --- a/kernel/rcu/tasks.h
 +++ b/kernel/rcu/tasks.h
-@@ -277,6 +277,8 @@ static void cblist_init_generic(struct rcu_tasks *rtp)
+@@ -34,6 +34,7 @@ typedef void (*postgp_func_t)(struct rcu_tasks *rtp);
+  * @rtp_blkd_tasks: List of tasks blocked as readers.
+  * @rtp_exit_list: List of tasks in the latter portion of do_exit().
+  * @cpu: CPU number corresponding to this entry.
++ * @index: Index of this CPU in rtpcp_array of the rcu_tasks structure.
+  * @rtpp: Pointer to the rcu_tasks structure.
+  */
+ struct rcu_tasks_percpu {
+@@ -49,6 +50,7 @@ struct rcu_tasks_percpu {
+ 	struct list_head rtp_blkd_tasks;
+ 	struct list_head rtp_exit_list;
+ 	int cpu;
++	int index;
+ 	struct rcu_tasks *rtpp;
+ };
+ 
+@@ -75,6 +77,7 @@ struct rcu_tasks_percpu {
+  * @postgp_func: This flavor's post-grace-period function (optional).
+  * @call_func: This flavor's call_rcu()-equivalent function.
+  * @rtpcpu: This flavor's rcu_tasks_percpu structure.
++ * @rtpcp_array: Array of pointers to rcu_tasks_percpu structure of CPUs in cpu_possible_mask.
+  * @percpu_enqueue_shift: Shift down CPU ID this much when enqueuing callbacks.
+  * @percpu_enqueue_lim: Number of per-CPU callback queues in use for enqueuing.
+  * @percpu_dequeue_lim: Number of per-CPU callback queues in use for dequeuing.
+@@ -108,6 +111,7 @@ struct rcu_tasks {
+ 	postgp_func_t postgp_func;
+ 	call_rcu_func_t call_func;
+ 	struct rcu_tasks_percpu __percpu *rtpcpu;
++	struct rcu_tasks_percpu **rtpcp_array;
+ 	int percpu_enqueue_shift;
+ 	int percpu_enqueue_lim;
+ 	int percpu_dequeue_lim;
+@@ -181,6 +185,8 @@ module_param(rcu_task_collapse_lim, int, 0444);
+ static int rcu_task_lazy_lim __read_mostly = 32;
+ module_param(rcu_task_lazy_lim, int, 0444);
+ 
++static int rcu_task_cpu_ids;
++
+ /* RCU tasks grace-period state for debugging. */
+ #define RTGS_INIT		 0
+ #define RTGS_WAIT_WAIT_CBS	 1
+@@ -245,6 +251,8 @@ static void cblist_init_generic(struct rcu_tasks *rtp)
+ 	unsigned long flags;
+ 	int lim;
+ 	int shift;
++	int maxcpu;
++	int index = 0;
+ 
+ 	if (rcu_task_enqueue_lim < 0) {
+ 		rcu_task_enqueue_lim = 1;
+@@ -254,14 +262,9 @@ static void cblist_init_generic(struct rcu_tasks *rtp)
+ 	}
+ 	lim = rcu_task_enqueue_lim;
+ 
+-	if (lim > nr_cpu_ids)
+-		lim = nr_cpu_ids;
+-	shift = ilog2(nr_cpu_ids / lim);
+-	if (((nr_cpu_ids - 1) >> shift) >= lim)
+-		shift++;
+-	WRITE_ONCE(rtp->percpu_enqueue_shift, shift);
+-	WRITE_ONCE(rtp->percpu_dequeue_lim, lim);
+-	smp_store_release(&rtp->percpu_enqueue_lim, lim);
++	rtp->rtpcp_array = kcalloc(num_possible_cpus(), sizeof(struct rcu_tasks_percpu *), GFP_KERNEL);
++	BUG_ON(!rtp->rtpcp_array);
++
+ 	for_each_possible_cpu(cpu) {
+ 		struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
+ 
+@@ -275,14 +278,29 @@ static void cblist_init_generic(struct rcu_tasks *rtp)
+ 		INIT_WORK(&rtpcp->rtp_work, rcu_tasks_invoke_cbs_wq);
+ 		rtpcp->cpu = cpu;
  		rtpcp->rtpp = rtp;
++		rtpcp->index = index;
++		rtp->rtpcp_array[index] = rtpcp;
++		index++;
  		if (!rtpcp->rtp_blkd_tasks.next)
  			INIT_LIST_HEAD(&rtpcp->rtp_blkd_tasks);
-+		if (!rtpcp->rtp_exit_list.next)
-+			INIT_LIST_HEAD(&rtpcp->rtp_exit_list);
+ 		if (!rtpcp->rtp_exit_list.next)
+ 			INIT_LIST_HEAD(&rtpcp->rtp_exit_list);
++		maxcpu = cpu;
  	}
  
- 	pr_info("%s: Setting shift to %d and lim to %d rcu_task_cb_adjust=%d.\n", rtp->name,
+-	pr_info("%s: Setting shift to %d and lim to %d rcu_task_cb_adjust=%d.\n", rtp->name,
+-			data_race(rtp->percpu_enqueue_shift), data_race(rtp->percpu_enqueue_lim), rcu_task_cb_adjust);
++	rcu_task_cpu_ids = maxcpu + 1;
++	if (lim > rcu_task_cpu_ids)
++		lim = rcu_task_cpu_ids;
++	shift = ilog2(rcu_task_cpu_ids / lim);
++	if (((rcu_task_cpu_ids - 1) >> shift) >= lim)
++		shift++;
++	WRITE_ONCE(rtp->percpu_enqueue_shift, shift);
++	WRITE_ONCE(rtp->percpu_dequeue_lim, lim);
++	smp_store_release(&rtp->percpu_enqueue_lim, lim);
++
++	pr_info("%s: Setting shift to %d and lim to %d rcu_task_cb_adjust=%d rcu_task_cpu_ids=%d.\n",
++			rtp->name, data_race(rtp->percpu_enqueue_shift), data_race(rtp->percpu_enqueue_lim),
++			rcu_task_cb_adjust, rcu_task_cpu_ids);
+ }
+ 
+ // Compute wakeup time for lazy callback timer.
+@@ -350,7 +368,7 @@ static void call_rcu_tasks_generic(struct rcu_head *rhp, rcu_callback_t func,
+ 			rtpcp->rtp_n_lock_retries = 0;
+ 		}
+ 		if (rcu_task_cb_adjust && ++rtpcp->rtp_n_lock_retries > rcu_task_contend_lim &&
+-		    READ_ONCE(rtp->percpu_enqueue_lim) != nr_cpu_ids)
++		    READ_ONCE(rtp->percpu_enqueue_lim) != rcu_task_cpu_ids)
+ 			needadjust = true;  // Defer adjustment to avoid deadlock.
+ 	}
+ 	// Queuing callbacks before initialization not yet supported.
+@@ -370,10 +388,10 @@ static void call_rcu_tasks_generic(struct rcu_head *rhp, rcu_callback_t func,
+ 	raw_spin_unlock_irqrestore_rcu_node(rtpcp, flags);
+ 	if (unlikely(needadjust)) {
+ 		raw_spin_lock_irqsave(&rtp->cbs_gbl_lock, flags);
+-		if (rtp->percpu_enqueue_lim != nr_cpu_ids) {
++		if (rtp->percpu_enqueue_lim != rcu_task_cpu_ids) {
+ 			WRITE_ONCE(rtp->percpu_enqueue_shift, 0);
+-			WRITE_ONCE(rtp->percpu_dequeue_lim, nr_cpu_ids);
+-			smp_store_release(&rtp->percpu_enqueue_lim, nr_cpu_ids);
++			WRITE_ONCE(rtp->percpu_dequeue_lim, rcu_task_cpu_ids);
++			smp_store_release(&rtp->percpu_enqueue_lim, rcu_task_cpu_ids);
+ 			pr_info("Switching %s to per-CPU callback queuing.\n", rtp->name);
+ 		}
+ 		raw_spin_unlock_irqrestore(&rtp->cbs_gbl_lock, flags);
+@@ -446,6 +464,8 @@ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
+ 
+ 	dequeue_limit = smp_load_acquire(&rtp->percpu_dequeue_lim);
+ 	for (cpu = 0; cpu < dequeue_limit; cpu++) {
++		if (!cpu_possible(cpu))
++			continue;
+ 		struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
+ 
+ 		/* Advance and accelerate any new callbacks. */
+@@ -483,7 +503,7 @@ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
+ 	if (rcu_task_cb_adjust && ncbs <= rcu_task_collapse_lim) {
+ 		raw_spin_lock_irqsave(&rtp->cbs_gbl_lock, flags);
+ 		if (rtp->percpu_enqueue_lim > 1) {
+-			WRITE_ONCE(rtp->percpu_enqueue_shift, order_base_2(nr_cpu_ids));
++			WRITE_ONCE(rtp->percpu_enqueue_shift, order_base_2(rcu_task_cpu_ids));
+ 			smp_store_release(&rtp->percpu_enqueue_lim, 1);
+ 			rtp->percpu_dequeue_gpseq = get_state_synchronize_rcu();
+ 			gpdone = false;
+@@ -498,7 +518,9 @@ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
+ 			pr_info("Completing switch %s to CPU-0 callback queuing.\n", rtp->name);
+ 		}
+ 		if (rtp->percpu_dequeue_lim == 1) {
+-			for (cpu = rtp->percpu_dequeue_lim; cpu < nr_cpu_ids; cpu++) {
++			for (cpu = rtp->percpu_dequeue_lim; cpu < rcu_task_cpu_ids; cpu++) {
++				if (!cpu_possible(cpu))
++					continue;
+ 				struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
+ 
+ 				WARN_ON_ONCE(rcu_segcblist_n_cbs(&rtpcp->cblist));
+@@ -513,30 +535,32 @@ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
+ // Advance callbacks and invoke any that are ready.
+ static void rcu_tasks_invoke_cbs(struct rcu_tasks *rtp, struct rcu_tasks_percpu *rtpcp)
+ {
+-	int cpu;
+-	int cpunext;
+ 	int cpuwq;
+ 	unsigned long flags;
+ 	int len;
++	int index;
+ 	struct rcu_head *rhp;
+ 	struct rcu_cblist rcl = RCU_CBLIST_INITIALIZER(rcl);
+ 	struct rcu_tasks_percpu *rtpcp_next;
+ 
+-	cpu = rtpcp->cpu;
+-	cpunext = cpu * 2 + 1;
+-	if (cpunext < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
+-		rtpcp_next = per_cpu_ptr(rtp->rtpcpu, cpunext);
+-		cpuwq = rcu_cpu_beenfullyonline(cpunext) ? cpunext : WORK_CPU_UNBOUND;
+-		queue_work_on(cpuwq, system_wq, &rtpcp_next->rtp_work);
+-		cpunext++;
+-		if (cpunext < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
+-			rtpcp_next = per_cpu_ptr(rtp->rtpcpu, cpunext);
+-			cpuwq = rcu_cpu_beenfullyonline(cpunext) ? cpunext : WORK_CPU_UNBOUND;
++	index = rtpcp->index * 2 + 1;
++	if (index < num_possible_cpus()) {
++		rtpcp_next = rtp->rtpcp_array[index];
++		if (rtpcp_next->cpu < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
++			cpuwq = rcu_cpu_beenfullyonline(rtpcp_next->cpu) ? rtpcp_next->cpu : WORK_CPU_UNBOUND;
+ 			queue_work_on(cpuwq, system_wq, &rtpcp_next->rtp_work);
++			index++;
++			if (index < num_possible_cpus()) {
++				rtpcp_next = rtp->rtpcp_array[index];
++				if (rtpcp_next->cpu < smp_load_acquire(&rtp->percpu_dequeue_lim)) {
++					cpuwq = rcu_cpu_beenfullyonline(rtpcp_next->cpu) ? rtpcp_next->cpu : WORK_CPU_UNBOUND;
++					queue_work_on(cpuwq, system_wq, &rtpcp_next->rtp_work);
++				}
++			}
+ 		}
+ 	}
+ 
+-	if (rcu_segcblist_empty(&rtpcp->cblist) || !cpu_possible(cpu))
++	if (rcu_segcblist_empty(&rtpcp->cblist))
+ 		return;
+ 	raw_spin_lock_irqsave_rcu_node(rtpcp, flags);
+ 	rcu_segcblist_advance(&rtpcp->cblist, rcu_seq_current(&rtp->tasks_gp_seq));
 -- 
 2.43.0
 
