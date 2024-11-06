@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E9F54765;
-	Wed,  6 Nov 2024 13:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DBF54765;
+	Wed,  6 Nov 2024 13:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899097; cv=none; b=TUZnE+8xTbk/RtTfBEFl/bw/oZ2nmrLvb50xyAUw2VBRxE43kzIbS+bRfKCIiOQ1gNpM5M53cc/Fia1OHjkLpFQkMe96ybqVYLUQV1MDafw9tZuKjiHorNIN1d6o3DucaXjkbVYm+6dFYwPxt7/fqFhtPG38o8f+fFekRXkp7c0=
+	t=1730899100; cv=none; b=pqPfAf+TOpskgVq3lIcaR1wTiX4IrLG0WDoguxf5H4evEk+xM8Xe8N98Geket8xVR1LYRm1S2Gb6XLGQI1zpuGTgl/i08NaXANA77InctGdOfpL0vcOfXOnBEXxiIEeqJYhaPlCEsfc722WnpvBLdLG0qEQEcGFaThUpik4kbeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899097; c=relaxed/simple;
-	bh=ozgyNJ/9Hmdz/kGsY/ziSCDULa4UdbdcFUQYjgAt3sE=;
+	s=arc-20240116; t=1730899100; c=relaxed/simple;
+	bh=Cj73cU7fpnqjKLkcoxkWVf988qYGhpoXnGW1LcGJ+cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xen85IdtAYOMlawS+01bkl1IqnnqPIHQUvS2hKsl0JQYRR/F0Qpg7VraGOF7V+R/PZD2UJ3KTkXeaQs8+XZHGNxb7jJNCjxFBtnVtYNZrZB6905OSPF0jJezRpqfaf0ymLPpz8n/iGZkmQtFDzWJTIGyfhj+wVual4FZsh8NPWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrbzTb23; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sc0kI8/2VDhO/kZ/I7kHPWeMl4MQwpwwvqPrqt9Rl2zY+MfCPHGVuqFY/Ymg+74HuQrdwK9g/sWaMEqlI+5fIQI+XcRJon9FGDf7BWqVOdtr9Xl7x5n3of7nKCa3YBYGGyg2zNckMxcw4VpfHlNrZdmq9UZp6vj2bgPTyR8wGwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obJAXGH1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrbzTb23"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D5E1C4CECD;
-	Wed,  6 Nov 2024 13:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obJAXGH1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EBE5C4CECD;
+	Wed,  6 Nov 2024 13:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899096;
-	bh=ozgyNJ/9Hmdz/kGsY/ziSCDULa4UdbdcFUQYjgAt3sE=;
+	s=korg; t=1730899099;
+	bh=Cj73cU7fpnqjKLkcoxkWVf988qYGhpoXnGW1LcGJ+cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UrbzTb2365KCe1N1/5sNbElIqdEQxbbxEXISEdJ3tQoIva4AaDZvYEJFlN6T2TMR2
-	 T+YSe5zhN/dyIEqrR0Wy8vVZY76JwXs+Dt9LaqPgs+K/nKU34vK14dbVkkE1H/nbsJ
-	 OWTm78DbcjgBaypFyta29dGojgmwd3eYV4mtGMYU=
+	b=obJAXGH1uC3uueG55a2ZFBjAIHNKUBb5AFkho/prODjcMzCyR4CZtNM52luQ7nAFK
+	 n4jdXEMuUC/epfm/GmzvTXm5kkW7J2c5KtlhC9h44x77XTAfek3Y9al9WQYFrLy+U3
+	 /TyEKotcqmCG/el5EJ10KfUiM15aBjBOi70d/smg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>
-Subject: [PATCH 5.4 459/462] Revert "drm/mipi-dsi: Set the fwnode for mipi_dsi_device"
-Date: Wed,  6 Nov 2024 13:05:52 +0100
-Message-ID: <20241106120342.840494585@linuxfoundation.org>
+	syzbot+955da2d57931604ee691@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>
+Subject: [PATCH 5.4 460/462] vt: prevent kernel-infoleak in con_font_get()
+Date: Wed,  6 Nov 2024 13:05:53 +0100
+Message-ID: <20241106120342.866094000@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -49,47 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Jason-JH.Lin" <jason-jh.lin@mediatek.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-This reverts commit 22b8ac608af5b8a859ed9dc0b15f31dea26cdbb0 which is
-commit a26cc2934331b57b5a7164bff344f0a2ec245fc0 upstream.
+commit f956052e00de211b5c9ebaa1958366c23f82ee9e upstream.
 
-Reason for revert:
-1. The commit [1] does not land on linux-5.15, so this patch does not
-fix anything.
+font.data may not initialize all memory spaces depending on the implementation
+of vc->vc_sw->con_font_get. This may cause info-leak, so to prevent this, it
+is safest to modify it to initialize the allocated memory space to 0, and it
+generally does not affect the overall performance of the system.
 
-2. Since the fw_devlink improvements series [2] does not land on
-linux-5.15, using device_set_fwnode() causes the panel to flash during
-bootup.
-
-Incorrect link management may lead to incorrect device initialization,
-affecting firmware node links and consumer relationships.
-The fwnode setting of panel to the DSI device would cause a DSI
-initialization error without series[2], so this patch was reverted to
-avoid using the incomplete fw_devlink functionality.
-
-[1] commit 3fb16866b51d ("driver core: fw_devlink: Make cycle detection more robust")
-[2] Link: https://lore.kernel.org/all/20230207014207.1678715-1-saravanak@google.com
-
-Cc: stable@vger.kernel.org # 5.15.169
-Cc: stable@vger.kernel.org # 5.10.228
-Cc: stable@vger.kernel.org # 5.4.284
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+955da2d57931604ee691@syzkaller.appspotmail.com
+Fixes: 05e2600cb0a4 ("VT: Bump font size limitation to 64x128 pixels")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Link: https://lore.kernel.org/r/20241010174619.59662-1-aha310510@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_mipi_dsi.c |    2 +-
+ drivers/tty/vt/vt.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_mipi_dsi.c
-+++ b/drivers/gpu/drm/drm_mipi_dsi.c
-@@ -221,7 +221,7 @@ mipi_dsi_device_register_full(struct mip
- 		return dsi;
- 	}
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -4519,7 +4519,7 @@ static int con_font_get(struct vc_data *
+ 	int c;
  
--	device_set_node(&dsi->dev, of_fwnode_handle(info->node));
-+	dsi->dev.of_node = info->node;
- 	dsi->channel = info->channel;
- 	strlcpy(dsi->name, info->type, sizeof(dsi->name));
- 
+ 	if (op->data) {
+-		font.data = kmalloc(max_font_size, GFP_KERNEL);
++		font.data = kzalloc(max_font_size, GFP_KERNEL);
+ 		if (!font.data)
+ 			return -ENOMEM;
+ 	} else
 
 
