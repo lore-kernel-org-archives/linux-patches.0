@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C841DFE06;
-	Wed,  6 Nov 2024 12:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88731DFE3E;
+	Wed,  6 Nov 2024 12:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895799; cv=none; b=YaqdyUgT4lyAychVCz7VVu6ZnMh8/5mnyCUlGWjy4uzcZIjwJEIS9uYFeJvUpyD6tu+fc1XbYl0KRVfWgx8gaKJ68xT6KQp/EJX3EmB9TRXplYhwsclvXxrSoWL88qbE/0tkFCTyqv27iM5OAu+rjBAHALg7AmX2fHEvVRyrrdI=
+	t=1730895803; cv=none; b=EZlk6ldHuBTU8h8TSbjHCPbE+KaRtTeyzYgGV7Elh4SZacnPJEXomBdH4g/v25KhafKSAH3EhCSt7uI10IHAZX6AA0kaOwNiVP6odQTX2RWhrJO70tF5kjWd5UdoNIiM0ssfdxT6wj4gCueLaRnSeJp04QUpvK0IBHF+lGHVqz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895799; c=relaxed/simple;
-	bh=Yq/NfmAk4yagtDZxArKRqJtdWqsCTmY3CrSUuqxGcgE=;
+	s=arc-20240116; t=1730895803; c=relaxed/simple;
+	bh=WXMa0RzL0Rri8LCwp+fwvWTy0MVfewrjBwnpNenz6S4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1aW+cu1rBOezT8l8E+pjoqwgansyh6iN8baKbRuB44wpwtxJGOHuGpXH6AORWP2sJcUOPooexYIpRyr1Pg8+p4xspwftr3Yby+Cb74tTZaj2B29SCb9E51kBu6F2Ytpo3RCgTKJ2FHJ8nKxLB3xnycC5rfXnmeWGKkgLUCER0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUgTdUH8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C58joEnwldAyz9WN5DntSgd2vmABs47eZjJvh2XOblwvKQKzLZ86bDgjEVA+gIx4wNWZGBsg/RRnXCQlPyqbVdbr34WpsH6G2h4jjkUDCaAQKCdJJ6R9itdUN4HS0U1X0lMIq178cmQoFYKdf+AMn7nkPPC2U2OeWHRL3bR7ERo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZsl4JL0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUgTdUH8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EE8C4CED3;
-	Wed,  6 Nov 2024 12:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZsl4JL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBABFC4CED3;
+	Wed,  6 Nov 2024 12:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895799;
-	bh=Yq/NfmAk4yagtDZxArKRqJtdWqsCTmY3CrSUuqxGcgE=;
+	s=korg; t=1730895803;
+	bh=WXMa0RzL0Rri8LCwp+fwvWTy0MVfewrjBwnpNenz6S4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AUgTdUH8Nh5MzL8wRsuLaINTvQpNKmMvpnx/56ZjbKi0OeaegULLh/sHNbRsw2H3D
-	 72A4ojrfBkDSSd9uGeHKwDBXSMVNiV0x9FuEpe8s1oJF+0G086x5mbswzSWrakM8Ov
-	 UycReIkDQIKUWZwHq0LTDm/O4SdlSMG506VCGJVs=
+	b=TZsl4JL0geYYfpzxsYD6DqC2XjgfOGbJoMZvTLBzgLjRSQ6+0rM4BuG+9w29HR67L
+	 3QSgA1r3wI6kwpujPzb/CoNNMa6NCEkageAT1VHU4Fooqw8cv+OTfOH9ZVE1ZcfsHV
+	 fXtIU2gLHvou9vxTc0gwINjSakld/0/TeRwcn3rE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>
-Subject: [PATCH 4.19 340/350] usb: phy: Fix API devm_usb_put_phy() can not release the phy
-Date: Wed,  6 Nov 2024 13:04:28 +0100
-Message-ID: <20241106120329.097885213@linuxfoundation.org>
+	Faisal Hassan <quic_faisalh@quicinc.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 4.19 341/350] xhci: Fix Link TRB DMA in command ring stopped completion event
+Date: Wed,  6 Nov 2024 13:04:29 +0100
+Message-ID: <20241106120329.120893935@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -49,34 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Faisal Hassan <quic_faisalh@quicinc.com>
 
-commit fdce49b5da6e0fb6d077986dec3e90ef2b094b50 upstream.
+commit 075919f6df5dd82ad0b1894898b315fbb3c29b84 upstream.
 
-For devm_usb_put_phy(), its comment says it needs to invoke usb_put_phy()
-to release the phy, but it does not do that actually, so it can not fully
-undo what the API devm_usb_get_phy() does, that is wrong, fixed by using
-devres_release() instead of devres_destroy() within the API.
+During the aborting of a command, the software receives a command
+completion event for the command ring stopped, with the TRB pointing
+to the next TRB after the aborted command.
 
-Fixes: cedf8602373a ("usb: phy: move bulk of otg/otg.c to phy/phy.c")
+If the command we abort is located just before the Link TRB in the
+command ring, then during the 'command ring stopped' completion event,
+the xHC gives the Link TRB in the event's cmd DMA, which causes a
+mismatch in handling command completion event.
+
+To address this situation, move the 'command ring stopped' completion
+event check slightly earlier, since the specific command it stopped
+on isn't of significant concern.
+
+Fixes: 7f84eef0dafb ("USB: xhci: No-op command queueing and irq handler.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20241020-usb_phy_fix-v1-1-7f79243b8e1e@quicinc.com
+Signed-off-by: Faisal Hassan <quic_faisalh@quicinc.com>
+Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20241022155631.1185-1-quic_faisalh@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/phy/phy.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci-ring.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/phy/phy.c
-+++ b/drivers/usb/phy/phy.c
-@@ -579,7 +579,7 @@ void devm_usb_put_phy(struct device *dev
- {
- 	int r;
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1431,6 +1431,14 @@ static void handle_cmd_completion(struct
  
--	r = devres_destroy(dev, devm_usb_phy_release, devm_usb_phy_match, phy);
-+	r = devres_release(dev, devm_usb_phy_release, devm_usb_phy_match, phy);
- 	dev_WARN_ONCE(dev, r, "couldn't find PHY resource\n");
- }
- EXPORT_SYMBOL_GPL(devm_usb_put_phy);
+ 	trace_xhci_handle_command(xhci->cmd_ring, &cmd_trb->generic);
+ 
++	cmd_comp_code = GET_COMP_CODE(le32_to_cpu(event->status));
++
++	/* If CMD ring stopped we own the trbs between enqueue and dequeue */
++	if (cmd_comp_code == COMP_COMMAND_RING_STOPPED) {
++		complete_all(&xhci->cmd_ring_stop_completion);
++		return;
++	}
++
+ 	cmd_dequeue_dma = xhci_trb_virt_to_dma(xhci->cmd_ring->deq_seg,
+ 			cmd_trb);
+ 	/*
+@@ -1447,14 +1455,6 @@ static void handle_cmd_completion(struct
+ 
+ 	cancel_delayed_work(&xhci->cmd_timer);
+ 
+-	cmd_comp_code = GET_COMP_CODE(le32_to_cpu(event->status));
+-
+-	/* If CMD ring stopped we own the trbs between enqueue and dequeue */
+-	if (cmd_comp_code == COMP_COMMAND_RING_STOPPED) {
+-		complete_all(&xhci->cmd_ring_stop_completion);
+-		return;
+-	}
+-
+ 	if (cmd->command_trb != xhci->cmd_ring->dequeue) {
+ 		xhci_err(xhci,
+ 			 "Command completion event does not match command\n");
 
 
