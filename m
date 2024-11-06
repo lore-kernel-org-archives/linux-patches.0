@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6F51DF986;
-	Wed,  6 Nov 2024 12:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF591DF251;
+	Wed,  6 Nov 2024 12:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896077; cv=none; b=DlKE9t2KzOFXa9Ghu3Fz4AknGvGZ6/mUIJ7WKxh00dXyAfiz+aGbTI3ZThaUiByMkma7f+mEDuIBlF1q+Pm52NZsBmzAWuNtBRnanVNJjzp+JzGqtgkcIXq+La6BYiOZIpdfdQHzKQcrLOt9jlaaITqKK/IZAxsutpeH5g8wbiI=
+	t=1730896080; cv=none; b=k61kAJQLt/B7Ctu1ZyObgcI1daNXhr5OeZlqheeEyTuESVTMe4sMWQv2YlZsUps/4BlGb/tOTGE+OBYk0bCZPVinq6sf8BtYUxIrDemZ94kPzQ+HWNO+08vC9/yMnlS3chLLhpjlNSocTb0+P7jWOweOI5uU8IZ2kub6Md/wkoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896077; c=relaxed/simple;
-	bh=Xz43xTj29Rl+ZVsgSUjK2omOlA09yI7wQSDpkrTIelY=;
+	s=arc-20240116; t=1730896080; c=relaxed/simple;
+	bh=+C+7ciEw/I5oXXy/sCTP9uKgvOdFYlO/79m5uaUvuiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nXdY9iiNHsoZLb9ESEwF1TAhs/P7doMeImY3ynrzQBNs/N3o+ozxryCrduCK52BVtxPkM2xk9VRaScjz/gqTZrZDcpyxF8pq7i2cFvRl6wwVh7VHeNRt//GvdY9GR/CvkkRkWBy3N+iK5GRNJXrIstxiQghclTJ9r1F9B7A0Joc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QngcRAEC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O18OuFBrYivAbdSYJX6UA4GUreJMl7fKPYmNgvfsDR3OP2zS8MgUAPxbf8W3rxvMa8xKgQXJC1+Yk6cOFgOTqFnX7bHHyqkyHZlatN4B/dqGStjgFKtUqoHXpXDpAVaoyWV4L3xolp8bKU0ipBmlA1Xm10ORc7FQHeL9NpOIHoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b700Sz7z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QngcRAEC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E846AC4CECD;
-	Wed,  6 Nov 2024 12:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b700Sz7z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63E9C4CECD;
+	Wed,  6 Nov 2024 12:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896077;
-	bh=Xz43xTj29Rl+ZVsgSUjK2omOlA09yI7wQSDpkrTIelY=;
+	s=korg; t=1730896080;
+	bh=+C+7ciEw/I5oXXy/sCTP9uKgvOdFYlO/79m5uaUvuiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QngcRAECFxckDlnEijA5SoE7qpW1Z0IBqNYuRoQrl+AEonJeMIFYHETYuUmQtcShR
-	 lTqSHOw/0lDVd+ExrcVRbattVfwqnU2de4fL69j1hAQn7kSKym0V2UhiESqo/jUKmL
-	 a4ekaz7RHnR/0UppWo7YjrAMqb66qeTLkmWR+mBM=
+	b=b700Sz7zP/VZ4buN6Oh9rQbw35NF4ku0V7Z+1X6WEho9d1AdJQDNDVncufae6l0Ei
+	 GrOILzWrbF7OJEff519PRbm4N7OV7XbWxcgclZmfmtw4hnV3BiZ5tOCfvBqt6739Kw
+	 EWWyWN5mjkn3UscXxtSKoepZT50sBRY2AK/eO/Mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
 	Hou Tao <houtao1@huawei.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 046/245] bpf: Free dynamically allocated bits in bpf_iter_bits_destroy()
-Date: Wed,  6 Nov 2024 13:01:39 +0100
-Message-ID: <20241106120320.360706570@linuxfoundation.org>
+Subject: [PATCH 6.11 047/245] bpf: Add bpf_mem_alloc_check_size() helper
+Date: Wed,  6 Nov 2024 13:01:40 +0100
+Message-ID: <20241106120320.383534823@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -54,92 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 101ccfbabf4738041273ce64e2b116cf440dea13 ]
+[ Upstream commit 62a898b07b83f6f407003d8a70f0827a5af08a59 ]
 
-bpf_iter_bits_destroy() uses "kit->nr_bits <= 64" to check whether the
-bits are dynamically allocated. However, the check is incorrect and may
-cause a kmemleak as shown below:
+Introduce bpf_mem_alloc_check_size() to check whether the allocation
+size exceeds the limitation for the kmalloc-equivalent allocator. The
+upper limit for percpu allocation is LLIST_NODE_SZ bytes larger than
+non-percpu allocation, so a percpu argument is added to the helper.
 
-unreferenced object 0xffff88812628c8c0 (size 32):
-  comm "swapper/0", pid 1, jiffies 4294727320
-  hex dump (first 32 bytes):
-	b0 c1 55 f5 81 88 ff ff f0 f0 f0 f0 f0 f0 f0 f0  ..U...........
-	f0 f0 f0 f0 f0 f0 f0 f0 00 00 00 00 00 00 00 00  ..............
-  backtrace (crc 781e32cc):
-	[<00000000c452b4ab>] kmemleak_alloc+0x4b/0x80
-	[<0000000004e09f80>] __kmalloc_node_noprof+0x480/0x5c0
-	[<00000000597124d6>] __alloc.isra.0+0x89/0xb0
-	[<000000004ebfffcd>] alloc_bulk+0x2af/0x720
-	[<00000000d9c10145>] prefill_mem_cache+0x7f/0xb0
-	[<00000000ff9738ff>] bpf_mem_alloc_init+0x3e2/0x610
-	[<000000008b616eac>] bpf_global_ma_init+0x19/0x30
-	[<00000000fc473efc>] do_one_initcall+0xd3/0x3c0
-	[<00000000ec81498c>] kernel_init_freeable+0x66a/0x940
-	[<00000000b119f72f>] kernel_init+0x20/0x160
-	[<00000000f11ac9a7>] ret_from_fork+0x3c/0x70
-	[<0000000004671da4>] ret_from_fork_asm+0x1a/0x30
+The helper will be used in the following patch to check whether the size
+parameter passed to bpf_mem_alloc() is too big.
 
-That is because nr_bits will be set as zero in bpf_iter_bits_next()
-after all bits have been iterated.
-
-Fix the issue by setting kit->bit to kit->nr_bits instead of setting
-kit->nr_bits to zero when the iteration completes in
-bpf_iter_bits_next(). In addition, use "!nr_bits || bits >= nr_bits" to
-check whether the iteration is complete and still use "nr_bits > 64" to
-indicate whether bits are dynamically allocated. The "!nr_bits" check is
-necessary because bpf_iter_bits_new() may fail before setting
-kit->nr_bits, and this condition will stop the iteration early instead
-of accessing the zeroed or freed kit->bits.
-
-Considering the initial value of kit->bits is -1 and the type of
-kit->nr_bits is unsigned int, change the type of kit->nr_bits to int.
-The potential overflow problem will be handled in the following patch.
-
-Fixes: 4665415975b0 ("bpf: Add bits iterator")
-Acked-by: Yafang Shao <laoar.shao@gmail.com>
 Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20241030100516.3633640-2-houtao@huaweicloud.com
+Link: https://lore.kernel.org/r/20241030100516.3633640-3-houtao@huaweicloud.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 393397fbdcad ("bpf: Check the validity of nr_words in bpf_iter_bits_new()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/helpers.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ include/linux/bpf_mem_alloc.h |  3 +++
+ kernel/bpf/memalloc.c         | 14 +++++++++++++-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
-index cc8c00864a680..a4521d2606b6b 100644
---- a/kernel/bpf/helpers.c
-+++ b/kernel/bpf/helpers.c
-@@ -2835,7 +2835,7 @@ struct bpf_iter_bits_kern {
- 		unsigned long *bits;
- 		unsigned long bits_copy;
- 	};
--	u32 nr_bits;
-+	int nr_bits;
- 	int bit;
- } __aligned(8);
+diff --git a/include/linux/bpf_mem_alloc.h b/include/linux/bpf_mem_alloc.h
+index aaf004d943228..e45162ef59bb1 100644
+--- a/include/linux/bpf_mem_alloc.h
++++ b/include/linux/bpf_mem_alloc.h
+@@ -33,6 +33,9 @@ int bpf_mem_alloc_percpu_init(struct bpf_mem_alloc *ma, struct obj_cgroup *objcg
+ int bpf_mem_alloc_percpu_unit_init(struct bpf_mem_alloc *ma, int size);
+ void bpf_mem_alloc_destroy(struct bpf_mem_alloc *ma);
  
-@@ -2909,17 +2909,16 @@ bpf_iter_bits_new(struct bpf_iter_bits *it, const u64 *unsafe_ptr__ign, u32 nr_w
- __bpf_kfunc int *bpf_iter_bits_next(struct bpf_iter_bits *it)
++/* Check the allocation size for kmalloc equivalent allocator */
++int bpf_mem_alloc_check_size(bool percpu, size_t size);
++
+ /* kmalloc/kfree equivalent: */
+ void *bpf_mem_alloc(struct bpf_mem_alloc *ma, size_t size);
+ void bpf_mem_free(struct bpf_mem_alloc *ma, void *ptr);
+diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
+index dec892ded031e..b2c7a4c49be77 100644
+--- a/kernel/bpf/memalloc.c
++++ b/kernel/bpf/memalloc.c
+@@ -35,6 +35,8 @@
+  */
+ #define LLIST_NODE_SZ sizeof(struct llist_node)
+ 
++#define BPF_MEM_ALLOC_SIZE_MAX 4096
++
+ /* similar to kmalloc, but sizeof == 8 bucket is gone */
+ static u8 size_index[24] __ro_after_init = {
+ 	3,	/* 8 */
+@@ -65,7 +67,7 @@ static u8 size_index[24] __ro_after_init = {
+ 
+ static int bpf_mem_cache_idx(size_t size)
  {
- 	struct bpf_iter_bits_kern *kit = (void *)it;
--	u32 nr_bits = kit->nr_bits;
-+	int bit = kit->bit, nr_bits = kit->nr_bits;
- 	const unsigned long *bits;
--	int bit;
+-	if (!size || size > 4096)
++	if (!size || size > BPF_MEM_ALLOC_SIZE_MAX)
+ 		return -1;
  
--	if (nr_bits == 0)
-+	if (!nr_bits || bit >= nr_bits)
- 		return NULL;
+ 	if (size <= 192)
+@@ -1005,3 +1007,13 @@ void notrace *bpf_mem_cache_alloc_flags(struct bpf_mem_alloc *ma, gfp_t flags)
  
- 	bits = nr_bits == 64 ? &kit->bits_copy : kit->bits;
--	bit = find_next_bit(bits, nr_bits, kit->bit + 1);
-+	bit = find_next_bit(bits, nr_bits, bit + 1);
- 	if (bit >= nr_bits) {
--		kit->nr_bits = 0;
-+		kit->bit = bit;
- 		return NULL;
- 	}
- 
+ 	return !ret ? NULL : ret + LLIST_NODE_SZ;
+ }
++
++int bpf_mem_alloc_check_size(bool percpu, size_t size)
++{
++	/* The size of percpu allocation doesn't have LLIST_NODE_SZ overhead */
++	if ((percpu && size > BPF_MEM_ALLOC_SIZE_MAX) ||
++	    (!percpu && size > BPF_MEM_ALLOC_SIZE_MAX - LLIST_NODE_SZ))
++		return -E2BIG;
++
++	return 0;
++}
 -- 
 2.43.0
 
