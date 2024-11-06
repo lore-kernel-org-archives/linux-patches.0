@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B509C1E0B7C;
-	Wed,  6 Nov 2024 12:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4051D1E0B7C;
+	Wed,  6 Nov 2024 12:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897441; cv=none; b=fXyw+SdIDpatpVXckIaDE9ryNY9WTNbdIFrSaAKQSVntb8m0ZV8wVi/0KFu3PzYDmaspA/Tarp/vlXKsODeQ2JbVZSKSuvZLb7Bv40utQmWO8k03bpLX62n84af32sr8DiKko4D9xbcjePCJdL3YaMw2n4BFp4p7BNvzdo0gfQM=
+	t=1730897444; cv=none; b=Jp+INHJojY2je26y3PJkb7Ve3x1Szh+k+6K+W9y3qYnm8TBWpe4DU8Gu22ecT53dfzfc1BvhHn0b8H61N6SxsJVbceHHLCPuXFdmbID2VOH6Os1SA4mjzzNIseFfUBAYFrxq4LGz5woKOOlEpANz0xEap0CBY1qw/QhFGEy9rGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897441; c=relaxed/simple;
-	bh=+KS+SMi8STbfHaNhPRkJfkQmMzZ5w40o/SodWILVubI=;
+	s=arc-20240116; t=1730897444; c=relaxed/simple;
+	bh=LvjJwXzF5fo+ZZqBCCeZB0DidVc+viR77YRPcZznd+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZilEeRkrLMRtMeC9q/VoYw46Jou+xCFe0+9Gjrt7le1rfiKLyTkUwN0TfQ/aRJvkhLA+I8h3VWb9hhzhOQHAfNlFC7qOch2Ieuk5rFoH2ylzzZ5JOmaKCDtRS5ESiDVaL4rMkjL1jk4bcnQU1cHH9eXPx2HKrW2fxNke9sooOHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtAWEue1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jsGGwDu6XXSRAE3m1EYTPcMMDlWvQoCx5dcLvPxUp0wkYvUvqc63iHSMhdeDOymSGwht7kFiiPObNUkUri0M6kFIUQ+FucXZcFFwwyP/zf0np8VOKWFHcL+y4gwEd2pXOjec60Bn29wfLDf4GPBOUVL4u8uqslJvp5iT9PdPtds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFAmc989; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtAWEue1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01F1C4CECD;
-	Wed,  6 Nov 2024 12:50:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFAmc989"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B97B9C4CECD;
+	Wed,  6 Nov 2024 12:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897441;
-	bh=+KS+SMi8STbfHaNhPRkJfkQmMzZ5w40o/SodWILVubI=;
+	s=korg; t=1730897444;
+	bh=LvjJwXzF5fo+ZZqBCCeZB0DidVc+viR77YRPcZznd+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WtAWEue1zk4nkU5VoaothNWPHrED6TXJaxjmM3Xukcgpg7k8+LIQnovsuUrbw3RUZ
-	 6zYHoS6CiH5yvpOfw5XE4sgVsLqu3fg3lbFw8YduIA3ce3RqVSvXJOU+tm1VgGwn+V
-	 0eUHzBKiFMI5ayXWbathiEHdgsP/2LBvKTn+Id0o=
+	b=pFAmc989W4bs+vp1A9WBP+mzh3uEBsB0DqshqpBok8gMCj7OBXzAt04OqK08K2CyB
+	 br/xX4EWxf+V5A0Pr7l4DJqYj5jX1mk+Nr+o7aY/FN5NAsQLI5Anmp5hRPX0PFsgA6
+	 a+5Xp5gKG+5OoF8uPS1Fc8++6Xc659vR7uDCpEik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiju Jose <shiju.jose@huawei.com>,
-	Ira Weiny <ira.weiny@intel.com>,
+	lei lu <llfamsec@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/151] cxl/events: Fix Trace DRAM Event Record
-Date: Wed,  6 Nov 2024 13:04:02 +0100
-Message-ID: <20241106120310.320333537@linuxfoundation.org>
+Subject: [PATCH 6.6 055/151] ntfs3: Add bounds checking to mi_enum_attr()
+Date: Wed,  6 Nov 2024 13:04:03 +0100
+Message-ID: <20241106120310.346886356@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -51,75 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shiju Jose <shiju.jose@huawei.com>
+From: lei lu <llfamsec@gmail.com>
 
-[ Upstream commit 53ab8678e7180834be29cf56cd52825fc3427c02 ]
+[ Upstream commit 556bdf27c2dd5c74a9caacbe524b943a6cd42d99 ]
 
-CXL spec rev 3.0 section 8.2.9.2.1.2 defines the DRAM Event Record.
+Added bounds checking to make sure that every attr don't stray beyond
+valid memory region.
 
-Fix decode memory event type field of DRAM Event Record.
-For e.g. if value is 0x1 it will be reported as an Invalid Address
-(General Media Event Record - Memory Event Type) instead of Scrub Media
-ECC Error (DRAM Event Record - Memory Event Type) and so on.
-
-Fixes: 2d6c1e6d60ba ("cxl/mem: Trace DRAM Event Record")
-Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-Link: https://patch.msgid.link/20241014143003.1170-1-shiju.jose@huawei.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Signed-off-by: lei lu <llfamsec@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/trace.h | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ fs/ntfs3/record.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/cxl/core/trace.h b/drivers/cxl/core/trace.h
-index bdf24867d5174..1e1e50d39bf63 100644
---- a/drivers/cxl/core/trace.h
-+++ b/drivers/cxl/core/trace.h
-@@ -278,7 +278,7 @@ TRACE_EVENT(cxl_generic_event,
- #define CXL_GMER_MEM_EVT_TYPE_ECC_ERROR			0x00
- #define CXL_GMER_MEM_EVT_TYPE_INV_ADDR			0x01
- #define CXL_GMER_MEM_EVT_TYPE_DATA_PATH_ERROR		0x02
--#define show_mem_event_type(type)	__print_symbolic(type,			\
-+#define show_gmer_mem_event_type(type)	__print_symbolic(type,			\
- 	{ CXL_GMER_MEM_EVT_TYPE_ECC_ERROR,		"ECC Error" },		\
- 	{ CXL_GMER_MEM_EVT_TYPE_INV_ADDR,		"Invalid Address" },	\
- 	{ CXL_GMER_MEM_EVT_TYPE_DATA_PATH_ERROR,	"Data Path Error" }	\
-@@ -359,7 +359,7 @@ TRACE_EVENT(cxl_general_media,
- 		"device=%x comp_id=%s validity_flags='%s'",
- 		__entry->dpa, show_dpa_flags(__entry->dpa_flags),
- 		show_event_desc_flags(__entry->descriptor),
--		show_mem_event_type(__entry->type),
-+		show_gmer_mem_event_type(__entry->type),
- 		show_trans_type(__entry->transaction_type),
- 		__entry->channel, __entry->rank, __entry->device,
- 		__print_hex(__entry->comp_id, CXL_EVENT_GEN_MED_COMP_ID_SIZE),
-@@ -376,6 +376,17 @@ TRACE_EVENT(cxl_general_media,
-  * DRAM Event Record defines many fields the same as the General Media Event
-  * Record.  Reuse those definitions as appropriate.
-  */
-+#define CXL_DER_MEM_EVT_TYPE_ECC_ERROR			0x00
-+#define CXL_DER_MEM_EVT_TYPE_SCRUB_MEDIA_ECC_ERROR	0x01
-+#define CXL_DER_MEM_EVT_TYPE_INV_ADDR			0x02
-+#define CXL_DER_MEM_EVT_TYPE_DATA_PATH_ERROR		0x03
-+#define show_dram_mem_event_type(type)  __print_symbolic(type,				\
-+	{ CXL_DER_MEM_EVT_TYPE_ECC_ERROR,		"ECC Error" },			\
-+	{ CXL_DER_MEM_EVT_TYPE_SCRUB_MEDIA_ECC_ERROR,	"Scrub Media ECC Error" },	\
-+	{ CXL_DER_MEM_EVT_TYPE_INV_ADDR,		"Invalid Address" },		\
-+	{ CXL_DER_MEM_EVT_TYPE_DATA_PATH_ERROR,		"Data Path Error" }		\
-+)
+diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
+index 6c76503edc200..2a375247b3c09 100644
+--- a/fs/ntfs3/record.c
++++ b/fs/ntfs3/record.c
+@@ -223,28 +223,19 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 		prev_type = 0;
+ 		attr = Add2Ptr(rec, off);
+ 	} else {
+-		/* Check if input attr inside record. */
++		/*
++		 * We don't need to check previous attr here. There is
++		 * a bounds checking in the previous round.
++		 */
+ 		off = PtrOffset(rec, attr);
+-		if (off >= used)
+-			return NULL;
+ 
+ 		asize = le32_to_cpu(attr->size);
+-		if (asize < SIZEOF_RESIDENT) {
+-			/* Impossible 'cause we should not return such attribute. */
+-			return NULL;
+-		}
+-
+-		/* Overflow check. */
+-		if (off + asize < off)
+-			return NULL;
+ 
+ 		prev_type = le32_to_cpu(attr->type);
+ 		attr = Add2Ptr(attr, asize);
+ 		off += asize;
+ 	}
+ 
+-	asize = le32_to_cpu(attr->size);
+-
+ 	/* Can we use the first field (attr->type). */
+ 	if (off + 8 > used) {
+ 		static_assert(ALIGN(sizeof(enum ATTR_TYPE), 8) == 8);
+@@ -265,6 +256,12 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 	if (t32 < prev_type)
+ 		return NULL;
+ 
++	asize = le32_to_cpu(attr->size);
++	if (asize < SIZEOF_RESIDENT) {
++		/* Impossible 'cause we should not return such attribute. */
++		return NULL;
++	}
 +
- #define CXL_DER_VALID_CHANNEL				BIT(0)
- #define CXL_DER_VALID_RANK				BIT(1)
- #define CXL_DER_VALID_NIBBLE				BIT(2)
-@@ -449,7 +460,7 @@ TRACE_EVENT(cxl_dram,
- 		"validity_flags='%s'",
- 		__entry->dpa, show_dpa_flags(__entry->dpa_flags),
- 		show_event_desc_flags(__entry->descriptor),
--		show_mem_event_type(__entry->type),
-+		show_dram_mem_event_type(__entry->type),
- 		show_trans_type(__entry->transaction_type),
- 		__entry->channel, __entry->rank, __entry->nibble_mask,
- 		__entry->bank_group, __entry->bank,
+ 	/* Check overflow and boundary. */
+ 	if (off + asize < off || off + asize > used)
+ 		return NULL;
 -- 
 2.43.0
 
