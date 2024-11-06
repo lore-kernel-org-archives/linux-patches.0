@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810641E0491;
-	Wed,  6 Nov 2024 13:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4291DFE25;
+	Wed,  6 Nov 2024 13:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898713; cv=none; b=Hf2DhL8XLTs+prDFXLlrErvOkIHyaG0H/4Gmt8rKlgeeHTaSymMaBTrRj6yvsj4a+O6sGT6S1/3n3D8qFCe1nVWM7t6OetNLiULLnoISa3GZcsuqC5nkl7qW4IlAby5RUF8t8C3Ky+rElXfya2XG0BWsTEyJfB4IG76Gt6lvL20=
+	t=1730898716; cv=none; b=OkzCXRnZQNB6wYWFKYh4FYNbFxblxn8dyaFcVSS9gWmVtnGCgc04qjp6MlA2nPVUc42gN2jkI+TfvBFnFQaDUFTAOR+qIeuesSVU5nRjQRTFF75Snccd4+TLm/+Qu77sno0z0x5LAcVDPsEv0l+YphNzTX9cZ7KyuBBBrZSVthQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898713; c=relaxed/simple;
-	bh=wANagVZwrajq/pywT//PQk1WEJPWXXW2n5Si2Xu4YKA=;
+	s=arc-20240116; t=1730898716; c=relaxed/simple;
+	bh=XhHLqBukLlji8UienIgFKwu1yG3RcPl6j8gDWEcc6Fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKIAWLM7dN8IyGKwK1lL2PkRK5W2/V6Dtfl08vmwy29ujl01BRNefH5hUqg9xCZVyyuPFowN6Pcc2NYJi4qBOPE5dB+sjJrn3EUv1ShNDRidjDO0ko2vDElhzVj/J0gQMwEpXmZeIOzuPyd4+dXn66k2MECQErlMhdUV2jX5BvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+xHqAR+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m3JmiwcZ6swpadrknJZcms94e9lFTCKik2rFnBBOrPlDG/gGRDHjVH5Gz2VgkY52Mh/tffHAu/OKayyfO7PTizblLqnjbm9fGpu7veAhG+Jygzkmny4b9XqAaoIC6rQbfCpibMOpLjQK6M97lrx+3MqI6+mCwJCDz/ENTDMgBiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYvOxzvz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+xHqAR+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A891C4CECD;
-	Wed,  6 Nov 2024 13:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYvOxzvz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA90AC4CECD;
+	Wed,  6 Nov 2024 13:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898713;
-	bh=wANagVZwrajq/pywT//PQk1WEJPWXXW2n5Si2Xu4YKA=;
+	s=korg; t=1730898716;
+	bh=XhHLqBukLlji8UienIgFKwu1yG3RcPl6j8gDWEcc6Fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F+xHqAR+8GmgFdNezmbr/nQWkaBp5bYIZ3KN6uA7xwIbl6FCR2Tx0AbcorWpfh3tT
-	 ZVvHqdlkWzSut0qagIC55DZytDECxs59y51cIkHg8L88DwcX1t227VcuUGYqNYvl7V
-	 ZBPOxY8KofFRvoDJI5I2ykPBQH7PxJzIoPRCbS+I=
+	b=UYvOxzvzJ/Td9VD6efDOdCfDN+22m18jMmht36X8+4WC8cpxtH7CVKqtuloUX9YAQ
+	 Sfo3goh3vvazRgYlE8HWQVgjnUgy59yjItqd+9i5LqV88m6vlzi5BqXHkd8iPmkmdI
+	 vhtZe4UEznF7utXVsUuSd3pPm+GAdguyUVT8CAqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
-	Yuanyuan Zhong <yzhong@purestorage.com>,
-	Simon Horman <horms@kernel.org>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.4 330/462] igb: Do not bring the device up after non-fatal error
-Date: Wed,  6 Nov 2024 13:03:43 +0100
-Message-ID: <20241106120339.676347010@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 331/462] net/sched: accept TCA_STAB only for root qdisc
+Date: Wed,  6 Nov 2024 13:03:44 +0100
+Message-ID: <20241106120339.702525828@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -54,94 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 330a699ecbfc9c26ec92c6310686da1230b4e7eb ]
+[ Upstream commit 3cb7cf1540ddff5473d6baeb530228d19bc97b8a ]
 
-Commit 004d25060c78 ("igb: Fix igb_down hung on surprise removal")
-changed igb_io_error_detected() to ignore non-fatal pcie errors in order
-to avoid hung task that can happen when igb_down() is called multiple
-times. This caused an issue when processing transient non-fatal errors.
-igb_io_resume(), which is called after igb_io_error_detected(), assumes
-that device is brought down by igb_io_error_detected() if the interface
-is up. This resulted in panic with stacktrace below.
+Most qdiscs maintain their backlog using qdisc_pkt_len(skb)
+on the assumption it is invariant between the enqueue()
+and dequeue() handlers.
 
-[ T3256] igb 0000:09:00.0 haeth0: igb: haeth0 NIC Link is Down
-[  T292] pcieport 0000:00:1c.5: AER: Uncorrected (Non-Fatal) error received: 0000:09:00.0
-[  T292] igb 0000:09:00.0: PCIe Bus Error: severity=Uncorrected (Non-Fatal), type=Transaction Layer, (Requester ID)
-[  T292] igb 0000:09:00.0:   device [8086:1537] error status/mask=00004000/00000000
-[  T292] igb 0000:09:00.0:    [14] CmpltTO [  200.105524,009][  T292] igb 0000:09:00.0: AER:   TLP Header: 00000000 00000000 00000000 00000000
-[  T292] pcieport 0000:00:1c.5: AER: broadcast error_detected message
-[  T292] igb 0000:09:00.0: Non-correctable non-fatal error reported.
-[  T292] pcieport 0000:00:1c.5: AER: broadcast mmio_enabled message
-[  T292] pcieport 0000:00:1c.5: AER: broadcast resume message
-[  T292] ------------[ cut here ]------------
-[  T292] kernel BUG at net/core/dev.c:6539!
-[  T292] invalid opcode: 0000 [#1] PREEMPT SMP
-[  T292] RIP: 0010:napi_enable+0x37/0x40
-[  T292] Call Trace:
-[  T292]  <TASK>
-[  T292]  ? die+0x33/0x90
-[  T292]  ? do_trap+0xdc/0x110
-[  T292]  ? napi_enable+0x37/0x40
-[  T292]  ? do_error_trap+0x70/0xb0
-[  T292]  ? napi_enable+0x37/0x40
-[  T292]  ? napi_enable+0x37/0x40
-[  T292]  ? exc_invalid_op+0x4e/0x70
-[  T292]  ? napi_enable+0x37/0x40
-[  T292]  ? asm_exc_invalid_op+0x16/0x20
-[  T292]  ? napi_enable+0x37/0x40
-[  T292]  igb_up+0x41/0x150
-[  T292]  igb_io_resume+0x25/0x70
-[  T292]  report_resume+0x54/0x70
-[  T292]  ? report_frozen_detected+0x20/0x20
-[  T292]  pci_walk_bus+0x6c/0x90
-[  T292]  ? aer_print_port_info+0xa0/0xa0
-[  T292]  pcie_do_recovery+0x22f/0x380
-[  T292]  aer_process_err_devices+0x110/0x160
-[  T292]  aer_isr+0x1c1/0x1e0
-[  T292]  ? disable_irq_nosync+0x10/0x10
-[  T292]  irq_thread_fn+0x1a/0x60
-[  T292]  irq_thread+0xe3/0x1a0
-[  T292]  ? irq_set_affinity_notifier+0x120/0x120
-[  T292]  ? irq_affinity_notify+0x100/0x100
-[  T292]  kthread+0xe2/0x110
-[  T292]  ? kthread_complete_and_exit+0x20/0x20
-[  T292]  ret_from_fork+0x2d/0x50
-[  T292]  ? kthread_complete_and_exit+0x20/0x20
-[  T292]  ret_from_fork_asm+0x11/0x20
-[  T292]  </TASK>
+Unfortunately syzbot can crash a host rather easily using
+a TBF + SFQ combination, with an STAB on SFQ [1]
 
-To fix this issue igb_io_resume() checks if the interface is running and
-the device is not down this means igb_io_error_detected() did not bring
-the device down and there is no need to bring it up.
+We can't support TCA_STAB on arbitrary level, this would
+require to maintain per-qdisc storage.
 
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Reviewed-by: Yuanyuan Zhong <yzhong@purestorage.com>
-Fixes: 004d25060c78 ("igb: Fix igb_down hung on surprise removal")
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+[1]
+[   88.796496] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[   88.798611] #PF: supervisor read access in kernel mode
+[   88.799014] #PF: error_code(0x0000) - not-present page
+[   88.799506] PGD 0 P4D 0
+[   88.799829] Oops: Oops: 0000 [#1] SMP NOPTI
+[   88.800569] CPU: 14 UID: 0 PID: 2053 Comm: b371744477 Not tainted 6.12.0-rc1-virtme #1117
+[   88.801107] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   88.801779] RIP: 0010:sfq_dequeue (net/sched/sch_sfq.c:272 net/sched/sch_sfq.c:499) sch_sfq
+[ 88.802544] Code: 0f b7 50 12 48 8d 04 d5 00 00 00 00 48 89 d6 48 29 d0 48 8b 91 c0 01 00 00 48 c1 e0 03 48 01 c2 66 83 7a 1a 00 7e c0 48 8b 3a <4c> 8b 07 4c 89 02 49 89 50 08 48 c7 47 08 00 00 00 00 48 c7 07 00
+All code
+========
+   0:	0f b7 50 12          	movzwl 0x12(%rax),%edx
+   4:	48 8d 04 d5 00 00 00 	lea    0x0(,%rdx,8),%rax
+   b:	00
+   c:	48 89 d6             	mov    %rdx,%rsi
+   f:	48 29 d0             	sub    %rdx,%rax
+  12:	48 8b 91 c0 01 00 00 	mov    0x1c0(%rcx),%rdx
+  19:	48 c1 e0 03          	shl    $0x3,%rax
+  1d:	48 01 c2             	add    %rax,%rdx
+  20:	66 83 7a 1a 00       	cmpw   $0x0,0x1a(%rdx)
+  25:	7e c0                	jle    0xffffffffffffffe7
+  27:	48 8b 3a             	mov    (%rdx),%rdi
+  2a:*	4c 8b 07             	mov    (%rdi),%r8		<-- trapping instruction
+  2d:	4c 89 02             	mov    %r8,(%rdx)
+  30:	49 89 50 08          	mov    %rdx,0x8(%r8)
+  34:	48 c7 47 08 00 00 00 	movq   $0x0,0x8(%rdi)
+  3b:	00
+  3c:	48                   	rex.W
+  3d:	c7                   	.byte 0xc7
+  3e:	07                   	(bad)
+	...
+
+Code starting with the faulting instruction
+===========================================
+   0:	4c 8b 07             	mov    (%rdi),%r8
+   3:	4c 89 02             	mov    %r8,(%rdx)
+   6:	49 89 50 08          	mov    %rdx,0x8(%r8)
+   a:	48 c7 47 08 00 00 00 	movq   $0x0,0x8(%rdi)
+  11:	00
+  12:	48                   	rex.W
+  13:	c7                   	.byte 0xc7
+  14:	07                   	(bad)
+	...
+[   88.803721] RSP: 0018:ffff9a1f892b7d58 EFLAGS: 00000206
+[   88.804032] RAX: 0000000000000000 RBX: ffff9a1f8420c800 RCX: ffff9a1f8420c800
+[   88.804560] RDX: ffff9a1f81bc1440 RSI: 0000000000000000 RDI: 0000000000000000
+[   88.805056] RBP: ffffffffc04bb0e0 R08: 0000000000000001 R09: 00000000ff7f9a1f
+[   88.805473] R10: 000000000001001b R11: 0000000000009a1f R12: 0000000000000140
+[   88.806194] R13: 0000000000000001 R14: ffff9a1f886df400 R15: ffff9a1f886df4ac
+[   88.806734] FS:  00007f445601a740(0000) GS:ffff9a2e7fd80000(0000) knlGS:0000000000000000
+[   88.807225] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   88.807672] CR2: 0000000000000000 CR3: 000000050cc46000 CR4: 00000000000006f0
+[   88.808165] Call Trace:
+[   88.808459]  <TASK>
+[   88.808710] ? __die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434)
+[   88.809261] ? page_fault_oops (arch/x86/mm/fault.c:715)
+[   88.809561] ? exc_page_fault (./arch/x86/include/asm/irqflags.h:26 ./arch/x86/include/asm/irqflags.h:87 ./arch/x86/include/asm/irqflags.h:147 arch/x86/mm/fault.c:1489 arch/x86/mm/fault.c:1539)
+[   88.809806] ? asm_exc_page_fault (./arch/x86/include/asm/idtentry.h:623)
+[   88.810074] ? sfq_dequeue (net/sched/sch_sfq.c:272 net/sched/sch_sfq.c:499) sch_sfq
+[   88.810411] sfq_reset (net/sched/sch_sfq.c:525) sch_sfq
+[   88.810671] qdisc_reset (./include/linux/skbuff.h:2135 ./include/linux/skbuff.h:2441 ./include/linux/skbuff.h:3304 ./include/linux/skbuff.h:3310 net/sched/sch_generic.c:1036)
+[   88.810950] tbf_reset (./include/linux/timekeeping.h:169 net/sched/sch_tbf.c:334) sch_tbf
+[   88.811208] qdisc_reset (./include/linux/skbuff.h:2135 ./include/linux/skbuff.h:2441 ./include/linux/skbuff.h:3304 ./include/linux/skbuff.h:3310 net/sched/sch_generic.c:1036)
+[   88.811484] netif_set_real_num_tx_queues (./include/linux/spinlock.h:396 ./include/net/sch_generic.h:768 net/core/dev.c:2958)
+[   88.811870] __tun_detach (drivers/net/tun.c:590 drivers/net/tun.c:673)
+[   88.812271] tun_chr_close (drivers/net/tun.c:702 drivers/net/tun.c:3517)
+[   88.812505] __fput (fs/file_table.c:432 (discriminator 1))
+[   88.812735] task_work_run (kernel/task_work.c:230)
+[   88.813016] do_exit (kernel/exit.c:940)
+[   88.813372] ? trace_hardirqs_on (kernel/trace/trace_preemptirq.c:58 (discriminator 4))
+[   88.813639] ? handle_mm_fault (./arch/x86/include/asm/irqflags.h:42 ./arch/x86/include/asm/irqflags.h:97 ./arch/x86/include/asm/irqflags.h:155 ./include/linux/memcontrol.h:1022 ./include/linux/memcontrol.h:1045 ./include/linux/memcontrol.h:1052 mm/memory.c:5928 mm/memory.c:6088)
+[   88.813867] do_group_exit (kernel/exit.c:1070)
+[   88.814138] __x64_sys_exit_group (kernel/exit.c:1099)
+[   88.814490] x64_sys_call (??:?)
+[   88.814791] do_syscall_64 (arch/x86/entry/common.c:52 (discriminator 1) arch/x86/entry/common.c:83 (discriminator 1))
+[   88.815012] entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+[   88.815495] RIP: 0033:0x7f44560f1975
+
+Fixes: 175f9c1bba9b ("net_sched: Add size table for qdiscs")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://patch.msgid.link/20241007184130.3960565-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/net/sch_generic.h | 1 -
+ net/sched/sch_api.c       | 7 ++++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index 884beeb67a1fb..1e9967657248a 100644
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -9111,6 +9111,10 @@ static void igb_io_resume(struct pci_dev *pdev)
- 	struct igb_adapter *adapter = netdev_priv(netdev);
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index e8034756cbf8e..6d934ce54c8dd 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -827,7 +827,6 @@ static inline void qdisc_calculate_pkt_len(struct sk_buff *skb,
+ static inline int qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 				struct sk_buff **to_free)
+ {
+-	qdisc_calculate_pkt_len(skb, sch);
+ 	return sch->enqueue(skb, sch, to_free);
+ }
  
- 	if (netif_running(netdev)) {
-+		if (!test_bit(__IGB_DOWN, &adapter->state)) {
-+			dev_dbg(&pdev->dev, "Resuming from non-fatal error, do nothing.\n");
-+			return;
+diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
+index d07146a2d0bba..069d0d8a89397 100644
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -586,7 +586,6 @@ void __qdisc_calculate_pkt_len(struct sk_buff *skb,
+ 		pkt_len = 1;
+ 	qdisc_skb_cb(skb)->pkt_len = pkt_len;
+ }
+-EXPORT_SYMBOL(__qdisc_calculate_pkt_len);
+ 
+ void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc)
+ {
+@@ -1110,6 +1109,12 @@ static int qdisc_graft(struct net_device *dev, struct Qdisc *parent,
+ 			return -EINVAL;
+ 		}
+ 
++		if (new &&
++		    !(parent->flags & TCQ_F_MQROOT) &&
++		    rcu_access_pointer(new->stab)) {
++			NL_SET_ERR_MSG(extack, "STAB not supported on a non root");
++			return -EINVAL;
 +		}
- 		if (igb_up(adapter)) {
- 			dev_err(&pdev->dev, "igb_up failed after reset\n");
- 			return;
+ 		err = cops->graft(parent, cl, new, &old, extack);
+ 		if (err)
+ 			return err;
 -- 
 2.43.0
 
