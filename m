@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178181DFD9D;
-	Wed,  6 Nov 2024 12:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060571FB3F0;
+	Wed,  6 Nov 2024 12:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897613; cv=none; b=s2DnqqWEWZe3KMgqja2gbZtJa6GUsug2bHP/n+aifF8CQhxDPndaSF1Q1DgQG5SLFke68ux0XPNnU1wDYvFxxz1ONQI1mMAdrZUfPw0gGrof0tbYGfs1gmcTSZ0Cl7mmaEnjlNfum03w0W343aq1wDZZjTujQ8GAJ+yWGdoOcu8=
+	t=1730897616; cv=none; b=jCiM+rnT+B7kZN2grMWUMaL6ivouFD8XRxUJSdi4uhthftE6IwV9l529/LYSUpdghvDv3MnzY6v1J1w5I/va1XhFrHzyoIzgUisHtL6ITBd69tjWbdL51B7cxuwgmrlSqweKpfqk+a+MVT5UZfvnmgIijBoM0QB+VWsbhgGbNOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897613; c=relaxed/simple;
-	bh=6Wh8L+RyguHEJKcEcvD3LegmXRDYoPcwZeozAiydFj8=;
+	s=arc-20240116; t=1730897616; c=relaxed/simple;
+	bh=kNTV8q8dnHhnUmprChwULAo+Z/YC0XeDG2klDh5PmoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDpkdnlYmBwFrKK1HedQFtDumAKB6t0C8tgry1DGFDk6s0tNpcCAbW0Hv20Bdmwh7sZY3lL+kZrGqDs/8p9oxdxNtspfsrfXVjTWqx24btDtOjKrYrQqlnnN50OLoALYhAR/bn1E0z/CnCFMyaI9YVvUrptGzTUn7P0YLeuet/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxJiGoEN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MywPtNgpzIbdqOdmsDcDgGGWNEWx1DlbFcgiK4PiJUf9EtFFYXzEEfuKNHl9LWw9axuny0vUYroH9tpBL7nANyDj/vAzxImOpwubf099yCNA7xY4IfMMzrCldXd45DryhH4rFNVMhngooETvq/5YJIm3LUvnR+zuWHQetzqOqA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TId8D0sr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxJiGoEN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E7FC4CECD;
-	Wed,  6 Nov 2024 12:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TId8D0sr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D209C4CECD;
+	Wed,  6 Nov 2024 12:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897613;
-	bh=6Wh8L+RyguHEJKcEcvD3LegmXRDYoPcwZeozAiydFj8=;
+	s=korg; t=1730897615;
+	bh=kNTV8q8dnHhnUmprChwULAo+Z/YC0XeDG2klDh5PmoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OxJiGoENwgIXwb8PeK/+GU0E5zovwi6R4IZ1Ulg0EQxEGxLbzRwbL2f3UpHaOeX7B
-	 GuimV+A7koy3YZ7Flvl8NCU5EAB5zFFcXR0KlY/opuEFyos0Z26wZXuIElHLpR6nJ0
-	 7kF0sLaWL9p5GYBdc3M0Lc5dBJndRNDRXM5BxXHE=
+	b=TId8D0sr7F7C3UJJlI+nxREIgsY051xK79XfYz4zZ3/0FOCLZXkt1MHRnvXgtuBZL
+	 gAPtO9nmMI3cpZ7EqUo7t49zL2DePa3vGYzvt4TPW0ayYw6RZ/fbmQKXU6UO68dveh
+	 U7cXZ40MPouOZ6UH9keCKzszhkk7mGmwHcRJyB4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
 	Frederic Weisbecker <frederic@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/151] rcu-tasks: Pull sampling of ->percpu_dequeue_lim out of loop
-Date: Wed,  6 Nov 2024 13:04:24 +0100
-Message-ID: <20241106120310.942011913@linuxfoundation.org>
+Subject: [PATCH 6.6 077/151] rcu-tasks: Add data to eliminate RCU-tasks/do_exit() deadlocks
+Date: Wed,  6 Nov 2024 13:04:25 +0100
+Message-ID: <20241106120310.971166110@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -54,77 +56,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit e62d8ae4620865411d1b2347980aa28ccf891a3d ]
+[ Upstream commit bfe93930ea1ea3c6c115a7d44af6e4fea609067e ]
 
-The rcu_tasks_need_gpcb() samples ->percpu_dequeue_lim as part of the
-condition clause of a "for" loop, which is a bit confusing.  This commit
-therefore hoists this sampling out of the loop, using the result loaded
-in the condition clause.
+Holding a mutex across synchronize_rcu_tasks() and acquiring
+that same mutex in code called from do_exit() after its call to
+exit_tasks_rcu_start() but before its call to exit_tasks_rcu_stop()
+results in deadlock.  This is by design, because tasks that are far
+enough into do_exit() are no longer present on the tasks list, making
+it a bit difficult for RCU Tasks to find them, let alone wait on them
+to do a voluntary context switch.  However, such deadlocks are becoming
+more frequent.  In addition, lockdep currently does not detect such
+deadlocks and they can be difficult to reproduce.
 
-So why does this work in the face of a concurrent switch from single-CPU
-queueing to per-CPU queueing?
+In addition, if a task voluntarily context switches during that time
+(for example, if it blocks acquiring a mutex), then this task is in an
+RCU Tasks quiescent state.  And with some adjustments, RCU Tasks could
+just as well take advantage of that fact.
 
-o	The call_rcu_tasks_generic() that makes the change has already
-	enqueued its callback, which means that all of the other CPU's
-	callback queues are empty.
+This commit therefore adds the data structures that will be needed
+to rely on these quiescent states and to eliminate these deadlocks.
 
-o	For the call_rcu_tasks_generic() that first notices
-	the switch to per-CPU queues, the smp_store_release()
-	used to update ->percpu_enqueue_lim pairs with the
-	raw_spin_trylock_rcu_node()'s full barrier that is
-	between the READ_ONCE(rtp->percpu_enqueue_shift) and the
-	rcu_segcblist_enqueue() that enqueues the callback.
+Link: https://lore.kernel.org/all/20240118021842.290665-1-chenzhongjin@huawei.com/
 
-o	Because this CPU's queue is empty (unless it happens to
-	be the original single queue, in which case there is no
-	need for synchronization), this call_rcu_tasks_generic()
-	will do an irq_work_queue() to schedule a handler for the
-	needed rcuwait_wake_up() call.	This call will be ordered
-	after the first call_rcu_tasks_generic() function's change to
-	->percpu_dequeue_lim.
-
-o	This rcuwait_wake_up() will either happen before or after the
-	set_current_state() in rcuwait_wait_event().  If it happens
-	before, the "condition" argument's call to rcu_tasks_need_gpcb()
-	will be ordered after the original change, and all callbacks on
-	all CPUs will be visible.  Otherwise, if it happens after, then
-	the grace-period kthread's state will be set back to running,
-	which will result in a later call to rcuwait_wait_event() and
-	thus to rcu_tasks_need_gpcb(), which will again see the change.
-
-So it all works out.
-
-Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Reported-by: Yang Jihong <yangjihong1@huawei.com>
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Tested-by: Yang Jihong <yangjihong1@huawei.com>
+Tested-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
 Stable-dep-of: fd70e9f1d85f ("rcu-tasks: Fix access non-existent percpu rtpcp variable in rcu_tasks_need_gpcb()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tasks.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/linux/sched.h | 2 ++
+ kernel/rcu/tasks.h    | 2 ++
+ 2 files changed, 4 insertions(+)
 
+diff --git a/include/linux/sched.h b/include/linux/sched.h
+index 77f01ac385f7a..3d83cc397eac1 100644
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -854,6 +854,8 @@ struct task_struct {
+ 	u8				rcu_tasks_idx;
+ 	int				rcu_tasks_idle_cpu;
+ 	struct list_head		rcu_tasks_holdout_list;
++	int				rcu_tasks_exit_cpu;
++	struct list_head		rcu_tasks_exit_list;
+ #endif /* #ifdef CONFIG_TASKS_RCU */
+ 
+ #ifdef CONFIG_TASKS_TRACE_RCU
 diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index df81506cf2bde..90425d0ec09cf 100644
+index 90425d0ec09cf..7ac3c8af075fc 100644
 --- a/kernel/rcu/tasks.h
 +++ b/kernel/rcu/tasks.h
-@@ -432,6 +432,7 @@ static void rcu_barrier_tasks_generic(struct rcu_tasks *rtp)
- static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
- {
+@@ -32,6 +32,7 @@ typedef void (*postgp_func_t)(struct rcu_tasks *rtp);
+  * @rtp_irq_work: IRQ work queue for deferred wakeups.
+  * @barrier_q_head: RCU callback for barrier operation.
+  * @rtp_blkd_tasks: List of tasks blocked as readers.
++ * @rtp_exit_list: List of tasks in the latter portion of do_exit().
+  * @cpu: CPU number corresponding to this entry.
+  * @rtpp: Pointer to the rcu_tasks structure.
+  */
+@@ -46,6 +47,7 @@ struct rcu_tasks_percpu {
+ 	struct irq_work rtp_irq_work;
+ 	struct rcu_head barrier_q_head;
+ 	struct list_head rtp_blkd_tasks;
++	struct list_head rtp_exit_list;
  	int cpu;
-+	int dequeue_limit;
- 	unsigned long flags;
- 	bool gpdone = poll_state_synchronize_rcu(rtp->percpu_dequeue_gpseq);
- 	long n;
-@@ -439,7 +440,8 @@ static int rcu_tasks_need_gpcb(struct rcu_tasks *rtp)
- 	long ncbsnz = 0;
- 	int needgpcb = 0;
- 
--	for (cpu = 0; cpu < smp_load_acquire(&rtp->percpu_dequeue_lim); cpu++) {
-+	dequeue_limit = smp_load_acquire(&rtp->percpu_dequeue_lim);
-+	for (cpu = 0; cpu < dequeue_limit; cpu++) {
- 		struct rcu_tasks_percpu *rtpcp = per_cpu_ptr(rtp->rtpcpu, cpu);
- 
- 		/* Advance and accelerate any new callbacks. */
+ 	struct rcu_tasks *rtpp;
+ };
 -- 
 2.43.0
 
