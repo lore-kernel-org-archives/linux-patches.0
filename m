@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6174A1D2784;
-	Wed,  6 Nov 2024 12:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528911D2784;
+	Wed,  6 Nov 2024 12:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896144; cv=none; b=YEJ2e/XEgwZk+GD/02FJUtuVg6ppvTSABV6OMY2oIGhO0jejRiiK0S/M/Qjjcbhax4obYrDTI9wp8ni/X55qrJNcybgIZDiAJWQ3+AiA3Thx1dh1zHySqKsZtC+W5O0lYhHj1qNmWAZILsgBjNyZ9RsSe86htP35MBAAVtjPHoA=
+	t=1730896147; cv=none; b=mEsk7ZpM/NPjo3dfUQSJGLAVGnj37l6dfp41BqsEiPvVi9qjaPWOmzJYizvSJEBYbGaXI8DEFD8IBwCJc7pH8qLz4N8fNyYvRPgLSB07sy7iZmAZOoFJ6YgEd4EVu6vqsMwNn6lkNBnxHMs12lF3xyUnQRrS+Kd6HkKs6M8B8is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896144; c=relaxed/simple;
-	bh=Cld8LoD6Eo+h4g6oqX8OKs+8FDIoJyPoZWRjsEcnQf8=;
+	s=arc-20240116; t=1730896147; c=relaxed/simple;
+	bh=4zHnNJApI2T2y9h5pLXsS4pzhh2fI4lZW21MljLBQEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jjB3IQQyKVWKc0PiJzgWVZKs/IMGzA25ePmYJK+pvERZuVIdIYB//Wcmj2vRrLkdGu3DZqD8MUIatKlFa/pCvfhbSc/X5Y4btzBXaSwBGcD0QfXxSSXb5q6U6hzTn99O6FZ40aFEgSVAD33+eDP2QOjvcD7fJq1GHVJG8Gl28fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHwR6c2r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cCsvNhsul8Y6JkS3KESC5OKHSB9pkhHU/UC1y7Vz2qqt1eHHpNppWETI6PZePNKGoLNFE3B+OHYkTvTUzqjc5LAhFx5VMwnMtSn6BacQ0N0hE3aWSMYIgPqLGoOv9T0px5PbTNFAm6vo/nT6xvj8QK/k73gl98tI6UYy7xy/IUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0EP7xqQS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHwR6c2r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC418C4CED3;
-	Wed,  6 Nov 2024 12:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0EP7xqQS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCCF8C4CECD;
+	Wed,  6 Nov 2024 12:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896144;
-	bh=Cld8LoD6Eo+h4g6oqX8OKs+8FDIoJyPoZWRjsEcnQf8=;
+	s=korg; t=1730896147;
+	bh=4zHnNJApI2T2y9h5pLXsS4pzhh2fI4lZW21MljLBQEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HHwR6c2roJBv8oSAAI2EMC9F3M10KyFWL/diLamcn+v2/2Y8PKW91P4JkBD1ClNTG
-	 e8iXquGtnwuPO0izCNPV4rXKsmcBS5Sopyts1yTIiy9w/t9bNYCQPFhx3MFKmYbnk8
-	 IOkif7corYjE3EbpaiH8C08IhlbmdhxivCGO2RrU=
+	b=0EP7xqQSvty1nUTkDN9g/U1JgK7FIgl1GmVaL4L8+4SNP8qIKntFusa660RuNtARK
+	 1BGH9tAkh9hJ2S5SzuP2EA/JKE33t9UaL9US6SwA0urbDfIitTCLeGbS0IA1d1yxo5
+	 esS2kujybg5JxoxGivf6lIELZlETDLZIlY4ddNe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 104/245] rpcrdma: Always release the rpcrdma_devices xa_array
-Date: Wed,  6 Nov 2024 13:02:37 +0100
-Message-ID: <20241106120321.776410872@linuxfoundation.org>
+	=?UTF-8?q?Jan=20Sch=C3=A4r?= <jan@jschaer.ch>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.11 105/245] ALSA: usb-audio: Add quirks for Dell WD19 dock
+Date: Wed,  6 Nov 2024 13:02:38 +0100
+Message-ID: <20241106120321.799810217@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -45,43 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+Message-ID: <20241106120238._0OBfbcxNAcb0H4JbwFSV4IbgpdalIaJzz8dGFNMeBk@z>
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jan Schär <jan@jschaer.ch>
 
-[ Upstream commit 63a81588cd2025e75fbaf30b65930b76825c456f ]
+commit 4413665dd6c528b31284119e3571c25f371e1c36 upstream.
 
-Dai pointed out that the xa_init_flags() in rpcrdma_add_one() needs
-to have a matching xa_destroy() in rpcrdma_remove_one() to release
-underlying memory that the xarray might have accrued during
-operation.
+The WD19 family of docks has the same audio chipset as the WD15. This
+change enables jack detection on the WD19.
 
-Reported-by: Dai Ngo <dai.ngo@oracle.com>
-Fixes: 7e86845a0346 ("rpcrdma: Implement generic device removal")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+We don't need the dell_dock_mixer_init quirk for the WD19. It is only
+needed because of the dell_alc4020_map quirk for the WD15 in
+mixer_maps.c, which disables the volume controls. Even for the WD15,
+this quirk was apparently only needed when the dock firmware was not
+updated.
+
+Signed-off-by: Jan Schär <jan@jschaer.ch>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20241029221249.15661-1-jan@jschaer.ch
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/ib_client.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/mixer_quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sunrpc/xprtrdma/ib_client.c b/net/sunrpc/xprtrdma/ib_client.c
-index 8507cd4d89217..28c68b5f68238 100644
---- a/net/sunrpc/xprtrdma/ib_client.c
-+++ b/net/sunrpc/xprtrdma/ib_client.c
-@@ -153,6 +153,7 @@ static void rpcrdma_remove_one(struct ib_device *device,
- 	}
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -3880,6 +3880,9 @@ int snd_usb_mixer_apply_create_quirk(str
+ 			break;
+ 		err = dell_dock_mixer_init(mixer);
+ 		break;
++	case USB_ID(0x0bda, 0x402e): /* Dell WD19 dock */
++		err = dell_dock_mixer_create(mixer);
++		break;
  
- 	trace_rpcrdma_client_remove_one_done(device);
-+	xa_destroy(&rd->rd_xa);
- 	kfree(rd);
- }
- 
--- 
-2.43.0
-
+ 	case USB_ID(0x2a39, 0x3fd2): /* RME ADI-2 Pro */
+ 	case USB_ID(0x2a39, 0x3fd3): /* RME ADI-2 DAC */
 
 
