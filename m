@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5363242AB0;
-	Wed,  6 Nov 2024 12:15:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E6F42AB0;
+	Wed,  6 Nov 2024 12:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895315; cv=none; b=Fjvu4iLvLiP122y2pMCVhD6PIBcIKCiEk36qAiciljK0LY2RWhBbD/koOybuyDytyw/0PhaN7aWy96Wl5dlQ5HmyUgA3hYwtvyY06n377SHQr6caSIxfhdWc72ql9Vy+5EBhLg0uBQfX6ush+TIt1EyfhpufNs0krfLgZlx5+JI=
+	t=1730895317; cv=none; b=hEmsO8xGrsSN0ek1ftZBbLXXw/SUY5yvJ/gNjns/5NTpYZeQKlae0WuXNQHEVlJDVXpUmjL78h04/ugUzqhofySSBhT4knIRoSNigoBVoh9oMlgQqPKchwUn+XQFNqCuEWezYi300DaZatxA2GNaE1loSMFNDhIMUSBnxuLjFKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895315; c=relaxed/simple;
-	bh=FQ8UPKVQjPV7eH92o+CP5ll6vde46UrzA9XzE4tQcx0=;
+	s=arc-20240116; t=1730895317; c=relaxed/simple;
+	bh=oM17XWEA85onLmibRd8bnocTA45pVp32Zj1heKfLxhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGUu5PKyklx6TgDKsweiZdqlEo7E3P89sm0PMFS4Fq1cM+FEe4+AJLQdbVCoxir9uMCJkc/XSrUDcQqPCh0rgCJr/aGg855gC2z0jtqhPgF5kLCEfr7URK3Jky7+eZQlatT1CUIa2tvBMzeMO8QjgJpGsqBEsmI5ZjIgF3ZuzY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2fP8HZ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xuy/lVkUi7Z83X3fyfL5AFXMxk/C+KR3/lUeXblXR4ld7qzGyWHNEyhhCmVWAzqTff59PmrxH9PP2EWfZRzsgqkNVAYHDEbO4GWALnCkhDoveI5YVtPM2Wbw/mUbIJjk59gGUEvlGT8cB59pqWy46/tpN1n+dONME7Ahsg2w6+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8wx5R3Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2fP8HZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A244C4CECD;
-	Wed,  6 Nov 2024 12:15:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8wx5R3Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED7DC4CED3;
+	Wed,  6 Nov 2024 12:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895314;
-	bh=FQ8UPKVQjPV7eH92o+CP5ll6vde46UrzA9XzE4tQcx0=;
+	s=korg; t=1730895317;
+	bh=oM17XWEA85onLmibRd8bnocTA45pVp32Zj1heKfLxhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L2fP8HZ6ZlNTRe0T+HXZOxUERLZLpV9ex0PqbZ0fXRuSS8xZeDstcs+auYBNYjZKe
-	 icm5Lb9oYmf2D6Cc7Mo1s16G0idpR86F0V7UAg+iUtA6hcsuY2fzzlAqD8IITvtvGD
-	 6oTLMbl+uziG+5+E3oYXRp+XIGg5EPTDnelKPyXw=
+	b=N8wx5R3ZD1TuqUgN2LA+c+w1JGxRbqMyUiDLqs2K2jZ+gSR2YWxTsDbRqGOWOSheZ
+	 SHO861ywYni1JiFLeTZLdh/qUEi24XiXM95OS/TmeWygfVX7GhSIgQaXAmx4MHYlid
+	 ZIX/pVkBHCgh8TUA20A1tllyI2GNZr8rfUario1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+3c010e21296f33a5dc16@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 169/350] jfs: Fix uaf in dbFreeBits
-Date: Wed,  6 Nov 2024 13:01:37 +0100
-Message-ID: <20241106120325.100220865@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 178/350] ext4: ext4_search_dir should return a proper error
+Date: Wed,  6 Nov 2024 13:01:46 +0100
+Message-ID: <20241106120325.328148389@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,115 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit d6c1b3599b2feb5c7291f5ac3a36e5fa7cedb234 ]
+[ Upstream commit cd69f8f9de280e331c9e6ff689ced0a688a9ce8f ]
 
-[syzbot reported]
-==================================================================
-BUG: KASAN: slab-use-after-free in __mutex_lock_common kernel/locking/mutex.c:587 [inline]
-BUG: KASAN: slab-use-after-free in __mutex_lock+0xfe/0xd70 kernel/locking/mutex.c:752
-Read of size 8 at addr ffff8880229254b0 by task syz-executor357/5216
+ext4_search_dir currently returns -1 in case of a failure, while it returns
+0 when the name is not found. In such failure cases, it should return an
+error code instead.
 
-CPU: 0 UID: 0 PID: 5216 Comm: syz-executor357 Not tainted 6.11.0-rc3-syzkaller-00156-gd7a5aa4b3c00 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 06/27/2024
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:93 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:119
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:488
- kasan_report+0x143/0x180 mm/kasan/report.c:601
- __mutex_lock_common kernel/locking/mutex.c:587 [inline]
- __mutex_lock+0xfe/0xd70 kernel/locking/mutex.c:752
- dbFreeBits+0x7ea/0xd90 fs/jfs/jfs_dmap.c:2390
- dbFreeDmap fs/jfs/jfs_dmap.c:2089 [inline]
- dbFree+0x35b/0x680 fs/jfs/jfs_dmap.c:409
- dbDiscardAG+0x8a9/0xa20 fs/jfs/jfs_dmap.c:1650
- jfs_ioc_trim+0x433/0x670 fs/jfs/jfs_discard.c:100
- jfs_ioctl+0x2d0/0x3e0 fs/jfs/ioctl.c:131
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:907 [inline]
- __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:893
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+This becomes even more important when ext4_find_inline_entry returns an
+error code as well in the next commit.
 
-Freed by task 5218:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
- kasan_save_free_info+0x40/0x50 mm/kasan/generic.c:579
- poison_slab_object+0xe0/0x150 mm/kasan/common.c:240
- __kasan_slab_free+0x37/0x60 mm/kasan/common.c:256
- kasan_slab_free include/linux/kasan.h:184 [inline]
- slab_free_hook mm/slub.c:2252 [inline]
- slab_free mm/slub.c:4473 [inline]
- kfree+0x149/0x360 mm/slub.c:4594
- dbUnmount+0x11d/0x190 fs/jfs/jfs_dmap.c:278
- jfs_mount_rw+0x4ac/0x6a0 fs/jfs/jfs_mount.c:247
- jfs_remount+0x3d1/0x6b0 fs/jfs/super.c:454
- reconfigure_super+0x445/0x880 fs/super.c:1083
- vfs_cmd_reconfigure fs/fsopen.c:263 [inline]
- vfs_fsconfig_locked fs/fsopen.c:292 [inline]
- __do_sys_fsconfig fs/fsopen.c:473 [inline]
- __se_sys_fsconfig+0xb6e/0xf80 fs/fsopen.c:345
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+-EFSCORRUPTED seems appropriate as such error code as these failures would
+be caused by unexpected record lengths and is in line with other instances
+of ext4_check_dir_entry failures.
 
-[Analysis]
-There are two paths (dbUnmount and jfs_ioc_trim) that generate race
-condition when accessing bmap, which leads to the occurrence of uaf.
+In the case of ext4_dx_find_entry, the current use of ERR_BAD_DX_DIR was
+left as is to reduce the risk of regressions.
 
-Use the lock s_umount to synchronize them, in order to avoid uaf caused
-by race condition.
-
-Reported-and-tested-by: syzbot+3c010e21296f33a5dc16@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Link: https://patch.msgid.link/20240821152324.3621860-2-cascardo@igalia.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_discard.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/ext4/namei.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/fs/jfs/jfs_discard.c b/fs/jfs/jfs_discard.c
-index f76ff0a464442..9d78c427b9443 100644
---- a/fs/jfs/jfs_discard.c
-+++ b/fs/jfs/jfs_discard.c
-@@ -78,7 +78,7 @@ void jfs_issue_discard(struct inode *ip, u64 blkno, u64 nblocks)
- int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
- {
- 	struct inode *ipbmap = JFS_SBI(ip->i_sb)->ipbmap;
--	struct bmap *bmp = JFS_SBI(ip->i_sb)->bmap;
-+	struct bmap *bmp;
- 	struct super_block *sb = ipbmap->i_sb;
- 	int agno, agno_end;
- 	u64 start, end, minlen;
-@@ -96,10 +96,15 @@ int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
- 	if (minlen == 0)
- 		minlen = 1;
+diff --git a/fs/ext4/namei.c b/fs/ext4/namei.c
+index 8594feea2d932..d85be8255d790 100644
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -1334,7 +1334,7 @@ static inline bool ext4_match(const struct ext4_filename *fname,
+ }
  
-+	down_read(&sb->s_umount);
-+	bmp = JFS_SBI(ip->i_sb)->bmap;
-+
- 	if (minlen > bmp->db_agsize ||
- 	    start >= bmp->db_mapsize ||
--	    range->len < sb->s_blocksize)
-+	    range->len < sb->s_blocksize) {
-+		up_read(&sb->s_umount);
- 		return -EINVAL;
-+	}
- 
- 	if (end >= bmp->db_mapsize)
- 		end = bmp->db_mapsize - 1;
-@@ -113,6 +118,8 @@ int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
- 		trimmed += dbDiscardAG(ip, agno, minlen);
- 		agno++;
+ /*
+- * Returns 0 if not found, -1 on failure, and 1 on success
++ * Returns 0 if not found, -EFSCORRUPTED on failure, and 1 on success
+  */
+ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
+ 		    struct inode *dir, struct ext4_filename *fname,
+@@ -1355,7 +1355,7 @@ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
+ 			 * a full check */
+ 			if (ext4_check_dir_entry(dir, NULL, de, bh, search_buf,
+ 						 buf_size, offset))
+-				return -1;
++				return -EFSCORRUPTED;
+ 			*res_dir = de;
+ 			return 1;
+ 		}
+@@ -1363,7 +1363,7 @@ int ext4_search_dir(struct buffer_head *bh, char *search_buf, int buf_size,
+ 		de_len = ext4_rec_len_from_disk(de->rec_len,
+ 						dir->i_sb->s_blocksize);
+ 		if (de_len <= 0)
+-			return -1;
++			return -EFSCORRUPTED;
+ 		offset += de_len;
+ 		de = (struct ext4_dir_entry_2 *) ((char *) de + de_len);
  	}
-+
-+	up_read(&sb->s_umount);
- 	range->len = trimmed << sb->s_blocksize_bits;
- 
- 	return 0;
+@@ -1514,8 +1514,10 @@ static struct buffer_head *__ext4_find_entry(struct inode *dir,
+ 			goto cleanup_and_exit;
+ 		} else {
+ 			brelse(bh);
+-			if (i < 0)
++			if (i < 0) {
++				ret = ERR_PTR(i);
+ 				goto cleanup_and_exit;
++			}
+ 		}
+ 	next:
+ 		if (++block >= nblocks)
+@@ -1609,7 +1611,7 @@ static struct buffer_head * ext4_dx_find_entry(struct inode *dir,
+ 		if (retval == 1)
+ 			goto success;
+ 		brelse(bh);
+-		if (retval == -1) {
++		if (retval < 0) {
+ 			bh = ERR_PTR(ERR_BAD_DX_DIR);
+ 			goto errout;
+ 		}
 -- 
 2.43.0
 
