@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 321571E8856;
-	Wed,  6 Nov 2024 12:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC491F709C;
+	Wed,  6 Nov 2024 12:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896986; cv=none; b=RflJW08cDDSBbJz/mW7iSbvTYT8nQ2WnxTdeVDGuNP36TBeoWpflGBvpqz3F7Rp8k0ew+syy6ZhPqYNtLxVm9xZxqdMGVnQxHYDPGZB6gCFkQQVwbOymSqcdalzNioLJkBrFyGi08lZGP7uZFNA9ApdgYhQDBdRlJlCJ57P7m0E=
+	t=1730896989; cv=none; b=aCD6zinZzGALviHjgoc10sDVYosT3GETLDV/jEy4NwXubCKL57mCOurnbyjvrfwgVHqjWfJYH5Oik7lTquwJldF0DikjUrNRe37L82PRb3Fycpz6SOdmnumIZZB4Yzo5O2KfxqZSHsNcHGdpHSftB5GvYhIAd/7hwSUbG3ZJLBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896986; c=relaxed/simple;
-	bh=VIGBuQyaHMyi7q6MrYxjCE12rzxBIRAUJqHq+LSYNAY=;
+	s=arc-20240116; t=1730896989; c=relaxed/simple;
+	bh=bJhsPZ9xVKC3PWn7ERqBXUteyaW9U7KAgBZwfMn528U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MNK49bhgL/JwUEis/6kjrcbgnG/ZUrX0BaPmi6DZHsvxLV3QS2+dJ2apOR24/vXldGj5evbKDmemxKlzEF/JeYy6zMyU+HLvSrFx9SdRtGPAVUN94TX1LndwJSh78rLDA6V4jfaQrrCccZtZ4vBEOeC2Vt+Rux3P+HXfLqc0U18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ObyNy8tx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pFGbtan4L9GQ2bfibaS8x85DlEq4BsK0+Sm82EHSv0AEYF4kYCLTNS7WbRKS48lZBmtMHVoFYI/rO9KhVpkGRNb9KjpjBMHQTqSHoNNAXdRrSPNxG3QodjjA4/vh/lhQUTsWzVvvNSerxRQwxIEpYLlcCAL8Qxvsi4fy4dOH95I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KLAFDXT8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ObyNy8tx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8ECCC4CECD;
-	Wed,  6 Nov 2024 12:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLAFDXT8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F92C4CECD;
+	Wed,  6 Nov 2024 12:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896986;
-	bh=VIGBuQyaHMyi7q6MrYxjCE12rzxBIRAUJqHq+LSYNAY=;
+	s=korg; t=1730896989;
+	bh=bJhsPZ9xVKC3PWn7ERqBXUteyaW9U7KAgBZwfMn528U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ObyNy8txXk4btGGFuhvl5sHSXDGvoGysCi+Cu/YMbSn2Ofe+xouFhnM2ffCTFpefC
-	 OSDqQMBaPy0Lr6lqj5LOA2KQ8IiTKBPKbDaOGmbtuP6q/p3V6H1EihZ3A0FqT3PrJS
-	 lEyglUIPFjtd5Ppzkz29cSuY6ye11MybvQmLPfzI=
+	b=KLAFDXT80UTlNMzEC0UXqiLVu4T/B+hC3OCvCisIaIFbryt+qi3LfFRrZJrh5Hbti
+	 8VDZFl4Ima9PnCFGg+yaUyu5R4yrwW+3MA7aL9ZqBIu6VLtqAt46CairD2mdjWLGA6
+	 dyUDc9LdQgTW4atjx/8ZNMLQy7O+GUWw2KAHnB0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Byeonguk Jeong <jungbu2855@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@kernel.org>,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Dong Chenchen <dongchenchen2@huawei.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/126] bpf: Fix out-of-bounds write in trie_get_next_key()
-Date: Wed,  6 Nov 2024 13:03:49 +0100
-Message-ID: <20241106120306.864418404@linuxfoundation.org>
+Subject: [PATCH 6.1 029/126] netfilter: Fix use-after-free in get_info()
+Date: Wed,  6 Nov 2024 13:03:50 +0100
+Message-ID: <20241106120306.891148130@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -47,49 +46,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Byeonguk Jeong <jungbu2855@gmail.com>
+From: Dong Chenchen <dongchenchen2@huawei.com>
 
-[ Upstream commit 13400ac8fb80c57c2bfb12ebd35ee121ce9b4d21 ]
+[ Upstream commit f48d258f0ac540f00fa617dac496c4c18b5dc2fa ]
 
-trie_get_next_key() allocates a node stack with size trie->max_prefixlen,
-while it writes (trie->max_prefixlen + 1) nodes to the stack when it has
-full paths from the root to leaves. For example, consider a trie with
-max_prefixlen is 8, and the nodes with key 0x00/0, 0x00/1, 0x00/2, ...
-0x00/8 inserted. Subsequent calls to trie_get_next_key with _key with
-.prefixlen = 8 make 9 nodes be written on the node stack with size 8.
+ip6table_nat module unload has refcnt warning for UAF. call trace is:
 
-Fixes: b471f2f1de8b ("bpf: implement MAP_GET_NEXT_KEY command for LPM_TRIE map")
-Signed-off-by: Byeonguk Jeong <jungbu2855@gmail.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@kernel.org>
-Tested-by: Hou Tao <houtao1@huawei.com>
-Acked-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/Zxx384ZfdlFYnz6J@localhost.localdomain
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+WARNING: CPU: 1 PID: 379 at kernel/module/main.c:853 module_put+0x6f/0x80
+Modules linked in: ip6table_nat(-)
+CPU: 1 UID: 0 PID: 379 Comm: ip6tables Not tainted 6.12.0-rc4-00047-gc2ee9f594da8-dirty #205
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+RIP: 0010:module_put+0x6f/0x80
+Call Trace:
+ <TASK>
+ get_info+0x128/0x180
+ do_ip6t_get_ctl+0x6a/0x430
+ nf_getsockopt+0x46/0x80
+ ipv6_getsockopt+0xb9/0x100
+ rawv6_getsockopt+0x42/0x190
+ do_sock_getsockopt+0xaa/0x180
+ __sys_getsockopt+0x70/0xc0
+ __x64_sys_getsockopt+0x20/0x30
+ do_syscall_64+0xa2/0x1a0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Concurrent execution of module unload and get_info() trigered the warning.
+The root cause is as follows:
+
+cpu0				      cpu1
+module_exit
+//mod->state = MODULE_STATE_GOING
+  ip6table_nat_exit
+    xt_unregister_template
+	kfree(t)
+	//removed from templ_list
+				      getinfo()
+					  t = xt_find_table_lock
+						list_for_each_entry(tmpl, &xt_templates[af]...)
+							if (strcmp(tmpl->name, name))
+								continue;  //table not found
+							try_module_get
+						list_for_each_entry(t, &xt_net->tables[af]...)
+							return t;  //not get refcnt
+					  module_put(t->me) //uaf
+    unregister_pernet_subsys
+    //remove table from xt_net list
+
+While xt_table module was going away and has been removed from
+xt_templates list, we couldnt get refcnt of xt_table->me. Check
+module in xt_net->tables list re-traversal to fix it.
+
+Fixes: fdacd57c79b7 ("netfilter: x_tables: never register tables by default")
+Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
+Reviewed-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/lpm_trie.c | 2 +-
+ net/netfilter/x_tables.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
-index 37b510d91b810..d8ddb1e245d9d 100644
---- a/kernel/bpf/lpm_trie.c
-+++ b/kernel/bpf/lpm_trie.c
-@@ -650,7 +650,7 @@ static int trie_get_next_key(struct bpf_map *map, void *_key, void *_next_key)
- 	if (!key || key->prefixlen > trie->max_prefixlen)
- 		goto find_leftmost;
+diff --git a/net/netfilter/x_tables.c b/net/netfilter/x_tables.c
+index 470282cf3fae6..e8cc8eef0ab65 100644
+--- a/net/netfilter/x_tables.c
++++ b/net/netfilter/x_tables.c
+@@ -1268,7 +1268,7 @@ struct xt_table *xt_find_table_lock(struct net *net, u_int8_t af,
  
--	node_stack = kmalloc_array(trie->max_prefixlen,
-+	node_stack = kmalloc_array(trie->max_prefixlen + 1,
- 				   sizeof(struct lpm_trie_node *),
- 				   GFP_ATOMIC | __GFP_NOWARN);
- 	if (!node_stack)
+ 	/* and once again: */
+ 	list_for_each_entry(t, &xt_net->tables[af], list)
+-		if (strcmp(t->name, name) == 0)
++		if (strcmp(t->name, name) == 0 && owner == t->me)
+ 			return t;
+ 
+ 	module_put(owner);
 -- 
 2.43.0
 
