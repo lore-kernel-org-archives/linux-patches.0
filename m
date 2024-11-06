@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238121D2784;
-	Wed,  6 Nov 2024 12:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EBD1DE3B8;
+	Wed,  6 Nov 2024 12:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894870; cv=none; b=rimtFUXiopomfLjDxRpX4/NYof17aPOy9Vv7n2Ltj+h46rk/9Ev7ioUfZS/7AY5kSARQ6Pt18h+8Shr09mYbtEKK/qMcyyW9dJJn07DQq5Jdpt8nSOIJ7m/lPA1LGgkgX8yCMvNliMHeQTMML1rW9KgnAIcO1CZEoJMAcH+4AWM=
+	t=1730894872; cv=none; b=U8ZKUmEvyfCv2ISJWGTwN2kfSAXcaizs2T6WuY77jpQp655HfQ297SSH9/weE1FBUmoRXgFWeTVuYpi9APRVGdXkv2cFbjHe4479vZIXvS06WApoy6jZrUlQ/Hml8MyAh5H60VBF4VVnbp56mfzygS3XZtQggia86tv3vCFpVy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894870; c=relaxed/simple;
-	bh=Dvo2g6aD4zrcZM+5psL/pFFYwYkiiRyFb1kO7/ZvOnU=;
+	s=arc-20240116; t=1730894872; c=relaxed/simple;
+	bh=dDWtKp/UPtSje9wKd2IXi2VS3mmNUsVtHSB/7fiJG2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S8eJQhgmOygABOYIkTvGuCLYr49u5BTqBeYOp1LoQ5QmmocyLlvLTapEhP8BxLxhNPGG+yfzK70x3hrKu3kFlLjrS3MBWcRi47ezdYTJr59Flso1/g2rs0X0x1vln8G9slmVJ97gPiCHGP/iDNgia+ZXvVOZOeHu5YxmAtU8wQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExRVlmb0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d7sJkvq+R/SjGa57G/8zanE/BNoqcEsbd6n7oD08gcxXZqenCKdKl53619kfyF5edFV2U0lhMKT0BAVWfkUKj7rmStLABbblAhKWgBtufJ0Axs/yUbPiIgwnpIcpm9Jg8h5HEwyVbrbj4S98Us550hy3SVUqKvfEn7t06lUIePI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTNbpE11; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExRVlmb0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3962EC4CECD;
-	Wed,  6 Nov 2024 12:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTNbpE11"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9AAC4CED2;
+	Wed,  6 Nov 2024 12:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894869;
-	bh=Dvo2g6aD4zrcZM+5psL/pFFYwYkiiRyFb1kO7/ZvOnU=;
+	s=korg; t=1730894872;
+	bh=dDWtKp/UPtSje9wKd2IXi2VS3mmNUsVtHSB/7fiJG2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ExRVlmb0p7PXx3SO0CdyHY8YZnGT1Ue2LUUyYVHB8xHuQXlkVNAmP6euuayFTSpno
-	 KY/Kn94j/vSMhP4VrPDo9jH6OET6Xo2mdcW0qC/Bl41fPwlGQAyfRhY4JoGjmnu3tL
-	 K5Blnj4+gmBZ9pbSYLZDE3nYng7GRsEdx8aMUh4M=
+	b=gTNbpE11QHfxV6zxMrHoM7rNGx1HCLTrlNRrGa73FB1XdvuVfl9jjmqOBbhXZVkjk
+	 5Y832ZqQ2QSm474I2Mzf8j8W7M9R/6JiDZv3uRfTAHy86O+cyox0GNVZYHnvXxnVb6
+	 wmXAfwJxwev/k4BH5kI7maimhm1EoBeUAyIrIb7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 028/350] ACPI: PMIC: Remove unneeded check in tps68470_pmic_opregion_probe()
-Date: Wed,  6 Nov 2024 12:59:16 +0100
-Message-ID: <20241106120321.571598928@linuxfoundation.org>
+Subject: [PATCH 4.19 011/350] net: dpaa: Pad packets to ETH_ZLEN
+Date: Wed,  6 Nov 2024 12:58:59 +0100
+Message-ID: <20241106120321.150592375@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -53,49 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit 07442c46abad1d50ac82af5e0f9c5de2732c4592 ]
+[ Upstream commit cbd7ec083413c6a2e0c326d49e24ec7d12c7a9e0 ]
 
-In tps68470_pmic_opregion_probe() pointer 'dev' is compared to NULL which
-is useless.
+When sending packets under 60 bytes, up to three bytes of the buffer
+following the data may be leaked. Avoid this by extending all packets to
+ETH_ZLEN, ensuring nothing is leaked in the padding. This bug can be
+reproduced by running
 
-Fix this issue by removing unneeded check.
+	$ ping -s 11 destination
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: e13452ac3790 ("ACPI / PMIC: Add TI PMIC TPS68470 operation region driver")
-Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Link: https://patch.msgid.link/20240730225339.13165-1-amishin@t-argos.ru
-[ rjw: Subject edit ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 9ad1a3749333 ("dpaa_eth: add support for DPAA Ethernet")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240910143144.1439910-1-sean.anderson@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pmic/tps68470_pmic.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/freescale/dpaa/dpaa_eth.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/pmic/tps68470_pmic.c b/drivers/acpi/pmic/tps68470_pmic.c
-index a083de507009e..fde8a1271c9b6 100644
---- a/drivers/acpi/pmic/tps68470_pmic.c
-+++ b/drivers/acpi/pmic/tps68470_pmic.c
-@@ -376,10 +376,8 @@ static int tps68470_pmic_opregion_probe(struct platform_device *pdev)
- 	struct tps68470_pmic_opregion *opregion;
- 	acpi_status status;
+--- a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
++++ b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
+@@ -2055,12 +2055,12 @@ static netdev_tx_t
+ dpaa_start_xmit(struct sk_buff *skb, struct net_device *net_dev)
+ {
+ 	const int queue_mapping = skb_get_queue_mapping(skb);
+-	bool nonlinear = skb_is_nonlinear(skb);
+ 	struct rtnl_link_stats64 *percpu_stats;
+ 	struct dpaa_percpu_priv *percpu_priv;
+ 	struct netdev_queue *txq;
+ 	struct dpaa_priv *priv;
+ 	struct qm_fd fd;
++	bool nonlinear;
+ 	int offset = 0;
+ 	int err = 0;
  
--	if (!dev || !tps68470_regmap) {
--		dev_warn(dev, "dev or regmap is NULL\n");
--		return -EINVAL;
--	}
-+	if (!tps68470_regmap)
-+		return dev_err_probe(dev, -EINVAL, "regmap is missing\n");
+@@ -2070,6 +2070,13 @@ dpaa_start_xmit(struct sk_buff *skb, str
  
- 	if (!handle) {
- 		dev_warn(dev, "acpi handle is NULL\n");
--- 
-2.43.0
-
+ 	qm_fd_clear_fd(&fd);
+ 
++	/* Packet data is always read as 32-bit words, so zero out any part of
++	 * the skb which might be sent if we have to pad the packet
++	 */
++	if (__skb_put_padto(skb, ETH_ZLEN, false))
++		goto enomem;
++
++	nonlinear = skb_is_nonlinear(skb);
+ 	if (!nonlinear) {
+ 		/* We're going to store the skb backpointer at the beginning
+ 		 * of the data buffer, so we need a privately owned skb
 
 
