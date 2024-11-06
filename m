@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79A91DED58;
-	Wed,  6 Nov 2024 12:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748EF1DED58;
+	Wed,  6 Nov 2024 12:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896024; cv=none; b=sjbZbR8ZfzW+dXnA1+bsYhsBZH5wuV1dv3JflRk9XGobwaXLIe8xOkEYDrbQSag5C8bTbb2Fd31MQQgBCY8G0CdMVF8IXyYQfkbfAuEZTSU7++3Svot1oOdoIjN0IApLlvNw9CaBpiro3R5+KpzpMJ2OL1f1xrKHWmGoNertatI=
+	t=1730896027; cv=none; b=ZDE4QUULcALrd/sJcRgTmyehSfHaF83Wn9eCsV1N+aDKhoZD5LxBz/F9/YLoPDXdrfi2B4/05TsxDok8ds3AhGZIkyLdxeU6d8xzQgZeZNCA0yL4EV/z5F7kpRBtLdZ5gs44nXd5k/DhCCz4ge5tgGxugYCY6kR33G+VIKJPPlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896024; c=relaxed/simple;
-	bh=zLs9yJvZ9b8TPhARydtbZs/NgH0oA2GX7uhAA1Psdk8=;
+	s=arc-20240116; t=1730896027; c=relaxed/simple;
+	bh=jpHQR7c5J9JvJSd1eIjhjO5ZhzabFI8pc/pOS1XEw7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=US+3jJg8y4YxlqZBhJ2lFRLakllZXJjpN5KXhSiOMjMq1WLZuaFq1Vmx3ZavglpMF3DorxiMlP+eeVfFuOMwuMuUTpQAYwr6UST2mllDJ+QAsVIsAx6xNCaZ2KhJ+LXlYE9qIAn2/T12AXWka0GK9Xr0sN9d8LVRbrGpe6uY1k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrZEKele; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lmIH1VDZFZuJSMh/vptxgGGlSSoTvfXweKQs5nlJiMKIuWq1/UN+fkdRxsdKhIJ5fr2oCrUyQVaBI0PF8BhDfVFOAaTdQfDCX5xrwIVF3jg7pCYvNOwz1sOud9jdiX89+Jyn0h9UyMj3WMbMywQEuNvQsdABBfTtBkiD3wSLX3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOqqJ8L6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrZEKele"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB10C4CECD;
-	Wed,  6 Nov 2024 12:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOqqJ8L6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA06C4CECD;
+	Wed,  6 Nov 2024 12:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896024;
-	bh=zLs9yJvZ9b8TPhARydtbZs/NgH0oA2GX7uhAA1Psdk8=;
+	s=korg; t=1730896027;
+	bh=jpHQR7c5J9JvJSd1eIjhjO5ZhzabFI8pc/pOS1XEw7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lrZEKelemfn+8fJZ4hsM9P81uSh8SJ9Jlwv5ZjwdVdP+4oBnqGUyuG1qxFFbbN5VA
-	 00UaowaSbfPZdQ97LjqA4uY3uzz7Ht7koJ6gc71A+/GWvr8qT/X+R2Jn3P+RMjyTAb
-	 fhmW03NY5yfAh67zL9LDaE4PCZJYpIWEJzPG0EyM=
+	b=oOqqJ8L6gLWTL+H137xmzQmelllf8IOc77Is+OqvznHr6AR/Fr4qRG6IqsbYSAH6c
+	 7CysfI7jptJDZoHtxn3zyijrGIcun1k2MmOvyYOyDdIZRfjRzcyNAkRxdhuW+NGTvy
+	 3zGOASOcRMy9lUAyqzvx+SwbJRDJMkCyP1Z5JsU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	James Morse <james.morse@arm.com>,
-	Will Deacon <will@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 064/245] firmware: arm_sdei: Fix the input parameter of cpuhp_remove_state()
-Date: Wed,  6 Nov 2024 13:01:57 +0100
-Message-ID: <20241106120320.782220101@linuxfoundation.org>
+Subject: [PATCH 6.11 065/245] afs: Fix missing subdir edit when renamed between parent dirs
+Date: Wed,  6 Nov 2024 13:01:58 +0100
+Message-ID: <20241106120320.807976240@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,36 +53,254 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c83212d79be2c9886d3e6039759ecd388fd5fed1 ]
+[ Upstream commit 247d65fb122ad560be1c8c4d87d7374fb28b0770 ]
 
-In sdei_device_freeze(), the input parameter of cpuhp_remove_state() is
-passed as 'sdei_entry_point' by mistake. Change it to 'sdei_hp_state'.
+When rename moves an AFS subdirectory between parent directories, the
+subdir also needs a bit of editing: the ".." entry needs updating to point
+to the new parent (though I don't make use of the info) and the DV needs
+incrementing by 1 to reflect the change of content.  The server also sends
+a callback break notification on the subdirectory if we have one, but we
+can take care of recovering the promise next time we access the subdir.
 
-Fixes: d2c48b2387eb ("firmware: arm_sdei: Fix sleep from invalid context BUG")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Reviewed-by: James Morse <james.morse@arm.com>
-Link: https://lore.kernel.org/r/20241016084740.183353-1-wangxiongfeng2@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
+This can be triggered by something like:
+
+    mount -t afs %example.com:xfstest.test20 /xfstest.test/
+    mkdir /xfstest.test/{aaa,bbb,aaa/ccc}
+    touch /xfstest.test/bbb/ccc/d
+    mv /xfstest.test/{aaa/ccc,bbb/ccc}
+    touch /xfstest.test/bbb/ccc/e
+
+When the pathwalk for the second touch hits "ccc", kafs spots that the DV
+is incorrect and downloads it again (so the fix is not critical).
+
+Fix this, if the rename target is a directory and the old and new
+parents are different, by:
+
+ (1) Incrementing the DV number of the target locally.
+
+ (2) Editing the ".." entry in the target to refer to its new parent's
+     vnode ID and uniquifier.
+
+Link: https://lore.kernel.org/r/3340431.1729680010@warthog.procyon.org.uk
+Fixes: 63a4681ff39c ("afs: Locally edit directory data for mkdir/create/unlink/...")
+cc: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_sdei.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/afs/dir.c               | 25 +++++++++++
+ fs/afs/dir_edit.c          | 91 +++++++++++++++++++++++++++++++++++++-
+ fs/afs/internal.h          |  2 +
+ include/trace/events/afs.h |  7 ++-
+ 4 files changed, 122 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/arm_sdei.c b/drivers/firmware/arm_sdei.c
-index 285fe7ad490d1..3e8051fe82965 100644
---- a/drivers/firmware/arm_sdei.c
-+++ b/drivers/firmware/arm_sdei.c
-@@ -763,7 +763,7 @@ static int sdei_device_freeze(struct device *dev)
- 	int err;
+diff --git a/fs/afs/dir.c b/fs/afs/dir.c
+index f8622ed72e081..ada363af5aab8 100644
+--- a/fs/afs/dir.c
++++ b/fs/afs/dir.c
+@@ -12,6 +12,7 @@
+ #include <linux/swap.h>
+ #include <linux/ctype.h>
+ #include <linux/sched.h>
++#include <linux/iversion.h>
+ #include <linux/task_io_accounting_ops.h>
+ #include "internal.h"
+ #include "afs_fs.h"
+@@ -1823,6 +1824,8 @@ static int afs_symlink(struct mnt_idmap *idmap, struct inode *dir,
  
- 	/* unregister private events */
--	cpuhp_remove_state(sdei_entry_point);
-+	cpuhp_remove_state(sdei_hp_state);
+ static void afs_rename_success(struct afs_operation *op)
+ {
++	struct afs_vnode *vnode = AFS_FS_I(d_inode(op->dentry));
++
+ 	_enter("op=%08x", op->debug_id);
  
- 	err = sdei_unregister_shared();
- 	if (err)
+ 	op->ctime = op->file[0].scb.status.mtime_client;
+@@ -1832,6 +1835,22 @@ static void afs_rename_success(struct afs_operation *op)
+ 		op->ctime = op->file[1].scb.status.mtime_client;
+ 		afs_vnode_commit_status(op, &op->file[1]);
+ 	}
++
++	/* If we're moving a subdir between dirs, we need to update
++	 * its DV counter too as the ".." will be altered.
++	 */
++	if (S_ISDIR(vnode->netfs.inode.i_mode) &&
++	    op->file[0].vnode != op->file[1].vnode) {
++		u64 new_dv;
++
++		write_seqlock(&vnode->cb_lock);
++
++		new_dv = vnode->status.data_version + 1;
++		vnode->status.data_version = new_dv;
++		inode_set_iversion_raw(&vnode->netfs.inode, new_dv);
++
++		write_sequnlock(&vnode->cb_lock);
++	}
+ }
+ 
+ static void afs_rename_edit_dir(struct afs_operation *op)
+@@ -1873,6 +1892,12 @@ static void afs_rename_edit_dir(struct afs_operation *op)
+ 				 &vnode->fid, afs_edit_dir_for_rename_2);
+ 	}
+ 
++	if (S_ISDIR(vnode->netfs.inode.i_mode) &&
++	    new_dvnode != orig_dvnode &&
++	    test_bit(AFS_VNODE_DIR_VALID, &vnode->flags))
++		afs_edit_dir_update_dotdot(vnode, new_dvnode,
++					   afs_edit_dir_for_rename_sub);
++
+ 	new_inode = d_inode(new_dentry);
+ 	if (new_inode) {
+ 		spin_lock(&new_inode->i_lock);
+diff --git a/fs/afs/dir_edit.c b/fs/afs/dir_edit.c
+index a71bff10496b2..fe223fb781111 100644
+--- a/fs/afs/dir_edit.c
++++ b/fs/afs/dir_edit.c
+@@ -127,10 +127,10 @@ static struct folio *afs_dir_get_folio(struct afs_vnode *vnode, pgoff_t index)
+ /*
+  * Scan a directory block looking for a dirent of the right name.
+  */
+-static int afs_dir_scan_block(union afs_xdr_dir_block *block, struct qstr *name,
++static int afs_dir_scan_block(const union afs_xdr_dir_block *block, const struct qstr *name,
+ 			      unsigned int blocknum)
+ {
+-	union afs_xdr_dirent *de;
++	const union afs_xdr_dirent *de;
+ 	u64 bitmap;
+ 	int d, len, n;
+ 
+@@ -492,3 +492,90 @@ void afs_edit_dir_remove(struct afs_vnode *vnode,
+ 	clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
+ 	goto out_unmap;
+ }
++
++/*
++ * Edit a subdirectory that has been moved between directories to update the
++ * ".." entry.
++ */
++void afs_edit_dir_update_dotdot(struct afs_vnode *vnode, struct afs_vnode *new_dvnode,
++				enum afs_edit_dir_reason why)
++{
++	union afs_xdr_dir_block *block;
++	union afs_xdr_dirent *de;
++	struct folio *folio;
++	unsigned int nr_blocks, b;
++	pgoff_t index;
++	loff_t i_size;
++	int slot;
++
++	_enter("");
++
++	i_size = i_size_read(&vnode->netfs.inode);
++	if (i_size < AFS_DIR_BLOCK_SIZE) {
++		clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
++		return;
++	}
++	nr_blocks = i_size / AFS_DIR_BLOCK_SIZE;
++
++	/* Find a block that has sufficient slots available.  Each folio
++	 * contains two or more directory blocks.
++	 */
++	for (b = 0; b < nr_blocks; b++) {
++		index = b / AFS_DIR_BLOCKS_PER_PAGE;
++		folio = afs_dir_get_folio(vnode, index);
++		if (!folio)
++			goto error;
++
++		block = kmap_local_folio(folio, b * AFS_DIR_BLOCK_SIZE - folio_pos(folio));
++
++		/* Abandon the edit if we got a callback break. */
++		if (!test_bit(AFS_VNODE_DIR_VALID, &vnode->flags))
++			goto invalidated;
++
++		slot = afs_dir_scan_block(block, &dotdot_name, b);
++		if (slot >= 0)
++			goto found_dirent;
++
++		kunmap_local(block);
++		folio_unlock(folio);
++		folio_put(folio);
++	}
++
++	/* Didn't find the dirent to clobber.  Download the directory again. */
++	trace_afs_edit_dir(vnode, why, afs_edit_dir_update_nodd,
++			   0, 0, 0, 0, "..");
++	clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
++	goto out;
++
++found_dirent:
++	de = &block->dirents[slot];
++	de->u.vnode  = htonl(new_dvnode->fid.vnode);
++	de->u.unique = htonl(new_dvnode->fid.unique);
++
++	trace_afs_edit_dir(vnode, why, afs_edit_dir_update_dd, b, slot,
++			   ntohl(de->u.vnode), ntohl(de->u.unique), "..");
++
++	kunmap_local(block);
++	folio_unlock(folio);
++	folio_put(folio);
++	inode_set_iversion_raw(&vnode->netfs.inode, vnode->status.data_version);
++
++out:
++	_leave("");
++	return;
++
++invalidated:
++	kunmap_local(block);
++	folio_unlock(folio);
++	folio_put(folio);
++	trace_afs_edit_dir(vnode, why, afs_edit_dir_update_inval,
++			   0, 0, 0, 0, "..");
++	clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
++	goto out;
++
++error:
++	trace_afs_edit_dir(vnode, why, afs_edit_dir_update_error,
++			   0, 0, 0, 0, "..");
++	clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
++	goto out;
++}
+diff --git a/fs/afs/internal.h b/fs/afs/internal.h
+index 6e1d3c4daf72c..b306c09808706 100644
+--- a/fs/afs/internal.h
++++ b/fs/afs/internal.h
+@@ -1072,6 +1072,8 @@ extern void afs_check_for_remote_deletion(struct afs_operation *);
+ extern void afs_edit_dir_add(struct afs_vnode *, struct qstr *, struct afs_fid *,
+ 			     enum afs_edit_dir_reason);
+ extern void afs_edit_dir_remove(struct afs_vnode *, struct qstr *, enum afs_edit_dir_reason);
++void afs_edit_dir_update_dotdot(struct afs_vnode *vnode, struct afs_vnode *new_dvnode,
++				enum afs_edit_dir_reason why);
+ 
+ /*
+  * dir_silly.c
+diff --git a/include/trace/events/afs.h b/include/trace/events/afs.h
+index 450c44c83a5d2..a0aed1a428a18 100644
+--- a/include/trace/events/afs.h
++++ b/include/trace/events/afs.h
+@@ -331,7 +331,11 @@ enum yfs_cm_operation {
+ 	EM(afs_edit_dir_delete,			"delete") \
+ 	EM(afs_edit_dir_delete_error,		"d_err ") \
+ 	EM(afs_edit_dir_delete_inval,		"d_invl") \
+-	E_(afs_edit_dir_delete_noent,		"d_nent")
++	EM(afs_edit_dir_delete_noent,		"d_nent") \
++	EM(afs_edit_dir_update_dd,		"u_ddot") \
++	EM(afs_edit_dir_update_error,		"u_fail") \
++	EM(afs_edit_dir_update_inval,		"u_invl") \
++	E_(afs_edit_dir_update_nodd,		"u_nodd")
+ 
+ #define afs_edit_dir_reasons				  \
+ 	EM(afs_edit_dir_for_create,		"Create") \
+@@ -340,6 +344,7 @@ enum yfs_cm_operation {
+ 	EM(afs_edit_dir_for_rename_0,		"Renam0") \
+ 	EM(afs_edit_dir_for_rename_1,		"Renam1") \
+ 	EM(afs_edit_dir_for_rename_2,		"Renam2") \
++	EM(afs_edit_dir_for_rename_sub,		"RnmSub") \
+ 	EM(afs_edit_dir_for_rmdir,		"RmDir ") \
+ 	EM(afs_edit_dir_for_silly_0,		"S_Ren0") \
+ 	EM(afs_edit_dir_for_silly_1,		"S_Ren1") \
 -- 
 2.43.0
 
