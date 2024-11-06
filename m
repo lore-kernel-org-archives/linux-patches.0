@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717321DED49;
-	Wed,  6 Nov 2024 12:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C081DED49;
+	Wed,  6 Nov 2024 12:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895653; cv=none; b=mRrm42Hjj1mJL7pwyA6ljPDrJgLWUPULmMz4CDiySuiVV9LE0ROEfIuWNETpVaolCouZ5jzAHUYD2/DxYb/1pvhKqOI7asj3Ckpa1RKEGeuhlTAZQtThcplH1o1At0GWoeSwMp4xmo0X7B9eBrieRV+jfTpV3mVImydUHDycTjE=
+	t=1730895656; cv=none; b=U4J8ttHMrnk5wK3Xnxy9ecqUxgjC3xqwX42bBWcVV1tu753LEn35gx/s3QZZmN+RMpsSMXYgqZcBRqcNnXfoBtmY8qt2lI2Dqkvqh4DfMFsdyIsBjjTYvTiKzegEAwIfCBLbbG9l+XhJO82pLECWzRxKMx6i1IXnpkCHIozhpg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895653; c=relaxed/simple;
-	bh=BDQi3SApF0gx7xJhxJaXfdnhXDepMiuaudDowHZufO0=;
+	s=arc-20240116; t=1730895656; c=relaxed/simple;
+	bh=BSCDvNy6iBCEy4hGpsp+mu7DYZw2DOxmqJt3H4pvcNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HZ7Db85m96AnFBwRadKcD9pRpg9eyUCI3Y6xKmq6um3oYFBD5nKH8X6+wNuL3cs39R13ZADGLWSBwIl2Gq4wJMai7ayKHCr6b37Z4h9a7UP6YXBJG5Wg1aVIqWHSqkxHwhjbW+prPQVAscjmf2ypolnG9afIedcvUrOP7qilQHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgFiTj1o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Vj4Bt1H9GEHKzy6HpQtpAM0X/hoh881L0LiH0+1tRmsyS7bJsZXro0Hnq9Y4sPuDe44YwuhYE5YqTFISkkH2TMIiQBwtdRS8F6Fnx+YiLftUHjHsKAEHHs0wepKpY1P5N2GtVQdp/HjN1CwW0DrSqkGx1I+hQTYMrQ+RWTRHOc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqwNzPJQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgFiTj1o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED670C4CECD;
-	Wed,  6 Nov 2024 12:20:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqwNzPJQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BD4C4CECD;
+	Wed,  6 Nov 2024 12:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895653;
-	bh=BDQi3SApF0gx7xJhxJaXfdnhXDepMiuaudDowHZufO0=;
+	s=korg; t=1730895656;
+	bh=BSCDvNy6iBCEy4hGpsp+mu7DYZw2DOxmqJt3H4pvcNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wgFiTj1oiUicv5qfHxx3WpfFNgnyKk1008UWreKX+kEOjRjfuMu1RJ/zIiPOEq9Lw
-	 z0YsO3fLrywf3bY4yWCuavrHcxSA/Z64b9dFYYMKy0aYqTeVIF/j9O/0d8sBHVuCbS
-	 nj1wlXnYMd6O9ntWiYzZeAX2eaT0xux36HrWCX9Q=
+	b=tqwNzPJQrJn/rfB9Y/hPAB3RkIgUMR/WPHnKZsPEjbhoDkfZvhJ74OoxqwfyrNVhb
+	 VSB6IN2uZ9S3qysH/PgheWAzODGfF6/GvDum86XHOwf7bWfDP8wCLscW/VvdcvYr2j
+	 4pDb2NoiuZbwRPD0kdpLmAZRRGv9O4RCKYWL3+VE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Edworthy <phil.edworthy@renesas.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Russell King <linux@armlinux.org.uk>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Alexandru Ardelean <aardelean@deviqon.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 254/350] clk: Add (devm_)clk_get_optional() functions
-Date: Wed,  6 Nov 2024 13:03:02 +0100
-Message-ID: <20241106120327.186603490@linuxfoundation.org>
+Subject: [PATCH 4.19 255/350] clk: generalize devm_clk_get() a bit
+Date: Wed,  6 Nov 2024 13:03:03 +0100
+Message-ID: <20241106120327.209647832@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -47,133 +47,126 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Phil Edworthy <phil.edworthy@renesas.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 60b8f0ddf1a927ef02141a6610fd52575134f821 ]
+[ Upstream commit abae8e57e49aa75f6db76aa866c775721523908f ]
 
-This adds clk_get_optional() and devm_clk_get_optional() functions to get
-optional clocks.
+Allow to add an exit hook to devm managed clocks. Also use
+clk_get_optional() in devm_clk_get_optional instead of open coding it.
+The generalisation will be used in the next commit to add some more
+devm_clk helpers.
 
-They behave the same as (devm_)clk_get() except where there is no clock
-producer. In this case, instead of returning -ENOENT, the function
-returns NULL. This makes error checking simpler and allows
-clk_prepare_enable, etc to be called on the returned reference
-without additional checks.
-
-Signed-off-by: Phil Edworthy <phil.edworthy@renesas.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Russell King <linux@armlinux.org.uk>
-[sboyd@kernel.org: Document in devres.txt]
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Alexandru Ardelean <aardelean@deviqon.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20220520075737.758761-3-u.kleine-koenig@pengutronix.de
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Stable-dep-of: a6191a3d1811 ("gpio: aspeed: Use devm_clk api to manage clock source")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-model/devres.txt |  1 +
- drivers/clk/clk-devres.c              | 11 ++++++++
- include/linux/clk.h                   | 36 +++++++++++++++++++++++++++
- 3 files changed, 48 insertions(+)
+ drivers/clk/clk-devres.c | 66 +++++++++++++++++++++++++++++-----------
+ 1 file changed, 49 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/driver-model/devres.txt b/Documentation/driver-model/devres.txt
-index 43681ca0837f8..5a2d8c7ce2474 100644
---- a/Documentation/driver-model/devres.txt
-+++ b/Documentation/driver-model/devres.txt
-@@ -235,6 +235,7 @@ certainly invest a bit more effort into libata core layer).
- 
- CLOCK
-   devm_clk_get()
-+  devm_clk_get_optional()
-   devm_clk_put()
-   devm_clk_hw_register()
-   devm_of_clk_add_hw_provider()
 diff --git a/drivers/clk/clk-devres.c b/drivers/clk/clk-devres.c
-index d854e26a8ddbc..a062389ccd3d5 100644
+index a062389ccd3d5..3a45b4d0d502d 100644
 --- a/drivers/clk/clk-devres.c
 +++ b/drivers/clk/clk-devres.c
-@@ -34,6 +34,17 @@ struct clk *devm_clk_get(struct device *dev, const char *id)
+@@ -9,39 +9,71 @@
+ #include <linux/export.h>
+ #include <linux/gfp.h>
+ 
++struct devm_clk_state {
++	struct clk *clk;
++	void (*exit)(struct clk *clk);
++};
++
+ static void devm_clk_release(struct device *dev, void *res)
+ {
+-	clk_put(*(struct clk **)res);
++	struct devm_clk_state *state = *(struct devm_clk_state **)res;
++
++	if (state->exit)
++		state->exit(state->clk);
++
++	clk_put(state->clk);
+ }
+ 
+-struct clk *devm_clk_get(struct device *dev, const char *id)
++static struct clk *__devm_clk_get(struct device *dev, const char *id,
++				  struct clk *(*get)(struct device *dev, const char *id),
++				  int (*init)(struct clk *clk),
++				  void (*exit)(struct clk *clk))
+ {
+-	struct clk **ptr, *clk;
++	struct devm_clk_state *state;
++	struct clk *clk;
++	int ret;
+ 
+-	ptr = devres_alloc(devm_clk_release, sizeof(*ptr), GFP_KERNEL);
+-	if (!ptr)
++	state = devres_alloc(devm_clk_release, sizeof(*state), GFP_KERNEL);
++	if (!state)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	clk = clk_get(dev, id);
+-	if (!IS_ERR(clk)) {
+-		*ptr = clk;
+-		devres_add(dev, ptr);
+-	} else {
+-		devres_free(ptr);
++	clk = get(dev, id);
++	if (IS_ERR(clk)) {
++		ret = PTR_ERR(clk);
++		goto err_clk_get;
+ 	}
+ 
++	if (init) {
++		ret = init(clk);
++		if (ret)
++			goto err_clk_init;
++	}
++
++	state->clk = clk;
++	state->exit = exit;
++
++	devres_add(dev, state);
++
+ 	return clk;
++
++err_clk_init:
++
++	clk_put(clk);
++err_clk_get:
++
++	devres_free(state);
++	return ERR_PTR(ret);
++}
++
++struct clk *devm_clk_get(struct device *dev, const char *id)
++{
++	return __devm_clk_get(dev, id, clk_get, NULL, NULL);
  }
  EXPORT_SYMBOL(devm_clk_get);
  
-+struct clk *devm_clk_get_optional(struct device *dev, const char *id)
-+{
-+	struct clk *clk = devm_clk_get(dev, id);
-+
-+	if (clk == ERR_PTR(-ENOENT))
-+		return NULL;
-+
-+	return clk;
-+}
-+EXPORT_SYMBOL(devm_clk_get_optional);
-+
- struct clk_bulk_devres {
- 	struct clk_bulk_data *clks;
- 	int num_clks;
-diff --git a/include/linux/clk.h b/include/linux/clk.h
-index 0a2382d3f68c8..55b08adaaa3c1 100644
---- a/include/linux/clk.h
-+++ b/include/linux/clk.h
-@@ -388,6 +388,17 @@ int __must_check devm_clk_bulk_get(struct device *dev, int num_clks,
-  */
- struct clk *devm_clk_get(struct device *dev, const char *id);
- 
-+/**
-+ * devm_clk_get_optional - lookup and obtain a managed reference to an optional
-+ *			   clock producer.
-+ * @dev: device for clock "consumer"
-+ * @id: clock consumer ID
-+ *
-+ * Behaves the same as devm_clk_get() except where there is no clock producer.
-+ * In this case, instead of returning -ENOENT, the function returns NULL.
-+ */
-+struct clk *devm_clk_get_optional(struct device *dev, const char *id);
-+
- /**
-  * devm_get_clk_from_child - lookup and obtain a managed reference to a
-  *			     clock producer from child node.
-@@ -655,6 +666,12 @@ static inline struct clk *devm_clk_get(struct device *dev, const char *id)
- 	return NULL;
- }
- 
-+static inline struct clk *devm_clk_get_optional(struct device *dev,
-+						const char *id)
-+{
-+	return NULL;
-+}
-+
- static inline int __must_check devm_clk_bulk_get(struct device *dev, int num_clks,
- 						 struct clk_bulk_data *clks)
+ struct clk *devm_clk_get_optional(struct device *dev, const char *id)
  {
-@@ -774,6 +791,25 @@ static inline void clk_bulk_disable_unprepare(int num_clks,
- 	clk_bulk_unprepare(num_clks, clks);
+-	struct clk *clk = devm_clk_get(dev, id);
+-
+-	if (clk == ERR_PTR(-ENOENT))
+-		return NULL;
+-
+-	return clk;
++	return __devm_clk_get(dev, id, clk_get_optional, NULL, NULL);
  }
+ EXPORT_SYMBOL(devm_clk_get_optional);
  
-+/**
-+ * clk_get_optional - lookup and obtain a reference to an optional clock
-+ *		      producer.
-+ * @dev: device for clock "consumer"
-+ * @id: clock consumer ID
-+ *
-+ * Behaves the same as clk_get() except where there is no clock producer. In
-+ * this case, instead of returning -ENOENT, the function returns NULL.
-+ */
-+static inline struct clk *clk_get_optional(struct device *dev, const char *id)
-+{
-+	struct clk *clk = clk_get(dev, id);
-+
-+	if (clk == ERR_PTR(-ENOENT))
-+		return NULL;
-+
-+	return clk;
-+}
-+
- #if defined(CONFIG_OF) && defined(CONFIG_COMMON_CLK)
- struct clk *of_clk_get(struct device_node *np, int index);
- struct clk *of_clk_get_by_name(struct device_node *np, const char *name);
 -- 
 2.43.0
 
