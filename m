@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3E21DF75C;
-	Wed,  6 Nov 2024 12:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1A11DF72F;
+	Wed,  6 Nov 2024 12:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895561; cv=none; b=ptoRJREaZ0uuCcgDf93aOYUqflYPEV+87zdibGAXHw33CoLFZy13pjs0G3pqw38KfQew6Jze3heKJRnPi/zeYCThpD1sCWyZO7R4jcSwDAgCRmLfKQXkoEZqzrcHQAAxur2ozeaajjdkM0lDpevPDc1p2o2dN2Ks8/Z4OnF2nYI=
+	t=1730895564; cv=none; b=mBJ3LwDNAUgouEUfMNNvoivWBB1y9X/wkYdeb1xDJvAeu4W0hzXpDxluI4OhFOmv+MAtMj3Nt/9JXp1p1L33UeMkM8sl1wgG454DPGlREulcNKtrCijVqMKKglX33OMfJVo/AcirZUBHsiia0ER9tvyL7vYxIscT+23ZPFmoogE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895561; c=relaxed/simple;
-	bh=E/UNVJyjsl/VhsniNZklILcZM6WihF19/MuPRGU2cRs=;
+	s=arc-20240116; t=1730895564; c=relaxed/simple;
+	bh=ST86yPLu9pBZXPiG1S+ifwx06SrCvFBdX324CZf9XyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTiXTSqMqgVpSHukxQ+ig6Ifkg3vOW0lURy1o4XKBZpS4Gi3KXCrhRVIjAZJjnG8pOJS+3IAAY4eLqdSv3Bt5QYb2dmrZC/raUxh9bw+cCROt4/G8ccusKbp2taHoadeXUvA7V3ONSUp31hVqEitTwf4krkCASgT/Q7mJpXlyz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BR9fx78A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UGAVD6fk5p2KT60lUFFQcs4LZPgD3joT6mxkLkVAqSP79vjtpf3DohvioplIEn+Zkry090o9lfYNRxd85CEWpYQR2rOJbR57pVSNMhI4UpuucHf4b2a3RqEbwReXP9lGyzfd5I7r5PJ2XhmKnn0CCNZmbrXWjtCbhYxe0q9hvfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7HV+UdR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BR9fx78A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A52DC4AF0B;
-	Wed,  6 Nov 2024 12:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7HV+UdR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452C8C4CECD;
+	Wed,  6 Nov 2024 12:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895561;
-	bh=E/UNVJyjsl/VhsniNZklILcZM6WihF19/MuPRGU2cRs=;
+	s=korg; t=1730895564;
+	bh=ST86yPLu9pBZXPiG1S+ifwx06SrCvFBdX324CZf9XyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BR9fx78ARlGXGeYfL/txQhfoKgX1AJhQ0pITx6ni3IpgxdyMRafvP5pVMqEaYV68o
-	 g+hjdgGRUDuZnlb1pmPyVe5BBxityqfSsbDklgusqwL8otfewbPaxW6o+oLkslhYKL
-	 5IpV7tEXS6gEdMkMy7OTdBfsLug1qebEOYEQgdZ0=
+	b=K7HV+UdRBDCQbLkxQ8drsslnVX0FZDY8JE5s2lWGJDUo5vZBAvBqAN8NMXcH+JS0S
+	 lw/q+p7bWCZwTnlLf9FcKJBiLrmRxHDjOs5n7ENL8qQKCRZE+JtnKguqhXeQ+UkrKj
+	 jfvVamoQ0MmZOFiJeDYvNZW2WZuakRBx9ibk49KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1d121645899e7692f92a@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 260/350] ppp: fix ppp_async_encode() illegal access
-Date: Wed,  6 Nov 2024 13:03:08 +0100
-Message-ID: <20241106120327.328361395@linuxfoundation.org>
+	Johannes Nixdorf <j.nixdorf@avm.de>,
+	"David S. Miller" <davem@davemloft.net>,
+	Bruno VERNAY <bruno.vernay@se.com>,
+	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Subject: [PATCH 4.19 261/350] net: ipv6: ensure we call ipv6_mc_down() at most once
+Date: Wed,  6 Nov 2024 13:03:09 +0100
+Message-ID: <20241106120327.351789236@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -53,91 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: j.nixdorf@avm.de <j.nixdorf@avm.de>
 
-[ Upstream commit 40dddd4b8bd08a69471efd96107a4e1c73fabefc ]
+commit 9995b408f17ff8c7f11bc725c8aa225ba3a63b1c upstream.
 
-syzbot reported an issue in ppp_async_encode() [1]
+There are two reasons for addrconf_notify() to be called with NETDEV_DOWN:
+either the network device is actually going down, or IPv6 was disabled
+on the interface.
 
-In this case, pppoe_sendmsg() is called with a zero size.
-Then ppp_async_encode() is called with an empty skb.
+If either of them stays down while the other is toggled, we repeatedly
+call the code for NETDEV_DOWN, including ipv6_mc_down(), while never
+calling the corresponding ipv6_mc_up() in between. This will cause a
+new entry in idev->mc_tomb to be allocated for each multicast group
+the interface is subscribed to, which in turn leaks one struct ifmcaddr6
+per nontrivial multicast group the interface is subscribed to.
 
-BUG: KMSAN: uninit-value in ppp_async_encode drivers/net/ppp/ppp_async.c:545 [inline]
- BUG: KMSAN: uninit-value in ppp_async_push+0xb4f/0x2660 drivers/net/ppp/ppp_async.c:675
-  ppp_async_encode drivers/net/ppp/ppp_async.c:545 [inline]
-  ppp_async_push+0xb4f/0x2660 drivers/net/ppp/ppp_async.c:675
-  ppp_async_send+0x130/0x1b0 drivers/net/ppp/ppp_async.c:634
-  ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2280 [inline]
-  ppp_input+0x1f1/0xe60 drivers/net/ppp/ppp_generic.c:2304
-  pppoe_rcv_core+0x1d3/0x720 drivers/net/ppp/pppoe.c:379
-  sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1113
-  __release_sock+0x1da/0x330 net/core/sock.c:3072
-  release_sock+0x6b/0x250 net/core/sock.c:3626
-  pppoe_sendmsg+0x2b8/0xb90 drivers/net/ppp/pppoe.c:903
-  sock_sendmsg_nosec net/socket.c:729 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:744
-  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
-  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
-  __do_sys_sendmmsg net/socket.c:2771 [inline]
-  __se_sys_sendmmsg net/socket.c:2768 [inline]
-  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
-  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The following reproducer will leak at least $n objects:
 
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:4092 [inline]
-  slab_alloc_node mm/slub.c:4135 [inline]
-  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4187
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:587
-  __alloc_skb+0x363/0x7b0 net/core/skbuff.c:678
-  alloc_skb include/linux/skbuff.h:1322 [inline]
-  sock_wmalloc+0xfe/0x1a0 net/core/sock.c:2732
-  pppoe_sendmsg+0x3a7/0xb90 drivers/net/ppp/pppoe.c:867
-  sock_sendmsg_nosec net/socket.c:729 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:744
-  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
-  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
-  __do_sys_sendmmsg net/socket.c:2771 [inline]
-  __se_sys_sendmmsg net/socket.c:2768 [inline]
-  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
-  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ip addr add ff2e::4242/32 dev eth0 autojoin
+sysctl -w net.ipv6.conf.eth0.disable_ipv6=1
+for i in $(seq 1 $n); do
+	ip link set up eth0; ip link set down eth0
+done
 
-CPU: 1 UID: 0 PID: 5411 Comm: syz.1.14 Not tainted 6.12.0-rc1-syzkaller-00165-g360c1f1f24c6 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Joining groups with IPV6_ADD_MEMBERSHIP (unprivileged) or setting the
+sysctl net.ipv6.conf.eth0.forwarding to 1 (=> subscribing to ff02::2)
+can also be used to create a nontrivial idev->mc_list, which will the
+leak objects with the right up-down-sequence.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+1d121645899e7692f92a@syzkaller.appspotmail.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20241009185802.3763282-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Based on both sources for NETDEV_DOWN events the interface IPv6 state
+should be considered:
+
+ - not ready if the network interface is not ready OR IPv6 is disabled
+   for it
+ - ready if the network interface is ready AND IPv6 is enabled for it
+
+The functions ipv6_mc_up() and ipv6_down() should only be run when this
+state changes.
+
+Implement this by remembering when the IPv6 state is ready, and only
+run ipv6_mc_down() if it actually changed from ready to not ready.
+
+The other direction (not ready -> ready) already works correctly, as:
+
+ - the interface notification triggered codepath for NETDEV_UP /
+   NETDEV_CHANGE returns early if ipv6 is disabled, and
+ - the disable_ipv6=0 triggered codepath skips fully initializing the
+   interface as long as addrconf_link_ready(dev) returns false
+ - calling ipv6_mc_up() repeatedly does not leak anything
+
+Fixes: 3ce62a84d53c ("ipv6: exit early in addrconf_notify() if IPv6 is disabled")
+Signed-off-by: Johannes Nixdorf <j.nixdorf@avm.de>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Bruno VERNAY <bruno.vernay@se.com>
+Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ppp/ppp_async.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/addrconf.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
-index fb1e28a298929..14e8ad3f93544 100644
---- a/drivers/net/ppp/ppp_async.c
-+++ b/drivers/net/ppp/ppp_async.c
-@@ -555,7 +555,7 @@ ppp_async_encode(struct asyncppp *ap)
- 	 * and 7 (code-reject) must be sent as though no options
- 	 * had been negotiated.
- 	 */
--	islcp = proto == PPP_LCP && 1 <= data[2] && data[2] <= 7;
-+	islcp = proto == PPP_LCP && count >= 3 && 1 <= data[2] && data[2] <= 7;
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -3679,6 +3679,7 @@ static int addrconf_ifdown(struct net_de
+ 	struct inet6_ifaddr *ifa;
+ 	LIST_HEAD(tmp_addr_list);
+ 	bool keep_addr = false;
++	bool was_ready;
+ 	int state, i;
  
- 	if (i == 0) {
- 		if (islcp)
--- 
-2.43.0
-
+ 	ASSERT_RTNL();
+@@ -3744,7 +3745,10 @@ restart:
+ 
+ 	addrconf_del_rs_timer(idev);
+ 
+-	/* Step 2: clear flags for stateless addrconf */
++	/* Step 2: clear flags for stateless addrconf, repeated down
++	 *         detection
++	 */
++	was_ready = idev->if_flags & IF_READY;
+ 	if (!how)
+ 		idev->if_flags &= ~(IF_RS_SENT|IF_RA_RCVD|IF_READY);
+ 
+@@ -3824,7 +3828,7 @@ restart:
+ 	if (how) {
+ 		ipv6_ac_destroy_dev(idev);
+ 		ipv6_mc_destroy_dev(idev);
+-	} else {
++	} else if (was_ready) {
+ 		ipv6_mc_down(idev);
+ 	}
+ 
 
 
