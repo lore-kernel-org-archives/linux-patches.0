@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9E24207F;
-	Wed,  6 Nov 2024 12:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD08D6088F;
+	Wed,  6 Nov 2024 12:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896241; cv=none; b=T81jtw5xHriD8CYUZ4cDLs9xAC9vXWqZ6HhoBliscPWoS3dhGi7EH/79lEzoBfwi+uQByNzpygEg813mtzLqae3jMrJCAHBK0XEZl8rPImXAitmlKTh+9u74u8Q7Uu20qgxNh8yCK6gI/Y0LaHa8m3hAKrtnJVQBejmRHKbs98A=
+	t=1730896244; cv=none; b=dJIo68Cjv2CwccXI6Lrgph47FUfdUcrpIYNwYXrFWoEgZ1ToEasQkT/fp4gJBYqUvtk2VdZJuWDA7wc9SjPZhRx1FQvUeMTMi2beVBoekuInAF9XYeSS+FsSmGV22lOSi4Uz4mWKRHX6ipfpU7Ct3EoNFfW3ZCee+JAwQFXGYZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896241; c=relaxed/simple;
-	bh=WOsv19W2XO6zGYmPFcTOuxO7/Q7Z0RTXJJtMAXzXHiA=;
+	s=arc-20240116; t=1730896244; c=relaxed/simple;
+	bh=5sLTHDGyob/IznoMa1ZR9YwTKibZ4OutxfoGfCb7kuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V+W2S2Tng3emJ3nrPRJhUq2HW9JVVaYjhFkEEkeRBJYjF82m/G+fGeS5lZpwtVcg52fFqgeFiZAZXBt34ot5l5dMii8BAMGzE59M6+xJ0HiX+4A3ruCeY8wo+0waweLcpER2YhkTQEePwS0Q21LfCEGOAqWWgZYKZfF2PBZQPyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P6CaedTs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qDV0zvsb0dm527Xvt+/sw6i3YiB39qMFSUO5HuDqae5/+NQkXZ9MozMJgf3Nqdw1/C5Lf6egJGfvdqokK9GmLpIYQ9bLPSdYTwmX/3dFN89TlipwPrqNUgybkWMs3Alvm//2LK0B/fuM0B3yQlqJ3w/n9aMdp6T3/Tk0BUVjIWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XoR82tso; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P6CaedTs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14606C4CED4;
-	Wed,  6 Nov 2024 12:30:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XoR82tso"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE74DC4CECD;
+	Wed,  6 Nov 2024 12:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896241;
-	bh=WOsv19W2XO6zGYmPFcTOuxO7/Q7Z0RTXJJtMAXzXHiA=;
+	s=korg; t=1730896244;
+	bh=5sLTHDGyob/IznoMa1ZR9YwTKibZ4OutxfoGfCb7kuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P6CaedTshrODrRU8EkWZRDxY71cg9bUcyK5OXghMcSLkQ0gfT72FWC6B98qcaW3Nc
-	 h/bst7MKIlLWG/fOCG57G7gsoc0Jyim28inoQkM42vkL6EZoQlSXLYLNo0pSj1RqH7
-	 SdUZujny+XTurW3iozXLS5oYOfBkfEpxPHFHarQE=
+	b=XoR82tsomC4S97DrYJegJbXkU5Ah8W4SJosYNMNqmYsbcBokVQk17anOIMDdvxclk
+	 4K1E32vbwelia7GCqCClFdlWDPTjph0MR0ssBd+125ltsutGgzCnk2PHKFLqKo9i7R
+	 Vv6B1Ve9Kh46k5w1UeJVeF255/Ly7QKNA9iVkbHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wladislav Wiebe <wladislav.kw@gmail.com>,
+	Chen Ridong <chenridong@huawei.com>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Vlastimil Babka <vbabka@suse.cz>,
-	"Herton R. Krzesinski" <herton@redhat.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Dave Chinner <dchinner@redhat.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Wang Weiyang <wangweiyang2@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 137/245] tools/mm: -Werror fixes in page-types/slabinfo
-Date: Wed,  6 Nov 2024 13:03:10 +0100
-Message-ID: <20241106120322.601400444@linuxfoundation.org>
+Subject: [PATCH 6.11 138/245] mm: shrinker: avoid memleak in alloc_shrinker_info
+Date: Wed,  6 Nov 2024 13:03:11 +0100
+Message-ID: <20241106120322.626040519@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -46,94 +52,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wladislav Wiebe <wladislav.kw@gmail.com>
+From: Chen Ridong <chenridong@huawei.com>
 
-commit ece5897e5a10fcd56a317e32f2dc7219f366a5a8 upstream.
+commit 15e8156713cc38031642fafc8baf7d53f19f2e83 upstream.
 
-Commit e6d2c436ff693 ("tools/mm: allow users to provide additional
-cflags/ldflags") passes now CFLAGS to Makefile.  With this, build systems
-with default -Werror enabled found:
+A memleak was found as below:
 
-slabinfo.c:1300:25: error: ignoring return value of 'chdir'
-declared with attribute 'warn_unused_result' [-Werror=unused-result]
-                         chdir("..");
-                         ^~~~~~~~~~~
-page-types.c:397:35: error: format '%lu' expects argument of type
-'long unsigned int', but argument 2 has type 'uint64_t'
-{aka 'long long unsigned int'} [-Werror=format=]
-                         printf("%lu\t", mapcnt0);
-                                 ~~^     ~~~~~~~
-..
+unreferenced object 0xffff8881010d2a80 (size 32):
+  comm "mkdir", pid 1559, jiffies 4294932666
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  @...............
+  backtrace (crc 2e7ef6fa):
+    [<ffffffff81372754>] __kmalloc_node_noprof+0x394/0x470
+    [<ffffffff813024ab>] alloc_shrinker_info+0x7b/0x1a0
+    [<ffffffff813b526a>] mem_cgroup_css_online+0x11a/0x3b0
+    [<ffffffff81198dd9>] online_css+0x29/0xa0
+    [<ffffffff811a243d>] cgroup_apply_control_enable+0x20d/0x360
+    [<ffffffff811a5728>] cgroup_mkdir+0x168/0x5f0
+    [<ffffffff8148543e>] kernfs_iop_mkdir+0x5e/0x90
+    [<ffffffff813dbb24>] vfs_mkdir+0x144/0x220
+    [<ffffffff813e1c97>] do_mkdirat+0x87/0x130
+    [<ffffffff813e1de9>] __x64_sys_mkdir+0x49/0x70
+    [<ffffffff81f8c928>] do_syscall_64+0x68/0x140
+    [<ffffffff8200012f>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fix page-types by using PRIu64 for uint64_t prints and check in slabinfo
-for return code on chdir("..").
+alloc_shrinker_info(), when shrinker_unit_alloc() returns an errer, the
+info won't be freed.  Just fix it.
 
-Link: https://lkml.kernel.org/r/c1ceb507-94bc-461c-934d-c19b77edd825@gmail.com
-Fixes: e6d2c436ff69 ("tools/mm: allow users to provide additional cflags/ldflags")
-Signed-off-by: Wladislav Wiebe <wladislav.kw@gmail.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Herton R. Krzesinski <herton@redhat.com>
+Link: https://lkml.kernel.org/r/20241025060942.1049263-1-chenridong@huaweicloud.com
+Fixes: 307bececcd12 ("mm: shrinker: add a secondary array for shrinker_info::{map, nr_deferred}")
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Acked-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Wang Weiyang <wangweiyang2@huawei.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/mm/page-types.c |    9 +++++----
- tools/mm/slabinfo.c   |    4 +++-
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ mm/shrinker.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/tools/mm/page-types.c
-+++ b/tools/mm/page-types.c
-@@ -22,6 +22,7 @@
- #include <time.h>
- #include <setjmp.h>
- #include <signal.h>
-+#include <inttypes.h>
- #include <sys/types.h>
- #include <sys/errno.h>
- #include <sys/fcntl.h>
-@@ -392,9 +393,9 @@ static void show_page_range(unsigned lon
- 		if (opt_file)
- 			printf("%lx\t", voff);
- 		if (opt_list_cgroup)
--			printf("@%llu\t", (unsigned long long)cgroup0);
-+			printf("@%" PRIu64 "\t", cgroup0);
- 		if (opt_list_mapcnt)
--			printf("%lu\t", mapcnt0);
-+			printf("%" PRIu64 "\t", mapcnt0);
- 		printf("%lx\t%lx\t%s\n",
- 				index, count, page_flag_name(flags0));
- 	}
-@@ -420,9 +421,9 @@ static void show_page(unsigned long voff
- 	if (opt_file)
- 		printf("%lx\t", voffset);
- 	if (opt_list_cgroup)
--		printf("@%llu\t", (unsigned long long)cgroup);
-+		printf("@%" PRIu64 "\t", cgroup)
- 	if (opt_list_mapcnt)
--		printf("%lu\t", mapcnt);
-+		printf("%" PRIu64 "\t", mapcnt);
+--- a/mm/shrinker.c
++++ b/mm/shrinker.c
+@@ -76,19 +76,21 @@ void free_shrinker_info(struct mem_cgrou
  
- 	printf("%lx\t%s\n", offset, page_flag_name(flags));
- }
---- a/tools/mm/slabinfo.c
-+++ b/tools/mm/slabinfo.c
-@@ -1297,7 +1297,9 @@ static void read_slab_dir(void)
- 			slab->cpu_partial_free = get_obj("cpu_partial_free");
- 			slab->alloc_node_mismatch = get_obj("alloc_node_mismatch");
- 			slab->deactivate_bypass = get_obj("deactivate_bypass");
--			chdir("..");
-+			if (chdir(".."))
-+				fatal("Unable to chdir from slab ../%s\n",
-+				      slab->name);
- 			if (slab->name[0] == ':')
- 				alias_targets++;
- 			slab++;
+ int alloc_shrinker_info(struct mem_cgroup *memcg)
+ {
+-	struct shrinker_info *info;
+ 	int nid, ret = 0;
+ 	int array_size = 0;
+ 
+ 	mutex_lock(&shrinker_mutex);
+ 	array_size = shrinker_unit_size(shrinker_nr_max);
+ 	for_each_node(nid) {
+-		info = kvzalloc_node(sizeof(*info) + array_size, GFP_KERNEL, nid);
++		struct shrinker_info *info = kvzalloc_node(sizeof(*info) + array_size,
++							   GFP_KERNEL, nid);
+ 		if (!info)
+ 			goto err;
+ 		info->map_nr_max = shrinker_nr_max;
+-		if (shrinker_unit_alloc(info, NULL, nid))
++		if (shrinker_unit_alloc(info, NULL, nid)) {
++			kvfree(info);
+ 			goto err;
++		}
+ 		rcu_assign_pointer(memcg->nodeinfo[nid]->shrinker_info, info);
+ 	}
+ 	mutex_unlock(&shrinker_mutex);
 
 
