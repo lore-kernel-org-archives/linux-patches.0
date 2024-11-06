@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634CF1DE3B5;
-	Wed,  6 Nov 2024 13:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562F91F472F;
+	Wed,  6 Nov 2024 13:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898230; cv=none; b=MGGZsut1bUOcfcG+PMiLNJ26lzcYDNu/ZTICTFVo0daGpCnurcGZz9JCfh0NHzJC3p3ZEgtCNJOvgTJRapj/8b5ouippnDhsIItzJyJLS6RwHyYHTwWSpO/L20DffrowQhQq87eVaoiiI/MVFwLP0tGXF51o4o6aYkeQUF57oSw=
+	t=1730898233; cv=none; b=XBeGk53UEPFTpJ1TwgKSS/K51MIRgS/ReVomjaCGCgZE8Fr4tyZtKjyO6IT8VMGDw5ZE5oP/mmhRz180d/W8Ud99/9snLB7q7MkZ3lT87SdG41SW37JE9nZmB0FVgBGAe6/jwzL5WhC7qywpDl0YiW732bxQ3pPur9czMLo/kKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898230; c=relaxed/simple;
-	bh=VR6wFjBKyifCY/cTwCfJzWGcxdTf5Qp09x2J78u5QEU=;
+	s=arc-20240116; t=1730898233; c=relaxed/simple;
+	bh=midi08vshezM5vbL3hDmsI77uDNYLv8VSAGbzivVjpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NdR5ioZRBuMy1BGww3B7ncyo06ugQDGS1k3f6j5L+G/H5Tyv7TLzHWLJ3QliRduVDoinpJY7WknvFvblGTTMvnUGtj6WAfI87muGtXWbKrCu0MGnbmRNxQ6MP80bZ7fUMAQ9ZMRC2OuWcLgv4k/+L4w2pF5cdjV0ncQBibFyA2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V732DU0q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a5Bmc1TqOfGfv3dRf4o/R0ANCIicn2RXKR6AG+XV7TeolTm1NLDtJs5UWduSXl+alVby+Y8qOLkDdW1zTUXvwqY6dGWtHMzhAa3rYqWud2ImY+vBGJWgW32Al9ltUnehL5I6jZ29qduP8v5urGUJ6KqalP73aXHVfPPrIRhPSaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtP3yxLz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V732DU0q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8BA0C4CECD;
-	Wed,  6 Nov 2024 13:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtP3yxLz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0A5C4CECD;
+	Wed,  6 Nov 2024 13:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898230;
-	bh=VR6wFjBKyifCY/cTwCfJzWGcxdTf5Qp09x2J78u5QEU=;
+	s=korg; t=1730898233;
+	bh=midi08vshezM5vbL3hDmsI77uDNYLv8VSAGbzivVjpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V732DU0qTnuV+dUf9qWsF1kgk/zO0Ft0n0TGIik1VrcBv2BDTcRTcXZ0jRuLvZcjp
-	 R/TlrBheE8O1FNk/mb1rmg+ovHY1v15uoaZQ2J0ylEm4F4k/gjGodYK9VfLhsG5IEX
-	 HtsnO6ODA6sDugtXbu9hRsbawOqh4sDKoN93JnpE=
+	b=TtP3yxLz+0tiWqtMIkPDKbVQh/+SHv7QERQZCVidfVrWEl1zs0vfPG/04lVwMq/ei
+	 +BEsV30ALaI0EAUayOS1IwR4fduVGCCXeqWkUseEB3GT6qiqb3RChq2hcJRYaoFfj2
+	 +xtdewAPu97BD1LKCbm3nCC4c0+d8sa6IuHRv4G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 168/462] pps: add an error check in parport_attach
-Date: Wed,  6 Nov 2024 13:01:01 +0100
-Message-ID: <20241106120335.669540437@linuxfoundation.org>
+	David Gow <davidgow@google.com>,
+	Kees Cook <kees@kernel.org>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 169/462] mm: only enforce minimum stack gap size if its sensible
+Date: Wed,  6 Nov 2024 13:01:02 +0100
+Message-ID: <20241106120335.693202176@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,65 +56,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: David Gow <davidgow@google.com>
 
-[ Upstream commit 62c5a01a5711c8e4be8ae7b6f0db663094615d48 ]
+commit 69b50d4351ed924f29e3d46b159e28f70dfc707f upstream.
 
-In parport_attach, the return value of ida_alloc is unchecked, witch leads
-to the use of an invalid index value.
+The generic mmap_base code tries to leave a gap between the top of the
+stack and the mmap base address, but enforces a minimum gap size (MIN_GAP)
+of 128MB, which is too large on some setups.  In particular, on arm tasks
+without ADDR_LIMIT_32BIT, the STACK_TOP value is less than 128MB, so it's
+impossible to fit such a gap in.
 
-To address this issue, index should be checked. When the index value is
-abnormal, the device should be freed.
+Only enforce this minimum if MIN_GAP < MAX_GAP, as we'd prefer to honour
+MAX_GAP, which is defined proportionally, so scales better and always
+leaves us with both _some_ stack space and some room for mmap.
 
-Found by code review, compile tested only.
+This fixes the usercopy KUnit test suite on 32-bit arm, as it doesn't set
+any personality flags so gets the default (in this case 26-bit) task size.
+This test can be run with: ./tools/testing/kunit/kunit.py run --arch arm
+usercopy --make_options LLVM=1
 
-Cc: stable@vger.kernel.org
-Fixes: fb56d97df70e ("pps: client: use new parport device model")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/20240828131814.3034338-1-make24@iscas.ac.cn
+Link: https://lkml.kernel.org/r/20240803074642.1849623-2-davidgow@google.com
+Fixes: dba79c3df4a2 ("arm: use generic mmap top-down layout and brk randomization")
+Signed-off-by: David Gow <davidgow@google.com>
+Reviewed-by: Kees Cook <kees@kernel.org>
+Cc: Alexandre Ghiti <alex@ghiti.fr>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/clients/pps_parport.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ mm/util.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pps/clients/pps_parport.c b/drivers/pps/clients/pps_parport.c
-index 4bb3678c7e451..84e49204912f8 100644
---- a/drivers/pps/clients/pps_parport.c
-+++ b/drivers/pps/clients/pps_parport.c
-@@ -145,6 +145,9 @@ static void parport_attach(struct parport *port)
- 	}
+--- a/mm/util.c
++++ b/mm/util.c
+@@ -407,7 +407,7 @@ static unsigned long mmap_base(unsigned
+ 	if (gap + pad > gap)
+ 		gap += pad;
  
- 	index = ida_alloc(&pps_client_index, GFP_KERNEL);
-+	if (index < 0)
-+		goto err_free_device;
-+
- 	memset(&pps_client_cb, 0, sizeof(pps_client_cb));
- 	pps_client_cb.private = device;
- 	pps_client_cb.irq_func = parport_irq;
-@@ -155,7 +158,7 @@ static void parport_attach(struct parport *port)
- 						    index);
- 	if (!device->pardev) {
- 		pr_err("couldn't register with %s\n", port->name);
--		goto err_free;
-+		goto err_free_ida;
- 	}
- 
- 	if (parport_claim_or_block(device->pardev) < 0) {
-@@ -183,8 +186,9 @@ static void parport_attach(struct parport *port)
- 	parport_release(device->pardev);
- err_unregister_dev:
- 	parport_unregister_device(device->pardev);
--err_free:
-+err_free_ida:
- 	ida_free(&pps_client_index, index);
-+err_free_device:
- 	kfree(device);
- }
- 
--- 
-2.43.0
-
+-	if (gap < MIN_GAP)
++	if (gap < MIN_GAP && MIN_GAP < MAX_GAP)
+ 		gap = MIN_GAP;
+ 	else if (gap > MAX_GAP)
+ 		gap = MAX_GAP;
 
 
