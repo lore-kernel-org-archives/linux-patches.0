@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD60D1F7573;
-	Wed,  6 Nov 2024 12:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43171F76AD;
+	Wed,  6 Nov 2024 12:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897022; cv=none; b=D4Ec+dqrS0uqx+/fisuARSLgnZRh/MWXABC+8w3Kq9RuGJazLBKMEOLwpO67HK8gX8wI9oHs/xOhFtDdnSnTrSzqrcN+5OGBBYA6N08mM5Ey9eKqCRScL83f4g+4Vyvit8jwXq/zP1hj7azWJp0fqlEOlJKKCPExbdf9MQtD34c=
+	t=1730897026; cv=none; b=qU3EtTY0CesIc2BAKn4/cLmhH4jO2PwsK48AT3qv34UnOqshuNBtpaIwLgfxRSC+LT1uk1ZrMGyPBac6cwjzfeVegKftSd6POraINtifUc6rr5csYNRu2FhtErW734DItZ9NmSLgEHOkhA6v5fd6iHW0nIzZlc/wu+cneyyGDig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897022; c=relaxed/simple;
-	bh=89ewVA14KqdncHhjx7Rxtu8yA3p6cz7sISt91mDoJJo=;
+	s=arc-20240116; t=1730897026; c=relaxed/simple;
+	bh=RBjkcHo4eVQKdjMmMeENmZGfAxBtCnqD/NrU2PRUzv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rYZ3ZwKpBjpSgpDZGcGtInbRCUqn+zBgbRS8obOUhHWEN8blcJCO1qBlA7hPnrYROv1/Fi7tovfmJQz8YPF/Vaur5tGlSVDNva9M029kVJv5xPCze6kK7GmyPPU8X5JicPoKILwhGo02NbQuyMNUO3CAUHHI+rUtR6njtfVSpuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGlgbVCs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=smycdeniHfdbIb2fQXwgGMx3rEHWckRJZr9lIaBzszv4B/doBrgPcJ7w+q8DqBif4nhvxEDCkE/ijbv+AJb7saUYiiY9eycdRLI2D7wgMD1PqYXaF/QKWnRcKnJGsZEqeZlW8hB5gwBnxO50RvS+DvcdQeN4LW02i7fZ7Gy1HBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAV7uoWj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGlgbVCs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15254C4CECD;
-	Wed,  6 Nov 2024 12:43:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAV7uoWj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB394C4CECD;
+	Wed,  6 Nov 2024 12:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897022;
-	bh=89ewVA14KqdncHhjx7Rxtu8yA3p6cz7sISt91mDoJJo=;
+	s=korg; t=1730897026;
+	bh=RBjkcHo4eVQKdjMmMeENmZGfAxBtCnqD/NrU2PRUzv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BGlgbVCsAHj52tN49VZp6PRfBciWjuUgxmgsXow5x5yQX3Vl8z92FDfML++Zhlhl6
-	 D+sW8jmdwAnDte7o/4RWIwIeXFwfvvQdtEtFjEhOMpKT8sEzoNT3PFVBIxiQE2ZAxH
-	 ioIwEDPd6600mMpzrIu8bBnX2zqxW7tG4QJYNFfk=
+	b=fAV7uoWjIyUWpWZOfr3mX3fKeS7hVMYRV4FflZtwTzsU6V6rkz+0jXMhlFWsHgBd3
+	 EbpbfU+oke8jC4OISyLMU4D6OMW+2iqPPnWdqDDgldpUYdP97UL/zqLRQaLH7npnGh
+	 DPjHkCQ9ruM7VML735fpqIEjbafKwU/2uyhZjI94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cochran <richardcochran@gmail.com>,
-	Amit Cohen <amcohen@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	ruansy.fnst@fujitsu.com,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/126] mlxsw: spectrum_ptp: Add missing verification before pushing Tx header
-Date: Wed,  6 Nov 2024 13:03:54 +0100
-Message-ID: <20241106120307.003402772@linuxfoundation.org>
+Subject: [PATCH 6.1 042/126] fsdax: remove zeroing code from dax_unshare_iter
+Date: Wed,  6 Nov 2024 13:04:03 +0100
+Message-ID: <20241106120307.246805589@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -53,62 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Cohen <amcohen@nvidia.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 0a66e5582b5102c4d7b866b977ff7c850c1174ce ]
+[ Upstream commit 95472274b6fed8f2d30fbdda304e12174b3d4099 ]
 
-Tx header should be pushed for each packet which is transmitted via
-Spectrum ASICs. The cited commit moved the call to skb_cow_head() from
-mlxsw_sp_port_xmit() to functions which handle Tx header.
+Remove the code in dax_unshare_iter that zeroes the destination memory
+because it's not necessary.
 
-In case that mlxsw_sp->ptp_ops->txhdr_construct() is used to handle Tx
-header, and txhdr_construct() is mlxsw_sp_ptp_txhdr_construct(), there is
-no call for skb_cow_head() before pushing Tx header size to SKB. This flow
-is relevant for Spectrum-1 and Spectrum-4, for PTP packets.
+If srcmap is unwritten, we don't have to do anything because that
+unwritten extent came from the regular file mapping, and unwritten
+extents cannot be shared.  The same applies to holes.
 
-Add the missing call to skb_cow_head() to make sure that there is both
-enough room to push the Tx header and that the SKB header is not cloned and
-can be modified.
+Furthermore, zeroing to unshare a mapping is just plain wrong because
+unsharing means copy on write, and we should be copying data.
 
-An additional set will be sent to net-next to centralize the handling of
-the Tx header by pushing it to every packet just before transmission.
+This is effectively a revert of commit 13dd4e04625f ("fsdax: unshare:
+zero destination if srcmap is HOLE or UNWRITTEN")
 
-Cc: Richard Cochran <richardcochran@gmail.com>
-Fixes: 24157bc69f45 ("mlxsw: Send PTP packets as data packets to overcome a limitation")
-Signed-off-by: Amit Cohen <amcohen@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/5145780b07ebbb5d3b3570f311254a3a2d554a44.1729866134.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: ruansy.fnst@fujitsu.com
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://lore.kernel.org/r/172796813311.1131942.16033376284752798632.stgit@frogsfrogsfrogs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 50793801fc7f ("fsdax: dax_unshare_iter needs to copy entire blocks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_ptp.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/dax.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_ptp.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_ptp.c
-index 7b01b9c20722a..7bb7b57af1a76 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_ptp.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_ptp.c
-@@ -16,6 +16,7 @@
- #include "spectrum.h"
- #include "spectrum_ptp.h"
- #include "core.h"
-+#include "txheader.h"
+diff --git a/fs/dax.c b/fs/dax.c
+index 74f9a14565f59..fa5a82b27c2f6 100644
+--- a/fs/dax.c
++++ b/fs/dax.c
+@@ -1239,14 +1239,6 @@ static s64 dax_unshare_iter(struct iomap_iter *iter)
+ 	if (ret < 0)
+ 		goto out_unlock;
  
- #define MLXSW_SP1_PTP_CLOCK_CYCLES_SHIFT	29
- #define MLXSW_SP1_PTP_CLOCK_FREQ_KHZ		156257 /* 6.4nSec */
-@@ -1696,6 +1697,12 @@ int mlxsw_sp_ptp_txhdr_construct(struct mlxsw_core *mlxsw_core,
- 				 struct sk_buff *skb,
- 				 const struct mlxsw_tx_info *tx_info)
- {
-+	if (skb_cow_head(skb, MLXSW_TXHDR_LEN)) {
-+		this_cpu_inc(mlxsw_sp_port->pcpu_stats->tx_dropped);
-+		dev_kfree_skb_any(skb);
-+		return -ENOMEM;
-+	}
-+
- 	mlxsw_sp_txhdr_construct(skb, tx_info);
- 	return 0;
- }
+-	/* zero the distance if srcmap is HOLE or UNWRITTEN */
+-	if (srcmap->flags & IOMAP_F_SHARED || srcmap->type == IOMAP_UNWRITTEN) {
+-		memset(daddr, 0, length);
+-		dax_flush(iomap->dax_dev, daddr, length);
+-		ret = length;
+-		goto out_unlock;
+-	}
+-
+ 	ret = dax_iomap_direct_access(srcmap, pos, length, &saddr, NULL);
+ 	if (ret < 0)
+ 		goto out_unlock;
 -- 
 2.43.0
 
