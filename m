@@ -1,38 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42D61F7544;
-	Wed,  6 Nov 2024 13:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BDA1F7556;
+	Wed,  6 Nov 2024 13:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898003; cv=none; b=Kfg4EQhrtiBZIf5sxYxxhKslY0x3jzuiE8PtxIX8ma391WBmWcUDtWwFhDF5r/+3Eo/QRj7Za6KDpByoVMSKSHBJgonMrcJ7KPavbdErnXf/cMLIhBso+8PfocwS8GnE2WIcArzVZTyixxUqxhikVVNqzsJabVFfIQ4gwUrgYFw=
+	t=1730898006; cv=none; b=ST6B1Nq4uCvZBUGM8GOrjUx+i71f3QLAdkUN9vRSQ5cs+Zto9agb+jmW45uCFlrQZLC+A0pUNyt+thFT8+1QCxOA+Aes0dfSeBa6rcgklQkzdyb24qOItLWGqR+/TpeOIIOKblSp88zEgXQ3kWi7UFa0EyNVPBE5l+5F2wzljSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898003; c=relaxed/simple;
-	bh=ctH3GDyP6ZD5+zgEJ4f7r2oY7ygvYVXyf4f6G776DUE=;
+	s=arc-20240116; t=1730898006; c=relaxed/simple;
+	bh=OeJoMWQofA18LaapbcG2NlumlWBGg8gyMqWz4dHhUXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9x6tBqMLqT4iPkvj+CkS0t8hiLob3vXmKEebIIGRgsEZfVwRCKO2ObQe3ucpCs5MyePCk4/OkvTXJOlJTj1JvYjFhDKeU20UQmmJ5xsKHw3lAnMUSMOnRJ/doOK41NIvPvjFXBjmVgtUY1ZjDv0DO61UjbF1qqi0Ds2n7fHEjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6axh+n+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iDR7YATA7n+ep/U4JSWW7eKP2Eibg6c0fc2KQSij6PklJIor9hxkw9qu9D0CtGCl0XhabhvVMIIPHithaRDy0ZQoHD7tCmoEoiIbeLlh1kE3wrs6csetcE1WZMaR2CCg6w9oKAsXfB4kvmZNbAku+1I2556yWYGpvBnTB5Wk8qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrnAE3/0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6axh+n+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7AD9C4CECD;
-	Wed,  6 Nov 2024 13:00:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrnAE3/0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94253C4CECD;
+	Wed,  6 Nov 2024 13:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898003;
-	bh=ctH3GDyP6ZD5+zgEJ4f7r2oY7ygvYVXyf4f6G776DUE=;
+	s=korg; t=1730898006;
+	bh=OeJoMWQofA18LaapbcG2NlumlWBGg8gyMqWz4dHhUXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6axh+n+wDz1Tbmd18L5IF8QE7cqBayl/81r5r/2B/4crN/Hs2K3+1vqQ1E8oLc+Y
-	 /C/Pc2Sk46dEibQHz5tkp8XFMJ+Zn7pmnwlsPXxfnoaJWICQ+dMfAw3qTr06JezEo1
-	 fvyNaFPgvIs/znNt5kHjAd4B7t9W9qqCQVY4XFCs=
+	b=GrnAE3/0tYuLMpRFFgx5fc05newQ1Ru1cv9l4RRJon2eSzxPW9gAI8RbC1GozNCZ9
+	 fXMsDpg0hrrxocqi8aq2E/LDpxRfjaw93NelmMsgsFbgRML0Y23kVtRHqe0AwVZ5Pg
+	 PR/EP5p5VQkUwF2WvaL8nQ3Rmy3Bt6YKfadXjomg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 091/462] selftests/bpf: Fix error compiling test_lru_map.c
-Date: Wed,  6 Nov 2024 12:59:44 +0100
-Message-ID: <20241106120333.754961577@linuxfoundation.org>
+	Lasse Collin <lasse.collin@tukaani.org>,
+	Sam James <sam@gentoo.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Joel Stanley <joel@jms.id.au>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Jubin Zhong <zhongjubin@huawei.com>,
+	Jules Maselbas <jmaselbas@zdiv.net>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Rui Li <me@lirui.org>,
+	Simon Glass <sjg@chromium.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.4 092/462] xz: cleanup CRC32 edits from 2018
+Date: Wed,  6 Nov 2024 12:59:45 +0100
+Message-ID: <20241106120333.780309285@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,44 +69,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Lasse Collin <lasse.collin@tukaani.org>
 
-[ Upstream commit cacf2a5a78cd1f5f616eae043ebc6f024104b721 ]
+[ Upstream commit 2ee96abef214550d9e92f5143ee3ac1fd1323e67 ]
 
-Although the post-increment in macro 'CPU_SET(next++, &cpuset)' seems safe,
-the sequencing can raise compile errors, so move the increment outside the
-macro. This avoids an error seen using gcc 12.3.0 for mips64el/musl-libc:
+In 2018, a dependency on <linux/crc32poly.h> was added to avoid
+duplicating the same constant in multiple files.  Two months later it was
+found to be a bad idea and the definition of CRC32_POLY_LE macro was moved
+into xz_private.h to avoid including <linux/crc32poly.h>.
 
-  In file included from test_lru_map.c:11:
-  test_lru_map.c: In function 'sched_next_online':
-  test_lru_map.c:129:29: error: operation on 'next' may be undefined [-Werror=sequence-point]
-    129 |                 CPU_SET(next++, &cpuset);
-        |                             ^
-  cc1: all warnings being treated as errors
+xz_private.h is a wrong place for it too.  Revert back to the upstream
+version which has the poly in xz_crc32_init() in xz_crc32.c.
 
-Fixes: 3fbfadce6012 ("bpf: Fix test_lru_sanity5() in test_lru_map.c")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/22993dfb11ccf27925a626b32672fd3324cb76c4.1722244708.git.tony.ambardar@gmail.com
+Link: https://lkml.kernel.org/r/20240721133633.47721-10-lasse.collin@tukaani.org
+Fixes: faa16bc404d7 ("lib: Use existing define with polynomial")
+Fixes: 242cdad873a7 ("lib/xz: Put CRC32_POLY_LE in xz_private.h")
+Signed-off-by: Lasse Collin <lasse.collin@tukaani.org>
+Reviewed-by: Sam James <sam@gentoo.org>
+Tested-by: Michael Ellerman <mpe@ellerman.id.au> (powerpc)
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Joel Stanley <joel@jms.id.au>
+Cc: Albert Ou <aou@eecs.berkeley.edu>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Jubin Zhong <zhongjubin@huawei.com>
+Cc: Jules Maselbas <jmaselbas@zdiv.net>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Rui Li <me@lirui.org>
+Cc: Simon Glass <sjg@chromium.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_lru_map.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ lib/xz/xz_crc32.c   | 2 +-
+ lib/xz/xz_private.h | 4 ----
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_lru_map.c b/tools/testing/selftests/bpf/test_lru_map.c
-index 6a5349f9eb148..7748d28e8b97a 100644
---- a/tools/testing/selftests/bpf/test_lru_map.c
-+++ b/tools/testing/selftests/bpf/test_lru_map.c
-@@ -137,7 +137,8 @@ static int sched_next_online(int pid, int *next_to_try)
+diff --git a/lib/xz/xz_crc32.c b/lib/xz/xz_crc32.c
+index 912aae5fa09e1..34532d14fd4c2 100644
+--- a/lib/xz/xz_crc32.c
++++ b/lib/xz/xz_crc32.c
+@@ -29,7 +29,7 @@ STATIC_RW_DATA uint32_t xz_crc32_table[256];
  
- 	while (next < nr_cpus) {
- 		CPU_ZERO(&cpuset);
--		CPU_SET(next++, &cpuset);
-+		CPU_SET(next, &cpuset);
-+		next++;
- 		if (!sched_setaffinity(pid, sizeof(cpuset), &cpuset)) {
- 			ret = 0;
- 			break;
+ XZ_EXTERN void xz_crc32_init(void)
+ {
+-	const uint32_t poly = CRC32_POLY_LE;
++	const uint32_t poly = 0xEDB88320;
+ 
+ 	uint32_t i;
+ 	uint32_t j;
+diff --git a/lib/xz/xz_private.h b/lib/xz/xz_private.h
+index 09360ebb510ef..482b90f363fe3 100644
+--- a/lib/xz/xz_private.h
++++ b/lib/xz/xz_private.h
+@@ -102,10 +102,6 @@
+ #	endif
+ #endif
+ 
+-#ifndef CRC32_POLY_LE
+-#define CRC32_POLY_LE 0xedb88320
+-#endif
+-
+ /*
+  * Allocate memory for LZMA2 decoder. xz_dec_lzma2_reset() must be used
+  * before calling xz_dec_lzma2_run().
 -- 
 2.43.0
 
