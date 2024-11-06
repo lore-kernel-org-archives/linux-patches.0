@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E487D1D2784;
-	Wed,  6 Nov 2024 12:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55461DF726;
+	Wed,  6 Nov 2024 12:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896051; cv=none; b=ZTwVprAnTphd3Y7qEnM7mBfBcHTktqZcGG6wNdy+2oSIbNbaKFqHmEMIBnjTxuUWm9LbK77MeM1Bvfigf42ULJT7N3FGK5+IusfRjSE5SkeJnwBIU8hw06Z3KXklhx5OdsV4tiIt/fn9ISwnvgI2WqbcLu8Jwzq7g8gB0n6UIcA=
+	t=1730896053; cv=none; b=jKokUYg80sNwXYh7PFH9Btvsh9quPiaoWjq4clLUaYJ1BQwXDklJ73R3fmVMOuNlmqhq9DiUSttFxaRmTYdFAKoym91xIJ0VknO5y+jMmcODYc56L69Z2AYmeXfAuX2oTNlptmT28VR8G9CV7dk4xsTpEhdIG+3X9IyNC43uwDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896051; c=relaxed/simple;
-	bh=uLnWG7QAamuITbol5sadPK8dse3klJcFIo18gpCr1ek=;
+	s=arc-20240116; t=1730896053; c=relaxed/simple;
+	bh=Sv0kOMz0KYTQ2dIFtftFtwyJjBn1KvG5AKnUmnfdNgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IohjnCYCe5c1BoZEA3sViT/OGi0cUj3rcya2XVAPrdmwXhKqomgDh8cA4F3qud1VFB88F9etYkklY/JDaTlJeO6jPk2cvToLicDWR3gTg/BFBtXjz8OE729NsIsdLLZ0kDUhqTXGZkhlWY5AjlI/Ho05oMbHgwziKFbZr6gu4zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJVj86pm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dIAIQuRmkKLOJ8zORuW+YeC+INVOhYK6PgrxZWlWsg7vWpe3i7N9Fz3LeTtV2su3PKslDKvBPV+stxz8YFrsv7r9+nN09P4e7tqU9fzu6gGgFr/RVWoBL8XYir8PZk0HzH7TqJdZUEIPWU3n94C47J08Js4U/zlU+Urj7CLRrKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ss2776hP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJVj86pm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63320C4CED4;
-	Wed,  6 Nov 2024 12:27:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ss2776hP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A4D7C4CECD;
+	Wed,  6 Nov 2024 12:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896050;
-	bh=uLnWG7QAamuITbol5sadPK8dse3klJcFIo18gpCr1ek=;
+	s=korg; t=1730896053;
+	bh=Sv0kOMz0KYTQ2dIFtftFtwyJjBn1KvG5AKnUmnfdNgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DJVj86pmjTVewfSgzuiOmnUcwrDNzTrmoKh6O+K8KY7pCfXrObBtox1hiyLfNPG25
-	 yx+5ryhx9WeibXqw9aOa1PbgWoTm/VGAkfIcKRYW1Dep4fva5JxQuru4NFOc+7Xy0d
-	 VeyShhSyMp7ThTwzJLNcbdzKK1+BEaUHwQzNE5CM=
+	b=Ss2776hPWldc6viMywKzlfFiNAJlKZX/pi4CvrRnMzPlSetj9CIThm9DI+mM6hmXl
+	 SKUh7j7DcycMnA7M4nP6tKf8JOxG47BiAO+X4pwT9ynFma2fcojjb3Z2U81l+AWhKK
+	 EfLHP8dAEW09KqDuvxMtt/BPNOhk4gijoPcftlCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Liankun Yang <liankun.yang@mediatek.com>,
-	Fei Shao <fshao@chromium.org>,
-	CK Hu <ck.hu@mediatek.com>,
 	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 072/245] drm/mediatek: Fix get efuse issue for MT8188 DPTX
-Date: Wed,  6 Nov 2024 13:02:05 +0100
-Message-ID: <20241106120320.978352869@linuxfoundation.org>
+Subject: [PATCH 6.11 073/245] drm/mediatek: Use cmdq_pkt_create() and cmdq_pkt_destroy()
+Date: Wed,  6 Nov 2024 13:02:06 +0100
+Message-ID: <20241106120321.003003630@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -55,132 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liankun Yang <liankun.yang@mediatek.com>
+From: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 
-[ Upstream commit 3ded11b5c1b476f6d027d9017aa7deb8ab381ec1 ]
+[ Upstream commit d7c66b5fbc70d09348f3e0414ebf360c3125f3fa ]
 
-Update efuse data for MT8188 displayport.
+Use cmdq_pkt_create() and cmdq_pkt_destroy() common function
+instead of implementing drm version.
 
-The DP monitor can not display when DUT connected to USB-c to DP dongle.
-Analysis view is invalid DP efuse data.
-
-Fixes: 350c3fe907fb ("drm/mediatek: dp: Add support MT8188 dp/edp function")
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Liankun Yang <liankun.yang@mediatek.com>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Tested-by: Fei Shao <fshao@chromium.org>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20240923132521.22785-1-liankun.yang@mediatek.com/
 Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20240810090918.7457-3-chunkuang.hu@kernel.org/
+Stable-dep-of: 4018651ba5c4 ("drm/mediatek: Fix potential NULL dereference in mtk_crtc_destroy()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dp.c | 85 ++++++++++++++++++++++++++++++-
- 1 file changed, 84 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_crtc.c | 46 +++--------------------------
+ 1 file changed, 4 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
-index d8796a904eca4..f2bee617f063a 100644
---- a/drivers/gpu/drm/mediatek/mtk_dp.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dp.c
-@@ -145,6 +145,89 @@ struct mtk_dp_data {
- 	u16 audio_m_div2_bit;
- };
+diff --git a/drivers/gpu/drm/mediatek/mtk_crtc.c b/drivers/gpu/drm/mediatek/mtk_crtc.c
+index a90504359e8d2..4bee0328bdbee 100644
+--- a/drivers/gpu/drm/mediatek/mtk_crtc.c
++++ b/drivers/gpu/drm/mediatek/mtk_crtc.c
+@@ -120,44 +120,6 @@ static void mtk_drm_finish_page_flip(struct mtk_crtc *mtk_crtc)
+ 	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
+ }
  
-+static const struct mtk_dp_efuse_fmt mt8188_dp_efuse_fmt[MTK_DP_CAL_MAX] = {
-+	[MTK_DP_CAL_GLB_BIAS_TRIM] = {
-+		.idx = 0,
-+		.shift = 10,
-+		.mask = 0x1f,
-+		.min_val = 1,
-+		.max_val = 0x1e,
-+		.default_val = 0xf,
-+	},
-+	[MTK_DP_CAL_CLKTX_IMPSE] = {
-+		.idx = 0,
-+		.shift = 15,
-+		.mask = 0xf,
-+		.min_val = 1,
-+		.max_val = 0xe,
-+		.default_val = 0x8,
-+	},
-+	[MTK_DP_CAL_LN_TX_IMPSEL_PMOS_0] = {
-+		.idx = 1,
-+		.shift = 0,
-+		.mask = 0xf,
-+		.min_val = 1,
-+		.max_val = 0xe,
-+		.default_val = 0x8,
-+	},
-+	[MTK_DP_CAL_LN_TX_IMPSEL_PMOS_1] = {
-+		.idx = 1,
-+		.shift = 8,
-+		.mask = 0xf,
-+		.min_val = 1,
-+		.max_val = 0xe,
-+		.default_val = 0x8,
-+	},
-+	[MTK_DP_CAL_LN_TX_IMPSEL_PMOS_2] = {
-+		.idx = 1,
-+		.shift = 16,
-+		.mask = 0xf,
-+		.min_val = 1,
-+		.max_val = 0xe,
-+		.default_val = 0x8,
-+	},
-+	[MTK_DP_CAL_LN_TX_IMPSEL_PMOS_3] = {
-+		.idx = 1,
-+		.shift = 24,
-+		.mask = 0xf,
-+		.min_val = 1,
-+		.max_val = 0xe,
-+		.default_val = 0x8,
-+	},
-+	[MTK_DP_CAL_LN_TX_IMPSEL_NMOS_0] = {
-+		.idx = 1,
-+		.shift = 4,
-+		.mask = 0xf,
-+		.min_val = 1,
-+		.max_val = 0xe,
-+		.default_val = 0x8,
-+	},
-+	[MTK_DP_CAL_LN_TX_IMPSEL_NMOS_1] = {
-+		.idx = 1,
-+		.shift = 12,
-+		.mask = 0xf,
-+		.min_val = 1,
-+		.max_val = 0xe,
-+		.default_val = 0x8,
-+	},
-+	[MTK_DP_CAL_LN_TX_IMPSEL_NMOS_2] = {
-+		.idx = 1,
-+		.shift = 20,
-+		.mask = 0xf,
-+		.min_val = 1,
-+		.max_val = 0xe,
-+		.default_val = 0x8,
-+	},
-+	[MTK_DP_CAL_LN_TX_IMPSEL_NMOS_3] = {
-+		.idx = 1,
-+		.shift = 28,
-+		.mask = 0xf,
-+		.min_val = 1,
-+		.max_val = 0xe,
-+		.default_val = 0x8,
-+	},
-+};
-+
- static const struct mtk_dp_efuse_fmt mt8195_edp_efuse_fmt[MTK_DP_CAL_MAX] = {
- 	[MTK_DP_CAL_GLB_BIAS_TRIM] = {
- 		.idx = 3,
-@@ -2771,7 +2854,7 @@ static SIMPLE_DEV_PM_OPS(mtk_dp_pm_ops, mtk_dp_suspend, mtk_dp_resume);
- static const struct mtk_dp_data mt8188_dp_data = {
- 	.bridge_type = DRM_MODE_CONNECTOR_DisplayPort,
- 	.smc_cmd = MTK_DP_SIP_ATF_VIDEO_UNMUTE,
--	.efuse_fmt = mt8195_dp_efuse_fmt,
-+	.efuse_fmt = mt8188_dp_efuse_fmt,
- 	.audio_supported = true,
- 	.audio_pkt_in_hblank_area = true,
- 	.audio_m_div2_bit = MT8188_AUDIO_M_CODE_MULT_DIV_SEL_DP_ENC0_P0_DIV_2,
+-#if IS_REACHABLE(CONFIG_MTK_CMDQ)
+-static int mtk_drm_cmdq_pkt_create(struct cmdq_client *client, struct cmdq_pkt *pkt,
+-				   size_t size)
+-{
+-	struct device *dev;
+-	dma_addr_t dma_addr;
+-
+-	pkt->va_base = kzalloc(size, GFP_KERNEL);
+-	if (!pkt->va_base)
+-		return -ENOMEM;
+-
+-	pkt->buf_size = size;
+-	pkt->cl = (void *)client;
+-
+-	dev = client->chan->mbox->dev;
+-	dma_addr = dma_map_single(dev, pkt->va_base, pkt->buf_size,
+-				  DMA_TO_DEVICE);
+-	if (dma_mapping_error(dev, dma_addr)) {
+-		dev_err(dev, "dma map failed, size=%u\n", (u32)(u64)size);
+-		kfree(pkt->va_base);
+-		return -ENOMEM;
+-	}
+-
+-	pkt->pa_base = dma_addr;
+-
+-	return 0;
+-}
+-
+-static void mtk_drm_cmdq_pkt_destroy(struct cmdq_pkt *pkt)
+-{
+-	struct cmdq_client *client = (struct cmdq_client *)pkt->cl;
+-
+-	dma_unmap_single(client->chan->mbox->dev, pkt->pa_base, pkt->buf_size,
+-			 DMA_TO_DEVICE);
+-	kfree(pkt->va_base);
+-}
+-#endif
+-
+ static void mtk_crtc_destroy(struct drm_crtc *crtc)
+ {
+ 	struct mtk_crtc *mtk_crtc = to_mtk_crtc(crtc);
+@@ -165,7 +127,7 @@ static void mtk_crtc_destroy(struct drm_crtc *crtc)
+ 
+ 	mtk_mutex_put(mtk_crtc->mutex);
+ #if IS_REACHABLE(CONFIG_MTK_CMDQ)
+-	mtk_drm_cmdq_pkt_destroy(&mtk_crtc->cmdq_handle);
++	cmdq_pkt_destroy(&mtk_crtc->cmdq_client, &mtk_crtc->cmdq_handle);
+ 
+ 	if (mtk_crtc->cmdq_client.chan) {
+ 		mbox_free_channel(mtk_crtc->cmdq_client.chan);
+@@ -1122,9 +1084,9 @@ int mtk_crtc_create(struct drm_device *drm_dev, const unsigned int *path,
+ 			mbox_free_channel(mtk_crtc->cmdq_client.chan);
+ 			mtk_crtc->cmdq_client.chan = NULL;
+ 		} else {
+-			ret = mtk_drm_cmdq_pkt_create(&mtk_crtc->cmdq_client,
+-						      &mtk_crtc->cmdq_handle,
+-						      PAGE_SIZE);
++			ret = cmdq_pkt_create(&mtk_crtc->cmdq_client,
++					      &mtk_crtc->cmdq_handle,
++					      PAGE_SIZE);
+ 			if (ret) {
+ 				dev_dbg(dev, "mtk_crtc %d failed to create cmdq packet\n",
+ 					drm_crtc_index(&mtk_crtc->base));
 -- 
 2.43.0
 
