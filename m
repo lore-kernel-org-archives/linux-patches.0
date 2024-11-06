@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3981DF24A;
-	Wed,  6 Nov 2024 12:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FD71DF257;
+	Wed,  6 Nov 2024 12:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895588; cv=none; b=F/48Hmm6BEmR2XbyxbCvsLzWhqc8WtvKmzY30fjhpZwpSmLR7sjyv1YtqiIpS26PQ9hv0mxsXFZKXQmGN/4InHNq4k/Qa38Tn3+0cZy0lbVLNrnr3O1vdLdrsn14wB0BjPWToCeJ4ZkPRHzXb1tFso6zhnAK3iXnour1RUcuaBU=
+	t=1730895591; cv=none; b=QkSuicChnwZwkEosBsYLFa8DkUk0i7e79FtikoAQtF+uC36VfCcQrIIIX5ZeHq+x7oUZQnJGK5uKKh3g1PUrihq9LDG+UrNlwX55B8vDUZlSlH9F6eSVMKrNUBOoyo5pQnL5Vgj/+ytXu7ctP+4BL+xZUlysUgpAf1Cz8Zp3C/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895588; c=relaxed/simple;
-	bh=YmsD9JYBDeGrAL8wXQU/CUoiy5eFzYjdG2y4KBGnay8=;
+	s=arc-20240116; t=1730895591; c=relaxed/simple;
+	bh=nnTwbjq2WoNtL3F623X75mpY7wFmXo1nV+Uog7RXt1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=boooR+iEES2CQ8vk3L6IZ1NN5x+UmpjYMbeeiP7hlfxHQGzgIv6WGW6IdDyZ7pvDz9w/O4HKFS2lItPloFbJZBUUh/X12ifaQyt5TQMgYawu/x8Ch4FZd6gvTLvyLfc0TmepInXitwtnDTQpyKjDyN+ZzxzwxarERZNnjFOJyuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qdtqq9mf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TOflyUepz/h02kEeS80fcRxZT8r5w24F3C0jdAMjtDEg67czVQ8nry2mlsoAhgG0RzHmAjXz26g+aIvw5OYY0MaOHw1IIUQKuPYcRqdca4FWP2xqs9HvUztwpW5ZUD+EQ81vspoIMm8FPAT0/7dD59bbkdR/HiEXQOLbnWWyKGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHjRK1zI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qdtqq9mf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E8BC4CECD;
-	Wed,  6 Nov 2024 12:19:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHjRK1zI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21668C4CECD;
+	Wed,  6 Nov 2024 12:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895588;
-	bh=YmsD9JYBDeGrAL8wXQU/CUoiy5eFzYjdG2y4KBGnay8=;
+	s=korg; t=1730895591;
+	bh=nnTwbjq2WoNtL3F623X75mpY7wFmXo1nV+Uog7RXt1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qdtqq9mfkc1U4Qafp5tXNCHw6uhRPUnRZbUVcHFXEkLnnypkgkoifbCpfHPykxp+b
-	 YsY3cBmleV7AVnNG+CZMibmPwnycdRUvFCzdnb0ZxofPwG10a638nwCu/Y3F6knEUr
-	 RZIOZBMufDiVutK8SeCaiRKFSAW/8QM3clz4g+wA=
+	b=aHjRK1zI5OEECz+haR/hgHruEz/vpPoWCQPl5rZcHKz/oUk/8ILZ11GGaM78TnkTI
+	 ei4yaoDRLUjcdrCN6QzwwdK6yuddzTJdOUSEB0J/vxZLKhY6L3B6w99LCeQczgCSvg
+	 uNxMrdvLPSGnpKsQhR0ZhChLwy4kVAKHMrzaSGIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cochran <richardcochran@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 268/350] posix-clock: Fix missing timespec64 check in pc_clock_settime()
-Date: Wed,  6 Nov 2024 13:03:16 +0100
-Message-ID: <20241106120327.513472441@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 4.19 269/350] arm64: probes: Remove broken LDR (literal) uprobe support
+Date: Wed,  6 Nov 2024 13:03:17 +0100
+Message-ID: <20241106120327.536747119@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -53,52 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit d8794ac20a299b647ba9958f6d657051fc51a540 upstream.
+commit acc450aa07099d071b18174c22a1119c57da8227 upstream.
 
-As Andrew pointed out, it will make sense that the PTP core
-checked timespec64 struct's tv_sec and tv_nsec range before calling
-ptp->info->settime64().
+The simulate_ldr_literal() and simulate_ldrsw_literal() functions are
+unsafe to use for uprobes. Both functions were originally written for
+use with kprobes, and access memory with plain C accesses. When uprobes
+was added, these were reused unmodified even though they cannot safely
+access user memory.
 
-As the man manual of clock_settime() said, if tp.tv_sec is negative or
-tp.tv_nsec is outside the range [0..999,999,999], it should return EINVAL,
-which include dynamic clocks which handles PTP clock, and the condition is
-consistent with timespec64_valid(). As Thomas suggested, timespec64_valid()
-only check the timespec is valid, but not ensure that the time is
-in a valid range, so check it ahead using timespec64_valid_strict()
-in pc_clock_settime() and return -EINVAL if not valid.
+There are three key problems:
 
-There are some drivers that use tp->tv_sec and tp->tv_nsec directly to
-write registers without validity checks and assume that the higher layer
-has checked it, which is dangerous and will benefit from this, such as
-hclge_ptp_settime(), igb_ptp_settime_i210(), _rcar_gen4_ptp_settime(),
-and some drivers can remove the checks of itself.
+1) The plain C accesses do not have corresponding extable entries, and
+   thus if they encounter a fault the kernel will treat these as
+   unintentional accesses to user memory, resulting in a BUG() which
+   will kill the kernel thread, and likely lead to further issues (e.g.
+   lockup or panic()).
 
+2) The plain C accesses are subject to HW PAN and SW PAN, and so when
+   either is in use, any attempt to simulate an access to user memory
+   will fault. Thus neither simulate_ldr_literal() nor
+   simulate_ldrsw_literal() can do anything useful when simulating a
+   user instruction on any system with HW PAN or SW PAN.
+
+3) The plain C accesses are privileged, as they run in kernel context,
+   and in practice can access a small range of kernel virtual addresses.
+   The instructions they simulate have a range of +/-1MiB, and since the
+   simulated instructions must itself be a user instructions in the
+   TTBR0 address range, these can address the final 1MiB of the TTBR1
+   acddress range by wrapping downwards from an address in the first
+   1MiB of the TTBR0 address range.
+
+   In contemporary kernels the last 8MiB of TTBR1 address range is
+   reserved, and accesses to this will always fault, meaning this is no
+   worse than (1).
+
+   Historically, it was theoretically possible for the linear map or
+   vmemmap to spill into the final 8MiB of the TTBR1 address range, but
+   in practice this is extremely unlikely to occur as this would
+   require either:
+
+   * Having enough physical memory to fill the entire linear map all the
+     way to the final 1MiB of the TTBR1 address range.
+
+   * Getting unlucky with KASLR randomization of the linear map such
+     that the populated region happens to overlap with the last 1MiB of
+     the TTBR address range.
+
+   ... and in either case if we were to spill into the final page there
+   would be larger problems as the final page would alias with error
+   pointers.
+
+Practically speaking, (1) and (2) are the big issues. Given there have
+been no reports of problems since the broken code was introduced, it
+appears that no-one is relying on probing these instructions with
+uprobes.
+
+Avoid these issues by not allowing uprobes on LDR (literal) and LDRSW
+(literal), limiting the use of simulate_ldr_literal() and
+simulate_ldrsw_literal() to kprobes. Attempts to place uprobes on LDR
+(literal) and LDRSW (literal) will be rejected as
+arm_probe_decode_insn() will return INSN_REJECTED. In future we can
+consider introducing working uprobes support for these instructions, but
+this will require more significant work.
+
+Fixes: 9842ceae9fa8 ("arm64: Add uprobe support")
 Cc: stable@vger.kernel.org
-Fixes: 0606f422b453 ("posix clocks: Introduce dynamic clocks")
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Suggested-by: Andrew Lunn <andrew@lunn.ch>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20241009072302.1754567-2-ruanjinjie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20241008155851.801546-2-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/posix-clock.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/kernel/probes/decode-insn.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/kernel/time/posix-clock.c
-+++ b/kernel/time/posix-clock.c
-@@ -312,6 +312,9 @@ static int pc_clock_settime(clockid_t id
- 		goto out;
- 	}
- 
-+	if (!timespec64_valid_strict(ts))
-+		return -EINVAL;
+--- a/arch/arm64/kernel/probes/decode-insn.c
++++ b/arch/arm64/kernel/probes/decode-insn.c
+@@ -104,10 +104,6 @@ arm_probe_decode_insn(probe_opcode_t ins
+ 	    aarch64_insn_is_blr(insn) ||
+ 	    aarch64_insn_is_ret(insn)) {
+ 		api->handler = simulate_br_blr_ret;
+-	} else if (aarch64_insn_is_ldr_lit(insn)) {
+-		api->handler = simulate_ldr_literal;
+-	} else if (aarch64_insn_is_ldrsw_lit(insn)) {
+-		api->handler = simulate_ldrsw_literal;
+ 	} else {
+ 		/*
+ 		 * Instruction cannot be stepped out-of-line and we don't
+@@ -145,6 +141,17 @@ arm_kprobe_decode_insn(kprobe_opcode_t *
+ 	probe_opcode_t insn = le32_to_cpu(*addr);
+ 	probe_opcode_t *scan_end = NULL;
+ 	unsigned long size = 0, offset = 0;
++	struct arch_probe_insn *api = &asi->api;
 +
- 	if (cd.clk->ops.clock_settime)
- 		err = cd.clk->ops.clock_settime(cd.clk, ts);
- 	else
++	if (aarch64_insn_is_ldr_lit(insn)) {
++		api->handler = simulate_ldr_literal;
++		decoded = INSN_GOOD_NO_SLOT;
++	} else if (aarch64_insn_is_ldrsw_lit(insn)) {
++		api->handler = simulate_ldrsw_literal;
++		decoded = INSN_GOOD_NO_SLOT;
++	} else {
++		decoded = arm_probe_decode_insn(insn, &asi->api);
++	}
+ 
+ 	/*
+ 	 * If there's a symbol defined in front of and near enough to
+@@ -162,7 +169,6 @@ arm_kprobe_decode_insn(kprobe_opcode_t *
+ 		else
+ 			scan_end = addr - MAX_ATOMIC_CONTEXT_SIZE;
+ 	}
+-	decoded = arm_probe_decode_insn(insn, &asi->api);
+ 
+ 	if (decoded != INSN_REJECTED && scan_end)
+ 		if (is_probed_address_atomic(addr - 1, scan_end))
 
 
