@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A38F1DFE3A;
-	Wed,  6 Nov 2024 13:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDCC1E1337;
+	Wed,  6 Nov 2024 13:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898251; cv=none; b=UIB0hVw8GRvloMKzREQXE+TS3jYUHhLVRbA9BCRxBYD+4pE31V7WNCWZJvGqftjF0nPNZSun9mYXZ3bi9H0jFsmXc65kJ8HfdwrsrjedhHkfVAbdo2PWucIxpO2437iBSDTVUXpeOFfuJYwhhggtdJr/tvyPEXs0qVHPeFtB8Ug=
+	t=1730898254; cv=none; b=RRkwOSuoU7JcX8NtaK+SfICE3FCn8QCnbKdCDgwa2oI4ffiCw7ZyET/gutl9ZvSOhhlog1pk5iVpux7M8tQCtmBpu9u8nPHh1O4i7THTs3QOPUQ6qbmBNxhzTfKsfXhCfHmL+8hB1aBQ20kJFFlB/S38argBXXmbIn3MPBQ77EI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898251; c=relaxed/simple;
-	bh=9iv/Iv66Pugi0yaagaol8/yBidgPrI1HVCfVSriUDdE=;
+	s=arc-20240116; t=1730898254; c=relaxed/simple;
+	bh=cXvjuu5jIcQH3CwC/44zMQI0aTSpvQz5EpDRht553k0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZsqkqnFsGtT2vjF2V2a2+sajB++cC9NmnB73Aqkj1rbmviGhHXjtncwMavipBsDBKXvfq06jEKjWVHSXt1ZzPylP9d9fGmsLRqsmfz6q2lqN84KDDSDqqzTJUrHhYHmLB7lH8s6Quw+I0TzEmUomjTi1Lm59fTdaMF/eMt6now=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/dBf84w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ozTjgoKBBxK74Jq5h5KVHFDcGcqS3I48JG0WRrf8lD+RNK2kUk6yPOBi21O6Q/ElnI7mnTqeScwgiyi/L+mNQkTO4rU7pTYzF5gMkszYMjgiExtRp64pTUcgzLuxITaAqgikXWqP2c1yzWc1MLNzSPHjLlICBL5jBTkYXidjNjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9X3aQng; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/dBf84w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6690BC4CECD;
-	Wed,  6 Nov 2024 13:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9X3aQng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDACC4CECD;
+	Wed,  6 Nov 2024 13:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898250;
-	bh=9iv/Iv66Pugi0yaagaol8/yBidgPrI1HVCfVSriUDdE=;
+	s=korg; t=1730898254;
+	bh=cXvjuu5jIcQH3CwC/44zMQI0aTSpvQz5EpDRht553k0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/dBf84wapbyDKPn7KTkawKsNEzc86kly5EKPIWCMyqKkb1zxpcjUhWjfJdt8LNck
-	 MFdnVsFGWbS3xGAg+87YmErZ5Q15lnXIs8v+1XwwwgI1QeivvM1657bSaov/E9cNkc
-	 viNOIu9BPlor2BIHFIZTmOd5NjGoHI9+b5t8fJ1c=
+	b=H9X3aQng9XxNXThAv/JdltxbD95FR/AmLNb6FLw/N97Ujoitf6pzTDFnhuhou/IzW
+	 uJvwijQCRAiRBn7+1arwVmzvwucpuTQ/xH9iLDHmtt0TZew/G7tyijTppi4i1VUpEo
+	 GMV00bd4aQfAzYJbVktfjI+f1dKAb4ZPFUCqeLpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiubo Li <xiubli@redhat.com>,
-	Patrick Donnelly <pdonnell@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 175/462] ceph: remove the incorrect Fw reference check when dirtying pages
-Date: Wed,  6 Nov 2024 13:01:08 +0100
-Message-ID: <20241106120335.841320457@linuxfoundation.org>
+Subject: [PATCH 5.4 176/462] Minor fixes to the CAIF Transport drivers Kconfig file
+Date: Wed,  6 Nov 2024 13:01:09 +0100
+Message-ID: <20241106120335.865917790@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,35 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiubo Li <xiubli@redhat.com>
+From: rd.dunlab@gmail.com <rd.dunlab@gmail.com>
 
-[ Upstream commit c08dfb1b49492c09cf13838c71897493ea3b424e ]
+[ Upstream commit 0f04f8ea62ce79f5a8bb1a7c2d92513799532239 ]
 
-When doing the direct-io reads it will also try to mark pages dirty,
-but for the read path it won't hold the Fw caps and there is case
-will it get the Fw reference.
+Minor fixes to the CAIF Transport drivers Kconfig file:
 
-Fixes: 5dda377cf0a6 ("ceph: set i_head_snapc when getting CEPH_CAP_FILE_WR reference")
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+- end sentence with period
+- capitalize CAIF acronym
+
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: addf89774e48 ("ieee802154: Fix build error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/caif/Kconfig | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 34ab7b892b700..0791855963647 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -89,7 +89,6 @@ static int ceph_set_page_dirty(struct page *page)
+diff --git a/drivers/net/caif/Kconfig b/drivers/net/caif/Kconfig
+index 2b9a2f117113e..66ea15f067025 100644
+--- a/drivers/net/caif/Kconfig
++++ b/drivers/net/caif/Kconfig
+@@ -22,7 +22,7 @@ config CAIF_SPI_SLAVE
+ 	The CAIF Link layer SPI Protocol driver for Slave SPI interface.
+ 	This driver implements a platform driver to accommodate for a
+ 	platform specific SPI device. A sample CAIF SPI Platform device is
+-	provided in Documentation/networking/caif/spi_porting.txt
++	provided in <file:Documentation/networking/caif/spi_porting.txt>.
  
- 	/* dirty the head */
- 	spin_lock(&ci->i_ceph_lock);
--	BUG_ON(ci->i_wr_ref == 0); // caller should hold Fw reference
- 	if (__ceph_have_pending_cap_snap(ci)) {
- 		struct ceph_cap_snap *capsnap =
- 				list_last_entry(&ci->i_cap_snaps,
+ config CAIF_SPI_SYNC
+ 	bool "Next command and length in start of frame"
+@@ -38,7 +38,7 @@ config CAIF_HSI
+        depends on CAIF
+        default n
+        ---help---
+-       The caif low level driver for CAIF over HSI.
++       The CAIF low level driver for CAIF over HSI.
+        Be aware that if you enable this then you also need to
+        enable a low-level HSI driver.
+ 
+@@ -50,7 +50,7 @@ config CAIF_VIRTIO
+ 	select GENERIC_ALLOCATOR
+ 	default n
+ 	---help---
+-	The caif driver for CAIF over Virtio.
++	The CAIF driver for CAIF over Virtio.
+ 
+ if CAIF_VIRTIO
+ source "drivers/vhost/Kconfig.vringh"
 -- 
 2.43.0
 
