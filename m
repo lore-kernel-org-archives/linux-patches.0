@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3C41FAEF9;
-	Wed,  6 Nov 2024 12:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2261FB3CE;
+	Wed,  6 Nov 2024 12:38:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896705; cv=none; b=P2hvPa5A4DJWFaz9UlEatdbBMzorSmM+ijMh0WujI3ItelWeLb6jJcrRigWaaERsDhF5XBStG3xwSV0w59YvAn0TxwWHpxuLZqqpuULbMi76wNr22hnwzB2TTCIxEIP++CWwAR0kwRn+Iaor90pUWtkKt1syCRJ3y4U7wdjQfOE=
+	t=1730896708; cv=none; b=PlzIpNzHgQyeRDvr8yngkq7kHILqJlz0AChbFPsJpjDfXHNpbeSFMjz1CO8lAc4UN84/S6ww0o0zwi7KPiqUr97O6W275/lm7zd2CimzdlimkraRuDxxj9OJunRwQNd8RjBG47qRkVdXHZbg0rOn8sqTDZ7YyOLvsw3SkuzpaIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896705; c=relaxed/simple;
-	bh=3zz6SYNG3td+q5uuu+rSZn8A2X/Ybza0p7RyOkveuCE=;
+	s=arc-20240116; t=1730896708; c=relaxed/simple;
+	bh=bFMNBeTBK0q51+2izrbx4OfDAx1hzFYyrGskEwFGtlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P4vS09vC3Z/Z4m83jRM+afB9LziWtZ1hlHC3SYn37fHoKOoWTaL0cdMj9W2f2NoBWLFDRYrV6oaRvnM3ZlChi9ke5cdswQI7RaGFNEueNUoUREC3+KX3mE+DZIem+o7ohF90O8JX2atQxbY4x4NjRJ9gAopKSACHS/rXyVBoQBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uz+35DCu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tD/rlpAb066bOfksSqEIWgazHLuJQtNF+noAZfpt86SqhFErcxHHMT+fyuHapYXEmR+T9k6ucT/6aFgK23nqkr/9kiY49lHlM8V4mFh1i17HG7O5tfaiSimAVUGSElrkJCWVm1ziDUxw9OaPfimSutN3wSryfN7tatfzhem1m8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ovB/8Jv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uz+35DCu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F74C4CED8;
-	Wed,  6 Nov 2024 12:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ovB/8Jv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00B0C4CEDC;
+	Wed,  6 Nov 2024 12:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896705;
-	bh=3zz6SYNG3td+q5uuu+rSZn8A2X/Ybza0p7RyOkveuCE=;
+	s=korg; t=1730896708;
+	bh=bFMNBeTBK0q51+2izrbx4OfDAx1hzFYyrGskEwFGtlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uz+35DCuen7uPAN09i+ABm0sXsL9tL/692v6hyGdLiAQAHg10eXuJyAt5F8CfaGr1
-	 i1EgDkND4YdQdDxSNGAnCKFhhqPFF7qIepjY0w1j6o5NmdNIEnln4NhI9zVbC+9OeM
-	 5wPJOz1gOLiqcgz5AgX2drWajNK5ectSH4TPExJ8=
+	b=1ovB/8JvxafEpSJ5/elBO6xTYviOCHTmY+zjQ8BhA8KkP5lcOyDPgXkELOz522eT1
+	 +eDzxOscBuxRMNCZq9SDdT4BlgWwTNxDc8ziOqjpImgATtLZzjZXNFDgI/+mDeOps+
+	 g23L5vO8zcRZEUPnp4KKWJ6uteYu0uQB6Yz9wy34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+985ada84bf055a575c07@syzkaller.appspotmail.com,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.10 046/110] nilfs2: fix kernel bug due to missing clearing of buffer delay flag
-Date: Wed,  6 Nov 2024 13:04:12 +0100
-Message-ID: <20241106120304.475196630@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 029/110] ASoC: fsl_sai: Enable FIFO continue on error FCONT bit
+Date: Wed,  6 Nov 2024 13:03:55 +0100
+Message-ID: <20241106120303.981574696@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -51,55 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-commit 6ed469df0bfbef3e4b44fca954a781919db9f7ab upstream.
+[ Upstream commit 72455e33173c1a00c0ce93d2b0198eb45d5f4195 ]
 
-Syzbot reported that after nilfs2 reads a corrupted file system image
-and degrades to read-only, the BUG_ON check for the buffer delay flag
-in submit_bh_wbc() may fail, causing a kernel bug.
+FCONT=1 means On FIFO error, the SAI will continue from the
+same word that caused the FIFO error to set after the FIFO
+warning flag has been cleared.
 
-This is because the buffer delay flag is not cleared when clearing the
-buffer state flags to discard a page/folio or a buffer head. So, fix
-this.
+Set FCONT bit in control register to avoid the channel swap
+issue after SAI xrun.
 
-This became necessary when the use of nilfs2's own page clear routine
-was expanded.  This state inconsistency does not occur if the buffer
-is written normally by log writing.
-
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Link: https://lore.kernel.org/r/20241015213300.7114-1-konishi.ryusuke@gmail.com
-Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
-Reported-by: syzbot+985ada84bf055a575c07@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=985ada84bf055a575c07
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/1727676508-22830-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/page.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/fsl/fsl_sai.c | 5 ++++-
+ sound/soc/fsl/fsl_sai.h | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -77,7 +77,8 @@ void nilfs_forget_buffer(struct buffer_h
- 	const unsigned long clear_bits =
- 		(BIT(BH_Uptodate) | BIT(BH_Dirty) | BIT(BH_Mapped) |
- 		 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
--		 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected));
-+		 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
-+		 BIT(BH_Delay));
+diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
+index 03731d14d4757..998102711da09 100644
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -490,6 +490,9 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
  
- 	lock_buffer(bh);
- 	set_mask_bits(&bh->b_state, clear_bits, 0);
-@@ -409,7 +410,8 @@ void nilfs_clear_dirty_page(struct page
- 		const unsigned long clear_bits =
- 			(BIT(BH_Uptodate) | BIT(BH_Dirty) | BIT(BH_Mapped) |
- 			 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
--			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected));
-+			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
-+			 BIT(BH_Delay));
+ 	val_cr4 |= FSL_SAI_CR4_FRSZ(slots);
  
- 		bh = head = page_buffers(page);
- 		do {
++	/* Set to avoid channel swap */
++	val_cr4 |= FSL_SAI_CR4_FCONT;
++
+ 	/* Set to output mode to avoid tri-stated data pins */
+ 	if (tx)
+ 		val_cr4 |= FSL_SAI_CR4_CHMOD;
+@@ -515,7 +518,7 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
+ 			   FSL_SAI_CR3_TRCE((1 << pins) - 1));
+ 	regmap_update_bits(sai->regmap, FSL_SAI_xCR4(tx, ofs),
+ 			   FSL_SAI_CR4_SYWD_MASK | FSL_SAI_CR4_FRSZ_MASK |
+-			   FSL_SAI_CR4_CHMOD_MASK,
++			   FSL_SAI_CR4_CHMOD_MASK | FSL_SAI_CR4_FCONT_MASK,
+ 			   val_cr4);
+ 	regmap_update_bits(sai->regmap, FSL_SAI_xCR5(tx, ofs),
+ 			   FSL_SAI_CR5_WNW_MASK | FSL_SAI_CR5_W0W_MASK |
+diff --git a/sound/soc/fsl/fsl_sai.h b/sound/soc/fsl/fsl_sai.h
+index 691847d54b17d..eff3b7b2dd3e8 100644
+--- a/sound/soc/fsl/fsl_sai.h
++++ b/sound/soc/fsl/fsl_sai.h
+@@ -132,6 +132,7 @@
+ 
+ /* SAI Transmit and Receive Configuration 4 Register */
+ 
++#define FSL_SAI_CR4_FCONT_MASK	BIT(28)
+ #define FSL_SAI_CR4_FCONT	BIT(28)
+ #define FSL_SAI_CR4_FCOMB_SHIFT BIT(26)
+ #define FSL_SAI_CR4_FCOMB_SOFT  BIT(27)
+-- 
+2.43.0
+
 
 
