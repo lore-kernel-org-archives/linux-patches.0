@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33A01DF73B;
-	Wed,  6 Nov 2024 12:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F5F1DF73C;
+	Wed,  6 Nov 2024 12:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895694; cv=none; b=XPO12XpY6P57+Jm6mwZpvVi7pesQJUpSNe6hVYIwmu2YC8YqJsby9/bd6xNBegGv6nqFVeECkwNOvcvT+0CpObW52MUYZsfUFMky+9riLbrWJeIRVRoElQLl3oVDjGTWlDNsS7Hno6BQSbiHzL/KcxzY+zGd5x7ya2JnhdjE5H0=
+	t=1730895697; cv=none; b=BZYoG9lMUI4T+amByjJN6rk9ZR/WwOPpT5pd6tjDp0W7Z3wnVCnjpqV6Qk84X3i+JtjMgWVL4w9SqVNccpKvuUjvKtpL77bykft93Wzh+xLLJDXrYc8nxpvslxdJHwOgNtHjgNQtXTLvp2nosNoLExsDOFIqPOKn7tInnx7b4+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895694; c=relaxed/simple;
-	bh=Xkzq+Ee2SRid4+KkQAxoRqQa8lCBaqIKWNweTU7Og3w=;
+	s=arc-20240116; t=1730895697; c=relaxed/simple;
+	bh=Sk12d4Z+ohTPqsKLhMi0j3tAt4EP45ths8ham7ZnWSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bei0HQJ7KX6MT8/Kfwss8SiHCHR6uK4ZzNhZlbrGeu70oj4vJ53IedSEEohT33ElwSIrvx297eay2W+IMCN7SvZUGPVDQqy1vZTP/urHnd2EOZnPWbqdikyKQksScCZesNHFPqZq1iAy+2IxAcJ0u38w91qwei69SxiALmz40fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UwF21DVy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sayjByP9rJO7oa224/CcWGGWtSXTWACCrZMr+oz2EmmEZjf3fxxO8REgh9He6a30/rSDrgBZ8GyxFc+soaig1/CG/HmOMSSVO153ZahwbH+lRYhJ0Y37loBG9jn06FSxmKl/ecDSbCrjCPEir9lMducwKIkVpDUGRnDAdYoWTcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cotP6jF7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwF21DVy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572ECC4CED4;
-	Wed,  6 Nov 2024 12:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cotP6jF7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A380C4CECD;
+	Wed,  6 Nov 2024 12:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895694;
-	bh=Xkzq+Ee2SRid4+KkQAxoRqQa8lCBaqIKWNweTU7Og3w=;
+	s=korg; t=1730895697;
+	bh=Sk12d4Z+ohTPqsKLhMi0j3tAt4EP45ths8ham7ZnWSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwF21DVyVUiRwpJ+8u4SNTbskGR39b3ettmeoqCH253TEpJ1XFrg8sZQAeC+2n/w+
-	 UYl0goEW3ViskpWD/CnyO5ia+7O5emuwiLcv2Wul38WDqadP2NLK64a541fpBnPZ7h
-	 bU+K51DIm8KTrzhhNySvw0P9ddged2fpVFeMyGP8=
+	b=cotP6jF7/v3NzIguUeXpceARvaEmc32zw4bzK7Mbv6nYtss/0qtpVh7QewsfW4j+L
+	 srz8UJEiVklExHPZQXoYanupAn+VS4EZ0f52HC9zypxv+uhw9d6XX82nbk/2ZATV7W
+	 e9EC4VVD6y4xwRc8ICi9c7ZGBUbG0Kf1riWVOugI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.19 287/350] USB: serial: option: add Telit FN920C04 MBIM compositions
-Date: Wed,  6 Nov 2024 13:03:35 +0100
-Message-ID: <20241106120327.928098433@linuxfoundation.org>
+	Janis Schoetterl-Glausch <scgl@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 305/350] KVM: s390: gaccess: Refactor access address range check
+Date: Wed,  6 Nov 2024 13:03:53 +0100
+Message-ID: <20241106120328.324215577@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -50,114 +52,233 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Janis Schoetterl-Glausch <scgl@linux.ibm.com>
 
-commit 6d951576ee16430822a8dee1e5c54d160e1de87d upstream.
+[ Upstream commit 7faa543df19bf62d4583a64d3902705747f2ad29 ]
 
-Add the following Telit FN920C04 compositions:
+Do not round down the first address to the page boundary, just translate
+it normally, which gives the value we care about in the first place.
+Given this, translating a single address is just the special case of
+translating a range spanning a single page.
 
-0x10a2: MBIM + tty (AT/NMEA) + tty (AT) + tty (diag)
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 17 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a2 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Make the output optional, so the function can be used to just check a
+range.
 
-0x10a7: MBIM + tty (AT) + tty (AT) + tty (diag)
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 18 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10a7 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x10aa: MBIM + tty (AT) + tty (diag) + DPL (data packet logging) + adb
-T:  Bus=03 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 15 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10aa Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN920
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 6 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Janis Schoetterl-Glausch <scgl@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-Id: <20211126164549.7046-3-scgl@linux.ibm.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Stable-dep-of: e8061f06185b ("KVM: s390: gaccess: Check if guest address is in memslot")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/s390/kvm/gaccess.c | 122 +++++++++++++++++++++++-----------------
+ 1 file changed, 69 insertions(+), 53 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1382,10 +1382,16 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(0) | RSVD(1) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a0, 0xff),	/* Telit FN20C04 (rmnet) */
- 	  .driver_info = RSVD(0) | NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a2, 0xff),	/* Telit FN920C04 (MBIM) */
-+	  .driver_info = NCTRL(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a4, 0xff),	/* Telit FN20C04 (rmnet) */
- 	  .driver_info = RSVD(0) | NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a7, 0xff),	/* Telit FN920C04 (MBIM) */
-+	  .driver_info = NCTRL(4) },
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10a9, 0xff),	/* Telit FN20C04 (rmnet) */
- 	  .driver_info = RSVD(0) | NCTRL(2) | RSVD(3) | RSVD(4) },
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x10aa, 0xff),	/* Telit FN920C04 (MBIM) */
-+	  .driver_info = NCTRL(3) | RSVD(4) | RSVD(5) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910),
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(3) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, TELIT_PRODUCT_ME910_DUAL_MODEM),
+diff --git a/arch/s390/kvm/gaccess.c b/arch/s390/kvm/gaccess.c
+index b184749ffc5ae..d4fe5db5984dd 100644
+--- a/arch/s390/kvm/gaccess.c
++++ b/arch/s390/kvm/gaccess.c
+@@ -794,35 +794,74 @@ static int low_address_protection_enabled(struct kvm_vcpu *vcpu,
+ 	return 1;
+ }
+ 
+-static int guest_page_range(struct kvm_vcpu *vcpu, unsigned long ga, u8 ar,
+-			    unsigned long *pages, unsigned long nr_pages,
+-			    const union asce asce, enum gacc_mode mode)
++/**
++ * guest_range_to_gpas() - Calculate guest physical addresses of page fragments
++ * covering a logical range
++ * @vcpu: virtual cpu
++ * @ga: guest address, start of range
++ * @ar: access register
++ * @gpas: output argument, may be NULL
++ * @len: length of range in bytes
++ * @asce: address-space-control element to use for translation
++ * @mode: access mode
++ *
++ * Translate a logical range to a series of guest absolute addresses,
++ * such that the concatenation of page fragments starting at each gpa make up
++ * the whole range.
++ * The translation is performed as if done by the cpu for the given @asce, @ar,
++ * @mode and state of the @vcpu.
++ * If the translation causes an exception, its program interruption code is
++ * returned and the &struct kvm_s390_pgm_info pgm member of @vcpu is modified
++ * such that a subsequent call to kvm_s390_inject_prog_vcpu() will inject
++ * a correct exception into the guest.
++ * The resulting gpas are stored into @gpas, unless it is NULL.
++ *
++ * Note: All fragments except the first one start at the beginning of a page.
++ *	 When deriving the boundaries of a fragment from a gpa, all but the last
++ *	 fragment end at the end of the page.
++ *
++ * Return:
++ * * 0		- success
++ * * <0		- translation could not be performed, for example if  guest
++ *		  memory could not be accessed
++ * * >0		- an access exception occurred. In this case the returned value
++ *		  is the program interruption code and the contents of pgm may
++ *		  be used to inject an exception into the guest.
++ */
++static int guest_range_to_gpas(struct kvm_vcpu *vcpu, unsigned long ga, u8 ar,
++			       unsigned long *gpas, unsigned long len,
++			       const union asce asce, enum gacc_mode mode)
+ {
+ 	psw_t *psw = &vcpu->arch.sie_block->gpsw;
++	unsigned int offset = offset_in_page(ga);
++	unsigned int fragment_len;
+ 	int lap_enabled, rc = 0;
+ 	enum prot_type prot;
++	unsigned long gpa;
+ 
+ 	lap_enabled = low_address_protection_enabled(vcpu, asce);
+-	while (nr_pages) {
++	while (min(PAGE_SIZE - offset, len) > 0) {
++		fragment_len = min(PAGE_SIZE - offset, len);
+ 		ga = kvm_s390_logical_to_effective(vcpu, ga);
+ 		if (mode == GACC_STORE && lap_enabled && is_low_address(ga))
+ 			return trans_exc(vcpu, PGM_PROTECTION, ga, ar, mode,
+ 					 PROT_TYPE_LA);
+-		ga &= PAGE_MASK;
+ 		if (psw_bits(*psw).dat) {
+-			rc = guest_translate(vcpu, ga, pages, asce, mode, &prot);
++			rc = guest_translate(vcpu, ga, &gpa, asce, mode, &prot);
+ 			if (rc < 0)
+ 				return rc;
+ 		} else {
+-			*pages = kvm_s390_real_to_abs(vcpu, ga);
+-			if (kvm_is_error_gpa(vcpu->kvm, *pages))
++			gpa = kvm_s390_real_to_abs(vcpu, ga);
++			if (kvm_is_error_gpa(vcpu->kvm, gpa))
+ 				rc = PGM_ADDRESSING;
+ 		}
+ 		if (rc)
+ 			return trans_exc(vcpu, rc, ga, ar, mode, prot);
+-		ga += PAGE_SIZE;
+-		pages++;
+-		nr_pages--;
++		if (gpas)
++			*gpas++ = gpa;
++		offset = 0;
++		ga += fragment_len;
++		len -= fragment_len;
+ 	}
+ 	return 0;
+ }
+@@ -831,10 +870,10 @@ int access_guest(struct kvm_vcpu *vcpu, unsigned long ga, u8 ar, void *data,
+ 		 unsigned long len, enum gacc_mode mode)
+ {
+ 	psw_t *psw = &vcpu->arch.sie_block->gpsw;
+-	unsigned long nr_pages, gpa, idx;
+-	unsigned long pages_array[2];
++	unsigned long nr_pages, idx;
++	unsigned long gpa_array[2];
+ 	unsigned int fragment_len;
+-	unsigned long *pages;
++	unsigned long *gpas;
+ 	int need_ipte_lock;
+ 	union asce asce;
+ 	int rc;
+@@ -846,30 +885,28 @@ int access_guest(struct kvm_vcpu *vcpu, unsigned long ga, u8 ar, void *data,
+ 	if (rc)
+ 		return rc;
+ 	nr_pages = (((ga & ~PAGE_MASK) + len - 1) >> PAGE_SHIFT) + 1;
+-	pages = pages_array;
+-	if (nr_pages > ARRAY_SIZE(pages_array))
+-		pages = vmalloc(array_size(nr_pages, sizeof(unsigned long)));
+-	if (!pages)
++	gpas = gpa_array;
++	if (nr_pages > ARRAY_SIZE(gpa_array))
++		gpas = vmalloc(array_size(nr_pages, sizeof(unsigned long)));
++	if (!gpas)
+ 		return -ENOMEM;
+ 	need_ipte_lock = psw_bits(*psw).dat && !asce.r;
+ 	if (need_ipte_lock)
+ 		ipte_lock(vcpu);
+-	rc = guest_page_range(vcpu, ga, ar, pages, nr_pages, asce, mode);
++	rc = guest_range_to_gpas(vcpu, ga, ar, gpas, len, asce, mode);
+ 	for (idx = 0; idx < nr_pages && !rc; idx++) {
+-		gpa = pages[idx] + offset_in_page(ga);
+-		fragment_len = min(PAGE_SIZE - offset_in_page(gpa), len);
++		fragment_len = min(PAGE_SIZE - offset_in_page(gpas[idx]), len);
+ 		if (mode == GACC_STORE)
+-			rc = kvm_write_guest(vcpu->kvm, gpa, data, fragment_len);
++			rc = kvm_write_guest(vcpu->kvm, gpas[idx], data, fragment_len);
+ 		else
+-			rc = kvm_read_guest(vcpu->kvm, gpa, data, fragment_len);
++			rc = kvm_read_guest(vcpu->kvm, gpas[idx], data, fragment_len);
+ 		len -= fragment_len;
+-		ga += fragment_len;
+ 		data += fragment_len;
+ 	}
+ 	if (need_ipte_lock)
+ 		ipte_unlock(vcpu);
+-	if (nr_pages > ARRAY_SIZE(pages_array))
+-		vfree(pages);
++	if (nr_pages > ARRAY_SIZE(gpa_array))
++		vfree(gpas);
+ 	return rc;
+ }
+ 
+@@ -906,8 +943,6 @@ int access_guest_real(struct kvm_vcpu *vcpu, unsigned long gra,
+ int guest_translate_address(struct kvm_vcpu *vcpu, unsigned long gva, u8 ar,
+ 			    unsigned long *gpa, enum gacc_mode mode)
+ {
+-	psw_t *psw = &vcpu->arch.sie_block->gpsw;
+-	enum prot_type prot;
+ 	union asce asce;
+ 	int rc;
+ 
+@@ -915,23 +950,7 @@ int guest_translate_address(struct kvm_vcpu *vcpu, unsigned long gva, u8 ar,
+ 	rc = get_vcpu_asce(vcpu, &asce, gva, ar, mode);
+ 	if (rc)
+ 		return rc;
+-	if (is_low_address(gva) && low_address_protection_enabled(vcpu, asce)) {
+-		if (mode == GACC_STORE)
+-			return trans_exc(vcpu, PGM_PROTECTION, gva, 0,
+-					 mode, PROT_TYPE_LA);
+-	}
+-
+-	if (psw_bits(*psw).dat && !asce.r) {	/* Use DAT? */
+-		rc = guest_translate(vcpu, gva, gpa, asce, mode, &prot);
+-		if (rc > 0)
+-			return trans_exc(vcpu, rc, gva, 0, mode, prot);
+-	} else {
+-		*gpa = kvm_s390_real_to_abs(vcpu, gva);
+-		if (kvm_is_error_gpa(vcpu->kvm, *gpa))
+-			return trans_exc(vcpu, rc, gva, PGM_ADDRESSING, mode, 0);
+-	}
+-
+-	return rc;
++	return guest_range_to_gpas(vcpu, gva, ar, gpa, 1, asce, mode);
+ }
+ 
+ /**
+@@ -940,17 +959,14 @@ int guest_translate_address(struct kvm_vcpu *vcpu, unsigned long gva, u8 ar,
+ int check_gva_range(struct kvm_vcpu *vcpu, unsigned long gva, u8 ar,
+ 		    unsigned long length, enum gacc_mode mode)
+ {
+-	unsigned long gpa;
+-	unsigned long currlen;
++	union asce asce;
+ 	int rc = 0;
+ 
++	rc = get_vcpu_asce(vcpu, &asce, gva, ar, mode);
++	if (rc)
++		return rc;
+ 	ipte_lock(vcpu);
+-	while (length > 0 && !rc) {
+-		currlen = min(length, PAGE_SIZE - (gva % PAGE_SIZE));
+-		rc = guest_translate_address(vcpu, gva, ar, &gpa, mode);
+-		gva += currlen;
+-		length -= currlen;
+-	}
++	rc = guest_range_to_gpas(vcpu, gva, ar, NULL, length, asce, mode);
+ 	ipte_unlock(vcpu);
+ 
+ 	return rc;
+-- 
+2.43.0
+
 
 
