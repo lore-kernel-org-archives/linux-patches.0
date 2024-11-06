@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B6D1FBF71;
-	Wed,  6 Nov 2024 12:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DA91FBF6A;
+	Wed,  6 Nov 2024 12:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897720; cv=none; b=Ikk4gcO4j3yHeot4R1ZSO6MrQOsevYjffhaALIpT6wNLEF3pWUXBH7Mfx+VGCaYJgh6wbeCa1bziwalCeKt/b+bq3398XQJ14khws0WbaWnKZsv1lG2r8+Wv0KREZ24ZHisYoLmJjH/zh10Qc2q5/kGQ9DnV4kbDF+q9kWNUQtM=
+	t=1730897723; cv=none; b=dsML9gn5p3W/gKdO/qRT3p2UgXk8tpiFccsgvmi6t56DYbW/rmyJTmrwoMOmJ8TkWCT3MYVqiac4nyVZHVjLBGb5dpVIdILZC6nm/zb8K/Lm9VQFJNmBwpZHHXuc2xLqsdmGXWC9+8YmoGtZEz8scmMD64g3FciSCfl5xJHclBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897720; c=relaxed/simple;
-	bh=XYnddLXQHhjvKO4fKCqXng+VHktlA6p4xkZcDol+nC4=;
+	s=arc-20240116; t=1730897723; c=relaxed/simple;
+	bh=eNPZUO9ZqfSu2Pdr/YBQPtfYNnh6ht+RQ1YSXbmXaKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NYlyrP88NlzNcQ1V/9YWcwrPfiNuaaTk9AN1Df0FCVPI1nCQnsYN2uFixyFxh70TG3mT9111NPwjNkpSr0XsjXJjSakLcn6T8HbqjgbBr+yxLeVsRBEcNfMIo15OZ2402QweSmLgBXzDsllF+OHyVQ+kEl9AOKVwwa9TigG5CaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c6hbA9dM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FrEqcG6I/qql7a5iorWG7Yv7t6p0a89aPm9F98spCx4rfaKnWOOKP5xqYlWN39UdlG6UBStUhWq4FJ3SLEIi/qljpGu+UtfGR9YIpaBLpoHSH8GdLJBUI1BzOPljZzpvzVdRq/bdAHEeQcyh7vcReieSQngHwBo4JQ5C1GyL8tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsOuEbg1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c6hbA9dM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B64C4CECD;
-	Wed,  6 Nov 2024 12:55:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsOuEbg1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D648FC4CECD;
+	Wed,  6 Nov 2024 12:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897720;
-	bh=XYnddLXQHhjvKO4fKCqXng+VHktlA6p4xkZcDol+nC4=;
+	s=korg; t=1730897723;
+	bh=eNPZUO9ZqfSu2Pdr/YBQPtfYNnh6ht+RQ1YSXbmXaKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c6hbA9dM30LglIa8fFrVT7P0q+jinNAvMVClD7Mdq4UkESRguWyO0rSjfU9gR2Jul
-	 0xIYMdD4cTtPuU0BV1jZ5djT0prqWcS0cm6oQWVWvyhLZ+1iRMGeZxIO4daOLkOOoO
-	 Th3gIFmhFjZcERqxrdHmqX5mV/XPUwH5IZsgSSgc=
+	b=rsOuEbg1SygU2z0u1BdNhytunwvNH0xlHjV1LQOX74Pd/9s60WHBJGNN1WZPB4I/Q
+	 HmjBAi1//A8bZBsAxMMRkjiHf/d1jgJvUyfeamr8kYvLRRFia0IVYoFT9MdGIkqlae
+	 2m7baCmUcRgITELUzDp4wKUY17/hqGXsnmyFa8LE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 147/151] ASoC: SOF: ipc4-topology: Add definition for generic switch/enum control
-Date: Wed,  6 Nov 2024 13:05:35 +0100
-Message-ID: <20241106120312.894161753@linuxfoundation.org>
+Subject: [PATCH 6.6 148/151] ASoC: SOF: ipc4-control: Add support for ALSA switch control
+Date: Wed,  6 Nov 2024 13:05:36 +0100
+Message-ID: <20241106120312.919518958@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -54,64 +54,191 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 060a07cd9bc69eba2da33ed96b1fa69ead60bab1 upstream.
+commit 4a2fd607b7ca6128ee3532161505da7624197f55 upstream.
 
-Currently IPC4 has no notion of a switch or enum type of control which is
-a generic concept in ALSA.
-
-The generic support for these control types will be as follows:
-- large config is used to send the channel-value par array
-- param_id of a SWITCH type is 200
-- param_id of an ENUM type is 201
-
-Each module need to support a switch or/and enum must handle these
-universal param_ids.
-The message payload is described by struct sof_ipc4_control_msg_payload.
+Volume controls with a max value of 1 are switches.
+Switch controls use generic param_id and a generic struct where the data
+is passed to the firmware.
 
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
 Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230919103115.30783-2-peter.ujfalusi@linux.intel.com
+Link: https://lore.kernel.org/r/20230919103115.30783-3-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/ipc4-topology.h |   19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ sound/soc/sof/ipc4-control.c  |  111 +++++++++++++++++++++++++++++++++++++++++-
+ sound/soc/sof/ipc4-topology.c |   16 ++++--
+ 2 files changed, 122 insertions(+), 5 deletions(-)
 
---- a/sound/soc/sof/ipc4-topology.h
-+++ b/sound/soc/sof/ipc4-topology.h
-@@ -319,7 +319,7 @@ struct sof_ipc4_copier {
- /**
-  * struct sof_ipc4_ctrl_value_chan: generic channel mapped value data
-  * @channel: Channel ID
-- * @value: gain value
-+ * @value: Value associated with @channel
-  */
- struct sof_ipc4_ctrl_value_chan {
- 	u32 channel;
-@@ -343,6 +343,23 @@ struct sof_ipc4_control_data {
- 	};
- };
+--- a/sound/soc/sof/ipc4-control.c
++++ b/sound/soc/sof/ipc4-control.c
+@@ -201,6 +201,102 @@ static int sof_ipc4_volume_get(struct sn
+ 	return 0;
+ }
  
-+#define SOF_IPC4_SWITCH_CONTROL_PARAM_ID	200
-+#define SOF_IPC4_ENUM_CONTROL_PARAM_ID		201
++static int
++sof_ipc4_set_generic_control_data(struct snd_sof_dev *sdev,
++				  struct snd_sof_widget *swidget,
++				  struct snd_sof_control *scontrol, bool lock)
++{
++	struct sof_ipc4_control_data *cdata = scontrol->ipc_control_data;
++	struct sof_ipc4_control_msg_payload *data;
++	struct sof_ipc4_msg *msg = &cdata->msg;
++	size_t data_size;
++	unsigned int i;
++	int ret;
 +
-+/**
-+ * struct sof_ipc4_control_msg_payload - IPC payload for kcontrol parameters
-+ * @id: unique id of the control
-+ * @num_elems: Number of elements in the chanv array
-+ * @reserved: reserved for future use, must be set to 0
-+ * @chanv: channel ID and value array
-+ */
-+struct sof_ipc4_control_msg_payload {
-+	uint16_t id;
-+	uint16_t num_elems;
-+	uint32_t reserved[4];
-+	DECLARE_FLEX_ARRAY(struct sof_ipc4_ctrl_value_chan, chanv);
-+} __packed;
++	data_size = struct_size(data, chanv, scontrol->num_channels);
++	data = kzalloc(data_size, GFP_KERNEL);
++	if (!data)
++		return -ENOMEM;
 +
- /**
-  * struct sof_ipc4_gain_params - IPC gain parameters
-  * @channels: Channels
++	data->id = cdata->index;
++	data->num_elems = scontrol->num_channels;
++	for (i = 0; i < scontrol->num_channels; i++) {
++		data->chanv[i].channel = cdata->chanv[i].channel;
++		data->chanv[i].value = cdata->chanv[i].value;
++	}
++
++	msg->data_ptr = data;
++	msg->data_size = data_size;
++
++	ret = sof_ipc4_set_get_kcontrol_data(scontrol, true, lock);
++	msg->data_ptr = NULL;
++	msg->data_size = 0;
++	if (ret < 0)
++		dev_err(sdev->dev, "Failed to set control update for %s\n",
++			scontrol->name);
++
++	kfree(data);
++
++	return ret;
++}
++
++static bool sof_ipc4_switch_put(struct snd_sof_control *scontrol,
++				struct snd_ctl_elem_value *ucontrol)
++{
++	struct sof_ipc4_control_data *cdata = scontrol->ipc_control_data;
++	struct snd_soc_component *scomp = scontrol->scomp;
++	struct snd_sof_dev *sdev = snd_soc_component_get_drvdata(scomp);
++	struct snd_sof_widget *swidget;
++	bool widget_found = false;
++	bool change = false;
++	unsigned int i;
++	u32 value;
++	int ret;
++
++	/* update each channel */
++	for (i = 0; i < scontrol->num_channels; i++) {
++		value = ucontrol->value.integer.value[i];
++		change = change || (value != cdata->chanv[i].value);
++		cdata->chanv[i].channel = i;
++		cdata->chanv[i].value = value;
++	}
++
++	if (!pm_runtime_active(scomp->dev))
++		return change;
++
++	/* find widget associated with the control */
++	list_for_each_entry(swidget, &sdev->widget_list, list) {
++		if (swidget->comp_id == scontrol->comp_id) {
++			widget_found = true;
++			break;
++		}
++	}
++
++	if (!widget_found) {
++		dev_err(scomp->dev, "Failed to find widget for kcontrol %s\n", scontrol->name);
++		return false;
++	}
++
++	ret = sof_ipc4_set_generic_control_data(sdev, swidget, scontrol, true);
++	if (ret < 0)
++		return false;
++
++	return change;
++}
++
++static int sof_ipc4_switch_get(struct snd_sof_control *scontrol,
++			       struct snd_ctl_elem_value *ucontrol)
++{
++	struct sof_ipc4_control_data *cdata = scontrol->ipc_control_data;
++	unsigned int i;
++
++	/* read back each channel */
++	for (i = 0; i < scontrol->num_channels; i++)
++		ucontrol->value.integer.value[i] = cdata->chanv[i].value;
++
++	return 0;
++}
++
+ static int sof_ipc4_set_get_bytes_data(struct snd_sof_dev *sdev,
+ 				       struct snd_sof_control *scontrol,
+ 				       bool set, bool lock)
+@@ -438,6 +534,16 @@ static int sof_ipc4_bytes_ext_volatile_g
+ 	return _sof_ipc4_bytes_ext_get(scontrol, binary_data, size, true);
+ }
+ 
++static int
++sof_ipc4_volsw_setup(struct snd_sof_dev *sdev, struct snd_sof_widget *swidget,
++		     struct snd_sof_control *scontrol)
++{
++	if (scontrol->max == 1)
++		return sof_ipc4_set_generic_control_data(sdev, swidget, scontrol, false);
++
++	return sof_ipc4_set_volume_data(sdev, swidget, scontrol, false);
++}
++
+ /* set up all controls for the widget */
+ static int sof_ipc4_widget_kcontrol_setup(struct snd_sof_dev *sdev, struct snd_sof_widget *swidget)
+ {
+@@ -450,8 +556,7 @@ static int sof_ipc4_widget_kcontrol_setu
+ 			case SND_SOC_TPLG_CTL_VOLSW:
+ 			case SND_SOC_TPLG_CTL_VOLSW_SX:
+ 			case SND_SOC_TPLG_CTL_VOLSW_XR_SX:
+-				ret = sof_ipc4_set_volume_data(sdev, swidget,
+-							       scontrol, false);
++				ret = sof_ipc4_volsw_setup(sdev, swidget, scontrol);
+ 				break;
+ 			case SND_SOC_TPLG_CTL_BYTES:
+ 				ret = sof_ipc4_set_get_bytes_data(sdev, scontrol,
+@@ -498,6 +603,8 @@ sof_ipc4_set_up_volume_table(struct snd_
+ const struct sof_ipc_tplg_control_ops tplg_ipc4_control_ops = {
+ 	.volume_put = sof_ipc4_volume_put,
+ 	.volume_get = sof_ipc4_volume_get,
++	.switch_put = sof_ipc4_switch_put,
++	.switch_get = sof_ipc4_switch_get,
+ 	.bytes_put = sof_ipc4_bytes_put,
+ 	.bytes_get = sof_ipc4_bytes_get,
+ 	.bytes_ext_put = sof_ipc4_bytes_ext_put,
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -2127,12 +2127,22 @@ static int sof_ipc4_control_load_volume(
+ 	msg->primary |= SOF_IPC4_MSG_DIR(SOF_IPC4_MSG_REQUEST);
+ 	msg->primary |= SOF_IPC4_MSG_TARGET(SOF_IPC4_MODULE_MSG);
+ 
+-	msg->extension = SOF_IPC4_MOD_EXT_MSG_PARAM_ID(SOF_IPC4_GAIN_PARAM_ID);
++	/* volume controls with range 0-1 (off/on) are switch controls */
++	if (scontrol->max == 1)
++		msg->extension = SOF_IPC4_MOD_EXT_MSG_PARAM_ID(SOF_IPC4_SWITCH_CONTROL_PARAM_ID);
++	else
++		msg->extension = SOF_IPC4_MOD_EXT_MSG_PARAM_ID(SOF_IPC4_GAIN_PARAM_ID);
+ 
+-	/* set default volume values to 0dB in control */
+ 	for (i = 0; i < scontrol->num_channels; i++) {
+ 		control_data->chanv[i].channel = i;
+-		control_data->chanv[i].value = SOF_IPC4_VOL_ZERO_DB;
++		/*
++		 * Default, initial values:
++		 * - 0dB for volume controls
++		 * - off (0) for switch controls - value already zero after
++		 *				   memory allocation
++		 */
++		if (scontrol->max > 1)
++			control_data->chanv[i].value = SOF_IPC4_VOL_ZERO_DB;
+ 	}
+ 
+ 	return 0;
 
 
