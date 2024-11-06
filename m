@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88CFA1E0DC4;
-	Wed,  6 Nov 2024 12:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791331DE3B5;
+	Wed,  6 Nov 2024 12:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897429; cv=none; b=Ri81HXOX1RcpV6/i5c6prCm2Yd+HI8EwED7AZsYio8cHjgHhalC2/P65l/n5kGETLk/+nFgqBaJ6PxynTI6WaE//SLuaLI9dj9EDBGRkkoOsf3WwQMzGbLhqS1lCp942EnbYXkDcHpSsSuo2JRwodynayD9cHpKXYIX6JFCQ/CU=
+	t=1730897432; cv=none; b=VWJu1enczC0xuXc5JT6Nc5XSpC5fk/6z+8zmgQ545CV1wUQkHVe7MJdr08cTtusK/jJoe+jIaLgQJPaVrvworL1GPDlljoZnvNhtFBHXs+OSCkTuh+uxYfrSPZbC95ZIRzx7disU5JVzoshm8iAceuLXoRCm7rbezJkyptjp2qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897429; c=relaxed/simple;
-	bh=p61fEAi7DisFc1HR224EB7j8VyRM0rqT4vdnWV1lNB0=;
+	s=arc-20240116; t=1730897432; c=relaxed/simple;
+	bh=ohtfN00Whm0YWCJcZKOiavRVJH+nVkFAZJXxf15sYoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eGvf8HIMDBRPIJVWWdLA+GInMT2Tx0RlBPkYMBZyD1MhIk90ucV96BJJzDdI293EnaWKof2b/fqGW754Mm51JnKU6n4xHdAPYZupreY0HpU8Lt0VETmc66kyWeDK6QVnA+XKrm6c08uKDwmK5Ey0mORvfdt4Wre6TfExS+V1kkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QhuPQdsR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tNKf/Znvr5Tb555tG31LhH7LPnxPCwB2WFnM594ytYMNpUQ7GJWKPc9Kwi3s848pkGJ7dDsRWC/fIslIjx/E5+j77ldmxbCyQ/FmuNsuygih8+FY86AfhhsqJDoAV3Z7GDmI0ZOYj3UI5A2uJzLosJQ7ojOizWAiJwsFuRuDKaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxVbpYe6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QhuPQdsR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0F5C4CECD;
-	Wed,  6 Nov 2024 12:50:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxVbpYe6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000CAC4CECD;
+	Wed,  6 Nov 2024 12:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897429;
-	bh=p61fEAi7DisFc1HR224EB7j8VyRM0rqT4vdnWV1lNB0=;
+	s=korg; t=1730897432;
+	bh=ohtfN00Whm0YWCJcZKOiavRVJH+nVkFAZJXxf15sYoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QhuPQdsRI4U883X0wEO3TSMJvnzE14Ogf9brNjVUwEjnq0Yf0UzQWbZTSXMw86nLU
-	 gSijqi8bMGA18uzXNVS2T6F5fr9/IRML8ivTAssaUOaRRb4HYFwqSe/DIqWvrXPcOv
-	 st0LSadmuLMQcSKFfyXDiAyZA7iFIOPxjTk8ta/Y=
+	b=kxVbpYe6AcHKdM6OfT05iqW0OWvx3aCYWWN2bvGp/tRr0ABut+Ce4TD6bO5rGbDP1
+	 qMSefkH/PUsxuAZnPDsIc+kJGyVHjid4/yTBNHYFcgkN9MS1mcTe8Rzylw7qJl8E3q
+	 dNSRCzc842UvRlrpJjExWjHSd7jGLo7wSYx7Da9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/151] ACPI: CPPC: Make rmw_lock a raw_spin_lock
-Date: Wed,  6 Nov 2024 13:03:59 +0100
-Message-ID: <20241106120310.240308204@linuxfoundation.org>
+Subject: [PATCH 6.6 034/151] netfilter: nf_reject_ipv6: fix potential crash in nf_send_reset6()
+Date: Wed,  6 Nov 2024 13:03:42 +0100
+Message-ID: <20241106120309.774381273@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -51,126 +52,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre Gondois <pierre.gondois@arm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1c10941e34c5fdc0357e46a25bd130d9cf40b925 ]
+[ Upstream commit 4ed234fe793f27a3b151c43d2106df2ff0d81aac ]
 
-The following BUG was triggered:
+I got a syzbot report without a repro [1] crashing in nf_send_reset6()
 
-=============================
-[ BUG: Invalid wait context ]
-6.12.0-rc2-XXX #406 Not tainted
------------------------------
-kworker/1:1/62 is trying to lock:
-ffffff8801593030 (&cpc_ptr->rmw_lock){+.+.}-{3:3}, at: cpc_write+0xcc/0x370
-other info that might help us debug this:
-context-{5:5}
-2 locks held by kworker/1:1/62:
-  #0: ffffff897ef5ec98 (&rq->__lock){-.-.}-{2:2}, at: raw_spin_rq_lock_nested+0x2c/0x50
-  #1: ffffff880154e238 (&sg_policy->update_lock){....}-{2:2}, at: sugov_update_shared+0x3c/0x280
-stack backtrace:
-CPU: 1 UID: 0 PID: 62 Comm: kworker/1:1 Not tainted 6.12.0-rc2-g9654bd3e8806 #406
-Workqueue:  0x0 (events)
-Call trace:
-  dump_backtrace+0xa4/0x130
-  show_stack+0x20/0x38
-  dump_stack_lvl+0x90/0xd0
-  dump_stack+0x18/0x28
-  __lock_acquire+0x480/0x1ad8
-  lock_acquire+0x114/0x310
-  _raw_spin_lock+0x50/0x70
-  cpc_write+0xcc/0x370
-  cppc_set_perf+0xa0/0x3a8
-  cppc_cpufreq_fast_switch+0x40/0xc0
-  cpufreq_driver_fast_switch+0x4c/0x218
-  sugov_update_shared+0x234/0x280
-  update_load_avg+0x6ec/0x7b8
-  dequeue_entities+0x108/0x830
-  dequeue_task_fair+0x58/0x408
-  __schedule+0x4f0/0x1070
-  schedule+0x54/0x130
-  worker_thread+0xc0/0x2e8
-  kthread+0x130/0x148
-  ret_from_fork+0x10/0x20
+I think the issue is that dev->hard_header_len is zero, and we attempt
+later to push an Ethernet header.
 
-sugov_update_shared() locks a raw_spinlock while cpc_write() locks a
-spinlock.
+Use LL_MAX_HEADER, as other functions in net/ipv6/netfilter/nf_reject_ipv6.c.
 
-To have a correct wait-type order, update rmw_lock to a raw spinlock and
-ensure that interrupts will be disabled on the CPU holding it.
+[1]
 
-Fixes: 60949b7b8054 ("ACPI: CPPC: Fix MASK_VAL() usage")
-Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
-Link: https://patch.msgid.link/20241028125657.1271512-1-pierre.gondois@arm.com
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+skbuff: skb_under_panic: text:ffffffff89b1d008 len:74 put:14 head:ffff88803123aa00 data:ffff88803123a9f2 tail:0x3c end:0x140 dev:syz_tun
+ kernel BUG at net/core/skbuff.c:206 !
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 0 UID: 0 PID: 7373 Comm: syz.1.568 Not tainted 6.12.0-rc2-syzkaller-00631-g6d858708d465 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+ RIP: 0010:skb_panic net/core/skbuff.c:206 [inline]
+ RIP: 0010:skb_under_panic+0x14b/0x150 net/core/skbuff.c:216
+Code: 0d 8d 48 c7 c6 60 a6 29 8e 48 8b 54 24 08 8b 0c 24 44 8b 44 24 04 4d 89 e9 50 41 54 41 57 41 56 e8 ba 30 38 02 48 83 c4 20 90 <0f> 0b 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3
+RSP: 0018:ffffc900045269b0 EFLAGS: 00010282
+RAX: 0000000000000088 RBX: dffffc0000000000 RCX: cd66dacdc5d8e800
+RDX: 0000000000000000 RSI: 0000000000000200 RDI: 0000000000000000
+RBP: ffff88802d39a3d0 R08: ffffffff8174afec R09: 1ffff920008a4ccc
+R10: dffffc0000000000 R11: fffff520008a4ccd R12: 0000000000000140
+R13: ffff88803123aa00 R14: ffff88803123a9f2 R15: 000000000000003c
+FS:  00007fdbee5ff6c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 000000005d322000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+  skb_push+0xe5/0x100 net/core/skbuff.c:2636
+  eth_header+0x38/0x1f0 net/ethernet/eth.c:83
+  dev_hard_header include/linux/netdevice.h:3208 [inline]
+  nf_send_reset6+0xce6/0x1270 net/ipv6/netfilter/nf_reject_ipv6.c:358
+  nft_reject_inet_eval+0x3b9/0x690 net/netfilter/nft_reject_inet.c:48
+  expr_call_ops_eval net/netfilter/nf_tables_core.c:240 [inline]
+  nft_do_chain+0x4ad/0x1da0 net/netfilter/nf_tables_core.c:288
+  nft_do_chain_inet+0x418/0x6b0 net/netfilter/nft_chain_filter.c:161
+  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+  nf_hook_slow+0xc3/0x220 net/netfilter/core.c:626
+  nf_hook include/linux/netfilter.h:269 [inline]
+  NF_HOOK include/linux/netfilter.h:312 [inline]
+  br_nf_pre_routing_ipv6+0x63e/0x770 net/bridge/br_netfilter_ipv6.c:184
+  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+  nf_hook_bridge_pre net/bridge/br_input.c:277 [inline]
+  br_handle_frame+0x9fd/0x1530 net/bridge/br_input.c:424
+  __netif_receive_skb_core+0x13e8/0x4570 net/core/dev.c:5562
+  __netif_receive_skb_one_core net/core/dev.c:5666 [inline]
+  __netif_receive_skb+0x12f/0x650 net/core/dev.c:5781
+  netif_receive_skb_internal net/core/dev.c:5867 [inline]
+  netif_receive_skb+0x1e8/0x890 net/core/dev.c:5926
+  tun_rx_batched+0x1b7/0x8f0 drivers/net/tun.c:1550
+  tun_get_user+0x3056/0x47e0 drivers/net/tun.c:2007
+  tun_chr_write_iter+0x10d/0x1f0 drivers/net/tun.c:2053
+  new_sync_write fs/read_write.c:590 [inline]
+  vfs_write+0xa6d/0xc90 fs/read_write.c:683
+  ksys_write+0x183/0x2b0 fs/read_write.c:736
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fdbeeb7d1ff
+Code: 89 54 24 18 48 89 74 24 10 89 7c 24 08 e8 c9 8d 02 00 48 8b 54 24 18 48 8b 74 24 10 41 89 c0 8b 7c 24 08 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 31 44 89 c7 48 89 44 24 08 e8 1c 8e 02 00 48
+RSP: 002b:00007fdbee5ff000 EFLAGS: 00000293 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 00007fdbeed36058 RCX: 00007fdbeeb7d1ff
+RDX: 000000000000008e RSI: 0000000020000040 RDI: 00000000000000c8
+RBP: 00007fdbeebf12be R08: 0000000000000000 R09: 0000000000000000
+R10: 000000000000008e R11: 0000000000000293 R12: 0000000000000000
+R13: 0000000000000000 R14: 00007fdbeed36058 R15: 00007ffc38de06e8
+ </TASK>
+
+Fixes: c8d7b98bec43 ("netfilter: move nf_send_resetX() code to nf_reject_ipvX modules")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c | 9 +++++----
- include/acpi/cppc_acpi.h | 2 +-
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ net/ipv6/netfilter/nf_reject_ipv6.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index 5df417626fd10..26d1beec99137 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -863,7 +863,7 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
+index 4e0976534648c..e4776bd2ed89b 100644
+--- a/net/ipv6/netfilter/nf_reject_ipv6.c
++++ b/net/ipv6/netfilter/nf_reject_ipv6.c
+@@ -268,12 +268,12 @@ static int nf_reject6_fill_skb_dst(struct sk_buff *skb_in)
+ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+ 		    int hook)
+ {
+-	struct sk_buff *nskb;
+-	struct tcphdr _otcph;
+-	const struct tcphdr *otcph;
+-	unsigned int otcplen, hh_len;
+ 	const struct ipv6hdr *oip6h = ipv6_hdr(oldskb);
+ 	struct dst_entry *dst = NULL;
++	const struct tcphdr *otcph;
++	struct sk_buff *nskb;
++	struct tcphdr _otcph;
++	unsigned int otcplen;
+ 	struct flowi6 fl6;
  
- 	/* Store CPU Logical ID */
- 	cpc_ptr->cpu_id = pr->id;
--	spin_lock_init(&cpc_ptr->rmw_lock);
-+	raw_spin_lock_init(&cpc_ptr->rmw_lock);
+ 	if ((!(ipv6_addr_type(&oip6h->saddr) & IPV6_ADDR_UNICAST)) ||
+@@ -312,9 +312,8 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+ 	if (IS_ERR(dst))
+ 		return;
  
- 	/* Parse PSD data for this CPU */
- 	ret = acpi_get_psd(cpc_ptr, handle);
-@@ -1083,6 +1083,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
- 	int pcc_ss_id = per_cpu(cpu_pcc_subspace_idx, cpu);
- 	struct cpc_reg *reg = &reg_res->cpc_entry.reg;
- 	struct cpc_desc *cpc_desc;
-+	unsigned long flags;
+-	hh_len = (dst->dev->hard_header_len + 15)&~15;
+-	nskb = alloc_skb(hh_len + 15 + dst->header_len + sizeof(struct ipv6hdr)
+-			 + sizeof(struct tcphdr) + dst->trailer_len,
++	nskb = alloc_skb(LL_MAX_HEADER + sizeof(struct ipv6hdr) +
++			 sizeof(struct tcphdr) + dst->trailer_len,
+ 			 GFP_ATOMIC);
  
- 	size = GET_BIT_WIDTH(reg);
+ 	if (!nskb) {
+@@ -327,7 +326,7 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
  
-@@ -1122,7 +1123,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
- 			return -ENODEV;
- 		}
+ 	nskb->mark = fl6.flowi6_mark;
  
--		spin_lock(&cpc_desc->rmw_lock);
-+		raw_spin_lock_irqsave(&cpc_desc->rmw_lock, flags);
- 		switch (size) {
- 		case 8:
- 			prev_val = readb_relaxed(vaddr);
-@@ -1137,7 +1138,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
- 			prev_val = readq_relaxed(vaddr);
- 			break;
- 		default:
--			spin_unlock(&cpc_desc->rmw_lock);
-+			raw_spin_unlock_irqrestore(&cpc_desc->rmw_lock, flags);
- 			return -EFAULT;
- 		}
- 		val = MASK_VAL_WRITE(reg, prev_val, val);
-@@ -1170,7 +1171,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
- 	}
+-	skb_reserve(nskb, hh_len + dst->header_len);
++	skb_reserve(nskb, LL_MAX_HEADER);
+ 	nf_reject_ip6hdr_put(nskb, oldskb, IPPROTO_TCP, ip6_dst_hoplimit(dst));
+ 	nf_reject_ip6_tcphdr_put(nskb, oldskb, otcph, otcplen);
  
- 	if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
--		spin_unlock(&cpc_desc->rmw_lock);
-+		raw_spin_unlock_irqrestore(&cpc_desc->rmw_lock, flags);
- 
- 	return ret_val;
- }
-diff --git a/include/acpi/cppc_acpi.h b/include/acpi/cppc_acpi.h
-index e1720d9306669..a451ca4c207bb 100644
---- a/include/acpi/cppc_acpi.h
-+++ b/include/acpi/cppc_acpi.h
-@@ -65,7 +65,7 @@ struct cpc_desc {
- 	int write_cmd_status;
- 	int write_cmd_id;
- 	/* Lock used for RMW operations in cpc_write() */
--	spinlock_t rmw_lock;
-+	raw_spinlock_t rmw_lock;
- 	struct cpc_register_resource cpc_regs[MAX_CPC_REG_ENT];
- 	struct acpi_psd_package domain_info;
- 	struct kobject kobj;
 -- 
 2.43.0
 
