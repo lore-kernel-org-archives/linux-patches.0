@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7CA1DE4CA;
-	Wed,  6 Nov 2024 12:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA4F1DE4CA;
+	Wed,  6 Nov 2024 12:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897939; cv=none; b=a2VTH51ViAU0aw4ytS/DBngGeJT4S0HbEHe2Hn0/kq9om7ey4sohoXAUjyzMja47HNkKUmgQQrHNlpS44M+LdU4Ua19UkFvIPAVD7+egyUDLa9ht4htbkS4ELWwzb7DSqg1uB7JSWwk9aMRuyCE+I62xVGs6uFBVEKwOX1sErIY=
+	t=1730897943; cv=none; b=O0/HqrPVbbXT9fnSLeSmejX/SdhjnryUsHS5t3pIOlDXV84BFX/zQ39opMZMA56/ctZ83IG+38yYHvFAeSQxHlAYpWLJEYdvBewgS1r2C8A8LLFuYiRbp48fijk440/SwKTx8PBaT6oRAcM9q84QZYIP407s6mZ20STh+s4Oq9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897939; c=relaxed/simple;
-	bh=KEcbq12ARf44WHAIYukZWIyddhR4vj6nbyrNg8oTGr4=;
+	s=arc-20240116; t=1730897943; c=relaxed/simple;
+	bh=n/QNAnz1FQcSmi93Av0vUlfWIBPTX4ckwWJx6w7Pqzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GAYCVpuYPXIUj8Mi/Vi4w1pD5PgARK1gyZS1fuc3Dw+o3YjHdZOZUrQUvl33L/QOUFw0kZVXRd4B0eK1uGvKrG1MZXmwXCaKCmZ5wO93VDG7aGOJX8tEo9za8igdeN/ErPPVCAlDKQHp/+wYUlYODOvtE0uEymGVvb/p75IxlUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQnJe59I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XN6mRdHUAu2QC1vTXwbJyi0huQqJygc+bKwAA7iO1Wm4YEFYsRgcZ2dPfnrrYOuxcEfcoOsZh0VyyrQoihK3yBfXpzZ23hpENYVy1DAS6drvPsShgDH71yR8lTVuOLBnrLfekVAWLT6fu75LEPVJyTp74/kwJ8nyB+xeInsfteA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WBJWK2ah; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQnJe59I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0D1C4CECD;
-	Wed,  6 Nov 2024 12:58:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WBJWK2ah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3451BC4CECD;
+	Wed,  6 Nov 2024 12:59:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897939;
-	bh=KEcbq12ARf44WHAIYukZWIyddhR4vj6nbyrNg8oTGr4=;
+	s=korg; t=1730897942;
+	bh=n/QNAnz1FQcSmi93Av0vUlfWIBPTX4ckwWJx6w7Pqzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KQnJe59IY3D8mITbRC7QifuPNNd36HvrQjsNWeGFkT4E8m41Im+qVNGNEoTMFKXDi
-	 f6J8co4KZthh17NiLHSEnMqsb38SgdK2ZjIa2xT41JeNPIsX4bEKcD9x50yXgy2lQ7
-	 5G3sJTdw+6hWfHKYVsRV9Au0jbU7VFKnTIxq9cUw=
+	b=WBJWK2ahrWPmoQuHsVPGwgieVRGo8x3MJ8n/XddE7arxhJuAyF9UDmyiBPCoOU+nR
+	 pQU4+2zGnhtlPG0B/JE0tV0QjFsvzGF8qlCLMgm91oH1euWo8dBisIh5d4AkU8NZBi
+	 Kq+q32ht1tsnBCo0U3AHMVUM8KreQQicJ8RuYzIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Tobias <dan.g.tob@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jan Kara <jack@suse.cz>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Richard Weinberger <richard@nod.at>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 034/462] wifi: ath9k: Remove error checks when creating debugfs entries
-Date: Wed,  6 Nov 2024 12:58:47 +0100
-Message-ID: <20241106120332.362271934@linuxfoundation.org>
+Subject: [PATCH 5.4 035/462] fs: explicitly unregister per-superblock BDIs
+Date: Wed,  6 Nov 2024 12:58:48 +0100
+Message-ID: <20241106120332.387329940@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -46,70 +50,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit f6ffe7f0184792c2f99aca6ae5b916683973d7d3 ]
+[ Upstream commit 0b3ea0926afb8dde70cfab00316ae0a70b93a7cc ]
 
-We should not be checking the return values from debugfs creation at all: the
-debugfs functions are designed to handle errors of previously called functions
-and just transparently abort the creation of debugfs entries when debugfs is
-disabled. If we check the return value and abort driver initialisation, we break
-the driver if debugfs is disabled (such as when booting with debugfs=off).
+Add a new SB_I_ flag to mark superblocks that have an ephemeral bdi
+associated with them, and unregister it when the superblock is shut
+down.
 
-Earlier versions of ath9k accidentally did the right thing by checking the
-return value, but only for NULL, not for IS_ERR(). This was "fixed" by the two
-commits referenced below, breaking ath9k with debugfs=off starting from the 6.6
-kernel (as reported in the Bugzilla linked below).
-
-Restore functionality by just getting rid of the return value check entirely.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219122
-Fixes: 1e4134610d93 ("wifi: ath9k: use IS_ERR() with debugfs_create_dir()")
-Fixes: 6edb4ba6fb5b ("wifi: ath9k: fix parameter check in ath9k_init_debug()")
-Reported-by: Daniel Tobias <dan.g.tob@gmail.com>
-Tested-by: Daniel Tobias <dan.g.tob@gmail.com>
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://patch.msgid.link/20240805110225.19690-1-toke@toke.dk
+Link: https://lkml.kernel.org/r/20211021124441.668816-4-hch@lst.de
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Cc: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Vignesh Raghavendra <vigneshr@ti.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 4bcda1eaf184 ("mount: handle OOM on mnt_warn_timestamp_expiry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/debug.c         | 2 --
- drivers/net/wireless/ath/ath9k/htc_drv_debug.c | 2 --
- 2 files changed, 4 deletions(-)
+ fs/super.c         | 3 +++
+ include/linux/fs.h | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath9k/debug.c b/drivers/net/wireless/ath/ath9k/debug.c
-index 42f404119912f..f5773ce252dd1 100644
---- a/drivers/net/wireless/ath/ath9k/debug.c
-+++ b/drivers/net/wireless/ath/ath9k/debug.c
-@@ -1371,8 +1371,6 @@ int ath9k_init_debug(struct ath_hw *ah)
+diff --git a/fs/super.c b/fs/super.c
+index 47ca7dc0e6c3d..8edf44a2d3dcc 100644
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -475,6 +475,8 @@ void generic_shutdown_super(struct super_block *sb)
+ 	spin_unlock(&sb_lock);
+ 	up_write(&sb->s_umount);
+ 	if (sb->s_bdi != &noop_backing_dev_info) {
++		if (sb->s_iflags & SB_I_PERSB_BDI)
++			bdi_unregister(sb->s_bdi);
+ 		bdi_put(sb->s_bdi);
+ 		sb->s_bdi = &noop_backing_dev_info;
+ 	}
+@@ -1622,6 +1624,7 @@ int super_setup_bdi_name(struct super_block *sb, char *fmt, ...)
+ 	}
+ 	WARN_ON(sb->s_bdi != &noop_backing_dev_info);
+ 	sb->s_bdi = bdi;
++	sb->s_iflags |= SB_I_PERSB_BDI;
  
- 	sc->debug.debugfs_phy = debugfs_create_dir("ath9k",
- 						   sc->hw->wiphy->debugfsdir);
--	if (IS_ERR(sc->debug.debugfs_phy))
--		return -ENOMEM;
+ 	return 0;
+ }
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index d4f5fcc60744d..b21fdce37c37a 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1407,6 +1407,7 @@ extern int send_sigurg(struct fown_struct *fown);
+ #define SB_I_UNTRUSTED_MOUNTER		0x00000040
  
- #ifdef CONFIG_ATH_DEBUG
- 	debugfs_create_file("debug", 0600, sc->debug.debugfs_phy,
-diff --git a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-index e79bbcd3279af..81332086e2899 100644
---- a/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-+++ b/drivers/net/wireless/ath/ath9k/htc_drv_debug.c
-@@ -491,8 +491,6 @@ int ath9k_htc_init_debug(struct ath_hw *ah)
+ #define SB_I_SKIP_SYNC	0x00000100	/* Skip superblock at global sync */
++#define SB_I_PERSB_BDI	0x00000200	/* has a per-sb bdi */
  
- 	priv->debug.debugfs_phy = debugfs_create_dir(KBUILD_MODNAME,
- 					     priv->hw->wiphy->debugfsdir);
--	if (IS_ERR(priv->debug.debugfs_phy))
--		return -ENOMEM;
- 
- 	ath9k_cmn_spectral_init_debug(&priv->spec_priv, priv->debug.debugfs_phy);
- 
+ /* Possible states of 'frozen' field */
+ enum {
 -- 
 2.43.0
 
