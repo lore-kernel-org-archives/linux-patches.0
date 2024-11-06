@@ -1,109 +1,126 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB4C1D54C2
-	for <patches@lists.linux.dev>; Wed,  6 Nov 2024 08:20:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5411922D8;
+	Wed,  6 Nov 2024 08:43:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730881259; cv=none; b=jXNb8umt5ZvYhMCSPpBlZTgsW3+Vy4dA2E706/OWAYuJ9Wzrx2n4fCczhuOe/F11gOMTl6uPmAvdYBGCjO3scEJaUe3fDPnzjFdMsLI+NhC/HD67rGVLVmVWX7CoF4efov0QZrlG0ntt+3tvllAM4uh0b5H4fkWrJjzLx5yR6x0=
+	t=1730882603; cv=none; b=oIYlraElaSjfimk7uB4cbRWXpig5H1Rcch0Nuh1w0ozlc35RfX60KDGF+XCBkpc2CLcxt4REC/WO21iAJoXCYpzObF/TPyxgtC4O1J8C52RQqOUJuuzF/x5+khfA+miiCRnEUKwIp3hrwfVy9M1s8868dDehOHZAMLFZlHgWB8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730881259; c=relaxed/simple;
-	bh=Zbaa3THwmyR0QbbitUy47QNMG6IMEwpDVlVishwvaeQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=D5G6SeNNh9ygeN05aYm/u4iJel9Hmtb0tGK1eFRATHNx1q5Bi3c1a4262Mab/ybsBgTRCCjjHNBGe8Ts7kVyFGO0NrHQIQ5O2Asv0ZHzkiUmiE+KVcnKVmq+KA9IrH/iBql5Vqv82vhXtCmXhsPeDPuPSTp/boH8U1Q9vZDbD8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IXb9lj8j; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1730882603; c=relaxed/simple;
+	bh=2FaB9DZ+5bt0vHcem3FiA70mddNIj2sFcK506ZwMn/Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N5zlgTat+QL6S18EoUJBpbicTfyJV67uiJnUrl2YufZFFmt7PnG8ta422vI+cJjSVES3DW/uiVggo3J+23Nc2k4Nd0H8ckee3r9cL7nn9mL7eSdxYEbeNY7CIR3jAHC9qBxkq8kzY11IizGGZkazNgmYhZJkOEbMqLPPLyOsj3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hLmnbg+x; arc=none smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IXb9lj8j"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-460a8d1a9b7so130411cf.1
-        for <patches@lists.linux.dev>; Wed, 06 Nov 2024 00:20:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1730881257; x=1731486057; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9zWEHY0OXQFhrxfXe2dL4RGu6ZaPdsnfdH9+QncDVfg=;
-        b=IXb9lj8j91OStTWjisn6cYilbSn5sDB96d+UOyu13bvO/sr2z2yPJxDy22qfXFZq6A
-         6yAYnmjsMgTDs2ufMYB/eUK0pPo3nkpgc0veIc7Scm3UE/8wLMHTdrWDisPgy6QbOnEV
-         /vyDeUrdPgYWAdgw2+lAPs0NmEbSN6BGe4Lff3AyLZIf4SmWPSqjM5F5V33Vasnmt0Bv
-         g9V1msXOTaSmYqYZHnfxnULVfxL/mtK/OZBb/liCRtmuIsGSDSyZODc2gDEsK83iJQSP
-         3/iC2W1UfJJy+WO2kgBs2hvj0mV75NTxLm/JbpFxn7OJbEDKgZshah91WiNHA3IDSGME
-         o/Kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730881257; x=1731486057;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9zWEHY0OXQFhrxfXe2dL4RGu6ZaPdsnfdH9+QncDVfg=;
-        b=J4tiCAMAE4OWOO44psij3E81lp4v7zlr3/sIGBZeTWF7zEpBnE0oCnn/1V07Aan3Cw
-         yOmzDORlxHjmgfTJifHZK9StfmeFN1khHRfkwMDKr1LcANUJQJ64RCyPUj28Es1xAfxX
-         KevCCtEKZsuONEufJj5Q+Y0VPc0F4qZf3hC3kdeMUk7V6LPD83D/sajgvVfFNemw/pvO
-         DZYLvWaoEl/g8vjG4DJzav2MD9p+hpRv3jY/6TZXVh42FP5Iet4czsVqPdK2FcoOAYb0
-         Q6tdq8Sz31LapOxoI2Koe+YAe+TkpYeEBll66MyGw3vzN0nLz0JVsL2WiA+g287CH8bY
-         5Nhg==
-X-Forwarded-Encrypted: i=1; AJvYcCXKNyGFDPmdJsFT4IY39pWHQeXIj6145M9jpT5z4cc6S/Ade4VSc9MR+VrmQyhUSGph0HDedsd6@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw8jLmQjD5UBmsczb8ThUk8EHhfDNi6oeqBEArIfeoMZEFWr26n
-	7zLstCv4vbW0hPITO3T6GiB6vbLuScwVSoeRkwb+NaLt3JlLBi8ohMcv0SX1KasNWhehYACdPm7
-	//fCNN4fEIBSASswshaJFORC0GUV8+BdN7b3o9W2KlCaEWrTXLw==
-X-Gm-Gg: ASbGnctlfiX7wP7BR6Gbstph/8H/Sr1RR7b5ezpev7EqeeOt0twb5qN6XKXcXXByzUS
-	Q2EgliXRT4Re1rlvdtK0Mn1vXvWTaLLE=
-X-Google-Smtp-Source: AGHT+IHVRXb16/Eki75BEyW60A1+LleOmCRbbQLzOBFovvuid3gjU31QECFuGcSFQD7dc7heQpZVLYkLFMh9hgpf0Z8=
-X-Received: by 2002:ac8:584b:0:b0:461:32e9:c5ee with SMTP id
- d75a77b69052e-462f0024a56mr2697281cf.0.1730881256767; Wed, 06 Nov 2024
- 00:20:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hLmnbg+x"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1730882602; x=1762418602;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=2FaB9DZ+5bt0vHcem3FiA70mddNIj2sFcK506ZwMn/Q=;
+  b=hLmnbg+xuE+p5i4UrDdaXcesY6QdwzJEabK+GcFnmVwYMM+V0C7TW+0F
+   EyHTSIsmglWlRxM/EQH2SIjR3KN2HP3iZm0IntdVONmA6wsrSPgkMPiKg
+   bOzt94u98n6YhaF3aZJV9jFkVO2WRu3xJTGxirxn+PuKesa8Ga+zVAUk9
+   FVFIBS8MYW5JE76epZCt3ftYb2Aq7TbJ6dPGSzMD0OpHiWEbwy+iRPE6I
+   lTD6kjNVOS5Soj4n876N6V3PhFEyEH4yA+MMOgfHgSHLqY8F7qcN1fzRX
+   o/nNRBcutN8hOeMMV3HNLUwjBv47IRgGNnlt1H7bgMO9scryl0uIXxVvy
+   A==;
+X-CSE-ConnectionGUID: NGcJJ8Z+SharKQGdp4TkMA==
+X-CSE-MsgGUID: /RXjRShLQLyhL3IQjQ1xsA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11247"; a="30889103"
+X-IronPort-AV: E=Sophos;i="6.11,262,1725346800"; 
+   d="scan'208";a="30889103"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2024 00:43:21 -0800
+X-CSE-ConnectionGUID: FQSFjxl3TY2wyKbOXhKltw==
+X-CSE-MsgGUID: IM4k9HfgRNW2rIV3li9lkA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,262,1725346800"; 
+   d="scan'208";a="115233886"
+Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
+  by orviesa002.jf.intel.com with ESMTP; 06 Nov 2024 00:43:18 -0800
+Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1t8bdD-000n6B-37;
+	Wed, 06 Nov 2024 08:43:15 +0000
+Date: Wed, 6 Nov 2024 16:43:10 +0800
+From: kernel test robot <lkp@intel.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	Boris Brezillon <bbrezillon@kernel.org>,
+	dri-devel@lists.freedesktop.org, Liviu Dudau <liviu.dudau@arm.com>,
+	patches@lists.linux.dev, Steven Price <steven.price@arm.com>
+Subject: Re: [PATCH v3 2/3] iommu/io-pgtable-arm-v7s: Remove split on unmap
+ behavior
+Message-ID: <202411061634.3EtgZij8-lkp@intel.com>
+References: <2-v3-b3a5b5937f56+7bb-arm_no_split_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241021171003.2907935-1-surenb@google.com> <2024110639-astute-smokiness-ea1d@gregkh>
-In-Reply-To: <2024110639-astute-smokiness-ea1d@gregkh>
-From: Suren Baghdasaryan <surenb@google.com>
-Date: Wed, 6 Nov 2024 00:20:45 -0800
-Message-ID: <CAJuCfpEAKAePqbB74j8iCQ1JXrvZQbELkAMzdT7dWtvdros-Eg@mail.gmail.com>
-Subject: Re: [PATCH 6.11.y 1/2] rcu/kvfree: Add kvfree_rcu_barrier() API
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: akpm@linux-foundation.org, fw@strlen.de, urezki@gmail.com, vbabka@suse.cz, 
-	greearb@candelatech.com, kent.overstreet@linux.dev, stable@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2-v3-b3a5b5937f56+7bb-arm_no_split_jgg@nvidia.com>
 
-On Tue, Nov 5, 2024 at 11:09=E2=80=AFPM Greg KH <gregkh@linuxfoundation.org=
-> wrote:
->
-> On Mon, Oct 21, 2024 at 10:10:02AM -0700, Suren Baghdasaryan wrote:
-> > From: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
-> >
-> > From: Uladzislau Rezki <urezki@gmail.com>
-> >
-> > commit 3c5d61ae919cc377c71118ccc76fa6e8518023f8 upstream.
-> >
-> > Add a kvfree_rcu_barrier() function. It waits until all
-> > in-flight pointers are freed over RCU machinery. It does
-> > not wait any GP completion and it is within its right to
-> > return immediately if there are no outstanding pointers.
-> >
-> > This function is useful when there is a need to guarantee
-> > that a memory is fully freed before destroying memory caches.
-> > For example, during unloading a kernel module.
-> >
-> > Signed-off-by: Uladzislau Rezki (Sony) <urezki@gmail.com>
-> > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> > ---
-> >  include/linux/rcutiny.h |   5 ++
-> >  include/linux/rcutree.h |   1 +
-> >  kernel/rcu/tree.c       | 109 +++++++++++++++++++++++++++++++++++++---
-> >  3 files changed, 107 insertions(+), 8 deletions(-)
->
-> We need a signed-off-by line from you, as you did the backport here,
-> please fix that up and resend this series.
+Hi Jason,
 
-Doh! Ok, I'll resend it tomorrow morning. Thanks!
+kernel test robot noticed the following build warnings:
 
->
-> thanks,
->
-> greg k-h
+[auto build test WARNING on 8e929cb546ee42c9a61d24fae60605e9e3192354]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Jason-Gunthorpe/iommu-io-pgtable-arm-Remove-split-on-unmap-behavior/20241106-021511
+base:   8e929cb546ee42c9a61d24fae60605e9e3192354
+patch link:    https://lore.kernel.org/r/2-v3-b3a5b5937f56%2B7bb-arm_no_split_jgg%40nvidia.com
+patch subject: [PATCH v3 2/3] iommu/io-pgtable-arm-v7s: Remove split on unmap behavior
+config: arm-randconfig-004-20241106 (https://download.01.org/0day-ci/archive/20241106/202411061634.3EtgZij8-lkp@intel.com/config)
+compiler: clang version 17.0.6 (https://github.com/llvm/llvm-project 6009708b4367171ccdbf4b5905cb6a803753fe18)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241106/202411061634.3EtgZij8-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202411061634.3EtgZij8-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/iommu/io-pgtable-arm-v7s.c:823:18: warning: variable 'loopnr' set but not used [-Wunused-but-set-variable]
+     823 |         unsigned int i, loopnr = 0;
+         |                         ^
+   1 warning generated.
+
+Kconfig warnings: (for reference only)
+   WARNING: unmet direct dependencies detected for GET_FREE_REGION
+   Depends on [n]: SPARSEMEM [=n]
+   Selected by [y]:
+   - RESOURCE_KUNIT_TEST [=y] && RUNTIME_TESTING_MENU [=y] && KUNIT [=y]
+
+
+vim +/loopnr +823 drivers/iommu/io-pgtable-arm-v7s.c
+
+e5fc9753b1a831 Robin Murphy    2016-01-26  810  
+e5fc9753b1a831 Robin Murphy    2016-01-26  811  static int __init arm_v7s_do_selftests(void)
+e5fc9753b1a831 Robin Murphy    2016-01-26  812  {
+e5fc9753b1a831 Robin Murphy    2016-01-26  813  	struct io_pgtable_ops *ops;
+e5fc9753b1a831 Robin Murphy    2016-01-26  814  	struct io_pgtable_cfg cfg = {
+e5fc9753b1a831 Robin Murphy    2016-01-26  815  		.tlb = &dummy_tlb_ops,
+e5fc9753b1a831 Robin Murphy    2016-01-26  816  		.oas = 32,
+e5fc9753b1a831 Robin Murphy    2016-01-26  817  		.ias = 32,
+4f41845b340783 Will Deacon     2019-06-25  818  		.coherent_walk = true,
+4f41845b340783 Will Deacon     2019-06-25  819  		.quirks = IO_PGTABLE_QUIRK_ARM_NS,
+e5fc9753b1a831 Robin Murphy    2016-01-26  820  		.pgsize_bitmap = SZ_4K | SZ_64K | SZ_1M | SZ_16M,
+e5fc9753b1a831 Robin Murphy    2016-01-26  821  	};
+76b8c2705cdd26 Jason Gunthorpe 2024-11-05  822  	unsigned int iova, size;
+e5fc9753b1a831 Robin Murphy    2016-01-26 @823  	unsigned int i, loopnr = 0;
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
