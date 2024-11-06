@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3900B1E767B;
-	Wed,  6 Nov 2024 12:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B5C1F80C0;
+	Wed,  6 Nov 2024 12:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896664; cv=none; b=NUG1P8+boI29Mo/maCGcXS8xCPE2j9GySw7YL0N/3qogKqg7GhFPOOM+GBTpJi7BxfcJWhRTtyYvCk/+ftF+AkEbINts0iclgyronFwfwvJRceBOESBIbKTsP/gj70JhpWN4ZyhTx8EyoYx//fHXxxL3eSajwlQgFaoi0QpVFuc=
+	t=1730896667; cv=none; b=HncGBMSI7/gUGNko0zmY3nD8oMhxsrsbaMkr1nEJzN9LNc0OF6GKDye9mBKeXTaMrd7UoX3UgqFAgdS/fsIADdxwLjXxSVNP4ADsAwPuE0xDtqIZN+sHMD8rtVjhpBLPKtaT1MgnxmCOVnf/JNc5B429J7sSINNyViJd9YZqv2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896664; c=relaxed/simple;
-	bh=CsVd1JK/fPP/FWMlXxIW17RMoht1myFM6rz7w2oMt/g=;
+	s=arc-20240116; t=1730896667; c=relaxed/simple;
+	bh=OU3RzlLCl8iXChL0B99XM0H1niX5dLC+Ju24ZKy4EYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvjjHh6MIA9n2vaxR46l/V8HsnUA+IQb6FIuUVW1uFtlDRNxXQwLbcg0D12Vh8AaOughM9IJIferRwi7XfUoGDYtdd/zN9fqvCjKMtd0bssKYoSQqEkHM5OuwY4CaudcPYEWaVlUy0zcpncsdHa7cl0UJhH0xd0Tgd4SPrt7qG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKZXSm1x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SyXmRm2FkmItKerV/RUUaH3FAmDzsPOv7wbvD4OHGcZkf29zzzJj1cw2oLi0ftQcP9Vqz/4l9NHZi+2HVYpjW91xIOdFiSn8QSQV5Rpke9hQwOrInGXEw6V9K7Tyb2NDVWaWH9tk3EOZ7PGQeg/CnT8P7MA3Ogl8VEQeb1UHIRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6AuvETk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKZXSm1x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CBC8C4CECD;
-	Wed,  6 Nov 2024 12:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6AuvETk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F28CC4CED5;
+	Wed,  6 Nov 2024 12:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896663;
-	bh=CsVd1JK/fPP/FWMlXxIW17RMoht1myFM6rz7w2oMt/g=;
+	s=korg; t=1730896666;
+	bh=OU3RzlLCl8iXChL0B99XM0H1niX5dLC+Ju24ZKy4EYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HKZXSm1xZ8gj7NUG4xLxKcDf1o/w1NaR+bB6p7JXhMj3XHcjViHOPOgKqv1RyJHHK
-	 a3I92ud1RlMuahtqnFy0T3hWc2/2cB+kYPNpXVc91cZWh0d9tixIJ4OxX4TvjNzFgL
-	 AOcz7uT2aOh+z6zILKYiHX3TqqI7jPLkHvtjAE10=
+	b=U6AuvETksTL+76D1z7tdY1Yy549e89/4ro4QOfTz/i1zc6FiliYbme1RseJRz/CII
+	 qnIhJ4N8Jym3tIshWmKEMjyCWHiSSQlc/HQsL+lOCC+7EK6BPFI7SyVEkYQ29gCFBX
+	 aKUhBnMK2aOAaf7SKnyYWMUJHz6oCs8bGdy2t9eA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bhargava Chenna Marreddy <bhargava.marreddy@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 007/110] RDMA/bnxt_re: Fix a bug while setting up Level-2 PBL pages
-Date: Wed,  6 Nov 2024 13:03:33 +0100
-Message-ID: <20241106120303.351523467@linuxfoundation.org>
+Subject: [PATCH 5.10 008/110] drm/msm/dsi: fix 32-bit signed integer extension in pclk_rate calculation
+Date: Wed,  6 Nov 2024 13:03:34 +0100
+Message-ID: <20241106120303.381162083@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -52,57 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bhargava Chenna Marreddy <bhargava.marreddy@broadcom.com>
+From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit 7988bdbbb85ac85a847baf09879edcd0f70521dc ]
+[ Upstream commit 358b762400bd94db2a14a72dfcef74c7da6bd845 ]
 
-Avoid memory corruption while setting up Level-2 PBL pages for the non MR
-resources when num_pages > 256K.
+When (mode->clock * 1000) is larger than (1<<31), int to unsigned long
+conversion will sign extend the int to 64 bits and the pclk_rate value
+will be incorrect.
 
-There will be a single PDE page address (contiguous pages in the case of >
-PAGE_SIZE), but, current logic assumes multiple pages, leading to invalid
-memory access after 256K PBL entries in the PDE.
+Fix this by making the result of the multiplication unsigned.
 
-Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
-Link: https://patch.msgid.link/r/1728373302-19530-10-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Bhargava Chenna Marreddy <bhargava.marreddy@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Note that above (1<<32) would still be broken and require more changes, but
+its unlikely anyone will need that anytime soon.
+
+Fixes: c4d8cfe516dc ("drm/msm/dsi: add implementation for helper functions")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/618434/
+Link: https://lore.kernel.org/r/20241007050157.26855-2-jonathan@marek.ca
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_res.c | 19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-index 2861a2bbea6e4..af23e57fc78ed 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
-@@ -256,22 +256,9 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
- 			dst_virt_ptr =
- 				(dma_addr_t **)hwq->pbl[PBL_LVL_0].pg_arr;
- 			src_phys_ptr = hwq->pbl[PBL_LVL_1].pg_map_arr;
--			if (hwq_attr->type == HWQ_TYPE_MR) {
--			/* For MR it is expected that we supply only 1 contigous
--			 * page i.e only 1 entry in the PDL that will contain
--			 * all the PBLs for the user supplied memory region
--			 */
--				for (i = 0; i < hwq->pbl[PBL_LVL_1].pg_count;
--				     i++)
--					dst_virt_ptr[0][i] = src_phys_ptr[i] |
--						flag;
--			} else {
--				for (i = 0; i < hwq->pbl[PBL_LVL_1].pg_count;
--				     i++)
--					dst_virt_ptr[PTR_PG(i)][PTR_IDX(i)] =
--						src_phys_ptr[i] |
--						PTU_PDE_VALID;
--			}
-+			for (i = 0; i < hwq->pbl[PBL_LVL_1].pg_count; i++)
-+				dst_virt_ptr[0][i] = src_phys_ptr[i] | flag;
-+
- 			/* Alloc or init PTEs */
- 			rc = __alloc_pbl(res, &hwq->pbl[PBL_LVL_2],
- 					 hwq_attr->sginfo);
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index fb7792ca39e2c..b69099b533bfe 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -685,7 +685,7 @@ static u32 dsi_get_pclk_rate(struct msm_dsi_host *msm_host, bool is_dual_dsi)
+ 	struct drm_display_mode *mode = msm_host->mode;
+ 	u32 pclk_rate;
+ 
+-	pclk_rate = mode->clock * 1000;
++	pclk_rate = mode->clock * 1000u;
+ 
+ 	/*
+ 	 * For dual DSI mode, the current DRM mode has the complete width of the
 -- 
 2.43.0
 
