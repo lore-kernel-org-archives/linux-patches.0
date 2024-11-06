@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438931E103C;
-	Wed,  6 Nov 2024 12:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CE81E25F7;
+	Wed,  6 Nov 2024 12:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896901; cv=none; b=u2igq7cZOCE+fTz6551xYpvV7lGPfnTAzoXqxjsa03ET+hWQ8zwe3B+E1PiDtKPSd9HqYsok4fq3T1+NH6ItjlW+jEVFliyBz6kc1PAf3X6LiGElLdjAUed3z2bwkrU+ViWr/Gn+ioK1uISJf5HT4OwpFTmcDdQ5zkeecFrPdrM=
+	t=1730896904; cv=none; b=nKiAaysAxzfuV017LheTgbpqq6cZJmLtzlY0+7+DQGPwORFWHNY/XESycU0tqUjeFpkpGZDCynqpfLO9qTQGX4jTqV5VYkDjEoaGVrdaaIXrRGWPZEQQhW2O5ryge6kfGYxOUoJ9mnqEasaX5xXzqZdmicpTDH4ENQ4H4Uc/wdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896901; c=relaxed/simple;
-	bh=uCD8tOlCH/r2ly1FymiAioBZAP4PQX3c990RvrZz1Zk=;
+	s=arc-20240116; t=1730896904; c=relaxed/simple;
+	bh=Vz2QSFuVaRx8lsSJ9B4L+2OWmKq88eNcz2S96bUYryA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mJIfGIrgKrCbfbAxt/ztQfX4h9amGRXliGF/1lfZQMtnhF5MHj5nqx/9F+bPBN6x5CTg0NEbF+qHZyFiPbTXHw23r5YEtMPQMATo4H+7M2Sn4goYpnXtF5Y4XuKn/LlLzEHm0R6eKUMdVh9ux045J2cLqgJRtxW8uVfHlnd2Cq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LdLOmniT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZJcDMowMkYgStBPK4/M3+kPM6HsnQGHRZ1J+LaQ+cuAFPsLBRP2F93G3HQy5aaBNLeXxSl0mjuuFoGvYy8+pRTZunHu0bHtWqGwJuZLBUfIeyWzcJzXOjet0oAlC9ZOO/gmuUfM/lAoZD5glK7jmN/wkVSrO+x6qK0Uug1aKeYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RInJiJux; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LdLOmniT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD792C4CECD;
-	Wed,  6 Nov 2024 12:41:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RInJiJux"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD61C4CECD;
+	Wed,  6 Nov 2024 12:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896901;
-	bh=uCD8tOlCH/r2ly1FymiAioBZAP4PQX3c990RvrZz1Zk=;
+	s=korg; t=1730896904;
+	bh=Vz2QSFuVaRx8lsSJ9B4L+2OWmKq88eNcz2S96bUYryA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LdLOmniTIkNdvldHUiTpItS8qlJOlcmjLTw6/zyAc7zs6vOS8dhBZJwOyMJ462ozv
-	 3Exc3nDKcBZDEIdz7uEdCd55zcMDCReFB2YgeSpzDFhipZX7TcIWjTwi7MGJNjRCsa
-	 legUH1af3JVmxoYkorLsl/4E07WrgM/+Ivs8AgL0=
+	b=RInJiJuxMqGPt88ysZ70cLxGvZHm5K28RY13o/t39jSiu0CBglEppgVtZ31k4cslc
+	 MF1d61vHmXczPswqbzFJROU88MjRPipLD62d3sFX5ajn2MSLHRtuZEBSJNM5HWIATs
+	 /EE1MexNr5sOzBEo8ZiZVWg/b+Y+8ODisQb+TwlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Budimir Markovic <markovicbudimir@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Byeonguk Jeong <jungbu2855@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@kernel.org>,
+	Hou Tao <houtao1@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 073/110] net/sched: stop qdisc_tree_reduce_backlog on TC_H_ROOT
-Date: Wed,  6 Nov 2024 13:04:39 +0100
-Message-ID: <20241106120305.203608693@linuxfoundation.org>
+Subject: [PATCH 5.10 074/110] bpf: Fix out-of-bounds write in trie_get_next_key()
+Date: Wed,  6 Nov 2024 13:04:40 +0100
+Message-ID: <20241106120305.232861437@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -49,63 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Byeonguk Jeong <jungbu2855@gmail.com>
 
-[ Upstream commit 2e95c4384438adeaa772caa560244b1a2efef816 ]
+[ Upstream commit 13400ac8fb80c57c2bfb12ebd35ee121ce9b4d21 ]
 
-In qdisc_tree_reduce_backlog, Qdiscs with major handle ffff: are assumed
-to be either root or ingress. This assumption is bogus since it's valid
-to create egress qdiscs with major handle ffff:
-Budimir Markovic found that for qdiscs like DRR that maintain an active
-class list, it will cause a UAF with a dangling class pointer.
+trie_get_next_key() allocates a node stack with size trie->max_prefixlen,
+while it writes (trie->max_prefixlen + 1) nodes to the stack when it has
+full paths from the root to leaves. For example, consider a trie with
+max_prefixlen is 8, and the nodes with key 0x00/0, 0x00/1, 0x00/2, ...
+0x00/8 inserted. Subsequent calls to trie_get_next_key with _key with
+.prefixlen = 8 make 9 nodes be written on the node stack with size 8.
 
-In 066a3b5b2346, the concern was to avoid iterating over the ingress
-qdisc since its parent is itself. The proper fix is to stop when parent
-TC_H_ROOT is reached because the only way to retrieve ingress is when a
-hierarchy which does not contain a ffff: major handle call into
-qdisc_lookup with TC_H_MAJ(TC_H_ROOT).
-
-In the scenario where major ffff: is an egress qdisc in any of the tree
-levels, the updates will also propagate to TC_H_ROOT, which then the
-iteration must stop.
-
-Fixes: 066a3b5b2346 ("[NET_SCHED] sch_api: fix qdisc_tree_decrease_qlen() loop")
-Reported-by: Budimir Markovic <markovicbudimir@gmail.com>
-Suggested-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-
- net/sched/sch_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-Reviewed-by: Simon Horman <horms@kernel.org>
-
-Link: https://patch.msgid.link/20241024165547.418570-1-jhs@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b471f2f1de8b ("bpf: implement MAP_GET_NEXT_KEY command for LPM_TRIE map")
+Signed-off-by: Byeonguk Jeong <jungbu2855@gmail.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@kernel.org>
+Tested-by: Hou Tao <houtao1@huawei.com>
+Acked-by: Hou Tao <houtao1@huawei.com>
+Link: https://lore.kernel.org/r/Zxx384ZfdlFYnz6J@localhost.localdomain
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_api.c | 2 +-
+ kernel/bpf/lpm_trie.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index d0e4845ea7018..b4e405676600f 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -780,7 +780,7 @@ void qdisc_tree_reduce_backlog(struct Qdisc *sch, int n, int len)
- 	drops = max_t(int, n, 0);
- 	rcu_read_lock();
- 	while ((parentid = sch->parent)) {
--		if (TC_H_MAJ(parentid) == TC_H_MAJ(TC_H_INGRESS))
-+		if (parentid == TC_H_ROOT)
- 			break;
+diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
+index 3c2d8722d45b3..8370b391f1d6c 100644
+--- a/kernel/bpf/lpm_trie.c
++++ b/kernel/bpf/lpm_trie.c
+@@ -655,7 +655,7 @@ static int trie_get_next_key(struct bpf_map *map, void *_key, void *_next_key)
+ 	if (!key || key->prefixlen > trie->max_prefixlen)
+ 		goto find_leftmost;
  
- 		if (sch->flags & TCQ_F_NOPARENT)
+-	node_stack = kmalloc_array(trie->max_prefixlen,
++	node_stack = kmalloc_array(trie->max_prefixlen + 1,
+ 				   sizeof(struct lpm_trie_node *),
+ 				   GFP_ATOMIC | __GFP_NOWARN);
+ 	if (!node_stack)
 -- 
 2.43.0
 
