@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBFD1E0B84;
-	Wed,  6 Nov 2024 13:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221121EF957;
+	Wed,  6 Nov 2024 13:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898557; cv=none; b=YJWWOV/rFNIWCK6plNyhETKPIdZk0UMOC/t3zPT8N7exBr6Tg3/4J1r0krRyrWltjpNVej3BuZc4Wm2rUWX3ipU/CI8lmqw5g89dNvtI0pzKrPhezqn6c7D57/A7dWnwOU619xGkJEnCkMRY31GguxCwFTjAHjqgJv9XDom0/WE=
+	t=1730898561; cv=none; b=A4e3F3qWR3p5P5RQ8u8gie7fsxmHgyzUADcVipatAHFxFHg2TJlP/dmztZ9bMgCYGVcvBPKHRKmF8cDwzMRSJYx14LSsWPP9j28D+0TZIy8BkLErK1d+yuM9DXZOeQ+jiPSAp7/tKtgl1P35PyPQ0LHWkqrajbNdlVC0BLtLdeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898557; c=relaxed/simple;
-	bh=bFWtiqE5monq4WVUZZnTlEXx9riq4G+Todjs830zeJQ=;
+	s=arc-20240116; t=1730898561; c=relaxed/simple;
+	bh=HMPcYuyTVjy98m0E5zWdouCwArbfOgIR5KaVodX6tbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CSEaLjIzebR5JW7cWzYY1dM7VtmBlfshuauywCc+iOF9KOZ75C3j9sssK0i5URSitinlW6ivPgO3cMwpQHvrciZC7Y1SvJpwt3YU3+d2vBe2X/yX4NYUx1AmX5UTQuK/3bBUseR39xI/Gwg7gdbrGaVSHpEn3iuNTfHOcl0ZrCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxB6io4k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TDQKRpJFQLEIBJ1tmbxgV1WoXZ1Fhj5Rg1qvgzuCSehXoV9+oVYtpS5G6iHQM9+/5hA0V1GoelcFGhpjCNu3a8B9r7hA9PkkRrmyLTqz2mAzuiq4HEZ3eBPvYQy374QzhIJYcGpZXGhpKbZdSGMiIZWlYbJx93tK/n1bM11OvnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4bnY8B2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxB6io4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E51EAC4CED3;
-	Wed,  6 Nov 2024 13:09:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4bnY8B2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FCAC4CED3;
+	Wed,  6 Nov 2024 13:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898557;
-	bh=bFWtiqE5monq4WVUZZnTlEXx9riq4G+Todjs830zeJQ=;
+	s=korg; t=1730898561;
+	bh=HMPcYuyTVjy98m0E5zWdouCwArbfOgIR5KaVodX6tbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gxB6io4kejZivcvl7qyXFr5d/HpHXjBlwsPD85QJTqo0iS1xL773pNFidGSCmY0x6
-	 oka6jPLtj/6SPPaHckfys1YOcNizjHzYVwqDJIF1D/liA6UeNbuHAtRpm1nJ6+rQeZ
-	 1ESdYASt3zTYu25qg9FuvOu6E34IzIsEwEZ5HZw8=
+	b=S4bnY8B2uDeh7snCeiDijsFZ/kr1Zx1v7M+tNr6Qup54f7MCQgek9S7nxDJuwfAQw
+	 lQpZc6CvcEAKGqfztv5VNSiXFEQubd4uuKSW91nB1L7Fk7GzfPSEN7YSM5q+uuEdRz
+	 Vfj5WuWOo0DzyuIdh3kCdL7tZpScf6OEqBn51i/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Parth Pancholi <parth.pancholi@toradex.com>,
-	Keerthy <j-keerthy@ti.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 5.4 279/462] gpio: davinci: fix lazy disable
-Date: Wed,  6 Nov 2024 13:02:52 +0100
-Message-ID: <20241106120338.417440165@linuxfoundation.org>
+	Alok Chauhan <alokc@codeaurora.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Brendan Higgins <brendanhiggins@google.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Amit Kucheria <amit.kucheria@linaro.org>,
+	Wolfram Sang <wsa@the-dreams.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 280/462] i2c: qcom-geni: Let firmware specify irq trigger flags
+Date: Wed,  6 Nov 2024 13:02:53 +0100
+Message-ID: <20241106120338.441105466@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,61 +56,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+From: Stephen Boyd <swboyd@chromium.org>
 
-commit 3360d41f4ac490282fddc3ccc0b58679aa5c065d upstream.
+[ Upstream commit b2ca8800621b95ecced081376de9fe256b1fa479 ]
 
-On a few platforms such as TI's AM69 device, disable_irq() fails to keep
-track of the interrupts that happen between disable_irq() and
-enable_irq() and those interrupts are missed. Use the ->irq_unmask() and
-->irq_mask() methods instead of ->irq_enable() and ->irq_disable() to
-correctly keep track of edges when disable_irq is called.
+We don't need to force IRQF_TRIGGER_HIGH here as the DT or ACPI tables
+should take care of this for us. Just use 0 instead so that we use the
+flags from the firmware. Also, remove specify dev_name() for the irq
+name so that we can get better information in /proc/interrupts about
+which device is generating interrupts.
 
-This solves the issue of disable_irq() not working as expected on such
-platforms.
-
-Fixes: 23265442b02b ("ARM: davinci: irq_data conversion.")
-Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
-Signed-off-by: Parth Pancholi <parth.pancholi@toradex.com>
-Acked-by: Keerthy <j-keerthy@ti.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240828133207.493961-1-parth105105@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Alok Chauhan <alokc@codeaurora.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Brendan Higgins <brendanhiggins@google.com>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Amit Kucheria <amit.kucheria@linaro.org>
+Signed-off-by: Wolfram Sang <wsa@the-dreams.de>
+Stable-dep-of: e2c85d85a05f ("i2c: qcom-geni: Use IRQF_NO_AUTOEN flag in request_irq()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-davinci.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/i2c/busses/i2c-qcom-geni.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpio/gpio-davinci.c
-+++ b/drivers/gpio/gpio-davinci.c
-@@ -300,7 +300,7 @@ static int davinci_gpio_probe(struct pla
-  * serve as EDMA event triggers.
-  */
- 
--static void gpio_irq_disable(struct irq_data *d)
-+static void gpio_irq_mask(struct irq_data *d)
- {
- 	struct davinci_gpio_regs __iomem *g = irq2regs(d);
- 	uintptr_t mask = (uintptr_t)irq_data_get_irq_handler_data(d);
-@@ -309,7 +309,7 @@ static void gpio_irq_disable(struct irq_
- 	writel_relaxed(mask, &g->clr_rising);
- }
- 
--static void gpio_irq_enable(struct irq_data *d)
-+static void gpio_irq_unmask(struct irq_data *d)
- {
- 	struct davinci_gpio_regs __iomem *g = irq2regs(d);
- 	uintptr_t mask = (uintptr_t)irq_data_get_irq_handler_data(d);
-@@ -335,8 +335,8 @@ static int gpio_irq_type(struct irq_data
- 
- static struct irq_chip gpio_irqchip = {
- 	.name		= "GPIO",
--	.irq_enable	= gpio_irq_enable,
--	.irq_disable	= gpio_irq_disable,
-+	.irq_unmask	= gpio_irq_unmask,
-+	.irq_mask	= gpio_irq_mask,
- 	.irq_set_type	= gpio_irq_type,
- 	.flags		= IRQCHIP_SET_TYPE_MASKED | IRQCHIP_SKIP_SET_WAKE,
- };
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index c73b997899af8..6b87061ac81d1 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -576,8 +576,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 	init_completion(&gi2c->done);
+ 	spin_lock_init(&gi2c->lock);
+ 	platform_set_drvdata(pdev, gi2c);
+-	ret = devm_request_irq(&pdev->dev, gi2c->irq, geni_i2c_irq,
+-			       IRQF_TRIGGER_HIGH, "i2c_geni", gi2c);
++	ret = devm_request_irq(&pdev->dev, gi2c->irq, geni_i2c_irq, 0,
++			       dev_name(&pdev->dev), gi2c);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Request_irq failed:%d: err:%d\n",
+ 			gi2c->irq, ret);
+-- 
+2.43.0
+
 
 
