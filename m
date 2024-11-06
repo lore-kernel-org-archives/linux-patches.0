@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89181200CB8;
-	Wed,  6 Nov 2024 12:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6621B201031;
+	Wed,  6 Nov 2024 12:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896797; cv=none; b=GHx1Elz7hDbYt9HwrK8Qxv0obLUru1T+D7oPRwlAQD0e61Xng0DuI04HJbZtSh+xtSLlCX6Mi1TQAsZc97I7CPNyg4ks7jgsDN7XAIUOB59mk2OvBUdVFNZ5cIex5tCizJ0EUvlYePFdGQKm52NkPz7LEKfCbRZqWiLKWv6NTo8=
+	t=1730896800; cv=none; b=UimGw++ZoYquzV02gCB9S16XmovAZ8ja4cLc4SiSxWlurJn7xa6akRCpiiF8Q2qA7w5nTAPEtFkeW531oFCCz7QGVMjACuUXkKiovXv3+1LE6XlbXPpbn4IAUwjESuBlSA2KqDs4v4OXOckb74AggTWyqUUvUv0d6JIySYsXOmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896797; c=relaxed/simple;
-	bh=Q999o+9bwJ0/8HVdXCh2TIW7bZOsGj2e71NrgL2fZR8=;
+	s=arc-20240116; t=1730896800; c=relaxed/simple;
+	bh=ScG2kMEYtLEdsDxIIPXgUvFkxRQp2dn4H5TDV2uMi4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZVgh9e/Cew4jqpk/i3VdYcV7lRgHpbWy3pLE1WlunxzKV84isCmknULFb8aQynckS4c9dYbQMQsHfRKLdIryC8cNKB+EVPlZPQaUqx+BR5dMdMtCqqWmLQDroAKJsk7eQw+JcUMdRRqKc7JCc55ChLKBNhtnk9hUOYF1nG5yJaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rl6czS58; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ORlTYQMs+CgNMYFvo+BAYkzLBvyuR2psk/zIM3FbOXri3/PnbkhSDNg7M1xMoMRg+Kg4cHXNm6y89WM1WTkOJAZmG+46V+2kdO8r/dblvTJHxC5cbIQEV4uaFsp+XwMq84cAQ3fvIvbX0idWZRvvtfm53xvqsUeJNOJSrKB5Ud0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dku9qmR2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rl6czS58"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE2E3C4CED3;
-	Wed,  6 Nov 2024 12:39:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dku9qmR2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2EE2C4CED3;
+	Wed,  6 Nov 2024 12:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896797;
-	bh=Q999o+9bwJ0/8HVdXCh2TIW7bZOsGj2e71NrgL2fZR8=;
+	s=korg; t=1730896800;
+	bh=ScG2kMEYtLEdsDxIIPXgUvFkxRQp2dn4H5TDV2uMi4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rl6czS5857Mb2yelvLjcm/WchuiUqK99bobCekXnnrzOBXSEX19QQ20AThWuk97g6
-	 p45u48guNEOGvxPpHfQHHILZkNRXZ6+qNl2MT+TALWxadENeJIPGz0qzomEvnZWKMZ
-	 WwSg3zz3qZOowTBwadnr6ANaI64sXAmVORFf9VpQ=
+	b=Dku9qmR2mFdx+c6gvcZuRoXtVCbMw3MtNUf0t8MRUsINQSe4KN8BfgakXyLAauAf7
+	 wxfiHodYkOnSLmT/tp92IKOotTBtV7tEPHVrxfeVfaQDIpJbpJNDq2bqzMgzWSJXSh
+	 vkV1j4TOiuTML36EY71aCAHz/U5b/UkMYsqhpXF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Slavin Liu <slavin-ayu@qq.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 076/110] net: skip offload for NETIF_F_IPV6_CSUM if ipv6 header contains extension
-Date: Wed,  6 Nov 2024 13:04:42 +0100
-Message-ID: <20241106120305.286236592@linuxfoundation.org>
+Subject: [PATCH 5.10 077/110] netfilter: nft_payload: sanitize offset and length before calling skb_checksum()
+Date: Wed,  6 Nov 2024 13:04:43 +0100
+Message-ID: <20241106120305.315866897@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -46,74 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Monin <benoit.monin@gmx.fr>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 04c20a9356f283da623903e81e7c6d5df7e4dc3c ]
+[ Upstream commit d5953d680f7e96208c29ce4139a0e38de87a57fe ]
 
-As documented in skbuff.h, devices with NETIF_F_IPV6_CSUM capability
-can only checksum TCP and UDP over IPv6 if the IP header does not
-contains extension.
+If access to offset + length is larger than the skbuff length, then
+skb_checksum() triggers BUG_ON().
 
-This is enforced for UDP packets emitted from user-space to an IPv6
-address as they go through ip6_make_skb(), which calls
-__ip6_append_data() where a check is done on the header size before
-setting CHECKSUM_PARTIAL.
+skb_checksum() internally subtracts the length parameter while iterating
+over skbuff, BUG_ON(len) at the end of it checks that the expected
+length to be included in the checksum calculation is fully consumed.
 
-But the introduction of UDP encapsulation with fou6 added a code-path
-where it is possible to get an skb with a partial UDP checksum and an
-IPv6 header with extension:
-* fou6 adds a UDP header with a partial checksum if the inner packet
-does not contains a valid checksum.
-* ip6_tunnel adds an IPv6 header with a destination option extension
-header if encap_limit is non-zero (the default value is 4).
-
-The thread linked below describes in more details how to reproduce the
-problem with GRE-in-UDP tunnel.
-
-Add a check on the network header size in skb_csum_hwoffload_help() to
-make sure no IPv6 packet with extension header is handed to a network
-device with NETIF_F_IPV6_CSUM capability.
-
-Link: https://lore.kernel.org/netdev/26548921.1r3eYUQgxm@benoit.monin/T/#u
-Fixes: aa3463d65e7b ("fou: Add encap ops for IPv6 tunnels")
-Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/5fbeecfc311ea182aa1d1c771725ab8b4cac515e.1729778144.git.benoit.monin@gmx.fr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7ec3f7b47b8d ("netfilter: nft_payload: add packet mangling support")
+Reported-by: Slavin Liu <slavin-ayu@qq.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/nft_payload.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 6f04bb2ac4932..2c11247509b4c 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -3651,6 +3651,9 @@ int skb_csum_hwoffload_help(struct sk_buff *skb,
- 		return 0;
+diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
+index fa64b1b8ae918..f607cd7f203ad 100644
+--- a/net/netfilter/nft_payload.c
++++ b/net/netfilter/nft_payload.c
+@@ -618,6 +618,9 @@ static void nft_payload_set_eval(const struct nft_expr *expr,
+ 	if ((priv->csum_type == NFT_PAYLOAD_CSUM_INET || priv->csum_flags) &&
+ 	    (priv->base != NFT_PAYLOAD_TRANSPORT_HEADER ||
+ 	     skb->ip_summed != CHECKSUM_PARTIAL)) {
++		if (offset + priv->len > skb->len)
++			goto err;
++
+ 		fsum = skb_checksum(skb, offset, priv->len, 0);
+ 		tsum = csum_partial(src, priv->len, 0);
  
- 	if (features & (NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM)) {
-+		if (vlan_get_protocol(skb) == htons(ETH_P_IPV6) &&
-+		    skb_network_header_len(skb) != sizeof(struct ipv6hdr))
-+			goto sw_checksum;
- 		switch (skb->csum_offset) {
- 		case offsetof(struct tcphdr, check):
- 		case offsetof(struct udphdr, check):
-@@ -3658,6 +3661,7 @@ int skb_csum_hwoffload_help(struct sk_buff *skb,
- 		}
- 	}
- 
-+sw_checksum:
- 	return skb_checksum_help(skb);
- }
- EXPORT_SYMBOL(skb_csum_hwoffload_help);
 -- 
 2.43.0
 
