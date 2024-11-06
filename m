@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B51C1DF740;
-	Wed,  6 Nov 2024 12:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D881DF73C;
+	Wed,  6 Nov 2024 12:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895715; cv=none; b=Vn+qPFmzc666uFiPXT0rrVsHtbWutQr9Ov1ynwh7Lct0sHLD6DYHlBdbPvJz9rL5rzuOYnQUYzI8VwJ2HLxysxM7PZViGj8ouQ4qirK36vqQ5ZIYRsRcYUR1THCx2cFC+7EFj2w9MNkVxB73p29cQKPUdGp6EMeKSjynSwyrANI=
+	t=1730895718; cv=none; b=L0hOB4NJ89dtHI1iaBrpZtIwoNI4Xp92kfedqYL8qR85Vcur21jupuUrQk15YROVTW2biWeBE9z889SxeB4ZNWEalWf2sMK6NrfIyJGrCmLTwumG97rvKOf3sTHQRfgMN86gp0cK0Pyvv9NK8QJfMJ71Q3w2KbGoffbx7claViw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895715; c=relaxed/simple;
-	bh=f5VShkQ6aM0s/iKxdXrpJab0j6gr9vpQc27BtoARLWs=;
+	s=arc-20240116; t=1730895718; c=relaxed/simple;
+	bh=1jxesrKA3MYMgEA0qCEl2m7gOvc5o2cB+au3TeQrHfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E34wgMux3BB8Z6ilB1RHOhinEKyiXL6cbmr301/e2+fe3/xJ407mFhp834olnjtic2d8F+PPLlGVxzwyDJsk2jbVXkL3D0RVPtxg/nxRimpUa+9x+iJVelqwtVKteVOArSlIW10m/AhjRnViBmUTUGj9kAd+80Bm3h5LsmM459A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9/7fViG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bqzi9hERcBQ0Xr1i8Ulljg1VQU92T8fGaCk+1Xd+SbX9zcpiLEYGyHY3Yl/fkl+Qhig21c2+4UW8UPAQDJTZ39NYMAQI19+oX1SZMocvTo2R76L9o1pGPwpBKZRrNOCZVC/gPNOZcMjxk+g0LVIa4Vv5FhY53SwVD0gHnofyZkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKwzZYrr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9/7fViG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015E4C4CECD;
-	Wed,  6 Nov 2024 12:21:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKwzZYrr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6227C4CECD;
+	Wed,  6 Nov 2024 12:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895715;
-	bh=f5VShkQ6aM0s/iKxdXrpJab0j6gr9vpQc27BtoARLWs=;
+	s=korg; t=1730895718;
+	bh=1jxesrKA3MYMgEA0qCEl2m7gOvc5o2cB+au3TeQrHfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9/7fViG+gSIbRf1Ri0W4GZXvN0n746bUvzIovIr1xSCefV1UvqfoYiPOf0vGSG8s
-	 lmpWSZzsDy6Bf1fCjshS4J4hNNrl1v9yzb+0gvGZXO1GQ6XoMmWVfbsERw7gVLehx9
-	 HCTkNGdNhmallqCOGmIrW/wuavi7Ruz26lTAsX6s=
+	b=NKwzZYrrknrusKGnt8QPp5tWqpnjSw37xU4hs+ZK4iadRmsY/EwUnljRqGLPDOKGQ
+	 0E5J2D7forVtoFOhucsdWH5NpmSJKqG/Xj2VHPS1Eto13925dDn/l6fYGGjQHbSZEk
+	 lHzQoJcdwOyrqNO8vlUxphZmkPQTcui9O/twW9uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Hai <wanghai38@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Biju Das <biju.das@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 311/350] be2net: fix potential memory leak in be_xmit()
-Date: Wed,  6 Nov 2024 13:03:59 +0100
-Message-ID: <20241106120328.456768331@linuxfoundation.org>
+Subject: [PATCH 4.19 312/350] dt-bindings: power: Add r8a774b1 SYSC power domain definitions
+Date: Wed,  6 Nov 2024 13:04:00 +0100
+Message-ID: <20241106120328.478044780@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -53,59 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Hai <wanghai38@huawei.com>
+From: Biju Das <biju.das@bp.renesas.com>
 
-[ Upstream commit e4dd8bfe0f6a23acd305f9b892c00899089bd621 ]
+[ Upstream commit be67c41781cb4c06a4acb0b92db0cbb728e955e2 ]
 
-The be_xmit() returns NETDEV_TX_OK without freeing skb
-in case of be_xmit_enqueue() fails, add dev_kfree_skb_any() to fix it.
+This patch adds power domain indices for the RZ/G2N (a.k.a r8a774b1)
+SoC.
 
-Fixes: 760c295e0e8d ("be2net: Support for OS2BMC.")
-Signed-off-by: Wang Hai <wanghai38@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Message-ID: <20241015144802.12150-1-wanghai38@huawei.com>
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Biju Das <biju.das@bp.renesas.com>
+Link: https://lore.kernel.org/r/1567666326-27373-1-git-send-email-biju.das@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Stable-dep-of: 8a7d12d674ac ("net: usb: usbnet: fix name regression")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/emulex/benet/be_main.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/dt-bindings/power/r8a774b1-sysc.h | 26 +++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+ create mode 100644 include/dt-bindings/power/r8a774b1-sysc.h
 
-diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
-index d0d9a420f557e..8215bd1ca022f 100644
---- a/drivers/net/ethernet/emulex/benet/be_main.c
-+++ b/drivers/net/ethernet/emulex/benet/be_main.c
-@@ -1386,10 +1386,8 @@ static netdev_tx_t be_xmit(struct sk_buff *skb, struct net_device *netdev)
- 	be_get_wrb_params_from_skb(adapter, skb, &wrb_params);
- 
- 	wrb_cnt = be_xmit_enqueue(adapter, txo, skb, &wrb_params);
--	if (unlikely(!wrb_cnt)) {
--		dev_kfree_skb_any(skb);
--		goto drop;
--	}
-+	if (unlikely(!wrb_cnt))
-+		goto drop_skb;
- 
- 	/* if os2bmc is enabled and if the pkt is destined to bmc,
- 	 * enqueue the pkt a 2nd time with mgmt bit set.
-@@ -1398,7 +1396,7 @@ static netdev_tx_t be_xmit(struct sk_buff *skb, struct net_device *netdev)
- 		BE_WRB_F_SET(wrb_params.features, OS2BMC, 1);
- 		wrb_cnt = be_xmit_enqueue(adapter, txo, skb, &wrb_params);
- 		if (unlikely(!wrb_cnt))
--			goto drop;
-+			goto drop_skb;
- 		else
- 			skb_get(skb);
- 	}
-@@ -1412,6 +1410,8 @@ static netdev_tx_t be_xmit(struct sk_buff *skb, struct net_device *netdev)
- 		be_xmit_flush(adapter, txo);
- 
- 	return NETDEV_TX_OK;
-+drop_skb:
-+	dev_kfree_skb_any(skb);
- drop:
- 	tx_stats(txo)->tx_drv_drops++;
- 	/* Flush the already enqueued tx requests */
+diff --git a/include/dt-bindings/power/r8a774b1-sysc.h b/include/dt-bindings/power/r8a774b1-sysc.h
+new file mode 100644
+index 0000000000000..373736402f048
+--- /dev/null
++++ b/include/dt-bindings/power/r8a774b1-sysc.h
+@@ -0,0 +1,26 @@
++/* SPDX-License-Identifier: GPL-2.0
++ *
++ * Copyright (C) 2019 Renesas Electronics Corp.
++ */
++#ifndef __DT_BINDINGS_POWER_R8A774B1_SYSC_H__
++#define __DT_BINDINGS_POWER_R8A774B1_SYSC_H__
++
++/*
++ * These power domain indices match the numbers of the interrupt bits
++ * representing the power areas in the various Interrupt Registers
++ * (e.g. SYSCISR, Interrupt Status Register)
++ */
++
++#define R8A774B1_PD_CA57_CPU0		 0
++#define R8A774B1_PD_CA57_CPU1		 1
++#define R8A774B1_PD_A3VP		 9
++#define R8A774B1_PD_CA57_SCU		12
++#define R8A774B1_PD_A3VC		14
++#define R8A774B1_PD_3DG_A		17
++#define R8A774B1_PD_3DG_B		18
++#define R8A774B1_PD_A2VC1		26
++
++/* Always-on power area */
++#define R8A774B1_PD_ALWAYS_ON		32
++
++#endif /* __DT_BINDINGS_POWER_R8A774B1_SYSC_H__ */
 -- 
 2.43.0
 
