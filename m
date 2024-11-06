@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194401F4FB9;
-	Wed,  6 Nov 2024 12:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F4D1F4293;
+	Wed,  6 Nov 2024 12:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897631; cv=none; b=O4soqNe9GkwIRt7G7hSpvWJEI3b7kEQvDUJVmdgwCp+/waoRwlyJ75YuB/KnYMo/Br4TLYdKWnHqn6NkHbw6MH7aZBcYDcORurcQb84V5Z4gGAnhZX3KOHoL/0SFAIIh/RXHByqD4cUNbb0ikW1aLtIFxFdE/J9zMajgKWo0EkY=
+	t=1730897634; cv=none; b=BLk2eKa4tsfCO+m6crMR/WcsEWxuP3o2+tRIsR/LjpSswiL5fvw10nJMUUGgPk2iNXLQ+f9u6EFZB4Mke0LX+qGwyb8xiA4hu1mwPxsuTsdj8Cly5ROvKOCReVaDrOhNRMt2jqgzHJ5ze8yJBIdQBrmOn7dqv1+ck1xLwkqbWYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897631; c=relaxed/simple;
-	bh=9fmGBx9B4+fNTG3piPE0Ip+23s8eGt4gio+RHAthawc=;
+	s=arc-20240116; t=1730897634; c=relaxed/simple;
+	bh=ZqIO6nAWKxKLQKNiG7xmqvHcmAGh1iB0RdLzc/Ryae4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RdZ6cb8zQ6gEEeoz39QiOwuHO45PSp68Imqr1juG62DADp/+3/OSyqygusicF+NVWmUpdaUix+7/LNGf6N1nBXl6hR1U3PnuITAeL3j+xJ5rOoHRYAB4CWCSOispPUx++Sr4UCnGeetjpaFBSQNxIldE+ylij0VqUlZy1We1CVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gMdGOzEJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B0/FoZnP4d2JTYBROqdPgnbsSJ6Dtul9V9GZuGH4WenBixFQzb9fhSXlQxALl8tSOSC2769i5giFYQUGn0coVkBfFE1lK2qj8fyabf9skWw4HLMjF3f0Khh6R1coZpoHipUGZmjOs549yZ05MmwH6FkjGU6MoVSw6jPEKDc+EI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CmJrh98E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gMdGOzEJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A9B1C4CECD;
-	Wed,  6 Nov 2024 12:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmJrh98E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33990C4CECD;
+	Wed,  6 Nov 2024 12:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897630;
-	bh=9fmGBx9B4+fNTG3piPE0Ip+23s8eGt4gio+RHAthawc=;
+	s=korg; t=1730897633;
+	bh=ZqIO6nAWKxKLQKNiG7xmqvHcmAGh1iB0RdLzc/Ryae4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gMdGOzEJN2158SFffzTZpsap4oaz2m+MAOPpb7AEoxtnXPIAHr+yV70QEyihCWCNo
-	 lDGn41kYkfDGvOgp2ztgYmOJNl5rgPadtmqKk5n+RzmywnnFde/xrQ6jRI92YIHMMN
-	 UyBSEe5EAgRpgxrK3R2qaGghr+j+R5JdYDY4Po9c=
+	b=CmJrh98Ec7GMRRrlj99vgGn857tb0VkiesH1qPm/dNxv/uFTMZUPDcR4aDf+qUgec
+	 vq/w4DORy7FVBXa2O7Yf87PbFZMd21NVM6p52mCFa5frcqsnUThW7j2FE7S96l7FJO
+	 xGwsyRc2cCTclDnYyfakUoD4vVkAjTmFSvMafoDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcello Sylvester Bauer <marcello.bauer@9elements.com>,
-	Marcello Sylvester Bauer <sylv@sylv.io>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Frank Li <Frank.Li@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/151] usb: gadget: dummy_hcd: Switch to hrtimer transfer scheduler
-Date: Wed,  6 Nov 2024 13:04:20 +0100
-Message-ID: <20241106120310.828708884@linuxfoundation.org>
+Subject: [PATCH 6.6 112/151] spi: spi-fsl-dspi: Fix crash when not using GPIO chip select
+Date: Wed,  6 Nov 2024 13:05:00 +0100
+Message-ID: <20241106120311.948475824@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -52,151 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marcello Sylvester Bauer <sylv@sylv.io>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit a7f3813e589fd8e2834720829a47b5eb914a9afe ]
+[ Upstream commit 25f00a13dccf8e45441265768de46c8bf58e08f6 ]
 
-The dummy_hcd transfer scheduler assumes that the internal kernel timer
-frequency is set to 1000Hz to give a polling interval of 1ms. Reducing
-the timer frequency will result in an anti-proportional reduction in
-transfer performance. Switch to a hrtimer to decouple this association.
+Add check for the return value of spi_get_csgpiod() to avoid passing a NULL
+pointer to gpiod_direction_output(), preventing a crash when GPIO chip
+select is not used.
 
-Signed-off-by: Marcello Sylvester Bauer <marcello.bauer@9elements.com>
-Signed-off-by: Marcello Sylvester Bauer <sylv@sylv.io>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/57a1c2180ff74661600e010c234d1dbaba1d0d46.1712843963.git.sylv@sylv.io
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix below crash:
+[    4.251960] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+[    4.260762] Mem abort info:
+[    4.263556]   ESR = 0x0000000096000004
+[    4.267308]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    4.272624]   SET = 0, FnV = 0
+[    4.275681]   EA = 0, S1PTW = 0
+[    4.278822]   FSC = 0x04: level 0 translation fault
+[    4.283704] Data abort info:
+[    4.286583]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[    4.292074]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    4.297130]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    4.302445] [0000000000000000] user address but active_mm is swapper
+[    4.308805] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+[    4.315072] Modules linked in:
+[    4.318124] CPU: 2 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.0-rc4-next-20241023-00008-ga20ec42c5fc1 #359
+[    4.328130] Hardware name: LS1046A QDS Board (DT)
+[    4.332832] pstate: 40000005 (nZcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    4.339794] pc : gpiod_direction_output+0x34/0x5c
+[    4.344505] lr : gpiod_direction_output+0x18/0x5c
+[    4.349208] sp : ffff80008003b8f0
+[    4.352517] x29: ffff80008003b8f0 x28: 0000000000000000 x27: ffffc96bcc7e9068
+[    4.359659] x26: ffffc96bcc6e00b0 x25: ffffc96bcc598398 x24: ffff447400132810
+[    4.366800] x23: 0000000000000000 x22: 0000000011e1a300 x21: 0000000000020002
+[    4.373940] x20: 0000000000000000 x19: 0000000000000000 x18: ffffffffffffffff
+[    4.381081] x17: ffff44740016e600 x16: 0000000500000003 x15: 0000000000000007
+[    4.388221] x14: 0000000000989680 x13: 0000000000020000 x12: 000000000000001e
+[    4.395362] x11: 0044b82fa09b5a53 x10: 0000000000000019 x9 : 0000000000000008
+[    4.402502] x8 : 0000000000000002 x7 : 0000000000000007 x6 : 0000000000000000
+[    4.409641] x5 : 0000000000000200 x4 : 0000000002000000 x3 : 0000000000000000
+[    4.416781] x2 : 0000000000022202 x1 : 0000000000000000 x0 : 0000000000000000
+[    4.423921] Call trace:
+[    4.426362]  gpiod_direction_output+0x34/0x5c (P)
+[    4.431067]  gpiod_direction_output+0x18/0x5c (L)
+[    4.435771]  dspi_setup+0x220/0x334
+
+Fixes: 9e264f3f85a5 ("spi: Replace all spi->chip_select and spi->cs_gpiod references with function call")
+Cc: stable@vger.kernel.org
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20241023203032.1388491-1-Frank.Li@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/dummy_hcd.c | 35 +++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 15 deletions(-)
+ drivers/spi/spi-fsl-dspi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/dummy_hcd.c b/drivers/usb/gadget/udc/dummy_hcd.c
-index 0953e1b5c0300..dab559d8ee8ca 100644
---- a/drivers/usb/gadget/udc/dummy_hcd.c
-+++ b/drivers/usb/gadget/udc/dummy_hcd.c
-@@ -30,7 +30,7 @@
- #include <linux/slab.h>
- #include <linux/errno.h>
- #include <linux/init.h>
--#include <linux/timer.h>
-+#include <linux/hrtimer.h>
- #include <linux/list.h>
- #include <linux/interrupt.h>
- #include <linux/platform_device.h>
-@@ -240,7 +240,7 @@ enum dummy_rh_state {
- struct dummy_hcd {
- 	struct dummy			*dum;
- 	enum dummy_rh_state		rh_state;
--	struct timer_list		timer;
-+	struct hrtimer			timer;
- 	u32				port_status;
- 	u32				old_status;
- 	unsigned long			re_timeout;
-@@ -1301,8 +1301,8 @@ static int dummy_urb_enqueue(
- 		urb->error_count = 1;		/* mark as a new urb */
- 
- 	/* kick the scheduler, it'll do the rest */
--	if (!timer_pending(&dum_hcd->timer))
--		mod_timer(&dum_hcd->timer, jiffies + 1);
-+	if (!hrtimer_active(&dum_hcd->timer))
-+		hrtimer_start(&dum_hcd->timer, ms_to_ktime(1), HRTIMER_MODE_REL);
- 
-  done:
- 	spin_unlock_irqrestore(&dum_hcd->dum->lock, flags);
-@@ -1323,7 +1323,7 @@ static int dummy_urb_dequeue(struct usb_hcd *hcd, struct urb *urb, int status)
- 	rc = usb_hcd_check_unlink_urb(hcd, urb, status);
- 	if (!rc && dum_hcd->rh_state != DUMMY_RH_RUNNING &&
- 			!list_empty(&dum_hcd->urbp_list))
--		mod_timer(&dum_hcd->timer, jiffies);
-+		hrtimer_start(&dum_hcd->timer, ns_to_ktime(0), HRTIMER_MODE_REL);
- 
- 	spin_unlock_irqrestore(&dum_hcd->dum->lock, flags);
- 	return rc;
-@@ -1777,7 +1777,7 @@ static int handle_control_request(struct dummy_hcd *dum_hcd, struct urb *urb,
-  * drivers except that the callbacks are invoked from soft interrupt
-  * context.
-  */
--static void dummy_timer(struct timer_list *t)
-+static enum hrtimer_restart dummy_timer(struct hrtimer *t)
- {
- 	struct dummy_hcd	*dum_hcd = from_timer(dum_hcd, t, timer);
- 	struct dummy		*dum = dum_hcd->dum;
-@@ -1808,8 +1808,6 @@ static void dummy_timer(struct timer_list *t)
- 		break;
+diff --git a/drivers/spi/spi-fsl-dspi.c b/drivers/spi/spi-fsl-dspi.c
+index 8318249f8a1f9..bcb0de864d34d 100644
+--- a/drivers/spi/spi-fsl-dspi.c
++++ b/drivers/spi/spi-fsl-dspi.c
+@@ -1008,6 +1008,7 @@ static int dspi_setup(struct spi_device *spi)
+ 	u32 cs_sck_delay = 0, sck_cs_delay = 0;
+ 	struct fsl_dspi_platform_data *pdata;
+ 	unsigned char pasc = 0, asc = 0;
++	struct gpio_desc *gpio_cs;
+ 	struct chip_data *chip;
+ 	unsigned long clkrate;
+ 	bool cs = true;
+@@ -1073,7 +1074,10 @@ static int dspi_setup(struct spi_device *spi)
+ 			chip->ctar_val |= SPI_CTAR_LSBFE;
  	}
  
--	/* FIXME if HZ != 1000 this will probably misbehave ... */
--
- 	/* look at each urb queued by the host side driver */
- 	spin_lock_irqsave(&dum->lock, flags);
- 
-@@ -1817,7 +1815,7 @@ static void dummy_timer(struct timer_list *t)
- 		dev_err(dummy_dev(dum_hcd),
- 				"timer fired with no URBs pending?\n");
- 		spin_unlock_irqrestore(&dum->lock, flags);
--		return;
-+		return HRTIMER_NORESTART;
- 	}
- 	dum_hcd->next_frame_urbp = NULL;
- 
-@@ -1995,10 +1993,12 @@ static void dummy_timer(struct timer_list *t)
- 		dum_hcd->udev = NULL;
- 	} else if (dum_hcd->rh_state == DUMMY_RH_RUNNING) {
- 		/* want a 1 msec delay here */
--		mod_timer(&dum_hcd->timer, jiffies + msecs_to_jiffies(1));
-+		hrtimer_start(&dum_hcd->timer, ms_to_ktime(1), HRTIMER_MODE_REL);
- 	}
- 
- 	spin_unlock_irqrestore(&dum->lock, flags);
+-	gpiod_direction_output(spi_get_csgpiod(spi, 0), false);
++	gpio_cs = spi_get_csgpiod(spi, 0);
++	if (gpio_cs)
++		gpiod_direction_output(gpio_cs, false);
 +
-+	return HRTIMER_NORESTART;
- }
+ 	dspi_deassert_cs(spi, &cs);
  
- /*-------------------------------------------------------------------------*/
-@@ -2387,7 +2387,7 @@ static int dummy_bus_resume(struct usb_hcd *hcd)
- 		dum_hcd->rh_state = DUMMY_RH_RUNNING;
- 		set_link_state(dum_hcd);
- 		if (!list_empty(&dum_hcd->urbp_list))
--			mod_timer(&dum_hcd->timer, jiffies);
-+			hrtimer_start(&dum_hcd->timer, ns_to_ktime(0), HRTIMER_MODE_REL);
- 		hcd->state = HC_STATE_RUNNING;
- 	}
- 	spin_unlock_irq(&dum_hcd->dum->lock);
-@@ -2465,7 +2465,8 @@ static DEVICE_ATTR_RO(urbs);
- 
- static int dummy_start_ss(struct dummy_hcd *dum_hcd)
- {
--	timer_setup(&dum_hcd->timer, dummy_timer, 0);
-+	hrtimer_init(&dum_hcd->timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
-+	dum_hcd->timer.function = dummy_timer;
- 	dum_hcd->rh_state = DUMMY_RH_RUNNING;
- 	dum_hcd->stream_en_ep = 0;
- 	INIT_LIST_HEAD(&dum_hcd->urbp_list);
-@@ -2494,7 +2495,8 @@ static int dummy_start(struct usb_hcd *hcd)
- 		return dummy_start_ss(dum_hcd);
- 
- 	spin_lock_init(&dum_hcd->dum->lock);
--	timer_setup(&dum_hcd->timer, dummy_timer, 0);
-+	hrtimer_init(&dum_hcd->timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
-+	dum_hcd->timer.function = dummy_timer;
- 	dum_hcd->rh_state = DUMMY_RH_RUNNING;
- 
- 	INIT_LIST_HEAD(&dum_hcd->urbp_list);
-@@ -2513,8 +2515,11 @@ static int dummy_start(struct usb_hcd *hcd)
- 
- static void dummy_stop(struct usb_hcd *hcd)
- {
--	device_remove_file(dummy_dev(hcd_to_dummy_hcd(hcd)), &dev_attr_urbs);
--	dev_info(dummy_dev(hcd_to_dummy_hcd(hcd)), "stopped\n");
-+	struct dummy_hcd	*dum_hcd = hcd_to_dummy_hcd(hcd);
-+
-+	hrtimer_cancel(&dum_hcd->timer);
-+	device_remove_file(dummy_dev(dum_hcd), &dev_attr_urbs);
-+	dev_info(dummy_dev(dum_hcd), "stopped\n");
- }
- 
- /*-------------------------------------------------------------------------*/
+ 	spi_set_ctldata(spi, chip);
 -- 
 2.43.0
 
