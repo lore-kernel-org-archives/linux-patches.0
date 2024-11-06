@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4582198E96;
-	Wed,  6 Nov 2024 12:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B604207F;
+	Wed,  6 Nov 2024 12:30:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896236; cv=none; b=MmDGdx299ZTCJ+eOKHq/LJrQh+s4Oap0DDLW7DbdvKZskHfH0bDxSjBYJhYrX78fdUYC0pfppxarH9tZRnUguNz1C8n6VzVc8dTE0RNOO4ohkNLCSC6u4nHbVeOG44eCjVdE3UXSf+/dhgVS4TpJhUIh3oAOJfPiNWLmqnEQP8E=
+	t=1730896238; cv=none; b=Fga6RlbEA/Sj2BDtPeJ3w5s22qJQuq2ypa35xkAhNYyHa4ldR/qQelKF52PwK4p3dkovNTqFb1NGkFYngXw2LIaC7iLSKz3tpWdmcg0onvB/EPOfQ/z2R3WR1fggCNrCnDnELD6OYoiBp79OgLhOLCmYgcMBulAnLnq7TSLHeUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896236; c=relaxed/simple;
-	bh=ItySo/jevHd2cXBAkifpr4rtkU9vA1p7lMnvRhP+FTM=;
+	s=arc-20240116; t=1730896238; c=relaxed/simple;
+	bh=nZozHv7ZeYkCMCrf/wXTZ45bUEw43D83rwfTypTstIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g6d093Ep2uHsRUIUpi+B+AGxe1OoI4OtGVQ7N5qkM5khVMIAc/GVY/msggw2ZN6Zge9GWbIwRa0KxKRh1z8YIdTVr1w6k0pHjZO5i7gCVcnUI1nNLMiS0c4XQUkP8Qj5qmjS25oTZY9Z3gGwmEHoA5NkgLh6FF1KDjjSXaOacX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byaocdBJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fDRMII7MkGWJO18YrxXHYSKJocQH6EcpJ9TMCpPiS3b2GY1XjvG4tUV6v137gBJ7+4v89UmDJzUowEFvmSN7XJKcGd/I8pGK+6Ss7Z3wIoln1+ib7DKdsBMEf2pmZ4pyi2p74asehEDGyIpobGpiJ+FR8hIMY0m7DE0dAYdF/oU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqKzbdfq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byaocdBJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A03C4CECD;
-	Wed,  6 Nov 2024 12:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqKzbdfq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EB4C4CECD;
+	Wed,  6 Nov 2024 12:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896235;
-	bh=ItySo/jevHd2cXBAkifpr4rtkU9vA1p7lMnvRhP+FTM=;
+	s=korg; t=1730896238;
+	bh=nZozHv7ZeYkCMCrf/wXTZ45bUEw43D83rwfTypTstIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=byaocdBJvcXdl5576I9s7LFcAZkyArXSPOxOmWyUr/lG/BvHnJOxJTFdINV08iZtn
-	 7U6oQwa3CTjATFykFeVqFUlnfIZ3M1nL2ZJ+sGPm8xWzuq2mi0GIfmyZvm76N+2z+x
-	 YLDO7EOaAiC2kwerqvvD1aAzaMMJDsppegcTN+vQ=
+	b=qqKzbdfqqY4qyUNt25fHhdPWpnPB+2GB8g1kRIioWdgd4AkFC403syb7Lwzf6lH5u
+	 u1QrnZtYAgUAdxpdbx/2FBJM8S+XbaiJScusaOZDwLEh27X1SbwsQzeffkbiJE4HDY
+	 DAPtkH6K9L9T2z4E0c6RPHLIdGYwH0jfKV+fZsio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ashish Sangwan <a.sangwan@samsung.com>,
-	Namjae Jeon <namjae.jeon@samsung.com>,
-	Dirk Behme <dirk.behme@de.bosch.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.11 118/245] Revert "driver core: Fix uevent_show() vs driver detach race"
-Date: Wed,  6 Nov 2024 13:02:51 +0100
-Message-ID: <20241106120322.125064437@linuxfoundation.org>
+	Jeongjun Park <aha310510@gmail.com>,
+	syzbot <syzkaller@googlegroup.com>,
+	Hugh Dickins <hughd@google.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.11 136/245] mm: shmem: fix data-race in shmem_getattr()
+Date: Wed,  6 Nov 2024 13:03:09 +0100
+Message-ID: <20241106120322.576608394@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -54,94 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 9a71892cbcdb9d1459c84f5a4c722b14354158a5 upstream.
+commit d949d1d14fa281ace388b1de978e8f2cd52875cf upstream.
 
-This reverts commit 15fffc6a5624b13b428bb1c6e9088e32a55eb82c.
+I got the following KCSAN report during syzbot testing:
 
-This commit causes a regression, so revert it for now until it can come
-back in a way that works for everyone.
+==================================================================
+BUG: KCSAN: data-race in generic_fillattr / inode_set_ctime_current
 
-Link: https://lore.kernel.org/all/172790598832.1168608.4519484276671503678.stgit@dwillia2-xfh.jf.intel.com/
-Fixes: 15fffc6a5624 ("driver core: Fix uevent_show() vs driver detach race")
-Cc: stable <stable@kernel.org>
-Cc: Ashish Sangwan <a.sangwan@samsung.com>
-Cc: Namjae Jeon <namjae.jeon@samsung.com>
-Cc: Dirk Behme <dirk.behme@de.bosch.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Dan Williams <dan.j.williams@intel.com>
+write to 0xffff888102eb3260 of 4 bytes by task 6565 on cpu 1:
+ inode_set_ctime_to_ts include/linux/fs.h:1638 [inline]
+ inode_set_ctime_current+0x169/0x1d0 fs/inode.c:2626
+ shmem_mknod+0x117/0x180 mm/shmem.c:3443
+ shmem_create+0x34/0x40 mm/shmem.c:3497
+ lookup_open fs/namei.c:3578 [inline]
+ open_last_lookups fs/namei.c:3647 [inline]
+ path_openat+0xdbc/0x1f00 fs/namei.c:3883
+ do_filp_open+0xf7/0x200 fs/namei.c:3913
+ do_sys_openat2+0xab/0x120 fs/open.c:1416
+ do_sys_open fs/open.c:1431 [inline]
+ __do_sys_openat fs/open.c:1447 [inline]
+ __se_sys_openat fs/open.c:1442 [inline]
+ __x64_sys_openat+0xf3/0x120 fs/open.c:1442
+ x64_sys_call+0x1025/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:258
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+read to 0xffff888102eb3260 of 4 bytes by task 3498 on cpu 0:
+ inode_get_ctime_nsec include/linux/fs.h:1623 [inline]
+ inode_get_ctime include/linux/fs.h:1629 [inline]
+ generic_fillattr+0x1dd/0x2f0 fs/stat.c:62
+ shmem_getattr+0x17b/0x200 mm/shmem.c:1157
+ vfs_getattr_nosec fs/stat.c:166 [inline]
+ vfs_getattr+0x19b/0x1e0 fs/stat.c:207
+ vfs_statx_path fs/stat.c:251 [inline]
+ vfs_statx+0x134/0x2f0 fs/stat.c:315
+ vfs_fstatat+0xec/0x110 fs/stat.c:341
+ __do_sys_newfstatat fs/stat.c:505 [inline]
+ __se_sys_newfstatat+0x58/0x260 fs/stat.c:499
+ __x64_sys_newfstatat+0x55/0x70 fs/stat.c:499
+ x64_sys_call+0x141f/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:263
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+value changed: 0x2755ae53 -> 0x27ee44d3
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 UID: 0 PID: 3498 Comm: udevd Not tainted 6.11.0-rc6-syzkaller-00326-gd1f2d51b711a-dirty #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+==================================================================
+
+When calling generic_fillattr(), if you don't hold read lock, data-race
+will occur in inode member variables, which can cause unexpected
+behavior.
+
+Since there is no special protection when shmem_getattr() calls
+generic_fillattr(), data-race occurs by functions such as shmem_unlink()
+or shmem_mknod(). This can cause unexpected results, so commenting it out
+is not enough.
+
+Therefore, when calling generic_fillattr() from shmem_getattr(), it is
+appropriate to protect the inode using inode_lock_shared() and
+inode_unlock_shared() to prevent data-race.
+
+Link: https://lkml.kernel.org/r/20240909123558.70229-1-aha310510@gmail.com
+Fixes: 44a30220bc0a ("shmem: recalculate file inode when fstat")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Reported-by: syzbot <syzkaller@googlegroup.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c   |   13 +++++--------
- drivers/base/module.c |    4 ----
- 2 files changed, 5 insertions(+), 12 deletions(-)
+ mm/shmem.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -25,7 +25,6 @@
- #include <linux/mutex.h>
- #include <linux/pm_runtime.h>
- #include <linux/netdevice.h>
--#include <linux/rcupdate.h>
- #include <linux/sched/signal.h>
- #include <linux/sched/mm.h>
- #include <linux/string_helpers.h>
-@@ -2641,7 +2640,6 @@ static const char *dev_uevent_name(const
- static int dev_uevent(const struct kobject *kobj, struct kobj_uevent_env *env)
- {
- 	const struct device *dev = kobj_to_dev(kobj);
--	struct device_driver *driver;
- 	int retval = 0;
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1163,7 +1163,9 @@ static int shmem_getattr(struct mnt_idma
+ 	stat->attributes_mask |= (STATX_ATTR_APPEND |
+ 			STATX_ATTR_IMMUTABLE |
+ 			STATX_ATTR_NODUMP);
++	inode_lock_shared(inode);
+ 	generic_fillattr(idmap, request_mask, inode, stat);
++	inode_unlock_shared(inode);
  
- 	/* add device node properties if present */
-@@ -2670,12 +2668,8 @@ static int dev_uevent(const struct kobje
- 	if (dev->type && dev->type->name)
- 		add_uevent_var(env, "DEVTYPE=%s", dev->type->name);
- 
--	/* Synchronize with module_remove_driver() */
--	rcu_read_lock();
--	driver = READ_ONCE(dev->driver);
--	if (driver)
--		add_uevent_var(env, "DRIVER=%s", driver->name);
--	rcu_read_unlock();
-+	if (dev->driver)
-+		add_uevent_var(env, "DRIVER=%s", dev->driver->name);
- 
- 	/* Add common DT information about the device */
- 	of_device_uevent(dev, env);
-@@ -2745,8 +2739,11 @@ static ssize_t uevent_show(struct device
- 	if (!env)
- 		return -ENOMEM;
- 
-+	/* Synchronize with really_probe() */
-+	device_lock(dev);
- 	/* let the kset specific function add its keys */
- 	retval = kset->uevent_ops->uevent(&dev->kobj, env);
-+	device_unlock(dev);
- 	if (retval)
- 		goto out;
- 
---- a/drivers/base/module.c
-+++ b/drivers/base/module.c
-@@ -7,7 +7,6 @@
- #include <linux/errno.h>
- #include <linux/slab.h>
- #include <linux/string.h>
--#include <linux/rcupdate.h>
- #include "base.h"
- 
- static char *make_driver_name(const struct device_driver *drv)
-@@ -102,9 +101,6 @@ void module_remove_driver(const struct d
- 	if (!drv)
- 		return;
- 
--	/* Synchronize with dev_uevent() */
--	synchronize_rcu();
--
- 	sysfs_remove_link(&drv->p->kobj, "module");
- 
- 	if (drv->owner)
+ 	if (shmem_huge_global_enabled(inode, 0, false, NULL, 0))
+ 		stat->blksize = HPAGE_PMD_SIZE;
 
 
