@@ -1,101 +1,143 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1220518B48B;
-	Wed,  6 Nov 2024 16:22:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 317C613C67C;
+	Wed,  6 Nov 2024 16:37:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730910176; cv=none; b=gKnohb87Q+6POTOaYKPnp8/Fk08tqZQCQO8T3uGAcVOhpDaTcoD/hEEj3FeHfe15pQTJ3VohGHFLLKVr1wLtHSI4CZomVgIZrqy3xxOdoa7aCFraWNf4WCCNzfP5boDAK3AyQmMYDQzvqAFMiOBCgISOivQaHGyVoxzotfE/ygQ=
+	t=1730911081; cv=none; b=XQx2vwb8sPMK2XiXgn5OgOTVc5JH8pzXepKhyo1NOVQvvsVyEpEkfzIDedb6IfpruxOSUFdrRES9GTeWvJbOQQW7Mn0ggbUO/2Bdd2O7YgOvDcIOOwCm1jR5Mpg7efEc/rdntQUGIbdPoT/91HmPwwLSoaiUrYFSMDTUu05Mhec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730910176; c=relaxed/simple;
-	bh=fko2d8Xv/YYA+GV+21EM8ZaKw6eqvgyyyHl4/3gL/Gc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=By9WZihtym/SZaJTgqNhCYvbh9RtUgZbu4b6p1u+QvJD0FiWfplA8wx8bzXIUD1VgMDCy1wwL4sN4D6/gFbjanWRGaN01HpXFWDdlQ1fq2ruU/mqUpQaJe+wMBw7e5M1Kjf1GsMMxK/iyp7UJi1VrN1/vYQKFMiyvFa55L4bzVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vNCduIyL; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vNCduIyL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E12EC4CED5;
-	Wed,  6 Nov 2024 16:22:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730910175;
-	bh=fko2d8Xv/YYA+GV+21EM8ZaKw6eqvgyyyHl4/3gL/Gc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vNCduIyLgJ/+J00/AAxsHgY8tBhMN97vlbiNC2skrfGXhUHojPNpgznfYgpVGiCGv
-	 8LM72hveI+/iUDqpsvHhCLWX8KT2YyUC0wiNlGIWe69Mb5+PJA4dKZqxkiPsL7L5ic
-	 rmQVgoluQYSC1H++FEXNMXdjQNdI/xbEAec21SeHwkK448/T/fMptFOdAn0PRUV6qq
-	 8WTKpjAqoARgTcPhp6m6eTgv1Hgn1h93WEReHGmvOU7O/w8PM2d5IKtqyP37KCFeDV
-	 3aiqC55DjPNRJ2l3PFjCOPbfkpT1WgFohFWAqwaZS2LJUtxqDRTKrtk1o5Yh3ntO9V
-	 Jx2Ohi2F0fPrw==
-Date: Wed, 6 Nov 2024 16:22:50 +0000
-From: Will Deacon <will@kernel.org>
-To: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Robin Murphy <robin.murphy@arm.com>, catalin.marinas@arm.com,
-	kernel-team@android.com,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	dri-devel@lists.freedesktop.org, Liviu Dudau <liviu.dudau@arm.com>,
-	patches@lists.linux.dev, Steven Price <steven.price@arm.com>
-Subject: Re: [PATCH v3 0/3] Remove split on unmap behavior
-Message-ID: <20241106162249.GA14615@willie-the-truck>
-References: <0-v3-b3a5b5937f56+7bb-arm_no_split_jgg@nvidia.com>
- <173090505900.4167208.10850898110820689849.b4-ty@kernel.org>
- <20241106161520.GJ35848@ziepe.ca>
+	s=arc-20240116; t=1730911081; c=relaxed/simple;
+	bh=NoUPWQGZ3FMIWDA+UGAU977oicgCj2D+ncc6vpw6caU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WNaHgcETXkzfeWBCmb5aQYYblnVrC7qwdtLlQW0Oc9EEgxYc+xSpwxdZqi4BdRcKxIBL0OYiLfHGuvYLWLeV4Ln4K4V8jZvcc4yrLZw6OXqVy4xFs5JAXFNHhXl8sf8RPpjJEzlvnDgdIhwMOuH0IXTdI8lRAwOH9c9p68IDkB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 118FC497;
+	Wed,  6 Nov 2024 08:38:28 -0800 (PST)
+Received: from [10.57.90.5] (unknown [10.57.90.5])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6850B3F528;
+	Wed,  6 Nov 2024 08:37:54 -0800 (PST)
+Message-ID: <8a5940b0-08f3-48b1-9498-f09f0527a964@arm.com>
+Date: Wed, 6 Nov 2024 16:37:53 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241106161520.GJ35848@ziepe.ca>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 05/12] iommu/arm-smmu-v3: Support IOMMU_GET_HW_INFO via
+ struct arm_smmu_hw_info
+To: Jason Gunthorpe <jgg@nvidia.com>, Will Deacon <will@kernel.org>
+Cc: acpica-devel@lists.linux.dev, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
+ kvm@vger.kernel.org, Len Brown <lenb@kernel.org>,
+ linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Robert Moore <robert.moore@intel.com>, Sudeep Holla <sudeep.holla@arm.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Donald Dutile <ddutile@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ Hanjun Guo <guohanjun@huawei.com>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Jerry Snitselaar <jsnitsel@redhat.com>, Moritz Fischer <mdf@kernel.org>,
+ Michael Shavit <mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ patches@lists.linux.dev, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Mostafa Saleh <smostafa@google.com>
+References: <0-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com>
+ <5-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com>
+ <20241104114723.GA11511@willie-the-truck> <20241104124102.GX10193@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <20241104124102.GX10193@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 06, 2024 at 12:15:20PM -0400, Jason Gunthorpe wrote:
-> On Wed, Nov 06, 2024 at 03:53:23PM +0000, Will Deacon wrote:
-> > On Tue, 05 Nov 2024 14:14:23 -0400, Jason Gunthorpe wrote:
-> > > This is the result of the discussion on removing split. We agreed that
-> > > split is not required, and no application should ask for anything that
-> > > would not unmap a full large IOPTE.
-> > > 
-> > > Instead of split the two ARM drivers will now WARN_ON and return 0. This
-> > > is in contrast to what several other drivers do of removing the whole
-> > > IOPTE and returning 0.
-> > > 
-> > > [...]
-> > 
-> > Applied to iommu (arm/smmu), thanks!
-> > 
-> > [1/3] iommu/io-pgtable-arm: Remove split on unmap behavior
-> >       https://git.kernel.org/iommu/c/33729a5fc0ca
-> > [2/3] iommu/io-pgtable-arm-v7s: Remove split on unmap behavior
-> >       https://git.kernel.org/iommu/c/fd50651636fb
-> > [3/3] iommu: Add a kdoc to iommu_unmap()
-> >       https://git.kernel.org/iommu/c/6ac7dffe7cca
+On 2024-11-04 12:41 pm, Jason Gunthorpe wrote:
+> On Mon, Nov 04, 2024 at 11:47:24AM +0000, Will Deacon wrote:
+>>> +/**
+>>> + * struct iommu_hw_info_arm_smmuv3 - ARM SMMUv3 hardware information
+>>> + *                                   (IOMMU_HW_INFO_TYPE_ARM_SMMUV3)
+>>> + *
+>>> + * @flags: Must be set to 0
+>>> + * @__reserved: Must be 0
+>>> + * @idr: Implemented features for ARM SMMU Non-secure programming interface
+>>> + * @iidr: Information about the implementation and implementer of ARM SMMU,
+>>> + *        and architecture version supported
+>>> + * @aidr: ARM SMMU architecture version
+>>> + *
+>>> + * For the details of @idr, @iidr and @aidr, please refer to the chapters
+>>> + * from 6.3.1 to 6.3.6 in the SMMUv3 Spec.
+>>> + *
+>>> + * User space should read the underlying ARM SMMUv3 hardware information for
+>>> + * the list of supported features.
+>>> + *
+>>> + * Note that these values reflect the raw HW capability, without any insight if
+>>> + * any required kernel driver support is present. Bits may be set indicating the
+>>> + * HW has functionality that is lacking kernel software support, such as BTM. If
+>>> + * a VMM is using this information to construct emulated copies of these
+>>> + * registers it should only forward bits that it knows it can support.
+
+But how *is* a VMM supposed to know what it can support? Are they all 
+expected to grovel the host devicetree/ACPI tables and maintain their 
+own knowledge of implementation errata to understand what's actually usable?
+
+>>> + *
+>>> + * In future, presence of required kernel support will be indicated in flags.
+>>
+>> What about the case where we _know_ that some functionality is broken in
+>> the hardware? For example, we nobble BTM support on MMU 700 thanks to
+>> erratum #2812531 yet we'll still cheerfully advertise it in IDR0 here.
+>> Similarly, HTTU can be overridden by IORT, so should we update the view
+>> that we advertise for that as well?
 > 
-> Thanks, can you add this hunk to fix the W=1 warning?
+> My knee jerk answer is no, these struct fields should just report the
+> raw HW register. A VMM should not copy these fields directly into a
+> VM. The principle purpose is to give the VMM the same details about the
+> HW as the kernel so it can apply erratas/etc.
 > 
-> --- a/drivers/iommu/io-pgtable-arm-v7s.c
-> +++ b/drivers/iommu/io-pgtable-arm-v7s.c
-> @@ -820,7 +820,7 @@ static int __init arm_v7s_do_selftests(void)
->                 .pgsize_bitmap = SZ_4K | SZ_64K | SZ_1M | SZ_16M,
->         };
->         unsigned int iova, size;
-> -       unsigned int i, loopnr = 0;
-> +       unsigned int i;
->         size_t mapped;
->  
->         selftest_running = true;
-> @@ -868,7 +868,6 @@ static int __init arm_v7s_do_selftests(void)
->                         return __FAIL(ops);
->  
->                 iova += SZ_16M;
-> -               loopnr++;
->         }
->  
->         /* Full unmap */
+> For instance, if we hide these fields how will the VMM/VM know to
+> apply the various flushing errata? With vCMDQ/etc the VM is directly
+> pushing flushes to HW, it must know the errata.
 
-I think I'd already folded that in, but please check!
+That doesn't seem like a valid argument. We obviously can't abstract 
+SMMU_IIDR, that would indeed be an invitation for trouble, but 
+otherwise, if an erratum affects S1 operation under conditions dependent 
+on an optional feature, then not advertising that feature would make the 
+workaround irrelevant anyway, since as far as the VM is concerned it 
+would be wrong to expect a non-existent feature to work in the first place.
 
-Will
+> For BTM/HTTU/etc - those all require kernel SW support and per-device
+> permission in the kernel to turn on. For instance requesting a nested
+> vSTE that needs BTM will fail today during attach. Turning on HTTU on
+> the S2 already has an API that will fail if the IORT blocks it.
+
+What does S2 HTTU have to do with the VM? How the host wants to maintain 
+its S2 tables it its own business. AFAICS, unless the VMM wants to do 
+some fiddly CD shadowing, it's going to be kinda hard to prevent the 
+SMMU seeing a guest CD with CD.HA and/or CD.HD set if the guest expects 
+S1 HTTU to work.
+
+I'm not sure what "vSTE that needs BTM" means. Even if the system does 
+support BTM, the only control is the global SMMU_CR2.PTM, and a vSMMU 
+can't usefully emulate changing that either way. Either the host set 
+PTM=0 before enabling the SMMU, so BTM can be advertised and expected to 
+work, or it didn't, in which case there can be no BTM, full stop.
+
+> Incrementally dealing with expanding the support is part of the
+> "required kernel support will be indicated in flags."
+> 
+> Basically, exposing the information as-is doesn't do any harm.
+
+I would say it does. Advertising a feature when we already know it's not 
+usable at all puts a non-trivial and unnecessary burden on the VMM and 
+VM to then have to somehow derive that information from other sources, 
+at the risk of being confused by unexpected behaviour if they don't.
+
+We sanitise CPU ID registers for userspace and KVM, so I see no 
+compelling reason for SMMU ID registers to be different.
+
+Thanks,
+Robin.
