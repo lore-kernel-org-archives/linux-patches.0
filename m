@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBED1E0491;
-	Wed,  6 Nov 2024 13:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7851E0493;
+	Wed,  6 Nov 2024 13:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898704; cv=none; b=Jx87ogFsoycV6vVxs9tZ1vh00N8uu9JLpV1ehhp/e0Ssa8muVR3TPl5Uyg46bsSWQBagu6T7wkZLBadewV2nayWgEOTGKG2cFrLmsW4CWT6bMf4B1x28MgGwmKtdi0jt5cP7tgBZdqckuI5WHjlJcMOCHgJBL28ek8Cf9/CZ0Rg=
+	t=1730898707; cv=none; b=qUXzLPCRIcsUDkUBK77zyEnDupFHE4XkZvSLbCUXtXwtVaZy8/U86NZgMMZIB0QJ9STEphMcazy9JC7ALXNmAIdS0bUKIqh/HUO2uSKqI/HHipVqNcBQl0UbSYpgZ/uiuZi7IbPKubvPtTWewyYj04YbckELOY7eu73PqnkH7ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898704; c=relaxed/simple;
-	bh=IaOhtWFl6eYT81nCDrLF9iiG3PJ5QkF+f8SOEH8SpP8=;
+	s=arc-20240116; t=1730898707; c=relaxed/simple;
+	bh=Gbbr6CKxagcQJ2xrpZ8tAwdgN+5NNpRO+lDhWE622tA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LjtIETSjM0zgXlfck6hZcr6ryXQ1GkLwCmdnC9ylkECRbJ8/Vi3MMaX8VsEIB65uVylCnSLTr5cwg7AeSzvKKOpKv+P2iSQPyEu+1gb5sF7aM0DGM0xjvOLNnqvntTA1f56Wwm5HEhr7U77pzfDMZZZ8LMFumgJcS5uWJnWVEfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ciBpH8fF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cGNIHDE5pduPO6ieigdd5pkyZMTc107Ih3poPSEW2oJhkEfRt1r3RxnRtgfrbFnOEUCP8EGm6GC8VACnzf51ab3nTeJMtLLCRNMIVqXgSwu8brfeTecr7CMayH/WQD2DEdt9c9Uulz5HY9TTXNvXME2Y8T9cnreFJEvJg2gNVSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFsCPZtL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ciBpH8fF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083CCC4CED8;
-	Wed,  6 Nov 2024 13:11:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFsCPZtL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C47C4CED4;
+	Wed,  6 Nov 2024 13:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898704;
-	bh=IaOhtWFl6eYT81nCDrLF9iiG3PJ5QkF+f8SOEH8SpP8=;
+	s=korg; t=1730898707;
+	bh=Gbbr6CKxagcQJ2xrpZ8tAwdgN+5NNpRO+lDhWE622tA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ciBpH8fFGIijdjb4sOUHCk9C2Y+3ViKzxS9qJQsgyBuRxJFD9NMP9LTEEQZWpFBDO
-	 m8+32GkgP/VawLC88/Oxqzqup+fiJL9wwQi0xm/pYr7TFkX798x+San/qaUA/MqOKv
-	 Fj+ZIPwwFbJ0GPpkjirn2Hv1YW76cqLlxbpsElzk=
+	b=cFsCPZtLjn1eJWaeyKU0DT9hQkScLKczmyT1IKge/bwOqyReJ4lDk8Y9rn2iz18hx
+	 3SbFfQVVvI4ZcT2L3gonIdO73fx0QJHBHEYZhB4rSFIAgNHnL/wOPltx0J4FRZU1hq
+	 8z/1KHCvJYjkOo718JRcl60C5Zs2jmGHN2ptiM3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d7ce59b06b3eb14fd218@syzkaller.appspotmail.com,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Billy Tsai <billy_tsai@aspeedtech.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 327/462] Bluetooth: RFCOMM: FIX possible deadlock in rfcomm_sk_state_change
-Date: Wed,  6 Nov 2024 13:03:40 +0100
-Message-ID: <20241106120339.603808803@linuxfoundation.org>
+Subject: [PATCH 5.4 328/462] gpio: aspeed: Add the flush write to ensure the write complete.
+Date: Wed,  6 Nov 2024 13:03:41 +0100
+Message-ID: <20241106120339.629681297@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,49 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Billy Tsai <billy_tsai@aspeedtech.com>
 
-[ Upstream commit 08d1914293dae38350b8088980e59fbc699a72fe ]
+[ Upstream commit 1bb5a99e1f3fd27accb804aa0443a789161f843c ]
 
-rfcomm_sk_state_change attempts to use sock_lock so it must never be
-called with it locked but rfcomm_sock_ioctl always attempt to lock it
-causing the following trace:
+Performing a dummy read ensures that the register write operation is fully
+completed, mitigating any potential bus delays that could otherwise impact
+the frequency of bitbang usage. E.g., if the JTAG application uses GPIO to
+control the JTAG pins (TCK, TMS, TDI, TDO, and TRST), and the application
+sets the TCK clock to 1 MHz, the GPIO's high/low transitions will rely on
+a delay function to ensure the clock frequency does not exceed 1 MHz.
+However, this can lead to rapid toggling of the GPIO because the write
+operation is POSTed and does not wait for a bus acknowledgment.
 
-======================================================
-WARNING: possible circular locking dependency detected
-6.8.0-syzkaller-08951-gfe46a7dd189e #0 Not tainted
-------------------------------------------------------
-syz-executor386/5093 is trying to acquire lock:
-ffff88807c396258 (sk_lock-AF_BLUETOOTH-BTPROTO_RFCOMM){+.+.}-{0:0}, at: lock_sock include/net/sock.h:1671 [inline]
-ffff88807c396258 (sk_lock-AF_BLUETOOTH-BTPROTO_RFCOMM){+.+.}-{0:0}, at: rfcomm_sk_state_change+0x5b/0x310 net/bluetooth/rfcomm/sock.c:73
-
-but task is already holding lock:
-ffff88807badfd28 (&d->lock){+.+.}-{3:3}, at: __rfcomm_dlc_close+0x226/0x6a0 net/bluetooth/rfcomm/core.c:491
-
-Reported-by: syzbot+d7ce59b06b3eb14fd218@syzkaller.appspotmail.com
-Tested-by: syzbot+d7ce59b06b3eb14fd218@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d7ce59b06b3eb14fd218
-Fixes: 3241ad820dbb ("[Bluetooth] Add timestamp support to L2CAP, RFCOMM and SCO")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 361b79119a4b ("gpio: Add Aspeed driver")
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+Link: https://lore.kernel.org/r/20241008081450.1490955-2-billy_tsai@aspeedtech.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/sock.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpio/gpio-aspeed.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
-index e67310a749d27..c52e2f7ff84bd 100644
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -872,9 +872,7 @@ static int rfcomm_sock_ioctl(struct socket *sock, unsigned int cmd, unsigned lon
+diff --git a/drivers/gpio/gpio-aspeed.c b/drivers/gpio/gpio-aspeed.c
+index b7e93d10a6ab6..24bd00a6ae423 100644
+--- a/drivers/gpio/gpio-aspeed.c
++++ b/drivers/gpio/gpio-aspeed.c
+@@ -404,6 +404,8 @@ static void __aspeed_gpio_set(struct gpio_chip *gc, unsigned int offset,
+ 	gpio->dcache[GPIO_BANK(offset)] = reg;
  
- 	if (err == -ENOIOCTLCMD) {
- #ifdef CONFIG_BT_RFCOMM_TTY
--		lock_sock(sk);
- 		err = rfcomm_dev_ioctl(sk, cmd, (void __user *) arg);
--		release_sock(sk);
- #else
- 		err = -EOPNOTSUPP;
- #endif
+ 	iowrite32(reg, addr);
++	/* Flush write */
++	ioread32(addr);
+ }
+ 
+ static void aspeed_gpio_set(struct gpio_chip *gc, unsigned int offset,
 -- 
 2.43.0
 
