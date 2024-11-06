@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D98B1CB310;
-	Wed,  6 Nov 2024 13:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61CF21DF98F;
+	Wed,  6 Nov 2024 13:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899079; cv=none; b=KyNFvrMsyqfQxYAlHdkwWQDOucP5X3+E4m40BJm/N9yfKaGI5ObScmrVpGinAoP3hwKLvbFtCwNb4xQMf7z3UqhiPqDRI6fpcwENCnF1IGYh5bOstO5F1WnOEqfpSOXaLbKW6vlKUV56VK7UnQWzkPOO0IRmF6U1lSAmuc7Pjjk=
+	t=1730899082; cv=none; b=uqmsos1ULJ3z6aibdQmYEfPn+h/eFq5O2DOCUZsqN+0C4VgkR1ZDcrow2lToyFlQH2rth3n3V3Ix1yYNFC2wlQRbpumVvI6o4WBPi/b3RbxsyVppI9fCivMVqtd2iw0K61H+pU5/zt/8/oadc4khp1WoEfZ8XBWDm5nS8ivdVg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899079; c=relaxed/simple;
-	bh=6BNsEMHtn31c6hk75qKqvifRY0Cw7Fj2fu/7D+WiskE=;
+	s=arc-20240116; t=1730899082; c=relaxed/simple;
+	bh=UMfZtjnUMOUtJ4ddOJ1tKePWGVLUPUubR5F3m6y1cig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bSz05RAjkKfNrrYaQbSgJHWNJiDR/MTltf+2sDmD0wh9W5rwcqsQzVl1kij1LdMTyvMKbdPwbi8iQNGb6YfcrEFSUMp+V2Kbit+WwdtwWlfP3WRpm2PMu8utZs8+03j+Nocj+BEYpRv+oe4Jq7+UTNXKThVjkLlMuoqXUDsAhsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bx6SEynL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=phbHWuzqsWBHZXo+AbdQFfUOSHUZGNvqC7HtBvXDr59FTACYoO29VBfTxZWNJJk13zuRsGsy5OHXZFpBW7dSTxaXL37kGhtbDau9hDiPTz2GcGUecQNvK2WUHKEMptPq+ppNlFzhcEW/iBsxffCIj0kPcDgFqYuBPw49OAeuNi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LH8quxK8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bx6SEynL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE22C4CECD;
-	Wed,  6 Nov 2024 13:17:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LH8quxK8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF460C4CECD;
+	Wed,  6 Nov 2024 13:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899079;
-	bh=6BNsEMHtn31c6hk75qKqvifRY0Cw7Fj2fu/7D+WiskE=;
+	s=korg; t=1730899082;
+	bh=UMfZtjnUMOUtJ4ddOJ1tKePWGVLUPUubR5F3m6y1cig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bx6SEynLpZpEU3b1na9vj4mgcciuGIJJBMicrCq2e8/UBZhF6TONZzDDlvfJaZ2sj
-	 dTyO9qPVc5jNoRqw+9jVkhFLGESSeo88MKwdUy0tW9OqfrfkbNOTbgHR7FSY3awmuK
-	 fOOKvZ3jFMSjmTAigQDv4HF/DVx7yWcrTOBkaTw4=
+	b=LH8quxK8Q15wTyq9TE5ZtMNZBcKskpZLrTU1iBDKl0Hc6y16QqfkzkLkBAL5GAU46
+	 T39pAZb5FAkrglOGK94G/jSQPr6kbxxqGyD8dab/ls0woq8blA9p0kQOMk8LPUuRPv
+	 ppYdNH7F/F8YW/3a1aEGavMUE9ANO2BUah4WlQnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zicheng Qu <quzicheng@huawei.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 453/462] staging: iio: frequency: ad9832: fix division by zero in ad9832_calc_freqreg()
-Date: Wed,  6 Nov 2024 13:05:46 +0100
-Message-ID: <20241106120342.694752094@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+9ef37ac20608f4836256@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 454/462] nilfs2: fix potential deadlock with newly created symlinks
+Date: Wed,  6 Nov 2024 13:05:47 +0100
+Message-ID: <20241106120342.720540291@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,49 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zicheng Qu <quzicheng@huawei.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 6bd301819f8f69331a55ae2336c8b111fc933f3d upstream.
+commit b3a033e3ecd3471248d474ef263aadc0059e516a upstream.
 
-In the ad9832_write_frequency() function, clk_get_rate() might return 0.
-This can lead to a division by zero when calling ad9832_calc_freqreg().
-The check if (fout > (clk_get_rate(st->mclk) / 2)) does not protect
-against the case when fout is 0. The ad9832_write_frequency() function
-is called from ad9832_write(), and fout is derived from a text buffer,
-which can contain any value.
+Syzbot reported that page_symlink(), called by nilfs_symlink(), triggers
+memory reclamation involving the filesystem layer, which can result in
+circular lock dependencies among the reader/writer semaphore
+nilfs->ns_segctor_sem, s_writers percpu_rwsem (intwrite) and the
+fs_reclaim pseudo lock.
 
-Link: https://lore.kernel.org/all/2024100904-CVE-2024-47663-9bdc@gregkh/
-Fixes: ea707584bac1 ("Staging: IIO: DDS: AD9832 / AD9835 driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20241022134354.574614-1-quzicheng@huawei.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+This is because after commit 21fc61c73c39 ("don't put symlink bodies in
+pagecache into highmem"), the gfp flags of the page cache for symbolic
+links are overwritten to GFP_KERNEL via inode_nohighmem().
+
+This is not a problem for symlinks read from the backing device, because
+the __GFP_FS flag is dropped after inode_nohighmem() is called.  However,
+when a new symlink is created with nilfs_symlink(), the gfp flags remain
+overwritten to GFP_KERNEL.  Then, memory allocation called from
+page_symlink() etc.  triggers memory reclamation including the FS layer,
+which may call nilfs_evict_inode() or nilfs_dirty_inode().  And these can
+cause a deadlock if they are called while nilfs->ns_segctor_sem is held:
+
+Fix this issue by dropping the __GFP_FS flag from the page cache GFP flags
+of newly created symlinks in the same way that nilfs_new_inode() and
+__nilfs_read_inode() do, as a workaround until we adopt nofs allocation
+scope consistently or improve the locking constraints.
+
+Link: https://lkml.kernel.org/r/20241020050003.4308-1-konishi.ryusuke@gmail.com
+Fixes: 21fc61c73c39 ("don't put symlink bodies in pagecache into highmem")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+9ef37ac20608f4836256@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9ef37ac20608f4836256
+Tested-by: syzbot+9ef37ac20608f4836256@syzkaller.appspotmail.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/iio/frequency/ad9832.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/nilfs2/namei.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/staging/iio/frequency/ad9832.c
-+++ b/drivers/staging/iio/frequency/ad9832.c
-@@ -129,12 +129,15 @@ static unsigned long ad9832_calc_freqreg
- static int ad9832_write_frequency(struct ad9832_state *st,
- 				  unsigned int addr, unsigned long fout)
- {
-+	unsigned long clk_freq;
- 	unsigned long regval;
- 
--	if (fout > (clk_get_rate(st->mclk) / 2))
-+	clk_freq = clk_get_rate(st->mclk);
-+
-+	if (!clk_freq || fout > (clk_freq / 2))
- 		return -EINVAL;
- 
--	regval = ad9832_calc_freqreg(clk_get_rate(st->mclk), fout);
-+	regval = ad9832_calc_freqreg(clk_freq, fout);
- 
- 	st->freq_data[0] = cpu_to_be16((AD9832_CMD_FRE8BITSW << CMD_SHIFT) |
- 					(addr << ADD_SHIFT) |
+--- a/fs/nilfs2/namei.c
++++ b/fs/nilfs2/namei.c
+@@ -156,6 +156,9 @@ static int nilfs_symlink(struct inode *d
+ 	/* slow symlink */
+ 	inode->i_op = &nilfs_symlink_inode_operations;
+ 	inode_nohighmem(inode);
++	mapping_set_gfp_mask(inode->i_mapping,
++			     mapping_gfp_constraint(inode->i_mapping,
++						    ~__GFP_FS));
+ 	inode->i_mapping->a_ops = &nilfs_aops;
+ 	err = page_symlink(inode, symname, l);
+ 	if (err)
 
 
