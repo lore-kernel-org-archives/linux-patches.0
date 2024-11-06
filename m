@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C70C1DED58;
-	Wed,  6 Nov 2024 12:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946D918C00E;
+	Wed,  6 Nov 2024 12:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896135; cv=none; b=jsG8d89VbLArgdb4ERxNMWfMU7mPtE4PZ4kH0jFDYDWBpP2fqKPj6BEvXCyVrvFkaP5ecGv6mQEITME6TbaRKsbOjc9ofQ1tuWcOM3nEQsPITQP/Bkf17gWvYazTVVzr2vn7zWfPaOgeaTp7E7Qv8UvbJM2hGS2TnL44edIAf98=
+	t=1730896138; cv=none; b=g84uzGo4rH01M6/M5NyO+yXDggob/Hmh6+qXh/3E0edeMGCLgzimVXkLMGsPzfwSoDVcIDtMYTw2QpjAcqsaK9EeT02rmeTvtTauq7+q4orp3nGY++8KzC18KQK30SdRkwjIv1UcpkPSNpVRG+QXtcvufRoXiizJph2jaHvRXgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896135; c=relaxed/simple;
-	bh=Deq93Ey3lPU5t1SFMyfgJYO5QOw77Vw4NAlK+BFNtMo=;
+	s=arc-20240116; t=1730896138; c=relaxed/simple;
+	bh=tMRnWglhvRkuWySe2zFEGqBqftBIRiLEnqbHdQgDfO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qjdC4qLLnFsj0KgiCNLY0ROaT2qZHeUVI43sadmvL5q6btBjMxdKxhXjDsNCtkUEQjB3qcQETsIMSO1Z3489W/cBcUC43dJzz/VVziVvHYBbsMF6QSmGCL0Cd0eA8iD6K4mqzwNC4nMveIkF9FBdld79zA2L+OKIt+o3FdJr6Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ha9lya1e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SDZaNAhf5BwKnPx51WqLW/Q8OwjKQ8Duf2SCsPTBfIyLrg1fLfkS6bGjYD+PgxiDRagXSaR+8PE+vBld507qE2j3vmdJnKH+VT7+2qJpSxWhqcsExKR7B8173UMVWhx5vsapR0yNGSWe+rJ5NBqppe0wHqCSoXUMlriyHIFnHoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVV/jlFF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ha9lya1e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2373CC4CECD;
-	Wed,  6 Nov 2024 12:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVV/jlFF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF39C4CECD;
+	Wed,  6 Nov 2024 12:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896135;
-	bh=Deq93Ey3lPU5t1SFMyfgJYO5QOw77Vw4NAlK+BFNtMo=;
+	s=korg; t=1730896138;
+	bh=tMRnWglhvRkuWySe2zFEGqBqftBIRiLEnqbHdQgDfO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ha9lya1ezr50VOitCBQxbL+lsshrWLmx/kta3j+faAlGT+Jd9zrfTH1NBqhL67Hfd
-	 mWD7iRg00LV4Ur5m9+G0a6INEXMhDDcupK1tZWX7RmLtdeq4P+RBtlccQR5uyCgChu
-	 cDuWpm+VCb1HutKONvDVsQ37cwXbj1vksmK6tJHM=
+	b=iVV/jlFFlpisozSd2G8QztoTXfNm4NXrw6vwDb0L3kbYTJXSHX7xbgAfVHGO3RR2A
+	 OLsqv2u15P1B43FzIDrLgiZ39ta+7Rkr4PMlKb7HC19Tveh9yHV1ervJ2uCLKpYgDR
+	 XEWPrbjR9iViGDCc7H9jciKtwATzT0Kkbbk3dkDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dimitri Sivanich <sivanich@hpe.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 101/245] misc: sgi-gru: Dont disable preemption in GRU driver
-Date: Wed,  6 Nov 2024 13:02:34 +0100
-Message-ID: <20241106120321.699622125@linuxfoundation.org>
+Subject: [PATCH 6.11 102/245] NFSD: Initialize struct nfsd4_copy earlier
+Date: Wed,  6 Nov 2024 13:02:35 +0100
+Message-ID: <20241106120321.725587229@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -51,94 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dimitri Sivanich <sivanich@hpe.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit b983b271662bd6104d429b0fd97af3333ba760bf ]
+[ Upstream commit 63fab04cbd0f96191b6e5beedc3b643b01c15889 ]
 
-Disabling preemption in the GRU driver is unnecessary, and clashes with
-sleeping locks in several code paths.  Remove preempt_disable and
-preempt_enable from the GRU driver.
+Ensure the refcount and async_copies fields are initialized early.
+cleanup_async_copy() will reference these fields if an error occurs
+in nfsd4_copy(). If they are not correctly initialized, at the very
+least, a refcount underflow occurs.
 
-Signed-off-by: Dimitri Sivanich <sivanich@hpe.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-by: Olga Kornievskaia <okorniev@redhat.com>
+Fixes: aadc3bbea163 ("NFSD: Limit the number of concurrent async COPY operations")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Olga Kornievskaia <okorniev@redhat.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/sgi-gru/grukservices.c | 2 --
- drivers/misc/sgi-gru/grumain.c      | 4 ----
- drivers/misc/sgi-gru/grutlbpurge.c  | 2 --
- 3 files changed, 8 deletions(-)
+ fs/nfsd/nfs4proc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/sgi-gru/grukservices.c b/drivers/misc/sgi-gru/grukservices.c
-index 37e804bbb1f28..205945ce9e86a 100644
---- a/drivers/misc/sgi-gru/grukservices.c
-+++ b/drivers/misc/sgi-gru/grukservices.c
-@@ -258,7 +258,6 @@ static int gru_get_cpu_resources(int dsr_bytes, void **cb, void **dsr)
- 	int lcpu;
- 
- 	BUG_ON(dsr_bytes > GRU_NUM_KERNEL_DSR_BYTES);
--	preempt_disable();
- 	bs = gru_lock_kernel_context(-1);
- 	lcpu = uv_blade_processor_id();
- 	*cb = bs->kernel_cb + lcpu * GRU_HANDLE_STRIDE;
-@@ -272,7 +271,6 @@ static int gru_get_cpu_resources(int dsr_bytes, void **cb, void **dsr)
- static void gru_free_cpu_resources(void *cb, void *dsr)
- {
- 	gru_unlock_kernel_context(uv_numa_blade_id());
--	preempt_enable();
- }
- 
- /*
-diff --git a/drivers/misc/sgi-gru/grumain.c b/drivers/misc/sgi-gru/grumain.c
-index 0f5b09e290c89..3036c15f36892 100644
---- a/drivers/misc/sgi-gru/grumain.c
-+++ b/drivers/misc/sgi-gru/grumain.c
-@@ -937,10 +937,8 @@ vm_fault_t gru_fault(struct vm_fault *vmf)
- 
- again:
- 	mutex_lock(&gts->ts_ctxlock);
--	preempt_disable();
- 
- 	if (gru_check_context_placement(gts)) {
--		preempt_enable();
- 		mutex_unlock(&gts->ts_ctxlock);
- 		gru_unload_context(gts, 1);
- 		return VM_FAULT_NOPAGE;
-@@ -949,7 +947,6 @@ vm_fault_t gru_fault(struct vm_fault *vmf)
- 	if (!gts->ts_gru) {
- 		STAT(load_user_context);
- 		if (!gru_assign_gru_context(gts)) {
--			preempt_enable();
- 			mutex_unlock(&gts->ts_ctxlock);
- 			set_current_state(TASK_INTERRUPTIBLE);
- 			schedule_timeout(GRU_ASSIGN_DELAY);  /* true hack ZZZ */
-@@ -965,7 +962,6 @@ vm_fault_t gru_fault(struct vm_fault *vmf)
- 				vma->vm_page_prot);
- 	}
- 
--	preempt_enable();
- 	mutex_unlock(&gts->ts_ctxlock);
- 
- 	return VM_FAULT_NOPAGE;
-diff --git a/drivers/misc/sgi-gru/grutlbpurge.c b/drivers/misc/sgi-gru/grutlbpurge.c
-index 10921cd2608df..1107dd3e2e9fa 100644
---- a/drivers/misc/sgi-gru/grutlbpurge.c
-+++ b/drivers/misc/sgi-gru/grutlbpurge.c
-@@ -65,7 +65,6 @@ static struct gru_tlb_global_handle *get_lock_tgh_handle(struct gru_state
- 	struct gru_tlb_global_handle *tgh;
- 	int n;
- 
--	preempt_disable();
- 	if (uv_numa_blade_id() == gru->gs_blade_id)
- 		n = get_on_blade_tgh(gru);
- 	else
-@@ -79,7 +78,6 @@ static struct gru_tlb_global_handle *get_lock_tgh_handle(struct gru_state
- static void get_unlock_tgh_handle(struct gru_tlb_global_handle *tgh)
- {
- 	unlock_tgh_handle(tgh);
--	preempt_enable();
- }
- 
- /*
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 5768b2ff1d1d1..81a1e3bf06b97 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1838,14 +1838,14 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 		if (!async_copy)
+ 			goto out_err;
+ 		async_copy->cp_nn = nn;
++		INIT_LIST_HEAD(&async_copy->copies);
++		refcount_set(&async_copy->refcount, 1);
+ 		/* Arbitrary cap on number of pending async copy operations */
+ 		if (atomic_inc_return(&nn->pending_async_copies) >
+ 				(int)rqstp->rq_pool->sp_nrthreads) {
+ 			atomic_dec(&nn->pending_async_copies);
+ 			goto out_err;
+ 		}
+-		INIT_LIST_HEAD(&async_copy->copies);
+-		refcount_set(&async_copy->refcount, 1);
+ 		async_copy->cp_src = kmalloc(sizeof(*async_copy->cp_src), GFP_KERNEL);
+ 		if (!async_copy->cp_src)
+ 			goto out_err;
 -- 
 2.43.0
 
