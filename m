@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3BF1DED49;
-	Wed,  6 Nov 2024 12:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767D51DF26B;
+	Wed,  6 Nov 2024 12:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895493; cv=none; b=O//+Iyz5CURx/q1aDz80Z38GKB9rvIbPq7RaT2suQYE8LAGk67lKp91NJEBnS6/8aApEPEq4Aqb+6mNqOtfrt1U8y41Oru4DJPopoM2J6DtnjsYf0avCsPYjAbkY7MIrNKx4hNhJmmrRK1kNNoHvjXKHUceIHlEN5EhUscyqh30=
+	t=1730895496; cv=none; b=Hclni6/Qb7ItFzb7c5S/VauaXbm1tKf48bg0Nb06lSVfyE5NsGNezqTmX8VcMQeOczQODyPz4ttpeL2oIHMFDCF6jSyXGu/eD2Jxv8VZR0viPf/jxl3Zhb+v/0MastOlz8WSivvlxaoApNs8679dPBuS6Udha+it3maWXoeAMyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895493; c=relaxed/simple;
-	bh=KpWuidg9YQ4lEoTd06nGD60v5elxH1H9X/Wyyd/UDUg=;
+	s=arc-20240116; t=1730895496; c=relaxed/simple;
+	bh=+bC58XwPsgNLZw729qNnECxDmU5Eev6pMVUXq+YxS+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2xupT2DWsKCTC9XgM+VKQN2zN8WC6pjUYdelAJkYYLQpKamHydfUMif1Bxp8rwgxSeARY60YOb338vFa1Mj0gXlRkUqnZiYm9Ox+OMLsmanHa8N6O9Uu5pPKa/OqkrGmjayJCCacGl0L2Qng7vb06h5vfmqD9lhEP/fbhNCF4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FmCtYluK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cCWrviVL3k6s/MQe2KfL18aTIB5fiTyw6FrFweGccbg12kSOh9OTWmrRZ6FaeIHKZ5kLrOpcMM2UojhNW9T9IL6/JW0Rimki3qGSElEikZK39MrIVRl0l/XN1EOXD3Ybk+mpBgLwZTRJQF8Kz1lIMUDdtcBDbA3q9zkBJD3LBWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NAmPaOxk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FmCtYluK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06436C4CED3;
-	Wed,  6 Nov 2024 12:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NAmPaOxk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E5EC4CECD;
+	Wed,  6 Nov 2024 12:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895493;
-	bh=KpWuidg9YQ4lEoTd06nGD60v5elxH1H9X/Wyyd/UDUg=;
+	s=korg; t=1730895496;
+	bh=+bC58XwPsgNLZw729qNnECxDmU5Eev6pMVUXq+YxS+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FmCtYluK2UqbARjoM5dZ5jtqHH3sFB8sQYQRb6otTPHc+s21rHKVomxr9T3SJFYsb
-	 NA//cnYOgf/inwNRyxazX8dZYUIkB9QLOh8Ln3KyqVTtcoQDyW+41U+/0pR2XOlZ46
-	 HYKr7gMlHIn3n9xUYckeJ3S7FGIj2jWnfwVqsSPU=
+	b=NAmPaOxk/hY8DVkEgAttTfb2HTQ3lwcK55V6hChGlY3rWHNt0JEHSwWf+tU6k25pI
+	 bn9Eh/Sg/eHbbFnM+5hSQCSXSI5ebKsw1iANNK/b0HKDznl4Vwf+ONov0b9pwLzY1X
+	 inEoil6Vc35cABAz7K3yoRpvHsGZzgiFNgL69AEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 236/350] s390/mm: Add cond_resched() to cmm_alloc/free_pages()
-Date: Wed,  6 Nov 2024 13:02:44 +0100
-Message-ID: <20241106120326.787535901@linuxfoundation.org>
+	Alfred Agrell <blubban@gmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Subject: [PATCH 4.19 210/350] tomoyo: fallback to realpath if symlinks pathname does not exist
+Date: Wed,  6 Nov 2024 13:02:18 +0100
+Message-ID: <20241106120326.177404036@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,69 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 131b8db78558120f58c5dc745ea9655f6b854162 ]
+commit ada1986d07976d60bed5017aa38b7f7cf27883f7 upstream.
 
-Adding/removing large amount of pages at once to/from the CMM balloon
-can result in rcu_sched stalls or workqueue lockups, because of busy
-looping w/o cond_resched().
+Alfred Agrell found that TOMOYO cannot handle execveat(AT_EMPTY_PATH)
+inside chroot environment where /dev and /proc are not mounted, for
+commit 51f39a1f0cea ("syscalls: implement execveat() system call") missed
+that TOMOYO tries to canonicalize argv[0] when the filename fed to the
+executed program as argv[0] is supplied using potentially nonexistent
+pathname.
 
-Prevent this by adding a cond_resched(). cmm_free_pages() holds a
-spin_lock while looping, so it cannot be added directly to the existing
-loop. Instead, introduce a wrapper function that operates on maximum 256
-pages at once, and add it there.
+Since "/dev/fd/<fd>" already lost symlink information used for obtaining
+that <fd>, it is too late to reconstruct symlink's pathname. Although
+<filename> part of "/dev/fd/<fd>/<filename>" might not be canonicalized,
+TOMOYO cannot use tomoyo_realpath_nofollow() when /dev or /proc is not
+mounted. Therefore, fallback to tomoyo_realpath_from_path() when
+tomoyo_realpath_nofollow() failed.
 
-Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Alfred Agrell <blubban@gmail.com>
+Closes: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1082001
+Fixes: 51f39a1f0cea ("syscalls: implement execveat() system call")
+Cc: stable@vger.kernel.org # v3.19+
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/mm/cmm.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ security/tomoyo/domain.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/s390/mm/cmm.c b/arch/s390/mm/cmm.c
-index a51c892f14f3e..756aefbd05249 100644
---- a/arch/s390/mm/cmm.c
-+++ b/arch/s390/mm/cmm.c
-@@ -98,11 +98,12 @@ static long cmm_alloc_pages(long nr, long *counter,
- 		(*counter)++;
- 		spin_unlock(&cmm_lock);
- 		nr--;
-+		cond_resched();
- 	}
- 	return nr;
- }
- 
--static long cmm_free_pages(long nr, long *counter, struct cmm_page_array **list)
-+static long __cmm_free_pages(long nr, long *counter, struct cmm_page_array **list)
- {
- 	struct cmm_page_array *pa;
- 	unsigned long addr;
-@@ -126,6 +127,21 @@ static long cmm_free_pages(long nr, long *counter, struct cmm_page_array **list)
- 	return nr;
- }
- 
-+static long cmm_free_pages(long nr, long *counter, struct cmm_page_array **list)
-+{
-+	long inc = 0;
-+
-+	while (nr) {
-+		inc = min(256L, nr);
-+		nr -= inc;
-+		inc = __cmm_free_pages(inc, counter, list);
-+		if (inc)
-+			break;
-+		cond_resched();
+--- a/security/tomoyo/domain.c
++++ b/security/tomoyo/domain.c
+@@ -701,10 +701,13 @@ int tomoyo_find_next_domain(struct linux
+ 	ee->r.obj = &ee->obj;
+ 	ee->obj.path1 = bprm->file->f_path;
+ 	/* Get symlink's pathname of program. */
+-	retval = -ENOENT;
+ 	exename.name = tomoyo_realpath_nofollow(original_name);
+-	if (!exename.name)
+-		goto out;
++	if (!exename.name) {
++		/* Fallback to realpath if symlink's pathname does not exist. */
++		exename.name = tomoyo_realpath_from_path(&bprm->file->f_path);
++		if (!exename.name)
++			goto out;
 +	}
-+	return nr + inc;
-+}
-+
- static int cmm_oom_notify(struct notifier_block *self,
- 			  unsigned long dummy, void *parm)
- {
--- 
-2.43.0
-
+ 	tomoyo_fill_path_info(&exename);
+ retry:
+ 	/* Check 'aggregator' directive. */
 
 
