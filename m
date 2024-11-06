@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64ABF1F4FAE;
-	Wed,  6 Nov 2024 12:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0EB1E133E;
+	Wed,  6 Nov 2024 12:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896631; cv=none; b=X9gj9KQvQdJg9wDHw44FtOGY50M1nE4kz9EdbqHFIU/TkQmpt8vVlju9ShvU8xa37bD9iAYit72U4u/fw3EZhtE6StaHAZ9W3GtLcpvQiPyZzv26nLdB7asrK2xj1C3gN7B1LOyuk5hET7C5csDnod5inVT5Oe8SrUX26IqPd+I=
+	t=1730896633; cv=none; b=YHZ1SoqFGpQXoLcCRxr49/K8OGoi/zNqs5a1nobCcT0Qw5gtzL51Bp0GAbCSSocJ8CAfoiiDHH4x1+b8Uvnw0nOhZCoGsT0DRu6oooTSGOEGUlacGjggVcOxU6FLx4d/V9IfzlM+AE2tpfWw/mj7mo7flRbZwAl51W1paftEmtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896631; c=relaxed/simple;
-	bh=0J/qc3NLIvDzOjJVY0FX13USk75SB02lb42nPNuRt1I=;
+	s=arc-20240116; t=1730896633; c=relaxed/simple;
+	bh=BSGwTLx23B6IqesDbg3VRO4Fcwdl8oXWrXE0yk43HeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qp5D3RgQA0pEvh+mCijt71Zv/jLomvHr3eo4H6+n2cysHWJ+mNrokzhOEXlLxuzn205c6XAFTvFKJo3b0vTL6QmhdQ3pbebDastiz48dWl0ZdC/ppzW75rsHhXq92aRupe5HG4ohxqfrGaaQddXRXZqoDlg+l8oSTQX3VhaDbYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rn3LVZpA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FlTDHrPQmQtSFR9U6PQxZ/FjxHVvfot/VESqjbFKqucbafGjxCxInSDAspi44jXW2mYQ9HqiOqXqNTGRbAKE0Sw1vK+vDTYFZ4u24N+FGUheupcr3LcUZkWeYhoEPq0E0/+RyCP0QeBU5GSOF6tjNYu0tPIEZLzDKX24P+90Jy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0I0S2oA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rn3LVZpA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79102C4CECD;
-	Wed,  6 Nov 2024 12:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0I0S2oA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647E0C4CECD;
+	Wed,  6 Nov 2024 12:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896630;
-	bh=0J/qc3NLIvDzOjJVY0FX13USk75SB02lb42nPNuRt1I=;
+	s=korg; t=1730896633;
+	bh=BSGwTLx23B6IqesDbg3VRO4Fcwdl8oXWrXE0yk43HeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rn3LVZpADnaERIzO0nuWSibPLCiv1WrIQ+RmNWoBxNIY0uHAj54020Ex8j/cDco0l
-	 4gV9T1N+T66qOWILMTKY1qTIkUjxw072Jg7JJFBspIBF4QrkYnVWbxuc17+6PoWY3H
-	 343PE8+BhxMyao4pfpjdqhpkZBVysox24IVk5Gqk=
+	b=y0I0S2oA0u3hz1BAtwWvrCvpizIHuRFoaMK1ls2Fnxg2C+ZOsgOBRrM9AqX6/mcjf
+	 AuOAWxKM9szLC+kCMXaMIlA7aePd5bdpRymSLW30V8iSBvQQ5KOZBQ+ui3YN4BWFwG
+	 3Yomtt14OTIPxG4xcSPRGFk9sLViGrZj+ND22KwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Janis Schoetterl-Glausch <scgl@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 020/110] arm64: probes: Fix uprobes for big-endian kernels
-Date: Wed,  6 Nov 2024 13:03:46 +0100
-Message-ID: <20241106120303.721705189@linuxfoundation.org>
+Subject: [PATCH 5.10 021/110] KVM: s390: gaccess: Refactor gpa and length calculation
+Date: Wed,  6 Nov 2024 13:03:47 +0100
+Message-ID: <20241106120303.747210808@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -52,174 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Janis Schoetterl-Glausch <scgl@linux.ibm.com>
 
-[ Upstream commit 13f8f1e05f1dc36dbba6cba0ae03354c0dafcde7 ]
+[ Upstream commit 416e7f0c9d613bf84e182eba9547ae8f9f5bfa4c ]
 
-The arm64 uprobes code is broken for big-endian kernels as it doesn't
-convert the in-memory instruction encoding (which is always
-little-endian) into the kernel's native endianness before analyzing and
-simulating instructions. This may result in a few distinct problems:
+Improve readability by renaming the length variable and
+not calculating the offset manually.
 
-* The kernel may may erroneously reject probing an instruction which can
-  safely be probed.
-
-* The kernel may erroneously erroneously permit stepping an
-  instruction out-of-line when that instruction cannot be stepped
-  out-of-line safely.
-
-* The kernel may erroneously simulate instruction incorrectly dur to
-  interpretting the byte-swapped encoding.
-
-The endianness mismatch isn't caught by the compiler or sparse because:
-
-* The arch_uprobe::{insn,ixol} fields are encoded as arrays of u8, so
-  the compiler and sparse have no idea these contain a little-endian
-  32-bit value. The core uprobes code populates these with a memcpy()
-  which similarly does not handle endianness.
-
-* While the uprobe_opcode_t type is an alias for __le32, both
-  arch_uprobe_analyze_insn() and arch_uprobe_skip_sstep() cast from u8[]
-  to the similarly-named probe_opcode_t, which is an alias for u32.
-  Hence there is no endianness conversion warning.
-
-Fix this by changing the arch_uprobe::{insn,ixol} fields to __le32 and
-adding the appropriate __le32_to_cpu() conversions prior to consuming
-the instruction encoding. The core uprobes copies these fields as opaque
-ranges of bytes, and so is unaffected by this change.
-
-At the same time, remove MAX_UINSN_BYTES and consistently use
-AARCH64_INSN_SIZE for clarity.
-
-Tested with the following:
-
-| #include <stdio.h>
-| #include <stdbool.h>
-|
-| #define noinline __attribute__((noinline))
-|
-| static noinline void *adrp_self(void)
-| {
-|         void *addr;
-|
-|         asm volatile(
-|         "       adrp    %x0, adrp_self\n"
-|         "       add     %x0, %x0, :lo12:adrp_self\n"
-|         : "=r" (addr));
-| }
-|
-|
-| int main(int argc, char *argv)
-| {
-|         void *ptr = adrp_self();
-|         bool equal = (ptr == adrp_self);
-|
-|         printf("adrp_self   => %p\n"
-|                "adrp_self() => %p\n"
-|                "%s\n",
-|                adrp_self, ptr, equal ? "EQUAL" : "NOT EQUAL");
-|
-|         return 0;
-| }
-
-.... where the adrp_self() function was compiled to:
-
-| 00000000004007e0 <adrp_self>:
-|   4007e0:       90000000        adrp    x0, 400000 <__ehdr_start>
-|   4007e4:       911f8000        add     x0, x0, #0x7e0
-|   4007e8:       d65f03c0        ret
-
-Before this patch, the ADRP is not recognized, and is assumed to be
-steppable, resulting in corruption of the result:
-
-| # ./adrp-self
-| adrp_self   => 0x4007e0
-| adrp_self() => 0x4007e0
-| EQUAL
-| # echo 'p /root/adrp-self:0x007e0' > /sys/kernel/tracing/uprobe_events
-| # echo 1 > /sys/kernel/tracing/events/uprobes/enable
-| # ./adrp-self
-| adrp_self   => 0x4007e0
-| adrp_self() => 0xffffffffff7e0
-| NOT EQUAL
-
-After this patch, the ADRP is correctly recognized and simulated:
-
-| # ./adrp-self
-| adrp_self   => 0x4007e0
-| adrp_self() => 0x4007e0
-| EQUAL
-| #
-| # echo 'p /root/adrp-self:0x007e0' > /sys/kernel/tracing/uprobe_events
-| # echo 1 > /sys/kernel/tracing/events/uprobes/enable
-| # ./adrp-self
-| adrp_self   => 0x4007e0
-| adrp_self() => 0x4007e0
-| EQUAL
-
-Fixes: 9842ceae9fa8 ("arm64: Add uprobe support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20241008155851.801546-4-mark.rutland@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Janis Schoetterl-Glausch <scgl@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Message-Id: <20211126164549.7046-2-scgl@linux.ibm.com>
+Signed-off-by: Janosch Frank <frankja@linux.ibm.com>
+Stable-dep-of: e8061f06185b ("KVM: s390: gaccess: Check if guest address is in memslot")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/uprobes.h   | 8 +++-----
- arch/arm64/kernel/probes/uprobes.c | 4 ++--
- 2 files changed, 5 insertions(+), 7 deletions(-)
+ arch/s390/kvm/gaccess.c | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/arch/arm64/include/asm/uprobes.h b/arch/arm64/include/asm/uprobes.h
-index ba4bff5ca6749..98f29a43bfe89 100644
---- a/arch/arm64/include/asm/uprobes.h
-+++ b/arch/arm64/include/asm/uprobes.h
-@@ -10,11 +10,9 @@
- #include <asm/insn.h>
- #include <asm/probes.h>
+diff --git a/arch/s390/kvm/gaccess.c b/arch/s390/kvm/gaccess.c
+index b9f85b2dc053f..9f80d95a43770 100644
+--- a/arch/s390/kvm/gaccess.c
++++ b/arch/s390/kvm/gaccess.c
+@@ -831,8 +831,9 @@ int access_guest(struct kvm_vcpu *vcpu, unsigned long ga, u8 ar, void *data,
+ 		 unsigned long len, enum gacc_mode mode)
+ {
+ 	psw_t *psw = &vcpu->arch.sie_block->gpsw;
+-	unsigned long _len, nr_pages, gpa, idx;
++	unsigned long nr_pages, gpa, idx;
+ 	unsigned long pages_array[2];
++	unsigned int fragment_len;
+ 	unsigned long *pages;
+ 	int need_ipte_lock;
+ 	union asce asce;
+@@ -855,15 +856,15 @@ int access_guest(struct kvm_vcpu *vcpu, unsigned long ga, u8 ar, void *data,
+ 		ipte_lock(vcpu);
+ 	rc = guest_page_range(vcpu, ga, ar, pages, nr_pages, asce, mode);
+ 	for (idx = 0; idx < nr_pages && !rc; idx++) {
+-		gpa = *(pages + idx) + (ga & ~PAGE_MASK);
+-		_len = min(PAGE_SIZE - (gpa & ~PAGE_MASK), len);
++		gpa = pages[idx] + offset_in_page(ga);
++		fragment_len = min(PAGE_SIZE - offset_in_page(gpa), len);
+ 		if (mode == GACC_STORE)
+-			rc = kvm_write_guest(vcpu->kvm, gpa, data, _len);
++			rc = kvm_write_guest(vcpu->kvm, gpa, data, fragment_len);
+ 		else
+-			rc = kvm_read_guest(vcpu->kvm, gpa, data, _len);
+-		len -= _len;
+-		ga += _len;
+-		data += _len;
++			rc = kvm_read_guest(vcpu->kvm, gpa, data, fragment_len);
++		len -= fragment_len;
++		ga += fragment_len;
++		data += fragment_len;
+ 	}
+ 	if (need_ipte_lock)
+ 		ipte_unlock(vcpu);
+@@ -875,19 +876,20 @@ int access_guest(struct kvm_vcpu *vcpu, unsigned long ga, u8 ar, void *data,
+ int access_guest_real(struct kvm_vcpu *vcpu, unsigned long gra,
+ 		      void *data, unsigned long len, enum gacc_mode mode)
+ {
+-	unsigned long _len, gpa;
++	unsigned int fragment_len;
++	unsigned long gpa;
+ 	int rc = 0;
  
--#define MAX_UINSN_BYTES		AARCH64_INSN_SIZE
--
- #define UPROBE_SWBP_INSN	cpu_to_le32(BRK64_OPCODE_UPROBES)
- #define UPROBE_SWBP_INSN_SIZE	AARCH64_INSN_SIZE
--#define UPROBE_XOL_SLOT_BYTES	MAX_UINSN_BYTES
-+#define UPROBE_XOL_SLOT_BYTES	AARCH64_INSN_SIZE
- 
- typedef u32 uprobe_opcode_t;
- 
-@@ -23,8 +21,8 @@ struct arch_uprobe_task {
- 
- struct arch_uprobe {
- 	union {
--		u8 insn[MAX_UINSN_BYTES];
--		u8 ixol[MAX_UINSN_BYTES];
-+		__le32 insn;
-+		__le32 ixol;
- 	};
- 	struct arch_probe_insn api;
- 	bool simulate;
-diff --git a/arch/arm64/kernel/probes/uprobes.c b/arch/arm64/kernel/probes/uprobes.c
-index 2c247634552b1..8a02c549e57fd 100644
---- a/arch/arm64/kernel/probes/uprobes.c
-+++ b/arch/arm64/kernel/probes/uprobes.c
-@@ -42,7 +42,7 @@ int arch_uprobe_analyze_insn(struct arch_uprobe *auprobe, struct mm_struct *mm,
- 	else if (!IS_ALIGNED(addr, AARCH64_INSN_SIZE))
- 		return -EINVAL;
- 
--	insn = *(probe_opcode_t *)(&auprobe->insn[0]);
-+	insn = le32_to_cpu(auprobe->insn);
- 
- 	switch (arm_probe_decode_insn(insn, &auprobe->api)) {
- 	case INSN_REJECTED:
-@@ -108,7 +108,7 @@ bool arch_uprobe_skip_sstep(struct arch_uprobe *auprobe, struct pt_regs *regs)
- 	if (!auprobe->simulate)
- 		return false;
- 
--	insn = *(probe_opcode_t *)(&auprobe->insn[0]);
-+	insn = le32_to_cpu(auprobe->insn);
- 	addr = instruction_pointer(regs);
- 
- 	if (auprobe->api.handler)
+ 	while (len && !rc) {
+ 		gpa = kvm_s390_real_to_abs(vcpu, gra);
+-		_len = min(PAGE_SIZE - (gpa & ~PAGE_MASK), len);
++		fragment_len = min(PAGE_SIZE - offset_in_page(gpa), len);
+ 		if (mode)
+-			rc = write_guest_abs(vcpu, gpa, data, _len);
++			rc = write_guest_abs(vcpu, gpa, data, fragment_len);
+ 		else
+-			rc = read_guest_abs(vcpu, gpa, data, _len);
+-		len -= _len;
+-		gra += _len;
+-		data += _len;
++			rc = read_guest_abs(vcpu, gpa, data, fragment_len);
++		len -= fragment_len;
++		gra += fragment_len;
++		data += fragment_len;
+ 	}
+ 	return rc;
+ }
 -- 
 2.43.0
 
