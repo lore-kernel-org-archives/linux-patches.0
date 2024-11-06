@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478171E0B84;
-	Wed,  6 Nov 2024 13:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456991E0B84;
+	Wed,  6 Nov 2024 13:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898545; cv=none; b=qQNwbF4MzfnwyTwJm4HI1G606su/Xo2DoT6nGNVeqiVax2e5ZWiA18Q50n07wEjCwsBCgD2OFphhY9ee/sSwKcVDRMX4XqDiLJKhrTtYbvXtaDGo+QlV3Gywsl8e+fwnFON+4J35HjxYvbHsgatwMmNPcrc4UlgkjjCQ/CTmyco=
+	t=1730898548; cv=none; b=onTcK28Ye4tTWhrgIzkAkbizPDQTXt0VikSe+V/5XE93mcpttBJEhW1OCO/TeQEk4l8N2dM4dNeDVDd17WFh0rq5RG6QgH6zvQsFhZl8l4FMJpiKmIV6n3t2qkmb1Xp6609nkNt7+0K2DfoAd21PQxeCDFrv/jJp9BLne0AxthU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898545; c=relaxed/simple;
-	bh=vP7m7r8GDsf3ow4zzV9kVLvMg6EmeiLY7jtlKxtMH8Y=;
+	s=arc-20240116; t=1730898548; c=relaxed/simple;
+	bh=899Atn33pVJHEskxn4LZcwDt3Kj4B/GH15s5dX9sKGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CAKZlhHibc0bMbcmoN4+uNuGvpS7nTTljge9j6gG96rq22JFEyLLDJcz0wET5NuWc696gEh/hKf/i/p6peW38TCmlnbXbfP9tKrJkgNr/J2RJgX1wbgcV+3NgQnuKHk/zm7XTwoxfq0RiGo5BdFwJZ1fsIXNkatZC8dp1PNNdIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aUy7ZUoh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dcAqhHkRVcRuA0fwUPlvj31QiU+4l5CAr5blWfeyRkXbMGMpumZrA9nho3NPm/WL4MMe2xQO5VlZRjx9eyLWtrcIsIynIT/EC2LsjMLgZVnCz1OEzzMKBONx27goCryLysvhwyOQcbtoCXe6ElZAdQtHjZGOML0gkX1EJJVNZ84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ApsHF9Gz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aUy7ZUoh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA07FC4CED3;
-	Wed,  6 Nov 2024 13:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ApsHF9Gz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6132C4CED3;
+	Wed,  6 Nov 2024 13:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898545;
-	bh=vP7m7r8GDsf3ow4zzV9kVLvMg6EmeiLY7jtlKxtMH8Y=;
+	s=korg; t=1730898548;
+	bh=899Atn33pVJHEskxn4LZcwDt3Kj4B/GH15s5dX9sKGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aUy7ZUohYsAaPNjBy1PwiE+0RpX9/PwIf1FgXC9h7SUOwXjrOTZVKk6p0zzrgshWN
-	 fTVl5py005K43f5escxhMlQOWVQQmuvA6ZMQ8+fFH7yFziJtdlesGNr6lezRcF8ihT
-	 oBIMaAwQndaTHb67APDFuJecUFEQorPZQzObToiU=
+	b=ApsHF9Gz8QsHBsnDY40my5ryqzDpfVJ6L7f2e90RHMloBxHFHnZMT9wjFV1xxqXLO
+	 0fNxv0uo/3quR3VSDank3pcz0ZFswjHZLmQcUHnR4b/1YzLUVZwRLEnEWKlGMZrbfk
+	 R+j5y7Fhyry3HyFcckDrDUmKLavQ+xaawuk6tL54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 5.4 267/462] clk: rockchip: fix error for unknown clocks
-Date: Wed,  6 Nov 2024 13:02:40 +0100
-Message-ID: <20241106120338.124086372@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.4 276/462] ACPI: resource: Add Asus ExpertBook B2502CVA to irq1_level_low_skip_override[]
+Date: Wed,  6 Nov 2024 13:02:49 +0100
+Message-ID: <20241106120338.342944098@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -50,43 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 12fd64babaca4dc09d072f63eda76ba44119816a upstream.
+commit 056301e7c7c886f96d799edd36f3406cc30e1822 upstream.
 
-There is a clk == NULL check after the switch to check for
-unsupported clk types. Since clk is re-assigned in a loop,
-this check is useless right now for anything but the first
-round. Let's fix this up by assigning clk = NULL in the
-loop before the switch statement.
+Like other Asus ExpertBook models the B2502CVA has its keybopard IRQ (1)
+described as ActiveLow in the DSDT, which the kernel overrides to EdgeHigh
+which breaks the keyboard.
 
-Fixes: a245fecbb806 ("clk: rockchip: add basic infrastructure for clock branches")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-[added fixes + stable-cc]
-Link: https://lore.kernel.org/r/20240325193609.237182-6-sebastian.reichel@collabora.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Add the B2502CVA to the irq1_level_low_skip_override[] quirk table to fix
+this.
+
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217760
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20240927141606.66826-4-hdegoede@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/rockchip/clk.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/resource.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/clk/rockchip/clk.c
-+++ b/drivers/clk/rockchip/clk.c
-@@ -439,12 +439,13 @@ void __init rockchip_clk_register_branch
- 				      struct rockchip_clk_branch *list,
- 				      unsigned int nr_clk)
- {
--	struct clk *clk = NULL;
-+	struct clk *clk;
- 	unsigned int idx;
- 	unsigned long flags;
- 
- 	for (idx = 0; idx < nr_clk; idx++, list++) {
- 		flags = list->flags;
-+		clk = NULL;
- 
- 		/* catch simple muxes */
- 		switch (list->branch_type) {
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -495,6 +495,13 @@ static const struct dmi_system_id asus_l
+ 		},
+ 	},
+ 	{
++		/* Asus ExpertBook B2502CVA */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_BOARD_NAME, "B2502CVA"),
++		},
++	},
++	{
+ 		/* TongFang GMxHGxx/TUXEDO Stellaris Slim Gen1 AMD */
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "GMxHGxx"),
 
 
