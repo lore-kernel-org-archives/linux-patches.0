@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DEB1D2784;
-	Wed,  6 Nov 2024 12:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC601DED58;
+	Wed,  6 Nov 2024 12:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896030; cv=none; b=F5EeZlXF2u8GPQ114NWNBDp3t2EmO2EmRo/A0lP2dWx0N+OiVXDWbXn7yLVQBNppX0WWcGhYwr6Fyug8EUx5xqLCIctRxcxUD9h93Yr/cVKfqoeDQlwMsHJbQv6uoZ4TA+8TjgsK40WOyhSXXcxAOoiQMwaHF40hlNG0l42hAwk=
+	t=1730896033; cv=none; b=J7saQ6ehG9BCjnnk1V+M5CKcqhutaRByWwKvVybJ8/jztssZVKUbA1WRCBp6bPrWFitdWeK0aIT4Wm7FJLj0b/Qix5oQqIzh1AhW/XHbQrxTj4enNO1+tQL5Oe6nWUJ20jaaZakLA3MOzcs1OaD9rr6yV55XthhV5UOSor0dXnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896030; c=relaxed/simple;
-	bh=a4fnKqXuiIJRg/tO6TjfnKv68cyqDShclJKJ0hzDu8Q=;
+	s=arc-20240116; t=1730896033; c=relaxed/simple;
+	bh=EiYADMrWp0EBzf+Z5Nocq/ohorrjBqJ5KkCLmJgvZx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z74eBQb/90EmalYcPhrdDNhh6pK0JVQd7Q1a5ie01aK/DFa4neR7ifpLEkgqrTa/whkuJwVLfpswiO+V655YTkj3NGx7dt3Nl/lez2RNqiKRytn20y/d7XSsNtuyyoD+Q9RikSKYVRPaEOP375O6c4LAG1ZHnV9KwRp4ubasJBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmaKZJcG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CAm6WH/KVe1G1+l49QjZPfStWe3Y+FltES3ty2/A3hSEs5mYu/VPZQlYw9rsw801hHoHz2Uw/hsiA/+Je3hjgi48xXK0FQBtgcAqKrwhJ2vWYCkD1Ps3JeMpFZ0SltR9q+jwmH78KMXsnz7f4JKXs5ROYNz31tb+1QwUILv+eh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzTWFKRy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmaKZJcG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF48C4CED5;
-	Wed,  6 Nov 2024 12:27:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzTWFKRy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD894C4CECD;
+	Wed,  6 Nov 2024 12:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896030;
-	bh=a4fnKqXuiIJRg/tO6TjfnKv68cyqDShclJKJ0hzDu8Q=;
+	s=korg; t=1730896033;
+	bh=EiYADMrWp0EBzf+Z5Nocq/ohorrjBqJ5KkCLmJgvZx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QmaKZJcGBu1xGYK1aauYjSuaF8GXjnaSNmqbl5xzq4GeHG8yybvNigFvMC30fBXRi
-	 Nuu247Y8B/qVHB8OAjk3z0UAvrBILo65K2VsqnMTfbPFclYMFZTej18G+iEmJbkFrg
-	 5f3PJkFp84y2OlRENwsJOHWJ7goSIabNHnchXEl8=
+	b=WzTWFKRy05T0wYSNVFHwb2fte7qreZwAang1pT6m8btTSniZw0s0CkyQzo4SZQnqR
+	 TURbIKHpBh98Kgl3vJAQ5rTj2YHszKRvPqCCIeVouugvsLhVhRY59tLyvte8ikfweF
+	 +gLdMHnX+P3FCJOOwfr7AzcfBtJxs6/ZxaEl6LZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 066/245] ACPI: CPPC: Make rmw_lock a raw_spin_lock
-Date: Wed,  6 Nov 2024 13:01:59 +0100
-Message-ID: <20241106120320.831899185@linuxfoundation.org>
+Subject: [PATCH 6.11 067/245] gpio: sloppy-logic-analyzer: Check for error code from devm_mutex_init() call
+Date: Wed,  6 Nov 2024 13:02:00 +0100
+Message-ID: <20241106120320.856680549@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -51,126 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre Gondois <pierre.gondois@arm.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 1c10941e34c5fdc0357e46a25bd130d9cf40b925 ]
+[ Upstream commit 90bad749858cf88d80af7c2b23f86db4f7ad61c2 ]
 
-The following BUG was triggered:
+Even if it's not critical, the avoidance of checking the error code
+from devm_mutex_init() call today diminishes the point of using devm
+variant of it. Tomorrow it may even leak something. Add the missed
+check.
 
-=============================
-[ BUG: Invalid wait context ]
-6.12.0-rc2-XXX #406 Not tainted
------------------------------
-kworker/1:1/62 is trying to lock:
-ffffff8801593030 (&cpc_ptr->rmw_lock){+.+.}-{3:3}, at: cpc_write+0xcc/0x370
-other info that might help us debug this:
-context-{5:5}
-2 locks held by kworker/1:1/62:
-  #0: ffffff897ef5ec98 (&rq->__lock){-.-.}-{2:2}, at: raw_spin_rq_lock_nested+0x2c/0x50
-  #1: ffffff880154e238 (&sg_policy->update_lock){....}-{2:2}, at: sugov_update_shared+0x3c/0x280
-stack backtrace:
-CPU: 1 UID: 0 PID: 62 Comm: kworker/1:1 Not tainted 6.12.0-rc2-g9654bd3e8806 #406
-Workqueue:  0x0 (events)
-Call trace:
-  dump_backtrace+0xa4/0x130
-  show_stack+0x20/0x38
-  dump_stack_lvl+0x90/0xd0
-  dump_stack+0x18/0x28
-  __lock_acquire+0x480/0x1ad8
-  lock_acquire+0x114/0x310
-  _raw_spin_lock+0x50/0x70
-  cpc_write+0xcc/0x370
-  cppc_set_perf+0xa0/0x3a8
-  cppc_cpufreq_fast_switch+0x40/0xc0
-  cpufreq_driver_fast_switch+0x4c/0x218
-  sugov_update_shared+0x234/0x280
-  update_load_avg+0x6ec/0x7b8
-  dequeue_entities+0x108/0x830
-  dequeue_task_fair+0x58/0x408
-  __schedule+0x4f0/0x1070
-  schedule+0x54/0x130
-  worker_thread+0xc0/0x2e8
-  kthread+0x130/0x148
-  ret_from_fork+0x10/0x20
-
-sugov_update_shared() locks a raw_spinlock while cpc_write() locks a
-spinlock.
-
-To have a correct wait-type order, update rmw_lock to a raw spinlock and
-ensure that interrupts will be disabled on the CPU holding it.
-
-Fixes: 60949b7b8054 ("ACPI: CPPC: Fix MASK_VAL() usage")
-Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
-Link: https://patch.msgid.link/20241028125657.1271512-1-pierre.gondois@arm.com
-[ rjw: Changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 7828b7bbbf20 ("gpio: add sloppy logic analyzer using polling")
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20241030174132.2113286-3-andriy.shevchenko@linux.intel.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c | 9 +++++----
- include/acpi/cppc_acpi.h | 2 +-
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ drivers/gpio/gpio-sloppy-logic-analyzer.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index ed91dfd4fdca7..544f53ae9cc0c 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -867,7 +867,7 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
+diff --git a/drivers/gpio/gpio-sloppy-logic-analyzer.c b/drivers/gpio/gpio-sloppy-logic-analyzer.c
+index aed6d1f6cfc30..6440d55bf2e1f 100644
+--- a/drivers/gpio/gpio-sloppy-logic-analyzer.c
++++ b/drivers/gpio/gpio-sloppy-logic-analyzer.c
+@@ -235,7 +235,9 @@ static int gpio_la_poll_probe(struct platform_device *pdev)
+ 	if (!priv)
+ 		return -ENOMEM;
  
- 	/* Store CPU Logical ID */
- 	cpc_ptr->cpu_id = pr->id;
--	spin_lock_init(&cpc_ptr->rmw_lock);
-+	raw_spin_lock_init(&cpc_ptr->rmw_lock);
+-	devm_mutex_init(dev, &priv->blob_lock);
++	ret = devm_mutex_init(dev, &priv->blob_lock);
++	if (ret)
++		return ret;
  
- 	/* Parse PSD data for this CPU */
- 	ret = acpi_get_psd(cpc_ptr, handle);
-@@ -1087,6 +1087,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
- 	int pcc_ss_id = per_cpu(cpu_pcc_subspace_idx, cpu);
- 	struct cpc_reg *reg = &reg_res->cpc_entry.reg;
- 	struct cpc_desc *cpc_desc;
-+	unsigned long flags;
+ 	fops_buf_size_set(priv, GPIO_LA_DEFAULT_BUF_SIZE);
  
- 	size = GET_BIT_WIDTH(reg);
- 
-@@ -1126,7 +1127,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
- 			return -ENODEV;
- 		}
- 
--		spin_lock(&cpc_desc->rmw_lock);
-+		raw_spin_lock_irqsave(&cpc_desc->rmw_lock, flags);
- 		switch (size) {
- 		case 8:
- 			prev_val = readb_relaxed(vaddr);
-@@ -1141,7 +1142,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
- 			prev_val = readq_relaxed(vaddr);
- 			break;
- 		default:
--			spin_unlock(&cpc_desc->rmw_lock);
-+			raw_spin_unlock_irqrestore(&cpc_desc->rmw_lock, flags);
- 			return -EFAULT;
- 		}
- 		val = MASK_VAL_WRITE(reg, prev_val, val);
-@@ -1174,7 +1175,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
- 	}
- 
- 	if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
--		spin_unlock(&cpc_desc->rmw_lock);
-+		raw_spin_unlock_irqrestore(&cpc_desc->rmw_lock, flags);
- 
- 	return ret_val;
- }
-diff --git a/include/acpi/cppc_acpi.h b/include/acpi/cppc_acpi.h
-index e1720d9306669..a451ca4c207bb 100644
---- a/include/acpi/cppc_acpi.h
-+++ b/include/acpi/cppc_acpi.h
-@@ -65,7 +65,7 @@ struct cpc_desc {
- 	int write_cmd_status;
- 	int write_cmd_id;
- 	/* Lock used for RMW operations in cpc_write() */
--	spinlock_t rmw_lock;
-+	raw_spinlock_t rmw_lock;
- 	struct cpc_register_resource cpc_regs[MAX_CPC_REG_ENT];
- 	struct acpi_psd_package domain_info;
- 	struct kobject kobj;
 -- 
 2.43.0
 
