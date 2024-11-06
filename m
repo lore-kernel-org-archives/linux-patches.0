@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF591DF251;
-	Wed,  6 Nov 2024 12:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971541DDA15;
+	Wed,  6 Nov 2024 12:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896080; cv=none; b=k61kAJQLt/B7Ctu1ZyObgcI1daNXhr5OeZlqheeEyTuESVTMe4sMWQv2YlZsUps/4BlGb/tOTGE+OBYk0bCZPVinq6sf8BtYUxIrDemZ94kPzQ+HWNO+08vC9/yMnlS3chLLhpjlNSocTb0+P7jWOweOI5uU8IZ2kub6Md/wkoQ=
+	t=1730896083; cv=none; b=AKNwc8tlZw1oV78prFLWZ6SDT+aU4u0tFpZ653CJTiLMAei646ybOEbnA6ITqSHSwdQEB4OgdWzQ7E+CkOjTCh14NoPUdhdIofpvhAopQg9PSUVuyUrc2SRuMeMPDEHG+qu1u7FUbBYpUE8U3S6ylHzZw/qCmm2BAZEZXQobisY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896080; c=relaxed/simple;
-	bh=+C+7ciEw/I5oXXy/sCTP9uKgvOdFYlO/79m5uaUvuiw=;
+	s=arc-20240116; t=1730896083; c=relaxed/simple;
+	bh=7OaZ6QDmZ1BqMzadVifuIsH3epBe9yC0n38On8nVPb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O18OuFBrYivAbdSYJX6UA4GUreJMl7fKPYmNgvfsDR3OP2zS8MgUAPxbf8W3rxvMa8xKgQXJC1+Yk6cOFgOTqFnX7bHHyqkyHZlatN4B/dqGStjgFKtUqoHXpXDpAVaoyWV4L3xolp8bKU0ipBmlA1Xm10ORc7FQHeL9NpOIHoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b700Sz7z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JWCmbzeS2kb8c+D6jsFIenhdOzJEO6+RLPlRpboMji61iAQeTNVhViIHpdW3mlcS+2IpI+3RA5tKLHfFTn3Tn6vYDM5a2ld9UIuthIwmQ2h8SoKjsbP2FrTLvDmE+vhjQtTl8ArwddLg+Jn8Ev57H3FNSz5xG+BlG0RmROFJWcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9fJrcKE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b700Sz7z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63E9C4CECD;
-	Wed,  6 Nov 2024 12:27:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9fJrcKE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA42DC4CECD;
+	Wed,  6 Nov 2024 12:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896080;
-	bh=+C+7ciEw/I5oXXy/sCTP9uKgvOdFYlO/79m5uaUvuiw=;
+	s=korg; t=1730896083;
+	bh=7OaZ6QDmZ1BqMzadVifuIsH3epBe9yC0n38On8nVPb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b700Sz7zP/VZ4buN6Oh9rQbw35NF4ku0V7Z+1X6WEho9d1AdJQDNDVncufae6l0Ei
-	 GrOILzWrbF7OJEff519PRbm4N7OV7XbWxcgclZmfmtw4hnV3BiZ5tOCfvBqt6739Kw
-	 EWWyWN5mjkn3UscXxtSKoepZT50sBRY2AK/eO/Mo=
+	b=n9fJrcKE1mAXCH1MJtw5ModW1i3m//81CVnlhhRWpAv9lMjZrw+B6uE4osC5+gwWd
+	 uXKvDpSI7PK7JSFrfnt+IMYGfcZn8LC9s1qJnIAnPgdt+YyQk8DA2ox71hNDFPlgBb
+	 IcS8uCwOViJA2vSG2IJOrYHmZ7gxgpQnN1Sj5Gas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	syzbot+7e46cdef14bf496a3ab4@syzkaller.appspotmail.com,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 047/245] bpf: Add bpf_mem_alloc_check_size() helper
-Date: Wed,  6 Nov 2024 13:01:40 +0100
-Message-ID: <20241106120320.383534823@linuxfoundation.org>
+Subject: [PATCH 6.11 038/245] bpf: Force checkpoint when jmp history is too long
+Date: Wed,  6 Nov 2024 13:01:31 +0100
+Message-ID: <20241106120320.162182576@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -51,78 +53,198 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 62a898b07b83f6f407003d8a70f0827a5af08a59 ]
+[ Upstream commit aa30eb3260b2dea3a68d3c42a39f9a09c5e99cee ]
 
-Introduce bpf_mem_alloc_check_size() to check whether the allocation
-size exceeds the limitation for the kmalloc-equivalent allocator. The
-upper limit for percpu allocation is LLIST_NODE_SZ bytes larger than
-non-percpu allocation, so a percpu argument is added to the helper.
+A specifically crafted program might trick verifier into growing very
+long jump history within a single bpf_verifier_state instance.
+Very long jump history makes mark_chain_precision() unreasonably slow,
+especially in case if verifier processes a loop.
 
-The helper will be used in the following patch to check whether the size
-parameter passed to bpf_mem_alloc() is too big.
+Mitigate this by forcing new state in is_state_visited() in case if
+current state's jump history is too long.
 
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/20241030100516.3633640-3-houtao@huaweicloud.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: 393397fbdcad ("bpf: Check the validity of nr_words in bpf_iter_bits_new()")
+Use same constant as in `skip_inf_loop_check`, but multiply it by
+arbitrarily chosen value 2 to account for jump history containing not
+only information about jumps, but also information about stack access.
+
+For an example of problematic program consider the code below,
+w/o this patch the example is processed by verifier for ~15 minutes,
+before failing to allocate big-enough chunk for jmp_history.
+
+    0: r7 = *(u16 *)(r1 +0);"
+    1: r7 += 0x1ab064b9;"
+    2: if r7 & 0x702000 goto 1b;
+    3: r7 &= 0x1ee60e;"
+    4: r7 += r1;"
+    5: if r7 s> 0x37d2 goto +0;"
+    6: r0 = 0;"
+    7: exit;"
+
+Perf profiling shows that most of the time is spent in
+mark_chain_precision() ~95%.
+
+The easiest way to explain why this program causes problems is to
+apply the following patch:
+
+    diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+    index 0c216e71cec7..4b4823961abe 100644
+    \--- a/include/linux/bpf.h
+    \+++ b/include/linux/bpf.h
+    \@@ -1926,7 +1926,7 @@ struct bpf_array {
+            };
+     };
+
+    -#define BPF_COMPLEXITY_LIMIT_INSNS      1000000 /* yes. 1M insns */
+    +#define BPF_COMPLEXITY_LIMIT_INSNS      256 /* yes. 1M insns */
+     #define MAX_TAIL_CALL_CNT 33
+
+     /* Maximum number of loops for bpf_loop and bpf_iter_num.
+    diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+    index f514247ba8ba..75e88be3bb3e 100644
+    \--- a/kernel/bpf/verifier.c
+    \+++ b/kernel/bpf/verifier.c
+    \@@ -18024,8 +18024,13 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+     skip_inf_loop_check:
+                            if (!force_new_state &&
+                                env->jmps_processed - env->prev_jmps_processed < 20 &&
+    -                           env->insn_processed - env->prev_insn_processed < 100)
+    +                           env->insn_processed - env->prev_insn_processed < 100) {
+    +                               verbose(env, "is_state_visited: suppressing checkpoint at %d, %d jmps processed, cur->jmp_history_cnt is %d\n",
+    +                                       env->insn_idx,
+    +                                       env->jmps_processed - env->prev_jmps_processed,
+    +                                       cur->jmp_history_cnt);
+                                    add_new_state = false;
+    +                       }
+                            goto miss;
+                    }
+                    /* If sl->state is a part of a loop and this loop's entry is a part of
+    \@@ -18142,6 +18147,9 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+            if (!add_new_state)
+                    return 0;
+
+    +       verbose(env, "is_state_visited: new checkpoint at %d, resetting env->jmps_processed\n",
+    +               env->insn_idx);
+    +
+            /* There were no equivalent states, remember the current one.
+             * Technically the current state is not proven to be safe yet,
+             * but it will either reach outer most bpf_exit (which means it's safe)
+
+And observe verification log:
+
+    ...
+    is_state_visited: new checkpoint at 5, resetting env->jmps_processed
+    5: R1=ctx() R7=ctx(...)
+    5: (65) if r7 s> 0x37d2 goto pc+0     ; R7=ctx(...)
+    6: (b7) r0 = 0                        ; R0_w=0
+    7: (95) exit
+
+    from 5 to 6: R1=ctx() R7=ctx(...) R10=fp0
+    6: R1=ctx() R7=ctx(...) R10=fp0
+    6: (b7) r0 = 0                        ; R0_w=0
+    7: (95) exit
+    is_state_visited: suppressing checkpoint at 1, 3 jmps processed, cur->jmp_history_cnt is 74
+
+    from 2 to 1: R1=ctx() R7_w=scalar(...) R10=fp0
+    1: R1=ctx() R7_w=scalar(...) R10=fp0
+    1: (07) r7 += 447767737
+    is_state_visited: suppressing checkpoint at 2, 3 jmps processed, cur->jmp_history_cnt is 75
+    2: R7_w=scalar(...)
+    2: (45) if r7 & 0x702000 goto pc-2
+    ... mark_precise 152 steps for r7 ...
+    2: R7_w=scalar(...)
+    is_state_visited: suppressing checkpoint at 1, 4 jmps processed, cur->jmp_history_cnt is 75
+    1: (07) r7 += 447767737
+    is_state_visited: suppressing checkpoint at 2, 4 jmps processed, cur->jmp_history_cnt is 76
+    2: R7_w=scalar(...)
+    2: (45) if r7 & 0x702000 goto pc-2
+    ...
+    BPF program is too large. Processed 257 insn
+
+The log output shows that checkpoint at label (1) is never created,
+because it is suppressed by `skip_inf_loop_check` logic:
+a. When 'if' at (2) is processed it pushes a state with insn_idx (1)
+   onto stack and proceeds to (3);
+b. At (5) checkpoint is created, and this resets
+   env->{jmps,insns}_processed.
+c. Verification proceeds and reaches `exit`;
+d. State saved at step (a) is popped from stack and is_state_visited()
+   considers if checkpoint needs to be added, but because
+   env->{jmps,insns}_processed had been just reset at step (b)
+   the `skip_inf_loop_check` logic forces `add_new_state` to false.
+e. Verifier proceeds with current state, which slowly accumulates
+   more and more entries in the jump history.
+
+The accumulation of entries in the jump history is a problem because
+of two factors:
+- it eventually exhausts memory available for kmalloc() allocation;
+- mark_chain_precision() traverses the jump history of a state,
+  meaning that if `r7` is marked precise, verifier would iterate
+  ever growing jump history until parent state boundary is reached.
+
+(note: the log also shows a REG INVARIANTS VIOLATION warning
+       upon jset processing, but that's another bug to fix).
+
+With this patch applied, the example above is rejected by verifier
+under 1s of time, reaching 1M instructions limit.
+
+The program is a simplified reproducer from syzbot report.
+Previous discussion could be found at [1].
+The patch does not cause any changes in verification performance,
+when tested on selftests from veristat.cfg and cilium programs taken
+from [2].
+
+[1] https://lore.kernel.org/bpf/20241009021254.2805446-1-eddyz87@gmail.com/
+[2] https://github.com/anakryiko/cilium
+
+Changelog:
+- v1 -> v2:
+  - moved patch to bpf tree;
+  - moved force_new_state variable initialization after declaration and
+    shortened the comment.
+v1: https://lore.kernel.org/bpf/20241018020307.1766906-1-eddyz87@gmail.com/
+
+Fixes: 2589726d12a1 ("bpf: introduce bounded loops")
+Reported-by: syzbot+7e46cdef14bf496a3ab4@syzkaller.appspotmail.com
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20241029172641.1042523-1-eddyz87@gmail.com
+
+Closes: https://lore.kernel.org/bpf/670429f6.050a0220.49194.0517.GAE@google.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_mem_alloc.h |  3 +++
- kernel/bpf/memalloc.c         | 14 +++++++++++++-
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/bpf_mem_alloc.h b/include/linux/bpf_mem_alloc.h
-index aaf004d943228..e45162ef59bb1 100644
---- a/include/linux/bpf_mem_alloc.h
-+++ b/include/linux/bpf_mem_alloc.h
-@@ -33,6 +33,9 @@ int bpf_mem_alloc_percpu_init(struct bpf_mem_alloc *ma, struct obj_cgroup *objcg
- int bpf_mem_alloc_percpu_unit_init(struct bpf_mem_alloc *ma, int size);
- void bpf_mem_alloc_destroy(struct bpf_mem_alloc *ma);
- 
-+/* Check the allocation size for kmalloc equivalent allocator */
-+int bpf_mem_alloc_check_size(bool percpu, size_t size);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 77b60896200ef..626c5284ca5a8 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -17416,9 +17416,11 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+ 	struct bpf_verifier_state_list *sl, **pprev;
+ 	struct bpf_verifier_state *cur = env->cur_state, *new, *loop_entry;
+ 	int i, j, n, err, states_cnt = 0;
+-	bool force_new_state = env->test_state_freq || is_force_checkpoint(env, insn_idx);
+-	bool add_new_state = force_new_state;
+-	bool force_exact;
++	bool force_new_state, add_new_state, force_exact;
 +
- /* kmalloc/kfree equivalent: */
- void *bpf_mem_alloc(struct bpf_mem_alloc *ma, size_t size);
- void bpf_mem_free(struct bpf_mem_alloc *ma, void *ptr);
-diff --git a/kernel/bpf/memalloc.c b/kernel/bpf/memalloc.c
-index dec892ded031e..b2c7a4c49be77 100644
---- a/kernel/bpf/memalloc.c
-+++ b/kernel/bpf/memalloc.c
-@@ -35,6 +35,8 @@
-  */
- #define LLIST_NODE_SZ sizeof(struct llist_node)
++	force_new_state = env->test_state_freq || is_force_checkpoint(env, insn_idx) ||
++			  /* Avoid accumulating infinitely long jmp history */
++			  cur->jmp_history_cnt > 40;
  
-+#define BPF_MEM_ALLOC_SIZE_MAX 4096
-+
- /* similar to kmalloc, but sizeof == 8 bucket is gone */
- static u8 size_index[24] __ro_after_init = {
- 	3,	/* 8 */
-@@ -65,7 +67,7 @@ static u8 size_index[24] __ro_after_init = {
- 
- static int bpf_mem_cache_idx(size_t size)
- {
--	if (!size || size > 4096)
-+	if (!size || size > BPF_MEM_ALLOC_SIZE_MAX)
- 		return -1;
- 
- 	if (size <= 192)
-@@ -1005,3 +1007,13 @@ void notrace *bpf_mem_cache_alloc_flags(struct bpf_mem_alloc *ma, gfp_t flags)
- 
- 	return !ret ? NULL : ret + LLIST_NODE_SZ;
- }
-+
-+int bpf_mem_alloc_check_size(bool percpu, size_t size)
-+{
-+	/* The size of percpu allocation doesn't have LLIST_NODE_SZ overhead */
-+	if ((percpu && size > BPF_MEM_ALLOC_SIZE_MAX) ||
-+	    (!percpu && size > BPF_MEM_ALLOC_SIZE_MAX - LLIST_NODE_SZ))
-+		return -E2BIG;
-+
-+	return 0;
-+}
+ 	/* bpf progs typically have pruning point every 4 instructions
+ 	 * http://vger.kernel.org/bpfconf2019.html#session-1
+@@ -17428,6 +17430,7 @@ static int is_state_visited(struct bpf_verifier_env *env, int insn_idx)
+ 	 * In tests that amounts to up to 50% reduction into total verifier
+ 	 * memory consumption and 20% verifier time speedup.
+ 	 */
++	add_new_state = force_new_state;
+ 	if (env->jmps_processed - env->prev_jmps_processed >= 2 &&
+ 	    env->insn_processed - env->prev_insn_processed >= 8)
+ 		add_new_state = true;
 -- 
 2.43.0
 
