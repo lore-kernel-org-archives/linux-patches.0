@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FD71F428D;
-	Wed,  6 Nov 2024 12:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F5AE1F428D;
+	Wed,  6 Nov 2024 12:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897527; cv=none; b=sGOOUtqX0dFyiZRvFIl8fRDQLokklkJcHrtbrecmejqWljLlqVu3DPrKTcSE6muENGSL1QxCJK3S9tGzTVnSE/DWLZLVK8w8kXshTx621TjYWM0l2ju2PIv2LAW2/CRTKZYLoyjHFCbP5aA3ZkFZPfvhbrdDMYRQhT8hvzRrGrI=
+	t=1730897530; cv=none; b=FhLRKLVZ9G6jx2wtdDpRCi7PnZlpH2Hgwcs5g5Bnb1/nh8/3sL205QppmB+s8l9BfRhZv47E7DWZZsOMhxE2cbgWSm1zWUQFhbpSZ/6zsPUyJ0o3eICCmZh3A+OkKoDvc8QtXhF9JtfG0MXWcqEJhLgNhzVV3iunQBefw6m3zKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897527; c=relaxed/simple;
-	bh=ISIuu03VBuvaijttqByDt2g2VnA8d5faw1UnvsZVdM4=;
+	s=arc-20240116; t=1730897530; c=relaxed/simple;
+	bh=ViEwyOIs9bAMX/Lbas8x/4KDLn4HLB2Jw7lqfaFnpfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KqLshNX7CiB5B6czoU8r47CLhaY7yjcg2Gh2fsPpY5cA53zbnRWD5bTB8YISRglrHZL/F3H16XNvh23z5+HcRW3f0Mx1MWcgdZBpMK/zNcxYoyYF5LJNamChlfGmc1eUoHcIFEfoJQv3uGzlJgOo2sm1WUnKwtzORxnS9baFQk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=az9tN0cB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oCONEUTbJtPXAIdEsqHA6t8Ou4YLPnubLANGcZHV9gqgHtbvnw+kYMoISMEp3sxpPF+/JRu+UNF3Nz//EBcK5laVu39pwDGi5HtQSn/zQwjFhw5QJfzgtDReh8RUPae2Siepzj7AREV4DhDFkjXmX96ysFLTnNX0z1gMSQvkNIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOYu17ZH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="az9tN0cB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFCF6C4CECD;
-	Wed,  6 Nov 2024 12:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOYu17ZH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E23C4CECD;
+	Wed,  6 Nov 2024 12:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897527;
-	bh=ISIuu03VBuvaijttqByDt2g2VnA8d5faw1UnvsZVdM4=;
+	s=korg; t=1730897530;
+	bh=ViEwyOIs9bAMX/Lbas8x/4KDLn4HLB2Jw7lqfaFnpfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=az9tN0cBMGUlSMzmzDQOWx7C6dKu5M8zKQ3CrosHQWZ536ioDkjMVY/eRSmIFHaLK
-	 1S0HJnxcUwcmAfqo3FTeKiN97vkURkBPqAJ6KA7C2lKUvFfwtmrl0ykfTNcmPW+p0M
-	 ybLEHA2i9mNByt+3xS4trtnEWchkNgW2ZSG/PEoE=
+	b=tOYu17ZHZtP2a+CMQmOR9U+4FaBqOWyaC6Qzs5MJ8DbMfCRtk6yzQw/DdwjwVG0t1
+	 sO4fH6cuyyFgWpaFwi/TfSDnY2fXm0rebY+chpdE5zMK4WiayaA/xoevWV4QawqbVn
+	 r5S8K0H78pA7Bu0ODN7wTOKwbS5s5qtaIT2HHwlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.6 084/151] usb: typec: qcom-pmic-typec: use fwnode_handle_put() to release fwnodes
-Date: Wed,  6 Nov 2024 13:04:32 +0100
-Message-ID: <20241106120311.175905629@linuxfoundation.org>
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.6 085/151] phy: qcom: qmp-usb: fix NULL-deref on runtime suspend
+Date: Wed,  6 Nov 2024 13:04:33 +0100
+Message-ID: <20241106120311.202670975@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -52,50 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 7f02b8a5b602098f2901166e7e4d583acaed872a upstream.
+commit bd9e4d4a3b127686efc60096271b0a44c3100061 upstream.
 
-The right function to release a fwnode acquired via
-device_get_named_child_node() is fwnode_handle_put(), and not
-fwnode_remove_software_node(), as no software node is being handled.
+Commit 413db06c05e7 ("phy: qcom-qmp-usb: clean up probe initialisation")
+removed most users of the platform device driver data, but mistakenly
+also removed the initialisation despite the data still being used in the
+runtime PM callbacks.
 
-Replace the calls to fwnode_remove_software_node() with
-fwnode_handle_put() in qcom_pmic_typec_probe() and
-qcom_pmic_typec_remove().
+Restore the driver data initialisation at probe to avoid a NULL-pointer
+dereference on runtime suspend.
 
-Cc: stable@vger.kernel.org
-Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Apparently no one uses runtime PM, which currently needs to be enabled
+manually through sysfs, with this driver.
+
+Fixes: 413db06c05e7 ("phy: qcom-qmp-usb: clean up probe initialisation")
+Cc: stable@vger.kernel.org	# 6.2
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241020-qcom_pmic_typec-fwnode_remove-v2-1-7054f3d2e215@gmail.com
+Link: https://lore.kernel.org/r/20240911115253.10920-2-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-@@ -268,7 +268,7 @@ static int qcom_pmic_typec_probe(struct
- 	return 0;
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+@@ -2173,6 +2173,7 @@ static int qmp_usb_probe(struct platform
+ 		return -ENOMEM;
  
- fwnode_remove:
--	fwnode_remove_software_node(tcpm->tcpc.fwnode);
-+	fwnode_handle_put(tcpm->tcpc.fwnode);
+ 	qmp->dev = dev;
++	dev_set_drvdata(dev, qmp);
  
- 	return ret;
- }
-@@ -280,7 +280,7 @@ static void qcom_pmic_typec_remove(struc
- 	qcom_pmic_typec_pdphy_stop(tcpm->pmic_typec_pdphy);
- 	qcom_pmic_typec_port_stop(tcpm->pmic_typec_port);
- 	tcpm_unregister_port(tcpm->tcpm_port);
--	fwnode_remove_software_node(tcpm->tcpc.fwnode);
-+	fwnode_handle_put(tcpm->tcpc.fwnode);
- }
- 
- static struct pmic_typec_pdphy_resources pm8150b_pdphy_res = {
+ 	qmp->cfg = of_device_get_match_data(dev);
+ 	if (!qmp->cfg)
 
 
