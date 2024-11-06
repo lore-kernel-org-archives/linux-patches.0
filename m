@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE5F1D416E;
-	Wed,  6 Nov 2024 12:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D441D416E;
+	Wed,  6 Nov 2024 12:12:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895151; cv=none; b=N2VZ/hkeusexm5BowYqPSqBMr2ydkF0St7i7D+SexCdjzD8zHyIB+3S3f8cx9oj835zjs9LaJKb4WNtnYQyAmyef3SsfMSD4mQ2pg8WZe5GjqaZLCSNkqNHUI7xlXBAh+aVIZfmYEWuYhlx+x6WAOGGB327+ni0pNNVeVEmyI58=
+	t=1730895155; cv=none; b=hc4t4nV3S/G/Bx86CfTQ5n+K2pBtOSIXgG3BtIRxKsKuWJcN9G1UGFL/AGu+Xl5zWVa/aSQwT71wAZF66AcDiHOG5w0403gavuLGQvA7uRLSXQoHwCvx5/PdafMWHFJjjDs6B/dRCYIX4bkl00N5FTjZVq4tDPNcIfXjpnajbPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895151; c=relaxed/simple;
-	bh=zFlr0xyTFQuQTLhfq86bYc2FvbBGHi6YE9FW5qmt7p8=;
+	s=arc-20240116; t=1730895155; c=relaxed/simple;
+	bh=YW/owvLXfO4oIffQfpAAnumdodrQVWEb2+ijBXAJXrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R8Gnt5kiy1sBFfemjptyJTCvNdYfwD0fh6hCq4imJWfsA3r6Fg9EENII1uqrDh35STgvnuwISQuL5CRGAhyobFstKD0/E9qAEBY0qEcvFbHBoV7g2r+Tt+0Y42ShuBjuaE/FNyzPjzYVXPiReO5y3bpyW9ck8JEVqB55JKeK4NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuOAAM+0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nGyxlJGL3NiCSd/cC3SCBn5sjvhQnAyBRYsRaEimfXLVwLRfqwAuyEo6mpqkTu1kRYEU6nVW4rxKKUde2lZAyUq9jg3FVVJNwXainj56p12zrf2HZE0f4LN5b3StCnEJ+lwMas3cstpBqMBqDIfyTQX4PU9RqjvPB9Kk2eB66+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4dfVeio; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuOAAM+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41505C4CED6;
-	Wed,  6 Nov 2024 12:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4dfVeio"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6963BC4CED2;
+	Wed,  6 Nov 2024 12:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895151;
-	bh=zFlr0xyTFQuQTLhfq86bYc2FvbBGHi6YE9FW5qmt7p8=;
+	s=korg; t=1730895154;
+	bh=YW/owvLXfO4oIffQfpAAnumdodrQVWEb2+ijBXAJXrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yuOAAM+0vP7Cv0iuumJqouP1Oq9xXBwqJQ+965OHxOQO/c1gSxQyCAn17r+f4dAWX
-	 Fypse0XUh09LtQ8KaLARXJpEq2mu0CGq2jaqxZtnYXWMxiwCXYDb4tZzykfyjz/49t
-	 6NxFdvgkluoKbUrH57FdV8SEI825vIHX9eFAnHQg=
+	b=z4dfVeioon0ovP4i0xJuC+K8UGDYYwj/CJCe2p+cLEA5urwjvoDQyndQmsA/xsSyg
+	 zqtibgvaW9zuRGUgHbwncGjR+t4XJPvFtPGT/34upKUhWnqmH2oftqavik8r3ucV6h
+	 jPvtpS3lyyAqNuxRHWuKozjHskwchY5wGIK0ijtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Rob Herring <robh@kernel.org>,
+	Sean Anderson <sean.anderson@linux.dev>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 121/350] PCI: xilinx-nwl: Use irq_data_get_irq_chip_data()
-Date: Wed,  6 Nov 2024 13:00:49 +0100
-Message-ID: <20241106120323.896257601@linuxfoundation.org>
+Subject: [PATCH 4.19 122/350] PCI: xilinx-nwl: Fix off-by-one in INTx IRQ handler
+Date: Wed,  6 Nov 2024 13:00:50 +0100
+Message-ID: <20241106120323.921672985@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,63 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit e56427068a8d796bb7b8e297f2b6e947380e383f ]
+[ Upstream commit 0199d2f2bd8cd97b310f7ed82a067247d7456029 ]
 
-Going through a full irq descriptor lookup instead of just using the proper
-helper function which provides direct access is suboptimal.
+MSGF_LEG_MASK is laid out with INTA in bit 0, INTB in bit 1, INTC in bit 2,
+and INTD in bit 3. Hardware IRQ numbers start at 0, and we register
+PCI_NUM_INTX IRQs. So to enable INTA (aka hwirq 0) we should set bit 0.
+Remove the subtraction of one.
 
-In fact it _is_ wrong because the chip callback needs to get the chip data
-which is relevant for the chip while using the irq descriptor variant
-returns the irq chip data of the top level chip of a hierarchy. It does not
-matter in this case because the chip is the top level chip, but that
-doesn't make it more correct.
+This bug would cause INTx interrupts not to be delivered, as enabling INTB
+would actually enable INTA, and enabling INTA wouldn't enable anything at
+all. It is likely that this got overlooked for so long since most PCIe
+hardware uses MSIs. This fixes the following UBSAN error:
 
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/r/20201210194044.364211860@linutronix.de
-Stable-dep-of: 0199d2f2bd8c ("PCI: xilinx-nwl: Fix off-by-one in INTx IRQ handler")
+  UBSAN: shift-out-of-bounds in ../drivers/pci/controller/pcie-xilinx-nwl.c:389:11
+  shift exponent 18446744073709551615 is too large for 32-bit type 'int'
+  CPU: 1 PID: 61 Comm: kworker/u10:1 Not tainted 6.6.20+ #268
+  Hardware name: xlnx,zynqmp (DT)
+  Workqueue: events_unbound deferred_probe_work_func
+  Call trace:
+  dump_backtrace (arch/arm64/kernel/stacktrace.c:235)
+  show_stack (arch/arm64/kernel/stacktrace.c:242)
+  dump_stack_lvl (lib/dump_stack.c:107)
+  dump_stack (lib/dump_stack.c:114)
+  __ubsan_handle_shift_out_of_bounds (lib/ubsan.c:218 lib/ubsan.c:387)
+  nwl_unmask_leg_irq (drivers/pci/controller/pcie-xilinx-nwl.c:389 (discriminator 1))
+  irq_enable (kernel/irq/internals.h:234 kernel/irq/chip.c:170 kernel/irq/chip.c:439 kernel/irq/chip.c:432 kernel/irq/chip.c:345)
+  __irq_startup (kernel/irq/internals.h:239 kernel/irq/chip.c:180 kernel/irq/chip.c:250)
+  irq_startup (kernel/irq/chip.c:270)
+  __setup_irq (kernel/irq/manage.c:1800)
+  request_threaded_irq (kernel/irq/manage.c:2206)
+  pcie_pme_probe (include/linux/interrupt.h:168 drivers/pci/pcie/pme.c:348)
+
+Fixes: 9a181e1093af ("PCI: xilinx-nwl: Modify IRQ chip for legacy interrupts")
+Link: https://lore.kernel.org/r/20240531161337.864994-3-sean.anderson@linux.dev
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pcie-xilinx-nwl.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/pci/controller/pcie-xilinx-nwl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/pci/controller/pcie-xilinx-nwl.c b/drivers/pci/controller/pcie-xilinx-nwl.c
-index 4b7b906967582..79d72ec8f5c36 100644
+index 79d72ec8f5c36..9fde526045ec0 100644
 --- a/drivers/pci/controller/pcie-xilinx-nwl.c
 +++ b/drivers/pci/controller/pcie-xilinx-nwl.c
-@@ -384,13 +384,11 @@ static void nwl_pcie_msi_handler_low(struct irq_desc *desc)
- 
- static void nwl_mask_leg_irq(struct irq_data *data)
- {
--	struct irq_desc *desc = irq_to_desc(data->irq);
--	struct nwl_pcie *pcie;
-+	struct nwl_pcie *pcie = irq_data_get_irq_chip_data(data);
- 	unsigned long flags;
+@@ -389,7 +389,7 @@ static void nwl_mask_leg_irq(struct irq_data *data)
  	u32 mask;
  	u32 val;
  
--	pcie = irq_desc_get_chip_data(desc);
- 	mask = 1 << (data->hwirq - 1);
+-	mask = 1 << (data->hwirq - 1);
++	mask = 1 << data->hwirq;
  	raw_spin_lock_irqsave(&pcie->leg_mask_lock, flags);
  	val = nwl_bridge_readl(pcie, MSGF_LEG_MASK);
-@@ -400,13 +398,11 @@ static void nwl_mask_leg_irq(struct irq_data *data)
- 
- static void nwl_unmask_leg_irq(struct irq_data *data)
- {
--	struct irq_desc *desc = irq_to_desc(data->irq);
--	struct nwl_pcie *pcie;
-+	struct nwl_pcie *pcie = irq_data_get_irq_chip_data(data);
- 	unsigned long flags;
+ 	nwl_bridge_writel(pcie, (val & (~mask)), MSGF_LEG_MASK);
+@@ -403,7 +403,7 @@ static void nwl_unmask_leg_irq(struct irq_data *data)
  	u32 mask;
  	u32 val;
  
--	pcie = irq_desc_get_chip_data(desc);
- 	mask = 1 << (data->hwirq - 1);
+-	mask = 1 << (data->hwirq - 1);
++	mask = 1 << data->hwirq;
  	raw_spin_lock_irqsave(&pcie->leg_mask_lock, flags);
  	val = nwl_bridge_readl(pcie, MSGF_LEG_MASK);
+ 	nwl_bridge_writel(pcie, (val | mask), MSGF_LEG_MASK);
 -- 
 2.43.0
 
