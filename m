@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB581EABD0;
-	Wed,  6 Nov 2024 12:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C231E0096;
+	Wed,  6 Nov 2024 12:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896601; cv=none; b=rEFdu6tYf0hgY7fd9wU0GTZnKNnnLnHznMjXf7/BmHB9qoEf4lRT/tfWLMGfoIW0uafiCNDqxhfLeVe+RKGqzCrj1v1zrxNrw0Mrx4hwdFArrCw3yz6NQbtC8PV29uMHpSXR8N6Yg61ODsDoHC3vVL1kOMfZMGaOxF8VPS48xNA=
+	t=1730896604; cv=none; b=cl5NZ0woko+Q0OZpuqyJPY0/cuvUiRoPneUFE7byGDFWGVYJOH4KRJZ55GI7hhb4x2nU4zhv5mmmCeLlmuao0swPiIUxzk89PbrOS1iyVC5FEry2UZhmzCcnZIJQE+agRfCCWRlAnYuKxdW7zWqNbEA9aJSLWG/1NmlMnGBjsVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896601; c=relaxed/simple;
-	bh=K9h8cW3cmA/vl3PkuKgkqgouNjelEzbKb3U94Cx1rtM=;
+	s=arc-20240116; t=1730896604; c=relaxed/simple;
+	bh=BKFWdbU3IDY78AN+sCSoUm3zasgw852+HBuCjowMnvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxjtSz6aKQr+ByDtXm++zVfH9AihhD2ZRIR4lBNLT0mfOMYMircjwaHvrw0DyH8aZkwBL4awHhjU3uGoiS4CYR4VW65/F1bCyn+i6KX2EMUMU/YqZQCGf++Pb7GKPyPESrL1rKoaP6jSIpiB1k140VbvKht2x4yCOp0ODt3SSHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0UIp7dI5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BH3jnLfW2RSwOhU1Fdl+AKXahKuJbTAcj/YQIM/fMLy3gfNTDTbPrPsu+tZ2mRdgq5bJ5MN6ADZQf+1ZRrAvnZPgSnVSmwkYufNlzqeJeu5rObOgzBf55wQ2/VUKwmX/OdbicQlsglUEYMPP2FzSyuXmUHDCYNh5EplU09JfM98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C7lXJjej; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UIp7dI5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6B5C4CED4;
-	Wed,  6 Nov 2024 12:36:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C7lXJjej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12D4C4CED5;
+	Wed,  6 Nov 2024 12:36:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896601;
-	bh=K9h8cW3cmA/vl3PkuKgkqgouNjelEzbKb3U94Cx1rtM=;
+	s=korg; t=1730896604;
+	bh=BKFWdbU3IDY78AN+sCSoUm3zasgw852+HBuCjowMnvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0UIp7dI5hnqmXzQA/LQluf2o0M6TlAGu8nUR+kHCUnUlNxXU3AKRnqjrb7GzU68J9
-	 4HQO7i5gwgNNhCUVLUgR6FJpwxJtkWDYmwa8D9gtxgQ+knXNkFGNRmCH3jVEOdIX1X
-	 HG83r9eD5KPjkhwzJbcbGx1osILFONR4du3CTZYs=
+	b=C7lXJjejkEGgBOlbjYmVWVimCRvn4cOm8E/nnf8k3DmPasjLOnstPADGF672bu72q
+	 RTNmZh6O0PBIHokUMQuRn+2YDdqOl0qMQR3W3Cs6siU/s3nGrT7Jt/27bt2d12QH2z
+	 5pKmE0isEFw9wEYLR/L33OJJwMSmgFgDikG3lzv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Wen Gu <guwen@linux.alibaba.com>,
-	Li RongQing <lirongqing@baidu.com>,
-	Simon Horman <horms@kernel.org>,
-	Gerd Bayer <gbayer@linux.ibm.com>,
+	Wang Hai <wanghai38@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 011/110] net/smc: Fix searching in list of known pnetids in smc_pnet_add_pnetid
-Date: Wed,  6 Nov 2024 13:03:37 +0100
-Message-ID: <20241106120303.464909607@linuxfoundation.org>
+Subject: [PATCH 5.10 012/110] net: systemport: fix potential memory leak in bcm_sysport_xmit()
+Date: Wed,  6 Nov 2024 13:03:38 +0100
+Message-ID: <20241106120303.494246649@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -55,38 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Wang Hai <wanghai38@huawei.com>
 
-[ Upstream commit 82ac39ebd6db0c9f7a97a934bda1e3e101a9d201 ]
+[ Upstream commit c401ed1c709948e57945485088413e1bb5e94bd1 ]
 
-pnetid of pi (not newly allocated pe) should be compared
+The bcm_sysport_xmit() returns NETDEV_TX_OK without freeing skb
+in case of dma_map_single() fails, add dev_kfree_skb() to fix it.
 
-Fixes: e888a2e8337c ("net/smc: introduce list of pnetids for Ethernet devices")
-Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
-Reviewed-by: Wen Gu <guwen@linux.alibaba.com>
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Gerd Bayer <gbayer@linux.ibm.com>
-Link: https://patch.msgid.link/20241014115321.33234-1-lirongqing@baidu.com
+Fixes: 80105befdb4b ("net: systemport: add Broadcom SYSTEMPORT Ethernet MAC driver")
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+Link: https://patch.msgid.link/20241014145115.44977-1-wanghai38@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_pnet.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bcmsysport.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/smc/smc_pnet.c b/net/smc/smc_pnet.c
-index ed9cfa11b589f..7824b32cdb66c 100644
---- a/net/smc/smc_pnet.c
-+++ b/net/smc/smc_pnet.c
-@@ -744,7 +744,7 @@ static int smc_pnet_add_pnetid(struct net *net, u8 *pnetid)
+diff --git a/drivers/net/ethernet/broadcom/bcmsysport.c b/drivers/net/ethernet/broadcom/bcmsysport.c
+index 82d369d9f7a50..ae1cf2ead9a96 100644
+--- a/drivers/net/ethernet/broadcom/bcmsysport.c
++++ b/drivers/net/ethernet/broadcom/bcmsysport.c
+@@ -1343,6 +1343,7 @@ static netdev_tx_t bcm_sysport_xmit(struct sk_buff *skb,
+ 		netif_err(priv, tx_err, dev, "DMA map failed at %p (len=%d)\n",
+ 			  skb->data, skb_len);
+ 		ret = NETDEV_TX_OK;
++		dev_kfree_skb_any(skb);
+ 		goto out;
+ 	}
  
- 	write_lock(&sn->pnetids_ndev.lock);
- 	list_for_each_entry(pi, &sn->pnetids_ndev.list, list) {
--		if (smc_pnet_match(pnetid, pe->pnetid)) {
-+		if (smc_pnet_match(pnetid, pi->pnetid)) {
- 			refcount_inc(&pi->refcnt);
- 			kfree(pe);
- 			goto unlock;
 -- 
 2.43.0
 
