@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002001E3789;
-	Wed,  6 Nov 2024 12:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9F21F7079;
+	Wed,  6 Nov 2024 12:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896963; cv=none; b=lwyp+CzyUwLS+VJMpQ9El3bva0z60iv6bJeax6c3qQaFrvx868gMovpgnt9xtil5toGsnRmUbR9ucWOT7mdlLwQeQ9jd0S9WSwEnqv9Re1x5J0scPOOJ6owWzx9kFVf+pFF7hpVnLYiHXx+ZbNo4RwO/Y0McTObH2QR++sd2t7o=
+	t=1730896965; cv=none; b=D+QWBMPqb7kDwu3G1zKRxgux6sgD0E2USdQLk4571KF9LTTmUwvyf02fcDmuAhRdoqmIu6q+/n//oYoJI4+qjO5dWBlyxq0UM4j0mUECKDl2h3dad1hZMAgn7/jsyncE4xkYFdEjzNMeISQChCqaSV0QhoVfdvYNwIYLFbFktc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896963; c=relaxed/simple;
-	bh=aN+Cn83LxRCxgP2lh/bU0z5t8GI93uxTd5jIZs/SiyA=;
+	s=arc-20240116; t=1730896965; c=relaxed/simple;
+	bh=8qZL4rDnxblA+lpiaoy2JAfeq+XJplfOMMHHeblh54Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r08OL1UOVmSdPjnV2QiQWvD5SbL3HqU++Q/hboerZkV+8Hp6kI1b+ucpaxqf1bBqQe+59ZH1LgvWoWB0mcO0m1j+rTNBpvHN4tzQOVkID0k2N7KXQbyoKxw33vw/kTfLK2WEOOR/ln6XnHkbbmwiynvjGOs0kEM/Njuwl7ilfZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxXqbByN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YTuUeyn0gmuT9rzyww3yCwAU90/uVuimjHuxQtskVGVjvMHp9qk41WmjCHENGBEkG/18v3yPjH4d6PwBCWDu2n8ZD9kx8S2Q0R4mxHFBUbVNd1B3VMVOW3IlFPVBQPqlk+eXK9l2VKqM+ggxsJ5kZWu+9hpB8ORDzuXc7FL6mi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiuEwbad; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxXqbByN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3864EC4CED4;
-	Wed,  6 Nov 2024 12:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiuEwbad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25987C4CED3;
+	Wed,  6 Nov 2024 12:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896962;
-	bh=aN+Cn83LxRCxgP2lh/bU0z5t8GI93uxTd5jIZs/SiyA=;
+	s=korg; t=1730896965;
+	bh=8qZL4rDnxblA+lpiaoy2JAfeq+XJplfOMMHHeblh54Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qxXqbByNQwN0GUf9VwH/U4RM/lfyyu/8A95rtwRE7Tg+E0dIYna+ULwlewxzkHdDH
-	 SnY3r6BvY3iR05RF6bBzFiQGWtwfTDkZW+G3OimAjsC7hQALtoW+N0IcAP0Cw2M4Aq
-	 ta5CAt6du4Eve/9JJVMYt2JWa5M6MqodZbBvNW54=
+	b=xiuEwbadf81mm/r0lfbDSFRdvJitXAGHy8815Ohso3HdcnC1P7uMQ5M+jaczXZ7r5
+	 Bktjslv0KYn3iCEpNZfcCtETRCspkAG0Xs19LaaOxqw3RAQJYVeTIX0lNuqFPHD5Ej
+	 pNstGqdZN0LrlDQyQOECI5dUIcpgD3LeGPnqJCsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Chris Mi <cmi@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 020/126] ASoC: cs42l51: Fix some error handling paths in cs42l51_probe()
-Date: Wed,  6 Nov 2024 13:03:41 +0100
-Message-ID: <20241106120306.643004417@linuxfoundation.org>
+Subject: [PATCH 6.1 021/126] macsec: Fix use-after-free while sending the offloading packet
+Date: Wed,  6 Nov 2024 13:03:42 +0100
+Message-ID: <20241106120306.669367267@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -52,54 +56,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-[ Upstream commit d221b844ee79823ffc29b7badc4010bdb0960224 ]
+[ Upstream commit f1e54d11b210b53d418ff1476c6b58a2f434dfc0 ]
 
-If devm_gpiod_get_optional() fails, we need to disable previously enabled
-regulators, as done in the other error handling path of the function.
+KASAN reports the following UAF. The metadata_dst, which is used to
+store the SCI value for macsec offload, is already freed by
+metadata_dst_free() in macsec_free_netdev(), while driver still use it
+for sending the packet.
 
-Also, gpiod_set_value_cansleep(, 1) needs to be called to undo a
-potential gpiod_set_value_cansleep(, 0).
-If the "reset" gpio is not defined, this additional call is just a no-op.
+To fix this issue, dst_release() is used instead to release
+metadata_dst. So it is not freed instantly in macsec_free_netdev() if
+still referenced by skb.
 
-This behavior is the same as the one already in the .remove() function.
+ BUG: KASAN: slab-use-after-free in mlx5e_xmit+0x1e8f/0x4190 [mlx5_core]
+ Read of size 2 at addr ffff88813e42e038 by task kworker/7:2/714
+ [...]
+ Workqueue: mld mld_ifc_work
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x51/0x60
+  print_report+0xc1/0x600
+  kasan_report+0xab/0xe0
+  mlx5e_xmit+0x1e8f/0x4190 [mlx5_core]
+  dev_hard_start_xmit+0x120/0x530
+  sch_direct_xmit+0x149/0x11e0
+  __qdisc_run+0x3ad/0x1730
+  __dev_queue_xmit+0x1196/0x2ed0
+  vlan_dev_hard_start_xmit+0x32e/0x510 [8021q]
+  dev_hard_start_xmit+0x120/0x530
+  __dev_queue_xmit+0x14a7/0x2ed0
+  macsec_start_xmit+0x13e9/0x2340
+  dev_hard_start_xmit+0x120/0x530
+  __dev_queue_xmit+0x14a7/0x2ed0
+  ip6_finish_output2+0x923/0x1a70
+  ip6_finish_output+0x2d7/0x970
+  ip6_output+0x1ce/0x3a0
+  NF_HOOK.constprop.0+0x15f/0x190
+  mld_sendpack+0x59a/0xbd0
+  mld_ifc_work+0x48a/0xa80
+  process_one_work+0x5aa/0xe50
+  worker_thread+0x79c/0x1290
+  kthread+0x28f/0x350
+  ret_from_fork+0x2d/0x70
+  ret_from_fork_asm+0x11/0x20
+  </TASK>
 
-Fixes: 11b9cd748e31 ("ASoC: cs42l51: add reset management")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/a5e5f4b9fb03f46abd2c93ed94b5c395972ce0d1.1729975570.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Mark Brown <broonie@kernel.org>
+ Allocated by task 3922:
+  kasan_save_stack+0x20/0x40
+  kasan_save_track+0x10/0x30
+  __kasan_kmalloc+0x77/0x90
+  __kmalloc_noprof+0x188/0x400
+  metadata_dst_alloc+0x1f/0x4e0
+  macsec_newlink+0x914/0x1410
+  __rtnl_newlink+0xe08/0x15b0
+  rtnl_newlink+0x5f/0x90
+  rtnetlink_rcv_msg+0x667/0xa80
+  netlink_rcv_skb+0x12c/0x360
+  netlink_unicast+0x551/0x770
+  netlink_sendmsg+0x72d/0xbd0
+  __sock_sendmsg+0xc5/0x190
+  ____sys_sendmsg+0x52e/0x6a0
+  ___sys_sendmsg+0xeb/0x170
+  __sys_sendmsg+0xb5/0x140
+  do_syscall_64+0x4c/0x100
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+ Freed by task 4011:
+  kasan_save_stack+0x20/0x40
+  kasan_save_track+0x10/0x30
+  kasan_save_free_info+0x37/0x50
+  poison_slab_object+0x10c/0x190
+  __kasan_slab_free+0x11/0x30
+  kfree+0xe0/0x290
+  macsec_free_netdev+0x3f/0x140
+  netdev_run_todo+0x450/0xc70
+  rtnetlink_rcv_msg+0x66f/0xa80
+  netlink_rcv_skb+0x12c/0x360
+  netlink_unicast+0x551/0x770
+  netlink_sendmsg+0x72d/0xbd0
+  __sock_sendmsg+0xc5/0x190
+  ____sys_sendmsg+0x52e/0x6a0
+  ___sys_sendmsg+0xeb/0x170
+  __sys_sendmsg+0xb5/0x140
+  do_syscall_64+0x4c/0x100
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Fixes: 0a28bfd4971f ("net/macsec: Add MACsec skb_metadata_dst Tx Data path support")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Chris Mi <cmi@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20241021100309.234125-1-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l51.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/macsec.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/cs42l51.c b/sound/soc/codecs/cs42l51.c
-index 4b832d52f643f..cda6216476029 100644
---- a/sound/soc/codecs/cs42l51.c
-+++ b/sound/soc/codecs/cs42l51.c
-@@ -750,8 +750,10 @@ int cs42l51_probe(struct device *dev, struct regmap *regmap)
+diff --git a/drivers/net/macsec.c b/drivers/net/macsec.c
+index 3a19d6f0e0dd8..c007e262daf7d 100644
+--- a/drivers/net/macsec.c
++++ b/drivers/net/macsec.c
+@@ -3726,8 +3726,7 @@ static void macsec_free_netdev(struct net_device *dev)
+ {
+ 	struct macsec_dev *macsec = macsec_priv(dev);
  
- 	cs42l51->reset_gpio = devm_gpiod_get_optional(dev, "reset",
- 						      GPIOD_OUT_LOW);
--	if (IS_ERR(cs42l51->reset_gpio))
--		return PTR_ERR(cs42l51->reset_gpio);
-+	if (IS_ERR(cs42l51->reset_gpio)) {
-+		ret = PTR_ERR(cs42l51->reset_gpio);
-+		goto error;
-+	}
+-	if (macsec->secy.tx_sc.md_dst)
+-		metadata_dst_free(macsec->secy.tx_sc.md_dst);
++	dst_release(&macsec->secy.tx_sc.md_dst->dst);
+ 	free_percpu(macsec->stats);
+ 	free_percpu(macsec->secy.tx_sc.stats);
  
- 	if (cs42l51->reset_gpio) {
- 		dev_dbg(dev, "Release reset gpio\n");
-@@ -783,6 +785,7 @@ int cs42l51_probe(struct device *dev, struct regmap *regmap)
- 	return 0;
- 
- error:
-+	gpiod_set_value_cansleep(cs42l51->reset_gpio, 1);
- 	regulator_bulk_disable(ARRAY_SIZE(cs42l51->supplies),
- 			       cs42l51->supplies);
- 	return ret;
 -- 
 2.43.0
 
