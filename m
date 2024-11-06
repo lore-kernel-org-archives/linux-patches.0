@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90351FBF65;
-	Wed,  6 Nov 2024 12:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733791EE028;
+	Wed,  6 Nov 2024 12:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896736; cv=none; b=PMEundaS1YCoVmB/8/vu1BuDfHiPzIISyB0yq0jh8A4WUYMjemTT0gIWIImKdh8LsGW/c87xB9HbTu+YKydKWQ4M8M2I1hUA20TXJHRCPIYu7TnxHRwykN+W8ljnVgmcZt82erBfXDXy+J1GfSaaAUHK7BxkRmnLWVQqVI7F594=
+	t=1730896739; cv=none; b=COpfuZWWaj8MG80mPOEeIr/eDLoOz/YpjnVhh5Ufl7Ok6PrDCE9eORLzMLE1BtBjQpbafEq3UzxIyBydCf+ALLp/QnVL4t1FCQ+r855nJfA9wTaXxInNORb25/kUlsuAqLFGBHSZ/jZWT6ocsXICt5RZw9ohfE8FhANZeAocww8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896736; c=relaxed/simple;
-	bh=VR59fxSQRyeuAahpLsHaBV+yYCiQCvaTT3+4/4ldOwY=;
+	s=arc-20240116; t=1730896739; c=relaxed/simple;
+	bh=UfpO5n+vhHDOcy/txj/9mLYWfC6iAkecik9fDfQNQjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pKJVusjiDJjcYveBWfj49IXci5GSKc2df4+6UAxAcoXDC2/Eje5SmD4LGS9ip1tk0fsDaIdtlYjzrKUpV0PQc/pFzfX+9EVXYId/pZqWYdku7EwbaiTTJQkQLfwJ3rUjo0/GbyG0MYaVSUsHHF4pj+Nsf3SlOSLGeysuz4vQDUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=paWlm81f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FyXJ4+hHd0y6HnQdMEwC8PLb0IhiXh8sKTpWGX/K7x02Y2/eHIzfl0Hz2stOgZQiqM7fBZukxVZXcdGY0vXyR0VzCP2q00Sr4Nadq5vpfFDTyZzvOFM4r3797baMxyKQ/eR9tqgObtpFc+XuH76rjot2i14ukDAgzoya0IXNAAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OIqc4Le; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="paWlm81f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DF4C4CED4;
-	Wed,  6 Nov 2024 12:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OIqc4Le"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF04C4CED4;
+	Wed,  6 Nov 2024 12:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896736;
-	bh=VR59fxSQRyeuAahpLsHaBV+yYCiQCvaTT3+4/4ldOwY=;
+	s=korg; t=1730896739;
+	bh=UfpO5n+vhHDOcy/txj/9mLYWfC6iAkecik9fDfQNQjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=paWlm81fFCpxJ13QH/bqaIMgL113W7PkaNwx+hIJyGves+Zqcq0CrxH7w/LQua3zF
-	 11Qqhw9X/C81uQsTDGM7Ot8gER0aXZxCmdbx7DjP7tcxegaup4z59H8ig7iF3StqTd
-	 pJyJoY8TmU7V039e+VY7XlV5gFgl0quVR/4aJmDY=
+	b=0OIqc4Le+Ee9r01lHGw79Z041MnX/jbMbo4al1rpfYz5SwoCpqVLcoPuD6pr7Qw/Y
+	 kCZBy546B3cHz5oyzmxLj9M+U+qt9cAEE69cfhQK/JFe02g55WStQtwWGL2iepzmni
+	 bpDBlsN26NXGnzEZsORPi5eou5vED0pX4Cm1C43E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	junhua huang <huang.junhua@zte.com.cn>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.10 055/110] arm64/uprobes: change the uprobe_opcode_t typedef to fix the sparse warning
-Date: Wed,  6 Nov 2024 13:04:21 +0100
-Message-ID: <20241106120304.721158082@linuxfoundation.org>
+	syzbot+cc39f136925517aed571@syzkaller.appspotmail.com,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Antony Antony <antony.antony@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 056/110] xfrm: validate new SAs prefixlen using SA family when sel.family is unset
+Date: Wed,  6 Nov 2024 13:04:22 +0100
+Message-ID: <20241106120304.748388851@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -51,46 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: junhua huang <huang.junhua@zte.com.cn>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-commit ef08c0fadd8a17ebe429b85e23952dac3263ad34 upstream.
+[ Upstream commit 3f0ab59e6537c6a8f9e1b355b48f9c05a76e8563 ]
 
-After we fixed the uprobe inst endian in aarch_be, the sparse check report
-the following warning info:
+This expands the validation introduced in commit 07bf7908950a ("xfrm:
+Validate address prefix lengths in the xfrm selector.")
 
-sparse warnings: (new ones prefixed by >>)
->> kernel/events/uprobes.c:223:25: sparse: sparse: restricted __le32 degrades to integer
->> kernel/events/uprobes.c:574:56: sparse: sparse: incorrect type in argument 4 (different base types)
-@@     expected unsigned int [addressable] [usertype] opcode @@     got restricted __le32 [usertype] @@
-   kernel/events/uprobes.c:574:56: sparse:     expected unsigned int [addressable] [usertype] opcode
-   kernel/events/uprobes.c:574:56: sparse:     got restricted __le32 [usertype]
->> kernel/events/uprobes.c:1483:32: sparse: sparse: incorrect type in initializer (different base types)
-@@     expected unsigned int [usertype] insn @@     got restricted __le32 [usertype] @@
-   kernel/events/uprobes.c:1483:32: sparse:     expected unsigned int [usertype] insn
-   kernel/events/uprobes.c:1483:32: sparse:     got restricted __le32 [usertype]
+syzbot created an SA with
+    usersa.sel.family = AF_UNSPEC
+    usersa.sel.prefixlen_s = 128
+    usersa.family = AF_INET
 
-use the __le32 to u32 for uprobe_opcode_t, to keep the same.
+Because of the AF_UNSPEC selector, verify_newsa_info doesn't put
+limits on prefixlen_{s,d}. But then copy_from_user_state sets
+x->sel.family to usersa.family (AF_INET). Do the same conversion in
+verify_newsa_info before validating prefixlen_{s,d}, since that's how
+prefixlen is going to be used later on.
 
-Fixes: 60f07e22a73d ("arm64:uprobe fix the uprobe SWBP_INSN in big-endian")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: junhua huang <huang.junhua@zte.com.cn>
-Link: https://lore.kernel.org/r/202212280954121197626@zte.com.cn
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+cc39f136925517aed571@syzkaller.appspotmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Antony Antony <antony.antony@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/uprobes.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/xfrm/xfrm_user.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/include/asm/uprobes.h
-+++ b/arch/arm64/include/asm/uprobes.h
-@@ -14,7 +14,7 @@
- #define UPROBE_SWBP_INSN_SIZE	AARCH64_INSN_SIZE
- #define UPROBE_XOL_SLOT_BYTES	AARCH64_INSN_SIZE
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index 070946d093817..e28e49499713f 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -149,6 +149,7 @@ static int verify_newsa_info(struct xfrm_usersa_info *p,
+ 			     struct nlattr **attrs)
+ {
+ 	int err;
++	u16 family = p->sel.family;
  
--typedef u32 uprobe_opcode_t;
-+typedef __le32 uprobe_opcode_t;
+ 	err = -EINVAL;
+ 	switch (p->family) {
+@@ -167,7 +168,10 @@ static int verify_newsa_info(struct xfrm_usersa_info *p,
+ 		goto out;
+ 	}
  
- struct arch_uprobe_task {
- };
+-	switch (p->sel.family) {
++	if (!family && !(p->flags & XFRM_STATE_AF_UNSPEC))
++		family = p->family;
++
++	switch (family) {
+ 	case AF_UNSPEC:
+ 		break;
+ 
+-- 
+2.43.0
+
 
 
