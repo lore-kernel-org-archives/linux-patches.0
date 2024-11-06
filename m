@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B16540C03;
-	Wed,  6 Nov 2024 13:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335391E00AB;
+	Wed,  6 Nov 2024 13:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899138; cv=none; b=LhGlmGsQaSlgfUmiPsG8rXo7ktfVYcIwR0It9Ji0fNbmuxraxS11VU7WvfxmJzHnSzhbjLrJAJT1mfCquzb26eeihWw1ni9GwE9hkcMYMiNJYeT61d1C1k0zhkWWkIP8mEiZme+GISMwhUQFRtCf4zCiSLT0g7t932CjuFKHw6k=
+	t=1730899141; cv=none; b=pXbHKcFKc73cvoT4tdc217VlQIE1c4H3dHotpkLUwYUD6ZTXZKLKIjajLfhLyuJOy8L1YAuT1WyxDicvYPn8lyHPyXVcgY3tIfS2tTa6HP6/a9QDtjr0x/4yaHy/JhmWiPU577/ZlGIHNc392zAAIIhkQ5tGOmFajpbFTB2Cb9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899138; c=relaxed/simple;
-	bh=VDsh/QsTEQ5OxU5LDh5DMSMnVsaok96yMy3muyc03yo=;
+	s=arc-20240116; t=1730899141; c=relaxed/simple;
+	bh=eFeWUI0mYH/y6bt/QBCUao+dZDH7J4fRVGV+VKs8DNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=moEnl3NjJPFHbclh+Tt9s/oOhAlykdbU6fp0JJaS42LwkggbY5qk01VU2i/Cx0cn6mRrRXJbB55OaBGw273w7oNjSCNDFyXck0vO8XkVnTQyZ0M7wo4sjL/vHSM5seMAz4QUDFGUhZq5AFLJ7evTRXPVa8Eea1BaWzQ9+I3lGtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSvHT+MI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c5l9pwjbwCpP14rdJdNr0ZDc8wUdgkXis4cGJZI1MzEZ+pCPNSIQvsV+UQmHvOgGut5W3GAGpHl+N49yPZsBgq6WpRKazs1AubxL02Le13RZRTQlIf5LVlKDzOaYFqd1u8ObbYOx858JZBDGgTuXwjxakFmf9a3KZkEC1CWWk1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bb/8huDC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSvHT+MI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35FDC4CECD;
-	Wed,  6 Nov 2024 13:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bb/8huDC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD20EC4CED3;
+	Wed,  6 Nov 2024 13:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899138;
-	bh=VDsh/QsTEQ5OxU5LDh5DMSMnVsaok96yMy3muyc03yo=;
+	s=korg; t=1730899141;
+	bh=eFeWUI0mYH/y6bt/QBCUao+dZDH7J4fRVGV+VKs8DNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DSvHT+MIpoHnyiLo46CMV0jp3M136qA7cQlt+ItDisYXRpIUvHg7EJ2nT935aqm0r
-	 feg7q9gSX4CX+5CfU5C2cKni+lmt6rPkbaIXDhzKuFPiJmACkSBVM3YLZqJRykCOSY
-	 YIYwSntQs9lpVSbhP6kw3TAH3y6bkiv2KoO4hUmo=
+	b=bb/8huDCCOBgLkGKvpk7sB8HzRz1i927PvUsp6Al08LtWgghP7fwQjlPP6Eg0T4Ee
+	 +mTHN4ySscD6EfRonq5xxOYBP2GzLe9XwbgYe/Br5L4MJfLRL7h+ZR+0nfqsCAWUyb
+	 bx8DSlu4s6B+iFPkh+skkNBz94o4ggXyVToyFPFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Luca Coelho <luciano.coelho@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 12/73] RDMA/bnxt_re: synchronize the qp-handle table array
-Date: Wed,  6 Nov 2024 13:05:16 +0100
-Message-ID: <20241106120300.327750590@linuxfoundation.org>
+Subject: [PATCH 5.15 13/73] mac80211: do drv_reconfig_complete() before restarting all
+Date: Wed,  6 Nov 2024 13:05:17 +0100
+Message-ID: <20241106120300.356440553@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120259.955073160@linuxfoundation.org>
 References: <20241106120259.955073160@linuxfoundation.org>
@@ -52,108 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 76d3ddff7153cc0bcc14a63798d19f5d0693ea71 ]
+[ Upstream commit 13dee10b30c058ee2c58c5da00339cc0d4201aa6 ]
 
-There is a race between the CREQ tasklet and destroy qp when accessing the
-qp-handle table. There is a chance of reading a valid qp-handle in the
-CREQ tasklet handler while the QP is already moving ahead with the
-destruction.
+When we reconfigure, the driver might do some things to complete
+the reconfiguration. It's strange and could be broken in some
+cases because we restart other works (e.g. remain-on-channel and
+TX) before this happens, yet only start queues later.
 
-Fixing this race by implementing a table-lock to synchronize the access.
+Change this to do the reconfig complete when reconfiguration is
+actually complete, not when we've already started doing other
+things again.
 
-Fixes: f218d67ef004 ("RDMA/bnxt_re: Allow posting when QPs are in error")
-Fixes: 84cf229f4001 ("RDMA/bnxt_re: Fix the qp table indexing")
-Link: https://patch.msgid.link/r/1728912975-19346-3-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+For iwlwifi, this should fix a race where the reconfig can race
+with TX, for ath10k and ath11k that also use this it won't make
+a difference because they just start queues there, and mac80211
+also stopped the queues and will restart them later as before.
+
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
+Link: https://lore.kernel.org/r/iwlwifi.20211129152938.cab99f22fe19.Iefe494687f15fd85f77c1b989d1149c8efdfdc36@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 07a6e3b78a65 ("wifi: iwlwifi: mvm: Fix response handling in iwl_mvm_send_recovery_cmd()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.c   |  4 ++++
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 13 +++++++++----
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.h |  2 ++
- 3 files changed, 15 insertions(+), 4 deletions(-)
+ net/mac80211/util.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-index f1aa3e19b6de6..dea70db9ee971 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -1494,9 +1494,11 @@ int bnxt_qplib_destroy_qp(struct bnxt_qplib_res *res,
- 	u32 tbl_indx;
- 	int rc;
- 
-+	spin_lock_bh(&rcfw->tbl_lock);
- 	tbl_indx = map_qp_id_to_tbl_indx(qp->id, rcfw);
- 	rcfw->qp_tbl[tbl_indx].qp_id = BNXT_QPLIB_QP_ID_INVALID;
- 	rcfw->qp_tbl[tbl_indx].qp_handle = NULL;
-+	spin_unlock_bh(&rcfw->tbl_lock);
- 
- 	RCFW_CMD_PREP(req, DESTROY_QP, cmd_flags);
- 
-@@ -1504,8 +1506,10 @@ int bnxt_qplib_destroy_qp(struct bnxt_qplib_res *res,
- 	rc = bnxt_qplib_rcfw_send_message(rcfw, (void *)&req,
- 					  (void *)&resp, NULL, 0);
- 	if (rc) {
-+		spin_lock_bh(&rcfw->tbl_lock);
- 		rcfw->qp_tbl[tbl_indx].qp_id = qp->id;
- 		rcfw->qp_tbl[tbl_indx].qp_handle = qp;
-+		spin_unlock_bh(&rcfw->tbl_lock);
- 		return rc;
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index ef7b6d88ee00c..28676a305916c 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -2656,6 +2656,13 @@ int ieee80211_reconfig(struct ieee80211_local *local)
+ 		mutex_unlock(&local->sta_mtx);
  	}
  
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index 8d5557e3056c4..2394dcc0338cf 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -320,17 +320,21 @@ static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
- 	case CREQ_QP_EVENT_EVENT_QP_ERROR_NOTIFICATION:
- 		err_event = (struct creq_qp_error_notification *)qp_event;
- 		qp_id = le32_to_cpu(err_event->xid);
-+		spin_lock(&rcfw->tbl_lock);
- 		tbl_indx = map_qp_id_to_tbl_indx(qp_id, rcfw);
- 		qp = rcfw->qp_tbl[tbl_indx].qp_handle;
-+		if (!qp) {
-+			spin_unlock(&rcfw->tbl_lock);
-+			break;
-+		}
-+		bnxt_qplib_mark_qp_error(qp);
-+		rc = rcfw->creq.aeq_handler(rcfw, qp_event, qp);
-+		spin_unlock(&rcfw->tbl_lock);
- 		dev_dbg(&pdev->dev, "Received QP error notification\n");
- 		dev_dbg(&pdev->dev,
- 			"qpid 0x%x, req_err=0x%x, resp_err=0x%x\n",
- 			qp_id, err_event->req_err_state_reason,
- 			err_event->res_err_state_reason);
--		if (!qp)
--			break;
--		bnxt_qplib_mark_qp_error(qp);
--		rc = rcfw->creq.aeq_handler(rcfw, qp_event, qp);
- 		break;
- 	default:
- 		/*
-@@ -631,6 +635,7 @@ int bnxt_qplib_alloc_rcfw_channel(struct bnxt_qplib_res *res,
- 			       GFP_KERNEL);
- 	if (!rcfw->qp_tbl)
- 		goto fail;
-+	spin_lock_init(&rcfw->tbl_lock);
++	/*
++	 * If this is for hw restart things are still running.
++	 * We may want to change that later, however.
++	 */
++	if (local->open_count && (!suspended || reconfig_due_to_wowlan))
++		drv_reconfig_complete(local, IEEE80211_RECONFIG_TYPE_RESTART);
++
+ 	if (local->in_reconfig) {
+ 		local->in_reconfig = false;
+ 		barrier();
+@@ -2674,13 +2681,6 @@ int ieee80211_reconfig(struct ieee80211_local *local)
+ 					IEEE80211_QUEUE_STOP_REASON_SUSPEND,
+ 					false);
  
- 	return 0;
+-	/*
+-	 * If this is for hw restart things are still running.
+-	 * We may want to change that later, however.
+-	 */
+-	if (local->open_count && (!suspended || reconfig_due_to_wowlan))
+-		drv_reconfig_complete(local, IEEE80211_RECONFIG_TYPE_RESTART);
+-
+ 	if (!suspended)
+ 		return 0;
  
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-index 2acdec55a667e..aaf06cd939e69 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-@@ -186,6 +186,8 @@ struct bnxt_qplib_rcfw {
- 	struct bnxt_qplib_crsqe		*crsqe_tbl;
- 	int qp_tbl_size;
- 	struct bnxt_qplib_qp_node *qp_tbl;
-+	/* To synchronize the qp-handle hash table */
-+	spinlock_t			tbl_lock;
- 	u64 oos_prev;
- 	u32 init_oos_stats;
- 	u32 cmdq_depth;
 -- 
 2.43.0
 
