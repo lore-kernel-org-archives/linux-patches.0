@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451C91DFE38;
-	Wed,  6 Nov 2024 12:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582B31DFE33;
+	Wed,  6 Nov 2024 12:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896540; cv=none; b=FOtea8HH8m+RNAcU9lk35fpClSgwviW0eELbxoMMUCVq4mT1yppuC5Tm+KCuPVnQmTYinNxIPGbeip0hIhxrWxe7F08MFpz0s/xdvpLdoosc1IQxEf8MczdjB795Om18Jmp1dVQLM9iZoAO+Og+fB9AoIQ1nu+VK/o/DkDIMjlo=
+	t=1730896543; cv=none; b=VhGiqp4wGb6ioX+xjSyANUQwAoJML6QpfBadHgn7UmYNF4C36qcVUzS/ooK3kIwef/WEsOpfyo5242zJuJgNwZ5cILV3VxVE1nb8VoXKGMPNKN0J8Uf1o1DRg74Lb4K0TgA0WLd+8ABqGDOWAvrDTJFWCghFc3Ivh0HB/ADa1Xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896540; c=relaxed/simple;
-	bh=16Y44MslnunBM6i514PsS2eWfQJJIVDwbaqtMCiQBYw=;
+	s=arc-20240116; t=1730896543; c=relaxed/simple;
+	bh=tYXuKPZxo7ykxr+v6GiTwiXIpHTUkGMp6RBGhn2QBVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bu58cspEgbbgq+5f/RfmJP+4wrxLL0lvJTzL43T7bbIqAYhKuU8zuB4cru7RYKNJgIg3NkJ1D221QIR0vh1a24lu9mpC3AM9uIYzc1DdDAEhs+OZefaFzgcYH3YU/PUWOYbSU/oESvaoZgnMcP+6EaGZTED9ooGlKjxnM3Eq0bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOXvRZWG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W3NVoiOWh5fIdGIAsI2y0naTva/i9wn8uza9Gc2NFwSqx5qnFuVwbkfshPFjg54XwdkXRQXhraRvnE9ncTDHaSECbtzuv3PYpX2rpAFf++f8zv+UA24g0euruvHeYaBxzx1BUNORTjk53mYy8aHOUJGTgQNUhPg5rkLHyQztZ9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iad2uUO5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOXvRZWG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE16C4CECD;
-	Wed,  6 Nov 2024 12:35:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iad2uUO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE581C4CED3;
+	Wed,  6 Nov 2024 12:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896540;
-	bh=16Y44MslnunBM6i514PsS2eWfQJJIVDwbaqtMCiQBYw=;
+	s=korg; t=1730896543;
+	bh=tYXuKPZxo7ykxr+v6GiTwiXIpHTUkGMp6RBGhn2QBVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NOXvRZWGcBR4AFabl6vz/rgaNWSHQLNEaapDuOrTPebEg1KlyFn8ZanVumvmeDUxD
-	 EmrFWFgB/k+o+58J44I0OIzjqcvi38ObrYS3frrmYbKdkUmRV6er2ySvLmNh35FkNp
-	 OWsd2V+vhDava3xI1QS9xr6j/wr+iwiJJ7xCMz2s=
+	b=iad2uUO5IE2oBslFBi9tEg2tWeMqBvDVWKdOpSA5px3mreqwmB39X0pjRvHNcdKM7
+	 m8LI+NGdMqHEg+Tu883wtfi0trK6963gbRAYLhVEcE4wTtMW6Pkb4fAcMVM3FyhiPd
+	 OHrDqHqR14rAOgurqgNUN/p+e8kPTWFQdtWKrimM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 200/245] gpiolib: fix debugfs newline separators
-Date: Wed,  6 Nov 2024 13:04:13 +0100
-Message-ID: <20241106120324.167325739@linuxfoundation.org>
+Subject: [PATCH 6.11 201/245] gpiolib: fix debugfs dangling chip separator
+Date: Wed,  6 Nov 2024 13:04:14 +0100
+Message-ID: <20241106120324.191615560@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -54,43 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 3e8b7238b427e05498034c240451af5f5495afda ]
+[ Upstream commit 604888f8c3d01fddd9366161efc65cb3182831f1 ]
 
-The gpiolib debugfs interface exports a list of all gpio chips in a
-system and the state of their pins.
+Add the missing newline after entries for recently removed gpio chips
+so that the chip sections are separated by a newline as intended.
 
-The gpio chip sections are supposed to be separated by a newline
-character, but a long-standing bug prevents the separator from
-being included when output is generated in multiple sessions, making the
-output inconsistent and hard to read.
-
-Make sure to only suppress the newline separator at the beginning of the
-file as intended.
-
-Fixes: f9c4a31f6150 ("gpiolib: Use seq_file's iterator interface")
-Cc: stable@vger.kernel.org	# 3.7
-Cc: Thierry Reding <treding@nvidia.com>
+Fixes: e348544f7994 ("gpio: protect the list of GPIO devices with SRCU")
+Cc: stable@vger.kernel.org	# 6.9
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20241028125000.24051-2-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20241028125000.24051-3-johan+linaro@kernel.org
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpio/gpiolib.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 148bcfbf98e02..1f522499c6fc5 100644
+index 1f522499c6fc5..337971080dfde 100644
 --- a/drivers/gpio/gpiolib.c
 +++ b/drivers/gpio/gpiolib.c
-@@ -4834,6 +4834,8 @@ static void *gpiolib_seq_start(struct seq_file *s, loff_t *pos)
- 		return NULL;
+@@ -4879,7 +4879,7 @@ static int gpiolib_seq_show(struct seq_file *s, void *v)
  
- 	s->private = priv;
-+	if (*pos > 0)
-+		priv->newline = true;
- 	priv->idx = srcu_read_lock(&gpio_devices_srcu);
- 
- 	list_for_each_entry_srcu(gdev, &gpio_devices, list,
+ 	gc = srcu_dereference(gdev->chip, &gdev->srcu);
+ 	if (!gc) {
+-		seq_printf(s, "%s%s: (dangling chip)",
++		seq_printf(s, "%s%s: (dangling chip)\n",
+ 			   priv->newline ? "\n" : "",
+ 			   dev_name(&gdev->dev));
+ 		return 0;
 -- 
 2.43.0
 
