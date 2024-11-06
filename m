@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC041E1310;
-	Wed,  6 Nov 2024 12:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECEC1E048F;
+	Wed,  6 Nov 2024 12:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897797; cv=none; b=OIxJqi74O60c/cPfophNbps/o+FN8itdEa0eXLHCY14D4ZCl+k3J+97hIOTyYQ5kIodNR6nyGUDXQ4cIv4bEEptStYGga/FF8d9er7LumhYCpi+HF7yA479dIGRcluqSKguPzmYx6cj5przFACtP/wc0LYXZQnZg7wzHp4bEVp4=
+	t=1730897800; cv=none; b=M8Q3XlyshY3cVuXug/8zKOGBmh2BxUWIz3Z2OnKc5QWipiRpDOOPwKgeqYf+eBUjCbYd8hIFrHpRY1RUjvYoummgilOYppapiCe2jE52s+yTANepsj0JlnXY6X3Ur0SeLrhohzWDn3Fg2QWFncPQhpU1yDclWzqn3Fjl+Srzd+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897797; c=relaxed/simple;
-	bh=n/49quFZXME4PnYZ24BbRYQfKWrVnCwFOB1xkyEi1D0=;
+	s=arc-20240116; t=1730897800; c=relaxed/simple;
+	bh=bT43pmgXCqtoUy/XhG8XvYQO1rtM3s3gFYvN0GCTwEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bkbf19jkVjvrgl+z08nJepRpO/L8FiA6zeBTe8of3z5Kao6RDcAdTV/e8b1iq5y/VeysZ/7uMVQt3j0hnBmYKkJZfAfwp+ZFFU8xwoSEENWYO7uueZPU8uTzPVL9TYRAmBt6aWgO6ERLqu0JBvjky0wp3kl9dTJ5I/1V6RTF3E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0B3wtEV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uZ9oYpjhfE6LLOlrcNJsgzcTNd4iSk0gQF6GTRN4FYnHdpgVMHLjRJrwwQWOevfjFjf7vZm8AVJZ9sPe+c/5v6JkcwlhocRO53pctgIB/nG9E1bCaiL6DNGX/Te8coT55D2YmgMHBflXkXqUR8MRtHiqWz55eqOtTFjmF3EFWoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LO2/4+l4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0B3wtEV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02772C4CECD;
-	Wed,  6 Nov 2024 12:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LO2/4+l4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE27C4CECD;
+	Wed,  6 Nov 2024 12:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897797;
-	bh=n/49quFZXME4PnYZ24BbRYQfKWrVnCwFOB1xkyEi1D0=;
+	s=korg; t=1730897800;
+	bh=bT43pmgXCqtoUy/XhG8XvYQO1rtM3s3gFYvN0GCTwEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r0B3wtEVyHB41eiQLIRvEQpzoUXM3w0OiyIJXWjRhsQENfA6DTNvzni7A+LlDfweu
-	 kBOpv8EuxbMOyRcGynpO3/6x9Hf71jW430CbgnLcZpPhKlAcDlZOzf7TI2i5YFWSiX
-	 57SCSnpAVuHbSnjq3Kd2JeOZslbzUzhHmyTDXNdk=
+	b=LO2/4+l4e9zObe5IEt3zg2URrXbmZd5uUqLP14SnVKchtOC15bOzly2SWA+EY1zih
+	 5Neyk/kTpZceF0WbHd40lF1xf9qOjpBA/Ti8CJkXQZG9XfORPgaLMKGuKy/MgsJGGs
+	 QJJo5UCJ2GM36H+QWgX8F+Fi6YQkjk6AkyjSYT1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"hongchi.peng" <hongchi.peng@siengine.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Liao Chen <liaochen4@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 022/462] drm: komeda: Fix an issue related to normalized zpos
-Date: Wed,  6 Nov 2024 12:58:35 +0100
-Message-ID: <20241106120332.059480278@linuxfoundation.org>
+Subject: [PATCH 5.4 023/462] spi: bcm63xx: Enable module autoloading
+Date: Wed,  6 Nov 2024 12:58:36 +0100
+Message-ID: <20241106120332.085995103@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,77 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: hongchi.peng <hongchi.peng@siengine.com>
+From: Liao Chen <liaochen4@huawei.com>
 
-[ Upstream commit 258905cb9a6414be5c9ca4aa20ef855f8dc894d4 ]
+[ Upstream commit 709df70a20e990d262c473ad9899314039e8ec82 ]
 
-We use komeda_crtc_normalize_zpos to normalize zpos of affected planes
-to their blending zorder in CU. If there's only one slave plane in
-affected planes and its layer_split property is enabled, order++ for
-its split layer, so that when calculating the normalized_zpos
-of master planes, the split layer of the slave plane is included, but
-the max_slave_zorder does not include the split layer and keep zero
-because there's only one slave plane in affacted planes, although we
-actually use two slave layers in this commit.
+Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded based
+on the alias from of_device_id table.
 
-In most cases, this bug does not result in a commit failure, but assume
-the following situation:
-    slave_layer 0: zpos = 0, layer split enabled, normalized_zpos =
-    0;(use slave_layer 2 as its split layer)
-    master_layer 0: zpos = 2, layer_split enabled, normalized_zpos =
-    2;(use master_layer 2 as its split layer)
-    master_layer 1: zpos = 4, normalized_zpos = 4;
-    master_layer 3: zpos = 5, normalized_zpos = 5;
-    kcrtc_st->max_slave_zorder = 0;
-When we use master_layer 3 as a input of CU in function
-komeda_compiz_set_input and check it with function
-komeda_component_check_input, the parameter idx is equal to
-normailzed_zpos minus max_slave_zorder, the value of idx is 5
-and is euqal to CU's max_active_inputs, so that
-komeda_component_check_input returns a -EINVAL value.
-
-To fix the bug described above, when calculating the max_slave_zorder
-with the layer_split enabled, count the split layer in this calculation
-directly.
-
-Signed-off-by: hongchi.peng <hongchi.peng@siengine.com>
-Acked-by: Liviu Dudau <liviu.dudau@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240826024517.3739-1-hongchi.peng@siengine.com
+Signed-off-by: Liao Chen <liaochen4@huawei.com>
+Link: https://patch.msgid.link/20240831094231.795024-1-liaochen4@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/arm/display/komeda/komeda_kms.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/spi/spi-bcm63xx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_kms.c b/drivers/gpu/drm/arm/display/komeda/komeda_kms.c
-index ae274902ff924..4e9c3184a906c 100644
---- a/drivers/gpu/drm/arm/display/komeda/komeda_kms.c
-+++ b/drivers/gpu/drm/arm/display/komeda/komeda_kms.c
-@@ -148,6 +148,7 @@ static int komeda_crtc_normalize_zpos(struct drm_crtc *crtc,
- 	struct drm_plane *plane;
- 	struct list_head zorder_list;
- 	int order = 0, err;
-+	u32 slave_zpos = 0;
+diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
+index ff27596168732..104e3e6e056d7 100644
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -481,6 +481,7 @@ static const struct of_device_id bcm63xx_spi_of_match[] = {
+ 	{ .compatible = "brcm,bcm6358-spi", .data = &bcm6358_spi_reg_offsets },
+ 	{ },
+ };
++MODULE_DEVICE_TABLE(of, bcm63xx_spi_of_match);
  
- 	DRM_DEBUG_ATOMIC("[CRTC:%d:%s] calculating normalized zpos values\n",
- 			 crtc->base.id, crtc->name);
-@@ -187,10 +188,13 @@ static int komeda_crtc_normalize_zpos(struct drm_crtc *crtc,
- 				 plane_st->zpos, plane_st->normalized_zpos);
- 
- 		/* calculate max slave zorder */
--		if (has_bit(drm_plane_index(plane), kcrtc->slave_planes))
-+		if (has_bit(drm_plane_index(plane), kcrtc->slave_planes)) {
-+			slave_zpos = plane_st->normalized_zpos;
-+			if (to_kplane_st(plane_st)->layer_split)
-+				slave_zpos++;
- 			kcrtc_st->max_slave_zorder =
--				max(plane_st->normalized_zpos,
--				    kcrtc_st->max_slave_zorder);
-+				max(slave_zpos, kcrtc_st->max_slave_zorder);
-+		}
- 	}
- 
- 	crtc_st->zpos_changed = true;
+ static int bcm63xx_spi_probe(struct platform_device *pdev)
+ {
 -- 
 2.43.0
 
