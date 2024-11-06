@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B041DF736;
-	Wed,  6 Nov 2024 12:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839131DED58;
+	Wed,  6 Nov 2024 12:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895983; cv=none; b=ZhfIs2RDPlSYqdSKQZgHuovhDPDXRrmAIRji2PTBvO4I+syNbHJX5FJ4UjUbHgR4DWFVzhvWhSIQw3LAPyMa8Q+WtMrQ0CNFVen+273KAxz7XT/cqu1SDSSbtcVoUTLKHrsYSoMErxfDQ71xPZEcNN+ED2MtRRSum2mwiQqNyOs=
+	t=1730895986; cv=none; b=kiLu6eyKSdyb4n4WgXiUdyc1aElilJg8hEQwFOj6s87aWT/IZz4BA+8fkekUaXuasN1couq7YQLTWiFrnKaePgqxZxMpxLSZ2rgOfd0x01gYYqJJvPu3H/QX3lPM4wjkbPYyWr6Jt2+kb3K8FPzn6qYRsXZpho4zBHnm22bJtF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895983; c=relaxed/simple;
-	bh=+hPWS5KaV7wyFKV3CRc8n866FeZd0goqdsnpSiRLMjc=;
+	s=arc-20240116; t=1730895986; c=relaxed/simple;
+	bh=AXdcEabcCpiYL4B8ConpZKONZkkgvofwyccnMfc7ZUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PqPdBhVRL/hzCZO/r6VrDouDTWTWsXX3Dma2+T3QUUXUQDPxG32dSQ8cInnrU8r24qKBJYcotUQwMUnVXA4gszuYAn/gb92M174p40wJUvsYafNaavozU1/Cc2/cRZ7LQ4ERXu0rGdCrZ/VbocY/Jf2Hd8x3kD+ftcGu8SUXz9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=flZtMdF9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MPToHtczw3aXuq/VhQjCRVfECA9hZMg1AyM7xcp8BCIE8AdGbpS/JYaW84Cyqw6FjM43d9qESFoJoeXIQo6KF4JrUXU/XgMo1/wi8v2jkAcFfOE3w+2tp508idzugKhXdGMbiFrxl1O9JsAEyx02D7cyxT2RewlYoIvYvtnJsns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpSc4iww; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flZtMdF9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0776EC4CECD;
-	Wed,  6 Nov 2024 12:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpSc4iww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C34C4CECD;
+	Wed,  6 Nov 2024 12:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895983;
-	bh=+hPWS5KaV7wyFKV3CRc8n866FeZd0goqdsnpSiRLMjc=;
+	s=korg; t=1730895986;
+	bh=AXdcEabcCpiYL4B8ConpZKONZkkgvofwyccnMfc7ZUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=flZtMdF9lg4XP0a4DGngZunfnpVPOgEM7vihQhpYgi8jkPqO+MY92KnT0BQHg9V1f
-	 DKwVt2e+iwqc80Yts2oG9ESu3AATwmx4y9IOEVByOZqE9ajQDPcocjj/GpiNfnVSDB
-	 vkadSGSP02Hb7bqYNacf7chzLP6Co4JDs4sZaxeg=
+	b=JpSc4iwwqFqOYP6XWnvrry5x71NzGiB17OH04HCJl0GgfMQPdbV8va6bxzk/XmyKr
+	 vypqeMxy0Uz+ilg+qnylkAGfa2NhwOB3vYV2hHeEBy+yUT8rPZOlJsV2IlcDj14+/b
+	 qMW34CRnnvBo4VpvPkAJlsiUyNVhD2ep6zfhtHZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Petr Machata <petrm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 051/245] mlxsw: pci: Sync Rx buffers for CPU
-Date: Wed,  6 Nov 2024 13:01:44 +0100
-Message-ID: <20241106120320.477596438@linuxfoundation.org>
+Subject: [PATCH 6.11 052/245] mlxsw: pci: Sync Rx buffers for device
+Date: Wed,  6 Nov 2024 13:01:45 +0100
+Message-ID: <20241106120320.500598037@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -56,89 +56,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Amit Cohen <amcohen@nvidia.com>
 
-[ Upstream commit 15f73e601a9c67aa83bde92b2d940a6532d8614d ]
+[ Upstream commit d0fbdc3ae9ecc614ddffde55dccbcacef353da0b ]
 
-When Rx packet is received, drivers should sync the pages for CPU, to
-ensure the CPU reads the data written by the device and not stale
-data from its cache.
+Non-coherent architectures, like ARM, may require invalidating caches
+before the device can use the DMA mapped memory, which means that before
+posting pages to device, drivers should sync the memory for device.
 
-Add the missing sync call in Rx path, sync the actual length of data for
-each fragment.
+Sync for device can be configured as page pool responsibility. Set the
+relevant flag and define max_len for sync.
 
 Cc: Jiri Pirko <jiri@resnulli.us>
 Fixes: b5b60bb491b2 ("mlxsw: pci: Use page pool for Rx buffers allocation")
 Signed-off-by: Amit Cohen <amcohen@nvidia.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
 Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/461486fac91755ca4e04c2068c102250026dcd0b.1729866134.git.petrm@nvidia.com
+Link: https://patch.msgid.link/92e01f05c4f506a4f0a9b39c10175dcc01994910.1729866134.git.petrm@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/pci.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/mellanox/mlxsw/pci.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlxsw/pci.c b/drivers/net/ethernet/mellanox/mlxsw/pci.c
-index 060e5b9392114..2320a5f323b45 100644
+index 2320a5f323b45..d6f37456fb317 100644
 --- a/drivers/net/ethernet/mellanox/mlxsw/pci.c
 +++ b/drivers/net/ethernet/mellanox/mlxsw/pci.c
-@@ -389,15 +389,27 @@ static void mlxsw_pci_wqe_frag_unmap(struct mlxsw_pci *mlxsw_pci, char *wqe,
- 	dma_unmap_single(&pdev->dev, mapaddr, frag_len, direction);
- }
+@@ -996,12 +996,13 @@ static int mlxsw_pci_cq_page_pool_init(struct mlxsw_pci_queue *q,
+ 	if (cq_type != MLXSW_PCI_CQ_RDQ)
+ 		return 0;
  
--static struct sk_buff *mlxsw_pci_rdq_build_skb(struct page *pages[],
-+static struct sk_buff *mlxsw_pci_rdq_build_skb(struct mlxsw_pci_queue *q,
-+					       struct page *pages[],
- 					       u16 byte_count)
- {
-+	struct mlxsw_pci_queue *cq = q->u.rdq.cq;
- 	unsigned int linear_data_size;
-+	struct page_pool *page_pool;
- 	struct sk_buff *skb;
- 	int page_index = 0;
- 	bool linear_only;
- 	void *data;
+-	pp_params.flags = PP_FLAG_DMA_MAP;
++	pp_params.flags = PP_FLAG_DMA_MAP | PP_FLAG_DMA_SYNC_DEV;
+ 	pp_params.pool_size = MLXSW_PCI_WQE_COUNT * mlxsw_pci->num_sg_entries;
+ 	pp_params.nid = dev_to_node(&mlxsw_pci->pdev->dev);
+ 	pp_params.dev = &mlxsw_pci->pdev->dev;
+ 	pp_params.napi = &q->u.cq.napi;
+ 	pp_params.dma_dir = DMA_FROM_DEVICE;
++	pp_params.max_len = PAGE_SIZE;
  
-+	linear_only = byte_count + MLXSW_PCI_RX_BUF_SW_OVERHEAD <= PAGE_SIZE;
-+	linear_data_size = linear_only ? byte_count :
-+					 PAGE_SIZE -
-+					 MLXSW_PCI_RX_BUF_SW_OVERHEAD;
-+
-+	page_pool = cq->u.cq.page_pool;
-+	page_pool_dma_sync_for_cpu(page_pool, pages[page_index],
-+				   MLXSW_PCI_SKB_HEADROOM, linear_data_size);
-+
- 	data = page_address(pages[page_index]);
- 	net_prefetch(data);
- 
-@@ -405,11 +417,6 @@ static struct sk_buff *mlxsw_pci_rdq_build_skb(struct page *pages[],
- 	if (unlikely(!skb))
- 		return ERR_PTR(-ENOMEM);
- 
--	linear_only = byte_count + MLXSW_PCI_RX_BUF_SW_OVERHEAD <= PAGE_SIZE;
--	linear_data_size = linear_only ? byte_count :
--					 PAGE_SIZE -
--					 MLXSW_PCI_RX_BUF_SW_OVERHEAD;
--
- 	skb_reserve(skb, MLXSW_PCI_SKB_HEADROOM);
- 	skb_put(skb, linear_data_size);
- 
-@@ -425,6 +432,7 @@ static struct sk_buff *mlxsw_pci_rdq_build_skb(struct page *pages[],
- 
- 		page = pages[page_index];
- 		frag_size = min(byte_count, PAGE_SIZE);
-+		page_pool_dma_sync_for_cpu(page_pool, page, 0, frag_size);
- 		skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
- 				page, 0, frag_size, PAGE_SIZE);
- 		byte_count -= frag_size;
-@@ -760,7 +768,7 @@ static void mlxsw_pci_cqe_rdq_handle(struct mlxsw_pci *mlxsw_pci,
- 	if (err)
- 		goto out;
- 
--	skb = mlxsw_pci_rdq_build_skb(pages, byte_count);
-+	skb = mlxsw_pci_rdq_build_skb(q, pages, byte_count);
- 	if (IS_ERR(skb)) {
- 		dev_err_ratelimited(&pdev->dev, "Failed to build skb for RDQ\n");
- 		mlxsw_pci_rdq_pages_recycle(q, pages, num_sg_entries);
+ 	page_pool = page_pool_create(&pp_params);
+ 	if (IS_ERR(page_pool))
 -- 
 2.43.0
 
