@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC651DE3B8;
-	Wed,  6 Nov 2024 12:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084CD1D416E;
+	Wed,  6 Nov 2024 12:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895241; cv=none; b=LBsJKh3fwXJbAQJAHnIcFkd5AEygUjlF6OnDxvzokI2o4sQ5hB51ZG/WHAJOwHE8EHfUgQPOrwGpaPadSXw3c/SrkznPjwwjuWy52KdSlaTtaO2RDOl3hpgt6LHXkyrsI7qLU5HG8FTFUyGsPFb/RLuFjqXV+hSBNjFQ2ZzSfCE=
+	t=1730895244; cv=none; b=bxUiY52kYdnBqA2/AsySz/lZJByrfJyL34l0gMk2MmCs/aPuCpwxLbdk/pirk0nG2KD/+ZbFp0QtFG24YdgpaexhnT/X2MYPGQc7I4WIvRlWeurGiy8Vm45VDGgUYQAIbwd72mxr2+HjLnnwB8OFVpaeSFAfQ5iCvh6tcdco9QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895241; c=relaxed/simple;
-	bh=haVM7gE6hFW7maec84DP3NGOp3wSeEhsZleGgP5BBxc=;
+	s=arc-20240116; t=1730895244; c=relaxed/simple;
+	bh=XRplhH7CZFywTS/48l8qgm/BFwU+FGsS3pvkMrE/SWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t70tA0yYZbEP2lwT/SF4+ZoWSljzO8/ils0un9VHYgsrmzWuLVfn7Rz5pcJ/yAnkIxGsr4sYbvq+cz8Mu76v7Az7Nf+MQpj//FLVTfqyjJAJodfH+uP3j4zNNxp7fczcn8hjeG7kG4e4vDhqltYe66k2ZRmI6GZh6dpZZJUxLMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n5abZYgl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d8qR2aMxZX+7O+duUjgHCIV/380LhOt0dr5qqtjvvhyiHu9HgCoUa1xxVBAqtndwjRphSQZGIIxgh1ZZ+wJDMmmfKo84wcMiYCQVC9Lw6tATuOw8xHNyZEsnL8li7qwodCVR4q03Nxz7g8J/bDwqjUMS4pBYRS4pzZEYtG1cONA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bfn6KI/f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n5abZYgl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B72C4CECD;
-	Wed,  6 Nov 2024 12:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bfn6KI/f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD6BC4CECD;
+	Wed,  6 Nov 2024 12:14:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895240;
-	bh=haVM7gE6hFW7maec84DP3NGOp3wSeEhsZleGgP5BBxc=;
+	s=korg; t=1730895243;
+	bh=XRplhH7CZFywTS/48l8qgm/BFwU+FGsS3pvkMrE/SWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n5abZYglFhi0CJDTy8uK6KkgJi71E47Hz+gRxb1tVHNyi8cDc/gix1ztAc3MqW5/9
-	 03r8sqkZzl8Dipt4dGnukl+tTPfS9bc/EKYb4nxdMDMCI4lJMJ6YzTBg6UbzIwNsku
-	 MoFEmDq3Fd0bupo5LKYVulnKWq6BjmLypPKdQXJM=
+	b=Bfn6KI/fdeIQpwUkvT3CK/h2j6PnTQnYJq2cfvjQvqlEBqpuGxBYi4HlarpGN2OBF
+	 65NJKtXuOrp4pCDddcyFCyP/cDHDfmtSYsxYY8yBORag9GpzcYZrDrWV1leAO1Kkdw
+	 BIP4Cjvo5SG53bT8sHtFawVXVEB1yWBuJT+TEW2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Armin Wolf <W_Armin@gmx.de>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 151/350] ACPICA: Fix memory leak if acpi_ps_get_next_namepath() fails
-Date: Wed,  6 Nov 2024 13:01:19 +0100
-Message-ID: <20241106120324.646474463@linuxfoundation.org>
+Subject: [PATCH 4.19 152/350] ACPICA: Fix memory leak if acpi_ps_get_next_field() fails
+Date: Wed,  6 Nov 2024 13:01:20 +0100
+Message-ID: <20241106120324.672292342@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -53,50 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 5accb265f7a1b23e52b0ec42313d1e12895552f4 ]
+[ Upstream commit e6169a8ffee8a012badd8c703716e761ce851b15 ]
 
-ACPICA commit 2802af722bbde7bf1a7ac68df68e179e2555d361
+ACPICA commit 1280045754264841b119a5ede96cd005bc09b5a7
 
-If acpi_ps_get_next_namepath() fails, the previously allocated
-union acpi_parse_object needs to be freed before returning the
-status code.
+If acpi_ps_get_next_field() fails, the previously created field list
+needs to be properly disposed before returning the status code.
 
-The issue was first being reported on the Linux ACPI mailing list:
-
-Link: https://lore.kernel.org/linux-acpi/56f94776-484f-48c0-8855-dba8e6a7793b@yandex.ru/T/
-Link: https://github.com/acpica/acpica/commit/2802af72
+Link: https://github.com/acpica/acpica/commit/12800457
 Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+[ rjw: Rename local variable to avoid compiler confusion ]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/psargs.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/acpi/acpica/psargs.c | 39 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
 
 diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
-index 176d28d60125d..576ac74a47935 100644
+index 576ac74a47935..956aaf6a3f3d0 100644
 --- a/drivers/acpi/acpica/psargs.c
 +++ b/drivers/acpi/acpica/psargs.c
-@@ -820,6 +820,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
- 			    acpi_ps_get_next_namepath(walk_state, parser_state,
- 						      arg,
- 						      ACPI_NOT_METHOD_CALL);
-+			if (ACPI_FAILURE(status)) {
-+				acpi_ps_free_op(arg);
-+				return_ACPI_STATUS(status);
-+			}
- 		} else {
- 			/* Single complex argument, nothing returned */
+@@ -25,6 +25,8 @@ acpi_ps_get_next_package_length(struct acpi_parse_state *parser_state);
+ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
+ 						       *parser_state);
  
-@@ -854,6 +858,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
- 			    acpi_ps_get_next_namepath(walk_state, parser_state,
- 						      arg,
- 						      ACPI_POSSIBLE_METHOD_CALL);
-+			if (ACPI_FAILURE(status)) {
-+				acpi_ps_free_op(arg);
-+				return_ACPI_STATUS(status);
-+			}
++static void acpi_ps_free_field_list(union acpi_parse_object *start);
++
+ /*******************************************************************************
+  *
+  * FUNCTION:    acpi_ps_get_next_package_length
+@@ -683,6 +685,39 @@ static union acpi_parse_object *acpi_ps_get_next_field(struct acpi_parse_state
+ 	return_PTR(field);
+ }
  
- 			if (arg->common.aml_opcode == AML_INT_METHODCALL_OP) {
++/*******************************************************************************
++ *
++ * FUNCTION:    acpi_ps_free_field_list
++ *
++ * PARAMETERS:  start               - First Op in field list
++ *
++ * RETURN:      None.
++ *
++ * DESCRIPTION: Free all Op objects inside a field list.
++ *
++ ******************************************************************************/
++
++static void acpi_ps_free_field_list(union acpi_parse_object *start)
++{
++	union acpi_parse_object *cur = start;
++	union acpi_parse_object *next;
++	union acpi_parse_object *arg;
++
++	while (cur) {
++		next = cur->common.next;
++
++		/* AML_INT_CONNECTION_OP can have a single argument */
++
++		arg = acpi_ps_get_arg(cur, 0);
++		if (arg) {
++			acpi_ps_free_op(arg);
++		}
++
++		acpi_ps_free_op(cur);
++		cur = next;
++	}
++}
++
+ /*******************************************************************************
+  *
+  * FUNCTION:    acpi_ps_get_next_arg
+@@ -751,6 +786,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
+ 			while (parser_state->aml < parser_state->pkg_end) {
+ 				field = acpi_ps_get_next_field(parser_state);
+ 				if (!field) {
++					if (arg) {
++						acpi_ps_free_field_list(arg);
++					}
++
+ 					return_ACPI_STATUS(AE_NO_MEMORY);
+ 				}
  
 -- 
 2.43.0
