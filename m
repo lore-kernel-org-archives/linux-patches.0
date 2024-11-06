@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1D91DF249;
-	Wed,  6 Nov 2024 12:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19E61DEFF4;
+	Wed,  6 Nov 2024 12:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894918; cv=none; b=FZKx7kA5wqDjqDoZGkFm6VJvoXICV0Bg08xiq+TPQ9eKzr0FdvzZ5+82tPa8BwISPlfqUtNOwWkcJE/EbHjuE10hdSIgs7JDQmYl7Jq+Ok4Xeg1MheoDxPgDXMstIKp19WStaR81Pykkzp2yOk3g+B5itrHMleiAUslaBAhvV2A=
+	t=1730894921; cv=none; b=U/GMTEtqc3g3Xol/v6+iqvkKtUduVy3Y0ZlAWAzOmhZlCx/lwg9f7FW7BXoOgl4N03l3S36K9gOn/7mev8cvPCdtYLaSWey0GlthDrVxunm3vnrt0UC/AWlMtYlsPY0IgcV7d3lqcQktCgA7vn+JqsVuZl6i6yHwszOEeq2ZOss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894918; c=relaxed/simple;
-	bh=UgJXE36GtBX7eCrhgQdQs8V3t5DV3EL4VP3Z58zzb68=;
+	s=arc-20240116; t=1730894921; c=relaxed/simple;
+	bh=HculaqOZCXPEqCQJpCR0vepg+opukch91pxKmaAZAXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DEp6tAjEiKD3hpPFfyQuwcpd5gcNiEIA6Vu5F9sgHOJ+L0kko9yfNqyUwZU0NYmVjR2YgEGO8GEVKrKxS5MqsCAfKE8TwwhTKM64j2pRMFeOo9sMouCYjQpHQ4EZ3xS4xz2HVIWyaeBB/61cSmg2qMCvFS5vpsxAFpqc/vDgM8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiYGJcZj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GdoFXKuSXUi+aUuaR3NOLOtoGn2TCClvbslbgoGxjnmnyN3dYV0embzbGbv4/VBR6XMEEleoyzNPhtQA9TgUQX+ftS21tVhd7MZ/AlOCAGYmYvSW20C8LMZ2ud5sMo3RfMyCP87tVPG1caXZ/75tRwrtKIW5CI6OeisRMF7cUBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwktbXgB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiYGJcZj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41B4C4CECD;
-	Wed,  6 Nov 2024 12:08:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwktbXgB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA703C4CECD;
+	Wed,  6 Nov 2024 12:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894918;
-	bh=UgJXE36GtBX7eCrhgQdQs8V3t5DV3EL4VP3Z58zzb68=;
+	s=korg; t=1730894921;
+	bh=HculaqOZCXPEqCQJpCR0vepg+opukch91pxKmaAZAXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xiYGJcZjxtHQfD8XPzu0MOahMX4hs7VSTsm5i8YwR7g4OdiQN52fVPI+N3LzVE9bC
-	 I84RlvXLlvyyd8d3rPoJRKLQ9Oijup4/RO6MucvgfKiN5KaAcKFxAERKIOc+VW35ub
-	 Wn2CJhuXXoo03tK1xgg9s5TL947Yz3TGFfjGS3bc=
+	b=MwktbXgBzWBVq7Inw94/RoP1Jn0rrb3j+dcS60sI0fjJkYpxl3A/TgROxSJuSYlNh
+	 LIbPP0b2qOT30AIvFNrVITJFZtyid30fTJGRRP4MNUlCqvpEpsZALHNuWXaVXqeQ/F
+	 1vMyuFqLsbKrf1KBuvA4cVJvIFxxAbuZJQ0iDGl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 042/350] ARM: versatile: fix OF node leak in CPUs prepare
-Date: Wed,  6 Nov 2024 12:59:30 +0100
-Message-ID: <20241106120321.925110932@linuxfoundation.org>
+Subject: [PATCH 4.19 043/350] reset: berlin: fix OF node leak in probe() error path
+Date: Wed,  6 Nov 2024 12:59:31 +0100
+Message-ID: <20241106120321.950791083@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -54,33 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit f2642d97f2105ed17b2ece0c597450f2ff95d704 ]
+[ Upstream commit 5f58a88cc91075be38cec69b7cb70aaa4ba69e8b ]
 
-Machine code is leaking OF node reference from of_find_matching_node()
-in realview_smp_prepare_cpus().
+Driver is leaking OF node reference on memory allocation failure.
+Acquire the OF node reference after memory allocation to fix this and
+keep it simple.
 
-Fixes: 5420b4b15617 ("ARM: realview: add an DT SMP boot method")
+Fixes: aed6f3cadc86 ("reset: berlin: convert to a platform driver")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://lore.kernel.org/20240826054934.10724-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20240825-reset-cleanup-scoped-v1-1-03f6d834f8c0@linaro.org
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-realview/platsmp-dt.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/reset/reset-berlin.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-realview/platsmp-dt.c b/arch/arm/mach-realview/platsmp-dt.c
-index c242423bf8db5..66d6b11eda7bd 100644
---- a/arch/arm/mach-realview/platsmp-dt.c
-+++ b/arch/arm/mach-realview/platsmp-dt.c
-@@ -70,6 +70,7 @@ static void __init realview_smp_prepare_cpus(unsigned int max_cpus)
- 		return;
- 	}
- 	map = syscon_node_to_regmap(np);
-+	of_node_put(np);
- 	if (IS_ERR(map)) {
- 		pr_err("PLATSMP: No syscon regmap\n");
- 		return;
+diff --git a/drivers/reset/reset-berlin.c b/drivers/reset/reset-berlin.c
+index 371197bbd0556..542d32719b8ae 100644
+--- a/drivers/reset/reset-berlin.c
++++ b/drivers/reset/reset-berlin.c
+@@ -68,13 +68,14 @@ static int berlin_reset_xlate(struct reset_controller_dev *rcdev,
+ 
+ static int berlin2_reset_probe(struct platform_device *pdev)
+ {
+-	struct device_node *parent_np = of_get_parent(pdev->dev.of_node);
++	struct device_node *parent_np;
+ 	struct berlin_reset_priv *priv;
+ 
+ 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+ 		return -ENOMEM;
+ 
++	parent_np = of_get_parent(pdev->dev.of_node);
+ 	priv->regmap = syscon_node_to_regmap(parent_np);
+ 	of_node_put(parent_np);
+ 	if (IS_ERR(priv->regmap))
 -- 
 2.43.0
 
