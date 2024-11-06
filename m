@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DE554765;
-	Wed,  6 Nov 2024 13:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0FC646;
+	Wed,  6 Nov 2024 13:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898997; cv=none; b=Mbo6gt+zCG6NCmdINYu4Hy99n1u+YX6nt0DXWg4nf6TvhodUZ2Kvq7PMNEJGlo24h6nDAV+qgFFvAZutiuatDGSJ5UCaziaA+DSkGcM6OIt3qRFksCytEsnRxOfxjAs0ubIar3qZTOwiYMIBStw7Xth45q3qkLUOe43oMN6vxW4=
+	t=1730899000; cv=none; b=d7UuDCt9qKuYryPNfhJI+cOeqfMnSEEbC5l0PfL30wQjC2BHidzsKIvCtPv8VVQs5ixgg8L2ceGipuRKEvNoUg5pmEvk41E682+wnmgRO1KePMqy0FRwWT9qlQ8oNUgEPCE1SgBvCqazLgJhn/hC+YvVGMA2+R00R88Z8eZn4RE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898997; c=relaxed/simple;
-	bh=v46+COC8VOpxxDt1xxoamZ6vD0QjFOeCXGhIavBYYRs=;
+	s=arc-20240116; t=1730899000; c=relaxed/simple;
+	bh=iu1oVAJ8txIhzyzfSWnu0mUVpElUaac54UByH4F52HA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lUXu0uuUV2jE2X+0ulJe/v+3yJa7aj/vyi+dvhtLa/of9uE5AGLjbP5EC88CuhZrWjsReNWNnCHv3XOTX63Z3VwNxNp+1fJzaKDb57VKCcthGh+HE6dsxLFM/EVDacetySdDoVIA8MUzijaoln0XyStcT7BABk4PcRZp3JKjKJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FleQxA1u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SK5EtYsrqYCrXZHnjwTM53nk5ovJNqaOr+oxPGPWA/dCOFx8gdojui6z1xt67doIyD6lRXIt6yl1jKV/qC1MSGEDU/MyGTlaD0+TcJmQv6xuo6bnAg45CUb45opnhFanul/2PYSwVefcK1lf7bJZOnW8yT9BijoBiZjLJZVgIzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ehg9ZCqr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FleQxA1u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09A5C4CECD;
-	Wed,  6 Nov 2024 13:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ehg9ZCqr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE55C4CECD;
+	Wed,  6 Nov 2024 13:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898997;
-	bh=v46+COC8VOpxxDt1xxoamZ6vD0QjFOeCXGhIavBYYRs=;
+	s=korg; t=1730899000;
+	bh=iu1oVAJ8txIhzyzfSWnu0mUVpElUaac54UByH4F52HA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FleQxA1uladDceBR9CYPOjoQ3QIzGFmoj5lwHohrTEqQeZIblpQ69YWJquStgDkkU
-	 GsixVI/2+/qJTGsZZfYTjIqDDO3KJNaEXFAD5LWv2JeG5PxqADFogHdJMc/AQAWQjK
-	 3NVEsQJGtdB/WCZtk8o3GL5lfIb6FVJaR8ZUnIjY=
+	b=Ehg9ZCqrNZggaVnCTPDpYBCyUm5vFO0uZ7WWtiClZwMAzH13sIfB1UaEZWBp/U2oe
+	 PZCHldgtALO92/PBokePN+p4h61Y99to+CquL3BbVuoDmqIGYd8Dz4X/GzCDInZlGA
+	 3ftv0A8qdZMdPFiPM/c9lamZR7A1i7YWACbDJ/Y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 389/462] RDMA/bnxt_re: Return more meaningful error
-Date: Wed,  6 Nov 2024 13:04:42 +0100
-Message-ID: <20241106120341.131950591@linuxfoundation.org>
+Subject: [PATCH 5.4 390/462] drm/msm/dsi: fix 32-bit signed integer extension in pclk_rate calculation
+Date: Wed,  6 Nov 2024 13:04:43 +0100
+Message-ID: <20241106120341.157377847@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,39 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit 98647df0178df215b8239c5c365537283b2852a6 ]
+[ Upstream commit 358b762400bd94db2a14a72dfcef74c7da6bd845 ]
 
-When the HWRM command fails, driver currently returns -EFAULT(Bad
-address). This does not look correct.
+When (mode->clock * 1000) is larger than (1<<31), int to unsigned long
+conversion will sign extend the int to 64 bits and the pclk_rate value
+will be incorrect.
 
-Modified to return -EIO(I/O error).
+Fix this by making the result of the multiplication unsigned.
 
-Fixes: cc1ec769b87c ("RDMA/bnxt_re: Fixing the Control path command and response handling")
-Fixes: 65288a22ddd8 ("RDMA/bnxt_re: use shadow qd while posting non blocking rcfw command")
-Link: https://patch.msgid.link/r/1728373302-19530-5-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Note that above (1<<32) would still be broken and require more changes, but
+its unlikely anyone will need that anytime soon.
+
+Fixes: c4d8cfe516dc ("drm/msm/dsi: add implementation for helper functions")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/618434/
+Link: https://lore.kernel.org/r/20241007050157.26855-2-jonathan@marek.ca
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 2 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index 5cdfa84faf85e..e74fb7c4d0335 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -244,7 +244,7 @@ int bnxt_qplib_rcfw_send_message(struct bnxt_qplib_rcfw *rcfw,
- 		/* failed with status */
- 		dev_err(&rcfw->pdev->dev, "cmdq[%#x]=%#x status %#x\n",
- 			cookie, opcode, evnt->status);
--		rc = -EFAULT;
-+		rc = -EIO;
- 	}
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 419cad31830ea..41b68047bf61b 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -663,7 +663,7 @@ static u32 dsi_get_pclk_rate(struct msm_dsi_host *msm_host, bool is_dual_dsi)
+ 	struct drm_display_mode *mode = msm_host->mode;
+ 	u32 pclk_rate;
  
- 	return rc;
+-	pclk_rate = mode->clock * 1000;
++	pclk_rate = mode->clock * 1000u;
+ 
+ 	/*
+ 	 * For dual DSI mode, the current DRM mode has the complete width of the
 -- 
 2.43.0
 
