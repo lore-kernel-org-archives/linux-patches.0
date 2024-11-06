@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EF01DF726;
-	Wed,  6 Nov 2024 12:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136941DF726;
+	Wed,  6 Nov 2024 12:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895733; cv=none; b=BjljzLviVCaiqHJbYGav+z+kF/r4NbdlYmGcOyE8YqLvFLVFUrcGUUlT/25Qcq4hEM4PcycoPD43mE0ryOSfvnFepEbgdXP/cvFxmrzlSKb370XR74qAnRkY420DKskdY9P0yQ6QsyQaAvLyrPa+0pCX/UjlPV4+f34HhRbrKyM=
+	t=1730895736; cv=none; b=AqP8DYTSQ8spTvRMJicIoLiwuTFE072nlvXk7SG83ecXVYpE2UGLKKZy5xxJM5dccGRopzn4wyikr42e6DIw4IhyDcSdWvUM4VuagDkjnw7m4GshHSmWyOQItxNCUjQ6Mq2hU/WdKQu2HERGz0PPLIwXzd4ATbF6gGxY9hXtDbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895733; c=relaxed/simple;
-	bh=gkEnmai8byE98Vt93iUXhh7VmUsVoOSPsUcM2vhohSE=;
+	s=arc-20240116; t=1730895736; c=relaxed/simple;
+	bh=bnueWQi6aRinWlTh4inG235QBtP/TT9LbFZ7Jr6w0+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SzvFjWaTu8y1+25+oIQ6YYHe/jML03rfDafbQIcJlkVfN/dmyq5t9w4EZPnYV6dZXX0c1VHTiB7FE1il+uhWATObC01WP+kNiAU2gh6G4bk8Y8YSpW/1yxT42DLFiz21LRP7mfxKEZJ2vWUjbsk4VpTK5qQcvLir6Fc3w7GPbQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MfOM0JjT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c9BKh2zaFHTQPIzoUv6GZbuwHB0Bn4PSQUkIprCjr4xCtEk1AEaXv0pyYYhfnDUK0HdKteZa1PqsGvlWhN+oNt5xcVgCq91QfDTt77fT1yowh9w8TjjJf5gvezwYOUMvdbOfPwMEq7AueWQ9KbCoX4ROq7c9jSbkdOxtbribk7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XFepUazx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfOM0JjT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E89C4CECD;
-	Wed,  6 Nov 2024 12:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XFepUazx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F875C4CECD;
+	Wed,  6 Nov 2024 12:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895733;
-	bh=gkEnmai8byE98Vt93iUXhh7VmUsVoOSPsUcM2vhohSE=;
+	s=korg; t=1730895736;
+	bh=bnueWQi6aRinWlTh4inG235QBtP/TT9LbFZ7Jr6w0+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MfOM0JjTk4tTDvTHokhN+t9MT6a1o+FOrS6mc54G4kEMjTMCPYwP0wxFLjUKOQlBK
-	 Hbf9IeUYw91CBpiIhEdlVFdfRsRRBVpi/Y7mrQqlbPi+Od/EY3MvQhBoUKRbru4Vkl
-	 vS1h7VMnefV1HRb3NuZDL8qc5cJNI9D0PMDLC1hg=
+	b=XFepUazxeeVE5bXylZ9+jZZw9RB1bLGJLYAuWDY9MfIPfI0mfBO3d5ZOqIxTLSLoJ
+	 WCXko9b3vSaVZtIa2lZIUjNitDaWN6TioCg7BBNybxEHNRVz55Kjsuv6BT1cuTpNL+
+	 0NvZRG8QJprTbXwu3e7KJmG+vWAriCeWHPuhiwus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 4.19 316/350] drm/amd: Guard against bad data for ATIF ACPI method
-Date: Wed,  6 Nov 2024 13:04:04 +0100
-Message-ID: <20241106120328.566232813@linuxfoundation.org>
+	Shubham Panwar <shubiisp8@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 4.19 317/350] ACPI: button: Add DMI quirk for Samsung Galaxy Book2 to fix initial lid detection issue
+Date: Wed,  6 Nov 2024 13:04:05 +0100
+Message-ID: <20241106120328.587696856@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -50,75 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Shubham Panwar <shubiisp8@gmail.com>
 
-commit bf58f03931fdcf7b3c45cb76ac13244477a60f44 upstream.
+commit 8fa73ee44daefc884c53a25158c25a4107eb5a94 upstream.
 
-If a BIOS provides bad data in response to an ATIF method call
-this causes a NULL pointer dereference in the caller.
+Add a DMI quirk for Samsung Galaxy Book2 to fix an initial lid state
+detection issue.
 
-```
-? show_regs (arch/x86/kernel/dumpstack.c:478 (discriminator 1))
-? __die (arch/x86/kernel/dumpstack.c:423 arch/x86/kernel/dumpstack.c:434)
-? page_fault_oops (arch/x86/mm/fault.c:544 (discriminator 2) arch/x86/mm/fault.c:705 (discriminator 2))
-? do_user_addr_fault (arch/x86/mm/fault.c:440 (discriminator 1) arch/x86/mm/fault.c:1232 (discriminator 1))
-? acpi_ut_update_object_reference (drivers/acpi/acpica/utdelete.c:642)
-? exc_page_fault (arch/x86/mm/fault.c:1542)
-? asm_exc_page_fault (./arch/x86/include/asm/idtentry.h:623)
-? amdgpu_atif_query_backlight_caps.constprop.0 (drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c:387 (discriminator 2)) amdgpu
-? amdgpu_atif_query_backlight_caps.constprop.0 (drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c:386 (discriminator 1)) amdgpu
-```
+The _LID device incorrectly returns the lid status as "closed" during
+boot, causing the system to enter a suspend loop right after booting.
 
-It has been encountered on at least one system, so guard for it.
+The quirk ensures that the correct lid state is reported initially,
+preventing the system from immediately suspending after startup.  It
+only addresses the initial lid state detection and ensures proper
+system behavior upon boot.
 
-Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c9b7c809b89f24e9372a4e7f02d64c950b07fdee)
-Cc: stable@vger.kernel.org
+Signed-off-by: Shubham Panwar <shubiisp8@gmail.com>
+Link: https://patch.msgid.link/20241020095045.6036-2-shubiisp8@gmail.com
+[ rjw: Changelog edits ]
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/acpi/button.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-@@ -90,6 +90,7 @@ static union acpi_object *amdgpu_atif_ca
- 					   struct acpi_buffer *params)
- {
- 	acpi_status status;
-+	union acpi_object *obj;
- 	union acpi_object atif_arg_elements[2];
- 	struct acpi_object_list atif_arg;
- 	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
-@@ -112,16 +113,24 @@ static union acpi_object *amdgpu_atif_ca
+--- a/drivers/acpi/button.c
++++ b/drivers/acpi/button.c
+@@ -124,6 +124,17 @@ static const struct dmi_system_id lid_bl
+ 		},
+ 		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
+ 	},
++	{
++		/*
++		 * Samsung galaxybook2 ,initial _LID device notification returns
++		 * lid closed.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "SAMSUNG ELECTRONICS CO., LTD."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "750XED"),
++		},
++		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
++	},
+ 	{}
+ };
  
- 	status = acpi_evaluate_object(atif->handle, NULL, &atif_arg,
- 				      &buffer);
-+	obj = (union acpi_object *)buffer.pointer;
- 
--	/* Fail only if calling the method fails and ATIF is supported */
-+	/* Fail if calling the method fails and ATIF is supported */
- 	if (ACPI_FAILURE(status) && status != AE_NOT_FOUND) {
- 		DRM_DEBUG_DRIVER("failed to evaluate ATIF got %s\n",
- 				 acpi_format_exception(status));
--		kfree(buffer.pointer);
-+		kfree(obj);
- 		return NULL;
- 	}
- 
--	return buffer.pointer;
-+	if (obj->type != ACPI_TYPE_BUFFER) {
-+		DRM_DEBUG_DRIVER("bad object returned from ATIF: %d\n",
-+				 obj->type);
-+		kfree(obj);
-+		return NULL;
-+	}
-+
-+	return obj;
- }
- 
- /**
 
 
