@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6C01DF260;
-	Wed,  6 Nov 2024 12:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B28B1DEFF4;
+	Wed,  6 Nov 2024 12:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894942; cv=none; b=aMGRmp4awoKBsg3CwPc0/qLvIqspjCiOYzJv5ZUhd3BchlLnNZXmpuqWUG53IHoGjUjZPUZc0giCAXNNi+3Fsi2Rj3s+KmZuzYPXvUkqYlwOewgRYCI3Hq3MlXLmYkaqLWY11EnbLcHLKT1W8fc4ZqYoMDsPjZqnFHdewHnEaIM=
+	t=1730894945; cv=none; b=cQJdQII3bWQgztfuiP+DRDIDstgMRtEGbs+y4MTkh5+tJ2zKHPXTNqLCKcXWvdcyfjBD92e1EKsyzX9NUubenmZpyrs+A4wTWIQ0wRMR7eg6ctfL/IekP1a1jEd6V3Igdj+8iVA2a8AdTSgwTkPCjvBnkbotqWbPs+VGwT1C4dM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894942; c=relaxed/simple;
-	bh=9RG1DfPkzY7ZMGdjg/W+dkBiVg0x1NpXlwKxOuhV68A=;
+	s=arc-20240116; t=1730894945; c=relaxed/simple;
+	bh=/71qhSYi7rYutApy6drycimdqiKyn69kZN7uowmcx4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ReaCs5Ir8DREqXAmTlhIRakT2AdV1wx5fVJ6GKzhsc9rHkjKAp6H1j+RcVVEEi/CBuizePn48ELvX+sgelOsv5VWO4ZjZ5H7tj07PvJumjclopiC+QuyX+QO0LVVfG+1deRNXfdB3PA32IgLrPj8ReTEBKOYrPlTpbkOj5C/S+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HvlhDkp8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hh5FfG2HychZTszI5Dlu0+lEbmv+Z8nRbf0/iDJvM0R82AT0VCHiED/TFnPX3LF7WDqiRHpKmJNUuKHnZqpdwrBxniP0Ds5Yr+HEHhbccljxDX/Wq8kCedS6hcYZSPPg6r+jBkfjrseE8CYJD+upVm6396xrTVY1ptpjb17eXgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8G/qUnj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HvlhDkp8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E6F3C4CECD;
-	Wed,  6 Nov 2024 12:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8G/qUnj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D126C4CECD;
+	Wed,  6 Nov 2024 12:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894941;
-	bh=9RG1DfPkzY7ZMGdjg/W+dkBiVg0x1NpXlwKxOuhV68A=;
+	s=korg; t=1730894944;
+	bh=/71qhSYi7rYutApy6drycimdqiKyn69kZN7uowmcx4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HvlhDkp8q/Qhq+41XNeu7npQgJB/mrBye0uqWyZMLYwq5ZHoMJhR1vuzOcOWZokdK
-	 YF294ZQ1AFqhLWVcLuGpsL3lIczsSLymf8SruYCjQnF7Qs2qHyHBYLUOTZOO7bYumk
-	 bdPiPvo8XTs+pMBbjyPUzaocun1rHM9HEdI+XZ+0=
+	b=e8G/qUnjktNAFCpcMWHq9+ojDW32Wde4SipKie6LalRI2EDKv+LX09qybKgHvyR2k
+	 2df4RXp+kOKwj1oEcjiRZoF6J8yvDzlz9wRYaZr79VzXm0RcFeldHtHNkCsNvbVNM4
+	 KAbzJLpu+8XuPWgIsFJ2QGhgt2nmMtFUWLqQWix8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Saeed Mirzamohammadi <saeed.mirzamohammadi@oracle.com>
-Subject: [PATCH 4.19 014/350] selftests/kcmp: remove call to ksft_set_plan()
-Date: Wed,  6 Nov 2024 12:59:02 +0100
-Message-ID: <20241106120321.222151058@linuxfoundation.org>
+	Hongbo Li <lihongbo22@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 015/350] ASoC: allow module autoloading for table db1200_pids
+Date: Wed,  6 Nov 2024 12:59:03 +0100
+Message-ID: <20241106120321.249146740@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,29 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Hongbo Li <lihongbo22@huawei.com>
 
-The function definition for ksft_set_plan() is not present in linux-4.19.y.
-kcmp_test selftest fails to compile because of this.
+[ Upstream commit 0e9fdab1e8df490354562187cdbb8dec643eae2c ]
 
-Fixes: 32b0469d13eb ("selftests/kcmp: Make the test output consistent and clear")
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Reviewed-by: Saeed Mirzamohammadi <saeed.mirzamohammadi@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add MODULE_DEVICE_TABLE(), so modules could be properly
+autoloaded based on the alias from platform_device_id table.
+
+Signed-off-by: Hongbo Li <lihongbo22@huawei.com>
+Link: https://patch.msgid.link/20240821061955.2273782-2-lihongbo22@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kcmp/kcmp_test.c |    1 -
- 1 file changed, 1 deletion(-)
+ sound/soc/au1x/db1200.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/testing/selftests/kcmp/kcmp_test.c
-+++ b/tools/testing/selftests/kcmp/kcmp_test.c
-@@ -89,7 +89,6 @@ int main(int argc, char **argv)
- 		int ret;
+diff --git a/sound/soc/au1x/db1200.c b/sound/soc/au1x/db1200.c
+index 301e1fc9a3773..24d16e6bf7501 100644
+--- a/sound/soc/au1x/db1200.c
++++ b/sound/soc/au1x/db1200.c
+@@ -43,6 +43,7 @@ static const struct platform_device_id db1200_pids[] = {
+ 	},
+ 	{},
+ };
++MODULE_DEVICE_TABLE(platform, db1200_pids);
  
- 		ksft_print_header();
--		ksft_set_plan(3);
+ /*-------------------------  AC97 PART  ---------------------------*/
  
- 		fd2 = open(kpath, O_RDWR);
- 		if (fd2 < 0) {
+-- 
+2.43.0
+
 
 
