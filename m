@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816D71E0DBD;
-	Wed,  6 Nov 2024 13:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335FB1E00AF;
+	Wed,  6 Nov 2024 13:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899207; cv=none; b=VvPrKA9QBuwJ9/kSj0idK2gtkS3cd4wLR9Psz1w1Dsb+ynTtzjHEiGUP19ZTHDtl5mmPLcG+eafdweMiCUJqRJyLLaqpCsBHb3IMWKsdJvya6AkHDcABhHypgFRUCHMrHoVMKeo7BNZ0Mq0E1nNBZ8cjmDvvvsRm7l4ipfnR7+M=
+	t=1730899210; cv=none; b=pwPRspe/yuKba+6OWkbWIdGBgELTCNBi8NAFLihyeiaH/ceTFVTl7jJEmyj/e2wb4j5LId9hqNlD2/kzOrAyvN20AdTPnQO46x0kmUlmYaIT0EJqEmyr9Nu6gJH4sX1/iyKGQxxOGpr7keSSDUdCgkJv7TYM1Fl00wuOguFglPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899207; c=relaxed/simple;
-	bh=4bl8luB91je7woID+I1w6yKFKoVHbslWSaXSFyh+qfA=;
+	s=arc-20240116; t=1730899210; c=relaxed/simple;
+	bh=V3om6d2SJwIv0DgUzsV1wWdM2ozpDoxIF1lTkk3gOcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBwFMNDeAzgj9McTIlin7Eo/gYSsaug7gKfmac0IXpcAtfbm0hhPu59Ha0oj3fVz0qlL1fNm21Qz9aFk6emKHrsQycLSaKHc+7tJrNMVj6rOtkFfjIMb5dLi6h3cYQepW76PV0DzKRKXUqlcBKkbOSusVRu4QBOWQFq5eoHjZKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdcpekQS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=popfkZxKtLInjPlxYfNQDbQiRNMChI1eK33W+v/BIBATVkF0jRID9ltUWDEL7a7//isXB1ggZK8B2cxd0nCGBIoRTuu9AkA0PZoWSBMyByXmwAK4mGtdid1TABOzMkw0AHaKpjRE9bUYSSiMX2eS14lf4znA8cy0tMwzJV63qII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlZPo0n0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdcpekQS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2421C4CED4;
-	Wed,  6 Nov 2024 13:20:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlZPo0n0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F31C4CECD;
+	Wed,  6 Nov 2024 13:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899207;
-	bh=4bl8luB91je7woID+I1w6yKFKoVHbslWSaXSFyh+qfA=;
+	s=korg; t=1730899210;
+	bh=V3om6d2SJwIv0DgUzsV1wWdM2ozpDoxIF1lTkk3gOcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZdcpekQSke44+Evc743CcaRd9X0is/w48Qu73+vVJ6RhZqeLZcGH/Aw8xOWu+DZiX
-	 +hcnLI9RLGvNmdrJryksJOYru+dsoUCRnYk3DEvrr81uCaB0FpFI4u0AEgQfVasHe0
-	 D8S7W31ugynf1KurmMvWuLqAA+GVEP3D86DSN6Kc=
+	b=AlZPo0n0IYHoeLaFn712ptGN8EDU2gS14rTx40fb8DUhVZk/J6HGqzwfuNSq4kO+w
+	 /I7n3UtiUqO0SAUzpQlRRScBmHrPO78jc+DBtPQrEB0TgXUWFuyyJFrt3x8s60+cxB
+	 mzG5GogsCLqFgpurTJ4eNrehQvTg2A+TNXu2ZnGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Marzinski <bmarzins@redhat.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Daniel Palmer <daniel@0x0f.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 34/73] scsi: scsi_transport_fc: Allow setting rport state to current state
-Date: Wed,  6 Nov 2024 13:05:38 +0100
-Message-ID: <20241106120300.984611095@linuxfoundation.org>
+Subject: [PATCH 5.15 35/73] net: amd: mvme147: Fix probe banner message
+Date: Wed,  6 Nov 2024 13:05:39 +0100
+Message-ID: <20241106120301.014090613@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120259.955073160@linuxfoundation.org>
 References: <20241106120259.955073160@linuxfoundation.org>
@@ -52,46 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Marzinski <bmarzins@redhat.com>
+From: Daniel Palmer <daniel@0x0f.com>
 
-[ Upstream commit d539a871ae47a1f27a609a62e06093fa69d7ce99 ]
+[ Upstream commit 82c5b53140faf89c31ea2b3a0985a2f291694169 ]
 
-The only input fc_rport_set_marginal_state() currently accepts is
-"Marginal" when port_state is "Online", and "Online" when the port_state
-is "Marginal". It should also allow setting port_state to its current
-state, either "Marginal or "Online".
+Currently this driver prints this line with what looks like
+a rogue format specifier when the device is probed:
+[    2.840000] eth%d: MVME147 at 0xfffe1800, irq 12, Hardware Address xx:xx:xx:xx:xx:xx
 
-Signed-off-by: Benjamin Marzinski <bmarzins@redhat.com>
-Link: https://lore.kernel.org/r/20240917230643.966768-1-bmarzins@redhat.com
-Reviewed-by: Ewan D. Milne <emilne@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Change the printk() for netdev_info() and move it after the
+registration has completed so it prints out the name of the
+interface properly.
+
+Signed-off-by: Daniel Palmer <daniel@0x0f.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_transport_fc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/amd/mvme147.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/scsi_transport_fc.c b/drivers/scsi/scsi_transport_fc.c
-index a2524106206db..fbe2036ca6196 100644
---- a/drivers/scsi/scsi_transport_fc.c
-+++ b/drivers/scsi/scsi_transport_fc.c
-@@ -1250,7 +1250,7 @@ static ssize_t fc_rport_set_marginal_state(struct device *dev,
- 		 */
- 		if (rport->port_state == FC_PORTSTATE_ONLINE)
- 			rport->port_state = port_state;
--		else
-+		else if (port_state != rport->port_state)
- 			return -EINVAL;
- 	} else if (port_state == FC_PORTSTATE_ONLINE) {
- 		/*
-@@ -1260,7 +1260,7 @@ static ssize_t fc_rport_set_marginal_state(struct device *dev,
- 		 */
- 		if (rport->port_state == FC_PORTSTATE_MARGINAL)
- 			rport->port_state = port_state;
--		else
-+		else if (port_state != rport->port_state)
- 			return -EINVAL;
- 	} else
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/amd/mvme147.c b/drivers/net/ethernet/amd/mvme147.c
+index da97fccea9ea6..769355824b7e1 100644
+--- a/drivers/net/ethernet/amd/mvme147.c
++++ b/drivers/net/ethernet/amd/mvme147.c
+@@ -103,10 +103,6 @@ static struct net_device * __init mvme147lance_probe(void)
+ 	address = address >> 8;
+ 	dev->dev_addr[3] = address&0xff;
+ 
+-	printk("%s: MVME147 at 0x%08lx, irq %d, Hardware Address %pM\n",
+-	       dev->name, dev->base_addr, MVME147_LANCE_IRQ,
+-	       dev->dev_addr);
+-
+ 	lp = netdev_priv(dev);
+ 	lp->ram = __get_dma_pages(GFP_ATOMIC, 3);	/* 32K */
+ 	if (!lp->ram) {
+@@ -136,6 +132,9 @@ static struct net_device * __init mvme147lance_probe(void)
+ 		return ERR_PTR(err);
+ 	}
+ 
++	netdev_info(dev, "MVME147 at 0x%08lx, irq %d, Hardware Address %pM\n",
++		    dev->base_addr, MVME147_LANCE_IRQ, dev->dev_addr);
++
+ 	return dev;
+ }
+ 
 -- 
 2.43.0
 
