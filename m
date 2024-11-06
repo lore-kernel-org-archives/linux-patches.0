@@ -1,49 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D021E04AD;
-	Wed,  6 Nov 2024 13:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD6F1DFE38;
+	Wed,  6 Nov 2024 13:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898051; cv=none; b=qqQGhJ7JW+T4wxs0Tp82ZIvMQIRhxcLEMEjjxVRLig/0ZwbJR1Nd5cUWrD/6VjFCvzBJp6tJun/5PG1ulbN5P2YBtzniCTRrkETbPzaCvbr/BPsLBTTWykjKfQGXkOiDqjijktFYp9oCTE+wSaF+j288M6QkG9ghDIMLgKbRfYo=
+	t=1730898053; cv=none; b=Y348r2FkBDAPxDbwWeNKzsI8O0BhOiOShIAymfyCuw8YsAN47i1MMD9/IVWkz1r56T5Ufo7ycdJQ06N6CgGkPCY0lSlwyX3/iUfcPxslR0CzYbaWZfGyjYU76bEs4Gsp7eU8a6DmY0ZETPmgVlglCUWmJZrZbONnYpdxZ0OXyZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898051; c=relaxed/simple;
-	bh=UiP73xnwuFiVfZ4uZH1B6Zd325A62cG9swWq3SkinDI=;
+	s=arc-20240116; t=1730898053; c=relaxed/simple;
+	bh=JfgB4Ps+OKVRW3IoZhToaym4JY+ZbnXjMBoCsx4RHvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h8IBnp+XNcncmTqkkWJaTDpazpFJRhU7WQf5s9G3dWAygwkdm002APqxmCJg62bxxAZ0QtujOgogyAEOjnZ2Zr0yFilsTpDEYoUf32X4yMlqjOz1Uw0yEGsauClcJyTnCZuOjuAal4mA7UyRgdbTsFxrbyb2NJUwE3WgKeriHYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgQnsSTP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DE+Mt/26pZCJMWqVNpbXm7bbbZCuJyexhTc2MshMPKo1zXX5/sblMQluUUJ2Ofg5moNjeuOez4w/ageU53KS1tCZzn8oF6Hr8QM2j4dsySwqr3GO+FrnK5r44pmeDfZtmgZrVNP8nWolNrVlveRAGsor0N0Q0XgSC2MYCtdtkTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfWqjO4e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgQnsSTP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E853FC4CECD;
-	Wed,  6 Nov 2024 13:00:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfWqjO4e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CABC4CECD;
+	Wed,  6 Nov 2024 13:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898050;
-	bh=UiP73xnwuFiVfZ4uZH1B6Zd325A62cG9swWq3SkinDI=;
+	s=korg; t=1730898053;
+	bh=JfgB4Ps+OKVRW3IoZhToaym4JY+ZbnXjMBoCsx4RHvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hgQnsSTPYh4W6ED+YFDISX5tHYw4BWYfiE6NEDPoAWdI8oYIs2NMsmMymJh6tKRWj
-	 M4SqrK54Ywdu9rLCub2vf2FWEhALsyODyZ6wSJDC1X7aRBqi28k/mSJNSBC95FC8KW
-	 mB0DMsL893qM3uxYBT2iurdX3csM/JDHPxhWFlqA=
+	b=xfWqjO4eHbNK6QosSJGXLTpEAdUU2iEpwrxnTo/uaxKrIJhZTDw9f0EBKjwVG4ruz
+	 +HSdj9hM63NPFBbKXCPhvhAzW3Lu7l8myH51F9fI0mreeCZWWoCHq7EkD6IDqYpSl0
+	 vFfxoUfxQYbMZOK7X8pBjlx4cnnI1xKgGdWZSmcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong@bytedance.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	David Ahern <dsa@cumulusnetworks.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@arm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 106/462] perf sched timehist: Fixed timestamp error when unable to confirm event sched_in time
-Date: Wed,  6 Nov 2024 12:59:59 +0100
-Message-ID: <20241106120334.126141820@linuxfoundation.org>
+Subject: [PATCH 5.4 071/462] drm/amdgpu: properly handle vbios fake edid sizing
+Date: Wed,  6 Nov 2024 12:59:24 +0100
+Message-ID: <20241106120333.263956456@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -56,102 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yang Jihong <yangjihong@bytedance.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 39c243411bdb8fb35777adf49ee32549633c4e12 ]
+[ Upstream commit 8155566a26b8d6c1dd914f06a0c652e4e2f2adf1 ]
 
-If sched_in event for current task is not recorded, sched_in timestamp
-will be set to end_time of time window interest, causing an error in
-timestamp show. In this case, we choose to ignore this event.
+The comment in the vbios structure says:
+// = 128 means EDID length is 128 bytes, otherwise the EDID length = ucFakeEDIDLength*128
 
-Test scenario:
+This fake edid struct has not been used in a long time, so I'm
+not sure if there were actually any boards out there with a non-128 byte
+EDID, but align the code with the comment.
 
-  perf[1229608] does not record the first sched_in event, run time and sch delay are both 0
-
-  # perf sched timehist
-  Samples of sched_switch event do not have callchains.
-             time    cpu  task name                       wait time  sch delay   run time
-                          [tid/pid]                          (msec)     (msec)     (msec)
-  --------------- ------  ------------------------------  ---------  ---------  ---------
-   2090450.763231 [0000]  perf[1229608]                       0.000      0.000      0.000
-   2090450.763235 [0000]  migration/0[15]                     0.000      0.001      0.003
-   2090450.763263 [0001]  perf[1229608]                       0.000      0.000      0.000
-   2090450.763268 [0001]  migration/1[21]                     0.000      0.001      0.004
-   2090450.763302 [0002]  perf[1229608]                       0.000      0.000      0.000
-   2090450.763309 [0002]  migration/2[27]                     0.000      0.001      0.007
-   2090450.763338 [0003]  perf[1229608]                       0.000      0.000      0.000
-   2090450.763343 [0003]  migration/3[33]                     0.000      0.001      0.004
-
-Before:
-
-  arbitrarily specify a time window of interest, timestamp will be set to an incorrect value
-
-  # perf sched timehist --time 100,200
-  Samples of sched_switch event do not have callchains.
-             time    cpu  task name                       wait time  sch delay   run time
-                          [tid/pid]                          (msec)     (msec)     (msec)
-  --------------- ------  ------------------------------  ---------  ---------  ---------
-       200.000000 [0000]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0001]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0002]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0003]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0004]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0005]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0006]  perf[1229608]                       0.000      0.000      0.000
-       200.000000 [0007]  perf[1229608]                       0.000      0.000      0.000
-
- After:
-
-  # perf sched timehist --time 100,200
-  Samples of sched_switch event do not have callchains.
-             time    cpu  task name                       wait time  sch delay   run time
-                          [tid/pid]                          (msec)     (msec)     (msec)
-  --------------- ------  ------------------------------  ---------  ---------  ---------
-
-Fixes: 853b74071110bed3 ("perf sched timehist: Add option to specify time window of interest")
-Signed-off-by: Yang Jihong <yangjihong@bytedance.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: David Ahern <dsa@cumulusnetworks.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@arm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240819024720.2405244-1-yangjihong@bytedance.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
+Reported-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lists.freedesktop.org/archives/amd-gfx/2024-June/109964.html
+Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/amdgpu/atombios_encoders.c    | 29 ++++++++++---------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 9e2c7779f5b0a..09c14a0f93ec2 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -2561,9 +2561,12 @@ static int timehist_sched_change_event(struct perf_tool *tool,
- 	 * - previous sched event is out of window - we are done
- 	 * - sample time is beyond window user cares about - reset it
- 	 *   to close out stats for time window interest
-+	 * - If tprev is 0, that is, sched_in event for current task is
-+	 *   not recorded, cannot determine whether sched_in event is
-+	 *   within time window interest - ignore it
- 	 */
- 	if (ptime->end) {
--		if (tprev > ptime->end)
-+		if (!tprev || tprev > ptime->end)
- 			goto out;
- 
- 		if (t > ptime->end)
+diff --git a/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c b/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
+index 754d1e1387155..74951666733a7 100644
+--- a/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
++++ b/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
+@@ -2098,26 +2098,29 @@ amdgpu_atombios_encoder_get_lcd_info(struct amdgpu_encoder *encoder)
+ 					fake_edid_record = (ATOM_FAKE_EDID_PATCH_RECORD *)record;
+ 					if (fake_edid_record->ucFakeEDIDLength) {
+ 						struct edid *edid;
+-						int edid_size =
+-							max((int)EDID_LENGTH, (int)fake_edid_record->ucFakeEDIDLength);
+-						edid = kmalloc(edid_size, GFP_KERNEL);
++						int edid_size;
++
++						if (fake_edid_record->ucFakeEDIDLength == 128)
++							edid_size = fake_edid_record->ucFakeEDIDLength;
++						else
++							edid_size = fake_edid_record->ucFakeEDIDLength * 128;
++						edid = kmemdup(&fake_edid_record->ucFakeEDIDString[0],
++							       edid_size, GFP_KERNEL);
+ 						if (edid) {
+-							memcpy((u8 *)edid, (u8 *)&fake_edid_record->ucFakeEDIDString[0],
+-							       fake_edid_record->ucFakeEDIDLength);
+-
+ 							if (drm_edid_is_valid(edid)) {
+ 								adev->mode_info.bios_hardcoded_edid = edid;
+ 								adev->mode_info.bios_hardcoded_edid_size = edid_size;
+-							} else
++							} else {
+ 								kfree(edid);
++							}
+ 						}
++						record += struct_size(fake_edid_record,
++								      ucFakeEDIDString,
++								      edid_size);
++					} else {
++						/* empty fake edid record must be 3 bytes long */
++						record += sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
+ 					}
+-					record += fake_edid_record->ucFakeEDIDLength ?
+-						  struct_size(fake_edid_record,
+-							      ucFakeEDIDString,
+-							      fake_edid_record->ucFakeEDIDLength) :
+-						  /* empty fake edid record must be 3 bytes long */
+-						  sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
+ 					break;
+ 				case LCD_PANEL_RESOLUTION_RECORD_TYPE:
+ 					panel_res_record = (ATOM_PANEL_RESOLUTION_PATCH_RECORD *)record;
 -- 
 2.43.0
 
