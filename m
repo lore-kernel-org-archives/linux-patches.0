@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BE71DF726;
-	Wed,  6 Nov 2024 12:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BAC1DF726;
+	Wed,  6 Nov 2024 12:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895739; cv=none; b=TsDS19YRWc8VyD7SpNFRdm0aqkXqT5ASTuRO3Cxe45BOcH4zUHtq9XxN59HzbqwAC3FviTuRhqiZdRbD/4tUnoqnm6YQ8EbiAXkIASzhQ1gySPLyPO1M7/V1G+uAj9aAZP1cx/TJ/0lCGJICSf58myXn3LFKrtsG1R03gq38KMI=
+	t=1730895742; cv=none; b=tkR6kXjZsCj9tj7VAh3FC5cHwT0nI0fEGdrG6YlFcveWl92ogwDZcHuzoVvKWXufi2mOwpP4E7HyOOv9NwxEI6rlfNDD4bOuZq3rH5xR9Kp/mndVkq+hk+E1NSYBjQrKR6hJLqF8Hrw5K25V77RewD1PFr9REVumo2EO/bM91ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895739; c=relaxed/simple;
-	bh=8Tx9NcET2LIiMN8Qn9Wra/0f/VlGK67VmlVrFhf+VtY=;
+	s=arc-20240116; t=1730895742; c=relaxed/simple;
+	bh=0i+RItifkWfm7cGWqiXz3ykTNHafLwr7lxziLwJuFZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0BBNA8P2d6kyT7rQEX1YW2EBazS6zsxOtNcKy732v7LrfGbsVuxz7IJeJriu+W+kMLYqxrJ27dhRGR8bjRkAg0E1Wppa3M9LqOU8Jneo5qr1GRbw+ZSV1iL3nJRG5G2caHdH+q2eCLu/9uInLR9Vp3lGteq+7BupMLzPID1Lno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BRmiEw+W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qdZzT/z2gRkkChcAjdIKBjIE7JQTH0iGCYc7aHlPyse336WPTI+Bvwf1hAl4q+mpRnpNEDpKZdycRUnmZfWh76g4/XhMdIeJenhMMi+YZyfqFmgW+I8li+Llw7MACaCgMwfmfBJaN2haqH0deJQxMeewAb3sFiwI+X1+dveMeeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2sKITsTw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BRmiEw+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FF2C4CECD;
-	Wed,  6 Nov 2024 12:22:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2sKITsTw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767B9C4CED8;
+	Wed,  6 Nov 2024 12:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895738;
-	bh=8Tx9NcET2LIiMN8Qn9Wra/0f/VlGK67VmlVrFhf+VtY=;
+	s=korg; t=1730895742;
+	bh=0i+RItifkWfm7cGWqiXz3ykTNHafLwr7lxziLwJuFZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BRmiEw+WwnrdyK4JM/hW4d49/plpwfQKPMuHKH7fz3Pui1wu5QVt0tw9FmAG01LGf
-	 Opsnf2YZJCj9uYngW5pJJC/K7p0+5MvfPAcIpbMfxHRoKM5DDcvuaVmtzXiMig2NhT
-	 6J+MogeWRdn0/fbHPkTjhbhN/aWNfaLlvbj39CiY=
+	b=2sKITsTwimKsSkYNpSOrdDWC/JbESlQJohw+u6ZkLGme0nWYsPeHo/tR5fLCA3UYU
+	 xe8pJnCCCnwutvnzaBJ+z/GiwxGyzRbNIl5M1BPSyjfZrvdul6/WgGNwePAJE6dROd
+	 imGGcGbsYEme6XRtRaBY12i4MM1xaYIGepPWJJuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+985ada84bf055a575c07@syzkaller.appspotmail.com,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 4.19 318/350] nilfs2: fix kernel bug due to missing clearing of buffer delay flag
-Date: Wed,  6 Nov 2024 13:04:06 +0100
-Message-ID: <20241106120328.610101242@linuxfoundation.org>
+	Stephen Hemminger <stephen@networkplumber.org>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 4.19 319/350] hv_netvsc: Fix VF namespace also in synthetic NIC NETDEV_REGISTER event
+Date: Wed,  6 Nov 2024 13:04:07 +0100
+Message-ID: <20241106120328.632846383@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,55 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Haiyang Zhang <haiyangz@microsoft.com>
 
-commit 6ed469df0bfbef3e4b44fca954a781919db9f7ab upstream.
+commit 4c262801ea60c518b5bebc22a09f5b78b3147da2 upstream.
 
-Syzbot reported that after nilfs2 reads a corrupted file system image
-and degrades to read-only, the BUG_ON check for the buffer delay flag
-in submit_bh_wbc() may fail, causing a kernel bug.
+The existing code moves VF to the same namespace as the synthetic NIC
+during netvsc_register_vf(). But, if the synthetic device is moved to a
+new namespace after the VF registration, the VF won't be moved together.
 
-This is because the buffer delay flag is not cleared when clearing the
-buffer state flags to discard a page/folio or a buffer head. So, fix
-this.
+To make the behavior more consistent, add a namespace check for synthetic
+NIC's NETDEV_REGISTER event (generated during its move), and move the VF
+if it is not in the same namespace.
 
-This became necessary when the use of nilfs2's own page clear routine
-was expanded.  This state inconsistency does not occur if the buffer
-is written normally by log writing.
-
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Link: https://lore.kernel.org/r/20241015213300.7114-1-konishi.ryusuke@gmail.com
-Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
-Reported-by: syzbot+985ada84bf055a575c07@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=985ada84bf055a575c07
 Cc: stable@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: c0a41b887ce6 ("hv_netvsc: move VF to same namespace as netvsc device")
+Suggested-by: Stephen Hemminger <stephen@networkplumber.org>
+Signed-off-by: Haiyang Zhang <haiyangz@microsoft.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/1729275922-17595-1-git-send-email-haiyangz@microsoft.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/page.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/hyperv/netvsc_drv.c |   30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
---- a/fs/nilfs2/page.c
-+++ b/fs/nilfs2/page.c
-@@ -78,7 +78,8 @@ void nilfs_forget_buffer(struct buffer_h
- 	const unsigned long clear_bits =
- 		(BIT(BH_Uptodate) | BIT(BH_Dirty) | BIT(BH_Mapped) |
- 		 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
--		 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected));
-+		 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
-+		 BIT(BH_Delay));
+--- a/drivers/net/hyperv/netvsc_drv.c
++++ b/drivers/net/hyperv/netvsc_drv.c
+@@ -2526,6 +2526,31 @@ static struct  hv_driver netvsc_drv = {
+ 	},
+ };
  
- 	lock_buffer(bh);
- 	set_mask_bits(&bh->b_state, clear_bits, 0);
-@@ -412,7 +413,8 @@ void nilfs_clear_dirty_page(struct page
- 		const unsigned long clear_bits =
- 			(BIT(BH_Uptodate) | BIT(BH_Dirty) | BIT(BH_Mapped) |
- 			 BIT(BH_Async_Write) | BIT(BH_NILFS_Volatile) |
--			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected));
-+			 BIT(BH_NILFS_Checked) | BIT(BH_NILFS_Redirected) |
-+			 BIT(BH_Delay));
++/* Set VF's namespace same as the synthetic NIC */
++static void netvsc_event_set_vf_ns(struct net_device *ndev)
++{
++	struct net_device_context *ndev_ctx = netdev_priv(ndev);
++	struct net_device *vf_netdev;
++	int ret;
++
++	vf_netdev = rtnl_dereference(ndev_ctx->vf_netdev);
++	if (!vf_netdev)
++		return;
++
++	if (!net_eq(dev_net(ndev), dev_net(vf_netdev))) {
++		ret = dev_change_net_namespace(vf_netdev, dev_net(ndev),
++					       "eth%d");
++		if (ret)
++			netdev_err(vf_netdev,
++				   "Cannot move to same namespace as %s: %d\n",
++				   ndev->name, ret);
++		else
++			netdev_info(vf_netdev,
++				    "Moved VF to namespace with: %s\n",
++				    ndev->name);
++	}
++}
++
+ /*
+  * On Hyper-V, every VF interface is matched with a corresponding
+  * synthetic interface. The synthetic interface is presented first
+@@ -2538,6 +2563,11 @@ static int netvsc_netdev_event(struct no
+ 	struct net_device *event_dev = netdev_notifier_info_to_dev(ptr);
+ 	int ret = 0;
  
- 		bh = head = page_buffers(page);
- 		do {
++	if (event_dev->netdev_ops == &device_ops && event == NETDEV_REGISTER) {
++		netvsc_event_set_vf_ns(event_dev);
++		return NOTIFY_DONE;
++	}
++
+ 	ret = check_dev_is_matching_vf(event_dev);
+ 	if (ret != 0)
+ 		return NOTIFY_DONE;
 
 
