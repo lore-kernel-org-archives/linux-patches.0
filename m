@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59811CB310;
-	Wed,  6 Nov 2024 13:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809001CB310;
+	Wed,  6 Nov 2024 13:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899105; cv=none; b=MYtAt15zNzvHCqTQZE1Yp27wq6bT8+R6kfysOUG1tHC1FnD1SUE0cQxxskVXJCzNVSM1uTJKDQRgoe2IVhbQqoEziEX77Co8JpVDG0+eR/EYN1AXWAJfKGXuJ9pmdgHZqlbafWDlkJ5AkGS1p7MytydYy+a9qgjWwID7ENGbzqI=
+	t=1730899108; cv=none; b=tscJfgsbJsJnNWIiXuWcTj4NvaniFQ+FmE4EwbLvVDHGTzRjAavXhKmVCPvP4w3ap5oh62TV+wKi9HSJK8OsDW0GLtH61PZ5jXdxyhWoSxLHuh1/AB1DA80+AJ2L9UJHxhLuGofdEVlgmIefD20D6GEIK81wpWRRocKe/3bVMV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899105; c=relaxed/simple;
-	bh=rJF7bRM4yefRi3xYzi6F5gGE5xemJjTn9t+l+Y5WIro=;
+	s=arc-20240116; t=1730899108; c=relaxed/simple;
+	bh=GQjpg4vXp+G/pdPuKYA/x9uNF8G3pBSGw9aKOW8+ovY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B3RMwAsJCUYuY3Xl2hMqH6+3YKTkNaGOH4XYMqX+8qjXZUEL+G9NUvyRjU5a0BqHhbsFKOJ7SY4u7OVRr3aJcXX4BABBKUBAjCZaAM2vQF9uXj5i8f38Ul+zHqvXAtNFt3GjA+cpVLwBFBRuSaNVkANx7H0BmeF2ny8+SdFil3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wbe+UnxP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UUJ08g+jp2LA0Dv/WxPc9GR2WvwAnAgwxjdNgQoZMvllmo8kbsjr3O5arfVLyGz6akwM8IEWs0OGu+hUvwzTAMMXHHjh1YnL4m0k1Wp4uApnNm1kCnJ59GxeSEj8EvSGtP4vSfWHcWqOaInw8WgzcxOMuul0F4SwlmFDwLQmZhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QSnDe+hZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wbe+UnxP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E242C4CECD;
-	Wed,  6 Nov 2024 13:18:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSnDe+hZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07B7BC4CECD;
+	Wed,  6 Nov 2024 13:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899105;
-	bh=rJF7bRM4yefRi3xYzi6F5gGE5xemJjTn9t+l+Y5WIro=;
+	s=korg; t=1730899108;
+	bh=GQjpg4vXp+G/pdPuKYA/x9uNF8G3pBSGw9aKOW8+ovY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wbe+UnxPUZkB6ZkqiB+nUS0Kivke7pDH+lc4ZjuByqlurxPdjIpdJRYGbbn67U5sA
-	 mnVPcdIuX4mAlQgJW4ljAdtg06c5ezMtT6iIBvqaSvWyJTE8VnZxNZn9l0EXD37j+z
-	 7dRogvx9ISdgEr1Erb/jYf3bi5HUhIbcc9XRvfa0=
+	b=QSnDe+hZS4kCIkuF2X8nE/nGL+0cjrFb1U15UZwb+Y8+oNgfFaUqllyfKdOyo9aSz
+	 PlxGT1rFQ3C9MMBOJUCJigOdfLRsC0Wtfig5NvTSW79hJ3OqxmS+TzXJM0DXwBatOs
+	 GOddR3Rk2SQFJWj/x4jMyU0kcVD0aFpCv3cSvyoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Luca Coelho <luciano.coelho@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 427/462] wifi: mac80211: skip non-uploaded keys in ieee80211_iter_keys
-Date: Wed,  6 Nov 2024 13:05:20 +0100
-Message-ID: <20241106120342.059303391@linuxfoundation.org>
+Subject: [PATCH 5.4 428/462] mac80211: do drv_reconfig_complete() before restarting all
+Date: Wed,  6 Nov 2024 13:05:21 +0100
+Message-ID: <20241106120342.083716692@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,92 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 52009b419355195912a628d0a9847922e90c348c ]
+[ Upstream commit 13dee10b30c058ee2c58c5da00339cc0d4201aa6 ]
 
-Sync iterator conditions with ieee80211_iter_keys_rcu.
+When we reconfigure, the driver might do some things to complete
+the reconfiguration. It's strange and could be broken in some
+cases because we restart other works (e.g. remain-on-channel and
+TX) before this happens, yet only start queues later.
 
-Fixes: 830af02f24fb ("mac80211: allow driver to iterate keys")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20241006153630.87885-1-nbd@nbd.name
+Change this to do the reconfig complete when reconfiguration is
+actually complete, not when we've already started doing other
+things again.
+
+For iwlwifi, this should fix a race where the reconfig can race
+with TX, for ath10k and ath11k that also use this it won't make
+a difference because they just start queues there, and mac80211
+also stopped the queues and will restart them later as before.
+
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
+Link: https://lore.kernel.org/r/iwlwifi.20211129152938.cab99f22fe19.Iefe494687f15fd85f77c1b989d1149c8efdfdc36@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 07a6e3b78a65 ("wifi: iwlwifi: mvm: Fix response handling in iwl_mvm_send_recovery_cmd()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/key.c | 42 +++++++++++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ net/mac80211/util.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/net/mac80211/key.c b/net/mac80211/key.c
-index 1be9cd265c727..5889a590b3edd 100644
---- a/net/mac80211/key.c
-+++ b/net/mac80211/key.c
-@@ -883,6 +883,26 @@ void ieee80211_reenable_keys(struct ieee80211_sub_if_data *sdata)
- 	mutex_unlock(&sdata->local->key_mtx);
- }
- 
-+static void
-+ieee80211_key_iter(struct ieee80211_hw *hw,
-+		   struct ieee80211_vif *vif,
-+		   struct ieee80211_key *key,
-+		   void (*iter)(struct ieee80211_hw *hw,
-+				struct ieee80211_vif *vif,
-+				struct ieee80211_sta *sta,
-+				struct ieee80211_key_conf *key,
-+				void *data),
-+		   void *iter_data)
-+{
-+	/* skip keys of station in removal process */
-+	if (key->sta && key->sta->removed)
-+		return;
-+	if (!(key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE))
-+		return;
-+	iter(hw, vif, key->sta ? &key->sta->sta : NULL,
-+	     &key->conf, iter_data);
-+}
-+
- void ieee80211_iter_keys(struct ieee80211_hw *hw,
- 			 struct ieee80211_vif *vif,
- 			 void (*iter)(struct ieee80211_hw *hw,
-@@ -902,16 +922,13 @@ void ieee80211_iter_keys(struct ieee80211_hw *hw,
- 	if (vif) {
- 		sdata = vif_to_sdata(vif);
- 		list_for_each_entry_safe(key, tmp, &sdata->key_list, list)
--			iter(hw, &sdata->vif,
--			     key->sta ? &key->sta->sta : NULL,
--			     &key->conf, iter_data);
-+			ieee80211_key_iter(hw, vif, key, iter, iter_data);
- 	} else {
- 		list_for_each_entry(sdata, &local->interfaces, list)
- 			list_for_each_entry_safe(key, tmp,
- 						 &sdata->key_list, list)
--				iter(hw, &sdata->vif,
--				     key->sta ? &key->sta->sta : NULL,
--				     &key->conf, iter_data);
-+				ieee80211_key_iter(hw, &sdata->vif, key,
-+						   iter, iter_data);
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index 6223af1c3457a..8d3069c93a60a 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -2491,6 +2491,13 @@ int ieee80211_reconfig(struct ieee80211_local *local)
+ 		mutex_unlock(&local->sta_mtx);
  	}
- 	mutex_unlock(&local->key_mtx);
- }
-@@ -929,17 +946,8 @@ _ieee80211_iter_keys_rcu(struct ieee80211_hw *hw,
- {
- 	struct ieee80211_key *key;
  
--	list_for_each_entry_rcu(key, &sdata->key_list, list) {
--		/* skip keys of station in removal process */
--		if (key->sta && key->sta->removed)
--			continue;
--		if (!(key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE))
--			continue;
++	/*
++	 * If this is for hw restart things are still running.
++	 * We may want to change that later, however.
++	 */
++	if (local->open_count && (!suspended || reconfig_due_to_wowlan))
++		drv_reconfig_complete(local, IEEE80211_RECONFIG_TYPE_RESTART);
++
+ 	if (local->in_reconfig) {
+ 		local->in_reconfig = false;
+ 		barrier();
+@@ -2509,13 +2516,6 @@ int ieee80211_reconfig(struct ieee80211_local *local)
+ 					IEEE80211_QUEUE_STOP_REASON_SUSPEND,
+ 					false);
+ 
+-	/*
+-	 * If this is for hw restart things are still running.
+-	 * We may want to change that later, however.
+-	 */
+-	if (local->open_count && (!suspended || reconfig_due_to_wowlan))
+-		drv_reconfig_complete(local, IEEE80211_RECONFIG_TYPE_RESTART);
 -
--		iter(hw, &sdata->vif,
--		     key->sta ? &key->sta->sta : NULL,
--		     &key->conf, iter_data);
--	}
-+	list_for_each_entry_rcu(key, &sdata->key_list, list)
-+		ieee80211_key_iter(hw, &sdata->vif, key, iter, iter_data);
- }
+ 	if (!suspended)
+ 		return 0;
  
- void ieee80211_iter_keys_rcu(struct ieee80211_hw *hw,
 -- 
 2.43.0
 
