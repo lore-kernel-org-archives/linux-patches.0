@@ -1,38 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D341DEFD3;
-	Wed,  6 Nov 2024 12:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0CE1DF721;
+	Wed,  6 Nov 2024 12:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895024; cv=none; b=cNQ5QgeyWYSrkdmYI8wlPX7Lw9gBVR+XC40YOZ3IaF1U2FyDSanz0WIw9Idt/IJiiCRfOiabhZvZHmXet2fcu89VHZ35m49J6Sg3KhooRmo5MnRg/3CEBWFSZ9MSTW7mGZQ0v9sWSFHwWHE04Bw2AqkPfpkBqR2TlBwbd40gUCU=
+	t=1730895027; cv=none; b=sxCUzZoc8C3u1yKqgc4QJu08IAxvN/z27H1CP0MM/ZI8yZhEIAseTJrs6AyPmJTXEvp7MFFIgCB3ajcTnYcJjV63zhcdtXiBdP/xrYjQEKJFN+g5EHVi6pyRpu2ydls2TDhXwb/l5ogPYhclO4UvhFB25svFsMR8jM7YAPNx2Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895024; c=relaxed/simple;
-	bh=XAS6Sl2re3j8AozItli8td5kvA6/hBApb7M/RFnSKZg=;
+	s=arc-20240116; t=1730895027; c=relaxed/simple;
+	bh=bF7dIj2HyASzEITV2aKENfnYztFIN/XnBGa/wLs/SsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y4rKcc6+XM7W4pV/+feuhkAPPmuFnrcoJJQIUu2jEl+ohTdPAcYf2PDpPyeMfVazLKsBFk8yHmA6+iHEbV3i+3YISraOHg7nue2/7ym8ChQyUx6NR+DQzYRNVuUYzFtDIX/LlkhIQsZqsD3dxpTI4xkO6Ufc5w8ViALWQuZxyQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5sh2Kxy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sVO48006K9mdtAXjFs5Sjebxc7YVUaW2a97eaictpQnrJdec/uJXVD5g4TNuFen6TwLc0B6jgNCYQyPSN8meW6E/s/WL5oiamhd/W8sg2L3cBknqyj4PewZzR15Jp1Y55MHjYblOdHM51Xar04hssGtorpR4Hwwsdg2QWwVnYc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AAdKZ7bi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5sh2Kxy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F93C4CECD;
-	Wed,  6 Nov 2024 12:10:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AAdKZ7bi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89201C4CECD;
+	Wed,  6 Nov 2024 12:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895024;
-	bh=XAS6Sl2re3j8AozItli8td5kvA6/hBApb7M/RFnSKZg=;
+	s=korg; t=1730895027;
+	bh=bF7dIj2HyASzEITV2aKENfnYztFIN/XnBGa/wLs/SsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T5sh2Kxyn6V4OwGA51Q0N/zPZHWvmGhJZNR4A9y/kGbDdp7zbIfjZxvTqIXHZxkyz
-	 9Z3JwffI/6hgkN8p9S3QhW9zZs94OZhwzxhn/HFfyjse57rLIo+FG2FwxRzupUpd22
-	 nU79wMg0DCQ6g2oKkay2S/RXY80OzEJGKlrGRugQ=
+	b=AAdKZ7biSm7OO+5hDP+3V7yaLN6KykGY3GlEMiWV2gvk3NBpS7PzRMWdF+ra6P9CU
+	 hHSw2p/vCrFUW+uW/uEPaJa0NCMtDd2lnz3sKsaF0oHnqGNTRV1DISUj0kRcf8aR74
+	 vmE8MqxKchAgMmwWpOWijOslOk5r5Rl+C2qJzumY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Yang Jihong <yangjihong@bytedance.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	David Ahern <dsa@cumulusnetworks.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 052/350] drm/amdgpu: Replace one-element array with flexible-array member
-Date: Wed,  6 Nov 2024 12:59:40 +0100
-Message-ID: <20241106120322.175929636@linuxfoundation.org>
+Subject: [PATCH 4.19 079/350] perf sched timehist: Fix missing free of session in perf_sched__timehist()
+Date: Wed,  6 Nov 2024 13:00:07 +0100
+Message-ID: <20241106120322.846091483@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,66 +61,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>
+From: Yang Jihong <yangjihong@bytedance.com>
 
-[ Upstream commit 320e2590e281d0a7865e861f50155b5b435e9813 ]
+[ Upstream commit 6bdf5168b6fb19541b0c1862bdaa596d116c7bfb ]
 
-One-element arrays are deprecated, and we are replacing them with
-flexible array members instead. So, replace one-element array with
-flexible-array member in struct _ATOM_FAKE_EDID_PATCH_RECORD and
-refactor the rest of the code accordingly.
+When perf_time__parse_str() fails in perf_sched__timehist(),
+need to free session that was previously created, fix it.
 
-Important to mention is that doing a build before/after this patch
-results in no binary output differences.
-
-This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
-routines on memcpy() and help us make progress towards globally
-enabling -fstrict-flex-arrays=3 [1].
-
-Link: https://github.com/KSPP/linux/issues/79
-Link: https://github.com/KSPP/linux/issues/238
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=101836 [1]
-
-Signed-off-by: Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 8155566a26b8 ("drm/amdgpu: properly handle vbios fake edid sizing")
+Fixes: 853b74071110bed3 ("perf sched timehist: Add option to specify time window of interest")
+Signed-off-by: Yang Jihong <yangjihong@bytedance.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: David Ahern <dsa@cumulusnetworks.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240806023533.1316348-1-yangjihong@bytedance.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/atombios_encoders.c | 7 +++++--
- drivers/gpu/drm/amd/include/atombios.h         | 2 +-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ tools/perf/builtin-sched.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c b/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
-index d702fb8e34275..9de266a1bfbe0 100644
---- a/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
-+++ b/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
-@@ -2110,8 +2110,11 @@ amdgpu_atombios_encoder_get_lcd_info(struct amdgpu_encoder *encoder)
- 						}
- 					}
- 					record += fake_edid_record->ucFakeEDIDLength ?
--						fake_edid_record->ucFakeEDIDLength + 2 :
--						sizeof(ATOM_FAKE_EDID_PATCH_RECORD);
-+						  struct_size(fake_edid_record,
-+							      ucFakeEDIDString,
-+							      fake_edid_record->ucFakeEDIDLength) :
-+						  /* empty fake edid record must be 3 bytes long */
-+						  sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
- 					break;
- 				case LCD_PANEL_RESOLUTION_RECORD_TYPE:
- 					panel_res_record = (ATOM_PANEL_RESOLUTION_PATCH_RECORD *)record;
-diff --git a/drivers/gpu/drm/amd/include/atombios.h b/drivers/gpu/drm/amd/include/atombios.h
-index 8ba21747b40a3..c9f70accd46d8 100644
---- a/drivers/gpu/drm/amd/include/atombios.h
-+++ b/drivers/gpu/drm/amd/include/atombios.h
-@@ -4107,7 +4107,7 @@ typedef struct _ATOM_FAKE_EDID_PATCH_RECORD
- {
-   UCHAR ucRecordType;
-   UCHAR ucFakeEDIDLength;       // = 128 means EDID length is 128 bytes, otherwise the EDID length = ucFakeEDIDLength*128
--  UCHAR ucFakeEDIDString[1];    // This actually has ucFakeEdidLength elements.
-+  UCHAR ucFakeEDIDString[];     // This actually has ucFakeEdidLength elements.
- } ATOM_FAKE_EDID_PATCH_RECORD;
+diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
+index 4562e3b2f4d36..1c9e06c1d0089 100644
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -2994,7 +2994,8 @@ static int perf_sched__timehist(struct perf_sched *sched)
  
- typedef struct  _ATOM_PANEL_RESOLUTION_PATCH_RECORD
+ 	if (perf_time__parse_str(&sched->ptime, sched->time_str) != 0) {
+ 		pr_err("Invalid time string\n");
+-		return -EINVAL;
++		err = -EINVAL;
++		goto out;
+ 	}
+ 
+ 	if (timehist_check_attr(sched, evlist) != 0)
 -- 
 2.43.0
 
