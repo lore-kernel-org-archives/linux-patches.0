@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626371EE002;
-	Wed,  6 Nov 2024 13:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D781EE002;
+	Wed,  6 Nov 2024 13:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898591; cv=none; b=qJvgQcy0t/vejnlLsDW4RsU2FejmEBCPAGWZH+ovY+eRWVUXIVpyJOrT3bWOw5k5P5EcCCo/qhIK/rsaGz0aravps9iOozLzVAaB4jx5nxFVMwgEYlrxMigUFtScMUk83a5WmPqOKXwkpcxxUertyWQsUAMl7vvzAc0xxTf7btM=
+	t=1730898594; cv=none; b=caHqNj+LBBoy3vaTh3fMndJMO+d9RFmAAdsGPvvw2jlyf40bRTfRlrOXIosl+518O+VB0YPt2mTXz64Iy/S2zJ1r22BvTPUItSU6mx7kSf9qTJZgvmatSKTUSLRSQkatHS8PVOjzPIOIZJyTAMod7y7Sa8v+eoczUUF+UiOtFcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898591; c=relaxed/simple;
-	bh=srMOq0jApBo5+7ResZP/ZH/lmvvTUtRZO6A5eAqoSHM=;
+	s=arc-20240116; t=1730898594; c=relaxed/simple;
+	bh=h548rlFP8ZoMpaD7c2jmgbFxhEznxp96nU2zIHlty8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=klWINz7orYaruTn4Ej9fYmYXoXEa0e7suRh4QWWFfHp2xmaN/bHiZmh07+A30an86qF8IGPEOku4bM2KQvuMh5I6MY+6kPmso/7E2+B0n/nS+vlknH7s/kOcLLSwnzKWjAzGpedR1Mi9DcTeWgT6JFO+uK1Rhnj5MH7BrUUiVxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9EqlzHk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GvPbUVkLMvknffdZQAb+pQdKhAFtgW7FLW2zSGMdnCod8kQae2UCLhO9rMsmGzpbFfeDMbygrQgIlhYGr2m0dG/yFR9uYh/KDWDSQiGss6/icldeQEIF7MEoFRLV5RRBBEEJyfxF6Y8PXUySPtT6ytbhEzDN1Du+aTMaw2zYCuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeWt2NNR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9EqlzHk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0927C4CECD;
-	Wed,  6 Nov 2024 13:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeWt2NNR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C75C4CED3;
+	Wed,  6 Nov 2024 13:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898591;
-	bh=srMOq0jApBo5+7ResZP/ZH/lmvvTUtRZO6A5eAqoSHM=;
+	s=korg; t=1730898594;
+	bh=h548rlFP8ZoMpaD7c2jmgbFxhEznxp96nU2zIHlty8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I9EqlzHktEFu8FMSL1TyQy0jYwO1ilqswkF1T6WVVC5X3fWWy/6pRNy4K1wXz4O1D
-	 eYtTsXCUrIuzrxzhOuvvAfC4mw/aEEYZlcHJLAt0zNvTzcvgV5ks5Hcm3M9yP8yjDW
-	 AS1kCKnH5ZBenL/N5uyLu5gnYpF8cWUtd3Fy9RsI=
+	b=WeWt2NNR13MuDezHA6aUI90AUvgS1hJR98BzWDhIjZBB9jOs0NlDS2oZmk7FYLylU
+	 gUeI1Hp5GZaw64C9pWtYTwbk6Z1T5t8dwLDxvlF6zFmsyFlIuWV06CNYbl/kzhln9L
+	 RpsCLe95h1reJSARfO/P5PEakVpbXVxOH09Ykqio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	Taniya Das <tdas@codeaurora.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Mike Tipton <quic_mdtipton@quicinc.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 289/462] clk: qcom: rpmh: Simplify clk_rpmh_bcm_send_cmd()
-Date: Wed,  6 Nov 2024 13:03:02 +0100
-Message-ID: <20241106120338.663635516@linuxfoundation.org>
+Subject: [PATCH 5.4 290/462] clk: qcom: clk-rpmh: Fix overflow in BCM vote
+Date: Wed,  6 Nov 2024 13:03:03 +0100
+Message-ID: <20241106120338.688996284@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,81 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Boyd <sboyd@kernel.org>
+From: Mike Tipton <quic_mdtipton@quicinc.com>
 
-[ Upstream commit 2cf7a4cbcb4e108aae666dc6a81cedf69e1cba37 ]
+[ Upstream commit a4e5af27e6f6a8b0d14bc0d7eb04f4a6c7291586 ]
 
-This function has some duplication in unlocking a mutex and returns in a
-few different places. Let's use some if statements to consolidate code
-and make this a bit easier to read.
+Valid frequencies may result in BCM votes that exceed the max HW value.
+Set vote ceiling to BCM_TCS_CMD_VOTE_MASK to ensure the votes aren't
+truncated, which can result in lower frequencies than desired.
 
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-CC: Taniya Das <tdas@codeaurora.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lkml.kernel.org/r/20200309221232.145630-2-sboyd@kernel.org
-Stable-dep-of: a4e5af27e6f6 ("clk: qcom: clk-rpmh: Fix overflow in BCM vote")
+Fixes: 04053f4d23a4 ("clk: qcom: clk-rpmh: Add IPA clock support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
+Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
+Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
+Link: https://lore.kernel.org/r/20240809-clk-rpmh-bcm-vote-fix-v2-1-240c584b7ef9@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rpmh.c | 33 ++++++++++++++-------------------
- 1 file changed, 14 insertions(+), 19 deletions(-)
+ drivers/clk/qcom/clk-rpmh.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index d7586e26acd8d..21f4248ba7ddb 100644
+index 21f4248ba7ddb..a1cd64d71cec9 100644
 --- a/drivers/clk/qcom/clk-rpmh.c
 +++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -259,38 +259,33 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
- {
- 	struct tcs_cmd cmd = { 0 };
- 	u32 cmd_state;
--	int ret;
-+	int ret = 0;
- 
- 	mutex_lock(&rpmh_clk_lock);
--
--	cmd_state = 0;
- 	if (enable) {
- 		cmd_state = 1;
- 		if (c->aggr_state)
- 			cmd_state = c->aggr_state;
-+	} else {
-+		cmd_state = 0;
+@@ -270,6 +270,8 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
+ 		cmd_state = 0;
  	}
  
--	if (c->last_sent_aggr_state == cmd_state) {
--		mutex_unlock(&rpmh_clk_lock);
--		return 0;
--	}
--
--	cmd.addr = c->res_addr;
--	cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
-+	if (c->last_sent_aggr_state != cmd_state) {
-+		cmd.addr = c->res_addr;
-+		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
- 
--	ret = clk_rpmh_send(c, RPMH_ACTIVE_ONLY_STATE, &cmd, enable);
--	if (ret) {
--		dev_err(c->dev, "set active state of %s failed: (%d)\n",
--			c->res_name, ret);
--		mutex_unlock(&rpmh_clk_lock);
--		return ret;
-+		ret = clk_rpmh_send(c, RPMH_ACTIVE_ONLY_STATE, &cmd, enable);
-+		if (ret) {
-+			dev_err(c->dev, "set active state of %s failed: (%d)\n",
-+				c->res_name, ret);
-+		} else {
-+			c->last_sent_aggr_state = cmd_state;
-+		}
- 	}
- 
--	c->last_sent_aggr_state = cmd_state;
--
- 	mutex_unlock(&rpmh_clk_lock);
- 
--	return 0;
-+	return ret;
- }
- 
- static int clk_rpmh_bcm_prepare(struct clk_hw *hw)
++	cmd_state = min(cmd_state, BCM_TCS_CMD_VOTE_MASK);
++
+ 	if (c->last_sent_aggr_state != cmd_state) {
+ 		cmd.addr = c->res_addr;
+ 		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
 -- 
 2.43.0
 
