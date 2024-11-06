@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47EA1DF97A;
-	Wed,  6 Nov 2024 12:45:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD681CC89D;
+	Wed,  6 Nov 2024 12:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897123; cv=none; b=DJJMn5lnZli84LYea5MlbtLVHdnOMLbRo77s0BVZXhXvwiEgouL0/ogwQ8LWKj0nfqtrCPBkWQHp/K7KSTfJVzSP1WM/GSBvp6L8emvuXEBqrVno2Pb7Xv1XYe2aEuL3N5gsC2eSjo7G5gYf6DJcq5YoFn8v3GDCOYxCdXzWDHg=
+	t=1730897126; cv=none; b=KR+RXR0Jdjk2dGyUO5Ikp7mWFVhJfA2Y9g9dqsQSYvvvMhTnx6GeDlDe0kyoid4eKyTyW57ENWHwZ0iBiAzBH8B00AvOs4kpDiZ95CfazYWZhay8G43Xo7D5AfEdevUzbwVxdjBTKYLqnu46W8CIc/F0h1Pzj89/8naGMdMUIYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897123; c=relaxed/simple;
-	bh=dL1qGhqMkDku8T8q7pT9Mw3rCBaiH7GXsR4rk7InsqU=;
+	s=arc-20240116; t=1730897126; c=relaxed/simple;
+	bh=iJ6Chp4fxyYs7027X7XOVv+Fe28z8jE+Yfxmd5I8ZRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SR6BknTwoJJZuq6CRGHvIgzsiEs+Ta5LHz10qzTjSHVLNI0gypxCWRq5184n6u64W+9cVx+tpVmuQUeRuRzORBIGa4Ug/5iXcZ4k7BlLqYw3wPKIbT935tvPQ/rpjQWsxaj4muQ8PPYKLZa7pxr13ne8bok1g2ydpVY5c1FWsV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HLIoiMhc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EkB61nqZQ4wkcEQ+yL2XqfyQa++87n5PbXokxRZZbbRrXg+fCDpkshAcGGYWs5PnZy2TrtySbrLIYKkCj/k9d53g4RfzuKw0bj/iqOATZMo/+9DuoBCutUwnjJ6/C1y/phVCVk3y4618Qb+6lvaUf1cSEba3R/oNGXxQ6yw6UVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTxeVPpn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLIoiMhc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C348C4CECD;
-	Wed,  6 Nov 2024 12:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTxeVPpn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE91C4CECD;
+	Wed,  6 Nov 2024 12:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897123;
-	bh=dL1qGhqMkDku8T8q7pT9Mw3rCBaiH7GXsR4rk7InsqU=;
+	s=korg; t=1730897126;
+	bh=iJ6Chp4fxyYs7027X7XOVv+Fe28z8jE+Yfxmd5I8ZRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HLIoiMhcpuSBQ/SVB4W2XSq4lkjpTmiyZQV5IgEzoB5mgLaCDlX0a88wWjgnBrbGf
-	 lU0vOnUnyY0dPpkPDGOIFavWCR+LCu4ns7WjqnA9AUdUCIpc9agqwVjOnEcnwRXHyv
-	 SU7u33FWRneWRnLLXVDKXd2QaXP3jIV7sewRiLnw=
+	b=aTxeVPpnehldM7Sj+nDauYRKY1LDpWp/7gRj5TkYO7kJ3qz57bDV2oC7O/XNZMU7T
+	 E4dw0m+DMXiHJRfifHGSVyBCVh7p27GHPGRpFyIVZ0VslHwjWEqeGtPbf1fEClQ0QK
+	 AFQSOio2jnmnsjiiStTmVjm77ozKBQWajADTQGYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/126] iomap: convert iomap_unshare_iter to use large folios
-Date: Wed,  6 Nov 2024 13:03:59 +0100
-Message-ID: <20241106120307.141018181@linuxfoundation.org>
+Subject: [PATCH 6.1 039/126] iomap: improve shared block detection in iomap_unshare_iter
+Date: Wed,  6 Nov 2024 13:04:00 +0100
+Message-ID: <20241106120307.167601869@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -51,78 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit a5f31a5028d1e88e97c3b6cdc3e3bf2da085e232 ]
+[ Upstream commit b53fdb215d13f8e9c29541434bf2d14dac8bcbdc ]
 
-Convert iomap_unshare_iter to create large folios if possible, since the
-write and zeroing paths already do that.  I think this got missed in the
-conversion of the write paths that landed in 6.6-rc1.
+Currently iomap_unshare_iter relies on the IOMAP_F_SHARED flag to detect
+blocks to unshare.  This is reasonable, but IOMAP_F_SHARED is also useful
+for the file system to do internal book keeping for out of place writes.
+XFS used to that, until it got removed in commit 72a048c1056a
+("xfs: only set IOMAP_F_SHARED when providing a srcmap to a write")
+because unshare for incorrectly unshare such blocks.
 
-Cc: ritesh.list@gmail.com, willy@infradead.org
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Add an extra safeguard by checking the explicitly provided srcmap instead
+of the fallback to the iomap for valid data, as that catches the case
+where we'd just copy from the same place we'd write to easily, allowing
+to reinstate setting IOMAP_F_SHARED for all XFS writes that go to the
+COW fork.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20240910043949.3481298-3-hch@lst.de
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Stable-dep-of: 50793801fc7f ("fsdax: dax_unshare_iter needs to copy entire blocks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ fs/iomap/buffered-io.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
 diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 1833608f39318..674ac79bdb456 100644
+index 674ac79bdb456..527d3bcfc69a7 100644
 --- a/fs/iomap/buffered-io.c
 +++ b/fs/iomap/buffered-io.c
-@@ -1090,7 +1090,6 @@ static loff_t iomap_unshare_iter(struct iomap_iter *iter)
- 	const struct iomap *srcmap = iomap_iter_srcmap(iter);
+@@ -1087,16 +1087,25 @@ EXPORT_SYMBOL_GPL(iomap_file_buffered_write_punch_delalloc);
+ static loff_t iomap_unshare_iter(struct iomap_iter *iter)
+ {
+ 	struct iomap *iomap = &iter->iomap;
+-	const struct iomap *srcmap = iomap_iter_srcmap(iter);
  	loff_t pos = iter->pos;
  	loff_t length = iomap_length(iter);
--	long status = 0;
  	loff_t written = 0;
  
- 	/* don't bother with blocks that are not shared to start with */
-@@ -1101,28 +1100,33 @@ static loff_t iomap_unshare_iter(struct iomap_iter *iter)
+-	/* don't bother with blocks that are not shared to start with */
++	/* Don't bother with blocks that are not shared to start with. */
+ 	if (!(iomap->flags & IOMAP_F_SHARED))
+ 		return length;
+-	/* don't bother with holes or unwritten extents */
+-	if (srcmap->type == IOMAP_HOLE || srcmap->type == IOMAP_UNWRITTEN)
++
++	/*
++	 * Don't bother with holes or unwritten extents.
++	 *
++	 * Note that we use srcmap directly instead of iomap_iter_srcmap as
++	 * unsharing requires providing a separate source map, and the presence
++	 * of one is a good indicator that unsharing is needed, unlike
++	 * IOMAP_F_SHARED which can be set for any data that goes into the COW
++	 * fork for XFS.
++	 */
++	if (iter->srcmap.type == IOMAP_HOLE ||
++	    iter->srcmap.type == IOMAP_UNWRITTEN)
  		return length;
  
  	do {
--		unsigned long offset = offset_in_page(pos);
--		unsigned long bytes = min_t(loff_t, PAGE_SIZE - offset, length);
- 		struct folio *folio;
-+		int status;
-+		size_t offset;
-+		size_t bytes = min_t(u64, SIZE_MAX, length);
- 
- 		status = iomap_write_begin(iter, pos, bytes, &folio);
- 		if (unlikely(status))
- 			return status;
--		if (iter->iomap.flags & IOMAP_F_STALE)
-+		if (iomap->flags & IOMAP_F_STALE)
- 			break;
- 
--		status = iomap_write_end(iter, pos, bytes, bytes, folio);
--		if (WARN_ON_ONCE(status == 0))
-+		offset = offset_in_folio(folio, pos);
-+		if (bytes > folio_size(folio) - offset)
-+			bytes = folio_size(folio) - offset;
-+
-+		bytes = iomap_write_end(iter, pos, bytes, bytes, folio);
-+		if (WARN_ON_ONCE(bytes == 0))
- 			return -EIO;
- 
- 		cond_resched();
- 
--		pos += status;
--		written += status;
--		length -= status;
-+		pos += bytes;
-+		written += bytes;
-+		length -= bytes;
- 
- 		balance_dirty_pages_ratelimited(iter->inode->i_mapping);
--	} while (length);
-+	} while (length > 0);
- 
- 	return written;
- }
 -- 
 2.43.0
 
