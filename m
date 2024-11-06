@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3142D1E0DFD;
-	Wed,  6 Nov 2024 12:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AE21E0DFD;
+	Wed,  6 Nov 2024 12:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897554; cv=none; b=si+RTyhGcog9KNx8PiMtz4S4jAPd4qCUOVYe/Nsb6KICIV52efqB+sIoGg5uv1Oyy7yNE0dQ3/O1FWgLWwdfMbFH8q58LrTSFEosMy/SXHAbbZ3OtRxy4o5JprX1qWVb6/fHdqlb0L6ZEVEal59ZHpK6JS85IzVovthIfM1Csy0=
+	t=1730897557; cv=none; b=Z5nibDu4NIS5FM/rTGVPFHDyHpAwDbYvDRdOJMH72/dcTA8K5KnjjVFZzKlpoAd0o4Al6f7kx7BC8JdAN9oSXKFyTwZo+xa+K5Yi49o0WcnlPWZOmgCBNi0dSupQVNL5KW4RftPyMG0mNs7DPqGjUoETLacWCNt2iCKFBPwUX9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897554; c=relaxed/simple;
-	bh=kJHikDqhhaCCj/IgrlKO9JlYNAeA8AUl7u11kPAWOo0=;
+	s=arc-20240116; t=1730897557; c=relaxed/simple;
+	bh=1XkR7rM/dq2+Me7Iv49kkaeVJshR5qaTmhF8ylJmFnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BUcUe5UjpAE61lm90SnRQ0yJK77Td1epmJVvTlt+FulhgOKHSdCM1NWLFRzTxEJUNONjrZAPuRJFyO1F9avQXfzSXlcUP5k6JtaHoUkfOppBQ5oZT5GS0GVRvowwYmFerodydqLHbYTq1yi+2fZhLLkpsE/X7NK6JADoWPg1lfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SeQJU5Kn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T63bT0RFSDLQSWCFqUTz2VmvOcjcquWpp3iSTON6GX2lmb/1i145gTr16JGqr8SAggLAl3ShLJW9cC94u51TcxAAd0D36/Z9m+36elBR4R4qPUIfwmYsHcpMGPZ+efYLpoAIh1RTWBEDNT6dI2NbqiBMHEsy5eMH1vvpWbYJeik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/EC5nbN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SeQJU5Kn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3330C4CECD;
-	Wed,  6 Nov 2024 12:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/EC5nbN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC83C4CECD;
+	Wed,  6 Nov 2024 12:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897554;
-	bh=kJHikDqhhaCCj/IgrlKO9JlYNAeA8AUl7u11kPAWOo0=;
+	s=korg; t=1730897557;
+	bh=1XkR7rM/dq2+Me7Iv49kkaeVJshR5qaTmhF8ylJmFnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SeQJU5KnpTpjmpUjN//v8FPkRTrSp/BNiRyEF7Xzrsr8gAk9VXCzhtQR2UOqfAGaR
-	 zyKYUJOJ3pPDO/p+lgfX/kJXxHGYuwF2bPFXyZ0Q858m5h0iQPUOrX5ik4SxwG2tAG
-	 zUZyaEucIEPwd3fOpBtiuwr0K/N6gE9NzDyCq0iI=
+	b=e/EC5nbNDrZY1LDx8DDZOu6xX3SxXdmvm5YDUXSCBNfsIWhJLXuDr1DOrujokvk+S
+	 ummBuTOK1ghZFw+k21tUHypQgdA/IhDTTD1h5zKF0GWROPUNoNNqflP2xFi+aGtQh1
+	 yRREBc9mHb/zgxiaZd7xm7qBVeQ4deKqWtvGfKAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.6 092/151] wifi: mac80211: do not pass a stopped vif to the driver in .get_txpower
-Date: Wed,  6 Nov 2024 13:04:40 +0100
-Message-ID: <20241106120311.403468652@linuxfoundation.org>
+	Manikanta Pubbisetty <quic_mpubbise@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>
+Subject: [PATCH 6.6 093/151] wifi: ath10k: Fix memory leak in management tx
+Date: Wed,  6 Nov 2024 13:04:41 +0100
+Message-ID: <20241106120311.432640659@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -50,33 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
 
-commit 393b6bc174b0dd21bb2a36c13b36e62fc3474a23 upstream.
+commit e15d84b3bba187aa372dff7c58ce1fd5cb48a076 upstream.
 
-Avoid potentially crashing in the driver because of uninitialized private data
+In the current logic, memory is allocated for storing the MSDU context
+during management packet TX but this memory is not being freed during
+management TX completion. Similar leaks are seen in the management TX
+cleanup logic.
 
-Fixes: 5b3dc42b1b0d ("mac80211: add support for driver tx power reporting")
+Kmemleak reports this problem as below,
+
+unreferenced object 0xffffff80b64ed250 (size 16):
+  comm "kworker/u16:7", pid 148, jiffies 4294687130 (age 714.199s)
+  hex dump (first 16 bytes):
+    00 2b d8 d8 80 ff ff ff c4 74 e9 fd 07 00 00 00  .+.......t......
+  backtrace:
+    [<ffffffe6e7b245dc>] __kmem_cache_alloc_node+0x1e4/0x2d8
+    [<ffffffe6e7adde88>] kmalloc_trace+0x48/0x110
+    [<ffffffe6bbd765fc>] ath10k_wmi_tlv_op_gen_mgmt_tx_send+0xd4/0x1d8 [ath10k_core]
+    [<ffffffe6bbd3eed4>] ath10k_mgmt_over_wmi_tx_work+0x134/0x298 [ath10k_core]
+    [<ffffffe6e78d5974>] process_scheduled_works+0x1ac/0x400
+    [<ffffffe6e78d60b8>] worker_thread+0x208/0x328
+    [<ffffffe6e78dc890>] kthread+0x100/0x1c0
+    [<ffffffe6e78166c0>] ret_from_fork+0x10/0x20
+
+Free the memory during completion and cleanup to fix the leak.
+
+Protect the mgmt_pending_tx idr_remove() operation in
+ath10k_wmi_tlv_op_cleanup_mgmt_tx_send() using ar->data_lock similar to
+other instances.
+
+Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.2.0-01387-QCAHLSWMTPLZ-1
+
+Fixes: dc405152bb64 ("ath10k: handle mgmt tx completion event")
+Fixes: c730c477176a ("ath10k: Remove msdu from idr when management pkt send fails")
 Cc: stable@vger.kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20241002095630.22431-1-nbd@nbd.name
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
+Link: https://patch.msgid.link/20241015064103.6060-1-quic_mpubbise@quicinc.com
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/cfg.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/wmi-tlv.c |    7 ++++++-
+ drivers/net/wireless/ath/ath10k/wmi.c     |    2 ++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -3115,7 +3115,8 @@ static int ieee80211_get_tx_power(struct
- 	struct ieee80211_local *local = wiphy_priv(wiphy);
- 	struct ieee80211_sub_if_data *sdata = IEEE80211_WDEV_TO_SUB_IF(wdev);
+--- a/drivers/net/wireless/ath/ath10k/wmi-tlv.c
++++ b/drivers/net/wireless/ath/ath10k/wmi-tlv.c
+@@ -3042,9 +3042,14 @@ ath10k_wmi_tlv_op_cleanup_mgmt_tx_send(s
+ 				       struct sk_buff *msdu)
+ {
+ 	struct ath10k_skb_cb *cb = ATH10K_SKB_CB(msdu);
++	struct ath10k_mgmt_tx_pkt_addr *pkt_addr;
+ 	struct ath10k_wmi *wmi = &ar->wmi;
  
--	if (local->ops->get_txpower)
-+	if (local->ops->get_txpower &&
-+	    (sdata->flags & IEEE80211_SDATA_IN_DRIVER))
- 		return drv_get_txpower(local, sdata, dbm);
+-	idr_remove(&wmi->mgmt_pending_tx, cb->msdu_id);
++	spin_lock_bh(&ar->data_lock);
++	pkt_addr = idr_remove(&wmi->mgmt_pending_tx, cb->msdu_id);
++	spin_unlock_bh(&ar->data_lock);
++
++	kfree(pkt_addr);
  
- 	if (!local->use_chanctx)
+ 	return 0;
+ }
+--- a/drivers/net/wireless/ath/ath10k/wmi.c
++++ b/drivers/net/wireless/ath/ath10k/wmi.c
+@@ -2440,6 +2440,7 @@ wmi_process_mgmt_tx_comp(struct ath10k *
+ 	dma_unmap_single(ar->dev, pkt_addr->paddr,
+ 			 msdu->len, DMA_TO_DEVICE);
+ 	info = IEEE80211_SKB_CB(msdu);
++	kfree(pkt_addr);
+ 
+ 	if (param->status) {
+ 		info->flags &= ~IEEE80211_TX_STAT_ACK;
+@@ -9559,6 +9560,7 @@ static int ath10k_wmi_mgmt_tx_clean_up_p
+ 	dma_unmap_single(ar->dev, pkt_addr->paddr,
+ 			 msdu->len, DMA_TO_DEVICE);
+ 	ieee80211_free_txskb(ar->hw, msdu);
++	kfree(pkt_addr);
+ 
+ 	return 0;
+ }
 
 
