@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D711F81AA;
-	Wed,  6 Nov 2024 12:45:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564461DFE3B;
+	Wed,  6 Nov 2024 12:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897150; cv=none; b=RydCIheTZEBt0FOQmf6WFSdpkXat/Mp2MnBI3OS/8j8Bb594oseWk8hQXcSx6QoYCbrGc9HvT5vamtOvACwz0d3mwM7sJfnUrSmR5MjiRTWzjg5ot81vzP3a1xbV/ecwxiZhm62hEBKGZTedtEAKryLTWsO6VK6sDXcTqbqchRE=
+	t=1730897153; cv=none; b=aP3oc/C8OuMarFqTLO+xhRLX+RM3FA9hZEIMmOFujWffI7Phlz3RDWjIjp8OLXF3bsy5XXSqMhBndEyEqAfu6DynsEaMpG81AfdWYBSjk8F20kr/l5gK+tPfO3GGb/jYit4v5HeMYufe+PUTdffRwcJOiTcREu5MNrHkSKzJ4qg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897150; c=relaxed/simple;
-	bh=8fuyALaXkZ5Vl/yRosUCyDO9DGUuh/3J1V+LGdyfOCE=;
+	s=arc-20240116; t=1730897153; c=relaxed/simple;
+	bh=+pdeKJdhpjJeDNLzzOj2exJrMBoUDTsiiH45BSuKOdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PC5xasChgExdHgNibaLtoQ9p+PXVbMLSXD6FHPIQsChOS9tKQBR99OzJln1l4irkhVygNh28a1yqyy8rhPcB1jScJaJ7Cf+i461EvhXr4CPXs0W+L+YL5ZgbjJIJtSUqKvBceGVU7krVHURAFLi0/2w+7CUziguiF84/w30LV0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VKdikiWc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AxYrvjr2nokeuAoN7Nih197e2aw1hjKDqo3hbLm9+3hRLIAzY6wZMMaHQwmZdpAW5M0dsMbqdgbH2e1zpOKXLEI++Op7cguR82LrLypgS6AUX4l5bmBVtD1zkHFkQw1Xk+2yvEf+HGkFuwHurFEgpn6JKU2c4aOlW4VBKQaKXOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=coO7Izbx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VKdikiWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0133C4CECD;
-	Wed,  6 Nov 2024 12:45:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="coO7Izbx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83FCC4CECD;
+	Wed,  6 Nov 2024 12:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897150;
-	bh=8fuyALaXkZ5Vl/yRosUCyDO9DGUuh/3J1V+LGdyfOCE=;
+	s=korg; t=1730897153;
+	bh=+pdeKJdhpjJeDNLzzOj2exJrMBoUDTsiiH45BSuKOdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VKdikiWcPYEa/rvR7fEYHIw8iWpPQ7tXedR/oQ3AZyCmhUGDNqNwlBboVHY/+hMA0
-	 Pzl0dH+8F1Z2pCSP7Ky0efEbJyYtZVulNzV9iMcacoV7rw0coo+prQpE2jBO9KhdM4
-	 XfOZYFdwtNhTSqSq2MhUdSHgyX6PP0agSLlBmdZ4=
+	b=coO7IzbxQNh1iLp2vv9ghOn2lkVquCPUQaxpEmuS+0qCz6nEjVkEiJikKctq7epiM
+	 OPBdDb5SEOZzW3a/KuGIwWxG5Fyzsn88ia8Dyp1ariDkNqhtkiE3cVmyfENlEeOURN
+	 ZwpVJlaz/C6gr6FwcLwsZ+q5BmJiy9DrSXYKqNEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	WangYuli <wangyuli@uniontech.com>,
+	Charlie Jenkins <charlie@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 084/126] riscv: efi: Set NX compat flag in PE/COFF header
-Date: Wed,  6 Nov 2024 13:04:45 +0100
-Message-ID: <20241106120308.346429953@linuxfoundation.org>
+Subject: [PATCH 6.1 085/126] riscv: Use %u to format the output of cpu
+Date: Wed,  6 Nov 2024 13:04:46 +0100
+Message-ID: <20241106120308.372175406@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -53,46 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit d41373a4b910961df5a5e3527d7bde6ad45ca438 ]
+[ Upstream commit e0872ab72630dada3ae055bfa410bf463ff1d1e0 ]
 
-The IMAGE_DLLCHARACTERISTICS_NX_COMPAT informs the firmware that the
-EFI binary does not rely on pages that are both executable and
-writable.
+'cpu' is an unsigned integer, so its conversion specifier should
+be %u, not %d.
 
-The flag is used by some distro versions of GRUB to decide if the EFI
-binary may be executed.
-
-As the Linux kernel neither has RWX sections nor needs RWX pages for
-relocation we should set the flag.
-
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Reviewed-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
-Fixes: cb7d2dd5612a ("RISC-V: Add PE/COFF header for EFI stub")
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20240929140233.211800-1-heinrich.schuchardt@canonical.com
+Suggested-by: Wentao Guan <guanwentao@uniontech.com>
+Suggested-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Link: https://lore.kernel.org/all/alpine.DEB.2.21.2409122309090.40372@angie.orcam.me.uk/
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Tested-by: Charlie Jenkins <charlie@rivosinc.com>
+Fixes: f1e58583b9c7 ("RISC-V: Support cpu hotplug")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/4C127DEECDA287C8+20241017032010.96772-1-wangyuli@uniontech.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/efi-header.S | 2 +-
+ arch/riscv/kernel/cpu-hotplug.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/efi-header.S b/arch/riscv/kernel/efi-header.S
-index 8e733aa48ba6c..c306f3a6a800e 100644
---- a/arch/riscv/kernel/efi-header.S
-+++ b/arch/riscv/kernel/efi-header.S
-@@ -59,7 +59,7 @@ extra_header_fields:
- 	.long	efi_header_end - _start			// SizeOfHeaders
- 	.long	0					// CheckSum
- 	.short	IMAGE_SUBSYSTEM_EFI_APPLICATION		// Subsystem
--	.short	0					// DllCharacteristics
-+	.short	IMAGE_DLL_CHARACTERISTICS_NX_COMPAT	// DllCharacteristics
- 	.quad	0					// SizeOfStackReserve
- 	.quad	0					// SizeOfStackCommit
- 	.quad	0					// SizeOfHeapReserve
+diff --git a/arch/riscv/kernel/cpu-hotplug.c b/arch/riscv/kernel/cpu-hotplug.c
+index f7a832e3a1d1d..462b3631663f9 100644
+--- a/arch/riscv/kernel/cpu-hotplug.c
++++ b/arch/riscv/kernel/cpu-hotplug.c
+@@ -65,7 +65,7 @@ void __cpu_die(unsigned int cpu)
+ 	if (cpu_ops[cpu]->cpu_is_stopped)
+ 		ret = cpu_ops[cpu]->cpu_is_stopped(cpu);
+ 	if (ret)
+-		pr_warn("CPU%d may not have stopped: %d\n", cpu, ret);
++		pr_warn("CPU%u may not have stopped: %d\n", cpu, ret);
+ }
+ 
+ /*
 -- 
 2.43.0
 
