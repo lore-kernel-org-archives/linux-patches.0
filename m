@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B301F8934;
-	Wed,  6 Nov 2024 12:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263161EABD7;
+	Wed,  6 Nov 2024 12:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896676; cv=none; b=u+CqUYaj/hnsY9z4S/rWRxBsviVuR0MsRyjzUd6eSt7cGYC/1codWVeCkFwGoxAf8JAStrRWyo7ZNVhEGXZ6KcqSRx0fWQs6I9Bmr++119pPna1pEO851ukw8g8EYg3yv8juJG+LPHpJJVsUQaj/uwX1Dp1yYmxqmTdugCTlX78=
+	t=1730896679; cv=none; b=bfS5lo9DCyKmgvtHV230paoWXJN7gsH0KhXBNwAFTM5I2MoDk5fPCphQkKSiBs87RW9xzKnzoGDxGBbK4vRz6nouBGbt8ECxHOxtEZS/AsoBcVHnlNvZwtqiM4Mzld6ObHCVDJZj1RbSXDx5D1XZvZPIq8i8kT+Lvrqab41wS94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896676; c=relaxed/simple;
-	bh=B+uhDNyPgc2+UlLWlxZ88XAeo+wgcrsyt0h5DOfUpDg=;
+	s=arc-20240116; t=1730896679; c=relaxed/simple;
+	bh=OlrhO+/4P7tvPKRkZZ5qnBT9SGYSvlSUCiuUYU1/FbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VaO7a/0OPjoypGw9b0nAunqezcs41QuyCWTSWTfIkG/xED8fWcJAgTvTZewFftUSPNuFh4em3TwCWehOttPI3vbGOJpNRdY7Q7Rwcrzwag4Zdf8ng13Twtj6wh0Q3S5l5RDExgP5ScDOtN46rlUc22QCC0agHNGyXH1d3kydufw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eM1+6QwK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CehEaWi5l1OMHkiLvNJV+R4ppX5g7kunGhs7VKH1GfeLvAYXPCxdEdxvByi3u3GN4peaZebzDNIq2s9biCbHVIqy7YRcVrbKuH8+qXPxtEiwB1c/msQXDpZjYqZCu7Ef1zEmjWj+C/og+MrprEvq1FlHPYTOEsinfAJzid8S65c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9LcDv8J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eM1+6QwK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D91C4CED3;
-	Wed,  6 Nov 2024 12:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9LcDv8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2CBC4CED6;
+	Wed,  6 Nov 2024 12:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896675;
-	bh=B+uhDNyPgc2+UlLWlxZ88XAeo+wgcrsyt0h5DOfUpDg=;
+	s=korg; t=1730896678;
+	bh=OlrhO+/4P7tvPKRkZZ5qnBT9SGYSvlSUCiuUYU1/FbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eM1+6QwKRslGn5D+53jvO8qvQnbc/4k3vZtrb7k8jUNZrgSZC/fYsTZoZtcvoa6Op
-	 8r+pJ5dA07x+/38ZX9NRnjZyYtpwohyAJF2RpOjRZqRjba84c+QTuTeELF9CZqQg8z
-	 IJ0P3but6W8FVKX/214CWrGz/zFDFSiWsvvrXEFM=
+	b=A9LcDv8Jlo9Pris8wyLs50sIa9YvJHZQSs446F1HAdOc5Ta+XfnjG/zU2h1lkyf/5
+	 s7o5phRNunzgwuRk0yfbte4HeAVoraAdn7UBOzD1m4yUQizvoQKe24rdqrmi4PYTLV
+	 fPTheEJTSs1Kt6MJzapKKvldD9qtxSl5zYkBk8rY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 028/110] drm/vboxvideo: Replace fake VLA at end of vbva_mouse_pointer_shape with real VLA
-Date: Wed,  6 Nov 2024 13:03:54 +0100
-Message-ID: <20241106120303.950183622@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	Greg Thelen <gthelen@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	John Sperbeck <jsperbeck@google.com>
+Subject: [PATCH 5.10 037/110] net: usb: usbnet: fix name regression
+Date: Wed,  6 Nov 2024 13:04:03 +0100
+Message-ID: <20241106120304.219631092@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -51,69 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit d92b90f9a54d9300a6e883258e79f36dab53bfae ]
+[ Upstream commit 8a7d12d674ac6f2147c18f36d1e15f1a48060edf ]
 
-Replace the fake VLA at end of the vbva_mouse_pointer_shape shape with
-a real VLA to fix a "memcpy: detected field-spanning write error" warning:
+The fix for MAC addresses broke detection of the naming convention
+because it gave network devices no random MAC before bind()
+was called. This means that the check for the local assignment bit
+was always negative as the address was zeroed from allocation,
+instead of from overwriting the MAC with a unique hardware address.
 
-[   13.319813] memcpy: detected field-spanning write (size 16896) of single field "p->data" at drivers/gpu/drm/vboxvideo/hgsmi_base.c:154 (size 4)
-[   13.319841] WARNING: CPU: 0 PID: 1105 at drivers/gpu/drm/vboxvideo/hgsmi_base.c:154 hgsmi_update_pointer_shape+0x192/0x1c0 [vboxvideo]
-[   13.320038] Call Trace:
-[   13.320173]  hgsmi_update_pointer_shape [vboxvideo]
-[   13.320184]  vbox_cursor_atomic_update [vboxvideo]
+The correct check for whether bind() has altered the MAC is
+done with is_zero_ether_addr
 
-Note as mentioned in the added comment it seems the original length
-calculation for the allocated and send hgsmi buffer is 4 bytes too large.
-Changing this is not the goal of this patch, so this behavior is kept.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240827104523.17442-1-hdegoede@redhat.com
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Reported-by: Greg Thelen <gthelen@google.com>
+Diagnosed-by: John Sperbeck <jsperbeck@google.com>
+Fixes: bab8eb0dd4cb9 ("usbnet: modern method to get random MAC")
+Link: https://patch.msgid.link/20241017071849.389636-1-oneukum@suse.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vboxvideo/hgsmi_base.c | 10 +++++++++-
- drivers/gpu/drm/vboxvideo/vboxvideo.h  |  4 +---
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/usb/usbnet.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vboxvideo/hgsmi_base.c b/drivers/gpu/drm/vboxvideo/hgsmi_base.c
-index 361d3193258ea..7edc9cf6a6069 100644
---- a/drivers/gpu/drm/vboxvideo/hgsmi_base.c
-+++ b/drivers/gpu/drm/vboxvideo/hgsmi_base.c
-@@ -135,7 +135,15 @@ int hgsmi_update_pointer_shape(struct gen_pool *ctx, u32 flags,
- 		flags |= VBOX_MOUSE_POINTER_VISIBLE;
- 	}
- 
--	p = hgsmi_buffer_alloc(ctx, sizeof(*p) + pixel_len, HGSMI_CH_VBVA,
-+	/*
-+	 * The 4 extra bytes come from switching struct vbva_mouse_pointer_shape
-+	 * from having a 4 bytes fixed array at the end to using a proper VLA
-+	 * at the end. These 4 extra bytes were not subtracted from sizeof(*p)
-+	 * before the switch to the VLA, so this way the behavior is unchanged.
-+	 * Chances are these 4 extra bytes are not necessary but they are kept
-+	 * to avoid regressions.
-+	 */
-+	p = hgsmi_buffer_alloc(ctx, sizeof(*p) + pixel_len + 4, HGSMI_CH_VBVA,
- 			       VBVA_MOUSE_POINTER_SHAPE);
- 	if (!p)
- 		return -ENOMEM;
-diff --git a/drivers/gpu/drm/vboxvideo/vboxvideo.h b/drivers/gpu/drm/vboxvideo/vboxvideo.h
-index a5de40fe1a76a..bed285fe083c8 100644
---- a/drivers/gpu/drm/vboxvideo/vboxvideo.h
-+++ b/drivers/gpu/drm/vboxvideo/vboxvideo.h
-@@ -351,10 +351,8 @@ struct vbva_mouse_pointer_shape {
- 	 * Bytes in the gap between the AND and the XOR mask are undefined.
- 	 * XOR mask scanlines have no gap between them and size of XOR mask is:
- 	 * xor_len = width * 4 * height.
--	 *
--	 * Preallocate 4 bytes for accessing actual data as p->data.
- 	 */
--	u8 data[4];
-+	u8 data[];
- } __packed;
- 
- /* pointer is visible */
+diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
+index 669cd20cfe00a..b3d363ebea26e 100644
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -1717,7 +1717,8 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
+ 		// can rename the link if it knows better.
+ 		if ((dev->driver_info->flags & FLAG_ETHER) != 0 &&
+ 		    ((dev->driver_info->flags & FLAG_POINTTOPOINT) == 0 ||
+-		     (net->dev_addr [0] & 0x02) == 0))
++		     /* somebody touched it*/
++		     !is_zero_ether_addr(net->dev_addr)))
+ 			strscpy(net->name, "eth%d", sizeof(net->name));
+ 		/* WLAN devices should always be named "wlan%d" */
+ 		if ((dev->driver_info->flags & FLAG_WLAN) != 0)
 -- 
 2.43.0
 
