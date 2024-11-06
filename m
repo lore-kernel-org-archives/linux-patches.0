@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3196018C00E;
-	Wed,  6 Nov 2024 12:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE9C1D2784;
+	Wed,  6 Nov 2024 12:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896039; cv=none; b=EN3ujn/IrlIDVpJWnn0z+tfvP0qFof4EgcYHdonYGqJVjssEB1TwEobWx4568iLYSlwc/9e3mHzzxhiw/6Oae4iS3ZJ8b2C6mADztr0PzNl36/eUsgHD+YygLEyZpK16u38Kng1/w8j3Ju9jUQchk1Q+mXC6xBJ3j5FZIhm5LIY=
+	t=1730896042; cv=none; b=XIZl+KIB2vatsfMSLDQqfBkz8yt4q/Eye6XJOIU8/2zIOZbII7dxqLWGZRjR7sddlYq8I4mfQwfPpDQQgoNj6n//bKN5W4Wg8qofHPL5qi44l+f4PghXyljD4rIEwR9zRzwSEhL962K9lwmLOn+OO4oR3jKPEVrAfmzLvsGxu2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896039; c=relaxed/simple;
-	bh=pV/fp3eXixlYQmCBcbqyfulmE1ZwveJvTErODiawG1A=;
+	s=arc-20240116; t=1730896042; c=relaxed/simple;
+	bh=EQ1DJBTe8MB56YaVGBtrEAe1UGlYlW5HDGK5+Dm71D0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kMj8q0HjSapmu+dDN1kuHVNVIXhGTIZfBnVxzJKnEOo68l3JPktDoCDSOzENmTj0prrBvlBo8RooBZ4LppVdJZynaACRhEZ71y401B72V6mDCe759y0Gy/EZnSYd2qXxSp2S9Mlea/D79dWsx70uwHvWv/6vy3L5OPSf7sZjcYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=To/5HS90; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PRk9mbYmDHTySvvJrFdx00YjHVYNhR+YWQIWCocmhYgWGXu8MJDEmOoMxa66cNjFbYeeWjFvsMZr6XfuOPNI3guA7uSPx5tctb9e/JLxNI9sNkmp/gHInO9aZ7fUMZp3rxODWx9QlKa3O+KlazA+RgolEMBIIJlWaoRQn6Motrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCY/j2uU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="To/5HS90"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC35EC4CECD;
-	Wed,  6 Nov 2024 12:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCY/j2uU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9881DC4CECD;
+	Wed,  6 Nov 2024 12:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896039;
-	bh=pV/fp3eXixlYQmCBcbqyfulmE1ZwveJvTErODiawG1A=;
+	s=korg; t=1730896042;
+	bh=EQ1DJBTe8MB56YaVGBtrEAe1UGlYlW5HDGK5+Dm71D0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=To/5HS90zzzXceI65vFUep7CkKBAbfGgq9tjYH45lI77dtr6ftaxPcs/uy4gh0ucL
-	 FbZ57UljXhaNVJXpEGFw6TiCxp4BKVfFZS3EN8gJzsC1r1FBi+Q0LEr6LIm7Daslu4
-	 t3cofZ8RoDvlBlqA3iIk9BKPfG6w2ApoiE4HfCN4=
+	b=cCY/j2uUEP8IMwEFcnHlFmA2nzSHAMr3NiSQ6/RDH78zLvvo2GFjp3PyPLQU6wHjW
+	 aTcghPtNwgQ7b5FqaekqKrZnZARNsKLtXR6I4fgZ4tT0AsnupMCIa/HJETVFoqUg8U
+	 RYWCVKUV3U8D6dLDdrE1xIQb8/qIpIWE5V57f2I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 068/245] smb: client: fix parsing of device numbers
-Date: Wed,  6 Nov 2024 13:02:01 +0100
-Message-ID: <20241106120320.879494555@linuxfoundation.org>
+Subject: [PATCH 6.11 069/245] smb: client: set correct device number on nfs reparse points
+Date: Wed,  6 Nov 2024 13:02:02 +0100
+Message-ID: <20241106120320.903333201@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -53,68 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 663f295e35594f4c2584fc68c28546b747b637cd ]
+[ Upstream commit a9de67336a4aa3ff2e706ba023fb5f7ff681a954 ]
 
-Report correct major and minor numbers from special files created with
-NFS reparse points.
+Fix major and minor numbers set on special files created with NFS
+reparse points.
 
 Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c | 6 +++---
- fs/smb/client/reparse.h | 9 +--------
- 2 files changed, 4 insertions(+), 11 deletions(-)
+ fs/smb/client/reparse.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index 7429b96a6ae5e..a4e25b99411ec 100644
+index a4e25b99411ec..c848b5e88d32f 100644
 --- a/fs/smb/client/reparse.c
 +++ b/fs/smb/client/reparse.c
-@@ -497,7 +497,7 @@ static void wsl_to_fattr(struct cifs_open_info_data *data,
- 		else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen))
- 			fattr->cf_mode = (umode_t)le32_to_cpu(*(__le32 *)v);
- 		else if (!strncmp(name, SMB2_WSL_XATTR_DEV, nlen))
--			fattr->cf_rdev = wsl_mkdev(v);
-+			fattr->cf_rdev = reparse_mkdev(v);
- 	} while (next);
- out:
- 	fattr->cf_dtype = S_DT(fattr->cf_mode);
-@@ -518,13 +518,13 @@ bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
- 			if (le16_to_cpu(buf->ReparseDataLength) != sizeof(buf->InodeType) + 8)
- 				return false;
- 			fattr->cf_mode |= S_IFCHR;
--			fattr->cf_rdev = reparse_nfs_mkdev(buf);
-+			fattr->cf_rdev = reparse_mkdev(buf->DataBuffer);
- 			break;
- 		case NFS_SPECFILE_BLK:
- 			if (le16_to_cpu(buf->ReparseDataLength) != sizeof(buf->InodeType) + 8)
- 				return false;
- 			fattr->cf_mode |= S_IFBLK;
--			fattr->cf_rdev = reparse_nfs_mkdev(buf);
-+			fattr->cf_rdev = reparse_mkdev(buf->DataBuffer);
- 			break;
- 		case NFS_SPECFILE_FIFO:
- 			fattr->cf_mode |= S_IFIFO;
-diff --git a/fs/smb/client/reparse.h b/fs/smb/client/reparse.h
-index 2c0644bc4e65a..158e7b7aae646 100644
---- a/fs/smb/client/reparse.h
-+++ b/fs/smb/client/reparse.h
-@@ -18,14 +18,7 @@
-  */
- #define IO_REPARSE_TAG_INTERNAL ((__u32)~0U)
- 
--static inline dev_t reparse_nfs_mkdev(struct reparse_posix_data *buf)
--{
--	u64 v = le64_to_cpu(*(__le64 *)buf->DataBuffer);
--
--	return MKDEV(v >> 32, v & 0xffffffff);
--}
--
--static inline dev_t wsl_mkdev(void *ptr)
-+static inline dev_t reparse_mkdev(void *ptr)
- {
- 	u64 v = le64_to_cpu(*(__le64 *)ptr);
- 
+@@ -108,8 +108,8 @@ static int nfs_set_reparse_buf(struct reparse_posix_data *buf,
+ 	buf->InodeType = cpu_to_le64(type);
+ 	buf->ReparseDataLength = cpu_to_le16(len + dlen -
+ 					     sizeof(struct reparse_data_buffer));
+-	*(__le64 *)buf->DataBuffer = cpu_to_le64(((u64)MAJOR(dev) << 32) |
+-						 MINOR(dev));
++	*(__le64 *)buf->DataBuffer = cpu_to_le64(((u64)MINOR(dev) << 32) |
++						 MAJOR(dev));
+ 	iov->iov_base = buf;
+ 	iov->iov_len = len + dlen;
+ 	return 0;
 -- 
 2.43.0
 
