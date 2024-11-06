@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66363198E96;
-	Wed,  6 Nov 2024 12:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F297DA7F;
+	Wed,  6 Nov 2024 12:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896358; cv=none; b=LGyNQ6gN5LzLx5FQFo0hBGLGyNK5JlpVQOE6uAoGGmSj58awk9nwPayKSxzjWQYg33Gs/EjO0/R1jUpHCFlr3d6bhN7I6Q9i5eBCFC9+SLHoN9mru6sBf8K4Om3Vf2ScyctcrmsBRcBbgrUsv/Y31dJ5BZQ/7/WhzkBpbiZ1pSs=
+	t=1730896361; cv=none; b=PiaMmS2w/dR4D2TdYMjiez25fIukAnkUAZCdL42i+hE2EETsL45EAa1C7UZUhGFvsfZLEnw8VLaVlwNdzoPrn+U/UL4vHkpe5SLY+9O/ADNMeSdwMid84ks7obxBlqhynvE+hyT0fnlf/XBRFOCk83yL8qOygmHTBv0MGl7XoZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896358; c=relaxed/simple;
-	bh=gX4YlGd737+hsVe1Jl4yEnxNvoMgNunSEn7BCESLkKk=;
+	s=arc-20240116; t=1730896361; c=relaxed/simple;
+	bh=g9gw8P4YtUt6Jb3hUfIw7pqS0hzCblkIAuiTOZdRdaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZjgMZTVb+KkEZ+HVKIA7ehj4Kg2vd6j+jdl/p3oa3320PdTqWPEdQlahLS5tp/vAFxk9ly4QeXcL3RnmATyOOiHebN9/23pomziYp3ixqeK7nJHh9U0/aksP+eM3awq7Tj36/Pu0EuJezqOnlsgGZvEN+YQicJJBpbWVp2CxVgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8fNVCqv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RpqogDLiX35URKFvR1jajrbb4YMozKCKJJCuECWdlJMzjgxzqB7qiePzbY4QFdI61mWCPZAh9ArU84lblhluqJ6yiir6oIfpis23sCb1ogKTtFrq+6iqgCwP60ddrw/8KzShPuc3lWEy9dfrLWUf+kvgUvoODDlOfDu04SfDRYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O4nX0k38; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8fNVCqv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B858DC4CECD;
-	Wed,  6 Nov 2024 12:32:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O4nX0k38"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2545C4CECD;
+	Wed,  6 Nov 2024 12:32:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896358;
-	bh=gX4YlGd737+hsVe1Jl4yEnxNvoMgNunSEn7BCESLkKk=;
+	s=korg; t=1730896361;
+	bh=g9gw8P4YtUt6Jb3hUfIw7pqS0hzCblkIAuiTOZdRdaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p8fNVCqv51xcJ4MSxSzvahDemWLunH6fTJ5BY+ufDmL1vPSdWwFZcEfqAxxv0SBsM
-	 rNqqeV5RmIE/twzC0nm2oFGh2+GHkZ5Tvs8y5lGbMxP0ogssQKuVfQMFRyataNIEk6
-	 Eby13WfSDE5TnZShNzmE8R+cugqZyhC9yNzHeDJw=
+	b=O4nX0k38N4Vha/41tulTjpR1COUeyps27nQhvQKiMtrckU+ThA0HcAMfXIN9Mi1QU
+	 TaBxkqQxoNBY7UB+ACqncxV6jVbuiH8QQ0IdIjebEJvffqZg9dFxNJ6NjpYsBdS+Pw
+	 U5bbbqYOPkGZABg3l0l1WY2NFaIeHXv6u1XTRuoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Jann Horn <jannh@google.com>,
-	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Matt Fleming <mfleming@cloudflare.com>,
 	Vlastimil Babka <vbabka@suse.cz>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Linus Torvalds <torvalds@linuxfoundation.org>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Michal Hocko <mhocko@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 175/245] fork: only invoke khugepaged, ksm hooks if no error
-Date: Wed,  6 Nov 2024 13:03:48 +0100
-Message-ID: <20241106120323.545855141@linuxfoundation.org>
+Subject: [PATCH 6.11 176/245] mm/page_alloc: let GFP_ATOMIC order-0 allocs access highatomic reserves
+Date: Wed,  6 Nov 2024 13:03:49 +0100
+Message-ID: <20241106120323.570324244@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -58,110 +54,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+From: Matt Fleming <mfleming@cloudflare.com>
 
-[ Upstream commit 985da552a98e27096444508ce5d853244019111f ]
+[ Upstream commit 281dd25c1a018261a04d1b8bf41a0674000bfe38 ]
 
-There is no reason to invoke these hooks early against an mm that is in an
-incomplete state.
+Under memory pressure it's possible for GFP_ATOMIC order-0 allocations to
+fail even though free pages are available in the highatomic reserves.
+GFP_ATOMIC allocations cannot trigger unreserve_highatomic_pageblock()
+since it's only run from reclaim.
 
-The change in commit d24062914837 ("fork: use __mt_dup() to duplicate
-maple tree in dup_mmap()") makes this more pertinent as we may be in a
-state where entries in the maple tree are not yet consistent.
+Given that such allocations will pass the watermarks in
+__zone_watermark_unusable_free(), it makes sense to fallback to highatomic
+reserves the same way that ALLOC_OOM can.
 
-Their placement early in dup_mmap() only appears to have been meaningful
-for early error checking, and since functionally it'd require a very small
-allocation to fail (in practice 'too small to fail') that'd only occur in
-the most dire circumstances, meaning the fork would fail or be OOM'd in
-any case.
+This fixes order-0 page allocation failures observed on Cloudflare's fleet
+when handling network packets:
 
-Since both khugepaged and KSM tracking are there to provide optimisations
-to memory performance rather than critical functionality, it doesn't
-really matter all that much if, under such dire memory pressure, we fail
-to register an mm with these.
+  kswapd1: page allocation failure: order:0, mode:0x820(GFP_ATOMIC),
+  nodemask=(null),cpuset=/,mems_allowed=0-7
+  CPU: 10 PID: 696 Comm: kswapd1 Kdump: loaded Tainted: G           O 6.6.43-CUSTOM #1
+  Hardware name: MACHINE
+  Call Trace:
+   <IRQ>
+   dump_stack_lvl+0x3c/0x50
+   warn_alloc+0x13a/0x1c0
+   __alloc_pages_slowpath.constprop.0+0xc9d/0xd10
+   __alloc_pages+0x327/0x340
+   __napi_alloc_skb+0x16d/0x1f0
+   bnxt_rx_page_skb+0x96/0x1b0 [bnxt_en]
+   bnxt_rx_pkt+0x201/0x15e0 [bnxt_en]
+   __bnxt_poll_work+0x156/0x2b0 [bnxt_en]
+   bnxt_poll+0xd9/0x1c0 [bnxt_en]
+   __napi_poll+0x2b/0x1b0
+   bpf_trampoline_6442524138+0x7d/0x1000
+   __napi_poll+0x5/0x1b0
+   net_rx_action+0x342/0x740
+   handle_softirqs+0xcf/0x2b0
+   irq_exit_rcu+0x6c/0x90
+   sysvec_apic_timer_interrupt+0x72/0x90
+   </IRQ>
 
-As a result, we follow the example of commit d2081b2bf819 ("mm:
-khugepaged: make khugepaged_enter() void function") and make ksm_fork() a
-void function also.
-
-We only expose the mm to these functions once we are done with them and
-only if no error occurred in the fork operation.
-
-Link: https://lkml.kernel.org/r/e0cb8b840c9d1d5a6e84d4f8eff5f3f2022aa10c.1729014377.git.lorenzo.stoakes@oracle.com
-Fixes: d24062914837 ("fork: use __mt_dup() to duplicate maple tree in dup_mmap()")
-Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reported-by: Jann Horn <jannh@google.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
+[mfleming@cloudflare.com: update comment]
+  Link: https://lkml.kernel.org/r/20241015125158.3597702-1-matt@readmodwrite.com
+Link: https://lkml.kernel.org/r/20241011120737.3300370-1-matt@readmodwrite.com
+Link: https://lore.kernel.org/all/CAGis_TWzSu=P7QJmjD58WWiu3zjMTVKSzdOwWE8ORaGytzWJwQ@mail.gmail.com/
+Fixes: 1d91df85f399 ("mm/page_alloc: handle a missing case for memalloc_nocma_{save/restore} APIs")
+Signed-off-by: Matt Fleming <mfleming@cloudflare.com>
+Suggested-by: Vlastimil Babka <vbabka@suse.cz>
 Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: Jann Horn <jannh@google.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Linus Torvalds <torvalds@linuxfoundation.org>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Michal Hocko <mhocko@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ksm.h | 10 ++++------
- kernel/fork.c       |  7 ++-----
- 2 files changed, 6 insertions(+), 11 deletions(-)
+ mm/page_alloc.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/ksm.h b/include/linux/ksm.h
-index 11690dacd9868..ec9c05044d4fe 100644
---- a/include/linux/ksm.h
-+++ b/include/linux/ksm.h
-@@ -54,12 +54,11 @@ static inline long mm_ksm_zero_pages(struct mm_struct *mm)
- 	return atomic_long_read(&mm->ksm_zero_pages);
- }
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 91ace8ca97e21..ec459522c2934 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -2874,12 +2874,12 @@ struct page *rmqueue_buddy(struct zone *preferred_zone, struct zone *zone,
+ 			page = __rmqueue(zone, order, migratetype, alloc_flags);
  
--static inline int ksm_fork(struct mm_struct *mm, struct mm_struct *oldmm)
-+static inline void ksm_fork(struct mm_struct *mm, struct mm_struct *oldmm)
- {
-+	/* Adding mm to ksm is best effort on fork. */
- 	if (test_bit(MMF_VM_MERGEABLE, &oldmm->flags))
--		return __ksm_enter(mm);
--
--	return 0;
-+		__ksm_enter(mm);
- }
+ 			/*
+-			 * If the allocation fails, allow OOM handling access
+-			 * to HIGHATOMIC reserves as failing now is worse than
+-			 * failing a high-order atomic allocation in the
+-			 * future.
++			 * If the allocation fails, allow OOM handling and
++			 * order-0 (atomic) allocs access to HIGHATOMIC
++			 * reserves as failing now is worse than failing a
++			 * high-order atomic allocation in the future.
+ 			 */
+-			if (!page && (alloc_flags & ALLOC_OOM))
++			if (!page && (alloc_flags & (ALLOC_OOM|ALLOC_NON_BLOCK)))
+ 				page = __rmqueue_smallest(zone, order, MIGRATE_HIGHATOMIC);
  
- static inline int ksm_execve(struct mm_struct *mm)
-@@ -107,9 +106,8 @@ static inline int ksm_disable(struct mm_struct *mm)
- 	return 0;
- }
- 
--static inline int ksm_fork(struct mm_struct *mm, struct mm_struct *oldmm)
-+static inline void ksm_fork(struct mm_struct *mm, struct mm_struct *oldmm)
- {
--	return 0;
- }
- 
- static inline int ksm_execve(struct mm_struct *mm)
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 6423ce60b8f97..dc08a23747338 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -653,11 +653,6 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
- 	mm->exec_vm = oldmm->exec_vm;
- 	mm->stack_vm = oldmm->stack_vm;
- 
--	retval = ksm_fork(mm, oldmm);
--	if (retval)
--		goto out;
--	khugepaged_fork(mm, oldmm);
--
- 	/* Use __mt_dup() to efficiently build an identical maple tree. */
- 	retval = __mt_dup(&oldmm->mm_mt, &mm->mm_mt, GFP_KERNEL);
- 	if (unlikely(retval))
-@@ -760,6 +755,8 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
- 	vma_iter_free(&vmi);
- 	if (!retval) {
- 		mt_set_in_rcu(vmi.mas.tree);
-+		ksm_fork(mm, oldmm);
-+		khugepaged_fork(mm, oldmm);
- 	} else if (mpnt) {
- 		/*
- 		 * The entire maple tree has already been duplicated. If the
+ 			if (!page) {
 -- 
 2.43.0
 
