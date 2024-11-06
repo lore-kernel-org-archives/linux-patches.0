@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C0E1DFE3A;
-	Wed,  6 Nov 2024 13:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B331DFE1E;
+	Wed,  6 Nov 2024 13:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899225; cv=none; b=ZihWKIJV3SvEMmIxU6KzR+meAQQqXdCvAkHr+t9mx7MirTeerXpJNIMAjJgg+xihvcjIMUwpaoxfBi6yeGQNG+1n0L6JiVdyqtpKHaQPg7mJUlUuRddLVszeXndE6AcljTDnTSGi2it+preffEf8lIvV1k5gTVdAPYTaaGSIxaE=
+	t=1730899228; cv=none; b=HtZKPxzhx1lIfM/x9tTtzbUw0sfVPNwK9biVlfMvNP0NbL5l70XMLw4MiskW751Jq/RlFy4jBWLHbkaebjt4iwV48eRs89qfkoU2tX/uUT7uKPQgKEQelLLrfJKHipbOq6tRca+jP4FRHhGYxZWiCZjX9TagWp+lC80jBfblQEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899225; c=relaxed/simple;
-	bh=lFDYbLToVFfKe3gwvjG7bzo1jbHK8rzUbJd1fMauEp4=;
+	s=arc-20240116; t=1730899228; c=relaxed/simple;
+	bh=2HkPPl2jx+rK0FiDHk3QxANXldS1zmvQsdEA7oDdA9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gAOWIV729W1g/vy1wLPWCUGfd9DgvgU5/Kkk106fGg6nQhpHJ8j5hmFlPu2ni5uFO2HudN8HHdZvG2dDKbyJbWtsCFURjBDg+S+yUkP04BmqqT5pAWgLftj4HbkRs6zyQlwf3xiaGcM+LEUABnXei+9vasp9P+Zr0/WIuzyj9sQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEpIDYaY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kNVT5ZKD0Mx5G1DVST75R+uM1XA60j1mGMI9jFsoVSvHx+DRCRoZZF/zifxCl4i8Bg36cYFn4ZUxJgsyr9emC9/700PgC+BlVXTvFrFbSdsdFNHuxnc+TqqhqGu2f3p4pD85/v2zBWqk1JdL9AnqMPwHEWhkPjn6ae02XzV+Pkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMC4xIjc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEpIDYaY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DE0C4CECD;
-	Wed,  6 Nov 2024 13:20:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMC4xIjc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E77C4CECD;
+	Wed,  6 Nov 2024 13:20:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899224;
-	bh=lFDYbLToVFfKe3gwvjG7bzo1jbHK8rzUbJd1fMauEp4=;
+	s=korg; t=1730899227;
+	bh=2HkPPl2jx+rK0FiDHk3QxANXldS1zmvQsdEA7oDdA9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BEpIDYaY/rqPwvsfgwTHto8qiMrfQokK3QtoW6R8Z0Vp/j6zaYxIU7wPuhwODQNyD
-	 FCmPshbWaREuydd1ywFoniTblRjd+E6M6bv+Y8F3mouePKbVLX8O0rCC4LtBqcWuMl
-	 BH5+ndlkBa714v4Zy2wbRCkjsD31JbIf94Ig84bk=
+	b=RMC4xIjcpxYAp6JdCFawB9vycC+zbzXyymloUgNpGki3a6cLlaK4JJV8OluiXMiRL
+	 3RMhUUwZ8qYHyWcmTDPXd3pf5ZS9k8RLAGQ6Eafvchbse7HbkxSqNSUbu0Nq4bUtPu
+	 cU4SHaR+1BLw2JPRZ1F7E6B353u7/+AfBs8o1uTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Subject: [PATCH 5.15 40/73] usb: typec: fix unreleased fwnode_handle in typec_port_register_altmodes()
-Date: Wed,  6 Nov 2024 13:05:44 +0100
-Message-ID: <20241106120301.158331166@linuxfoundation.org>
+	Faisal Hassan <quic_faisalh@quicinc.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 41/73] xhci: Fix Link TRB DMA in command ring stopped completion event
+Date: Wed,  6 Nov 2024 13:05:45 +0100
+Message-ID: <20241106120301.189475281@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120259.955073160@linuxfoundation.org>
 References: <20241106120259.955073160@linuxfoundation.org>
@@ -50,35 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Faisal Hassan <quic_faisalh@quicinc.com>
 
-commit 9581acb91eaf5bbe70086bbb6fca808220d358ba upstream.
+commit 075919f6df5dd82ad0b1894898b315fbb3c29b84 upstream.
 
-The 'altmodes_node' fwnode_handle is never released after it is no
-longer required, which leaks the resource.
+During the aborting of a command, the software receives a command
+completion event for the command ring stopped, with the TRB pointing
+to the next TRB after the aborted command.
 
-Add the required call to fwnode_handle_put() when 'altmodes_node' is no
-longer required.
+If the command we abort is located just before the Link TRB in the
+command ring, then during the 'command ring stopped' completion event,
+the xHC gives the Link TRB in the event's cmd DMA, which causes a
+mismatch in handling command completion event.
 
+To address this situation, move the 'command ring stopped' completion
+event check slightly earlier, since the specific command it stopped
+on isn't of significant concern.
+
+Fixes: 7f84eef0dafb ("USB: xhci: No-op command queueing and irq handler.")
 Cc: stable@vger.kernel.org
-Fixes: 7b458a4c5d73 ("usb: typec: Add typec_port_register_altmodes()")
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20241021-typec-class-fwnode_handle_put-v2-1-3281225d3d27@gmail.com
+Signed-off-by: Faisal Hassan <quic_faisalh@quicinc.com>
+Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20241022155631.1185-1-quic_faisalh@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/class.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/host/xhci-ring.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -2026,6 +2026,7 @@ void typec_port_register_altmodes(struct
- 		altmodes[index] = alt;
- 		index++;
- 	}
-+	fwnode_handle_put(altmodes_node);
- }
- EXPORT_SYMBOL_GPL(typec_port_register_altmodes);
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1769,6 +1769,14 @@ static void handle_cmd_completion(struct
  
+ 	trace_xhci_handle_command(xhci->cmd_ring, &cmd_trb->generic);
+ 
++	cmd_comp_code = GET_COMP_CODE(le32_to_cpu(event->status));
++
++	/* If CMD ring stopped we own the trbs between enqueue and dequeue */
++	if (cmd_comp_code == COMP_COMMAND_RING_STOPPED) {
++		complete_all(&xhci->cmd_ring_stop_completion);
++		return;
++	}
++
+ 	cmd_dequeue_dma = xhci_trb_virt_to_dma(xhci->cmd_ring->deq_seg,
+ 			cmd_trb);
+ 	/*
+@@ -1785,14 +1793,6 @@ static void handle_cmd_completion(struct
+ 
+ 	cancel_delayed_work(&xhci->cmd_timer);
+ 
+-	cmd_comp_code = GET_COMP_CODE(le32_to_cpu(event->status));
+-
+-	/* If CMD ring stopped we own the trbs between enqueue and dequeue */
+-	if (cmd_comp_code == COMP_COMMAND_RING_STOPPED) {
+-		complete_all(&xhci->cmd_ring_stop_completion);
+-		return;
+-	}
+-
+ 	if (cmd->command_trb != xhci->cmd_ring->dequeue) {
+ 		xhci_err(xhci,
+ 			 "Command completion event does not match command\n");
 
 
