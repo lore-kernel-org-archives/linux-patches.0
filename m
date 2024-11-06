@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370811DFDA8;
-	Wed,  6 Nov 2024 12:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093981DF978;
+	Wed,  6 Nov 2024 12:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895901; cv=none; b=N5sXFYTH6laP/QkNYAllWZYOFXm862kNFRcBz/sL0D8luN9Y5rVHCiRoGO9JnVeENb3MNa6tv8sjVtAnCctT1wt5BW42uEXdI8/Hva8Kxq+veQ9CpwR9zntImhN+XSCpCAM8ikILSD9C0VK8JI+OjuVLRQNbFME+WCrcspniPT8=
+	t=1730895904; cv=none; b=Ztq/4oGGfLS4IWHT+b7v0KJAnIPf3pkIymVUwFNoktDmsurPz3H1SZbhm7askgD2HMr62CcJeOW22ePZQMLfCUzyy41dFyY0tqpA84tEUrOu6xEzm3a++lFZ0LsgZ/AL206QbbnTLm8qQMfjWe2cNI1+mud1FmFWgcGqHurULSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895901; c=relaxed/simple;
-	bh=Kg3/+FB/Vk+/N9tcQE4qGoUZehCLR+iw1zhLi3dzLlI=;
+	s=arc-20240116; t=1730895904; c=relaxed/simple;
+	bh=4l15eMwk3dncQ1XJHzVO3R2jDPL7ZsZ5UnL2JjszJLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SSY/bhLjrtYYg7f9FdwW5JL77ZzWGlvltnp4cr/eHU27QA1cVb2JKycql0+qUM7VeeOVAu7LklP+QFi8M18VBUC/s1z1HbA5Bv/g39s3TXcqWfUignooS5ZCSdGmYiJb9ZszaoBF6gykocUmjjx5fpKsdoYGj64jzaCvGmZzNcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=raXLz7+l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fr4MX/Tu/o4R0/W5RiYPfmT48Y2qr0T5Ffloca/J7pooBCIcHCIeyg4zmABMA6Lm/uycYQL6kHLQVWSMt2cM0mkWcRsoRkJoms4I81vTFska2CHjqxQJGMBk7MkOUFim7sKagUla6LsnzV1BYlPnJNFJVW1jvKSJcBOn4vXQMlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXHduDmD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="raXLz7+l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640F2C4CECD;
-	Wed,  6 Nov 2024 12:25:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXHduDmD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B830C4CED3;
+	Wed,  6 Nov 2024 12:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895900;
-	bh=Kg3/+FB/Vk+/N9tcQE4qGoUZehCLR+iw1zhLi3dzLlI=;
+	s=korg; t=1730895903;
+	bh=4l15eMwk3dncQ1XJHzVO3R2jDPL7ZsZ5UnL2JjszJLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=raXLz7+lMio+IAd+GXtiW4lauBRBdAsWIXBnSKDV8y9uQhB2hJ9s3aHrX9c1ZRjvS
-	 peyFK1YkbVQ9T73I0hYQpvN6osQVUS/dHeJe1S8lvS4YQLE72AlwPJC+Od0rf7WbKv
-	 tkpEcOGRGFhikDd4O2TUy2YKSX2GkuhOV6DAADC0=
+	b=KXHduDmD1UqsHtyFLst9ETYmal7l6TrgUGZEeJZpuy+n9FWIxUXXP6zMaFRskudgi
+	 F6PyThazTTkwznbmuxTJFiAkBMuVeWjF1/iY5O0QIq/yHY7d6bPl/ZgpLBcQNPMgk5
+	 Q5u5xOqVEtswA5Zczh4kGDYqBOvGjIbvgaznVN3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 022/245] wifi: iwlwifi: mvm: dont add default link in fw restart flow
-Date: Wed,  6 Nov 2024 13:01:15 +0100
-Message-ID: <20241106120319.781927785@linuxfoundation.org>
+Subject: [PATCH 6.11 023/245] Revert "wifi: iwlwifi: remove retry loops in start"
+Date: Wed,  6 Nov 2024 13:01:16 +0100
+Message-ID: <20241106120319.805249955@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -54,76 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 734a377e1eacc5153bae0ccd4423365726876e93 ]
+[ Upstream commit bfc0ed73e095cc3858d35731f191fa6e3d813262 ]
 
-When we add the vif (and its default link) in fw restart we may
-override the link that already exists. We take care of this but if
-link 0 is a valid MLO link, then we will re-create a default link on
-mvmvif->link[0] and we'll loose the real link we had there.
+Revert commit dfdfe4be183b ("wifi: iwlwifi: remove retry loops in
+start"), it turns out that there's an issue with the PNVM load
+notification from firmware not getting processed, that this patch
+has been somewhat successfully papering over. Since this is being
+reported, revert the loop removal for now.
 
-In non-MLO, we need to re-create the default link upon the interface
-creation, this is fine. In MLO, we'll just wait for change_vif_links()
-to re-build the links.
+We will later at least clean this up to only attempt to retry if
+there was a timeout, but currently we don't even bubble up the
+failure reason to the correct layer, only returning NULL.
 
-Fixes: bf976c814c86 ("wifi: iwlwifi: mvm: implement link change ops")
+Fixes: dfdfe4be183b ("wifi: iwlwifi: remove retry loops in start")
 Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20241010140328.385bfea1b2e9.I4a127312285ccb529cc95cc4edf6fbe1e0a136ad@changeid
+Link: https://patch.msgid.link/20241022092212.4aa82a558a00.Ibdeff9c8f0d608bc97fc42024392ae763b6937b7@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/intel/iwlwifi/mvm/mld-mac80211.c | 24 ++++++++++++++-----
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/iwl-drv.c  | 28 +++++++++++++------
+ drivers/net/wireless/intel/iwlwifi/iwl-drv.h  |  3 ++
+ .../net/wireless/intel/iwlwifi/mvm/mac80211.c | 10 ++++++-
+ 3 files changed, 31 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-index 27980d58e6956..c4ccc353a8fd4 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-@@ -41,8 +41,6 @@ static int iwl_mvm_mld_mac_add_interface(struct ieee80211_hw *hw,
- 	/* reset deflink MLO parameters */
- 	mvmvif->deflink.fw_link_id = IWL_MVM_FW_LINK_ID_INVALID;
- 	mvmvif->deflink.active = 0;
--	/* the first link always points to the default one */
--	mvmvif->link[0] = &mvmvif->deflink;
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
+index aaaabd67f9593..3709039a294d8 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
+@@ -1413,25 +1413,35 @@ _iwl_op_mode_start(struct iwl_drv *drv, struct iwlwifi_opmode_table *op)
+ 	const struct iwl_op_mode_ops *ops = op->ops;
+ 	struct dentry *dbgfs_dir = NULL;
+ 	struct iwl_op_mode *op_mode = NULL;
++	int retry, max_retry = !!iwlwifi_mod_params.fw_restart * IWL_MAX_INIT_RETRY;
  
- 	ret = iwl_mvm_mld_mac_ctxt_add(mvm, vif);
- 	if (ret)
-@@ -60,9 +58,19 @@ static int iwl_mvm_mld_mac_add_interface(struct ieee80211_hw *hw,
- 				     IEEE80211_VIF_SUPPORTS_CQM_RSSI;
- 	}
+ 	/* also protects start/stop from racing against each other */
+ 	lockdep_assert_held(&iwlwifi_opmode_table_mtx);
  
--	ret = iwl_mvm_add_link(mvm, vif, &vif->bss_conf);
--	if (ret)
--		goto out_free_bf;
-+	/* We want link[0] to point to the default link, unless we have MLO and
-+	 * in this case this will be modified later by .change_vif_links()
-+	 * If we are in the restart flow with an MLD connection, we will wait
-+	 * to .change_vif_links() to setup the links.
-+	 */
-+	if (!test_bit(IWL_MVM_STATUS_IN_HW_RESTART, &mvm->status) ||
-+	    !ieee80211_vif_is_mld(vif)) {
-+		mvmvif->link[0] = &mvmvif->deflink;
++	for (retry = 0; retry <= max_retry; retry++) {
 +
-+		ret = iwl_mvm_add_link(mvm, vif, &vif->bss_conf);
-+		if (ret)
-+			goto out_free_bf;
+ #ifdef CONFIG_IWLWIFI_DEBUGFS
+-	drv->dbgfs_op_mode = debugfs_create_dir(op->name,
+-						drv->dbgfs_drv);
+-	dbgfs_dir = drv->dbgfs_op_mode;
++		drv->dbgfs_op_mode = debugfs_create_dir(op->name,
++							drv->dbgfs_drv);
++		dbgfs_dir = drv->dbgfs_op_mode;
+ #endif
+ 
+-	op_mode = ops->start(drv->trans, drv->trans->cfg,
+-			     &drv->fw, dbgfs_dir);
+-	if (op_mode)
+-		return op_mode;
++		op_mode = ops->start(drv->trans, drv->trans->cfg,
++				     &drv->fw, dbgfs_dir);
++
++		if (op_mode)
++			return op_mode;
++
++		if (test_bit(STATUS_TRANS_DEAD, &drv->trans->status))
++			break;
++
++		IWL_ERR(drv, "retry init count %d\n", retry);
+ 
+ #ifdef CONFIG_IWLWIFI_DEBUGFS
+-	debugfs_remove_recursive(drv->dbgfs_op_mode);
+-	drv->dbgfs_op_mode = NULL;
++		debugfs_remove_recursive(drv->dbgfs_op_mode);
++		drv->dbgfs_op_mode = NULL;
+ #endif
 +	}
  
- 	/* Save a pointer to p2p device vif, so it can later be used to
- 	 * update the p2p device MAC when a GO is started/stopped
-@@ -1188,7 +1196,11 @@ iwl_mvm_mld_change_vif_links(struct ieee80211_hw *hw,
+ 	return NULL;
+ }
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.h b/drivers/net/wireless/intel/iwlwifi/iwl-drv.h
+index 1549ff4295497..6a1d31892417b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.h
+@@ -98,6 +98,9 @@ void iwl_drv_stop(struct iwl_drv *drv);
+ #define VISIBLE_IF_IWLWIFI_KUNIT static
+ #endif
+ 
++/* max retry for init flow */
++#define IWL_MAX_INIT_RETRY 2
++
+ #define FW_NAME_PRE_BUFSIZE	64
+ struct iwl_trans;
+ const char *iwl_drv_get_fwname_pre(struct iwl_trans *trans, char *buf);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index e38cff6176dd3..63b2c6fe3f8ab 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -1292,12 +1292,14 @@ int iwl_mvm_mac_start(struct ieee80211_hw *hw)
+ {
+ 	struct iwl_mvm *mvm = IWL_MAC80211_GET_MVM(hw);
+ 	int ret;
++	int retry, max_retry = 0;
  
  	mutex_lock(&mvm->mutex);
  
--	if (old_links == 0) {
-+	/* If we're in RESTART flow, the default link wasn't added in
-+         * drv_add_interface(), and link[0] doesn't point to it.
-+	 */
-+	if (old_links == 0 && !test_bit(IWL_MVM_STATUS_IN_HW_RESTART,
-+					&mvm->status)) {
- 		err = iwl_mvm_disable_link(mvm, vif, &vif->bss_conf);
- 		if (err)
- 			goto out_err;
+ 	/* we are starting the mac not in error flow, and restart is enabled */
+ 	if (!test_bit(IWL_MVM_STATUS_HW_RESTART_REQUESTED, &mvm->status) &&
+ 	    iwlwifi_mod_params.fw_restart) {
++		max_retry = IWL_MAX_INIT_RETRY;
+ 		/*
+ 		 * This will prevent mac80211 recovery flows to trigger during
+ 		 * init failures
+@@ -1305,7 +1307,13 @@ int iwl_mvm_mac_start(struct ieee80211_hw *hw)
+ 		set_bit(IWL_MVM_STATUS_STARTING, &mvm->status);
+ 	}
+ 
+-	ret = __iwl_mvm_mac_start(mvm);
++	for (retry = 0; retry <= max_retry; retry++) {
++		ret = __iwl_mvm_mac_start(mvm);
++		if (!ret)
++			break;
++
++		IWL_ERR(mvm, "mac start retry %d\n", retry);
++	}
+ 	clear_bit(IWL_MVM_STATUS_STARTING, &mvm->status);
+ 
+ 	mutex_unlock(&mvm->mutex);
 -- 
 2.43.0
 
