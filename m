@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4241F668B;
-	Wed,  6 Nov 2024 12:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F621E5718;
+	Wed,  6 Nov 2024 12:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896927; cv=none; b=ttztoWtpE7STJD4hc2aQ53kHjcbQBX5REWRzcZN/O3h/WP8Ai7YD6/sSkS0ZIvtqTofyNNfiEnIuIgFFpJsMX+u7AkV5GQM7NRv0EgWmmSIy2voVVr+1GELeSqavpaNdyKjrVNlT2A92OPjqmcigvnWPTXmcVZl3yglCYSZgLFg=
+	t=1730896930; cv=none; b=dmntfEonxtnpaSXL8JI/bTibcVkP3mFjXQnI9LrJr7Qc+gGja4gLKD9KAlL0qaYoAWb9AGKktTThOBbpzkL2HTj/w8QKQbstqPMkbTEa2YZ1QZ9Lw2OMZLVUC1DnBeTxSjYWm1tG7R9FmibHmK85NNSkd/wDjEG25bxYjVr2Qvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896927; c=relaxed/simple;
-	bh=ownBqU+z5f8d3CuaB2UOtLmfKb85BNgKsHRWowWfvHw=;
+	s=arc-20240116; t=1730896930; c=relaxed/simple;
+	bh=H/4yWOUVX+tVYIMvaAmvNgfem0ATK8owfCNAEhR2OFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cf6rHgXt8ge6wHn/2dlKbi4psaM+BnPzKfmN/Us6JTErQd6qMwhTbZyv2IqTSaTq/VPCOj8DvaxITSQ+BFU6SIU9nyG2WTCo4gs1h47SiZdqBVKmOJwyKNCVRfeGAmBJmZa49CxtxtRYjmXgfaC85ZxfglZ0uXjdyRrRMDBjrrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZglItxOD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ln4gnpgnmOAZiXBcaDUnjtJ70XZbFjebIQkqpDjd3nZGUPJHOeoLQt5i8MY/iDp9AdvJBM20tx7Mtl6pEhXgYQe/Lvg+z7wxeM7LV7WRiOv6wdsqcvN6pWc76uM+2LPr9/mpj6yiQgUHMin6NGeu11luiPHNmv5IdO1Q+GAKpok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=silAxvtC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZglItxOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A2FC4CECD;
-	Wed,  6 Nov 2024 12:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="silAxvtC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECF99C4CECD;
+	Wed,  6 Nov 2024 12:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896927;
-	bh=ownBqU+z5f8d3CuaB2UOtLmfKb85BNgKsHRWowWfvHw=;
+	s=korg; t=1730896930;
+	bh=H/4yWOUVX+tVYIMvaAmvNgfem0ATK8owfCNAEhR2OFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZglItxODNNzfKiuScApFlnejurPOlE0PkHC219OF/U4LLeo5kpo9gJh74TV4GS4q8
-	 voDfS+40j7BKzG8E9tINhJPxNrp6vmXDgSnQPy0sMLdCMiQX0qGDjl3ZUq3fNxMo4G
-	 l+8eosBMiXS9P5KEbh4MWvVFwum8qeo6EB2hYH+o=
+	b=silAxvtCTPl+PH6csKkuyLIKTgn/02hB7sxyvqG/cHN8Y4fxigGeV7YxMiRHZXj4e
+	 m2//Dvddi+rrrGRaBiKjda8MOuZPxywis6JCjHgi25n3oh9Nyla3fYEAtt3kaNmjfw
+	 tlAJn/SoFxGfIg6+9W2Y5ExnOLOLS3Q+GK05v2DU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hector Martin <marcan@marcan.st>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	=?UTF-8?q?Martin-=C3=89ric=20Racine?= <martin-eric.racine@iki.fi>,
+	Ben Hutchings <ben@decadent.org.uk>,
+	Brandon Nielsen <nielsenb@jetfuse.net>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/126] cpufreq: Generalize of_perf_domain_get_sharing_cpumask phandle format
-Date: Wed,  6 Nov 2024 13:03:22 +0100
-Message-ID: <20241106120306.081312093@linuxfoundation.org>
+Subject: [PATCH 6.1 010/126] wifi: iwlegacy: Fix "field-spanning write" warning in il_enqueue_hcmd()
+Date: Wed,  6 Nov 2024 13:03:31 +0100
+Message-ID: <20241106120306.350302452@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -45,147 +48,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hector Martin <marcan@marcan.st>
+From: Ben Hutchings <ben@decadent.org.uk>
 
-[ Upstream commit d182dc6de93225cd853de4db68a1a77501bedb6e ]
+[ Upstream commit d4cdc46ca16a5c78b36c5b9b6ad8cac09d6130a0 ]
 
-of_perf_domain_get_sharing_cpumask currently assumes a 1-argument
-phandle format, and directly returns the argument. Generalize this to
-return the full of_phandle_args, so it can be used by drivers which use
-other phandle styles (e.g. separate nodes). This also requires changing
-the CPU sharing match to compare the full args structure.
+iwlegacy uses command buffers with a payload size of 320
+bytes (default) or 4092 bytes (huge).  The struct il_device_cmd type
+describes the default buffers and there is no separate type describing
+the huge buffers.
 
-Also, make sure to of_node_put(args.np) (the original code was leaking a
-reference).
+The il_enqueue_hcmd() function works with both default and huge
+buffers, and has a memcpy() to the buffer payload.  The size of
+this copy may exceed 320 bytes when using a huge buffer, which
+now results in a run-time warning:
 
-Signed-off-by: Hector Martin <marcan@marcan.st>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Stable-dep-of: c0f02536fffb ("cpufreq: Avoid a bad reference count on CPU node")
+    memcpy: detected field-spanning write (size 1014) of single field "&out_cmd->cmd.payload" at drivers/net/wireless/intel/iwlegacy/common.c:3170 (size 320)
+
+To fix this:
+
+- Define a new struct type for huge buffers, with a correctly sized
+  payload field
+- When using a huge buffer in il_enqueue_hcmd(), cast the command
+  buffer pointer to that type when looking up the payload field
+
+Reported-by: Martin-Éric Racine <martin-eric.racine@iki.fi>
+References: https://bugs.debian.org/1062421
+References: https://bugzilla.kernel.org/show_bug.cgi?id=219124
+Signed-off-by: Ben Hutchings <ben@decadent.org.uk>
+Fixes: 54d9469bc515 ("fortify: Add run-time WARN for cross-field memcpy()")
+Tested-by: Martin-Éric Racine <martin-eric.racine@iki.fi>
+Tested-by: Brandon Nielsen <nielsenb@jetfuse.net>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/ZuIhQRi/791vlUhE@decadent.org.uk
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/mediatek-cpufreq-hw.c | 14 +++++++++-----
- include/linux/cpufreq.h               | 28 +++++++++++++++------------
- 2 files changed, 25 insertions(+), 17 deletions(-)
+ drivers/net/wireless/intel/iwlegacy/common.c | 13 ++++++++++++-
+ drivers/net/wireless/intel/iwlegacy/common.h | 12 ++++++++++++
+ 2 files changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/mediatek-cpufreq-hw.c b/drivers/cpufreq/mediatek-cpufreq-hw.c
-index 7f326bb5fd8de..62f5a9d64e8fa 100644
---- a/drivers/cpufreq/mediatek-cpufreq-hw.c
-+++ b/drivers/cpufreq/mediatek-cpufreq-hw.c
-@@ -162,6 +162,7 @@ static int mtk_cpu_resources_init(struct platform_device *pdev,
- 	struct mtk_cpufreq_data *data;
- 	struct device *dev = &pdev->dev;
- 	struct resource *res;
-+	struct of_phandle_args args;
- 	void __iomem *base;
- 	int ret, i;
- 	int index;
-@@ -170,11 +171,14 @@ static int mtk_cpu_resources_init(struct platform_device *pdev,
- 	if (!data)
- 		return -ENOMEM;
+diff --git a/drivers/net/wireless/intel/iwlegacy/common.c b/drivers/net/wireless/intel/iwlegacy/common.c
+index 96002121bb8b2..9fa38221c4311 100644
+--- a/drivers/net/wireless/intel/iwlegacy/common.c
++++ b/drivers/net/wireless/intel/iwlegacy/common.c
+@@ -3119,6 +3119,7 @@ il_enqueue_hcmd(struct il_priv *il, struct il_host_cmd *cmd)
+ 	struct il_cmd_meta *out_meta;
+ 	dma_addr_t phys_addr;
+ 	unsigned long flags;
++	u8 *out_payload;
+ 	u32 idx;
+ 	u16 fix_size;
  
--	index = of_perf_domain_get_sharing_cpumask(policy->cpu, "performance-domains",
--						   "#performance-domain-cells",
--						   policy->cpus);
--	if (index < 0)
--		return index;
-+	ret = of_perf_domain_get_sharing_cpumask(policy->cpu, "performance-domains",
-+						 "#performance-domain-cells",
-+						 policy->cpus, &args);
-+	if (ret < 0)
-+		return ret;
+@@ -3154,6 +3155,16 @@ il_enqueue_hcmd(struct il_priv *il, struct il_host_cmd *cmd)
+ 	out_cmd = txq->cmd[idx];
+ 	out_meta = &txq->meta[idx];
+ 
++	/* The payload is in the same place in regular and huge
++	 * command buffers, but we need to let the compiler know when
++	 * we're using a larger payload buffer to avoid "field-
++	 * spanning write" warnings at run-time for huge commands.
++	 */
++	if (cmd->flags & CMD_SIZE_HUGE)
++		out_payload = ((struct il_device_cmd_huge *)out_cmd)->cmd.payload;
++	else
++		out_payload = out_cmd->cmd.payload;
 +
-+	index = args.args[0];
-+	of_node_put(args.np);
+ 	if (WARN_ON(out_meta->flags & CMD_MAPPED)) {
+ 		spin_unlock_irqrestore(&il->hcmd_lock, flags);
+ 		return -ENOSPC;
+@@ -3167,7 +3178,7 @@ il_enqueue_hcmd(struct il_priv *il, struct il_host_cmd *cmd)
+ 		out_meta->callback = cmd->callback;
  
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, index);
- 	if (!res) {
-diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
-index 9d208648c84d5..1976244b97e3a 100644
---- a/include/linux/cpufreq.h
-+++ b/include/linux/cpufreq.h
-@@ -1123,10 +1123,10 @@ cpufreq_table_set_inefficient(struct cpufreq_policy *policy,
- }
+ 	out_cmd->hdr.cmd = cmd->id;
+-	memcpy(&out_cmd->cmd.payload, cmd->data, cmd->len);
++	memcpy(out_payload, cmd->data, cmd->len);
  
- static inline int parse_perf_domain(int cpu, const char *list_name,
--				    const char *cell_name)
-+				    const char *cell_name,
-+				    struct of_phandle_args *args)
- {
- 	struct device_node *cpu_np;
--	struct of_phandle_args args;
- 	int ret;
+ 	/* At this point, the out_cmd now has all of the incoming cmd
+ 	 * information */
+diff --git a/drivers/net/wireless/intel/iwlegacy/common.h b/drivers/net/wireless/intel/iwlegacy/common.h
+index 69687fcf963fc..027dae5619a37 100644
+--- a/drivers/net/wireless/intel/iwlegacy/common.h
++++ b/drivers/net/wireless/intel/iwlegacy/common.h
+@@ -560,6 +560,18 @@ struct il_device_cmd {
  
- 	cpu_np = of_cpu_device_node_get(cpu);
-@@ -1134,41 +1134,44 @@ static inline int parse_perf_domain(int cpu, const char *list_name,
- 		return -ENODEV;
+ #define TFD_MAX_PAYLOAD_SIZE (sizeof(struct il_device_cmd))
  
- 	ret = of_parse_phandle_with_args(cpu_np, list_name, cell_name, 0,
--					 &args);
-+					 args);
- 	if (ret < 0)
- 		return ret;
- 
- 	of_node_put(cpu_np);
- 
--	return args.args[0];
-+	return 0;
- }
- 
- static inline int of_perf_domain_get_sharing_cpumask(int pcpu, const char *list_name,
--						     const char *cell_name, struct cpumask *cpumask)
-+						     const char *cell_name, struct cpumask *cpumask,
-+						     struct of_phandle_args *pargs)
- {
--	int target_idx;
- 	int cpu, ret;
-+	struct of_phandle_args args;
- 
--	ret = parse_perf_domain(pcpu, list_name, cell_name);
-+	ret = parse_perf_domain(pcpu, list_name, cell_name, pargs);
- 	if (ret < 0)
- 		return ret;
- 
--	target_idx = ret;
- 	cpumask_set_cpu(pcpu, cpumask);
- 
- 	for_each_possible_cpu(cpu) {
- 		if (cpu == pcpu)
- 			continue;
- 
--		ret = parse_perf_domain(cpu, list_name, cell_name);
-+		ret = parse_perf_domain(cpu, list_name, cell_name, &args);
- 		if (ret < 0)
- 			continue;
- 
--		if (target_idx == ret)
-+		if (pargs->np == args.np && pargs->args_count == args.args_count &&
-+		    !memcmp(pargs->args, args.args, sizeof(args.args[0]) * args.args_count))
- 			cpumask_set_cpu(cpu, cpumask);
++/**
++ * struct il_device_cmd_huge
++ *
++ * For use when sending huge commands.
++ */
++struct il_device_cmd_huge {
++	struct il_cmd_header hdr;	/* uCode API */
++	union {
++		u8 payload[IL_MAX_CMD_SIZE - sizeof(struct il_cmd_header)];
++	} __packed cmd;
++} __packed;
 +
-+		of_node_put(args.np);
- 	}
- 
--	return target_idx;
-+	return 0;
- }
- #else
- static inline int cpufreq_boost_trigger_state(int state)
-@@ -1198,7 +1201,8 @@ cpufreq_table_set_inefficient(struct cpufreq_policy *policy,
- }
- 
- static inline int of_perf_domain_get_sharing_cpumask(int pcpu, const char *list_name,
--						     const char *cell_name, struct cpumask *cpumask)
-+						     const char *cell_name, struct cpumask *cpumask,
-+						     struct of_phandle_args *pargs)
- {
- 	return -EOPNOTSUPP;
- }
+ struct il_host_cmd {
+ 	const void *data;
+ 	unsigned long reply_page;
 -- 
 2.43.0
 
