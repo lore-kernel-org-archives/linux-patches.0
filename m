@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B604207F;
-	Wed,  6 Nov 2024 12:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9E24207F;
+	Wed,  6 Nov 2024 12:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896238; cv=none; b=Fga6RlbEA/Sj2BDtPeJ3w5s22qJQuq2ypa35xkAhNYyHa4ldR/qQelKF52PwK4p3dkovNTqFb1NGkFYngXw2LIaC7iLSKz3tpWdmcg0onvB/EPOfQ/z2R3WR1fggCNrCnDnELD6OYoiBp79OgLhOLCmYgcMBulAnLnq7TSLHeUI=
+	t=1730896241; cv=none; b=T81jtw5xHriD8CYUZ4cDLs9xAC9vXWqZ6HhoBliscPWoS3dhGi7EH/79lEzoBfwi+uQByNzpygEg813mtzLqae3jMrJCAHBK0XEZl8rPImXAitmlKTh+9u74u8Q7Uu20qgxNh8yCK6gI/Y0LaHa8m3hAKrtnJVQBejmRHKbs98A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896238; c=relaxed/simple;
-	bh=nZozHv7ZeYkCMCrf/wXTZ45bUEw43D83rwfTypTstIs=;
+	s=arc-20240116; t=1730896241; c=relaxed/simple;
+	bh=WOsv19W2XO6zGYmPFcTOuxO7/Q7Z0RTXJJtMAXzXHiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fDRMII7MkGWJO18YrxXHYSKJocQH6EcpJ9TMCpPiS3b2GY1XjvG4tUV6v137gBJ7+4v89UmDJzUowEFvmSN7XJKcGd/I8pGK+6Ss7Z3wIoln1+ib7DKdsBMEf2pmZ4pyi2p74asehEDGyIpobGpiJ+FR8hIMY0m7DE0dAYdF/oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqKzbdfq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=V+W2S2Tng3emJ3nrPRJhUq2HW9JVVaYjhFkEEkeRBJYjF82m/G+fGeS5lZpwtVcg52fFqgeFiZAZXBt34ot5l5dMii8BAMGzE59M6+xJ0HiX+4A3ruCeY8wo+0waweLcpER2YhkTQEePwS0Q21LfCEGOAqWWgZYKZfF2PBZQPyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P6CaedTs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqKzbdfq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EB4C4CECD;
-	Wed,  6 Nov 2024 12:30:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P6CaedTs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14606C4CED4;
+	Wed,  6 Nov 2024 12:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896238;
-	bh=nZozHv7ZeYkCMCrf/wXTZ45bUEw43D83rwfTypTstIs=;
+	s=korg; t=1730896241;
+	bh=WOsv19W2XO6zGYmPFcTOuxO7/Q7Z0RTXJJtMAXzXHiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqKzbdfqqY4qyUNt25fHhdPWpnPB+2GB8g1kRIioWdgd4AkFC403syb7Lwzf6lH5u
-	 u1QrnZtYAgUAdxpdbx/2FBJM8S+XbaiJScusaOZDwLEh27X1SbwsQzeffkbiJE4HDY
-	 DAPtkH6K9L9T2z4E0c6RPHLIdGYwH0jfKV+fZsio=
+	b=P6CaedTshrODrRU8EkWZRDxY71cg9bUcyK5OXghMcSLkQ0gfT72FWC6B98qcaW3Nc
+	 h/bst7MKIlLWG/fOCG57G7gsoc0Jyim28inoQkM42vkL6EZoQlSXLYLNo0pSj1RqH7
+	 SdUZujny+XTurW3iozXLS5oYOfBkfEpxPHFHarQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	syzbot <syzkaller@googlegroup.com>,
-	Hugh Dickins <hughd@google.com>,
-	Yu Zhao <yuzhao@google.com>,
+	Wladislav Wiebe <wladislav.kw@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"Herton R. Krzesinski" <herton@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 136/245] mm: shmem: fix data-race in shmem_getattr()
-Date: Wed,  6 Nov 2024 13:03:09 +0100
-Message-ID: <20241106120322.576608394@linuxfoundation.org>
+Subject: [PATCH 6.11 137/245] tools/mm: -Werror fixes in page-types/slabinfo
+Date: Wed,  6 Nov 2024 13:03:10 +0100
+Message-ID: <20241106120322.601400444@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -47,102 +46,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Wladislav Wiebe <wladislav.kw@gmail.com>
 
-commit d949d1d14fa281ace388b1de978e8f2cd52875cf upstream.
+commit ece5897e5a10fcd56a317e32f2dc7219f366a5a8 upstream.
 
-I got the following KCSAN report during syzbot testing:
+Commit e6d2c436ff693 ("tools/mm: allow users to provide additional
+cflags/ldflags") passes now CFLAGS to Makefile.  With this, build systems
+with default -Werror enabled found:
 
-==================================================================
-BUG: KCSAN: data-race in generic_fillattr / inode_set_ctime_current
+slabinfo.c:1300:25: error: ignoring return value of 'chdir'
+declared with attribute 'warn_unused_result' [-Werror=unused-result]
+                         chdir("..");
+                         ^~~~~~~~~~~
+page-types.c:397:35: error: format '%lu' expects argument of type
+'long unsigned int', but argument 2 has type 'uint64_t'
+{aka 'long long unsigned int'} [-Werror=format=]
+                         printf("%lu\t", mapcnt0);
+                                 ~~^     ~~~~~~~
+..
 
-write to 0xffff888102eb3260 of 4 bytes by task 6565 on cpu 1:
- inode_set_ctime_to_ts include/linux/fs.h:1638 [inline]
- inode_set_ctime_current+0x169/0x1d0 fs/inode.c:2626
- shmem_mknod+0x117/0x180 mm/shmem.c:3443
- shmem_create+0x34/0x40 mm/shmem.c:3497
- lookup_open fs/namei.c:3578 [inline]
- open_last_lookups fs/namei.c:3647 [inline]
- path_openat+0xdbc/0x1f00 fs/namei.c:3883
- do_filp_open+0xf7/0x200 fs/namei.c:3913
- do_sys_openat2+0xab/0x120 fs/open.c:1416
- do_sys_open fs/open.c:1431 [inline]
- __do_sys_openat fs/open.c:1447 [inline]
- __se_sys_openat fs/open.c:1442 [inline]
- __x64_sys_openat+0xf3/0x120 fs/open.c:1442
- x64_sys_call+0x1025/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:258
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Fix page-types by using PRIu64 for uint64_t prints and check in slabinfo
+for return code on chdir("..").
 
-read to 0xffff888102eb3260 of 4 bytes by task 3498 on cpu 0:
- inode_get_ctime_nsec include/linux/fs.h:1623 [inline]
- inode_get_ctime include/linux/fs.h:1629 [inline]
- generic_fillattr+0x1dd/0x2f0 fs/stat.c:62
- shmem_getattr+0x17b/0x200 mm/shmem.c:1157
- vfs_getattr_nosec fs/stat.c:166 [inline]
- vfs_getattr+0x19b/0x1e0 fs/stat.c:207
- vfs_statx_path fs/stat.c:251 [inline]
- vfs_statx+0x134/0x2f0 fs/stat.c:315
- vfs_fstatat+0xec/0x110 fs/stat.c:341
- __do_sys_newfstatat fs/stat.c:505 [inline]
- __se_sys_newfstatat+0x58/0x260 fs/stat.c:499
- __x64_sys_newfstatat+0x55/0x70 fs/stat.c:499
- x64_sys_call+0x141f/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:263
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-value changed: 0x2755ae53 -> 0x27ee44d3
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 UID: 0 PID: 3498 Comm: udevd Not tainted 6.11.0-rc6-syzkaller-00326-gd1f2d51b711a-dirty #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
-==================================================================
-
-When calling generic_fillattr(), if you don't hold read lock, data-race
-will occur in inode member variables, which can cause unexpected
-behavior.
-
-Since there is no special protection when shmem_getattr() calls
-generic_fillattr(), data-race occurs by functions such as shmem_unlink()
-or shmem_mknod(). This can cause unexpected results, so commenting it out
-is not enough.
-
-Therefore, when calling generic_fillattr() from shmem_getattr(), it is
-appropriate to protect the inode using inode_lock_shared() and
-inode_unlock_shared() to prevent data-race.
-
-Link: https://lkml.kernel.org/r/20240909123558.70229-1-aha310510@gmail.com
-Fixes: 44a30220bc0a ("shmem: recalculate file inode when fstat")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Reported-by: syzbot <syzkaller@googlegroup.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Yu Zhao <yuzhao@google.com>
+Link: https://lkml.kernel.org/r/c1ceb507-94bc-461c-934d-c19b77edd825@gmail.com
+Fixes: e6d2c436ff69 ("tools/mm: allow users to provide additional cflags/ldflags")
+Signed-off-by: Wladislav Wiebe <wladislav.kw@gmail.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Herton R. Krzesinski <herton@redhat.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shmem.c |    2 ++
- 1 file changed, 2 insertions(+)
+ tools/mm/page-types.c |    9 +++++----
+ tools/mm/slabinfo.c   |    4 +++-
+ 2 files changed, 8 insertions(+), 5 deletions(-)
 
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1163,7 +1163,9 @@ static int shmem_getattr(struct mnt_idma
- 	stat->attributes_mask |= (STATX_ATTR_APPEND |
- 			STATX_ATTR_IMMUTABLE |
- 			STATX_ATTR_NODUMP);
-+	inode_lock_shared(inode);
- 	generic_fillattr(idmap, request_mask, inode, stat);
-+	inode_unlock_shared(inode);
+--- a/tools/mm/page-types.c
++++ b/tools/mm/page-types.c
+@@ -22,6 +22,7 @@
+ #include <time.h>
+ #include <setjmp.h>
+ #include <signal.h>
++#include <inttypes.h>
+ #include <sys/types.h>
+ #include <sys/errno.h>
+ #include <sys/fcntl.h>
+@@ -392,9 +393,9 @@ static void show_page_range(unsigned lon
+ 		if (opt_file)
+ 			printf("%lx\t", voff);
+ 		if (opt_list_cgroup)
+-			printf("@%llu\t", (unsigned long long)cgroup0);
++			printf("@%" PRIu64 "\t", cgroup0);
+ 		if (opt_list_mapcnt)
+-			printf("%lu\t", mapcnt0);
++			printf("%" PRIu64 "\t", mapcnt0);
+ 		printf("%lx\t%lx\t%s\n",
+ 				index, count, page_flag_name(flags0));
+ 	}
+@@ -420,9 +421,9 @@ static void show_page(unsigned long voff
+ 	if (opt_file)
+ 		printf("%lx\t", voffset);
+ 	if (opt_list_cgroup)
+-		printf("@%llu\t", (unsigned long long)cgroup);
++		printf("@%" PRIu64 "\t", cgroup)
+ 	if (opt_list_mapcnt)
+-		printf("%lu\t", mapcnt);
++		printf("%" PRIu64 "\t", mapcnt);
  
- 	if (shmem_huge_global_enabled(inode, 0, false, NULL, 0))
- 		stat->blksize = HPAGE_PMD_SIZE;
+ 	printf("%lx\t%s\n", offset, page_flag_name(flags));
+ }
+--- a/tools/mm/slabinfo.c
++++ b/tools/mm/slabinfo.c
+@@ -1297,7 +1297,9 @@ static void read_slab_dir(void)
+ 			slab->cpu_partial_free = get_obj("cpu_partial_free");
+ 			slab->alloc_node_mismatch = get_obj("alloc_node_mismatch");
+ 			slab->deactivate_bypass = get_obj("deactivate_bypass");
+-			chdir("..");
++			if (chdir(".."))
++				fatal("Unable to chdir from slab ../%s\n",
++				      slab->name);
+ 			if (slab->name[0] == ':')
+ 				alias_targets++;
+ 			slab++;
 
 
