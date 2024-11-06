@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7701DFE38;
-	Wed,  6 Nov 2024 13:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01411DFE38;
+	Wed,  6 Nov 2024 13:12:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898742; cv=none; b=K7mcxzkR5ascnIhHsEERdrsI6Hyi1GRJgzs0cWvMwCRPqKokCsVcm+EZmwO6SvEgHXtfBV2D/lJOLfMft2yFQ9pQffbulH7vy3RGPIKVhfTk81ypwAoSH24tLR3uEI4luUVMH1W7jGP36IMH+z9TFRAgG2KtaZRRwPHEVjGHU2w=
+	t=1730898745; cv=none; b=NonCqnw870+XajxR1lPeNQ+NsCwGdEdSs+FkWS8DWSHHByecbb1D8zNwAZNjEFU17adzwn8wcOUShUX+zTVbX9Mq4VCoSYo5GWzgtlanJS9VzBjwYbFy5vLzCdt++DqFchTIvv404LE37drduAjdJhCuK/+5wOj4AmIV824WpS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898742; c=relaxed/simple;
-	bh=swvfstVfQBTRd2KZ/2MPWHcwI7LAIJWmL5GzBAGzJ78=;
+	s=arc-20240116; t=1730898745; c=relaxed/simple;
+	bh=kZ2fSRLMHs+Am28rO0r6Pg/uFUna114JA8xqoD9V48c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xh/GH6vhdYsbvsDlAKQz3E5HqA6ziC+7ZPx2wqEHb6lqw192ay2aWvteU7r1rqGYg0CkxZ+xWy7wtN6TC/S7owIM2j5RBLfm2saXq3hwoMpR4BU3aZLG1X+ZtP4hxbnRiXImtVRWAZjU4nXHbpNl9HOog0OdeGA9mSIPYDBcQLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUWqeEZo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iM1+xr9JT0WjNsCs5zmElDtBB8qDv8v8O6g1IxRpI8YizyxNbWzwTCSIAaE/rGzPSYp//iMnrVhuGBmLYq2WHmUPz92MFQLA8WhqGSDjqNe2zDbhWEQf18SPdeLVunRY4GqQmLAjdWeQ36zN0C4Nf3+E4wwVR16Gb+qT699JpQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qc+9/wkc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUWqeEZo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 366EDC4CECD;
-	Wed,  6 Nov 2024 13:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qc+9/wkc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7F7C4CECD;
+	Wed,  6 Nov 2024 13:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898742;
-	bh=swvfstVfQBTRd2KZ/2MPWHcwI7LAIJWmL5GzBAGzJ78=;
+	s=korg; t=1730898745;
+	bh=kZ2fSRLMHs+Am28rO0r6Pg/uFUna114JA8xqoD9V48c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hUWqeEZoikEQC+67eFo9wr2uBP/uDRSjUH2Pq9wsjzAZN0OJwVXEdD0RKndeSffwz
-	 oga0YpzWGdKFuQ7rsygi6eMPf+vpdYm+Tzz73r44iB5l96F5BgzYDOKylcZLh/AUk/
-	 WOjJu7P0P7SzlJTKdvTE7gvOL1s58yW7Pr+762KI=
+	b=Qc+9/wkc5Hy3fX007ROaPqToiyUYdQGWYeI85oLE1Fge42tBQ+t7Cb2rO3d+wjOyG
+	 EvHiDp5Od/WYZwiOQzDunZphdvBxnf6f5UfTOf9a4wMPkC8sVBVtD73JjtO3Ly6W6A
+	 XCaGVkA+kMCvAMHyZfRDa+aMwnxlgwb4d98NmMwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
+	Waiman Long <longman@redhat.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Bart Van Assche <bvanassche@acm.org>,
 	Carlos Llamas <cmllamas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 339/462] locking/lockdep: Rework lockdep_lock
-Date: Wed,  6 Nov 2024 13:03:52 +0100
-Message-ID: <20241106120339.898488812@linuxfoundation.org>
+Subject: [PATCH 5.4 340/462] locking/lockdep: Avoid potential access of invalid memory in lock_class
+Date: Wed,  6 Nov 2024 13:03:53 +0100
+Message-ID: <20241106120339.922549484@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,225 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Waiman Long <longman@redhat.com>
 
-commit 248efb2158f1e23750728e92ad9db3ab60c14485 upstream.
+commit 61cc4534b6550997c97a03759ab46b29d44c0017 upstream.
 
-A few sites want to assert we own the graph_lock/lockdep_lock, provide
-a more conventional lock interface for it with a number of trivial
-debug checks.
+It was found that reading /proc/lockdep after a lockdep splat may
+potentially cause an access to freed memory if lockdep_unregister_key()
+is called after the splat but before access to /proc/lockdep [1]. This
+is due to the fact that graph_lock() call in lockdep_unregister_key()
+fails after the clearing of debug_locks by the splat process.
 
+After lockdep_unregister_key() is called, the lock_name may be freed
+but the corresponding lock_class structure still have a reference to
+it. That invalid memory pointer will then be accessed when /proc/lockdep
+is read by a user and a use-after-free (UAF) error will be reported if
+KASAN is enabled.
+
+To fix this problem, lockdep_unregister_key() is now modified to always
+search for a matching key irrespective of the debug_locks state and
+zap the corresponding lock class if a matching one is found.
+
+[1] https://lore.kernel.org/lkml/77f05c15-81b6-bddd-9650-80d5f23fe330@i-love.sakura.ne.jp/
+
+Fixes: 8b39adbee805 ("locking/lockdep: Make lockdep_unregister_key() honor 'debug_locks' again")
+Reported-by: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Signed-off-by: Waiman Long <longman@redhat.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20200313102107.GX12561@hirez.programming.kicks-ass.net
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lkml.kernel.org/r/20220103023558.1377055-1-longman@redhat.com
 Signed-off-by: Carlos Llamas <cmllamas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/lockdep.c | 89 ++++++++++++++++++++++------------------
- 1 file changed, 48 insertions(+), 41 deletions(-)
+ kernel/locking/lockdep.c | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
 diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-index 0a2be60e4aa7b..b9fabbab39183 100644
+index b9fabbab39183..8e0351970a1da 100644
 --- a/kernel/locking/lockdep.c
 +++ b/kernel/locking/lockdep.c
-@@ -84,12 +84,39 @@ module_param(lock_stat, int, 0644);
-  * to use a raw spinlock - we really dont want the spinlock
-  * code to recurse back into the lockdep code...
-  */
--static arch_spinlock_t lockdep_lock = (arch_spinlock_t)__ARCH_SPIN_LOCK_UNLOCKED;
-+static arch_spinlock_t __lock = (arch_spinlock_t)__ARCH_SPIN_LOCK_UNLOCKED;
-+static struct task_struct *__owner;
-+
-+static inline void lockdep_lock(void)
-+{
-+	DEBUG_LOCKS_WARN_ON(!irqs_disabled());
-+
-+	arch_spin_lock(&__lock);
-+	__owner = current;
-+	current->lockdep_recursion++;
-+}
-+
-+static inline void lockdep_unlock(void)
-+{
-+	if (debug_locks && DEBUG_LOCKS_WARN_ON(__owner != current))
-+		return;
-+
-+	current->lockdep_recursion--;
-+	__owner = NULL;
-+	arch_spin_unlock(&__lock);
-+}
-+
-+static inline bool lockdep_assert_locked(void)
-+{
-+	return DEBUG_LOCKS_WARN_ON(__owner != current);
-+}
-+
- static struct task_struct *lockdep_selftest_task_struct;
- 
-+
- static int graph_lock(void)
- {
--	arch_spin_lock(&lockdep_lock);
-+	lockdep_lock();
- 	/*
- 	 * Make sure that if another CPU detected a bug while
- 	 * walking the graph we dont change it (while the other
-@@ -97,27 +124,15 @@ static int graph_lock(void)
- 	 * dropped already)
- 	 */
- 	if (!debug_locks) {
--		arch_spin_unlock(&lockdep_lock);
-+		lockdep_unlock();
- 		return 0;
- 	}
--	/* prevent any recursions within lockdep from causing deadlocks */
--	current->lockdep_recursion++;
- 	return 1;
+@@ -5302,7 +5302,13 @@ void lockdep_reset_lock(struct lockdep_map *lock)
+ 		lockdep_reset_lock_reg(lock);
  }
  
--static inline int graph_unlock(void)
-+static inline void graph_unlock(void)
+-/* Unregister a dynamically allocated key. */
++/*
++ * Unregister a dynamically allocated key.
++ *
++ * Unlike lockdep_register_key(), a search is always done to find a matching
++ * key irrespective of debug_locks to avoid potential invalid access to freed
++ * memory in lock_class entry.
++ */
+ void lockdep_unregister_key(struct lock_class_key *key)
  {
--	if (debug_locks && !arch_spin_is_locked(&lockdep_lock)) {
--		/*
--		 * The lockdep graph lock isn't locked while we expect it to
--		 * be, we're confused now, bye!
--		 */
--		return DEBUG_LOCKS_WARN_ON(1);
--	}
--
--	current->lockdep_recursion--;
--	arch_spin_unlock(&lockdep_lock);
--	return 0;
-+	lockdep_unlock();
- }
- 
- /*
-@@ -128,7 +143,7 @@ static inline int debug_locks_off_graph_unlock(void)
- {
- 	int ret = debug_locks_off();
- 
--	arch_spin_unlock(&lockdep_lock);
-+	lockdep_unlock();
- 
- 	return ret;
- }
-@@ -1476,6 +1491,8 @@ static int __bfs(struct lock_list *source_entry,
- 	struct circular_queue *cq = &lock_cq;
- 	int ret = 1;
- 
-+	lockdep_assert_locked();
-+
- 	if (match(source_entry, data)) {
- 		*target_entry = source_entry;
- 		ret = 0;
-@@ -1498,8 +1515,6 @@ static int __bfs(struct lock_list *source_entry,
- 
- 		head = get_dep_list(lock, offset);
- 
--		DEBUG_LOCKS_WARN_ON(!irqs_disabled());
--
- 		list_for_each_entry_rcu(entry, head, entry) {
- 			if (!lock_accessed(entry)) {
- 				unsigned int cq_depth;
-@@ -1726,11 +1741,9 @@ unsigned long lockdep_count_forward_deps(struct lock_class *class)
- 	this.class = class;
- 
- 	raw_local_irq_save(flags);
--	current->lockdep_recursion++;
--	arch_spin_lock(&lockdep_lock);
-+	lockdep_lock();
- 	ret = __lockdep_count_forward_deps(&this);
--	arch_spin_unlock(&lockdep_lock);
--	current->lockdep_recursion--;
-+	lockdep_unlock();
- 	raw_local_irq_restore(flags);
- 
- 	return ret;
-@@ -1755,11 +1768,9 @@ unsigned long lockdep_count_backward_deps(struct lock_class *class)
- 	this.class = class;
- 
- 	raw_local_irq_save(flags);
--	current->lockdep_recursion++;
--	arch_spin_lock(&lockdep_lock);
-+	lockdep_lock();
- 	ret = __lockdep_count_backward_deps(&this);
--	arch_spin_unlock(&lockdep_lock);
--	current->lockdep_recursion--;
-+	lockdep_unlock();
- 	raw_local_irq_restore(flags);
- 
- 	return ret;
-@@ -2930,7 +2941,7 @@ static inline int add_chain_cache(struct task_struct *curr,
- 	 * disabled to make this an IRQ-safe lock.. for recursion reasons
- 	 * lockdep won't complain about its own locking errors.
- 	 */
--	if (DEBUG_LOCKS_WARN_ON(!irqs_disabled()))
-+	if (lockdep_assert_locked())
- 		return 0;
- 
- 	chain = alloc_lock_chain();
-@@ -5092,8 +5103,7 @@ static void free_zapped_rcu(struct rcu_head *ch)
+ 	struct hlist_head *hash_head = keyhashentry(key);
+@@ -5317,10 +5323,8 @@ void lockdep_unregister_key(struct lock_class_key *key)
  		return;
  
  	raw_local_irq_save(flags);
--	arch_spin_lock(&lockdep_lock);
--	current->lockdep_recursion++;
+-	if (!graph_lock())
+-		goto out_irq;
 +	lockdep_lock();
  
- 	/* closed head */
- 	pf = delayed_free.pf + (delayed_free.index ^ 1);
-@@ -5105,8 +5115,7 @@ static void free_zapped_rcu(struct rcu_head *ch)
- 	 */
- 	call_rcu_zapped(delayed_free.pf + delayed_free.index);
- 
--	current->lockdep_recursion--;
--	arch_spin_unlock(&lockdep_lock);
-+	lockdep_unlock();
- 	raw_local_irq_restore(flags);
- }
- 
-@@ -5151,13 +5160,11 @@ static void lockdep_free_key_range_reg(void *start, unsigned long size)
- 	init_data_structures_once();
- 
- 	raw_local_irq_save(flags);
--	arch_spin_lock(&lockdep_lock);
--	current->lockdep_recursion++;
-+	lockdep_lock();
- 	pf = get_pending_free();
- 	__lockdep_free_key_range(pf, start, size);
- 	call_rcu_zapped(pf);
--	current->lockdep_recursion--;
--	arch_spin_unlock(&lockdep_lock);
+-	pf = get_pending_free();
+ 	hlist_for_each_entry_rcu(k, hash_head, hash_entry) {
+ 		if (k == key) {
+ 			hlist_del_rcu(&k->hash_entry);
+@@ -5328,11 +5332,13 @@ void lockdep_unregister_key(struct lock_class_key *key)
+ 			break;
+ 		}
+ 	}
+-	WARN_ON_ONCE(!found);
+-	__lockdep_free_key_range(pf, key, 1);
+-	call_rcu_zapped(pf);
+-	graph_unlock();
+-out_irq:
++	WARN_ON_ONCE(!found && debug_locks);
++	if (found) {
++		pf = get_pending_free();
++		__lockdep_free_key_range(pf, key, 1);
++		call_rcu_zapped(pf);
++	}
 +	lockdep_unlock();
  	raw_local_irq_restore(flags);
  
- 	/*
-@@ -5179,10 +5186,10 @@ static void lockdep_free_key_range_imm(void *start, unsigned long size)
- 	init_data_structures_once();
- 
- 	raw_local_irq_save(flags);
--	arch_spin_lock(&lockdep_lock);
-+	lockdep_lock();
- 	__lockdep_free_key_range(pf, start, size);
- 	__free_zapped_classes(pf);
--	arch_spin_unlock(&lockdep_lock);
-+	lockdep_unlock();
- 	raw_local_irq_restore(flags);
- }
- 
-@@ -5278,10 +5285,10 @@ static void lockdep_reset_lock_imm(struct lockdep_map *lock)
- 	unsigned long flags;
- 
- 	raw_local_irq_save(flags);
--	arch_spin_lock(&lockdep_lock);
-+	lockdep_lock();
- 	__lockdep_reset_lock(pf, lock);
- 	__free_zapped_classes(pf);
--	arch_spin_unlock(&lockdep_lock);
-+	lockdep_unlock();
- 	raw_local_irq_restore(flags);
- }
- 
+ 	/* Wait until is_dynamic_key() has finished accessing k->hash_entry. */
 -- 
 2.43.0
 
