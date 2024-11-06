@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9471DF978;
-	Wed,  6 Nov 2024 12:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B951DFDAF;
+	Wed,  6 Nov 2024 12:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895888; cv=none; b=VKnfFo0t+TBYDTjxJ68JAwWCeeVsyVezPQDgrvNOmZhTakS7C1TuKL5jqmW8KftyqQZ9fqfv076rqKtGqahBUrP4rWq2iEo0ZuF2x9Qe6JVYbo4rR+Q4B5WYDcfxjWSNiQBo3qkAAWGUNcauz7aEPKUh53GqdV2DMfYZGIc1sW0=
+	t=1730895892; cv=none; b=c0/xEcZglBSdSekXLBieSsLMoISg1iVzTliDvxuOC/B5ZQjp9ahQ7+H5mpae4JK6TfTuVJUae2Qb0xTK2JxIBfD3vbdUH+jFAY/A0b7kJmdISyp7RmY0Qu8uLiy5lXixwoJ6VtccBgUqssj4HQjtfoZisbmQOZMW61G6VdNaN9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895888; c=relaxed/simple;
-	bh=7JME/qD7oQuttpd5vCbtWuQ//Zv0xh4OTdp6yFz8bTw=;
+	s=arc-20240116; t=1730895892; c=relaxed/simple;
+	bh=boEgGvu3K1KOBi+giUza6xlil0YbiI8q/29v3cldiTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7xI0/vqlP2BDjU1LpPgNd7UJRFMMU+5TVYWiBTTu5tQgwqdTzTpCdCRlCH2etbeWa2UTgdxaJqGYkAc7bssjOD0EfZSoZbdDYjB99GQeIIY1j9RlpIF1crWWEvzdPfQKK94HUGaBzROdeD9t39FiGPHddkW1UI1asM7jClhRO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2/gWpnL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hxg+sDLkpLl2t3O8ODDqfacmsW/pWmj3i1S5xYPM+F4C++8232yoRNixUcBC4+pl/f/AZ1UHwBHXPslmEwYOXnF0N4vG3VjfYn3AEf55xiLvTXzf28829dxFRZkcNhqc6uAc4OyjCaQYRAXSQsHaEm7cq77ekygiTJknSRYU8CI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hq75c9Qr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2/gWpnL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F4FC4CECD;
-	Wed,  6 Nov 2024 12:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hq75c9Qr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3C1C4CECD;
+	Wed,  6 Nov 2024 12:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895888;
-	bh=7JME/qD7oQuttpd5vCbtWuQ//Zv0xh4OTdp6yFz8bTw=;
+	s=korg; t=1730895891;
+	bh=boEgGvu3K1KOBi+giUza6xlil0YbiI8q/29v3cldiTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2/gWpnLUURNT27BsOLO5BA6dNbF3B0/PBse6iyc7NO1E4u4kRFoBuc/58fdNiKGs
-	 6SBLCcYoiUZ9oqbNuPqj2NGLPXRVcgrbPCLHRRKIxWvLh08ZloCENeX0pd1f+1vD5N
-	 Bz9bVECdOrb5H0lyZYl9W3GAb/6lR70Z1Daa+BLM=
+	b=hq75c9Qrs3RXdJpcfz0BTRaHun2lYwyIgh8id6DuP0OSY/B+oIPQlnHUXboGdk53C
+	 LAUFxNjINpnb8Phkw3bA45cvIt/Zpnfis/isjt30xUubNyJ+vaWB/Gv+oPZzOQIttu
+	 KBKqbg57BP3WN9qTRJVYbO3hEJJeqdEXAQr6KIpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Frank Min <Frank.Min@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 019/245] wifi: iwlwifi: mvm: dont leak a link on AP removal
-Date: Wed,  6 Nov 2024 13:01:12 +0100
-Message-ID: <20241106120319.708814924@linuxfoundation.org>
+Subject: [PATCH 6.11 002/245] drm/amdgpu: fix random data corruption for sdma 7
+Date: Wed,  6 Nov 2024 13:00:55 +0100
+Message-ID: <20241106120319.301391105@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,45 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Frank Min <Frank.Min@amd.com>
 
-[ Upstream commit 3ed092997a004d68a3a5b0eeb94e71b69839d0f7 ]
+[ Upstream commit 108bc59fe817686a59d2008f217bad38a5cf4427 ]
 
-Release the link mapping resource in AP removal. This impacted devices
-that do not support the MLD API (9260 and down).
-On those devices, we couldn't start the AP again after the AP has been
-already started and stopped.
+There is random data corruption caused by const fill, this is caused by
+write compression mode not correctly configured.
 
-Fixes: a8b5d4809b50 ("wifi: iwlwifi: mvm: Configure the link mapping for non-MLD FW")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20241010140328.c54c42779882.Ied79e0d6244dc5a372e8b6ffa8ee9c6e1379ec1d@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+So correct compression mode for const fill.
+
+Signed-off-by: Frank Min <Frank.Min@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 75400f8d6e36afc88d59db8a1f3e4b7d90d836ad)
+Cc: stable@vger.kernel.org # 6.11.x
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index 1ebcc6417ecef..e38cff6176dd3 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -1951,7 +1951,6 @@ static void iwl_mvm_mac_remove_interface(struct ieee80211_hw *hw,
- 		mvm->p2p_device_vif = NULL;
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c b/drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c
+index 403c177f24349..bbf43e668c1c4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c
+@@ -51,6 +51,12 @@ MODULE_FIRMWARE("amdgpu/sdma_7_0_1.bin");
+ #define SDMA0_HYP_DEC_REG_END 0x589a
+ #define SDMA1_HYP_DEC_REG_OFFSET 0x20
  
--	iwl_mvm_unset_link_mapping(mvm, vif, &vif->bss_conf);
- 	iwl_mvm_mac_ctxt_remove(mvm, vif);
- 
- 	RCU_INIT_POINTER(mvm->vif_id_to_mac[mvmvif->id], NULL);
-@@ -1960,6 +1959,7 @@ static void iwl_mvm_mac_remove_interface(struct ieee80211_hw *hw,
- 		mvm->monitor_on = false;
- 
- out:
-+	iwl_mvm_unset_link_mapping(mvm, vif, &vif->bss_conf);
- 	if (vif->type == NL80211_IFTYPE_AP ||
- 	    vif->type == NL80211_IFTYPE_ADHOC) {
- 		iwl_mvm_dealloc_int_sta(mvm, &mvmvif->deflink.mcast_sta);
++/*define for compression field for sdma7*/
++#define SDMA_PKT_CONSTANT_FILL_HEADER_compress_offset 0
++#define SDMA_PKT_CONSTANT_FILL_HEADER_compress_mask   0x00000001
++#define SDMA_PKT_CONSTANT_FILL_HEADER_compress_shift  16
++#define SDMA_PKT_CONSTANT_FILL_HEADER_COMPRESS(x) (((x) & SDMA_PKT_CONSTANT_FILL_HEADER_compress_mask) << SDMA_PKT_CONSTANT_FILL_HEADER_compress_shift)
++
+ static void sdma_v7_0_set_ring_funcs(struct amdgpu_device *adev);
+ static void sdma_v7_0_set_buffer_funcs(struct amdgpu_device *adev);
+ static void sdma_v7_0_set_vm_pte_funcs(struct amdgpu_device *adev);
+@@ -1611,7 +1617,8 @@ static void sdma_v7_0_emit_fill_buffer(struct amdgpu_ib *ib,
+ 				       uint64_t dst_offset,
+ 				       uint32_t byte_count)
+ {
+-	ib->ptr[ib->length_dw++] = SDMA_PKT_COPY_LINEAR_HEADER_OP(SDMA_OP_CONST_FILL);
++	ib->ptr[ib->length_dw++] = SDMA_PKT_CONSTANT_FILL_HEADER_OP(SDMA_OP_CONST_FILL) |
++		SDMA_PKT_CONSTANT_FILL_HEADER_COMPRESS(1);
+ 	ib->ptr[ib->length_dw++] = lower_32_bits(dst_offset);
+ 	ib->ptr[ib->length_dw++] = upper_32_bits(dst_offset);
+ 	ib->ptr[ib->length_dw++] = src_data;
 -- 
 2.43.0
 
