@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC4A1DF98F;
-	Wed,  6 Nov 2024 13:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D98B1CB310;
+	Wed,  6 Nov 2024 13:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899076; cv=none; b=Btao8HbQDn3jXlVVQBCR/vZfBqAuy/pZC69vIA17H7c4RKrcYQfIIQIxvFLHmZI7APBP0oh/eBcfkSYHayUkLt0rNeZZPh94hZwigWO2jyC8pwHkFU4luOQfXFua5bBokuFd+eyfu61QJ3nD2PlzAagCOrjMydtJbN5X5+ionTc=
+	t=1730899079; cv=none; b=KyNFvrMsyqfQxYAlHdkwWQDOucP5X3+E4m40BJm/N9yfKaGI5ObScmrVpGinAoP3hwKLvbFtCwNb4xQMf7z3UqhiPqDRI6fpcwENCnF1IGYh5bOstO5F1WnOEqfpSOXaLbKW6vlKUV56VK7UnQWzkPOO0IRmF6U1lSAmuc7Pjjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899076; c=relaxed/simple;
-	bh=1S6ANel3x2oag6z+uS0r/mMXbfIQMLp12UOZWP6qbBA=;
+	s=arc-20240116; t=1730899079; c=relaxed/simple;
+	bh=6BNsEMHtn31c6hk75qKqvifRY0Cw7Fj2fu/7D+WiskE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nj04c9TWOAZIck8hvLg8Sofkv3jJFZTWSYSaEKaUdBuVCqJ9YmmuDyZgUYoC0iCIraWtu11uBcN80ZGBXsnC4yULJeWGeCOVyJC/EW/c1evfdvp7hd48FL8/4cq1n+w7HnFippw+Wg5ADIGt6p7lNGWxRth6rmrlxveZpR+T8Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vb6OOPtp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bSz05RAjkKfNrrYaQbSgJHWNJiDR/MTltf+2sDmD0wh9W5rwcqsQzVl1kij1LdMTyvMKbdPwbi8iQNGb6YfcrEFSUMp+V2Kbit+WwdtwWlfP3WRpm2PMu8utZs8+03j+Nocj+BEYpRv+oe4Jq7+UTNXKThVjkLlMuoqXUDsAhsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bx6SEynL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vb6OOPtp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2C4C4CED7;
-	Wed,  6 Nov 2024 13:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bx6SEynL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAE22C4CECD;
+	Wed,  6 Nov 2024 13:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899076;
-	bh=1S6ANel3x2oag6z+uS0r/mMXbfIQMLp12UOZWP6qbBA=;
+	s=korg; t=1730899079;
+	bh=6BNsEMHtn31c6hk75qKqvifRY0Cw7Fj2fu/7D+WiskE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vb6OOPtp6wnV8/c88PCdtjWrGTQoeqrRiB6T9J6Fg/kM1etrJRjM2iKM1uA4ibg0h
-	 KcrZkrF+wsX0A8NUR8EbLgcAPL4aR2zLH5fPoyyzH2uBDKaHDDghSXP4WBswaE4FT5
-	 f0eub7VcDi9w+D5Qid0qT0GYmOsd+aBQPMbkePss=
+	b=Bx6SEynLpZpEU3b1na9vj4mgcciuGIJJBMicrCq2e8/UBZhF6TONZzDDlvfJaZ2sj
+	 dTyO9qPVc5jNoRqw+9jVkhFLGESSeo88MKwdUy0tW9OqfrfkbNOTbgHR7FSY3awmuK
+	 fOOKvZ3jFMSjmTAigQDv4HF/DVx7yWcrTOBkaTw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 426/462] cgroup: Fix potential overflow issue when checking max_depth
-Date: Wed,  6 Nov 2024 13:05:19 +0100
-Message-ID: <20241106120342.034747614@linuxfoundation.org>
+	Zicheng Qu <quzicheng@huawei.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.4 453/462] staging: iio: frequency: ad9832: fix division by zero in ad9832_calc_freqreg()
+Date: Wed,  6 Nov 2024 13:05:46 +0100
+Message-ID: <20241106120342.694752094@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -46,63 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Zicheng Qu <quzicheng@huawei.com>
 
-[ Upstream commit 3cc4e13bb1617f6a13e5e6882465984148743cf4 ]
+commit 6bd301819f8f69331a55ae2336c8b111fc933f3d upstream.
 
-cgroup.max.depth is the maximum allowed descent depth below the current
-cgroup. If the actual descent depth is equal or larger, an attempt to
-create a new child cgroup will fail. However due to the cgroup->max_depth
-is of int type and having the default value INT_MAX, the condition
-'level > cgroup->max_depth' will never be satisfied, and it will cause
-an overflow of the level after it reaches to INT_MAX.
+In the ad9832_write_frequency() function, clk_get_rate() might return 0.
+This can lead to a division by zero when calling ad9832_calc_freqreg().
+The check if (fout > (clk_get_rate(st->mclk) / 2)) does not protect
+against the case when fout is 0. The ad9832_write_frequency() function
+is called from ad9832_write(), and fout is derived from a text buffer,
+which can contain any value.
 
-Fix it by starting the level from 0 and using '>=' instead.
-
-It's worth mentioning that this issue is unlikely to occur in reality,
-as it's impossible to have a depth of INT_MAX hierarchy, but should be
-be avoided logically.
-
-Fixes: 1a926e0bbab8 ("cgroup: implement hierarchy limits")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/all/2024100904-CVE-2024-47663-9bdc@gregkh/
+Fixes: ea707584bac1 ("Staging: IIO: DDS: AD9832 / AD9835 driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20241022134354.574614-1-quzicheng@huawei.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cgroup.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/staging/iio/frequency/ad9832.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index 16ae868941211..79e57b6df7316 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -5502,7 +5502,7 @@ static bool cgroup_check_hierarchy_limits(struct cgroup *parent)
+--- a/drivers/staging/iio/frequency/ad9832.c
++++ b/drivers/staging/iio/frequency/ad9832.c
+@@ -129,12 +129,15 @@ static unsigned long ad9832_calc_freqreg
+ static int ad9832_write_frequency(struct ad9832_state *st,
+ 				  unsigned int addr, unsigned long fout)
  {
- 	struct cgroup *cgroup;
- 	int ret = false;
--	int level = 1;
-+	int level = 0;
++	unsigned long clk_freq;
+ 	unsigned long regval;
  
- 	lockdep_assert_held(&cgroup_mutex);
+-	if (fout > (clk_get_rate(st->mclk) / 2))
++	clk_freq = clk_get_rate(st->mclk);
++
++	if (!clk_freq || fout > (clk_freq / 2))
+ 		return -EINVAL;
  
-@@ -5510,7 +5510,7 @@ static bool cgroup_check_hierarchy_limits(struct cgroup *parent)
- 		if (cgroup->nr_descendants >= cgroup->max_descendants)
- 			goto fail;
+-	regval = ad9832_calc_freqreg(clk_get_rate(st->mclk), fout);
++	regval = ad9832_calc_freqreg(clk_freq, fout);
  
--		if (level > cgroup->max_depth)
-+		if (level >= cgroup->max_depth)
- 			goto fail;
- 
- 		level++;
--- 
-2.43.0
-
+ 	st->freq_data[0] = cpu_to_be16((AD9832_CMD_FRE8BITSW << CMD_SHIFT) |
+ 					(addr << ADD_SHIFT) |
 
 
