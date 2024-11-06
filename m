@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1AD1D5AD7;
-	Wed,  6 Nov 2024 12:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237FD1D5AD7;
+	Wed,  6 Nov 2024 12:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894980; cv=none; b=clNPDYTOjocEctBxBPGTAt7LAO6lKrteIm5OIFTWAf91zza/8FSukiXujwiiDnCl58YH/vig8qTS28ylO9cWDolSFanIQdeN/gDBe9t0wQnQGqXrtjykdb1RLKueLBEc5H0zsEVJNMr0VQdt+Cj/WSuxyo+wpoADoQDTEJSuc20=
+	t=1730894983; cv=none; b=IhbKozHmdNtpWLr0GpdUnfNBlMy1O34/UGEtU82au3WhLOXTba4kfL85+GqQapeO9JI/xErgFSxyO8OGY3K+G0uJPvrl7LpLaxBGwyWD5gojT+cevqbeuaM++rWdZYn95gyCnSRvnfRQfVlQGslcyaN2aI4sG1h8MPCs2oVfL/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894980; c=relaxed/simple;
-	bh=HTSJ4Yz3nz4kj3QLgF4kr0TB0v/fxsANetXTZu22T6A=;
+	s=arc-20240116; t=1730894983; c=relaxed/simple;
+	bh=3gjhrw4eR8C281VqHqIz1cViHRRLmjQmDa2PI0oOJ5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PGRGiZ9nQE9yQW2h671eBQP2uAFQKRX5pfGohqEVkqZWWfHMl+m5VtnZp+F8LEsWe2OY8p3n67jPeDzkb5+H/x6MudSKfNRcxTy/hxvkldCXIGCcr7wI5w4U7NILowqIKgnSuQzyhMNZbtw7MsZBDgo41ZiAYjYaVJoDRTF219M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NdnF8Jz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hzYzOqneF8zNHYG3dGxs3zFkM8/Ep3rsv9eDJ49nEtRyjlX1HiY8WTLKIB8f+N2yhwr2C868hurbzTMHFGRmmxp3PhGo0ABOxCxXQ6lHljKBzfQ0QQ64Wq+L1kSIiwG90FP4M4DtYKtr50MJ/1ony+nIrkDUBrIyjj1C0GQb7SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OePwHzvv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NdnF8Jz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70C0C4CECD;
-	Wed,  6 Nov 2024 12:09:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OePwHzvv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D8C4C4CECD;
+	Wed,  6 Nov 2024 12:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894980;
-	bh=HTSJ4Yz3nz4kj3QLgF4kr0TB0v/fxsANetXTZu22T6A=;
+	s=korg; t=1730894983;
+	bh=3gjhrw4eR8C281VqHqIz1cViHRRLmjQmDa2PI0oOJ5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0NdnF8Jzymml8+WfLVZSJ9NQHRMnoT/YKqfdsDdeH78/LoJvD6yGr1hV7xfOUEbdB
-	 DgPW4/L+hXLDFNdxhhj2YWneXU+Ark8C1sC6YbfaiCnodaIhIyduFhMIuFmCfvLyBc
-	 LRMv9ETn7klMAMR5ggk5+7yHu6bLHsWkTtWZ+Tj0=
+	b=OePwHzvvtFfS0IejV38x7RuqgOXkwAoLu9E85et3JnSM6q92YFLcUl5piwFEiLxog
+	 PIkeN3sGcROBNGgbWjWFuZs9YOlo77WPpol+lhsc14LLOXYLDs6jYqE2HILk4yrdi5
+	 Pitzs2qCTo6OkaujIDIjMlhlwTRRHU2yVFWUpvq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Gross <jgross@suse.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
+	Tony Ambardar <tony.ambardar@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 065/350] xen/swiotlb: add alignment check for dma buffers
-Date: Wed,  6 Nov 2024 12:59:53 +0100
-Message-ID: <20241106120322.498681024@linuxfoundation.org>
+Subject: [PATCH 4.19 066/350] selftests/bpf: Fix error compiling test_lru_map.c
+Date: Wed,  6 Nov 2024 12:59:54 +0100
+Message-ID: <20241106120322.524969074@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,50 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Tony Ambardar <tony.ambardar@gmail.com>
 
-[ Upstream commit 9f40ec84a7976d95c34e7cc070939deb103652b0 ]
+[ Upstream commit cacf2a5a78cd1f5f616eae043ebc6f024104b721 ]
 
-When checking a memory buffer to be consecutive in machine memory,
-the alignment needs to be checked, too. Failing to do so might result
-in DMA memory not being aligned according to its requested size,
-leading to error messages like:
+Although the post-increment in macro 'CPU_SET(next++, &cpuset)' seems safe,
+the sequencing can raise compile errors, so move the increment outside the
+macro. This avoids an error seen using gcc 12.3.0 for mips64el/musl-libc:
 
-  4xxx 0000:2b:00.0: enabling device (0140 -> 0142)
-  4xxx 0000:2b:00.0: Ring address not aligned
-  4xxx 0000:2b:00.0: Failed to initialise service qat_crypto
-  4xxx 0000:2b:00.0: Resetting device qat_dev0
-  4xxx: probe of 0000:2b:00.0 failed with error -14
+  In file included from test_lru_map.c:11:
+  test_lru_map.c: In function 'sched_next_online':
+  test_lru_map.c:129:29: error: operation on 'next' may be undefined [-Werror=sequence-point]
+    129 |                 CPU_SET(next++, &cpuset);
+        |                             ^
+  cc1: all warnings being treated as errors
 
-Fixes: 9435cce87950 ("xen/swiotlb: Add support for 64KB page granularity")
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: 3fbfadce6012 ("bpf: Fix test_lru_sanity5() in test_lru_map.c")
+Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/22993dfb11ccf27925a626b32672fd3324cb76c4.1722244708.git.tony.ambardar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/swiotlb-xen.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/selftests/bpf/test_lru_map.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/xen/swiotlb-xen.c b/drivers/xen/swiotlb-xen.c
-index 2f4d4e36c7b36..98f82c759d1e2 100644
---- a/drivers/xen/swiotlb-xen.c
-+++ b/drivers/xen/swiotlb-xen.c
-@@ -98,9 +98,15 @@ static inline int range_straddles_page_boundary(phys_addr_t p, size_t size)
- {
- 	unsigned long next_bfn, xen_pfn = XEN_PFN_DOWN(p);
- 	unsigned int i, nr_pages = XEN_PFN_UP(xen_offset_in_page(p) + size);
-+	phys_addr_t algn = 1ULL << (get_order(size) + PAGE_SHIFT);
+diff --git a/tools/testing/selftests/bpf/test_lru_map.c b/tools/testing/selftests/bpf/test_lru_map.c
+index 781c7de343be0..a9ed4b58c0879 100644
+--- a/tools/testing/selftests/bpf/test_lru_map.c
++++ b/tools/testing/selftests/bpf/test_lru_map.c
+@@ -76,7 +76,8 @@ static int sched_next_online(int pid, int *next_to_try)
  
- 	next_bfn = pfn_to_bfn(xen_pfn);
- 
-+	/* If buffer is physically aligned, ensure DMA alignment. */
-+	if (IS_ALIGNED(p, algn) &&
-+	    !IS_ALIGNED((phys_addr_t)next_bfn << XEN_PAGE_SHIFT, algn))
-+		return 1;
-+
- 	for (i = 1; i < nr_pages; i++)
- 		if (pfn_to_bfn(++xen_pfn) != ++next_bfn)
- 			return 1;
+ 	while (next < nr_cpus) {
+ 		CPU_ZERO(&cpuset);
+-		CPU_SET(next++, &cpuset);
++		CPU_SET(next, &cpuset);
++		next++;
+ 		if (!sched_setaffinity(pid, sizeof(cpuset), &cpuset)) {
+ 			ret = 0;
+ 			break;
 -- 
 2.43.0
 
