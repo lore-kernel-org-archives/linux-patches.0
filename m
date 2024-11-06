@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EF14207F;
-	Wed,  6 Nov 2024 12:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8CF1DF969;
+	Wed,  6 Nov 2024 12:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896402; cv=none; b=l6FGVwN7ppmJeoYrm2pyu9Ll79Mog7E11iFnJmzZJNhRjUHaES9+d7IUNg3rr5ijdjNtBLbJp4UYOmHRdOqzxXEAjdeI06bZHFZ9FiNjHgGz4agzCQai/ZqU6yJ57flHnoj2G7gagpBumDVBlLQrvoda256cRcEGkAbcABut3Nc=
+	t=1730896405; cv=none; b=FmM5vDFd9+LrVEKLjV9SUXsGEd4goIWXXgs3zVeGedBP7djkJmQ1KZBuEtK6gZbWXm6Nl+SDjxHZdNhZK/qC1VE8DMvXfNjIBjqQbDcFhtb3tfMhvgSj0zlwfQ8iaL4TJwNjrhR7YaJ4XliqKgysGAkXexmlaiI1AUa76vVJ0xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896402; c=relaxed/simple;
-	bh=hYO2tzdLOAkyRMwUcuXLvgRTxL8lYdFUObDosIQjrZQ=;
+	s=arc-20240116; t=1730896405; c=relaxed/simple;
+	bh=GmnFEJ2x1/lk4ThH3O6tXAi3lZf3ptwtp3iaijJT/D8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OWYzCf85xCx1uzZUd1ZVV6UOgQW3W70tmltu0Xz4ZZkfqeXCK39ik2dqjpGcwAKhJXykS0UV3zbjJn8RM0beKgAPCtbL01mJt4KvWIUn84laq6u2IANjneNoDnGkIUm/45Q+Ru+i9XsCttL/Ynni9rXukQTFqrYqzCxcALQ44LE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uXMgrCtC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WhUoTBhxOGW/l9+zXVe/4Uqo2+zjZfI2bW2bxsg5/0vBNhVSEykIZjvZb/zdpADhK35S4JiOBjQGa9iyFNObaL5VEMnLxo1HlM7dizWtjH3UJJQXdQZWCiUqn/E6P33dEloI3bViM6K38kX+7fSTuI2B00yQkYkx1tiasa66gYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDHyK5LG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uXMgrCtC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB698C4CECD;
-	Wed,  6 Nov 2024 12:33:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDHyK5LG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9796C4CECD;
+	Wed,  6 Nov 2024 12:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896402;
-	bh=hYO2tzdLOAkyRMwUcuXLvgRTxL8lYdFUObDosIQjrZQ=;
+	s=korg; t=1730896405;
+	bh=GmnFEJ2x1/lk4ThH3O6tXAi3lZf3ptwtp3iaijJT/D8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uXMgrCtCJ6yMVJV6swWXg66w9lYfk+DrueQYyI2n0Ai4049TrB/FLVqBBkLLHnaxU
-	 rYzCNQ4J7ruvvh45BDXLVVXviuT/6KM1OdxmlWj+dDkQ5hJLYNtbq/ng0q08a641Ja
-	 NUL15/jDwcOAilsBIyQWNjef5Xp0xkRt2eQ6GSBE=
+	b=xDHyK5LGlqUesYUI4e7+SReq+XWeL1m4YZYfp8FjtOna18jmAwzGLvPOM63RANso8
+	 mrwqKv1DmlNIDUUcEbz1FnJ2kYhx7jixtTEK259SesLDEGsQL+NySSDSiP0YTTL1Ha
+	 4pyc8w2A4xMv4aSR5caSrQkr+zgmJeGdz15W1fX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Sabyrzhan Tasbolatov <snovitoll@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 189/245] kasan: remove vmalloc_percpu test
-Date: Wed,  6 Nov 2024 13:04:02 +0100
-Message-ID: <20241106120323.895635455@linuxfoundation.org>
+Subject: [PATCH 6.11 190/245] drm/tests: helpers: Add helper for drm_display_mode_from_cea_vic()
+Date: Wed,  6 Nov 2024 13:04:03 +0100
+Message-ID: <20241106120323.922581270@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -57,85 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Konovalov <andreyknvl@gmail.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 330d8df81f3673d6fb74550bbc9bb159d81b35f7 ]
+[ Upstream commit caa714f86699bcfb01aa2d698db12d91af7d0d81 ]
 
-Commit 1a2473f0cbc0 ("kasan: improve vmalloc tests") added the
-vmalloc_percpu KASAN test with the assumption that __alloc_percpu always
-uses vmalloc internally, which is tagged by KASAN.
+As Maxime suggested, add a new helper
+drm_kunit_display_mode_from_cea_vic(), it can replace the direct call
+of drm_display_mode_from_cea_vic(), and it will help solving
+the `mode` memory leaks.
 
-However, __alloc_percpu might allocate memory from the first per-CPU
-chunk, which is not allocated via vmalloc().  As a result, the test might
-fail.
-
-Remove the test until proper KASAN annotation for the per-CPU allocated
-are added; tracked in https://bugzilla.kernel.org/show_bug.cgi?id=215019.
-
-Link: https://lkml.kernel.org/r/20241022160706.38943-1-andrey.konovalov@linux.dev
-Fixes: 1a2473f0cbc0 ("kasan: improve vmalloc tests")
-Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
-Reported-by: Samuel Holland <samuel.holland@sifive.com>
-Link: https://lore.kernel.org/all/4a245fff-cc46-44d1-a5f9-fd2f1c3764ae@sifive.com/
-Reported-by: Sabyrzhan Tasbolatov <snovitoll@gmail.com>
-Link: https://lore.kernel.org/all/CACzwLxiWzNqPBp4C1VkaXZ2wDwvY3yZeetCi1TLGFipKW77drA@mail.gmail.com/
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Sabyrzhan Tasbolatov <snovitoll@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Suggested-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241030023504.530425-2-ruanjinjie@huawei.com
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Stable-dep-of: 926163342a2e ("drm/connector: hdmi: Fix memory leak in drm_display_mode_from_cea_vic()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/kasan/kasan_test.c | 27 ---------------------------
- 1 file changed, 27 deletions(-)
+ drivers/gpu/drm/tests/drm_kunit_helpers.c | 42 +++++++++++++++++++++++
+ include/drm/drm_kunit_helpers.h           |  4 +++
+ 2 files changed, 46 insertions(+)
 
-diff --git a/mm/kasan/kasan_test.c b/mm/kasan/kasan_test.c
-index 7b32be2a3cf0e..9efde47f80698 100644
---- a/mm/kasan/kasan_test.c
-+++ b/mm/kasan/kasan_test.c
-@@ -1765,32 +1765,6 @@ static void vm_map_ram_tags(struct kunit *test)
- 	free_pages((unsigned long)p_ptr, 1);
+diff --git a/drivers/gpu/drm/tests/drm_kunit_helpers.c b/drivers/gpu/drm/tests/drm_kunit_helpers.c
+index aa62719dab0e4..04a6b8cc62ac6 100644
+--- a/drivers/gpu/drm/tests/drm_kunit_helpers.c
++++ b/drivers/gpu/drm/tests/drm_kunit_helpers.c
+@@ -3,6 +3,7 @@
+ #include <drm/drm_atomic.h>
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_drv.h>
++#include <drm/drm_edid.h>
+ #include <drm/drm_fourcc.h>
+ #include <drm/drm_kunit_helpers.h>
+ #include <drm/drm_managed.h>
+@@ -311,6 +312,47 @@ drm_kunit_helper_create_crtc(struct kunit *test,
  }
+ EXPORT_SYMBOL_GPL(drm_kunit_helper_create_crtc);
  
--static void vmalloc_percpu(struct kunit *test)
--{
--	char __percpu *ptr;
--	int cpu;
--
--	/*
--	 * This test is specifically crafted for the software tag-based mode,
--	 * the only tag-based mode that poisons percpu mappings.
--	 */
--	KASAN_TEST_NEEDS_CONFIG_ON(test, CONFIG_KASAN_SW_TAGS);
--
--	ptr = __alloc_percpu(PAGE_SIZE, PAGE_SIZE);
--
--	for_each_possible_cpu(cpu) {
--		char *c_ptr = per_cpu_ptr(ptr, cpu);
--
--		KUNIT_EXPECT_GE(test, (u8)get_tag(c_ptr), (u8)KASAN_TAG_MIN);
--		KUNIT_EXPECT_LT(test, (u8)get_tag(c_ptr), (u8)KASAN_TAG_KERNEL);
--
--		/* Make sure that in-bounds accesses don't crash the kernel. */
--		*c_ptr = 0;
--	}
--
--	free_percpu(ptr);
--}
--
- /*
-  * Check that the assigned pointer tag falls within the [KASAN_TAG_MIN,
-  * KASAN_TAG_KERNEL) range (note: excluding the match-all tag) for tag-based
-@@ -1967,7 +1941,6 @@ static struct kunit_case kasan_kunit_test_cases[] = {
- 	KUNIT_CASE(vmalloc_oob),
- 	KUNIT_CASE(vmap_tags),
- 	KUNIT_CASE(vm_map_ram_tags),
--	KUNIT_CASE(vmalloc_percpu),
- 	KUNIT_CASE(match_all_not_assigned),
- 	KUNIT_CASE(match_all_ptr_tag),
- 	KUNIT_CASE(match_all_mem_tag),
++static void kunit_action_drm_mode_destroy(void *ptr)
++{
++	struct drm_display_mode *mode = ptr;
++
++	drm_mode_destroy(NULL, mode);
++}
++
++/**
++ * drm_kunit_display_mode_from_cea_vic() - return a mode for CEA VIC
++					   for a KUnit test
++ * @test: The test context object
++ * @dev: DRM device
++ * @video_code: CEA VIC of the mode
++ *
++ * Creates a new mode matching the specified CEA VIC for a KUnit test.
++ *
++ * Resources will be cleaned up automatically.
++ *
++ * Returns: A new drm_display_mode on success or NULL on failure
++ */
++struct drm_display_mode *
++drm_kunit_display_mode_from_cea_vic(struct kunit *test, struct drm_device *dev,
++				    u8 video_code)
++{
++	struct drm_display_mode *mode;
++	int ret;
++
++	mode = drm_display_mode_from_cea_vic(dev, video_code);
++	if (!mode)
++		return NULL;
++
++	ret = kunit_add_action_or_reset(test,
++					kunit_action_drm_mode_destroy,
++					mode);
++	if (ret)
++		return NULL;
++
++	return mode;
++}
++EXPORT_SYMBOL_GPL(drm_kunit_display_mode_from_cea_vic);
++
+ MODULE_AUTHOR("Maxime Ripard <maxime@cerno.tech>");
+ MODULE_DESCRIPTION("KUnit test suite helper functions");
+ MODULE_LICENSE("GPL");
+diff --git a/include/drm/drm_kunit_helpers.h b/include/drm/drm_kunit_helpers.h
+index e7cc17ee4934a..afdd46ef04f70 100644
+--- a/include/drm/drm_kunit_helpers.h
++++ b/include/drm/drm_kunit_helpers.h
+@@ -120,4 +120,8 @@ drm_kunit_helper_create_crtc(struct kunit *test,
+ 			     const struct drm_crtc_funcs *funcs,
+ 			     const struct drm_crtc_helper_funcs *helper_funcs);
+ 
++struct drm_display_mode *
++drm_kunit_display_mode_from_cea_vic(struct kunit *test, struct drm_device *dev,
++				    u8 video_code);
++
+ #endif // DRM_KUNIT_HELPERS_H_
 -- 
 2.43.0
 
