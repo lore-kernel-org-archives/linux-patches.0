@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C874646;
-	Wed,  6 Nov 2024 13:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E646646;
+	Wed,  6 Nov 2024 13:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899123; cv=none; b=OWbvp41IjWA9/XKVr6FaJKsRlcMQmJ0u4OnO3jqaorS+GOOeRk3BgubxGYAK00MLEI4q2HbeNAXscWdrrCPmLlPuimhpQs6Vj2XUUQweCh16vrUE8DL9hgqUWYsFxZQrtUqyQPbTUmmw7soHwYf1w97ZNvP9VyTSSEqH+Prx6gQ=
+	t=1730899126; cv=none; b=WgYhHdNeF2kuNcYRjP25ovG3ecX9ZrEAgNEXdMmZ1LBfrGF01dJFLnGL8Sj0SprpPO3dMjGs9bD9OLbR5SFjcpOAFU51dQIZf597L1HRT/ay4ypnLcxF2V+ZRJjyOTBUuWBb6G9wGr3Q35bRNMDlXxktBjoAsmO28RxQeAWq4qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899123; c=relaxed/simple;
-	bh=X6sGs1nydibkYbVtb/cxlJ3QHSqasaAbpXBFS9+Z61Q=;
+	s=arc-20240116; t=1730899126; c=relaxed/simple;
+	bh=eE+U5Ebb8AM7ykQxd7Boctxrm8C7YpBMOhgd1Jx9qiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lizmSf8zn9ByIzitBjqrZDgbSVN7+U91wdSvG8gSbgqe4BgkzHZaWxQaD3qV3OBXul5/psZuXDWt4t0PaNObzmdDc9ZSNPDW37Wa09ML+tv8ZEKeMyjTSaGmFdLsT3yCvV0EvleNxbsvEUIapJS/zULv/9IEtLZAUO5360NnM4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6bxa6uY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RV0Zri3fxl8/uGYXuMELdAWTdalWKw6YNkctEb1wf7ZcQvrjjprLeCO8SEyFNz/QLZiOWwOCFb6MHmTuzy7OB5KhidGHdsanYE4cwofrUSPDoNvv7MOtBZ0l00O/Metg0U+FBjSn+SQiQllXFakotmc3Ya4mBh43iAu3XAn2QcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LIALM0e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6bxa6uY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3383C4CECD;
-	Wed,  6 Nov 2024 13:18:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LIALM0e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9811C4CECD;
+	Wed,  6 Nov 2024 13:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899123;
-	bh=X6sGs1nydibkYbVtb/cxlJ3QHSqasaAbpXBFS9+Z61Q=;
+	s=korg; t=1730899126;
+	bh=eE+U5Ebb8AM7ykQxd7Boctxrm8C7YpBMOhgd1Jx9qiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U6bxa6uYyRUFU48NHgcfwSdrNfjTtDx+20ROMsiKrLxQi+6P4dW5jXViKZLuXHe2K
-	 CKSLQ5l8gtFx9e4W84K3+ZSPtaS1GP4it++W9Uy7QlhjKeMCEQRmm69B5CqNCL9pMJ
-	 JBVBNyacZaQa423zYSrIEVsZbANKHR4w4OeIp4Z0=
+	b=1LIALM0eBRZj8s7pwKOeQ0VND2n+ZIxFCitv4Jk5iJestgjxqhPX3UbasHl54JHd4
+	 E3ssh4qdmngXCMxjRz1e8oCph6itZdBriqfN6go971LH7HfKjtF8ddnG7ozQBzgAva
+	 dsRgN5PNLWgfRdC/KcC7skSiwRZhINR6Udf5QDHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Sun <samsun1006219@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 423/462] selinux: improve error checking in sel_write_load()
-Date: Wed,  6 Nov 2024 13:05:16 +0100
-Message-ID: <20241106120341.962622589@linuxfoundation.org>
+	Qun-Wei Lin <qun-wei.lin@mediatek.com>,
+	David Rientjes <rientjes@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 5.4 462/462] mm: krealloc: Fix MTE false alarm in __do_krealloc
+Date: Wed,  6 Nov 2024 13:05:55 +0100
+Message-ID: <20241106120342.916487840@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,89 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Moore <paul@paul-moore.com>
+From: Qun-Wei Lin <qun-wei.lin@mediatek.com>
 
-[ Upstream commit 42c773238037c90b3302bf37a57ae3b5c3f6004a ]
+commit 704573851b51808b45dae2d62059d1d8189138a2 upstream.
 
-Move our existing input sanity checking to the top of sel_write_load()
-and add a check to ensure the buffer size is non-zero.
+This patch addresses an issue introduced by commit 1a83a716ec233 ("mm:
+krealloc: consider spare memory for __GFP_ZERO") which causes MTE
+(Memory Tagging Extension) to falsely report a slab-out-of-bounds error.
 
-Move a local variable initialization from the declaration to before it
-is used.
+The problem occurs when zeroing out spare memory in __do_krealloc. The
+original code only considered software-based KASAN and did not account
+for MTE. It does not reset the KASAN tag before calling memset, leading
+to a mismatch between the pointer tag and the memory tag, resulting
+in a false positive.
 
-Minor style adjustments.
+Example of the error:
+==================================================================
+swapper/0: BUG: KASAN: slab-out-of-bounds in __memset+0x84/0x188
+swapper/0: Write at addr f4ffff8005f0fdf0 by task swapper/0/1
+swapper/0: Pointer tag: [f4], memory tag: [fe]
+swapper/0:
+swapper/0: CPU: 4 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.
+swapper/0: Hardware name: MT6991(ENG) (DT)
+swapper/0: Call trace:
+swapper/0:  dump_backtrace+0xfc/0x17c
+swapper/0:  show_stack+0x18/0x28
+swapper/0:  dump_stack_lvl+0x40/0xa0
+swapper/0:  print_report+0x1b8/0x71c
+swapper/0:  kasan_report+0xec/0x14c
+swapper/0:  __do_kernel_fault+0x60/0x29c
+swapper/0:  do_bad_area+0x30/0xdc
+swapper/0:  do_tag_check_fault+0x20/0x34
+swapper/0:  do_mem_abort+0x58/0x104
+swapper/0:  el1_abort+0x3c/0x5c
+swapper/0:  el1h_64_sync_handler+0x80/0xcc
+swapper/0:  el1h_64_sync+0x68/0x6c
+swapper/0:  __memset+0x84/0x188
+swapper/0:  btf_populate_kfunc_set+0x280/0x3d8
+swapper/0:  __register_btf_kfunc_id_set+0x43c/0x468
+swapper/0:  register_btf_kfunc_id_set+0x48/0x60
+swapper/0:  register_nf_nat_bpf+0x1c/0x40
+swapper/0:  nf_nat_init+0xc0/0x128
+swapper/0:  do_one_initcall+0x184/0x464
+swapper/0:  do_initcall_level+0xdc/0x1b0
+swapper/0:  do_initcalls+0x70/0xc0
+swapper/0:  do_basic_setup+0x1c/0x28
+swapper/0:  kernel_init_freeable+0x144/0x1b8
+swapper/0:  kernel_init+0x20/0x1a8
+swapper/0:  ret_from_fork+0x10/0x20
+==================================================================
 
-Reported-by: Sam Sun <samsun1006219@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-[cascardo: keep fsi initialization at its declaration point as it is used earlier]
-[cascardo: keep check for 64MiB size limit]
-Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1a83a716ec233 ("mm: krealloc: consider spare memory for __GFP_ZERO")
+Signed-off-by: Qun-Wei Lin <qun-wei.lin@mediatek.com>
+Acked-by: David Rientjes <rientjes@google.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/selinuxfs.c | 31 +++++++++++++++++--------------
- 1 file changed, 17 insertions(+), 14 deletions(-)
+ mm/slab_common.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/security/selinux/selinuxfs.c b/security/selinux/selinuxfs.c
-index e9eaff90cbccd..fd6282fa9c39f 100644
---- a/security/selinux/selinuxfs.c
-+++ b/security/selinux/selinuxfs.c
-@@ -535,6 +535,16 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
- 	ssize_t length;
- 	void *data = NULL;
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -1683,7 +1683,7 @@ static __always_inline void *__do_kreall
+ 		/* Zero out spare memory. */
+ 		if (want_init_on_alloc(flags)) {
+ 			kasan_disable_current();
+-			memset((void *)p + new_size, 0, ks - new_size);
++			memset(kasan_reset_tag(p) + new_size, 0, ks - new_size);
+ 			kasan_enable_current();
+ 		}
  
-+	/* no partial writes */
-+	if (*ppos)
-+		return -EINVAL;
-+	/* no empty policies */
-+	if (!count)
-+		return -EINVAL;
-+
-+	if (count > 64 * 1024 * 1024)
-+		return -EFBIG;
-+
- 	mutex_lock(&fsi->mutex);
- 
- 	length = avc_has_perm(&selinux_state,
-@@ -543,23 +553,15 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
- 	if (length)
- 		goto out;
- 
--	/* No partial writes. */
--	length = -EINVAL;
--	if (*ppos != 0)
--		goto out;
--
--	length = -EFBIG;
--	if (count > 64 * 1024 * 1024)
--		goto out;
--
--	length = -ENOMEM;
- 	data = vmalloc(count);
--	if (!data)
-+	if (!data) {
-+		length = -ENOMEM;
- 		goto out;
--
--	length = -EFAULT;
--	if (copy_from_user(data, buf, count) != 0)
-+	}
-+	if (copy_from_user(data, buf, count) != 0) {
-+		length = -EFAULT;
- 		goto out;
-+	}
- 
- 	length = security_load_policy(fsi->state, data, count);
- 	if (length) {
-@@ -578,6 +580,7 @@ static ssize_t sel_write_load(struct file *file, const char __user *buf,
- 		"auid=%u ses=%u lsm=selinux res=1",
- 		from_kuid(&init_user_ns, audit_get_loginuid(current)),
- 		audit_get_sessionid(current));
-+
- out:
- 	mutex_unlock(&fsi->mutex);
- 	vfree(data);
--- 
-2.43.0
-
 
 
