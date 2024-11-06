@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D9F1E0E13;
-	Wed,  6 Nov 2024 12:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039A71E0E13;
+	Wed,  6 Nov 2024 12:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897747; cv=none; b=f6oqxl8D6FYudzMgh/ulQbMtznXwveDRnIMHMyNCDwHR4yDpTloGZSPtSD1wxDTcb+5vfaPPllrGqCINJurwcZUC7qWtH9bhtOXd24q+i/ltxxzHLcqnJuU6aw9DLQlk5pp+AXkfLHHqIhGiqnRGJ7geN+PiNbJeXFkVs2Y2oPI=
+	t=1730897750; cv=none; b=GePGBLvxxgcHKjiAz6Go5KOmDuAO9RVPdhZwvRMvqxhn/NkvBfzoFDREGZPtsJ6PDbZ5M3fkYyVTulO7zVyrVnmhdiA+9eOKALLbl2LgeNvAbkA8aoZPjISpU/120QJclies7Cm4zSaH7RM9dFXNg5fB0j+KaFTvATwxCm1lASk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897747; c=relaxed/simple;
-	bh=Xpfey6w8TSf8eWkZ5MqGFgpsK8j9rPqsVomM1SJbBuo=;
+	s=arc-20240116; t=1730897750; c=relaxed/simple;
+	bh=OQ3q+FKfHM6ecbavXnHAn6isvT1kHWVnieuyf+hry7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uG7yZrtghGFrTlCKxsGrVN9a5LRuVIeGShvgJaEMuQFQwc8r27WEO5hiOgZm/PNcsS3RSBcR0ARb24w1LfEPCDhbAtvUfKz3ZeKZZ6v9IcykKTg69sYbK8DosoS1dTTN/m9hw1ueFYi2LuntIftqLCl0PBMTKlZ3jBWe8JIw7DI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2dyFd04; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e6KPEWDNvSOx7wKnaEXLJXOz4VtWYB0eWROrvXKbbt1F62pKiB6T6430fYceoqdoXv9BjlQZoCRAowGL3AX8xMfgZQaQsokfhTpKs6nbbytBF1xtDrSy7POjPQBFIs0NI8e/bG4mPgr6B9Tbv6/KNOvsti8llOjc1onrpjERmSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCsKG79p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2dyFd04"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE935C4CECD;
-	Wed,  6 Nov 2024 12:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCsKG79p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE4EC4CECD;
+	Wed,  6 Nov 2024 12:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897747;
-	bh=Xpfey6w8TSf8eWkZ5MqGFgpsK8j9rPqsVomM1SJbBuo=;
+	s=korg; t=1730897749;
+	bh=OQ3q+FKfHM6ecbavXnHAn6isvT1kHWVnieuyf+hry7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U2dyFd04zCaB/nSiDHAJO/UwuGPKWLUlfFqOWiYgc3wDKZgn9dPDpvcNvC390HMV1
-	 XisGh+3xcmdvLP7plmM9cQKde/sf6DMMkozN5sweO/Dl3Hu+PNyG4ySbSz7Z7dXxNv
-	 KDvsmYr6evtyt8CbIkP+ge/ureuQN5pO5GL4z4OQ=
+	b=UCsKG79pU3nFSHnoMMv57WzP1wMsRrKwIdEbcWOQdISCo8pmTFnjUbNNHha7r3pE9
+	 WJyYtcl/aP2E2ML9iBRS2wC3Pe1EZEk6p7Irv5u41jzaGuDvBGOmk0hPlPCe2aMZz3
+	 14rXEEQO1Bo9tsVYeuiYOQrBxmXRVVRpCh9q1NN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <dan.j.williams@intel.com>,
-	Gregory Price <gourry@gourry.net>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Ira Weiny <ira.weiny@intel.com>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 120/151] cxl/port: Fix cxl_bus_rescan() vs bus_rescan_devices()
-Date: Wed,  6 Nov 2024 13:05:08 +0100
-Message-ID: <20241106120312.167960445@linuxfoundation.org>
+Subject: [PATCH 6.6 111/151] phy: freescale: imx8m-pcie: Do CMN_RST just before PHY PLL lock check
+Date: Wed,  6 Nov 2024 13:04:59 +0100
+Message-ID: <20241106120311.923588789@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -53,63 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Richard Zhu <hongxing.zhu@nxp.com>
 
-[ Upstream commit 3d6ebf16438de5d712030fefbb4182b46373d677 ]
+[ Upstream commit f89263b69731e0144d275fff777ee0dd92069200 ]
 
-It turns out since its original introduction, pre-2.6.12,
-bus_rescan_devices() has skipped devices that might be in the process of
-attaching or detaching from their driver. For CXL this behavior is
-unwanted and expects that cxl_bus_rescan() is a probe barrier.
+When enable initcall_debug together with higher debug level below.
+CONFIG_CONSOLE_LOGLEVEL_DEFAULT=9
+CONFIG_CONSOLE_LOGLEVEL_QUIET=9
+CONFIG_MESSAGE_LOGLEVEL_DEFAULT=7
 
-That behavior is simple enough to achieve with bus_for_each_dev() paired
-with call to device_attach(), and it is unclear why bus_rescan_devices()
-took the position of lockless consumption of dev->driver which is racy.
+The initialization of i.MX8MP PCIe PHY might be timeout failed randomly.
+To fix this issue, adjust the sequence of the resets refer to the power
+up sequence listed below.
 
-The "Fixes:" but no "Cc: stable" on this patch reflects that the issue
-is merely by inspection since the bug that triggered the discovery of
-this potential problem [1] is fixed by other means.  However, a stable
-backport should do no harm.
+i.MX8MP PCIe PHY power up sequence:
+                          /---------------------------------------------
+1.8v supply     ---------/
+                    /---------------------------------------------------
+0.8v supply     ---/
 
-Fixes: 8dd2bc0f8e02 ("cxl/mem: Add the cxl_mem driver")
-Link: http://lore.kernel.org/20241004212504.1246-1-gourry@gourry.net [1]
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Tested-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Link: https://patch.msgid.link/172964781104.81806.4277549800082443769.stgit@dwillia2-xfh.jf.intel.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+                ---\ /--------------------------------------------------
+                    X        REFCLK Valid
+Reference Clock ---/ \--------------------------------------------------
+                             -------------------------------------------
+                             |
+i_init_restn    --------------
+                                    ------------------------------------
+                                    |
+i_cmn_rstn      ---------------------
+                                         -------------------------------
+                                         |
+o_pll_lock_done --------------------------
+
+Logs:
+imx6q-pcie 33800000.pcie: host bridge /soc@0/pcie@33800000 ranges:
+imx6q-pcie 33800000.pcie:       IO 0x001ff80000..0x001ff8ffff -> 0x0000000000
+imx6q-pcie 33800000.pcie:      MEM 0x0018000000..0x001fefffff -> 0x0018000000
+probe of clk_imx8mp_audiomix.reset.0 returned 0 after 1052 usecs
+probe of 30e20000.clock-controller returned 0 after 32971 usecs
+phy phy-32f00000.pcie-phy.4: phy poweron failed --> -110
+probe of 30e10000.dma-controller returned 0 after 10235 usecs
+imx6q-pcie 33800000.pcie: waiting for PHY ready timeout!
+dwhdmi-imx 32fd8000.hdmi: Detected HDMI TX controller v2.13a with HDCP (samsung_dw_hdmi_phy2)
+imx6q-pcie 33800000.pcie: probe with driver imx6q-pcie failed with error -110
+
+Fixes: dce9edff16ee ("phy: freescale: imx8m-pcie: Add i.MX8MP PCIe PHY support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+
+v2 changes:
+- Rebase to latest fixes branch of linux-phy git repo.
+- Richard's environment have problem and can't sent out patch. So I help
+post this fix patch.
+
+Link: https://lore.kernel.org/r/20241021155241.943665-1-Frank.Li@nxp.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/phy/freescale/phy-fsl-imx8m-pcie.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index c67cc8c9d5cc6..7f28d1021fa99 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -1969,11 +1969,18 @@ static void cxl_bus_remove(struct device *dev)
+diff --git a/drivers/phy/freescale/phy-fsl-imx8m-pcie.c b/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
+index 11fcb1867118c..e98361dcdeadf 100644
+--- a/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
++++ b/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
+@@ -141,11 +141,6 @@ static int imx8_pcie_phy_power_on(struct phy *phy)
+ 			   IMX8MM_GPR_PCIE_REF_CLK_PLL);
+ 	usleep_range(100, 200);
  
- static struct workqueue_struct *cxl_bus_wq;
+-	/* Do the PHY common block reset */
+-	regmap_update_bits(imx8_phy->iomuxc_gpr, IOMUXC_GPR14,
+-			   IMX8MM_GPR_PCIE_CMN_RST,
+-			   IMX8MM_GPR_PCIE_CMN_RST);
+-
+ 	switch (imx8_phy->drvdata->variant) {
+ 	case IMX8MP:
+ 		reset_control_deassert(imx8_phy->perst);
+@@ -156,6 +151,11 @@ static int imx8_pcie_phy_power_on(struct phy *phy)
+ 		break;
+ 	}
  
--static void cxl_bus_rescan_queue(struct work_struct *w)
-+static int cxl_rescan_attach(struct device *dev, void *data)
- {
--	int rc = bus_rescan_devices(&cxl_bus_type);
-+	int rc = device_attach(dev);
++	/* Do the PHY common block reset */
++	regmap_update_bits(imx8_phy->iomuxc_gpr, IOMUXC_GPR14,
++			   IMX8MM_GPR_PCIE_CMN_RST,
++			   IMX8MM_GPR_PCIE_CMN_RST);
 +
-+	dev_vdbg(dev, "rescan: %s\n", rc ? "attach" : "detached");
- 
--	pr_debug("CXL bus rescan result: %d\n", rc);
-+	return 0;
-+}
-+
-+static void cxl_bus_rescan_queue(struct work_struct *w)
-+{
-+	bus_for_each_dev(&cxl_bus_type, NULL, NULL, cxl_rescan_attach);
- }
- 
- void cxl_bus_rescan(void)
+ 	/* Polling to check the phy is ready or not. */
+ 	ret = readl_poll_timeout(imx8_phy->base + IMX8MM_PCIE_PHY_CMN_REG075,
+ 				 val, val == ANA_PLL_DONE, 10, 20000);
 -- 
 2.43.0
 
