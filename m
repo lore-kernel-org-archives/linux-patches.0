@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4A41DF736;
-	Wed,  6 Nov 2024 12:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8371DED58;
+	Wed,  6 Nov 2024 12:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895930; cv=none; b=T6r1yK0aRjdyteR3jr9Sx0l/ryvN5XsM/qrtu0vKZuLiNfNKnAFHWg4jdlkARD3/IdzaWDQ5Oqvs34xuK7s5avAcrxGAWGfW0zzexJTGp01vIgL2L+HV6d51AQ8D2PhSh+9ZOw9dlFfieydiXjX40t0Uh2CrjkGARf32JVtwIfc=
+	t=1730895933; cv=none; b=q8M9Hcid5iEFgVsIi/z9Z3zCNYsjx/ufgLjXDPD6ohVDM9PKjAELHxvY/Bk4wxXPF5vu9gwamJAz9DCZrc2GH9wympkJDdT5NO3Y7QGsxv66UGODBZNq6DUei/urDVUz1jy2N7eYJe1zdJwxco9jWF+tumaHytKHuOvxjc9BCI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895930; c=relaxed/simple;
-	bh=XqPhFt6V/fpiUORbRpUkyTYsxQGIP3zqTws5B0tFrNY=;
+	s=arc-20240116; t=1730895933; c=relaxed/simple;
+	bh=gg+6koYsN6uh7bKJQ9HbT1ujcr4qECJp4lM/NqrJXUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bmagkWNs1vXpAPBhxdJWS9T02+z+6oSTnwSzjxRs9w2wnW4ZmgmcB9sL4s8GF28F3Q0XNnPJqdHKoIXjLKvnHx5dgM+etahErUISA+owfeQ6PK6bAa2QCX6JgQhrL3aue3te8bra6H+rZL06QWBgRo05zQNK1SmDO7rk6uBDd1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mgRlvSUp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dxUuCUVxPoYfI/ymBYNQRusWA7GEwpIX4tIoyprOkXlvNr9lM5eDkqVXn50Ys02gj+k4RF3ZmI17eFPr4f5HjZP1c20YDtu5DfQO2ckSyFwHftvjefOiz93RBCAqcy1sKMHvNJNs7xB7FshV7tQDSpcp42uA3a0gnUmWrpz+wuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QAt3WVcO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mgRlvSUp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B9CC4CECD;
-	Wed,  6 Nov 2024 12:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QAt3WVcO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91D5C4CECD;
+	Wed,  6 Nov 2024 12:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895930;
-	bh=XqPhFt6V/fpiUORbRpUkyTYsxQGIP3zqTws5B0tFrNY=;
+	s=korg; t=1730895933;
+	bh=gg+6koYsN6uh7bKJQ9HbT1ujcr4qECJp4lM/NqrJXUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mgRlvSUpk2vfU16d8aMd1NwsH1Lhay5VWztgRj+bwU0G2uyAY+FRrvWQ0HDDyGfuE
-	 coN3A6WWSHHCvxub+LHz+Wy3big4/1ywcyr8PjiXbcsYQ/f6oKb0knfmIrvu/BEmpc
-	 vA9rXsZldOlyZc+Gd4zsR0yRAgeAPRzm8GyXQ+cg=
+	b=QAt3WVcOygrl5jzAs1VnF/YR9+wIZPhSremVcG+NSTQCx3oxphu3t/aweTl6pDKmd
+	 NuwQ/BXW9qb1JsvOaWc4etq/ZnWGCsLdD8NSBcDmDV4TLoYRJ81udwwmqYKPjhaTaO
+	 hHrIzy3RRNYC1Y1FyzGt8m8OH3YKWaTJZD+Rgj4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiri Pirko <jiri@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 031/245] dpll: add Embedded SYNC feature for a pin
-Date: Wed,  6 Nov 2024 13:01:24 +0100
-Message-ID: <20241106120319.994059446@linuxfoundation.org>
+Subject: [PATCH 6.11 032/245] ice: add callbacks for Embedded SYNC enablement on dpll pins
+Date: Wed,  6 Nov 2024 13:01:25 +0100
+Message-ID: <20241106120320.018623534@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -55,356 +55,311 @@ Content-Transfer-Encoding: 8bit
 
 From: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
 
-[ Upstream commit cda1fba15cb2282b3c364805c9767698f11c3b0e ]
+[ Upstream commit 87abc5666ab753e8c31a2d39df3b5233f4e47b43 ]
 
-Implement and document new pin attributes for providing Embedded SYNC
-capabilities to the DPLL subsystem users through a netlink pin-get
-do/dump messages. Allow the user to set Embedded SYNC frequency with
-pin-set do netlink message.
+Allow the user to get and set configuration of Embedded SYNC feature
+on the ice driver dpll pins.
 
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Signed-off-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
 Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20240822222513.255179-2-arkadiusz.kubalewski@intel.com
+Link: https://patch.msgid.link/20240822222513.255179-3-arkadiusz.kubalewski@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 6e58c3310622 ("ice: fix crash on probe for DPLL enabled E810 LOM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/dpll.rst     |  21 +++++
- Documentation/netlink/specs/dpll.yaml |  24 +++++
- drivers/dpll/dpll_netlink.c           | 130 ++++++++++++++++++++++++++
- drivers/dpll/dpll_nl.c                |   5 +-
- include/linux/dpll.h                  |  15 +++
- include/uapi/linux/dpll.h             |   3 +
- 6 files changed, 196 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_dpll.c | 223 +++++++++++++++++++++-
+ drivers/net/ethernet/intel/ice/ice_dpll.h |   1 +
+ 2 files changed, 221 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/driver-api/dpll.rst b/Documentation/driver-api/dpll.rst
-index ea8d16600e16a..e6855cd37e852 100644
---- a/Documentation/driver-api/dpll.rst
-+++ b/Documentation/driver-api/dpll.rst
-@@ -214,6 +214,27 @@ offset values are fractional with 3-digit decimal places and shell be
- divided with ``DPLL_PIN_PHASE_OFFSET_DIVIDER`` to get integer part and
- modulo divided to get fractional part.
+diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.c b/drivers/net/ethernet/intel/ice/ice_dpll.c
+index cc35d29ac9e6c..74c0e7319a4ca 100644
+--- a/drivers/net/ethernet/intel/ice/ice_dpll.c
++++ b/drivers/net/ethernet/intel/ice/ice_dpll.c
+@@ -9,6 +9,7 @@
+ #define ICE_CGU_STATE_ACQ_ERR_THRESHOLD		50
+ #define ICE_DPLL_PIN_IDX_INVALID		0xff
+ #define ICE_DPLL_RCLK_NUM_PER_PF		1
++#define ICE_DPLL_PIN_ESYNC_PULSE_HIGH_PERCENT	25
  
-+Embedded SYNC
-+=============
-+
-+Device may provide ability to use Embedded SYNC feature. It allows
-+to embed additional SYNC signal into the base frequency of a pin - a one
-+special pulse of base frequency signal every time SYNC signal pulse
-+happens. The user can configure the frequency of Embedded SYNC.
-+The Embedded SYNC capability is always related to a given base frequency
-+and HW capabilities. The user is provided a range of Embedded SYNC
-+frequencies supported, depending on current base frequency configured for
-+the pin.
-+
-+  ========================================= =================================
-+  ``DPLL_A_PIN_ESYNC_FREQUENCY``            current Embedded SYNC frequency
-+  ``DPLL_A_PIN_ESYNC_FREQUENCY_SUPPORTED``  nest available Embedded SYNC
-+                                            frequency ranges
-+    ``DPLL_A_PIN_FREQUENCY_MIN``            attr minimum value of frequency
-+    ``DPLL_A_PIN_FREQUENCY_MAX``            attr maximum value of frequency
-+  ``DPLL_A_PIN_ESYNC_PULSE``                pulse type of Embedded SYNC
-+  ========================================= =================================
-+
- Configuration commands group
- ============================
+ /**
+  * enum ice_dpll_pin_type - enumerate ice pin types:
+@@ -30,6 +31,10 @@ static const char * const pin_type_name[] = {
+ 	[ICE_DPLL_PIN_TYPE_RCLK_INPUT] = "rclk-input",
+ };
  
-diff --git a/Documentation/netlink/specs/dpll.yaml b/Documentation/netlink/specs/dpll.yaml
-index 94132d30e0e03..f2894ca35de84 100644
---- a/Documentation/netlink/specs/dpll.yaml
-+++ b/Documentation/netlink/specs/dpll.yaml
-@@ -345,6 +345,26 @@ attribute-sets:
-           Value is in PPM (parts per million).
-           This may be implemented for example for pin of type
-           PIN_TYPE_SYNCE_ETH_PORT.
-+      -
-+        name: esync-frequency
-+        type: u64
-+        doc: |
-+          Frequency of Embedded SYNC signal. If provided, the pin is configured
-+          with a SYNC signal embedded into its base clock frequency.
-+      -
-+        name: esync-frequency-supported
-+        type: nest
-+        multi-attr: true
-+        nested-attributes: frequency-range
-+        doc: |
-+          If provided a pin is capable of embedding a SYNC signal (within given
-+          range) into its base frequency signal.
-+      -
-+        name: esync-pulse
-+        type: u32
-+        doc: |
-+          A ratio of high to low state of a SYNC signal pulse embedded
-+          into base clock frequency. Value is in percents.
-   -
-     name: pin-parent-device
-     subset-of: pin
-@@ -510,6 +530,9 @@ operations:
-             - phase-adjust-max
-             - phase-adjust
-             - fractional-frequency-offset
-+            - esync-frequency
-+            - esync-frequency-supported
-+            - esync-pulse
++static const struct dpll_pin_frequency ice_esync_range[] = {
++	DPLL_PIN_FREQUENCY_RANGE(0, DPLL_PIN_FREQUENCY_1_HZ),
++};
++
+ /**
+  * ice_dpll_is_reset - check if reset is in progress
+  * @pf: private board structure
+@@ -394,8 +399,8 @@ ice_dpll_pin_state_update(struct ice_pf *pf, struct ice_dpll_pin *pin,
  
-       dump:
-         request:
-@@ -536,6 +559,7 @@ operations:
-             - parent-device
-             - parent-pin
-             - phase-adjust
-+            - esync-frequency
-     -
-       name: pin-create-ntf
-       doc: Notification about pin appearing
-diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
-index 98e6ad8528d37..fc0280dcddd10 100644
---- a/drivers/dpll/dpll_netlink.c
-+++ b/drivers/dpll/dpll_netlink.c
-@@ -342,6 +342,51 @@ dpll_msg_add_pin_freq(struct sk_buff *msg, struct dpll_pin *pin,
+ 	switch (pin_type) {
+ 	case ICE_DPLL_PIN_TYPE_INPUT:
+-		ret = ice_aq_get_input_pin_cfg(&pf->hw, pin->idx, NULL, NULL,
+-					       NULL, &pin->flags[0],
++		ret = ice_aq_get_input_pin_cfg(&pf->hw, pin->idx, &pin->status,
++					       NULL, NULL, &pin->flags[0],
+ 					       &pin->freq, &pin->phase_adjust);
+ 		if (ret)
+ 			goto err;
+@@ -430,7 +435,7 @@ ice_dpll_pin_state_update(struct ice_pf *pf, struct ice_dpll_pin *pin,
+ 			goto err;
+ 
+ 		parent &= ICE_AQC_GET_CGU_OUT_CFG_DPLL_SRC_SEL;
+-		if (ICE_AQC_SET_CGU_OUT_CFG_OUT_EN & pin->flags[0]) {
++		if (ICE_AQC_GET_CGU_OUT_CFG_OUT_EN & pin->flags[0]) {
+ 			pin->state[pf->dplls.eec.dpll_idx] =
+ 				parent == pf->dplls.eec.dpll_idx ?
+ 				DPLL_PIN_STATE_CONNECTED :
+@@ -1100,6 +1105,214 @@ ice_dpll_phase_offset_get(const struct dpll_pin *pin, void *pin_priv,
  	return 0;
  }
  
++/**
++ * ice_dpll_output_esync_set - callback for setting embedded sync
++ * @pin: pointer to a pin
++ * @pin_priv: private data pointer passed on pin registration
++ * @dpll: registered dpll pointer
++ * @dpll_priv: private data pointer passed on dpll registration
++ * @freq: requested embedded sync frequency
++ * @extack: error reporting
++ *
++ * Dpll subsystem callback. Handler for setting embedded sync frequency value
++ * on output pin.
++ *
++ * Context: Acquires pf->dplls.lock
++ * Return:
++ * * 0 - success
++ * * negative - error
++ */
 +static int
-+dpll_msg_add_pin_esync(struct sk_buff *msg, struct dpll_pin *pin,
-+		       struct dpll_pin_ref *ref, struct netlink_ext_ack *extack)
++ice_dpll_output_esync_set(const struct dpll_pin *pin, void *pin_priv,
++			  const struct dpll_device *dpll, void *dpll_priv,
++			  u64 freq, struct netlink_ext_ack *extack)
 +{
-+	const struct dpll_pin_ops *ops = dpll_pin_ops(ref);
-+	struct dpll_device *dpll = ref->dpll;
-+	struct dpll_pin_esync esync;
-+	struct nlattr *nest;
-+	int ret, i;
-+
-+	if (!ops->esync_get)
-+		return 0;
-+	ret = ops->esync_get(pin, dpll_pin_on_dpll_priv(dpll, pin), dpll,
-+			     dpll_priv(dpll), &esync, extack);
-+	if (ret == -EOPNOTSUPP)
-+		return 0;
-+	else if (ret)
-+		return ret;
-+	if (nla_put_64bit(msg, DPLL_A_PIN_ESYNC_FREQUENCY, sizeof(esync.freq),
-+			  &esync.freq, DPLL_A_PIN_PAD))
-+		return -EMSGSIZE;
-+	if (nla_put_u32(msg, DPLL_A_PIN_ESYNC_PULSE, esync.pulse))
-+		return -EMSGSIZE;
-+	for (i = 0; i < esync.range_num; i++) {
-+		nest = nla_nest_start(msg,
-+				      DPLL_A_PIN_ESYNC_FREQUENCY_SUPPORTED);
-+		if (!nest)
-+			return -EMSGSIZE;
-+		if (nla_put_64bit(msg, DPLL_A_PIN_FREQUENCY_MIN,
-+				  sizeof(esync.range[i].min),
-+				  &esync.range[i].min, DPLL_A_PIN_PAD))
-+			goto nest_cancel;
-+		if (nla_put_64bit(msg, DPLL_A_PIN_FREQUENCY_MAX,
-+				  sizeof(esync.range[i].max),
-+				  &esync.range[i].max, DPLL_A_PIN_PAD))
-+			goto nest_cancel;
-+		nla_nest_end(msg, nest);
-+	}
-+	return 0;
-+
-+nest_cancel:
-+	nla_nest_cancel(msg, nest);
-+	return -EMSGSIZE;
-+}
-+
- static bool dpll_pin_is_freq_supported(struct dpll_pin *pin, u32 freq)
- {
- 	int fs;
-@@ -481,6 +526,9 @@ dpll_cmd_pin_get_one(struct sk_buff *msg, struct dpll_pin *pin,
- 	if (ret)
- 		return ret;
- 	ret = dpll_msg_add_ffo(msg, pin, ref, extack);
-+	if (ret)
-+		return ret;
-+	ret = dpll_msg_add_pin_esync(msg, pin, ref, extack);
- 	if (ret)
- 		return ret;
- 	if (xa_empty(&pin->parent_refs))
-@@ -738,6 +786,83 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
- 	return ret;
- }
- 
-+static int
-+dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
-+		   struct netlink_ext_ack *extack)
-+{
-+	struct dpll_pin_ref *ref, *failed;
-+	const struct dpll_pin_ops *ops;
-+	struct dpll_pin_esync esync;
-+	u64 freq = nla_get_u64(a);
-+	struct dpll_device *dpll;
-+	bool supported = false;
-+	unsigned long i;
++	struct ice_dpll_pin *p = pin_priv;
++	struct ice_dpll *d = dpll_priv;
++	struct ice_pf *pf = d->pf;
++	u8 flags = 0;
 +	int ret;
 +
-+	xa_for_each(&pin->dpll_refs, i, ref) {
-+		ops = dpll_pin_ops(ref);
-+		if (!ops->esync_set || !ops->esync_get) {
-+			NL_SET_ERR_MSG(extack,
-+				       "embedded sync feature is not supported by this device");
-+			return -EOPNOTSUPP;
++	if (ice_dpll_is_reset(pf, extack))
++		return -EBUSY;
++	mutex_lock(&pf->dplls.lock);
++	if (p->flags[0] & ICE_AQC_GET_CGU_OUT_CFG_OUT_EN)
++		flags = ICE_AQC_SET_CGU_OUT_CFG_OUT_EN;
++	if (freq == DPLL_PIN_FREQUENCY_1_HZ) {
++		if (p->flags[0] & ICE_AQC_GET_CGU_OUT_CFG_ESYNC_EN) {
++			ret = 0;
++		} else {
++			flags |= ICE_AQC_SET_CGU_OUT_CFG_ESYNC_EN;
++			ret = ice_aq_set_output_pin_cfg(&pf->hw, p->idx, flags,
++							0, 0, 0);
++		}
++	} else {
++		if (!(p->flags[0] & ICE_AQC_GET_CGU_OUT_CFG_ESYNC_EN)) {
++			ret = 0;
++		} else {
++			flags &= ~ICE_AQC_SET_CGU_OUT_CFG_ESYNC_EN;
++			ret = ice_aq_set_output_pin_cfg(&pf->hw, p->idx, flags,
++							0, 0, 0);
 +		}
 +	}
-+	ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
-+	ops = dpll_pin_ops(ref);
-+	dpll = ref->dpll;
-+	ret = ops->esync_get(pin, dpll_pin_on_dpll_priv(dpll, pin), dpll,
-+			     dpll_priv(dpll), &esync, extack);
-+	if (ret) {
-+		NL_SET_ERR_MSG(extack, "unable to get current embedded sync frequency value");
-+		return ret;
-+	}
-+	if (freq == esync.freq)
-+		return 0;
-+	for (i = 0; i < esync.range_num; i++)
-+		if (freq <= esync.range[i].max && freq >= esync.range[i].min)
-+			supported = true;
-+	if (!supported) {
-+		NL_SET_ERR_MSG_ATTR(extack, a,
-+				    "requested embedded sync frequency value is not supported by this device");
-+		return -EINVAL;
-+	}
++	mutex_unlock(&pf->dplls.lock);
 +
-+	xa_for_each(&pin->dpll_refs, i, ref) {
-+		void *pin_dpll_priv;
-+
-+		ops = dpll_pin_ops(ref);
-+		dpll = ref->dpll;
-+		pin_dpll_priv = dpll_pin_on_dpll_priv(dpll, pin);
-+		ret = ops->esync_set(pin, pin_dpll_priv, dpll, dpll_priv(dpll),
-+				      freq, extack);
-+		if (ret) {
-+			failed = ref;
-+			NL_SET_ERR_MSG_FMT(extack,
-+					   "embedded sync frequency set failed for dpll_id: %u",
-+					   dpll->id);
-+			goto rollback;
-+		}
-+	}
-+	__dpll_pin_change_ntf(pin);
-+
-+	return 0;
-+
-+rollback:
-+	xa_for_each(&pin->dpll_refs, i, ref) {
-+		void *pin_dpll_priv;
-+
-+		if (ref == failed)
-+			break;
-+		ops = dpll_pin_ops(ref);
-+		dpll = ref->dpll;
-+		pin_dpll_priv = dpll_pin_on_dpll_priv(dpll, pin);
-+		if (ops->esync_set(pin, pin_dpll_priv, dpll, dpll_priv(dpll),
-+				   esync.freq, extack))
-+			NL_SET_ERR_MSG(extack, "set embedded sync frequency rollback failed");
-+	}
 +	return ret;
 +}
 +
- static int
- dpll_pin_on_pin_state_set(struct dpll_pin *pin, u32 parent_idx,
- 			  enum dpll_pin_state state,
-@@ -1039,6 +1164,11 @@ dpll_pin_set_from_nlattr(struct dpll_pin *pin, struct genl_info *info)
- 			if (ret)
- 				return ret;
- 			break;
-+		case DPLL_A_PIN_ESYNC_FREQUENCY:
-+			ret = dpll_pin_esync_set(pin, a, info->extack);
-+			if (ret)
-+				return ret;
-+			break;
- 		}
- 	}
- 
-diff --git a/drivers/dpll/dpll_nl.c b/drivers/dpll/dpll_nl.c
-index 1e95f5397cfce..fe9b6893d2614 100644
---- a/drivers/dpll/dpll_nl.c
-+++ b/drivers/dpll/dpll_nl.c
-@@ -62,7 +62,7 @@ static const struct nla_policy dpll_pin_get_dump_nl_policy[DPLL_A_PIN_ID + 1] =
- };
- 
- /* DPLL_CMD_PIN_SET - do */
--static const struct nla_policy dpll_pin_set_nl_policy[DPLL_A_PIN_PHASE_ADJUST + 1] = {
-+static const struct nla_policy dpll_pin_set_nl_policy[DPLL_A_PIN_ESYNC_FREQUENCY + 1] = {
- 	[DPLL_A_PIN_ID] = { .type = NLA_U32, },
- 	[DPLL_A_PIN_FREQUENCY] = { .type = NLA_U64, },
- 	[DPLL_A_PIN_DIRECTION] = NLA_POLICY_RANGE(NLA_U32, 1, 2),
-@@ -71,6 +71,7 @@ static const struct nla_policy dpll_pin_set_nl_policy[DPLL_A_PIN_PHASE_ADJUST +
- 	[DPLL_A_PIN_PARENT_DEVICE] = NLA_POLICY_NESTED(dpll_pin_parent_device_nl_policy),
- 	[DPLL_A_PIN_PARENT_PIN] = NLA_POLICY_NESTED(dpll_pin_parent_pin_nl_policy),
- 	[DPLL_A_PIN_PHASE_ADJUST] = { .type = NLA_S32, },
-+	[DPLL_A_PIN_ESYNC_FREQUENCY] = { .type = NLA_U64, },
- };
- 
- /* Ops table for dpll */
-@@ -138,7 +139,7 @@ static const struct genl_split_ops dpll_nl_ops[] = {
- 		.doit		= dpll_nl_pin_set_doit,
- 		.post_doit	= dpll_pin_post_doit,
- 		.policy		= dpll_pin_set_nl_policy,
--		.maxattr	= DPLL_A_PIN_PHASE_ADJUST,
-+		.maxattr	= DPLL_A_PIN_ESYNC_FREQUENCY,
- 		.flags		= GENL_ADMIN_PERM | GENL_CMD_CAP_DO,
- 	},
- };
-diff --git a/include/linux/dpll.h b/include/linux/dpll.h
-index d275736230b3b..81f7b623d0ba6 100644
---- a/include/linux/dpll.h
-+++ b/include/linux/dpll.h
-@@ -15,6 +15,7 @@
- 
- struct dpll_device;
- struct dpll_pin;
-+struct dpll_pin_esync;
- 
- struct dpll_device_ops {
- 	int (*mode_get)(const struct dpll_device *dpll, void *dpll_priv,
-@@ -83,6 +84,13 @@ struct dpll_pin_ops {
- 	int (*ffo_get)(const struct dpll_pin *pin, void *pin_priv,
- 		       const struct dpll_device *dpll, void *dpll_priv,
- 		       s64 *ffo, struct netlink_ext_ack *extack);
-+	int (*esync_set)(const struct dpll_pin *pin, void *pin_priv,
++/**
++ * ice_dpll_output_esync_get - callback for getting embedded sync config
++ * @pin: pointer to a pin
++ * @pin_priv: private data pointer passed on pin registration
++ * @dpll: registered dpll pointer
++ * @dpll_priv: private data pointer passed on dpll registration
++ * @esync: on success holds embedded sync pin properties
++ * @extack: error reporting
++ *
++ * Dpll subsystem callback. Handler for getting embedded sync frequency value
++ * and capabilities on output pin.
++ *
++ * Context: Acquires pf->dplls.lock
++ * Return:
++ * * 0 - success
++ * * negative - error
++ */
++static int
++ice_dpll_output_esync_get(const struct dpll_pin *pin, void *pin_priv,
++			  const struct dpll_device *dpll, void *dpll_priv,
++			  struct dpll_pin_esync *esync,
++			  struct netlink_ext_ack *extack)
++{
++	struct ice_dpll_pin *p = pin_priv;
++	struct ice_dpll *d = dpll_priv;
++	struct ice_pf *pf = d->pf;
++
++	if (ice_dpll_is_reset(pf, extack))
++		return -EBUSY;
++	mutex_lock(&pf->dplls.lock);
++	if (!(p->flags[0] & ICE_AQC_GET_CGU_OUT_CFG_ESYNC_ABILITY) ||
++	    p->freq != DPLL_PIN_FREQUENCY_10_MHZ) {
++		mutex_unlock(&pf->dplls.lock);
++		return -EOPNOTSUPP;
++	}
++	esync->range = ice_esync_range;
++	esync->range_num = ARRAY_SIZE(ice_esync_range);
++	if (p->flags[0] & ICE_AQC_GET_CGU_OUT_CFG_ESYNC_EN) {
++		esync->freq = DPLL_PIN_FREQUENCY_1_HZ;
++		esync->pulse = ICE_DPLL_PIN_ESYNC_PULSE_HIGH_PERCENT;
++	} else {
++		esync->freq = 0;
++		esync->pulse = 0;
++	}
++	mutex_unlock(&pf->dplls.lock);
++
++	return 0;
++}
++
++/**
++ * ice_dpll_input_esync_set - callback for setting embedded sync
++ * @pin: pointer to a pin
++ * @pin_priv: private data pointer passed on pin registration
++ * @dpll: registered dpll pointer
++ * @dpll_priv: private data pointer passed on dpll registration
++ * @freq: requested embedded sync frequency
++ * @extack: error reporting
++ *
++ * Dpll subsystem callback. Handler for setting embedded sync frequency value
++ * on input pin.
++ *
++ * Context: Acquires pf->dplls.lock
++ * Return:
++ * * 0 - success
++ * * negative - error
++ */
++static int
++ice_dpll_input_esync_set(const struct dpll_pin *pin, void *pin_priv,
 +			 const struct dpll_device *dpll, void *dpll_priv,
-+			 u64 freq, struct netlink_ext_ack *extack);
-+	int (*esync_get)(const struct dpll_pin *pin, void *pin_priv,
++			 u64 freq, struct netlink_ext_ack *extack)
++{
++	struct ice_dpll_pin *p = pin_priv;
++	struct ice_dpll *d = dpll_priv;
++	struct ice_pf *pf = d->pf;
++	u8 flags_en = 0;
++	int ret;
++
++	if (ice_dpll_is_reset(pf, extack))
++		return -EBUSY;
++	mutex_lock(&pf->dplls.lock);
++	if (p->flags[0] & ICE_AQC_GET_CGU_IN_CFG_FLG2_INPUT_EN)
++		flags_en = ICE_AQC_SET_CGU_IN_CFG_FLG2_INPUT_EN;
++	if (freq == DPLL_PIN_FREQUENCY_1_HZ) {
++		if (p->flags[0] & ICE_AQC_GET_CGU_IN_CFG_FLG2_ESYNC_EN) {
++			ret = 0;
++		} else {
++			flags_en |= ICE_AQC_SET_CGU_IN_CFG_FLG2_ESYNC_EN;
++			ret = ice_aq_set_input_pin_cfg(&pf->hw, p->idx, 0,
++						       flags_en, 0, 0);
++		}
++	} else {
++		if (!(p->flags[0] & ICE_AQC_GET_CGU_IN_CFG_FLG2_ESYNC_EN)) {
++			ret = 0;
++		} else {
++			flags_en &= ~ICE_AQC_SET_CGU_IN_CFG_FLG2_ESYNC_EN;
++			ret = ice_aq_set_input_pin_cfg(&pf->hw, p->idx, 0,
++						       flags_en, 0, 0);
++		}
++	}
++	mutex_unlock(&pf->dplls.lock);
++
++	return ret;
++}
++
++/**
++ * ice_dpll_input_esync_get - callback for getting embedded sync config
++ * @pin: pointer to a pin
++ * @pin_priv: private data pointer passed on pin registration
++ * @dpll: registered dpll pointer
++ * @dpll_priv: private data pointer passed on dpll registration
++ * @esync: on success holds embedded sync pin properties
++ * @extack: error reporting
++ *
++ * Dpll subsystem callback. Handler for getting embedded sync frequency value
++ * and capabilities on input pin.
++ *
++ * Context: Acquires pf->dplls.lock
++ * Return:
++ * * 0 - success
++ * * negative - error
++ */
++static int
++ice_dpll_input_esync_get(const struct dpll_pin *pin, void *pin_priv,
 +			 const struct dpll_device *dpll, void *dpll_priv,
 +			 struct dpll_pin_esync *esync,
-+			 struct netlink_ext_ack *extack);
- };
- 
- struct dpll_pin_frequency {
-@@ -111,6 +119,13 @@ struct dpll_pin_phase_adjust_range {
- 	s32 max;
- };
- 
-+struct dpll_pin_esync {
-+	u64 freq;
-+	const struct dpll_pin_frequency *range;
-+	u8 range_num;
-+	u8 pulse;
-+};
++			 struct netlink_ext_ack *extack)
++{
++	struct ice_dpll_pin *p = pin_priv;
++	struct ice_dpll *d = dpll_priv;
++	struct ice_pf *pf = d->pf;
 +
- struct dpll_pin_properties {
- 	const char *board_label;
- 	const char *panel_label;
-diff --git a/include/uapi/linux/dpll.h b/include/uapi/linux/dpll.h
-index 0c13d7f1a1bc3..b0654ade7b7eb 100644
---- a/include/uapi/linux/dpll.h
-+++ b/include/uapi/linux/dpll.h
-@@ -210,6 +210,9 @@ enum dpll_a_pin {
- 	DPLL_A_PIN_PHASE_ADJUST,
- 	DPLL_A_PIN_PHASE_OFFSET,
- 	DPLL_A_PIN_FRACTIONAL_FREQUENCY_OFFSET,
-+	DPLL_A_PIN_ESYNC_FREQUENCY,
-+	DPLL_A_PIN_ESYNC_FREQUENCY_SUPPORTED,
-+	DPLL_A_PIN_ESYNC_PULSE,
++	if (ice_dpll_is_reset(pf, extack))
++		return -EBUSY;
++	mutex_lock(&pf->dplls.lock);
++	if (!(p->status & ICE_AQC_GET_CGU_IN_CFG_STATUS_ESYNC_CAP) ||
++	    p->freq != DPLL_PIN_FREQUENCY_10_MHZ) {
++		mutex_unlock(&pf->dplls.lock);
++		return -EOPNOTSUPP;
++	}
++	esync->range = ice_esync_range;
++	esync->range_num = ARRAY_SIZE(ice_esync_range);
++	if (p->flags[0] & ICE_AQC_GET_CGU_IN_CFG_FLG2_ESYNC_EN) {
++		esync->freq = DPLL_PIN_FREQUENCY_1_HZ;
++		esync->pulse = ICE_DPLL_PIN_ESYNC_PULSE_HIGH_PERCENT;
++	} else {
++		esync->freq = 0;
++		esync->pulse = 0;
++	}
++	mutex_unlock(&pf->dplls.lock);
++
++	return 0;
++}
++
+ /**
+  * ice_dpll_rclk_state_on_pin_set - set a state on rclk pin
+  * @pin: pointer to a pin
+@@ -1224,6 +1437,8 @@ static const struct dpll_pin_ops ice_dpll_input_ops = {
+ 	.phase_adjust_get = ice_dpll_pin_phase_adjust_get,
+ 	.phase_adjust_set = ice_dpll_input_phase_adjust_set,
+ 	.phase_offset_get = ice_dpll_phase_offset_get,
++	.esync_set = ice_dpll_input_esync_set,
++	.esync_get = ice_dpll_input_esync_get,
+ };
  
- 	__DPLL_A_PIN_MAX,
- 	DPLL_A_PIN_MAX = (__DPLL_A_PIN_MAX - 1)
+ static const struct dpll_pin_ops ice_dpll_output_ops = {
+@@ -1234,6 +1449,8 @@ static const struct dpll_pin_ops ice_dpll_output_ops = {
+ 	.direction_get = ice_dpll_output_direction,
+ 	.phase_adjust_get = ice_dpll_pin_phase_adjust_get,
+ 	.phase_adjust_set = ice_dpll_output_phase_adjust_set,
++	.esync_set = ice_dpll_output_esync_set,
++	.esync_get = ice_dpll_output_esync_get,
+ };
+ 
+ static const struct dpll_device_ops ice_dpll_ops = {
+diff --git a/drivers/net/ethernet/intel/ice/ice_dpll.h b/drivers/net/ethernet/intel/ice/ice_dpll.h
+index 93172e93995b9..c320f1bf7d6d6 100644
+--- a/drivers/net/ethernet/intel/ice/ice_dpll.h
++++ b/drivers/net/ethernet/intel/ice/ice_dpll.h
+@@ -31,6 +31,7 @@ struct ice_dpll_pin {
+ 	struct dpll_pin_properties prop;
+ 	u32 freq;
+ 	s32 phase_adjust;
++	u8 status;
+ };
+ 
+ /** ice_dpll - store info required for DPLL control
 -- 
 2.43.0
 
