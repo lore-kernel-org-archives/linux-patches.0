@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EA71DF974;
-	Wed,  6 Nov 2024 12:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE92C1DF251;
+	Wed,  6 Nov 2024 12:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896390; cv=none; b=pxEK2gpwwz3u2OZmuD7hWoS2rt6h3YCG7CN248N+bXuqqs2endBQGExUy3AzK/cV5nzHEct03mM7wPkitw80XdPvShjPpVk2etFfQ7llayko7EykjwMwNjeeQuY/xWYeR4Y7vOfcfKPBskXnkQO6dJfqGk69hPPGOexUMdDanMM=
+	t=1730896393; cv=none; b=OEH1/EiuraYeAwgplXLSNujtJTf/F1mheO1vcXPLR+ghSE6vCAgJQkHO+WwDzrM0t6w6BbiShi/Vyv1jqXtYfP/QbCIgirKMEi7ThjYu109SHmWtrsPNoQRgqlx23NbeMcSklw8ffYAgcQ51hIEDnBN/S6zYlNsYUVFjwPth2Rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896390; c=relaxed/simple;
-	bh=wjTDGp0OC62NqMX9GQDo5ExmdyvCi5Dr7BklEMs6xoo=;
+	s=arc-20240116; t=1730896393; c=relaxed/simple;
+	bh=vxCbe6N3GN4heMUSFsV/ZhkPl0vmlMV/PfNA4MHYs14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaGOOyeIlwYUjmCJz1PwaMBp6bZ1qOujpWGH0k8YKllb3AAHluPkW78Wv3Kqj2eUZfvCYe3DD944b1h8EGrUVYpXgRtpMrXKXp6YeRH+vG7S3Hj7VkyN/EMSFlyNMKGoqYjlKcNI0tSMgIOFx2f1s2uPpEW2flQJg4lnM9xvBMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaPMgXVF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I8YyjIV2tj10X+XvVmI8i9QWD9B7naCExtKwyUSg3j0NXMPkVjnEyBMBxEpG7czitjjiZl5qY6Dxs2u6iS1iqosLzxsGCuXCQgGiSJgIeozstIVLJ+zQ1ydw3UHUgwi9I4HfBAFJ3z46tb6BfDjh3yiYiq0L8ouV/8va2aZChG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=buy4DWx3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaPMgXVF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB11C4CECD;
-	Wed,  6 Nov 2024 12:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="buy4DWx3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46200C4CECD;
+	Wed,  6 Nov 2024 12:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896390;
-	bh=wjTDGp0OC62NqMX9GQDo5ExmdyvCi5Dr7BklEMs6xoo=;
+	s=korg; t=1730896393;
+	bh=vxCbe6N3GN4heMUSFsV/ZhkPl0vmlMV/PfNA4MHYs14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aaPMgXVF2oD2VKVWxBoMZ7/vQ6UdnmyaLrYl0AWqGyHN7+NXFxpys1Cy+Xq0X0YCV
-	 ksiXqKhDx9gw11F+zswCSDo0lNYA1U8UGgVG/VONQdjomHh5fWkIxZ+nJvKFr0hr6l
-	 MZuP2gJ4+kl9XHZQ7o4HhzpUoVmIQgpEzmQX0Xbk=
+	b=buy4DWx3R0WuWMa8zDu4QKQQDQu6XrHbCkHKCMeA8c2Upf1E7TQkEiCv8rv39ubF8
+	 67xayPnCS2vznlTB34mhTKCknxMq3idYFsV/oD4C7Q363kMIuxZ7M8qsYWXQtn2cTB
+	 jJQo5s4d7cED03yBHnErjCghp58zloLHspVmsXwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Werner Sembach <wse@tuxedocomputers.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 185/245] ALSA: hda/realtek: Fix headset mic on TUXEDO Gemini 17 Gen3
-Date: Wed,  6 Nov 2024 13:03:58 +0100
-Message-ID: <20241106120323.795706194@linuxfoundation.org>
+Subject: [PATCH 6.11 186/245] ALSA: hda/realtek: Fix headset mic on TUXEDO Stellaris 16 Gen6 mb1
+Date: Wed,  6 Nov 2024 13:03:59 +0100
+Message-ID: <20241106120323.819844041@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -54,14 +54,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoffer Sandberg <cs@tuxedo.de>
 
-[ Upstream commit 0b04fbe886b4274c8e5855011233aaa69fec6e75 ]
+[ Upstream commit e49370d769e71456db3fbd982e95bab8c69f73e8 ]
 
 Quirk is needed to enable headset microphone on missing pin 0x19.
 
 Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
 Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241029151653.80726-1-wse@tuxedocomputers.com
+Link: https://patch.msgid.link/20241029151653.80726-2-wse@tuxedocomputers.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -69,17 +69,17 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 8d6f446d507c2..25d4c417d3c07 100644
+index 25d4c417d3c07..660fd984a9285 100644
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -10729,6 +10729,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1558, 0x1404, "Clevo N150CU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x14a1, "Clevo L141MU", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x2624, "Clevo L240TU", ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1558, 0x28c1, "Clevo V370VND", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1558, 0x4018, "Clevo NV40M[BE]", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x4019, "Clevo NV40MZ", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1558, 0x4020, "Clevo NV40MB", ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE),
+@@ -10971,6 +10971,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1d05, 0x115c, "TongFang GMxTGxx", ALC269_FIXUP_NO_SHUTUP),
+ 	SND_PCI_QUIRK(0x1d05, 0x121b, "TongFang GMxAGxx", ALC269_FIXUP_NO_SHUTUP),
+ 	SND_PCI_QUIRK(0x1d05, 0x1387, "TongFang GMxIXxx", ALC2XX_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1d05, 0x1409, "TongFang GMxIXxx", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
+ 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
 -- 
 2.43.0
 
