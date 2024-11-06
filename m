@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3E31F8F15;
-	Wed,  6 Nov 2024 12:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBE21E3786;
+	Wed,  6 Nov 2024 12:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896681; cv=none; b=ObREtUSRHM4qM2eopw+KjJd8cXzQRy3NAQ/uftMc/+Kp0sv0mkJ4Yof3B2wu4HN/DVjSb1z0tMtFRHxCP1yK4QxJfQdtS2pwause3MpxBTf9XqezPWdUX44oaE2viuople9QRIvjoPQIwTVhXHInPu7wYnBoKwbflzJYpeOu/pU=
+	t=1730896684; cv=none; b=DUj/jxGA2rpU0b0pdl4yoPd2aFSqVrf6ranSj9e8xhIq7Qs5375dO4pNEh5ReFc06lMVk1ksnESMkiLy+P7hyc0HurzS70MP5MbbpVcT5axlENH62VQ1XmhjO/RWg0SRFpkRNYeqBquoHVRinE/aszJ0zezuf2X2zGvfa88rXS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896681; c=relaxed/simple;
-	bh=/PFAizbs+WYEXPBHgZPkPyz4XDuHG5si1czU9g91jfs=;
+	s=arc-20240116; t=1730896684; c=relaxed/simple;
+	bh=nLGuUCja0+7EUQaxM7/I0+dwwEIru5pQ9obFYdqJIP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/peo+4zjPOGadxKMPPamP9W2rlggoBB0kj1vn9Ou8SuUGSnYg/YRjsk+50xkFjs6v1KC3RX4NRa1Hk8XuM8ZuaAOhxtxJhXjGQIQmJnNxbWZ9Sy/b6wcBHYEWFBDchSUQA9hGSMzfpkUsvKZn6HNzO01vviXrFBVnU8/fVBZI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJn/HeSt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBzJERpjX82reUIhhpuRBpngL8hjHNg9WHI95kxgaqnYYOg3H5KHcOHbV2Y5dlBOXRdaAer1eDHu1s+4bUuB8qpk2vVmdXoWAkJ8FUTYgsDQ+CIGpexjJP1e5yepQZ5cXh/IyWEKLFWmN07djkI/Fd+keCbNY3P5DFQO4SP0R7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtmSWc8w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJn/HeSt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42248C4CECD;
-	Wed,  6 Nov 2024 12:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtmSWc8w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3117AC4CED4;
+	Wed,  6 Nov 2024 12:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896681;
-	bh=/PFAizbs+WYEXPBHgZPkPyz4XDuHG5si1czU9g91jfs=;
+	s=korg; t=1730896684;
+	bh=nLGuUCja0+7EUQaxM7/I0+dwwEIru5pQ9obFYdqJIP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mJn/HeStdEdk4HJckLYA/4WQ5WUkAl7jCEsqa0g7RKRpu7lE6sVJvPShc0333oeCJ
-	 lbSzTkb07zIdGmSX9ENWDyaMsdEuNCjcvN6OrcIz+34hc+glZhP34hqFh7JShTwVsh
-	 VVoQQ1mPyd0HA1nqe+IwBRVBZvyPAjLYiGegxgTg=
+	b=RtmSWc8waLk0uF7y2+cfH6lWOSCPqqTumD5dBsCBwG44yir71tHo/pzmdqWsUCwpn
+	 oUkoFwTlL5OEFGyacmmyPtCeqgV27DNlpR7QivUGJXULw7gDSq/wxv4UJnLou/b4aX
+	 qbSsm3vjbCVecIQHpYfrJoaY+q2b/Tmv6HNFjKIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b65e0af58423fc8a73aa@syzkaller.appspotmail.com,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+	Atlas Yu <atlas.yu@canonical.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 038/110] net: sched: fix use-after-free in taprio_change()
-Date: Wed,  6 Nov 2024 13:04:04 +0100
-Message-ID: <20241106120304.248535956@linuxfoundation.org>
+Subject: [PATCH 5.10 039/110] r8169: avoid unsolicited interrupts
+Date: Wed,  6 Nov 2024 13:04:05 +0100
+Message-ID: <20241106120304.278055842@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -53,43 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit f504465970aebb2467da548f7c1efbbf36d0f44b ]
+[ Upstream commit 10ce0db787004875f4dba068ea952207d1d8abeb ]
 
-In 'taprio_change()', 'admin' pointer may become dangling due to sched
-switch / removal caused by 'advance_sched()', and critical section
-protected by 'q->current_entry_lock' is too small to prevent from such
-a scenario (which causes use-after-free detected by KASAN). Fix this
-by prefer 'rcu_replace_pointer()' over 'rcu_assign_pointer()' to update
-'admin' immediately before an attempt to schedule freeing.
+It was reported that after resume from suspend a PCI error is logged
+and connectivity is broken. Error message is:
+PCI error (cmd = 0x0407, status_errs = 0x0000)
+The message seems to be a red herring as none of the error bits is set,
+and the PCI command register value also is normal. Exception handling
+for a PCI error includes a chip reset what apparently brakes connectivity
+here. The interrupt status bit triggering the PCI error handling isn't
+actually used on PCIe chip versions, so it's not clear why this bit is
+set by the chip. Fix this by ignoring this bit on PCIe chip versions.
 
-Fixes: a3d43c0d56f1 ("taprio: Add support adding an admin schedule")
-Reported-by: syzbot+b65e0af58423fc8a73aa@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b65e0af58423fc8a73aa
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Link: https://patch.msgid.link/20241018051339.418890-1-dmantipov@yandex.ru
+Fixes: 0e4851502f84 ("r8169: merge with version 8.001.00 of Realtek's r8168 driver")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219388
+Tested-by: Atlas Yu <atlas.yu@canonical.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/78e2f535-438f-4212-ad94-a77637ac6c9c@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/r8169_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index 04ed23b5f21b4..16ab7b1480661 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -1590,7 +1590,8 @@ static int taprio_change(struct Qdisc *sch, struct nlattr *opt,
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index e9296d63450d8..3aa1dda3406cd 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4650,7 +4650,9 @@ static irqreturn_t rtl8169_interrupt(int irq, void *dev_instance)
+ 	if ((status & 0xffff) == 0xffff || !(status & tp->irq_mask))
+ 		return IRQ_NONE;
  
- 		taprio_start_sched(sch, start, new_admin);
- 
--		rcu_assign_pointer(q->admin_sched, new_admin);
-+		admin = rcu_replace_pointer(q->admin_sched, new_admin,
-+					    lockdep_rtnl_is_held());
- 		if (admin)
- 			call_rcu(&admin->rcu, taprio_free_sched_cb);
- 
+-	if (unlikely(status & SYSErr)) {
++	/* At least RTL8168fp may unexpectedly set the SYSErr bit */
++	if (unlikely(status & SYSErr &&
++	    tp->mac_version <= RTL_GIGA_MAC_VER_06)) {
+ 		rtl8169_pcierr_interrupt(tp->dev);
+ 		goto out;
+ 	}
 -- 
 2.43.0
 
