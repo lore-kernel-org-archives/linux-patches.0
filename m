@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100081D2F42;
-	Wed,  6 Nov 2024 13:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB101D2F42;
+	Wed,  6 Nov 2024 13:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898731; cv=none; b=pRq6jedLCOlbbNPv/rPklj5BFMsWSmoJyyNQAWCvefw1JiJ4SHTd6OyLGZ7x8DTxQN5pUeX4SLMZv1nywbKh2Pv8qOw7Noh2mnZNeYESXZwWcJY5QlIzA+ls9n63qectjRzPVwGkKGlGCWDI2YTOx/bVGGpBi43HVGxlRiFyVvM=
+	t=1730898734; cv=none; b=HKxpy0ecVHn61ySwdxM+wmpLIcvXeWnYH66+IDtkdFJVGoh4VUsFs37StJLFBElhg09QCKsfKaM0pBp0nRCPcns3rCRI2IfptxtXUoXFbpYV/E6W7as0h/lOfqpMcvtVzZLIROvYol9lMQNZNWmzf4jT5+sx5VtYzZgHYKTZH3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898731; c=relaxed/simple;
-	bh=icFp003OtTP4thxvqQII1stK7/ZvjEA8rtT3sBRco0c=;
+	s=arc-20240116; t=1730898734; c=relaxed/simple;
+	bh=3b/MJfX9ANi7ePujyFz06nsDkaKC8n1LMoWSzQCiI/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWnUgBCAo6cecqUFLsRTeKNMg3youfZcs5G1XYvkOJpcT2tDyQvpKqUIFATzKmLbUBHnXw9akpaS6o8rclKI840aAB2dNpU6QQnALVNK1CqetXokyRzJ9dYzIdSycInXzY67oCJXCFY1BrDKFzrc5KvcqB2GfAv4b8JYxC+Wt9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnFbi2sQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V6b4kuhbFcjL6H4JRMmdqGR/BH91vZE7r/2C/pZLE6BPDWNdCzb3d262GS/fFU7FSidqcoj663snPbM0i95kQlmYDuRwoKyPyhd77CnWXfWg573NoGF6JkepZVFSovqZMZqvOwsELKW7hbwXMo15vphqAGGOHl8lHvA7rG+KtGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=luWXYqJw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnFbi2sQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89AD2C4CED3;
-	Wed,  6 Nov 2024 13:12:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="luWXYqJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77BF7C4CECD;
+	Wed,  6 Nov 2024 13:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898730;
-	bh=icFp003OtTP4thxvqQII1stK7/ZvjEA8rtT3sBRco0c=;
+	s=korg; t=1730898733;
+	bh=3b/MJfX9ANi7ePujyFz06nsDkaKC8n1LMoWSzQCiI/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qnFbi2sQjiZXt2kd6dyHm3IJxdU5zF56GvhnIyW9fQYgcEpjCOdeAkeDa88MPmdlK
-	 6+CaOQByZDafy3tz4A0sQnCeEk7jicLv0qD70Onv5gW8uiKJkOAdwN1TbOCYt78j3e
-	 xvdiTpBpMWME3HdaqtElw6L19FhuVQVavkXZZGVw=
+	b=luWXYqJw6HC19poc6uJQdxBKwc69aaVHSpeAqbayNO6wOc8xRjO5acY7RJ7Y/y9tP
+	 ONIQBpHGZFSq9JhrIg5uBaruQl4EN7DshfbcxyXJzaMoldCM6E/W3bI58A8sWQVLwl
+	 d8+rTTHUZcWfkph7BwwlhnSW41FGR06p2Jg9AJxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+1d121645899e7692f92a@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 335/462] sctp: ensure sk_state is set to CLOSED if hashing fails in sctp_listen_start
-Date: Wed,  6 Nov 2024 13:03:48 +0100
-Message-ID: <20241106120339.798988168@linuxfoundation.org>
+Subject: [PATCH 5.4 336/462] ppp: fix ppp_async_encode() illegal access
+Date: Wed,  6 Nov 2024 13:03:49 +0100
+Message-ID: <20241106120339.824646948@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,75 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4d5c70e6155d5eae198bade4afeab3c1b15073b6 ]
+[ Upstream commit 40dddd4b8bd08a69471efd96107a4e1c73fabefc ]
 
-If hashing fails in sctp_listen_start(), the socket remains in the
-LISTENING state, even though it was not added to the hash table.
-This can lead to a scenario where a socket appears to be listening
-without actually being accessible.
+syzbot reported an issue in ppp_async_encode() [1]
 
-This patch ensures that if the hashing operation fails, the sk_state
-is set back to CLOSED before returning an error.
+In this case, pppoe_sendmsg() is called with a zero size.
+Then ppp_async_encode() is called with an empty skb.
 
-Note that there is no need to undo the autobind operation if hashing
-fails, as the bind port can still be used for next listen() call on
-the same socket.
+BUG: KMSAN: uninit-value in ppp_async_encode drivers/net/ppp/ppp_async.c:545 [inline]
+ BUG: KMSAN: uninit-value in ppp_async_push+0xb4f/0x2660 drivers/net/ppp/ppp_async.c:675
+  ppp_async_encode drivers/net/ppp/ppp_async.c:545 [inline]
+  ppp_async_push+0xb4f/0x2660 drivers/net/ppp/ppp_async.c:675
+  ppp_async_send+0x130/0x1b0 drivers/net/ppp/ppp_async.c:634
+  ppp_channel_bridge_input drivers/net/ppp/ppp_generic.c:2280 [inline]
+  ppp_input+0x1f1/0xe60 drivers/net/ppp/ppp_generic.c:2304
+  pppoe_rcv_core+0x1d3/0x720 drivers/net/ppp/pppoe.c:379
+  sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1113
+  __release_sock+0x1da/0x330 net/core/sock.c:3072
+  release_sock+0x6b/0x250 net/core/sock.c:3626
+  pppoe_sendmsg+0x2b8/0xb90 drivers/net/ppp/pppoe.c:903
+  sock_sendmsg_nosec net/socket.c:729 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:744
+  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
+  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
+  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
+  __do_sys_sendmmsg net/socket.c:2771 [inline]
+  __se_sys_sendmmsg net/socket.c:2768 [inline]
+  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
+  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fixes: 76c6d988aeb3 ("sctp: add sock_reuseport for the sock in __sctp_hash_endpoint")
-Reported-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Uninit was created at:
+  slab_post_alloc_hook mm/slub.c:4092 [inline]
+  slab_alloc_node mm/slub.c:4135 [inline]
+  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4187
+  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:587
+  __alloc_skb+0x363/0x7b0 net/core/skbuff.c:678
+  alloc_skb include/linux/skbuff.h:1322 [inline]
+  sock_wmalloc+0xfe/0x1a0 net/core/sock.c:2732
+  pppoe_sendmsg+0x3a7/0xb90 drivers/net/ppp/pppoe.c:867
+  sock_sendmsg_nosec net/socket.c:729 [inline]
+  __sock_sendmsg+0x30f/0x380 net/socket.c:744
+  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
+  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
+  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
+  __do_sys_sendmmsg net/socket.c:2771 [inline]
+  __se_sys_sendmmsg net/socket.c:2768 [inline]
+  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
+  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+CPU: 1 UID: 0 PID: 5411 Comm: syz.1.14 Not tainted 6.12.0-rc1-syzkaller-00165-g360c1f1f24c6 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+1d121645899e7692f92a@syzkaller.appspotmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241009185802.3763282-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/net/ppp/ppp_async.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index efc9981481c5f..4aee4fc05ba7c 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -8370,6 +8370,7 @@ static int sctp_listen_start(struct sock *sk, int backlog)
- 	struct sctp_endpoint *ep = sp->ep;
- 	struct crypto_shash *tfm = NULL;
- 	char alg[32];
-+	int err;
+diff --git a/drivers/net/ppp/ppp_async.c b/drivers/net/ppp/ppp_async.c
+index 34c31d6da734c..c41eeecb5a106 100644
+--- a/drivers/net/ppp/ppp_async.c
++++ b/drivers/net/ppp/ppp_async.c
+@@ -551,7 +551,7 @@ ppp_async_encode(struct asyncppp *ap)
+ 	 * and 7 (code-reject) must be sent as though no options
+ 	 * had been negotiated.
+ 	 */
+-	islcp = proto == PPP_LCP && 1 <= data[2] && data[2] <= 7;
++	islcp = proto == PPP_LCP && count >= 3 && 1 <= data[2] && data[2] <= 7;
  
- 	/* Allocate HMAC for generating cookie. */
- 	if (!sp->hmac && sp->sctp_hmac_alg) {
-@@ -8397,18 +8398,25 @@ static int sctp_listen_start(struct sock *sk, int backlog)
- 	inet_sk_set_state(sk, SCTP_SS_LISTENING);
- 	if (!ep->base.bind_addr.port) {
- 		if (sctp_autobind(sk)) {
--			inet_sk_set_state(sk, SCTP_SS_CLOSED);
--			return -EAGAIN;
-+			err = -EAGAIN;
-+			goto err;
- 		}
- 	} else {
- 		if (sctp_get_port(sk, inet_sk(sk)->inet_num)) {
--			inet_sk_set_state(sk, SCTP_SS_CLOSED);
--			return -EADDRINUSE;
-+			err = -EADDRINUSE;
-+			goto err;
- 		}
- 	}
- 
- 	WRITE_ONCE(sk->sk_max_ack_backlog, backlog);
--	return sctp_hash_endpoint(ep);
-+	err = sctp_hash_endpoint(ep);
-+	if (err)
-+		goto err;
-+
-+	return 0;
-+err:
-+	inet_sk_set_state(sk, SCTP_SS_CLOSED);
-+	return err;
- }
- 
- /*
+ 	if (i == 0) {
+ 		if (islcp)
 -- 
 2.43.0
 
