@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC0F1E1322;
-	Wed,  6 Nov 2024 12:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A06D1E1C38;
+	Wed,  6 Nov 2024 12:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896492; cv=none; b=nyzhqRD0DJDBI5o2j2EoMCdJJHzUDpI4K1epp8OH1f6T29xd6D/6UqFg99ZN/c7z1OZ03oUZ8ZURvwVocg/GXt/8nWxH6d21svnRVhaig2uFOKH6xEqFIBuMiil2Si+rhqiREfL3HK+BT/nMIbKmtFC3dvmkJ56Y3udgts+34XA=
+	t=1730896495; cv=none; b=E9LLERbIPoWcJjn8pMAG688iSt5QcddjuDa8XqW/EhE0m1kWs0EUtctv/uT5jIXUVgllrTjb2oa/YW4q3aydX1GDcr+biDi2n7iazQspKO4eoIQA28d8CbE2+5ZorMmPS3bc4Atq1iytyhIfB5pJQAo/fpdSAo8e/kA5FwA9NyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896492; c=relaxed/simple;
-	bh=ZsO7XpcE/jakp6QQ0Su1B4E7XMtZllrwx+NTDxcE2L0=;
+	s=arc-20240116; t=1730896495; c=relaxed/simple;
+	bh=2YKgCrolF694gS/++uu+pY3cuhE28nf+YMHW/+h7ABE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZtfe0dXN4c1zVCcDLYGP8tm+Y/2Q75CF1W31BUE4TG4ADxMpTc1dpq5Ar0MKmCZo379ryZqigJWUxQIMiqlesVW4bgQsj/JAOlvBXIzXu7QMm422TC5V6//fJdAg0cJ37oEGIkMgzAHd31jfO7RwknhWJtTbkXOF93zKeQrmDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Myw9TV33; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h4DKeXCpVnQaKnT88RyGFbN0RrLSnCu/ARlSngPVwQix5HuGOsJK2yVkArwafWAiiRZX5Q78nR3Q16aja34kXI55v0hmjKfM12T8aqbrLRUzqAPVP9E4FrVqj6G8UKfF37XRgx+trcx/EqTQtd/Zvmrp4wfknCbFFClIJi5IYj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxOwAMVn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Myw9TV33"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D05AC4CED3;
-	Wed,  6 Nov 2024 12:34:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxOwAMVn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24FAC4CED4;
+	Wed,  6 Nov 2024 12:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896492;
-	bh=ZsO7XpcE/jakp6QQ0Su1B4E7XMtZllrwx+NTDxcE2L0=;
+	s=korg; t=1730896495;
+	bh=2YKgCrolF694gS/++uu+pY3cuhE28nf+YMHW/+h7ABE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Myw9TV33yOB/LGGGrrpuZCQlayhmeSPoxSEniLfykI5wvGAzF4w1V/0ZWawfkOxgT
-	 ULJPxOLNNUHerHvXoEg9ZC31f12x/sw6SBMr1GbXP3jtmP3PAGu++255jw286MRYZQ
-	 CfY7HKOdjRm6ngmCKhHdWYC3J9xmaLsfiy3W6oBk=
+	b=KxOwAMVnszuHzJVDNgVvUTEHWB1U30TSG5+6VJMlOp7reTAgvVtX7UJ8pqWEoc/tX
+	 xq4HHFFWrgiYboi30ctPiTPGN+2p6pESTe9fljoqkqZUV/HJntcW5/T+01/4e5wVGu
+	 9Je9Psh0qAD0kQ4hu8CK1RhRBOsP/vcLeMxK8edU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.11 220/245] arm64: dts: qcom: x1e80100: fix PCIe4 and PCIe6a PHY clocks
-Date: Wed,  6 Nov 2024 13:04:33 +0100
-Message-ID: <20241106120324.672914488@linuxfoundation.org>
+	Shekhar Chauhan <shekhar.chauhan@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.11 221/245] drm/i915: Skip programming FIA link enable bits for MTL+
+Date: Wed,  6 Nov 2024 13:04:34 +0100
+Message-ID: <20241106120324.697082018@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,67 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Gustavo Sousa <gustavo.sousa@intel.com>
 
-commit 27727cb6604e0998d03d9ec063b517b239d2bb0f upstream.
+commit 9fc97277eb2d17492de636b68cf7d2f5c4f15c1b upstream.
 
-Add the missing clkref enable and pipediv2 clocks to the PCIe4 and
-PCIe6a PHYs.
+Starting with Xe_LPD+, although FIA is still used to readout Type-C pin
+assignment, part of Type-C support is moved to PICA and programming
+PORT_TX_DFLEXDPMLE1(*) registers is not applicable anymore like it was
+for previous display IPs (e.g. see BSpec 49190).
 
-Fixes: 5eb83fc10289 ("arm64: dts: qcom: x1e80100: Add PCIe nodes")
-Cc: stable@vger.kernel.org	# 6.9
-Cc: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
-Link: https://lore.kernel.org/r/20240916082307.29393-3-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+v2:
+  - Mention Bspec 49190 as a reference of instructions for previous
+    IPs. (Shekhar Chauhan)
+  - s/Xe_LPDP/Xe_LPD+/ in the commit message. (Matt Roper)
+  - Update commit message to be more accurate to the changes in the IP.
+    (Imre Deak)
+
+Bspec: 65750, 65448
+Reviewed-by: Shekhar Chauhan <shekhar.chauhan@intel.com>
+Reviewed-by: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240625202652.315936-1-gustavo.sousa@intel.com
+Signed-off-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/i915/display/intel_tc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -2973,14 +2973,16 @@
+--- a/drivers/gpu/drm/i915/display/intel_tc.c
++++ b/drivers/gpu/drm/i915/display/intel_tc.c
+@@ -393,6 +393,9 @@ void intel_tc_port_set_fia_lane_count(st
+ 	bool lane_reversal = dig_port->saved_port_bits & DDI_BUF_PORT_REVERSAL;
+ 	u32 val;
  
- 			clocks = <&gcc GCC_PCIE_6A_PHY_AUX_CLK>,
- 				 <&gcc GCC_PCIE_6A_CFG_AHB_CLK>,
--				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&tcsr TCSR_PCIE_4L_CLKREF_EN>,
- 				 <&gcc GCC_PCIE_6A_PHY_RCHNG_CLK>,
--				 <&gcc GCC_PCIE_6A_PIPE_CLK>;
-+				 <&gcc GCC_PCIE_6A_PIPE_CLK>,
-+				 <&gcc GCC_PCIE_6A_PIPEDIV2_CLK>;
- 			clock-names = "aux",
- 				      "cfg_ahb",
- 				      "ref",
- 				      "rchng",
--				      "pipe";
-+				      "pipe",
-+				      "pipediv2";
++	if (DISPLAY_VER(i915) >= 14)
++		return;
++
+ 	drm_WARN_ON(&i915->drm,
+ 		    lane_reversal && tc->mode != TC_PORT_LEGACY);
  
- 			resets = <&gcc GCC_PCIE_6A_PHY_BCR>,
- 				 <&gcc GCC_PCIE_6A_NOCSR_COM_PHY_BCR>;
-@@ -3105,14 +3107,16 @@
- 
- 			clocks = <&gcc GCC_PCIE_4_AUX_CLK>,
- 				 <&gcc GCC_PCIE_4_CFG_AHB_CLK>,
--				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&tcsr TCSR_PCIE_2L_4_CLKREF_EN>,
- 				 <&gcc GCC_PCIE_4_PHY_RCHNG_CLK>,
--				 <&gcc GCC_PCIE_4_PIPE_CLK>;
-+				 <&gcc GCC_PCIE_4_PIPE_CLK>,
-+				 <&gcc GCC_PCIE_4_PIPEDIV2_CLK>;
- 			clock-names = "aux",
- 				      "cfg_ahb",
- 				      "ref",
- 				      "rchng",
--				      "pipe";
-+				      "pipe",
-+				      "pipediv2";
- 
- 			resets = <&gcc GCC_PCIE_4_PHY_BCR>;
- 			reset-names = "phy";
 
 
