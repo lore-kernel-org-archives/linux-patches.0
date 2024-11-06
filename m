@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495751DE3B9;
-	Wed,  6 Nov 2024 13:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F901E009F;
+	Wed,  6 Nov 2024 13:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898139; cv=none; b=drMhxqHSrvd/6+oVYIiwQ6bWCXn55qpgGSDwqqa+Hr0ON9YwCImIl+fnBKoO6j15z/nZ3wQJlsanYBkdGSUMDAHDIMtxA4IBaG94vCD+locwpeZRxi9CFg7kbzqxgj8vHUSIfgewG4hSGh3whOu2UbUXmLnMESASRilY0dx1fAc=
+	t=1730898142; cv=none; b=FS8rw7Nq6jpkLQFCVWVtEHwxaKrOhUYvDGK/Pnv51vqNW7ShXfyEjB65R9kyV2OauzcwYg0YA6zhikgol9yn8Bd2HZSA3G4agmfX0O5+/46S+n6EQa/JEY0uazQGWBZ3DhXG9pBpwxBEhmzR2L3JNKmiK6x3ORjW4H9m0IjNtxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898139; c=relaxed/simple;
-	bh=+mHnpXBUpXhMzSMMZT/fNkE/oLxTDostQdfoEJdhi50=;
+	s=arc-20240116; t=1730898142; c=relaxed/simple;
+	bh=Bk8QSmxiLIQwRgZYK/79Eyp3usq7ryb4c09/Zog+B7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eSlyzMdgQEbjholmIpvVrww9vwYubh6kcffkUITqWAqM8ehDlggkqDC/tyf/5x1I8LECEOZX25NoAgc0qI+OhNpfyW7GB3GIWkadPACKcdoNfriToG2RXLbSWz1S8ntP8z0jmGiNHHPLkh+SoLk6hsrXyJTEhKksZCa61PeFGIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qi6NUKN2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p+TJ6Vty83D3sAJXyWCf2IICYdP13G4QuTY69UQYD9ywFvUeJi4dIJPTwwijPCxOnAvW0zhf38zzNR0c9fo/rg4MXiSlvhTsWT8VwWFMNv00WW3YqiVe740aVqD1fUzdSoMu5UM7x2kHzQtQrJDlrCUmvnVEyjYoMtsDXrX4pCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwB838Jz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qi6NUKN2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50D4C4CECD;
-	Wed,  6 Nov 2024 13:02:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwB838Jz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B1FC4CECD;
+	Wed,  6 Nov 2024 13:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898139;
-	bh=+mHnpXBUpXhMzSMMZT/fNkE/oLxTDostQdfoEJdhi50=;
+	s=korg; t=1730898142;
+	bh=Bk8QSmxiLIQwRgZYK/79Eyp3usq7ryb4c09/Zog+B7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qi6NUKN2AxRRq6gcjLMw6k8aovZQwt9I/YXmQ6AbX8/tj6Y2ncrEY5N8HooXNZJbi
-	 PseNfaoa4EXRwp5dofxdUvM9/R3A454DvgmqWD0EztMshwZd0cseWJpL3cq8a4+56E
-	 y803usRJgb2qGTabcQ22wZzZpSovCfoNm3dImY7k=
+	b=RwB838JzZhl/Iv6gXFxrkeYZGu1ssYtm49J6PFiuSWa7EGRw/TAR5bjINpBOeQslX
+	 doxgW16ODYNnE+0r9RnWyO3iAFrZ+3QGZBH4geHl6/zA7eKw6anMFCfCPXucy2VAMD
+	 yQZVBVQPE10tidwEJVZZlqq/GfCrKXMFlvo0vhsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junlin Li <make24@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 110/462] drivers: media: dvb-frontends/rtl2830: fix an out-of-bounds write error
-Date: Wed,  6 Nov 2024 13:00:03 +0100
-Message-ID: <20241106120334.223523131@linuxfoundation.org>
+Subject: [PATCH 5.4 137/462] netfilter: ctnetlink: compile ctnetlink_label_size with CONFIG_NF_CONNTRACK_EVENTS
+Date: Wed,  6 Nov 2024 13:00:30 +0100
+Message-ID: <20241106120334.891974077@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,42 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junlin Li <make24@iscas.ac.cn>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit 46d7ebfe6a75a454a5fa28604f0ef1491f9d8d14 ]
+[ Upstream commit e1f1ee0e9ad8cbe660f5c104e791c5f1a7cf4c31 ]
 
-Ensure index in rtl2830_pid_filter does not exceed 31 to prevent
-out-of-bounds access.
+Only provide ctnetlink_label_size when it is used,
+which is when CONFIG_NF_CONNTRACK_EVENTS is configured.
 
-dev->filters is a 32-bit value, so set_bit and clear_bit functions should
-only operate on indices from 0 to 31. If index is 32, it will attempt to
-access a non-existent 33rd bit, leading to out-of-bounds access.
-Change the boundary check from index > 32 to index >= 32 to resolve this
-issue.
+Flagged by clang-18 W=1 builds as:
 
-Fixes: df70ddad81b4 ("[media] rtl2830: implement PID filter")
-Signed-off-by: Junlin Li <make24@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+.../nf_conntrack_netlink.c:385:19: warning: unused function 'ctnetlink_label_size' [-Wunused-function]
+  385 | static inline int ctnetlink_label_size(const struct nf_conn *ct)
+      |                   ^~~~~~~~~~~~~~~~~~~~
+
+The condition on CONFIG_NF_CONNTRACK_LABELS being removed by
+this patch guards compilation of non-trivial implementations
+of ctnetlink_dump_labels() and ctnetlink_label_size().
+
+However, this is not necessary as each of these functions
+will always return 0 if CONFIG_NF_CONNTRACK_LABELS is not defined
+as each function starts with the equivalent of:
+
+	struct nf_conn_labels *labels = nf_ct_labels_find(ct);
+
+	if (!labels)
+		return 0;
+
+And nf_ct_labels_find always returns NULL if CONFIG_NF_CONNTRACK_LABELS
+is not enabled.  So I believe that the compiler optimises the code away
+in such cases anyway.
+
+Found by inspection.
+Compile tested only.
+
+Originally splitted in two patches, Pablo Neira Ayuso collapsed them and
+added Fixes: tag.
+
+Fixes: 0ceabd83875b ("netfilter: ctnetlink: deliver labels to userspace")
+Link: https://lore.kernel.org/netfilter-devel/20240909151712.GZ2097826@kernel.org/
+Signed-off-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/rtl2830.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_netlink.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/rtl2830.c b/drivers/media/dvb-frontends/rtl2830.c
-index e6b8367c8cce4..84c00c6894d3d 100644
---- a/drivers/media/dvb-frontends/rtl2830.c
-+++ b/drivers/media/dvb-frontends/rtl2830.c
-@@ -609,7 +609,7 @@ static int rtl2830_pid_filter(struct dvb_frontend *fe, u8 index, u16 pid, int on
- 		index, pid, onoff);
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -357,7 +357,7 @@ nla_put_failure:
+ #define ctnetlink_dump_secctx(a, b) (0)
+ #endif
  
- 	/* skip invalid PIDs (0x2000) */
--	if (pid > 0x1fff || index > 32)
-+	if (pid > 0x1fff || index >= 32)
+-#ifdef CONFIG_NF_CONNTRACK_LABELS
++#ifdef CONFIG_NF_CONNTRACK_EVENTS
+ static inline int ctnetlink_label_size(const struct nf_conn *ct)
+ {
+ 	struct nf_conn_labels *labels = nf_ct_labels_find(ct);
+@@ -366,6 +366,7 @@ static inline int ctnetlink_label_size(c
  		return 0;
+ 	return nla_total_size(sizeof(labels->bits));
+ }
++#endif
  
- 	if (onoff)
--- 
-2.43.0
-
+ static int
+ ctnetlink_dump_labels(struct sk_buff *skb, const struct nf_conn *ct)
+@@ -386,10 +387,6 @@ ctnetlink_dump_labels(struct sk_buff *sk
+ 
+ 	return 0;
+ }
+-#else
+-#define ctnetlink_dump_labels(a, b) (0)
+-#define ctnetlink_label_size(a)	(0)
+-#endif
+ 
+ #define master_tuple(ct) &(ct->master->tuplehash[IP_CT_DIR_ORIGINAL].tuple)
+ 
 
 
