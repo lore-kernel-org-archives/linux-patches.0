@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30151E0DFD;
-	Wed,  6 Nov 2024 12:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA911EF93D;
+	Wed,  6 Nov 2024 12:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897485; cv=none; b=eGJmi1K1Dguarx1TJ1jLvup7/zb0Uwx8xhf70m3V4zAeVPsvUqN21vNcheFQ6sOmLPz0Fc3ZlUz8bJaAGzy8XPky2QKi/uGQeJjogaWgnBjnRFInNcPnnls9bY3zUc6lGKETC12QMgadKIhQ+ufuSdkDPtwRZ8CfLAE0+8rfNIk=
+	t=1730897488; cv=none; b=id6DPw7xidiQo26Am6OXIInZr/Vb1bS6viMKOFyAqjt1GM5LNl6sICkU14CZ+t3+nqC4nqNgib5i5RwXBoyROLOifWqjyAVVNOBIE2yzJJIChsbRNF/kZaRcFUO+xrcaI+FNmJc5sr5F5dyCCGut5Uc7YjMqRlq4Y4XM3OLdKuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897485; c=relaxed/simple;
-	bh=lXq4p9aA5h+VEK+7uP8HqpxABagZSpOwiomWV18QIr0=;
+	s=arc-20240116; t=1730897488; c=relaxed/simple;
+	bh=HHygwu3gJBB+qnsX+r6KB87NXdA5ke2Of3ZzBR0tNNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GzzTA4QWBj6QfIZAocWjJ/nL0TZ2FOOo851FlLgDNnk10W5THfbH7OXoWH4z8TWl21l4pGav94GmP2ZVQbsWNnihcvSFpKohxTZBIM/JeBZx9sh4+W0ZqzdaEEyLBcsa05RLbpKGHCMoff84hH5n+ZALHXkJ3K5Zcf59XAXf5LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crCx3P54; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M9LVkVWSZUNmgzw139uaBsiT7kc9FdnAms1b+mI42EM8+0PTYNtM9MAmZC6XnSbGkKQfq6iDxNhwAK2j345ukSKqGDepnHyrxQlOyBzp0nLSflhRmgOLIB/dtgJAVEvgU572aiCcovBfYAHMPZpR2Gq3kvsQQwIe5gfMCR8ZQdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9auCpGh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crCx3P54"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C97FC4CECD;
-	Wed,  6 Nov 2024 12:51:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9auCpGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB25C4CED3;
+	Wed,  6 Nov 2024 12:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897485;
-	bh=lXq4p9aA5h+VEK+7uP8HqpxABagZSpOwiomWV18QIr0=;
+	s=korg; t=1730897488;
+	bh=HHygwu3gJBB+qnsX+r6KB87NXdA5ke2Of3ZzBR0tNNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crCx3P54McZ/eturddfBfo8zduj1p9jlJlh4aLH1JsjmCWFGtVACF1JOlTMjB3F/x
-	 lnDVIx6kpgFSnXQtdy+TtJ4UwdL+dgPpXB6QeMrcfyHsgUliw+Tvz3uVqOqZ6Wq/om
-	 YFbDTdALBfiEjJTey1D/vPNjqFpMMGKY/MoIuCVQ=
+	b=j9auCpGh2scgdhKIUfb0ISaZKKCZFus0FKrrgN7t/L3CrlKl2CdxsGXlYGYddaBcw
+	 1s06b8DXOGasdyURPgyJtY7I+xy6fr58p0DVMA/i/L0v4S3PBJ+5x1bKcHJnpFqbs+
+	 KLiI7se7NOQLmFfRlkhurZfZRxCN7L7UX28nQzYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Daniel Palmer <daniel@0x0f.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 068/151] thermal: intel: int340x: processor: Add MMIO RAPL PL4 support
-Date: Wed,  6 Nov 2024 13:04:16 +0100
-Message-ID: <20241106120310.708054082@linuxfoundation.org>
+Subject: [PATCH 6.6 069/151] net: amd: mvme147: Fix probe banner message
+Date: Wed,  6 Nov 2024 13:04:17 +0100
+Message-ID: <20241106120310.734616399@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -52,41 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Daniel Palmer <daniel@0x0f.com>
 
-[ Upstream commit 3fb0eea8a1c4be5884e0731ea76cbd3ce126e1f3 ]
+[ Upstream commit 82c5b53140faf89c31ea2b3a0985a2f291694169 ]
 
-Similar to the MSR RAPL interface, MMIO RAPL supports PL4 too, so add
-MMIO RAPL PL4d support to the processor_thermal driver.
+Currently this driver prints this line with what looks like
+a rogue format specifier when the device is probed:
+[    2.840000] eth%d: MVME147 at 0xfffe1800, irq 12, Hardware Address xx:xx:xx:xx:xx:xx
 
-As a result, the powercap sysfs for MMIO RAPL will show a new "peak
-power" constraint.
+Change the printk() for netdev_info() and move it after the
+registration has completed so it prints out the name of the
+interface properly.
 
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20240930081801.28502-7-rui.zhang@intel.com
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Daniel Palmer <daniel@0x0f.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../thermal/intel/int340x_thermal/processor_thermal_rapl.c    | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/amd/mvme147.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/processor_thermal_rapl.c b/drivers/thermal/intel/int340x_thermal/processor_thermal_rapl.c
-index f7ab1f47ca7a6..f504781f4b7c5 100644
---- a/drivers/thermal/intel/int340x_thermal/processor_thermal_rapl.c
-+++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_rapl.c
-@@ -13,9 +13,9 @@ static struct rapl_if_priv rapl_mmio_priv;
+diff --git a/drivers/net/ethernet/amd/mvme147.c b/drivers/net/ethernet/amd/mvme147.c
+index 410c7b67eba4d..e6cc916d205f1 100644
+--- a/drivers/net/ethernet/amd/mvme147.c
++++ b/drivers/net/ethernet/amd/mvme147.c
+@@ -105,10 +105,6 @@ static struct net_device * __init mvme147lance_probe(void)
+ 	macaddr[3] = address&0xff;
+ 	eth_hw_addr_set(dev, macaddr);
  
- static const struct rapl_mmio_regs rapl_mmio_default = {
- 	.reg_unit = 0x5938,
--	.regs[RAPL_DOMAIN_PACKAGE] = { 0x59a0, 0x593c, 0x58f0, 0, 0x5930},
-+	.regs[RAPL_DOMAIN_PACKAGE] = { 0x59a0, 0x593c, 0x58f0, 0, 0x5930, 0x59b0},
- 	.regs[RAPL_DOMAIN_DRAM] = { 0x58e0, 0x58e8, 0x58ec, 0, 0},
--	.limits[RAPL_DOMAIN_PACKAGE] = BIT(POWER_LIMIT2),
-+	.limits[RAPL_DOMAIN_PACKAGE] = BIT(POWER_LIMIT2) | BIT(POWER_LIMIT4),
- 	.limits[RAPL_DOMAIN_DRAM] = BIT(POWER_LIMIT2),
- };
+-	printk("%s: MVME147 at 0x%08lx, irq %d, Hardware Address %pM\n",
+-	       dev->name, dev->base_addr, MVME147_LANCE_IRQ,
+-	       dev->dev_addr);
+-
+ 	lp = netdev_priv(dev);
+ 	lp->ram = __get_dma_pages(GFP_ATOMIC, 3);	/* 32K */
+ 	if (!lp->ram) {
+@@ -138,6 +134,9 @@ static struct net_device * __init mvme147lance_probe(void)
+ 		return ERR_PTR(err);
+ 	}
+ 
++	netdev_info(dev, "MVME147 at 0x%08lx, irq %d, Hardware Address %pM\n",
++		    dev->base_addr, MVME147_LANCE_IRQ, dev->dev_addr);
++
+ 	return dev;
+ }
  
 -- 
 2.43.0
