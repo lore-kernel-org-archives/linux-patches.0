@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BD14207F;
-	Wed,  6 Nov 2024 12:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4582198E96;
+	Wed,  6 Nov 2024 12:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896233; cv=none; b=BQrw6yEfgGnSKiwGCXYiWBVDF1gz0FKvxZD0yEFJpVuKbIVZFT6e2XFxi3U3M2gOhc1AusIQE4wDRALEwgEeOsxrzUS2bzKZqvOCih7wVcrcERkFRVXZb0Rmh0YTNBfc1NCmS8XL/tFyCAa/Z+jCieQ9KD2lfvp/7ppOsu+r3dQ=
+	t=1730896236; cv=none; b=MmDGdx299ZTCJ+eOKHq/LJrQh+s4Oap0DDLW7DbdvKZskHfH0bDxSjBYJhYrX78fdUYC0pfppxarH9tZRnUguNz1C8n6VzVc8dTE0RNOO4ohkNLCSC6u4nHbVeOG44eCjVdE3UXSf+/dhgVS4TpJhUIh3oAOJfPiNWLmqnEQP8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896233; c=relaxed/simple;
-	bh=2ByaA5g4rWqgw0THnHOFPL2Vc0LUtm2fLm0FNmAKHX8=;
+	s=arc-20240116; t=1730896236; c=relaxed/simple;
+	bh=ItySo/jevHd2cXBAkifpr4rtkU9vA1p7lMnvRhP+FTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eUphBI+xr3r0Bk3ygbffOrTdwJyPjCPU6xav2UITYVIjUVYOjgaDM0KrcmEZ6Mq1GDKipuOBOjZWjGuxGx6PHjaYUvZHAx64k0+qYydjt89w/o6ebIngPwH39DmZMUpztsjwulO04VkxpZeoknqeaC5NYi9H9gtdKMz2mghadYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duhcVSTd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g6d093Ep2uHsRUIUpi+B+AGxe1OoI4OtGVQ7N5qkM5khVMIAc/GVY/msggw2ZN6Zge9GWbIwRa0KxKRh1z8YIdTVr1w6k0pHjZO5i7gCVcnUI1nNLMiS0c4XQUkP8Qj5qmjS25oTZY9Z3gGwmEHoA5NkgLh6FF1KDjjSXaOacX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byaocdBJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duhcVSTd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D4A8C4CECD;
-	Wed,  6 Nov 2024 12:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byaocdBJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A03C4CECD;
+	Wed,  6 Nov 2024 12:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896232;
-	bh=2ByaA5g4rWqgw0THnHOFPL2Vc0LUtm2fLm0FNmAKHX8=;
+	s=korg; t=1730896235;
+	bh=ItySo/jevHd2cXBAkifpr4rtkU9vA1p7lMnvRhP+FTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=duhcVSTdK3+TXvUf1VuZCW8wCh00QYqTgpmkHljCzD2OGHlhKfhRuruCyZvTYjT2X
-	 wfmbGbJSaM+yOerqFE811LPQd7Z+XVQtmk1zW8VCbmn5uV18E1pYTbYZzxNqBvJIt6
-	 P46tYLex/erfsje5QwIbiGbv2llXCEbIDRi29q/s=
+	b=byaocdBJvcXdl5576I9s7LFcAZkyArXSPOxOmWyUr/lG/BvHnJOxJTFdINV08iZtn
+	 7U6oQwa3CTjATFykFeVqFUlnfIZ3M1nL2ZJ+sGPm8xWzuq2mi0GIfmyZvm76N+2z+x
+	 YLDO7EOaAiC2kwerqvvD1aAzaMMJDsppegcTN+vQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Yunhui Cui <cuiyunhui@bytedance.com>,
-	Sunil V L <sunilvl@ventanamicro.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.11 135/245] RISC-V: ACPI: fix early_ioremap to early_memremap
-Date: Wed,  6 Nov 2024 13:03:08 +0100
-Message-ID: <20241106120322.551324801@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ashish Sangwan <a.sangwan@samsung.com>,
+	Namjae Jeon <namjae.jeon@samsung.com>,
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 6.11 118/245] Revert "driver core: Fix uevent_show() vs driver detach race"
+Date: Wed,  6 Nov 2024 13:02:51 +0100
+Message-ID: <20241106120322.125064437@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,52 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunhui Cui <cuiyunhui@bytedance.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 1966db682f064172891275cb951aa8c98a0a809b upstream.
+commit 9a71892cbcdb9d1459c84f5a4c722b14354158a5 upstream.
 
-When SVPBMT is enabled, __acpi_map_table() will directly access the
-data in DDR through the IO attribute, rather than through hardware
-cache consistency, resulting in incorrect data in the obtained ACPI
-table.
+This reverts commit 15fffc6a5624b13b428bb1c6e9088e32a55eb82c.
 
-The log: ACPI: [ACPI:0x18] Invalid zero length.
+This commit causes a regression, so revert it for now until it can come
+back in a way that works for everyone.
 
-We do not assume whether the bootloader flushes or not. We should
-access in a cacheable way instead of maintaining cache consistency
-by software.
-
-Fixes: 3b426d4b5b14 ("RISC-V: ACPI : Fix for usage of pointers in different address space")
-Cc: stable@vger.kernel.org
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Yunhui Cui <cuiyunhui@bytedance.com>
-Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
-Link: https://lore.kernel.org/r/20241014130141.86426-1-cuiyunhui@bytedance.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://lore.kernel.org/all/172790598832.1168608.4519484276671503678.stgit@dwillia2-xfh.jf.intel.com/
+Fixes: 15fffc6a5624 ("driver core: Fix uevent_show() vs driver detach race")
+Cc: stable <stable@kernel.org>
+Cc: Ashish Sangwan <a.sangwan@samsung.com>
+Cc: Namjae Jeon <namjae.jeon@samsung.com>
+Cc: Dirk Behme <dirk.behme@de.bosch.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Cc: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/acpi.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/base/core.c   |   13 +++++--------
+ drivers/base/module.c |    4 ----
+ 2 files changed, 5 insertions(+), 12 deletions(-)
 
---- a/arch/riscv/kernel/acpi.c
-+++ b/arch/riscv/kernel/acpi.c
-@@ -210,7 +210,7 @@ void __init __iomem *__acpi_map_table(un
- 	if (!size)
- 		return NULL;
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -25,7 +25,6 @@
+ #include <linux/mutex.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/netdevice.h>
+-#include <linux/rcupdate.h>
+ #include <linux/sched/signal.h>
+ #include <linux/sched/mm.h>
+ #include <linux/string_helpers.h>
+@@ -2641,7 +2640,6 @@ static const char *dev_uevent_name(const
+ static int dev_uevent(const struct kobject *kobj, struct kobj_uevent_env *env)
+ {
+ 	const struct device *dev = kobj_to_dev(kobj);
+-	struct device_driver *driver;
+ 	int retval = 0;
  
--	return early_ioremap(phys, size);
-+	return early_memremap(phys, size);
- }
+ 	/* add device node properties if present */
+@@ -2670,12 +2668,8 @@ static int dev_uevent(const struct kobje
+ 	if (dev->type && dev->type->name)
+ 		add_uevent_var(env, "DEVTYPE=%s", dev->type->name);
  
- void __init __acpi_unmap_table(void __iomem *map, unsigned long size)
-@@ -218,7 +218,7 @@ void __init __acpi_unmap_table(void __io
- 	if (!map || !size)
+-	/* Synchronize with module_remove_driver() */
+-	rcu_read_lock();
+-	driver = READ_ONCE(dev->driver);
+-	if (driver)
+-		add_uevent_var(env, "DRIVER=%s", driver->name);
+-	rcu_read_unlock();
++	if (dev->driver)
++		add_uevent_var(env, "DRIVER=%s", dev->driver->name);
+ 
+ 	/* Add common DT information about the device */
+ 	of_device_uevent(dev, env);
+@@ -2745,8 +2739,11 @@ static ssize_t uevent_show(struct device
+ 	if (!env)
+ 		return -ENOMEM;
+ 
++	/* Synchronize with really_probe() */
++	device_lock(dev);
+ 	/* let the kset specific function add its keys */
+ 	retval = kset->uevent_ops->uevent(&dev->kobj, env);
++	device_unlock(dev);
+ 	if (retval)
+ 		goto out;
+ 
+--- a/drivers/base/module.c
++++ b/drivers/base/module.c
+@@ -7,7 +7,6 @@
+ #include <linux/errno.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+-#include <linux/rcupdate.h>
+ #include "base.h"
+ 
+ static char *make_driver_name(const struct device_driver *drv)
+@@ -102,9 +101,6 @@ void module_remove_driver(const struct d
+ 	if (!drv)
  		return;
  
--	early_iounmap(map, size);
-+	early_memunmap(map, size);
- }
+-	/* Synchronize with dev_uevent() */
+-	synchronize_rcu();
+-
+ 	sysfs_remove_link(&drv->p->kobj, "module");
  
- void __iomem *acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
+ 	if (drv->owner)
 
 
