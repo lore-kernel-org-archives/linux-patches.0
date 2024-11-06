@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A8A171C9;
-	Wed,  6 Nov 2024 12:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDE8171C9;
+	Wed,  6 Nov 2024 12:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896250; cv=none; b=rx5wxNQVRStUGaCe/ZYAdaB9bki8xEIIdCvIYIwWKxob23f+4k8K3IsxdK5e1dqHrJMVwvle1gpY1Tniw03lI9ObSu6NCM6eqURRSi/hHNmEaeFL+Kj/K554sk3fe6hYjcT5rDgLUN/MLZcOVMsTysUyNz8pu3BofNwCMyPhhGQ=
+	t=1730896253; cv=none; b=NCMiIjN/hkwJPXPIPG3S9J5RpcVpNrtaOSMTnunqFtjAbECtTUEZreZ95x3D7w2rvQ0suqUJv7MJOgB/eT3WCRB/J6oaP0YyNQ+w5le6EkvYovQEbfkYr40fYsHXnQJ/DLjZFU+vji+cdJiwEuxQ8/IU86upF2dkBFo6FvU7iik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896250; c=relaxed/simple;
-	bh=dxMYw/poP/TwVUCMsRwea+jLu/fgaP5h862LJokD8Ho=;
+	s=arc-20240116; t=1730896253; c=relaxed/simple;
+	bh=SEec/FX1YQMfYorBkcVSZdYneZ9ldDQXnFtBEcFu+Ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AFw11bk/9LIe78pcx9FbKdwkfnE55IeI1Q5QVXBrBxiaolgNMdn0qiosaX7ipnyQAIDg7jKjmg0Qff+9U/Le8z5MyOXT1pmrrDlgpTDqch/en1r4EoKKhknWsSYGHk04AVtQD5V5x75zWdBrPy5WShLdZtwxePfZvc6sMzn0iiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EAL1BbZk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UMwexQBkmaL71hyCakQBZ0JbOudICrFds3e5o92PEkNevw5r0Af1VGADzwAMmulEK2SKQhhi6qEAhwMgxKdP3fhMBdYxvTjueuWrZakYRN5Jv1kojU14uaHOihIuF5uEqgRRkcUBqHcm/9DI+JCJn1yDUJOedfQ5DG2tW4jxOtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KmtylldJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EAL1BbZk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB65AC4CECD;
-	Wed,  6 Nov 2024 12:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmtylldJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC798C4CECD;
+	Wed,  6 Nov 2024 12:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896250;
-	bh=dxMYw/poP/TwVUCMsRwea+jLu/fgaP5h862LJokD8Ho=;
+	s=korg; t=1730896253;
+	bh=SEec/FX1YQMfYorBkcVSZdYneZ9ldDQXnFtBEcFu+Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EAL1BbZkkz3j3xp0odB42cHaRsfB8piyR5twAxN/CV1MA36IrcX33WP2AqM1LLUKH
-	 SWT9CIjenWgoD8u1GBS2241H9yvQ9O/hKtIh0b6VdyoKoB+HXVSPkkx4+8Kq0T/ANK
-	 PlTkCOiFnhGvYp52Y5vIQw5EbbdXhrbAo+VRS+JE=
+	b=KmtylldJ+A61PeMKuafYyHjZ/BcO6+JRQdqMOfPZV2g3SpCiC+MzaJcgqKP/UzA1q
+	 nZ4NzlBlOmzL9zCdSryjuASkl6wLxJAt9pi/3EE3OYC9+b77sczH2f9mDLIkM8ib2+
+	 /w3spqqCjR2rukZGP7ZiBONBro9k3bg47EWO8BNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gil Fine <gil.fine@linux.intel.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.11 140/245] thunderbolt: Fix KASAN reported stack out-of-bounds read in tb_retimer_scan()
-Date: Wed,  6 Nov 2024 13:03:13 +0100
-Message-ID: <20241106120322.676472353@linuxfoundation.org>
+Subject: [PATCH 6.11 141/245] thunderbolt: Honor TMU requirements in the domain when setting TMU mode
+Date: Wed,  6 Nov 2024 13:03:14 +0100
+Message-ID: <20241106120322.700236199@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -49,68 +50,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Gil Fine <gil.fine@linux.intel.com>
 
-commit e9e1b20fae7de06ba36dd3f8dba858157bad233d upstream.
+commit 3cea8af2d1a9ae5869b47c3dabe3b20f331f3bbd upstream.
 
-KASAN reported following issue:
+Currently, when configuring TMU (Time Management Unit) mode of a given
+router, we take into account only its own TMU requirements ignoring
+other routers in the domain. This is problematic if the router we are
+configuring has lower TMU requirements than what is already configured
+in the domain.
 
- BUG: KASAN: stack-out-of-bounds in tb_retimer_scan+0xffe/0x1550 [thunderbolt]
- Read of size 4 at addr ffff88810111fc1c by task kworker/u56:0/11
- CPU: 0 UID: 0 PID: 11 Comm: kworker/u56:0 Tainted: G     U             6.11.0+ #1387
- Tainted: [U]=USER
- Workqueue: thunderbolt0 tb_handle_hotplug [thunderbolt]
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x6c/0x90
-  print_report+0xd1/0x630
-  kasan_report+0xdb/0x110
-  __asan_report_load4_noabort+0x14/0x20
-  tb_retimer_scan+0xffe/0x1550 [thunderbolt]
-  tb_scan_port+0xa6f/0x2060 [thunderbolt]
-  tb_handle_hotplug+0x17b1/0x3080 [thunderbolt]
-  process_one_work+0x626/0x1100
-  worker_thread+0x6c8/0xfa0
-  kthread+0x2c8/0x3a0
-  ret_from_fork+0x3a/0x80
-  ret_from_fork_asm+0x1a/0x30
+In the scenario below, we have a host router with two USB4 ports: A and
+B. Port A connected to device router #1 (which supports CL states) and
+existing DisplayPort tunnel, thus, the TMU mode is HiFi uni-directional.
 
-This happens because the loop variable still gets incremented by one so
-max becomes 3 instead of 2, and this makes the second loop read past the
-the array declared on the stack.
+1. Initial topology
 
-Fix this by assigning to max directly in the loop body.
+          [Host]
+         A/
+         /
+ [Device #1]
+   /
+Monitor
 
-Fixes: ff6ab055e070 ("thunderbolt: Add receiver lane margining support for retimers")
-CC: stable@vger.kernel.org
+2. Plug in device #2 (that supports CL states) to downstream port B of
+   the host router
+
+         [Host]
+        A/    B\
+        /       \
+ [Device #1]    [Device #2]
+   /
+Monitor
+
+The TMU mode on port B and port A will be configured to LowRes which is
+not what we want and will cause monitor to start flickering.
+
+To address this we first scan the domain and search for any router
+configured to HiFi uni-directional mode, and if found, configure TMU
+mode of the given router to HiFi uni-directional as well.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Gil Fine <gil.fine@linux.intel.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/retimer.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/thunderbolt/tb.c |   48 +++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 42 insertions(+), 6 deletions(-)
 
---- a/drivers/thunderbolt/retimer.c
-+++ b/drivers/thunderbolt/retimer.c
-@@ -516,7 +516,7 @@ int tb_retimer_scan(struct tb_port *port
- 	 */
- 	tb_retimer_set_inbound_sbtx(port);
+--- a/drivers/thunderbolt/tb.c
++++ b/drivers/thunderbolt/tb.c
+@@ -288,6 +288,24 @@ static void tb_increase_tmu_accuracy(str
+ 	device_for_each_child(&sw->dev, NULL, tb_increase_switch_tmu_accuracy);
+ }
  
--	for (i = 1; i <= TB_MAX_RETIMER_INDEX; i++) {
-+	for (max = 1, i = 1; i <= TB_MAX_RETIMER_INDEX; i++) {
- 		/*
- 		 * Last retimer is true only for the last on-board
- 		 * retimer (the one connected directly to the Type-C
-@@ -527,9 +527,10 @@ int tb_retimer_scan(struct tb_port *port
- 			last_idx = i;
- 		else if (ret < 0)
- 			break;
++static int tb_switch_tmu_hifi_uni_required(struct device *dev, void *not_used)
++{
++	struct tb_switch *sw = tb_to_switch(dev);
 +
-+		max = i;
++	if (sw && tb_switch_tmu_is_enabled(sw) &&
++	    tb_switch_tmu_is_configured(sw, TB_SWITCH_TMU_MODE_HIFI_UNI))
++		return 1;
++
++	return device_for_each_child(dev, NULL,
++				     tb_switch_tmu_hifi_uni_required);
++}
++
++static bool tb_tmu_hifi_uni_required(struct tb *tb)
++{
++	return device_for_each_child(&tb->dev, NULL,
++				     tb_switch_tmu_hifi_uni_required) == 1;
++}
++
+ static int tb_enable_tmu(struct tb_switch *sw)
+ {
+ 	int ret;
+@@ -302,12 +320,30 @@ static int tb_enable_tmu(struct tb_switc
+ 	ret = tb_switch_tmu_configure(sw,
+ 			TB_SWITCH_TMU_MODE_MEDRES_ENHANCED_UNI);
+ 	if (ret == -EOPNOTSUPP) {
+-		if (tb_switch_clx_is_enabled(sw, TB_CL1))
+-			ret = tb_switch_tmu_configure(sw,
+-					TB_SWITCH_TMU_MODE_LOWRES);
+-		else
+-			ret = tb_switch_tmu_configure(sw,
+-					TB_SWITCH_TMU_MODE_HIFI_BI);
++		if (tb_switch_clx_is_enabled(sw, TB_CL1)) {
++			/*
++			 * Figure out uni-directional HiFi TMU requirements
++			 * currently in the domain. If there are no
++			 * uni-directional HiFi requirements we can put the TMU
++			 * into LowRes mode.
++			 *
++			 * Deliberately skip bi-directional HiFi links
++			 * as these work independently of other links
++			 * (and they do not allow any CL states anyway).
++			 */
++			if (tb_tmu_hifi_uni_required(sw->tb))
++				ret = tb_switch_tmu_configure(sw,
++						TB_SWITCH_TMU_MODE_HIFI_UNI);
++			else
++				ret = tb_switch_tmu_configure(sw,
++						TB_SWITCH_TMU_MODE_LOWRES);
++		} else {
++			ret = tb_switch_tmu_configure(sw, TB_SWITCH_TMU_MODE_HIFI_BI);
++		}
++
++		/* If not supported, fallback to bi-directional HiFi */
++		if (ret == -EOPNOTSUPP)
++			ret = tb_switch_tmu_configure(sw, TB_SWITCH_TMU_MODE_HIFI_BI);
  	}
- 
--	max = i;
- 	ret = 0;
- 
- 	/* Add retimers if they do not exist already */
+ 	if (ret)
+ 		return ret;
 
 
