@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B9C1F943D;
-	Wed,  6 Nov 2024 12:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C6E1EE033;
+	Wed,  6 Nov 2024 12:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897335; cv=none; b=Xpsht2K3s/zi3w4KrFvlMvaa28aRKjjo3CT018AmZS5ATOYJOV3FkC80AaIC+8dYQfNBG8IdJVi8DL6fwwsUrIe3AB+L1+2QVW3sodYm0R87taEgFU5WZXLKP+GjJuJOLgM5V2YTFoT/VBD8q5AHD73zvRbm+ksJ0UCp7ukXh8g=
+	t=1730897338; cv=none; b=QvgTBvYP1Ryd8q1+uXZi5/x2lEIgZfSYYNK4Kvf3VMEANKk8I4+vdWmd+0ZNj8InF35aXcm8Nu6754KfUbLLz13ysIsFsFP6p6SO/+dnAjd+YMEYl7Kub2sehGIa7p0H3z6nvTYYMf0zPpeB/X63RTBcNbkTV650OijZMHxx644=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897335; c=relaxed/simple;
-	bh=SSxak3SB3+VAYBaq3bQoahgUS7tqZ3S7ACI8wyCxeIE=;
+	s=arc-20240116; t=1730897338; c=relaxed/simple;
+	bh=z+pUf72+jPLVIoS+rNuw3qBW2YPCoIKBAj0omXcmIPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W/tOHttMbhdrwPbOA99a/YCFcsqdt+FwbyFFKrWg0ub12n3AMIeyYpZspc0WU1TfVBhamSAtlsiqh8T/bvGlP2k/RbpE3hHcV8/A3RcXM7wBiOpqFIfLCa+/AV5+Mtr15lcWL35JT2rxwAxPlA6aUPvO4NGqRB+peeajow5ml6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8PiRf8+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D9JQJVYAGOdChGQYvt985pumoWfSziPHuO50IBnW24XE93G5S/bacIeqGuSkXzp5NDBAezu0OgG3BAnjWWwyNvKd/5DunTnrH0ATdt3itWkTTyjLdVPk+WJWcZXN+T34TZzAhgKEUJB8/fUCigG+a4Ul1wGbfQa1DRD6/ZpfgU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9fdBOvR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8PiRf8+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D39C4CECD;
-	Wed,  6 Nov 2024 12:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9fdBOvR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69792C4CECD;
+	Wed,  6 Nov 2024 12:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897334;
-	bh=SSxak3SB3+VAYBaq3bQoahgUS7tqZ3S7ACI8wyCxeIE=;
+	s=korg; t=1730897337;
+	bh=z+pUf72+jPLVIoS+rNuw3qBW2YPCoIKBAj0omXcmIPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s8PiRf8+AxQkwQCyB3Yqipq/A5LvNr7vUHNnaGZ4JhKU0Q0x8v78tahjYlqCgTAHZ
-	 cXmDw3WAMPeWb7F4OSiWPpwxy7jXtPnS94kL+LQqFU4StQ4is/Wt4KVurSTZpObr4P
-	 IbP8OOaIQCeDsE4q/mCAlIaD6SFJCmf35QVOKblQ=
+	b=t9fdBOvRzDlpy0zjAU0IBO/7hVIhHB/ROyz8FZnD75N07secTQmMGWD+cxJv/tmLV
+	 bcv/OmbN6VGeDKuWl6gaW0i02lK+HzppZ7taoZd80Dc7MAyAXVXfBp8U8CEsna77Mr
+	 BiBXUs4JT1r3HDy//3kb6ZgJa0va4peeNg4ZIhN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/151] wifi: iwlwifi: mvm: dont add default link in fw restart flow
-Date: Wed,  6 Nov 2024 13:03:27 +0100
-Message-ID: <20241106120309.366595327@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Lukasz Luba <lukasz.luba@arm.com>
+Subject: [PATCH 6.6 002/151] thermal: core: Rework thermal zone availability check
+Date: Wed,  6 Nov 2024 13:03:10 +0100
+Message-ID: <20241106120308.908857217@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -52,78 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 734a377e1eacc5153bae0ccd4423365726876e93 ]
+[ Upstream commit b38aa87f67931e23ebc32c0ca00a86dfa4688719 ]
 
-When we add the vif (and its default link) in fw restart we may
-override the link that already exists. We take care of this but if
-link 0 is a valid MLO link, then we will re-create a default link on
-mvmvif->link[0] and we'll loose the real link we had there.
+In order to avoid running __thermal_zone_device_update() for thermal
+zones going away, the thermal zone lock is held around device_del()
+in thermal_zone_device_unregister() and thermal_zone_device_update()
+passes the given thermal zone device to device_is_registered().
+This allows thermal_zone_device_update() to skip the
+__thermal_zone_device_update() if device_del() has already run for
+the thermal zone at hand.
 
-In non-MLO, we need to re-create the default link upon the interface
-creation, this is fine. In MLO, we'll just wait for change_vif_links()
-to re-build the links.
+However, instead of looking at driver core internals, the thermal
+subsystem may as well rely on its own data structures for this
+purpose.  Namely, if the thermal zone is not present in
+thermal_tz_list, it can be regarded as unavailable, which in fact is
+already the case in thermal_zone_device_unregister().  Accordingly,
+the device_is_registered() check in thermal_zone_device_update() can
+be replaced with checking whether or not the node list_head in struct
+thermal_zone_device is empty, in which case it is not there in
+thermal_tz_list.
 
-Fixes: bf976c814c86 ("wifi: iwlwifi: mvm: implement link change ops")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20241010140328.385bfea1b2e9.I4a127312285ccb529cc95cc4edf6fbe1e0a136ad@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+To make this work, though, it is necessary to initialize tz->node
+in thermal_zone_device_register_with_trips() before registering the
+thermal zone device and it needs to be added to thermal_tz_list and
+deleted from it under its zone lock.
+
+After the above modifications, the zone lock does not need to be
+held around device_del() in thermal_zone_device_unregister() any more.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-and-tested-by: Lukasz Luba <lukasz.luba@arm.com>
+Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Stable-dep-of: 827a07525c09 ("thermal: core: Free tzp copy along with the thermal zone")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/intel/iwlwifi/mvm/mld-mac80211.c | 24 ++++++++++++++-----
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/thermal/thermal_core.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-index 4d9a872818a52..d05a800cbdb4c 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
-@@ -39,8 +39,6 @@ static int iwl_mvm_mld_mac_add_interface(struct ieee80211_hw *hw,
- 	/* reset deflink MLO parameters */
- 	mvmvif->deflink.fw_link_id = IWL_MVM_FW_LINK_ID_INVALID;
- 	mvmvif->deflink.active = 0;
--	/* the first link always points to the default one */
--	mvmvif->link[0] = &mvmvif->deflink;
+diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+index 5a9068e8f050d..69b89a71f44eb 100644
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -487,11 +487,16 @@ int thermal_zone_device_is_enabled(struct thermal_zone_device *tz)
+ 	return tz->mode == THERMAL_DEVICE_ENABLED;
+ }
  
- 	ret = iwl_mvm_mld_mac_ctxt_add(mvm, vif);
- 	if (ret)
-@@ -58,9 +56,19 @@ static int iwl_mvm_mld_mac_add_interface(struct ieee80211_hw *hw,
- 				     IEEE80211_VIF_SUPPORTS_CQM_RSSI;
++static bool thermal_zone_is_present(struct thermal_zone_device *tz)
++{
++	return !list_empty(&tz->node);
++}
++
+ void thermal_zone_device_update(struct thermal_zone_device *tz,
+ 				enum thermal_notify_event event)
+ {
+ 	mutex_lock(&tz->lock);
+-	if (device_is_registered(&tz->device))
++	if (thermal_zone_is_present(tz))
+ 		__thermal_zone_device_update(tz, event);
+ 	mutex_unlock(&tz->lock);
+ }
+@@ -1292,6 +1297,7 @@ thermal_zone_device_register_with_trips(const char *type, struct thermal_trip *t
  	}
  
--	ret = iwl_mvm_add_link(mvm, vif, &vif->bss_conf);
--	if (ret)
--		goto out_free_bf;
-+	/* We want link[0] to point to the default link, unless we have MLO and
-+	 * in this case this will be modified later by .change_vif_links()
-+	 * If we are in the restart flow with an MLD connection, we will wait
-+	 * to .change_vif_links() to setup the links.
-+	 */
-+	if (!test_bit(IWL_MVM_STATUS_IN_HW_RESTART, &mvm->status) ||
-+	    !ieee80211_vif_is_mld(vif)) {
-+		mvmvif->link[0] = &mvmvif->deflink;
+ 	INIT_LIST_HEAD(&tz->thermal_instances);
++	INIT_LIST_HEAD(&tz->node);
+ 	ida_init(&tz->ida);
+ 	mutex_init(&tz->lock);
+ 	init_completion(&tz->removal);
+@@ -1365,7 +1371,9 @@ thermal_zone_device_register_with_trips(const char *type, struct thermal_trip *t
+ 	}
+ 
+ 	mutex_lock(&thermal_list_lock);
++	mutex_lock(&tz->lock);
+ 	list_add_tail(&tz->node, &thermal_tz_list);
++	mutex_unlock(&tz->lock);
+ 	mutex_unlock(&thermal_list_lock);
+ 
+ 	/* Bind cooling devices for this zone */
+@@ -1455,7 +1463,10 @@ void thermal_zone_device_unregister(struct thermal_zone_device *tz)
+ 		mutex_unlock(&thermal_list_lock);
+ 		return;
+ 	}
 +
-+		ret = iwl_mvm_add_link(mvm, vif, &vif->bss_conf);
-+		if (ret)
-+			goto out_free_bf;
-+	}
++	mutex_lock(&tz->lock);
+ 	list_del(&tz->node);
++	mutex_unlock(&tz->lock);
  
- 	/* Save a pointer to p2p device vif, so it can later be used to
- 	 * update the p2p device MAC when a GO is started/stopped
-@@ -1015,7 +1023,11 @@ iwl_mvm_mld_change_vif_links(struct ieee80211_hw *hw,
+ 	/* Unbind all cdevs associated with 'this' thermal zone */
+ 	list_for_each_entry(cdev, &thermal_cdev_list, node)
+@@ -1472,9 +1483,7 @@ void thermal_zone_device_unregister(struct thermal_zone_device *tz)
+ 	ida_free(&thermal_tz_ida, tz->id);
+ 	ida_destroy(&tz->ida);
  
- 	mutex_lock(&mvm->mutex);
+-	mutex_lock(&tz->lock);
+ 	device_del(&tz->device);
+-	mutex_unlock(&tz->lock);
  
--	if (old_links == 0) {
-+	/* If we're in RESTART flow, the default link wasn't added in
-+         * drv_add_interface(), and link[0] doesn't point to it.
-+	 */
-+	if (old_links == 0 && !test_bit(IWL_MVM_STATUS_IN_HW_RESTART,
-+					&mvm->status)) {
- 		err = iwl_mvm_disable_link(mvm, vif, &vif->bss_conf);
- 		if (err)
- 			goto out_err;
+ 	kfree(tz->tzp);
+ 
 -- 
 2.43.0
 
