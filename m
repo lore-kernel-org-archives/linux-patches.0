@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EFDA1DE8A2;
-	Wed,  6 Nov 2024 12:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546461DE8A2;
+	Wed,  6 Nov 2024 12:15:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895347; cv=none; b=rTA1lv2YS6l9d+9Vg0B50I98AZVdkSKMkkPfL+Rw+lWj0uVOrqhhX7/dPSiLDbIq7wnl33tEC2J1V8AfD2gEV2l9F1NCKxlEytD5m+Xu5Ljv1CDQDdDvwBCzkOVrGg6vvEDy1cS3BjGW2BvqIsBnSHiJupA6R6phj+0wTnB3K0M=
+	t=1730895350; cv=none; b=WFYhtMkgfsJK+0XHC84J6hk5fPHqq38qrkNfPqPLmIrvtMmNZT6TDgvtRd9/s+oM8KeQDt2wXZIhUT+dmHK2/3gUSfl+FG2vXvkcPVklcAyfvuzsltsKkzAnfTztnqsBnSGI21wSbtHlNWtOLuZAnHcE4jh+/aRg3CQ+I5Fd3JU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895347; c=relaxed/simple;
-	bh=Zos4tI3lgLYk+YIotm/2C8IZOB6t7/Gou096R8WoklA=;
+	s=arc-20240116; t=1730895350; c=relaxed/simple;
+	bh=0MKfJR2N5nZQiMADHSpEEYKzsKySVXX6f7TTG/PpXL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=luaqX4od/WjXWV58XogMS49CQRkR0H5i1qfNjeXN9W301KjJV802h+e6ui3B+yq1L9/0J4nmCclq1PDbYHrE+6Kzx1nOJtOLxe6IB80iK8i6WwT58W95+iLa3ieWkUjmSlRKIIr/e6exL1bRGrC+cr5LXpoj5qqu0bp6wXr7Qe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/hEvp4t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=auXb+FMDDMRajirSUPi8ybPK3Sp0BQn1bM8v/1skzBKKk7EQXvGTt42IsbZ/HPDqQJ7TUZ7B1yffXfpiQjjFSEoDAAxYKcL14lNo1HD75JDZxxvq7pEBrg4cD2aIcCHaM+w0P3LQ1fR6EE0OqYMZt47XCvKcfSiu3fOWVf3jojA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inhuS4Tk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/hEvp4t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9FAC4CECD;
-	Wed,  6 Nov 2024 12:15:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inhuS4Tk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAE9C4CECD;
+	Wed,  6 Nov 2024 12:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895347;
-	bh=Zos4tI3lgLYk+YIotm/2C8IZOB6t7/Gou096R8WoklA=;
+	s=korg; t=1730895350;
+	bh=0MKfJR2N5nZQiMADHSpEEYKzsKySVXX6f7TTG/PpXL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j/hEvp4tAXg5c7IvQsw6ecZ4VgkWMqgzMkLzJoSat5WFcUSgfJl8Dg1+oYTVLeZfB
-	 aCnwQw/zOzE2LN01YtW21zM1AeuCiWNyFL/l8CEr/tGYUb5p924Ydq3Mtgg6J6UBwx
-	 EAV7CgAlZWYV7U0W1LmaYNU+UZUEZmmcREESR7PI=
+	b=inhuS4TkWwxlVoeuHLGcIg0FuHeps0WslTmTzCef7iKoiolOuF7wdjLqEGFR3QPqn
+	 jOdDWNhWI0LXL40nTRL54tNAfM7pYGgiWHHh3Soimn19T3ZP5vPJfzxVEeT7PT4JYq
+	 MxlNNlLb5sRWVN/ubNdcu8voEitrtnCNg9la2upY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com,
 	Edward Adam Davis <eadavis@qq.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 170/350] jfs: check if leafidx greater than num leaves per dmap tree
-Date: Wed,  6 Nov 2024 13:01:38 +0100
-Message-ID: <20241106120325.124437073@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 4.19 188/350] ext4: no need to continue when the number of entries is 1
+Date: Wed,  6 Nov 2024 13:01:56 +0100
+Message-ID: <20241106120325.598920889@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -54,50 +54,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit d64ff0d2306713ff084d4b09f84ed1a8c75ecc32 ]
+commit 1a00a393d6a7fb1e745a41edd09019bd6a0ad64c upstream.
 
-syzbot report a out of bounds in dbSplit, it because dmt_leafidx greater
-than num leaves per dmap tree, add a checking for dmt_leafidx in dbFindLeaf.
-
-Shaggy:
-Modified sanity check to apply to control pages as well as leaf pages.
-
-Reported-and-tested-by: syzbot+dca05492eff41f604890@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=dca05492eff41f604890
+Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
+Reported-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ae688d469e36fb5138d0
 Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-and-tested-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/tencent_BE7AEE6C7C2D216CB8949CE8E6EE7ECC2C0A@qq.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/jfs_dmap.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ext4/namei.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 9f731847ae634..21597e8b727c6 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -3019,9 +3019,10 @@ static void dbAdjTree(dmtree_t *tp, int leafno, int newval, bool is_ctl)
- static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
- {
- 	int ti, n = 0, k, x = 0;
--	int max_size;
-+	int max_size, max_idx;
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -1832,7 +1832,7 @@ static struct ext4_dir_entry_2 *do_split
+ 		split = count/2;
  
- 	max_size = is_ctl ? CTLTREESIZE : TREESIZE;
-+	max_idx = is_ctl ? LPERCTL : LPERDMAP;
- 
- 	/* first check the root of the tree to see if there is
- 	 * sufficient free space.
-@@ -3053,6 +3054,8 @@ static int dbFindLeaf(dmtree_t *tp, int l2nb, int *leafidx, bool is_ctl)
- 		 */
- 		assert(n < 4);
- 	}
-+	if (le32_to_cpu(tp->dmt_leafidx) >= max_idx)
-+		return -ENOSPC;
- 
- 	/* set the return to the leftmost leaf describing sufficient
- 	 * free space.
--- 
-2.43.0
-
+ 	hash2 = map[split].hash;
+-	continued = hash2 == map[split - 1].hash;
++	continued = split > 0 ? hash2 == map[split - 1].hash : 0;
+ 	dxtrace(printk(KERN_INFO "Split block %lu at %x, %i/%i\n",
+ 			(unsigned long)dx_get_block(frame->at),
+ 					hash2, split, count-split));
 
 
