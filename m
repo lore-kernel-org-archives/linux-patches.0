@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF001DED49;
-	Wed,  6 Nov 2024 12:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565491DF252;
+	Wed,  6 Nov 2024 12:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895517; cv=none; b=LtlLWeRvDpVh4G1vM8xqSBOkeb0UTwxR29M/r2rwez5qcNkgUvNYDr4Ee5wPpwN3BYS8COpHTqSd9+bvt8gjei3JqNgNUQHAC8Z0oAF85LhaVh6YA21lmzjtNfbUusiFi63dvP92Ttdf0TSgojkT63zTWYKhx1MLQRbb733r7IU=
+	t=1730895520; cv=none; b=XUFFu4MnAIOb8FmGkzSIahx0gUJvNYPNDIh8lRnML8oCJI/8rcrMVfwio552/l6rxoyXRu7EM5Fs0JooaHDG6vUwA8f9nQrmopfwUQlPjViJEkV6QlRq4Malj8weRzkt8dtYQUMntmhSBwELO6jvKmh6bhapxbYNw55//Nf75rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895517; c=relaxed/simple;
-	bh=GmmL+9Qb9fKSeJKovpJxELbrLGtqO3uabcXZVryclB0=;
+	s=arc-20240116; t=1730895520; c=relaxed/simple;
+	bh=FlnCQIWeZjufZDG7AyQqAjIuajUmeIEFR5/kpPyrjiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vta+B/DZlYo7OfD6BtPGnsx5K4hMlaMb8zoTlnSWUz6/qklHI2D3skgWjVRNDw0OYcqB1/IUdMoYERcSUB/0GsQNA5EOBGLup9Dy2OnWuBEfFExONo2nV2m/rSyn6HdK+ovFHpVHLabJ7nOzgqtpc8YzKS/kxyXHcDUjPorugpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JPmOOEMJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pG4Rn8pfmU7A/0wK2VC+d39O1T+x3E5zGOkrQGMeCZP+rIuuJTua6kBiWpwjTCClOxrJMtG/s/gS5KMPQkNvZDXkAM8gYXgwz5hkJW/hzLptCo1vJ5CUCmHMRra5v6l78AdGbPpoi2FPkHWy/5M9lvUXAInqZ5wbTarp39rlYP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5SWMZe5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JPmOOEMJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77EFC4CECD;
-	Wed,  6 Nov 2024 12:18:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5SWMZe5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4661C4CECD;
+	Wed,  6 Nov 2024 12:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895517;
-	bh=GmmL+9Qb9fKSeJKovpJxELbrLGtqO3uabcXZVryclB0=;
+	s=korg; t=1730895520;
+	bh=FlnCQIWeZjufZDG7AyQqAjIuajUmeIEFR5/kpPyrjiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JPmOOEMJXYsa20Oy8wSMKn/Fl2cqfcPfLlI4aIpDH2rjBMyVMMx+5apA8N+fCX3dF
-	 h7dYZB62ymDkCiCyFrB6iEqkOYMLDvlq/ky/lau6pF8WPDONe8AX7pu5ew2v/0se5Z
-	 Fz3J6+oVvXfpNXamOkDCZ77MaXRgZ77bKxLj7D3g=
+	b=h5SWMZe5EyHDYsVUp3XaJGAVrEv/OeXI4E9E94w6ircG5xYBRHIH1eFly0poMozAk
+	 +c+eAXuQ8RbGhixXtyZ5g0muqX8iwqUsf/r2nY3V8R60Lnge7LA/KAMBdtALKzjcnE
+	 AHYNcpgGPgOPSSZ7eDoIfFcpZuP+WRYQ9Snh0Wwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunke Cao <yunkec@chromium.org>,
-	Tomasz Figa <tfiga@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Peter Chen <peter.chen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 243/350] media: videobuf2-core: clear memory related fields in __vb2_plane_dmabuf_put()
-Date: Wed,  6 Nov 2024 13:02:51 +0100
-Message-ID: <20241106120326.941436343@linuxfoundation.org>
+Subject: [PATCH 4.19 244/350] usb: chipidea: udc: enable suspend interrupt after usb reset
+Date: Wed,  6 Nov 2024 13:02:52 +0100
+Message-ID: <20241106120326.964236100@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,49 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunke Cao <yunkec@chromium.org>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit 6a9c97ab6b7e85697e0b74e86062192a5ffffd99 ]
+[ Upstream commit e4fdcc10092fb244218013bfe8ff01c55d54e8e4 ]
 
-Clear vb2_plane's memory related fields in __vb2_plane_dmabuf_put(),
-including bytesused, length, fd and data_offset.
+Currently, suspend interrupt is enabled before pullup enable operation.
+This will cause a suspend interrupt assert right after pullup DP. This
+suspend interrupt is meaningless, so this will ignore such interrupt
+by enable it after usb reset completed.
 
-Remove the duplicated code in __prepare_dmabuf().
-
-Signed-off-by: Yunke Cao <yunkec@chromium.org>
-Acked-by: Tomasz Figa <tfiga@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20240823073832.1702135-1-xu.yang_2@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/common/videobuf2/videobuf2-core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/chipidea/udc.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-index 50015a2ea5ce0..98719aa986bb9 100644
---- a/drivers/media/common/videobuf2/videobuf2-core.c
-+++ b/drivers/media/common/videobuf2/videobuf2-core.c
-@@ -281,6 +281,10 @@ static void __vb2_plane_dmabuf_put(struct vb2_buffer *vb, struct vb2_plane *p)
- 	p->mem_priv = NULL;
- 	p->dbuf = NULL;
- 	p->dbuf_mapped = 0;
-+	p->bytesused = 0;
-+	p->length = 0;
-+	p->m.fd = 0;
-+	p->data_offset = 0;
- }
+diff --git a/drivers/usb/chipidea/udc.c b/drivers/usb/chipidea/udc.c
+index 3bda856ff2cab..6a626f41cded1 100644
+--- a/drivers/usb/chipidea/udc.c
++++ b/drivers/usb/chipidea/udc.c
+@@ -81,7 +81,7 @@ static int hw_device_state(struct ci_hdrc *ci, u32 dma)
+ 		hw_write(ci, OP_ENDPTLISTADDR, ~0, dma);
+ 		/* interrupt, error, port change, reset, sleep/suspend */
+ 		hw_write(ci, OP_USBINTR, ~0,
+-			     USBi_UI|USBi_UEI|USBi_PCI|USBi_URI|USBi_SLI);
++			     USBi_UI|USBi_UEI|USBi_PCI|USBi_URI);
+ 	} else {
+ 		hw_write(ci, OP_USBINTR, ~0, 0);
+ 	}
+@@ -748,6 +748,7 @@ __releases(ci->lock)
+ __acquires(ci->lock)
+ {
+ 	int retval;
++	u32 intr;
  
- /*
-@@ -1169,10 +1173,6 @@ static int __prepare_dmabuf(struct vb2_buffer *vb, const void *pb)
+ 	spin_unlock(&ci->lock);
+ 	if (ci->gadget.speed != USB_SPEED_UNKNOWN)
+@@ -761,6 +762,11 @@ __acquires(ci->lock)
+ 	if (retval)
+ 		goto done;
  
- 		/* Release previously acquired memory if present */
- 		__vb2_plane_dmabuf_put(vb, &vb->planes[plane]);
--		vb->planes[plane].bytesused = 0;
--		vb->planes[plane].length = 0;
--		vb->planes[plane].m.fd = 0;
--		vb->planes[plane].data_offset = 0;
- 
- 		/* Acquire each plane's memory */
- 		mem_priv = call_ptr_memop(vb, attach_dmabuf,
++	/* clear SLI */
++	hw_write(ci, OP_USBSTS, USBi_SLI, USBi_SLI);
++	intr = hw_read(ci, OP_USBINTR, ~0);
++	hw_write(ci, OP_USBINTR, ~0, intr | USBi_SLI);
++
+ 	ci->status = usb_ep_alloc_request(&ci->ep0in->ep, GFP_ATOMIC);
+ 	if (ci->status == NULL)
+ 		retval = -ENOMEM;
 -- 
 2.43.0
 
