@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297E41DF24A;
-	Wed,  6 Nov 2024 12:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74981DF266;
+	Wed,  6 Nov 2024 12:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895262; cv=none; b=UyaKcyn3RP/Uo/oGszHT5dv06FtsEkKaV1PfWiUUT7UxfL3Atz7zvtGi41dQMJ7AQRRu1OhI9x3tD6M//JolLaz5KS9zScJIlEV4Rf2egPR+lKlRAcsjvmAQjZuPK/ksYIGqQM5cJ7hqu3QbXPwLR345E3ZMU+DXgGKqrdp3j6A=
+	t=1730895264; cv=none; b=c/pEvcXDxvcM/ZaWSL8XYUCBY9rLotsFarvl0TiBuNkOjuoxH92xxSuFYqQTnF1RVOiQtCPuiD7hNmTf2btuNo4Qg2S9BgsllatrgTHA8Q8HajxTZKbsFi6kNvCkNUGsocrN+xtCpi+/qXZCDu1JY98vPGPd8932geynOT7kbOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895262; c=relaxed/simple;
-	bh=MwYlmtWBB9VNj6sfwjnlLarUfbFckMNbtD4ipo3fa20=;
+	s=arc-20240116; t=1730895264; c=relaxed/simple;
+	bh=N7Xjmg1adJZ91szriL9wQv0UXrZfRtBA3RtyqQMprJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MUhueNpycaAv0UjSX9eouXIg/K+LYdqX48XQKIrfQMwdrCMiA2ZciFkE4G2xT3iO77g1YT7op8PNrlr623cQoo3J3UAKiNySRIw1G0HMJU9lMmBxR5oUAeG4z4YGzgg4Yqq5xsfIpK7JEvmSKPHXxjo1m1sU2BtqhMx/W1BH6eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRi9yW3L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZMl8bLo7/dp4ys8Gdn5vzs06HDDWRy2YSowHhEGFNS2Cfp/olRhjCOrO08KuWakwEPJz5H7UsP97YRVuFAwKV/KoIBO8co21gOICSJCDXBKECvBelMzO4Mn/EXClRmgssV1vLZsNVHO9Nf/MQcAxO8pmNttkviZG8PewGJeGou8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yY2y4pt3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRi9yW3L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E997C4CED2;
-	Wed,  6 Nov 2024 12:14:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yY2y4pt3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F62BC4CECD;
+	Wed,  6 Nov 2024 12:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895261;
-	bh=MwYlmtWBB9VNj6sfwjnlLarUfbFckMNbtD4ipo3fa20=;
+	s=korg; t=1730895264;
+	bh=N7Xjmg1adJZ91szriL9wQv0UXrZfRtBA3RtyqQMprJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRi9yW3La2rWGxxD81BImRlf1UjUKUDyDZkH4aP6T+5NuByshoOsFnxau4+VUFFn/
-	 8PJ7Grn1tFsRQjsD8U1aAFZMVPNVTf8tVQkzFbLwEkrpYjN2Nrcujpasc/8lfrPbBd
-	 ZhLM3ARiQQOFC0W7JJYW/0TkLBoVGNhwCUzr8Ibo=
+	b=yY2y4pt3LXS3aLgEwXpnOMTP9jGOXWcUYiszI1dFh/Wzl3FuP5yJd2aJ4WACTmth3
+	 nxEd7y5v8sQQL2EvPOFTJf18QDV95nO9ZYp3BptlkGzs21+Ccj+LU8KbT+S0goe065
+	 QukwUK0Yd96m+cwgO1ELHCRYtPuJgahAIu4HVIiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	kernel test robot <lkp@intel.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 4.19 131/350] usb: yurex: Fix inconsistent locking bug in yurex_read()
-Date: Wed,  6 Nov 2024 13:00:59 +0100
-Message-ID: <20241106120324.142492133@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 158/350] ipv4: Mask upper DSCP bits and ECN bits in NETLINK_FIB_LOOKUP family
+Date: Wed,  6 Nov 2024 13:01:26 +0100
+Message-ID: <20241106120324.823310014@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,36 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit e7d3b9f28654dbfce7e09f8028210489adaf6a33 upstream.
+[ Upstream commit 8fed54758cd248cd311a2b5c1e180abef1866237 ]
 
-Unlock before returning on the error path.
+The NETLINK_FIB_LOOKUP netlink family can be used to perform a FIB
+lookup according to user provided parameters and communicate the result
+back to user space.
 
-Fixes: 86b20af11e84 ("usb: yurex: Replace snprintf() with the safer scnprintf() variant")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202312170252.3udgrIcP-lkp@intel.com/
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20231219063639.450994-1-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+However, unlike other users of the FIB lookup API, the upper DSCP bits
+and the ECN bits of the DS field are not masked, which can result in the
+wrong result being returned.
+
+Solve this by masking the upper DSCP bits and the ECN bits using
+IPTOS_RT_MASK.
+
+The structure that communicates the request and the response is not
+exported to user space, so it is unlikely that this netlink family is
+actually in use [1].
+
+[1] https://lore.kernel.org/netdev/ZpqpB8vJU%2FQ6LSqa@debian/
+
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/yurex.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv4/fib_frontend.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/misc/yurex.c
-+++ b/drivers/usb/misc/yurex.c
-@@ -414,8 +414,10 @@ static ssize_t yurex_read(struct file *f
- 		return -ENODEV;
- 	}
- 
--	if (WARN_ON_ONCE(dev->bbu > S64_MAX || dev->bbu < S64_MIN))
-+	if (WARN_ON_ONCE(dev->bbu > S64_MAX || dev->bbu < S64_MIN)) {
-+		mutex_unlock(&dev->io_mutex);
- 		return -EIO;
-+	}
- 
- 	spin_lock_irq(&dev->lock);
- 	scnprintf(in_buffer, MAX_S64_STRLEN, "%lld\n", dev->bbu);
+diff --git a/net/ipv4/fib_frontend.c b/net/ipv4/fib_frontend.c
+index 9aa48b4c40960..322ba1ba2ac3b 100644
+--- a/net/ipv4/fib_frontend.c
++++ b/net/ipv4/fib_frontend.c
+@@ -1135,7 +1135,7 @@ static void nl_fib_lookup(struct net *net, struct fib_result_nl *frn)
+ 	struct flowi4           fl4 = {
+ 		.flowi4_mark = frn->fl_mark,
+ 		.daddr = frn->fl_addr,
+-		.flowi4_tos = frn->fl_tos,
++		.flowi4_tos = frn->fl_tos & IPTOS_RT_MASK,
+ 		.flowi4_scope = frn->fl_scope,
+ 	};
+ 	struct fib_table *tb;
+-- 
+2.43.0
+
 
 
