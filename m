@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDDC1DEFF3;
-	Wed,  6 Nov 2024 12:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8CE1DF992;
+	Wed,  6 Nov 2024 12:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896561; cv=none; b=rj/iMj9bAulgLSVauh/o7WXu2qLa2AGLXOcVbFNtgc1xZEsje04mjcEYZF0F+P4qGyNNHBw9J3vNuJ2Oi/RVVWuDmMwk+8lL8fFO01BHU4EPGzXbrSpBfCxH2fRDQTWPqoBGXWHqYvYq+r7LsAZLc77qDZf5ARUnzyC16S3eGTU=
+	t=1730896565; cv=none; b=MTjkqBmYNoo7FSLhpuApqaP02Ssc25bQK/EpKkme4D3iaJU7VkF3HQHNRmiRHLyq6sl3/8QGOcpZ5T+YgGfD6nSF5oQ58dRj8BgVCJeNGvxVOmY7xhK+VZYLkC56oAzfahl0Nmh+Y4lnzImkIR0N0ivL3tyMdAiNGJBrbhNUT68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896561; c=relaxed/simple;
-	bh=cn6sK+6+9/4NSlphZlN6EsAGVDxgRb3+XY6K5TY0Hkk=;
+	s=arc-20240116; t=1730896565; c=relaxed/simple;
+	bh=ZIcg5deJz95cjLrw/Jm6ksG/YxH/gyBWioMDyyNGIjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qFJgLYlGUtJZue/d0xPp2OIekOMMbAMywg7Z63tRDQOmAVC7LoGkxepmh7zwbyHcQ2oQfo/Imf/mEo3rN6rntrvkWz5mMT6HCjHo8HEe7vrM7TzOYXs0tZHHFoSLG2iLkg92ZepRJv+Zd1uCJdpL4bG+4ZrlmHaGJ2L8567PGyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/0eZmSu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iq9oSZv43ZqNAV7/vS77sUlX0OMbHFDLbEVleQUK9vfnK+HmUGWWDsuFNcaZEIQ9c9PpJZ13lPA2LoG6Dlhp943mjKsLJDVg+y1ioj2XmzyCjmun3GV1WGvAdFAdWIjAhbRLV22cozKpH4hYpuErZoFiHT4zldUAZW0XHKsTZ3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gz9DOFnx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/0eZmSu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97680C4CED9;
-	Wed,  6 Nov 2024 12:36:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gz9DOFnx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4AC8C4CECD;
+	Wed,  6 Nov 2024 12:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896561;
-	bh=cn6sK+6+9/4NSlphZlN6EsAGVDxgRb3+XY6K5TY0Hkk=;
+	s=korg; t=1730896565;
+	bh=ZIcg5deJz95cjLrw/Jm6ksG/YxH/gyBWioMDyyNGIjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O/0eZmSuVY7daeBTL1dsXC2pwCCyAfnR/1txxUUYjS35yxbBdK92zwEg2VmhHLYGD
-	 RRxxZOPTSUQmJkStqHERX7qnG/i5xF51/wEBXiensRGbeAPXccOwCAub3KlputdTcS
-	 LLcgesfw8dsDRUtb11vaCd9RjwNsDHFx3FhQVxaY=
+	b=Gz9DOFnx2AvJfmGlfvnlLjnho0TOQa+jRkEl1T+rr5eLCgZ+Tr5lINJHXBLzZ4Z+g
+	 TIklMHgOTmalo7Sti4VC3jtJnaxC7aTmAd7aih/XNDgnUxo1ZPkvIlEdft3TlCCalw
+	 1GG7GumhNkCt+cFK2v3oDvvZATRFakrc0cVNXGeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.11 244/245] fs/ntfs3: Sequential field availability check in mi_enum_attr()
-Date: Wed,  6 Nov 2024 13:04:57 +0100
-Message-ID: <20241106120325.277904149@linuxfoundation.org>
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>
+Subject: [PATCH 6.11 245/245] drm/amdgpu: handle default profile on on devices without fullscreen 3D
+Date: Wed,  6 Nov 2024 13:04:58 +0100
+Message-ID: <20241106120325.302774561@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -49,71 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 090f612756a9720ec18b0b130e28be49839d7cb5 upstream.
+commit 7c210ca5a2d72868e5a052fc533d5dcb7e070f89 upstream.
 
-The code is slightly reformatted to consistently check field availability
-without duplication.
+Some devices do not support fullscreen 3D.
 
-Fixes: 556bdf27c2dd ("ntfs3: Add bounds checking to mi_enum_attr()")
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+v2: Make the check generic.
+
+Fixes: ec1aab7816b0 ("drm/amdgpu/swsmu: default to fullscreen 3D profile for dGPUs")
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Kenneth Feng <kenneth.feng@amd.com>
+Cc: Lijo Lazar <lijo.lazar@amd.com>
+(cherry picked from commit 1cdd67510e54e3832f14a885dbf5858584558650)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/record.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/fs/ntfs3/record.c
-+++ b/fs/ntfs3/record.c
-@@ -237,6 +237,7 @@ struct ATTRIB *mi_enum_attr(struct mft_i
+--- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
+@@ -1234,6 +1234,14 @@ static void smu_init_xgmi_plpd_mode(stru
  	}
+ }
  
- 	/* Can we use the first field (attr->type). */
-+	/* NOTE: this code also checks attr->size availability. */
- 	if (off + 8 > used) {
- 		static_assert(ALIGN(sizeof(enum ATTR_TYPE), 8) == 8);
- 		return NULL;
-@@ -257,10 +258,6 @@ struct ATTRIB *mi_enum_attr(struct mft_i
- 		return NULL;
- 
- 	asize = le32_to_cpu(attr->size);
--	if (asize < SIZEOF_RESIDENT) {
--		/* Impossible 'cause we should not return such attribute. */
--		return NULL;
--	}
- 
- 	/* Check overflow and boundary. */
- 	if (off + asize < off || off + asize > used)
-@@ -290,6 +287,10 @@ struct ATTRIB *mi_enum_attr(struct mft_i
- 	if (attr->non_res != 1)
- 		return NULL;
- 
-+	/* Can we use memory including attr->nres.valid_size? */
-+	if (asize < SIZEOF_NONRESIDENT)
-+		return NULL;
++static bool smu_is_workload_profile_available(struct smu_context *smu,
++					      u32 profile)
++{
++	if (profile >= PP_SMC_POWER_PROFILE_COUNT)
++		return false;
++	return smu->workload_map && smu->workload_map[profile].valid_mapping;
++}
 +
- 	t16 = le16_to_cpu(attr->nres.run_off);
- 	if (t16 > asize)
- 		return NULL;
-@@ -316,7 +317,8 @@ struct ATTRIB *mi_enum_attr(struct mft_i
+ static int smu_sw_init(void *handle)
+ {
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+@@ -1265,7 +1273,8 @@ static int smu_sw_init(void *handle)
+ 	smu->workload_prority[PP_SMC_POWER_PROFILE_COMPUTE] = 5;
+ 	smu->workload_prority[PP_SMC_POWER_PROFILE_CUSTOM] = 6;
  
- 	if (!attr->nres.svcn && is_attr_ext(attr)) {
- 		/* First segment of sparse/compressed attribute */
--		if (asize + 8 < SIZEOF_NONRESIDENT_EX)
-+		/* Can we use memory including attr->nres.total_size? */
-+		if (asize < SIZEOF_NONRESIDENT_EX)
- 			return NULL;
- 
- 		tot_size = le64_to_cpu(attr->nres.total_size);
-@@ -326,9 +328,6 @@ struct ATTRIB *mi_enum_attr(struct mft_i
- 		if (tot_size > alloc_size)
- 			return NULL;
- 	} else {
--		if (asize + 8 < SIZEOF_NONRESIDENT)
--			return NULL;
--
- 		if (attr->nres.c_unit)
- 			return NULL;
- 
+-	if (smu->is_apu)
++	if (smu->is_apu ||
++	    !smu_is_workload_profile_available(smu, PP_SMC_POWER_PROFILE_FULLSCREEN3D))
+ 		smu->workload_mask = 1 << smu->workload_prority[PP_SMC_POWER_PROFILE_BOOTUP_DEFAULT];
+ 	else
+ 		smu->workload_mask = 1 << smu->workload_prority[PP_SMC_POWER_PROFILE_FULLSCREEN3D];
 
 
