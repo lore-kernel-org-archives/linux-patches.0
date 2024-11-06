@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF94F1DFDB1;
-	Wed,  6 Nov 2024 12:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35FD1E00B0;
+	Wed,  6 Nov 2024 12:34:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896486; cv=none; b=GjD/lWU46tfp8PZIhFU74HbAcf/Y/ucoKpNOCULT0Kr5BOalYswJE8JSMWEP2pegVkgpWZY8kQgiRFvyZ6JlvMdZH9/uEq4cJ4pQDqIppRYp+7QXczf7NGPf0sMQHIsxDNHSOsOIeCbAS7sCDMkTGYq0Vkbk6ftJketKTwepbkM=
+	t=1730896489; cv=none; b=cXrCNYiyjtjzZ1g1JLJt0RhCSDofIzL6zbi0WmMH/rOGN9L+8uFBpurTLDWu1QNzAP2NQMrX7xcGBpWtq4ESMh+C2C6XHqqp5hSq+/cys4VDr2oS/9Ik2u2lcGDDhg7kDY7D7ZBRatku1dtCPIWkvL8C3TYT9onI6yMCA3JqSEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896486; c=relaxed/simple;
-	bh=FUlL6KyCNjWyZEqGXD1O7OV46ENgx99uNaMKyqTHO1M=;
+	s=arc-20240116; t=1730896489; c=relaxed/simple;
+	bh=riixdz2zUTqr4BK/DPN16lttERMF9iBdtKtU3YmffOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lE/ztO/6ZRY2YWAa+mPyFtYyFZyaWN5Vl+bTFh5tLRAYEEs4ouNQwDGYOztc7o5eckVCJvIj6/s+IYLaavF7BZrkljj1XaX76AaG2pDIffF/SQmuO20DnwAwmVRDd2bQ9Cxh6iPe50dnwqmtsCdXDgOikd4gnSrE33DEnakA0Lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mEHejF5B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SvJqalIyZ7NC2WUud9YFuNg2ZDvCPm0bA6pMhOghjKMPH5ATeJsf1hn5tj9SOq/gCPHkljkE+2PV84VgpVrQTOwXdi2F08x9Sr19F5WuN4aCCUr53etJZRJvzJ1YI74yKDnBEq+tJ1ztCze0HJDus9e/0WnetMckKP8Gy/Rd1VE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WrvXoR4u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mEHejF5B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B75C4CECD;
-	Wed,  6 Nov 2024 12:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WrvXoR4u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25997C4CED3;
+	Wed,  6 Nov 2024 12:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896486;
-	bh=FUlL6KyCNjWyZEqGXD1O7OV46ENgx99uNaMKyqTHO1M=;
+	s=korg; t=1730896489;
+	bh=riixdz2zUTqr4BK/DPN16lttERMF9iBdtKtU3YmffOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mEHejF5BbaeACERFwYN6aXHl4711b67qr1A46WuF9oV25sZYN9TqZiJQPFuTHj6z2
-	 VlGXh/K/OXV6fQhIoyJMaGDR/sIoFqw4gLltI9fyHZNUTjcmaXSN8PNf2KG6lAgIeC
-	 8QnHMzCFTRjUTiF77UKYn3EykaQDh+F6fTxqjRkc=
+	b=WrvXoR4uJLOb41Tu1X0bmze/ivwqE8fM9b8f/xjBAve3IhU3JagwXGPLqSR2g0cdg
+	 xsicUJd/8SWbWXGfBhx4DHzds6f6dViT+H6FsssPj5AGwhJn2azmBeR/x6oesLCt1R
+	 wIJbdPcUymrnwaxQhaayevzCIc6Hju2W505mEd+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.11 218/245] arm64: dts: imx8ulp: correct the flexspi compatible string
-Date: Wed,  6 Nov 2024 13:04:31 +0100
-Message-ID: <20241106120324.621919874@linuxfoundation.org>
+	Abel Vesa <abel.vesa@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.11 219/245] arm64: dts: qcom: x1e80100: Add Broadcast_AND region in LLCC block
+Date: Wed,  6 Nov 2024 13:04:32 +0100
+Message-ID: <20241106120324.647368502@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -51,92 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-commit 409dc5196d5b6eb67468a06bf4d2d07d7225a67b upstream.
+commit 80fe25fcc605209b707583e3337e3cd40b7ed0bf upstream.
 
-The flexspi on imx8ulp only has 16 LUTs, and imx8mm flexspi has
-32 LUTs, so correct the compatible string here, otherwise will
-meet below error:
+Add missing Broadcast_AND region to the LLCC block for x1e80100,
+as the LLCC version on this platform is 4.1 and it provides the region.
 
-[    1.119072] ------------[ cut here ]------------
-[    1.123926] WARNING: CPU: 0 PID: 1 at drivers/spi/spi-nxp-fspi.c:855 nxp_fspi_exec_op+0xb04/0xb64
-[    1.133239] Modules linked in:
-[    1.136448] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.11.0-rc6-next-20240902-00001-g131bf9439dd9 #69
-[    1.146821] Hardware name: NXP i.MX8ULP EVK (DT)
-[    1.151647] pstate: 40000005 (nZcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    1.158931] pc : nxp_fspi_exec_op+0xb04/0xb64
-[    1.163496] lr : nxp_fspi_exec_op+0xa34/0xb64
-[    1.168060] sp : ffff80008002b2a0
-[    1.171526] x29: ffff80008002b2d0 x28: 0000000000000000 x27: 0000000000000000
-[    1.179002] x26: ffff2eb645542580 x25: ffff800080610014 x24: ffff800080610000
-[    1.186480] x23: ffff2eb645548080 x22: 0000000000000006 x21: ffff2eb6455425e0
-[    1.193956] x20: 0000000000000000 x19: ffff80008002b5e0 x18: ffffffffffffffff
-[    1.201432] x17: ffff2eb644467508 x16: 0000000000000138 x15: 0000000000000002
-[    1.208907] x14: 0000000000000000 x13: ffff2eb6400d8080 x12: 00000000ffffff00
-[    1.216378] x11: 0000000000000000 x10: ffff2eb6400d8080 x9 : ffff2eb697adca80
-[    1.223850] x8 : ffff2eb697ad3cc0 x7 : 0000000100000000 x6 : 0000000000000001
-[    1.231324] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 00000000000007a6
-[    1.238795] x2 : 0000000000000000 x1 : 00000000000001ce x0 : 00000000ffffff92
-[    1.246267] Call trace:
-[    1.248824]  nxp_fspi_exec_op+0xb04/0xb64
-[    1.253031]  spi_mem_exec_op+0x3a0/0x430
-[    1.257139]  spi_nor_read_id+0x80/0xcc
-[    1.261065]  spi_nor_scan+0x1ec/0xf10
-[    1.264901]  spi_nor_probe+0x108/0x2fc
-[    1.268828]  spi_mem_probe+0x6c/0xbc
-[    1.272574]  spi_probe+0x84/0xe4
-[    1.275958]  really_probe+0xbc/0x29c
-[    1.279713]  __driver_probe_device+0x78/0x12c
-[    1.284277]  driver_probe_device+0xd8/0x15c
-[    1.288660]  __device_attach_driver+0xb8/0x134
-[    1.293316]  bus_for_each_drv+0x88/0xe8
-[    1.297337]  __device_attach+0xa0/0x190
-[    1.301353]  device_initial_probe+0x14/0x20
-[    1.305734]  bus_probe_device+0xac/0xb0
-[    1.309752]  device_add+0x5d0/0x790
-[    1.313408]  __spi_add_device+0x134/0x204
-[    1.317606]  of_register_spi_device+0x3b4/0x590
-[    1.322348]  spi_register_controller+0x47c/0x754
-[    1.327181]  devm_spi_register_controller+0x4c/0xa4
-[    1.332289]  nxp_fspi_probe+0x1cc/0x2b0
-[    1.336307]  platform_probe+0x68/0xc4
-[    1.340145]  really_probe+0xbc/0x29c
-[    1.343893]  __driver_probe_device+0x78/0x12c
-[    1.348457]  driver_probe_device+0xd8/0x15c
-[    1.352838]  __driver_attach+0x90/0x19c
-[    1.356857]  bus_for_each_dev+0x7c/0xdc
-[    1.360877]  driver_attach+0x24/0x30
-[    1.364624]  bus_add_driver+0xe4/0x208
-[    1.368552]  driver_register+0x5c/0x124
-[    1.372573]  __platform_driver_register+0x28/0x34
-[    1.377497]  nxp_fspi_driver_init+0x1c/0x28
-[    1.381888]  do_one_initcall+0x80/0x1c8
-[    1.385908]  kernel_init_freeable+0x1c4/0x28c
-[    1.390472]  kernel_init+0x20/0x1d8
-[    1.394138]  ret_from_fork+0x10/0x20
-[    1.397885] ---[ end trace 0000000000000000 ]---
-[    1.407908] ------------[ cut here ]------------
+This also fixes the following error caused by the missing region:
 
-Fixes: ef89fd56bdfc ("arm64: dts: imx8ulp: add flexspi node")
-Cc: stable@kernel.org
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+[    3.797768] qcom-llcc 25000000.system-cache-controller: error -EINVAL: invalid resource (null)
+
+This error started showing up only after the new regmap region called
+Broadcast_AND that has been added to the llcc-qcom driver.
+
+Cc: stable@vger.kernel.org # 6.11: 055afc34fd21: soc: qcom: llcc: Add regmap for Broadcast_AND region
+Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20241014-x1e80100-dts-llcc-add-broadcastand_region-v2-1-5ee6ac128627@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8ulp.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/freescale/imx8ulp.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8ulp.dtsi
-@@ -384,7 +384,7 @@
- 			};
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -5700,7 +5700,8 @@
+ 			      <0 0x25a00000 0 0x200000>,
+ 			      <0 0x25c00000 0 0x200000>,
+ 			      <0 0x25e00000 0 0x200000>,
+-			      <0 0x26000000 0 0x200000>;
++			      <0 0x26000000 0 0x200000>,
++			      <0 0x26200000 0 0x200000>;
+ 			reg-names = "llcc0_base",
+ 				    "llcc1_base",
+ 				    "llcc2_base",
+@@ -5709,7 +5710,8 @@
+ 				    "llcc5_base",
+ 				    "llcc6_base",
+ 				    "llcc7_base",
+-				    "llcc_broadcast_base";
++				    "llcc_broadcast_base",
++				    "llcc_broadcast_and_base";
+ 			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
  
- 			flexspi2: spi@29810000 {
--				compatible = "nxp,imx8mm-fspi";
-+				compatible = "nxp,imx8ulp-fspi";
- 				reg = <0x29810000 0x10000>, <0x60000000 0x10000000>;
- 				reg-names = "fspi_base", "fspi_mmap";
- 				#address-cells = <1>;
 
 
