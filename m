@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CF91DF249;
-	Wed,  6 Nov 2024 12:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1D91DF249;
+	Wed,  6 Nov 2024 12:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894915; cv=none; b=Shk81MjA2OglW6tAReMKJtaIqmhN2/fStjISG+XSHWC/dM1TsZGx6lbP+I+fr2tQGGNhp1ly3TmB428Nqo112URYhM9yVR/xPRixD1ZNygdhElC3oeLadByAQUnu9zZHCuBxkTT8OIEalYRLASxcKad4R58y89HXMG85DTUmUvE=
+	t=1730894918; cv=none; b=FZKx7kA5wqDjqDoZGkFm6VJvoXICV0Bg08xiq+TPQ9eKzr0FdvzZ5+82tPa8BwISPlfqUtNOwWkcJE/EbHjuE10hdSIgs7JDQmYl7Jq+Ok4Xeg1MheoDxPgDXMstIKp19WStaR81Pykkzp2yOk3g+B5itrHMleiAUslaBAhvV2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894915; c=relaxed/simple;
-	bh=waeWc/eYmJrXk2FGKZ2fefahSMIE5Ro8A+yfqCSquSc=;
+	s=arc-20240116; t=1730894918; c=relaxed/simple;
+	bh=UgJXE36GtBX7eCrhgQdQs8V3t5DV3EL4VP3Z58zzb68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tzZTH3rchTaR9369YjjY9hQNiwMc2C7Gl1DDmzbSs282/Bv0p8f2gtkpvy3S+bPsl/JmaXKvWu9EaioyawnGa+TJqIwOZevg+TwDEZLoqMBMvbfMhZngB4LhzjKfIO11PX2gqmzM4ZR0qGf3M/SS+866TY4EaFxtsfnmdtDY6JI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqNn63XQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DEp6tAjEiKD3hpPFfyQuwcpd5gcNiEIA6Vu5F9sgHOJ+L0kko9yfNqyUwZU0NYmVjR2YgEGO8GEVKrKxS5MqsCAfKE8TwwhTKM64j2pRMFeOo9sMouCYjQpHQ4EZ3xS4xz2HVIWyaeBB/61cSmg2qMCvFS5vpsxAFpqc/vDgM8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xiYGJcZj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqNn63XQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1645C4CECD;
-	Wed,  6 Nov 2024 12:08:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xiYGJcZj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41B4C4CECD;
+	Wed,  6 Nov 2024 12:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894915;
-	bh=waeWc/eYmJrXk2FGKZ2fefahSMIE5Ro8A+yfqCSquSc=;
+	s=korg; t=1730894918;
+	bh=UgJXE36GtBX7eCrhgQdQs8V3t5DV3EL4VP3Z58zzb68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oqNn63XQCi+7+7mqxWOkZUmziIMV95C0M1ghYgG7Tis2jtI5+l9ijgdEstAcqxQqO
-	 uyJsK7iC7I25nGtlL+xw0psayKFIpBZ0hFxbVcBHyLAhBcTWAni5Y3wFJgXmA56AF3
-	 +oL9RwU0aubxopvnpqZr4LtCCjXHr6oSV4W3VRhY=
+	b=xiYGJcZjxtHQfD8XPzu0MOahMX4hs7VSTsm5i8YwR7g4OdiQN52fVPI+N3LzVE9bC
+	 I84RlvXLlvyyd8d3rPoJRKLQ9Oijup4/RO6MucvgfKiN5KaAcKFxAERKIOc+VW35ub
+	 Wn2CJhuXXoo03tK1xgg9s5TL947Yz3TGFfjGS3bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 041/350] spi: ppc4xx: Avoid returning 0 when failed to parse and map IRQ
-Date: Wed,  6 Nov 2024 12:59:29 +0100
-Message-ID: <20241106120321.901336399@linuxfoundation.org>
+Subject: [PATCH 4.19 042/350] ARM: versatile: fix OF node leak in CPUs prepare
+Date: Wed,  6 Nov 2024 12:59:30 +0100
+Message-ID: <20241106120321.925110932@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,48 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 7781f1d120fec8624fc654eda900fc8748262082 ]
+[ Upstream commit f2642d97f2105ed17b2ece0c597450f2ff95d704 ]
 
-0 is incorrect error code when failed to parse and map IRQ.
-Replace OF specific old API for IRQ retrieval with a generic
-one to fix this issue.
+Machine code is leaking OF node reference from of_find_matching_node()
+in realview_smp_prepare_cpus().
 
-Fixes: 0f245463b01e ("spi: ppc4xx: handle irq_of_parse_and_map() errors")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20240814144525.2648450-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5420b4b15617 ("ARM: realview: add an DT SMP boot method")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://lore.kernel.org/20240826054934.10724-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-ppc4xx.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm/mach-realview/platsmp-dt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-ppc4xx.c b/drivers/spi/spi-ppc4xx.c
-index 8a1290fb4dd9d..7e8fc572f26cc 100644
---- a/drivers/spi/spi-ppc4xx.c
-+++ b/drivers/spi/spi-ppc4xx.c
-@@ -29,7 +29,6 @@
- #include <linux/errno.h>
- #include <linux/wait.h>
- #include <linux/of_address.h>
--#include <linux/of_irq.h>
- #include <linux/of_platform.h>
- #include <linux/of_gpio.h>
- #include <linux/interrupt.h>
-@@ -494,9 +493,10 @@ static int spi_ppc4xx_of_probe(struct platform_device *op)
+diff --git a/arch/arm/mach-realview/platsmp-dt.c b/arch/arm/mach-realview/platsmp-dt.c
+index c242423bf8db5..66d6b11eda7bd 100644
+--- a/arch/arm/mach-realview/platsmp-dt.c
++++ b/arch/arm/mach-realview/platsmp-dt.c
+@@ -70,6 +70,7 @@ static void __init realview_smp_prepare_cpus(unsigned int max_cpus)
+ 		return;
  	}
- 
- 	/* Request IRQ */
--	hw->irqnum = irq_of_parse_and_map(np, 0);
--	if (hw->irqnum <= 0)
-+	ret = platform_get_irq(op, 0);
-+	if (ret < 0)
- 		goto free_host;
-+	hw->irqnum = ret;
- 
- 	ret = request_irq(hw->irqnum, spi_ppc4xx_int,
- 			  0, "spi_ppc4xx_of", (void *)hw);
+ 	map = syscon_node_to_regmap(np);
++	of_node_put(np);
+ 	if (IS_ERR(map)) {
+ 		pr_err("PLATSMP: No syscon regmap\n");
+ 		return;
 -- 
 2.43.0
 
