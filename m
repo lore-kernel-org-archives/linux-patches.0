@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4388B1DE8B4;
-	Wed,  6 Nov 2024 12:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE101DED40;
+	Wed,  6 Nov 2024 12:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895377; cv=none; b=S+E4s5zjoS1OotbqDE9S3oZlNMB0Cao4AZEgVQFA7VhWzC5LyolVuPBbcosckjBqtarK3sM9ShjkGEaS2+O+9hX4qgAdt+6MVelFzAJVJLCoA2HjEyK5eo2J5bpfjPw5cjE7pTBTc27KJkZMhOCCzJG1LNGcW3uJBg9sN6lW5mI=
+	t=1730895381; cv=none; b=fh1TmFmc/a9/vy8wL8TkB+SQeT5RYIsOcPay1s9IAZZA9zPzR5ow+BWeYbsRsgN/IupcMeGqrK1xiZJDSFbd+FqB9QoXjXq7yyUReLWObvP5Nkc2uszEMkVbAzJ6MUcQ5jWszT30bPTab/2hLTEG8oGmp6mzYARsJ7zEuNe4rew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895377; c=relaxed/simple;
-	bh=5KoTCkpdqpv0tcFSlVKAhJSBFnNWWksTqZmHVhwTvlk=;
+	s=arc-20240116; t=1730895381; c=relaxed/simple;
+	bh=QFeJ1y0i9nX7xFpPGULBRW+knr1Bk9R0KE/CGE4ISc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sM3bMrwSHrVuXTihy/TkN5j1thsVQdH6ur6vfsb0/IFqVc8sZwa47F14cHXRC8QY//r5uDxCuCUOhv+trAxcS2BS4GJY6Vb20yXWTp2yvyjOitpdaHd1DNFOf4qMd1aPIgU4LgWhu7ky8A/4qr9MHhehA+59lcrNZ27u/Y7CDc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VO/OYmB8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CCFTMYBqbowyp5BzXmwETxrJZwNJH/ympkp2UJ+XQyPvFUnr6tzIDjodGhbdIwWzxGvxRINd6loXnOYVkXQvoWcp/+AalAChV22RGpp7ZAy6bpcE4rSlQWIBYas5bmkAUJmNfaCvOGOFbOEKb09E1aOcYlmDpxZyZaTGFM4V6go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OL06HnF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VO/OYmB8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E8EC4CECD;
-	Wed,  6 Nov 2024 12:16:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OL06HnF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A65BC4CECD;
+	Wed,  6 Nov 2024 12:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895376;
-	bh=5KoTCkpdqpv0tcFSlVKAhJSBFnNWWksTqZmHVhwTvlk=;
+	s=korg; t=1730895379;
+	bh=QFeJ1y0i9nX7xFpPGULBRW+knr1Bk9R0KE/CGE4ISc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VO/OYmB84CyQK0sOwbCBkV5UhNwyEg4ATiNBbKUFINRKKia4d/gqye4AMGzkTv9uQ
-	 LPpaao1RwFgT6e3RE96azzz05+TFGiz/tim/u8F+UE+tq0CCrljNEQ8BLX8eFaQv1e
-	 6/niIAwOCYM6s7u2G0hKfajwdsCgkD2GktbYmwlU=
+	b=2OL06HnF+Kn3KM6L7K1Xn74kECAhX/1tYPyY8ehOomWlPGDRJyOl97vGV64w2E/Pe
+	 XD7mKcxT4wslNyHsDOc0+Q6nCvbX2KHt7FBnvE0+D3hSoX0F7/BmTl1AArhNeqH7Z/
+	 iW8MFIfemqCGc9KjN7oMopoLShaOC54YoQ1IWsOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
-	Su Yue <glass.su@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 197/350] ocfs2: fix the la space leak when unmounting an ocfs2 volume
-Date: Wed,  6 Nov 2024 13:02:05 +0100
-Message-ID: <20241106120325.835265196@linuxfoundation.org>
+	syzbot+02341e0daa42a15ce130@syzkaller.appspotmail.com,
+	Zhao Mengmeng <zhaomengmeng@kylinos.cn>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 171/350] jfs: Fix uninit-value access of new_ea in ea_buffer
+Date: Wed,  6 Nov 2024 13:01:39 +0100
+Message-ID: <20241106120325.149888076@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -58,60 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heming Zhao <heming.zhao@suse.com>
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
 
-commit dfe6c5692fb525e5e90cefe306ee0dffae13d35f upstream.
+[ Upstream commit 2b59ffad47db1c46af25ccad157bb3b25147c35c ]
 
-This bug has existed since the initial OCFS2 code.  The code logic in
-ocfs2_sync_local_to_main() is wrong, as it ignores the last contiguous
-free bits, which causes an OCFS2 volume to lose the last free clusters of
-LA window on each umount command.
+syzbot reports that lzo1x_1_do_compress is using uninit-value:
 
-Link: https://lkml.kernel.org/r/20240719114310.14245-1-heming.zhao@suse.com
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Su Yue <glass.su@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+=====================================================
+BUG: KMSAN: uninit-value in lzo1x_1_do_compress+0x19f9/0x2510 lib/lzo/lzo1x_compress.c:178
+
+...
+
+Uninit was stored to memory at:
+ ea_put fs/jfs/xattr.c:639 [inline]
+
+...
+
+Local variable ea_buf created at:
+ __jfs_setxattr+0x5d/0x1ae0 fs/jfs/xattr.c:662
+ __jfs_xattr_set+0xe6/0x1f0 fs/jfs/xattr.c:934
+
+=====================================================
+
+The reason is ea_buf->new_ea is not initialized properly.
+
+Fix this by using memset to empty its content at the beginning
+in ea_get().
+
+Reported-by: syzbot+02341e0daa42a15ce130@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=02341e0daa42a15ce130
+Signed-off-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/localalloc.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ fs/jfs/xattr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ocfs2/localalloc.c
-+++ b/fs/ocfs2/localalloc.c
-@@ -1026,6 +1026,25 @@ static int ocfs2_sync_local_to_main(stru
- 		start = bit_off + 1;
- 	}
+diff --git a/fs/jfs/xattr.c b/fs/jfs/xattr.c
+index 37b984692ca90..bb8c4583f0655 100644
+--- a/fs/jfs/xattr.c
++++ b/fs/jfs/xattr.c
+@@ -447,6 +447,8 @@ static int ea_get(struct inode *inode, struct ea_buffer *ea_buf, int min_size)
+ 	int rc;
+ 	int quota_allocation = 0;
  
-+	/* clear the contiguous bits until the end boundary */
-+	if (count) {
-+		blkno = la_start_blk +
-+			ocfs2_clusters_to_blocks(osb->sb,
-+					start - count);
++	memset(&ea_buf->new_ea, 0, sizeof(ea_buf->new_ea));
 +
-+		trace_ocfs2_sync_local_to_main_free(
-+				count, start - count,
-+				(unsigned long long)la_start_blk,
-+				(unsigned long long)blkno);
-+
-+		status = ocfs2_release_clusters(handle,
-+				main_bm_inode,
-+				main_bm_bh, blkno,
-+				count);
-+		if (status < 0)
-+			mlog_errno(status);
-+	}
-+
- bail:
- 	if (status)
- 		mlog_errno(status);
+ 	/* When fsck.jfs clears a bad ea, it doesn't clear the size */
+ 	if (ji->ea.flag == 0)
+ 		ea_size = 0;
+-- 
+2.43.0
+
 
 
