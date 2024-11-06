@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733541E1336;
-	Wed,  6 Nov 2024 13:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7791E1336;
+	Wed,  6 Nov 2024 13:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898320; cv=none; b=NktOWTfIDdUessbmefSl+3mwMjHSFqJYS2+op+6mcQyAZxSlkqchkqEUmv99YVgeT/B40SZwpuQ5eQfQhceOz/kDzXQMOXIlfdBVL9tcAux5H/7Dy2hTWCdlfPKhqABg0x7PY3d5MD78VpAEBkWKNfMYdHVMT5A5PT6rqUnI1ow=
+	t=1730898322; cv=none; b=jP138VG54yq+e52iBO0tW9/CYo7s1rty4IZeoz5hSkPQ2D+b9s7DysEUhmclTs+y1YSRsjuy/DqWGIWTdBoCq+DR745aPdPLxNo1Agl2tQ4EPbabqlZ1f9oLsiKhuzopTTT4URlVxKcDKuH+VJADZ8xrdsr5AM1gmo/AwsYokyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898320; c=relaxed/simple;
-	bh=NAu2uzPKNArupiz5dEHLHccdBQPDTbyaWebkDMwoddY=;
+	s=arc-20240116; t=1730898322; c=relaxed/simple;
+	bh=PEVe6yDz+aMCMMari1bXPnZkVv6eDlJ1T+BVoERP3d8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSZVLmpPCBKgA92eHgNdVoJU4YdLIgqy5KjqpxHaCNmCUK/F5SN2amZm5LKy2VNE6bTDxaJxmtVoSNk112hhUkb37n0EDfGAZ5WbT6038NcFA24O+JbwFiFJXViAxRwCtRKTRVezYjr6g6Yrr3QZHrey5d3h56x0dwhjxVotypw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNJ1Zvgx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BunORIt8c8dMeukY3Jk/kYBvCsoO5dYSoLfPm12Re2QhhChKR8+ilnMS6adFWMUDq3Weybfrfc2KNAQHDi9+njMO8hhwK1HdzLWkCeMbzJiiH8Cs4BhAsMAncpeRi7IVC0ARCtOx5s7cWNIiYSsi52ISO2f9WDVVsr9qvuIsTPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UexOqnV9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNJ1Zvgx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8EAC4CECD;
-	Wed,  6 Nov 2024 13:05:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UexOqnV9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 111A0C4CECD;
+	Wed,  6 Nov 2024 13:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898319;
-	bh=NAu2uzPKNArupiz5dEHLHccdBQPDTbyaWebkDMwoddY=;
+	s=korg; t=1730898322;
+	bh=PEVe6yDz+aMCMMari1bXPnZkVv6eDlJ1T+BVoERP3d8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CNJ1Zvgx+0Qfho4luQIJ+5PgmgG5Ki9ebc1XNeVtUslt4KFeN0bXiTbZ7kjtYuy99
-	 MnU0IErPscoZxYhCCjVrre4Ll2BQJGE4UAgTV6UDZ8Vr97L5RCqgMRYMC5K+o2ttfJ
-	 RHpJEBTF31pLOr9T5l0qbuVQn5WY4CEfzRC8hTHI=
+	b=UexOqnV9xgQ77zAXkKkjpbqqvvTlOrY7HmdNcXqafSfsLyu/JiHg6CHaRu7oGNJip
+	 /4OO9L9PVNA7UdQWslvSF1BQR3wFmbVoq3+kigXTtCA6dAowLPN82CAR/n8swCNVGa
+	 DbzLlAW7OXETg7cI5WGTrfLJcRbZegjr/tO1fFN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 199/462] net: hisilicon: hns_mdio: fix OF node leak in probe()
-Date: Wed,  6 Nov 2024 13:01:32 +0100
-Message-ID: <20241106120336.433345969@linuxfoundation.org>
+Subject: [PATCH 5.4 200/462] ACPICA: Fix memory leak if acpi_ps_get_next_namepath() fails
+Date: Wed,  6 Nov 2024 13:01:33 +0100
+Message-ID: <20241106120336.455584133@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,34 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit e62beddc45f487b9969821fad3a0913d9bc18a2f ]
+[ Upstream commit 5accb265f7a1b23e52b0ec42313d1e12895552f4 ]
 
-Driver is leaking OF node reference from
-of_parse_phandle_with_fixed_args() in probe().
+ACPICA commit 2802af722bbde7bf1a7ac68df68e179e2555d361
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240827144421.52852-4-krzysztof.kozlowski@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+If acpi_ps_get_next_namepath() fails, the previously allocated
+union acpi_parse_object needs to be freed before returning the
+status code.
+
+The issue was first being reported on the Linux ACPI mailing list:
+
+Link: https://lore.kernel.org/linux-acpi/56f94776-484f-48c0-8855-dba8e6a7793b@yandex.ru/T/
+Link: https://github.com/acpica/acpica/commit/2802af72
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns_mdio.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/acpica/psargs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns_mdio.c b/drivers/net/ethernet/hisilicon/hns_mdio.c
-index 7df5d7d211d47..58af9b4ae2be8 100644
---- a/drivers/net/ethernet/hisilicon/hns_mdio.c
-+++ b/drivers/net/ethernet/hisilicon/hns_mdio.c
-@@ -498,6 +498,7 @@ static int hns_mdio_probe(struct platform_device *pdev)
- 						MDIO_SC_RESET_ST;
- 				}
- 			}
-+			of_node_put(reg_args.np);
+diff --git a/drivers/acpi/acpica/psargs.c b/drivers/acpi/acpica/psargs.c
+index e62c7897fdf18..78afbfc762d36 100644
+--- a/drivers/acpi/acpica/psargs.c
++++ b/drivers/acpi/acpica/psargs.c
+@@ -820,6 +820,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
+ 			    acpi_ps_get_next_namepath(walk_state, parser_state,
+ 						      arg,
+ 						      ACPI_NOT_METHOD_CALL);
++			if (ACPI_FAILURE(status)) {
++				acpi_ps_free_op(arg);
++				return_ACPI_STATUS(status);
++			}
  		} else {
- 			dev_warn(&pdev->dev, "find syscon ret = %#x\n", ret);
- 			mdio_dev->subctrl_vbase = NULL;
+ 			/* Single complex argument, nothing returned */
+ 
+@@ -854,6 +858,10 @@ acpi_ps_get_next_arg(struct acpi_walk_state *walk_state,
+ 			    acpi_ps_get_next_namepath(walk_state, parser_state,
+ 						      arg,
+ 						      ACPI_POSSIBLE_METHOD_CALL);
++			if (ACPI_FAILURE(status)) {
++				acpi_ps_free_op(arg);
++				return_ACPI_STATUS(status);
++			}
+ 
+ 			if (arg->common.aml_opcode == AML_INT_METHODCALL_OP) {
+ 
 -- 
 2.43.0
 
