@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B9C1D416E;
-	Wed,  6 Nov 2024 12:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92EA1D416E;
+	Wed,  6 Nov 2024 12:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895341; cv=none; b=WhqpGU2/+UfDhRmbwkE7C3mghtn7fMWr6/7+S45LBgUys5yqbrqK6dY+jsaz/Aoj69dKWm++dcNFRu7hFqP82KiCxAVoPXKVWLqR/cHDs1nWREAXa14hGhCp1ka2J1uuL77KF/YhVJFsj2Yj6ufZfPdIU0xINUrT5UT0h2FDDmI=
+	t=1730895344; cv=none; b=VQGFXweOgDZ4khhiHAKfCqQgcKY7d7brKcE8b0RyJekQdGtkiCkNIbo2VcgWD56vr0WVg/srxnf2MCPGHqTJmxeQxoH1Ih13O6EVDTltUYwc8ZD0F1LWCOPTNXbwMJnROgmh9H8RG1ERIdF9OCNh/q0l+glqZ+dWO5YLb+Bhd2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895341; c=relaxed/simple;
-	bh=86iMv183xq/DwXp50goXH1E4e2tFmGq1e6NkFihgN5g=;
+	s=arc-20240116; t=1730895344; c=relaxed/simple;
+	bh=p+LN+9uj9Z6ABJkSYochajBuz8CFJuv3v+El3cNjDxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6RScDGgIOHjUrJRbB66pzClggTZWinOmpx3pRBVLQW0kzaixGrtI6LhJu26wTjgpj3w7ExF0+nBBq4l5Cg1QQ0IbPS1q53qW5Gu+mhbNvKn+C5Tsd3z16DBbToJO4wrN+h6tMAZweoknQAw/ClNi06bEJDWpyIaDi8OgEyhq7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAxN6Uze; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hlO95RTIoBpKUSXAUnblRLZ+Zftj++951aboLoXiNoLmILooLJKK8JW6uHPBrgIm7vIV1lsMmASOy/gPc3nOa11uqGa5R1sdqVAM+JANty9tCgc47pcWJl00na19JgMTnyB+eopRG5w6XEGCRCe9uyjKqw0PTiITXQzVbNbZdJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fShl/Irw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAxN6Uze"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D5EC4CECD;
-	Wed,  6 Nov 2024 12:15:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fShl/Irw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA131C4CECD;
+	Wed,  6 Nov 2024 12:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895341;
-	bh=86iMv183xq/DwXp50goXH1E4e2tFmGq1e6NkFihgN5g=;
+	s=korg; t=1730895344;
+	bh=p+LN+9uj9Z6ABJkSYochajBuz8CFJuv3v+El3cNjDxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SAxN6UzeRDX1TYPBm1eAf4s+7dkVwNA3zT2cej3cLtMVvTEFScjplSjZxBNA76L0O
-	 T3Wujh+/5icdo/Kj/gmlSTIiBmycDAVBVoX/xBj8P8Q/iVrD+H92Wyt4qaDikTwHAJ
-	 UhkhkR6+nOJgoTZ6tEMecGSrNUami266l9gWUdSU=
+	b=fShl/IrwUzdogCHIRNZKLi6m1+iB4UlA0QIQpo3G/9xYBB0XX9sKaWQySNjvu2VVP
+	 b8jIggksCG+M0EAqOhv8t1vjqXjCpxbtFBQ31IZwzgcW3tL7V7lv+Ulx0iFW5pfcoZ
+	 wzVq3wFaa+pePG5/cBGN5HNjnnBvOgSExMMVAR6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 4.19 186/350] parisc: Fix itlb miss handler for 64-bit programs
-Date: Wed,  6 Nov 2024 13:01:54 +0100
-Message-ID: <20241106120325.542991848@linuxfoundation.org>
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.19 187/350] ALSA: core: add isascii() check to card ID generator
+Date: Wed,  6 Nov 2024 13:01:55 +0100
+Message-ID: <20241106120325.569808247@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -43,51 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Jaroslav Kysela <perex@perex.cz>
 
-commit 9542130937e9dc707dd7c6b7af73326437da2d50 upstream.
+commit d278a9de5e1837edbe57b2f1f95a104ff6c84846 upstream.
 
-For an itlb miss when executing code above 4 Gb on ILP64 adjust the
-iasq/iaoq in the same way isr/ior was adjusted.  This fixes signal
-delivery for the 64-bit static test program from
-http://ftp.parisc-linux.org/src/64bit.tar.gz.  Note that signals are
-handled by the signal trampoline code in the 64-bit VDSO which is mapped
-into high userspace memory region above 4GB for 64-bit processes.
+The card identifier should contain only safe ASCII characters. The isalnum()
+returns true also for characters for non-ASCII characters.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org	# v4.19+
+Link: https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/4135
+Link: https://lore.kernel.org/linux-sound/yk3WTvKkwheOon_LzZlJ43PPInz6byYfBzpKkbasww1yzuiMRqn7n6Y8vZcXB-xwFCu_vb8hoNjv7DTNwH5TWjpEuiVsyn9HPCEXqwF4120=@protonmail.com/
+Cc: stable@vger.kernel.org
+Reported-by: Barnabás Pőcze <pobrn@protonmail.com>
+Signed-off-by: Jaroslav Kysela <perex@perex.cz>
+Link: https://patch.msgid.link/20241002194649.1944696-1-perex@perex.cz
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/entry.S |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ sound/core/init.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/arch/parisc/kernel/entry.S
-+++ b/arch/parisc/kernel/entry.S
-@@ -1089,8 +1089,7 @@ ENTRY_CFI(intr_save)		/* for os_hpmc */
- 	STREG           %r16, PT_ISR(%r29)
- 	STREG           %r17, PT_IOR(%r29)
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -548,13 +548,19 @@ int snd_card_free(struct snd_card *card)
+ }
+ EXPORT_SYMBOL(snd_card_free);
  
--#if 0 && defined(CONFIG_64BIT)
--	/* Revisit when we have 64-bit code above 4Gb */
-+#if defined(CONFIG_64BIT)
- 	b,n		intr_save2
++/* check, if the character is in the valid ASCII range */
++static inline bool safe_ascii_char(char c)
++{
++	return isascii(c) && isalnum(c);
++}
++
+ /* retrieve the last word of shortname or longname */
+ static const char *retrieve_id_from_card_name(const char *name)
+ {
+ 	const char *spos = name;
  
- skip_save_ior:
-@@ -1098,8 +1097,7 @@ skip_save_ior:
- 	 * need to adjust iasq/iaoq here in the same way we adjusted isr/ior
- 	 * above.
- 	 */
--	extrd,u,*	%r8,PSW_W_BIT,1,%r1
--	cmpib,COND(=),n	1,%r1,intr_save2
-+	bb,COND(>=),n	%r8,PSW_W_BIT,intr_save2
- 	LDREG		PT_IASQ0(%r29), %r16
- 	LDREG		PT_IAOQ0(%r29), %r17
- 	/* adjust iasq/iaoq */
+ 	while (*name) {
+-		if (isspace(*name) && isalnum(name[1]))
++		if (isspace(*name) && safe_ascii_char(name[1]))
+ 			spos = name + 1;
+ 		name++;
+ 	}
+@@ -581,12 +587,12 @@ static void copy_valid_id_string(struct
+ {
+ 	char *id = card->id;
+ 
+-	while (*nid && !isalnum(*nid))
++	while (*nid && !safe_ascii_char(*nid))
+ 		nid++;
+ 	if (isdigit(*nid))
+ 		*id++ = isalpha(*src) ? *src : 'D';
+ 	while (*nid && (size_t)(id - card->id) < sizeof(card->id) - 1) {
+-		if (isalnum(*nid))
++		if (safe_ascii_char(*nid))
+ 			*id++ = *nid;
+ 		nid++;
+ 	}
+@@ -684,7 +690,7 @@ card_id_store_attr(struct device *dev, s
+ 
+ 	for (idx = 0; idx < copy; idx++) {
+ 		c = buf[idx];
+-		if (!isalnum(c) && c != '_' && c != '-')
++		if (!safe_ascii_char(c) && c != '_' && c != '-')
+ 			return -EINVAL;
+ 	}
+ 	memcpy(buf1, buf, copy);
 
 
