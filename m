@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49091CCB5F;
-	Wed,  6 Nov 2024 13:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E0E1DFE27;
+	Wed,  6 Nov 2024 13:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899177; cv=none; b=OjQxmZuGJ8Gsun877TVu3pHfwz6EyEHAbdZAIEhogb3crYS7/+EHBZ+0lyhdemMQm1NES0msO6tAwQvntL840XQ25IVhrnxxpaHODS8o3MiDOne8+Nw/E8OIaGEHSf9OWfmgccEbQ3PrVT7AxIqclJm6oDxGk6O4JuFy/MWNHDA=
+	t=1730899181; cv=none; b=qkFMlwd0Mm685/EUB6qlENGHPDTiIup0+X6chLbt7hWuVR+/AWjY/E2yKRmHEf9D/qZvkEe9DnhtQ4Pa0YzO2qqLOVySx4Xle9Pn8ThyI0miDYZsW1pW4snhFgwebyiMWpzTSsdDXnQ535RdlNomqYGb6z7IrdKnSCN8tEO4Gmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899177; c=relaxed/simple;
-	bh=g55l2Eo8UxBA9+gLXL66wV/cEK+uljDHw7QzuBm67x4=;
+	s=arc-20240116; t=1730899181; c=relaxed/simple;
+	bh=gifWxZMjB5g7JIh7aC62pe9xmUDOI6lojO3nCIU+Tlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WFZhzKwzdD2tO6FrvZSvgzWUkDLf8JHZpVYbyYycSc6GRIJ2QdpCjGenAcrr159Bk3dqBHcrs49S7F676tD6ZSxdiysIIG9r5eYjb+L9nKoeeVqZVhsI5gx/bJkdVlJYuOSMW1/toafyK1bW618nOV0Iqm0Mx8MBq2UZXCIwD0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x6A4YhIE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TdcbwIPRWqSJ92ZaVUxG6nrIm1bi9wrb/PcTDQQY5f5seT7ydwoJfD8zx2eMkX21jdiuU/+N1wwUXLFszETo+wlR66WhWsr92x/PvQpu/ScWWiBlGgaANhcz52aPd1LETcDpx7dBG5daHHmZvslrOdlnsmuNkqHSnVQstRJ40uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PU2BDPgG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x6A4YhIE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3860EC4CED3;
-	Wed,  6 Nov 2024 13:19:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PU2BDPgG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25649C4CECD;
+	Wed,  6 Nov 2024 13:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899177;
-	bh=g55l2Eo8UxBA9+gLXL66wV/cEK+uljDHw7QzuBm67x4=;
+	s=korg; t=1730899180;
+	bh=gifWxZMjB5g7JIh7aC62pe9xmUDOI6lojO3nCIU+Tlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x6A4YhIEzXUzgyUeYDHEp9E40nBcjPwea62sOhfIoLjOroIMboFbHH/hHHTyld4wj
-	 zC63HTm2TgdCAY/Bfi18egfPdYrobtsXkkMP/uFB5JceeKig017c4ZPFIsmFRRJG9A
-	 DT8oUFvjEPI+G7I9vyGl/+LERVELHWEZGkhrHBkc=
+	b=PU2BDPgGebndz0SRrOuzOubQbjoKNhD+f40IX8UreBT/nsW8Bnp6yjgJl3avKopNa
+	 6WSQevUCjFHyO7UL648F1sLsgU7XCgELHiv9J9sitaI0ppk3vDDETeUmj3rqBVRwUN
+	 aEdtRay2ACBSl9R3Efr0jjQWcMAxQVX8K6y3dvAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dong Chenchen <dongchenchen2@huawei.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 25/73] netfilter: Fix use-after-free in get_info()
-Date: Wed,  6 Nov 2024 13:05:29 +0100
-Message-ID: <20241106120300.712949306@linuxfoundation.org>
+Subject: [PATCH 5.15 26/73] net: skip offload for NETIF_F_IPV6_CSUM if ipv6 header contains extension
+Date: Wed,  6 Nov 2024 13:05:30 +0100
+Message-ID: <20241106120300.746553511@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120259.955073160@linuxfoundation.org>
 References: <20241106120259.955073160@linuxfoundation.org>
@@ -46,85 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dong Chenchen <dongchenchen2@huawei.com>
+From: Benoît Monin <benoit.monin@gmx.fr>
 
-[ Upstream commit f48d258f0ac540f00fa617dac496c4c18b5dc2fa ]
+[ Upstream commit 04c20a9356f283da623903e81e7c6d5df7e4dc3c ]
 
-ip6table_nat module unload has refcnt warning for UAF. call trace is:
+As documented in skbuff.h, devices with NETIF_F_IPV6_CSUM capability
+can only checksum TCP and UDP over IPv6 if the IP header does not
+contains extension.
 
-WARNING: CPU: 1 PID: 379 at kernel/module/main.c:853 module_put+0x6f/0x80
-Modules linked in: ip6table_nat(-)
-CPU: 1 UID: 0 PID: 379 Comm: ip6tables Not tainted 6.12.0-rc4-00047-gc2ee9f594da8-dirty #205
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
-BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-RIP: 0010:module_put+0x6f/0x80
-Call Trace:
- <TASK>
- get_info+0x128/0x180
- do_ip6t_get_ctl+0x6a/0x430
- nf_getsockopt+0x46/0x80
- ipv6_getsockopt+0xb9/0x100
- rawv6_getsockopt+0x42/0x190
- do_sock_getsockopt+0xaa/0x180
- __sys_getsockopt+0x70/0xc0
- __x64_sys_getsockopt+0x20/0x30
- do_syscall_64+0xa2/0x1a0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+This is enforced for UDP packets emitted from user-space to an IPv6
+address as they go through ip6_make_skb(), which calls
+__ip6_append_data() where a check is done on the header size before
+setting CHECKSUM_PARTIAL.
 
-Concurrent execution of module unload and get_info() trigered the warning.
-The root cause is as follows:
+But the introduction of UDP encapsulation with fou6 added a code-path
+where it is possible to get an skb with a partial UDP checksum and an
+IPv6 header with extension:
+* fou6 adds a UDP header with a partial checksum if the inner packet
+does not contains a valid checksum.
+* ip6_tunnel adds an IPv6 header with a destination option extension
+header if encap_limit is non-zero (the default value is 4).
 
-cpu0				      cpu1
-module_exit
-//mod->state = MODULE_STATE_GOING
-  ip6table_nat_exit
-    xt_unregister_template
-	kfree(t)
-	//removed from templ_list
-				      getinfo()
-					  t = xt_find_table_lock
-						list_for_each_entry(tmpl, &xt_templates[af]...)
-							if (strcmp(tmpl->name, name))
-								continue;  //table not found
-							try_module_get
-						list_for_each_entry(t, &xt_net->tables[af]...)
-							return t;  //not get refcnt
-					  module_put(t->me) //uaf
-    unregister_pernet_subsys
-    //remove table from xt_net list
+The thread linked below describes in more details how to reproduce the
+problem with GRE-in-UDP tunnel.
 
-While xt_table module was going away and has been removed from
-xt_templates list, we couldnt get refcnt of xt_table->me. Check
-module in xt_net->tables list re-traversal to fix it.
+Add a check on the network header size in skb_csum_hwoffload_help() to
+make sure no IPv6 packet with extension header is handed to a network
+device with NETIF_F_IPV6_CSUM capability.
 
-Fixes: fdacd57c79b7 ("netfilter: x_tables: never register tables by default")
-Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/netdev/26548921.1r3eYUQgxm@benoit.monin/T/#u
+Fixes: aa3463d65e7b ("fou: Add encap ops for IPv6 tunnels")
+Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/5fbeecfc311ea182aa1d1c771725ab8b4cac515e.1729778144.git.benoit.monin@gmx.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/x_tables.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/dev.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/netfilter/x_tables.c b/net/netfilter/x_tables.c
-index 25524e3933496..9a579217763df 100644
---- a/net/netfilter/x_tables.c
-+++ b/net/netfilter/x_tables.c
-@@ -1268,7 +1268,7 @@ struct xt_table *xt_find_table_lock(struct net *net, u_int8_t af,
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 8a22ce15b7f53..15ed4a79be46f 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3668,6 +3668,9 @@ int skb_csum_hwoffload_help(struct sk_buff *skb,
+ 		return 0;
  
- 	/* and once again: */
- 	list_for_each_entry(t, &xt_net->tables[af], list)
--		if (strcmp(t->name, name) == 0)
-+		if (strcmp(t->name, name) == 0 && owner == t->me)
- 			return t;
+ 	if (features & (NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM)) {
++		if (vlan_get_protocol(skb) == htons(ETH_P_IPV6) &&
++		    skb_network_header_len(skb) != sizeof(struct ipv6hdr))
++			goto sw_checksum;
+ 		switch (skb->csum_offset) {
+ 		case offsetof(struct tcphdr, check):
+ 		case offsetof(struct udphdr, check):
+@@ -3675,6 +3678,7 @@ int skb_csum_hwoffload_help(struct sk_buff *skb,
+ 		}
+ 	}
  
- 	module_put(owner);
++sw_checksum:
+ 	return skb_checksum_help(skb);
+ }
+ EXPORT_SYMBOL(skb_csum_hwoffload_help);
 -- 
 2.43.0
 
