@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F121CC14B;
-	Wed,  6 Nov 2024 13:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1C581EE005;
+	Wed,  6 Nov 2024 13:00:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898021; cv=none; b=Uf4VXpTCNQB4Mw01As+sQWcgTmzKtjqeXyHJxMTscHkB4S4PlIC29cEPROD9lu9CaKD1zqKoFDZC8db9tKH/Q4na/zUflBT0OYG2V/WkJX80WyNoNh+ovbaWIDwD6fm9bNuJAomQj84EkZlTJJTlOAqo8+EF+FT6cY3a9jOyUdM=
+	t=1730898023; cv=none; b=tmI1IwahyxWCypwWtYgKgQBnjNS++JoeP/xoZ33bMy4GXtwU7kwXaVaLeQRnUqIU5+lZNerx6pCf1zUkDrbYbAzEnpdKngpJICKR0lEcUa0YzqdYt+7D4uIRI1m29SorAUX3Yvzo9jE8MoTgv7gWBhHg39pGbxYQM9KOlAkr5ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898021; c=relaxed/simple;
-	bh=1AEXVHomUln2gKg8/ri/oxAFdORH7JQvt517gwRxhNo=;
+	s=arc-20240116; t=1730898023; c=relaxed/simple;
+	bh=9CjO1K6QVPIkl/WkCKJ9l7A1C0qtbi5uw4UYW5/eWfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nKpU1CaaLP516GkzXYRHU1+0RMyIr2hwgjeu3uQz8aCY2yFVKZ1ixTXAmAVjhcdaclsKfMYjz9lizGB4dLD6FVAhr0A9Vm98xHonfv71gQ5uG4fvzSQcblNdBqy69U61dWTJ9kwO1FQzQJcd26Sb6WM+3TLIDaKofdgXcXaWQws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j2VKybfQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JGOSji3p6PAXiJzMXOXMd+IyVORZd/n9Me/kQfZBQKlSMcxkihwpxdw+7EAugJzVsTbmGPM3i8Xv+MaNOlziERULm78mQOt6/WHN42VkwQp64nBzmFXgQo/OM6M5KsclbyzVfKuuri+HfR0PJ2YJ11n4LwMMa6wqlpoeMWi8Xnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNAGtaYm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2VKybfQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669C2C4CECD;
-	Wed,  6 Nov 2024 13:00:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNAGtaYm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56548C4CECD;
+	Wed,  6 Nov 2024 13:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898020;
-	bh=1AEXVHomUln2gKg8/ri/oxAFdORH7JQvt517gwRxhNo=;
+	s=korg; t=1730898023;
+	bh=9CjO1K6QVPIkl/WkCKJ9l7A1C0qtbi5uw4UYW5/eWfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j2VKybfQz1RPnGqySK3dxmssGO7XGuUZ5gPjGnlu3SEGvDJhYU3HNwQeBFiT2FcJs
-	 lgj8p4NuGTqjQbhXYZUDkeKSl1hPuVoPq73w5SlmAzDEH/H6yO1RD4AUFcWuD65gwV
-	 Hu4RHvGy895Z/MpDV7ln03QM/37WILKEGDd0+ti4=
+	b=CNAGtaYmA3XLjekaNz1YtLyCdMvOuBGPpnqQ6qmrEUOfsgVIVwMO3EVW9b0YOJ9Vt
+	 f+lBzwm/2/ShnGbh2vO8HoXxKUN/Iv4KRUCX07cW9H//2+YxhUFnrL3uZ3HsqA1tY/
+	 2j6j9acJRxMsE7ISAV6kMPurEBAl7t/4kYoJ4KJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jiawei Ye <jiawei.ye@foxmail.com>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 070/462] drm/amdgpu: Replace one-element array with flexible-array member
-Date: Wed,  6 Nov 2024 12:59:23 +0100
-Message-ID: <20241106120333.238256120@linuxfoundation.org>
+Subject: [PATCH 5.4 097/462] smackfs: Use rcu_assign_pointer() to ensure safe assignment in smk_set_cipso
+Date: Wed,  6 Nov 2024 12:59:50 +0100
+Message-ID: <20241106120333.904844189@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,66 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>
+From: Jiawei Ye <jiawei.ye@foxmail.com>
 
-[ Upstream commit 320e2590e281d0a7865e861f50155b5b435e9813 ]
+[ Upstream commit 2749749afa071f8a0e405605de9da615e771a7ce ]
 
-One-element arrays are deprecated, and we are replacing them with
-flexible array members instead. So, replace one-element array with
-flexible-array member in struct _ATOM_FAKE_EDID_PATCH_RECORD and
-refactor the rest of the code accordingly.
+In the `smk_set_cipso` function, the `skp->smk_netlabel.attr.mls.cat`
+field is directly assigned to a new value without using the appropriate
+RCU pointer assignment functions. According to RCU usage rules, this is
+illegal and can lead to unpredictable behavior, including data
+inconsistencies and impossible-to-diagnose memory corruption issues.
 
-Important to mention is that doing a build before/after this patch
-results in no binary output differences.
+This possible bug was identified using a static analysis tool developed
+by myself, specifically designed to detect RCU-related issues.
 
-This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
-routines on memcpy() and help us make progress towards globally
-enabling -fstrict-flex-arrays=3 [1].
+To address this, the assignment is now done using rcu_assign_pointer(),
+which ensures that the pointer assignment is done safely, with the
+necessary memory barriers and synchronization. This change prevents
+potential RCU dereference issues by ensuring that the `cat` field is
+safely updated while still adhering to RCU's requirements.
 
-Link: https://github.com/KSPP/linux/issues/79
-Link: https://github.com/KSPP/linux/issues/238
-Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=101836 [1]
-
-Signed-off-by: Paulo Miguel Almeida <paulo.miguel.almeida.rodenas@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 8155566a26b8 ("drm/amdgpu: properly handle vbios fake edid sizing")
+Fixes: 0817534ff9ea ("smackfs: Fix use-after-free in netlbl_catmap_walk()")
+Signed-off-by: Jiawei Ye <jiawei.ye@foxmail.com>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/atombios_encoders.c | 7 +++++--
- drivers/gpu/drm/amd/include/atombios.h         | 2 +-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ security/smack/smackfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c b/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
-index 1e94a9b652f70..754d1e1387155 100644
---- a/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
-+++ b/drivers/gpu/drm/amd/amdgpu/atombios_encoders.c
-@@ -2113,8 +2113,11 @@ amdgpu_atombios_encoder_get_lcd_info(struct amdgpu_encoder *encoder)
- 						}
- 					}
- 					record += fake_edid_record->ucFakeEDIDLength ?
--						fake_edid_record->ucFakeEDIDLength + 2 :
--						sizeof(ATOM_FAKE_EDID_PATCH_RECORD);
-+						  struct_size(fake_edid_record,
-+							      ucFakeEDIDString,
-+							      fake_edid_record->ucFakeEDIDLength) :
-+						  /* empty fake edid record must be 3 bytes long */
-+						  sizeof(ATOM_FAKE_EDID_PATCH_RECORD) + 1;
- 					break;
- 				case LCD_PANEL_RESOLUTION_RECORD_TYPE:
- 					panel_res_record = (ATOM_PANEL_RESOLUTION_PATCH_RECORD *)record;
-diff --git a/drivers/gpu/drm/amd/include/atombios.h b/drivers/gpu/drm/amd/include/atombios.h
-index 8ba21747b40a3..c9f70accd46d8 100644
---- a/drivers/gpu/drm/amd/include/atombios.h
-+++ b/drivers/gpu/drm/amd/include/atombios.h
-@@ -4107,7 +4107,7 @@ typedef struct _ATOM_FAKE_EDID_PATCH_RECORD
- {
-   UCHAR ucRecordType;
-   UCHAR ucFakeEDIDLength;       // = 128 means EDID length is 128 bytes, otherwise the EDID length = ucFakeEDIDLength*128
--  UCHAR ucFakeEDIDString[1];    // This actually has ucFakeEdidLength elements.
-+  UCHAR ucFakeEDIDString[];     // This actually has ucFakeEdidLength elements.
- } ATOM_FAKE_EDID_PATCH_RECORD;
- 
- typedef struct  _ATOM_PANEL_RESOLUTION_PATCH_RECORD
+diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
+index a71975ea88a94..ddb0a292802ef 100644
+--- a/security/smack/smackfs.c
++++ b/security/smack/smackfs.c
+@@ -920,7 +920,7 @@ static ssize_t smk_set_cipso(struct file *file, const char __user *buf,
+ 	rc = smk_netlbl_mls(maplevel, mapcatset, &ncats, SMK_CIPSOLEN);
+ 	if (rc >= 0) {
+ 		old_cat = skp->smk_netlabel.attr.mls.cat;
+-		skp->smk_netlabel.attr.mls.cat = ncats.attr.mls.cat;
++		rcu_assign_pointer(skp->smk_netlabel.attr.mls.cat, ncats.attr.mls.cat);
+ 		skp->smk_netlabel.attr.mls.lvl = ncats.attr.mls.lvl;
+ 		synchronize_rcu();
+ 		netlbl_catmap_free(old_cat);
 -- 
 2.43.0
 
