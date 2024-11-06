@@ -1,96 +1,74 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17623203716
-	for <patches@lists.linux.dev>; Wed,  6 Nov 2024 16:07:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0705205129
+	for <patches@lists.linux.dev>; Wed,  6 Nov 2024 16:15:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730909239; cv=none; b=BtzR9mdD4b+9TS6YiYApveTIa618ONN9Z+Aja0IlsbNqPaupQ3ACxfvR+G9XhiC5Jh9CBKfp4cXTXHpbeq4uFQrPSrSVWinnXV3l9K/8Y9gNJOEK4oN3McYYot4MRqOnwDv2jXHpzEghbElJvenaqQ3WKRfl9uEHn9Z/KFWV57I=
+	t=1730909725; cv=none; b=TKZkuJiZJVTzyuRAcZNiZcoppu8fcpQZlWYgjVvaURReBXVFoiRU7MyEeBhjRmIkDTbL3O5P7ClWZWE0z1tnAylo0WHdeyfW5TOlchhJzAZYsl0XtJaCBDWa7q23kTzy3twZBJ6DK38YfcS78aCIBoZfJmsAd4Kiw0inR/JoxyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730909239; c=relaxed/simple;
-	bh=yrnpiJhy1J/7RqZ/+CyJugHSccwtATWWeukq81MaSCM=;
+	s=arc-20240116; t=1730909725; c=relaxed/simple;
+	bh=4IEA5CT2OJ1TXjN8LNwKEd35uSTQ404HcVnPzFp9gEE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Nom28SspPsPRgQFo5vPiCghkuFbd+UQGcSN1pGv87/s342kDFdjswuUQcYbm4dvx5e+V+g7eoWlaozW/0GH/2u2JdBnlXvgTjdKGdjfUnsnJKZ7gvtZS0+1Ws7x4Jxg0xSsa115bMK47TWxF9+ET95xBHR0m8bOBKBZ0aPWFrhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=GVlxQEKN; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=TpiLxwRe; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=GVlxQEKN; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=TpiLxwRe; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
+	 Content-Type:Content-Disposition:In-Reply-To; b=g0/qJA6+pNFDOwXd39wmzIaF3kqoS/DrIw6V+ln7Jna/936ZnuvOPkaQuknxTYU7tibQYMmbUjbPuEp3UxJ8uz61ryUZXfXVvPD+ixJXE0ONWWtKURBgGyPS6pfA30MAvsAlNQhoiWkAJN39yjpAleZ1qX7V8/qRELf2vB+9yg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca; spf=pass smtp.mailfrom=ziepe.ca; dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b=WOJ/Ruxu; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="GVlxQEKN";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="TpiLxwRe";
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="GVlxQEKN";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="TpiLxwRe"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 410DE1FD16;
-	Wed,  6 Nov 2024 16:07:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1730909234;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oFK4lU6B12gDl5NcQ8bStKX2YCBIjE84h/WDX0M3oX0=;
-	b=GVlxQEKN3N/ZUMBOshLxms6mGsMue3UYHWVi1mIDw1tBV2ZPdp8hmRhKTc2D2GXij2WUOv
-	t8Hq06BbIeQd3N/c/ocBmmwjaAH9JW/ey6GolnmYyvA6vQ9VC3MA2r5aCZITpotTGEitmz
-	224sR5GS3zq/J9+1J6kkSgt5kzEFNuI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1730909234;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oFK4lU6B12gDl5NcQ8bStKX2YCBIjE84h/WDX0M3oX0=;
-	b=TpiLxwReKDl7e0yEg9XXcp1Uuush7wNq9HBMtCqDXUg9gHoPtPNXBSUrQjivAzEFj/uHRG
-	7SDYa2bi1PlVhkDA==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.cz header.s=susede2_rsa header.b=GVlxQEKN;
-	dkim=pass header.d=suse.cz header.s=susede2_ed25519 header.b=TpiLxwRe
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1730909234;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oFK4lU6B12gDl5NcQ8bStKX2YCBIjE84h/WDX0M3oX0=;
-	b=GVlxQEKN3N/ZUMBOshLxms6mGsMue3UYHWVi1mIDw1tBV2ZPdp8hmRhKTc2D2GXij2WUOv
-	t8Hq06BbIeQd3N/c/ocBmmwjaAH9JW/ey6GolnmYyvA6vQ9VC3MA2r5aCZITpotTGEitmz
-	224sR5GS3zq/J9+1J6kkSgt5kzEFNuI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1730909234;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oFK4lU6B12gDl5NcQ8bStKX2YCBIjE84h/WDX0M3oX0=;
-	b=TpiLxwReKDl7e0yEg9XXcp1Uuush7wNq9HBMtCqDXUg9gHoPtPNXBSUrQjivAzEFj/uHRG
-	7SDYa2bi1PlVhkDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0F49D137C4;
-	Wed,  6 Nov 2024 16:07:14 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id DkGAAzKUK2dLWgAAD6G6ig
-	(envelope-from <dsterba@suse.cz>); Wed, 06 Nov 2024 16:07:14 +0000
-Date: Wed, 6 Nov 2024 17:07:08 +0100
-From: David Sterba <dsterba@suse.cz>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hagar@microsoft.com, broonie@kernel.org, Chris Mason <clm@fb.com>,
-	Josef Bacik <josef@toxicpanda.com>, David Sterba <dsterba@suse.com>,
-	Linux btrfs <linux-btrfs@vger.kernel.org>,
-	linux-mips@vger.kernel.org
-Subject: Re: [PATCH 6.11 000/245] 6.11.7-rc1 review
-Message-ID: <20241106160708.GE31418@suse.cz>
-Reply-To: dsterba@suse.cz
-References: <20241106120319.234238499@linuxfoundation.org>
- <CA+G9fYtjpUJFFV=FdqvW+5K+JL5ZYN4sPfVDjQovqzd7cib39w@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b="WOJ/Ruxu"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6cbd12b38b4so40521226d6.2
+        for <patches@lists.linux.dev>; Wed, 06 Nov 2024 08:15:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ziepe.ca; s=google; t=1730909722; x=1731514522; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=6nSgGdK6NvqqFV9LyhiXVQ/e823UrG8JIi5eQbgWpwM=;
+        b=WOJ/Ruxu7/79JBCLlkvxoLGm6fc35l1yTGONpPtuolqV54ZeLFyUSIEVu1LUDjuSzn
+         cohxQXH/pe4hGW2BBvotTWfqVUVQZ5qdy4bZ/NP80E95bI+SSUfY35OAmisa1Ls8FPxT
+         kHV2wmn8kvmH0H8I+xYpbZil3SILGq2whqtjAu0YvDT7oDrWS5imjlJ7NieqNvo736Wm
+         GB2AId2ZfHEahHFghTu7atnAGVE2voWMMmbC13Sptn1XG6SJ2J8ueWz6zKZQvkj9bO56
+         5oiVytt6lYfH/zp7CJ2CGz90wXbTZ9yawHuhd4xDHdgh6PT54T34+ueNmjte7myBh5DJ
+         a03Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730909722; x=1731514522;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6nSgGdK6NvqqFV9LyhiXVQ/e823UrG8JIi5eQbgWpwM=;
+        b=Xk8mYJ0abeYBkdgW4dkA9LKIl7JkvwZRLOxCa96jAJfKzIFK8/m9ImD9IH+Q47jCOq
+         EN0pKTBjlsTqe1csVd23VzudHRf7qa5XLlhrOXHSpc8/PncsNz0YPz5zd+4PI9DPA8Hm
+         QIhlu8Azv4suU65V5ZSVB0sM5jsbuK5w0VavaJK6nG4mqiwRKMpe9hON1YSOtaQkbBzX
+         z8RhqtUizE79xJZUjXtqoWEYpYbUqAVJC4t2ZXfykQsC6A4cJsKbbxZ7B3YYyTH6h4R/
+         GlwjwpOxQvcNx2BE4t74fqMY6VJ+iX3IWE6ZtiMA2bdHu0+t8alh1T3ENUvt2bTYuDb7
+         1mUg==
+X-Forwarded-Encrypted: i=1; AJvYcCWRvf/R7xM1UZrUHwuMSkpPB6L+l7p6EaJGtotW4LyzUoznSiSD/g/BSRgp1ff4CFzUaRK4RITD@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy2aWJUJpWF7Z43sCyKhDgh0m5KBEPzLP50nk/DC8zX/OMstzi6
+	ebw+R3wAF92DFKYmxzYWyE5S0wRhzXjQZWMZmqXHF2bW4HMfL+sVRNuVbkNUyUg=
+X-Google-Smtp-Source: AGHT+IEwombH/Npcr6xgQKI4hUOBNWDndBBc7puCreP3V/CqgxTRomKyutXho3m/FUi9CO1Dgd2M5Q==
+X-Received: by 2002:a05:6214:2c13:b0:6cb:f654:55ac with SMTP id 6a1803df08f44-6d185683569mr561328396d6.11.1730909722261;
+        Wed, 06 Nov 2024 08:15:22 -0800 (PST)
+Received: from ziepe.ca (hlfxns017vw-142-68-128-5.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.68.128.5])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7b2f39ebaadsm644777685a.2.2024.11.06.08.15.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Nov 2024 08:15:21 -0800 (PST)
+Received: from jgg by wakko with local (Exim 4.97)
+	(envelope-from <jgg@ziepe.ca>)
+	id 1t8igi-00000002BDj-3v7y;
+	Wed, 06 Nov 2024 12:15:20 -0400
+Date: Wed, 6 Nov 2024 12:15:20 -0400
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: Will Deacon <will@kernel.org>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Robin Murphy <robin.murphy@arm.com>, catalin.marinas@arm.com,
+	kernel-team@android.com,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	dri-devel@lists.freedesktop.org, Liviu Dudau <liviu.dudau@arm.com>,
+	patches@lists.linux.dev, Steven Price <steven.price@arm.com>
+Subject: Re: [PATCH v3 0/3] Remove split on unmap behavior
+Message-ID: <20241106161520.GJ35848@ziepe.ca>
+References: <0-v3-b3a5b5937f56+7bb-arm_no_split_jgg@nvidia.com>
+ <173090505900.4167208.10850898110820689849.b4-ty@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -99,87 +77,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CA+G9fYtjpUJFFV=FdqvW+5K+JL5ZYN4sPfVDjQovqzd7cib39w@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
-X-Rspamd-Queue-Id: 410DE1FD16
-X-Spam-Score: -2.71
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.71 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	HAS_REPLYTO(0.30)[dsterba@suse.cz];
-	R_DKIM_ALLOW(-0.20)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	TO_DN_SOME(0.00)[];
-	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	RCPT_COUNT_TWELVE(0.00)[25];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_ALL(0.00)[];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	DKIM_TRACE(0.00)[suse.cz:+];
-	RCVD_COUNT_TWO(0.00)[2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
-	REPLYTO_ADDR_EQ_FROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	FREEMAIL_CC(0.00)[linuxfoundation.org,vger.kernel.org,lists.linux.dev,linux-foundation.org,roeck-us.net,kernel.org,kernelci.org,lists.linaro.org,denx.de,nvidia.com,gmail.com,sladewatkins.net,gmx.de,microsoft.com,fb.com,toxicpanda.com,suse.com];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[];
-	R_RATELIMIT(0.00)[to_ip_from(RLe1zdo9uk7dz69twkrygihbgb)];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spam-Flag: NO
-X-Spam-Level: 
+In-Reply-To: <173090505900.4167208.10850898110820689849.b4-ty@kernel.org>
 
-On Wed, Nov 06, 2024 at 03:12:46PM +0000, Naresh Kamboju wrote:
-> On Wed, 6 Nov 2024 at 12:26, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.11.7 release.
-> > There are 245 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Fri, 08 Nov 2024 12:02:47 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.11.7-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
+On Wed, Nov 06, 2024 at 03:53:23PM +0000, Will Deacon wrote:
+> On Tue, 05 Nov 2024 14:14:23 -0400, Jason Gunthorpe wrote:
+> > This is the result of the discussion on removing split. We agreed that
+> > split is not required, and no application should ask for anything that
+> > would not unmap a full large IOPTE.
+> > 
+> > Instead of split the two ARM drivers will now WARN_ON and return 0. This
+> > is in contrast to what several other drivers do of removing the whole
+> > IOPTE and returning 0.
+> > 
+> > [...]
 > 
-> The mips gcc-12 allmodconfig build failed on the Linux stable-rc
-> linux-6.11.y branch.
+> Applied to iommu (arm/smmu), thanks!
 > 
-> 
-> First seen on Linux stable-rc v6.11.4-642-g0e21c72fc970
-> 
->   Good: v6.11.4-397-g4ccf0b49d5b6
->   Bad:   v6.11.4-642-g0e21c72fc970
-> 
-> mips:
->   build:
->     * gcc-12-allmodconfig
-> 
-> Build errors:
-> -------------
-> ERROR: modpost: "__cmpxchg_small" [fs/btrfs/btrfs.ko] undefined!
+> [1/3] iommu/io-pgtable-arm: Remove split on unmap behavior
+>       https://git.kernel.org/iommu/c/33729a5fc0ca
+> [2/3] iommu/io-pgtable-arm-v7s: Remove split on unmap behavior
+>       https://git.kernel.org/iommu/c/fd50651636fb
+> [3/3] iommu: Add a kdoc to iommu_unmap()
+>       https://git.kernel.org/iommu/c/6ac7dffe7cca
 
-The patch "btrfs: fix error propagation of split bios" needs
-90a88784cdb7 ("MIPS: export __cmpxchg_small()")
+Thanks, can you add this hunk to fix the W=1 warning?
+
+--- a/drivers/iommu/io-pgtable-arm-v7s.c
++++ b/drivers/iommu/io-pgtable-arm-v7s.c
+@@ -820,7 +820,7 @@ static int __init arm_v7s_do_selftests(void)
+                .pgsize_bitmap = SZ_4K | SZ_64K | SZ_1M | SZ_16M,
+        };
+        unsigned int iova, size;
+-       unsigned int i, loopnr = 0;
++       unsigned int i;
+        size_t mapped;
+ 
+        selftest_running = true;
+@@ -868,7 +868,6 @@ static int __init arm_v7s_do_selftests(void)
+                        return __FAIL(ops);
+ 
+                iova += SZ_16M;
+-               loopnr++;
+        }
+ 
+        /* Full unmap */
+
+
+Jason
