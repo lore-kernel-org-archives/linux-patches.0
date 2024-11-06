@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F5C1D2784;
-	Wed,  6 Nov 2024 12:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E85C1D2784;
+	Wed,  6 Nov 2024 12:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896182; cv=none; b=iJ231RQ7BGZV9YI+XCgddKTHLqsX+Jtt8Yo1df5ywmvQDf7NUt6v1CvMhhUFTPVE3VSmMmSr6HVfCx9+kqwdba+bA0YWIr1QXbuM4iFjX4CUEbYYTkaQu/KX50kJbSg9grTx4A4gkJKq1QYlf9USF2d5z0a8FN0xKMVTQ5WTj4k=
+	t=1730896185; cv=none; b=jiyXMgnBp7IbUErogsUGvu7jMKHDg/Qwvw2jgdMRO0w4BViKiceKn9KZFoQthMy5DAkM4V749gU4Aw6UQxTbpJZYHa5iXhDbjZWspKhR8r4olnzsNZwXiNfwow966Oe5p2D3TWiGumMf2WiS67KZ9D+FKBTPUfJP2m3kuD5RGCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896182; c=relaxed/simple;
-	bh=z1tMfdkQlQg5diGvVOtNqqAm2v6jj1OK/IZUtlot1ds=;
+	s=arc-20240116; t=1730896185; c=relaxed/simple;
+	bh=YNDd2DxFb6VKmRRwzwJJS857J5cF3KLYWGy5/vprxl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dvf9qNPymmyvnju2H/RAqh1CLwFMY/9wY+kxg9Og66D4a8TB7eFJJoo5qoRLOENtPXlCn9XO0eng6tup5NWwvjOnjX2bnPNhcYgbeS/tAlJHl8UEzZLHx5WM/JdwWr+VXxuLkk9l0v40y6bZ7DadnqLGPHUJYB0qUk763ozpuKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ne+vXP/0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U2hRMj3rl6YqDmaJHP+eDQ2ecaLEKi/5ymZdc41O+KKVeAET7ZowS1+OE2AhBlhFBz5zzAy45gK5On8Dt9rLaFnA06rTwgcRA4Zt7j3xY5+gy6nEvewZ9Pp+vjTjkqRnYYnPRI01zj6i2cnIEQoVYPGP/5OCCJXcltsTOU85s80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbIykjgR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ne+vXP/0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C50C4CECD;
-	Wed,  6 Nov 2024 12:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbIykjgR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC567C4CECD;
+	Wed,  6 Nov 2024 12:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896182;
-	bh=z1tMfdkQlQg5diGvVOtNqqAm2v6jj1OK/IZUtlot1ds=;
+	s=korg; t=1730896185;
+	bh=YNDd2DxFb6VKmRRwzwJJS857J5cF3KLYWGy5/vprxl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ne+vXP/0xMQb7IUrUxrvEvG5MnljlKlmX5Z6SGXbUSIHqBk9Ocr1yQIwBU3/3qVaX
-	 auVVejhL1+ERMcTtxN9TejTNktuH3KrSanhuEXmowPXkjGl7QhpUGHZj5Qa3NxYNtC
-	 ke9uLqAXYLU+UiBIFPZN+0Pym20FY3lcMVUNP/48=
+	b=AbIykjgR7xnvwIz82S5WEY8kvPvqtw9gkW+x7pwYE/o6Ly2iErIZIwx61wHc43DGv
+	 d0UdBz98VmJXr9GST5J8LRaLyLsosSS8ssVGCJGEjgp+x5yc/7TvqPtDD2a6XnFWze
+	 S/4xqTcecSqhBiL+vFr6RukfLKhS4maSJAoiOUYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	lei lu <llfamsec@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 081/245] drm/panthor: Report group as timedout when we fail to properly suspend
-Date: Wed,  6 Nov 2024 13:02:14 +0100
-Message-ID: <20241106120321.198463198@linuxfoundation.org>
+Subject: [PATCH 6.11 082/245] ntfs3: Add bounds checking to mi_enum_attr()
+Date: Wed,  6 Nov 2024 13:02:15 +0100
+Message-ID: <20241106120321.222056074@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,62 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: lei lu <llfamsec@gmail.com>
 
-[ Upstream commit 4700fd3e050da8302e60ebd4850d008250fa7204 ]
+[ Upstream commit 556bdf27c2dd5c74a9caacbe524b943a6cd42d99 ]
 
-If we don't do that, the group is considered usable by userspace, but
-all further GROUP_SUBMIT will fail with -EINVAL.
+Added bounds checking to make sure that every attr don't stray beyond
+valid memory region.
 
-Changes in v3:
-- Add R-bs
-
-Changes in v2:
-- New patch
-
-Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241029152912.270346-3-boris.brezillon@collabora.com
+Signed-off-by: lei lu <llfamsec@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ fs/ntfs3/record.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 9b64c61caab64..e9234488dc2b4 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -589,10 +589,11 @@ struct panthor_group {
- 	 * @timedout: True when a timeout occurred on any of the queues owned by
- 	 * this group.
- 	 *
--	 * Timeouts can be reported by drm_sched or by the FW. In any case, any
--	 * timeout situation is unrecoverable, and the group becomes useless.
--	 * We simply wait for all references to be dropped so we can release the
--	 * group object.
-+	 * Timeouts can be reported by drm_sched or by the FW. If a reset is required,
-+	 * and the group can't be suspended, this also leads to a timeout. In any case,
-+	 * any timeout situation is unrecoverable, and the group becomes useless. We
-+	 * simply wait for all references to be dropped so we can release the group
-+	 * object.
- 	 */
- 	bool timedout;
+diff --git a/fs/ntfs3/record.c b/fs/ntfs3/record.c
+index 6c76503edc200..2a375247b3c09 100644
+--- a/fs/ntfs3/record.c
++++ b/fs/ntfs3/record.c
+@@ -223,28 +223,19 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 		prev_type = 0;
+ 		attr = Add2Ptr(rec, off);
+ 	} else {
+-		/* Check if input attr inside record. */
++		/*
++		 * We don't need to check previous attr here. There is
++		 * a bounds checking in the previous round.
++		 */
+ 		off = PtrOffset(rec, attr);
+-		if (off >= used)
+-			return NULL;
  
-@@ -2640,6 +2641,12 @@ void panthor_sched_suspend(struct panthor_device *ptdev)
- 		csgs_upd_ctx_init(&upd_ctx);
- 		while (slot_mask) {
- 			u32 csg_id = ffs(slot_mask) - 1;
-+			struct panthor_csg_slot *csg_slot = &sched->csg_slots[csg_id];
+ 		asize = le32_to_cpu(attr->size);
+-		if (asize < SIZEOF_RESIDENT) {
+-			/* Impossible 'cause we should not return such attribute. */
+-			return NULL;
+-		}
+-
+-		/* Overflow check. */
+-		if (off + asize < off)
+-			return NULL;
+ 
+ 		prev_type = le32_to_cpu(attr->type);
+ 		attr = Add2Ptr(attr, asize);
+ 		off += asize;
+ 	}
+ 
+-	asize = le32_to_cpu(attr->size);
+-
+ 	/* Can we use the first field (attr->type). */
+ 	if (off + 8 > used) {
+ 		static_assert(ALIGN(sizeof(enum ATTR_TYPE), 8) == 8);
+@@ -265,6 +256,12 @@ struct ATTRIB *mi_enum_attr(struct mft_inode *mi, struct ATTRIB *attr)
+ 	if (t32 < prev_type)
+ 		return NULL;
+ 
++	asize = le32_to_cpu(attr->size);
++	if (asize < SIZEOF_RESIDENT) {
++		/* Impossible 'cause we should not return such attribute. */
++		return NULL;
++	}
 +
-+			/* We consider group suspension failures as fatal and flag the
-+			 * group as unusable by setting timedout=true.
-+			 */
-+			csg_slot->group->timedout = true;
- 
- 			csgs_upd_ctx_queue_reqs(ptdev, &upd_ctx, csg_id,
- 						CSG_STATE_TERMINATE,
+ 	/* Check overflow and boundary. */
+ 	if (off + asize < off || off + asize > used)
+ 		return NULL;
 -- 
 2.43.0
 
