@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A49B1D86E8;
-	Wed,  6 Nov 2024 13:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538F01CC89D;
+	Wed,  6 Nov 2024 13:14:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898879; cv=none; b=bIPZ1FQ6DvqnEysYBEctqikJryItFvZHrS9qYpeFboiKWmAAut9d+WrBv96qqy6xwtM5JscTZLZ790xvGYN5DQNIjOfJMDTy16yZX+VaYlXX2R9RGZP3OPwbuCeW+1kue+LlhpXfLSttHKQTIhZCAxzb5hTHh5QjRk9u6RMz/48=
+	t=1730898882; cv=none; b=H64lOwWYKUrd2h9P00m+7cRx/Uuo4khxefSFIZJ65EgaV4rgjoFIs59yOWfegJ5lBnuKQ+mrwCCtVJbRV1h9t+PlYkwW3zylDSTKlRe/cv5I/KFYJZ9Zngnkn5n5zmkRlbRkPQZcOWnGbkkPSxZFtXmA0k6ebxCb9FsCOMTZ6YI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898879; c=relaxed/simple;
-	bh=ksuRrO5QrtvSsPdXWpCtWdNPCcVpHvy2UGDTwcZngO4=;
+	s=arc-20240116; t=1730898882; c=relaxed/simple;
+	bh=v6c0ZEWS0t1eM/q1n53BsUuNqryoDGaw8H+yWJlXWDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OemWleSM0gd5m6k1QT48gquBW41eIMOpX1C091XIEFKBlX5bEf3XCTokT4R6BSHPi/nYiJ/MweMdIKh+bBCCBHMcStkd21aWeLsjL+onT4575TH86XD1vGJL6hAnUPlLNbAgLeRAXtc7R9xntXkWbD6R6TkbJA3KyGZWNadA2GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xAxL4QFQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EEE5WzZbR/TbpQtqUQzUh91RIFYlL8SIYLlZbtTBjG8fYwRumqfwaxTuV6RtmI5864q0J1eKu0YKPhZbPLuGEa4vGWnyglMRr7MYy5Ep7Iy/g7hX2rVSpwtXYyZh4X2eNamAdRUKY/P0kG8Y1A5Fu+WLxZNEh9uNnoLJ5lqA3Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wA31l7fc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xAxL4QFQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3442C4CECD;
-	Wed,  6 Nov 2024 13:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wA31l7fc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02B9C4CECD;
+	Wed,  6 Nov 2024 13:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898879;
-	bh=ksuRrO5QrtvSsPdXWpCtWdNPCcVpHvy2UGDTwcZngO4=;
+	s=korg; t=1730898882;
+	bh=v6c0ZEWS0t1eM/q1n53BsUuNqryoDGaw8H+yWJlXWDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xAxL4QFQIlz16e/RpiowQnNw1L2qvDvmX8nqxGDvtmdQcJh3rftrSaMcwh5vjz3I+
-	 Qk6Wqwt/BYhJCKCjGCIuAR4O6H/Mi2JXN1yT/s0Bn+4WjnTz05RvI7S3u4qyKM4d+6
-	 6fIMv7GCm41AifjDjKHjSBRNhwXfC0sTnD5W9c4Y=
+	b=wA31l7fc9kCRDzZa1tT5blD3gQ5AYkjAm2tKv4rbvqUuLh5eMgbmNIl/hvrnxbuab
+	 28lZZQkRVTaAIkzT38vx7JezS09oSpT6GX3m6sNohsg88fYQ4JuFjfw48LnEhXYOFJ
+	 swKIu/ZBdYegL27vXNp+uzpxJ4StGZxf9gp6TNTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SurajSonawane2415 <surajsonawane0215@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 5.4 349/462] hid: intel-ish-hid: Fix uninitialized variable rv in ish_fw_xfer_direct_dma
-Date: Wed,  6 Nov 2024 13:04:02 +0100
-Message-ID: <20241106120340.148934704@linuxfoundation.org>
+	Anastasia Kovaleva <a.kovaleva@yadro.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 350/462] net: Fix an unsafe loop on the list
+Date: Wed,  6 Nov 2024 13:04:03 +0100
+Message-ID: <20241106120340.175378291@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -50,37 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SurajSonawane2415 <surajsonawane0215@gmail.com>
+From: Anastasia Kovaleva <a.kovaleva@yadro.com>
 
-commit d41bff05a61fb539f21e9bf0d39fac77f457434e upstream.
+commit 1dae9f1187189bc09ff6d25ca97ead711f7e26f9 upstream.
 
-Fix the uninitialized symbol 'rv' in the function ish_fw_xfer_direct_dma
-to resolve the following warning from the smatch tool:
-drivers/hid/intel-ish-hid/ishtp-fw-loader.c:714 ish_fw_xfer_direct_dma()
-error: uninitialized symbol 'rv'.
-Initialize 'rv' to 0 to prevent undefined behavior from uninitialized
-access.
+The kernel may crash when deleting a genetlink family if there are still
+listeners for that family:
 
+Oops: Kernel access of bad area, sig: 11 [#1]
+  ...
+  NIP [c000000000c080bc] netlink_update_socket_mc+0x3c/0xc0
+  LR [c000000000c0f764] __netlink_clear_multicast_users+0x74/0xc0
+  Call Trace:
+__netlink_clear_multicast_users+0x74/0xc0
+genl_unregister_family+0xd4/0x2d0
+
+Change the unsafe loop on the list to a safe one, because inside the
+loop there is an element removal from this list.
+
+Fixes: b8273570f802 ("genetlink: fix netns vs. netlink table locking (2)")
 Cc: stable@vger.kernel.org
-Fixes: 91b228107da3 ("HID: intel-ish-hid: ISH firmware loader client driver")
-Signed-off-by: SurajSonawane2415 <surajsonawane0215@gmail.com>
-Link: https://patch.msgid.link/20241004075944.44932-1-surajsonawane0215@gmail.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Anastasia Kovaleva <a.kovaleva@yadro.com>
+Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20241003104431.12391-1-a.kovaleva@yadro.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/intel-ish-hid/ishtp-fw-loader.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/sock.h       |    2 ++
+ net/netlink/af_netlink.c |    3 ++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/intel-ish-hid/ishtp-fw-loader.c
-+++ b/drivers/hid/intel-ish-hid/ishtp-fw-loader.c
-@@ -630,7 +630,7 @@ static int ish_fw_xfer_direct_dma(struct
- 				  const struct firmware *fw,
- 				  const struct shim_fw_info fw_info)
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -766,6 +766,8 @@ static inline void sk_add_bind_node(stru
+ 	hlist_for_each_entry_safe(__sk, tmp, list, sk_node)
+ #define sk_for_each_bound(__sk, list) \
+ 	hlist_for_each_entry(__sk, list, sk_bind_node)
++#define sk_for_each_bound_safe(__sk, tmp, list) \
++	hlist_for_each_entry_safe(__sk, tmp, list, sk_bind_node)
+ 
+ /**
+  * sk_for_each_entry_offset_rcu - iterate over a list at a given struct offset
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -2153,8 +2153,9 @@ void __netlink_clear_multicast_users(str
  {
--	int rv;
-+	int rv = 0;
- 	void *dma_buf;
- 	dma_addr_t dma_buf_phy;
- 	u32 fragment_offset, fragment_size, payload_max_size;
+ 	struct sock *sk;
+ 	struct netlink_table *tbl = &nl_table[ksk->sk_protocol];
++	struct hlist_node *tmp;
+ 
+-	sk_for_each_bound(sk, &tbl->mc_list)
++	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list)
+ 		netlink_update_socket_mc(nlk_sk(sk), group, 0);
+ }
+ 
 
 
