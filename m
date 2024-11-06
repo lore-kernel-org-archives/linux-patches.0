@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653421E0496;
-	Wed,  6 Nov 2024 12:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE661F669E;
+	Wed,  6 Nov 2024 12:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896933; cv=none; b=rjJbReJLWP18MTALaeuyV9B9PUPy6Qr+Q7LwsMpt9kFAtP1Va5wqw1xE82l0kJXQJcclohWBzuRuNdol838Nd7CF9v10l8MHEAVsADgmF6VsM2NKGz0VVEgnCAj80VuOsIByb8YzccbUa8OQk3jn8i7iXrwg1MT8ULTUumMA5SQ=
+	t=1730896936; cv=none; b=rXzX9s696yqIvVAwEDCXrU+zVyQtDR2CjfpcmlIOiaA57oTF4iSnbCCQ9U6Ie6sTMnDWJN/DbUE+l12lbHGeWfRGQXoRVcusmBJ7Mqzr9AZgQQJaK+mttY2ZTmjJDRFn3VCJm9SDZTYlGsAUvBZFS9xco3uGMAyyuBDUyJobKEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896933; c=relaxed/simple;
-	bh=CUqSWyJZ9vr3n9UDkn0FULn2iWdIBbJXLY0ettqHZSQ=;
+	s=arc-20240116; t=1730896936; c=relaxed/simple;
+	bh=KzwXq5iu5JiAU3z4lXjcRP/VWhKTeL26dM4m3i4edWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FpBJq1XirazAWRlVzaztKI/OHrhzWfexx5Psh3tWgLyFKmXFaCTej9QZNSY2sKp9RxzkvhfcmwjVLegKI0nNz/md+rdvzxfK8J88mEJgKady5jPeadEXfFAH+ZHrx2vaS7t9Dp7tJirg3V2e8rEfu1P6UY7OCHxlqV9m2iSeAng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INu/F86k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mnUfCKaz9kvC2gF76cxQepn+RYQwqpih/ICrox4wZx3QhY232X5BYQgke5ik46YeoY6VB1NnjpQkVlyQGBavgTZy83Zl0Tj1mTpcnhgb0tZX1cr0l4aMt+wFMCs0moAd5hK24tPTJzvnmrDUfy/WJeNgWW9BFhbdZdKEXNh/TTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmU8mEI2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INu/F86k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D78C4CED3;
-	Wed,  6 Nov 2024 12:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmU8mEI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBB21C4CECD;
+	Wed,  6 Nov 2024 12:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896933;
-	bh=CUqSWyJZ9vr3n9UDkn0FULn2iWdIBbJXLY0ettqHZSQ=;
+	s=korg; t=1730896936;
+	bh=KzwXq5iu5JiAU3z4lXjcRP/VWhKTeL26dM4m3i4edWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=INu/F86kAHb4XfxvwCBJsKEC2s2N1LjiFLEfLGsvPpRKiBYJgZg6ZUucuirjh4g5k
-	 9Fgpng4ks0FQBolUV/+nXr4lgu3ZLlTw8MRI+Yl09mZ8dWI61ggJ9xs3NGo0Oie8hK
-	 4ci6aDz6gNxIpg0i3LXy3e1GygYGDlRTIwFsNJE4=
+	b=jmU8mEI2scxBXTxkrdSvL033elaTc9Kzq/xuoQetYNCYYUvzg691dsTbSm+7z5Uzj
+	 IAgw/fysdL1xHjgAWde3oWrbX5WXCckK0/Ycnw9LsnDvJ4zMLtEvxJD9hVrP58HTQm
+	 h0q1LfktoLMJCmj2nNAFtMD26hsL6SF49H0YRsqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/126] mac80211: MAC80211_MESSAGE_TRACING should depend on TRACING
-Date: Wed,  6 Nov 2024 13:03:32 +0100
-Message-ID: <20241106120306.379234624@linuxfoundation.org>
+Subject: [PATCH 6.1 012/126] wifi: mac80211: skip non-uploaded keys in ieee80211_iter_keys
+Date: Wed,  6 Nov 2024 13:03:33 +0100
+Message-ID: <20241106120306.409446707@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -51,35 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert@linux-m68k.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit b3e046c31441d182b954fc2f57b2dc38c71ad4bc ]
+[ Upstream commit 52009b419355195912a628d0a9847922e90c348c ]
 
-When tracing is disabled, there is no point in asking the user about
-enabling tracing of all mac80211 debug messages.
+Sync iterator conditions with ieee80211_iter_keys_rcu.
 
-Fixes: 3fae0273168026ed ("mac80211: trace debug messages")
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://patch.msgid.link/85bbe38ce0df13350f45714e2dc288cc70947a19.1727179690.git.geert@linux-m68k.org
+Fixes: 830af02f24fb ("mac80211: allow driver to iterate keys")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20241006153630.87885-1-nbd@nbd.name
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/key.c | 42 +++++++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
 
-diff --git a/net/mac80211/Kconfig b/net/mac80211/Kconfig
-index 51ec8256b7fa9..8278221a36a1d 100644
---- a/net/mac80211/Kconfig
-+++ b/net/mac80211/Kconfig
-@@ -86,7 +86,7 @@ config MAC80211_DEBUGFS
+diff --git a/net/mac80211/key.c b/net/mac80211/key.c
+index 23bb24243c6e9..585de86fce840 100644
+--- a/net/mac80211/key.c
++++ b/net/mac80211/key.c
+@@ -976,6 +976,26 @@ void ieee80211_reenable_keys(struct ieee80211_sub_if_data *sdata)
+ 	mutex_unlock(&sdata->local->key_mtx);
+ }
  
- config MAC80211_MESSAGE_TRACING
- 	bool "Trace all mac80211 debug messages"
--	depends on MAC80211
-+	depends on MAC80211 && TRACING
- 	help
- 	  Select this option to have mac80211 register the
- 	  mac80211_msg trace subsystem with tracepoints to
++static void
++ieee80211_key_iter(struct ieee80211_hw *hw,
++		   struct ieee80211_vif *vif,
++		   struct ieee80211_key *key,
++		   void (*iter)(struct ieee80211_hw *hw,
++				struct ieee80211_vif *vif,
++				struct ieee80211_sta *sta,
++				struct ieee80211_key_conf *key,
++				void *data),
++		   void *iter_data)
++{
++	/* skip keys of station in removal process */
++	if (key->sta && key->sta->removed)
++		return;
++	if (!(key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE))
++		return;
++	iter(hw, vif, key->sta ? &key->sta->sta : NULL,
++	     &key->conf, iter_data);
++}
++
+ void ieee80211_iter_keys(struct ieee80211_hw *hw,
+ 			 struct ieee80211_vif *vif,
+ 			 void (*iter)(struct ieee80211_hw *hw,
+@@ -995,16 +1015,13 @@ void ieee80211_iter_keys(struct ieee80211_hw *hw,
+ 	if (vif) {
+ 		sdata = vif_to_sdata(vif);
+ 		list_for_each_entry_safe(key, tmp, &sdata->key_list, list)
+-			iter(hw, &sdata->vif,
+-			     key->sta ? &key->sta->sta : NULL,
+-			     &key->conf, iter_data);
++			ieee80211_key_iter(hw, vif, key, iter, iter_data);
+ 	} else {
+ 		list_for_each_entry(sdata, &local->interfaces, list)
+ 			list_for_each_entry_safe(key, tmp,
+ 						 &sdata->key_list, list)
+-				iter(hw, &sdata->vif,
+-				     key->sta ? &key->sta->sta : NULL,
+-				     &key->conf, iter_data);
++				ieee80211_key_iter(hw, &sdata->vif, key,
++						   iter, iter_data);
+ 	}
+ 	mutex_unlock(&local->key_mtx);
+ }
+@@ -1022,17 +1039,8 @@ _ieee80211_iter_keys_rcu(struct ieee80211_hw *hw,
+ {
+ 	struct ieee80211_key *key;
+ 
+-	list_for_each_entry_rcu(key, &sdata->key_list, list) {
+-		/* skip keys of station in removal process */
+-		if (key->sta && key->sta->removed)
+-			continue;
+-		if (!(key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE))
+-			continue;
+-
+-		iter(hw, &sdata->vif,
+-		     key->sta ? &key->sta->sta : NULL,
+-		     &key->conf, iter_data);
+-	}
++	list_for_each_entry_rcu(key, &sdata->key_list, list)
++		ieee80211_key_iter(hw, &sdata->vif, key, iter, iter_data);
+ }
+ 
+ void ieee80211_iter_keys_rcu(struct ieee80211_hw *hw,
 -- 
 2.43.0
 
