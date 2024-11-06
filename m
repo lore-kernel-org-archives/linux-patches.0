@@ -1,56 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370BB1DF995;
-	Wed,  6 Nov 2024 13:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151DD1D2F42;
+	Wed,  6 Nov 2024 13:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898009; cv=none; b=gtVx/nDcHaasfXtz/SvfcfGq3nf6vN3ljMMA4ZIxEGzu0QwrgaUQ1QCnMeqJN1Hi13mFXWLF5lO0t5WMajpAJ0mB6I4OJdlvbZbYuGhVopbmYVv3DMjMWFyKto1bTe6egdwT6oiCD5sb+/cpf52HNbDtmrXLGwemwTBZbhPkFI4=
+	t=1730898012; cv=none; b=QIgaI76Bta0wlelsK//5EGzwnkzFvzzf73Fin7l7SG6yBK6qz7rw/DSkbInmLXesZkCKvVDIVXo77OzQPF0V8v92HArf7AFVEyht8jZ0Cmdlgvrw8qcVpaDbTyWG6T+FJQRzErljDRPkc1Pq03Zp9xnzVGOoXCx8IjuqcHpaE9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898009; c=relaxed/simple;
-	bh=ry5hvqQ6XFZxkWBnoke8qlACxMLDf5fcrH+onPsF9Xs=;
+	s=arc-20240116; t=1730898012; c=relaxed/simple;
+	bh=1zVV/vFJEsHPe2ETR8tghE8+B9UBT4nf4F9FdLFmvd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OyR1fMiUAq5QstCq5gNX9z5Zpl+zWvDC1mQwEIxXia0yMXdwLGOpOHk6NycRMePMzpPr1OhIJc5OYboR1uDPyETOXAS/3ad8S2pB5U6Hw1HvQWLLxBwP3ju6IAAe8/LTbpVj0tlBh5amwGsos15d//RKqE5rX03UYeea6NBHk8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6/d2tLx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=goL4iRUm4OPZf/Mk6nU99waB1nWsJZN+gkBihSKj/SxpsIO+wYdS2Xdc0aEGpSlN1cUzwLfnWJFL13VBC/hTAbvAyzfnldpyuPpK1a/b5IxCnclbwZZzHpAoRvIfzGz0XyClTD6ngRNHm7riNLdEjWSmjSxujNubMXEvKgNt1wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUCXERIj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6/d2tLx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85621C4CED3;
-	Wed,  6 Nov 2024 13:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUCXERIj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B32C4CECD;
+	Wed,  6 Nov 2024 13:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898009;
-	bh=ry5hvqQ6XFZxkWBnoke8qlACxMLDf5fcrH+onPsF9Xs=;
+	s=korg; t=1730898012;
+	bh=1zVV/vFJEsHPe2ETR8tghE8+B9UBT4nf4F9FdLFmvd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6/d2tLxhkfJP0ip7F7N+igfUegO9iMFL+b7rn6boDVcJ4bHjMqq6JEF+n76FOPPb
-	 Af+EvQidxqYSEAQYD1AMazTFpDKp4mxcvzc1JhHI30eYC0mLjVdUcTm+XhmUGzJ1dd
-	 TYSbhXtsSu1OHL78Pazz09GLdlvMgqzWn/ebsSCE=
+	b=BUCXERIjz+zCx+SOfKZawlVqF6sR8yAE9J3z+107uwRqMjoI6kFLS3U7PmnvvkM3b
+	 i/mI1Kul383o8IfyN1C8oeDdq707cnD4leRoBHYUS0xw6nGgF8BLdlodi17dCP7lzl
+	 3Eq6lSL0QO6yk+6M8Osst4Dv1n+6yZsu4are3LkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Phil Auld <pauld@redhat.com>,
-	Valentin Schneider <valentin.schneider@arm.com>,
-	Thara Gopinath <thara.gopinath@linaro.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Vincent Donnefort <vincent.donnefort@arm.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Jens Axboe <axboe@kernel.dk>,
-	Marcelo Tosatti <mtosatti@redhat.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Ilias Stamatis <stamatis.iliass@gmail.com>,
-	Liang Chen <cl@rock-chips.com>,
-	Ben Dooks <ben.dooks@codethink.co.uk>,
-	Peter Zijlstra <a.p.zijlstra@chello.nl>,
-	"J. Bruce Fields" <bfields@redhat.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	David Gow <davidgow@google.com>,
+	Mateusz Guzik <mjguzik@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 093/462] kthread: add kthread_work tracepoints
-Date: Wed,  6 Nov 2024 12:59:46 +0100
-Message-ID: <20241106120333.805721106@linuxfoundation.org>
+Subject: [PATCH 5.4 094/462] kthread: fix task state in kthread worker if being frozen
+Date: Wed,  6 Nov 2024 12:59:47 +0100
+Message-ID: <20241106120333.831042693@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -63,181 +51,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Clark <robdclark@chromium.org>
+From: Chen Yu <yu.c.chen@intel.com>
 
-[ Upstream commit f630c7c6f10546ebff15c3a856e7949feb7a2372 ]
+[ Upstream commit e16c7b07784f3fb03025939c4590b9a7c64970a7 ]
 
-While migrating some code from wq to kthread_worker, I found that I missed
-the execute_start/end tracepoints.  So add similar tracepoints for
-kthread_work.  And for completeness, queue_work tracepoint (although this
-one differs slightly from the matching workqueue tracepoint).
+When analyzing a kernel waring message, Peter pointed out that there is a
+race condition when the kworker is being frozen and falls into
+try_to_freeze() with TASK_INTERRUPTIBLE, which could trigger a
+might_sleep() warning in try_to_freeze().  Although the root cause is not
+related to freeze()[1], it is still worthy to fix this issue ahead.
 
-Link: https://lkml.kernel.org/r/20201010180323.126634-1-robdclark@gmail.com
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Cc: Rob Clark <robdclark@chromium.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: "Peter Zijlstra (Intel)" <peterz@infradead.org>
-Cc: Phil Auld <pauld@redhat.com>
-Cc: Valentin Schneider <valentin.schneider@arm.com>
-Cc: Thara Gopinath <thara.gopinath@linaro.org>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: Vincent Donnefort <vincent.donnefort@arm.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Marcelo Tosatti <mtosatti@redhat.com>
-Cc: Frederic Weisbecker <frederic@kernel.org>
-Cc: Ilias Stamatis <stamatis.iliass@gmail.com>
-Cc: Liang Chen <cl@rock-chips.com>
-Cc: Ben Dooks <ben.dooks@codethink.co.uk>
-Cc: Peter Zijlstra <a.p.zijlstra@chello.nl>
-Cc: "J. Bruce Fields" <bfields@redhat.com>
+One possible race scenario:
+
+        CPU 0                                           CPU 1
+        -----                                           -----
+
+        // kthread_worker_fn
+        set_current_state(TASK_INTERRUPTIBLE);
+                                                       suspend_freeze_processes()
+                                                         freeze_processes
+                                                           static_branch_inc(&freezer_active);
+                                                         freeze_kernel_threads
+                                                           pm_nosig_freezing = true;
+        if (work) { //false
+          __set_current_state(TASK_RUNNING);
+
+        } else if (!freezing(current)) //false, been frozen
+
+                      freezing():
+                      if (static_branch_unlikely(&freezer_active))
+                        if (pm_nosig_freezing)
+                          return true;
+          schedule()
+	}
+
+        // state is still TASK_INTERRUPTIBLE
+        try_to_freeze()
+          might_sleep() <--- warning
+
+Fix this by explicitly set the TASK_RUNNING before entering
+try_to_freeze().
+
+Link: https://lore.kernel.org/lkml/Zs2ZoAcUsZMX2B%2FI@chenyu5-mobl2/ [1]
+Link: https://lkml.kernel.org/r/20240827112308.181081-1-yu.c.chen@intel.com
+Fixes: b56c0d8937e6 ("kthread: implement kthread_worker")
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Suggested-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: David Gow <davidgow@google.com>
+Cc: Mateusz Guzik <mjguzik@gmail.com>
+Cc: Mickaël Salaün <mic@digikod.net>
+Cc: Tejun Heo <tj@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Stable-dep-of: e16c7b07784f ("kthread: fix task state in kthread worker if being frozen")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/sched.h | 84 ++++++++++++++++++++++++++++++++++++
- kernel/kthread.c             |  9 ++++
- 2 files changed, 93 insertions(+)
+ kernel/kthread.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/include/trace/events/sched.h b/include/trace/events/sched.h
-index 420e80e56e551..5a55ec2b72af0 100644
---- a/include/trace/events/sched.h
-+++ b/include/trace/events/sched.h
-@@ -5,6 +5,7 @@
- #if !defined(_TRACE_SCHED_H) || defined(TRACE_HEADER_MULTI_READ)
- #define _TRACE_SCHED_H
- 
-+#include <linux/kthread.h>
- #include <linux/sched/numa_balancing.h>
- #include <linux/tracepoint.h>
- #include <linux/binfmts.h>
-@@ -51,6 +52,89 @@ TRACE_EVENT(sched_kthread_stop_ret,
- 	TP_printk("ret=%d", __entry->ret)
- );
- 
-+/**
-+ * sched_kthread_work_queue_work - called when a work gets queued
-+ * @worker:	pointer to the kthread_worker
-+ * @work:	pointer to struct kthread_work
-+ *
-+ * This event occurs when a work is queued immediately or once a
-+ * delayed work is actually queued (ie: once the delay has been
-+ * reached).
-+ */
-+TRACE_EVENT(sched_kthread_work_queue_work,
-+
-+	TP_PROTO(struct kthread_worker *worker,
-+		 struct kthread_work *work),
-+
-+	TP_ARGS(worker, work),
-+
-+	TP_STRUCT__entry(
-+		__field( void *,	work	)
-+		__field( void *,	function)
-+		__field( void *,	worker)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->work		= work;
-+		__entry->function	= work->func;
-+		__entry->worker		= worker;
-+	),
-+
-+	TP_printk("work struct=%p function=%ps worker=%p",
-+		  __entry->work, __entry->function, __entry->worker)
-+);
-+
-+/**
-+ * sched_kthread_work_execute_start - called immediately before the work callback
-+ * @work:	pointer to struct kthread_work
-+ *
-+ * Allows to track kthread work execution.
-+ */
-+TRACE_EVENT(sched_kthread_work_execute_start,
-+
-+	TP_PROTO(struct kthread_work *work),
-+
-+	TP_ARGS(work),
-+
-+	TP_STRUCT__entry(
-+		__field( void *,	work	)
-+		__field( void *,	function)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->work		= work;
-+		__entry->function	= work->func;
-+	),
-+
-+	TP_printk("work struct %p: function %ps", __entry->work, __entry->function)
-+);
-+
-+/**
-+ * sched_kthread_work_execute_end - called immediately after the work callback
-+ * @work:	pointer to struct work_struct
-+ * @function:   pointer to worker function
-+ *
-+ * Allows to track workqueue execution.
-+ */
-+TRACE_EVENT(sched_kthread_work_execute_end,
-+
-+	TP_PROTO(struct kthread_work *work, kthread_work_func_t function),
-+
-+	TP_ARGS(work, function),
-+
-+	TP_STRUCT__entry(
-+		__field( void *,	work	)
-+		__field( void *,	function)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->work		= work;
-+		__entry->function	= function;
-+	),
-+
-+	TP_printk("work struct %p: function %ps", __entry->work, __entry->function)
-+);
-+
- /*
-  * Tracepoint for waking up a task:
-  */
 diff --git a/kernel/kthread.c b/kernel/kthread.c
-index 63f7eb3c2640d..eb2b54ae93ee6 100644
+index eb2b54ae93ee6..2423ae25b5666 100644
 --- a/kernel/kthread.c
 +++ b/kernel/kthread.c
-@@ -725,8 +725,15 @@ int kthread_worker_fn(void *worker_ptr)
- 	raw_spin_unlock_irq(&worker->lock);
- 
- 	if (work) {
-+		kthread_work_func_t func = work->func;
- 		__set_current_state(TASK_RUNNING);
-+		trace_sched_kthread_work_execute_start(work);
- 		work->func(work);
-+		/*
-+		 * Avoid dereferencing work after this point.  The trace
-+		 * event only cares about the address.
-+		 */
-+		trace_sched_kthread_work_execute_end(work, func);
- 	} else if (!freezing(current))
+@@ -734,8 +734,16 @@ int kthread_worker_fn(void *worker_ptr)
+ 		 * event only cares about the address.
+ 		 */
+ 		trace_sched_kthread_work_execute_end(work, func);
+-	} else if (!freezing(current))
++	} else if (!freezing(current)) {
  		schedule();
++	} else {
++		/*
++		 * Handle the case where the current remains
++		 * TASK_INTERRUPTIBLE. try_to_freeze() expects
++		 * the current to be TASK_RUNNING.
++		 */
++		__set_current_state(TASK_RUNNING);
++	}
  
-@@ -855,6 +862,8 @@ static void kthread_insert_work(struct kthread_worker *worker,
- {
- 	kthread_insert_work_sanity_check(worker, work);
- 
-+	trace_sched_kthread_work_queue_work(worker, work);
-+
- 	list_add_tail(&work->node, pos);
- 	work->worker = worker;
- 	if (!worker->current_work && likely(worker->task))
+ 	try_to_freeze();
+ 	cond_resched();
 -- 
 2.43.0
 
