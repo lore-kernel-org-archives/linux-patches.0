@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F99E18C00E;
-	Wed,  6 Nov 2024 12:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C04618C00E;
+	Wed,  6 Nov 2024 12:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896095; cv=none; b=LmbE0877wUj1leXr/o5zSUfE7MQRw//UAciitZEd8is45v2XCAc938edIk0X+5GlB4b2++0VmYnXb1NT1BmQb3/BNAz8rUZCHYn5CPMhPvqM78v8E1mwWz2xyZ6aRaKhNwVqB2Iss0UGQK3aI4DKSq+a7LnuU44pR2rIJVmTspg=
+	t=1730896098; cv=none; b=C6j0qUgykwa3ogluSIWVzCA6f3+s9rlT8iFO13pqYcAnzpXEUH5HH4jP2RexW1beo+gMaO+9qHqvsx6O4qIQfztOKg9oesaGZjNQxiSvwSc0MhUvO23DPVhCmAmIwJ8amIoleZLnBEXPiestIttTPJKt3vqhk/LHncOa0GYXO88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896095; c=relaxed/simple;
-	bh=7hBObZ2L52trQVD0htV3zSZ5OxzpzUeNUhYwIg5gOJU=;
+	s=arc-20240116; t=1730896098; c=relaxed/simple;
+	bh=DtAHNDFKGZhlAJ4FSZ9+8B8TRYQ85SurTC12qaraeJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZmTRdYDcEaRGrAZ+qjv6M2DQGwMWCRSjgk/CbOZo+DfL1kXMlZY4qb1oTkSE0LeawxyjZ4hiuhBlxBwuOI20hnrt1ownW5SGE4bzOoVEIQiP5axivlYmqaSqUCOQ0fwAXhX+asnjoA34NMxcCtHcm77Km9W6t51OEbJ7jKTbXxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OszJNiTq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q2HuHleGNu3fudNs81hAFa9JyS0WpVbms3Hz4PFwBHTBIHIvELpqDRyRbOEIHD/dbRkEaj170TnKtJqB5ivpPAA81JoIVHSDzNInzw4BFC16ij7ebpbJyxyEWZjkuQJh+Bs+2QSSQoXE34hCfq94Jw2Dro+/FWUIiwCDLzfH0Ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1MhsyL5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OszJNiTq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A63C4CECD;
-	Wed,  6 Nov 2024 12:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1MhsyL5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923EBC4CED4;
+	Wed,  6 Nov 2024 12:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896095;
-	bh=7hBObZ2L52trQVD0htV3zSZ5OxzpzUeNUhYwIg5gOJU=;
+	s=korg; t=1730896098;
+	bh=DtAHNDFKGZhlAJ4FSZ9+8B8TRYQ85SurTC12qaraeJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OszJNiTqslZa+iK26zYqHfOH/ebiqwq21X6Jm46YKZIjLXvgltoDDdo/+cwdW21nl
-	 lUv06hWebQSDdIyEFMX+HeOEb6+9vSHhBYoho64QXPp4T6s2Drb3Wkjn/XF7xuLKBC
-	 bG8tYqxqcuSEUQGIjGc7Tr2rhU/3174V6c9F1rsk=
+	b=h1MhsyL5LfnWPqCraLQI0EJIiQYL1vq2WZtyW/7dmJQKHTd+JkL/gYtp8HW/ytIwD
+	 5MsoLHSKdHnvG1ghTdDBVDAuW2jwtFXDHjDamGMaCimeHcOfyb1hOHp/9z3duJgm8r
+	 c0Wap3vx+2wKb7az2C7fiuBuL0OrRdQ2+sIqAO+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9af29acd8f27fbce94bc@syzkaller.appspotmail.com,
+	syzbot+8c652f14a0fde76ff11d@syzkaller.appspotmail.com,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 089/245] fs/ntfs3: Fix general protection fault in run_is_mapped_full
-Date: Wed,  6 Nov 2024 13:02:22 +0100
-Message-ID: <20241106120321.399742920@linuxfoundation.org>
+Subject: [PATCH 6.11 090/245] fs/ntfs3: Additional check in ntfs_file_release
+Date: Wed,  6 Nov 2024 13:02:23 +0100
+Message-ID: <20241106120321.423525764@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -53,34 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit a33fb016e49e37aafab18dc3c8314d6399cb4727 ]
+[ Upstream commit 031d6f608290c847ba6378322d0986d08d1a645a ]
 
-Fixed deleating of a non-resident attribute in ntfs_create_inode()
-rollback.
-
-Reported-by: syzbot+9af29acd8f27fbce94bc@syzkaller.appspotmail.com
+Reported-by: syzbot+8c652f14a0fde76ff11d@syzkaller.appspotmail.com
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ntfs3/file.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 56b6c4c6f528f..4804eb9628bb2 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -1717,7 +1717,10 @@ int ntfs_create_inode(struct mnt_idmap *idmap, struct inode *dir,
- 	attr = ni_find_attr(ni, NULL, NULL, ATTR_EA, NULL, 0, NULL, NULL);
- 	if (attr && attr->non_res) {
- 		/* Delete ATTR_EA, if non-resident. */
--		attr_set_size(ni, ATTR_EA, NULL, 0, NULL, 0, NULL, false, NULL);
-+		struct runs_tree run;
-+		run_init(&run);
-+		attr_set_size(ni, ATTR_EA, NULL, 0, &run, 0, NULL, false, NULL);
-+		run_close(&run);
- 	}
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index d31eae611fe06..906ee60d91cb1 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -1285,7 +1285,14 @@ static int ntfs_file_release(struct inode *inode, struct file *file)
+ 	/* If we are last writer on the inode, drop the block reservation. */
+ 	if (sbi->options->prealloc &&
+ 	    ((file->f_mode & FMODE_WRITE) &&
+-	     atomic_read(&inode->i_writecount) == 1)) {
++	     atomic_read(&inode->i_writecount) == 1)
++	   /*
++	    * The only file when inode->i_fop = &ntfs_file_operations and
++	    * init_rwsem(&ni->file.run_lock) is not called explicitly is MFT.
++	    *
++	    * Add additional check here.
++	    */
++	    && inode->i_ino != MFT_REC_MFT) {
+ 		ni_lock(ni);
+ 		down_write(&ni->file.run_lock);
  
- 	if (rp_inserted)
 -- 
 2.43.0
 
