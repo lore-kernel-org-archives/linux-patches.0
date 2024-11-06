@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE871FB3D0;
-	Wed,  6 Nov 2024 12:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2071FB3D0;
+	Wed,  6 Nov 2024 12:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897568; cv=none; b=O7U7Udi8fB6NsCQmc1XwtkxnicNu/T1EMkQuzv7FHwHcTig1OrgbHSB8Wu1spBqPqp82nOFReM0rV8Ly/d/c8Q5cIxxxJqcLWI1Px9VANIHqmeAVpUSdvPm92zJZk4AwgwL+lfgyWqIddVhapP4S35gRnHMJLZGnt89cpny8Xlk=
+	t=1730897571; cv=none; b=TXNYTusOUuHEpvzw9KuWO+C8bQbhMNUDkAIDJ6Z8AYmlW+cZEvIX06dsSHefI01CAkPfs2MU3Nqueutnf9zU/pKQaUc12PyL5VVtzAw/nf9yLLIF0E/1B2rw6TyXOABNlTdAky361VSCuJ1NcGQrr44KR71iD8hZJsCD2XO7sL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897568; c=relaxed/simple;
-	bh=rTnGRDLtCOlmF4T5KqOQTASWchZVX/3umQVBruEhec4=;
+	s=arc-20240116; t=1730897571; c=relaxed/simple;
+	bh=bO9ZslLvoT9Iimbl532a11Z7AU5UzQMxx9I5qsIGdyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VLQJyi/oerxRZgrXBQiR21VUognrkDU8ri6sCfyjGhE1l1V6sXn3Elj+cJemxH08AGJGJ1qg5HgyZAtQXT/5YMaaV2LXxfaR1aZNA0X/sLp6615F/qBKdIrQxzGzoFEY+8LPhkbMT0FnX6rr3lVhdV+6e2Eob7ep6I4gukQ+dFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fkeRkZR2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VorMdXg6CkWhZcRuXD9uKG/I4HjTKPQX5g2zQfpotLI5a0f99lRkm2H3KQMisxP/LEgteDgWn2pX+gZKqNmth5N8oKevetHEfJYa5/KbwX5fzrPN/w6pqvo4MBfrkfNVIUbQeCpECBvP2O4i2oiwUe+RKt0PqeyZSvKgnjsqKbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xellU3Ca; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkeRkZR2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7EDC4CECD;
-	Wed,  6 Nov 2024 12:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xellU3Ca"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416B0C4CECD;
+	Wed,  6 Nov 2024 12:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897568;
-	bh=rTnGRDLtCOlmF4T5KqOQTASWchZVX/3umQVBruEhec4=;
+	s=korg; t=1730897571;
+	bh=bO9ZslLvoT9Iimbl532a11Z7AU5UzQMxx9I5qsIGdyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fkeRkZR2VjgGJE/r6MqWP0tYNLx9JoyWYgGZPfgBYEFi6PML65ON3gR5jUDpIyxIs
-	 I13SdwZVHBWexhV4OYu6x5L6Qz1OyevAtjWucurK9va6LPevJiugQnIETmyX3cI7l5
-	 B/gQK+BsBBT7OL/3GpR4QxMJvG1+6KzZ7s2Fjw4Q=
+	b=xellU3CaxJWS6dJux0BQSgReFgmk/SKcU6ih8zQWkm3Z3jSfosJKsJcXjmctMAHfD
+	 CtVAcAj7VrlotfIOMYvmOkSZayM+eRHkMfxPvs4Gubswyujh2IKgnTolLJj9B43PQR
+	 2yYt3UTKhTdGRW/ze7wPTRWTn9ImrTTwKF4N3ww8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zicheng Qu <quzicheng@huawei.com>,
-	Nuno Sa <nuno.sa@analog.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 097/151] iio: adc: ad7124: fix division by zero in ad7124_set_channel_odr()
-Date: Wed,  6 Nov 2024 13:04:45 +0100
-Message-ID: <20241106120311.541961478@linuxfoundation.org>
+Subject: [PATCH 6.6 098/151] iio: gts-helper: Fix memory leaks for the error path of iio_gts_build_avail_scale_table()
+Date: Wed,  6 Nov 2024 13:04:46 +0100
+Message-ID: <20241106120311.570759484@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -51,38 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zicheng Qu <quzicheng@huawei.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit efa353ae1b0541981bc96dbf2e586387d0392baa upstream.
+commit 369f05688911b05216cfcd6ca74473bec87948d7 upstream.
 
-In the ad7124_write_raw() function, parameter val can potentially
-be zero. This may lead to a division by zero when DIV_ROUND_CLOSEST()
-is called within ad7124_set_channel_odr(). The ad7124_write_raw()
-function is invoked through the sequence: iio_write_channel_raw() ->
-iio_write_channel_attribute() -> iio_channel_write(), with no checks
-in place to ensure val is non-zero.
+If per_time_scales[i] or per_time_gains[i] kcalloc fails in the for loop
+of iio_gts_build_avail_scale_table(), the err_free_out will fail to call
+kfree() each time when i is reduced to 0, so all the per_time_scales[0]
+and per_time_gains[0] will not be freed, which will cause memory leaks.
+
+Fix it by checking if i >= 0.
 
 Cc: stable@vger.kernel.org
-Fixes: 7b8d045e497a ("iio: adc: ad7124: allow more than 8 channels")
-Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20241022134330.574601-1-quzicheng@huawei.com
+Fixes: 38416c28e168 ("iio: light: Add gain-time-scale helpers")
+Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://patch.msgid.link/20241016012453.2013302-1-ruanjinjie@huawei.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7124.c |    2 +-
+ drivers/iio/industrialio-gts-helper.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ad7124.c
-+++ b/drivers/iio/adc/ad7124.c
-@@ -643,7 +643,7 @@ static int ad7124_write_raw(struct iio_d
+--- a/drivers/iio/industrialio-gts-helper.c
++++ b/drivers/iio/industrialio-gts-helper.c
+@@ -313,7 +313,7 @@ static int iio_gts_build_avail_scale_tab
+ 	return 0;
  
- 	switch (info) {
- 	case IIO_CHAN_INFO_SAMP_FREQ:
--		if (val2 != 0) {
-+		if (val2 != 0 || val == 0) {
- 			ret = -EINVAL;
- 			break;
- 		}
+ err_free_out:
+-	for (i--; i; i--) {
++	for (i--; i >= 0; i--) {
+ 		kfree(per_time_scales[i]);
+ 		kfree(per_time_gains[i]);
+ 	}
 
 
