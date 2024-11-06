@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F4F1DE4FC;
-	Wed,  6 Nov 2024 12:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8821DE8A2;
+	Wed,  6 Nov 2024 12:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895335; cv=none; b=pczdB/kSRSJrKD2Bm88Ii7kHVFN/rWhgt2zE5hB05D66RcHeNPzWIcdyAgBUS9ASH09S3CfFYSzvdj0fTKKPZxQQkrnske3BTi2gxVyAx5WwIHzpjrSGKHm9O0PwjLLqRuuUkJZZWKXICgjuaR9pSXiAEVnRj3U2VQEYeNaKYQc=
+	t=1730895339; cv=none; b=M6cfiP7FdUexlSB4Oy0Jru7MKavkJYHAM/2D5cn8p870fNlqRlD+ZZZ00om9nIN7Y/1nawSyADDL5gToyML2kEyoSMAQVQhaePlYrw0WTcLizUPnVtBRNFJ+EmdQS+h1VhIGza91b49NkqG+kqC3RWF0CIiOkaSsVHQgwq7n5dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895335; c=relaxed/simple;
-	bh=h16Gz3SbG9TRbU/mmdjcZWGU9dh9wCV+N64z3ff1KGU=;
+	s=arc-20240116; t=1730895339; c=relaxed/simple;
+	bh=mpEqja8a8kEOOewZVWivjb3M61gQw/J3MBG1PDe2IFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RICKioIfcZSB9fE6a33xdb/k8k1+eTb6gbsbg9prVWUv1no1GQ9H30Hbli5bAz8wOie9w+cqfa0LdcaJ+VNetHggge0Gcnm+Wicb8zLZE4L6wNvHl8vdBhXrqZN9CLeeJkslh5T1Cs2Ysc/FFLReRWDfTkMRi83RPDd9wqWvPLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5iYgHXN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pnZ0oH0vxgK6sM8VsgXxnJrCAUJ2j3fFjhhB6gVxPXDk2gnVqufKKxgHzQapcdgcx6pdDM3o97YZEYAgjju6QwikwFKh4kMMEeLs83lc9V2IivP3+E860bOKFmmHCo9XvGvn3SmF9kM6GtgLK0Pl6Wa7va3Jg5OIsuW+V/wIMWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9XrLSa6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5iYgHXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11897C4CECD;
-	Wed,  6 Nov 2024 12:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9XrLSa6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CDFFC4CECD;
+	Wed,  6 Nov 2024 12:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895335;
-	bh=h16Gz3SbG9TRbU/mmdjcZWGU9dh9wCV+N64z3ff1KGU=;
+	s=korg; t=1730895338;
+	bh=mpEqja8a8kEOOewZVWivjb3M61gQw/J3MBG1PDe2IFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s5iYgHXNHmqz1vgpsvzXwQj5HKTfOhcxnDKIhOQk1kzLWXxx/tu6FnxioOOYoOveU
-	 NXwhNKr5JN5npF0L+yfHFfvTWcX4cGR0V5YK3SlCgaOzy6z2Bh8I4W1zK+74BgQ8zW
-	 51YHgkEfqufPt9hCq/a0qVNJo2vMxCV2qBZT2HEA=
+	b=t9XrLSa6YlK74GlD+baQa8MH3ISCFabSo9371Agt3RegcTom2E1C3rjw02J6MOH9j
+	 U3p5nY5C7aT4bAR7ZXMDMKBqF2d5AyKh3qHnKPw17vzSXzaq6kszyWhB7iVs0oDGFd
+	 kUdZxqrQ1Ygcpx/4kkk4vl8iRKrHewx12hhsOpRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 4.19 184/350] spi: bcm63xx: Fix module autoloading
-Date: Wed,  6 Nov 2024 13:01:52 +0100
-Message-ID: <20241106120325.491007023@linuxfoundation.org>
+	Luo Gengkun <luogengkun@huaweicloud.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>
+Subject: [PATCH 4.19 185/350] perf/core: Fix small negative period being ignored
+Date: Wed,  6 Nov 2024 13:01:53 +0100
+Message-ID: <20241106120325.516935321@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,33 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Luo Gengkun <luogengkun@huaweicloud.com>
 
-commit 909f34f2462a99bf876f64c5c61c653213e32fce upstream.
+commit 62c0b1061593d7012292f781f11145b2d46f43ab upstream.
 
-Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
-based on the alias from platform_device_id table.
+In perf_adjust_period, we will first calculate period, and then use
+this period to calculate delta. However, when delta is less than 0,
+there will be a deviation compared to when delta is greater than or
+equal to 0. For example, when delta is in the range of [-14,-1], the
+range of delta = delta + 7 is between [-7,6], so the final value of
+delta/8 is 0. Therefore, the impact of -1 and -2 will be ignored.
+This is unacceptable when the target period is very short, because
+we will lose a lot of samples.
 
-Fixes: 44d8fb30941d ("spi/bcm63xx: move register definitions into the driver")
+Here are some tests and analyzes:
+before:
+  # perf record -e cs -F 1000  ./a.out
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.022 MB perf.data (518 samples) ]
+
+  # perf script
+  ...
+  a.out     396   257.956048:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.957891:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.959730:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.961545:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.963355:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.965163:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.966973:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.968785:         23 cs:  ffffffff81f4eeec schedul>
+  a.out     396   257.970593:         23 cs:  ffffffff81f4eeec schedul>
+  ...
+
+after:
+  # perf record -e cs -F 1000  ./a.out
+  [ perf record: Woken up 1 times to write data ]
+  [ perf record: Captured and wrote 0.058 MB perf.data (1466 samples) ]
+
+  # perf script
+  ...
+  a.out     395    59.338813:         11 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.339707:         12 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.340682:         13 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.341751:         13 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.342799:         12 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.343765:         11 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.344651:         11 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.345539:         12 cs:  ffffffff81f4eeec schedul>
+  a.out     395    59.346502:         13 cs:  ffffffff81f4eeec schedul>
+  ...
+
+test.c
+
+int main() {
+        for (int i = 0; i < 20000; i++)
+                usleep(10);
+
+        return 0;
+}
+
+  # time ./a.out
+  real    0m1.583s
+  user    0m0.040s
+  sys     0m0.298s
+
+The above results were tested on x86-64 qemu with KVM enabled using
+test.c as test program. Ideally, we should have around 1500 samples,
+but the previous algorithm had only about 500, whereas the modified
+algorithm now has about 1400. Further more, the new version shows 1
+sample per 0.001s, while the previous one is 1 sample per 0.002s.This
+indicates that the new algorithm is more sensitive to small negative
+values compared to old algorithm.
+
+Fixes: bd2b5b12849a ("perf_counter: More aggressive frequency adjustment")
+Signed-off-by: Luo Gengkun <luogengkun@huaweicloud.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
-Link: https://patch.msgid.link/20240819123349.4020472-2-ruanjinjie@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lkml.kernel.org/r/20240831074316.2106159-2-luogengkun@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-bcm63xx.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/events/core.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-bcm63xx.c
-+++ b/drivers/spi/spi-bcm63xx.c
-@@ -484,6 +484,7 @@ static const struct platform_device_id b
- 	{
- 	},
- };
-+MODULE_DEVICE_TABLE(platform, bcm63xx_spi_dev_match);
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -3618,7 +3618,11 @@ static void perf_adjust_period(struct pe
+ 	period = perf_calculate_period(event, nsec, count);
  
- static const struct of_device_id bcm63xx_spi_of_match[] = {
- 	{ .compatible = "brcm,bcm6348-spi", .data = &bcm6348_spi_reg_offsets },
+ 	delta = (s64)(period - hwc->sample_period);
+-	delta = (delta + 7) / 8; /* low pass filter */
++	if (delta >= 0)
++		delta += 7;
++	else
++		delta -= 7;
++	delta /= 8; /* low pass filter */
+ 
+ 	sample_period = hwc->sample_period + delta;
+ 
 
 
