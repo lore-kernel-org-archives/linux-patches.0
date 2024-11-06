@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099711EF08E;
-	Wed,  6 Nov 2024 12:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C771E0488;
+	Wed,  6 Nov 2024 12:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897292; cv=none; b=clTGarvn8/OowrL1FVIK5UPQ5F9S2S+M+9+mZEcP7sn/yb5BE9OrzV1s6TpEH0EygOE4ONpF0GpUM8KG38364cfOdo3CdbVECfWiNGK+YmI3r1IXrobZSstjgNQoxLI6RG+1X1crkfs5oj0yTKqgXNsbcWpbJhLfwQ9X0JeVhQg=
+	t=1730897295; cv=none; b=CUN+n5yB5soJ/DKw0Jz5KWy2tJraJTHW+ncCI3zH8YC9P12vCDJ4QAE/l7MSjBITr8xVcU9M6xBW7z1Mwv1NpGJU74lMBYOHoDYsEkUFTvNa+AkMoBcLe8sqsMklOF6uMS7K3x21UseJoReOjty0qGslzScH3huF/lebYNZQ8LQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897292; c=relaxed/simple;
-	bh=BdTEik5RRd3VYZvCCFJBGY/GioKtxa1vGXQpIn97ycI=;
+	s=arc-20240116; t=1730897295; c=relaxed/simple;
+	bh=NdAWSfFHuiaJWlO9hKMEsd+ifZtzhZDOJGO1Uvc1Atk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lKwSFfatMJy1nLOAG18ctfBouPHEuI/IRcxt/g/M/jeG7F8gKVlCV1buaSEYa1/nWprsZAx10dYaZ+tFlL0m0kLbVkiMgD1+bp1TG1VdLUwZSzrG34awdI5rCX1ZHjdCBTOw/jC99zBtl638VWCNP/oqnG2w1f9W83u2B/3GTcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVpSkBhR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EVeQ6ibcfspA8bREMaZ7PFPnYvpu0whU9fRq/pBNjjCtwkFTxUsNtlJgLcIXp0u+SrwTMXmb7r1m9fkW+/rWR1lL+TUz0MLKxk5M/dq/HUBqoPr4ZhH3pur4+wv5oWf4mfqkaxHGUDYRLP6nI/5WAVRIKFWyz3hVMbJFT8hLuXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amIX3Tvx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVpSkBhR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82503C4CECD;
-	Wed,  6 Nov 2024 12:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amIX3Tvx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6F1C4CECD;
+	Wed,  6 Nov 2024 12:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897291;
-	bh=BdTEik5RRd3VYZvCCFJBGY/GioKtxa1vGXQpIn97ycI=;
+	s=korg; t=1730897294;
+	bh=NdAWSfFHuiaJWlO9hKMEsd+ifZtzhZDOJGO1Uvc1Atk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tVpSkBhR3PkGU2CQAIyMRJ5HkCqFJNpzT36VePgGEdGDaRxWVw7UM5wrHifQdW9Ea
-	 xodf7IVr1GnpYXIenJxhc5iVqwNBQRLrfRS3QNds2Oqmb1St+cWLrZZ9srIjLhp896
-	 gtFvlRytScbI25SwVs1wR6D4P5xT+b182AqgUGJ0=
+	b=amIX3Tvx4Y2y7FfZ2+Ib8K1myzTHhLfNzCFrU3bULF0SP6fcV7nQ50pxJWD9/NuBQ
+	 7i2Xgri0TEIFBgJpIjT82jMpaAZLZNI1mF1UI66zDU4KqCQLDFDKF3KorU/wQnQZEU
+	 YG8kcsPeOhiA29ygU31pP/lODCZYHZS9OmIfCHEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 118/126] wifi: iwlwifi: mvm: fix 6 GHz scan construction
-Date: Wed,  6 Nov 2024 13:05:19 +0100
-Message-ID: <20241106120309.245248328@linuxfoundation.org>
+	Jeongjun Park <aha310510@gmail.com>,
+	syzbot <syzkaller@googlegroup.com>,
+	Hugh Dickins <hughd@google.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 119/126] mm: shmem: fix data-race in shmem_getattr()
+Date: Wed,  6 Nov 2024 13:05:20 +0100
+Message-ID: <20241106120309.275493655@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -49,46 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 7245012f0f496162dd95d888ed2ceb5a35170f1a upstream.
+commit d949d1d14fa281ace388b1de978e8f2cd52875cf upstream.
 
-If more than 255 colocated APs exist for the set of all
-APs found during 2.4/5 GHz scanning, then the 6 GHz scan
-construction will loop forever since the loop variable
-has type u8, which can never reach the number found when
-that's bigger than 255, and is stored in a u32 variable.
-Also move it into the loops to have a smaller scope.
+I got the following KCSAN report during syzbot testing:
 
-Using a u32 there is fine, we limit the number of APs in
-the scan list and each has a limit on the number of RNR
-entries due to the frame size. With a limit of 1000 scan
-results, a frame size upper bound of 4096 (really it's
-more like ~2300) and a TBTT entry size of at least 11,
-we get an upper bound for the number of ~372k, well in
-the bounds of a u32.
+==================================================================
+BUG: KCSAN: data-race in generic_fillattr / inode_set_ctime_current
 
-Cc: stable@vger.kernel.org
-Fixes: eae94cf82d74 ("iwlwifi: mvm: add support for 6GHz")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219375
-Link: https://patch.msgid.link/20241023091744.f4baed5c08a1.I8b417148bbc8c5d11c101e1b8f5bf372e17bf2a7@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+write to 0xffff888102eb3260 of 4 bytes by task 6565 on cpu 1:
+ inode_set_ctime_to_ts include/linux/fs.h:1638 [inline]
+ inode_set_ctime_current+0x169/0x1d0 fs/inode.c:2626
+ shmem_mknod+0x117/0x180 mm/shmem.c:3443
+ shmem_create+0x34/0x40 mm/shmem.c:3497
+ lookup_open fs/namei.c:3578 [inline]
+ open_last_lookups fs/namei.c:3647 [inline]
+ path_openat+0xdbc/0x1f00 fs/namei.c:3883
+ do_filp_open+0xf7/0x200 fs/namei.c:3913
+ do_sys_openat2+0xab/0x120 fs/open.c:1416
+ do_sys_open fs/open.c:1431 [inline]
+ __do_sys_openat fs/open.c:1447 [inline]
+ __se_sys_openat fs/open.c:1442 [inline]
+ __x64_sys_openat+0xf3/0x120 fs/open.c:1442
+ x64_sys_call+0x1025/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:258
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+read to 0xffff888102eb3260 of 4 bytes by task 3498 on cpu 0:
+ inode_get_ctime_nsec include/linux/fs.h:1623 [inline]
+ inode_get_ctime include/linux/fs.h:1629 [inline]
+ generic_fillattr+0x1dd/0x2f0 fs/stat.c:62
+ shmem_getattr+0x17b/0x200 mm/shmem.c:1157
+ vfs_getattr_nosec fs/stat.c:166 [inline]
+ vfs_getattr+0x19b/0x1e0 fs/stat.c:207
+ vfs_statx_path fs/stat.c:251 [inline]
+ vfs_statx+0x134/0x2f0 fs/stat.c:315
+ vfs_fstatat+0xec/0x110 fs/stat.c:341
+ __do_sys_newfstatat fs/stat.c:505 [inline]
+ __se_sys_newfstatat+0x58/0x260 fs/stat.c:499
+ __x64_sys_newfstatat+0x55/0x70 fs/stat.c:499
+ x64_sys_call+0x141f/0x2d60 arch/x86/include/generated/asm/syscalls_64.h:263
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x54/0x120 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+value changed: 0x2755ae53 -> 0x27ee44d3
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 UID: 0 PID: 3498 Comm: udevd Not tainted 6.11.0-rc6-syzkaller-00326-gd1f2d51b711a-dirty #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+==================================================================
+
+When calling generic_fillattr(), if you don't hold read lock, data-race
+will occur in inode member variables, which can cause unexpected
+behavior.
+
+Since there is no special protection when shmem_getattr() calls
+generic_fillattr(), data-race occurs by functions such as shmem_unlink()
+or shmem_mknod(). This can cause unexpected results, so commenting it out
+is not enough.
+
+Therefore, when calling generic_fillattr() from shmem_getattr(), it is
+appropriate to protect the inode using inode_lock_shared() and
+inode_unlock_shared() to prevent data-race.
+
+Link: https://lkml.kernel.org/r/20240909123558.70229-1-aha310510@gmail.com
+Fixes: 44a30220bc0a ("shmem: recalculate file inode when fstat")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Reported-by: syzbot <syzkaller@googlegroup.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/shmem.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -1739,7 +1739,8 @@ iwl_mvm_umac_scan_cfg_channels_v6_6g(str
- 			&cp->channel_config[ch_cnt];
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1086,7 +1086,9 @@ static int shmem_getattr(struct user_nam
+ 	stat->attributes_mask |= (STATX_ATTR_APPEND |
+ 			STATX_ATTR_IMMUTABLE |
+ 			STATX_ATTR_NODUMP);
++	inode_lock_shared(inode);
+ 	generic_fillattr(&init_user_ns, inode, stat);
++	inode_unlock_shared(inode);
  
- 		u32 s_ssid_bitmap = 0, bssid_bitmap = 0, flags = 0;
--		u8 j, k, s_max = 0, b_max = 0, n_used_bssid_entries;
-+		u8 k, s_max = 0, b_max = 0, n_used_bssid_entries;
-+		u32 j;
- 		bool force_passive, found = false, allow_passive = true,
- 		     unsolicited_probe_on_chan = false, psc_no_listen = false;
- 
+ 	if (shmem_is_huge(NULL, inode, 0, false))
+ 		stat->blksize = HPAGE_PMD_SIZE;
 
 
