@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AC51DED62;
-	Wed,  6 Nov 2024 12:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204471DED62;
+	Wed,  6 Nov 2024 12:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895445; cv=none; b=QPzYibF532aBvTLpp1fTCkSWqOSqpRdCsnvbVh804pxtm/WTvDTPfSQPXYJeZD+EWuyjKgl5hJ1OnWKNTCObPdLZNAmI6TM+9IP3djdnrIIS69rPadnS1DkpQQ+KqsjmO2tWzxekwxY/R8f0ixXNVS05xSKF2Ze46x3D1er8Hrk=
+	t=1730895448; cv=none; b=ciwxYIbE0iq1VXya1xd3tjM94J1VtzgbHjzPf6Aj/05A41GWMeWIvDDCPuSPkPMMkp9tZAWByJnJjS09q7gh0MEKEAP3dFM5NUinPVonXIYVPDoUfFwzsQ5BiCrOP/hVddKMNJGfLtUwK7C7XlV60JUzN8Y6RLXq2aZda/ucxAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895445; c=relaxed/simple;
-	bh=CU60l7mRF1Le6PnSAYrNAC9pKrTVpWAah5vj83pAaTI=;
+	s=arc-20240116; t=1730895448; c=relaxed/simple;
+	bh=r+0WCy0PpVE6x/GhOtRPfxNgxSUHih4UlfL2ei40qw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UkcAP6ghMx4zG1Ubs9+RCl6bcG7cm9IWGyqC2qGkDKbev/sumW+bKpoGK6or2Z4TxqJURwlVrAAOtYUYe0z9xTQOzVhfoCJ5kHQL0hx08tH7wmTofIADxrgExYaebFwv90a6EoSIP/BzWlryaayC8YxabTvVtytyPJccuo2v3Nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HyPW8YJG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TxXUgmcj1fsyU5V8x8NhQfn9WEHtkY96+D4RywLMmsbNs3DSgwzmQWBxBO5bhr64U4V3udYNdsOrVvvISNFpJ+UA0lxP+k1dgeFDhr1mRYNMDxKr2rojQ76IBDdY2d9rDiz6UZMytvFbI9rlTYB2gctmOaCZ8E38RAVM6uF+LdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGda0+gc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HyPW8YJG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0088C4CECD;
-	Wed,  6 Nov 2024 12:17:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGda0+gc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E17C4CED2;
+	Wed,  6 Nov 2024 12:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895445;
-	bh=CU60l7mRF1Le6PnSAYrNAC9pKrTVpWAah5vj83pAaTI=;
+	s=korg; t=1730895448;
+	bh=r+0WCy0PpVE6x/GhOtRPfxNgxSUHih4UlfL2ei40qw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HyPW8YJGLTynWBouPbv1jpD56Aik25Qr4D1WrOWbqp6or+zYOoUNg4AafwUOcqOk8
-	 /Gzy92WMe9Mlz0bDavSeGswpwlOA7saDD8a5oEK1fb+NQJgfENOfydjJ71sZWH2tf/
-	 O1I3wzZmvS6n0WEu5f5yZYRKU27szacpsW82tewg=
+	b=ZGda0+gc5Nd75cE58BYIXs/UnpRrftr5bx0mSGPQ51Fs8J1BWCTvhX0an++yuhuEq
+	 CujQ5GRtpRlQFS1AXVlnrVD4EH+D+W/oBpfzg3qDvH/z5QWg+WpHrh8FzMrGB+rPyl
+	 DIS+nXqB/Ozfac4lr1ISCK4Z7Up+4AWrXs8Kfvsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	"J. Bruce Fields" <bfields@redhat.com>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	NeilBrown <neilb@suse.de>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 221/350] nfsd: use ktime_get_seconds() for timestamps
-Date: Wed,  6 Nov 2024 13:02:29 +0100
-Message-ID: <20241106120326.457310449@linuxfoundation.org>
+Subject: [PATCH 4.19 222/350] nfsd: fix delegation_blocked() to block correctly for at least 30 seconds
+Date: Wed,  6 Nov 2024 13:02:30 +0100
+Message-ID: <20241106120326.482542988@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,62 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit b3f255ef6bffc18a28c3b6295357f2a3380c033f ]
+[ Upstream commit 45bb63ed20e02ae146336412889fe5450316a84f ]
 
-The delegation logic in nfsd uses the somewhat inefficient
-seconds_since_boot() function to record time intervals.
+The pair of bloom filtered used by delegation_blocked() was intended to
+block delegations on given filehandles for between 30 and 60 seconds.  A
+new filehandle would be recorded in the "new" bit set.  That would then
+be switch to the "old" bit set between 0 and 30 seconds later, and it
+would remain as the "old" bit set for 30 seconds.
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: J. Bruce Fields <bfields@redhat.com>
-Stable-dep-of: 45bb63ed20e0 ("nfsd: fix delegation_blocked() to block correctly for at least 30 seconds")
+Unfortunately the code intended to clear the old bit set once it reached
+30 seconds old, preparing it to be the next new bit set, instead cleared
+the *new* bit set before switching it to be the old bit set.  This means
+that the "old" bit set is always empty and delegations are blocked
+between 0 and 30 seconds.
+
+This patch updates bd->new before clearing the set with that index,
+instead of afterwards.
+
+Reported-by: Olga Kornievskaia <okorniev@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: 6282cd565553 ("NFSD: Don't hand out delegations for 30 seconds after recalling them.")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/nfsd/nfs4state.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 7ac644d64ab1d..acb43210d2dc5 100644
+index acb43210d2dc5..061694c405ac3 100644
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -755,7 +755,7 @@ static void nfs4_free_deleg(struct nfs4_stid *stid)
- static DEFINE_SPINLOCK(blocked_delegations_lock);
- static struct bloom_pair {
- 	int	entries, old_entries;
--	time_t	swap_time;
-+	time64_t swap_time;
- 	int	new; /* index into 'set' */
- 	DECLARE_BITMAP(set[2], 256);
- } blocked_delegations;
-@@ -767,15 +767,15 @@ static int delegation_blocked(struct knfsd_fh *fh)
- 
- 	if (bd->entries == 0)
- 		return 0;
--	if (seconds_since_boot() - bd->swap_time > 30) {
-+	if (ktime_get_seconds() - bd->swap_time > 30) {
- 		spin_lock(&blocked_delegations_lock);
--		if (seconds_since_boot() - bd->swap_time > 30) {
-+		if (ktime_get_seconds() - bd->swap_time > 30) {
+@@ -743,7 +743,8 @@ static void nfs4_free_deleg(struct nfs4_stid *stid)
+  * When a delegation is recalled, the filehandle is stored in the "new"
+  * filter.
+  * Every 30 seconds we swap the filters and clear the "new" one,
+- * unless both are empty of course.
++ * unless both are empty of course.  This results in delegations for a
++ * given filehandle being blocked for between 30 and 60 seconds.
+  *
+  * Each filter is 256 bits.  We hash the filehandle to 32bit and use the
+  * low 3 bytes as hash-table indices.
+@@ -772,9 +773,9 @@ static int delegation_blocked(struct knfsd_fh *fh)
+ 		if (ktime_get_seconds() - bd->swap_time > 30) {
  			bd->entries -= bd->old_entries;
  			bd->old_entries = bd->entries;
++			bd->new = 1-bd->new;
  			memset(bd->set[bd->new], 0,
  			       sizeof(bd->set[0]));
- 			bd->new = 1-bd->new;
--			bd->swap_time = seconds_since_boot();
-+			bd->swap_time = ktime_get_seconds();
+-			bd->new = 1-bd->new;
+ 			bd->swap_time = ktime_get_seconds();
  		}
  		spin_unlock(&blocked_delegations_lock);
- 	}
-@@ -805,7 +805,7 @@ static void block_delegations(struct knfsd_fh *fh)
- 	__set_bit((hash>>8)&255, bd->set[bd->new]);
- 	__set_bit((hash>>16)&255, bd->set[bd->new]);
- 	if (bd->entries == 0)
--		bd->swap_time = seconds_since_boot();
-+		bd->swap_time = ktime_get_seconds();
- 	bd->entries += 1;
- 	spin_unlock(&blocked_delegations_lock);
- }
 -- 
 2.43.0
 
