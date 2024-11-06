@@ -1,47 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6D81E25F8;
-	Wed,  6 Nov 2024 12:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0181F7544;
+	Wed,  6 Nov 2024 12:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896992; cv=none; b=DcejtDwEnJVC+IQqmk6TvrmncpO29EyeP9WpFDTN3On2RuwBGDhgG95+mTSgTQOqTuK953lvFXkWOVwxehO+Q3ipo4FwDBEnZGMJhVr+thU/ZJ7X/JCH5+D/QAtRfcS7Q3/JJ47kG5Nv0jRlCyaXDch5PCjWdnExayqZ1Ef1K7M=
+	t=1730896995; cv=none; b=mjSy/15G2QgLz4NmFb/k4/Y+em5gN7pFtkd9PksRt/fFmEJp+MZ7MUUqIdXs7OSAkUVNeHMYk/Y7F0OLhlKn8/932tR4wmZgKNitpFZFT9sJm0RsvQK8q7gWu7FFlb36jQ7Lf2nBzNnkKe00vqLh11ExrkvoZDsks9+hfK1wM2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896992; c=relaxed/simple;
-	bh=j2D+M/6FPdfJ8p1t9pbPJ9bmiF5lnKWS9d632ymab6w=;
+	s=arc-20240116; t=1730896995; c=relaxed/simple;
+	bh=zMTFDaKmoyAhut2tEYf2ZRDwKrvC+MHZmgtLHvMiiCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T/Hs/159bMBkLfaIBw5JIcfxsdssJqMRS7TLjsPCnDsSwTgZxwLsAab5XFqOCEJPz/MevqIfnkcVX9ciioNI+uY5oQObvm0L3xm5t8aXyWTVvX8dtr+DoRu/QTeIfjrqNMob7x3phUxF/8vvKntbWVr6AG2ccYIDN0/t8fvOeR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1752h3vN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qHPZaFB6Fe8g+P6J0f9bzoT0HMGKUEeqpM0O674WwpMp2OhiGV6FT9SwlMaXUE2YGDm7GhpBlKvLaxwZO/9BQ3cKlRVO/mj4l2u59PrKZU2CnmtRnZ2/+4E7NqaUaKpvHyOexkOQKQlzeinLxzo3Bdp3104utS3WhKQ1WW3uqUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4/GRs/s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1752h3vN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6760EC4CECD;
-	Wed,  6 Nov 2024 12:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4/GRs/s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91771C4CECD;
+	Wed,  6 Nov 2024 12:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896992;
-	bh=j2D+M/6FPdfJ8p1t9pbPJ9bmiF5lnKWS9d632ymab6w=;
+	s=korg; t=1730896995;
+	bh=zMTFDaKmoyAhut2tEYf2ZRDwKrvC+MHZmgtLHvMiiCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1752h3vNDfQ2fetLN5MrD02oBGJN7RPPwRAYLz/ppbp37wKQIIJrZcF1DXQUD9LJw
-	 aIO3zHvN9FrfBA4OXIDgUywA9LugLglWKW7bSzujhxEi8we++eoeRUD9h3fsBrJcNG
-	 75GpX3n75bVY8Wu+/ZYjgoisybaJgOsMJXxQwNWE=
+	b=A4/GRs/sX11AYKlLFkFB3G7hTdfDQvdCvTVVS0jP0d6UMyotOnhityBQl1V6aE9U9
+	 E+4Lb/nKoj7JAL+2qgoFmzUFZPTFDrVtFJzJgHpSCmo6K5A5AQQD1kdnQmTRLYAFjb
+	 w1awekfhCnQQemsf8Vc8dbrAsJpElJsswcSihBv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donet Tom <donettom@linux.ibm.com>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
-	Kees Cook <keescook@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Jason Gunthorpe <jgg@mellanox.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/126] selftests/mm: fix incorrect buffer->mirror size in hmm2 double_map test
-Date: Wed,  6 Nov 2024 13:03:24 +0100
-Message-ID: <20241106120306.141292208@linuxfoundation.org>
+Subject: [PATCH 6.1 030/126] netfilter: nf_reject_ipv6: fix potential crash in nf_send_reset6()
+Date: Wed,  6 Nov 2024 13:03:51 +0100
+Message-ID: <20241106120306.919966321@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -54,71 +46,137 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Donet Tom <donettom@linux.ibm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 76503e1fa1a53ef041a120825d5ce81c7fe7bdd7 ]
+[ Upstream commit 4ed234fe793f27a3b151c43d2106df2ff0d81aac ]
 
-The hmm2 double_map test was failing due to an incorrect buffer->mirror
-size.  The buffer->mirror size was 6, while buffer->ptr size was 6 *
-PAGE_SIZE.  The test failed because the kernel's copy_to_user function was
-attempting to copy a 6 * PAGE_SIZE buffer to buffer->mirror.  Since the
-size of buffer->mirror was incorrect, copy_to_user failed.
+I got a syzbot report without a repro [1] crashing in nf_send_reset6()
 
-This patch corrects the buffer->mirror size to 6 * PAGE_SIZE.
+I think the issue is that dev->hard_header_len is zero, and we attempt
+later to push an Ethernet header.
 
-Test Result without this patch
-==============================
- #  RUN           hmm2.hmm2_device_private.double_map ...
- # hmm-tests.c:1680:double_map:Expected ret (-14) == 0 (0)
- # double_map: Test terminated by assertion
- #          FAIL  hmm2.hmm2_device_private.double_map
- not ok 53 hmm2.hmm2_device_private.double_map
+Use LL_MAX_HEADER, as other functions in net/ipv6/netfilter/nf_reject_ipv6.c.
 
-Test Result with this patch
-===========================
- #  RUN           hmm2.hmm2_device_private.double_map ...
- #            OK  hmm2.hmm2_device_private.double_map
- ok 53 hmm2.hmm2_device_private.double_map
+[1]
 
-Link: https://lkml.kernel.org/r/20240927050752.51066-1-donettom@linux.ibm.com
-Fixes: fee9f6d1b8df ("mm/hmm/test: add selftests for HMM")
-Signed-off-by: Donet Tom <donettom@linux.ibm.com>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Cc: Jérôme Glisse <jglisse@redhat.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Cc: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Jason Gunthorpe <jgg@mellanox.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+skbuff: skb_under_panic: text:ffffffff89b1d008 len:74 put:14 head:ffff88803123aa00 data:ffff88803123a9f2 tail:0x3c end:0x140 dev:syz_tun
+ kernel BUG at net/core/skbuff.c:206 !
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 0 UID: 0 PID: 7373 Comm: syz.1.568 Not tainted 6.12.0-rc2-syzkaller-00631-g6d858708d465 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+ RIP: 0010:skb_panic net/core/skbuff.c:206 [inline]
+ RIP: 0010:skb_under_panic+0x14b/0x150 net/core/skbuff.c:216
+Code: 0d 8d 48 c7 c6 60 a6 29 8e 48 8b 54 24 08 8b 0c 24 44 8b 44 24 04 4d 89 e9 50 41 54 41 57 41 56 e8 ba 30 38 02 48 83 c4 20 90 <0f> 0b 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3
+RSP: 0018:ffffc900045269b0 EFLAGS: 00010282
+RAX: 0000000000000088 RBX: dffffc0000000000 RCX: cd66dacdc5d8e800
+RDX: 0000000000000000 RSI: 0000000000000200 RDI: 0000000000000000
+RBP: ffff88802d39a3d0 R08: ffffffff8174afec R09: 1ffff920008a4ccc
+R10: dffffc0000000000 R11: fffff520008a4ccd R12: 0000000000000140
+R13: ffff88803123aa00 R14: ffff88803123a9f2 R15: 000000000000003c
+FS:  00007fdbee5ff6c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000000 CR3: 000000005d322000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+  skb_push+0xe5/0x100 net/core/skbuff.c:2636
+  eth_header+0x38/0x1f0 net/ethernet/eth.c:83
+  dev_hard_header include/linux/netdevice.h:3208 [inline]
+  nf_send_reset6+0xce6/0x1270 net/ipv6/netfilter/nf_reject_ipv6.c:358
+  nft_reject_inet_eval+0x3b9/0x690 net/netfilter/nft_reject_inet.c:48
+  expr_call_ops_eval net/netfilter/nf_tables_core.c:240 [inline]
+  nft_do_chain+0x4ad/0x1da0 net/netfilter/nf_tables_core.c:288
+  nft_do_chain_inet+0x418/0x6b0 net/netfilter/nft_chain_filter.c:161
+  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+  nf_hook_slow+0xc3/0x220 net/netfilter/core.c:626
+  nf_hook include/linux/netfilter.h:269 [inline]
+  NF_HOOK include/linux/netfilter.h:312 [inline]
+  br_nf_pre_routing_ipv6+0x63e/0x770 net/bridge/br_netfilter_ipv6.c:184
+  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+  nf_hook_bridge_pre net/bridge/br_input.c:277 [inline]
+  br_handle_frame+0x9fd/0x1530 net/bridge/br_input.c:424
+  __netif_receive_skb_core+0x13e8/0x4570 net/core/dev.c:5562
+  __netif_receive_skb_one_core net/core/dev.c:5666 [inline]
+  __netif_receive_skb+0x12f/0x650 net/core/dev.c:5781
+  netif_receive_skb_internal net/core/dev.c:5867 [inline]
+  netif_receive_skb+0x1e8/0x890 net/core/dev.c:5926
+  tun_rx_batched+0x1b7/0x8f0 drivers/net/tun.c:1550
+  tun_get_user+0x3056/0x47e0 drivers/net/tun.c:2007
+  tun_chr_write_iter+0x10d/0x1f0 drivers/net/tun.c:2053
+  new_sync_write fs/read_write.c:590 [inline]
+  vfs_write+0xa6d/0xc90 fs/read_write.c:683
+  ksys_write+0x183/0x2b0 fs/read_write.c:736
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fdbeeb7d1ff
+Code: 89 54 24 18 48 89 74 24 10 89 7c 24 08 e8 c9 8d 02 00 48 8b 54 24 18 48 8b 74 24 10 41 89 c0 8b 7c 24 08 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 31 44 89 c7 48 89 44 24 08 e8 1c 8e 02 00 48
+RSP: 002b:00007fdbee5ff000 EFLAGS: 00000293 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 00007fdbeed36058 RCX: 00007fdbeeb7d1ff
+RDX: 000000000000008e RSI: 0000000020000040 RDI: 00000000000000c8
+RBP: 00007fdbeebf12be R08: 0000000000000000 R09: 0000000000000000
+R10: 000000000000008e R11: 0000000000000293 R12: 0000000000000000
+R13: 0000000000000000 R14: 00007fdbeed36058 R15: 00007ffc38de06e8
+ </TASK>
+
+Fixes: c8d7b98bec43 ("netfilter: move nf_send_resetX() code to nf_reject_ipvX modules")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/vm/hmm-tests.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/netfilter/nf_reject_ipv6.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/vm/hmm-tests.c b/tools/testing/selftests/vm/hmm-tests.c
-index 4adaad1b822f0..95af1a73f505f 100644
---- a/tools/testing/selftests/vm/hmm-tests.c
-+++ b/tools/testing/selftests/vm/hmm-tests.c
-@@ -1652,7 +1652,7 @@ TEST_F(hmm2, double_map)
+diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
+index 4e0976534648c..e4776bd2ed89b 100644
+--- a/net/ipv6/netfilter/nf_reject_ipv6.c
++++ b/net/ipv6/netfilter/nf_reject_ipv6.c
+@@ -268,12 +268,12 @@ static int nf_reject6_fill_skb_dst(struct sk_buff *skb_in)
+ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+ 		    int hook)
+ {
+-	struct sk_buff *nskb;
+-	struct tcphdr _otcph;
+-	const struct tcphdr *otcph;
+-	unsigned int otcplen, hh_len;
+ 	const struct ipv6hdr *oip6h = ipv6_hdr(oldskb);
+ 	struct dst_entry *dst = NULL;
++	const struct tcphdr *otcph;
++	struct sk_buff *nskb;
++	struct tcphdr _otcph;
++	unsigned int otcplen;
+ 	struct flowi6 fl6;
  
- 	buffer->fd = -1;
- 	buffer->size = size;
--	buffer->mirror = malloc(npages);
-+	buffer->mirror = malloc(size);
- 	ASSERT_NE(buffer->mirror, NULL);
+ 	if ((!(ipv6_addr_type(&oip6h->saddr) & IPV6_ADDR_UNICAST)) ||
+@@ -312,9 +312,8 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+ 	if (IS_ERR(dst))
+ 		return;
  
- 	/* Reserve a range of addresses. */
+-	hh_len = (dst->dev->hard_header_len + 15)&~15;
+-	nskb = alloc_skb(hh_len + 15 + dst->header_len + sizeof(struct ipv6hdr)
+-			 + sizeof(struct tcphdr) + dst->trailer_len,
++	nskb = alloc_skb(LL_MAX_HEADER + sizeof(struct ipv6hdr) +
++			 sizeof(struct tcphdr) + dst->trailer_len,
+ 			 GFP_ATOMIC);
+ 
+ 	if (!nskb) {
+@@ -327,7 +326,7 @@ void nf_send_reset6(struct net *net, struct sock *sk, struct sk_buff *oldskb,
+ 
+ 	nskb->mark = fl6.flowi6_mark;
+ 
+-	skb_reserve(nskb, hh_len + dst->header_len);
++	skb_reserve(nskb, LL_MAX_HEADER);
+ 	nf_reject_ip6hdr_put(nskb, oldskb, IPPROTO_TCP, ip6_dst_hoplimit(dst));
+ 	nf_reject_ip6_tcphdr_put(nskb, oldskb, otcph, otcplen);
+ 
 -- 
 2.43.0
 
