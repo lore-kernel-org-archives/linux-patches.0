@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3651DF978;
-	Wed,  6 Nov 2024 12:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9471DF978;
+	Wed,  6 Nov 2024 12:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895886; cv=none; b=NiAUOLT8jfZrU8NKAXOVVDrvdlR9bknsp/OMDkuUKyDY3HX9SMNhvD35lmXjT6XHlt8gVUJAc+nhqmYF7T1wKHMAva/JDGhVAxxB50u802AMsZVsOJ+fNqj3Ab2Y/iEImPyt9/t9dqr3mNHjwUwhqXHg9s8gCdg/J2gYHaQe0eg=
+	t=1730895888; cv=none; b=VKnfFo0t+TBYDTjxJ68JAwWCeeVsyVezPQDgrvNOmZhTakS7C1TuKL5jqmW8KftyqQZ9fqfv076rqKtGqahBUrP4rWq2iEo0ZuF2x9Qe6JVYbo4rR+Q4B5WYDcfxjWSNiQBo3qkAAWGUNcauz7aEPKUh53GqdV2DMfYZGIc1sW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895886; c=relaxed/simple;
-	bh=2Lci21Iu9UroG5hIh5QGbGUsEcswAvcx3ggoSj2vNH0=;
+	s=arc-20240116; t=1730895888; c=relaxed/simple;
+	bh=7JME/qD7oQuttpd5vCbtWuQ//Zv0xh4OTdp6yFz8bTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n6HA4jjrzGWNNJwpmjMXxesMETigW3HRtXNDTZtYv/FRr1O6MxoKpYEOZvGwBQ2QfcyAkiVDgp9oCHh3SZGolnS+tjpzrhdjXD89WjrLCBuh86nKdlOEVBUXdgVtqWsoimhs2Hx33ofdX/R4z2IbEbxcreKGKU3A7tFPP0vvXGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUkFxPxY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R7xI0/vqlP2BDjU1LpPgNd7UJRFMMU+5TVYWiBTTu5tQgwqdTzTpCdCRlCH2etbeWa2UTgdxaJqGYkAc7bssjOD0EfZSoZbdDYjB99GQeIIY1j9RlpIF1crWWEvzdPfQKK94HUGaBzROdeD9t39FiGPHddkW1UI1asM7jClhRO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2/gWpnL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUkFxPxY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA8EC4CECD;
-	Wed,  6 Nov 2024 12:24:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2/gWpnL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F4FC4CECD;
+	Wed,  6 Nov 2024 12:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895885;
-	bh=2Lci21Iu9UroG5hIh5QGbGUsEcswAvcx3ggoSj2vNH0=;
+	s=korg; t=1730895888;
+	bh=7JME/qD7oQuttpd5vCbtWuQ//Zv0xh4OTdp6yFz8bTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CUkFxPxYzPA99bvVm+BAq7FiPSPjZK/lbxG61INgzmz5lPlzPSoQFxqXjTHCn9HfJ
-	 Z0du512ONHVYMMasEauhdm+LtPcFhMFi9Y2xeRAvZmVDvTmzetpgfd1cN4k8XIwHG4
-	 iYVdZwTBclB34tTqYQhE93bzkv+2TOQhPi2vqWeQ=
+	b=C2/gWpnLUURNT27BsOLO5BA6dNbF3B0/PBse6iyc7NO1E4u4kRFoBuc/58fdNiKGs
+	 6SBLCcYoiUZ9oqbNuPqj2NGLPXRVcgrbPCLHRRKIxWvLh08ZloCENeX0pd1f+1vD5N
+	 Bz9bVECdOrb5H0lyZYl9W3GAb/6lR70Z1Daa+BLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 018/245] RDMA/bnxt_re: synchronize the qp-handle table array
-Date: Wed,  6 Nov 2024 13:01:11 +0100
-Message-ID: <20241106120319.685539058@linuxfoundation.org>
+Subject: [PATCH 6.11 019/245] wifi: iwlwifi: mvm: dont leak a link on AP removal
+Date: Wed,  6 Nov 2024 13:01:12 +0100
+Message-ID: <20241106120319.708814924@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,108 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 76d3ddff7153cc0bcc14a63798d19f5d0693ea71 ]
+[ Upstream commit 3ed092997a004d68a3a5b0eeb94e71b69839d0f7 ]
 
-There is a race between the CREQ tasklet and destroy qp when accessing the
-qp-handle table. There is a chance of reading a valid qp-handle in the
-CREQ tasklet handler while the QP is already moving ahead with the
-destruction.
+Release the link mapping resource in AP removal. This impacted devices
+that do not support the MLD API (9260 and down).
+On those devices, we couldn't start the AP again after the AP has been
+already started and stopped.
 
-Fixing this race by implementing a table-lock to synchronize the access.
-
-Fixes: f218d67ef004 ("RDMA/bnxt_re: Allow posting when QPs are in error")
-Fixes: 84cf229f4001 ("RDMA/bnxt_re: Fix the qp table indexing")
-Link: https://patch.msgid.link/r/1728912975-19346-3-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: a8b5d4809b50 ("wifi: iwlwifi: mvm: Configure the link mapping for non-MLD FW")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20241010140328.c54c42779882.Ied79e0d6244dc5a372e8b6ffa8ee9c6e1379ec1d@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.c   |  4 ++++
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.c | 13 +++++++++----
- drivers/infiniband/hw/bnxt_re/qplib_rcfw.h |  2 ++
- 3 files changed, 15 insertions(+), 4 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-index 03d517be9c52e..560a0f7bff85e 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -1532,9 +1532,11 @@ int bnxt_qplib_destroy_qp(struct bnxt_qplib_res *res,
- 	u32 tbl_indx;
- 	int rc;
- 
-+	spin_lock_bh(&rcfw->tbl_lock);
- 	tbl_indx = map_qp_id_to_tbl_indx(qp->id, rcfw);
- 	rcfw->qp_tbl[tbl_indx].qp_id = BNXT_QPLIB_QP_ID_INVALID;
- 	rcfw->qp_tbl[tbl_indx].qp_handle = NULL;
-+	spin_unlock_bh(&rcfw->tbl_lock);
- 
- 	bnxt_qplib_rcfw_cmd_prep((struct cmdq_base *)&req,
- 				 CMDQ_BASE_OPCODE_DESTROY_QP,
-@@ -1545,8 +1547,10 @@ int bnxt_qplib_destroy_qp(struct bnxt_qplib_res *res,
- 				sizeof(resp), 0);
- 	rc = bnxt_qplib_rcfw_send_message(rcfw, &msg);
- 	if (rc) {
-+		spin_lock_bh(&rcfw->tbl_lock);
- 		rcfw->qp_tbl[tbl_indx].qp_id = qp->id;
- 		rcfw->qp_tbl[tbl_indx].qp_handle = qp;
-+		spin_unlock_bh(&rcfw->tbl_lock);
- 		return rc;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index 1ebcc6417ecef..e38cff6176dd3 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -1951,7 +1951,6 @@ static void iwl_mvm_mac_remove_interface(struct ieee80211_hw *hw,
+ 		mvm->p2p_device_vif = NULL;
  	}
  
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-index ca26b88a0a80f..e82bd37158ad6 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.c
-@@ -634,17 +634,21 @@ static int bnxt_qplib_process_qp_event(struct bnxt_qplib_rcfw *rcfw,
- 	case CREQ_QP_EVENT_EVENT_QP_ERROR_NOTIFICATION:
- 		err_event = (struct creq_qp_error_notification *)qp_event;
- 		qp_id = le32_to_cpu(err_event->xid);
-+		spin_lock(&rcfw->tbl_lock);
- 		tbl_indx = map_qp_id_to_tbl_indx(qp_id, rcfw);
- 		qp = rcfw->qp_tbl[tbl_indx].qp_handle;
-+		if (!qp) {
-+			spin_unlock(&rcfw->tbl_lock);
-+			break;
-+		}
-+		bnxt_qplib_mark_qp_error(qp);
-+		rc = rcfw->creq.aeq_handler(rcfw, qp_event, qp);
-+		spin_unlock(&rcfw->tbl_lock);
- 		dev_dbg(&pdev->dev, "Received QP error notification\n");
- 		dev_dbg(&pdev->dev,
- 			"qpid 0x%x, req_err=0x%x, resp_err=0x%x\n",
- 			qp_id, err_event->req_err_state_reason,
- 			err_event->res_err_state_reason);
--		if (!qp)
--			break;
--		bnxt_qplib_mark_qp_error(qp);
--		rc = rcfw->creq.aeq_handler(rcfw, qp_event, qp);
- 		break;
- 	default:
- 		/*
-@@ -973,6 +977,7 @@ int bnxt_qplib_alloc_rcfw_channel(struct bnxt_qplib_res *res,
- 			       GFP_KERNEL);
- 	if (!rcfw->qp_tbl)
- 		goto fail;
-+	spin_lock_init(&rcfw->tbl_lock);
+-	iwl_mvm_unset_link_mapping(mvm, vif, &vif->bss_conf);
+ 	iwl_mvm_mac_ctxt_remove(mvm, vif);
  
- 	rcfw->max_timeout = res->cctx->hwrm_cmd_max_timeout;
+ 	RCU_INIT_POINTER(mvm->vif_id_to_mac[mvmvif->id], NULL);
+@@ -1960,6 +1959,7 @@ static void iwl_mvm_mac_remove_interface(struct ieee80211_hw *hw,
+ 		mvm->monitor_on = false;
  
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-index 45996e60a0d03..07779aeb75759 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_rcfw.h
-@@ -224,6 +224,8 @@ struct bnxt_qplib_rcfw {
- 	struct bnxt_qplib_crsqe		*crsqe_tbl;
- 	int qp_tbl_size;
- 	struct bnxt_qplib_qp_node *qp_tbl;
-+	/* To synchronize the qp-handle hash table */
-+	spinlock_t			tbl_lock;
- 	u64 oos_prev;
- 	u32 init_oos_stats;
- 	u32 cmdq_depth;
+ out:
++	iwl_mvm_unset_link_mapping(mvm, vif, &vif->bss_conf);
+ 	if (vif->type == NL80211_IFTYPE_AP ||
+ 	    vif->type == NL80211_IFTYPE_ADHOC) {
+ 		iwl_mvm_dealloc_int_sta(mvm, &mvmvif->deflink.mcast_sta);
 -- 
 2.43.0
 
