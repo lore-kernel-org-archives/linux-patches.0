@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9321D5AD7;
-	Wed,  6 Nov 2024 12:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266931D416E;
+	Wed,  6 Nov 2024 12:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894995; cv=none; b=J2JO9PI6JgoE1YqmEUNOdjc7IhI6HhjhqlsCY7h6IVRqTMmgcXmrIWky3GIk+bXjXKWvZVVVgBE1Brlc0RPBDfI09ym+ZKV5AO3WnTYOPzZcQuFHbBDMWhYG2SVCJE4lZeNZWdPR0iMsL0ifadL2dm/hHX1JRid688CLPYF2ixo=
+	t=1730894998; cv=none; b=ahxzhapH0pQlNYrj3GVQ0GE/sCAoo+0KsB6B8VUHmEIj8hi0bkzW2mgUZ3jYjVXruH/xIxrHKjBUULhCok+iDHyVBar30n7Hf0HT9K0+TO/VsYrb9bfPs7L6CeTEQKwnVc/3CbRLmMRcFV8nui51STPn6apl0jNhGkeWb0czAYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894995; c=relaxed/simple;
-	bh=NxG7tT7/p1pk60GVjZ9QCdjhtH0Hm3dBUNvIRKmP6s0=;
+	s=arc-20240116; t=1730894998; c=relaxed/simple;
+	bh=NuVlYGHtmX5lEBF2FZ4XhzExbi+/P77wiecBGCqIatU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eLx5gQBsLDbICakn1R5a/9bzR/KdtbvG/q8gsu2Oxd41mpdcJ2OjFILceLc2YEYNk5OmIetZkv3u5Ahbi+bpz26YssgG8hOjqAQG5Y+i4G4AEjvkiX03sR0p3di2LrQzyroaV6XF1IxY9wb3ta5bMmXxJRA7xPJfCt3dW0Ip7Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KkzZPBnu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uSaZodX6f1eq3he1Ki7Bwna2HRf+qLmIijmY8zuUfgr8SlbcNqHZkY9rXjxuwWLwGTGrzKl8YDPW/4uQJ5XVmi+p3dIfT5HIV5GKkpqH5MuL9axChoOm6bAMw4tRkqN1IuyHZ3Kc+GTb55ZDC1lxu/Qkj+V2wr3sJEvKX1gLnqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmtReoMb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KkzZPBnu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C73BC4CECD;
-	Wed,  6 Nov 2024 12:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmtReoMb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A27C4CECD;
+	Wed,  6 Nov 2024 12:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894994;
-	bh=NxG7tT7/p1pk60GVjZ9QCdjhtH0Hm3dBUNvIRKmP6s0=;
+	s=korg; t=1730894997;
+	bh=NuVlYGHtmX5lEBF2FZ4XhzExbi+/P77wiecBGCqIatU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KkzZPBnuyUjC4ph6jX/hk0XWrDXO7dRrdR4FTtgxkzEbIyVb/9G1L9TGovOttzHUH
-	 zPedr2kZmoHVx6bNqrJmPeO0K5KRAEfEU6pvkZdnDDbvSOY7fWi0zdb4msbByqft24
-	 CedSRwBqU77dFrZiTHOVwUN/UNvIQKY8apgoKFSY=
+	b=dmtReoMbY9oJT4vPOuq4XiFPogI7SUm8p8KPSnAD85af2Si6pwr7hRiNFjY+Fno7u
+	 9EerFxnUOz+sJisMpRCzyis1ZCVTLyIVEqjaNufPfO6QvpGohXRFgXpHPE3MIheei6
+	 9hP4h7N1Bsv42oidrkV8Hq8fnOIUYzQ+EZZdAExU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Yu <yu.c.chen@intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	David Gow <davidgow@google.com>,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
-	Tejun Heo <tj@kernel.org>,
+	Mauricio Faria de Oliveira <mfo@canonical.com>,
+	Jan Kara <jack@suse.cz>,
+	Andreas Dilger <adilger@dilger.ca>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 069/350] kthread: fix task state in kthread worker if being frozen
-Date: Wed,  6 Nov 2024 12:59:57 +0100
-Message-ID: <20241106120322.600633447@linuxfoundation.org>
+Subject: [PATCH 4.19 070/350] jbd2: introduce/export functions jbd2_journal_submit|finish_inode_data_buffers()
+Date: Wed,  6 Nov 2024 12:59:58 +0100
+Message-ID: <20241106120322.625050309@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,93 +47,153 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Yu <yu.c.chen@intel.com>
+From: Mauricio Faria de Oliveira <mfo@canonical.com>
 
-[ Upstream commit e16c7b07784f3fb03025939c4590b9a7c64970a7 ]
+[ Upstream commit aa3c0c61f62d682259e3e66cdc01846290f9cd6c ]
 
-When analyzing a kernel waring message, Peter pointed out that there is a
-race condition when the kworker is being frozen and falls into
-try_to_freeze() with TASK_INTERRUPTIBLE, which could trigger a
-might_sleep() warning in try_to_freeze().  Although the root cause is not
-related to freeze()[1], it is still worthy to fix this issue ahead.
+Export functions that implement the current behavior done
+for an inode in journal_submit|finish_inode_data_buffers().
 
-One possible race scenario:
+No functional change.
 
-        CPU 0                                           CPU 1
-        -----                                           -----
-
-        // kthread_worker_fn
-        set_current_state(TASK_INTERRUPTIBLE);
-                                                       suspend_freeze_processes()
-                                                         freeze_processes
-                                                           static_branch_inc(&freezer_active);
-                                                         freeze_kernel_threads
-                                                           pm_nosig_freezing = true;
-        if (work) { //false
-          __set_current_state(TASK_RUNNING);
-
-        } else if (!freezing(current)) //false, been frozen
-
-                      freezing():
-                      if (static_branch_unlikely(&freezer_active))
-                        if (pm_nosig_freezing)
-                          return true;
-          schedule()
-	}
-
-        // state is still TASK_INTERRUPTIBLE
-        try_to_freeze()
-          might_sleep() <--- warning
-
-Fix this by explicitly set the TASK_RUNNING before entering
-try_to_freeze().
-
-Link: https://lore.kernel.org/lkml/Zs2ZoAcUsZMX2B%2FI@chenyu5-mobl2/ [1]
-Link: https://lkml.kernel.org/r/20240827112308.181081-1-yu.c.chen@intel.com
-Fixes: b56c0d8937e6 ("kthread: implement kthread_worker")
-Signed-off-by: Chen Yu <yu.c.chen@intel.com>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Suggested-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Andreas Gruenbacher <agruenba@redhat.com>
-Cc: David Gow <davidgow@google.com>
-Cc: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Mickaël Salaün <mic@digikod.net>
-Cc: Tejun Heo <tj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Mauricio Faria de Oliveira <mfo@canonical.com>
+Suggested-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Link: https://lore.kernel.org/r/20201006004841.600488-2-mfo@canonical.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 20cee68f5b44 ("ext4: clear EXT4_GROUP_INFO_WAS_TRIMMED_BIT even mount with discard")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kthread.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/jbd2/commit.c     | 36 ++++++++++++++++--------------------
+ fs/jbd2/journal.c    |  2 ++
+ include/linux/jbd2.h |  4 ++++
+ 3 files changed, 22 insertions(+), 20 deletions(-)
 
-diff --git a/kernel/kthread.c b/kernel/kthread.c
-index f69aa5da3b53e..9c562b3b362ae 100644
---- a/kernel/kthread.c
-+++ b/kernel/kthread.c
-@@ -705,8 +705,16 @@ int kthread_worker_fn(void *worker_ptr)
- 		 * event only cares about the address.
- 		 */
- 		trace_sched_kthread_work_execute_end(work, func);
--	} else if (!freezing(current))
-+	} else if (!freezing(current)) {
- 		schedule();
-+	} else {
-+		/*
-+		 * Handle the case where the current remains
-+		 * TASK_INTERRUPTIBLE. try_to_freeze() expects
-+		 * the current to be TASK_RUNNING.
-+		 */
-+		__set_current_state(TASK_RUNNING);
-+	}
+diff --git a/fs/jbd2/commit.c b/fs/jbd2/commit.c
+index 97760cb9bcd75..0250a6e1f91c9 100644
+--- a/fs/jbd2/commit.c
++++ b/fs/jbd2/commit.c
+@@ -187,19 +187,17 @@ static int journal_wait_on_commit_record(journal_t *journal,
+  * use writepages() because with dealyed allocation we may be doing
+  * block allocation in writepages().
+  */
+-static int journal_submit_inode_data_buffers(struct address_space *mapping,
+-		loff_t dirty_start, loff_t dirty_end)
++int jbd2_journal_submit_inode_data_buffers(struct jbd2_inode *jinode)
+ {
+-	int ret;
++	struct address_space *mapping = jinode->i_vfs_inode->i_mapping;
+ 	struct writeback_control wbc = {
+ 		.sync_mode =  WB_SYNC_ALL,
+ 		.nr_to_write = mapping->nrpages * 2,
+-		.range_start = dirty_start,
+-		.range_end = dirty_end,
++		.range_start = jinode->i_dirty_start,
++		.range_end = jinode->i_dirty_end,
+ 	};
  
- 	try_to_freeze();
- 	cond_resched();
+-	ret = generic_writepages(mapping, &wbc);
+-	return ret;
++	return generic_writepages(mapping, &wbc);
+ }
+ 
+ /*
+@@ -215,16 +213,11 @@ static int journal_submit_data_buffers(journal_t *journal,
+ {
+ 	struct jbd2_inode *jinode;
+ 	int err, ret = 0;
+-	struct address_space *mapping;
+ 
+ 	spin_lock(&journal->j_list_lock);
+ 	list_for_each_entry(jinode, &commit_transaction->t_inode_list, i_list) {
+-		loff_t dirty_start = jinode->i_dirty_start;
+-		loff_t dirty_end = jinode->i_dirty_end;
+-
+ 		if (!(jinode->i_flags & JI_WRITE_DATA))
+ 			continue;
+-		mapping = jinode->i_vfs_inode->i_mapping;
+ 		jinode->i_flags |= JI_COMMIT_RUNNING;
+ 		spin_unlock(&journal->j_list_lock);
+ 		/*
+@@ -234,8 +227,7 @@ static int journal_submit_data_buffers(journal_t *journal,
+ 		 * only allocated blocks here.
+ 		 */
+ 		trace_jbd2_submit_inode_data(jinode->i_vfs_inode);
+-		err = journal_submit_inode_data_buffers(mapping, dirty_start,
+-				dirty_end);
++		err = jbd2_journal_submit_inode_data_buffers(jinode);
+ 		if (!ret)
+ 			ret = err;
+ 		spin_lock(&journal->j_list_lock);
+@@ -248,6 +240,15 @@ static int journal_submit_data_buffers(journal_t *journal,
+ 	return ret;
+ }
+ 
++int jbd2_journal_finish_inode_data_buffers(struct jbd2_inode *jinode)
++{
++	struct address_space *mapping = jinode->i_vfs_inode->i_mapping;
++
++	return filemap_fdatawait_range_keep_errors(mapping,
++						   jinode->i_dirty_start,
++						   jinode->i_dirty_end);
++}
++
+ /*
+  * Wait for data submitted for writeout, refile inodes to proper
+  * transaction if needed.
+@@ -262,16 +263,11 @@ static int journal_finish_inode_data_buffers(journal_t *journal,
+ 	/* For locking, see the comment in journal_submit_data_buffers() */
+ 	spin_lock(&journal->j_list_lock);
+ 	list_for_each_entry(jinode, &commit_transaction->t_inode_list, i_list) {
+-		loff_t dirty_start = jinode->i_dirty_start;
+-		loff_t dirty_end = jinode->i_dirty_end;
+-
+ 		if (!(jinode->i_flags & JI_WAIT_DATA))
+ 			continue;
+ 		jinode->i_flags |= JI_COMMIT_RUNNING;
+ 		spin_unlock(&journal->j_list_lock);
+-		err = filemap_fdatawait_range_keep_errors(
+-				jinode->i_vfs_inode->i_mapping, dirty_start,
+-				dirty_end);
++		err = jbd2_journal_finish_inode_data_buffers(jinode);
+ 		if (!ret)
+ 			ret = err;
+ 		spin_lock(&journal->j_list_lock);
+diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
+index 08cff80f8c297..79eceebbf3df8 100644
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -96,6 +96,8 @@ EXPORT_SYMBOL(jbd2_journal_inode_add_write);
+ EXPORT_SYMBOL(jbd2_journal_inode_add_wait);
+ EXPORT_SYMBOL(jbd2_journal_inode_ranged_write);
+ EXPORT_SYMBOL(jbd2_journal_inode_ranged_wait);
++EXPORT_SYMBOL(jbd2_journal_submit_inode_data_buffers);
++EXPORT_SYMBOL(jbd2_journal_finish_inode_data_buffers);
+ EXPORT_SYMBOL(jbd2_journal_init_jbd_inode);
+ EXPORT_SYMBOL(jbd2_journal_release_jbd_inode);
+ EXPORT_SYMBOL(jbd2_journal_begin_ordered_truncate);
+diff --git a/include/linux/jbd2.h b/include/linux/jbd2.h
+index 268f3000d1b34..1d81afb54928e 100644
+--- a/include/linux/jbd2.h
++++ b/include/linux/jbd2.h
+@@ -1421,6 +1421,10 @@ extern int	   jbd2_journal_inode_ranged_write(handle_t *handle,
+ extern int	   jbd2_journal_inode_ranged_wait(handle_t *handle,
+ 			struct jbd2_inode *inode, loff_t start_byte,
+ 			loff_t length);
++extern int	   jbd2_journal_submit_inode_data_buffers(
++			struct jbd2_inode *jinode);
++extern int	   jbd2_journal_finish_inode_data_buffers(
++			struct jbd2_inode *jinode);
+ extern int	   jbd2_journal_begin_ordered_truncate(journal_t *journal,
+ 				struct jbd2_inode *inode, loff_t new_size);
+ extern void	   jbd2_journal_init_jbd_inode(struct jbd2_inode *jinode, struct inode *inode);
 -- 
 2.43.0
 
