@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950BA1D5AD7;
-	Wed,  6 Nov 2024 12:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850A41D416E;
+	Wed,  6 Nov 2024 12:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895130; cv=none; b=RrMdKAVkM5lLeuj6jG4QUBd2NjYIW+55wMQvZOtC6qQsGN/Cfyt1QSwXUYucwpH/2cVqSfde4mNK9s0Hy0r0wh5yewe1nMGEMz/tzXAvp5/jzzvhd6K7Tn2mD8hgAe4tXsj+ysaRqZI51r4x1N1DRrL/hg/dLPEIkVZ3Haa7URI=
+	t=1730895133; cv=none; b=r2mzI9PIrnpI3l7Y2JEjuYXndXHEDD9OLMviXAt57Ni+UuOMRotnZZX8Eg6tAhztz2LEV2y1UDeZz2dKIeS4GyN9vj6dFFX3Qu2rUcCFaiFybbEuElvDyXlgprgsOKn1YZGHof5U5Xue7hnq9dAlJh9WTkKcLZif80mWG7AmJ04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895130; c=relaxed/simple;
-	bh=CSwjAWfQFV3QxecjS4/3WPDN14+Uy3/dNI/UTYeGEok=;
+	s=arc-20240116; t=1730895133; c=relaxed/simple;
+	bh=WdRysko8dpb66i4sIz+p8JSLf+lc8To3V52llo/SRrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MgJc0PV74oIwUOxUPlzO1EFD/l4QQiKNNQEFt12599N/QWNQAbcZ0TrS5hXZMy3mSowfU+/74P5MHmp1aXlu44W7Dr0RCXLbJyGghhOkBm3BK53E/ZryHpg4D+nbhEvzPJCY0Qi+V7jpUdtCYE4/Rsdcs6FUUGjDi5ifcjeuSfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMHlKagl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gvIzCIE1wCd2ugH2u+QPAr3oJAiwZIjGucrQIot8AtMrDp73hQTw7zz8FuBEIPeOBE0cZ378WajFCWffFqcU+iLcjROD2tDO05eBGlxXOKefET22AFlJL/Ghb9frozB6Q0bQ+xIB3qLBAodKJIO/VjlZUDp+kk+SCUeYyLkkOUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afBkglyF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMHlKagl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16471C4CECD;
-	Wed,  6 Nov 2024 12:12:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afBkglyF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEC5C4CECD;
+	Wed,  6 Nov 2024 12:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895130;
-	bh=CSwjAWfQFV3QxecjS4/3WPDN14+Uy3/dNI/UTYeGEok=;
+	s=korg; t=1730895133;
+	bh=WdRysko8dpb66i4sIz+p8JSLf+lc8To3V52llo/SRrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aMHlKaglqvQtCkpa/VzvwguF85+excRJswytcv8/eveExc1tuiULVP7ivjMygFunk
-	 BRB1MnrKzXlj21kAycvPgkeDFeaf6ulAtUTASiSEMHfkLlMuiL+z9RxiVxujOUkrWA
-	 +QUaUZpdAwG+bk+UQNT7u7d07oGaQKABB6inXphM=
+	b=afBkglyFhd00BxlfEnE+303HZfbepY3oe2Wrfl0WBQu++Rcjnd0iQ/LajCxTw0ZoL
+	 iMV8HDBz+gAcEdjqlxOPlAM/MsOSQ9alrelfTHf2MdzO1jsa+jJfzjR/hK7JzrVOrp
+	 qRtpL8q5WCS8qMBHC+y1CC3GJFnVrNyTmtDn1Uac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 4.19 115/350] ACPI: sysfs: validate return type of _STR method
-Date: Wed,  6 Nov 2024 13:00:43 +0100
-Message-ID: <20241106120323.745273173@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 4.19 116/350] f2fs: prevent possible int overflow in dir_block_index()
+Date: Wed,  6 Nov 2024 13:00:44 +0100
+Message-ID: <20241106120323.769453763@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -44,45 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 4bb1e7d027413835b086aed35bc3f0713bc0f72b upstream.
+commit 47f268f33dff4a5e31541a990dc09f116f80e61c upstream.
 
-Only buffer objects are valid return values of _STR.
+The result of multiplication between values derived from functions
+dir_buckets() and bucket_blocks() *could* technically reach
+2^30 * 2^2 = 2^32.
 
-If something else is returned description_show() will access invalid
-memory.
+While unlikely to happen, it is prudent to ensure that it will not
+lead to integer overflow. Thus, use mul_u32_u32() as it's more
+appropriate to mitigate the issue.
 
-Fixes: d1efe3c324ea ("ACPI: Add new sysfs interface to export device description")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://patch.msgid.link/20240709-acpi-sysfs-groups-v2-1-058ab0667fa8@weissschuh.net
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
+
+Fixes: 3843154598a0 ("f2fs: introduce large directory support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/device_sysfs.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/f2fs/dir.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/acpi/device_sysfs.c
-+++ b/drivers/acpi/device_sysfs.c
-@@ -539,8 +539,9 @@ int acpi_device_setup_files(struct acpi_
- 	 * If device has _STR, 'description' file is created
- 	 */
- 	if (acpi_has_method(dev->handle, "_STR")) {
--		status = acpi_evaluate_object(dev->handle, "_STR",
--					NULL, &buffer);
-+		status = acpi_evaluate_object_typed(dev->handle, "_STR",
-+						    NULL, &buffer,
-+						    ACPI_TYPE_BUFFER);
- 		if (ACPI_FAILURE(status))
- 			buffer.pointer = NULL;
- 		dev->pnp.str_obj = buffer.pointer;
+--- a/fs/f2fs/dir.c
++++ b/fs/f2fs/dir.c
+@@ -79,7 +79,8 @@ static unsigned long dir_block_index(uns
+ 	unsigned long bidx = 0;
+ 
+ 	for (i = 0; i < level; i++)
+-		bidx += dir_buckets(i, dir_level) * bucket_blocks(i);
++		bidx += mul_u32_u32(dir_buckets(i, dir_level),
++				    bucket_blocks(i));
+ 	bidx += idx * bucket_blocks(level);
+ 	return bidx;
+ }
 
 
