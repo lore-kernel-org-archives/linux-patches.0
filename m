@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB3E1F4FCF;
-	Wed,  6 Nov 2024 12:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B53F1E2019;
+	Wed,  6 Nov 2024 12:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897788; cv=none; b=RyWROqPpF6xdpnVvh8X1ylPgrnxFr05gFzCJVc2Ve4P+kiPYN0WY8W9Akq/1YQ4tmiGj8MmBp5Wfhw0SbNWx6XO1l5iDKa+p9Ujm3a5MQzq5XWOsFjoahyAXfwB+/lCg+yowV9mVFRUDjki3mV7hWKjnBh6xr7xd0iUF1J3XHhQ=
+	t=1730897791; cv=none; b=MQAALrC3Guduc+1may+fNFxBMA9KOevpcnccu9ANwk5gp797qfBwFLcT7PXHXUaACicqNDnIvkRxJt9DXdXE8Qd7RIkMAW+Y8gtduAHk9PrQwOTqZOE34gQ3BmxS8bsCexx6Jsi7obVSnKr9Ac0Pm2u6DEFipL/NA3rz74a8Beg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897788; c=relaxed/simple;
-	bh=yJ5mPHVwwm3Jn7I5X7Dr1P2YtLqHTaeRgUDcKY0a73c=;
+	s=arc-20240116; t=1730897791; c=relaxed/simple;
+	bh=k7IJyMJ84HUgoC0FSzmoyFlaKdzrLO0bH4K0ZKnsLHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WO5VL3yD6eX4WOjg3iw9jNkDp3r+vuqZBGTlU/BE67bkYWUHkUSCiyyAoAIuXMEsqLfhn0e9mi2wYzSJ0AzqOZwaG1S3kj5R0bMxVJc2mtgSidQbE7aAci+jukUpg5zIrjy214JJT+8hYKJ5rJQ+9u7GbNSN+r+Qs5oHRLeSel8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZklcOGO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HWE28Y0wGk2PgzeoKFzQY47EaIx6riYd9ZhYwLPIwtbZtWk/2mDni6MeVfao63mSTHDUAEofRozZsL0XVkPI1ncXNNZWgETteimr8zLuuAFZ+YjyRArrwSPvlyveReAeX3BaRP+zLYGLOv+ZYdFex8SLNcJf9p0HQfla8uei4L4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x27dLdbi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZklcOGO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE563C4CED3;
-	Wed,  6 Nov 2024 12:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x27dLdbi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F7D2C4CED3;
+	Wed,  6 Nov 2024 12:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897788;
-	bh=yJ5mPHVwwm3Jn7I5X7Dr1P2YtLqHTaeRgUDcKY0a73c=;
+	s=korg; t=1730897791;
+	bh=k7IJyMJ84HUgoC0FSzmoyFlaKdzrLO0bH4K0ZKnsLHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZklcOGO5znaB5sadUhar5C2oQtWND2U+1CtYFO5juTPa4nMV6b776A6nX4pICOoJ
-	 MULx7yBZ6cLHWhYuKa7nJpRcnzi5CT6VpaMYyv2pkKzKyXWsxcB+VKMxBWMMJAy9KG
-	 ggIL/D/7ogP48OIS4HfXUDOUAnXYU/yi9R1URT6M=
+	b=x27dLdbivRwfI+6hNCCme5rBLWU35QykQpxbeHd8Rx+l15hbgwW0c2MpI32VX+tqC
+	 GVBQka0LIb02PftPbYA7ZMamnKRH50omtD+7Gkquy1cgvxF5nNgztCwXfbB2k4KTcI
+	 CGc9iyw45fvQIj6BmYj9VM+2uUg0x5nQcf07K27A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moon Yeounsu <yyyynoom@gmail.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	"David S. Miller" <davem@davemloft.net>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 002/462] net: ethernet: use ip_hdrlen() instead of bit shift
-Date: Wed,  6 Nov 2024 12:58:15 +0100
-Message-ID: <20241106120331.565118655@linuxfoundation.org>
+Subject: [PATCH 5.4 020/462] wifi: iwlwifi: mvm: dont wait for tx queues if firmware is dead
+Date: Wed,  6 Nov 2024 12:58:33 +0100
+Message-ID: <20241106120332.007548882@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,48 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moon Yeounsu <yyyynoom@gmail.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 9a039eeb71a42c8b13408a1976e300f3898e1be0 ]
+[ Upstream commit 3a84454f5204718ca5b4ad2c1f0bf2031e2403d1 ]
 
-`ip_hdr(skb)->ihl << 2` is the same as `ip_hdrlen(skb)`
-Therefore, we should use a well-defined function not a bit shift
-to find the header length.
+There is a WARNING in iwl_trans_wait_tx_queues_empty() (that was
+recently converted from just a message), that can be hit if we
+wait for TX queues to become empty after firmware died. Clearly,
+we can't expect anything from the firmware after it's declared dead.
 
-It also compresses two lines to a single line.
+Don't call iwl_trans_wait_tx_queues_empty() in this case. While it could
+be a good idea to stop the flow earlier, the flush functions do some
+maintenance work that is not related to the firmware, so keep that part
+of the code running even when the firmware is not running.
 
-Signed-off-by: Moon Yeounsu <yyyynoom@gmail.com>
-Reviewed-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20240825191257.a7cbd794cee9.I44a739fbd4ffcc46b83844dd1c7b2eb0c7b270f6@changeid
+[edit commit message]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/jme.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/jme.c b/drivers/net/ethernet/jme.c
-index 25aa400e2e3c..773ec50d515b 100644
---- a/drivers/net/ethernet/jme.c
-+++ b/drivers/net/ethernet/jme.c
-@@ -947,15 +947,13 @@ jme_udpsum(struct sk_buff *skb)
- 	if (skb->protocol != htons(ETH_P_IP))
- 		return csum;
- 	skb_set_network_header(skb, ETH_HLEN);
--	if ((ip_hdr(skb)->protocol != IPPROTO_UDP) ||
--	    (skb->len < (ETH_HLEN +
--			(ip_hdr(skb)->ihl << 2) +
--			sizeof(struct udphdr)))) {
-+
-+	if (ip_hdr(skb)->protocol != IPPROTO_UDP ||
-+	    skb->len < (ETH_HLEN + ip_hdrlen(skb) + sizeof(struct udphdr))) {
- 		skb_reset_network_header(skb);
- 		return csum;
- 	}
--	skb_set_transport_header(skb,
--			ETH_HLEN + (ip_hdr(skb)->ihl << 2));
-+	skb_set_transport_header(skb, ETH_HLEN + ip_hdrlen(skb));
- 	csum = udp_hdr(skb)->check;
- 	skb_reset_transport_header(skb);
- 	skb_reset_network_header(skb);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index 3c523774ef0e6..c8c884bb5090e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -4666,6 +4666,10 @@ static void iwl_mvm_flush_no_vif(struct iwl_mvm *mvm, u32 queues, bool drop)
+ 	int i;
+ 
+ 	if (!iwl_mvm_has_new_tx_api(mvm)) {
++		/* we can't ask the firmware anything if it is dead */
++		if (test_bit(IWL_MVM_STATUS_HW_RESTART_REQUESTED,
++			     &mvm->status))
++			return;
+ 		if (drop) {
+ 			mutex_lock(&mvm->mutex);
+ 			iwl_mvm_flush_tx_path(mvm,
+@@ -4747,8 +4751,11 @@ static void iwl_mvm_mac_flush(struct ieee80211_hw *hw,
+ 
+ 	/* this can take a while, and we may need/want other operations
+ 	 * to succeed while doing this, so do it without the mutex held
++	 * If the firmware is dead, this can't work...
+ 	 */
+-	if (!drop && !iwl_mvm_has_new_tx_api(mvm))
++	if (!drop && !iwl_mvm_has_new_tx_api(mvm) &&
++	    !test_bit(IWL_MVM_STATUS_HW_RESTART_REQUESTED,
++		      &mvm->status))
+ 		iwl_trans_wait_tx_queues_empty(mvm->trans, msk);
+ }
+ 
 -- 
 2.43.0
 
