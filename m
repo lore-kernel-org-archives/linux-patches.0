@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA431E0083;
-	Wed,  6 Nov 2024 13:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE081E0DA1;
+	Wed,  6 Nov 2024 13:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898095; cv=none; b=PoHEI/Q1vGZashR64lpKAC3ipH+otuKpjfQCijDH5KPieAxlp0vNviH2a5qoNjqEl5/wuyXcEtiMQ444TNgj81/B/0axuJbIQFsS+zTQmO34uqHzTrc/4GD2WQJx5q2NdH0oZqTh2pS7ZaKtK3MH4JtQLN2rcTqwuoyfUnq+R0E=
+	t=1730898098; cv=none; b=ZbDJ1kvdaAMnWFGtSKmVM1zNM502Esv68Yn3NsLNd3lHVtqHqGYlICk9fNTlLxwiH5DVek7AI7HwSrL5W4eEopX1p8GBWc1dSCojILoa7tjrtyS9bOiweR33yhwI5FEULoqKiI+9PA/geWOIkt+XgzcTGGMgfKueDWEzW+hwC7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898095; c=relaxed/simple;
-	bh=VUiLZrvBzalNNjCsUkHrSrzShajnkDG4mXwD/q6C/FM=;
+	s=arc-20240116; t=1730898098; c=relaxed/simple;
+	bh=iunHOcW/g3FRg6HmPMIQas/etVdRfeaGZLr3dVKvpjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHIBkk4z9DFZaOZRd5UgkSi0vX3KJvjVp1spVDda9kEhZrROuIavcuzqBC80PapnTEBcwCRSf+oUZT2tbVm9YGbjNzUt7I92l8nY3yqiWcb0Yw7eOg/GSf2MuyT3X51aKQW76vrWjM760d2hedJVQ0mwX368984Pl2RkSWxGijc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUicoLH8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BoL8ShS0XEOXNG/KAd6vNyRUdOD5Bz1eR5SoH7w1nQppoysE+vlzd6MXgb8FSNGJmxTLiF8ozu5jZp7FNF6zFGNgXnTinCnR1bMhRrV2INH5VBspqV1C4tOHFBnax8kT3ZUu918NWkjwIqvc/Zsk/NEPGXg1lbUOF0MMW9HP6Uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kK7doi80; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUicoLH8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829EDC4CECD;
-	Wed,  6 Nov 2024 13:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kK7doi80"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5687C4CECD;
+	Wed,  6 Nov 2024 13:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898094;
-	bh=VUiLZrvBzalNNjCsUkHrSrzShajnkDG4mXwD/q6C/FM=;
+	s=korg; t=1730898098;
+	bh=iunHOcW/g3FRg6HmPMIQas/etVdRfeaGZLr3dVKvpjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cUicoLH8tQqMRrK50bjTSI7uQjht71nLTOLVRbGq3kj2WJ3FgmHPDYn5g1y2HIQdR
-	 OzYRjqBc50mpJ2u9eiK9LWvsofWNGzZlysQ6eXXlvxYrHEoO+HCqoIQOcuuw9na9Iu
-	 R9UPIqh/4LA0hHC5gJnCdDGmfIibun9MWe2rEr6s=
+	b=kK7doi80wpsAYcf9ETdbQZdHguhKkAnvMVZRkK42oM1xx22A0mW/qzvkZcZqhZa6V
+	 lYZFUezOBRbKb2Fvnv9T6FeUlq4ainrq5blGuotRiPiYf7ZzLM2gHGS+XgA1pTTUk2
+	 XqKXwQhfQhWaMf2PPbndI/aCXLWJbI3SdxJ7Xgi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoqing Jiang <guoqing.jiang@linux.dev>,
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Scott Mayhew <smayhew@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>
-Subject: [PATCH 5.4 123/462] nfsd: call cache_put if xdr_reserve_space returns NULL
-Date: Wed,  6 Nov 2024 13:00:16 +0100
-Message-ID: <20241106120334.545394728@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 124/462] nfsd: return -EINVAL when namelen is 0
+Date: Wed,  6 Nov 2024 13:00:17 +0100
+Message-ID: <20241106120334.571212607@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,56 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoqing Jiang <guoqing.jiang@linux.dev>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-[ Upstream commit d078cbf5c38de83bc31f83c47dcd2184c04a50c7 ]
+[ Upstream commit 22451a16b7ab7debefce660672566be887db1637 ]
 
-If not enough buffer space available, but idmap_lookup has triggered
-lookup_fn which calls cache_get and returns successfully. Then we
-missed to call cache_put here which pairs with cache_get.
+When we have a corrupted main.sqlite in /var/lib/nfs/nfsdcld/, it may
+result in namelen being 0, which will cause memdup_user() to return
+ZERO_SIZE_PTR.
+When we access the name.data that has been assigned the value of
+ZERO_SIZE_PTR in nfs4_client_to_reclaim(), null pointer dereference is
+triggered.
 
-Fixes: ddd1ea563672 ("nfsd4: use xdr_reserve_space in attribute encoding")
-Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
-Reviwed-by: Jeff Layton <jlayton@kernel.org>
+[ T1205] ==================================================================
+[ T1205] BUG: KASAN: null-ptr-deref in nfs4_client_to_reclaim+0xe9/0x260
+[ T1205] Read of size 1 at addr 0000000000000010 by task nfsdcld/1205
+[ T1205]
+[ T1205] CPU: 11 PID: 1205 Comm: nfsdcld Not tainted 5.10.0-00003-g2c1423731b8d #406
+[ T1205] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS ?-20190727_073836-buildvm-ppc64le-16.ppc.fedoraproject.org-3.fc31 04/01/2014
+[ T1205] Call Trace:
+[ T1205]  dump_stack+0x9a/0xd0
+[ T1205]  ? nfs4_client_to_reclaim+0xe9/0x260
+[ T1205]  __kasan_report.cold+0x34/0x84
+[ T1205]  ? nfs4_client_to_reclaim+0xe9/0x260
+[ T1205]  kasan_report+0x3a/0x50
+[ T1205]  nfs4_client_to_reclaim+0xe9/0x260
+[ T1205]  ? nfsd4_release_lockowner+0x410/0x410
+[ T1205]  cld_pipe_downcall+0x5ca/0x760
+[ T1205]  ? nfsd4_cld_tracking_exit+0x1d0/0x1d0
+[ T1205]  ? down_write_killable_nested+0x170/0x170
+[ T1205]  ? avc_policy_seqno+0x28/0x40
+[ T1205]  ? selinux_file_permission+0x1b4/0x1e0
+[ T1205]  rpc_pipe_write+0x84/0xb0
+[ T1205]  vfs_write+0x143/0x520
+[ T1205]  ksys_write+0xc9/0x170
+[ T1205]  ? __ia32_sys_read+0x50/0x50
+[ T1205]  ? ktime_get_coarse_real_ts64+0xfe/0x110
+[ T1205]  ? ktime_get_coarse_real_ts64+0xa2/0x110
+[ T1205]  do_syscall_64+0x33/0x40
+[ T1205]  entry_SYSCALL_64_after_hwframe+0x67/0xd1
+[ T1205] RIP: 0033:0x7fdbdb761bc7
+[ T1205] Code: 0f 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 514
+[ T1205] RSP: 002b:00007fff8c4b7248 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+[ T1205] RAX: ffffffffffffffda RBX: 000000000000042b RCX: 00007fdbdb761bc7
+[ T1205] RDX: 000000000000042b RSI: 00007fff8c4b75f0 RDI: 0000000000000008
+[ T1205] RBP: 00007fdbdb761bb0 R08: 0000000000000000 R09: 0000000000000001
+[ T1205] R10: 0000000000000000 R11: 0000000000000246 R12: 000000000000042b
+[ T1205] R13: 0000000000000008 R14: 00007fff8c4b75f0 R15: 0000000000000000
+[ T1205] ==================================================================
+
+Fix it by checking namelen.
+
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Fixes: 74725959c33c ("nfsd: un-deprecate nfsdcld")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Scott Mayhew <smayhew@redhat.com>
+Tested-by: Scott Mayhew <smayhew@redhat.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4idmap.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4recover.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/nfsd/nfs4idmap.c b/fs/nfsd/nfs4idmap.c
-index d1f285245af80..06d7404354b99 100644
---- a/fs/nfsd/nfs4idmap.c
-+++ b/fs/nfsd/nfs4idmap.c
-@@ -566,6 +566,7 @@ static __be32 idmap_id_to_name(struct xdr_stream *xdr,
- 		.id = id,
- 		.type = type,
- 	};
-+	__be32 status = nfs_ok;
- 	__be32 *p;
- 	int ret;
- 	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
-@@ -578,12 +579,16 @@ static __be32 idmap_id_to_name(struct xdr_stream *xdr,
- 		return nfserrno(ret);
- 	ret = strlen(item->name);
- 	WARN_ON_ONCE(ret > IDMAP_NAMESZ);
-+
- 	p = xdr_reserve_space(xdr, ret + 4);
--	if (!p)
--		return nfserr_resource;
--	p = xdr_encode_opaque(p, item->name, ret);
-+	if (unlikely(!p)) {
-+		status = nfserr_resource;
-+		goto out_put;
-+	}
-+	xdr_encode_opaque(p, item->name, ret);
-+out_put:
- 	cache_put(&item->h, nn->idtoname_cache);
--	return 0;
-+	return status;
- }
- 
- static bool
+diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
+index 14463e107918f..1abddad2b7ae7 100644
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -816,6 +816,10 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
+ 			ci = &cmsg->cm_u.cm_clntinfo;
+ 			if (get_user(namelen, &ci->cc_name.cn_len))
+ 				return -EFAULT;
++			if (!namelen) {
++				dprintk("%s: namelen should not be zero", __func__);
++				return -EINVAL;
++			}
+ 			name.data = memdup_user(&ci->cc_name.cn_id, namelen);
+ 			if (IS_ERR_OR_NULL(name.data))
+ 				return -EFAULT;
+@@ -838,6 +842,10 @@ __cld_pipe_inprogress_downcall(const struct cld_msg_v2 __user *cmsg,
+ 			cnm = &cmsg->cm_u.cm_name;
+ 			if (get_user(namelen, &cnm->cn_len))
+ 				return -EFAULT;
++			if (!namelen) {
++				dprintk("%s: namelen should not be zero", __func__);
++				return -EINVAL;
++			}
+ 			name.data = memdup_user(&cnm->cn_id, namelen);
+ 			if (IS_ERR_OR_NULL(name.data))
+ 				return -EFAULT;
 -- 
 2.43.0
 
