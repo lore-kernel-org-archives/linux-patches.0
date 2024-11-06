@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17041F9EA6;
-	Wed,  6 Nov 2024 12:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B1F1EF0A7;
+	Wed,  6 Nov 2024 12:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897353; cv=none; b=VnYFKy5xS/wedjVtdhF0Y7UhAl8OtDvkuFvIAoY3JiMeWjqhAUHi9cX6n0gHulRLmP+vP7mf6Gm3Q8ygL8g1lsuYNjGia4rUPUU6PTJYjSbFBZxxdsgRdVyZVcc5O4nj48a0smrH35zzUaIRLPHlm22tNz61V3gWNfiLfWq6D94=
+	t=1730897355; cv=none; b=qfol26imEaIp+57LC4Y46Pf9Ylse1anFQGBzCmRDnSTI7Czwg8w93gTxP7yboztNNDzZOjJY8EYcxLZKrLK6IZLpnjjHbtBWLN07lpIY9tJTSn1RrO2wo9v5XxpLDnFakgAqs9oQYoBust/fb283ucE9X5LlGNMCAyv7ZSu3rOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897353; c=relaxed/simple;
-	bh=miE/Xg+akWn80L0J/jQ2rpdZJ9OANFQQowUXP2ljWj8=;
+	s=arc-20240116; t=1730897355; c=relaxed/simple;
+	bh=ij0VwgjoEhDmc/nw2aUWkdFfdzjBCvSY/JMwTRdee1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lmfjj2a7gh2EYc8lDayxzXVvoeu4bjkwKWN74kfmzLS1PBIVJ6U2nNZ4qqSqNXk72eZV0KSSQrXZF7vi4+7f0A8NtZBmK/mJEqN3qQoq86T+xdVpajWDWWE7lNrzc+dlFBNFiDp1JGG/Z9i2R6/Ghsr2+zQtKWmkSl8By3MXk7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+bUwvnD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ch4e8+hnsLKco1JLwtIouw3AZRI/5hf1ZGHLlkVmPU9x8h3CxOpWv7eCWmCN1sFjTR0d+od93MeVqmPNDIJc2OZ38/iw8NtOcqDp4EcJCrXvwKOHmP00By4ut9Nvxc9RKLhwp5107iMXnw9KKBQescpgIp7B0P5UuFI6OirDQzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpVtNsXn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+bUwvnD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24ABBC4CECD;
-	Wed,  6 Nov 2024 12:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpVtNsXn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18709C4CECD;
+	Wed,  6 Nov 2024 12:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897352;
-	bh=miE/Xg+akWn80L0J/jQ2rpdZJ9OANFQQowUXP2ljWj8=;
+	s=korg; t=1730897355;
+	bh=ij0VwgjoEhDmc/nw2aUWkdFfdzjBCvSY/JMwTRdee1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+bUwvnDyoI6iMxgYKGJLfo21WqiHiresyMn6stpoKnynhqDqROmit7ow4e90mS0E
-	 GRrbYYHapB5OMwth4QYXdE05N/1ZBqYZZLWda/9pvUzLi/dxClSqM84v461B7cI+qw
-	 pUrtSsggAwzayrZYoshOnRVzGIqyBN5bU3vpBcEk=
+	b=mpVtNsXnXY0LCF1UK+iJ+W0OpQD8nN48YgJ8V6sK2mbkLgp5d33uvCoQtEYV8QRH8
+	 4zf/quG0xlpwbNndE3GBq954x51RtcGJkDN1PmDPAmn5koFTiFg0ISwwKQvu4orTpS
+	 2uqyZH9GjdDeTxMWpW00Kos8JZQ98Xp72rsBSLmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wander Lairson Costa <wander@redhat.com>,
-	Yuying Ma <yuma@redhat.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/151] igb: Disable threaded IRQ for igb_msix_other
-Date: Wed,  6 Nov 2024 13:03:32 +0100
-Message-ID: <20241106120309.497996398@linuxfoundation.org>
+Subject: [PATCH 6.6 025/151] ipv4: ip_tunnel: Fix suspicious RCU usage warning in ip_tunnel_init_flow()
+Date: Wed,  6 Nov 2024 13:03:33 +0100
+Message-ID: <20241106120309.523473521@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -56,77 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 338c4d3902feb5be49bfda530a72c7ab860e2c9f ]
+[ Upstream commit ad4a3ca6a8e886f6491910a3ae5d53595e40597d ]
 
-During testing of SR-IOV, Red Hat QE encountered an issue where the
-ip link up command intermittently fails for the igbvf interfaces when
-using the PREEMPT_RT variant. Investigation revealed that
-e1000_write_posted_mbx returns an error due to the lack of an ACK
-from e1000_poll_for_ack.
+There are code paths from which the function is called without holding
+the RCU read lock, resulting in a suspicious RCU usage warning [1].
 
-The underlying issue arises from the fact that IRQs are threaded by
-default under PREEMPT_RT. While the exact hardware details are not
-available, it appears that the IRQ handled by igb_msix_other must
-be processed before e1000_poll_for_ack times out. However,
-e1000_write_posted_mbx is called with preemption disabled, leading
-to a scenario where the IRQ is serviced only after the failure of
-e1000_write_posted_mbx.
+Fix by using l3mdev_master_upper_ifindex_by_index() which will acquire
+the RCU read lock before calling
+l3mdev_master_upper_ifindex_by_index_rcu().
 
-To resolve this, we set IRQF_NO_THREAD for the affected interrupt,
-ensuring that the kernel handles it immediately, thereby preventing
-the aforementioned error.
+[1]
+WARNING: suspicious RCU usage
+6.12.0-rc3-custom-gac8f72681cf2 #141 Not tainted
+-----------------------------
+net/core/dev.c:876 RCU-list traversed in non-reader section!!
 
-Reproducer:
+other info that might help us debug this:
 
-    #!/bin/bash
+rcu_scheduler_active = 2, debug_locks = 1
+1 lock held by ip/361:
+ #0: ffffffff86fc7cb0 (rtnl_mutex){+.+.}-{3:3}, at: rtnetlink_rcv_msg+0x377/0xf60
 
-    # echo 2 > /sys/class/net/ens14f0/device/sriov_numvfs
-    ipaddr_vlan=3
-    nic_test=ens14f0
-    vf=${nic_test}v0
+stack backtrace:
+CPU: 3 UID: 0 PID: 361 Comm: ip Not tainted 6.12.0-rc3-custom-gac8f72681cf2 #141
+Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xba/0x110
+ lockdep_rcu_suspicious.cold+0x4f/0xd6
+ dev_get_by_index_rcu+0x1d3/0x210
+ l3mdev_master_upper_ifindex_by_index_rcu+0x2b/0xf0
+ ip_tunnel_bind_dev+0x72f/0xa00
+ ip_tunnel_newlink+0x368/0x7a0
+ ipgre_newlink+0x14c/0x170
+ __rtnl_newlink+0x1173/0x19c0
+ rtnl_newlink+0x6c/0xa0
+ rtnetlink_rcv_msg+0x3cc/0xf60
+ netlink_rcv_skb+0x171/0x450
+ netlink_unicast+0x539/0x7f0
+ netlink_sendmsg+0x8c1/0xd80
+ ____sys_sendmsg+0x8f9/0xc20
+ ___sys_sendmsg+0x197/0x1e0
+ __sys_sendmsg+0x122/0x1f0
+ do_syscall_64+0xbb/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-    while true; do
-	    ip link set ${nic_test} mtu 1500
-	    ip link set ${vf} mtu 1500
-	    ip link set $vf up
-	    ip link set ${nic_test} vf 0 vlan ${ipaddr_vlan}
-	    ip addr add 172.30.${ipaddr_vlan}.1/24 dev ${vf}
-	    ip addr add 2021:db8:${ipaddr_vlan}::1/64 dev ${vf}
-	    if ! ip link show $vf | grep 'state UP'; then
-		    echo 'Error found'
-		    break
-	    fi
-	    ip link set $vf down
-    done
-
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
-Reported-by: Yuying Ma <yuma@redhat.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: db53cd3d88dc ("net: Handle l3mdev in ip_tunnel_init_flow")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20241022063822.462057-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c | 2 +-
+ include/net/ip_tunnels.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index 49b349fa22542..4c1673527361e 100644
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -935,7 +935,7 @@ static int igb_request_msix(struct igb_adapter *adapter)
- 	int i, err = 0, vector = 0, free_vector = 0;
+diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
+index 4e69f52a51177..006a61ddd36fa 100644
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -260,7 +260,7 @@ static inline void ip_tunnel_init_flow(struct flowi4 *fl4,
+ 	memset(fl4, 0, sizeof(*fl4));
  
- 	err = request_irq(adapter->msix_entries[vector].vector,
--			  igb_msix_other, 0, netdev->name, adapter);
-+			  igb_msix_other, IRQF_NO_THREAD, netdev->name, adapter);
- 	if (err)
- 		goto err_out;
- 
+ 	if (oif) {
+-		fl4->flowi4_l3mdev = l3mdev_master_upper_ifindex_by_index_rcu(net, oif);
++		fl4->flowi4_l3mdev = l3mdev_master_upper_ifindex_by_index(net, oif);
+ 		/* Legacy VRF/l3mdev use case */
+ 		fl4->flowi4_oif = fl4->flowi4_l3mdev ? 0 : oif;
+ 	}
 -- 
 2.43.0
 
