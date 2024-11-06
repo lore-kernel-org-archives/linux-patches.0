@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF73198E96;
-	Wed,  6 Nov 2024 12:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B8B1DF974;
+	Wed,  6 Nov 2024 12:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896468; cv=none; b=vGOogGTPu0/cJNRibKp9RVooy6mcA3hxuQ5RK/bSGeEnZpq4UfQ1xweQGNCQ3PetLUEToG2URa0kEnT8H+QfOofyIpJwJh95GgQrfz7SaI48UBDZnIOxSpnrS/QnjR1LJygtsPlzPjlxtMvTezGxf/9sxpVQqamSOzRXeOAdic0=
+	t=1730896471; cv=none; b=f2CG7ZBW5RVCmCU8zBwDAQWgpFrEZKnqYAP5RtaWr1ju4hwxN32j/9tFc+C0NB61T82OjxV7QLPQ4LS7yNzp5z95stSGi11Elvx9nhdCbYXNl/gy+X6rCtze0dBW+xZU1dEuHluzLFymWTO0v7L/pBq5VP2/aMIixl01Zu3TN0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896468; c=relaxed/simple;
-	bh=BSeKeT75Q6r68kNEmA6TLJ9l0xkfJsiF+NW7dGJr/EM=;
+	s=arc-20240116; t=1730896471; c=relaxed/simple;
+	bh=hdg5UsZ1XJ+IoYuyaBU5J4jwDzLvoHJT9SKlcRydBuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FQIvDFH+N6QQUv3UnfMmw4HcYlW39oE9VcJMP+W+Y6rf/t7rR6Z0c+Srs+NSnHHx+J4J7a2MMa7WRhiLkO4M8RvEeL70Oz9jesVjrm8Eeooo9BULprQIQ6TaTG4hnQb4AduGEYOK7jl00/UAJOaRgDIjObyZ3XkHNDhlbjztOkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSZXnuKi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DPsMZVo/B1WmAADVLNHZyYRWZNfJ+K5FW1xah8UjkuRFXKMPyObmR3BWBKyxG7rVaS5V9fuFlKvlLHfyJohcTAmSWA+yAG3krZWonSoRFypIj98cRDrWEWa7GzaSV00mTe1ebEqmYjlIoG7oCIvF7R8aLKvERl0TK5txdzL4560=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOKNQpXh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSZXnuKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A81C4CECD;
-	Wed,  6 Nov 2024 12:34:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOKNQpXh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E38C4CED4;
+	Wed,  6 Nov 2024 12:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896468;
-	bh=BSeKeT75Q6r68kNEmA6TLJ9l0xkfJsiF+NW7dGJr/EM=;
+	s=korg; t=1730896471;
+	bh=hdg5UsZ1XJ+IoYuyaBU5J4jwDzLvoHJT9SKlcRydBuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wSZXnuKi2Ky9dBglY6W8qHMZcrs/Pj/4FKFFqHsuLF6GrfzRGajXkkC/ZPfEZYcNa
-	 1Rl95HmXYqhAbYCQNWcarkUwxJld6BWyEihGFqAvA2XiLc3CrFBWtEozK6jZb4In8L
-	 h94+e/vSaCd8Kmt5qFmye9LS5UdZvC5pZYJwn+PA=
+	b=LOKNQpXhJonfKQ3Zf6cc391652NHkpWIXbcWQynVqQGnOw5vLnrh4Ai1fgjmLNB/Z
+	 txiNDlZfAIhG7JJXZ8JD7nl7Tts8JcvolSMeD88n60ER57s5j4udSBZ6MnqR6T9y4+
+	 /gyQuWwuY7O1cmXUDfFoyXBss/0zYzUWJp8ZnCXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Xilin Wu <wuxilin123@gmail.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.11 213/245] arm64: dts: qcom: x1e80100: Fix up BAR spaces
-Date: Wed,  6 Nov 2024 13:04:26 +0100
-Message-ID: <20241106120324.498382303@linuxfoundation.org>
+Subject: [PATCH 6.11 214/245] arm64: dts: qcom: x1e80100-vivobook-s15: fix nvme regulator boot glitch
+Date: Wed,  6 Nov 2024 13:04:27 +0100
+Message-ID: <20241106120324.521426644@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -51,58 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 7af1418500124150f9fd24e1a5b9c288771df271 upstream.
+commit c6d151f61b6703124e14bc0eae98d05206e36e02 upstream.
 
-The 32-bit BAR spaces are reaching outside their assigned register
-regions. Shrink them to match their actual sizes.
+The NVMe regulator has been left enabled by the boot firmware. Mark it
+as such to avoid disabling the regulator temporarily during boot.
 
-This resolves an issue where the regions overlap and one of the
-controllers won't come up, which can be seen in the log as:
-
-  qcom-pcie 1c08000.pci: resource collision: [mem 0x7c300000-0x7fffffff] conflicts with 1c00000.pci dbi [mem 0x7e000000-0x7e000f1c]
-
-While at it, unify the style.
-
-Fixes: 5eb83fc10289 ("arm64: dts: qcom: x1e80100: Add PCIe nodes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Tested-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240710-topic-barman-v1-1-5f63fca8d0fc@linaro.org
-[bjorn: Added note about overlapping resource regions]
+Fixes: d0e2f8f62dff ("arm64: dts: qcom: Add device tree for ASUS Vivobook S 15")
+Cc: stable@vger.kernel.org	# 6.11
+Cc: Xilin Wu <wuxilin123@gmail.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20241016145112.24785-4-johan+linaro@kernel.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -2895,9 +2895,9 @@
- 				    "mhi";
- 			#address-cells = <3>;
- 			#size-cells = <2>;
--			ranges = <0x01000000 0 0x00000000 0 0x70200000 0 0x100000>,
--				 <0x02000000 0 0x70300000 0 0x70300000 0 0x3d00000>;
--			bus-range = <0 0xff>;
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x70200000 0x0 0x100000>,
-+				 <0x02000000 0x0 0x70300000 0x0 0x70300000 0x0 0x1d00000>;
-+			bus-range = <0x00 0xff>;
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+index 20616bd4aa6c..fb4a48a1e2a8 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
+@@ -134,6 +134,8 @@ vreg_nvme: regulator-nvme {
  
- 			dma-coherent;
+ 		pinctrl-0 = <&nvme_reg_en>;
+ 		pinctrl-names = "default";
++
++		regulator-boot-on;
+ 	};
+ };
  
-@@ -3017,8 +3017,8 @@
- 				    "mhi";
- 			#address-cells = <3>;
- 			#size-cells = <2>;
--			ranges = <0x01000000 0 0x00000000 0 0x7c200000 0 0x100000>,
--				 <0x02000000 0 0x7c300000 0 0x7c300000 0 0x3d00000>;
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x7c200000 0x0 0x100000>,
-+				 <0x02000000 0x0 0x7c300000 0x0 0x7c300000 0x0 0x1d00000>;
- 			bus-range = <0x00 0xff>;
- 
- 			dma-coherent;
+-- 
+2.47.0
+
 
 
