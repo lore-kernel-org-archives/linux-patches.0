@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3421F942D;
-	Wed,  6 Nov 2024 12:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2631C1E0DA1;
+	Wed,  6 Nov 2024 12:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897283; cv=none; b=CKsPjHovi9wtoWkIBYExIPNrXs03LAvbjNsTQoNxzAupSy5U4NQOfJhiTjrSO2VBpOrc+zT5pY8djSBET2dD+CJf5IEnlIioeaR+nRg+0W+vKalVV9YP7ubltdOn2Owot0Tl+uC9aQZAj5Eglrm3Ehsywz3UQuBBfhQIFfDEUSM=
+	t=1730897286; cv=none; b=F4PuSFa4i6XLSj/92ro7WzdkBfeRvz76u78M81ZIVBnuvC1A0TD51tHreDVXXpCU7XzNgae9FkdY8dkmSU4m3DxGsND6RUBktWX0WNuYItYEkp0IGf99B0jfhRuwY3bUSVyOIkMiP9XrIPxTMGWt/Me776EwljDhJRfHclynSJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897283; c=relaxed/simple;
-	bh=7IpPHdrze9VdTkvlvngnj0YHac0TVXXOtf50/WEMFp8=;
+	s=arc-20240116; t=1730897286; c=relaxed/simple;
+	bh=m/XxnZOehRSXARgwXkwCzX/aoddE5ybMdPHj4idrReo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aROagX5wW39kn8xwHPkBxszajBca0A7f+cRJwQHmKsqrjrUv8Ly6+JuK0kzonb/gUFszSQ3XpH8WN5YpK0wDw/mMOzh1+ZQK2j3Y870oaL+98oek2OlnUlhby8lXs5XjtUsmeL/onfaPhzpqdazMR+pC46OS0zbKZgWKvzhnqDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6libibw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YuEZeswq5GUYTqUoc73DdIORoEEgTA91wV7pOhjEf3bg2HHRgcX/L3uyffeICzx1hfh1tyO+Sxo9p73UinOVe2bKq4FTkqi0ezR+ZhLhR2JBpCfwMwMIhg7v+/Pv9BUJkAmOogV1BHIzuSzTWjLYVsEXOBx8lBUSxrhJmWkf0jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMLdB4Uy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6libibw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F798C4CECD;
-	Wed,  6 Nov 2024 12:48:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMLdB4Uy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B5A0C4CECD;
+	Wed,  6 Nov 2024 12:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897283;
-	bh=7IpPHdrze9VdTkvlvngnj0YHac0TVXXOtf50/WEMFp8=;
+	s=korg; t=1730897286;
+	bh=m/XxnZOehRSXARgwXkwCzX/aoddE5ybMdPHj4idrReo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d6libibwnab7hpr2J5C4nUiQgfzJvOMvH0H/Uaya5NYdbh4vrfKRJOhe1ZBazJzLO
-	 nPA9kF4YSU+AfY99QvI3d5unXHqzPS4xnZ9ZhkPW5vfV5izJr86810iMd4ZlLjZYkO
-	 UzLizr/VmsRC81oyKXRLikiLczSWwNkbZ1szCJnU=
+	b=oMLdB4UyoA++kJ+jj6dANxjGMwKJyuiOe0tUdlUm+89PuBf509Qa8Ub82Oy+K4Dhq
+	 uZvZ6kOpiea6bKJZ2BGnPkqPRGXJqEvsB3ISHWZ1Nq6BrOUaVt0ezACgR3NdAhvIv0
+	 eRRfY9rlboEjoIkdKViFt2mvOUquyr3nbnBcF6vQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Gill <rtgill82@gmail.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Brian Gerst <brgerst@gmail.com>,
-	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>
-Subject: [PATCH 6.1 115/126] x86/bugs: Use code segment selector for VERW operand
-Date: Wed,  6 Nov 2024 13:05:16 +0100
-Message-ID: <20241106120309.164236348@linuxfoundation.org>
+	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>
+Subject: [PATCH 6.1 116/126] wifi: mac80211: fix NULL dereference at band check in starting tx ba session
+Date: Wed,  6 Nov 2024 13:05:17 +0100
+Message-ID: <20241106120309.193518773@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -53,81 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+From: Zong-Zhe Yang <kevin_yang@realtek.com>
 
-commit e4d2102018542e3ae5e297bc6e229303abff8a0f upstream.
+commit 021d53a3d87eeb9dbba524ac515651242a2a7e3b upstream.
 
-Robert Gill reported below #GP in 32-bit mode when dosemu software was
-executing vm86() system call:
+In MLD connection, link_data/link_conf are dynamically allocated. They
+don't point to vif->bss_conf. So, there will be no chanreq assigned to
+vif->bss_conf and then the chan will be NULL. Tweak the code to check
+ht_supported/vht_supported/has_he/has_eht on sta deflink.
 
-  general protection fault: 0000 [#1] PREEMPT SMP
-  CPU: 4 PID: 4610 Comm: dosemu.bin Not tainted 6.6.21-gentoo-x86 #1
-  Hardware name: Dell Inc. PowerEdge 1950/0H723K, BIOS 2.7.0 10/30/2010
-  EIP: restore_all_switch_stack+0xbe/0xcf
-  EAX: 00000000 EBX: 00000000 ECX: 00000000 EDX: 00000000
-  ESI: 00000000 EDI: 00000000 EBP: 00000000 ESP: ff8affdc
-  DS: 0000 ES: 0000 FS: 0000 GS: 0033 SS: 0068 EFLAGS: 00010046
-  CR0: 80050033 CR2: 00c2101c CR3: 04b6d000 CR4: 000406d0
-  Call Trace:
-   show_regs+0x70/0x78
-   die_addr+0x29/0x70
-   exc_general_protection+0x13c/0x348
-   exc_bounds+0x98/0x98
-   handle_exception+0x14d/0x14d
-   exc_bounds+0x98/0x98
-   restore_all_switch_stack+0xbe/0xcf
-   exc_bounds+0x98/0x98
-   restore_all_switch_stack+0xbe/0xcf
+Crash log (with rtw89 version under MLO development):
+[ 9890.526087] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[ 9890.526102] #PF: supervisor read access in kernel mode
+[ 9890.526105] #PF: error_code(0x0000) - not-present page
+[ 9890.526109] PGD 0 P4D 0
+[ 9890.526114] Oops: 0000 [#1] PREEMPT SMP PTI
+[ 9890.526119] CPU: 2 PID: 6367 Comm: kworker/u16:2 Kdump: loaded Tainted: G           OE      6.9.0 #1
+[ 9890.526123] Hardware name: LENOVO 2356AD1/2356AD1, BIOS G7ETB3WW (2.73 ) 11/28/2018
+[ 9890.526126] Workqueue: phy2 rtw89_core_ba_work [rtw89_core]
+[ 9890.526203] RIP: 0010:ieee80211_start_tx_ba_session (net/mac80211/agg-tx.c:618 (discriminator 1)) mac80211
+[ 9890.526279] Code: f7 e8 d5 93 3e ea 48 83 c4 28 89 d8 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 49 8b 84 24 e0 f1 ff ff 48 8b 80 90 1b 00 00 <83> 38 03 0f 84 37 fe ff ff bb ea ff ff ff eb cc 49 8b 84 24 10 f3
+All code
+========
+   0:	f7 e8                	imul   %eax
+   2:	d5                   	(bad)
+   3:	93                   	xchg   %eax,%ebx
+   4:	3e ea                	ds (bad)
+   6:	48 83 c4 28          	add    $0x28,%rsp
+   a:	89 d8                	mov    %ebx,%eax
+   c:	5b                   	pop    %rbx
+   d:	41 5c                	pop    %r12
+   f:	41 5d                	pop    %r13
+  11:	41 5e                	pop    %r14
+  13:	41 5f                	pop    %r15
+  15:	5d                   	pop    %rbp
+  16:	c3                   	retq
+  17:	cc                   	int3
+  18:	cc                   	int3
+  19:	cc                   	int3
+  1a:	cc                   	int3
+  1b:	49 8b 84 24 e0 f1 ff 	mov    -0xe20(%r12),%rax
+  22:	ff
+  23:	48 8b 80 90 1b 00 00 	mov    0x1b90(%rax),%rax
+  2a:*	83 38 03             	cmpl   $0x3,(%rax)		<-- trapping instruction
+  2d:	0f 84 37 fe ff ff    	je     0xfffffffffffffe6a
+  33:	bb ea ff ff ff       	mov    $0xffffffea,%ebx
+  38:	eb cc                	jmp    0x6
+  3a:	49                   	rex.WB
+  3b:	8b                   	.byte 0x8b
+  3c:	84 24 10             	test   %ah,(%rax,%rdx,1)
+  3f:	f3                   	repz
 
-This only happens in 32-bit mode when VERW based mitigations like MDS/RFDS
-are enabled. This is because segment registers with an arbitrary user value
-can result in #GP when executing VERW. Intel SDM vol. 2C documents the
-following behavior for VERW instruction:
+Code starting with the faulting instruction
+===========================================
+   0:	83 38 03             	cmpl   $0x3,(%rax)
+   3:	0f 84 37 fe ff ff    	je     0xfffffffffffffe40
+   9:	bb ea ff ff ff       	mov    $0xffffffea,%ebx
+   e:	eb cc                	jmp    0xffffffffffffffdc
+  10:	49                   	rex.WB
+  11:	8b                   	.byte 0x8b
+  12:	84 24 10             	test   %ah,(%rax,%rdx,1)
+  15:	f3                   	repz
+[ 9890.526285] RSP: 0018:ffffb8db09013d68 EFLAGS: 00010246
+[ 9890.526291] RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffff9308e0d656c8
+[ 9890.526295] RDX: 0000000000000000 RSI: ffffffffab99460b RDI: ffffffffab9a7685
+[ 9890.526300] RBP: ffffb8db09013db8 R08: 0000000000000000 R09: 0000000000000873
+[ 9890.526304] R10: ffff9308e0d64800 R11: 0000000000000002 R12: ffff9308e5ff6e70
+[ 9890.526308] R13: ffff930952500e20 R14: ffff9309192a8c00 R15: 0000000000000000
+[ 9890.526313] FS:  0000000000000000(0000) GS:ffff930b4e700000(0000) knlGS:0000000000000000
+[ 9890.526316] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 9890.526318] CR2: 0000000000000000 CR3: 0000000391c58005 CR4: 00000000001706f0
+[ 9890.526321] Call Trace:
+[ 9890.526324]  <TASK>
+[ 9890.526327] ? show_regs (arch/x86/kernel/dumpstack.c:479)
+[ 9890.526335] ? __die (arch/x86/kernel/dumpstack.c:421 arch/x86/kernel/dumpstack.c:434)
+[ 9890.526340] ? page_fault_oops (arch/x86/mm/fault.c:713)
+[ 9890.526347] ? search_module_extables (kernel/module/main.c:3256 (discriminator 3))
+[ 9890.526353] ? ieee80211_start_tx_ba_session (net/mac80211/agg-tx.c:618 (discriminator 1)) mac80211
 
-  #GP(0) - If a memory operand effective address is outside the CS, DS, ES,
-	   FS, or GS segment limit.
-
-CLEAR_CPU_BUFFERS macro executes VERW instruction before returning to user
-space. Use %cs selector to reference VERW operand. This ensures VERW will
-not #GP for an arbitrary user %ds.
-
-[ mingo: Fixed the SOB chain. ]
-
-Fixes: a0e2dab44d22 ("x86/entry_32: Add VERW just before userspace transition")
-Reported-by: Robert Gill <rtgill82@gmail.com>
-Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com
-Cc: stable@vger.kernel.org # 5.10+
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218707
-Closes: https://lore.kernel.org/all/8c77ccfd-d561-45a1-8ed5-6b75212c7a58@leemhuis.info/
-Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
-Suggested-by: Brian Gerst <brgerst@gmail.com>
-Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Link: https://patch.msgid.link/20240617115217.22344-1-kevin_yang@realtek.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/nospec-branch.h |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ net/mac80211/agg-tx.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/x86/include/asm/nospec-branch.h
-+++ b/arch/x86/include/asm/nospec-branch.h
-@@ -211,7 +211,16 @@
-  */
- .macro CLEAR_CPU_BUFFERS
- 	ALTERNATIVE "jmp .Lskip_verw_\@", "", X86_FEATURE_CLEAR_CPU_BUF
--	verw _ASM_RIP(mds_verw_sel)
-+#ifdef CONFIG_X86_64
-+	verw mds_verw_sel(%rip)
-+#else
-+	/*
-+	 * In 32bit mode, the memory operand must be a %cs reference. The data
-+	 * segments may not be usable (vm86 mode), and the stack segment may not
-+	 * be flat (ESPFIX32).
-+	 */
-+	verw %cs:mds_verw_sel
-+#endif
- .Lskip_verw_\@:
- .endm
+--- a/net/mac80211/agg-tx.c
++++ b/net/mac80211/agg-tx.c
+@@ -593,7 +593,9 @@ int ieee80211_start_tx_ba_session(struct
+ 		return -EINVAL;
  
+ 	if (!pubsta->deflink.ht_cap.ht_supported &&
+-	    sta->sdata->vif.bss_conf.chandef.chan->band != NL80211_BAND_6GHZ)
++	    !pubsta->deflink.vht_cap.vht_supported &&
++	    !pubsta->deflink.he_cap.has_he &&
++	    !pubsta->deflink.eht_cap.has_eht)
+ 		return -EINVAL;
+ 
+ 	if (WARN_ON_ONCE(!local->ops->ampdu_action))
 
 
