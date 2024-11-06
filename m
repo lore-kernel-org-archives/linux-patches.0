@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13C81DF72E;
-	Wed,  6 Nov 2024 12:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE751DF272;
+	Wed,  6 Nov 2024 12:19:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895582; cv=none; b=bHIYJ6dKWPmByxd4mUQ0wE8feT2jDMQ44xTOg3eDpa/kEIAFC5E5zar+Gksb8Ua5Ue750T8KAA4AJ2XALx6uk9NSJfXdaFppQ/4duKrOnfhpZ2lNDN9WuOfuF6HlDePusTCGM9jpjU8bKJYS/+8+8+mjPFMF6r9GfDKwnJnT/D4=
+	t=1730895585; cv=none; b=RHQ3rMG1GPwy6n+t7MBvtwulXF1smG/MTpvtWz9vMuRFL6Lt5DWO0/hMp8QEZsQW/9stlnnHDXv2mEXhAUpeOfkzD6zri24f71bO2NLioi+GEbMp8Y6UA0bpdEoCCJ/ED3Yglkt2x/Ch4U46k5QT5ZC+yb1f0Q2LgDubnoZ7Dxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895582; c=relaxed/simple;
-	bh=oybRPaZwhX3WTCOMDM4P0srzS6Q7wDujrg1pJYUgFPg=;
+	s=arc-20240116; t=1730895585; c=relaxed/simple;
+	bh=PRqVRxrbYSpRHU/UZ8K1hCgEA+2nmiYfxsizmlQafzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YGiz9A+cSN0rQzPHF2xBozpc9E4RC5IlY2MMQVxhgixm1h5m/wO1GdQi2XQMkqGXnC6rnHYPCXhqcQ3r/NANiXv9eK0RcPfwEuYXQWGJ5jg6e20ZpXgjSqDgDp644jQaYEq+glV88LcAMkdzHUF2aKG4gUrZ/xTzyHBFFtKlbrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RC2VAGWo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wc3GcXEZDAqJh+jr6DPcBxdx2HZI2h8vGt6Dap7Dy6ebCy6vkfNS7IzG8hs2sTULrdL1wu9UtBk0Xs27vfTKgcs/lINLi6Sz9jDRzsHGHtxFdLLntXOn+qyZ9CCmsSMXpmUUtAGNbK89aKHSHMV0wa13m8PKDn5ttvgl+6Tac/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7/E7fV2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RC2VAGWo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D23C4CECD;
-	Wed,  6 Nov 2024 12:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7/E7fV2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BC8C4CECD;
+	Wed,  6 Nov 2024 12:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895582;
-	bh=oybRPaZwhX3WTCOMDM4P0srzS6Q7wDujrg1pJYUgFPg=;
+	s=korg; t=1730895585;
+	bh=PRqVRxrbYSpRHU/UZ8K1hCgEA+2nmiYfxsizmlQafzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RC2VAGWozGF5k7VJA4+0flPYOCjiGui9hAx6tqw7B8k3gPfIagmFf9c2np4GPsc0r
-	 ZsiVDRZKrtcK8E3ccx7sf55lxqspC9JUq9tuoubPR3AZG2fhPrPLJ2JycK8IveMjYH
-	 R+sWGZEJlsxEeteRfSvUJ4mVvB8/l+1H2yoMMEcw=
+	b=c7/E7fV23DsOfjeP7bkTGbkwSYDCVJUBCjRaMSSz93yk/RJQJoKyZEgVJGDhTkHKv
+	 LuA25pQUQupJSbHnOdyi7OSmuJJvhnlkhoHsDoW/Z6GyG/YSSeGkh4ZJxqssmD8nfb
+	 adjcsdXaGSy/33yVru4nvEnbSlWCigj5Ryp++3BQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Icenowy Zheng <uwu@icenowy.me>,
-	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 4.19 266/350] usb: storage: ignore bogus device raised by JieLi BR21 USB sound chip
-Date: Wed,  6 Nov 2024 13:03:14 +0100
-Message-ID: <20241106120327.468035586@linuxfoundation.org>
+	Anastasia Kovaleva <a.kovaleva@yadro.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 267/350] net: Fix an unsafe loop on the list
+Date: Wed,  6 Nov 2024 13:03:15 +0100
+Message-ID: <20241106120327.490444721@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,46 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Icenowy Zheng <uwu@icenowy.me>
+From: Anastasia Kovaleva <a.kovaleva@yadro.com>
 
-commit a6555cb1cb69db479d0760e392c175ba32426842 upstream.
+commit 1dae9f1187189bc09ff6d25ca97ead711f7e26f9 upstream.
 
-JieLi tends to use SCSI via USB Mass Storage to implement their own
-proprietary commands instead of implementing another USB interface.
-Enumerating it as a generic mass storage device will lead to a Hardware
-Error sense key get reported.
+The kernel may crash when deleting a genetlink family if there are still
+listeners for that family:
 
-Ignore this bogus device to prevent appearing a unusable sdX device
-file.
+Oops: Kernel access of bad area, sig: 11 [#1]
+  ...
+  NIP [c000000000c080bc] netlink_update_socket_mc+0x3c/0xc0
+  LR [c000000000c0f764] __netlink_clear_multicast_users+0x74/0xc0
+  Call Trace:
+__netlink_clear_multicast_users+0x74/0xc0
+genl_unregister_family+0xd4/0x2d0
 
-Signed-off-by: Icenowy Zheng <uwu@icenowy.me>
-Cc: stable <stable@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20241001083407.8336-1-uwu@icenowy.me
+Change the unsafe loop on the list to a safe one, because inside the
+loop there is an element removal from this list.
+
+Fixes: b8273570f802 ("genetlink: fix netns vs. netlink table locking (2)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Anastasia Kovaleva <a.kovaleva@yadro.com>
+Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20241003104431.12391-1-a.kovaleva@yadro.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_devs.h |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ include/net/sock.h       |    2 ++
+ net/netlink/af_netlink.c |    3 ++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/storage/unusual_devs.h
-+++ b/drivers/usb/storage/unusual_devs.h
-@@ -2412,6 +2412,17 @@ UNUSUAL_DEV(  0xc251, 0x4003, 0x0100, 0x
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_NOT_LOCKABLE),
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -764,6 +764,8 @@ static inline void sk_add_bind_node(stru
+ 	hlist_for_each_entry_safe(__sk, tmp, list, sk_node)
+ #define sk_for_each_bound(__sk, list) \
+ 	hlist_for_each_entry(__sk, list, sk_bind_node)
++#define sk_for_each_bound_safe(__sk, tmp, list) \
++	hlist_for_each_entry_safe(__sk, tmp, list, sk_bind_node)
  
-+/*
-+ * Reported by Icenowy Zheng <uwu@icenowy.me>
-+ * This is an interface for vendor-specific cryptic commands instead
-+ * of real USB storage device.
-+ */
-+UNUSUAL_DEV(  0xe5b7, 0x0811, 0x0100, 0x0100,
-+		"ZhuHai JieLi Technology",
-+		"JieLi BR21",
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
-+		US_FL_IGNORE_DEVICE),
-+
- /* Reported by Andrew Simmons <andrew.simmons@gmail.com> */
- UNUSUAL_DEV(  0xed06, 0x4500, 0x0001, 0x0001,
- 		"DataStor",
+ /**
+  * sk_for_each_entry_offset_rcu - iterate over a list at a given struct offset
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -2145,8 +2145,9 @@ void __netlink_clear_multicast_users(str
+ {
+ 	struct sock *sk;
+ 	struct netlink_table *tbl = &nl_table[ksk->sk_protocol];
++	struct hlist_node *tmp;
+ 
+-	sk_for_each_bound(sk, &tbl->mc_list)
++	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list)
+ 		netlink_update_socket_mc(nlk_sk(sk), group, 0);
+ }
+ 
 
 
