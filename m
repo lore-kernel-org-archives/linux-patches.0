@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB32E1DF241;
-	Wed,  6 Nov 2024 12:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECE41DF24C;
+	Wed,  6 Nov 2024 12:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894816; cv=none; b=u/EdgpFpzaHmPU5zAavrxs82YfIAh4JwqZ5CoTZvwzyw5Pxe+OkSTf3v8whcuTydd5yUi700utZlOXGSofQ7raxXd9vvcFZUs5wTVWOTsTVbFJvw/5QNf3WAh6C6wnfiWnWRnkEQ0YAfdwjklWKIs9/VfHxyF1YXlygtX966KDk=
+	t=1730894819; cv=none; b=SaSBRBbrJAF23pM+OT6uAP3jJRJEPgGb21Q+L5vUzJW9sMPlwYHt1l5UFxuSovYgt9+Y/6jUmYTRVAYosoLyvatq4cVUTlaaZ9A1dmZnI0HlIEvfQTxkUch9fSrZrEzJJMeFWcU5bcDuc9lWd/cYxdIXDeKlETN6cSKizrZhxb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894816; c=relaxed/simple;
-	bh=YdOlRUcrhtlhS+RXnT5vjn5Q3x1VWEi4ow6U+yLd/4w=;
+	s=arc-20240116; t=1730894819; c=relaxed/simple;
+	bh=rmjTWp5nKqx4/qbbum5o3KE3M/YC87u9xLEHvhMJSSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rb7TQJOamquIwGJ3qH+O05cO6LypaGVsUgqTnn4NpI2zWgtybYU//RHgjafHYHG675dPMrCRnlCyiwNGB5V9rCVdfOa2dNDagxe4QYjob0RkB9EVnEj/1VjCXZsbuQH9VBbO/eyT/O2Z9aE4YGCNza2EI8HFom+veQNjZUVcmRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iI8qFsHB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ro+6C0nhQcq3a4uoKvqQwTAY9zBgpSklYAXGbjmiBcHELosoL7RuQ2mPl51R3ik/Km4YQX3I9o12mJS0/RbWcPtPCreGDziuhnim9+hxFKPkG9Nvz60IwGDLwgIQqckdXf/SoxyzVSrPcNqxB5zkEpfo/pnv8v9ZHIjCKIP/gUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=su65ojQF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iI8qFsHB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC563C4CECD;
-	Wed,  6 Nov 2024 12:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="su65ojQF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F96EC4CECD;
+	Wed,  6 Nov 2024 12:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894815;
-	bh=YdOlRUcrhtlhS+RXnT5vjn5Q3x1VWEi4ow6U+yLd/4w=;
+	s=korg; t=1730894818;
+	bh=rmjTWp5nKqx4/qbbum5o3KE3M/YC87u9xLEHvhMJSSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iI8qFsHBb0KdoD0dcy5juZ8ZMQRfor7PJxt55QJ15WU/DGMnSjhvKXv3cEsoz0zT3
-	 N54942SkQAbjgAFAQtfSkUURl8XeyiMHxLJKN06mHhv834adZwjgr7k+C76XTc7dFq
-	 lCtfZToLnE7NkU4I8UJxBtimKatB9wToJw6jY4XI=
+	b=su65ojQFABFl5wTmZQHH4CfVb0k2w+mxALO/mwHTRiDqYXZSi6hy/itgQ0EsMfMKS
+	 IT2HrM777u//znjTtKlSIe/FtDLdCJCM9aBaBNRaU+esIEtMrFZFXq3yHoujEaRndX
+	 pmIPRvbbQDCZ0eyEbfL+W0uzKD/GNTYCG3b/JUwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Beniamin Bia <beniamin.bia@analog.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 002/350] staging: iio: frequency: ad9833: Load clock using clock framework
-Date: Wed,  6 Nov 2024 12:58:50 +0100
-Message-ID: <20241106120320.928707029@linuxfoundation.org>
+Subject: [PATCH 4.19 003/350] staging: iio: frequency: ad9834: Validate frequency parameter value
+Date: Wed,  6 Nov 2024 12:58:51 +0100
+Message-ID: <20241106120320.952383016@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,127 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Beniamin Bia <biabeniamin@gmail.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 8e8040c52e63546d1171c188a24aacf145a9a7e0 ]
+[ Upstream commit b48aa991758999d4e8f9296c5bbe388f293ef465 ]
 
-The clock frequency is loaded from device-tree using clock framework
-instead of statically value. The change allow configuration of
-the device via device-trees and better initialization sequence.
-This is part of broader effort to add device-tree support to this driver
-and take it out from staging.
+In ad9834_write_frequency() clk_get_rate() can return 0. In such case
+ad9834_calc_freqreg() call will lead to division by zero. Checking
+'if (fout > (clk_freq / 2))' doesn't protect in case of 'fout' is 0.
+ad9834_write_frequency() is called from ad9834_write(), where fout is
+taken from text buffer, which can contain any value.
 
-Signed-off-by: Beniamin Bia <beniamin.bia@analog.com>
+Modify parameters checking.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 12b9d5bf76bf ("Staging: IIO: DDS: AD9833 / AD9834 driver")
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20240703154506.25584-1-amishin@t-argos.ru
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: b48aa9917589 ("staging: iio: frequency: ad9834: Validate frequency parameter value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/iio/frequency/ad9834.c | 35 ++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 11 deletions(-)
+ drivers/staging/iio/frequency/ad9834.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/staging/iio/frequency/ad9834.c b/drivers/staging/iio/frequency/ad9834.c
-index f6b36eedd48e..5e98ee5dfbdc 100644
+index 5e98ee5dfbdc..3eb089dc220e 100644
 --- a/drivers/staging/iio/frequency/ad9834.c
 +++ b/drivers/staging/iio/frequency/ad9834.c
-@@ -6,6 +6,7 @@
-  * Licensed under the GPL-2.
-  */
+@@ -116,7 +116,7 @@ static int ad9834_write_frequency(struct ad9834_state *st,
  
-+#include <linux/clk.h>
- #include <linux/interrupt.h>
- #include <linux/workqueue.h>
- #include <linux/device.h>
-@@ -71,7 +72,7 @@
- struct ad9834_state {
- 	struct spi_device		*spi;
- 	struct regulator		*reg;
--	unsigned int			mclk;
-+	struct clk			*mclk;
- 	unsigned short			control;
- 	unsigned short			devid;
- 	struct spi_transfer		xfer;
-@@ -110,12 +111,15 @@ static unsigned int ad9834_calc_freqreg(unsigned long mclk, unsigned long fout)
- static int ad9834_write_frequency(struct ad9834_state *st,
- 				  unsigned long addr, unsigned long fout)
- {
-+	unsigned long clk_freq;
- 	unsigned long regval;
+ 	clk_freq = clk_get_rate(st->mclk);
  
--	if (fout > (st->mclk / 2))
-+	clk_freq = clk_get_rate(st->mclk);
-+
-+	if (fout > (clk_freq / 2))
+-	if (fout > (clk_freq / 2))
++	if (!clk_freq || fout > (clk_freq / 2))
  		return -EINVAL;
  
--	regval = ad9834_calc_freqreg(st->mclk, fout);
-+	regval = ad9834_calc_freqreg(clk_freq, fout);
- 
- 	st->freq_data[0] = cpu_to_be16(addr | (regval &
- 				       RES_MASK(AD9834_FREQ_BITS / 2)));
-@@ -413,7 +417,14 @@ static int ad9834_probe(struct spi_device *spi)
- 	spi_set_drvdata(spi, indio_dev);
- 	st = iio_priv(indio_dev);
- 	mutex_init(&st->lock);
--	st->mclk = 25000000;
-+	st->mclk = devm_clk_get(&spi->dev, NULL);
-+
-+	ret = clk_prepare_enable(st->mclk);
-+	if (ret) {
-+		dev_err(&spi->dev, "Failed to enable master clock\n");
-+		goto error_disable_reg;
-+	}
-+
- 	st->spi = spi;
- 	st->devid = spi_get_device_id(spi)->driver_data;
- 	st->reg = reg;
-@@ -458,31 +469,32 @@ static int ad9834_probe(struct spi_device *spi)
- 	ret = spi_sync(st->spi, &st->msg);
- 	if (ret) {
- 		dev_err(&spi->dev, "device init failed\n");
--		goto error_disable_reg;
-+		goto error_clock_unprepare;
- 	}
- 
- 	ret = ad9834_write_frequency(st, AD9834_REG_FREQ0, 1000000);
- 	if (ret)
--		goto error_disable_reg;
-+		goto error_clock_unprepare;
- 
- 	ret = ad9834_write_frequency(st, AD9834_REG_FREQ1, 5000000);
- 	if (ret)
--		goto error_disable_reg;
-+		goto error_clock_unprepare;
- 
- 	ret = ad9834_write_phase(st, AD9834_REG_PHASE0, 512);
- 	if (ret)
--		goto error_disable_reg;
-+		goto error_clock_unprepare;
- 
- 	ret = ad9834_write_phase(st, AD9834_REG_PHASE1, 1024);
- 	if (ret)
--		goto error_disable_reg;
-+		goto error_clock_unprepare;
- 
- 	ret = iio_device_register(indio_dev);
- 	if (ret)
--		goto error_disable_reg;
-+		goto error_clock_unprepare;
- 
- 	return 0;
--
-+error_clock_unprepare:
-+	clk_disable_unprepare(st->mclk);
- error_disable_reg:
- 	regulator_disable(reg);
- 
-@@ -495,6 +507,7 @@ static int ad9834_remove(struct spi_device *spi)
- 	struct ad9834_state *st = iio_priv(indio_dev);
- 
- 	iio_device_unregister(indio_dev);
-+	clk_disable_unprepare(st->mclk);
- 	regulator_disable(st->reg);
- 
- 	return 0;
+ 	regval = ad9834_calc_freqreg(clk_freq, fout);
 -- 
 2.43.0
 
