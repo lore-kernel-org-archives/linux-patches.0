@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B031F9412;
-	Wed,  6 Nov 2024 13:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF021F9A83;
+	Wed,  6 Nov 2024 13:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898310; cv=none; b=qeasUy3N0H4liDfq7/Pcm0l40Tm3qEJZbY4Ef+O6YiHYyfClOQtWmjTKDPSPmjZDDsrE7hJebR0JCy9PWrFYwHX8yYfeFi6vJUt8+HJxjoLd4H3v5Ts+mVwpGTDsr/hJzKHqJKnId6y+hzavQ7kMkTt5k195gNMxN9rpWFDLy6A=
+	t=1730898313; cv=none; b=AwkI6RlhI9n5b9ODP2i+D6yZ1NxyNgHyfSl62367BKFrZl67T6ENcQfE2RGi3SI9lvcgTz0p41eTptBpjwwPKkH+B+NB/msj0ziioZ9+yODAOVvhuD4Dst+1W+y1O1FVmGy4qHpwN7Ai2p1trgD+D+JSpkqHB9bp/uLXdMaa8sY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898310; c=relaxed/simple;
-	bh=HC7wsrGdwXKZjuuppx6E/hQROvSyDie3LURBkNhBt8I=;
+	s=arc-20240116; t=1730898313; c=relaxed/simple;
+	bh=YdekU1DT7K6X3MBZo5Cs9znTFVkqt1U3gOrxBq1CwwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NbvlaVTU7011jjJK+ruNwVo+7Pwof53dFLSW/Ie7AL8z4kbg2nPppr1Q+vG3HKwHAhsm6Ll9DKs6C5XNfmQmQrDjqdbr3Mf+tbk2uR8YDGY3NthRY8fJA60FfErtO/3LVh3WqC+4kL1NcHp3lvjXQQq/OGBN3+WzAgxK6lhHcMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjyNQ+B6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gDEBL3xCSuMX4dJB5e8lmYkIYgg5AZZgEW37+FcBzDMlhD2NDHnyIZzImASjinQs3+jmEOjJ3aYv/pAeo9BYxq5qcTuk7yX6IBMYuMjt/kjubESiTC3Y2orVY0ErObuZgKpgVrI4TPOoismA2tUX36VkovK75s9QL6kDNOtv/o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ttqWT5c+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjyNQ+B6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5274C4CECD;
-	Wed,  6 Nov 2024 13:05:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttqWT5c+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28F7C4CECD;
+	Wed,  6 Nov 2024 13:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898310;
-	bh=HC7wsrGdwXKZjuuppx6E/hQROvSyDie3LURBkNhBt8I=;
+	s=korg; t=1730898313;
+	bh=YdekU1DT7K6X3MBZo5Cs9znTFVkqt1U3gOrxBq1CwwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JjyNQ+B6z3tMhomnxS75cQaaxc/Ig0YfXykqU1TcVmrRpp3TF332//0V8g9lHVlqo
-	 W9ajC05GJmspcviRd5V5OVP4stvR50F1JWF8wBI/T13+3hdy5gSmC1E61zFpGFvZsx
-	 pghvJPK++0YLdfhqD9j1G9iRMog1DREGrsnpDOLQ=
+	b=ttqWT5c+EHa+4nJo7VgUWEw+t/h62BvEudgPgpQ0WPI5io+yi0OS69MaRs9sqNPjv
+	 C9fFBy7BbPwS221Asaz/XQfGgrziZhknZqLVUjXHTJoIyWv7u3TQlI3g7owwBPKQcg
+	 5g0llTHXOHW1tdhxzZZ1O8niiD2YMz5YJRE20Aos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Danilov <littlesmilingcloud@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 188/462] ipv4: ip_gre: Fix drops of small packets in ipgre_xmit
-Date: Wed,  6 Nov 2024 13:01:21 +0100
-Message-ID: <20241106120336.158124649@linuxfoundation.org>
+Subject: [PATCH 5.4 197/462] net: hisilicon: hip04: fix OF node leak in probe()
+Date: Wed,  6 Nov 2024 13:01:30 +0100
+Message-ID: <20241106120336.382439215@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,87 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Danilov <littlesmilingcloud@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit c4a14f6d9d17ad1e41a36182dd3b8a5fd91efbd7 ]
+[ Upstream commit 17555297dbd5bccc93a01516117547e26a61caf1 ]
 
-Regression Description:
+Driver is leaking OF node reference from
+of_parse_phandle_with_fixed_args() in probe().
 
-Depending on the options specified for the GRE tunnel device, small
-packets may be dropped. This occurs because the pskb_network_may_pull
-function fails due to the packet's insufficient length.
-
-For example, if only the okey option is specified for the tunnel device,
-original (before encapsulation) packets smaller than 28 bytes (including
-the IPv4 header) will be dropped. This happens because the required
-length is calculated relative to the network header, not the skb->head.
-
-Here is how the required length is computed and checked:
-
-* The pull_len variable is set to 28 bytes, consisting of:
-  * IPv4 header: 20 bytes
-  * GRE header with Key field: 8 bytes
-
-* The pskb_network_may_pull function adds the network offset, shifting
-the checkable space further to the beginning of the network header and
-extending it to the beginning of the packet. As a result, the end of
-the checkable space occurs beyond the actual end of the packet.
-
-Instead of ensuring that 28 bytes are present in skb->head, the function
-is requesting these 28 bytes starting from the network header. For small
-packets, this requested length exceeds the actual packet size, causing
-the check to fail and the packets to be dropped.
-
-This issue affects both locally originated and forwarded packets in
-DMVPN-like setups.
-
-How to reproduce (for local originated packets):
-
-  ip link add dev gre1 type gre ikey 1.9.8.4 okey 1.9.8.4 \
-          local <your-ip> remote 0.0.0.0
-
-  ip link set mtu 1400 dev gre1
-  ip link set up dev gre1
-  ip address add 192.168.13.1/24 dev gre1
-  ip neighbor add 192.168.13.2 lladdr <remote-ip> dev gre1
-  ping -s 1374 -c 10 192.168.13.2
-  tcpdump -vni gre1
-  tcpdump -vni <your-ext-iface> 'ip proto 47'
-  ip -s -s -d link show dev gre1
-
-Solution:
-
-Use the pskb_may_pull function instead the pskb_network_may_pull.
-
-Fixes: 80d875cfc9d3 ("ipv4: ip_gre: Avoid skb_pull() failure in ipgre_xmit()")
-Signed-off-by: Anton Danilov <littlesmilingcloud@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240924235158.106062-1-littlesmilingcloud@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240827144421.52852-2-krzysztof.kozlowski@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/hisilicon/hip04_eth.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index 3aae46b845775..09e9e46259f70 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -635,11 +635,11 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
- 		if (skb_cow_head(skb, 0))
- 			goto free_skb;
+diff --git a/drivers/net/ethernet/hisilicon/hip04_eth.c b/drivers/net/ethernet/hisilicon/hip04_eth.c
+index b5eae06dd8705..00ca5183f9c3e 100644
+--- a/drivers/net/ethernet/hisilicon/hip04_eth.c
++++ b/drivers/net/ethernet/hisilicon/hip04_eth.c
+@@ -955,6 +955,7 @@ static int hip04_mac_probe(struct platform_device *pdev)
+ 	priv->tx_coalesce_timer.function = tx_done;
  
--		tnl_params = (const struct iphdr *)skb->data;
--
--		if (!pskb_network_may_pull(skb, pull_len))
-+		if (!pskb_may_pull(skb, pull_len))
- 			goto free_skb;
- 
-+		tnl_params = (const struct iphdr *)skb->data;
-+
- 		/* ip_tunnel_xmit() needs skb->data pointing to gre header. */
- 		skb_pull(skb, pull_len);
- 		skb_reset_mac_header(skb);
+ 	priv->map = syscon_node_to_regmap(arg.np);
++	of_node_put(arg.np);
+ 	if (IS_ERR(priv->map)) {
+ 		dev_warn(d, "no syscon hisilicon,hip04-ppe\n");
+ 		ret = PTR_ERR(priv->map);
 -- 
 2.43.0
 
