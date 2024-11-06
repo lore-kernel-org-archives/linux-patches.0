@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C70F1DFE1E;
-	Wed,  6 Nov 2024 12:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D19A1E104A;
+	Wed,  6 Nov 2024 12:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897877; cv=none; b=Wd6pH0//dxThyW94rn327OQTMCbOjynsV3mwSW2e98uzzl5NrgB+s0Z6O145g40TaY3ODSrJhBCdlBTGEzBz4jDA9gicuQXiniI33bpuBAlVZXp7WcEHGwjtmN34NE2rjLYh5KuqXTEWDtWOPeaYZBikL/YmJzikLM1GnEBnF08=
+	t=1730897880; cv=none; b=DbalM1eWjkg7BOKxAogQjIuicA+pB6FV8f9A1JVgBcy2sJrRXqXMw1gk7aSqkOfTQvYcuU1VmsaAvjVwMA8rto/FQ1wsRmviJC/Fdmv6V2WsWu2esfeApD4ZxIOIkxON0NYF0UnMBcEROU8rzWUI35TFIpBWIoUq2oaZA1Q+6aE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897877; c=relaxed/simple;
-	bh=ozgyEehD265pA8pmttgQg04xtx7A86UGo92TNGyVjuo=;
+	s=arc-20240116; t=1730897880; c=relaxed/simple;
+	bh=R2i6p2XahVSlvrws8WOA2JpLDeoRSwYvQJpFczdwyr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RiNUTkJ8W4/KuWRdCuTBlRRC0iWJ77nTbsRN2UHQ17hGtqXwTLpMXZRrM4dveYbyT40HTpsKcWx+pqH36W55pAC/HW2YnGU14mJQECWaH/StQ3Uev/JKXk6emU1s1wouapJqtLFEgfboMxZNq8AsZeT1zCUhTweIzeyMPPkF1tU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bpqkv628; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYQCJBjeiOECroyNYDdnoC/RU/wqfNlaaWYEKeTVXD/TLEELD/x72uzDSJs3eo7tjP5tTETPUCjj0FSAqN7AHTTqUj9OmhMujafsxKS8unlNl+sxwQIhOJ1prWUBi3hHPJvinFN/2wYDCMhUO1NtHm7VPD+YuzcRpIfQNRrnpqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NERIGj+J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bpqkv628"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB02C4CECD;
-	Wed,  6 Nov 2024 12:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NERIGj+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B74B9C4CECD;
+	Wed,  6 Nov 2024 12:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897877;
-	bh=ozgyEehD265pA8pmttgQg04xtx7A86UGo92TNGyVjuo=;
+	s=korg; t=1730897880;
+	bh=R2i6p2XahVSlvrws8WOA2JpLDeoRSwYvQJpFczdwyr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bpqkv628U3MZy3S+SxOFc6q5rSFQd5zhib8xYwe++/gNIJwXavNvTTWJctaaZw16n
-	 o6x1sjIRGYnhNjv4a8431bYhJcVdXmtNK5HTYFR2rb4OglUOhE+45j0PbAdeXfNcEg
-	 lCXWuom/JRvYLx4LRWI0TxSdUrqlYkhMji94qlOU=
+	b=NERIGj+JYsMpvNjE9Bmx+us4yBFQm9vUrvOJd81WqhW3A5bHRCEgwB3hzz7n3wNkg
+	 PgaowhrXRuVe44jHZpfph5aYU9fr6dWYGHJoXQyXves0U2eZMqdLZ5WZ3wHhE4pkf7
+	 YQbapgaaXHg+SUOuUIQ5wDJpWDr+E2Jm0OoXS0Gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0532ac7a06fb1a03187e@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Kiran K <kiran.k@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 049/462] can: bcm: Clear bo->bcm_proc_read after remove_proc_entry().
-Date: Wed,  6 Nov 2024 12:59:02 +0100
-Message-ID: <20241106120332.730231027@linuxfoundation.org>
+Subject: [PATCH 5.4 050/462] Bluetooth: btusb: Fix not handling ZPL/short-transfer
+Date: Wed,  6 Nov 2024 12:59:03 +0100
+Message-ID: <20241106120332.754607522@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -53,97 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 94b0818fa63555a65f6ba107080659ea6bcca63e ]
+[ Upstream commit 7b05933340f4490ef5b09e84d644d12484b05fdf ]
 
-syzbot reported a warning in bcm_release(). [0]
+Requesting transfers of the exact same size of wMaxPacketSize may result
+in ZPL/short-transfer since the USB stack cannot handle it as we are
+limiting the buffer size to be the same as wMaxPacketSize.
 
-The blamed change fixed another warning that is triggered when
-connect() is issued again for a socket whose connect()ed device has
-been unregistered.
+Also, in terms of throughput this change has the same effect to
+interrupt endpoint as 290ba200815f "Bluetooth: Improve USB driver throughput
+by increasing the frame size" had for the bulk endpoint, so users of the
+advertisement bearer (e.g. BT Mesh) may benefit from this change.
 
-However, if the socket is just close()d without the 2nd connect(), the
-remaining bo->bcm_proc_read triggers unnecessary remove_proc_entry()
-in bcm_release().
-
-Let's clear bo->bcm_proc_read after remove_proc_entry() in bcm_notify().
-
-[0]
-name '4986'
-WARNING: CPU: 0 PID: 5234 at fs/proc/generic.c:711 remove_proc_entry+0x2e7/0x5d0 fs/proc/generic.c:711
-Modules linked in:
-CPU: 0 UID: 0 PID: 5234 Comm: syz-executor606 Not tainted 6.11.0-rc5-syzkaller-00178-g5517ae241919 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
-RIP: 0010:remove_proc_entry+0x2e7/0x5d0 fs/proc/generic.c:711
-Code: ff eb 05 e8 cb 1e 5e ff 48 8b 5c 24 10 48 c7 c7 e0 f7 aa 8e e8 2a 38 8e 09 90 48 c7 c7 60 3a 1b 8c 48 89 de e8 da 42 20 ff 90 <0f> 0b 90 90 48 8b 44 24 18 48 c7 44 24 40 0e 36 e0 45 49 c7 04 07
-RSP: 0018:ffffc9000345fa20 EFLAGS: 00010246
-RAX: 2a2d0aee2eb64600 RBX: ffff888032f1f548 RCX: ffff888029431e00
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc9000345fb08 R08: ffffffff8155b2f2 R09: 1ffff1101710519a
-R10: dffffc0000000000 R11: ffffed101710519b R12: ffff888011d38640
-R13: 0000000000000004 R14: 0000000000000000 R15: dffffc0000000000
-FS:  0000000000000000(0000) GS:ffff8880b8800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fcfb52722f0 CR3: 000000000e734000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- bcm_release+0x250/0x880 net/can/bcm.c:1578
- __sock_release net/socket.c:659 [inline]
- sock_close+0xbc/0x240 net/socket.c:1421
- __fput+0x24a/0x8a0 fs/file_table.c:422
- task_work_run+0x24f/0x310 kernel/task_work.c:228
- exit_task_work include/linux/task_work.h:40 [inline]
- do_exit+0xa2f/0x27f0 kernel/exit.c:882
- do_group_exit+0x207/0x2c0 kernel/exit.c:1031
- __do_sys_exit_group kernel/exit.c:1042 [inline]
- __se_sys_exit_group kernel/exit.c:1040 [inline]
- __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1040
- x64_sys_call+0x2634/0x2640 arch/x86/include/generated/asm/syscalls_64.h:232
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fcfb51ee969
-Code: Unable to access opcode bytes at 0x7fcfb51ee93f.
-RSP: 002b:00007ffce0109ca8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-RAX: ffffffffffffffda RBX: 0000000000000001 RCX: 00007fcfb51ee969
-RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000001
-RBP: 00007fcfb526f3b0 R08: ffffffffffffffb8 R09: 0000555500000000
-R10: 0000555500000000 R11: 0000000000000246 R12: 00007fcfb526f3b0
-R13: 0000000000000000 R14: 00007fcfb5271ee0 R15: 00007fcfb51bf160
- </TASK>
-
-Fixes: 76fe372ccb81 ("can: bcm: Remove proc entry when dev is unregistered.")
-Reported-by: syzbot+0532ac7a06fb1a03187e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0532ac7a06fb1a03187e
-Tested-by: syzbot+0532ac7a06fb1a03187e@syzkaller.appspotmail.com
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://patch.msgid.link/20240905012237.79683-1-kuniyu@amazon.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 5e23b923da03 ("[Bluetooth] Add generic driver for Bluetooth USB devices")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Tested-by: Kiran K <kiran.k@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/bcm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index cc7fb30eafc0b..1b5409b39a752 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -1426,8 +1426,10 @@ static void bcm_notify(struct bcm_sock *bo, unsigned long msg,
- 		/* remove device reference, if this is our bound device */
- 		if (bo->bound && bo->ifindex == dev->ifindex) {
- #if IS_ENABLED(CONFIG_PROC_FS)
--			if (sock_net(sk)->can.bcmproc_dir && bo->bcm_proc_read)
-+			if (sock_net(sk)->can.bcmproc_dir && bo->bcm_proc_read) {
- 				remove_proc_entry(bo->procname, sock_net(sk)->can.bcmproc_dir);
-+				bo->bcm_proc_read = NULL;
-+			}
- #endif
- 			bo->bound   = 0;
- 			bo->ifindex = 0;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index b9752625c88b4..87392ceee3dba 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -834,7 +834,10 @@ static int btusb_submit_intr_urb(struct hci_dev *hdev, gfp_t mem_flags)
+ 	if (!urb)
+ 		return -ENOMEM;
+ 
+-	size = le16_to_cpu(data->intr_ep->wMaxPacketSize);
++	/* Use maximum HCI Event size so the USB stack handles
++	 * ZPL/short-transfer automatically.
++	 */
++	size = HCI_MAX_EVENT_SIZE;
+ 
+ 	buf = kmalloc(size, mem_flags);
+ 	if (!buf) {
 -- 
 2.43.0
 
