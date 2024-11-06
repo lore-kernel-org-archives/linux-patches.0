@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434BA1DF726;
-	Wed,  6 Nov 2024 12:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0651DF969;
+	Wed,  6 Nov 2024 12:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895727; cv=none; b=eh1CtUzKHmXj94g/CzEnH/n/gEiXLx6+YhC+7BYZoOfuKKeh1G2hAEo8JE9T6nuqiTq5LrSyEV0kSWpc+QX2jlgzX2EjA58k1sRY+gBidpt3lsrMjXHTX6ESRnSyWsZFKYipKPwTfI3q7Z4nr94w/mk4yz4Pe8siasvbJi+7xo8=
+	t=1730895730; cv=none; b=GfNXiN6CkJowZApFkmRVjuzKYdE0CkOx3z+DAexaxpqWnBp0zvVC8PdtBWbz+lw6hpkHgjbuP6sgJ8vXYl7v7zoGPCdPbhXGQqW69OeOZKWEygpXwgzSm7ZwSSlEVwv85bzWowPxBxcx/qFZVJZpC7yRyvuVR9n7d+TdOg1LHaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895727; c=relaxed/simple;
-	bh=pV+g58PjaJCMXvlL08GQTD4H5vHBba0OVhPTW0iyk18=;
+	s=arc-20240116; t=1730895730; c=relaxed/simple;
+	bh=GlBbt9YkB/G0oDj0wT5+rQknOKcCDC84TTETEgna3ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=leAp2SvJk4OqVkD4DKMfIs7QNUkXLRVCPW2W3UiIl3r3hOaX4TD7dPXEUaTVUVS77j4/VYl8JPV2nLSJzVS3wH7Vk5+c7xUtWB5bGoErqJY5POP6GWdB1gWu33RWYH+6gAimwkuOgK10SBTWq2t3Eh80PWOBPMXympW9n8Znzqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewWyTv2g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OfYm6Vg+X/GdMGCbSsBLoYrbA6BX1Q+lxUIq61nJOjIF/4Xb0hXKJTIwJExh141REuS2XvMc9fKY12OO7d/vC+xJquX9817YIrz5BaZbQq7YEFpsEHD068uk33xwoVU10973A8qVi0KlWfw8T/SHSO3Uq83JHl9Gq62qRBBl1yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9Gv1rvB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewWyTv2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC831C4CECD;
-	Wed,  6 Nov 2024 12:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9Gv1rvB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE2BC4CECD;
+	Wed,  6 Nov 2024 12:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895727;
-	bh=pV+g58PjaJCMXvlL08GQTD4H5vHBba0OVhPTW0iyk18=;
+	s=korg; t=1730895730;
+	bh=GlBbt9YkB/G0oDj0wT5+rQknOKcCDC84TTETEgna3ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewWyTv2g0jTLz4nbxvYk+eW/DW0nub7XEU20y7+gqztbvJz0AUChq4g0QYtps5cYn
-	 TTUdcfEHdYS1kmrSCc2giaEzMvByFdDKBf085rrGGqq+EpXVTlLSji2wNkfiZupdlE
-	 U9qGUxmn1JulmtuPiMvjW827pdzAvufbQb1IoGG8=
+	b=N9Gv1rvBOk6Xv+vlfRD3TiRR22TNxTbZeBypPbUG2Y0jEXWk6MaWX1R0YGeynIkS0
+	 RGzO3M6qO/Cul2MTrDcb9/Y8ZwL5imr5ivyekEOQtMBAVC8Ci/VpJPeaw3XHwMZI65
+	 xBHAmpoxnLzeHbKstibHugibnu2J6WQMe2xkt53o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.19 288/350] parport: Proper fix for array out-of-bounds access
-Date: Wed,  6 Nov 2024 13:03:36 +0100
-Message-ID: <20241106120327.951701994@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 315/350] ALSA: hda/realtek: Update default depop procedure
+Date: Wed,  6 Nov 2024 13:04:03 +0100
+Message-ID: <20241106120328.544907684@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -49,105 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Kailang Yang <kailang@realtek.com>
 
-commit 02ac3a9ef3a18b58d8f3ea2b6e46de657bf6c4f9 upstream.
+[ Upstream commit e3ea2757c312e51bbf62ebc434a6f7df1e3a201f ]
 
-The recent fix for array out-of-bounds accesses replaced sprintf()
-calls blindly with snprintf().  However, since snprintf() returns the
-would-be-printed size, not the actually output size, the length
-calculation can still go over the given limit.
+Old procedure has a chance to meet Headphone no output.
 
-Use scnprintf() instead of snprintf(), which returns the actually
-output letters, for addressing the potential out-of-bounds access
-properly.
-
-Fixes: ab11dac93d2d ("dev/parport: fix the array out-of-bounds risk")
-Cc: stable@vger.kernel.org
+Fixes: c2d6af53a43f ("ALSA: hda/realtek - Add default procedure for suspend and resume state")
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/17b717a0a0b04a77aea4a8ec820cba13@realtek.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20240920103318.19271-1-tiwai@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/parport/procfs.c |   22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ sound/pci/hda/patch_realtek.c | 38 ++++++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 21 deletions(-)
 
---- a/drivers/parport/procfs.c
-+++ b/drivers/parport/procfs.c
-@@ -51,12 +51,12 @@ static int do_active_device(struct ctl_t
- 	
- 	for (dev = port->devices; dev ; dev = dev->next) {
- 		if(dev == port->cad) {
--			len += snprintf(buffer, sizeof(buffer), "%s\n", dev->name);
-+			len += scnprintf(buffer, sizeof(buffer), "%s\n", dev->name);
- 		}
- 	}
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 60dfaf2adaaf5..f33d09d939e14 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -3537,20 +3537,18 @@ static void alc_default_init(struct hda_codec *codec)
  
- 	if(!len) {
--		len += snprintf(buffer, sizeof(buffer), "%s\n", "none");
-+		len += scnprintf(buffer, sizeof(buffer), "%s\n", "none");
- 	}
+ 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
  
- 	if (len > *lenp)
-@@ -87,19 +87,19 @@ static int do_autoprobe(struct ctl_table
- 	}
- 	
- 	if ((str = info->class_name) != NULL)
--		len += snprintf (buffer + len, sizeof(buffer) - len, "CLASS:%s;\n", str);
-+		len += scnprintf (buffer + len, sizeof(buffer) - len, "CLASS:%s;\n", str);
+-	if (hp_pin_sense)
++	if (hp_pin_sense) {
+ 		msleep(2);
  
- 	if ((str = info->model) != NULL)
--		len += snprintf (buffer + len, sizeof(buffer) - len, "MODEL:%s;\n", str);
-+		len += scnprintf (buffer + len, sizeof(buffer) - len, "MODEL:%s;\n", str);
+-	snd_hda_codec_write(codec, hp_pin, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+-
+-	if (hp_pin_sense)
+-		msleep(85);
++		snd_hda_codec_write(codec, hp_pin, 0,
++				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
  
- 	if ((str = info->mfr) != NULL)
--		len += snprintf (buffer + len, sizeof(buffer) - len, "MANUFACTURER:%s;\n", str);
-+		len += scnprintf (buffer + len, sizeof(buffer) - len, "MANUFACTURER:%s;\n", str);
+-	snd_hda_codec_write(codec, hp_pin, 0,
+-			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
++		msleep(75);
  
- 	if ((str = info->description) != NULL)
--		len += snprintf (buffer + len, sizeof(buffer) - len, "DESCRIPTION:%s;\n", str);
-+		len += scnprintf (buffer + len, sizeof(buffer) - len, "DESCRIPTION:%s;\n", str);
+-	if (hp_pin_sense)
+-		msleep(100);
++		snd_hda_codec_write(codec, hp_pin, 0,
++				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
++		msleep(75);
++	}
+ }
  
- 	if ((str = info->cmdset) != NULL)
--		len += snprintf (buffer + len, sizeof(buffer) - len, "COMMAND SET:%s;\n", str);
-+		len += scnprintf (buffer + len, sizeof(buffer) - len, "COMMAND SET:%s;\n", str);
+ static void alc_default_shutup(struct hda_codec *codec)
+@@ -3566,22 +3564,20 @@ static void alc_default_shutup(struct hda_codec *codec)
  
- 	if (len > *lenp)
- 		len = *lenp;
-@@ -128,7 +128,7 @@ static int do_hardware_base_addr(struct
- 	if (write) /* permissions prevent this anyway */
- 		return -EACCES;
+ 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
  
--	len += snprintf (buffer, sizeof(buffer), "%lu\t%lu\n", port->base, port->base_hi);
-+	len += scnprintf (buffer, sizeof(buffer), "%lu\t%lu\n", port->base, port->base_hi);
+-	if (hp_pin_sense)
++	if (hp_pin_sense) {
+ 		msleep(2);
  
- 	if (len > *lenp)
- 		len = *lenp;
-@@ -156,7 +156,7 @@ static int do_hardware_irq(struct ctl_ta
- 	if (write) /* permissions prevent this anyway */
- 		return -EACCES;
+-	snd_hda_codec_write(codec, hp_pin, 0,
+-			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+-
+-	if (hp_pin_sense)
+-		msleep(85);
+-
+-	if (!spec->no_shutup_pins)
+ 		snd_hda_codec_write(codec, hp_pin, 0,
+-				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
++				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
  
--	len += snprintf (buffer, sizeof(buffer), "%d\n", port->irq);
-+	len += scnprintf (buffer, sizeof(buffer), "%d\n", port->irq);
+-	if (hp_pin_sense)
+-		msleep(100);
++		msleep(75);
  
- 	if (len > *lenp)
- 		len = *lenp;
-@@ -184,7 +184,7 @@ static int do_hardware_dma(struct ctl_ta
- 	if (write) /* permissions prevent this anyway */
- 		return -EACCES;
- 
--	len += snprintf (buffer, sizeof(buffer), "%d\n", port->dma);
-+	len += scnprintf (buffer, sizeof(buffer), "%d\n", port->dma);
- 
- 	if (len > *lenp)
- 		len = *lenp;
-@@ -216,7 +216,7 @@ static int do_hardware_modes(struct ctl_
- #define printmode(x)							\
- do {									\
- 	if (port->modes & PARPORT_MODE_##x)				\
--		len += snprintf(buffer + len, sizeof(buffer) - len, "%s%s", f++ ? "," : "", #x); \
-+		len += scnprintf(buffer + len, sizeof(buffer) - len, "%s%s", f++ ? "," : "", #x); \
- } while (0)
- 		int f = 0;
- 		printmode(PCSPP);
++		if (!spec->no_shutup_pins)
++			snd_hda_codec_write(codec, hp_pin, 0,
++					    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
++
++		msleep(75);
++	}
+ 	alc_auto_setup_eapd(codec, false);
+ 	alc_shutup_pins(codec);
+ }
+-- 
+2.43.0
+
 
 
