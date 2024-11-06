@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8C11CC14B;
-	Wed,  6 Nov 2024 13:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19BF1922EF;
+	Wed,  6 Nov 2024 13:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898492; cv=none; b=eF8GYsGB/k9F4oK6/5UTvoCvWFbc1hZ6N0jtFUgBgJr/vrhem72HTIZHrX3QzOMezlx0UnU+Nrr5y6BdWQOXxvYITfRw1xESpdcTHLtPbKIxka+QoZXOSbxJmn4YUvUNmBgdb1Ro5NPgPEbITxDDHx+R59kULEdlApTthzY/mfs=
+	t=1730898494; cv=none; b=n8CQLwLdf+lio6xVMjUpgHIyy7PY/axse29Dj0+v6B2btwoevYuA7ZMKcrGp3AR/kS4p8IDWuERu1m9l8wWJPi+uHcXjfi94ylQBjv8kDHh2Y53GMcFssBUZqMfp3ZUCCe5jHHx+7+Obb712O8X0oWLwtMvzcgSjNnx8IaPiuxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898492; c=relaxed/simple;
-	bh=aFeuQZtZvDWBc1Db/vjnMHTqf1DzBoSposNsnxUy904=;
+	s=arc-20240116; t=1730898494; c=relaxed/simple;
+	bh=H6hg6b6SivqltR4X5YkW+puXMeEj1SudnpRrkcIOPPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BeV0goYPTOd3Ga1qtQXh7zfBT2ncuaayJH+lPi9VeSVc7iKDU+7YP8yh/JyCDmCw+Etoh9VyglDVXOO198us7zh0BoRVOPg0dDRWuNNYouiAMoD2PWXtSJmoBBPSBXpUan68RCCL/Ji0zfncPg2KU6YWSgCCvj008DsShdgY2p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gY++T6Ld; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PMKcJM5rozftnyPTgBS138Wt3mYcbXsVnsPLuFUUwfds2MG1RXxzNmwT8zmqHrXnAv+oAaW8QYVt7Lj7iAziQHBARUpjw6piBX+f3UjGlfX5+4mlu1Emjv1FO+wQjEgmPz8AWriD5guBt5aNcrI+ebWAQIOhKwECPaLiday5Nf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoZUulp2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gY++T6Ld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 640E4C4CECD;
-	Wed,  6 Nov 2024 13:08:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoZUulp2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565DCC4CECD;
+	Wed,  6 Nov 2024 13:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898491;
-	bh=aFeuQZtZvDWBc1Db/vjnMHTqf1DzBoSposNsnxUy904=;
+	s=korg; t=1730898494;
+	bh=H6hg6b6SivqltR4X5YkW+puXMeEj1SudnpRrkcIOPPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gY++T6LdzNHVB2/IKuhYqQsUXYWzy1GQu7r01fy5dpXGVcKnBI3acN52kUmZpdGW3
-	 wTvCzzsXW4qJgMSiZkSWu5YndQkTDmi6cYhUyLz7RSDUPBs3wx2hVW3vrr4AnnVlZ6
-	 wwgBmGtgXFsxrw+qpT6Ze1/UaYCNeYzDyBt3WT70=
+	b=FoZUulp2HYtODpFYmkXr5+n7OmBSBvfpxjhrWDtOy3tSfkTLoWpNxQtXk6KkkwdVU
+	 q6Kx97H83/v/KGEWWGRiMUkcTurgkh9vOLO+leswnXMnhSAUzs1mv3ZhHJd9xMTb8e
+	 O72BbKX/79euhOH0upvCI5oxEaH2ITzRNbDs+8UM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 229/462] drm/printer: Allow NULL data in devcoredump printer
-Date: Wed,  6 Nov 2024 13:02:02 +0100
-Message-ID: <20241106120337.176772652@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.4 256/462] jbd2: stop waiting for space when jbd2_cleanup_journal_tail() returns error
+Date: Wed,  6 Nov 2024 13:02:29 +0100
+Message-ID: <20241106120337.848968347@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,144 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 53369581dc0c68a5700ed51e1660f44c4b2bb524 ]
+commit f5cacdc6f2bb2a9bf214469dd7112b43dd2dd68a upstream.
 
-We want to determine the size of the devcoredump before writing it out.
-To that end, we will run the devcoredump printer with NULL data to get
-the size, alloc data based on the generated offset, then run the
-devcorecump again with a valid data pointer to print.  This necessitates
-not writing data to the data pointer on the initial pass, when it is
-NULL.
+In __jbd2_log_wait_for_space(), we might call jbd2_cleanup_journal_tail()
+to recover some journal space. But if an error occurs while executing
+jbd2_cleanup_journal_tail() (e.g., an EIO), we don't stop waiting for free
+space right away, we try other branches, and if j_committing_transaction
+is NULL (i.e., the tid is 0), we will get the following complain:
 
-v5:
- - Better commit message (Jonathan)
- - Add kerenl doc with examples (Jani)
+============================================
+JBD2: I/O error when updating journal superblock for sdd-8.
+__jbd2_log_wait_for_space: needed 256 blocks and only had 217 space available
+__jbd2_log_wait_for_space: no way to get more journal space in sdd-8
+------------[ cut here ]------------
+WARNING: CPU: 2 PID: 139804 at fs/jbd2/checkpoint.c:109 __jbd2_log_wait_for_space+0x251/0x2e0
+Modules linked in:
+CPU: 2 PID: 139804 Comm: kworker/u8:3 Not tainted 6.6.0+ #1
+RIP: 0010:__jbd2_log_wait_for_space+0x251/0x2e0
+Call Trace:
+ <TASK>
+ add_transaction_credits+0x5d1/0x5e0
+ start_this_handle+0x1ef/0x6a0
+ jbd2__journal_start+0x18b/0x340
+ ext4_dirty_inode+0x5d/0xb0
+ __mark_inode_dirty+0xe4/0x5d0
+ generic_update_time+0x60/0x70
+[...]
+============================================
 
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Acked-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240801154118.2547543-3-matthew.brost@intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+So only if jbd2_cleanup_journal_tail() returns 1, i.e., there is nothing to
+clean up at the moment, continue to try to reclaim free space in other ways.
+
+Note that this fix relies on commit 6f6a6fda2945 ("jbd2: fix ocfs2 corrupt
+when updating journal superblock fails") to make jbd2_cleanup_journal_tail
+return the correct error code.
+
+Fixes: 8c3f25d8950c ("jbd2: don't give up looking for space so easily in __jbd2_log_wait_for_space")
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240718115336.2554501-1-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_print.c | 13 +++++----
- include/drm/drm_print.h     | 54 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 61 insertions(+), 6 deletions(-)
+ fs/jbd2/checkpoint.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_print.c b/drivers/gpu/drm/drm_print.c
-index a17c8a14dba4f..898a08b481ed5 100644
---- a/drivers/gpu/drm/drm_print.c
-+++ b/drivers/gpu/drm/drm_print.c
-@@ -59,8 +59,9 @@ void __drm_puts_coredump(struct drm_printer *p, const char *str)
- 			copy = iterator->remain;
- 
- 		/* Copy out the bit of the string that we need */
--		memcpy(iterator->data,
--			str + (iterator->start - iterator->offset), copy);
-+		if (iterator->data)
-+			memcpy(iterator->data,
-+			       str + (iterator->start - iterator->offset), copy);
- 
- 		iterator->offset = iterator->start + copy;
- 		iterator->remain -= copy;
-@@ -69,7 +70,8 @@ void __drm_puts_coredump(struct drm_printer *p, const char *str)
- 
- 		len = min_t(ssize_t, strlen(str), iterator->remain);
- 
--		memcpy(iterator->data + pos, str, len);
-+		if (iterator->data)
-+			memcpy(iterator->data + pos, str, len);
- 
- 		iterator->offset += len;
- 		iterator->remain -= len;
-@@ -99,8 +101,9 @@ void __drm_printfn_coredump(struct drm_printer *p, struct va_format *vaf)
- 	if ((iterator->offset >= iterator->start) && (len < iterator->remain)) {
- 		ssize_t pos = iterator->offset - iterator->start;
- 
--		snprintf(((char *) iterator->data) + pos,
--			iterator->remain, "%pV", vaf);
-+		if (iterator->data)
-+			snprintf(((char *) iterator->data) + pos,
-+				 iterator->remain, "%pV", vaf);
- 
- 		iterator->offset += len;
- 		iterator->remain -= len;
-diff --git a/include/drm/drm_print.h b/include/drm/drm_print.h
-index a5d6f2f3e430f..a9447c2d650f3 100644
---- a/include/drm/drm_print.h
-+++ b/include/drm/drm_print.h
-@@ -115,7 +115,8 @@ drm_vprintf(struct drm_printer *p, const char *fmt, va_list *va)
- 
- /**
-  * struct drm_print_iterator - local struct used with drm_printer_coredump
-- * @data: Pointer to the devcoredump output buffer
-+ * @data: Pointer to the devcoredump output buffer, can be NULL if using
-+ * drm_printer_coredump to determine size of devcoredump
-  * @start: The offset within the buffer to start writing
-  * @remain: The number of bytes to write for this iteration
-  */
-@@ -160,6 +161,57 @@ struct drm_print_iterator {
-  *			coredump_read, ...)
-  *	}
-  *
-+ * The above example has a time complexity of O(N^2), where N is the size of the
-+ * devcoredump. This is acceptable for small devcoredumps but scales poorly for
-+ * larger ones.
-+ *
-+ * Another use case for drm_coredump_printer is to capture the devcoredump into
-+ * a saved buffer before the dev_coredump() callback. This involves two passes:
-+ * one to determine the size of the devcoredump and another to print it to a
-+ * buffer. Then, in dev_coredump(), copy from the saved buffer into the
-+ * devcoredump read buffer.
-+ *
-+ * For example::
-+ *
-+ *	char *devcoredump_saved_buffer;
-+ *
-+ *	ssize_t __coredump_print(char *buffer, ssize_t count, ...)
-+ *	{
-+ *		struct drm_print_iterator iter;
-+ *		struct drm_printer p;
-+ *
-+ *		iter.data = buffer;
-+ *		iter.start = 0;
-+ *		iter.remain = count;
-+ *
-+ *		p = drm_coredump_printer(&iter);
-+ *
-+ *		drm_printf(p, "foo=%d\n", foo);
-+ *		...
-+ *		return count - iter.remain;
-+ *	}
-+ *
-+ *	void coredump_print(...)
-+ *	{
-+ *		ssize_t count;
-+ *
-+ *		count = __coredump_print(NULL, INT_MAX, ...);
-+ *		devcoredump_saved_buffer = kvmalloc(count, GFP_KERNEL);
-+ *		__coredump_print(devcoredump_saved_buffer, count, ...);
-+ *	}
-+ *
-+ *	void coredump_read(char *buffer, loff_t offset, size_t count,
-+ *			   void *data, size_t datalen)
-+ *	{
-+ *		...
-+ *		memcpy(buffer, devcoredump_saved_buffer + offset, count);
-+ *		...
-+ *	}
-+ *
-+ * The above example has a time complexity of O(N*2), where N is the size of the
-+ * devcoredump. This scales better than the previous example for larger
-+ * devcoredumps.
-+ *
-  * RETURNS:
-  * The &drm_printer object
-  */
--- 
-2.43.0
-
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -125,8 +125,11 @@ __releases(&journal->j_state_lock)
+ 			write_unlock(&journal->j_state_lock);
+ 			if (chkpt) {
+ 				jbd2_log_do_checkpoint(journal);
+-			} else if (jbd2_cleanup_journal_tail(journal) == 0) {
+-				/* We were able to recover space; yay! */
++			} else if (jbd2_cleanup_journal_tail(journal) <= 0) {
++				/*
++				 * We were able to recover space or the
++				 * journal was aborted due to an error.
++				 */
+ 				;
+ 			} else if (has_transaction) {
+ 				/*
 
 
