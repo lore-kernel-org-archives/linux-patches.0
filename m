@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD985198E96;
-	Wed,  6 Nov 2024 12:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 634571DF251;
+	Wed,  6 Nov 2024 12:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896271; cv=none; b=HoxfehV1YYCUriEaGujmVfTMtb9dxA7tnb3N6bMRRYifTNtq7ZXfaBYelDc523Ey/CYMBr/lyK8XoaaytversCZX5sq/oZDu/9FJ7GPjjiRLznvwjMom0vldsZXyIbAZtoSqNMMycX+voIaaSY4g4DWB1EFdkOh+gUhuOaFF4AE=
+	t=1730896274; cv=none; b=pr4YXrzb/410qf68NF+zxDXZMHupMTxG/Mwt2HDtzT/WBFCsyzBgSeY0SKInnVt11cBMarqXZsS7uPAPuOTXTcDg9v750pq8CmDa0VR/32SjCHYpnN0Mm+e1Y46FjY1zlDETfBEeMeap8ianTYJxEmlFG5DWFsHJrVeq4SD/YKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896271; c=relaxed/simple;
-	bh=3xgvypl63aFfPZJFs2006wfYdCWtDhBmsnL/lMMn2aE=;
+	s=arc-20240116; t=1730896274; c=relaxed/simple;
+	bh=muEea+tRuyuNvZ3HFkFrS7U7o3Bqc4XBcvaYSuzL34s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jCdgJto7VZCdXZwW3ab/K8nZw7cUe1BSmCjUq1OSXL376Ks0iC+EeodL5D5v3QvduF/V52TkfIsg2MuJpuW8UBuHBGlsQm/sw82mtpTPNYJCwh/JEglQKjLZnfzDVGRrV3wByuPLyxI2ttjNN3CUOJlGllZwEy5BMmirL7Md7Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VoCUyC9U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=foS+3hWm0ioVJ8Oantob/S1p7rU/dcP1xhYd7T/g6hE5pTyu1K4nLKkWDEKPpfo0jhfvPbtYXMgRAaMxKonN7cOyQnxUJhT51lXpvjdYIpbCify3KdGdlVUvSVcaDDwj27fGLK5X6mPCS4Kc2yRTEJPPlgwaBnpTd0o6jXCMMgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GsiPCfE+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VoCUyC9U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFA95C4CECD;
-	Wed,  6 Nov 2024 12:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GsiPCfE+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8554C4CED6;
+	Wed,  6 Nov 2024 12:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896271;
-	bh=3xgvypl63aFfPZJFs2006wfYdCWtDhBmsnL/lMMn2aE=;
+	s=korg; t=1730896274;
+	bh=muEea+tRuyuNvZ3HFkFrS7U7o3Bqc4XBcvaYSuzL34s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VoCUyC9UxiH5yDa7ogEyw+sHUUQjMiXp5xXdeTMKj45PlH/O8BArkYJfCRkXn1omT
-	 mg8IAbNoiJSZjKi+VYDuQHcjyj+e68tsMDpWK5arN5hzJV2kSEtUDCsUFE6pecxV2I
-	 fTe9NYsPFFBh0R/LfWxM+PS75gp8o9hBq7EIWMt0=
+	b=GsiPCfE+x+iDFxnFbxAlKtLTh0RbK5bO7s9qaiUtcYhISffo+6p8dK2YYr03QENim
+	 IeEgez+BHcbTSzH5rQuIcjQFUbjcV464paOPuIbghtjTsrVH92HkJJ3kkeAnj66SBV
+	 ZX/XIHpu9JgMckaSkuttpiIoEGKPxHfmAEqzAqPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Chuang <ben.chuang@genesyslogic.com.tw>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.11 146/245] mmc: sdhci-pci-gli: GL9767: Fix low power mode in the SD Express process
-Date: Wed,  6 Nov 2024 13:03:19 +0100
-Message-ID: <20241106120322.820943243@linuxfoundation.org>
+	Xinyu Zhang <xizhang@purestorage.com>,
+	Uday Shankar <ushankar@purestorage.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 147/245] block: fix sanity checks in blk_rq_map_user_bvec
+Date: Wed,  6 Nov 2024 13:03:20 +0100
+Message-ID: <20241106120322.845297178@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -50,34 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Chuang <ben.chuang@genesyslogic.com.tw>
+From: Xinyu Zhang <xizhang@purestorage.com>
 
-commit c4dedaaeb3f78d3718e9c1b1e4d972a6b99073cd upstream.
+[ Upstream commit 2ff949441802a8d076d9013c7761f63e8ae5a9bd ]
 
-When starting the SD Express process, the low power negotiation mode will
-be disabled, so we need to re-enable it after switching back to SD mode.
+blk_rq_map_user_bvec contains a check bytes + bv->bv_len > nr_iter which
+causes unnecessary failures in NVMe passthrough I/O, reproducible as
+follows:
 
-Fixes: 0e92aec2efa0 ("mmc: sdhci-pci-gli: Add support SD Express card for GL9767")
-Signed-off-by: Ben Chuang <ben.chuang@genesyslogic.com.tw>
-Cc: stable@vger.kernel.org
-Message-ID: <20241025060017.1663697-2-benchuanggli@gmail.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+- register a 2 page, page-aligned buffer against a ring
+- use that buffer to do a 1 page io_uring NVMe passthrough read
+
+The second (i = 1) iteration of the loop in blk_rq_map_user_bvec will
+then have nr_iter == 1 page, bytes == 1 page, bv->bv_len == 1 page, so
+the check bytes + bv->bv_len > nr_iter will succeed, causing the I/O to
+fail. This failure is unnecessary, as when the check succeeds, it means
+we've checked the entire buffer that will be used by the request - i.e.
+blk_rq_map_user_bvec should complete successfully. Therefore, terminate
+the loop early and return successfully when the check bytes + bv->bv_len
+> nr_iter succeeds.
+
+While we're at it, also remove the check that all segments in the bvec
+are single-page. While this seems to be true for all users of the
+function, it doesn't appear to be required anywhere downstream.
+
+CC: stable@vger.kernel.org
+Signed-off-by: Xinyu Zhang <xizhang@purestorage.com>
+Co-developed-by: Uday Shankar <ushankar@purestorage.com>
+Signed-off-by: Uday Shankar <ushankar@purestorage.com>
+Fixes: 37987547932c ("block: extend functionality to map bvec iterator")
+Link: https://lore.kernel.org/r/20241023211519.4177873-1-ushankar@purestorage.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-pci-gli.c |    3 +++
- 1 file changed, 3 insertions(+)
+ block/blk-map.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/mmc/host/sdhci-pci-gli.c
-+++ b/drivers/mmc/host/sdhci-pci-gli.c
-@@ -1068,6 +1068,9 @@ static int gl9767_init_sd_express(struct
- 		sdhci_writew(host, value, SDHCI_CLOCK_CONTROL);
- 	}
+diff --git a/block/blk-map.c b/block/blk-map.c
+index 0e1167b239342..6ef2ec1f7d78b 100644
+--- a/block/blk-map.c
++++ b/block/blk-map.c
+@@ -600,9 +600,7 @@ static int blk_rq_map_user_bvec(struct request *rq, const struct iov_iter *iter)
+ 		if (nsegs >= nr_segs || bytes > UINT_MAX - bv->bv_len)
+ 			goto put_bio;
+ 		if (bytes + bv->bv_len > nr_iter)
+-			goto put_bio;
+-		if (bv->bv_offset + bv->bv_len > PAGE_SIZE)
+-			goto put_bio;
++			break;
  
-+	pci_read_config_dword(pdev, PCIE_GLI_9767_CFG, &value);
-+	value &= ~PCIE_GLI_9767_CFG_LOW_PWR_OFF;
-+	pci_write_config_dword(pdev, PCIE_GLI_9767_CFG, value);
- 	gl9767_vhs_read(pdev);
- 
- 	return 0;
+ 		nsegs++;
+ 		bytes += bv->bv_len;
+-- 
+2.43.0
+
 
 
