@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910621E0488;
-	Wed,  6 Nov 2024 12:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDBA1DFD90;
+	Wed,  6 Nov 2024 12:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896516; cv=none; b=YS8Cb/eLcXIec81VgHRpEuU/k5fHVYHMiTbKVCkPperM/l3J6/5IsuWyZXSFGguNFX/pd/sXLSYHGPDcvWxIUrzOSryDt8VpYju8nei7NrqVyWc03mHhP69qSDe2XYFpnktAyBK9h0OBh3sF/l4OXmwVjzftGCQmXuU85kaHP8s=
+	t=1730896519; cv=none; b=pBJzrFZhG6Ppx9VHahviHEw5UZ3FkXRyz0KmMczOdN2YDr6gtUntHpMm0tdKzmuk/R1d/hPLUL7ZcGqm3j13L49sVyUK5IKaU5NLmeaM/hdTEZ51EhqaeHHcvgrXE/yiDp0o+djwinu3pRT5fMxCmtbnbVYyvtAfYlwYAVE5dxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896516; c=relaxed/simple;
-	bh=VGONr6K9TmGbiXtr9hfpI9Lyz+sNywJh0EkSBZJGsEU=;
+	s=arc-20240116; t=1730896519; c=relaxed/simple;
+	bh=BZxL/1w8NeAAXupQuSA55lgzgK0burY+28b44lpkrck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oTe2+5npmJjp+z903vSi4otmDVY0K9KnNCw8rVf6wXLqeqxDjW1StBJQhP+dkKITBosCUimeVEMifL7KqCaHKQyfXNWKOlSwrg0i9iW5ZOPctLwT5W+jfxXpz0/qDaoYiL854AUU+cd9IUwJrKY32FyRZ7ZpOE81w5pLedPKYY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m732c/uo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xohv0xyTQBiBW7bs3fGOdwdmGqGSmewy7TnHjq4J8ue2gg6DXVkSDQaHjowq5igRxemxK8tKEM/Zqk2QNefQ+uEsROYjcPsflRKl+AYqOGwX46LTv9Cvo+A05MXRWG1QFPGspqrJLbfVCuYr65mdJ0y5l6Kl57DzIW2Egn5ssHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLupVrnT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m732c/uo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185E1C4CECD;
-	Wed,  6 Nov 2024 12:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLupVrnT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0777EC4CECD;
+	Wed,  6 Nov 2024 12:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896516;
-	bh=VGONr6K9TmGbiXtr9hfpI9Lyz+sNywJh0EkSBZJGsEU=;
+	s=korg; t=1730896519;
+	bh=BZxL/1w8NeAAXupQuSA55lgzgK0burY+28b44lpkrck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m732c/uoYhNWREknvcrpLA0hFZwtM56heJEidj/CSFXavof03ef6LwRHqIpt073ur
-	 XDjkHyrd45D9YGCkhkb1tWRy2dEPmFzGsrcwNM3Yh/+DnVnbVvzi3PwGr1Ho3qxp5M
-	 SfHuYZ3FrVbvqCq9otkH43io5E9r3IzlyO0+pxy8=
+	b=uLupVrnTRPEliPnR+NWOc1uQ7EtBuHrno/G7yndwTK2Pe9MCgCQ7MPz2xTFc7tDx1
+	 PPhNjVDifJb8rKzgI1O9LNgVrW4xZQPO6QecGkhvvCfPKEPACzUqwvVAWEI76KoWez
+	 ocIFPFFy5aa4mtc/gRdAKW30oPTszEOl4eYpZuCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
+	Arun R Murthy <arun.r.murthy@intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
 	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
 	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.11 227/245] drm/i915/dp: Clear VSC SDP during post ddi disable routine
-Date: Wed,  6 Nov 2024 13:04:40 +0100
-Message-ID: <20241106120324.849059030@linuxfoundation.org>
+Subject: [PATCH 6.11 228/245] drm/i915/display/dp: Compute AS SDP when vrr is also enabled
+Date: Wed,  6 Nov 2024 13:04:41 +0100
+Message-ID: <20241106120324.873113765@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -51,45 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Kandpal <suraj.kandpal@intel.com>
+From: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
 
-commit 3e307d6c28e7bc7d94b5699d0ed7fe07df6db094 upstream.
+commit eb53e5b933b9ff315087305b3dc931af3067d19c upstream.
 
-Clear VSC SDP if intel_dp_set_infoframes is called from post ddi disable
-routine i.e with the variable of enable as false. This is to avoid
-an infoframes.enable mismatch issue which is caused when pipe is
-connected to eDp which has psr then connected to DPMST. In this case
-eDp's post ddi disable routine does not clear infoframes.enable VSC
-for the given pipe and DPMST does not recompute VSC SDP and write
-infoframes.enable which causes a mismatch.
+AS SDP should be computed when VRR timing generator is also enabled.
+Correct the compute condition to compute params of Adaptive sync SDP
+when VRR timing genrator is enabled along with sink support indication.
 
---v2
--Make the comment match the code [Jani]
+--v2:
+Modify if condition (Jani).
 
-Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Fixes: b2013783c445 ("drm/i915/display: Cache adpative sync caps to use it later")
+Cc: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
+Cc: Arun R Murthy <arun.r.murthy@intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: intel-gfx@lists.freedesktop.org
+Cc: intel-xe@lists.freedesktop.org
+Signed-off-by: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
 Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240724163743.3668407-1-suraj.kandpal@intel.com
+Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+(added prefix drm in subject)
+Link: https://patchwork.freedesktop.org/patch/msgid/20240730040941.396862-1-mitulkumar.ajitkumar.golani@intel.com
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/gpu/drm/i915/display/intel_dp.c
 +++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -4393,8 +4393,11 @@ void intel_dp_set_infoframes(struct inte
- 	if (!enable && HAS_DSC(dev_priv))
- 		val &= ~VDIP_ENABLE_PPS;
+@@ -2627,7 +2627,7 @@ static void intel_dp_compute_as_sdp(stru
+ 	const struct drm_display_mode *adjusted_mode =
+ 		&crtc_state->hw.adjusted_mode;
  
--	/* When PSR is enabled, this routine doesn't disable VSC DIP */
--	if (!crtc_state->has_psr)
-+	/*
-+	 * This routine disables VSC DIP if the function is called
-+	 * to disable SDP or if it does not have PSR
-+	 */
-+	if (!enable || !crtc_state->has_psr)
- 		val &= ~VIDEO_DIP_ENABLE_VSC_HSW;
+-	if (!crtc_state->vrr.enable || intel_dp->as_sdp_supported)
++	if (!crtc_state->vrr.enable || !intel_dp->as_sdp_supported)
+ 		return;
  
- 	intel_de_write(dev_priv, reg, val);
+ 	crtc_state->infoframes.enable |= intel_hdmi_infoframe_enable(DP_SDP_ADAPTIVE_SYNC);
 
 
