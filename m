@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D571E0B84;
-	Wed,  6 Nov 2024 13:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495751DE3B9;
+	Wed,  6 Nov 2024 13:02:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898136; cv=none; b=j1gnb8yu/BK2s9U+etbMpnwblPWBOT1HS2Xl8m+DmHqYF6I6M2Oeb59NPd9f0+I3PLqH0gLOYSb4Av/mbtfe9YJO6TLmmrU5O29ZjJDanjjVTJE0/3N8hUfXupiPuxOagLKkz4HqV9VtYKgPK4V5aqbw8UQQPfYf9Yz/GkGFcb0=
+	t=1730898139; cv=none; b=drMhxqHSrvd/6+oVYIiwQ6bWCXn55qpgGSDwqqa+Hr0ON9YwCImIl+fnBKoO6j15z/nZ3wQJlsanYBkdGSUMDAHDIMtxA4IBaG94vCD+locwpeZRxi9CFg7kbzqxgj8vHUSIfgewG4hSGh3whOu2UbUXmLnMESASRilY0dx1fAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898136; c=relaxed/simple;
-	bh=7x9TDUltnHT2PdpFBK/60ADcz2/z2bv/I7lX+cDHI1U=;
+	s=arc-20240116; t=1730898139; c=relaxed/simple;
+	bh=+mHnpXBUpXhMzSMMZT/fNkE/oLxTDostQdfoEJdhi50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hKy+FA5Dcp5P295PDNhAQxh0qWDesU7kimmkY1Nj/pO5gGVmOe1WrtSXgOGFwUBZgpEqK7hWr2z2cHAJL3JGLbp5MuDao1fX7T2qZCrQTs2cwdiRAHyMyqylotia74YrtkIJlkRoShW3N7IWfHQIZMb/G3I19hSGc1Ryct5htms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkJP6Jnw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eSlyzMdgQEbjholmIpvVrww9vwYubh6kcffkUITqWAqM8ehDlggkqDC/tyf/5x1I8LECEOZX25NoAgc0qI+OhNpfyW7GB3GIWkadPACKcdoNfriToG2RXLbSWz1S8ntP8z0jmGiNHHPLkh+SoLk6hsrXyJTEhKksZCa61PeFGIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qi6NUKN2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkJP6Jnw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F13C4CECD;
-	Wed,  6 Nov 2024 13:02:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qi6NUKN2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50D4C4CECD;
+	Wed,  6 Nov 2024 13:02:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898136;
-	bh=7x9TDUltnHT2PdpFBK/60ADcz2/z2bv/I7lX+cDHI1U=;
+	s=korg; t=1730898139;
+	bh=+mHnpXBUpXhMzSMMZT/fNkE/oLxTDostQdfoEJdhi50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VkJP6Jnw7fsccMgyJmJo8/wsIUHeD2UrmwmJKpInQDgJ735nL+v3mAo7bMEIAyyE4
-	 nYxM3jcCpB4q5LT5c7rCCCWX/XjMrD7EHE1XtW1gXgzaThWhhq2lUGeqgojkjIFPia
-	 beU1ghWlFbDFMN0236s+9Qibf5CyYmrcWgOhg5jw=
+	b=Qi6NUKN2AxRRq6gcjLMw6k8aovZQwt9I/YXmQ6AbX8/tj6Y2ncrEY5N8HooXNZJbi
+	 PseNfaoa4EXRwp5dofxdUvM9/R3A454DvgmqWD0EztMshwZd0cseWJpL3cq8a4+56E
+	 y803usRJgb2qGTabcQ22wZzZpSovCfoNm3dImY7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youssef Samir <quic_yabdulra@quicinc.com>,
-	Jeffery Hugo <quic_jhugo@quicinc.com>,
-	Carl Vanderlip <quic_carlv@quicinc.com>,
-	Chris Lew <quic_clew@quicinc.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Junlin Li <make24@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 136/462] net: qrtr: Update packets cloning when broadcasting
-Date: Wed,  6 Nov 2024 13:00:29 +0100
-Message-ID: <20241106120334.866848395@linuxfoundation.org>
+Subject: [PATCH 5.4 110/462] drivers: media: dvb-frontends/rtl2830: fix an out-of-bounds write error
+Date: Wed,  6 Nov 2024 13:00:03 +0100
+Message-ID: <20241106120334.223523131@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -54,47 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youssef Samir <quic_yabdulra@quicinc.com>
+From: Junlin Li <make24@iscas.ac.cn>
 
-[ Upstream commit f011b313e8ebd5b7abd8521b5119aecef403de45 ]
+[ Upstream commit 46d7ebfe6a75a454a5fa28604f0ef1491f9d8d14 ]
 
-When broadcasting data to multiple nodes via MHI, using skb_clone()
-causes all nodes to receive the same header data. This can result in
-packets being discarded by endpoints, leading to lost data.
+Ensure index in rtl2830_pid_filter does not exceed 31 to prevent
+out-of-bounds access.
 
-This issue occurs when a socket is closed, and a QRTR_TYPE_DEL_CLIENT
-packet is broadcasted. All nodes receive the same destination node ID,
-causing the node connected to the client to discard the packet and
-remain unaware of the client's deletion.
+dev->filters is a 32-bit value, so set_bit and clear_bit functions should
+only operate on indices from 0 to 31. If index is 32, it will attempt to
+access a non-existent 33rd bit, leading to out-of-bounds access.
+Change the boundary check from index > 32 to index >= 32 to resolve this
+issue.
 
-Replace skb_clone() with pskb_copy(), to create a separate copy of
-the header for each sk_buff.
-
-Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
-Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
-Reviewed-by: Jeffery Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Reviewed-by: Chris Lew <quic_clew@quicinc.com>
-Link: https://patch.msgid.link/20240916170858.2382247-1-quic_yabdulra@quicinc.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: df70ddad81b4 ("[media] rtl2830: implement PID filter")
+Signed-off-by: Junlin Li <make24@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/qrtr.c | 2 +-
+ drivers/media/dvb-frontends/rtl2830.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
-index b97a786d048cc..2fb510a4124ba 100644
---- a/net/qrtr/qrtr.c
-+++ b/net/qrtr/qrtr.c
-@@ -711,7 +711,7 @@ static int qrtr_bcast_enqueue(struct qrtr_node *node, struct sk_buff *skb,
+diff --git a/drivers/media/dvb-frontends/rtl2830.c b/drivers/media/dvb-frontends/rtl2830.c
+index e6b8367c8cce4..84c00c6894d3d 100644
+--- a/drivers/media/dvb-frontends/rtl2830.c
++++ b/drivers/media/dvb-frontends/rtl2830.c
+@@ -609,7 +609,7 @@ static int rtl2830_pid_filter(struct dvb_frontend *fe, u8 index, u16 pid, int on
+ 		index, pid, onoff);
  
- 	mutex_lock(&qrtr_node_lock);
- 	list_for_each_entry(node, &qrtr_all_nodes, item) {
--		skbn = skb_clone(skb, GFP_KERNEL);
-+		skbn = pskb_copy(skb, GFP_KERNEL);
- 		if (!skbn)
- 			break;
- 		skb_set_owner_w(skbn, skb->sk);
+ 	/* skip invalid PIDs (0x2000) */
+-	if (pid > 0x1fff || index > 32)
++	if (pid > 0x1fff || index >= 32)
+ 		return 0;
+ 
+ 	if (onoff)
 -- 
 2.43.0
 
