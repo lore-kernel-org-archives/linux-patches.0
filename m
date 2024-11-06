@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B14C1DE8B4;
-	Wed,  6 Nov 2024 12:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3861DE8B4;
+	Wed,  6 Nov 2024 12:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895371; cv=none; b=H/RSn1yjTm8KR9JsWlAWOfM+zzuUFhohO5RArNWQQRHvGmb6KrD4NeyJoDrI83dHv/8A/k04ZryW15gWSjab8dzWDLCLkAiqOX8i3Q77G94hycAn5u5bhLgHPXWl7BgKo34NQ5BhNpC33Zy66zmGRaHloOZGXgs88Vf8Ig2s8Gk=
+	t=1730895374; cv=none; b=D0LbjL6I+ohbqDkaHCrY+hjDIBZiBLsPYKR9vY49MybBIjYqzzL8tLs8a+Rc8Au+64zXl+aQs9zVkIVBzW1twDXjTf/++aC1+tzLJUXRAa3vxPuti6mg+Ywcuk8tzu5L4iGYTeN8Kj0WNMDUrcA1lTrFwcw9zIQJuD20Iya4950=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895371; c=relaxed/simple;
-	bh=jwDWpKHEvDFxTgm8rL0dd405oPuEbfwfacQxRCh7sFs=;
+	s=arc-20240116; t=1730895374; c=relaxed/simple;
+	bh=Wi+S184fFzCv1cI1Ap9BcjazYUnz9PiiP1vIQyJlDIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dlL/cckEWm879haoXArQRb8VSMsfC8h+EIUwnYvHHyX2mb9fwyG6ZRwgcXPF0304pOEz4L7rhIyzxSKur+AEWYghhID3qV41WwLNMuL/x7M4E88P64Jj+ypDfQfzhlTDcI92PAI6/uoL8YaB1AwLT2aG5NYA8X3RyJPEJB/gKrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bk40xmzi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=espyUTc50QyUuZGPtJrhlms6sIuT/CbxNJxkGipMDUe7l2y6n/3mEe6onY3p4jG/gnGZOXvKXBc0pp88w4mDNG9tKuPkCu8y5L8IxZ8yZiFe6A8m1MuJTAZ30NW8w9f7Q3aI9vlPDrJWd8TIcHSO7iIreSA5kN09SK43bqCnwOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erbk3NnK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bk40xmzi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85183C4CECD;
-	Wed,  6 Nov 2024 12:16:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erbk3NnK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F991C4CECD;
+	Wed,  6 Nov 2024 12:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895370;
-	bh=jwDWpKHEvDFxTgm8rL0dd405oPuEbfwfacQxRCh7sFs=;
+	s=korg; t=1730895373;
+	bh=Wi+S184fFzCv1cI1Ap9BcjazYUnz9PiiP1vIQyJlDIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bk40xmzinCiKkrS4lbsxr/V9IPn134HRwRmDroGEmnr+M3uhS5rD03QsHy3abfCHV
-	 j5tUBvlj0UfOFItN5emWCB5DxFhA9rJwXVu3u5nGNA/VUf6exEGSEW3NwTFQet+NxT
-	 TYc1CeRylucmMDPTCtt9IH4XZZ22vQ0NxOBK/Hd8=
+	b=erbk3NnKUD6HbaJVpedNY0A+wmArgOS6oAcg9daxekjJ+vD8Xtqiny1XoLtexVv35
+	 gCfo93NePIRbkFdGZcFzKiv00XqykwGaoBPdlCwiXbV/hEGC08YHtAcjoHy2nCyEco
+	 8aoi5Hi2VCOCGzpW9wDhFZBxeo7tpN256x43zbn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jones <ajones@ventanamicro.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 4.19 195/350] of/irq: Support #msi-cells=<0> in of_msi_get_domain
-Date: Wed,  6 Nov 2024 13:02:03 +0100
-Message-ID: <20241106120325.785557617@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.19 196/350] jbd2: stop waiting for space when jbd2_cleanup_journal_tail() returns error
+Date: Wed,  6 Nov 2024 13:02:04 +0100
+Message-ID: <20241106120325.810059965@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -50,102 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Jones <ajones@ventanamicro.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit db8e81132cf051843c9a59b46fa5a071c45baeb3 upstream.
+commit f5cacdc6f2bb2a9bf214469dd7112b43dd2dd68a upstream.
 
-An 'msi-parent' property with a single entry and no accompanying
-'#msi-cells' property is considered the legacy definition as opposed
-to its definition after being expanded with commit 126b16e2ad98
-("Docs: dt: add generic MSI bindings"). However, the legacy
-definition is completely compatible with the current definition and,
-since of_phandle_iterator_next() tolerates missing and present-but-
-zero *cells properties since commit e42ee61017f5 ("of: Let
-of_for_each_phandle fallback to non-negative cell_count"), there's no
-need anymore to special case the legacy definition in
-of_msi_get_domain().
+In __jbd2_log_wait_for_space(), we might call jbd2_cleanup_journal_tail()
+to recover some journal space. But if an error occurs while executing
+jbd2_cleanup_journal_tail() (e.g., an EIO), we don't stop waiting for free
+space right away, we try other branches, and if j_committing_transaction
+is NULL (i.e., the tid is 0), we will get the following complain:
 
-Indeed, special casing has turned out to be harmful, because, as of
-commit 7c025238b47a ("dt-bindings: irqchip: Describe the IMX MU block
-as a MSI controller"), MSI controller DT bindings have started
-specifying '#msi-cells' as a required property (even when the value
-must be zero) as an effort to make the bindings more explicit. But,
-since the special casing of 'msi-parent' only uses the existence of
-'#msi-cells' for its heuristic, and not whether or not it's also
-nonzero, the legacy path is not taken. Furthermore, the path to
-support the new, broader definition isn't taken either since that
-path has been restricted to the platform-msi bus.
+============================================
+JBD2: I/O error when updating journal superblock for sdd-8.
+__jbd2_log_wait_for_space: needed 256 blocks and only had 217 space available
+__jbd2_log_wait_for_space: no way to get more journal space in sdd-8
+------------[ cut here ]------------
+WARNING: CPU: 2 PID: 139804 at fs/jbd2/checkpoint.c:109 __jbd2_log_wait_for_space+0x251/0x2e0
+Modules linked in:
+CPU: 2 PID: 139804 Comm: kworker/u8:3 Not tainted 6.6.0+ #1
+RIP: 0010:__jbd2_log_wait_for_space+0x251/0x2e0
+Call Trace:
+ <TASK>
+ add_transaction_credits+0x5d1/0x5e0
+ start_this_handle+0x1ef/0x6a0
+ jbd2__journal_start+0x18b/0x340
+ ext4_dirty_inode+0x5d/0xb0
+ __mark_inode_dirty+0xe4/0x5d0
+ generic_update_time+0x60/0x70
+[...]
+============================================
 
-But, neither the definition of 'msi-parent' nor the definition of
-'#msi-cells' is platform-msi-specific (the platform-msi bus was just
-the first bus that needed '#msi-cells'), so remove both the special
-casing and the restriction. The code removal also requires changing
-to of_parse_phandle_with_optional_args() in order to ensure the
-legacy (but compatible) use of 'msi-parent' remains supported. This
-not only simplifies the code but also resolves an issue with PCI
-devices finding their MSI controllers on riscv, as the riscv,imsics
-binding requires '#msi-cells=<0>'.
+So only if jbd2_cleanup_journal_tail() returns 1, i.e., there is nothing to
+clean up at the moment, continue to try to reclaim free space in other ways.
 
-Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/20240817074107.31153-2-ajones@ventanamicro.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Note that this fix relies on commit 6f6a6fda2945 ("jbd2: fix ocfs2 corrupt
+when updating journal superblock fails") to make jbd2_cleanup_journal_tail
+return the correct error code.
+
+Fixes: 8c3f25d8950c ("jbd2: don't give up looking for space so easily in __jbd2_log_wait_for_space")
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240718115336.2554501-1-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/irq.c |   34 +++++++---------------------------
- 1 file changed, 7 insertions(+), 27 deletions(-)
+ fs/jbd2/checkpoint.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -641,8 +641,7 @@ struct irq_domain *of_msi_map_get_device
-  * @np: device node for @dev
-  * @token: bus type for this domain
-  *
-- * Parse the msi-parent property (both the simple and the complex
-- * versions), and returns the corresponding MSI domain.
-+ * Parse the msi-parent property and returns the corresponding MSI domain.
-  *
-  * Returns: the MSI domain for this device (or NULL on failure).
-  */
-@@ -650,33 +649,14 @@ struct irq_domain *of_msi_get_domain(str
- 				     struct device_node *np,
- 				     enum irq_domain_bus_token token)
- {
--	struct device_node *msi_np;
-+	struct of_phandle_iterator it;
- 	struct irq_domain *d;
-+	int err;
- 
--	/* Check for a single msi-parent property */
--	msi_np = of_parse_phandle(np, "msi-parent", 0);
--	if (msi_np && !of_property_read_bool(msi_np, "#msi-cells")) {
--		d = irq_find_matching_host(msi_np, token);
--		if (!d)
--			of_node_put(msi_np);
--		return d;
--	}
--
--	if (token == DOMAIN_BUS_PLATFORM_MSI) {
--		/* Check for the complex msi-parent version */
--		struct of_phandle_args args;
--		int index = 0;
--
--		while (!of_parse_phandle_with_args(np, "msi-parent",
--						   "#msi-cells",
--						   index, &args)) {
--			d = irq_find_matching_host(args.np, token);
--			if (d)
--				return d;
--
--			of_node_put(args.np);
--			index++;
--		}
-+	of_for_each_phandle(&it, err, np, "msi-parent", "#msi-cells", 0) {
-+		d = irq_find_matching_host(it.node, token);
-+		if (d)
-+			return d;
- 	}
- 
- 	return NULL;
+--- a/fs/jbd2/checkpoint.c
++++ b/fs/jbd2/checkpoint.c
+@@ -147,8 +147,11 @@ void __jbd2_log_wait_for_space(journal_t
+ 			write_unlock(&journal->j_state_lock);
+ 			if (chkpt) {
+ 				jbd2_log_do_checkpoint(journal);
+-			} else if (jbd2_cleanup_journal_tail(journal) == 0) {
+-				/* We were able to recover space; yay! */
++			} else if (jbd2_cleanup_journal_tail(journal) <= 0) {
++				/*
++				 * We were able to recover space or the
++				 * journal was aborted due to an error.
++				 */
+ 				;
+ 			} else if (has_transaction) {
+ 				/*
 
 
