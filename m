@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C76D1CC89D;
-	Wed,  6 Nov 2024 13:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601731DFE27;
+	Wed,  6 Nov 2024 13:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899195; cv=none; b=jrcwbhDa6mundLiMpZUbnRjSG3IU6WIClWKEo5SQFHa8GlBfhNJ4iY3FXUc+R0KreoQ6ztJJKJ71w0G3ENgWC7ZM6gsAtN8IiWt6fdj4hPsNGbKYsNazRrVzXEiFSpmidNfLZcc/YxU67+qjcQBneXGWg6+AlioV10qbhcP8uHA=
+	t=1730899198; cv=none; b=qa9oRUfTJtlqe052hcda1RwTHcXf8wvo4AxmdvCgZ7DBZPxJnv9ySOGd8ps0H4RY9Ah50Nk5Wa98MJqS4sQufE+ytXVuipOH7PIPRfZsEv/UoDR4aLCtc6nwFDwEvE9zENc2blK1Kyjavy6cyx2j3V7lugWLyCySzHM1EVSRozs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899195; c=relaxed/simple;
-	bh=rtr7xawq0ICASJDmFa4U8xqzwd89N0A4B0iDL8x2mnA=;
+	s=arc-20240116; t=1730899198; c=relaxed/simple;
+	bh=Y05lbFBQSAf6IsuK9YH3BkooBMudVEPMTT3nUisBbCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EtQ09gxfBTn5A4Nblh58bC7JygkU0s7VT29JfRcjyspKFe0U05bM2EhE007tK5iYfsL6Nt9bFYpbkMXm3Tsi+cJtd6q3fqE2bNTQRkqhDHGYLsD2RwqGKgcOSrNp5iPl2LyEZdg4CFxqH7wvkXEohsy0lADLjjVcam115vCFdO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcwaJIrD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GLA8gBYP2/UAB6h23kSAPgUOGgXrxNuCc8OQFdtWqkHIVx0vWq72bcwPP+7caM3Z8FKkEfvD/gpd8sr2Toemqg7XqXcLhmxUhgwk5wy/9d3bOGtennB7plSL6g6uj/JWrI/T33d9YwcxolAR04xa67g2UnauYLvADImwkDASKHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGh2FWto; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcwaJIrD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E995CC4CED3;
-	Wed,  6 Nov 2024 13:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGh2FWto"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E82C4CECD;
+	Wed,  6 Nov 2024 13:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899195;
-	bh=rtr7xawq0ICASJDmFa4U8xqzwd89N0A4B0iDL8x2mnA=;
+	s=korg; t=1730899198;
+	bh=Y05lbFBQSAf6IsuK9YH3BkooBMudVEPMTT3nUisBbCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bcwaJIrDLrWepsCMokbNGttgglFZNIYlNwlZm34riwOkf/lYC7DGGPAr0zLX18394
-	 hEsz5/qcqTcMblCYCrCm/1CXYQv0wgZpNZ9dK/bU6wNBHeqjn93DVez7i+2Vy+9DtS
-	 0zXiRf0ML9M4/YOtkIxy2MAlPJLuwYbWKjv3v+CY=
+	b=hGh2FWtoD7iARH4UlCArrU1HvrkW+GHuU+K/9pvwN2Dbrcb8utXH8i2ehswlEGoXZ
+	 VykhU4VimIeIbD6Dvg1UMv6fHQ/6YVkxbR0yHO9OtEurf8auGdcIYs4dI/ZZDRUdLa
+	 91RWlbog1fGs8Vjvl3tjbS8H+/BYd6JGMmG/Ew0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+bc7ca0ae4591cb2550f9@syzkaller.appspotmail.com,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	syzbot+c2ada45c23d98d646118@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 31/73] fs/ntfs3: Fix warning possible deadlock in ntfs_set_state
-Date: Wed,  6 Nov 2024 13:05:35 +0100
-Message-ID: <20241106120300.893773005@linuxfoundation.org>
+Subject: [PATCH 5.15 32/73] fs/ntfs3: Fix possible deadlock in mi_read
+Date: Wed,  6 Nov 2024 13:05:36 +0100
+Message-ID: <20241106120300.922974694@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120259.955073160@linuxfoundation.org>
 References: <20241106120259.955073160@linuxfoundation.org>
@@ -53,30 +53,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 5b2db723455a89dc96743d34d8bdaa23a402db2f ]
+[ Upstream commit 03b097099eef255fbf85ea6a786ae3c91b11f041 ]
 
-Use non-zero subkey to skip analyzer warnings.
+Mutex lock with another subclass used in ni_lock_dir().
 
+Reported-by: syzbot+bc7ca0ae4591cb2550f9@syzkaller.appspotmail.com
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Reported-by: syzbot+c2ada45c23d98d646118@syzkaller.appspotmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/ntfs_fs.h | 2 +-
+ fs/ntfs3/namei.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
-index b4c09b99edd1d..7b46926e920c6 100644
---- a/fs/ntfs3/ntfs_fs.h
-+++ b/fs/ntfs3/ntfs_fs.h
-@@ -328,7 +328,7 @@ struct mft_inode {
- 
- /* Nested class for ntfs_inode::ni_lock. */
- enum ntfs_inode_mutex_lock_class {
--	NTFS_INODE_MUTEX_DIRTY,
-+	NTFS_INODE_MUTEX_DIRTY = 1,
- 	NTFS_INODE_MUTEX_SECURITY,
- 	NTFS_INODE_MUTEX_OBJID,
- 	NTFS_INODE_MUTEX_REPARSE,
+diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
+index bff1934e044e5..c1bce9d656cff 100644
+--- a/fs/ntfs3/namei.c
++++ b/fs/ntfs3/namei.c
+@@ -79,7 +79,7 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
+ 		if (err < 0)
+ 			inode = ERR_PTR(err);
+ 		else {
+-			ni_lock(ni);
++			ni_lock_dir(ni);
+ 			inode = dir_search_u(dir, uni, NULL);
+ 			ni_unlock(ni);
+ 		}
 -- 
 2.43.0
 
