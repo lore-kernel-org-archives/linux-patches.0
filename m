@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F381DF75A;
-	Wed,  6 Nov 2024 12:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BC01CC89D;
+	Wed,  6 Nov 2024 12:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897112; cv=none; b=lJq0pER7SyHyHQFY3dXIwM4/DaMQ8fv/F697o6aFtPEcfmp5qjE8IrSfkl6Pve3KjklYaY/Klzw0UYR53rJAMpCI25YfE432Ce9QC2vtWFP1VXPf2e1qiACcJgMiIAAfjvlRwsJIe5UIpQ6NLy3NNObaFaaEK6v3x2HNmMJvQUc=
+	t=1730897115; cv=none; b=FEGFbYga5ONNYpEZgzsrcLa01CEebS8pV/qyQdQPhcsr6yJy3WfE9Ei4sUitU1bx0+R2zFzWfLMaj8hWPnVcngmrTcslz/AVu9UFRy18G2KmTMl30HkwgyzdOBal0VZr3l+2igtofG0uUJ9r3cT2vx0nQPpNCWTR/pCnow11e10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897112; c=relaxed/simple;
-	bh=/ofLAKEF6d7iUnVpV37Ca5eS1ezefp9Re5gnnblDmEM=;
+	s=arc-20240116; t=1730897115; c=relaxed/simple;
+	bh=eceqGWV2LIvwXulq6g2m8Ob2gFMwCTinsFojGG7W7/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OqYKgQb9vPkq41rQHh1fHIuCXfayGe2DMHl7V861GrNwA5xWQ0RTLBiS9eeVHDqp+6mFAgjjgWFPdlIVnuWj2UYv2uzdftpXzAsyfUg79a9JgBuobEf0nPeSjITT5IsjSdNsxpJd+US+W54J1kZkEbTFsEkRKh2+MrYxs9OChog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmu/tKtI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g8n7LkRFpETi2Iv2hpSpHsZUw17BA/IuxutN6idxKnik6tCVE2NXdk5cfvATxJw/CcAGNf4GfXBpellVnr1gLlJhVYG7qI5EFoZol90kgb8gjuFtxhBeI6HpiOMBeRxuipt0ZUCr4vaSCGXoni9wVu9L7u98AHS3t01BheVi7g4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DKu/4t8t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmu/tKtI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4CBC4CECD;
-	Wed,  6 Nov 2024 12:45:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DKu/4t8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D05FC4CECD;
+	Wed,  6 Nov 2024 12:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897111;
-	bh=/ofLAKEF6d7iUnVpV37Ca5eS1ezefp9Re5gnnblDmEM=;
+	s=korg; t=1730897114;
+	bh=eceqGWV2LIvwXulq6g2m8Ob2gFMwCTinsFojGG7W7/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kmu/tKtIN8NaG7iER5eZ7uL9epzJe93YXod4E9v3tpT3mSXfkJlFZdGE6JMoJHLCc
-	 FA/Ic1CdLAMeXNEa+DqW5RkgpYH8qE40E7Bjf8PkovZKovzUuZMTvWWUx7qX7rNAHX
-	 lOxRKfBBuM6ErmhSk3AYC5uY6xptf5m6Y2y5DnRI=
+	b=DKu/4t8thJdiQ/d9QP8PY+s6h4lyG/b8/ngVXV6zo1P/UWPEDo87ut0pydvlP3FaR
+	 s19bXB8n03isKnSBKi83dQtqUPCOnzPTXQwutbGEr7q+KQ6UsnCdBsuCbYQ9KPUP8C
+	 x2lUau/n6ufeD5uwC17eMYvPqg4fY7EoAxokMT4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faisal Hassan <quic_faisalh@quicinc.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.1 069/126] xhci: Fix Link TRB DMA in command ring stopped completion event
-Date: Wed,  6 Nov 2024 13:04:30 +0100
-Message-ID: <20241106120307.955673477@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.1 070/126] xhci: Use pm_runtime_get to prevent RPM on unsupported systems
+Date: Wed,  6 Nov 2024 13:04:31 +0100
+Message-ID: <20241106120307.980947571@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -50,64 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Faisal Hassan <quic_faisalh@quicinc.com>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-commit 075919f6df5dd82ad0b1894898b315fbb3c29b84 upstream.
+commit 31004740e42846a6f0bb255e6348281df3eb8032 upstream.
 
-During the aborting of a command, the software receives a command
-completion event for the command ring stopped, with the TRB pointing
-to the next TRB after the aborted command.
+Use pm_runtime_put in the remove function and pm_runtime_get to disable
+RPM on platforms that don't support runtime D3, as re-enabling it through
+sysfs auto power control may cause the controller to malfunction. This
+can lead to issues such as hotplug devices not being detected due to
+failed interrupt generation.
 
-If the command we abort is located just before the Link TRB in the
-command ring, then during the 'command ring stopped' completion event,
-the xHC gives the Link TRB in the event's cmd DMA, which causes a
-mismatch in handling command completion event.
-
-To address this situation, move the 'command ring stopped' completion
-event check slightly earlier, since the specific command it stopped
-on isn't of significant concern.
-
-Fixes: 7f84eef0dafb ("USB: xhci: No-op command queueing and irq handler.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Faisal Hassan <quic_faisalh@quicinc.com>
-Acked-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20241022155631.1185-1-quic_faisalh@quicinc.com
+Fixes: a5d6264b638e ("xhci: Enable RPM on controllers that support low-power states")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20241024133718.723846-1-Basavaraj.Natikar@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/usb/host/xhci-pci.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1704,6 +1704,14 @@ static void handle_cmd_completion(struct
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -526,7 +526,7 @@ static int xhci_pci_probe(struct pci_dev
+ 	pm_runtime_put_noidle(&dev->dev);
  
- 	trace_xhci_handle_command(xhci->cmd_ring, &cmd_trb->generic);
+ 	if (pci_choose_state(dev, PMSG_SUSPEND) == PCI_D0)
+-		pm_runtime_forbid(&dev->dev);
++		pm_runtime_get(&dev->dev);
+ 	else if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
+ 		pm_runtime_allow(&dev->dev);
  
-+	cmd_comp_code = GET_COMP_CODE(le32_to_cpu(event->status));
-+
-+	/* If CMD ring stopped we own the trbs between enqueue and dequeue */
-+	if (cmd_comp_code == COMP_COMMAND_RING_STOPPED) {
-+		complete_all(&xhci->cmd_ring_stop_completion);
-+		return;
-+	}
-+
- 	cmd_dequeue_dma = xhci_trb_virt_to_dma(xhci->cmd_ring->deq_seg,
- 			cmd_trb);
- 	/*
-@@ -1720,14 +1728,6 @@ static void handle_cmd_completion(struct
+@@ -553,7 +553,9 @@ static void xhci_pci_remove(struct pci_d
  
- 	cancel_delayed_work(&xhci->cmd_timer);
+ 	xhci->xhc_state |= XHCI_STATE_REMOVING;
  
--	cmd_comp_code = GET_COMP_CODE(le32_to_cpu(event->status));
--
--	/* If CMD ring stopped we own the trbs between enqueue and dequeue */
--	if (cmd_comp_code == COMP_COMMAND_RING_STOPPED) {
--		complete_all(&xhci->cmd_ring_stop_completion);
--		return;
--	}
--
- 	if (cmd->command_trb != xhci->cmd_ring->dequeue) {
- 		xhci_err(xhci,
- 			 "Command completion event does not match command\n");
+-	if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
++	if (pci_choose_state(dev, PMSG_SUSPEND) == PCI_D0)
++		pm_runtime_put(&dev->dev);
++	else if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
+ 		pm_runtime_forbid(&dev->dev);
+ 
+ 	if (xhci->shared_hcd) {
 
 
