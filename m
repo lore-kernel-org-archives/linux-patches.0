@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1711A1DFE38;
-	Wed,  6 Nov 2024 12:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081C91DF251;
+	Wed,  6 Nov 2024 12:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896382; cv=none; b=bnY6JupFOr5VtbanZiSbx9vm4s0su4jze/vd/lVNH56G8hYycnFs6GdIVI3SciKHJ3bgwh8ovDJkUpI8FA0IaM9ptFRnThxQcq2F5eSXp1sVbFRFpI+JIxXA1dAwSKxtnSraWKEPOrNCWau7XT5E4qkhOpNX3DCdMf+I8zo+KEI=
+	t=1730896385; cv=none; b=l5KNsZLwHqC97sU4eLwfBlvYihWNXQpjtplXQj4QIFzLTwxbvunuO0UKdIzbL1U+dcfklxkEqXB+4rvwxHgrgHXDFYJipWY5r8MYdlm7AVFmrlf7yIkoarwHeHr4/JhrJ9NM2+KHsXhSL5k9FERoEVvGrw2w7xO3NEUq09VioRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896382; c=relaxed/simple;
-	bh=PNVvr3xbi+Y0lLuQUNLkVeUeA9H+URuhPACqZs2qfQI=;
+	s=arc-20240116; t=1730896385; c=relaxed/simple;
+	bh=H6/wMgXF3PuiOCy8dxlQVqbxaR8a/2prFiXygUMtXAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XFc+R3x43msVmHABLcCFygUWPdSF4aqCRJlUYgVvycrd6E8HS1PvudRsi+Rx2w0JeuaXuq+RGeaYm3P5BMxDOeKaWUMr9O5bhmaMzTngQ/lPG9xEAYY5KtjwjNunNNnaZO9xhPUYWJNvaRNoifIP5vG/JaZX7PmjSXCBUhFbxts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dJiKAme; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dxPB1+Ru0qiHoDZmCkUihysx1Lruwp1B/cjtKG5o3nWkkBudks8ov0QGOPp9GdAe4t6NxxBzQrqm71Ne5kZnzmMxjriKq2gZlo6ha/Q2V8up/Ga6VQlLZe5Cs6wjPAgFC4wimcYnxUGefBUbHgeFRHXah5NcZrtEIb8CcEonjFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvn6nMGu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dJiKAme"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92044C4CECD;
-	Wed,  6 Nov 2024 12:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvn6nMGu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C578C4CECD;
+	Wed,  6 Nov 2024 12:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896382;
-	bh=PNVvr3xbi+Y0lLuQUNLkVeUeA9H+URuhPACqZs2qfQI=;
+	s=korg; t=1730896384;
+	bh=H6/wMgXF3PuiOCy8dxlQVqbxaR8a/2prFiXygUMtXAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1dJiKAme7B4lsx1iVNqyEZTU7uK2L+JtDmYXHghQgAh0XWOSrb4x0KUtuVcORK39e
-	 fC+52JrYmGlQ7t4jzAVD9AtQQvetT8j7tZPjUbALX3+8qfi0gDjwbek2lzKke0h5DN
-	 /e7uWh6TC+YZUKJA44Ud3nQJ8q6XDdB+LidWKt4k=
+	b=jvn6nMGuYyrN/r+vsHyG0bPV44htZZhq3V6hDgcIR8b4yc/GwLLnvYre4gfDHbkMU
+	 pu0gyhwoXGg5XPX4nnt1eZR4JZrG29beytmilXnN0/ASkY9JwV4lT0RUSLkNaJ456V
+	 DDJDJolFhfoEcCttWe8iVb5cmBj3YNo+MJY2QJG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>,
-	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	syzbot+4125a3c514e3436a02e6@syzkaller.appspotmail.com,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 183/245] accel/ivpu: Fix NOC firewall interrupt handling
-Date: Wed,  6 Nov 2024 13:03:56 +0100
-Message-ID: <20241106120323.744696144@linuxfoundation.org>
+Subject: [PATCH 6.11 184/245] xfs: fix finding a last resort AG in xfs_filestream_pick_ag
+Date: Wed,  6 Nov 2024 13:03:57 +0100
+Message-ID: <20241106120323.769244798@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,99 +53,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 72f7e16eccddde99386a10eb2d08833e805917c6 ]
+[ Upstream commit dc60992ce76fbc2f71c2674f435ff6bde2108028 ]
 
-The NOC firewall interrupt means that the HW prevented
-unauthorized access to a protected resource, so there
-is no need to trigger device reset in such case.
+When the main loop in xfs_filestream_pick_ag fails to find a suitable
+AG it tries to just pick the online AG.  But the loop for that uses
+args->pag as loop iterator while the later code expects pag to be
+set.  Fix this by reusing the max_pag case for this last resort, and
+also add a check for impossible case of no AG just to make sure that
+the uninitialized pag doesn't even escape in theory.
 
-To facilitate security testing add firewall_irq_counter
-debugfs file that tracks firewall interrupts.
-
-Fixes: 8a27ad81f7d3 ("accel/ivpu: Split IP and buttress code")
-Cc: stable@vger.kernel.org # v6.11+
-Signed-off-by: Andrzej Kacprowski <Andrzej.Kacprowski@intel.com>
-Reviewed-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241017144958.79327-1-jacek.lawrynowicz@linux.intel.com
+Reported-by: syzbot+4125a3c514e3436a02e6@syzkaller.appspotmail.com
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Tested-by: syzbot+4125a3c514e3436a02e6@syzkaller.appspotmail.com
+Fixes: f8f1ed1ab3baba ("xfs: return a referenced perag from filestreams allocator")
+Cc: <stable@vger.kernel.org> # v6.3
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_debugfs.c | 9 +++++++++
- drivers/accel/ivpu/ivpu_hw.c      | 1 +
- drivers/accel/ivpu/ivpu_hw.h      | 1 +
- drivers/accel/ivpu/ivpu_hw_ip.c   | 5 ++++-
- 4 files changed, 15 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_filestream.c | 23 ++++++++++++-----------
+ fs/xfs/xfs_trace.h      | 15 +++++----------
+ 2 files changed, 17 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/accel/ivpu/ivpu_debugfs.c b/drivers/accel/ivpu/ivpu_debugfs.c
-index 6f86f8df30db0..8d50981594d15 100644
---- a/drivers/accel/ivpu/ivpu_debugfs.c
-+++ b/drivers/accel/ivpu/ivpu_debugfs.c
-@@ -108,6 +108,14 @@ static int reset_pending_show(struct seq_file *s, void *v)
+diff --git a/fs/xfs/xfs_filestream.c b/fs/xfs/xfs_filestream.c
+index e3aaa05555978..88bd23ce74cde 100644
+--- a/fs/xfs/xfs_filestream.c
++++ b/fs/xfs/xfs_filestream.c
+@@ -64,7 +64,7 @@ xfs_filestream_pick_ag(
+ 	struct xfs_perag	*pag;
+ 	struct xfs_perag	*max_pag = NULL;
+ 	xfs_extlen_t		minlen = *longest;
+-	xfs_extlen_t		free = 0, minfree, maxfree = 0;
++	xfs_extlen_t		minfree, maxfree = 0;
+ 	xfs_agnumber_t		agno;
+ 	bool			first_pass = true;
+ 	int			err;
+@@ -107,7 +107,6 @@ xfs_filestream_pick_ag(
+ 			     !(flags & XFS_PICK_USERDATA) ||
+ 			     (flags & XFS_PICK_LOWSPACE))) {
+ 				/* Break out, retaining the reference on the AG. */
+-				free = pag->pagf_freeblks;
+ 				break;
+ 			}
+ 		}
+@@ -150,23 +149,25 @@ xfs_filestream_pick_ag(
+ 		 * grab.
+ 		 */
+ 		if (!max_pag) {
+-			for_each_perag_wrap(args->mp, 0, start_agno, args->pag)
++			for_each_perag_wrap(args->mp, 0, start_agno, pag) {
++				max_pag = pag;
+ 				break;
+-			atomic_inc(&args->pag->pagf_fstrms);
+-			*longest = 0;
+-		} else {
+-			pag = max_pag;
+-			free = maxfree;
+-			atomic_inc(&pag->pagf_fstrms);
++			}
++
++			/* Bail if there are no AGs at all to select from. */
++			if (!max_pag)
++				return -ENOSPC;
+ 		}
++
++		pag = max_pag;
++		atomic_inc(&pag->pagf_fstrms);
+ 	} else if (max_pag) {
+ 		xfs_perag_rele(max_pag);
+ 	}
+ 
+-	trace_xfs_filestream_pick(pag, pino, free);
++	trace_xfs_filestream_pick(pag, pino);
+ 	args->pag = pag;
  	return 0;
+-
  }
  
-+static int firewall_irq_counter_show(struct seq_file *s, void *v)
-+{
-+	struct ivpu_device *vdev = seq_to_ivpu(s);
-+
-+	seq_printf(s, "%d\n", atomic_read(&vdev->hw->firewall_irq_counter));
-+	return 0;
-+}
-+
- static const struct drm_debugfs_info vdev_debugfs_list[] = {
- 	{"bo_list", bo_list_show, 0},
- 	{"fw_name", fw_name_show, 0},
-@@ -116,6 +124,7 @@ static const struct drm_debugfs_info vdev_debugfs_list[] = {
- 	{"last_bootmode", last_bootmode_show, 0},
- 	{"reset_counter", reset_counter_show, 0},
- 	{"reset_pending", reset_pending_show, 0},
-+	{"firewall_irq_counter", firewall_irq_counter_show, 0},
- };
+ static struct xfs_inode *
+diff --git a/fs/xfs/xfs_trace.h b/fs/xfs/xfs_trace.h
+index 180ce697305a9..f681a195a7441 100644
+--- a/fs/xfs/xfs_trace.h
++++ b/fs/xfs/xfs_trace.h
+@@ -691,8 +691,8 @@ DEFINE_FILESTREAM_EVENT(xfs_filestream_lookup);
+ DEFINE_FILESTREAM_EVENT(xfs_filestream_scan);
  
- static ssize_t
-diff --git a/drivers/accel/ivpu/ivpu_hw.c b/drivers/accel/ivpu/ivpu_hw.c
-index 27f0fe4d54e00..e69c0613513f1 100644
---- a/drivers/accel/ivpu/ivpu_hw.c
-+++ b/drivers/accel/ivpu/ivpu_hw.c
-@@ -249,6 +249,7 @@ int ivpu_hw_init(struct ivpu_device *vdev)
- 	platform_init(vdev);
- 	wa_init(vdev);
- 	timeouts_init(vdev);
-+	atomic_set(&vdev->hw->firewall_irq_counter, 0);
- 
- 	return 0;
- }
-diff --git a/drivers/accel/ivpu/ivpu_hw.h b/drivers/accel/ivpu/ivpu_hw.h
-index 1c0c98e3afb88..a96a05b2acda9 100644
---- a/drivers/accel/ivpu/ivpu_hw.h
-+++ b/drivers/accel/ivpu/ivpu_hw.h
-@@ -52,6 +52,7 @@ struct ivpu_hw_info {
- 	int dma_bits;
- 	ktime_t d0i3_entry_host_ts;
- 	u64 d0i3_entry_vpu_ts;
-+	atomic_t firewall_irq_counter;
- };
- 
- int ivpu_hw_init(struct ivpu_device *vdev);
-diff --git a/drivers/accel/ivpu/ivpu_hw_ip.c b/drivers/accel/ivpu/ivpu_hw_ip.c
-index dfd2f4a5b5268..60b33fc59d96e 100644
---- a/drivers/accel/ivpu/ivpu_hw_ip.c
-+++ b/drivers/accel/ivpu/ivpu_hw_ip.c
-@@ -1062,7 +1062,10 @@ static void irq_wdt_mss_handler(struct ivpu_device *vdev)
- 
- static void irq_noc_firewall_handler(struct ivpu_device *vdev)
- {
--	ivpu_pm_trigger_recovery(vdev, "NOC Firewall IRQ");
-+	atomic_inc(&vdev->hw->firewall_irq_counter);
-+
-+	ivpu_dbg(vdev, IRQ, "NOC Firewall interrupt detected, counter %d\n",
-+		 atomic_read(&vdev->hw->firewall_irq_counter));
- }
- 
- /* Handler for IRQs from NPU core */
+ TRACE_EVENT(xfs_filestream_pick,
+-	TP_PROTO(struct xfs_perag *pag, xfs_ino_t ino, xfs_extlen_t free),
+-	TP_ARGS(pag, ino, free),
++	TP_PROTO(struct xfs_perag *pag, xfs_ino_t ino),
++	TP_ARGS(pag, ino),
+ 	TP_STRUCT__entry(
+ 		__field(dev_t, dev)
+ 		__field(xfs_ino_t, ino)
+@@ -703,14 +703,9 @@ TRACE_EVENT(xfs_filestream_pick,
+ 	TP_fast_assign(
+ 		__entry->dev = pag->pag_mount->m_super->s_dev;
+ 		__entry->ino = ino;
+-		if (pag) {
+-			__entry->agno = pag->pag_agno;
+-			__entry->streams = atomic_read(&pag->pagf_fstrms);
+-		} else {
+-			__entry->agno = NULLAGNUMBER;
+-			__entry->streams = 0;
+-		}
+-		__entry->free = free;
++		__entry->agno = pag->pag_agno;
++		__entry->streams = atomic_read(&pag->pagf_fstrms);
++		__entry->free = pag->pagf_freeblks;
+ 	),
+ 	TP_printk("dev %d:%d ino 0x%llx agno 0x%x streams %d free %d",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 -- 
 2.43.0
 
