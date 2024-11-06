@@ -1,175 +1,140 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D80B9202F95;
-	Wed,  6 Nov 2024 15:12:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9FC202F63
+	for <patches@lists.linux.dev>; Wed,  6 Nov 2024 15:12:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730905976; cv=none; b=cQi0YT986WmI/FDdcnJZXwT97jw0SFR7iPELZi5LxCn/UJ99oi4lc2TpD8v1SxFK20iFApl1NcfohpzkyP57yokoziouTKgqXH8AemZ6tFoki5PJ/63iL9vW7UIde1kjll+WsBdrp4R5iMN82teTqdTLygx7lx5K3TEbiOnpEsw=
+	t=1730905980; cv=none; b=OViwPIaLU60o0CHWzf500frBhmsR3MzEMSIq2k7XmY0qXmV1NQurWNFkXod7/zi8YpqzPTSMNLL5D8+tFuQcQMZHLj7shkGMacW5nA2aOHmGR9s5pvKwOj4GIcwMKJJvelEFVbx5CeUuqcfwzpA5jD4p+rO3GXftS2VaXAllJoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730905976; c=relaxed/simple;
-	bh=NtWPaIkKC8r1cfM6lS0CoFAf6144okQV0U14dbywN1o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EBXTL+PMOFflO04nbR/1DZXLDbIbkehCH35bBs+HI4n45t1dwvvG8yeshIW8nvH5KE0Cm/xHy7sJkJDBIJtxVK/rct/7ZAHp1Sh6MueZILW/ogjjGm1p8EnYouBLQ1LNCmt4E6UQqD+YToy8wokt1EFkD0qkkM+FYovlEd72SAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0F91A497;
-	Wed,  6 Nov 2024 07:13:23 -0800 (PST)
-Received: from [10.57.91.71] (unknown [10.57.91.71])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A051B3F528;
-	Wed,  6 Nov 2024 07:12:50 -0800 (PST)
-Message-ID: <f0d98255-8050-4d79-998b-df805bb8f150@arm.com>
-Date: Wed, 6 Nov 2024 15:12:48 +0000
+	s=arc-20240116; t=1730905980; c=relaxed/simple;
+	bh=hJwSnsQSETNFXzvgqfuf9ElowDht9infCxazmOXBa7U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=V31lsCXnIrBnr0Zncl6kBNBN34CrOgOyxvSgOhfxooMsWyenfeqddWYz1D3g4JWr0nKEe6wzD4bRVuQTtbhfSc+fPEL/lYWCXmBnrY3pUkz/WZ3RZyQlcedr0heQk6pSzth8DbrPydld6cYYQ9IGSw7wkNNOXqzOiH90K+9y9fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IZhzGVL5; arc=none smtp.client-ip=209.85.167.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IZhzGVL5"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-3e5f9712991so3323540b6e.2
+        for <patches@lists.linux.dev>; Wed, 06 Nov 2024 07:12:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1730905977; x=1731510777; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/s8MXlCqJ3S3d997kkGlOblTEnbIpL85LZHtL6uGm0Q=;
+        b=IZhzGVL5khH2/zIVFyVIQN3DmycZWovKY28ly5G2eIDvusWoUHcR/g/5ALafoBwE8K
+         UKq+Z9W0w2n+pHelljj+CKnKJMTQl/I1S01PFXaYMsp+DKjHCqGBJzdyBqWqzeibpHRy
+         Ju41uC/CopOY6Rpav/ZcZd9eh9eMsNxh2iC0I7fwDx9IS4O6W1wwGb6ixps/v+jJLJUP
+         intYC+ntMj26seRyyoJAE6u8U0C/8+H+Azh0OmsqvP/DLk8OSZy3aKd21sy30BzJ0DUD
+         82xdvCr7i5hh1Ak8YDTUC8YDUTQgb+tUwXK9cZjXF8Hxb4gxplcND8ptOUWyJnMjCHzq
+         Q+MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730905977; x=1731510777;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/s8MXlCqJ3S3d997kkGlOblTEnbIpL85LZHtL6uGm0Q=;
+        b=FLwpArLhtwmJgn2KjuB54lXOQ9JQD2usIoGcl+apMw16IKxgZquQ0giPZOxFC4J1sD
+         SopnSIeZ4vO9OuQSEEquc3h6Q5W2sASW8q1rZ0+QnHdpvnXDAgO01p6azsidSepewARy
+         DvNlmVlJSAd8MaCdvhAbkfdQL8Jgio5rtNGokNK5uMdVP0PK/M4bU/La0qMwl5v3GZ59
+         dEWuDkjFgxX//pFtyrCYc2jPBDpt8HqqZowiLKEANodArc3hSKvNWOzuaSJZOsadH/LG
+         UnFMoaucuU0gnCuqmglAxHTlPZSpQEwlXAXsxxjIGrALtVZPSiPYhrKZxmgt4Wilmghq
+         j30Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVUHeer/vd2Jl+tiWOM8vzwz/i6zjDS6rXEU9M3eDV48RXncefw16snGfNsBYzWs8zdHD1jhMOb@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx2B+0FzwEBJvxQUCLUYo279oVj3kx2xx8xesRLylC+LYcxeJix
+	hwwnwt93HKx7R7yfmN1Zp9EQRC6y8MX05+iUSGnmzo0Duw0tfEJYwfiVibLtoW6VOt6Glsrh7mX
+	i/ZXxoRoJVAMO0073dbBrjCfgSPA9p105l22Oxg==
+X-Google-Smtp-Source: AGHT+IFK0O+catjkeLn95aRPwfONLUcgvqi/oAotqb/lG7yJa9aCtKL/wkazFs/bxZ/MPrgGD7dqggXgWdBZY7x6muM=
+X-Received: by 2002:a05:6218:2814:b0:1b3:9b15:ac01 with SMTP id
+ e5c5f4694b2df-1c5f98c5a83mr960654055d.3.1730905977486; Wed, 06 Nov 2024
+ 07:12:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] iommu/io-pgtable-arm: Remove split on unmap
- behavior
-To: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, linux-arm-kernel@lists.infradead.org,
- Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>
-Cc: Boris Brezillon <boris.brezillon@collabora.com>,
- dri-devel@lists.freedesktop.org, Liviu Dudau <liviu.dudau@arm.com>,
- patches@lists.linux.dev
-References: <1-v2-fd55d00a60b2+c69-arm_no_split_jgg@nvidia.com>
-From: Steven Price <steven.price@arm.com>
-Content-Language: en-GB
-In-Reply-To: <1-v2-fd55d00a60b2+c69-arm_no_split_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20241106120319.234238499@linuxfoundation.org>
+In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 6 Nov 2024 15:12:46 +0000
+Message-ID: <CA+G9fYtjpUJFFV=FdqvW+5K+JL5ZYN4sPfVDjQovqzd7cib39w@mail.gmail.com>
+Subject: Re: [PATCH 6.11 000/245] 6.11.7-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hagar@microsoft.com, 
+	broonie@kernel.org, Chris Mason <clm@fb.com>, Josef Bacik <josef@toxicpanda.com>, 
+	David Sterba <dsterba@suse.com>, Linux btrfs <linux-btrfs@vger.kernel.org>, 
+	linux-mips@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 04/11/2024 17:41, Jason Gunthorpe wrote:
-> A minority of page table implementations (arm_lpae, armv7) are unique in
-> how they handle partial unmap of large IOPTEs.
-> 
-> Other implementations will unmap the large IOPTE and return it's
-> length. For example if a 2M IOPTE is present and the first 4K is requested
-> to be unmapped then unmap will remove the whole 2M and report 2M as the
-> result.
-> 
-> arm_lpae instead replaces the IOPTE with a table of smaller IOPTEs, unmaps
-> the 4K and returns 4k. This is actually an illegal/non-hitless operation
-> on at least SMMUv3 because of the BBM level 0 rules.
-> 
-> Will says this was done to support VFIO, but upon deeper analysis this was
-> never strictly necessary:
-> 
->  https://lore.kernel.org/all/20241024134411.GA6956@nvidia.com/
-> 
-> In summary, historical VFIO supported the AMD behavior of unmapping the
-> whole large IOPTE and returning the size, even if asked to unmap a
-> portion. The driver would see this as a request to split a large IOPTE.
-> Modern VFIO always unmaps entire large IOPTEs (except on AMD) and drivers
-> don't see an IOPTE split.
-> 
-> Given it doesn't work fully correctly on SMMUv3 and relying on ARM unique
-> behavior would create portability problems across IOMMU drivers, retire
-> this functionality.
-> 
-> Outside the iommu users, this will potentially effect io_pgtable users of
-> ARM_32_LPAE_S1, ARM_32_LPAE_S2, ARM_64_LPAE_S1, ARM_64_LPAE_S2, and
-> ARM_MALI_LPAE formats.
-> 
-> Cc: Boris Brezillon <boris.brezillon@collabora.com>
-> Cc: Steven Price <steven.price@arm.com>
-> Cc: Liviu Dudau <liviu.dudau@arm.com>
-> Cc: dri-devel@lists.freedesktop.org
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+On Wed, 6 Nov 2024 at 12:26, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.11.7 release.
+> There are 245 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 08 Nov 2024 12:02:47 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.11.7-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Reviewed-by: Steven Price <steven.price@arm.com>
+The mips gcc-12 allmodconfig build failed on the Linux stable-rc
+linux-6.11.y branch.
 
-> ---
->  drivers/iommu/io-pgtable-arm.c | 68 +---------------------------------
->  1 file changed, 2 insertions(+), 66 deletions(-)
-> 
-> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> index 0e67f1721a3d98..9a16815b3f3434 100644
-> --- a/drivers/iommu/io-pgtable-arm.c
-> +++ b/drivers/iommu/io-pgtable-arm.c
-> @@ -569,66 +569,6 @@ static void arm_lpae_free_pgtable(struct io_pgtable *iop)
->  	kfree(data);
->  }
->  
-> -static size_t arm_lpae_split_blk_unmap(struct arm_lpae_io_pgtable *data,
-> -				       struct iommu_iotlb_gather *gather,
-> -				       unsigned long iova, size_t size,
-> -				       arm_lpae_iopte blk_pte, int lvl,
-> -				       arm_lpae_iopte *ptep, size_t pgcount)
-> -{
-> -	struct io_pgtable_cfg *cfg = &data->iop.cfg;
-> -	arm_lpae_iopte pte, *tablep;
-> -	phys_addr_t blk_paddr;
-> -	size_t tablesz = ARM_LPAE_GRANULE(data);
-> -	size_t split_sz = ARM_LPAE_BLOCK_SIZE(lvl, data);
-> -	int ptes_per_table = ARM_LPAE_PTES_PER_TABLE(data);
-> -	int i, unmap_idx_start = -1, num_entries = 0, max_entries;
-> -
-> -	if (WARN_ON(lvl == ARM_LPAE_MAX_LEVELS))
-> -		return 0;
-> -
-> -	tablep = __arm_lpae_alloc_pages(tablesz, GFP_ATOMIC, cfg, data->iop.cookie);
-> -	if (!tablep)
-> -		return 0; /* Bytes unmapped */
-> -
-> -	if (size == split_sz) {
-> -		unmap_idx_start = ARM_LPAE_LVL_IDX(iova, lvl, data);
-> -		max_entries = ptes_per_table - unmap_idx_start;
-> -		num_entries = min_t(int, pgcount, max_entries);
-> -	}
-> -
-> -	blk_paddr = iopte_to_paddr(blk_pte, data);
-> -	pte = iopte_prot(blk_pte);
-> -
-> -	for (i = 0; i < ptes_per_table; i++, blk_paddr += split_sz) {
-> -		/* Unmap! */
-> -		if (i >= unmap_idx_start && i < (unmap_idx_start + num_entries))
-> -			continue;
-> -
-> -		__arm_lpae_init_pte(data, blk_paddr, pte, lvl, 1, &tablep[i]);
-> -	}
-> -
-> -	pte = arm_lpae_install_table(tablep, ptep, blk_pte, data);
-> -	if (pte != blk_pte) {
-> -		__arm_lpae_free_pages(tablep, tablesz, cfg, data->iop.cookie);
-> -		/*
-> -		 * We may race against someone unmapping another part of this
-> -		 * block, but anything else is invalid. We can't misinterpret
-> -		 * a page entry here since we're never at the last level.
-> -		 */
-> -		if (iopte_type(pte) != ARM_LPAE_PTE_TYPE_TABLE)
-> -			return 0;
-> -
-> -		tablep = iopte_deref(pte, data);
-> -	} else if (unmap_idx_start >= 0) {
-> -		for (i = 0; i < num_entries; i++)
-> -			io_pgtable_tlb_add_page(&data->iop, gather, iova + i * size, size);
-> -
-> -		return num_entries * size;
-> -	}
-> -
-> -	return __arm_lpae_unmap(data, gather, iova, size, pgcount, lvl, tablep);
-> -}
-> -
->  static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
->  			       struct iommu_iotlb_gather *gather,
->  			       unsigned long iova, size_t size, size_t pgcount,
-> @@ -678,12 +618,8 @@ static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
->  
->  		return i * size;
->  	} else if (iopte_leaf(pte, lvl, iop->fmt)) {
-> -		/*
-> -		 * Insert a table at the next level to map the old region,
-> -		 * minus the part we want to unmap
-> -		 */
-> -		return arm_lpae_split_blk_unmap(data, gather, iova, size, pte,
-> -						lvl + 1, ptep, pgcount);
-> +		WARN_ONCE(true, "Unmap of a partial large IOPTE is not allowed");
-> +		return 0;
->  	}
->  
->  	/* Keep on walkin' */
 
+First seen on Linux stable-rc v6.11.4-642-g0e21c72fc970
+
+  Good: v6.11.4-397-g4ccf0b49d5b6
+  Bad:   v6.11.4-642-g0e21c72fc970
+
+mips:
+  build:
+    * gcc-12-allmodconfig
+
+Build errors:
+-------------
+ERROR: modpost: "__cmpxchg_small" [fs/btrfs/btrfs.ko] undefined!
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+Links:
+- https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.11.y/build/v6.11.4-642-g0e21c72fc970/testrun/25700362/suite/build/test/gcc-12-allmodconfig/log
+- https://storage.tuxsuite.com/public/linaro/lkft/builds/2oTbq5WdzEalBxPXBBCuzLUA45b/
+- https://storage.tuxsuite.com/public/linaro/lkft/builds/2oTbq5WdzEalBxPXBBCuzLUA45b/config
+
+Steps to reproduce:
+------------
+   - tuxmake --runtime podman --target-arch mips --toolchain gcc-12
+--kconfig allmodconfig
+
+metadata:
+----
+  git describe: v6.11.4-642-g0e21c72fc970
+  git repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+  git sha: 0e21c72fc970e320e6c1ca9d81d2dce4aab95b3b
+  kernel config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2oTbq5WdzEalBxPXBBCuzLUA45b/config
+  build url: https://storage.tuxsuite.com/public/linaro/lkft/builds/2oTbq5WdzEalBxPXBBCuzLUA45b/
+  toolchain: gcc-12
+  config: allmodconfig
+  arch: mips
+
+--
+Linaro LKFT
+https://lkft.linaro.org
