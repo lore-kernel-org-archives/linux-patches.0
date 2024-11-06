@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B8A1CCB5F;
-	Wed,  6 Nov 2024 13:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF8F646;
+	Wed,  6 Nov 2024 13:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899259; cv=none; b=A8YIuL6fXy7vMivEGTp0wukFAXtx2dwwSCWoBWRT/Brlw5frK/c7gFZAp+dj4/IU9bQk3yXh7fQJp43nKke1MDSBqa4ddh5Tf7VIbCwudkK0nqoa+CMrKGem7nSvMKmEcTHRzyKVJ6XhhqaNqRlZ6ek3h9ZV2iuPVcatKng2Vfs=
+	t=1730899263; cv=none; b=shFZ/vWoM3dvC1/1ZZLzuzgHaa9+bq9r4ZhhrxZvcJwdAtIGQnxfm0QzRMncKyIdXutNtqOK+6xtsnGUH5H01P3rR/VtBr8mKyQlLapMlkZ8dsqPf516XUstQHA5hM8zTtDUDvcgM2vJTzYcBAjUfkVw+x6M20uLa3m9XIMmDpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899259; c=relaxed/simple;
-	bh=CYwwqXuumP5h92NkvUCLkTiSUGixhDHBWBPYMpT8Cgg=;
+	s=arc-20240116; t=1730899263; c=relaxed/simple;
+	bh=yJ6WQYdKFwB9UHn6/7ZEYyKp9Z1POdRXdwXbl7XXZE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xu0zm2dIg3T9xGucVBVNCxYytMaiJW5m9Ru7M4RB9TjVg2Y0ffKZAocgsuOfr6m2xiAVFzEVWtgqWr/uezqNjZVb5N6fqaZr3MenJtEhhEQYMX0CJsoyzx38uck4RNZOnlgWn+Wypm87h8ibf2kxKhm8Be3f5WIhcplwwp6G4WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJTw4aZI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FUK3qRcv+l6IBXNFZtuPkjXWlscdDb1Vbl+8UMklCPF5w68G715WA7/rvgTFNCYz0RnNQZVZUoes50noU8aLLN+JF770VGwBnKsbnyGqv4thR2MJXlctavkAxJkZTIEbXliMXbJc3q/taZPSwzMOBdlCUdVKjQVcpxU0Lwnt8Vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/kOEG8V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJTw4aZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 594BCC4CECD;
-	Wed,  6 Nov 2024 13:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/kOEG8V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE3CC4CECD;
+	Wed,  6 Nov 2024 13:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899259;
-	bh=CYwwqXuumP5h92NkvUCLkTiSUGixhDHBWBPYMpT8Cgg=;
+	s=korg; t=1730899262;
+	bh=yJ6WQYdKFwB9UHn6/7ZEYyKp9Z1POdRXdwXbl7XXZE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJTw4aZIF7FaB5Be6S4c7tOwp0hRkeENV5mJMGc+kGCA4+6OjGb0LqGM7Ph7uzCIh
-	 7yVc8QQGwr7ply2ailgiWzLQkhIPzz0f522oicxtunxIcCRH/Zj5gMOg53XyoZDF9t
-	 5XgWHrF6Bobf/58dRQ/qsQs00Rx1h8+IlLhuyXBM=
+	b=K/kOEG8VCzeiOyCteiW3BZXpYrNg5m3icO7NnE99BnyHGitMzlm43TSwMaLntxRwa
+	 LY96dlTtT2cVuhvxRkypEGEmBl3OStHfgFHaHFGQR1hg7PJzLbwqZ9KLftdjsB8HTB
+	 EWys2Is3zw1Yw/65fLD7N6MpnLSIhipzAuyHVUZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Guo Ren <guoren@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 51/73] riscv: vdso: Prevent the compiler from inserting calls to memset()
-Date: Wed,  6 Nov 2024 13:05:55 +0100
-Message-ID: <20241106120301.486266314@linuxfoundation.org>
+Subject: [PATCH 5.15 52/73] riscv: efi: Set NX compat flag in PE/COFF header
+Date: Wed,  6 Nov 2024 13:05:56 +0100
+Message-ID: <20241106120301.517748810@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120259.955073160@linuxfoundation.org>
 References: <20241106120259.955073160@linuxfoundation.org>
@@ -52,38 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-[ Upstream commit bf40167d54d55d4b54d0103713d86a8638fb9290 ]
+[ Upstream commit d41373a4b910961df5a5e3527d7bde6ad45ca438 ]
 
-The compiler is smart enough to insert a call to memset() in
-riscv_vdso_get_cpus(), which generates a dynamic relocation.
+The IMAGE_DLLCHARACTERISTICS_NX_COMPAT informs the firmware that the
+EFI binary does not rely on pages that are both executable and
+writable.
 
-So prevent this by using -fno-builtin option.
+The flag is used by some distro versions of GRUB to decide if the EFI
+binary may be executed.
 
-Fixes: e2c0cdfba7f6 ("RISC-V: User-facing API")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20241016083625.136311-2-alexghiti@rivosinc.com
+As the Linux kernel neither has RWX sections nor needs RWX pages for
+relocation we should set the flag.
+
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Reviewed-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Fixes: cb7d2dd5612a ("RISC-V: Add PE/COFF header for EFI stub")
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20240929140233.211800-1-heinrich.schuchardt@canonical.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/vdso/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/kernel/efi-header.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index 06e6b27f3bcc9..c1b68f962bada 100644
---- a/arch/riscv/kernel/vdso/Makefile
-+++ b/arch/riscv/kernel/vdso/Makefile
-@@ -18,6 +18,7 @@ obj-vdso = $(patsubst %, %.o, $(vdso-syms)) note.o
- 
- ccflags-y := -fno-stack-protector
- ccflags-y += -DDISABLE_BRANCH_PROFILING
-+ccflags-y += -fno-builtin
- 
- ifneq ($(c-gettimeofday-y),)
-   CFLAGS_vgettimeofday.o += -fPIC -include $(c-gettimeofday-y)
+diff --git a/arch/riscv/kernel/efi-header.S b/arch/riscv/kernel/efi-header.S
+index 8e733aa48ba6c..c306f3a6a800e 100644
+--- a/arch/riscv/kernel/efi-header.S
++++ b/arch/riscv/kernel/efi-header.S
+@@ -59,7 +59,7 @@ extra_header_fields:
+ 	.long	efi_header_end - _start			// SizeOfHeaders
+ 	.long	0					// CheckSum
+ 	.short	IMAGE_SUBSYSTEM_EFI_APPLICATION		// Subsystem
+-	.short	0					// DllCharacteristics
++	.short	IMAGE_DLL_CHARACTERISTICS_NX_COMPAT	// DllCharacteristics
+ 	.quad	0					// SizeOfStackReserve
+ 	.quad	0					// SizeOfStackCommit
+ 	.quad	0					// SizeOfHeapReserve
 -- 
 2.43.0
 
