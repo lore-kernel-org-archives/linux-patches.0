@@ -1,48 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402A71DFE0B;
-	Wed,  6 Nov 2024 12:35:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420EF1DFE37;
+	Wed,  6 Nov 2024 12:35:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896549; cv=none; b=HRVovlCfPC15gCMJgXVDGmhP9QKtJ8i8OwgnbrIsrdF0JTmhT9AnJPORJx6zl+pPNFD88VjFzd2f3EsdLeQp1uQiAL9HqkPpPzIjf0fO+0Qfh0nFubB2OxWVvH3GASMBhkzLYDOpNooMH15A3uw19tHvzKSkVjF7U/kUhksZecE=
+	t=1730896552; cv=none; b=GbzyBjeahvgznL4QvFGivf2t64BbXyFlv4OT964l0YZmv5+tJju8alHkT5GSVHI2ZwaFqQlkQ7FJYpl1YGB+nLgw0eMWO2iDomNIznzSRwuvuw42Qc4qhWmEKZEtbbJ5YvJs9LzGH9/GhwzWwJOC3RZC8tnY9wIaKLNRYnIQaho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896549; c=relaxed/simple;
-	bh=L8IjY8bc/3c4OP96xIX17HnHLpxs38Lwz8k6XzHvEr0=;
+	s=arc-20240116; t=1730896552; c=relaxed/simple;
+	bh=jKreSrZN+EWUBLugMkZ7Fvk26s0hqeidc7W+UeAu/lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fnz0uyJ9ZZtVKtwH4HFvV2XAQVpekxp1kyZCPwTjsicGQdo7wJ8CTpfPw5FXZJWSRrGQKex9SyJpE0QDOCKPp1QbEdrEuL4FlKms0oQXbFutyRx0Gah+wp8O3Wq2KLIDMQml6brIoIZ6VnnmrzG7IEF1Rko/QcABsMsNuF2sHvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1YObDHId; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HJG3TFyUaivHGIXsgbM4NzNJMt0I3sN/NqguD04IqCQ1Qj8aii0/yUQI2ckrbzyEWg9G3EILrv5w9jl19nxAetmVUWpEaZvUZQAOWzH6R5czf/QTq+Y+XSIgR/VWplLWZD4DLK8TJPcjTG3u1PF11ZxbGIYSuf10crHJZZGE/pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uj+Whzso; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YObDHId"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B700C4CECD;
-	Wed,  6 Nov 2024 12:35:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uj+Whzso"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA64CC4CED3;
+	Wed,  6 Nov 2024 12:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896549;
-	bh=L8IjY8bc/3c4OP96xIX17HnHLpxs38Lwz8k6XzHvEr0=;
+	s=korg; t=1730896552;
+	bh=jKreSrZN+EWUBLugMkZ7Fvk26s0hqeidc7W+UeAu/lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1YObDHIdq9BQzCJUciuK6iAYEjf4dhNt7m3DsAhrBiOvAySg3kxllQogETEZ+XWP9
-	 tm7MYQlI8m9aFfdQ8TT3QpqCTX2eQQQpXErr60Fuuupo8F0o5Hcl+E54lK+bI2ygtJ
-	 oP3mCFek66EGKOqNe+NCZRnBOlQ+14/KVIVkd1pQ=
+	b=Uj+WhzsoQ5hrx/nKpWImLiOcAKf0xBAb17xqbs7gQiQHaAbOSRGNPwYG3VPsQn36l
+	 ZTbNoIMVz7QqsDYeVTknZYsQROw5Pwc5mpzIVPuXsfltRqVLyK8jKDdbqS8uH/1MYa
+	 YgYkhoLDBFyyiIpvnNVPxlbw+KbUuFsyyHdZAqJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Michael Matz <matz@suse.de>,
-	Matthias Bodenbinder <matthias@bodenbinder.de>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Yang Shi <yang@os.amperecomputing.com>,
-	Rik van Riel <riel@surriel.com>,
-	Jann Horn <jannh@google.com>,
-	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
-	Petr Tesarik <ptesarik@suse.com>,
-	Thorsten Leemhuis <regressions@leemhuis.info>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Gabriel Krisman Bertazi <gabriel@krisman.be>
-Subject: [PATCH 6.11 203/245] mm, mmap: limit THP alignment of anonymous mappings to PMD-aligned sizes
-Date: Wed,  6 Nov 2024 13:04:16 +0100
-Message-ID: <20241106120324.243782042@linuxfoundation.org>
+	"Ned T. Crigler" <crigler@gmail.com>,
+	Christian Heusel <christian@heusel.eu>,
+	Peter Seiderer <ps.report@gmx.net>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.11 204/245] Input: fix regression when re-registering input handlers
+Date: Wed,  6 Nov 2024 13:04:17 +0100
+Message-ID: <20241106120324.267321488@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -61,72 +53,251 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlastimil Babka <vbabka@suse.cz>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit d4148aeab412432bf928f311eca8a2ba52bb05df ]
+[ Upstream commit 071b24b54d2d05fbf39ddbb27dee08abd1d713f3 ]
 
-Since commit efa7df3e3bb5 ("mm: align larger anonymous mappings on THP
-boundaries") a mmap() of anonymous memory without a specific address hint
-and of at least PMD_SIZE will be aligned to PMD so that it can benefit
-from a THP backing page.
+Commit d469647bafd9 ("Input: simplify event handling logic") introduced
+code that would set handler->events() method to either
+input_handler_events_filter() or input_handler_events_default() or
+input_handler_events_null(), depending on the kind of input handler
+(a filter or a regular one) we are dealing with. Unfortunately this
+breaks cases when we try to re-register the same filter (as is the case
+with sysrq handler): after initial registration the handler will have 2
+event handling methods defined, and will run afoul of the check in
+input_handler_check_methods():
 
-However this change has been shown to regress some workloads
-significantly.  [1] reports regressions in various spec benchmarks, with
-up to 600% slowdown of the cactusBSSN benchmark on some platforms.  The
-benchmark seems to create many mappings of 4632kB, which would have merged
-to a large THP-backed area before commit efa7df3e3bb5 and now they are
-fragmented to multiple areas each aligned to PMD boundary with gaps
-between.  The regression then seems to be caused mainly due to the
-benchmark's memory access pattern suffering from TLB or cache aliasing due
-to the aligned boundaries of the individual areas.
+	input: input_handler_check_methods: only one event processing method can be defined (sysrq)
+	sysrq: Failed to register input handler, error -22
 
-Another known regression bisected to commit efa7df3e3bb5 is darktable [2]
-[3] and early testing suggests this patch fixes the regression there as
-well.
+Fix this by adding handle_events() method to input_handle structure and
+setting it up when registering a new input handle according to event
+handling methods defined in associated input_handler structure, thus
+avoiding modifying the input_handler structure.
 
-To fix the regression but still try to benefit from THP-friendly anonymous
-mapping alignment, add a condition that the size of the mapping must be a
-multiple of PMD size instead of at least PMD size.  In case of many
-odd-sized mapping like the cactusBSSN creates, those will stop being
-aligned and with gaps between, and instead naturally merge again.
-
-Link: https://lkml.kernel.org/r/20241024151228.101841-2-vbabka@suse.cz
-Fixes: efa7df3e3bb5 ("mm: align larger anonymous mappings on THP boundaries")
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Reported-by: Michael Matz <matz@suse.de>
-Debugged-by: Gabriel Krisman Bertazi <gabriel@krisman.be>
-Closes: https://bugzilla.suse.com/show_bug.cgi?id=1229012 [1]
-Reported-by: Matthias Bodenbinder <matthias@bodenbinder.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219366 [2]
-Closes: https://lore.kernel.org/all/2050f0d4-57b0-481d-bab8-05e8d48fed0c@leemhuis.info/ [3]
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Yang Shi <yang@os.amperecomputing.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Liam R. Howlett <Liam.Howlett@Oracle.com>
-Cc: Petr Tesarik <ptesarik@suse.com>
-Cc: Thorsten Leemhuis <regressions@leemhuis.info>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: "Ned T. Crigler" <crigler@gmail.com>
+Reported-by: Christian Heusel <christian@heusel.eu>
+Tested-by: "Ned T. Crigler" <crigler@gmail.com>
+Tested-by: Peter Seiderer <ps.report@gmx.net>
+Fixes: d469647bafd9 ("Input: simplify event handling logic")
+Link: https://lore.kernel.org/r/Zx2iQp6csn42PJA7@xavtug
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/input/input.c | 134 +++++++++++++++++++++++-------------------
+ include/linux/input.h |  10 +++-
+ 2 files changed, 82 insertions(+), 62 deletions(-)
 
-diff --git a/mm/mmap.c b/mm/mmap.c
-index 18fddcce03b85..8a04f29aa4230 100644
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -1952,7 +1952,8 @@ __get_unmapped_area(struct file *file, unsigned long addr, unsigned long len,
+diff --git a/drivers/input/input.c b/drivers/input/input.c
+index 54c57b267b25f..865d3f8e97a66 100644
+--- a/drivers/input/input.c
++++ b/drivers/input/input.c
+@@ -119,12 +119,12 @@ static void input_pass_values(struct input_dev *dev,
  
- 	if (get_area) {
- 		addr = get_area(file, addr, len, pgoff, flags);
--	} else if (IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE)) {
-+	} else if (IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE)
-+		   && IS_ALIGNED(len, PMD_SIZE)) {
- 		/* Ensures that larger anonymous mappings are THP aligned. */
- 		addr = thp_get_unmapped_area_vmflags(file, addr, len,
- 						     pgoff, flags, vm_flags);
+ 	handle = rcu_dereference(dev->grab);
+ 	if (handle) {
+-		count = handle->handler->events(handle, vals, count);
++		count = handle->handle_events(handle, vals, count);
+ 	} else {
+ 		list_for_each_entry_rcu(handle, &dev->h_list, d_node)
+ 			if (handle->open) {
+-				count = handle->handler->events(handle, vals,
+-								count);
++				count = handle->handle_events(handle, vals,
++							      count);
+ 				if (!count)
+ 					break;
+ 			}
+@@ -2537,57 +2537,6 @@ static int input_handler_check_methods(const struct input_handler *handler)
+ 	return 0;
+ }
+ 
+-/*
+- * An implementation of input_handler's events() method that simply
+- * invokes handler->event() method for each event one by one.
+- */
+-static unsigned int input_handler_events_default(struct input_handle *handle,
+-						 struct input_value *vals,
+-						 unsigned int count)
+-{
+-	struct input_handler *handler = handle->handler;
+-	struct input_value *v;
+-
+-	for (v = vals; v != vals + count; v++)
+-		handler->event(handle, v->type, v->code, v->value);
+-
+-	return count;
+-}
+-
+-/*
+- * An implementation of input_handler's events() method that invokes
+- * handler->filter() method for each event one by one and removes events
+- * that were filtered out from the "vals" array.
+- */
+-static unsigned int input_handler_events_filter(struct input_handle *handle,
+-						struct input_value *vals,
+-						unsigned int count)
+-{
+-	struct input_handler *handler = handle->handler;
+-	struct input_value *end = vals;
+-	struct input_value *v;
+-
+-	for (v = vals; v != vals + count; v++) {
+-		if (handler->filter(handle, v->type, v->code, v->value))
+-			continue;
+-		if (end != v)
+-			*end = *v;
+-		end++;
+-	}
+-
+-	return end - vals;
+-}
+-
+-/*
+- * An implementation of input_handler's events() method that does nothing.
+- */
+-static unsigned int input_handler_events_null(struct input_handle *handle,
+-					      struct input_value *vals,
+-					      unsigned int count)
+-{
+-	return count;
+-}
+-
+ /**
+  * input_register_handler - register a new input handler
+  * @handler: handler to be registered
+@@ -2607,13 +2556,6 @@ int input_register_handler(struct input_handler *handler)
+ 
+ 	INIT_LIST_HEAD(&handler->h_list);
+ 
+-	if (handler->filter)
+-		handler->events = input_handler_events_filter;
+-	else if (handler->event)
+-		handler->events = input_handler_events_default;
+-	else if (!handler->events)
+-		handler->events = input_handler_events_null;
+-
+ 	error = mutex_lock_interruptible(&input_mutex);
+ 	if (error)
+ 		return error;
+@@ -2687,6 +2629,75 @@ int input_handler_for_each_handle(struct input_handler *handler, void *data,
+ }
+ EXPORT_SYMBOL(input_handler_for_each_handle);
+ 
++/*
++ * An implementation of input_handle's handle_events() method that simply
++ * invokes handler->event() method for each event one by one.
++ */
++static unsigned int input_handle_events_default(struct input_handle *handle,
++						struct input_value *vals,
++						unsigned int count)
++{
++	struct input_handler *handler = handle->handler;
++	struct input_value *v;
++
++	for (v = vals; v != vals + count; v++)
++		handler->event(handle, v->type, v->code, v->value);
++
++	return count;
++}
++
++/*
++ * An implementation of input_handle's handle_events() method that invokes
++ * handler->filter() method for each event one by one and removes events
++ * that were filtered out from the "vals" array.
++ */
++static unsigned int input_handle_events_filter(struct input_handle *handle,
++					       struct input_value *vals,
++					       unsigned int count)
++{
++	struct input_handler *handler = handle->handler;
++	struct input_value *end = vals;
++	struct input_value *v;
++
++	for (v = vals; v != vals + count; v++) {
++		if (handler->filter(handle, v->type, v->code, v->value))
++			continue;
++		if (end != v)
++			*end = *v;
++		end++;
++	}
++
++	return end - vals;
++}
++
++/*
++ * An implementation of input_handle's handle_events() method that does nothing.
++ */
++static unsigned int input_handle_events_null(struct input_handle *handle,
++					     struct input_value *vals,
++					     unsigned int count)
++{
++	return count;
++}
++
++/*
++ * Sets up appropriate handle->event_handler based on the input_handler
++ * associated with the handle.
++ */
++static void input_handle_setup_event_handler(struct input_handle *handle)
++{
++	struct input_handler *handler = handle->handler;
++
++	if (handler->filter)
++		handle->handle_events = input_handle_events_filter;
++	else if (handler->event)
++		handle->handle_events = input_handle_events_default;
++	else if (handler->events)
++		handle->handle_events = handler->events;
++	else
++		handle->handle_events = input_handle_events_null;
++}
++
+ /**
+  * input_register_handle - register a new input handle
+  * @handle: handle to register
+@@ -2704,6 +2715,7 @@ int input_register_handle(struct input_handle *handle)
+ 	struct input_dev *dev = handle->dev;
+ 	int error;
+ 
++	input_handle_setup_event_handler(handle);
+ 	/*
+ 	 * We take dev->mutex here to prevent race with
+ 	 * input_release_device().
+diff --git a/include/linux/input.h b/include/linux/input.h
+index 89a0be6ee0e23..cd866b020a01d 100644
+--- a/include/linux/input.h
++++ b/include/linux/input.h
+@@ -339,12 +339,16 @@ struct input_handler {
+  * @name: name given to the handle by handler that created it
+  * @dev: input device the handle is attached to
+  * @handler: handler that works with the device through this handle
++ * @handle_events: event sequence handler. It is set up by the input core
++ *	according to event handling method specified in the @handler. See
++ *	input_handle_setup_event_handler().
++ *	This method is being called by the input core with interrupts disabled
++ *	and dev->event_lock spinlock held and so it may not sleep.
+  * @d_node: used to put the handle on device's list of attached handles
+  * @h_node: used to put the handle on handler's list of handles from which
+  *	it gets events
+  */
+ struct input_handle {
+-
+ 	void *private;
+ 
+ 	int open;
+@@ -353,6 +357,10 @@ struct input_handle {
+ 	struct input_dev *dev;
+ 	struct input_handler *handler;
+ 
++	unsigned int (*handle_events)(struct input_handle *handle,
++				      struct input_value *vals,
++				      unsigned int count);
++
+ 	struct list_head	d_node;
+ 	struct list_head	h_node;
+ };
 -- 
 2.43.0
 
