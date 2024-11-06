@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E2318C00E;
-	Wed,  6 Nov 2024 12:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F91D1D2784;
+	Wed,  6 Nov 2024 12:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896153; cv=none; b=RRW84dlI9ZlErw0B4aJFR3TVefLSNYjsUOU1hVK6TL2xdEoKiSSloeuGrwX5XiQKknn9Zyfw94d8+X8ctAg089LYWEJG+lJ27y1NG0UWPERBKGSGqsYnDD6TUMBDdjDvPocXZW6dqwQVnzKH25h6W94TQsTIrEeWrm+GB+f6Mng=
+	t=1730896156; cv=none; b=EXunIf0uR8AklGiWcjLrj1Aq+tFzGq41mFF6mm4qk0mVGLLSvWwaabTjHc/UurmduKgNkD/m1UfDrv52Lk2ItFXHm7TwSj0gabRa/Zhp3iEhTzhwtAT0daGZvV02B10hFMT33qOxP6kopY7DDo02jwrztTGucOoPbNYjc0P7iDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896153; c=relaxed/simple;
-	bh=/nUAC8kbBjJqJ6YMQMLg1uq2EZr0QDooti5ibdouA4Y=;
+	s=arc-20240116; t=1730896156; c=relaxed/simple;
+	bh=+oy1uQ5H1IFv8zk7JB21dyb8GtcFlWM+rtvjsui990U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r4eGKT8c5uTQdpX0224QS+SbOPH3lwDC4l+kaSZx4GLBXHlsqDBCIQSBOw+2PzDRVPR1bCsuXgZzAjA/iV50Ogdzwi7XH77tVF5XowfqqBNoWO5/fkLOKBgH+snlap0uU1GrNqXUYeUyk33DrouVVplIC11UmwWu4V3L6+IXFgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1nff4Nc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MpE6XwlywEmb4SpSfT9TDWj3r4bBWb3JRpa+fe7JftZ0FpWSL7QU8HmuPJ8i0HDSpU4XmLNuV5khhlcXYCBfEWU/K+81CfaWPgKyAGT9LaodnyLCmnFACVsL7iyH6bjoyrY8VKYNhIbTZsTbAK4LK5dz9K3nQhoCUMDlztNGiWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r76Qf4dq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1nff4Nc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0136C4CECD;
-	Wed,  6 Nov 2024 12:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r76Qf4dq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE46C4CECD;
+	Wed,  6 Nov 2024 12:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896153;
-	bh=/nUAC8kbBjJqJ6YMQMLg1uq2EZr0QDooti5ibdouA4Y=;
+	s=korg; t=1730896156;
+	bh=+oy1uQ5H1IFv8zk7JB21dyb8GtcFlWM+rtvjsui990U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K1nff4Nch2QJ0FeE6EBvNdB4KqT091yd5SZSqZ7xtmQq3acFAfmH7pRSFRxbB+qwp
-	 PFoMpKCH3H2PJCCxabJEIIEvxgxXG3C8jB673yTEqFDLPrj7O+HHtXlrlSIMPoebCA
-	 0cgi+8e3nUHljpBtSphuB14DcG6gu7RhAlZgjcOE=
+	b=r76Qf4dqwj+/qZkuSGC6l8j5wx9c9tGX/Czcb5/16jevz/8NBP8rPYO7dm4QvOx6z
+	 f2c81IeX2Qi04xshnCI60QNBYho6XaOxMVqZIZ6jEahf6JMZ6j6ffLiH1mlXwOajWS
+	 fzp2cm9ZYE6oB4zL4k5oyYB+X5j1wwTrSQt26m9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 080/245] drm/panthor: Fail job creation when the group is dead
-Date: Wed,  6 Nov 2024 13:02:13 +0100
-Message-ID: <20241106120321.174598431@linuxfoundation.org>
+	Hongren Zheng <i@zenithal.me>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Zongmin Zhou <zhouzongmin@kylinos.cn>
+Subject: [PATCH 6.11 107/245] usbip: tools: Fix detach_port() invalid port error path
+Date: Wed,  6 Nov 2024 13:02:40 +0100
+Message-ID: <20241106120321.850390464@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,48 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Zongmin Zhou <zhouzongmin@kylinos.cn>
 
-[ Upstream commit 412a2a8fdd4eb89b263623c7a59b77dbfcf8f215 ]
+commit e7cd4b811c9e019f5acbce85699c622b30194c24 upstream.
 
-Userspace can use GROUP_SUBMIT errors as a trigger to check the group
-state and recreate the group if it became unusable. Make sure we
-report an error when the group became unusable.
+The detach_port() doesn't return error
+when detach is attempted on an invalid port.
 
-Changes in v3:
-- None
-
-Changes in v2:
-- Add R-bs
-
-Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241029152912.270346-2-boris.brezillon@collabora.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 40ecdeb1a187 ("usbip: usbip_detach: fix to check for invalid ports")
+Cc: stable@vger.kernel.org
+Reviewed-by: Hongren Zheng <i@zenithal.me>
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Zongmin Zhou <zhouzongmin@kylinos.cn>
+Link: https://lore.kernel.org/r/20241024022700.1236660-1-min_halo@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/usb/usbip/src/usbip_detach.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 4d1d5a342a4a6..9b64c61caab64 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -3409,6 +3409,11 @@ panthor_job_create(struct panthor_file *pfile,
- 		goto err_put_job;
+--- a/tools/usb/usbip/src/usbip_detach.c
++++ b/tools/usb/usbip/src/usbip_detach.c
+@@ -68,6 +68,7 @@ static int detach_port(char *port)
  	}
  
-+	if (!group_can_run(job->group)) {
-+		ret = -EINVAL;
-+		goto err_put_job;
-+	}
-+
- 	if (job->queue_idx >= job->group->queue_count ||
- 	    !job->group->queues[job->queue_idx]) {
- 		ret = -EINVAL;
--- 
-2.43.0
-
+ 	if (!found) {
++		ret = -1;
+ 		err("Invalid port %s > maxports %d",
+ 			port, vhci_driver->nports);
+ 		goto call_driver_close;
 
 
