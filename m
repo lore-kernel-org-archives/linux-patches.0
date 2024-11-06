@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CCF1E0E1F;
-	Wed,  6 Nov 2024 12:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FBB1FB3E1;
+	Wed,  6 Nov 2024 12:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897598; cv=none; b=grv8ep2QANtp/UFAh44D/0cz0auwwfANUMQblK9O+dEhCd48UcftjYyLyN9NMSSBUzv71XGFxApMG7ZChSYsL0aXvZE0fg3JDlwO8a+ODZwhunqv4RMCbQq6x5nJo3k3i8JTuGtd2IS20MbYSVn3d7s9sSjNt1SG1/nG2vpPOwo=
+	t=1730897601; cv=none; b=Jj5EYrL/tOKpWxc/Gp3UgVCg4tRAZMS2mHwQv6lUy69u0MWBFtZ+T03GiQclLVyXMVac54htszjsD4TnFpuvxtQ5apbSu71HWqnQsYa8REBzxjPI2QtpFCp7n+mJGIqSuQE3yCw7y22d7lM3BEDKYgmUP9qEWzypHzuABrJnCXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897598; c=relaxed/simple;
-	bh=lP+duNugN5gLf0+fHf1pNbeyDcHnWdPMy7EsehswX64=;
+	s=arc-20240116; t=1730897601; c=relaxed/simple;
+	bh=nhlbmUuiV6hCI0s7r4xBYJnxn1eEjEaFEtdpDAwMPXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ItUF3nSfugu02PxaMQnucXTf4oHioQh27MnhCeh1i3CZA9m23+oq36k2FCnpRTiUcBvMcuf8jBwyo0uqTPGY32MuxQFV0zmai6V/jI+LXuOx5Vgob2+kD9HXmDdSbQ/aPvdh1O39PNv24PbOZWUXhjZKOH7gguucaYffrVUJPLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHUgkTmO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SCGiK5prpHCxX+vslGg5v01Z5hEHRcjO9yAsYCv7GLhVZfWtXNVGdgOQ7LHpOCVIE2rfYshmBuhAmgBjIRd5qmRrtPuHeg+pLtiww1THu/Q9qAkyK5tE4f9i5FmKfHMp6cZkt4ODXt4L5a5UIGkkL8UV7UdXxpsgFFUCUyYybQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oE8vR53V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHUgkTmO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7DFC4CECD;
-	Wed,  6 Nov 2024 12:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oE8vR53V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE90AC4CECD;
+	Wed,  6 Nov 2024 12:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897598;
-	bh=lP+duNugN5gLf0+fHf1pNbeyDcHnWdPMy7EsehswX64=;
+	s=korg; t=1730897601;
+	bh=nhlbmUuiV6hCI0s7r4xBYJnxn1eEjEaFEtdpDAwMPXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHUgkTmOyzcN2uElU2ezMoF52Y+ut1O9iiZPWn/++Q2c83ZUVTqpxUCezGZuaV7VX
-	 SgGeXFUkyIxy7SAhM0vFlVpOAmK5UvWur14RMSbZwJ4YZ2Ss3NDvu01oL/vX/5to5y
-	 Iwc7REQRY9vB6SamnNlzpNh3t01wIRJIJUznXSfA=
+	b=oE8vR53VrqOaqzbtD4rSXMtlZnIHZzKIqLTOKEbvrQ/V/moBMk8oyBJMRLuX7TmJg
+	 iJmHrckkusFWBWJ92D8oMlgV71t61N7XcRMFKlPimkZpeQm4PtCtSO1BDu0KlB+LKn
+	 0e3cwq0NYRTnrlrBymTBZ2dmuwh4uqwILo3Jkr5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.6 106/151] cxl/port: Fix use-after-free, permit out-of-order decoder shutdown
-Date: Wed,  6 Nov 2024 13:04:54 +0100
-Message-ID: <20241106120311.789881978@linuxfoundation.org>
+	Georg Gottleuber <ggo@tuxedocomputers.com>,
+	Ben Chuang <ben.chuang@genesyslogic.com.tw>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 107/151] mmc: sdhci-pci-gli: GL9767: Fix low power mode on the set clock function
+Date: Wed,  6 Nov 2024 13:04:55 +0100
+Message-ID: <20241106120311.814798695@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -55,380 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Ben Chuang <ben.chuang@genesyslogic.com.tw>
 
-commit 101c268bd2f37e965a5468353e62d154db38838e upstream.
+commit 8c68b5656e55e9324875881f1000eb4ee3603a87 upstream.
 
-In support of investigating an initialization failure report [1],
-cxl_test was updated to register mock memory-devices after the mock
-root-port/bus device had been registered. That led to cxl_test crashing
-with a use-after-free bug with the following signature:
+On sdhci_gl9767_set_clock(), the vendor header space(VHS) is read-only
+after calling gl9767_disable_ssc_pll() and gl9767_set_ssc_pll_205mhz().
+So the low power negotiation mode cannot be enabled again.
+Introduce gl9767_set_low_power_negotiation() function to fix it.
 
-    cxl_port_attach_region: cxl region3: cxl_host_bridge.0:port3 decoder3.0 add: mem0:decoder7.0 @ 0 next: cxl_switch_uport.0 nr_eps: 1 nr_targets: 1
-    cxl_port_attach_region: cxl region3: cxl_host_bridge.0:port3 decoder3.0 add: mem4:decoder14.0 @ 1 next: cxl_switch_uport.0 nr_eps: 2 nr_targets: 1
-    cxl_port_setup_targets: cxl region3: cxl_switch_uport.0:port6 target[0] = cxl_switch_dport.0 for mem0:decoder7.0 @ 0
-1)  cxl_port_setup_targets: cxl region3: cxl_switch_uport.0:port6 target[1] = cxl_switch_dport.4 for mem4:decoder14.0 @ 1
-    [..]
-    cxld_unregister: cxl decoder14.0:
-    cxl_region_decode_reset: cxl_region region3:
-    mock_decoder_reset: cxl_port port3: decoder3.0 reset
-2)  mock_decoder_reset: cxl_port port3: decoder3.0: out of order reset, expected decoder3.1
-    cxl_endpoint_decoder_release: cxl decoder14.0:
-    [..]
-    cxld_unregister: cxl decoder7.0:
-3)  cxl_region_decode_reset: cxl_region region3:
-    Oops: general protection fault, probably for non-canonical address 0x6b6b6b6b6b6b6bc3: 0000 [#1] PREEMPT SMP PTI
-    [..]
-    RIP: 0010:to_cxl_port+0x8/0x60 [cxl_core]
-    [..]
-    Call Trace:
-     <TASK>
-     cxl_region_decode_reset+0x69/0x190 [cxl_core]
-     cxl_region_detach+0xe8/0x210 [cxl_core]
-     cxl_decoder_kill_region+0x27/0x40 [cxl_core]
-     cxld_unregister+0x5d/0x60 [cxl_core]
+The explanation process is as below.
 
-At 1) a region has been established with 2 endpoint decoders (7.0 and
-14.0). Those endpoints share a common switch-decoder in the topology
-(3.0). At teardown, 2), decoder14.0 is the first to be removed and hits
-the "out of order reset case" in the switch decoder. The effect though
-is that region3 cleanup is aborted leaving it in-tact and
-referencing decoder14.0. At 3) the second attempt to teardown region3
-trips over the stale decoder14.0 object which has long since been
-deleted.
+static void sdhci_gl9767_set_clock()
+{
+	...
+        gl9767_vhs_write();
+        ...
+	value |= PCIE_GLI_9767_CFG_LOW_PWR_OFF;
+        pci_write_config_dword(pdev, PCIE_GLI_9767_CFG, value); <--- (a)
 
-The fix here is to recognize that the CXL specification places no
-mandate on in-order shutdown of switch-decoders, the driver enforces
-in-order allocation, and hardware enforces in-order commit. So, rather
-than fail and leave objects dangling, always remove them.
+        gl9767_disable_ssc_pll(); <--- (b)
+        sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
 
-In support of making cxl_region_decode_reset() always succeed,
-cxl_region_invalidate_memregion() failures are turned into warnings.
-Crashing the kernel is ok there since system integrity is at risk if
-caches cannot be managed around physical address mutation events like
-CXL region destruction.
+        if (clock == 0)
+                return;  <-- (I)
 
-A new device_for_each_child_reverse_from() is added to cleanup
-port->commit_end after all dependent decoders have been disabled. In
-other words if decoders are allocated 0->1->2 and disabled 1->2->0 then
-port->commit_end only decrements from 2 after 2 has been disabled, and
-it decrements all the way to zero since 1 was disabled previously.
+	...
+        if (clock == 200000000 && ios->timing == MMC_TIMING_UHS_SDR104) {
+		...
+                gl9767_set_ssc_pll_205mhz(); <--- (c)
+        }
+	...
+	value &= ~PCIE_GLI_9767_CFG_LOW_PWR_OFF;
+        pci_write_config_dword(pdev, PCIE_GLI_9767_CFG, value); <-- (II)
+        gl9767_vhs_read();
+}
 
-Link: http://lore.kernel.org/20241004212504.1246-1-gourry@gourry.net [1]
+(a) disable low power negotiation mode. When return on (I), the low power
+mode is disabled.  After (b) and (c), VHS is read-only, the low power mode
+cannot be enabled on (II).
+
+Reported-by: Georg Gottleuber <ggo@tuxedocomputers.com>
+Fixes: d2754355512e ("mmc: sdhci-pci-gli: Set SDR104's clock to 205MHz and enable SSC for GL9767")
+Signed-off-by: Ben Chuang <ben.chuang@genesyslogic.com.tw>
+Tested-by: Georg Gottleuber <ggo@tuxedocomputers.com>
 Cc: stable@vger.kernel.org
-Fixes: 176baefb2eb5 ("cxl/hdm: Commit decoder state to hardware")
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Cc: Alison Schofield <alison.schofield@intel.com>
-Cc: Ira Weiny <ira.weiny@intel.com>
-Cc: Zijun Hu <quic_zijuhu@quicinc.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Link: https://patch.msgid.link/172964782781.81806.17902885593105284330.stgit@dwillia2-xfh.jf.intel.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Message-ID: <20241025060017.1663697-1-benchuanggli@gmail.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c          |   35 ++++++++++++++++++++++++++++++
- drivers/cxl/core/hdm.c       |   50 ++++++++++++++++++++++++++++++++++++-------
- drivers/cxl/core/region.c    |   48 +++++++++++------------------------------
- drivers/cxl/cxl.h            |    3 +-
- include/linux/device.h       |    3 ++
- tools/testing/cxl/test/cxl.c |   14 ++++--------
- 6 files changed, 100 insertions(+), 53 deletions(-)
+ drivers/mmc/host/sdhci-pci-gli.c |   35 +++++++++++++++++++++--------------
+ 1 file changed, 21 insertions(+), 14 deletions(-)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -4012,6 +4012,41 @@ int device_for_each_child_reverse(struct
- EXPORT_SYMBOL_GPL(device_for_each_child_reverse);
- 
- /**
-+ * device_for_each_child_reverse_from - device child iterator in reversed order.
-+ * @parent: parent struct device.
-+ * @from: optional starting point in child list
-+ * @fn: function to be called for each device.
-+ * @data: data for the callback.
-+ *
-+ * Iterate over @parent's child devices, starting at @from, and call @fn
-+ * for each, passing it @data. This helper is identical to
-+ * device_for_each_child_reverse() when @from is NULL.
-+ *
-+ * @fn is checked each iteration. If it returns anything other than 0,
-+ * iteration stop and that value is returned to the caller of
-+ * device_for_each_child_reverse_from();
-+ */
-+int device_for_each_child_reverse_from(struct device *parent,
-+				       struct device *from, const void *data,
-+				       int (*fn)(struct device *, const void *))
-+{
-+	struct klist_iter i;
-+	struct device *child;
-+	int error = 0;
-+
-+	if (!parent->p)
-+		return 0;
-+
-+	klist_iter_init_node(&parent->p->klist_children, &i,
-+			     (from ? &from->p->knode_parent : NULL));
-+	while ((child = prev_device(&i)) && !error)
-+		error = fn(child, data);
-+	klist_iter_exit(&i);
-+	return error;
-+}
-+EXPORT_SYMBOL_GPL(device_for_each_child_reverse_from);
-+
-+/**
-  * device_find_child - device iterator for locating a particular device.
-  * @parent: parent struct device
-  * @match: Callback function to check device
---- a/drivers/cxl/core/hdm.c
-+++ b/drivers/cxl/core/hdm.c
-@@ -723,7 +723,44 @@ static int cxl_decoder_commit(struct cxl
- 	return 0;
+--- a/drivers/mmc/host/sdhci-pci-gli.c
++++ b/drivers/mmc/host/sdhci-pci-gli.c
+@@ -902,28 +902,40 @@ static void gl9767_disable_ssc_pll(struc
+ 	gl9767_vhs_read(pdev);
  }
  
--static int cxl_decoder_reset(struct cxl_decoder *cxld)
-+static int commit_reap(struct device *dev, const void *data)
++static void gl9767_set_low_power_negotiation(struct pci_dev *pdev, bool enable)
 +{
-+	struct cxl_port *port = to_cxl_port(dev->parent);
-+	struct cxl_decoder *cxld;
++	u32 value;
 +
-+	if (!is_switch_decoder(dev) && !is_endpoint_decoder(dev))
-+		return 0;
++	gl9767_vhs_write(pdev);
 +
-+	cxld = to_cxl_decoder(dev);
-+	if (port->commit_end == cxld->id &&
-+	    ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)) {
-+		port->commit_end--;
-+		dev_dbg(&port->dev, "reap: %s commit_end: %d\n",
-+			dev_name(&cxld->dev), port->commit_end);
++	pci_read_config_dword(pdev, PCIE_GLI_9767_CFG, &value);
++	if (enable)
++		value &= ~PCIE_GLI_9767_CFG_LOW_PWR_OFF;
++	else
++		value |= PCIE_GLI_9767_CFG_LOW_PWR_OFF;
++	pci_write_config_dword(pdev, PCIE_GLI_9767_CFG, value);
++
++	gl9767_vhs_read(pdev);
++}
++
+ static void sdhci_gl9767_set_clock(struct sdhci_host *host, unsigned int clock)
+ {
+ 	struct sdhci_pci_slot *slot = sdhci_priv(host);
+ 	struct mmc_ios *ios = &host->mmc->ios;
+ 	struct pci_dev *pdev;
+-	u32 value;
+ 	u16 clk;
+ 
+ 	pdev = slot->chip->pdev;
+ 	host->mmc->actual_clock = 0;
+ 
+-	gl9767_vhs_write(pdev);
+-
+-	pci_read_config_dword(pdev, PCIE_GLI_9767_CFG, &value);
+-	value |= PCIE_GLI_9767_CFG_LOW_PWR_OFF;
+-	pci_write_config_dword(pdev, PCIE_GLI_9767_CFG, value);
+-
++	gl9767_set_low_power_negotiation(pdev, false);
+ 	gl9767_disable_ssc_pll(pdev);
+ 	sdhci_writew(host, 0, SDHCI_CLOCK_CONTROL);
+ 
+-	if (clock == 0)
++	if (clock == 0) {
++		gl9767_set_low_power_negotiation(pdev, true);
+ 		return;
 +	}
-+
-+	return 0;
-+}
-+
-+void cxl_port_commit_reap(struct cxl_decoder *cxld)
-+{
-+	struct cxl_port *port = to_cxl_port(cxld->dev.parent);
-+
-+	lockdep_assert_held_write(&cxl_region_rwsem);
-+
-+	/*
-+	 * Once the highest committed decoder is disabled, free any other
-+	 * decoders that were pinned allocated by out-of-order release.
-+	 */
-+	port->commit_end--;
-+	dev_dbg(&port->dev, "reap: %s commit_end: %d\n", dev_name(&cxld->dev),
-+		port->commit_end);
-+	device_for_each_child_reverse_from(&port->dev, &cxld->dev, NULL,
-+					   commit_reap);
-+}
-+EXPORT_SYMBOL_NS_GPL(cxl_port_commit_reap, CXL);
-+
-+static void cxl_decoder_reset(struct cxl_decoder *cxld)
- {
- 	struct cxl_port *port = to_cxl_port(cxld->dev.parent);
- 	struct cxl_hdm *cxlhdm = dev_get_drvdata(&port->dev);
-@@ -732,14 +769,14 @@ static int cxl_decoder_reset(struct cxl_
- 	u32 ctrl;
  
- 	if ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)
--		return 0;
-+		return;
- 
--	if (port->commit_end != id) {
-+	if (port->commit_end == id)
-+		cxl_port_commit_reap(cxld);
-+	else
- 		dev_dbg(&port->dev,
- 			"%s: out of order reset, expected decoder%d.%d\n",
- 			dev_name(&cxld->dev), port->id, port->commit_end);
--		return -EBUSY;
--	}
- 
- 	down_read(&cxl_dpa_rwsem);
- 	ctrl = readl(hdm + CXL_HDM_DECODER0_CTRL_OFFSET(id));
-@@ -752,7 +789,6 @@ static int cxl_decoder_reset(struct cxl_
- 	writel(0, hdm + CXL_HDM_DECODER0_BASE_LOW_OFFSET(id));
- 	up_read(&cxl_dpa_rwsem);
- 
--	port->commit_end--;
- 	cxld->flags &= ~CXL_DECODER_F_ENABLE;
- 
- 	/* Userspace is now responsible for reconfiguring this decoder */
-@@ -762,8 +798,6 @@ static int cxl_decoder_reset(struct cxl_
- 		cxled = to_cxl_endpoint_decoder(&cxld->dev);
- 		cxled->state = CXL_DECODER_STATE_MANUAL;
+ 	clk = sdhci_calc_clk(host, clock, &host->mmc->actual_clock);
+ 	if (clock == 200000000 && ios->timing == MMC_TIMING_UHS_SDR104) {
+@@ -932,12 +944,7 @@ static void sdhci_gl9767_set_clock(struc
  	}
+ 
+ 	sdhci_enable_clk(host, clk);
 -
--	return 0;
- }
- 
- static int cxl_setup_hdm_decoder_from_dvsec(
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -128,8 +128,8 @@ static int cxl_region_invalidate_memregi
- 				"Bypassing cpu_cache_invalidate_memregion() for testing!\n");
- 			return 0;
- 		} else {
--			dev_err(&cxlr->dev,
--				"Failed to synchronize CPU cache state\n");
-+			dev_WARN(&cxlr->dev,
-+				 "Failed to synchronize CPU cache state\n");
- 			return -ENXIO;
- 		}
- 	}
-@@ -138,19 +138,17 @@ static int cxl_region_invalidate_memregi
- 	return 0;
- }
- 
--static int cxl_region_decode_reset(struct cxl_region *cxlr, int count)
-+static void cxl_region_decode_reset(struct cxl_region *cxlr, int count)
- {
- 	struct cxl_region_params *p = &cxlr->params;
--	int i, rc = 0;
-+	int i;
- 
- 	/*
--	 * Before region teardown attempt to flush, and if the flush
--	 * fails cancel the region teardown for data consistency
--	 * concerns
-+	 * Before region teardown attempt to flush, evict any data cached for
-+	 * this region, or scream loudly about missing arch / platform support
-+	 * for CXL teardown.
- 	 */
--	rc = cxl_region_invalidate_memregion(cxlr);
--	if (rc)
--		return rc;
-+	cxl_region_invalidate_memregion(cxlr);
- 
- 	for (i = count - 1; i >= 0; i--) {
- 		struct cxl_endpoint_decoder *cxled = p->targets[i];
-@@ -173,23 +171,17 @@ static int cxl_region_decode_reset(struc
- 			cxl_rr = cxl_rr_load(iter, cxlr);
- 			cxld = cxl_rr->decoder;
- 			if (cxld->reset)
--				rc = cxld->reset(cxld);
--			if (rc)
--				return rc;
-+				cxld->reset(cxld);
- 			set_bit(CXL_REGION_F_NEEDS_RESET, &cxlr->flags);
- 		}
- 
- endpoint_reset:
--		rc = cxled->cxld.reset(&cxled->cxld);
--		if (rc)
--			return rc;
-+		cxled->cxld.reset(&cxled->cxld);
- 		set_bit(CXL_REGION_F_NEEDS_RESET, &cxlr->flags);
- 	}
- 
- 	/* all decoders associated with this region have been torn down */
- 	clear_bit(CXL_REGION_F_NEEDS_RESET, &cxlr->flags);
+-	pci_read_config_dword(pdev, PCIE_GLI_9767_CFG, &value);
+-	value &= ~PCIE_GLI_9767_CFG_LOW_PWR_OFF;
+-	pci_write_config_dword(pdev, PCIE_GLI_9767_CFG, value);
 -
--	return 0;
+-	gl9767_vhs_read(pdev);
++	gl9767_set_low_power_negotiation(pdev, true);
  }
  
- static int commit_decoder(struct cxl_decoder *cxld)
-@@ -305,16 +297,8 @@ static ssize_t commit_store(struct devic
- 		 * still pending.
- 		 */
- 		if (p->state == CXL_CONFIG_RESET_PENDING) {
--			rc = cxl_region_decode_reset(cxlr, p->interleave_ways);
--			/*
--			 * Revert to committed since there may still be active
--			 * decoders associated with this region, or move forward
--			 * to active to mark the reset successful
--			 */
--			if (rc)
--				p->state = CXL_CONFIG_COMMIT;
--			else
--				p->state = CXL_CONFIG_ACTIVE;
-+			cxl_region_decode_reset(cxlr, p->interleave_ways);
-+			p->state = CXL_CONFIG_ACTIVE;
- 		}
- 	}
- 
-@@ -1945,13 +1929,7 @@ static int cxl_region_detach(struct cxl_
- 	get_device(&cxlr->dev);
- 
- 	if (p->state > CXL_CONFIG_ACTIVE) {
--		/*
--		 * TODO: tear down all impacted regions if a device is
--		 * removed out of order
--		 */
--		rc = cxl_region_decode_reset(cxlr, p->interleave_ways);
--		if (rc)
--			goto out;
-+		cxl_region_decode_reset(cxlr, p->interleave_ways);
- 		p->state = CXL_CONFIG_ACTIVE;
- 	}
- 
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -347,7 +347,7 @@ struct cxl_decoder {
- 	struct cxl_region *region;
- 	unsigned long flags;
- 	int (*commit)(struct cxl_decoder *cxld);
--	int (*reset)(struct cxl_decoder *cxld);
-+	void (*reset)(struct cxl_decoder *cxld);
- };
- 
- /*
-@@ -682,6 +682,7 @@ static inline bool is_cxl_root(struct cx
- int cxl_num_decoders_committed(struct cxl_port *port);
- bool is_cxl_port(const struct device *dev);
- struct cxl_port *to_cxl_port(const struct device *dev);
-+void cxl_port_commit_reap(struct cxl_decoder *cxld);
- struct pci_bus;
- int devm_cxl_register_pci_bus(struct device *host, struct device *uport_dev,
- 			      struct pci_bus *bus);
---- a/include/linux/device.h
-+++ b/include/linux/device.h
-@@ -1063,6 +1063,9 @@ int device_for_each_child(struct device
- 			  int (*fn)(struct device *dev, void *data));
- int device_for_each_child_reverse(struct device *dev, void *data,
- 				  int (*fn)(struct device *dev, void *data));
-+int device_for_each_child_reverse_from(struct device *parent,
-+				       struct device *from, const void *data,
-+				       int (*fn)(struct device *, const void *));
- struct device *device_find_child(struct device *dev, void *data,
- 				 int (*match)(struct device *dev, void *data));
- struct device *device_find_child_by_name(struct device *parent,
---- a/tools/testing/cxl/test/cxl.c
-+++ b/tools/testing/cxl/test/cxl.c
-@@ -687,26 +687,22 @@ static int mock_decoder_commit(struct cx
- 	return 0;
- }
- 
--static int mock_decoder_reset(struct cxl_decoder *cxld)
-+static void mock_decoder_reset(struct cxl_decoder *cxld)
- {
- 	struct cxl_port *port = to_cxl_port(cxld->dev.parent);
- 	int id = cxld->id;
- 
- 	if ((cxld->flags & CXL_DECODER_F_ENABLE) == 0)
--		return 0;
-+		return;
- 
- 	dev_dbg(&port->dev, "%s reset\n", dev_name(&cxld->dev));
--	if (port->commit_end != id) {
-+	if (port->commit_end == id)
-+		cxl_port_commit_reap(cxld);
-+	else
- 		dev_dbg(&port->dev,
- 			"%s: out of order reset, expected decoder%d.%d\n",
- 			dev_name(&cxld->dev), port->id, port->commit_end);
--		return -EBUSY;
--	}
--
--	port->commit_end--;
- 	cxld->flags &= ~CXL_DECODER_F_ENABLE;
--
--	return 0;
- }
- 
- static void default_mock_decoder(struct cxl_decoder *cxld)
+ static void gli_set_9767(struct sdhci_host *host)
 
 
