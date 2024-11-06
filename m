@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DF51FC7DE;
-	Wed,  6 Nov 2024 12:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE851E1A27;
+	Wed,  6 Nov 2024 12:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897741; cv=none; b=l0CwgB6U7oUlqUtIeQAgDd0frN38/zoisv8LQgVu5D968SCngeoc7n7dK/7vjW6vK+cnbC9JTbTjb1zAkePGsdZtoIsR/ZVvKyy+pkKcfrTZDuC11IZixeAZULGO54Dx1UUobzqJOyR6ciR9qkKHWR1ncXwkht4ax0440EGTZWY=
+	t=1730897744; cv=none; b=Kv1L+JhdTw98kPztZ6D+yzvpiax5UUr1guzB9z31+23kwnaxYGu6kp8ZMai/O0TIorU7a8FAxBndyPM6E/ypU2lgoksop9U9YnyUTv7q86iQaNIYxFXn4dJKzlqXtd+k1klVjQC/mnBCAER4zyyC8l3K5nBNYf20VhNsgQmDRQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897741; c=relaxed/simple;
-	bh=vbuN/YpMT6xnuNBAV9J+ulVGF64PzIEvDjcKtl3vvVE=;
+	s=arc-20240116; t=1730897744; c=relaxed/simple;
+	bh=mXLY+fiz24fK57FuGxA+78/Im1P1Y4ZteShMYDDniXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Swl82Nxf7bqdeQrBlXkY85x28HZ8YRTrOnJQdj8nRPKhaxu9tZbIHFvIpOWNFDw1oWYzdHA6rNzm4YUGwEgj2etMmS7wAbThjc8CAZNVAEsBjhy/xk0GJ3JbNNupnmCdxvKT/oeO+hmsFwXFx6bfNMTpFoxcW9HsmGkATDHzzpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/gAv0xY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UbXcScR9S+XmwRRdKPAuw7W0HCEFl+SFHHdW+EkpE8wk2oCBzHmYDi5pMjLW9Dcv83GZtQLyr8t/5Dt4Fd+sbRvfI23nH4qQRSKawJaJCDtgMM+37HDsNDkH2K9NWtmzMJDsPvCqCBIQLEBajrLgdmKuKO+KTxavXVjb9rd6+LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukemfsWc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/gAv0xY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB591C4CED3;
-	Wed,  6 Nov 2024 12:55:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukemfsWc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F01C4CECD;
+	Wed,  6 Nov 2024 12:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897741;
-	bh=vbuN/YpMT6xnuNBAV9J+ulVGF64PzIEvDjcKtl3vvVE=;
+	s=korg; t=1730897744;
+	bh=mXLY+fiz24fK57FuGxA+78/Im1P1Y4ZteShMYDDniXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1/gAv0xYWqHn46oTdIC5WimdZodKML5JgyF+XQt7GTU5FGcA3nPifhVmJgC6BZcxk
-	 jkcovuXGy1nrSBeIvWCI9sBiz6IKedDoDtEHwdDCTch3h+LtnbHvjZKwHMBmZUenhm
-	 GlqUM6nWlK0mChBpSejZoX696su3jUecDywM4wuM=
+	b=ukemfsWcPOFwkhWHDbbwl2k+2/MhDUftyLSddM+IWNlQ045w3iV4unr5lclp8MfhD
+	 tV5VcdewqLyrXgHHVlHyJ6VdwglLSjuUdmsmHR/DuYjlRTSUvOrdXJ2mBcyQgkSrBP
+	 2XALP/wVdoPQMkQk5nXgFBPxf44g4sHhPRQPa0TI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chunyan Zhang <zhangchunyan@iscas.ac.cn>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 118/151] riscv: Remove unused GENERATING_ASM_OFFSETS
-Date: Wed,  6 Nov 2024 13:05:06 +0100
-Message-ID: <20241106120312.113120159@linuxfoundation.org>
+Subject: [PATCH 6.6 119/151] riscv: Remove duplicated GET_RM
+Date: Wed,  6 Nov 2024 13:05:07 +0100
+Message-ID: <20241106120312.139781023@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -54,40 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
 
-[ Upstream commit 46d4e5ac6f2f801f97bcd0ec82365969197dc9b1 ]
+[ Upstream commit 164f66de6bb6ef454893f193c898dc8f1da6d18b ]
 
-The macro is not used in the current version of kernel, it looks like
-can be removed to avoid a build warning:
+The macro GET_RM defined twice in this file, one can be removed.
 
-../arch/riscv/kernel/asm-offsets.c: At top level:
-../arch/riscv/kernel/asm-offsets.c:7: warning: macro "GENERATING_ASM_OFFSETS" is not used [-Wunused-macros]
-    7 | #define GENERATING_ASM_OFFSETS
-
-Fixes: 9639a44394b9 ("RISC-V: Provide a cleaner raw_smp_processor_id()")
-Cc: stable@vger.kernel.org
 Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Tested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
 Signed-off-by: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20241008094141.549248-2-zhangchunyan@iscas.ac.cn
+Fixes: 956d705dd279 ("riscv: Unaligned load/store handling for M_MODE")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20241008094141.549248-3-zhangchunyan@iscas.ac.cn
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/asm-offsets.c | 2 --
+ arch/riscv/kernel/traps_misaligned.c | 2 --
  1 file changed, 2 deletions(-)
 
-diff --git a/arch/riscv/kernel/asm-offsets.c b/arch/riscv/kernel/asm-offsets.c
-index 9f535d5de33f9..6a992cba2f287 100644
---- a/arch/riscv/kernel/asm-offsets.c
-+++ b/arch/riscv/kernel/asm-offsets.c
-@@ -4,8 +4,6 @@
-  * Copyright (C) 2017 SiFive
-  */
+diff --git a/arch/riscv/kernel/traps_misaligned.c b/arch/riscv/kernel/traps_misaligned.c
+index e867fe465164e..edae2735ebe34 100644
+--- a/arch/riscv/kernel/traps_misaligned.c
++++ b/arch/riscv/kernel/traps_misaligned.c
+@@ -132,8 +132,6 @@
+ #define REG_PTR(insn, pos, regs)	\
+ 	(ulong *)((ulong)(regs) + REG_OFFSET(insn, pos))
  
--#define GENERATING_ASM_OFFSETS
+-#define GET_RM(insn)			(((insn) >> 12) & 7)
 -
- #include <linux/kbuild.h>
- #include <linux/mm.h>
- #include <linux/sched.h>
+ #define GET_RS1(insn, regs)		(*REG_PTR(insn, SH_RS1, regs))
+ #define GET_RS2(insn, regs)		(*REG_PTR(insn, SH_RS2, regs))
+ #define GET_RS1S(insn, regs)		(*REG_PTR(RVC_RS1S(insn), 0, regs))
 -- 
 2.43.0
 
