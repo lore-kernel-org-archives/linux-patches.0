@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544971E0491;
-	Wed,  6 Nov 2024 12:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4342C1E230D;
+	Wed,  6 Nov 2024 12:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896851; cv=none; b=nuktgwFZNnLCpyjpYRWQwdNwkHx7rJ0+aKbYDv0cyvHOs4VaG1GDYmFieapjgtG+TVWHX5BZu82Y5ibMe+v4wj9ZdD8WlrC53O36EJ0BvyyYkYDll28p7/NAsSZbl0iHfkn5zoXlTuAQCPdhkCKgVIV8I8GihKcp7lu76GKxOL0=
+	t=1730896854; cv=none; b=oWtB1GlL6FwwOglHXkeZinG7TmMALz9k7czPdb0yHU0r7s4HYg6/qcfUZyMgmSKPZ8cU7FllU/OCDa1PmPg8NsH97m+8bDv1QNl1AY/V+8xQXc/SpQXE+nyoLkqoC3yc+E5rOVkniWi9JU1d3IDNvBbeT/Cyr51gQ+LsXwv8wPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896851; c=relaxed/simple;
-	bh=GRD3gGfxiiwfIIISTpVxijrvZ5NfVgs56gQt8ChSdGY=;
+	s=arc-20240116; t=1730896854; c=relaxed/simple;
+	bh=dJKB/5Rpw/Vsw4sCh0TpbW6igoO0nghQwRGCsvHSyL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ry7shMUhufjpFFuY3OGxOIwdj/zJxv/WaU/e0iIYrtv25uJzPQzKEbGhJUBKRKF/y4DnQeoHcOQqgAsAe1/9W/DuFq//WVQeLmWpFhIPXzlhKkKb4Ca9mFbyzCq84nXFTYD9MT7GDOD2K3p5qlRLPtMExwQLJvP1LxQ5wxFPcHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4gJQ0xG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mvRX4LG6/CLOYWc2TwOTjZYnplgGcgCxncJUG5DvzGJOu2bL4BFrQk0TomDV43XoEOZ4LpA6euv2q+s4c1YE98OSJGBgYvhZn4FMxa/E7oZAfkx0oxReZhI0DHf2m/SfuVrWo1MHK0ctJAsdN+gmJ7BmRCqMot7a6hGA8seUSY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLvJHiF1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4gJQ0xG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D633C4CECD;
-	Wed,  6 Nov 2024 12:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLvJHiF1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBAEC4CED4;
+	Wed,  6 Nov 2024 12:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896850;
-	bh=GRD3gGfxiiwfIIISTpVxijrvZ5NfVgs56gQt8ChSdGY=;
+	s=korg; t=1730896853;
+	bh=dJKB/5Rpw/Vsw4sCh0TpbW6igoO0nghQwRGCsvHSyL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r4gJQ0xGS+9gitPJbzvOu1R592SVAFvwVcngtvS9dKywd6z1BCgrQ5dTwZaF2XpTI
-	 Z4ggTd8tz2dQ2WPqixzAGdUpnZjl2xpn7vlLFZEhqN+Dkjna4k8bg3jt2kfPVxTlgR
-	 ciiYT589vddlTIJLGc52agnfLUVCoiSJka0EyLZk=
+	b=NLvJHiF1uC2UJzsjPnYqcd4ISiYGaduqSmXkfCqFjkKsT4MP+Dy878Pic9x/UTSh/
+	 N9eWvH/TQk2JQszf1HkSyZEOXgbyKB449A3m+FP4QsrFmoSGkUGVmA62iIuWH3u/Xv
+	 YtGGyeja7r/K77oyfWaaYUitmmcpRMr3r6Y0Zk7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zicheng Qu <quzicheng@huawei.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 093/110] staging: iio: frequency: ad9832: fix division by zero in ad9832_calc_freqreg()
-Date: Wed,  6 Nov 2024 13:04:59 +0100
-Message-ID: <20241106120305.754433644@linuxfoundation.org>
+Subject: [PATCH 5.10 094/110] iio: light: veml6030: fix microlux value calculation
+Date: Wed,  6 Nov 2024 13:05:00 +0100
+Message-ID: <20241106120305.781415079@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -52,49 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zicheng Qu <quzicheng@huawei.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 6bd301819f8f69331a55ae2336c8b111fc933f3d upstream.
+commit 63dd163cd61dda6f38343776b42331cc6b7e56e0 upstream.
 
-In the ad9832_write_frequency() function, clk_get_rate() might return 0.
-This can lead to a division by zero when calling ad9832_calc_freqreg().
-The check if (fout > (clk_get_rate(st->mclk) / 2)) does not protect
-against the case when fout is 0. The ad9832_write_frequency() function
-is called from ad9832_write(), and fout is derived from a text buffer,
-which can contain any value.
+The raw value conversion to obtain a measurement in lux as
+INT_PLUS_MICRO does not calculate the decimal part properly to display
+it as micro (in this case microlux). It only calculates the module to
+obtain the decimal part from a resolution that is 10000 times the
+provided in the datasheet (0.5376 lux/cnt for the veml6030). The
+resulting value must still be multiplied by 100 to make it micro.
 
-Link: https://lore.kernel.org/all/2024100904-CVE-2024-47663-9bdc@gregkh/
-Fixes: ea707584bac1 ("Staging: IIO: DDS: AD9832 / AD9835 driver")
+This bug was introduced with the original implementation of the driver.
+
+Only the illuminance channel is fixed becuase the scale is non sensical
+for the intensity channels anyway.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20241022134354.574614-1-quzicheng@huawei.com
+Fixes: 7b779f573c48 ("iio: light: add driver for veml6030 ambient light sensor")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20241016-veml6030-fix-processed-micro-v1-1-4a5644796437@gmail.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/iio/frequency/ad9832.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/iio/light/veml6030.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/iio/frequency/ad9832.c
-+++ b/drivers/staging/iio/frequency/ad9832.c
-@@ -129,12 +129,15 @@ static unsigned long ad9832_calc_freqreg
- static int ad9832_write_frequency(struct ad9832_state *st,
- 				  unsigned int addr, unsigned long fout)
- {
-+	unsigned long clk_freq;
- 	unsigned long regval;
- 
--	if (fout > (clk_get_rate(st->mclk) / 2))
-+	clk_freq = clk_get_rate(st->mclk);
-+
-+	if (!clk_freq || fout > (clk_freq / 2))
- 		return -EINVAL;
- 
--	regval = ad9832_calc_freqreg(clk_get_rate(st->mclk), fout);
-+	regval = ad9832_calc_freqreg(clk_freq, fout);
- 
- 	st->freq_data[0] = cpu_to_be16((AD9832_CMD_FRE8BITSW << CMD_SHIFT) |
- 					(addr << ADD_SHIFT) |
+--- a/drivers/iio/light/veml6030.c
++++ b/drivers/iio/light/veml6030.c
+@@ -522,7 +522,7 @@ static int veml6030_read_raw(struct iio_
+ 			}
+ 			if (mask == IIO_CHAN_INFO_PROCESSED) {
+ 				*val = (reg * data->cur_resolution) / 10000;
+-				*val2 = (reg * data->cur_resolution) % 10000;
++				*val2 = (reg * data->cur_resolution) % 10000 * 100;
+ 				return IIO_VAL_INT_PLUS_MICRO;
+ 			}
+ 			*val = reg;
 
 
