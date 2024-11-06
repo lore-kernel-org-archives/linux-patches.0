@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A56C1E0DFD;
-	Wed,  6 Nov 2024 12:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424C91E0DFD;
+	Wed,  6 Nov 2024 12:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897539; cv=none; b=M5u7X2r7vgBnSe8/o3LiMd0QvuGrGREImS12bL+GHYamK83MFOhtKuoVMZxPErTYo0ZBF73O6u0yLkmi/iOEAeJidYaNvqmGzwMvPb9zyQ0mCgcYAvmEuCw63MHCzFCooQPx8SgcqbtDAwmqyKLVqgjsUtkEaAFojXyAlZHVh1o=
+	t=1730897542; cv=none; b=iPF6mz7dXlumvBUEBSopqu+F/FHZ1GGGa7NbA0J7u112ixzY1DlOH8FXlsd/UYNNFsBc5MlJP0l7EBQ7yojug8YwxFt2Qn/HQWeDck++mO8t54/ofoys2KFdiOdXrvW04GkOCZJ2LIFBj6TV28oETZlzhAM/s4K9q8TYePIDE5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897539; c=relaxed/simple;
-	bh=ul7/HgkcCKJ5v2WaC0VTyQDtb6bLu6N1PAU/3/O1ObQ=;
+	s=arc-20240116; t=1730897542; c=relaxed/simple;
+	bh=nARz/Pet3FI15A7l9Dc9wrOfZzNthy+HQGNld95ZFFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kCX0C4qvCOcOIZLoZrtwg2jqzon6PmTSrjQXN95FV8tRRzbeG7fz4BkOYCKQW9/J7oMGtU2Vw8BCQx1AukQHeh4kdlp7vmuNJvl2y/r00MhdZwa9q1k0eEYKff5aNqTX+2Pse5b+VF9lAVhv5WswFemJG6m5OvfwiuX9nRMsG4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=djkpgY8Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AZU2RbA5NltOS+LWwrs8AxVoHQP5THgkkutmldg70CgmriL3ape+sLxd9/25PTOHissKNCrZTiFtHaL073XvU3x0udDosh+xh5pSoAY+YEBdgEV1u3H11uS02r8i2UoYE3zP9SO159DNR/afSKvHf36Sfjqydczw8MhJGgN+ebc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZMv1Ost; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="djkpgY8Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A585CC4CECD;
-	Wed,  6 Nov 2024 12:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZMv1Ost"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E895C4CECD;
+	Wed,  6 Nov 2024 12:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897539;
-	bh=ul7/HgkcCKJ5v2WaC0VTyQDtb6bLu6N1PAU/3/O1ObQ=;
+	s=korg; t=1730897542;
+	bh=nARz/Pet3FI15A7l9Dc9wrOfZzNthy+HQGNld95ZFFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=djkpgY8QJYi68dg/obteS4e0OeNNYkZImuUsOhhQT6fo0zvbxutxYsYS9I1LzdE8r
-	 jfbzIOIwceGV1JtMoIgIiYhn6Qp0slj1g4km/0mzgg/iyhvdAPdWxRgaZ0s6aes62L
-	 g+UtL6arV0W4eSUKXPapgGiz7QRdJ2rrDOrmikQU=
+	b=WZMv1OstsJ/JRQuktgLV/h+fOHYp5a+Obq/th8+SH/Kh2JwTwZD8X/+tSIqnyAJAP
+	 zNq1+Q5Sojhsi2kWjaqJfBz2ZPx/yoaSvADMZQYWavGDVPicIZmCCtT0cMnHyCW0Xx
+	 EX50p73+4hBJkmZbAiiDr1ZLe/V8YsqbugiamNKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.6 088/151] xhci: Use pm_runtime_get to prevent RPM on unsupported systems
-Date: Wed,  6 Nov 2024 13:04:36 +0100
-Message-ID: <20241106120311.286870861@linuxfoundation.org>
+	Ashish Sangwan <a.sangwan@samsung.com>,
+	Namjae Jeon <namjae.jeon@samsung.com>,
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 6.6 089/151] Revert "driver core: Fix uevent_show() vs driver detach race"
+Date: Wed,  6 Nov 2024 13:04:37 +0100
+Message-ID: <20241106120311.316159223@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -51,47 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 31004740e42846a6f0bb255e6348281df3eb8032 upstream.
+commit 9a71892cbcdb9d1459c84f5a4c722b14354158a5 upstream.
 
-Use pm_runtime_put in the remove function and pm_runtime_get to disable
-RPM on platforms that don't support runtime D3, as re-enabling it through
-sysfs auto power control may cause the controller to malfunction. This
-can lead to issues such as hotplug devices not being detected due to
-failed interrupt generation.
+This reverts commit 15fffc6a5624b13b428bb1c6e9088e32a55eb82c.
 
-Fixes: a5d6264b638e ("xhci: Enable RPM on controllers that support low-power states")
+This commit causes a regression, so revert it for now until it can come
+back in a way that works for everyone.
+
+Link: https://lore.kernel.org/all/172790598832.1168608.4519484276671503678.stgit@dwillia2-xfh.jf.intel.com/
+Fixes: 15fffc6a5624 ("driver core: Fix uevent_show() vs driver detach race")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20241024133718.723846-1-Basavaraj.Natikar@amd.com
+Cc: Ashish Sangwan <a.sangwan@samsung.com>
+Cc: Namjae Jeon <namjae.jeon@samsung.com>
+Cc: Dirk Behme <dirk.behme@de.bosch.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Cc: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/base/core.c   |   13 +++++--------
+ drivers/base/module.c |    4 ----
+ 2 files changed, 5 insertions(+), 12 deletions(-)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -713,7 +713,7 @@ static int xhci_pci_probe(struct pci_dev
- 	pm_runtime_put_noidle(&dev->dev);
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -25,7 +25,6 @@
+ #include <linux/mutex.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/netdevice.h>
+-#include <linux/rcupdate.h>
+ #include <linux/sched/signal.h>
+ #include <linux/sched/mm.h>
+ #include <linux/string_helpers.h>
+@@ -2566,7 +2565,6 @@ static const char *dev_uevent_name(const
+ static int dev_uevent(const struct kobject *kobj, struct kobj_uevent_env *env)
+ {
+ 	const struct device *dev = kobj_to_dev(kobj);
+-	struct device_driver *driver;
+ 	int retval = 0;
  
- 	if (pci_choose_state(dev, PMSG_SUSPEND) == PCI_D0)
--		pm_runtime_forbid(&dev->dev);
-+		pm_runtime_get(&dev->dev);
- 	else if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
- 		pm_runtime_allow(&dev->dev);
+ 	/* add device node properties if present */
+@@ -2595,12 +2593,8 @@ static int dev_uevent(const struct kobje
+ 	if (dev->type && dev->type->name)
+ 		add_uevent_var(env, "DEVTYPE=%s", dev->type->name);
  
-@@ -740,7 +740,9 @@ static void xhci_pci_remove(struct pci_d
+-	/* Synchronize with module_remove_driver() */
+-	rcu_read_lock();
+-	driver = READ_ONCE(dev->driver);
+-	if (driver)
+-		add_uevent_var(env, "DRIVER=%s", driver->name);
+-	rcu_read_unlock();
++	if (dev->driver)
++		add_uevent_var(env, "DRIVER=%s", dev->driver->name);
  
- 	xhci->xhc_state |= XHCI_STATE_REMOVING;
+ 	/* Add common DT information about the device */
+ 	of_device_uevent(dev, env);
+@@ -2670,8 +2664,11 @@ static ssize_t uevent_show(struct device
+ 	if (!env)
+ 		return -ENOMEM;
  
--	if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
-+	if (pci_choose_state(dev, PMSG_SUSPEND) == PCI_D0)
-+		pm_runtime_put(&dev->dev);
-+	else if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
- 		pm_runtime_forbid(&dev->dev);
++	/* Synchronize with really_probe() */
++	device_lock(dev);
+ 	/* let the kset specific function add its keys */
+ 	retval = kset->uevent_ops->uevent(&dev->kobj, env);
++	device_unlock(dev);
+ 	if (retval)
+ 		goto out;
  
- 	if (xhci->shared_hcd) {
+--- a/drivers/base/module.c
++++ b/drivers/base/module.c
+@@ -7,7 +7,6 @@
+ #include <linux/errno.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+-#include <linux/rcupdate.h>
+ #include "base.h"
+ 
+ static char *make_driver_name(struct device_driver *drv)
+@@ -102,9 +101,6 @@ void module_remove_driver(struct device_
+ 	if (!drv)
+ 		return;
+ 
+-	/* Synchronize with dev_uevent() */
+-	synchronize_rcu();
+-
+ 	sysfs_remove_link(&drv->p->kobj, "module");
+ 
+ 	if (drv->owner)
 
 
