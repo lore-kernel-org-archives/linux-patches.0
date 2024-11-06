@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FE71DF24B;
-	Wed,  6 Nov 2024 12:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238121D2784;
+	Wed,  6 Nov 2024 12:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894867; cv=none; b=ORGWlrYE6T28PRXIqAyHtb5E7Ik8PgA35YONAUePZJn4/4z6A5pFXG+IDRUfEp9U8dn2Syzh+NUgMJCZ8ok40oZMtc0EtzZcfQfA8IjGDAN2eIdMr9EL7U+q3T+Kmw2sogRiXiwtJc4jMYYnMogEXqmb+ujcNmH1nPGCMuCO4rE=
+	t=1730894870; cv=none; b=rimtFUXiopomfLjDxRpX4/NYof17aPOy9Vv7n2Ltj+h46rk/9Ev7ioUfZS/7AY5kSARQ6Pt18h+8Shr09mYbtEKK/qMcyyW9dJJn07DQq5Jdpt8nSOIJ7m/lPA1LGgkgX8yCMvNliMHeQTMML1rW9KgnAIcO1CZEoJMAcH+4AWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894867; c=relaxed/simple;
-	bh=Vhr/rbecO1zjpzQP2XevugyrtrI0SJ0k00PPjKuf4/Q=;
+	s=arc-20240116; t=1730894870; c=relaxed/simple;
+	bh=Dvo2g6aD4zrcZM+5psL/pFFYwYkiiRyFb1kO7/ZvOnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I6PzxIQ+uHxjo4qhxyCDdef/S0QWgQ6ho+3tG1LB36W2zu6Fjikidi332H45mxO8whXkFs3Dd43nm51AWmej1Trlsf8Jfg23MjU3B9WYCr/ewmQnZ2vs/Or7OCJxv0CHxLmaw6hghVwL0Yt8ie3EoKP4lvEjSEoVNfbZlGiPY2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tZpJTRP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S8eJQhgmOygABOYIkTvGuCLYr49u5BTqBeYOp1LoQ5QmmocyLlvLTapEhP8BxLxhNPGG+yfzK70x3hrKu3kFlLjrS3MBWcRi47ezdYTJr59Flso1/g2rs0X0x1vln8G9slmVJ97gPiCHGP/iDNgia+ZXvVOZOeHu5YxmAtU8wQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ExRVlmb0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tZpJTRP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF0BC4CECD;
-	Wed,  6 Nov 2024 12:07:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ExRVlmb0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3962EC4CECD;
+	Wed,  6 Nov 2024 12:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894866;
-	bh=Vhr/rbecO1zjpzQP2XevugyrtrI0SJ0k00PPjKuf4/Q=;
+	s=korg; t=1730894869;
+	bh=Dvo2g6aD4zrcZM+5psL/pFFYwYkiiRyFb1kO7/ZvOnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2tZpJTRPTLKteGDUqpQWwyEMg71lVYSSl3FrM7P2QirgHbtk2RW6xtTLnbF9pGFg2
-	 9ghXDRlFQbRqrGV1w53B0pICFJvDXjZRFjhW/laCQdzRb4XbTZAE4+xQxWTk1jpRnf
-	 aAx6et4nOJU9zBqUegVEz3qkEZfWDNcoOJn8fMzc=
+	b=ExRVlmb0p7PXx3SO0CdyHY8YZnGT1Ue2LUUyYVHB8xHuQXlkVNAmP6euuayFTSpno
+	 KY/Kn94j/vSMhP4VrPDo9jH6OET6Xo2mdcW0qC/Bl41fPwlGQAyfRhY4JoGjmnu3tL
+	 K5Blnj4+gmBZ9pbSYLZDE3nYng7GRsEdx8aMUh4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao Xie <bigfoot@classfun.cn>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.19 027/350] USB: serial: pl2303: add device id for Macrosilicon MS3020
-Date: Wed,  6 Nov 2024 12:59:15 +0100
-Message-ID: <20241106120321.546867430@linuxfoundation.org>
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 028/350] ACPI: PMIC: Remove unneeded check in tps68470_pmic_opregion_probe()
+Date: Wed,  6 Nov 2024 12:59:16 +0100
+Message-ID: <20241106120321.571598928@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -50,41 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junhao Xie <bigfoot@classfun.cn>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-commit 7d47d22444bb7dc1b6d768904a22070ef35e1fc0 upstream.
+[ Upstream commit 07442c46abad1d50ac82af5e0f9c5de2732c4592 ]
 
-Add the device id for the Macrosilicon MS3020 which is a
-PL2303HXN based device.
+In tps68470_pmic_opregion_probe() pointer 'dev' is compared to NULL which
+is useless.
 
-Signed-off-by: Junhao Xie <bigfoot@classfun.cn>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this issue by removing unneeded check.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e13452ac3790 ("ACPI / PMIC: Add TI PMIC TPS68470 operation region driver")
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://patch.msgid.link/20240730225339.13165-1-amishin@t-argos.ru
+[ rjw: Subject edit ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/pl2303.c |    1 +
- drivers/usb/serial/pl2303.h |    4 ++++
- 2 files changed, 5 insertions(+)
+ drivers/acpi/pmic/tps68470_pmic.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/serial/pl2303.c
-+++ b/drivers/usb/serial/pl2303.c
-@@ -112,6 +112,7 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(SMART_VENDOR_ID, SMART_PRODUCT_ID) },
- 	{ USB_DEVICE(AT_VENDOR_ID, AT_VTKIT3_PRODUCT_ID) },
- 	{ USB_DEVICE(IBM_VENDOR_ID, IBM_PRODUCT_ID) },
-+	{ USB_DEVICE(MACROSILICON_VENDOR_ID, MACROSILICON_MS3020_PRODUCT_ID) },
- 	{ }					/* Terminating entry */
- };
+diff --git a/drivers/acpi/pmic/tps68470_pmic.c b/drivers/acpi/pmic/tps68470_pmic.c
+index a083de507009e..fde8a1271c9b6 100644
+--- a/drivers/acpi/pmic/tps68470_pmic.c
++++ b/drivers/acpi/pmic/tps68470_pmic.c
+@@ -376,10 +376,8 @@ static int tps68470_pmic_opregion_probe(struct platform_device *pdev)
+ 	struct tps68470_pmic_opregion *opregion;
+ 	acpi_status status;
  
---- a/drivers/usb/serial/pl2303.h
-+++ b/drivers/usb/serial/pl2303.h
-@@ -165,3 +165,7 @@
- /* Allied Telesis VT-Kit3 */
- #define AT_VENDOR_ID		0x0caa
- #define AT_VTKIT3_PRODUCT_ID	0x3001
-+
-+/* Macrosilicon MS3020 */
-+#define MACROSILICON_VENDOR_ID		0x345f
-+#define MACROSILICON_MS3020_PRODUCT_ID	0x3020
+-	if (!dev || !tps68470_regmap) {
+-		dev_warn(dev, "dev or regmap is NULL\n");
+-		return -EINVAL;
+-	}
++	if (!tps68470_regmap)
++		return dev_err_probe(dev, -EINVAL, "regmap is missing\n");
+ 
+ 	if (!handle) {
+ 		dev_warn(dev, "acpi handle is NULL\n");
+-- 
+2.43.0
+
 
 
