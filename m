@@ -1,36 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C3B646;
-	Wed,  6 Nov 2024 13:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C109B646;
+	Wed,  6 Nov 2024 13:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899318; cv=none; b=KrWAQZA5I6O/81dBo+etfa84VuDI2EQXsY4zqqFF5UH0ohRUk7P+ftCpfT5SdZCqWFxEGUHW69/1PQCL/xKk9i9+3CpW8UYbkFKJCP6H6aVCQjL3i3Dq8k3uFfFU7cdJfn2P+sNcIp3eojtPr+d3fi3YOYyQGsOlHgVYiHyjauQ=
+	t=1730899321; cv=none; b=EAIEjQuW6ZNea19W6TjLp15+1TC6foL00FK3RUf7rBasxBotM3J4oQi4QSB1v5xZc/likYDK21BDYXtHZ++kMmrdVcj1I5L2CoIeUh3p81l0aX5F1yflVNi1HuXgwPohDq7+ydrXJlOkjPrqijqdfphp0+1b2rgPQRYajkQ9LV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899318; c=relaxed/simple;
-	bh=QBf4813nqcknb/VY2H9YTEQO8wejSbmdP1zc9V6FvWI=;
+	s=arc-20240116; t=1730899321; c=relaxed/simple;
+	bh=e9pndrQ1aaf9nd0nfXDm79MgNu1JWoutE42D+x6GxN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/4O8Ok3JVG500lJUONoVP0TzZug6mypZ9qvpg0x1zj0nEISWqtqSD2qHpQ3waMOV9fQwl07n9rO6pdknGfb/4Q5g2QZWXmVFOGYkRbwJsG7D6MlKHiDG1MzGlAYl1NM5Yuv4vG1xiv682fLDPCVUK5HJGWX2chjJtBUD0QyHGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNqFhpNC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ffMFoV4D0oJjUVYO28CWli6de7hbGMO+SStonjBLtSuTNkIQZ1x2A3GssAjE1cgN5EA/hBwyxfC+FOpIoRiASEMgyk/HJ8RaKPXXV02yFx+/hHdclYAnmufZn0J3iWh7maLAnmdGz6YL4FGwuq9UlWtXQOOVdrU9KNMdGFGlv2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GoheB3ML; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNqFhpNC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D1BC4CECD;
-	Wed,  6 Nov 2024 13:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GoheB3ML"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65DFC4CECD;
+	Wed,  6 Nov 2024 13:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899318;
-	bh=QBf4813nqcknb/VY2H9YTEQO8wejSbmdP1zc9V6FvWI=;
+	s=korg; t=1730899321;
+	bh=e9pndrQ1aaf9nd0nfXDm79MgNu1JWoutE42D+x6GxN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MNqFhpNCyg4GN9VXupW6EF9UExWxTwXfcUn+zKcAhHkvCX5MSx+nQaXSjkBwUUgSX
-	 VhVKSGGD/SibAp2bugeN0kyO+hRzU7KwXYUyNWXlt3g8quWYyIJSALfXaNRAbbf75F
-	 kzQaunrJQ+bkT1cDHrjIGaUXasEb7OqO2yd4t57M=
+	b=GoheB3ML/zjUQANIQ3WvI7CuINvX6342D+FDIygioLDph+Yqkq730A8gu1/fdZrwd
+	 UcgqH3OGsRZvwtLxkmiqi2JVRnKCdRUAdxjtc+32nRF+cGXpGvcIVx65LX/dwGuQ0p
+	 9Y2miZQxRs/t80CM4YV4ktQuLuDrsO2b2705qi0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 73/73] mac80211: always have ieee80211_sta_restart()
-Date: Wed,  6 Nov 2024 13:06:17 +0100
-Message-ID: <20241106120302.119349911@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	David Rientjes <rientjes@google.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Michal Hocko <mhocko@kernel.org>,
+	Wei Xu <weixugc@google.com>,
+	Greg Thelen <gthelen@google.com>,
+	Hugh Dickins <hughd@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 56/73] mm/page_alloc: call check_new_pages() while zone spinlock is not held
+Date: Wed,  6 Nov 2024 13:06:00 +0100
+Message-ID: <20241106120301.630755013@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120259.955073160@linuxfoundation.org>
 References: <20241106120259.955073160@linuxfoundation.org>
@@ -49,39 +60,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 3fa5a0f5b0d69e31c6476cd81afeca3cc25a4927 upstream.
+[ Upstream commit 3313204c8ad553cf93f1ee8cc89456c73a7df938 ]
 
-When CONFIG_PM isn't defined we don't have the function
-ieee80211_sta_restart() compiled in, but we always need
-it now for firmware restart. Move it out of the ifdef.
+For high order pages not using pcp, rmqueue() is currently calling the
+costly check_new_pages() while zone spinlock is held, and hard irqs
+masked.
 
-Fixes: 7d352ccf1e99 ("mac80211: Add support to trigger sta disconnect on hardware restart")
-Link: https://lore.kernel.org/r/20220312221957.1fa96c72db51.I8ecaa5f9402fede0272161e0531ab930b97fba3e@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is not needed, we can release the spinlock sooner to reduce zone
+spinlock contention.
+
+Note that after this patch, we call __mod_zone_freepage_state() before
+deciding to leak the page because it is in bad state.
+
+Link: https://lkml.kernel.org/r/20220304170215.1868106-1-eric.dumazet@gmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Shakeel Butt <shakeelb@google.com>
+Acked-by: David Rientjes <rientjes@google.com>
+Acked-by: Mel Gorman <mgorman@techsingularity.net>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Greg Thelen <gthelen@google.com>
+Cc: Hugh Dickins <hughd@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 281dd25c1a01 ("mm/page_alloc: let GFP_ATOMIC order-0 allocs access highatomic reserves")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/page_alloc.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -4832,6 +4832,7 @@ void ieee80211_mgd_quiesce(struct ieee80
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 264efa022fa96..474150584ba48 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -3698,10 +3698,10 @@ struct page *rmqueue(struct zone *preferred_zone,
+ 	 * allocate greater than order-1 page units with __GFP_NOFAIL.
+ 	 */
+ 	WARN_ON_ONCE((gfp_flags & __GFP_NOFAIL) && (order > 1));
+-	spin_lock_irqsave(&zone->lock, flags);
  
- 	sdata_unlock(sdata);
- }
-+#endif
+ 	do {
+ 		page = NULL;
++		spin_lock_irqsave(&zone->lock, flags);
+ 		/*
+ 		 * order-0 request can reach here when the pcplist is skipped
+ 		 * due to non-CMA allocation context. HIGHATOMIC area is
+@@ -3713,15 +3713,15 @@ struct page *rmqueue(struct zone *preferred_zone,
+ 			if (page)
+ 				trace_mm_page_alloc_zone_locked(page, order, migratetype);
+ 		}
+-		if (!page)
++		if (!page) {
+ 			page = __rmqueue(zone, order, migratetype, alloc_flags);
+-	} while (page && check_new_pages(page, order));
+-	if (!page)
+-		goto failed;
+-
+-	__mod_zone_freepage_state(zone, -(1 << order),
+-				  get_pcppage_migratetype(page));
+-	spin_unlock_irqrestore(&zone->lock, flags);
++			if (!page)
++				goto failed;
++		}
++		__mod_zone_freepage_state(zone, -(1 << order),
++					  get_pcppage_migratetype(page));
++		spin_unlock_irqrestore(&zone->lock, flags);
++	} while (check_new_pages(page, order));
  
- void ieee80211_sta_restart(struct ieee80211_sub_if_data *sdata)
- {
-@@ -4867,7 +4868,6 @@ void ieee80211_sta_restart(struct ieee80
- 
- 	sdata_unlock(sdata);
- }
--#endif
- 
- /* interface setup */
- void ieee80211_sta_setup_sdata(struct ieee80211_sub_if_data *sdata)
+ 	__count_zid_vm_events(PGALLOC, page_zonenum(page), 1 << order);
+ 	zone_statistics(preferred_zone, zone, 1);
+-- 
+2.43.0
+
 
 
