@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02ECA1EBFE4;
-	Wed,  6 Nov 2024 12:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83251F8F06;
+	Wed,  6 Nov 2024 12:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897215; cv=none; b=H5uRABnepCYyn2jEzi8knSxFA9KC6xA8iUZPLx0hy/b4SdSP8r2XjoOGY3Z53g07yZLv/KQAwjKtj7Lo8fGk9a8c+XqXY0VP3RREr0BukWbD/Q1I0tfYVn7hnqK4JLpt1R6tIrOkE+xQDaX23kMsICdqDxi+uTcy2heKmxeK8pg=
+	t=1730897218; cv=none; b=gZQ3tbP7AiI4hbL6meOYNjCuAWm8asL+ojTDxMjOoBjuzcpVfUyP7SpN4jQwbuavy9SWLfCFlIPa12URkcGeWBw0hHr6HPX0tACUloAa45l6ZiSOHB75I8fvmgJn92MvxlcKoCO7ZUeDOWqAtVB6F+YF0/QDvVc9qJjSW2kyMzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897215; c=relaxed/simple;
-	bh=yBMEyyXRFR2TmjNrarU1tnaXOMhS1eHIbrszkmtG9gs=;
+	s=arc-20240116; t=1730897218; c=relaxed/simple;
+	bh=HoaaCcO5MbPwFOJWMeNV4sT5Ee2JmVa7z2AA3El12AI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hP2bRiSr2nMNjiQax6LqKeHNZA9M1n2gVlolJRa+8YV+/5QplDOjWJPDa+sF6KbTBXRSfTxe+e1DXm1c6TEDgMxAHobGKhSSy2nch0Ve7El5xXXzWAq0Dtym5tYQ+h++R742W/gL8DvIa/F3rjCqv9hdg1s6xYnHHKtX02NBPos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBvRzrpA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HWU1KSy5TgVe6Re6SK9t7EsOiuK0HOpxfAZlDR4PNECqs4kZCw/JAq9AQDMnFooxBsT9slnqbcTOAR7tPjaqI7u+XapTMGk3a9a5LU6orcbbfhReT5BC0C9OEdQALJa/0Gb0KGTKTAaLD2uvipESsQWwOvD1hqZOrjutyLor9cM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNI9Jbi8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBvRzrpA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8044CC4CECD;
-	Wed,  6 Nov 2024 12:46:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNI9Jbi8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6C0C4CECD;
+	Wed,  6 Nov 2024 12:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897214;
-	bh=yBMEyyXRFR2TmjNrarU1tnaXOMhS1eHIbrszkmtG9gs=;
+	s=korg; t=1730897217;
+	bh=HoaaCcO5MbPwFOJWMeNV4sT5Ee2JmVa7z2AA3El12AI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tBvRzrpAojt5MaTZ6++Me+QOajmwbY4OezxAMCs2cTVz5Lkr2RoBjgFwZGl9XEn1A
-	 nn+wHOj1xoyvC6SXW1XG3qpQi8zFuJAjnTpsCSIyO9dtiDbhScBHivDuaPFjeZmocG
-	 kTLwARDgb/CxncamJaXGzZXFyVZpgK2cTiTpq7pc=
+	b=WNI9Jbi89kXRmwNkMyxApVQULKLh+QQYw5C6/tUhsaLTjwyCq1U6AejKp2ayshBFp
+	 vlR4V0dDnbkmFIxiQjx+6WweLpmMdp45hWlbbA5txmSyHAlgiX8l+C4nzv0624fHyQ
+	 FvTnxJjzmXhWInwom+lVPyniiuSP72MNcW7akXrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Mann <peter.mann@sh.cz>,
-	Jens Axboe <axboe@kernel.dk>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/126] io_uring/rw: fix missing NOWAIT check for O_DIRECT start write
-Date: Wed,  6 Nov 2024 13:05:05 +0100
-Message-ID: <20241106120308.869676255@linuxfoundation.org>
+Subject: [PATCH 6.1 105/126] mm: migrate: try again if THP split is failed due to page refcnt
+Date: Wed,  6 Nov 2024 13:05:06 +0100
+Message-ID: <20241106120308.898481386@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -51,119 +56,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Baolin Wang <baolin.wang@linux.alibaba.com>
 
-[ Upstream commit 1d60d74e852647255bd8e76f5a22dc42531e4389 ]
+[ Upstream commit fd4a7ac32918d3d7a2d17dc06c5520f45e36eb52 ]
 
-When io_uring starts a write, it'll call kiocb_start_write() to bump the
-super block rwsem, preventing any freezes from happening while that
-write is in-flight. The freeze side will grab that rwsem for writing,
-excluding any new writers from happening and waiting for existing writes
-to finish. But io_uring unconditionally uses kiocb_start_write(), which
-will block if someone is currently attempting to freeze the mount point.
-This causes a deadlock where freeze is waiting for previous writes to
-complete, but the previous writes cannot complete, as the task that is
-supposed to complete them is blocked waiting on starting a new write.
-This results in the following stuck trace showing that dependency with
-the write blocked starting a new write:
+When creating a virtual machine, we will use memfd_create() to get a file
+descriptor which can be used to create share memory mappings using the
+mmap function, meanwhile the mmap() will set the MAP_POPULATE flag to
+allocate physical pages for the virtual machine.
 
-task:fio             state:D stack:0     pid:886   tgid:886   ppid:876
-Call trace:
- __switch_to+0x1d8/0x348
- __schedule+0x8e8/0x2248
- schedule+0x110/0x3f0
- percpu_rwsem_wait+0x1e8/0x3f8
- __percpu_down_read+0xe8/0x500
- io_write+0xbb8/0xff8
- io_issue_sqe+0x10c/0x1020
- io_submit_sqes+0x614/0x2110
- __arm64_sys_io_uring_enter+0x524/0x1038
- invoke_syscall+0x74/0x268
- el0_svc_common.constprop.0+0x160/0x238
- do_el0_svc+0x44/0x60
- el0_svc+0x44/0xb0
- el0t_64_sync_handler+0x118/0x128
- el0t_64_sync+0x168/0x170
-INFO: task fsfreeze:7364 blocked for more than 15 seconds.
-      Not tainted 6.12.0-rc5-00063-g76aaf945701c #7963
+When allocating physical pages for the guest, the host can fallback to
+allocate some CMA pages for the guest when over half of the zone's free
+memory is in the CMA area.
 
-with the attempting freezer stuck trying to grab the rwsem:
+In guest os, when the application wants to do some data transaction with
+DMA, our QEMU will call VFIO_IOMMU_MAP_DMA ioctl to do longterm-pin and
+create IOMMU mappings for the DMA pages.  However, when calling
+VFIO_IOMMU_MAP_DMA ioctl to pin the physical pages, we found it will be
+failed to longterm-pin sometimes.
 
-task:fsfreeze        state:D stack:0     pid:7364  tgid:7364  ppid:995
-Call trace:
- __switch_to+0x1d8/0x348
- __schedule+0x8e8/0x2248
- schedule+0x110/0x3f0
- percpu_down_write+0x2b0/0x680
- freeze_super+0x248/0x8a8
- do_vfs_ioctl+0x149c/0x1b18
- __arm64_sys_ioctl+0xd0/0x1a0
- invoke_syscall+0x74/0x268
- el0_svc_common.constprop.0+0x160/0x238
- do_el0_svc+0x44/0x60
- el0_svc+0x44/0xb0
- el0t_64_sync_handler+0x118/0x128
- el0t_64_sync+0x168/0x170
+After some invetigation, we found the pages used to do DMA mapping can
+contain some CMA pages, and these CMA pages will cause a possible failure
+of the longterm-pin, due to failed to migrate the CMA pages.  The reason
+of migration failure may be temporary reference count or memory allocation
+failure.  So that will cause the VFIO_IOMMU_MAP_DMA ioctl returns error,
+which makes the application failed to start.
 
-Fix this by having the io_uring side honor IOCB_NOWAIT, and only attempt a
-blocking grab of the super block rwsem if it isn't set. For normal issue
-where IOCB_NOWAIT would always be set, this returns -EAGAIN which will
-have io_uring core issue a blocking attempt of the write. That will in
-turn also get completions run, ensuring forward progress.
+I observed one migration failure case (which is not easy to reproduce) is
+that, the 'thp_migration_fail' count is 1 and the 'thp_split_page_failed'
+count is also 1.
 
-Since freezing requires CAP_SYS_ADMIN in the first place, this isn't
-something that can be triggered by a regular user.
+That means when migrating a THP which is in CMA area, but can not allocate
+a new THP due to memory fragmentation, so it will split the THP.  However
+THP split is also failed, probably the reason is temporary reference count
+of this THP.  And the temporary reference count can be caused by dropping
+page caches (I observed the drop caches operation in the system), but we
+can not drop the shmem page caches due to they are already dirty at that
+time.
 
-Cc: stable@vger.kernel.org # 5.10+
-Reported-by: Peter Mann <peter.mann@sh.cz>
-Link: https://lore.kernel.org/io-uring/38c94aec-81c9-4f62-b44e-1d87f5597644@sh.cz
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Especially for THP split failure, which is caused by temporary reference
+count, we can try again to mitigate the failure of migration in this case
+according to previous discussion [1].
+
+[1] https://lore.kernel.org/all/470dc638-a300-f261-94b4-e27250e42f96@redhat.com/
+Link: https://lkml.kernel.org/r/6784730480a1df82e8f4cba1ed088e4ac767994b.1666599848.git.baolin.wang@linux.alibaba.com
+Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 35e41024c4c2 ("vmscan,migrate: fix page count imbalance on node stats when demoting pages")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/rw.c | 23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ mm/huge_memory.c |  4 ++--
+ mm/migrate.c     | 19 ++++++++++++++++---
+ 2 files changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/io_uring/rw.c b/io_uring/rw.c
-index c15c7873813b3..9d6e17a244ae7 100644
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -839,6 +839,25 @@ int io_read(struct io_kiocb *req, unsigned int issue_flags)
- 	return kiocb_done(req, ret, issue_flags);
- }
- 
-+static bool io_kiocb_start_write(struct io_kiocb *req, struct kiocb *kiocb)
-+{
-+	struct inode *inode;
-+	bool ret;
-+
-+	if (!(req->flags & REQ_F_ISREG))
-+		return true;
-+	if (!(kiocb->ki_flags & IOCB_NOWAIT)) {
-+		kiocb_start_write(kiocb);
-+		return true;
-+	}
-+
-+	inode = file_inode(kiocb->ki_filp);
-+	ret = sb_start_write_trylock(inode->i_sb);
-+	if (ret)
-+		__sb_writers_release(inode->i_sb, SB_FREEZE_WRITE);
-+	return ret;
-+}
-+
- int io_write(struct io_kiocb *req, unsigned int issue_flags)
- {
- 	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
-@@ -892,8 +911,8 @@ int io_write(struct io_kiocb *req, unsigned int issue_flags)
- 		return ret;
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index 98a1a05f2db2d..f53bc54dacb37 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2728,7 +2728,7 @@ int split_huge_page_to_list(struct page *page, struct list_head *list)
+ 	 * split PMDs
+ 	 */
+ 	if (!can_split_folio(folio, &extra_pins)) {
+-		ret = -EBUSY;
++		ret = -EAGAIN;
+ 		goto out_unlock;
  	}
  
--	if (req->flags & REQ_F_ISREG)
--		kiocb_start_write(kiocb);
-+	if (unlikely(!io_kiocb_start_write(req, kiocb)))
-+		return -EAGAIN;
- 	kiocb->ki_flags |= IOCB_WRITE;
+@@ -2780,7 +2780,7 @@ int split_huge_page_to_list(struct page *page, struct list_head *list)
+ 			xas_unlock(&xas);
+ 		local_irq_enable();
+ 		remap_page(folio, folio_nr_pages(folio));
+-		ret = -EBUSY;
++		ret = -EAGAIN;
+ 	}
  
- 	if (likely(req->file->f_op->write_iter))
+ out_unlock:
+diff --git a/mm/migrate.c b/mm/migrate.c
+index 0252aa4ff572e..b0caa89e67d5f 100644
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -1518,9 +1518,22 @@ int migrate_pages(struct list_head *from, new_page_t get_new_page,
+ 				if (is_thp) {
+ 					nr_thp_failed++;
+ 					/* THP NUMA faulting doesn't split THP to retry. */
+-					if (!nosplit && !try_split_thp(page, &thp_split_pages)) {
+-						nr_thp_split++;
+-						break;
++					if (!nosplit) {
++						int ret = try_split_thp(page, &thp_split_pages);
++
++						if (!ret) {
++							nr_thp_split++;
++							break;
++						} else if (reason == MR_LONGTERM_PIN &&
++							   ret == -EAGAIN) {
++							/*
++							 * Try again to split THP to mitigate
++							 * the failure of longterm pinning.
++							 */
++							thp_retry++;
++							nr_retry_pages += nr_subpages;
++							break;
++						}
+ 					}
+ 				} else if (!no_subpage_counting) {
+ 					nr_failed++;
 -- 
 2.43.0
 
