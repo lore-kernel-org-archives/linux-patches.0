@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FA31DE3B8;
-	Wed,  6 Nov 2024 12:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE3F1DE3B8;
+	Wed,  6 Nov 2024 12:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896343; cv=none; b=RUpKtda4rwimfVhY277M9rEgqNObbf9vT2YzTxaTXqK8P5qHal+29lGwjP2xq12c5I7thj25r39wDeVYY23E21CEEL68ZDevIEw9h7gasIbMKfb9uWvcL3AeyL3qeoK/e7O7cy+iInMTG7xxmO3TdCrpQKOb9QMPLYgBji8e5wY=
+	t=1730896346; cv=none; b=DzouP7NKNWMnyqChLo2dWE91pm72ojPkuSgKXnM+eY6PbCFG2iT0rHFDTcvps6QkQZ5fghjv0McharcZdPpUz3t6FElAvNe4b494NmHWit1fSuPbjZ0kseOeXhtVgSUQFNj/DeG06Eq25wAhKf8uX2iLnHdgGyLxxvOkuWBtayA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896343; c=relaxed/simple;
-	bh=xu9fo1SuUWtEpCVb7u61SLhcdmk5htD7kpgbn5RNcZ4=;
+	s=arc-20240116; t=1730896346; c=relaxed/simple;
+	bh=UeZrigwor1AVJXJn68Y8/b57siSAy7+pEkKdN0MNTB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V9tyyMNYrtFV6HYGCds9KhPxwWubrWjAZ/yYkK38KPjSF4kxwgnpTxpn09FFo8j9euZHdW38NSwL+2wmqcGS/Ccdt4EVopZ5R+yuT4je83GGrG29ceU++ar7Muow31juZAUSGNCXbHd1jTy9uN5GcFG1EFr+Nm6RCjJOQoJMof4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+JFreC1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uzdtBAQNXetLZfctARopDf5iuNg6G1Gt7eo7L0HPq1cofVn4FcZYS6j6UN8wbFDYBrepj6MscTZKhx1lmFnCCGgaf+AYBHaBTXG0JOSX8HHcxwGdg5/B0DG4KS56CRJz+Rhhs5Vb8WNYgdxdyX5ONBJjb5Mym9YLShrK6QBPRvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znscjzMP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+JFreC1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38AF0C4CECD;
-	Wed,  6 Nov 2024 12:32:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znscjzMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254F6C4CECD;
+	Wed,  6 Nov 2024 12:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896343;
-	bh=xu9fo1SuUWtEpCVb7u61SLhcdmk5htD7kpgbn5RNcZ4=;
+	s=korg; t=1730896346;
+	bh=UeZrigwor1AVJXJn68Y8/b57siSAy7+pEkKdN0MNTB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+JFreC1cnCOuz10+Ef7XlfY5D9Zhpx9Czr+U/QSxU0IhFTnAyx1YAfW53PoKKLZ7
-	 a49meBBczVuSwdR1WCeOuaZ4LQr7TMiwB7sl02xYvvKZIV0pP32NE5KTzFD0itwcmT
-	 q2jG3MgxnqGUPAOq6vvJSTxylqT7oFbE68tPI+t8=
+	b=znscjzMPfgISyFZkahipfZxa3yafJq6sQMIBEbb7bWR9N+1C5Yth/kW8bWJE6Ffi1
+	 kG/ocD9mtfTnkFPohFnbJ8wrP8bhTbfEV2QI5ypI7vqRlSCru9uLArEEVgklSjhM4x
+	 5WlMfPx8KgU/9QM/7lQzjNVf88ihOq+g0YT8FCUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengyu Ma <mapengyu@gmail.com>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 171/245] tpm: Lazily flush the auth session
-Date: Wed,  6 Nov 2024 13:03:44 +0100
-Message-ID: <20241106120323.449467601@linuxfoundation.org>
+Subject: [PATCH 6.11 172/245] mptcp: init: protect sched with rcu_read_lock
+Date: Wed,  6 Nov 2024 13:03:45 +0100
+Message-ID: <20241106120323.472489384@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,212 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit df745e25098dcb2f706399c0d06dd8d1bab6b6ec ]
+[ Upstream commit 3deb12c788c385e17142ce6ec50f769852fcec65 ]
 
-Move the allocation of chip->auth to tpm2_start_auth_session() so that this
-field can be used as flag to tell whether auth session is active or not.
+Enabling CONFIG_PROVE_RCU_LIST with its dependence CONFIG_RCU_EXPERT
+creates this splat when an MPTCP socket is created:
 
-Instead of flushing and reloading the auth session for every transaction
-separately, keep the session open unless /dev/tpm0 is used.
+  =============================
+  WARNING: suspicious RCU usage
+  6.12.0-rc2+ #11 Not tainted
+  -----------------------------
+  net/mptcp/sched.c:44 RCU-list traversed in non-reader section!!
 
-Reported-by: Pengyu Ma <mapengyu@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219229
-Cc: stable@vger.kernel.org # v6.10+
-Fixes: 7ca110f2679b ("tpm: Address !chip->auth in tpm_buf_append_hmac_session*()")
-Tested-by: Pengyu Ma <mapengyu@gmail.com>
-Tested-by: Stefan Berger <stefanb@linux.ibm.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+  other info that might help us debug this:
+
+  rcu_scheduler_active = 2, debug_locks = 1
+  no locks held by mptcp_connect/176.
+
+  stack backtrace:
+  CPU: 0 UID: 0 PID: 176 Comm: mptcp_connect Not tainted 6.12.0-rc2+ #11
+  Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+  Call Trace:
+   <TASK>
+   dump_stack_lvl (lib/dump_stack.c:123)
+   lockdep_rcu_suspicious (kernel/locking/lockdep.c:6822)
+   mptcp_sched_find (net/mptcp/sched.c:44 (discriminator 7))
+   mptcp_init_sock (net/mptcp/protocol.c:2867 (discriminator 1))
+   ? sock_init_data_uid (arch/x86/include/asm/atomic.h:28)
+   inet_create.part.0.constprop.0 (net/ipv4/af_inet.c:386)
+   ? __sock_create (include/linux/rcupdate.h:347 (discriminator 1))
+   __sock_create (net/socket.c:1576)
+   __sys_socket (net/socket.c:1671)
+   ? __pfx___sys_socket (net/socket.c:1712)
+   ? do_user_addr_fault (arch/x86/mm/fault.c:1419 (discriminator 1))
+   __x64_sys_socket (net/socket.c:1728)
+   do_syscall_64 (arch/x86/entry/common.c:52 (discriminator 1))
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+That's because when the socket is initialised, rcu_read_lock() is not
+used despite the explicit comment written above the declaration of
+mptcp_sched_find() in sched.c. Adding the missing lock/unlock avoids the
+warning.
+
+Fixes: 1730b2b2c5a5 ("mptcp: add sched in mptcp_sock")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/523
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241021-net-mptcp-sched-lock-v1-1-637759cf061c@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm-chip.c       | 10 +++++++
- drivers/char/tpm/tpm-dev-common.c |  3 +++
- drivers/char/tpm/tpm-interface.c  |  6 +++--
- drivers/char/tpm/tpm2-sessions.c  | 45 ++++++++++++++++++-------------
- 4 files changed, 44 insertions(+), 20 deletions(-)
+ net/mptcp/protocol.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/char/tpm/tpm-chip.c b/drivers/char/tpm/tpm-chip.c
-index 854546000c92b..1ff99a7091bbb 100644
---- a/drivers/char/tpm/tpm-chip.c
-+++ b/drivers/char/tpm/tpm-chip.c
-@@ -674,6 +674,16 @@ EXPORT_SYMBOL_GPL(tpm_chip_register);
-  */
- void tpm_chip_unregister(struct tpm_chip *chip)
- {
-+#ifdef CONFIG_TCG_TPM2_HMAC
-+	int rc;
-+
-+	rc = tpm_try_get_ops(chip);
-+	if (!rc) {
-+		tpm2_end_auth_session(chip);
-+		tpm_put_ops(chip);
-+	}
-+#endif
-+
- 	tpm_del_legacy_sysfs(chip);
- 	if (tpm_is_hwrng_enabled(chip))
- 		hwrng_unregister(&chip->hwrng);
-diff --git a/drivers/char/tpm/tpm-dev-common.c b/drivers/char/tpm/tpm-dev-common.c
-index c3fbbf4d3db79..48ff87444f851 100644
---- a/drivers/char/tpm/tpm-dev-common.c
-+++ b/drivers/char/tpm/tpm-dev-common.c
-@@ -27,6 +27,9 @@ static ssize_t tpm_dev_transmit(struct tpm_chip *chip, struct tpm_space *space,
- 	struct tpm_header *header = (void *)buf;
- 	ssize_t ret, len;
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index d4b3bc46cdaaf..ec87b36f0d451 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2864,8 +2864,10 @@ static int mptcp_init_sock(struct sock *sk)
+ 	if (unlikely(!net->mib.mptcp_statistics) && !mptcp_mib_alloc(net))
+ 		return -ENOMEM;
  
-+	if (chip->flags & TPM_CHIP_FLAG_TPM2)
-+		tpm2_end_auth_session(chip);
-+
- 	ret = tpm2_prepare_space(chip, space, buf, bufsiz);
- 	/* If the command is not implemented by the TPM, synthesize a
- 	 * response with a TPM2_RC_COMMAND_CODE return for user-space.
-diff --git a/drivers/char/tpm/tpm-interface.c b/drivers/char/tpm/tpm-interface.c
-index 5da134f12c9a4..8134f002b121f 100644
---- a/drivers/char/tpm/tpm-interface.c
-+++ b/drivers/char/tpm/tpm-interface.c
-@@ -379,10 +379,12 @@ int tpm_pm_suspend(struct device *dev)
++	rcu_read_lock();
+ 	ret = mptcp_init_sched(mptcp_sk(sk),
+ 			       mptcp_sched_find(mptcp_get_scheduler(net)));
++	rcu_read_unlock();
+ 	if (ret)
+ 		return ret;
  
- 	rc = tpm_try_get_ops(chip);
- 	if (!rc) {
--		if (chip->flags & TPM_CHIP_FLAG_TPM2)
-+		if (chip->flags & TPM_CHIP_FLAG_TPM2) {
-+			tpm2_end_auth_session(chip);
- 			tpm2_shutdown(chip, TPM2_SU_STATE);
--		else
-+		} else {
- 			rc = tpm1_pm_suspend(chip, tpm_suspend_pcr);
-+		}
- 
- 		tpm_put_ops(chip);
- 	}
-diff --git a/drivers/char/tpm/tpm2-sessions.c b/drivers/char/tpm/tpm2-sessions.c
-index a194535619929..c8fdfe901dfb7 100644
---- a/drivers/char/tpm/tpm2-sessions.c
-+++ b/drivers/char/tpm/tpm2-sessions.c
-@@ -333,6 +333,9 @@ void tpm_buf_append_hmac_session(struct tpm_chip *chip, struct tpm_buf *buf,
- 	}
- 
- #ifdef CONFIG_TCG_TPM2_HMAC
-+	/* The first write to /dev/tpm{rm0} will flush the session. */
-+	attributes |= TPM2_SA_CONTINUE_SESSION;
-+
- 	/*
- 	 * The Architecture Guide requires us to strip trailing zeros
- 	 * before computing the HMAC
-@@ -484,7 +487,8 @@ static void tpm2_KDFe(u8 z[EC_PT_SZ], const char *str, u8 *pt_u, u8 *pt_v,
- 	sha256_final(&sctx, out);
- }
- 
--static void tpm_buf_append_salt(struct tpm_buf *buf, struct tpm_chip *chip)
-+static void tpm_buf_append_salt(struct tpm_buf *buf, struct tpm_chip *chip,
-+				struct tpm2_auth *auth)
- {
- 	struct crypto_kpp *kpp;
- 	struct kpp_request *req;
-@@ -543,7 +547,7 @@ static void tpm_buf_append_salt(struct tpm_buf *buf, struct tpm_chip *chip)
- 	sg_set_buf(&s[0], chip->null_ec_key_x, EC_PT_SZ);
- 	sg_set_buf(&s[1], chip->null_ec_key_y, EC_PT_SZ);
- 	kpp_request_set_input(req, s, EC_PT_SZ*2);
--	sg_init_one(d, chip->auth->salt, EC_PT_SZ);
-+	sg_init_one(d, auth->salt, EC_PT_SZ);
- 	kpp_request_set_output(req, d, EC_PT_SZ);
- 	crypto_kpp_compute_shared_secret(req);
- 	kpp_request_free(req);
-@@ -554,8 +558,7 @@ static void tpm_buf_append_salt(struct tpm_buf *buf, struct tpm_chip *chip)
- 	 * This works because KDFe fully consumes the secret before it
- 	 * writes the salt
- 	 */
--	tpm2_KDFe(chip->auth->salt, "SECRET", x, chip->null_ec_key_x,
--		  chip->auth->salt);
-+	tpm2_KDFe(auth->salt, "SECRET", x, chip->null_ec_key_x, auth->salt);
- 
-  out:
- 	crypto_free_kpp(kpp);
-@@ -853,7 +856,9 @@ int tpm_buf_check_hmac_response(struct tpm_chip *chip, struct tpm_buf *buf,
- 		if (rc)
- 			/* manually close the session if it wasn't consumed */
- 			tpm2_flush_context(chip, auth->handle);
--		memzero_explicit(auth, sizeof(*auth));
-+
-+		kfree_sensitive(auth);
-+		chip->auth = NULL;
- 	} else {
- 		/* reset for next use  */
- 		auth->session = TPM_HEADER_SIZE;
-@@ -881,7 +886,8 @@ void tpm2_end_auth_session(struct tpm_chip *chip)
- 		return;
- 
- 	tpm2_flush_context(chip, auth->handle);
--	memzero_explicit(auth, sizeof(*auth));
-+	kfree_sensitive(auth);
-+	chip->auth = NULL;
- }
- EXPORT_SYMBOL(tpm2_end_auth_session);
- 
-@@ -962,16 +968,20 @@ static int tpm2_load_null(struct tpm_chip *chip, u32 *null_key)
-  */
- int tpm2_start_auth_session(struct tpm_chip *chip)
- {
-+	struct tpm2_auth *auth;
- 	struct tpm_buf buf;
--	struct tpm2_auth *auth = chip->auth;
--	int rc;
- 	u32 null_key;
-+	int rc;
- 
--	if (!auth) {
--		dev_warn_once(&chip->dev, "auth session is not active\n");
-+	if (chip->auth) {
-+		dev_warn_once(&chip->dev, "auth session is active\n");
- 		return 0;
- 	}
- 
-+	auth = kzalloc(sizeof(*auth), GFP_KERNEL);
-+	if (!auth)
-+		return -ENOMEM;
-+
- 	rc = tpm2_load_null(chip, &null_key);
- 	if (rc)
- 		goto out;
-@@ -992,7 +1002,7 @@ int tpm2_start_auth_session(struct tpm_chip *chip)
- 	tpm_buf_append(&buf, auth->our_nonce, sizeof(auth->our_nonce));
- 
- 	/* append encrypted salt and squirrel away unencrypted in auth */
--	tpm_buf_append_salt(&buf, chip);
-+	tpm_buf_append_salt(&buf, chip, auth);
- 	/* session type (HMAC, audit or policy) */
- 	tpm_buf_append_u8(&buf, TPM2_SE_HMAC);
- 
-@@ -1014,10 +1024,13 @@ int tpm2_start_auth_session(struct tpm_chip *chip)
- 
- 	tpm_buf_destroy(&buf);
- 
--	if (rc)
--		goto out;
-+	if (rc == TPM2_RC_SUCCESS) {
-+		chip->auth = auth;
-+		return 0;
-+	}
- 
-- out:
-+out:
-+	kfree_sensitive(auth);
- 	return rc;
- }
- EXPORT_SYMBOL(tpm2_start_auth_session);
-@@ -1367,10 +1380,6 @@ int tpm2_sessions_init(struct tpm_chip *chip)
- 		return rc;
- 	}
- 
--	chip->auth = kmalloc(sizeof(*chip->auth), GFP_KERNEL);
--	if (!chip->auth)
--		return -ENOMEM;
--
- 	return rc;
- }
- EXPORT_SYMBOL(tpm2_sessions_init);
 -- 
 2.43.0
 
