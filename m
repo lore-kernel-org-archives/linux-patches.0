@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8641E0084;
-	Wed,  6 Nov 2024 12:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46941E7C1A;
+	Wed,  6 Nov 2024 12:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897927; cv=none; b=ibB39SFCSZXCx0UFVyCLRr2cJEvLDpNnl/4zv4D370dTIibBEPj/hICM3c3HLYfr4Ooe2npMt7ozs+EqOlm4JRERl2iy2XF/b4CYA11Ch7S8uATyaghn7KxICXewkKtYGSMALyXlTVvLJe8sySf5Sza/OtJfGQTQAuIz2TDZ5o8=
+	t=1730897930; cv=none; b=IO8BM/BkTV3seDicu2cj/yyjX+QBd2EsjyWaxDQiJsp99QkRXiAF0hetncuhUcZ0rPFIdMJqXB8T3RLcxjuYRBe1PgZ98dTIfIBOtmmOM2JHagi/R72EcmVJpPMLiJ6uMBuc9jyzqWJynfh/WogBEcSsfvDGCNjuXQ1Tb5WrO7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897927; c=relaxed/simple;
-	bh=mOs+oATkTkYHpoZcZPLh5i/gmmvpg5r/8LzFhANVTGA=;
+	s=arc-20240116; t=1730897930; c=relaxed/simple;
+	bh=a/zXdJsyaeJpQ3Sny0K/FmICzRE9NU1SxNWYpVpTMbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oIX5ZozA74tvyWGJQuwQnVO71RMk/v1+sSs8O9cdffMg0hzpiyfGZhDv5oj2IEU2knMCPLjhH2j+P/SLRlhdSwbokdcPDoIwYhF+E0yaZfBGfggd23gT/mrqIckl6VcuNPQFSrCNP+CaqBEda5ZIuh5z5WDM1xtMWnSYUH791VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwsmx2qi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MYzRqY6HzMMqrFcviNEE6QzlFnB2F5GpWQDtiYt9LzLa33KKeLKZFTsX4k62ZQM2ElxOWfyz9Fs8nr/+oJXpw9XLH9JIqiLbBqOR/fOqVf4Bqm+VNPFoaXnfDg5mgzyxRygjIeJ/4nL78rViEKNjRzRha17aPXkxWJiAPlrTmWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2kOhrtJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwsmx2qi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42770C4CECD;
-	Wed,  6 Nov 2024 12:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2kOhrtJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9CEC4CED3;
+	Wed,  6 Nov 2024 12:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897927;
-	bh=mOs+oATkTkYHpoZcZPLh5i/gmmvpg5r/8LzFhANVTGA=;
+	s=korg; t=1730897930;
+	bh=a/zXdJsyaeJpQ3Sny0K/FmICzRE9NU1SxNWYpVpTMbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwsmx2qiMYA/LnzBNO+PmTgPKvBDw3nA+FlLfkOW6jDlOcr7ULlgHWspiXoMtSTdZ
-	 CxqDdyZwdoNKdpYmny5elT9iV/xDIwswoJNGFXEasFR01zcmW6AX/4DJKAITEej365
-	 cmvBLsHCVY746EYGeb5skBCWHYspdwCwyflX4iAs=
+	b=L2kOhrtJu6rajaPqRKHlJhlEIseYzju4Wa4d9feyNoxvXrB0xxEPUcjYu6cFsbujD
+	 8TAnqMSCN/OUuE/pJ7YqCxws7sheZDqzs2N/fHa9MetWTXxKNwflQE1/GxsjEceIzL
+	 nIttctVg5gEIdgWuCZy+4uxrEG/JwQfAlngDwx7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Chris Morgan <macromorgan@hotmail.com>,
+	Artur Weber <aweber.kernel@gmail.com>,
+	Henrik Grimler <henrik@grimler.se>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 065/462] power: supply: axp20x_battery: Remove design from min and max voltage
-Date: Wed,  6 Nov 2024 12:59:18 +0100
-Message-ID: <20241106120333.117416099@linuxfoundation.org>
+Subject: [PATCH 5.4 066/462] power: supply: max17042_battery: Fix SOC threshold calc w/ no current sense
+Date: Wed,  6 Nov 2024 12:59:19 +0100
+Message-ID: <20241106120333.142243768@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -53,80 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Artur Weber <aweber.kernel@gmail.com>
 
-[ Upstream commit 61978807b00f8a1817b0e5580981af1cd2f428a5 ]
+[ Upstream commit 3a3acf839b2cedf092bdd1ff65b0e9895df1656b ]
 
-The POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN and
-POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN values should be immutable
-properties of the battery, but for this driver they are writable values
-and used as the minimum and maximum values for charging. Remove the
-DESIGN designation from these values.
+Commit 223a3b82834f ("power: supply: max17042_battery: use VFSOC for
+capacity when no rsns") made it so that capacity on systems without
+current sensing would be read from VFSOC instead of RepSOC. However,
+the SOC threshold calculation still read RepSOC to get the SOC
+regardless of the current sensing option state.
 
-Fixes: 46c202b5f25f ("power: supply: add battery driver for AXP20X and AXP22X PMICs")
-Suggested-by: Chen-Yu Tsai <wens@kernel.org>
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240821215456.962564-3-macroalpha82@gmail.com
+Fix this by applying the same conditional to determine which register
+should be read.
+
+This also seems to be the intended behavior as per the datasheet - SOC
+alert config value in MiscCFG on setups without current sensing is set
+to a value of 0b11, indicating SOC alerts being generated based on
+VFSOC, instead of 0b00 which indicates SOC alerts being generated based
+on RepSOC.
+
+This fixes an issue on the Galaxy S3/Midas boards, where the alert
+interrupt would be constantly retriggered, causing high CPU usage
+on idle (around ~12%-15%).
+
+Fixes: e5f3872d2044 ("max17042: Add support for signalling change in SOC")
+Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
+Reviewed-by: Henrik Grimler <henrik@grimler.se>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240817-max17042-soc-threshold-fix-v1-1-72b45899c3cc@gmail.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/axp20x_battery.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/power/supply/max17042_battery.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/axp20x_battery.c b/drivers/power/supply/axp20x_battery.c
-index 335e12cc5e2f9..d62a249f65da0 100644
---- a/drivers/power/supply/axp20x_battery.c
-+++ b/drivers/power/supply/axp20x_battery.c
-@@ -304,11 +304,11 @@ static int axp20x_battery_get_prop(struct power_supply *psy,
- 		val->intval = reg & AXP209_FG_PERCENT;
- 		break;
- 
--	case POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN:
-+	case POWER_SUPPLY_PROP_VOLTAGE_MAX:
- 		return axp20x_batt->data->get_max_voltage(axp20x_batt,
- 							  &val->intval);
- 
--	case POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN:
-+	case POWER_SUPPLY_PROP_VOLTAGE_MIN:
- 		ret = regmap_read(axp20x_batt->regmap, AXP20X_V_OFF, &reg);
- 		if (ret)
- 			return ret;
-@@ -456,10 +456,10 @@ static int axp20x_battery_set_prop(struct power_supply *psy,
- 	struct axp20x_batt_ps *axp20x_batt = power_supply_get_drvdata(psy);
- 
- 	switch (psp) {
--	case POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN:
-+	case POWER_SUPPLY_PROP_VOLTAGE_MIN:
- 		return axp20x_set_voltage_min_design(axp20x_batt, val->intval);
- 
--	case POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN:
-+	case POWER_SUPPLY_PROP_VOLTAGE_MAX:
- 		return axp20x_batt->data->set_max_voltage(axp20x_batt, val->intval);
- 
- 	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT:
-@@ -494,8 +494,8 @@ static enum power_supply_property axp20x_battery_props[] = {
- 	POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT,
- 	POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX,
- 	POWER_SUPPLY_PROP_HEALTH,
--	POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN,
--	POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN,
-+	POWER_SUPPLY_PROP_VOLTAGE_MAX,
-+	POWER_SUPPLY_PROP_VOLTAGE_MIN,
- 	POWER_SUPPLY_PROP_CAPACITY,
- };
- 
-@@ -503,8 +503,8 @@ static int axp20x_battery_prop_writeable(struct power_supply *psy,
- 					 enum power_supply_property psp)
- {
- 	return psp == POWER_SUPPLY_PROP_STATUS ||
--	       psp == POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN ||
--	       psp == POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN ||
-+	       psp == POWER_SUPPLY_PROP_VOLTAGE_MIN ||
-+	       psp == POWER_SUPPLY_PROP_VOLTAGE_MAX ||
- 	       psp == POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT ||
- 	       psp == POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX;
- }
+diff --git a/drivers/power/supply/max17042_battery.c b/drivers/power/supply/max17042_battery.c
+index 170639a1e734a..b3afcc5ffd57b 100644
+--- a/drivers/power/supply/max17042_battery.c
++++ b/drivers/power/supply/max17042_battery.c
+@@ -834,7 +834,10 @@ static void max17042_set_soc_threshold(struct max17042_chip *chip, u16 off)
+ 	/* program interrupt thesholds such that we should
+ 	 * get interrupt for every 'off' perc change in the soc
+ 	 */
+-	regmap_read(map, MAX17042_RepSOC, &soc);
++	if (chip->pdata->enable_current_sense)
++		regmap_read(map, MAX17042_RepSOC, &soc);
++	else
++		regmap_read(map, MAX17042_VFSOC, &soc);
+ 	soc >>= 8;
+ 	soc_tr = (soc + off) << 8;
+ 	if (off < soc)
 -- 
 2.43.0
 
