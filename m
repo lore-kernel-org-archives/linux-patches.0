@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188891F8F0F;
-	Wed,  6 Nov 2024 13:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1311E133E;
+	Wed,  6 Nov 2024 13:05:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898299; cv=none; b=mLkicVyMgABwAioN9qIPySnEfRVCuGZlfg8lmGvHLUm9LOEpfo4PUhhbiEifCg4VlLuYQWVeJaDoHG8xVjr59wRWSyX9UjVLqi/ll01Xovc15q80jXFYZPWrEzSNQSa4ZXJVdvP8oHoimB41G7cZMMJ1YXVey5yMVZh0+ysF+z0=
+	t=1730898302; cv=none; b=RvdYq13WKfcPY0dRcKntk/LMoKRfKMqu3HRWduL1Kfw837KCZOeTinCKs+t5wEYhX7dTHKnxQBrgyFLjJoT5ibTgt+qKRb+FFfu/8llbF5KM/dYD0X4elRvc4WNrhPF+SXn1lEdyzcNeApvsaZIcOiyRyKtjPWnSXFewPD/4E0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898299; c=relaxed/simple;
-	bh=vxtPCtfQyLx2ihf2cbqpP+G/MiYb5MgDgy7fHyag/7c=;
+	s=arc-20240116; t=1730898302; c=relaxed/simple;
+	bh=kDVpU0JCus3rHpzOUHj9asKlOCf1ww0QivXw33W9C4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iclyn0PYcanDf8M7wLmvNMw+eIKSE+0K12a2ex7eM4Rp7aWyN1FqBYPlU0qtEQXYgsgaFGt/LHY5BAJeuHez3GNTYJSJF7FvTg1wuFPmRkX9FVjjXn5rDz9fxci3depAmZyt41wXmypR1wXT3EiYs1GOwH7uf4WQ6DEd2BV8nTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gYOMu3kb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mlg2h40NpCdmc21LcZqHKwQmWS6KpRWffF2Fp2TwAjhj5cmwTM0nUVNZByfxrOQg3qkvn17+V9x1TnPWl35iQr/XzhO8pSZUjPGhBcQLF1iMidedHaRwM8RlN1yIjaaUPkIvb1dMS/GKSX3dBxsolr2VWBMXAb0G115LaqCebJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzz9hSTp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gYOMu3kb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53461C4CECD;
-	Wed,  6 Nov 2024 13:04:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzz9hSTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41016C4CECD;
+	Wed,  6 Nov 2024 13:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898298;
-	bh=vxtPCtfQyLx2ihf2cbqpP+G/MiYb5MgDgy7fHyag/7c=;
+	s=korg; t=1730898301;
+	bh=kDVpU0JCus3rHpzOUHj9asKlOCf1ww0QivXw33W9C4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYOMu3kb9Q0DDdGqtsj7TqSZfo2Myd87B8gvGWPle4VYsWWAS8z5e+97oIjD4U8yG
-	 Agl5xWXEXDadUUiyJ9M1e85kxOXT54r9w7mvtIo4whJXGfOnu7VBKh7vhtBgPMGW7j
-	 X7b7H/dIJIxhqv+Rl1/a2dV58zJzUt3qgpjNIkeA=
+	b=rzz9hSTp3UwX8xbWC9F3DGgZQnw48HYYcZ9UuryAJgS47x41ObtxdV4xKAwHakSWp
+	 C6rUXg8ceZYV66ljpNKSyoPAWAQl0lZ6DqumN6qujATjc0ccPuG6S0K7oLFkMi7CXd
+	 qzkE+bEyIroE4DPzM4WrJdaHEna09/6/+LNRvhDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 5.4 154/462] f2fs: avoid potential int overflow in sanity_check_area_boundary()
-Date: Wed,  6 Nov 2024 13:00:47 +0100
-Message-ID: <20241106120335.320187551@linuxfoundation.org>
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Guoqing Jiang <guoqing.jiang@canonical.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.4 155/462] hwrng: mtk - Use devm_pm_runtime_enable
+Date: Wed,  6 Nov 2024 13:00:48 +0100
+Message-ID: <20241106120335.345380910@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,43 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Guoqing Jiang <guoqing.jiang@canonical.com>
 
-commit 50438dbc483ca6a133d2bce9d5d6747bcee38371 upstream.
+commit 78cb66caa6ab5385ac2090f1aae5f3c19e08f522 upstream.
 
-While calculating the end addresses of main area and segment 0, u32
-may be not enough to hold the result without the danger of int
-overflow.
+Replace pm_runtime_enable with the devres-enabled version which
+can trigger pm_runtime_disable.
 
-Just in case, play it safe and cast one of the operands to a
-wider type (u64).
+Otherwise, the below appears during reload driver.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
+mtk_rng 1020f000.rng: Unbalanced pm_runtime_enable!
 
-Fixes: fd694733d523 ("f2fs: cover large section in sanity check of super")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 81d2b34508c6 ("hwrng: mtk - add runtime PM support")
+Cc: <stable@vger.kernel.org>
+Suggested-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Guoqing Jiang <guoqing.jiang@canonical.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/super.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/char/hw_random/mtk-rng.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2488,9 +2488,9 @@ static inline bool sanity_check_area_bou
- 	u32 segment_count = le32_to_cpu(raw_super->segment_count);
- 	u32 log_blocks_per_seg = le32_to_cpu(raw_super->log_blocks_per_seg);
- 	u64 main_end_blkaddr = main_blkaddr +
--				(segment_count_main << log_blocks_per_seg);
-+				((u64)segment_count_main << log_blocks_per_seg);
- 	u64 seg_end_blkaddr = segment0_blkaddr +
--				(segment_count << log_blocks_per_seg);
-+				((u64)segment_count << log_blocks_per_seg);
+--- a/drivers/char/hw_random/mtk-rng.c
++++ b/drivers/char/hw_random/mtk-rng.c
+@@ -149,7 +149,7 @@ static int mtk_rng_probe(struct platform
+ 	dev_set_drvdata(&pdev->dev, priv);
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, RNG_AUTOSUSPEND_TIMEOUT);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+-	pm_runtime_enable(&pdev->dev);
++	devm_pm_runtime_enable(&pdev->dev);
  
- 	if (segment0_blkaddr != cp_blkaddr) {
- 		f2fs_info(sbi, "Mismatch start address, segment0(%u) cp_blkaddr(%u)",
+ 	dev_info(&pdev->dev, "registered RNG driver\n");
+ 
 
 
