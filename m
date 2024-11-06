@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1201F6683;
-	Wed,  6 Nov 2024 13:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5721E0DB1;
+	Wed,  6 Nov 2024 13:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898621; cv=none; b=XujhebHfA0gAxApEipjIsbqm3XeM5F9meVE09G2UKrSgd2UMCn9oagZZg87sWG8u1/I91e8zgW1fVwlmNFEiwnEAxaukYaqKKYpfJXXRwmvq8DyaQFAxWOObTzwi5DQ/Y6UKUqPmCKcaPpG60xnrBXmflOidppd+D9/zI/YAtlU=
+	t=1730898624; cv=none; b=b0psWZZIiisSFp9iJe/YN4D3RU1dOuW11FRNJlDSfcopt+76God4xYfSkfK+RWfXlkxZhREh5PCTdcFZ5M4vN/0fxde7vi6MlrNY1KzoXlk5her6VaLW3LJIX1OQVaGMLhS5QZNO1LW8pEI9RBqLT6YGj0sGtknhChgCb/3sIxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898621; c=relaxed/simple;
-	bh=IKv8bn2PQuymaudCPBt2d9kLvfwK4Ai1UrL/cuQ4gPc=;
+	s=arc-20240116; t=1730898624; c=relaxed/simple;
+	bh=YD26CNvXMIm9ODsxDr7auAmdfDoTWnZHkOu2bEGgC6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rxdLNSIT6luNLq0zQsQ6TjV4C7bt/QETrcT474Ek6Ip0fqLhXKTJ8yvuWVttBlU0OJulebc7pUTTrSb+V9FCsPzXMM2zYnQ+ghyQzSFPjY0qQEIb8G0zbD9L9yu7isVWZiZFRUNv3OiEH7KioMv6TFZXsLVdp3XK3fMeWPSgDhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POcdhIjN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lfUCnxLn2gVTuYirp/QRLmkYokelUnwoUquGeB/5lwnTOdTAsHHOvA9XF/FKPLAS1lu+ySkONzdGIKsxQS1BUeaXraoQtmGAqiOPbm3U300QgnuzI8NOfdTq9H1Oh+DOiC0XWd+ozExW5/tJeioCEE5aC9uVX40xFDhvZOpHTec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+nv8VYz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POcdhIjN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B77C4CECD;
-	Wed,  6 Nov 2024 13:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+nv8VYz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261FBC4CECD;
+	Wed,  6 Nov 2024 13:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898621;
-	bh=IKv8bn2PQuymaudCPBt2d9kLvfwK4Ai1UrL/cuQ4gPc=;
+	s=korg; t=1730898624;
+	bh=YD26CNvXMIm9ODsxDr7auAmdfDoTWnZHkOu2bEGgC6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=POcdhIjN++EayV8194NDg6FovigyJkC4Vn+AqO547TMNtn4GAu91x2NlB502L/9vf
-	 cn31GJGxz6r215YuFIQUy7eSKdpXr5KP22bD6cPphbeIljpLlK+lVylBAfaLXktP1B
-	 KujwjsT6uPJv+EquEKpI+eDQs+SCnne2OGUWylNQ=
+	b=k+nv8VYz9FaTzRSzLFRCK38SvP2FSfLfmRElZ93OUB/Wuwm2URIqQgBeypl4VPPhF
+	 hT/UN+CtmRq5JXVenLB3EGSgqynLhrQYkXkesQQJmWzcoE7HgXPDykPKA4z0DDYfVC
+	 s0bKgbsxy6al4TVLCPQkCy0hgwDwQUaBD5hlqqYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sachin Sant <sachinp@linux.ibm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 298/462] tracing: Remove precision vsnprintf() check from print event
-Date: Wed,  6 Nov 2024 13:03:11 +0100
-Message-ID: <20241106120338.891876489@linuxfoundation.org>
+Subject: [PATCH 5.4 299/462] drm/crtc: fix uninitialized variable use even harder
+Date: Wed,  6 Nov 2024 13:03:12 +0100
+Message-ID: <20241106120338.914445910@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -54,67 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 5efd3e2aef91d2d812290dcb25b2058e6f3f532c ]
+[ Upstream commit b6802b61a9d0e99dcfa6fff7c50db7c48a9623d3 ]
 
-This reverts 60be76eeabb3d ("tracing: Add size check when printing
-trace_marker output"). The only reason the precision check was added
-was because of a bug that miscalculated the write size of the string into
-the ring buffer and it truncated it removing the terminating nul byte. On
-reading the trace it crashed the kernel. But this was due to the bug in
-the code that happened during development and should never happen in
-practice. If anything, the precision can hide bugs where the string in the
-ring buffer isn't nul terminated and it will not be checked.
+DRM_MODESET_LOCK_ALL_BEGIN() has a hidden trap-door (aka retry loop),
+which means we can't rely too much on variable initializers.
 
-Link: https://lore.kernel.org/all/C7E7AF1A-D30F-4D18-B8E5-AF1EF58004F5@linux.ibm.com/
-Link: https://lore.kernel.org/linux-trace-kernel/20240227125706.04279ac2@gandalf.local.home
-Link: https://lore.kernel.org/all/20240302111244.3a1674be@gandalf.local.home/
-Link: https://lore.kernel.org/linux-trace-kernel/20240304174341.2a561d9f@gandalf.local.home
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Fixes: 60be76eeabb3d ("tracing: Add size check when printing trace_marker output")
-Reported-by: Sachin Sant <sachinp@linux.ibm.com>
-Tested-by: Sachin Sant <sachinp@linux.ibm.com>
-Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 6e455f5dcdd1 ("drm/crtc: fix uninitialized variable use")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # sc7180, sdm845
+Link: https://patchwork.freedesktop.org/patch/msgid/20240212215534.190682-1-robdclark@gmail.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_output.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/drm_crtc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/trace/trace_output.c b/kernel/trace/trace_output.c
-index 9ffe54ff3edb2..b194dd1c8420f 100644
---- a/kernel/trace/trace_output.c
-+++ b/kernel/trace/trace_output.c
-@@ -1291,12 +1291,11 @@ static enum print_line_t trace_print_print(struct trace_iterator *iter,
- {
- 	struct print_entry *field;
- 	struct trace_seq *s = &iter->seq;
--	int max = iter->ent_size - offsetof(struct print_entry, buf);
+diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
+index 85d85a0ba85f9..da45cfd2939cf 100644
+--- a/drivers/gpu/drm/drm_crtc.c
++++ b/drivers/gpu/drm/drm_crtc.c
+@@ -727,6 +727,7 @@ int drm_mode_setcrtc(struct drm_device *dev, void *data,
+ 	connector_set = NULL;
+ 	fb = NULL;
+ 	mode = NULL;
++	num_connectors = 0;
  
- 	trace_assign_type(field, iter->ent);
- 
- 	seq_print_ip_sym(s, field->ip, flags);
--	trace_seq_printf(s, ": %.*s", max, field->buf);
-+	trace_seq_printf(s, ": %s", field->buf);
- 
- 	return trace_handle_return(s);
- }
-@@ -1305,11 +1304,10 @@ static enum print_line_t trace_print_raw(struct trace_iterator *iter, int flags,
- 					 struct trace_event *event)
- {
- 	struct print_entry *field;
--	int max = iter->ent_size - offsetof(struct print_entry, buf);
- 
- 	trace_assign_type(field, iter->ent);
- 
--	trace_seq_printf(&iter->seq, "# %lx %.*s", field->ip, max, field->buf);
-+	trace_seq_printf(&iter->seq, "# %lx %s", field->ip, field->buf);
- 
- 	return trace_handle_return(&iter->seq);
- }
+ 	DRM_MODESET_LOCK_ALL_END(ctx, ret);
+ 	mutex_unlock(&crtc->dev->mode_config.mutex);
 -- 
 2.43.0
 
