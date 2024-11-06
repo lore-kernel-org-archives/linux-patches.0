@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6841CC14B;
-	Wed,  6 Nov 2024 13:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200931CC14B;
+	Wed,  6 Nov 2024 13:08:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898483; cv=none; b=pgL48la5oUo8E7wcRJE3m6xxzkujmd4dbr4cDERQ91Xqhv0pwdkPmHScc43wg6nOC/ghbaAupRthFV6qlrOMnVyWraRiPhOCW8SeePhFxopawM9GKS1aIveDrh0VneIPaz8+TV8rysOs9rZWcZycVdP1L4ZZmQD+2ZlCeRRnHic=
+	t=1730898486; cv=none; b=MLHHFW6pssQqzeWpFgOtpO1Mhm4lpi7XcFcaDiW4OoxZWTqGilaU0pvwUKs7LhPxyscmot+XnUrpO5FWk1BhzQP9MqqIn5StfZJpJIPHKCvBvM24qhFhrSGfZ7Zj97L/q0EHFuH+sZAz0oFgw2NcUfmrPAE6Y21KXk5qnQ7KKWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898483; c=relaxed/simple;
-	bh=UovDFy7Nnxcv4ViyqGfWfdYoqWskLNYH6cieaiQ7DUM=;
+	s=arc-20240116; t=1730898486; c=relaxed/simple;
+	bh=+b5lZw2awLI3Tmpq3nukK71WlewVNFIVsLV7h25r49Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cJWPExtjwb1/7tTgDivdPrKtmUP5vsThOc7VCKXriqOHSXMXNf5oLsT1jA+0I20mAv+0FME7ZA6cB1bWF3FTZxA4tHMwG/SGK7+/1Kl1qYcV1MWQqpM4TtqOjh0WjT8tAqPAZvzl0YZLuanbmpZDSL4YXo0xcUqRtZjlNXUNQFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdN9aWNO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mG4nmkKdQtEhNykyWdHha0eESWaoWWKowScmVF+CzcKkFWpNIPLQqr+S20z/Gkfr+/eM5a75bUAVaKTS9Bfo85qwq2Q4hnmcIxRl4XWMKEeDXI7Z2FF/bjvauwAFG3WQi7qXDRiXSvGDS8l+Q95dSdORPVQqX49fK89Ww/FniXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fN9OWu6i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdN9aWNO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA26C4CECD;
-	Wed,  6 Nov 2024 13:08:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fN9OWu6i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9417FC4CECD;
+	Wed,  6 Nov 2024 13:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898483;
-	bh=UovDFy7Nnxcv4ViyqGfWfdYoqWskLNYH6cieaiQ7DUM=;
+	s=korg; t=1730898486;
+	bh=+b5lZw2awLI3Tmpq3nukK71WlewVNFIVsLV7h25r49Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fdN9aWNOKxC7daVPBcWDeQB6PpBff/Tc8jBZTZUetzsgkZCw8Oua4LxrOggHrbs7O
-	 Jpclik9hgusT6pYaHzfNjXX0tPM8HCoT4szF2YgaELg7yDPYarTQh8QjZjiCEBc4ww
-	 grws1R6F7oZmgnHKrxh80RpH1MoR9EB/J7/vMSqI=
+	b=fN9OWu6inp2PyrcovO4RuymeQKVh+tEb0NJ4H+4oAjHm+T4oC5NEXS1YaS6Ns8EqW
+	 sud2kMGidAjGJlIgc/vK8AuLT8LhZPNGvVhVjYDCXwuZAGlHi9msuW/t5maqd4Pm5M
+	 eduUI65gSGCrLMO0L9umdlD5Bvk2ICrSky8uE52c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Camm Maguire <camm@maguirefamily.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.4 253/462] parisc: Fix stack start for ADDR_NO_RANDOMIZE personality
-Date: Wed,  6 Nov 2024 13:02:26 +0100
-Message-ID: <20241106120337.773223238@linuxfoundation.org>
+	Andrew Jones <ajones@ventanamicro.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 5.4 254/462] of/irq: Support #msi-cells=<0> in of_msi_get_domain
+Date: Wed,  6 Nov 2024 13:02:27 +0100
+Message-ID: <20241106120337.799073174@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -50,75 +50,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Andrew Jones <ajones@ventanamicro.com>
 
-commit f31b256994acec6929306dfa86ac29716e7503d6 upstream.
+commit db8e81132cf051843c9a59b46fa5a071c45baeb3 upstream.
 
-Fix the stack start address calculation for the parisc architecture in
-setup_arg_pages() when address randomization is disabled. When the
-ADDR_NO_RANDOMIZE process personality is disabled there is no need to add
-additional space for the stack.
-Note that this patch touches code inside an #ifdef CONFIG_STACK_GROWSUP hunk,
-which is why only the parisc architecture is affected since it's the
-only Linux architecture where the stack grows upwards.
+An 'msi-parent' property with a single entry and no accompanying
+'#msi-cells' property is considered the legacy definition as opposed
+to its definition after being expanded with commit 126b16e2ad98
+("Docs: dt: add generic MSI bindings"). However, the legacy
+definition is completely compatible with the current definition and,
+since of_phandle_iterator_next() tolerates missing and present-but-
+zero *cells properties since commit e42ee61017f5 ("of: Let
+of_for_each_phandle fallback to non-negative cell_count"), there's no
+need anymore to special case the legacy definition in
+of_msi_get_domain().
 
-Without this patch you will find the stack in the middle of some
-mapped libaries and suddenly limited to 6MB instead of 8MB:
+Indeed, special casing has turned out to be harmful, because, as of
+commit 7c025238b47a ("dt-bindings: irqchip: Describe the IMX MU block
+as a MSI controller"), MSI controller DT bindings have started
+specifying '#msi-cells' as a required property (even when the value
+must be zero) as an effort to make the bindings more explicit. But,
+since the special casing of 'msi-parent' only uses the existence of
+'#msi-cells' for its heuristic, and not whether or not it's also
+nonzero, the legacy path is not taken. Furthermore, the path to
+support the new, broader definition isn't taken either since that
+path has been restricted to the platform-msi bus.
 
-root@parisc:~# setarch -R /bin/bash -c "cat /proc/self/maps"
-00010000-00019000 r-xp 00000000 08:05 1182034           /usr/bin/cat
-00019000-0001a000 rwxp 00009000 08:05 1182034           /usr/bin/cat
-0001a000-0003b000 rwxp 00000000 00:00 0                 [heap]
-f90c4000-f9283000 r-xp 00000000 08:05 1573004           /usr/lib/hppa-linux-gnu/libc.so.6
-f9283000-f9285000 r--p 001bf000 08:05 1573004           /usr/lib/hppa-linux-gnu/libc.so.6
-f9285000-f928a000 rwxp 001c1000 08:05 1573004           /usr/lib/hppa-linux-gnu/libc.so.6
-f928a000-f9294000 rwxp 00000000 00:00 0
-f9301000-f9323000 rwxp 00000000 00:00 0                 [stack]
-f98b4000-f98e4000 r-xp 00000000 08:05 1572869           /usr/lib/hppa-linux-gnu/ld.so.1
-f98e4000-f98e5000 r--p 00030000 08:05 1572869           /usr/lib/hppa-linux-gnu/ld.so.1
-f98e5000-f98e9000 rwxp 00031000 08:05 1572869           /usr/lib/hppa-linux-gnu/ld.so.1
-f9ad8000-f9b00000 rw-p 00000000 00:00 0
-f9b00000-f9b01000 r-xp 00000000 00:00 0                 [vdso]
+But, neither the definition of 'msi-parent' nor the definition of
+'#msi-cells' is platform-msi-specific (the platform-msi bus was just
+the first bus that needed '#msi-cells'), so remove both the special
+casing and the restriction. The code removal also requires changing
+to of_parse_phandle_with_optional_args() in order to ensure the
+legacy (but compatible) use of 'msi-parent' remains supported. This
+not only simplifies the code but also resolves an issue with PCI
+devices finding their MSI controllers on riscv, as the riscv,imsics
+binding requires '#msi-cells=<0>'.
 
-With the patch the stack gets correctly mapped at the end
-of the process memory map:
-
-root@panama:~# setarch -R /bin/bash -c "cat /proc/self/maps"
-00010000-00019000 r-xp 00000000 08:13 16385582          /usr/bin/cat
-00019000-0001a000 rwxp 00009000 08:13 16385582          /usr/bin/cat
-0001a000-0003b000 rwxp 00000000 00:00 0                 [heap]
-fef29000-ff0eb000 r-xp 00000000 08:13 16122400          /usr/lib/hppa-linux-gnu/libc.so.6
-ff0eb000-ff0ed000 r--p 001c2000 08:13 16122400          /usr/lib/hppa-linux-gnu/libc.so.6
-ff0ed000-ff0f2000 rwxp 001c4000 08:13 16122400          /usr/lib/hppa-linux-gnu/libc.so.6
-ff0f2000-ff0fc000 rwxp 00000000 00:00 0
-ff4b4000-ff4e4000 r-xp 00000000 08:13 16121913          /usr/lib/hppa-linux-gnu/ld.so.1
-ff4e4000-ff4e6000 r--p 00030000 08:13 16121913          /usr/lib/hppa-linux-gnu/ld.so.1
-ff4e6000-ff4ea000 rwxp 00032000 08:13 16121913          /usr/lib/hppa-linux-gnu/ld.so.1
-ff6d7000-ff6ff000 rw-p 00000000 00:00 0
-ff6ff000-ff700000 r-xp 00000000 00:00 0                 [vdso]
-ff700000-ff722000 rwxp 00000000 00:00 0                 [stack]
-
-Reported-by: Camm Maguire <camm@maguirefamily.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Fixes: d045c77c1a69 ("parisc,metag: Fix crashes due to stack randomization on stack-grows-upwards architectures")
-Fixes: 17d9822d4b4c ("parisc: Consider stack randomization for mmap base only when necessary")
-Cc: stable@vger.kernel.org	# v5.2+
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Link: https://lore.kernel.org/r/20240817074107.31153-2-ajones@ventanamicro.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exec.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/of/irq.c |   34 +++++++---------------------------
+ 1 file changed, 7 insertions(+), 27 deletions(-)
 
---- a/fs/exec.c
-+++ b/fs/exec.c
-@@ -719,7 +719,8 @@ int setup_arg_pages(struct linux_binprm
- 		stack_base = STACK_SIZE_MAX;
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -642,8 +642,7 @@ struct irq_domain *of_msi_map_get_device
+  * @np: device node for @dev
+  * @token: bus type for this domain
+  *
+- * Parse the msi-parent property (both the simple and the complex
+- * versions), and returns the corresponding MSI domain.
++ * Parse the msi-parent property and returns the corresponding MSI domain.
+  *
+  * Returns: the MSI domain for this device (or NULL on failure).
+  */
+@@ -651,33 +650,14 @@ struct irq_domain *of_msi_get_domain(str
+ 				     struct device_node *np,
+ 				     enum irq_domain_bus_token token)
+ {
+-	struct device_node *msi_np;
++	struct of_phandle_iterator it;
+ 	struct irq_domain *d;
++	int err;
  
- 	/* Add space for stack randomization. */
--	stack_base += (STACK_RND_MASK << PAGE_SHIFT);
-+	if (current->flags & PF_RANDOMIZE)
-+		stack_base += (STACK_RND_MASK << PAGE_SHIFT);
+-	/* Check for a single msi-parent property */
+-	msi_np = of_parse_phandle(np, "msi-parent", 0);
+-	if (msi_np && !of_property_read_bool(msi_np, "#msi-cells")) {
+-		d = irq_find_matching_host(msi_np, token);
+-		if (!d)
+-			of_node_put(msi_np);
+-		return d;
+-	}
+-
+-	if (token == DOMAIN_BUS_PLATFORM_MSI) {
+-		/* Check for the complex msi-parent version */
+-		struct of_phandle_args args;
+-		int index = 0;
+-
+-		while (!of_parse_phandle_with_args(np, "msi-parent",
+-						   "#msi-cells",
+-						   index, &args)) {
+-			d = irq_find_matching_host(args.np, token);
+-			if (d)
+-				return d;
+-
+-			of_node_put(args.np);
+-			index++;
+-		}
++	of_for_each_phandle(&it, err, np, "msi-parent", "#msi-cells", 0) {
++		d = irq_find_matching_host(it.node, token);
++		if (d)
++			return d;
+ 	}
  
- 	/* Make sure we didn't let the argument array grow too large. */
- 	if (vma->vm_end - vma->vm_start > stack_base)
+ 	return NULL;
 
 
