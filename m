@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE861D416E;
-	Wed,  6 Nov 2024 12:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A1F1DEFF5;
+	Wed,  6 Nov 2024 12:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895175; cv=none; b=P0NQWyXuYv79AAvCVpnF6ityuCTDXlAygYoFcnQzxaARcdcDum3+KK+wf+9kqBnXv1v2hNlxCGwI8suh4DtpCDpfXVqae2dndFeDdTetBj4Hnb8hakotXgyMWd1Xf461kZnb/eoM+YCY9i5/M2oC+00BLwjZnGx9O1DXdFFg0Ug=
+	t=1730895178; cv=none; b=PWYP36zWxR/mzqtst6VMXynAJM2eeRPXVVIYmNZfjuTCdH/2hc+l21UajBM7N/JQlnwGzrsKYJtOF8z06yHy9lJ3I7yQw0yE/lrKvzrJCyDBiNx/sY55t57OZWC1F8N8LZCx6+LhPzNMhLml645v3EIJ+vbXdWiE7jgxBTwAkbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895175; c=relaxed/simple;
-	bh=BFuseyQYKbiouNGdDKoTstwyjF+UCXO/sprBHKmvCPk=;
+	s=arc-20240116; t=1730895178; c=relaxed/simple;
+	bh=WZ/GpjUDnb6yOCpuQEGtPWd29AYJyZ6D15S4h98PvbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=owwVQKaGH3t5ZCSVYJN7uj3lNSvmH0iAAa3gYAdCeoUj5ZqGc6XszXGm04WY8t7YqpRcu/JrEGd2aF2kQYcdC+PiWrkrcKceqCv4HZVdEV+3YCwN1LpVLLMsS/T121JNYLegci/XHYmtYIz4CT8XvWff7SRM/ggduvnVnsHWSIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKm2YDis; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CN3i7JkwoRlnqhopVgwr08ryufRcA751WixvN2fKvQZm9daksHUVM4b0ag99RwYxxLTnKMRYMjdxFdynbuNg85LZAla562zRKIZ5maWuVBM6Bs8AdZnI/GExebDzwu6NcKKLU+Z2HwmCuqnK0Y3/q1GHbl27N63/40R8KvzzOR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiKNOiJk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKm2YDis"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F63DC4CECD;
-	Wed,  6 Nov 2024 12:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiKNOiJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228C6C4CED3;
+	Wed,  6 Nov 2024 12:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895175;
-	bh=BFuseyQYKbiouNGdDKoTstwyjF+UCXO/sprBHKmvCPk=;
+	s=korg; t=1730895178;
+	bh=WZ/GpjUDnb6yOCpuQEGtPWd29AYJyZ6D15S4h98PvbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wKm2YDiskDd1yQ99JqUkjf+KXcH+YoXpTbhD37wJuLa5y4l7udFL+3opB3saiuo6M
-	 ME5YrZ6DaZvKRlRNRnObCehzzzxKKP3OATL13XqhJbJc4QXE7kgKRmezT1f3uOXp+D
-	 4UMvozn7K0fHIyg+yiFwN4Vgb+/I/O0x4vqi7qSU=
+	b=UiKNOiJk3nVKvgALHT1/LZNnQ8hPW1RUmORJiu9clpqFufjxWhZpxjyJZEmYw+5fK
+	 AZCEZ4qAKn+y/ww4MgrN5QIaX8zEhlrBXxkSoPo/0sU8C9vLd5U7Hu6qb3NqMO0dGy
+	 Gzkdy4rKtMJyMRVBpaFzR9Ucf1ozCuZUvF7jcKag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoqing Jiang <guoqing.jiang@linux.dev>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>
-Subject: [PATCH 4.19 093/350] nfsd: call cache_put if xdr_reserve_space returns NULL
-Date: Wed,  6 Nov 2024 13:00:21 +0100
-Message-ID: <20241106120323.199293602@linuxfoundation.org>
+	Chao Yu <yuchao0@huawei.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 094/350] f2fs: enhance to update i_mode and acl atomically in f2fs_setattr()
+Date: Wed,  6 Nov 2024 13:00:22 +0100
+Message-ID: <20241106120323.222611023@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,56 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guoqing Jiang <guoqing.jiang@linux.dev>
+From: Chao Yu <yuchao0@huawei.com>
 
-[ Upstream commit d078cbf5c38de83bc31f83c47dcd2184c04a50c7 ]
+[ Upstream commit 17232e830afb800acdcc22ae8980bf9d330393ef ]
 
-If not enough buffer space available, but idmap_lookup has triggered
-lookup_fn which calls cache_get and returns successfully. Then we
-missed to call cache_put here which pairs with cache_get.
+Previously, in f2fs_setattr(), we don't update S_ISUID|S_ISGID|S_ISVTX
+bits with S_IRWXUGO bits and acl entries atomically, so in error path,
+chmod() may partially success, this patch enhances to make chmod() flow
+being atomical.
 
-Fixes: ddd1ea563672 ("nfsd4: use xdr_reserve_space in attribute encoding")
-Signed-off-by: Guoqing Jiang <guoqing.jiang@linux.dev>
-Reviwed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Chao Yu <yuchao0@huawei.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: aaf8c0b9ae04 ("f2fs: reduce expensive checkpoint trigger frequency")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4idmap.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/f2fs/acl.c   | 23 ++++++++++++++++++++++-
+ fs/f2fs/file.c  |  6 ++++--
+ fs/f2fs/xattr.c | 15 +++++++++------
+ 3 files changed, 35 insertions(+), 9 deletions(-)
 
-diff --git a/fs/nfsd/nfs4idmap.c b/fs/nfsd/nfs4idmap.c
-index a5bb76593ce72..de6bab641b20c 100644
---- a/fs/nfsd/nfs4idmap.c
-+++ b/fs/nfsd/nfs4idmap.c
-@@ -565,6 +565,7 @@ static __be32 idmap_id_to_name(struct xdr_stream *xdr,
- 		.id = id,
- 		.type = type,
- 	};
-+	__be32 status = nfs_ok;
- 	__be32 *p;
- 	int ret;
- 	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
-@@ -577,12 +578,16 @@ static __be32 idmap_id_to_name(struct xdr_stream *xdr,
- 		return nfserrno(ret);
- 	ret = strlen(item->name);
- 	WARN_ON_ONCE(ret > IDMAP_NAMESZ);
-+
- 	p = xdr_reserve_space(xdr, ret + 4);
--	if (!p)
--		return nfserr_resource;
--	p = xdr_encode_opaque(p, item->name, ret);
-+	if (unlikely(!p)) {
-+		status = nfserr_resource;
-+		goto out_put;
-+	}
-+	xdr_encode_opaque(p, item->name, ret);
-+out_put:
- 	cache_put(&item->h, nn->idtoname_cache);
--	return 0;
-+	return status;
+diff --git a/fs/f2fs/acl.c b/fs/f2fs/acl.c
+index b9fe937a3c701..cc53d4c80b0a9 100644
+--- a/fs/f2fs/acl.c
++++ b/fs/f2fs/acl.c
+@@ -200,6 +200,27 @@ struct posix_acl *f2fs_get_acl(struct inode *inode, int type)
+ 	return __f2fs_get_acl(inode, type, NULL);
  }
  
- static bool
++static int f2fs_acl_update_mode(struct inode *inode, umode_t *mode_p,
++			  struct posix_acl **acl)
++{
++	umode_t mode = inode->i_mode;
++	int error;
++
++	if (is_inode_flag_set(inode, FI_ACL_MODE))
++		mode = F2FS_I(inode)->i_acl_mode;
++
++	error = posix_acl_equiv_mode(*acl, &mode);
++	if (error < 0)
++		return error;
++	if (error == 0)
++		*acl = NULL;
++	if (!in_group_p(inode->i_gid) &&
++	    !capable_wrt_inode_uidgid(inode, CAP_FSETID))
++		mode &= ~S_ISGID;
++	*mode_p = mode;
++	return 0;
++}
++
+ static int __f2fs_set_acl(struct inode *inode, int type,
+ 			struct posix_acl *acl, struct page *ipage)
+ {
+@@ -213,7 +234,7 @@ static int __f2fs_set_acl(struct inode *inode, int type,
+ 	case ACL_TYPE_ACCESS:
+ 		name_index = F2FS_XATTR_INDEX_POSIX_ACL_ACCESS;
+ 		if (acl && !ipage) {
+-			error = posix_acl_update_mode(inode, &mode, &acl);
++			error = f2fs_acl_update_mode(inode, &mode, &acl);
+ 			if (error)
+ 				return error;
+ 			set_acl_inode(inode, mode);
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 043ce96ac1270..e44cb6bf68b9e 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -839,8 +839,10 @@ int f2fs_setattr(struct dentry *dentry, struct iattr *attr)
+ 
+ 	if (attr->ia_valid & ATTR_MODE) {
+ 		err = posix_acl_chmod(inode, f2fs_get_inode_mode(inode));
+-		if (err || is_inode_flag_set(inode, FI_ACL_MODE)) {
+-			inode->i_mode = F2FS_I(inode)->i_acl_mode;
++
++		if (is_inode_flag_set(inode, FI_ACL_MODE)) {
++			if (!err)
++				inode->i_mode = F2FS_I(inode)->i_acl_mode;
+ 			clear_inode_flag(inode, FI_ACL_MODE);
+ 		}
+ 	}
+diff --git a/fs/f2fs/xattr.c b/fs/f2fs/xattr.c
+index db3e76b35607b..496a9e70cb091 100644
+--- a/fs/f2fs/xattr.c
++++ b/fs/f2fs/xattr.c
+@@ -651,7 +651,7 @@ static int __f2fs_setxattr(struct inode *inode, int index,
+ 		}
+ 
+ 		if (value && f2fs_xattr_value_same(here, value, size))
+-			goto exit;
++			goto same;
+ 	} else if ((flags & XATTR_REPLACE)) {
+ 		error = -ENODATA;
+ 		goto exit;
+@@ -729,17 +729,20 @@ static int __f2fs_setxattr(struct inode *inode, int index,
+ 	if (error)
+ 		goto exit;
+ 
+-	if (is_inode_flag_set(inode, FI_ACL_MODE)) {
+-		inode->i_mode = F2FS_I(inode)->i_acl_mode;
+-		inode->i_ctime = current_time(inode);
+-		clear_inode_flag(inode, FI_ACL_MODE);
+-	}
+ 	if (index == F2FS_XATTR_INDEX_ENCRYPTION &&
+ 			!strcmp(name, F2FS_XATTR_NAME_ENCRYPTION_CONTEXT))
+ 		f2fs_set_encrypted_inode(inode);
+ 	f2fs_mark_inode_dirty_sync(inode, true);
+ 	if (!error && S_ISDIR(inode->i_mode))
+ 		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_CP);
++
++same:
++	if (is_inode_flag_set(inode, FI_ACL_MODE)) {
++		inode->i_mode = F2FS_I(inode)->i_acl_mode;
++		inode->i_ctime = current_time(inode);
++		clear_inode_flag(inode, FI_ACL_MODE);
++	}
++
+ exit:
+ 	kzfree(base_addr);
+ 	return error;
 -- 
 2.43.0
 
