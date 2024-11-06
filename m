@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6188D1DF740;
-	Wed,  6 Nov 2024 12:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C691DF98C;
+	Wed,  6 Nov 2024 12:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895783; cv=none; b=uQZekBmgvqFN1VvssV3chWmsurz49ofaKp3KOLZjdDoZ7Ac+JnTaxgW6wBc5VSBOIHQ5HWodlJep6tcdoN4TTLceurHmKe8n9sKGYORbxjd9iRSL/NLhkx+Ei0G4/aA3ZsS8MV5xPcZl6t/80DFJuikUMio/JTiFebfmqul8jF8=
+	t=1730895786; cv=none; b=i79f2rCqA74hSrYhdKBUSJGPagDM/lmLc2FM89A1y/uOgxjLSHAXtFthGOQvKn9JxP8nBocnmM0T4OLfOLElJ/cqiyMTjMfPBwfmvhIiFGY4dGfvsc9HI46WYUPjDuK13GIJHvjvRp3MKW+rUJlWvR6FQpqy3jLyVL+Fqh7L3n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895783; c=relaxed/simple;
-	bh=n83JAOG2MJo+YCCI4CFxVTgwN5QUaoLZgYRRA3U3wpw=;
+	s=arc-20240116; t=1730895786; c=relaxed/simple;
+	bh=fxYRA4BLwXm/3d3x5J0pAFBZz2vRy36rmPAewEt0rys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGv/9JGBUQFYtOjYuQKWpn8TAh3FM5jozyT+d+z+jMcWAUHXOPX06ivlJ73fYfBEMhQVoZ5jLoKBlzLY+sSdbAFQCbYkWNx4FxQxtA/t209ICtHX7jSyikgie2AYCT/c3iOQgBiPPqJxCJHJpgBGU3vDvaY4JwEz1/jRwst4AOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkWCzdSo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kPnZDH/StiPVzm8gBem13z78lhQPbLl2LB+2mJqAVjQ0K5P3ZvtjyvlMwTwMFR/aNmXbM4Z+mrsSwtA2ieVdR5ZnCOsjRPoXwGErdUbU3FIvONha54ZNID/pkZKcjuCjSXf3i1NRubsKS3FVCJdLixYIpl3R/J7QYoiE4ojKdWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANFouyYh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkWCzdSo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB93C4CECD;
-	Wed,  6 Nov 2024 12:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANFouyYh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C578CC4CED3;
+	Wed,  6 Nov 2024 12:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895783;
-	bh=n83JAOG2MJo+YCCI4CFxVTgwN5QUaoLZgYRRA3U3wpw=;
+	s=korg; t=1730895786;
+	bh=fxYRA4BLwXm/3d3x5J0pAFBZz2vRy36rmPAewEt0rys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nkWCzdSomw7eR2ge6ISaQF+qvpx/1wrOm8DzNK2EsYg4Lh2bk99NiDNe/Hlm37OEL
-	 gFOAUh4NFMJgApEca2+PuSeetFDt60F3VRMl7EOIiqrqZ9DxNPiqy7DJwEjRgdAxQe
-	 ZV33fdSYNTvpjuhd967tXVM7V4wLB/jEaF/Dh6qk=
+	b=ANFouyYhmhZ3qptbYWw+LDy1my8I89uSglEoXwPwzFEZCJDy16SSR49AK5QqdBBdF
+	 GFPHJL9AtKD0r3hqSf6Upd5x+mjrRO/LZiq6myq0GxY64kmYv89ySfx6wAUylZfaNi
+	 8xNejU18/9LFGr9pIM0Y5QAdU6z6i6RhFi56GKtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slavin Liu <slavin-ayu@qq.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 335/350] netfilter: nft_payload: sanitize offset and length before calling skb_checksum()
-Date: Wed,  6 Nov 2024 13:04:23 +0100
-Message-ID: <20241106120328.988060978@linuxfoundation.org>
+Subject: [PATCH 4.19 336/350] firmware: arm_sdei: Fix the input parameter of cpuhp_remove_state()
+Date: Wed,  6 Nov 2024 13:04:24 +0100
+Message-ID: <20241106120329.010768126@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,39 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit d5953d680f7e96208c29ce4139a0e38de87a57fe ]
+[ Upstream commit c83212d79be2c9886d3e6039759ecd388fd5fed1 ]
 
-If access to offset + length is larger than the skbuff length, then
-skb_checksum() triggers BUG_ON().
+In sdei_device_freeze(), the input parameter of cpuhp_remove_state() is
+passed as 'sdei_entry_point' by mistake. Change it to 'sdei_hp_state'.
 
-skb_checksum() internally subtracts the length parameter while iterating
-over skbuff, BUG_ON(len) at the end of it checks that the expected
-length to be included in the checksum calculation is fully consumed.
-
-Fixes: 7ec3f7b47b8d ("netfilter: nft_payload: add packet mangling support")
-Reported-by: Slavin Liu <slavin-ayu@qq.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: d2c48b2387eb ("firmware: arm_sdei: Fix sleep from invalid context BUG")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Reviewed-by: James Morse <james.morse@arm.com>
+Link: https://lore.kernel.org/r/20241016084740.183353-1-wangxiongfeng2@huawei.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_payload.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/firmware/arm_sdei.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
-index 0ef51c81ec94c..128195a7ea5ed 100644
---- a/net/netfilter/nft_payload.c
-+++ b/net/netfilter/nft_payload.c
-@@ -306,6 +306,9 @@ static void nft_payload_set_eval(const struct nft_expr *expr,
- 	if ((priv->csum_type == NFT_PAYLOAD_CSUM_INET || priv->csum_flags) &&
- 	    (priv->base != NFT_PAYLOAD_TRANSPORT_HEADER ||
- 	     skb->ip_summed != CHECKSUM_PARTIAL)) {
-+		if (offset + priv->len > skb->len)
-+			goto err;
-+
- 		fsum = skb_checksum(skb, offset, priv->len, 0);
- 		tsum = csum_partial(src, priv->len, 0);
+diff --git a/drivers/firmware/arm_sdei.c b/drivers/firmware/arm_sdei.c
+index ea2c2bdcf4f7f..eb99a02e51141 100644
+--- a/drivers/firmware/arm_sdei.c
++++ b/drivers/firmware/arm_sdei.c
+@@ -800,7 +800,7 @@ static int sdei_device_freeze(struct device *dev)
+ 	int err;
  
+ 	/* unregister private events */
+-	cpuhp_remove_state(sdei_entry_point);
++	cpuhp_remove_state(sdei_hp_state);
+ 
+ 	err = sdei_unregister_shared();
+ 	if (err)
 -- 
 2.43.0
 
