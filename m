@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B951DFDAF;
-	Wed,  6 Nov 2024 12:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB9A1DF978;
+	Wed,  6 Nov 2024 12:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895892; cv=none; b=c0/xEcZglBSdSekXLBieSsLMoISg1iVzTliDvxuOC/B5ZQjp9ahQ7+H5mpae4JK6TfTuVJUae2Qb0xTK2JxIBfD3vbdUH+jFAY/A0b7kJmdISyp7RmY0Qu8uLiy5lXixwoJ6VtccBgUqssj4HQjtfoZisbmQOZMW61G6VdNaN9c=
+	t=1730895895; cv=none; b=O0nkSkxbqHEifO+k+jQlxHpqmNnso2TfUEV2zqFJxFShJR/yRkNPjaoevFDitvN5TMcmpM225/+Y21DJ2RrGQYBZAloGDbW05/Jp0Qq8qDumZFapVpcanGpuIGNWI6OQE2Hhx5KUmjCF3nJTRJC+UMUIDmzzEq1fXr4tUMM7w54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895892; c=relaxed/simple;
-	bh=boEgGvu3K1KOBi+giUza6xlil0YbiI8q/29v3cldiTg=;
+	s=arc-20240116; t=1730895895; c=relaxed/simple;
+	bh=ba7vP08H5CqCxEwuLk2nkeHMHp0Pk+WtwZxR+DCcigg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hxg+sDLkpLl2t3O8ODDqfacmsW/pWmj3i1S5xYPM+F4C++8232yoRNixUcBC4+pl/f/AZ1UHwBHXPslmEwYOXnF0N4vG3VjfYn3AEf55xiLvTXzf28829dxFRZkcNhqc6uAc4OyjCaQYRAXSQsHaEm7cq77ekygiTJknSRYU8CI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hq75c9Qr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zc0xNqVOUEOlNafrfYpl7VwsA958Q/BEA2FpaUOKh983xZx+rTQ5Ficj9HKqLjjhBx367ZI0dKYJGTt84RtXIcL2tiGSqYb0UQtuhFXo0Jn34tyD/9NB7oswlf2FYk8TO3h0JyrVInz39yToJcyisRzD2bA7fV0cynyykHj4/uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jkcZ4VfW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hq75c9Qr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3C1C4CECD;
-	Wed,  6 Nov 2024 12:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jkcZ4VfW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772FEC4CECD;
+	Wed,  6 Nov 2024 12:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895891;
-	bh=boEgGvu3K1KOBi+giUza6xlil0YbiI8q/29v3cldiTg=;
+	s=korg; t=1730895894;
+	bh=ba7vP08H5CqCxEwuLk2nkeHMHp0Pk+WtwZxR+DCcigg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hq75c9Qrs3RXdJpcfz0BTRaHun2lYwyIgh8id6DuP0OSY/B+oIPQlnHUXboGdk53C
-	 LAUFxNjINpnb8Phkw3bA45cvIt/Zpnfis/isjt30xUubNyJ+vaWB/Gv+oPZzOQIttu
-	 KBKqbg57BP3WN9qTRJVYbO3hEJJeqdEXAQr6KIpw=
+	b=jkcZ4VfW8op9PhlV5kWopfyBRSi635MCZzDBaptV3dfUCUUVgvBrXSyiQYIRqtwIs
+	 UrbcWoYbzzbctsbviJvLUHSjvttpDop+idXgj05VzaZ55vAJyN4qsHC7nIVbOVMAtj
+	 cJUOVkBiTBtoFU09x6s8MbAklbRZ7YfLBT0G3uyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Min <Frank.Min@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 002/245] drm/amdgpu: fix random data corruption for sdma 7
-Date: Wed,  6 Nov 2024 13:00:55 +0100
-Message-ID: <20241106120319.301391105@linuxfoundation.org>
+Subject: [PATCH 6.11 020/245] wifi: iwlwifi: mvm: really send iwl_txpower_constraints_cmd
+Date: Wed,  6 Nov 2024 13:01:13 +0100
+Message-ID: <20241106120319.734219622@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -51,52 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Min <Frank.Min@amd.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 108bc59fe817686a59d2008f217bad38a5cf4427 ]
+[ Upstream commit cbe84e9ad5e28ef083beff7f6edf2e623fac09e4 ]
 
-There is random data corruption caused by const fill, this is caused by
-write compression mode not correctly configured.
+iwl_mvm_send_ap_tx_power_constraint_cmd is a no-op if the link is not
+active (we need to know the band etc.)
+However, for the station case it will be called just before we set the
+link to active (by calling iwl_mvm_link_changed with
+the LINK_CONTEXT_MODIFY_ACTIVE bit set in the 'changed' flags and
+active = true), so it will end up doing nothing.
 
-So correct compression mode for const fill.
+Fix this by calling iwl_mvm_send_ap_tx_power_constraint_cmd before
+iwl_mvm_link_changed.
 
-Signed-off-by: Frank Min <Frank.Min@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 75400f8d6e36afc88d59db8a1f3e4b7d90d836ad)
-Cc: stable@vger.kernel.org # 6.11.x
+Fixes: 6b82f4e119d1 ("wifi: iwlwifi: mvm: handle TPE advertised by AP")
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20241010140328.5c235fccd3f1.I2d40dea21e5547eba458565edcb4c354d094d82a@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c b/drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c
-index 403c177f24349..bbf43e668c1c4 100644
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v7_0.c
-@@ -51,6 +51,12 @@ MODULE_FIRMWARE("amdgpu/sdma_7_0_1.bin");
- #define SDMA0_HYP_DEC_REG_END 0x589a
- #define SDMA1_HYP_DEC_REG_OFFSET 0x20
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+index 3c99396ad3692..27980d58e6956 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-mac80211.c
+@@ -347,11 +347,6 @@ __iwl_mvm_mld_assign_vif_chanctx(struct iwl_mvm *mvm,
+ 		rcu_read_unlock();
+ 	}
  
-+/*define for compression field for sdma7*/
-+#define SDMA_PKT_CONSTANT_FILL_HEADER_compress_offset 0
-+#define SDMA_PKT_CONSTANT_FILL_HEADER_compress_mask   0x00000001
-+#define SDMA_PKT_CONSTANT_FILL_HEADER_compress_shift  16
-+#define SDMA_PKT_CONSTANT_FILL_HEADER_COMPRESS(x) (((x) & SDMA_PKT_CONSTANT_FILL_HEADER_compress_mask) << SDMA_PKT_CONSTANT_FILL_HEADER_compress_shift)
+-	if (vif->type == NL80211_IFTYPE_STATION)
+-		iwl_mvm_send_ap_tx_power_constraint_cmd(mvm, vif,
+-							link_conf,
+-							false);
+-
+ 	/* then activate */
+ 	ret = iwl_mvm_link_changed(mvm, vif, link_conf,
+ 				   LINK_CONTEXT_MODIFY_ACTIVE |
+@@ -360,6 +355,11 @@ __iwl_mvm_mld_assign_vif_chanctx(struct iwl_mvm *mvm,
+ 	if (ret)
+ 		goto out;
+ 
++	if (vif->type == NL80211_IFTYPE_STATION)
++		iwl_mvm_send_ap_tx_power_constraint_cmd(mvm, vif,
++							link_conf,
++							false);
 +
- static void sdma_v7_0_set_ring_funcs(struct amdgpu_device *adev);
- static void sdma_v7_0_set_buffer_funcs(struct amdgpu_device *adev);
- static void sdma_v7_0_set_vm_pte_funcs(struct amdgpu_device *adev);
-@@ -1611,7 +1617,8 @@ static void sdma_v7_0_emit_fill_buffer(struct amdgpu_ib *ib,
- 				       uint64_t dst_offset,
- 				       uint32_t byte_count)
- {
--	ib->ptr[ib->length_dw++] = SDMA_PKT_COPY_LINEAR_HEADER_OP(SDMA_OP_CONST_FILL);
-+	ib->ptr[ib->length_dw++] = SDMA_PKT_CONSTANT_FILL_HEADER_OP(SDMA_OP_CONST_FILL) |
-+		SDMA_PKT_CONSTANT_FILL_HEADER_COMPRESS(1);
- 	ib->ptr[ib->length_dw++] = lower_32_bits(dst_offset);
- 	ib->ptr[ib->length_dw++] = upper_32_bits(dst_offset);
- 	ib->ptr[ib->length_dw++] = src_data;
+ 	/*
+ 	 * Power state must be updated before quotas,
+ 	 * otherwise fw will complain.
 -- 
 2.43.0
 
