@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C09D1E1036;
-	Wed,  6 Nov 2024 13:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6BD1E6DD5;
+	Wed,  6 Nov 2024 13:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898409; cv=none; b=lkvYp8vaAragDuBixMrGDpK0SQVulXSUfver7Yi1yzvagbKgHwqiN9McE43L199N6EHR7cke5Fky3YzC6ADQM8l1ZLb2EA/HIYUI5bsXRH29SRTdItJbV4RUS/Jh1uigyN8Kxwgl1xYeWn/GYLQLhs3cSQ/EyIvSc6iErQ63sdQ=
+	t=1730898411; cv=none; b=FFc7GxVAKdlLDe9xXqDnF1W6wjvEDaAGm4A8IAYMG2VRcFphEhgg9+CnbRv+gCVshtwnqYJ3QcTlgfpte/4WutHgrPCFzjtzg7UDU1/e40uuoWVBrS6H+QAl2NndosYGqQvVBZ8Yo3qp4bc3w5HwILLFMcR0uS685tX5UMOXynA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898409; c=relaxed/simple;
-	bh=Wye2Bg0tzn1shVnSXGs7RFIi0JaBoXSOTWIVOEqkFMo=;
+	s=arc-20240116; t=1730898411; c=relaxed/simple;
+	bh=7cyssFWYn4nbrn9XoIfH3UFr10ifFfvUYWbsH4+hnd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V0ti2eFXJ79bZx5ocxKdGLAW9aQmFigo0XdTP5CeUaCsdIe0LNcCFSvua50J+QD9hGXwB5PXeEnFnkaqGAQisbNXsJI5YZoKqrwDYbC41smT0nQVA/sbLf21lSB74AUB62LhNHmb13DNPuNTyZvSaCQfIv5PwJAmTiMLCyPrw3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTkArMht; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cbSLad+5g3WVQ5KsBU3PqB2FbCXyArHKcp5zwE+wOoUWp48ijqYhTYnU9oIEbZnEuuAKZiWyyGDiRpRzIYGBfWIrtlHIesnZ7Z/r9YHZoYZN9j9ncpSrJHIrxfMgmeTATOeGJkXgDiKyH8unHrrlDFetB1W68QAmRF63/0iRzOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iEBKnqUd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTkArMht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D5BC4CECD;
-	Wed,  6 Nov 2024 13:06:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iEBKnqUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 363C8C4CECD;
+	Wed,  6 Nov 2024 13:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898408;
-	bh=Wye2Bg0tzn1shVnSXGs7RFIi0JaBoXSOTWIVOEqkFMo=;
+	s=korg; t=1730898411;
+	bh=7cyssFWYn4nbrn9XoIfH3UFr10ifFfvUYWbsH4+hnd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nTkArMhtIG8hkA1L9TVfmtnubuvy2dythBMVflPkTO4I0J8iV7Cvp2BfzIr1PctZ2
-	 ATNEaoClgH7LniO1hfsMrmLvNOSfYFNA4Q2Tkzti9yZL2fSvk8E/1OR6NH2fksOLRJ
-	 Scwl61OmZJ+YgCi+fjU8dQ62ICCZtzl7eUfE0aFo=
+	b=iEBKnqUdO7y2p5nJ2MsCItpnuepVz2PSmWjON6SIPmOZ4GX85MfIwhWPLTy/zcJ0I
+	 X90zJwQ2cuTfEQbprMjOJMBcK+v8nSsh4uwqkZ2UK5YoM2IJf3MapLqDXX04LwRFpC
+	 7W1SmZH0v4hNlM13kqDpQ9yLUPI3GLuMp6H9HQGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Heusel <christian@heusel.eu>,
-	Jerry <jerryluo225@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jann Horn <jannh@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 192/462] ALSA: hda/conexant: Fix conflicting quirk for System76 Pangolin
-Date: Wed,  6 Nov 2024 13:01:25 +0100
-Message-ID: <20241106120336.256752627@linuxfoundation.org>
+Subject: [PATCH 5.4 193/462] f2fs: Require FMODE_WRITE for atomic write ioctls
+Date: Wed,  6 Nov 2024 13:01:26 +0100
+Message-ID: <20241106120336.281404576@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,69 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit b3ebb007060f89d5a45c9b99f06a55e36a1945b5 ]
+commit 4f5a100f87f32cb65d4bb1ad282a08c92f6f591e upstream.
 
-We received a regression report for System76 Pangolin (pang14) due to
-the recent fix for Tuxedo Sirius devices to support the top speaker.
-The reason was the conflicting PCI SSID, as often seen.
+The F2FS ioctls for starting and committing atomic writes check for
+inode_owner_or_capable(), but this does not give LSMs like SELinux or
+Landlock an opportunity to deny the write access - if the caller's FSUID
+matches the inode's UID, inode_owner_or_capable() immediately returns true.
 
-As a workaround, now the codec SSID is checked and the quirk is
-applied conditionally only to Sirius devices.
+There are scenarios where LSMs want to deny a process the ability to write
+particular files, even files that the FSUID of the process owns; but this
+can currently partially be bypassed using atomic write ioctls in two ways:
 
-Fixes: 4178d78cd7a8 ("ALSA: hda/conexant: Add pincfg quirk to enable top speakers on Sirius devices")
-Reported-by: Christian Heusel <christian@heusel.eu>
-Reported-by: Jerry <jerryluo225@gmail.com>
-Closes: https://lore.kernel.org/c930b6a6-64e5-498f-b65a-1cd5e0a1d733@heusel.eu
-Link: https://patch.msgid.link/20241004082602.29016-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+ - F2FS_IOC_START_ATOMIC_REPLACE + F2FS_IOC_COMMIT_ATOMIC_WRITE can
+   truncate an inode to size 0
+ - F2FS_IOC_START_ATOMIC_WRITE + F2FS_IOC_ABORT_ATOMIC_WRITE can revert
+   changes another process concurrently made to a file
+
+Fix it by requiring FMODE_WRITE for these operations, just like for
+F2FS_IOC_MOVE_RANGE. Since any legitimate caller should only be using these
+ioctls when intending to write into the file, that seems unlikely to break
+anything.
+
+Fixes: 88b88a667971 ("f2fs: support atomic writes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_conexant.c | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ fs/f2fs/file.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
-index d0f26d7ed8611..5c0a40083342f 100644
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -717,6 +717,23 @@ static const struct hda_pintbl cxt_pincfg_sws_js201d[] = {
- 	{}
- };
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 030152219c4d6..0057e7a6596d0 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1862,6 +1862,9 @@ static int f2fs_ioc_start_atomic_write(struct file *filp)
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
+ 	int ret;
  
-+/* pincfg quirk for Tuxedo Sirius;
-+ * unfortunately the (PCI) SSID conflicts with System76 Pangolin pang14,
-+ * which has incompatible pin setup, so we check the codec SSID (luckily
-+ * different one!) and conditionally apply the quirk here
-+ */
-+static void cxt_fixup_sirius_top_speaker(struct hda_codec *codec,
-+					 const struct hda_fixup *fix,
-+					 int action)
-+{
-+	/* ignore for incorrectly picked-up pang14 */
-+	if (codec->core.subsystem_id == 0x278212b3)
-+		return;
-+	/* set up the top speaker pin */
-+	if (action == HDA_FIXUP_ACT_PRE_PROBE)
-+		snd_hda_codec_set_pincfg(codec, 0x1d, 0x82170111);
-+}
++	if (!(filp->f_mode & FMODE_WRITE))
++		return -EBADF;
 +
- static const struct hda_fixup cxt_fixups[] = {
- 	[CXT_PINCFG_LENOVO_X200] = {
- 		.type = HDA_FIXUP_PINS,
-@@ -873,11 +890,8 @@ static const struct hda_fixup cxt_fixups[] = {
- 		.v.pins = cxt_pincfg_sws_js201d,
- 	},
- 	[CXT_PINCFG_TOP_SPEAKER] = {
--		.type = HDA_FIXUP_PINS,
--		.v.pins = (const struct hda_pintbl[]) {
--			{ 0x1d, 0x82170111 },
--			{ }
--		},
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = cxt_fixup_sirius_top_speaker,
- 	},
- };
+ 	if (!inode_owner_or_capable(inode))
+ 		return -EACCES;
+ 
+@@ -1928,6 +1931,9 @@ static int f2fs_ioc_commit_atomic_write(struct file *filp)
+ 	struct inode *inode = file_inode(filp);
+ 	int ret;
+ 
++	if (!(filp->f_mode & FMODE_WRITE))
++		return -EBADF;
++
+ 	if (!inode_owner_or_capable(inode))
+ 		return -EACCES;
+ 
+@@ -1970,6 +1976,9 @@ static int f2fs_ioc_start_volatile_write(struct file *filp)
+ 	struct inode *inode = file_inode(filp);
+ 	int ret;
+ 
++	if (!(filp->f_mode & FMODE_WRITE))
++		return -EBADF;
++
+ 	if (!inode_owner_or_capable(inode))
+ 		return -EACCES;
+ 
+@@ -2005,6 +2014,9 @@ static int f2fs_ioc_release_volatile_write(struct file *filp)
+ 	struct inode *inode = file_inode(filp);
+ 	int ret;
+ 
++	if (!(filp->f_mode & FMODE_WRITE))
++		return -EBADF;
++
+ 	if (!inode_owner_or_capable(inode))
+ 		return -EACCES;
+ 
+@@ -2034,6 +2046,9 @@ static int f2fs_ioc_abort_volatile_write(struct file *filp)
+ 	struct inode *inode = file_inode(filp);
+ 	int ret;
+ 
++	if (!(filp->f_mode & FMODE_WRITE))
++		return -EBADF;
++
+ 	if (!inode_owner_or_capable(inode))
+ 		return -EACCES;
  
 -- 
 2.43.0
