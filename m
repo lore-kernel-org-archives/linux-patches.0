@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F901E009F;
-	Wed,  6 Nov 2024 13:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1AB1DFDB3;
+	Wed,  6 Nov 2024 13:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898142; cv=none; b=FS8rw7Nq6jpkLQFCVWVtEHwxaKrOhUYvDGK/Pnv51vqNW7ShXfyEjB65R9kyV2OauzcwYg0YA6zhikgol9yn8Bd2HZSA3G4agmfX0O5+/46S+n6EQa/JEY0uazQGWBZ3DhXG9pBpwxBEhmzR2L3JNKmiK6x3ORjW4H9m0IjNtxI=
+	t=1730898145; cv=none; b=Spyw1yCzlMpV2cfgrM3GLNWzyKvu0/Lo1/YjAA8khqW7o1AIrwBmL3tDh8h7EVKu3MJrPb+0w7Nwu6dG1F/7Kh9yA4sxtxT2hOQlk913JrPgM1Pa8765jlPOOBO9Gs0dPd0yUDpnRsr282Zml+t79JfMDPXE9m5UMrozLUBnO3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898142; c=relaxed/simple;
-	bh=Bk8QSmxiLIQwRgZYK/79Eyp3usq7ryb4c09/Zog+B7U=;
+	s=arc-20240116; t=1730898145; c=relaxed/simple;
+	bh=mX+izFiI+NgByyzRSA0DrqOFTSp7BF4Ga25xh4YSCXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+TJ6Vty83D3sAJXyWCf2IICYdP13G4QuTY69UQYD9ywFvUeJi4dIJPTwwijPCxOnAvW0zhf38zzNR0c9fo/rg4MXiSlvhTsWT8VwWFMNv00WW3YqiVe740aVqD1fUzdSoMu5UM7x2kHzQtQrJDlrCUmvnVEyjYoMtsDXrX4pCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwB838Jz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A2Qs6m+4GVKlEEiLclUFKa0yKXH4lHDfiuWAepprVRkB4ESG0kVrrOgUQtNhMUpuD722DZjLjyL14zGJi6fykoVtn6e1w4X/9+tZenx/pfGhVX6F7bSADiPTwzkvKQNrmadZXLNzrqfcOeBQF5viqFC7Gn0gDfUkqAAju7eH0Nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHYxZc2a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwB838Jz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B1FC4CECD;
-	Wed,  6 Nov 2024 13:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHYxZc2a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A91FC4CECD;
+	Wed,  6 Nov 2024 13:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898142;
-	bh=Bk8QSmxiLIQwRgZYK/79Eyp3usq7ryb4c09/Zog+B7U=;
+	s=korg; t=1730898145;
+	bh=mX+izFiI+NgByyzRSA0DrqOFTSp7BF4Ga25xh4YSCXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RwB838JzZhl/Iv6gXFxrkeYZGu1ssYtm49J6PFiuSWa7EGRw/TAR5bjINpBOeQslX
-	 doxgW16ODYNnE+0r9RnWyO3iAFrZ+3QGZBH4geHl6/zA7eKw6anMFCfCPXucy2VAMD
-	 yQZVBVQPE10tidwEJVZZlqq/GfCrKXMFlvo0vhsI=
+	b=VHYxZc2aT+zHmV9107a12r/i9wioLz7rVQmliGIFA75e5mMCG+AinOs6gPN28ypu/
+	 gy1D5QJLmZZrhO8l0kzLfug7cdcJU0eCChLGRWo0IV/3XCNzYm9iDQNQ1GBLEJp5yi
+	 xXBLlx69Aqz6JhdVgpshmIO02gX19ZWYrLyiI79c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 137/462] netfilter: ctnetlink: compile ctnetlink_label_size with CONFIG_NF_CONNTRACK_EVENTS
-Date: Wed,  6 Nov 2024 13:00:30 +0100
-Message-ID: <20241106120334.891974077@linuxfoundation.org>
+	Hailey Mothershead <hailmo@amazon.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Subject: [PATCH 5.4 138/462] crypto: aead,cipher - zeroize key buffer after use
+Date: Wed,  6 Nov 2024 13:00:31 +0100
+Message-ID: <20241106120334.916947784@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,80 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Hailey Mothershead <hailmo@amazon.com>
 
-[ Upstream commit e1f1ee0e9ad8cbe660f5c104e791c5f1a7cf4c31 ]
+commit 23e4099bdc3c8381992f9eb975c79196d6755210 upstream.
 
-Only provide ctnetlink_label_size when it is used,
-which is when CONFIG_NF_CONNTRACK_EVENTS is configured.
+I.G 9.7.B for FIPS 140-3 specifies that variables temporarily holding
+cryptographic information should be zeroized once they are no longer
+needed. Accomplish this by using kfree_sensitive for buffers that
+previously held the private key.
 
-Flagged by clang-18 W=1 builds as:
-
-.../nf_conntrack_netlink.c:385:19: warning: unused function 'ctnetlink_label_size' [-Wunused-function]
-  385 | static inline int ctnetlink_label_size(const struct nf_conn *ct)
-      |                   ^~~~~~~~~~~~~~~~~~~~
-
-The condition on CONFIG_NF_CONNTRACK_LABELS being removed by
-this patch guards compilation of non-trivial implementations
-of ctnetlink_dump_labels() and ctnetlink_label_size().
-
-However, this is not necessary as each of these functions
-will always return 0 if CONFIG_NF_CONNTRACK_LABELS is not defined
-as each function starts with the equivalent of:
-
-	struct nf_conn_labels *labels = nf_ct_labels_find(ct);
-
-	if (!labels)
-		return 0;
-
-And nf_ct_labels_find always returns NULL if CONFIG_NF_CONNTRACK_LABELS
-is not enabled.  So I believe that the compiler optimises the code away
-in such cases anyway.
-
-Found by inspection.
-Compile tested only.
-
-Originally splitted in two patches, Pablo Neira Ayuso collapsed them and
-added Fixes: tag.
-
-Fixes: 0ceabd83875b ("netfilter: ctnetlink: deliver labels to userspace")
-Link: https://lore.kernel.org/netfilter-devel/20240909151712.GZ2097826@kernel.org/
-Signed-off-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Hailey Mothershead <hailmo@amazon.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_netlink.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ crypto/aead.c   |    3 +--
+ crypto/cipher.c |    3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -357,7 +357,7 @@ nla_put_failure:
- #define ctnetlink_dump_secctx(a, b) (0)
- #endif
- 
--#ifdef CONFIG_NF_CONNTRACK_LABELS
-+#ifdef CONFIG_NF_CONNTRACK_EVENTS
- static inline int ctnetlink_label_size(const struct nf_conn *ct)
- {
- 	struct nf_conn_labels *labels = nf_ct_labels_find(ct);
-@@ -366,6 +366,7 @@ static inline int ctnetlink_label_size(c
- 		return 0;
- 	return nla_total_size(sizeof(labels->bits));
+--- a/crypto/aead.c
++++ b/crypto/aead.c
+@@ -40,8 +40,7 @@ static int setkey_unaligned(struct crypt
+ 	alignbuffer = (u8 *)ALIGN((unsigned long)buffer, alignmask + 1);
+ 	memcpy(alignbuffer, key, keylen);
+ 	ret = crypto_aead_alg(tfm)->setkey(tfm, alignbuffer, keylen);
+-	memset(alignbuffer, 0, keylen);
+-	kfree(buffer);
++	kzfree(buffer);
+ 	return ret;
  }
-+#endif
  
- static int
- ctnetlink_dump_labels(struct sk_buff *skb, const struct nf_conn *ct)
-@@ -386,10 +387,6 @@ ctnetlink_dump_labels(struct sk_buff *sk
+--- a/crypto/cipher.c
++++ b/crypto/cipher.c
+@@ -33,8 +33,7 @@ static int setkey_unaligned(struct crypt
+ 	alignbuffer = (u8 *)ALIGN((unsigned long)buffer, alignmask + 1);
+ 	memcpy(alignbuffer, key, keylen);
+ 	ret = cia->cia_setkey(tfm, alignbuffer, keylen);
+-	memset(alignbuffer, 0, keylen);
+-	kfree(buffer);
++	kzfree(buffer);
+ 	return ret;
  
- 	return 0;
  }
--#else
--#define ctnetlink_dump_labels(a, b) (0)
--#define ctnetlink_label_size(a)	(0)
--#endif
- 
- #define master_tuple(ct) &(ct->master->tuplehash[IP_CT_DIR_ORIGINAL].tuple)
- 
 
 
