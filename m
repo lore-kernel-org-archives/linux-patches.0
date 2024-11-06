@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB7E1EE004;
-	Wed,  6 Nov 2024 12:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837DB1E0B62;
+	Wed,  6 Nov 2024 12:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897200; cv=none; b=M713T0KbBcudxgi6c70sTsYnvMiwx9mQPB7KIDpOdavT+B/GWtpMP+ILl5lPLtbPLA3dqIZoxXTg+rXwgKOHLjAcFfxDDSl4bkuZDulsP4OcptWodmfBbAkXee1UTLWY8EeE6gsr+QbIX92PAfD1yPW1pPpLN3hrpsvdYuNFbR4=
+	t=1730897203; cv=none; b=qM7WOeg+nq+DIUTuTbff/rSuTh5Gf68xYd0Kv2QyD6+HbLxB5M8LZsXbmvRXhwNcwGzn1KM2WlEryD0N3mNy6mEgBfQBlJYAA8n+W8tvkhAxoxY/b0w79ND643+hlqnkXHXiffO7WipwasAq01HIlSLaTdOplnDOx2lIgHkuyu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897200; c=relaxed/simple;
-	bh=kVVgSZFfmIaR07UR2S+oCL7D/shoE07My4gmBbIuZ8M=;
+	s=arc-20240116; t=1730897203; c=relaxed/simple;
+	bh=iFGmRQX3shr0BiZVMOHwZlH5HsR4dgClNwSjQvuxo4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btuPCcF7wqRJp/xEWzaeD7liyLz0KYjXlUuy6T1K+9UwLzCDSwIhMqaetqMa0ZRuUYuBIc+SlnkkBGDNvm8DQIMZy5w7VNWG4sU0hwfm5AUwe5+CXnt7o/rRvJQIUoc7wrWzWLCFGTTzhpzqtAhYtwqgxcNGIVRexfK36FpR32E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEoO7SLB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SbYWh6n9tMz1VDsg2HH2fmcGdhgP7W9KnjgacqekXASG+2fTMj17Tw7XQ3DIxV6oM1B2cqbMB2Gt/xUQzx1ItZDsjrWZ3yCmuUI0x+T9XUaudFienwMfbJep8MKBznpBLJSEt7I7Ww/ttdqdDP7UQu7BlAltjgt5aYXDGV+R7d8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bivsKakg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEoO7SLB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA75EC4CECD;
-	Wed,  6 Nov 2024 12:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bivsKakg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA670C4CECD;
+	Wed,  6 Nov 2024 12:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897200;
-	bh=kVVgSZFfmIaR07UR2S+oCL7D/shoE07My4gmBbIuZ8M=;
+	s=korg; t=1730897203;
+	bh=iFGmRQX3shr0BiZVMOHwZlH5HsR4dgClNwSjQvuxo4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xEoO7SLBrXPasJvIVQn72gcEy6Uu/4Ek2XvyPUOHrc8Vv2uamzPWOY9JrC/NSvBYV
-	 Q1f+aKSiBZSNaVOtdZVsYiHBP9s5Qw8/k8QwPkZSYBAJnTG34mJC8zA+i91Oy0ZCRJ
-	 wMpak0H+H3RNyhCVY/wLgOA05ibUUxwXX3xC386Y=
+	b=bivsKakg356D9pVjm8R85T9+/Z/+nCrDiX4Dz4jXv2X/f1ApGbOF40Cywro8GXCUx
+	 UqNPcS/bIYgsulKcUSVBt74J4rIGcaz0CuHuprxjvOxUfKgqIzFLU9tqwNwTAxln7N
+	 Ifxf36uFVhl5lqUFHq4PNPa8MqWez2FiUfUldMNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Sabyrzhan Tasbolatov <snovitoll@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 100/126] kasan: remove vmalloc_percpu test
-Date: Wed,  6 Nov 2024 13:05:01 +0100
-Message-ID: <20241106120308.765735102@linuxfoundation.org>
+	syzbot+36218cddfd84b5cc263e@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 074/126] wifi: cfg80211: clear wdev->cqm_config pointer on free
+Date: Wed,  6 Nov 2024 13:04:35 +0100
+Message-ID: <20241106120308.089856396@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -57,87 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Konovalov <andreyknvl@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 330d8df81f3673d6fb74550bbc9bb159d81b35f7 ]
+commit d5fee261dfd9e17b08b1df8471ac5d5736070917 upstream.
 
-Commit 1a2473f0cbc0 ("kasan: improve vmalloc tests") added the
-vmalloc_percpu KASAN test with the assumption that __alloc_percpu always
-uses vmalloc internally, which is tagged by KASAN.
+When we free wdev->cqm_config when unregistering, we also
+need to clear out the pointer since the same wdev/netdev
+may get re-registered in another network namespace, then
+destroyed later, running this code again, which results in
+a double-free.
 
-However, __alloc_percpu might allocate memory from the first per-CPU
-chunk, which is not allocated via vmalloc().  As a result, the test might
-fail.
-
-Remove the test until proper KASAN annotation for the per-CPU allocated
-are added; tracked in https://bugzilla.kernel.org/show_bug.cgi?id=215019.
-
-Link: https://lkml.kernel.org/r/20241022160706.38943-1-andrey.konovalov@linux.dev
-Fixes: 1a2473f0cbc0 ("kasan: improve vmalloc tests")
-Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
-Reported-by: Samuel Holland <samuel.holland@sifive.com>
-Link: https://lore.kernel.org/all/4a245fff-cc46-44d1-a5f9-fd2f1c3764ae@sifive.com/
-Reported-by: Sabyrzhan Tasbolatov <snovitoll@gmail.com>
-Link: https://lore.kernel.org/all/CACzwLxiWzNqPBp4C1VkaXZ2wDwvY3yZeetCi1TLGFipKW77drA@mail.gmail.com/
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Sabyrzhan Tasbolatov <snovitoll@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+36218cddfd84b5cc263e@syzkaller.appspotmail.com
+Fixes: 37c20b2effe9 ("wifi: cfg80211: fix cqm_config access race")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20241022161742.7c34b2037726.I121b9cdb7eb180802eafc90b493522950d57ee18@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kasan/kasan_test.c | 27 ---------------------------
- 1 file changed, 27 deletions(-)
+ net/wireless/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/mm/kasan/kasan_test.c b/mm/kasan/kasan_test.c
-index cef683a2e0d2e..df9658299a08a 100644
---- a/mm/kasan/kasan_test.c
-+++ b/mm/kasan/kasan_test.c
-@@ -1260,32 +1260,6 @@ static void vm_map_ram_tags(struct kunit *test)
- 	free_pages((unsigned long)p_ptr, 1);
- }
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1230,6 +1230,7 @@ static void _cfg80211_unregister_wdev(st
+ 	/* deleted from the list, so can't be found from nl80211 any more */
+ 	cqm_config = rcu_access_pointer(wdev->cqm_config);
+ 	kfree_rcu(cqm_config, rcu_head);
++	RCU_INIT_POINTER(wdev->cqm_config, NULL);
  
--static void vmalloc_percpu(struct kunit *test)
--{
--	char __percpu *ptr;
--	int cpu;
--
--	/*
--	 * This test is specifically crafted for the software tag-based mode,
--	 * the only tag-based mode that poisons percpu mappings.
--	 */
--	KASAN_TEST_NEEDS_CONFIG_ON(test, CONFIG_KASAN_SW_TAGS);
--
--	ptr = __alloc_percpu(PAGE_SIZE, PAGE_SIZE);
--
--	for_each_possible_cpu(cpu) {
--		char *c_ptr = per_cpu_ptr(ptr, cpu);
--
--		KUNIT_EXPECT_GE(test, (u8)get_tag(c_ptr), (u8)KASAN_TAG_MIN);
--		KUNIT_EXPECT_LT(test, (u8)get_tag(c_ptr), (u8)KASAN_TAG_KERNEL);
--
--		/* Make sure that in-bounds accesses don't crash the kernel. */
--		*c_ptr = 0;
--	}
--
--	free_percpu(ptr);
--}
--
- /*
-  * Check that the assigned pointer tag falls within the [KASAN_TAG_MIN,
-  * KASAN_TAG_KERNEL) range (note: excluding the match-all tag) for tag-based
-@@ -1439,7 +1413,6 @@ static struct kunit_case kasan_kunit_test_cases[] = {
- 	KUNIT_CASE(vmalloc_oob),
- 	KUNIT_CASE(vmap_tags),
- 	KUNIT_CASE(vm_map_ram_tags),
--	KUNIT_CASE(vmalloc_percpu),
- 	KUNIT_CASE(match_all_not_assigned),
- 	KUNIT_CASE(match_all_ptr_tag),
- 	KUNIT_CASE(match_all_mem_tag),
--- 
-2.43.0
-
+ 	/*
+ 	 * Ensure that all events have been processed and
 
 
