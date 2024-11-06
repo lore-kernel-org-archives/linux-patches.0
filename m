@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91831DFD84;
-	Wed,  6 Nov 2024 12:24:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED721DFD90;
+	Wed,  6 Nov 2024 12:24:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895856; cv=none; b=TeJlBxtjN+RC2izlKWqrUNgbkF6LZMSly3c77gF/tPsgXYpI6eAm8WbDpWKIewRa775sNgSS0taIifdyHdEaHZbf4q2SapgR/ZeSn8X+KerTxp8yTzyEJH5FLwcUgbhCHpxwkrndNLlA9ssZpo+KEu+x3hMeJya6yJ+FxmuMWaE=
+	t=1730895859; cv=none; b=qDuEMpWghj5mli7JIHakI8jxQeD4PS8pphkrrSxGh9eNiuU+u64g0ptVVnELeFzs9hC1HPCNZHcP5yU9FQGImnP96hHICumhphGIxOjmHZZMP6vyTT/YzUTa6qnl3cl76MT4tY+0r6ThKMYAL37c/1RYYxh/VfIw3Mn6cf+3lOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895856; c=relaxed/simple;
-	bh=l/dwoTyEOKCG+1nReCHGo7vz71m9aC6+lii934tBczU=;
+	s=arc-20240116; t=1730895859; c=relaxed/simple;
+	bh=lUfEJ0K0h9GRd0xRTYUeYQ0Mg9yBaKNPE9UrzKFDeAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DUxS5GYSidkomRtm5pCrb4LrP/TIKVJi0437pGiEDUsWUJw2nLu/ZT624oCbkHFk1Y6tdWrFRPYaAxo5bzObwZdmiw5FthzVzlo97Zzc3IfGoKRl5bNRWM8+/0m+R4WbQ2kbpEaAYM6felJjPFpIG1DikqwW76xnCWVNI0gGBOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Azrmhwvo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E2va8Aud1MIVtJ1QQZZ8jX+h96ou3Le9aa6GQNHbBd22LP2YWe6hNqv/cuFz9IcVu7/aSRePI6dFNsJBMbO2g0k3pF5OmTUavra8HGrwnjuDhxSJQFg+ZXwrwyWdtqnC+gyt9dhuK1nFerv9ByZHNF4i8ME7D/dn+aKesYwkZOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boW07J5N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Azrmhwvo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50341C4CECD;
-	Wed,  6 Nov 2024 12:24:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boW07J5N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43ACEC4CECD;
+	Wed,  6 Nov 2024 12:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895856;
-	bh=l/dwoTyEOKCG+1nReCHGo7vz71m9aC6+lii934tBczU=;
+	s=korg; t=1730895859;
+	bh=lUfEJ0K0h9GRd0xRTYUeYQ0Mg9yBaKNPE9UrzKFDeAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AzrmhwvoYk6g66YNBK+M/ArISNbLuZLFvBPyb/5RsD/j+Hm5qDGCO9YMKwkOMmvt2
-	 r074MlT47YhZuJQGHPBHDSumwiBXcI4f+iHZR5v6+VhRebhHxD4N68EyRHNjgbFJ8z
-	 LjM7pQA1YLQCpTIQRYnfqf5+U7G0GPubBdTt/1pA=
+	b=boW07J5Nm1yZzDF59A5hVojjFVX/vwHXOHDtAgj9PGXrEofYsPdjMKEE2muglDnx/
+	 o0wU7BAG90mTPjFRxIpsFolhy1VYX6abrFKuweOP9KUCUazQM7L0dejw21FekrJiPz
+	 LdIN0Z1fUj9x+oRzdvkkVXAjE3mAsFxugBRUBb1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Chen <chenyu56@huawei.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Felipe Balbi <balbi@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Ben Greear <greearb@candelatech.com>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 324/350] usb: dwc3: Add splitdisable quirk for Hisilicon Kirin Soc
-Date: Wed,  6 Nov 2024 13:04:12 +0100
-Message-ID: <20241106120328.742650434@linuxfoundation.org>
+Subject: [PATCH 6.11 001/245] lib: alloc_tag_module_unload must wait for pending kfree_rcu calls
+Date: Wed,  6 Nov 2024 13:00:54 +0100
+Message-ID: <20241106120319.274293314@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
-References: <20241106120320.865793091@linuxfoundation.org>
+In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
+References: <20241106120319.234238499@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,129 +52,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-4.19-stable review patch.  If anyone has any objections, please let me know.
+6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Chen <chenyu56@huawei.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit f580170f135af14e287560d94045624d4242d712 ]
+[ Upstream commit dc783ba4b9df3fb3e76e968b2cbeb9960069263c ]
 
-SPLIT_BOUNDARY_DISABLE should be set for DesignWare USB3 DRD Core
-of Hisilicon Kirin Soc when dwc3 core act as host.
+Ben Greear reports following splat:
+ ------------[ cut here ]------------
+ net/netfilter/nf_nat_core.c:1114 module nf_nat func:nf_nat_register_fn has 256 allocated at module unload
+ WARNING: CPU: 1 PID: 10421 at lib/alloc_tag.c:168 alloc_tag_module_unload+0x22b/0x3f0
+ Modules linked in: nf_nat(-) btrfs ufs qnx4 hfsplus hfs minix vfat msdos fat
+...
+ Hardware name: Default string Default string/SKYBAY, BIOS 5.12 08/04/2020
+ RIP: 0010:alloc_tag_module_unload+0x22b/0x3f0
+  codetag_unload_module+0x19b/0x2a0
+  ? codetag_load_module+0x80/0x80
 
-[mchehab: dropped a dev_dbg() as only traces are now allowwed on this driver]
+nf_nat module exit calls kfree_rcu on those addresses, but the free
+operation is likely still pending by the time alloc_tag checks for leaks.
 
-Signed-off-by: Yu Chen <chenyu56@huawei.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Signed-off-by: Felipe Balbi <balbi@kernel.org>
-Stable-dep-of: 0d410e8913f5 ("usb: dwc3: core: Stop processing of pending events if controller is halted")
+Wait for outstanding kfree_rcu operations to complete before checking
+resolves this warning.
+
+Reproducer:
+unshare -n iptables-nft -t nat -A PREROUTING -p tcp
+grep nf_nat /proc/allocinfo # will list 4 allocations
+rmmod nft_chain_nat
+rmmod nf_nat                # will WARN.
+
+[akpm@linux-foundation.org: add comment]
+Link: https://lkml.kernel.org/r/20241007205236.11847-1-fw@strlen.de
+Fixes: a473573964e5 ("lib: code tagging module support")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reported-by: Ben Greear <greearb@candelatech.com>
+Closes: https://lore.kernel.org/netdev/bdaaef9d-4364-4171-b82b-bcfc12e207eb@candelatech.com/
+Cc: Uladzislau Rezki <urezki@gmail.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.c | 25 +++++++++++++++++++++++++
- drivers/usb/dwc3/core.h |  7 +++++++
- 2 files changed, 32 insertions(+)
+ lib/codetag.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 259eeb2f6ad53..f50b8bf22356b 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -116,6 +116,7 @@ static void __dwc3_set_mode(struct work_struct *work)
- 	struct dwc3 *dwc = work_to_dwc(work);
- 	unsigned long flags;
- 	int ret;
-+	u32 reg;
+diff --git a/lib/codetag.c b/lib/codetag.c
+index afa8a2d4f3173..d1fbbb7c2ec3d 100644
+--- a/lib/codetag.c
++++ b/lib/codetag.c
+@@ -228,6 +228,9 @@ bool codetag_unload_module(struct module *mod)
+ 	if (!mod)
+ 		return true;
  
- 	if (dwc->dr_mode != USB_DR_MODE_OTG)
- 		return;
-@@ -167,6 +168,11 @@ static void __dwc3_set_mode(struct work_struct *work)
- 				otg_set_vbus(dwc->usb2_phy->otg, true);
- 			phy_set_mode(dwc->usb2_generic_phy, PHY_MODE_USB_HOST);
- 			phy_set_mode(dwc->usb3_generic_phy, PHY_MODE_USB_HOST);
-+			if (dwc->dis_split_quirk) {
-+				reg = dwc3_readl(dwc->regs, DWC3_GUCTL3);
-+				reg |= DWC3_GUCTL3_SPLITDISABLE;
-+				dwc3_writel(dwc->regs, DWC3_GUCTL3, reg);
-+			}
- 		}
- 		break;
- 	case DWC3_GCTL_PRTCAP_DEVICE:
-@@ -1314,6 +1320,9 @@ static void dwc3_get_properties(struct dwc3 *dwc)
- 	dwc->dis_metastability_quirk = device_property_read_bool(dev,
- 				"snps,dis_metastability_quirk");
- 
-+	dwc->dis_split_quirk = device_property_read_bool(dev,
-+				"snps,dis-split-quirk");
++	/* await any module's kfree_rcu() operations to complete */
++	kvfree_rcu_barrier();
 +
- 	dwc->lpm_nyet_threshold = lpm_nyet_threshold;
- 	dwc->tx_de_emphasis = tx_de_emphasis;
- 
-@@ -1850,10 +1859,26 @@ static int dwc3_resume(struct device *dev)
- 
- 	return 0;
- }
-+
-+static void dwc3_complete(struct device *dev)
-+{
-+	struct dwc3	*dwc = dev_get_drvdata(dev);
-+	u32		reg;
-+
-+	if (dwc->current_dr_role == DWC3_GCTL_PRTCAP_HOST &&
-+			dwc->dis_split_quirk) {
-+		reg = dwc3_readl(dwc->regs, DWC3_GUCTL3);
-+		reg |= DWC3_GUCTL3_SPLITDISABLE;
-+		dwc3_writel(dwc->regs, DWC3_GUCTL3, reg);
-+	}
-+}
-+#else
-+#define dwc3_complete NULL
- #endif /* CONFIG_PM_SLEEP */
- 
- static const struct dev_pm_ops dwc3_dev_pm_ops = {
- 	SET_SYSTEM_SLEEP_PM_OPS(dwc3_suspend, dwc3_resume)
-+	.complete = dwc3_complete,
- 	SET_RUNTIME_PM_OPS(dwc3_runtime_suspend, dwc3_runtime_resume,
- 			dwc3_runtime_idle)
- };
-diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-index a1d65e36a4d41..7f8804e9e74c3 100644
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -135,6 +135,7 @@
- #define DWC3_GEVNTCOUNT(n)	(0xc40c + ((n) * 0x10))
- 
- #define DWC3_GHWPARAMS8		0xc600
-+#define DWC3_GUCTL3		0xc60c
- #define DWC3_GFLADJ		0xc630
- 
- /* Device Registers */
-@@ -362,6 +363,9 @@
- /* Global User Control Register 2 */
- #define DWC3_GUCTL2_RST_ACTBITLATER		BIT(14)
- 
-+/* Global User Control Register 3 */
-+#define DWC3_GUCTL3_SPLITDISABLE		BIT(14)
-+
- /* Device Configuration Register */
- #define DWC3_DCFG_DEVADDR(addr)	((addr) << 3)
- #define DWC3_DCFG_DEVADDR_MASK	DWC3_DCFG_DEVADDR(0x7f)
-@@ -1004,6 +1008,7 @@ struct dwc3_scratchpad_array {
-  * 	2	- No de-emphasis
-  * 	3	- Reserved
-  * @dis_metastability_quirk: set to disable metastability quirk.
-+ * @dis_split_quirk: set to disable split boundary.
-  * @imod_interval: set the interrupt moderation interval in 250ns
-  *                 increments or 0 to disable.
-  */
-@@ -1175,6 +1180,8 @@ struct dwc3 {
- 
- 	unsigned		dis_metastability_quirk:1;
- 
-+	unsigned		dis_split_quirk:1;
-+
- 	u16			imod_interval;
- };
- 
+ 	mutex_lock(&codetag_lock);
+ 	list_for_each_entry(cttype, &codetag_types, link) {
+ 		struct codetag_module *found = NULL;
 -- 
 2.43.0
 
