@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34FC1E1036;
-	Wed,  6 Nov 2024 13:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AC21E0B63;
+	Wed,  6 Nov 2024 13:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898737; cv=none; b=ChiTTVTp1VJQnMmnZk5kPc2WtHpjMexuYwsXRg7iA+39mAbgLDJjil2CEmIHO6LjVWitHlCFTJe59dRqiXAS0QNa2u+cGZpISZm+R1sZD/GloJN9hnnUkzJC7Tpo8JjyD6WkweNZA33U6NRosv5e3J1VqfHpZ5ibsS3KkveIR48=
+	t=1730898740; cv=none; b=Dfqe1yZFsuLa1MKJWVqCJCsJHx8y86uzORHLb19KrSJb+C9KnGSyCVQW6xU5B5cv1NsHtFYjDLn5ywbVpH8+3T4lc9iynRZBIW17KfJAy5eGIn2L2mZJG7zI58DzLcYYuQ38ocWkZGmT6V7jzxXJt6GSEWUXvESMQbp6/+iMraY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898737; c=relaxed/simple;
-	bh=sdWJhOgqmCyu+lFMUdaJaFoQat6LQKb5dR+6L/Jh52o=;
+	s=arc-20240116; t=1730898740; c=relaxed/simple;
+	bh=VmLX4p8G0cVQeIwD0AB/v46tTLudkg/u3Fpwx+kzre0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G4T9a1yNnqy33H9JjFKGNws7Wjt4entIz6+AC2AzxCHCqNUa/9wwhSJJ9zhOmLaIqyYapi1aWVZVeLw0nlC5jzAVCzKeDQDfxK4bUZ/fyjkgHS1yeMUvGhVYqzCWqOmZ09fzA94/I9lxwnCKMT+7heJDVxYqLp2JcGFTsTdMnW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNCCHhak; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZJYX7ZceNCIC2hwkjw6sWNQ9cspUCeoK5kB4jYQOjJIogK/2IpQ0NljBbK8lr35a/8b8glukc2MpsD9f5J12mhAciiCHL2WHyXLAsyaTF65s3BAs2hiaXOAT5IDFZR359+4kboCwsJMZjvmxHhipfr7i9UFV9e03lLBWkzU5QWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w9yFyO3w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNCCHhak"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1FBC4CECD;
-	Wed,  6 Nov 2024 13:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w9yFyO3w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5217AC4CECD;
+	Wed,  6 Nov 2024 13:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898736;
-	bh=sdWJhOgqmCyu+lFMUdaJaFoQat6LQKb5dR+6L/Jh52o=;
+	s=korg; t=1730898739;
+	bh=VmLX4p8G0cVQeIwD0AB/v46tTLudkg/u3Fpwx+kzre0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FNCCHhakgZqRDKGMZ+/Wh5umtLnaB+vJuCVrWogc8CUcIyJG4bzy3UxUwyk+oGasH
-	 mTinuxJXbv2HF+ZgCyO76aUmJI/5/KWGqALCmaIyUozIRHOcKmHFy1eUocNYXjd7bM
-	 zTNpeBq9DiEfRMGGTXvynRNhIcqkCWPhATjMCC+s=
+	b=w9yFyO3wlXMhNKxG5khpF6nHmp/mqXAf15fPZ8LgS/QXc0/6l3B/RrZ5ihP5222SJ
+	 AzyxRdWUURxa9iy9r/iUVwF3W9btjdEf7U/r0dGguG5Kf3u4pIDUTIqcWb25++MYkI
+	 eUAnheN6l1FoqMq9B5FwtvzS0DIm9TmMl5k9ptZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2ada1bc857496353be5a@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Carlos Llamas <cmllamas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 337/462] slip: make slhc_remember() more robust against malicious packets
-Date: Wed,  6 Nov 2024 13:03:50 +0100
-Message-ID: <20241106120339.849314331@linuxfoundation.org>
+Subject: [PATCH 5.4 338/462] locking/lockdep: Fix bad recursion pattern
+Date: Wed,  6 Nov 2024 13:03:51 +0100
+Message-ID: <20241106120339.873257461@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,168 +51,294 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 7d3fce8cbe3a70a1c7c06c9b53696be5d5d8dd5c ]
+commit 10476e6304222ced7df9b3d5fb0a043b3c2a1ad8 upstream.
 
-syzbot found that slhc_remember() was missing checks against
-malicious packets [1].
+There were two patterns for lockdep_recursion:
 
-slhc_remember() only checked the size of the packet was at least 20,
-which is not good enough.
+Pattern-A:
+	if (current->lockdep_recursion)
+		return
 
-We need to make sure the packet includes the IPv4 and TCP header
-that are supposed to be carried.
+	current->lockdep_recursion = 1;
+	/* do stuff */
+	current->lockdep_recursion = 0;
 
-Add iph and th pointers to make the code more readable.
+Pattern-B:
+	current->lockdep_recursion++;
+	/* do stuff */
+	current->lockdep_recursion--;
 
-[1]
+But a third pattern has emerged:
 
-BUG: KMSAN: uninit-value in slhc_remember+0x2e8/0x7b0 drivers/net/slip/slhc.c:666
-  slhc_remember+0x2e8/0x7b0 drivers/net/slip/slhc.c:666
-  ppp_receive_nonmp_frame+0xe45/0x35e0 drivers/net/ppp/ppp_generic.c:2455
-  ppp_receive_frame drivers/net/ppp/ppp_generic.c:2372 [inline]
-  ppp_do_recv+0x65f/0x40d0 drivers/net/ppp/ppp_generic.c:2212
-  ppp_input+0x7dc/0xe60 drivers/net/ppp/ppp_generic.c:2327
-  pppoe_rcv_core+0x1d3/0x720 drivers/net/ppp/pppoe.c:379
-  sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1113
-  __release_sock+0x1da/0x330 net/core/sock.c:3072
-  release_sock+0x6b/0x250 net/core/sock.c:3626
-  pppoe_sendmsg+0x2b8/0xb90 drivers/net/ppp/pppoe.c:903
-  sock_sendmsg_nosec net/socket.c:729 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:744
-  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
-  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
-  __do_sys_sendmmsg net/socket.c:2771 [inline]
-  __se_sys_sendmmsg net/socket.c:2768 [inline]
-  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
-  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Pattern-C:
+	current->lockdep_recursion = 1;
+	/* do stuff */
+	current->lockdep_recursion = 0;
 
-Uninit was created at:
-  slab_post_alloc_hook mm/slub.c:4091 [inline]
-  slab_alloc_node mm/slub.c:4134 [inline]
-  kmem_cache_alloc_node_noprof+0x6bf/0xb80 mm/slub.c:4186
-  kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:587
-  __alloc_skb+0x363/0x7b0 net/core/skbuff.c:678
-  alloc_skb include/linux/skbuff.h:1322 [inline]
-  sock_wmalloc+0xfe/0x1a0 net/core/sock.c:2732
-  pppoe_sendmsg+0x3a7/0xb90 drivers/net/ppp/pppoe.c:867
-  sock_sendmsg_nosec net/socket.c:729 [inline]
-  __sock_sendmsg+0x30f/0x380 net/socket.c:744
-  ____sys_sendmsg+0x903/0xb60 net/socket.c:2602
-  ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2656
-  __sys_sendmmsg+0x3c1/0x960 net/socket.c:2742
-  __do_sys_sendmmsg net/socket.c:2771 [inline]
-  __se_sys_sendmmsg net/socket.c:2768 [inline]
-  __x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2768
-  x64_sys_call+0xb6e/0x3ba0 arch/x86/include/generated/asm/syscalls_64.h:308
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+And while this isn't broken per-se, it is highly dangerous because it
+doesn't nest properly.
 
-CPU: 0 UID: 0 PID: 5460 Comm: syz.2.33 Not tainted 6.12.0-rc2-syzkaller-00006-g87d6aab2389e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Get rid of all Pattern-C instances and shore up Pattern-A with a
+warning.
 
-Fixes: b5451d783ade ("slip: Move the SLIP drivers")
-Reported-by: syzbot+2ada1bc857496353be5a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/670646db.050a0220.3f80e.0027.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241009091132.2136321-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20200313093325.GW12561@hirez.programming.kicks-ass.net
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/slip/slhc.c | 57 ++++++++++++++++++++++++-----------------
- 1 file changed, 34 insertions(+), 23 deletions(-)
+ kernel/locking/lockdep.c | 74 ++++++++++++++++++++++------------------
+ 1 file changed, 40 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/net/slip/slhc.c b/drivers/net/slip/slhc.c
-index f78ceba42e57e..603a29f3905ba 100644
---- a/drivers/net/slip/slhc.c
-+++ b/drivers/net/slip/slhc.c
-@@ -643,46 +643,57 @@ slhc_uncompress(struct slcompress *comp, unsigned char *icp, int isize)
- int
- slhc_remember(struct slcompress *comp, unsigned char *icp, int isize)
- {
--	struct cstate *cs;
--	unsigned ihl;
--
-+	const struct tcphdr *th;
- 	unsigned char index;
-+	struct iphdr *iph;
-+	struct cstate *cs;
-+	unsigned int ihl;
+diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
+index 0d9ff8b621e6d..0a2be60e4aa7b 100644
+--- a/kernel/locking/lockdep.c
++++ b/kernel/locking/lockdep.c
+@@ -389,6 +389,12 @@ void lockdep_on(void)
+ }
+ EXPORT_SYMBOL(lockdep_on);
  
--	if(isize < 20) {
--		/* The packet is shorter than a legal IP header */
-+	/* The packet is shorter than a legal IP header.
-+	 * Also make sure isize is positive.
-+	 */
-+	if (isize < (int)sizeof(struct iphdr)) {
-+runt:
- 		comp->sls_i_runt++;
--		return slhc_toss( comp );
-+		return slhc_toss(comp);
- 	}
-+	iph = (struct iphdr *)icp;
- 	/* Peek at the IP header's IHL field to find its length */
--	ihl = icp[0] & 0xf;
--	if(ihl < 20 / 4){
--		/* The IP header length field is too small */
--		comp->sls_i_runt++;
--		return slhc_toss( comp );
--	}
--	index = icp[9];
--	icp[9] = IPPROTO_TCP;
-+	ihl = iph->ihl;
-+	/* The IP header length field is too small,
-+	 * or packet is shorter than the IP header followed
-+	 * by minimal tcp header.
-+	 */
-+	if (ihl < 5 || isize < ihl * 4 + sizeof(struct tcphdr))
-+		goto runt;
++static inline void lockdep_recursion_finish(void)
++{
++	if (WARN_ON_ONCE(--current->lockdep_recursion))
++		current->lockdep_recursion = 0;
++}
 +
-+	index = iph->protocol;
-+	iph->protocol = IPPROTO_TCP;
+ void lockdep_set_selftest_task(struct task_struct *task)
+ {
+ 	lockdep_selftest_task_struct = task;
+@@ -1720,11 +1726,11 @@ unsigned long lockdep_count_forward_deps(struct lock_class *class)
+ 	this.class = class;
  
- 	if (ip_fast_csum(icp, ihl)) {
- 		/* Bad IP header checksum; discard */
- 		comp->sls_i_badcheck++;
--		return slhc_toss( comp );
-+		return slhc_toss(comp);
+ 	raw_local_irq_save(flags);
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	arch_spin_lock(&lockdep_lock);
+ 	ret = __lockdep_count_forward_deps(&this);
+ 	arch_spin_unlock(&lockdep_lock);
+-	current->lockdep_recursion = 0;
++	current->lockdep_recursion--;
+ 	raw_local_irq_restore(flags);
+ 
+ 	return ret;
+@@ -1749,11 +1755,11 @@ unsigned long lockdep_count_backward_deps(struct lock_class *class)
+ 	this.class = class;
+ 
+ 	raw_local_irq_save(flags);
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	arch_spin_lock(&lockdep_lock);
+ 	ret = __lockdep_count_backward_deps(&this);
+ 	arch_spin_unlock(&lockdep_lock);
+-	current->lockdep_recursion = 0;
++	current->lockdep_recursion--;
+ 	raw_local_irq_restore(flags);
+ 
+ 	return ret;
+@@ -3550,9 +3556,9 @@ void lockdep_hardirqs_on(unsigned long ip)
+ 	if (DEBUG_LOCKS_WARN_ON(current->hardirq_context))
+ 		return;
+ 
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	__trace_hardirqs_on_caller(ip);
+-	current->lockdep_recursion = 0;
++	lockdep_recursion_finish();
+ }
+ NOKPROBE_SYMBOL(lockdep_hardirqs_on);
+ 
+@@ -3608,7 +3614,7 @@ void trace_softirqs_on(unsigned long ip)
+ 		return;
  	}
--	if(index > comp->rslot_limit) {
-+	if (index > comp->rslot_limit) {
- 		comp->sls_i_error++;
- 		return slhc_toss(comp);
+ 
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	/*
+ 	 * We'll do an OFF -> ON transition:
+ 	 */
+@@ -3623,7 +3629,7 @@ void trace_softirqs_on(unsigned long ip)
+ 	 */
+ 	if (curr->hardirqs_enabled)
+ 		mark_held_locks(curr, LOCK_ENABLED_SOFTIRQ);
+-	current->lockdep_recursion = 0;
++	lockdep_recursion_finish();
+ }
+ 
+ /*
+@@ -3877,9 +3883,9 @@ void lockdep_init_map(struct lockdep_map *lock, const char *name,
+ 			return;
+ 
+ 		raw_local_irq_save(flags);
+-		current->lockdep_recursion = 1;
++		current->lockdep_recursion++;
+ 		register_lock_class(lock, subclass, 1);
+-		current->lockdep_recursion = 0;
++		lockdep_recursion_finish();
+ 		raw_local_irq_restore(flags);
  	}
--
-+	th = (struct tcphdr *)(icp + ihl * 4);
-+	if (th->doff < sizeof(struct tcphdr) / 4)
-+		goto runt;
-+	if (isize < ihl * 4 + th->doff * 4)
-+		goto runt;
- 	/* Update local state */
- 	cs = &comp->rstate[comp->recv_current = index];
- 	comp->flags &=~ SLF_TOSS;
--	memcpy(&cs->cs_ip,icp,20);
--	memcpy(&cs->cs_tcp,icp + ihl*4,20);
-+	memcpy(&cs->cs_ip, iph, sizeof(*iph));
-+	memcpy(&cs->cs_tcp, th, sizeof(*th));
- 	if (ihl > 5)
--	  memcpy(cs->cs_ipopt, icp + sizeof(struct iphdr), (ihl - 5) * 4);
--	if (cs->cs_tcp.doff > 5)
--	  memcpy(cs->cs_tcpopt, icp + ihl*4 + sizeof(struct tcphdr), (cs->cs_tcp.doff - 5) * 4);
--	cs->cs_hsize = ihl*2 + cs->cs_tcp.doff*2;
-+	  memcpy(cs->cs_ipopt, &iph[1], (ihl - 5) * 4);
-+	if (th->doff > 5)
-+	  memcpy(cs->cs_tcpopt, &th[1], (th->doff - 5) * 4);
-+	cs->cs_hsize = ihl*2 + th->doff*2;
- 	cs->initialized = true;
- 	/* Put headers back on packet
- 	 * Neither header checksum is recalculated
+ }
+@@ -4561,11 +4567,11 @@ void lock_set_class(struct lockdep_map *lock, const char *name,
+ 		return;
+ 
+ 	raw_local_irq_save(flags);
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	check_flags(flags);
+ 	if (__lock_set_class(lock, name, key, subclass, ip))
+ 		check_chain_key(current);
+-	current->lockdep_recursion = 0;
++	lockdep_recursion_finish();
+ 	raw_local_irq_restore(flags);
+ }
+ EXPORT_SYMBOL_GPL(lock_set_class);
+@@ -4578,11 +4584,11 @@ void lock_downgrade(struct lockdep_map *lock, unsigned long ip)
+ 		return;
+ 
+ 	raw_local_irq_save(flags);
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	check_flags(flags);
+ 	if (__lock_downgrade(lock, ip))
+ 		check_chain_key(current);
+-	current->lockdep_recursion = 0;
++	lockdep_recursion_finish();
+ 	raw_local_irq_restore(flags);
+ }
+ EXPORT_SYMBOL_GPL(lock_downgrade);
+@@ -4603,11 +4609,11 @@ void lock_acquire(struct lockdep_map *lock, unsigned int subclass,
+ 	raw_local_irq_save(flags);
+ 	check_flags(flags);
+ 
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	trace_lock_acquire(lock, subclass, trylock, read, check, nest_lock, ip);
+ 	__lock_acquire(lock, subclass, trylock, read, check,
+ 		       irqs_disabled_flags(flags), nest_lock, ip, 0, 0);
+-	current->lockdep_recursion = 0;
++	lockdep_recursion_finish();
+ 	raw_local_irq_restore(flags);
+ }
+ EXPORT_SYMBOL_GPL(lock_acquire);
+@@ -4622,11 +4628,11 @@ void lock_release(struct lockdep_map *lock, int nested,
+ 
+ 	raw_local_irq_save(flags);
+ 	check_flags(flags);
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	trace_lock_release(lock, ip);
+ 	if (__lock_release(lock, ip))
+ 		check_chain_key(current);
+-	current->lockdep_recursion = 0;
++	lockdep_recursion_finish();
+ 	raw_local_irq_restore(flags);
+ }
+ EXPORT_SYMBOL_GPL(lock_release);
+@@ -4642,9 +4648,9 @@ int lock_is_held_type(const struct lockdep_map *lock, int read)
+ 	raw_local_irq_save(flags);
+ 	check_flags(flags);
+ 
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	ret = __lock_is_held(lock, read);
+-	current->lockdep_recursion = 0;
++	lockdep_recursion_finish();
+ 	raw_local_irq_restore(flags);
+ 
+ 	return ret;
+@@ -4663,9 +4669,9 @@ struct pin_cookie lock_pin_lock(struct lockdep_map *lock)
+ 	raw_local_irq_save(flags);
+ 	check_flags(flags);
+ 
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	cookie = __lock_pin_lock(lock);
+-	current->lockdep_recursion = 0;
++	lockdep_recursion_finish();
+ 	raw_local_irq_restore(flags);
+ 
+ 	return cookie;
+@@ -4682,9 +4688,9 @@ void lock_repin_lock(struct lockdep_map *lock, struct pin_cookie cookie)
+ 	raw_local_irq_save(flags);
+ 	check_flags(flags);
+ 
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	__lock_repin_lock(lock, cookie);
+-	current->lockdep_recursion = 0;
++	lockdep_recursion_finish();
+ 	raw_local_irq_restore(flags);
+ }
+ EXPORT_SYMBOL_GPL(lock_repin_lock);
+@@ -4699,9 +4705,9 @@ void lock_unpin_lock(struct lockdep_map *lock, struct pin_cookie cookie)
+ 	raw_local_irq_save(flags);
+ 	check_flags(flags);
+ 
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	__lock_unpin_lock(lock, cookie);
+-	current->lockdep_recursion = 0;
++	lockdep_recursion_finish();
+ 	raw_local_irq_restore(flags);
+ }
+ EXPORT_SYMBOL_GPL(lock_unpin_lock);
+@@ -4837,10 +4843,10 @@ void lock_contended(struct lockdep_map *lock, unsigned long ip)
+ 
+ 	raw_local_irq_save(flags);
+ 	check_flags(flags);
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	trace_lock_contended(lock, ip);
+ 	__lock_contended(lock, ip);
+-	current->lockdep_recursion = 0;
++	lockdep_recursion_finish();
+ 	raw_local_irq_restore(flags);
+ }
+ EXPORT_SYMBOL_GPL(lock_contended);
+@@ -4857,9 +4863,9 @@ void lock_acquired(struct lockdep_map *lock, unsigned long ip)
+ 
+ 	raw_local_irq_save(flags);
+ 	check_flags(flags);
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	__lock_acquired(lock, ip);
+-	current->lockdep_recursion = 0;
++	lockdep_recursion_finish();
+ 	raw_local_irq_restore(flags);
+ }
+ EXPORT_SYMBOL_GPL(lock_acquired);
+@@ -5087,7 +5093,7 @@ static void free_zapped_rcu(struct rcu_head *ch)
+ 
+ 	raw_local_irq_save(flags);
+ 	arch_spin_lock(&lockdep_lock);
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 
+ 	/* closed head */
+ 	pf = delayed_free.pf + (delayed_free.index ^ 1);
+@@ -5099,7 +5105,7 @@ static void free_zapped_rcu(struct rcu_head *ch)
+ 	 */
+ 	call_rcu_zapped(delayed_free.pf + delayed_free.index);
+ 
+-	current->lockdep_recursion = 0;
++	current->lockdep_recursion--;
+ 	arch_spin_unlock(&lockdep_lock);
+ 	raw_local_irq_restore(flags);
+ }
+@@ -5146,11 +5152,11 @@ static void lockdep_free_key_range_reg(void *start, unsigned long size)
+ 
+ 	raw_local_irq_save(flags);
+ 	arch_spin_lock(&lockdep_lock);
+-	current->lockdep_recursion = 1;
++	current->lockdep_recursion++;
+ 	pf = get_pending_free();
+ 	__lockdep_free_key_range(pf, start, size);
+ 	call_rcu_zapped(pf);
+-	current->lockdep_recursion = 0;
++	current->lockdep_recursion--;
+ 	arch_spin_unlock(&lockdep_lock);
+ 	raw_local_irq_restore(flags);
+ 
 -- 
 2.43.0
 
