@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802791EE02D;
-	Wed,  6 Nov 2024 12:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318BB1F9A86;
+	Wed,  6 Nov 2024 12:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897277; cv=none; b=a72Nhq42DgaGyF/LbiMMVKA3kDV7VXTOvuZGMFaiFeSnJxDKPai2xbkzfoHklC6KB4rGw/6e2iWql72aFm5/hXCuQXJ7kjZ473V+UqZxPdWBVgn5uHgMsvLG1rv9pMW0hYQBdV1i/35qcOecb88KKrRxEGIu+KXLvqZMBjhZr78=
+	t=1730897280; cv=none; b=kOFg76NpNMruMQ/7ntrEGtCzEf6Rbvtvu0R77jCBbsV9ITPA2Tf32l9wuAITM0dDzwI/6f4uFmg9Tq895k8m1z6Fj8Gk3yERu4cOkiKach1bCP0YeWS46VWibSsyC76v+lytNY2mCsy/kUKI9v5ak9av5dZIOrUp2rhJot1k1zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897277; c=relaxed/simple;
-	bh=jYHoGULAqPIkR+ki+HI2vx/cNNsBBUtDy1toYElOSo4=;
+	s=arc-20240116; t=1730897280; c=relaxed/simple;
+	bh=ECruLPH+vgsi1dNZHVSx69mXL7yTe/5l3AbNLxhpDwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NoeYMqdeyXTU0qPnRiMubNz4HOcamLVNfgD+AjHjlhOO1KSW+W9c920S0iUfLwtsGBzDgObuFa6cwFKLt/21iK9BNz2olak63rbPl8CYAQznShJnd2ap2U9nlpgD4Wp6XsI82aOwfxpOZOcUE47S9+LxviWRj6a6w98/VWnnxDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0HCojsqo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gNGIFC6SYG9iux+ytoGkDV6+3OSybXHioxtlTmQ1Feyb/J0bi62eE5ocWolOUkPcOPeynP5ZEvti+69OpNs83bY25yk2lgir6Fv4cDotDzGiBQALwxGoHG2TY+HJ19V5eGt3jcycRDurreZ36MCyUNF9+6S/KVwrfQIW6iEP8Yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGY8hdcJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0HCojsqo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8588DC4CED3;
-	Wed,  6 Nov 2024 12:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGY8hdcJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59F8C4CECD;
+	Wed,  6 Nov 2024 12:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897277;
-	bh=jYHoGULAqPIkR+ki+HI2vx/cNNsBBUtDy1toYElOSo4=;
+	s=korg; t=1730897280;
+	bh=ECruLPH+vgsi1dNZHVSx69mXL7yTe/5l3AbNLxhpDwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0HCojsqoGVIJhWS12+nGqvqD3LvNFDm4jmtjsNKj62O3E+neK2P8JpIG8Njvq2jNB
-	 RIPjEBNsKZDAps6ctD/o8xjGG93pHPLiK5plkVD2hnNk40Sqbte/lA0WjJ/v/wFVo2
-	 kjA0duJ9cdZPPZ7K9Rx9f0hETQwQh29XY4Yu7LEA=
+	b=lGY8hdcJiTEOfuq+aWRdFCdqNxP28HuSoC9+sXgXWLhCr80a362vuB4UquRsAlqpa
+	 8YHuGqY0MUPmsVbEoFx6aO1X+ojaoGr5/GWfRQVPbByzaWkPIUobHCtCPDRFjlbsA2
+	 2YvMZFVWb9ySrS16RbMd8tkbTYJHOY3yY3JeYy3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	Yang Shi <shy828301@gmail.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Wei Xu <weixugc@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/126] vmscan,migrate: fix page count imbalance on node stats when demoting pages
-Date: Wed,  6 Nov 2024 13:05:14 +0100
-Message-ID: <20241106120309.112808368@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 114/126] io_uring: always lock __io_cqring_overflow_flush
+Date: Wed,  6 Nov 2024 13:05:15 +0100
+Message-ID: <20241106120309.139145097@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -58,74 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 35e41024c4c2b02ef8207f61b9004f6956cf037b ]
+Commit 8d09a88ef9d3cb7d21d45c39b7b7c31298d23998 upstream.
 
-When numa balancing is enabled with demotion, vmscan will call
-migrate_pages when shrinking LRUs.  migrate_pages will decrement the
-the node's isolated page count, leading to an imbalanced count when
-invoked from (MG)LRU code.
+Conditional locking is never great, in case of
+__io_cqring_overflow_flush(), which is a slow path, it's not justified.
+Don't handle IOPOLL separately, always grab uring_lock for overflow
+flushing.
 
-The result is dmesg output like such:
-
-$ cat /proc/sys/vm/stat_refresh
-
-[77383.088417] vmstat_refresh: nr_isolated_anon -103212
-[77383.088417] vmstat_refresh: nr_isolated_file -899642
-
-This negative value may impact compaction and reclaim throttling.
-
-The following path produces the decrement:
-
-shrink_folio_list
-  demote_folio_list
-    migrate_pages
-      migrate_pages_batch
-        migrate_folio_move
-          migrate_folio_done
-            mod_node_page_state(-ve) <- decrement
-
-This path happens for SUCCESSFUL migrations, not failures.  Typically
-callers to migrate_pages are required to handle putback/accounting for
-failures, but this is already handled in the shrink code.
-
-When accounting for migrations, instead do not decrement the count when
-the migration reason is MR_DEMOTION.  As of v6.11, this demotion logic
-is the only source of MR_DEMOTION.
-
-Link: https://lkml.kernel.org/r/20241025141724.17927-1-gourry@gourry.net
-Fixes: 26aa2d199d6f ("mm/migrate: demote pages during reclaim")
-Signed-off-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: Wei Xu <weixugc@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/162947df299aa12693ac4b305dacedab32ec7976.1712708261.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/io_uring.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/mm/migrate.c b/mm/migrate.c
-index 46a1476e188c3..9ff5d77b61a3e 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -1044,7 +1044,7 @@ static void migrate_folio_done(struct folio *src,
- 	 * not accounted to NR_ISOLATED_*. They can be recognized
- 	 * as __PageMovable
- 	 */
--	if (likely(!__folio_test_movable(src)))
-+	if (likely(!__folio_test_movable(src)) && reason != MR_DEMOTION)
- 		mod_node_page_state(folio_pgdat(src), NR_ISOLATED_ANON +
- 				    folio_is_file_lru(src), -folio_nr_pages(src));
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -593,6 +593,8 @@ static bool __io_cqring_overflow_flush(s
+ 	bool all_flushed;
+ 	size_t cqe_size = sizeof(struct io_uring_cqe);
  
--- 
-2.43.0
-
++	lockdep_assert_held(&ctx->uring_lock);
++
+ 	if (!force && __io_cqring_events(ctx) == ctx->cq_entries)
+ 		return false;
+ 
+@@ -647,12 +649,9 @@ static bool io_cqring_overflow_flush(str
+ 	bool ret = true;
+ 
+ 	if (test_bit(IO_CHECK_CQ_OVERFLOW_BIT, &ctx->check_cq)) {
+-		/* iopoll syncs against uring_lock, not completion_lock */
+-		if (ctx->flags & IORING_SETUP_IOPOLL)
+-			mutex_lock(&ctx->uring_lock);
++		mutex_lock(&ctx->uring_lock);
+ 		ret = __io_cqring_overflow_flush(ctx, false);
+-		if (ctx->flags & IORING_SETUP_IOPOLL)
+-			mutex_unlock(&ctx->uring_lock);
++		mutex_unlock(&ctx->uring_lock);
+ 	}
+ 
+ 	return ret;
+@@ -1405,6 +1404,8 @@ static int io_iopoll_check(struct io_rin
+ 	int ret = 0;
+ 	unsigned long check_cq;
+ 
++	lockdep_assert_held(&ctx->uring_lock);
++
+ 	if (!io_allowed_run_tw(ctx))
+ 		return -EEXIST;
+ 
 
 
