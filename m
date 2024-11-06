@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD961DF738;
-	Wed,  6 Nov 2024 12:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8624A1DF721;
+	Wed,  6 Nov 2024 12:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895508; cv=none; b=BNtW7vgyaD8pTIkEXhHMrCidsZUEoM2tQ2GryFa8xc4Vm7wZCvmjgP5eVaDA/eeATaTd3S33Br/1z7wmSTOKnDL+P6oPnBzPJ6MghoyiSzwNNLMflki5cxX5Fj8mDbSJWRlxMwlsPdRfzb4RfGMQBU4/bFxW5DhVGlVRwq48MgI=
+	t=1730895511; cv=none; b=FK1oTrlD8l/GT1yhJuSd90NSX3u8JdkZn0KixEHZzOMcLACIkn27cXWUhiBNstY0veYyNIh1CiwfbALRhrMkes6iwVuL0BHvrAYscl22XVMVl4ckDfHURiuORByaYB95yUuq/bAligedhtaxPnwYPAn5Ed3iiXrG5YJGWNb41SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895508; c=relaxed/simple;
-	bh=QdzHY29gaoVRB6/WK4hdp7st9Qzhgm/HoR+d8i9uQlU=;
+	s=arc-20240116; t=1730895511; c=relaxed/simple;
+	bh=dmUPOFpb7eY6Mx+BOTYKfTvEGZh8Sv1WpTL9t0CSVb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y7VE2b3MwLMent3UutU9S6yEA1U9KVtGLLa4aovQUZxKCPwngjeNAYIMhko1ctHWZmWdlMhJx2MvH9csq7g1OA1D8frJzMkXaAzHdPfxfrykGkapqXrlpOgV2Z+4rEMkrDZt2djio7Ik7eQtlD+NDME2/3gJ9VYv4sSY4yogCz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y2/mwYp2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Kxn0tp9jdZ0uhbIdnfcacDMnEZml/pLuYO33/9q2K3kR71VrXZDo//iCUNFLbqvRcB+HH996rw/BwJTLrzzRyK/pqS929B0wR0DzLUOimF7kZxtSNtqIECXBeb5zIq5hQEOh5KWoeaS3JnT4cCjeRdyUYDj7UudvWHnV1me7tM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMn9yq1b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y2/mwYp2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4603C4CECD;
-	Wed,  6 Nov 2024 12:18:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMn9yq1b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A02C4CECD;
+	Wed,  6 Nov 2024 12:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895508;
-	bh=QdzHY29gaoVRB6/WK4hdp7st9Qzhgm/HoR+d8i9uQlU=;
+	s=korg; t=1730895511;
+	bh=dmUPOFpb7eY6Mx+BOTYKfTvEGZh8Sv1WpTL9t0CSVb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y2/mwYp298ryII5SRNHg5vkeIknLXoBx4OLPx7VMAntskHe5auF2ehqvktgcZzqaZ
-	 cB56SeE/Eh7Qr2l78ayHN8etDu16tgVc4hcgwaFQunkdbOQPshL49IGM8V5Iqr+idc
-	 h+cUbpONdSb++24SDHTJYbOEHWh7QgLLsnImJWpQ=
+	b=SMn9yq1bKHc/EW/1GQwci1KEirQruJPNljFx8pnnrrj4bGxv02kmx2nE8zeOSaYhT
+	 vi4Jm7NR/0UtlGvIOmkQcOkmFpoXPNvlUun+qN3MkFM0VubD8rLBz/EE3cMThqS3DJ
+	 Ue1RmTRh1MNiLNu1MbOf1ULdWSRulW910rXLPMrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 240/350] clk: bcm: bcm53573: fix OF node leak in init
-Date: Wed,  6 Nov 2024 13:02:48 +0100
-Message-ID: <20241106120326.876572855@linuxfoundation.org>
+Subject: [PATCH 4.19 241/350] i2c: i801: Use a different adapter-name for IDF adapters
+Date: Wed,  6 Nov 2024 13:02:49 +0100
+Message-ID: <20241106120326.897240218@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -45,43 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit f92d67e23b8caa81f6322a2bad1d633b00ca000e ]
+[ Upstream commit 43457ada98c824f310adb7bd96bd5f2fcd9a3279 ]
 
-Driver code is leaking OF node reference from of_get_parent() in
-bcm53573_ilp_init().  Usage of of_get_parent() is not needed in the
-first place, because the parent node will not be freed while we are
-processing given node (triggered by CLK_OF_DECLARE()).  Thus fix the
-leak by accessing parent directly, instead of of_get_parent().
+On chipsets with a second 'Integrated Device Function' SMBus controller use
+a different adapter-name for the second IDF adapter.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240826065801.17081-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+This allows platform glue code which is looking for the primary i801
+adapter to manually instantiate i2c_clients on to differentiate
+between the 2.
+
+This allows such code to find the primary i801 adapter by name, without
+needing to duplicate the PCI-ids to feature-flags mapping from i2c-i801.c.
+
+Reviewed-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/bcm/clk-bcm53573-ilp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-i801.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/bcm/clk-bcm53573-ilp.c b/drivers/clk/bcm/clk-bcm53573-ilp.c
-index 36eb3716ffb00..3bc6837f844db 100644
---- a/drivers/clk/bcm/clk-bcm53573-ilp.c
-+++ b/drivers/clk/bcm/clk-bcm53573-ilp.c
-@@ -115,7 +115,7 @@ static void bcm53573_ilp_init(struct device_node *np)
- 		goto err_free_ilp;
- 	}
+diff --git a/drivers/i2c/busses/i2c-i801.c b/drivers/i2c/busses/i2c-i801.c
+index c1e2539b79502..b552f8d62fa2f 100644
+--- a/drivers/i2c/busses/i2c-i801.c
++++ b/drivers/i2c/busses/i2c-i801.c
+@@ -1674,8 +1674,15 @@ static int i801_probe(struct pci_dev *dev, const struct pci_device_id *id)
  
--	ilp->regmap = syscon_node_to_regmap(of_get_parent(np));
-+	ilp->regmap = syscon_node_to_regmap(np->parent);
- 	if (IS_ERR(ilp->regmap)) {
- 		err = PTR_ERR(ilp->regmap);
- 		goto err_free_ilp;
+ 	i801_add_tco(priv);
+ 
++	/*
++	 * adapter.name is used by platform code to find the main I801 adapter
++	 * to instantiante i2c_clients, do not change.
++	 */
+ 	snprintf(priv->adapter.name, sizeof(priv->adapter.name),
+-		"SMBus I801 adapter at %04lx", priv->smba);
++		 "SMBus %s adapter at %04lx",
++		 (priv->features & FEATURE_IDF) ? "I801 IDF" : "I801",
++		 priv->smba);
++
+ 	err = i2c_add_adapter(&priv->adapter);
+ 	if (err) {
+ 		platform_device_unregister(priv->tco_pdev);
 -- 
 2.43.0
 
