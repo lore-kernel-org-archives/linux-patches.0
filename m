@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177011F669B;
-	Wed,  6 Nov 2024 13:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2431F7081;
+	Wed,  6 Nov 2024 13:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898648; cv=none; b=kZ6SXV1V26lK6of732rYasjiHss/6IWTIUp2Tp3b419b5BqmQK5wJOwcFDl2uV7Lg3XIht/QtdvAO3+hTmxA4SjwEv+UabYMEDbWRpU+dUqYBJCdOzxuBQV+5+GVKmEdhBvG/PEsbQpqdTdIBj45uo3OH2WR+0O6q7/GyM/cT1Y=
+	t=1730898651; cv=none; b=KVkciUEJxATDBF33IkUHt56KIOeSJ7kzYPq4D7OZ3aUtwwz4ujQcqZjEuCdJOXNuzjSNYkBJcZZqTQTCD4IdX7eW7qiDUXqg4CwEkbMrVfBDu8bffj2sJtlzc181tFLTbYZbUJcvBwDFmgK+QDid8hN+uJAUWZQPV4DLhv5ayQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898648; c=relaxed/simple;
-	bh=KFruHAUdwx61h2t5jShzobR5CJcleCkTc8VeltVXclM=;
+	s=arc-20240116; t=1730898651; c=relaxed/simple;
+	bh=B5y8G+8h7+iSDkkmbmXKVR6gK6oWerccqYvUV/Ul3p8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dUL1hqTrlmQPvx9AmHhWoWlmOGZnilxo+U5BgtOBpHIqfuuAB2/yWD8DKjBpJNkYv52SYRPFZKhPeQ7CPUzrq56Xat3esCbyhO3c0du3fbbeNRcizOl1xDmIbBo4luPeX2s2sKMP5/t56ZuHB7W8Jkf0BQ233wcR9BiEHAzlSUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zIEQbBBL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=boXnsJfRghxeE7THHiF5rAKy/9qE1j/RlIGq9xE+RX4sRZRsThJs1HcHP3L6IKOAOlaWIILt9I1a95iODXodfInOoGbWeoc54Yk7gOsDDVLymhsMZMZ4i2Rg8HD1XfNqLGSpE6OdasrK3kpxI4NETBLIOv38yzH3kfPZ5f7HCaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxdjDQOo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zIEQbBBL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9068DC4CECD;
-	Wed,  6 Nov 2024 13:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxdjDQOo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A296C4CECD;
+	Wed,  6 Nov 2024 13:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898648;
-	bh=KFruHAUdwx61h2t5jShzobR5CJcleCkTc8VeltVXclM=;
+	s=korg; t=1730898650;
+	bh=B5y8G+8h7+iSDkkmbmXKVR6gK6oWerccqYvUV/Ul3p8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zIEQbBBLZWJgIvAgAEJ+1hzJC1LUqbSFcIUgg2TzDSBPtczRDzbpmcIAuoFftqPDJ
-	 C7EePSsFF0XDF3tVX7OHFgzNwlh8GcquReUjekRXdHrDrw1yR5ulGWO++FMvD+zlDM
-	 AygBJqPKNJQKyNe1ymEsEBX1v2YYtzM3LaUsCO84=
+	b=wxdjDQOoLYYwMlaCkOGo1hzWVCvVyeAu6SBeWkb4JXgrRNfPjmz/hc+0AHwolv0ec
+	 Ez3KnXcgFaxlFI6JkeAMUz7xghAuxxPd2XXa694wQ2Do75uSAXC2JEzntsSKDXBW1T
+	 0VRHxWaY2/MOzSzk+97VC2i3PtwDe/guNg120jRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 5.4 273/462] rtc: at91sam9: fix OF node leak in probe() error path
-Date: Wed,  6 Nov 2024 13:02:46 +0100
-Message-ID: <20241106120338.269993897@linuxfoundation.org>
+	Nuno Sa <nuno.sa@analog.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.4 274/462] Input: adp5589-keys - fix adp5589_gpio_get_value()
+Date: Wed,  6 Nov 2024 13:02:47 +0100
+Message-ID: <20241106120338.294542550@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -50,32 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Nuno Sa <nuno.sa@analog.com>
 
-commit 73580e2ee6adfb40276bd420da3bb1abae204e10 upstream.
+commit c684771630e64bc39bddffeb65dd8a6612a6b249 upstream.
 
-Driver is leaking an OF node reference obtained from
-of_parse_phandle_with_fixed_args().
+The adp5589 seems to have the same behavior as similar devices as
+explained in commit 910a9f5636f5 ("Input: adp5588-keys - get value from
+data out when dir is out").
 
-Fixes: 43e112bb3dea ("rtc: at91sam9: make use of syscon/regmap to access GPBR registers")
+Basically, when the gpio is set as output we need to get the value from
+ADP5589_GPO_DATA_OUT_A register instead of ADP5589_GPI_STATUS_A.
+
+Fixes: 9d2e173644bb ("Input: ADP5589 - new driver for I2C Keypad Decoder and I/O Expander")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20241001-b4-dev-adp5589-fw-conversion-v1-2-fca0149dfc47@analog.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240825183103.102904-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-at91sam9.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/keyboard/adp5589-keys.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/rtc/rtc-at91sam9.c
-+++ b/drivers/rtc/rtc-at91sam9.c
-@@ -370,6 +370,7 @@ static int at91_rtc_probe(struct platfor
- 		return ret;
+--- a/drivers/input/keyboard/adp5589-keys.c
++++ b/drivers/input/keyboard/adp5589-keys.c
+@@ -390,10 +390,17 @@ static int adp5589_gpio_get_value(struct
+ 	struct adp5589_kpad *kpad = gpiochip_get_data(chip);
+ 	unsigned int bank = kpad->var->bank(kpad->gpiomap[off]);
+ 	unsigned int bit = kpad->var->bit(kpad->gpiomap[off]);
++	int val;
  
- 	rtc->gpbr = syscon_node_to_regmap(args.np);
-+	of_node_put(args.np);
- 	rtc->gpbr_offset = args.args[0];
- 	if (IS_ERR(rtc->gpbr)) {
- 		dev_err(&pdev->dev, "failed to retrieve gpbr regmap, aborting.\n");
+-	return !!(adp5589_read(kpad->client,
+-			       kpad->var->reg(ADP5589_GPI_STATUS_A) + bank) &
+-			       bit);
++	mutex_lock(&kpad->gpio_lock);
++	if (kpad->dir[bank] & bit)
++		val = kpad->dat_out[bank];
++	else
++		val = adp5589_read(kpad->client,
++				   kpad->var->reg(ADP5589_GPI_STATUS_A) + bank);
++	mutex_unlock(&kpad->gpio_lock);
++
++	return !!(val & bit);
+ }
+ 
+ static void adp5589_gpio_set_value(struct gpio_chip *chip,
 
 
