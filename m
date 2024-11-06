@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255631EC00E;
-	Wed,  6 Nov 2024 13:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1407C1E0DC4;
+	Wed,  6 Nov 2024 13:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898772; cv=none; b=ZOf8upTxjiAcwAo+rFX3kah4ZvQqxmb39w/5AxaArITf9AdZjz1bPlsiRMiXlQAHxB9iVkUTPKENXZrJtBTyOWS4n3gOp16BJlUgi2yh+VjkLAvfdtwIhkLQXEMNr2lebJxY0p2RYOqZeV1iPrpqFk3ZMuB5KVn50h2LRksnEE4=
+	t=1730898775; cv=none; b=CN+tcCEDvX+Xsl6p7YsPbJ7q4Z/den7vrDndexTJx7k6yzm3h1ebllPvXzdmyvFLuoMXhjm/+QMSQMaBRC4sC4fgj5LP7pZo7X99ehiLcUCunWEqgdBqTryAsLf4Fo33dxKd71DcnPtOccyEC353J8SF7tLf/5T8MZC5DQctx84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898772; c=relaxed/simple;
-	bh=Exr2DovyX3hWi4+56pTn4H354pWbvCufwbb2Z0bXQg8=;
+	s=arc-20240116; t=1730898775; c=relaxed/simple;
+	bh=CgLwHjSnHPIVAxLcUHNy+1vIUfiDtL9rQ5VMcO18eCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=je0L/0m8bfJgGt+uIqzkXS2zZbm8BOaigE1upa69yVvKQGmj6IGS2q3nb40+YGm/UhmmaaVc3DqQlI5st/VTw9tpwlYIwdHgtP8v1a1PbnFCO1wx2wGy+B693d/79UeUPakpCeemUKPT4EEpdU78A4CsZcHx/c1O54oDRsHb5eY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Iw693di; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fx1iN4pQM6q2Zbkq2HoBHY2ZGdqmwK0H8TOwc2tpDVb0W3ImhgiOVS6RjnlyEZ6NGaB6fGYYvnf9rs7nox9bIf6/R7OxzrW4y089RPvsxHmCvJMwnF9CyVeJ8jWy6DD9liOIRXv50AOr3EKFKAYp26J5N2miiMDVegVgy4MWgzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nyQS9uwp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Iw693di"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2393C4CECD;
-	Wed,  6 Nov 2024 13:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nyQS9uwp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF4BC4CECD;
+	Wed,  6 Nov 2024 13:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898772;
-	bh=Exr2DovyX3hWi4+56pTn4H354pWbvCufwbb2Z0bXQg8=;
+	s=korg; t=1730898774;
+	bh=CgLwHjSnHPIVAxLcUHNy+1vIUfiDtL9rQ5VMcO18eCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Iw693difSPJFcVqGEPGiA5nXNnBwHbZHUz1Csj8J4lVUHKEZzFDmeXjA9FmHFWvI
-	 iFemAUx+snpDjBLmNTNoFV6VHW/cdEmqtedqR1vAmHx/ygLGtTkDeMhhTa+Qzr035v
-	 yvRYSIQ4FzLZ3h9qk/CieHhOwz/2J2rcHzKffACM=
+	b=nyQS9uwpbUhwPWsIwrRJnWo7tc6hA6A7T/EpOVbE35Dy4m1BXH0+yvxm/201bq725
+	 uaI7vN7OSrCQ6Ann2brPduOCUMbYRNBXDCokJSsHRN+Jqa54U42VrViuWgiBEDzktW
+	 fpJqndM5/4Ewu6KALVC8f8N/PpLPKnbxgoaj7wlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 304/462] s390/facility: Disable compile time optimization for decompressor code
-Date: Wed,  6 Nov 2024 13:03:17 +0100
-Message-ID: <20241106120339.036279702@linuxfoundation.org>
+	Wade Wang <wade.wang@hp.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.4 344/462] HID: plantronics: Workaround for an unexcepted opposite volume key
+Date: Wed,  6 Nov 2024 13:03:57 +0100
+Message-ID: <20241106120340.021545526@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,44 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Wade Wang <wade.wang@hp.com>
 
-[ Upstream commit 0147addc4fb72a39448b8873d8acdf3a0f29aa65 ]
+commit 87b696209007b7c4ef7bdfe39ea0253404a43770 upstream.
 
-Disable compile time optimizations of test_facility() for the
-decompressor. The decompressor should not contain any optimized code
-depending on the architecture level set the kernel image is compiled
-for to avoid unexpected operation exceptions.
+Some Plantronics headset as the below send an unexcept opposite
+volume key's HID report for each volume key press after 200ms, like
+unecepted Volume Up Key following Volume Down key pressed by user.
+This patch adds a quirk to hid-plantronics for these devices, which
+will ignore the second unexcepted opposite volume key if it happens
+within 220ms from the last one that was handled.
+    Plantronics EncorePro 500 Series  (047f:431e)
+    Plantronics Blackwire_3325 Series (047f:430c)
 
-Add a __DECOMPRESSOR check to test_facility() to enforce that
-facilities are always checked during runtime for the decompressor.
+The patch was tested on the mentioned model, it shouldn't affect
+other models, however, this quirk might be needed for them too.
+Auto-repeat (when a key is held pressed) is not affected per test
+result.
 
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Wade Wang <wade.wang@hp.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/facility.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/hid/hid-ids.h         |    2 ++
+ drivers/hid/hid-plantronics.c |   23 +++++++++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/arch/s390/include/asm/facility.h b/arch/s390/include/asm/facility.h
-index 68c476b20b57e..c7031d9ada293 100644
---- a/arch/s390/include/asm/facility.h
-+++ b/arch/s390/include/asm/facility.h
-@@ -53,8 +53,10 @@ static inline int test_facility(unsigned long nr)
- 	unsigned long facilities_als[] = { FACILITIES_ALS };
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -954,6 +954,8 @@
+ #define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3220_SERIES	0xc056
+ #define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3215_SERIES	0xc057
+ #define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3225_SERIES	0xc058
++#define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3325_SERIES	0x430c
++#define USB_DEVICE_ID_PLANTRONICS_ENCOREPRO_500_SERIES		0x431e
  
- 	if (__builtin_constant_p(nr) && nr < sizeof(facilities_als) * 8) {
--		if (__test_facility(nr, &facilities_als))
--			return 1;
-+		if (__test_facility(nr, &facilities_als)) {
-+			if (!__is_defined(__DECOMPRESSOR))
-+				return 1;
-+		}
+ #define USB_VENDOR_ID_PANASONIC		0x04da
+ #define USB_DEVICE_ID_PANABOARD_UBT780	0x1044
+--- a/drivers/hid/hid-plantronics.c
++++ b/drivers/hid/hid-plantronics.c
+@@ -38,8 +38,10 @@
+ 			    (usage->hid & HID_USAGE_PAGE) == HID_UP_CONSUMER)
+ 
+ #define PLT_QUIRK_DOUBLE_VOLUME_KEYS BIT(0)
++#define PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS BIT(1)
+ 
+ #define PLT_DOUBLE_KEY_TIMEOUT 5 /* ms */
++#define PLT_FOLLOWED_OPPOSITE_KEY_TIMEOUT 220 /* ms */
+ 
+ struct plt_drv_data {
+ 	unsigned long device_type;
+@@ -137,6 +139,21 @@ static int plantronics_event(struct hid_
+ 
+ 		drv_data->last_volume_key_ts = cur_ts;
  	}
- 	return __test_facility(nr, &S390_lowcore.stfle_fac_list);
++	if (drv_data->quirks & PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS) {
++		unsigned long prev_ts, cur_ts;
++
++		/* Usages are filtered in plantronics_usages. */
++
++		if (!value) /* Handle key presses only. */
++			return 0;
++
++		prev_ts = drv_data->last_volume_key_ts;
++		cur_ts = jiffies;
++		if (jiffies_to_msecs(cur_ts - prev_ts) <= PLT_FOLLOWED_OPPOSITE_KEY_TIMEOUT)
++			return 1; /* Ignore the followed opposite volume key. */
++
++		drv_data->last_volume_key_ts = cur_ts;
++	}
+ 
+ 	return 0;
  }
--- 
-2.43.0
-
+@@ -210,6 +227,12 @@ static const struct hid_device_id plantr
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+ 					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3225_SERIES),
+ 		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
++					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3325_SERIES),
++		.driver_data = PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
++					 USB_DEVICE_ID_PLANTRONICS_ENCOREPRO_500_SERIES),
++		.driver_data = PLT_QUIRK_FOLLOWED_OPPOSITE_VOLUME_KEYS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS, HID_ANY_ID) },
+ 	{ }
+ };
 
 
