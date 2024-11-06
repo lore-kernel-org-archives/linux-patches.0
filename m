@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465D21F4733;
-	Wed,  6 Nov 2024 12:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383FE1FB8B1;
+	Wed,  6 Nov 2024 12:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897667; cv=none; b=dJ+I48JaIOU9CEiYJc2bsGSCMMAdy+7rtWBN7KxKBbPvsLEgtL6+IFeRz3C8+t1TNW79jKUxAqifykYgGuQmC0NOePnqqY5f20aYMaoUWIzn5PBQIqroxokJKDD0wbzF4QA/VhkhkuHvjZXZohNHjUcj21WucT3vbQ8k0MM5Ebs=
+	t=1730897670; cv=none; b=XvsaFvZuTq699xidQuZUwMESzKMQHUlmBPU+CTGO3c3aua1DBQlmu1k4l+PzBf1hsNSOZDFgwEm4znSVTE4dVZGsT5nOokm3VhRnQffPHxuHms6zYF1srZg288YgyyWAQvbMA7UXR7i0vEOSAmxof4KrPmiF8FDFw4wT+WRYwGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897667; c=relaxed/simple;
-	bh=Tqheekx0SFn4/eMGzOJoesEQg3IFI/WsS4Vsr+gkyI4=;
+	s=arc-20240116; t=1730897670; c=relaxed/simple;
+	bh=ncbGO4h92UUkd2BMrrJzJVcJ4lBFbkk3nXlfvy6fMW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCF9BHvolhTk9s2HpAAU+k3XxKD+8/08dDzzAKrPsuNdTHioIhf+0dZlWYSuz2ZWFUyYmQjj1lmUjrSVkp7qMg4hUbtbTR1pqzJxYSow5idH/lS7FD6jP2TDK3ldur53oZUdy1e/q88ROzTCF5nNjkR4qcu5BtbZuNYo6rzWtu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=POMvG06a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kFp2b/dxshMj4nuiSFa0+cijIIyrfp6pW7+6d5yjDB6uvXz4UIhaL+ra6MM1YaLPEPYUKTHvthOzLttdlXBQGd1ZHc2HA6XXmS8oNQ4kSwRxp0KVyimZ1QBgusBtmr/OPFyjf+57Odwj39nuRLpzDgJZs7vEuzEKAjJlpUCHW4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYCqEVGw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="POMvG06a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1604C4CED4;
-	Wed,  6 Nov 2024 12:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYCqEVGw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14BDC4CECD;
+	Wed,  6 Nov 2024 12:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897667;
-	bh=Tqheekx0SFn4/eMGzOJoesEQg3IFI/WsS4Vsr+gkyI4=;
+	s=korg; t=1730897670;
+	bh=ncbGO4h92UUkd2BMrrJzJVcJ4lBFbkk3nXlfvy6fMW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=POMvG06aa51iExHCPk3jVUm20udYfIvgyhP/k6NcbO/yyLq2c5+rEF8mM2C5LEHKP
-	 ITp1r/KmncTcwNeLusYsOf4H2BkpRLMf/pKOLdENdHRqTzS+eRUXfa/U8gWSS31xU7
-	 ovrBViglk34efPcHNx1WX5VMc9CBk4MnmTEqV64I=
+	b=IYCqEVGwFlTJidr/hALagouO7M4itkUnLL/BTD4jRXigZc4SL1Vzax/NGWOZVPpPp
+	 1YyXyptp/1np5ABssedOPqhPDqR6pdnFCAfD9oWoFglxntxGDC2ImYyLkikV93AVI/
+	 zM6K9NVKkIlC6rpXVUNeT3qMFQtPqsWi2qOWkjEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	syzbot+4125a3c514e3436a02e6@syzkaller.appspotmail.com,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 113/151] riscv: vdso: Prevent the compiler from inserting calls to memset()
-Date: Wed,  6 Nov 2024 13:05:01 +0100
-Message-ID: <20241106120311.977949405@linuxfoundation.org>
+Subject: [PATCH 6.6 131/151] xfs: fix finding a last resort AG in xfs_filestream_pick_ag
+Date: Wed,  6 Nov 2024 13:05:19 +0100
+Message-ID: <20241106120312.465329693@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -52,38 +53,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit bf40167d54d55d4b54d0103713d86a8638fb9290 ]
+[ Upstream commit dc60992ce76fbc2f71c2674f435ff6bde2108028 ]
 
-The compiler is smart enough to insert a call to memset() in
-riscv_vdso_get_cpus(), which generates a dynamic relocation.
+When the main loop in xfs_filestream_pick_ag fails to find a suitable
+AG it tries to just pick the online AG.  But the loop for that uses
+args->pag as loop iterator while the later code expects pag to be
+set.  Fix this by reusing the max_pag case for this last resort, and
+also add a check for impossible case of no AG just to make sure that
+the uninitialized pag doesn't even escape in theory.
 
-So prevent this by using -fno-builtin option.
-
-Fixes: e2c0cdfba7f6 ("RISC-V: User-facing API")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20241016083625.136311-2-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Reported-by: syzbot+4125a3c514e3436a02e6@syzkaller.appspotmail.com
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Tested-by: syzbot+4125a3c514e3436a02e6@syzkaller.appspotmail.com
+Fixes: f8f1ed1ab3baba ("xfs: return a referenced perag from filestreams allocator")
+Cc: <stable@vger.kernel.org> # v6.3
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/vdso/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ fs/xfs/xfs_filestream.c | 23 ++++++++++++-----------
+ fs/xfs/xfs_trace.h      | 15 +++++----------
+ 2 files changed, 17 insertions(+), 21 deletions(-)
 
-diff --git a/arch/riscv/kernel/vdso/Makefile b/arch/riscv/kernel/vdso/Makefile
-index e8aa7c3800075..d58f32a2035b1 100644
---- a/arch/riscv/kernel/vdso/Makefile
-+++ b/arch/riscv/kernel/vdso/Makefile
-@@ -18,6 +18,7 @@ obj-vdso = $(patsubst %, %.o, $(vdso-syms)) note.o
+diff --git a/fs/xfs/xfs_filestream.c b/fs/xfs/xfs_filestream.c
+index 2fc98d3137086..f62b023f274e9 100644
+--- a/fs/xfs/xfs_filestream.c
++++ b/fs/xfs/xfs_filestream.c
+@@ -64,7 +64,7 @@ xfs_filestream_pick_ag(
+ 	struct xfs_perag	*pag;
+ 	struct xfs_perag	*max_pag = NULL;
+ 	xfs_extlen_t		minlen = *longest;
+-	xfs_extlen_t		free = 0, minfree, maxfree = 0;
++	xfs_extlen_t		minfree, maxfree = 0;
+ 	xfs_agnumber_t		agno;
+ 	bool			first_pass = true;
+ 	int			err;
+@@ -107,7 +107,6 @@ xfs_filestream_pick_ag(
+ 			     !(flags & XFS_PICK_USERDATA) ||
+ 			     (flags & XFS_PICK_LOWSPACE))) {
+ 				/* Break out, retaining the reference on the AG. */
+-				free = pag->pagf_freeblks;
+ 				break;
+ 			}
+ 		}
+@@ -150,23 +149,25 @@ xfs_filestream_pick_ag(
+ 		 * grab.
+ 		 */
+ 		if (!max_pag) {
+-			for_each_perag_wrap(args->mp, 0, start_agno, args->pag)
++			for_each_perag_wrap(args->mp, 0, start_agno, pag) {
++				max_pag = pag;
+ 				break;
+-			atomic_inc(&args->pag->pagf_fstrms);
+-			*longest = 0;
+-		} else {
+-			pag = max_pag;
+-			free = maxfree;
+-			atomic_inc(&pag->pagf_fstrms);
++			}
++
++			/* Bail if there are no AGs at all to select from. */
++			if (!max_pag)
++				return -ENOSPC;
+ 		}
++
++		pag = max_pag;
++		atomic_inc(&pag->pagf_fstrms);
+ 	} else if (max_pag) {
+ 		xfs_perag_rele(max_pag);
+ 	}
  
- ccflags-y := -fno-stack-protector
- ccflags-y += -DDISABLE_BRANCH_PROFILING
-+ccflags-y += -fno-builtin
+-	trace_xfs_filestream_pick(pag, pino, free);
++	trace_xfs_filestream_pick(pag, pino);
+ 	args->pag = pag;
+ 	return 0;
+-
+ }
  
- ifneq ($(c-gettimeofday-y),)
-   CFLAGS_vgettimeofday.o += -fPIC -include $(c-gettimeofday-y)
+ static struct xfs_inode *
+diff --git a/fs/xfs/xfs_trace.h b/fs/xfs/xfs_trace.h
+index 3926cf7f2a6ed..d562028281f5c 100644
+--- a/fs/xfs/xfs_trace.h
++++ b/fs/xfs/xfs_trace.h
+@@ -672,8 +672,8 @@ DEFINE_FILESTREAM_EVENT(xfs_filestream_lookup);
+ DEFINE_FILESTREAM_EVENT(xfs_filestream_scan);
+ 
+ TRACE_EVENT(xfs_filestream_pick,
+-	TP_PROTO(struct xfs_perag *pag, xfs_ino_t ino, xfs_extlen_t free),
+-	TP_ARGS(pag, ino, free),
++	TP_PROTO(struct xfs_perag *pag, xfs_ino_t ino),
++	TP_ARGS(pag, ino),
+ 	TP_STRUCT__entry(
+ 		__field(dev_t, dev)
+ 		__field(xfs_ino_t, ino)
+@@ -684,14 +684,9 @@ TRACE_EVENT(xfs_filestream_pick,
+ 	TP_fast_assign(
+ 		__entry->dev = pag->pag_mount->m_super->s_dev;
+ 		__entry->ino = ino;
+-		if (pag) {
+-			__entry->agno = pag->pag_agno;
+-			__entry->streams = atomic_read(&pag->pagf_fstrms);
+-		} else {
+-			__entry->agno = NULLAGNUMBER;
+-			__entry->streams = 0;
+-		}
+-		__entry->free = free;
++		__entry->agno = pag->pag_agno;
++		__entry->streams = atomic_read(&pag->pagf_fstrms);
++		__entry->free = pag->pagf_freeblks;
+ 	),
+ 	TP_printk("dev %d:%d ino 0x%llx agno 0x%x streams %d free %d",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 -- 
 2.43.0
 
