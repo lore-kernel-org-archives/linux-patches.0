@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF551DE4EA;
-	Wed,  6 Nov 2024 12:28:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462FE18C00E;
+	Wed,  6 Nov 2024 12:28:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896086; cv=none; b=BxSonCA+fb47xcUl8lqJWHDfSa3gZUypbHbbFNYBnlppMoqyvwfsYgoU7xsTs2toqqcTq40unF1BPVFtiN7CFbLXEIRaIth9vhC92+MsZhKW+nEGLSon4cAAtoMMG1+/n58fVfoBSCylVbq1q5bBkKY5fU3r5ECYqA0Qi/SEtXw=
+	t=1730896089; cv=none; b=eyDO8binek82/98i7VgGp//uOPlsXaiPRLEOXfLK+R2iRz0UzVw8Bl8OVhXnIHszGg4m/3sTkYXRtNe6HygZBC4ZhfDWyb80DLolcHD3hJTNth11MKv4SrdlEHfoaXQ0CKq4nQQVneG/SuVvyPrBTEHvWFWivc27mi6uasTR1RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896086; c=relaxed/simple;
-	bh=aaRRHUaCIns7h7Kihf4fNwcC+0PTMnxhmuTsObfJmbw=;
+	s=arc-20240116; t=1730896089; c=relaxed/simple;
+	bh=C8Hok5jhkAY0jjo291On6PQcO3ynlskmg42dt2yC3MA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rTzl8FEylARQWX4JTqXprLxrsJXmnXzA8V0Lz1uQUHNMPyczxWdbABiQxxFjCe/KxQPO26m58M9l33WRXou1jITzyF/vXfFh7GRc4NlojdTbpHZey01gIas0RavHMbNuyuQwcPGQpJoqRb8xT61Fs1/nxZL1jhdcEXohk9jVbi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWW5Wux3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IRFuyIiwIjUXuW4rCUokVrn5Iq9aP6/DvkH0Cjikief9JwCSheGAt4o96u5LSScmwBHP3LTLYqrbtbHive9OXCuDJp+4Ep8GHdEbGTyWgichlBlh9pyz2OnDWlK6KGHYM2/zPj4QGhvyCrABA5+7f7cS6sY98l8yMi12yjg1P5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfcWg8Rw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWW5Wux3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16D1C4CED3;
-	Wed,  6 Nov 2024 12:28:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfcWg8Rw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C337DC4CECD;
+	Wed,  6 Nov 2024 12:28:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896086;
-	bh=aaRRHUaCIns7h7Kihf4fNwcC+0PTMnxhmuTsObfJmbw=;
+	s=korg; t=1730896089;
+	bh=C8Hok5jhkAY0jjo291On6PQcO3ynlskmg42dt2yC3MA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWW5Wux3lt+tHbqTlEmt516Y5YWkse5RcCXQec2IWm2/RlD2TZzs4Bx6Mk22+EDgm
-	 a/q6cTRElc2tm2VEAymoKYqOaoSL5C8oEJ1ZaABMcppi4O0pl2ucifdxjkhygZWtLg
-	 LwM2RpQLVCh+zFqCg31WjV4KQu4JKSiUfRPrt0to=
+	b=UfcWg8Rw2pIj8pchmtmx7m0plWMSsdDnAHO9icdteT93xhHlWcH5dkahGb8eNrUvW
+	 QT6nSvpFWcfgU9ZT9MEzPkhHg2VhQgd966KA4oG/nxYuPstKD4A72rwh3U1DKYnGib
+	 Mw/EnqMmWLPEDUhoxHpB2+6a6MR18YTFwtg9a27k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wei <dw@davidwei.uk>,
-	Christoph Hellwig <hch@lst.de>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
+	syzbot+bc7ca0ae4591cb2550f9@syzkaller.appspotmail.com,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 078/245] nvme: module parameter to disable pi with offsets
-Date: Wed,  6 Nov 2024 13:02:11 +0100
-Message-ID: <20241106120321.126249125@linuxfoundation.org>
+Subject: [PATCH 6.11 087/245] fs/ntfs3: Fix possible deadlock in mi_read
+Date: Wed,  6 Nov 2024 13:02:20 +0100
+Message-ID: <20241106120321.347487391@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -54,67 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 42ab37eaad17aee458489c553a367621ee04e0bc ]
+[ Upstream commit 03b097099eef255fbf85ea6a786ae3c91b11f041 ]
 
-A recent commit enables integrity checks for formats the previous kernel
-versions registered with the "nop" integrity profile. This means
-namespaces using that format become unreadable when upgrading the kernel
-past that commit.
+Mutex lock with another subclass used in ni_lock_dir().
 
-Introduce a module parameter to restore the "nop" integrity profile so
-that storage can be readable once again. This could be a boot device, so
-the setting needs to happen at module load time.
-
-Fixes: 921e81db524d17 ("nvme: allow integrity when PI is not in first bytes")
-Reported-by: David Wei <dw@davidwei.uk>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reported-by: syzbot+bc7ca0ae4591cb2550f9@syzkaller.appspotmail.com
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ fs/ntfs3/namei.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index a6fb1359a7e14..89ad4217f8606 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -90,6 +90,17 @@ module_param(apst_secondary_latency_tol_us, ulong, 0644);
- MODULE_PARM_DESC(apst_secondary_latency_tol_us,
- 	"secondary APST latency tolerance in us");
- 
-+/*
-+ * Older kernels didn't enable protection information if it was at an offset.
-+ * Newer kernels do, so it breaks reads on the upgrade if such formats were
-+ * used in prior kernels since the metadata written did not contain a valid
-+ * checksum.
-+ */
-+static bool disable_pi_offsets = false;
-+module_param(disable_pi_offsets, bool, 0444);
-+MODULE_PARM_DESC(disable_pi_offsets,
-+	"disable protection information if it has an offset");
-+
- /*
-  * nvme_wq - hosts nvme related works that are not reset or delete
-  * nvme_reset_wq - hosts nvme reset works
-@@ -1921,8 +1932,12 @@ static void nvme_configure_metadata(struct nvme_ctrl *ctrl,
- 
- 	if (head->pi_size && head->ms >= head->pi_size)
- 		head->pi_type = id->dps & NVME_NS_DPS_PI_MASK;
--	if (!(id->dps & NVME_NS_DPS_PI_FIRST))
--		info->pi_offset = head->ms - head->pi_size;
-+	if (!(id->dps & NVME_NS_DPS_PI_FIRST)) {
-+		if (disable_pi_offsets)
-+			head->pi_type = 0;
-+		else
-+			info->pi_offset = head->ms - head->pi_size;
-+	}
- 
- 	if (ctrl->ops->flags & NVME_F_FABRICS) {
- 		/*
+diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
+index 0a70c36585463..02b745f117a51 100644
+--- a/fs/ntfs3/namei.c
++++ b/fs/ntfs3/namei.c
+@@ -81,7 +81,7 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
+ 		if (err < 0)
+ 			inode = ERR_PTR(err);
+ 		else {
+-			ni_lock(ni);
++			ni_lock_dir(ni);
+ 			inode = dir_search_u(dir, uni, NULL);
+ 			ni_unlock(ni);
+ 		}
 -- 
 2.43.0
 
