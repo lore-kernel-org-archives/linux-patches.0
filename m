@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC491F709C;
-	Wed,  6 Nov 2024 12:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6D81E25F8;
+	Wed,  6 Nov 2024 12:43:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896989; cv=none; b=aCD6zinZzGALviHjgoc10sDVYosT3GETLDV/jEy4NwXubCKL57mCOurnbyjvrfwgVHqjWfJYH5Oik7lTquwJldF0DikjUrNRe37L82PRb3Fycpz6SOdmnumIZZB4Yzo5O2KfxqZSHsNcHGdpHSftB5GvYhIAd/7hwSUbG3ZJLBc=
+	t=1730896992; cv=none; b=DcejtDwEnJVC+IQqmk6TvrmncpO29EyeP9WpFDTN3On2RuwBGDhgG95+mTSgTQOqTuK953lvFXkWOVwxehO+Q3ipo4FwDBEnZGMJhVr+thU/ZJ7X/JCH5+D/QAtRfcS7Q3/JJ47kG5Nv0jRlCyaXDch5PCjWdnExayqZ1Ef1K7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896989; c=relaxed/simple;
-	bh=bJhsPZ9xVKC3PWn7ERqBXUteyaW9U7KAgBZwfMn528U=;
+	s=arc-20240116; t=1730896992; c=relaxed/simple;
+	bh=j2D+M/6FPdfJ8p1t9pbPJ9bmiF5lnKWS9d632ymab6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pFGbtan4L9GQ2bfibaS8x85DlEq4BsK0+Sm82EHSv0AEYF4kYCLTNS7WbRKS48lZBmtMHVoFYI/rO9KhVpkGRNb9KjpjBMHQTqSHoNNAXdRrSPNxG3QodjjA4/vh/lhQUTsWzVvvNSerxRQwxIEpYLlcCAL8Qxvsi4fy4dOH95I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KLAFDXT8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=T/Hs/159bMBkLfaIBw5JIcfxsdssJqMRS7TLjsPCnDsSwTgZxwLsAab5XFqOCEJPz/MevqIfnkcVX9ciioNI+uY5oQObvm0L3xm5t8aXyWTVvX8dtr+DoRu/QTeIfjrqNMob7x3phUxF/8vvKntbWVr6AG2ccYIDN0/t8fvOeR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1752h3vN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLAFDXT8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F92C4CECD;
-	Wed,  6 Nov 2024 12:43:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1752h3vN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6760EC4CECD;
+	Wed,  6 Nov 2024 12:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896989;
-	bh=bJhsPZ9xVKC3PWn7ERqBXUteyaW9U7KAgBZwfMn528U=;
+	s=korg; t=1730896992;
+	bh=j2D+M/6FPdfJ8p1t9pbPJ9bmiF5lnKWS9d632ymab6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KLAFDXT80UTlNMzEC0UXqiLVu4T/B+hC3OCvCisIaIFbryt+qi3LfFRrZJrh5Hbti
-	 8VDZFl4Ima9PnCFGg+yaUyu5R4yrwW+3MA7aL9ZqBIu6VLtqAt46CairD2mdjWLGA6
-	 dyUDc9LdQgTW4atjx/8ZNMLQy7O+GUWw2KAHnB0M=
+	b=1752h3vNDfQ2fetLN5MrD02oBGJN7RPPwRAYLz/ppbp37wKQIIJrZcF1DXQUD9LJw
+	 aIO3zHvN9FrfBA4OXIDgUywA9LugLglWKW7bSzujhxEi8we++eoeRUD9h3fsBrJcNG
+	 75GpX3n75bVY8Wu+/ZYjgoisybaJgOsMJXxQwNWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dong Chenchen <dongchenchen2@huawei.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
+	Kees Cook <keescook@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Ralph Campbell <rcampbell@nvidia.com>,
+	Jason Gunthorpe <jgg@mellanox.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/126] netfilter: Fix use-after-free in get_info()
-Date: Wed,  6 Nov 2024 13:03:50 +0100
-Message-ID: <20241106120306.891148130@linuxfoundation.org>
+Subject: [PATCH 6.1 003/126] selftests/mm: fix incorrect buffer->mirror size in hmm2 double_map test
+Date: Wed,  6 Nov 2024 13:03:24 +0100
+Message-ID: <20241106120306.141292208@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -46,85 +54,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dong Chenchen <dongchenchen2@huawei.com>
+From: Donet Tom <donettom@linux.ibm.com>
 
-[ Upstream commit f48d258f0ac540f00fa617dac496c4c18b5dc2fa ]
+[ Upstream commit 76503e1fa1a53ef041a120825d5ce81c7fe7bdd7 ]
 
-ip6table_nat module unload has refcnt warning for UAF. call trace is:
+The hmm2 double_map test was failing due to an incorrect buffer->mirror
+size.  The buffer->mirror size was 6, while buffer->ptr size was 6 *
+PAGE_SIZE.  The test failed because the kernel's copy_to_user function was
+attempting to copy a 6 * PAGE_SIZE buffer to buffer->mirror.  Since the
+size of buffer->mirror was incorrect, copy_to_user failed.
 
-WARNING: CPU: 1 PID: 379 at kernel/module/main.c:853 module_put+0x6f/0x80
-Modules linked in: ip6table_nat(-)
-CPU: 1 UID: 0 PID: 379 Comm: ip6tables Not tainted 6.12.0-rc4-00047-gc2ee9f594da8-dirty #205
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
-BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-RIP: 0010:module_put+0x6f/0x80
-Call Trace:
- <TASK>
- get_info+0x128/0x180
- do_ip6t_get_ctl+0x6a/0x430
- nf_getsockopt+0x46/0x80
- ipv6_getsockopt+0xb9/0x100
- rawv6_getsockopt+0x42/0x190
- do_sock_getsockopt+0xaa/0x180
- __sys_getsockopt+0x70/0xc0
- __x64_sys_getsockopt+0x20/0x30
- do_syscall_64+0xa2/0x1a0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+This patch corrects the buffer->mirror size to 6 * PAGE_SIZE.
 
-Concurrent execution of module unload and get_info() trigered the warning.
-The root cause is as follows:
+Test Result without this patch
+==============================
+ #  RUN           hmm2.hmm2_device_private.double_map ...
+ # hmm-tests.c:1680:double_map:Expected ret (-14) == 0 (0)
+ # double_map: Test terminated by assertion
+ #          FAIL  hmm2.hmm2_device_private.double_map
+ not ok 53 hmm2.hmm2_device_private.double_map
 
-cpu0				      cpu1
-module_exit
-//mod->state = MODULE_STATE_GOING
-  ip6table_nat_exit
-    xt_unregister_template
-	kfree(t)
-	//removed from templ_list
-				      getinfo()
-					  t = xt_find_table_lock
-						list_for_each_entry(tmpl, &xt_templates[af]...)
-							if (strcmp(tmpl->name, name))
-								continue;  //table not found
-							try_module_get
-						list_for_each_entry(t, &xt_net->tables[af]...)
-							return t;  //not get refcnt
-					  module_put(t->me) //uaf
-    unregister_pernet_subsys
-    //remove table from xt_net list
+Test Result with this patch
+===========================
+ #  RUN           hmm2.hmm2_device_private.double_map ...
+ #            OK  hmm2.hmm2_device_private.double_map
+ ok 53 hmm2.hmm2_device_private.double_map
 
-While xt_table module was going away and has been removed from
-xt_templates list, we couldnt get refcnt of xt_table->me. Check
-module in xt_net->tables list re-traversal to fix it.
-
-Fixes: fdacd57c79b7 ("netfilter: x_tables: never register tables by default")
-Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lkml.kernel.org/r/20240927050752.51066-1-donettom@linux.ibm.com
+Fixes: fee9f6d1b8df ("mm/hmm/test: add selftests for HMM")
+Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Jérôme Glisse <jglisse@redhat.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Cc: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Ralph Campbell <rcampbell@nvidia.com>
+Cc: Jason Gunthorpe <jgg@mellanox.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/x_tables.c | 2 +-
+ tools/testing/selftests/vm/hmm-tests.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/x_tables.c b/net/netfilter/x_tables.c
-index 470282cf3fae6..e8cc8eef0ab65 100644
---- a/net/netfilter/x_tables.c
-+++ b/net/netfilter/x_tables.c
-@@ -1268,7 +1268,7 @@ struct xt_table *xt_find_table_lock(struct net *net, u_int8_t af,
+diff --git a/tools/testing/selftests/vm/hmm-tests.c b/tools/testing/selftests/vm/hmm-tests.c
+index 4adaad1b822f0..95af1a73f505f 100644
+--- a/tools/testing/selftests/vm/hmm-tests.c
++++ b/tools/testing/selftests/vm/hmm-tests.c
+@@ -1652,7 +1652,7 @@ TEST_F(hmm2, double_map)
  
- 	/* and once again: */
- 	list_for_each_entry(t, &xt_net->tables[af], list)
--		if (strcmp(t->name, name) == 0)
-+		if (strcmp(t->name, name) == 0 && owner == t->me)
- 			return t;
+ 	buffer->fd = -1;
+ 	buffer->size = size;
+-	buffer->mirror = malloc(npages);
++	buffer->mirror = malloc(size);
+ 	ASSERT_NE(buffer->mirror, NULL);
  
- 	module_put(owner);
+ 	/* Reserve a range of addresses. */
 -- 
 2.43.0
 
