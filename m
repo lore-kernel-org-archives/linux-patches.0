@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093981DF978;
-	Wed,  6 Nov 2024 12:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC19E1DF24B;
+	Wed,  6 Nov 2024 12:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895904; cv=none; b=Ztq/4oGGfLS4IWHT+b7v0KJAnIPf3pkIymVUwFNoktDmsurPz3H1SZbhm7askgD2HMr62CcJeOW22ePZQMLfCUzyy41dFyY0tqpA84tEUrOu6xEzm3a++lFZ0LsgZ/AL206QbbnTLm8qQMfjWe2cNI1+mud1FmFWgcGqHurULSw=
+	t=1730895906; cv=none; b=gXJdGmpPlng/LPYqq9mucJmJqqDTN7H8dc598+UZzI1cVdSEIk8KOazP9zGBT1E+OEgoPQfX3TfrJXJUsgOnDvz1MmuHjA/bq3Rp2Bp8km9HTkNZWk2v60wxUK7mGKMclpDBeTx4BxWjpArysKbkziLc2Bs1GJmT8828p5sOfu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895904; c=relaxed/simple;
-	bh=4l15eMwk3dncQ1XJHzVO3R2jDPL7ZsZ5UnL2JjszJLM=;
+	s=arc-20240116; t=1730895906; c=relaxed/simple;
+	bh=PtxPCPjyrpoNOHowtQvpd1IXXcBBFKnHauL1q/ExP4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fr4MX/Tu/o4R0/W5RiYPfmT48Y2qr0T5Ffloca/J7pooBCIcHCIeyg4zmABMA6Lm/uycYQL6kHLQVWSMt2cM0mkWcRsoRkJoms4I81vTFska2CHjqxQJGMBk7MkOUFim7sKagUla6LsnzV1BYlPnJNFJVW1jvKSJcBOn4vXQMlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXHduDmD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rxKihFisSNxQCzoqB0ZhUex8XVQV0n6igPKqxC5O5lvDh5h9QZ8Ak+MVAm/N4h01jaDYUHPYy9aUcqBoXLGph8hd9HT7MenUtGVRCRqb4PH/isYuU7Jy35lzEZ1uO0T3ZG29WllrlUKy2+dRfP+tw5bXcmc2+zoLbiVPllQvDrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iuKVpKS6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXHduDmD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B830C4CED3;
-	Wed,  6 Nov 2024 12:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iuKVpKS6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F4EC4CECD;
+	Wed,  6 Nov 2024 12:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895903;
-	bh=4l15eMwk3dncQ1XJHzVO3R2jDPL7ZsZ5UnL2JjszJLM=;
+	s=korg; t=1730895906;
+	bh=PtxPCPjyrpoNOHowtQvpd1IXXcBBFKnHauL1q/ExP4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KXHduDmD1UqsHtyFLst9ETYmal7l6TrgUGZEeJZpuy+n9FWIxUXXP6zMaFRskudgi
-	 F6PyThazTTkwznbmuxTJFiAkBMuVeWjF1/iY5O0QIq/yHY7d6bPl/ZgpLBcQNPMgk5
-	 Q5u5xOqVEtswA5Zczh4kGDYqBOvGjIbvgaznVN3I=
+	b=iuKVpKS6cwPxvV/H7aytLXdD5CbhNyDJVRozr2S+a2mOTELt+6s8WPdTp/eIa9myg
+	 jYT7aJtDFbPt8KjfZbVWHR3iTbNb6o6yuBypaiEPNo+gr/jnn+UYszEVsG2vg2fyuE
+	 ZqqY1fdmzx+zFHBf8z421nJVtAuRjXO3GqA3YTBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 023/245] Revert "wifi: iwlwifi: remove retry loops in start"
-Date: Wed,  6 Nov 2024 13:01:16 +0100
-Message-ID: <20241106120319.805249955@linuxfoundation.org>
+Subject: [PATCH 6.11 024/245] ASoC: cs42l51: Fix some error handling paths in cs42l51_probe()
+Date: Wed,  6 Nov 2024 13:01:17 +0100
+Message-ID: <20241106120319.829174088@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -51,128 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit bfc0ed73e095cc3858d35731f191fa6e3d813262 ]
+[ Upstream commit d221b844ee79823ffc29b7badc4010bdb0960224 ]
 
-Revert commit dfdfe4be183b ("wifi: iwlwifi: remove retry loops in
-start"), it turns out that there's an issue with the PNVM load
-notification from firmware not getting processed, that this patch
-has been somewhat successfully papering over. Since this is being
-reported, revert the loop removal for now.
+If devm_gpiod_get_optional() fails, we need to disable previously enabled
+regulators, as done in the other error handling path of the function.
 
-We will later at least clean this up to only attempt to retry if
-there was a timeout, but currently we don't even bubble up the
-failure reason to the correct layer, only returning NULL.
+Also, gpiod_set_value_cansleep(, 1) needs to be called to undo a
+potential gpiod_set_value_cansleep(, 0).
+If the "reset" gpio is not defined, this additional call is just a no-op.
 
-Fixes: dfdfe4be183b ("wifi: iwlwifi: remove retry loops in start")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20241022092212.4aa82a558a00.Ibdeff9c8f0d608bc97fc42024392ae763b6937b7@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This behavior is the same as the one already in the .remove() function.
+
+Fixes: 11b9cd748e31 ("ASoC: cs42l51: add reset management")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/a5e5f4b9fb03f46abd2c93ed94b5c395972ce0d1.1729975570.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-drv.c  | 28 +++++++++++++------
- drivers/net/wireless/intel/iwlwifi/iwl-drv.h  |  3 ++
- .../net/wireless/intel/iwlwifi/mvm/mac80211.c | 10 ++++++-
- 3 files changed, 31 insertions(+), 10 deletions(-)
+ sound/soc/codecs/cs42l51.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-index aaaabd67f9593..3709039a294d8 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.c
-@@ -1413,25 +1413,35 @@ _iwl_op_mode_start(struct iwl_drv *drv, struct iwlwifi_opmode_table *op)
- 	const struct iwl_op_mode_ops *ops = op->ops;
- 	struct dentry *dbgfs_dir = NULL;
- 	struct iwl_op_mode *op_mode = NULL;
-+	int retry, max_retry = !!iwlwifi_mod_params.fw_restart * IWL_MAX_INIT_RETRY;
+diff --git a/sound/soc/codecs/cs42l51.c b/sound/soc/codecs/cs42l51.c
+index e4827b8c2bde4..6e51954bdb1ec 100644
+--- a/sound/soc/codecs/cs42l51.c
++++ b/sound/soc/codecs/cs42l51.c
+@@ -747,8 +747,10 @@ int cs42l51_probe(struct device *dev, struct regmap *regmap)
  
- 	/* also protects start/stop from racing against each other */
- 	lockdep_assert_held(&iwlwifi_opmode_table_mtx);
- 
-+	for (retry = 0; retry <= max_retry; retry++) {
-+
- #ifdef CONFIG_IWLWIFI_DEBUGFS
--	drv->dbgfs_op_mode = debugfs_create_dir(op->name,
--						drv->dbgfs_drv);
--	dbgfs_dir = drv->dbgfs_op_mode;
-+		drv->dbgfs_op_mode = debugfs_create_dir(op->name,
-+							drv->dbgfs_drv);
-+		dbgfs_dir = drv->dbgfs_op_mode;
- #endif
- 
--	op_mode = ops->start(drv->trans, drv->trans->cfg,
--			     &drv->fw, dbgfs_dir);
--	if (op_mode)
--		return op_mode;
-+		op_mode = ops->start(drv->trans, drv->trans->cfg,
-+				     &drv->fw, dbgfs_dir);
-+
-+		if (op_mode)
-+			return op_mode;
-+
-+		if (test_bit(STATUS_TRANS_DEAD, &drv->trans->status))
-+			break;
-+
-+		IWL_ERR(drv, "retry init count %d\n", retry);
- 
- #ifdef CONFIG_IWLWIFI_DEBUGFS
--	debugfs_remove_recursive(drv->dbgfs_op_mode);
--	drv->dbgfs_op_mode = NULL;
-+		debugfs_remove_recursive(drv->dbgfs_op_mode);
-+		drv->dbgfs_op_mode = NULL;
- #endif
+ 	cs42l51->reset_gpio = devm_gpiod_get_optional(dev, "reset",
+ 						      GPIOD_OUT_LOW);
+-	if (IS_ERR(cs42l51->reset_gpio))
+-		return PTR_ERR(cs42l51->reset_gpio);
++	if (IS_ERR(cs42l51->reset_gpio)) {
++		ret = PTR_ERR(cs42l51->reset_gpio);
++		goto error;
 +	}
  
- 	return NULL;
- }
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-drv.h b/drivers/net/wireless/intel/iwlwifi/iwl-drv.h
-index 1549ff4295497..6a1d31892417b 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-drv.h
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-drv.h
-@@ -98,6 +98,9 @@ void iwl_drv_stop(struct iwl_drv *drv);
- #define VISIBLE_IF_IWLWIFI_KUNIT static
- #endif
+ 	if (cs42l51->reset_gpio) {
+ 		dev_dbg(dev, "Release reset gpio\n");
+@@ -780,6 +782,7 @@ int cs42l51_probe(struct device *dev, struct regmap *regmap)
+ 	return 0;
  
-+/* max retry for init flow */
-+#define IWL_MAX_INIT_RETRY 2
-+
- #define FW_NAME_PRE_BUFSIZE	64
- struct iwl_trans;
- const char *iwl_drv_get_fwname_pre(struct iwl_trans *trans, char *buf);
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index e38cff6176dd3..63b2c6fe3f8ab 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -1292,12 +1292,14 @@ int iwl_mvm_mac_start(struct ieee80211_hw *hw)
- {
- 	struct iwl_mvm *mvm = IWL_MAC80211_GET_MVM(hw);
- 	int ret;
-+	int retry, max_retry = 0;
- 
- 	mutex_lock(&mvm->mutex);
- 
- 	/* we are starting the mac not in error flow, and restart is enabled */
- 	if (!test_bit(IWL_MVM_STATUS_HW_RESTART_REQUESTED, &mvm->status) &&
- 	    iwlwifi_mod_params.fw_restart) {
-+		max_retry = IWL_MAX_INIT_RETRY;
- 		/*
- 		 * This will prevent mac80211 recovery flows to trigger during
- 		 * init failures
-@@ -1305,7 +1307,13 @@ int iwl_mvm_mac_start(struct ieee80211_hw *hw)
- 		set_bit(IWL_MVM_STATUS_STARTING, &mvm->status);
- 	}
- 
--	ret = __iwl_mvm_mac_start(mvm);
-+	for (retry = 0; retry <= max_retry; retry++) {
-+		ret = __iwl_mvm_mac_start(mvm);
-+		if (!ret)
-+			break;
-+
-+		IWL_ERR(mvm, "mac start retry %d\n", retry);
-+	}
- 	clear_bit(IWL_MVM_STATUS_STARTING, &mvm->status);
- 
- 	mutex_unlock(&mvm->mutex);
+ error:
++	gpiod_set_value_cansleep(cs42l51->reset_gpio, 1);
+ 	regulator_bulk_disable(ARRAY_SIZE(cs42l51->supplies),
+ 			       cs42l51->supplies);
+ 	return ret;
 -- 
 2.43.0
 
