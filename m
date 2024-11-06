@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E611E103C;
-	Wed,  6 Nov 2024 13:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E649D1E2842;
+	Wed,  6 Nov 2024 13:06:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898387; cv=none; b=o/GQraIjwf47a2fM0rEUaUj/awUzml3Cv6j+0eryRtrtMnMEHX3PonoRS5VKCXRk7/Tr9PVWBjVriH6nIQQnaWosx8r7oolQoOU7Tfnz/vqrchYYVRV12NzAznqZSvi0tLxH09rN+euqszAYVJQaJwSpPJ3STe0eSq1QPN12JBM=
+	t=1730898391; cv=none; b=A3QfSwsp99j/X2sshc1AY8DdqiUSqWidd1OcWGwDygf5G61sz8OLBmzr06Wnj6I18Cdfn2ml2BRZQrfr0kbINb8TNZIAIugNhlCEaqP/ewyGemwDJUzZxrGb6hUI35TuZnMf1QNhJ5xmo9fMqwUyGY7qBlHuZMCzXZ5wl0xwFjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898387; c=relaxed/simple;
-	bh=cGqmj7sVSuhlAUgPkl9AGLz/OOxyserceT0Rp6Gh/NI=;
+	s=arc-20240116; t=1730898391; c=relaxed/simple;
+	bh=i1QMSn2rsF2MvqedmjSouHI8czOHdbIoDjSR/ambpF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XWHJdRb8YBRq+p2BqI72KsveFn5QOgCqX2+nwv3A1BP+HK7yezt72k9y3wYovplmlVX599+pVbFItxePyle2AvWsSfssg+SEsEpHcCiDBn/YLz4odJ1xv4a5AGyLyiq3Ru2vg9YUcgIgvD7E+eacTQwjpoDENhM7QsMdEaA95T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nc4NB7A8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q1/zocbB5yTBdQslU7xZZEhA1eFYyRvAQCORwuEBoroHNUoqwYlitFDEJVDX4Ki1lbDrOfiOy60N56vI9rrx6N2MK7ybnFtp2LVQV6qbhlFZInPyIfrqhsUyo30Dn4Gipoo2k1M3UnJqgVZnonI1ITzg7Iu31zATMPLxcu4AU9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HuaF0yHP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nc4NB7A8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A75FC4CECD;
-	Wed,  6 Nov 2024 13:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HuaF0yHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37740C4CECD;
+	Wed,  6 Nov 2024 13:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898387;
-	bh=cGqmj7sVSuhlAUgPkl9AGLz/OOxyserceT0Rp6Gh/NI=;
+	s=korg; t=1730898390;
+	bh=i1QMSn2rsF2MvqedmjSouHI8czOHdbIoDjSR/ambpF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nc4NB7A8AFROunGl7jAgksfqKX39sR7belW0yLfC8GWGZS0xvcFhHW9o9G6RP/m6V
-	 tdzG3dAVXOZvrIUFzUBsIzJaEF+19FlQ8nRHpmi7NbbesiCevjoAVNUxNsrpuFgJw9
-	 LmvF0f6vMfIbuE5e5Q15d6YpOdtraAPJe0gCf2sI=
+	b=HuaF0yHPp42189wTo3zqY6LGAetoSE/ulLuFyeecT43yPZ3B8jvraA6sWjlYxiWEz
+	 HZfEmD66ft2MkI49YcHuyKkKg7WMGW5mCk8GbyYEEJmczTK/U5VNIsaVkvFQYAus4w
+	 9Uhfadn4+g+4+OdsF+l4o9nV9+h6k1VLidgiHfZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	Dhruva Gole <d-gole@ti.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Igor Pylypiv <ipylypiv@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 220/462] power: reset: brcmstb: Do not go into infinite loop if reset fails
-Date: Wed,  6 Nov 2024 13:01:53 +0100
-Message-ID: <20241106120336.955934507@linuxfoundation.org>
+Subject: [PATCH 5.4 221/462] ata: sata_sil: Rename sil_blacklist to sil_quirks
+Date: Wed,  6 Nov 2024 13:01:54 +0100
+Message-ID: <20241106120336.978622658@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -53,36 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Davis <afd@ti.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit cf8c39b00e982fa506b16f9d76657838c09150cb ]
+[ Upstream commit 93b0f9e11ce511353c65b7f924cf5f95bd9c3aba ]
 
-There may be other backup reset methods available, do not halt
-here so that other reset methods can be tried.
+Rename the array sil_blacklist to sil_quirks as this name is more
+neutral and is also consistent with how this driver define quirks with
+the SIL_QUIRK_XXX flags.
 
-Signed-off-by: Andrew Davis <afd@ti.com>
-Reviewed-by: Dhruva Gole <d-gole@ti.com>
-Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20240610142836.168603-5-afd@ti.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Igor Pylypiv <ipylypiv@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/reset/brcmstb-reboot.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/ata/sata_sil.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/power/reset/brcmstb-reboot.c b/drivers/power/reset/brcmstb-reboot.c
-index 884b53c483c09..9f8b9e5cad93a 100644
---- a/drivers/power/reset/brcmstb-reboot.c
-+++ b/drivers/power/reset/brcmstb-reboot.c
-@@ -72,9 +72,6 @@ static int brcmstb_restart_handler(struct notifier_block *this,
- 		return NOTIFY_DONE;
- 	}
+diff --git a/drivers/ata/sata_sil.c b/drivers/ata/sata_sil.c
+index 75321f1ceba52..fc438c4518fb7 100644
+--- a/drivers/ata/sata_sil.c
++++ b/drivers/ata/sata_sil.c
+@@ -128,7 +128,7 @@ static const struct pci_device_id sil_pci_tbl[] = {
+ static const struct sil_drivelist {
+ 	const char *product;
+ 	unsigned int quirk;
+-} sil_blacklist [] = {
++} sil_quirks[] = {
+ 	{ "ST320012AS",		SIL_QUIRK_MOD15WRITE },
+ 	{ "ST330013AS",		SIL_QUIRK_MOD15WRITE },
+ 	{ "ST340017AS",		SIL_QUIRK_MOD15WRITE },
+@@ -601,8 +601,8 @@ static void sil_thaw(struct ata_port *ap)
+  *	list, and apply the fixups to only the specific
+  *	devices/hosts/firmwares that need it.
+  *
+- *	20040111 - Seagate drives affected by the Mod15Write bug are blacklisted
+- *	The Maxtor quirk is in the blacklist, but I'm keeping the original
++ *	20040111 - Seagate drives affected by the Mod15Write bug are quirked
++ *	The Maxtor quirk is in sil_quirks, but I'm keeping the original
+  *	pessimistic fix for the following reasons...
+  *	- There seems to be less info on it, only one device gleaned off the
+  *	Windows	driver, maybe only one is affected.  More info would be greatly
+@@ -621,9 +621,9 @@ static void sil_dev_config(struct ata_device *dev)
  
--	while (1)
--		;
--
- 	return NOTIFY_DONE;
- }
+ 	ata_id_c_string(dev->id, model_num, ATA_ID_PROD, sizeof(model_num));
+ 
+-	for (n = 0; sil_blacklist[n].product; n++)
+-		if (!strcmp(sil_blacklist[n].product, model_num)) {
+-			quirks = sil_blacklist[n].quirk;
++	for (n = 0; sil_quirks[n].product; n++)
++		if (!strcmp(sil_quirks[n].product, model_num)) {
++			quirks = sil_quirks[n].quirk;
+ 			break;
+ 		}
  
 -- 
 2.43.0
