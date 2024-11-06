@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649911D416E;
-	Wed,  6 Nov 2024 12:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610AE1D416E;
+	Wed,  6 Nov 2024 12:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895208; cv=none; b=MweJhVKRBmQu1FmwJcBOF/OFjkfqsS8V80cihFlKlNo1any0UbBD8mSXoUz+QoIuqz1LUe9iWEc+PFAulJCrF0Tt0LojwTJbjLerrQ1HlrnFJ9zNt884a04GBmzcB68HrP5ywHxBbQI2xsiEYizbwFnDFeUjlrkEILZipbmpYWY=
+	t=1730895211; cv=none; b=HDqotEhujtbg4NQqRg2dHpvZ/d+wSy0neJh+Qr39fkZGDzojmREJRMDslOsMj+LyU2VeAUV64CmcNTR6MLKnEiLJjNAYqaG1RWC/6WKgCIYO8q/frwsWRLjoR3BJuCVYJZCh8uEu3xdIU04Xv7zdoQHj6SZULW7gc0XFsJnRD58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895208; c=relaxed/simple;
-	bh=cFiBECi12OdYLyILwmYwx34aqAET+7J+8eZKiU+JiD0=;
+	s=arc-20240116; t=1730895211; c=relaxed/simple;
+	bh=U+6DIisSM1sPEluEoJ2TQeyi6Ck2owR7cpP1dMKaP7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWEusNpJ+l6IeiXQsjX+uV8MndN1KlRaMF7NqyFEn8zgNcgESY8/+C5IfshasmVmT468snisLaQc/jssAtiVVfRvAbgfjrjMkLGs30J6VnLUTvty0CQCjFLSfutET02SeqOP1GvXDlAQmrEBCxLFKvM+ZVezVETvFICtVB3UbMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esCwrj8x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=px2KlT1dZ0ADHmNXx+MsbauSyo2cl1eZc63PoYf/BQ096e4G2rUbYVO71FYNrUwi9Owv9aoAvmZz55BFHLS2xONsYDGKMipWBn4TlGH4xVfeAOjm2j7zFouCiAkBKhfmNpaxUqUNaV/eQeLVokM+vmRUhhW49sCgwrBZRxIeCwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGqBXO0K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esCwrj8x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC0FC4CECD;
-	Wed,  6 Nov 2024 12:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGqBXO0K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA153C4CECD;
+	Wed,  6 Nov 2024 12:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895208;
-	bh=cFiBECi12OdYLyILwmYwx34aqAET+7J+8eZKiU+JiD0=;
+	s=korg; t=1730895211;
+	bh=U+6DIisSM1sPEluEoJ2TQeyi6Ck2owR7cpP1dMKaP7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=esCwrj8xh0s1sVYQXaksq9BWU70FBOayBIW1r9PCz0sg3s1Fd4KcQeKqBL2nBnr0f
-	 /tyc4wOepc1MPza2X9GenTv4x6w+97hvSoEHbRT5L5jRvPdJR9yRzn60/XqsnaZbtA
-	 XUzoxhYGntbvtNE7sI2ofoCMxIGx7nLtdo9Jz1Xc=
+	b=kGqBXO0Kpdv3xU52clEBpdXZEzdd5np64/l5DmjPZ9NbzVN+uNIGZg315I8T2puq0
+	 SuvhkE1ReYsNbvXZtebKMyXTsmyQ3oi652nxuXl0/dFjw9JPMfqcqX/h/EW0nupnXx
+	 hbciEQNv+9qf2RJHCwwSbAyWfPDvssZk0V3hWFbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Danilov <littlesmilingcloud@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
+	syzbot+f4e0f821e3a3b7cee51d@syzkaller.appspotmail.com,
+	Xin Long <lucien.xin@gmail.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 141/350] ipv4: ip_gre: Fix drops of small packets in ipgre_xmit
-Date: Wed,  6 Nov 2024 13:01:09 +0100
-Message-ID: <20241106120324.397946064@linuxfoundation.org>
+Subject: [PATCH 4.19 142/350] sctp: set sk_state back to CLOSED if autobind fails in sctp_listen_start
+Date: Wed,  6 Nov 2024 13:01:10 +0100
+Message-ID: <20241106120324.422789168@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,87 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anton Danilov <littlesmilingcloud@gmail.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit c4a14f6d9d17ad1e41a36182dd3b8a5fd91efbd7 ]
+[ Upstream commit 8beee4d8dee76b67c75dc91fd8185d91e845c160 ]
 
-Regression Description:
+In sctp_listen_start() invoked by sctp_inet_listen(), it should set the
+sk_state back to CLOSED if sctp_autobind() fails due to whatever reason.
 
-Depending on the options specified for the GRE tunnel device, small
-packets may be dropped. This occurs because the pskb_network_may_pull
-function fails due to the packet's insufficient length.
+Otherwise, next time when calling sctp_inet_listen(), if sctp_sk(sk)->reuse
+is already set via setsockopt(SCTP_REUSE_PORT), sctp_sk(sk)->bind_hash will
+be dereferenced as sk_state is LISTENING, which causes a crash as bind_hash
+is NULL.
 
-For example, if only the okey option is specified for the tunnel device,
-original (before encapsulation) packets smaller than 28 bytes (including
-the IPv4 header) will be dropped. This happens because the required
-length is calculated relative to the network header, not the skb->head.
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  RIP: 0010:sctp_inet_listen+0x7f0/0xa20 net/sctp/socket.c:8617
+  Call Trace:
+   <TASK>
+   __sys_listen_socket net/socket.c:1883 [inline]
+   __sys_listen+0x1b7/0x230 net/socket.c:1894
+   __do_sys_listen net/socket.c:1902 [inline]
 
-Here is how the required length is computed and checked:
-
-* The pull_len variable is set to 28 bytes, consisting of:
-  * IPv4 header: 20 bytes
-  * GRE header with Key field: 8 bytes
-
-* The pskb_network_may_pull function adds the network offset, shifting
-the checkable space further to the beginning of the network header and
-extending it to the beginning of the packet. As a result, the end of
-the checkable space occurs beyond the actual end of the packet.
-
-Instead of ensuring that 28 bytes are present in skb->head, the function
-is requesting these 28 bytes starting from the network header. For small
-packets, this requested length exceeds the actual packet size, causing
-the check to fail and the packets to be dropped.
-
-This issue affects both locally originated and forwarded packets in
-DMVPN-like setups.
-
-How to reproduce (for local originated packets):
-
-  ip link add dev gre1 type gre ikey 1.9.8.4 okey 1.9.8.4 \
-          local <your-ip> remote 0.0.0.0
-
-  ip link set mtu 1400 dev gre1
-  ip link set up dev gre1
-  ip address add 192.168.13.1/24 dev gre1
-  ip neighbor add 192.168.13.2 lladdr <remote-ip> dev gre1
-  ping -s 1374 -c 10 192.168.13.2
-  tcpdump -vni gre1
-  tcpdump -vni <your-ext-iface> 'ip proto 47'
-  ip -s -s -d link show dev gre1
-
-Solution:
-
-Use the pskb_may_pull function instead the pskb_network_may_pull.
-
-Fixes: 80d875cfc9d3 ("ipv4: ip_gre: Avoid skb_pull() failure in ipgre_xmit()")
-Signed-off-by: Anton Danilov <littlesmilingcloud@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240924235158.106062-1-littlesmilingcloud@gmail.com
+Fixes: 5e8f3f703ae4 ("sctp: simplify sctp listening code")
+Reported-by: syzbot+f4e0f821e3a3b7cee51d@syzkaller.appspotmail.com
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Link: https://patch.msgid.link/a93e655b3c153dc8945d7a812e6d8ab0d52b7aa0.1727729391.git.lucien.xin@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/sctp/socket.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index 2f5d2109c9192..ea30393c8c66c 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -711,11 +711,11 @@ static netdev_tx_t ipgre_xmit(struct sk_buff *skb,
- 		if (skb_cow_head(skb, 0))
- 			goto free_skb;
- 
--		tnl_params = (const struct iphdr *)skb->data;
--
--		if (!pskb_network_may_pull(skb, pull_len))
-+		if (!pskb_may_pull(skb, pull_len))
- 			goto free_skb;
- 
-+		tnl_params = (const struct iphdr *)skb->data;
-+
- 		/* ip_tunnel_xmit() needs skb->data pointing to gre header. */
- 		skb_pull(skb, pull_len);
- 		skb_reset_mac_header(skb);
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index c429a1a2bfe23..421b0340b6310 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -7845,8 +7845,10 @@ static int sctp_listen_start(struct sock *sk, int backlog)
+ 	 */
+ 	inet_sk_set_state(sk, SCTP_SS_LISTENING);
+ 	if (!ep->base.bind_addr.port) {
+-		if (sctp_autobind(sk))
++		if (sctp_autobind(sk)) {
++			inet_sk_set_state(sk, SCTP_SS_CLOSED);
+ 			return -EAGAIN;
++		}
+ 	} else {
+ 		if (sctp_get_port(sk, inet_sk(sk)->inet_num)) {
+ 			inet_sk_set_state(sk, SCTP_SS_CLOSED);
 -- 
 2.43.0
 
