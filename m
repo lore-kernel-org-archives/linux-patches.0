@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17DBF54765;
-	Wed,  6 Nov 2024 13:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11BE1DED7C;
+	Wed,  6 Nov 2024 13:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899100; cv=none; b=pqPfAf+TOpskgVq3lIcaR1wTiX4IrLG0WDoguxf5H4evEk+xM8Xe8N98Geket8xVR1LYRm1S2Gb6XLGQI1zpuGTgl/i08NaXANA77InctGdOfpL0vcOfXOnBEXxiIEeqJYhaPlCEsfc722WnpvBLdLG0qEQEcGFaThUpik4kbeA=
+	t=1730899103; cv=none; b=ebnDIPM0A+5UBUH31LxbYAJrZGgs+k568ltb1N4bNuZ0Y6j+H7DnbOpYyaywFoEfggV1AoT3uSYi189xW1FgabK737smzaquETpN4fJHq0fe9SVANIJosqmSLPqkDl5qoeomIieozgQLHsy31NhOz6xjd43NfNWolTq11GnKI7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899100; c=relaxed/simple;
-	bh=Cj73cU7fpnqjKLkcoxkWVf988qYGhpoXnGW1LcGJ+cw=;
+	s=arc-20240116; t=1730899103; c=relaxed/simple;
+	bh=ExSeAd+C7zMMX5S/1qPo/ibgPWMKWQg52bKBWoOrVl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sc0kI8/2VDhO/kZ/I7kHPWeMl4MQwpwwvqPrqt9Rl2zY+MfCPHGVuqFY/Ymg+74HuQrdwK9g/sWaMEqlI+5fIQI+XcRJon9FGDf7BWqVOdtr9Xl7x5n3of7nKCa3YBYGGyg2zNckMxcw4VpfHlNrZdmq9UZp6vj2bgPTyR8wGwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obJAXGH1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=koHfMgma/ZwQA6Q/uZ0fZVScP3ZN/9BshtjsSRSkpt0nhRVlIGEbFestXBoBH5KvWHMWysLwBqVFfghZeWQBK09IvpsVbyTfuJBUqgVjYsFkQM8IXMKiYIOlaWSQm4py0jvHWQzj3vUmu8xMMnEOqEyt3nOrRIJ94iPkW9Y0XgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qt3hUWby; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obJAXGH1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EBE5C4CECD;
-	Wed,  6 Nov 2024 13:18:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qt3hUWby"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37735C4CED3;
+	Wed,  6 Nov 2024 13:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899099;
-	bh=Cj73cU7fpnqjKLkcoxkWVf988qYGhpoXnGW1LcGJ+cw=;
+	s=korg; t=1730899102;
+	bh=ExSeAd+C7zMMX5S/1qPo/ibgPWMKWQg52bKBWoOrVl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=obJAXGH1uC3uueG55a2ZFBjAIHNKUBb5AFkho/prODjcMzCyR4CZtNM52luQ7nAFK
-	 n4jdXEMuUC/epfm/GmzvTXm5kkW7J2c5KtlhC9h44x77XTAfek3Y9al9WQYFrLy+U3
-	 /TyEKotcqmCG/el5EJ10KfUiM15aBjBOi70d/smg=
+	b=qt3hUWbyr5deD1cy0PIOYot5Jt8nKfXk5KxFSBqu0YpcAA9FV8fptXFqmZKOccE7H
+	 Hw5WAYDBw/1M1OUqMErvHAi64PxiH4BZNrXdRYv0jEcjg/DvXQmcIIZctlGbEKVFQV
+	 mngN24SKo9b0Zrvp8IAi9GcV+/h18bQSCksLizTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+955da2d57931604ee691@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>
-Subject: [PATCH 5.4 460/462] vt: prevent kernel-infoleak in con_font_get()
-Date: Wed,  6 Nov 2024 13:05:53 +0100
-Message-ID: <20241106120342.866094000@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.4 461/462] mac80211: always have ieee80211_sta_restart()
+Date: Wed,  6 Nov 2024 13:05:54 +0100
+Message-ID: <20241106120342.891262425@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -50,35 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit f956052e00de211b5c9ebaa1958366c23f82ee9e upstream.
+commit 3fa5a0f5b0d69e31c6476cd81afeca3cc25a4927 upstream.
 
-font.data may not initialize all memory spaces depending on the implementation
-of vc->vc_sw->con_font_get. This may cause info-leak, so to prevent this, it
-is safest to modify it to initialize the allocated memory space to 0, and it
-generally does not affect the overall performance of the system.
+When CONFIG_PM isn't defined we don't have the function
+ieee80211_sta_restart() compiled in, but we always need
+it now for firmware restart. Move it out of the ifdef.
 
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+955da2d57931604ee691@syzkaller.appspotmail.com
-Fixes: 05e2600cb0a4 ("VT: Bump font size limitation to 64x128 pixels")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Link: https://lore.kernel.org/r/20241010174619.59662-1-aha310510@gmail.com
+Fixes: 7d352ccf1e99 ("mac80211: Add support to trigger sta disconnect on hardware restart")
+Link: https://lore.kernel.org/r/20220312221957.1fa96c72db51.I8ecaa5f9402fede0272161e0531ab930b97fba3e@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/vt.c |    2 +-
+ net/mac80211/mlme.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -4519,7 +4519,7 @@ static int con_font_get(struct vc_data *
- 	int c;
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -4563,6 +4563,7 @@ void ieee80211_mgd_quiesce(struct ieee80
  
- 	if (op->data) {
--		font.data = kmalloc(max_font_size, GFP_KERNEL);
-+		font.data = kzalloc(max_font_size, GFP_KERNEL);
- 		if (!font.data)
- 			return -ENOMEM;
- 	} else
+ 	sdata_unlock(sdata);
+ }
++#endif
+ 
+ void ieee80211_sta_restart(struct ieee80211_sub_if_data *sdata)
+ {
+@@ -4598,7 +4599,6 @@ void ieee80211_sta_restart(struct ieee80
+ 
+ 	sdata_unlock(sdata);
+ }
+-#endif
+ 
+ /* interface setup */
+ void ieee80211_sta_setup_sdata(struct ieee80211_sub_if_data *sdata)
 
 
