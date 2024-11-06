@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021B41DE3B8;
-	Wed,  6 Nov 2024 12:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938761DF24E;
+	Wed,  6 Nov 2024 12:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895191; cv=none; b=djbOghiALbdiDhySJKqQk+9XUy78oepf53jefgRxS1a+kmrlYblwpwgaNlP0/86OEFHmbIp8Nzn7LzCnkuSoBX+xUFR80yXlkLFu+rNnPzW0bBhuXyqukJY1C3blOdUAnGo+6xlo1In9vONEMV7aJppzbWUjYi5HOVFazj7JNAU=
+	t=1730895193; cv=none; b=RrXG6EyTJlpnF4vqnV63GL//AWC5q8eUaCzwJ4yNvXG2iZdkcRTwUTT6GN0pBwZ7M+XHv2JttTAmqrW6Bt0UNyZv/HzpE8bsxun3pic1cNDu5XQe2+yUgzOrIOZX2pSERkkIVr17c2in8ZQ3cw/ZA0gli/8RMhZllqQlthneJCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895191; c=relaxed/simple;
-	bh=mriAJ9Ou/EoDUeUkiuIjQyX36qnSF4BJH/m7h/gxPkQ=;
+	s=arc-20240116; t=1730895193; c=relaxed/simple;
+	bh=vWILMgTlg1g10ZoDqF9FL/04UaAc2aVo0MdJ8c79U80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pW66FR5HE5P7rZkVpTMuy04VmmzBpb7ct8S2+sFgHdlsjqeA+NoEhOhwavORw7GV4Egcnp3g4IoSKT4IGeP6CUexf9Fg5WpZzwfDEgbzMyvFernYRFUPWWPZdvPAoN4eQ61vWGZ5NBkmb/2daIoT3F74wwaGD9CgBnZ6lz7CVVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mkhvfzsn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jgGNtKXA1TgDX2Ifpmmpknp3SymZPRtDJgoBBp60K4Glq7sYDziAWqunTE5wSNC18B8yIumV1qBRJoLRJWHDoQB6dT9SpA5yGSLK+oqm8oDjgLH7hB1h48Sja5e+pXaiDlubGvXn9zsJVUkskltA2XetcInrMw6CWqpr31K52/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mckB83Xj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mkhvfzsn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6677C4CECD;
-	Wed,  6 Nov 2024 12:13:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mckB83Xj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171C2C4CECD;
+	Wed,  6 Nov 2024 12:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895190;
-	bh=mriAJ9Ou/EoDUeUkiuIjQyX36qnSF4BJH/m7h/gxPkQ=;
+	s=korg; t=1730895193;
+	bh=vWILMgTlg1g10ZoDqF9FL/04UaAc2aVo0MdJ8c79U80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MkhvfzsnP7b/0TpUAqfs9l/eIXOtBQ4hqTk6XAAOZqLZvKnRSFUyzzxBTRR4K/Vik
-	 tN0NMxTOOE9oaIKSTsYGYCi2wa6ELpOp7l5Uw1SPfGaG8mRWWBKgNIE94PlX8G38Vj
-	 3gBpuJJGyVTKwNR0fbpN91w9Uk0DOgyRxNpp+7AM=
+	b=mckB83XjgqC+KqA+Wg6nxOTJbTrBe0mzigzKRpygpywmXHq9zmuLUqkVLJU7P1XvZ
+	 D+eNVdjb8ykaubVsor7crB10Vi2FqpiMnq7N6moNivRENe0jgqcMgQUtQ+luxA21nD
+	 DGkT/BPr4p8UciJYxilIoLxdX3DjQtwdEads4QXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 097/350] f2fs: remove unneeded check condition in __f2fs_setxattr()
-Date: Wed,  6 Nov 2024 13:00:25 +0100
-Message-ID: <20241106120323.298512856@linuxfoundation.org>
+Subject: [PATCH 4.19 088/350] clk: ti: dra7-atl: Fix leak of of_nodes
+Date: Wed,  6 Nov 2024 13:00:16 +0100
+Message-ID: <20241106120323.070835852@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,34 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: David Lechner <dlechner@baylibre.com>
 
-[ Upstream commit bc3994ffa4cf23f55171943c713366132c3ff45d ]
+[ Upstream commit 9d6e9f10e2e031fb7bfb3030a7d1afc561a28fea ]
 
-It has checked return value of write_all_xattrs(), remove unneeded
-following check condition.
+This fix leaking the of_node references in of_dra7_atl_clk_probe().
 
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: aaf8c0b9ae04 ("f2fs: reduce expensive checkpoint trigger frequency")
+The docs for of_parse_phandle_with_args() say that the caller must call
+of_node_put() on the returned node. This adds the missing of_node_put()
+to fix the leak.
+
+Fixes: 9ac33b0ce81f ("CLK: TI: Driver for DRA7 ATL (Audio Tracking Logic)")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Link: https://lore.kernel.org/r/20240826-clk-fix-leak-v1-1-f55418a13aa6@baylibre.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/xattr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/ti/clk-dra7-atl.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/f2fs/xattr.c b/fs/f2fs/xattr.c
-index 00af34ba8561e..5b8ce9c7a5dc2 100644
---- a/fs/f2fs/xattr.c
-+++ b/fs/f2fs/xattr.c
-@@ -732,7 +732,7 @@ static int __f2fs_setxattr(struct inode *inode, int index,
- 	if (index == F2FS_XATTR_INDEX_ENCRYPTION &&
- 			!strcmp(name, F2FS_XATTR_NAME_ENCRYPTION_CONTEXT))
- 		f2fs_set_encrypted_inode(inode);
--	if (!error && S_ISDIR(inode->i_mode))
-+	if (S_ISDIR(inode->i_mode))
- 		set_sbi_flag(F2FS_I_SB(inode), SBI_NEED_CP);
+diff --git a/drivers/clk/ti/clk-dra7-atl.c b/drivers/clk/ti/clk-dra7-atl.c
+index a4b6f3ac2d34a..afd71c894150b 100644
+--- a/drivers/clk/ti/clk-dra7-atl.c
++++ b/drivers/clk/ti/clk-dra7-atl.c
+@@ -257,6 +257,7 @@ static int of_dra7_atl_clk_probe(struct platform_device *pdev)
+ 		}
  
- same:
+ 		clk = of_clk_get_from_provider(&clkspec);
++		of_node_put(clkspec.np);
+ 		if (IS_ERR(clk)) {
+ 			pr_err("%s: failed to get atl clock %d from provider\n",
+ 			       __func__, i);
 -- 
 2.43.0
 
