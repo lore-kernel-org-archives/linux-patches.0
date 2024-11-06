@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D511DFE38;
-	Wed,  6 Nov 2024 12:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BE41EE00F;
+	Wed,  6 Nov 2024 12:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897250; cv=none; b=jAtxZoBiYnPLfXYsj3UFyTabZFo1kFTBBUZB0jodx+GgLDNI1OuG31Abj3UPcgsA2HiFWMOamQR8E5JQEDRj/WCYWRq4io6ytLYxrdptADKyR0SJPxSFmPrH8kZq68jm7yK43cQ1J6AVG62vBY2drG0QXhSRBSXp6gisBZmjhBE=
+	t=1730897254; cv=none; b=QyFRTJpHibTL055gqJ5e0miUlOSHddtx5pIlsHGSqjYiG4O1ai1R6Ut4nxteFkZANJpVuyUBGjzn4jk2t2glv+z1QwvP8Gv5pMrLW3rXcBXNoL9N4cCOw1yReq4s0fmFcdQsdcO3gTR6icOay5pkXpTHOelbld2ITsnD2unctuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897250; c=relaxed/simple;
-	bh=rXWCo1/xFTCIMd37e43tnX3x+AviXF1tYjAQAAa8sZU=;
+	s=arc-20240116; t=1730897254; c=relaxed/simple;
+	bh=9nJv/kUUVM4jJcMZtD8DQfUF4lseZjiXmC4hvCFKb4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F2P+cmzVkQl8CRqFoNuP14G7AnpKaCnKs3qkEB/0SAeMsgVq+IY3wL8WNX39wQf80GDvjY2INq7oKp2jTyE72ptWyNLX2l7DNhzU9XHTnJjFIGRe+f16F0eXHlUNdDUxnj7ebIcWSrErz8dze4DGe+eAVUWebkLH7AulkhZWS2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xH/dy5Yc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HkSxFL5HLGCQx8QKMsZX9/GY0HJBlp0QujaYlvBgS/+DxAv5tpwzQI6G34AS03AUb+/tw+mKXs1/uyCdOtuL0hA1mOgGKVwOM35YhDKyP+hX4sabozUmMDLAgObfbf5epRMKxvXJ7VDOofrR7ldCFP+7ixP5U2L9CiwQ6zxcnrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ld2UcbF5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xH/dy5Yc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E11DC4CECD;
-	Wed,  6 Nov 2024 12:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ld2UcbF5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1361FC4CECD;
+	Wed,  6 Nov 2024 12:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897250;
-	bh=rXWCo1/xFTCIMd37e43tnX3x+AviXF1tYjAQAAa8sZU=;
+	s=korg; t=1730897253;
+	bh=9nJv/kUUVM4jJcMZtD8DQfUF4lseZjiXmC4hvCFKb4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xH/dy5YcYgTgXb0HRhH6ghbbnufdaE2acRiSTpfLovZN60dIKE1vgsJB19psdtmei
-	 +5BWk8EEKbNDapiz14q120CgVQPDMo8vNG555mStV+WSUTK+v7HMq2dLAEZAorjFxQ
-	 Fq1uUwKJUHnaRS0DfauSpPBxZ8H7r4RmUfWSoi6s=
+	b=ld2UcbF56F2DFjGPkEQuYHCZS/abQnCBNlyk9nyghhGN3viXj+oxJN/AeIXIV9L3E
+	 BqglRudFxXPRsKgEFakuFMVjg9zlHxon2DWVCe0vcfvSbXO4W2QZvul4Fb9FFnaHe5
+	 QYaU/xL0I+3kESkO9hAF0tYMHYxfFmVPJT4gjxoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xinyu Zhang <xizhang@purestorage.com>,
-	Uday Shankar <ushankar@purestorage.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/126] block: fix sanity checks in blk_rq_map_user_bvec
-Date: Wed,  6 Nov 2024 13:04:41 +0100
-Message-ID: <20241106120308.243891002@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ashish Sangwan <a.sangwan@samsung.com>,
+	Namjae Jeon <namjae.jeon@samsung.com>,
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 6.1 071/126] Revert "driver core: Fix uevent_show() vs driver detach race"
+Date: Wed,  6 Nov 2024 13:04:32 +0100
+Message-ID: <20241106120308.008333876@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -52,59 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xinyu Zhang <xizhang@purestorage.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 2ff949441802a8d076d9013c7761f63e8ae5a9bd ]
+commit 9a71892cbcdb9d1459c84f5a4c722b14354158a5 upstream.
 
-blk_rq_map_user_bvec contains a check bytes + bv->bv_len > nr_iter which
-causes unnecessary failures in NVMe passthrough I/O, reproducible as
-follows:
+This reverts commit 15fffc6a5624b13b428bb1c6e9088e32a55eb82c.
 
-- register a 2 page, page-aligned buffer against a ring
-- use that buffer to do a 1 page io_uring NVMe passthrough read
+This commit causes a regression, so revert it for now until it can come
+back in a way that works for everyone.
 
-The second (i = 1) iteration of the loop in blk_rq_map_user_bvec will
-then have nr_iter == 1 page, bytes == 1 page, bv->bv_len == 1 page, so
-the check bytes + bv->bv_len > nr_iter will succeed, causing the I/O to
-fail. This failure is unnecessary, as when the check succeeds, it means
-we've checked the entire buffer that will be used by the request - i.e.
-blk_rq_map_user_bvec should complete successfully. Therefore, terminate
-the loop early and return successfully when the check bytes + bv->bv_len
-> nr_iter succeeds.
-
-While we're at it, also remove the check that all segments in the bvec
-are single-page. While this seems to be true for all users of the
-function, it doesn't appear to be required anywhere downstream.
-
-CC: stable@vger.kernel.org
-Signed-off-by: Xinyu Zhang <xizhang@purestorage.com>
-Co-developed-by: Uday Shankar <ushankar@purestorage.com>
-Signed-off-by: Uday Shankar <ushankar@purestorage.com>
-Fixes: 37987547932c ("block: extend functionality to map bvec iterator")
-Link: https://lore.kernel.org/r/20241023211519.4177873-1-ushankar@purestorage.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/all/172790598832.1168608.4519484276671503678.stgit@dwillia2-xfh.jf.intel.com/
+Fixes: 15fffc6a5624 ("driver core: Fix uevent_show() vs driver detach race")
+Cc: stable <stable@kernel.org>
+Cc: Ashish Sangwan <a.sangwan@samsung.com>
+Cc: Namjae Jeon <namjae.jeon@samsung.com>
+Cc: Dirk Behme <dirk.behme@de.bosch.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-map.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/base/core.c   |   13 +++++--------
+ drivers/base/module.c |    4 ----
+ 2 files changed, 5 insertions(+), 12 deletions(-)
 
-diff --git a/block/blk-map.c b/block/blk-map.c
-index b337ae347bfa3..a2fa387560375 100644
---- a/block/blk-map.c
-+++ b/block/blk-map.c
-@@ -597,9 +597,7 @@ static int blk_rq_map_user_bvec(struct request *rq, const struct iov_iter *iter)
- 		if (nsegs >= nr_segs || bytes > UINT_MAX - bv->bv_len)
- 			goto put_bio;
- 		if (bytes + bv->bv_len > nr_iter)
--			goto put_bio;
--		if (bv->bv_offset + bv->bv_len > PAGE_SIZE)
--			goto put_bio;
-+			break;
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -25,7 +25,6 @@
+ #include <linux/mutex.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/netdevice.h>
+-#include <linux/rcupdate.h>
+ #include <linux/sched/signal.h>
+ #include <linux/sched/mm.h>
+ #include <linux/swiotlb.h>
+@@ -2559,7 +2558,6 @@ static const char *dev_uevent_name(struc
+ static int dev_uevent(struct kobject *kobj, struct kobj_uevent_env *env)
+ {
+ 	struct device *dev = kobj_to_dev(kobj);
+-	struct device_driver *driver;
+ 	int retval = 0;
  
- 		nsegs++;
- 		bytes += bv->bv_len;
--- 
-2.43.0
-
+ 	/* add device node properties if present */
+@@ -2588,12 +2586,8 @@ static int dev_uevent(struct kobject *ko
+ 	if (dev->type && dev->type->name)
+ 		add_uevent_var(env, "DEVTYPE=%s", dev->type->name);
+ 
+-	/* Synchronize with module_remove_driver() */
+-	rcu_read_lock();
+-	driver = READ_ONCE(dev->driver);
+-	if (driver)
+-		add_uevent_var(env, "DRIVER=%s", driver->name);
+-	rcu_read_unlock();
++	if (dev->driver)
++		add_uevent_var(env, "DRIVER=%s", dev->driver->name);
+ 
+ 	/* Add common DT information about the device */
+ 	of_device_uevent(dev, env);
+@@ -2663,8 +2657,11 @@ static ssize_t uevent_show(struct device
+ 	if (!env)
+ 		return -ENOMEM;
+ 
++	/* Synchronize with really_probe() */
++	device_lock(dev);
+ 	/* let the kset specific function add its keys */
+ 	retval = kset->uevent_ops->uevent(&dev->kobj, env);
++	device_unlock(dev);
+ 	if (retval)
+ 		goto out;
+ 
+--- a/drivers/base/module.c
++++ b/drivers/base/module.c
+@@ -7,7 +7,6 @@
+ #include <linux/errno.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
+-#include <linux/rcupdate.h>
+ #include "base.h"
+ 
+ static char *make_driver_name(struct device_driver *drv)
+@@ -78,9 +77,6 @@ void module_remove_driver(struct device_
+ 	if (!drv)
+ 		return;
+ 
+-	/* Synchronize with dev_uevent() */
+-	synchronize_rcu();
+-
+ 	sysfs_remove_link(&drv->p->kobj, "module");
+ 
+ 	if (drv->owner)
 
 
