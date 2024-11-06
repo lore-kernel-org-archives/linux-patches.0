@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF361F9414;
-	Wed,  6 Nov 2024 13:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D127D1F9422;
+	Wed,  6 Nov 2024 13:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898305; cv=none; b=H3cGLfIJGrugVk8nkTpVoQLE+v6gXwUHuht9eQmWHDLu86/VR7mLmD8gnOPF3FcSal1o3d/ASw3QaZl2pmJgyYx2d0EYmhMAsdOR7TyE/Srvekajnsmi6s/V86p+WI33uGBVUgCerWYfFaxJXRmF/0Sy9N0CJhjwEM03KbN/Kqw=
+	t=1730898307; cv=none; b=jr5dLEbz0f8+oY6lPCnvTLGlc92RoD9AT68kCe9lqx6kSnHXYpaDm4ogXWyfwtTF+EGT6YuF3wPe+zu0zkdLu7NJofXDiJpWElDfGVPtcwsDxxEVOAKSgWMWi7PmI5dabPZCjEIcfVrGh6hB05wmmFwUVuPH5FqTVDqHpim7kNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898305; c=relaxed/simple;
-	bh=kYMt2D0lG2DWf3AOT57s8ZV4koJsoVTVjaghWUpuEWs=;
+	s=arc-20240116; t=1730898307; c=relaxed/simple;
+	bh=PbAQ502crNQxzM1H5eMmCnKhj6fnco+pzhKzLFBvQE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mL4T/JPtxmFFTWS6GJ95nqaTBmV/WgUlz+7XxelYcTWkoWgn17qbmjB6zh342Lx5e+6F+dsJNRCJDLMbd4jGjB93tw9oVBjNjB7y5H5pI+ZCCwp5SYHpU11pk/2McpMnUTQ1Xn6eaSR7uYEfXKKVh3ZnUZbNUhpUw1cnM3MMwQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISzt52LW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YNWWx7zdDpaYfTENvMOTuH8PL9TZT+sWynJbSavvBboSLp+m3nx/QuP9zJU0fSmY5KtpYrOusxQBrqhZqaOB2FCS1GrIJ/oGOpr2su3NJBQ3SVvTGVTD/jdV7aaO4a6F7LOqwJ7RXJE0wCO4jMyZ3uRF1N93pJSnv4ut1K8A5RA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gKgr1BYF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISzt52LW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24EDEC4CECD;
-	Wed,  6 Nov 2024 13:05:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gKgr1BYF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E074C4CECD;
+	Wed,  6 Nov 2024 13:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898304;
-	bh=kYMt2D0lG2DWf3AOT57s8ZV4koJsoVTVjaghWUpuEWs=;
+	s=korg; t=1730898307;
+	bh=PbAQ502crNQxzM1H5eMmCnKhj6fnco+pzhKzLFBvQE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ISzt52LWXlRhXgaZIxGdwmQkakUwOHBUS79+XRPG1Jh1Lj4v6AhUbWIeSKzkhKU20
-	 750lbKaJWb2Oa3m5oNALEtIxJzlwKjjQ8CobxupdBhlkDQcq6eVDhrNiHyXiCo63rY
-	 rOavZL+Jbu72NzLs5eKJ5q9QWzSaqe4I7ZdtGvac=
+	b=gKgr1BYFhEc9KIq0FPKdpbfa+b1t1RsnTfb6QN7Vq9WPk0miNUpeOWGlfi9+2p7wY
+	 8Qy+F8JNXpnBXMlm/rWQRVP/+hzq4HGCOiM3xz7HxuJfG7CAwa4NBt5oFBqBhX1/G/
+	 h00jhRe0vFm4oWezCA7wEWLCXXYG706gAc5W/p1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+67ba3c42bcbb4665d3ad@syzkaller.appspotmail.com,
-	Julian Sun <sunjunchao2870@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.4 156/462] vfs: fix race between evice_inodes() and find_inode()&iput()
-Date: Wed,  6 Nov 2024 13:00:49 +0100
-Message-ID: <20241106120335.373175646@linuxfoundation.org>
+	Qiu-ji Chen <chenqiuji666@gmail.com>,
+	Philipp Reisner <philipp.reisner@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.4 147/462] drbd: Fix atomicity violation in drbd_uuid_set_bm()
+Date: Wed,  6 Nov 2024 13:00:40 +0100
+Message-ID: <20241106120335.142812965@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,91 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Sun <sunjunchao2870@gmail.com>
+From: Qiu-ji Chen <chenqiuji666@gmail.com>
 
-commit 88b1afbf0f6b221f6c5bb66cc80cd3b38d696687 upstream.
+commit 2f02b5af3a4482b216e6a466edecf6ba8450fa45 upstream.
 
-Hi, all
+The violation of atomicity occurs when the drbd_uuid_set_bm function is
+executed simultaneously with modifying the value of
+device->ldev->md.uuid[UI_BITMAP]. Consider a scenario where, while
+device->ldev->md.uuid[UI_BITMAP] passes the validity check when its
+value is not zero, the value of device->ldev->md.uuid[UI_BITMAP] is
+written to zero. In this case, the check in drbd_uuid_set_bm might refer
+to the old value of device->ldev->md.uuid[UI_BITMAP] (before locking),
+which allows an invalid value to pass the validity check, resulting in
+inconsistency.
 
-Recently I noticed a bug[1] in btrfs, after digged it into
-and I believe it'a race in vfs.
+To address this issue, it is recommended to include the data validity
+check within the locked section of the function. This modification
+ensures that the value of device->ldev->md.uuid[UI_BITMAP] does not
+change during the validation process, thereby maintaining its integrity.
 
-Let's assume there's a inode (ie ino 261) with i_count 1 is
-called by iput(), and there's a concurrent thread calling
-generic_shutdown_super().
+This possible bug is found by an experimental static analysis tool
+developed by our team. This tool analyzes the locking APIs to extract
+function pairs that can be concurrently executed, and then analyzes the
+instructions in the paired functions to identify possible concurrency
+bugs including data races and atomicity violations.
 
-cpu0:                              cpu1:
-iput() // i_count is 1
-  ->spin_lock(inode)
-  ->dec i_count to 0
-  ->iput_final()                    generic_shutdown_super()
-    ->__inode_add_lru()               ->evict_inodes()
-      // cause some reason[2]           ->if (atomic_read(inode->i_count)) continue;
-      // return before                  // inode 261 passed the above check
-      // list_lru_add_obj()             // and then schedule out
-   ->spin_unlock()
-// note here: the inode 261
-// was still at sb list and hash list,
-// and I_FREEING|I_WILL_FREE was not been set
-
-btrfs_iget()
-  // after some function calls
-  ->find_inode()
-    // found the above inode 261
-    ->spin_lock(inode)
-   // check I_FREEING|I_WILL_FREE
-   // and passed
-      ->__iget()
-    ->spin_unlock(inode)                // schedule back
-                                        ->spin_lock(inode)
-                                        // check (I_NEW|I_FREEING|I_WILL_FREE) flags,
-                                        // passed and set I_FREEING
-iput()                                  ->spin_unlock(inode)
-  ->spin_lock(inode)			  ->evict()
-  // dec i_count to 0
-  ->iput_final()
-    ->spin_unlock()
-    ->evict()
-
-Now, we have two threads simultaneously evicting
-the same inode, which may trigger the BUG(inode->i_state & I_CLEAR)
-statement both within clear_inode() and iput().
-
-To fix the bug, recheck the inode->i_count after holding i_lock.
-Because in the most scenarios, the first check is valid, and
-the overhead of spin_lock() can be reduced.
-
-If there is any misunderstanding, please let me know, thanks.
-
-[1]: https://lore.kernel.org/linux-btrfs/000000000000eabe1d0619c48986@google.com/
-[2]: The reason might be 1. SB_ACTIVE was removed or 2. mapping_shrinkable()
-return false when I reproduced the bug.
-
-Reported-by: syzbot+67ba3c42bcbb4665d3ad@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=67ba3c42bcbb4665d3ad
-CC: stable@vger.kernel.org
-Fixes: 63997e98a3be ("split invalidate_inodes()")
-Signed-off-by: Julian Sun <sunjunchao2870@gmail.com>
-Link: https://lore.kernel.org/r/20240823130730.658881-1-sunjunchao2870@gmail.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 9f2247bb9b75 ("drbd: Protect accesses to the uuid set with a spinlock")
+Cc: stable@vger.kernel.org
+Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
+Reviewed-by: Philipp Reisner <philipp.reisner@linbit.com>
+Link: https://lore.kernel.org/r/20240913083504.10549-1-chenqiuji666@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/inode.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/block/drbd/drbd_main.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -667,6 +667,10 @@ again:
- 			continue;
+--- a/drivers/block/drbd/drbd_main.c
++++ b/drivers/block/drbd/drbd_main.c
+@@ -3509,10 +3509,12 @@ void drbd_uuid_new_current(struct drbd_d
+ void drbd_uuid_set_bm(struct drbd_device *device, u64 val) __must_hold(local)
+ {
+ 	unsigned long flags;
+-	if (device->ldev->md.uuid[UI_BITMAP] == 0 && val == 0)
++	spin_lock_irqsave(&device->ldev->md.uuid_lock, flags);
++	if (device->ldev->md.uuid[UI_BITMAP] == 0 && val == 0) {
++		spin_unlock_irqrestore(&device->ldev->md.uuid_lock, flags);
+ 		return;
++	}
  
- 		spin_lock(&inode->i_lock);
-+		if (atomic_read(&inode->i_count)) {
-+			spin_unlock(&inode->i_lock);
-+			continue;
-+		}
- 		if (inode->i_state & (I_NEW | I_FREEING | I_WILL_FREE)) {
- 			spin_unlock(&inode->i_lock);
- 			continue;
+-	spin_lock_irqsave(&device->ldev->md.uuid_lock, flags);
+ 	if (val == 0) {
+ 		drbd_uuid_move_history(device);
+ 		device->ldev->md.uuid[UI_HISTORY_START] = device->ldev->md.uuid[UI_BITMAP];
 
 
