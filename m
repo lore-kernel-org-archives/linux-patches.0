@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B701E22E2;
-	Wed,  6 Nov 2024 13:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419C81E1A25;
+	Wed,  6 Nov 2024 13:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898373; cv=none; b=WHtcEufpt3rcq8mXb+7tORQjFjhTTbznpBe65rS4hCOX/iaRnoiDtFXkRYFUwjDYgX5VmQ5KEE4Gs88oi8/y4D9VG/W7QALLcKH51R2UwpaFFmPb5XLoodDUxsV3VjNSyw+MBHfD7rRa8kbTfx2ARgk5hvdJG8psoSSjPrNpdJo=
+	t=1730898376; cv=none; b=Swfs9AtyD7C5+jVDb5cQU4ovZ0QVacmRNhXSpebqXkGntvf4Rs7NHLonkm0nbEGFi/6TMqDGP76Yd6c6KbxfidZ1cIyDuWxX1IC62xWAqzl8Vt+EwPeW9ukOzLoDWiiI7KPTJ56DyrnUMbfU5PMz1U1QpskiWwzbKAkXp+pyuL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898373; c=relaxed/simple;
-	bh=MGVlwsvwN+iDOxqcCJzWTeuv5YcfeNamuV6Fk4vFPQM=;
+	s=arc-20240116; t=1730898376; c=relaxed/simple;
+	bh=TqeKsJKxxwErvNjn83VnUKvMXbLzMEb4OMGvf7gjqWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d65YRcovHQqGpEvHL6KnmFpDLW4/ngF6WRdZHqR2aFUgg8bQrpa6ze5TNM5ZbDeTUUR2L/IkyeqTrAeKkfVADjzJUDs8LazgR1Hkvte/6Dyc0LHVsBUBwJTy7rkKRTiSN6ETqlKsBwRmUPAKgNFAUdT1gxF/5CYC4Qza+ZpYZ4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXLO7p2l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QljuNX/lzjkkXJemWGyxTDar4rlJObuA7LfU3T41jOWDN4YHISGuXSm96JKv/V5NciLTfXHQxnknuhX/14umU3KTmFC+ehoHjieGWrsPoV5pVqcXzwVLZibqE6tm+vFOyUoCGtpqgzTbNBPmJ6+gz7UoxPiD70eoIKZTjeV6LOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZaJGKTi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXLO7p2l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45B6C4CECD;
-	Wed,  6 Nov 2024 13:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZaJGKTi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DAB2C4CED8;
+	Wed,  6 Nov 2024 13:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898373;
-	bh=MGVlwsvwN+iDOxqcCJzWTeuv5YcfeNamuV6Fk4vFPQM=;
+	s=korg; t=1730898375;
+	bh=TqeKsJKxxwErvNjn83VnUKvMXbLzMEb4OMGvf7gjqWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vXLO7p2lEG4qEMLA8N3fvyLW4E3tWK1djy2mW4LqPm4mPRtfnOnUbkCNxylIgKR0S
-	 /ytg5qJfC1IstL/Jy0MEylE+Pa1KIiV1TlN1xDhsJc0CIz7eDzbbPuppjIRisvPpBn
-	 wysFd1cHtRuCEiJx34otl09n9EjnafbOgPZJ290M=
+	b=hZaJGKTiuxlAoNPV0v7zQO4quPqpkRUa7b4ICNcaVk1ozKG79zCKTeFXUCVlP0N/y
+	 seRlOxDVz1uV4q/rf+PE2YQpZ7Jx/sewlbBgF01V41hBh/LOaUCywkOFZ/xpegNqZj
+	 ihc7VjjJlOkdR1988rImnmntR/hpT3naQFWwbypE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Oder Chiou <oder_chiou@realtek.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 216/462] ALSA: asihpi: Fix potential OOB array access
-Date: Wed,  6 Nov 2024 13:01:49 +0100
-Message-ID: <20241106120336.857375392@linuxfoundation.org>
+Subject: [PATCH 5.4 190/462] ALSA: hda/realtek: Fix the push button function for the ALC257
+Date: Wed,  6 Nov 2024 13:01:23 +0100
+Message-ID: <20241106120336.207607829@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -50,37 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Oder Chiou <oder_chiou@realtek.com>
 
-[ Upstream commit 7b986c7430a6bb68d523dac7bfc74cbd5b44ef96 ]
+[ Upstream commit 05df9732a0894846c46d0062d4af535c5002799d ]
 
-ASIHPI driver stores some values in the static array upon a response
-from the driver, and its index depends on the firmware.  We shouldn't
-trust it blindly.
+The headset push button cannot work properly in case of the ALC257.
+This patch reverted the previous commit to correct the side effect.
 
-This patch adds a sanity check of the array index to fit in the array
-size.
-
-Link: https://patch.msgid.link/20240808091454.30846-1-tiwai@suse.de
+Fixes: ef9718b3d54e ("ALSA: hda/realtek: Fix noise from speakers on Lenovo IdeaPad 3 15IAU7")
+Signed-off-by: Oder Chiou <oder_chiou@realtek.com>
+Link: https://patch.msgid.link/20240930105039.3473266-1-oder_chiou@realtek.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/asihpi/hpimsgx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/asihpi/hpimsgx.c b/sound/pci/asihpi/hpimsgx.c
-index 5fb0b98bec304..b9eb597b0278a 100644
---- a/sound/pci/asihpi/hpimsgx.c
-+++ b/sound/pci/asihpi/hpimsgx.c
-@@ -713,7 +713,7 @@ static u16 HPIMSGX__init(struct hpi_message *phm,
- 		phr->error = HPI_ERROR_PROCESSING_MESSAGE;
- 		return phr->error;
- 	}
--	if (hr.error == 0) {
-+	if (hr.error == 0 && hr.u.s.adapter_index < HPI_MAX_ADAPTERS) {
- 		/* the adapter was created successfully
- 		   save the mapping for future use */
- 		hpi_entry_points[hr.u.s.adapter_index] = entry_point_func;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index fbd8b4206bad8..f32c3c3752417 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -520,6 +520,7 @@ static void alc_shutup_pins(struct hda_codec *codec)
+ 	switch (codec->core.vendor_id) {
+ 	case 0x10ec0236:
+ 	case 0x10ec0256:
++	case 0x10ec0257:
+ 	case 0x19e58326:
+ 	case 0x10ec0283:
+ 	case 0x10ec0285:
 -- 
 2.43.0
 
