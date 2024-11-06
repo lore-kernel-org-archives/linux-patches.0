@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A0E1E048E;
-	Wed,  6 Nov 2024 13:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8930191461;
+	Wed,  6 Nov 2024 13:16:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899014; cv=none; b=SFcFEQQugByNttGSSzcnVMDQ6OnOP4m0IGgSWuWIgwzI/TUYJNxYKmpTd0u4h4o0Evi7Z5ykucZVP4LZsCSgtZAh/Jc3GPFnkfmkiwTmJiXiH4TL8BksuyziskcGJDX/3Co4wX+mW8/UVAx1p1IlSmg+TDjNJM4VUNQrZi3Cz5c=
+	t=1730899017; cv=none; b=oOF88VF5JNFJFbHahNBkk/vckxLtMuWdc7Mn8YPJg4Xl0MXY94S2YVLijhbj5KONQ6Vmq9lsnXoReLN+wJiTY6di3Q30MATYHcMxcj8QT92NG6QbPYJrG0u6Hz/HgxHhdgvy/d5iM39RwuWp/WFL5y5B45tq0tBNctY9AXe6ZZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899014; c=relaxed/simple;
-	bh=hmg5OH+r8+/o/WqmnW9RiJl/t3zzWtlb3sVXbdH5n4Y=;
+	s=arc-20240116; t=1730899017; c=relaxed/simple;
+	bh=jSs2l9UNr+SsarI4E2S/vowPHwmJTFnWaj1QDXUnEpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZijVdT4neGpGdCAUNZCYFa8suqYRUCRYGFY3oC9v32b8Q8nyKw5WjD9lGSi4N0kD0D22oDPdNoUeR9NA8aq2iddZ6WycZr85gbyH7SZIDVIUKTVU5ftTyIq7bQUD8SL2hLhOSjUu9qtpvvmPfAAB4u9dV7laH3/rAJv0aGa+BkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbUGLsBN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aFYGm/DVSwHQ+DR7bHBeTmNPKHL64JcZlZhpcNeR1BS1vyYk1VfG9goyQ15DBdLMrT4XxR+IFSYrHlSOkKdeAcqNzbeRXS3oWnovjUL6PaijiPfXRdZCpCJ4Pw+BWUqm3Tvd5290HStROZSs79MCm8YYd2F6Wxzvo2K7H3Yw1t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+0RBCmf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbUGLsBN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9E0C4CECD;
-	Wed,  6 Nov 2024 13:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+0RBCmf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54A75C4CECD;
+	Wed,  6 Nov 2024 13:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899014;
-	bh=hmg5OH+r8+/o/WqmnW9RiJl/t3zzWtlb3sVXbdH5n4Y=;
+	s=korg; t=1730899017;
+	bh=jSs2l9UNr+SsarI4E2S/vowPHwmJTFnWaj1QDXUnEpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbUGLsBNb6QLDa5EyjDomYwmpVtb9HZ4ySyU54PmkWS+lnN0J79cHj4w9HI0N9qKY
-	 v15pBdQiNNFWRRdoWwdiZYbGIkFTtj1/MI0BX1yVD39n2x1n27nw3iB9gbhoggtOyx
-	 PaGNkubysLASs+hcu7+DjJJunh63MxvHyGGZ/D5E=
+	b=j+0RBCmf63RAicHEkEEEIUzYBzF/ywoF0ZdIzwMjGPmw9enqCWEAkTzt+H6CDkdZe
+	 p/9ZgMM3+NvQZdOx5kUK3/qVbrZofuGyawn79/tKyJafpTQiE59rQxb3mh/oCSZPmN
+	 WPyRXTuTIiMt6gPFFrqMTe88+XaECDOJ47l+ifdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Falkowski <m.falkowski@samsung.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Rob Herring <robh@kernel.org>,
+	Wander Lairson Costa <wander@redhat.com>,
+	Yuying Ma <yuma@redhat.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 433/462] dt-bindings: gpu: Convert Samsung Image Rotator to dt-schema
-Date: Wed,  6 Nov 2024 13:05:26 +0100
-Message-ID: <20241106120342.202714021@linuxfoundation.org>
+Subject: [PATCH 5.4 434/462] igb: Disable threaded IRQ for igb_msix_other
+Date: Wed,  6 Nov 2024 13:05:27 +0100
+Message-ID: <20241106120342.226566915@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,112 +56,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Falkowski <m.falkowski@samsung.com>
+From: Wander Lairson Costa <wander@redhat.com>
 
-[ Upstream commit 6e3ffcd592060403ee2d956c9b1704775898db79 ]
+[ Upstream commit 338c4d3902feb5be49bfda530a72c7ab860e2c9f ]
 
-Convert Samsung Image Rotator to newer dt-schema format.
+During testing of SR-IOV, Red Hat QE encountered an issue where the
+ip link up command intermittently fails for the igbvf interfaces when
+using the PREEMPT_RT variant. Investigation revealed that
+e1000_write_posted_mbx returns an error due to the lack of an ACK
+from e1000_poll_for_ack.
 
-Signed-off-by: Maciej Falkowski <m.falkowski@samsung.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Rob Herring <robh@kernel.org>
-Stable-dep-of: 338c4d3902fe ("igb: Disable threaded IRQ for igb_msix_other")
+The underlying issue arises from the fact that IRQs are threaded by
+default under PREEMPT_RT. While the exact hardware details are not
+available, it appears that the IRQ handled by igb_msix_other must
+be processed before e1000_poll_for_ack times out. However,
+e1000_write_posted_mbx is called with preemption disabled, leading
+to a scenario where the IRQ is serviced only after the failure of
+e1000_write_posted_mbx.
+
+To resolve this, we set IRQF_NO_THREAD for the affected interrupt,
+ensuring that the kernel handles it immediately, thereby preventing
+the aforementioned error.
+
+Reproducer:
+
+    #!/bin/bash
+
+    # echo 2 > /sys/class/net/ens14f0/device/sriov_numvfs
+    ipaddr_vlan=3
+    nic_test=ens14f0
+    vf=${nic_test}v0
+
+    while true; do
+	    ip link set ${nic_test} mtu 1500
+	    ip link set ${vf} mtu 1500
+	    ip link set $vf up
+	    ip link set ${nic_test} vf 0 vlan ${ipaddr_vlan}
+	    ip addr add 172.30.${ipaddr_vlan}.1/24 dev ${vf}
+	    ip addr add 2021:db8:${ipaddr_vlan}::1/64 dev ${vf}
+	    if ! ip link show $vf | grep 'state UP'; then
+		    echo 'Error found'
+		    break
+	    fi
+	    ip link set $vf down
+    done
+
+Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
+Reported-by: Yuying Ma <yuma@redhat.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/gpu/samsung-rotator.txt          | 28 -----------
- .../bindings/gpu/samsung-rotator.yaml         | 48 +++++++++++++++++++
- 2 files changed, 48 insertions(+), 28 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/gpu/samsung-rotator.txt
- create mode 100644 Documentation/devicetree/bindings/gpu/samsung-rotator.yaml
+ drivers/net/ethernet/intel/igb/igb_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/gpu/samsung-rotator.txt b/Documentation/devicetree/bindings/gpu/samsung-rotator.txt
-deleted file mode 100644
-index 3aca2578da0bd..0000000000000
---- a/Documentation/devicetree/bindings/gpu/samsung-rotator.txt
-+++ /dev/null
-@@ -1,28 +0,0 @@
--* Samsung Image Rotator
--
--Required properties:
--  - compatible : value should be one of the following:
--	* "samsung,s5pv210-rotator" for Rotator IP in S5PV210
--	* "samsung,exynos4210-rotator" for Rotator IP in Exynos4210
--	* "samsung,exynos4212-rotator" for Rotator IP in Exynos4212/4412
--	* "samsung,exynos5250-rotator" for Rotator IP in Exynos5250
--
--  - reg : Physical base address of the IP registers and length of memory
--	  mapped region.
--
--  - interrupts : Interrupt specifier for rotator interrupt, according to format
--		 specific to interrupt parent.
--
--  - clocks : Clock specifier for rotator clock, according to generic clock
--	     bindings. (See Documentation/devicetree/bindings/clock/exynos*.txt)
--
--  - clock-names : Names of clocks. For exynos rotator, it should be "rotator".
--
--Example:
--	rotator@12810000 {
--		compatible = "samsung,exynos4210-rotator";
--		reg = <0x12810000 0x1000>;
--		interrupts = <0 83 0>;
--		clocks = <&clock 278>;
--		clock-names = "rotator";
--	};
-diff --git a/Documentation/devicetree/bindings/gpu/samsung-rotator.yaml b/Documentation/devicetree/bindings/gpu/samsung-rotator.yaml
-new file mode 100644
-index 0000000000000..45ce562435fa7
---- /dev/null
-+++ b/Documentation/devicetree/bindings/gpu/samsung-rotator.yaml
-@@ -0,0 +1,48 @@
-+# SPDX-License-Identifier: GPL-2.0
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/gpu/samsung-rotator.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Samsung SoC Image Rotator
-+
-+maintainers:
-+  - Inki Dae <inki.dae@samsung.com>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - "samsung,s5pv210-rotator"
-+      - "samsung,exynos4210-rotator"
-+      - "samsung,exynos4212-rotator"
-+      - "samsung,exynos5250-rotator"
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  clocks:
-+    maxItems: 1
-+
-+  clock-names:
-+    items:
-+    - const: rotator
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - clocks
-+  - clock-names
-+
-+examples:
-+  - |
-+    rotator@12810000 {
-+        compatible = "samsung,exynos4210-rotator";
-+        reg = <0x12810000 0x1000>;
-+        interrupts = <0 83 0>;
-+        clocks = <&clock 278>;
-+        clock-names = "rotator";
-+    };
-+
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index 1e9967657248a..ebe216647c495 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -945,7 +945,7 @@ static int igb_request_msix(struct igb_adapter *adapter)
+ 	int i, err = 0, vector = 0, free_vector = 0;
+ 
+ 	err = request_irq(adapter->msix_entries[vector].vector,
+-			  igb_msix_other, 0, netdev->name, adapter);
++			  igb_msix_other, IRQF_NO_THREAD, netdev->name, adapter);
+ 	if (err)
+ 		goto err_out;
+ 
 -- 
 2.43.0
 
