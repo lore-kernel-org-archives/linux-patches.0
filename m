@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED601E0B62;
-	Wed,  6 Nov 2024 12:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA021E0B62;
+	Wed,  6 Nov 2024 12:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897206; cv=none; b=jZzrZWf6oBLYUwuNRDrtQr3vL6MS9EBzfB2ITVL0HZ4riQEJhlNzIWo7wkfcL7pyz7FPpBEWh7ORd9uqVo6vJ1xWpIr/kPusY6b+Fw94sP/w3AgTbZnEr0cMF+Zowp9NxUYjOaV0vV5kip9sg0+dmE8zgnJd0UzrAiceqZyFMrQ=
+	t=1730897209; cv=none; b=TvcI5CcG9Fov24glpBMTqpgUMfLZmJxcy06Yc7VP0ZLTXDRUVDy0x7fzoW0iGJSqIADMPrW1jqRuN3D8PmZvyAo81vBZz65ayeFvLLAwU/r2t+JkmNSM6JcC8sVKs/PKfnBDSYT395oeKgAEPr+jN4DIL93dv7sMLUXzY103WoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897206; c=relaxed/simple;
-	bh=gIMbGBLefe0rwIWuSwndeUQn8xKv22G7im0RxukLmWw=;
+	s=arc-20240116; t=1730897209; c=relaxed/simple;
+	bh=qqoTILHFMLtTj69JNfzPH2WDwcFWEs8PzcJpHjzmViE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ianiFuexlpbfp4bD7hxL9Fm2RoW52N9NBWto7PtYTU1FIwTMKIkfb791/730gjOiLNeVRRjpZZAU0bWnMpc9oHu2ftzFKkhG6w/aZCXAFYm4s4488hHgydiDxJegh/tuRLqQ9RtAxO30hrviKFU2QJ8x3LFbzbEue4wK9YlANck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRreTlBq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g1DjGHGhLceSgPkSzIG9/ra035knEqhF8jC32E20ke2GjbxPdxa8D/2WslnaFzDGqLGUv0k8Sh8gtJ/sTLdQdXp9ocAhuQO/rBXEi3QsuLMlFcpWp8Wun0i8p/WRCkymkmK/StjknaYLxEojoGN78IuVeAU2WGTp3caTR0tYX2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oiofwf2Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRreTlBq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8673C4CECD;
-	Wed,  6 Nov 2024 12:46:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oiofwf2Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8EFC4CECD;
+	Wed,  6 Nov 2024 12:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897206;
-	bh=gIMbGBLefe0rwIWuSwndeUQn8xKv22G7im0RxukLmWw=;
+	s=korg; t=1730897209;
+	bh=qqoTILHFMLtTj69JNfzPH2WDwcFWEs8PzcJpHjzmViE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lRreTlBqr4u6es+MsDOXmhpENz73qo7li7E5lBDLsA67zplNl+7vjc0k7WHViIRs7
-	 UHauDLBXJ3W4yanSYerii2ydKgLMtW1SDHVEAbX2xXGUP8oys1LAJiHzYJ6pKGGULw
-	 YEq5A4F0unmhVuHO4hoMn5mS9As4MKDtoSAs82gg=
+	b=Oiofwf2YKfD/6sJinPlinoirgsyEMHEd8JpBFW4o1EDkVWI2N3wIDqtLhF7ep/jjb
+	 OFwJJZWv6/8YFnUorrSESqtGhoEr530enzbhVluZgdfMp/zRm+65c1SeNqOabyU3bY
+	 jfzXa8oGI3gD25/BZrm638TpZeh/eldA+Wj8u25g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
 	Jan Kara <jack@suse.cz>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/126] io_uring: rename kiocb_end_write() local helper
-Date: Wed,  6 Nov 2024 13:05:02 +0100
-Message-ID: <20241106120308.792473139@linuxfoundation.org>
+Subject: [PATCH 6.1 102/126] fs: create kiocb_{start,end}_write() helpers
+Date: Wed,  6 Nov 2024 13:05:03 +0100
+Message-ID: <20241106120308.816843697@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -55,71 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit a370167fe526123637965f60859a9f1f3e1a58b7 ]
+[ Upstream commit ed0360bbab72b829437b67ebb2f9cfac19f59dfe ]
 
-This helper does not take a kiocb as input and we want to create a
-common helper by that name that takes a kiocb as input.
+aio, io_uring, cachefiles and overlayfs, all open code an ugly variant
+of file_{start,end}_write() to silence lockdep warnings.
 
+Create helpers for this lockdep dance so we can use the helpers in all
+the callers.
+
+Suggested-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
 Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Message-Id: <20230817141337.1025891-2-amir73il@gmail.com>
+Message-Id: <20230817141337.1025891-4-amir73il@gmail.com>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Stable-dep-of: 1d60d74e8526 ("io_uring/rw: fix missing NOWAIT check for O_DIRECT start write")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/rw.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/linux/fs.h | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/io_uring/rw.c b/io_uring/rw.c
-index 038e6b13a7496..4eb42fc29c151 100644
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -220,7 +220,7 @@ static bool io_rw_should_reissue(struct io_kiocb *req)
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index 33c4961309833..0d32634c5cf0d 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -3029,6 +3029,42 @@ static inline void file_end_write(struct file *file)
+ 	__sb_end_write(file_inode(file)->i_sb, SB_FREEZE_WRITE);
  }
- #endif
  
--static void kiocb_end_write(struct io_kiocb *req)
-+static void io_req_end_write(struct io_kiocb *req)
- {
- 	/*
- 	 * Tell lockdep we inherited freeze protection from submission
-@@ -243,7 +243,7 @@ static void io_req_io_end(struct io_kiocb *req)
- 	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
- 
- 	if (rw->kiocb.ki_flags & IOCB_WRITE) {
--		kiocb_end_write(req);
-+		io_req_end_write(req);
- 		fsnotify_modify(req->file);
- 	} else {
- 		fsnotify_access(req->file);
-@@ -307,7 +307,7 @@ static void io_complete_rw_iopoll(struct kiocb *kiocb, long res)
- 	struct io_kiocb *req = cmd_to_io_kiocb(rw);
- 
- 	if (kiocb->ki_flags & IOCB_WRITE)
--		kiocb_end_write(req);
-+		io_req_end_write(req);
- 	if (unlikely(res != req->cqe.res)) {
- 		if (res == -EAGAIN && io_rw_should_reissue(req)) {
- 			req->flags |= REQ_F_REISSUE | REQ_F_PARTIAL_IO;
-@@ -956,7 +956,7 @@ int io_write(struct io_kiocb *req, unsigned int issue_flags)
- 				io->bytes_done += ret2;
- 
- 			if (kiocb->ki_flags & IOCB_WRITE)
--				kiocb_end_write(req);
-+				io_req_end_write(req);
- 			return ret ? ret : -EAGAIN;
- 		}
- done:
-@@ -967,7 +967,7 @@ int io_write(struct io_kiocb *req, unsigned int issue_flags)
- 		ret = io_setup_async_rw(req, iovec, s, false);
- 		if (!ret) {
- 			if (kiocb->ki_flags & IOCB_WRITE)
--				kiocb_end_write(req);
-+				io_req_end_write(req);
- 			return -EAGAIN;
- 		}
- 		return ret;
++/**
++ * kiocb_start_write - get write access to a superblock for async file io
++ * @iocb: the io context we want to submit the write with
++ *
++ * This is a variant of sb_start_write() for async io submission.
++ * Should be matched with a call to kiocb_end_write().
++ */
++static inline void kiocb_start_write(struct kiocb *iocb)
++{
++	struct inode *inode = file_inode(iocb->ki_filp);
++
++	sb_start_write(inode->i_sb);
++	/*
++	 * Fool lockdep by telling it the lock got released so that it
++	 * doesn't complain about the held lock when we return to userspace.
++	 */
++	__sb_writers_release(inode->i_sb, SB_FREEZE_WRITE);
++}
++
++/**
++ * kiocb_end_write - drop write access to a superblock after async file io
++ * @iocb: the io context we sumbitted the write with
++ *
++ * Should be matched with a call to kiocb_start_write().
++ */
++static inline void kiocb_end_write(struct kiocb *iocb)
++{
++	struct inode *inode = file_inode(iocb->ki_filp);
++
++	/*
++	 * Tell lockdep we inherited freeze protection from submission thread.
++	 */
++	__sb_writers_acquired(inode->i_sb, SB_FREEZE_WRITE);
++	sb_end_write(inode->i_sb);
++}
++
+ /*
+  * This is used for regular files where some users -- especially the
+  * currently executed binary in a process, previously handled via
 -- 
 2.43.0
 
