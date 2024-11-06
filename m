@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1137D1E04AF;
-	Wed,  6 Nov 2024 12:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0630E1F8918;
+	Wed,  6 Nov 2024 12:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897168; cv=none; b=hojZWXzcg2yvHLWqxi/NwXxAutTpu2YvvvlCD0ISHZE7ljpqp7Fpqh/fTlGACwiER6f150I7gq4EPHh6FRXIoxYi0gZPOiWGZuk56guagp9sYW/gTitGfHowLrlq+hBQD1UTXWBHaF3S8aDHRN0dfKb/kN9H/eVkFgdea1XiNLU=
+	t=1730897171; cv=none; b=qRhbl2vuUr5fNgPcHabwUwBYoz4aQ2aEtLs+sxpxDVzLEtc5nVXSv2wOvjjPKMreqrtY+yI0SEp7LhJy96Gs/FKaikccmvJQJty6TjfThKTToyWXKscWhzeyOAWlBtDfQbAVBEWIPqqe1UzFPeRchElQHMJ1h4Yn6IwUZq+EhFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897168; c=relaxed/simple;
-	bh=bQc0QKwjeVyLnDxKPX4Tfqqnb1XMbzq727hmmfjsfFs=;
+	s=arc-20240116; t=1730897171; c=relaxed/simple;
+	bh=18KeR/JSTbAqh9lcjqGSzkxG6e9XV8B23LQX/xdvPwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NYtpFoDuu5HJ1fYDpGoEdR9LZWgBo2NTAnPqDmE72JdTLreSOORCv1mzhqVjG/9JGYD3Ha26WR7kL4VgYP3BdTPTiDJi5aMKTNXN+y1vx/uxPm2+Qg367IJqyj1J7aVOsf99vHJ7RUlGu/OEL0kTh0FYg72UyImNXqNwR4K+Q94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L8R2RRNd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oIoxCX6np/AuDsV8UfIGqhCCafLr8bWUCCnBYCoeBDD1qMNMpoSkV2LrpAgz2XEni9OCAPZvX+TIPiqL9Fk4Jn4Ywrz88dG7r/MOsC/vciSGo/ajLcJMCMeusyI1iwZae095Ej9XHEMnec1OTxnJoQeKefRs9jvTkNwRCcwqsMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gx1sJFwz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L8R2RRNd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C19AC4CECD;
-	Wed,  6 Nov 2024 12:46:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gx1sJFwz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F78C4CECD;
+	Wed,  6 Nov 2024 12:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897167;
-	bh=bQc0QKwjeVyLnDxKPX4Tfqqnb1XMbzq727hmmfjsfFs=;
+	s=korg; t=1730897170;
+	bh=18KeR/JSTbAqh9lcjqGSzkxG6e9XV8B23LQX/xdvPwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L8R2RRNdgU3EBK9oVYiRiM+uRFcHtXvzH8iQg7idt0Y0m+nXJ3K/DZ+kSgatxpKWj
-	 J5Pa2b39uIlcZ9VShNu6MTqzhWDFAVFrL7gFmKGzDMsa7apar5ncQLUd0Q03c+ZzVI
-	 i1X3mMbm6qqK9xpRGs9YnqKEaMPDGkfURUQupf34=
+	b=Gx1sJFwzTWYIc/CI6jU7CxGRcCp68JGXJxySbJE5R1oWznUkAICJcwPkIob6Y87+J
+	 cxgSkFlnBDfU8lcuZfATWFCEwmKnDDT4a/Vij8IcX3OdBGggXdRrDRNz5Pgcl2PAxK
+	 3+ULVIfuDHTDER5obb6My5Tt8FbRshv3f/LcAYpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Michal Hocko <mhocko@suse.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	NeilBrown <neilb@suse.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/126] mm/page_alloc: rename ALLOC_HIGH to ALLOC_MIN_RESERVE
-Date: Wed,  6 Nov 2024 13:04:51 +0100
-Message-ID: <20241106120308.501197124@linuxfoundation.org>
+	Manikanta Pubbisetty <quic_mpubbise@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>
+Subject: [PATCH 6.1 073/126] wifi: ath10k: Fix memory leak in management tx
+Date: Wed,  6 Nov 2024 13:04:34 +0100
+Message-ID: <20241106120308.063197907@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -56,113 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mel Gorman <mgorman@techsingularity.net>
+From: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
 
-[ Upstream commit 524c48072e5673f4511f1ad81493e2485863fd65 ]
+commit e15d84b3bba187aa372dff7c58ce1fd5cb48a076 upstream.
 
-Patch series "Discard __GFP_ATOMIC", v3.
+In the current logic, memory is allocated for storing the MSDU context
+during management packet TX but this memory is not being freed during
+management TX completion. Similar leaks are seen in the management TX
+cleanup logic.
 
-Neil's patch has been residing in mm-unstable as commit 2fafb4fe8f7a ("mm:
-discard __GFP_ATOMIC") for a long time and recently brought up again.
-Most recently, I was worried that __GFP_HIGH allocations could use
-high-order atomic reserves which is unintentional but there was no
-response so lets revisit -- this series reworks how min reserves are used,
-protects highorder reserves and then finishes with Neil's patch with very
-minor modifications so it fits on top.
+Kmemleak reports this problem as below,
 
-There was a review discussion on renaming __GFP_DIRECT_RECLAIM to
-__GFP_ALLOW_BLOCKING but I didn't think it was that big an issue and is
-orthogonal to the removal of __GFP_ATOMIC.
+unreferenced object 0xffffff80b64ed250 (size 16):
+  comm "kworker/u16:7", pid 148, jiffies 4294687130 (age 714.199s)
+  hex dump (first 16 bytes):
+    00 2b d8 d8 80 ff ff ff c4 74 e9 fd 07 00 00 00  .+.......t......
+  backtrace:
+    [<ffffffe6e7b245dc>] __kmem_cache_alloc_node+0x1e4/0x2d8
+    [<ffffffe6e7adde88>] kmalloc_trace+0x48/0x110
+    [<ffffffe6bbd765fc>] ath10k_wmi_tlv_op_gen_mgmt_tx_send+0xd4/0x1d8 [ath10k_core]
+    [<ffffffe6bbd3eed4>] ath10k_mgmt_over_wmi_tx_work+0x134/0x298 [ath10k_core]
+    [<ffffffe6e78d5974>] process_scheduled_works+0x1ac/0x400
+    [<ffffffe6e78d60b8>] worker_thread+0x208/0x328
+    [<ffffffe6e78dc890>] kthread+0x100/0x1c0
+    [<ffffffe6e78166c0>] ret_from_fork+0x10/0x20
 
-There were some concerns about how the gfp flags affect the min reserves
-but it never reached a solid conclusion so I made my own attempt.
+Free the memory during completion and cleanup to fix the leak.
 
-The series tries to iron out some of the details on how reserves are used.
-ALLOC_HIGH becomes ALLOC_MIN_RESERVE and ALLOC_HARDER becomes
-ALLOC_NON_BLOCK and documents how the reserves are affected.  For example,
-ALLOC_NON_BLOCK (no direct reclaim) on its own allows 25% of the min
-reserve.  ALLOC_MIN_RESERVE (__GFP_HIGH) allows 50% and both combined
-allows deeper access again.  ALLOC_OOM allows access to 75%.
+Protect the mgmt_pending_tx idr_remove() operation in
+ath10k_wmi_tlv_op_cleanup_mgmt_tx_send() using ar->data_lock similar to
+other instances.
 
-High-order atomic allocations are explicitly handled with the caveat that
-no __GFP_ATOMIC flag means that any high-order allocation that specifies
-GFP_HIGH and cannot enter direct reclaim will be treated as if it was
-GFP_ATOMIC.
+Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.2.0-01387-QCAHLSWMTPLZ-1
 
-This patch (of 6):
-
-__GFP_HIGH aliases to ALLOC_HIGH but the name does not really hint what it
-means.  As ALLOC_HIGH is internal to the allocator, rename it to
-ALLOC_MIN_RESERVE to document that the min reserves can be depleted.
-
-Link: https://lkml.kernel.org/r/20230113111217.14134-1-mgorman@techsingularity.net
-Link: https://lkml.kernel.org/r/20230113111217.14134-2-mgorman@techsingularity.net
-Signed-off-by: Mel Gorman <mgorman@techsingularity.net>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: NeilBrown <neilb@suse.de>
-Cc: Thierry Reding <thierry.reding@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 281dd25c1a01 ("mm/page_alloc: let GFP_ATOMIC order-0 allocs access highatomic reserves")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: dc405152bb64 ("ath10k: handle mgmt tx completion event")
+Fixes: c730c477176a ("ath10k: Remove msdu from idr when management pkt send fails")
+Cc: stable@vger.kernel.org
+Signed-off-by: Manikanta Pubbisetty <quic_mpubbise@quicinc.com>
+Link: https://patch.msgid.link/20241015064103.6060-1-quic_mpubbise@quicinc.com
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/internal.h   | 4 +++-
- mm/page_alloc.c | 8 ++++----
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath10k/wmi-tlv.c |    7 ++++++-
+ drivers/net/wireless/ath/ath10k/wmi.c     |    2 ++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/mm/internal.h b/mm/internal.h
-index d01130efce5fb..1be79a5147549 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -755,7 +755,9 @@ unsigned int reclaim_clean_pages_from_list(struct zone *zone,
- #endif
+--- a/drivers/net/wireless/ath/ath10k/wmi-tlv.c
++++ b/drivers/net/wireless/ath/ath10k/wmi-tlv.c
+@@ -3035,9 +3035,14 @@ ath10k_wmi_tlv_op_cleanup_mgmt_tx_send(s
+ 				       struct sk_buff *msdu)
+ {
+ 	struct ath10k_skb_cb *cb = ATH10K_SKB_CB(msdu);
++	struct ath10k_mgmt_tx_pkt_addr *pkt_addr;
+ 	struct ath10k_wmi *wmi = &ar->wmi;
  
- #define ALLOC_HARDER		 0x10 /* try to alloc harder */
--#define ALLOC_HIGH		 0x20 /* __GFP_HIGH set */
-+#define ALLOC_MIN_RESERVE	 0x20 /* __GFP_HIGH set. Allow access to 50%
-+				       * of the min watermark.
-+				       */
- #define ALLOC_CPUSET		 0x40 /* check for correct cpuset */
- #define ALLOC_CMA		 0x80 /* allow allocations from CMA areas */
- #ifdef CONFIG_ZONE_DMA32
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index a905b850d31c4..f5b870780d3fd 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -3983,7 +3983,7 @@ bool __zone_watermark_ok(struct zone *z, unsigned int order, unsigned long mark,
- 	/* free_pages may go negative - that's OK */
- 	free_pages -= __zone_watermark_unusable_free(z, order, alloc_flags);
+-	idr_remove(&wmi->mgmt_pending_tx, cb->msdu_id);
++	spin_lock_bh(&ar->data_lock);
++	pkt_addr = idr_remove(&wmi->mgmt_pending_tx, cb->msdu_id);
++	spin_unlock_bh(&ar->data_lock);
++
++	kfree(pkt_addr);
  
--	if (alloc_flags & ALLOC_HIGH)
-+	if (alloc_flags & ALLOC_MIN_RESERVE)
- 		min -= min / 2;
+ 	return 0;
+ }
+--- a/drivers/net/wireless/ath/ath10k/wmi.c
++++ b/drivers/net/wireless/ath/ath10k/wmi.c
+@@ -2440,6 +2440,7 @@ wmi_process_mgmt_tx_comp(struct ath10k *
+ 	dma_unmap_single(ar->dev, pkt_addr->paddr,
+ 			 msdu->len, DMA_TO_DEVICE);
+ 	info = IEEE80211_SKB_CB(msdu);
++	kfree(pkt_addr);
  
- 	if (unlikely(alloc_harder)) {
-@@ -4825,18 +4825,18 @@ gfp_to_alloc_flags(gfp_t gfp_mask)
- 	unsigned int alloc_flags = ALLOC_WMARK_MIN | ALLOC_CPUSET;
+ 	if (param->status) {
+ 		info->flags &= ~IEEE80211_TX_STAT_ACK;
+@@ -9581,6 +9582,7 @@ static int ath10k_wmi_mgmt_tx_clean_up_p
+ 	dma_unmap_single(ar->dev, pkt_addr->paddr,
+ 			 msdu->len, DMA_TO_DEVICE);
+ 	ieee80211_free_txskb(ar->hw, msdu);
++	kfree(pkt_addr);
  
- 	/*
--	 * __GFP_HIGH is assumed to be the same as ALLOC_HIGH
-+	 * __GFP_HIGH is assumed to be the same as ALLOC_MIN_RESERVE
- 	 * and __GFP_KSWAPD_RECLAIM is assumed to be the same as ALLOC_KSWAPD
- 	 * to save two branches.
- 	 */
--	BUILD_BUG_ON(__GFP_HIGH != (__force gfp_t) ALLOC_HIGH);
-+	BUILD_BUG_ON(__GFP_HIGH != (__force gfp_t) ALLOC_MIN_RESERVE);
- 	BUILD_BUG_ON(__GFP_KSWAPD_RECLAIM != (__force gfp_t) ALLOC_KSWAPD);
- 
- 	/*
- 	 * The caller may dip into page reserves a bit more if the caller
- 	 * cannot run direct reclaim, or if the caller has realtime scheduling
- 	 * policy or is asking for __GFP_HIGH memory.  GFP_ATOMIC requests will
--	 * set both ALLOC_HARDER (__GFP_ATOMIC) and ALLOC_HIGH (__GFP_HIGH).
-+	 * set both ALLOC_HARDER (__GFP_ATOMIC) and ALLOC_MIN_RESERVE(__GFP_HIGH).
- 	 */
- 	alloc_flags |= (__force int)
- 		(gfp_mask & (__GFP_HIGH | __GFP_KSWAPD_RECLAIM));
--- 
-2.43.0
-
+ 	return 0;
+ }
 
 
