@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D781EE002;
-	Wed,  6 Nov 2024 13:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A051F6666;
+	Wed,  6 Nov 2024 13:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898594; cv=none; b=caHqNj+LBBoy3vaTh3fMndJMO+d9RFmAAdsGPvvw2jlyf40bRTfRlrOXIosl+518O+VB0YPt2mTXz64Iy/S2zJ1r22BvTPUItSU6mx7kSf9qTJZgvmatSKTUSLRSQkatHS8PVOjzPIOIZJyTAMod7y7Sa8v+eoczUUF+UiOtFcU=
+	t=1730898597; cv=none; b=SE+xHjCkDLWNat7/jfBumVpBMBZrp2AvkLcGhCPlGAD0IlDKX9uApzqC3C8RnmW/EXqI1Y7hAyWJQXrlz3Q7nFB83j2QEfIu/OMzODHv+JsiFdqsot1kmBHlXZpjbd+FK22w60eAfjCnHvavTRylYCYL9jLhm/MhX4IuhWWfl4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898594; c=relaxed/simple;
-	bh=h548rlFP8ZoMpaD7c2jmgbFxhEznxp96nU2zIHlty8s=;
+	s=arc-20240116; t=1730898597; c=relaxed/simple;
+	bh=gCwdtI0hi2jaQrjNRAg2FbGPvf6ge5eZecDTAjUfANU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GvPbUVkLMvknffdZQAb+pQdKhAFtgW7FLW2zSGMdnCod8kQae2UCLhO9rMsmGzpbFfeDMbygrQgIlhYGr2m0dG/yFR9uYh/KDWDSQiGss6/icldeQEIF7MEoFRLV5RRBBEEJyfxF6Y8PXUySPtT6ytbhEzDN1Du+aTMaw2zYCuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeWt2NNR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uAMqcjKOftKn+ewIQBGtyWOpAMhsFNOmO7woi9TM9kOq9FMjin0PZ9K5ETmV5pIbip+H/8T4S6M/nKYFDigsr9qVtVT2wypuJRbxVkBciq+4H9N26r1C9NKZvdD33eTVqZXJvWDGBlOsVWhYQMAHpTDZp68B+AGJyNGSvtdIFJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U5IAxDiq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeWt2NNR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C75C4CED3;
-	Wed,  6 Nov 2024 13:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U5IAxDiq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BC1C4CECD;
+	Wed,  6 Nov 2024 13:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898594;
-	bh=h548rlFP8ZoMpaD7c2jmgbFxhEznxp96nU2zIHlty8s=;
+	s=korg; t=1730898597;
+	bh=gCwdtI0hi2jaQrjNRAg2FbGPvf6ge5eZecDTAjUfANU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WeWt2NNR13MuDezHA6aUI90AUvgS1hJR98BzWDhIjZBB9jOs0NlDS2oZmk7FYLylU
-	 gUeI1Hp5GZaw64C9pWtYTwbk6Z1T5t8dwLDxvlF6zFmsyFlIuWV06CNYbl/kzhln9L
-	 RpsCLe95h1reJSARfO/P5PEakVpbXVxOH09Ykqio=
+	b=U5IAxDiqHsnPV+kiWTPaihFxUQJ+x1qjZAeEV6HFPXdEe8rXQ6wnt8p63R3gtTwFs
+	 73muH1emKXb4BXQONmzUukNxajqPrG1ylHZPPSXbeS6xxjLStCufV8SV8+QcECvHV3
+	 JxHS9aXFZLhOthJiHxYyF0FODNyDdQjF+u9MxCyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Tipton <quic_mdtipton@quicinc.com>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 290/462] clk: qcom: clk-rpmh: Fix overflow in BCM vote
-Date: Wed,  6 Nov 2024 13:03:03 +0100
-Message-ID: <20241106120338.688996284@linuxfoundation.org>
+Subject: [PATCH 5.4 291/462] r8169: Fix spelling mistake: "tx_underun" -> "tx_underrun"
+Date: Wed,  6 Nov 2024 13:03:04 +0100
+Message-ID: <20241106120338.715299769@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -53,39 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Tipton <quic_mdtipton@quicinc.com>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit a4e5af27e6f6a8b0d14bc0d7eb04f4a6c7291586 ]
+[ Upstream commit 8df9439389a44fb2cc4ef695e08d6a8870b1616c ]
 
-Valid frequencies may result in BCM votes that exceed the max HW value.
-Set vote ceiling to BCM_TCS_CMD_VOTE_MASK to ensure the votes aren't
-truncated, which can result in lower frequencies than desired.
+There is a spelling mistake in the struct field tx_underun, rename
+it to tx_underrun.
 
-Fixes: 04053f4d23a4 ("clk: qcom: clk-rpmh: Add IPA clock support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
-Reviewed-by: Taniya Das <quic_tdas@quicinc.com>
-Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
-Link: https://lore.kernel.org/r/20240809-clk-rpmh-bcm-vote-fix-v2-1-240c584b7ef9@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://patch.msgid.link/20240909140021.64884-1-colin.i.king@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: ced8e8b8f40a ("r8169: add tally counter fields added with RTL8125")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rpmh.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/realtek/r8169_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index 21f4248ba7ddb..a1cd64d71cec9 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -270,6 +270,8 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
- 		cmd_state = 0;
- 	}
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index 319f8d7a502da..e354b8c99f62f 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -623,7 +623,7 @@ struct rtl8169_counters {
+ 	__le64	rx_broadcast;
+ 	__le32	rx_multicast;
+ 	__le16	tx_aborted;
+-	__le16	tx_underun;
++	__le16	tx_underrun;
+ };
  
-+	cmd_state = min(cmd_state, BCM_TCS_CMD_VOTE_MASK);
-+
- 	if (c->last_sent_aggr_state != cmd_state) {
- 		cmd.addr = c->res_addr;
- 		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
+ struct rtl8169_tc_offsets {
+@@ -1795,7 +1795,7 @@ static void rtl8169_get_ethtool_stats(struct net_device *dev,
+ 	data[9] = le64_to_cpu(counters->rx_broadcast);
+ 	data[10] = le32_to_cpu(counters->rx_multicast);
+ 	data[11] = le16_to_cpu(counters->tx_aborted);
+-	data[12] = le16_to_cpu(counters->tx_underun);
++	data[12] = le16_to_cpu(counters->tx_underrun);
+ }
+ 
+ static void rtl8169_get_strings(struct net_device *dev, u32 stringset, u8 *data)
 -- 
 2.43.0
 
