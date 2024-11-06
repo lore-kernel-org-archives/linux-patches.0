@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EA91E008B;
-	Wed,  6 Nov 2024 12:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31EE11E008B;
+	Wed,  6 Nov 2024 12:49:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897376; cv=none; b=Sp9WXnmv0+Z1xFamxh59GgqYMsxOJZlGYdTdJT0z4R0rRh78S4AFDRSDLDSCwfZLHEWwYM5O2BKpJ1XoQT91jwWadlix46Qi+URqTXKcPFLjuY6BsgU1YayXRUQNNrp17JFzXNxL2fe2ooFknKtHa1W0K6U/p9+wulECKglh5FU=
+	t=1730897379; cv=none; b=gCmMjNuDndbwpRMzExzczM2Cmiji2Lf1pmILvaOSb0EkgpJ9DMqarD/dKBMbyO+YSNL/4s/BRFe91LtS3YfysOzNQ4D4yN0A4I4JpX71fQT0fjFFY9CQ8YJ7w4ZItiCIVNpLhkyOI2T3IyeHTrNTMrBVu8pfX3zaHcvzPIiEBs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897376; c=relaxed/simple;
-	bh=bHuyH6LdK209xOYfQeKUwzEk812+hoGN5Wcziom3X4c=;
+	s=arc-20240116; t=1730897379; c=relaxed/simple;
+	bh=88N1M5qoRC7cS6z69iWyWvdDTjjE3eXKcpLZJaoF1W4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aizMz9AQ/hSBtp07NLleRcNn2clpc+ZXyqDcQQKgRXva5BC7vcUBeWMmUmJ3eY6NMwzdm0hTtb7aOvndbpl87BLvrYaJkd/q8iaHlKsRVzEXptMyR1y9s34gHTvuVq0SGk1xbPTrAz42vO4auIu2/VftxM9huc/dNQ4OH6/HOOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8fe+68C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wx6C9V+Du7Sk0dtO8KdkT7VZTq0HEu8Mmdd5bkrRJ3TEYoGnxVDManb/PlUZSQGJLyrgGDmWaqv31diU2Js8f1JzH2wgbIpKwee63m+QWcr6mZZ4mZRoc/CmNjFyp/4t9umYYEj0YxbMiZVWeW7agvhW1pQtekoxjlkKavGfUj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DWKJf64P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8fe+68C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23FAC4CECD;
-	Wed,  6 Nov 2024 12:49:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DWKJf64P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABCBEC4CECD;
+	Wed,  6 Nov 2024 12:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897376;
-	bh=bHuyH6LdK209xOYfQeKUwzEk812+hoGN5Wcziom3X4c=;
+	s=korg; t=1730897379;
+	bh=88N1M5qoRC7cS6z69iWyWvdDTjjE3eXKcpLZJaoF1W4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M8fe+68C5MKuDebG0Vtf5PJ+xXcF0KnE1zxIcPhqc2b3Vsk/p7zStUjOhMVxmrN8z
-	 V3dA6qTDMCuQn9Ia8aadHQPwoXSlBQ6TUF/C3KkSeeXpCvOoUUqt00kcOQ5NmdOv7K
-	 fRtrGUpyfdJR0nCsRGIMGR3O3QRZWQKxnfGxIgQQ=
+	b=DWKJf64PVLzUrwBJDcwJ+rhhhHyS/PppCnhkIBBlfOsaCJFE4pXxTykMu/EHfFDKv
+	 qaIeA33dIUIGCAXVk/HYj6bWvtFLtCWU/Hbgj6GU812GkOOGghT83GCLyCh82IYESV
+	 Fv2qthxgWCRkVcI54rYHTkywMvqWQfcolig5MYXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Byeonguk Jeong <jungbu2855@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@kernel.org>,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Brenton Simpson <appsforartists@google.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/151] bpf: Fix out-of-bounds write in trie_get_next_key()
-Date: Wed,  6 Nov 2024 13:03:39 +0100
-Message-ID: <20241106120309.694468735@linuxfoundation.org>
+Subject: [PATCH 6.6 004/151] Input: xpad - sort xpad_device by vendor and product ID
+Date: Wed,  6 Nov 2024 13:03:12 +0100
+Message-ID: <20241106120308.961837000@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120308.841299741@linuxfoundation.org>
 References: <20241106120308.841299741@linuxfoundation.org>
@@ -47,49 +45,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Byeonguk Jeong <jungbu2855@gmail.com>
+From: Brenton Simpson <appsforartists@google.com>
 
-[ Upstream commit 13400ac8fb80c57c2bfb12ebd35ee121ce9b4d21 ]
+[ Upstream commit 18970d4f6317a3595cc592c3c7815f63d1818932 ]
 
-trie_get_next_key() allocates a node stack with size trie->max_prefixlen,
-while it writes (trie->max_prefixlen + 1) nodes to the stack when it has
-full paths from the root to leaves. For example, consider a trie with
-max_prefixlen is 8, and the nodes with key 0x00/0, 0x00/1, 0x00/2, ...
-0x00/8 inserted. Subsequent calls to trie_get_next_key with _key with
-.prefixlen = 8 make 9 nodes be written on the node stack with size 8.
+This helps making sure there are no duplicate entries in the tables.
 
-Fixes: b471f2f1de8b ("bpf: implement MAP_GET_NEXT_KEY command for LPM_TRIE map")
-Signed-off-by: Byeonguk Jeong <jungbu2855@gmail.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@kernel.org>
-Tested-by: Hou Tao <houtao1@huawei.com>
-Acked-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/Zxx384ZfdlFYnz6J@localhost.localdomain
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Brenton Simpson <appsforartists@google.com>
+Link: https://lore.kernel.org/r/20240130231903.293265-1-appsforartists@google.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Stable-dep-of: ea330429a04b ("Input: xpad - add support for 8BitDo Ultimate 2C Wireless Controller")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/lpm_trie.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/joystick/xpad.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
-index d0febf07051ed..daf8ffcfcdac4 100644
---- a/kernel/bpf/lpm_trie.c
-+++ b/kernel/bpf/lpm_trie.c
-@@ -647,7 +647,7 @@ static int trie_get_next_key(struct bpf_map *map, void *_key, void *_next_key)
- 	if (!key || key->prefixlen > trie->max_prefixlen)
- 		goto find_leftmost;
+diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
+index 1cb47488375be..ebe243b79d819 100644
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -127,6 +127,7 @@ static const struct xpad_device {
+ 	u8 mapping;
+ 	u8 xtype;
+ } xpad_device[] = {
++	/* Please keep this list sorted by vendor and product ID. */
+ 	{ 0x0079, 0x18d4, "GPD Win 2 X-Box Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x03eb, 0xff01, "Wooting One (Legacy)", 0, XTYPE_XBOX360 },
+ 	{ 0x03eb, 0xff02, "Wooting Two (Legacy)", 0, XTYPE_XBOX360 },
+@@ -152,9 +153,9 @@ static const struct xpad_device {
+ 	{ 0x045e, 0x02d1, "Microsoft X-Box One pad", 0, XTYPE_XBOXONE },
+ 	{ 0x045e, 0x02dd, "Microsoft X-Box One pad (Firmware 2015)", 0, XTYPE_XBOXONE },
+ 	{ 0x045e, 0x02e3, "Microsoft X-Box One Elite pad", MAP_PADDLES, XTYPE_XBOXONE },
+-	{ 0x045e, 0x0b00, "Microsoft X-Box One Elite 2 pad", MAP_PADDLES, XTYPE_XBOXONE },
+ 	{ 0x045e, 0x02ea, "Microsoft X-Box One S pad", 0, XTYPE_XBOXONE },
+ 	{ 0x045e, 0x0719, "Xbox 360 Wireless Receiver", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360W },
++	{ 0x045e, 0x0b00, "Microsoft X-Box One Elite 2 pad", MAP_PADDLES, XTYPE_XBOXONE },
+ 	{ 0x045e, 0x0b0a, "Microsoft X-Box Adaptive Controller", MAP_PROFILE_BUTTON, XTYPE_XBOXONE },
+ 	{ 0x045e, 0x0b12, "Microsoft Xbox Series S|X Controller", MAP_SELECT_BUTTON, XTYPE_XBOXONE },
+ 	{ 0x046d, 0xc21d, "Logitech Gamepad F310", 0, XTYPE_XBOX360 },
+@@ -343,7 +344,6 @@ static const struct xpad_device {
+ 	{ 0x20d6, 0x2001, "BDA Xbox Series X Wired Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x20d6, 0x2009, "PowerA Enhanced Wired Controller for Xbox Series X|S", 0, XTYPE_XBOXONE },
+ 	{ 0x20d6, 0x281f, "PowerA Wired Controller For Xbox 360", 0, XTYPE_XBOX360 },
+-	{ 0x2e24, 0x0652, "Hyperkin Duke X-Box One pad", 0, XTYPE_XBOXONE },
+ 	{ 0x24c6, 0x5000, "Razer Atrox Arcade Stick", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
+ 	{ 0x24c6, 0x5300, "PowerA MINI PROEX Controller", 0, XTYPE_XBOX360 },
+ 	{ 0x24c6, 0x5303, "Xbox Airflo wired controller", 0, XTYPE_XBOX360 },
+@@ -358,9 +358,9 @@ static const struct xpad_device {
+ 	{ 0x24c6, 0x5502, "Hori Fighting Stick VX Alt", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
+ 	{ 0x24c6, 0x5503, "Hori Fighting Edge", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
+ 	{ 0x24c6, 0x5506, "Hori SOULCALIBUR V Stick", 0, XTYPE_XBOX360 },
+-	{ 0x24c6, 0x5510, "Hori Fighting Commander ONE (Xbox 360/PC Mode)", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
+ 	{ 0x24c6, 0x550d, "Hori GEM Xbox controller", 0, XTYPE_XBOX360 },
+ 	{ 0x24c6, 0x550e, "Hori Real Arcade Pro V Kai 360", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
++	{ 0x24c6, 0x5510, "Hori Fighting Commander ONE (Xbox 360/PC Mode)", MAP_TRIGGERS_TO_BUTTONS, XTYPE_XBOX360 },
+ 	{ 0x24c6, 0x551a, "PowerA FUSION Pro Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x24c6, 0x561a, "PowerA FUSION Controller", 0, XTYPE_XBOXONE },
+ 	{ 0x24c6, 0x5b00, "ThrustMaster Ferrari 458 Racing Wheel", 0, XTYPE_XBOX360 },
+@@ -373,6 +373,7 @@ static const struct xpad_device {
+ 	{ 0x294b, 0x3404, "Snakebyte GAMEPAD RGB X", 0, XTYPE_XBOXONE },
+ 	{ 0x2dc8, 0x2000, "8BitDo Pro 2 Wired Controller fox Xbox", 0, XTYPE_XBOXONE },
+ 	{ 0x2dc8, 0x3106, "8BitDo Pro 2 Wired Controller", 0, XTYPE_XBOX360 },
++	{ 0x2e24, 0x0652, "Hyperkin Duke X-Box One pad", 0, XTYPE_XBOXONE },
+ 	{ 0x31e3, 0x1100, "Wooting One", 0, XTYPE_XBOX360 },
+ 	{ 0x31e3, 0x1200, "Wooting Two", 0, XTYPE_XBOX360 },
+ 	{ 0x31e3, 0x1210, "Wooting Lekker", 0, XTYPE_XBOX360 },
+@@ -470,6 +471,10 @@ static const signed short xpad_btn_paddles[] = {
+ 	{ XPAD_XBOXONE_VENDOR_PROTOCOL((vend), 208) }
  
--	node_stack = kmalloc_array(trie->max_prefixlen,
-+	node_stack = kmalloc_array(trie->max_prefixlen + 1,
- 				   sizeof(struct lpm_trie_node *),
- 				   GFP_ATOMIC | __GFP_NOWARN);
- 	if (!node_stack)
+ static const struct usb_device_id xpad_table[] = {
++	/*
++	 * Please keep this list sorted by vendor ID. Note that there are 2
++	 * macros - XPAD_XBOX360_VENDOR and XPAD_XBOXONE_VENDOR.
++	 */
+ 	{ USB_INTERFACE_INFO('X', 'B', 0) },	/* Xbox USB-IF not-approved class */
+ 	XPAD_XBOX360_VENDOR(0x0079),		/* GPD Win 2 controller */
+ 	XPAD_XBOX360_VENDOR(0x03eb),		/* Wooting Keyboards (Legacy) */
 -- 
 2.43.0
 
