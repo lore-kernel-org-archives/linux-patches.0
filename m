@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649D81EABB4;
-	Wed,  6 Nov 2024 12:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4C21EABC7;
+	Wed,  6 Nov 2024 12:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897047; cv=none; b=C3H2DJnPYbL1NlrCaseBHvDA3jS0MW4U1NeOw9gwNvVSkZfumFjwe6MFLrY1nYgK36ibVCC6D2EY70FNTuuCfFRks0fsEYRo0BGWcYy8rbVfgIj1TOCjodf3BGr4xEloEkJ4KjgrrdHCZANS8O2M4w9RaxZiiI6EZRyBSNiEBVI=
+	t=1730897050; cv=none; b=NJ3P72EEtKJA1ufjeAzH9fo73fAAy3V6iS0DJq/baMESGqsZCP39qRgFivQb4Cqs71sLnhXaNrypWY3SrTmdJENgYCj0BPIp93KZUAVD9Okt5zmgjFqSNJF+Nfs+V4r1E9OuvqHlGt3+4RYYCwx7lrApJyQu2UDJ0vVoiC2qxJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897047; c=relaxed/simple;
-	bh=Frj4Ogwq6Y1vQinHa87bLiHzhSHlVsD4JFf2H8rye9M=;
+	s=arc-20240116; t=1730897050; c=relaxed/simple;
+	bh=JEJ3xWldJFg4aFVRXjkQHIVjIn08yvN36UZvltAWH2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i7j7XolQxGX3KIQbtdPJP09KQySsQxr4yxZcka+yt4lKjHBnE9uzIkB6d+tFu6idqCAbZInNcbvODehxWxGIKxFVaptn4iVK4LWQUtBJfYKl1RdYmApWFBPZNv3uQ2cqdt4Q4ReePjoOFNFnX1s5pm6F63baMXMCXQ0O1D/zPYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KnrIZ6/r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kVV/1PDY3yMb3EDMCVGiYNUU+ToD+aKe0SUylro/0Mpi7IosoV0W/j89kLlwCk5h+aWuDLzcGWFO95Cjb6hh2kMuHiIURmXHy4xhFVLEkIZTTAkr9vaGJDWAh1hxTedU6rrAWCVIbpXwW/p3+PI/fm5r8nX0geqDb8q7WvLg3DY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qB4IspR1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KnrIZ6/r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE429C4CECD;
-	Wed,  6 Nov 2024 12:44:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qB4IspR1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C92F6C4CED5;
+	Wed,  6 Nov 2024 12:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897047;
-	bh=Frj4Ogwq6Y1vQinHa87bLiHzhSHlVsD4JFf2H8rye9M=;
+	s=korg; t=1730897050;
+	bh=JEJ3xWldJFg4aFVRXjkQHIVjIn08yvN36UZvltAWH2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KnrIZ6/ryWl0BiL2ThVHU0qj0xIygeMQ8KncHm+d/koFII/Ul2XSDywYiLYAjux8c
-	 7oO4BmTOmO7tEDBWQYpMCuLv9uP608Cez3bs+rgKW4SwE5u4Ij9nPSv58AVGpRyU7H
-	 Awfa686dQYqM75xCspgdAK9Gm4uXWRmRJyD3Yjyo=
+	b=qB4IspR1xLLXKmXOQtQtzqqYFGW9YIYmxsrC01Ha5mXWqqUQj+Ol74RlFhjxXQSEJ
+	 Axs9uJX7gUEu95IgPs+YBJqUgyIHwoekhF9N8SBuCe6tWlJO3oubvw+vAphAdOGXdu
+	 d/kXu+d9puwL/GTs516ykolgBs7O2pGsa6cbTUhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	linux-afs@lists.infradead.org,
-	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/126] afs: Automatically generate trace tag enums
-Date: Wed,  6 Nov 2024 13:04:10 +0100
-Message-ID: <20241106120307.428878329@linuxfoundation.org>
+Subject: [PATCH 6.1 050/126] afs: Fix missing subdir edit when renamed between parent dirs
+Date: Wed,  6 Nov 2024 13:04:11 +0100
+Message-ID: <20241106120307.454136988@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -56,288 +55,252 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 2daa6404fd2f00985d5bfeb3c161f4630b46b6bf ]
+[ Upstream commit 247d65fb122ad560be1c8c4d87d7374fb28b0770 ]
 
-Automatically generate trace tag enums from the symbol -> string mapping
-tables rather than having the enums as well, thereby reducing duplicated
-data.
+When rename moves an AFS subdirectory between parent directories, the
+subdir also needs a bit of editing: the ".." entry needs updating to point
+to the new parent (though I don't make use of the info) and the DV needs
+incrementing by 1 to reflect the change of content.  The server also sends
+a callback break notification on the subdirectory if we have one, but we
+can take care of recovering the promise next time we access the subdir.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
+This can be triggered by something like:
+
+    mount -t afs %example.com:xfstest.test20 /xfstest.test/
+    mkdir /xfstest.test/{aaa,bbb,aaa/ccc}
+    touch /xfstest.test/bbb/ccc/d
+    mv /xfstest.test/{aaa/ccc,bbb/ccc}
+    touch /xfstest.test/bbb/ccc/e
+
+When the pathwalk for the second touch hits "ccc", kafs spots that the DV
+is incorrect and downloads it again (so the fix is not critical).
+
+Fix this, if the rename target is a directory and the old and new
+parents are different, by:
+
+ (1) Incrementing the DV number of the target locally.
+
+ (2) Editing the ".." entry in the target to refer to its new parent's
+     vnode ID and uniquifier.
+
+Link: https://lore.kernel.org/r/3340431.1729680010@warthog.procyon.org.uk
+Fixes: 63a4681ff39c ("afs: Locally edit directory data for mkdir/create/unlink/...")
+cc: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Jeff Layton <jlayton@kernel.org>
 cc: linux-afs@lists.infradead.org
-cc: linux-fsdevel@vger.kernel.org
-Stable-dep-of: 247d65fb122a ("afs: Fix missing subdir edit when renamed between parent dirs")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/afs.h | 233 +++++--------------------------------
- 1 file changed, 27 insertions(+), 206 deletions(-)
+ fs/afs/dir.c               | 25 +++++++++++
+ fs/afs/dir_edit.c          | 91 +++++++++++++++++++++++++++++++++++++-
+ fs/afs/internal.h          |  2 +
+ include/trace/events/afs.h |  7 ++-
+ 4 files changed, 122 insertions(+), 3 deletions(-)
 
+diff --git a/fs/afs/dir.c b/fs/afs/dir.c
+index 07dc4ec73520c..38d5260c4614f 100644
+--- a/fs/afs/dir.c
++++ b/fs/afs/dir.c
+@@ -12,6 +12,7 @@
+ #include <linux/swap.h>
+ #include <linux/ctype.h>
+ #include <linux/sched.h>
++#include <linux/iversion.h>
+ #include <linux/task_io_accounting_ops.h>
+ #include "internal.h"
+ #include "afs_fs.h"
+@@ -1808,6 +1809,8 @@ static int afs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
+ 
+ static void afs_rename_success(struct afs_operation *op)
+ {
++	struct afs_vnode *vnode = AFS_FS_I(d_inode(op->dentry));
++
+ 	_enter("op=%08x", op->debug_id);
+ 
+ 	op->ctime = op->file[0].scb.status.mtime_client;
+@@ -1817,6 +1820,22 @@ static void afs_rename_success(struct afs_operation *op)
+ 		op->ctime = op->file[1].scb.status.mtime_client;
+ 		afs_vnode_commit_status(op, &op->file[1]);
+ 	}
++
++	/* If we're moving a subdir between dirs, we need to update
++	 * its DV counter too as the ".." will be altered.
++	 */
++	if (S_ISDIR(vnode->netfs.inode.i_mode) &&
++	    op->file[0].vnode != op->file[1].vnode) {
++		u64 new_dv;
++
++		write_seqlock(&vnode->cb_lock);
++
++		new_dv = vnode->status.data_version + 1;
++		vnode->status.data_version = new_dv;
++		inode_set_iversion_raw(&vnode->netfs.inode, new_dv);
++
++		write_sequnlock(&vnode->cb_lock);
++	}
+ }
+ 
+ static void afs_rename_edit_dir(struct afs_operation *op)
+@@ -1858,6 +1877,12 @@ static void afs_rename_edit_dir(struct afs_operation *op)
+ 				 &vnode->fid, afs_edit_dir_for_rename_2);
+ 	}
+ 
++	if (S_ISDIR(vnode->netfs.inode.i_mode) &&
++	    new_dvnode != orig_dvnode &&
++	    test_bit(AFS_VNODE_DIR_VALID, &vnode->flags))
++		afs_edit_dir_update_dotdot(vnode, new_dvnode,
++					   afs_edit_dir_for_rename_sub);
++
+ 	new_inode = d_inode(new_dentry);
+ 	if (new_inode) {
+ 		spin_lock(&new_inode->i_lock);
+diff --git a/fs/afs/dir_edit.c b/fs/afs/dir_edit.c
+index 0ab7752d1b758..e22682c577302 100644
+--- a/fs/afs/dir_edit.c
++++ b/fs/afs/dir_edit.c
+@@ -126,10 +126,10 @@ static struct folio *afs_dir_get_folio(struct afs_vnode *vnode, pgoff_t index)
+ /*
+  * Scan a directory block looking for a dirent of the right name.
+  */
+-static int afs_dir_scan_block(union afs_xdr_dir_block *block, struct qstr *name,
++static int afs_dir_scan_block(const union afs_xdr_dir_block *block, const struct qstr *name,
+ 			      unsigned int blocknum)
+ {
+-	union afs_xdr_dirent *de;
++	const union afs_xdr_dirent *de;
+ 	u64 bitmap;
+ 	int d, len, n;
+ 
+@@ -491,3 +491,90 @@ void afs_edit_dir_remove(struct afs_vnode *vnode,
+ 	clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
+ 	goto out_unmap;
+ }
++
++/*
++ * Edit a subdirectory that has been moved between directories to update the
++ * ".." entry.
++ */
++void afs_edit_dir_update_dotdot(struct afs_vnode *vnode, struct afs_vnode *new_dvnode,
++				enum afs_edit_dir_reason why)
++{
++	union afs_xdr_dir_block *block;
++	union afs_xdr_dirent *de;
++	struct folio *folio;
++	unsigned int nr_blocks, b;
++	pgoff_t index;
++	loff_t i_size;
++	int slot;
++
++	_enter("");
++
++	i_size = i_size_read(&vnode->netfs.inode);
++	if (i_size < AFS_DIR_BLOCK_SIZE) {
++		clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
++		return;
++	}
++	nr_blocks = i_size / AFS_DIR_BLOCK_SIZE;
++
++	/* Find a block that has sufficient slots available.  Each folio
++	 * contains two or more directory blocks.
++	 */
++	for (b = 0; b < nr_blocks; b++) {
++		index = b / AFS_DIR_BLOCKS_PER_PAGE;
++		folio = afs_dir_get_folio(vnode, index);
++		if (!folio)
++			goto error;
++
++		block = kmap_local_folio(folio, b * AFS_DIR_BLOCK_SIZE - folio_pos(folio));
++
++		/* Abandon the edit if we got a callback break. */
++		if (!test_bit(AFS_VNODE_DIR_VALID, &vnode->flags))
++			goto invalidated;
++
++		slot = afs_dir_scan_block(block, &dotdot_name, b);
++		if (slot >= 0)
++			goto found_dirent;
++
++		kunmap_local(block);
++		folio_unlock(folio);
++		folio_put(folio);
++	}
++
++	/* Didn't find the dirent to clobber.  Download the directory again. */
++	trace_afs_edit_dir(vnode, why, afs_edit_dir_update_nodd,
++			   0, 0, 0, 0, "..");
++	clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
++	goto out;
++
++found_dirent:
++	de = &block->dirents[slot];
++	de->u.vnode  = htonl(new_dvnode->fid.vnode);
++	de->u.unique = htonl(new_dvnode->fid.unique);
++
++	trace_afs_edit_dir(vnode, why, afs_edit_dir_update_dd, b, slot,
++			   ntohl(de->u.vnode), ntohl(de->u.unique), "..");
++
++	kunmap_local(block);
++	folio_unlock(folio);
++	folio_put(folio);
++	inode_set_iversion_raw(&vnode->netfs.inode, vnode->status.data_version);
++
++out:
++	_leave("");
++	return;
++
++invalidated:
++	kunmap_local(block);
++	folio_unlock(folio);
++	folio_put(folio);
++	trace_afs_edit_dir(vnode, why, afs_edit_dir_update_inval,
++			   0, 0, 0, 0, "..");
++	clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
++	goto out;
++
++error:
++	trace_afs_edit_dir(vnode, why, afs_edit_dir_update_error,
++			   0, 0, 0, 0, "..");
++	clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
++	goto out;
++}
+diff --git a/fs/afs/internal.h b/fs/afs/internal.h
+index a25fdc3e52310..097d5a5f07b1a 100644
+--- a/fs/afs/internal.h
++++ b/fs/afs/internal.h
+@@ -1043,6 +1043,8 @@ extern void afs_check_for_remote_deletion(struct afs_operation *);
+ extern void afs_edit_dir_add(struct afs_vnode *, struct qstr *, struct afs_fid *,
+ 			     enum afs_edit_dir_reason);
+ extern void afs_edit_dir_remove(struct afs_vnode *, struct qstr *, enum afs_edit_dir_reason);
++void afs_edit_dir_update_dotdot(struct afs_vnode *vnode, struct afs_vnode *new_dvnode,
++				enum afs_edit_dir_reason why);
+ 
+ /*
+  * dir_silly.c
 diff --git a/include/trace/events/afs.h b/include/trace/events/afs.h
-index e9d412d19dbbb..54d10c69e55ec 100644
+index 54d10c69e55ec..d1ee4272d1cb8 100644
 --- a/include/trace/events/afs.h
 +++ b/include/trace/events/afs.h
-@@ -18,97 +18,6 @@
- #ifndef __AFS_DECLARE_TRACE_ENUMS_ONCE_ONLY
- #define __AFS_DECLARE_TRACE_ENUMS_ONCE_ONLY
+@@ -295,7 +295,11 @@ enum yfs_cm_operation {
+ 	EM(afs_edit_dir_delete,			"delete") \
+ 	EM(afs_edit_dir_delete_error,		"d_err ") \
+ 	EM(afs_edit_dir_delete_inval,		"d_invl") \
+-	E_(afs_edit_dir_delete_noent,		"d_nent")
++	EM(afs_edit_dir_delete_noent,		"d_nent") \
++	EM(afs_edit_dir_update_dd,		"u_ddot") \
++	EM(afs_edit_dir_update_error,		"u_fail") \
++	EM(afs_edit_dir_update_inval,		"u_invl") \
++	E_(afs_edit_dir_update_nodd,		"u_nodd")
  
--enum afs_call_trace {
--	afs_call_trace_alloc,
--	afs_call_trace_free,
--	afs_call_trace_get,
--	afs_call_trace_put,
--	afs_call_trace_wake,
--	afs_call_trace_work,
--};
--
--enum afs_server_trace {
--	afs_server_trace_alloc,
--	afs_server_trace_callback,
--	afs_server_trace_destroy,
--	afs_server_trace_free,
--	afs_server_trace_gc,
--	afs_server_trace_get_by_addr,
--	afs_server_trace_get_by_uuid,
--	afs_server_trace_get_caps,
--	afs_server_trace_get_install,
--	afs_server_trace_get_new_cbi,
--	afs_server_trace_get_probe,
--	afs_server_trace_give_up_cb,
--	afs_server_trace_purging,
--	afs_server_trace_put_call,
--	afs_server_trace_put_cbi,
--	afs_server_trace_put_find_rsq,
--	afs_server_trace_put_probe,
--	afs_server_trace_put_slist,
--	afs_server_trace_put_slist_isort,
--	afs_server_trace_put_uuid_rsq,
--	afs_server_trace_update,
--};
--
--
--enum afs_volume_trace {
--	afs_volume_trace_alloc,
--	afs_volume_trace_free,
--	afs_volume_trace_get_alloc_sbi,
--	afs_volume_trace_get_cell_insert,
--	afs_volume_trace_get_new_op,
--	afs_volume_trace_get_query_alias,
--	afs_volume_trace_put_cell_dup,
--	afs_volume_trace_put_cell_root,
--	afs_volume_trace_put_destroy_sbi,
--	afs_volume_trace_put_free_fc,
--	afs_volume_trace_put_put_op,
--	afs_volume_trace_put_query_alias,
--	afs_volume_trace_put_validate_fc,
--	afs_volume_trace_remove,
--};
--
--enum afs_cell_trace {
--	afs_cell_trace_alloc,
--	afs_cell_trace_free,
--	afs_cell_trace_get_queue_dns,
--	afs_cell_trace_get_queue_manage,
--	afs_cell_trace_get_queue_new,
--	afs_cell_trace_get_vol,
--	afs_cell_trace_insert,
--	afs_cell_trace_manage,
--	afs_cell_trace_put_candidate,
--	afs_cell_trace_put_destroy,
--	afs_cell_trace_put_queue_fail,
--	afs_cell_trace_put_queue_work,
--	afs_cell_trace_put_vol,
--	afs_cell_trace_see_source,
--	afs_cell_trace_see_ws,
--	afs_cell_trace_unuse_alias,
--	afs_cell_trace_unuse_check_alias,
--	afs_cell_trace_unuse_delete,
--	afs_cell_trace_unuse_fc,
--	afs_cell_trace_unuse_lookup,
--	afs_cell_trace_unuse_mntpt,
--	afs_cell_trace_unuse_no_pin,
--	afs_cell_trace_unuse_parse,
--	afs_cell_trace_unuse_pin,
--	afs_cell_trace_unuse_probe,
--	afs_cell_trace_unuse_sbi,
--	afs_cell_trace_unuse_ws,
--	afs_cell_trace_use_alias,
--	afs_cell_trace_use_check_alias,
--	afs_cell_trace_use_fc,
--	afs_cell_trace_use_fc_alias,
--	afs_cell_trace_use_lookup,
--	afs_cell_trace_use_mntpt,
--	afs_cell_trace_use_pin,
--	afs_cell_trace_use_probe,
--	afs_cell_trace_use_sbi,
--	afs_cell_trace_wait,
--};
--
- enum afs_fs_operation {
- 	afs_FS_FetchData		= 130,	/* AFS Fetch file data */
- 	afs_FS_FetchACL			= 131,	/* AFS Fetch file ACL */
-@@ -202,121 +111,6 @@ enum yfs_cm_operation {
- 	yfs_CB_CallBack			= 64204,
- };
- 
--enum afs_edit_dir_op {
--	afs_edit_dir_create,
--	afs_edit_dir_create_error,
--	afs_edit_dir_create_inval,
--	afs_edit_dir_create_nospc,
--	afs_edit_dir_delete,
--	afs_edit_dir_delete_error,
--	afs_edit_dir_delete_inval,
--	afs_edit_dir_delete_noent,
--};
--
--enum afs_edit_dir_reason {
--	afs_edit_dir_for_create,
--	afs_edit_dir_for_link,
--	afs_edit_dir_for_mkdir,
--	afs_edit_dir_for_rename_0,
--	afs_edit_dir_for_rename_1,
--	afs_edit_dir_for_rename_2,
--	afs_edit_dir_for_rmdir,
--	afs_edit_dir_for_silly_0,
--	afs_edit_dir_for_silly_1,
--	afs_edit_dir_for_symlink,
--	afs_edit_dir_for_unlink,
--};
--
--enum afs_eproto_cause {
--	afs_eproto_bad_status,
--	afs_eproto_cb_count,
--	afs_eproto_cb_fid_count,
--	afs_eproto_cellname_len,
--	afs_eproto_file_type,
--	afs_eproto_ibulkst_cb_count,
--	afs_eproto_ibulkst_count,
--	afs_eproto_motd_len,
--	afs_eproto_offline_msg_len,
--	afs_eproto_volname_len,
--	afs_eproto_yvl_fsendpt4_len,
--	afs_eproto_yvl_fsendpt6_len,
--	afs_eproto_yvl_fsendpt_num,
--	afs_eproto_yvl_fsendpt_type,
--	afs_eproto_yvl_vlendpt4_len,
--	afs_eproto_yvl_vlendpt6_len,
--	afs_eproto_yvl_vlendpt_type,
--};
--
--enum afs_io_error {
--	afs_io_error_cm_reply,
--	afs_io_error_extract,
--	afs_io_error_fs_probe_fail,
--	afs_io_error_vl_lookup_fail,
--	afs_io_error_vl_probe_fail,
--};
--
--enum afs_file_error {
--	afs_file_error_dir_bad_magic,
--	afs_file_error_dir_big,
--	afs_file_error_dir_missing_page,
--	afs_file_error_dir_name_too_long,
--	afs_file_error_dir_over_end,
--	afs_file_error_dir_small,
--	afs_file_error_dir_unmarked_ext,
--	afs_file_error_mntpt,
--	afs_file_error_writeback_fail,
--};
--
--enum afs_flock_event {
--	afs_flock_acquired,
--	afs_flock_callback_break,
--	afs_flock_defer_unlock,
--	afs_flock_extend_fail,
--	afs_flock_fail_other,
--	afs_flock_fail_perm,
--	afs_flock_no_lockers,
--	afs_flock_release_fail,
--	afs_flock_silly_delete,
--	afs_flock_timestamp,
--	afs_flock_try_to_lock,
--	afs_flock_vfs_lock,
--	afs_flock_vfs_locking,
--	afs_flock_waited,
--	afs_flock_waiting,
--	afs_flock_work_extending,
--	afs_flock_work_retry,
--	afs_flock_work_unlocking,
--	afs_flock_would_block,
--};
--
--enum afs_flock_operation {
--	afs_flock_op_copy_lock,
--	afs_flock_op_flock,
--	afs_flock_op_grant,
--	afs_flock_op_lock,
--	afs_flock_op_release_lock,
--	afs_flock_op_return_ok,
--	afs_flock_op_return_eagain,
--	afs_flock_op_return_edeadlk,
--	afs_flock_op_return_error,
--	afs_flock_op_set_lock,
--	afs_flock_op_unlock,
--	afs_flock_op_wake,
--};
--
--enum afs_cb_break_reason {
--	afs_cb_break_no_break,
--	afs_cb_break_no_promise,
--	afs_cb_break_for_callback,
--	afs_cb_break_for_deleted,
--	afs_cb_break_for_lapsed,
--	afs_cb_break_for_s_reinit,
--	afs_cb_break_for_unlink,
--	afs_cb_break_for_v_break,
--	afs_cb_break_for_volume_callback,
--	afs_cb_break_for_zap,
--};
--
- #endif /* end __AFS_DECLARE_TRACE_ENUMS_ONCE_ONLY */
- 
- /*
-@@ -391,6 +185,7 @@ enum afs_cb_break_reason {
- 	EM(afs_cell_trace_unuse_fc,		"UNU fc    ") \
- 	EM(afs_cell_trace_unuse_lookup,		"UNU lookup") \
- 	EM(afs_cell_trace_unuse_mntpt,		"UNU mntpt ") \
-+	EM(afs_cell_trace_unuse_no_pin,		"UNU no-pin") \
- 	EM(afs_cell_trace_unuse_parse,		"UNU parse ") \
- 	EM(afs_cell_trace_unuse_pin,		"UNU pin   ") \
- 	EM(afs_cell_trace_unuse_probe,		"UNU probe ") \
-@@ -614,6 +409,32 @@ enum afs_cb_break_reason {
- 	EM(afs_cb_break_for_volume_callback,	"break-v-cb")		\
- 	E_(afs_cb_break_for_zap,		"break-zap")
- 
-+/*
-+ * Generate enums for tracing information.
-+ */
-+#ifndef __AFS_GENERATE_TRACE_ENUMS_ONCE_ONLY
-+#define __AFS_GENERATE_TRACE_ENUMS_ONCE_ONLY
-+
-+#undef EM
-+#undef E_
-+#define EM(a, b) a,
-+#define E_(a, b) a
-+
-+enum afs_call_trace		{ afs_call_traces } __mode(byte);
-+enum afs_cb_break_reason	{ afs_cb_break_reasons } __mode(byte);
-+enum afs_cell_trace		{ afs_cell_traces } __mode(byte);
-+enum afs_edit_dir_op		{ afs_edit_dir_ops } __mode(byte);
-+enum afs_edit_dir_reason	{ afs_edit_dir_reasons } __mode(byte);
-+enum afs_eproto_cause		{ afs_eproto_causes } __mode(byte);
-+enum afs_file_error		{ afs_file_errors } __mode(byte);
-+enum afs_flock_event		{ afs_flock_events } __mode(byte);
-+enum afs_flock_operation	{ afs_flock_operations } __mode(byte);
-+enum afs_io_error		{ afs_io_errors } __mode(byte);
-+enum afs_server_trace		{ afs_server_traces } __mode(byte);
-+enum afs_volume_trace		{ afs_volume_traces } __mode(byte);
-+
-+#endif /* end __AFS_GENERATE_TRACE_ENUMS_ONCE_ONLY */
-+
- /*
-  * Export enum symbols via userspace.
-  */
+ #define afs_edit_dir_reasons				  \
+ 	EM(afs_edit_dir_for_create,		"Create") \
+@@ -304,6 +308,7 @@ enum yfs_cm_operation {
+ 	EM(afs_edit_dir_for_rename_0,		"Renam0") \
+ 	EM(afs_edit_dir_for_rename_1,		"Renam1") \
+ 	EM(afs_edit_dir_for_rename_2,		"Renam2") \
++	EM(afs_edit_dir_for_rename_sub,		"RnmSub") \
+ 	EM(afs_edit_dir_for_rmdir,		"RmDir ") \
+ 	EM(afs_edit_dir_for_silly_0,		"S_Ren0") \
+ 	EM(afs_edit_dir_for_silly_1,		"S_Ren1") \
 -- 
 2.43.0
 
