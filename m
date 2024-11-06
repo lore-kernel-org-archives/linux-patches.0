@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434831EE01A;
-	Wed,  6 Nov 2024 13:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D9A1EE01A;
+	Wed,  6 Nov 2024 13:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898782; cv=none; b=QvGfiU7cQZ2mE/jZuoY7JmotbCcmpQlrUkyD0qpICgiSgAL7PKYIhVW+cRF0Cgm1TewX8P9qlJAXNYzptoX9H4kx2F14jutaYXVx96d8/8F6oGjy9KGzialVuH888xjRyFgsk/H3COlx70/fjfBG/OWcQYn5f9pjhr7mVQK56Mw=
+	t=1730898784; cv=none; b=pIRsxAw2kJiwP/j1HI8nK92A0ln4RYXWCNs+hvAiiOXcWzDta9byMw933gKAYaIQRFGrrN9XWyd+skrigbtwC9H39/C81fDF2zF0rOxwB6V3L79aVihEgRIwkLM62Zw3WgUjcsPMiwvCQFeFAORh/IgaN/Cxot8aNql1gvQWu9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898782; c=relaxed/simple;
-	bh=/azb1dUc89ZWiKLMi+qMHGjF8RnLbIqt+hhsB4v7z0U=;
+	s=arc-20240116; t=1730898784; c=relaxed/simple;
+	bh=Thp0yKPWojygWlJHiu65qPvNS6tjL8aec6F2Hs3EmFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F17lO4WZ4apzvQKvX1VvO24g8w2vAg7xtbaZrWd36I2ERRqQ/r+hy92OI+m61bZ3Hwi5d8hPXdTC8H91H/KDwbg+YAnLzxaVd3CZbN3JYxkA1g9nKtntgFCogVhrhCTUaki1q52uxUXNSm1KEN0jr87aP+ah/vcqk2QBQKPPjhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPSf4vMN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o7aWiSSwYWIsbLC4oVHUh4afd8nNeADn9iIbEAPziCIlf3uXdNp0Lrg/UCqs94Dyau8Xvf6J5/qxPT385DvPhhRVMAvwsZcLMgmp1tmo3k0mCElZFzuIMUVm0c9jXj4unkFqJrFgmo6iZCecaeUOQMLe9CG5cWp2cSP9PRyW3eE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IaDpHJQ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPSf4vMN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664CFC4CECD;
-	Wed,  6 Nov 2024 13:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IaDpHJQ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B896C4CECD;
+	Wed,  6 Nov 2024 13:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898781;
-	bh=/azb1dUc89ZWiKLMi+qMHGjF8RnLbIqt+hhsB4v7z0U=;
+	s=korg; t=1730898784;
+	bh=Thp0yKPWojygWlJHiu65qPvNS6tjL8aec6F2Hs3EmFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xPSf4vMN/BNzKlGXi8oaq3cWdEOkcBJK69H+Kvqo5reBEITHyWxgmRLfDrwlI8TiE
-	 6xKg2AV6/qAeHrqyKsN2q72FW6ZmjpCoHQPUVVUcgr9d8sEnMWMSNEpZ2V5WJwSR7S
-	 LkYE5PQoEP+KCBgMTwrLJFVbxExhTZhcMg006N7c=
+	b=IaDpHJQ+Wa+GcEfRaBqBiToNEVXab49lExpRTNuYBi1jnUCdsl+JFjivYDiZMcG3E
+	 q9LV94LZPJUG+1HqoqytT1H7t8R6B5J3seWrpLOwbl6ky6N4aT6Wt1espprOhi3IDb
+	 k20wIWpGe9OH0Q4rJkFtMf/8mqFTxA1+aYmwd6vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.4 354/462] arm64: probes: Fix simulate_ldr*_literal()
-Date: Wed,  6 Nov 2024 13:04:07 +0100
-Message-ID: <20241106120340.274883685@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Francis Laniel <flaniel@linux.microsoft.com>,
+	Sherry Yang <sherry.yang@oracle.com>
+Subject: [PATCH 5.4 355/462] tracing/kprobes: Return EADDRNOTAVAIL when func matches several symbols
+Date: Wed,  6 Nov 2024 13:04:08 +0100
+Message-ID: <20241106120340.299815837@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -51,79 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Francis Laniel <flaniel@linux.microsoft.com>
 
-commit 50f813e57601c22b6f26ced3193b9b94d70a2640 upstream.
+commit b022f0c7e404887a7c5229788fc99eff9f9a80d5 upstream.
 
-The simulate_ldr_literal() code always loads a 64-bit quantity, and when
-simulating a 32-bit load into a 'W' register, it discards the most
-significant 32 bits. For big-endian kernels this means that the relevant
-bits are discarded, and the value returned is the the subsequent 32 bits
-in memory (i.e. the value at addr + 4).
+When a kprobe is attached to a function that's name is not unique (is
+static and shares the name with other functions in the kernel), the
+kprobe is attached to the first function it finds. This is a bug as the
+function that it is attaching to is not necessarily the one that the
+user wants to attach to.
 
-Additionally, simulate_ldr_literal() and simulate_ldrsw_literal() use a
-plain C load, which the compiler may tear or elide (e.g. if the target
-is the zero register). Today this doesn't happen to matter, but it may
-matter in future if trampoline code uses a LDR (literal) or LDRSW
-(literal).
+Instead of blindly picking a function to attach to what is ambiguous,
+error with EADDRNOTAVAIL to let the user know that this function is not
+unique, and that the user must use another unique function with an
+address offset to get to the function they want to attach to.
 
-Update simulate_ldr_literal() and simulate_ldrsw_literal() to use an
-appropriately-sized READ_ONCE() to perform the access, which avoids
-these problems.
+Link: https://lore.kernel.org/all/20231020104250.9537-2-flaniel@linux.microsoft.com/
 
-Fixes: 39a67d49ba35 ("arm64: kprobes instruction simulation support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20241008155851.801546-3-mark.rutland@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 413d37d1eb69 ("tracing: Add kprobe-based event tracer")
+Suggested-by: Masami Hiramatsu <mhiramat@kernel.org>
+Signed-off-by: Francis Laniel <flaniel@linux.microsoft.com>
+Link: https://lore.kernel.org/lkml/20230819101105.b0c104ae4494a7d1f2eea742@kernel.org/
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+[ Sherry: kselftest kprobe_non_uniq_symbol.tc failed on 5.4.y, because of missing
+  this commit, backport it to 5.4.y. Minor conflicts due to context change, ignore
+  context change ]
+Signed-off-by: Sherry Yang <sherry.yang@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/probes/simulate-insn.c |   18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ kernel/trace/trace_kprobe.c |   74 ++++++++++++++++++++++++++++++++++++++++++++
+ kernel/trace/trace_probe.h  |    1 
+ 2 files changed, 75 insertions(+)
 
---- a/arch/arm64/kernel/probes/simulate-insn.c
-+++ b/arch/arm64/kernel/probes/simulate-insn.c
-@@ -170,17 +170,15 @@ simulate_tbz_tbnz(u32 opcode, long addr,
- void __kprobes
- simulate_ldr_literal(u32 opcode, long addr, struct pt_regs *regs)
- {
--	u64 *load_addr;
-+	unsigned long load_addr;
- 	int xn = opcode & 0x1f;
--	int disp;
- 
--	disp = ldr_displacement(opcode);
--	load_addr = (u64 *) (addr + disp);
-+	load_addr = addr + ldr_displacement(opcode);
- 
- 	if (opcode & (1 << 30))	/* x0-x30 */
--		set_x_reg(regs, xn, *load_addr);
-+		set_x_reg(regs, xn, READ_ONCE(*(u64 *)load_addr));
- 	else			/* w0-w30 */
--		set_w_reg(regs, xn, *load_addr);
-+		set_w_reg(regs, xn, READ_ONCE(*(u32 *)load_addr));
- 
- 	instruction_pointer_set(regs, instruction_pointer(regs) + 4);
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -714,6 +714,36 @@ static inline void sanitize_event_name(c
+ 			*name = '_';
  }
-@@ -188,14 +186,12 @@ simulate_ldr_literal(u32 opcode, long ad
- void __kprobes
- simulate_ldrsw_literal(u32 opcode, long addr, struct pt_regs *regs)
+ 
++struct count_symbols_struct {
++	const char *func_name;
++	unsigned int count;
++};
++
++static int count_symbols(void *data, const char *name, struct module *unused0,
++			 unsigned long unused1)
++{
++	struct count_symbols_struct *args = data;
++
++	if (strcmp(args->func_name, name))
++		return 0;
++
++	args->count++;
++
++	return 0;
++}
++
++static unsigned int number_of_same_symbols(char *func_name)
++{
++	struct count_symbols_struct args = {
++		.func_name = func_name,
++		.count = 0,
++	};
++
++	kallsyms_on_each_symbol(count_symbols, &args);
++
++	return args.count;
++}
++
+ static int trace_kprobe_create(int argc, const char *argv[])
  {
--	s32 *load_addr;
-+	unsigned long load_addr;
- 	int xn = opcode & 0x1f;
--	int disp;
+ 	/*
+@@ -825,6 +855,31 @@ static int trace_kprobe_create(int argc,
+ 		}
+ 	}
  
--	disp = ldr_displacement(opcode);
--	load_addr = (s32 *) (addr + disp);
-+	load_addr = addr + ldr_displacement(opcode);
- 
--	set_x_reg(regs, xn, *load_addr);
-+	set_x_reg(regs, xn, READ_ONCE(*(s32 *)load_addr));
- 
- 	instruction_pointer_set(regs, instruction_pointer(regs) + 4);
++	if (symbol && !strchr(symbol, ':')) {
++		unsigned int count;
++
++		count = number_of_same_symbols(symbol);
++		if (count > 1) {
++			/*
++			 * Users should use ADDR to remove the ambiguity of
++			 * using KSYM only.
++			 */
++			trace_probe_log_err(0, NON_UNIQ_SYMBOL);
++			ret = -EADDRNOTAVAIL;
++
++			goto error;
++		} else if (count == 0) {
++			/*
++			 * We can return ENOENT earlier than when register the
++			 * kprobe.
++			 */
++			trace_probe_log_err(0, BAD_PROBE_ADDR);
++			ret = -ENOENT;
++
++			goto error;
++		}
++	}
++
+ 	trace_probe_log_set_index(0);
+ 	if (event) {
+ 		ret = traceprobe_parse_event_name(&event, &group, buf,
+@@ -1596,6 +1651,7 @@ static int unregister_kprobe_event(struc
  }
+ 
+ #ifdef CONFIG_PERF_EVENTS
++
+ /* create a trace_kprobe, but don't add it to global lists */
+ struct trace_event_call *
+ create_local_trace_kprobe(char *func, void *addr, unsigned long offs,
+@@ -1605,6 +1661,24 @@ create_local_trace_kprobe(char *func, vo
+ 	int ret;
+ 	char *event;
+ 
++	if (func) {
++		unsigned int count;
++
++		count = number_of_same_symbols(func);
++		if (count > 1)
++			/*
++			 * Users should use addr to remove the ambiguity of
++			 * using func only.
++			 */
++			return ERR_PTR(-EADDRNOTAVAIL);
++		else if (count == 0)
++			/*
++			 * We can return ENOENT earlier than when register the
++			 * kprobe.
++			 */
++			return ERR_PTR(-ENOENT);
++	}
++
+ 	/*
+ 	 * local trace_kprobes are not added to dyn_event, so they are never
+ 	 * searched in find_trace_kprobe(). Therefore, there is no concern of
+--- a/kernel/trace/trace_probe.h
++++ b/kernel/trace/trace_probe.h
+@@ -403,6 +403,7 @@ extern int traceprobe_define_arg_fields(
+ 	C(BAD_MAXACT,		"Invalid maxactive number"),		\
+ 	C(MAXACT_TOO_BIG,	"Maxactive is too big"),		\
+ 	C(BAD_PROBE_ADDR,	"Invalid probed address or symbol"),	\
++	C(NON_UNIQ_SYMBOL,	"The symbol is not unique"),		\
+ 	C(BAD_RETPROBE,		"Retprobe address must be an function entry"), \
+ 	C(NO_GROUP_NAME,	"Group name is not specified"),		\
+ 	C(GROUP_TOO_LONG,	"Group name is too long"),		\
 
 
