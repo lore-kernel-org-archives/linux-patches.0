@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AC81DF726;
-	Wed,  6 Nov 2024 12:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3196018C00E;
+	Wed,  6 Nov 2024 12:27:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896036; cv=none; b=XlHz+O+lyOQypnAdbhh9uD3w6lIwLt4urFZ45NT55iYya4aMgioLE3WlFYB6vXBddFe60D84gcw9AHGxzGArjTAArTC5pyvg/azJDtRSDsZiAqo4wJfmJAJ1epXtv2iZIOFXe71L4WxqKQkfxSltNkWWIyLcPVJNs+uJOv9VEQ0=
+	t=1730896039; cv=none; b=EN3ujn/IrlIDVpJWnn0z+tfvP0qFof4EgcYHdonYGqJVjssEB1TwEobWx4568iLYSlwc/9e3mHzzxhiw/6Oae4iS3ZJ8b2C6mADztr0PzNl36/eUsgHD+YygLEyZpK16u38Kng1/w8j3Ju9jUQchk1Q+mXC6xBJ3j5FZIhm5LIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896036; c=relaxed/simple;
-	bh=BSu1+yvOw48dEJx6aC6LBHk+uIiwrXFljWQXzBFGeVE=;
+	s=arc-20240116; t=1730896039; c=relaxed/simple;
+	bh=pV/fp3eXixlYQmCBcbqyfulmE1ZwveJvTErODiawG1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i3dkRQRPfc7XyqaDhO9Mp+JApqIEArah1MpO0SLcELdJBDn0qOsRYR+bXJhcUESzXJOqgiDUngsg2lUULz6lI9D+My4B38C5kalAbNKAP3Lnswu4umNuncGVdCC7P5/8fhs0vLOOwAIuEUf6hcs0iLN60EvNLke720m/93V5yHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZ3ST+vn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kMj8q0HjSapmu+dDN1kuHVNVIXhGTIZfBnVxzJKnEOo68l3JPktDoCDSOzENmTj0prrBvlBo8RooBZ4LppVdJZynaACRhEZ71y401B72V6mDCe759y0Gy/EZnSYd2qXxSp2S9Mlea/D79dWsx70uwHvWv/6vy3L5OPSf7sZjcYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=To/5HS90; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZ3ST+vn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0283C4CECD;
-	Wed,  6 Nov 2024 12:27:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="To/5HS90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC35EC4CECD;
+	Wed,  6 Nov 2024 12:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896036;
-	bh=BSu1+yvOw48dEJx6aC6LBHk+uIiwrXFljWQXzBFGeVE=;
+	s=korg; t=1730896039;
+	bh=pV/fp3eXixlYQmCBcbqyfulmE1ZwveJvTErODiawG1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vZ3ST+vnu4Z2m46WKc+atvcJUHQcsQG4xTYyz0RVUngkS879Oi401WjuQBuU8eASz
-	 A7cEl5tGtS3ujyvyFHsbiOjOtm2l6apahk8bg/hPOh2buHe3TemkcbU/eZJknSN7En
-	 ssM2bzHiHS8C1FaV+X1cMgg7UzTTMkuDubyO29n4=
+	b=To/5HS90zzzXceI65vFUep7CkKBAbfGgq9tjYH45lI77dtr6ftaxPcs/uy4gh0ucL
+	 FbZ57UljXhaNVJXpEGFw6TiCxp4BKVfFZS3EN8gJzsC1r1FBi+Q0LEr6LIm7Daslu4
+	 t3cofZ8RoDvlBlqA3iIk9BKPfG6w2ApoiE4HfCN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Byeonguk Jeong <jungbu2855@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@kernel.org>,
-	Hou Tao <houtao1@huawei.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 041/245] bpf: Fix out-of-bounds write in trie_get_next_key()
-Date: Wed,  6 Nov 2024 13:01:34 +0100
-Message-ID: <20241106120320.236464929@linuxfoundation.org>
+Subject: [PATCH 6.11 068/245] smb: client: fix parsing of device numbers
+Date: Wed,  6 Nov 2024 13:02:01 +0100
+Message-ID: <20241106120320.879494555@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -47,49 +45,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Byeonguk Jeong <jungbu2855@gmail.com>
+From: Paulo Alcantara <pc@manguebit.com>
 
-[ Upstream commit 13400ac8fb80c57c2bfb12ebd35ee121ce9b4d21 ]
+[ Upstream commit 663f295e35594f4c2584fc68c28546b747b637cd ]
 
-trie_get_next_key() allocates a node stack with size trie->max_prefixlen,
-while it writes (trie->max_prefixlen + 1) nodes to the stack when it has
-full paths from the root to leaves. For example, consider a trie with
-max_prefixlen is 8, and the nodes with key 0x00/0, 0x00/1, 0x00/2, ...
-0x00/8 inserted. Subsequent calls to trie_get_next_key with _key with
-.prefixlen = 8 make 9 nodes be written on the node stack with size 8.
+Report correct major and minor numbers from special files created with
+NFS reparse points.
 
-Fixes: b471f2f1de8b ("bpf: implement MAP_GET_NEXT_KEY command for LPM_TRIE map")
-Signed-off-by: Byeonguk Jeong <jungbu2855@gmail.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@kernel.org>
-Tested-by: Hou Tao <houtao1@huawei.com>
-Acked-by: Hou Tao <houtao1@huawei.com>
-Link: https://lore.kernel.org/r/Zxx384ZfdlFYnz6J@localhost.localdomain
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/lpm_trie.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/reparse.c | 6 +++---
+ fs/smb/client/reparse.h | 9 +--------
+ 2 files changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
-index 0218a5132ab56..9b60eda0f727b 100644
---- a/kernel/bpf/lpm_trie.c
-+++ b/kernel/bpf/lpm_trie.c
-@@ -655,7 +655,7 @@ static int trie_get_next_key(struct bpf_map *map, void *_key, void *_next_key)
- 	if (!key || key->prefixlen > trie->max_prefixlen)
- 		goto find_leftmost;
+diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
+index 7429b96a6ae5e..a4e25b99411ec 100644
+--- a/fs/smb/client/reparse.c
++++ b/fs/smb/client/reparse.c
+@@ -497,7 +497,7 @@ static void wsl_to_fattr(struct cifs_open_info_data *data,
+ 		else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen))
+ 			fattr->cf_mode = (umode_t)le32_to_cpu(*(__le32 *)v);
+ 		else if (!strncmp(name, SMB2_WSL_XATTR_DEV, nlen))
+-			fattr->cf_rdev = wsl_mkdev(v);
++			fattr->cf_rdev = reparse_mkdev(v);
+ 	} while (next);
+ out:
+ 	fattr->cf_dtype = S_DT(fattr->cf_mode);
+@@ -518,13 +518,13 @@ bool cifs_reparse_point_to_fattr(struct cifs_sb_info *cifs_sb,
+ 			if (le16_to_cpu(buf->ReparseDataLength) != sizeof(buf->InodeType) + 8)
+ 				return false;
+ 			fattr->cf_mode |= S_IFCHR;
+-			fattr->cf_rdev = reparse_nfs_mkdev(buf);
++			fattr->cf_rdev = reparse_mkdev(buf->DataBuffer);
+ 			break;
+ 		case NFS_SPECFILE_BLK:
+ 			if (le16_to_cpu(buf->ReparseDataLength) != sizeof(buf->InodeType) + 8)
+ 				return false;
+ 			fattr->cf_mode |= S_IFBLK;
+-			fattr->cf_rdev = reparse_nfs_mkdev(buf);
++			fattr->cf_rdev = reparse_mkdev(buf->DataBuffer);
+ 			break;
+ 		case NFS_SPECFILE_FIFO:
+ 			fattr->cf_mode |= S_IFIFO;
+diff --git a/fs/smb/client/reparse.h b/fs/smb/client/reparse.h
+index 2c0644bc4e65a..158e7b7aae646 100644
+--- a/fs/smb/client/reparse.h
++++ b/fs/smb/client/reparse.h
+@@ -18,14 +18,7 @@
+  */
+ #define IO_REPARSE_TAG_INTERNAL ((__u32)~0U)
  
--	node_stack = kmalloc_array(trie->max_prefixlen,
-+	node_stack = kmalloc_array(trie->max_prefixlen + 1,
- 				   sizeof(struct lpm_trie_node *),
- 				   GFP_ATOMIC | __GFP_NOWARN);
- 	if (!node_stack)
+-static inline dev_t reparse_nfs_mkdev(struct reparse_posix_data *buf)
+-{
+-	u64 v = le64_to_cpu(*(__le64 *)buf->DataBuffer);
+-
+-	return MKDEV(v >> 32, v & 0xffffffff);
+-}
+-
+-static inline dev_t wsl_mkdev(void *ptr)
++static inline dev_t reparse_mkdev(void *ptr)
+ {
+ 	u64 v = le64_to_cpu(*(__le64 *)ptr);
+ 
 -- 
 2.43.0
 
