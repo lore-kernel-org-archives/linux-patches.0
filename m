@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC4C1CB310;
-	Wed,  6 Nov 2024 13:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099A71CB310;
+	Wed,  6 Nov 2024 13:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899088; cv=none; b=dH0SdnV3xa4hTkeqFas2w/M3mPbpXON2xsWtnVe5zLRctd45YSaIfzje6XTCdXypBGIZHRNGfe99hLvOnjSq0x0NxpdYBzOqYM6YGK8qCAqblj2E5JzGzyMLd0PmbmSl1BaYpsIvWyOGe9beJgl2Lup6s1R3+tujDwxA4Vvw3HE=
+	t=1730899091; cv=none; b=fMswQF3eeZOKLszn/hUuq/AaHWcTLph7raWVYL3AoSA6Wx8x0XAV58DuEfKg5yxPw9+Ma0P+M3f2b8RZ4n/ZVj/cTAGipSBO/tt2hGiGjqZ1aQSpD8NpcUNfuLmg/vN1fhs8CrvH0kHfqePtsy3GhWQg3kcPxsFlMgMZOwZfsKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899088; c=relaxed/simple;
-	bh=4Mf5p2NWYtuUj0IjG2Gmki1CeftRPlkpofBPVNae2Ck=;
+	s=arc-20240116; t=1730899091; c=relaxed/simple;
+	bh=yr+JmLTiHfc561KO4/mqlj2I1noPmFYTJPzgVT/icJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MDXZixaFbBXFmGbCQC2MjnoHsheDS/BzNBPOJ1NzJDYclLxfxyr1GbPHB8+juwf7JuqoAc3r33qCIYHTVBJqr8oX3oAyL9z1Gq53I6taMgfM9/0W6YIzKtBBKEQPrwzN5rp+TX/kyCZTxPLs1VuxyXJWDiP2AZ6qMQYEYQ/7DYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTzc7/KL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R9l/mVVuRysMfTXVqDpzddssLYqGunWcAk2C4mPn36yoGpEmxnoHqzqMv6Z981GrYrNsqYWXF5cybmesSSz5vJijvdyB/ozodwxx2MjIss4vHA4MqVZ6bTlzRsjFTxQvoUqBFshjksF25FMVTjj6/3rXPh85hIjngjw3yfFtzjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ytkkrhKs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTzc7/KL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA5BC4CECD;
-	Wed,  6 Nov 2024 13:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ytkkrhKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812CBC4CECD;
+	Wed,  6 Nov 2024 13:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899088;
-	bh=4Mf5p2NWYtuUj0IjG2Gmki1CeftRPlkpofBPVNae2Ck=;
+	s=korg; t=1730899090;
+	bh=yr+JmLTiHfc561KO4/mqlj2I1noPmFYTJPzgVT/icJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZTzc7/KLIEgpznpT1bJqNOS+XPU7NVCnRB+1UjI+tQteCYzLGIEPxeLMQsP3+wdv8
-	 CM6lVhImOgQWAIxwVxv2NRQX9CFifItwsYTD5gSSK/Ez3NJqqpWiDBUAx3xaZFKytN
-	 xzsPZ7JVkXamsywwBR6obW/2jcqHV0N/I2XNMOtY=
+	b=ytkkrhKsjBCIuPGuuY1qxbTUswEn3Sc2rsu+S2ZrRSQmSNOOo44Jrf8SpW5ZXclbl
+	 LnGQUKWVWaPaIj3elxfSzd6xyNgDjkUgJAilerYKOSCid/VSE8PcOBkhb2NRIt9hnG
+	 zcro3+LOFqjCke37ueHzLoeTT1b2IfLqdpxcbrzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	syzbot+81092778aac03460d6b7@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Mark Fasheh <mark@fasheh.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 456/462] ocfs2: pass u64 to ocfs2_truncate_inline maybe overflow
-Date: Wed,  6 Nov 2024 13:05:49 +0100
-Message-ID: <20241106120342.767775908@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+d6ca2daf692c7a82f959@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 457/462] nilfs2: fix kernel bug due to missing clearing of checked flag
+Date: Wed,  6 Nov 2024 13:05:50 +0100
+Message-ID: <20241106120342.791473266@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -59,60 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit bc0a2f3a73fcdac651fca64df39306d1e5ebe3b0 ]
+commit 41e192ad2779cae0102879612dfe46726e4396aa upstream.
 
-Syzbot reported a kernel BUG in ocfs2_truncate_inline.  There are two
-reasons for this: first, the parameter value passed is greater than
-ocfs2_max_inline_data_with_xattr, second, the start and end parameters of
-ocfs2_truncate_inline are "unsigned int".
+Syzbot reported that in directory operations after nilfs2 detects
+filesystem corruption and degrades to read-only,
+__block_write_begin_int(), which is called to prepare block writes, may
+fail the BUG_ON check for accesses exceeding the folio/page size,
+triggering a kernel bug.
 
-So, we need to add a sanity check for byte_start and byte_len right before
-ocfs2_truncate_inline() in ocfs2_remove_inode_range(), if they are greater
-than ocfs2_max_inline_data_with_xattr return -EINVAL.
+This was found to be because the "checked" flag of a page/folio was not
+cleared when it was discarded by nilfs2's own routine, which causes the
+sanity check of directory entries to be skipped when the directory
+page/folio is reloaded.  So, fix that.
 
-Link: https://lkml.kernel.org/r/tencent_D48DB5122ADDAEDDD11918CFB68D93258C07@qq.com
-Fixes: 1afc32b95233 ("ocfs2: Write support for inline data")
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reported-by: syzbot+81092778aac03460d6b7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=81092778aac03460d6b7
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
+This was necessary when the use of nilfs2's own page discard routine was
+applied to more than just metadata files.
+
+Link: https://lkml.kernel.org/r/20241017193359.5051-1-konishi.ryusuke@gmail.com
+Fixes: 8c26c4e2694a ("nilfs2: fix issue with flush kernel thread after remount in RO mode because of driver's internal error or metadata corruption")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+d6ca2daf692c7a82f959@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d6ca2daf692c7a82f959
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/file.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/nilfs2/page.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
-index 7294d5b3d80fe..0c62cb90d63dd 100644
---- a/fs/ocfs2/file.c
-+++ b/fs/ocfs2/file.c
-@@ -1787,6 +1787,14 @@ int ocfs2_remove_inode_range(struct inode *inode,
- 		return 0;
+--- a/fs/nilfs2/page.c
++++ b/fs/nilfs2/page.c
+@@ -405,6 +405,7 @@ void nilfs_clear_dirty_page(struct page
  
- 	if (OCFS2_I(inode)->ip_dyn_features & OCFS2_INLINE_DATA_FL) {
-+		int id_count = ocfs2_max_inline_data_with_xattr(inode->i_sb, di);
-+
-+		if (byte_start > id_count || byte_start + byte_len > id_count) {
-+			ret = -EINVAL;
-+			mlog_errno(ret);
-+			goto out;
-+		}
-+
- 		ret = ocfs2_truncate_inline(inode, di_bh, byte_start,
- 					    byte_start + byte_len, 0);
- 		if (ret) {
--- 
-2.43.0
-
+ 	ClearPageUptodate(page);
+ 	ClearPageMappedToDisk(page);
++	ClearPageChecked(page);
+ 
+ 	if (page_has_buffers(page)) {
+ 		struct buffer_head *bh, *head;
 
 
