@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1B51DF24E;
-	Wed,  6 Nov 2024 12:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD55D1D416E;
+	Wed,  6 Nov 2024 12:14:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895273; cv=none; b=kFN0wv4105/gS69gUZVcOHQ8OL6p0ZhkQ8HDmrox8hF2oMKFUlfKqwmWdI0/e7mzxoBeMXVynsbj47Hhh8vFBwvzWjZj+TK+gvi0AIDbZQ8uXD1KoWkDXpkzOgBa0wyezWA30EDNJn4Jl9IGCTiiui9yDOcIv37XNWhQluXHi+E=
+	t=1730895276; cv=none; b=V59atm6rh+klvm9UozUhhfudCzz+cmub8SLCJBE1Bgje5QdD1AuUbHca+YK3NZSQT08FkWm9Buc201Y0EZezZFkacxJyIg4RXTwu8q/OtfiRyFNwPGPJj7w2ZAB7ZehjH6OH5EdcZeT1AwpYw/EiwZ850eX4/DzcAg5ciQaVFsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895273; c=relaxed/simple;
-	bh=hk6N5AncAHChmPCXGRiHstbr9gXkj6ajwyO/npDOX8o=;
+	s=arc-20240116; t=1730895276; c=relaxed/simple;
+	bh=rXpVa3NE21MDyWLhWo2aI7Zo0fUsoA2gCbFoWT/Aww0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=blbXUcD08cyopDEFLGdOGB0wed4uWpa8jiyFCS45mMF+jGFepriMjYVui1GgSiIlJivbUa311MVisgR2D/v2BMj+jzEaFcnKnZQBwE1UMxbGPIL1IsiPFAkRi0EF+dKYD710+uwmFElkwcT+lv/IN7UoATRfXiLw6eNmV4xCrb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VC2WymeQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TUIYhvyWqhokQQ+/w7bKVWIuY6PdnjxlgaSls1qUylIN/rcHv14b17VuO76OMqAhlTrl42xDIUpG65TR3iA9CqY3YOEOQcDI01U5UBJmlJlOroMTjipcy0GJTZJzJJ2C+i8QxC7r9tMekNgl+s9Bwfc87cZ5/VTQQv4r7ugeNpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sT35f0K2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VC2WymeQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35695C4CECD;
-	Wed,  6 Nov 2024 12:14:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sT35f0K2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31850C4CECD;
+	Wed,  6 Nov 2024 12:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895273;
-	bh=hk6N5AncAHChmPCXGRiHstbr9gXkj6ajwyO/npDOX8o=;
+	s=korg; t=1730895276;
+	bh=rXpVa3NE21MDyWLhWo2aI7Zo0fUsoA2gCbFoWT/Aww0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VC2WymeQ+05uZmokCbC/AkxzhAvv3LuAI6SL8s0gLRLDV3OH+xQEuF9YB1mhlk9wC
-	 WOz1lobBjqCxSU5ZZHPOSagRKYLJp+ZfsJ4rKsUd7lauTnAdmq9yP3LO3szSwaqxKv
-	 FE+dWW4JKq60ZdjyvncfeKOyxllkqbtoom4c6bzw=
+	b=sT35f0K2NFonnrzEyBrbCJ68AqxjUUVcuDcnpwzpR0vRO7c0gnXZkm4SO5urvxm1a
+	 8IXTVcEvUu1WFr+HYrgAelyiR/EZ8CYlc2Og4Ai72wMADEeyXUFMHKnyrPk/Iy1VBg
+	 dh6KO+FkokjxBs25UAk9qb53WgskhwwWTUetIj6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Brian Norris <briannorris@chromium.org>,
-	Kalle Valo <kvalo@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 161/350] wifi: mwifiex: Fix memcpy() field-spanning write warning in mwifiex_cmd_802_11_scan_ext()
-Date: Wed,  6 Nov 2024 13:01:29 +0100
-Message-ID: <20241106120324.897049771@linuxfoundation.org>
+Subject: [PATCH 4.19 162/350] signal: Replace BUG_ON()s
+Date: Wed,  6 Nov 2024 13:01:30 +0100
+Message-ID: <20241106120324.920858735@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -53,59 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 498365e52bebcbc36a93279fe7e9d6aec8479cee ]
+[ Upstream commit 7f8af7bac5380f2d95a63a6f19964e22437166e1 ]
 
-Replace one-element array with a flexible-array member in
-`struct host_cmd_ds_802_11_scan_ext`.
+These really can be handled gracefully without killing the machine.
 
-With this, fix the following warning:
-
-elo 16 17:51:58 surfacebook kernel: ------------[ cut here ]------------
-elo 16 17:51:58 surfacebook kernel: memcpy: detected field-spanning write (size 243) of single field "ext_scan->tlv_buffer" at drivers/net/wireless/marvell/mwifiex/scan.c:2239 (size 1)
-elo 16 17:51:58 surfacebook kernel: WARNING: CPU: 0 PID: 498 at drivers/net/wireless/marvell/mwifiex/scan.c:2239 mwifiex_cmd_802_11_scan_ext+0x83/0x90 [mwifiex]
-
-Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Closes: https://lore.kernel.org/linux-hardening/ZsZNgfnEwOcPdCly@black.fi.intel.com/
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://patch.msgid.link/ZsZa5xRcsLq9D+RX@elsanto
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/fw.h   | 2 +-
- drivers/net/wireless/marvell/mwifiex/scan.c | 3 +--
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ kernel/signal.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
-index 3e3134bcc2b06..bfa482cf464ff 100644
---- a/drivers/net/wireless/marvell/mwifiex/fw.h
-+++ b/drivers/net/wireless/marvell/mwifiex/fw.h
-@@ -1590,7 +1590,7 @@ struct host_cmd_ds_802_11_scan_rsp {
+diff --git a/kernel/signal.c b/kernel/signal.c
+index c79b87ac10416..356bdf5c45e61 100644
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -1739,10 +1739,11 @@ struct sigqueue *sigqueue_alloc(void)
  
- struct host_cmd_ds_802_11_scan_ext {
- 	u32   reserved;
--	u8    tlv_buffer[1];
-+	u8    tlv_buffer[];
- } __packed;
+ void sigqueue_free(struct sigqueue *q)
+ {
+-	unsigned long flags;
+ 	spinlock_t *lock = &current->sighand->siglock;
++	unsigned long flags;
  
- struct mwifiex_ie_types_bss_mode {
-diff --git a/drivers/net/wireless/marvell/mwifiex/scan.c b/drivers/net/wireless/marvell/mwifiex/scan.c
-index 4f0e78ae3dbd0..0cbdd5a930d83 100644
---- a/drivers/net/wireless/marvell/mwifiex/scan.c
-+++ b/drivers/net/wireless/marvell/mwifiex/scan.c
-@@ -2570,8 +2570,7 @@ int mwifiex_ret_802_11_scan_ext(struct mwifiex_private *priv,
- 	ext_scan_resp = &resp->params.ext_scan;
+-	BUG_ON(!(q->flags & SIGQUEUE_PREALLOC));
++	if (WARN_ON_ONCE(!(q->flags & SIGQUEUE_PREALLOC)))
++		return;
+ 	/*
+ 	 * We must hold ->siglock while testing q->list
+ 	 * to serialize with collect_signal() or with
+@@ -1770,7 +1771,10 @@ int send_sigqueue(struct sigqueue *q, struct pid *pid, enum pid_type type)
+ 	unsigned long flags;
+ 	int ret, result;
  
- 	tlv = (void *)ext_scan_resp->tlv_buffer;
--	buf_left = le16_to_cpu(resp->size) - (sizeof(*ext_scan_resp) + S_DS_GEN
--					      - 1);
-+	buf_left = le16_to_cpu(resp->size) - (sizeof(*ext_scan_resp) + S_DS_GEN);
+-	BUG_ON(!(q->flags & SIGQUEUE_PREALLOC));
++	if (WARN_ON_ONCE(!(q->flags & SIGQUEUE_PREALLOC)))
++		return 0;
++	if (WARN_ON_ONCE(q->info.si_code != SI_TIMER))
++		return 0;
  
- 	while (buf_left >= sizeof(struct mwifiex_ie_types_header)) {
- 		type = le16_to_cpu(tlv->type);
+ 	ret = -1;
+ 	rcu_read_lock();
+@@ -1789,7 +1793,6 @@ int send_sigqueue(struct sigqueue *q, struct pid *pid, enum pid_type type)
+ 		 * If an SI_TIMER entry is already queue just increment
+ 		 * the overrun count.
+ 		 */
+-		BUG_ON(q->info.si_code != SI_TIMER);
+ 		q->info.si_overrun++;
+ 		result = TRACE_SIGNAL_ALREADY_PENDING;
+ 		goto out;
 -- 
 2.43.0
 
