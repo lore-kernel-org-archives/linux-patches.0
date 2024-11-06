@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E646646;
-	Wed,  6 Nov 2024 13:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAFC646;
+	Wed,  6 Nov 2024 13:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899126; cv=none; b=WgYhHdNeF2kuNcYRjP25ovG3ecX9ZrEAgNEXdMmZ1LBfrGF01dJFLnGL8Sj0SprpPO3dMjGs9bD9OLbR5SFjcpOAFU51dQIZf597L1HRT/ay4ypnLcxF2V+ZRJjyOTBUuWBb6G9wGr3Q35bRNMDlXxktBjoAsmO28RxQeAWq4qk=
+	t=1730899129; cv=none; b=Fuy816Xd4Rpt/6d4OTYdmTyuBQ0+GgqWY0hQqK0Uy5KfcyyI1G0wv+vqFpseCZUoTUmoKUmNGcaXUZIPcVpMUJr/8/wBFIXCC1sKXfiL/X9GyogK3rhXQFbHgqVMg8RkNYf7066gC1vXTOfRWNgCTNxumgQDyLTFHdR0+PDHYw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899126; c=relaxed/simple;
-	bh=eE+U5Ebb8AM7ykQxd7Boctxrm8C7YpBMOhgd1Jx9qiU=;
+	s=arc-20240116; t=1730899129; c=relaxed/simple;
+	bh=hKCuvq3OmT2hRGIWI5ZUpEnl0G3g5uQsCSlnZBZJZos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RV0Zri3fxl8/uGYXuMELdAWTdalWKw6YNkctEb1wf7ZcQvrjjprLeCO8SEyFNz/QLZiOWwOCFb6MHmTuzy7OB5KhidGHdsanYE4cwofrUSPDoNvv7MOtBZ0l00O/Metg0U+FBjSn+SQiQllXFakotmc3Ya4mBh43iAu3XAn2QcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LIALM0e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UQcWxHtBnscNlvG2KFSPgMcRVaGbISb2L6q2UV8I61PoE5XdDjcFtzncIzWqgfTDO6qO08bx9rJrvIEZKpPTjbhaNnPGTKM4v7Ofg4fP/cybZyERrQ0HCsCT3LTh0qNtC4m9ItzMK7Il1Mw3rtFaVOvXs5KPASU3mYE7Mhjq/zU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFauQQk5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LIALM0e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9811C4CECD;
-	Wed,  6 Nov 2024 13:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFauQQk5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8BD5C4CECD;
+	Wed,  6 Nov 2024 13:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899126;
-	bh=eE+U5Ebb8AM7ykQxd7Boctxrm8C7YpBMOhgd1Jx9qiU=;
+	s=korg; t=1730899129;
+	bh=hKCuvq3OmT2hRGIWI5ZUpEnl0G3g5uQsCSlnZBZJZos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1LIALM0eBRZj8s7pwKOeQ0VND2n+ZIxFCitv4Jk5iJestgjxqhPX3UbasHl54JHd4
-	 E3ssh4qdmngXCMxjRz1e8oCph6itZdBriqfN6go971LH7HfKjtF8ddnG7ozQBzgAva
-	 dsRgN5PNLWgfRdC/KcC7skSiwRZhINR6Udf5QDHs=
+	b=gFauQQk52S4E5OXfvc+axCcX3mzAOYwzlnuodkSOVwMeA7WdS/PJ8TViRKMysUh7B
+	 xmjcjlziTFK1/1zkpIeDVlJgjhYStV7e0TRwfJgm6IZQtGTucpB53CeRbr3VlkQClk
+	 xL/ZD2c/HXgTds+3OV+yQDl1UWpSUbPeArE7bJt4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qun-Wei Lin <qun-wei.lin@mediatek.com>,
-	David Rientjes <rientjes@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 5.4 462/462] mm: krealloc: Fix MTE false alarm in __do_krealloc
-Date: Wed,  6 Nov 2024 13:05:55 +0100
-Message-ID: <20241106120342.916487840@linuxfoundation.org>
+	Donet Tom <donettom@linux.ibm.com>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	=?UTF-8?q?J=C3=A9r=C3=B4me=20Glisse?= <jglisse@redhat.com>,
+	Kees Cook <keescook@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Ralph Campbell <rcampbell@nvidia.com>,
+	Jason Gunthorpe <jgg@mellanox.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 01/73] selftests/mm: fix incorrect buffer->mirror size in hmm2 double_map test
+Date: Wed,  6 Nov 2024 13:05:05 +0100
+Message-ID: <20241106120259.999995913@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
-References: <20241106120331.497003148@linuxfoundation.org>
+In-Reply-To: <20241106120259.955073160@linuxfoundation.org>
+References: <20241106120259.955073160@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,81 +54,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.4-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qun-Wei Lin <qun-wei.lin@mediatek.com>
+From: Donet Tom <donettom@linux.ibm.com>
 
-commit 704573851b51808b45dae2d62059d1d8189138a2 upstream.
+[ Upstream commit 76503e1fa1a53ef041a120825d5ce81c7fe7bdd7 ]
 
-This patch addresses an issue introduced by commit 1a83a716ec233 ("mm:
-krealloc: consider spare memory for __GFP_ZERO") which causes MTE
-(Memory Tagging Extension) to falsely report a slab-out-of-bounds error.
+The hmm2 double_map test was failing due to an incorrect buffer->mirror
+size.  The buffer->mirror size was 6, while buffer->ptr size was 6 *
+PAGE_SIZE.  The test failed because the kernel's copy_to_user function was
+attempting to copy a 6 * PAGE_SIZE buffer to buffer->mirror.  Since the
+size of buffer->mirror was incorrect, copy_to_user failed.
 
-The problem occurs when zeroing out spare memory in __do_krealloc. The
-original code only considered software-based KASAN and did not account
-for MTE. It does not reset the KASAN tag before calling memset, leading
-to a mismatch between the pointer tag and the memory tag, resulting
-in a false positive.
+This patch corrects the buffer->mirror size to 6 * PAGE_SIZE.
 
-Example of the error:
-==================================================================
-swapper/0: BUG: KASAN: slab-out-of-bounds in __memset+0x84/0x188
-swapper/0: Write at addr f4ffff8005f0fdf0 by task swapper/0/1
-swapper/0: Pointer tag: [f4], memory tag: [fe]
-swapper/0:
-swapper/0: CPU: 4 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.
-swapper/0: Hardware name: MT6991(ENG) (DT)
-swapper/0: Call trace:
-swapper/0:  dump_backtrace+0xfc/0x17c
-swapper/0:  show_stack+0x18/0x28
-swapper/0:  dump_stack_lvl+0x40/0xa0
-swapper/0:  print_report+0x1b8/0x71c
-swapper/0:  kasan_report+0xec/0x14c
-swapper/0:  __do_kernel_fault+0x60/0x29c
-swapper/0:  do_bad_area+0x30/0xdc
-swapper/0:  do_tag_check_fault+0x20/0x34
-swapper/0:  do_mem_abort+0x58/0x104
-swapper/0:  el1_abort+0x3c/0x5c
-swapper/0:  el1h_64_sync_handler+0x80/0xcc
-swapper/0:  el1h_64_sync+0x68/0x6c
-swapper/0:  __memset+0x84/0x188
-swapper/0:  btf_populate_kfunc_set+0x280/0x3d8
-swapper/0:  __register_btf_kfunc_id_set+0x43c/0x468
-swapper/0:  register_btf_kfunc_id_set+0x48/0x60
-swapper/0:  register_nf_nat_bpf+0x1c/0x40
-swapper/0:  nf_nat_init+0xc0/0x128
-swapper/0:  do_one_initcall+0x184/0x464
-swapper/0:  do_initcall_level+0xdc/0x1b0
-swapper/0:  do_initcalls+0x70/0xc0
-swapper/0:  do_basic_setup+0x1c/0x28
-swapper/0:  kernel_init_freeable+0x144/0x1b8
-swapper/0:  kernel_init+0x20/0x1a8
-swapper/0:  ret_from_fork+0x10/0x20
-==================================================================
+Test Result without this patch
+==============================
+ #  RUN           hmm2.hmm2_device_private.double_map ...
+ # hmm-tests.c:1680:double_map:Expected ret (-14) == 0 (0)
+ # double_map: Test terminated by assertion
+ #          FAIL  hmm2.hmm2_device_private.double_map
+ not ok 53 hmm2.hmm2_device_private.double_map
 
-Fixes: 1a83a716ec233 ("mm: krealloc: consider spare memory for __GFP_ZERO")
-Signed-off-by: Qun-Wei Lin <qun-wei.lin@mediatek.com>
-Acked-by: David Rientjes <rientjes@google.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Test Result with this patch
+===========================
+ #  RUN           hmm2.hmm2_device_private.double_map ...
+ #            OK  hmm2.hmm2_device_private.double_map
+ ok 53 hmm2.hmm2_device_private.double_map
+
+Link: https://lkml.kernel.org/r/20240927050752.51066-1-donettom@linux.ibm.com
+Fixes: fee9f6d1b8df ("mm/hmm/test: add selftests for HMM")
+Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Jérôme Glisse <jglisse@redhat.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Cc: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Ralph Campbell <rcampbell@nvidia.com>
+Cc: Jason Gunthorpe <jgg@mellanox.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/slab_common.c |    2 +-
+ tools/testing/selftests/vm/hmm-tests.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -1683,7 +1683,7 @@ static __always_inline void *__do_kreall
- 		/* Zero out spare memory. */
- 		if (want_init_on_alloc(flags)) {
- 			kasan_disable_current();
--			memset((void *)p + new_size, 0, ks - new_size);
-+			memset(kasan_reset_tag(p) + new_size, 0, ks - new_size);
- 			kasan_enable_current();
- 		}
+diff --git a/tools/testing/selftests/vm/hmm-tests.c b/tools/testing/selftests/vm/hmm-tests.c
+index 203323967b507..a8f69d991243d 100644
+--- a/tools/testing/selftests/vm/hmm-tests.c
++++ b/tools/testing/selftests/vm/hmm-tests.c
+@@ -1482,7 +1482,7 @@ TEST_F(hmm2, double_map)
  
+ 	buffer->fd = -1;
+ 	buffer->size = size;
+-	buffer->mirror = malloc(npages);
++	buffer->mirror = malloc(size);
+ 	ASSERT_NE(buffer->mirror, NULL);
+ 
+ 	/* Reserve a range of addresses. */
+-- 
+2.43.0
+
 
 
