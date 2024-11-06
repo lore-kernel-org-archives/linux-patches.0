@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD5E1F4734;
-	Wed,  6 Nov 2024 13:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FA81DFE35;
+	Wed,  6 Nov 2024 13:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898609; cv=none; b=NMhk3MEOL3PKCn7oW+PYCi8wvaWymDESMuFDrxy7ZsHuxPKcca8467q+4g9c4zhjnBZ7wB8LBi76a7LYBA4DL71lOcSpcSMvZkWvqobp4iWycgnim33oNowGON/+TglAH4ceSkXO9o8o87NMKb7x0n6m/dVefem3aVpiqT+sECE=
+	t=1730898612; cv=none; b=pPIAdGCkyBu5LcbxF4keI6iuhygZSFlg/ihGxs9qxg/68q2DI0AeCiLfzldbNDNNgXJmWYF8LurYD5R326zB2oOdUkk7pseKeIKlubEkS53d8cDZSHYvfw2JVwuk4F4obW8I+t+MOSIWQ2iUWLCImJQJXFlScnNC3EtCB7Rp2cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898609; c=relaxed/simple;
-	bh=pXThfSNgavUvMV2XZSxfL7aBlAQt9bskUBaH2yJaBKM=;
+	s=arc-20240116; t=1730898612; c=relaxed/simple;
+	bh=pWo+KSoZ+Lqk3+XuDREuQ6bo9b8O/AtZq3yRWDoft3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCPoz0JA0cKuYWwpYZUCZmTBT+UiVepgk34l3wYIlnGRa00hA/+FoqHwsF5kZnSfIQ6P5hihsag8SeUXPMrujea7+3NFwgf+KmvuNwoujBf6voaS4CklJRNCS+/ZYHo9ZcZD49eVrE7ihGHuKDHW0tflEJPPxqXj6G6dPPz3Ark=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzC+td2n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VYrStEFMPiXNd6U3LqjlpH4/Dipood13iUeJLDLeOQHXrYMhF47tS/4qkZOyywRhKa8o9x8t2BQWDVmj1F7cL5vZ9nsxir85oiR91sBaV8YgVdOpC7sQgdL38XVIihjSdg3tMHGBz/hw521xVRaOzrtffeBe2gTw0bKv0cedtq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SmA57OQX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzC+td2n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930C5C4CECD;
-	Wed,  6 Nov 2024 13:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SmA57OQX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A1EC4CECD;
+	Wed,  6 Nov 2024 13:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898609;
-	bh=pXThfSNgavUvMV2XZSxfL7aBlAQt9bskUBaH2yJaBKM=;
+	s=korg; t=1730898611;
+	bh=pWo+KSoZ+Lqk3+XuDREuQ6bo9b8O/AtZq3yRWDoft3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BzC+td2nJo33yY78LH0j2bGJRV2+JuoAIzkKiCOTYi+NJqau/UAzrmCuVxy9llGKZ
-	 Gl/AYJnIfE6vY3qxitBV5qn24s0t8Jw3afAfPoN4wNAy7mqeDn+D7R9HQNm0dyLHOk
-	 gWK8+AUoC8Hk8zR90Xav5ym0oYorYIi2Jbr5jMnM=
+	b=SmA57OQXku53DaEoGdbkG2JVcpr+q4gnUs/Jn4MSHWYCGInw9OBpxvY9plV5vH+Zi
+	 3nA3HNeJoweU9LGky5lVYJ4++vxAjLr5ejV7mopv96lCtajZrXyKv7lsRF+FfxQePC
+	 G/hNs8kKdjzyZ97OL8EokC9n6DgOFkfZNTTWVoW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhanchengbin <zhanchengbin1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	Baokun Li <libaokun1@huawei.com>
-Subject: [PATCH 5.4 295/462] ext4: fix inode tree inconsistency caused by ENOMEM
-Date: Wed,  6 Nov 2024 13:03:08 +0100
-Message-ID: <20241106120338.810725594@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 5.4 269/462] media: uapi/linux/cec.h: cec_msg_set_reply_to: zero flags
+Date: Wed,  6 Nov 2024 13:02:42 +0100
+Message-ID: <20241106120338.171602192@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,45 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhanchengbin <zhanchengbin1@huawei.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-commit 3f5424790d4377839093b68c12b130077a4e4510 upstream.
+commit 599f6899051cb70c4e0aa9fd591b9ee220cb6f14 upstream.
 
-If ENOMEM fails when the extent is splitting, we need to restore the length
-of the split extent.
-In the ext4_split_extent_at function, only in ext4_ext_create_new_leaf will
-it alloc memory and change the shape of the extent tree,even if an ENOMEM
-is returned at this time, the extent tree is still self-consistent, Just
-restore the split extent lens in the function ext4_split_extent_at.
+The cec_msg_set_reply_to() helper function never zeroed the
+struct cec_msg flags field, this can cause unexpected behavior
+if flags was uninitialized to begin with.
 
-ext4_split_extent_at
- ext4_ext_insert_extent
-  ext4_ext_create_new_leaf
-   1)ext4_ext_split
-     ext4_find_extent
-   2)ext4_ext_grow_indepth
-     ext4_find_extent
-
-Signed-off-by: zhanchengbin <zhanchengbin1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230103022812.130603-1-zhanchengbin1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: Baokun Li <libaokun1@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 0dbacebede1e ("[media] cec: move the CEC framework out of staging and to media")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/uapi/linux/cec.h |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -3421,7 +3421,7 @@ static int ext4_split_extent_at(handle_t
- 		ext4_ext_mark_unwritten(ex2);
+--- a/include/uapi/linux/cec.h
++++ b/include/uapi/linux/cec.h
+@@ -132,6 +132,8 @@ static inline void cec_msg_init(struct c
+  * Set the msg destination to the orig initiator and the msg initiator to the
+  * orig destination. Note that msg and orig may be the same pointer, in which
+  * case the change is done in place.
++ *
++ * It also zeroes the reply, timeout and flags fields.
+  */
+ static inline void cec_msg_set_reply_to(struct cec_msg *msg,
+ 					struct cec_msg *orig)
+@@ -139,7 +141,9 @@ static inline void cec_msg_set_reply_to(
+ 	/* The destination becomes the initiator and vice versa */
+ 	msg->msg[0] = (cec_msg_destination(orig) << 4) |
+ 		      cec_msg_initiator(orig);
+-	msg->reply = msg->timeout = 0;
++	msg->reply = 0;
++	msg->timeout = 0;
++	msg->flags = 0;
+ }
  
- 	err = ext4_ext_insert_extent(handle, inode, ppath, &newex, flags);
--	if (err != -ENOSPC && err != -EDQUOT)
-+	if (err != -ENOSPC && err != -EDQUOT && err != -ENOMEM)
- 		goto out;
- 
- 	if (EXT4_EXT_MAY_ZEROOUT & split_flag) {
+ /* cec_msg flags field */
 
 
