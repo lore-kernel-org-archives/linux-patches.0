@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8722C1D2784;
-	Wed,  6 Nov 2024 12:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852FC1DF24B;
+	Wed,  6 Nov 2024 12:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894909; cv=none; b=DSuvp+Abj79KDc0MX1a2do3JccjmDgYAY/KRwUbKxFxL6rjjXrxKPGSx+bLrYza+kJH7ySRcstjXNUQrBymN395Rto2fXw8uXTThZi6geI57plmsJDbwasC3X+zmWsqqFZpu3NpG+brYdphtNCxLbtPff81ZxDi0Yg9kxYWjR28=
+	t=1730894912; cv=none; b=o8Jp7TVPJepLfbNgQg9tXB4D7CzbL+GwCeR/HJS+j47HRfvsmCn9/IzS6bYlqrh4QKPjwTxENsUNMs2yv2rfVEsUQULh0GuW9lcJnBmgxR2+DDMnr+tm1sJSuCJEiCYprZ0CmKgMVkgrqqxCka5Nw5U9V6bSDLOGU/0bP0fxtgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894909; c=relaxed/simple;
-	bh=a4Mfbxao/COgXvJTw0bPjbv0Bb2qbtObqXhMT9af/T8=;
+	s=arc-20240116; t=1730894912; c=relaxed/simple;
+	bh=DR1RLQR18gwfhm11vMTowKd4myGXcj5k2i/ONdm75v8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GaR748u8ywvCVVbXHtD5rYq3Ar8CRzTnvbNXlVq2+mqySc9FMpaxiD0Pn9Xd1dyHX0OHznw60X243Oc6dsJlmQ+o0lnJQ/FGLh7zk7VTG++R++b6sk0Nvkhgl9jYfngw4kTiiSxlvV3tUeKoT6ivpO4SmZBVQIiuIAycAcKKEas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hB0i5hVb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UGYfZE54wrkm6MoHN6w7YtLU9Tp92lvw583txoEX2GzSrNZvTdbXf1RPW+GL+wZFoCzqEcHsxx2sb2/TlVNDXQTrCnM6Fh5+2OHPhd730GDSiNM3lZ9uy2AZ7yPLZKClhTkbQS82lycLtXyqkdgpuO7fOV5wPtJOXt7vgbA71l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRlGawdt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hB0i5hVb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF6FC4CECD;
-	Wed,  6 Nov 2024 12:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRlGawdt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F1CC4CECD;
+	Wed,  6 Nov 2024 12:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894909;
-	bh=a4Mfbxao/COgXvJTw0bPjbv0Bb2qbtObqXhMT9af/T8=;
+	s=korg; t=1730894912;
+	bh=DR1RLQR18gwfhm11vMTowKd4myGXcj5k2i/ONdm75v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hB0i5hVbPjyuzoYx9NdU/FU3ewG/d0rs1bNhXzmrW2hGdl6W/h3uda1zkqFUudNQw
-	 nm9osY276EblWxgDnJbJwK0tlwkvLHFgm3pao4l14FhgD3BWAYkZuN9g52jJMiBU1W
-	 yERnFHVnhSd+Rx1KaNVlom4a/0hck7u6JIAPkcpM=
+	b=mRlGawdt3QdoEw8IMMEzyLbzgmSKfqgXlSgNl/2monLs8YsOAceitLq3ZwrYUnHHE
+	 m7zzhjHxSLZx+G19WwF4PjOWaDO48bfCppX3spSyjsOWRHgQGsHvC/NbXs8kiHBdWt
+	 ZKAqbH37PxDLefXbCPJylpzlChcEQBKOKMSUamoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ma Ke <make24@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 039/350] block, bfq: dont break merge chain in bfq_split_bfqq()
-Date: Wed,  6 Nov 2024 12:59:27 +0100
-Message-ID: <20241106120321.850367905@linuxfoundation.org>
+Subject: [PATCH 4.19 040/350] spi: ppc4xx: handle irq_of_parse_and_map() errors
+Date: Wed,  6 Nov 2024 12:59:28 +0100
+Message-ID: <20241106120321.877028768@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -45,68 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit 42c306ed723321af4003b2a41bb73728cab54f85 ]
+[ Upstream commit 0f245463b01ea254ae90e1d0389e90b0e7d8dc75 ]
 
-Consider the following scenario:
+Zero and negative number is not a valid IRQ for in-kernel code and the
+irq_of_parse_and_map() function returns zero on error.  So this check for
+valid IRQs should only accept values > 0.
 
-    Process 1       Process 2       Process 3       Process 4
-     (BIC1)          (BIC2)          (BIC3)          (BIC4)
-      Λ               |               |                |
-       \-------------\ \-------------\ \--------------\|
-                      V               V                V
-      bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
-ref    0              1               2                4
-
-If Process 1 issue a new IO and bfqq2 is found, and then bfq_init_rq()
-decide to spilt bfqq2 by bfq_split_bfqq(). Howerver, procress reference
-of bfqq2 is 1 and bfq_split_bfqq() just clear the coop flag, which will
-break the merge chain.
-
-Expected result: caller will allocate a new bfqq for BIC1
-
-    Process 1       Process 2       Process 3       Process 4
-     (BIC1)          (BIC2)          (BIC3)          (BIC4)
-                      |               |                |
-                       \-------------\ \--------------\|
-                                      V                V
-      bfqq1--------->bfqq2---------->bfqq3----------->bfqq4
-ref    0              0               1                3
-
-Since the condition is only used for the last bfqq4 when the previous
-bfqq2 and bfqq3 are already splited. Fix the problem by checking if
-bfqq is the last one in the merge chain as well.
-
-Fixes: 36eca8948323 ("block, bfq: add Early Queue Merge (EQM)")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20240902130329.3787024-4-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 44dab88e7cc9 ("spi: add spi_ppc4xx driver")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Link: https://patch.msgid.link/20240724084047.1506084-1-make24@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-iosched.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-ppc4xx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 3ed6584496f34..afc30a200fe82 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -5037,7 +5037,7 @@ bfq_split_bfqq(struct bfq_io_cq *bic, struct bfq_queue *bfqq)
- {
- 	bfq_log_bfqq(bfqq->bfqd, bfqq, "splitting queue");
+diff --git a/drivers/spi/spi-ppc4xx.c b/drivers/spi/spi-ppc4xx.c
+index 58765a62fc15b..8a1290fb4dd9d 100644
+--- a/drivers/spi/spi-ppc4xx.c
++++ b/drivers/spi/spi-ppc4xx.c
+@@ -495,6 +495,9 @@ static int spi_ppc4xx_of_probe(struct platform_device *op)
  
--	if (bfqq_process_refs(bfqq) == 1) {
-+	if (bfqq_process_refs(bfqq) == 1 && !bfqq->new_bfqq) {
- 		bfqq->pid = current->pid;
- 		bfq_clear_bfqq_coop(bfqq);
- 		bfq_clear_bfqq_split_coop(bfqq);
+ 	/* Request IRQ */
+ 	hw->irqnum = irq_of_parse_and_map(np, 0);
++	if (hw->irqnum <= 0)
++		goto free_host;
++
+ 	ret = request_irq(hw->irqnum, spi_ppc4xx_int,
+ 			  0, "spi_ppc4xx_of", (void *)hw);
+ 	if (ret) {
 -- 
 2.43.0
 
