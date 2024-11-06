@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC3E1F5853;
-	Wed,  6 Nov 2024 13:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626371EE002;
+	Wed,  6 Nov 2024 13:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898588; cv=none; b=IzcsokIg8dR8+ywc9ZZ1916glM2M+t+FX6tblJiPVr1blv4Oy8NefvzDzf5h3IBA5Xz9ROdjfd02O/DZJz7+o/M+CKKPGfO+S0z7dzNh0lkRYkOk5nzv0h30wjoDIhU8aLGRwrftfy8/ngzs5oI+uLCAREYZ9wnVlgRjzbIvgBU=
+	t=1730898591; cv=none; b=qJvgQcy0t/vejnlLsDW4RsU2FejmEBCPAGWZH+ovY+eRWVUXIVpyJOrT3bWOw5k5P5EcCCo/qhIK/rsaGz0aravps9iOozLzVAaB4jx5nxFVMwgEYlrxMigUFtScMUk83a5WmPqOKXwkpcxxUertyWQsUAMl7vvzAc0xxTf7btM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898588; c=relaxed/simple;
-	bh=3YhbVMq73/OIbG2Ekibf9etB6qtv++8MF7IIeYhO40U=;
+	s=arc-20240116; t=1730898591; c=relaxed/simple;
+	bh=srMOq0jApBo5+7ResZP/ZH/lmvvTUtRZO6A5eAqoSHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UXPdMNUQPlB/I9lfWYnOLXA+nowbNGrdpDGsgBUuGy/FBPh1OIW43r2Pn1GieHrBd9/SuSJwES+mX/KGezDZlSKGaM5KGjQ5bIzL7sqE2fOrsGJqcWIFygh2TvgdbuQQiLq3hS/zmOoC5zg/zODFdW6uOls20oy26hD1pdmP8pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNi0nVRB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=klWINz7orYaruTn4Ej9fYmYXoXEa0e7suRh4QWWFfHp2xmaN/bHiZmh07+A30an86qF8IGPEOku4bM2KQvuMh5I6MY+6kPmso/7E2+B0n/nS+vlknH7s/kOcLLSwnzKWjAzGpedR1Mi9DcTeWgT6JFO+uK1Rhnj5MH7BrUUiVxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9EqlzHk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNi0nVRB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC27C4CECD;
-	Wed,  6 Nov 2024 13:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9EqlzHk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0927C4CECD;
+	Wed,  6 Nov 2024 13:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898588;
-	bh=3YhbVMq73/OIbG2Ekibf9etB6qtv++8MF7IIeYhO40U=;
+	s=korg; t=1730898591;
+	bh=srMOq0jApBo5+7ResZP/ZH/lmvvTUtRZO6A5eAqoSHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CNi0nVRBN4wTollt+cR3STNJRJPvnPxOB6uZtCFlIvKMMpazY7xWK995jkt2wc+2B
-	 95T7958sLJSTcB81OOQ+tcAgNVwEnHz8xqXanTD6CtwwhK3jVhHoUJ5J6cJrX1fCXr
-	 at230x+SaGGFn/Z+jGS6jz3yIOQvGniZExoe5xl0=
+	b=I9EqlzHktEFu8FMSL1TyQy0jYwO1ilqswkF1T6WVVC5X3fWWy/6pRNy4K1wXz4O1D
+	 eYtTsXCUrIuzrxzhOuvvAfC4mw/aEEYZlcHJLAt0zNvTzcvgV5ks5Hcm3M9yP8yjDW
+	 AS1kCKnH5ZBenL/N5uyLu5gnYpF8cWUtd3Fy9RsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	NeilBrown <neilb@suse.de>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Taniya Das <tdas@codeaurora.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 288/462] nfsd: fix delegation_blocked() to block correctly for at least 30 seconds
-Date: Wed,  6 Nov 2024 13:03:01 +0100
-Message-ID: <20241106120338.637782018@linuxfoundation.org>
+Subject: [PATCH 5.4 289/462] clk: qcom: rpmh: Simplify clk_rpmh_bcm_send_cmd()
+Date: Wed,  6 Nov 2024 13:03:02 +0100
+Message-ID: <20241106120338.663635516@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -54,62 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Stephen Boyd <sboyd@kernel.org>
 
-[ Upstream commit 45bb63ed20e02ae146336412889fe5450316a84f ]
+[ Upstream commit 2cf7a4cbcb4e108aae666dc6a81cedf69e1cba37 ]
 
-The pair of bloom filtered used by delegation_blocked() was intended to
-block delegations on given filehandles for between 30 and 60 seconds.  A
-new filehandle would be recorded in the "new" bit set.  That would then
-be switch to the "old" bit set between 0 and 30 seconds later, and it
-would remain as the "old" bit set for 30 seconds.
+This function has some duplication in unlocking a mutex and returns in a
+few different places. Let's use some if statements to consolidate code
+and make this a bit easier to read.
 
-Unfortunately the code intended to clear the old bit set once it reached
-30 seconds old, preparing it to be the next new bit set, instead cleared
-the *new* bit set before switching it to be the old bit set.  This means
-that the "old" bit set is always empty and delegations are blocked
-between 0 and 30 seconds.
-
-This patch updates bd->new before clearing the set with that index,
-instead of afterwards.
-
-Reported-by: Olga Kornievskaia <okorniev@redhat.com>
-Cc: stable@vger.kernel.org
-Fixes: 6282cd565553 ("NFSD: Don't hand out delegations for 30 seconds after recalling them.")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+CC: Taniya Das <tdas@codeaurora.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lkml.kernel.org/r/20200309221232.145630-2-sboyd@kernel.org
+Stable-dep-of: a4e5af27e6f6 ("clk: qcom: clk-rpmh: Fix overflow in BCM vote")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/clk-rpmh.c | 33 ++++++++++++++-------------------
+ 1 file changed, 14 insertions(+), 19 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 336342b414627..89927d9b07673 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -820,7 +820,8 @@ static void nfs4_free_deleg(struct nfs4_stid *stid)
-  * When a delegation is recalled, the filehandle is stored in the "new"
-  * filter.
-  * Every 30 seconds we swap the filters and clear the "new" one,
-- * unless both are empty of course.
-+ * unless both are empty of course.  This results in delegations for a
-+ * given filehandle being blocked for between 30 and 60 seconds.
-  *
-  * Each filter is 256 bits.  We hash the filehandle to 32bit and use the
-  * low 3 bytes as hash-table indices.
-@@ -849,9 +850,9 @@ static int delegation_blocked(struct knfsd_fh *fh)
- 		if (ktime_get_seconds() - bd->swap_time > 30) {
- 			bd->entries -= bd->old_entries;
- 			bd->old_entries = bd->entries;
-+			bd->new = 1-bd->new;
- 			memset(bd->set[bd->new], 0,
- 			       sizeof(bd->set[0]));
--			bd->new = 1-bd->new;
- 			bd->swap_time = ktime_get_seconds();
- 		}
- 		spin_unlock(&blocked_delegations_lock);
+diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
+index d7586e26acd8d..21f4248ba7ddb 100644
+--- a/drivers/clk/qcom/clk-rpmh.c
++++ b/drivers/clk/qcom/clk-rpmh.c
+@@ -259,38 +259,33 @@ static int clk_rpmh_bcm_send_cmd(struct clk_rpmh *c, bool enable)
+ {
+ 	struct tcs_cmd cmd = { 0 };
+ 	u32 cmd_state;
+-	int ret;
++	int ret = 0;
+ 
+ 	mutex_lock(&rpmh_clk_lock);
+-
+-	cmd_state = 0;
+ 	if (enable) {
+ 		cmd_state = 1;
+ 		if (c->aggr_state)
+ 			cmd_state = c->aggr_state;
++	} else {
++		cmd_state = 0;
+ 	}
+ 
+-	if (c->last_sent_aggr_state == cmd_state) {
+-		mutex_unlock(&rpmh_clk_lock);
+-		return 0;
+-	}
+-
+-	cmd.addr = c->res_addr;
+-	cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
++	if (c->last_sent_aggr_state != cmd_state) {
++		cmd.addr = c->res_addr;
++		cmd.data = BCM_TCS_CMD(1, enable, 0, cmd_state);
+ 
+-	ret = clk_rpmh_send(c, RPMH_ACTIVE_ONLY_STATE, &cmd, enable);
+-	if (ret) {
+-		dev_err(c->dev, "set active state of %s failed: (%d)\n",
+-			c->res_name, ret);
+-		mutex_unlock(&rpmh_clk_lock);
+-		return ret;
++		ret = clk_rpmh_send(c, RPMH_ACTIVE_ONLY_STATE, &cmd, enable);
++		if (ret) {
++			dev_err(c->dev, "set active state of %s failed: (%d)\n",
++				c->res_name, ret);
++		} else {
++			c->last_sent_aggr_state = cmd_state;
++		}
+ 	}
+ 
+-	c->last_sent_aggr_state = cmd_state;
+-
+ 	mutex_unlock(&rpmh_clk_lock);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int clk_rpmh_bcm_prepare(struct clk_hw *hw)
 -- 
 2.43.0
 
