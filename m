@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608D21DE3B4;
-	Wed,  6 Nov 2024 12:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5363242AB0;
+	Wed,  6 Nov 2024 12:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895312; cv=none; b=IrYfT47LboBN8h4Ekd3PA3lF/EzFpiXOBQD39cV2fWgDWclu5Br+ydFZQqi4qz47ME4tF8Cr/Zk1xCafgYp6ATpBTl7CbqO9zjGgvRcfvDvgjQu+WxmYAMsuU60apUpeyJmNJqJzF3+Mo/LA8z9+NJA61Y1sX9RIMn0E9ZbBmLI=
+	t=1730895315; cv=none; b=Fjvu4iLvLiP122y2pMCVhD6PIBcIKCiEk36qAiciljK0LY2RWhBbD/koOybuyDytyw/0PhaN7aWy96Wl5dlQ5HmyUgA3hYwtvyY06n377SHQr6caSIxfhdWc72ql9Vy+5EBhLg0uBQfX6ush+TIt1EyfhpufNs0krfLgZlx5+JI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895312; c=relaxed/simple;
-	bh=3v8tg343IBvLouJt1zPspvx66rSmqZBb1omC5Pe9YAo=;
+	s=arc-20240116; t=1730895315; c=relaxed/simple;
+	bh=FQ8UPKVQjPV7eH92o+CP5ll6vde46UrzA9XzE4tQcx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FYKgK8H7cJcMxn22RMc1VKlRNqD83lude2NKMfAzwKYm4TDc1C8zQYfLEtLw/deqqHukZfE+Qwg1kQvmLIsfBrEwvZNjCWM5kcflK90Yj2JJT0EX6OuX5XLaD6PWRB1S7EhHEUHHSy3BZjfsVKpJiERWBOpQncQyauOQMfxNgww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPChj4kX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MGUu5PKyklx6TgDKsweiZdqlEo7E3P89sm0PMFS4Fq1cM+FEe4+AJLQdbVCoxir9uMCJkc/XSrUDcQqPCh0rgCJr/aGg855gC2z0jtqhPgF5kLCEfr7URK3Jky7+eZQlatT1CUIa2tvBMzeMO8QjgJpGsqBEsmI5ZjIgF3ZuzY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L2fP8HZ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPChj4kX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73FCDC4CECD;
-	Wed,  6 Nov 2024 12:15:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L2fP8HZ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A244C4CECD;
+	Wed,  6 Nov 2024 12:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895311;
-	bh=3v8tg343IBvLouJt1zPspvx66rSmqZBb1omC5Pe9YAo=;
+	s=korg; t=1730895314;
+	bh=FQ8UPKVQjPV7eH92o+CP5ll6vde46UrzA9XzE4tQcx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DPChj4kXDnrlY2o2EMtc2vS7V0OW2PhUTnCDet6+0Crw+BOyIBhSL1DPG4CdJ9x1Q
-	 NgyRNoigr7LJG1HpauCGWBGTkj8uBd0XLMUScZCpbXAtvwGPeVx7UT5aE4t9Q0OwJy
-	 9ww0ROXsM2ozjK06/gjifU/+CO8MQBLwz2khwxwU=
+	b=L2fP8HZ6ZlNTRe0T+HXZOxUERLZLpV9ex0PqbZ0fXRuSS8xZeDstcs+auYBNYjZKe
+	 icm5Lb9oYmf2D6Cc7Mo1s16G0idpR86F0V7UAg+iUtA6hcsuY2fzzlAqD8IITvtvGD
+	 6oTLMbl+uziG+5+E3oYXRp+XIGg5EPTDnelKPyXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 128/350] pps: add an error check in parport_attach
-Date: Wed,  6 Nov 2024 13:00:56 +0100
-Message-ID: <20241106120324.068735754@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+3c010e21296f33a5dc16@syzkaller.appspotmail.com
+Subject: [PATCH 4.19 169/350] jfs: Fix uaf in dbFreeBits
+Date: Wed,  6 Nov 2024 13:01:37 +0100
+Message-ID: <20241106120325.100220865@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -51,63 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 62c5a01a5711c8e4be8ae7b6f0db663094615d48 ]
+[ Upstream commit d6c1b3599b2feb5c7291f5ac3a36e5fa7cedb234 ]
 
-In parport_attach, the return value of ida_alloc is unchecked, witch leads
-to the use of an invalid index value.
+[syzbot reported]
+==================================================================
+BUG: KASAN: slab-use-after-free in __mutex_lock_common kernel/locking/mutex.c:587 [inline]
+BUG: KASAN: slab-use-after-free in __mutex_lock+0xfe/0xd70 kernel/locking/mutex.c:752
+Read of size 8 at addr ffff8880229254b0 by task syz-executor357/5216
 
-To address this issue, index should be checked. When the index value is
-abnormal, the device should be freed.
+CPU: 0 UID: 0 PID: 5216 Comm: syz-executor357 Not tainted 6.11.0-rc3-syzkaller-00156-gd7a5aa4b3c00 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 06/27/2024
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:93 [inline]
+ dump_stack_lvl+0x241/0x360 lib/dump_stack.c:119
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0x169/0x550 mm/kasan/report.c:488
+ kasan_report+0x143/0x180 mm/kasan/report.c:601
+ __mutex_lock_common kernel/locking/mutex.c:587 [inline]
+ __mutex_lock+0xfe/0xd70 kernel/locking/mutex.c:752
+ dbFreeBits+0x7ea/0xd90 fs/jfs/jfs_dmap.c:2390
+ dbFreeDmap fs/jfs/jfs_dmap.c:2089 [inline]
+ dbFree+0x35b/0x680 fs/jfs/jfs_dmap.c:409
+ dbDiscardAG+0x8a9/0xa20 fs/jfs/jfs_dmap.c:1650
+ jfs_ioc_trim+0x433/0x670 fs/jfs/jfs_discard.c:100
+ jfs_ioctl+0x2d0/0x3e0 fs/jfs/ioctl.c:131
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:907 [inline]
+ __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:893
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
 
-Found by code review, compile tested only.
+Freed by task 5218:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+ kasan_save_free_info+0x40/0x50 mm/kasan/generic.c:579
+ poison_slab_object+0xe0/0x150 mm/kasan/common.c:240
+ __kasan_slab_free+0x37/0x60 mm/kasan/common.c:256
+ kasan_slab_free include/linux/kasan.h:184 [inline]
+ slab_free_hook mm/slub.c:2252 [inline]
+ slab_free mm/slub.c:4473 [inline]
+ kfree+0x149/0x360 mm/slub.c:4594
+ dbUnmount+0x11d/0x190 fs/jfs/jfs_dmap.c:278
+ jfs_mount_rw+0x4ac/0x6a0 fs/jfs/jfs_mount.c:247
+ jfs_remount+0x3d1/0x6b0 fs/jfs/super.c:454
+ reconfigure_super+0x445/0x880 fs/super.c:1083
+ vfs_cmd_reconfigure fs/fsopen.c:263 [inline]
+ vfs_fsconfig_locked fs/fsopen.c:292 [inline]
+ __do_sys_fsconfig fs/fsopen.c:473 [inline]
+ __se_sys_fsconfig+0xb6e/0xf80 fs/fsopen.c:345
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Cc: stable@vger.kernel.org
-Fixes: fb56d97df70e ("pps: client: use new parport device model")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Link: https://lore.kernel.org/r/20240828131814.3034338-1-make24@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[Analysis]
+There are two paths (dbUnmount and jfs_ioc_trim) that generate race
+condition when accessing bmap, which leads to the occurrence of uaf.
+
+Use the lock s_umount to synchronize them, in order to avoid uaf caused
+by race condition.
+
+Reported-and-tested-by: syzbot+3c010e21296f33a5dc16@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/clients/pps_parport.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/jfs/jfs_discard.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pps/clients/pps_parport.c b/drivers/pps/clients/pps_parport.c
-index de49ae85adbeb..9710207bce7cc 100644
---- a/drivers/pps/clients/pps_parport.c
-+++ b/drivers/pps/clients/pps_parport.c
-@@ -159,6 +159,9 @@ static void parport_attach(struct parport *port)
- 	}
+diff --git a/fs/jfs/jfs_discard.c b/fs/jfs/jfs_discard.c
+index f76ff0a464442..9d78c427b9443 100644
+--- a/fs/jfs/jfs_discard.c
++++ b/fs/jfs/jfs_discard.c
+@@ -78,7 +78,7 @@ void jfs_issue_discard(struct inode *ip, u64 blkno, u64 nblocks)
+ int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
+ {
+ 	struct inode *ipbmap = JFS_SBI(ip->i_sb)->ipbmap;
+-	struct bmap *bmp = JFS_SBI(ip->i_sb)->bmap;
++	struct bmap *bmp;
+ 	struct super_block *sb = ipbmap->i_sb;
+ 	int agno, agno_end;
+ 	u64 start, end, minlen;
+@@ -96,10 +96,15 @@ int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
+ 	if (minlen == 0)
+ 		minlen = 1;
  
- 	index = ida_alloc(&pps_client_index, GFP_KERNEL);
-+	if (index < 0)
-+		goto err_free_device;
++	down_read(&sb->s_umount);
++	bmp = JFS_SBI(ip->i_sb)->bmap;
 +
- 	memset(&pps_client_cb, 0, sizeof(pps_client_cb));
- 	pps_client_cb.private = device;
- 	pps_client_cb.irq_func = parport_irq;
-@@ -169,7 +172,7 @@ static void parport_attach(struct parport *port)
- 						    index);
- 	if (!device->pardev) {
- 		pr_err("couldn't register with %s\n", port->name);
--		goto err_free;
-+		goto err_free_ida;
+ 	if (minlen > bmp->db_agsize ||
+ 	    start >= bmp->db_mapsize ||
+-	    range->len < sb->s_blocksize)
++	    range->len < sb->s_blocksize) {
++		up_read(&sb->s_umount);
+ 		return -EINVAL;
++	}
+ 
+ 	if (end >= bmp->db_mapsize)
+ 		end = bmp->db_mapsize - 1;
+@@ -113,6 +118,8 @@ int jfs_ioc_trim(struct inode *ip, struct fstrim_range *range)
+ 		trimmed += dbDiscardAG(ip, agno, minlen);
+ 		agno++;
  	}
++
++	up_read(&sb->s_umount);
+ 	range->len = trimmed << sb->s_blocksize_bits;
  
- 	if (parport_claim_or_block(device->pardev) < 0) {
-@@ -197,8 +200,9 @@ static void parport_attach(struct parport *port)
- 	parport_release(device->pardev);
- err_unregister_dev:
- 	parport_unregister_device(device->pardev);
--err_free:
-+err_free_ida:
- 	ida_free(&pps_client_index, index);
-+err_free_device:
- 	kfree(device);
- }
- 
+ 	return 0;
 -- 
 2.43.0
 
