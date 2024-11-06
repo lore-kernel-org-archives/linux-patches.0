@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748EF1DED58;
-	Wed,  6 Nov 2024 12:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DEB1D2784;
+	Wed,  6 Nov 2024 12:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896027; cv=none; b=ZDE4QUULcALrd/sJcRgTmyehSfHaF83Wn9eCsV1N+aDKhoZD5LxBz/F9/YLoPDXdrfi2B4/05TsxDok8ds3AhGZIkyLdxeU6d8xzQgZeZNCA0yL4EV/z5F7kpRBtLdZ5gs44nXd5k/DhCCz4ge5tgGxugYCY6kR33G+VIKJPPlk=
+	t=1730896030; cv=none; b=F5EeZlXF2u8GPQ114NWNBDp3t2EmO2EmRo/A0lP2dWx0N+OiVXDWbXn7yLVQBNppX0WWcGhYwr6Fyug8EUx5xqLCIctRxcxUD9h93Yr/cVKfqoeDQlwMsHJbQv6uoZ4TA+8TjgsK40WOyhSXXcxAOoiQMwaHF40hlNG0l42hAwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896027; c=relaxed/simple;
-	bh=jpHQR7c5J9JvJSd1eIjhjO5ZhzabFI8pc/pOS1XEw7E=;
+	s=arc-20240116; t=1730896030; c=relaxed/simple;
+	bh=a4fnKqXuiIJRg/tO6TjfnKv68cyqDShclJKJ0hzDu8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lmIH1VDZFZuJSMh/vptxgGGlSSoTvfXweKQs5nlJiMKIuWq1/UN+fkdRxsdKhIJ5fr2oCrUyQVaBI0PF8BhDfVFOAaTdQfDCX5xrwIVF3jg7pCYvNOwz1sOud9jdiX89+Jyn0h9UyMj3WMbMywQEuNvQsdABBfTtBkiD3wSLX3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOqqJ8L6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z74eBQb/90EmalYcPhrdDNhh6pK0JVQd7Q1a5ie01aK/DFa4neR7ifpLEkgqrTa/whkuJwVLfpswiO+V655YTkj3NGx7dt3Nl/lez2RNqiKRytn20y/d7XSsNtuyyoD+Q9RikSKYVRPaEOP375O6c4LAG1ZHnV9KwRp4ubasJBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmaKZJcG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOqqJ8L6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA06C4CECD;
-	Wed,  6 Nov 2024 12:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmaKZJcG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF48C4CED5;
+	Wed,  6 Nov 2024 12:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896027;
-	bh=jpHQR7c5J9JvJSd1eIjhjO5ZhzabFI8pc/pOS1XEw7E=;
+	s=korg; t=1730896030;
+	bh=a4fnKqXuiIJRg/tO6TjfnKv68cyqDShclJKJ0hzDu8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oOqqJ8L6gLWTL+H137xmzQmelllf8IOc77Is+OqvznHr6AR/Fr4qRG6IqsbYSAH6c
-	 7CysfI7jptJDZoHtxn3zyijrGIcun1k2MmOvyYOyDdIZRfjRzcyNAkRxdhuW+NGTvy
-	 3zGOASOcRMy9lUAyqzvx+SwbJRDJMkCyP1Z5JsU8=
+	b=QmaKZJcGBu1xGYK1aauYjSuaF8GXjnaSNmqbl5xzq4GeHG8yybvNigFvMC30fBXRi
+	 Nuu247Y8B/qVHB8OAjk3z0UAvrBILo65K2VsqnMTfbPFclYMFZTej18G+iEmJbkFrg
+	 5f3PJkFp84y2OlRENwsJOHWJ7goSIabNHnchXEl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Christian Brauner <brauner@kernel.org>,
+	Pierre Gondois <pierre.gondois@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 065/245] afs: Fix missing subdir edit when renamed between parent dirs
-Date: Wed,  6 Nov 2024 13:01:58 +0100
-Message-ID: <20241106120320.807976240@linuxfoundation.org>
+Subject: [PATCH 6.11 066/245] ACPI: CPPC: Make rmw_lock a raw_spin_lock
+Date: Wed,  6 Nov 2024 13:01:59 +0100
+Message-ID: <20241106120320.831899185@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -53,254 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Pierre Gondois <pierre.gondois@arm.com>
 
-[ Upstream commit 247d65fb122ad560be1c8c4d87d7374fb28b0770 ]
+[ Upstream commit 1c10941e34c5fdc0357e46a25bd130d9cf40b925 ]
 
-When rename moves an AFS subdirectory between parent directories, the
-subdir also needs a bit of editing: the ".." entry needs updating to point
-to the new parent (though I don't make use of the info) and the DV needs
-incrementing by 1 to reflect the change of content.  The server also sends
-a callback break notification on the subdirectory if we have one, but we
-can take care of recovering the promise next time we access the subdir.
+The following BUG was triggered:
 
-This can be triggered by something like:
+=============================
+[ BUG: Invalid wait context ]
+6.12.0-rc2-XXX #406 Not tainted
+-----------------------------
+kworker/1:1/62 is trying to lock:
+ffffff8801593030 (&cpc_ptr->rmw_lock){+.+.}-{3:3}, at: cpc_write+0xcc/0x370
+other info that might help us debug this:
+context-{5:5}
+2 locks held by kworker/1:1/62:
+  #0: ffffff897ef5ec98 (&rq->__lock){-.-.}-{2:2}, at: raw_spin_rq_lock_nested+0x2c/0x50
+  #1: ffffff880154e238 (&sg_policy->update_lock){....}-{2:2}, at: sugov_update_shared+0x3c/0x280
+stack backtrace:
+CPU: 1 UID: 0 PID: 62 Comm: kworker/1:1 Not tainted 6.12.0-rc2-g9654bd3e8806 #406
+Workqueue:  0x0 (events)
+Call trace:
+  dump_backtrace+0xa4/0x130
+  show_stack+0x20/0x38
+  dump_stack_lvl+0x90/0xd0
+  dump_stack+0x18/0x28
+  __lock_acquire+0x480/0x1ad8
+  lock_acquire+0x114/0x310
+  _raw_spin_lock+0x50/0x70
+  cpc_write+0xcc/0x370
+  cppc_set_perf+0xa0/0x3a8
+  cppc_cpufreq_fast_switch+0x40/0xc0
+  cpufreq_driver_fast_switch+0x4c/0x218
+  sugov_update_shared+0x234/0x280
+  update_load_avg+0x6ec/0x7b8
+  dequeue_entities+0x108/0x830
+  dequeue_task_fair+0x58/0x408
+  __schedule+0x4f0/0x1070
+  schedule+0x54/0x130
+  worker_thread+0xc0/0x2e8
+  kthread+0x130/0x148
+  ret_from_fork+0x10/0x20
 
-    mount -t afs %example.com:xfstest.test20 /xfstest.test/
-    mkdir /xfstest.test/{aaa,bbb,aaa/ccc}
-    touch /xfstest.test/bbb/ccc/d
-    mv /xfstest.test/{aaa/ccc,bbb/ccc}
-    touch /xfstest.test/bbb/ccc/e
+sugov_update_shared() locks a raw_spinlock while cpc_write() locks a
+spinlock.
 
-When the pathwalk for the second touch hits "ccc", kafs spots that the DV
-is incorrect and downloads it again (so the fix is not critical).
+To have a correct wait-type order, update rmw_lock to a raw spinlock and
+ensure that interrupts will be disabled on the CPU holding it.
 
-Fix this, if the rename target is a directory and the old and new
-parents are different, by:
-
- (1) Incrementing the DV number of the target locally.
-
- (2) Editing the ".." entry in the target to refer to its new parent's
-     vnode ID and uniquifier.
-
-Link: https://lore.kernel.org/r/3340431.1729680010@warthog.procyon.org.uk
-Fixes: 63a4681ff39c ("afs: Locally edit directory data for mkdir/create/unlink/...")
-cc: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 60949b7b8054 ("ACPI: CPPC: Fix MASK_VAL() usage")
+Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
+Link: https://patch.msgid.link/20241028125657.1271512-1-pierre.gondois@arm.com
+[ rjw: Changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/dir.c               | 25 +++++++++++
- fs/afs/dir_edit.c          | 91 +++++++++++++++++++++++++++++++++++++-
- fs/afs/internal.h          |  2 +
- include/trace/events/afs.h |  7 ++-
- 4 files changed, 122 insertions(+), 3 deletions(-)
+ drivers/acpi/cppc_acpi.c | 9 +++++----
+ include/acpi/cppc_acpi.h | 2 +-
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/fs/afs/dir.c b/fs/afs/dir.c
-index f8622ed72e081..ada363af5aab8 100644
---- a/fs/afs/dir.c
-+++ b/fs/afs/dir.c
-@@ -12,6 +12,7 @@
- #include <linux/swap.h>
- #include <linux/ctype.h>
- #include <linux/sched.h>
-+#include <linux/iversion.h>
- #include <linux/task_io_accounting_ops.h>
- #include "internal.h"
- #include "afs_fs.h"
-@@ -1823,6 +1824,8 @@ static int afs_symlink(struct mnt_idmap *idmap, struct inode *dir,
+diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
+index ed91dfd4fdca7..544f53ae9cc0c 100644
+--- a/drivers/acpi/cppc_acpi.c
++++ b/drivers/acpi/cppc_acpi.c
+@@ -867,7 +867,7 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
  
- static void afs_rename_success(struct afs_operation *op)
- {
-+	struct afs_vnode *vnode = AFS_FS_I(d_inode(op->dentry));
-+
- 	_enter("op=%08x", op->debug_id);
+ 	/* Store CPU Logical ID */
+ 	cpc_ptr->cpu_id = pr->id;
+-	spin_lock_init(&cpc_ptr->rmw_lock);
++	raw_spin_lock_init(&cpc_ptr->rmw_lock);
  
- 	op->ctime = op->file[0].scb.status.mtime_client;
-@@ -1832,6 +1835,22 @@ static void afs_rename_success(struct afs_operation *op)
- 		op->ctime = op->file[1].scb.status.mtime_client;
- 		afs_vnode_commit_status(op, &op->file[1]);
- 	}
-+
-+	/* If we're moving a subdir between dirs, we need to update
-+	 * its DV counter too as the ".." will be altered.
-+	 */
-+	if (S_ISDIR(vnode->netfs.inode.i_mode) &&
-+	    op->file[0].vnode != op->file[1].vnode) {
-+		u64 new_dv;
-+
-+		write_seqlock(&vnode->cb_lock);
-+
-+		new_dv = vnode->status.data_version + 1;
-+		vnode->status.data_version = new_dv;
-+		inode_set_iversion_raw(&vnode->netfs.inode, new_dv);
-+
-+		write_sequnlock(&vnode->cb_lock);
-+	}
- }
+ 	/* Parse PSD data for this CPU */
+ 	ret = acpi_get_psd(cpc_ptr, handle);
+@@ -1087,6 +1087,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
+ 	int pcc_ss_id = per_cpu(cpu_pcc_subspace_idx, cpu);
+ 	struct cpc_reg *reg = &reg_res->cpc_entry.reg;
+ 	struct cpc_desc *cpc_desc;
++	unsigned long flags;
  
- static void afs_rename_edit_dir(struct afs_operation *op)
-@@ -1873,6 +1892,12 @@ static void afs_rename_edit_dir(struct afs_operation *op)
- 				 &vnode->fid, afs_edit_dir_for_rename_2);
+ 	size = GET_BIT_WIDTH(reg);
+ 
+@@ -1126,7 +1127,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
+ 			return -ENODEV;
+ 		}
+ 
+-		spin_lock(&cpc_desc->rmw_lock);
++		raw_spin_lock_irqsave(&cpc_desc->rmw_lock, flags);
+ 		switch (size) {
+ 		case 8:
+ 			prev_val = readb_relaxed(vaddr);
+@@ -1141,7 +1142,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
+ 			prev_val = readq_relaxed(vaddr);
+ 			break;
+ 		default:
+-			spin_unlock(&cpc_desc->rmw_lock);
++			raw_spin_unlock_irqrestore(&cpc_desc->rmw_lock, flags);
+ 			return -EFAULT;
+ 		}
+ 		val = MASK_VAL_WRITE(reg, prev_val, val);
+@@ -1174,7 +1175,7 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
  	}
  
-+	if (S_ISDIR(vnode->netfs.inode.i_mode) &&
-+	    new_dvnode != orig_dvnode &&
-+	    test_bit(AFS_VNODE_DIR_VALID, &vnode->flags))
-+		afs_edit_dir_update_dotdot(vnode, new_dvnode,
-+					   afs_edit_dir_for_rename_sub);
-+
- 	new_inode = d_inode(new_dentry);
- 	if (new_inode) {
- 		spin_lock(&new_inode->i_lock);
-diff --git a/fs/afs/dir_edit.c b/fs/afs/dir_edit.c
-index a71bff10496b2..fe223fb781111 100644
---- a/fs/afs/dir_edit.c
-+++ b/fs/afs/dir_edit.c
-@@ -127,10 +127,10 @@ static struct folio *afs_dir_get_folio(struct afs_vnode *vnode, pgoff_t index)
- /*
-  * Scan a directory block looking for a dirent of the right name.
-  */
--static int afs_dir_scan_block(union afs_xdr_dir_block *block, struct qstr *name,
-+static int afs_dir_scan_block(const union afs_xdr_dir_block *block, const struct qstr *name,
- 			      unsigned int blocknum)
- {
--	union afs_xdr_dirent *de;
-+	const union afs_xdr_dirent *de;
- 	u64 bitmap;
- 	int d, len, n;
+ 	if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
+-		spin_unlock(&cpc_desc->rmw_lock);
++		raw_spin_unlock_irqrestore(&cpc_desc->rmw_lock, flags);
  
-@@ -492,3 +492,90 @@ void afs_edit_dir_remove(struct afs_vnode *vnode,
- 	clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
- 	goto out_unmap;
+ 	return ret_val;
  }
-+
-+/*
-+ * Edit a subdirectory that has been moved between directories to update the
-+ * ".." entry.
-+ */
-+void afs_edit_dir_update_dotdot(struct afs_vnode *vnode, struct afs_vnode *new_dvnode,
-+				enum afs_edit_dir_reason why)
-+{
-+	union afs_xdr_dir_block *block;
-+	union afs_xdr_dirent *de;
-+	struct folio *folio;
-+	unsigned int nr_blocks, b;
-+	pgoff_t index;
-+	loff_t i_size;
-+	int slot;
-+
-+	_enter("");
-+
-+	i_size = i_size_read(&vnode->netfs.inode);
-+	if (i_size < AFS_DIR_BLOCK_SIZE) {
-+		clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
-+		return;
-+	}
-+	nr_blocks = i_size / AFS_DIR_BLOCK_SIZE;
-+
-+	/* Find a block that has sufficient slots available.  Each folio
-+	 * contains two or more directory blocks.
-+	 */
-+	for (b = 0; b < nr_blocks; b++) {
-+		index = b / AFS_DIR_BLOCKS_PER_PAGE;
-+		folio = afs_dir_get_folio(vnode, index);
-+		if (!folio)
-+			goto error;
-+
-+		block = kmap_local_folio(folio, b * AFS_DIR_BLOCK_SIZE - folio_pos(folio));
-+
-+		/* Abandon the edit if we got a callback break. */
-+		if (!test_bit(AFS_VNODE_DIR_VALID, &vnode->flags))
-+			goto invalidated;
-+
-+		slot = afs_dir_scan_block(block, &dotdot_name, b);
-+		if (slot >= 0)
-+			goto found_dirent;
-+
-+		kunmap_local(block);
-+		folio_unlock(folio);
-+		folio_put(folio);
-+	}
-+
-+	/* Didn't find the dirent to clobber.  Download the directory again. */
-+	trace_afs_edit_dir(vnode, why, afs_edit_dir_update_nodd,
-+			   0, 0, 0, 0, "..");
-+	clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
-+	goto out;
-+
-+found_dirent:
-+	de = &block->dirents[slot];
-+	de->u.vnode  = htonl(new_dvnode->fid.vnode);
-+	de->u.unique = htonl(new_dvnode->fid.unique);
-+
-+	trace_afs_edit_dir(vnode, why, afs_edit_dir_update_dd, b, slot,
-+			   ntohl(de->u.vnode), ntohl(de->u.unique), "..");
-+
-+	kunmap_local(block);
-+	folio_unlock(folio);
-+	folio_put(folio);
-+	inode_set_iversion_raw(&vnode->netfs.inode, vnode->status.data_version);
-+
-+out:
-+	_leave("");
-+	return;
-+
-+invalidated:
-+	kunmap_local(block);
-+	folio_unlock(folio);
-+	folio_put(folio);
-+	trace_afs_edit_dir(vnode, why, afs_edit_dir_update_inval,
-+			   0, 0, 0, 0, "..");
-+	clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
-+	goto out;
-+
-+error:
-+	trace_afs_edit_dir(vnode, why, afs_edit_dir_update_error,
-+			   0, 0, 0, 0, "..");
-+	clear_bit(AFS_VNODE_DIR_VALID, &vnode->flags);
-+	goto out;
-+}
-diff --git a/fs/afs/internal.h b/fs/afs/internal.h
-index 6e1d3c4daf72c..b306c09808706 100644
---- a/fs/afs/internal.h
-+++ b/fs/afs/internal.h
-@@ -1072,6 +1072,8 @@ extern void afs_check_for_remote_deletion(struct afs_operation *);
- extern void afs_edit_dir_add(struct afs_vnode *, struct qstr *, struct afs_fid *,
- 			     enum afs_edit_dir_reason);
- extern void afs_edit_dir_remove(struct afs_vnode *, struct qstr *, enum afs_edit_dir_reason);
-+void afs_edit_dir_update_dotdot(struct afs_vnode *vnode, struct afs_vnode *new_dvnode,
-+				enum afs_edit_dir_reason why);
- 
- /*
-  * dir_silly.c
-diff --git a/include/trace/events/afs.h b/include/trace/events/afs.h
-index 450c44c83a5d2..a0aed1a428a18 100644
---- a/include/trace/events/afs.h
-+++ b/include/trace/events/afs.h
-@@ -331,7 +331,11 @@ enum yfs_cm_operation {
- 	EM(afs_edit_dir_delete,			"delete") \
- 	EM(afs_edit_dir_delete_error,		"d_err ") \
- 	EM(afs_edit_dir_delete_inval,		"d_invl") \
--	E_(afs_edit_dir_delete_noent,		"d_nent")
-+	EM(afs_edit_dir_delete_noent,		"d_nent") \
-+	EM(afs_edit_dir_update_dd,		"u_ddot") \
-+	EM(afs_edit_dir_update_error,		"u_fail") \
-+	EM(afs_edit_dir_update_inval,		"u_invl") \
-+	E_(afs_edit_dir_update_nodd,		"u_nodd")
- 
- #define afs_edit_dir_reasons				  \
- 	EM(afs_edit_dir_for_create,		"Create") \
-@@ -340,6 +344,7 @@ enum yfs_cm_operation {
- 	EM(afs_edit_dir_for_rename_0,		"Renam0") \
- 	EM(afs_edit_dir_for_rename_1,		"Renam1") \
- 	EM(afs_edit_dir_for_rename_2,		"Renam2") \
-+	EM(afs_edit_dir_for_rename_sub,		"RnmSub") \
- 	EM(afs_edit_dir_for_rmdir,		"RmDir ") \
- 	EM(afs_edit_dir_for_silly_0,		"S_Ren0") \
- 	EM(afs_edit_dir_for_silly_1,		"S_Ren1") \
+diff --git a/include/acpi/cppc_acpi.h b/include/acpi/cppc_acpi.h
+index e1720d9306669..a451ca4c207bb 100644
+--- a/include/acpi/cppc_acpi.h
++++ b/include/acpi/cppc_acpi.h
+@@ -65,7 +65,7 @@ struct cpc_desc {
+ 	int write_cmd_status;
+ 	int write_cmd_id;
+ 	/* Lock used for RMW operations in cpc_write() */
+-	spinlock_t rmw_lock;
++	raw_spinlock_t rmw_lock;
+ 	struct cpc_register_resource cpc_regs[MAX_CPC_REG_ENT];
+ 	struct acpi_psd_package domain_info;
+ 	struct kobject kobj;
 -- 
 2.43.0
 
