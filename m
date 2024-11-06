@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDEB1DF27C;
-	Wed,  6 Nov 2024 12:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F13471DF249;
+	Wed,  6 Nov 2024 12:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730894855; cv=none; b=N3IyXImutuR07absvkEA5GreUxa/VVKtHwzt5NjOfGEEuPhYxqXxprsDO3FN6QJ78hsyr+ZuKxA0Q2QjFT6TxucCp5F38dg9mBqRjCQ6i0m6KghB6YOusWDI7O7RhuAyFyJV+iSr9Zv8JgLg0DXpbWp1YyTTBa9G2e9ryoybta4=
+	t=1730894858; cv=none; b=LOtjhhS9FaffQNrK7K/ZRXxjbj3ZRmAbdHbvUt04Iuy5C4fD7Ko5rH0Vr9HOwVUrz2/J+0xTTAdbttRGp5kZsz8CjH75hCHpwFIVixgOxacNgnos+t2ZnkMEYfRUu1y86RbA2Ob5/ZAJT64mSkq+tpWGOyJXLGnsPIXzXc1RiNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730894855; c=relaxed/simple;
-	bh=r6xazE9+YIYUTzFbVh5sn1rd4z8MdFDvvIB1RsegMBU=;
+	s=arc-20240116; t=1730894858; c=relaxed/simple;
+	bh=7Mv52YfyS45CDJE4yvp0ifMqEVaL4ToPuxPlDmys3d8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l5AqsRBTMT4/1bwowUaQbo3TqOHFOP422noxHnqm+S/6wc9fEXJTtxJaxVOXFgY0xpuPcUNv6HwY/tlrvJ6VZTs3Y3Cdcoger1eLSScaOf1TUnJ0GlLrG4kc12/LH0/aqyk/xBbYJYXWsY4bhklG3FCVc7t08FwJR/d9pkkmO3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKXMAVHh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OzCNirlH2iDYL4ftzsHEtE5qDnlicaFM/0lJ4TfolvlHoHiHLd73tDv5mQxai4RSmFIN9qtPezR5GCkG0ymxtQ3HXpL16yPOYVqZavWb7aCSM99de6BCt0T+/18uY9NmRR/72TpkfsIi0X9Kck5ES2nIDALZMGwpNi/00jGLyXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BAKcBatq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKXMAVHh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E22C4CECD;
-	Wed,  6 Nov 2024 12:07:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BAKcBatq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08672C4CECD;
+	Wed,  6 Nov 2024 12:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730894854;
-	bh=r6xazE9+YIYUTzFbVh5sn1rd4z8MdFDvvIB1RsegMBU=;
+	s=korg; t=1730894857;
+	bh=7Mv52YfyS45CDJE4yvp0ifMqEVaL4ToPuxPlDmys3d8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QKXMAVHhmcAZYh0cyAHXgAGhwaYFNc/H1W0UJzw/nEytGUqKrk9WKYPXCAdczlxYg
-	 qJEPVmWyUbitnnCKK+FIcRYifQtlWyjywaScrqY7RSFYg/TfccKWy6wA9TZ22599EQ
-	 nKZb16XY8TOzatj0KKzkMmHjrtYJZ/B52W9XYqsA=
+	b=BAKcBatqHGfkmnzpXHFlkGa7erTPHWjtPd9GcAW24SgwHCPFDYCklpqJ+aRs7pQ/o
+	 idgVEaToqI5zsZiiUBwTVKXiRkvZSEkMH9IEBdhXZO8wVEIYzNs95//pJcJobAdEyz
+	 esPPZlDZusnTSQXGCpOgRb9gVQBXZKj3jUD5FS7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Roman Kisel <romank@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Ferry Meng <mengferry@linux.alibaba.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	lei lu <llfamsec@gmail.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 023/350] x86/hyperv: Set X86_FEATURE_TSC_KNOWN_FREQ when Hyper-V provides frequency
-Date: Wed,  6 Nov 2024 12:59:11 +0100
-Message-ID: <20241106120321.448301192@linuxfoundation.org>
+Subject: [PATCH 4.19 024/350] ocfs2: add bounds checking to ocfs2_xattr_find_entry()
+Date: Wed,  6 Nov 2024 12:59:12 +0100
+Message-ID: <20241106120321.472141026@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,46 +59,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhklinux@outlook.com>
+From: Ferry Meng <mengferry@linux.alibaba.com>
 
-[ Upstream commit 8fcc514809de41153b43ccbe1a0cdf7f72b78e7e ]
+[ Upstream commit 9e3041fecdc8f78a5900c3aa51d3d756e73264d6 ]
 
-A Linux guest on Hyper-V gets the TSC frequency from a synthetic MSR, if
-available. In this case, set X86_FEATURE_TSC_KNOWN_FREQ so that Linux
-doesn't unnecessarily do refined TSC calibration when setting up the TSC
-clocksource.
+Add a paranoia check to make sure it doesn't stray beyond valid memory
+region containing ocfs2 xattr entries when scanning for a match.  It will
+prevent out-of-bound access in case of crafted images.
 
-With this change, a message such as this is no longer output during boot
-when the TSC is used as the clocksource:
-
-[    1.115141] tsc: Refined TSC clocksource calibration: 2918.408 MHz
-
-Furthermore, the guest and host will have exactly the same view of the
-TSC frequency, which is important for features such as the TSC deadline
-timer that are emulated by the Hyper-V host.
-
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Roman Kisel <romank@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20240606025559.1631-1-mhklinux@outlook.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20240606025559.1631-1-mhklinux@outlook.com>
+Link: https://lkml.kernel.org/r/20240520024024.1976129-1-joseph.qi@linux.alibaba.com
+Signed-off-by: Ferry Meng <mengferry@linux.alibaba.com>
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reported-by: lei lu <llfamsec@gmail.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: af77c4fc1871 ("ocfs2: strict bound check before memcmp in ocfs2_xattr_find_entry()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/mshyperv.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ocfs2/xattr.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/mshyperv.c b/arch/x86/kernel/cpu/mshyperv.c
-index f8b0fa2dbe374..b43f25b3c99d3 100644
---- a/arch/x86/kernel/cpu/mshyperv.c
-+++ b/arch/x86/kernel/cpu/mshyperv.c
-@@ -243,6 +243,7 @@ static void __init ms_hyperv_init_platform(void)
- 	    ms_hyperv.misc_features & HV_FEATURE_FREQUENCY_MSRS_AVAILABLE) {
- 		x86_platform.calibrate_tsc = hv_get_tsc_khz;
- 		x86_platform.calibrate_cpu = hv_get_tsc_khz;
-+		setup_force_cpu_cap(X86_FEATURE_TSC_KNOWN_FREQ);
- 	}
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index 54d881c9ac81e..8ec85c2503f23 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -1076,7 +1076,7 @@ ssize_t ocfs2_listxattr(struct dentry *dentry,
+ 	return i_ret + b_ret;
+ }
  
- 	if (ms_hyperv.hints & HV_X64_ENLIGHTENED_VMCS_RECOMMENDED) {
+-static int ocfs2_xattr_find_entry(int name_index,
++static int ocfs2_xattr_find_entry(struct inode *inode, int name_index,
+ 				  const char *name,
+ 				  struct ocfs2_xattr_search *xs)
+ {
+@@ -1090,6 +1090,10 @@ static int ocfs2_xattr_find_entry(int name_index,
+ 	name_len = strlen(name);
+ 	entry = xs->here;
+ 	for (i = 0; i < le16_to_cpu(xs->header->xh_count); i++) {
++		if ((void *)entry >= xs->end) {
++			ocfs2_error(inode->i_sb, "corrupted xattr entries");
++			return -EFSCORRUPTED;
++		}
+ 		cmp = name_index - ocfs2_xattr_get_type(entry);
+ 		if (!cmp)
+ 			cmp = name_len - entry->xe_name_len;
+@@ -1180,7 +1184,7 @@ static int ocfs2_xattr_ibody_get(struct inode *inode,
+ 	xs->base = (void *)xs->header;
+ 	xs->here = xs->header->xh_entries;
+ 
+-	ret = ocfs2_xattr_find_entry(name_index, name, xs);
++	ret = ocfs2_xattr_find_entry(inode, name_index, name, xs);
+ 	if (ret)
+ 		return ret;
+ 	size = le64_to_cpu(xs->here->xe_value_size);
+@@ -2712,7 +2716,7 @@ static int ocfs2_xattr_ibody_find(struct inode *inode,
+ 
+ 	/* Find the named attribute. */
+ 	if (oi->ip_dyn_features & OCFS2_INLINE_XATTR_FL) {
+-		ret = ocfs2_xattr_find_entry(name_index, name, xs);
++		ret = ocfs2_xattr_find_entry(inode, name_index, name, xs);
+ 		if (ret && ret != -ENODATA)
+ 			return ret;
+ 		xs->not_found = ret;
+@@ -2847,7 +2851,7 @@ static int ocfs2_xattr_block_find(struct inode *inode,
+ 		xs->end = (void *)(blk_bh->b_data) + blk_bh->b_size;
+ 		xs->here = xs->header->xh_entries;
+ 
+-		ret = ocfs2_xattr_find_entry(name_index, name, xs);
++		ret = ocfs2_xattr_find_entry(inode, name_index, name, xs);
+ 	} else
+ 		ret = ocfs2_xattr_index_block_find(inode, blk_bh,
+ 						   name_index,
 -- 
 2.43.0
 
