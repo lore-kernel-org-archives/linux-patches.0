@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0DD1EABDB;
-	Wed,  6 Nov 2024 13:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327671922EF;
+	Wed,  6 Nov 2024 13:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898474; cv=none; b=od8wWC2skK6Vt50BxVQUfb8GfsKt4f8zvqFKVmUeq/A8y3V7CXptC9WNti/cf9XL3u92yJ/YAtfSFgJeT6oRJbvjKRkwQaXCGgCOHxZLmN6J80z6fRRjceN6ysC7hxX5lHIomB8EFTBNj2D3kB3DxnrG8STzcLHg9HV2aT3r9pA=
+	t=1730898477; cv=none; b=Q3Zwlwg0gXyitcK6B+fTZUJd9LafyDaSUfS2qlEaXZYyrfgYNP8iqDXt2J+yDxaJTNPMt+S0B1VR6ybIOww5GwK3I8MYUKdvQ11N2FcTLVjGNEq5kbZcklg1XliVSQsBzkDmsJmvAw9Tck6SF8/MHKNKsn2DW/21jZ2P9dMRtsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898474; c=relaxed/simple;
-	bh=vutoaJ3yPCU2hwZYnV2fRGT01J4kD9B4oWEm8XyLUh0=;
+	s=arc-20240116; t=1730898477; c=relaxed/simple;
+	bh=9WmKZuaN885RgGF5U+qEjdRktaP+H+DfA3qYNq/WVaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W4OvVTfS0LUFqw0AaY+zbNtl6/Dvbkt5bQyU4KyBQDoUXKFJikEyTyb+nyFPOfUzxXtD8+CZS/Twa8LCqIadA/0RacVXAIVZq3IPavvYzxVz7Feg5AdF9q1nKOcRwnLbfyCHVbVkqZLuRRxUlk3x8qbMuspl+SsRxtvRT/g8RY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIMIAfzS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XLlVMSx8fPqPNCdMGE6qKGdkwpKnkTUFtBgUk7E5QPveDXgzaDz/KavZmEmlA+nuJM29KR7o7q9S9A/X84OZHQ2/GhKovnyvt+ZoCPI1PohPK3T9E7Kcfx3oTL4zMIzKLUS6tJTe2/uGduQZbexNQrwXZYe/oA1UnSHPkz3TPa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0X+5OCkh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIMIAfzS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968F4C4CECD;
-	Wed,  6 Nov 2024 13:07:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0X+5OCkh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB375C4CECD;
+	Wed,  6 Nov 2024 13:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898474;
-	bh=vutoaJ3yPCU2hwZYnV2fRGT01J4kD9B4oWEm8XyLUh0=;
+	s=korg; t=1730898477;
+	bh=9WmKZuaN885RgGF5U+qEjdRktaP+H+DfA3qYNq/WVaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CIMIAfzSRmbU+spryAJr8cS0XqSSlPQgNQLY9YvoTg9oehdOZAuDYNLhXSeM+MlyA
-	 GHxSrfBtz+cuU94Uq1s1d0KnM+7us/LP2dex3rifrOiIdYitOsPUvFkmi9G+JJ4TyC
-	 1HbHVAUwVCvC6w42eDrBNUuCO0n8kEIByNtB03dg=
+	b=0X+5OCkhZq9/GY39Mv1m6DoAZUKTHjKZmsO3tiJiqCXoAEZpRwWUUw4L6J7MUSnIt
+	 SZx+UA+W8CkdDIqAsB2I8VEPkUebXBfS3dpma63ua8z5rvB6oMbVndLpGVi5iqx3LR
+	 2rGN0u9ac4F9lT1IeoaMWCx/0T8lqe4lVvbExKWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
+	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
 	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.4 250/462] ext4: fix double brelse() the buffer of the extents path
-Date: Wed,  6 Nov 2024 13:02:23 +0100
-Message-ID: <20241106120337.698533640@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.4 251/462] ext4: fix incorrect tid assumption in ext4_wait_for_tail_page_commit()
+Date: Wed,  6 Nov 2024 13:02:24 +0100
+Message-ID: <20241106120337.723672382@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -53,100 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 
-commit dcaa6c31134c0f515600111c38ed7750003e1b9c upstream.
+commit dd589b0f1445e1ea1085b98edca6e4d5dedb98d0 upstream.
 
-In ext4_ext_try_to_merge_up(), set path[1].p_bh to NULL after it has been
-released, otherwise it may be released twice. An example of what triggers
-this is as follows:
+Function ext4_wait_for_tail_page_commit() assumes that '0' is not a valid
+value for transaction IDs, which is incorrect.  Don't assume that and invoke
+jbd2_log_wait_commit() if the journal had a committing transaction instead.
 
-  split2    map    split1
-|--------|-------|--------|
-
-ext4_ext_map_blocks
- ext4_ext_handle_unwritten_extents
-  ext4_split_convert_extents
-   // path->p_depth == 0
-   ext4_split_extent
-     // 1. do split1
-     ext4_split_extent_at
-       |ext4_ext_insert_extent
-       |  ext4_ext_create_new_leaf
-       |    ext4_ext_grow_indepth
-       |      le16_add_cpu(&neh->eh_depth, 1)
-       |    ext4_find_extent
-       |      // return -ENOMEM
-       |// get error and try zeroout
-       |path = ext4_find_extent
-       |  path->p_depth = 1
-       |ext4_ext_try_to_merge
-       |  ext4_ext_try_to_merge_up
-       |    path->p_depth = 0
-       |    brelse(path[1].p_bh)  ---> not set to NULL here
-       |// zeroout success
-     // 2. update path
-     ext4_find_extent
-     // 3. do split2
-     ext4_split_extent_at
-       ext4_ext_insert_extent
-         ext4_ext_create_new_leaf
-           ext4_ext_grow_indepth
-             le16_add_cpu(&neh->eh_depth, 1)
-           ext4_find_extent
-             path[0].p_bh = NULL;
-             path->p_depth = 1
-             read_extent_tree_block  ---> return err
-             // path[1].p_bh is still the old value
-             ext4_free_ext_path
-               ext4_ext_drop_refs
-                 // path->p_depth == 1
-                 brelse(path[1].p_bh)  ---> brelse a buffer twice
-
-Finally got the following WARRNING when removing the buffer from lru:
-
-============================================
-VFS: brelse: Trying to free free buffer
-WARNING: CPU: 2 PID: 72 at fs/buffer.c:1241 __brelse+0x58/0x90
-CPU: 2 PID: 72 Comm: kworker/u19:1 Not tainted 6.9.0-dirty #716
-RIP: 0010:__brelse+0x58/0x90
-Call Trace:
- <TASK>
- __find_get_block+0x6e7/0x810
- bdev_getblk+0x2b/0x480
- __ext4_get_inode_loc+0x48a/0x1240
- ext4_get_inode_loc+0xb2/0x150
- ext4_reserve_inode_write+0xb7/0x230
- __ext4_mark_inode_dirty+0x144/0x6a0
- ext4_ext_insert_extent+0x9c8/0x3230
- ext4_ext_map_blocks+0xf45/0x2dc0
- ext4_map_blocks+0x724/0x1700
- ext4_do_writepages+0x12d6/0x2a70
-[...]
-============================================
-
-Fixes: ecb94f5fdf4b ("ext4: collapse a single extent tree block into the inode if possible")
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20240822023545.1994557-9-libaokun@huaweicloud.com
+Link: https://patch.msgid.link/20240724161119.13448-2-luis.henriques@linux.dev
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/inode.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -1907,6 +1907,7 @@ static void ext4_ext_try_to_merge_up(han
- 	path[0].p_hdr->eh_max = cpu_to_le16(max_root);
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5575,8 +5575,9 @@ static void ext4_wait_for_tail_page_comm
+ 	struct page *page;
+ 	unsigned offset;
+ 	journal_t *journal = EXT4_SB(inode->i_sb)->s_journal;
+-	tid_t commit_tid = 0;
++	tid_t commit_tid;
+ 	int ret;
++	bool has_transaction;
  
- 	brelse(path[1].p_bh);
-+	path[1].p_bh = NULL;
- 	ext4_free_blocks(handle, inode, NULL, blk, 1,
- 			 EXT4_FREE_BLOCKS_METADATA | EXT4_FREE_BLOCKS_FORGET);
+ 	offset = inode->i_size & (PAGE_SIZE - 1);
+ 	/*
+@@ -5601,12 +5602,14 @@ static void ext4_wait_for_tail_page_comm
+ 		put_page(page);
+ 		if (ret != -EBUSY)
+ 			return;
+-		commit_tid = 0;
++		has_transaction = false;
+ 		read_lock(&journal->j_state_lock);
+-		if (journal->j_committing_transaction)
++		if (journal->j_committing_transaction) {
+ 			commit_tid = journal->j_committing_transaction->t_tid;
++			has_transaction = true;
++		}
+ 		read_unlock(&journal->j_state_lock);
+-		if (commit_tid)
++		if (has_transaction)
+ 			jbd2_log_wait_commit(journal, commit_tid);
+ 	}
  }
 
 
