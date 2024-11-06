@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034A31D619E;
-	Wed,  6 Nov 2024 13:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5FA11E0480;
+	Wed,  6 Nov 2024 13:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730898693; cv=none; b=rygCL8kCkqKq6iOFWOydh8EctxDoNu4t571nS//wRFEjcIKvUlLAXoSP2EG3kd1oj82bGSrqA7sYS/rpquf/2a7iif6bXXkqxjyGAsOMI4Y+lLxEBvJnq7sBybjuzyKLKd+00p9wTX30JhLBZ/xfS91bhA8KGNb2oZA+PB+3Jas=
+	t=1730898695; cv=none; b=Ij0gZJLFI0XWeg8czjGTuxINnW2qDQX3r/DrXBIpcTvS3ejHJATHFPo8C2fRQ7jFAlQ5PlIMeeNEgHzTOZymyi3CaNtUNOyUdOtAdIwLucxyA1lJkl5mIirexElhPg9v4urszfYfiENFeUfd0PvMsjJ19votkApmX+iZGQEWjZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730898693; c=relaxed/simple;
-	bh=fZzVgFJGnDDWnCUq6fFnTOeHF5ta9PHZIyoFbb/uTxs=;
+	s=arc-20240116; t=1730898695; c=relaxed/simple;
+	bh=l9VVBZwM+jS3OiQzXVSQLHr062jsC1uwTe0a567ZfqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MX1yrxBhKxrXhry7oN/RzvexhMFF0IdEDn/LitEfCtNYW4hFXUwf54FGBEZJreHUSvCqeWMlJecNf83aUmkd+0MqAbmVrt7zI8jQtU6MZfK82Gsuwqcv60VguFq+lmGMhhKnr3wO0DdyQdTcjSHpPuCk1Fk4uOrepw/ru3JuOio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Tb709O3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AAnh9XmthlaDfekx7SNF3bM8OaLc8yGmuEs7DYSkQeXRG1OQiLOvWl/Z28xb4c0GU2Unhmwkko/Yls51bdkJN1wBzXAy4v3aLz1ta78G8teeWZcsoyN7tCnt4sgBmgA9GB///qnckW0/GrOT6kpGAyPKqP2qSRSZxE8BS3IUWD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSL4t/I+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Tb709O3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312FAC4CECD;
-	Wed,  6 Nov 2024 13:11:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSL4t/I+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E415C4CECD;
+	Wed,  6 Nov 2024 13:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730898692;
-	bh=fZzVgFJGnDDWnCUq6fFnTOeHF5ta9PHZIyoFbb/uTxs=;
+	s=korg; t=1730898695;
+	bh=l9VVBZwM+jS3OiQzXVSQLHr062jsC1uwTe0a567ZfqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Tb709O3NbOMlx2RAoqr61ocE7SLmGRfSz3EkcfrbvatJCLmT8l/FCnuJYivGGHJC
-	 9NkJBf5otTcS44Nipk8PXn3BDgLM7uJbLkLKfSFMYfc03WzjbH3CxNIgnRtnxeiRlb
-	 3e036oUEFH78jhlJrYto1z4RpfUFjxh6Ziac/oV0=
+	b=JSL4t/I+0eDS7HE/QSk8sJB74zBoywN5MZtrGAAEj5v7p3EEkyZrKafVDNec09ml2
+	 5N038srsNB/peaMs0gdTYd0eIZpBQNqRohKsOU65jDPeMMHnRX6pERxcVOEwSQGsl7
+	 ysqbGsqbr0xbmKsFtSVLhNTWdvnrkMQVVV1BAxtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Wojciech=20G=C5=82adysz?= <wojciech.gladysz@infogain.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Geumhwan Yu <geumhwan.yu@samsung.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Yuchung Cheng <ycheng@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 306/462] ext4: nested locking for xattr inode
-Date: Wed,  6 Nov 2024 13:03:19 +0100
-Message-ID: <20241106120339.086311415@linuxfoundation.org>
+Subject: [PATCH 5.4 324/462] tcp: fix to allow timestamp undo if no retransmits were sent
+Date: Wed,  6 Nov 2024 13:03:37 +0100
+Message-ID: <20241106120339.531386951@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -45,191 +48,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wojciech Gładysz <wojciech.gladysz@infogain.com>
+From: Neal Cardwell <ncardwell@google.com>
 
-[ Upstream commit d1bc560e9a9c78d0b2314692847fc8661e0aeb99 ]
+[ Upstream commit e37ab7373696e650d3b6262a5b882aadad69bb9e ]
 
-Add nested locking with I_MUTEX_XATTR subclass to avoid lockdep warning
-while handling xattr inode on file open syscall at ext4_xattr_inode_iget.
+Fix the TCP loss recovery undo logic in tcp_packet_delayed() so that
+it can trigger undo even if TSQ prevents a fast recovery episode from
+reaching tcp_retransmit_skb().
 
-Backtrace
-EXT4-fs (loop0): Ignoring removed oldalloc option
-======================================================
-WARNING: possible circular locking dependency detected
-5.10.0-syzkaller #0 Not tainted
-------------------------------------------------------
-syz-executor543/2794 is trying to acquire lock:
-ffff8880215e1a48 (&ea_inode->i_rwsem#7/1){+.+.}-{3:3}, at: inode_lock include/linux/fs.h:782 [inline]
-ffff8880215e1a48 (&ea_inode->i_rwsem#7/1){+.+.}-{3:3}, at: ext4_xattr_inode_iget+0x42a/0x5c0 fs/ext4/xattr.c:425
+Geumhwan Yu <geumhwan.yu@samsung.com> recently reported that after
+this commit from 2019:
 
-but task is already holding lock:
-ffff8880215e3278 (&ei->i_data_sem/3){++++}-{3:3}, at: ext4_setattr+0x136d/0x19c0 fs/ext4/inode.c:5559
+commit bc9f38c8328e ("tcp: avoid unconditional congestion window undo
+on SYN retransmit")
 
-which lock already depends on the new lock.
+...and before this fix we could have buggy scenarios like the
+following:
 
-the existing dependency chain (in reverse order) is:
++ Due to reordering, a TCP connection receives some SACKs and enters a
+  spurious fast recovery.
 
--> #1 (&ei->i_data_sem/3){++++}-{3:3}:
-       lock_acquire+0x197/0x480 kernel/locking/lockdep.c:5566
-       down_write+0x93/0x180 kernel/locking/rwsem.c:1564
-       ext4_update_i_disksize fs/ext4/ext4.h:3267 [inline]
-       ext4_xattr_inode_write fs/ext4/xattr.c:1390 [inline]
-       ext4_xattr_inode_lookup_create fs/ext4/xattr.c:1538 [inline]
-       ext4_xattr_set_entry+0x331a/0x3d80 fs/ext4/xattr.c:1662
-       ext4_xattr_ibody_set+0x124/0x390 fs/ext4/xattr.c:2228
-       ext4_xattr_set_handle+0xc27/0x14e0 fs/ext4/xattr.c:2385
-       ext4_xattr_set+0x219/0x390 fs/ext4/xattr.c:2498
-       ext4_xattr_user_set+0xc9/0xf0 fs/ext4/xattr_user.c:40
-       __vfs_setxattr+0x404/0x450 fs/xattr.c:177
-       __vfs_setxattr_noperm+0x11d/0x4f0 fs/xattr.c:208
-       __vfs_setxattr_locked+0x1f9/0x210 fs/xattr.c:266
-       vfs_setxattr+0x112/0x2c0 fs/xattr.c:283
-       setxattr+0x1db/0x3e0 fs/xattr.c:548
-       path_setxattr+0x15a/0x240 fs/xattr.c:567
-       __do_sys_setxattr fs/xattr.c:582 [inline]
-       __se_sys_setxattr fs/xattr.c:578 [inline]
-       __x64_sys_setxattr+0xc5/0xe0 fs/xattr.c:578
-       do_syscall_64+0x6d/0xa0 arch/x86/entry/common.c:62
-       entry_SYSCALL_64_after_hwframe+0x61/0xcb
++ TSQ prevents all invocations of tcp_retransmit_skb(), because many
+  skbs are queued in lower layers of the sending machine's network
+  stack; thus tp->retrans_stamp remains 0.
 
--> #0 (&ea_inode->i_rwsem#7/1){+.+.}-{3:3}:
-       check_prev_add kernel/locking/lockdep.c:2988 [inline]
-       check_prevs_add kernel/locking/lockdep.c:3113 [inline]
-       validate_chain+0x1695/0x58f0 kernel/locking/lockdep.c:3729
-       __lock_acquire+0x12fd/0x20d0 kernel/locking/lockdep.c:4955
-       lock_acquire+0x197/0x480 kernel/locking/lockdep.c:5566
-       down_write+0x93/0x180 kernel/locking/rwsem.c:1564
-       inode_lock include/linux/fs.h:782 [inline]
-       ext4_xattr_inode_iget+0x42a/0x5c0 fs/ext4/xattr.c:425
-       ext4_xattr_inode_get+0x138/0x410 fs/ext4/xattr.c:485
-       ext4_xattr_move_to_block fs/ext4/xattr.c:2580 [inline]
-       ext4_xattr_make_inode_space fs/ext4/xattr.c:2682 [inline]
-       ext4_expand_extra_isize_ea+0xe70/0x1bb0 fs/ext4/xattr.c:2774
-       __ext4_expand_extra_isize+0x304/0x3f0 fs/ext4/inode.c:5898
-       ext4_try_to_expand_extra_isize fs/ext4/inode.c:5941 [inline]
-       __ext4_mark_inode_dirty+0x591/0x810 fs/ext4/inode.c:6018
-       ext4_setattr+0x1400/0x19c0 fs/ext4/inode.c:5562
-       notify_change+0xbb6/0xe60 fs/attr.c:435
-       do_truncate+0x1de/0x2c0 fs/open.c:64
-       handle_truncate fs/namei.c:2970 [inline]
-       do_open fs/namei.c:3311 [inline]
-       path_openat+0x29f3/0x3290 fs/namei.c:3425
-       do_filp_open+0x20b/0x450 fs/namei.c:3452
-       do_sys_openat2+0x124/0x460 fs/open.c:1207
-       do_sys_open fs/open.c:1223 [inline]
-       __do_sys_open fs/open.c:1231 [inline]
-       __se_sys_open fs/open.c:1227 [inline]
-       __x64_sys_open+0x221/0x270 fs/open.c:1227
-       do_syscall_64+0x6d/0xa0 arch/x86/entry/common.c:62
-       entry_SYSCALL_64_after_hwframe+0x61/0xcb
++ The connection receives a TCP timestamp ECR value echoing a
+  timestamp before the fast recovery, indicating that the fast
+  recovery was spurious.
 
-other info that might help us debug this:
++ The connection fails to undo the spurious fast recovery because
+  tp->retrans_stamp is 0, and thus tcp_packet_delayed() returns false,
+  due to the new logic in the 2019 commit: commit bc9f38c8328e ("tcp:
+  avoid unconditional congestion window undo on SYN retransmit")
 
- Possible unsafe locking scenario:
+This fix tweaks the logic to be more similar to the
+tcp_packet_delayed() logic before bc9f38c8328e, except that we take
+care not to be fooled by the FLAG_SYN_ACKED code path zeroing out
+tp->retrans_stamp (the bug noted and fixed by Yuchung in
+bc9f38c8328e).
 
-       CPU0                    CPU1
-       ----                    ----
-  lock(&ei->i_data_sem/3);
-                               lock(&ea_inode->i_rwsem#7/1);
-                               lock(&ei->i_data_sem/3);
-  lock(&ea_inode->i_rwsem#7/1);
+Note that this returns the high-level behavior of tcp_packet_delayed()
+to again match the comment for the function, which says: "Nothing was
+retransmitted or returned timestamp is less than timestamp of the
+first retransmission." Note that this comment is in the original
+2005-04-16 Linux git commit, so this is evidently long-standing
+behavior.
 
- *** DEADLOCK ***
-
-5 locks held by syz-executor543/2794:
- #0: ffff888026fbc448 (sb_writers#4){.+.+}-{0:0}, at: mnt_want_write+0x4a/0x2a0 fs/namespace.c:365
- #1: ffff8880215e3488 (&sb->s_type->i_mutex_key#7){++++}-{3:3}, at: inode_lock include/linux/fs.h:782 [inline]
- #1: ffff8880215e3488 (&sb->s_type->i_mutex_key#7){++++}-{3:3}, at: do_truncate+0x1cf/0x2c0 fs/open.c:62
- #2: ffff8880215e3310 (&ei->i_mmap_sem){++++}-{3:3}, at: ext4_setattr+0xec4/0x19c0 fs/ext4/inode.c:5519
- #3: ffff8880215e3278 (&ei->i_data_sem/3){++++}-{3:3}, at: ext4_setattr+0x136d/0x19c0 fs/ext4/inode.c:5559
- #4: ffff8880215e30c8 (&ei->xattr_sem){++++}-{3:3}, at: ext4_write_trylock_xattr fs/ext4/xattr.h:162 [inline]
- #4: ffff8880215e30c8 (&ei->xattr_sem){++++}-{3:3}, at: ext4_try_to_expand_extra_isize fs/ext4/inode.c:5938 [inline]
- #4: ffff8880215e30c8 (&ei->xattr_sem){++++}-{3:3}, at: __ext4_mark_inode_dirty+0x4fb/0x810 fs/ext4/inode.c:6018
-
-stack backtrace:
-CPU: 1 PID: 2794 Comm: syz-executor543 Not tainted 5.10.0-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x177/0x211 lib/dump_stack.c:118
- print_circular_bug+0x146/0x1b0 kernel/locking/lockdep.c:2002
- check_noncircular+0x2cc/0x390 kernel/locking/lockdep.c:2123
- check_prev_add kernel/locking/lockdep.c:2988 [inline]
- check_prevs_add kernel/locking/lockdep.c:3113 [inline]
- validate_chain+0x1695/0x58f0 kernel/locking/lockdep.c:3729
- __lock_acquire+0x12fd/0x20d0 kernel/locking/lockdep.c:4955
- lock_acquire+0x197/0x480 kernel/locking/lockdep.c:5566
- down_write+0x93/0x180 kernel/locking/rwsem.c:1564
- inode_lock include/linux/fs.h:782 [inline]
- ext4_xattr_inode_iget+0x42a/0x5c0 fs/ext4/xattr.c:425
- ext4_xattr_inode_get+0x138/0x410 fs/ext4/xattr.c:485
- ext4_xattr_move_to_block fs/ext4/xattr.c:2580 [inline]
- ext4_xattr_make_inode_space fs/ext4/xattr.c:2682 [inline]
- ext4_expand_extra_isize_ea+0xe70/0x1bb0 fs/ext4/xattr.c:2774
- __ext4_expand_extra_isize+0x304/0x3f0 fs/ext4/inode.c:5898
- ext4_try_to_expand_extra_isize fs/ext4/inode.c:5941 [inline]
- __ext4_mark_inode_dirty+0x591/0x810 fs/ext4/inode.c:6018
- ext4_setattr+0x1400/0x19c0 fs/ext4/inode.c:5562
- notify_change+0xbb6/0xe60 fs/attr.c:435
- do_truncate+0x1de/0x2c0 fs/open.c:64
- handle_truncate fs/namei.c:2970 [inline]
- do_open fs/namei.c:3311 [inline]
- path_openat+0x29f3/0x3290 fs/namei.c:3425
- do_filp_open+0x20b/0x450 fs/namei.c:3452
- do_sys_openat2+0x124/0x460 fs/open.c:1207
- do_sys_open fs/open.c:1223 [inline]
- __do_sys_open fs/open.c:1231 [inline]
- __se_sys_open fs/open.c:1227 [inline]
- __x64_sys_open+0x221/0x270 fs/open.c:1227
- do_syscall_64+0x6d/0xa0 arch/x86/entry/common.c:62
- entry_SYSCALL_64_after_hwframe+0x61/0xcb
-RIP: 0033:0x7f0cde4ea229
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 21 18 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffd81d1c978 EFLAGS: 00000246 ORIG_RAX: 0000000000000002
-RAX: ffffffffffffffda RBX: 0030656c69662f30 RCX: 00007f0cde4ea229
-RDX: 0000000000000089 RSI: 00000000000a0a00 RDI: 00000000200001c0
-RBP: 2f30656c69662f2e R08: 0000000000208000 R09: 0000000000208000
-R10: 0000000000000000 R11: 0000000000000246 R12: 00007ffd81d1c9c0
-R13: 00007ffd81d1ca00 R14: 0000000000080000 R15: 0000000000000003
-EXT4-fs error (device loop0): ext4_expand_extra_isize_ea:2730: inode #13: comm syz-executor543: corrupted in-inode xattr
-
-Signed-off-by: Wojciech Gładysz <wojciech.gladysz@infogain.com>
-Link: https://patch.msgid.link/20240801143827.19135-1-wojciech.gladysz@infogain.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: bc9f38c8328e ("tcp: avoid unconditional congestion window undo on SYN retransmit")
+Reported-by: Geumhwan Yu <geumhwan.yu@samsung.com>
+Diagnosed-by: Geumhwan Yu <geumhwan.yu@samsung.com>
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Yuchung Cheng <ycheng@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241001200517.2756803-2-ncardwell.sw@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/xattr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_input.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
-index d65f1eb85a924..19982a682b9c1 100644
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -420,7 +420,7 @@ static int ext4_xattr_inode_iget(struct inode *parent, unsigned long ea_ino,
- 		ext4_set_inode_state(inode, EXT4_STATE_LUSTRE_EA_INODE);
- 		ext4_xattr_inode_set_ref(inode, 1);
- 	} else {
--		inode_lock(inode);
-+		inode_lock_nested(inode, I_MUTEX_XATTR);
- 		inode->i_flags |= S_NOQUOTA;
- 		inode_unlock(inode);
- 	}
-@@ -1033,7 +1033,7 @@ static int ext4_xattr_inode_update_ref(handle_t *handle, struct inode *ea_inode,
- 	s64 ref_count;
- 	int ret;
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index cf6221e9fda50..75e954590bdd5 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -2294,8 +2294,22 @@ static bool tcp_skb_spurious_retrans(const struct tcp_sock *tp,
+  */
+ static inline bool tcp_packet_delayed(const struct tcp_sock *tp)
+ {
+-	return tp->retrans_stamp &&
+-	       tcp_tsopt_ecr_before(tp, tp->retrans_stamp);
++	const struct sock *sk = (const struct sock *)tp;
++
++	if (tp->retrans_stamp &&
++	    tcp_tsopt_ecr_before(tp, tp->retrans_stamp))
++		return true;  /* got echoed TS before first retransmission */
++
++	/* Check if nothing was retransmitted (retrans_stamp==0), which may
++	 * happen in fast recovery due to TSQ. But we ignore zero retrans_stamp
++	 * in TCP_SYN_SENT, since when we set FLAG_SYN_ACKED we also clear
++	 * retrans_stamp even if we had retransmitted the SYN.
++	 */
++	if (!tp->retrans_stamp &&	   /* no record of a retransmit/SYN? */
++	    sk->sk_state != TCP_SYN_SENT)  /* not the FLAG_SYN_ACKED case? */
++		return true;  /* nothing was retransmitted */
++
++	return false;
+ }
  
--	inode_lock(ea_inode);
-+	inode_lock_nested(ea_inode, I_MUTEX_XATTR);
- 
- 	ret = ext4_reserve_inode_write(handle, ea_inode, &iloc);
- 	if (ret)
+ /* Undo procedures. */
 -- 
 2.43.0
 
