@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E20E51DED40;
-	Wed,  6 Nov 2024 12:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F4F1DE4FC;
+	Wed,  6 Nov 2024 12:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730895333; cv=none; b=IgomDF4bqMgp4WaNDu/8rL/+KCX56L/MDzZUP3g/Q7cwyBZTbhdk6hcOXrwnL3an0CosZtbx0iuL88+V8BLozsWdqriWgvZ9rnVHpGcONa8tOweNOP/bQLZvz8C+9OAB81P2nbcD/Z3PE+PGmTAtzJtnSSqccszv+BP95B/oODk=
+	t=1730895335; cv=none; b=pczdB/kSRSJrKD2Bm88Ii7kHVFN/rWhgt2zE5hB05D66RcHeNPzWIcdyAgBUS9ASH09S3CfFYSzvdj0fTKKPZxQQkrnske3BTi2gxVyAx5WwIHzpjrSGKHm9O0PwjLLqRuuUkJZZWKXICgjuaR9pSXiAEVnRj3U2VQEYeNaKYQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730895333; c=relaxed/simple;
-	bh=qTQ3S5bh7Tde7ABu+v+yIyH4pSyf25JL2WmouV1M9VM=;
+	s=arc-20240116; t=1730895335; c=relaxed/simple;
+	bh=h16Gz3SbG9TRbU/mmdjcZWGU9dh9wCV+N64z3ff1KGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRdVzR7627+lvU78abrMAwvsjnxPeU9e9A1+LE0x6fUqILaivFb3KPiYBettln6kxRoPRodFWYK+nbSmlb8a9Yv+YC2DbLXO6nFduh0ZcIyDXMWPIniFZrTWwvkBK6KuX8BU8Rvu56xH4by0fFn36qmbMqjzDlvOKKZOxBPJK8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xxi3wb4R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RICKioIfcZSB9fE6a33xdb/k8k1+eTb6gbsbg9prVWUv1no1GQ9H30Hbli5bAz8wOie9w+cqfa0LdcaJ+VNetHggge0Gcnm+Wicb8zLZE4L6wNvHl8vdBhXrqZN9CLeeJkslh5T1Cs2Ysc/FFLReRWDfTkMRi83RPDd9wqWvPLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5iYgHXN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xxi3wb4R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F43C4CECD;
-	Wed,  6 Nov 2024 12:15:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5iYgHXN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11897C4CECD;
+	Wed,  6 Nov 2024 12:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730895332;
-	bh=qTQ3S5bh7Tde7ABu+v+yIyH4pSyf25JL2WmouV1M9VM=;
+	s=korg; t=1730895335;
+	bh=h16Gz3SbG9TRbU/mmdjcZWGU9dh9wCV+N64z3ff1KGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xxi3wb4RYpW80v1i5zLalVKlLTpw1M/MHQl7ZTk50StVYQ8Ha9Y2Vix0JQkDBz/j2
-	 /sVDGmNADUwe7p6hg79H2b025DnedhE1njRCzzqKrl/C3ah720SWxar0nt8WfupQVV
-	 o5WRVlOGrC6SS1fnvghAcLe90WWKAgeuQGHedb7E=
+	b=s5iYgHXNHmqz1vgpsvzXwQj5HKTfOhcxnDKIhOQk1kzLWXxx/tu6FnxioOOYoOveU
+	 NXwhNKr5JN5npF0L+yfHFfvTWcX4cGR0V5YK3SlCgaOzy6z2Bh8I4W1zK+74BgQ8zW
+	 51YHgkEfqufPt9hCq/a0qVNJo2vMxCV2qBZT2HEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Hancock <robert.hancock@calian.com>,
-	Manikanta Guntupalli <manikanta.guntupalli@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 4.19 183/350] i2c: xiic: Wait for TX empty to avoid missed TX NAKs
-Date: Wed,  6 Nov 2024 13:01:51 +0100
-Message-ID: <20241106120325.464220306@linuxfoundation.org>
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 4.19 184/350] spi: bcm63xx: Fix module autoloading
+Date: Wed,  6 Nov 2024 13:01:52 +0100
+Message-ID: <20241106120325.491007023@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120320.865793091@linuxfoundation.org>
 References: <20241106120320.865793091@linuxfoundation.org>
@@ -52,75 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Hancock <robert.hancock@calian.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-commit 521da1e9225450bd323db5fa5bca942b1dc485b7 upstream.
+commit 909f34f2462a99bf876f64c5c61c653213e32fce upstream.
 
-Frequently an I2C write will be followed by a read, such as a register
-address write followed by a read of the register value. In this driver,
-when the TX FIFO half empty interrupt was raised and it was determined
-that there was enough space in the TX FIFO to send the following read
-command, it would do so without waiting for the TX FIFO to actually
-empty.
+Add MODULE_DEVICE_TABLE(), so modules could be properly autoloaded
+based on the alias from platform_device_id table.
 
-Unfortunately it appears that in some cases this can result in a NAK
-that was raised by the target device on the write, such as due to an
-unsupported register address, being ignored and the subsequent read
-being done anyway. This can potentially put the I2C bus into an
-invalid state and/or result in invalid read data being processed.
-
-To avoid this, once a message has been fully written to the TX FIFO,
-wait for the TX FIFO empty interrupt before moving on to the next
-message, to ensure NAKs are handled properly.
-
-Fixes: e1d5b6598cdc ("i2c: Add support for Xilinx XPS IIC Bus Interface")
-Signed-off-by: Robert Hancock <robert.hancock@calian.com>
-Cc: <stable@vger.kernel.org> # v2.6.34+
-Reviewed-by: Manikanta Guntupalli <manikanta.guntupalli@amd.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Fixes: 44d8fb30941d ("spi/bcm63xx: move register definitions into the driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
+Link: https://patch.msgid.link/20240819123349.4020472-2-ruanjinjie@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-xiic.c |   19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ drivers/spi/spi-bcm63xx.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/i2c/busses/i2c-xiic.c
-+++ b/drivers/i2c/busses/i2c-xiic.c
-@@ -478,14 +478,17 @@ static irqreturn_t xiic_process(int irq,
- 			goto out;
- 		}
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -484,6 +484,7 @@ static const struct platform_device_id b
+ 	{
+ 	},
+ };
++MODULE_DEVICE_TABLE(platform, bcm63xx_spi_dev_match);
  
--		xiic_fill_tx_fifo(i2c);
--
--		/* current message sent and there is space in the fifo */
--		if (!xiic_tx_space(i2c) && xiic_tx_fifo_space(i2c) >= 2) {
-+		if (xiic_tx_space(i2c)) {
-+			xiic_fill_tx_fifo(i2c);
-+		} else {
-+			/* current message fully written */
- 			dev_dbg(i2c->adap.dev.parent,
- 				"%s end of message sent, nmsgs: %d\n",
- 				__func__, i2c->nmsgs);
--			if (i2c->nmsgs > 1) {
-+			/* Don't move onto the next message until the TX FIFO empties,
-+			 * to ensure that a NAK is not missed.
-+			 */
-+			if (i2c->nmsgs > 1 && (pend & XIIC_INTR_TX_EMPTY_MASK)) {
- 				i2c->nmsgs--;
- 				i2c->tx_msg++;
- 				xfer_more = 1;
-@@ -496,11 +499,7 @@ static irqreturn_t xiic_process(int irq,
- 					"%s Got TX IRQ but no more to do...\n",
- 					__func__);
- 			}
--		} else if (!xiic_tx_space(i2c) && (i2c->nmsgs == 1))
--			/* current frame is sent and is last,
--			 * make sure to disable tx half
--			 */
--			xiic_irq_dis(i2c, XIIC_INTR_TX_HALF_MASK);
-+		}
- 	}
- out:
- 	dev_dbg(i2c->adap.dev.parent, "%s clr: 0x%x\n", __func__, clr);
+ static const struct of_device_id bcm63xx_spi_of_match[] = {
+ 	{ .compatible = "brcm,bcm6348-spi", .data = &bcm6348_spi_reg_offsets },
 
 
