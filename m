@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949651E103C;
-	Wed,  6 Nov 2024 12:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40641E103C;
+	Wed,  6 Nov 2024 12:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896883; cv=none; b=kFPXwKPLQj26uZwYI58sPxtcOZejWg8oqgTAiRphnpwUKePOgmzNFMP2sxnkVTsmX5vw9md94sUL9ir2vRetBc1fH/H17ilRPzbX5Uzyk+ri5gTkTndofU4zy7uPWpGN8+3SA6JxvxC9i++0bNqrOnNQFCur/SdesVxuw53Ha1k=
+	t=1730896887; cv=none; b=KPanQyqa9tcl5Y0TOIE2EoWP4N1GxAIvEE9YA+AHJGKkosZV21WLM2NuYSIHrSjJY081wVZlTqrRfxBPPj33+a0mif0Kqgm07QVZAIs/HXuV2Jyfj/mmjQ9tRw98pX/tJB9cb7nte5apMg0Hh2l/3N6ubyOAank7fO+1eGcFwzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896883; c=relaxed/simple;
-	bh=I/ElNnwj9OVFuCf7Gn2zjOS7IsVIg75+VvaGp51QIRo=;
+	s=arc-20240116; t=1730896887; c=relaxed/simple;
+	bh=eXvWHLIVjvzQCjHzM1lkKEWmp545DsXfQqePglv29nE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YFDMrhhqgQNLoxRZ+5wKaQcEztOmpRp0raO10GTFOLaNvb68k4wB/Xk8p6J4HrQSXGn4y7475JJxxCAR1I2spn3T1kmia2L1BypVObwECU9AzKwMsfbJPJ5MPNf7GOu1apvs1pWAYbbT7k/XQK/tQCA8G8umQq121EZWqKUNOgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmxJkheG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M9RNJSOBAB8Z4xhhloOvSzZq5XJACcJnFedpx7kWFLYs1Gw41ejXFb7F7dJsM7HL2pKUDXI7Yy7D6vTqzfFeHHjHDd/L9d8HyYng1uX9wPf1R/S+ESCO8tJD+0Fevw67abTOcDMTyPD9U9OLXhkbJWsm5Gl71QnNdqQhNkF0K/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEKnDcFp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmxJkheG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E14C4CECD;
-	Wed,  6 Nov 2024 12:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEKnDcFp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D9CDC4CECD;
+	Wed,  6 Nov 2024 12:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896883;
-	bh=I/ElNnwj9OVFuCf7Gn2zjOS7IsVIg75+VvaGp51QIRo=;
+	s=korg; t=1730896886;
+	bh=eXvWHLIVjvzQCjHzM1lkKEWmp545DsXfQqePglv29nE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GmxJkheG50FYzRkXaUkUdqlTJKZMKQB0WAl4QaG3fxRx/7tsqLGNR+rgR/0tBQF7A
-	 BAquem20wclJqL2HFuJJUAcNhqW7xv8xW1pWEZakZ2/5MrIUioIBXnMo4CVvKMmUMB
-	 xCnNAUqn4Sm//Zez84Zewu37rhclh1jsAMKkeixg=
+	b=kEKnDcFp6+5wKn+AJ9coeORa7FA8/xbDzATYzgHgXqtH4mTHVbGUiLCcwA8wNZV32
+	 8tNnJYcT6rjGqZxkSi83ccpUDW9qpFLvF4jd6P1oNB5Kq/xM1bXL7swVTK3L0wu1ug
+	 f77fclW/F0cXfVF5i6Uuo7qpRpR4F5r3XhcAXIeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	syzbot+81092778aac03460d6b7@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Mark Fasheh <mark@fasheh.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 103/110] ocfs2: pass u64 to ocfs2_truncate_inline maybe overflow
-Date: Wed,  6 Nov 2024 13:05:09 +0100
-Message-ID: <20241106120306.017571792@linuxfoundation.org>
+	Robert Gill <rtgill82@gmail.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Brian Gerst <brgerst@gmail.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 5.10 104/110] x86/bugs: Use code segment selector for VERW operand
+Date: Wed,  6 Nov 2024 13:05:10 +0100
+Message-ID: <20241106120306.045406897@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
 References: <20241106120303.135636370@linuxfoundation.org>
@@ -59,60 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-[ Upstream commit bc0a2f3a73fcdac651fca64df39306d1e5ebe3b0 ]
+commit e4d2102018542e3ae5e297bc6e229303abff8a0f upstream.
 
-Syzbot reported a kernel BUG in ocfs2_truncate_inline.  There are two
-reasons for this: first, the parameter value passed is greater than
-ocfs2_max_inline_data_with_xattr, second, the start and end parameters of
-ocfs2_truncate_inline are "unsigned int".
+Robert Gill reported below #GP in 32-bit mode when dosemu software was
+executing vm86() system call:
 
-So, we need to add a sanity check for byte_start and byte_len right before
-ocfs2_truncate_inline() in ocfs2_remove_inode_range(), if they are greater
-than ocfs2_max_inline_data_with_xattr return -EINVAL.
+  general protection fault: 0000 [#1] PREEMPT SMP
+  CPU: 4 PID: 4610 Comm: dosemu.bin Not tainted 6.6.21-gentoo-x86 #1
+  Hardware name: Dell Inc. PowerEdge 1950/0H723K, BIOS 2.7.0 10/30/2010
+  EIP: restore_all_switch_stack+0xbe/0xcf
+  EAX: 00000000 EBX: 00000000 ECX: 00000000 EDX: 00000000
+  ESI: 00000000 EDI: 00000000 EBP: 00000000 ESP: ff8affdc
+  DS: 0000 ES: 0000 FS: 0000 GS: 0033 SS: 0068 EFLAGS: 00010046
+  CR0: 80050033 CR2: 00c2101c CR3: 04b6d000 CR4: 000406d0
+  Call Trace:
+   show_regs+0x70/0x78
+   die_addr+0x29/0x70
+   exc_general_protection+0x13c/0x348
+   exc_bounds+0x98/0x98
+   handle_exception+0x14d/0x14d
+   exc_bounds+0x98/0x98
+   restore_all_switch_stack+0xbe/0xcf
+   exc_bounds+0x98/0x98
+   restore_all_switch_stack+0xbe/0xcf
 
-Link: https://lkml.kernel.org/r/tencent_D48DB5122ADDAEDDD11918CFB68D93258C07@qq.com
-Fixes: 1afc32b95233 ("ocfs2: Write support for inline data")
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reported-by: syzbot+81092778aac03460d6b7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=81092778aac03460d6b7
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This only happens in 32-bit mode when VERW based mitigations like MDS/RFDS
+are enabled. This is because segment registers with an arbitrary user value
+can result in #GP when executing VERW. Intel SDM vol. 2C documents the
+following behavior for VERW instruction:
+
+  #GP(0) - If a memory operand effective address is outside the CS, DS, ES,
+	   FS, or GS segment limit.
+
+CLEAR_CPU_BUFFERS macro executes VERW instruction before returning to user
+space. Use %cs selector to reference VERW operand. This ensures VERW will
+not #GP for an arbitrary user %ds.
+
+[ mingo: Fixed the SOB chain. ]
+
+Fixes: a0e2dab44d22 ("x86/entry_32: Add VERW just before userspace transition")
+Reported-by: Robert Gill <rtgill82@gmail.com>
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com
+Cc: stable@vger.kernel.org # 5.10+
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218707
+Closes: https://lore.kernel.org/all/8c77ccfd-d561-45a1-8ed5-6b75212c7a58@leemhuis.info/
+Suggested-by: Dave Hansen <dave.hansen@linux.intel.com>
+Suggested-by: Brian Gerst <brgerst@gmail.com>
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/file.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/include/asm/nospec-branch.h |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
-index 5fd565a6228f7..09a62539ab74d 100644
---- a/fs/ocfs2/file.c
-+++ b/fs/ocfs2/file.c
-@@ -1787,6 +1787,14 @@ int ocfs2_remove_inode_range(struct inode *inode,
- 		return 0;
+--- a/arch/x86/include/asm/nospec-branch.h
++++ b/arch/x86/include/asm/nospec-branch.h
+@@ -199,7 +199,16 @@
+  */
+ .macro CLEAR_CPU_BUFFERS
+ 	ALTERNATIVE "jmp .Lskip_verw_\@", "", X86_FEATURE_CLEAR_CPU_BUF
+-	verw _ASM_RIP(mds_verw_sel)
++#ifdef CONFIG_X86_64
++	verw mds_verw_sel(%rip)
++#else
++	/*
++	 * In 32bit mode, the memory operand must be a %cs reference. The data
++	 * segments may not be usable (vm86 mode), and the stack segment may not
++	 * be flat (ESPFIX32).
++	 */
++	verw %cs:mds_verw_sel
++#endif
+ .Lskip_verw_\@:
+ .endm
  
- 	if (OCFS2_I(inode)->ip_dyn_features & OCFS2_INLINE_DATA_FL) {
-+		int id_count = ocfs2_max_inline_data_with_xattr(inode->i_sb, di);
-+
-+		if (byte_start > id_count || byte_start + byte_len > id_count) {
-+			ret = -EINVAL;
-+			mlog_errno(ret);
-+			goto out;
-+		}
-+
- 		ret = ocfs2_truncate_inline(inode, di_bh, byte_start,
- 					    byte_start + byte_len, 0);
- 		if (ret) {
--- 
-2.43.0
-
 
 
