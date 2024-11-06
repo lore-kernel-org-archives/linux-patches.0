@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0735A1DFE34;
-	Wed,  6 Nov 2024 12:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F82F1E00AB;
+	Wed,  6 Nov 2024 12:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896586; cv=none; b=c0xAVuGcUl+e3UJUHAkyEkzCEoITTiytgx1q06EsV79MszA9jdnVLpu4n8w3jvg1vqL3QxRGpfnWcARzg6BVpYpk1PhQeblOVH+7fUrWR4VXgeM57XwXzP5fhjgz/9h6ECqIV3L+CPNw41Y1vd/P+pu1MtpK5wJ66md1kinwDAE=
+	t=1730896590; cv=none; b=Gx2sQ3QPkOGIV/+fyI30xWqTlb7fKwduItlkpmSQHQqrBJ2YoH99rNcfExCWtKLy9M7vLj0KGNgwCkXuC59+CRtayzCRYptytM7oZxmZonEz+7UDJ8TTPwg9J566xpgX3vXeuTQ5oA0zPnm8XoylGsltwuRNtiuXwoS88k0l3Wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896586; c=relaxed/simple;
-	bh=Sy8DeK9o28pwcnXB3fPbe1H9HLaL4BnB7kvTo7YavFc=;
+	s=arc-20240116; t=1730896590; c=relaxed/simple;
+	bh=WcgMKb7L5Z3qM29AXJG+xqYA/GjYaJTxQ5kc611Waww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DDLJP3HkRQR5l84wlH2MLEM3v/6KjWt3+DUjJ6XqQOZ/vF4MFMl9ac+BHp27ny9rS7VYg4OvNMKw8r769kHvQwSNSM6DERHYBH3AUKxoTAUh9ro/rx+FN86rT8XwgcW0eun+Nq9UZUDe7he81nXKjh2RUsZ4BoppP6XaJGPTkNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O81u2m2Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E9PHswyyT6GqYpY3XDk+98Ys0RTuyKk19A+Ogxm/kmMkj1pDI3wtsHHjVvxYKu92WOjbQimDDCYy4htcybfE75dM+lyxmWOPip+E0vSLaZjLlE040vFomaGZmGYSyqLZ+y8lhQi7Ku7IQ3v3b/rrC5da+B+Dlb3WXdmbA6Iuo88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PivI/VwO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O81u2m2Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80FD7C4CED3;
-	Wed,  6 Nov 2024 12:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PivI/VwO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74172C4CED4;
+	Wed,  6 Nov 2024 12:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896585;
-	bh=Sy8DeK9o28pwcnXB3fPbe1H9HLaL4BnB7kvTo7YavFc=;
+	s=korg; t=1730896588;
+	bh=WcgMKb7L5Z3qM29AXJG+xqYA/GjYaJTxQ5kc611Waww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O81u2m2Zt8DFUUrJu8QEJQfblz3Jh0oP9gJPJs/3py9rzZm94M7YQv8agJWbk4yiK
-	 ezy4FlnUdiDwexiuU4Lkq3N9wg0/UwecxpEfynLyLewAsibKLYJt0ieEOxu982rMO9
-	 M+vMR1E+HKyjNM0jetAEeLrFUt5PTILsyk1lllG4=
+	b=PivI/VwOSLhYKsj9xtKggdeH5cHrjLeoUwzxXqu9v4fb/4qYBejdLHUx4Dy7sg75u
+	 awCFONCdsJGa5rfSO4Y6gYRQdYFoh4Qc0RAbcW6kBJ6JXNdQhYBKgtCSXhSe54JVd/
+	 RD/FkFa99tFnx6Qm+Zl2KF3T2coovK2bEKM7Aj9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kenneth Feng <kenneth.feng@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.11 242/245] drm/amdgpu/swsmu: fix ordering for setting workload_mask
-Date: Wed,  6 Nov 2024 13:04:55 +0100
-Message-ID: <20241106120325.228469649@linuxfoundation.org>
+Subject: [PATCH 6.11 243/245] drm/amdgpu/swsmu: default to fullscreen 3D profile for dGPUs
+Date: Wed,  6 Nov 2024 13:04:56 +0100
+Message-ID: <20241106120325.253208271@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,34 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-commit b932d5ad9257f262a0bfd1bd7146120b0adc11a7 upstream.
+commit ec1aab7816b06c32f42935e34ce3a3040c778afb upstream.
 
-No change in functionality for the current code, but we
-need to set the index properly before changing it if we
-ever use a non-0 index.
+This uses more aggressive hueristics than the the bootup default
+profile.  On windows the OS has a special fullscreen 3D mode
+where this is used.  Since we don't have the equivalent on Linux
+default to this profile for dGPUs.
 
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3618
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/1500
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3131
 Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 336568de918e08c825b3b1cbe2ec809f2fc26d94)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 --- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
 +++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-@@ -1257,7 +1257,6 @@ static int smu_sw_init(void *handle)
- 	atomic_set(&smu->smu_power.power_gate.vpe_gated, 1);
- 	atomic_set(&smu->smu_power.power_gate.umsch_mm_gated, 1);
- 
--	smu->workload_mask = 1 << smu->workload_prority[PP_SMC_POWER_PROFILE_BOOTUP_DEFAULT];
- 	smu->workload_prority[PP_SMC_POWER_PROFILE_BOOTUP_DEFAULT] = 0;
- 	smu->workload_prority[PP_SMC_POWER_PROFILE_FULLSCREEN3D] = 1;
- 	smu->workload_prority[PP_SMC_POWER_PROFILE_POWERSAVING] = 2;
-@@ -1265,6 +1264,7 @@ static int smu_sw_init(void *handle)
+@@ -1264,7 +1264,11 @@ static int smu_sw_init(void *handle)
  	smu->workload_prority[PP_SMC_POWER_PROFILE_VR] = 4;
  	smu->workload_prority[PP_SMC_POWER_PROFILE_COMPUTE] = 5;
  	smu->workload_prority[PP_SMC_POWER_PROFILE_CUSTOM] = 6;
-+	smu->workload_mask = 1 << smu->workload_prority[PP_SMC_POWER_PROFILE_BOOTUP_DEFAULT];
+-	smu->workload_mask = 1 << smu->workload_prority[PP_SMC_POWER_PROFILE_BOOTUP_DEFAULT];
++
++	if (smu->is_apu)
++		smu->workload_mask = 1 << smu->workload_prority[PP_SMC_POWER_PROFILE_BOOTUP_DEFAULT];
++	else
++		smu->workload_mask = 1 << smu->workload_prority[PP_SMC_POWER_PROFILE_FULLSCREEN3D];
  
  	smu->workload_setting[0] = PP_SMC_POWER_PROFILE_BOOTUP_DEFAULT;
  	smu->workload_setting[1] = PP_SMC_POWER_PROFILE_FULLSCREEN3D;
