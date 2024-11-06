@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1FE1CC89D;
-	Wed,  6 Nov 2024 13:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE2D1CC89D;
+	Wed,  6 Nov 2024 13:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730899117; cv=none; b=IZH0ZoCsg+N/0EuSPi1HBbqOV50VX5NmmNJoGQd2zSUd7GKvrrnEImOMWOwj3kA6pjb17f8hd+l97wQHHa/dJoLorg2OshrzskzR5mAMnaZ4cNdUxtlHKieOZdocPeq6OPKkxismmXQLI4Sd2mnLQR640RXpnjxjJ5para0rpgQ=
+	t=1730899122; cv=none; b=Fb42d6zx85Izc6j1WzdLx6fkiAIn/E7gkstO1Ev5hhG0SZo6nFOT/JUiHAzvki1JZjGEjy+ggnNRwPxUmqAYVgwq32BaFNNEv81IEvKzOuq4IEU4tAJL03PExsqXOiud0NPO3z/rFI8jxDcTjizFZp5/yTTdfyTkBaejjN3hkNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730899117; c=relaxed/simple;
-	bh=MIFU2VTLGB225Dl2DX6oKlGmBoLgXUZ2hD8WmJbxtwY=;
+	s=arc-20240116; t=1730899122; c=relaxed/simple;
+	bh=x9of6KxYTPzmdwtdYZH9TgbSUOmqczw4hoPWzRrh7BI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pvqz4NLrVNoIxrhmSttj2/On4+PqvKj6FNaBpIiXu0UmvYcL91668ysaybus4rqlTvgt6VVRDlt3ufM9EomhV6plbfTMtbRPyQu2yncgymVncZ7pUzK0f0zlAxS+kzPUmex97QwaFfvELM9dHqsA8SxOojGVyolebZd7e0rxP+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3qG3UiG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L6fPG/O9ZWL7sY48mBrCHW+kIRmyQuCDgUAwLX7r2MAlemVRQ8Lpe6RIPo0hCMCdqUy23VPP1JrZ/BS8neGJchd457WPL1uYY5jxqHj5/pNTo+tsO0PR5u8JFLqq5plXonheW3ozh4V9jr0oo53nd5lmyTF5foGohyoYJkGdl60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bl49O8Tw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3qG3UiG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114A6C4CECD;
-	Wed,  6 Nov 2024 13:18:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bl49O8Tw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05EEDC4CECD;
+	Wed,  6 Nov 2024 13:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730899117;
-	bh=MIFU2VTLGB225Dl2DX6oKlGmBoLgXUZ2hD8WmJbxtwY=;
+	s=korg; t=1730899120;
+	bh=x9of6KxYTPzmdwtdYZH9TgbSUOmqczw4hoPWzRrh7BI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3qG3UiGqtqCzfby7Wps7kR+D3Rv8P1JasdbAOCAqmG8DkVgDChj2opUW9+3Y1/9U
-	 B1HxZTPGZmkOZ13u9DAz1GBnF9XBxLEs5P6wRReAMrk7BuapkSn1MqJFE7EqC/k/x9
-	 bpvfd/XBCaNjsxdZr0OpXqLYN74gK7Vg3SKL0ebA=
+	b=bl49O8Tw21BE/1qzzOV+eEcXs/v9zke/RGG8uYVJyhvYgbLH6Sx8vwr+++ruCGAdC
+	 Nud2IFh+UrjU0TmhHEfnZTKP5kx2mjnBFzy9hVXzgsj+OJsX4A7D+ShuLRs/MRwv8y
+	 Zfo+gnvaNH+74m2w8xZMoOCbkB2O/22X44S5X1G8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gabay <daniel.gabay@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 431/462] wifi: iwlwifi: mvm: Fix response handling in iwl_mvm_send_recovery_cmd()
-Date: Wed,  6 Nov 2024 13:05:24 +0100
-Message-ID: <20241106120342.154634232@linuxfoundation.org>
+Subject: [PATCH 5.4 432/462] ASoC: cs42l51: Fix some error handling paths in cs42l51_probe()
+Date: Wed,  6 Nov 2024 13:05:25 +0100
+Message-ID: <20241106120342.179466650@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120331.497003148@linuxfoundation.org>
 References: <20241106120331.497003148@linuxfoundation.org>
@@ -52,71 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Gabay <daniel.gabay@intel.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 07a6e3b78a65f4b2796a8d0d4adb1a15a81edead ]
+[ Upstream commit d221b844ee79823ffc29b7badc4010bdb0960224 ]
 
-1. The size of the response packet is not validated.
-2. The response buffer is not freed.
+If devm_gpiod_get_optional() fails, we need to disable previously enabled
+regulators, as done in the other error handling path of the function.
 
-Resolve these issues by switching to iwl_mvm_send_cmd_status(),
-which handles both size validation and frees the buffer.
+Also, gpiod_set_value_cansleep(, 1) needs to be called to undo a
+potential gpiod_set_value_cansleep(, 0).
+If the "reset" gpio is not defined, this additional call is just a no-op.
 
-Fixes: f130bb75d881 ("iwlwifi: add FW recovery flow")
-Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20241010140328.76c73185951e.Id3b6ca82ced2081f5ee4f33c997491d0ebda83f7@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This behavior is the same as the one already in the .remove() function.
+
+Fixes: 11b9cd748e31 ("ASoC: cs42l51: add reset management")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/a5e5f4b9fb03f46abd2c93ed94b5c395972ce0d1.1729975570.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/fw.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ sound/soc/codecs/cs42l51.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-index 16bf070566e6c..287f9c551525c 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-@@ -1192,8 +1192,8 @@ static void iwl_mvm_disconnect_iterator(void *data, u8 *mac,
- void iwl_mvm_send_recovery_cmd(struct iwl_mvm *mvm, u32 flags)
- {
- 	u32 error_log_size = mvm->fw->ucode_capa.error_log_size;
-+	u32 status = 0;
- 	int ret;
--	u32 resp;
+diff --git a/sound/soc/codecs/cs42l51.c b/sound/soc/codecs/cs42l51.c
+index 07371e32167c8..7fa0a849e65f4 100644
+--- a/sound/soc/codecs/cs42l51.c
++++ b/sound/soc/codecs/cs42l51.c
+@@ -740,8 +740,10 @@ int cs42l51_probe(struct device *dev, struct regmap *regmap)
  
- 	struct iwl_fw_error_recovery_cmd recovery_cmd = {
- 		.flags = cpu_to_le32(flags),
-@@ -1201,7 +1201,6 @@ void iwl_mvm_send_recovery_cmd(struct iwl_mvm *mvm, u32 flags)
- 	};
- 	struct iwl_host_cmd host_cmd = {
- 		.id = WIDE_ID(SYSTEM_GROUP, FW_ERROR_RECOVERY_CMD),
--		.flags = CMD_WANT_SKB,
- 		.data = {&recovery_cmd, },
- 		.len = {sizeof(recovery_cmd), },
- 	};
-@@ -1221,7 +1220,7 @@ void iwl_mvm_send_recovery_cmd(struct iwl_mvm *mvm, u32 flags)
- 		recovery_cmd.buf_size = cpu_to_le32(error_log_size);
- 	}
+ 	cs42l51->reset_gpio = devm_gpiod_get_optional(dev, "reset",
+ 						      GPIOD_OUT_LOW);
+-	if (IS_ERR(cs42l51->reset_gpio))
+-		return PTR_ERR(cs42l51->reset_gpio);
++	if (IS_ERR(cs42l51->reset_gpio)) {
++		ret = PTR_ERR(cs42l51->reset_gpio);
++		goto error;
++	}
  
--	ret = iwl_mvm_send_cmd(mvm, &host_cmd);
-+	ret = iwl_mvm_send_cmd_status(mvm, &host_cmd, &status);
- 	kfree(mvm->error_recovery_buf);
- 	mvm->error_recovery_buf = NULL;
+ 	if (cs42l51->reset_gpio) {
+ 		dev_dbg(dev, "Release reset gpio\n");
+@@ -773,6 +775,7 @@ int cs42l51_probe(struct device *dev, struct regmap *regmap)
+ 	return 0;
  
-@@ -1232,11 +1231,10 @@ void iwl_mvm_send_recovery_cmd(struct iwl_mvm *mvm, u32 flags)
- 
- 	/* skb respond is only relevant in ERROR_RECOVERY_UPDATE_DB */
- 	if (flags & ERROR_RECOVERY_UPDATE_DB) {
--		resp = le32_to_cpu(*(__le32 *)host_cmd.resp_pkt->data);
--		if (resp) {
-+		if (status) {
- 			IWL_ERR(mvm,
- 				"Failed to send recovery cmd blob was invalid %d\n",
--				resp);
-+				status);
- 
- 			ieee80211_iterate_interfaces(mvm->hw, 0,
- 						     iwl_mvm_disconnect_iterator,
+ error:
++	gpiod_set_value_cansleep(cs42l51->reset_gpio, 1);
+ 	regulator_bulk_disable(ARRAY_SIZE(cs42l51->supplies),
+ 			       cs42l51->supplies);
+ 	return ret;
 -- 
 2.43.0
 
