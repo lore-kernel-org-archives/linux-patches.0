@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD02F1922EF;
-	Wed,  6 Nov 2024 12:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47EA1DF97A;
+	Wed,  6 Nov 2024 12:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730897121; cv=none; b=NuafecMMteo4u2NejBedK9vfhBNmrK0dUbCVOjyBNHIr0WHoBoHRpQlvS0a/zqaU01GrJFDRSKj8mL5yCyUHeh1nUC5kJvpC4jexuyg+yo/baG1YIQSI58u4P7x2JQLQjrHo1aSZ185/sVZSfQWDFXvKbHWCmGelkrzwRs7g2ac=
+	t=1730897123; cv=none; b=DJJMn5lnZli84LYea5MlbtLVHdnOMLbRo77s0BVZXhXvwiEgouL0/ogwQ8LWKj0nfqtrCPBkWQHp/K7KSTfJVzSP1WM/GSBvp6L8emvuXEBqrVno2Pb7Xv1XYe2aEuL3N5gsC2eSjo7G5gYf6DJcq5YoFn8v3GDCOYxCdXzWDHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730897121; c=relaxed/simple;
-	bh=j0XWWilpk3sgH/cwQiHKlZDVcF8orHqEHQtDXSOSvs0=;
+	s=arc-20240116; t=1730897123; c=relaxed/simple;
+	bh=dL1qGhqMkDku8T8q7pT9Mw3rCBaiH7GXsR4rk7InsqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9jWzp4rH9KJU06taMN3g5jg1D+NCjVCnSRuTpFytBXPMwCCJYqPZvBTDGJS1yFn2WYKEJLq+8UHJv3/Gu1SoId0ah90F5Qhw84pBmiZUF40dgIKRhLtpZuDEYQZ7cEzftkI8j5Z89H34paPuDPkYyD+lSFEiGwgBPvC66HW6fY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5ZDMLkG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SR6BknTwoJJZuq6CRGHvIgzsiEs+Ta5LHz10qzTjSHVLNI0gypxCWRq5184n6u64W+9cVx+tpVmuQUeRuRzORBIGa4Ug/5iXcZ4k7BlLqYw3wPKIbT935tvPQ/rpjQWsxaj4muQ8PPYKLZa7pxr13ne8bok1g2ydpVY5c1FWsV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HLIoiMhc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5ZDMLkG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65887C4CECD;
-	Wed,  6 Nov 2024 12:45:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HLIoiMhc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C348C4CECD;
+	Wed,  6 Nov 2024 12:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730897120;
-	bh=j0XWWilpk3sgH/cwQiHKlZDVcF8orHqEHQtDXSOSvs0=;
+	s=korg; t=1730897123;
+	bh=dL1qGhqMkDku8T8q7pT9Mw3rCBaiH7GXsR4rk7InsqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o5ZDMLkGQVDtiZeHAr7JQufig+bhnx0Ky5aTv8BK6GfTImpD2Y+W0dBIYvYJqCHJV
-	 k0ubfaMN8rKZqEEFYSNwJZo+mTtBxz/HQwLT0aWGBubl3811cgYm5P5MP0Ic65SNxe
-	 ZvdfNf4dGkxoqDNMN0/saK1ZePRivqoeITbu88Fw=
+	b=HLIoiMhcpuSBQ/SVB4W2XSq4lkjpTmiyZQV5IgEzoB5mgLaCDlX0a88wWjgnBrbGf
+	 lU0vOnUnyY0dPpkPDGOIFavWCR+LCu4ns7WjqnA9AUdUCIpc9agqwVjOnEcnwRXHyv
+	 SU7u33FWRneWRnLLXVDKXd2QaXP3jIV7sewRiLnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slavin Liu <slavin-ayu@qq.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/126] netfilter: nft_payload: sanitize offset and length before calling skb_checksum()
-Date: Wed,  6 Nov 2024 13:03:58 +0100
-Message-ID: <20241106120307.112170307@linuxfoundation.org>
+Subject: [PATCH 6.1 038/126] iomap: convert iomap_unshare_iter to use large folios
+Date: Wed,  6 Nov 2024 13:03:59 +0100
+Message-ID: <20241106120307.141018181@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120306.038154857@linuxfoundation.org>
 References: <20241106120306.038154857@linuxfoundation.org>
@@ -51,39 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit d5953d680f7e96208c29ce4139a0e38de87a57fe ]
+[ Upstream commit a5f31a5028d1e88e97c3b6cdc3e3bf2da085e232 ]
 
-If access to offset + length is larger than the skbuff length, then
-skb_checksum() triggers BUG_ON().
+Convert iomap_unshare_iter to create large folios if possible, since the
+write and zeroing paths already do that.  I think this got missed in the
+conversion of the write paths that landed in 6.6-rc1.
 
-skb_checksum() internally subtracts the length parameter while iterating
-over skbuff, BUG_ON(len) at the end of it checks that the expected
-length to be included in the checksum calculation is fully consumed.
-
-Fixes: 7ec3f7b47b8d ("netfilter: nft_payload: add packet mangling support")
-Reported-by: Slavin Liu <slavin-ayu@qq.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: ritesh.list@gmail.com, willy@infradead.org
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Stable-dep-of: 50793801fc7f ("fsdax: dax_unshare_iter needs to copy entire blocks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_payload.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/iomap/buffered-io.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/net/netfilter/nft_payload.c b/net/netfilter/nft_payload.c
-index 1b001dd2bc9ad..ae3277424b839 100644
---- a/net/netfilter/nft_payload.c
-+++ b/net/netfilter/nft_payload.c
-@@ -777,6 +777,9 @@ static void nft_payload_set_eval(const struct nft_expr *expr,
- 	    ((priv->base != NFT_PAYLOAD_TRANSPORT_HEADER &&
- 	      priv->base != NFT_PAYLOAD_INNER_HEADER) ||
- 	     skb->ip_summed != CHECKSUM_PARTIAL)) {
-+		if (offset + priv->len > skb->len)
-+			goto err;
-+
- 		fsum = skb_checksum(skb, offset, priv->len, 0);
- 		tsum = csum_partial(src, priv->len, 0);
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 1833608f39318..674ac79bdb456 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -1090,7 +1090,6 @@ static loff_t iomap_unshare_iter(struct iomap_iter *iter)
+ 	const struct iomap *srcmap = iomap_iter_srcmap(iter);
+ 	loff_t pos = iter->pos;
+ 	loff_t length = iomap_length(iter);
+-	long status = 0;
+ 	loff_t written = 0;
  
+ 	/* don't bother with blocks that are not shared to start with */
+@@ -1101,28 +1100,33 @@ static loff_t iomap_unshare_iter(struct iomap_iter *iter)
+ 		return length;
+ 
+ 	do {
+-		unsigned long offset = offset_in_page(pos);
+-		unsigned long bytes = min_t(loff_t, PAGE_SIZE - offset, length);
+ 		struct folio *folio;
++		int status;
++		size_t offset;
++		size_t bytes = min_t(u64, SIZE_MAX, length);
+ 
+ 		status = iomap_write_begin(iter, pos, bytes, &folio);
+ 		if (unlikely(status))
+ 			return status;
+-		if (iter->iomap.flags & IOMAP_F_STALE)
++		if (iomap->flags & IOMAP_F_STALE)
+ 			break;
+ 
+-		status = iomap_write_end(iter, pos, bytes, bytes, folio);
+-		if (WARN_ON_ONCE(status == 0))
++		offset = offset_in_folio(folio, pos);
++		if (bytes > folio_size(folio) - offset)
++			bytes = folio_size(folio) - offset;
++
++		bytes = iomap_write_end(iter, pos, bytes, bytes, folio);
++		if (WARN_ON_ONCE(bytes == 0))
+ 			return -EIO;
+ 
+ 		cond_resched();
+ 
+-		pos += status;
+-		written += status;
+-		length -= status;
++		pos += bytes;
++		written += bytes;
++		length -= bytes;
+ 
+ 		balance_dirty_pages_ratelimited(iter->inode->i_mapping);
+-	} while (length);
++	} while (length > 0);
+ 
+ 	return written;
+ }
 -- 
 2.43.0
 
