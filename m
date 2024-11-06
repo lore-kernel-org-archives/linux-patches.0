@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3931DFD91;
-	Wed,  6 Nov 2024 12:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851AA6088F;
+	Wed,  6 Nov 2024 12:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896203; cv=none; b=bXJNr+QIExBG8mE6p3baUhjUowwweB6WMGJhtw4V9NXit+mlwKx/24AEsaLo890sxIVKxUS2XsfI+RJW9Tkav+6Tr2f+S20+4Q1Ye5Il8jJyR+TzGvT9pMg7ygV67hWmKWw/2ULbW5nShsJ0YFD1X1gugVAzKjFrFi45vYP+TAM=
+	t=1730896206; cv=none; b=ssSXg6CPAIfUj9g2AvqFyhcPdWTqrw85qgcZPKkR4DJbn5Y0zbj4kMkIXU5KjnoREUP+UZIb3pDxC0YUtm1D0Gq4uyGYRuZRI0Z4JajkL/Cy2DGgF/yLmYjBsO4TBoiND6Z9AGOM7L59ySkbIm3tm+g+01Qopd23HALzkmG1fQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896203; c=relaxed/simple;
-	bh=U1VudsR/Mg75C+chDDgH8GNBmQ+CmHB6OH7tjHcc7Bc=;
+	s=arc-20240116; t=1730896206; c=relaxed/simple;
+	bh=7Hno4yU4rf8cfCtFHPXYTzaoT7q93ccF494RNYs6XN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XjSIhq9MkrURNq3HGAZDuhA12tn43wiDcyZlXwSN4kwydFy36yKp/74jC4Rohn6OlZb9PMeO2YI3RGVlUYEuE12EwPlO5zta8BT9uihUWb4lh4m5x2U1/szeftLDsmulkIxtm818PRkqyp3MMg1mupXMqO6vsYhT5zeiQ22Y72Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8J3znSO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QQtvd3x/XNztAeF4D77/O/6s51Bg7WAQBPC0ILR7NQJpYP1uHH0HMP7V8VaXy1lRYuiTrZiEfPa7fOgrGfDu7hDdK4UoBPBawmqKPfEXlgro2tWBiPrC0TOtFwlpFvsy/xCDVl3j75itaST49OStIkdeViVF0dlowGneu9SgCns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lw2INMBG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8J3znSO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2322C4CECD;
-	Wed,  6 Nov 2024 12:30:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lw2INMBG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D44C4CECD;
+	Wed,  6 Nov 2024 12:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896203;
-	bh=U1VudsR/Mg75C+chDDgH8GNBmQ+CmHB6OH7tjHcc7Bc=;
+	s=korg; t=1730896206;
+	bh=7Hno4yU4rf8cfCtFHPXYTzaoT7q93ccF494RNYs6XN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z8J3znSOlK08w2YKmemw7Gf8ANh1gCpT7gq0D6EEuk3f4Dh+Cetdq+dk6+s/eaEU3
-	 N8LwWlt1/YtEJP8s9SMI9b6C5mmG80WSvcxDg464A8WsP3CD4Nq4av+zctY3TEvSDS
-	 LiIoGC0ngU7DptKmMqLcb5vzJ2M+enQYSVDGtzuA=
+	b=lw2INMBGFX5ZDFeffkbhupByMC4DmjbUp7RHRlPctBc6im1cO4TOI/aGZhqOaYD3Y
+	 rT5OMCcitMTV1kTtL6SD+9CYS2aZMIMdtMfOUAFnVTAwpKDtCOTofoL5A09wBPASjG
+	 gTR49wdIMORmx9Vip4x2AjyryHpEL/sDncQ47a3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.11 117/245] xhci: Use pm_runtime_get to prevent RPM on unsupported systems
-Date: Wed,  6 Nov 2024 13:02:50 +0100
-Message-ID: <20241106120322.099760660@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.11 126/245] wifi: iwlwifi: mvm: fix 6 GHz scan construction
+Date: Wed,  6 Nov 2024 13:02:59 +0100
+Message-ID: <20241106120322.324642756@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -51,47 +49,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 31004740e42846a6f0bb255e6348281df3eb8032 upstream.
+commit 7245012f0f496162dd95d888ed2ceb5a35170f1a upstream.
 
-Use pm_runtime_put in the remove function and pm_runtime_get to disable
-RPM on platforms that don't support runtime D3, as re-enabling it through
-sysfs auto power control may cause the controller to malfunction. This
-can lead to issues such as hotplug devices not being detected due to
-failed interrupt generation.
+If more than 255 colocated APs exist for the set of all
+APs found during 2.4/5 GHz scanning, then the 6 GHz scan
+construction will loop forever since the loop variable
+has type u8, which can never reach the number found when
+that's bigger than 255, and is stored in a u32 variable.
+Also move it into the loops to have a smaller scope.
 
-Fixes: a5d6264b638e ("xhci: Enable RPM on controllers that support low-power states")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20241024133718.723846-1-Basavaraj.Natikar@amd.com
+Using a u32 there is fine, we limit the number of APs in
+the scan list and each has a limit on the number of RNR
+entries due to the frame size. With a limit of 1000 scan
+results, a frame size upper bound of 4096 (really it's
+more like ~2300) and a TBTT entry size of at least 11,
+we get an upper bound for the number of ~372k, well in
+the bounds of a u32.
+
+Cc: stable@vger.kernel.org
+Fixes: eae94cf82d74 ("iwlwifi: mvm: add support for 6GHz")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219375
+Link: https://patch.msgid.link/20241023091744.f4baed5c08a1.I8b417148bbc8c5d11c101e1b8f5bf372e17bf2a7@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/scan.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -654,7 +654,7 @@ static int xhci_pci_probe(struct pci_dev
- 	pm_runtime_put_noidle(&dev->dev);
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+@@ -1774,7 +1774,7 @@ iwl_mvm_umac_scan_cfg_channels_v7_6g(str
+ 			&cp->channel_config[ch_cnt];
  
- 	if (pci_choose_state(dev, PMSG_SUSPEND) == PCI_D0)
--		pm_runtime_forbid(&dev->dev);
-+		pm_runtime_get(&dev->dev);
- 	else if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
- 		pm_runtime_allow(&dev->dev);
+ 		u32 s_ssid_bitmap = 0, bssid_bitmap = 0, flags = 0;
+-		u8 j, k, n_s_ssids = 0, n_bssids = 0;
++		u8 k, n_s_ssids = 0, n_bssids = 0;
+ 		u8 max_s_ssids, max_bssids;
+ 		bool force_passive = false, found = false, allow_passive = true,
+ 		     unsolicited_probe_on_chan = false, psc_no_listen = false;
+@@ -1799,7 +1799,7 @@ iwl_mvm_umac_scan_cfg_channels_v7_6g(str
+ 		cfg->v5.iter_count = 1;
+ 		cfg->v5.iter_interval = 0;
  
-@@ -681,7 +681,9 @@ static void xhci_pci_remove(struct pci_d
+-		for (j = 0; j < params->n_6ghz_params; j++) {
++		for (u32 j = 0; j < params->n_6ghz_params; j++) {
+ 			s8 tmp_psd_20;
  
- 	xhci->xhc_state |= XHCI_STATE_REMOVING;
+ 			if (!(scan_6ghz_params[j].channel_idx == i))
+@@ -1873,7 +1873,7 @@ iwl_mvm_umac_scan_cfg_channels_v7_6g(str
+ 		 * SSID.
+ 		 * TODO: improve this logic
+ 		 */
+-		for (j = 0; j < params->n_6ghz_params; j++) {
++		for (u32 j = 0; j < params->n_6ghz_params; j++) {
+ 			if (!(scan_6ghz_params[j].channel_idx == i))
+ 				continue;
  
--	if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
-+	if (pci_choose_state(dev, PMSG_SUSPEND) == PCI_D0)
-+		pm_runtime_put(&dev->dev);
-+	else if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
- 		pm_runtime_forbid(&dev->dev);
- 
- 	if (xhci->shared_hcd) {
 
 
