@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5B818C00E;
-	Wed,  6 Nov 2024 12:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA7818C00E;
+	Wed,  6 Nov 2024 12:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730896571; cv=none; b=N4JgOQZU9he3jtDBgVb2LgKlo/fF/NgwYtsGOXZwwOFEGYI20mR3P8rbXg2wB367NOZ2DY0842xQgE27cUE9ab6cgAcrwHOKC/xbdfUl3xJl0bIfQ8fjl0vzUBMNIqu616ChOZvncIYODWZvS9a2CGdNQN+gK65pkUGF3R/9e+k=
+	t=1730896574; cv=none; b=iIAJ4eVMYaAKthoJxotXw2oDnqKM+I7WjQYA83yN9+xtnUfZnsOCPAMArJSuhU9YzLhwCIX7+Fz6kW7eWIWrnry/vOOhSkFTx2Fn7Jur5jBSCp0dn+V4ZVWpb6i64HwxZNPZ3qtdJVx3nJG+BxBpeGn1INP7vwAQHLwQGzqiUXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730896571; c=relaxed/simple;
-	bh=lPi+UEM6GGWJ/DKWYD0QItarQK7ZKkx1AthHertTUhI=;
+	s=arc-20240116; t=1730896574; c=relaxed/simple;
+	bh=becQgweGYlG0BTGLNbemcb40RJxrm+siogthUpkD5jU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qFYLbZAJQUSBmiS/gVVA/3yK6Tf8UFiykab0pJVPVnFDMY6VbLlyNo46l4Oq5dNs1ixPSxvXiBz3Lm3qfUsH4aSC7UJj0om73PvmYBYMUnc8SnXYst6H3sfVWqvluUDdv7RR+UIyLTrKrcq4lk0qJ8K6hdhIhHuo2Ol3SJSfOwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmceVlBq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q8sB0qzY5bYqfT5Q52m2vPGu/4TdzUjcBsrY+87HUsSbNbDfVksSLTMgOju1thMIPhx2Hq/tafdM04Aa1rWZ7ze0HsyWYGWGsYJxUv0kK+/jFhL7UKTiDnRu5cnJU6gDvZFXZYUOsj/R/mWSwIiRGXfiJqkXZPCxE40Ej8IQl+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0p+5BBzq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmceVlBq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8BC3C4CECD;
-	Wed,  6 Nov 2024 12:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0p+5BBzq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2AB4C4CECD;
+	Wed,  6 Nov 2024 12:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730896571;
-	bh=lPi+UEM6GGWJ/DKWYD0QItarQK7ZKkx1AthHertTUhI=;
+	s=korg; t=1730896574;
+	bh=becQgweGYlG0BTGLNbemcb40RJxrm+siogthUpkD5jU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gmceVlBqu1wwM/NjlLDhB75RZD4QGmouFmnTb/n3yAtHTfrerYd1FqfyhIufIfr4+
-	 /PX2aB2yNwusyFT33hCIjAYcORPsDh7fj4J41cbUW5WGurmFDKiIbQTq9ZBIwyPcPA
-	 kka64TYG6yWOB9SKas5HraWsMXbLpFPTvbEWxUzg=
+	b=0p+5BBzqG5bP0x0qC4d3gtwboZ3cBBfFb6R/mCANsU7jYJc/A75jLmUTVW2WXkSTV
+	 HOZ8Ynz1i/M/Q9IVJSDd7jl3GhAb35zEIOa+AyAcyPLUnYiSlaXDlVXFuKsZBl2BiX
+	 2Dap4UtqCNRmNPdoVJQJOuYqyTBL+SurWgXv14z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sai Teja Pottumuttu <sai.teja.pottumuttu@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Akshata Jahagirdar <akshata.jahagirdar@intel.com>,
 	Matt Roper <matthew.d.roper@intel.com>,
 	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.11 237/245] drm/xe/xe2hpg: Introduce performance tuning changes for Xe2_HPG
-Date: Wed,  6 Nov 2024 13:04:50 +0100
-Message-ID: <20241106120325.101340490@linuxfoundation.org>
+Subject: [PATCH 6.11 238/245] drm/xe/xe2: Introduce performance changes
+Date: Wed,  6 Nov 2024 13:04:51 +0100
+Message-ID: <20241106120325.124458445@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241106120319.234238499@linuxfoundation.org>
 References: <20241106120319.234238499@linuxfoundation.org>
@@ -52,48 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sai Teja Pottumuttu <sai.teja.pottumuttu@intel.com>
+From: Akshata Jahagirdar <akshata.jahagirdar@intel.com>
 
-commit e4ac526c440af8aa94d2bdfe6066339dd93b4db2 upstream.
+commit 2009e808bc3e0df6d4d83e2271bc25ae63a4ac05 upstream.
 
-Add performance tuning changes for Xe2_HPG
+Add Compression Performance Improvement Changes in Xe2
+
+v2: Rebase
+
+v3: Rebase, updated as per latest changes on bspec,
+    Removed unnecessary default actions (Matt)
+    formatting nits (Tejas)
+
+v4: Formatting nits, removed default set action for bit 14 (Matt)
 
 Bspec: 72161
-Signed-off-by: Sai Teja Pottumuttu <sai.teja.pottumuttu@intel.com>
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Signed-off-by: Akshata Jahagirdar <akshata.jahagirdar@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
 Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240724121521.2347524-1-sai.teja.pottumuttu@intel.com
+Link: https://patchwork.freedesktop.org/patch/msgid/c2dd753fdc55df6a6432026f2df9c2684a0d25c1.1722607628.git.akshata.jahagirdar@intel.com
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/regs/xe_gt_regs.h |    1 +
- drivers/gpu/drm/xe/xe_tuning.c       |    8 ++++++++
- 2 files changed, 9 insertions(+)
+ drivers/gpu/drm/xe/regs/xe_gt_regs.h |    3 +++
+ drivers/gpu/drm/xe/xe_tuning.c       |    5 +++++
+ 2 files changed, 8 insertions(+)
 
 --- a/drivers/gpu/drm/xe/regs/xe_gt_regs.h
 +++ b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
-@@ -109,6 +109,7 @@
+@@ -368,6 +368,9 @@
+ #define XEHP_L3NODEARBCFG			XE_REG_MCR(0xb0b4)
+ #define   XEHP_LNESPARE				REG_BIT(19)
  
- #define FF_MODE					XE_REG_MCR(0x6210)
- #define   DIS_TE_AUTOSTRIP			REG_BIT(31)
-+#define   VS_HIT_MAX_VALUE_MASK			REG_GENMASK(25, 20)
- #define   DIS_MESH_PARTIAL_AUTOSTRIP		REG_BIT(16)
- #define   DIS_MESH_AUTOSTRIP			REG_BIT(15)
++#define L3SQCREG2				XE_REG_MCR(0xb104)
++#define   COMPMEMRD256BOVRFETCHEN		REG_BIT(20)
++
+ #define L3SQCREG3				XE_REG_MCR(0xb108)
+ #define   COMPPWOVERFETCHEN			REG_BIT(28)
  
 --- a/drivers/gpu/drm/xe/xe_tuning.c
 +++ b/drivers/gpu/drm/xe/xe_tuning.c
-@@ -93,6 +93,14 @@ static const struct xe_rtp_entry_sr lrc_
- 				   REG_FIELD_PREP(L3_PWM_TIMER_INIT_VAL_MASK, 0x7f)))
+@@ -45,6 +45,11 @@ static const struct xe_rtp_entry_sr gt_t
+ 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, XE_RTP_END_VERSION_UNDEFINED)),
+ 	  XE_RTP_ACTIONS(SET(L3SQCREG3, COMPPWOVERFETCHEN))
  	},
- 
-+	/* Xe2_HPG */
-+
-+	{ XE_RTP_NAME("Tuning: vs hit max value"),
-+	  XE_RTP_RULES(GRAPHICS_VERSION(2001), ENGINE_CLASS(RENDER)),
-+	  XE_RTP_ACTIONS(FIELD_SET(FF_MODE, VS_HIT_MAX_VALUE_MASK,
-+				   REG_FIELD_PREP(VS_HIT_MAX_VALUE_MASK, 0x3f)))
++	{ XE_RTP_NAME("Tuning: L2 Overfetch Compressible Only"),
++	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(2001, XE_RTP_END_VERSION_UNDEFINED)),
++	  XE_RTP_ACTIONS(SET(L3SQCREG2,
++			     COMPMEMRD256BOVRFETCHEN))
 +	},
-+
  	{}
  };
  
