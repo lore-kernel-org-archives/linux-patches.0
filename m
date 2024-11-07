@@ -1,100 +1,118 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AFA212164
-	for <patches@lists.linux.dev>; Thu,  7 Nov 2024 14:26:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80177212164
+	for <patches@lists.linux.dev>; Thu,  7 Nov 2024 14:28:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730989602; cv=none; b=Rd/QHSzM0EvdKLwJ0NcUbrBtQ6WmLQk+9ybi4A4iGABobJtt0Ae8lviDuK60GztrPJXL+4BX+EfahcnzAGlA8u8LQpEGPkfAN0ApLVIfB0+KlxsZw05RpnSQr12dBqeiBRHK8ZX/jH1nnGk1aTf05czi+wIQuvb0n/hUT8gyPfI=
+	t=1730989696; cv=none; b=AVAvIJ/HhUjNGASceHwDd0zfWVmjm9KTUU36eqJ1DMel6US1l9j8fZc34DgJffd5W2r1kwtDRgOUGc4ZAHiOg8UcaFL4fEgEld8pg6ZYGh9FZ6ImPhO362LZwQBzXfaxQDR0Qqz09I3+fhwOKQFYqyC2y7Z05eYE4IbRbeaaQaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730989602; c=relaxed/simple;
-	bh=IZ1L6Ihm8Joep60ZOkXArh7N57MsF6DTK72afzXGdrw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=L4o+QB2T9mghoBi2TUj5up+Zu/kRCYTyXWWq9/gXvWBRAmZGB5SIQGJnV+69RmijtuRkiwcU+0fR1mr9V2fHs4x4+rRqLeHjzll6ICMmaoDJnyG3WghfZXTp02j/c1tUUGIcykp7I3otZtPGgiKQ1pPpTNt8VUuXMj1yyj33bPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=OrZl8qf6; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="OrZl8qf6"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43158625112so9118005e9.3
-        for <patches@lists.linux.dev>; Thu, 07 Nov 2024 06:26:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1730989598; x=1731594398; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4lWe+8OTr1x391V84LUEUDWwUDsOdkE6GAj381Q8PLc=;
-        b=OrZl8qf6HFaf6jR25aJk6OR9cQ1OXs9MMFtrm2JleakTgbnoBHpd8Wl/Zh4Ivuupp4
-         61wwM4PN5fctuhKQXpQ/VhOLr17tzRGmceNEjwSFmaTqmiDwCnoyYMJa24StdP4nvBFh
-         gvXjnRoiRgMPoew1xK2G6vVxNcJh9WCinAVrC34NyuQaA3LbdxgDo3Xl7FqXmmYFhZOh
-         zX5k4Ke/trQAwuLzFGIjPLlN7jhk/ApPbZqmnNt/BEzYNLHJtubN1KVhTa7sCJZlxNy5
-         4l2PQunb/adHSyUeH6LS7eCuzllzD+YF2fgKqg7ESqtyR7leh3BmpzV0RciQj/yOtoc3
-         DdWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730989598; x=1731594398;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4lWe+8OTr1x391V84LUEUDWwUDsOdkE6GAj381Q8PLc=;
-        b=X9kKlWqXmMmQyHXZ5Wge9ycgeSxWaOEtO4sg69dX0AClfVrYJBrL8MF7bHfGMhX53c
-         sbDpENkKW1OszUhm+U5f/YtMc4JEWCrXzGC4fK6dFxBN68A+yaM9zOOV1oeILevfsf1O
-         CTpXFmKhfq4v0JuD837SJ99ENVoEBYMnKBnGMTWu2PJuR1cV8cR+fk+TNYBx5MJdEU7q
-         8zMyJ0XojgPd+GOsmcCvlcOy2beYvJvi+rVW3ELkZFftm114cUJEcKwTuVpejNsWL3YV
-         n7Rruq8CwAuqEgdB8tMrT25ip/Qr+6ku7Kg5x0YyGUvVZ21zCuA5n6lK36lKv5wf0TB2
-         IZDA==
-X-Gm-Message-State: AOJu0YxEJwYyX7SZMiL6pA+ke6bRg3NdCI5d6f6wYEVq6NIL8cgcigL3
-	N7ZgFJHTf+GnxMMPwIT0bfX2WmP2oUakHcBkzrMZtgEctdDIhZk=
-X-Google-Smtp-Source: AGHT+IHL0wi7WKTvPc5hxP5ofUXYUbtQb+bUpSZkX57u5JK3fnO3kXSjXOKKaPT73hDp1BFuoTcl6w==
-X-Received: by 2002:a05:600c:1d09:b0:431:5f3b:6ae4 with SMTP id 5b1f17b1804b1-43283255a5bmr214848015e9.17.1730989597555;
-        Thu, 07 Nov 2024 06:26:37 -0800 (PST)
-Received: from [192.168.1.3] (p5b2ac486.dip0.t-ipconnect.de. [91.42.196.134])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432b05c2161sm26038635e9.31.2024.11.07.06.26.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Nov 2024 06:26:36 -0800 (PST)
-Message-ID: <6f515d2c-80dd-4868-893f-194dd8e2963f@googlemail.com>
-Date: Thu, 7 Nov 2024 15:26:35 +0100
+	s=arc-20240116; t=1730989696; c=relaxed/simple;
+	bh=F010ownv3bBnqIQ8ilTKry8FD6vEzGw6XQJgHJD1qU0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ngZFHtWvrqh1vucRAskDMf4tD2g43Cq+SJ5g5uJROxxU/tCGsoGiqAUM8GOqCLnTAW2jYRqgX+T7F1RQeyrQEOUu0kMLB2E8eaoJvhJtU3Jf9ZEBOAL3b8lFub0CZWw6RmvJcIgJum/SgIE/3+nlW1mKnEN94Q3n3Yy+eSJeDvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 89CDC1C00A0; Thu,  7 Nov 2024 15:28:12 +0100 (CET)
+Date: Thu, 7 Nov 2024 15:28:12 +0100
+From: Pavel Machek <pavel@denx.de>
+To: Mark Brown <broonie@kernel.org>
+Cc: Pavel Machek <pavel@denx.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hagar@microsoft.com, chris.paterson2@renesas.com
+Subject: Re: [PATCH 6.11 000/249] 6.11.7-rc2 review
+Message-ID: <ZyzOfIPHTEjq5W1+@duo.ucw.cz>
+References: <20241107064547.006019150@linuxfoundation.org>
+ <Zyy4mfTry2gNQBH+@duo.ucw.cz>
+ <7a791358-63ff-41e1-b7f0-e687df21047b@sirena.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.11 000/249] 6.11.7-rc2 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hagar@microsoft.com, broonie@kernel.org
-References: <20241107064547.006019150@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20241107064547.006019150@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="hYyuC9AgkQKiubg2"
+Content-Disposition: inline
+In-Reply-To: <7a791358-63ff-41e1-b7f0-e687df21047b@sirena.org.uk>
 
-Am 07.11.2024 um 07:47 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.11.7 release.
-> There are 249 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
-oddities or regressions found.
+--hYyuC9AgkQKiubg2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+Hi!
 
-Beste Grüße,
-Peter Schneider
+> > > This is the start of the stable review cycle for the 6.11.7 release.
+> > > There are 249 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, plea=
+se
+> > > let me know.
+> >=20
+> > CIP testing has problem with BeagleBone Black on 6.11:
+> >=20
+> > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/li=
+nux-6.11.y
+>=20
+> My Beaglebone Black jobs ran fairly happily, eg:
+>=20
+>    https://lava.sirena.org.uk/scheduler/job/951530
+>=20
+> Looking at your logs:
+>=20
+>    https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/8=
+295477303
+>=20
+> you seem to be seeing an infrastructure issue:
+>=20
+> * lava.pdu-reboot [pass]
+> * lava.bootloader-commands [fail]
+> * lava.uboot-commands [fail]
+> * lava.uboot-action [fail]
+> * lava.power-off [pass]
+> * lava.job [fail]
+>=20
+> The job is failing in the bootloader:
+>=20
+>    https://lava.ciplatform.org/scheduler/job/1218595
+>=20
+> shows:
+>=20
+> | =3D> bootz 0x82000000 - 0x88000000
+> | zimage: Bad magic!
+>=20
+> I didn't check but this almost always indicates that the download to the
+> board was corrupted due to some image size having grown large enough to
+> overwrite the adjacent image, you'll need to adjust the load addresses.
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+Yep, thanks, it does not seem to be kernel issue. People from our Q&A
+team are investigating.
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+Best regards,
+								Pavel
+
+
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--hYyuC9AgkQKiubg2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZyzOfAAKCRAw5/Bqldv6
+8gR9AJ0cLQIcPjjUH2FMKyyHT0t1aa95WgCeI0Cvrur4op9pQlGunOhuhRZLt8E=
+=E2Fh
+-----END PGP SIGNATURE-----
+
+--hYyuC9AgkQKiubg2--
