@@ -1,47 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BBC2B9DD;
-	Thu,  7 Nov 2024 06:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19508D53F;
+	Thu,  7 Nov 2024 06:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730961247; cv=none; b=P+sMzB5gtYsA3sT2UXSbVU3uit35m5Xda3I7R8c+vwLXU9rtk3I/WPD483LygLmxrt4TnJGh6prPNJ+wU18v008WezfDJL834OQBeHKV/QhKm7wYPpWTpdGk8kQ3GYmkxAZc8w4PziP11YhAN+jdr1tKovQJ6Cdrn7LLiQgQMRo=
+	t=1730961482; cv=none; b=sEtyeoDrdsXIYWcRTE4DwZcJDUXygueBrO5nKQvoRxyWL4vyU1mt2ndH62yjCoyadWfZvDibnBHsZVPjp+ObEQGzjFstjKfCDkLHZLjHYq7gGbq1qr1peh2oNHpwIM7i07QYka5FkImbQv9a12T5o566LNrIWzD+l4QZc9oRya4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730961247; c=relaxed/simple;
-	bh=9aeMmwmnUEyjV483wWngqqK394BMN3bdiS3/vaO0WvY=;
+	s=arc-20240116; t=1730961482; c=relaxed/simple;
+	bh=T4TgS+4aaAOaTl1qmoEDzqZ6WyctMMKHQz5ckqGi+vg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mOCPDb6F1P4SVYnPZBGQdaCTG79GpZCrb9SZMbPJpHjrkVikVIsGYl66udom5EB5NEmevgpUtjK0CpluoEV1KFrr6bp778veyz+zSXPVCgb1/CTIg6zwfwyHdfSSZluqkV0yvGdWAuyP8cIKvoenYJ3R1zYZuZWCztLrAXQLfCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j47O1zFa; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=np+jCn+zgIT/c1RgkXdRB/bwl0OdBRToZBPGBnfXDYGH6fMB7j1qKewTNx+9TIdP0Rcg43MJwFxIte8BdNzJ2TrJTe7M/49q5+4H7InlsT28tZGWy/Rt0Vi7cBy1O/Wnij9yT7dwEmHevG9rptT+JggEnNbqdNqcuehB8tDqVpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=liDr7jlK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j47O1zFa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791BBC4CECC;
-	Thu,  7 Nov 2024 06:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="liDr7jlK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41775C4CECC;
+	Thu,  7 Nov 2024 06:38:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730961247;
-	bh=9aeMmwmnUEyjV483wWngqqK394BMN3bdiS3/vaO0WvY=;
+	s=korg; t=1730961481;
+	bh=T4TgS+4aaAOaTl1qmoEDzqZ6WyctMMKHQz5ckqGi+vg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=j47O1zFatkbjdobXFWlnTGifosynnwTAkVp69Y8OFit3ipqY6/dm5pa2yC83la0Lt
-	 YxjuwfwkOQdE/hEjGqTXJ7HAuVL733fBGwHi4PAtx4InNi3Uy8XPSUhmI+HY61l3W6
-	 hltuPnrI+h0GzCSRI8lvxOhVXTM28ZWFnzgTNQ5U=
-Date: Thu, 7 Nov 2024 07:33:48 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: David Sterba <dsterba@suse.cz>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hagar@microsoft.com, broonie@kernel.org, Chris Mason <clm@fb.com>,
-	Josef Bacik <josef@toxicpanda.com>, David Sterba <dsterba@suse.com>,
-	Linux btrfs <linux-btrfs@vger.kernel.org>,
-	linux-mips@vger.kernel.org
-Subject: Re: [PATCH 6.11 000/245] 6.11.7-rc1 review
-Message-ID: <2024110735-exhume-overhang-ca61@gregkh>
-References: <20241106120319.234238499@linuxfoundation.org>
- <CA+G9fYtjpUJFFV=FdqvW+5K+JL5ZYN4sPfVDjQovqzd7cib39w@mail.gmail.com>
- <20241106160708.GE31418@suse.cz>
+	b=liDr7jlKUzEU5NYMq1aabaGqP1o3eoYWS5UZJOIQH3KuGxu4dp8Yg/S27wZBvRazV
+	 JlS7yHpZyxPvIv+uJnTzgSUPaex0XqFXFY6bJYePGjBeiU0xlYdb9HeN9njld0ONb3
+	 5a7paBP2tczwDFVv/ZVdfudjs2tmzDMc7sxNxkHg=
+Date: Thu, 7 Nov 2024 07:37:43 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Suren Baghdasaryan <surenb@google.com>
+Cc: akpm@linux-foundation.org, fw@strlen.de, urezki@gmail.com,
+	vbabka@suse.cz, greearb@candelatech.com, kent.overstreet@linux.dev,
+	stable@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v2 6.11.y 1/2] rcu/kvfree: Add kvfree_rcu_barrier() API
+Message-ID: <2024110700-undertone-coastline-7484@gregkh>
+References: <20241106170927.130996-1-surenb@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,51 +40,18 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241106160708.GE31418@suse.cz>
+In-Reply-To: <20241106170927.130996-1-surenb@google.com>
 
-On Wed, Nov 06, 2024 at 05:07:08PM +0100, David Sterba wrote:
-> On Wed, Nov 06, 2024 at 03:12:46PM +0000, Naresh Kamboju wrote:
-> > On Wed, 6 Nov 2024 at 12:26, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > >
-> > > This is the start of the stable review cycle for the 6.11.7 release.
-> > > There are 245 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > >
-> > > Responses should be made by Fri, 08 Nov 2024 12:02:47 +0000.
-> > > Anything received after that time might be too late.
-> > >
-> > > The whole patch series can be found in one patch at:
-> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.11.7-rc1.gz
-> > > or in the git tree and branch at:
-> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
-> > > and the diffstat can be found below.
-> > >
-> > > thanks,
-> > >
-> > > greg k-h
-> > 
-> > The mips gcc-12 allmodconfig build failed on the Linux stable-rc
-> > linux-6.11.y branch.
-> > 
-> > 
-> > First seen on Linux stable-rc v6.11.4-642-g0e21c72fc970
-> > 
-> >   Good: v6.11.4-397-g4ccf0b49d5b6
-> >   Bad:   v6.11.4-642-g0e21c72fc970
-> > 
-> > mips:
-> >   build:
-> >     * gcc-12-allmodconfig
-> > 
-> > Build errors:
-> > -------------
-> > ERROR: modpost: "__cmpxchg_small" [fs/btrfs/btrfs.ko] undefined!
+On Wed, Nov 06, 2024 at 09:09:26AM -0800, Suren Baghdasaryan wrote:
+> From: Uladzislau Rezki <urezki@gmail.com>
 > 
-> The patch "btrfs: fix error propagation of split bios" needs
-> 90a88784cdb7 ("MIPS: export __cmpxchg_small()")
+> commit 3c5d61ae919cc377c71118ccc76fa6e8518023f8 upstream.
 
-Thanks, I"ll queue that up now and push out a -rc2 soon.
+No, that's not the right git id :(
+
+This should be 2b55d6a42d14c8675e38d6d9adca3014fdf01951, right?  Let me
+go change this...
+
+thanks,
 
 greg k-h
