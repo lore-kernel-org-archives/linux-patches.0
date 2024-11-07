@@ -1,215 +1,155 @@
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2040.outbound.protection.outlook.com [40.107.223.40])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB60D38DC8;
-	Thu,  7 Nov 2024 16:31:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.40
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730997117; cv=fail; b=ACwjrbcFFCQIXqtmFPhGizb/tgihxrq1uIPWYHOvnfXp3uMcai79eUfvZVK9M3jef1kKusf42fCEC58rBKLkF7t7BvwhkfK14QDgCCaZ8aelXjRnBPcSFY2z+o1upZoVZgpdtA3Zvns+3b4rgfbkd6HCL6FxoKgqd3+dr8+naQI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730997117; c=relaxed/simple;
-	bh=QJH74D+dSGjmPw9BoabV2KMmyK5wqDNhT1j0FHrkJnM=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OLA6iGj/Yugg9GB0A99uOn/rli2riQOMF7JY6YgNCqHLcKBPaxp7E7TNnYEal8nuYHqNpVG4ohExhIHFFxtHodbYFiYZtT79/dyIC5N+oZRJZyscPlYYHGaNdM49PysMDJakZ+ezqZYaQy2HkLio5ybbXTPAQJLVTyyRenx8QG4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=MbnQoHl3; arc=fail smtp.client-ip=40.107.223.40
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E221F18660F
+	for <patches@lists.linux.dev>; Thu,  7 Nov 2024 16:39:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1730997584; cv=none; b=MdwQJkFSyL9wDvMwwBBeOScW+CGI2CRnUlE2kJv/R6/pPwl/OLzn/RTbB+OwhtO697XiVKy3ajWRo8Qmsa8e3L5TYa/cEsjYMVBTbK+z0yBTKbGCvFr7FJAwgt3C49Vk/uASfhe16mbPjAS7jRUdqiaV2Hp/itpiBSqJsyYq09E=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1730997584; c=relaxed/simple;
+	bh=lJ93r7UQYNp+rlYKZUt1Can6uIRWWwjylI/k8nRrfqw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bSbvJ/Kyoj6l8a7DzcN1b3AqcH5AHuVIGQcDvRd+IHZ9btbx39b+7++05SxF90soLGGHJsMGH/8xkNpBXlBdtxdUhyDj3BwamCjk9isqvchTWb8Vx4hx6kA3qTn//bEeBTTZN3mbESh7J2cXmUQMkAuC1svY64/mk6SkUKoJZ1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fOlEr7TJ; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="MbnQoHl3"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lYERFexEqOmrpwYIv0+o+T7LIOP5OQpghqTWmz3TKpeiA4Jsv8Gd1OcmKt+EeKLRa1ex9+MDTRsmDWWz80n9Gmfytjjx5HAmFnf0UB3ftZo0guPlkLmQfgbTD6eJq1JEEuBAEopB/xLbR3lysKTS1loIC58rkDA5I0I46/Kx4Gvu6waIzP2qRW7FTIARxVHDdIbEyI/+tWCAn9ax05PM3BfjqVM73bfyvf9U6p5Mqtd5FWBhUMA/sSp39sjNifi0RxJHo2dWvey11aXLOKDsrirlYEbuG6IBPFIf0Zlc1VvPVgs81yQVEDfDqrtNX84OMiBf3IZ8gynu1n9Lcorvrg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Cb8NGRycyEvh8tupg+qxax84XEdQg4nCthtUYA/vJfI=;
- b=KWKIjhyr23bZQSm1zFlYU2JZqlQZlCBSaM/M1OpY9jYa4GsXq7h5Dn7+zT3Zxodn7cuLqKyH7hWGDycrBWPwTo2YavrNseiBKpeatLJ7BICh0RO1l/zWgGRMF71jUF6QipG+zMeS4IfAPa/jd5mk8MzDcqBdZD22U4RMFNZ2QAflbNYcukKnq1WiktKiS+4SY1HXIc96Y6W2oLzAYeWckQcKFaMiAvIqHDhWqBmAuHu0f5ufXV8DFdjkBMz0yufE5BQXNsz8/fvjpGxIsfgsrV/YkgYQS1unJH+FsbPghWD7u15tC3dRNYd3oPwz3eufrvTmG7zvmYyqXOVhfFXh4A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=amd.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Cb8NGRycyEvh8tupg+qxax84XEdQg4nCthtUYA/vJfI=;
- b=MbnQoHl33yEtjZbb39+f9idVQoGXKtRx0cNJd2v0snzz3PrYSgu0qqP5SNclgmmu6LNTCaTI4MHjtcPBIVSuh34b39aAWxq1l/19k8p2paTSycOuhByfnU7esooCspoaGlNNuQEaYZQVSnRgEiPou/pIWae8/o8eL0r8qxtHUDwSR8/xM/QNZ6lr4gHsjpy6ceoy2GskrDgcZPeaQsu3LCPnPRTZ11gwCkD9Px6KF79452d7YU83SIzGbK8NztUb70o2FvdAe/Q+dIiM6xyzvDpiHCKHBsOrOEMWq5+UQOegNKPPvXuunKcNUBxUW5JpARZEOMK/TvFhdu8lcmzF+A==
-Received: from SN6PR04CA0090.namprd04.prod.outlook.com (2603:10b6:805:f2::31)
- by SN7PR12MB7812.namprd12.prod.outlook.com (2603:10b6:806:329::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.20; Thu, 7 Nov
- 2024 16:31:51 +0000
-Received: from SN1PEPF0002636D.namprd02.prod.outlook.com
- (2603:10b6:805:f2:cafe::46) by SN6PR04CA0090.outlook.office365.com
- (2603:10b6:805:f2::31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.18 via Frontend
- Transport; Thu, 7 Nov 2024 16:31:51 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- SN1PEPF0002636D.mail.protection.outlook.com (10.167.241.138) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8137.17 via Frontend Transport; Thu, 7 Nov 2024 16:31:50 +0000
-Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 7 Nov 2024
- 08:31:42 -0800
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Thu, 7 Nov 2024 08:31:41 -0800
-Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com
- (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Thu, 7 Nov 2024 08:31:40 -0800
-Date: Thu, 7 Nov 2024 08:31:39 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Alexey Kardashevskiy <aik@amd.com>
-CC: <jgg@nvidia.com>, <kevin.tian@intel.com>, <corbet@lwn.net>,
-	<joro@8bytes.org>, <suravee.suthikulpanit@amd.com>, <will@kernel.org>,
-	<robin.murphy@arm.com>, <dwmw2@infradead.org>, <shuah@kernel.org>,
-	<iommu@lists.linux.dev>, <linux-doc@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-kselftest@vger.kernel.org>,
-	<baolu.lu@linux.intel.com>, <eric.auger@redhat.com>,
-	<jean-philippe@linaro.org>, <mdf@kernel.org>, <mshavit@google.com>,
-	<shameerali.kolothum.thodi@huawei.com>, <smostafa@google.com>,
-	<yi.l.liu@intel.com>, <zhangfei.gao@linaro.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH v6 01/10] iommufd/viommu: Add IOMMUFD_OBJ_VDEVICE and
- IOMMU_VDEVICE_ALLOC ioctl
-Message-ID: <Zyzra/E3ARtE/Yyx@Asurada-Nvidia>
-References: <cover.1730313494.git.nicolinc@nvidia.com>
- <19e20e54d41a0c1ab7403264e1016c4b19293135.1730313494.git.nicolinc@nvidia.com>
- <aeb88b6b-9989-4e1a-824c-757ffdbfbca7@amd.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fOlEr7TJ"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2113da91b53so9152175ad.3
+        for <patches@lists.linux.dev>; Thu, 07 Nov 2024 08:39:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730997582; x=1731602382; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hgXJATuyZwVkN70AZDZo/VSscc1RChOphjdktHVIOVk=;
+        b=fOlEr7TJjUmomWjVPjjzeYeUnDDB7X6oZIAbd8odCb0m5JJ1PFnYPj5aYDQidv3dFX
+         l6QSI0zdo4zRarLh5PEJ3I8Jb/U9jvaQAbcoiBZ0g/CltpCi9yqcuciIBPGJKOS36h53
+         M1ZoO1yQqPo3U7PZpfwMcxP8L2U2KRNRyYQf3f37LYHFc51E+wRYhGJ3YFcvDzj6tyKq
+         XzkhvNAUwF3OUXjGkNCzGbKuQsxpte5w58GG7jH8sKDd5whgC/1qd+t5RIN95zMIU0qG
+         lN+nZ7VcvYilapDh0xeubWhXEet+5NSiDFhLoJy7qck3E8vhQl62YZ2LCIa/RY958y0Z
+         VpLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730997582; x=1731602382;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hgXJATuyZwVkN70AZDZo/VSscc1RChOphjdktHVIOVk=;
+        b=pedM7UVvHhwKsePE2nOOfX8nbDeeMCO2grYCoUvj15/51yOd6iQBIZ/r+K8o67prfE
+         97wyLPnQGx0R7x4W5VhiAEKqdoooyhxe3CprabH4ywXATfh3merUzRwMEEKhKQPK0/0K
+         Y/Smfob+mstSmLPYPTl8FTDVss0FJ6sKCEdixRBZPZUkdbNWgQS0SGrkXdpBEz0S0lml
+         sgfgYJAytL0Q2d/WG5+EN3aWycG89HnF0QpZP4BAOC4nNFB1Bkdfy1coedr6C1d3x+Qc
+         2Y/rET3Mcb6q7F3JHOmxdKiMibgv1OTWCf2e6Xe6PKd7JNzZN8II5NjtUmjvlBOKc3xo
+         siiw==
+X-Gm-Message-State: AOJu0YzqlfTHmfQHV6PRGayTxCDDcS0XoTyJ0FWX4MIHJW3oTmb6j7s2
+	LftZhM9A42K3u5E1IMnkga7L8y+6f2UEacepPwdY+k+DL5bzdbDb
+X-Google-Smtp-Source: AGHT+IFPIGSNoq7pKYDhMfYzlbbJCa5NYMEd+nCZ7spV5q2pirGrNOs8bvGt97VJ9ExX3vwlY/BLrA==
+X-Received: by 2002:a17:902:c942:b0:20c:8839:c517 with SMTP id d9443c01a7336-211823b5347mr428465ad.53.1730997582019;
+        Thu, 07 Nov 2024 08:39:42 -0800 (PST)
+Received: from [192.168.1.3] (ip68-4-215-93.oc.oc.cox.net. [68.4.215.93])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21177e6a471sm14142415ad.233.2024.11.07.08.39.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Nov 2024 08:39:41 -0800 (PST)
+Message-ID: <05671820-dee5-4b31-b585-5e1f034e65f6@gmail.com>
+Date: Thu, 7 Nov 2024 08:39:39 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aeb88b6b-9989-4e1a-824c-757ffdbfbca7@amd.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF0002636D:EE_|SN7PR12MB7812:EE_
-X-MS-Office365-Filtering-Correlation-Id: c7183d1d-b2a0-40ff-da74-08dcff49aed9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|82310400026|1800799024|7416014|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?Z3gzNnVMVmZML1NoMDFIdm9tU3lYQWFKYnI1K2UrampsNm12VER2KytKTTBo?=
- =?utf-8?B?aWFuS3lvV25DQWR1V3FqcnpNckVjcEVNQnllVXZiTGFnNVVzZVhuMjVMV09N?=
- =?utf-8?B?Y0VYMFYyMmtkWEZVTlhoTklHazE2RzVUSU9ValY3K245SlJZWUovRzBjbW5X?=
- =?utf-8?B?YkVzL1ViY3lYVjREVUQyWTB0VUdaSWhoY3BUOHFyNWZ4N1lKdWlpc3B0NkFX?=
- =?utf-8?B?YTRrdTFtZi9nYVF4VFBtdTk3NGF6ZkRJSWpnNTFibkpNRUplank3bzFudUpL?=
- =?utf-8?B?bnh3WXExSG1KaE9kRzBUWGdSa3ZwNDdtTHdZZytnbVlFNFZoMEgzQmhza1lU?=
- =?utf-8?B?VSt2N3JMeUVUd2VaNUF5SGxVM0h5czI5SWNQUGxaNjYzWTlaWnlpVCthTHEw?=
- =?utf-8?B?NjZTSklBWXlHa3VaaWdxU2JBOHFuaGVpRUpSSHVlUmJkN1o0WmZBM1k0aGIv?=
- =?utf-8?B?VGU3R2l1OUh5Z000c0s3cXBPam4yaW9oTU1RaGxxOFlNSkVNbkxMSWpCOVlX?=
- =?utf-8?B?VndSNFk3b0lhb25hWFllb3RKK1VYWU1HN2YzbWdSNXJEa1hUMzVyN1gvQmNY?=
- =?utf-8?B?YmlMTTZuRU51ZXlURmd0akZicUtmN3MwMmllMW0xcnBsaE8xZ1NVem9lTXh2?=
- =?utf-8?B?cWpxVlgyTXNkVU8yM3V0VGthaDhGeTNQRVVwZTJ0VVF6V0F2QWlzbllVSS9G?=
- =?utf-8?B?YytQUUo0aUREMnBieTNjdzZxVlRLOGpja2xKVEZRQysyeWJtQi81L3dVQkdv?=
- =?utf-8?B?VGZlTk9saitaSE5yQUlZRWxWQU1VcmtCYm1uMmt3NHJwQlYwaWJzRS9OZ3dX?=
- =?utf-8?B?cXh4YWQxWmZwOW5VOGNkWXNQNUlqbzk4eURRZzBwQXFERGRNRnRYaXROZ0Fz?=
- =?utf-8?B?d2hvbUdvMGpla1dMU2d3eGk4S09DeVhBeFRsdksvQklkR1czQmNFWHp3Wlpy?=
- =?utf-8?B?UUlJNHBBSENTYWVvMVZKQjBsbUtOQzV1cTErOCsyT0xJcFd1Ny9TbWlxbzNO?=
- =?utf-8?B?TUtvS0g4TXpMMTk2YitjOHh6bzhWZHBjYUVBQms4eldZaHhSeFdHb01yV2VB?=
- =?utf-8?B?SFN1VVNsbHZlOTdZaUVtK00vVDY5bEM5N0xVRmp6dlI0STJSdWliV3NibmVu?=
- =?utf-8?B?S2tGdlNubnMwRWtxUEMwOTEwaVAzbE1BUkJmZUowOUk2eG5qeW5pQ3BPTi9Z?=
- =?utf-8?B?cHJCanh2aHVOaEdBWUZyZWpaZEJLZDM2TnpZQ0QxMWNVSXIrdUQ3aE90UVFB?=
- =?utf-8?B?MHNuMlo1dEpBbUV1aGhDTGhVamROWnNxSDJxZ3gyU3R1K2VYTVZwa0t0RHBI?=
- =?utf-8?B?MmdhMnBaVjE2MTdCYk5WMVQxTHVrNFNKaVFDWHU1ZlFDbHBHVUZnWEVyMGdu?=
- =?utf-8?B?YXZRZmxQcDNqSmw5V3l4WEltQXJ6MVlHV0E4YVhwVU5PMXArRCtWbzhzbDhq?=
- =?utf-8?B?ZGMzczR2TkNySW4rWkdvS2g3ZWkwcWkwazlVdHVSSkd5NG1XTzVhalRkQ2xC?=
- =?utf-8?B?RFFtTVNhWlJmb1lIK2lxdzdVdlk2Zi9NNG1ZZ1lVU09wbDJDNjJmZ3N0OU4z?=
- =?utf-8?B?STE3QjNYZlQvMUtPTEdkeGZ3SGhjbEVUWEl2VmpScjE4b0J5ZDFXTHhzVFBQ?=
- =?utf-8?B?NVdBUmZoOHNRdFhScjNZeUYrTGRSdERhY2t3WUVPaTlVMnlycnZPVThNVTZs?=
- =?utf-8?B?d0tZblRDRURDYTFIRE8vUXJ3dllRZHFKUU8vWUpqbnE3WEJsZytVSlo0ZFRS?=
- =?utf-8?B?NVhLSjcwM2hpWktsWU9BelBVMytEcWhMT3VvM1dFbERXUE1lWU4rWmNaekFq?=
- =?utf-8?B?UUV2aE9BeU42eHRQdVZzSW5mUU8wQXBGT3d4K25wajhEbFRlOExlcGJULzVJ?=
- =?utf-8?B?RVpwOWUwZFJ4U2h4Ujh1ekF2QkFENTdhelloRU9WamFraHc9PQ==?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(82310400026)(1800799024)(7416014)(376014);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Nov 2024 16:31:50.9569
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c7183d1d-b2a0-40ff-da74-08dcff49aed9
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SN1PEPF0002636D.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7812
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.4 000/461] 5.4.285-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, hagar@microsoft.com, broonie@kernel.org
+References: <20241107063341.146657755@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20241107063341.146657755@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Nov 07, 2024 at 09:11:27PM +1100, Alexey Kardashevskiy wrote:
-> On 31/10/24 08:35, Nicolin Chen wrote:
-> > Introduce a new IOMMUFD_OBJ_VDEVICE to represent a physical device (struct
-> > device) against a vIOMMU (struct iommufd_viommu) object in a VM.
-> > 
-> > This vDEVICE object (and its structure) holds all the infos and attributes
-> > in the VM, regarding the device related to the vIOMMU.
-> > 
-> > As an initial patch, add a per-vIOMMU virtual ID. This can be:
-> >   - Virtual StreamID on a nested ARM SMMUv3, an index to a Stream Table
-> >   - Virtual DeviceID on a nested AMD IOMMU, an index to a Device Table
-> >   - Virtual RID on a nested Intel VT-D IOMMU, an index to a Context Table
-> > Potentially, this vDEVICE structure would hold some vData for Confidential
-> > Compute Architecture (CCA). Use this virtual ID to index an "vdevs" xarray
-> > that belongs to a vIOMMU object.
-> > 
-> > Add a new ioctl for vDEVICE allocations. Since a vDEVICE is a connection
-> > of a device object and an iommufd_viommu object, take two refcounts in the
-> > ioctl handler.
 
-> > +/**
-> > + * struct iommu_vdevice_alloc - ioctl(IOMMU_VDEVICE_ALLOC)
-> > + * @size: sizeof(struct iommu_vdevice_alloc)
-> > + * @viommu_id: vIOMMU ID to associate with the virtual device
-> > + * @dev_id: The physical device to allocate a virtual instance on the vIOMMU
-> > + * @out_vdevice_id: Object handle for the vDevice. Pass to IOMMU_DESTORY
-> > + * @virt_id: Virtual device ID per vIOMMU, e.g. vSID of ARM SMMUv3, vDeviceID
-> > + *           of AMD IOMMU, and vRID of a nested Intel VT-d to a Context Table
+
+On 11/6/2024 10:47 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.285 release.
+> There are 461 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
+> Responses should be made by Sat, 09 Nov 2024 06:32:59 +0000.
+> Anything received after that time might be too late.
 > 
-> So it is one vdevice per a passed through device (say, a network
-> adapter), right?
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.285-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Yes. It's per iommufd_device per iommufd_viommu.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-> I am asking as there are passed through devices and
-> IOMMU devices, and (at least on AMD) IOMMUs look like PCI devices, both
-> in hosts and guests. For example, from the above: "@dev_id: The physical
-> device ..." - both a network card and IOMMU are physical, so dev_id is a
-> NIC or IOMMU? I assume that шы a NIC (but it is a source of constant
-> confusion).
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 
-In that case, dev_id is NIC. viommu_id is IOMMU.
+There are however new build warnings, on 32-bit:
 
-First VMM should allocate a vIOMMU using the dev_id (NIC) to get
-a viommu_id, and then use this viommu_id and dev_id to allocate
-a vDEVICE.
+In file included from ./include/linux/mm.h:29,
+                  from ./include/linux/pagemap.h:8,
+                  from ./include/linux/buffer_head.h:14,
+                  from fs/udf/udfdecl.h:12,
+                  from fs/udf/inode.c:32:
+fs/udf/inode.c: In function 'udf_current_aext':
+./include/linux/overflow.h:61:22: warning: comparison of distinct 
+pointer types lacks a cast
+    61 |         (void) (&__a == __d);                   \
+       |                      ^~
+fs/udf/inode.c:2202:21: note: in expansion of macro 'check_add_overflow'
+  2202 |                 if (check_add_overflow(sizeof(struct allocExtDesc),
+       |                     ^~~~~~~~~~~~~~~~~~
 
-It might sound duplicated in this case because this AMD IOMMU is
-exclusive for the NIC. But ARM/Intel can be shared among devices
-so they can allocate a vIOMMU with device1 and allocate vDEVICEs
-for device1, device2, device3, and so on.
 
-> Is there any plan to add guest device BDFn as well, or I can add one
-> here for my TEE-IO exercise, if it is the right place? It is the same as
-> vDeviceID for AMD but I am not sure about the others, hence the
-> question. Thanks,
+On 64-bit:
 
-Generally speaking, adding vRID isn't a problem so long as there
-is a legit reason/usecase. That being said, if it is the same as
-the @virt_id for AMD, why not just pass via @virt_id v.s. adding
-a new vRID/vBDF field?
+fs/udf/inode.c: In function 'udf_current_aext':
+./include/linux/overflow.h:60:15: warning: comparison of distinct 
+pointer types lacks a cast
+   (void) (&__a == &__b);   \
+                ^~
+fs/udf/inode.c:2202:7: note: in expansion of macro 'check_add_overflow'
+    if (check_add_overflow(sizeof(struct allocExtDesc),
+        ^~~~~~~~~~~~~~~~~~
+./include/linux/overflow.h:61:15: warning: comparison of distinct 
+pointer types lacks a cast
+   (void) (&__a == __d);   \
+                ^~
+fs/udf/inode.c:2202:7: note: in expansion of macro 'check_add_overflow'
+    if (check_add_overflow(sizeof(struct allocExtDesc),
+        ^~~~~~~~~~~~~~~~~~
 
-Thanks
-Nicolin
+In file included from ./include/linux/mm.h:29,
+                  from ./include/linux/pagemap.h:8,
+                  from ./include/linux/buffer_head.h:14,
+                  from fs/udf/udfdecl.h:12,
+                  from fs/udf/super.c:41:
+fs/udf/super.c: In function 'udf_fill_partdesc_info':
+./include/linux/overflow.h:60:15: warning: comparison of distinct 
+pointer types lacks a cast
+   (void) (&__a == &__b);   \
+                ^~
+fs/udf/super.c:1162:7: note: in expansion of macro 'check_add_overflow'
+    if (check_add_overflow(map->s_partition_len,
+        ^~~~~~~~~~~~~~~~~~
+
+-- 
+Florian
+
