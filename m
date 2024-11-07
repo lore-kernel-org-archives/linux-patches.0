@@ -1,118 +1,92 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80177212164
-	for <patches@lists.linux.dev>; Thu,  7 Nov 2024 14:28:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1D42E3EB
+	for <patches@lists.linux.dev>; Thu,  7 Nov 2024 14:48:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730989696; cv=none; b=AVAvIJ/HhUjNGASceHwDd0zfWVmjm9KTUU36eqJ1DMel6US1l9j8fZc34DgJffd5W2r1kwtDRgOUGc4ZAHiOg8UcaFL4fEgEld8pg6ZYGh9FZ6ImPhO362LZwQBzXfaxQDR0Qqz09I3+fhwOKQFYqyC2y7Z05eYE4IbRbeaaQaw=
+	t=1730990921; cv=none; b=sU2iwVn0iLuWfEd3cf0zQ4GK8zQ/X1xLADLVSRhRTki/X8nN+5O/graYYr7Na9zrGSy543lT8RZmg5HrEG7R8zpHoZpUi6UFxt2r/oWNcWGMY+M+d138dGA5oGHyQgcTcvnxNftFTOs/sE0n3HhwgMefP67Ob1Xou2TL17gjOkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730989696; c=relaxed/simple;
-	bh=F010ownv3bBnqIQ8ilTKry8FD6vEzGw6XQJgHJD1qU0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ngZFHtWvrqh1vucRAskDMf4tD2g43Cq+SJ5g5uJROxxU/tCGsoGiqAUM8GOqCLnTAW2jYRqgX+T7F1RQeyrQEOUu0kMLB2E8eaoJvhJtU3Jf9ZEBOAL3b8lFub0CZWw6RmvJcIgJum/SgIE/3+nlW1mKnEN94Q3n3Yy+eSJeDvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 89CDC1C00A0; Thu,  7 Nov 2024 15:28:12 +0100 (CET)
-Date: Thu, 7 Nov 2024 15:28:12 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Mark Brown <broonie@kernel.org>
-Cc: Pavel Machek <pavel@denx.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hagar@microsoft.com, chris.paterson2@renesas.com
-Subject: Re: [PATCH 6.11 000/249] 6.11.7-rc2 review
-Message-ID: <ZyzOfIPHTEjq5W1+@duo.ucw.cz>
-References: <20241107064547.006019150@linuxfoundation.org>
- <Zyy4mfTry2gNQBH+@duo.ucw.cz>
- <7a791358-63ff-41e1-b7f0-e687df21047b@sirena.org.uk>
+	s=arc-20240116; t=1730990921; c=relaxed/simple;
+	bh=obhoIviuaHhyC0A/b6MUfz2+yt0S4BGH+02rVk3sulM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cG43V44czIYJ6LqwDy+ZLwt0kFfDqXuewJPoDtVC02pRklxugsjPKUejWKiS+ytIV8/fJYzGXCmCeJAiyrdicqKEx9cZL7jKpGZdo4OeFZZzZ+TnSE21ikzj7fjp/uX1gLwtBFegs3N4M/iEemeJ9x1YFUEqvmB7KW1q5OoBcWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fEPWu+Uw; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fEPWu+Uw"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4608dddaa35so338601cf.0
+        for <patches@lists.linux.dev>; Thu, 07 Nov 2024 06:48:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1730990918; x=1731595718; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=obhoIviuaHhyC0A/b6MUfz2+yt0S4BGH+02rVk3sulM=;
+        b=fEPWu+Uw6ykVnmOMzmEgUYT335rR7xMwR7tMqRR1IehEIasDrcmO4Lxcz7aWZ2yGY/
+         dWP+MzPOBHgRNfvvwfBavOjD1SLTiIVgLNoUkO59G3CYLTTtNGz7+bQ+6p2etPT/TIA5
+         1jPp9rXRSL9EGYeaUBSwBbyGwQQIpZidcxIjcYqYksc3fhB9Q9wdyzkp7MiWgsub02DE
+         k/A13C9WFwhZ/FPBCL6IhbDJpERrstQ9FwQE/a9IX9Sh6PodL8U2qRMAZgNH3SpTWsbV
+         U9950lChlPco651X4d9OaQIrbwueCRKtRE1TXDp9y+XrvttudfSeiTDh4F7FckWsQGA9
+         UZqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730990918; x=1731595718;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=obhoIviuaHhyC0A/b6MUfz2+yt0S4BGH+02rVk3sulM=;
+        b=kTgWBTsPgKhklHAi4i4zNpWR0MZxP2DorTj6ZrH3N475e17sop0jCOMhfaL8FEbeaS
+         5ZAwNqfASD7B5Bx/ahVVyFM8iQCwV3kcy7xccO6H6y5SnZsU4WOH6MfWuvBPZtV9xEQJ
+         5zRWlq9j5eucOYf0OONTYcjj3yyRT8w3aJt72Dba8b9v2kGbSgp0XeGMirmhDvi6bptI
+         NzZCuUV/s0jJjfiirrW4ThEsKYGa2dA3t3GIc0w/cPCSWJj6cgRb1dRiJNJSdcvXpwN3
+         LmQo6KrAK406rZzsK75ron8AQ7ApZG+PVt5tPCKrBLKPeFtiHicHTLwxFsKI/ThzybOq
+         6pvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWAAam3lBKwesidf0gw78jvojsYiyCnaPYNROIZMRvhO8WuIetc8yjyCfHhqZ7Sq7yHAJpPLaeQ@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx7Z/bt30OeEj5L3L1eH+B0J8Moxvjqe0BoKL25EDyD4GEO8ldc
+	AFcGnhKwaYTqAnQPiJLsx9jvKeGvbe/hX9v42ccqYcWTU6Y4zygiZZyy2qJ8Hs0s7IZ8UvpuaAa
+	orTPkZ/Zqb8KCh6qfk0F9h+P2VUMtUGTH/vKF
+X-Gm-Gg: ASbGncuW3HlfHHhwuaUSb1PM16sulc5LZ4KPD/kXWv29awDMdA4hbWKAao6mPn70VU+
+	L30iB8SGtMtO3wdv/KMkSlabyhgqkc+H3B+6A4ivcQYsAVSEdI+rUUf7N1a5w
+X-Google-Smtp-Source: AGHT+IFUtxSOl7YCdaawpBadONVmwESllKbqlKdDYg3jdy0lj0KRfJTQJdUdOzWNrbgKvlM+eMv7ydh90ffq9ljzyjQ=
+X-Received: by 2002:a05:622a:528b:b0:461:3e03:738b with SMTP id
+ d75a77b69052e-462fa619d72mr4247661cf.19.1730990918259; Thu, 07 Nov 2024
+ 06:48:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="hYyuC9AgkQKiubg2"
-Content-Disposition: inline
-In-Reply-To: <7a791358-63ff-41e1-b7f0-e687df21047b@sirena.org.uk>
-
-
---hYyuC9AgkQKiubg2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20241106170927.130996-1-surenb@google.com> <2024110700-undertone-coastline-7484@gregkh>
+ <2024110725-goofiness-release-bd30@gregkh>
+In-Reply-To: <2024110725-goofiness-release-bd30@gregkh>
+From: Suren Baghdasaryan <surenb@google.com>
+Date: Thu, 7 Nov 2024 06:48:26 -0800
+Message-ID: <CAJuCfpFRH_TMJ4v+KsaLMi__yaHg9Agg-HdyUFdHzc=3MeMTnA@mail.gmail.com>
+Subject: Re: [PATCH v2 6.11.y 1/2] rcu/kvfree: Add kvfree_rcu_barrier() API
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: akpm@linux-foundation.org, fw@strlen.de, urezki@gmail.com, vbabka@suse.cz, 
+	greearb@candelatech.com, kent.overstreet@linux.dev, stable@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi!
+On Wed, Nov 6, 2024 at 10:46=E2=80=AFPM Greg KH <gregkh@linuxfoundation.org=
+> wrote:
+>
+> On Thu, Nov 07, 2024 at 07:37:43AM +0100, Greg KH wrote:
+> > On Wed, Nov 06, 2024 at 09:09:26AM -0800, Suren Baghdasaryan wrote:
+> > > From: Uladzislau Rezki <urezki@gmail.com>
+> > >
+> > > commit 3c5d61ae919cc377c71118ccc76fa6e8518023f8 upstream.
+> >
+> > No, that's not the right git id :(
+>
+> But it is the git id of the fixup patch that I also need to take, so now
+> grabbed, thanks for making me look :)
 
-> > > This is the start of the stable review cycle for the 6.11.7 release.
-> > > There are 249 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, plea=
-se
-> > > let me know.
-> >=20
-> > CIP testing has problem with BeagleBone Black on 6.11:
-> >=20
-> > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/li=
-nux-6.11.y
->=20
-> My Beaglebone Black jobs ran fairly happily, eg:
->=20
->    https://lava.sirena.org.uk/scheduler/job/951530
->=20
-> Looking at your logs:
->=20
->    https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/8=
-295477303
->=20
-> you seem to be seeing an infrastructure issue:
->=20
-> * lava.pdu-reboot [pass]
-> * lava.bootloader-commands [fail]
-> * lava.uboot-commands [fail]
-> * lava.uboot-action [fail]
-> * lava.power-off [pass]
-> * lava.job [fail]
->=20
-> The job is failing in the bootloader:
->=20
->    https://lava.ciplatform.org/scheduler/job/1218595
->=20
-> shows:
->=20
-> | =3D> bootz 0x82000000 - 0x88000000
-> | zimage: Bad magic!
->=20
-> I didn't check but this almost always indicates that the download to the
-> board was corrupted due to some image size having grown large enough to
-> overwrite the adjacent image, you'll need to adjust the load addresses.
+Sorry for the confusion. Sounds like you sorted it out :)
 
-Yep, thanks, it does not seem to be kernel issue. People from our Q&A
-team are investigating.
-
-Best regards,
-								Pavel
-
-
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---hYyuC9AgkQKiubg2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZyzOfAAKCRAw5/Bqldv6
-8gR9AJ0cLQIcPjjUH2FMKyyHT0t1aa95WgCeI0Cvrur4op9pQlGunOhuhRZLt8E=
-=E2Fh
------END PGP SIGNATURE-----
-
---hYyuC9AgkQKiubg2--
+>
+> greg k-h
