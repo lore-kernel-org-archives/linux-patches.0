@@ -1,109 +1,130 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0494A1D0400;
-	Fri,  8 Nov 2024 14:56:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731077783; cv=none; b=OX4BaZqt5kaoiJ7Pt1bq9SGPQZ1o0fGPzxYZK6Llu3H4NoTsRI3OZC4vJ0I8wKlXF/FWGEhRueZRTXZKspJcA/uyn7N959GCetHhvAOqt1SucIWBRFYcCkwIzR4escosbDrRjhPI4g1lEnfYDQocV4JPVr98KWNtzPM0V7/DXV0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731077783; c=relaxed/simple;
-	bh=6FAwEz1aNs6pjulAvH3wCg9nOjDsVb0l9FuLjHXGFtI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AFT8T8n/qxI2wegeuxpqGc8aE9s50Bgt7U5dDtHycLK/nX9ddxyBGASzP+xe0wvPdbWfE/1hY9bGVZkeaNL0fz9r5ps15yFYTqEgvC7L5kl1pNejPDqpR6eMG2NiFXi3j2tVR71aHeTYtFpjWr1WCPb04V3ECLScgHf1T1/Uxis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b9hZFeNV; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BB41F4711
+	for <patches@lists.linux.dev>; Fri,  8 Nov 2024 14:56:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1731077788; cv=pass; b=i8Po95II0siykHL8GAvi24lrfVyeQyfvERYemr6r4BA/5Q6aYdzhuQgHo5jVkCDCEmvUew17zk0482bm7Y7hf4zxdfcmhjErv+O0FBdIDuLECf+OuCGMIJIAUwwehGV0LbcGk+VFhHBlcjxsoqxjpgFEU3N7gdGXdm1PQTXII9k=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1731077788; c=relaxed/simple;
+	bh=jY8mL9KFW/tlrl9+sLpaVUGT79pR9NyDU8R45I8w1l4=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=acrPKlmCHvqdrerk/1BOBqhY1lLDhiIrqnXDtKM0069tNSuSRdEag5nkl+XuNy0bHttCoO7jGMCF+xg39/JdXuhLs+MYtvsTCHGJiedpIcUnBbQKdYY5Szaedsujb+Ofu3qSaOueUetV6RpCxX3RMrvnRLnpkLcDY0Npdzcgrdk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=ZNns02Wx; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b9hZFeNV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16CD3C4CECD;
-	Fri,  8 Nov 2024 14:56:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731077782;
-	bh=6FAwEz1aNs6pjulAvH3wCg9nOjDsVb0l9FuLjHXGFtI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=b9hZFeNVj8VpGUF0f27FLcnlwN8hRdEybVmw28VptgICFG1V13MnGp3yEMYfBMgLF
-	 qX/rFwNSfcv6bGXMcrHN8aqlcZJLH8/ebuueRx4DuApb7umf0a73hsVDq9dTwb3u5+
-	 6sLvOCk4DKWF4jlO7DvWI9Agl3/36SYxws1x7QNr/FKjeAnR21CHXWHKToEKVvIyTN
-	 IDVZ+ob4t2u0QPax7OJ8MG5Wr8LNPlnwXdoAKe4KRH6mWxcge8Ftmj7JhkBp7kbI86
-	 C6EM6SEYAebI18+wacEEL8/H9ag8KIaqO8kbE/S3KvBuIE/bSahpBE4+XVgADcl5FV
-	 yBC9lwPvpCnwg==
-Date: Fri, 8 Nov 2024 14:56:14 +0000
-From: Will Deacon <will@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: acpica-devel@lists.linux.dev, iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>,
-	kvm@vger.kernel.org, Len Brown <lenb@kernel.org>,
-	linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Robert Moore <robert.moore@intel.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Donald Dutile <ddutile@redhat.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Moritz Fischer <mdf@kernel.org>,
-	Michael Shavit <mshavit@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
-	Mostafa Saleh <smostafa@google.com>
-Subject: Re: [PATCH v4 00/12] Initial support for SMMUv3 nested translation
-Message-ID: <20241108145611.GB17325@willie-the-truck>
-References: <0-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com>
- <20241101121849.GD8518@willie-the-truck>
- <20241101132503.GU10193@nvidia.com>
- <20241105164829.GA12923@willie-the-truck>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="ZNns02Wx"
+ARC-Seal: i=1; a=rsa-sha256; t=1731077765; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=JkvlOqTtn1DJDLeCoPYJy6vVo9xddfv6yCEYoJn27GkdVnVOyONKs0Ct2NQQ+gnSX0yo/OUp7ZXCeEiNQvqPSiZlGeQTOE4rm/oU4GxA4swru3hM9yT0eqpUBHsfPfXXu9KCVN/VIl3yvRv2VSBGyNeh1wJK+yErVJJy94KqzH8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1731077765; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=JIL0Tqq6XSmmFjo5ZnYFi9IVsl+kxJkuAUuGy/hPIwo=; 
+	b=XrFy2BRAGcYh7O5vMnRzsehbaW0bR+GSg/mrYoHRyDqxYnILQw3GOtY16BROZJQJTwQy0AEm7SYCyAyMsbI1pI8QTOTM0kHDhg1/EMrbvP7NvwhrplD+3hItMfn4oYLo0kg8WstWjuqL5SzPkwmavBcFa3hWv14iG1K5gL1FnNk=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
+	dmarc=pass header.from=<Usama.Anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1731077765;
+	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=JIL0Tqq6XSmmFjo5ZnYFi9IVsl+kxJkuAUuGy/hPIwo=;
+	b=ZNns02WxN4wxMVz7k5pHHMV+9QL+hfsIM8s1CxhRN7iZTyiVJkJmj7Yh6f48vtaM
+	6kB2jSfyEm0bErFjxEKgugujQviuM0JED6Vgy+g1X0TGPpT4r7c5rkroIM08yj20m7h
+	7oWyIwA5viAWaTz+iICsPOCFjDgNXH2DH1hlvR9M=
+Received: by mx.zohomail.com with SMTPS id 173107776421953.72453123934565;
+	Fri, 8 Nov 2024 06:56:04 -0800 (PST)
+Message-ID: <074e19e1-fbe5-438e-83c7-3840c389ef6c@collabora.com>
+Date: Fri, 8 Nov 2024 19:55:52 +0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241105164829.GA12923@willie-the-truck>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+User-Agent: Mozilla Thunderbird
+Cc: Usama.Anjum@collabora.com, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hagar@microsoft.com,
+ broonie@kernel.org
+Subject: Re: [PATCH 5.4 000/461] 5.4.285-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+References: <20241107063341.146657755@linuxfoundation.org>
+Content-Language: en-US
+From: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
+In-Reply-To: <20241107063341.146657755@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-On Tue, Nov 05, 2024 at 04:48:29PM +0000, Will Deacon wrote:
-> On Fri, Nov 01, 2024 at 10:25:03AM -0300, Jason Gunthorpe wrote:
-> > On Fri, Nov 01, 2024 at 12:18:50PM +0000, Will Deacon wrote:
-> > > On Wed, Oct 30, 2024 at 09:20:44PM -0300, Jason Gunthorpe wrote:
-> > > > [This is now based on Nicolin's iommufd patches for vIOMMU and will need
-> > > > to go through the iommufd tree, please ack]
-> > > 
-> > > Can't we separate out the SMMUv3 driver changes? They shouldn't depend on
-> > > Nicolin's work afaict.
-> > 
-> > We can put everything before "iommu/arm-smmu-v3: Support
-> > IOMMU_VIOMMU_ALLOC" directly on a rc and share a branch with your tree.
-> > 
-> > That patch and following all depend on Nicolin's work, as they rely on
-> > the VIOMMU due to how different ARM is from Intel.
-> > 
-> > How about you take these patches:
-> > 
-> >  [PATCH v4 01/12] vfio: Remove VFIO_TYPE1_NESTING_IOMMU
-> >  [PATCH v4 02/12] ACPICA: IORT: Update for revision E.f
-> >  [PATCH v4 03/12] ACPI/IORT: Support CANWBS memory access flag
-> >  [PATCH v4 04/12] iommu/arm-smmu-v3: Report IOMMU_CAP_ENFORCE_CACHE_COHERENCY for CANWBS
-> >  [PATCH v4 05/12] iommu/arm-smmu-v3: Support IOMMU_GET_HW_INFO via struct arm_smmu_hw_info
-> >  [PATCH v4 06/12] iommu/arm-smmu-v3: Implement IOMMU_HWPT_ALLOC_NEST_PARENT
-> >  [PATCH v4 07/12] iommu/arm-smmu-v3: Expose the arm_smmu_attach interface
-> > 
-> > Onto a branch.
+On 11/7/24 11:47 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.285 release.
+> There are 461 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> I've pushed these onto a new branch in the IOMMU tree:
+> Responses should be made by Sat, 09 Nov 2024 06:32:59 +0000.
+> Anything received after that time might be too late.
 > 
-> 	iommufd/arm-smmuv3-nested
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.285-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
 > 
-> However, please can you give it a day or two to get some exposure in
-> -next before you merge that into iommufd? I'll ping back here later in
-> the week.
+> thanks,
+> 
+> greg k-h
+> 
+> -------------
+Hi,
 
-Not seen anything go bang in -next, so I think we can consider this
-branch stable now.
+Please find the KernelCI report below :-
 
-Will
+
+OVERVIEW
+
+    Builds: 21 passed, 2 failed
+
+    Boot tests: 46 passed, 0 failed
+
+    CI systems: maestro
+
+REVISION
+
+    Commit
+        name: 
+        hash:   5dfaabbf946a8554cfc17ba8c289fe5eda8a3e1c
+    Checked out from
+        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+
+BUILDS
+
+    Failures
+      - arm64 (defconfig)
+      Build detail: https://kcidb.kernelci.org/d/build/build?var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-id=maestro:672c672e58937056c603d256&var-test-path=boot&from=now-100y&to=now&timezone=browser&var-test_path=&var-issue_presence=yes
+      Build error: ./arch/arm64/include/asm/memory.h: In function ‘kaslr_offset’:
+      ./arch/arm64/include/asm/memory.h:85:50: error: ‘KASAN_SHADOW_SCALE_SHIFT’ undeclared (first use in this function)
+       85 | #define KASAN_SHADOW_END        ((UL(1) << (64 - KASAN_SHADOW_SCALE_SHIFT)) \
+      - arm64 (chromeos-5.4/arm64/chromiumos-qualcomm.flavour.config)
+      Build detail: https://kcidb.kernelci.org/d/build/build?var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-id=maestro:672c672b58937056c603d232&var-test-path=boot&from=now-100y&to=now&timezone=browser&var-test_path=&var-issue_presence=yes
+      Build error: /tmp/ccMynPub.s:129: Error: invalid barrier type -- `dmb ishld'
+      /tmp/ccMynPub.s:234: Error: invalid barrier type -- `dmb ishld'
+      /tmp/ccMynPub.s:510: Error: invalid barrier type -- `dmb ishld'
+
+BOOT TESTS
+
+    No new boot failures found
+
+See complete and up-to-date report at:
+    https://kcidb.kernelci.org/d/revision/revision?orgId=1&var-datasource=edquppk2ghfcwc&var-git_commit_hash=5dfaabbf946a8554cfc17ba8c289fe5eda8a3e1c&var-patchset_hash=&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-test_path=boot&from=now-100y&to=now&timezone=browser
+
+Tested-by: kernelci.org bot <bot@kernelci.org>
+
+Thanks,
+KernelCI team
