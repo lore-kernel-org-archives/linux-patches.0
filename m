@@ -1,133 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E911D2F54;
-	Fri,  8 Nov 2024 07:50:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5521DEFEA
+	for <patches@lists.linux.dev>; Fri,  8 Nov 2024 08:56:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731052252; cv=none; b=JqHP7E2acvCOti/UI7SOz5ydpHHwMbVC521mwN04crdSkEteVWBMLvMPZoe3SbQtHV+fyn7nL7U/uTfYQmqXwCRChrrXULC94NvMKaXNgyjDv0LlIdD7Xfepz/+OoylHLZR8lijpXaxU32vksccquHj/dKu1aTHnccitrOC3Icc=
+	t=1731056191; cv=none; b=eREONKB8GLf9qOb/j2JDRmKo854VAMlnMv7n5hX3ooyXweT5lf8XoRdoZVbN/xDrdf31RpHFy6I22RxqPEIjjO3XzyvzjeEGn4YvoYTdkHwrgSwxaJCOXBhGxgwa9yYGLAgIBhetMKhUuzennuks5CGyCVpd+SlNfd8jBR4xmVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731052252; c=relaxed/simple;
-	bh=PidCOc5vam5FIUslcJaLD9YUGnOw3EfiaT/M3s5atqk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hnyZdV9TX53hzfWc/cBdNL6yYwoyeRMED3IpQk2tttuXrUIYDIjSoIBBYy09W5bJeFPds2xFyVIUHzfZrleZTbVBWdlG7guRZD2IBlW+LRgFDqFd/aGOQcpP0I2y5HdcAwhXahVvg3uRJt1ZKiKU3PEuy6Wyc1/Wowi0cHFnF7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdBYMvYq; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdBYMvYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558AFC4CECE;
-	Fri,  8 Nov 2024 07:50:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731052251;
-	bh=PidCOc5vam5FIUslcJaLD9YUGnOw3EfiaT/M3s5atqk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QdBYMvYq4Jbk51kd714CXMpJdgnw3V2SYQDUcIzQspywKEJQEdo+y+CSDIow1AEUc
-	 OywSSlv45J8DHb6AH/LqP3z1ddfzU+PhIr33lGY+yXmGchC61vgxPCE/AVsKuESlRC
-	 Angg1LHb4c6FXoNvDyTKWIdYB/dwnDdTV4LnDdig=
-Date: Fri, 8 Nov 2024 08:50:49 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Florian Fainelli <f.fainelli@gmail.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hagar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 5.4 000/461] 5.4.285-rc2 review
-Message-ID: <2024110817-ozone-tanning-0df8@gregkh>
-References: <20241107063341.146657755@linuxfoundation.org>
- <05671820-dee5-4b31-b585-5e1f034e65f6@gmail.com>
+	s=arc-20240116; t=1731056191; c=relaxed/simple;
+	bh=rrmgunvTJ+LbeosaRNs9WFk6xpnbkpOpbqPD4AJK4s0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MfW9KPpNOa8of8r/nWIwpjycQs2XbGkIK2cN0PgFYpJOp2B6OFR34m4grlGHJMnTtYKRldDzrM63wC+FyEhqHOQaftciEI5OsDvTmwxofU5aea6uTqUiMEB7McUvXhQDwlBr9CoYGvuR6D5J9BwLmVBpagJdJrDlAYXqV+YV3sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e3314fc5aacso1809085276.3
+        for <patches@lists.linux.dev>; Fri, 08 Nov 2024 00:56:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731056188; x=1731660988;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/wpmVEsmuJB7pcIow0lnOOrf5v2idmphGsuBkI3kTvk=;
+        b=h4bizmdelDhex3NLY5JNP/7ss2tiCvAQxe1hEHuM3ishWQ05oSqD1DucanvuZe0VbR
+         1HbfGfE2rtkNcB6Pml6jjJPNQnZhQ+Za5B6Opz2BbASPIH73twkNJJ9ClNx2cPe23BRw
+         yHvQbJd89D1v4AS8PgzL+Nh23xxZ+XQDArAHTvysnS4C7I2TdMsdJ6wFFOu7F1bmTgkF
+         bGwqO9iQVuUyghy+VrKcuCrZ+UCd3SY6SoQuq92TZQsmR9JKx3xxs8otvDxiW39VImDO
+         umfxQtHzXUGeIkVbLJE6rCjsz7xys3UC/H2Qndimrqai+1UCP9BEKHhL9i6ICgtTZPYs
+         DykA==
+X-Forwarded-Encrypted: i=1; AJvYcCUZVEAmVMxCEwyUzJm+XhGr7odbBSiLSbQnadwBvayQdMjiCP5jf+YZ5tTqhci0plMEW3izvYZf@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyyhiv08AUUXhDEzl3xgpi0h9+ibS11V+uB/ba1HmyhulLRKS1V
+	VDZ9spaYIxrtDDdtHW5KI8vby7IVPa3KPkyhrSYvMqKwMpy4QFRWYezB5+GA
+X-Google-Smtp-Source: AGHT+IHiNOXNxddqXdl2hVzVNfs2FJDt4x5+RutoOnwe4udBpvbXgE2/dYtEtR0paETXY8pxmO7S7g==
+X-Received: by 2002:a05:6902:cc6:b0:e33:1c9e:5cf2 with SMTP id 3f1490d57ef6-e337f8beb36mr2098082276.39.1731056188285;
+        Fri, 08 Nov 2024 00:56:28 -0800 (PST)
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com. [209.85.128.175])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e336f1ba572sm627693276.37.2024.11.08.00.56.27
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Nov 2024 00:56:27 -0800 (PST)
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6ea8419a57eso21675387b3.1
+        for <patches@lists.linux.dev>; Fri, 08 Nov 2024 00:56:27 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVnpvP06ipurqMgzAXrl+3f19XnTvjyxN6sU+baQFL3xTTVuGcg5OTonfZleDNgkZ+0eTA1IlRV@lists.linux.dev
+X-Received: by 2002:a05:690c:4b90:b0:6ea:7198:fb64 with SMTP id
+ 00721157ae682-6eaddfa4910mr21644887b3.41.1731056187520; Fri, 08 Nov 2024
+ 00:56:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <05671820-dee5-4b31-b585-5e1f034e65f6@gmail.com>
+References: <20241016212016.887552-1-sboyd@kernel.org> <20241017203810.GA814469-robh@kernel.org>
+ <38153cbf2616a4a6706412952778eec1.sboyd@kernel.org>
+In-Reply-To: <38153cbf2616a4a6706412952778eec1.sboyd@kernel.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Fri, 8 Nov 2024 09:56:15 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdWp84u66Y-ELtbbRmySYwQch_=2qQiXzWJzrSkGeLZYBA@mail.gmail.com>
+Message-ID: <CAMuHMdWp84u66Y-ELtbbRmySYwQch_=2qQiXzWJzrSkGeLZYBA@mail.gmail.com>
+Subject: Re: [PATCH] of: Allow overlay kunit tests to run CONFIG_OF_OVERLAY=n
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, devicetree@vger.kernel.org, 
+	kunit-dev@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 07, 2024 at 08:39:39AM -0800, Florian Fainelli wrote:
-> 
-> 
-> On 11/6/2024 10:47 PM, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.4.285 release.
-> > There are 461 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Sat, 09 Nov 2024 06:32:59 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.285-rc2.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> 
-> On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on
-> BMIPS_GENERIC:
-> 
-> Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-> 
-> There are however new build warnings, on 32-bit:
-> 
-> In file included from ./include/linux/mm.h:29,
->                  from ./include/linux/pagemap.h:8,
->                  from ./include/linux/buffer_head.h:14,
->                  from fs/udf/udfdecl.h:12,
->                  from fs/udf/inode.c:32:
-> fs/udf/inode.c: In function 'udf_current_aext':
-> ./include/linux/overflow.h:61:22: warning: comparison of distinct pointer
-> types lacks a cast
->    61 |         (void) (&__a == __d);                   \
->       |                      ^~
-> fs/udf/inode.c:2202:21: note: in expansion of macro 'check_add_overflow'
->  2202 |                 if (check_add_overflow(sizeof(struct allocExtDesc),
->       |                     ^~~~~~~~~~~~~~~~~~
-> 
-> 
-> On 64-bit:
-> 
-> fs/udf/inode.c: In function 'udf_current_aext':
-> ./include/linux/overflow.h:60:15: warning: comparison of distinct pointer
-> types lacks a cast
->   (void) (&__a == &__b);   \
->                ^~
-> fs/udf/inode.c:2202:7: note: in expansion of macro 'check_add_overflow'
->    if (check_add_overflow(sizeof(struct allocExtDesc),
->        ^~~~~~~~~~~~~~~~~~
-> ./include/linux/overflow.h:61:15: warning: comparison of distinct pointer
-> types lacks a cast
->   (void) (&__a == __d);   \
->                ^~
-> fs/udf/inode.c:2202:7: note: in expansion of macro 'check_add_overflow'
->    if (check_add_overflow(sizeof(struct allocExtDesc),
->        ^~~~~~~~~~~~~~~~~~
-> 
-> In file included from ./include/linux/mm.h:29,
->                  from ./include/linux/pagemap.h:8,
->                  from ./include/linux/buffer_head.h:14,
->                  from fs/udf/udfdecl.h:12,
->                  from fs/udf/super.c:41:
-> fs/udf/super.c: In function 'udf_fill_partdesc_info':
-> ./include/linux/overflow.h:60:15: warning: comparison of distinct pointer
-> types lacks a cast
->   (void) (&__a == &__b);   \
->                ^~
-> fs/udf/super.c:1162:7: note: in expansion of macro 'check_add_overflow'
->    if (check_add_overflow(map->s_partition_len,
->        ^~~~~~~~~~~~~~~~~~
+Hi Stephen,
 
-Yes, this is due to commit d219d2a9a92e ("overflow: Allow mixed type
-arguments") not being backported to 5.4 and 5.10.y trees.  If people
-want to see these warnings removed, perhaps someone can provide a
-working backport of this commit :)
+On Sat, Oct 19, 2024 at 12:21=E2=80=AFAM Stephen Boyd <sboyd@kernel.org> wr=
+ote:
+> Quoting Rob Herring (2024-10-17 13:38:10)
+> > On Wed, Oct 16, 2024 at 02:20:15PM -0700, Stephen Boyd wrote:
+> > > Some configurations want to enable CONFIG_KUNIT without enabling
+> > > CONFIG_OF_OVERLAY. The kunit overlay code already skips if
+> > > CONFIG_OF_OVERLAY isn't enabled, so this select here isn't really doi=
+ng
+> > > anything besides making it easier to run the tests without them
+> > > skipping. Remove the select and move the config setting to the
+> > > drivers/of/.kunitconfig file so that the overlay tests can be run wit=
+h
+> > > or without CONFIG_OF_OVERLAY set to test either behavior.
 
-thanks,
+Thanks for your patch, which is now commit 027af8c26fdc0642 ("of: Allow
+overlay kunit tests to run CONFIG_OF_OVERLAY=3Dn") in dt-rh/for-next.
 
-greg k-h
+> > > Fixes: 5c9dd72d8385 ("of: Add a KUnit test for overlays and test mana=
+ged APIs")
+> >
+> > Doesn't really seem like a fix.
+>
+> Ok. Feel free to drop the tag.
+>
+> > Does this need to go into 6.12?
+>
+> It's only important for 6.12 if kernel configurators want to build the
+> kernel with OF_OVERLAY_KUNIT_TEST enabled and not be forced to enable
+> CONFIG_OF_OVERLAY. I don't mind if it waits a while.
+
+I'd say it's a fix, so please keep at last the Fixes tag. Merely
+enabling kunit tests (which can be modular) should not increase the
+possible attack vector on a product by enabling extra unneeded code.
+
+So
+Acked-by: Geert Uytterhoeven <geert+renesas@glider.be>
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
