@@ -1,55 +1,43 @@
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B081D07A7
-	for <patches@lists.linux.dev>; Fri,  8 Nov 2024 07:21:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5341D12E9;
+	Fri,  8 Nov 2024 07:35:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731050469; cv=none; b=jgp7MfVb+idfYSKvioYzCGXFsyH67vNPcBRwAznAQKJj0vZ594EZoGDzpCmDFRbHmjx3azjflqdoWfmBoxztmFLaZdmfaQXwAym78aZMlNEK3nSeTMqvP3Wv8jOblDG6ocE/71GIUy1DAdE0d7y/GupXNyE9WLaXJ/5yIDfRUSI=
+	t=1731051328; cv=none; b=fHjdjn8kz6SuBSBzeUo7P9Ejn+B/yUC7vKsT8V6CdJ2TrKLYS8v07KIbYqxBdOFh2MWrdPn/dJEJrLaAqs27+4zTGu1zVBiKJMU8EAoZvAxhigiCwchGQzaqvdHH6zr9lXbjSAdR5SFY3dlzi1nddhPuTFhwsxuMRxEW1a/FBTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731050469; c=relaxed/simple;
-	bh=23tATNDA+iMUE4C2pCRwp33Op7BC0dmSavYfH4GpOvI=;
+	s=arc-20240116; t=1731051328; c=relaxed/simple;
+	bh=JFPQHfMfRHmJuaiD5Io50N6l60lWhMea8yWRnZhrYFo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WO7JyXljYavd2Z2b93Cjy5R4G+VOdF8mDc31XjFm/LcSYrXU1uUsAVqU4ZZQ9tbBFAq7gnY+8vDBHyQUIOfBf1RXXK3wSyhJtZhSpNbCjAoXIqIFMvGBu+EEo701pxN0pbmMSe3vqj9lGYr9B7rj8k6dZMTsjPr62XW/lvs9cvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Ds08UC5s; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=4dS/fdsr; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=oUs0uwQeVuqYA2CC2c/h22w7tMe2HQp3oL2oGXp49mdStrv9fjLvfF42EJAV0ox0fTl677YGQ/hr73U2JeQAQWARQBMYPPpPuF/L8Y9XiVSlhxQ1nYVUTnpfWQmKsvb59edybo8iCPfMWE4yytnf+avGm7Z6Vk1ylANJ0MIKbn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPrbu+2Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Ds08UC5s";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="4dS/fdsr"
-Date: Fri, 8 Nov 2024 08:21:04 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1731050465;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=e54qp4gQIl1mGHYFjl2FQL12XUiO7bGeMiKlRC5hwdc=;
-	b=Ds08UC5swG4xtuE1x9NYUtwyOQxcirN+RT7qR6bOpsPx1l/t6KKPT96pesnGEp4eY4L97E
-	jPwiDFDAQhcgxejPwfQEEHBFLlbiC1iRDNBpgQ5UraGrNVFFa5ikvX/9P9eVaHgXgJ81yl
-	xkjdnaHf0Y7XSq8HwsXnZZUMivlHA6I8wYSBCktI5vrlwfcgoZsVY0q9RoUZax02jvdE+5
-	70B9bEZHVXGO9GdTsZXaQlWNaNs/Un8oY+NAMZ6iKnoZFB6eLVjDBGtVMd/poazRnH1u3l
-	Pv6A/AUWUemy4f0RIaYWGQk8GAlUJAEvdRu37yek/xZ985RhAIvhka1A8U5Qfw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1731050465;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=e54qp4gQIl1mGHYFjl2FQL12XUiO7bGeMiKlRC5hwdc=;
-	b=4dS/fdsriADavjlgWWJQBgwFyovBdPTsd9tyXgz2C2c9BYoJfaJ6ABcOA/yy0KD8HLNOrK
-	QU/rtgNfbWKoHfDA==
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPrbu+2Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB60CC4CECE;
+	Fri,  8 Nov 2024 07:35:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1731051327;
+	bh=JFPQHfMfRHmJuaiD5Io50N6l60lWhMea8yWRnZhrYFo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QPrbu+2ZxtxlsEHyCJezxqzzAWCr1cb44XjndpumsCKCjuxR11QRA29j2FSx+/LTd
+	 3oEV3i9KVoTzWhkM7J7Uh3tzxpexWf8W7Bk14cwsq15gYdbTagJDkuwH9Cicilel3h
+	 Hy7ONNLqSNdMEl1WWtILAPEBZuh7QGxdzs9f2OMk=
+Date: Fri, 8 Nov 2024 08:35:07 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Wander Lairson Costa <wander@redhat.com>,
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Wander Lairson Costa <wander@redhat.com>,
 	Yuying Ma <yuma@redhat.com>,
 	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Simon Horman <horms@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Florian Bezdeka <florian.bezdeka@siemens.com>
 Subject: Re: [PATCH 6.11 030/245] igb: Disable threaded IRQ for igb_msix_other
-Message-ID: <20241108072104.SfHZzo4P@linutronix.de>
+Message-ID: <2024110856-mandolin-unbutton-110e@gregkh>
 References: <20241106120319.234238499@linuxfoundation.org>
  <20241106120319.970840571@linuxfoundation.org>
  <358ba32f-99f6-4a60-a25f-922a9b2273d2@siemens.com>
@@ -59,18 +47,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <358ba32f-99f6-4a60-a25f-922a9b2273d2@siemens.com>
 
-On 2024-11-08 08:01:12 [+0100], Jan Kiszka wrote:
+On Fri, Nov 08, 2024 at 08:01:12AM +0100, Jan Kiszka wrote:
+> On 06.11.24 13:01, Greg Kroah-Hartman wrote:
+> > 6.11-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Wander Lairson Costa <wander@redhat.com>
+> > 
+> > [ Upstream commit 338c4d3902feb5be49bfda530a72c7ab860e2c9f ]
+> > 
+> > During testing of SR-IOV, Red Hat QE encountered an issue where the
+> > ip link up command intermittently fails for the igbvf interfaces when
+> > using the PREEMPT_RT variant. Investigation revealed that
+> > e1000_write_posted_mbx returns an error due to the lack of an ACK
+> > from e1000_poll_for_ack.
+> > 
+> > The underlying issue arises from the fact that IRQs are threaded by
+> > default under PREEMPT_RT. While the exact hardware details are not
+> > available, it appears that the IRQ handled by igb_msix_other must
+> > be processed before e1000_poll_for_ack times out. However,
+> > e1000_write_posted_mbx is called with preemption disabled, leading
+> > to a scenario where the IRQ is serviced only after the failure of
+> > e1000_write_posted_mbx.
+> > 
+> > To resolve this, we set IRQF_NO_THREAD for the affected interrupt,
+> > ensuring that the kernel handles it immediately, thereby preventing
+> > the aforementioned error.
+> > 
+> > Reproducer:
+> > 
+> >     #!/bin/bash
+> > 
+> >     # echo 2 > /sys/class/net/ens14f0/device/sriov_numvfs
+> >     ipaddr_vlan=3
+> >     nic_test=ens14f0
+> >     vf=${nic_test}v0
+> > 
+> >     while true; do
+> > 	    ip link set ${nic_test} mtu 1500
+> > 	    ip link set ${vf} mtu 1500
+> > 	    ip link set $vf up
+> > 	    ip link set ${nic_test} vf 0 vlan ${ipaddr_vlan}
+> > 	    ip addr add 172.30.${ipaddr_vlan}.1/24 dev ${vf}
+> > 	    ip addr add 2021:db8:${ipaddr_vlan}::1/64 dev ${vf}
+> > 	    if ! ip link show $vf | grep 'state UP'; then
+> > 		    echo 'Error found'
+> > 		    break
+> > 	    fi
+> > 	    ip link set $vf down
+> >     done
+> > 
+> > Signed-off-by: Wander Lairson Costa <wander@redhat.com>
+> > Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
+> > Reported-by: Yuying Ma <yuma@redhat.com>
+> > Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+> > Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+> > Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+> > Reviewed-by: Simon Horman <horms@kernel.org>
+> > Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > ---
+> >  drivers/net/ethernet/intel/igb/igb_main.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+> > index f1d0881687233..b83df5f94b1f5 100644
+> > --- a/drivers/net/ethernet/intel/igb/igb_main.c
+> > +++ b/drivers/net/ethernet/intel/igb/igb_main.c
+> > @@ -907,7 +907,7 @@ static int igb_request_msix(struct igb_adapter *adapter)
+> >  	int i, err = 0, vector = 0, free_vector = 0;
+> >  
+> >  	err = request_irq(adapter->msix_entries[vector].vector,
+> > -			  igb_msix_other, 0, netdev->name, adapter);
+> > +			  igb_msix_other, IRQF_NO_THREAD, netdev->name, adapter);
+> >  	if (err)
+> >  		goto err_out;
+> >  
 > 
 > This is scheduled for being reverted upstream [1]. Please drop from all 
 > stable queues.
 
-The wheels are in motion
-	https://lore.kernel.org/20241106111427.7272-1-wander@redhat.com
+Now dropped from all of them, thanks.
 
-> Jan
-
-Sebastian
+greg k-h
