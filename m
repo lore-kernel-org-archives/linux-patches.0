@@ -1,82 +1,94 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963641F4FA2;
-	Fri,  8 Nov 2024 15:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6960D1991BD;
+	Fri,  8 Nov 2024 16:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731080835; cv=none; b=rpgmfs/GawOiQGd0+Q05cuMsiv2Pq6YFVoZpF2ehM2pbR/RK4Mjo/7TgHmnT1n5K1m6W5msOs54Vjb4zIdmRxrOUe4nntDI+gER4IDmWWIEoFofxoMrX1fersXYSFxfjaGyeOf12xRxvSbDHhuEtvwhN/WXpVwpZ/dR0oWUvSPY=
+	t=1731084935; cv=none; b=speIbh9LSFKEpij16jOmStJI3OrI2kfiFluGE0X7M9SOuHQpLlFlTRC/BNYXjGVZyQrJjgRF/ee2RMwGE/3lYqnhMi4u6lGviKPhXVD638gvky6WIeIg1EjEJahuOw7AW5qlDWRjiIdYm2UkYs3ru9T5KcrZWFxMWpacBH/cOO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731080835; c=relaxed/simple;
-	bh=V4sN8c5UMc7TF/GLnT31+BpkP2tlxqfCtebPqzVlW6M=;
+	s=arc-20240116; t=1731084935; c=relaxed/simple;
+	bh=kICkJghl4CqQ5MV25sHO+sQ4MhXX6W6lZJNTy62c1I0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gWEfhQwDUl9rmRx8gNan4DNxgWBn4mGgQfEl1sbYCWC4C4ARiSDdgEtg63RrpeElKYoK03/IoVGlbcyenVcGFrDN7JS3I9jRxnS5j4f3ubQg8dPBefJF9jGHvmqC/bHD4CBJDIMQjbudlp804npAjySKdDEshlfhcMH0wBCb5t8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R+AZ9eV1; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=knYF4Gcx21K2BGPu8VyCXqnzK0WgGMHJIS2Hmj4gp1ZIoNOlxmmhil4EKdZOSORAOgBCT839fyspsUoXT/GdocbzOrjwjvhLP2m5h5nWAguH2a74ueSCOov8F4geUZiHxf9fZw3xAq8RGWizWj+eyZfLeouNYJ0LeAD4CMHFAhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d4BTTqei; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R+AZ9eV1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D4AC4CECD;
-	Fri,  8 Nov 2024 15:47:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d4BTTqei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A787FC4CECD;
+	Fri,  8 Nov 2024 16:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731080835;
-	bh=V4sN8c5UMc7TF/GLnT31+BpkP2tlxqfCtebPqzVlW6M=;
+	s=k20201202; t=1731084933;
+	bh=kICkJghl4CqQ5MV25sHO+sQ4MhXX6W6lZJNTy62c1I0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=R+AZ9eV1312iFUV6O1Jc25xaZTip6kKMBnMb5xGabvbu1iDkCwWMPKzSXfoJJlUmU
-	 6kYwUt0lZXmij6GLtgvqYh8Eadp5Em9eCh5ZkiKY6UzdP9LQTKcUmD+U3eAu+6rxTg
-	 wZm1j96WHcpBYKjA5csgKtVYVzmQZAdXJUHHyd8zrEME2TD1/OfWGac2raiNfrBXqh
-	 JgC2kzqmre3AET1FtPKYxtr0EiQePDePiVyxf0yEy9AYuxn8lzZmuSIoJ+969r+dK9
-	 xFrW1AeRtqQ75wwMtfZwl9gnrQrT5rT108f/fE70YP0DRdx/N6WaoqskQzY2pOxuZd
-	 jI8IqTRfH7ZUw==
-Date: Fri, 8 Nov 2024 15:47:08 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hagar@microsoft.com
-Subject: Re: [PATCH 5.10 000/110] 5.10.229-rc1 review
-Message-ID: <d74e3e72-d264-4824-8d4e-f6e762eec1de@sirena.org.uk>
-References: <20241106120303.135636370@linuxfoundation.org>
+	b=d4BTTqeiIYW6gVnnPCHN6OSIdoa7+aiamxw/x0XPnSje0elpy6fxPKnDrKmIOEgBv
+	 /NLEtZONtpvjdPn2nf+iUKAqenZ1uoyq2bX6kdawp3xzhIpgrvE7YNhxDR09iEJICL
+	 jvdt2zYGgBFyCE3bdGNlQiW2CFKPsmhAg4nujn+9lcX5iw5PVwsnvWlqsHaeuOyVqn
+	 M09qy6R7blBnQ99IlwnoS98dre6aCHiqiSmjHSd2f29cymxPkOfM1MAQHe/EXvaeRg
+	 qixMDqJrGAU92L3MVfs5Lpr75b/eoNHlKPE2b1GfuCAbq7Vthtkc7Lvxo84JpFrHhy
+	 58MmyoXipJL/g==
+Date: Fri, 8 Nov 2024 10:55:32 -0600
+From: Rob Herring <robh@kernel.org>
+To: Geert Uytterhoeven <geert@linux-m68k.org>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: Saravana Kannan <saravanak@google.com>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, devicetree@vger.kernel.org,
+	kunit-dev@googlegroups.com
+Subject: Re: [PATCH] of: Allow overlay kunit tests to run CONFIG_OF_OVERLAY=n
+Message-ID: <20241108165532.GA2411452-robh@kernel.org>
+References: <20241016212016.887552-1-sboyd@kernel.org>
+ <20241017203810.GA814469-robh@kernel.org>
+ <38153cbf2616a4a6706412952778eec1.sboyd@kernel.org>
+ <CAMuHMdWp84u66Y-ELtbbRmySYwQch_=2qQiXzWJzrSkGeLZYBA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tJJd7voXMsJzlhc+"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241106120303.135636370@linuxfoundation.org>
-X-Cookie: Do not overtax your powers.
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMuHMdWp84u66Y-ELtbbRmySYwQch_=2qQiXzWJzrSkGeLZYBA@mail.gmail.com>
 
+On Fri, Nov 08, 2024 at 09:56:15AM +0100, Geert Uytterhoeven wrote:
+> Hi Stephen,
+> 
+> On Sat, Oct 19, 2024 at 12:21 AM Stephen Boyd <sboyd@kernel.org> wrote:
+> > Quoting Rob Herring (2024-10-17 13:38:10)
+> > > On Wed, Oct 16, 2024 at 02:20:15PM -0700, Stephen Boyd wrote:
+> > > > Some configurations want to enable CONFIG_KUNIT without enabling
+> > > > CONFIG_OF_OVERLAY. The kunit overlay code already skips if
+> > > > CONFIG_OF_OVERLAY isn't enabled, so this select here isn't really doing
+> > > > anything besides making it easier to run the tests without them
+> > > > skipping. Remove the select and move the config setting to the
+> > > > drivers/of/.kunitconfig file so that the overlay tests can be run with
+> > > > or without CONFIG_OF_OVERLAY set to test either behavior.
+> 
+> Thanks for your patch, which is now commit 027af8c26fdc0642 ("of: Allow
+> overlay kunit tests to run CONFIG_OF_OVERLAY=n") in dt-rh/for-next.
+> 
+> > > > Fixes: 5c9dd72d8385 ("of: Add a KUnit test for overlays and test managed APIs")
+> > >
+> > > Doesn't really seem like a fix.
+> >
+> > Ok. Feel free to drop the tag.
+> >
+> > > Does this need to go into 6.12?
+> >
+> > It's only important for 6.12 if kernel configurators want to build the
+> > kernel with OF_OVERLAY_KUNIT_TEST enabled and not be forced to enable
+> > CONFIG_OF_OVERLAY. I don't mind if it waits a while.
+> 
+> I'd say it's a fix, so please keep at last the Fixes tag. Merely
+> enabling kunit tests (which can be modular) should not increase the
+> possible attack vector on a product by enabling extra unneeded code.
 
---tJJd7voXMsJzlhc+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Not sure I buy that that is an actual problem. However, not worth 
+arguing over. I only really care because if there's a Fixes, then this 
+really should go to Linus for 6.12 rather than eventually get 
+auto-selected from 6.13 to go to stable. So I moved it to send to Linus, 
+but I found that CONFIG_OF_OVERLAY is still selected with this patch. 
+That's because the clock kunit tests also select CONFIG_OF_OVERLAY. 
+That's fixed in next, but it's not queued up for 6.12.
 
-On Wed, Nov 06, 2024 at 01:03:26PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.229 release.
-> There are 110 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-Tested-by: Mark Brown <broonie@kernel.org>
-
---tJJd7voXMsJzlhc+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmcuMnwACgkQJNaLcl1U
-h9BkQQf+JV+iOsaQS4jDnwiP0KTx2bAQIP0qxlx24kLBE8f2Lp1xdQVnnQV5SEMd
-2RvZv1dp+G4h9uGhrIWVx0cxVuN8nXtxsW+NMboguRjEzC7wSD3+zLp6immYHqoo
-9ehZKzHW6aXjfP3cz008qAQRVRfjZ9+T8y+bq5CsHyqY/xpoMjbrAPUAc58xKJ6K
-EGi9DoBCvL7vllypQeCvwag54B5wEKKl+uznVn+Q8Lj3Qw5j8e3lJInw0csO6JlJ
-oy4lBiUCU7a347RjcOLNXBZ+4nlboiwd0UODnV3RRF7MmrFma0hhkmL5S7/2/+2Y
-/0zlhZcJlbgh2V6Hp9sGtzANlJQkcg==
-=pxoP
------END PGP SIGNATURE-----
-
---tJJd7voXMsJzlhc+--
+Rob
