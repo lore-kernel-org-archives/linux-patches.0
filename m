@@ -1,121 +1,129 @@
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E984E12E7E;
-	Fri,  8 Nov 2024 14:45:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.237.130.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5CFD1803A;
+	Fri,  8 Nov 2024 14:53:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731077156; cv=none; b=NfsPkH5YVg8e4T6Maa7RfRIXNEPmU+eWlQgLa1ywd7u9XVkDwf0LwMPZ2MhQPoH32obwbhG3nVP7lGgGsrYZ2SWcSGtGcYsRu/0wZo6XCoodoR379eEphz8KEUioEN+Su8QyMneBIbXV8cV0bwBchReNBbgNeL1ZDN9bme4WizA=
+	t=1731077611; cv=none; b=jRcplzXzObUN9sMHzAFf6I1+STtiICq46rfn3mZjCLDfO/j7ag7v+2UrtASkDt07igXcPEcodHGMVK3d7L6WUXpv0CuVL6rboE6/N52Gsr8h0tIn+Qgh2fSrqP1BO+9miertVdBOzFfMhl+T/MadCAtKUx109Et13EINfnvhb3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731077156; c=relaxed/simple;
-	bh=+Z17qE27pB32xsCc3tJDQlA/DEvOwiWWUOF6DeMaUbE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ae7chNwpZ9G9VQfjAhVW1WfmsoXcq0GfTL1amKBFxlltYbY8ScG8p+NcQ43DNK3E1T68HRtkEwtqpTL+XUN6sRU5VDvMl3PSZWqnEdhrOmx4l2oUFlmNRerkJKjwAOsQ6k0y1E0DL/1PkAi2T4w1FOCRLm8r5yufkQbYmCqVmFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info; spf=pass smtp.mailfrom=leemhuis.info; dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b=Z6wZF4DU; arc=none smtp.client-ip=80.237.130.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=leemhuis.info
+	s=arc-20240116; t=1731077611; c=relaxed/simple;
+	bh=kZbPfuZ0ikYZXriOFOyM/wtjpbX2/SuwojvsPEaqSLA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oPcNgYSDeZg/EglCRPD406jjMej4FNk5RUDZIJN2rNoRCTw+bXUkF1Mo9Y/Batxxg0LgbRV7GLJhAipjFY71AgH8u4ac2l6ci+8xnUZlayq0Xl2Iqm992mkHRD/5xopsHj/rDvUdjq/ZhsdBGHTN2NRn6AVU684VFFB1PwUajTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rZh606o7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b="Z6wZF4DU"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=leemhuis.info; s=he214686; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:From:
-	Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
-	References; bh=qf5PkJ1Q9UQwMoauWaNfZyGvjJboinzPybJlaIlo9Xw=; t=1731077154;
-	x=1731509154; b=Z6wZF4DUn5XiWzxxmcl4sE2ioN2ZgcLcQdgKNLpesXDnMUuWcm2uMvNh3IG0m
-	pfAFEoEcdXIvZzh1ZIQ1gYhLKKA05tIdDujFYuSttW/aoo4G2LfXmQJQH9YZQCClqlLfFQzPcBT94
-	OvcTpoJmGVVQTxnLUrlmAwJvUeClFeJOCOsy5Bt2RsiFPLkb6z1h0ejNZaSATemp0U1fwy2lVURmy
-	OYAFVGT1GlJD4azupg+58EgCZpnIQywsw9hnqoCItMr5yvtMNYCkL0BPkvGFqE5D8NL04mk/lE4z8
-	jrXpxeoviuXmjrMGhNpkyxn8I8p5e3vst4zPLhbDKq1Es54EEg==;
-Received: from [2a02:8108:8980:2478:87e9:6c79:5f84:367d]; authenticated
-	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	id 1t9QF6-0001Cy-SA; Fri, 08 Nov 2024 15:45:44 +0100
-Message-ID: <76cdb74a-d25b-4ddc-b7b6-f4b3733013b5@leemhuis.info>
-Date: Fri, 8 Nov 2024 15:45:44 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rZh606o7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1CCC4CED5;
+	Fri,  8 Nov 2024 14:53:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1731077611;
+	bh=kZbPfuZ0ikYZXriOFOyM/wtjpbX2/SuwojvsPEaqSLA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rZh606o7uJMo6Rkf6Lz4RxQEyMr7vA756y0kFoEQhrTmohzr9Rp23gAVJj0gPMiLJ
+	 fiXqcWwVsoZGUl2E1KYIZdbZGgQgoAxcy2j0yAULt+/HhwCWGPl7QQ10YIxm/N7GGE
+	 7HwCs+UTOIW82PdunYNwSqmiCw/688dnKn1I9smPqqH4dK5e4pkg6bUKnLWUeFXz1D
+	 jmlU9f6QgL0uLbtdWuN195GnRy/Q3rTRqlJHzsOyTbQUklcr9SF0nNwXgiyMyMbdaM
+	 uXxVGrW0J8Um2aCgd+5douR6vdS7u6p21BHrCfHKPj2T6ojdtMqDWvKmv2J3OKSwTA
+	 uQV4/Bd+cHtMA==
+Date: Fri, 8 Nov 2024 14:53:22 +0000
+From: Will Deacon <will@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Robin Murphy <robin.murphy@arm.com>, acpica-devel@lists.linux.dev,
+	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org,
+	Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Robert Moore <robert.moore@intel.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Donald Dutile <ddutile@redhat.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Moritz Fischer <mdf@kernel.org>,
+	Michael Shavit <mshavit@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>, patches@lists.linux.dev,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+	Mostafa Saleh <smostafa@google.com>
+Subject: Re: [PATCH v4 05/12] iommu/arm-smmu-v3: Support IOMMU_GET_HW_INFO
+ via struct arm_smmu_hw_info
+Message-ID: <20241108145320.GA17325@willie-the-truck>
+References: <0-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com>
+ <5-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com>
+ <20241104114723.GA11511@willie-the-truck>
+ <20241104124102.GX10193@nvidia.com>
+ <8a5940b0-08f3-48b1-9498-f09f0527a964@arm.com>
+ <20241106180531.GA520535@nvidia.com>
+ <2a0e69e3-63ba-475b-a5a9-0863ad0f2bf8@arm.com>
+ <20241107023506.GC520535@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] cdx: Fix cdx_mmap_resource() after constifying attr in
- ->mmap()
-To: Nathan Chancellor <nathan@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>,
- Nipun Gupta <nipun.gupta@amd.com>, Nikhil Agarwal <nikhil.agarwal@amd.com>,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <20241107-sysfs-const-mmap-fix-cdx-v1-1-2ed9b7cd5f8b@kernel.org>
-Content-Language: en-MW
-From: Thorsten Leemhuis <linux@leemhuis.info>
-Autocrypt: addr=linux@leemhuis.info; keydata=
- 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 n7RI
-In-Reply-To: <20241107-sysfs-const-mmap-fix-cdx-v1-1-2ed9b7cd5f8b@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;linux@leemhuis.info;1731077154;58b783ce;
-X-HE-SMSGID: 1t9QF6-0001Cy-SA
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241107023506.GC520535@nvidia.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On 07.11.24 18:07, Nathan Chancellor wrote:
-> Commit 94a20fb9af16 ("sysfs: treewide: constify attribute callback of
-> bin_attribute::mmap()") missed updating the attr parameter of
-> cdx_mmap_resource(), resulting in a build failure.
+Hi guys,
+
+On Wed, Nov 06, 2024 at 10:35:06PM -0400, Jason Gunthorpe wrote:
+> On Wed, Nov 06, 2024 at 09:05:26PM +0000, Robin Murphy wrote:
+> > You should take "We discussed this already"
+> > as more of a clue to yourself than to me - if 4 different people have all
+> > said the exact same thing in so many words, perhaps there's something in
+> > it...
 > 
->   drivers/cdx/cdx.c: In function 'cdx_create_res_attr':
->   drivers/cdx/cdx.c:773:24: error: assignment to 'int (*)(struct file *, struct kobject *, const struct bin_attribute *, struct vm_area_struct *)' from incompatible pointer type 'int (*)(struct file *, struct kobject *, struct bin_attribute *, struct vm_area_struct *)' [-Wincompatible-pointer-types]
->     773 |         res_attr->mmap = cdx_mmap_resource;
->         |                        ^
+> And all seemed to agree it was not a big deal after the discussion.
 > 
-> Update cdx_mmap_resource() to match, resolving the build failure.
-> 
-> Fixes: 94a20fb9af16 ("sysfs: treewide: constify attribute callback of bin_attribute::mmap()")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> I think Mostafa was driving in a direction that we break up the IDR
+> into explicit fields and thus be explicit about what information the
+> VMM is able to access. This would effectively document and enforce
+> what the baseline is.
 
-Ran into the described problem for my daily -next builds on all Fedora
-releases on ARM64 yesterday and today. This fixes it for me.
+As one of the four people mentioned above, I figured I'd chime in with
+my rationale for queuing this in case it's of any help or interest.
 
-Tested-by: Thorsten Leemhuis <linux@leemhuis.info>
+Initially, I was reasonably sure that we should be sanitising the ID
+registers and being selective about what we advertise to userspace.
+However, after Jason's reply to my comments, mulling it over in my head
+and having lively conversations with Mostafa at lunchtime, I've come
+full circle. Is it a great interface? Not at all. It's 8 register values
+copied from the hardware to userspace. But is it good enough? I think it
+is. It's also extremely simple (i.e. easy to explain what it does and
+trivial to implement), which I think is a huge benefit given that the
+IOMMUFD work around it is still evolving.
 
-Ciao, Thorsten
+I'm firmly of the opinion that the VMM is going to need a tonne of help
+from other sources to expose a virtual IOMMU successfully. For example,
+anything relating to policy or configuration choices should be driven
+from userspace rather than the kernel. If we start to expose policy in
+the id registers for the cases where it happens to fit nicely, I fear
+that this will backfire and the VMM will end up second-guessing the
+kernel in cases where it decides it knows best. I'm not sold on the
+analogy with CPU ID registers as (a) we don't have big/little idiocy to
+deal with in the SMMU and (b) I don't think SMMU features always need
+support code in the host, which is quite unlike many CPU features that
+cannot be exposed safely without hypervisor context-switching support.
+
+On top of all that, this interface can be extended if we change our
+minds. If we decide we need to mask out fields, I think we could add
+that after the fact. Hell, if we all decide that it's a disaster in a
+few releases time, we can try something else. Ultimately, Jason is the
+one maintaining IOMMUFD and he gets to deal with the problems if his
+UAPI doesn't work out :)
+
+So, given where we are in the cycle, I think the pragmatic thing to do
+is to land this change now and enable the ongoing IOMMUFD work to
+continue. We still have over two months to resolve any major problems
+with the interface (and even unplug it entirely from the driver if we
+really get stuck) but for now I think it's "fine".
+
+Will
