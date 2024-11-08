@@ -1,94 +1,118 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6960D1991BD;
-	Fri,  8 Nov 2024 16:55:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CCA7199FBF
+	for <patches@lists.linux.dev>; Fri,  8 Nov 2024 17:24:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731084935; cv=none; b=speIbh9LSFKEpij16jOmStJI3OrI2kfiFluGE0X7M9SOuHQpLlFlTRC/BNYXjGVZyQrJjgRF/ee2RMwGE/3lYqnhMi4u6lGviKPhXVD638gvky6WIeIg1EjEJahuOw7AW5qlDWRjiIdYm2UkYs3ru9T5KcrZWFxMWpacBH/cOO4=
+	t=1731086654; cv=none; b=YbO8JS1uhF+39kjQ9O5edsBBnSCmULqq12xxM/CtVXhDnSmsX6cRWgV+Lvhg7TQOGLgbVXPrzL4EFkNeIPoC3mZ3YPldyB6qVT5qlgLx7G4zmUnQyrh/WjeYjrwvU1jF1p2vyam8uuzbubFF9fKAN1QZfxLEQyqs8/x2PvLyiUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731084935; c=relaxed/simple;
-	bh=kICkJghl4CqQ5MV25sHO+sQ4MhXX6W6lZJNTy62c1I0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=knYF4Gcx21K2BGPu8VyCXqnzK0WgGMHJIS2Hmj4gp1ZIoNOlxmmhil4EKdZOSORAOgBCT839fyspsUoXT/GdocbzOrjwjvhLP2m5h5nWAguH2a74ueSCOov8F4geUZiHxf9fZw3xAq8RGWizWj+eyZfLeouNYJ0LeAD4CMHFAhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d4BTTqei; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1731086654; c=relaxed/simple;
+	bh=p/Q3zj8qIH2ThrBRizyuweJ8R1Been3HPLb9zh0QrMM=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=OX2fxqBY69fFjJ+128MLtElyhaQzM1dsHUTggJfPuozh5r+/DEMOPMKFfJVF1xv89CW4w+C6R/Kw/GQScIrtwkn+ToqEOcm3O1nPC771NSBwQ1tau1WTo1S0AHNbHQNE62MU3ws8PKpAebRWtZad7Ks1Se+/5Dsncv4uuXFUy3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=AVLtzl6M; arc=none smtp.client-ip=159.69.126.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d4BTTqei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A787FC4CECD;
-	Fri,  8 Nov 2024 16:55:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731084933;
-	bh=kICkJghl4CqQ5MV25sHO+sQ4MhXX6W6lZJNTy62c1I0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=d4BTTqeiIYW6gVnnPCHN6OSIdoa7+aiamxw/x0XPnSje0elpy6fxPKnDrKmIOEgBv
-	 /NLEtZONtpvjdPn2nf+iUKAqenZ1uoyq2bX6kdawp3xzhIpgrvE7YNhxDR09iEJICL
-	 jvdt2zYGgBFyCE3bdGNlQiW2CFKPsmhAg4nujn+9lcX5iw5PVwsnvWlqsHaeuOyVqn
-	 M09qy6R7blBnQ99IlwnoS98dre6aCHiqiSmjHSd2f29cymxPkOfM1MAQHe/EXvaeRg
-	 qixMDqJrGAU92L3MVfs5Lpr75b/eoNHlKPE2b1GfuCAbq7Vthtkc7Lvxo84JpFrHhy
-	 58MmyoXipJL/g==
-Date: Fri, 8 Nov 2024 10:55:32 -0600
-From: Rob Herring <robh@kernel.org>
-To: Geert Uytterhoeven <geert@linux-m68k.org>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: Saravana Kannan <saravanak@google.com>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, devicetree@vger.kernel.org,
-	kunit-dev@googlegroups.com
-Subject: Re: [PATCH] of: Allow overlay kunit tests to run CONFIG_OF_OVERLAY=n
-Message-ID: <20241108165532.GA2411452-robh@kernel.org>
-References: <20241016212016.887552-1-sboyd@kernel.org>
- <20241017203810.GA814469-robh@kernel.org>
- <38153cbf2616a4a6706412952778eec1.sboyd@kernel.org>
- <CAMuHMdWp84u66Y-ELtbbRmySYwQch_=2qQiXzWJzrSkGeLZYBA@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="AVLtzl6M"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
+	s=mail; t=1731086640;
+	bh=p/Q3zj8qIH2ThrBRizyuweJ8R1Been3HPLb9zh0QrMM=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=AVLtzl6M//n8dQvjJhvkV+XDtoFL+Jt3mW3O+MrcQFjHEAVcKiN6DyjT/13Ntsvtk
+	 x0tifAlUiw0qKsqxabi2rxvdgu+Fe3SoVpyjlgk9TTCHX7knzNRFQvp4lMghLulppj
+	 G0v1PzYsQmMezOSMlmiuUhV7DCVht5cgYxu22tKc=
+Date: Fri, 8 Nov 2024 12:23:50 -0500 (EST)
+From: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas@weissschuh.net>
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	=?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Nipun Gupta <nipun.gupta@amd.com>,
+	Nikhil Agarwal <nikhil.agarwal@amd.com>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Message-ID: <f005d74e-7b35-42de-a80f-e5650e3d164d@weissschuh.net>
+In-Reply-To: <20241107-sysfs-const-mmap-fix-cdx-v1-1-2ed9b7cd5f8b@kernel.org>
+References: <20241107-sysfs-const-mmap-fix-cdx-v1-1-2ed9b7cd5f8b@kernel.org>
+Subject: Re: [PATCH] cdx: Fix cdx_mmap_resource() after constifying attr in
+ ->mmap()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMuHMdWp84u66Y-ELtbbRmySYwQch_=2qQiXzWJzrSkGeLZYBA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Correlation-ID: <f005d74e-7b35-42de-a80f-e5650e3d164d@weissschuh.net>
 
-On Fri, Nov 08, 2024 at 09:56:15AM +0100, Geert Uytterhoeven wrote:
-> Hi Stephen,
-> 
-> On Sat, Oct 19, 2024 at 12:21 AM Stephen Boyd <sboyd@kernel.org> wrote:
-> > Quoting Rob Herring (2024-10-17 13:38:10)
-> > > On Wed, Oct 16, 2024 at 02:20:15PM -0700, Stephen Boyd wrote:
-> > > > Some configurations want to enable CONFIG_KUNIT without enabling
-> > > > CONFIG_OF_OVERLAY. The kunit overlay code already skips if
-> > > > CONFIG_OF_OVERLAY isn't enabled, so this select here isn't really doing
-> > > > anything besides making it easier to run the tests without them
-> > > > skipping. Remove the select and move the config setting to the
-> > > > drivers/of/.kunitconfig file so that the overlay tests can be run with
-> > > > or without CONFIG_OF_OVERLAY set to test either behavior.
-> 
-> Thanks for your patch, which is now commit 027af8c26fdc0642 ("of: Allow
-> overlay kunit tests to run CONFIG_OF_OVERLAY=n") in dt-rh/for-next.
-> 
-> > > > Fixes: 5c9dd72d8385 ("of: Add a KUnit test for overlays and test managed APIs")
-> > >
-> > > Doesn't really seem like a fix.
-> >
-> > Ok. Feel free to drop the tag.
-> >
-> > > Does this need to go into 6.12?
-> >
-> > It's only important for 6.12 if kernel configurators want to build the
-> > kernel with OF_OVERLAY_KUNIT_TEST enabled and not be forced to enable
-> > CONFIG_OF_OVERLAY. I don't mind if it waits a while.
-> 
-> I'd say it's a fix, so please keep at last the Fixes tag. Merely
-> enabling kunit tests (which can be modular) should not increase the
-> possible attack vector on a product by enabling extra unneeded code.
+Hi Nathan,
 
-Not sure I buy that that is an actual problem. However, not worth 
-arguing over. I only really care because if there's a Fixes, then this 
-really should go to Linus for 6.12 rather than eventually get 
-auto-selected from 6.13 to go to stable. So I moved it to send to Linus, 
-but I found that CONFIG_OF_OVERLAY is still selected with this patch. 
-That's because the clock kunit tests also select CONFIG_OF_OVERLAY. 
-That's fixed in next, but it's not queued up for 6.12.
+Nov 7, 2024 12:07:56 Nathan Chancellor <nathan@kernel.org>:
 
-Rob
+> Commit 94a20fb9af16 ("sysfs: treewide: constify attribute callback of
+> bin_attribute::mmap()") missed updating the attr parameter of
+> cdx_mmap_resource(), resulting in a build failure.
+>
+> =C2=A0 drivers/cdx/cdx.c: In function 'cdx_create_res_attr':
+> =C2=A0 drivers/cdx/cdx.c:773:24: error: assignment to 'int (*)(struct fil=
+e *, struct kobject *, const struct bin_attribute *, struct vm_area_struct =
+*)' from incompatible pointer type 'int (*)(struct file *, struct kobject *=
+, struct bin_attribute *, struct vm_area_struct *)' [-Wincompatible-pointer=
+-types]
+> =C2=A0=C2=A0=C2=A0 773 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+res_attr->mmap =3D cdx_mmap_resource;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^
+>
+> Update cdx_mmap_resource() to match, resolving the build failure.
+>
+> Fixes: 94a20fb9af16 ("sysfs: treewide: constify attribute callback of bin=
+_attribute::mmap()")
+
+I'm not sure about the Fixes tag.
+cdx.c is not yet in mainline and this change should be folded into the cdx =
+patch or the sysfs patch, depending on their order in the merge window.
+I guess Greg will take care of it.
+
+Thanks for the notification, though!
+
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+
+If it ends up as a real commit:
+
+Reviewed-by: Thomas Wei=C3=9Fschuu <linux@weissschuh.net>
+
+> ---
+> drivers/cdx/cdx.c | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/cdx/cdx.c b/drivers/cdx/cdx.c
+> index 07371cb653d356977cbd3dd99a1b848146d5a993..316bd89a95caf97163a126478=
+985c52b1b596bb4 100644
+> --- a/drivers/cdx/cdx.c
+> +++ b/drivers/cdx/cdx.c
+> @@ -707,7 +707,7 @@ static const struct vm_operations_struct cdx_phys_vm_=
+ops =3D {
+> =C2=A0 * Return: true on success, false otherwise.
+> =C2=A0 */
+> static int cdx_mmap_resource(struct file *fp, struct kobject *kobj,
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 struct bin_attribute *attr,
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 const struct bin_attribute *attr,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 struct vm_area_struct *vma)
+> {
+> =C2=A0=C2=A0=C2=A0 struct cdx_device *cdx_dev =3D to_cdx_device(kobj_to_d=
+ev(kobj));
+>
+> ---
+> base-commit: 298c2af4788ed027a42c2bab0f210219825fb5fd
+> change-id: 20241107-sysfs-const-mmap-fix-cdx-1457914fe16d
+>
+> Best regards,
+> --
+> Nathan Chancellor <nathan@kernel.org>
+
