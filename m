@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE308F49;
-	Sat,  9 Nov 2024 00:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA10CA6B;
+	Sat,  9 Nov 2024 00:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731112111; cv=none; b=LtS2UITQw5UkYeFB269FQ8Z8LOjvQbIzxiaMtrB5+sCQ1loh2MJfQA3HaDWTdlkzViLFLSqtvvOZsFTm3xnb7h4372pMeWqPI5dgDE520RH6Wlpedr7ClkfpCyCnUmBz15tQJGQNMquOw2vQCVgctYS1dyF7+3aLbWX7MXhtJhs=
+	t=1731112111; cv=none; b=vC56IqRl1+H6wOfCvseQzPR35f+DQVCte6B9XNV4qwdZqoqqX8+Fq7gdezha/FZw5laY6ja5DeR06Fk53DszbKBna0wqIXt4Qc8K4MI2VscoaDb9B+2lWLHhKGkfLL7jeyQFAQUnlhGc4eULBTCj7N+gbdo5Qh8fNFeaSL/pOr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1731112111; c=relaxed/simple;
-	bh=EWIW2i2N7eAAxcCgqkKrlpW0rLZ1if4K4lcBruXdEwQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GYdMys4dRPFAQPhEuJ034L+qBbMY0bZ+m2IzUZyVx02LzfRgrma/jnFVNmvSMcjvzDnL/xzm6DBqA5obtR8T6Izhw0xTuIueu/GkSoGzZ9PV18uL/8TLHutWh8SnoFbad2oq/NTxC9rs1QcOQPxmHEzD61QrBVBamNRno/F4E1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eDyNYGce; arc=none smtp.client-ip=10.30.226.201
+	bh=C7SFj4q4lLbVbx3tVScA0zWrHnfokGjWtxuW3ZW984w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=h8NKfiYcmXOky89JJcGVzodaPEzMP0qYb1c7euqHNNQ/YjvsRscyYqDuyGdBtl/fKj86SSu+ikPWKNN8+shGd0qrcwfvt+tsJ/U/MuHuEPc/X7oWvtJFFFeoQpXQh8qDTlvSOasS4jORJMag4Fj89nAg+Er8FFjSPCOpFdR1elM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ejaddrhx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eDyNYGce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8800DC4CECD;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ejaddrhx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4544C4CED2;
 	Sat,  9 Nov 2024 00:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731112110;
-	bh=EWIW2i2N7eAAxcCgqkKrlpW0rLZ1if4K4lcBruXdEwQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=eDyNYGceRPr0uF5gGYTsLy6tTSAgODed4ZMOHlGux8BTmFYcDJLR7/3KXpiECFdK1
-	 uY6WJRc5Uuj2LRfawidKCxONp5c0YWt0s6E7hRRsSoZEvcRuhjYhAh82PbKma6CRyW
-	 btLfb3vMqXT7RbJ9cNAVXGkNwSvs8wV85KKtNFxPbXN+V/n3yJdgMHNMhqbrL9ZtxZ
-	 PLxS1uvuNo97YrM7TzkyISHZ0QFG2SHszsR3KjIs32SP2gLVpfZgU+ctZ3tBQto52Y
-	 bhiGjO0NqJNEmtmitadQC2sNHpY6QJsOwgzbSOcfCDXXbFTFRIeNCszXHO44Zw4dej
-	 uXqJgpmRFVgag==
+	s=k20201202; t=1731112111;
+	bh=C7SFj4q4lLbVbx3tVScA0zWrHnfokGjWtxuW3ZW984w=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ejaddrhxiuI6LbManrPYzvNdJtUX5+WsYnFFqOdK2SzvKPBiuK15KyZpBSYXDuRHo
+	 dEBJflmyG5Im66K/Qd/fLtM90rWjEYxX28uLULVzb04PlS4h0yN9XnKyJtKR5cuk4i
+	 ut5PuNMJ0OhQiKePYM6PTDEdI77j9hopNaQYbx83oTpw0tjgR3RaYtuctcBNwErlXM
+	 L84FHUN+zOE8Up3ioQ04CCDdDzELSO8NpQZXpFrC+4QS/M5yJaG4IPqLcepXQ65q7J
+	 7K0IYHy0IXVPOXw4bkUYdeJHobcRTxELnxNrmjG+zGY/fQWR6IU8+clPgd6jlbU3mF
+	 fiiWEzVaJDLZQ==
 From: Stephen Boyd <sboyd@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH 0/3] SPMI patches for the next merge window
-Date: Fri,  8 Nov 2024 16:28:25 -0800
-Message-ID: <20241109002829.160973-1-sboyd@kernel.org>
+Cc: Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	stable@vger.kernel.org,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 1/3] spmi: pmic-arb: fix return path in for_each_available_child_of_node()
+Date: Fri,  8 Nov 2024 16:28:26 -0800
+Message-ID: <20241109002829.160973-2-sboyd@kernel.org>
 X-Mailer: git-send-email 2.47.0.277.g8800431eea-goog
+In-Reply-To: <20241109002829.160973-1-sboyd@kernel.org>
+References: <20241109002829.160973-1-sboyd@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -41,31 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Greg,
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-Please apply these SPMI patches for the next merge window.
+This loop requires explicit calls to of_node_put() upon early exits
+(break, goto, return) to decrement the child refcounter and avoid memory
+leaks if the child is not required out of the loop.
 
- - Compatible string updates for SPMI bindings
- - Use scoped version of for_each_available_child_of_node() to avoid
-   leaks
+A more robust solution is using the scoped variant of the macro, which
+automatically calls of_node_put() when the child goes out of scope.
 
-Dmitry Baryshkov (1):
-  dt-bindings: spmi: qcom,x1e80100-spmi-pmic-arb: Add SAR2130P
-    compatible
+Cc: stable@vger.kernel.org
+Fixes: 979987371739 ("spmi: pmic-arb: Add multi bus support")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://lore.kernel.org/r/20241001-spmi-pmic-arb-scoped-v1-1-5872bab34ed6@gmail.com
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+---
+ drivers/spmi/spmi-pmic-arb.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Fei Shao (1):
-  dt-bindings: spmi: spmi-mtk-pmif: Add compatible for MT8188
-
-Javier Carrasco (1):
-  spmi: pmic-arb: fix return path in for_each_available_child_of_node()
-
- .../devicetree/bindings/spmi/mtk,spmi-mtk-pmif.yaml         | 1 +
- .../bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml          | 6 +++++-
- drivers/spmi/spmi-pmic-arb.c                                | 3 +--
- 3 files changed, 7 insertions(+), 3 deletions(-)
-
-
-base-commit: 9852d85ec9d492ebef56dc5f229416c925758edc
+diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+index 9ba9495fcc4b..ea843159b745 100644
+--- a/drivers/spmi/spmi-pmic-arb.c
++++ b/drivers/spmi/spmi-pmic-arb.c
+@@ -1763,14 +1763,13 @@ static int spmi_pmic_arb_register_buses(struct spmi_pmic_arb *pmic_arb,
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *node = dev->of_node;
+-	struct device_node *child;
+ 	int ret;
+ 
+ 	/* legacy mode doesn't provide child node for the bus */
+ 	if (of_device_is_compatible(node, "qcom,spmi-pmic-arb"))
+ 		return spmi_pmic_arb_bus_init(pdev, node, pmic_arb);
+ 
+-	for_each_available_child_of_node(node, child) {
++	for_each_available_child_of_node_scoped(node, child) {
+ 		if (of_node_name_eq(child, "spmi")) {
+ 			ret = spmi_pmic_arb_bus_init(pdev, child, pmic_arb);
+ 			if (ret)
 -- 
 https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
 https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
