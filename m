@@ -1,35 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7701BC4E;
-	Mon, 11 Nov 2024 20:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560471BC9E2;
+	Mon, 11 Nov 2024 22:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731356209; cv=none; b=G1wzDqyRfpAxl67R3eMbyASuqyqMgcJKU6zNDU2ZBZPENwktfuv40W0C7125+jRSuwH92OE0l8XWLECs8CqFWSPDxmlL+EleOUpzfLMlkmBySUigET53hfs3iZuW0pAVtvkN50Cpo0FmEbUX4+MS7aQUVH1plyQjtH6kkqwHRNU=
+	t=1731362897; cv=none; b=LrI9bKfN6iNIUbOsynp+h6MoUCbsNehXP5WgmZGN0e0Yxy+CDH8jB7RtymQZ63fOwz7HBZsvChv/soaWVxKToBEU2VdIJRUlggA4PQkjWf70O/KIAKW14Q2dTFKKKHkrIkV9GHeKTltYt7eJa4Ibcgu2CvXR149upD3QcLpfZW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731356209; c=relaxed/simple;
-	bh=CwAXbOxrmH689Ea3tdgf8f02pWsjJIlJAoVkv53F2ug=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ay8kNfWaKRdVTg+YtciTPHbMnRHx/9EimC0xc6a/P13ssD9cbFt/FPg/3foOR5wWPf+IXSz/cvRU1vUs0JEFA3o9+RCB+BuEHsnhdZhkXj+YjtStYNytEteG+NqoIIkNo468uzwVcTXQLyTWdRjoOc1awwKQXm+9hN7KeJXrlNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gqoaqqR5; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1731362897; c=relaxed/simple;
+	bh=IzWYI+IYnI0IBX47UP23OrbRespa5zMschuKkcxwO5I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dJe2KwsRkjR1QkPwi3vwXEGG7KGYCvDmKigFbkRybx3SloqWXiaE0QO2R+UANooTb+sxn5eSU/LQsXdSwEIsWx7kLhcddgRXnS7HH1jk3k4HHpTKyKwtPfTUWG3H2DJXfOHeEPFqw35WmGYti3JsTdLPIUuQCdjYOpTl64LZK34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CQjDgDO2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gqoaqqR5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB4EC4CECF;
-	Mon, 11 Nov 2024 20:16:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CQjDgDO2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF06C4CECF;
+	Mon, 11 Nov 2024 22:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731356209;
-	bh=CwAXbOxrmH689Ea3tdgf8f02pWsjJIlJAoVkv53F2ug=;
+	s=k20201202; t=1731362896;
+	bh=IzWYI+IYnI0IBX47UP23OrbRespa5zMschuKkcxwO5I=;
 	h=From:To:Cc:Subject:Date:From;
-	b=gqoaqqR5q9K0BDuMuxpM8V7JvQAm/5HzvsjRVtt88NBcpQSadZWWoAb1onaMePqU4
-	 J2TGClTRxzydahccp+si7LOvMnJGZ3RE2Ihvc1xt3kSca9Z2tPwSlImzruo5QlXcoy
-	 hhav0/18c53T8d+yFMD93wX4me9lSvaLCwOYpggeqpYEgwy9lqdJSW+nxeBsK9JgYm
-	 fLx1x9ZUE48DuKFOThVfnA1aT2vy/pb5XLCZFPI3+KtkmH3aSuEskWYMJM9n5+qQcY
-	 8mU0XLzmIBsFp5IcOYzgdkTlS6cKRc/8/+YyE5BzYVYtvj7EaKRLemhxU4OgB2MYM1
-	 +Yq8cDMS1Q20w==
+	b=CQjDgDO2C4+qsKgBOb8WwvjFr8dHIJbWfbrAu9L4E7lGDD+PM0g0UOUGHo25WeCvG
+	 HssWPsQlpiGQXwaLWSmulQFZAbymdL0Hx1qzkmQd8mMx04EYx/SimX0yhiJZl+2zpz
+	 cYjoDUc48tBa9tK+LA7lfYwaRVDulRQsLCy1GQR7H/oqVUbaBhUz2btdvtX7W55HKa
+	 d0SDkuY9xSJEyZkPYjOGEmvOnwH78VzQAhlntllsrxh7Xi3Am/ihrqmzHqeh0YhB1r
+	 PaYm24Liumj/U9gVV3Kjv/kqBQOT3t4eNE/ciIZ/mm0Etk31HHG97x/C8HeXniPFn4
+	 jACpLlZcGTW9g==
 From: Miguel Ojeda <ojeda@kernel.org>
-To: Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>,
+To: Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>
+Cc: Mark Rutland <mark.rutland@arm.com>,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	Boqun Feng <boqun.feng@gmail.com>,
 	Gary Guo <gary@garyguo.net>,
 	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
 	Benno Lossin <benno.lossin@proton.me>,
@@ -37,18 +41,12 @@ Cc: Boqun Feng <boqun.feng@gmail.com>,
 	Alice Ryhl <aliceryhl@google.com>,
 	Trevor Gross <tmgross@umich.edu>,
 	rust-for-linux@vger.kernel.org,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	llvm@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Ben Beasley <code@musicinmybrain.net>,
-	NoisyCoil <noisycoil@tutanota.com>,
-	Matthias Geiger <werdahias@riseup.net>
-Subject: [PATCH v2] rust: warn on bindgen < 0.69.5 and libclang >= 19.1
-Date: Mon, 11 Nov 2024 21:16:07 +0100
-Message-ID: <20241111201607.653149-1-ojeda@kernel.org>
+	"Stephen Rothwell" <sfr@canb.auug.org.au>,
+	"Linux Next Mailing List" <linux-next@vger.kernel.org>
+Subject: [PATCH v2] samples: rust: fix `rust_print` build making it a combined module
+Date: Mon, 11 Nov 2024 23:08:05 +0100
+Message-ID: <20241111220805.708889-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,200 +55,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When testing a `clang` upgrade with Rust Binder, Alice encountered [1] a
-build failure caused by `bindgen` not translating some symbols related to
-tracepoints. This was caused by commit 2e770edd8ce1 ("[libclang] Compute
-the right spelling location") changing the behavior of a function exposed
-by `libclang`. `bindgen` fixed the regression in commit 600f63895f73
-("Use clang_getFileLocation instead of clang_getSpellingLocation").
+The `rust_print` module, when built as a module, fails to build with:
 
-However, the regression fix is only available in `bindgen` versions
-0.69.5 or later (it was backported for 0.69.x). This means that when
-older bindgen versions are used with new versions of `libclang`, `bindgen`
-may do the wrong thing, which could lead to a build failure.
+    ERROR: modpost: missing MODULE_LICENSE() in samples/rust/rust_print_events.o
+    ERROR: modpost: "__tracepoint_rust_sample_loaded" [samples/rust/rust_print.ko] undefined!
+    ERROR: modpost: "rust_do_trace_rust_sample_loaded" [samples/rust/rust_print.ko] undefined!
 
-Alice encountered the bug with some header files related to tracepoints,
-but it could also cause build failures in other circumstances. Thus,
-always emit a warning when using an old `bindgen` with a new `libclang`
-so that other people do not have to spend time chasing down the same
-bug.
+Fix it by building it as a combined one.
 
-However, testing just the version is inconvenient, since distributions
-do patch their packages without changing the version, so I reduced the
-issue into the following piece of code that can trigger the issue:
-
-    #define F(x) int x##x
-    F(foo);
-
-In particular, an unpatched `bindgen` will ignore the macro expansion
-and thus not provide a declaration for the exported `int`.
-
-Thus add a build test to `rust_is_available.sh` using the code above
-(that is only triggered if the versions appear to be affected), following
-what we did for the 0.66.x issue.
-
-Moreover, I checked the status in the major distributions we have
-instructions for:
-
-  - Fedora 41 was affected but is now OK, since it now ships `bindgen`
-    0.69.5.
-
-    Thanks Ben for the quick reply on the updates that were ongoing.
-
-    Fedora 40 and earlier are OK (older `libclang`, and they also now
-    carry `bindgen` 0.69.5).
-
-  - Debian Sid was affected but is now OK, since they now ship a patched
-    `bindgen` binary (0.66.1-7+b3). The issue was reported to Debian by
-    email and then as a bug report [2].
-
-    Thanks NoisyCoil and Matthias for the quick replies. NoisyCoil handled
-    the needed updates. Debian may upgrade to `bindgen` 0.70.x, too.
-
-    Debian Testing is OK (older `libclang` so far).
-
-  - Ubuntu non-LTS (oracular) is affected. The issue was reported to Ubuntu
-    by email and then as a bug report [3].
-
-    Ubuntu LTS is not affected (older `libclang` so far).
-
-  - Arch Linux, Gentoo Linux and openSUSE should be OK (newer `bindgen` is
-    provided). Nix as well (older `libclang` so far).
-
-This issue was also added to our "live list" that tracks issues around
-distributions [4].
-
-Cc: Ben Beasley <code@musicinmybrain.net>
-Cc: NoisyCoil <noisycoil@tutanota.com>
-Cc: Matthias Geiger <werdahias@riseup.net>
-Link: https://lore.kernel.org/rust-for-linux/20241030-bindgen-libclang-warn-v1-1-3a7ba9fedcfe@google.com/ [1]
-Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1086510 [2]
-Link: https://bugs.launchpad.net/ubuntu/+source/rust-bindgen-cli/+bug/2086639 [3]
-Link: https://github.com/Rust-for-Linux/linux/issues/1127 [4]
-Co-developed-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Closes: https://lore.kernel.org/all/20241108152149.28459a72@canb.auug.org.au/
+Fixes: 91d39024e1b0 ("rust: samples: add tracepoint to Rust sample")
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
-We would like to put this into the merge window, or ideally very soon after as a
-"fix" (it is not really a fix, but it is very convenient for people wondering
-why their toolchain may not work, especially if tracepoints land in the merge
-window as expected).
+v2:
+  - Instead of renaming the module name, rename the main source file.
+    This avoids changing other places (e.g. Kconfig) and, most
+    importantly, minimizes the impact to developers/users (e.g. CIs
+    out there).
 
-v2 (based on Alice's v1):
-  - Fixed libclang version number (we use a different `get_canonical_version`
-    that returns one more digit).
-  - Added build test -- now we can detect binaries like Debian's that are
-    patched but do not change the version number.
-  - Added tests.
-  - Explained the current status of the distributions in the commit message.
+v1: https://lore.kernel.org/rust-for-linux/20241109165520.1461400-1-ojeda@kernel.org/
 
- scripts/rust_is_available.sh                  | 15 ++++++++
- ...ust_is_available_bindgen_libclang_concat.h |  3 ++
- scripts/rust_is_available_test.py             | 34 ++++++++++++++++++-
- 3 files changed, 51 insertions(+), 1 deletion(-)
- create mode 100644 scripts/rust_is_available_bindgen_libclang_concat.h
+ samples/rust/Makefile                              | 4 +++-
+ samples/rust/{rust_print.rs => rust_print_main.rs} | 0
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+ rename samples/rust/{rust_print.rs => rust_print_main.rs} (100%)
 
-diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-index 5262c56dd674..93c0ef7fb3fb 100755
---- a/scripts/rust_is_available.sh
-+++ b/scripts/rust_is_available.sh
-@@ -225,6 +225,21 @@ if [ "$bindgen_libclang_cversion" -lt "$bindgen_libclang_min_cversion" ]; then
- 	exit 1
- fi
+diff --git a/samples/rust/Makefile b/samples/rust/Makefile
+index f29280ec4820..c1a5c1655395 100644
+--- a/samples/rust/Makefile
++++ b/samples/rust/Makefile
+@@ -2,6 +2,8 @@
+ ccflags-y += -I$(src)				# needed for trace events
 
-+if [ "$bindgen_libclang_cversion" -ge 1900100 ] &&
-+	[ "$rust_bindings_generator_cversion" -lt 6905 ]; then
-+	# Distributions may have patched the issue (e.g. Debian did).
-+	if ! "$BINDGEN" $(dirname $0)/rust_is_available_bindgen_libclang_concat.h | grep -q foofoo; then
-+		echo >&2 "***"
-+		echo >&2 "*** Rust bindings generator '$BINDGEN' < 0.69.5 together with libclang >= 19.1"
-+		echo >&2 "*** may not work due to a bug (https://github.com/rust-lang/rust-bindgen/pull/2824),"
-+		echo >&2 "*** unless patched (like Debian's)."
-+		echo >&2 "***   Your bindgen version:  $rust_bindings_generator_version"
-+		echo >&2 "***   Your libclang version: $bindgen_libclang_version"
-+		echo >&2 "***"
-+		warning=1
-+	fi
-+fi
+ obj-$(CONFIG_SAMPLE_RUST_MINIMAL)		+= rust_minimal.o
+-obj-$(CONFIG_SAMPLE_RUST_PRINT)			+= rust_print.o rust_print_events.o
++obj-$(CONFIG_SAMPLE_RUST_PRINT)			+= rust_print.o
 +
- # If the C compiler is Clang, then we can also check whether its version
- # matches the `libclang` version used by the Rust bindings generator.
- #
-diff --git a/scripts/rust_is_available_bindgen_libclang_concat.h b/scripts/rust_is_available_bindgen_libclang_concat.h
-new file mode 100644
-index 000000000000..efc6e98d0f1d
---- /dev/null
-+++ b/scripts/rust_is_available_bindgen_libclang_concat.h
-@@ -0,0 +1,3 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+#define F(x) int x##x
-+F(foo);
-diff --git a/scripts/rust_is_available_test.py b/scripts/rust_is_available_test.py
-index 413741037fb3..4fcc319dea84 100755
---- a/scripts/rust_is_available_test.py
-+++ b/scripts/rust_is_available_test.py
-@@ -54,7 +54,7 @@ else:
- """)
++rust_print-y := rust_print_main.o rust_print_events.o
 
-     @classmethod
--    def generate_bindgen(cls, version_stdout, libclang_stderr, version_0_66_patched=False):
-+    def generate_bindgen(cls, version_stdout, libclang_stderr, version_0_66_patched=False, libclang_concat_patched=False):
-         if libclang_stderr is None:
-             libclang_case = f"raise SystemExit({cls.bindgen_default_bindgen_libclang_failure_exit_code})"
-         else:
-@@ -65,12 +65,19 @@ else:
-         else:
-             version_0_66_case = "raise SystemExit(1)"
+ subdir-$(CONFIG_SAMPLE_RUST_HOSTPROGS)		+= hostprogs
+diff --git a/samples/rust/rust_print.rs b/samples/rust/rust_print_main.rs
+similarity index 100%
+rename from samples/rust/rust_print.rs
+rename to samples/rust/rust_print_main.rs
 
-+        if libclang_concat_patched:
-+            libclang_concat_case = "print('pub static mut foofoo: ::std::os::raw::c_int;')"
-+        else:
-+            libclang_concat_case = "pass"
-+
-         return cls.generate_executable(f"""#!/usr/bin/env python3
- import sys
- if "rust_is_available_bindgen_libclang.h" in " ".join(sys.argv):
-     {libclang_case}
- elif "rust_is_available_bindgen_0_66.h" in " ".join(sys.argv):
-     {version_0_66_case}
-+elif "rust_is_available_bindgen_libclang_concat.h" in " ".join(sys.argv):
-+    {libclang_concat_case}
- else:
-     print({repr(version_stdout)})
- """)
-@@ -268,6 +275,31 @@ else:
-         result = self.run_script(self.Expected.FAILURE, { "BINDGEN": bindgen })
-         self.assertIn(f"libclang (used by the Rust bindings generator '{bindgen}') is too old.", result.stderr)
-
-+    def test_bindgen_bad_libclang_concat(self):
-+        for (bindgen_version, libclang_version, expected_not_patched) in (
-+            ("0.69.4", "18.0.0", self.Expected.SUCCESS),
-+            ("0.69.4", "19.1.0", self.Expected.SUCCESS_WITH_WARNINGS),
-+            ("0.69.4", "19.2.0", self.Expected.SUCCESS_WITH_WARNINGS),
-+
-+            ("0.69.5", "18.0.0", self.Expected.SUCCESS),
-+            ("0.69.5", "19.1.0", self.Expected.SUCCESS),
-+            ("0.69.5", "19.2.0", self.Expected.SUCCESS),
-+
-+            ("0.70.0", "18.0.0", self.Expected.SUCCESS),
-+            ("0.70.0", "19.1.0", self.Expected.SUCCESS),
-+            ("0.70.0", "19.2.0", self.Expected.SUCCESS),
-+        ):
-+            with self.subTest(bindgen_version=bindgen_version, libclang_version=libclang_version):
-+                cc = self.generate_clang(f"clang version {libclang_version}")
-+                libclang_stderr = f"scripts/rust_is_available_bindgen_libclang.h:2:9: warning: clang version {libclang_version} [-W#pragma-messages], err: false"
-+                bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr)
-+                result = self.run_script(expected_not_patched, { "BINDGEN": bindgen, "CC": cc })
-+                if expected_not_patched == self.Expected.SUCCESS_WITH_WARNINGS:
-+                    self.assertIn(f"Rust bindings generator '{bindgen}' < 0.69.5 together with libclang >= 19.1", result.stderr)
-+
-+                bindgen = self.generate_bindgen(f"bindgen {bindgen_version}", libclang_stderr, libclang_concat_patched=True)
-+                result = self.run_script(self.Expected.SUCCESS, { "BINDGEN": bindgen, "CC": cc })
-+
-     def test_clang_matches_bindgen_libclang_different_bindgen(self):
-         bindgen = self.generate_bindgen_libclang("scripts/rust_is_available_bindgen_libclang.h:2:9: warning: clang version 999.0.0 [-W#pragma-messages], err: false")
-         result = self.run_script(self.Expected.SUCCESS_WITH_WARNINGS, { "BINDGEN": bindgen })
-
-base-commit: ae7851c29747fa3765ecb722fe722117a346f988
+base-commit: 91d39024e1b02914cc5e2dbc137908e29b269ce4
 --
 2.47.0
