@@ -1,96 +1,97 @@
-Received: from phobos.denx.de (phobos.denx.de [85.214.62.61])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253C68F77;
-	Mon, 11 Nov 2024 17:32:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.62.61
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAB11AB6CD
+	for <patches@lists.linux.dev>; Mon, 11 Nov 2024 20:00:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731346328; cv=none; b=d1icd7k3JgtaAluYeh7mb0j+/XFsqcI5CDeQORpTK2NvyeDxuzmHCAvAFJ5m62kmNIX5DuZwxm4USB273+ZoLMmlqtse8ttABNsmOHdfTkVN5/GWt8duwQUiz9EKvDNKHTNJ9FcN7ncv9/1k4lkjtFSQZb5iZfWn+MIwywGi388=
+	t=1731355209; cv=none; b=W2GEnfHkSH0ebGQVf3GpQw6YhM4j6DsgtVeK0dmLjk4XoB//o5kab7KPwv2G40ML6mVR3BPw4GzD6mSAIUP7/fJ5Uk0Mgs8I2qq44T5Y34YEx0qjiLB9VRr7+jSW/mOhnNTamzrsc435nGwOswqwNF0WXpWPUf/C6al2E8ehB2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731346328; c=relaxed/simple;
-	bh=R1OxGtW1OXn6UnWHatNz7pta1Hc/mAoMIINg5IcSwIw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=W6FewgJtBZVlFeSNQqrAdTaOZfZMjiBGioi2qX7ZVYIXmqdIFuZx33PCdw3/pW3ZaV/ziXZ4LxBDac73y8ujX0qk9swhJYG8libS5AkiExkGLYTlLH0ENEOIysKxEQLZNVbSEPPT+OASPdROTML77mJ2sI8H3F6xWmQlFGg0GfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=mIveQqah; arc=none smtp.client-ip=85.214.62.61
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1731355209; c=relaxed/simple;
+	bh=WiOrNDG1WD7oZEY0fUAmYsOz30tIJ03LDcgV3v4oLu0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JUQ82H5d3UpyEgNiLk+dObKgfiIBi2cxw9TL2E8YTgNYA1eASjyU+nZzuyhqSga1SxlbTsiyUMg5O5AB8DzFiKHlzQxWEQF0g8s0hHFr/EY2jAXh7lULHOtuDjx3qCCKSOqPx5wAfF0PKnUtwvXwHV7MPNKn1c+aymU5fp5G+kA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nLIibMPh; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="mIveQqah"
-Received: from [127.0.0.1] (p578adb1c.dip0.t-ipconnect.de [87.138.219.28])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: marex@denx.de)
-	by phobos.denx.de (Postfix) with ESMTPSA id 108F88932A;
-	Mon, 11 Nov 2024 18:32:03 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
-	s=phobos-20191101; t=1731346324;
-	bh=m+Eyb5nA9rP5UvCqe5BJXcKC8MFjYJaJOoHKui5tOZc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=mIveQqahnM5ROin2S8Hd9hqJT92YGDjyviAFuRNsqftCOxP0Ha/b5in09JCXIVOba
-	 o5pr2rda+lX8TFA8UPLPUiniuAS3I0t+73b6DwLH7uA8XbumIYrGRTQrkMtxrEjV9n
-	 ESF5hZEiWz7sZ+y+KSZL5ykZNFTCE18BNkAzcfWplnHn+1Bgk6WqKHHrzM7zgqqzUu
-	 1mpDzt4VuXtPZJqKqHHwKyKvpm7dUdctaj6XqKO0KEBSOtXEoeTAxuPkLB+ut55QJD
-	 yNJTvZYE2A8KkZoX46qhtPe3nxOT+heUkH63krZ/A0ahUQKAh3Q6mopMqzHfMhKqqX
-	 QQSCs4dSCPs4w==
-Message-ID: <781bff37-975d-418e-9ea1-ecb3deb16612@denx.de>
-Date: Mon, 11 Nov 2024 17:18:12 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nLIibMPh"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2e5b1aaad96so614592a91.0
+        for <patches@lists.linux.dev>; Mon, 11 Nov 2024 12:00:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731355207; x=1731960007; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vcFeO/WZBic4QahIcKveKriqrYB+4GqvXPKrBYwpRHM=;
+        b=nLIibMPhftRPBJnlV3kC3U4Sqa0LgJoLn26Fxxa//uGcqPPBlncxxfPZwlmdLwSXza
+         BYrfeNhoClcOhusMezwTZ8jFkN/dVCJA1T16p4eBP8Sajmgrb5OU3R1ozW1xRu6aeFs9
+         xbR6HWdGhpfZXytp9pSLUrsR/Ix1KVpGeyNF4XDqb0Bp5Wcj03snhixhwJcyAY7AS/6r
+         WgsOzxx61stmU/iq5+x+tyQXAhazOCxgHnksqAxW9+jBL4Y1MZcOM/DzqT0RgZpJG3lQ
+         iahOGPbj4iqWPvNMrhZehGflsqBW28FnAE0RrQPGU4JrakGY2CAcfvcr6Yv6DCA5Uxw6
+         qvMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731355207; x=1731960007;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vcFeO/WZBic4QahIcKveKriqrYB+4GqvXPKrBYwpRHM=;
+        b=L5VrQWbiuq0jf0JloJOIyMY4X5xmzM6SoWmIfKdS6XqP9xTD3JhUNONfrXsoaRQgfV
+         g5lrV7fJAP2h0M24VT2qMw2WlFv0Ai+dsWIXZVCEN8mxgLKhRKBT3lAKmEXlkeobD/V1
+         jdTWH2VJL29yKX7F84m6058iz+HT18mHlzuylS8o7cjt2IskzPSx2pO5OQYh1zKQ8xWm
+         5EMkT5S1TzBYvBXVPU6Qpf8c9DiPQs/WE3/QdXPJzhVGQI22Q9LxvdcvKffUwLW1aGRl
+         EprzfPSo+MbPoXCWetORempUqycgevhTS/dpi4tPvGl9g5PHm9RhRe5rwO9qYDf8XgXQ
+         +qsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX9+U1cdrb7C8J5nf7tpqsdUkhptGo6w1guMqhgWC52Lrv2Uhhz7bIx+0OoD6RZIAoHbGtcrr2I@lists.linux.dev
+X-Gm-Message-State: AOJu0YwZjdRDV0cSpNnJ9G/JEd6aqosy6cAU1jw/UphAzu9OXQ72UE4N
+	0It4sNKXkPc610pRx8sgCqKRJZqI+USwxQGqvGScCnrzpnnvWj/rrji0FJ0qP5a+1ieZtaJVdsV
+	zjZNwUjOAW/igRuvxRv/GHIo/54/DOHBL
+X-Google-Smtp-Source: AGHT+IHCla+3aT64d/PQpp3F34xwPPb0N3eP3FUnIcHUDvmJpi47dsbyQVEnutOGTkU/YrE5VMyCX4YDA0KOHFn+YwM=
+X-Received: by 2002:a17:90b:4d0d:b0:2e2:9026:8bee with SMTP id
+ 98e67ed59e1d1-2e9b16aa2e8mr7616013a91.9.1731355207362; Mon, 11 Nov 2024
+ 12:00:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Input: ads7846 - Increase xfer array size in 'struct
- ser_req'
-To: Nathan Chancellor <nathan@kernel.org>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: linux-input@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
-References: <20241111-input-ads7846-increase-xfer-array-size-v1-1-06cd92e9f20f@kernel.org>
-Content-Language: en-US
-From: Marek Vasut <marex@denx.de>
-In-Reply-To: <20241111-input-ads7846-increase-xfer-array-size-v1-1-06cd92e9f20f@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: clamav-milter 0.103.8 at phobos.denx.de
-X-Virus-Status: Clean
+References: <20241109165520.1461400-1-ojeda@kernel.org>
+In-Reply-To: <20241109165520.1461400-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 11 Nov 2024 20:59:55 +0100
+Message-ID: <CANiq72m_jUUo1ELwyn8qqXUDNxvCfPbv0NVRAxuAyjzU8o02ow@mail.gmail.com>
+Subject: Re: [PATCH RESEND] samples: rust: fix `rust_print` build making it a
+ combined module
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>, Masami Hiramatsu <mhiramat@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Mark Rutland <mark.rutland@arm.com>, 
+	linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	patches@lists.linux.dev, Stephen Rothwell <sfr@canb.auug.org.au>, 
+	Linux Next Mailing List <linux-next@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 11/11/24 4:09 PM, Nathan Chancellor wrote:
-> Clang warns (or errors with CONFIG_WERROR=y, trimmed for brevity):
-> 
->    drivers/input/touchscreen/ads7846.c:412:2: error: array index 6 is past the end of the array (that has type 'struct spi_transfer[6]') [-Werror,-Warray-bounds]
->      412 |         req->xfer[6].tx_buf = &req->scratch;
->          |         ^         ~
->    ...
->    drivers/input/touchscreen/ads7846.c:416:2: error: array index 7 is past the end of the array (that has type 'struct spi_transfer[6]') [-Werror,-Warray-bounds]
->      416 |         req->xfer[7].rx_buf = &req->scratch;
->          |         ^         ~
->    drivers/input/touchscreen/ads7846.c:334:2: note: array 'xfer' declared here
->      334 |         struct spi_transfer     xfer[6];
->          |         ^
-> 
-> Increase the size of xfer in 'struct ser_req' to ensure that there is
-> enough space for all necessary members and there are no out of bounds
-> accesses, clearing up the warning.
-> 
-> Fixes: 781a07da9bb9 ("Input: ads7846 - add dummy command register clearing cycle")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->   drivers/input/touchscreen/ads7846.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/input/touchscreen/ads7846.c b/drivers/input/touchscreen/ads7846.c
-> index f7bc0a3e56d86932823b6bc0dcd6bcd8e1b9b5c2..7b3711a3597c86f18c45d040f73bef884ec3c4aa 100644
-> --- a/drivers/input/touchscreen/ads7846.c
-> +++ b/drivers/input/touchscreen/ads7846.c
-> @@ -331,7 +331,7 @@ struct ser_req {
->   	u8			ref_off;
->   	u16			scratch;
->   	struct spi_message	msg;
-> -	struct spi_transfer	xfer[6];
-> +	struct spi_transfer	xfer[8];
-Sigh ...
+On Sat, Nov 9, 2024 at 5:55=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wrot=
+e:
+>
+>  obj-$(CONFIG_SAMPLE_RUST_MINIMAL)              +=3D rust_minimal.o
+> -obj-$(CONFIG_SAMPLE_RUST_PRINT)                        +=3D rust_print.o=
+ rust_print_events.o
+> +obj-$(CONFIG_SAMPLE_RUST_PRINT)                        +=3D rust-print.o
+> +
+> +rust-print-y :=3D rust_print.o rust_print_events.o
 
-Reviewed-by: Marek Vasut <marex@denx.de>
+Steven: if you have not applied this one yet (I think you didn't), I
+think it would be best to rename the main source file instead of the
+module name, since we already have users and a couple other places we
+should rename.
 
-Thank you
+I am sending v2 in case you can pick that one instead.
+
+Cheers,
+Miguel
