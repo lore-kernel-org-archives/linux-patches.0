@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6AF9214416;
-	Tue, 12 Nov 2024 10:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3372144A4;
+	Tue, 12 Nov 2024 10:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408383; cv=none; b=hhH8j6mLAerza7zgFzK+wedk7RdzSmiJdscq5ou5KGNnBw5ymFoK72yF4PaRJFEZyhtko3oqe3gDWoa89+G5htSWmOjSL3p3TZH9uSD8+F/WEXzm185Q2Hpfsljs8i8HRoevuLeCr22vUatsZBeBQlVxloDijfMBHX/6dLlom9A=
+	t=1731408387; cv=none; b=OuZnVPkxqfsmm8kPylcAWHDE748SUTaqczyb6Hq2t9+LuxY3ZrRtjJXqLf0aqKLiEreXgqv+KGIfcdRHB0mLWtf6kaZGuTbop7o3uuq4E4vn5MTi+vMC/Vwla0whQo9r1vrst8iwdeRDqJeTjaPf2/pIN/uO+EU+RiBr69fY9ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408383; c=relaxed/simple;
-	bh=dSvDIJLBQi8+VidcwYBDzrilrovx3pzSeJPrmOre4G0=;
+	s=arc-20240116; t=1731408387; c=relaxed/simple;
+	bh=eGQ/P2gitOiLZ3MSquTzsdHenwC/d1X/7yp6DHsKdq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WvQpeWPTGB/I2zv1ErV64NDQ45Q+Dcylpaykd4fbajSlw4GJLjR5OMwXdhilfjdVCrFv04kB4j61EjiXs6N7T1sJrGuZBMRDEgV2HfgDVFWKR389bUL7eLEdbe1p4jXbO+ky2EYc3K2dwDvJgK/7AGCiwPMwooRNod9u3kko5eY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdG/ZZJX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VE8LalsuDLsnWb4qt6jDaR0AVR6gabbHa7eGfxp/9oydMP1k1rRKuYaC3svXkz9/SxnBuVzC/Y3R+RNHJGkQgEehqCB/VZIX8/yN1jEdzyyo3SX8RDMYFTDezpWDuO7ZGaSm4J6vZ4lQ+TVdtHq6BGl9AALSQvXT/vVhqiNkqz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6+DXAZx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdG/ZZJX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162F6C4CECD;
-	Tue, 12 Nov 2024 10:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6+DXAZx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6035CC4CED4;
+	Tue, 12 Nov 2024 10:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408383;
-	bh=dSvDIJLBQi8+VidcwYBDzrilrovx3pzSeJPrmOre4G0=;
+	s=korg; t=1731408386;
+	bh=eGQ/P2gitOiLZ3MSquTzsdHenwC/d1X/7yp6DHsKdq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fdG/ZZJXgIs5IBDOY0zAXuEKTycQat/9FZ/neVrJ0l5nwsBh0HVJDp+A79PuekRWY
-	 c2cbbQYsnP+b8w9ibT15oLRp8+DM/22nQCZ6zjRw4M+Tag8gPvZLGRHCiiLWGUm6tv
-	 36GE42tt8g4kmOyKbWC51HWKoN5ftTlMJwXSk4Mg=
+	b=E6+DXAZxJ/rY/Rg7ZC4CQl+FOdzvE5d64VSnOLWuIu95Jwq4EDbwDkO77pKVGsr9v
+	 Uec3Nqz6QWnDwwQEo4rAM9hmB2lREUBKsn4sCMtj6FVoYPPGFHKVZz6J5sScVlsjo0
+	 0q8IUW49ZN4NPt7EIyIxmXwQLy0Ki34jbcjqawng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Christopher Obbard <christopher.obbard@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.11 146/184] clk: qcom: clk-alpha-pll: Fix pll post div mask when width is not set
-Date: Tue, 12 Nov 2024 11:21:44 +0100
-Message-ID: <20241112101906.474291985@linuxfoundation.org>
+	Qi Xi <xiqi2@huawei.com>,
+	kernel test robot <lkp@intel.com>,
+	Baoquan He <bhe@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Michael Holzheu <holzheu@linux.vnet.ibm.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.11 147/184] fs/proc: fix compile warning about variable vmcore_mmap_ops
+Date: Tue, 12 Nov 2024 11:21:45 +0100
+Message-ID: <20241112101906.512985124@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -46,43 +50,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Barnabás Czémán <barnabas.czeman@mainlining.org>
+From: Qi Xi <xiqi2@huawei.com>
 
-commit e02bfea4d7ef587bb285ad5825da4e1973ac8263 upstream.
+commit b8ee299855f08539e04d6c1a6acb3dc9e5423c00 upstream.
 
-Many qcom clock drivers do not have .width set. In that case value of
-(p)->width - 1 will be negative which breaks clock tree. Fix this
-by checking if width is zero, and pass 3 to GENMASK if that's the case.
+When build with !CONFIG_MMU, the variable 'vmcore_mmap_ops'
+is defined but not used:
 
-Fixes: 1c3541145cbf ("clk: qcom: support for 2 bit PLL post divider")
-Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Christopher Obbard <christopher.obbard@linaro.org>
-Tested-by: Christopher Obbard <christopher.obbard@linaro.org>
-Link: https://lore.kernel.org/r/20241006-fix-postdiv-mask-v3-1-160354980433@mainlining.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+>> fs/proc/vmcore.c:458:42: warning: unused variable 'vmcore_mmap_ops'
+     458 | static const struct vm_operations_struct vmcore_mmap_ops = {
+
+Fix this by only defining it when CONFIG_MMU is enabled.
+
+Link: https://lkml.kernel.org/r/20241101034803.9298-1-xiqi2@huawei.com
+Fixes: 9cb218131de1 ("vmcore: introduce remap_oldmem_pfn_range()")
+Signed-off-by: Qi Xi <xiqi2@huawei.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/lkml/202410301936.GcE8yUos-lkp@intel.com/
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Michael Holzheu <holzheu@linux.vnet.ibm.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/proc/vmcore.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -40,7 +40,7 @@
+--- a/fs/proc/vmcore.c
++++ b/fs/proc/vmcore.c
+@@ -457,10 +457,6 @@ static vm_fault_t mmap_vmcore_fault(stru
+ #endif
+ }
  
- #define PLL_USER_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_USER_CTL])
- # define PLL_POST_DIV_SHIFT	8
--# define PLL_POST_DIV_MASK(p)	GENMASK((p)->width - 1, 0)
-+# define PLL_POST_DIV_MASK(p)	GENMASK((p)->width ? (p)->width - 1 : 3, 0)
- # define PLL_ALPHA_MSB		BIT(15)
- # define PLL_ALPHA_EN		BIT(24)
- # define PLL_ALPHA_MODE		BIT(25)
+-static const struct vm_operations_struct vmcore_mmap_ops = {
+-	.fault = mmap_vmcore_fault,
+-};
+-
+ /**
+  * vmcore_alloc_buf - allocate buffer in vmalloc memory
+  * @size: size of buffer
+@@ -488,6 +484,11 @@ static inline char *vmcore_alloc_buf(siz
+  * virtually contiguous user-space in ELF layout.
+  */
+ #ifdef CONFIG_MMU
++
++static const struct vm_operations_struct vmcore_mmap_ops = {
++	.fault = mmap_vmcore_fault,
++};
++
+ /*
+  * remap_oldmem_pfn_checked - do remap_oldmem_pfn_range replacing all pages
+  * reported as not being ram with the zero page.
 
 
