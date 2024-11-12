@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE36215C66;
-	Tue, 12 Nov 2024 10:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573D0216DE2;
+	Tue, 12 Nov 2024 10:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407700; cv=none; b=obLgi6ylgXwyPhp9YW2fXMz1ezJX9pLJnbfT2V05GZeRjrs1lu0dZqcKHflQ8jcD9IslWYgRqS2kQ07LYIYFwHM8NSPSHvaWbJxQ+JGiY9wa18CvegblfWOW4MLfKWDGQ2hZ17Fk3IDOdd494rRLOoV7hwcjxrB8NVAaYmOkCuQ=
+	t=1731407703; cv=none; b=rigVwU4Ggf6UF8/DgmLD2t/975mgw0wZlXh+QQCFecY6dR0DvoF7vVSH+Y3RlsNs3kkWPSlctuLsTVfq1+WjqUVdMkyrwPj5LCZwf+0O4PiaMYxzRPprWP7ZGSTt/DVrSl+cWQexwhA5QxzQYM9FwDzmMULjITmvNXIyq70G14c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407700; c=relaxed/simple;
-	bh=6Ue/1caWEEWImcuRj3YHOUAtUhYpnVfEYFDGVEYsk3U=;
+	s=arc-20240116; t=1731407703; c=relaxed/simple;
+	bh=Opul5+OBKstBWzRMuAVO0qoryJKgl2esrehHefwNQSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z00VtWcbqbejgfdrkTEIy036jfRxeEBeoDEPFGzbg+RtVz2hs8/dqyUstGZq1zYwx4v04P+AWBRwpja9xObYnKB06pO+50oLOPYrp0oRxLl9bHKeUAfQuuHBrrpu7Inb9ib6hiCnf7c7gbqIU7Io0pXgoPoYWrkGY7Tz+p2eTKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s179PZMi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bPBQADmLwEYYjm/mZRG44G35AKjq1aKmoeoLWKzYWwHliOlQulDjhrLH1SYvDkCTEdg4d/vR1Recb1dfvlu7K+ZuHEzsRgYZNGXUoTYzBfXFJvjD29w9hFNuTEeum9EcWFO9T0jyDf0QEuDYRJScU0F2wLQA79Ssb22X56tTpYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jDH10J/H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s179PZMi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E6FC4CED6;
-	Tue, 12 Nov 2024 10:34:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jDH10J/H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6A0C4CECD;
+	Tue, 12 Nov 2024 10:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407699;
-	bh=6Ue/1caWEEWImcuRj3YHOUAtUhYpnVfEYFDGVEYsk3U=;
+	s=korg; t=1731407703;
+	bh=Opul5+OBKstBWzRMuAVO0qoryJKgl2esrehHefwNQSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s179PZMi1rL38DhOOS6U6qajW0Ngb6e5BWanJo0sI8lpIjNV8HeGrGyPe/fCJ5I8h
-	 ElRmF7djX1w5fJTtlfyarPUDkquW+bl9NpU9MGCM+DuUXDwXlR7kktV12+RQmY3oGL
-	 FlsSCEGPbOdK2YNZJOpJnwppXQvWvVztRE4B4cZI=
+	b=jDH10J/HvEKXQWlbRoBkLXGXYwg67H/gKfCdj0bRnIFmD6uoyxUwCv2Tn1EUO6t0v
+	 jlZ0DIj1bR4B2dfFvuNfwDAQOe89X6e6H4g0y4Wge9jc0EKiYE0k0wZ4EMEEL0TFGN
+	 XBOTPPoj9BXScuE8+UXFo7Ja1JnGrX87lSYGwLiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Qu Wenru <wqu@suse.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/119] media: adv7604: prevent underflow condition when reporting colorspace
-Date: Tue, 12 Nov 2024 11:21:02 +0100
-Message-ID: <20241112101850.781988592@linuxfoundation.org>
+Subject: [PATCH 6.6 055/119] scsi: sd_zbc: Use kvzalloc() to allocate REPORT ZONES buffer
+Date: Tue, 12 Nov 2024 11:21:03 +0100
+Message-ID: <20241112101850.820714270@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -51,72 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 50b9fa751d1aef5d262bde871c70a7f44262f0bc ]
+[ Upstream commit 7ce3e6107103214d354a16729a472f588be60572 ]
 
-Currently, adv76xx_log_status() reads some date using
-io_read() which may return negative values. The current logic
-doesn't check such errors, causing colorspace to be reported
-on a wrong way at adv76xx_log_status(), as reported by Coverity.
+We have two reports of failed memory allocation in btrfs' code which is
+calling into report zones.
 
-If I/O error happens there, print a different message, instead
-of reporting bogus messages to userspace.
+Both of these reports have the following signature coming from
+__vmalloc_area_node():
 
-Fixes: 54450f591c99 ("[media] adv7604: driver for the Analog Devices ADV7604 video decoder")
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
+ kworker/u17:5: vmalloc error: size 0, failed to allocate pages, mode:0x10dc2(GFP_KERNEL|__GFP_HIGHMEM|__GFP_NORETRY|__GFP_ZERO), nodemask=(null),cpuset=/,mems_allowed=0
+
+Further debugging showed these where allocations of one sector (512
+bytes) and at least one of the reporter's systems where low on memory,
+so going through the overhead of allocating a vm area failed.
+
+Switching the allocation from __vmalloc() to kvzalloc() avoids the
+overhead of vmalloc() on small allocations and succeeds.
+
+Note: the buffer is already freed using kvfree() so there's no need to
+adjust the free path.
+
+Cc: Qu Wenru <wqu@suse.com>
+Cc: Naohiro Aota <naohiro.aota@wdc.com>
+Link: https://github.com/kdave/btrfs-progs/issues/779
+Link: https://github.com/kdave/btrfs-progs/issues/915
+Fixes: 23a50861adda ("scsi: sd_zbc: Cleanup sd_zbc_alloc_report_buffer()")
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20241030110253.11718-1-jth@kernel.org
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/adv7604.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/scsi/sd_zbc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/adv7604.c b/drivers/media/i2c/adv7604.c
-index b202a85fbeaa0..d1609bd8f0485 100644
---- a/drivers/media/i2c/adv7604.c
-+++ b/drivers/media/i2c/adv7604.c
-@@ -2519,10 +2519,10 @@ static int adv76xx_log_status(struct v4l2_subdev *sd)
- 	const struct adv76xx_chip_info *info = state->info;
- 	struct v4l2_dv_timings timings;
- 	struct stdi_readback stdi;
--	u8 reg_io_0x02 = io_read(sd, 0x02);
-+	int ret;
-+	u8 reg_io_0x02;
- 	u8 edid_enabled;
- 	u8 cable_det;
--
- 	static const char * const csc_coeff_sel_rb[16] = {
- 		"bypassed", "YPbPr601 -> RGB", "reserved", "YPbPr709 -> RGB",
- 		"reserved", "RGB -> YPbPr601", "reserved", "RGB -> YPbPr709",
-@@ -2621,13 +2621,21 @@ static int adv76xx_log_status(struct v4l2_subdev *sd)
- 	v4l2_info(sd, "-----Color space-----\n");
- 	v4l2_info(sd, "RGB quantization range ctrl: %s\n",
- 			rgb_quantization_range_txt[state->rgb_quantization_range]);
--	v4l2_info(sd, "Input color space: %s\n",
--			input_color_space_txt[reg_io_0x02 >> 4]);
--	v4l2_info(sd, "Output color space: %s %s, alt-gamma %s\n",
--			(reg_io_0x02 & 0x02) ? "RGB" : "YCbCr",
--			(((reg_io_0x02 >> 2) & 0x01) ^ (reg_io_0x02 & 0x01)) ?
--				"(16-235)" : "(0-255)",
--			(reg_io_0x02 & 0x08) ? "enabled" : "disabled");
-+
-+	ret = io_read(sd, 0x02);
-+	if (ret < 0) {
-+		v4l2_info(sd, "Can't read Input/Output color space\n");
-+	} else {
-+		reg_io_0x02 = ret;
-+
-+		v4l2_info(sd, "Input color space: %s\n",
-+				input_color_space_txt[reg_io_0x02 >> 4]);
-+		v4l2_info(sd, "Output color space: %s %s, alt-gamma %s\n",
-+				(reg_io_0x02 & 0x02) ? "RGB" : "YCbCr",
-+				(((reg_io_0x02 >> 2) & 0x01) ^ (reg_io_0x02 & 0x01)) ?
-+					"(16-235)" : "(0-255)",
-+				(reg_io_0x02 & 0x08) ? "enabled" : "disabled");
-+	}
- 	v4l2_info(sd, "Color space conversion: %s\n",
- 			csc_coeff_sel_rb[cp_read(sd, info->cp_csc) >> 4]);
+diff --git a/drivers/scsi/sd_zbc.c b/drivers/scsi/sd_zbc.c
+index a25215507668d..203df5e53b1a8 100644
+--- a/drivers/scsi/sd_zbc.c
++++ b/drivers/scsi/sd_zbc.c
+@@ -221,8 +221,7 @@ static void *sd_zbc_alloc_report_buffer(struct scsi_disk *sdkp,
+ 	bufsize = min_t(size_t, bufsize, queue_max_segments(q) << PAGE_SHIFT);
  
+ 	while (bufsize >= SECTOR_SIZE) {
+-		buf = __vmalloc(bufsize,
+-				GFP_KERNEL | __GFP_ZERO | __GFP_NORETRY);
++		buf = kvzalloc(bufsize, GFP_KERNEL | __GFP_NORETRY);
+ 		if (buf) {
+ 			*buflen = bufsize;
+ 			return buf;
 -- 
 2.43.0
 
