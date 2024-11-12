@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B586D1F26E3;
-	Tue, 12 Nov 2024 10:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D622213120;
+	Tue, 12 Nov 2024 10:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407118; cv=none; b=ljRrbh0Ly6VMbDFVCeNUEjZ2ZqLK9C+9DTugRpP7qHBhVi06CPMI9F5O9pzRFdbCSz7FI5d/qYYfovwM1AxFLRU2Uk1pMDyvylCfVsZ4Mf55b99v1ZcNrbx+t9oo/pbrlLXCmT5vCffn1/l/yhTzyb3zP4ceVqr3Tbjk0B9pp2g=
+	t=1731407122; cv=none; b=nYEm5yTkrlyn4JtqeNSB8nSPhalA6nnz1dMe99o0zEpJsfapkUS7ce4lgIpUxgmYkSeG1Qfkjdn/PN+OWiFs/YtgjG9f8kdIg9uhOviPcYgY+BZbiA7cG/NGVum3KAn9p3UlGlkmZLeOTeptLyPWmRbzgOjxgyxVvWZfpS2NA1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407118; c=relaxed/simple;
-	bh=YEaisjAzQpBi1Qb5BpCySpjMFB0biiS6Kh9MqItxOLo=;
+	s=arc-20240116; t=1731407122; c=relaxed/simple;
+	bh=rx6XIk4HCntFOLuHoiZWF5aZ43jl8TUX33UB8mkGxps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p80E7XsF3cl34OYHm74ybZ9Ve3vLp9T4dRPCEuuXUPYuIIN5Qyh29hz1AjE1kEGAOBttNGWdCKVevo7nDqyGAZ0R2hLin3ODBLKUmMJzYZQ4BgEQ1OF73Kr6QZXBvOHVgXEsZhyAHTfRGJJwuVUCTM5URPhsPd1Z8lenkTtNp/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0ubMYPR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bPjh06RwvYothWhimxahAX6KQNxTdyWPf/Kxi2ZBrqSS2Yif3T4Gik1rtPzpYWZkNaibyRB3k8u/3PB/OiayHoTUtnnqZ/QsCPPUcm7VN4JorFF2XXUNUIoRhXBWrjEgZGHZjvtdmeQ9vJ7OQ3a5lTySHzAcCZP9kuA6K0AJDIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BCgmY65d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0ubMYPR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3896DC4CECD;
-	Tue, 12 Nov 2024 10:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BCgmY65d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62939C4CECD;
+	Tue, 12 Nov 2024 10:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407118;
-	bh=YEaisjAzQpBi1Qb5BpCySpjMFB0biiS6Kh9MqItxOLo=;
+	s=korg; t=1731407121;
+	bh=rx6XIk4HCntFOLuHoiZWF5aZ43jl8TUX33UB8mkGxps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0ubMYPRpZ+dEzFKkXJyMUL/jWEdU9qhIt2X4uhveKhbQFamt0AOr72sSXTYGf9iP
-	 jdeqTOkBwUToUukVesTLJsrKb4qsv5wDcaSgQmXcwRxRKH8jtCKb2Kje1aKsfQr6Pu
-	 d2Tsu8av3TjnqDWjZLfCfI+zTkFO+7JJ4o65XHy0=
+	b=BCgmY65dU9GM7wV+NW9309C5cM7Bm4r1gLrvAFBIB9fzoe6IJYhlmnKx/gGmtHX6G
+	 gHRt/olXwVYTpvxWQJc0Q/BC1dbwetoqsiPk+sUMAaQ4ernKB7wceoM1CVyVq2mUII
+	 50iFKnN6+IDu+6r3+4MD6jv127DoA4goGqcJY1nA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>
-Subject: [PATCH 5.15 54/76] nfs: Fix KMSAN warning in decode_getfattr_attrs()
-Date: Tue, 12 Nov 2024 11:21:19 +0100
-Message-ID: <20241112101841.836881348@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 55/76] btrfs: reinitialize delayed ref list after deleting it from the list
+Date: Tue, 12 Nov 2024 11:21:20 +0100
+Message-ID: <20241112101841.877442315@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -50,69 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit dc270d7159699ad6d11decadfce9633f0f71c1db upstream.
+commit c9a75ec45f1111ef530ab186c2a7684d0a0c9245 upstream.
 
-Fix the following KMSAN warning:
+At insert_delayed_ref() if we need to update the action of an existing
+ref to BTRFS_DROP_DELAYED_REF, we delete the ref from its ref head's
+ref_add_list using list_del(), which leaves the ref's add_list member
+not reinitialized, as list_del() sets the next and prev members of the
+list to LIST_POISON1 and LIST_POISON2, respectively.
 
-CPU: 1 UID: 0 PID: 7651 Comm: cp Tainted: G    B
-Tainted: [B]=BAD_PAGE
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009)
-=====================================================
-=====================================================
-BUG: KMSAN: uninit-value in decode_getfattr_attrs+0x2d6d/0x2f90
- decode_getfattr_attrs+0x2d6d/0x2f90
- decode_getfattr_generic+0x806/0xb00
- nfs4_xdr_dec_getattr+0x1de/0x240
- rpcauth_unwrap_resp_decode+0xab/0x100
- rpcauth_unwrap_resp+0x95/0xc0
- call_decode+0x4ff/0xb50
- __rpc_execute+0x57b/0x19d0
- rpc_execute+0x368/0x5e0
- rpc_run_task+0xcfe/0xee0
- nfs4_proc_getattr+0x5b5/0x990
- __nfs_revalidate_inode+0x477/0xd00
- nfs_access_get_cached+0x1021/0x1cc0
- nfs_do_access+0x9f/0xae0
- nfs_permission+0x1e4/0x8c0
- inode_permission+0x356/0x6c0
- link_path_walk+0x958/0x1330
- path_lookupat+0xce/0x6b0
- filename_lookup+0x23e/0x770
- vfs_statx+0xe7/0x970
- vfs_fstatat+0x1f2/0x2c0
- __se_sys_newfstatat+0x67/0x880
- __x64_sys_newfstatat+0xbd/0x120
- x64_sys_call+0x1826/0x3cf0
- do_syscall_64+0xd0/0x1b0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+If later we end up calling drop_delayed_ref() against the ref, which can
+happen during merging or when destroying delayed refs due to a transaction
+abort, we can trigger a crash since at drop_delayed_ref() we call
+list_empty() against the ref's add_list, which returns false since
+the list was not reinitialized after the list_del() and as a consequence
+we call list_del() again at drop_delayed_ref(). This results in an
+invalid list access since the next and prev members are set to poison
+pointers, resulting in a splat if CONFIG_LIST_HARDENED and
+CONFIG_DEBUG_LIST are set or invalid poison pointer dereferences
+otherwise.
 
-The KMSAN warning is triggered in decode_getfattr_attrs(), when calling
-decode_attr_mdsthreshold(). It appears that fattr->mdsthreshold is not
-initialized.
+So fix this by deleting from the list with list_del_init() instead.
 
-Fix the issue by initializing fattr->mdsthreshold to NULL in
-nfs_fattr_init().
-
-Cc: stable@vger.kernel.org # v3.5.x
-Fixes: 88034c3d88c2 ("NFSv4.1 mdsthreshold attribute xdr")
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Fixes: 1d57ee941692 ("btrfs: improve delayed refs iterations")
+CC: stable@vger.kernel.org # 4.19+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/inode.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/delayed-ref.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -1586,6 +1586,7 @@ void nfs_fattr_init(struct nfs_fattr *fa
- 	fattr->gencount = nfs_inc_attr_generation_counter();
- 	fattr->owner_name = NULL;
- 	fattr->group_name = NULL;
-+	fattr->mdsthreshold = NULL;
- }
- EXPORT_SYMBOL_GPL(nfs_fattr_init);
- 
+--- a/fs/btrfs/delayed-ref.c
++++ b/fs/btrfs/delayed-ref.c
+@@ -608,7 +608,7 @@ static int insert_delayed_ref(struct btr
+ 					      &href->ref_add_list);
+ 			else if (ref->action == BTRFS_DROP_DELAYED_REF) {
+ 				ASSERT(!list_empty(&exist->add_list));
+-				list_del(&exist->add_list);
++				list_del_init(&exist->add_list);
+ 			} else {
+ 				ASSERT(0);
+ 			}
 
 
