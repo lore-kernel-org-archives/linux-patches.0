@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF23219CB6;
-	Tue, 12 Nov 2024 10:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7250120F5AF;
+	Tue, 12 Nov 2024 10:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408324; cv=none; b=FC0mI+qY6iO7VO0B1tmAh/LLWTWdpI+JVo3KTirbeTq+vNdyWj1xlQHPltEEVUTkgdjzB6WJy60lONaIUjLorA/UG4PX8d7j/Aku9rJQiJ0NT4mEGW3XuhIAmQE97zQ0XCL49pTmHMLakL9Pngph1ukp76yOoCBY+I8VLGpiaNE=
+	t=1731408327; cv=none; b=RuAUE7uyqY5Ig2PhhwrUloqMHm9s8U+55p8/N/Ps4q9ouEU/SjQl/29HE3RESQhgT4pAvx0Rkq3mUCzTewlpOon9X/ZQY9MAJtuALAo75OORJ0I3oQjM509YYO4mCIdKBBnwBES64UKcOm6nnBdtd51TH26Dcc4y7soqnjuspbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408324; c=relaxed/simple;
-	bh=FU3+wVlNLSSNV1r6XoD1A1rXB3ZX+B0IDX+qWgMZ5LY=;
+	s=arc-20240116; t=1731408327; c=relaxed/simple;
+	bh=m6fxlWHYizo5nwFoO4U29SmHcBAtcoK9ZxvhPzBMAjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DXReuu9pQUg1hZ6yKPpqWaScoAcdc7VdE4jyvDk37HeGuy+04reoFDOv6B16ZcQarMO5E9b5VDW/0bpTICdHhOlV5u6Q/MSCTCKAsNMQLIv5uFCiatPkjG16oMCkB1TO2gekRPVm+yHiw1lleYgOiy1eWih71Bod+/35kdX58SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxP0Yga2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UQRK62wSiKjaFcVeD8edU+m4RSGC4AWqXA25Yar4E5TeIRtmcJga6P7kvhBj+l7MbmVag0a3i5GUDDyUbgoNiTxHIX4Av3QUQC5k30Dt9gp++mD74AlIgEpqEYOIeAMqp4/ZBBLM8IHbIGLRGzFoh877zlM7O7rAr2tHF4Ip5mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVrN5GNS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxP0Yga2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C68C4CECD;
-	Tue, 12 Nov 2024 10:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVrN5GNS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDC2C4CECD;
+	Tue, 12 Nov 2024 10:45:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408324;
-	bh=FU3+wVlNLSSNV1r6XoD1A1rXB3ZX+B0IDX+qWgMZ5LY=;
+	s=korg; t=1731408327;
+	bh=m6fxlWHYizo5nwFoO4U29SmHcBAtcoK9ZxvhPzBMAjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OxP0Yga2xtrp3RQOlT9XGj6OxajWy0t0isTEu8K+mi9VJbb1WGVpetZawRiwEfN0Z
-	 OhhdHXIFgu3tCigEw3T/IofC2UBu8d+heYhD7G3466rgHbg6AmiEWacjxUeQh/Sk0+
-	 9qEW//B2O1Th3FqLDyocuzUAEp58QCMrPNG8AgaY=
+	b=nVrN5GNSCNDJwkDua5FpkLzN/WNkkxBnh9aIFpXo008wND9sFVJeuh7n1bcNCyvTr
+	 K6Tv5MyyleHj1a2zjA+U10Z832Yjq9bEqxOTh/mkz5NlgDYb3A3Hr13xnVZjuIda5L
+	 Z6zolLx5GINNRppUGmBDwM3fNXjifqhd6qQ7i6Vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.11 126/184] net: wwan: t7xx: Fix off-by-one error in t7xx_dpmaif_rx_buf_alloc()
-Date: Tue, 12 Nov 2024 11:21:24 +0100
-Message-ID: <20241112101905.702511465@linuxfoundation.org>
+Subject: [PATCH 6.11 127/184] net: vertexcom: mse102x: Fix possible double free of TX skb
+Date: Tue, 12 Nov 2024 11:21:25 +0100
+Message-ID: <20241112101905.740564168@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -46,46 +44,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-commit 3b557be89fc688dbd9ccf704a70f7600a094f13a upstream.
+commit 1f26339b2ed63d1e8e18a18674fb73a392f3660e upstream.
 
-The error path in t7xx_dpmaif_rx_buf_alloc(), free and unmap the already
-allocated and mapped skb in a loop, but the loop condition terminates when
-the index reaches zero, which fails to free the first allocated skb at
-index zero.
+The scope of the TX skb is wider than just mse102x_tx_frame_spi(),
+so in case the TX skb room needs to be expanded, we should free the
+the temporary skb instead of the original skb. Otherwise the original
+TX skb pointer would be freed again in mse102x_tx_work(), which leads
+to crashes:
 
-Check with i-- so that skb at index 0 is freed as well.
+  Internal error: Oops: 0000000096000004 [#2] PREEMPT SMP
+  CPU: 0 PID: 712 Comm: kworker/0:1 Tainted: G      D            6.6.23
+  Hardware name: chargebyte Charge SOM DC-ONE (DT)
+  Workqueue: events mse102x_tx_work [mse102x]
+  pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  pc : skb_release_data+0xb8/0x1d8
+  lr : skb_release_data+0x1ac/0x1d8
+  sp : ffff8000819a3cc0
+  x29: ffff8000819a3cc0 x28: ffff0000046daa60 x27: ffff0000057f2dc0
+  x26: ffff000005386c00 x25: 0000000000000002 x24: 00000000ffffffff
+  x23: 0000000000000000 x22: 0000000000000001 x21: ffff0000057f2e50
+  x20: 0000000000000006 x19: 0000000000000000 x18: ffff00003fdacfcc
+  x17: e69ad452d0c49def x16: 84a005feff870102 x15: 0000000000000000
+  x14: 000000000000024a x13: 0000000000000002 x12: 0000000000000000
+  x11: 0000000000000400 x10: 0000000000000930 x9 : ffff00003fd913e8
+  x8 : fffffc00001bc008
+  x7 : 0000000000000000 x6 : 0000000000000008
+  x5 : ffff00003fd91340 x4 : 0000000000000000 x3 : 0000000000000009
+  x2 : 00000000fffffffe x1 : 0000000000000000 x0 : 0000000000000000
+  Call trace:
+   skb_release_data+0xb8/0x1d8
+   kfree_skb_reason+0x48/0xb0
+   mse102x_tx_work+0x164/0x35c [mse102x]
+   process_one_work+0x138/0x260
+   worker_thread+0x32c/0x438
+   kthread+0x118/0x11c
+   ret_from_fork+0x10/0x20
+  Code: aa1303e0 97fffab6 72001c1f 54000141 (f9400660)
 
 Cc: stable@vger.kernel.org
-Fixes: d642b012df70 ("net: wwan: t7xx: Add data path interface")
-Acked-by: Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/20241101025316.3234023-1-ruanjinjie@huawei.com
+Fixes: 2f207cbf0dd4 ("net: vertexcom: Add MSE102x SPI support")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://patch.msgid.link/20241105163101.33216-1-wahrenst@gmx.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/vertexcom/mse102x.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-+++ b/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-@@ -226,7 +226,7 @@ int t7xx_dpmaif_rx_buf_alloc(struct dpma
- 	return 0;
+--- a/drivers/net/ethernet/vertexcom/mse102x.c
++++ b/drivers/net/ethernet/vertexcom/mse102x.c
+@@ -222,7 +222,7 @@ static int mse102x_tx_frame_spi(struct m
+ 	struct mse102x_net_spi *mses = to_mse102x_spi(mse);
+ 	struct spi_transfer *xfer = &mses->spi_xfer;
+ 	struct spi_message *msg = &mses->spi_msg;
+-	struct sk_buff *tskb;
++	struct sk_buff *tskb = NULL;
+ 	int ret;
  
- err_unmap_skbs:
--	while (--i > 0)
-+	while (i--)
- 		t7xx_unmap_bat_skb(dpmaif_ctrl->dev, bat_req->bat_skb, i);
+ 	netif_dbg(mse, tx_queued, mse->ndev, "%s: skb %p, %d@%p\n",
+@@ -235,7 +235,6 @@ static int mse102x_tx_frame_spi(struct m
+ 		if (!tskb)
+ 			return -ENOMEM;
  
+-		dev_kfree_skb(txp);
+ 		txp = tskb;
+ 	}
+ 
+@@ -257,6 +256,8 @@ static int mse102x_tx_frame_spi(struct m
+ 		mse->stats.xfer_err++;
+ 	}
+ 
++	dev_kfree_skb(tskb);
++
  	return ret;
+ }
+ 
 
 
