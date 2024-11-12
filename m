@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7963D212D04;
-	Tue, 12 Nov 2024 10:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9CE212D04;
+	Tue, 12 Nov 2024 10:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407184; cv=none; b=poXmsaDLyJzn/9KGjTmDs99qcCfvin1qYwu1emf1YXL5uvgb3Dm+fhqi7YbQQ8Rlds6T/UJJLPziMX7TkVZHhZKRpfFkEI1rO0d7Ti9bOoj48/EeomNMZ/Z086gplpPXhQPshZNc43BnBDoc+jlr1LY/IlyX6oL7M0fX9Woqzfg=
+	t=1731407187; cv=none; b=h6iFpeDAuDqD7GD/DnZRbcXp2TDC3Vxa2XWCumb+uHKAL6Le47b8qLedsYewl2yIWd/hqypRao72LLoeO/cFB7bSjZZod0OBpNsbeGKUW/hyfukecs2YGJyuByAmvZ3Tps4g7rs3ug8ZcIdEVax60NRKEiXFrEv8zZIanplTEfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407184; c=relaxed/simple;
-	bh=q6OZzLIzSHdXrBMRULM6l+vv2kOUi9I+nqy0bp3b5kc=;
+	s=arc-20240116; t=1731407187; c=relaxed/simple;
+	bh=XbOnRAgCeO5QHDxunoiayV9VrTI9U/MQXvqWd58Ukts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dcTdvhhl1pqHkIgPFEbsq1Sa29XaOl8cmtLSrxFv12wxd3T8I6+mFLkJ3nCexpGpfn2rGFqO5X6WIF7jEZI+LC/juqP/p4s7v+pXL4UghRHV0HE3U4tjXk7MXSJ3+Tzdg8M7jhhv0hTE2jT9tNjo0fPbnSP+3h+h8sqSsJ9HcxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HIPVKKYA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bYNPBjWNYA9BMI0Srb+porpgVQvy1RvkBSYiONJdAw9wCORuY18QJXwJafyNcQuTwZU484kgouXTlDoNPqfote8CBqhvRRJ4Fl2YfUIg+6HJ8/SZbaWE51Gu2WNQUl0eViSftV/NEi5IbE6MJQ3+EdnvfLDmAionrQZRTZIrYP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B971AbZV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIPVKKYA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4863C4CECD;
-	Tue, 12 Nov 2024 10:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B971AbZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B97EC4CECD;
+	Tue, 12 Nov 2024 10:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407184;
-	bh=q6OZzLIzSHdXrBMRULM6l+vv2kOUi9I+nqy0bp3b5kc=;
+	s=korg; t=1731407187;
+	bh=XbOnRAgCeO5QHDxunoiayV9VrTI9U/MQXvqWd58Ukts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HIPVKKYAKQBrZ70g8snibDHQZnk9N/EqXFt+s2yVITX6tc5Y7oLozvWAiETuKAnyi
-	 qR3Fb6dkZOUrcHE8XwCe9W2XqGtl8pHupKdyZuXfLxbpOH+xrF5VO2w7uWp/O+DDV7
-	 xEDC7gpidSIrp5bvv8bMvy3WCC8YUYrBmy8Q4Vec=
+	b=B971AbZVY6TmqvZbGh6OI+3+U4WxCOhtcXuLypbccqmIc1pw9QjM5YkL6SbgDm49Y
+	 RRoqlqhZ63Jb6RUSQuzJHUKkFVfJeWP95v/5evvNqbNXArL1xXhJ0Se/nYZQ8YY0Pc
+	 bEdmhcFsvqQgZKVf92ah+q4HvJhvzal3Y2C8Le6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Qi Xi <xiqi2@huawei.com>,
 	kernel test robot <lkp@intel.com>,
-	=?UTF-8?q?Jan=20Sch=C3=A4r?= <jan@jschaer.ch>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 76/76] ALSA: usb-audio: Add endianness annotations
-Date: Tue, 12 Nov 2024 11:21:41 +0100
-Message-ID: <20241112101842.670094307@linuxfoundation.org>
+	Baoquan He <bhe@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Michael Holzheu <holzheu@linux.vnet.ibm.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 60/76] fs/proc: fix compile warning about variable vmcore_mmap_ops
+Date: Tue, 12 Nov 2024 11:21:25 +0100
+Message-ID: <20241112101842.065332238@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -45,47 +50,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Schär <jan@jschaer.ch>
+From: Qi Xi <xiqi2@huawei.com>
 
-commit 61c606a43b6c74556e35acc645c7a1b6a67c2af9 upstream.
+commit b8ee299855f08539e04d6c1a6acb3dc9e5423c00 upstream.
 
-Fixes: 4b8ea38fabab ("ALSA: usb-audio: Support jack detection on Dell dock")
+When build with !CONFIG_MMU, the variable 'vmcore_mmap_ops'
+is defined but not used:
+
+>> fs/proc/vmcore.c:458:42: warning: unused variable 'vmcore_mmap_ops'
+     458 | static const struct vm_operations_struct vmcore_mmap_ops = {
+
+Fix this by only defining it when CONFIG_MMU is enabled.
+
+Link: https://lkml.kernel.org/r/20241101034803.9298-1-xiqi2@huawei.com
+Fixes: 9cb218131de1 ("vmcore: introduce remap_oldmem_pfn_range()")
+Signed-off-by: Qi Xi <xiqi2@huawei.com>
 Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/r/202207051932.qUilU0am-lkp@intel.com
-Signed-off-by: Jan Schär <jan@jschaer.ch>
-Link: https://lore.kernel.org/r/20220705135746.13713-1-jan@jschaer.ch
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Closes: https://lore.kernel.org/lkml/202410301936.GcE8yUos-lkp@intel.com/
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Michael Holzheu <holzheu@linux.vnet.ibm.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/proc/vmcore.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -1965,7 +1965,7 @@ static int snd_soundblaster_e1_switch_cr
- static int realtek_hda_set(struct snd_usb_audio *chip, u32 cmd)
- {
- 	struct usb_device *dev = chip->dev;
--	u32 buf = cpu_to_be32(cmd);
-+	__be32 buf = cpu_to_be32(cmd);
+--- a/fs/proc/vmcore.c
++++ b/fs/proc/vmcore.c
+@@ -446,10 +446,6 @@ static vm_fault_t mmap_vmcore_fault(stru
+ #endif
+ }
  
- 	return snd_usb_ctl_msg(dev, usb_sndctrlpipe(dev, 0), REALTEK_HDA_SET,
- 			       USB_RECIP_DEVICE | USB_TYPE_VENDOR | USB_DIR_OUT,
-@@ -1976,7 +1976,7 @@ static int realtek_hda_get(struct snd_us
- {
- 	struct usb_device *dev = chip->dev;
- 	int err;
--	u32 buf = cpu_to_be32(cmd);
-+	__be32 buf = cpu_to_be32(cmd);
- 
- 	err = snd_usb_ctl_msg(dev, usb_sndctrlpipe(dev, 0), REALTEK_HDA_GET_OUT,
- 			      USB_RECIP_DEVICE | USB_TYPE_VENDOR | USB_DIR_OUT,
+-static const struct vm_operations_struct vmcore_mmap_ops = {
+-	.fault = mmap_vmcore_fault,
+-};
+-
+ /**
+  * vmcore_alloc_buf - allocate buffer in vmalloc memory
+  * @sizez: size of buffer
+@@ -477,6 +473,11 @@ static inline char *vmcore_alloc_buf(siz
+  * virtually contiguous user-space in ELF layout.
+  */
+ #ifdef CONFIG_MMU
++
++static const struct vm_operations_struct vmcore_mmap_ops = {
++	.fault = mmap_vmcore_fault,
++};
++
+ /*
+  * remap_oldmem_pfn_checked - do remap_oldmem_pfn_range replacing all pages
+  * reported as not being ram with the zero page.
 
 
