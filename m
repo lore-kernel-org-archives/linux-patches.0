@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0AA212EEF;
-	Tue, 12 Nov 2024 10:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C7F217F2A;
+	Tue, 12 Nov 2024 10:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408148; cv=none; b=rDIbaovUPmq5bT5IiUF8mnOD++cVC5qvxWgbgRreq9MT/JyYkgtDC4xKwCs+fYSjKcuwcu2pvh0BvdNrzup0SoSsPyHhzHb4JJflKY09FEJvkIevMr0OWHjWD7oovA4M1w0sY8lQsnexJMOZY3+auvIJ1J9HXE7Hmn+YYSLrbpA=
+	t=1731408151; cv=none; b=cdrWHghmS9z4WsCRlt37v/WIo+R9rdFCQG/d8hv8PaarWBmMU6T650SxtMZNoD3/IRoC0A72igRPb9h7vj20YzOpCTkSRVvJY+SmOpmXXP8TLU5kTmDhaFMwElcaCDGAcnF5yrYhyENDlpzqJdHTZSOTSrA1bDKG1O6pApV4AFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408148; c=relaxed/simple;
-	bh=kIIhF42DtGOmLLSwCz+pcinGmVuYkAIFo8SZWbqNVJc=;
+	s=arc-20240116; t=1731408151; c=relaxed/simple;
+	bh=p3s8aogREnyTu70nnD9Ob9pMkw8hsM52cu4oOHzh0qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qAZixM2zi3YLL293UC0QVRV1pE+ziYNa5VUmcv91l+hC3KkP+KlheCJjXGbfNRYgF4VDNjAhNzh/q5oON/sfucohWqnXACOPCEW96ACRMzwS2mVTW1wBNvJY79ZNYxqwmCdrJlk5pKsdKWqG0zwKCTlpAcrqq39oj7L99OOiHY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDwvECLU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tVkUjJvk3FPMHjRqAQsKlucD3NmZif8EJqZCIIaP17sIkxlrYWc9CUfV0BvCvnUQdAlOnFdd+g4MGfMbA4nqro7LOFxZ7b/Q4FQqrO9XblXXkKfP/9ZBiIIeuDJpA+SLRTczl3GRARxNJq79vaajlRS7CoaColkFaAb6hMC1Mwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZySNPyB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDwvECLU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA455C4CECD;
-	Tue, 12 Nov 2024 10:42:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZySNPyB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1ECC4CECD;
+	Tue, 12 Nov 2024 10:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408148;
-	bh=kIIhF42DtGOmLLSwCz+pcinGmVuYkAIFo8SZWbqNVJc=;
+	s=korg; t=1731408151;
+	bh=p3s8aogREnyTu70nnD9Ob9pMkw8hsM52cu4oOHzh0qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iDwvECLU0nz7ZyhwtCyF7xAsGfBvoxNHZTR+nojS6qX4grRYjY0qRzfIckaZbHoNQ
-	 ojjCcqRafAHLpZCGX8AB0IzS8vpffdKaGkEgbuGyTqiKzQyzVEzbBohqRq+1Q7laDa
-	 +wA4eleNHThskYmhVYei//tM8QHK5q9Ndho/n23M=
+	b=hZySNPyBUc0eZuFrmHrG5QlHCHuPLpMb6nqgC/Nft6c6hb1QczPKsn25D1TvXsToF
+	 qvjkoJqN8ipWuJne2wZ0X+lAj5sVv3PoR/hNutswuk+aNTxckMDsaMXRejlcVeiK3a
+	 CfA/7P/lzPXXplzsdreM1dE8t0Xbg4awuX1XaTdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.11 075/184] media: dvb-core: add missing buffer index check
-Date: Tue, 12 Nov 2024 11:20:33 +0100
-Message-ID: <20241112101903.740370534@linuxfoundation.org>
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	=?UTF-8?q?Martin=20T=C5=AFma?= <martin.tuma@digiteqautomotive.com>
+Subject: [PATCH 6.11 076/184] media: mgb4: protect driver against spectre
+Date: Tue, 12 Nov 2024 11:20:34 +0100
+Message-ID: <20241112101903.778683645@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -46,49 +44,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-commit fa88dc7db176c79b50adb132a56120a1d4d9d18b upstream.
+commit 2aee207e5b3c94ef859316008119ea06d6798d49 upstream.
 
-dvb_vb2_expbuf() didn't check if the given buffer index was
-for a valid buffer. Add this check.
+Frequency range is set from sysfs via frequency_range_store(),
+being vulnerable to spectre, as reported by smatch:
 
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Closes: https://lore.kernel.org/linux-media/?q=WARNING+in+vb2_core_reqbufs
-Fixes: 7dc866df4012 ("media: dvb-core: Use vb2_get_buffer() instead of directly access to buffers array")
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc: <stable@vger.kernel.org>
+	drivers/media/pci/mgb4/mgb4_cmt.c:231 mgb4_cmt_set_vin_freq_range() warn: potential spectre issue 'cmt_vals_in' [r]
+	drivers/media/pci/mgb4/mgb4_cmt.c:238 mgb4_cmt_set_vin_freq_range() warn: possible spectre second half.  'reg_set'
+
+Fix it.
+
+Fixes: 0ab13674a9bd ("media: pci: mgb4: Added Digiteq Automotive MGB4 driver")
+Cc: stable@vger.kernel.org
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Martin Tůma <martin.tuma@digiteqautomotive.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-core/dvb_vb2.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/media/pci/mgb4/mgb4_cmt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/dvb-core/dvb_vb2.c
-+++ b/drivers/media/dvb-core/dvb_vb2.c
-@@ -366,9 +366,15 @@ int dvb_vb2_querybuf(struct dvb_vb2_ctx
- int dvb_vb2_expbuf(struct dvb_vb2_ctx *ctx, struct dmx_exportbuffer *exp)
- {
- 	struct vb2_queue *q = &ctx->vb_q;
-+	struct vb2_buffer *vb2 = vb2_get_buffer(q, exp->index);
- 	int ret;
+diff --git a/drivers/media/pci/mgb4/mgb4_cmt.c b/drivers/media/pci/mgb4/mgb4_cmt.c
+index 70dc78ef193c..a25b68403bc6 100644
+--- a/drivers/media/pci/mgb4/mgb4_cmt.c
++++ b/drivers/media/pci/mgb4/mgb4_cmt.c
+@@ -227,6 +227,8 @@ void mgb4_cmt_set_vin_freq_range(struct mgb4_vin_dev *vindev,
+ 	u32 config;
+ 	size_t i;
  
--	ret = vb2_core_expbuf(&ctx->vb_q, &exp->fd, q->type, q->bufs[exp->index],
-+	if (!vb2) {
-+		dprintk(1, "[%s] invalid buffer index\n", ctx->name);
-+		return -EINVAL;
-+	}
++	freq_range = array_index_nospec(freq_range, ARRAY_SIZE(cmt_vals_in));
 +
-+	ret = vb2_core_expbuf(&ctx->vb_q, &exp->fd, q->type, vb2,
- 			      0, exp->flags);
- 	if (ret) {
- 		dprintk(1, "[%s] index=%d errno=%d\n", ctx->name,
+ 	addr = cmt_addrs_in[vindev->config->id];
+ 	reg_set = cmt_vals_in[freq_range];
+ 
+-- 
+2.47.0
+
 
 
