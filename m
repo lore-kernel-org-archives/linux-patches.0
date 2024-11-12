@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E91721C17A;
-	Tue, 12 Nov 2024 10:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DC019E992;
+	Tue, 12 Nov 2024 10:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408500; cv=none; b=Vms0/Ifm+3Z6MblfDgQYi9zJoLLWbi/X22F5pm/g0YCfAB4rc/87eJnm9wUd9vRCYMupRzrE/4vWUDp73gt5C8XlXJ0k4Xpu4fffpK7p4wei0KXIaxPP8J+ZY6qDdpz6fWDG2MG3tR6e0Y1xaYtvRw2sk4pXWGBanLYDwx5Vy1M=
+	t=1731408503; cv=none; b=cYdMn+rbqlH3D7Or5JNeb5R+XebPhDYz9CoX3+Pw1ib0IV8b7KbTk2vlNbpTe9O+W56cKPPVXhh/YAJ3GSi4ESVABmX/p1cMsFtWSQqNx85UMahRyWEmTtaKPZE+713ctljVRRijgVS49haGp78eLamMQnBLvQtK1iICCeC/6rU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408500; c=relaxed/simple;
-	bh=UU4qgRgAyUIptpNVzlqao+R4kD3KIcZfvrHplap8vAo=;
+	s=arc-20240116; t=1731408503; c=relaxed/simple;
+	bh=pYopgXeO0ClSpTkuGlZ36/bQyvw28h6eKVqvH2L4Rto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1IBhjD7Dpddg/XacayPrVypA0L8pqJbNbTiaUtbdQdN20HQ+Q939ZjT7Mpedfd+twycBgaRF0cP8qyionf+WhHvhsEiFdhOQJldUc/rB4KdoLp15XLN9rhuMvY5dACsIYOZmZNl93XeroGNISir1j9vHQ/xNL8c1VerLFVRrH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2tWvHKyu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sY7TaYEBhsg91/K46hXAFjEK8CoLR729GmsxGDnZ4RV8QeRH9s4IJWh8wPM66+Wef9Z/hF7N5wNfIt1lb+F3ZQUQ266BXYKWi3pPwQcEZPDQQ4kTzc/EXeVqB4GRPBwjpfZl+0gj4+XM9eeeZqGhOnPn1qWG8pFB/FYlq4MijIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ofk5AY3q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2tWvHKyu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1B2C4CECD;
-	Tue, 12 Nov 2024 10:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ofk5AY3q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DD9C4CED6;
+	Tue, 12 Nov 2024 10:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408500;
-	bh=UU4qgRgAyUIptpNVzlqao+R4kD3KIcZfvrHplap8vAo=;
+	s=korg; t=1731408503;
+	bh=pYopgXeO0ClSpTkuGlZ36/bQyvw28h6eKVqvH2L4Rto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2tWvHKyuyaGcFMl1bnbsAJ1Tyz9e1Lzlb9KyjawTaDqo1j5Wi/aSiixBNVmK5yiLE
-	 MczW7YEaFJGiifakfNN9OoDn1Eh/tRYn57vt+EfLqkS5JqUiYV8d695VlbamoxN2EG
-	 2GFG0tpjnNqjDlCYdjeMxxgxFJnyu6DOAiMwUGW4=
+	b=Ofk5AY3qDYTHEszjuXatNhpj1qo7RR9cMN66UFeWL0s9JDGqGwcgSwJrTiriVF8OA
+	 ZemT7WDipINjoHgz6MlcNI+YEix3pgGz3Q7pOGgq8wci0X2shwBlsFLAXkS8BwunUV
+	 ZnEnpEsIkoR2rSffmmExBiPrqr0MZjUzS1hnn7CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jagadeesh Kona <quic_jkona@quicinc.com>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Steev Klimaszewski <steev@kali.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.11 164/184] clk: qcom: videocc-sm8350: use HW_CTRL_TRIGGER for vcodec GDSCs
-Date: Tue, 12 Nov 2024 11:22:02 +0100
-Message-ID: <20241112101907.163241432@linuxfoundation.org>
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Yujie Liu <yujie.liu@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.11 182/184] xtensa: Emulate one-byte cmpxchg
+Date: Tue, 12 Nov 2024 11:22:20 +0100
+Message-ID: <20241112101907.849500966@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -55,75 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-commit f903663a8dcd6e1656e52856afbf706cc14cbe6d upstream.
+commit e799bef0d9c85b963938d8f31806a898385a5b09 upstream.
 
-A recent change in the venus driver results in a stuck clock on the
-Lenovo ThinkPad X13s, for example, when streaming video in firefox:
+Use the new cmpxchg_emu_u8() to emulate one-byte cmpxchg() on xtensa.
 
-	video_cc_mvs0_clk status stuck at 'off'
-	WARNING: CPU: 6 PID: 2885 at drivers/clk/qcom/clk-branch.c:87 clk_branch_wait+0x144/0x15c
-	...
-	Call trace:
-	 clk_branch_wait+0x144/0x15c
-	 clk_branch2_enable+0x30/0x40
-	 clk_core_enable+0xd8/0x29c
-	 clk_enable+0x2c/0x4c
-	 vcodec_clks_enable.isra.0+0x94/0xd8 [venus_core]
-	 coreid_power_v4+0x464/0x628 [venus_core]
-	 vdec_start_streaming+0xc4/0x510 [venus_dec]
-	 vb2_start_streaming+0x6c/0x180 [videobuf2_common]
-	 vb2_core_streamon+0x120/0x1dc [videobuf2_common]
-	 vb2_streamon+0x1c/0x6c [videobuf2_v4l2]
-	 v4l2_m2m_ioctl_streamon+0x30/0x80 [v4l2_mem2mem]
-	 v4l_streamon+0x24/0x30 [videodev]
+[ paulmck: Apply kernel test robot feedback. ]
+[ paulmck: Drop two-byte support per Arnd Bergmann feedback. ]
+[ Apply Geert Uytterhoeven feedback. ]
 
-using the out-of-tree sm8350/sc8280xp venus support. [1]
-
-Update also the sm8350/sc8280xp GDSC definitions so that the hw control
-mode can be changed at runtime as the venus driver now requires.
-
-Fixes: ec9a652e5149 ("venus: pm_helpers: Use dev_pm_genpd_set_hwmode to switch GDSC mode on V6")
-Link: https://lore.kernel.org/lkml/20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org/ # [1]
-Cc: Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Cc: Abel Vesa <abel.vesa@linaro.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Steev Klimaszewski <steev@kali.org>
-Link: https://lore.kernel.org/r/20240901093024.18841-1-johan+linaro@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Tested-by: Yujie Liu <yujie.liu@intel.com>
+Cc: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: "Peter Zijlstra (Intel)" <peterz@infradead.org>
+Cc: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/videocc-sm8350.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/xtensa/Kconfig               |    1 +
+ arch/xtensa/include/asm/cmpxchg.h |    2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/clk/qcom/videocc-sm8350.c b/drivers/clk/qcom/videocc-sm8350.c
-index 5bd6fe3e1298..874d4da95ff8 100644
---- a/drivers/clk/qcom/videocc-sm8350.c
-+++ b/drivers/clk/qcom/videocc-sm8350.c
-@@ -452,7 +452,7 @@ static struct gdsc mvs0_gdsc = {
- 	.pd = {
- 		.name = "mvs0_gdsc",
- 	},
--	.flags = HW_CTRL | RETAIN_FF_ENABLE,
-+	.flags = HW_CTRL_TRIGGER | RETAIN_FF_ENABLE,
- 	.pwrsts = PWRSTS_OFF_ON,
- };
+--- a/arch/xtensa/Kconfig
++++ b/arch/xtensa/Kconfig
+@@ -14,6 +14,7 @@ config XTENSA
+ 	select ARCH_HAS_DMA_SET_UNCACHED if MMU
+ 	select ARCH_HAS_STRNCPY_FROM_USER if !KASAN
+ 	select ARCH_HAS_STRNLEN_USER
++	select ARCH_NEED_CMPXCHG_1_EMU
+ 	select ARCH_USE_MEMTEST
+ 	select ARCH_USE_QUEUED_RWLOCKS
+ 	select ARCH_USE_QUEUED_SPINLOCKS
+--- a/arch/xtensa/include/asm/cmpxchg.h
++++ b/arch/xtensa/include/asm/cmpxchg.h
+@@ -15,6 +15,7 @@
  
-@@ -461,7 +461,7 @@ static struct gdsc mvs1_gdsc = {
- 	.pd = {
- 		.name = "mvs1_gdsc",
- 	},
--	.flags = HW_CTRL | RETAIN_FF_ENABLE,
-+	.flags = HW_CTRL_TRIGGER | RETAIN_FF_ENABLE,
- 	.pwrsts = PWRSTS_OFF_ON,
- };
+ #include <linux/bits.h>
+ #include <linux/stringify.h>
++#include <linux/cmpxchg-emu.h>
  
--- 
-2.47.0
-
+ /*
+  * cmpxchg
+@@ -74,6 +75,7 @@ static __inline__ unsigned long
+ __cmpxchg(volatile void *ptr, unsigned long old, unsigned long new, int size)
+ {
+ 	switch (size) {
++	case 1:  return cmpxchg_emu_u8(ptr, old, new);
+ 	case 4:  return __cmpxchg_u32(ptr, old, new);
+ 	default: __cmpxchg_called_with_bad_pointer();
+ 		 return old;
 
 
