@@ -1,188 +1,254 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42DE230996;
-	Tue, 12 Nov 2024 11:43:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731411789; cv=none; b=B4eLhJ6JkE1ZO6m+lC4w7/9zJmGtejub9QmQ+BwLLSiUj+ikt6NKWdQrdRcAVoJ/FnlfephaMmiFamzHiAfO7zVn8gExbE+VPgkEdU2bC7XjDzGMJ2USLGsNWYyfHyMmyiSRoCkR132gqk86AZD033DrGcD9l3wtVKnICUpY9S0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731411789; c=relaxed/simple;
-	bh=ywmrmwU61cquYWqHb3soWy5KtfML++9SbcjwKY7ZNaI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hzBMPidEcp5xrNAYUFZvCCZ6nuWkavyqpWDgXxlhOwoI/FZgFNxpEdHb9t2TdEkZYQIZGp7rG7tzDK+69p3+3yyMFVsjVkGRpj2Q0ESte5PqRaMQtba2pLih9O4u3j5IMxeyQG+xtV1HodvdQcEeWP34kg+E1PDLpx+Mwh4gGYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PDX0EjKm; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0408070830;
+	Tue, 12 Nov 2024 13:10:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1731417035; cv=fail; b=l+RB5eGZ+Q1uwidhBdBEGjPjTEcbEHB96EgC7viO3JPrRUHFbKZXLRCMwZ2A2GH/Hpv+Wk9+5KQm/lXs3CqLlv66dI4/UW9jQfQ/BP8UazNaGHaTOH3nT0EEIVVQDbndfa9eTy8MCnUOOOR/tsWkIvMsWPt4+JAIZbBT+N3wXxo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1731417035; c=relaxed/simple;
+	bh=NcNrG8rmcLFBTs1HZq+Ww+oXf07b8AfxzyeXcgbzjko=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=S+qNsqwY8gvGVjQsV62eaef2VKnfuUzbSDFXko+XEDwr0g4AyWZ7i2iqoYoOfnBzk4/oyLo2TUqmQhgyy065JFotdaOyI867rKj3MfU4b8Ak2/3mDhOhW1KdnwzoMjXWbCAwO3ovuIVhp1YJNZDMCPQboxbC7W519OUZ67/PACc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=g495iao4; arc=fail smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PDX0EjKm"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2e9b23d189cso66965a91.1;
-        Tue, 12 Nov 2024 03:43:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731411787; x=1732016587; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=j0z23DhUHW7wNW00l4MV+YrP9iRE6XDYN76aiQ5G0Vc=;
-        b=PDX0EjKmlNcQErwO4bc/9TEjD5Ug6SCu2kXXeTp5F48B2GQPNSO4gR432fzcyOM8Tr
-         YzdzBaLHGm48UkM2TSo/JlnuCv4gQAyJTBMrENF1Fv+YRONydp4ptv86nGFL4Yw4WY0y
-         EM/rqlLUj3oo9g1x/ReJKaHEZZBojdjaBFOfTZu/Et4WFVyD2Owa6DHYDs/BDXPyZd/X
-         YPoyiCGivFucV8Glr6d5cocuglualz/V6rCfFK8+s7NohxzvrvVkVTgWIOFZQ/Nvaq+P
-         +VrDgZeC6CQeoF95+tWmqYZEjot24Fao2E+iHSOzVlqkBqKNpx0lEeLoOCwIQTNGRqPo
-         x/jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731411787; x=1732016587;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=j0z23DhUHW7wNW00l4MV+YrP9iRE6XDYN76aiQ5G0Vc=;
-        b=gngu8l2FqdnzG6tx/HhLtpm7dt41nIve/TI80uMfsm4O3R9PG5/Jb3QzmSbnfXpjGx
-         p6TSWHNqIA9BbNJwsw+ERR8y3fMPHWBwhFqC1+/CWLajibUE8pMeKwnbJiKSZ7Fe5okT
-         yD7F4+9WNx3xIN8xAVQx/DbpWqS56n/3TmlsnQZuM2awTkRWKvo6DOo66tT0nJRBo2CL
-         HNiDKl9qKmNU6An7m7qdRH1BFvnPLJ9gua1R4Dk42wQBpluax/6zrfYxWkq11JykI4du
-         LKjOyzVqIwYOl91t2V8MKq4KTxyaJ0+/LeQT3LzzrwcAnE7tXfEa2WUKo2YNUueHysil
-         3ucQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW65tYRHrD5sOT6xbJATxTV4W/lNk2CbW534OrNdNP0a3cIu+w7eT6fnHi6IOEKtC05yZTU@lists.linux.dev, AJvYcCX4fZZ/J9/lseP0O2EAU/S6g29LmHP58YrvejmIuM9eDmIUoOOaucroc7IAklSDGcsv3zj/PqPPyg==@lists.linux.dev
-X-Gm-Message-State: AOJu0YynwRKOEudAzoucNPSIELq1HrBJMj4DwZ2nBK6/I0UMI3LBqdzO
-	u3eFHOXJJGQEljTVGRKT/3G7RP9/ulOKaBOgGSgYpaKzO67airsoXw++J60D1kdGCmsUBf/xolP
-	1sg/xVG7oysxrWWhjuq3qNR1q7pg=
-X-Google-Smtp-Source: AGHT+IGggizb3kL12ZjnHA+9BEc8hjb63HpYjen5xTTmWs+MKPFBZ8CYn9vyQuK8cPPVTowrwyuTF+2y5HhglUBEUAA=
-X-Received: by 2002:a17:90b:3ec5:b0:2e2:ada8:2984 with SMTP id
- 98e67ed59e1d1-2e9b174818dmr8920433a91.4.1731411787013; Tue, 12 Nov 2024
- 03:43:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="g495iao4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1731417034; x=1762953034;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=NcNrG8rmcLFBTs1HZq+Ww+oXf07b8AfxzyeXcgbzjko=;
+  b=g495iao44c6ERX0Z/+7hKuYkvYnaDGU8XTYJMV3GYIdgPqSmRjQr7Iog
+   DXXvHt0V5Zgur44NsfXFqZmPeSS77rDCt7pLK2842sqwg2wpZ019Hkr/2
+   w/bXk54naHAUpaS2QxBmgkxvS8tg7Xc49/13zSD4RCpD7W4GASgJfYDeM
+   uf0Yz8EXfjnjdVQoN1r/6BqC3fHuaXiYMo6H3pc/00CKS3mDx68T3x1qf
+   d8Z9LzJzL4t/TtlU5mX86W3JbRyZ7P4DNjdT8IPxYDIQyGxMc5gkjT37+
+   CyfWgbfbhSuO/m+teZqP3fzmOjJyUtuF37jQR/VVgh5OxAu2U6bsasnTc
+   w==;
+X-CSE-ConnectionGUID: BhXr3vSMTCqvbnVFnTR2vQ==
+X-CSE-MsgGUID: G2Z5dJH1Q5WdarkTeoYjww==
+X-IronPort-AV: E=McAfee;i="6700,10204,11253"; a="35181223"
+X-IronPort-AV: E=Sophos;i="6.12,148,1728975600"; 
+   d="scan'208";a="35181223"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2024 05:10:33 -0800
+X-CSE-ConnectionGUID: zZBcXR/qQOieJpHggFqbwA==
+X-CSE-MsgGUID: qkvldZOjRQyJdHlZ8OPmQg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,148,1728975600"; 
+   d="scan'208";a="92532550"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+  by orviesa004.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 12 Nov 2024 05:10:33 -0800
+Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Tue, 12 Nov 2024 05:10:32 -0800
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Tue, 12 Nov 2024 05:10:32 -0800
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.171)
+ by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 12 Nov 2024 05:10:31 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=TZLNTi+JJRIrXXjOd/yYja9Mp6IGbT3qypMwUXd1urbsXV8mO480tnS3fzTtmjK2LS69AItWQJhB0KyPvIw3Dq+cEp1Hyc0xwmJ32N+Zu1J1X68R76z5Wv6e2gYKQim3PE5H8Wgr56uQtf7ZcXFLgGU16GRtZTU3NwJFe0S0MqDi3glu9Ad+XdxkkS6QWLqLrG5y6LOBmtIuYCbiacNvJT8OldTp0dJu+CMN5aXt1A+I9FXuE1DPB//emLbPZcQ6mtPs/C6cztqjQCFmYCwcuNpZbsZEOx8aVnPOA49VL6aPk1F+FipiRmSmveRItXOtgS9Uz0CeolAkGxruAuJkSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mfapXwFotbGhMxBIhosnly+1H023C1qFrYjJhPCKJkQ=;
+ b=ZKs5dfnI8JjSAmNWMUUd51PSW6uO9sIZ6Iw07hBFrLimw3MuXxVS43sXjNC2eVinmooguia8cR/L/Db49tbyh8CkP6pBpSqlWNwhBVJdVOLFTX4Z2t7tV70xh5w0docPe+yrmXxRh9eprbQdkXALZYCEryL0OAobAxNjovIh23IHECEur8OGQSviuQOl3pTJjTsTpexmOB3zkBpTfdP8COSEsyCoWAhojsbKq6o3YnaKx/SgEhfP4rgrrf/+lw1xoxOjVvohuyy1wx3qO3tuK4W2C96j4o6d84mtx0A5mgiMcwmuSIJc8v/aEaMhzk1oPeZEZlNlUWor+wowZisuxQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS0PR11MB7529.namprd11.prod.outlook.com (2603:10b6:8:141::20)
+ by SA1PR11MB7699.namprd11.prod.outlook.com (2603:10b6:806:338::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.17; Tue, 12 Nov
+ 2024 13:10:29 +0000
+Received: from DS0PR11MB7529.namprd11.prod.outlook.com
+ ([fe80::d244:15cd:1060:941a]) by DS0PR11MB7529.namprd11.prod.outlook.com
+ ([fe80::d244:15cd:1060:941a%5]) with mapi id 15.20.8158.013; Tue, 12 Nov 2024
+ 13:10:29 +0000
+Message-ID: <f0c45d5b-b8cd-4f75-a9d7-21808f18583d@intel.com>
+Date: Tue, 12 Nov 2024 21:15:02 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 13/13] Documentation: userspace-api: iommufd: Update
+ vIOMMU
+To: Nicolin Chen <nicolinc@nvidia.com>, <jgg@nvidia.com>,
+	<kevin.tian@intel.com>, <corbet@lwn.net>
+CC: <joro@8bytes.org>, <suravee.suthikulpanit@amd.com>, <will@kernel.org>,
+	<robin.murphy@arm.com>, <dwmw2@infradead.org>, <shuah@kernel.org>,
+	<iommu@lists.linux.dev>, <linux-doc@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-kselftest@vger.kernel.org>,
+	<baolu.lu@linux.intel.com>, <eric.auger@redhat.com>,
+	<jean-philippe@linaro.org>, <mdf@kernel.org>, <mshavit@google.com>,
+	<shameerali.kolothum.thodi@huawei.com>, <smostafa@google.com>, <aik@amd.com>,
+	<zhangfei.gao@linaro.org>, <patches@lists.linux.dev>
+References: <cover.1730836219.git.nicolinc@nvidia.com>
+ <7e4302064e0d02137c1b1e139342affc0485ed3f.1730836219.git.nicolinc@nvidia.com>
+Content-Language: en-US
+From: Yi Liu <yi.l.liu@intel.com>
+In-Reply-To: <7e4302064e0d02137c1b1e139342affc0485ed3f.1730836219.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR02CA0083.apcprd02.prod.outlook.com
+ (2603:1096:4:90::23) To DS0PR11MB7529.namprd11.prod.outlook.com
+ (2603:10b6:8:141::20)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241111201607.653149-1-ojeda@kernel.org>
-In-Reply-To: <20241111201607.653149-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 12 Nov 2024 12:42:55 +0100
-Message-ID: <CANiq72mUu9V0tAFRYju5=B9-EZ9hbPVMabKJvHm67n7BgSVQXw@mail.gmail.com>
-Subject: Re: [PATCH v2] rust: warn on bindgen < 0.69.5 and libclang >= 19.1
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, 
-	Justin Stitt <justinstitt@google.com>, llvm@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Ben Beasley <code@musicinmybrain.net>, 
-	NoisyCoil <noisycoil@tutanota.com>, Matthias Geiger <werdahias@riseup.net>, 
-	Masahiro Yamada <masahiroy@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
-	Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR11MB7529:EE_|SA1PR11MB7699:EE_
+X-MS-Office365-Filtering-Correlation-Id: e94bb2b7-7080-4b21-a2be-08dd031b6116
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?RjI5ZnpGc3VDM2hYdGk1NmJlWTUvVVBpeTAwY1R6bVZML2NFUktBenVQUkZD?=
+ =?utf-8?B?RHJ1WWNaemxPckg1ZlF5SVBnU1h6Q2x5aXJkNUE1K0JZdzd3b0JXbjhTaFNk?=
+ =?utf-8?B?dDJQbUVBeW1kMmN5d0psQjZlZm42SzNiREozdm94LzdzQUNLM2kyV0dLK0RR?=
+ =?utf-8?B?RjcrUnBEZkJ3R3NUU2ZPczlIcFQ0ZGtiYUYwM3pHS3NNc012cDhxUjdHQkxU?=
+ =?utf-8?B?OEdhaHhnVGZNMFUvdUNOQ0NZVURMU0trbXp6V2tKRURPRFB6MndqMGRCWmdx?=
+ =?utf-8?B?WHpudTZ3WXg2d1l5ZUF5UXhsOXg0REZhdWczSXJHV1JrTStHYjVYTEN5R1VK?=
+ =?utf-8?B?NFhoVXNpck1wWmgzWEszTXRzeGhDYUt5OVJlZFhtTE5kbXdjamVXRFV4Sks1?=
+ =?utf-8?B?dHppdWVlSmY4UEFDQ2haVWlvVzFlSExYODlIRVBYdldRRTVUMEc1bSticGdl?=
+ =?utf-8?B?L0gvcG1tZ2JoQW41V3pCUmx3eW5XT2h3SWlhOEtlbjF2a3RBbEI3MDFadFFY?=
+ =?utf-8?B?MVovbHN2VHVEMnp5Z3EyMURnanlQeXZDQzAzN2t4N2xjQmQ1ODAxNGNkQlNj?=
+ =?utf-8?B?aDRGNERZMjdVVFp3bll4ckFXbkZXOHdUbEFOWCtaazlkZVFOVDJta1BCVDNv?=
+ =?utf-8?B?U25DQ0pQSXE4UGhWR0pEalpQWVE1R2pxTE5Hbnc5MEExQXl3Y1dUUHZ4SlVL?=
+ =?utf-8?B?UDZKb05YclFUd1NhaTIrVWs4NndRKzVkVzM4Q3FaZUxhRnA1Q0VObERNZXVD?=
+ =?utf-8?B?RGwxRldGZmJEdHFPQmxVSkkzNGVyMXVvOStYODlaN1kyc0Q0b0E1ejU4SlU2?=
+ =?utf-8?B?UlJOOFFQaGNlOE1hWVYwQmtRdnk4VlhkK2hCSWN1RVhVM1VyenFFelUxb25F?=
+ =?utf-8?B?MXlRc2JwUHJKV2gyZ3ZxYTUyYVV3dURFMDBURTlRTUs5N2hjbVJGdTdGM3lZ?=
+ =?utf-8?B?dHBXVGdWL1FHUzI5WmM2R0Y3QU9pQlppam5aWWJyMGE0RmxvYlduTFNhTWRj?=
+ =?utf-8?B?R0pveEl0dEkwb1haLzZJT1VSbFVBK3haa3BZUEI2UmJ0M3NKZGM3azBud2lO?=
+ =?utf-8?B?RGxKcU9VMjB3VGo5dStxMzZNNEpYempGOGJZZy90cDNsWGd0UDlkblpGMWFR?=
+ =?utf-8?B?eExQR0xuR3JXS1FxNkFocEhLM1RLbW1sYzBYOGZ1dVNOR2l0d0tUdXZ1ZnRH?=
+ =?utf-8?B?eEwwZ2ZNV1VTY2VCUUluWS9HU0hHbzJsTDN6eVRoeGNhM2RKdVN4SXlJZmw4?=
+ =?utf-8?B?eXo0UWlWck1FdDFWNmhuRG82eHQzUFVUWHFtbk41MVVFZmN2K0w5Yi9iR1V3?=
+ =?utf-8?B?OERUUkEzc1Y0MUp2R2k0QklDb0NUN1VHWkovdERkclFMdit3ZkYrT1VncWN3?=
+ =?utf-8?B?R2NKei9UUmpHRlk0ck81WGZCK1JzeEFoRnE4WmNoUEU0azVyL0FtOHp3RGZC?=
+ =?utf-8?B?OWhpRkxzQkZqa3NvNmh3Rk5LR2JKMDAwMmxweVkyNjFCdWFRYUZrS3U0NzZi?=
+ =?utf-8?B?SnA1c29IazBtRVlvYitFYkRDaFJtUDFFdVVhRGt3dE5nQUMrVGgvclRWZmhC?=
+ =?utf-8?B?U2tZQXVyLzk2U2pZUnUrZ2djWFBXeHNLQi9sQmZiNDhYaXVxSzB0SFFSa1JE?=
+ =?utf-8?B?OXVKWjRJUkZyRzlzRHRhL0tFWEh4VXBuVGJhelArdXF3WVhiN3ZianRBWmNm?=
+ =?utf-8?B?OWFIYlMzNjRPWUZWTWRUMlRUaU5aZmlSMXI2d3A4bW45R05pT21rWTFKRnkw?=
+ =?utf-8?Q?2/icYIsqqLZgZz//j0kQXESR3XuxTn2q8OceY8e?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB7529.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NjRoL0dXZHowZXZjTFJnOVJIZFRhcGpPK0ZrOGxSRW9sYzJtNmdVUVJCci9u?=
+ =?utf-8?B?d0tmSW5XeUNIMUZlOTFvcnpsYXB5TXNsNkw2TE5pdUw1LzN1UmIyOUs0TkR2?=
+ =?utf-8?B?N0ZsR1Y0aDFwcUdEdmhYU0JoUnFJVmhLUEsrSjhsTTEwaWtlcEdrVGUrc3Jr?=
+ =?utf-8?B?L29iYk8wM0pYdGJUR05WMm5iejUyQlh4UkluNG0yWUJsOXZKTkhDdnNVb0ts?=
+ =?utf-8?B?dzZaRkdSNHd4dzNmZlRuT05RZXFmOXR0WWxCeGlONFdKNWt6d1N1N3pVellT?=
+ =?utf-8?B?NzNXRzl1YTZ3R0Z4ZDMzV0p5MzVoek9EV3FkZVZ5Tklaa3lRVzBLaXdZSW11?=
+ =?utf-8?B?M1BuWXRwU3ZBVGFhNUhNSmxXdGxIZXM0bHVJSFBlQWNwTW9BSUQzKzhHazJp?=
+ =?utf-8?B?cE4xeEw5Rk5oWnExRHZqZmpJNHI5a2laZnl3dVNpeUJzaGdOWG1ibURWN1ZP?=
+ =?utf-8?B?NmNVbHd3eEZucGtERmdQYzFSd1Fia3ZNZzFRekQ5NHllU1lFSlE4VkQ3eTVO?=
+ =?utf-8?B?dmd3WkdTMWpZQ0V0N2o0SUh0UldhaGpaVVlpVTl4L0tkT1hrY2xwa2xnNW5E?=
+ =?utf-8?B?cTM2VDVjOUlaT0dYU3NaUy9XQTNIU2o0WjFVME03ZGtTcmZ2N05IRGlNcXRv?=
+ =?utf-8?B?SFZLZ1A5VjFCWjQyeEhySXJpRDdPU0ZDNDEzKzZZdkt2QnNRRGhCcjdydzNq?=
+ =?utf-8?B?MDAzUEhkT1I2TGlObm43MWNLMnVSbjVlMmJZdUY2YjV0aTZDSWRnSERBdU94?=
+ =?utf-8?B?Tm5NUjcrWmtYa3RrOGRGVGNxb3pTN0prSzQvK1krODYwdFVjL3VzdDZacXcx?=
+ =?utf-8?B?MVZRSjd5bmdGWEoxUXdwWGczekFYYkNTejNvejRKRFNjRTRldEFZTVhPcVFF?=
+ =?utf-8?B?SGFld3hSV0F3Zk5Ob2JncGRSems4cExoY0ZvTmNZNW1idm1FNy9vbCsvczFl?=
+ =?utf-8?B?UC9sMTExOUdMc2U3SDl6Rk5LQ09xVkFvQVRWbHRKVFQ1a2JpRDlacnprRzhz?=
+ =?utf-8?B?cGI4L2ZXR1djblBTQno4WnZRdC9KY0NPckx1dU5lSm4wNXVvM0xGNjU1UmtZ?=
+ =?utf-8?B?WWhTUjNKaGZZTlFRcVNpRUsza3ZBemw4Mi9ncVFuK2hMSlVUdE9zUnl0NWRk?=
+ =?utf-8?B?eDQvbWQzay8rcEZRMG1zdVNjcWk2RG1kUCsyaGJCWnE3dVVnYlo3bFB1Nk5T?=
+ =?utf-8?B?UmVqa1BFdEMzMzVSRWsxZ2d1dzVTYzNxNnlZT3k4VHBJOVdXN2cwWFZrMUlS?=
+ =?utf-8?B?NjNObDJ1cVR0cEhtRkhEMytXVFJrOWliVXIyckVSTGtCQ29jWjRXUzFaR1lL?=
+ =?utf-8?B?bjVBMVFnVDZRbitDam9tNW54WkNjd2c4cC9FUUxMOTE4K3VMdjQxSW85cFNp?=
+ =?utf-8?B?R1l2bFJKNVhSUytCOVVKTE1mWnVYM2FSQytNMW9LMkxTbTBUMElESnFERTB1?=
+ =?utf-8?B?bGMxaDN4RVVIUjFWbUtVL2F5WER6TUtpZmlpR0IvSytUbHJadm15WjJMRzBI?=
+ =?utf-8?B?NGhFTzlQenhqVllXUlJkK3pxMEowZnJNMEY1TlM0WHJTbjJSbHE0d1RjbmJq?=
+ =?utf-8?B?NEF1d0RRN1ltL3IrRVVialB4VWdtcnpmTy8xYk1ReTB2SkwyNW85eXdQMGdK?=
+ =?utf-8?B?YnJrVTZzcTFTVGo3d1NBYmFFR2Z3QmJUMGdWRVd6VXNoMzFYTlYzMllhQUli?=
+ =?utf-8?B?TUJDcFA0N3U5MVVmeHVVVkVHK3dLZ21jb1c2WE4wc0hrUHQrRG5vVGtuOC9R?=
+ =?utf-8?B?UXdyNzZPQ1hvQjJWeGhmZ0trd3M4dVlUWHh6cmptY3ZyOE5VZHF3K3FaUTlx?=
+ =?utf-8?B?aVdZaGlaSXJvaGFQb0V5bHJaY0cxTEZTSnhrTGtoYVZQR0hFRjNabkkwcGhx?=
+ =?utf-8?B?UW5GamZhSm1malkzQmFCS2JNeDNMT0h6V0hFODlKWUJQbzFrOWtJclREZW9m?=
+ =?utf-8?B?QlBFeWJPWmRsUGZMbVFQL0lOZTh3TFBRd3VGckdFbHNTRHJpWE9oZTBjZVpm?=
+ =?utf-8?B?ZXBZanRYR2xWaDZjZTNydDFzR2VJazNneTBEb0N2RTQ3c0FSc3QwRno2TXho?=
+ =?utf-8?B?akRmYzlzV1Z2L210eGVhOHlMQXlpNnpRTkZPM0I4WkpRY2g1SklwSy9wS2tq?=
+ =?utf-8?Q?qbNwOEC8jlxM+tnvVU4XAMXWi?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: e94bb2b7-7080-4b21-a2be-08dd031b6116
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7529.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2024 13:10:29.1990
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: OOmhJjMGbNW+aRWyV85+s5yOXVFsvML4uw4DoQXZr7N2w7QQAaXCRjwqiFwKUf3cscJdnW25iQ0k6h80+w3c8g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB7699
+X-OriginatorOrg: intel.com
 
-On Mon, Nov 11, 2024 at 9:16=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> When testing a `clang` upgrade with Rust Binder, Alice encountered [1] a
-> build failure caused by `bindgen` not translating some symbols related to
-> tracepoints. This was caused by commit 2e770edd8ce1 ("[libclang] Compute
-> the right spelling location") changing the behavior of a function exposed
-> by `libclang`. `bindgen` fixed the regression in commit 600f63895f73
-> ("Use clang_getFileLocation instead of clang_getSpellingLocation").
->
-> However, the regression fix is only available in `bindgen` versions
-> 0.69.5 or later (it was backported for 0.69.x). This means that when
-> older bindgen versions are used with new versions of `libclang`, `bindgen=
-`
-> may do the wrong thing, which could lead to a build failure.
->
-> Alice encountered the bug with some header files related to tracepoints,
-> but it could also cause build failures in other circumstances. Thus,
-> always emit a warning when using an old `bindgen` with a new `libclang`
-> so that other people do not have to spend time chasing down the same
-> bug.
->
-> However, testing just the version is inconvenient, since distributions
-> do patch their packages without changing the version, so I reduced the
-> issue into the following piece of code that can trigger the issue:
->
->     #define F(x) int x##x
->     F(foo);
->
-> In particular, an unpatched `bindgen` will ignore the macro expansion
-> and thus not provide a declaration for the exported `int`.
->
-> Thus add a build test to `rust_is_available.sh` using the code above
-> (that is only triggered if the versions appear to be affected), following
-> what we did for the 0.66.x issue.
->
-> Moreover, I checked the status in the major distributions we have
-> instructions for:
->
->   - Fedora 41 was affected but is now OK, since it now ships `bindgen`
->     0.69.5.
->
->     Thanks Ben for the quick reply on the updates that were ongoing.
->
->     Fedora 40 and earlier are OK (older `libclang`, and they also now
->     carry `bindgen` 0.69.5).
->
->   - Debian Sid was affected but is now OK, since they now ship a patched
->     `bindgen` binary (0.66.1-7+b3). The issue was reported to Debian by
->     email and then as a bug report [2].
->
->     Thanks NoisyCoil and Matthias for the quick replies. NoisyCoil handle=
-d
->     the needed updates. Debian may upgrade to `bindgen` 0.70.x, too.
->
->     Debian Testing is OK (older `libclang` so far).
->
->   - Ubuntu non-LTS (oracular) is affected. The issue was reported to Ubun=
-tu
->     by email and then as a bug report [3].
->
->     Ubuntu LTS is not affected (older `libclang` so far).
->
->   - Arch Linux, Gentoo Linux and openSUSE should be OK (newer `bindgen` i=
-s
->     provided). Nix as well (older `libclang` so far).
->
-> This issue was also added to our "live list" that tracks issues around
-> distributions [4].
->
-> Cc: Ben Beasley <code@musicinmybrain.net>
-> Cc: NoisyCoil <noisycoil@tutanota.com>
-> Cc: Matthias Geiger <werdahias@riseup.net>
-> Link: https://lore.kernel.org/rust-for-linux/20241030-bindgen-libclang-wa=
-rn-v1-1-3a7ba9fedcfe@google.com/ [1]
-> Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D1086510 [2]
-> Link: https://bugs.launchpad.net/ubuntu/+source/rust-bindgen-cli/+bug/208=
-6639 [3]
-> Link: https://github.com/Rust-for-Linux/linux/issues/1127 [4]
-> Co-developed-by: Alice Ryhl <aliceryhl@google.com>
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
-> We would like to put this into the merge window, or ideally very soon aft=
-er as a
-> "fix" (it is not really a fix, but it is very convenient for people wonde=
-ring
-> why their toolchain may not work, especially if tracepoints land in the m=
-erge
-> window as expected).
->
-> v2 (based on Alice's v1):
->   - Fixed libclang version number (we use a different `get_canonical_vers=
-ion`
->     that returns one more digit).
->   - Added build test -- now we can detect binaries like Debian's that are
->     patched but do not change the version number.
->   - Added tests.
->   - Explained the current status of the distributions in the commit messa=
-ge.
+On 2024/11/6 04:04, Nicolin Chen wrote:
+>   
+>   The diagrams below show relationships between user-visible objects and kernel
+> @@ -101,6 +132,28 @@ creating the objects and links::
+>              |------------>|iommu_domain|<----|iommu_domain|<----|device|
+>                            |____________|     |____________|     |______|
+>   
+> +  _______________________________________________________________________
+> + |                      iommufd (with vIOMMU)                            |
+> + |                                                                       |
+> + |                             [5]                                       |
+> + |                        _____________                                  |
+> + |                       |             |                                 |
+> + |      |----------------|    vIOMMU   |                                 |
+> + |      |                |             |                                 |
+> + |      |                |             |                                 |
+> + |      |      [1]       |             |          [4]             [2]    |
+> + |      |     ______     |             |     _____________     ________  |
+> + |      |    |      |    |     [3]     |    |             |   |        | |
+> + |      |    | IOAS |<---|(HWPT_PAGING)|<---| HWPT_NESTED |<--| DEVICE | |
+> + |      |    |______|    |_____________|    |_____________|   |________| |
+> + |      |        |              |                  |               |     |
+> + |______|________|______________|__________________|_______________|_____|
+> +        |        |              |                  |               |
+> +  ______v_____   |        ______v_____       ______v_____       ___v__
+> + |   struct   |  |  PFN  |  (paging)  |     |  (nested)  |     |struct|
+> + |iommu_device|  |------>|iommu_domain|<----|iommu_domain|<----|device|
+> + |____________|   storage|____________|     |____________|     |______|
+> +
+>   1. IOMMUFD_OBJ_IOAS is created via the IOMMU_IOAS_ALLOC uAPI. An iommufd can
+>      hold multiple IOAS objects. IOAS is the most generic object and does not
+>      expose interfaces that are specific to single IOMMU drivers. All operations
+> @@ -132,7 +185,8 @@ creating the objects and links::
+>        flag is set.
+>   
+>   4. IOMMUFD_OBJ_HWPT_NESTED can be only manually created via the IOMMU_HWPT_ALLOC
+> -   uAPI, provided an hwpt_id via @pt_id to associate the new HWPT_NESTED object
+> +   uAPI, provided an hwpt_id or a viommu_id of a vIOMMU object encapsulating a
+> +   nesting parent HWPT_PAGING via @pt_id to associate the new HWPT_NESTED object
+>      to the corresponding HWPT_PAGING object. The associating HWPT_PAGING object
+>      must be a nesting parent manually allocated via the same uAPI previously with
+>      an IOMMU_HWPT_ALLOC_NEST_PARENT flag, otherwise the allocation will fail. The
+> @@ -149,6 +203,18 @@ creating the objects and links::
+>         created via the same IOMMU_HWPT_ALLOC uAPI. The difference is at the type
+>         of the object passed in via the @pt_id field of struct iommufd_hwpt_alloc.
+>   
+> +5. IOMMUFD_OBJ_VIOMMU can be only manually created via the IOMMU_VIOMMU_ALLOC
+> +   uAPI, provided a dev_id (for the device's physical IOMMU to back the vIOMMU)
+> +   and an hwpt_id (to associate the vIOMMU to a nesting parent HWPT_PAGING). The
+> +   iommufd core will link the vIOMMU object to the struct iommu_device that the
+> +   struct device is behind. 
 
-Cc'ing Kbuild too, so that they are aware, just in case -- sorry, I
-should have done that in the patch itself yesterday:
+It looks to be reasonable to share the viommu_obj between devices behind 
+the same physical IOMMU. This design seems no enforcement for it. So it's
+all up to userspace from what I got. :)
 
-    https://lore.kernel.org/rust-for-linux/20241111201607.653149-1-ojeda@ke=
-rnel.org/
-
-Cheers,
-Miguel
+-- 
+Regards,
+Yi Liu
