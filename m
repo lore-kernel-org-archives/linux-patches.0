@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AAB320E31D;
-	Tue, 12 Nov 2024 10:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771A120D4E3;
+	Tue, 12 Nov 2024 10:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407071; cv=none; b=Syf6MJQQWjnD1lvyKdMG/8o0IsuRPu1HriZZFihB0UfdH0Wbnq8oKFmoQVqIyJ0uJQ35ItBMKG9CLu8Xs+KSwt9IBa6Kqk9u6iRHNRLXh4wabTNZDSoVDNr4kYTHCe3PF1eAg+KTZ+ziF15GjA11aOiV/eKX2jJ7Fw1Wmfnwx5g=
+	t=1731407074; cv=none; b=dSVAASeiiOk0D4NMLf+AyzqW5vYnBJ0VTvX8iZ9In0mpoRKJaKUMqjSnjNy9HVM+m8h96n5xP5wB/zK3r3oq2k0oP3hmXcg3TVTxAK1We2EhL0SpAp55v1nLvYuJdaj9Wbs4ZikU7E6/HU4OXD1K9C51LuejE45+mPP4lu6epak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407071; c=relaxed/simple;
-	bh=5ig/JRT2E12im3HxhyH+Kw9i1m9+TUIvhv2ufCh1JVQ=;
+	s=arc-20240116; t=1731407074; c=relaxed/simple;
+	bh=Vbvbb45hU/jYd/tunflqqv86ufzRcUTPsIkcEKUhvUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lKZjKnH3WioDzlYx3iJccFvPUPVLY8xGUmnjRaAj6DXilGbDKP/KH6Gmu4Z+u1onhq75S+kH8cm9QQK2YWqLW16JKPScZBRk/M2Ggjme93oCVGzmR7DtVGyhl/VX0yQqkfIcPiAHlD83G0OauJI0NL+lfaEuyLHhib0v7OwtifE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pef6V4+x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VD6BabUhrHEKeLNbZF1fTWQOxB0qF1KBqmzNTSyPYtTdzAUKWNnP141cI1xvlFvv9mhtwBaJJaLAOpBmNGqKglFGo8XEv3QLTk7PynqIlF4MgO7G9JvJn6SzqTx0cMKwyXETQN6wQBVIpjF+rpsh0RoSyiUO7Izp+n99jbvGOG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocEizB+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pef6V4+x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B0DC4CECD;
-	Tue, 12 Nov 2024 10:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocEizB+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9430C4CECD;
+	Tue, 12 Nov 2024 10:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407071;
-	bh=5ig/JRT2E12im3HxhyH+Kw9i1m9+TUIvhv2ufCh1JVQ=;
+	s=korg; t=1731407074;
+	bh=Vbvbb45hU/jYd/tunflqqv86ufzRcUTPsIkcEKUhvUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pef6V4+xsltcMaYpDWxzWUbkFXUharsm2nzJvFktB2vWeB9Ne8t92+6vlJDSlRljT
-	 ufDDcqTKfKGz+XFFZhyS5NrAOisB3fye9pLQzHcH65I8CGdqOsdM1m8BGGBzX/YgX9
-	 unUzC48OMoe79sDxlu3tx50ORNALP8fSov3fttnA=
+	b=ocEizB+PRURYKGSK9AIQLvGZgzfhHYdF2J1IRl05n8ci6MKM6GULGIsBh7I069QCG
+	 Yxb9HOWtOrG/HivTeqL1fHMZIGWfrO51F2waHsHjSrYaBY+1abNUxSp9z7KjfMw0QS
+	 Jvpp3eyZpw5NEIBrHGH62sNMaR+uZdv7LrTL5PWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>
-Subject: [PATCH 5.15 42/76] thermal/drivers/qcom/lmh: Remove false lockdep backtrace
-Date: Tue, 12 Nov 2024 11:21:07 +0100
-Message-ID: <20241112101841.386429389@linuxfoundation.org>
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Joe Thornber <thornber@redhat.com>
+Subject: [PATCH 5.15 43/76] dm cache: correct the number of origin blocks to match the target length
+Date: Tue, 12 Nov 2024 11:21:08 +0100
+Message-ID: <20241112101841.424322423@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -50,86 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-commit f16beaaee248eaa37ad40b5905924fcf70ae02e3 upstream.
+commit 235d2e739fcbe964c9ce179b4c991025662dcdb6 upstream.
 
-Annotate LMH IRQs with lockdep classes so that the lockdep doesn't
-report possible recursive locking issue between LMH and GIC interrupts.
+When creating a cache device, the actual size of the cache origin might
+be greater than the specified cache target length. In such case, the
+number of origin blocks should match the cache target length, not the
+full size of the origin device, since access beyond the cache target is
+not possible. This issue occurs when reducing the origin device size
+using lvm, as lvreduce preloads the new cache table before resuming the
+cache origin, which can result in incorrect sizes for the discard bitset
+and smq hotspot blocks.
 
-For the reference:
+Reproduce steps:
 
-       CPU0
-       ----
-  lock(&irq_desc_lock_class);
-  lock(&irq_desc_lock_class);
+1. create a cache device consists of 4096 origin blocks
 
- *** DEADLOCK ***
+dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
+dmsetup create corig --table "0 524288 linear /dev/sdc 262144"
+dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
+dmsetup create cache --table "0 524288 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
 
-Call trace:
- dump_backtrace+0x98/0xf0
- show_stack+0x18/0x24
- dump_stack_lvl+0x90/0xd0
- dump_stack+0x18/0x24
- print_deadlock_bug+0x258/0x348
- __lock_acquire+0x1078/0x1f44
- lock_acquire+0x1fc/0x32c
- _raw_spin_lock_irqsave+0x60/0x88
- __irq_get_desc_lock+0x58/0x98
- enable_irq+0x38/0xa0
- lmh_enable_interrupt+0x2c/0x38
- irq_enable+0x40/0x8c
- __irq_startup+0x78/0xa4
- irq_startup+0x78/0x168
- __enable_irq+0x70/0x7c
- enable_irq+0x4c/0xa0
- qcom_cpufreq_ready+0x20/0x2c
- cpufreq_online+0x2a8/0x988
- cpufreq_add_dev+0x80/0x98
- subsys_interface_register+0x104/0x134
- cpufreq_register_driver+0x150/0x234
- qcom_cpufreq_hw_driver_probe+0x2a8/0x388
- platform_probe+0x68/0xc0
- really_probe+0xbc/0x298
- __driver_probe_device+0x78/0x12c
- driver_probe_device+0x3c/0x160
- __device_attach_driver+0xb8/0x138
- bus_for_each_drv+0x84/0xe0
- __device_attach+0x9c/0x188
- device_initial_probe+0x14/0x20
- bus_probe_device+0xac/0xb0
- deferred_probe_work_func+0x8c/0xc8
- process_one_work+0x20c/0x62c
- worker_thread+0x1bc/0x36c
- kthread+0x120/0x124
- ret_from_fork+0x10/0x20
+2. reduce the cache origin to 2048 oblocks, in lvreduce's approach
 
-Fixes: 53bca371cdf7 ("thermal/drivers/qcom: Add support for LMh driver")
+dmsetup reload corig --table "0 262144 linear /dev/sdc 262144"
+dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+dmsetup suspend cache
+dmsetup suspend corig
+dmsetup suspend cdata
+dmsetup suspend cmeta
+dmsetup resume corig
+dmsetup resume cdata
+dmsetup resume cmeta
+dmsetup resume cache
+
+3. shutdown the cache, and check the number of discard blocks in
+   superblock. The value is expected to be 2048, but actually is 4096.
+
+dmsetup remove cache corig cdata cmeta
+dd if=/dev/sdc bs=1c count=8 skip=224 2>/dev/null | hexdump -e '1/8 "%u\n"'
+
+Fix by correcting the origin_blocks initialization in cache_create and
+removing the unused origin_sectors from struct cache_args accordingly.
+
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Fixes: c6b4fcbad044 ("dm: add cache target")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241011-lmh-lockdep-v1-1-495cbbe6fef1@linaro.org
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Acked-by: Joe Thornber <thornber@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/qcom/lmh.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/md/dm-cache-target.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/thermal/qcom/lmh.c
-+++ b/drivers/thermal/qcom/lmh.c
-@@ -71,7 +71,14 @@ static struct irq_chip lmh_irq_chip = {
- static int lmh_irq_map(struct irq_domain *d, unsigned int irq, irq_hw_number_t hw)
- {
- 	struct lmh_hw_data *lmh_data = d->host_data;
-+	static struct lock_class_key lmh_lock_key;
-+	static struct lock_class_key lmh_request_key;
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -1988,7 +1988,6 @@ struct cache_args {
+ 	sector_t cache_sectors;
  
-+	/*
-+	 * This lock class tells lockdep that GPIO irqs are in a different
-+	 * category than their parents, so it won't report false recursion.
-+	 */
-+	irq_set_lockdep_class(irq, &lmh_lock_key, &lmh_request_key);
- 	irq_set_chip_and_handler(irq, &lmh_irq_chip, handle_simple_irq);
- 	irq_set_chip_data(irq, lmh_data);
+ 	struct dm_dev *origin_dev;
+-	sector_t origin_sectors;
+ 
+ 	uint32_t block_size;
+ 
+@@ -2070,6 +2069,7 @@ static int parse_cache_dev(struct cache_
+ static int parse_origin_dev(struct cache_args *ca, struct dm_arg_set *as,
+ 			    char **error)
+ {
++	sector_t origin_sectors;
+ 	int r;
+ 
+ 	if (!at_least_one_arg(as, error))
+@@ -2082,8 +2082,8 @@ static int parse_origin_dev(struct cache
+ 		return r;
+ 	}
+ 
+-	ca->origin_sectors = get_dev_size(ca->origin_dev);
+-	if (ca->ti->len > ca->origin_sectors) {
++	origin_sectors = get_dev_size(ca->origin_dev);
++	if (ca->ti->len > origin_sectors) {
+ 		*error = "Device size larger than cached device";
+ 		return -EINVAL;
+ 	}
+@@ -2392,7 +2392,7 @@ static int cache_create(struct cache_arg
+ 
+ 	ca->metadata_dev = ca->origin_dev = ca->cache_dev = NULL;
+ 
+-	origin_blocks = cache->origin_sectors = ca->origin_sectors;
++	origin_blocks = cache->origin_sectors = ti->len;
+ 	origin_blocks = block_div(origin_blocks, ca->block_size);
+ 	cache->origin_blocks = to_oblock(origin_blocks);
  
 
 
