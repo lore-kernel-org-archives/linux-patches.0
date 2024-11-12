@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2518119E992;
-	Tue, 12 Nov 2024 10:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3591F26E3;
+	Tue, 12 Nov 2024 10:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407533; cv=none; b=dM6gqV6F5BeX0S8M4rl3ZcHANcMWKZhN7+JEkqExF3sF9fgfRzURi9J5K4b5QYMK62u+POzVARn7eC9uGHjfokWAyaTxg5ieE7uVuV9y/WvvwdZ8W48YCCj6yC/IA9FNX4oZiOAQg2xmidAxl33s6KzrsBMxpK974N1zPYKkGEg=
+	t=1731407536; cv=none; b=Q1REZ+Hna/SYunwHuCZ1JfugQotzGzdqCYyEZVEyE8+7UQZEimQZyiYPhhSuAFWtVpFAPw7H8K26FnMvC9qrl0iSG96OM67QDcNoseMGsOUrbbsfkcO7fJBetLLo8Jh1N9/GBShtJHHQTRPETgNX3pMA2MCJPY0GJ1x5zlsT9Js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407533; c=relaxed/simple;
-	bh=Q3zIB7a/7bDHvlaS4yfm4q75HLWYlllQfRnwyWr8jKg=;
+	s=arc-20240116; t=1731407536; c=relaxed/simple;
+	bh=njpGOjrg+r//TIgBYYPzn/F2OKblnOqi8CCKx+uGlpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IMZNrp58VjR+WvfalmM69YkIQPJbDrx/vKSII9ge0HjWYbm3wnrpj9IAj/Tw3zSfZLs5sQeLCteNFh2uQlCr5LHejOB11H1t7AhINIrNLSK6i7bBGiq+yLXkzvnOLRzYgQCtPbxhoY30wuDxUvWi6AVPb8ygnP1Y2q5/3RJf6BY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qimcLsFG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X3XtsdO7MpkZmfVr89KpoHtpI33vq7vn/4yCSLHorTOFGqSO0OS3e18uN+SUmu8yXnWC9cXUlbG4g9mjnSLieTMwDWhx6XaIrsNpKRu3uSnVneYIyANbQtSmahbj967gn4ju44LlpyOphA+rzCRPxPuDwijzhmKXWn+AIAPFRsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XCqZ80M6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qimcLsFG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939D5C4CECD;
-	Tue, 12 Nov 2024 10:32:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XCqZ80M6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C572AC4CECD;
+	Tue, 12 Nov 2024 10:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407533;
-	bh=Q3zIB7a/7bDHvlaS4yfm4q75HLWYlllQfRnwyWr8jKg=;
+	s=korg; t=1731407536;
+	bh=njpGOjrg+r//TIgBYYPzn/F2OKblnOqi8CCKx+uGlpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qimcLsFGxWgu5XB0og0sSD0WFORGuPHHVnYEzIlEe/2jeaFw8RNyMUh9DQ03r/bmM
-	 bYOMHBI0VSiDWP+f63gP+i5ImLeGMeC5QVsmToUH8vC2RKHdlipmmvc+LBB68dBu3N
-	 umOdezcnyHwG9TbCFURUK5RWA+OvDFiaWu38lNt8=
+	b=XCqZ80M64UTJljceWEiaINOKg8X5qfP7LL8CAigEyvFyV4uVmipyjHfLBRZQyxssl
+	 ukLY3L1Q+2reX2QwJKU7zLC07mdNzFxvGsEZjtyBqFgLTVXidmL3TITTnJ4mmMLy3a
+	 3YT0MaBzR1b6Z8KdaPK/ggAxxMCp07QLnPN+B+nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 81/98] filemap: Fix bounds checking in filemap_read()
-Date: Tue, 12 Nov 2024 11:21:36 +0100
-Message-ID: <20241112101847.336751176@linuxfoundation.org>
+	Qi Xi <xiqi2@huawei.com>,
+	kernel test robot <lkp@intel.com>,
+	Baoquan He <bhe@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Michael Holzheu <holzheu@linux.vnet.ibm.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 82/98] fs/proc: fix compile warning about variable vmcore_mmap_ops
+Date: Tue, 12 Nov 2024 11:21:37 +0100
+Message-ID: <20241112101847.374756510@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -51,37 +56,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Qi Xi <xiqi2@huawei.com>
 
-commit ace149e0830c380ddfce7e466fe860ca502fe4ee upstream.
+commit b8ee299855f08539e04d6c1a6acb3dc9e5423c00 upstream.
 
-If the caller supplies an iocb->ki_pos value that is close to the
-filesystem upper limit, and an iterator with a count that causes us to
-overflow that limit, then filemap_read() enters an infinite loop.
+When build with !CONFIG_MMU, the variable 'vmcore_mmap_ops'
+is defined but not used:
 
-This behaviour was discovered when testing xfstests generic/525 with the
-"localio" optimisation for loopback NFS mounts.
+>> fs/proc/vmcore.c:458:42: warning: unused variable 'vmcore_mmap_ops'
+     458 | static const struct vm_operations_struct vmcore_mmap_ops = {
 
-Reported-by: Mike Snitzer <snitzer@kernel.org>
-Fixes: c2a9737f45e2 ("vfs,mm: fix a dead loop in truncate_inode_pages_range()")
-Tested-by: Mike Snitzer <snitzer@kernel.org>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fix this by only defining it when CONFIG_MMU is enabled.
+
+Link: https://lkml.kernel.org/r/20241101034803.9298-1-xiqi2@huawei.com
+Fixes: 9cb218131de1 ("vmcore: introduce remap_oldmem_pfn_range()")
+Signed-off-by: Qi Xi <xiqi2@huawei.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/lkml/202410301936.GcE8yUos-lkp@intel.com/
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Michael Holzheu <holzheu@linux.vnet.ibm.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/proc/vmcore.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -2738,7 +2738,7 @@ ssize_t filemap_read(struct kiocb *iocb,
- 	if (unlikely(!iov_iter_count(iter)))
- 		return 0;
+--- a/fs/proc/vmcore.c
++++ b/fs/proc/vmcore.c
+@@ -457,10 +457,6 @@ static vm_fault_t mmap_vmcore_fault(stru
+ #endif
+ }
  
--	iov_iter_truncate(iter, inode->i_sb->s_maxbytes);
-+	iov_iter_truncate(iter, inode->i_sb->s_maxbytes - iocb->ki_pos);
- 	folio_batch_init(&fbatch);
- 
- 	do {
+-static const struct vm_operations_struct vmcore_mmap_ops = {
+-	.fault = mmap_vmcore_fault,
+-};
+-
+ /**
+  * vmcore_alloc_buf - allocate buffer in vmalloc memory
+  * @size: size of buffer
+@@ -488,6 +484,11 @@ static inline char *vmcore_alloc_buf(siz
+  * virtually contiguous user-space in ELF layout.
+  */
+ #ifdef CONFIG_MMU
++
++static const struct vm_operations_struct vmcore_mmap_ops = {
++	.fault = mmap_vmcore_fault,
++};
++
+ /*
+  * remap_oldmem_pfn_checked - do remap_oldmem_pfn_range replacing all pages
+  * reported as not being ram with the zero page.
 
 
