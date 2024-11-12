@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389F821B427;
-	Tue, 12 Nov 2024 10:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636D621C189;
+	Tue, 12 Nov 2024 10:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407806; cv=none; b=h5ryXdjixhol1CAswb2Eb6DJIhzo8wZ2vLeMF+b8uTVcIsGUd4Dfwh8paHKyllMWuCZthasLEKgFw3ESCdWjR6+g059LgfT74SU5tdYAOJBTMGd9JmRfj0uCaTT48DpPCxQoRgXy6NHEYwrj9LG5MD39BpleqR6OdxbP1NmZwqQ=
+	t=1731407809; cv=none; b=b4dJQjpbJmt6Qfj9f6I68h3suh2BehEdeCPfxZWU89But7WOTxIBW7bHItRgKadAKWPFnm8hL6hhJulwBspiC0y63/zdDX4JI3mZhW2qgEi+XRfhYO2aYFy8UrfVgQ2pV2z0xdPBPFRYSFr/ZiroMvLgksx0AOnQx9SguqVwnpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407806; c=relaxed/simple;
-	bh=N1vPjMzG+IsUmdPudeYilaGkbuSM7+HJtkXb8xFkLA4=;
+	s=arc-20240116; t=1731407809; c=relaxed/simple;
+	bh=yTPJMTT2GpSKHQO5+anLFClTVO0taON68QOjUwRTiaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHF+HzOw+62xCTNTBHzRXArGLhcl/LizstUR9h+i/1QuELJ2u9uMdWxwZzhE2DKvRyXjlHh7bZsWot3Mcg4sEmnZPzYPLVSGsq3EYN+XxzaUpUe+PLc9RNYnMlfcqVeC0QPU7LykDdn1l8YgGz2TzcoMI+JQaVk6XZeNN2XhnCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVm+6AQ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OoeeZ7A0LAZHkCedrB1VcJ1iXZpuJfwPjSVFHEd/N4m/K1utnbN7NfKtz0OOQuRuMiW0l8OAXG4uX7m/By/PsUrfTGRIOOt0eJh7Mxk33L43bSzkM7JeNN7dpL5Tz5tqKWCnTOJPY7Cuh3XX3tEKhqAHgo/2O0atDM+iMNiSHEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HlzBVVJS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVm+6AQ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A3EC4CED7;
-	Tue, 12 Nov 2024 10:36:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HlzBVVJS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E8BCC4CED4;
+	Tue, 12 Nov 2024 10:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407806;
-	bh=N1vPjMzG+IsUmdPudeYilaGkbuSM7+HJtkXb8xFkLA4=;
+	s=korg; t=1731407809;
+	bh=yTPJMTT2GpSKHQO5+anLFClTVO0taON68QOjUwRTiaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iVm+6AQ7C3cUo8EHmfcaRRH/Kp1/krMWozUyGCt3epkjI6hHrkgczPF8WH7n45qn/
-	 MwslYvXatyQfi2nMVHsE3oTcb4Om76lJQY/x+hCGfOSRGwd65/aHgheOXDZ43xmQ3K
-	 y1dTLTeZCuyHMECGvpMtOlyB372qtqBcBvT2lUJ4=
+	b=HlzBVVJSIc4oBSvYRK+eAi8wAhX0iTRtOBKkMCJ+ToOdyAhoMbqC6xECXDd//V28O
+	 XvB0108nWRNykZPVyaLlAqvxUdRLTMu+m2NKRAFwkcoIAnVGrWbcZBaHIoIijbSKl8
+	 fO1D2cVoqgmHk4Zai+K+7j6Ac8cIVLLjSwLGuhMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.6 061/119] media: ar0521: dont overflow when checking PLL values
-Date: Tue, 12 Nov 2024 11:21:09 +0100
-Message-ID: <20241112101851.045921050@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 088/119] ALSA: usb-audio: Add quirk for HP 320 FHD Webcam
+Date: Tue, 12 Nov 2024 11:21:36 +0100
+Message-ID: <20241112101852.077438108@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -50,39 +49,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 438d3085ba5b8b5bfa5290faa594e577f6ac9aa7 upstream.
+commit dabc44c28f118910dea96244d903f0c270225669 upstream.
 
-The PLL checks are comparing 64 bit integers with 32 bit
-ones, as reported by Coverity. Depending on the values of
-the variables, this may underflow.
+HP 320 FHD Webcam (03f0:654a) seems to have flaky firmware like other
+webcam devices that don't like the frequency inquiries.  Also, Mic
+Capture Volume has an invalid resolution, hence fix it to be 16 (as a
+blind shot).
 
-Fix it ensuring that both sides of the expression are u64.
-
-Fixes: 852b50aeed15 ("media: On Semi AR0521 sensor driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1232768
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20241105120220.5740-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ar0521.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/usb/mixer.c  |    1 +
+ sound/usb/quirks.c |    2 ++
+ 2 files changed, 3 insertions(+)
 
---- a/drivers/media/i2c/ar0521.c
-+++ b/drivers/media/i2c/ar0521.c
-@@ -257,10 +257,10 @@ static u32 calc_pll(struct ar0521_dev *s
- 			continue; /* Minimum value */
- 		if (new_mult > 254)
- 			break; /* Maximum, larger pre won't work either */
--		if (sensor->extclk_freq * (u64)new_mult < AR0521_PLL_MIN *
-+		if (sensor->extclk_freq * (u64)new_mult < (u64)AR0521_PLL_MIN *
- 		    new_pre)
- 			continue;
--		if (sensor->extclk_freq * (u64)new_mult > AR0521_PLL_MAX *
-+		if (sensor->extclk_freq * (u64)new_mult > (u64)AR0521_PLL_MAX *
- 		    new_pre)
- 			break; /* Larger pre won't work either */
- 		new_pll = div64_round_up(sensor->extclk_freq * (u64)new_mult,
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1205,6 +1205,7 @@ static void volume_control_quirks(struct
+ 		}
+ 		break;
+ 	case USB_ID(0x1bcf, 0x2283): /* NexiGo N930AF FHD Webcam */
++	case USB_ID(0x03f0, 0x654a): /* HP 320 FHD Webcam */
+ 		if (!strcmp(kctl->id.name, "Mic Capture Volume")) {
+ 			usb_audio_info(chip,
+ 				"set resolution quirk: cval->res = 16\n");
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2016,6 +2016,8 @@ struct usb_audio_quirk_flags_table {
+ 
+ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	/* Device matches */
++	DEVICE_FLG(0x03f0, 0x654a, /* HP 320 FHD Webcam */
++		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x041e, 0x3000, /* Creative SB Extigy */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x041e, 0x4080, /* Creative Live Cam VF0610 */
 
 
