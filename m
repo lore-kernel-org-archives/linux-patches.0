@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D30D212F1D;
-	Tue, 12 Nov 2024 10:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8577A212F1D;
+	Tue, 12 Nov 2024 10:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408170; cv=none; b=p4sQqArBqkwgbkMzJQZRfn0GE5QRRPdxDmgqMbx/4Aj85eGgvNjPFYn5BFyAZFKZgptyl4SiEMviUXy1WuyaqMsWEPE0Fva2DL22sZJSCNHIjpVsb0PFXqmR1wwu8uxGuguqt9cVwZKviQZeWdcn71dNZhIpL75UoYpVvFh022I=
+	t=1731408173; cv=none; b=pn8Krjl1JOn1XaoYA0zLOf8q7VSCWzD5ijcjaFPAtqC7oe2E7vgylqlRt83xjoYzgLXV4yNSNYdVjSUpdzf+ZLaWp5jNwYgeWJ5MMQlkoGtXXg3M4IpDU05ER6rpbahYJNYd0nNh/PzbxNXEI2ZPtuH+b87F0XgHFpK5Oie9G9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408170; c=relaxed/simple;
-	bh=CnP/KTIy+tX7exKRa9EVxOA6SdCvuff4Wk/kfq4sYoc=;
+	s=arc-20240116; t=1731408173; c=relaxed/simple;
+	bh=Q3W+0UTuJUo2wrRaV2/bvHsQH/lbgQj3o+aelbrbohE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W8AxKsduOu7hPRuLWkX0LT+lT+sgM2NnXlD8cXG9Vc5SdUEQozr1eZSbkiin6S/mcGliiUJv1bSKbtp/RbHzP47MO4GT/KwZunx6np1R0GedcIqjmf0YCh4ObL5j1FU+nrQ79jYezMJy2erH9MxUOLB9R+qLO2fKqvadh1rcCnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHh/5umg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nIuOpdjTTrTWrVkiswMQ2Bnj1PaU+/DRxY/yv52fV3ZsQMUOu2N4FbwFR4xCIQdLfoGQGXiGRTorSSw6ax3IUKz6ildZQ1UyGmcdsiAsvsFNIls8AwJdTrSJP/pjVV+DwOsq9XFzqSoXcbSv8lhjS3nWd7gGdutHHiPDO5UFXOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olt6vzgR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHh/5umg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF160C4CECD;
-	Tue, 12 Nov 2024 10:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olt6vzgR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBE2C4CECD;
+	Tue, 12 Nov 2024 10:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408170;
-	bh=CnP/KTIy+tX7exKRa9EVxOA6SdCvuff4Wk/kfq4sYoc=;
+	s=korg; t=1731408173;
+	bh=Q3W+0UTuJUo2wrRaV2/bvHsQH/lbgQj3o+aelbrbohE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHh/5umghYR2EmRQKzzWcxjXHxYzcSq0BxWXJfkJotPHbWGwUXQieUKLla8PgFU2h
-	 yhY6sgMZoKMt8IUvdTXGqEpfhksNhETql7WnXPh6v72xoXhXfpZJaTGJOPU3BdX4K3
-	 6o57SiveigldS8ojn/W0a/I9L0xQWwxAVScUacGs=
+	b=olt6vzgRrzwsBTcjK8w+6BOThDs+qgDynHdRPaQcGB8F5GhEV7pUB1KWdgEp7jrjZ
+	 fT8pYHjs+2d2abstFGW2VVUmBzYAvKGFP9sY2DQKotB+pp4FjIsohkBQEOBIumckt6
+	 AuwV0B9KJ+C3eTtAwxvg2j3Khx8YZwiOYEoUsMtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.11 081/184] media: pulse8-cec: fix data timestamp at pulse8_setup()
-Date: Tue, 12 Nov 2024 11:20:39 +0100
-Message-ID: <20241112101903.968684081@linuxfoundation.org>
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.11 082/184] media: vivid: fix buffer overwrite when using > 32 buffers
+Date: Tue, 12 Nov 2024 11:20:40 +0100
+Message-ID: <20241112101904.006993933@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -49,57 +49,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Hans Verkuil <hverkuil@xs4all.nl>
 
-commit ba9cf6b430433e57bfc8072364e944b7c0eca2a4 upstream.
+commit 96d8569563916fe2f8fe17317e20e43f54f9ba4b upstream.
 
-As pointed by Coverity, there is a hidden overflow condition there.
-As date is signed and u8 is unsigned, doing:
+The maximum number of buffers that can be requested was increased to
+64 for the video capture queue. But video capture used a must_blank
+array that was still sized for 32 (VIDEO_MAX_FRAME). This caused an
+out-of-bounds write when using buffer indices >= 32.
 
-	date = (data[0] << 24)
+Create a new define MAX_VID_CAP_BUFFERS that is used to access the
+must_blank array and set max_num_buffers for the video capture queue.
 
-With a value bigger than 07f will make all upper bits of date
-0xffffffff. This can be demonstrated with this small code:
+This solves a crash reported by:
 
-<code>
-typedef int64_t time64_t;
-typedef uint8_t u8;
+	https://bugzilla.kernel.org/show_bug.cgi?id=219258
 
-int main(void)
-{
-	u8 data[] = { 0xde ,0xad , 0xbe, 0xef };
-	time64_t date;
-
-	date = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
-	printf("Invalid data = 0x%08lx\n", date);
-
-	date = ((unsigned)data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
-	printf("Expected data = 0x%08lx\n", date);
-
-	return 0;
-}
-</code>
-
-Fix it by converting the upper bit calculation to unsigned.
-
-Fixes: cea28e7a55e7 ("media: pulse8-cec: reorganize function order")
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Fixes: cea70ed416b4 ("media: test-drivers: vivid: Increase max supported buffers for capture queues")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/usb/pulse8/pulse8-cec.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/test-drivers/vivid/vivid-core.c    |    2 +-
+ drivers/media/test-drivers/vivid/vivid-core.h    |    4 +++-
+ drivers/media/test-drivers/vivid/vivid-ctrls.c   |    2 +-
+ drivers/media/test-drivers/vivid/vivid-vid-cap.c |    2 +-
+ 4 files changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/media/cec/usb/pulse8/pulse8-cec.c
-+++ b/drivers/media/cec/usb/pulse8/pulse8-cec.c
-@@ -685,7 +685,7 @@ static int pulse8_setup(struct pulse8 *p
- 	err = pulse8_send_and_wait(pulse8, cmd, 1, cmd[0], 4);
- 	if (err)
- 		return err;
--	date = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
-+	date = ((unsigned)data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
- 	dev_info(pulse8->dev, "Firmware build date %ptT\n", &date);
+--- a/drivers/media/test-drivers/vivid/vivid-core.c
++++ b/drivers/media/test-drivers/vivid/vivid-core.c
+@@ -910,7 +910,7 @@ static int vivid_create_queue(struct viv
+ 	 * videobuf2-core.c to MAX_BUFFER_INDEX.
+ 	 */
+ 	if (buf_type == V4L2_BUF_TYPE_VIDEO_CAPTURE)
+-		q->max_num_buffers = 64;
++		q->max_num_buffers = MAX_VID_CAP_BUFFERS;
+ 	if (buf_type == V4L2_BUF_TYPE_SDR_CAPTURE)
+ 		q->max_num_buffers = 1024;
+ 	if (buf_type == V4L2_BUF_TYPE_VBI_CAPTURE)
+--- a/drivers/media/test-drivers/vivid/vivid-core.h
++++ b/drivers/media/test-drivers/vivid/vivid-core.h
+@@ -26,6 +26,8 @@
+ #define MAX_INPUTS 16
+ /* The maximum number of outputs */
+ #define MAX_OUTPUTS 16
++/* The maximum number of video capture buffers */
++#define MAX_VID_CAP_BUFFERS 64
+ /* The maximum up or down scaling factor is 4 */
+ #define MAX_ZOOM  4
+ /* The maximum image width/height are set to 4K DMT */
+@@ -481,7 +483,7 @@ struct vivid_dev {
+ 	/* video capture */
+ 	struct tpg_data			tpg;
+ 	unsigned			ms_vid_cap;
+-	bool				must_blank[VIDEO_MAX_FRAME];
++	bool				must_blank[MAX_VID_CAP_BUFFERS];
  
- 	dev_dbg(pulse8->dev, "Persistent config:\n");
+ 	const struct vivid_fmt		*fmt_cap;
+ 	struct v4l2_fract		timeperframe_vid_cap;
+--- a/drivers/media/test-drivers/vivid/vivid-ctrls.c
++++ b/drivers/media/test-drivers/vivid/vivid-ctrls.c
+@@ -553,7 +553,7 @@ static int vivid_vid_cap_s_ctrl(struct v
+ 		break;
+ 	case VIVID_CID_PERCENTAGE_FILL:
+ 		tpg_s_perc_fill(&dev->tpg, ctrl->val);
+-		for (i = 0; i < VIDEO_MAX_FRAME; i++)
++		for (i = 0; i < MAX_VID_CAP_BUFFERS; i++)
+ 			dev->must_blank[i] = ctrl->val < 100;
+ 		break;
+ 	case VIVID_CID_INSERT_SAV:
+--- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
++++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+@@ -213,7 +213,7 @@ static int vid_cap_start_streaming(struc
+ 
+ 	dev->vid_cap_seq_count = 0;
+ 	dprintk(dev, 1, "%s\n", __func__);
+-	for (i = 0; i < VIDEO_MAX_FRAME; i++)
++	for (i = 0; i < MAX_VID_CAP_BUFFERS; i++)
+ 		dev->must_blank[i] = tpg_g_perc_fill(&dev->tpg) < 100;
+ 	if (dev->start_streaming_error) {
+ 		dev->start_streaming_error = false;
 
 
