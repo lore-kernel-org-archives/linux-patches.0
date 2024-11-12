@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FE819E992;
-	Tue, 12 Nov 2024 10:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556752144B9;
+	Tue, 12 Nov 2024 10:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408507; cv=none; b=XohOeDB6MyULg0rVJskTd2Vfk3MgA0+sf0tNrfeb6+GjkQNbEXs0pFRn7MHK2MbXBBbm5q3nQjPmvb8eiMeVeVPiAi9qGlKDIWqDuNnD4XSLez+ru0Tm9aIWFjKlrojmapQzbcgpjolbz+2PnQsmLeCdAYAxwFd1xtMUeMyhlts=
+	t=1731408510; cv=none; b=lS+TndnyWmn2icgZ2W2a0/u/GRqdn4NZfr6ayfSVj5jGHeFT9AOG6oaSQ3SlFTRrFB6iJff1WEs/E7Q1wPu2zyXAnHYBhgR/HTlUP+x84svjgzYR4EwAWiQ8jNw986uIsL+i+mV1/H03TEKkOCgq91QvNkPVyHvd3noeeYk2pwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408507; c=relaxed/simple;
-	bh=Eu4u+XjRhHRBcsdPX2n38zDPOuVHUJ9FIimTmlAgrEI=;
+	s=arc-20240116; t=1731408510; c=relaxed/simple;
+	bh=FjxCBJtEIa79hY58QxTOb/KsRvikVJyBGKrQubY5uLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hs2dfFkCdJsTH+XpFpCcMJ4eZv88ExrRnmrXqLzdgGmxBWSvHk+3uvXNCvbon1XvDRWCxgdWEVRMXFksAFcFGRBaSk6mDlPpXmFWa6CNfVtlp0xbVZXCkD7GCrar2mw5616jBiZ/GxCNV+BE0ent2YlV4mYsKC1spglQy/ZS1O8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rjo+t3t3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f7vpCqtZDBtf5cGWT2MWlD0W7Ar0fUJzL2f8QHhBGkqYF86SuGFAK9jJRH18p/TTppIH85MGJYuD3qo1RCV4w0UXEEopw4DMyS2R6+Qss3Ebu6mqYga0hPYdpH5ZPONGiVbkt6sBBDq6ZvaB2/nEjUFEvIbc6e0kBU+98hP0oOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGSvzb4L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rjo+t3t3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CD5C4CECD;
-	Tue, 12 Nov 2024 10:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGSvzb4L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB813C4CECD;
+	Tue, 12 Nov 2024 10:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408506;
-	bh=Eu4u+XjRhHRBcsdPX2n38zDPOuVHUJ9FIimTmlAgrEI=;
+	s=korg; t=1731408510;
+	bh=FjxCBJtEIa79hY58QxTOb/KsRvikVJyBGKrQubY5uLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rjo+t3t3cEOtum0j3mNrkewM6v7mLLgW1mtPvUP+DeFwgC73Hu8lJ2Gz6KPol4ZGv
-	 xKPHo1BEBKmAbcvPt05eeqQUbyuNWlESkaHcmPaY/dw0Lo4OTQUnG1sGTb5XOOxXS8
-	 s2LFBDRRh8iN0HfbsoJ3YWhohQbkd//f1MQlen80=
+	b=cGSvzb4L/TzOJ9rZyQAoCUD/0StIscHxJztkfymLoHHwB4KhHC8OysA3VNCVFAA7F
+	 gLRRN34HJW54/mShqOg5jokgTXNODkeR6NMZzbvumWCljKFjLTf67q9QfafQjTSjGT
+	 +Qf7OS1ne+uz368WPkLi6EWBYedkDU7+ix2/V6cA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable <stable@kernel.org>,
 	Hyunwoo Kim <v4bel@theori.io>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.11 183/184] hv_sock: Initializing vsk->trans to NULL to prevent a dangling pointer
-Date: Tue, 12 Nov 2024 11:22:21 +0100
-Message-ID: <20241112101907.889791794@linuxfoundation.org>
+	Wongi Lee <qwerty@theori.io>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.11 184/184] vsock/virtio: Initialization of the dangling pointer occurring in vsk->trans
+Date: Tue, 12 Nov 2024 11:22:22 +0100
+Message-ID: <20241112101907.928330294@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -54,31 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Hyunwoo Kim <v4bel@theori.io>
 
-commit e629295bd60abf4da1db85b82819ca6a4f6c1e79 upstream.
+commit 6ca575374dd9a507cdd16dfa0e78c2e9e20bd05f upstream.
 
-When hvs is released, there is a possibility that vsk->trans may not
-be initialized to NULL, which could lead to a dangling pointer.
-This issue is resolved by initializing vsk->trans to NULL.
+During loopback communication, a dangling pointer can be created in
+vsk->trans, potentially leading to a Use-After-Free condition.  This
+issue is resolved by initializing vsk->trans to NULL.
 
+Cc: stable <stable@kernel.org>
+Fixes: 06a8fc78367d ("VSOCK: Introduce virtio_vsock_common.ko")
 Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/Zys4hCj61V+mQfX2@v4bel-B760M-AORUS-ELITE-AX
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Wongi Lee <qwerty@theori.io>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Message-Id: <2024102245-strive-crib-c8d3@gregkh>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/hyperv_transport.c |    1 +
+ net/vmw_vsock/virtio_transport_common.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/net/vmw_vsock/hyperv_transport.c
-+++ b/net/vmw_vsock/hyperv_transport.c
-@@ -549,6 +549,7 @@ static void hvs_destruct(struct vsock_so
- 		vmbus_hvsock_device_unregister(chan);
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -1087,6 +1087,7 @@ void virtio_transport_destruct(struct vs
+ 	struct virtio_vsock_sock *vvs = vsk->trans;
  
- 	kfree(hvs);
+ 	kfree(vvs);
 +	vsk->trans = NULL;
  }
+ EXPORT_SYMBOL_GPL(virtio_transport_destruct);
  
- static int hvs_dgram_bind(struct vsock_sock *vsk, struct sockaddr_vm *addr)
 
 
