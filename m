@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B272101A7;
-	Tue, 12 Nov 2024 10:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B9620DD7D;
+	Tue, 12 Nov 2024 10:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407454; cv=none; b=K+3rWzs22kS26vXCjef3ApEIOxQlSKtYG6GIDz8LAn+EhQNovsQg2ig8sFqqbcp1HXfDztGU1BzoTFYMdZOBp4ANIVQCs9IffEmTt2AxOIKT5kNybc7A7KxOMMDdB+RyotXeX35Laocyyfrq0o4St6ADiHk1JE0mo5CBX/9Ne9E=
+	t=1731407458; cv=none; b=YO7KIEGHvDY7wxd+NGJs6rSFHnq+HJGMUqx28qrCVtmu+YkDZdTTJdG1PZl3P2RsAIy2cAKe4W3jwsH+kqC30DKOOaR79i3J6QPhmqDYLsFjHnpXvzSqz9E9L7gWajrkTz0cGwZgXo+OKWNZ2JtqyLwVuYuu6ibGk0bXE4lYMj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407454; c=relaxed/simple;
-	bh=pPj3jYbGNusZ2O80Yh6BOu9GFGcxRDBXvgOJbhFNTWI=;
+	s=arc-20240116; t=1731407458; c=relaxed/simple;
+	bh=EQU4g40FFrV8JlVjQRfO04shZ4op57BUUHzPyjeP6Nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mbd1woFWJiuqdTjK5sjM1Koo+D0d0CsiL3UZYPdja2ZsYicQO2A72LWSGM4yeuFFmM/vkMCGGMwPWbljLTgdr4y9U5uEGvg3lOVtSByl8Jc4//hnLdcFhR6OSPEQscP1wPVTyn4N5vBCVEx3O6ueFBXB6KCu1rETogciOMpDFcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GAEKpddo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U1aaUQGzRsSKk2AnjBx7UbdfPtiGAfc8TX/hSyYMXFO9fgZ4O9kLwehcvNVVaNL7LTpdwFDtpEtMPvdxVxC4M4rXUcBa85tvYVitmGRDjh3xZE7jxKW9tSCHEs3LsMzH6aovpmbGPkRPvnJhZ4re+NNOwwx81RptsUXndVd6aYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEOSRjJn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAEKpddo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7795FC4CECD;
-	Tue, 12 Nov 2024 10:30:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEOSRjJn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B57C4CECD;
+	Tue, 12 Nov 2024 10:30:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407454;
-	bh=pPj3jYbGNusZ2O80Yh6BOu9GFGcxRDBXvgOJbhFNTWI=;
+	s=korg; t=1731407457;
+	bh=EQU4g40FFrV8JlVjQRfO04shZ4op57BUUHzPyjeP6Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GAEKpddoXIE7CHsFaGsu7MxIu8B2pxL7fd+jwPjJfcahmyPBjXaZBHEdvtl/IJc4K
-	 wa3En94TNsKAg3HL+2ei9dc3wRiz2dkteLc4mmaeGPnoqpnQqiVGOg+ZeRgGou4D+e
-	 CF9yVrRG8ioZv0thcRvHWsod3asPrfAt1aRqe3sI=
+	b=YEOSRjJnHlryXK+Ye9rFYwXxgU5aAkPOCqr5s2dBEPhmpoBQwLe+P++HEPbGiW7hm
+	 2oJ5SWjmvOv6UYbP9nefmB7Y3wEcm+rQE+3Z+vHe/Z64vj6HPkWsu7o/TzDJHZ6OOo
+	 dFOuCGOBKWkhnAMWmJFfYVY9+WKQuKR3vU25zUWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.1 49/98] media: v4l2-ctrls-api: fix error handling for v4l2_g_ctrl()
-Date: Tue, 12 Nov 2024 11:21:04 +0100
-Message-ID: <20241112101846.138046891@linuxfoundation.org>
+	Murad Masimov <m.masimov@maxima.ru>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 40/98] ALSA: firewire-lib: fix return value on fail in amdtp_tscm_init()
+Date: Tue, 12 Nov 2024 11:20:55 +0100
+Message-ID: <20241112101845.800591138@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -49,68 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Murad Masimov <m.masimov@maxima.ru>
 
-commit 4c76f331a9a173ac8fe1297a9231c2a38f88e368 upstream.
+[ Upstream commit 8abbf1f01d6a2ef9f911f793e30f7382154b5a3a ]
 
-As detected by Coverity, the error check logic at get_ctrl() is
-broken: if ptr_to_user() fails to fill a control due to an error,
-no errors are returned and v4l2_g_ctrl() returns success on a
-failed operation, which may cause applications to fail.
+If amdtp_stream_init() fails in amdtp_tscm_init(), the latter returns zero,
+though it's supposed to return error code, which is checked inside
+init_stream() in file tascam-stream.c.
 
-Add an error check at get_ctrl() and ensure that it will
-be returned to userspace without filling the control value if
-get_ctrl() fails.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 71c689dc2e73 ("media: v4l2-ctrls: split up into four source files")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 47faeea25ef3 ("ALSA: firewire-tascam: add data block processing layer")
+Signed-off-by: Murad Masimov <m.masimov@maxima.ru>
+Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20241101185517.1819-1-m.masimov@maxima.ru
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-api.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ sound/firewire/tascam/amdtp-tascam.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/v4l2-core/v4l2-ctrls-api.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-api.c
-@@ -753,9 +753,10 @@ static int get_ctrl(struct v4l2_ctrl *ct
- 		for (i = 0; i < master->ncontrols; i++)
- 			cur_to_new(master->cluster[i]);
- 		ret = call_op(master, g_volatile_ctrl);
--		new_to_user(c, ctrl);
-+		if (!ret)
-+			ret = new_to_user(c, ctrl);
- 	} else {
--		cur_to_user(c, ctrl);
-+		ret = cur_to_user(c, ctrl);
- 	}
- 	v4l2_ctrl_unlock(master);
- 	return ret;
-@@ -770,7 +771,10 @@ int v4l2_g_ctrl(struct v4l2_ctrl_handler
- 	if (!ctrl || !ctrl->is_int)
- 		return -EINVAL;
- 	ret = get_ctrl(ctrl, &c);
--	control->value = c.value;
-+
-+	if (!ret)
-+		control->value = c.value;
-+
- 	return ret;
- }
- EXPORT_SYMBOL(v4l2_g_ctrl);
-@@ -811,10 +815,11 @@ static int set_ctrl_lock(struct v4l2_fh
- 	int ret;
+diff --git a/sound/firewire/tascam/amdtp-tascam.c b/sound/firewire/tascam/amdtp-tascam.c
+index 64d66a8025455..ad185ff3209db 100644
+--- a/sound/firewire/tascam/amdtp-tascam.c
++++ b/sound/firewire/tascam/amdtp-tascam.c
+@@ -244,7 +244,7 @@ int amdtp_tscm_init(struct amdtp_stream *s, struct fw_unit *unit,
+ 	err = amdtp_stream_init(s, unit, dir, flags, fmt,
+ 			process_ctx_payloads, sizeof(struct amdtp_tscm));
+ 	if (err < 0)
+-		return 0;
++		return err;
  
- 	v4l2_ctrl_lock(ctrl);
--	user_to_new(c, ctrl);
--	ret = set_ctrl(fh, ctrl, 0);
-+	ret = user_to_new(c, ctrl);
-+	if (!ret)
-+		ret = set_ctrl(fh, ctrl, 0);
- 	if (!ret)
--		cur_to_user(c, ctrl);
-+		ret = cur_to_user(c, ctrl);
- 	v4l2_ctrl_unlock(ctrl);
- 	return ret;
- }
+ 	if (dir == AMDTP_OUT_STREAM) {
+ 		// Use fixed value for FDF field.
+-- 
+2.43.0
+
 
 
