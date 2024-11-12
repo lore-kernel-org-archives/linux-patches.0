@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BA62144C3;
-	Tue, 12 Nov 2024 10:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E15519E992;
+	Tue, 12 Nov 2024 10:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408480; cv=none; b=K27bstA+x0eNXY9pqV3tZxd7s0etmQAOkfIg4UhZT5O4kF26rlVrHZa9H+nUyx/DFfEWaSToCR3QI++gPifokwDD9QohtjA3paW5H2MQuU6kDPrMrwJ/CRiSseXioMYrj9k6L3zMhPkDjEZ+4jLMHJMAiIL96xhRycUQx5Crd1o=
+	t=1731408484; cv=none; b=qWz3qpB4tIwOn/dOF46nrBNKDTuRANQzjH0uZIWidnvPWE8IrJl83gWjqc/pb+HbIH5pTBDEHGOEcC4wQ8yR6/fhdWVC4x20MlfRFExy0MHlyo5fNRb1o/rnnx3BKCev2TYAEuyz0jUqGR6K0HiUVvGeN3/ggfsV2YeC9NPtGrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408480; c=relaxed/simple;
-	bh=eWlcfspPV1VOk9oGm/kLOhJf5vVeZwQcxo+gkLzeiAE=;
+	s=arc-20240116; t=1731408484; c=relaxed/simple;
+	bh=8toJBGbgNg1gWDS/6eneClcItR/7I70kZ6oA9wM5Sjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMN5WVMsynkoxJxlEmqsq0RKsUk3QxMseZEO12Couamp5aax0NPxMAs46uI9zLFiY6QDH/v0D1AgN0ISDm+GG5yDExwaVLMCnzcolthkm7jbI4uPGGCeNU9KofS1MqEflMuuDUznyshPaEJERGSk3+WB5NKlrlF/yBQuzwpzbEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFT+dRyd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q8lI0aGQH1qEB481s+Vp+cGD/31cFWML2rmv92iMHwZDJ6a1o6hCFPWht4fmyV79a0qdYvuYZ6n+jPFzGIFCE/pN9wZbrvRkJfw4lnH2eWcX30Ot5V2bCu7yPArEJ6JYVaNnSiHkMMDkLFgiZ6IJU7jKUgE7cQGYdW4tyV5TmbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQtxVbxa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFT+dRyd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42534C4CECD;
-	Tue, 12 Nov 2024 10:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQtxVbxa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94107C4CECD;
+	Tue, 12 Nov 2024 10:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408480;
-	bh=eWlcfspPV1VOk9oGm/kLOhJf5vVeZwQcxo+gkLzeiAE=;
+	s=korg; t=1731408484;
+	bh=8toJBGbgNg1gWDS/6eneClcItR/7I70kZ6oA9wM5Sjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFT+dRydIhlfjBHKgwtJb8z8l/Mq6LmYUPfS9bC+1rY5N/S4ZIzN1gk3iQZRZkUh6
-	 l56vGB43cW0XzjEHt98mCpvruLoHhFK4rnlApwQol1/1aCS6PFWluKm00kRnfPdgV4
-	 q08JYEGnobh/CTl0tPgsKsoWxOOBy/2yUNK+2RXo=
+	b=mQtxVbxa4ZVaC0/PcR5JcAn8l1/anDmrh6KPsiDIrZsZ6ujVIhwERAmAF+1wEYM58
+	 4G0EEe7436ab5NB/h3P/+S2q3mCyR0SSKjL7ziWjGjrFFnnEAj01TUBhx9lYjUVZ0R
+	 AFFuWVhjy04zQ5DWTNWfJtGSXiePDcqw8yrm/KzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	John Garry <john.g.garry@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Badal Nilawar <badal.nilawar@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 176/184] block: fix queue limits checks in blk_rq_map_user_bvec for real
-Date: Tue, 12 Nov 2024 11:22:14 +0100
-Message-ID: <20241112101907.617772721@linuxfoundation.org>
+Subject: [PATCH 6.11 177/184] drm/xe/guc/ct: Flush g2h worker in case of g2h response timeout
+Date: Tue, 12 Nov 2024 11:22:15 +0100
+Message-ID: <20241112101907.655546085@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -52,107 +55,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Badal Nilawar <badal.nilawar@intel.com>
 
-[ Upstream commit be0e822bb3f5259c7f9424ba97e8175211288813 ]
+[ Upstream commit 22ef43c78647dd37b0dafe2182b8650b99dbbe59 ]
 
-blk_rq_map_user_bvec currently only has ad-hoc checks for queue limits,
-and the last fix to it enabled valid NVMe I/O to pass, but also allowed
-invalid one for drivers that set a max_segment_size or seg_boundary
-limit.
+In case if g2h worker doesn't get opportunity to within specified
+timeout delay then flush the g2h worker explicitly.
 
-Fix it once for all by using the bio_split_rw_at helper from the I/O
-path that indicates if and where a bio would be have to be split to
-adhere to the queue limits, and it returns a positive value, turn that
-into -EREMOTEIO to retry using the copy path.
+v2:
+  - Describe change in the comment and add TODO (Matt B/John H)
+  - Add xe_gt_warn on fence done after G2H flush (John H)
+v3:
+  - Updated the comment with root cause
+  - Clean up xe_gt_warn message (John H)
 
-Fixes: 2ff949441802 ("block: fix sanity checks in blk_rq_map_user_bvec")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://lore.kernel.org/r/20241028090840.446180-1-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/issues/1620
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/issues/2902
+Signed-off-by: Badal Nilawar <badal.nilawar@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Acked-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241017111410.2553784-2-badal.nilawar@intel.com
+(cherry picked from commit e5152723380404acb8175e0777b1cea57f319a01)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Stable-dep-of: 55e8a3f37e54 ("drm/xe: Move LNL scheduling WA to xe_device.h")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-map.c | 56 +++++++++++++++----------------------------------
- 1 file changed, 17 insertions(+), 39 deletions(-)
+ drivers/gpu/drm/xe/xe_guc_ct.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/block/blk-map.c b/block/blk-map.c
-index 6ef2ec1f7d78b..b5fd1d8574615 100644
---- a/block/blk-map.c
-+++ b/block/blk-map.c
-@@ -561,55 +561,33 @@ EXPORT_SYMBOL(blk_rq_append_bio);
- /* Prepare bio for passthrough IO given ITER_BVEC iter */
- static int blk_rq_map_user_bvec(struct request *rq, const struct iov_iter *iter)
- {
--	struct request_queue *q = rq->q;
--	size_t nr_iter = iov_iter_count(iter);
--	size_t nr_segs = iter->nr_segs;
--	struct bio_vec *bvecs, *bvprvp = NULL;
--	const struct queue_limits *lim = &q->limits;
--	unsigned int nsegs = 0, bytes = 0;
-+	const struct queue_limits *lim = &rq->q->limits;
-+	unsigned int max_bytes = lim->max_hw_sectors << SECTOR_SHIFT;
-+	unsigned int nsegs;
- 	struct bio *bio;
--	size_t i;
-+	int ret;
+diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
+index cd9918e3896c0..ab24053f8766f 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -888,6 +888,24 @@ static int guc_ct_send_recv(struct xe_guc_ct *ct, const u32 *action, u32 len,
  
--	if (!nr_iter || (nr_iter >> SECTOR_SHIFT) > queue_max_hw_sectors(q))
--		return -EINVAL;
--	if (nr_segs > queue_max_segments(q))
-+	if (!iov_iter_count(iter) || iov_iter_count(iter) > max_bytes)
- 		return -EINVAL;
+ 	ret = wait_event_timeout(ct->g2h_fence_wq, g2h_fence.done, HZ);
  
--	/* no iovecs to alloc, as we already have a BVEC iterator */
-+	/* reuse the bvecs from the iterator instead of allocating new ones */
- 	bio = blk_rq_map_bio_alloc(rq, 0, GFP_KERNEL);
--	if (bio == NULL)
-+	if (!bio)
- 		return -ENOMEM;
--
- 	bio_iov_bvec_set(bio, (struct iov_iter *)iter);
--	blk_rq_bio_prep(rq, bio, nr_segs);
--
--	/* loop to perform a bunch of sanity checks */
--	bvecs = (struct bio_vec *)iter->bvec;
--	for (i = 0; i < nr_segs; i++) {
--		struct bio_vec *bv = &bvecs[i];
--
--		/*
--		 * If the queue doesn't support SG gaps and adding this
--		 * offset would create a gap, fallback to copy.
--		 */
--		if (bvprvp && bvec_gap_to_prev(lim, bvprvp, bv->bv_offset)) {
--			blk_mq_map_bio_put(bio);
--			return -EREMOTEIO;
--		}
--		/* check full condition */
--		if (nsegs >= nr_segs || bytes > UINT_MAX - bv->bv_len)
--			goto put_bio;
--		if (bytes + bv->bv_len > nr_iter)
--			break;
- 
--		nsegs++;
--		bytes += bv->bv_len;
--		bvprvp = bv;
-+	/* check that the data layout matches the hardware restrictions */
-+	ret = bio_split_rw_at(bio, lim, &nsegs, max_bytes);
-+	if (ret) {
-+		/* if we would have to split the bio, copy instead */
-+		if (ret > 0)
-+			ret = -EREMOTEIO;
-+		blk_mq_map_bio_put(bio);
-+		return ret;
- 	}
++	/*
++	 * Occasionally it is seen that the G2H worker starts running after a delay of more than
++	 * a second even after being queued and activated by the Linux workqueue subsystem. This
++	 * leads to G2H timeout error. The root cause of issue lies with scheduling latency of
++	 * Lunarlake Hybrid CPU. Issue dissappears if we disable Lunarlake atom cores from BIOS
++	 * and this is beyond xe kmd.
++	 *
++	 * TODO: Drop this change once workqueue scheduling delay issue is fixed on LNL Hybrid CPU.
++	 */
++	if (!ret) {
++		flush_work(&ct->g2h_worker);
++		if (g2h_fence.done) {
++			xe_gt_warn(gt, "G2H fence %u, action %04x, done\n",
++				   g2h_fence.seqno, action[0]);
++			ret = 1;
++		}
++	}
 +
-+	blk_rq_bio_prep(rq, bio, nsegs);
- 	return 0;
--put_bio:
--	blk_mq_map_bio_put(bio);
--	return -EINVAL;
- }
- 
- /**
+ 	/*
+ 	 * Ensure we serialize with completion side to prevent UAF with fence going out of scope on
+ 	 * the stack, since we have no clue if it will fire after the timeout before we can erase
 -- 
 2.43.0
 
