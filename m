@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44B419E992;
-	Tue, 12 Nov 2024 10:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0B019E992;
+	Tue, 12 Nov 2024 10:48:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408514; cv=none; b=E/uBGKHF6JF+4Vkvi3U3TB7rUPcBv4cWVq+XVnqNQHx8//37SVj2di4Wty45oeDcQ5bIhihKmEOTleofgkTACXKqyvVYFVCLg8qRS8CaK5LIJgJZdrtzVF+aB3qw8LREB0NItFWbxWPNq8jIIxFHAyNLGNxdsGBYYQ/C7t+fAf8=
+	t=1731408517; cv=none; b=r1+FUsl5kZYqolmLg5hSBJZXSHQmc++8sDHluMzfZ4Ie2A/IrcuoDtdoegOx3ZhGeCVxhD8XOrlVDh9vxFLyA0LDGYPZYTcu70GPxBn3nnw5ADU5r2NuN/2963GTQS73RHpK4My1Qs1pvKUbkAeziFHNW9ELeoIpAjlmYqbZ/XQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408514; c=relaxed/simple;
-	bh=Kcll9nRJS5MCSDL/eJGFa02clpK7Qett7lbyjKxp9IY=;
+	s=arc-20240116; t=1731408517; c=relaxed/simple;
+	bh=DL18UrsICnRHsaAu4SFn4Uw70rYYU0JSe3cPf+y322o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HdLL472mHO0AgQMRtdfJNUppkyy1w/kykJfaIiSPUKyXVPYypxXGxZN9Dk09KxWagZmDlfGEXa2DV1WZiOcTOKLWvmmDQkZ5En7uX7OZYNotZxUHl+Hpyo8DgA01I4bkBIYQC6N1aI/gy/Wc+Ibks7w3MWIOJhJ1hTh0se1cpO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUDgLstK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cK31AGjnB/r/EMKjf9h+Z+nJf8FXwblCIIYkAZpHUII8as5djVytof50kiLPRYvUNewnIEv/kVSpIhsZ+BWbGUhVaWjV0Kppde/sn4Kvrkaxqvpyd82TsEiJbUfHaiBb7fJS15mEWjcU4QWvzZRHVgs1GyDuPCHPHRzo4BjkZOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ErFHAgWj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUDgLstK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B292C4CECD;
-	Tue, 12 Nov 2024 10:48:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErFHAgWj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3ACC4CED6;
+	Tue, 12 Nov 2024 10:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408513;
-	bh=Kcll9nRJS5MCSDL/eJGFa02clpK7Qett7lbyjKxp9IY=;
+	s=korg; t=1731408517;
+	bh=DL18UrsICnRHsaAu4SFn4Uw70rYYU0JSe3cPf+y322o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HUDgLstK7dTLB7Vy97y1XUusv9aMcac8yw6GjmJv2MjabF9uuPCj5KsfRkL8yIkaO
-	 PgAt2EDGONuEnSSoaCe/P1dW0vvLe/uDEwKxbdjg/6vGja3LKweLIiZLSPgfl+D84d
-	 lFTwrF928VaQDmVnJGFR1mIHHzwZgawbwLKGBdBI=
+	b=ErFHAgWjcqXrTNG/+uDqGDA3EZ5EhTI81EJwkCqJm179xtLn52EDf8v9URLLHuB3v
+	 6Fbj2qxc5jOHpAU6Ybii8BoKAcJd2JetD6fgfNlPqCeVJgaPyRETWxE+TFr6DMmdm4
+	 Rz8XYQQK438kwYhyVdXPbJzpNQsqvTyZ+uQ99ogE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Tipton <quic_mdtipton@quicinc.com>,
-	Qiang Yu <quic_qianyu@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.11 165/184] clk: qcom: gcc-x1e80100: Fix halt_check for pipediv2 clocks
-Date: Tue, 12 Nov 2024 11:22:03 +0100
-Message-ID: <20241112101907.200628689@linuxfoundation.org>
+	Rick Lahaye <rick@581238.xyz>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.11 166/184] thunderbolt: Fix connection issue with Pluggable UD-4VPD dock
+Date: Tue, 12 Nov 2024 11:22:04 +0100
+Message-ID: <20241112101907.239463857@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -53,79 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Yu <quic_qianyu@quicinc.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit bf0a800415a7397617765fe5f5278a645195c75a upstream.
+commit bd646c768a934d28e574ee940d6759c7954a024d upstream.
 
-The pipediv2_clk's source from the same mux as pipe clock. So they have
-same limitation, which is that the PHY sequence requires to enable these
-local CBCs before the PHY is actually outputting a clock to them. This
-means the clock won't actually turn on when we vote them. Hence, let's
-skip the halt bit check of the pipediv2_clk, otherwise pipediv2_clk may
-stuck at off state during bootup.
+Rick reported that his Pluggable USB4 dock does not work anymore after
+upgrading to v6.10 kernel.
 
+It looks like commit c6ca1ac9f472 ("thunderbolt: Increase sideband
+access polling delay") makes the device router enumeration happen later
+than what might be expected by the dock (although there is no such limit
+in the USB4 spec) which probably makes it assume there is something
+wrong with the high-speed link and reset it. After the link is reset the
+same issue happens again and again.
+
+For this reason lower the sideband access delay from 5ms to 1ms. This
+seems to work fine according to Rick's testing.
+
+Reported-by: Rick Lahaye <rick@581238.xyz>
+Closes: https://lore.kernel.org/linux-usb/000f01db247b$d10e1520$732a3f60$@581238.xyz/
+Tested-by: Rick Lahaye <rick@581238.xyz>
+Fixes: c6ca1ac9f472 ("thunderbolt: Increase sideband access polling delay")
 Cc: stable@vger.kernel.org
-Fixes: 161b7c401f4b ("clk: qcom: Add Global Clock controller (GCC) driver for X1E80100")
-Suggested-by: Mike Tipton <quic_mdtipton@quicinc.com>
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20241011104142.1181773-6-quic_qianyu@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-x1e80100.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/thunderbolt/usb4.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-x1e80100.c b/drivers/clk/qcom/gcc-x1e80100.c
-index 0f578771071f..81ba5ceab342 100644
---- a/drivers/clk/qcom/gcc-x1e80100.c
-+++ b/drivers/clk/qcom/gcc-x1e80100.c
-@@ -3123,7 +3123,7 @@ static struct clk_branch gcc_pcie_3_pipe_clk = {
+diff --git a/drivers/thunderbolt/usb4.c b/drivers/thunderbolt/usb4.c
+index 0a9b4aeb3fa1..402fdf8b1cde 100644
+--- a/drivers/thunderbolt/usb4.c
++++ b/drivers/thunderbolt/usb4.c
+@@ -48,7 +48,7 @@ enum usb4_ba_index {
  
- static struct clk_branch gcc_pcie_3_pipediv2_clk = {
- 	.halt_reg = 0x58060,
--	.halt_check = BRANCH_HALT_VOTED,
-+	.halt_check = BRANCH_HALT_SKIP,
- 	.clkr = {
- 		.enable_reg = 0x52020,
- 		.enable_mask = BIT(5),
-@@ -3248,7 +3248,7 @@ static struct clk_branch gcc_pcie_4_pipe_clk = {
+ /* Delays in us used with usb4_port_wait_for_bit() */
+ #define USB4_PORT_DELAY			50
+-#define USB4_PORT_SB_DELAY		5000
++#define USB4_PORT_SB_DELAY		1000
  
- static struct clk_branch gcc_pcie_4_pipediv2_clk = {
- 	.halt_reg = 0x6b054,
--	.halt_check = BRANCH_HALT_VOTED,
-+	.halt_check = BRANCH_HALT_SKIP,
- 	.clkr = {
- 		.enable_reg = 0x52010,
- 		.enable_mask = BIT(27),
-@@ -3373,7 +3373,7 @@ static struct clk_branch gcc_pcie_5_pipe_clk = {
- 
- static struct clk_branch gcc_pcie_5_pipediv2_clk = {
- 	.halt_reg = 0x2f054,
--	.halt_check = BRANCH_HALT_VOTED,
-+	.halt_check = BRANCH_HALT_SKIP,
- 	.clkr = {
- 		.enable_reg = 0x52018,
- 		.enable_mask = BIT(19),
-@@ -3511,7 +3511,7 @@ static struct clk_branch gcc_pcie_6a_pipe_clk = {
- 
- static struct clk_branch gcc_pcie_6a_pipediv2_clk = {
- 	.halt_reg = 0x31060,
--	.halt_check = BRANCH_HALT_VOTED,
-+	.halt_check = BRANCH_HALT_SKIP,
- 	.clkr = {
- 		.enable_reg = 0x52018,
- 		.enable_mask = BIT(28),
-@@ -3649,7 +3649,7 @@ static struct clk_branch gcc_pcie_6b_pipe_clk = {
- 
- static struct clk_branch gcc_pcie_6b_pipediv2_clk = {
- 	.halt_reg = 0x8d060,
--	.halt_check = BRANCH_HALT_VOTED,
-+	.halt_check = BRANCH_HALT_SKIP,
- 	.clkr = {
- 		.enable_reg = 0x52010,
- 		.enable_mask = BIT(28),
+ static int usb4_native_switch_op(struct tb_switch *sw, u16 opcode,
+ 				 u32 *metadata, u8 *status,
 -- 
 2.47.0
 
