@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B27920E31D;
-	Tue, 12 Nov 2024 10:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C6320EA2D;
+	Tue, 12 Nov 2024 10:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731406960; cv=none; b=ZyPJTMHVo1b47YMfEJnNtZTqjjvJInO1nTbChnnomdv0S8P6y0FZ9+u5EuCKe27msaq3YxVUhKeTIii7TXlgk5DiLmXNEYUEq3scFnsSWzWfrQeqZMTj8qrKb6Xy4juUMkmbjwzQ88mb97xvJ8e1qZo59xyk/Wa1juakGDvreg8=
+	t=1731406963; cv=none; b=TZX8He15PKoIQcrKlMeOJ0A3jvYNI+2Ul7VwTnaRvRp4/auIa+mNXtyFBznD5PL06psd7zAyU8xZvmb9CuFX3p7FdKogumy5EB5N+rr0uwgcfuh+XjdQ1abTbdG1g7b/sn01DhoY1Hw/SoEK8/Z/jhKpeERWd7RIclbT1JqJ+z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731406960; c=relaxed/simple;
-	bh=gTHukjRadpnVYoLy2t/k84b8EgfMtG+Nv7lEPlMDXTw=;
+	s=arc-20240116; t=1731406963; c=relaxed/simple;
+	bh=VhGpLIoz8yYIEZDezp/4i7mZQ+EcliZWBE5bN92oXjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DooxOid3Ln/C48nuavMjmzw9xdf9E6TxY1vRMUXno4jM5Pi5MENQ9XjcTc9uu2iw+2D9LGJqyvGSoT/GDqdQPpCIlOaZnldrjqzDcYMIBGJQQ71EUg/9prFJ4myyH3B/Ty4GZi2KAB1rEzWwGn8qkDxHQg5gZRnbmPubhhiEDPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywL3QPG+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LKurOZfeDH44J2yUzGFKIybwAJl4ZNeFeQf9ly7eC1id6v51fLIZGna9azpNGsoUMEpR5FQLnV9YcDCVrQ8Zqi9RrV2vZ22vSSKO7y1uGafyr79+MXRB4CXXjNCvxii3l+RcZM9GXKKFtzKyrHA2xSNvfqKOtbng8Wd3Ew6hhFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sl4+kCgE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywL3QPG+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49D5EC4CECD;
-	Tue, 12 Nov 2024 10:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sl4+kCgE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF62CC4CECD;
+	Tue, 12 Nov 2024 10:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731406959;
-	bh=gTHukjRadpnVYoLy2t/k84b8EgfMtG+Nv7lEPlMDXTw=;
+	s=korg; t=1731406963;
+	bh=VhGpLIoz8yYIEZDezp/4i7mZQ+EcliZWBE5bN92oXjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ywL3QPG+JwjB2Q/VW0H0DECWm7Lor5CK3A/lMgCATRyGaipIl6RhNJYjxigmfMz+r
-	 1lsgeJS+GQbGUvJqjw/wXhTX3sy13kqot80L91IOk8R/JCvl8eH8GlpGf7WjCTwzXv
-	 XnyPdzxwjYoCbuFqR+y5MwqZV9qAgQY4cVz/1eXk=
+	b=sl4+kCgExx16GxqzCnOMvGWbV0Q4+FBboWI9u+bTrWlKhE8Q3tsepzIxDkSiWlags
+	 pOfTfYPTOUAsuzyAJ0JBOrX4fyQHvlDQkFrW+fzoRG/KZhDoeIX1R8Ov74hGXtV6im
+	 bCtNqFUG9iye/KkxCDpqd7WETiet5P9dsakWd+XY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Caesar Wang <wxt@rock-chips.com>,
+	Dragan Simic <dsimic@manjaro.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 01/76] arm64: dts: rockchip: Fix rt5651 compatible value on rk3399-sapphire-excavator
-Date: Tue, 12 Nov 2024 11:20:26 +0100
-Message-ID: <20241112101839.837975127@linuxfoundation.org>
+Subject: [PATCH 5.15 10/76] ARM: dts: rockchip: Fix the realtek audio codec on rk3036-kylin
+Date: Tue, 12 Nov 2024 11:20:35 +0100
+Message-ID: <20241112101840.175203220@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -51,35 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 577b5761679da90e691acc939ebbe7879fff5f31 ]
+[ Upstream commit 77a9a7f2d3b94d29d13d71b851114d593a2147cf ]
 
-There are no DT bindings and driver support for a "rockchip,rt5651"
-codec.  Replace "rockchip,rt5651" by "realtek,rt5651", which matches the
-"simple-audio-card,name" property in the "rt5651-sound" node.
+Both the node name as well as the compatible were not named
+according to the binding expectations, fix that.
 
-Fixes: 0a3c78e251b3a266 ("arm64: dts: rockchip: Add support for rk3399 excavator main board")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/abc6c89811b3911785601d6d590483eacb145102.1727358193.git.geert+renesas@glider.be
+Fixes: 47bf3a5c9e2a ("ARM: dts: rockchip: add the sound setup for rk3036-kylin board")
+Cc: Caesar Wang <wxt@rock-chips.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20241008203940.2573684-15-heiko@sntech.de
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/rk3036-kylin.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts b/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts
-index f6b2199a42bda..3b168da34617b 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts
-@@ -163,7 +163,7 @@
+diff --git a/arch/arm/boot/dts/rk3036-kylin.dts b/arch/arm/boot/dts/rk3036-kylin.dts
+index e817eba8c622b..0c8cd25d0ba5c 100644
+--- a/arch/arm/boot/dts/rk3036-kylin.dts
++++ b/arch/arm/boot/dts/rk3036-kylin.dts
+@@ -300,8 +300,8 @@
+ &i2c2 {
  	status = "okay";
  
- 	rt5651: rt5651@1a {
--		compatible = "rockchip,rt5651";
-+		compatible = "realtek,rt5651";
- 		reg = <0x1a>;
- 		clocks = <&cru SCLK_I2S_8CH_OUT>;
+-	rt5616: rt5616@1b {
+-		compatible = "rt5616";
++	rt5616: audio-codec@1b {
++		compatible = "realtek,rt5616";
+ 		reg = <0x1b>;
+ 		clocks = <&cru SCLK_I2S_OUT>;
  		clock-names = "mclk";
 -- 
 2.43.0
