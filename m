@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B9921440D;
-	Tue, 12 Nov 2024 10:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCB6212F03;
+	Tue, 12 Nov 2024 10:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407465; cv=none; b=ES1XriTtFwHkCV+vFt/O7MEkpRc9JpFC/zjBXnlAhx3if1vZBSG4PxdYE63D5ybgntD5zJnmpj0aB8aqeIoMghFACovFPEpOJhnOog3UispM+whrKv+ohg/936ZJHG6SXfYIE7PscKXCKiU73FbnD/pqyYc5Baqn00jkkKsn/7c=
+	t=1731407468; cv=none; b=uLeXx1gTBRSVTwmlAU/6fDCwPkxgqJrE4JqvSmLivrhN9BPv8cZYmYZ36UsZBZI70BSldF3UPxcOhcyV+RaxFzyuKQhutwqAdNbQQM8KNQX1q+4I3yzY4Hb6kKbyU+rfn5rneBf0eVa1mPuNoeNDtmq7Tv9pYf9LcAKOzYJndlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407465; c=relaxed/simple;
-	bh=Bnyj1oAzVPFHpeCRsqvrh3OyZ4DXL35Dx5088ciIHAE=;
+	s=arc-20240116; t=1731407468; c=relaxed/simple;
+	bh=5SOgaQgdSX5k6M6VzCKe9hyjAkho9CIY3zYGqVuVLb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=frlM2GuWJX0cN5RKhNPFoVZi38ZlrapRcb5gxrJx3RzaPVRKpr4zrtJ/Lodo4oPGyYYHyp/VkMbDmrxu8JKyKkIhpi83Jm2NCqntMapEPPboS6xG6l2XLg26hSqItDtXpSUAVtQgl2UpzOggvy5R1Nemreet9vgkGL5q6tWAC+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MrdA8UZE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vf5iFqeW1EaN9md8GcpH2jTDmEK1qKA4MoNlwJ1Ow/PylwRB4z9mztoN16eIByWxP4sX48A6uzq/SOFg6h2gm3qX9riyP8xSZQnscXDwu75jUnS9OrWqL5ER7mQ6Qyn496jGLeQSPFJ/p6TRTgLJ0KnofT74s3SiE51SDUeOJ1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k2cOvmE7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MrdA8UZE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E90C4CECD;
-	Tue, 12 Nov 2024 10:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k2cOvmE7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D00C4CECD;
+	Tue, 12 Nov 2024 10:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407464;
-	bh=Bnyj1oAzVPFHpeCRsqvrh3OyZ4DXL35Dx5088ciIHAE=;
+	s=korg; t=1731407468;
+	bh=5SOgaQgdSX5k6M6VzCKe9hyjAkho9CIY3zYGqVuVLb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MrdA8UZE90HVn6XaEJtfPy3Xr9QMuAqAXWyO9gjdK/H12Zj8K/7ona0SD4ttaeGxM
-	 60sXtoyZT5c6nhwEEfRK7rJH/DdjZz9CtuDXR92VEnCKGMriWLWijMIIWqIfvEmOvO
-	 0ezTtuqlIACOfZjNzyLViD4i0TTAnhd2XkkT59nA=
+	b=k2cOvmE7b6lJjV0tz93YK0hg8VRhTqXL5+7cJPWG8QsEX/4bN1AE1mej8nnQT6c2T
+	 CLPfs9UZkIojcaryBqdozYZvHhOn5u/4XofyRIJZgeydxP6uN2+d3POKjVd/yWVgyM
+	 e4PWgnWOfrPH0j98eNspGiA4Ia2OT487A1rxLN8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>
-Subject: [PATCH 6.1 84/98] usb: musb: sunxi: Fix accessing an released usb phy
-Date: Tue, 12 Nov 2024 11:21:39 +0100
-Message-ID: <20241112101847.449424675@linuxfoundation.org>
+	William McVicker <willmcvicker@google.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.1 85/98] usb: dwc3: fix fault at system suspend if device was already runtime suspended
+Date: Tue, 12 Nov 2024 11:21:40 +0100
+Message-ID: <20241112101847.486580805@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -49,47 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Roger Quadros <rogerq@kernel.org>
 
-commit 498dbd9aea205db9da674994b74c7bf8e18448bd upstream.
+commit 9cfb31e4c89d200d8ab7cb1e0bb9e6e8d621ca0b upstream.
 
-Commit 6ed05c68cbca ("usb: musb: sunxi: Explicitly release USB PHY on
-exit") will cause that usb phy @glue->xceiv is accessed after released.
+If the device was already runtime suspended then during system suspend
+we cannot access the device registers else it will crash.
 
-1) register platform driver @sunxi_musb_driver
-// get the usb phy @glue->xceiv
-sunxi_musb_probe() -> devm_usb_get_phy().
+Also we cannot access any registers after dwc3_core_exit() on some
+platforms so move the dwc3_enable_susphy() call to the top.
 
-2) register and unregister platform driver @musb_driver
-musb_probe() -> sunxi_musb_init()
-use the phy here
-//the phy is released here
-musb_remove() -> sunxi_musb_exit() -> devm_usb_put_phy()
-
-3) register @musb_driver again
-musb_probe() -> sunxi_musb_init()
-use the phy here but the phy has been released at 2).
-...
-
-Fixed by reverting the commit, namely, removing devm_usb_put_phy()
-from sunxi_musb_exit().
-
-Fixes: 6ed05c68cbca ("usb: musb: sunxi: Explicitly release USB PHY on exit")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20241029-sunxi_fix-v1-1-9431ed2ab826@quicinc.com
+Cc: stable@vger.kernel.org # v5.15+
+Reported-by: William McVicker <willmcvicker@google.com>
+Closes: https://lore.kernel.org/all/ZyVfcUuPq56R2m1Y@google.com
+Fixes: 705e3ce37bcc ("usb: dwc3: core: Fix system suspend on TI AM62 platforms")
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Tested-by: Will McVicker <willmcvicker@google.com>
+Link: https://lore.kernel.org/r/20241104-am62-lpm-usb-fix-v1-1-e93df73a4f0d@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/musb/sunxi.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/usb/dwc3/core.c |   25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
---- a/drivers/usb/musb/sunxi.c
-+++ b/drivers/usb/musb/sunxi.c
-@@ -286,8 +286,6 @@ static int sunxi_musb_exit(struct musb *
- 	if (test_bit(SUNXI_MUSB_FL_HAS_SRAM, &glue->flags))
- 		sunxi_sram_release(musb->controller->parent);
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -2131,10 +2131,18 @@ static int dwc3_suspend_common(struct dw
+ {
+ 	u32 reg;
  
--	devm_usb_put_phy(glue->dev, glue->xceiv);
+-	dwc->susphy_state = (dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0)) &
+-			    DWC3_GUSB2PHYCFG_SUSPHY) ||
+-			    (dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0)) &
+-			    DWC3_GUSB3PIPECTL_SUSPHY);
++	if (!pm_runtime_suspended(dwc->dev) && !PMSG_IS_AUTO(msg)) {
++		dwc->susphy_state = (dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0)) &
++				    DWC3_GUSB2PHYCFG_SUSPHY) ||
++				    (dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0)) &
++				    DWC3_GUSB3PIPECTL_SUSPHY);
++		/*
++		 * TI AM62 platform requires SUSPHY to be
++		 * enabled for system suspend to work.
++		 */
++		if (!dwc->susphy_state)
++			dwc3_enable_susphy(dwc, true);
++	}
+ 
+ 	switch (dwc->current_dr_role) {
+ 	case DWC3_GCTL_PRTCAP_DEVICE:
+@@ -2183,15 +2191,6 @@ static int dwc3_suspend_common(struct dw
+ 		break;
+ 	}
+ 
+-	if (!PMSG_IS_AUTO(msg)) {
+-		/*
+-		 * TI AM62 platform requires SUSPHY to be
+-		 * enabled for system suspend to work.
+-		 */
+-		if (!dwc->susphy_state)
+-			dwc3_enable_susphy(dwc, true);
+-	}
 -
  	return 0;
  }
