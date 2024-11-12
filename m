@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00BEC2139AF;
-	Tue, 12 Nov 2024 10:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0B820E33B;
+	Tue, 12 Nov 2024 10:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407058; cv=none; b=F7fS0ewaINNRtFuvH3JhW/Se8o2XSST7pIqTT8HB34JS/qXTW9Ui7Tj2ppH0arFy3K3M0jtQAuuANlyI3+GNHyfOygK5GyPrE6STbTixKNwCGP1vrQ0R6yhNFkirP7NPQJX0ieAPxBnhbUWr9vCtle08npV3JgocMpyUAKCYF64=
+	t=1731407061; cv=none; b=R/vq9e/wzw4DBMwsDQgBLc3H++GImS2aA37XMWYe05VJZqsGoHfj3oDwUsMF46oxDro3JPTLz2kpfCqX2zclso5HZ3crDF2ewgopS5X3HdVTHzWH52gbZ+EkOICzFcLYsnJM0N89ReGGE3ToyVb1fVd1jsTliLTnaeMMryqmHyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407058; c=relaxed/simple;
-	bh=bnLR32Pnal98jASECmOo6+aS4l3NfxppDTrVpSyPtac=;
+	s=arc-20240116; t=1731407061; c=relaxed/simple;
+	bh=0ZHWuKYW9rFqcWG3Rhc7B4SsNFerwt4XR4FV7NI3Yh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RW0r+YezlHwWxYPxo4g4Ie+2aKHsnujOksrBm5AH+7cqZQIrh60BU5woY9dTIwPev1ArafU12oS9c2SZ4Vkidsfn9VbGms9/ZJ6mkIydkkW79qJcu5dbxvU7claobSyTt+nIstoi1Sz/QYVb3nKxNGMIWLpmtyHG3MJiwY7ZGuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKlj7/oU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h9ZcF64P5IIbD0Ky2dQahnLoF0pdp1SE11LXnqO4NrYdZ2wU1oIuhWaX01AGR9x+sELSkPBHeA9dzlhV4sHEEeODAq3c26G9mZ/t9o/A573fF/22EzItwq2o0nffaJSqyA72eFVvnm8ExOPByV43xNMo4TK7BpZP9HRWqijUdn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WkQXlqH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKlj7/oU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE08C4CECD;
-	Tue, 12 Nov 2024 10:24:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WkQXlqH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEACBC4CECD;
+	Tue, 12 Nov 2024 10:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407057;
-	bh=bnLR32Pnal98jASECmOo6+aS4l3NfxppDTrVpSyPtac=;
+	s=korg; t=1731407061;
+	bh=0ZHWuKYW9rFqcWG3Rhc7B4SsNFerwt4XR4FV7NI3Yh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKlj7/oUxE7OZdsA61y1kPXouiQyXr/FcJ+ytt1aBYdwlOvygJK6ihSFo40et7+1A
-	 QCSg/rkMMb3E/1S66kxTg01hXDfPsHWrKGpg1O0vw88V6j9aFsP3V0X+Jgy4ZKV50T
-	 e0pN+tL+bzqalkwVaJb323hF6gntT7DCpGVnSRCQ=
+	b=1WkQXlqHRQQsjqr0rodonQmIIE0JLLJZg9NUrKyZd1ZSyExakZvXBj+qcT85G5iAV
+	 k3rfo34mNrqUyPFGf9jh0V1Tc4E4lma4Za/x+UNQRJYECIOx7eTLw/qF3lCvkW6XRs
+	 im4b6cy2I+O1Fq6R4UyJtZT2IwqPoC8b8beEAQBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erik Schumacher <erik.schumacher@iris-sensing.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-Subject: [PATCH 5.15 38/76] pwm: imx-tpm: Use correct MODULO value for EPWM mode
-Date: Tue, 12 Nov 2024 11:21:03 +0100
-Message-ID: <20241112101841.236745509@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 39/76] drm/amdgpu: Adjust debugfs eviction and IB access permissions
+Date: Tue, 12 Nov 2024 11:21:04 +0100
+Message-ID: <20241112101841.273345621@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -44,48 +44,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Erik Schumacher <erik.schumacher@iris-sensing.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit cc6a931d1f3b412263d515fd93b21fc0ca5147fe upstream.
+commit f790a2c494c4ef587eeeb9fca20124de76a1646f upstream.
 
-The modulo register defines the period of the edge-aligned PWM mode
-(which is the only mode implemented). The reference manual states:
-"The EPWM period is determined by (MOD + 0001h) ..." So the value that
-is written to the MOD register must therefore be one less than the
-calculated period length. Return -EINVAL if the calculated length is
-already zero.
-A correct MODULO value is particularly relevant if the PWM has to output
-a high frequency due to a low period value.
+Users should not be able to run these.
 
-Fixes: 738a1cfec2ed ("pwm: Add i.MX TPM PWM driver support")
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 7ba9395430f611cfc101b1c2687732baafa239d5)
 Cc: stable@vger.kernel.org
-Signed-off-by: Erik Schumacher <erik.schumacher@iris-sensing.com>
-Link: https://lore.kernel.org/r/1a3890966d68b9f800d457cbf095746627495e18.camel@iris-sensing.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-imx-tpm.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/pwm/pwm-imx-tpm.c
-+++ b/drivers/pwm/pwm-imx-tpm.c
-@@ -106,7 +106,9 @@ static int pwm_imx_tpm_round_state(struc
- 	p->prescale = prescale;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -1523,11 +1523,11 @@ int amdgpu_debugfs_init(struct amdgpu_de
+ 	amdgpu_securedisplay_debugfs_init(adev);
+ 	amdgpu_fw_attestation_debugfs_init(adev);
  
- 	period_count = (clock_unit + ((1 << prescale) >> 1)) >> prescale;
--	p->mod = period_count;
-+	if (period_count == 0)
-+		return -EINVAL;
-+	p->mod = period_count - 1;
- 
- 	/* calculate real period HW can support */
- 	tmp = (u64)period_count << prescale;
+-	debugfs_create_file("amdgpu_evict_vram", 0444, root, adev,
++	debugfs_create_file("amdgpu_evict_vram", 0400, root, adev,
+ 			    &amdgpu_evict_vram_fops);
+-	debugfs_create_file("amdgpu_evict_gtt", 0444, root, adev,
++	debugfs_create_file("amdgpu_evict_gtt", 0400, root, adev,
+ 			    &amdgpu_evict_gtt_fops);
+-	debugfs_create_file("amdgpu_test_ib", 0444, root, adev,
++	debugfs_create_file("amdgpu_test_ib", 0400, root, adev,
+ 			    &amdgpu_debugfs_test_ib_fops);
+ 	debugfs_create_file("amdgpu_vm_info", 0444, root, adev,
+ 			    &amdgpu_debugfs_vm_info_fops);
 
 
