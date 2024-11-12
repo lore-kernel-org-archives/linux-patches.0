@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8577A212F1D;
-	Tue, 12 Nov 2024 10:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5121213EE5;
+	Tue, 12 Nov 2024 10:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408173; cv=none; b=pn8Krjl1JOn1XaoYA0zLOf8q7VSCWzD5ijcjaFPAtqC7oe2E7vgylqlRt83xjoYzgLXV4yNSNYdVjSUpdzf+ZLaWp5jNwYgeWJ5MMQlkoGtXXg3M4IpDU05ER6rpbahYJNYd0nNh/PzbxNXEI2ZPtuH+b87F0XgHFpK5Oie9G9s=
+	t=1731408176; cv=none; b=aXiZskCVsDmJc+SVtNs34OMCMUKdCm5/YDkumGHYbxvBZdQXuRHnZRx+SPBvPfpBuEp7FynNaSVz6MlOnG38bcinFY5qaVF73x9L3LoG/nNUFT/sy3BWBGQfu66LLZ++Dw4wIHsqvm+zvHLjJvh2RWDq/bNiAwNyzO5bGg77lf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408173; c=relaxed/simple;
-	bh=Q3W+0UTuJUo2wrRaV2/bvHsQH/lbgQj3o+aelbrbohE=;
+	s=arc-20240116; t=1731408176; c=relaxed/simple;
+	bh=74fiWBkEqX8twxGcdq9X/k9jLlxZHXLgsR+U2KAvUsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nIuOpdjTTrTWrVkiswMQ2Bnj1PaU+/DRxY/yv52fV3ZsQMUOu2N4FbwFR4xCIQdLfoGQGXiGRTorSSw6ax3IUKz6ildZQ1UyGmcdsiAsvsFNIls8AwJdTrSJP/pjVV+DwOsq9XFzqSoXcbSv8lhjS3nWd7gGdutHHiPDO5UFXOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olt6vzgR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hoa593j9jW74PO8uFlC1P5xnc+AoZEDKKvDQwGwrH8wFjV2KcFsAiBuiy/zdaaWYpGGKojYCirgV9GhCpCu2KwDpLnQ+xcv20uplPJci5nds/0d6YC0GHsQPEr2+gh7fAL21kI5MDq0RZzk+hmL11HWCnqphKrBW/IbvhGHqtZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdamLtB9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olt6vzgR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBE2C4CECD;
-	Tue, 12 Nov 2024 10:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdamLtB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3C6C4CED4;
+	Tue, 12 Nov 2024 10:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408173;
-	bh=Q3W+0UTuJUo2wrRaV2/bvHsQH/lbgQj3o+aelbrbohE=;
+	s=korg; t=1731408176;
+	bh=74fiWBkEqX8twxGcdq9X/k9jLlxZHXLgsR+U2KAvUsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=olt6vzgRrzwsBTcjK8w+6BOThDs+qgDynHdRPaQcGB8F5GhEV7pUB1KWdgEp7jrjZ
-	 fT8pYHjs+2d2abstFGW2VVUmBzYAvKGFP9sY2DQKotB+pp4FjIsohkBQEOBIumckt6
-	 AuwV0B9KJ+C3eTtAwxvg2j3Khx8YZwiOYEoUsMtg=
+	b=ZdamLtB9iouqJwyPRZXuCHvdekrYUa4T9cgKVy2bcAES0SkMODmJ0W+c9faEtb1Wp
+	 L3VsRiPLvJJkAujjjR96iq9kWTO1Vo2hVpmdT2eDvewTcXf6fb4pf5VEcVy9u4Htxs
+	 dmI0+518ngxlniAp4sbc4ldOt/P/OefAOP2xIOsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.11 082/184] media: vivid: fix buffer overwrite when using > 32 buffers
-Date: Tue, 12 Nov 2024 11:20:40 +0100
-Message-ID: <20241112101904.006993933@linuxfoundation.org>
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.11 083/184] media: v4l2-tpg: prevent the risk of a division by zero
+Date: Tue, 12 Nov 2024 11:20:41 +0100
+Message-ID: <20241112101904.044493059@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -49,85 +49,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Verkuil <hverkuil@xs4all.nl>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-commit 96d8569563916fe2f8fe17317e20e43f54f9ba4b upstream.
+commit e6a3ea83fbe15d4818d01804e904cbb0e64e543b upstream.
 
-The maximum number of buffers that can be requested was increased to
-64 for the video capture queue. But video capture used a must_blank
-array that was still sized for 32 (VIDEO_MAX_FRAME). This caused an
-out-of-bounds write when using buffer indices >= 32.
+As reported by Coverity, the logic at tpg_precalculate_line()
+blindly rescales the buffer even when scaled_witdh is equal to
+zero. If this ever happens, this will cause a division by zero.
 
-Create a new define MAX_VID_CAP_BUFFERS that is used to access the
-must_blank array and set max_num_buffers for the video capture queue.
+Instead, add a WARN_ON_ONCE() to trigger such cases and return
+without doing any precalculation.
 
-This solves a crash reported by:
-
-	https://bugzilla.kernel.org/show_bug.cgi?id=219258
-
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
-Fixes: cea70ed416b4 ("media: test-drivers: vivid: Increase max supported buffers for capture queues")
+Fixes: 63881df94d3e ("[media] vivid: add the Test Pattern Generator")
 Cc: stable@vger.kernel.org
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/test-drivers/vivid/vivid-core.c    |    2 +-
- drivers/media/test-drivers/vivid/vivid-core.h    |    4 +++-
- drivers/media/test-drivers/vivid/vivid-ctrls.c   |    2 +-
- drivers/media/test-drivers/vivid/vivid-vid-cap.c |    2 +-
- 4 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/media/common/v4l2-tpg/v4l2-tpg-core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/test-drivers/vivid/vivid-core.c
-+++ b/drivers/media/test-drivers/vivid/vivid-core.c
-@@ -910,7 +910,7 @@ static int vivid_create_queue(struct viv
- 	 * videobuf2-core.c to MAX_BUFFER_INDEX.
- 	 */
- 	if (buf_type == V4L2_BUF_TYPE_VIDEO_CAPTURE)
--		q->max_num_buffers = 64;
-+		q->max_num_buffers = MAX_VID_CAP_BUFFERS;
- 	if (buf_type == V4L2_BUF_TYPE_SDR_CAPTURE)
- 		q->max_num_buffers = 1024;
- 	if (buf_type == V4L2_BUF_TYPE_VBI_CAPTURE)
---- a/drivers/media/test-drivers/vivid/vivid-core.h
-+++ b/drivers/media/test-drivers/vivid/vivid-core.h
-@@ -26,6 +26,8 @@
- #define MAX_INPUTS 16
- /* The maximum number of outputs */
- #define MAX_OUTPUTS 16
-+/* The maximum number of video capture buffers */
-+#define MAX_VID_CAP_BUFFERS 64
- /* The maximum up or down scaling factor is 4 */
- #define MAX_ZOOM  4
- /* The maximum image width/height are set to 4K DMT */
-@@ -481,7 +483,7 @@ struct vivid_dev {
- 	/* video capture */
- 	struct tpg_data			tpg;
- 	unsigned			ms_vid_cap;
--	bool				must_blank[VIDEO_MAX_FRAME];
-+	bool				must_blank[MAX_VID_CAP_BUFFERS];
+--- a/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
++++ b/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
+@@ -1795,6 +1795,9 @@ static void tpg_precalculate_line(struct
+ 	unsigned p;
+ 	unsigned x;
  
- 	const struct vivid_fmt		*fmt_cap;
- 	struct v4l2_fract		timeperframe_vid_cap;
---- a/drivers/media/test-drivers/vivid/vivid-ctrls.c
-+++ b/drivers/media/test-drivers/vivid/vivid-ctrls.c
-@@ -553,7 +553,7 @@ static int vivid_vid_cap_s_ctrl(struct v
- 		break;
- 	case VIVID_CID_PERCENTAGE_FILL:
- 		tpg_s_perc_fill(&dev->tpg, ctrl->val);
--		for (i = 0; i < VIDEO_MAX_FRAME; i++)
-+		for (i = 0; i < MAX_VID_CAP_BUFFERS; i++)
- 			dev->must_blank[i] = ctrl->val < 100;
- 		break;
- 	case VIVID_CID_INSERT_SAV:
---- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-@@ -213,7 +213,7 @@ static int vid_cap_start_streaming(struc
- 
- 	dev->vid_cap_seq_count = 0;
- 	dprintk(dev, 1, "%s\n", __func__);
--	for (i = 0; i < VIDEO_MAX_FRAME; i++)
-+	for (i = 0; i < MAX_VID_CAP_BUFFERS; i++)
- 		dev->must_blank[i] = tpg_g_perc_fill(&dev->tpg) < 100;
- 	if (dev->start_streaming_error) {
- 		dev->start_streaming_error = false;
++	if (WARN_ON_ONCE(!tpg->src_width || !tpg->scaled_width))
++		return;
++
+ 	switch (tpg->pattern) {
+ 	case TPG_PAT_GREEN:
+ 		contrast = TPG_COLOR_100_RED;
 
 
