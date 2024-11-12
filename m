@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B953208239;
-	Tue, 12 Nov 2024 10:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5194F2141A4;
+	Tue, 12 Nov 2024 10:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408314; cv=none; b=ZCRjCNBWKkLIpUcZVCTExktPuqoDBIVe9Gm1IPu2ru6sdam0hCTSWMUyp1kRVoPgqgX/3XHVhBbnFe7FuI2KNRJaAM4dWRD3k8ThFg4OjuaL/63SkF6XOUKYRSYqStjlWnp8dDOAxnZRLQASfBMNGdFCpRIzNqhWRRvNL41/WYk=
+	t=1731408317; cv=none; b=r/60Jy3wFk1nFVwC50nBElHQkpkDM2zO99ZuNBRBEofaxY78ZLJOG57cvEKF2sAiVEe8FfSklzM5Wk0lVHgYviYmps/rTxhVAaDalmSQgIALC2uDcO96Y11t3BaFWK/qLgXw3D1tKr4LUuCf2AEt9OmM1KXNQY6NrU0OkoZfLa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408314; c=relaxed/simple;
-	bh=rsLXAjFxW5lU4L5bhuIE/UK+4iBx9b+pjZtTmqcKZBQ=;
+	s=arc-20240116; t=1731408317; c=relaxed/simple;
+	bh=IrYdpeEkbmiV6NN+eQv8avAraMLs0AQd18nIdSv7/lA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LnT37WdtQyq/GLaeOlkCJazp/OnofiRq3QM4XjPF3rX/ckfj/45T//m2/ufr6prN0mTXkPlSLzVU6QlpwhDuFhRebvOFDEvQz7uht/xIVYD/WSNwQNKN1y1qL6Q3yW3k3PFNcGav1kN1XhNLiMBqumc5DS5V+7avq3bZMx4YZ1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrH9s3wd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=teoarMhUxDQFsdwdm91qHWxKbFo5pJ99HOG+SRBzl4Mc06jUA4aPHH7EoIbk42nlPqvzMiEovFG13O0Xd1Z2wGOGNe+vX+8GdcvdpPeQJ9+WTDvqlq8rF0vtKCemmRzxd1XGJPVY54qCTx2155gkJIAOsp7AVUNQapTJSEwmjMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFyU1hzU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrH9s3wd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BD0C4CECD;
-	Tue, 12 Nov 2024 10:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFyU1hzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B436AC4CECD;
+	Tue, 12 Nov 2024 10:45:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408313;
-	bh=rsLXAjFxW5lU4L5bhuIE/UK+4iBx9b+pjZtTmqcKZBQ=;
+	s=korg; t=1731408317;
+	bh=IrYdpeEkbmiV6NN+eQv8avAraMLs0AQd18nIdSv7/lA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GrH9s3wdm3/mFVHZgVYwmrAV0k75+WOxQ85WbLD1/Xdw4VgJyDk0KiWG0PuGJvzD4
-	 g2t4YQ9VEREIKhg9DYeLrNREkMBxbJX0H1lRH/o/96xEXLRPF3DGBIXoNyYq9q3j/X
-	 Ex3U05Lj//cRt1xCjwL3C41U+DBvH/sEEdg9kTaU=
+	b=aFyU1hzULJwEnDp1seLIAb18lRpmYg7awLFvOp8w/XWqKVbN1pQyReszb1KCRFcIE
+	 E+/dpCibsfDnlh8Z0F339f67MEtMLFR/QJ3STyyKk9Nqgjg/nE9BUoitS6ZWG6iWR2
+	 mb/ZM/+1Whsf/9uAnqxwEkTysVwSZdYVi2ivIbgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Seo <mikeseohyungjin@gmail.com>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.11 097/184] tpm: Lock TPM chip in tpm_pm_suspend() first
-Date: Tue, 12 Nov 2024 11:20:55 +0100
-Message-ID: <20241112101904.586023723@linuxfoundation.org>
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>
+Subject: [PATCH 6.11 124/184] nfs: Fix KMSAN warning in decode_getfattr_attrs()
+Date: Tue, 12 Nov 2024 11:21:22 +0100
+Message-ID: <20241112101905.624750981@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -51,110 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-commit 9265fed6db601ee2ec47577815387458ef4f047a upstream.
+commit dc270d7159699ad6d11decadfce9633f0f71c1db upstream.
 
-Setting TPM_CHIP_FLAG_SUSPENDED in the end of tpm_pm_suspend() can be racy
-according, as this leaves window for tpm_hwrng_read() to be called while
-the operation is in progress. The recent bug report gives also evidence of
-this behaviour.
+Fix the following KMSAN warning:
 
-Aadress this by locking the TPM chip before checking any chip->flags both
-in tpm_pm_suspend() and tpm_hwrng_read(). Move TPM_CHIP_FLAG_SUSPENDED
-check inside tpm_get_random() so that it will be always checked only when
-the lock is reserved.
+CPU: 1 UID: 0 PID: 7651 Comm: cp Tainted: G    B
+Tainted: [B]=BAD_PAGE
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009)
+=====================================================
+=====================================================
+BUG: KMSAN: uninit-value in decode_getfattr_attrs+0x2d6d/0x2f90
+ decode_getfattr_attrs+0x2d6d/0x2f90
+ decode_getfattr_generic+0x806/0xb00
+ nfs4_xdr_dec_getattr+0x1de/0x240
+ rpcauth_unwrap_resp_decode+0xab/0x100
+ rpcauth_unwrap_resp+0x95/0xc0
+ call_decode+0x4ff/0xb50
+ __rpc_execute+0x57b/0x19d0
+ rpc_execute+0x368/0x5e0
+ rpc_run_task+0xcfe/0xee0
+ nfs4_proc_getattr+0x5b5/0x990
+ __nfs_revalidate_inode+0x477/0xd00
+ nfs_access_get_cached+0x1021/0x1cc0
+ nfs_do_access+0x9f/0xae0
+ nfs_permission+0x1e4/0x8c0
+ inode_permission+0x356/0x6c0
+ link_path_walk+0x958/0x1330
+ path_lookupat+0xce/0x6b0
+ filename_lookup+0x23e/0x770
+ vfs_statx+0xe7/0x970
+ vfs_fstatat+0x1f2/0x2c0
+ __se_sys_newfstatat+0x67/0x880
+ __x64_sys_newfstatat+0xbd/0x120
+ x64_sys_call+0x1826/0x3cf0
+ do_syscall_64+0xd0/0x1b0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Cc: stable@vger.kernel.org # v6.4+
-Fixes: 99d464506255 ("tpm: Prevent hwrng from activating during resume")
-Reported-by: Mike Seo <mikeseohyungjin@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219383
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Tested-by: Mike Seo <mikeseohyungjin@gmail.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+The KMSAN warning is triggered in decode_getfattr_attrs(), when calling
+decode_attr_mdsthreshold(). It appears that fattr->mdsthreshold is not
+initialized.
+
+Fix the issue by initializing fattr->mdsthreshold to NULL in
+nfs_fattr_init().
+
+Cc: stable@vger.kernel.org # v3.5.x
+Fixes: 88034c3d88c2 ("NFSv4.1 mdsthreshold attribute xdr")
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm-chip.c      |    4 ----
- drivers/char/tpm/tpm-interface.c |   32 ++++++++++++++++++++++----------
- 2 files changed, 22 insertions(+), 14 deletions(-)
+ fs/nfs/inode.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/char/tpm/tpm-chip.c
-+++ b/drivers/char/tpm/tpm-chip.c
-@@ -525,10 +525,6 @@ static int tpm_hwrng_read(struct hwrng *
- {
- 	struct tpm_chip *chip = container_of(rng, struct tpm_chip, hwrng);
- 
--	/* Give back zero bytes, as TPM chip has not yet fully resumed: */
--	if (chip->flags & TPM_CHIP_FLAG_SUSPENDED)
--		return 0;
--
- 	return tpm_get_random(chip, data, max);
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -1656,6 +1656,7 @@ void nfs_fattr_init(struct nfs_fattr *fa
+ 	fattr->gencount = nfs_inc_attr_generation_counter();
+ 	fattr->owner_name = NULL;
+ 	fattr->group_name = NULL;
++	fattr->mdsthreshold = NULL;
  }
+ EXPORT_SYMBOL_GPL(nfs_fattr_init);
  
---- a/drivers/char/tpm/tpm-interface.c
-+++ b/drivers/char/tpm/tpm-interface.c
-@@ -370,6 +370,13 @@ int tpm_pm_suspend(struct device *dev)
- 	if (!chip)
- 		return -ENODEV;
- 
-+	rc = tpm_try_get_ops(chip);
-+	if (rc) {
-+		/* Can be safely set out of locks, as no action cannot race: */
-+		chip->flags |= TPM_CHIP_FLAG_SUSPENDED;
-+		goto out;
-+	}
-+
- 	if (chip->flags & TPM_CHIP_FLAG_ALWAYS_POWERED)
- 		goto suspended;
- 
-@@ -377,21 +384,19 @@ int tpm_pm_suspend(struct device *dev)
- 	    !pm_suspend_via_firmware())
- 		goto suspended;
- 
--	rc = tpm_try_get_ops(chip);
--	if (!rc) {
--		if (chip->flags & TPM_CHIP_FLAG_TPM2) {
--			tpm2_end_auth_session(chip);
--			tpm2_shutdown(chip, TPM2_SU_STATE);
--		} else {
--			rc = tpm1_pm_suspend(chip, tpm_suspend_pcr);
--		}
--
--		tpm_put_ops(chip);
-+	if (chip->flags & TPM_CHIP_FLAG_TPM2) {
-+		tpm2_end_auth_session(chip);
-+		tpm2_shutdown(chip, TPM2_SU_STATE);
-+		goto suspended;
- 	}
- 
-+	rc = tpm1_pm_suspend(chip, tpm_suspend_pcr);
-+
- suspended:
- 	chip->flags |= TPM_CHIP_FLAG_SUSPENDED;
-+	tpm_put_ops(chip);
- 
-+out:
- 	if (rc)
- 		dev_err(dev, "Ignoring error %d while suspending\n", rc);
- 	return 0;
-@@ -440,11 +445,18 @@ int tpm_get_random(struct tpm_chip *chip
- 	if (!chip)
- 		return -ENODEV;
- 
-+	/* Give back zero bytes, as TPM chip has not yet fully resumed: */
-+	if (chip->flags & TPM_CHIP_FLAG_SUSPENDED) {
-+		rc = 0;
-+		goto out;
-+	}
-+
- 	if (chip->flags & TPM_CHIP_FLAG_TPM2)
- 		rc = tpm2_get_random(chip, out, max);
- 	else
- 		rc = tpm1_get_random(chip, out, max);
- 
-+out:
- 	tpm_put_ops(chip);
- 	return rc;
- }
 
 
