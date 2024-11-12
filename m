@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9198F20899D;
-	Tue, 12 Nov 2024 10:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB74170A3A;
+	Tue, 12 Nov 2024 10:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407360; cv=none; b=GCSTTsZqV5+PbkWYDidLwYhm9yUSpODx8Z+6ZXctwNA07TF0kxE1iBuqeUZi5A2rH3bNieImvmTw1kp5Kn+53EA6HnlnBuZA+uNcR0/HCltrHEobhP0AqK51S9HO4Adi1wRTY3pDVUJHDbn0Tuy3iNZs3Cs9VjdqJre3ObIs92E=
+	t=1731407363; cv=none; b=fnEUNuov4fNi6MaBHukgiGUiWGeXBXLQrxcg+0EpbmzCnDfi1BP8Gti7JcMZW+0LHi21u2QjpIOwC6AS4iMSmsTeqYdDpMru/U9Nh5NPAo0P/CGtZ9zydkCjFVHIplE6o7qxGpN55wKjYDTWpMAsTpNIrEsEbzLsYrQG+zwaAUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407360; c=relaxed/simple;
-	bh=0DMh0nI2WRzJAla3AoMDA4aOW+eH5NL2ehKI13nG4Ww=;
+	s=arc-20240116; t=1731407363; c=relaxed/simple;
+	bh=v42vZgvRONYsAWWRzuL6rWLcaUHXfde/4O9U3NYQvQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mjH8LBg4IVMg3Anqg2nxQXZOc/Y+l8q5FSTMJwqGPZwMPSOrnoE5ZhHwPVxx8GgpSt+4kMCMVH/C71WYZkDkJV1wV6mVWRjwchlS/LnU/t2vXmdTzrD5ZQt/yzDj3MQbemOHgjtbhMZNE4cS7Fa/ygYGCFqyypP4xXilxpvf/yE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZZdbTFz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GIZ8wQHx7fDmMh0mMW3OXR9l5nkQca9qS4OlyKYLmSXRhmY/ZN7/g6Z3YiSvRphPy9m63qW5tYm++QVLLMcW8gDbYc8Ff8rL9+WabvDGmsFdZGDv8h4H3iDyEd2t+g8q7nMzZGEddDAVOg9QkStflivgcTDY/2YGNfsGjLf8wCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiDDHyKY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZZdbTFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A87C4CECD;
-	Tue, 12 Nov 2024 10:29:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiDDHyKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 295C4C4CECD;
+	Tue, 12 Nov 2024 10:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407360;
-	bh=0DMh0nI2WRzJAla3AoMDA4aOW+eH5NL2ehKI13nG4Ww=;
+	s=korg; t=1731407363;
+	bh=v42vZgvRONYsAWWRzuL6rWLcaUHXfde/4O9U3NYQvQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KZZdbTFzpuUPhepzSYHX7kRPqhBx79q29zUZpjPRLVwTBXk19PU11pQIq359Xeyac
-	 88+d1q4EcgBmLKNfodGHMo4PM/ApxNj45smeKLguRK1zp2ocUyXx8zvdb1Wx6Su3Dq
-	 zueIB92JrKS2ycG2AHu+an1sudNJPssr0nO0aqfg=
+	b=qiDDHyKYw01WB/U2/eJxb84JWz1papLgADVAdrzyutDxo7qwgcuqFLznK+DO3R6uY
+	 UhzZC3MP/J4kLHz3wIg4RL6M5WepQ7Ii5Rd6hHt+4PVTH8Rmr5OHXX/KCsdVY+YJrR
+	 i9+sOZgGlHWYjkZ7Z9wCFxafc48hzdpAnwXc97LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Norbert Szetei <norbert@doyensec.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 53/98] ksmbd: Fix the missing xa_store error check
-Date: Tue, 12 Nov 2024 11:21:08 +0100
-Message-ID: <20241112101846.288106377@linuxfoundation.org>
+Subject: [PATCH 6.1 54/98] ksmbd: fix slab-use-after-free in smb3_preauth_hash_rsp
+Date: Tue, 12 Nov 2024 11:21:09 +0100
+Message-ID: <20241112101846.325797643@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -51,57 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 3abab905b14f4ba756d413f37f1fb02b708eee93 upstream.
+commit b8fc56fbca7482c1e5c0e3351c6ae78982e25ada upstream.
 
-xa_store() can fail, it return xa_err(-EINVAL) if the entry cannot
-be stored in an XArray, or xa_err(-ENOMEM) if memory allocation failed,
-so check error for xa_store() to fix it.
+ksmbd_user_session_put should be called under smb3_preauth_hash_rsp().
+It will avoid freeing session before calling smb3_preauth_hash_rsp().
 
-Cc: stable@vger.kernel.org
-Fixes: b685757c7b08 ("ksmbd: Implements sess->rpc_handle_list as xarray")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Cc: stable@vger.kernel.org # v5.15+
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/user_session.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/smb/server/server.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -90,7 +90,7 @@ static int __rpc_method(char *rpc_name)
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -238,11 +238,11 @@ static void __handle_ksmbd_work(struct k
+ 	} while (is_chained == true);
  
- int ksmbd_session_rpc_open(struct ksmbd_session *sess, char *rpc_name)
- {
--	struct ksmbd_session_rpc *entry;
-+	struct ksmbd_session_rpc *entry, *old;
- 	struct ksmbd_rpc_command *resp;
- 	int method;
- 
-@@ -106,16 +106,19 @@ int ksmbd_session_rpc_open(struct ksmbd_
- 	entry->id = ksmbd_ipc_id_alloc();
- 	if (entry->id < 0)
- 		goto free_entry;
--	xa_store(&sess->rpc_handle_list, entry->id, entry, GFP_KERNEL);
-+	old = xa_store(&sess->rpc_handle_list, entry->id, entry, GFP_KERNEL);
-+	if (xa_is_err(old))
-+		goto free_id;
- 
- 	resp = ksmbd_rpc_open(sess, entry->id);
- 	if (!resp)
--		goto free_id;
-+		goto erase_xa;
- 
- 	kvfree(resp);
- 	return entry->id;
--free_id:
-+erase_xa:
- 	xa_erase(&sess->rpc_handle_list, entry->id);
-+free_id:
- 	ksmbd_rpc_id_free(entry->id);
- free_entry:
- 	kfree(entry);
+ send:
+-	if (work->sess)
+-		ksmbd_user_session_put(work->sess);
+ 	if (work->tcon)
+ 		ksmbd_tree_connect_put(work->tcon);
+ 	smb3_preauth_hash_rsp(work);
++	if (work->sess)
++		ksmbd_user_session_put(work->sess);
+ 	if (work->sess && work->sess->enc && work->encrypted &&
+ 	    conn->ops->encrypt_resp) {
+ 		rc = conn->ops->encrypt_resp(work);
 
 
