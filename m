@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28BB21830B;
-	Tue, 12 Nov 2024 10:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0581621312A;
+	Tue, 12 Nov 2024 10:42:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408154; cv=none; b=Ujo930g9/CZu0KVymu7fLjEpnzYX6EM8MdtBbrCevjmgkcXqV4o3lAIit53UC4Fr0jUGqGk9g6ZLdfgdNLOmW7WWEkOC3A63bsDCC7lK4pJk/Cd0np+WFGBv9ZrCvp0vPC0oYExeEkE8LCfJXc/0C9rBTFyTOzqQjXbvBi4l3GM=
+	t=1731408158; cv=none; b=Wa0G6hk7l/JXsf0XhbZZO8DIXdPR00yRRTijFcIYv4jNuP+Sl5XUQMM+UGdtwXccXvzD2A2BUUE87DQ8R8Oh5Oc3Yqxp86kJmKJitzn+6DdWLHIIQhM6Puuij9Z2C8/TI/M1QHOK9IMBtG8fjmCUU/TOxF+E/HOqA4zIFu+YNYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408154; c=relaxed/simple;
-	bh=naXvWg0VtErlmY6LXrSFjJPSDSIJtibBEFlN76lDXhQ=;
+	s=arc-20240116; t=1731408158; c=relaxed/simple;
+	bh=JzxVm3CRRD8wnUkaNs8Mr0/ZjcpUMhPnu3esRiKFpac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ds1KUMfWN5BNcWo3sf0dfQiwDvj+wHSIILP4zQl7L5WefmDY3Hm2ZNfRJurtJ9VYPzrHvKqWTBP7GD0GmenRfWMlXeZZqgcRzQdHaGLT6MGBRS95LJ9L03zR4TihlZSU+PJqrnkqw9pSNkDDenwv8PEBQwd14cY9aB3intyp3JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wN3jXjmL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I7q5yHSwU0xwBwoxRRm6XVcoix+JAvpvaLH+Q1BZmRqVoFgZX0StyW4pIlaP5WWVoHQpT5OUVYotZlN+ogpNb/t3moNN7cX7GsaJhNYh8hs5VKxdRn5mMhmUptsd1FmasUKdrDweKFLXolSDMwqRH3oXDOgVogHdRId7jizsZf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SyYUigRv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wN3jXjmL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059FCC4AF0B;
-	Tue, 12 Nov 2024 10:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SyYUigRv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 306A7C4CECD;
+	Tue, 12 Nov 2024 10:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408154;
-	bh=naXvWg0VtErlmY6LXrSFjJPSDSIJtibBEFlN76lDXhQ=;
+	s=korg; t=1731408157;
+	bh=JzxVm3CRRD8wnUkaNs8Mr0/ZjcpUMhPnu3esRiKFpac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wN3jXjmLfLprmwT6tM9AO3lMfoBA9Mj1ER/M4OK67tBDfqwnhB1iizEBXSIlRGeyT
-	 0Te+W+PyIT5XEZ42s4dkYChZdhZpVfZawREnN+K21prdCnkIH7Mavf9Cdc99wJWzEV
-	 y0J3uAx2D+FclhO+9nCeE4HfVhUAn7iRLuV9die0=
+	b=SyYUigRvBgS8zWXkCssCbmJ19h52B8ciNl+uyZDslGchoxaRKmvJOPTpKdGzeLWjV
+	 QQz+jYD/F4em2zz/WMcO3DTGJBG26e1vqkSwnhVX+HGG9cp1PCfsfiT+M00ca5uSAS
+	 2PGLbZRldCciQeNcS9Yk946BHK/3Y8TtOD+DKVz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.11 077/184] media: ar0521: dont overflow when checking PLL values
-Date: Tue, 12 Nov 2024 11:20:35 +0100
-Message-ID: <20241112101903.816542399@linuxfoundation.org>
+	Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Subject: [PATCH 6.11 078/184] media: s5p-jpeg: prevent buffer overflows
+Date: Tue, 12 Nov 2024 11:20:36 +0100
+Message-ID: <20241112101903.855111909@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -52,37 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-commit 438d3085ba5b8b5bfa5290faa594e577f6ac9aa7 upstream.
+commit 14a22762c3daeac59a5a534e124acbb4d7a79b3a upstream.
 
-The PLL checks are comparing 64 bit integers with 32 bit
-ones, as reported by Coverity. Depending on the values of
-the variables, this may underflow.
+The current logic allows word to be less than 2. If this happens,
+there will be buffer overflows, as reported by smatch. Add extra
+checks to prevent it.
 
-Fix it ensuring that both sides of the expression are u64.
+While here, remove an unused word = 0 assignment.
 
-Fixes: 852b50aeed15 ("media: On Semi AR0521 sensor driver")
+Fixes: 6c96dbbc2aa9 ("[media] s5p-jpeg: add support for 5433")
 Cc: stable@vger.kernel.org
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ar0521.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/samsung/s5p-jpeg/jpeg-core.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
---- a/drivers/media/i2c/ar0521.c
-+++ b/drivers/media/i2c/ar0521.c
-@@ -255,10 +255,10 @@ static u32 calc_pll(struct ar0521_dev *s
- 			continue; /* Minimum value */
- 		if (new_mult > 254)
- 			break; /* Maximum, larger pre won't work either */
--		if (sensor->extclk_freq * (u64)new_mult < AR0521_PLL_MIN *
-+		if (sensor->extclk_freq * (u64)new_mult < (u64)AR0521_PLL_MIN *
- 		    new_pre)
- 			continue;
--		if (sensor->extclk_freq * (u64)new_mult > AR0521_PLL_MAX *
-+		if (sensor->extclk_freq * (u64)new_mult > (u64)AR0521_PLL_MAX *
- 		    new_pre)
- 			break; /* Larger pre won't work either */
- 		new_pll = div64_round_up(sensor->extclk_freq * (u64)new_mult,
+--- a/drivers/media/platform/samsung/s5p-jpeg/jpeg-core.c
++++ b/drivers/media/platform/samsung/s5p-jpeg/jpeg-core.c
+@@ -775,11 +775,14 @@ static void exynos4_jpeg_parse_decode_h_
+ 		(unsigned long)vb2_plane_vaddr(&vb->vb2_buf, 0) + ctx->out_q.sos + 2;
+ 	jpeg_buffer.curr = 0;
+ 
+-	word = 0;
+-
+ 	if (get_word_be(&jpeg_buffer, &word))
+ 		return;
+-	jpeg_buffer.size = (long)word - 2;
++
++	if (word < 2)
++		jpeg_buffer.size = 0;
++	else
++		jpeg_buffer.size = (long)word - 2;
++
+ 	jpeg_buffer.data += 2;
+ 	jpeg_buffer.curr = 0;
+ 
+@@ -1058,6 +1061,7 @@ static int get_word_be(struct s5p_jpeg_b
+ 	if (byte == -1)
+ 		return -1;
+ 	*word = (unsigned int)byte | temp;
++
+ 	return 0;
+ }
+ 
+@@ -1145,7 +1149,7 @@ static bool s5p_jpeg_parse_hdr(struct s5
+ 			if (get_word_be(&jpeg_buffer, &word))
+ 				break;
+ 			length = (long)word - 2;
+-			if (!length)
++			if (length <= 0)
+ 				return false;
+ 			sof = jpeg_buffer.curr; /* after 0xffc0 */
+ 			sof_len = length;
+@@ -1176,7 +1180,7 @@ static bool s5p_jpeg_parse_hdr(struct s5
+ 			if (get_word_be(&jpeg_buffer, &word))
+ 				break;
+ 			length = (long)word - 2;
+-			if (!length)
++			if (length <= 0)
+ 				return false;
+ 			if (n_dqt >= S5P_JPEG_MAX_MARKER)
+ 				return false;
+@@ -1189,7 +1193,7 @@ static bool s5p_jpeg_parse_hdr(struct s5
+ 			if (get_word_be(&jpeg_buffer, &word))
+ 				break;
+ 			length = (long)word - 2;
+-			if (!length)
++			if (length <= 0)
+ 				return false;
+ 			if (n_dht >= S5P_JPEG_MAX_MARKER)
+ 				return false;
+@@ -1214,6 +1218,7 @@ static bool s5p_jpeg_parse_hdr(struct s5
+ 			if (get_word_be(&jpeg_buffer, &word))
+ 				break;
+ 			length = (long)word - 2;
++			/* No need to check underflows as skip() does it  */
+ 			skip(&jpeg_buffer, length);
+ 			break;
+ 		}
 
 
