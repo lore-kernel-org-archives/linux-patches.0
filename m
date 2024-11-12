@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5DA1EE02B;
-	Tue, 12 Nov 2024 10:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056F220B801;
+	Tue, 12 Nov 2024 10:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407723; cv=none; b=NI8mc4JHL1oAYAxKnYOTUJLGdlXABWux6/CSztsMZ8GtKlL7W1+f8KM8ISuSIRzYEYmiciDDWFKwUQzrqYxlWS0HG1YZAqgnwkgiR1icupArQCyKRbjzXEaU+NTS4St/OpWY0uUZlbtGg/DkmlHmkhkhpLN4P99JBx7z/rh5x5c=
+	t=1731407726; cv=none; b=MlXWI5lQcErbjgblM/5hug/ZRrv3so4q4AWQd5R6R7V2miJuTktHgJv6HRQ9/tWSYxWW03wvsQ5glYOm5u0STT+gA1EDrJW+X4mZw0GIOlN/dJNoZIGiSfJiGhblw6sAJuiyTNjTT58M6wN/ian20gEBwrMYFqKIZIqFS1Z+/Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407723; c=relaxed/simple;
-	bh=iow3Sfsbtozb1yVMMVJqdZuCeakqV6F163VjRbm4p70=;
+	s=arc-20240116; t=1731407726; c=relaxed/simple;
+	bh=nVvERhfw67x+/ONEHN1RggHSp/cYnFPpLnNF//KsJI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OixBBXKheJTIWX2VEbYfusEpoKfJ6pwtDX30B3vgzZk4l8qBuf2BDJa6Wcj9Busy/sOFK2jV2aX8v6oHcbeDUERmLG32hHgaaj+stJwQA8AJFjkK3ECwFB4YeB9PC9HFfTaAti9tEo/ZU9YXHZBni4l+ofGwpC+hogIbsF3ZRiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pb18rXju; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QPfgyAzPTQPUu/ZkSGtMvm6Is99xl60zIlGwxjqtmjO+UcLMoe63NJtDyIALCQKg6dGpHH9+M7O5/L8ENYpqZppdKhf3Aren2FQmL57pCEZo+xPKY8LKPK1xK6VZs4vUFlnMOfmiTaKFGBd2Ie9Wux4WBFmP5oTEKXtJdnX/U5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTadBBLt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pb18rXju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B38C4CECD;
-	Tue, 12 Nov 2024 10:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTadBBLt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF03C4CED4;
+	Tue, 12 Nov 2024 10:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407722;
-	bh=iow3Sfsbtozb1yVMMVJqdZuCeakqV6F163VjRbm4p70=;
+	s=korg; t=1731407725;
+	bh=nVvERhfw67x+/ONEHN1RggHSp/cYnFPpLnNF//KsJI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pb18rXjueE+GFraJ10zB072hyJ9OmrzFkhn/67LLxVBQo7za11LOrzB8SWkIqEWRM
-	 filtHVMP74nxxrLogaIMfj7Wyt6ZcsRp+oeOlcA78kEpAU/gSMbcBM8xspouk98XZs
-	 JpBSBfq5ietTeE53buPvnpq5Uffzc1K0tbKHl27E=
+	b=bTadBBLtkNl85WbqoWjM7wk2Fd+vbjnzYg7xICykGEDHDfn2qNvxxNb2RavWOuxyr
+	 1z28/cHKCoRE7w5QWKqg9oEpMAzOUyeUZQYm+YCe9/NgsZkeC6MoGvUeHFUcboVIm2
+	 G07VEgk7ZlK8iZUsD6zbaXK8CPs3Xey7M3qXNyW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChiYuan Huang <cy_huang@richtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/119] regulator: rtq2208: Fix uninitialized use of regulator_config
-Date: Tue, 12 Nov 2024 11:20:38 +0100
-Message-ID: <20241112101849.865476857@linuxfoundation.org>
+Subject: [PATCH 6.6 031/119] net: enetc: set MAC address to the VF net_device
+Date: Tue, 12 Nov 2024 11:20:39 +0100
+Message-ID: <20241112101849.903021473@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -51,34 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChiYuan Huang <cy_huang@richtek.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 2feb023110843acce790e9089e72e9a9503d9fa5 ]
+[ Upstream commit badccd49b93bb945bf4e5cc8707db67cdc5e27e5 ]
 
-Fix rtq2208 driver uninitialized use to cause kernel error.
+The MAC address of VF can be configured through the mailbox mechanism of
+ENETC, but the previous implementation forgot to set the MAC address in
+net_device, resulting in the SMAC of the sent frames still being the old
+MAC address. Since the MAC address in the hardware has been changed, Rx
+cannot receive frames with the DMAC address as the new MAC address. The
+most obvious phenomenon is that after changing the MAC address, we can
+see that the MAC address of eno0vf0 has not changed through the "ifconfig
+eno0vf0" command and the IP address cannot be obtained .
 
-Fixes: 85a11f55621a ("regulator: rtq2208: Add Richtek RTQ2208 SubPMIC")
-Signed-off-by: ChiYuan Huang <cy_huang@richtek.com>
-Link: https://patch.msgid.link/00d691cfcc0eae9ce80a37b62e99851e8fdcffe2.1729829243.git.cy_huang@richtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+root@ls1028ardb:~# ifconfig eno0vf0 down
+root@ls1028ardb:~# ifconfig eno0vf0 hw ether 00:04:9f:3a:4d:56 up
+root@ls1028ardb:~# ifconfig eno0vf0
+eno0vf0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        ether 66:36:2c:3b:87:76  txqueuelen 1000  (Ethernet)
+        RX packets 794  bytes 69239 (69.2 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 11  bytes 2226 (2.2 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+Fixes: beb74ac878c8 ("enetc: Add vf to pf messaging support")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
+Link: https://patch.msgid.link/20241029090406.841836-1-wei.fang@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/rtq2208-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/enetc/enetc_vf.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/rtq2208-regulator.c b/drivers/regulator/rtq2208-regulator.c
-index 2d54844c4226b..e05531c8c0298 100644
---- a/drivers/regulator/rtq2208-regulator.c
-+++ b/drivers/regulator/rtq2208-regulator.c
-@@ -513,7 +513,7 @@ static int rtq2208_probe(struct i2c_client *i2c)
- 	struct regmap *regmap;
- 	struct rtq2208_regulator_desc *rdesc[RTQ2208_LDO_MAX];
- 	struct regulator_dev *rdev;
--	struct regulator_config cfg;
-+	struct regulator_config cfg = {};
- 	struct rtq2208_rdev_map *rdev_map;
- 	int i, ret = 0, idx, n_regulator = 0;
- 	unsigned int regulator_idx_table[RTQ2208_LDO_MAX],
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_vf.c b/drivers/net/ethernet/freescale/enetc/enetc_vf.c
+index dfcaac302e245..b15db70769e5e 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_vf.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_vf.c
+@@ -78,11 +78,18 @@ static int enetc_vf_set_mac_addr(struct net_device *ndev, void *addr)
+ {
+ 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
+ 	struct sockaddr *saddr = addr;
++	int err;
+ 
+ 	if (!is_valid_ether_addr(saddr->sa_data))
+ 		return -EADDRNOTAVAIL;
+ 
+-	return enetc_msg_vsi_set_primary_mac_addr(priv, saddr);
++	err = enetc_msg_vsi_set_primary_mac_addr(priv, saddr);
++	if (err)
++		return err;
++
++	eth_hw_addr_set(ndev, saddr->sa_data);
++
++	return 0;
+ }
+ 
+ static int enetc_vf_set_features(struct net_device *ndev,
 -- 
 2.43.0
 
