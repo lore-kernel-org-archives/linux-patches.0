@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3317621744D;
-	Tue, 12 Nov 2024 10:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E812309A4;
+	Tue, 12 Nov 2024 10:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408016; cv=none; b=DJnGT0lGeDKARzNgNKWMk5vcVgvbksxYI18UoOywyJTBW6gsnCCyJIaZtTLbwePewz4mbq4bMaY6mUrnQL/GSmfH5T/9KR8wjAacLThbwQ2YVc7KNw15w6qyxgMvRoyfWzW2wP5RY8cMhhq1de4l7q3btRSedhoIPo/rIVq+V6U=
+	t=1731408019; cv=none; b=NTmVGhX61GrKCuhPRD9Ae3rqc3eXN2052/r0TisAVDBLuXVMc1V55zK96CywOb3i5djK/GgSvUnb8SkDObuS31EQc/tsJyoWKEuXL2fzNqYo6QkzpNReZ7Iyw5CXkaHM/qxvcNHqh48HgOg5XU1mJAyklE/FjN+2vjSw54vG+vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408016; c=relaxed/simple;
-	bh=ccmC89so6d6cNW94E/YN2h/e0CO0C3ETc0eLjEDgyvU=;
+	s=arc-20240116; t=1731408019; c=relaxed/simple;
+	bh=Sg3kU1RNErxA1PfXE/4A44WWaWHX5Uzh20H8LRodDVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pnrc7EFnGwCMjAEsMVmOgVmLk6Ew+4tQLLyuXFuvXw3VToMKzuqGOfUwZdPtWnGMtoJmLh8lEWUW74P+6mmNkcG7bqQJm0scykyDkUndOv7q+McsCj6/XberDVCqpwZP3JWTFGeMIO059nVEepaq/o9SaLadkGi+hD7oQmXOieg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVldyUA8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LicmZAza9ZuoyokgEM9ZUG/wxXPDrJRhPLIwXP5xIBSys+jkFkd1/3i7cGLNvVUPDsb7EU7tmWTQ+M5Aa5n6nQxc++uFys1eBlFTPnOYQQ+n+kdKo+lVpIb6nD35GPz1KbHld7AyPvUYODqXW1JQXg3LY4/WpICtJzUCKCtXXK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2HZGeFG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVldyUA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7337DC4CECD;
-	Tue, 12 Nov 2024 10:40:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2HZGeFG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB17C4CED4;
+	Tue, 12 Nov 2024 10:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408015;
-	bh=ccmC89so6d6cNW94E/YN2h/e0CO0C3ETc0eLjEDgyvU=;
+	s=korg; t=1731408019;
+	bh=Sg3kU1RNErxA1PfXE/4A44WWaWHX5Uzh20H8LRodDVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SVldyUA89/HTfjytPA6SQLBc8aFzohhONZMJS2WVM5mfOu9340lxCVdGvN1nLkylf
-	 PhIUYf4MXqpnuR6q86ZM/Xbj0VpNZ3JrO7MYxycbjyYqo/ORitW3NjXZXzJXerD822
-	 R6JQ3TNMAPDrQpTeI95o2aBOX8RyaQiq9COCO4iw=
+	b=n2HZGeFGqUHqER/ekSKePvSnohs7NLvUVA+uxqn5NdQV/jpkkz2ZOyLnB3DtflxFF
+	 Z690BtEZXw/zRIZ+zhvf6w7Wjg/A1XohT9SJ/S8Ojeml15UfaoKAJHiQsk8bENqboq
+	 S0YwPEHCKAWcmX7fHfikhTOdpTwo6sd6xVG5TzIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martijn Braam <martijn@brixit.nl>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Ondrej Jirman <megi@xff.cz>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	NeilBrown <neilb@suse.de>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 026/184] arm64: dts: rockchip: remove orphaned pinctrl-names from pinephone pro
-Date: Tue, 12 Nov 2024 11:19:44 +0100
-Message-ID: <20241112101901.871917452@linuxfoundation.org>
+Subject: [PATCH 6.11 035/184] NFSv3: only use NFS timeout for MOUNT when protocols are compatible
+Date: Tue, 12 Nov 2024 11:19:53 +0100
+Message-ID: <20241112101902.214881887@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -54,51 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 3577d5e2bc1ff78808cbe2f233ae1837ee2ce84c ]
+[ Upstream commit 6e2a10343ecb71c4457bc16be05758f9c7aae7d9 ]
 
-The patch adding display support for the pinephone pro introduced two
-regulators that contain pinctrl-names props but no pinctrl-assignments.
+If a timeout is specified in the mount options, it currently applies to
+both the NFS protocol and (with v3) the MOUNT protocol.  This is
+sensible when they both use the same underlying protocol, or those
+protocols are compatible w.r.t timeouts as RDMA and TCP are.
 
-Looks like someone forgot the pinctrl settings, so remove the orphans
-for now, until that changes.
+However if, for example, NFS is using TCP and MOUNT is using UDP then
+using the same timeout doesn't make much sense.
 
-Fixes: 3e987e1f22b9 ("arm64: dts: rockchip: Add internal display support to rk3399-pinephone-pro")
-Cc: Martijn Braam <martijn@brixit.nl>
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Ondrej Jirman <megi@xff.cz>
-Reviewed-by: Ondrej Jirman <megi@xff.cz>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20241008203940.2573684-11-heiko@sntech.de
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+If you
+   mount -o vers=3,proto=tcp,mountproto=udp,timeo=600,retrans=5 \
+      server:/path /mountpoint
+
+then the timeo=600 which was intended for the NFS/TCP request will
+apply to the MOUNT/UDP requests with the result that there will only be
+one request sent (because UDP has a maximum timeout of 60 seconds).
+This is not what a reasonable person might expect.
+
+This patch disables the sharing of timeout information in cases where
+the underlying protocols are not compatible.
+
+Fixes: c9301cb35b59 ("nfs: hornor timeo and retrans option when mounting NFSv3")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts | 2 --
- 1 file changed, 2 deletions(-)
+ fs/nfs/super.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-index ef754ea30a940..855e0ca92270b 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-@@ -167,7 +167,6 @@
- 		regulator-max-microvolt = <1800000>;
- 		vin-supply = <&vcc3v3_sys>;
- 		gpio = <&gpio3 RK_PA5 GPIO_ACTIVE_HIGH>;
--		pinctrl-names = "default";
- 	};
- 
- 	/* MIPI DSI panel 2.8v supply */
-@@ -179,7 +178,6 @@
- 		regulator-max-microvolt = <2800000>;
- 		vin-supply = <&vcc3v3_sys>;
- 		gpio = <&gpio3 RK_PA1 GPIO_ACTIVE_HIGH>;
--		pinctrl-names = "default";
- 	};
- 
- 	vibrator {
+diff --git a/fs/nfs/super.c b/fs/nfs/super.c
+index 97b386032b717..e17d80876cf07 100644
+--- a/fs/nfs/super.c
++++ b/fs/nfs/super.c
+@@ -882,7 +882,15 @@ static int nfs_request_mount(struct fs_context *fc,
+ 	 * Now ask the mount server to map our export path
+ 	 * to a file handle.
+ 	 */
+-	status = nfs_mount(&request, ctx->timeo, ctx->retrans);
++	if ((request.protocol == XPRT_TRANSPORT_UDP) ==
++	    !(ctx->flags & NFS_MOUNT_TCP))
++		/*
++		 * NFS protocol and mount protocol are both UDP or neither UDP
++		 * so timeouts are compatible.  Use NFS timeouts for MOUNT
++		 */
++		status = nfs_mount(&request, ctx->timeo, ctx->retrans);
++	else
++		status = nfs_mount(&request, NFS_UNSPEC_TIMEO, NFS_UNSPEC_RETRANS);
+ 	if (status != 0) {
+ 		dfprintk(MOUNT, "NFS: unable to mount server %s, error %d\n",
+ 				request.hostname, status);
 -- 
 2.43.0
 
