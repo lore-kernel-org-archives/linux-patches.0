@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9646221765D;
-	Tue, 12 Nov 2024 10:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BA220E31D;
+	Tue, 12 Nov 2024 10:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408110; cv=none; b=euXqqZ3Tihe5nT/bz1w8un9vOA2h5nqk4wJTIzYZI/3C0EhnUOqK0y/sZVG8ON1QRfhdNCtvRL63cLe1GprJGv2Qti4sTk2dWFYpc4b6eHNknwevsafUCjgosKFpPvwXHeT6+Gyn1Xoz+ZaV9lnUzg78QNXFs5r3AfSQ8Z6f4k4=
+	t=1731408113; cv=none; b=TzcZ/eFPzyorn89vTezDoSIu2JjKlUTNw0vhvE+SF4VQk1sr9xtx8lWflGf/rGI9sVBDI59SdnU+LDTIiocU87WacRxfzVJzC/alpIcL16xmeTwzEKU68orP+ZPzPNeLnoIDNsapg3mhiK14Kf38/e4iA9YsPgBkATh1FzCCPPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408110; c=relaxed/simple;
-	bh=fHj4ljC77D84Ea9yDNhXe2GDDrfgiHl7af6TEDB23kA=;
+	s=arc-20240116; t=1731408113; c=relaxed/simple;
+	bh=LH2YYkfyEbi7DF3UOSoqzdHGhScENDCVZRVMPjxkmDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QjXfQ7SxdxtkjQP0oiW/izBkc1dHejaOepNSczlfLp/KOxtdvBuYgDDtvxwZjp3rBJ9WGhFr9wfZB+SHeeum12OneV4D2HzS/up7cSPJbuaUw2voRL4IaHNBqY0OHqJb8VC3Rs5/CULGtMqh2zt2uGc9Y6fHy23qW8MDxPJ/4ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NV6xzcWA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qZIaERM517C17a4F0oWjhBMX16s9YF0RK2aCKah0PZyvO2fTcb4bWaun+kHV0TgqyiXoBsT1ROPm9LnflaIQOJvyQ3//XyVStPSB9863/jGgbZuv/Mrzujxx/5QEQRZOhwrh6rJorqhCjREhvpFtT9JFEQd1uJytWEiNZbxPQwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nib+dnYX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NV6xzcWA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC01C4CECD;
-	Tue, 12 Nov 2024 10:41:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nib+dnYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0296AC4CECD;
+	Tue, 12 Nov 2024 10:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408110;
-	bh=fHj4ljC77D84Ea9yDNhXe2GDDrfgiHl7af6TEDB23kA=;
+	s=korg; t=1731408113;
+	bh=LH2YYkfyEbi7DF3UOSoqzdHGhScENDCVZRVMPjxkmDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NV6xzcWAQuj5MFAEG71kw43ANIsIzoNbT7wEe3g3zpf7d91hCXVYomNTLhpcBfnh4
-	 80zDmOkoG3E/b3zGy9etY7rsvF5Xp5BcTX66FaF+crLvlJttGEMniEBeSxJyIaFnIL
-	 7mNx7GRWhb1mIhA5irPLK/t4RuCPlSz8yybOIbOU=
+	b=Nib+dnYXEjFsB8RXo6TvQODFSbhFlhNL2dAooci0ses/LoOrcED2lAfq7XvEN+0Uf
+	 dWocZPodugTSjD/e6tUMqj4g2uh1nvq4vB/I0AJs8xEouhMZG0ViJ/3O8cpFdE4bdQ
+	 9Gcm6kKwSlLO0D5GM7tPCG5gxi6juaLOFqtNM4I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diederik de Haas <didi.debian@cknow.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 031/184] arm64: dts: rockchip: Correct GPIO polarity on brcm BT nodes
-Date: Tue, 12 Nov 2024 11:19:49 +0100
-Message-ID: <20241112101902.061299152@linuxfoundation.org>
+Subject: [PATCH 6.11 032/184] HID: core: zero-initialize the report buffer
+Date: Tue, 12 Nov 2024 11:19:50 +0100
+Message-ID: <20241112101902.098990588@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -45,69 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Diederik de Haas <didi.debian@cknow.org>
+From: Jiri Kosina <jkosina@suse.com>
 
-[ Upstream commit 08846522d9a7bccf18d4f97c3f39d03c7a193970 ]
+[ Upstream commit 177f25d1292c7e16e1199b39c85480f7f8815552 ]
 
-Paragraph "3.4 Power up Timing Sequence" of the AzureWave-CM256SM
-datasheet mentions the following about the BT_REG_ON pin, which is
-connected to GPIO0_C4_d:
+Since the report buffer is used by all kinds of drivers in various ways, let's
+zero-initialize it during allocation to make sure that it can't be ever used
+to leak kernel memory via specially-crafted report.
 
-  When this pin is low and WL_REG_ON is high,
-  the BT section is in reset.
-
-Therefor set that pin to GPIO_ACTIVE_HIGH so that it can be pulled low
-for a reset.
-If set to GPIO_ACTIVE_LOW, the following errors are observed:
-
-  Bluetooth: hci0: command 0x0c03 tx timeout
-  Bluetooth: hci0: BCM: Reset failed (-110)
-
-So fix the GPIO polarity by setting it to ACTIVE_HIGH.
-This also matches what other devices with the same BT device have.
-
-Fixes: 2b6a3f857550 ("arm64: dts: rockchip: Fix reset-gpios property on brcm BT nodes")
-Signed-off-by: Diederik de Haas <didi.debian@cknow.org>
-Link: https://lore.kernel.org/r/20241018145053.11928-2-didi.debian@cknow.org
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 27ce405039bf ("HID: fix data access in implement()")
+Reported-by: Benoît Sevens <bsevens@google.com>
+Acked-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi  | 2 +-
- arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/hid-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
-index a477bd992b40e..0131f2cdd312f 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
-@@ -688,7 +688,7 @@
- 		host-wakeup-gpios = <&gpio0 RK_PC3 GPIO_ACTIVE_HIGH>;
- 		pinctrl-0 = <&bt_enable_h>, <&bt_host_wake_l>, <&bt_wake_h>;
- 		pinctrl-names = "default";
--		shutdown-gpios = <&gpio0 RK_PC4 GPIO_ACTIVE_LOW>;
-+		shutdown-gpios = <&gpio0 RK_PC4 GPIO_ACTIVE_HIGH>;
- 		vbat-supply = <&vcc_wl>;
- 		vddio-supply = <&vcca_1v8_pmu>;
- 	};
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3.dtsi
-index e9fa9bee995ae..1e36f73840dad 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3.dtsi
-@@ -404,7 +404,7 @@
- 		host-wakeup-gpios = <&gpio2 RK_PB1 GPIO_ACTIVE_HIGH>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&bt_host_wake_h &bt_reg_on_h &bt_wake_host_h>;
--		shutdown-gpios = <&gpio2 RK_PC0 GPIO_ACTIVE_LOW>;
-+		shutdown-gpios = <&gpio2 RK_PC0 GPIO_ACTIVE_HIGH>;
- 		vbat-supply = <&vcc_3v3>;
- 		vddio-supply = <&vcc_1v8>;
- 	};
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index 988d0acbdf04d..3fcf098f4f569 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -1875,7 +1875,7 @@ u8 *hid_alloc_report_buf(struct hid_report *report, gfp_t flags)
+ 
+ 	u32 len = hid_report_len(report) + 7;
+ 
+-	return kmalloc(len, flags);
++	return kzalloc(len, flags);
+ }
+ EXPORT_SYMBOL_GPL(hid_alloc_report_buf);
+ 
 -- 
 2.43.0
 
