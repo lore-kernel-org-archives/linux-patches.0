@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D886212F00;
-	Tue, 12 Nov 2024 10:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1542E213120;
+	Tue, 12 Nov 2024 10:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408120; cv=none; b=Uh15lREOpcl2ZR3oadJ7xlyssBg6cf1S3eWEh+F4W41xfpmNfsFcJCZ4yhSB1uT8wq5rNRrEjb96VI0/uo02V5jYjTPZtReU0Tl2OqsbuwFaLF+uMeFvUl/8RnxorpsUzI7KMcRBR4uWyXLvNqA0a5jU/zQINazaW2tv7JvIuZE=
+	t=1731408123; cv=none; b=d6zf1+j/aa9olTNgiuw0WfqEe7x5HOgdRQao+1A7qJf4vGLXqbWTrGOc6izheHztGzOu/QMI2ahoFM26Hq3Sqf3waLXzYfo+55XfQ0PVQHdG5SBclEpQgPU5ygTZCzFhjXgsyr6mUogJUTXXNirnswmVwgJClVHxvJZO5b41Nlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408120; c=relaxed/simple;
-	bh=Mo/ZRE10DG5mJd7Z8aAAGqUG1/Xb1MtLUCJBJRA8AlI=;
+	s=arc-20240116; t=1731408123; c=relaxed/simple;
+	bh=V90/5f0vM2WVnzWRMOczzYxGmJFmpzxybS/HsCY1m24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PSHHvIuGAs35vmcNIHAWEa81imPOOJznaruoJVDdJEY+F5nS3UxUQ+1xbUYLBVGXC1Ze3DcQ0ZG0OGJuwrLHcirVH0n8bFcX3qeMK5N6HkRV/421DNyefnHcem9K2nsFpctAF4rLsqddlhhQR9MpiTf5CDVtZlQlXoxs1ClvDEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsRPsjhH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z+oeH1VoxLM9VlWI30Zp5ZF5u2ibVq8PNhf4hF1vPZANTe79fJoc41Hj/iI9dZnkDrzXbMMCG4XNO4FULMrlniSdJSz/WQjo2thSnZa53Z/vimkO2BIo8pUXMCzIS0Zxl7ETYe/ZtvIIPoyv/5BbMKV9E2L77Ki3NIF3y78cP6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtDLtBgb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsRPsjhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96857C4CED4;
-	Tue, 12 Nov 2024 10:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtDLtBgb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6C7C4CED6;
+	Tue, 12 Nov 2024 10:42:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408120;
-	bh=Mo/ZRE10DG5mJd7Z8aAAGqUG1/Xb1MtLUCJBJRA8AlI=;
+	s=korg; t=1731408123;
+	bh=V90/5f0vM2WVnzWRMOczzYxGmJFmpzxybS/HsCY1m24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nsRPsjhHoALbJA/azktv+z/SubKGlbYxP0JtVn8unRstaYhJ4g0CiSQhJifkci4bu
-	 0ZWBIWjBIrbZGaKJrshl113nvk35cYFbpBRuD6VSayLC/8hzB1dv8b6LnGkPcwztMA
-	 vloTtZqRXH7YpHCONTfQOk1QfFW5EWee0KiA8PDg=
+	b=dtDLtBgbp0OG0Q6d0z7C+jJ23+NuVRxYMRyrdIzMTKlVrOC/6wuJmztmq6r6YyOeM
+	 UE0N1uOwVqx2EXC2XbKOlSwCOyH4AOJ4/mw/ELNTnSh8uF7TbrXzafKX1SOD3e8Zsa
+	 adodS0yFC8oSzbsuxRApSmgbv7LXNg6FeQ6qLE6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Qingqing Zhou <quic_qqzhou@quicinc.com>,
+	Kuldeep Singh <quic_kuldsing@quicinc.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 034/184] sunrpc: handle -ENOTCONN in xs_tcp_setup_socket()
-Date: Tue, 12 Nov 2024 11:19:52 +0100
-Message-ID: <20241112101902.175930579@linuxfoundation.org>
+Subject: [PATCH 6.11 025/184] firmware: qcom: scm: Return -EOPNOTSUPP for unsupported SHM bridge enabling
+Date: Tue, 12 Nov 2024 11:19:43 +0100
+Message-ID: <20241112101901.833194343@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -52,44 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Qingqing Zhou <quic_qqzhou@quicinc.com>
 
-[ Upstream commit 10f0740234f0b157b41bdc7e9c3555a9b86c1599 ]
+[ Upstream commit f489f6c6eb26482010470d77bad3901a3de1b166 ]
 
-xs_tcp_finish_connecting() can return -ENOTCONN but the switch statement
-in xs_tcp_setup_socket() treats that as an unhandled error.
+When enabling SHM bridge, QTEE returns 0 and sets error 4 in result to
+qcom_scm for unsupported platforms. Currently, tzmem interprets this as
+an unknown error rather than recognizing it as an unsupported platform.
 
-If we treat it as a known error it would propagate back to
-call_connect_status() which does handle that error code.  This appears
-to be the intention of the commit (given below) which added -ENOTCONN as
-a return status for xs_tcp_finish_connecting().
+Error log:
+[    0.177224] qcom_scm firmware:scm: error (____ptrval____): Failed to enable the TrustZone memory allocator
+[    0.177244] qcom_scm firmware:scm: probe with driver qcom_scm failed with error 4
 
-So add -ENOTCONN to the switch statement as an error to pass through to
-the caller.
+To address this, modify the function call qcom_scm_shm_bridge_enable()
+to remap result to indicate an unsupported error. This way, tzmem will
+correctly identify it as an unsupported platform case instead of
+reporting it as an error.
 
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1231050
-Link: https://access.redhat.com/discussions/3434091
-Fixes: 01d37c428ae0 ("SUNRPC: xprt_connect() don't abort the task if the transport isn't bound")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Reviewed-by: Benjamin Coddington <bcodding@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Fixes: 178e19c0df1b ("firmware: qcom: scm: add support for SHM bridge operations")
+Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
+Co-developed-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
+Signed-off-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Link: https://lore.kernel.org/r/20241022192148.1626633-1-quic_kuldsing@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/qcom/qcom_scm.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index 0e1691316f423..1326fbf45a347 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -2459,6 +2459,7 @@ static void xs_tcp_setup_socket(struct work_struct *work)
- 	case -EHOSTUNREACH:
- 	case -EADDRINUSE:
- 	case -ENOBUFS:
-+	case -ENOTCONN:
- 		break;
- 	default:
- 		printk("%s: connect returned unhandled error %d\n",
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index a50d8e8d0f1b8..6436bd09587a5 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -112,6 +112,7 @@ enum qcom_scm_qseecom_tz_cmd_info {
+ };
+ 
+ #define QSEECOM_MAX_APP_NAME_SIZE		64
++#define SHMBRIDGE_RESULT_NOTSUPP		4
+ 
+ /* Each bit configures cold/warm boot address for one of the 4 CPUs */
+ static const u8 qcom_scm_cpu_cold_bits[QCOM_SCM_BOOT_MAX_CPUS] = {
+@@ -1353,6 +1354,8 @@ EXPORT_SYMBOL_GPL(qcom_scm_lmh_dcvsh_available);
+ 
+ int qcom_scm_shm_bridge_enable(void)
+ {
++	int ret;
++
+ 	struct qcom_scm_desc desc = {
+ 		.svc = QCOM_SCM_SVC_MP,
+ 		.cmd = QCOM_SCM_MP_SHM_BRIDGE_ENABLE,
+@@ -1365,7 +1368,15 @@ int qcom_scm_shm_bridge_enable(void)
+ 					  QCOM_SCM_MP_SHM_BRIDGE_ENABLE))
+ 		return -EOPNOTSUPP;
+ 
+-	return qcom_scm_call(__scm->dev, &desc, &res) ?: res.result[0];
++	ret = qcom_scm_call(__scm->dev, &desc, &res);
++
++	if (ret)
++		return ret;
++
++	if (res.result[0] == SHMBRIDGE_RESULT_NOTSUPP)
++		return -EOPNOTSUPP;
++
++	return res.result[0];
+ }
+ EXPORT_SYMBOL_GPL(qcom_scm_shm_bridge_enable);
+ 
 -- 
 2.43.0
 
