@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67632101BE;
-	Tue, 12 Nov 2024 10:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E0220FAB3;
+	Tue, 12 Nov 2024 10:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407131; cv=none; b=LECvCz1IS+oj1bKvN5+bbjnor02P0VRrxkbS+ZlRKB5U53D6qM398ysKrv6Y44tV86w+8R+sv+qYEP6nEg6woMLpizLdlu5F0UPjrlttnrz1qP3M75C5mXug85sVwqsNHI2kkVT1pJFtX+8CRm+NtUyMeTLFdr3uevKoXWyf5rw=
+	t=1731407134; cv=none; b=H+aAg7+144uJocF5b8FQh6/khyfjUKoFrPDS4xt0KJhWQopQ2zYwGDdPZgVxTRKHCWVlJUKCsMs0SPTk3OE+pJLBR3JQdOy2bmQ3gACnuBwHiNP16BIedqhZM5T/Y7EKqIldFP4HAUh52Dl0S5mwI6xQi6xT3atqclkQ5CmcbB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407131; c=relaxed/simple;
-	bh=PqspOwxT3SgRETjd7tEVMWZfPo8BHdEE0cu4y0DevKI=;
+	s=arc-20240116; t=1731407134; c=relaxed/simple;
+	bh=6k21m7dk7v5F+mrirI4GlyTOS8vJtUouypCXIXJaDbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WdywxoVpXP3Qc2avAak0sEfqP/uFuIabigAvP5kj7W7FgmZIMOAA0wq2VRrwXn9TjSRI08N9K9nuqpCntT5uMgej/ejIzQDpOiCHjjM49WkwZ92tQBJk/K914rJYhsHXBj4tJ4iLh8yfzEWslaTjp6dugzKtsJPZ7TpmYvd8zD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VthABOkB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BSRPh3XT4n2yLXJ3Cc0r/dfvdbDtpaMscoD3WzX/zwRBGulC8r93ZwLRPfAbOz7iGa5nRXsL0uWgtQKcWueRPy9jYG48mvT8lBwMeFipW6JMa2WZlroqPU4FLNMb8GWqLS53hSLJ//PW59frrJlVdeESn2G9xrqiP6keG4NAPcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F+QoYWzt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VthABOkB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07AEBC4CECD;
-	Tue, 12 Nov 2024 10:25:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F+QoYWzt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17DA0C4CECD;
+	Tue, 12 Nov 2024 10:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407131;
-	bh=PqspOwxT3SgRETjd7tEVMWZfPo8BHdEE0cu4y0DevKI=;
+	s=korg; t=1731407134;
+	bh=6k21m7dk7v5F+mrirI4GlyTOS8vJtUouypCXIXJaDbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VthABOkBY5xnPyiRDyDWrCZpT7L6gjORrU1xt/dayHxa6Hfe9g6xLgkIh3YAb6umf
-	 ard15yoP6UjR2o4WUGL0Cry31rV2AnqmAo83HwJ+dToBnaDF/ouWTj6xKBsXtJF6JP
-	 nxug4Mxhcl4yT0BivQTkP+i4cw0L9kt8SFoKD0TQ=
+	b=F+QoYWztuqy82KY046vQoNga2XGkX93gNrC9GuTq2adPN4gd5MAjaPKirXVogYL76
+	 Ww7teX9mWu0UvGSRZkS7i+SG7m6CqkZ7vFi16cTVTgXkH9ubrihz3RBY0pXkOpWSpV
+	 lDwFfvUYD3ba1CYNiu4H9vowUELabvHznG0g8RfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 28/76] media: dvb_frontend: dont play tricks with underflow values
-Date: Tue, 12 Nov 2024 11:20:53 +0100
-Message-ID: <20241112101840.859070447@linuxfoundation.org>
+Subject: [PATCH 5.15 29/76] media: adv7604: prevent underflow condition when reporting colorspace
+Date: Tue, 12 Nov 2024 11:20:54 +0100
+Message-ID: <20241112101840.897783786@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -52,40 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-[ Upstream commit 9883a4d41aba7612644e9bb807b971247cea9b9d ]
+[ Upstream commit 50b9fa751d1aef5d262bde871c70a7f44262f0bc ]
 
-fepriv->auto_sub_step is unsigned. Setting it to -1 is just a
-trick to avoid calling continue, as reported by Coverity.
+Currently, adv76xx_log_status() reads some date using
+io_read() which may return negative values. The current logic
+doesn't check such errors, causing colorspace to be reported
+on a wrong way at adv76xx_log_status(), as reported by Coverity.
 
-It relies to have this code just afterwards:
+If I/O error happens there, print a different message, instead
+of reporting bogus messages to userspace.
 
-	if (!ready) fepriv->auto_sub_step++;
-
-Simplify the code by simply setting it to zero and use
-continue to return to the while loop.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 54450f591c99 ("[media] adv7604: driver for the Analog Devices ADV7604 video decoder")
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvb_frontend.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/i2c/adv7604.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
-index d76ac3ec93c2f..762058d748ddf 100644
---- a/drivers/media/dvb-core/dvb_frontend.c
-+++ b/drivers/media/dvb-core/dvb_frontend.c
-@@ -443,8 +443,8 @@ static int dvb_frontend_swzigzag_autotune(struct dvb_frontend *fe, int check_wra
+diff --git a/drivers/media/i2c/adv7604.c b/drivers/media/i2c/adv7604.c
+index d688ffff7a074..5ed5a22b946ff 100644
+--- a/drivers/media/i2c/adv7604.c
++++ b/drivers/media/i2c/adv7604.c
+@@ -2517,10 +2517,10 @@ static int adv76xx_log_status(struct v4l2_subdev *sd)
+ 	const struct adv76xx_chip_info *info = state->info;
+ 	struct v4l2_dv_timings timings;
+ 	struct stdi_readback stdi;
+-	u8 reg_io_0x02 = io_read(sd, 0x02);
++	int ret;
++	u8 reg_io_0x02;
+ 	u8 edid_enabled;
+ 	u8 cable_det;
+-
+ 	static const char * const csc_coeff_sel_rb[16] = {
+ 		"bypassed", "YPbPr601 -> RGB", "reserved", "YPbPr709 -> RGB",
+ 		"reserved", "RGB -> YPbPr601", "reserved", "RGB -> YPbPr709",
+@@ -2619,13 +2619,21 @@ static int adv76xx_log_status(struct v4l2_subdev *sd)
+ 	v4l2_info(sd, "-----Color space-----\n");
+ 	v4l2_info(sd, "RGB quantization range ctrl: %s\n",
+ 			rgb_quantization_range_txt[state->rgb_quantization_range]);
+-	v4l2_info(sd, "Input color space: %s\n",
+-			input_color_space_txt[reg_io_0x02 >> 4]);
+-	v4l2_info(sd, "Output color space: %s %s, alt-gamma %s\n",
+-			(reg_io_0x02 & 0x02) ? "RGB" : "YCbCr",
+-			(((reg_io_0x02 >> 2) & 0x01) ^ (reg_io_0x02 & 0x01)) ?
+-				"(16-235)" : "(0-255)",
+-			(reg_io_0x02 & 0x08) ? "enabled" : "disabled");
++
++	ret = io_read(sd, 0x02);
++	if (ret < 0) {
++		v4l2_info(sd, "Can't read Input/Output color space\n");
++	} else {
++		reg_io_0x02 = ret;
++
++		v4l2_info(sd, "Input color space: %s\n",
++				input_color_space_txt[reg_io_0x02 >> 4]);
++		v4l2_info(sd, "Output color space: %s %s, alt-gamma %s\n",
++				(reg_io_0x02 & 0x02) ? "RGB" : "YCbCr",
++				(((reg_io_0x02 >> 2) & 0x01) ^ (reg_io_0x02 & 0x01)) ?
++					"(16-235)" : "(0-255)",
++				(reg_io_0x02 & 0x08) ? "enabled" : "disabled");
++	}
+ 	v4l2_info(sd, "Color space conversion: %s\n",
+ 			csc_coeff_sel_rb[cp_read(sd, info->cp_csc) >> 4]);
  
- 		default:
- 			fepriv->auto_step++;
--			fepriv->auto_sub_step = -1; /* it'll be incremented to 0 in a moment */
--			break;
-+			fepriv->auto_sub_step = 0;
-+			continue;
- 		}
- 
- 		if (!ready) fepriv->auto_sub_step++;
 -- 
 2.43.0
 
