@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151901CBE8F;
-	Tue, 12 Nov 2024 10:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DB220D4E3;
+	Tue, 12 Nov 2024 10:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407311; cv=none; b=hgyLk+Ywbq/g3t6Wxk6ZLn27indjfuuKak2YUgLl1qoFRtSeC30rGnB8/cgarWhHJIqG/vT4211Q5SCMqxedVdLPdgFiKeLf0qM3jFIbvBM3fv/iu0WpMH+Yv38rghTZnVYtFpaspkXRRZZSecs2LgLW483ife1wVWEVGrg9c6g=
+	t=1731407314; cv=none; b=K9MFwtjN22wGtW3rasROGheMUnVTi+G/2l1CfRpBg/KCqhCLtgd3p1SbIJnYWcKDQ2gk10HBBnnyCyp6geBZvzg9XerhrgN7235PRRaqZzWsfp8uTaT8MbWWzKg3ViqU+0p/zQ1sQR0gr/WrhQ7sbr5vif+zYtfQjDtm91DvfYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407311; c=relaxed/simple;
-	bh=r9X9J4B3jmRUTnVF/kPNhXZSxAsRW8sjpimH34XI/oE=;
+	s=arc-20240116; t=1731407314; c=relaxed/simple;
+	bh=5XWWtCIdaN4NO2m2JwiMZTwSIjXhCPrNcqlzJMipU4I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hcxoefvxp5CAYwalui0Mc/Ky5CMvhEPQjxPyVPuD7UK+noUYS4DMYh79trAzrAmBL93n98vjWBoaCSTPTIeDGoaiaG3H8xEPyCnaE7ZAJ+KX+sz5XljxJte8e3WFQAsmGfoFWAvYZU8fhzpeHTrPWPoIRleIeurSBPdRTDtBxcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5/k4PTk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NDQ6p0K3tR6EnVOC4PoPmh5ryzt5zbL8O1t9guZJuGFA6KwAVvne/5cT6mJ8E9aixx22KvKeU5y8i38E2Xtzop1/hdNNTFkjrdBlcFJq4+kU0X0odl92o4DeVVpurZWuIpztON5h9B9Ow9RXQutW/50LLnbbaxwFdBHFCmUNjC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVp5p2hv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5/k4PTk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8943CC4CECD;
-	Tue, 12 Nov 2024 10:28:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVp5p2hv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C804BC4CECD;
+	Tue, 12 Nov 2024 10:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407311;
-	bh=r9X9J4B3jmRUTnVF/kPNhXZSxAsRW8sjpimH34XI/oE=;
+	s=korg; t=1731407314;
+	bh=5XWWtCIdaN4NO2m2JwiMZTwSIjXhCPrNcqlzJMipU4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5/k4PTkrjfSt/fpyCd5NUlG83b03s689oHVY7YaFfxkQG5E9inTgU/RIeDfMLnCC
-	 IPGA0/KWTyVcj7mKClu1uZjBtt7oxaLp2DXQEeyJ5PAIn5zP8mqvXaUyg6IpAttmg4
-	 D+0I3WDPDCH7dBTbdKklFxaUnU5n6MTsFr0iMGJI=
+	b=vVp5p2hvVd1p+4tSZ/TmqPh0eIE/sOWr27T0rkTUVHc1QzEQVs+xfcTEr46aaSoYB
+	 a460kmM/bo+uFc0tN+TrmpmQvLE/QfmW9vW3YSBO/5o6YiE05Zo95hRyRu4p6nfeje
+	 OdU48ix2FarboY1+l42M4EFvSDQjB9dUn5QlsZsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 10/98] arm64: dts: imx8-ss-vpu: Fix imx8qm VPU IRQs
-Date: Tue, 12 Nov 2024 11:20:25 +0100
-Message-ID: <20241112101844.664547255@linuxfoundation.org>
+Subject: [PATCH 6.1 37/98] media: dvb_frontend: dont play tricks with underflow values
+Date: Tue, 12 Nov 2024 11:20:52 +0100
+Message-ID: <20241112101845.686589658@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -51,66 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-[ Upstream commit eed2d8e8d0051a6551e4dffba99e16eb88c676ac ]
+[ Upstream commit 9883a4d41aba7612644e9bb807b971247cea9b9d ]
 
-imx8-ss-vpu only contained imx8qxp IRQ numbers, only mu2_m0 uses the
-correct imx8qm IRQ number, as imx8qxp lacks this MU.
-Fix this by providing imx8qm IRQ numbers in the main imx8-ss-vpu.dtsi
-and override the IRQ numbers in SoC-specific imx8qxp-ss-vpu.dtsi, similar
-to reg property for VPU core devices.
+fepriv->auto_sub_step is unsigned. Setting it to -1 is just a
+trick to avoid calling continue, as reported by Coverity.
 
-Fixes: 0d9968d98467d ("arm64: dts: freescale: imx8q: add imx vpu codec entries")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+It relies to have this code just afterwards:
+
+	if (!ready) fepriv->auto_sub_step++;
+
+Simplify the code by simply setting it to zero and use
+continue to return to the while loop.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8-ss-vpu.dtsi    | 4 ++--
- arch/arm64/boot/dts/freescale/imx8qxp-ss-vpu.dtsi | 8 ++++++++
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ drivers/media/dvb-core/dvb_frontend.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8-ss-vpu.dtsi b/arch/arm64/boot/dts/freescale/imx8-ss-vpu.dtsi
-index c6540768bdb92..87211c18d65a9 100644
---- a/arch/arm64/boot/dts/freescale/imx8-ss-vpu.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8-ss-vpu.dtsi
-@@ -15,7 +15,7 @@ vpu: vpu@2c000000 {
- 	mu_m0: mailbox@2d000000 {
- 		compatible = "fsl,imx6sx-mu";
- 		reg = <0x2d000000 0x20000>;
--		interrupts = <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>;
-+		interrupts = <GIC_SPI 472 IRQ_TYPE_LEVEL_HIGH>;
- 		#mbox-cells = <2>;
- 		power-domains = <&pd IMX_SC_R_VPU_MU_0>;
- 		status = "disabled";
-@@ -24,7 +24,7 @@ vpu: vpu@2c000000 {
- 	mu1_m0: mailbox@2d020000 {
- 		compatible = "fsl,imx6sx-mu";
- 		reg = <0x2d020000 0x20000>;
--		interrupts = <GIC_SPI 470 IRQ_TYPE_LEVEL_HIGH>;
-+		interrupts = <GIC_SPI 473 IRQ_TYPE_LEVEL_HIGH>;
- 		#mbox-cells = <2>;
- 		power-domains = <&pd IMX_SC_R_VPU_MU_1>;
- 		status = "disabled";
-diff --git a/arch/arm64/boot/dts/freescale/imx8qxp-ss-vpu.dtsi b/arch/arm64/boot/dts/freescale/imx8qxp-ss-vpu.dtsi
-index 7894a3ab26d6b..f81937b5fb720 100644
---- a/arch/arm64/boot/dts/freescale/imx8qxp-ss-vpu.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8qxp-ss-vpu.dtsi
-@@ -5,6 +5,14 @@
-  * Author: Alexander Stein
-  */
+diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
+index a1a3dbb0e7388..a997cffbc8ea2 100644
+--- a/drivers/media/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb-core/dvb_frontend.c
+@@ -443,8 +443,8 @@ static int dvb_frontend_swzigzag_autotune(struct dvb_frontend *fe, int check_wra
  
-+&mu_m0 {
-+	interrupts = <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>;
-+};
-+
-+&mu1_m0 {
-+	interrupts = <GIC_SPI 470 IRQ_TYPE_LEVEL_HIGH>;
-+};
-+
- &vpu_core0 {
- 	reg = <0x2d040000 0x10000>;
- };
+ 		default:
+ 			fepriv->auto_step++;
+-			fepriv->auto_sub_step = -1; /* it'll be incremented to 0 in a moment */
+-			break;
++			fepriv->auto_sub_step = 0;
++			continue;
+ 		}
+ 
+ 		if (!ready) fepriv->auto_sub_step++;
 -- 
 2.43.0
 
