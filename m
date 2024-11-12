@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB3372144A4;
-	Tue, 12 Nov 2024 10:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D47420F5AF;
+	Tue, 12 Nov 2024 10:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408387; cv=none; b=OuZnVPkxqfsmm8kPylcAWHDE748SUTaqczyb6Hq2t9+LuxY3ZrRtjJXqLf0aqKLiEreXgqv+KGIfcdRHB0mLWtf6kaZGuTbop7o3uuq4E4vn5MTi+vMC/Vwla0whQo9r1vrst8iwdeRDqJeTjaPf2/pIN/uO+EU+RiBr69fY9ck=
+	t=1731408390; cv=none; b=bkOItQaQuC+Pe4JIFrXheBmFL5jEfRiwEa/aDfPaT0fOq49WDb7FNOLpCknmRIeXgzhLM2pSYc4jtkPJDPfs0MqpkGseWUJgXmkpzBTaA9La6tmqPi+17+SKtGJBpat/iX7EuSm/kmJa5zhNjefR5oQNLKxe5csKsR/tVLs2ddM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408387; c=relaxed/simple;
-	bh=eGQ/P2gitOiLZ3MSquTzsdHenwC/d1X/7yp6DHsKdq4=;
+	s=arc-20240116; t=1731408390; c=relaxed/simple;
+	bh=gLamf4uvQpjS10zu7d5vMLSYTpMeCIAb9CBuFbpyjnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VE8LalsuDLsnWb4qt6jDaR0AVR6gabbHa7eGfxp/9oydMP1k1rRKuYaC3svXkz9/SxnBuVzC/Y3R+RNHJGkQgEehqCB/VZIX8/yN1jEdzyyo3SX8RDMYFTDezpWDuO7ZGaSm4J6vZ4lQ+TVdtHq6BGl9AALSQvXT/vVhqiNkqz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6+DXAZx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=emaMWdGuWYy2Z90xqWv8+zW5lb+948CxRrMVwkl4izfe5EQkgGdSQ0vVQJkNN5T9zZiK6+S1nQWMqC8JK/2c7jZI3vwsO/Qnzcwyar8BNSArKFASdE7QAv9deStsCNcAwWgo8caB3gr2rK76TS9EJoZ6AJSwBS0cD51t7rry8ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfA8JM0N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6+DXAZx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6035CC4CED4;
-	Tue, 12 Nov 2024 10:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfA8JM0N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4A3C4CECD;
+	Tue, 12 Nov 2024 10:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408386;
-	bh=eGQ/P2gitOiLZ3MSquTzsdHenwC/d1X/7yp6DHsKdq4=;
+	s=korg; t=1731408390;
+	bh=gLamf4uvQpjS10zu7d5vMLSYTpMeCIAb9CBuFbpyjnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6+DXAZxJ/rY/Rg7ZC4CQl+FOdzvE5d64VSnOLWuIu95Jwq4EDbwDkO77pKVGsr9v
-	 Uec3Nqz6QWnDwwQEo4rAM9hmB2lREUBKsn4sCMtj6FVoYPPGFHKVZz6J5sScVlsjo0
-	 0q8IUW49ZN4NPt7EIyIxmXwQLy0Ki34jbcjqawng=
+	b=XfA8JM0Nt0dXwUCSugWuYlITBcNgRbhIOeH8/FDVj1FcfuAWTZ9xXHbjRaWNDdLEG
+	 ybPy7PA3OB9EtHYszcfVoYcWy62T/n3LilwV3btCHqPVDm88xUSe2Kw7te1Vl17AJX
+	 r09fZbvnt9nIO2Kvz8LoZhK83kT+GjYo/UtNjhbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Xi <xiqi2@huawei.com>,
-	kernel test robot <lkp@intel.com>,
-	Baoquan He <bhe@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	Michael Holzheu <holzheu@linux.vnet.ibm.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 147/184] fs/proc: fix compile warning about variable vmcore_mmap_ops
-Date: Tue, 12 Nov 2024 11:21:45 +0100
-Message-ID: <20241112101906.512985124@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.11 130/184] arm64: Kconfig: Make SME depend on BROKEN for now
+Date: Tue, 12 Nov 2024 11:21:28 +0100
+Message-ID: <20241112101905.854936497@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -56,58 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Xi <xiqi2@huawei.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit b8ee299855f08539e04d6c1a6acb3dc9e5423c00 upstream.
+commit 81235ae0c846e1fb46a2c6fe9283fe2b2b24f7dc upstream.
 
-When build with !CONFIG_MMU, the variable 'vmcore_mmap_ops'
-is defined but not used:
+Although support for SME was merged in v5.19, we've since uncovered a
+number of issues with the implementation, including issues which might
+corrupt the FPSIMD/SVE/SME state of arbitrary tasks. While there are
+patches to address some of these issues, ongoing review has highlighted
+additional functional problems, and more time is necessary to analyse
+and fix these.
 
->> fs/proc/vmcore.c:458:42: warning: unused variable 'vmcore_mmap_ops'
-     458 | static const struct vm_operations_struct vmcore_mmap_ops = {
+For now, mark SME as BROKEN in the hope that we can fix things properly
+in the near future. As SME is an OPTIONAL part of ARMv9.2+, and there is
+very little extant hardware, this should not adversely affect the vast
+majority of users.
 
-Fix this by only defining it when CONFIG_MMU is enabled.
-
-Link: https://lkml.kernel.org/r/20241101034803.9298-1-xiqi2@huawei.com
-Fixes: 9cb218131de1 ("vmcore: introduce remap_oldmem_pfn_range()")
-Signed-off-by: Qi Xi <xiqi2@huawei.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/lkml/202410301936.GcE8yUos-lkp@intel.com/
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Michael Holzheu <holzheu@linux.vnet.ibm.com>
-Cc: Vivek Goyal <vgoyal@redhat.com>
-Cc: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: stable@vger.kernel.org # 5.19
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/r/20241106164220.2789279-1-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/vmcore.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ arch/arm64/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/proc/vmcore.c
-+++ b/fs/proc/vmcore.c
-@@ -457,10 +457,6 @@ static vm_fault_t mmap_vmcore_fault(stru
- #endif
- }
- 
--static const struct vm_operations_struct vmcore_mmap_ops = {
--	.fault = mmap_vmcore_fault,
--};
--
- /**
-  * vmcore_alloc_buf - allocate buffer in vmalloc memory
-  * @size: size of buffer
-@@ -488,6 +484,11 @@ static inline char *vmcore_alloc_buf(siz
-  * virtually contiguous user-space in ELF layout.
-  */
- #ifdef CONFIG_MMU
-+
-+static const struct vm_operations_struct vmcore_mmap_ops = {
-+	.fault = mmap_vmcore_fault,
-+};
-+
- /*
-  * remap_oldmem_pfn_checked - do remap_oldmem_pfn_range replacing all pages
-  * reported as not being ram with the zero page.
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -2173,6 +2173,7 @@ config ARM64_SME
+ 	bool "ARM Scalable Matrix Extension support"
+ 	default y
+ 	depends on ARM64_SVE
++	depends on BROKEN
+ 	help
+ 	  The Scalable Matrix Extension (SME) is an extension to the AArch64
+ 	  execution state which utilises a substantial subset of the SVE
 
 
