@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF13217F37;
-	Tue, 12 Nov 2024 10:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B89217F37;
+	Tue, 12 Nov 2024 10:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408160; cv=none; b=bgXsiSdlyaT3oHraBEsns2qkniNE4k1BzI+JScMuHQYk90fW6+psXAS93hUFrTETelXIkcHqqdx+2HJmQ+TVwpVfoXR7xR4La7uPbY1va5J9lOa0dyoBsYcfdyYWzYoHTMIlCCk/K2jJjXk7U8c0eFvT9qQxgGiktozTpl9kYHo=
+	t=1731408164; cv=none; b=I1fgnlIr2U7nOK43B+8l7KYDzetIiK5jyuTQ2TVa4o5GbVO+RO6MIYt5Z6jyCWod07HIXg2LYkjxHcDRRRaM2Z+i9LHQ6e+hfr5PbjwDSw9lHjy6eK3uG1gnciENdi9QOAtn0CB1sxk8YW2orAFSM2I3lz3alG4BkKDuCE9qrEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408160; c=relaxed/simple;
-	bh=83zoGHe9k2GoQs6HoPfeFi3VxNEb/S9YKo8n5sOz+/k=;
+	s=arc-20240116; t=1731408164; c=relaxed/simple;
+	bh=+gMLKW0VItw9QRdPUNYVSZtgvhw8Esyqphcq+zt00XM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wu3y4c5I7MifCy57KyWEerFV1+ooWKjIa9l5dyAfK3YeZ0Mjrb2qzx2IgUTfG7uei+Loj4FzBbvgv7G1OOt3k6OPtdWuQp7hDfg0p57pbXoAZ80rxM/4/0lu214SvY4q83AV1cAaxB05ylJzclPGrnNuHP3ZFv6e6TZx9ZuaqAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAMIgjts; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AYYNvTqluxFbSrCV/noCK0LXjaFzUlUiWQgaIWNDpW4c8YhDIctVybV+QohK5qO+VNKLSSMztQBF1/D1duPpeC9FH64RZUFIndRRxOchwxW9tjpuPd9DzqtsOImJ6gPFq4QIiDBnijJelPpcYNw6P4Te0kADzMIN6eqYQUsMY+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SwIy/xc0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAMIgjts"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1123FC4CECD;
-	Tue, 12 Nov 2024 10:42:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SwIy/xc0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C60C4CED4;
+	Tue, 12 Nov 2024 10:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408160;
-	bh=83zoGHe9k2GoQs6HoPfeFi3VxNEb/S9YKo8n5sOz+/k=;
+	s=korg; t=1731408163;
+	bh=+gMLKW0VItw9QRdPUNYVSZtgvhw8Esyqphcq+zt00XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DAMIgjtspeFIvGlc25jiOtFCfc278vBqZC8f0Gva3ewrVArzV6OXIQy6oTM9QopdF
-	 /bdhv/UijhUvAdrE+tDrvf0akucDj0Jv8SNA9hnq/V+/QiQJVimWZiVvskfaJlIFkO
-	 adGlrNUrhEFxv4iVJnDUuk9kDcplzAYyIsPoqFcE=
+	b=SwIy/xc0xx3RJxMPCzA0fws6CwkFLX6Y7j17z1wllKE3/2HayueD7vAKeFZqIUphA
+	 KrdSACzA5x5r2DiG3bLA20DBiLK1NnNmj6iA++p3taANjdCmaE/ZT9J9zF6bz7jmho
+	 hd3ML6827fkP/LnJ+SMgm7T0POvM8q5ppX0owc1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	linux-afs@lists.infradead.org,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 061/184] rxrpc: Fix missing locking causing hanging calls
-Date: Tue, 12 Nov 2024 11:20:19 +0100
-Message-ID: <20241112101903.201992378@linuxfoundation.org>
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.11 079/184] media: cx24116: prevent overflows on SNR calculus
+Date: Tue, 12 Nov 2024 11:20:37 +0100
+Message-ID: <20241112101903.894035056@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -53,69 +49,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-[ Upstream commit fc9de52de38f656399d2ce40f7349a6b5f86e787 ]
+commit 576a307a7650bd544fbb24df801b9b7863b85e2f upstream.
 
-If a call gets aborted (e.g. because kafs saw a signal) between it being
-queued for connection and the I/O thread picking up the call, the abort
-will be prioritised over the connection and it will be removed from
-local->new_client_calls by rxrpc_disconnect_client_call() without a lock
-being held.  This may cause other calls on the list to disappear if a race
-occurs.
+as reported by Coverity, if reading SNR registers fail, a negative
+number will be returned, causing an underflow when reading SNR
+registers.
 
-Fix this by taking the client_call_lock when removing a call from whatever
-list its ->wait_link happens to be on.
+Prevent that.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: linux-afs@lists.infradead.org
-Reported-by: Marc Dionne <marc.dionne@auristor.com>
-Fixes: 9d35d880e0e4 ("rxrpc: Move client call connection to the I/O thread")
-Link: https://patch.msgid.link/726660.1730898202@warthog.procyon.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8953db793d5b ("V4L/DVB (9178): cx24116: Add module parameter to return SNR as ESNO.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/rxrpc.h | 1 +
- net/rxrpc/conn_client.c      | 4 ++++
- 2 files changed, 5 insertions(+)
+ drivers/media/dvb-frontends/cx24116.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
-index a1b126a6b0d72..cc22596c7250c 100644
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -287,6 +287,7 @@
- 	EM(rxrpc_call_see_input,		"SEE input   ") \
- 	EM(rxrpc_call_see_release,		"SEE release ") \
- 	EM(rxrpc_call_see_userid_exists,	"SEE u-exists") \
-+	EM(rxrpc_call_see_waiting_call,		"SEE q-conn  ") \
- 	E_(rxrpc_call_see_zap,			"SEE zap     ")
+--- a/drivers/media/dvb-frontends/cx24116.c
++++ b/drivers/media/dvb-frontends/cx24116.c
+@@ -741,6 +741,7 @@ static int cx24116_read_snr_pct(struct d
+ {
+ 	struct cx24116_state *state = fe->demodulator_priv;
+ 	u8 snr_reading;
++	int ret;
+ 	static const u32 snr_tab[] = { /* 10 x Table (rounded up) */
+ 		0x00000, 0x0199A, 0x03333, 0x04ccD, 0x06667,
+ 		0x08000, 0x0999A, 0x0b333, 0x0cccD, 0x0e667,
+@@ -749,7 +750,11 @@ static int cx24116_read_snr_pct(struct d
  
- #define rxrpc_txqueue_traces \
-diff --git a/net/rxrpc/conn_client.c b/net/rxrpc/conn_client.c
-index d25bf1cf36700..bb11e8289d6dc 100644
---- a/net/rxrpc/conn_client.c
-+++ b/net/rxrpc/conn_client.c
-@@ -516,6 +516,7 @@ void rxrpc_connect_client_calls(struct rxrpc_local *local)
+ 	dprintk("%s()\n", __func__);
  
- 		spin_lock(&local->client_call_lock);
- 		list_move_tail(&call->wait_link, &bundle->waiting_calls);
-+		rxrpc_see_call(call, rxrpc_call_see_waiting_call);
- 		spin_unlock(&local->client_call_lock);
+-	snr_reading = cx24116_readreg(state, CX24116_REG_QUALITY0);
++	ret = cx24116_readreg(state, CX24116_REG_QUALITY0);
++	if (ret  < 0)
++		return ret;
++
++	snr_reading = ret;
  
- 		if (rxrpc_bundle_has_space(bundle))
-@@ -586,7 +587,10 @@ void rxrpc_disconnect_client_call(struct rxrpc_bundle *bundle, struct rxrpc_call
- 		_debug("call is waiting");
- 		ASSERTCMP(call->call_id, ==, 0);
- 		ASSERT(!test_bit(RXRPC_CALL_EXPOSED, &call->flags));
-+		/* May still be on ->new_client_calls. */
-+		spin_lock(&local->client_call_lock);
- 		list_del_init(&call->wait_link);
-+		spin_unlock(&local->client_call_lock);
- 		return;
- 	}
- 
--- 
-2.43.0
-
+ 	if (snr_reading >= 0xa0 /* 100% */)
+ 		*snr = 0xffff;
 
 
