@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDEBD2144B3;
-	Tue, 12 Nov 2024 10:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28C421315C;
+	Tue, 12 Nov 2024 10:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407681; cv=none; b=cFZ4Tj3lQlTji4MProWk12l8ldqgyY4MxnR3dQJgbxEtCTBQIwD3xbnLS3pP4WY4T+X02iJelHjYusB/UMYWozPbVtyTtw/LuzwY7W8d0A6fpwRrhwlsSgiVRiX8JhBNfXN2uxTY8U6MAbrqFcOI9LMsEXK8kl3/SuqSSS/Fo38=
+	t=1731407684; cv=none; b=NQs3TQ4VeXD6ZNHMiJoZyzGb54tplLxS+AVy1EpASuJvP8J48X81Qjk4Mf+J6FGeWMs7bi8OmVvb65K6SGrQVDSq2ME6n0cP5RrqRbnQkuO3jaAp6hlPlObIm+AN/fTHYmtmtPBLho24VqIBF+pycmV0cX4UPSsekfj+Sb6N+to=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407681; c=relaxed/simple;
-	bh=4CgQHFSO7PILVa7WI277YHzBBnKSDybjHCWMep9iAOM=;
+	s=arc-20240116; t=1731407684; c=relaxed/simple;
+	bh=EUActtaa6pYWsVW/4lFm/Z9wxnNFtsW4bcL8qtLWfes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qxUA4DrCqDVABLUkE9nu0TaLyAd6wRw7DkZwaGxJCo55oIYVjALXXwrg7Id9/jXv2xapvxu6m0ZT+WLz/8cyWsus7hhNj5rPrmrT00SIvMYUPyvydg/zes1DgaHPGdkSCaWPgIbNvQsbZUlP3g8ohRw3u4hZhGp3lsA9HoES1gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iR6u2DA/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E5Ud/sA5HrmyU0A1LKhbooJMg8cAKPiSuyXFUGjxETHK7cRQEUURC704cIJQGT6iFXc08rcvjQg/rResL9LWaGxJinaFfgH4OXYzf+VEiugdDgLmw3DdiyaMGUtxKP1/R88Cxr/yO55kQuPB/mqo2bEDp4yTJSLBCFd1makbHYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9pTnw/k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iR6u2DA/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23902C4CED4;
-	Tue, 12 Nov 2024 10:34:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9pTnw/k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302C4C4CED4;
+	Tue, 12 Nov 2024 10:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407681;
-	bh=4CgQHFSO7PILVa7WI277YHzBBnKSDybjHCWMep9iAOM=;
+	s=korg; t=1731407684;
+	bh=EUActtaa6pYWsVW/4lFm/Z9wxnNFtsW4bcL8qtLWfes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iR6u2DA/mwKHlhWOGYVEdGOtVWLsAGT63mrtmf0EMNVpaDrvZ5POiEs1YQ7ZqKvIx
-	 RMnWQBHmVOU65aKHxt/6IrTUgf9BZcorxcJlU7AQPD9CDgoFWpL5j74KljVYELkD9i
-	 yf4xmoj5Jn9aEApo04g77ZvtLVTfE+CjQE4T8l6w=
+	b=B9pTnw/kNaRN6y4RpDQf4U9rvTJxhVJDOu+oICzEEP3MTeX0Pb/8FSpbHfWBx6k16
+	 R66gzs2mWoNT8KesRaYFMvi7xWgP2tlkjrjuKUXwLwHSHVK7IqC9wsJPft1Vihz4LW
+	 USC3QnLtKCa2LYgiCq5bKjfw/DjGRiH4hUfk0ksI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jaros=C5=82aw=20Janik?= <jaroslaw.janik@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 050/119] Revert "ALSA: hda/conexant: Mute speakers at suspend / shutdown"
-Date: Tue, 12 Nov 2024 11:20:58 +0100
-Message-ID: <20241112101850.629945198@linuxfoundation.org>
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.6 051/119] media: stb0899_algo: initialize cfr before using it
+Date: Tue, 12 Nov 2024 11:20:59 +0100
+Message-ID: <20241112101850.667739163@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -44,49 +43,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jarosław Janik <jaroslaw.janik@gmail.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-commit c9363bbb0f68dd1ddb8be7bbfe958cdfcd38d851 upstream.
+commit 2d861977e7314f00bf27d0db17c11ff5e85e609a upstream.
 
-Commit 4f61c8fe3520 ("ALSA: hda/conexant: Mute speakers at suspend /
-shutdown") mutes speakers on system shutdown or whenever HDA controller
-is suspended by PM; this however interacts badly with Thinkpad's ACPI
-firmware behavior which uses beeps to signal various events (enter/leave
-suspend or hibernation, AC power connect/disconnect, low battery, etc.);
-now those beeps are either muted altogether (for suspend/hibernate/
-shutdown related events) or work more or less randomly (eg. AC
-plug/unplug is only audible when you are playing music at the moment,
-because HDA device is likely in suspend mode otherwise).
+The loop at stb0899_search_carrier() starts with a random
+value for cfr, as reported by Coverity.
 
-Since the original bug report mentioned in 4f61c8fe3520 complained about
-Lenovo's Thinkpad laptop - revert this commit altogether.
+Initialize it to zero, just like stb0899_dvbs_algo() to ensure
+that carrier search won't bail out.
 
-Fixes: 4f61c8fe3520 ("ALSA: hda/conexant: Mute speakers at suspend / shutdown")
-Signed-off-by: Jarosław Janik <jaroslaw.janik@gmail.com>
-Link: https://patch.msgid.link/20241030171813.18941-2-jaroslaw.janik@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 8bd135bab91f ("V4L/DVB (9375): Add STB0899 support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_conexant.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/media/dvb-frontends/stb0899_algo.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -205,8 +205,6 @@ static void cx_auto_shutdown(struct hda_
- {
- 	struct conexant_spec *spec = codec->spec;
+--- a/drivers/media/dvb-frontends/stb0899_algo.c
++++ b/drivers/media/dvb-frontends/stb0899_algo.c
+@@ -269,7 +269,7 @@ static enum stb0899_status stb0899_searc
  
--	snd_hda_gen_shutup_speakers(codec);
--
- 	/* Turn the problematic codec into D3 to avoid spurious noises
- 	   from the internal speaker during (and after) reboot */
- 	cx_auto_turn_eapd(codec, spec->num_eapds, spec->eapds, false);
+ 	short int derot_freq = 0, last_derot_freq = 0, derot_limit, next_loop = 3;
+ 	int index = 0;
+-	u8 cfr[2];
++	u8 cfr[2] = {0};
+ 	u8 reg;
+ 
+ 	internal->status = NOCARRIER;
 
 
