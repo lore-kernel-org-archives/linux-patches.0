@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A1E216DE2;
-	Tue, 12 Nov 2024 10:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC14D2123F5;
+	Tue, 12 Nov 2024 10:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408006; cv=none; b=cr3/NWKHdMoWsyJ5Eam/TqwiKiSTTA0qwqa0VvOgBSHLwMt92dgeFLczt028BNhtlPJXFde0dltVcNGRiABEOjyM9e0ORX0BnSO4rggIzL2pZyOI8F3iw1uIDJN9309b2oxv8BCc2m1ONJ2XaH4WtZhLqR82svc4K73RV4vIlhE=
+	t=1731408009; cv=none; b=bHC+Z1sLFBAa3hkHri/K2iHx5e7IAYiKzRDxFOGOs+0CXIZ4UKFlT5wujovQjETdxNZTpTIbbP7rZ7MfhujCItfDduq8wEFmaUAdDsdYHyn1GGTOXR38EM+UV+SNZvawkAaOEy1vnucbpuWX0s6wEFB6PWLydjIgLQYCSPUSd2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408006; c=relaxed/simple;
-	bh=sgrJaZeZmuTMA/sGjBaFA74FGMGVEm5OcblGyxDKdbQ=;
+	s=arc-20240116; t=1731408009; c=relaxed/simple;
+	bh=MCuS7uI+ToDnJnZQZEYgEAAEJQRXF5Av4AYiIvJSTwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C6HUBbn7XaDWf4Ojywkg8jIb4uzEtiSyeosA1KbC5SnhbrkeEcKIb197uDBcihN85iAqklCsHOJYQwA7MaYYs+M+mkNm7Z6lOjROFKyYEuu2K3X+YAsYkCj7b3+P5z6UGUtPLCW60McJVhg33b8WWYwwfjB7Xkp4yPe8KBE3yjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cb2VeBz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o0BAQGBU0h7iii1yy3Cel5glU86GafTO2IOGEIt6yYloi9u9702uA+E3y7FgNyQ9lgBxULeWqK4pSksGBglZs3CCHxtTRaS2x1M3SKZ/z5ngL/Ia1B2SF/bCYsruAf+6sqymnFUDFGLHOAmNpdkwEqROsnpStA/x1UssOZ80TOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pqTXjH/b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cb2VeBz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC05C4CECD;
-	Tue, 12 Nov 2024 10:40:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pqTXjH/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8FEC4CED4;
+	Tue, 12 Nov 2024 10:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408005;
-	bh=sgrJaZeZmuTMA/sGjBaFA74FGMGVEm5OcblGyxDKdbQ=;
+	s=korg; t=1731408009;
+	bh=MCuS7uI+ToDnJnZQZEYgEAAEJQRXF5Av4AYiIvJSTwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1cb2VeBz0Ug8JSytvbEaWvOnShLLMrhtEqmwB91D4QMQU0+GdE7Rfw/vtKZfg5MaM
-	 u3nBfr7RWFCzkJBYvbWMFs7nEKc3Rfd+ZM8NVDwvQZQGk+QWOm7gCaEf8RPIIzD+yV
-	 MqDjIjspKX1PUqHekYBQiyZ6lE6HZRkMWooaHUs0=
+	b=pqTXjH/bNagV4peputaTZpUQEJY0PJ1Bcb2X2JAM683mNzVWFic/FeusY0YGwo43h
+	 vTMyQSYsJW62ZYJ016SdIpnMvPM4/ycAfx3rZcgKw9QpobnaflimTp/BkmIWE3Phvl
+	 0sW8Bf0w1TigD24/pkoJRPwPIW2ieewCKU+eEujE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Diederik de Haas <didi.debian@cknow.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 008/184] arm64: dts: rockchip: Remove hdmis 2nd interrupt on rk3328
-Date: Tue, 12 Nov 2024 11:19:26 +0100
-Message-ID: <20241112101901.191788496@linuxfoundation.org>
+Subject: [PATCH 6.11 009/184] arm64: dts: rockchip: Fix wakeup prop names on PineNote BT node
+Date: Tue, 12 Nov 2024 11:19:27 +0100
+Message-ID: <20241112101901.229519251@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -53,49 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Diederik de Haas <didi.debian@cknow.org>
 
-[ Upstream commit de50a7e3681771c6b990238af82bf1dea9b11b21 ]
+[ Upstream commit 87299d6ee95a37d2d576dd8077ea6860f77ad8e2 ]
 
-The "synopsys,dw-hdmi.yaml" binding specifies that the interrupts
-property of the hdmi node has 'maxItems: 1', so the hdmi node in
-rk3328.dtsi having 2 is incorrect.
+The "brcm,bluetooth.yaml" binding has 'device-wakeup-gpios' and
+'host-wakeup-gpios' property names, not '*-wake-gpios'.
+Fix the incorrect property names.
 
-Paragraph 1.3 ("System Interrupt connection") of the RK3328 TRM v1.1
-page 16 and 17 define the following hdmi related interrupts:
--  67 hdmi_intr
-- 103 hdmi_intr_wakeup
+Note that the "realtek,bluetooth.yaml" binding does use the
+'*-wake-gpios' property names.
 
-The difference of 32 is due to a different base used in the TRM.
-
-The RK3399 (which uses the same binding) has '23: hdmi_irq' and
-'24: hdmi_wakeup_irq' according to its TRM (page 19).
-The RK3568 (also same binding) has '76: hdmi_wakeup' and '77: hdmi'
-according to page 17 of its TRM.
-In both cases the non-wakeup IRQ was used, so use that too for rk3328.
-
-Helped-by: Heiko Stuebner <heiko@sntech.de>
-Fixes: 725e351c265a ("arm64: dts: rockchip: add rk3328 display nodes")
+Fixes: d449121e5e8a ("arm64: dts: rockchip: Add Pine64 PineNote board")
 Signed-off-by: Diederik de Haas <didi.debian@cknow.org>
-Link: https://lore.kernel.org/r/20241008113344.23957-3-didi.debian@cknow.org
+Link: https://lore.kernel.org/r/20241008113344.23957-4-didi.debian@cknow.org
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3328.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-index b01efd6d042c8..a60259ae8a532 100644
---- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-@@ -754,8 +754,7 @@
- 		compatible = "rockchip,rk3328-dw-hdmi";
- 		reg = <0x0 0xff3c0000 0x0 0x20000>;
- 		reg-io-width = <4>;
--		interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
-+		interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
- 		clocks = <&cru PCLK_HDMI>,
- 			 <&cru SCLK_HDMI_SFC>,
- 			 <&cru SCLK_RTC32K>;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+index ae2536c65a830..ca7666bf5c0a5 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
+@@ -684,8 +684,8 @@
+ 		compatible = "brcm,bcm43438-bt";
+ 		clocks = <&rk817 1>;
+ 		clock-names = "lpo";
+-		device-wake-gpios = <&gpio0 RK_PC2 GPIO_ACTIVE_HIGH>;
+-		host-wake-gpios = <&gpio0 RK_PC3 GPIO_ACTIVE_HIGH>;
++		device-wakeup-gpios = <&gpio0 RK_PC2 GPIO_ACTIVE_HIGH>;
++		host-wakeup-gpios = <&gpio0 RK_PC3 GPIO_ACTIVE_HIGH>;
+ 		reset-gpios = <&gpio0 RK_PC4 GPIO_ACTIVE_LOW>;
+ 		pinctrl-0 = <&bt_enable_h>, <&bt_host_wake_l>, <&bt_wake_h>;
+ 		pinctrl-names = "default";
 -- 
 2.43.0
 
