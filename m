@@ -1,178 +1,194 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2081.outbound.protection.outlook.com [40.107.94.81])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9048217476;
-	Tue, 12 Nov 2024 18:45:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731437131; cv=none; b=MpzWE6epy5aA+QmZbaW4v2gAxbXqYVb0VGW6m1clk98bHboncSw9bgX7JeFudXnpggKP7bVw3VXbagxNfKjzvGYXOa9yMvLIXBWdteZgLw89amw/71Q9tftHKrJb93H2Ce7zIeNHdnju94E/pkcDPlvAGKPD45cNoyppO0HJUcc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731437131; c=relaxed/simple;
-	bh=wCXJF4/5quDEP4F6qG1v7jSbleUiRWK2iEYLSUjTZPQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BlsXxx5MGGuHOe/cW06saf3qXQnTpzzQ79l+xlKonsrIPyHblYWhCh3fOzKap8/bXwJFCMY8N4OofXq0ukzGi+0TYACM530p60/qHaVXz2BZDYSDyFyHsmAlcaQFWCTm/fxA7x45JC1HAnSEAU4n0m1WUEF2TimJVUJGPTweRCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jqfOgf+d; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705522178EE;
+	Tue, 12 Nov 2024 18:51:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.81
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1731437508; cv=fail; b=bJgcOuTGDEySzM5s+XMAOLNiM6JbASKZZ8iRxi4nFX1sklGybA3klStVHIrqwG2t0m8n5sgcEjMwU3iTAQojnzCZHK6UM5yFhw+qElaFMn6xP8wEYICXwp24VfwQSgLX4bCzQaEz2lBwuHFYIw4FjMZ98iViumzwo9aOXvIOY64=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1731437508; c=relaxed/simple;
+	bh=YwLxXyONxT57nSKd5dUNSSmXLzAWs7YnKy3Y9w7PjTY=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=u252s4MR75rZZ5yk5vLTRfpSw9+mLCS8D/GxU6FiZrHn+FnptMa5JNcle9UxLhh1KhQijrCn+hKrAkuxKwcS6bfivHzg072q7v6zjxvjrVi3sjDMXeug5uBgei85LrInhAetwnecRm/boAlyIL17JZe/uts3rJuD1NHlYJvGjY0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Or6r5CnV; arc=fail smtp.client-ip=40.107.94.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jqfOgf+d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9E7C4CECD;
-	Tue, 12 Nov 2024 18:45:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731437130;
-	bh=wCXJF4/5quDEP4F6qG1v7jSbleUiRWK2iEYLSUjTZPQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=jqfOgf+dYhrkzneeZkWksvX30rmB1BmKC2+jNVBNOZHz3sDYVd1lbsk1WwjI0eUR0
-	 rKjq0bzNBJkPMQvjvKFY/cRI+GzPIeyF226omTKNgTnF5TVh6NHQJvvs1rAvfiTtYR
-	 cB/REsuUsWKUAAvFk+CUj+ZN89VeG+cdxPmNOtljdAkHcfBW7qoQt6KQqgz6aWQ7/f
-	 Epi9h3b8xOMoRMbMCpaTSu7R4RdZcCO8FBtMqBcH2eMh6nC3X2ZbFskWSrbfrjLBBU
-	 BoPH7b7YByjbp+JtHLIikSlg0a7b0ooLzte/iv2E7rVU2yHbQmtTPgm5BiTfVs9API
-	 l3xCxrjpP+6vA==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Masahiro Yamada <masahiroy@kernel.org>,
-	HONG Yifan <elsk@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>
-Cc: Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	linux-kbuild@vger.kernel.org,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Trevor Gross <tmgross@umich.edu>,
-	rust-for-linux@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH v3] kbuild: rust: add PROCMACROLDFLAGS
-Date: Tue, 12 Nov 2024 19:44:55 +0100
-Message-ID: <20241112184455.855133-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Or6r5CnV"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=I7rYTqFLSBPgP94FZPgw9XsBm69Nyopv9Q7U+NSmWMAmQTCTYcPG0sh1dH/+Aw38gBLC2z82IkzjuKVgv1+yrRZC0i2b2oNh35BcuPHVj7n06TTMARfDE8Lpwp5XUWmUqL7dckQqJJjlmAVAELNRWC1RJPthWfKhSkV5N1G4P+KfN73TZmdtIiVPiwTnn4YB8tZOid93uQGvz+McDoo1wAXF1WLMmMf/B+LpbKOAWT674MJT0tMMztXJ7pbw3L/RqRw1NBWTZie9ZvWo+rOR4M3w4ZwPlo0KNaaYobM/oOGQLX1w8mPG3r7zBVVNfRNjgira0UTeEucb37Uoe/MwjA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EGMUd8gDzf1tNAM8NDYrfFbVS4/2J94KgmvMGetROrs=;
+ b=vdUHuG1bLk9jqLPijUTKNi7Mxc0+AOVtlXKFasqpjeAPUw4ExLrC7GoWYyZ7AOSs4Mfk57l+3lU5OUMJVycRrQfMnmAudT/62ynQiNEdgMq9cHW7BqeQappJbc2RUC/NEu8i3z5I6qZYNIXfs3gS4YeIm2PddEzIvvihRe0NoG0rrnuwxFZhUo1c4RyySv9g9KffI/dqI877ZzydTh8+xxkSmqZVw1lUEfFUCW7EwF4aPZMhI9KgeWI/fB52jOSuJUueUtzIoTf+0eebi3LxzHOKA7k7uEvWKUcHaS9YfFWJ0eIN/QGJpekn7WdjBO66LttcnBC+kIAaf20ubkTcag==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EGMUd8gDzf1tNAM8NDYrfFbVS4/2J94KgmvMGetROrs=;
+ b=Or6r5CnVs62PyGFz3ScJ6fGrADTSQ2yHkRmgtCGp8jnHYKpJzxQeNsxiNEJcZp5Oof0pvKWY3neBUpyvhE0xPeXB87+KWxJuzP1/OlFIPoxSENttMS6qWc5n1KuNWKhb8zsf5G5M6LJvk41azeYwpobTYu6PynQoDkXX2l+iFgzxiGyLKood81nbu3QoftZ2jp3j4HUT19Kr0Y0vWrLff6daem4o7J/nsrdhBP4s8Zxuq6ic3IJLdy6rme8gyHL9YrBPwG7ngIBCK7Tp8NGt7ENvkR0vi0zaefd7XiGI/9oWCj36IBV/reh7VnKP+ibYypYLPTxN06X5aiZN/snIOg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by IA0PR12MB8982.namprd12.prod.outlook.com (2603:10b6:208:481::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.28; Tue, 12 Nov
+ 2024 18:51:40 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8137.027; Tue, 12 Nov 2024
+ 18:51:37 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: iommu@lists.linux.dev,
+	Kevin Tian <kevin.tian@intel.com>,
+	Will Deacon <will@kernel.org>
+Cc: patches@lists.linux.dev
+Subject: [PATCH] iommu/arm-smmu-v3: Improve uAPI comment for IOMMU_HW_INFO_TYPE_ARM_SMMUV3
+Date: Tue, 12 Nov 2024 14:51:36 -0400
+Message-ID: <0-v1-191e5e24cec3+3b0-iommufd_smmuv3_hwinf_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: MN0P223CA0006.NAMP223.PROD.OUTLOOK.COM
+ (2603:10b6:208:52b::6) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|IA0PR12MB8982:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7561f41a-345c-44b6-c8e4-08dd034b094f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?EKhJcUDrgVumKlq3YXN9iyMwNU2JXOmOh1rEZBhSwnHiqWn5zBQnOqk2xWze?=
+ =?us-ascii?Q?Ktjz2JciPMXfb/saH9VVVg+XUyX524qZ8qdjtSaMsqETtuRmqNWMhw0UfZFc?=
+ =?us-ascii?Q?0RFZn4z9MjH+ufpmLc6PXh87ICd+QTGuCS1hte1XIRpP0jS8WaFCKVHNs0CQ?=
+ =?us-ascii?Q?6T1CT5Jb0g0BaGqIEOK/nMVdK7nhoyzJRkcRFj3MnrllraZOY0uVY8DtJtYG?=
+ =?us-ascii?Q?Jk97hrKqPNu111H2nerQHmhAHLi9uvYV431096go9g4YeP9hwNkuOega16XQ?=
+ =?us-ascii?Q?rX8egsK5PfNi7U8za3xzwiNCyR88/7cmfZxreIcOSPIbL+bOwsmnB869FcXI?=
+ =?us-ascii?Q?lzvf9qUFcOm2arpgWjZNEjSnDALEa7KY/av7dfJuGS+ksQopViwgHl/whc2y?=
+ =?us-ascii?Q?EeA+K43SQW7QFDbnovm7VDXZfJZlHz6QBE+m3yUAwGOFR43M/9LWPwPAhScZ?=
+ =?us-ascii?Q?UA7PlaVFzmdW55CKAtNbWDM05lwcHhvSIhq1djTbYumGzRyVwlYoGuKUcL+J?=
+ =?us-ascii?Q?vShtIvRlDzN50vRURyFaAnXDFEQ06XP5h8ylgKYm3J00y+q1mvsp1ugAn1E+?=
+ =?us-ascii?Q?dpo6uzebaXc0kJ84ykVKG41+Vyl9VwlU+GhfpZQpwBBW3+TYaEUPif8s2RuJ?=
+ =?us-ascii?Q?8D8z7fSX4QfryArj85xAdLGTCjC6ZidXjuDeJRumi7b9J5bIwajzfy25RQn9?=
+ =?us-ascii?Q?RH9MmUWQdRKlT1sJnr1nOnQ5rw1FQBSaT5mSY1vTNxjevlrQP+ZQIZchtlNN?=
+ =?us-ascii?Q?DXbY9aXGeT1wjraqmsl1xgyv9FnA3uRXAf2krqfRZv28NlXNd88NV6u9WmcH?=
+ =?us-ascii?Q?X7jEEmTVBIe+AC0i4DPN5hcEmLxvrSWG9SLPBjYaP3pst7P9MuH7M3gg+tJc?=
+ =?us-ascii?Q?hfRhiFrdxNEIILLBAKtSJ9jZZc0SUZvBiS8WWxR80kpRlimSPJ724iIMJS/L?=
+ =?us-ascii?Q?YBVqj+aMp7AbwfpYQWYjoNQ68eIRFQOeWdfNaWkA7jJCQa/OK0RYxR4BZb3z?=
+ =?us-ascii?Q?b/GKwC+f3alq5QhCq5PAlmWL3soPSN4lGNT5+tpzpRoJGvtyeRWrgTC7izxf?=
+ =?us-ascii?Q?/YCt98cpo/LX7wQpHep6X3ouMO4pbLRYaVsc8hndNglzjuBPbmSsBttTYkuI?=
+ =?us-ascii?Q?4qnhlDPKLk0mPvGaVlQVLbS9Nu+wjjsdt4nF8xJx4n+4UXfijyYVbGID4v8L?=
+ =?us-ascii?Q?fRJHSN0bSJaCr4ieby37KcYU60DXB+YMdIgdy1sxJt8s6EDBjja8JpM3oxiG?=
+ =?us-ascii?Q?RNKSlxHSeVdJcU8o5TOmhq85mX1B42xETpp+jyqk5mYaDb9gbemAIjFUBEk6?=
+ =?us-ascii?Q?DuTXlksT943k6/nWLt5PmAep?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?UQtV4aZCLR8iFDnrUEE0YGP0qRJVQLdxQg9W6NMzZ3pq1im9D3OYro0eN4H0?=
+ =?us-ascii?Q?34Q9nPDdd0+gEbmUBCp7B2TEaJdMmqT9RbeacjiA7lJvGmrb0xb5qLkT0+/8?=
+ =?us-ascii?Q?NdBjyBwkhXjhpZn+L8qirG4dwQp7GK4tKnNXPUZ6g13IT4HJPef9W5tuLxun?=
+ =?us-ascii?Q?lr2g8MRwS7MR+vercDRSBFGbsBN8xv5fB1PSeEUcZUin+TINq7xZSl5uZfIG?=
+ =?us-ascii?Q?4GZNZc2tvGopTMhmL5Mf7hE5sXk3b2dHo8OMZx6V9S3a5JLexjuqabv54QfF?=
+ =?us-ascii?Q?M1uLwe9xCOpu0XlzIPSnTQXbw2GQKenXJOHiyCjtLagGxAWXxxq/skT7L6gI?=
+ =?us-ascii?Q?8//dkTZ7X8p1KKDKrcwzDMiomSr4oD37+4BhcSzm4gSPsD4Dbl7jnuwBCxNs?=
+ =?us-ascii?Q?QQuT4RijGHWanPOkDOVwTiuxph9hlPzgMFpEqJTKN1jyIMMSlzqK5fEzfQRm?=
+ =?us-ascii?Q?VW2LHZA62RB3GcCdGdLYNtNdscBoik+v+tfl4MdAwNHujUV2BJAynb6Bb4lx?=
+ =?us-ascii?Q?NciUg3ej7+NwCc+7bdE+bAn991l7yS/QQSFS7teXKcru2tuklxlMegylgWRw?=
+ =?us-ascii?Q?KnjFgp9mJSWcO3e+w8aYsuz8TVhhIOxOHjL09JpSMuxsReEuMLlHIhZO4XVB?=
+ =?us-ascii?Q?HpuGVDd4GlM0BLbj8bZWsZNMEw887UyhxIzo/3x+ajioxgmGqn9rQnYXGz1R?=
+ =?us-ascii?Q?IymTqK76u9NxTy4b3hYKSdUPboyUpFvsi15sVyz039EjkUYAud7erpXMC8De?=
+ =?us-ascii?Q?zag1OR/OJGzlWo3CigrTEzuWiKh1HHLHXbaOQwIvN6vs0jZlde/EvQam3J0u?=
+ =?us-ascii?Q?o7ULNcNnez8Hjkr9jRdDNBesdaPuvkcxUqrB7mlhHGy1WHfVq26d+qX0Fu6O?=
+ =?us-ascii?Q?57A9KoXIUG2Q4v9pb3ODllIzvrJZDadEVnQOwEmxqJXgxDJYW05ZkgcCyzhl?=
+ =?us-ascii?Q?9hw/7VH2gxMXFjsqxwFExxsBxKLR4iyCrZu12bnPOcrMR9JVV3dCLG/sBWcm?=
+ =?us-ascii?Q?+VI6vzgucn44FyvFzly+lK3nIc2lzIqO8G1S3JWHm7V94/xTL9GPEGwRCQC1?=
+ =?us-ascii?Q?2fWY8/N/cIgfrl9v+8+eYrhpMPgnCJFzrj2MA5zCDcSuGmduDF33/blhsTkF?=
+ =?us-ascii?Q?HtL7Jn+rxiG7atln9XJUrd3Zn+H7X1s51saSZCanVqKTWts55K43YOhCuAYy?=
+ =?us-ascii?Q?jwXwZjpBoEGo9dfKpjakuB3jOkewue/Y2F/Toe89SbftKXrA2DeKDS0A+k/m?=
+ =?us-ascii?Q?eK9r40w1N1kEe2mTtyrC+WMilNDKRpm3dBPl9NAUOXEE0mkVu8Q1tyM90lBt?=
+ =?us-ascii?Q?spzcV44Gkj3dXASt93/G5dE446g2TZgrA7pSuLc6Y/SP3VVVEbrEJqnAmVn6?=
+ =?us-ascii?Q?AXVe2XJT0Lv1PTUZ/Jv6XaRsYUkTPpL+NVsyKWlseYWQtKqwhZcgu1xex9pq?=
+ =?us-ascii?Q?CznVFWalwkhOOKaGxhp0OZjCiqz52ULrwpTe0rhcYJdtHg5RQ5JwphmaGzO/?=
+ =?us-ascii?Q?MGGYIrl/CADA38ATVnYTHjDmP3SLHu1ZDsD5vAKShOydQPcDOCj5Y6YVmCkE?=
+ =?us-ascii?Q?D8sUH/iFHADDsVEHNg41Zxb6p+rR9YaOXMf6Y6nA?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7561f41a-345c-44b6-c8e4-08dd034b094f
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2024 18:51:37.2283
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: iRvwhQUHAc0g5RU3pWaQrbvQYeSutNcUylJ4DUfY5S54yzrQ20o1JbARLpjtoi5m
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8982
 
-From: HONG Yifan <elsk@google.com>
+Be specific about what fields should be accessed in the idr result and
+give other guidance to the VMM on how it should generate the
+vIDR. Discussion on the list, and review of the qmeu implementation
+understood this needs to be clearer and more detailed.
 
-These are flags to be passed when linking proc macros for the Rust
-toolchain. If unset, it defaults to $(KBUILD_HOSTLDFLAGS).
-
-This is needed because the list of flags to link hostprogs is not
-necessarily the same as the list of flags used to link libmacros.so.
-When we build proc macros, we need the latter, not the former (e.g. when
-using a Rust compiler binary linked to a different C library than host
-programs).
-
-To distinguish between the two, introduce this new variable to stand
-out from KBUILD_HOSTLDFLAGS used to link other host progs.
-
-Signed-off-by: HONG Yifan <elsk@google.com>
-Link: https://lore.kernel.org/r/20241017210430.2401398-2-elsk@google.com
-[ v3:
-
-  - `export`ed the variable. Otherwise it would not be visible in
-    `rust/Makefile`.
-
-  - Removed "additional" from the documentation and commit message,
-    since this actually replaces the other flags, unlike other cases.
-
-  - Added example of use case to documentation and commit message.
-    Thanks Alice for the details on what Google needs!
-
-  - Instead of `HOSTLDFLAGS`, used `KBUILD_HOSTLDFLAGS` as the fallback
-    to preserve the previous behavior as much as possible, as discussed
-    with Alice/Yifan. Thus moved the variable down too (currently we
-    do not modify `KBUILD_HOSTLDFLAGS` elsewhere) and avoided
-    mentioning `HOSTLDFLAGS` directly in the documentation.
-
-  - Fixed documentation header formatting.
-
-  - Reworded slightly.
-
-         - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
-Masahiro: if Kbuild wants to pick this up, that is great. Otherwise, I am happy
-picking this up early next cycle, if you give an `Acked-by` since this is
-changing the interface for Kbuild users given we are introducing a new
-environment variable. Thanks!
+ include/uapi/linux/iommufd.h | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-Note that the `or` means if the string is empty, we will use the default rather
-than nothing. I didn't change that from Yifan's version, but maybe we want to do
-otherwise. Users can still provide e.g. an empty space to avoid any flag.
+As posted in the other thread, it is a enough of an improvement I'd like to
+pick it up for the iommufd PR.
 
-Yifan/Alice: please double-check the changes. Thanks!
+Thanks,
+Jason
 
-v3: see changes above.
-v2: https://lore.kernel.org/rust-for-linux/20241017210430.2401398-2-elsk@google.com/
-v1: https://lore.kernel.org/rust-for-linux/20241017200138.2390077-2-elsk@google.com/
+diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
+index 747d3d9baa3dda..1e0345a62a3ab8 100644
+--- a/include/uapi/linux/iommufd.h
++++ b/include/uapi/linux/iommufd.h
+@@ -549,16 +549,25 @@ struct iommu_hw_info_vtd {
+  * For the details of @idr, @iidr and @aidr, please refer to the chapters
+  * from 6.3.1 to 6.3.6 in the SMMUv3 Spec.
+  *
+- * User space should read the underlying ARM SMMUv3 hardware information for
+- * the list of supported features.
++ * This reports the raw HW capability, and not all bits are meaningful to be
++ * read by userspace. Only the following fields should be used:
+  *
+- * Note that these values reflect the raw HW capability, without any insight if
+- * any required kernel driver support is present. Bits may be set indicating the
+- * HW has functionality that is lacking kernel software support, such as BTM. If
+- * a VMM is using this information to construct emulated copies of these
+- * registers it should only forward bits that it knows it can support.
++ * idr[0]: ST_LEVEL, TERM_MODEL, STALL_MODEL, TTENDIAN , CD2L, ASID16, TTF
++ * idr[1]: SIDSIZE, SSIDSIZE
++ * idr[3]: BBML, RIL
++ * idr[5]: VAX, GRAN64K, GRAN16K, GRAN4K
+  *
+- * In future, presence of required kernel support will be indicated in flags.
++ * - S1P should be assumed to be true if a NESTED HWPT can be created
++ * - VFIO/iommufd only support platforms with COHACC, it should be assumed to be
++ *   true.
++ * - ATS is a per-device property. If the VMM describes any devices as ATS
++ *   capable in ACPI/DT it should set the corresponding idr.
++ *
++ * This list may expand in future (eg E0PD, AIE, PBHA, D128, DS etc). It is
++ * important that VMMs do not read bits outside the list to allow for
++ * compatibility with future kernels. Several features in the SMMUv3
++ * architecture are not currently supported by the kernel for nesting: HTTU,
++ * BTM, MPAM and others.
+  */
+ struct iommu_hw_info_arm_smmuv3 {
+ 	__u32 flags;
 
- Documentation/kbuild/kbuild.rst | 11 +++++++++++
- Makefile                        |  3 ++-
- rust/Makefile                   |  2 +-
- 3 files changed, 14 insertions(+), 2 deletions(-)
+base-commit: d68beb276ba26cec47350a6d468e967673ee0c56
+-- 
+2.43.0
 
-diff --git a/Documentation/kbuild/kbuild.rst b/Documentation/kbuild/kbuild.rst
-index 1796b3eba37b..9cb876ccc363 100644
---- a/Documentation/kbuild/kbuild.rst
-+++ b/Documentation/kbuild/kbuild.rst
-@@ -91,6 +91,17 @@ HOSTRUSTFLAGS
- -------------
- Additional flags to be passed to $(HOSTRUSTC) when building host programs.
-
-+PROCMACROLDFLAGS
-+----------------
-+Flags to be passed when linking Rust proc macros. Since proc macros are loaded
-+by rustc at build time, they must be linked in a way that is compatible with
-+the rustc toolchain being used.
-+
-+For instance, it can be useful when rustc uses a different C library than
-+the one the user wants to use for host programs.
-+
-+If unset, it defaults to the flags passed when linking host programs.
-+
- HOSTLDFLAGS
- -----------
- Additional flags to be passed when linking host programs.
-diff --git a/Makefile b/Makefile
-index a9e723cb0596..3efb001bada5 100644
---- a/Makefile
-+++ b/Makefile
-@@ -471,6 +471,7 @@ KBUILD_HOSTRUSTFLAGS := $(rust_common_flags) -O -Cstrip=debuginfo \
- 			-Zallow-features= $(HOSTRUSTFLAGS)
- KBUILD_HOSTLDFLAGS  := $(HOST_LFS_LDFLAGS) $(HOSTLDFLAGS)
- KBUILD_HOSTLDLIBS   := $(HOST_LFS_LIBS) $(HOSTLDLIBS)
-+KBUILD_PROCMACROLDFLAGS := $(or $(PROCMACROLDFLAGS),$(KBUILD_HOSTLDFLAGS))
-
- # Make variables (CC, etc...)
- CPP		= $(CC) -E
-@@ -595,7 +596,7 @@ export HOSTRUSTC KBUILD_HOSTRUSTFLAGS
- export CPP AR NM STRIP OBJCOPY OBJDUMP READELF PAHOLE RESOLVE_BTFIDS LEX YACC AWK INSTALLKERNEL
- export PERL PYTHON3 CHECK CHECKFLAGS MAKE UTS_MACHINE HOSTCXX
- export KGZIP KBZIP2 KLZOP LZMA LZ4 XZ ZSTD
--export KBUILD_HOSTCXXFLAGS KBUILD_HOSTLDFLAGS KBUILD_HOSTLDLIBS LDFLAGS_MODULE
-+export KBUILD_HOSTCXXFLAGS KBUILD_HOSTLDFLAGS KBUILD_HOSTLDLIBS KBUILD_PROCMACROLDFLAGS LDFLAGS_MODULE
- export KBUILD_USERCFLAGS KBUILD_USERLDFLAGS
-
- export KBUILD_CPPFLAGS NOSTDINC_FLAGS LINUXINCLUDE OBJCOPYFLAGS KBUILD_LDFLAGS
-diff --git a/rust/Makefile b/rust/Makefile
-index f349e7b067ea..9f55c470aa2c 100644
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -344,7 +344,7 @@ quiet_cmd_rustc_procmacro = $(RUSTC_OR_CLIPPY_QUIET) P $@
-       cmd_rustc_procmacro = \
- 	$(RUSTC_OR_CLIPPY) $(rust_common_flags) \
- 		-Clinker-flavor=gcc -Clinker=$(HOSTCC) \
--		-Clink-args='$(call escsq,$(KBUILD_HOSTLDFLAGS))' \
-+		-Clink-args='$(call escsq,$(KBUILD_PROCMACROLDFLAGS))' \
- 		--emit=dep-info=$(depfile) --emit=link=$@ --extern proc_macro \
- 		--crate-type proc-macro \
- 		--crate-name $(patsubst lib%.so,%,$(notdir $@)) $<
-
-base-commit: d072acda4862f095ec9056979b654cc06a22cc68
---
-2.47.0
