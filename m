@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F5021216C;
-	Tue, 12 Nov 2024 10:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D5619E992;
+	Tue, 12 Nov 2024 10:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407009; cv=none; b=CY+La1Ugn3s2T6PCgS0OkltbfX8uFtSIAM8kaDiOIRA6SRCfMWOQMHOMx0xKsNldrTjYVCAfx9OgZpDgRXwSmOktIkezzaxIPph4oTEeL91xUy7g9w7fHPYy6OS3OSZ4CMgz8EzvjKle90v2LWP56XYk7vz6MzICDGbgqdQAtsg=
+	t=1731407012; cv=none; b=o7KTpmhSTnbUPZYZ4RkCZY1rsvrIHaYgfuYBDuepkcDj7M5Lk9RWOXm2U9M2ueWGt0FfYWlfC+HWdxFQNsD44o/8XmVDq+zgBK31hFQWUrwU75J1NyqIHFclb9m1eoX9TEt5p4NyELKk6l0saFNnZJvsWlmxCO2hrn7XofcC/nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407009; c=relaxed/simple;
-	bh=pd1/rPt1pnt+58Fbfibj2TUtF6YG44NC2Rc3XGb7T/w=;
+	s=arc-20240116; t=1731407012; c=relaxed/simple;
+	bh=AuEgug5EjhQ55PpCZ9ca6k+mffawaic1D5yFZZRglo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q/zyRchFRFKvep674fG9Jbnr90DjtIH/uDymY6AdEqDlJM9EQEY1YRF6eoISVyqrWolbUMnojTawmC8roRRo68ybh5L8X0O7Xo27eL4zodikh8PO1/VMX2MxlODSVKLGn4hHN7/z6MPdr5VRHZiIG1UtyZ/zDHd4nAo4KEp4HDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/BP/HPa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=G8lP5OD6+IsFa0Xnnv5OC4L77PN8hnzPLI3FHREz616C3M8p1Yh2Oby0AqCi+RlIXBxgE6y6QmuJF6M38l4u4D43288VgeUqv8Sa7n9nJWBLbVPXb55dEwr35YOn80k0OJAX1OqxkyzRTM0ySE9QyyC+0zrRTZkrdGcim+9C0Pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gPCtFsL+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/BP/HPa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EF00C4CED9;
-	Tue, 12 Nov 2024 10:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gPCtFsL+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E53C4CED4;
+	Tue, 12 Nov 2024 10:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407008;
-	bh=pd1/rPt1pnt+58Fbfibj2TUtF6YG44NC2Rc3XGb7T/w=;
+	s=korg; t=1731407012;
+	bh=AuEgug5EjhQ55PpCZ9ca6k+mffawaic1D5yFZZRglo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/BP/HPa5C9UlKcTn1a4y/I1sL1SoB175cmdeyKwySwXlwtJyzn864SBruTtkcypl
-	 AAgqmEFmNYdcT8b+stJGXu9zmYWin8g1YXMLAFTKjcAYtYOgs9T69+tJnmL1pOwhk8
-	 MO+9wrkG7XiQ9HLjdfdRJfqHJN9Ikpvxqi+94IHk=
+	b=gPCtFsL+ibZGBq+6fuxt+9wq4blmq4FAuvBs5wrUfqsbjvWL2Po6GtitpO49OJM/m
+	 8qC20K41ERGyVTdTadL0A1N0axPiqT21vNVVZjQaAxN1TOfFbWSQjkvRd60YOX4j8j
+	 rQ1t0ggMxQJVULSgZil8HBgAFcYiL7vUXaSXsVfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diogo Silva <diogompaissilva@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 22/76] net: phy: ti: add PHY_RST_AFTER_CLK_EN flag
-Date: Tue, 12 Nov 2024 11:20:47 +0100
-Message-ID: <20241112101840.631647072@linuxfoundation.org>
+Subject: [PATCH 5.15 23/76] net: stmmac: Fix unbalanced IRQ wake disable warning on single irq case
+Date: Tue, 12 Nov 2024 11:20:48 +0100
+Message-ID: <20241112101840.669926454@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -46,47 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Diogo Silva <diogompaissilva@gmail.com>
+From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 
-[ Upstream commit 256748d5480bb3c4b731236c6d6fc86a8e2815d8 ]
+[ Upstream commit 25d70702142ac2115e75e01a0a985c6ea1d78033 ]
 
-DP83848	datasheet (section 4.7.2) indicates that the reset pin should be
-toggled after the clocks are running. Add the PHY_RST_AFTER_CLK_EN to
-make sure that this indication is respected.
+Commit a23aa0404218 ("net: stmmac: ethtool: Fixed calltrace caused by
+unbalanced disable_irq_wake calls") introduced checks to prevent
+unbalanced enable and disable IRQ wake calls. However it only
+initialized the auxiliary variable on one of the paths,
+stmmac_request_irq_multi_msi(), missing the other,
+stmmac_request_irq_single().
 
-In my experience not having this flag enabled would lead to, on some
-boots, the wrong MII mode being selected if the PHY was initialized on
-the bootloader and was receiving data during Linux boot.
+Add the same initialization on stmmac_request_irq_single() to prevent
+"Unbalanced IRQ <x> wake disable" warnings from being printed the first
+time disable_irq_wake() is called on platforms that run on that code
+path.
 
-Signed-off-by: Diogo Silva <diogompaissilva@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Fixes: 34e45ad9378c ("net: phy: dp83848: Add TI DP83848 Ethernet PHY")
-Link: https://patch.msgid.link/20241102151504.811306-1-paissilva@ld-100007.ds1.internal
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a23aa0404218 ("net: stmmac: ethtool: Fixed calltrace caused by unbalanced disable_irq_wake calls")
+Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241101-stmmac-unbalanced-wake-single-fix-v1-1-5952524c97f0@collabora.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/dp83848.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/phy/dp83848.c b/drivers/net/phy/dp83848.c
-index 937061acfc613..351411f0aa6f4 100644
---- a/drivers/net/phy/dp83848.c
-+++ b/drivers/net/phy/dp83848.c
-@@ -147,6 +147,8 @@ MODULE_DEVICE_TABLE(mdio, dp83848_tbl);
- 		/* IRQ related */				\
- 		.config_intr	= dp83848_config_intr,		\
- 		.handle_interrupt = dp83848_handle_interrupt,	\
-+								\
-+		.flags		= PHY_RST_AFTER_CLK_EN,		\
- 	}
- 
- static struct phy_driver dp83848_driver[] = {
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 4a194f30f4a83..2478caeec763f 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -3650,6 +3650,7 @@ static int stmmac_request_irq_single(struct net_device *dev)
+ 	/* Request the Wake IRQ in case of another line
+ 	 * is used for WoL
+ 	 */
++	priv->wol_irq_disabled = true;
+ 	if (priv->wol_irq > 0 && priv->wol_irq != dev->irq) {
+ 		ret = request_irq(priv->wol_irq, stmmac_interrupt,
+ 				  IRQF_SHARED, dev->name, dev);
 -- 
 2.43.0
 
