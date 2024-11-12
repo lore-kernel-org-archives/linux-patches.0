@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA60213148;
-	Tue, 12 Nov 2024 10:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F7F214435;
+	Tue, 12 Nov 2024 10:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408279; cv=none; b=H/zjNI/V8bVb/OCn+p4jh6Tm8lgAm/iy6j+X0ZQn2ZnJBKjsIX8vO3xFm5wcUEebbaOo+yw1mSAi0RNVGUDcorMkjVCJi3GQ0W019HlVzGl5qzkTGsOSWlYCusTKBPpHrQwTrh/BgZkfBe69jeM8tS++tLs6zCb/xS8qX9WKwYI=
+	t=1731408283; cv=none; b=XSbF/rDb5kiB1JK87vP/6ky23G/A7D4oElwvH/jKSwcaaqRW8q+wPjkMFp6Uk/fMgR+/AXoouJQnB28qWZTm4tPQcfmKpxjaM9NOOs7kIXKxE/xDfzYpLVqAIOmDywUHU32ZfbAq3lIbaB9jy/KJYmvrea1Am2aeJwNdWWI+Y5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408279; c=relaxed/simple;
-	bh=AqX52EVdaL2Hh9k9gQ391gYrzmJQ+LjAQBZ5oR58Zx0=;
+	s=arc-20240116; t=1731408283; c=relaxed/simple;
+	bh=QZkCWtTy/U6ddCnT2XekJD4hOkoLGFn+Sqjcvoub6T4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2mLv5lDj468Hb/0uy/twbH7Yrlf4r04H3YdiHVrdXGmyXoCXAEVlvOPlHOPHxh9tjEUY6QNUj96IR5LVXcJHQjDCzg4ET6QMQ3gt3EI3P03A6Y0JSKq6UvTUN14gfjAZD/70/WcfA41FSryOXmLHRFrXkftbPU1Sjd9s/O9o50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAYwD7hn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FdN3DDsIJ9kV0weec9r+BduIIEHrEODPnjJO7iOfA/CQ5QH5BZR6lQ4EUVASjguvFqScdu8NDxDr1f+jICEUgZEdvcGtyCLuw9oRy5GxosJ5B1F9E2lRH2LR1u2k8Fuvu8u6LjnsozTu6WVkjitv0usVHFSKbHxT9ASUHcYreQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MB8/u8hF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAYwD7hn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63B4C4CECD;
-	Tue, 12 Nov 2024 10:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MB8/u8hF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37261C4CECD;
+	Tue, 12 Nov 2024 10:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408279;
-	bh=AqX52EVdaL2Hh9k9gQ391gYrzmJQ+LjAQBZ5oR58Zx0=;
+	s=korg; t=1731408282;
+	bh=QZkCWtTy/U6ddCnT2XekJD4hOkoLGFn+Sqjcvoub6T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OAYwD7hnTlmU+LWf4l5PoOT7hx6+ZuJ8/FeHy9C+XRlGWAaCPkJwO42WHMWphoejB
-	 014no+8/DLtDvLm93kjr4qWWsv4mI8zf8xO2xVvK9vRabEDtoYkNe+oH3/VxIzynRm
-	 7Ufuw5tgkqFPaJDJh0B0z+NDHsXrXhwIf8olRlog=
+	b=MB8/u8hFjKN/5PsJsDE1DyGqxoQDQcCh7DrBhjLZ15soG8g1Z+Ngy/YOssx9HwmQ2
+	 k0JXOk48Jgp7RN8w/g7mS3DZBK+bsH/2uuPIKDMtTZVqFeb7j8kCJ3XZIJ9mOJtUvf
+	 oRqwr1Df4dXsBaRV11K8jHoFv2gVBbZDYLwrS+yU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ming-Hung Tsai <mtsai@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Joe Thornber <thornber@redhat.com>
-Subject: [PATCH 6.11 114/184] dm cache: correct the number of origin blocks to match the target length
-Date: Tue, 12 Nov 2024 11:21:12 +0100
-Message-ID: <20241112101905.242357953@linuxfoundation.org>
+Subject: [PATCH 6.11 115/184] dm cache: fix flushing uninitialized delayed_work on cache_ctr error
+Date: Tue, 12 Nov 2024 11:21:13 +0100
+Message-ID: <20241112101905.281830357@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -53,98 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming-Hung Tsai <mtsai@redhat.com>
 
-commit 235d2e739fcbe964c9ce179b4c991025662dcdb6 upstream.
+commit 135496c208ba26fd68cdef10b64ed7a91ac9a7ff upstream.
 
-When creating a cache device, the actual size of the cache origin might
-be greater than the specified cache target length. In such case, the
-number of origin blocks should match the cache target length, not the
-full size of the origin device, since access beyond the cache target is
-not possible. This issue occurs when reducing the origin device size
-using lvm, as lvreduce preloads the new cache table before resuming the
-cache origin, which can result in incorrect sizes for the discard bitset
-and smq hotspot blocks.
+An unexpected WARN_ON from flush_work() may occur when cache creation
+fails, caused by destroying the uninitialized delayed_work waker in the
+error path of cache_create(). For example, the warning appears on the
+superblock checksum error.
 
 Reproduce steps:
-
-1. create a cache device consists of 4096 origin blocks
 
 dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
 dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
 dmsetup create corig --table "0 524288 linear /dev/sdc 262144"
-dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
+dd if=/dev/urandom of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
 dmsetup create cache --table "0 524288 cache /dev/mapper/cmeta \
 /dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
 
-2. reduce the cache origin to 2048 oblocks, in lvreduce's approach
+Kernel logs:
 
-dmsetup reload corig --table "0 262144 linear /dev/sdc 262144"
-dmsetup reload cache --table "0 262144 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
-dmsetup suspend cache
-dmsetup suspend corig
-dmsetup suspend cdata
-dmsetup suspend cmeta
-dmsetup resume corig
-dmsetup resume cdata
-dmsetup resume cmeta
-dmsetup resume cache
+(snip)
+WARNING: CPU: 0 PID: 84 at kernel/workqueue.c:4178 __flush_work+0x5d4/0x890
 
-3. shutdown the cache, and check the number of discard blocks in
-   superblock. The value is expected to be 2048, but actually is 4096.
-
-dmsetup remove cache corig cdata cmeta
-dd if=/dev/sdc bs=1c count=8 skip=224 2>/dev/null | hexdump -e '1/8 "%u\n"'
-
-Fix by correcting the origin_blocks initialization in cache_create and
-removing the unused origin_sectors from struct cache_args accordingly.
+Fix by pulling out the cancel_delayed_work_sync() from the constructor's
+error path. This patch doesn't affect the use-after-free fix for
+concurrent dm_resume and dm_destroy (commit 6a459d8edbdb ("dm cache: Fix
+UAF in destroy()")) as cache_dtr is not changed.
 
 Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Fixes: c6b4fcbad044 ("dm: add cache target")
+Fixes: 6a459d8edbdb ("dm cache: Fix UAF in destroy()")
 Cc: stable@vger.kernel.org
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Acked-by: Joe Thornber <thornber@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/md/dm-cache-target.c |   24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
 --- a/drivers/md/dm-cache-target.c
 +++ b/drivers/md/dm-cache-target.c
-@@ -2003,7 +2003,6 @@ struct cache_args {
- 	sector_t cache_sectors;
- 
- 	struct dm_dev *origin_dev;
--	sector_t origin_sectors;
- 
- 	uint32_t block_size;
- 
-@@ -2084,6 +2083,7 @@ static int parse_cache_dev(struct cache_
- static int parse_origin_dev(struct cache_args *ca, struct dm_arg_set *as,
- 			    char **error)
+@@ -1905,16 +1905,13 @@ static void check_migrations(struct work
+  * This function gets called on the error paths of the constructor, so we
+  * have to cope with a partially initialised struct.
+  */
+-static void destroy(struct cache *cache)
++static void __destroy(struct cache *cache)
  {
-+	sector_t origin_sectors;
- 	int r;
+-	unsigned int i;
+-
+ 	mempool_exit(&cache->migration_pool);
  
- 	if (!at_least_one_arg(as, error))
-@@ -2096,8 +2096,8 @@ static int parse_origin_dev(struct cache
- 		return r;
+ 	if (cache->prison)
+ 		dm_bio_prison_destroy_v2(cache->prison);
+ 
+-	cancel_delayed_work_sync(&cache->waker);
+ 	if (cache->wq)
+ 		destroy_workqueue(cache->wq);
+ 
+@@ -1942,13 +1939,22 @@ static void destroy(struct cache *cache)
+ 	if (cache->policy)
+ 		dm_cache_policy_destroy(cache->policy);
+ 
++	bioset_exit(&cache->bs);
++
++	kfree(cache);
++}
++
++static void destroy(struct cache *cache)
++{
++	unsigned int i;
++
++	cancel_delayed_work_sync(&cache->waker);
++
+ 	for (i = 0; i < cache->nr_ctr_args ; i++)
+ 		kfree(cache->ctr_args[i]);
+ 	kfree(cache->ctr_args);
+ 
+-	bioset_exit(&cache->bs);
+-
+-	kfree(cache);
++	__destroy(cache);
+ }
+ 
+ static void cache_dtr(struct dm_target *ti)
+@@ -2561,7 +2567,7 @@ static int cache_create(struct cache_arg
+ 	*result = cache;
+ 	return 0;
+ bad:
+-	destroy(cache);
++	__destroy(cache);
+ 	return r;
+ }
+ 
+@@ -2612,7 +2618,7 @@ static int cache_ctr(struct dm_target *t
+ 
+ 	r = copy_ctr_args(cache, argc - 3, (const char **)argv + 3);
+ 	if (r) {
+-		destroy(cache);
++		__destroy(cache);
+ 		goto out;
  	}
- 
--	ca->origin_sectors = get_dev_size(ca->origin_dev);
--	if (ca->ti->len > ca->origin_sectors) {
-+	origin_sectors = get_dev_size(ca->origin_dev);
-+	if (ca->ti->len > origin_sectors) {
- 		*error = "Device size larger than cached device";
- 		return -EINVAL;
- 	}
-@@ -2407,7 +2407,7 @@ static int cache_create(struct cache_arg
- 
- 	ca->metadata_dev = ca->origin_dev = ca->cache_dev = NULL;
- 
--	origin_blocks = cache->origin_sectors = ca->origin_sectors;
-+	origin_blocks = cache->origin_sectors = ti->len;
- 	origin_blocks = block_div(origin_blocks, ca->block_size);
- 	cache->origin_blocks = to_oblock(origin_blocks);
  
 
 
