@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDC620B20B;
-	Tue, 12 Nov 2024 10:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02EA214415;
+	Tue, 12 Nov 2024 10:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407151; cv=none; b=fr5BMm+oV9ICTWVrHTqw6QY1vnEfiDccgHbDwhCuROFvOPE4XyqJ3sc6v/9MiHa01aU9WdEhvrvgpKTK++HUVgamxnslO7Wqa7G1rC/9TS4CaVhFFepDlCvEJqToItlTv2/Wkh+/qzBzJhrVs4WyMHrYw83ujUpqDUeZGejTYRw=
+	t=1731407154; cv=none; b=lunDjkHWgLUsrqhns9L5STi3wbJwLuHQqQZIrIHGNH4TgcXoqPgvqug7lS3rJnvgXZSnc2943PAiFEkSeJdtT2cYPbPmBWAvcLB7nFP3/7S2GP4yG/KTS4vcIggfwhUHirdhRTz1v7DLVB46l7UxvdMrkIl9SxzJSUJPLtUYhzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407151; c=relaxed/simple;
-	bh=kBU/p1gc1jD9LdxX1pSrI7gRD8SEteYR+jUbn6wRuow=;
+	s=arc-20240116; t=1731407154; c=relaxed/simple;
+	bh=13V1uvSG3yyHlip6Or4DeDxAz8UAr9jjNEVJBdLx5Uc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQzEYz5VS/82HvhpeUFWnmFFWiRLjtQG5lCSC4e60vbiJIEHfT7VFwGFEwo7y3c3EsBSzdtNqLa4PTl34dZncsy29z0q71nS7dsbqot+yFAgvg07f/uxqOzK9dPHQHA38Bp3QZhj3OZ5ZfUhujQ5rMBuBTodhVsTZwBGWM+AeV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcLVOd6O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pejB6bQmvBmEx1YZzljavA+9kiOY/c3ROCPAt7KKgJjv8170T2q9QCy2wbkI3vUCJ8JMbzOq8MM2eofcT78VS9Gj3vEMnRNH5kYNzJcK8ADKLVpm+tDowUyYn4v46O/0J4gc964HaWzjmjU5DD4wLAVwekDHt86FAlsziy5Vj3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LqslLzg2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcLVOd6O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0ED2C4CED4;
-	Tue, 12 Nov 2024 10:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LqslLzg2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 110CBC4CED4;
+	Tue, 12 Nov 2024 10:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407151;
-	bh=kBU/p1gc1jD9LdxX1pSrI7gRD8SEteYR+jUbn6wRuow=;
+	s=korg; t=1731407154;
+	bh=13V1uvSG3yyHlip6Or4DeDxAz8UAr9jjNEVJBdLx5Uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DcLVOd6O0xdNM747SsMdWZ47050JIGOQi7ToOn0EtuC82+GOK7VoEJK+9pYupCV0h
-	 l0wLFGcQb2gzXog1J34MuekAxnhL4I0i9isbg9vdm88WcuWNvC5vrrPNpOZGI34yN0
-	 UJP+4i5TMUacQDvsxOlzq/rjdD6GHZ0laRKvhW6g=
+	b=LqslLzg2pzdUhDmnHOdHwBX0IECyo3Ht+Fcv35f9JSDkdttNslLjHNArpqNP8U145
+	 6v5BPXuW/wZaXqorUbdH2d26HAg4dWCLjtaM7LGouk116PAw2j1MFuPPckblGeht3B
+	 /Wq9feTdE+NPxaVtqeznpum8DtIQnrT2Qtf19FzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wu <david.wu@rock-chips.com>,
-	Johan Jonker <jbx6244@gmail.com>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 24/76] net: arc: fix the device for dma_map_single/dma_unmap_single
-Date: Tue, 12 Nov 2024 11:20:49 +0100
-Message-ID: <20241112101840.708585093@linuxfoundation.org>
+	Benoit Sevens <bsevens@google.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.15 59/76] media: uvcvideo: Skip parsing frames of type UVC_VS_UNDEFINED in uvc_parse_format
+Date: Tue, 12 Nov 2024 11:21:24 +0100
+Message-ID: <20241112101842.028586366@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -53,154 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: Benoit Sevens <bsevens@google.com>
 
-[ Upstream commit 71803c1dfa29e0d13b99e48fda11107cc8caebc7 ]
+commit ecf2b43018da9579842c774b7f35dbe11b5c38dd upstream.
 
-The ndev->dev and pdev->dev aren't the same device, use ndev->dev.parent
-which has dma_mask, ndev->dev.parent is just pdev->dev.
-Or it would cause the following issue:
+This can lead to out of bounds writes since frames of this type were not
+taken into account when calculating the size of the frames buffer in
+uvc_parse_streaming.
 
-[   39.933526] ------------[ cut here ]------------
-[   39.938414] WARNING: CPU: 1 PID: 501 at kernel/dma/mapping.c:149 dma_map_page_attrs+0x90/0x1f8
-
-Fixes: f959dcd6ddfd ("dma-direct: Fix potential NULL pointer dereference")
-Signed-off-by: David Wu <david.wu@rock-chips.com>
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c0efd232929c ("V4L/DVB (8145a): USB Video Class driver")
+Signed-off-by: Benoit Sevens <bsevens@google.com>
+Cc: stable@vger.kernel.org
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/arc/emac_main.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/arc/emac_main.c b/drivers/net/ethernet/arc/emac_main.c
-index 333333692caa5..bafa63e5ce252 100644
---- a/drivers/net/ethernet/arc/emac_main.c
-+++ b/drivers/net/ethernet/arc/emac_main.c
-@@ -111,6 +111,7 @@ static void arc_emac_tx_clean(struct net_device *ndev)
- {
- 	struct arc_emac_priv *priv = netdev_priv(ndev);
- 	struct net_device_stats *stats = &ndev->stats;
-+	struct device *dev = ndev->dev.parent;
- 	unsigned int i;
- 
- 	for (i = 0; i < TX_BD_NUM; i++) {
-@@ -140,7 +141,7 @@ static void arc_emac_tx_clean(struct net_device *ndev)
- 			stats->tx_bytes += skb->len;
- 		}
- 
--		dma_unmap_single(&ndev->dev, dma_unmap_addr(tx_buff, addr),
-+		dma_unmap_single(dev, dma_unmap_addr(tx_buff, addr),
- 				 dma_unmap_len(tx_buff, len), DMA_TO_DEVICE);
- 
- 		/* return the sk_buff to system */
-@@ -174,6 +175,7 @@ static void arc_emac_tx_clean(struct net_device *ndev)
- static int arc_emac_rx(struct net_device *ndev, int budget)
- {
- 	struct arc_emac_priv *priv = netdev_priv(ndev);
-+	struct device *dev = ndev->dev.parent;
- 	unsigned int work_done;
- 
- 	for (work_done = 0; work_done < budget; work_done++) {
-@@ -223,9 +225,9 @@ static int arc_emac_rx(struct net_device *ndev, int budget)
- 			continue;
- 		}
- 
--		addr = dma_map_single(&ndev->dev, (void *)skb->data,
-+		addr = dma_map_single(dev, (void *)skb->data,
- 				      EMAC_BUFFER_SIZE, DMA_FROM_DEVICE);
--		if (dma_mapping_error(&ndev->dev, addr)) {
-+		if (dma_mapping_error(dev, addr)) {
- 			if (net_ratelimit())
- 				netdev_err(ndev, "cannot map dma buffer\n");
- 			dev_kfree_skb(skb);
-@@ -237,7 +239,7 @@ static int arc_emac_rx(struct net_device *ndev, int budget)
- 		}
- 
- 		/* unmap previosly mapped skb */
--		dma_unmap_single(&ndev->dev, dma_unmap_addr(rx_buff, addr),
-+		dma_unmap_single(dev, dma_unmap_addr(rx_buff, addr),
- 				 dma_unmap_len(rx_buff, len), DMA_FROM_DEVICE);
- 
- 		pktlen = info & LEN_MASK;
-@@ -423,6 +425,7 @@ static int arc_emac_open(struct net_device *ndev)
- {
- 	struct arc_emac_priv *priv = netdev_priv(ndev);
- 	struct phy_device *phy_dev = ndev->phydev;
-+	struct device *dev = ndev->dev.parent;
- 	int i;
- 
- 	phy_dev->autoneg = AUTONEG_ENABLE;
-@@ -445,9 +448,9 @@ static int arc_emac_open(struct net_device *ndev)
- 		if (unlikely(!rx_buff->skb))
- 			return -ENOMEM;
- 
--		addr = dma_map_single(&ndev->dev, (void *)rx_buff->skb->data,
-+		addr = dma_map_single(dev, (void *)rx_buff->skb->data,
- 				      EMAC_BUFFER_SIZE, DMA_FROM_DEVICE);
--		if (dma_mapping_error(&ndev->dev, addr)) {
-+		if (dma_mapping_error(dev, addr)) {
- 			netdev_err(ndev, "cannot dma map\n");
- 			dev_kfree_skb(rx_buff->skb);
- 			return -ENOMEM;
-@@ -548,6 +551,7 @@ static void arc_emac_set_rx_mode(struct net_device *ndev)
- static void arc_free_tx_queue(struct net_device *ndev)
- {
- 	struct arc_emac_priv *priv = netdev_priv(ndev);
-+	struct device *dev = ndev->dev.parent;
- 	unsigned int i;
- 
- 	for (i = 0; i < TX_BD_NUM; i++) {
-@@ -555,7 +559,7 @@ static void arc_free_tx_queue(struct net_device *ndev)
- 		struct buffer_state *tx_buff = &priv->tx_buff[i];
- 
- 		if (tx_buff->skb) {
--			dma_unmap_single(&ndev->dev,
-+			dma_unmap_single(dev,
- 					 dma_unmap_addr(tx_buff, addr),
- 					 dma_unmap_len(tx_buff, len),
- 					 DMA_TO_DEVICE);
-@@ -579,6 +583,7 @@ static void arc_free_tx_queue(struct net_device *ndev)
- static void arc_free_rx_queue(struct net_device *ndev)
- {
- 	struct arc_emac_priv *priv = netdev_priv(ndev);
-+	struct device *dev = ndev->dev.parent;
- 	unsigned int i;
- 
- 	for (i = 0; i < RX_BD_NUM; i++) {
-@@ -586,7 +591,7 @@ static void arc_free_rx_queue(struct net_device *ndev)
- 		struct buffer_state *rx_buff = &priv->rx_buff[i];
- 
- 		if (rx_buff->skb) {
--			dma_unmap_single(&ndev->dev,
-+			dma_unmap_single(dev,
- 					 dma_unmap_addr(rx_buff, addr),
- 					 dma_unmap_len(rx_buff, len),
- 					 DMA_FROM_DEVICE);
-@@ -679,6 +684,7 @@ static netdev_tx_t arc_emac_tx(struct sk_buff *skb, struct net_device *ndev)
- 	unsigned int len, *txbd_curr = &priv->txbd_curr;
- 	struct net_device_stats *stats = &ndev->stats;
- 	__le32 *info = &priv->txbd[*txbd_curr].info;
-+	struct device *dev = ndev->dev.parent;
- 	dma_addr_t addr;
- 
- 	if (skb_padto(skb, ETH_ZLEN))
-@@ -692,10 +698,9 @@ static netdev_tx_t arc_emac_tx(struct sk_buff *skb, struct net_device *ndev)
- 		return NETDEV_TX_BUSY;
- 	}
- 
--	addr = dma_map_single(&ndev->dev, (void *)skb->data, len,
--			      DMA_TO_DEVICE);
-+	addr = dma_map_single(dev, (void *)skb->data, len, DMA_TO_DEVICE);
- 
--	if (unlikely(dma_mapping_error(&ndev->dev, addr))) {
-+	if (unlikely(dma_mapping_error(dev, addr))) {
- 		stats->tx_dropped++;
- 		stats->tx_errors++;
- 		dev_kfree_skb_any(skb);
--- 
-2.43.0
-
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -645,7 +645,7 @@ static int uvc_parse_format(struct uvc_d
+ 	/* Parse the frame descriptors. Only uncompressed, MJPEG and frame
+ 	 * based formats have frame descriptors.
+ 	 */
+-	while (buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE &&
++	while (ftype && buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE &&
+ 	       buffer[2] == ftype) {
+ 		frame = &format->frame[format->nframes];
+ 		if (ftype != UVC_VS_FRAME_FRAME_BASED)
 
 
