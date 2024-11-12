@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B9619E992;
-	Tue, 12 Nov 2024 10:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BA220DD62;
+	Tue, 12 Nov 2024 10:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407672; cv=none; b=Tv3vMbMZjhU7ip89uIQXqpCnuOi9Sem+Lo/h0gUz4w/ALRrBHlaB2lsaoCBBMWnsSDmZuKRwh3z0tMR/yFTczzdBquloA+nhCvN7MvXCcbmbCbA38RWMOgpCBCPNatooAVYpVe46EAvoxWBH1ZMiE3AnstzZHTIh3tFgsJoV8to=
+	t=1731407675; cv=none; b=gfnM4ugnYYKEDTOhcU0U5y4XgZkYXVq8SR8iAgw/HAwpOy7zUHeMYYvqMsEwi81Va2S1TirInPx3lPCjjVRJhlVzkKGbnlR5bKhPNwlnIBKVoTZfHkKLpL3Ex+gvNbl9wyQnFs8oeL8xvbY8A/VxhgGd/l2UtEOx3bs22Xydjo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407672; c=relaxed/simple;
-	bh=20BQj+7Qw+x+3gGJYqBCXee8f0le+DSpxohzUzAuwkQ=;
+	s=arc-20240116; t=1731407675; c=relaxed/simple;
+	bh=ytp7kXlpAtqB9urT6gy4YaIy74UXy/ZM6dsuviAjRwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ojzVxfGbFigch5gHThUvDCjRoElinf3by0Vf9blO9KPmyGJrkXoMI9eMZMvvV133SJSAVUy9ymfwFKKygU1w+Pj0aiR82rjCPVBJT4kKr/S9RGoEDbsewNGMbBldnOjM4lmU/pzrMc9D/adQd0aZOVk+g+U7pZyxDGWurQ5Zzvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/b953Zs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mxOBjxHh1aj/L/gketJ5ynjceVNU6Jc2OuFWvXioWk2Pi5EpF3lJVBgAJv8kQFZ6FQl/p5UeSZYg4Wtp2ol1UvuZvMafEWXr36JbSkI/+3vai1VEe2PcgEqz3phnq0J2HYIiadCcQ1U1hhGAg39JR7dYR6hiCnhIioSAuV6NSLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEfHcUz0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/b953Zs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1DFC4CECD;
-	Tue, 12 Nov 2024 10:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEfHcUz0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3EFC4CED4;
+	Tue, 12 Nov 2024 10:34:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407672;
-	bh=20BQj+7Qw+x+3gGJYqBCXee8f0le+DSpxohzUzAuwkQ=;
+	s=korg; t=1731407675;
+	bh=ytp7kXlpAtqB9urT6gy4YaIy74UXy/ZM6dsuviAjRwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t/b953Zsw8qMbWZmr0HP5iDk7KU0opqPDoqxconSDYn8WH46tuaY4ppjrc5wWBahR
-	 c1SHsEy0WquRunRCy0KxcjuXpnljUuot/F+zxevXumwDxVm17CI2mtjb5garMCLFOU
-	 0ot7JCQyWm94/GrTGeFb0Aj5TlmRJlZoMuC30514=
+	b=QEfHcUz0CyimjX0QDYdz1jylXkSVOYdnKVvfJE0YEcC4kh8Yz68CF4aUOAKCjCy2B
+	 4kfly06LtXZHcTlfNuVJfFMh/feJBxsC3d1tyG6SlkU1S0qwTC2rlBQoeQ7ysyZ6mu
+	 co1OwsaAbaN/KtmtxA0i04SKaBJ7ietRpfeoZjA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Jonker <jbx6244@gmail.com>,
-	Andy Yan <andyshrk@163.com>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	linux-afs@lists.infradead.org,
+	Marc Dionne <marc.dionne@auristor.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/119] net: arc: rockchip: fix emac mdio node support
-Date: Tue, 12 Nov 2024 11:20:55 +0100
-Message-ID: <20241112101850.515345091@linuxfoundation.org>
+Subject: [PATCH 6.6 048/119] rxrpc: Fix missing locking causing hanging calls
+Date: Tue, 12 Nov 2024 11:20:56 +0100
+Message-ID: <20241112101850.552175902@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -54,56 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 0a1c7a7b0adbf595ce7f218609db53749e966573 ]
+[ Upstream commit fc9de52de38f656399d2ce40f7349a6b5f86e787 ]
 
-The binding emac_rockchip.txt is converted to YAML.
-Changed against the original binding is an added MDIO subnode.
-This make the driver failed to find the PHY, and given the 'mdio
-has invalid PHY address' it is probably looking in the wrong node.
-Fix emac_mdio.c so that it can handle both old and new
-device trees.
+If a call gets aborted (e.g. because kafs saw a signal) between it being
+queued for connection and the I/O thread picking up the call, the abort
+will be prioritised over the connection and it will be removed from
+local->new_client_calls by rxrpc_disconnect_client_call() without a lock
+being held.  This may cause other calls on the list to disappear if a race
+occurs.
 
-Fixes: 1dabb74971b3 ("ARM: dts: rockchip: restyle emac nodes")
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Tested-by: Andy Yan <andyshrk@163.com>
-Link: https://lore.kernel.org/r/20220603163539.537-3-jbx6244@gmail.com
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix this by taking the client_call_lock when removing a call from whatever
+list its ->wait_link happens to be on.
+
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: linux-afs@lists.infradead.org
+Reported-by: Marc Dionne <marc.dionne@auristor.com>
+Fixes: 9d35d880e0e4 ("rxrpc: Move client call connection to the I/O thread")
+Link: https://patch.msgid.link/726660.1730898202@warthog.procyon.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/arc/emac_mdio.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ include/trace/events/rxrpc.h | 1 +
+ net/rxrpc/conn_client.c      | 4 ++++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/arc/emac_mdio.c b/drivers/net/ethernet/arc/emac_mdio.c
-index 87f40c2ba9040..078b1a72c1613 100644
---- a/drivers/net/ethernet/arc/emac_mdio.c
-+++ b/drivers/net/ethernet/arc/emac_mdio.c
-@@ -133,6 +133,7 @@ int arc_mdio_probe(struct arc_emac_priv *priv)
- 	struct arc_emac_mdio_bus_data *data = &priv->bus_data;
- 	struct device_node *np = priv->dev->of_node;
- 	const char *name = "Synopsys MII Bus";
-+	struct device_node *mdio_node;
- 	struct mii_bus *bus;
- 	int error;
+diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
+index 3322fb93a260b..ed36f5f577a9d 100644
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -283,6 +283,7 @@
+ 	EM(rxrpc_call_see_input,		"SEE input   ") \
+ 	EM(rxrpc_call_see_release,		"SEE release ") \
+ 	EM(rxrpc_call_see_userid_exists,	"SEE u-exists") \
++	EM(rxrpc_call_see_waiting_call,		"SEE q-conn  ") \
+ 	E_(rxrpc_call_see_zap,			"SEE zap     ")
  
-@@ -164,7 +165,13 @@ int arc_mdio_probe(struct arc_emac_priv *priv)
+ #define rxrpc_txqueue_traces \
+diff --git a/net/rxrpc/conn_client.c b/net/rxrpc/conn_client.c
+index 1d95f8bc769fa..a0231b64fb6ef 100644
+--- a/net/rxrpc/conn_client.c
++++ b/net/rxrpc/conn_client.c
+@@ -507,6 +507,7 @@ void rxrpc_connect_client_calls(struct rxrpc_local *local)
  
- 	snprintf(bus->id, MII_BUS_ID_SIZE, "%s", bus->name);
+ 		spin_lock(&local->client_call_lock);
+ 		list_move_tail(&call->wait_link, &bundle->waiting_calls);
++		rxrpc_see_call(call, rxrpc_call_see_waiting_call);
+ 		spin_unlock(&local->client_call_lock);
  
--	error = of_mdiobus_register(bus, priv->dev->of_node);
-+	/* Backwards compatibility for EMAC nodes without MDIO subnode. */
-+	mdio_node = of_get_child_by_name(np, "mdio");
-+	if (!mdio_node)
-+		mdio_node = of_node_get(np);
-+
-+	error = of_mdiobus_register(bus, mdio_node);
-+	of_node_put(mdio_node);
- 	if (error) {
- 		mdiobus_free(bus);
- 		return dev_err_probe(priv->dev, error,
+ 		if (rxrpc_bundle_has_space(bundle))
+@@ -577,7 +578,10 @@ void rxrpc_disconnect_client_call(struct rxrpc_bundle *bundle, struct rxrpc_call
+ 		_debug("call is waiting");
+ 		ASSERTCMP(call->call_id, ==, 0);
+ 		ASSERT(!test_bit(RXRPC_CALL_EXPOSED, &call->flags));
++		/* May still be on ->new_client_calls. */
++		spin_lock(&local->client_call_lock);
+ 		list_del_init(&call->wait_link);
++		spin_unlock(&local->client_call_lock);
+ 		return;
+ 	}
+ 
 -- 
 2.43.0
 
