@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F782139B1;
-	Tue, 12 Nov 2024 10:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDC620B20B;
+	Tue, 12 Nov 2024 10:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407148; cv=none; b=UQrbxx/M74IjDf678lhAD6wCwMlYNaJT06y97aVlYyo3r9oJPefxoM4DPsnTOBufH/aFURKAkCuFaqd45t9DIcVN1DelSmLFM1HBJm46BQeRwEzWglR/F2h9aASBG256XzYWroQ8cWe2nkWJcar6a/LC0Um6Tya9Szwg0Ch/LHc=
+	t=1731407151; cv=none; b=fr5BMm+oV9ICTWVrHTqw6QY1vnEfiDccgHbDwhCuROFvOPE4XyqJ3sc6v/9MiHa01aU9WdEhvrvgpKTK++HUVgamxnslO7Wqa7G1rC/9TS4CaVhFFepDlCvEJqToItlTv2/Wkh+/qzBzJhrVs4WyMHrYw83ujUpqDUeZGejTYRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407148; c=relaxed/simple;
-	bh=EIhbh6XRwO/woSBIqFX+OUE3FB7XGCxGYtTib+UmWic=;
+	s=arc-20240116; t=1731407151; c=relaxed/simple;
+	bh=kBU/p1gc1jD9LdxX1pSrI7gRD8SEteYR+jUbn6wRuow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YkE20TjHTt22P4bLB9S2EqBlxATc9ZtwsXm0Yx7UxH51EF0cM6F/pcSRz3cNGdqIp/1XmZ6djpTmT6KgwSpkNuRlIDbCQUumEr5986Ik5K/f+ZGHAd/FQWZ9JrEq979PeJOMbs7fgIDFo5pgpUDZrSU5Y0a1tZdoQaxeR16Dutk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUJhgENO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lQzEYz5VS/82HvhpeUFWnmFFWiRLjtQG5lCSC4e60vbiJIEHfT7VFwGFEwo7y3c3EsBSzdtNqLa4PTl34dZncsy29z0q71nS7dsbqot+yFAgvg07f/uxqOzK9dPHQHA38Bp3QZhj3OZ5ZfUhujQ5rMBuBTodhVsTZwBGWM+AeV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DcLVOd6O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUJhgENO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0AFC4CED6;
-	Tue, 12 Nov 2024 10:25:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DcLVOd6O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0ED2C4CED4;
+	Tue, 12 Nov 2024 10:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407147;
-	bh=EIhbh6XRwO/woSBIqFX+OUE3FB7XGCxGYtTib+UmWic=;
+	s=korg; t=1731407151;
+	bh=kBU/p1gc1jD9LdxX1pSrI7gRD8SEteYR+jUbn6wRuow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SUJhgENOWHhZ+zR3qOmJbE6FUcC3VBOfb7EiWM+bQaVm2kGkp658+T1WuGLkBY+Rx
-	 4+I6fZDFkZ3yXzSSkmqfWPxFVP8jpNdaBRLcfHSCtaToTfTgADKqtpak867YE9+LgQ
-	 G7Zvfx1IBNRPakLlJGKsZVIM9cWG/CMoFn57iVv0=
+	b=DcLVOd6O0xdNM747SsMdWZ47050JIGOQi7ToOn0EtuC82+GOK7VoEJK+9pYupCV0h
+	 l0wLFGcQb2gzXog1J34MuekAxnhL4I0i9isbg9vdm88WcuWNvC5vrrPNpOZGI34yN0
+	 UJP+4i5TMUacQDvsxOlzq/rjdD6GHZ0laRKvhW6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Jacek Anaszewski <jacek.anaszewski@gmail.com>
-Subject: [PATCH 5.15 33/76] media: s5p-jpeg: prevent buffer overflows
-Date: Tue, 12 Nov 2024 11:20:58 +0100
-Message-ID: <20241112101841.048924307@linuxfoundation.org>
+	David Wu <david.wu@rock-chips.com>,
+	Johan Jonker <jbx6244@gmail.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 24/76] net: arc: fix the device for dma_map_single/dma_unmap_single
+Date: Tue, 12 Nov 2024 11:20:49 +0100
+Message-ID: <20241112101840.708585093@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -50,87 +53,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Johan Jonker <jbx6244@gmail.com>
 
-commit 14a22762c3daeac59a5a534e124acbb4d7a79b3a upstream.
+[ Upstream commit 71803c1dfa29e0d13b99e48fda11107cc8caebc7 ]
 
-The current logic allows word to be less than 2. If this happens,
-there will be buffer overflows, as reported by smatch. Add extra
-checks to prevent it.
+The ndev->dev and pdev->dev aren't the same device, use ndev->dev.parent
+which has dma_mask, ndev->dev.parent is just pdev->dev.
+Or it would cause the following issue:
 
-While here, remove an unused word = 0 assignment.
+[   39.933526] ------------[ cut here ]------------
+[   39.938414] WARNING: CPU: 1 PID: 501 at kernel/dma/mapping.c:149 dma_map_page_attrs+0x90/0x1f8
 
-Fixes: 6c96dbbc2aa9 ("[media] s5p-jpeg: add support for 5433")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jacek Anaszewski <jacek.anaszewski@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f959dcd6ddfd ("dma-direct: Fix potential NULL pointer dereference")
+Signed-off-by: David Wu <david.wu@rock-chips.com>
+Signed-off-by: Johan Jonker <jbx6244@gmail.com>
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/s5p-jpeg/jpeg-core.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/arc/emac_main.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
---- a/drivers/media/platform/s5p-jpeg/jpeg-core.c
-+++ b/drivers/media/platform/s5p-jpeg/jpeg-core.c
-@@ -775,11 +775,14 @@ static void exynos4_jpeg_parse_decode_h_
- 		(unsigned long)vb2_plane_vaddr(&vb->vb2_buf, 0) + ctx->out_q.sos + 2;
- 	jpeg_buffer.curr = 0;
+diff --git a/drivers/net/ethernet/arc/emac_main.c b/drivers/net/ethernet/arc/emac_main.c
+index 333333692caa5..bafa63e5ce252 100644
+--- a/drivers/net/ethernet/arc/emac_main.c
++++ b/drivers/net/ethernet/arc/emac_main.c
+@@ -111,6 +111,7 @@ static void arc_emac_tx_clean(struct net_device *ndev)
+ {
+ 	struct arc_emac_priv *priv = netdev_priv(ndev);
+ 	struct net_device_stats *stats = &ndev->stats;
++	struct device *dev = ndev->dev.parent;
+ 	unsigned int i;
  
--	word = 0;
--
- 	if (get_word_be(&jpeg_buffer, &word))
- 		return;
--	jpeg_buffer.size = (long)word - 2;
-+
-+	if (word < 2)
-+		jpeg_buffer.size = 0;
-+	else
-+		jpeg_buffer.size = (long)word - 2;
-+
- 	jpeg_buffer.data += 2;
- 	jpeg_buffer.curr = 0;
- 
-@@ -1058,6 +1061,7 @@ static int get_word_be(struct s5p_jpeg_b
- 	if (byte == -1)
- 		return -1;
- 	*word = (unsigned int)byte | temp;
-+
- 	return 0;
- }
- 
-@@ -1145,7 +1149,7 @@ static bool s5p_jpeg_parse_hdr(struct s5
- 			if (get_word_be(&jpeg_buffer, &word))
- 				break;
- 			length = (long)word - 2;
--			if (!length)
-+			if (length <= 0)
- 				return false;
- 			sof = jpeg_buffer.curr; /* after 0xffc0 */
- 			sof_len = length;
-@@ -1176,7 +1180,7 @@ static bool s5p_jpeg_parse_hdr(struct s5
- 			if (get_word_be(&jpeg_buffer, &word))
- 				break;
- 			length = (long)word - 2;
--			if (!length)
-+			if (length <= 0)
- 				return false;
- 			if (n_dqt >= S5P_JPEG_MAX_MARKER)
- 				return false;
-@@ -1189,7 +1193,7 @@ static bool s5p_jpeg_parse_hdr(struct s5
- 			if (get_word_be(&jpeg_buffer, &word))
- 				break;
- 			length = (long)word - 2;
--			if (!length)
-+			if (length <= 0)
- 				return false;
- 			if (n_dht >= S5P_JPEG_MAX_MARKER)
- 				return false;
-@@ -1214,6 +1218,7 @@ static bool s5p_jpeg_parse_hdr(struct s5
- 			if (get_word_be(&jpeg_buffer, &word))
- 				break;
- 			length = (long)word - 2;
-+			/* No need to check underflows as skip() does it  */
- 			skip(&jpeg_buffer, length);
- 			break;
+ 	for (i = 0; i < TX_BD_NUM; i++) {
+@@ -140,7 +141,7 @@ static void arc_emac_tx_clean(struct net_device *ndev)
+ 			stats->tx_bytes += skb->len;
  		}
+ 
+-		dma_unmap_single(&ndev->dev, dma_unmap_addr(tx_buff, addr),
++		dma_unmap_single(dev, dma_unmap_addr(tx_buff, addr),
+ 				 dma_unmap_len(tx_buff, len), DMA_TO_DEVICE);
+ 
+ 		/* return the sk_buff to system */
+@@ -174,6 +175,7 @@ static void arc_emac_tx_clean(struct net_device *ndev)
+ static int arc_emac_rx(struct net_device *ndev, int budget)
+ {
+ 	struct arc_emac_priv *priv = netdev_priv(ndev);
++	struct device *dev = ndev->dev.parent;
+ 	unsigned int work_done;
+ 
+ 	for (work_done = 0; work_done < budget; work_done++) {
+@@ -223,9 +225,9 @@ static int arc_emac_rx(struct net_device *ndev, int budget)
+ 			continue;
+ 		}
+ 
+-		addr = dma_map_single(&ndev->dev, (void *)skb->data,
++		addr = dma_map_single(dev, (void *)skb->data,
+ 				      EMAC_BUFFER_SIZE, DMA_FROM_DEVICE);
+-		if (dma_mapping_error(&ndev->dev, addr)) {
++		if (dma_mapping_error(dev, addr)) {
+ 			if (net_ratelimit())
+ 				netdev_err(ndev, "cannot map dma buffer\n");
+ 			dev_kfree_skb(skb);
+@@ -237,7 +239,7 @@ static int arc_emac_rx(struct net_device *ndev, int budget)
+ 		}
+ 
+ 		/* unmap previosly mapped skb */
+-		dma_unmap_single(&ndev->dev, dma_unmap_addr(rx_buff, addr),
++		dma_unmap_single(dev, dma_unmap_addr(rx_buff, addr),
+ 				 dma_unmap_len(rx_buff, len), DMA_FROM_DEVICE);
+ 
+ 		pktlen = info & LEN_MASK;
+@@ -423,6 +425,7 @@ static int arc_emac_open(struct net_device *ndev)
+ {
+ 	struct arc_emac_priv *priv = netdev_priv(ndev);
+ 	struct phy_device *phy_dev = ndev->phydev;
++	struct device *dev = ndev->dev.parent;
+ 	int i;
+ 
+ 	phy_dev->autoneg = AUTONEG_ENABLE;
+@@ -445,9 +448,9 @@ static int arc_emac_open(struct net_device *ndev)
+ 		if (unlikely(!rx_buff->skb))
+ 			return -ENOMEM;
+ 
+-		addr = dma_map_single(&ndev->dev, (void *)rx_buff->skb->data,
++		addr = dma_map_single(dev, (void *)rx_buff->skb->data,
+ 				      EMAC_BUFFER_SIZE, DMA_FROM_DEVICE);
+-		if (dma_mapping_error(&ndev->dev, addr)) {
++		if (dma_mapping_error(dev, addr)) {
+ 			netdev_err(ndev, "cannot dma map\n");
+ 			dev_kfree_skb(rx_buff->skb);
+ 			return -ENOMEM;
+@@ -548,6 +551,7 @@ static void arc_emac_set_rx_mode(struct net_device *ndev)
+ static void arc_free_tx_queue(struct net_device *ndev)
+ {
+ 	struct arc_emac_priv *priv = netdev_priv(ndev);
++	struct device *dev = ndev->dev.parent;
+ 	unsigned int i;
+ 
+ 	for (i = 0; i < TX_BD_NUM; i++) {
+@@ -555,7 +559,7 @@ static void arc_free_tx_queue(struct net_device *ndev)
+ 		struct buffer_state *tx_buff = &priv->tx_buff[i];
+ 
+ 		if (tx_buff->skb) {
+-			dma_unmap_single(&ndev->dev,
++			dma_unmap_single(dev,
+ 					 dma_unmap_addr(tx_buff, addr),
+ 					 dma_unmap_len(tx_buff, len),
+ 					 DMA_TO_DEVICE);
+@@ -579,6 +583,7 @@ static void arc_free_tx_queue(struct net_device *ndev)
+ static void arc_free_rx_queue(struct net_device *ndev)
+ {
+ 	struct arc_emac_priv *priv = netdev_priv(ndev);
++	struct device *dev = ndev->dev.parent;
+ 	unsigned int i;
+ 
+ 	for (i = 0; i < RX_BD_NUM; i++) {
+@@ -586,7 +591,7 @@ static void arc_free_rx_queue(struct net_device *ndev)
+ 		struct buffer_state *rx_buff = &priv->rx_buff[i];
+ 
+ 		if (rx_buff->skb) {
+-			dma_unmap_single(&ndev->dev,
++			dma_unmap_single(dev,
+ 					 dma_unmap_addr(rx_buff, addr),
+ 					 dma_unmap_len(rx_buff, len),
+ 					 DMA_FROM_DEVICE);
+@@ -679,6 +684,7 @@ static netdev_tx_t arc_emac_tx(struct sk_buff *skb, struct net_device *ndev)
+ 	unsigned int len, *txbd_curr = &priv->txbd_curr;
+ 	struct net_device_stats *stats = &ndev->stats;
+ 	__le32 *info = &priv->txbd[*txbd_curr].info;
++	struct device *dev = ndev->dev.parent;
+ 	dma_addr_t addr;
+ 
+ 	if (skb_padto(skb, ETH_ZLEN))
+@@ -692,10 +698,9 @@ static netdev_tx_t arc_emac_tx(struct sk_buff *skb, struct net_device *ndev)
+ 		return NETDEV_TX_BUSY;
+ 	}
+ 
+-	addr = dma_map_single(&ndev->dev, (void *)skb->data, len,
+-			      DMA_TO_DEVICE);
++	addr = dma_map_single(dev, (void *)skb->data, len, DMA_TO_DEVICE);
+ 
+-	if (unlikely(dma_mapping_error(&ndev->dev, addr))) {
++	if (unlikely(dma_mapping_error(dev, addr))) {
+ 		stats->tx_dropped++;
+ 		stats->tx_errors++;
+ 		dev_kfree_skb_any(skb);
+-- 
+2.43.0
+
 
 
