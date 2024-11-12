@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9412123F5;
-	Tue, 12 Nov 2024 10:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF5F2123F3;
+	Tue, 12 Nov 2024 10:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407996; cv=none; b=BMLY0XnnUHXhCw+pQcj/MuRTUesnWt69SApF8/t7PQFvgxUSjocP10SQjVWn16NUOlsif+rm0XWy9xSyWEu/d1G38gY2SuJUHvd+hF8/iWI6wcWJ5+ehBQXi0Ob6e611KUsqq8RlHOS4OfHaZiRB07HNFe2nJ1f5slUiZ/B9RXo=
+	t=1731407999; cv=none; b=ks1uUn6u220l2gsNX3LW1Vz/HRsxr6/mpIIggScg2tgjQ7lyjIttb+AGFtuDvZs+15S+yXdkr9YLqyao6IAn3gfYN1hCqmM8nVzTVgSOM4flpobmLQUWQCOZq07/8+ie0Tg0YWo/YaT0YBKRsrRWxiKVeQUQ1unN41P5TfeiD+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407996; c=relaxed/simple;
-	bh=LiGdhCOaunIWvxyzbIjkAHuUyGnK8Qem+2TNKRaqME4=;
+	s=arc-20240116; t=1731407999; c=relaxed/simple;
+	bh=IQoWrY7WfLv2TQtT2aR8Z7Ya/fCj8Z5AA7DXqd3gyvU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IP5v3iOet+VGcVZEqLlkA7s+JBjLl2dkTl+jcUYzFVY0/58TunVM+q1bfVdl8m/USgpoQj/DfOhtdI+91GjtBWU52cL08c+yo25BuaO9zNDbzDJbWB9NXk1Bc+jpx8OkBn9XycilC6X9JJ71hhqLp1WofjkrJcM2QRppVcV22Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9BjFjP2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g0KpPnfkV70DGlQKDNMm68vhm+3/iJ3Pec1P+1CVjASXB0KFVvwFUk+WjCd0HsFPzier/HAujorTV/lHvHVbHJZ+71zqx5bmScC4wEJ6WJ//nnoBffyMRTv/BPwoBULyXYrRIF2Jtze01IoQDqX53xHirYeYRAc4NZeeFoLqPgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DWnMie1O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9BjFjP2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06C6C4CED4;
-	Tue, 12 Nov 2024 10:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DWnMie1O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8365C4CECD;
+	Tue, 12 Nov 2024 10:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407996;
-	bh=LiGdhCOaunIWvxyzbIjkAHuUyGnK8Qem+2TNKRaqME4=;
+	s=korg; t=1731407999;
+	bh=IQoWrY7WfLv2TQtT2aR8Z7Ya/fCj8Z5AA7DXqd3gyvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U9BjFjP2lb+rR7h8bo371geaByD5Ggwr8WtqLwJ8CuImasGvV2UpS6cfeRAGEDXRU
-	 McdN/sdaTIQotQPCvxN+7r5l1yoICSdSC+e+MpDU/C2QQdBW6v0dMVOXWaUAno5Wj0
-	 cF1xlP+26J9YxGRfO+C0W5/qiSuSjXRqqQ58mG/A=
+	b=DWnMie1OyW6f9Q6Cd6rpMB5Zi1q10z+aGqlUxbmNTgaOq/nVh6hhbp9QV1lUP+m6y
+	 Kw2fcGbVuV8fsyDmmB61gELUNHmgWgaqQw/oss01qV7FqXUL9njP+eQ2rmpDzR12OW
+	 0l7E8+OLGwmOhpFnFkDccNuCxu4UKT0srTzgLHLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Edwards <CFSworks@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Rudraksha Gupta <guptarud@gmail.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Kuldeep Singh <quic_kuldsing@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 005/184] arm64: dts: rockchip: Designate Turing RK1s system power controller
-Date: Tue, 12 Nov 2024 11:19:23 +0100
-Message-ID: <20241112101901.076476595@linuxfoundation.org>
+Subject: [PATCH 6.11 006/184] firmware: qcom: scm: fix a NULL-pointer dereference
+Date: Tue, 12 Nov 2024 11:19:24 +0100
+Message-ID: <20241112101901.115325013@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -51,36 +56,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Edwards <cfsworks@gmail.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 875ea82c75f56697fa500f30fabaa49f82f9b229 ]
+[ Upstream commit ca61d6836e6f4442a77762e1074d2706a2a6e578 ]
 
-Currently, the Turing RK1 board reboots when told to power off.
+Some SCM calls can be invoked with __scm being NULL (the driver may not
+have been and will not be probed as there's no SCM entry in device-tree).
+Make sure we don't dereference a NULL pointer.
 
-Resolve this by designating the RK806 as the system power controller, so
-that the relevant driver can handle system shutdown requests.
-
-Fixes: 2806a69f3fef ("arm64: dts: rockchip: Add Turing RK1 SoM support")
-Signed-off-by: Sam Edwards <CFSworks@gmail.com>
-Link: https://lore.kernel.org/r/20240912180148.205957-1-CFSworks@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 449d0d84bcd8 ("firmware: qcom: scm: smc: switch to using the SCM allocator")
+Reported-by: Rudraksha Gupta <guptarud@gmail.com>
+Closes: https://lore.kernel.org/lkml/692cfe9a-8c05-4ce4-813e-82b3f310019a@gmail.com/
+Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
+Tested-by: Rudraksha Gupta <guptarud@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
+Link: https://lore.kernel.org/r/20240930083328.17904-1-brgl@bgdev.pl
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588-turing-rk1.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/qcom/qcom_scm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588-turing-rk1.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-turing-rk1.dtsi
-index dbaa94ca69f47..432133251e318 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588-turing-rk1.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-turing-rk1.dtsi
-@@ -296,6 +296,7 @@
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pmic_pins>, <&rk806_dvs1_null>,
- 			    <&rk806_dvs2_null>, <&rk806_dvs3_null>;
-+		system-power-controller;
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 0f5ac346bda43..a50d8e8d0f1b8 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -207,7 +207,7 @@ static DEFINE_SPINLOCK(scm_query_lock);
  
- 		vcc1-supply = <&vcc5v0_sys>;
- 		vcc2-supply = <&vcc5v0_sys>;
+ struct qcom_tzmem_pool *qcom_scm_get_tzmem_pool(void)
+ {
+-	return __scm->mempool;
++	return __scm ? __scm->mempool : NULL;
+ }
+ 
+ static enum qcom_scm_convention __get_convention(void)
 -- 
 2.43.0
 
