@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F6021A4A8;
-	Tue, 12 Nov 2024 10:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E4121A4BB;
+	Tue, 12 Nov 2024 10:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408400; cv=none; b=CDw0yKr7KCdMA0DtB1djowu9g3gE6eXGqFe5BY5Oe62RaoJqaaif8RC4R0V3Xdsy8FKNpAqGDBrEy4+JHpaNE+nDwP9kkJL4GtrfJdaQyyKRgFJld+1r3GmxH9vkKol69GXE8taUs7rLxsd2z13QMhxh5Y4wpi7JwHtLrd/ELwE=
+	t=1731408403; cv=none; b=PIYuSB2Ia808p1ckQ7zE48SqMl2QoZLUDe7DnJNrCoEDd7nFfDAQfuUIvmIwpjNHgsXCW96VIqyj6bmGyfHBVrmjGobero8mjVR8OgyCWnMR2+d90nURjAfnbo1GX3A4deYd8zD/Sb/GPYMVTTsyRkwb/9IjJLLPiY7asGQsCPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408400; c=relaxed/simple;
-	bh=s6cUf99GOkXMAXBJ8ooIT7bW42cVL4ZpH9sQ9MYJ9vQ=;
+	s=arc-20240116; t=1731408403; c=relaxed/simple;
+	bh=zlSHJPiFuBuRZcSjITiMaWvHjN8rI86nelzCpU6UiB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mvV9yUfRz8jisvNCu7+ANde4bTh9yxYinKNs3KEiLm3ZdfZiL60/hBCVpnM+N8oMK0Uy+PEiLOuKNnHLHdJc0e1TmcOsWD5MZbBmOZGC2L8+vYgVY+Sogfjf5QX6aOgZn4yjEuLHh7g8jqLEEHPoNuETUSm11/HZanqCHRgTSwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LEyamfd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tfc2YbIkY1v3cRvrquLXdp0rZ0WtteC3td6X6/atcH+fjeaRifqsgwaPdfCIaZQOQD4Vkb5D9e/L6qscBHj25ydkIuoAX7ZgW8P2F2ad5CTNnfZ2FG3p7CDmt1HeAjzDZWk5SJCY0iMh4ifuUJQYF1OzqfyrsqkrPJsbysBe8E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ktD0Jw6e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LEyamfd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7C42C4CECD;
-	Tue, 12 Nov 2024 10:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ktD0Jw6e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89F8C4CECD;
+	Tue, 12 Nov 2024 10:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408400;
-	bh=s6cUf99GOkXMAXBJ8ooIT7bW42cVL4ZpH9sQ9MYJ9vQ=;
+	s=korg; t=1731408403;
+	bh=zlSHJPiFuBuRZcSjITiMaWvHjN8rI86nelzCpU6UiB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1LEyamfd5JTXdflBRaKKYzGKBc/3q4AkB2R0chwUnAHkRRx9IKLZ/L0Wlvebi2+/g
-	 mznzZhxa1R4KE/0d14ac9BULy9j8qP6zzhCwCgBLUySHl37CBiguK3gt/SzzE5meBr
-	 cK8f+0N6LGWjSZGDYUrlJZJ5ba0b5nyW6mnEM2EQ=
+	b=ktD0Jw6ePSXu7BprnPznPdepKrMbV1yOXcmPPyuBXnS6HsLnpl0QHb3oeaxKIitVQ
+	 /NxlvG28Vhy+yhZsd/7ySKXml0LlDqrcCMwWMAqSd3e2aX0yeSGIfBWsscDzsFa654
+	 9EP0M9dH3RpzbxkRt5PRTpNdNylkIxZdVIZBqWXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	SeongJae Park <sj@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 150/184] mm/damon/core: avoid overflow in damon_feed_loop_next_input()
-Date: Tue, 12 Nov 2024 11:21:48 +0100
-Message-ID: <20241112101906.626013119@linuxfoundation.org>
+Subject: [PATCH 6.11 151/184] mm/damon/core: handle zero {aggregation,ops_update} intervals
+Date: Tue, 12 Nov 2024 11:21:49 +0100
+Message-ID: <20241112101906.665579273@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -53,73 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 From: SeongJae Park <sj@kernel.org>
 
-commit 4401e9d10ab0281a520b9f8c220f30f60b5c248f upstream.
+commit 3488af0970445ff5532c7e8dc5e6456b877aee5e upstream.
 
-damon_feed_loop_next_input() is inefficient and fragile to overflows.
-Specifically, 'score_goal_diff_bp' calculation can overflow when 'score'
-is high.  The calculation is actually unnecessary at all because 'goal' is
-a constant of value 10,000.  Calculation of 'compensation' is again
-fragile to overflow.  Final calculation of return value for under-achiving
-case is again fragile to overflow when the current score is
-under-achieving the target.
+Patch series "mm/damon/core: fix handling of zero non-sampling intervals".
 
-Add two corner cases handling at the beginning of the function to make the
-body easier to read, and rewrite the body of the function to avoid
-overflows and the unnecessary bp value calcuation.
+DAMON's internal intervals accounting logic is not correctly handling
+non-sampling intervals of zero values for a wrong assumption.  This could
+cause unexpected monitoring behavior, and even result in infinite hang of
+DAMON sysfs interface user threads in case of zero aggregation interval.
+Fix those by updating the intervals accounting logic.  For details of the
+root case and solutions, please refer to commit messages of fixes.
 
-Link: https://lkml.kernel.org/r/20241031161203.47751-1-sj@kernel.org
-Fixes: 9294a037c015 ("mm/damon/core: implement goal-oriented feedback-driven quota auto-tuning")
+
+This patch (of 2):
+
+DAMON's logics to determine if this is the time to do aggregation and ops
+update assumes next_{aggregation,ops_update}_sis are always set larger
+than current passed_sample_intervals.  And therefore it further assumes
+continuously incrementing passed_sample_intervals every sampling interval
+will make it reaches to the next_{aggregation,ops_update}_sis in future.
+The logic therefore make the action and update
+next_{aggregation,ops_updaste}_sis only if passed_sample_intervals is same
+to the counts, respectively.
+
+If Aggregation interval or Ops update interval are zero, however,
+next_aggregation_sis or next_ops_update_sis are set same to current
+passed_sample_intervals, respectively.  And passed_sample_intervals is
+incremented before doing the next_{aggregation,ops_update}_sis check.
+Hence, passed_sample_intervals becomes larger than
+next_{aggregation,ops_update}_sis, and the logic says it is not the time
+to do the action and update next_{aggregation,ops_update}_sis forever,
+until an overflow happens.  In other words, DAMON stops doing aggregations
+or ops updates effectively forever, and users cannot get monitoring
+results.
+
+Based on the documents and the common sense, a reasonable behavior for
+such inputs is doing an aggregation and an ops update for every sampling
+interval.  Handle the case by removing the assumption.
+
+Note that this could incur particular real issue for DAMON sysfs interface
+users, in case of zero Aggregation interval.  When user starts DAMON with
+zero Aggregation interval and asks online DAMON parameter tuning via DAMON
+sysfs interface, the request is handled by the aggregation callback.
+Until the callback finishes the work, the user who requested the online
+tuning just waits.  Hence, the user will be stuck until the
+passed_sample_intervals overflows.
+
+Link: https://lkml.kernel.org/r/20241031183757.49610-1-sj@kernel.org
+Link: https://lkml.kernel.org/r/20241031183757.49610-2-sj@kernel.org
+Fixes: 4472edf63d66 ("mm/damon/core: use number of passed access sampling as a timer")
 Signed-off-by: SeongJae Park <sj@kernel.org>
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/944f3d5b-9177-48e7-8ec9-7f1331a3fea3@roeck-us.net
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Cc: <stable@vger.kernel.org>	[6.8.x]
+Cc: <stable@vger.kernel.org>	[6.7.x]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |   28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ mm/damon/core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/mm/damon/core.c
 +++ b/mm/damon/core.c
-@@ -1450,17 +1450,31 @@ static unsigned long damon_feed_loop_nex
- 		unsigned long score)
- {
- 	const unsigned long goal = 10000;
--	unsigned long score_goal_diff = max(goal, score) - min(goal, score);
--	unsigned long score_goal_diff_bp = score_goal_diff * 10000 / goal;
--	unsigned long compensation = last_input * score_goal_diff_bp / 10000;
- 	/* Set minimum input as 10000 to avoid compensation be zero */
- 	const unsigned long min_input = 10000;
-+	unsigned long score_goal_diff, compensation;
-+	bool over_achieving = score > goal;
+@@ -2001,7 +2001,7 @@ static int kdamond_fn(void *data)
+ 		if (ctx->ops.check_accesses)
+ 			max_nr_accesses = ctx->ops.check_accesses(ctx);
  
--	if (goal > score)
-+	if (score == goal)
-+		return last_input;
-+	if (score >= goal * 2)
-+		return min_input;
-+
-+	if (over_achieving)
-+		score_goal_diff = score - goal;
-+	else
-+		score_goal_diff = goal - score;
-+
-+	if (last_input < ULONG_MAX / score_goal_diff)
-+		compensation = last_input * score_goal_diff / goal;
-+	else
-+		compensation = last_input / goal * score_goal_diff;
-+
-+	if (over_achieving)
-+		return max(last_input - compensation, min_input);
-+	if (last_input < ULONG_MAX - compensation)
- 		return last_input + compensation;
--	if (last_input > compensation + min_input)
--		return last_input - compensation;
--	return min_input;
-+	return ULONG_MAX;
- }
+-		if (ctx->passed_sample_intervals == next_aggregation_sis) {
++		if (ctx->passed_sample_intervals >= next_aggregation_sis) {
+ 			kdamond_merge_regions(ctx,
+ 					max_nr_accesses / 10,
+ 					sz_limit);
+@@ -2019,7 +2019,7 @@ static int kdamond_fn(void *data)
  
- #ifdef CONFIG_PSI
+ 		sample_interval = ctx->attrs.sample_interval ?
+ 			ctx->attrs.sample_interval : 1;
+-		if (ctx->passed_sample_intervals == next_aggregation_sis) {
++		if (ctx->passed_sample_intervals >= next_aggregation_sis) {
+ 			ctx->next_aggregation_sis = next_aggregation_sis +
+ 				ctx->attrs.aggr_interval / sample_interval;
+ 
+@@ -2029,7 +2029,7 @@ static int kdamond_fn(void *data)
+ 				ctx->ops.reset_aggregated(ctx);
+ 		}
+ 
+-		if (ctx->passed_sample_intervals == next_ops_update_sis) {
++		if (ctx->passed_sample_intervals >= next_ops_update_sis) {
+ 			ctx->next_ops_update_sis = next_ops_update_sis +
+ 				ctx->attrs.ops_update_interval /
+ 				sample_interval;
 
 
