@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F7F214435;
-	Tue, 12 Nov 2024 10:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328E3213144;
+	Tue, 12 Nov 2024 10:44:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408283; cv=none; b=XSbF/rDb5kiB1JK87vP/6ky23G/A7D4oElwvH/jKSwcaaqRW8q+wPjkMFp6Uk/fMgR+/AXoouJQnB28qWZTm4tPQcfmKpxjaM9NOOs7kIXKxE/xDfzYpLVqAIOmDywUHU32ZfbAq3lIbaB9jy/KJYmvrea1Am2aeJwNdWWI+Y5k=
+	t=1731408286; cv=none; b=YJm7oPxnZ3B+oJ4C1QGzc6aGdDOlzQ5foHGr0MjhPU3jd+GxC1I40gVkXkOT8hj0CRZJ1s4SfS+HiN2AfhjL7WfUNuJRJCgcNleHki+uePAxIn5l50T4g47mt9/zUG/uiO/hA41k4f8nksJkA95zcq28RgY/FhPZi7odvmUj8uY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408283; c=relaxed/simple;
-	bh=QZkCWtTy/U6ddCnT2XekJD4hOkoLGFn+Sqjcvoub6T4=;
+	s=arc-20240116; t=1731408286; c=relaxed/simple;
+	bh=ni2bWzybE32OW5GvA5O69HZngaD/5pK946aqq2ecyTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FdN3DDsIJ9kV0weec9r+BduIIEHrEODPnjJO7iOfA/CQ5QH5BZR6lQ4EUVASjguvFqScdu8NDxDr1f+jICEUgZEdvcGtyCLuw9oRy5GxosJ5B1F9E2lRH2LR1u2k8Fuvu8u6LjnsozTu6WVkjitv0usVHFSKbHxT9ASUHcYreQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MB8/u8hF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=spUalnQW8b1tO/ODvyompIa53+NJCFEvijX46Y3eqv9MtjIn86nunGvHboSNv6pUqPp8/1Bals6WGD7lxZRasNhSv6usuw2ZbuPZQdQngToZxPO6FY45/hAbtFQKRuJATL0MrZsCxw7nTBh/vwQE36bioWNEC6XnoMeXKvJl+OE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0t3zrWbp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MB8/u8hF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37261C4CECD;
-	Tue, 12 Nov 2024 10:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0t3zrWbp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94651C4CED4;
+	Tue, 12 Nov 2024 10:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408282;
-	bh=QZkCWtTy/U6ddCnT2XekJD4hOkoLGFn+Sqjcvoub6T4=;
+	s=korg; t=1731408286;
+	bh=ni2bWzybE32OW5GvA5O69HZngaD/5pK946aqq2ecyTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MB8/u8hFjKN/5PsJsDE1DyGqxoQDQcCh7DrBhjLZ15soG8g1Z+Ngy/YOssx9HwmQ2
-	 k0JXOk48Jgp7RN8w/g7mS3DZBK+bsH/2uuPIKDMtTZVqFeb7j8kCJ3XZIJ9mOJtUvf
-	 oRqwr1Df4dXsBaRV11K8jHoFv2gVBbZDYLwrS+yU=
+	b=0t3zrWbp0Hn0hDmRkvm+OPEKrvTFirZsioiePWiKTZ0heDmIuR8hwxHuDZ70y2Nn0
+	 xyuMYdp95cjljXo7scaQ4s4C4+837TPzBzajbXqX5ZYJiln0LgOut4jMc/KwKma8r0
+	 VO3NVp25m4QTzdguR44KDwHSe5NnkxedHJI6cguM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ming-Hung Tsai <mtsai@redhat.com>,
 	Mikulas Patocka <mpatocka@redhat.com>,
 	Joe Thornber <thornber@redhat.com>
-Subject: [PATCH 6.11 115/184] dm cache: fix flushing uninitialized delayed_work on cache_ctr error
-Date: Tue, 12 Nov 2024 11:21:13 +0100
-Message-ID: <20241112101905.281830357@linuxfoundation.org>
+Subject: [PATCH 6.11 116/184] dm cache: fix out-of-bounds access to the dirty bitset when resizing
+Date: Tue, 12 Nov 2024 11:21:14 +0100
+Message-ID: <20241112101905.321552018@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -53,105 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming-Hung Tsai <mtsai@redhat.com>
 
-commit 135496c208ba26fd68cdef10b64ed7a91ac9a7ff upstream.
+commit 792227719725497ce10a8039803bec13f89f8910 upstream.
 
-An unexpected WARN_ON from flush_work() may occur when cache creation
-fails, caused by destroying the uninitialized delayed_work waker in the
-error path of cache_create(). For example, the warning appears on the
-superblock checksum error.
+dm-cache checks the dirty bits of the cache blocks to be dropped when
+shrinking the fast device, but an index bug in bitset iteration causes
+out-of-bounds access.
 
 Reproduce steps:
 
+1. create a cache device of 1024 cache blocks (128 bytes dirty bitset)
+
 dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
+dmsetup create cdata --table "0 131072 linear /dev/sdc 8192"
 dmsetup create corig --table "0 524288 linear /dev/sdc 262144"
-dd if=/dev/urandom of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
+dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1 oflag=direct
 dmsetup create cache --table "0 524288 cache /dev/mapper/cmeta \
 /dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
 
-Kernel logs:
+2. shrink the fast device to 512 cache blocks, triggering out-of-bounds
+   access to the dirty bitset (offset 0x80)
 
-(snip)
-WARNING: CPU: 0 PID: 84 at kernel/workqueue.c:4178 __flush_work+0x5d4/0x890
+dmsetup suspend cache
+dmsetup reload cdata --table "0 65536 linear /dev/sdc 8192"
+dmsetup resume cdata
+dmsetup resume cache
 
-Fix by pulling out the cancel_delayed_work_sync() from the constructor's
-error path. This patch doesn't affect the use-after-free fix for
-concurrent dm_resume and dm_destroy (commit 6a459d8edbdb ("dm cache: Fix
-UAF in destroy()")) as cache_dtr is not changed.
+KASAN reports:
+
+  BUG: KASAN: vmalloc-out-of-bounds in cache_preresume+0x269/0x7b0
+  Read of size 8 at addr ffffc900000f3080 by task dmsetup/131
+
+  (...snip...)
+  The buggy address belongs to the virtual mapping at
+   [ffffc900000f3000, ffffc900000f5000) created by:
+   cache_ctr+0x176a/0x35f0
+
+  (...snip...)
+  Memory state around the buggy address:
+   ffffc900000f2f80: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+   ffffc900000f3000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  >ffffc900000f3080: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+                     ^
+   ffffc900000f3100: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+   ffffc900000f3180: f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8 f8
+
+Fix by making the index post-incremented.
 
 Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
-Fixes: 6a459d8edbdb ("dm cache: Fix UAF in destroy()")
+Fixes: f494a9c6b1b6 ("dm cache: cache shrinking support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Acked-by: Joe Thornber <thornber@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |   24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/md/dm-cache-target.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/md/dm-cache-target.c
 +++ b/drivers/md/dm-cache-target.c
-@@ -1905,16 +1905,13 @@ static void check_migrations(struct work
-  * This function gets called on the error paths of the constructor, so we
-  * have to cope with a partially initialised struct.
-  */
--static void destroy(struct cache *cache)
-+static void __destroy(struct cache *cache)
- {
--	unsigned int i;
--
- 	mempool_exit(&cache->migration_pool);
- 
- 	if (cache->prison)
- 		dm_bio_prison_destroy_v2(cache->prison);
- 
--	cancel_delayed_work_sync(&cache->waker);
- 	if (cache->wq)
- 		destroy_workqueue(cache->wq);
- 
-@@ -1942,13 +1939,22 @@ static void destroy(struct cache *cache)
- 	if (cache->policy)
- 		dm_cache_policy_destroy(cache->policy);
- 
-+	bioset_exit(&cache->bs);
-+
-+	kfree(cache);
-+}
-+
-+static void destroy(struct cache *cache)
-+{
-+	unsigned int i;
-+
-+	cancel_delayed_work_sync(&cache->waker);
-+
- 	for (i = 0; i < cache->nr_ctr_args ; i++)
- 		kfree(cache->ctr_args[i]);
- 	kfree(cache->ctr_args);
- 
--	bioset_exit(&cache->bs);
--
--	kfree(cache);
-+	__destroy(cache);
- }
- 
- static void cache_dtr(struct dm_target *ti)
-@@ -2561,7 +2567,7 @@ static int cache_create(struct cache_arg
- 	*result = cache;
- 	return 0;
- bad:
--	destroy(cache);
-+	__destroy(cache);
- 	return r;
- }
- 
-@@ -2612,7 +2618,7 @@ static int cache_ctr(struct dm_target *t
- 
- 	r = copy_ctr_args(cache, argc - 3, (const char **)argv + 3);
- 	if (r) {
--		destroy(cache);
-+		__destroy(cache);
- 		goto out;
+@@ -2912,13 +2912,13 @@ static bool can_resize(struct cache *cac
+ 	 * We can't drop a dirty block when shrinking the cache.
+ 	 */
+ 	while (from_cblock(new_size) < from_cblock(cache->cache_size)) {
+-		new_size = to_cblock(from_cblock(new_size) + 1);
+ 		if (is_dirty(cache, new_size)) {
+ 			DMERR("%s: unable to shrink cache; cache block %llu is dirty",
+ 			      cache_device_name(cache),
+ 			      (unsigned long long) from_cblock(new_size));
+ 			return false;
+ 		}
++		new_size = to_cblock(from_cblock(new_size) + 1);
  	}
  
+ 	return true;
 
 
