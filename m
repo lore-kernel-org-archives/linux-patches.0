@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B2F20EA2D;
-	Tue, 12 Nov 2024 10:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F8A2141B3;
+	Tue, 12 Nov 2024 10:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407767; cv=none; b=uxiLDaj+z1CQeTukwrarOnPr0wW9HugYKjjvbeAtWsX1M24XUtfrHX5Q4NvZS1YHJETJqNYVz/C/ra8ixPW7oQVUzo2THoiDYBHYwNdBVdqxSkGAZL0CsOXYPm07bpNWrKCzwdEYF9PBFIWG8TFnJdvVlScdV2n4IXtbQiCTEVE=
+	t=1731407770; cv=none; b=cbSTqfFVNnFd73Tm2yDLjyr1v+z1rUBmRdLSoyK1kZygawJ9XsboUiVUd4Cwlxmzsd+xeijZ43D5kyxFH/pNKfFX3Ptvs3AOGoQFaYqKCcqh5y9vJ5AXvlJXFCY4qaPFwHI/tcr4TsnV7iFBV/eql/bhOF+WQu/W2ViTRedDk24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407767; c=relaxed/simple;
-	bh=PSKs06Fxv569QvPQM6shvFiTD40CvAbNCLSePiOkWRA=;
+	s=arc-20240116; t=1731407770; c=relaxed/simple;
+	bh=bpltndSOcXnJY6Y54QHfpIB2/p9+VuX0huBlgHKNUHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sZJddoUPhKkwPEHYb+CbvUjBb6Nhpb2Z3r4J7qofHApyqiW8edMwkSFwVL+eL0U+/qoBr5AHkjDs9zHzBvMabiKhBJJDS/BA20ToYNMyKMkAEz1jgAfNe3Jrn3Dni1lXebBqNfn42Xil9ZRWq58SnFiWkNs4ppoqthBNvEJHPfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/EsHB0O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UAaS0Y3rEwZE6vGXm7y6OXFzZtgxKr+r7Ex6/6VNZlPiTcoa3uS8gIvjXhIX7OHnTdHCXe5RfuxwAK+E1F7hMmXhY9cM52ZDibRrJUT1nqp9sgzbX+LH8ivIYzwru3cxPaZU2t33/HJhyH5yc0rhad2N2KP0H10+eDUIarXVcOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fRv/jup/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/EsHB0O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B051C4CECD;
-	Tue, 12 Nov 2024 10:36:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fRv/jup/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B9BC4CED6;
+	Tue, 12 Nov 2024 10:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407766;
-	bh=PSKs06Fxv569QvPQM6shvFiTD40CvAbNCLSePiOkWRA=;
+	s=korg; t=1731407770;
+	bh=bpltndSOcXnJY6Y54QHfpIB2/p9+VuX0huBlgHKNUHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/EsHB0Oxj8/gmUt1f7010PyVV/lcWTaUiJn5ybJYL/DoERVtXgokem0g1ILovEXn
-	 xCggh6iFoW+4Wyw9GGIMIvgyWWTyKnk+tkQ/i71fAIfAE9qZOnQwuCyxmJpKiTiNsd
-	 AJATALHRXz3TR0tIRNd2Onfj+UV4YJUZYjEByZM0=
+	b=fRv/jup/EC+ZL6mhVETvRBx32apHjPDAgiMiVq5+vC6espDXyNtI9B5gFjOVPNMs4
+	 Nkbd49WDW6jHTFp2p1uQ97oxp2/yFi823fpmbmNswdKuM2POtJsjvE/9+8deXik5am
+	 O0i8Lx7OcZ1wzxsDz2HnmK00fxT97TYRtmhBLh0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 077/119] drm/amdgpu: add missing size check in amdgpu_debugfs_gprwave_read()
-Date: Tue, 12 Nov 2024 11:21:25 +0100
-Message-ID: <20241112101851.663825391@linuxfoundation.org>
+	Jyri Sarha <jyri.sarha@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 060/119] ASoC: SOF: sof-client-probes-ipc4: Set param_size extension bits
+Date: Tue, 12 Nov 2024 11:21:08 +0100
+Message-ID: <20241112101851.008668021@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -50,31 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jyri Sarha <jyri.sarha@linux.intel.com>
 
-commit 4d75b9468021c73108b4439794d69e892b1d24e3 upstream.
+[ Upstream commit 48b86532c10128cf50c854a90c2d5b1410f4012d ]
 
-Avoid a possible buffer overflow if size is larger than 4K.
+Write the size of the optional payload of SOF_IPC4_MOD_INIT_INSTANCE
+message to extension param_size-bits.
 
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f5d873f5825b40d886d03bd2aede91d4cf002434)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The previous IPC4 version does not set these bits that should indicate
+the size of the optional payload (struct sof_ipc4_probe_cfg). The old
+firmware side component code works well without these bits, but when
+the probes are converted to use the generic module API, this does not
+work anymore.
+
+Fixes: f5623593060f ("ASoC: SOF: IPC4: probes: Implement IPC4 ops for probes client device")
+Signed-off-by: Jyri Sarha <jyri.sarha@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20241107132840.17386-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sof/sof-client-probes-ipc4.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -402,7 +402,7 @@ static ssize_t amdgpu_debugfs_gprwave_re
- 	int r;
- 	uint32_t *data, x;
+diff --git a/sound/soc/sof/sof-client-probes-ipc4.c b/sound/soc/sof/sof-client-probes-ipc4.c
+index c56a85854d92c..07bb143823d77 100644
+--- a/sound/soc/sof/sof-client-probes-ipc4.c
++++ b/sound/soc/sof/sof-client-probes-ipc4.c
+@@ -125,6 +125,7 @@ static int ipc4_probes_init(struct sof_client_dev *cdev, u32 stream_tag,
+ 	msg.primary |= SOF_IPC4_MSG_TARGET(SOF_IPC4_MODULE_MSG);
+ 	msg.extension = SOF_IPC4_MOD_EXT_DST_MOD_INSTANCE(INVALID_PIPELINE_ID);
+ 	msg.extension |= SOF_IPC4_MOD_EXT_CORE_ID(0);
++	msg.extension |= SOF_IPC4_MOD_EXT_PARAM_SIZE(sizeof(cfg) / sizeof(uint32_t));
  
--	if (size & 0x3 || *pos & 0x3)
-+	if (size > 4096 || size & 0x3 || *pos & 0x3)
- 		return -EINVAL;
- 
- 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
+ 	msg.data_size = sizeof(cfg);
+ 	msg.data_ptr = &cfg;
+-- 
+2.43.0
+
 
 
