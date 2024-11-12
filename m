@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3216A2141D4;
-	Tue, 12 Nov 2024 10:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D30D212F1D;
+	Tue, 12 Nov 2024 10:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408167; cv=none; b=NI6sjpYBkQSBtuw8QCYQR2sh/C7Q1RWYfnFRVCPVlyzDpPr5vAOSw7Bfrg97qsCEtMJhgTiiM0X+H3q560x48gB7/W5xj24mIIUtJUV06vfGyihdjGFLpbzVHWdXs6vBfCtmlZLzrvkrRlrVfTHWv0frhL3IZKJaLNF5i5alrg0=
+	t=1731408170; cv=none; b=p4sQqArBqkwgbkMzJQZRfn0GE5QRRPdxDmgqMbx/4Aj85eGgvNjPFYn5BFyAZFKZgptyl4SiEMviUXy1WuyaqMsWEPE0Fva2DL22sZJSCNHIjpVsb0PFXqmR1wwu8uxGuguqt9cVwZKviQZeWdcn71dNZhIpL75UoYpVvFh022I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408167; c=relaxed/simple;
-	bh=sX4tIDh1vU+yHsicGY02csjINZYoGId4mQMXheAMXYE=;
+	s=arc-20240116; t=1731408170; c=relaxed/simple;
+	bh=CnP/KTIy+tX7exKRa9EVxOA6SdCvuff4Wk/kfq4sYoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bU0npVS56sFa2yhbsadz2qHDQIfjOa54pYDrT1H31JUwOCS9ZOZJiraJrR/s0+qzaMHOVcGnyqOwkXmrtKUSW6DUA7nLiQfkogzHAI5Gc+hmPFur6SMHBCiXXGmauOIk3FPsJ+jAyb7CCjqxampsUQs4mcnIFmsPWu2Ulw9BOf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xk4N1j0K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W8AxKsduOu7hPRuLWkX0LT+lT+sgM2NnXlD8cXG9Vc5SdUEQozr1eZSbkiin6S/mcGliiUJv1bSKbtp/RbHzP47MO4GT/KwZunx6np1R0GedcIqjmf0YCh4ObL5j1FU+nrQ79jYezMJy2erH9MxUOLB9R+qLO2fKqvadh1rcCnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHh/5umg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xk4N1j0K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 952E9C4CECD;
-	Tue, 12 Nov 2024 10:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHh/5umg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF160C4CECD;
+	Tue, 12 Nov 2024 10:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408167;
-	bh=sX4tIDh1vU+yHsicGY02csjINZYoGId4mQMXheAMXYE=;
+	s=korg; t=1731408170;
+	bh=CnP/KTIy+tX7exKRa9EVxOA6SdCvuff4Wk/kfq4sYoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xk4N1j0KGeP2+zakC24CVSlCf55JhqXQ5XiQE0mY5uA/OBvhb+uT5T9iO7BYZUmkB
-	 QmRNGJMVoZLCcpz7inrkDLI/VbQ3vavgUf/3g9pAaIqTzPjfrRp+nf/9h+GEFQjfUQ
-	 2gY4Cj2jLcQFV/oVg/SqVeFJRMv2cpJYt/wsFkuY=
+	b=tHh/5umghYR2EmRQKzzWcxjXHxYzcSq0BxWXJfkJotPHbWGwUXQieUKLla8PgFU2h
+	 yhY6sgMZoKMt8IUvdTXGqEpfhksNhETql7WnXPh6v72xoXhXfpZJaTGJOPU3BdX4K3
+	 6o57SiveigldS8ojn/W0a/I9L0xQWwxAVScUacGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 6.11 080/184] media: av7110: fix a spectre vulnerability
-Date: Tue, 12 Nov 2024 11:20:38 +0100
-Message-ID: <20241112101903.931488072@linuxfoundation.org>
+Subject: [PATCH 6.11 081/184] media: pulse8-cec: fix data timestamp at pulse8_setup()
+Date: Tue, 12 Nov 2024 11:20:39 +0100
+Message-ID: <20241112101903.968684081@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -51,100 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-commit 458ea1c0be991573ec436aa0afa23baacfae101a upstream.
+commit ba9cf6b430433e57bfc8072364e944b7c0eca2a4 upstream.
 
-As warned by smatch:
-	drivers/staging/media/av7110/av7110_ca.c:270 dvb_ca_ioctl() warn: potential spectre issue 'av7110->ci_slot' [w] (local cap)
+As pointed by Coverity, there is a hidden overflow condition there.
+As date is signed and u8 is unsigned, doing:
 
-There is a spectre-related vulnerability at the code. Fix it.
+	date = (data[0] << 24)
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+With a value bigger than 07f will make all upper bits of date
+0xffffffff. This can be demonstrated with this small code:
+
+<code>
+typedef int64_t time64_t;
+typedef uint8_t u8;
+
+int main(void)
+{
+	u8 data[] = { 0xde ,0xad , 0xbe, 0xef };
+	time64_t date;
+
+	date = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
+	printf("Invalid data = 0x%08lx\n", date);
+
+	date = ((unsigned)data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
+	printf("Expected data = 0x%08lx\n", date);
+
+	return 0;
+}
+</code>
+
+Fix it by converting the upper bit calculation to unsigned.
+
+Fixes: cea28e7a55e7 ("media: pulse8-cec: reorganize function order")
 Cc: stable@vger.kernel.org
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/av7110/av7110.h    |    4 +++-
- drivers/staging/media/av7110/av7110_ca.c |   25 +++++++++++++++++--------
- 2 files changed, 20 insertions(+), 9 deletions(-)
+ drivers/media/cec/usb/pulse8/pulse8-cec.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/media/av7110/av7110.h
-+++ b/drivers/staging/media/av7110/av7110.h
-@@ -88,6 +88,8 @@ struct infrared {
- 	u32			ir_config;
- };
+--- a/drivers/media/cec/usb/pulse8/pulse8-cec.c
++++ b/drivers/media/cec/usb/pulse8/pulse8-cec.c
+@@ -685,7 +685,7 @@ static int pulse8_setup(struct pulse8 *p
+ 	err = pulse8_send_and_wait(pulse8, cmd, 1, cmd[0], 4);
+ 	if (err)
+ 		return err;
+-	date = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
++	date = ((unsigned)data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
+ 	dev_info(pulse8->dev, "Firmware build date %ptT\n", &date);
  
-+#define MAX_CI_SLOTS	2
-+
- /* place to store all the necessary device information */
- struct av7110 {
- 	/* devices */
-@@ -163,7 +165,7 @@ struct av7110 {
- 
- 	/* CA */
- 
--	struct ca_slot_info	ci_slot[2];
-+	struct ca_slot_info	ci_slot[MAX_CI_SLOTS];
- 
- 	enum av7110_video_mode	vidmode;
- 	struct dmxdev		dmxdev;
---- a/drivers/staging/media/av7110/av7110_ca.c
-+++ b/drivers/staging/media/av7110/av7110_ca.c
-@@ -26,23 +26,28 @@
- 
- void CI_handle(struct av7110 *av7110, u8 *data, u16 len)
- {
-+	unsigned slot_num;
-+
- 	dprintk(8, "av7110:%p\n", av7110);
- 
- 	if (len < 3)
- 		return;
- 	switch (data[0]) {
- 	case CI_MSG_CI_INFO:
--		if (data[2] != 1 && data[2] != 2)
-+		if (data[2] != 1 && data[2] != MAX_CI_SLOTS)
- 			break;
-+
-+		slot_num = array_index_nospec(data[2] - 1, MAX_CI_SLOTS);
-+
- 		switch (data[1]) {
- 		case 0:
--			av7110->ci_slot[data[2] - 1].flags = 0;
-+			av7110->ci_slot[slot_num].flags = 0;
- 			break;
- 		case 1:
--			av7110->ci_slot[data[2] - 1].flags |= CA_CI_MODULE_PRESENT;
-+			av7110->ci_slot[slot_num].flags |= CA_CI_MODULE_PRESENT;
- 			break;
- 		case 2:
--			av7110->ci_slot[data[2] - 1].flags |= CA_CI_MODULE_READY;
-+			av7110->ci_slot[slot_num].flags |= CA_CI_MODULE_READY;
- 			break;
- 		}
- 		break;
-@@ -262,15 +267,19 @@ static int dvb_ca_ioctl(struct file *fil
- 	case CA_GET_SLOT_INFO:
- 	{
- 		struct ca_slot_info *info = (struct ca_slot_info *)parg;
-+		unsigned int slot_num;
- 
- 		if (info->num < 0 || info->num > 1) {
- 			mutex_unlock(&av7110->ioctl_mutex);
- 			return -EINVAL;
- 		}
--		av7110->ci_slot[info->num].num = info->num;
--		av7110->ci_slot[info->num].type = FW_CI_LL_SUPPORT(av7110->arm_app) ?
--							CA_CI_LINK : CA_CI;
--		memcpy(info, &av7110->ci_slot[info->num], sizeof(struct ca_slot_info));
-+		slot_num = array_index_nospec(info->num, MAX_CI_SLOTS);
-+
-+		av7110->ci_slot[slot_num].num = info->num;
-+		av7110->ci_slot[slot_num].type = FW_CI_LL_SUPPORT(av7110->arm_app) ?
-+						 CA_CI_LINK : CA_CI;
-+		memcpy(info, &av7110->ci_slot[slot_num],
-+		       sizeof(struct ca_slot_info));
- 		break;
- 	}
- 
+ 	dev_dbg(pulse8->dev, "Persistent config:\n");
 
 
