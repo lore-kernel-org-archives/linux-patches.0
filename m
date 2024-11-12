@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B64214406;
-	Tue, 12 Nov 2024 10:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F062141CD;
+	Tue, 12 Nov 2024 10:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407227; cv=none; b=IJSSwt5QaQK4g6O9gA7XrKug2KYlTMsHghCuEGPXMAajsSgFf0dNkzomapihhVOmPyMmT13I8tsTDBwTepkTQLEGZbAfq6/7hC2z6m/bpdrmLTgm64sg5NCf1yhAqiSuohjM+kFLRN4nsd7v8vKdjqqoHmkvgaAYbDeXMr884Uw=
+	t=1731407230; cv=none; b=tMPNaZiscBK6fLtPNRibO4T2j5tRoApbritka4q379YaEVlbMQwnQWXovocfNSRpC/ifkq6HU4pB6yLPbeX0wYDHeWNl42FsclQtW6GNrarplJ0nPZ5qLxQ7/wLs+b7OeQbQEejaIBwLse6VHscR5kc3/6CGY4FiNZRbmwczLVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407227; c=relaxed/simple;
-	bh=fg9+C8+P+mhW0KnF5Omxci/FEuVrj/h6UW4EZTeTEww=;
+	s=arc-20240116; t=1731407230; c=relaxed/simple;
+	bh=VYKPrA9t+P3dSgMSfdwRECChspPfkhRub870njgoV80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qc9Q2LiOky1VV/+KZChqKmRrnA8O0P6DB2+XDN51XD35hwi/RhLmHZmZSEqv79ELnweX3d2MwXiNS35LdnL4Rh4Tm1Ce8j6qRDctJ9HbNKdhvjJc0p6hKZkIJ1oyTmX14zJihdrVTq6o/qTIWAOVkFO0d2nzSC+KPM0gDE+VQv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B4NCz/Da; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jj9uRnJN9tPryDwCVv8OiR1nYxh/8NWGH7I05nLEytA+/tFzPEFe/2zCALn+Qb1P43FdxkqdvOWZNbujLjkw6nMpo9qaI3K9yPhbdgxAfMw6aeoTWEpo9yCBAoZLdl2rvIVmJKmyoVRifKepM2+jQNzau3lpZB9M74JflrxmizQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F1b7Ckf9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B4NCz/Da"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59098C4CECD;
-	Tue, 12 Nov 2024 10:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F1b7Ckf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB7FC4CECD;
+	Tue, 12 Nov 2024 10:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407226;
-	bh=fg9+C8+P+mhW0KnF5Omxci/FEuVrj/h6UW4EZTeTEww=;
+	s=korg; t=1731407230;
+	bh=VYKPrA9t+P3dSgMSfdwRECChspPfkhRub870njgoV80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B4NCz/DacBfBvTJrH8+HYOrVjCMh8lMz2fcmhYqAXznkiLAANj9JQRyBDBuLTBNg2
-	 exoGj7wLVvw1ZTjeFPUNJaiAw/bdq6dGQZcTavzXV+++BP/Jkn5JkmrSbCONzjWyoi
-	 APstxiWq3TAFXRFD34uv3HvjvELFV9uDDHoZqNOw=
+	b=F1b7Ckf958Mh+yPSnZUpNy2N850fXtlDM2YeTSROwWxHVkQDeP8k4TpUO7Em2Zt2i
+	 AaizhUU4cQdqQej3yxkzx+Tj3/LkLU/t3b7C0sRlfVD/MDpLomeir8PrLwZRAhpZN5
+	 Qf3A+3b/NX0t/qbE7vxg33Pcu0HZLT4gWC9M53WI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diederik de Haas <didi.debian@cknow.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Dragan Simic <dsimic@manjaro.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 04/98] arm64: dts: rockchip: Fix wakeup prop names on PineNote BT node
-Date: Tue, 12 Nov 2024 11:20:19 +0100
-Message-ID: <20241112101844.437449517@linuxfoundation.org>
+Subject: [PATCH 6.1 05/98] arm64: dts: rockchip: Fix bluetooth properties on Rock960 boards
+Date: Tue, 12 Nov 2024 11:20:20 +0100
+Message-ID: <20241112101844.474396728@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -51,41 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diederik de Haas <didi.debian@cknow.org>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 87299d6ee95a37d2d576dd8077ea6860f77ad8e2 ]
+[ Upstream commit ea74528aaea5a1dfc8e3de09ef2af37530eca526 ]
 
-The "brcm,bluetooth.yaml" binding has 'device-wakeup-gpios' and
-'host-wakeup-gpios' property names, not '*-wake-gpios'.
-Fix the incorrect property names.
+The expected clock-name is different, and extclk also is deprecated
+in favor of txco for clocks that are not crystals.
 
-Note that the "realtek,bluetooth.yaml" binding does use the
-'*-wake-gpios' property names.
+So fix it to match the binding.
 
-Fixes: d449121e5e8a ("arm64: dts: rockchip: Add Pine64 PineNote board")
-Signed-off-by: Diederik de Haas <didi.debian@cknow.org>
-Link: https://lore.kernel.org/r/20241008113344.23957-4-didi.debian@cknow.org
+Fixes: c72235c288c8 ("arm64: dts: rockchip: Add on-board WiFi/BT support for Rock960 boards")
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20241008203940.2573684-5-heiko@sntech.de
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-rock960.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
-index 8d61f824c12dc..52ab14308a5c1 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
-@@ -685,8 +685,8 @@
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock960.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rock960.dtsi
+index 94e39ed633971..d38b25a0c77f4 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-rock960.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-rock960.dtsi
+@@ -575,7 +575,7 @@
+ 	bluetooth {
  		compatible = "brcm,bcm43438-bt";
- 		clocks = <&rk817 1>;
- 		clock-names = "lpo";
--		device-wake-gpios = <&gpio0 RK_PC2 GPIO_ACTIVE_HIGH>;
--		host-wake-gpios = <&gpio0 RK_PC3 GPIO_ACTIVE_HIGH>;
-+		device-wakeup-gpios = <&gpio0 RK_PC2 GPIO_ACTIVE_HIGH>;
-+		host-wakeup-gpios = <&gpio0 RK_PC3 GPIO_ACTIVE_HIGH>;
- 		reset-gpios = <&gpio0 RK_PC4 GPIO_ACTIVE_LOW>;
- 		pinctrl-0 = <&bt_enable_h>, <&bt_host_wake_l>, <&bt_wake_h>;
- 		pinctrl-names = "default";
+ 		clocks = <&rk808 1>;
+-		clock-names = "ext_clock";
++		clock-names = "txco";
+ 		device-wakeup-gpios = <&gpio2 RK_PD3 GPIO_ACTIVE_HIGH>;
+ 		host-wakeup-gpios = <&gpio0 RK_PA4 GPIO_ACTIVE_HIGH>;
+ 		shutdown-gpios = <&gpio0 RK_PB1 GPIO_ACTIVE_HIGH>;
 -- 
 2.43.0
 
