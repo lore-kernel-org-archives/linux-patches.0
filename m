@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FF42123DC;
-	Tue, 12 Nov 2024 10:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715222123DC;
+	Tue, 12 Nov 2024 10:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407265; cv=none; b=tCDzgBlvF726A5Fjjb2UxuDh9VtGJaWdOicLmFH6KsWmkMQGr9Nm7UQDr+Sokz92JShKgGPfNiRKrzDmQnqloO+oUsuBiyO5iudhoqRGfQcTY8/PSy2k2RuUu/7mfz5SFiHRkn1PrmVF2enD8q0G6i5Wme2tMvMQeTEOJgmCuVA=
+	t=1731407268; cv=none; b=NsS05dUvsCa+izQyeoEBwSEAAEVrs+5hxyVD8KBMm0/sE+rzGx1mno+b9nR5PTFuMqKrz3wsi9YeSknoAB5PeumNuoJ42EzCF5M41HEx+RuOSF9gNaHIl4sVNSp3JEp1iL7PE+pK4WVCkja9ax5Fh3xo5gsQQ3uW+V606nKWuFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407265; c=relaxed/simple;
-	bh=fTeWMT9N9bQWs7cweAKtGaN0spA+TNl5Crt7w+/XQrA=;
+	s=arc-20240116; t=1731407268; c=relaxed/simple;
+	bh=gWKFlF2TfV/cne3lzg8u4FAKY+9YZNXw1A9UJk/099M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o6X1DJOSRBcA4q0o08Ia2fzPC1QNZqZzlmKBMcHeCgqmU2NjvOn3VrTEol6DrVx1txbCY+hWDvupMh+p42tUeDVFnplAtVO/r8oWxDjMOqUdgsjjTcuzOoUdwe7BJX8Y0pJU8JD+rHxyQMrKLh5MeOQfRI7z6mon4FINuClGTlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvDxZfnG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ix9VOK1/QvROMk1jqLmZKzJSOLXDY4sNzIgJrAkTFG3rqq3TRpoWwtxtWDmfs3DmToxD+KoFmVahqsKVhSh/I6Doc4Z53QQkgkHgOhHYWaqPnMUjVmq6Bid/RWlOW+a/lIqdXSnKWaLDTlRT0U3TslqLiz+W1h55FT9vsx6Z/Kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCmaHl6l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvDxZfnG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893C4C4CECD;
-	Tue, 12 Nov 2024 10:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCmaHl6l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4468C4CECD;
+	Tue, 12 Nov 2024 10:27:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407265;
-	bh=fTeWMT9N9bQWs7cweAKtGaN0spA+TNl5Crt7w+/XQrA=;
+	s=korg; t=1731407268;
+	bh=gWKFlF2TfV/cne3lzg8u4FAKY+9YZNXw1A9UJk/099M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SvDxZfnGqyV4ZfjNJM2awp45VSlKJU6Ad5zskpIoOAz1B79fzEss8qXFB0tYxMBCf
-	 xlwplc2w45qaXWrC4mcrCQq5v4ktnf+mtthUAV2P1z5E6aaQnkxFUspS85Cw4zYa2n
-	 RkTLYI07Y/UYJsHcFNtotxa6GkGQZl8lH1NyXP2E=
+	b=GCmaHl6l+NlAZS4WNFfcTfSgvDkUx406x7GKuYkeIgDewjvgjpK6Rre9USXvwSXVH
+	 7znH5RtDb5qqwgKDitkS0QHBMDyJM+plDW31UYqTJFom4UGkBOA0CT0w3ScBL1NR5r
+	 tMGYUjCVdbRkwRECxSI0if+BDRmkT1x40rGikbGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f0cbb34d39392f2746ca@syzkaller.appspotmail.com,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 24/98] sctp: properly validate chunk size in sctp_sf_ootb()
-Date: Tue, 12 Nov 2024 11:20:39 +0100
-Message-ID: <20241112101845.188843505@linuxfoundation.org>
+Subject: [PATCH 6.1 25/98] can: c_can: fix {rx,tx}_errors statistics
+Date: Tue, 12 Nov 2024 11:20:40 +0100
+Message-ID: <20241112101845.227897112@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -52,47 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit 0ead60804b64f5bd6999eec88e503c6a1a242d41 ]
+[ Upstream commit 4d6d26537940f3b3e17138987ed9e4a334780bf7 ]
 
-A size validation fix similar to that in Commit 50619dbf8db7 ("sctp: add
-size validation when walking chunks") is also required in sctp_sf_ootb()
-to address a crash reported by syzbot:
+The c_can_handle_bus_err() function was incorrectly incrementing only the
+receive error counter, even in cases of bit or acknowledgment errors that
+occur during transmission. The patch fixes the issue by incrementing the
+appropriate counter based on the type of error.
 
-  BUG: KMSAN: uninit-value in sctp_sf_ootb+0x7f5/0xce0 net/sctp/sm_statefuns.c:3712
-  sctp_sf_ootb+0x7f5/0xce0 net/sctp/sm_statefuns.c:3712
-  sctp_do_sm+0x181/0x93d0 net/sctp/sm_sideeffect.c:1166
-  sctp_endpoint_bh_rcv+0xc38/0xf90 net/sctp/endpointola.c:407
-  sctp_inq_push+0x2ef/0x380 net/sctp/inqueue.c:88
-  sctp_rcv+0x3831/0x3b20 net/sctp/input.c:243
-  sctp4_rcv+0x42/0x50 net/sctp/protocol.c:1159
-  ip_protocol_deliver_rcu+0xb51/0x13d0 net/ipv4/ip_input.c:205
-  ip_local_deliver_finish+0x336/0x500 net/ipv4/ip_input.c:233
-
-Reported-by: syzbot+f0cbb34d39392f2746ca@syzkaller.appspotmail.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/a29ebb6d8b9f8affd0f9abb296faafafe10c17d8.1730223981.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 881ff67ad450 ("can: c_can: Added support for Bosch C_CAN controller")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Link: https://patch.msgid.link/20241014135319.2009782-1-dario.binacchi@amarulasolutions.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/c_can/c_can_main.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index a56749a50e5c5..4848d5d50a5f5 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -3752,7 +3752,7 @@ enum sctp_disposition sctp_sf_ootb(struct net *net,
- 		}
+diff --git a/drivers/net/can/c_can/c_can_main.c b/drivers/net/can/c_can/c_can_main.c
+index c63f7fc1e6917..511615dc33419 100644
+--- a/drivers/net/can/c_can/c_can_main.c
++++ b/drivers/net/can/c_can/c_can_main.c
+@@ -1011,7 +1011,6 @@ static int c_can_handle_bus_err(struct net_device *dev,
  
- 		ch = (struct sctp_chunkhdr *)ch_end;
--	} while (ch_end < skb_tail_pointer(skb));
-+	} while (ch_end + sizeof(*ch) < skb_tail_pointer(skb));
+ 	/* common for all type of bus errors */
+ 	priv->can.can_stats.bus_error++;
+-	stats->rx_errors++;
  
- 	if (ootb_shut_ack)
- 		return sctp_sf_shut_8_4_5(net, ep, asoc, type, arg, commands);
+ 	/* propagate the error condition to the CAN stack */
+ 	skb = alloc_can_err_skb(dev, &cf);
+@@ -1027,26 +1026,32 @@ static int c_can_handle_bus_err(struct net_device *dev,
+ 	case LEC_STUFF_ERROR:
+ 		netdev_dbg(dev, "stuff error\n");
+ 		cf->data[2] |= CAN_ERR_PROT_STUFF;
++		stats->rx_errors++;
+ 		break;
+ 	case LEC_FORM_ERROR:
+ 		netdev_dbg(dev, "form error\n");
+ 		cf->data[2] |= CAN_ERR_PROT_FORM;
++		stats->rx_errors++;
+ 		break;
+ 	case LEC_ACK_ERROR:
+ 		netdev_dbg(dev, "ack error\n");
+ 		cf->data[3] = CAN_ERR_PROT_LOC_ACK;
++		stats->tx_errors++;
+ 		break;
+ 	case LEC_BIT1_ERROR:
+ 		netdev_dbg(dev, "bit1 error\n");
+ 		cf->data[2] |= CAN_ERR_PROT_BIT1;
++		stats->tx_errors++;
+ 		break;
+ 	case LEC_BIT0_ERROR:
+ 		netdev_dbg(dev, "bit0 error\n");
+ 		cf->data[2] |= CAN_ERR_PROT_BIT0;
++		stats->tx_errors++;
+ 		break;
+ 	case LEC_CRC_ERROR:
+ 		netdev_dbg(dev, "CRC error\n");
+ 		cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
++		stats->rx_errors++;
+ 		break;
+ 	default:
+ 		break;
 -- 
 2.43.0
 
