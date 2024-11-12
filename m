@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A54210184;
-	Tue, 12 Nov 2024 10:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4279820B20B;
+	Tue, 12 Nov 2024 10:23:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731406987; cv=none; b=VP1tDIFmcc8NXEIoFrGt4n8XXBfW95VOjky6JZ2f4DnNfJqg6+2alC9E5qKIs8j5hvBinFGBHTWiTUksfiUGRQJBdu/3a8ytgw4304SNnMFprlmlewz249JMuxpBXA9TIh+m2qtHbWltL8lOFQFwh5Bb3UcBf+LVms3vkXH0eXg=
+	t=1731406990; cv=none; b=LY37iNn9N5DVePzMDCJo7p3DwOHFnxFCJZasPVlnAjcmiKLmtjlNjv9X1HFfWRqwd4ZYQy29x4nzusMzxroFcGWMY4oJQ+OsGSwVAHl9JSDDH+49PGzoBkb6BHFUIpK3d9LdCoUbxca7CxdlBMsxE+pHjL898ms2YkhBauFeCEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731406987; c=relaxed/simple;
-	bh=CMfq7SW5dsLqWt0mjoT1k96hfe1/eg0N5I6cXqbxrco=;
+	s=arc-20240116; t=1731406990; c=relaxed/simple;
+	bh=QsnK123/hTsKY/FzQIEFh5SfjvcQls1u05Sqpj/P77k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b43OEOFL39OPaN5mG7lI825LoIh+mTDVPFniyX1leD+PM21s5H5XyROr9KpcmSTIL+jiX5aU9WzIqjSG/b5pr6Riqjf0DpMu3Wi7t7TFUWg3wXLMNjU6ZiqemeFVLfIj4Vh91bb/DsNwNRfH8U1UMvKomIiHnsJZ1+nN9WQGu/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzSgSbMt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IC+hO0Yt8FQ3w56fHaeDslFdTNBz2Xoidl7s7unwFzerHBof9E0p+nxQCF6W9lXZixNXr3CQRgycgfAPSs4iqWGbCISWDcHN4EhlvGWCXkuIumHtGzQwaYFeYfPnvmMYwNMua3eqL6fWAcX3zDd62dkw4pWiQ9MC0cVPk+27RQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GoCI7cLv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzSgSbMt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD47C4CECD;
-	Tue, 12 Nov 2024 10:23:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GoCI7cLv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82963C4CED7;
+	Tue, 12 Nov 2024 10:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731406986;
-	bh=CMfq7SW5dsLqWt0mjoT1k96hfe1/eg0N5I6cXqbxrco=;
+	s=korg; t=1731406990;
+	bh=QsnK123/hTsKY/FzQIEFh5SfjvcQls1u05Sqpj/P77k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xzSgSbMtgCOxyJs1asRhDTtu9mS5IdHL8I72ZiHOl+BkqQxzijPwqHn7rXHNTa/Zz
-	 aZEXz0bj2vOPHHT+V1MyCeEaBmsuKjhTZjsYQkbr5nHaGYeVeiYnaKPGR6qEQQzMv2
-	 ZYygOknBp2T/z/hCJ+y12I7ElUquzUwqrQyp3fKo=
+	b=GoCI7cLvs0+0rv39O9UzQV4+d2eYvKNusSBA6VjU5T56WxrBwHQ6Q3Di1XsumoQzi
+	 gduDgccZ1miCsNGwh6TKIBoKc4oF9uj5efpdmdYpfKzHK3Tg/3F4C9Ds16mvZhIavk
+	 txr/IFR0G+W2tPp8gdug+h2A6T/FApdMsNAgw1V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	syzbot+f0cbb34d39392f2746ca@syzkaller.appspotmail.com,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 17/76] net: enetc: set MAC address to the VF net_device
-Date: Tue, 12 Nov 2024 11:20:42 +0100
-Message-ID: <20241112101840.438861381@linuxfoundation.org>
+Subject: [PATCH 5.15 18/76] sctp: properly validate chunk size in sctp_sf_ootb()
+Date: Tue, 12 Nov 2024 11:20:43 +0100
+Message-ID: <20241112101840.476434888@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -53,64 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit badccd49b93bb945bf4e5cc8707db67cdc5e27e5 ]
+[ Upstream commit 0ead60804b64f5bd6999eec88e503c6a1a242d41 ]
 
-The MAC address of VF can be configured through the mailbox mechanism of
-ENETC, but the previous implementation forgot to set the MAC address in
-net_device, resulting in the SMAC of the sent frames still being the old
-MAC address. Since the MAC address in the hardware has been changed, Rx
-cannot receive frames with the DMAC address as the new MAC address. The
-most obvious phenomenon is that after changing the MAC address, we can
-see that the MAC address of eno0vf0 has not changed through the "ifconfig
-eno0vf0" command and the IP address cannot be obtained .
+A size validation fix similar to that in Commit 50619dbf8db7 ("sctp: add
+size validation when walking chunks") is also required in sctp_sf_ootb()
+to address a crash reported by syzbot:
 
-root@ls1028ardb:~# ifconfig eno0vf0 down
-root@ls1028ardb:~# ifconfig eno0vf0 hw ether 00:04:9f:3a:4d:56 up
-root@ls1028ardb:~# ifconfig eno0vf0
-eno0vf0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        ether 66:36:2c:3b:87:76  txqueuelen 1000  (Ethernet)
-        RX packets 794  bytes 69239 (69.2 KB)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 11  bytes 2226 (2.2 KB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+  BUG: KMSAN: uninit-value in sctp_sf_ootb+0x7f5/0xce0 net/sctp/sm_statefuns.c:3712
+  sctp_sf_ootb+0x7f5/0xce0 net/sctp/sm_statefuns.c:3712
+  sctp_do_sm+0x181/0x93d0 net/sctp/sm_sideeffect.c:1166
+  sctp_endpoint_bh_rcv+0xc38/0xf90 net/sctp/endpointola.c:407
+  sctp_inq_push+0x2ef/0x380 net/sctp/inqueue.c:88
+  sctp_rcv+0x3831/0x3b20 net/sctp/input.c:243
+  sctp4_rcv+0x42/0x50 net/sctp/protocol.c:1159
+  ip_protocol_deliver_rcu+0xb51/0x13d0 net/ipv4/ip_input.c:205
+  ip_local_deliver_finish+0x336/0x500 net/ipv4/ip_input.c:233
 
-Fixes: beb74ac878c8 ("enetc: Add vf to pf messaging support")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
-Link: https://patch.msgid.link/20241029090406.841836-1-wei.fang@nxp.com
+Reported-by: syzbot+f0cbb34d39392f2746ca@syzkaller.appspotmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/a29ebb6d8b9f8affd0f9abb296faafafe10c17d8.1730223981.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_vf.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/sctp/sm_statefuns.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_vf.c b/drivers/net/ethernet/freescale/enetc/enetc_vf.c
-index acd4a3167ed6a..88dfcebf2b873 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_vf.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_vf.c
-@@ -78,11 +78,18 @@ static int enetc_vf_set_mac_addr(struct net_device *ndev, void *addr)
- {
- 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
- 	struct sockaddr *saddr = addr;
-+	int err;
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index 13acb84b00c2b..b5f5ee233b59d 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -3736,7 +3736,7 @@ enum sctp_disposition sctp_sf_ootb(struct net *net,
+ 		}
  
- 	if (!is_valid_ether_addr(saddr->sa_data))
- 		return -EADDRNOTAVAIL;
+ 		ch = (struct sctp_chunkhdr *)ch_end;
+-	} while (ch_end < skb_tail_pointer(skb));
++	} while (ch_end + sizeof(*ch) < skb_tail_pointer(skb));
  
--	return enetc_msg_vsi_set_primary_mac_addr(priv, saddr);
-+	err = enetc_msg_vsi_set_primary_mac_addr(priv, saddr);
-+	if (err)
-+		return err;
-+
-+	eth_hw_addr_set(ndev, saddr->sa_data);
-+
-+	return 0;
- }
- 
- static int enetc_vf_set_features(struct net_device *ndev,
+ 	if (ootb_shut_ack)
+ 		return sctp_sf_shut_8_4_5(net, ep, asoc, type, arg, commands);
 -- 
 2.43.0
 
