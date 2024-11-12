@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80D120EA2D;
-	Tue, 12 Nov 2024 10:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE7019E992;
+	Tue, 12 Nov 2024 10:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407015; cv=none; b=Z5bT1Pr2rCW3cvDt5CIAQ01O58utuOVRxRGaKI1pPO4X2t8nS3pgHaBXRqUn/UWEUAVExpfQVwIm0yOrIUVHRDQbKpsGXr8RBNKWRfFsjpLQGeTExuS2/LOCCJjFkrBzi5VKQwJZImeA1kmtaa4jWt8MTMB4I/PN5cPVgs0DjlY=
+	t=1731407019; cv=none; b=LS9J3MET5ESbvXPTrNhkrVir0nc7zsEfHMi+cRKqQKYYJ6hIgTPoUUXCISVU+LiDHhK749Pv6OQ9Cdba6k4NzMGfFGLs1G/GTBlFUxqSqYA1l2n9B+FX01MdtXh+kOxvmNdW/TcaMENASLztLsUl2lwjNZolFzQbCGR6WoYPAC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407015; c=relaxed/simple;
-	bh=PUy/vbsuSIasYfLGLIuazPIVEPsSbWfDPCJxLWYqBRw=;
+	s=arc-20240116; t=1731407019; c=relaxed/simple;
+	bh=xb/em1ZqdlY7m4kn/hbrjAQADfcb2raZHygkP776VA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c7xXjB7IwoLw09xxlPS8Jf5INoN+di1pqwKKJD92CIGmQU96HakYY/v+uL6o/lJJZEffpZXcomkUjM12usv5LrF5cvYvO/62b6zDXOlFgSDArOmndz+WxkuIEfaM8J1lRejn+ClxOG6FZZYVPtgnNPf9dZlsQDqX3by6Q13WJHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7mbU3tz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q6ox8p5gx6AWBORfeN9o2DJuyWbzUQlRfiz18UnXE8tyUaeWn0UnLpRWLe6yptMSbTgrbJlKW3ct+tmUaGoispyzc13v7eqyAJJQTl7B3xcZSY01FZxf4FnRh8bumQJtwwMp3J9Oa463AWANOI30zjPQC5w8pNMIJfzVcLHcy8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBSs0vgx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7mbU3tz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD837C4CECD;
-	Tue, 12 Nov 2024 10:23:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBSs0vgx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E35FC4CECD;
+	Tue, 12 Nov 2024 10:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407015;
-	bh=PUy/vbsuSIasYfLGLIuazPIVEPsSbWfDPCJxLWYqBRw=;
+	s=korg; t=1731407019;
+	bh=xb/em1ZqdlY7m4kn/hbrjAQADfcb2raZHygkP776VA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b7mbU3tz8IOEx4SH+edesRNnYbzNX6HhuGQ6qCdd8G2w4TDEW3L3eOIqUdlviRzow
-	 BpTRqk/YwbZ7pFxB0FRR+wVrcv15RIlfe8CBuKwZsOHtbFG7PGK2qiRUrD6DyTD0h3
-	 HwvyWD3YeuisIBU0d81ryMnR3UpYrBxt4zoqbABU=
+	b=bBSs0vgxJUBNJ5yzwszLKrELspJCoo9q75gzNA6pWxKz5cHmm1jJtH3ZW02ZNdWNN
+	 doE4SCMelcCtQoR0HnRlS9cIDwrL7U6XotHOKhUiP+yzofCIvR+hv6M1+K9oqKmqp+
+	 hrp0q5dYmAEbGuLwkTsL+toUlWRK1NNybilqT6P4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+	Klaus Goger <klaus.goger@theobroma-systems.com>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 03/76] arm64: dts: rockchip: Fix bluetooth properties on Rock960 boards
-Date: Tue, 12 Nov 2024 11:20:28 +0100
-Message-ID: <20241112101839.913581816@linuxfoundation.org>
+Subject: [PATCH 5.15 04/76] arm64: dts: rockchip: Remove #cooling-cells from fan on Theobroma lion
+Date: Tue, 12 Nov 2024 11:20:29 +0100
+Message-ID: <20241112101839.950461747@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -54,37 +56,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit ea74528aaea5a1dfc8e3de09ef2af37530eca526 ]
+[ Upstream commit 5ed96580568c4f79a0aff11a67f10b3e9229ba86 ]
 
-The expected clock-name is different, and extclk also is deprecated
-in favor of txco for clocks that are not crystals.
+All Theobroma boards use a ti,amc6821 as fan controller.
+It normally runs in an automatically controlled way and while it may be
+possible to use it as part of a dt-based thermal management, this is
+not yet specified in the binding, nor implemented in any kernel.
 
-So fix it to match the binding.
+Newer boards already don't contain that #cooling-cells property, but
+older ones do. So remove them for now, they can be re-added if thermal
+integration gets implemented in the future.
 
-Fixes: c72235c288c8 ("arm64: dts: rockchip: Add on-board WiFi/BT support for Rock960 boards")
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+There are two further occurences in v6.12-rc in px30-ringneck and
+rk3399-puma, but those already get removed by the i2c-mux conversion
+scheduled for 6.13 . As the undocumented property is in the kernel so
+long, I opted for not causing extra merge conflicts between 6.12 and 6.13
+
+Fixes: d99a02bcfa81 ("arm64: dts: rockchip: add RK3368-uQ7 (Lion) SoM")
+Cc: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Cc: Klaus Goger <klaus.goger@theobroma-systems.com>
+Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
 Reviewed-by: Dragan Simic <dsimic@manjaro.org>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20241008203940.2573684-5-heiko@sntech.de
+Link: https://lore.kernel.org/r/20241008203940.2573684-7-heiko@sntech.de
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-rock960.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3368-lion.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rock960.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-rock960.dtsi
-index 25dc61c26a943..68d59394a9304 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-rock960.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-rock960.dtsi
-@@ -574,7 +574,7 @@
- 	bluetooth {
- 		compatible = "brcm,bcm43438-bt";
- 		clocks = <&rk808 1>;
--		clock-names = "ext_clock";
-+		clock-names = "txco";
- 		device-wakeup-gpios = <&gpio2 RK_PD3 GPIO_ACTIVE_HIGH>;
- 		host-wakeup-gpios = <&gpio0 RK_PA4 GPIO_ACTIVE_HIGH>;
- 		shutdown-gpios = <&gpio0 RK_PB1 GPIO_ACTIVE_HIGH>;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3368-lion.dtsi b/arch/arm64/boot/dts/rockchip/rk3368-lion.dtsi
+index bcd7977fb0f8e..6b28bfec8b4b6 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3368-lion.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3368-lion.dtsi
+@@ -60,7 +60,6 @@
+ 			fan: fan@18 {
+ 				compatible = "ti,amc6821";
+ 				reg = <0x18>;
+-				#cooling-cells = <2>;
+ 			};
+ 
+ 			rtc_twi: rtc@6f {
 -- 
 2.43.0
 
