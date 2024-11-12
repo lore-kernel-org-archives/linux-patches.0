@@ -1,197 +1,167 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2042.outbound.protection.outlook.com [40.107.101.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FFF1CDA1A
-	for <patches@lists.linux.dev>; Tue, 12 Nov 2024 13:43:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731418995; cv=none; b=V725xw7jl03BC+CZrbRzeTIpXq32fBQefOu9cbKoB2kJEgrztmynMMnDN+sYf4+YVeM0GoA3w/TxDZIyWDHr8Sze2ERD9KVBLRhCEWrAwQqSL+L1wx5t0t3YbBEspuz65rIYCetq1X7mTzX2KwZam1z8hNkr6q0ciU57MKzNoA0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731418995; c=relaxed/simple;
-	bh=N8FpRnzUZPbaHEban3irlAWuvmLWodujTP5VHleNsl8=;
-	h=From:To:CC:Date:Message-ID:MIME-Version:Content-Type:Subject; b=V89WYL2RXEroGitZdiqL2pE3ectozJASInF4vSWFBQ7hcqA46cSNVRH7Ed3sOegTdLQkzYvBHYvLu3LWeeQ54MuddcxF/owr6hKuK0TeTxIRTe9Ac9GcXLbpDXUqOnc5188y0h6WyCnu+HIs6yJFZ9aqwPA5P4eL5moi3SjEH8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b=cE7fWQ9K; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A321524B4;
+	Tue, 12 Nov 2024 15:46:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.101.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1731426361; cv=fail; b=Pen0s3E0oPqqyNBXxAVUVe7/xYqzNmcbv00ypxfht3XDYsnIxVvEMmptqMWvYY9mYM9Yk5NiNDRuN4PsCdqSwbz73Nr+NfQuO7IwGpkLSwjdYEMnIwdzA8uYgbDQIois29iFYT6lSyWCsSSuONa2NcRM2EvGfEQgrnlQm8etL2g=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1731426361; c=relaxed/simple;
+	bh=o5HiOfm88phVx0Qz8JS95rEKdf0pu8SN7tD1BxiB68U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=RZE2y/QW9fVzWE3mdbj8V2VXQv5oTro1KsC1vhnLXxHYukFL8Qf7E8GJOGfRBEZcfl5GrdusKQ1RCA0kKg3eCSWsIMWq0Y9AZd69yt36gVHsMCRNkx1e3CtHE0QgVTlrIaQ2avAo9hznj8gvjgsbOzhiOTFQfqGYXA+/aTpoEK4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ISu8rXWG; arc=fail smtp.client-ip=40.107.101.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b="cE7fWQ9K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD52C4CECD
-	for <patches@lists.linux.dev>; Tue, 12 Nov 2024 13:43:14 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b="cE7fWQ9K"
-Resent-From: Mark Brown <broonie@finisterre.sirena.org.uk>
-Resent-Date: Tue, 12 Nov 2024 13:43:11 +0000
-Resent-Message-ID: <ZzNbbwt_9aNny1lI@finisterre.sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Envelope-to: broonie@sirena.co.uk
-Delivery-date: Tue, 12 Nov 2024 13:14:48 +0000
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
-	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <SRS0=s6/z=SH=opensource.cirrus.com=prvs=80465ff1e4=ckeepax@kernel.org>)
-	id 1tAqjG-0039Mr-HF
-	for broonie@sirena.co.uk; Tue, 12 Nov 2024 13:14:48 +0000
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 18E4B5C55A9
-	for <broonie@sirena.co.uk>; Tue, 12 Nov 2024 13:14:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id 40944C4CED0; Tue, 12 Nov 2024 13:14:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1B762C4CECD
-	for <broonie@kernel.org>; Tue, 12 Nov 2024 13:14:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 1B762C4CECD
-Authentication-Results: smtp.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=opensource.cirrus.com
-Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
-	by mx0a-001ae601.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AC6dhRb026352;
-	Tue, 12 Nov 2024 07:14:37 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
-	:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=PODMain02222019; bh=AdNv6VJBkL+UQ4wf
-	hxhyUfabaQRutH6h88XESTcL05c=; b=cE7fWQ9K8FU3wUxKdODMnOxGUp8xgMa5
-	LiLln0Jkchs3t9OoqGr+QaTs7HHleKo9hwhGJKQONIgBg4KoqD3WlFCoT9zCIKfY
-	x6HTnnJgOdH1mMzzumDfYyxQT8kVG60Ba0s+v95A0ZVMRo2hSrrWhtZo5lHm4L+y
-	KNYvjEvWGP1JQZsdzIFd5/z9m4Lm4hmz0Hbu2Qk+W7z0HsnuT/GFlO+vw+MfS/Yr
-	ZarzTgo/pdEQ7lODctn1J4emDcx80M8JFYIgq8SWFzY971hZb9iUMzDTVu0DT+lC
-	IOi67OK+5lzpisUzNu/xS3eL8NmJzytPqlMex0dpAaz6NIreT4O2uQ==
-Received: from ediex02.ad.cirrus.com ([84.19.233.68])
-	by mx0a-001ae601.pphosted.com (PPS) with ESMTPS id 42t613b675-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Nov 2024 07:14:37 -0600 (CST)
-Received: from ediex02.ad.cirrus.com (198.61.84.81) by ediex02.ad.cirrus.com
- (198.61.84.81) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 12 Nov
- 2024 13:14:35 +0000
-Received: from ediswmail9.ad.cirrus.com (198.61.86.93) by
- anon-ediex02.ad.cirrus.com (198.61.84.81) with Microsoft SMTP Server id
- 15.2.1544.9 via Frontend Transport; Tue, 12 Nov 2024 13:14:35 +0000
-Received: from ediswws07.ad.cirrus.com (ediswws07.ad.cirrus.com [198.90.208.14])
-	by ediswmail9.ad.cirrus.com (Postfix) with ESMTP id 016EA820241;
-	Tue, 12 Nov 2024 13:14:35 +0000 (UTC)
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
-To: <broonie@kernel.org>
-CC: <patches@opensource.cirrus.com>, <linux-spi@vger.kernel.org>
-Date: Tue, 12 Nov 2024 13:14:34 +0000
-Message-ID: <20241112131434.678882-1-ckeepax@opensource.cirrus.com>
-X-Mailer: git-send-email 2.39.5
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ISu8rXWG"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LFRawjATwbt8v4TkwynINihlItIf3ZI7U8xgaUxA1MwPv45x8OJidcpkrj0k6Rn2LfvcHTB7Ihi6HDg1OkScYwbx+kiu+BNAGIE+lWgR9qJMJIvF+Ae6s6u2nhwgEjmU1KOrmWA2DOYYsWzxe9YGLMIakXPmtCK0qkzaNFndf5eLxRpKAvDyZdWtbIyeJWrsTPgodH8vzHd7HjYBMCBKz1D4plzYAjUdDClVmWFv/VrC694yPacf7E5kCHtNGY+T3EMhlHhwTpLNzX0An8Cq7nplVBeVR2uJzTq68F8z9unhGhrgrEtWcDCkH0di0A0hxx92+6JOaCEVoVRDOiZOYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jaPGy7f7qwAkFHdXRZDR1TWf1Lu4RCFWWeJfEYpR3hc=;
+ b=sBZON5y2eJxVxUTui0Yq0htiw6SN7GLEpWTfELu120jovMfnLx3MpwajkQdNyNxLHBvFtIXoMrNoTEKX8NRjlm1tiP5vVZyNr44xc60hrlnz7QCA9QsUv0zJ7HnT5QMwX+09pzl+qrisr8jHEQQEsqvE/nZGUbYrCkQuOGnW+TRJtK70U9iVkUj33fb+U+Fg5zTwdRNBCItkZX93azb3ETZtHr8kGM1mA3LHYJQlMG73/Y53VCJVPhzNFKBRIgnZQQh+hFe4WdzSiLDvPW/23qlvIxMVuKriz+rwW8BSAG12PKJqiUKvs7chXhCPOrBHk/S8QI/Md0jFW3x1MyEOvQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jaPGy7f7qwAkFHdXRZDR1TWf1Lu4RCFWWeJfEYpR3hc=;
+ b=ISu8rXWGIebSJADOmml3UzKTFn2Y4f1DsmgibrsELqtAwUmfYSG3YDh/yVjJcjSLM5W1MtgnocqoNF70KP9kpQ57WFD8A4f6LgQ3CYqRGyNFh0Oc6lGwsbKD6oHpR5asjAWMK8QOkxTXuqq/PnAivJrBYtr1DvzidIr7Fkf/qTm9bPtEciZ2JDjhdbE0KsZowzQ8yiztwjdKvbO2wMeEr1p7OLmUCIYav9cO4cfpoQTX9zcFgFsvl8OqcWriBc9lsSQJzCrG9YOJ4WIfI45ggkGp+drHlYgWZBierBqdrGdGlJr2xKRVsHgulR9L8JnNgUTjLYagl+n+HnY/MgWv7g==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by CYYPR12MB8891.namprd12.prod.outlook.com (2603:10b6:930:c0::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.27; Tue, 12 Nov
+ 2024 15:45:54 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8137.027; Tue, 12 Nov 2024
+ 15:45:52 +0000
+Date: Tue, 12 Nov 2024 11:45:51 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: kevin.tian@intel.com, corbet@lwn.net, joro@8bytes.org,
+	suravee.suthikulpanit@amd.com, will@kernel.org,
+	robin.murphy@arm.com, dwmw2@infradead.org, shuah@kernel.org,
+	iommu@lists.linux.dev, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org,
+	baolu.lu@linux.intel.com, eric.auger@redhat.com,
+	jean-philippe@linaro.org, mdf@kernel.org, mshavit@google.com,
+	shameerali.kolothum.thodi@huawei.com, smostafa@google.com,
+	yi.l.liu@intel.com, aik@amd.com, zhangfei.gao@linaro.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v7 02/13] iommufd: Move _iommufd_object_alloc helper to a
+ sharable file
+Message-ID: <20241112154551.GA50895@nvidia.com>
+References: <cover.1730836219.git.nicolinc@nvidia.com>
+ <2f4f6e116dc49ffb67ff6c5e8a7a8e789ab9e98e.1730836219.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2f4f6e116dc49ffb67ff6c5e8a7a8e789ab9e98e.1730836219.git.nicolinc@nvidia.com>
+X-ClientProxiedBy: BLAPR03CA0030.namprd03.prod.outlook.com
+ (2603:10b6:208:32b::35) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: 3Q2WRqZyrHFIM7JSZrmpEP1KfpLsOLgS
-X-Proofpoint-GUID: 3Q2WRqZyrHFIM7JSZrmpEP1KfpLsOLgS
-X-Proofpoint-Spam-Reason: safe
-X-SA-Exim-Connect-IP: 2604:1380:4641:c500::1
-X-SA-Exim-Mail-From: SRS0=s6/z=SH=opensource.cirrus.com=prvs=80465ff1e4=ckeepax@kernel.org
-Subject: [PATCH] spi: cs42l43: Add GPIO speaker id support to the bridge configuration
-X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
-X-TUID: 81IXBpZxHMs6
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|CYYPR12MB8891:EE_
+X-MS-Office365-Filtering-Correlation-Id: d85ae96e-3b16-4e03-d040-08dd033116a5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?qkIw4VvTrRWV03h9nf6xNNHWrswKYguDxxDvOULcjWu4FxQ4rUS2YpFhkPOG?=
+ =?us-ascii?Q?QCJJ/FTwwYbqQ7RbvSkYaB+COrDxiZGacQenzbuZzwGL/D69FOFUGJzyChb2?=
+ =?us-ascii?Q?F6QpPkc1QGIVUry23wlwxM8RXKCmW9KltRCAUVwxJk2DG/YfJHIqWEW5guw8?=
+ =?us-ascii?Q?lV0iLAOH2YZzUfuWFn16u3jvx4qx2KO3DlfZFIf6fzNT9im6X8Wh23FVPGgO?=
+ =?us-ascii?Q?Dxnxvcdq28qgAaQLllv2L24oTdmJyWDus94sQqYpQqFsVYLwKfUY2CLEuQqd?=
+ =?us-ascii?Q?qsDyg2RBk02p/lS8cVsu56GCTaipRsLEj5GWVcYArumfhjBNY7JTfvqxY8Gz?=
+ =?us-ascii?Q?85fADo37r1o5yxhvP7EOgr7YPW8P4Y1yh86uHBymQJJ4lkXxRW/TA0FNUM8H?=
+ =?us-ascii?Q?jz75RJW4Zp442ck1XBJ2xXstu//d4PvAFg7Go8eK3MdiAZxBaZqxOO7+vr3D?=
+ =?us-ascii?Q?oBLosyETHxm2dik4XqECbb/0IdjsddIzY7DVBCBkY14O0PnbUvJrmjF/LekR?=
+ =?us-ascii?Q?ZNdfUh2hgbkepmAiViTUPVErhsKhuT7mB7rbARXhh5sx9xCxnPFsW77ySPJU?=
+ =?us-ascii?Q?nyO+E3DYxF8FSJ7lDzS3vj68k/Iu1Lfz5AeFlOvBuCtpMjWGA9IkeojCYSA5?=
+ =?us-ascii?Q?eZmgKsVAnNHWpXasPud36psdOBxk8MF8Vp34Z/gpLMuA8+Qr6H9Ybbmd5mP/?=
+ =?us-ascii?Q?qi+vr3Z/HhSFxO8kLtAQGKmzmfqMNB+mEBFqcgn4KhGwl+/oKk0wjF1Bg8IH?=
+ =?us-ascii?Q?cdmSEMZ/lzSHJfIT6UCgHKc6D3QleIbCYHCWvexPWyWaoGU9N5gDYqIxWpm/?=
+ =?us-ascii?Q?+ogHRAh9cckrjcqGfsUGcWN7B9/HryuplzXHU1dvdeiIVhAyVo2CYi8JvBlT?=
+ =?us-ascii?Q?7l12Sjw6svSFxmXzaIGaPUxmsM5j6j3YE47Cz3jZRGzhWsh17cLa+rfCz0Na?=
+ =?us-ascii?Q?ec7ZtHvkfkupnGY6lxaat9FAlkwx+Sb3ybhJclvppqxxNH4Q3oIJJVj0rXpi?=
+ =?us-ascii?Q?6eaBgEIfue87wUCVUnW4GQIJhRye87uEED7RCwHxS+jOlby68K/2Ft+zrZvA?=
+ =?us-ascii?Q?r5qJjcZxMDY4qi+y89AUkdb5Qu2unepi+aTO7zr+q51xOatdmnWtsOQo2Z4v?=
+ =?us-ascii?Q?xZ8Nz5ywVPMNW3Jmfhn8EchVJxu53xWTgU4dG0p5X7H6af2msqfXCEC0XnKd?=
+ =?us-ascii?Q?kJSlYFDBAP3tIKgVflu04WG/RqqP6jf+01He7OZD87Ki3JApv4cfogtPUXve?=
+ =?us-ascii?Q?Qi1IuZPGY5ryyjz09cgBemUiFyX9oCy7L0CaiblGaH7OQLaj+UlchqrL2+35?=
+ =?us-ascii?Q?8wiJZ//K2P2rEtLjbHWsrxE2?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?yN4AIhOuXxeAXDoeE81wAjbRLZ/9TKpb93BCFswNP9isWdSy+O2NUndYQZ9J?=
+ =?us-ascii?Q?1GAvs7lRwQysapL5FomSTUzrr/wzVXVKFuMUIrtamOCEj0TNCtWxcarAaPZ2?=
+ =?us-ascii?Q?Ifb5iNiqNPexSDlft8Qz+nE6QihjpfSabWwxXRRQP33ERBzAhwfi+UEfOneY?=
+ =?us-ascii?Q?ku/kE3lao8IITtNMJHd3MOJw/Cxsdvx00aDAmJA0R46zwHo/GzfjfQVe2MGJ?=
+ =?us-ascii?Q?Kk/4h0nW1nwtkw/Ku9Uhtew1sh/1ng2+DX01eDwNjA4a90Hq1avuGoj2hPxi?=
+ =?us-ascii?Q?E4dDUFyDPVjWdW42QbZZRj9GeC0u8iivzqlLCKGUwliQ4Cu9SoqBr5RM7vv1?=
+ =?us-ascii?Q?eh8YKedlJGA5G4Hggd+6UhbsiQ9C/ZSWDZqstCXXTSNEkehs/Eon/f5OyvV+?=
+ =?us-ascii?Q?Dk5pYLVyvFf2ozXHrt8LW3OxwjpK+KTe6XQgY/2PziMW/0Mi0UNrs+u4Hr7h?=
+ =?us-ascii?Q?qLHKh4Jua4d4i0R6MBC4GSnFOmKX0wnfmTgTWByJyf2NPfiG2XFcUzE+M7p4?=
+ =?us-ascii?Q?WmzltLN+UlIZz8uhYl+S6gBLR7/dTtDi3NIPfiNtRJ2Q/UtXpfyY/77AwJhc?=
+ =?us-ascii?Q?JBZdfhWVLlj8DgNGngmttdqnnULhJfXU2+1wx0hsEji/hiZEE6D0RiGph12d?=
+ =?us-ascii?Q?bAiez5dMzr/EPzKy+WrCPrzUgu4Ag3IACQ8fUeFs3J0A2zUH8VZWkOGQre/s?=
+ =?us-ascii?Q?7+RWIPG5cYgCCqmokVKxGePfqdwKsyzQSlJ8baYTPr+RvBh4nYu9mQEyooGf?=
+ =?us-ascii?Q?Z0FSiEsnKZfgQMFe62vsntp1i3XQhZzs5XIlgktHC8MihhgVu59cWjd+YpQf?=
+ =?us-ascii?Q?zB8kTCQF55jf44mTxgbIuLfddEFYfy2w46Nl16hDP2Rv2Snke0bDeRCL8SFj?=
+ =?us-ascii?Q?o1xCk4fIEI7zXJLNad3yJ1nC6CG8mWEYQxN828GscxNxSb9MXBz3/QvdOmov?=
+ =?us-ascii?Q?Ya6gLMgRY4NMNx+Vnnx+Pry6cmlIKjCbCIYpoeqTueGX0Ivotfz43oAdh0yv?=
+ =?us-ascii?Q?ynGw50qQo7nfd5chEY2w1cK8GjcumUhfbrR03WysWr+veL/atTcpwbWDPpBF?=
+ =?us-ascii?Q?DxAeo3E/mzy9lQ7r7DR14hDncCfjnYNGf5ZqfpY3pam2gymuxnfHvkjL4lzE?=
+ =?us-ascii?Q?wYgjJMNloCuPAb1kPikl/ZAHM2dBEFL4N9LOyEX48xqdpyN0RBS6t28TsFJ6?=
+ =?us-ascii?Q?F2DXSSKu74pgSl26cmvj452f556G7ih7nkkVkTVxWPzcNxKxrtAF//Nl7uj0?=
+ =?us-ascii?Q?2exNTKxDZMQqwrEhX7tnNmxfPr4GCLFzwnyQLfbf7kkvsbfO3RPkksNqkhUv?=
+ =?us-ascii?Q?3+qh/6Xy0R8XixAttp5b4x/Vz3T4OmRfGUUlss+0e7WceOA3imFL2unTO36w?=
+ =?us-ascii?Q?aVRkM4iT2BGbMECvfiDMd1VjDonaQ/bfYP1x1UJzsqUrn1ylJtAN+UFZxuGR?=
+ =?us-ascii?Q?4lRVPnrkMDf7A2BOi54cBXOwFsOoMTZIbagIObUjnMcpTBnAVjkQsThfBJaL?=
+ =?us-ascii?Q?wZCknnTOdkrvk7mW+AtWhfrAWWukv0NAzvhDmdVVWPhwfC7nimNFp7ftqeIF?=
+ =?us-ascii?Q?62eHTcqvuAY81tFnFKc59jLgcolPjlkkauNzCFEh?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d85ae96e-3b16-4e03-d040-08dd033116a5
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2024 15:45:52.7006
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2lnAs15rRVIe/faQCGQEAaqXVGWUFegDk5zHz2ynWRIaJADWNB8EtIkOMhD0oKgE
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR12MB8891
 
-From: Simon Trimmer <simont@opensource.cirrus.com>
+On Tue, Nov 05, 2024 at 12:04:18PM -0800, Nicolin Chen wrote:
 
-OEMs can use the spk-id-gpios ACPI property to indicate the type of
-speakers fitted to a device.
+> --- a/drivers/iommu/iommufd/Makefile
+> +++ b/drivers/iommu/iommufd/Makefile
+> @@ -13,3 +13,4 @@ iommufd-$(CONFIG_IOMMUFD_TEST) += selftest.o
+>  
+>  obj-$(CONFIG_IOMMUFD) += iommufd.o
+>  obj-$(CONFIG_IOMMUFD_DRIVER) += iova_bitmap.o
+> +obj-$(CONFIG_IOMMUFD_DRIVER_CORE) += driver.o
 
-Attempt to read a spk-id value using the GPIO method when a usable
-spk-id value is not obtained from the 01fa-spk-id-val ACPI property.
+This gives a wonky module name of "driver.ko", I'm going to adjust it
+to this:
 
-Obtaining the spk-id value has been moved earlier in the function to the
-other sidecar block, so that an -EPROBE_DEFER from a GPIO driver is
-handled more efficiently.
+-obj-$(CONFIG_IOMMUFD_DRIVER_CORE) += driver.o
++
++iommufd_driver-y := driver.o
++obj-$(CONFIG_IOMMUFD_DRIVER_CORE) += iommufd_driver.o
 
-Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
----
- drivers/spi/spi-cs42l43.c | 46 ++++++++++++++++++++++++++++++++++-----
- 1 file changed, 41 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/spi/spi-cs42l43.c b/drivers/spi/spi-cs42l43.c
-index 5b8ed65f8094d..d0b55a26c31b9 100644
---- a/drivers/spi/spi-cs42l43.c
-+++ b/drivers/spi/spi-cs42l43.c
-@@ -12,6 +12,7 @@
- #include <linux/cleanup.h>
- #include <linux/device.h>
- #include <linux/errno.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/gpio/machine.h>
- #include <linux/gpio/property.h>
- #include <linux/mfd/cs42l43.h>
-@@ -229,6 +230,33 @@ static size_t cs42l43_spi_max_length(struct spi_device *spi)
- 	return CS42L43_SPI_MAX_LENGTH;
- }
- 
-+static int cs42l43_get_speaker_id_gpios(struct cs42l43_spi *priv, int *result)
-+{
-+	struct gpio_descs *descs;
-+	u32 spkid;
-+	int i, ret;
-+
-+	descs = gpiod_get_array_optional(priv->dev, "spk-id", GPIOD_IN);
-+	if (IS_ERR_OR_NULL(descs))
-+		return PTR_ERR(descs);
-+
-+	spkid = 0;
-+	for (i = 0; i < descs->ndescs; i++) {
-+		ret = gpiod_get_value_cansleep(descs->desc[i]);
-+		if (ret < 0)
-+			goto err;
-+
-+		spkid |= (ret << i);
-+	}
-+
-+	dev_dbg(priv->dev, "spk-id-gpios = %d\n", spkid);
-+	*result = spkid;
-+err:
-+	gpiod_put_array(descs);
-+
-+	return ret;
-+}
-+
- static struct fwnode_handle *cs42l43_find_xu_node(struct fwnode_handle *fwnode)
- {
- 	static const u32 func_smart_amp = 0x1;
-@@ -306,6 +334,7 @@ static int cs42l43_spi_probe(struct platform_device *pdev)
- 	struct fwnode_handle *fwnode = dev_fwnode(cs42l43->dev);
- 	struct fwnode_handle *xu_fwnode __free(fwnode_handle) = cs42l43_find_xu_node(fwnode);
- 	int nsidecars = 0;
-+	int spkid = -EINVAL;
- 	int ret;
- 
- 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
-@@ -360,6 +389,18 @@ static int cs42l43_spi_probe(struct platform_device *pdev)
- 	fwnode_property_read_u32(xu_fwnode, "01fa-sidecar-instances", &nsidecars);
- 
- 	if (nsidecars) {
-+		ret = fwnode_property_read_u32(xu_fwnode, "01fa-spk-id-val", &spkid);
-+		if (!ret) {
-+			dev_dbg(priv->dev, "01fa-spk-id-val = %d\n", spkid);
-+		} else if (ret != -EINVAL) {
-+			return dev_err_probe(priv->dev, ret, "Failed to get spk-id-val\n");
-+		} else {
-+			ret = cs42l43_get_speaker_id_gpios(priv, &spkid);
-+			if (ret < 0)
-+				return dev_err_probe(priv->dev, ret,
-+						     "Failed to get spk-id-gpios\n");
-+		}
-+
- 		ret = software_node_register(&cs42l43_gpiochip_swnode);
- 		if (ret)
- 			return dev_err_probe(priv->dev, ret,
-@@ -385,11 +426,6 @@ static int cs42l43_spi_probe(struct platform_device *pdev)
- 	if (nsidecars) {
- 		struct spi_board_info *ampl_info;
- 		struct spi_board_info *ampr_info;
--		int spkid = -EINVAL;
--
--		fwnode_property_read_u32(xu_fwnode, "01fa-spk-id-val", &spkid);
--
--		dev_dbg(priv->dev, "Found speaker ID %d\n", spkid);
- 
- 		ampl_info = cs42l43_create_bridge_amp(priv, "cs35l56-left", 0, spkid);
- 		if (!ampl_info)
--- 
-2.39.5
-
+Thanks,
+Jason
