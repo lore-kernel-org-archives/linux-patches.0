@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0342123CF;
-	Tue, 12 Nov 2024 10:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F52215C66;
+	Tue, 12 Nov 2024 10:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407220; cv=none; b=eozxikQnYJKND/flNFz+ajOAUAPrQSIxBZVeVIr9RGDV9rCqJjrM06suEwVt2+GA6B9mTqKP9p0T4GWS/FdDrNGi+RnsSkNGDfjwH5JcY/g9yZmFSAM7xjHYxY3m8+RrG8ICyrTQfsgEm9jtIlLoyFWqheK6cHgMFBPxyk74XAE=
+	t=1731407224; cv=none; b=ayI3GBE9GBYOSKl4AtOlZJlx817xMNmk6zJHRc1WWRAdrrpQCmTb2YI+1Bn4Kf+onnHeTGtViv5URHp7qw9unSTzJBCzdw5MeGpPmkeRb9SQs/d64NQzgSo6ncCg2DwLNOjakRkhaPFPGtNgZ2UAYqEuzg+zet5MFkB1Hub63bM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407220; c=relaxed/simple;
-	bh=iF4aGTEK0J/TaIgRMGPzl6Dk7+XQ6RjnTqZfbIFYEZQ=;
+	s=arc-20240116; t=1731407224; c=relaxed/simple;
+	bh=Oy6RCSDcQgelv7tLD0cQhaPC/sJxTvlvJyrz6HXPKsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oc34xbbxWPWi4UyRBdRZXr3Q5Xkc42ON70tbvq30axSY806dhNV9H6y/VrOT2nwxQoEcKys0WdvKbAH8uw4J12KRkYoyZIapoxkUHjh6c3Y2lwRg6zg8eBnLMkoE7u7qJJIV1/CVfl/jiRv1anT0nQ0IzNl3dzvgTiOL69rPMr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbitsCiD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ceQ3kHqTWZnN52TqsjbWr5W57QZGlU/NGicmbDfbosJ0yxHn53jmaD+6ij8L17Rf8MHOf+L5zPZXTnmcRG981YPNluHhdtR3dSYXNNhRvqQRPKPMpmeSdV1FSr86X+DcTx+vjEG91su4oGdTCMlibIHNxBkm4XO/qRucRuQXDmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hL0TnKKT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbitsCiD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06314C4CECD;
-	Tue, 12 Nov 2024 10:26:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hL0TnKKT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B35C4CED4;
+	Tue, 12 Nov 2024 10:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407220;
-	bh=iF4aGTEK0J/TaIgRMGPzl6Dk7+XQ6RjnTqZfbIFYEZQ=;
+	s=korg; t=1731407223;
+	bh=Oy6RCSDcQgelv7tLD0cQhaPC/sJxTvlvJyrz6HXPKsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QbitsCiDB1VvVGCBU6kRq7llySltiss8j8+PeNh/KvENqPUsIRTodx4Iee5BbPQiq
-	 eGPSXG4WPbgLTXuyXsMNxrJKB/ZGeFGwsnsdefjmJq9X70C3tpIGLfpohPNnNd7G2p
-	 Qobcdz7d6nJ714F0C0Lt2kQsMcA0D5Z6cfM1C6Pk=
+	b=hL0TnKKTohv9KCb19d63GSO/6bGRdFxADLY2Z9+bp/s2iXs8Md5MYXNqKmGGsx0mt
+	 FAMuupztZSUfWU4LsBcQCuc9381vO3HEchQoN0VUVC7riyFfZwBIFsBTcyIcUgmzNI
+	 f+WorCs070rVsGrlQ2GrFvkNU4QaAwhUb5INCUss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Diederik de Haas <didi.debian@cknow.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 02/98] arm64: dts: rockchip: Fix rt5651 compatible value on rk3399-sapphire-excavator
-Date: Tue, 12 Nov 2024 11:20:17 +0100
-Message-ID: <20241112101844.361588049@linuxfoundation.org>
+Subject: [PATCH 6.1 03/98] arm64: dts: rockchip: Remove hdmis 2nd interrupt on rk3328
+Date: Tue, 12 Nov 2024 11:20:18 +0100
+Message-ID: <20241112101844.398848788@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -51,36 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Diederik de Haas <didi.debian@cknow.org>
 
-[ Upstream commit 577b5761679da90e691acc939ebbe7879fff5f31 ]
+[ Upstream commit de50a7e3681771c6b990238af82bf1dea9b11b21 ]
 
-There are no DT bindings and driver support for a "rockchip,rt5651"
-codec.  Replace "rockchip,rt5651" by "realtek,rt5651", which matches the
-"simple-audio-card,name" property in the "rt5651-sound" node.
+The "synopsys,dw-hdmi.yaml" binding specifies that the interrupts
+property of the hdmi node has 'maxItems: 1', so the hdmi node in
+rk3328.dtsi having 2 is incorrect.
 
-Fixes: 0a3c78e251b3a266 ("arm64: dts: rockchip: Add support for rk3399 excavator main board")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/abc6c89811b3911785601d6d590483eacb145102.1727358193.git.geert+renesas@glider.be
+Paragraph 1.3 ("System Interrupt connection") of the RK3328 TRM v1.1
+page 16 and 17 define the following hdmi related interrupts:
+-  67 hdmi_intr
+- 103 hdmi_intr_wakeup
+
+The difference of 32 is due to a different base used in the TRM.
+
+The RK3399 (which uses the same binding) has '23: hdmi_irq' and
+'24: hdmi_wakeup_irq' according to its TRM (page 19).
+The RK3568 (also same binding) has '76: hdmi_wakeup' and '77: hdmi'
+according to page 17 of its TRM.
+In both cases the non-wakeup IRQ was used, so use that too for rk3328.
+
+Helped-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 725e351c265a ("arm64: dts: rockchip: add rk3328 display nodes")
+Signed-off-by: Diederik de Haas <didi.debian@cknow.org>
+Link: https://lore.kernel.org/r/20241008113344.23957-3-didi.debian@cknow.org
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3328.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts b/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts
-index dbec2b7173a0b..31ea3d0182c06 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts
-@@ -163,7 +163,7 @@
- 	status = "okay";
- 
- 	rt5651: rt5651@1a {
--		compatible = "rockchip,rt5651";
-+		compatible = "realtek,rt5651";
- 		reg = <0x1a>;
- 		clocks = <&cru SCLK_I2S_8CH_OUT>;
- 		clock-names = "mclk";
+diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+index 5adb2fbc2aafa..75ea512e9724f 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+@@ -724,8 +724,7 @@
+ 		compatible = "rockchip,rk3328-dw-hdmi";
+ 		reg = <0x0 0xff3c0000 0x0 0x20000>;
+ 		reg-io-width = <4>;
+-		interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
++		interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&cru PCLK_HDMI>,
+ 			 <&cru SCLK_HDMI_SFC>,
+ 			 <&cru SCLK_RTC32K>;
 -- 
 2.43.0
 
