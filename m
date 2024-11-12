@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9F720B20B;
-	Tue, 12 Nov 2024 10:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84AC82101A9;
+	Tue, 12 Nov 2024 10:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407141; cv=none; b=BpghYp/4XmSyMgxTAh2L5e7T9HNezsLyFmXK3dGhxjDv7oWZn79JlVTnbODsr3Bejf7rETLJfEa7mZ5Omanv3cBKb1l0BYaPBjR7ps42JwOA33ECQcRA43QYwg6raOYy2UfgDg8XwZ5GabnSUgIZxxhVV48gnXu8biMDviAYtxw=
+	t=1731407144; cv=none; b=P0M3KSMxTwiQbVQVgIdHOG+TD9lIYL+iDC5TJAJ3oNtmeuhpENBNRPhojJPARqsUU1BJe70GIfZnWrCwUjYeyLaf6Ah3fc8k2SHY0IsbF2pkooRD9oEP4bhbSNSwc4Nvwmgvuq/aLPfxNkBYTpDe3g1vet+xyeS9slztWSqbWSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407141; c=relaxed/simple;
-	bh=KW1rnn5kgWO+pD47FHk67BZhvBM3rQ7PDIpIwESL+PY=;
+	s=arc-20240116; t=1731407144; c=relaxed/simple;
+	bh=PEcPCxYMj0FMP74FaQV6UGReU4l1Jtqc4jZY085IdfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JrRySYOPI+JFNQhuooDBtfBLo7U3x1wFyfI8BA2gNE/0ItTT/ps/575zAF0+lQqTIf5H6dRq8XfWY3WGv3eNLGT7LZ97DOwN44P9rYOc6L79q4cbrfLR+RFyqXNKrmL/2as4luKjaFZYaQbszaqJ8uMI9QLIl2ypmcJXnxhCxqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7ppBuXb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uw8wge9oT0Vl/woCweT110Fg8cE6tYuSun/NnRjfgTyfk6q8dhfsuzGTO/OA2GsCjYrlf5BTvWpt/CLmkabxC661xiy6X36jXnwC3EZiTLLHcjNnoRJ55bm2a5/eEGlE9crQnkFGuqtX+Pq93K89TE//HHmxk0Z/sGQuKOW7LqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deMC8/OX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7ppBuXb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F630C4CED4;
-	Tue, 12 Nov 2024 10:25:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deMC8/OX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08915C4CECD;
+	Tue, 12 Nov 2024 10:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407141;
-	bh=KW1rnn5kgWO+pD47FHk67BZhvBM3rQ7PDIpIwESL+PY=;
+	s=korg; t=1731407144;
+	bh=PEcPCxYMj0FMP74FaQV6UGReU4l1Jtqc4jZY085IdfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w7ppBuXbT4sHOGV0S0K4GqXFgbqnvUE9ZaaUPp0NEfB+5zp2LGwKTsb4jIS7xO/rK
-	 WmXSI1Fie/7vNXRpEz4tsedi8R0wxDt8p4ZVGqVP1gKQKV6CiGRgbn58+xwbVglRxs
-	 xiL3cDIAiBucgsC/6aCMDG2hTd4guW0YSWuuf2uQ=
+	b=deMC8/OX45UNE5JEgbP3KMfEz8GULZJKoRYBLWfT5iRITvjLrXe0tBKUXOLWJusfD
+	 b2B8X2E8vjNB8+8PcfNnczNtZYbgdk8WAkVN/cBMyIEmEFXo8dOhQd8Eg3lih7+t4B
+	 tn+KJLC7CNYPpqvniByJwghsaa5NRjxHQan2XLIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@maxima.ru>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 31/76] ALSA: firewire-lib: fix return value on fail in amdtp_tscm_init()
-Date: Tue, 12 Nov 2024 11:20:56 +0100
-Message-ID: <20241112101840.972948419@linuxfoundation.org>
+Subject: [PATCH 5.15 32/76] ASoC: stm32: spdifrx: fix dma channel release in stm32_spdifrx_remove
+Date: Tue, 12 Nov 2024 11:20:57 +0100
+Message-ID: <20241112101841.010797583@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -52,39 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@maxima.ru>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-[ Upstream commit 8abbf1f01d6a2ef9f911f793e30f7382154b5a3a ]
+[ Upstream commit 9bb4af400c386374ab1047df44c508512c08c31f ]
 
-If amdtp_stream_init() fails in amdtp_tscm_init(), the latter returns zero,
-though it's supposed to return error code, which is checked inside
-init_stream() in file tascam-stream.c.
+In case of error when requesting ctrl_chan DMA channel, ctrl_chan is not
+null. So the release of the dma channel leads to the following issue:
+[    4.879000] st,stm32-spdifrx 500d0000.audio-controller:
+dma_request_slave_channel error -19
+[    4.888975] Unable to handle kernel NULL pointer dereference
+at virtual address 000000000000003d
+[...]
+[    5.096577] Call trace:
+[    5.099099]  dma_release_channel+0x24/0x100
+[    5.103235]  stm32_spdifrx_remove+0x24/0x60 [snd_soc_stm32_spdifrx]
+[    5.109494]  stm32_spdifrx_probe+0x320/0x4c4 [snd_soc_stm32_spdifrx]
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+To avoid this issue, release channel only if the pointer is valid.
 
-Fixes: 47faeea25ef3 ("ALSA: firewire-tascam: add data block processing layer")
-Signed-off-by: Murad Masimov <m.masimov@maxima.ru>
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20241101185517.1819-1-m.masimov@maxima.ru
+Fixes: 794df9448edb ("ASoC: stm32: spdifrx: manage rebind issue")
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Link: https://patch.msgid.link/20241105140242.527279-1-olivier.moysan@foss.st.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/firewire/tascam/amdtp-tascam.c | 2 +-
+ sound/soc/stm/stm32_spdifrx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/firewire/tascam/amdtp-tascam.c b/sound/firewire/tascam/amdtp-tascam.c
-index 64d66a8025455..ad185ff3209db 100644
---- a/sound/firewire/tascam/amdtp-tascam.c
-+++ b/sound/firewire/tascam/amdtp-tascam.c
-@@ -244,7 +244,7 @@ int amdtp_tscm_init(struct amdtp_stream *s, struct fw_unit *unit,
- 	err = amdtp_stream_init(s, unit, dir, flags, fmt,
- 			process_ctx_payloads, sizeof(struct amdtp_tscm));
- 	if (err < 0)
--		return 0;
-+		return err;
+diff --git a/sound/soc/stm/stm32_spdifrx.c b/sound/soc/stm/stm32_spdifrx.c
+index 48145f5535880..e3d6258afbac8 100644
+--- a/sound/soc/stm/stm32_spdifrx.c
++++ b/sound/soc/stm/stm32_spdifrx.c
+@@ -947,7 +947,7 @@ static int stm32_spdifrx_remove(struct platform_device *pdev)
+ {
+ 	struct stm32_spdifrx_data *spdifrx = platform_get_drvdata(pdev);
  
- 	if (dir == AMDTP_OUT_STREAM) {
- 		// Use fixed value for FDF field.
+-	if (spdifrx->ctrl_chan)
++	if (!IS_ERR(spdifrx->ctrl_chan))
+ 		dma_release_channel(spdifrx->ctrl_chan);
+ 
+ 	if (spdifrx->dmab)
 -- 
 2.43.0
 
