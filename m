@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0B820E33B;
-	Tue, 12 Nov 2024 10:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D882123C8;
+	Tue, 12 Nov 2024 10:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407061; cv=none; b=R/vq9e/wzw4DBMwsDQgBLc3H++GImS2aA37XMWYe05VJZqsGoHfj3oDwUsMF46oxDro3JPTLz2kpfCqX2zclso5HZ3crDF2ewgopS5X3HdVTHzWH52gbZ+EkOICzFcLYsnJM0N89ReGGE3ToyVb1fVd1jsTliLTnaeMMryqmHyw=
+	t=1731407064; cv=none; b=T1+tAb1GMCMb0QzpbtOoqoFLCn2P+OEEeOgcNK9LtRJslcSgJNayNkM69uJWOP9ykMcXA/o4OZtk3/r5EHSyVkv319fcSkzbzFX3/6/MtW9x++GWhq6iagvAivY4VdQk0tGSgX6NhXdHpe3Gg/HFCv0VTFPsmqNmp99mJVeeKk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407061; c=relaxed/simple;
-	bh=0ZHWuKYW9rFqcWG3Rhc7B4SsNFerwt4XR4FV7NI3Yh4=;
+	s=arc-20240116; t=1731407064; c=relaxed/simple;
+	bh=JK3b3oJIvKWGlV1+SyeD0OKZjfazv7PH3GQcGZ9qpFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h9ZcF64P5IIbD0Ky2dQahnLoF0pdp1SE11LXnqO4NrYdZ2wU1oIuhWaX01AGR9x+sELSkPBHeA9dzlhV4sHEEeODAq3c26G9mZ/t9o/A573fF/22EzItwq2o0nffaJSqyA72eFVvnm8ExOPByV43xNMo4TK7BpZP9HRWqijUdn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WkQXlqH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BVnNDn5p3jFP9M170ZG4FR8OezrvChrsm37SpzEP9OpKQAGVnHmUmCt0IpT6XZfFQqwLc3X92ZPFT0ofBx9Vkg4uNseQDNifWDC/LeLbW/PxgCu6OkMHWDOpIcYmtVP42ZVkkSFA1lKoawP/2h/xl//pt47FKq7C4pT5wwR7UEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+VGKeJn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WkQXlqH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEACBC4CECD;
-	Tue, 12 Nov 2024 10:24:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+VGKeJn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25044C4CECD;
+	Tue, 12 Nov 2024 10:24:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407061;
-	bh=0ZHWuKYW9rFqcWG3Rhc7B4SsNFerwt4XR4FV7NI3Yh4=;
+	s=korg; t=1731407064;
+	bh=JK3b3oJIvKWGlV1+SyeD0OKZjfazv7PH3GQcGZ9qpFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1WkQXlqHRQQsjqr0rodonQmIIE0JLLJZg9NUrKyZd1ZSyExakZvXBj+qcT85G5iAV
-	 k3rfo34mNrqUyPFGf9jh0V1Tc4E4lma4Za/x+UNQRJYECIOx7eTLw/qF3lCvkW6XRs
-	 im4b6cy2I+O1Fq6R4UyJtZT2IwqPoC8b8beEAQBg=
+	b=D+VGKeJnYgbpk5LGQyGTm+gMM080kkKmdICK3OGigXeWk0xKKNf7Z1GkCZDTTcU78
+	 7zpCfkTY79ITUu+JdgPxyS1at2lpLm0O+1gxDUQa3981tinTZQBufpRNeTPwYeTJEN
+	 qOm4D4sjob6XB75uD082pVsQsl7CNnl7f2ZgVd5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Wang <kevinyang.wang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 39/76] drm/amdgpu: Adjust debugfs eviction and IB access permissions
-Date: Tue, 12 Nov 2024 11:21:04 +0100
-Message-ID: <20241112101841.273345621@linuxfoundation.org>
+Subject: [PATCH 5.15 40/76] drm/amdgpu: add missing size check in amdgpu_debugfs_gprwave_read()
+Date: Tue, 12 Nov 2024 11:21:05 +0100
+Message-ID: <20241112101841.310832049@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -52,35 +52,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-commit f790a2c494c4ef587eeeb9fca20124de76a1646f upstream.
+commit 4d75b9468021c73108b4439794d69e892b1d24e3 upstream.
 
-Users should not be able to run these.
+Avoid a possible buffer overflow if size is larger than 4K.
 
 Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7ba9395430f611cfc101b1c2687732baafa239d5)
+(cherry picked from commit f5d873f5825b40d886d03bd2aede91d4cf002434)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -1523,11 +1523,11 @@ int amdgpu_debugfs_init(struct amdgpu_de
- 	amdgpu_securedisplay_debugfs_init(adev);
- 	amdgpu_fw_attestation_debugfs_init(adev);
+@@ -401,7 +401,7 @@ static ssize_t amdgpu_debugfs_regs_didt_
+ 	ssize_t result = 0;
+ 	int r;
  
--	debugfs_create_file("amdgpu_evict_vram", 0444, root, adev,
-+	debugfs_create_file("amdgpu_evict_vram", 0400, root, adev,
- 			    &amdgpu_evict_vram_fops);
--	debugfs_create_file("amdgpu_evict_gtt", 0444, root, adev,
-+	debugfs_create_file("amdgpu_evict_gtt", 0400, root, adev,
- 			    &amdgpu_evict_gtt_fops);
--	debugfs_create_file("amdgpu_test_ib", 0444, root, adev,
-+	debugfs_create_file("amdgpu_test_ib", 0400, root, adev,
- 			    &amdgpu_debugfs_test_ib_fops);
- 	debugfs_create_file("amdgpu_vm_info", 0444, root, adev,
- 			    &amdgpu_debugfs_vm_info_fops);
+-	if (size & 0x3 || *pos & 0x3)
++	if (size > 4096 || size & 0x3 || *pos & 0x3)
+ 		return -EINVAL;
+ 
+ 	if (!adev->didt_wreg)
 
 
