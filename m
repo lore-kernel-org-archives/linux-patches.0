@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0647214404;
-	Tue, 12 Nov 2024 10:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C302214415;
+	Tue, 12 Nov 2024 10:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408330; cv=none; b=Zn8DLPOcnqPBizwuBHkScmdp6X4CZll3pCA5F4oW2UeeuS2KV/YUrkuRuD0IpFrfabv0g9Df31fwnjbw+7kiiBYPl1j6K1lFlRx2hSqQUv3zS+kSJUV5R1s9ybE0IZvw08LjnFGzD2AnAARPe/jwGX7hJYK7D+LK12LK+XKZBW0=
+	t=1731408334; cv=none; b=nltdNl3VjHL4Cc2w2x4cBtITRtiJd5mNXMOx0TXukA3itVBoQxFDNlW7jqxjpMYo0WS/HWb8vLtbbkehbGJBdMQHlQjmzcBXG86tc9YLGeS1jBotiKs/50c+x3P5BFOIC0V2Zb2pB3k9GYP016l3+m8OztDJL6tMB2T1yRdhR5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408330; c=relaxed/simple;
-	bh=qhAxGBOpkCSpOnf/Yy32tXBLgkP4ojrKvOOWClQHRg4=;
+	s=arc-20240116; t=1731408334; c=relaxed/simple;
+	bh=G7vBc6dAock588Agrtx/nc9zo1uN/47JHez/y8dmkxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c+cBKrqVGK0rGCyE7B+EhJwA934282CamkLSQYuM+VTjZOIjXnp2UMl5EF8q7Q7x73t8g+KoaNeZ0RB5yOrGoJ3oIhIqb/w8GyrqRYo0rh/+i2oxVKFTTVt02zXtctadD12o916paRwGRNw3kH0pp9ph4M8NSYDH8WY+DJjr/tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMp2/pAA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QvdIU/VOy9mjJxLhCskB+OyiEmHrwC9Xs2liE8Ti1Xizy5kXnRioQ6FxzffMCbTPKHdPs1kgU38LBijwQW8uzuaS7WFobm/dgmQmu5WOrZLoAk5qVGoRVaLLtzftbUZAfMUMQw7PrJH97JB+YNbRDmp7XKvE5jCGEflVzGZG45k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9IvYJH8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMp2/pAA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C66FC4CECD;
-	Tue, 12 Nov 2024 10:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9IvYJH8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96974C4CECD;
+	Tue, 12 Nov 2024 10:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408330;
-	bh=qhAxGBOpkCSpOnf/Yy32tXBLgkP4ojrKvOOWClQHRg4=;
+	s=korg; t=1731408334;
+	bh=G7vBc6dAock588Agrtx/nc9zo1uN/47JHez/y8dmkxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SMp2/pAAQjtim/mXarGtBei83Kq/SDnT/yY+Qt/ncziuzN8LIDQTcF3/JIi2+Hc6a
-	 aZrr1kza3Ye9KiebaHt7CxMoolfjSQwEhCwpwfNFKoI2nFFw2J2rM2ipEC26YDrU61
-	 780x+IWn7bECFXPQFc8rDzYSJpKqJLr8PETEiPgY=
+	b=e9IvYJH8pK291pj5A9NBI4vHlYNpvWMOTGUbPnO9wu+nawFyrqXmxy71Gl7beuOog
+	 2NwRvc1TBdqfE1OdNUZIlwZzTDG3EzV5dyzjqUgjhHvTrwbGKRdxMQCaLngo6Zj9Dr
+	 EMBhvjbZ+M2hQsAds0sOgz2JosVIfBFsYNVwSQ1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Chris Lew <quic_clew@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.11 098/184] rpmsg: glink: Handle rejected intent request better
-Date: Tue, 12 Nov 2024 11:20:56 +0100
-Message-ID: <20241112101904.625370588@linuxfoundation.org>
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.11 099/184] drm/amd/pm: always pick the pptable from IFWI
+Date: Tue, 12 Nov 2024 11:20:57 +0100
+Message-ID: <20241112101904.662279749@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -52,99 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Kenneth Feng <kenneth.feng@amd.com>
 
-commit a387e73fedd6307c0e194deaa53c42b153ff0bd6 upstream.
+commit 1356bfc54c8d4c8e7c9fb8553dc8c28e9714b07b upstream.
 
-GLINK operates using pre-allocated buffers, aka intents, where incoming
-messages are aggregated before being passed up the stack. In the case
-that no suitable intents have been announced by the receiver, the sender
-can request an intent to be allocated.
+always pick the pptable from IFWI on smu v14.0.2/3
 
-The initial implementation of the response to such request dealt
-with two outcomes; granted allocations, and all other cases being
-considered -ECANCELLED (likely from "cancelling the operation as the
-remote is going down").
-
-But on some channels intent allocation is not supported, instead the
-remote will pre-allocate and announce a fixed number of intents for the
-sender to use. If for such channels an rpmsg_send() is being invoked
-before any channels have been announced, an intent request will be
-issued and as this comes back rejected the call fails with -ECANCELED.
-
-Given that this is reported in the same way as the remote being shut
-down, there's no way for the client to differentiate the two cases.
-
-In line with the original GLINK design, change the return value to
--EAGAIN for the case where the remote rejects an intent allocation
-request.
-
-It's tempting to handle this case in the GLINK core, as we expect
-intents to show up in this case. But there's no way to distinguish
-between this case and a rejection for a too big allocation, nor is it
-possible to predict if a currently used (and seemingly suitable) intent
-will be returned for reuse or not. As such, returning the error to the
-client and allow it to react seems to be the only sensible solution.
-
-In addition to this, commit 'c05dfce0b89e ("rpmsg: glink: Wait for
-intent, not just request ack")' changed the logic such that the code
-always wait for an intent request response and an intent. This works out
-in most cases, but in the event that an intent request is rejected and no
-further intent arrives (e.g. client asks for a too big intent), the code
-will stall for 10 seconds and then return -ETIMEDOUT; instead of a more
-suitable error.
-
-This change also resulted in intent requests racing with the shutdown of
-the remote would be exposed to this same problem, unless some intent
-happens to arrive. A patch for this was developed and posted by Sarannya
-S [1], and has been incorporated here.
-
-To summarize, the intent request can end in 4 ways:
-- Timeout, no response arrived => return -ETIMEDOUT
-- Abort TX, the edge is going away => return -ECANCELLED
-- Intent request was rejected => return -EAGAIN
-- Intent request was accepted, and an intent arrived => return 0
-
-This patch was developed with input from Sarannya S, Deepak Kumar Singh,
-and Chris Lew.
-
-[1] https://lore.kernel.org/all/20240925072328.1163183-1-quic_deesin@quicinc.com/
-
-Fixes: c05dfce0b89e ("rpmsg: glink: Wait for intent, not just request ack")
-Cc: stable@vger.kernel.org
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Reviewed-by: Chris Lew <quic_clew@quicinc.com>
-Link: https://lore.kernel.org/r/20241023-pmic-glink-ecancelled-v2-1-ebc268129407@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Kenneth Feng <kenneth.feng@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 136ce12bd5907388cb4e9aa63ee5c9c8c441640b)
+Cc: stable@vger.kernel.org # 6.11.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/qcom_glink_native.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c |   65 -------------------
+ 1 file changed, 1 insertion(+), 64 deletions(-)
 
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1354,14 +1354,18 @@ static int qcom_glink_request_intent(str
- 		goto unlock;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+@@ -354,54 +354,6 @@ static int smu_v14_0_2_store_powerplay_t
+ 	return 0;
+ }
  
- 	ret = wait_event_timeout(channel->intent_req_wq,
--				 READ_ONCE(channel->intent_req_result) >= 0 &&
--				 READ_ONCE(channel->intent_received),
-+				 READ_ONCE(channel->intent_req_result) == 0 ||
-+				 (READ_ONCE(channel->intent_req_result) > 0 &&
-+				  READ_ONCE(channel->intent_received)) ||
-+				 glink->abort_tx,
- 				 10 * HZ);
- 	if (!ret) {
- 		dev_err(glink->dev, "intent request timed out\n");
- 		ret = -ETIMEDOUT;
-+	} else if (glink->abort_tx) {
-+		ret = -ECANCELED;
- 	} else {
--		ret = READ_ONCE(channel->intent_req_result) ? 0 : -ECANCELED;
-+		ret = READ_ONCE(channel->intent_req_result) ? 0 : -EAGAIN;
- 	}
+-#ifndef atom_smc_dpm_info_table_14_0_0
+-struct atom_smc_dpm_info_table_14_0_0 {
+-	struct atom_common_table_header table_header;
+-	BoardTable_t BoardTable;
+-};
+-#endif
+-
+-static int smu_v14_0_2_append_powerplay_table(struct smu_context *smu)
+-{
+-	struct smu_table_context *table_context = &smu->smu_table;
+-	PPTable_t *smc_pptable = table_context->driver_pptable;
+-	struct atom_smc_dpm_info_table_14_0_0 *smc_dpm_table;
+-	BoardTable_t *BoardTable = &smc_pptable->BoardTable;
+-	int index, ret;
+-
+-	index = get_index_into_master_table(atom_master_list_of_data_tables_v2_1,
+-					    smc_dpm_info);
+-
+-	ret = amdgpu_atombios_get_data_table(smu->adev, index, NULL, NULL, NULL,
+-					     (uint8_t **)&smc_dpm_table);
+-	if (ret)
+-		return ret;
+-
+-	memcpy(BoardTable, &smc_dpm_table->BoardTable, sizeof(BoardTable_t));
+-
+-	return 0;
+-}
+-
+-#if 0
+-static int smu_v14_0_2_get_pptable_from_pmfw(struct smu_context *smu,
+-					     void **table,
+-					     uint32_t *size)
+-{
+-	struct smu_table_context *smu_table = &smu->smu_table;
+-	void *combo_pptable = smu_table->combo_pptable;
+-	int ret = 0;
+-
+-	ret = smu_cmn_get_combo_pptable(smu);
+-	if (ret)
+-		return ret;
+-
+-	*table = combo_pptable;
+-	*size = sizeof(struct smu_14_0_powerplay_table);
+-
+-	return 0;
+-}
+-#endif
+-
+ static int smu_v14_0_2_get_pptable_from_pmfw(struct smu_context *smu,
+ 					     void **table,
+ 					     uint32_t *size)
+@@ -423,16 +375,12 @@ static int smu_v14_0_2_get_pptable_from_
+ static int smu_v14_0_2_setup_pptable(struct smu_context *smu)
+ {
+ 	struct smu_table_context *smu_table = &smu->smu_table;
+-	struct amdgpu_device *adev = smu->adev;
+ 	int ret = 0;
  
- unlock:
+ 	if (amdgpu_sriov_vf(smu->adev))
+ 		return 0;
+ 
+-	if (!adev->scpm_enabled)
+-		ret = smu_v14_0_setup_pptable(smu);
+-	else
+-		ret = smu_v14_0_2_get_pptable_from_pmfw(smu,
++	ret = smu_v14_0_2_get_pptable_from_pmfw(smu,
+ 							&smu_table->power_play_table,
+ 							&smu_table->power_play_table_size);
+ 	if (ret)
+@@ -442,16 +390,6 @@ static int smu_v14_0_2_setup_pptable(str
+ 	if (ret)
+ 		return ret;
+ 
+-	/*
+-	 * With SCPM enabled, the operation below will be handled
+-	 * by PSP. Driver involvment is unnecessary and useless.
+-	 */
+-	if (!adev->scpm_enabled) {
+-		ret = smu_v14_0_2_append_powerplay_table(smu);
+-		if (ret)
+-			return ret;
+-	}
+-
+ 	ret = smu_v14_0_2_check_powerplay_table(smu);
+ 	if (ret)
+ 		return ret;
+@@ -1938,7 +1876,6 @@ static const struct pptable_funcs smu_v1
+ 	.check_fw_status = smu_v14_0_check_fw_status,
+ 	.setup_pptable = smu_v14_0_2_setup_pptable,
+ 	.check_fw_version = smu_v14_0_check_fw_version,
+-	.write_pptable = smu_cmn_write_pptable,
+ 	.set_driver_table_location = smu_v14_0_set_driver_table_location,
+ 	.system_features_control = smu_v14_0_system_features_control,
+ 	.set_allowed_mask = smu_v14_0_set_allowed_mask,
 
 
