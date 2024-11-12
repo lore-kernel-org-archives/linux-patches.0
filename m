@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FE7213127;
-	Tue, 12 Nov 2024 10:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF96D20E337;
+	Tue, 12 Nov 2024 10:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408226; cv=none; b=PVD/GBSaXLVAjYSkcj34vGlyqmE0SU2ULlcPQ6aKz3AHSePvUygzdXoTzjMjyuCLCmx//8iIFedN+PED4vV0Nu4wW8zMbbU7DgS2vHZGrndVIi9SvyGbSjPjlsymswbwYh3qv/FRdcGDpOHCuEsC13rGPLIoFhNeHv79Q9vqeZg=
+	t=1731408230; cv=none; b=Dzmke41GBNeGgEPAWj6EG9/5/5XVtlEd6k+TSwy+xyVOipMcF8q/2rcyym8UD7D91KoJMtIRr0d9mDhO6BUMt3j8/fSPAdpuwp9hXuIlbtWMQOTgW5NC9sYB9Bs0FapkIbooT0QNL+o9522ZhhW7BMx1HBuYqZ4k0WJZaQghR9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408226; c=relaxed/simple;
-	bh=iRdkujimQP9Fz5fzQrNv+Bz+Bh555ajLeZFDpiIGMwg=;
+	s=arc-20240116; t=1731408230; c=relaxed/simple;
+	bh=uxaG6q5CqT0Oh1dWd2ShCeTn5cHNdYy8VlBtsmOBzEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AnRbMn+wiaS/ymCuQJ0MwlruxJsR7kWvcjZ9cmWxcPU2Kml1KpGhlt2ubgHqHAp4hkkEhBZgnsU+F03nvyQTaTzXJwlTJMI2u4Ohq08Tuq9AkPhrFFZGRhBZaqmuvYBOGUa/oHqYKyvVoBO2CjUXiW149X+5f3FcuIa8Sk6NLks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xRvAl3do; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pu0jKNgP32LCmkp9Iz9VEQRmfXfHlE8k1Cyy6j5WHxbE50NOLrwLe7HyRxhWQ3Ny8he6yucO4O+rWhFnL1Hzv6bvgdXlEFSG6TrFStR+AagivqCz+A0Eb1mQvsti+if3M9zHluihGekaoUAR7lz9HYHZEk2Q38UEouAkv3HEOAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/JOSk94; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xRvAl3do"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1E4C4CECD;
-	Tue, 12 Nov 2024 10:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/JOSk94"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F48C4CECD;
+	Tue, 12 Nov 2024 10:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408226;
-	bh=iRdkujimQP9Fz5fzQrNv+Bz+Bh555ajLeZFDpiIGMwg=;
+	s=korg; t=1731408229;
+	bh=uxaG6q5CqT0Oh1dWd2ShCeTn5cHNdYy8VlBtsmOBzEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xRvAl3doFyt/88FebD0luHwDNXz3CAnq1R6fJpZvjyCaB3MWZqCWOcre6tCSKOzoX
-	 JzbZ4xOyPB8EVQ7PJoHNYtj3D0QW2XUDGzl5wzHFllcVMqw0MJwtBnAQaV7L23Hadr
-	 eenkYTDqCz5ZSd3x0+wEtgF82cALS961y+okLFug=
+	b=G/JOSk945aIHLYR4zmYOax3C0vyC2SwVXS6KxbeVkyRdVfLMWoivDsOj1c7P7xUvF
+	 LaSvtgPCJ4HwB0rU/f+I3Ed3fJJBybQzDeK4E6FAOuJUuI1FWUzTke931f/gFvQ9vk
+	 aTSHarFDwqDXiaj1lEV8QtOo9Q91Tq1VRmUfNeB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 066/184] media: dvbdev: prevent the risk of out of memory access
-Date: Tue, 12 Nov 2024 11:20:24 +0100
-Message-ID: <20241112101903.395286793@linuxfoundation.org>
+Subject: [PATCH 6.11 067/184] media: dvb_frontend: dont play tricks with underflow values
+Date: Tue, 12 Nov 2024 11:20:25 +0100
+Message-ID: <20241112101903.432720171@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -52,76 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-[ Upstream commit 972e63e895abbe8aa1ccbdbb4e6362abda7cd457 ]
+[ Upstream commit 9883a4d41aba7612644e9bb807b971247cea9b9d ]
 
-The dvbdev contains a static variable used to store dvb minors.
+fepriv->auto_sub_step is unsigned. Setting it to -1 is just a
+trick to avoid calling continue, as reported by Coverity.
 
-The behavior of it depends if CONFIG_DVB_DYNAMIC_MINORS is set
-or not. When not set, dvb_register_device() won't check for
-boundaries, as it will rely that a previous call to
-dvb_register_adapter() would already be enforcing it.
+It relies to have this code just afterwards:
 
-On a similar way, dvb_device_open() uses the assumption
-that the register functions already did the needed checks.
+	if (!ready) fepriv->auto_sub_step++;
 
-This can be fragile if some device ends using different
-calls. This also generate warnings on static check analysers
-like Coverity.
+Simplify the code by simply setting it to zero and use
+continue to return to the while loop.
 
-So, add explicit guards to prevent potential risk of OOM issues.
-
-Fixes: 5dd3f3071070 ("V4L/DVB (9361): Dynamic DVB minor allocation")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvbdev.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/media/dvb-core/dvb_frontend.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
-index b43695bc51e75..14f323fbada71 100644
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -86,10 +86,15 @@ static DECLARE_RWSEM(minor_rwsem);
- static int dvb_device_open(struct inode *inode, struct file *file)
- {
- 	struct dvb_device *dvbdev;
-+	unsigned int minor = iminor(inode);
-+
-+	if (minor >= MAX_DVB_MINORS)
-+		return -ENODEV;
+diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
+index 4f78f30b3646e..a05aa271a1baa 100644
+--- a/drivers/media/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb-core/dvb_frontend.c
+@@ -443,8 +443,8 @@ static int dvb_frontend_swzigzag_autotune(struct dvb_frontend *fe, int check_wra
  
- 	mutex_lock(&dvbdev_mutex);
- 	down_read(&minor_rwsem);
--	dvbdev = dvb_minors[iminor(inode)];
-+
-+	dvbdev = dvb_minors[minor];
+ 		default:
+ 			fepriv->auto_step++;
+-			fepriv->auto_sub_step = -1; /* it'll be incremented to 0 in a moment */
+-			break;
++			fepriv->auto_sub_step = 0;
++			continue;
+ 		}
  
- 	if (dvbdev && dvbdev->fops) {
- 		int err = 0;
-@@ -525,7 +530,7 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
- 	for (minor = 0; minor < MAX_DVB_MINORS; minor++)
- 		if (!dvb_minors[minor])
- 			break;
--	if (minor == MAX_DVB_MINORS) {
-+	if (minor >= MAX_DVB_MINORS) {
- 		if (new_node) {
- 			list_del(&new_node->list_head);
- 			kfree(dvbdevfops);
-@@ -540,6 +545,14 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
- 	}
- #else
- 	minor = nums2minor(adap->num, type, id);
-+	if (minor >= MAX_DVB_MINORS) {
-+		dvb_media_device_free(dvbdev);
-+		list_del(&dvbdev->list_head);
-+		kfree(dvbdev);
-+		*pdvbdev = NULL;
-+		mutex_unlock(&dvbdev_register_lock);
-+		return ret;
-+	}
- #endif
- 	dvbdev->minor = minor;
- 	dvb_minors[minor] = dvb_device_get(dvbdev);
+ 		if (!ready) fepriv->auto_sub_step++;
 -- 
 2.43.0
 
