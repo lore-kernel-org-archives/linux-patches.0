@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4622F2141A4;
-	Tue, 12 Nov 2024 10:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5718E213148;
+	Tue, 12 Nov 2024 10:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408297; cv=none; b=BTAc9Wn2vQ2G+lCexXOjYWueEjjaDC1iuMEAhp8yJL8PRr0z4xEmM3zZ4Y/kKFN7RzbrzXwz1KXgYy2Am8ffY+TRbFFKNbn1kHu9/xlTclsnPWvqc15NrtEgDQVH9Xl3903Pm6D7ghGOPOZoE8vktgHDZhdfQiYVY5H4Ug9YwnA=
+	t=1731408300; cv=none; b=GWVAaMqY9qsApfPuuj6wb7Lot00BzLKfO5weZsbclBkGZEn+9Ufy25vpgVuDnbFcXVV+cRJfmnPwroCWEEoXOqDTcYCo1672mEy9GgSWY1IWKDPKDzdxmJbiPpXYTvbRjNpTjFrcNGz1G8foYcPWgZdoJeirvYyHcjwcoCVfj6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408297; c=relaxed/simple;
-	bh=rjtdnUDnuAekcL/rKPAeDlrVogQV5XhObUvIGyU7sTs=;
+	s=arc-20240116; t=1731408300; c=relaxed/simple;
+	bh=Ag8pZEq/SLocaaHbuJSPI9KREysLLTNpiQLptWyFU0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dn+rIKenWuf+y9ENS1agZVNr44rTBBXX3hYNwUFzRpK7V2QmnBZpHQXJWSuOrzqVwpeVktXTJsFR7qwYdDPL/QNsPnCoN1W+dNmDKw6SZyIqkMsXRSbu0pPeKz2igJpEf5twut0Ej+M+KUhqV8dsipd3YNWbakg2LHou9q5nTDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJy4jhku; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W/FHK6g/PH7CS6NhBQblY/pE/dAjsZdSID36Z+VXqo4zKprOmawae+F46rSROBaEfiWDoG8nELAVVPYwejCiLmoqs1M/7m3WxVxajwjkm08y2ITrSmYh9umAjq3hoLuE589ig52PBZNFyDpE//Cx+di2z4T/mZ8oPPF8/wl4joA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWBtsnz+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJy4jhku"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23A2C4CECD;
-	Tue, 12 Nov 2024 10:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWBtsnz+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCCE2C4CECD;
+	Tue, 12 Nov 2024 10:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408297;
-	bh=rjtdnUDnuAekcL/rKPAeDlrVogQV5XhObUvIGyU7sTs=;
+	s=korg; t=1731408300;
+	bh=Ag8pZEq/SLocaaHbuJSPI9KREysLLTNpiQLptWyFU0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rJy4jhkuxsCcUwrVrnXP/K6sUecFAVnFne4TSAwRR9kwdihfHQzjSVj/vB55ETyTM
-	 +8vLMid28WEW71IkZQR/u0CTnIXpL3AxzziEabiMPLFW74X6CSCMzMLkSgAdK2cUde
-	 E8wgXWrQBdQ4Pmu8FtBuchlcWfdPDlPQNYHrzuDs=
+	b=nWBtsnz+oSmHprZ4zgA94eLFEXTBcNkrgaaCLdmaSjUXOn6q0B2u5ckzzmQvlnMo8
+	 far+NyrlF2+6Qcqmgb0rkZo5Yj0md4ZcTKBP+T9pIE9mKMfpiQ2OYxszuS7tEIgzpq
+	 DO3ycw+ksFEP2O+klqUvIkJVAWMmJyQZKmjJ/uBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zichen Xie <zichenxie0106@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.11 119/184] dm-unstriped: cast an operand to sector_t to prevent potential uint32_t overflow
-Date: Tue, 12 Nov 2024 11:21:17 +0100
-Message-ID: <20241112101905.436433283@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Nitesh Shetty <nj.shetty@samsung.com>
+Subject: [PATCH 6.11 120/184] dm: fix a crash if blk_alloc_disk fails
+Date: Tue, 12 Nov 2024 11:21:18 +0100
+Message-ID: <20241112101905.473897989@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -50,41 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zichen Xie <zichenxie0106@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 5a4510c762fc04c74cff264cd4d9e9f5bf364bae upstream.
+commit fed13a5478680614ba97fc87e71f16e2e197912e upstream.
 
-This was found by a static analyzer.
-There may be a potential integer overflow issue in
-unstripe_ctr(). uc->unstripe_offset and uc->unstripe_width are
-defined as "sector_t"(uint64_t), while uc->unstripe,
-uc->chunk_size and uc->stripes are all defined as "uint32_t".
-The result of the calculation will be limited to "uint32_t"
-without correct casting.
-So, we recommend adding an extra cast to prevent potential
-integer overflow.
+If blk_alloc_disk fails, the variable md->disk is set to an error value.
+cleanup_mapped_device will see that md->disk is non-NULL and it will
+attempt to access it, causing a crash on this statement
+"md->disk->private_data = NULL;".
 
-Fixes: 18a5bf270532 ("dm: add unstriped target")
-Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
 Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Closes: https://marc.info/?l=dm-devel&m=172824125004329&w=2
 Cc: stable@vger.kernel.org
+Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-unstripe.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/dm.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-unstripe.c
-+++ b/drivers/md/dm-unstripe.c
-@@ -85,8 +85,8 @@ static int unstripe_ctr(struct dm_target
- 	}
- 	uc->physical_start = start;
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -2290,8 +2290,10 @@ static struct mapped_device *alloc_dev(i
+ 	 * override accordingly.
+ 	 */
+ 	md->disk = blk_alloc_disk(NULL, md->numa_node_id);
+-	if (IS_ERR(md->disk))
++	if (IS_ERR(md->disk)) {
++		md->disk = NULL;
+ 		goto bad;
++	}
+ 	md->queue = md->disk->queue;
  
--	uc->unstripe_offset = uc->unstripe * uc->chunk_size;
--	uc->unstripe_width = (uc->stripes - 1) * uc->chunk_size;
-+	uc->unstripe_offset = (sector_t)uc->unstripe * uc->chunk_size;
-+	uc->unstripe_width = (sector_t)(uc->stripes - 1) * uc->chunk_size;
- 	uc->chunk_shift = is_power_of_2(uc->chunk_size) ? fls(uc->chunk_size) - 1 : 0;
- 
- 	tmp_len = ti->len;
+ 	init_waitqueue_head(&md->wait);
 
 
