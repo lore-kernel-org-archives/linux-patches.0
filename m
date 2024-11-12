@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B4120E307;
-	Tue, 12 Nov 2024 10:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0ED321A704;
+	Tue, 12 Nov 2024 10:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408432; cv=none; b=cdY2hcHvUkNyhVYtgPAYd0I/A0ZMiF2fUsyagN9C9s3KKPW1CIbuHyzkHWSfURV+SYd9HtTnm8RIMmdqIFqDg3s3HIN7WYars/FugjUGU1Mmkf/rK/H9vr9MJVASxQyurSANj5WVcuKz8tyEr7HcpWlIF4qhH+8SJx78ipUjv9E=
+	t=1731408436; cv=none; b=S8LiBDBmAAa1AjIQwv8IWKCx1TCMklWweblTqo21jQJRsInFxCZBnOSpeJF69jgXGyNI+qZrV2sh2Ysw6OXhXgE5Ybvoi4uMqFmofekE8BICJmuDOrZCN+hmY64mvMN+bG39PP4oMcTK4vGrjjYqS73hRft7iCaar+UgN2kwck4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408432; c=relaxed/simple;
-	bh=JsfZ16XgJQslgSp5liTBwh5blbSXcYpqEA9jS336200=;
+	s=arc-20240116; t=1731408436; c=relaxed/simple;
+	bh=QNiDnZeIgEiKYkxa5eLbfk0SEqYKCecIFlm1KUoE+yQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iWvXw5+c77x6QB6gjoytxQ6N2f0nXQOldAFmLFy6Uyokxs9xDji10pNOqwiqhJmpncRlilSAKyYzM+03V7ajeogqVdGGiHwsd4HaAsc61yg+r4+n6bRjglqM9DdmxmzPerx0DNg75NJHEDkqI4AAM3Erl86arKVPHCfias78xw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VslQO/Z0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ICEsDjcRT9JYzW/kkNviPImv1c7LZP3Jcf6CT5ospvKuUYXEaox2jKWEEk6w6vMCanPV1zXaYSNcsEnMfvYlH0FzVNa7kDbwDb2OjRvNWEF6eXqNz6xsvYa5JloS4toMR0/LtFFD3iknTHx7L3BN3uFherCwzPjko5wznFq97O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MiW+Um32; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VslQO/Z0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4FC3C4CECD;
-	Tue, 12 Nov 2024 10:47:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MiW+Um32"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A351C4CECD;
+	Tue, 12 Nov 2024 10:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408432;
-	bh=JsfZ16XgJQslgSp5liTBwh5blbSXcYpqEA9jS336200=;
+	s=korg; t=1731408435;
+	bh=QNiDnZeIgEiKYkxa5eLbfk0SEqYKCecIFlm1KUoE+yQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VslQO/Z0+1ITfuFy9GRMvNX1Tujddgww7B5Rl5LIdpY4HAEjQovuO3xmAL158eXnf
-	 bujZWvfGtR5HIbVNYJp96P9ScGUPnTl3/t8qJB3sNa8+X57UNECmYj1uC0dcF6q/yk
-	 toDnW1wWvEAidFap56AE46OAcyRbXmfzhK7X2NC0=
+	b=MiW+Um322T0qoMmS9F2Uezld9CbtiMH3GueISX9KciyP+EbSCi3FvG7VAQO+ZyUcL
+	 pn67+JjAJPInKBL59w7Tnx2Leb7m7DBTV/nCIO77GKRic8WICgyna4re26i5TvwvUL
+	 ATU3omPlHAyT+ZlHzDL7aai0xQLjRd3wv9h4MOW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
 	Dan Carpenter <dan.carpenter@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.11 159/184] usb: typec: fix potential out of bounds in ucsi_ccg_update_set_new_cam_cmd()
-Date: Tue, 12 Nov 2024 11:21:57 +0100
-Message-ID: <20241112101906.973262095@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.11 160/184] USB: serial: io_edgeport: fix use after free in debug printk
+Date: Tue, 12 Nov 2024 11:21:58 +0100
+Message-ID: <20241112101907.010842832@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -53,39 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 7dd08a0b4193087976db6b3ee7807de7e8316f96 upstream.
+commit 37bb5628379295c1254c113a407cab03a0f4d0b4 upstream.
 
-The "*cmd" variable can be controlled by the user via debugfs.  That means
-"new_cam" can be as high as 255 while the size of the uc->updated[] array
-is UCSI_MAX_ALTMODES (30).
+The "dev_dbg(&urb->dev->dev, ..." which happens after usb_free_urb(urb)
+is a use after free of the "urb" pointer.  Store the "dev" pointer at the
+start of the function to avoid this issue.
 
-The call tree is:
-ucsi_cmd() // val comes from simple_attr_write_xsigned()
--> ucsi_send_command()
-   -> ucsi_send_command_common()
-      -> ucsi_run_command() // calls ucsi->ops->sync_control()
-         -> ucsi_ccg_sync_control()
-
-Fixes: 170a6726d0e2 ("usb: typec: ucsi: add support for separate DP altmode devices")
-Cc: stable <stable@kernel.org>
+Fixes: 984f68683298 ("USB: serial: io_edgeport.c: remove dbg() usage")
+Cc: stable@vger.kernel.org
 Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/325102b3-eaa8-4918-a947-22aca1146586@stanley.mountain
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi_ccg.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/serial/io_edgeport.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-+++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-@@ -482,6 +482,8 @@ static void ucsi_ccg_update_set_new_cam_
+--- a/drivers/usb/serial/io_edgeport.c
++++ b/drivers/usb/serial/io_edgeport.c
+@@ -770,11 +770,12 @@ static void edge_bulk_out_data_callback(
+ static void edge_bulk_out_cmd_callback(struct urb *urb)
+ {
+ 	struct edgeport_port *edge_port = urb->context;
++	struct device *dev = &urb->dev->dev;
+ 	int status = urb->status;
  
- 	port = uc->orig;
- 	new_cam = UCSI_SET_NEW_CAM_GET_AM(*cmd);
-+	if (new_cam >= ARRAY_SIZE(uc->updated))
-+		return;
- 	new_port = &uc->updated[new_cam];
- 	cam = new_port->linked_idx;
- 	enter_new_mode = UCSI_SET_NEW_CAM_ENTER(*cmd);
+ 	atomic_dec(&CmdUrbs);
+-	dev_dbg(&urb->dev->dev, "%s - FREE URB %p (outstanding %d)\n",
+-		__func__, urb, atomic_read(&CmdUrbs));
++	dev_dbg(dev, "%s - FREE URB %p (outstanding %d)\n", __func__, urb,
++		atomic_read(&CmdUrbs));
+ 
+ 
+ 	/* clean up the transfer buffer */
+@@ -784,8 +785,7 @@ static void edge_bulk_out_cmd_callback(s
+ 	usb_free_urb(urb);
+ 
+ 	if (status) {
+-		dev_dbg(&urb->dev->dev,
+-			"%s - nonzero write bulk status received: %d\n",
++		dev_dbg(dev, "%s - nonzero write bulk status received: %d\n",
+ 			__func__, status);
+ 		return;
+ 	}
 
 
