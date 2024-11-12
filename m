@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625A72144A4;
-	Tue, 12 Nov 2024 10:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E502214416;
+	Tue, 12 Nov 2024 10:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408367; cv=none; b=kGUW+C4j9MCGZOd+HCa9eZA8fMcWJJ9Rd5Ln2yw5VNf5hMYOJiVxMeMXEOhU5gWt33M9GzUSSyinX3BjUtorNHg2Ak6xKctrOB1pA26IrkEib1kkPRGk1VooebjGkyIctEJA0rt4a4Pz4mSnqkfcBXEbzKwDYgIlpPOpCR+EFzQ=
+	t=1731408370; cv=none; b=mt3KhH5Dk6VGGx4quzZIWzC7REZdV9mouVGhsWlEKd0uMqFgLk5gB9iRx5rLjNhaqj3vwH+22XygWLCwXHjDKWu4nvLprIB5+eMi32T8idQfUWJRy7P4MirErzJBPb/3OEL8evGBzDWa5sA2ePnTzlbLH86GHC0gJSL3CNFgY34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408367; c=relaxed/simple;
-	bh=/ilhoi9Y3meSGnG+Pt2xebKZxKblFzGHIjvzb+swLSY=;
+	s=arc-20240116; t=1731408370; c=relaxed/simple;
+	bh=KI85fzJ/5lnlZiqtQlU/FUeKjHiETAtjzvdxPwlIqLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bYXMrH8RgBnX0g1EsLhgo0Wq+3BVm7IBUxSPJUa7yuCi4KPNNcYFAl3RTkSV5rrg1F1MW3ZykwUnubX1HYfIKETuw83KIum8Q0pjxLTS1sv1WcavhyF7o9bfwLwTGbsw0YOyvv+jN4PjULh9U7oXWbCDqpwlQ9bqpTCAiX/+hSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r96HdaOm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E9MnaMt8WlBQarzYXSydXoQeOvJaUXAb9JoeTCbAk5eDnB7dnchwAWeT/B1AQczjJG1u6F9XhaHLgccA/wmDQNAp81E3pTdKaRLKpnSI7hLpwI4tNcK2KkRacmMoorXftjfmIISFJpyxlNGhJ6HCtlp8SMcKqcU+Hhz5JHgUa/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3aI0ffB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r96HdaOm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F00C4CECD;
-	Tue, 12 Nov 2024 10:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3aI0ffB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9E9C4CECD;
+	Tue, 12 Nov 2024 10:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408367;
-	bh=/ilhoi9Y3meSGnG+Pt2xebKZxKblFzGHIjvzb+swLSY=;
+	s=korg; t=1731408370;
+	bh=KI85fzJ/5lnlZiqtQlU/FUeKjHiETAtjzvdxPwlIqLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r96HdaOmnUh/RDismojc7ng9QNcMwJQtSuGv4aGna7Gnzk8YRpObfNRj/v7Dh6Y4r
-	 Qi2usKX6au89WTtYidLKBgC9ac75xvmDeVqqhFfSvXwNUZqy1hk6h+BU/77I/WaGFY
-	 X6RIiwlz2I7XqcG9HltiCXGMwgLLi0x2HRLoLW0k=
+	b=l3aI0ffB5iSfsA1/O/AV+/QTuqA5kSe735LayL1Seqd4656nZMJ910ZaXidvDIu+q
+	 FqiHEgVOUR9oEJEeuIc8XSRIeCtDxZkpb7/kti/lwNdFREUf5+hW/Or9FXNsUF81vd
+	 CSAlUrrvEfw+75ZfBsIkW4xs+Q7sVZk321nE7u9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patil Rajesh Reddy <Patil.Reddy@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.11 141/184] platform/x86/amd/pmf: Add SMU metrics table support for 1Ah family 60h model
-Date: Tue, 12 Nov 2024 11:21:39 +0100
-Message-ID: <20241112101906.283877341@linuxfoundation.org>
+	Benoit Sevens <bsevens@google.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 6.11 142/184] media: uvcvideo: Skip parsing frames of type UVC_VS_UNDEFINED in uvc_parse_format
+Date: Tue, 12 Nov 2024 11:21:40 +0100
+Message-ID: <20241112101906.321867535@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -52,45 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Benoit Sevens <bsevens@google.com>
 
-commit 8ca8d07857c698503b2b3bf615238c87c02f064e upstream.
+commit ecf2b43018da9579842c774b7f35dbe11b5c38dd upstream.
 
-Add SMU metrics table support for 1Ah family 60h model. This information
-will be used by the PMF driver to alter the system thermals.
+This can lead to out of bounds writes since frames of this type were not
+taken into account when calculating the size of the frames buffer in
+uvc_parse_streaming.
 
-Co-developed-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
-Signed-off-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20241023063245.1404420-2-Shyam-sundar.S-k@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: c0efd232929c ("V4L/DVB (8145a): USB Video Class driver")
+Signed-off-by: Benoit Sevens <bsevens@google.com>
+Cc: stable@vger.kernel.org
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmf/core.c |    1 +
- drivers/platform/x86/amd/pmf/spc.c  |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/media/usb/uvc/uvc_driver.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/x86/amd/pmf/core.c
-+++ b/drivers/platform/x86/amd/pmf/core.c
-@@ -261,6 +261,7 @@ int amd_pmf_set_dram_addr(struct amd_pmf
- 			dev->mtable_size = sizeof(dev->m_table);
- 			break;
- 		case PCI_DEVICE_ID_AMD_1AH_M20H_ROOT:
-+		case PCI_DEVICE_ID_AMD_1AH_M60H_ROOT:
- 			dev->mtable_size = sizeof(dev->m_table_v2);
- 			break;
- 		default:
---- a/drivers/platform/x86/amd/pmf/spc.c
-+++ b/drivers/platform/x86/amd/pmf/spc.c
-@@ -86,6 +86,7 @@ static void amd_pmf_get_smu_info(struct
- 					 ARRAY_SIZE(dev->m_table.avg_core_c0residency), in);
- 		break;
- 	case PCI_DEVICE_ID_AMD_1AH_M20H_ROOT:
-+	case PCI_DEVICE_ID_AMD_1AH_M60H_ROOT:
- 		memcpy(&dev->m_table_v2, dev->buf, dev->mtable_size);
- 		in->ev_info.socket_power = dev->m_table_v2.apu_power + dev->m_table_v2.dgpu_power;
- 		in->ev_info.skin_temperature = dev->m_table_v2.skin_temp;
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -371,7 +371,7 @@ static int uvc_parse_format(struct uvc_d
+ 	 * Parse the frame descriptors. Only uncompressed, MJPEG and frame
+ 	 * based formats have frame descriptors.
+ 	 */
+-	while (buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE &&
++	while (ftype && buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE &&
+ 	       buffer[2] == ftype) {
+ 		unsigned int maxIntervalIndex;
+ 
 
 
