@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0834121263E;
-	Tue, 12 Nov 2024 10:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B586D1F26E3;
+	Tue, 12 Nov 2024 10:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407115; cv=none; b=fx9djk869R4FxQ3WYTLILrOOPjLAkjwQFNS3pwezZMDDnp/aRVnkumnmPL3rGsx7S31c+4xYZ1sg5Ik0Fgl6QPBGvTT7PIG83WVGupF2cx7MfvEMfsDAXvZKWrR8NWdIVcUlIh1MhxpRNaTMg0ckSkb/1vJ4PSNgoTT8ATsCVjM=
+	t=1731407118; cv=none; b=ljRrbh0Ly6VMbDFVCeNUEjZ2ZqLK9C+9DTugRpP7qHBhVi06CPMI9F5O9pzRFdbCSz7FI5d/qYYfovwM1AxFLRU2Uk1pMDyvylCfVsZ4Mf55b99v1ZcNrbx+t9oo/pbrlLXCmT5vCffn1/l/yhTzyb3zP4ceVqr3Tbjk0B9pp2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407115; c=relaxed/simple;
-	bh=DC1Tjf3JlPwhjFnqWoHBiOQpym1d86zqZJhz4xsHoFM=;
+	s=arc-20240116; t=1731407118; c=relaxed/simple;
+	bh=YEaisjAzQpBi1Qb5BpCySpjMFB0biiS6Kh9MqItxOLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rSE1OOcUtz5SDz2MQxlPouHOGu5iSKZ8+TCWmaHMB5xCtWlPpHIrt3c9OnVhOrCxGeFLw0QAcyMBk2ZeRu3ivX60lJTI8Cy5419ajfIF3s82zd1NvOwX142wuPH3qJpZjQv7CwJjXPiMYsJLzgsKVzYTJEU9oTEbzjxNAbZhygI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eZC8bdv+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p80E7XsF3cl34OYHm74ybZ9Ve3vLp9T4dRPCEuuXUPYuIIN5Qyh29hz1AjE1kEGAOBttNGWdCKVevo7nDqyGAZ0R2hLin3ODBLKUmMJzYZQ4BgEQ1OF73Kr6QZXBvOHVgXEsZhyAHTfRGJJwuVUCTM5URPhsPd1Z8lenkTtNp/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0ubMYPR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eZC8bdv+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DBF1C4CECD;
-	Tue, 12 Nov 2024 10:25:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0ubMYPR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3896DC4CECD;
+	Tue, 12 Nov 2024 10:25:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407114;
-	bh=DC1Tjf3JlPwhjFnqWoHBiOQpym1d86zqZJhz4xsHoFM=;
+	s=korg; t=1731407118;
+	bh=YEaisjAzQpBi1Qb5BpCySpjMFB0biiS6Kh9MqItxOLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eZC8bdv+AzeH65sAd3y02mvyQ4oh1ycxRddfbEBy+Iq8JQjd77boWMLN80c5Yadx9
-	 zuiV88+d9vpS6HzfRVEGdsGQgvDC4BLDfuoVmsIFvpT7dysiXamQ/m5uZ+INPYtdLX
-	 sM5Wq5bTLudw0z63EpTlJ1Madv0LWeJyJ7HjvUrQ=
+	b=z0ubMYPRpZ+dEzFKkXJyMUL/jWEdU9qhIt2X4uhveKhbQFamt0AOr72sSXTYGf9iP
+	 jdeqTOkBwUToUukVesTLJsrKb4qsv5wDcaSgQmXcwRxRKH8jtCKb2Kje1aKsfQr6Pu
+	 d2Tsu8av3TjnqDWjZLfCfI+zTkFO+7JJ4o65XHy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 27/76] media: dvbdev: prevent the risk of out of memory access
-Date: Tue, 12 Nov 2024 11:20:52 +0100
-Message-ID: <20241112101840.821506071@linuxfoundation.org>
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>
+Subject: [PATCH 5.15 54/76] nfs: Fix KMSAN warning in decode_getfattr_attrs()
+Date: Tue, 12 Nov 2024 11:21:19 +0100
+Message-ID: <20241112101841.836881348@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -50,80 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-[ Upstream commit 972e63e895abbe8aa1ccbdbb4e6362abda7cd457 ]
+commit dc270d7159699ad6d11decadfce9633f0f71c1db upstream.
 
-The dvbdev contains a static variable used to store dvb minors.
+Fix the following KMSAN warning:
 
-The behavior of it depends if CONFIG_DVB_DYNAMIC_MINORS is set
-or not. When not set, dvb_register_device() won't check for
-boundaries, as it will rely that a previous call to
-dvb_register_adapter() would already be enforcing it.
+CPU: 1 UID: 0 PID: 7651 Comm: cp Tainted: G    B
+Tainted: [B]=BAD_PAGE
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009)
+=====================================================
+=====================================================
+BUG: KMSAN: uninit-value in decode_getfattr_attrs+0x2d6d/0x2f90
+ decode_getfattr_attrs+0x2d6d/0x2f90
+ decode_getfattr_generic+0x806/0xb00
+ nfs4_xdr_dec_getattr+0x1de/0x240
+ rpcauth_unwrap_resp_decode+0xab/0x100
+ rpcauth_unwrap_resp+0x95/0xc0
+ call_decode+0x4ff/0xb50
+ __rpc_execute+0x57b/0x19d0
+ rpc_execute+0x368/0x5e0
+ rpc_run_task+0xcfe/0xee0
+ nfs4_proc_getattr+0x5b5/0x990
+ __nfs_revalidate_inode+0x477/0xd00
+ nfs_access_get_cached+0x1021/0x1cc0
+ nfs_do_access+0x9f/0xae0
+ nfs_permission+0x1e4/0x8c0
+ inode_permission+0x356/0x6c0
+ link_path_walk+0x958/0x1330
+ path_lookupat+0xce/0x6b0
+ filename_lookup+0x23e/0x770
+ vfs_statx+0xe7/0x970
+ vfs_fstatat+0x1f2/0x2c0
+ __se_sys_newfstatat+0x67/0x880
+ __x64_sys_newfstatat+0xbd/0x120
+ x64_sys_call+0x1826/0x3cf0
+ do_syscall_64+0xd0/0x1b0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-On a similar way, dvb_device_open() uses the assumption
-that the register functions already did the needed checks.
+The KMSAN warning is triggered in decode_getfattr_attrs(), when calling
+decode_attr_mdsthreshold(). It appears that fattr->mdsthreshold is not
+initialized.
 
-This can be fragile if some device ends using different
-calls. This also generate warnings on static check analysers
-like Coverity.
+Fix the issue by initializing fattr->mdsthreshold to NULL in
+nfs_fattr_init().
 
-So, add explicit guards to prevent potential risk of OOM issues.
-
-Fixes: 5dd3f3071070 ("V4L/DVB (9361): Dynamic DVB minor allocation")
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # v3.5.x
+Fixes: 88034c3d88c2 ("NFSv4.1 mdsthreshold attribute xdr")
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-core/dvbdev.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ fs/nfs/inode.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
-index 661588fc64f6a..71344ae26fea7 100644
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -96,10 +96,15 @@ static DECLARE_RWSEM(minor_rwsem);
- static int dvb_device_open(struct inode *inode, struct file *file)
- {
- 	struct dvb_device *dvbdev;
-+	unsigned int minor = iminor(inode);
-+
-+	if (minor >= MAX_DVB_MINORS)
-+		return -ENODEV;
+--- a/fs/nfs/inode.c
++++ b/fs/nfs/inode.c
+@@ -1586,6 +1586,7 @@ void nfs_fattr_init(struct nfs_fattr *fa
+ 	fattr->gencount = nfs_inc_attr_generation_counter();
+ 	fattr->owner_name = NULL;
+ 	fattr->group_name = NULL;
++	fattr->mdsthreshold = NULL;
+ }
+ EXPORT_SYMBOL_GPL(nfs_fattr_init);
  
- 	mutex_lock(&dvbdev_mutex);
- 	down_read(&minor_rwsem);
--	dvbdev = dvb_minors[iminor(inode)];
-+
-+	dvbdev = dvb_minors[minor];
- 
- 	if (dvbdev && dvbdev->fops) {
- 		int err = 0;
-@@ -539,7 +544,7 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
- 	for (minor = 0; minor < MAX_DVB_MINORS; minor++)
- 		if (dvb_minors[minor] == NULL)
- 			break;
--	if (minor == MAX_DVB_MINORS) {
-+	if (minor >= MAX_DVB_MINORS) {
- 		if (new_node) {
- 			list_del (&new_node->list_head);
- 			kfree(dvbdevfops);
-@@ -554,6 +559,14 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
- 	}
- #else
- 	minor = nums2minor(adap->num, type, id);
-+	if (minor >= MAX_DVB_MINORS) {
-+		dvb_media_device_free(dvbdev);
-+		list_del(&dvbdev->list_head);
-+		kfree(dvbdev);
-+		*pdvbdev = NULL;
-+		mutex_unlock(&dvbdev_register_lock);
-+		return ret;
-+	}
- #endif
- 	dvbdev->minor = minor;
- 	dvb_minors[minor] = dvb_device_get(dvbdev);
--- 
-2.43.0
-
 
 
