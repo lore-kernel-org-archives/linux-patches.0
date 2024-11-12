@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010711BD031;
-	Tue, 12 Nov 2024 10:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4441E22DAAF;
+	Tue, 12 Nov 2024 10:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407945; cv=none; b=KwdtwLnxzdga1R4YxKxq5FIQD0697nLmJUBTQK0iFPnZXvgVS+pUxfjFKdLnKMOIb6DPQzK/qFuEdxX2FzMLpTa/BMsP2MFH0zs3VSyssvI0cdY3CpOHbB2HyRN03XDEEbzDC62HZWYLMyYfgNXI8dtP5/S78mRDLRjNaU8Dz+8=
+	t=1731407948; cv=none; b=Lu4zZffdMqEIQih/DP4HfcorDi5MsEDMT78Fm+ckRkrz91EvHV2M313hwkIwBQljxkjjDcLeLMSx94NRHE7bEK7VhiwbF0VtilxI6XwURzc2N4UTrPrRBw0ov+Brt0F2hDxIHcvxPETgXIODvoFtvT8bDSFfwLxhc0+ZJK8UE6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407945; c=relaxed/simple;
-	bh=A9PC9nTjifNoDmy6ZIEQuAl5mtGhezq+W/IRswa/KqU=;
+	s=arc-20240116; t=1731407948; c=relaxed/simple;
+	bh=QoNHfViCWBDsWnhGxsAjCKcG9zNS9cjDkLy0fjR7LRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y6aLw+75sxRXC//76W4E4WDcq8bCu4c63c8QKDFlW1GqFaB/+L86ziIu9Yz2KjR8ZoAOmFa4u9hNmeLhyUDQh427AECbtnw11vZ3jGjRjdcf0m01f6mNtdhJE3nzwACQfvEi7OlZl72Iommlek+grkBOAMIAP8bIotosu3iza88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CdhZExGr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G81ZegyyI8cEvALA2wswg4dAQ9u9fUGAbR1xfBjaCEfpL9sijPRvumsGMlxNca9QXV/tylfFQf4pwXAQWWITp50b+lnI4KmXKqxyY52FO5kOW3XSpg8VNRokiYy10bMhSK8j/LJrkMO50Vxugw1x06Nxj2naunwHC/WBhuuiD5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nLitHbzD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CdhZExGr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667E8C4CED8;
-	Tue, 12 Nov 2024 10:39:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nLitHbzD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF29FC4CECD;
+	Tue, 12 Nov 2024 10:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407944;
-	bh=A9PC9nTjifNoDmy6ZIEQuAl5mtGhezq+W/IRswa/KqU=;
+	s=korg; t=1731407948;
+	bh=QoNHfViCWBDsWnhGxsAjCKcG9zNS9cjDkLy0fjR7LRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CdhZExGr/HKa8FoZCWxRZh3Z8z1f3ovamgmVYjHUflM55yBZBmLv3MMSgJmtTMyIY
-	 UiB/rVwpvZ0zsJlhj+afFYgDNvgJRIovYlwaudOAGa8+1D8rRG2HZgVezOJV08Ol90
-	 edszCH06D/ugLyvcpv4ZTT58jPA8lYqxhqLHOkNs=
+	b=nLitHbzDYiMeTUD9dj1wHmgUaoK3WEglVJ1u3aka2nPRZf47BYOUPKwKqrsgvefmt
+	 F06UKQc7ZEN/FabDf6qDFDVJuP40eyfz8fHs2o85zFU0RexjvfvYxmdpijjDVx3Z+M
+	 A9Fx6knqbcS2VAlk7AiTcYH8q41d/rfuMNvVzq3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Furkan Kardame <f.kardame@manjaro.org>,
-	Elon Zhang <zhangzj@rock-chips.com>,
+	Andy Yan <andyshrk@163.com>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 012/184] arm64: dts: rockchip: Drop regulator-init-microvolt from two boards
-Date: Tue, 12 Nov 2024 11:19:30 +0100
-Message-ID: <20241112101901.343575412@linuxfoundation.org>
+Subject: [PATCH 6.11 013/184] arm64: dts: rockchip: Fix bluetooth properties on rk3566 box demo
+Date: Tue, 12 Nov 2024 11:19:31 +0100
+Message-ID: <20241112101901.380558252@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -55,71 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 98c3f4a2d61a29a53244ce45e50655140bd47afb ]
+[ Upstream commit 2fa98dcc8d3ea2ebbd9e6be778f8bb19231c28be ]
 
-rk3568-roc-pc and rk3588-toybrick-x0 re-introduced this property despite
-previous patches removing older instances already.
+The expected clock-name is different, and extclk also is deprecated
+in favor of txco for clocks that are not crystals.
 
-regulator-init-microvolt is not part of any regulator binding and is
-only used in the Rockchip vendor kernel. So drop it.
+The wakeup gpio properties are named differently too, when changing
+from vendor-tree to mainline. So fix those to match the binding.
 
-It is used by u-boot in some places to setup initial regulator-state,
-but that should happen in the existing -u-boot devicetree additions.
-
-Fixes: 007b4bb47f44 ("arm64: dts: rockchip: add dts for Firefly Station P2 aka rk3568-roc-pc")
-Cc: Furkan Kardame <f.kardame@manjaro.org>
-Fixes: 8ffe365f8dc7 ("arm64: dts: rockchip: Add devicetree support for TB-RK3588X board")
-Cc: Elon Zhang <zhangzj@rock-chips.com>
+Fixes: 2e0537b16b25 ("arm64: dts: rockchip: Add dts for rockchip rk3566 box demo board")
+Cc: Andy Yan <andyshrk@163.com>
 Reviewed-by: Dragan Simic <dsimic@manjaro.org>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20241008203940.2573684-3-heiko@sntech.de
+Link: https://lore.kernel.org/r/20241008203940.2573684-4-heiko@sntech.de
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3568-roc-pc.dts      | 3 ---
- arch/arm64/boot/dts/rockchip/rk3588-toybrick-x0.dts | 1 -
- 2 files changed, 4 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3566-box-demo.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-roc-pc.dts b/arch/arm64/boot/dts/rockchip/rk3568-roc-pc.dts
-index e333449ead045..2fa89a0eeafcd 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-roc-pc.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-roc-pc.dts
-@@ -272,7 +272,6 @@
- 				regulator-name = "vdd_logic";
- 				regulator-always-on;
- 				regulator-boot-on;
--				regulator-init-microvolt = <900000>;
- 				regulator-initial-mode = <0x2>;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1350000>;
-@@ -285,7 +284,6 @@
- 
- 			vdd_gpu: DCDC_REG2 {
- 				regulator-name = "vdd_gpu";
--				regulator-init-microvolt = <900000>;
- 				regulator-initial-mode = <0x2>;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1350000>;
-@@ -309,7 +307,6 @@
- 
- 			vdd_npu: DCDC_REG4 {
- 				regulator-name = "vdd_npu";
--				regulator-init-microvolt = <900000>;
- 				regulator-initial-mode = <0x2>;
- 				regulator-min-microvolt = <500000>;
- 				regulator-max-microvolt = <1350000>;
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588-toybrick-x0.dts b/arch/arm64/boot/dts/rockchip/rk3588-toybrick-x0.dts
-index d0021524e7f95..328dcb894ccb2 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588-toybrick-x0.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-toybrick-x0.dts
-@@ -428,7 +428,6 @@
- 				regulator-boot-on;
- 				regulator-min-microvolt = <550000>;
- 				regulator-max-microvolt = <950000>;
--				regulator-init-microvolt = <750000>;
- 				regulator-ramp-delay = <12500>;
- 
- 				regulator-state-mem {
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-box-demo.dts b/arch/arm64/boot/dts/rockchip/rk3566-box-demo.dts
+index 0c18406e4c597..7d46809338239 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-box-demo.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-box-demo.dts
+@@ -449,9 +449,9 @@
+ 	bluetooth {
+ 		compatible = "brcm,bcm43438-bt";
+ 		clocks = <&pmucru CLK_RTC_32K>;
+-		clock-names = "ext_clock";
+-		device-wake-gpios = <&gpio2 RK_PC1 GPIO_ACTIVE_HIGH>;
+-		host-wake-gpios = <&gpio2 RK_PC0 GPIO_ACTIVE_HIGH>;
++		clock-names = "txco";
++		device-wakeup-gpios = <&gpio2 RK_PC1 GPIO_ACTIVE_HIGH>;
++		host-wakeup-gpios = <&gpio2 RK_PC0 GPIO_ACTIVE_HIGH>;
+ 		shutdown-gpios = <&gpio2 RK_PB7 GPIO_ACTIVE_HIGH>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&bt_host_wake_l &bt_wake_l &bt_enable_h>;
 -- 
 2.43.0
 
