@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1542E213120;
-	Tue, 12 Nov 2024 10:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D634B213120;
+	Tue, 12 Nov 2024 10:42:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408123; cv=none; b=d6zf1+j/aa9olTNgiuw0WfqEe7x5HOgdRQao+1A7qJf4vGLXqbWTrGOc6izheHztGzOu/QMI2ahoFM26Hq3Sqf3waLXzYfo+55XfQ0PVQHdG5SBclEpQgPU5ygTZCzFhjXgsyr6mUogJUTXXNirnswmVwgJClVHxvJZO5b41Nlo=
+	t=1731408125; cv=none; b=FtuWgRk5jKkSRy16JsNrxuLc01JTXNVM4NR5Cudgnq46bB+EkeHN6EPA899r44mtypGOfbQnLgGUUBjRrraYPRagtQOUCS8Ee4+rC50nFSpYuV51AqIxuRdyF0m19V7VOnuwyBdVghFoR5Y6aLvGx/qmnpINtLUoYq/wMuFbSNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408123; c=relaxed/simple;
-	bh=V90/5f0vM2WVnzWRMOczzYxGmJFmpzxybS/HsCY1m24=;
+	s=arc-20240116; t=1731408125; c=relaxed/simple;
+	bh=L3tvMEhzKcAGdd9QAxwuRqAFgyYRYhsZvPQ640hqbho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z+oeH1VoxLM9VlWI30Zp5ZF5u2ibVq8PNhf4hF1vPZANTe79fJoc41Hj/iI9dZnkDrzXbMMCG4XNO4FULMrlniSdJSz/WQjo2thSnZa53Z/vimkO2BIo8pUXMCzIS0Zxl7ETYe/ZtvIIPoyv/5BbMKV9E2L77Ki3NIF3y78cP6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtDLtBgb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o5DFpcMzkOVeji6mofUqBGdnnBAnj7Fz0u3Ri57ffy8vjxlsPraiHq5kWmxFdkN+mlMdeuHWhZ9DDaOyJJnGZ6P5tvy9kyyg+LAgq48oMKe1AKlhcgLYTU1ujctx7UYXZTMJdItc92AQaZFDQO7oWVUpqLe3Q1kHQ+BfnHHStD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=brCzXz24; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtDLtBgb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6C7C4CED6;
-	Tue, 12 Nov 2024 10:42:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="brCzXz24"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCA0C4CECD;
+	Tue, 12 Nov 2024 10:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408123;
-	bh=V90/5f0vM2WVnzWRMOczzYxGmJFmpzxybS/HsCY1m24=;
+	s=korg; t=1731408125;
+	bh=L3tvMEhzKcAGdd9QAxwuRqAFgyYRYhsZvPQ640hqbho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dtDLtBgbp0OG0Q6d0z7C+jJ23+NuVRxYMRyrdIzMTKlVrOC/6wuJmztmq6r6YyOeM
-	 UE0N1uOwVqx2EXC2XbKOlSwCOyH4AOJ4/mw/ELNTnSh8uF7TbrXzafKX1SOD3e8Zsa
-	 adodS0yFC8oSzbsuxRApSmgbv7LXNg6FeQ6qLE6g=
+	b=brCzXz24nGrOAGNilJDSJGThyJsaRhb7cL+AGyCcinCWhK9UwkgbseRIx0ExzIY9A
+	 YXANbFPQLat+afRtYgU8twaLac3ctZQbSh3jnbTAhqMLGAImpNdODVPCy8f3Y8ZGkO
+	 VTo714FTolzSp7oiICu+gwrZ6t26H4wtZO3LnG1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingqing Zhou <quic_qqzhou@quicinc.com>,
-	Kuldeep Singh <quic_kuldsing@quicinc.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Johan Jonker <jbx6244@gmail.com>,
+	Andy Yan <andyshrk@163.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 025/184] firmware: qcom: scm: Return -EOPNOTSUPP for unsupported SHM bridge enabling
-Date: Tue, 12 Nov 2024 11:19:43 +0100
-Message-ID: <20241112101901.833194343@linuxfoundation.org>
+Subject: [PATCH 6.11 060/184] net: arc: rockchip: fix emac mdio node support
+Date: Tue, 12 Nov 2024 11:20:18 +0100
+Message-ID: <20241112101903.164904658@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -54,74 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingqing Zhou <quic_qqzhou@quicinc.com>
+From: Johan Jonker <jbx6244@gmail.com>
 
-[ Upstream commit f489f6c6eb26482010470d77bad3901a3de1b166 ]
+[ Upstream commit 0a1c7a7b0adbf595ce7f218609db53749e966573 ]
 
-When enabling SHM bridge, QTEE returns 0 and sets error 4 in result to
-qcom_scm for unsupported platforms. Currently, tzmem interprets this as
-an unknown error rather than recognizing it as an unsupported platform.
+The binding emac_rockchip.txt is converted to YAML.
+Changed against the original binding is an added MDIO subnode.
+This make the driver failed to find the PHY, and given the 'mdio
+has invalid PHY address' it is probably looking in the wrong node.
+Fix emac_mdio.c so that it can handle both old and new
+device trees.
 
-Error log:
-[    0.177224] qcom_scm firmware:scm: error (____ptrval____): Failed to enable the TrustZone memory allocator
-[    0.177244] qcom_scm firmware:scm: probe with driver qcom_scm failed with error 4
-
-To address this, modify the function call qcom_scm_shm_bridge_enable()
-to remap result to indicate an unsupported error. This way, tzmem will
-correctly identify it as an unsupported platform case instead of
-reporting it as an error.
-
-Fixes: 178e19c0df1b ("firmware: qcom: scm: add support for SHM bridge operations")
-Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
-Co-developed-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
-Signed-off-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Link: https://lore.kernel.org/r/20241022192148.1626633-1-quic_kuldsing@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 1dabb74971b3 ("ARM: dts: rockchip: restyle emac nodes")
+Signed-off-by: Johan Jonker <jbx6244@gmail.com>
+Tested-by: Andy Yan <andyshrk@163.com>
+Link: https://lore.kernel.org/r/20220603163539.537-3-jbx6244@gmail.com
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom/qcom_scm.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/arc/emac_mdio.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index a50d8e8d0f1b8..6436bd09587a5 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -112,6 +112,7 @@ enum qcom_scm_qseecom_tz_cmd_info {
- };
+diff --git a/drivers/net/ethernet/arc/emac_mdio.c b/drivers/net/ethernet/arc/emac_mdio.c
+index 87f40c2ba9040..078b1a72c1613 100644
+--- a/drivers/net/ethernet/arc/emac_mdio.c
++++ b/drivers/net/ethernet/arc/emac_mdio.c
+@@ -133,6 +133,7 @@ int arc_mdio_probe(struct arc_emac_priv *priv)
+ 	struct arc_emac_mdio_bus_data *data = &priv->bus_data;
+ 	struct device_node *np = priv->dev->of_node;
+ 	const char *name = "Synopsys MII Bus";
++	struct device_node *mdio_node;
+ 	struct mii_bus *bus;
+ 	int error;
  
- #define QSEECOM_MAX_APP_NAME_SIZE		64
-+#define SHMBRIDGE_RESULT_NOTSUPP		4
+@@ -164,7 +165,13 @@ int arc_mdio_probe(struct arc_emac_priv *priv)
  
- /* Each bit configures cold/warm boot address for one of the 4 CPUs */
- static const u8 qcom_scm_cpu_cold_bits[QCOM_SCM_BOOT_MAX_CPUS] = {
-@@ -1353,6 +1354,8 @@ EXPORT_SYMBOL_GPL(qcom_scm_lmh_dcvsh_available);
+ 	snprintf(bus->id, MII_BUS_ID_SIZE, "%s", bus->name);
  
- int qcom_scm_shm_bridge_enable(void)
- {
-+	int ret;
+-	error = of_mdiobus_register(bus, priv->dev->of_node);
++	/* Backwards compatibility for EMAC nodes without MDIO subnode. */
++	mdio_node = of_get_child_by_name(np, "mdio");
++	if (!mdio_node)
++		mdio_node = of_node_get(np);
 +
- 	struct qcom_scm_desc desc = {
- 		.svc = QCOM_SCM_SVC_MP,
- 		.cmd = QCOM_SCM_MP_SHM_BRIDGE_ENABLE,
-@@ -1365,7 +1368,15 @@ int qcom_scm_shm_bridge_enable(void)
- 					  QCOM_SCM_MP_SHM_BRIDGE_ENABLE))
- 		return -EOPNOTSUPP;
- 
--	return qcom_scm_call(__scm->dev, &desc, &res) ?: res.result[0];
-+	ret = qcom_scm_call(__scm->dev, &desc, &res);
-+
-+	if (ret)
-+		return ret;
-+
-+	if (res.result[0] == SHMBRIDGE_RESULT_NOTSUPP)
-+		return -EOPNOTSUPP;
-+
-+	return res.result[0];
- }
- EXPORT_SYMBOL_GPL(qcom_scm_shm_bridge_enable);
- 
++	error = of_mdiobus_register(bus, mdio_node);
++	of_node_put(mdio_node);
+ 	if (error) {
+ 		mdiobus_free(bus);
+ 		return dev_err_probe(priv->dev, error,
 -- 
 2.43.0
 
