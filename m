@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9222123CF;
-	Tue, 12 Nov 2024 10:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0342123CF;
+	Tue, 12 Nov 2024 10:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407217; cv=none; b=EejdlbOWeWnq5Mwhxv5L3syngIDqzQ2rIBJKNVVfZY5p0kSig+WAWZP8VEVbEUmSf9HDazn/+nojwYHMb4QPCfFBOsN0Bhnm41EjDlnXYo3ehMDVjnPLWRURnOdMzCuWc+Z9EOm8Dnz8flIQz1FONRrOwu5D2H8lKAR/AZEc6iw=
+	t=1731407220; cv=none; b=eozxikQnYJKND/flNFz+ajOAUAPrQSIxBZVeVIr9RGDV9rCqJjrM06suEwVt2+GA6B9mTqKP9p0T4GWS/FdDrNGi+RnsSkNGDfjwH5JcY/g9yZmFSAM7xjHYxY3m8+RrG8ICyrTQfsgEm9jtIlLoyFWqheK6cHgMFBPxyk74XAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407217; c=relaxed/simple;
-	bh=LVT9DY9np2SR81yPLYSBc0yZ2lsQtRbo6vg+ayk0w9k=;
+	s=arc-20240116; t=1731407220; c=relaxed/simple;
+	bh=iF4aGTEK0J/TaIgRMGPzl6Dk7+XQ6RjnTqZfbIFYEZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jiZqiDDcCc3n9TITcB9cNt0HIVBntmBWHxrbW0NKlGcZyGFPnqd0oXdGjU1pl+XpHmLM6+AwnaAKwmKvsOGDkX+Ywc+0raf88IA+VOteRaQo7oQ8imQvQuYNxLlbXZM9lmAoxXavPjdu3Yq4oRDXKENekPUyH5L+EjrI+c9Z658=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIL16wSA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oc34xbbxWPWi4UyRBdRZXr3Q5Xkc42ON70tbvq30axSY806dhNV9H6y/VrOT2nwxQoEcKys0WdvKbAH8uw4J12KRkYoyZIapoxkUHjh6c3Y2lwRg6zg8eBnLMkoE7u7qJJIV1/CVfl/jiRv1anT0nQ0IzNl3dzvgTiOL69rPMr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbitsCiD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIL16wSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF039C4AF0B;
-	Tue, 12 Nov 2024 10:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbitsCiD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06314C4CECD;
+	Tue, 12 Nov 2024 10:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407217;
-	bh=LVT9DY9np2SR81yPLYSBc0yZ2lsQtRbo6vg+ayk0w9k=;
+	s=korg; t=1731407220;
+	bh=iF4aGTEK0J/TaIgRMGPzl6Dk7+XQ6RjnTqZfbIFYEZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DIL16wSAApLuYtRnqseSyfSndgUEjq/I6ZLkgHvgf4haztiSLldNCA3Yj32dgqfNI
-	 C9cQYGRV8hA/Moe41GXTJrcB0ouZrJ+wDMlw9GThCjAtebUoYsFneBtlGnDZ0anLWB
-	 ArmxrnymHbwrrLWldNnJQsakvVKg5R1tUKI8ZIdw=
+	b=QbitsCiDB1VvVGCBU6kRq7llySltiss8j8+PeNh/KvENqPUsIRTodx4Iee5BbPQiq
+	 eGPSXG4WPbgLTXuyXsMNxrJKB/ZGeFGwsnsdefjmJq9X70C3tpIGLfpohPNnNd7G2p
+	 Qobcdz7d6nJ714F0C0Lt2kQsMcA0D5Z6cfM1C6Pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 01/98] arm64: dts: rockchip: Fix rt5651 compatible value on rk3399-eaidk-610
-Date: Tue, 12 Nov 2024 11:20:16 +0100
-Message-ID: <20241112101844.323635425@linuxfoundation.org>
+Subject: [PATCH 6.1 02/98] arm64: dts: rockchip: Fix rt5651 compatible value on rk3399-sapphire-excavator
+Date: Tue, 12 Nov 2024 11:20:17 +0100
+Message-ID: <20241112101844.361588049@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -53,29 +53,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 2f39bba3b4f037d6c3c9174eed5befcef1c79abb ]
+[ Upstream commit 577b5761679da90e691acc939ebbe7879fff5f31 ]
 
 There are no DT bindings and driver support for a "rockchip,rt5651"
 codec.  Replace "rockchip,rt5651" by "realtek,rt5651", which matches the
 "simple-audio-card,name" property in the "rt5651-sound" node.
 
-Fixes: 904f983256fdd24b ("arm64: dts: rockchip: Add dts for a rk3399 based board EAIDK-610")
+Fixes: 0a3c78e251b3a266 ("arm64: dts: rockchip: Add support for rk3399 excavator main board")
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/a9877b8b1bd0de279d2ec8294d5be14587203a82.1727358193.git.geert+renesas@glider.be
+Link: https://lore.kernel.org/r/abc6c89811b3911785601d6d590483eacb145102.1727358193.git.geert+renesas@glider.be
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts | 2 +-
+ arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts b/arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts
-index d1f343345f674..1f156f5a8666a 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts
-@@ -541,7 +541,7 @@
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts b/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts
+index dbec2b7173a0b..31ea3d0182c06 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator.dts
+@@ -163,7 +163,7 @@
  	status = "okay";
  
- 	rt5651: audio-codec@1a {
+ 	rt5651: rt5651@1a {
 -		compatible = "rockchip,rt5651";
 +		compatible = "realtek,rt5651";
  		reg = <0x1a>;
