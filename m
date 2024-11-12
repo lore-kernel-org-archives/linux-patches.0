@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D704215013;
-	Tue, 12 Nov 2024 10:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85657215015;
+	Tue, 12 Nov 2024 10:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407846; cv=none; b=MXAvUyCxnPGt6NWZ95jysOuq5b8dyes/uF3Z2qdnFAlnEl7/ET9AWueRbBkyVztauzWYpO4iFOZP120JtN1BKgjAkMZHVX3yycQo9UBgqzNCOgGKW85tzfoPnAle1YcNMuc85mljEJoSCfQIyxEBiJOjovzWNLeSk/+8zMmVQTk=
+	t=1731407849; cv=none; b=b0FhDFSlzQYnR+7dyjNtvexOo88M3IN+3ncXmzkFTw+0hwJXqPUAGqWMg20QCUVkm7CcRBGDFF6Hm4pQCRwpvEdlF9POeysXVqcB/Ytf6FfYbTltWRbbCJe06x4b0U2tKFUZOR+p6DJbC/VX1GKjMnT56e1v+oenVZdaHQ2tIqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407846; c=relaxed/simple;
-	bh=mBO0Rokf76GLjOuWsSn6ihhrLNh1lLe1btYmrP3XopY=;
+	s=arc-20240116; t=1731407849; c=relaxed/simple;
+	bh=WHDrcxKcBdMnvRld4FXz79+dG81xHW2dgqeOUyogj0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Og8x+1XNNq5Zl2aW3CPzQF+LCwlsLxReXqD117a3WkQ8TY0GU9FkNGf7xuO9UDhXU/RmLp2i3IwxawWA0Z6BpRgenDN+FAzMDG0SvPoP7XzMR8veSFn7a0dL0zWIFW16Tcbp1rBTE+QqlPds0dwNKg1fODSWROuvTbppnR/miJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XIR/oLHp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lnAiJiM12NS0A/6kRa2sphhipot1KPkHkIAzVfrzyjCOT9tjq5vOKGncSfmMDRSvkhcw0F64sXPc9EDOM9qoh0gYNORZ/DeGQ0h/Zidzvc9qQfqC0WSoSYLAJ7b7+Zjf26N0a8tTn2DBxsZDkzhJt4y5wsKCJylv3FIHTI/yhz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uFShHbKR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XIR/oLHp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8719EC4CED4;
-	Tue, 12 Nov 2024 10:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFShHbKR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22CFC4CED7;
+	Tue, 12 Nov 2024 10:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407846;
-	bh=mBO0Rokf76GLjOuWsSn6ihhrLNh1lLe1btYmrP3XopY=;
+	s=korg; t=1731407849;
+	bh=WHDrcxKcBdMnvRld4FXz79+dG81xHW2dgqeOUyogj0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XIR/oLHprPKKiayPw8RDBVsp5YaSd45NLgZboxVUbwOnMvtbPpj1V9eYAL7113KZN
-	 7OXufw4tDI4b1z0cGVNUXBZ/dqm8JCySxtm6or/4RqSQWhWYE9VMDHxINuCt9I49Ao
-	 yrY0prUwh8ZQhErWwTtFjMTX4floUHKCGws8M9Ow=
+	b=uFShHbKR0mDNWXLrXg04ObrluYT3ePtDlsZJxSaLfHVRuArJAFiC27iYP5FwTqv7v
+	 7WJdAc/nbb3gdR/pYjE7myFs5rNBISC57c8H1noPDrNt6qYItqvMW1nVYfWBzw4Dji
+	 KpxG2wPZl/FhP0l1Ja9zSYgmZc/dyZHmCT4Fnagw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 093/119] mptcp: use sock_kfree_s instead of kfree
-Date: Tue, 12 Nov 2024 11:21:41 +0100
-Message-ID: <20241112101852.275018206@linuxfoundation.org>
+	Mike Snitzer <snitzer@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.6 102/119] filemap: Fix bounds checking in filemap_read()
+Date: Tue, 12 Nov 2024 11:21:50 +0100
+Message-ID: <20241112101852.622199814@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -51,46 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 99635c91fb8b860a6404b9bc8b769df7bdaa2ae3 upstream.
+commit ace149e0830c380ddfce7e466fe860ca502fe4ee upstream.
 
-The local address entries on userspace_pm_local_addr_list are allocated
-by sock_kmalloc().
+If the caller supplies an iocb->ki_pos value that is close to the
+filesystem upper limit, and an iterator with a count that causes us to
+overflow that limit, then filemap_read() enters an infinite loop.
 
-It's then required to use sock_kfree_s() instead of kfree() to free
-these entries in order to adjust the allocated size on the sk side.
+This behaviour was discovered when testing xfstests generic/525 with the
+"localio" optimisation for loopback NFS mounts.
 
-Fixes: 24430f8bf516 ("mptcp: add address into userspace pm list")
-Cc: stable@vger.kernel.org
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20241104-net-mptcp-misc-6-12-v1-2-c13f2ff1656f@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: c2a9737f45e2 ("vfs,mm: fix a dead loop in truncate_inode_pages_range()")
+Tested-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_userspace.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/filemap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -90,6 +90,7 @@ static int mptcp_userspace_pm_delete_loc
- 						struct mptcp_pm_addr_entry *addr)
- {
- 	struct mptcp_pm_addr_entry *entry, *tmp;
-+	struct sock *sk = (struct sock *)msk;
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -2660,7 +2660,7 @@ ssize_t filemap_read(struct kiocb *iocb,
+ 	if (unlikely(!iov_iter_count(iter)))
+ 		return 0;
  
- 	list_for_each_entry_safe(entry, tmp, &msk->pm.userspace_pm_local_addr_list, list) {
- 		if (mptcp_addresses_equal(&entry->addr, &addr->addr, false)) {
-@@ -97,7 +98,7 @@ static int mptcp_userspace_pm_delete_loc
- 			 * be used multiple times (e.g. fullmesh mode).
- 			 */
- 			list_del_rcu(&entry->list);
--			kfree(entry);
-+			sock_kfree_s(sk, entry, sizeof(*entry));
- 			msk->pm.local_addr_used--;
- 			return 0;
- 		}
+-	iov_iter_truncate(iter, inode->i_sb->s_maxbytes);
++	iov_iter_truncate(iter, inode->i_sb->s_maxbytes - iocb->ki_pos);
+ 	folio_batch_init(&fbatch);
+ 
+ 	do {
 
 
