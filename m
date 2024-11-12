@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5194F2141A4;
-	Tue, 12 Nov 2024 10:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B58B219E23;
+	Tue, 12 Nov 2024 10:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408317; cv=none; b=r/60Jy3wFk1nFVwC50nBElHQkpkDM2zO99ZuNBRBEofaxY78ZLJOG57cvEKF2sAiVEe8FfSklzM5Wk0lVHgYviYmps/rTxhVAaDalmSQgIALC2uDcO96Y11t3BaFWK/qLgXw3D1tKr4LUuCf2AEt9OmM1KXNQY6NrU0OkoZfLa4=
+	t=1731408321; cv=none; b=afiRNGJQisg4CJCCDbCv2A11JykFA7qTCNyk/pQAD+5baqop75nlLI5DRbzTppM8bWoW2j3RncEA2KRFWXNFwcWqQLq9RcwHgb1NIL6x60Vij+fnPvhjHCvlykDWRmYdcK5Y9nuiGPX1aTor1a7S2MjDcHdb1HBoIsB1cHJF3bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408317; c=relaxed/simple;
-	bh=IrYdpeEkbmiV6NN+eQv8avAraMLs0AQd18nIdSv7/lA=;
+	s=arc-20240116; t=1731408321; c=relaxed/simple;
+	bh=wbCI4opvV8kBW5mZSDUUs8Q+XSH/7w4CMDvcYjax2pU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=teoarMhUxDQFsdwdm91qHWxKbFo5pJ99HOG+SRBzl4Mc06jUA4aPHH7EoIbk42nlPqvzMiEovFG13O0Xd1Z2wGOGNe+vX+8GdcvdpPeQJ9+WTDvqlq8rF0vtKCemmRzxd1XGJPVY54qCTx2155gkJIAOsp7AVUNQapTJSEwmjMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFyU1hzU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AzVzlur+nY5zH+oYEQnOXtNDRy1PTyqkBEoXPnzIJUr9hA97Cd7Fw3d6muyOCj37PGNTIPIb1fnv7NUag4mlaCO6E7jNOBfcvXeBcx6OeBy6RMFST6eYfFz2woIPBKIBvnl/582r6TQncMPN38wi7zNM4S5Cl4JbNUYzyGMx+RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SLexu3L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFyU1hzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B436AC4CECD;
-	Tue, 12 Nov 2024 10:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SLexu3L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED93C4CECD;
+	Tue, 12 Nov 2024 10:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408317;
-	bh=IrYdpeEkbmiV6NN+eQv8avAraMLs0AQd18nIdSv7/lA=;
+	s=korg; t=1731408320;
+	bh=wbCI4opvV8kBW5mZSDUUs8Q+XSH/7w4CMDvcYjax2pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aFyU1hzULJwEnDp1seLIAb18lRpmYg7awLFvOp8w/XWqKVbN1pQyReszb1KCRFcIE
-	 E+/dpCibsfDnlh8Z0F339f67MEtMLFR/QJ3STyyKk9Nqgjg/nE9BUoitS6ZWG6iWR2
-	 mb/ZM/+1Whsf/9uAnqxwEkTysVwSZdYVi2ivIbgg=
+	b=2SLexu3LYS5QeeooI55mUHlivVk4Yh1ic8zmv6TqMAoNmFBvZOXNFe3zMP5R27bo1
+	 uETTOfmnOyNHewvV9Msh+iOL2JBSqpoeImL/0SOIEpAIbyDoaQJgHtK499FqM7U8zn
+	 v2jr/XNw+gNhfwXQydltQ8jqDC8VxMuNVR74/FIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>
-Subject: [PATCH 6.11 124/184] nfs: Fix KMSAN warning in decode_getfattr_attrs()
-Date: Tue, 12 Nov 2024 11:21:22 +0100
-Message-ID: <20241112101905.624750981@linuxfoundation.org>
+	Eric Sandeen <sandeen@redhat.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Ali Zahraee <ahzahraee@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Kalesh Singh <kaleshsingh@google.com>
+Subject: [PATCH 6.11 125/184] tracing: Fix tracefs mount options
+Date: Tue, 12 Nov 2024 11:21:23 +0100
+Message-ID: <20241112101905.664209414@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -50,69 +57,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Kalesh Singh <kaleshsingh@google.com>
 
-commit dc270d7159699ad6d11decadfce9633f0f71c1db upstream.
+commit e4d32142d1de8bcafd90ea5f4f557104f0969c41 upstream.
 
-Fix the following KMSAN warning:
+Commit 78ff64081949 ("vfs: Convert tracefs to use the new mount API")
+converted tracefs to use the new mount APIs caused mount options
+(e.g. gid=<gid>) to not take effect.
 
-CPU: 1 UID: 0 PID: 7651 Comm: cp Tainted: G    B
-Tainted: [B]=BAD_PAGE
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009)
-=====================================================
-=====================================================
-BUG: KMSAN: uninit-value in decode_getfattr_attrs+0x2d6d/0x2f90
- decode_getfattr_attrs+0x2d6d/0x2f90
- decode_getfattr_generic+0x806/0xb00
- nfs4_xdr_dec_getattr+0x1de/0x240
- rpcauth_unwrap_resp_decode+0xab/0x100
- rpcauth_unwrap_resp+0x95/0xc0
- call_decode+0x4ff/0xb50
- __rpc_execute+0x57b/0x19d0
- rpc_execute+0x368/0x5e0
- rpc_run_task+0xcfe/0xee0
- nfs4_proc_getattr+0x5b5/0x990
- __nfs_revalidate_inode+0x477/0xd00
- nfs_access_get_cached+0x1021/0x1cc0
- nfs_do_access+0x9f/0xae0
- nfs_permission+0x1e4/0x8c0
- inode_permission+0x356/0x6c0
- link_path_walk+0x958/0x1330
- path_lookupat+0xce/0x6b0
- filename_lookup+0x23e/0x770
- vfs_statx+0xe7/0x970
- vfs_fstatat+0x1f2/0x2c0
- __se_sys_newfstatat+0x67/0x880
- __x64_sys_newfstatat+0xbd/0x120
- x64_sys_call+0x1826/0x3cf0
- do_syscall_64+0xd0/0x1b0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The tracefs superblock can be updated from multiple paths:
+    - on fs_initcall() to init_trace_printk_function_export()
+    - from a work queue to initialize eventfs
+      tracer_init_tracefs_work_func()
+    - fsconfig() syscall to mount or remount of tracefs
 
-The KMSAN warning is triggered in decode_getfattr_attrs(), when calling
-decode_attr_mdsthreshold(). It appears that fattr->mdsthreshold is not
-initialized.
+The tracefs superblock root inode gets created early on in
+init_trace_printk_function_export().
 
-Fix the issue by initializing fattr->mdsthreshold to NULL in
-nfs_fattr_init().
+With the new mount API, tracefs effectively uses get_tree_single() instead
+of the old API mount_single().
 
-Cc: stable@vger.kernel.org # v3.5.x
-Fixes: 88034c3d88c2 ("NFSv4.1 mdsthreshold attribute xdr")
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Previously, mount_single() ensured that the options are always applied to
+the superblock root inode:
+    (1) If the root inode didn't exist, call fill_super() to create it
+        and apply the options.
+    (2) If the root inode exists, call reconfigure_single() which
+        effectively calls tracefs_apply_options() to parse and apply
+        options to the subperblock's fs_info and inode and remount
+        eventfs (if necessary)
+
+On the other hand, get_tree_single() effectively calls vfs_get_super()
+which:
+    (3) If the root inode doesn't exists, calls fill_super() to create it
+        and apply the options.
+    (4) If the root inode already exists, updates the fs_context root
+        with the superblock's root inode.
+
+(4) above is always the case for tracefs mounts, since the super block's
+root inode will already be created by init_trace_printk_function_export().
+
+This means that the mount options get ignored:
+    - Since it isn't applied to the superblock's root inode, it doesn't
+      get inherited by the children.
+    - Since eventfs is initialized from a separate work queue and
+      before call to mount with the options, and it doesn't get remounted
+      for mount.
+
+Ensure that the mount options are applied to the super block and eventfs
+is remounted to respect the mount options.
+
+To understand this better, if fstab has the following:
+
+ tracefs  /sys/kernel/tracing  tracefs   nosuid,nodev,noexec,gid=tracing 0  0
+
+On boot up, permissions look like:
+
+ # ls -l /sys/kernel/tracing/trace
+ -rw-r----- 1 root root 0 Nov  1 08:37 /sys/kernel/tracing/trace
+
+When it should look like:
+
+ # ls -l /sys/kernel/tracing/trace
+ -rw-r----- 1 root tracing 0 Nov  1 08:37 /sys/kernel/tracing/trace
+
+Link: https://lore.kernel.org/r/536e99d3-345c-448b-adee-a21389d7ab4b@redhat.com/
+
+Cc: Eric Sandeen <sandeen@redhat.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Ali Zahraee <ahzahraee@gmail.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 78ff64081949 ("vfs: Convert tracefs to use the new mount API")
+Link: https://lore.kernel.org/20241030171928.4168869-2-kaleshsingh@google.com
+Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/inode.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/tracefs/inode.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -1656,6 +1656,7 @@ void nfs_fattr_init(struct nfs_fattr *fa
- 	fattr->gencount = nfs_inc_attr_generation_counter();
- 	fattr->owner_name = NULL;
- 	fattr->group_name = NULL;
-+	fattr->mdsthreshold = NULL;
- }
- EXPORT_SYMBOL_GPL(nfs_fattr_init);
+diff --git a/fs/tracefs/inode.c b/fs/tracefs/inode.c
+index 1748dff58c3b..cfc614c638da 100644
+--- a/fs/tracefs/inode.c
++++ b/fs/tracefs/inode.c
+@@ -392,6 +392,9 @@ static int tracefs_reconfigure(struct fs_context *fc)
+ 	struct tracefs_fs_info *sb_opts = sb->s_fs_info;
+ 	struct tracefs_fs_info *new_opts = fc->s_fs_info;
  
++	if (!new_opts)
++		return 0;
++
+ 	sync_filesystem(sb);
+ 	/* structure copy of new mount options to sb */
+ 	*sb_opts = *new_opts;
+@@ -478,14 +481,17 @@ static int tracefs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	sb->s_op = &tracefs_super_operations;
+ 	sb->s_d_op = &tracefs_dentry_operations;
+ 
+-	tracefs_apply_options(sb, false);
+-
+ 	return 0;
+ }
+ 
+ static int tracefs_get_tree(struct fs_context *fc)
+ {
+-	return get_tree_single(fc, tracefs_fill_super);
++	int err = get_tree_single(fc, tracefs_fill_super);
++
++	if (err)
++		return err;
++
++	return tracefs_reconfigure(fc);
+ }
+ 
+ static void tracefs_free_fc(struct fs_context *fc)
+-- 
+2.47.0
+
 
 
