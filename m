@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7B32144B5;
-	Tue, 12 Nov 2024 10:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C883F2144B5;
+	Tue, 12 Nov 2024 10:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408416; cv=none; b=cal/2TILuDxux3M5kpyQd5ks0Go1IldJif3/oPtmOPqpyH8MUPqcYCuUvfxsl3qepRm55jFJB9tWxE/jFjRSstfLPDKnvfE3/mDCCN1Hj6iDagRprspFqZvLbE2TJfMievJxTZGbBBUvhnnG+XCcV+6F9vSLYr8miFRp7N8RgoA=
+	t=1731408419; cv=none; b=l9/OBDxXNKiKLu1X8eBuEKdxVrUZ0zKt1RqPlalMiwGDf6pFpp+Tp67WCtEcQjLF0Ave5U1Uzck/WV397hPXSUZGjIoGt6roLi1Xua1PPFrk++zR9gtie//0Sr3xcvNO1M/oVURTBXqN6TLbercgMEaL1WHW7Alh5w1voqAew/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408416; c=relaxed/simple;
-	bh=eUKFzTgnxP8vLNhC87EdDuOP51IhbQU+IBoiQicne5w=;
+	s=arc-20240116; t=1731408419; c=relaxed/simple;
+	bh=YAKjjb3neQHtNmYmCA69sCC/dMlmyyirr5Mqa1MfGTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GIMilmUFr08tTttJs+1VyVdFnwFNHD1NguhocdpN+dbhqLUpa2QSGppgsqJ9cHESxtx1ChyNojux2xulgvzcL6TDy4Dc0duqYNnOHS4fAsdV7CPcAUIxTuq1rDmWkdmVYnvA38hvBQCuPAUtLkWa+HNGaaBPyivnuRXjIyMmyAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bIcbVIs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GHpDZi2uxgfH2czZg6KIFJ4IKxmZsntTGdYbCaMuz3HO2jt9x7NB0w3ecPAqGh8dlWABksbc2/D3N24bMvUiZaeOcEc6PsGSXZPJG/8DxKzo2Rxn7G/aJZ9GWSekBe7Q2KuISKQwIxIXzbhZC5lWSNc1zBAo6cpGxOhZAKPRNVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZYTil4X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bIcbVIs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE681C4CECD;
-	Tue, 12 Nov 2024 10:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZYTil4X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BF93C4CECD;
+	Tue, 12 Nov 2024 10:46:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408416;
-	bh=eUKFzTgnxP8vLNhC87EdDuOP51IhbQU+IBoiQicne5w=;
+	s=korg; t=1731408419;
+	bh=YAKjjb3neQHtNmYmCA69sCC/dMlmyyirr5Mqa1MfGTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1bIcbVIsWk9y99v8kVyRNM6EZT1x3kYNnje5smcjPpy3qqyj5gRXmRcC4WyJXTCaT
-	 +ElplzzZ307zUkl2oCWyFBOpah5a8ADmHuPuHnwHEkr5KVJ9NzaIN/EzLf3k+Sjs2N
-	 mSDDjwgwnT+GNUKz1tnd9xSRvrdj4lmh04yYeASE=
+	b=2ZYTil4XcpkhehUV7h1J68RX/W+jcOSroVE+IGQJjpxhdXvn2UOBZ1dZJNm9wnJXA
+	 J56nJRBfSV+aCCEPhdqI/ECoNNpjkrR4zudLwO6B3+N40ivAYV0ZwaPQyGOkKiTkbA
+	 40HMvMnU+ESB1xh312E49LOVMXRD/TuCz2EY5ijg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AceLan Kao <acelan.kao@canonical.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.11 155/184] thunderbolt: Add only on-board retimers when !CONFIG_USB4_DEBUGFS_MARGINING
-Date: Tue, 12 Nov 2024 11:21:53 +0100
-Message-ID: <20241112101906.821572830@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>
+Subject: [PATCH 6.11 156/184] usb: musb: sunxi: Fix accessing an released usb phy
+Date: Tue, 12 Nov 2024 11:21:54 +0100
+Message-ID: <20241112101906.858393911@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -50,40 +49,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit bf791751162ac875a9439426d13f8d4d18151549 upstream.
+commit 498dbd9aea205db9da674994b74c7bf8e18448bd upstream.
 
-Normally there is no need to enumerate retimers on the other side of the
-cable. This is only needed in special cases where user wants to run
-receiver lane margining against the downstream facing port of a retimer.
-Furthermore this might confuse the userspace tools such as fwupd because
-it cannot read the information it expects from these retimers.
+Commit 6ed05c68cbca ("usb: musb: sunxi: Explicitly release USB PHY on
+exit") will cause that usb phy @glue->xceiv is accessed after released.
 
-Fix this by changing the retimer enumeration code to add only on-board
-retimers when CONFIG_USB4_DEBUGFS_MARGINING is not enabled.
+1) register platform driver @sunxi_musb_driver
+// get the usb phy @glue->xceiv
+sunxi_musb_probe() -> devm_usb_get_phy().
 
-Reported-by: AceLan Kao <acelan.kao@canonical.com>
-Tested-by: AceLan Kao <acelan.kao@canonical.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219420
+2) register and unregister platform driver @musb_driver
+musb_probe() -> sunxi_musb_init()
+use the phy here
+//the phy is released here
+musb_remove() -> sunxi_musb_exit() -> devm_usb_put_phy()
+
+3) register @musb_driver again
+musb_probe() -> sunxi_musb_init()
+use the phy here but the phy has been released at 2).
+...
+
+Fixed by reverting the commit, namely, removing devm_usb_put_phy()
+from sunxi_musb_exit().
+
+Fixes: 6ed05c68cbca ("usb: musb: sunxi: Explicitly release USB PHY on exit")
 Cc: stable@vger.kernel.org
-Fixes: ff6ab055e070 ("thunderbolt: Add receiver lane margining support for retimers")
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20241029-sunxi_fix-v1-1-9431ed2ab826@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/retimer.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/musb/sunxi.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/thunderbolt/retimer.c
-+++ b/drivers/thunderbolt/retimer.c
-@@ -532,6 +532,8 @@ int tb_retimer_scan(struct tb_port *port
- 	}
+--- a/drivers/usb/musb/sunxi.c
++++ b/drivers/usb/musb/sunxi.c
+@@ -293,8 +293,6 @@ static int sunxi_musb_exit(struct musb *
+ 	if (test_bit(SUNXI_MUSB_FL_HAS_SRAM, &glue->flags))
+ 		sunxi_sram_release(musb->controller->parent);
  
- 	ret = 0;
-+	if (!IS_ENABLED(CONFIG_USB4_DEBUGFS_MARGINING))
-+		max = min(last_idx, max);
+-	devm_usb_put_phy(glue->dev, glue->xceiv);
+-
+ 	return 0;
+ }
  
- 	/* Add retimers if they do not exist already */
- 	for (i = 1; i <= max; i++) {
 
 
