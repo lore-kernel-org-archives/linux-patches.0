@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500F72144B3;
-	Tue, 12 Nov 2024 10:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE1920E307;
+	Tue, 12 Nov 2024 10:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408445; cv=none; b=b1XYyOH/rXn1RcsQD/yzdiBb4VNET1M7XKgOH8YFNXhykduy9QwgvQ+5quHH0S5Et6H6Hg7UN9ZkdW42zrG0wh+UuCmK4zitjUNGp2hVMBmiPSeyS5diQUzjb5nQRDDO2xgn0aHa63WxbDaLGnhgs5Y8vViMIqb+MZo2btyr3DY=
+	t=1731408448; cv=none; b=aHMEHnCfScbfEWHwlMLeNKaROxxHvfPNERD10z2rAz88eNmyBP82iNte3T/Okn0q7pG3dncLCVl1CMtxYfGvPTmZstwp6pUNd9dL+BF0dcHPKo0+mPiyct5AxmRSkUHPxg/NySO99tT4woWNcEF6SZ7yE/YiuelUJt4Q0ufXCU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408445; c=relaxed/simple;
-	bh=OX9d+QvrjL1DiAsBBgmO8cf94O5M7BioQmXeYDllHTU=;
+	s=arc-20240116; t=1731408448; c=relaxed/simple;
+	bh=1fQq/uH/YurESwMJPYSH8tbDYSCl2DrFPhuZEbyb+7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Age3do1Bw1lXLCshsp1kufOVeJzPBcLqmwnFbK/ATd9mQI4a9Ht7BNSCHTAFsj0L8JWaJjg5jSxjkBLKAPdGkFfDDpqLTrLN09zVySXK+IW9XsQUFQfnELe2V4CIU8M2CV0aqtnZQ6efb9ILVwKWPZgSYsmfIY4JJ8aH+UPeHdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQAIDq0Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LvUz2LuPa/EyTjbvHmB8pJT4clD6swQ76F+z3x0rpYXpdXEKmn2Gut4jF/vxr9Y8boR+sHjKbzhW0AD2lFpQHOkHBR8BlrSlDT+axNNYwv9n+KLn6vQFqKIFHszeGBD9kh5PMksrmkKDbTBVAsIlctkMX2/bZHwSesBDtnZAlg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNjpPebp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQAIDq0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B07C4CECD;
-	Tue, 12 Nov 2024 10:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNjpPebp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D7DC4CECD;
+	Tue, 12 Nov 2024 10:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408445;
-	bh=OX9d+QvrjL1DiAsBBgmO8cf94O5M7BioQmXeYDllHTU=;
+	s=korg; t=1731408448;
+	bh=1fQq/uH/YurESwMJPYSH8tbDYSCl2DrFPhuZEbyb+7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JQAIDq0YXWtFbaSxgNAjfeKnv7O3n2nlvOchqtNLT1owMWbT73wsX4wKq59Od0Q/5
-	 69lHmT2nk2u/ZjXIZ9Ry6AvTpA0KvU8rVnvZTL0GWGMB11Q8QVWYg1XqfM7Nphh01W
-	 YfoMdRc6Gx1RaPAF+OpLu9/Z9sU9boGSJdYw5Srw=
+	b=nNjpPebpzU1WPyKjusOEwYybZUXCNWuVJ+DJkQbtgp9uS/ya6YeMRZuSFndoikYzV
+	 Q09fRvF1xtcLAiTtfgXEv0FI4GeHqKAXFOPouxhO4asx50bjA6tBw5QbTEgrY59zRn
+	 rpYFRXmqdrfaxY+Ag8CYcWD6Uj6073j3otVYRqi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gautam Menghani <gautam@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.11 133/184] KVM: PPC: Book3S HV: Mask off LPCR_MER for a vCPU before running it to avoid spurious interrupts
-Date: Tue, 12 Nov 2024 11:21:31 +0100
-Message-ID: <20241112101905.972164045@linuxfoundation.org>
+	Tarun K Singh <tarun.k.singh@intel.com>,
+	Pavan Kumar Linga <pavan.kumar.linga@intel.com>,
+	Krishneil Singh <krishneil.k.singh@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.11 134/184] idpf: avoid vport access in idpf_get_link_ksettings
+Date: Tue, 12 Nov 2024 11:21:32 +0100
+Message-ID: <20241112101906.012383754@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -50,77 +52,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautam Menghani <gautam@linux.ibm.com>
+From: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
 
-commit a373830f96db288a3eb43a8692b6bcd0bd88dfe1 upstream.
+commit 81d2fb4c7c18a3b36ba3e00b9d5b753107472d75 upstream.
 
-Running a L2 vCPU (see [1] for terminology) with LPCR_MER bit set and no
-pending interrupts results in that L2 vCPU getting an infinite flood of
-spurious interrupts. The 'if check' in kvmhv_run_single_vcpu() sets the
-LPCR_MER bit if there are pending interrupts.
+When the device control plane is removed or the platform
+running device control plane is rebooted, a reset is detected
+on the driver. On driver reset, it releases the resources and
+waits for the reset to complete. If the reset fails, it takes
+the error path and releases the vport lock. At this time if the
+monitoring tools tries to access link settings, it call traces
+for accessing released vport pointer.
 
-The spurious flood problem can be observed in 2 cases:
-1. Crashing the guest while interrupt heavy workload is running
-  a. Start a L2 guest and run an interrupt heavy workload (eg: ipistorm)
-  b. While the workload is running, crash the guest (make sure kdump
-     is configured)
-  c. Any one of the vCPUs of the guest will start getting an infinite
-     flood of spurious interrupts.
+To avoid it, move link_speed_mbps to netdev_priv structure
+which removes the dependency on vport pointer and the vport lock
+in idpf_get_link_ksettings. Also use netif_carrier_ok()
+to check the link status and adjust the offsetof to use link_up
+instead of link_speed_mbps.
 
-2. Running LTP stress tests in multiple guests at the same time
-   a. Start 4 L2 guests.
-   b. Start running LTP stress tests on all 4 guests at same time.
-   c. In some time, any one/more of the vCPUs of any of the guests will
-      start getting an infinite flood of spurious interrupts.
-
-The root cause of both the above issues is the same:
-1. A NMI is sent to a running vCPU that has LPCR_MER bit set.
-2. In the NMI path, all registers are refreshed, i.e, H_GUEST_GET_STATE
-   is called for all the registers.
-3. When H_GUEST_GET_STATE is called for LPCR, the vcpu->arch.vcore->lpcr
-   of that vCPU at L1 level gets updated with LPCR_MER set to 1, and this
-   new value is always used whenever that vCPU runs, regardless of whether
-   there was a pending interrupt.
-4. Since LPCR_MER is set, the vCPU in L2 always jumps to the external
-   interrupt handler, and this cycle never ends.
-
-Fix the spurious flood by masking off the LPCR_MER bit before running a
-L2 vCPU to ensure that it is not set if there are no pending interrupts.
-
-[1] Terminology:
-1. L0 : PAPR hypervisor running in HV mode
-2. L1 : Linux guest (logical partition) running on top of L0
-3. L2 : KVM guest running on top of L1
-
-Fixes: ec0f6639fa88 ("KVM: PPC: Book3S HV nestedv2: Ensure LPCR_MER bit is passed to the L0")
-Cc: stable@vger.kernel.org # v6.8+
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Fixes: 02cbfba1add5 ("idpf: add ethtool callbacks")
+Cc: stable@vger.kernel.org # 6.7+
+Reviewed-by: Tarun K Singh <tarun.k.singh@intel.com>
+Signed-off-by: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
+Tested-by: Krishneil Singh <krishneil.k.singh@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kvm/book3s_hv.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/ethernet/intel/idpf/idpf.h          |    4 ++--
+ drivers/net/ethernet/intel/idpf/idpf_ethtool.c  |   11 +++--------
+ drivers/net/ethernet/intel/idpf/idpf_lib.c      |    4 ++--
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.c |    2 +-
+ 4 files changed, 8 insertions(+), 13 deletions(-)
 
---- a/arch/powerpc/kvm/book3s_hv.c
-+++ b/arch/powerpc/kvm/book3s_hv.c
-@@ -4892,6 +4892,18 @@ int kvmhv_run_single_vcpu(struct kvm_vcp
- 							   BOOK3S_INTERRUPT_EXTERNAL, 0);
- 			else
- 				lpcr |= LPCR_MER;
-+		} else {
-+			/*
-+			 * L1's copy of L2's LPCR (vcpu->arch.vcore->lpcr) can get its MER bit
-+			 * unexpectedly set - for e.g. during NMI handling when all register
-+			 * states are synchronized from L0 to L1. L1 needs to inform L0 about
-+			 * MER=1 only when there are pending external interrupts.
-+			 * In the above if check, MER bit is set if there are pending
-+			 * external interrupts. Hence, explicity mask off MER bit
-+			 * here as otherwise it may generate spurious interrupts in L2 KVM
-+			 * causing an endless loop, which results in L2 guest getting hung.
-+			 */
-+			lpcr &= ~LPCR_MER;
- 		}
- 	} else if (vcpu->arch.pending_exceptions ||
- 		   vcpu->arch.doorbell_request ||
+--- a/drivers/net/ethernet/intel/idpf/idpf.h
++++ b/drivers/net/ethernet/intel/idpf/idpf.h
+@@ -141,6 +141,7 @@ enum idpf_vport_state {
+  * @adapter: Adapter back pointer
+  * @vport: Vport back pointer
+  * @vport_id: Vport identifier
++ * @link_speed_mbps: Link speed in mbps
+  * @vport_idx: Relative vport index
+  * @state: See enum idpf_vport_state
+  * @netstats: Packet and byte stats
+@@ -150,6 +151,7 @@ struct idpf_netdev_priv {
+ 	struct idpf_adapter *adapter;
+ 	struct idpf_vport *vport;
+ 	u32 vport_id;
++	u32 link_speed_mbps;
+ 	u16 vport_idx;
+ 	enum idpf_vport_state state;
+ 	struct rtnl_link_stats64 netstats;
+@@ -287,7 +289,6 @@ struct idpf_port_stats {
+  * @tx_itr_profile: TX profiles for Dynamic Interrupt Moderation
+  * @port_stats: per port csum, header split, and other offload stats
+  * @link_up: True if link is up
+- * @link_speed_mbps: Link speed in mbps
+  * @sw_marker_wq: workqueue for marker packets
+  */
+ struct idpf_vport {
+@@ -331,7 +332,6 @@ struct idpf_vport {
+ 	struct idpf_port_stats port_stats;
+ 
+ 	bool link_up;
+-	u32 link_speed_mbps;
+ 
+ 	wait_queue_head_t sw_marker_wq;
+ };
+--- a/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
+@@ -1296,24 +1296,19 @@ static void idpf_set_msglevel(struct net
+ static int idpf_get_link_ksettings(struct net_device *netdev,
+ 				   struct ethtool_link_ksettings *cmd)
+ {
+-	struct idpf_vport *vport;
+-
+-	idpf_vport_ctrl_lock(netdev);
+-	vport = idpf_netdev_to_vport(netdev);
++	struct idpf_netdev_priv *np = netdev_priv(netdev);
+ 
+ 	ethtool_link_ksettings_zero_link_mode(cmd, supported);
+ 	cmd->base.autoneg = AUTONEG_DISABLE;
+ 	cmd->base.port = PORT_NONE;
+-	if (vport->link_up) {
++	if (netif_carrier_ok(netdev)) {
+ 		cmd->base.duplex = DUPLEX_FULL;
+-		cmd->base.speed = vport->link_speed_mbps;
++		cmd->base.speed = np->link_speed_mbps;
+ 	} else {
+ 		cmd->base.duplex = DUPLEX_UNKNOWN;
+ 		cmd->base.speed = SPEED_UNKNOWN;
+ 	}
+ 
+-	idpf_vport_ctrl_unlock(netdev);
+-
+ 	return 0;
+ }
+ 
+--- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+@@ -1873,7 +1873,7 @@ int idpf_initiate_soft_reset(struct idpf
+ 	 * mess with. Nothing below should use those variables from new_vport
+ 	 * and should instead always refer to them in vport if they need to.
+ 	 */
+-	memcpy(new_vport, vport, offsetof(struct idpf_vport, link_speed_mbps));
++	memcpy(new_vport, vport, offsetof(struct idpf_vport, link_up));
+ 
+ 	/* Adjust resource parameters prior to reallocating resources */
+ 	switch (reset_cause) {
+@@ -1919,7 +1919,7 @@ int idpf_initiate_soft_reset(struct idpf
+ 	/* Same comment as above regarding avoiding copying the wait_queues and
+ 	 * mutexes applies here. We do not want to mess with those if possible.
+ 	 */
+-	memcpy(vport, new_vport, offsetof(struct idpf_vport, link_speed_mbps));
++	memcpy(vport, new_vport, offsetof(struct idpf_vport, link_up));
+ 
+ 	if (reset_cause == IDPF_SR_Q_CHANGE)
+ 		idpf_vport_alloc_vec_indexes(vport);
+--- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+@@ -141,7 +141,7 @@ static void idpf_handle_event_link(struc
+ 	}
+ 	np = netdev_priv(vport->netdev);
+ 
+-	vport->link_speed_mbps = le32_to_cpu(v2e->link_speed);
++	np->link_speed_mbps = le32_to_cpu(v2e->link_speed);
+ 
+ 	if (vport->link_up == v2e->link_status)
+ 		return;
 
 
