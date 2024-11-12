@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532C81FA82E;
-	Tue, 12 Nov 2024 10:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BD21FA839;
+	Tue, 12 Nov 2024 10:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407922; cv=none; b=JrSK+tctvgNxAn2ebBZA37+MGijit9I8W0N7ywXjfC+rG0e3JzjJOxCVakO2bUC/ckXk7jkJ1LIm9pBCRm11WXxkgu62cxtnjqPAid2MbpQd7TRshV7KA4M5WKx5G75hxXA8J4StgoQf9ybc2M1pi4JixKV0YCd7oHpTM2X7C3s=
+	t=1731407925; cv=none; b=LgWlv8Y+AOYL53YZf+0jXeE31BqCoSX4qefCgcjS+LportNxelbPHVmbJ6YCJLGDBP45MQdcQT+2fK9MEON1rBfxi+30ovNuwZNzybIZVzRuNMhS6zC2sDZa56qaqV0R/IeZPcvYdae5lUXCq5O9pGY1sfiG32eCkNrAktZURuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407922; c=relaxed/simple;
-	bh=FXud2FAT/XCFtPhKxPvffYzoBYGI/jS24rBrqQZIRHE=;
+	s=arc-20240116; t=1731407925; c=relaxed/simple;
+	bh=0NHtFmaGh+N0hgeZg2go9m7Tzuc2xa2M/GtIcfyB+HQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XY8nrZrAdj2C6D3jy8IC0Oaa7jsNoHlBDfrdm5/EC59zUSB6hP4p1IaPHOzo60vvr2ac+Ves73lNE3tanwXuYkL2rkVWy4ctsUO6WPno2rUeMau5vOMFZ7uTPjVbB3ww7I9kueVDy8EwtSKOOeLOmuDm5+XpOFKDOU9eZA4Z5/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQcQuz5E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U1OlBiOvLJr9s2GjiMidGJrUQKEWLqHRDxoxVmWTZ0HILD9YCedzaUMVXB58Z2gV5uWWwtkjQCM4/5hvN6knZqYmmGzPPBfaD7Rr8cORO6DwnP/vUIkmf6LFJ2UIt7kSZgK69SwitdW5vOjWts+rzKyWPtcF0qEqn6blK/emsm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxw2MhEy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQcQuz5E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3AF5C4CECD;
-	Tue, 12 Nov 2024 10:38:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxw2MhEy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E739CC4CECD;
+	Tue, 12 Nov 2024 10:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407922;
-	bh=FXud2FAT/XCFtPhKxPvffYzoBYGI/jS24rBrqQZIRHE=;
+	s=korg; t=1731407925;
+	bh=0NHtFmaGh+N0hgeZg2go9m7Tzuc2xa2M/GtIcfyB+HQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQcQuz5E4uz4Z7OG+N4aC96PlYxbL2SB/i5XfOcEma/EIeMV2uR1Rnw4KM5pFZCB3
-	 wW9WOjBHA9VV1E1hNxJbuKgb1Dq98dSZlI0syOe4q+DOqIPUpVjMevWeuwARCHX5or
-	 NaYH/LERmCKAp228M603vrliE1TKxQ4Y58DEr5+Y=
+	b=nxw2MhEycNbER3lOZ6bHr9hL5HgEvfuIdwvpQGrWwI/br2AwMfhAB0E6HMkPM+X6+
+	 M//UVfYR+xQqNINtKE9M+EOSTFmSdVlLhflKPvX+nncDsJXr3pJaZ24Sch2a4Ohsqa
+	 1T0gb3W3UjwlhCOCp7uAqg82YgVflfAd0QGiipX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Subject: [PATCH 6.6 099/119] Revert "wifi: mac80211: fix RCU list iterations"
-Date: Tue, 12 Nov 2024 11:21:47 +0100
-Message-ID: <20241112101852.504933955@linuxfoundation.org>
+	Pu Lehui <pulehui@huawei.com>
+Subject: [PATCH 6.6 100/119] Revert "selftests/bpf: Implement get_hw_ring_size function to retrieve current and max interface size"
+Date: Tue, 12 Nov 2024 11:21:48 +0100
+Message-ID: <20241112101852.544106351@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -50,71 +49,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Pu Lehui <pulehui@huawei.com>
 
-This reverts commit f37319609335d3eb2f7edfec4bad7996668a4d29 which is
-commit ac35180032fbc5d80b29af00ba4881815ceefcb6 upstream.
+This reverts commit c8c590f07ad7ffaa6ef11e90b81202212077497b which is
+commit 90a695c3d31e1c9f0adb8c4c80028ed4ea7ed5ab upstream.
 
-It should not have been backported here due to lack of other rcu
-changes in the stable branches.
+Commit c8c590f07ad7 ("selftests/bpf: Implement get_hw_ring_size function
+to retrieve current and max interface size") will cause the following
+bpf selftests compilation error in the 6.6 stable branch, and it is not
+the Stable-dep-of of commit 103c0431c7fb ("selftests/bpf: Drop unneeded
+error.h includes"). So let's revert commit c8c590f07ad7 to fix this
+compilation error.
 
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Cc: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
+  ./network_helpers.h:66:43: error: 'struct ethtool_ringparam' declared
+    inside parameter list will not be visible outside of this definition or
+    declaration [-Werror]
+      66 | int get_hw_ring_size(char *ifname, struct ethtool_ringparam *ring_param);
+
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/chan.c |    4 +---
- net/mac80211/mlme.c |    2 +-
- net/mac80211/scan.c |    2 +-
- net/mac80211/util.c |    4 +---
- 4 files changed, 4 insertions(+), 8 deletions(-)
+ tools/testing/selftests/bpf/network_helpers.c           |   24 ----------------
+ tools/testing/selftests/bpf/network_helpers.h           |    4 --
+ tools/testing/selftests/bpf/prog_tests/flow_dissector.c |    1 
+ tools/testing/selftests/bpf/xdp_hw_metadata.c           |   14 +++++++++
+ 4 files changed, 15 insertions(+), 28 deletions(-)
 
---- a/net/mac80211/chan.c
-+++ b/net/mac80211/chan.c
-@@ -245,9 +245,7 @@ ieee80211_get_max_required_bw(struct iee
- 	enum nl80211_chan_width max_bw = NL80211_CHAN_WIDTH_20_NOHT;
- 	struct sta_info *sta;
+--- a/tools/testing/selftests/bpf/network_helpers.c
++++ b/tools/testing/selftests/bpf/network_helpers.c
+@@ -465,27 +465,3 @@ int get_socket_local_port(int sock_fd)
  
--	lockdep_assert_wiphy(sdata->local->hw.wiphy);
+ 	return -1;
+ }
 -
--	list_for_each_entry(sta, &sdata->local->sta_list, list) {
-+	list_for_each_entry_rcu(sta, &sdata->local->sta_list, list) {
- 		if (sdata != sta->sdata &&
- 		    !(sta->sdata->bss && sta->sdata->bss == sdata->bss))
- 			continue;
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -732,7 +732,7 @@ static bool ieee80211_add_vht_ie(struct
- 		bool disable_mu_mimo = false;
- 		struct ieee80211_sub_if_data *other;
+-int get_hw_ring_size(char *ifname, struct ethtool_ringparam *ring_param)
+-{
+-	struct ifreq ifr = {0};
+-	int sockfd, err;
+-
+-	sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+-	if (sockfd < 0)
+-		return -errno;
+-
+-	memcpy(ifr.ifr_name, ifname, sizeof(ifr.ifr_name));
+-
+-	ring_param->cmd = ETHTOOL_GRINGPARAM;
+-	ifr.ifr_data = (char *)ring_param;
+-
+-	if (ioctl(sockfd, SIOCETHTOOL, &ifr) < 0) {
+-		err = errno;
+-		close(sockfd);
+-		return -err;
+-	}
+-
+-	close(sockfd);
+-	return 0;
+-}
+--- a/tools/testing/selftests/bpf/network_helpers.h
++++ b/tools/testing/selftests/bpf/network_helpers.h
+@@ -9,11 +9,8 @@ typedef __u16 __sum16;
+ #include <linux/if_packet.h>
+ #include <linux/ip.h>
+ #include <linux/ipv6.h>
+-#include <linux/ethtool.h>
+-#include <linux/sockios.h>
+ #include <netinet/tcp.h>
+ #include <bpf/bpf_endian.h>
+-#include <net/if.h>
  
--		list_for_each_entry(other, &local->interfaces, list) {
-+		list_for_each_entry_rcu(other, &local->interfaces, list) {
- 			if (other->vif.bss_conf.mu_mimo_owner) {
- 				disable_mu_mimo = true;
- 				break;
---- a/net/mac80211/scan.c
-+++ b/net/mac80211/scan.c
-@@ -490,7 +490,7 @@ static void __ieee80211_scan_completed(s
- 	 * the scan was in progress; if there was none this will
- 	 * just be a no-op for the particular interface.
- 	 */
--	list_for_each_entry(sdata, &local->interfaces, list) {
-+	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
- 		if (ieee80211_sdata_running(sdata))
- 			wiphy_work_queue(sdata->local->hw.wiphy, &sdata->work);
- 	}
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -745,9 +745,7 @@ static void __iterate_interfaces(struct
- 	struct ieee80211_sub_if_data *sdata;
- 	bool active_only = iter_flags & IEEE80211_IFACE_ITER_ACTIVE;
+ #define MAGIC_VAL 0x1234
+ #define NUM_ITER 100000
+@@ -63,7 +60,6 @@ int make_sockaddr(int family, const char
+ 		  struct sockaddr_storage *addr, socklen_t *len);
+ char *ping_command(int family);
+ int get_socket_local_port(int sock_fd);
+-int get_hw_ring_size(char *ifname, struct ethtool_ringparam *ring_param);
  
--	list_for_each_entry_rcu(sdata, &local->interfaces, list,
--				lockdep_is_held(&local->iflist_mtx) ||
--				lockdep_is_held(&local->hw.wiphy->mtx)) {
-+	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
- 		switch (sdata->vif.type) {
- 		case NL80211_IFTYPE_MONITOR:
- 			if (!(sdata->u.mntr.flags & MONITOR_FLAG_ACTIVE))
+ struct nstoken;
+ /**
+--- a/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
++++ b/tools/testing/selftests/bpf/prog_tests/flow_dissector.c
+@@ -2,6 +2,7 @@
+ #define _GNU_SOURCE
+ #include <test_progs.h>
+ #include <network_helpers.h>
++#include <linux/if.h>
+ #include <linux/if_tun.h>
+ #include <sys/uio.h>
+ 
+--- a/tools/testing/selftests/bpf/xdp_hw_metadata.c
++++ b/tools/testing/selftests/bpf/xdp_hw_metadata.c
+@@ -288,6 +288,20 @@ static int verify_metadata(struct xsk *r
+ 	return 0;
+ }
+ 
++struct ethtool_channels {
++	__u32	cmd;
++	__u32	max_rx;
++	__u32	max_tx;
++	__u32	max_other;
++	__u32	max_combined;
++	__u32	rx_count;
++	__u32	tx_count;
++	__u32	other_count;
++	__u32	combined_count;
++};
++
++#define ETHTOOL_GCHANNELS	0x0000003c /* Get no of channels */
++
+ static int rxq_num(const char *ifname)
+ {
+ 	struct ethtool_channels ch = {
 
 
