@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8653A2332C8;
-	Tue, 12 Nov 2024 10:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC343DABFB;
+	Tue, 12 Nov 2024 10:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407880; cv=none; b=Br223A9g/NwhKwVg+JKKhv+05itNepO6Mt4YUrmL2OVBjSsMrF/waK0r7T93bFQgS+6R6otcG7Qyf3bhSqMtRXwzeo9jmz1vx+/F/xyW1mC0a7HKnW022xOohCCaT6cGBqQm7wKekbdXU55szisyscMheRRkazu9eyL4yeFMxGo=
+	t=1731407883; cv=none; b=kq9YSg36gzgELVTSv1mlRN/VaPY1l5JYXbHscfoelAV8rY4ZDA5QeRiHUbANnFp9+a1eyRxQbdSC97Efdhkh0tXV0aXvZFEDX8pN8Y5ala2bVqXEjsdbwjMSpUFZkCHL54Xk2rX8K4FsTqp7qTiF69SPMMQRWxtV+9y5YOYph64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407880; c=relaxed/simple;
-	bh=y+kW2kzhSQjQSG2AeEcrjJKJ0Zp5Ys1QwKTIyyZ2jgM=;
+	s=arc-20240116; t=1731407883; c=relaxed/simple;
+	bh=yPZTntClUueZyHoYbTFCMyG/iTMwvmHA+fX2NlUU8mk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=avLfTGPBEa/4hKwAh5xBs2AgFEoY9Jbc/qOWR7P2+rsotdBs+gSuF24EmFNp5OYfVbh8/Slk8O5MHiuhsM52Fm3yqVu0Qd2jHJPDr0bGXMwEXnNl0rqj6JAmz4JPGz2I/3xO3nRWXbFKKDfOgdqGRGTRyJF2heAbufzhmDkmge8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ngmqiEUc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p04ZiAV/Rke2A3V0p1JJsDGPOa1JD8m6Gh40JGhu+ZYW62WGgiKW6KqzvRwagElhFnSeE3yQdbiIBXLZbnqpY1KFbPEB8tsR8SiBY1mWPdQBLvfsam1/X155ezh+bW+LvC7Te3zwOoBWNZAyOVSfkjkT0fA7+3jY7SG7eAUbAno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJdWmsl+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ngmqiEUc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC5F1C4CED8;
-	Tue, 12 Nov 2024 10:37:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJdWmsl+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1A3C4CED4;
+	Tue, 12 Nov 2024 10:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407880;
-	bh=y+kW2kzhSQjQSG2AeEcrjJKJ0Zp5Ys1QwKTIyyZ2jgM=;
+	s=korg; t=1731407883;
+	bh=yPZTntClUueZyHoYbTFCMyG/iTMwvmHA+fX2NlUU8mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ngmqiEUckJtZPjLymEBr/AcGIYK2u9Hm4ZHVADBy9RPUxL0Fx7q3hsvNQvkByyl7k
-	 AQJJeD0TNie01UwdFdos3+lDSu5dt/fyX05DOIiiG5u7v33IEwmXh40XfpXULiVZuX
-	 fEizZbLEJWj70r7u8srdvVcCpI9JglNL5wdzV1EI=
+	b=sJdWmsl+XI8HpAYrzeqhcXi8GXKhOwfrYUSmr5+Rb40sunMNfDwrflawt7HqA9jtk
+	 kzHaXTTFlm3xImgMnfF+dq+PVud/CogCesrdY7npvIQEME01lEzqUeuJ8WJABJgV7j
+	 jp6lhF6nIBFPBF5/ccj9YvPTWNK5w/MxzwrTO7gA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.6 094/119] arm64/sve: Discard stale CPU state when handling SVE traps
-Date: Tue, 12 Nov 2024 11:21:42 +0100
-Message-ID: <20241112101852.312087736@linuxfoundation.org>
+	Reinhard Speyerer <rspmn@arcor.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 112/119] USB: serial: option: add Fibocom FG132 0x0112 composition
+Date: Tue, 12 Nov 2024 11:22:00 +0100
+Message-ID: <20241112101852.997329261@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -51,91 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Reinhard Speyerer <rspmn@arcor.de>
 
-commit 751ecf6afd6568adc98f2a6052315552c0483d18 upstream.
+commit 393c74ccbd847bacf18865a01b422586fc7341cf upstream.
 
-The logic for handling SVE traps manipulates saved FPSIMD/SVE state
-incorrectly, and a race with preemption can result in a task having
-TIF_SVE set and TIF_FOREIGN_FPSTATE clear even though the live CPU state
-is stale (e.g. with SVE traps enabled). This has been observed to result
-in warnings from do_sve_acc() where SVE traps are not expected while
-TIF_SVE is set:
+Add Fibocom FG132 0x0112 composition:
 
-|         if (test_and_set_thread_flag(TIF_SVE))
-|                 WARN_ON(1); /* SVE access shouldn't have trapped */
+T:  Bus=03 Lev=02 Prnt=06 Port=01 Cnt=02 Dev#= 10 Spd=12   MxCh= 0
+D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2cb7 ProdID=0112 Rev= 5.15
+S:  Manufacturer=Fibocom Wireless Inc.
+S:  Product=Fibocom Module
+S:  SerialNumber=xxxxxxxx
+C:* #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=86(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
 
-Warnings of this form have been reported intermittently, e.g.
-
-  https://lore.kernel.org/linux-arm-kernel/CA+G9fYtEGe_DhY2Ms7+L7NKsLYUomGsgqpdBj+QwDLeSg=JhGg@mail.gmail.com/
-  https://lore.kernel.org/linux-arm-kernel/000000000000511e9a060ce5a45c@google.com/
-
-The race can occur when the SVE trap handler is preempted before and
-after manipulating the saved FPSIMD/SVE state, starting and ending on
-the same CPU, e.g.
-
-| void do_sve_acc(unsigned long esr, struct pt_regs *regs)
-| {
-|         // Trap on CPU 0 with TIF_SVE clear, SVE traps enabled
-|         // task->fpsimd_cpu is 0.
-|         // per_cpu_ptr(&fpsimd_last_state, 0) is task.
-|
-|         ...
-|
-|         // Preempted; migrated from CPU 0 to CPU 1.
-|         // TIF_FOREIGN_FPSTATE is set.
-|
-|         get_cpu_fpsimd_context();
-|
-|         if (test_and_set_thread_flag(TIF_SVE))
-|                 WARN_ON(1); /* SVE access shouldn't have trapped */
-|
-|         sve_init_regs() {
-|                 if (!test_thread_flag(TIF_FOREIGN_FPSTATE)) {
-|                         ...
-|                 } else {
-|                         fpsimd_to_sve(current);
-|                         current->thread.fp_type = FP_STATE_SVE;
-|                 }
-|         }
-|
-|         put_cpu_fpsimd_context();
-|
-|         // Preempted; migrated from CPU 1 to CPU 0.
-|         // task->fpsimd_cpu is still 0
-|         // If per_cpu_ptr(&fpsimd_last_state, 0) is still task then:
-|         // - Stale HW state is reused (with SVE traps enabled)
-|         // - TIF_FOREIGN_FPSTATE is cleared
-|         // - A return to userspace skips HW state restore
-| }
-
-Fix the case where the state is not live and TIF_FOREIGN_FPSTATE is set
-by calling fpsimd_flush_task_state() to detach from the saved CPU
-state. This ensures that a subsequent context switch will not reuse the
-stale CPU state, and will instead set TIF_FOREIGN_FPSTATE, forcing the
-new state to be reloaded from memory prior to a return to userspace.
-
-Fixes: cccb78ce89c4 ("arm64/sve: Rework SVE access trap to convert state in registers")
-Reported-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
 Cc: stable@vger.kernel.org
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20241030-arm64-fpsimd-foreign-flush-v1-1-bd7bd66905a2@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/fpsimd.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/arm64/kernel/fpsimd.c
-+++ b/arch/arm64/kernel/fpsimd.c
-@@ -1445,6 +1445,7 @@ static void sve_init_regs(void)
- 	} else {
- 		fpsimd_to_sve(current);
- 		current->thread.fp_type = FP_STATE_SVE;
-+		fpsimd_flush_task_state(current);
- 	}
- }
- 
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2320,6 +2320,9 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0xff, 0x30) },	/* Fibocom FG150 Diag */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0, 0) },		/* Fibocom FG150 AT */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0111, 0xff) },			/* Fibocom FM160 (MBIM mode) */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0112, 0xff, 0xff, 0x30) },	/* Fibocom FG132 Diag */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0112, 0xff, 0xff, 0x40) },	/* Fibocom FG132 AT */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0112, 0xff, 0, 0) },		/* Fibocom FG132 NMEA */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0115, 0xff),			/* Fibocom FM135 (laptop MBIM) */
+ 	  .driver_info = RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a0, 0xff) },			/* Fibocom NL668-AM/NL652-EU (laptop MBIM) */
 
 
