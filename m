@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBB5212F1D;
-	Tue, 12 Nov 2024 10:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BA4218937;
+	Tue, 12 Nov 2024 10:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408186; cv=none; b=BWISV05VXzPy7GKKF1ysGTvnViqVJNWkYy0mzxQK/ofDTjcRoXx7vupdIe4lElrFGAatbVPsPJZqG7yxNKEK7AyPY8dcEZ/TttE9ZfaNPfgFjdJ6TQ6UvYSogQKqin91wY6jPNDZUCIE0D7z3dG6zD72mDmoWyOFlMWhv89RVe0=
+	t=1731408189; cv=none; b=jNjRriDbMrRXa04CWrZmS9QMQpJME+/OdxsanisIp25GQa59+Iz1AjumyUM7G0LrVtdBK8Up9p73YeRICzqcKedGFlPQqAZcEpEhV8WWK8jJqOevTHjPXP71qZ3uaKoVH4ll3iQfU3EvqAGaWpbAXeW8r+Hz3409zAPHaZQjjaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408186; c=relaxed/simple;
-	bh=kQr1lr/VtQ0MwmXLass/7hHt5h/PTtsE/SsvqfTT/ks=;
+	s=arc-20240116; t=1731408189; c=relaxed/simple;
+	bh=kAq+bByb3WSQ7W6VqfJbvGr0WSZChqEwsIBxbskA34Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fzPa3/5hGL4iQ/5waQCLol9Ox6AYmP9pwqkus8w+3CQ1Aw4AulEK/UfjCRd5qCy2TBZjMZME1EKg7hwuZdJgc7J/ymiVSjN79Dcx0JUJvsEzlog8H6XpyROfYEMUm/q33z0BGzKrKBRWlNz+M8NHHCaDPlAb+aEHdBdv8F1av+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUqyNpL5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OHKBTn2D2H4nzpHHivqi836TH6IHKiqZwoGIMX83xmQJsTw52K3gnWtQmqqLuiettBgeELvpi6yLdP3p7LLEQxLkDhC9ggtlaZFFE+JyS8aLrEq2OQbeg1R4B8MkVs8vLv8Nzme7yKqkDqLsD3hxobbgztZ1CIl+Rxfps2BiGZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQpVNTjM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUqyNpL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37C7C4CECD;
-	Tue, 12 Nov 2024 10:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQpVNTjM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F48C4CECD;
+	Tue, 12 Nov 2024 10:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408186;
-	bh=kQr1lr/VtQ0MwmXLass/7hHt5h/PTtsE/SsvqfTT/ks=;
+	s=korg; t=1731408189;
+	bh=kAq+bByb3WSQ7W6VqfJbvGr0WSZChqEwsIBxbskA34Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IUqyNpL5jJgeHZ7Qlv/eY+K61+Tm3FQaVkyOeqelazQthtEKeWSI2cJdHkjzKXE4c
-	 Ubgph7LVkmO30eMircYQVhovj7HjbFMDEth7d0v85JrzlOqD1hni7Zw4i/zo9DXNCB
-	 Eb7B5vKuXm+sdWBYam28N/Sfod4reBgZNwSrnEwQ=
+	b=mQpVNTjMbhB0w16+EDhPqTapdsLqGiwNnnGZQyGviVjfySUYfc3RzOo1JWze5z2k5
+	 RahkST2E8uyGdjQaA3aqyxPbeIpJNrBymflpKzXRFtNnP4lHIg2yI3fONj9Sh/lYTa
+	 n1XHWznHLGyb8zyWvYl1a03N4zhvIEPylLXRSI9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schuchmann <schuchmann@schleissheimer.de>,
+	Simon Horman <horms@kernel.org>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.11 086/184] can: mcp251xfd: mcp251xfd_get_tef_len(): fix length calculation
-Date: Tue, 12 Nov 2024 11:20:44 +0100
-Message-ID: <20241112101904.160288657@linuxfoundation.org>
+Subject: [PATCH 6.11 087/184] can: mcp251xfd: mcp251xfd_ring_alloc(): fix coalescing configuration when switching CAN modes
+Date: Tue, 12 Nov 2024 11:20:45 +0100
+Message-ID: <20241112101904.198327751@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -52,61 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit 3c1c18551e6ac1b988d0a05c5650e3f6c95a1b8a upstream.
+commit eb9a839b3d8a989be5970035a5cf29bcd6ffd24d upstream.
 
-Commit b8e0ddd36ce9 ("can: mcp251xfd: tef: prepare to workaround
-broken TEF FIFO tail index erratum") introduced
-mcp251xfd_get_tef_len() to get the number of unhandled transmit events
-from the Transmit Event FIFO (TEF).
+Since commit 50ea5449c563 ("can: mcp251xfd: fix ring configuration
+when switching from CAN-CC to CAN-FD mode"), the current ring and
+coalescing configuration is passed to can_ram_get_layout(). That fixed
+the issue when switching between CAN-CC and CAN-FD mode with
+configured ring (rx, tx) and/or coalescing parameters (rx-frames-irq,
+tx-frames-irq).
 
-As the TEF has no head pointer, the driver uses the TX FIFO's tail
-pointer instead, assuming that send frames are completed. However the
-check for the TEF being full was not correct. This leads to the driver
-stop working if the TEF is full.
+However 50ea5449c563 ("can: mcp251xfd: fix ring configuration when
+switching from CAN-CC to CAN-FD mode"), introduced a regression when
+switching CAN modes with disabled coalescing configuration: Even if
+the previous CAN mode has no coalescing configured, the new mode is
+configured with active coalescing. This leads to delayed receiving of
+CAN-FD frames.
 
-Fix the TEF full check by assuming that if, from the driver's point of
-view, there are no free TX buffers in the chip and the TX FIFO is
-empty, all messages must have been sent and the TEF must therefore be
-full.
+This comes from the fact, that ethtool uses usecs = 0 and max_frames =
+1 to disable coalescing, however the driver uses internally
+priv->{rx,tx}_obj_num_coalesce_irq = 0 to indicate disabled
+coalescing.
 
-Reported-by: Sven Schuchmann <schuchmann@schleissheimer.de>
-Closes: https://patch.msgid.link/FR3P281MB155216711EFF900AD9791B7ED9692@FR3P281MB1552.DEUP281.PROD.OUTLOOK.COM
-Fixes: b8e0ddd36ce9 ("can: mcp251xfd: tef: prepare to workaround broken TEF FIFO tail index erratum")
-Tested-by: Sven Schuchmann <schuchmann@schleissheimer.de>
+Fix the regression by assigning struct ethtool_coalesce
+ec->{rx,tx}_max_coalesced_frames_irq = 1 if coalescing is disabled in
+the driver as can_ram_get_layout() expects this.
+
+Reported-by: https://github.com/vdh-robothania
+Closes: https://github.com/raspberrypi/linux/issues/6407
+Fixes: 50ea5449c563 ("can: mcp251xfd: fix ring configuration when switching from CAN-CC to CAN-FD mode")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20241104-mcp251xfd-fix-length-calculation-v3-1-608b6e7e2197@pengutronix.de
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241025-mcp251xfd-fix-coalesing-v1-1-9d11416de1df@pengutronix.de
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c
-+++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-tef.c
-@@ -16,9 +16,9 @@
+--- a/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c
++++ b/drivers/net/can/spi/mcp251xfd/mcp251xfd-ring.c
+@@ -2,7 +2,7 @@
+ //
+ // mcp251xfd - Microchip MCP251xFD Family CAN controller driver
+ //
+-// Copyright (c) 2019, 2020, 2021 Pengutronix,
++// Copyright (c) 2019, 2020, 2021, 2024 Pengutronix,
+ //               Marc Kleine-Budde <kernel@pengutronix.de>
+ //
+ // Based on:
+@@ -483,9 +483,11 @@ int mcp251xfd_ring_alloc(struct mcp251xf
+ 		};
+ 		const struct ethtool_coalesce ec = {
+ 			.rx_coalesce_usecs_irq = priv->rx_coalesce_usecs_irq,
+-			.rx_max_coalesced_frames_irq = priv->rx_obj_num_coalesce_irq,
++			.rx_max_coalesced_frames_irq = priv->rx_obj_num_coalesce_irq == 0 ?
++				1 : priv->rx_obj_num_coalesce_irq,
+ 			.tx_coalesce_usecs_irq = priv->tx_coalesce_usecs_irq,
+-			.tx_max_coalesced_frames_irq = priv->tx_obj_num_coalesce_irq,
++			.tx_max_coalesced_frames_irq = priv->tx_obj_num_coalesce_irq == 0 ?
++				1 : priv->tx_obj_num_coalesce_irq,
+ 		};
+ 		struct can_ram_layout layout;
  
- #include "mcp251xfd.h"
- 
--static inline bool mcp251xfd_tx_fifo_sta_full(u32 fifo_sta)
-+static inline bool mcp251xfd_tx_fifo_sta_empty(u32 fifo_sta)
- {
--	return !(fifo_sta & MCP251XFD_REG_FIFOSTA_TFNRFNIF);
-+	return fifo_sta & MCP251XFD_REG_FIFOSTA_TFERFFIF;
- }
- 
- static inline int
-@@ -122,7 +122,11 @@ mcp251xfd_get_tef_len(struct mcp251xfd_p
- 	if (err)
- 		return err;
- 
--	if (mcp251xfd_tx_fifo_sta_full(fifo_sta)) {
-+	/* If the chip says the TX-FIFO is empty, but there are no TX
-+	 * buffers free in the ring, we assume all have been sent.
-+	 */
-+	if (mcp251xfd_tx_fifo_sta_empty(fifo_sta) &&
-+	    mcp251xfd_get_tx_free(tx_ring) == 0) {
- 		*len_p = tx_ring->obj_num;
- 		return 0;
- 	}
 
 
