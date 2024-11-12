@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D771E21263E;
-	Tue, 12 Nov 2024 10:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4245919E992;
+	Tue, 12 Nov 2024 10:23:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407031; cv=none; b=CPfQn8z6KZONct2Y/U7sf26ayUsx/PIStGMnV4endjX792M+PIB+1VWNfJwqawW3q+wyIvcTzyvNUGZz/LZQ8ryI6zkKzGq5JDBQX0KSYEhHrwsXDmhDRIzGh7LagcYLOgmSN+RB+RmHNvLOOmB2vidkzWpQLpW+sbtW/PRgl8A=
+	t=1731407035; cv=none; b=hmWRAukvNiosGo3s1s3dyIWN1D6gAGuAKu6SlXGC06u9n+qobHKLsWqWwZNxmd+awdMbM3fNz9vRfCUqor922/rdyRd+UA68144KtH6hPlaR4/W0f8+B4ExkYP82LN+lzIgp4bFMGZ01vr6gZscm5AIY21CqBKTx3pSBqGkDpYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407031; c=relaxed/simple;
-	bh=43ndCtTTIO5IrN3BD8zByq7EJwMilS+t4XUufRnxHlY=;
+	s=arc-20240116; t=1731407035; c=relaxed/simple;
+	bh=YJ+m3AmdL9Y20fx2OBv/DiR22IicJla0MtsyBkKWQ8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XofkgSDwQCGx3E0ZBHAxJfpG5d769l+WMUNP/11P1O2I0LgxlACcHlcUSPViFs9sJv/LqZluMMHQO6KnYVYwTeAI96WiYoRqBvpMTPaEHn7ZEzC5LO8zVd3aTxeFwPdxTDCUIEKk35n5z8KMuJStzoW2xw15abPG4wLFdYYfY9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSplS3OA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mt6RbVgNdDfcQyLx3AeF+++tIvRg9lqLOCT62QoJi2XDblRsP+zlT8IRspvOmPgT9/1ReAz8AftUUTJmbdHao0xFRKMExQ543s+mCF/0KgsjJ/FvGMf4bWOMxnvayuqR2qxfmk1lNHYsBa+UXw+6ECmIsD5/1VuIDPc/inaykS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTw4bSGf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSplS3OA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54263C4CECD;
-	Tue, 12 Nov 2024 10:23:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTw4bSGf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51A2C4CECD;
+	Tue, 12 Nov 2024 10:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407031;
-	bh=43ndCtTTIO5IrN3BD8zByq7EJwMilS+t4XUufRnxHlY=;
+	s=korg; t=1731407035;
+	bh=YJ+m3AmdL9Y20fx2OBv/DiR22IicJla0MtsyBkKWQ8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wSplS3OA0hQoqtxTefCa8bNolgRX7xrrOXstx8mvatK29LeNpbSHEA8/D2HxDzPm4
-	 SKBS+Lb+qlg+UI+CyBsN/SDvjWqArU8MnlDx28yTqCVMd3CX2QOChjsGrbh2DvupWW
-	 l67Thc/7od7KfbLFYcDCm5ccxlQ0POuZGxuJAuQ0=
+	b=ZTw4bSGfHmPa4iu1BDtKXgg6KQmo9LDIBDwTcqBCDMC2QX5kN4pYP/J9sJEIA8ZBO
+	 s7J//06kGhqjq6gmj6sQ8kIKJWYoJAIu4kQHNsokY/rTUfSuB4yp+BF2rvyOyUzpqk
+	 /BrB9W+WkhiTc0DG/O0y2GINBZpzSD2/xagURb3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 08/76] ARM: dts: rockchip: drop grf reference from rk3036 hdmi
-Date: Tue, 12 Nov 2024 11:20:33 +0100
-Message-ID: <20241112101840.100476185@linuxfoundation.org>
+Subject: [PATCH 5.15 09/76] ARM: dts: rockchip: Fix the spi controller on rk3036
+Date: Tue, 12 Nov 2024 11:20:34 +0100
+Message-ID: <20241112101840.137737663@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -54,35 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 1580ccb6ed9dc76b8ff3e2d8912e8215c8b0fa6d ]
+[ Upstream commit 8bade1ad1f0821aef31f6a8fb1027ae292566d85 ]
 
-Neither the binding nor the driver implementation specify/use the grf
-reference provided in the rk3036. And neither does the newer rk3128
-user of the hdmi controller. So drop the rockchip,grf property.
+Compatible and clock names did not match the existing binding.
+So set the correct values and re-order+rename the clocks.
 
-Fixes: b7217cf19c63 ("ARM: dts: rockchip: add hdmi device node for rk3036")
+It looks like no rk3036 board did use the spi controller so far,
+so this was never detected on a running device yet.
+
+Fixes: f629fcfab2cd ("ARM: dts: rockchip: support the spi for rk3036")
 Cc: Caesar Wang <wxt@rock-chips.com>
 Reviewed-by: Dragan Simic <dsimic@manjaro.org>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20241008203940.2573684-13-heiko@sntech.de
+Link: https://lore.kernel.org/r/20241008203940.2573684-14-heiko@sntech.de
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rk3036.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm/boot/dts/rk3036.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm/boot/dts/rk3036.dtsi b/arch/arm/boot/dts/rk3036.dtsi
-index 4db4e19b22a1e..e0d4c71f109a7 100644
+index e0d4c71f109a7..d7a86f21cf23f 100644
 --- a/arch/arm/boot/dts/rk3036.dtsi
 +++ b/arch/arm/boot/dts/rk3036.dtsi
-@@ -398,7 +398,6 @@
- 		interrupts = <GIC_SPI 45 IRQ_TYPE_LEVEL_HIGH>;
- 		clocks = <&cru  PCLK_HDMI>;
- 		clock-names = "pclk";
--		rockchip,grf = <&grf>;
+@@ -550,11 +550,11 @@
+ 	};
+ 
+ 	spi: spi@20074000 {
+-		compatible = "rockchip,rockchip-spi";
++		compatible = "rockchip,rk3036-spi";
+ 		reg = <0x20074000 0x1000>;
+ 		interrupts = <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
+-		clocks = <&cru PCLK_SPI>, <&cru SCLK_SPI>;
+-		clock-names = "apb-pclk","spi_pclk";
++		clocks = <&cru SCLK_SPI>, <&cru PCLK_SPI>;
++		clock-names = "spiclk", "apb_pclk";
+ 		dmas = <&pdma 8>, <&pdma 9>;
+ 		dma-names = "tx", "rx";
  		pinctrl-names = "default";
- 		pinctrl-0 = <&hdmi_ctl>;
- 		status = "disabled";
 -- 
 2.43.0
 
