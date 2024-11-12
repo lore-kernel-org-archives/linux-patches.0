@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30A01F26E3;
-	Tue, 12 Nov 2024 10:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209C5213ECB;
+	Tue, 12 Nov 2024 10:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407094; cv=none; b=LgQmWkOX1phIoi/v+GfjX9DKRBhZDKBRZeaHW5sprn2Zl0hLZLbb6j0gisK2f6Qj1YB6Q0lk2ztazWva0hCbA1430W3j3A8fEipHGON6CG1ORqCv3NCirEDfjyoPZdhe2fCG+dhJ8F7a8h3ax2sMckYvz9KUcNJGP0MUsiLEa90=
+	t=1731407098; cv=none; b=bILzvSup0AiqKxgcp2aArcx3nK45D310OWA8dTIjB7pVlSwiwHaAKnucZz45pbYNQmWgnVG/IUTaFJJGBAa1WVefm6psmcoeYz6fP073VtqAiEAau1xe5PzP7yZBVsbOoQkRPC/LJpmo1Zfu1rtanG5+WFkkhhpx6tqP1X+sRP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407094; c=relaxed/simple;
-	bh=/XMjWF5YdNtloOrImZjr1cwxMxnxfdfWjdA4pvEmY9Y=;
+	s=arc-20240116; t=1731407098; c=relaxed/simple;
+	bh=NXQAXMNFgdp3hHtFa8iu0cCBFFkLKei9JOjRfoEXnQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sO/ig1mzdmB3E+FjXA4YFbXBBTdj/loN6x21PZ7doexUS/sxhO8jt4KsrCwP9HgGwG3S5IB8ij5+4ec2ddHln/v8FDKuVJpmjsTXlQ9P5n4BY6Gs+YgctnFRdYSxpFoirl5rwpX0wNXt/scdI9WphF1vaVxoFuAvBp6AzEXUiWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfrFfqZh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LFNrb5FNg6VOyS8YlS+1U06JpQWDy8RGE4MwIOizx1V1I8vvufNHIht1H0RjaAdBmmy5WYivuO+naydyM+NR8lOWIniVVb4jdemy1PUXL2FCWto71wYeIubPUJuGsVA/eJDTUkx9fEcKNrsAgtSKzdPTm/NNv/0JmbonG2TBXLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HX3gQa15; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfrFfqZh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A97FC4CED4;
-	Tue, 12 Nov 2024 10:24:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HX3gQa15"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C38C4CED8;
+	Tue, 12 Nov 2024 10:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407094;
-	bh=/XMjWF5YdNtloOrImZjr1cwxMxnxfdfWjdA4pvEmY9Y=;
+	s=korg; t=1731407097;
+	bh=NXQAXMNFgdp3hHtFa8iu0cCBFFkLKei9JOjRfoEXnQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XfrFfqZhUb/mGzNGLfXdEHk9FvHtJ/kSVoS0fz8vXiZlG8crI2Dzeb+6+Tgv3WQxf
-	 m6rjrl6QxJSE1fVprZjmMYeHLgnbTL/zCRiMEraEMedGRqrWr9z7qc+oDCvOozN253
-	 MSyyFv4AUnWaEzeoMdy340VuqOVajwXWTtnbCPtQ=
+	b=HX3gQa15ScXV8upv9lLc5me4p9Ec1ui9lmGeCkIhdWl4bzdsQjge384U/5I4svHMa
+	 A4iA8IaZ4mFOBa1/6DwMS83d8wU9SkpSXV3NHoPbKB47exkTlkk7MZWygCjjdpLrTR
+	 66nfArFAW8P0x3eDCBXHsH9/qdINiZortaXVYDnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 48/76] ALSA: usb-audio: Add quirk for HP 320 FHD Webcam
-Date: Tue, 12 Nov 2024 11:21:13 +0100
-Message-ID: <20241112101841.613108379@linuxfoundation.org>
+	Ben Segall <bsegall@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 49/76] posix-cpu-timers: Clear TICK_DEP_BIT_POSIX_TIMER on clone
+Date: Tue, 12 Nov 2024 11:21:14 +0100
+Message-ID: <20241112101841.650944154@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -49,45 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Benjamin Segall <bsegall@google.com>
 
-commit dabc44c28f118910dea96244d903f0c270225669 upstream.
+[ Upstream commit b5413156bad91dc2995a5c4eab1b05e56914638a ]
 
-HP 320 FHD Webcam (03f0:654a) seems to have flaky firmware like other
-webcam devices that don't like the frequency inquiries.  Also, Mic
-Capture Volume has an invalid resolution, hence fix it to be 16 (as a
-blind shot).
+When cloning a new thread, its posix_cputimers are not inherited, and
+are cleared by posix_cputimers_init(). However, this does not clear the
+tick dependency it creates in tsk->tick_dep_mask, and the handler does
+not reach the code to clear the dependency if there were no timers to
+begin with.
 
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1232768
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241105120220.5740-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Thus if a thread has a cputimer running before clone/fork, all
+descendants will prevent nohz_full unless they create a cputimer of
+their own.
+
+Fix this by entirely clearing the tick_dep_mask in copy_process().
+(There is currently no inherited state that needs a tick dependency)
+
+Process-wide timers do not have this problem because fork does not copy
+signal_struct as a baseline, it creates one from scratch.
+
+Fixes: b78783000d5c ("posix-cpu-timers: Migrate to use new tick dependency mask model")
+Signed-off-by: Ben Segall <bsegall@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/xm26o737bq8o.fsf@google.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer.c  |    1 +
- sound/usb/quirks.c |    2 ++
- 2 files changed, 3 insertions(+)
+ include/linux/tick.h | 8 ++++++++
+ kernel/fork.c        | 2 ++
+ 2 files changed, 10 insertions(+)
 
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -1206,6 +1206,7 @@ static void volume_control_quirks(struct
- 		}
- 		break;
- 	case USB_ID(0x1bcf, 0x2283): /* NexiGo N930AF FHD Webcam */
-+	case USB_ID(0x03f0, 0x654a): /* HP 320 FHD Webcam */
- 		if (!strcmp(kctl->id.name, "Mic Capture Volume")) {
- 			usb_audio_info(chip,
- 				"set resolution quirk: cval->res = 16\n");
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1747,6 +1747,8 @@ struct usb_audio_quirk_flags_table {
+diff --git a/include/linux/tick.h b/include/linux/tick.h
+index 9459fef5b8573..9701c571a5cfe 100644
+--- a/include/linux/tick.h
++++ b/include/linux/tick.h
+@@ -252,12 +252,19 @@ static inline void tick_dep_set_task(struct task_struct *tsk,
+ 	if (tick_nohz_full_enabled())
+ 		tick_nohz_dep_set_task(tsk, bit);
+ }
++
+ static inline void tick_dep_clear_task(struct task_struct *tsk,
+ 				       enum tick_dep_bits bit)
+ {
+ 	if (tick_nohz_full_enabled())
+ 		tick_nohz_dep_clear_task(tsk, bit);
+ }
++
++static inline void tick_dep_init_task(struct task_struct *tsk)
++{
++	atomic_set(&tsk->tick_dep_mask, 0);
++}
++
+ static inline void tick_dep_set_signal(struct task_struct *tsk,
+ 				       enum tick_dep_bits bit)
+ {
+@@ -291,6 +298,7 @@ static inline void tick_dep_set_task(struct task_struct *tsk,
+ 				     enum tick_dep_bits bit) { }
+ static inline void tick_dep_clear_task(struct task_struct *tsk,
+ 				       enum tick_dep_bits bit) { }
++static inline void tick_dep_init_task(struct task_struct *tsk) { }
+ static inline void tick_dep_set_signal(struct task_struct *tsk,
+ 				       enum tick_dep_bits bit) { }
+ static inline void tick_dep_clear_signal(struct signal_struct *signal,
+diff --git a/kernel/fork.c b/kernel/fork.c
+index fec103ae640ff..23ffcf8a859c5 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -97,6 +97,7 @@
+ #include <linux/scs.h>
+ #include <linux/io_uring.h>
+ #include <linux/bpf.h>
++#include <linux/tick.h>
  
- static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 	/* Device matches */
-+	DEVICE_FLG(0x03f0, 0x654a, /* HP 320 FHD Webcam */
-+		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x041e, 0x3000, /* Creative SB Extigy */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
- 	DEVICE_FLG(0x041e, 0x4080, /* Creative Live Cam VF0610 */
+ #include <asm/pgalloc.h>
+ #include <linux/uaccess.h>
+@@ -2126,6 +2127,7 @@ static __latent_entropy struct task_struct *copy_process(
+ 	acct_clear_integrals(p);
+ 
+ 	posix_cputimers_init(&p->posix_cputimers);
++	tick_dep_init_task(p);
+ 
+ 	p->io_context = NULL;
+ 	audit_set_context(p, NULL);
+-- 
+2.43.0
+
 
 
