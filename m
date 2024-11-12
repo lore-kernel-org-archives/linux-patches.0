@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225AA1CBE8F;
-	Tue, 12 Nov 2024 10:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665ED20E337;
+	Tue, 12 Nov 2024 10:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407324; cv=none; b=thuDyvmRx5Vl3ZBF+BGgb+wQYovFoK9p/pXFAlDSjw4b0j4lZ/bxZcizMqf7gHqIFtszWrYNZGZse9qrJ727om3aNvtobeX+jLCD2FfqjxL1wdbDxT8n6c2JfT4j7AZogz+oEX6rSMTOlImSG0OI/AGcXJ+KB2AfR29goDtbxpk=
+	t=1731407327; cv=none; b=tn4kQExI7AWIo8A7R6g24mfQensf+hBkXF9irFP0Z6SDNY7NW+l8pfxgknSWimXePvrdkgNV+3qvOIYcZpw1kDaJeXe8vv51jnMort7USCOPlh0XrRXtrYs9xM7rARKk8vLs9n2np1kZ/F3EPvajaboQWCjk9YhtIB3f9tqMI1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407324; c=relaxed/simple;
-	bh=PC5IEDlu5xWITmMK2icHKDu91nnAl4Ijl7V5fkmm/5A=;
+	s=arc-20240116; t=1731407327; c=relaxed/simple;
+	bh=CqExKTeRnYxGSO+D1cx8AuD7HUPXFEqGEpXaWJ0rTx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lMp1aoBT290uB+3C2Cjx86aJ5hjGtSjOfBAK8LeDvFaMmo+6cLUbicSoVDrGCbxcf3DIlF/bwJAaLLjY58Fa1OFaAzpf2Ocp3wv7Vc4x0CELQqq4yjbPfw2jNjx4fGilql2gwUC9N6thdW4+BGJAZZ6Ar9vZIkqdCBgMuWBJvTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2K+FhQSX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i4VElJ60MaMZ0sqpOt5nGna6tazE4Vh5Aq4O3g9z2698rY26ZTgfqVCH7tz07AU4NrpOu5/sMRDAuEv4pu8rX7hXxPJCcoweSGzybwNxD+jRR5+CzJZLhmCzlWQkYDZ4Kl9OavbsAnNRIrZFs97idrrleC4wOulVXEdq0issP5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzhZpJgB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2K+FhQSX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9885FC4CECD;
-	Tue, 12 Nov 2024 10:28:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzhZpJgB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8284C4CECD;
+	Tue, 12 Nov 2024 10:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407324;
-	bh=PC5IEDlu5xWITmMK2icHKDu91nnAl4Ijl7V5fkmm/5A=;
+	s=korg; t=1731407327;
+	bh=CqExKTeRnYxGSO+D1cx8AuD7HUPXFEqGEpXaWJ0rTx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2K+FhQSXiPlCoYuJye6/zShzDbmOZc1nPDA9PbIPgP1LZ1Eif1jMPKu+j37pMrBsz
-	 J8irVZsKIpzCB7rAdF0mjQ6aNMsI97FIRNewVcoJa6PQwTNlhRvE8oPsbF5BI169vI
-	 VIXkADPfOtDLysan2soLJRUSwJD0RSLrUtKSzvt8=
+	b=VzhZpJgBaQUppUS0T6UMB/JKXaSkgZ98IsaUWK49UrI9vnRn3CfXcZcQJyDuwU3g2
+	 q06Zxwa7HjAGOEhKU2iAl6ZUoAIZR0kC+Xz3rlDP826iMJSFVKc7ZNqfKURX8m3j3g
+	 qPkOijqzuorSR/OvShknVrvrge9BBpEQ4oN5+R8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 11/98] arm64: dts: imx8mp: correct sdhc ipg clk
-Date: Tue, 12 Nov 2024 11:20:26 +0100
-Message-ID: <20241112101844.701624434@linuxfoundation.org>
+Subject: [PATCH 6.1 12/98] ARM: dts: rockchip: fix rk3036 acodec node
+Date: Tue, 12 Nov 2024 11:20:27 +0100
+Message-ID: <20241112101844.738924343@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -52,53 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit eab6ba2aa3bbaf598a66e31f709bf84b7bb7dc8a ]
+[ Upstream commit c7206853cd7d31c52575fb1dc7616b4398f3bc8f ]
 
-The ipg clk for sdhc sources from IPG_CLK_ROOT per i.MX 8M Plus
-Applications Processor Reference Manual, Table 5-2. System Clocks.
+The acodec node is not conformant to the binding.
 
-Fixes: 6d9b8d20431f ("arm64: dts: freescale: Add i.MX8MP dtsi support")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Set the correct nodename, use the correct compatible, add the needed
+#sound-dai-cells and sort the rockchip,grf below clocks properties
+as expected.
+
+Fixes: faea098e1808 ("ARM: dts: rockchip: add core rk3036 dtsi")
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20241008203940.2573684-12-heiko@sntech.de
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/rk3036.dtsi | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-index 8c34b3e12a66a..86af7115ac60c 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-@@ -934,7 +934,7 @@
- 				compatible = "fsl,imx8mp-usdhc", "fsl,imx8mm-usdhc", "fsl,imx7d-usdhc";
- 				reg = <0x30b40000 0x10000>;
- 				interrupts = <GIC_SPI 22 IRQ_TYPE_LEVEL_HIGH>;
--				clocks = <&clk IMX8MP_CLK_DUMMY>,
-+				clocks = <&clk IMX8MP_CLK_IPG_ROOT>,
- 					 <&clk IMX8MP_CLK_NAND_USDHC_BUS>,
- 					 <&clk IMX8MP_CLK_USDHC1_ROOT>;
- 				clock-names = "ipg", "ahb", "per";
-@@ -948,7 +948,7 @@
- 				compatible = "fsl,imx8mp-usdhc", "fsl,imx8mm-usdhc", "fsl,imx7d-usdhc";
- 				reg = <0x30b50000 0x10000>;
- 				interrupts = <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
--				clocks = <&clk IMX8MP_CLK_DUMMY>,
-+				clocks = <&clk IMX8MP_CLK_IPG_ROOT>,
- 					 <&clk IMX8MP_CLK_NAND_USDHC_BUS>,
- 					 <&clk IMX8MP_CLK_USDHC2_ROOT>;
- 				clock-names = "ipg", "ahb", "per";
-@@ -962,7 +962,7 @@
- 				compatible = "fsl,imx8mp-usdhc", "fsl,imx8mm-usdhc", "fsl,imx7d-usdhc";
- 				reg = <0x30b60000 0x10000>;
- 				interrupts = <GIC_SPI 24 IRQ_TYPE_LEVEL_HIGH>;
--				clocks = <&clk IMX8MP_CLK_DUMMY>,
-+				clocks = <&clk IMX8MP_CLK_IPG_ROOT>,
- 					 <&clk IMX8MP_CLK_NAND_USDHC_BUS>,
- 					 <&clk IMX8MP_CLK_USDHC3_ROOT>;
- 				clock-names = "ipg", "ahb", "per";
+diff --git a/arch/arm/boot/dts/rk3036.dtsi b/arch/arm/boot/dts/rk3036.dtsi
+index c420c7c642cb0..e6bb1d7a2b4ec 100644
+--- a/arch/arm/boot/dts/rk3036.dtsi
++++ b/arch/arm/boot/dts/rk3036.dtsi
+@@ -382,12 +382,13 @@
+ 		};
+ 	};
+ 
+-	acodec: acodec-ana@20030000 {
+-		compatible = "rk3036-codec";
++	acodec: audio-codec@20030000 {
++		compatible = "rockchip,rk3036-codec";
+ 		reg = <0x20030000 0x4000>;
+-		rockchip,grf = <&grf>;
+ 		clock-names = "acodec_pclk";
+ 		clocks = <&cru PCLK_ACODEC>;
++		rockchip,grf = <&grf>;
++		#sound-dai-cells = <0>;
+ 		status = "disabled";
+ 	};
+ 
 -- 
 2.43.0
 
