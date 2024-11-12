@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0E82309AE;
-	Tue, 12 Nov 2024 10:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9B72141AB;
+	Tue, 12 Nov 2024 10:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408039; cv=none; b=sw/tV7pCD8PUHIATZU9X/oXZOKw3CHc+FOQiyFsaqV2AXNxBhxis6EiJ3H5OaWeuYb6HtpaOdWkrmP+Oehot+al6c7RZWrY+jILZd7oI8bu2dOHSVMxnx4xjTSLUqeIlON71fY7TKeJle6eL+/b0Bq8+9Rx+f9Z0qvMLazt+AVQ=
+	t=1731408042; cv=none; b=Pv4PTg7Pf5OXiccltnEpTvkuxDgKj5bNpKs1Q9uc00KjlwZzvZ40/6m8MIQINYme0toOuZVzsoBH6oqIScWhqOQXV7Ke9mXKrO7/VlbCpE9vL4CKMRjU0Tzez5200aNQMrgfNXmeFOtU+hfnVSckEdfFfOkNSlXOt46yHfM0wS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408039; c=relaxed/simple;
-	bh=1raYNUZUD/kkZSOJ+iO1tkfzfLn6G00RGK5NBbYgrv0=;
+	s=arc-20240116; t=1731408042; c=relaxed/simple;
+	bh=F7INGCg7fF+0ZLSjvx2eN6u7w9OFH+RlY1omxnKWsI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmkAVRhyG9wYTKZor/Z317hc7ktdNwaUSvM72hBkiP++ezPDIbJwbSGAPGAnE1FkcKfkoqrKjfjOU/vm2ETYWrLjoRjorTr9v6B9Cohi2GB6cS5BjC5eo62pbTjY+IGqYZW/Wcag//2l4FCukYUTqYiHXSlmTUIlLUGni6kqbbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtZ/jgP/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pu/BoXvotnlWkGUM2CHs5pU63WVm0r2nuvbOz0I/9g1tpnu96UcQeuDjEomwy+2KZNblhi0VdazX8f4x4FrR1XqmuIot8JEXoYnzdA7BfNvi0NiTkVHCLN8N54vujZ4YJgjuJBL+3O02Ah/AAvCKuBarlGkcgpparxSu0jBo+gI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nho/Wf+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtZ/jgP/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE98AC4CECD;
-	Tue, 12 Nov 2024 10:40:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nho/Wf+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9816C4CED4;
+	Tue, 12 Nov 2024 10:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408039;
-	bh=1raYNUZUD/kkZSOJ+iO1tkfzfLn6G00RGK5NBbYgrv0=;
+	s=korg; t=1731408042;
+	bh=F7INGCg7fF+0ZLSjvx2eN6u7w9OFH+RlY1omxnKWsI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rtZ/jgP/064E5+NbVi4bNbwEMUXVBZ0Nijjk+sFNO8SJbwtOmxcvjnIeXWDjW4zNr
-	 erNF4wVdkr8YRDhNSzJkvntr43ltccuPx8uTDCy+e8M9TrsSQnxMfaEqhoqiodTuLa
-	 A/bsn21BjC5lMomaCYYi6ceSJdrTHpSnYfqcvyYk=
+	b=nho/Wf+Pmw1LQoWKcvynMhsMfNL3qrmwoZ31lkp6Hx0RofKk0wGCwrilerKGDR31q
+	 t4EI1sE+azK9kAKXRwaaS8142jEcmshNE+sQh5cl3rTIeMy3Ev/QR0Gpf29/Jt4/6S
+	 g97Z1ooaG9hS8ZgHbeAYCo+AeRC08u+1uztj3rTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	Madalin Bucur <madalin.bucur@oss.nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 041/184] net: enetc: set MAC address to the VF net_device
-Date: Tue, 12 Nov 2024 11:19:59 +0100
-Message-ID: <20241112101902.443158494@linuxfoundation.org>
+Subject: [PATCH 6.11 042/184] net: dpaa_eth: print FD status in CPU endianness in dpaa_eth_fd tracepoint
+Date: Tue, 12 Nov 2024 11:20:00 +0100
+Message-ID: <20241112101902.480875219@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -53,64 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit badccd49b93bb945bf4e5cc8707db67cdc5e27e5 ]
+[ Upstream commit 0144c06c5890d1ad0eea65df074cffaf4eea5a3c ]
 
-The MAC address of VF can be configured through the mailbox mechanism of
-ENETC, but the previous implementation forgot to set the MAC address in
-net_device, resulting in the SMAC of the sent frames still being the old
-MAC address. Since the MAC address in the hardware has been changed, Rx
-cannot receive frames with the DMAC address as the new MAC address. The
-most obvious phenomenon is that after changing the MAC address, we can
-see that the MAC address of eno0vf0 has not changed through the "ifconfig
-eno0vf0" command and the IP address cannot be obtained .
+Sparse warns:
 
-root@ls1028ardb:~# ifconfig eno0vf0 down
-root@ls1028ardb:~# ifconfig eno0vf0 hw ether 00:04:9f:3a:4d:56 up
-root@ls1028ardb:~# ifconfig eno0vf0
-eno0vf0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        ether 66:36:2c:3b:87:76  txqueuelen 1000  (Ethernet)
-        RX packets 794  bytes 69239 (69.2 KB)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 11  bytes 2226 (2.2 KB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+note: in included file (through ../include/trace/trace_events.h,
+../include/trace/define_trace.h,
+../drivers/net/ethernet/freescale/dpaa/dpaa_eth_trace.h):
+warning: incorrect type in assignment (different base types)
+   expected unsigned int [usertype] fd_status
+   got restricted __be32 const [usertype] status
 
-Fixes: beb74ac878c8 ("enetc: Add vf to pf messaging support")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
-Link: https://patch.msgid.link/20241029090406.841836-1-wei.fang@nxp.com
+We take struct qm_fd :: status, store it and print it as an u32,
+though it is a big endian field. We should print the FD status in
+CPU endianness for ease of debug and consistency between PowerPC and
+Arm systems.
+
+Though it is a not often used debug feature, it is best to treat it as
+a bug and backport the format change to all supported stable kernels,
+for consistency.
+
+Fixes: eb11ddf36eb8 ("dpaa_eth: add trace points")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Acked-by: Madalin Bucur <madalin.bucur@oss.nxp.com>
+Link: https://patch.msgid.link/20241029163105.44135-1-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_vf.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/dpaa/dpaa_eth_trace.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_vf.c b/drivers/net/ethernet/freescale/enetc/enetc_vf.c
-index dfcaac302e245..b15db70769e5e 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_vf.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_vf.c
-@@ -78,11 +78,18 @@ static int enetc_vf_set_mac_addr(struct net_device *ndev, void *addr)
- {
- 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
- 	struct sockaddr *saddr = addr;
-+	int err;
+diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_eth_trace.h b/drivers/net/ethernet/freescale/dpaa/dpaa_eth_trace.h
+index 6f0e58a2a58ad..9e1d44ae92cce 100644
+--- a/drivers/net/ethernet/freescale/dpaa/dpaa_eth_trace.h
++++ b/drivers/net/ethernet/freescale/dpaa/dpaa_eth_trace.h
+@@ -56,7 +56,7 @@ DECLARE_EVENT_CLASS(dpaa_eth_fd,
+ 		__entry->fd_format = qm_fd_get_format(fd);
+ 		__entry->fd_offset = qm_fd_get_offset(fd);
+ 		__entry->fd_length = qm_fd_get_length(fd);
+-		__entry->fd_status = fd->status;
++		__entry->fd_status = __be32_to_cpu(fd->status);
+ 		__assign_str(name);
+ 	),
  
- 	if (!is_valid_ether_addr(saddr->sa_data))
- 		return -EADDRNOTAVAIL;
- 
--	return enetc_msg_vsi_set_primary_mac_addr(priv, saddr);
-+	err = enetc_msg_vsi_set_primary_mac_addr(priv, saddr);
-+	if (err)
-+		return err;
-+
-+	eth_hw_addr_set(ndev, saddr->sa_data);
-+
-+	return 0;
- }
- 
- static int enetc_vf_set_features(struct net_device *ndev,
 -- 
 2.43.0
 
