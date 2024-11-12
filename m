@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0D822B38B;
-	Tue, 12 Nov 2024 10:37:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C282144B2;
+	Tue, 12 Nov 2024 10:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407864; cv=none; b=YOA+lgbzLaCmuzuDFyQ3tt3F82N7o5DkAA5ddNRN0TTo+2IuhweAcOTEl6Mzvq0JslV0wagaXot8IvyKBN0tbXvNCEJX+tYN2LX+hJKjk44L/ZCn802d4FvZT9Bch1F+yj/aEUKHNh9sgydmdrvH2nEsJhZ7PN3j7rtJuqrCYb8=
+	t=1731407867; cv=none; b=JwkSrbcBfwM6AKJ8GpXnDR1cPXZnRIJsrRpYg7DPM87NeBVlVGCsFetLK1/XLquBtay/vuOHdrKbHd+cd0zdPg0pR+twqsSHqzHKt83lO9OdsaG1KRfmDA+cQLWLMZmflcNdwH6DlPmhhf7BmzrlLM55hybsCbGwOpHN8u+fAgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407864; c=relaxed/simple;
-	bh=EfReWBh7h9jKmgxsv5bpsa+U2VmGlTQ+N+mLgnmaU6I=;
+	s=arc-20240116; t=1731407867; c=relaxed/simple;
+	bh=0IHPlhB2hyutvgS1iT6YASHPKARhvYnrR7az+UVrsq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=usGeXrg02Vjy46mrD1h51tpKb+UPdedMzodSYbhmTSa99pJY1fsxNjmIii8wJ+frqxhNugXT5XoYZnLIAArvL4/9lK4FeagURxEnst7V4t7NkKBfMTEAP4nAB9ERgo0jGPoqp2RdIExggVFWNXL7UY9+N+nUzArqxsd+JlzMtX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOiv6vPd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y+mhXiuXfYmD2MGeEw0h7B5SekbA79V7t3eZ3XTbigWtehl/N5mkti7CJ3RgFliq+RR+VBaUCvQBF/+171zf/yFfAZB1fye9xyNj4BT7cCdfxqFXZPEqBUM988ABBv3qu85U2VjbHFeh38MMdPi7bS3wQm7R1bJw87vOT4BIj6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgFVEuId; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOiv6vPd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFCB1C4CECD;
-	Tue, 12 Nov 2024 10:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgFVEuId"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E10C4CED6;
+	Tue, 12 Nov 2024 10:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407864;
-	bh=EfReWBh7h9jKmgxsv5bpsa+U2VmGlTQ+N+mLgnmaU6I=;
+	s=korg; t=1731407867;
+	bh=0IHPlhB2hyutvgS1iT6YASHPKARhvYnrR7az+UVrsq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LOiv6vPdmwOZ7Rx+Bv2WMEZk8csr9PXJkn8lWPggXbScrY+0dvHWrPSFA/8rrmnsT
-	 ZiQWGYKtdKjcAkLH355U3sakNEezH6aRgHvQxLLslhCYT00Z07t0cTVX7dZvXRuk0h
-	 k0HHTgAP9bFIoVGYBatgCeBxOGmSxBIbcOV8tWrQ=
+	b=OgFVEuIdosbhJpk+v8Pu5P5NETGoRMfr7I3McabxPN1OJacc8yYRigz63j0/XPlEL
+	 f67L0TD89kBp099wnsOKHBgZAhx76L7023u35KTr1ukKoj980AX2nw1zaKWpmF4G8c
+	 tIky8Gnbzuf161lrf5IyD1fjBafD29dAvMHy08xM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William McVicker <willmcvicker@google.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.6 107/119] usb: dwc3: fix fault at system suspend if device was already runtime suspended
-Date: Tue, 12 Nov 2024 11:21:55 +0100
-Message-ID: <20241112101852.811240718@linuxfoundation.org>
+	Rex Nie <rex.nie@jaguarmicro.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH 6.6 108/119] usb: typec: qcom-pmic: init value of hdr_len/txbuf_len earlier
+Date: Tue, 12 Nov 2024 11:21:56 +0100
+Message-ID: <20241112101852.849290371@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -51,69 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roger Quadros <rogerq@kernel.org>
+From: Rex Nie <rex.nie@jaguarmicro.com>
 
-commit 9cfb31e4c89d200d8ab7cb1e0bb9e6e8d621ca0b upstream.
+commit 029778a4fd2c90c2e76a902b797c2348a722f1b8 upstream.
 
-If the device was already runtime suspended then during system suspend
-we cannot access the device registers else it will crash.
+If the read of USB_PDPHY_RX_ACKNOWLEDGE_REG failed, then hdr_len and
+txbuf_len are uninitialized. This commit stops to print uninitialized
+value and misleading/false data.
 
-Also we cannot access any registers after dwc3_core_exit() on some
-platforms so move the dwc3_enable_susphy() call to the top.
-
-Cc: stable@vger.kernel.org # v5.15+
-Reported-by: William McVicker <willmcvicker@google.com>
-Closes: https://lore.kernel.org/all/ZyVfcUuPq56R2m1Y@google.com
-Fixes: 705e3ce37bcc ("usb: dwc3: core: Fix system suspend on TI AM62 platforms")
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Tested-by: Will McVicker <willmcvicker@google.com>
-Link: https://lore.kernel.org/r/20241104-am62-lpm-usb-fix-v1-1-e93df73a4f0d@kernel.org
+Cc: stable@vger.kernel.org
+Fixes: a4422ff22142 (" usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+Signed-off-by: Rex Nie <rex.nie@jaguarmicro.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://lore.kernel.org/r/20241030133632.2116-1-rex.nie@jaguarmicro.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |   25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -2106,10 +2106,18 @@ static int dwc3_suspend_common(struct dw
- {
- 	u32 reg;
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+@@ -161,6 +161,10 @@ qcom_pmic_typec_pdphy_pd_transmit_payloa
  
--	dwc->susphy_state = (dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0)) &
--			    DWC3_GUSB2PHYCFG_SUSPHY) ||
--			    (dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0)) &
--			    DWC3_GUSB3PIPECTL_SUSPHY);
-+	if (!pm_runtime_suspended(dwc->dev) && !PMSG_IS_AUTO(msg)) {
-+		dwc->susphy_state = (dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0)) &
-+				    DWC3_GUSB2PHYCFG_SUSPHY) ||
-+				    (dwc3_readl(dwc->regs, DWC3_GUSB3PIPECTL(0)) &
-+				    DWC3_GUSB3PIPECTL_SUSPHY);
-+		/*
-+		 * TI AM62 platform requires SUSPHY to be
-+		 * enabled for system suspend to work.
-+		 */
-+		if (!dwc->susphy_state)
-+			dwc3_enable_susphy(dwc, true);
-+	}
+ 	spin_lock_irqsave(&pmic_typec_pdphy->lock, flags);
  
- 	switch (dwc->current_dr_role) {
- 	case DWC3_GCTL_PRTCAP_DEVICE:
-@@ -2158,15 +2166,6 @@ static int dwc3_suspend_common(struct dw
- 		break;
- 	}
++	hdr_len = sizeof(msg->header);
++	txbuf_len = pd_header_cnt_le(msg->header) * 4;
++	txsize_len = hdr_len + txbuf_len - 1;
++
+ 	ret = regmap_read(pmic_typec_pdphy->regmap,
+ 			  pmic_typec_pdphy->base + USB_PDPHY_RX_ACKNOWLEDGE_REG,
+ 			  &val);
+@@ -178,10 +182,6 @@ qcom_pmic_typec_pdphy_pd_transmit_payloa
+ 	if (ret)
+ 		goto done;
  
--	if (!PMSG_IS_AUTO(msg)) {
--		/*
--		 * TI AM62 platform requires SUSPHY to be
--		 * enabled for system suspend to work.
--		 */
--		if (!dwc->susphy_state)
--			dwc3_enable_susphy(dwc, true);
--	}
+-	hdr_len = sizeof(msg->header);
+-	txbuf_len = pd_header_cnt_le(msg->header) * 4;
+-	txsize_len = hdr_len + txbuf_len - 1;
 -
- 	return 0;
- }
- 
+ 	/* Write message header sizeof(u16) to USB_PDPHY_TX_BUFFER_HDR_REG */
+ 	ret = regmap_bulk_write(pmic_typec_pdphy->regmap,
+ 				pmic_typec_pdphy->base + USB_PDPHY_TX_BUFFER_HDR_REG,
 
 
