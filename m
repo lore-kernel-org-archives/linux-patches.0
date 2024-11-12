@@ -1,151 +1,101 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A961531C4
-	for <patches@lists.linux.dev>; Tue, 12 Nov 2024 23:04:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44BC218956
+	for <patches@lists.linux.dev>; Tue, 12 Nov 2024 23:13:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731452670; cv=none; b=hPbXMeMHnSPPfpOp2crOaycTfuWUDiKTHy1VsyiiCw3jb3zb/QgmVcv7l8P8QbI1w7kT9yTjKumn72Vt2CZj8pcXuDysEo8AWuAvuQj6xpYwof35EBmMt9u2DPCk33KCPak/I3jiMo2atSck1tuIAsIV7KGRNTADHiWa7TPqG3I=
+	t=1731453182; cv=none; b=D7evxTQDmyaWHWQH04plsowQQdCQbAv/SrTDOjUq3xUPzAIXacmMfQpcB3l55Og5mpfBMwa12YsdRVv1Hyfz9QAs2fsLEkzJXssMUFLrCzBEfZxD/IbwjXLPA8T1eEExCOCwXE1ytsF5FwHxK6pruh2IBL2tVy0lora7MlF8Hqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731452670; c=relaxed/simple;
-	bh=M8QZHdkR0C/TG//Jvt6IIv8ZeuA/WUQAchDPKwDVZpI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DCajT3F6JaFZz/YqgMlnAxp8nmsvufCL436Hbtjy9wIMMcd8s3JGlac1Sy1qrth8BUpTZNoBIQgr8Hu/XBcl3HgGyVIXJ2aWuKxKoEUQdWs2yelZci35lvoeUiU7Y8hN/ZJPHvFthJ/1ktuScsqvuVBVThhI4bo2c4vRmS3dB50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GjVAb29s; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1731453182; c=relaxed/simple;
+	bh=M+LlzL6aw+EiSnn0bxaD+l/N8DT+IZRxn9GoEcxMNhE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=C+W+0L51s0WYx8wABbRWCVnq4yl04V6DG2KlpW35Fa9qwy/jfmZpLkIn1UhTG2vvzUzvZo45ik1DlyhsCTJNwuKqMzkRIznoGREXsn3kWxHMac1lAXDzF4Gt/vjsTtSxCnst88VuVV5I/vwcWkwB6RAcfWyP5IXbRbLXRhJeK5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjRv2e/V; arc=none smtp.client-ip=209.85.166.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GjVAb29s"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-20ca03687fdso68145ad.0
-        for <patches@lists.linux.dev>; Tue, 12 Nov 2024 15:04:28 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjRv2e/V"
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-8323b555a6aso335710539f.3
+        for <patches@lists.linux.dev>; Tue, 12 Nov 2024 15:13:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1731452668; x=1732057468; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=oGcmcooZ3eXi2btPtJV6KWC5Ib7k9JOuUxsYyFpp28w=;
-        b=GjVAb29s3VnQNyxgjuGqDnLAYUNKdMWWJRx8PrDATYUDFqDP5p4W3nhPBDvXnS5eGW
-         KteY6VIi8fnhn8i2NpLKj8ySGnJKG5o+Er8dOEqt+cK6YXCQ1pL1kSgigoKS76sZa3BJ
-         Byku5K0x01ONrHrAC5Pg+Kq/Fu1btYTkmaggSufh/0RQnCjf9XaMPIj54/SBnVYREtdt
-         R9oykDnkgd6lQGUOf9Z3n8uXwO/eMJc5R5/G5DKudwaP6kJBIgoYSyMbJVM9SqhwsLkf
-         /3BXHKWTRdiSBph2ftKEJY3fw/9m3RarxH+LvVTdUN1UfCgDS3UrulJr+iCbHRYnDmkM
-         ExfA==
+        d=linuxfoundation.org; s=google; t=1731453180; x=1732057980; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=X+4WyyZqxm62aiyO+CVKXzQhKbvMWffzEQ8gIImHR1c=;
+        b=DjRv2e/VMp/2xPDYP2aR8LWByppMstPKO1ZdXQfPM1cYXJscRtgEDJEaYZtPzH+hhr
+         XaqFKPPDlQJ6YNVDNG7iyNQ1G4B6ZXddR2UFOT3mmTJcF5dSo2h7g4+h1vrs7hp9/HzZ
+         hFuL3g1OhPQ9XsP2730/rdshE0Y+bXrqiZ1js=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731452668; x=1732057468;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oGcmcooZ3eXi2btPtJV6KWC5Ib7k9JOuUxsYyFpp28w=;
-        b=qjWR+Nmx7KOt5QOYTVPTXWRZgz3ODlSzgxaeauQoPXR4Lvmda7QmVdgXiZh0zZXT4W
-         Cxb9mD3Fi2Cm10ga0tlp8O+McXdbm6uguLgJzzjPHOVwsD8o19WNxj4AMlSK5ERwf9lZ
-         Ix12JKWwyjHVeXDjNPL/klL0TTNT+DjVU+QtSn0C9TCGXrmcOQu0kjqJzpq0EtluTUCP
-         kDcTVyU3fTwbRCiPiv0NsAalYGEzIeXYa1W9Ex1Fv6rY3q6+bo0VtyWW5sw0+grXEwum
-         HZV/+dUPkzcW/ALMB1gFN3d4TvqDML/nySR7T0Sqm4PiYjLtWD+dgKHLbcBGESP1wnOJ
-         xKwQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUJcFf4b4zohMoTiKrMMoEzwhC6fw7EU24v1r84CFyvs94R28iPWCfPj/NtVNg0DUPQZ8W6s+4I@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy7E1YKqtuTsvparNZ+En/jnB6siV8Sc1MU7YV8yPblz16IgZOP
-	sQcpi8Y819FDUHoyp1MhewdlBEpBOPRebiUrBfy0DYYLVTG0N+JyvvhAfuwKXg==
-X-Gm-Gg: ASbGncvTp+SnTM7g2YEWiy+KNnXQ2h8AYHqU0UQ1lS65kfE7YToALgnXYxQSlUfRHhE
-	8P9LOfZ+sunjlo7P1uNM6dMftFeu1HiGjC8VpbFFaK+bJgLy+Ebl9QR8qA5wu36zPAT1ifXcU14
-	3QuekWcjF5WM+Y7nuBeJhW1lxxUqnWa3ekU560IDpLX4Gi2rqZaBVD8fJLCtZfxjTMdSSodJzOJ
-	3XyKjiKij6ocN2lCnL0fDG8Toqxn0YrHL93o8iy
-X-Google-Smtp-Source: AGHT+IHOy09+IsPJGVNT6MLd6Ag2vBUkiSWhTo9lb9O6NU0vAC5+WyRM3S3Z/m5iZlqrTpgtb91ezw==
-X-Received: by 2002:a17:903:192:b0:20c:e8df:2500 with SMTP id d9443c01a7336-211b6ffbb98mr262825ad.3.1731452667677;
-        Tue, 12 Nov 2024 15:04:27 -0800 (PST)
-Received: from google.com ([2620:15c:2d3:205:d954:735:c86e:9b56])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7f41f5ea0d5sm11198004a12.47.2024.11.12.15.04.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Nov 2024 15:04:27 -0800 (PST)
-Date: Tue, 12 Nov 2024 15:04:22 -0800
-From: Peter Collingbourne <pcc@google.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Qun-Wei Lin <qun-wei.lin@mediatek.com>,
-	David Rientjes <rientjes@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: Re: [PATCH 5.4 462/462] mm: krealloc: Fix MTE false alarm in
- __do_krealloc
-Message-ID: <ZzPe9ossmfQP_s77@google.com>
-References: <20241106120331.497003148@linuxfoundation.org>
- <20241106120342.916487840@linuxfoundation.org>
+        d=1e100.net; s=20230601; t=1731453180; x=1732057980;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=X+4WyyZqxm62aiyO+CVKXzQhKbvMWffzEQ8gIImHR1c=;
+        b=SAVZtoomg3eHpx78HEbThUA01xIPW/dPIJiAHEgAv3oZ1dVCgpshZ1bAUm1/CrIIgn
+         78Wk3ze1clYOo+7Rg/1I4f4LSPMEpOEEaF/MTsuJp949A7/20Sw5gor9MF+uR+PycAoD
+         LTS0jZp8+Vf8bBm8p51X6Tf6IN6oGgyCO60LhKBxuPf9GZAzpTTY8RE8PfPgPJqzdVTX
+         DziNdoU5vr5cb+n1p5wuJA8GAa3hFxT9HlF+8PI3yTA11P5i4UMLklYVWL+pUfe3t6vh
+         LLevoZHeCHb7rHbYRQ6iamocLilD71Jk4/UKAzFhnYZJAV+b8C4GMHxzgdacMWy41kmQ
+         dicw==
+X-Gm-Message-State: AOJu0YyEqU0lu6KLensQ+p+MAueF3doUqRmCioK3zsuxDaiGL3R5Tsm0
+	swQNecqzWc+AG2g002qIEinjngPdVpX1LfQaI4Si7PixMy7xJTGTU9JdQHqqsKI=
+X-Google-Smtp-Source: AGHT+IHS5lg0H/ukiayJoHc0vlP5PuhGydxkV5Y4j5BxvOfzlZpSvx6PeEtPlcigb0LVgLizi6lbfQ==
+X-Received: by 2002:a05:6602:6b10:b0:832:13ce:1fa3 with SMTP id ca18e2360f4ac-83e4fad06f4mr118666539f.8.1731453179664;
+        Tue, 12 Nov 2024 15:12:59 -0800 (PST)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4de787f0addsm2438058173.125.2024.11.12.15.12.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Nov 2024 15:12:59 -0800 (PST)
+Message-ID: <33462ad2-98b7-42ae-99ff-757180e3eb10@linuxfoundation.org>
+Date: Tue, 12 Nov 2024 16:12:58 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241106120342.916487840@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.11 000/184] 6.11.8-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20241112101900.865487674@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 06, 2024 at 01:05:55PM +0100, Greg Kroah-Hartman wrote:
-> 5.4-stable review patch.  If anyone has any objections, please let me know.
+On 11/12/24 03:19, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.11.8 release.
+> There are 184 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> ------------------
+> Responses should be made by Thu, 14 Nov 2024 10:18:19 +0000.
+> Anything received after that time might be too late.
 > 
-> From: Qun-Wei Lin <qun-wei.lin@mediatek.com>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.11.8-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.11.y
+> and the diffstat can be found below.
 > 
-> commit 704573851b51808b45dae2d62059d1d8189138a2 upstream.
+> thanks,
 > 
-> This patch addresses an issue introduced by commit 1a83a716ec233 ("mm:
-> krealloc: consider spare memory for __GFP_ZERO") which causes MTE
-> (Memory Tagging Extension) to falsely report a slab-out-of-bounds error.
+> greg k-h
 > 
-> The problem occurs when zeroing out spare memory in __do_krealloc. The
-> original code only considered software-based KASAN and did not account
-> for MTE. It does not reset the KASAN tag before calling memset, leading
-> to a mismatch between the pointer tag and the memory tag, resulting
-> in a false positive.
-> 
-> Example of the error:
-> ==================================================================
-> swapper/0: BUG: KASAN: slab-out-of-bounds in __memset+0x84/0x188
-> swapper/0: Write at addr f4ffff8005f0fdf0 by task swapper/0/1
-> swapper/0: Pointer tag: [f4], memory tag: [fe]
-> swapper/0:
-> swapper/0: CPU: 4 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.
-> swapper/0: Hardware name: MT6991(ENG) (DT)
-> swapper/0: Call trace:
-> swapper/0:  dump_backtrace+0xfc/0x17c
-> swapper/0:  show_stack+0x18/0x28
-> swapper/0:  dump_stack_lvl+0x40/0xa0
-> swapper/0:  print_report+0x1b8/0x71c
-> swapper/0:  kasan_report+0xec/0x14c
-> swapper/0:  __do_kernel_fault+0x60/0x29c
-> swapper/0:  do_bad_area+0x30/0xdc
-> swapper/0:  do_tag_check_fault+0x20/0x34
-> swapper/0:  do_mem_abort+0x58/0x104
-> swapper/0:  el1_abort+0x3c/0x5c
-> swapper/0:  el1h_64_sync_handler+0x80/0xcc
-> swapper/0:  el1h_64_sync+0x68/0x6c
-> swapper/0:  __memset+0x84/0x188
-> swapper/0:  btf_populate_kfunc_set+0x280/0x3d8
-> swapper/0:  __register_btf_kfunc_id_set+0x43c/0x468
-> swapper/0:  register_btf_kfunc_id_set+0x48/0x60
-> swapper/0:  register_nf_nat_bpf+0x1c/0x40
-> swapper/0:  nf_nat_init+0xc0/0x128
-> swapper/0:  do_one_initcall+0x184/0x464
-> swapper/0:  do_initcall_level+0xdc/0x1b0
-> swapper/0:  do_initcalls+0x70/0xc0
-> swapper/0:  do_basic_setup+0x1c/0x28
-> swapper/0:  kernel_init_freeable+0x144/0x1b8
-> swapper/0:  kernel_init+0x20/0x1a8
-> swapper/0:  ret_from_fork+0x10/0x20
-> ==================================================================
-> 
-> Fixes: 1a83a716ec233 ("mm: krealloc: consider spare memory for __GFP_ZERO")
-> Signed-off-by: Qun-Wei Lin <qun-wei.lin@mediatek.com>
-> Acked-by: David Rientjes <rientjes@google.com>
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  mm/slab_common.c |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Hi Greg,
+Compiled and booted on my test system. No dmesg regressions.
 
-Can this be picked up for the other stable trees as well please? The
-patch that caused MTE false positives is in linux-5.10.y, linux-5.15.y,
-linux-6.1.y and linux-6.6.y but this fix is not. I checked that it
-applies cleanly to all of them.
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Peter
+thanks,
+-- Shuah
