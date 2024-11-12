@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45BF21CFB7;
-	Tue, 12 Nov 2024 10:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED7221D216;
+	Tue, 12 Nov 2024 10:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408530; cv=none; b=UYRcWlNOBbHy9ZFhdP4m3cUz/oGygbn2PmhMdcSTX+UvExtOz4g/y4rwju+yeERcuxJ/pzhRLSURo2BWPLkfHQo9pw8VWksdTdfPLAG1E768KHA0GrtlKZF0IyWjjZLuVWAFjxxiBF27zw+tNm9spjca6uWOsziL4zRY1iyxAQ0=
+	t=1731408534; cv=none; b=u7e45RjBJpzClliMKf4zG4ztKODstfHOQ8b3UoPZ61PyrvxQLg9Q6hL02mWrjbqNuBxR1my3QmCFIsyCTMjDHleyqeGZAc1DBc7brJoJ8d+kZKnLtH3NaYUwQ9V0FZ5ZND68+7mBzacYG2px1nBEOFDH4MdjSsQZur279fK4zYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408530; c=relaxed/simple;
-	bh=Ky0biGkJ5D+ph7zAdumA2l5/RjEhf3IZofXtaYiq5aw=;
+	s=arc-20240116; t=1731408534; c=relaxed/simple;
+	bh=8N8abYrkrIyfsxb4CNUzsZ9om/2+JfCgD6+02CGnX0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NC+S1o861Qvnl95joQ2crxV3sFmy1rLlIox7UAyO79W6zuwdr6uVKTCVniTWtsBmOLDb9/g77qjkFC2veSAvM136jT5llXxi1Pj8wK4siZJeM9sa0gYmCRggcrdVFj/oLiEsa1+6NtLtK6QCrPPaJgLypc/Bews4DSm5XCXjDLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGsvBtyh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pRokxO9MB+rTwP1tMD6YJLSU99eUP1d2IrH+shiNuLXCakjAcjU6jv1jbprqc1YkkuvLX7p7ICjO3QBvfi/1XIkQW51pmkmne2JdalmQBC24KdpPkMosFRC029hP4YjI35hE7p20bEv83GFVOi8Wax3CgEWyrm4HehzOvqFpA5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KsSu3LCd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGsvBtyh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2293EC4CECD;
-	Tue, 12 Nov 2024 10:48:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KsSu3LCd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F754C4CECD;
+	Tue, 12 Nov 2024 10:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408530;
-	bh=Ky0biGkJ5D+ph7zAdumA2l5/RjEhf3IZofXtaYiq5aw=;
+	s=korg; t=1731408534;
+	bh=8N8abYrkrIyfsxb4CNUzsZ9om/2+JfCgD6+02CGnX0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lGsvBtyh7ltaXphgVkAuMyuhWpCc6Eor2Act3zrrME7a2Nzev77r5MLE3Lm6jMCzU
-	 lkUo60WDM8vzlhxNWyFqpD5p2izokIAzKpAYI9fBJKIzDU5oW4vMHSOucIAPWyvqW7
-	 rm6+0UxFUCmLFfLJ7ipCBotw1CGD+zklIh4kFKYs=
+	b=KsSu3LCdUGljSMYnHUQjleiJY8mBzeYzntF4DiheeWXPnqSCTMu8xHWzXhN9MESt8
+	 m6iLwkfESCobCMiiAG4y8cUjCqeh433Dd91aU0xZpdyAAF3ayXUYJkEOsz963ENdFw
+	 makj7Pih3SMRtjvY86idTgLaDeINRNAAGJJFdP/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Kanner <andrew.kanner@gmail.com>,
-	syzbot+386ce9e60fa1b18aac5b@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
+	Andrei Vagin <avagin@google.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Alexey Gladkov <legion@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Oleg Nesterov <oleg@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 170/184] ocfs2: remove entry once instead of null-ptr-dereference in ocfs2_xa_remove()
-Date: Tue, 12 Nov 2024 11:22:08 +0100
-Message-ID: <20241112101907.392565163@linuxfoundation.org>
+Subject: [PATCH 6.11 171/184] ucounts: fix counter leak in inc_rlimit_get_ucounts()
+Date: Tue, 12 Nov 2024 11:22:09 +0100
+Message-ID: <20241112101907.429791431@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -57,91 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Kanner <andrew.kanner@gmail.com>
+From: Andrei Vagin <avagin@google.com>
 
-commit 0b63c0e01fba40e3992bc627272ec7b618ccaef7 upstream.
+commit 432dc0654c612457285a5dcf9bb13968ac6f0804 upstream.
 
-Syzkaller is able to provoke null-ptr-dereference in ocfs2_xa_remove():
+The inc_rlimit_get_ucounts() increments the specified rlimit counter and
+then checks its limit.  If the value exceeds the limit, the function
+returns an error without decrementing the counter.
 
-[   57.319872] (a.out,1161,7):ocfs2_xa_remove:2028 ERROR: status = -12
-[   57.320420] (a.out,1161,7):ocfs2_xa_cleanup_value_truncate:1999 ERROR: Partial truncate while removing xattr overlay.upper.  Leaking 1 clusters and removing the entry
-[   57.321727] BUG: kernel NULL pointer dereference, address: 0000000000000004
-[...]
-[   57.325727] RIP: 0010:ocfs2_xa_block_wipe_namevalue+0x2a/0xc0
-[...]
-[   57.331328] Call Trace:
-[   57.331477]  <TASK>
-[...]
-[   57.333511]  ? do_user_addr_fault+0x3e5/0x740
-[   57.333778]  ? exc_page_fault+0x70/0x170
-[   57.334016]  ? asm_exc_page_fault+0x2b/0x30
-[   57.334263]  ? __pfx_ocfs2_xa_block_wipe_namevalue+0x10/0x10
-[   57.334596]  ? ocfs2_xa_block_wipe_namevalue+0x2a/0xc0
-[   57.334913]  ocfs2_xa_remove_entry+0x23/0xc0
-[   57.335164]  ocfs2_xa_set+0x704/0xcf0
-[   57.335381]  ? _raw_spin_unlock+0x1a/0x40
-[   57.335620]  ? ocfs2_inode_cache_unlock+0x16/0x20
-[   57.335915]  ? trace_preempt_on+0x1e/0x70
-[   57.336153]  ? start_this_handle+0x16c/0x500
-[   57.336410]  ? preempt_count_sub+0x50/0x80
-[   57.336656]  ? _raw_read_unlock+0x20/0x40
-[   57.336906]  ? start_this_handle+0x16c/0x500
-[   57.337162]  ocfs2_xattr_block_set+0xa6/0x1e0
-[   57.337424]  __ocfs2_xattr_set_handle+0x1fd/0x5d0
-[   57.337706]  ? ocfs2_start_trans+0x13d/0x290
-[   57.337971]  ocfs2_xattr_set+0xb13/0xfb0
-[   57.338207]  ? dput+0x46/0x1c0
-[   57.338393]  ocfs2_xattr_trusted_set+0x28/0x30
-[   57.338665]  ? ocfs2_xattr_trusted_set+0x28/0x30
-[   57.338948]  __vfs_removexattr+0x92/0xc0
-[   57.339182]  __vfs_removexattr_locked+0xd5/0x190
-[   57.339456]  ? preempt_count_sub+0x50/0x80
-[   57.339705]  vfs_removexattr+0x5f/0x100
-[...]
-
-Reproducer uses faultinject facility to fail ocfs2_xa_remove() ->
-ocfs2_xa_value_truncate() with -ENOMEM.
-
-In this case the comment mentions that we can return 0 if
-ocfs2_xa_cleanup_value_truncate() is going to wipe the entry
-anyway. But the following 'rc' check is wrong and execution flow do
-'ocfs2_xa_remove_entry(loc);' twice:
-* 1st: in ocfs2_xa_cleanup_value_truncate();
-* 2nd: returning back to ocfs2_xa_remove() instead of going to 'out'.
-
-Fix this by skipping the 2nd removal of the same entry and making
-syzkaller repro happy.
-
-Link: https://lkml.kernel.org/r/20241103193845.2940988-1-andrew.kanner@gmail.com
-Fixes: 399ff3a748cf ("ocfs2: Handle errors while setting external xattr values.")
-Signed-off-by: Andrew Kanner <andrew.kanner@gmail.com>
-Reported-by: syzbot+386ce9e60fa1b18aac5b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/671e13ab.050a0220.2b8c0f.01d0.GAE@google.com/T/
-Tested-by: syzbot+386ce9e60fa1b18aac5b@syzkaller.appspotmail.com
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
+Link: https://lkml.kernel.org/r/20241101191940.3211128-1-roman.gushchin@linux.dev
+Fixes: 15bc01effefe ("ucounts: Fix signal ucount refcounting")
+Signed-off-by: Andrei Vagin <avagin@google.com>
+Co-developed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Signed-off-by: Roman Gushchin <roman.gushchin@linux.dev>
+Tested-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Alexey Gladkov <legion@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Andrei Vagin <avagin@google.com>
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Alexey Gladkov <legion@kernel.org>
+Cc: Oleg Nesterov <oleg@redhat.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/xattr.c |    3 +--
+ kernel/ucount.c |    3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -2036,8 +2036,7 @@ static int ocfs2_xa_remove(struct ocfs2_
- 				rc = 0;
- 			ocfs2_xa_cleanup_value_truncate(loc, "removing",
- 							orig_clusters);
--			if (rc)
--				goto out;
-+			goto out;
- 		}
- 	}
- 
+--- a/kernel/ucount.c
++++ b/kernel/ucount.c
+@@ -318,7 +318,7 @@ long inc_rlimit_get_ucounts(struct ucoun
+ 	for (iter = ucounts; iter; iter = iter->ns->ucounts) {
+ 		long new = atomic_long_add_return(1, &iter->rlimit[type]);
+ 		if (new < 0 || new > max)
+-			goto unwind;
++			goto dec_unwind;
+ 		if (iter == ucounts)
+ 			ret = new;
+ 		if (!override_rlimit)
+@@ -336,7 +336,6 @@ long inc_rlimit_get_ucounts(struct ucoun
+ dec_unwind:
+ 	dec = atomic_long_sub_return(1, &iter->rlimit[type]);
+ 	WARN_ON_ONCE(dec < 0);
+-unwind:
+ 	do_dec_rlimit_put_ucounts(ucounts, iter, type);
+ 	return 0;
+ }
 
 
