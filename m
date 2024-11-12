@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C282144B2;
-	Tue, 12 Nov 2024 10:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F09122C732;
+	Tue, 12 Nov 2024 10:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407867; cv=none; b=JwkSrbcBfwM6AKJ8GpXnDR1cPXZnRIJsrRpYg7DPM87NeBVlVGCsFetLK1/XLquBtay/vuOHdrKbHd+cd0zdPg0pR+twqsSHqzHKt83lO9OdsaG1KRfmDA+cQLWLMZmflcNdwH6DlPmhhf7BmzrlLM55hybsCbGwOpHN8u+fAgk=
+	t=1731407871; cv=none; b=q9fNqNFD5Oc8QsgV29Vtfaw/zRoOvnq1pAGn+CktSx6vvvhqMk3JG21V/WovQmNmJUDg3dqPtZ33TZfWyfHLmTLJlqyB1vfENErnfYrRkRMdzu8bEfVPwNtaiecRznlC4M89pFo/VbgAos1K1MYWKwcEsMw8/ihoL532g1ovjJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407867; c=relaxed/simple;
-	bh=0IHPlhB2hyutvgS1iT6YASHPKARhvYnrR7az+UVrsq0=;
+	s=arc-20240116; t=1731407871; c=relaxed/simple;
+	bh=GlZ5haYisJUXPR+sDBSiALUte2WC03348wId332PmXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+mhXiuXfYmD2MGeEw0h7B5SekbA79V7t3eZ3XTbigWtehl/N5mkti7CJ3RgFliq+RR+VBaUCvQBF/+171zf/yFfAZB1fye9xyNj4BT7cCdfxqFXZPEqBUM988ABBv3qu85U2VjbHFeh38MMdPi7bS3wQm7R1bJw87vOT4BIj6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OgFVEuId; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tsBi+1I9n+tsWwsxMn8jZTwFGLQy+lzk4pOBvaRUcQIDZPAOlCqS0mhDXVi92E7I6EkFLwHsBi3/MgLh6XH0mgKARJniLxh0CecLqO1rL7+Wvbs+rfUJNTNyF9eMosUFl8Dx+mxYR1I4m8v2Iiqm6XYqak7gosjKO3V1Z7h+9G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHorq1Qe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OgFVEuId"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E10C4CED6;
-	Tue, 12 Nov 2024 10:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHorq1Qe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62EDC4CED6;
+	Tue, 12 Nov 2024 10:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407867;
-	bh=0IHPlhB2hyutvgS1iT6YASHPKARhvYnrR7az+UVrsq0=;
+	s=korg; t=1731407870;
+	bh=GlZ5haYisJUXPR+sDBSiALUte2WC03348wId332PmXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OgFVEuIdosbhJpk+v8Pu5P5NETGoRMfr7I3McabxPN1OJacc8yYRigz63j0/XPlEL
-	 f67L0TD89kBp099wnsOKHBgZAhx76L7023u35KTr1ukKoj980AX2nw1zaKWpmF4G8c
-	 tIky8Gnbzuf161lrf5IyD1fjBafD29dAvMHy08xM=
+	b=AHorq1Qemy/AW4mNPhwa5fN33QDwB+6OVcXqUDusBJdwMoggSkaRQIA6seZ+G2fab
+	 VwlLbqgIqrPjB7aVaRzKUv46q4KgR0oWBx9S3RW2ewsyw4xVOHi6q4MMVxc6VEHLCC
+	 tfa4H7Ij6A2+c9hbV56j6GKAfR91x+UJ02efmf+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rex Nie <rex.nie@jaguarmicro.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>
-Subject: [PATCH 6.6 108/119] usb: typec: qcom-pmic: init value of hdr_len/txbuf_len earlier
-Date: Tue, 12 Nov 2024 11:21:56 +0100
-Message-ID: <20241112101852.849290371@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.6 109/119] usb: typec: fix potential out of bounds in ucsi_ccg_update_set_new_cam_cmd()
+Date: Tue, 12 Nov 2024 11:21:57 +0100
+Message-ID: <20241112101852.886137722@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -52,49 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rex Nie <rex.nie@jaguarmicro.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 029778a4fd2c90c2e76a902b797c2348a722f1b8 upstream.
+commit 7dd08a0b4193087976db6b3ee7807de7e8316f96 upstream.
 
-If the read of USB_PDPHY_RX_ACKNOWLEDGE_REG failed, then hdr_len and
-txbuf_len are uninitialized. This commit stops to print uninitialized
-value and misleading/false data.
+The "*cmd" variable can be controlled by the user via debugfs.  That means
+"new_cam" can be as high as 255 while the size of the uc->updated[] array
+is UCSI_MAX_ALTMODES (30).
 
-Cc: stable@vger.kernel.org
-Fixes: a4422ff22142 (" usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
-Signed-off-by: Rex Nie <rex.nie@jaguarmicro.com>
+The call tree is:
+ucsi_cmd() // val comes from simple_attr_write_xsigned()
+-> ucsi_send_command()
+   -> ucsi_send_command_common()
+      -> ucsi_run_command() // calls ucsi->ops->sync_control()
+         -> ucsi_ccg_sync_control()
+
+Fixes: 170a6726d0e2 ("usb: typec: ucsi: add support for separate DP altmode devices")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20241030133632.2116-1-rex.nie@jaguarmicro.com
+Link: https://lore.kernel.org/r/325102b3-eaa8-4918-a947-22aca1146586@stanley.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_ccg.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-@@ -161,6 +161,10 @@ qcom_pmic_typec_pdphy_pd_transmit_payloa
+--- a/drivers/usb/typec/ucsi/ucsi_ccg.c
++++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
+@@ -441,6 +441,8 @@ static void ucsi_ccg_update_set_new_cam_
  
- 	spin_lock_irqsave(&pmic_typec_pdphy->lock, flags);
- 
-+	hdr_len = sizeof(msg->header);
-+	txbuf_len = pd_header_cnt_le(msg->header) * 4;
-+	txsize_len = hdr_len + txbuf_len - 1;
-+
- 	ret = regmap_read(pmic_typec_pdphy->regmap,
- 			  pmic_typec_pdphy->base + USB_PDPHY_RX_ACKNOWLEDGE_REG,
- 			  &val);
-@@ -178,10 +182,6 @@ qcom_pmic_typec_pdphy_pd_transmit_payloa
- 	if (ret)
- 		goto done;
- 
--	hdr_len = sizeof(msg->header);
--	txbuf_len = pd_header_cnt_le(msg->header) * 4;
--	txsize_len = hdr_len + txbuf_len - 1;
--
- 	/* Write message header sizeof(u16) to USB_PDPHY_TX_BUFFER_HDR_REG */
- 	ret = regmap_bulk_write(pmic_typec_pdphy->regmap,
- 				pmic_typec_pdphy->base + USB_PDPHY_TX_BUFFER_HDR_REG,
+ 	port = uc->orig;
+ 	new_cam = UCSI_SET_NEW_CAM_GET_AM(*cmd);
++	if (new_cam >= ARRAY_SIZE(uc->updated))
++		return;
+ 	new_port = &uc->updated[new_cam];
+ 	cam = new_port->linked_idx;
+ 	enter_new_mode = UCSI_SET_NEW_CAM_ENTER(*cmd);
 
 
