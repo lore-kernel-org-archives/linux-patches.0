@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88CCB22EE46;
-	Tue, 12 Nov 2024 10:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46A622EE46;
+	Tue, 12 Nov 2024 10:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407973; cv=none; b=fNGz/4RL7t9dehCkoDw5WYEmOWZjZnP+J5/lIoo0xQPfoJ7YLPGNHYupIrpKVd+08Xu1XsVG5LbbkHj5pMu4Dy/maBf/kwW1P6ccHQ4IGfUz+yEk/H4WjWwJFqaVbA4IomfE8TrlRjsmfynHmecoULj75VZpBRmRqNSBOGcdrXM=
+	t=1731407977; cv=none; b=ltV5XDluDMuBJHpyP1JuHfEZ0XPHTlB30PezbnPaMrxv09yRboaUSe9clHyH8QtCTSsQfuTmpLUQeDefeVdvB08SPPpZX4WMEKv1xY3hd8AWu2yNj6OuB+BPPTtgssU1LZbyQiES5Tnlh4H5SOylJiDvKKWmcxIStJRRGvjQNyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407973; c=relaxed/simple;
-	bh=5iW3R0Nl0Zjfv9TS9sPeuf2WhNqFB5iOM2CSvDDnrk0=;
+	s=arc-20240116; t=1731407977; c=relaxed/simple;
+	bh=puNWqjYf9x+lUfxjdOMGgq9HaAikte3pD/by5/tZKDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K4kL9SABftkkXzHgf8i4eLASL3Bii6F9h8FZfhBsFs7QDNcIwlgo10Ys1k+2MhnRecExjMx+bI7ondwMWx9MzA1T6RjiWthbBaxa5pRr2fF0Obh9yrHhhA8PyRlCnguCrO8sBXzURis4GrW8iXS3K7MbzjGI9ge82oK5S6PgBvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywgQbjEi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V9n+sUQD4tXIPx/k4/BITNIPrcikvKBG9CuApRRldpVF9aHznxOR5CyZ96D7DTmZTSosL8hJXfGPVHU1uY+h2jmvHXsWUc22Q3J22woY29ZG4i+bZ8Lht1Z1PT1iNimTTde1GEfzDS23rWwHbHEEJs7zq1e4CaR5r4pgQ3gsLwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NP01ckqQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywgQbjEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09641C4CECD;
-	Tue, 12 Nov 2024 10:39:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NP01ckqQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552D2C4CECD;
+	Tue, 12 Nov 2024 10:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407973;
-	bh=5iW3R0Nl0Zjfv9TS9sPeuf2WhNqFB5iOM2CSvDDnrk0=;
+	s=korg; t=1731407976;
+	bh=puNWqjYf9x+lUfxjdOMGgq9HaAikte3pD/by5/tZKDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ywgQbjEiykYcWGg8z+uju03kiLzMhWDKRD6jLb9Yq0TTY1mnjEEszcL4LacLy7ybR
-	 UiPSKC/oU6a7YIgDVEusSY9FSBf5b8xVaxwDW5PeF0/SVRIwa+uoRsi9C38m7a6CH9
-	 KmY/vtycH6sSydZrQpUjYkGZExsC2PZkBbr3BOIA=
+	b=NP01ckqQvwSjXre7F5pM2cui/EypXAEsKp8SNGqpsF85IvKOLYlgNdq5/DcPfDvt2
+	 WUBLLfrtJF3z7B/Tj81HOGS0oksM6cGz6KQ/ZQMRvhJv0falHcKP8Xx7Y3TOtDwnkO
+	 UIcIh/s7LflpJJ3o9bcYn7+CXvzMRaIkLL7iBuGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 020/184] arm64: dts: qcom: sm8450 fix PIPE clock specification for pcie1
-Date: Tue, 12 Nov 2024 11:19:38 +0100
-Message-ID: <20241112101901.645156274@linuxfoundation.org>
+Subject: [PATCH 6.11 021/184] arm64: dts: imx8-ss-vpu: Fix imx8qm VPU IRQs
+Date: Tue, 12 Nov 2024 11:19:39 +0100
+Message-ID: <20241112101901.682055024@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -53,45 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 5d3d966400d0a094359009147d742b3926a2ea53 ]
+[ Upstream commit eed2d8e8d0051a6551e4dffba99e16eb88c676ac ]
 
-For historical reasons on SM8450 the second PCIe host (pcie1) also keeps
-a reference to the PIPE clock coming from the PHY. Commit e76862840660
-("arm64: dts: qcom: sm8450: correct pcie1 phy clocks inputs to gcc") has
-updated the PHY to use #clock-cells = <1>, making just <&pcie1_phy>
-clock specification invalid. Update corresponding clock entry in the
-PCIe1 host node.
+imx8-ss-vpu only contained imx8qxp IRQ numbers, only mu2_m0 uses the
+correct imx8qm IRQ number, as imx8qxp lacks this MU.
+Fix this by providing imx8qm IRQ numbers in the main imx8-ss-vpu.dtsi
+and override the IRQ numbers in SoC-specific imx8qxp-ss-vpu.dtsi, similar
+to reg property for VPU core devices.
 
- /soc@0/pcie@1c08000: Failed to get clk index: 2 ret: -22
- qcom-pcie 1c08000.pcie: Failed to get clocks
- qcom-pcie 1c08000.pcie: probe with driver qcom-pcie failed with error -22
-
-Fixes: e76862840660 ("arm64: dts: qcom: sm8450: correct pcie1 phy clocks inputs to gcc")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241006-fix-sm8450-pcie1-v1-1-4f227c9082ed@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 0d9968d98467d ("arm64: dts: freescale: imx8q: add imx vpu codec entries")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8-ss-vpu.dtsi    | 4 ++--
+ arch/arm64/boot/dts/freescale/imx8qxp-ss-vpu.dtsi | 8 ++++++++
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 9bafb3b350ff6..38cb524cc5689 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -1973,7 +1973,7 @@
+diff --git a/arch/arm64/boot/dts/freescale/imx8-ss-vpu.dtsi b/arch/arm64/boot/dts/freescale/imx8-ss-vpu.dtsi
+index c6540768bdb92..87211c18d65a9 100644
+--- a/arch/arm64/boot/dts/freescale/imx8-ss-vpu.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8-ss-vpu.dtsi
+@@ -15,7 +15,7 @@ vpu: vpu@2c000000 {
+ 	mu_m0: mailbox@2d000000 {
+ 		compatible = "fsl,imx6sx-mu";
+ 		reg = <0x2d000000 0x20000>;
+-		interrupts = <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>;
++		interrupts = <GIC_SPI 472 IRQ_TYPE_LEVEL_HIGH>;
+ 		#mbox-cells = <2>;
+ 		power-domains = <&pd IMX_SC_R_VPU_MU_0>;
+ 		status = "disabled";
+@@ -24,7 +24,7 @@ vpu: vpu@2c000000 {
+ 	mu1_m0: mailbox@2d020000 {
+ 		compatible = "fsl,imx6sx-mu";
+ 		reg = <0x2d020000 0x20000>;
+-		interrupts = <GIC_SPI 470 IRQ_TYPE_LEVEL_HIGH>;
++		interrupts = <GIC_SPI 473 IRQ_TYPE_LEVEL_HIGH>;
+ 		#mbox-cells = <2>;
+ 		power-domains = <&pd IMX_SC_R_VPU_MU_1>;
+ 		status = "disabled";
+diff --git a/arch/arm64/boot/dts/freescale/imx8qxp-ss-vpu.dtsi b/arch/arm64/boot/dts/freescale/imx8qxp-ss-vpu.dtsi
+index 7894a3ab26d6b..f81937b5fb720 100644
+--- a/arch/arm64/boot/dts/freescale/imx8qxp-ss-vpu.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8qxp-ss-vpu.dtsi
+@@ -5,6 +5,14 @@
+  * Author: Alexander Stein
+  */
  
- 			clocks = <&gcc GCC_PCIE_1_PIPE_CLK>,
- 				 <&gcc GCC_PCIE_1_PIPE_CLK_SRC>,
--				 <&pcie1_phy>,
-+				 <&pcie1_phy QMP_PCIE_PIPE_CLK>,
- 				 <&rpmhcc RPMH_CXO_CLK>,
- 				 <&gcc GCC_PCIE_1_AUX_CLK>,
- 				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
++&mu_m0 {
++	interrupts = <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>;
++};
++
++&mu1_m0 {
++	interrupts = <GIC_SPI 470 IRQ_TYPE_LEVEL_HIGH>;
++};
++
+ &vpu_core0 {
+ 	reg = <0x2d040000 0x10000>;
+ };
 -- 
 2.43.0
 
