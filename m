@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72182141DA;
-	Tue, 12 Nov 2024 10:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73662141C3;
+	Tue, 12 Nov 2024 10:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407403; cv=none; b=ZLrUYiHvM8UbNyujXxH96rm4TaPM32N005/2U0I4bs8Kg8/FHvFv53Rb5vGGQrpMDCnIxAg9p5XiDegqWJU6HjM258rA3JGQF4ZvV6jfaitA646chIJHW9wD8N8nAMRljnzeTaYR/jZWBV5NyeIMRq4NbD1b4G46zmoSeEriT9Y=
+	t=1731407406; cv=none; b=mUPb7kCAw6fPkUVdyCOt902JiAOobSIsY9GmS8Knr/mKTVGe3DOjm4sVGmJgXOQHRu6oXO/8Go7Fgxnc6yjOt6xZ0Gncd3T+ZFk0zXWgOQIH0UMg+5wLoZf3/5Vfemm/zhQBApSxcObbxRiEjur6W7Tz7dRuaYbN1tVlKfpKYF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407403; c=relaxed/simple;
-	bh=RleiS/un3CERaqrCtbu0qeY1qt3rXbzbisLXhIu42Mo=;
+	s=arc-20240116; t=1731407406; c=relaxed/simple;
+	bh=Z9BGu8ZtiN/sJiRCPorCzL9sR2+7EQ5GW3n6nbJvmVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i7Bj88HOmXsrMT6jnEKQnuX68Vmq/O4f9nwzRZc47FQJRhJ7dG6DiN3tiTb7kVy3kIWwRw5HILyqSk9/IwbOSHrkizGVgvkZgOGk6sXrYXUpEt01U9QlhuYWWjKdplU4lxd9vWHc7vYJilqluN2WRynkRu84r4qJks4xdvCb9jY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ug7q40Be; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B0p8JYhHkjIcFjnqHeR7zQNV/VT4YADWR6COVgM3SbdzIBYOU1xAoifkVV9TTr0eU03Us5mI3GGxLNamWEPfa0enEFeKEp0zUkDtoRLJqBcYH8gULwAqKSwaGEsxJmvi1i3DqAn9hzWf0/5WNe23Z/aE8n3GLYfn539Tuo4UDvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCf2ItI2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ug7q40Be"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9858C4CED4;
-	Tue, 12 Nov 2024 10:30:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCf2ItI2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45032C4CED4;
+	Tue, 12 Nov 2024 10:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407403;
-	bh=RleiS/un3CERaqrCtbu0qeY1qt3rXbzbisLXhIu42Mo=;
+	s=korg; t=1731407406;
+	bh=Z9BGu8ZtiN/sJiRCPorCzL9sR2+7EQ5GW3n6nbJvmVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ug7q40Be7WhHaKBexh5W7hhpVArYmgm3jlWp5VMJYQir0MMeS2OvcmwL/bqS9G2P5
-	 zFWQ7+o3d6jEfND/n51d1A70SxD4e7hAbjZ75KIyF9wA+wcrvr3vgwTIaO+IcCafiK
-	 iz+Hy2VexMKlrbPrjYvYejPEZnbXcuYzJjQLKlQM=
+	b=DCf2ItI25vr+E2lj3vAQ4n2GmB8gSS7F8DvQiTuYolBAAeo0JpKr/j9OyhM70eY4e
+	 cKAV7AaSUDs0esa8QwfNE2mHdw4ftoCFGWbmBAl1qdEBo17hTwGdwJ3xOjW9yoOr7d
+	 YtNBZ6nOwgxlRfUL2Icii5YXPXwKz4hUhM8uOHmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zichen Xie <zichenxie0106@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.1 65/98] dm-unstriped: cast an operand to sector_t to prevent potential uint32_t overflow
-Date: Tue, 12 Nov 2024 11:21:20 +0100
-Message-ID: <20241112101846.736550189@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 66/98] ALSA: usb-audio: Add quirk for HP 320 FHD Webcam
+Date: Tue, 12 Nov 2024 11:21:21 +0100
+Message-ID: <20241112101846.773979966@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -50,41 +49,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zichen Xie <zichenxie0106@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 5a4510c762fc04c74cff264cd4d9e9f5bf364bae upstream.
+commit dabc44c28f118910dea96244d903f0c270225669 upstream.
 
-This was found by a static analyzer.
-There may be a potential integer overflow issue in
-unstripe_ctr(). uc->unstripe_offset and uc->unstripe_width are
-defined as "sector_t"(uint64_t), while uc->unstripe,
-uc->chunk_size and uc->stripes are all defined as "uint32_t".
-The result of the calculation will be limited to "uint32_t"
-without correct casting.
-So, we recommend adding an extra cast to prevent potential
-integer overflow.
+HP 320 FHD Webcam (03f0:654a) seems to have flaky firmware like other
+webcam devices that don't like the frequency inquiries.  Also, Mic
+Capture Volume has an invalid resolution, hence fix it to be 16 (as a
+blind shot).
 
-Fixes: 18a5bf270532 ("dm: add unstriped target")
-Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1232768
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20241105120220.5740-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-unstripe.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/usb/mixer.c  |    1 +
+ sound/usb/quirks.c |    2 ++
+ 2 files changed, 3 insertions(+)
 
---- a/drivers/md/dm-unstripe.c
-+++ b/drivers/md/dm-unstripe.c
-@@ -84,8 +84,8 @@ static int unstripe_ctr(struct dm_target
- 	}
- 	uc->physical_start = start;
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1205,6 +1205,7 @@ static void volume_control_quirks(struct
+ 		}
+ 		break;
+ 	case USB_ID(0x1bcf, 0x2283): /* NexiGo N930AF FHD Webcam */
++	case USB_ID(0x03f0, 0x654a): /* HP 320 FHD Webcam */
+ 		if (!strcmp(kctl->id.name, "Mic Capture Volume")) {
+ 			usb_audio_info(chip,
+ 				"set resolution quirk: cval->res = 16\n");
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2014,6 +2014,8 @@ struct usb_audio_quirk_flags_table {
  
--	uc->unstripe_offset = uc->unstripe * uc->chunk_size;
--	uc->unstripe_width = (uc->stripes - 1) * uc->chunk_size;
-+	uc->unstripe_offset = (sector_t)uc->unstripe * uc->chunk_size;
-+	uc->unstripe_width = (sector_t)(uc->stripes - 1) * uc->chunk_size;
- 	uc->chunk_shift = is_power_of_2(uc->chunk_size) ? fls(uc->chunk_size) - 1 : 0;
- 
- 	tmp_len = ti->len;
+ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	/* Device matches */
++	DEVICE_FLG(0x03f0, 0x654a, /* HP 320 FHD Webcam */
++		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x041e, 0x3000, /* Creative SB Extigy */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x041e, 0x4080, /* Creative Live Cam VF0610 */
 
 
