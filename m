@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0D72123CF;
-	Tue, 12 Nov 2024 10:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9222123CF;
+	Tue, 12 Nov 2024 10:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407214; cv=none; b=XJj0s/tZ409/z00OP7I2NyfAuUc1UIjPkKyswzDlQ0bwFo76VB5o0kpJ3iIW6xxTgOzkBvBUHw8MAS1UQzRez7AZs5HSKNPPd1vLUYSMhXLtbNb06Pr0EHwPwZE/PAjTe8ZKOHJWCmx2Imj/VZKVBdotPmthlq6SaYMBjoa0aSE=
+	t=1731407217; cv=none; b=EejdlbOWeWnq5Mwhxv5L3syngIDqzQ2rIBJKNVVfZY5p0kSig+WAWZP8VEVbEUmSf9HDazn/+nojwYHMb4QPCfFBOsN0Bhnm41EjDlnXYo3ehMDVjnPLWRURnOdMzCuWc+Z9EOm8Dnz8flIQz1FONRrOwu5D2H8lKAR/AZEc6iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407214; c=relaxed/simple;
-	bh=mhq2+K5hQUYBSwXVf+42Pl56mWz37v8xCvkVsDoQDaw=;
+	s=arc-20240116; t=1731407217; c=relaxed/simple;
+	bh=LVT9DY9np2SR81yPLYSBc0yZ2lsQtRbo6vg+ayk0w9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmbDdeFe2zfB0F6hnjzcOSIMXCCrOnOJaTTTOELHeCoRkef5ghKP53jS1m00M4tyt9sHLn0XShiSV8DFDnJqnMDt8Emi7ghtm+eablWcygDwL+kn43Dj1XdMrrGEB3Ztcp5/i32kv+W5HZoem9OkONWg52iqg5i++uglaVBM34A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4S643mQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jiZqiDDcCc3n9TITcB9cNt0HIVBntmBWHxrbW0NKlGcZyGFPnqd0oXdGjU1pl+XpHmLM6+AwnaAKwmKvsOGDkX+Ywc+0raf88IA+VOteRaQo7oQ8imQvQuYNxLlbXZM9lmAoxXavPjdu3Yq4oRDXKENekPUyH5L+EjrI+c9Z658=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DIL16wSA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4S643mQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3921C4CECD;
-	Tue, 12 Nov 2024 10:26:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DIL16wSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF039C4AF0B;
+	Tue, 12 Nov 2024 10:26:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407214;
-	bh=mhq2+K5hQUYBSwXVf+42Pl56mWz37v8xCvkVsDoQDaw=;
+	s=korg; t=1731407217;
+	bh=LVT9DY9np2SR81yPLYSBc0yZ2lsQtRbo6vg+ayk0w9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4S643mQ6eGGeMJlq4VRWGOhCZy0dox13JTfEMggYFOJ+Sdquv9kUbQozzIQO9hG+
-	 Khtik5b8Bb7Lrg+39v0GYspd11+PJ/QWMt8CfApd3Hnn9AzUQVEtFniP89DOaiyHsT
-	 voS/v2T2BcCMNggCNZeSC4vmHIeZb3A82K8mLVdE=
+	b=DIL16wSAApLuYtRnqseSyfSndgUEjq/I6ZLkgHvgf4haztiSLldNCA3Yj32dgqfNI
+	 C9cQYGRV8hA/Moe41GXTJrcB0ouZrJ+wDMlw9GThCjAtebUoYsFneBtlGnDZ0anLWB
+	 ArmxrnymHbwrrLWldNnJQsakvVKg5R1tUKI8ZIdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Abdelkareem Abdelsaamad <kareemem@amazon.com>
-Subject: [PATCH 5.15 58/76] net: do not delay dst_entries_add() in dst_release()
-Date: Tue, 12 Nov 2024 11:21:23 +0100
-Message-ID: <20241112101841.991304268@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 01/98] arm64: dts: rockchip: Fix rt5651 compatible value on rk3399-eaidk-610
+Date: Tue, 12 Nov 2024 11:20:16 +0100
+Message-ID: <20241112101844.323635425@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
-References: <20241112101839.777512218@linuxfoundation.org>
+In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
+References: <20241112101844.263449965@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,103 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit ac888d58869bb99753e7652be19a151df9ecb35d upstream.
+[ Upstream commit 2f39bba3b4f037d6c3c9174eed5befcef1c79abb ]
 
-dst_entries_add() uses per-cpu data that might be freed at netns
-dismantle from ip6_route_net_exit() calling dst_entries_destroy()
+There are no DT bindings and driver support for a "rockchip,rt5651"
+codec.  Replace "rockchip,rt5651" by "realtek,rt5651", which matches the
+"simple-audio-card,name" property in the "rt5651-sound" node.
 
-Before ip6_route_net_exit() can be called, we release all
-the dsts associated with this netns, via calls to dst_release(),
-which waits an rcu grace period before calling dst_destroy()
-
-dst_entries_add() use in dst_destroy() is racy, because
-dst_entries_destroy() could have been called already.
-
-Decrementing the number of dsts must happen sooner.
-
-Notes:
-
-1) in CONFIG_XFRM case, dst_destroy() can call
-   dst_release_immediate(child), this might also cause UAF
-   if the child does not have DST_NOCOUNT set.
-   IPSEC maintainers might take a look and see how to address this.
-
-2) There is also discussion about removing this count of dst,
-   which might happen in future kernels.
-
-Fixes: f88649721268 ("ipv4: fix dst race in sk_dst_get()")
-Closes: https://lore.kernel.org/lkml/CANn89iLCCGsP7SFn9HKpvnKu96Td4KD08xf7aGtiYgZnkjaL=w@mail.gmail.com/T/
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Xin Long <lucien.xin@gmail.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20241008143110.1064899-1-edumazet@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ resolved conflict due to bc9d3a9f2afc ("net: dst: Switch to rcuref_t
-  reference counting") is not in the tree ]
-Signed-off-by: Abdelkareem Abdelsaamad <kareemem@amazon.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 904f983256fdd24b ("arm64: dts: rockchip: Add dts for a rk3399 based board EAIDK-610")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/a9877b8b1bd0de279d2ec8294d5be14587203a82.1727358193.git.geert+renesas@glider.be
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dst.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/dst.c
-+++ b/net/core/dst.c
-@@ -108,9 +108,6 @@ struct dst_entry *dst_destroy(struct dst
- 		child = xdst->child;
- 	}
- #endif
--	if (!(dst->flags & DST_NOCOUNT))
--		dst_entries_add(dst->ops, -1);
--
- 	if (dst->ops->destroy)
- 		dst->ops->destroy(dst);
- 	dev_put(dst->dev);
-@@ -160,6 +157,12 @@ void dst_dev_put(struct dst_entry *dst)
- }
- EXPORT_SYMBOL(dst_dev_put);
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts b/arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts
+index d1f343345f674..1f156f5a8666a 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts
+@@ -541,7 +541,7 @@
+ 	status = "okay";
  
-+static void dst_count_dec(struct dst_entry *dst)
-+{
-+	if (!(dst->flags & DST_NOCOUNT))
-+		dst_entries_add(dst->ops, -1);
-+}
-+
- void dst_release(struct dst_entry *dst)
- {
- 	if (dst) {
-@@ -169,8 +172,10 @@ void dst_release(struct dst_entry *dst)
- 		if (WARN_ONCE(newrefcnt < 0, "dst_release underflow"))
- 			net_warn_ratelimited("%s: dst:%p refcnt:%d\n",
- 					     __func__, dst, newrefcnt);
--		if (!newrefcnt)
-+		if (!newrefcnt){
-+			dst_count_dec(dst);
- 			call_rcu(&dst->rcu_head, dst_destroy_rcu);
-+		}
- 	}
- }
- EXPORT_SYMBOL(dst_release);
-@@ -184,8 +189,10 @@ void dst_release_immediate(struct dst_en
- 		if (WARN_ONCE(newrefcnt < 0, "dst_release_immediate underflow"))
- 			net_warn_ratelimited("%s: dst:%p refcnt:%d\n",
- 					     __func__, dst, newrefcnt);
--		if (!newrefcnt)
-+		if (!newrefcnt){
-+			dst_count_dec(dst);
- 			dst_destroy(dst);
-+		}
- 	}
- }
- EXPORT_SYMBOL(dst_release_immediate);
+ 	rt5651: audio-codec@1a {
+-		compatible = "rockchip,rt5651";
++		compatible = "realtek,rt5651";
+ 		reg = <0x1a>;
+ 		clocks = <&cru SCLK_I2S_8CH_OUT>;
+ 		clock-names = "mclk";
+-- 
+2.43.0
+
 
 
