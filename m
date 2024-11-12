@@ -1,242 +1,151 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DB52185B9
-	for <patches@lists.linux.dev>; Tue, 12 Nov 2024 22:25:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.19
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731450335; cv=fail; b=O1Acf0fOUCFqZDfjCa25I1l/yKIy5gxo2kNxHXfHKqEnqC6C7VgT8LGEhxNrsMFEKoNiJgSzlFhcTynHAzN+yljH99fxhKD49Oev+baFOIg8igU0hikVATPWo0qJ6JT8szRZ+2ct+YSZ7ecuXGKOpn7ShqI0Q+Ag5n/dLK7u8po=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731450335; c=relaxed/simple;
-	bh=dDio8vbbhaTuzUkdxJklRLF+UzVyboSUwbU3YYj9SkE=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=cEHpG5q9Kjle4o2i3J1XirUB1OALLdS4ywCySTZtPu/UbfT8G/2nu45w+l67ixgyf2Xee8Nof3JsFopH53InzU4gaIFyaa0HQKhSBs2j3wOl52lllQbrDbf5mcfCkBwDC7nvrsqb1bxgHfIDkQizG5IfTIZlsIuZoaDkaRY80Fs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=U1EqC7bY; arc=fail smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A961531C4
+	for <patches@lists.linux.dev>; Tue, 12 Nov 2024 23:04:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1731452670; cv=none; b=hPbXMeMHnSPPfpOp2crOaycTfuWUDiKTHy1VsyiiCw3jb3zb/QgmVcv7l8P8QbI1w7kT9yTjKumn72Vt2CZj8pcXuDysEo8AWuAvuQj6xpYwof35EBmMt9u2DPCk33KCPak/I3jiMo2atSck1tuIAsIV7KGRNTADHiWa7TPqG3I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1731452670; c=relaxed/simple;
+	bh=M8QZHdkR0C/TG//Jvt6IIv8ZeuA/WUQAchDPKwDVZpI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DCajT3F6JaFZz/YqgMlnAxp8nmsvufCL436Hbtjy9wIMMcd8s3JGlac1Sy1qrth8BUpTZNoBIQgr8Hu/XBcl3HgGyVIXJ2aWuKxKoEUQdWs2yelZci35lvoeUiU7Y8hN/ZJPHvFthJ/1ktuScsqvuVBVThhI4bo2c4vRmS3dB50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GjVAb29s; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="U1EqC7bY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1731450333; x=1762986333;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=dDio8vbbhaTuzUkdxJklRLF+UzVyboSUwbU3YYj9SkE=;
-  b=U1EqC7bYIu7TGr2cFJ3GKfEQuk96hssZri6vbpHEa7zwpMe7FXpc40cN
-   8tdTe3wznKnn3DyDnqziBp79YKLm/TqlIPd2IRHV3DL/5MZLLgKmd0DA6
-   AJpQEbWRVRF7sdMMQjiDXSlmB3NZ6xm7CLGlNwgsg3VdTJRTo3tGtX92S
-   FutiC9iRL8isUjC1mHXUJ02x1iHIR8or0CSWvqeVpD+Yt5mr+JD2TXQy4
-   tZGju5AHinNRazETG8Fjbda08sr7v1ApzbNXd55eOK+vP+YS3fhhxyShi
-   6dwSC9/UL9k/N7yX5NBY0+GdgH5iDaHtEN5vOmo+xsdRjSvzfpJ4nC44p
-   A==;
-X-CSE-ConnectionGUID: kpHyi1xRRGeiM91gNU7dmA==
-X-CSE-MsgGUID: /BU/oqRFQ/eEQ0hHWtdr5w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11254"; a="30717887"
-X-IronPort-AV: E=Sophos;i="6.12,149,1728975600"; 
-   d="scan'208";a="30717887"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2024 14:25:32 -0800
-X-CSE-ConnectionGUID: 8W5naNK1T8qutqyj2xSc6g==
-X-CSE-MsgGUID: hK9tGQxuRgOi06DsFBeivA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,149,1728975600"; 
-   d="scan'208";a="87416852"
-Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
-  by fmviesa007.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 12 Nov 2024 14:25:26 -0800
-Received: from fmsmsx602.amr.corp.intel.com (10.18.126.82) by
- fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Tue, 12 Nov 2024 14:25:23 -0800
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Tue, 12 Nov 2024 14:25:23 -0800
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.175)
- by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 12 Nov 2024 14:25:22 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pz5s8Bth4uDIv/9y3Q4X2lpwdltmscDwYfGDv7FbPgJbaIBoHu03iEaA5GXzHFn3rN4/EW2BqU2hqT6Z6jEIN2UA2ba9gYxYxILj2rmKt3esg/V+C5CXHlXSJF7ZG71Uk7TcgohigbyMi0+jRtg6+rTyAqPKgbvtaF6Y3AVBX2Q5ElzHbK9mQ6FzRjxSyKagttM9XgP96D3k+l0E6L7p3ESfahAz4CQh22rNoQL2kVLxOAfITycBw5qDiN68kklK3Tpu81prgrD9lvUKWAhVCMSn7N5PT6LkZY0VM6hMF/AlPVkvdirCtjyRRgD9lmn5Zo4o8c9T2HN/9NYWWfjhpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=v81zssh42pUTrmacoxKZt+DoS7qdw+un0VI6vZuNo/U=;
- b=vUU96N7m1403tHKBE+RZgw1SDQmuRpRrpDOtkigKOIOdAK6duipT9+uLseLq7+IxS7IKFXnLxatVOvkRUWzcKJVIldVy8lWP0YlEPaev54npDiXE/FLsK3MOodPPbZ4LLnE1dyQp99q9WivfngCOBXLIl2O7JMEJfesKpHCRGNbOxeosgkXM30pGIz2Q4U1Wc+hbFL/UCIf5jvgeQpqUfbSldw2vDhY9J3CR5Ljkur0Ip4pIsNXbk68vLsCFwWZUzJ/VImy2+1Dyf4c7eEeIeTxBGLbJnxdRdGqa1ZDjRbVGNQoi4qqE4Ehmst3bAPZQnHN3qNp+0VHhEG+YktJvkg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by DM4PR11MB7351.namprd11.prod.outlook.com (2603:10b6:8:104::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.28; Tue, 12 Nov
- 2024 22:25:20 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf%7]) with mapi id 15.20.8137.027; Tue, 12 Nov 2024
- 22:25:20 +0000
-Message-ID: <6e614ae5-b7ee-44bf-8d33-93bd9a92aae2@intel.com>
-Date: Tue, 12 Nov 2024 14:25:18 -0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 7/7] x86/resctrl: Document the new "mba_MBps_event"
- file
-To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>, "Peter
- Newman" <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>, Shuah
- Khan <skhan@linuxfoundation.org>, <x86@kernel.org>
-CC: James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	<linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-	<patches@lists.linux.dev>
-References: <20241029172832.93963-1-tony.luck@intel.com>
- <20241029172832.93963-8-tony.luck@intel.com>
-Content-Language: en-US
-From: Reinette Chatre <reinette.chatre@intel.com>
-In-Reply-To: <20241029172832.93963-8-tony.luck@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4P223CA0023.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:303:80::28) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GjVAb29s"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-20ca03687fdso68145ad.0
+        for <patches@lists.linux.dev>; Tue, 12 Nov 2024 15:04:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1731452668; x=1732057468; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=oGcmcooZ3eXi2btPtJV6KWC5Ib7k9JOuUxsYyFpp28w=;
+        b=GjVAb29s3VnQNyxgjuGqDnLAYUNKdMWWJRx8PrDATYUDFqDP5p4W3nhPBDvXnS5eGW
+         KteY6VIi8fnhn8i2NpLKj8ySGnJKG5o+Er8dOEqt+cK6YXCQ1pL1kSgigoKS76sZa3BJ
+         Byku5K0x01ONrHrAC5Pg+Kq/Fu1btYTkmaggSufh/0RQnCjf9XaMPIj54/SBnVYREtdt
+         R9oykDnkgd6lQGUOf9Z3n8uXwO/eMJc5R5/G5DKudwaP6kJBIgoYSyMbJVM9SqhwsLkf
+         /3BXHKWTRdiSBph2ftKEJY3fw/9m3RarxH+LvVTdUN1UfCgDS3UrulJr+iCbHRYnDmkM
+         ExfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731452668; x=1732057468;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oGcmcooZ3eXi2btPtJV6KWC5Ib7k9JOuUxsYyFpp28w=;
+        b=qjWR+Nmx7KOt5QOYTVPTXWRZgz3ODlSzgxaeauQoPXR4Lvmda7QmVdgXiZh0zZXT4W
+         Cxb9mD3Fi2Cm10ga0tlp8O+McXdbm6uguLgJzzjPHOVwsD8o19WNxj4AMlSK5ERwf9lZ
+         Ix12JKWwyjHVeXDjNPL/klL0TTNT+DjVU+QtSn0C9TCGXrmcOQu0kjqJzpq0EtluTUCP
+         kDcTVyU3fTwbRCiPiv0NsAalYGEzIeXYa1W9Ex1Fv6rY3q6+bo0VtyWW5sw0+grXEwum
+         HZV/+dUPkzcW/ALMB1gFN3d4TvqDML/nySR7T0Sqm4PiYjLtWD+dgKHLbcBGESP1wnOJ
+         xKwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUJcFf4b4zohMoTiKrMMoEzwhC6fw7EU24v1r84CFyvs94R28iPWCfPj/NtVNg0DUPQZ8W6s+4I@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy7E1YKqtuTsvparNZ+En/jnB6siV8Sc1MU7YV8yPblz16IgZOP
+	sQcpi8Y819FDUHoyp1MhewdlBEpBOPRebiUrBfy0DYYLVTG0N+JyvvhAfuwKXg==
+X-Gm-Gg: ASbGncvTp+SnTM7g2YEWiy+KNnXQ2h8AYHqU0UQ1lS65kfE7YToALgnXYxQSlUfRHhE
+	8P9LOfZ+sunjlo7P1uNM6dMftFeu1HiGjC8VpbFFaK+bJgLy+Ebl9QR8qA5wu36zPAT1ifXcU14
+	3QuekWcjF5WM+Y7nuBeJhW1lxxUqnWa3ekU560IDpLX4Gi2rqZaBVD8fJLCtZfxjTMdSSodJzOJ
+	3XyKjiKij6ocN2lCnL0fDG8Toqxn0YrHL93o8iy
+X-Google-Smtp-Source: AGHT+IHOy09+IsPJGVNT6MLd6Ag2vBUkiSWhTo9lb9O6NU0vAC5+WyRM3S3Z/m5iZlqrTpgtb91ezw==
+X-Received: by 2002:a17:903:192:b0:20c:e8df:2500 with SMTP id d9443c01a7336-211b6ffbb98mr262825ad.3.1731452667677;
+        Tue, 12 Nov 2024 15:04:27 -0800 (PST)
+Received: from google.com ([2620:15c:2d3:205:d954:735:c86e:9b56])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7f41f5ea0d5sm11198004a12.47.2024.11.12.15.04.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Nov 2024 15:04:27 -0800 (PST)
+Date: Tue, 12 Nov 2024 15:04:22 -0800
+From: Peter Collingbourne <pcc@google.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Qun-Wei Lin <qun-wei.lin@mediatek.com>,
+	David Rientjes <rientjes@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: Re: [PATCH 5.4 462/462] mm: krealloc: Fix MTE false alarm in
+ __do_krealloc
+Message-ID: <ZzPe9ossmfQP_s77@google.com>
+References: <20241106120331.497003148@linuxfoundation.org>
+ <20241106120342.916487840@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|DM4PR11MB7351:EE_
-X-MS-Office365-Filtering-Correlation-Id: bcca9b26-3dab-4a1e-1664-08dd0368e488
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?bW5ESGQ1N0FxYnNJMDJZV2JtS2tOMVdHNERKck1hVjNiK3NHNDN0bnVBZkNT?=
- =?utf-8?B?RHBkakp2MDVrOTdrK09hSWJKczdxMjI5R3VVaHZXMW55Q2RrVFRJNm9SQUJM?=
- =?utf-8?B?TkVVZTlITVlLNWRSZWlCUjdGZHlwMUpvQ1ZoT0pHUW1HMlhTUFNyQVRmMXRv?=
- =?utf-8?B?RW51NWhobkhMMGxVSUVSMW9GNVdhVEJCUXNiV3V6Zk1IMmhXN3JqSnpHQ2Zx?=
- =?utf-8?B?SWJnSjV2cUI2aDNPVXZ4eTRQZjcxN0srOWVXNFVYclpEYzZiRlNFS0o3N3lu?=
- =?utf-8?B?QlRpMll2SzFKTE0wT3FrRzB4Q0lMcFJmWGpxUHRTU04xQU8vV2RXVTdJOUZU?=
- =?utf-8?B?ZyswaDRDbnc1R1pqWUtmVUxFbHY5dTNUYnA2cnpvMjRLbWR5SnkyaDhJZEpa?=
- =?utf-8?B?TmVJTTc2Nm9VdFpCaUk3cVk5d2dDRVhVWDBwaXphQ2pJR3E5SHQ3RlFsd0dr?=
- =?utf-8?B?Tk50UGVqSnhOaEo5dWtFY1Y1Ri9Zc2MyM3ozTTNOK3FxNkczUm90aFNXc1NS?=
- =?utf-8?B?bTFuTklTeXNtRmlwNlRUbllLWFk5MzFYbHQ2dEhKeE5EWDYyQmFMTFhtRmJ0?=
- =?utf-8?B?N3R6anhsU3kvbERiYStXQ1dDbTgzeTVYdTMwaGUya2JpN2VFM1BVaGpsTE5p?=
- =?utf-8?B?VVIyYTFlL2FPbDhKMEp0eldJbXoveldpbTUwaXQxVDkvb3cvVE1ZSE5ra0Jq?=
- =?utf-8?B?T2JoRWxzZlEweFdPSFRQOVIxYkloMWxHdjVTNTROYlA5ekJOaHlTMUVyOHI0?=
- =?utf-8?B?d1hpR1U2akJIOWhTTWVyLzlwMU0yblQvRHZZMVpkSkpWYW1COE9jMEhDWnBk?=
- =?utf-8?B?RTFYVDYvOWkrR0x4d1VWbWt5Ty9IV1RmOXhXN0JWQU5MNk1rdzR5NHJkU1N4?=
- =?utf-8?B?K3o2eEJRWDBybFVIRWl2STkwQ0Q2a2dOdnNoWmVFS21jbFNnd3RNeW1ENUdW?=
- =?utf-8?B?WW44eEQzSm82TFFNSG1IQ1NtNzdBZERVNUlRM05CeE84YTN4cHJMWmJITGgy?=
- =?utf-8?B?anVaWnJkcERjUzlkNlBjd1V6dUZieEV0bVdqYzI1NFNRNEpSRU91N0o0VTh2?=
- =?utf-8?B?a2xmL1pTT1FxLzdxelY5R25EZTc1TThZUVdnaWVyYXdMQ2ZHR0o1dmdrNGtV?=
- =?utf-8?B?RlNjc3I2MWVZZDRiT3JPNVExd0cwekFwQTdOTk11b3lzNEdaYU4xaVJrWS9l?=
- =?utf-8?B?bE5MNHk0UDF2a2hMTno1RkpNSy9kVGtrLzdXU3JKUFByMlhXRHV1R29sZnVz?=
- =?utf-8?B?dUtCbWd1STdpTFBZNWR2S2txaGI4dE1wYmJCUXRPNWM3S2Z6VWxBUnoyUml3?=
- =?utf-8?B?ZmNxVldmZXJodk43dWhOWGViZVEvcDVtOVp3VzJ6ekN5TnQ2cExBWGh0RnZ2?=
- =?utf-8?B?Vy90bXFKdnkyQ1ZzOE4wNGxkVG13QjA2dDc3MHhUUkxDTTU2MUhOWGg4aGNE?=
- =?utf-8?B?K3lhS1hnRVBGMUhINlF5WWRPZXJUQVJ5VnhKVlNPbDB6cUFkSTJRaGdJR0Uw?=
- =?utf-8?B?c04waGZwMWFhekVFa3JpSGlQV3dPa0FoQ1FmcVhsVjA5cWZ6ZnRHdndhVW9C?=
- =?utf-8?B?ZDR2b1A3ZXVNZXhYSEQ0aURHOXk1MzcwemtjczJNdXAzV2FkZEJ1aE1MeU5F?=
- =?utf-8?B?a0ZxT0VJdVo1RS9DYzlUN2pic29wbHF2djBxMVkzSHc2WlFtbEZUY0ZrWi9r?=
- =?utf-8?B?L2phbTFiSVc5cmFlK1lMNjA3WHRGTG9BMjJJTnREeWVvZ1VJaVo1N3hVNCsz?=
- =?utf-8?Q?eke87mjN+L7s1hpCM3BhxgeaiC6IFp1HWSpt0ES?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZUJpUjQ2Z282VmxLSDRFTXB6UHdBZG1mNE5KQnFCQ3ZiNU54a2N5WUlrejJj?=
- =?utf-8?B?bG56czJHK3dXZ05MVE9SSjNBSGYwVFZITFJJbVVIZmNvbnhmb3VEM2hSS2N1?=
- =?utf-8?B?ZTI4VW55QXpPMnRLNy9IQWZ4RzBTVjJ1MDN4NXhnUCtPckxERXpEOENnMGl5?=
- =?utf-8?B?VkJOdmFUaUprcXZQMHR0ektjSHVDUk9FUlhGTzdTVDRwck8zK3M1MU5ybysv?=
- =?utf-8?B?MFF3RUxFYStoNnA4S25CbWFDL0g2NlFMM3Q0Q3YyTmZsUVZrVmlWU1pmdlc5?=
- =?utf-8?B?YXkwNkQ5ek9RanhHOGxVMDRnQk1vNVBRSW1oTisvdXpmVFIrWWZIbEs2bkRR?=
- =?utf-8?B?dEgvOHBmUUdEQXVPNzVrZXFZU0pFbnYvY2NYUnF3TG8yMDZwVzhtN1ZTK2lP?=
- =?utf-8?B?cko1UlZYQ0dYRHJHbGR0dDF4bGZZSFFMSFNkNDRsYXpXcnV0b1plSkNDMG9P?=
- =?utf-8?B?V2M5Uk5BaWV6R2owL2FvNldTYWg2SHhwTVZaZ0J5eDlNcE5RS0lpVUFveU43?=
- =?utf-8?B?ZmVRa0FQb2o3M1FEc2g5MGZYTUwzL2s0TnZBb0c3Vk0ySSt6eEd6cURPd3gr?=
- =?utf-8?B?UkZrQ0xHdEpsb0luR3Foc1JzT3hvOFdkWUtwMmNzUGtveTN1aVRrYUlOTWVx?=
- =?utf-8?B?WlNaakh5aFZGSVA2cy8vS1NSSExkbjYrVzZBS29HdlFJcXlNUHJDbU5wT1JO?=
- =?utf-8?B?YkQwM2M0STdXWXZxTXJ2WUxzZkJ4WGtjbTNZMFk2YUJ2NWd1VlNXOHRPanQ2?=
- =?utf-8?B?U3RmVDBnK2xtTEtEVmVXUmJnemFiNmFJMkc0SDNZNEtGQTFMcnFtMXlWUFZh?=
- =?utf-8?B?WUR3c2ZFRTZwV3M0dG4wQlJpR0dubVhJR21YT3BSL1UwTEZiZUJJVlBVRmZW?=
- =?utf-8?B?TldsOFUveDdGMm5OYU1ySEVuVFNkZ0d5dldzeFEzejdpalBaMmNBdWlkM00w?=
- =?utf-8?B?M3hRYVBWR3U5eEwvbFZTMjBHaklna01mOXdWUFpnWVAzVVM3dFlFRTV6UEI1?=
- =?utf-8?B?UXJFZGhWbHZkc3VYYTF5WlNEUjNZdkRsQ29nWUluSnY5YlpjWmY3YkEwOXFK?=
- =?utf-8?B?dDJFTzhTVGhIa0huNGlZYjdlcjF1ZmYwY1lWUGZYYncrT2lPWVRTKzRMYjZS?=
- =?utf-8?B?Q2ZyWkVHdjNjK3NoZTBpRm5oUUxmUmlHK2N4eFUvZEFhT2NqcE5vQk85NmdZ?=
- =?utf-8?B?UzRZQmw2RXdaVnl4YkhYUDNGOTBSczBkNUZobG00RTlHNkFaQ0FuRTg4Lzlt?=
- =?utf-8?B?T0RJa092UGRBeDZ5aDdKMmYvbnpVSkZueEppaktIaTVMcjZ6OTRMYkI0bVVY?=
- =?utf-8?B?SERwaDJubFhqSDRuOW5BaHFGWjh5WUVxc3JYeWNKbEdrMmtyVUpJb1p6WmlU?=
- =?utf-8?B?T2FQSFJwVnBLTEw4WmltZloxYjlLVkJYS3YzZDRFU1FPWGxuUTRXaTVBRmwy?=
- =?utf-8?B?a2ZDUmY0Nmwxb0JIT2JPL3RIUWs4Tnl2cE82ZVQwNmpuTVF6SkdJRGtiODJn?=
- =?utf-8?B?OXRvZVM5YTNnWXM2MWx4TjhobUdKaTgrb3B5bGpDQXR5V1A0bm5CVVJnU2E5?=
- =?utf-8?B?MFg5MURRQzRWZXFtWDJQM3ZsY0JrUncrQXUyaFRYYlpiMmI2dzVZT1pSbVZK?=
- =?utf-8?B?U2ZBN0MvL0NxZVRNQ1BUL1Bzb0dLc080ZTlvdGV3TVlnazVBVmVwSktrbFM5?=
- =?utf-8?B?ZkNMeWptbk5PSVNWQk1uK0IyMEM3ZndsblNNTDZFV1IySVJkbXEyd01odThU?=
- =?utf-8?B?K1J6ckYxaDJ3NlQzbGxNVHhPcFNlcUFvZGZXUUNCYWo0clNYbWxLYXE3NFZP?=
- =?utf-8?B?M2U2VVhsVG9aYTUrTlEyblhla3NaS1phUzNvNzhzUE5oS3duK0VvMzFEandm?=
- =?utf-8?B?WHMvR2pESGJ0akdTdEZoYTVOQis4WHkzUWtOUkFId2ZscXhtSmV3M2pOUlJk?=
- =?utf-8?B?WkJuNG1iOTMzR3dvSlo2SXY4Y3lDR1hmK1ZsUGlpUUQ2UmQyQmx0VlRsU0Mv?=
- =?utf-8?B?VGdoVnhPZnk3VmJSOU5ueFRqZXhOekR6ZWgwUkhFTi9WYzBKaE5meitXb3RC?=
- =?utf-8?B?S0NFS1RoRituVzU1bnprTFQyVmFLdFdzSVBhRktsODMrUFEzMkg2UzhIYkhO?=
- =?utf-8?B?WHVMQWxHckFGUzFsYlRMSFZaVXJXQWIxWHBOS3dScldlUnhWc2wxQ3p2YnN6?=
- =?utf-8?B?Umc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: bcca9b26-3dab-4a1e-1664-08dd0368e488
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2024 22:25:20.3305
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: FhfMArvlEPtl1P31aym5+0itPSTz1mq/fYeXtd2MCFkZeD++3KdowBiGwJB2aqRX0pwX59s40KpKYqsaJHC7NyxL08IkfIfXuFXukE6HuJw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB7351
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241106120342.916487840@linuxfoundation.org>
 
-Hi Tony,
-
-On 10/29/24 10:28 AM, Tony Luck wrote:
-> New read/write file to show/set the memory bandwidth event used
-> to control bandwidth used by each ctrl_mon group.
-
-I expected at least a verb to summarize what this patch does.
-
+On Wed, Nov 06, 2024 at 01:05:55PM +0100, Greg Kroah-Hartman wrote:
+> 5.4-stable review patch.  If anyone has any objections, please let me know.
 > 
-> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ------------------
+> 
+> From: Qun-Wei Lin <qun-wei.lin@mediatek.com>
+> 
+> commit 704573851b51808b45dae2d62059d1d8189138a2 upstream.
+> 
+> This patch addresses an issue introduced by commit 1a83a716ec233 ("mm:
+> krealloc: consider spare memory for __GFP_ZERO") which causes MTE
+> (Memory Tagging Extension) to falsely report a slab-out-of-bounds error.
+> 
+> The problem occurs when zeroing out spare memory in __do_krealloc. The
+> original code only considered software-based KASAN and did not account
+> for MTE. It does not reset the KASAN tag before calling memset, leading
+> to a mismatch between the pointer tag and the memory tag, resulting
+> in a false positive.
+> 
+> Example of the error:
+> ==================================================================
+> swapper/0: BUG: KASAN: slab-out-of-bounds in __memset+0x84/0x188
+> swapper/0: Write at addr f4ffff8005f0fdf0 by task swapper/0/1
+> swapper/0: Pointer tag: [f4], memory tag: [fe]
+> swapper/0:
+> swapper/0: CPU: 4 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.
+> swapper/0: Hardware name: MT6991(ENG) (DT)
+> swapper/0: Call trace:
+> swapper/0:  dump_backtrace+0xfc/0x17c
+> swapper/0:  show_stack+0x18/0x28
+> swapper/0:  dump_stack_lvl+0x40/0xa0
+> swapper/0:  print_report+0x1b8/0x71c
+> swapper/0:  kasan_report+0xec/0x14c
+> swapper/0:  __do_kernel_fault+0x60/0x29c
+> swapper/0:  do_bad_area+0x30/0xdc
+> swapper/0:  do_tag_check_fault+0x20/0x34
+> swapper/0:  do_mem_abort+0x58/0x104
+> swapper/0:  el1_abort+0x3c/0x5c
+> swapper/0:  el1h_64_sync_handler+0x80/0xcc
+> swapper/0:  el1h_64_sync+0x68/0x6c
+> swapper/0:  __memset+0x84/0x188
+> swapper/0:  btf_populate_kfunc_set+0x280/0x3d8
+> swapper/0:  __register_btf_kfunc_id_set+0x43c/0x468
+> swapper/0:  register_btf_kfunc_id_set+0x48/0x60
+> swapper/0:  register_nf_nat_bpf+0x1c/0x40
+> swapper/0:  nf_nat_init+0xc0/0x128
+> swapper/0:  do_one_initcall+0x184/0x464
+> swapper/0:  do_initcall_level+0xdc/0x1b0
+> swapper/0:  do_initcalls+0x70/0xc0
+> swapper/0:  do_basic_setup+0x1c/0x28
+> swapper/0:  kernel_init_freeable+0x144/0x1b8
+> swapper/0:  kernel_init+0x20/0x1a8
+> swapper/0:  ret_from_fork+0x10/0x20
+> ==================================================================
+> 
+> Fixes: 1a83a716ec233 ("mm: krealloc: consider spare memory for __GFP_ZERO")
+> Signed-off-by: Qun-Wei Lin <qun-wei.lin@mediatek.com>
+> Acked-by: David Rientjes <rientjes@google.com>
+> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 > ---
->  Documentation/arch/x86/resctrl.rst | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
-> index a824affd741d..d86081e76bbf 100644
-> --- a/Documentation/arch/x86/resctrl.rst
-> +++ b/Documentation/arch/x86/resctrl.rst
-> @@ -384,6 +384,16 @@ When monitoring is enabled all MON groups will also contain:
->  	Available only with debug option. The identifier used by hardware
->  	for the monitor group. On x86 this is the RMID.
->  
-> +When the "mba_MBps" mount option is used all CTRL_MON groups will also contain:
-> +
-> +"mba_MBps_event":
-> +	Reading this file shows which memory bandwidth event is used
-> +	as input to a software feedback loop to keep memory bandwidth
+>  mm/slab_common.c |    2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Since there is only one "software feedback loop" it could be specific:
+Hi Greg,
 
-	" ... input to the software feedback loop that keeps memory bandwidth ..."
+Can this be picked up for the other stable trees as well please? The
+patch that caused MTE false positives is in linux-5.10.y, linux-5.15.y,
+linux-6.1.y and linux-6.6.y but this fix is not. I checked that it
+applies cleanly to all of them.
 
-> +	below the value specified in the schemata file. Writing the
-> +	name of one of the supported memory bandwidth events found in
-> +	/sys/fs/resctrl/info/L3_MON/monfeatures will change the input
-
-"monfeatures" -> "mon_features"
-"will change the input event" -> "changes the input event"
-
-(changes to document expectations wrt timing to be included)
-
-> +	event.
-> +
->  Resource allocation rules
->  -------------------------
->  
-
-Reinette
+Peter
