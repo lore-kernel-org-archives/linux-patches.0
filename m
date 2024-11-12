@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F45522EE46;
-	Tue, 12 Nov 2024 10:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF1720EA2D;
+	Tue, 12 Nov 2024 10:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407980; cv=none; b=MYqDtXVwSlHGWCJHtEAGwQjUCElvn93MWHISEb4aBpCPNoM42HcKFnA/mEacI0avFhRZ/SJ1BpE8dIAYzHH57AnUYJapKGKXcTvzdANZGfvld7FiezlRTplHEhWtT/pb+zoVLTfytkDgWeLP5Fgb4LbuZ66Lj6zKKouk6jfkKZE=
+	t=1731407983; cv=none; b=s6Uk+25sg5D56a1tyEbA0ygpxBOO/kq8p2Rb2csvMbFfYCc7IHmroNe1jHVO9fkSBPZX9793UAEP5CRzmr3R+/rI05O1z3xAjLov/VRG/ljMXNMGFqBkL2wujWM3qjDhhGayFgNnS3Psj/1mhxr1qxUIkCS/X/e91qBRWDVT8OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407980; c=relaxed/simple;
-	bh=q39QOojSRBpmV+evWW3Wb9Od/vbzXLZGbXxbVQDsMeM=;
+	s=arc-20240116; t=1731407983; c=relaxed/simple;
+	bh=vaNo/HVNu7U+7XY/txhmOYPBxCfNObKFFPmlkn/nlWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rg9hZK76/QiMqyMbKKrnpWumBaAQqXkLu57CBaHwbzGWnZldKbXFRBIgtNA9RkFngfY85CvOc7eVjx044+V8GYXJAyWI8BIUGH2J/TGgLuaDdK+2tYJH0z8W7X1j/tuY0wzyewhpmDILtsXiORJtvNJvqwwJeYmZWcAEjzWgBUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9gW3y43; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EWUvwgTc3SgzD3zH3Ksub+RBeg7hIuii/77pi5WZnUfSPF5aoGap7ZXNznByL9gzbyjJxASDzid3nmVwImh6QvCVbivjhcpSBoDHd0uPR2Xe4X1vyysADvksCCfV1C//MU5r9F6DRb9aEZuxmm75mkMOAgYbivPjCJOS4OtxfgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YiF0G881; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9gW3y43"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3186C4CECD;
-	Tue, 12 Nov 2024 10:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YiF0G881"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50E8C4CEDE;
+	Tue, 12 Nov 2024 10:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407980;
-	bh=q39QOojSRBpmV+evWW3Wb9Od/vbzXLZGbXxbVQDsMeM=;
+	s=korg; t=1731407983;
+	bh=vaNo/HVNu7U+7XY/txhmOYPBxCfNObKFFPmlkn/nlWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y9gW3y43UZyiMSQC794kcAzBxzC8hTM1IuWApNrwGKHBFB4uMisoQN9fg6D1mpvcE
-	 92DFdG8w0v1Y+1axP+akQnbdXgVpJFwkcwMJZLJZ7bddbX3YMRQA0iNhxsSPB3FVYN
-	 IK+S6rxlsT7efRW4VYavDExim3n9M9S6D+xiHthc=
+	b=YiF0G881uraQdy795SX4/9+IdsQ6rQyAtLYXYtcu46d01FsUrOX0Ypyyy6mZQmDFe
+	 2SdYfgkChQSc6ajgOPMvf5m5uLiwy8LyW00wVXE2u6GZ4HXGKz8PSPjsSLdedWLQlI
+	 AvEVoLky2khCTH8HOKTPHimoYBCD34972itkJ85c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Fabio Estevam <festevam@gmail.com>,
+	Isaac Scott <isaac.scott@ideasonboard.com>,
+	Marek Vasut <marex@denx.de>,
+	Yannic Moog <y.moog@phytec.de>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 022/184] arm64: dts: imx8mp: correct sdhc ipg clk
-Date: Tue, 12 Nov 2024 11:19:40 +0100
-Message-ID: <20241112101901.719570751@linuxfoundation.org>
+Subject: [PATCH 6.11 023/184] arm64: dts: imx8mp-phyboard-pollux: Set Video PLL1 frequency to 506.8 MHz
+Date: Tue, 12 Nov 2024 11:19:41 +0100
+Message-ID: <20241112101901.757523594@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -52,53 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit eab6ba2aa3bbaf598a66e31f709bf84b7bb7dc8a ]
+[ Upstream commit 4fbb73416b10778adfd2c1319e9c5829780d8535 ]
 
-The ipg clk for sdhc sources from IPG_CLK_ROOT per i.MX 8M Plus
-Applications Processor Reference Manual, Table 5-2. System Clocks.
+The LVDS panel on this device uses 72.4 MHz pixel clock, set IMX8MP_VIDEO_PLL1
+to 72.4 * 7 = 506.8 MHz so the LDB serializer and LCDIFv3 scanout engine can
+reach accurate pixel clock of exactly 72.4 MHz.
 
-Fixes: 6d9b8d20431f ("arm64: dts: freescale: Add i.MX8MP dtsi support")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Without this patch, the Video PLL1 frequency is the default set in imx8mp.dtsi
+which is 1039.5 MHz, which divides down to inaccurate pixel clock of 74.25 MHz
+which works for this particular panel by sheer chance.
+
+Stop taking that chance and set correct accurate pixel clock frequency instead.
+
+Fixes: 326d86e197fc ("arm64: dts: imx8mp-phyboard-pollux-rdk: add etml panel support")
+Reported-by: Isaac Scott <isaac.scott@ideasonboard.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Yannic Moog <y.moog@phytec.de>
+Tested-by: Yannic Moog <y.moog@phytec.de>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../dts/freescale/imx8mp-phyboard-pollux-rdk.dts     | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-index 603dfe80216f8..6113ea3a284ce 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-@@ -1261,7 +1261,7 @@
- 				compatible = "fsl,imx8mp-usdhc", "fsl,imx8mm-usdhc", "fsl,imx7d-usdhc";
- 				reg = <0x30b40000 0x10000>;
- 				interrupts = <GIC_SPI 22 IRQ_TYPE_LEVEL_HIGH>;
--				clocks = <&clk IMX8MP_CLK_DUMMY>,
-+				clocks = <&clk IMX8MP_CLK_IPG_ROOT>,
- 					 <&clk IMX8MP_CLK_NAND_USDHC_BUS>,
- 					 <&clk IMX8MP_CLK_USDHC1_ROOT>;
- 				clock-names = "ipg", "ahb", "per";
-@@ -1275,7 +1275,7 @@
- 				compatible = "fsl,imx8mp-usdhc", "fsl,imx8mm-usdhc", "fsl,imx7d-usdhc";
- 				reg = <0x30b50000 0x10000>;
- 				interrupts = <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
--				clocks = <&clk IMX8MP_CLK_DUMMY>,
-+				clocks = <&clk IMX8MP_CLK_IPG_ROOT>,
- 					 <&clk IMX8MP_CLK_NAND_USDHC_BUS>,
- 					 <&clk IMX8MP_CLK_USDHC2_ROOT>;
- 				clock-names = "ipg", "ahb", "per";
-@@ -1289,7 +1289,7 @@
- 				compatible = "fsl,imx8mp-usdhc", "fsl,imx8mm-usdhc", "fsl,imx7d-usdhc";
- 				reg = <0x30b60000 0x10000>;
- 				interrupts = <GIC_SPI 24 IRQ_TYPE_LEVEL_HIGH>;
--				clocks = <&clk IMX8MP_CLK_DUMMY>,
-+				clocks = <&clk IMX8MP_CLK_IPG_ROOT>,
- 					 <&clk IMX8MP_CLK_NAND_USDHC_BUS>,
- 					 <&clk IMX8MP_CLK_USDHC3_ROOT>;
- 				clock-names = "ipg", "ahb", "per";
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-phyboard-pollux-rdk.dts b/arch/arm64/boot/dts/freescale/imx8mp-phyboard-pollux-rdk.dts
+index 00a240484c254..b6fd292a3b91d 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-phyboard-pollux-rdk.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-phyboard-pollux-rdk.dts
+@@ -191,6 +191,18 @@
+ 	};
+ };
+ 
++&media_blk_ctrl {
++	/*
++	 * The LVDS panel on this device uses 72.4 MHz pixel clock,
++	 * set IMX8MP_VIDEO_PLL1 to 72.4 * 7 = 506.8 MHz so the LDB
++	 * serializer and LCDIFv3 scanout engine can reach accurate
++	 * pixel clock of exactly 72.4 MHz.
++	 */
++	assigned-clock-rates = <500000000>, <200000000>,
++			       <0>, <0>, <500000000>,
++			       <506800000>;
++};
++
+ &snvs_pwrkey {
+ 	status = "okay";
+ };
 -- 
 2.43.0
 
