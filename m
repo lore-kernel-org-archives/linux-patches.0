@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CF9213EFA;
-	Tue, 12 Nov 2024 10:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BEE2141A5;
+	Tue, 12 Nov 2024 10:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407373; cv=none; b=AkZoMO3jnoIb2PJ8tI9SVSB8Rm8trOIRyeMT3deRiwK8J9ODvWYmMNrFIVlqlpvurQ2L9IWT/ZG7nQ/rOp1lhcCiKF9J2K+rHmuL0Dcxz+uDUbM+PnuSbytl7G/ugK7axbE25O/+spZm6hHgxZR3pxFbsp1fWDO85L1zhR1oXmo=
+	t=1731407377; cv=none; b=kRBPD5jkeridT2w5ywdfsSNpAd5UnttMNzrQgaHJA2MRXHryB5j4yHzdbifX2p9YP9lrx8abQJLn55By1MhCNr6IfFUzj6sqO52+hAdkEBawIugXCY740fWcL9K6I0O0oGv7SJixLJRHkwpaKBtIZato4BlNzfTtXFMY0azqoQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407373; c=relaxed/simple;
-	bh=uUBryTaza5Ip4ANHud1LigIVhGTPveDrqGLynToXgeA=;
+	s=arc-20240116; t=1731407377; c=relaxed/simple;
+	bh=6A9wYgpecM+UrMpBIwKIKJyx0zeYcAOCG9g9g15pVGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DgVgf48oDgoB7l9iFwQAlCtOjqVlMEDiBq4LT4cULPdTlB/jVuN92bsf8Uz5KzhMe1c8MyW3SH7/mM3E6hjpWnjWQvv7bzo3/ww9z1rng2xUEcBqSevew5pRTozVDCeOSAcDEKEi3c7fG1iFuIA42M/eDxjeLQq8O0WGRtH785U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwahgCXq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OzUsOwAm09zC+qtZ+USjQFF7jtpCJ7KBs3xpz/MbLDIyhX8uddzACMhk4qYyLPTezFGCI//c101uNvahqwCCs6yknBdRYn7MMxjVax/T03Ip5MA6fQV7ioxHPIeNqC+vGv+2XGZYrg5564RzMFTmAnrDciOtihBmrA9rrAqapDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6RkZfeV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwahgCXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2F8C4CECD;
-	Tue, 12 Nov 2024 10:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6RkZfeV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75967C4CECD;
+	Tue, 12 Nov 2024 10:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407373;
-	bh=uUBryTaza5Ip4ANHud1LigIVhGTPveDrqGLynToXgeA=;
+	s=korg; t=1731407376;
+	bh=6A9wYgpecM+UrMpBIwKIKJyx0zeYcAOCG9g9g15pVGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwahgCXq6Hn6tnLMPbOAP8wFJOEmw0rjFn/3Gzs8h7leKcGoNDsTchpkjx2HHn8Pw
-	 kG7gotgmv7QddRLisbr2I7U74DQeHqmCEe5oUsOUtVB14i0syX0BA1AGvNQsgFkYvC
-	 IRCBR4ND5z/xIGHGG8vCVh+m0eLsfXT1hEnIZ0Zw=
+	b=u6RkZfeVCmaZnR53YiloZEqA7xGusvR0SjzdncHMdjOPsr9X3od8dBcRcamIEccyt
+	 fpeMdQzhGssPCz9TXyvMz8hQHgX4ju2QFj/M30nYPCWrDPu7rGfJ6diXkMrLBEl0TB
+	 E2ML7v8ROTBWoNyu9Yx1zKfEsTlv2+N5UO8mCNA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
+	Antonio Quartulli <antonio@mandelbit.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 57/98] drm/amdgpu: add missing size check in amdgpu_debugfs_gprwave_read()
-Date: Tue, 12 Nov 2024 11:21:12 +0100
-Message-ID: <20241112101846.438790940@linuxfoundation.org>
+Subject: [PATCH 6.1 58/98] drm/amdgpu: prevent NULL pointer dereference if ATIF is not supported
+Date: Tue, 12 Nov 2024 11:21:13 +0100
+Message-ID: <20241112101846.476196447@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -50,31 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Antonio Quartulli <antonio@mandelbit.com>
 
-commit 4d75b9468021c73108b4439794d69e892b1d24e3 upstream.
+commit a6dd15981c03f2cdc9a351a278f09b5479d53d2e upstream.
 
-Avoid a possible buffer overflow if size is larger than 4K.
+acpi_evaluate_object() may return AE_NOT_FOUND (failure), which
+would result in dereferencing buffer.pointer (obj) while being NULL.
 
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Although this case may be unrealistic for the current code, it is
+still better to protect against possible bugs.
+
+Bail out also when status is AE_NOT_FOUND.
+
+This fixes 1 FORWARD_NULL issue reported by Coverity
+Report: CID 1600951:  Null pointer dereferences  (FORWARD_NULL)
+
+Signed-off-by: Antonio Quartulli <antonio@mandelbit.com>
+Fixes: c9b7c809b89f ("drm/amd: Guard against bad data for ATIF ACPI method")
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20241031152848.4716-1-antonio@mandelbit.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f5d873f5825b40d886d03bd2aede91d4cf002434)
+(cherry picked from commit 91c9e221fe2553edf2db71627d8453f083de87a1)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -419,7 +419,7 @@ static ssize_t amdgpu_debugfs_regs_pcie_
- 	ssize_t result = 0;
- 	int r;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
+@@ -132,8 +132,8 @@ static union acpi_object *amdgpu_atif_ca
+ 				      &buffer);
+ 	obj = (union acpi_object *)buffer.pointer;
  
--	if (size & 0x3 || *pos & 0x3)
-+	if (size > 4096 || size & 0x3 || *pos & 0x3)
- 		return -EINVAL;
- 
- 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
+-	/* Fail if calling the method fails and ATIF is supported */
+-	if (ACPI_FAILURE(status) && status != AE_NOT_FOUND) {
++	/* Fail if calling the method fails */
++	if (ACPI_FAILURE(status)) {
+ 		DRM_DEBUG_DRIVER("failed to evaluate ATIF got %s\n",
+ 				 acpi_format_exception(status));
+ 		kfree(obj);
 
 
