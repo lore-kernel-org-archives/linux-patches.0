@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9EC213156;
-	Tue, 12 Nov 2024 10:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1BA62144C3;
+	Tue, 12 Nov 2024 10:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408477; cv=none; b=lNYmOMvGtPOEC073GUPGIKLvhExDyR7q6r6evZSMRJqbjR6jowy9/nMaXcM06xFP/vdefiyKqULEVfo6zeY1BL6yQ9hoIas+VZyrJkCw8dq5ztbIDTEsUaKVZF544qmMl+B7xNUaO/jf38Zs4gWxjz5yE64xKpw6BCsr8IfmPXs=
+	t=1731408480; cv=none; b=K27bstA+x0eNXY9pqV3tZxd7s0etmQAOkfIg4UhZT5O4kF26rlVrHZa9H+nUyx/DFfEWaSToCR3QI++gPifokwDD9QohtjA3paW5H2MQuU6kDPrMrwJ/CRiSseXioMYrj9k6L3zMhPkDjEZ+4jLMHJMAiIL96xhRycUQx5Crd1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408477; c=relaxed/simple;
-	bh=EsblFe2ad+Uf2bzY0BrfGi0INaBPZjWqOIeTCdZUws8=;
+	s=arc-20240116; t=1731408480; c=relaxed/simple;
+	bh=eWlcfspPV1VOk9oGm/kLOhJf5vVeZwQcxo+gkLzeiAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sL6BSeuJGGCqHb1q0ePe6LABAvS2nlZ/JiTSjbzy9hp7Tt14B6FU6UUByJa3XXhpIgvWUY1e8hVVrOVnTUjB4v9R9N5n93uXVovDjtUKU/zjqsUrc+BCkib8dCOxohtI+AksemT6pUCsHlCq3U2FUqdsCgUAVb4QxxJssj+7fDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTAiXboE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OMN5WVMsynkoxJxlEmqsq0RKsUk3QxMseZEO12Couamp5aax0NPxMAs46uI9zLFiY6QDH/v0D1AgN0ISDm+GG5yDExwaVLMCnzcolthkm7jbI4uPGGCeNU9KofS1MqEflMuuDUznyshPaEJERGSk3+WB5NKlrlF/yBQuzwpzbEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFT+dRyd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTAiXboE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8EAC4CECD;
-	Tue, 12 Nov 2024 10:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFT+dRyd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42534C4CECD;
+	Tue, 12 Nov 2024 10:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408477;
-	bh=EsblFe2ad+Uf2bzY0BrfGi0INaBPZjWqOIeTCdZUws8=;
+	s=korg; t=1731408480;
+	bh=eWlcfspPV1VOk9oGm/kLOhJf5vVeZwQcxo+gkLzeiAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hTAiXboEIJQL3mtqM9KNT1RsOkU83PCJSrJ1Wn7fqhZ3oRizqPifnvSe//tvX8WpJ
-	 6xSmidSbSqHxtWJBrFdEv4WNWOiXuTXlst21flG2NzMJLuejRWTAGNbVhFl++2X2we
-	 JgV3SGe5apmkCcX8z00A2BwrnXsLN8Iv3ykjQdvM=
+	b=ZFT+dRydIhlfjBHKgwtJb8z8l/Mq6LmYUPfS9bC+1rY5N/S4ZIzN1gk3iQZRZkUh6
+	 l56vGB43cW0XzjEHt98mCpvruLoHhFK4rnlApwQol1/1aCS6PFWluKm00kRnfPdgV4
+	 q08JYEGnobh/CTl0tPgsKsoWxOOBy/2yUNK+2RXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hans Holmberg <hans.holmberg@wdc.com>,
+	John Garry <john.g.garry@oracle.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 175/184] block: rework bio splitting
-Date: Tue, 12 Nov 2024 11:22:13 +0100
-Message-ID: <20241112101907.580461303@linuxfoundation.org>
+Subject: [PATCH 6.11 176/184] block: fix queue limits checks in blk_rq_map_user_bvec for real
+Date: Tue, 12 Nov 2024 11:22:14 +0100
+Message-ID: <20241112101907.617772721@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -56,445 +54,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit b35243a447b9fe6457fa8e1352152b818436ba5a ]
+[ Upstream commit be0e822bb3f5259c7f9424ba97e8175211288813 ]
 
-The current setup with bio_may_exceed_limit and __bio_split_to_limits
-is a bit of a mess.
+blk_rq_map_user_bvec currently only has ad-hoc checks for queue limits,
+and the last fix to it enabled valid NVMe I/O to pass, but also allowed
+invalid one for drivers that set a max_segment_size or seg_boundary
+limit.
 
-Change it so that __bio_split_to_limits does all the work and is just
-a variant of bio_split_to_limits that returns nr_segs.  This is done
-by inlining it and instead have the various bio_split_* helpers directly
-submit the potentially split bios.
+Fix it once for all by using the bio_split_rw_at helper from the I/O
+path that indicates if and where a bio would be have to be split to
+adhere to the queue limits, and it returns a positive value, turn that
+into -EREMOTEIO to retry using the copy path.
 
-To support btrfs, the rw version has a lower level helper split out
-that just returns the offset to split.  This turns out to nicely clean
-up the btrfs flow as well.
-
+Fixes: 2ff949441802 ("block: fix sanity checks in blk_rq_map_user_bvec")
 Signed-off-by: Christoph Hellwig <hch@lst.de>
-Acked-by: David Sterba <dsterba@suse.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Tested-by: Hans Holmberg <hans.holmberg@wdc.com>
-Reviewed-by: Hans Holmberg <hans.holmberg@wdc.com>
-Link: https://lore.kernel.org/r/20240826173820.1690925-2-hch@lst.de
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://lore.kernel.org/r/20241028090840.446180-1-hch@lst.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: be0e822bb3f5 ("block: fix queue limits checks in blk_rq_map_user_bvec for real")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-merge.c   | 146 +++++++++++++++++---------------------------
- block/blk-mq.c      |  11 ++--
- block/blk.h         |  63 +++++++++++++------
- fs/btrfs/bio.c      |  30 +++++----
- include/linux/bio.h |   4 +-
- 5 files changed, 125 insertions(+), 129 deletions(-)
+ block/blk-map.c | 56 +++++++++++++++----------------------------------
+ 1 file changed, 17 insertions(+), 39 deletions(-)
 
-diff --git a/block/blk-merge.c b/block/blk-merge.c
-index de5281bcadc53..c7222c4685e06 100644
---- a/block/blk-merge.c
-+++ b/block/blk-merge.c
-@@ -105,9 +105,33 @@ static unsigned int bio_allowed_max_sectors(const struct queue_limits *lim)
- 	return round_down(UINT_MAX, lim->logical_block_size) >> SECTOR_SHIFT;
- }
- 
--static struct bio *bio_split_discard(struct bio *bio,
--				     const struct queue_limits *lim,
--				     unsigned *nsegs, struct bio_set *bs)
-+static struct bio *bio_submit_split(struct bio *bio, int split_sectors)
-+{
-+	if (unlikely(split_sectors < 0)) {
-+		bio->bi_status = errno_to_blk_status(split_sectors);
-+		bio_endio(bio);
-+		return NULL;
-+	}
-+
-+	if (split_sectors) {
-+		struct bio *split;
-+
-+		split = bio_split(bio, split_sectors, GFP_NOIO,
-+				&bio->bi_bdev->bd_disk->bio_split);
-+		split->bi_opf |= REQ_NOMERGE;
-+		blkcg_bio_issue_init(split);
-+		bio_chain(split, bio);
-+		trace_block_split(split, bio->bi_iter.bi_sector);
-+		WARN_ON_ONCE(bio_zone_write_plugging(bio));
-+		submit_bio_noacct(bio);
-+		return split;
-+	}
-+
-+	return bio;
-+}
-+
-+struct bio *bio_split_discard(struct bio *bio, const struct queue_limits *lim,
-+		unsigned *nsegs)
+diff --git a/block/blk-map.c b/block/blk-map.c
+index 6ef2ec1f7d78b..b5fd1d8574615 100644
+--- a/block/blk-map.c
++++ b/block/blk-map.c
+@@ -561,55 +561,33 @@ EXPORT_SYMBOL(blk_rq_append_bio);
+ /* Prepare bio for passthrough IO given ITER_BVEC iter */
+ static int blk_rq_map_user_bvec(struct request *rq, const struct iov_iter *iter)
  {
- 	unsigned int max_discard_sectors, granularity;
- 	sector_t tmp;
-@@ -121,10 +145,10 @@ static struct bio *bio_split_discard(struct bio *bio,
- 		min(lim->max_discard_sectors, bio_allowed_max_sectors(lim));
- 	max_discard_sectors -= max_discard_sectors % granularity;
- 	if (unlikely(!max_discard_sectors))
--		return NULL;
-+		return bio;
- 
- 	if (bio_sectors(bio) <= max_discard_sectors)
--		return NULL;
-+		return bio;
- 
- 	split_sectors = max_discard_sectors;
- 
-@@ -139,19 +163,18 @@ static struct bio *bio_split_discard(struct bio *bio,
- 	if (split_sectors > tmp)
- 		split_sectors -= tmp;
- 
--	return bio_split(bio, split_sectors, GFP_NOIO, bs);
-+	return bio_submit_split(bio, split_sectors);
- }
- 
--static struct bio *bio_split_write_zeroes(struct bio *bio,
--					  const struct queue_limits *lim,
--					  unsigned *nsegs, struct bio_set *bs)
-+struct bio *bio_split_write_zeroes(struct bio *bio,
-+		const struct queue_limits *lim, unsigned *nsegs)
- {
- 	*nsegs = 0;
- 	if (!lim->max_write_zeroes_sectors)
--		return NULL;
-+		return bio;
- 	if (bio_sectors(bio) <= lim->max_write_zeroes_sectors)
--		return NULL;
--	return bio_split(bio, lim->max_write_zeroes_sectors, GFP_NOIO, bs);
-+		return bio;
-+	return bio_submit_split(bio, lim->max_write_zeroes_sectors);
- }
- 
- static inline unsigned int blk_boundary_sectors(const struct queue_limits *lim,
-@@ -274,27 +297,19 @@ static bool bvec_split_segs(const struct queue_limits *lim,
- }
- 
- /**
-- * bio_split_rw - split a bio in two bios
-+ * bio_split_rw_at - check if and where to split a read/write bio
-  * @bio:  [in] bio to be split
-  * @lim:  [in] queue limits to split based on
-  * @segs: [out] number of segments in the bio with the first half of the sectors
-- * @bs:	  [in] bio set to allocate the clone from
-  * @max_bytes: [in] maximum number of bytes per bio
-  *
-- * Clone @bio, update the bi_iter of the clone to represent the first sectors
-- * of @bio and update @bio->bi_iter to represent the remaining sectors. The
-- * following is guaranteed for the cloned bio:
-- * - That it has at most @max_bytes worth of data
-- * - That it has at most queue_max_segments(@q) segments.
-- *
-- * Except for discard requests the cloned bio will point at the bi_io_vec of
-- * the original bio. It is the responsibility of the caller to ensure that the
-- * original bio is not freed before the cloned bio. The caller is also
-- * responsible for ensuring that @bs is only destroyed after processing of the
-- * split bio has finished.
-+ * Find out if @bio needs to be split to fit the queue limits in @lim and a
-+ * maximum size of @max_bytes.  Returns a negative error number if @bio can't be
-+ * split, 0 if the bio doesn't have to be split, or a positive sector offset if
-+ * @bio needs to be split.
-  */
--struct bio *bio_split_rw(struct bio *bio, const struct queue_limits *lim,
--		unsigned *segs, struct bio_set *bs, unsigned max_bytes)
-+int bio_split_rw_at(struct bio *bio, const struct queue_limits *lim,
-+		unsigned *segs, unsigned max_bytes)
- {
- 	struct bio_vec bv, bvprv, *bvprvp = NULL;
- 	struct bvec_iter iter;
-@@ -324,22 +339,17 @@ struct bio *bio_split_rw(struct bio *bio, const struct queue_limits *lim,
- 	}
- 
- 	*segs = nsegs;
--	return NULL;
-+	return 0;
- split:
--	if (bio->bi_opf & REQ_ATOMIC) {
--		bio->bi_status = BLK_STS_INVAL;
--		bio_endio(bio);
--		return ERR_PTR(-EINVAL);
--	}
-+	if (bio->bi_opf & REQ_ATOMIC)
-+		return -EINVAL;
-+
- 	/*
- 	 * We can't sanely support splitting for a REQ_NOWAIT bio. End it
- 	 * with EAGAIN if splitting is required and return an error pointer.
- 	 */
--	if (bio->bi_opf & REQ_NOWAIT) {
--		bio->bi_status = BLK_STS_AGAIN;
--		bio_endio(bio);
--		return ERR_PTR(-EAGAIN);
--	}
-+	if (bio->bi_opf & REQ_NOWAIT)
-+		return -EAGAIN;
- 
- 	*segs = nsegs;
- 
-@@ -356,58 +366,16 @@ struct bio *bio_split_rw(struct bio *bio, const struct queue_limits *lim,
- 	 * big IO can be trival, disable iopoll when split needed.
- 	 */
- 	bio_clear_polled(bio);
--	return bio_split(bio, bytes >> SECTOR_SHIFT, GFP_NOIO, bs);
-+	return bytes >> SECTOR_SHIFT;
- }
--EXPORT_SYMBOL_GPL(bio_split_rw);
-+EXPORT_SYMBOL_GPL(bio_split_rw_at);
- 
--/**
-- * __bio_split_to_limits - split a bio to fit the queue limits
-- * @bio:     bio to be split
-- * @lim:     queue limits to split based on
-- * @nr_segs: returns the number of segments in the returned bio
-- *
-- * Check if @bio needs splitting based on the queue limits, and if so split off
-- * a bio fitting the limits from the beginning of @bio and return it.  @bio is
-- * shortened to the remainder and re-submitted.
-- *
-- * The split bio is allocated from @q->bio_split, which is provided by the
-- * block layer.
-- */
--struct bio *__bio_split_to_limits(struct bio *bio,
--				  const struct queue_limits *lim,
--				  unsigned int *nr_segs)
-+struct bio *bio_split_rw(struct bio *bio, const struct queue_limits *lim,
-+		unsigned *nr_segs)
- {
--	struct bio_set *bs = &bio->bi_bdev->bd_disk->bio_split;
--	struct bio *split;
--
--	switch (bio_op(bio)) {
--	case REQ_OP_DISCARD:
--	case REQ_OP_SECURE_ERASE:
--		split = bio_split_discard(bio, lim, nr_segs, bs);
--		break;
--	case REQ_OP_WRITE_ZEROES:
--		split = bio_split_write_zeroes(bio, lim, nr_segs, bs);
--		break;
--	default:
--		split = bio_split_rw(bio, lim, nr_segs, bs,
--				get_max_io_size(bio, lim) << SECTOR_SHIFT);
--		if (IS_ERR(split))
--			return NULL;
--		break;
--	}
--
--	if (split) {
--		/* there isn't chance to merge the split bio */
--		split->bi_opf |= REQ_NOMERGE;
--
--		blkcg_bio_issue_init(split);
--		bio_chain(split, bio);
--		trace_block_split(split, bio->bi_iter.bi_sector);
--		WARN_ON_ONCE(bio_zone_write_plugging(bio));
--		submit_bio_noacct(bio);
--		return split;
--	}
--	return bio;
-+	return bio_submit_split(bio,
-+		bio_split_rw_at(bio, lim, nr_segs,
-+			get_max_io_size(bio, lim) << SECTOR_SHIFT));
- }
- 
- /**
-@@ -426,9 +394,7 @@ struct bio *bio_split_to_limits(struct bio *bio)
- 	const struct queue_limits *lim = &bdev_get_queue(bio->bi_bdev)->limits;
- 	unsigned int nr_segs;
- 
--	if (bio_may_exceed_limits(bio, lim))
--		return __bio_split_to_limits(bio, lim, &nr_segs);
--	return bio;
-+	return __bio_split_to_limits(bio, lim, &nr_segs);
- }
- EXPORT_SYMBOL(bio_split_to_limits);
- 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index b56a1c0dd1387..a2401e4d8c974 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -2939,7 +2939,7 @@ void blk_mq_submit_bio(struct bio *bio)
- 	struct blk_plug *plug = current->plug;
- 	const int is_sync = op_is_sync(bio->bi_opf);
- 	struct blk_mq_hw_ctx *hctx;
--	unsigned int nr_segs = 1;
-+	unsigned int nr_segs;
- 	struct request *rq;
- 	blk_status_t ret;
- 
-@@ -2981,11 +2981,10 @@ void blk_mq_submit_bio(struct bio *bio)
- 		goto queue_exit;
- 	}
- 
--	if (unlikely(bio_may_exceed_limits(bio, &q->limits))) {
--		bio = __bio_split_to_limits(bio, &q->limits, &nr_segs);
--		if (!bio)
--			goto queue_exit;
--	}
-+	bio = __bio_split_to_limits(bio, &q->limits, &nr_segs);
-+	if (!bio)
-+		goto queue_exit;
-+
- 	if (!bio_integrity_prep(bio))
- 		goto queue_exit;
- 
-diff --git a/block/blk.h b/block/blk.h
-index e180863f918b1..0d8cd64c12606 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -331,33 +331,58 @@ ssize_t part_timeout_show(struct device *, struct device_attribute *, char *);
- ssize_t part_timeout_store(struct device *, struct device_attribute *,
- 				const char *, size_t);
- 
--static inline bool bio_may_exceed_limits(struct bio *bio,
--					 const struct queue_limits *lim)
-+struct bio *bio_split_discard(struct bio *bio, const struct queue_limits *lim,
-+		unsigned *nsegs);
-+struct bio *bio_split_write_zeroes(struct bio *bio,
-+		const struct queue_limits *lim, unsigned *nsegs);
-+struct bio *bio_split_rw(struct bio *bio, const struct queue_limits *lim,
-+		unsigned *nr_segs);
-+
-+/*
-+ * All drivers must accept single-segments bios that are smaller than PAGE_SIZE.
-+ *
-+ * This is a quick and dirty check that relies on the fact that bi_io_vec[0] is
-+ * always valid if a bio has data.  The check might lead to occasional false
-+ * positives when bios are cloned, but compared to the performance impact of
-+ * cloned bios themselves the loop below doesn't matter anyway.
-+ */
-+static inline bool bio_may_need_split(struct bio *bio,
-+		const struct queue_limits *lim)
-+{
-+	return lim->chunk_sectors || bio->bi_vcnt != 1 ||
-+		bio->bi_io_vec->bv_len + bio->bi_io_vec->bv_offset > PAGE_SIZE;
-+}
-+
-+/**
-+ * __bio_split_to_limits - split a bio to fit the queue limits
-+ * @bio:     bio to be split
-+ * @lim:     queue limits to split based on
-+ * @nr_segs: returns the number of segments in the returned bio
-+ *
-+ * Check if @bio needs splitting based on the queue limits, and if so split off
-+ * a bio fitting the limits from the beginning of @bio and return it.  @bio is
-+ * shortened to the remainder and re-submitted.
-+ *
-+ * The split bio is allocated from @q->bio_split, which is provided by the
-+ * block layer.
-+ */
-+static inline struct bio *__bio_split_to_limits(struct bio *bio,
-+		const struct queue_limits *lim, unsigned int *nr_segs)
- {
- 	switch (bio_op(bio)) {
-+	default:
-+		if (bio_may_need_split(bio, lim))
-+			return bio_split_rw(bio, lim, nr_segs);
-+		*nr_segs = 1;
-+		return bio;
- 	case REQ_OP_DISCARD:
- 	case REQ_OP_SECURE_ERASE:
-+		return bio_split_discard(bio, lim, nr_segs);
- 	case REQ_OP_WRITE_ZEROES:
--		return true; /* non-trivial splitting decisions */
--	default:
--		break;
-+		return bio_split_write_zeroes(bio, lim, nr_segs);
- 	}
--
--	/*
--	 * All drivers must accept single-segments bios that are <= PAGE_SIZE.
--	 * This is a quick and dirty check that relies on the fact that
--	 * bi_io_vec[0] is always valid if a bio has data.  The check might
--	 * lead to occasional false negatives when bios are cloned, but compared
--	 * to the performance impact of cloned bios themselves the loop below
--	 * doesn't matter anyway.
--	 */
--	return lim->chunk_sectors || bio->bi_vcnt != 1 ||
--		bio->bi_io_vec->bv_len + bio->bi_io_vec->bv_offset > PAGE_SIZE;
- }
- 
--struct bio *__bio_split_to_limits(struct bio *bio,
--				  const struct queue_limits *lim,
--				  unsigned int *nr_segs);
- int ll_back_merge_fn(struct request *req, struct bio *bio,
- 		unsigned int nr_segs);
- bool blk_attempt_req_merge(struct request_queue *q, struct request *rq,
-diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
-index 31e437d94869d..a98fa0ccae601 100644
---- a/fs/btrfs/bio.c
-+++ b/fs/btrfs/bio.c
-@@ -74,20 +74,13 @@ struct btrfs_bio *btrfs_bio_alloc(unsigned int nr_vecs, blk_opf_t opf,
- 
- static struct btrfs_bio *btrfs_split_bio(struct btrfs_fs_info *fs_info,
- 					 struct btrfs_bio *orig_bbio,
--					 u64 map_length, bool use_append)
-+					 u64 map_length)
- {
- 	struct btrfs_bio *bbio;
+-	struct request_queue *q = rq->q;
+-	size_t nr_iter = iov_iter_count(iter);
+-	size_t nr_segs = iter->nr_segs;
+-	struct bio_vec *bvecs, *bvprvp = NULL;
+-	const struct queue_limits *lim = &q->limits;
+-	unsigned int nsegs = 0, bytes = 0;
++	const struct queue_limits *lim = &rq->q->limits;
++	unsigned int max_bytes = lim->max_hw_sectors << SECTOR_SHIFT;
++	unsigned int nsegs;
  	struct bio *bio;
+-	size_t i;
++	int ret;
  
--	if (use_append) {
--		unsigned int nr_segs;
+-	if (!nr_iter || (nr_iter >> SECTOR_SHIFT) > queue_max_hw_sectors(q))
+-		return -EINVAL;
+-	if (nr_segs > queue_max_segments(q))
++	if (!iov_iter_count(iter) || iov_iter_count(iter) > max_bytes)
+ 		return -EINVAL;
+ 
+-	/* no iovecs to alloc, as we already have a BVEC iterator */
++	/* reuse the bvecs from the iterator instead of allocating new ones */
+ 	bio = blk_rq_map_bio_alloc(rq, 0, GFP_KERNEL);
+-	if (bio == NULL)
++	if (!bio)
+ 		return -ENOMEM;
 -
--		bio = bio_split_rw(&orig_bbio->bio, &fs_info->limits, &nr_segs,
--				   &btrfs_clone_bioset, map_length);
--	} else {
--		bio = bio_split(&orig_bbio->bio, map_length >> SECTOR_SHIFT,
--				GFP_NOFS, &btrfs_clone_bioset);
--	}
-+	bio = bio_split(&orig_bbio->bio, map_length >> SECTOR_SHIFT, GFP_NOFS,
-+			&btrfs_clone_bioset);
- 	bbio = btrfs_bio(bio);
- 	btrfs_bio_init(bbio, fs_info, NULL, orig_bbio);
- 	bbio->inode = orig_bbio->inode;
-@@ -648,6 +641,19 @@ static bool btrfs_wq_submit_bio(struct btrfs_bio *bbio,
- 	return true;
+ 	bio_iov_bvec_set(bio, (struct iov_iter *)iter);
+-	blk_rq_bio_prep(rq, bio, nr_segs);
+-
+-	/* loop to perform a bunch of sanity checks */
+-	bvecs = (struct bio_vec *)iter->bvec;
+-	for (i = 0; i < nr_segs; i++) {
+-		struct bio_vec *bv = &bvecs[i];
+-
+-		/*
+-		 * If the queue doesn't support SG gaps and adding this
+-		 * offset would create a gap, fallback to copy.
+-		 */
+-		if (bvprvp && bvec_gap_to_prev(lim, bvprvp, bv->bv_offset)) {
+-			blk_mq_map_bio_put(bio);
+-			return -EREMOTEIO;
+-		}
+-		/* check full condition */
+-		if (nsegs >= nr_segs || bytes > UINT_MAX - bv->bv_len)
+-			goto put_bio;
+-		if (bytes + bv->bv_len > nr_iter)
+-			break;
+ 
+-		nsegs++;
+-		bytes += bv->bv_len;
+-		bvprvp = bv;
++	/* check that the data layout matches the hardware restrictions */
++	ret = bio_split_rw_at(bio, lim, &nsegs, max_bytes);
++	if (ret) {
++		/* if we would have to split the bio, copy instead */
++		if (ret > 0)
++			ret = -EREMOTEIO;
++		blk_mq_map_bio_put(bio);
++		return ret;
+ 	}
++
++	blk_rq_bio_prep(rq, bio, nsegs);
+ 	return 0;
+-put_bio:
+-	blk_mq_map_bio_put(bio);
+-	return -EINVAL;
  }
  
-+static u64 btrfs_append_map_length(struct btrfs_bio *bbio, u64 map_length)
-+{
-+	unsigned int nr_segs;
-+	int sector_offset;
-+
-+	map_length = min(map_length, bbio->fs_info->max_zone_append_size);
-+	sector_offset = bio_split_rw_at(&bbio->bio, &bbio->fs_info->limits,
-+					&nr_segs, map_length);
-+	if (sector_offset)
-+		return sector_offset << SECTOR_SHIFT;
-+	return map_length;
-+}
-+
- static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
- {
- 	struct btrfs_inode *inode = bbio->inode;
-@@ -674,10 +680,10 @@ static bool btrfs_submit_chunk(struct btrfs_bio *bbio, int mirror_num)
- 
- 	map_length = min(map_length, length);
- 	if (use_append)
--		map_length = min(map_length, fs_info->max_zone_append_size);
-+		map_length = btrfs_append_map_length(bbio, map_length);
- 
- 	if (map_length < length) {
--		bbio = btrfs_split_bio(fs_info, bbio, map_length, use_append);
-+		bbio = btrfs_split_bio(fs_info, bbio, map_length);
- 		bio = &bbio->bio;
- 	}
- 
-diff --git a/include/linux/bio.h b/include/linux/bio.h
-index a46e2047bea4d..faceadb040f9a 100644
---- a/include/linux/bio.h
-+++ b/include/linux/bio.h
-@@ -324,8 +324,8 @@ static inline void bio_next_folio(struct folio_iter *fi, struct bio *bio)
- void bio_trim(struct bio *bio, sector_t offset, sector_t size);
- extern struct bio *bio_split(struct bio *bio, int sectors,
- 			     gfp_t gfp, struct bio_set *bs);
--struct bio *bio_split_rw(struct bio *bio, const struct queue_limits *lim,
--		unsigned *segs, struct bio_set *bs, unsigned max_bytes);
-+int bio_split_rw_at(struct bio *bio, const struct queue_limits *lim,
-+		unsigned *segs, unsigned max_bytes);
- 
  /**
-  * bio_next_split - get next @sectors from a bio, splitting if necessary
 -- 
 2.43.0
 
