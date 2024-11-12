@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B347820E31D;
-	Tue, 12 Nov 2024 10:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079C42123F2;
+	Tue, 12 Nov 2024 10:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407297; cv=none; b=WICtcquLEFBsfSmbaOK7Is3f7KauzMsASeFfg+3Cfc2rOZk2CHCFw0hO5JY8TUjnOQ3nGeN9tgl7PE1rtE0N4uqUuqeUTw3fUTeuqbuE17oRZcsojXAJopszwfVeWpwWiQJpbhPqMQMw5nSOscpc6PSPuQWMVMQpsRXvCS9B7sk=
+	t=1731407301; cv=none; b=Ds8tBFxkbRJ5vL6WZOuDwIMzSTTHnstyALq94JWDzcn/Y+DM0MJf3eJKWj3EpFHgV+JNbyz16TTEPgXr9uzIpNIkhUkNOwexHwoYUN2CZe9sIHfkIHSACpIzq5p6v2E1wk7M4lMI8DE7h2Ln2oq4itXUpKrtLz9n5eeX6tofQrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407297; c=relaxed/simple;
-	bh=I1+WChsAd4l3+oeaKBWi/C+W396I0Rn7zSDJsOc1EbI=;
+	s=arc-20240116; t=1731407301; c=relaxed/simple;
+	bh=IbPZQY9Wr0hOc70TGEe5vbhFb/mLxmuiaTM4kHyrcb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YyG8etp6Bhxy1piD+TjOJJayCUEkjOFX88UrSdhHIouO3rk/QtitrmAWmOwluPCh4RFOnUH/4Lf5T0J7RPGYr6gWJUDwE4BVnUvNbzCF2AQn9bHzlPoMy5aP5AuG+YXyedyaEBX2CQ9uQLpKju9ii5OGBlJ+Gn9bl55vtds+Td0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=faB/ENWX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AO8cgc6+KbprDwajrM1CU8oDG+PgNOrs+0uu+S/ADeD6XI/gh9Udphdau+ryPe8ZTBG620SrXbca2DnHCg9KrCsXaJFj4Q5iTXALTgXmzc7IJAtlhbJN6FF7H2SOdVPZCGo65WROxrwW5UTrg5zzWzUjAF8AZTxWafYpFHYlrZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSdMjJGZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faB/ENWX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39FD5C4CECD;
-	Tue, 12 Nov 2024 10:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSdMjJGZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA36C4CED4;
+	Tue, 12 Nov 2024 10:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407297;
-	bh=I1+WChsAd4l3+oeaKBWi/C+W396I0Rn7zSDJsOc1EbI=;
+	s=korg; t=1731407300;
+	bh=IbPZQY9Wr0hOc70TGEe5vbhFb/mLxmuiaTM4kHyrcb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=faB/ENWXBQUWyyU2o9C61J1ELhv+MnR35+84atb9kSEkMrlxYbQk2QgV8ntl9Z3g5
-	 1I9I0ngeOc4tlZp/CxVLjwHWkZxPwfO9ItyCvhYJWPJzVta+LFw3gMozRCYNtHmJUH
-	 4mpZGHTHrPt6i5UD8U3EoSkdsLDV4PDWLQJfUw3c=
+	b=OSdMjJGZQEKIbaoWii8HUwve4/ZrJzokzFJwwCHbCM2TlGJwJAlL6GaGm9Z58Tt0/
+	 q4aI+PKlAorWee6nTBL+qwKjRyUVfyCf45SBeK5XlV4teULppwnBd+72iEEJZm2NBf
+	 lDVbhP43Ma2yWGFSi4QpX8Ykr9ZE76JrwD+FbXDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Jonker <jbx6244@gmail.com>,
-	Andy Yan <andyshrk@163.com>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 33/98] net: arc: rockchip: fix emac mdio node support
-Date: Tue, 12 Nov 2024 11:20:48 +0100
-Message-ID: <20241112101845.534988251@linuxfoundation.org>
+	=?UTF-8?q?Jaros=C5=82aw=20Janik?= <jaroslaw.janik@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 34/98] Revert "ALSA: hda/conexant: Mute speakers at suspend / shutdown"
+Date: Tue, 12 Nov 2024 11:20:49 +0100
+Message-ID: <20241112101845.573027844@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -48,64 +44,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: Jarosław Janik <jaroslaw.janik@gmail.com>
 
-[ Upstream commit 0a1c7a7b0adbf595ce7f218609db53749e966573 ]
+commit c9363bbb0f68dd1ddb8be7bbfe958cdfcd38d851 upstream.
 
-The binding emac_rockchip.txt is converted to YAML.
-Changed against the original binding is an added MDIO subnode.
-This make the driver failed to find the PHY, and given the 'mdio
-has invalid PHY address' it is probably looking in the wrong node.
-Fix emac_mdio.c so that it can handle both old and new
-device trees.
+Commit 4f61c8fe3520 ("ALSA: hda/conexant: Mute speakers at suspend /
+shutdown") mutes speakers on system shutdown or whenever HDA controller
+is suspended by PM; this however interacts badly with Thinkpad's ACPI
+firmware behavior which uses beeps to signal various events (enter/leave
+suspend or hibernation, AC power connect/disconnect, low battery, etc.);
+now those beeps are either muted altogether (for suspend/hibernate/
+shutdown related events) or work more or less randomly (eg. AC
+plug/unplug is only audible when you are playing music at the moment,
+because HDA device is likely in suspend mode otherwise).
 
-Fixes: 1dabb74971b3 ("ARM: dts: rockchip: restyle emac nodes")
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Tested-by: Andy Yan <andyshrk@163.com>
-Link: https://lore.kernel.org/r/20220603163539.537-3-jbx6244@gmail.com
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Since the original bug report mentioned in 4f61c8fe3520 complained about
+Lenovo's Thinkpad laptop - revert this commit altogether.
+
+Fixes: 4f61c8fe3520 ("ALSA: hda/conexant: Mute speakers at suspend / shutdown")
+Signed-off-by: Jarosław Janik <jaroslaw.janik@gmail.com>
+Link: https://patch.msgid.link/20241030171813.18941-2-jaroslaw.janik@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/arc/emac_mdio.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_conexant.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/arc/emac_mdio.c b/drivers/net/ethernet/arc/emac_mdio.c
-index 87f40c2ba9040..078b1a72c1613 100644
---- a/drivers/net/ethernet/arc/emac_mdio.c
-+++ b/drivers/net/ethernet/arc/emac_mdio.c
-@@ -133,6 +133,7 @@ int arc_mdio_probe(struct arc_emac_priv *priv)
- 	struct arc_emac_mdio_bus_data *data = &priv->bus_data;
- 	struct device_node *np = priv->dev->of_node;
- 	const char *name = "Synopsys MII Bus";
-+	struct device_node *mdio_node;
- 	struct mii_bus *bus;
- 	int error;
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -205,8 +205,6 @@ static void cx_auto_shutdown(struct hda_
+ {
+ 	struct conexant_spec *spec = codec->spec;
  
-@@ -164,7 +165,13 @@ int arc_mdio_probe(struct arc_emac_priv *priv)
- 
- 	snprintf(bus->id, MII_BUS_ID_SIZE, "%s", bus->name);
- 
--	error = of_mdiobus_register(bus, priv->dev->of_node);
-+	/* Backwards compatibility for EMAC nodes without MDIO subnode. */
-+	mdio_node = of_get_child_by_name(np, "mdio");
-+	if (!mdio_node)
-+		mdio_node = of_node_get(np);
-+
-+	error = of_mdiobus_register(bus, mdio_node);
-+	of_node_put(mdio_node);
- 	if (error) {
- 		mdiobus_free(bus);
- 		return dev_err_probe(priv->dev, error,
--- 
-2.43.0
-
+-	snd_hda_gen_shutup_speakers(codec);
+-
+ 	/* Turn the problematic codec into D3 to avoid spurious noises
+ 	   from the internal speaker during (and after) reboot */
+ 	cx_auto_turn_eapd(codec, spec->num_eapds, spec->eapds, false);
 
 
