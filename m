@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715222123DC;
-	Tue, 12 Nov 2024 10:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96B320F5B6;
+	Tue, 12 Nov 2024 10:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407268; cv=none; b=NsS05dUvsCa+izQyeoEBwSEAAEVrs+5hxyVD8KBMm0/sE+rzGx1mno+b9nR5PTFuMqKrz3wsi9YeSknoAB5PeumNuoJ42EzCF5M41HEx+RuOSF9gNaHIl4sVNSp3JEp1iL7PE+pK4WVCkja9ax5Fh3xo5gsQQ3uW+V606nKWuFU=
+	t=1731407271; cv=none; b=I0AXdS7/GNbvOWM0/f2PdRk7S9ati8P/dKqp/hLWnXwa0RKLiTnDiJv6s7gyzbBdIqLuCnxKUVCCJpOGXuiE+GusHEHQnkPmIOveT1k6pUAfIqn2WjKrwvxKVt5gm3ZNCxpRiwwP+m4R45fZJUeQ6zynUqTiBQaEx/MnGHFuE24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407268; c=relaxed/simple;
-	bh=gWKFlF2TfV/cne3lzg8u4FAKY+9YZNXw1A9UJk/099M=;
+	s=arc-20240116; t=1731407271; c=relaxed/simple;
+	bh=L7QIjf2wxYV9TaeVJTx+RJc5U2NRezECK8bngUA3D7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ix9VOK1/QvROMk1jqLmZKzJSOLXDY4sNzIgJrAkTFG3rqq3TRpoWwtxtWDmfs3DmToxD+KoFmVahqsKVhSh/I6Doc4Z53QQkgkHgOhHYWaqPnMUjVmq6Bid/RWlOW+a/lIqdXSnKWaLDTlRT0U3TslqLiz+W1h55FT9vsx6Z/Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GCmaHl6l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YqyI+5219tcUMiaLhfsDLG29xmmrJooZ2ceinStD++wtYq4mrNsxp5rCdMF7kQ+IqVAopgzQ44P8zRZRgOVV91/tOP+1+08lmgJr0U9L4lK3dnn65kmMDHEzpEKmlOoLOQGSN05Fh5jK4da9M8oviwH4R++oVc/LSdeejdCboj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKnsgdxW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GCmaHl6l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4468C4CECD;
-	Tue, 12 Nov 2024 10:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKnsgdxW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350BCC4CECD;
+	Tue, 12 Nov 2024 10:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407268;
-	bh=gWKFlF2TfV/cne3lzg8u4FAKY+9YZNXw1A9UJk/099M=;
+	s=korg; t=1731407271;
+	bh=L7QIjf2wxYV9TaeVJTx+RJc5U2NRezECK8bngUA3D7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GCmaHl6l+NlAZS4WNFfcTfSgvDkUx406x7GKuYkeIgDewjvgjpK6Rre9USXvwSXVH
-	 7znH5RtDb5qqwgKDitkS0QHBMDyJM+plDW31UYqTJFom4UGkBOA0CT0w3ScBL1NR5r
-	 tMGYUjCVdbRkwRECxSI0if+BDRmkT1x40rGikbGM=
+	b=yKnsgdxWkBLm4mbM6vtRGgYVXGnIFBKnICN7V3CdKfZs9iZM0uBzla1+GAaU3sjBH
+	 ccmeDJxhJsmB0awK+f9nDdt5zu9rtqDmeQNNmtZ32TurBqKvrCvaAwHdmHhi32wD78
+	 Uw1Bn4cnavl2lMiqUJ2Zs7FixXTOwlX9udzPPyqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 25/98] can: c_can: fix {rx,tx}_errors statistics
-Date: Tue, 12 Nov 2024 11:20:40 +0100
-Message-ID: <20241112101845.227897112@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Mateusz Polchlopek <mateusz.polchlopek@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.1 26/98] ice: change q_index variable type to s16 to store -1 value
+Date: Tue, 12 Nov 2024 11:20:41 +0100
+Message-ID: <20241112101845.265093080@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -51,69 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
 
-[ Upstream commit 4d6d26537940f3b3e17138987ed9e4a334780bf7 ]
+[ Upstream commit 64502dac974a5d9951d16015fa2e16a14e5f2bb2 ]
 
-The c_can_handle_bus_err() function was incorrectly incrementing only the
-receive error counter, even in cases of bit or acknowledgment errors that
-occur during transmission. The patch fixes the issue by incrementing the
-appropriate counter based on the type of error.
+Fix Flow Director not allowing to re-map traffic to 0th queue when action
+is configured to drop (and vice versa).
 
-Fixes: 881ff67ad450 ("can: c_can: Added support for Bosch C_CAN controller")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Link: https://patch.msgid.link/20241014135319.2009782-1-dario.binacchi@amarulasolutions.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+The current implementation of ethtool callback in the ice driver forbids
+change Flow Director action from 0 to -1 and from -1 to 0 with an error,
+e.g:
+
+ # ethtool -U eth2 flow-type tcp4 src-ip 1.1.1.1 loc 1 action 0
+ # ethtool -U eth2 flow-type tcp4 src-ip 1.1.1.1 loc 1 action -1
+ rmgr: Cannot insert RX class rule: Invalid argument
+
+We set the value of `u16 q_index = 0` at the beginning of the function
+ice_set_fdir_input_set(). In case of "drop traffic" action (which is
+equal to -1 in ethtool) we store the 0 value. Later, when want to change
+traffic rule to redirect to queue with index 0 it returns an error
+caused by duplicate found.
+
+Fix this behaviour by change of the type of field `q_index` from u16 to s16
+in `struct ice_fdir_fltr`. This allows to store -1 in the field in case
+of "drop traffic" action. What is more, change the variable type in the
+function ice_set_fdir_input_set() and assign at the beginning the new
+`#define ICE_FDIR_NO_QUEUE_IDX` which is -1. Later, if the action is set
+to another value (point specific queue index) the variable value is
+overwritten in the function.
+
+Fixes: cac2a27cd9ab ("ice: Support IPv4 Flow Director filters")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/c_can/c_can_main.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c | 3 ++-
+ drivers/net/ethernet/intel/ice/ice_fdir.h         | 4 +++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/can/c_can/c_can_main.c b/drivers/net/can/c_can/c_can_main.c
-index c63f7fc1e6917..511615dc33419 100644
---- a/drivers/net/can/c_can/c_can_main.c
-+++ b/drivers/net/can/c_can/c_can_main.c
-@@ -1011,7 +1011,6 @@ static int c_can_handle_bus_err(struct net_device *dev,
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c b/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
+index 1839a37139dc1..b6bbf2376ef5c 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
+@@ -1694,11 +1694,12 @@ static int
+ ice_set_fdir_input_set(struct ice_vsi *vsi, struct ethtool_rx_flow_spec *fsp,
+ 		       struct ice_fdir_fltr *input)
+ {
+-	u16 dest_vsi, q_index = 0;
++	s16 q_index = ICE_FDIR_NO_QUEUE_IDX;
+ 	u16 orig_q_index = 0;
+ 	struct ice_pf *pf;
+ 	struct ice_hw *hw;
+ 	int flow_type;
++	u16 dest_vsi;
+ 	u8 dest_ctl;
  
- 	/* common for all type of bus errors */
- 	priv->can.can_stats.bus_error++;
--	stats->rx_errors++;
+ 	if (!vsi || !fsp || !input)
+diff --git a/drivers/net/ethernet/intel/ice/ice_fdir.h b/drivers/net/ethernet/intel/ice/ice_fdir.h
+index b384d2a4ab198..063ea3d516532 100644
+--- a/drivers/net/ethernet/intel/ice/ice_fdir.h
++++ b/drivers/net/ethernet/intel/ice/ice_fdir.h
+@@ -50,6 +50,8 @@
+  */
+ #define ICE_FDIR_IPV4_PKT_FLAG_MF		0x20
  
- 	/* propagate the error condition to the CAN stack */
- 	skb = alloc_can_err_skb(dev, &cf);
-@@ -1027,26 +1026,32 @@ static int c_can_handle_bus_err(struct net_device *dev,
- 	case LEC_STUFF_ERROR:
- 		netdev_dbg(dev, "stuff error\n");
- 		cf->data[2] |= CAN_ERR_PROT_STUFF;
-+		stats->rx_errors++;
- 		break;
- 	case LEC_FORM_ERROR:
- 		netdev_dbg(dev, "form error\n");
- 		cf->data[2] |= CAN_ERR_PROT_FORM;
-+		stats->rx_errors++;
- 		break;
- 	case LEC_ACK_ERROR:
- 		netdev_dbg(dev, "ack error\n");
- 		cf->data[3] = CAN_ERR_PROT_LOC_ACK;
-+		stats->tx_errors++;
- 		break;
- 	case LEC_BIT1_ERROR:
- 		netdev_dbg(dev, "bit1 error\n");
- 		cf->data[2] |= CAN_ERR_PROT_BIT1;
-+		stats->tx_errors++;
- 		break;
- 	case LEC_BIT0_ERROR:
- 		netdev_dbg(dev, "bit0 error\n");
- 		cf->data[2] |= CAN_ERR_PROT_BIT0;
-+		stats->tx_errors++;
- 		break;
- 	case LEC_CRC_ERROR:
- 		netdev_dbg(dev, "CRC error\n");
- 		cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
-+		stats->rx_errors++;
- 		break;
- 	default:
- 		break;
++#define ICE_FDIR_NO_QUEUE_IDX			-1
++
+ enum ice_fltr_prgm_desc_dest {
+ 	ICE_FLTR_PRGM_DESC_DEST_DROP_PKT,
+ 	ICE_FLTR_PRGM_DESC_DEST_DIRECT_PKT_QINDEX,
+@@ -181,7 +183,7 @@ struct ice_fdir_fltr {
+ 	u16 flex_fltr;
+ 
+ 	/* filter control */
+-	u16 q_index;
++	s16 q_index;
+ 	u16 orig_q_index;
+ 	u16 dest_vsi;
+ 	u8 dest_ctl;
 -- 
 2.43.0
 
