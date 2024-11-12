@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4B7217666;
-	Tue, 12 Nov 2024 10:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63862141DB;
+	Tue, 12 Nov 2024 10:41:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408100; cv=none; b=gUZOrlQ5oWCMYr9QsnUE+gFMNZA4t6MlrduaedqJvsosMg6R4wCZrmp/Om8KqykcHxEws7odHgs2Fuga3yXZtyqlP4MviMOm6LPWFYtAVx3Zy8zqVX0KdI2is5RS6wmvC9lxJq5Co3tocQSvgohbYGqJZZ0EquryBsLOdix7Qfg=
+	t=1731408103; cv=none; b=tp5DHh6AGQEFcXGcrrexstrRYU+/jEc6p2e8AC7grFl5muEc+POqN10+FR3Fc0BGhyAwYWc+WXyKuhfecxZxeh09XbVsofOTCpbuyRGQK0SrpY9G68ho+u0WxMFwedruO14YmuqPBQIfcmRJeZudLvpe7vAidLAN7sPBEkh3oT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408100; c=relaxed/simple;
-	bh=hYxR2kIA0+O76kmhsUBDvC3tX/fr5b4zFyKtlJnas6k=;
+	s=arc-20240116; t=1731408103; c=relaxed/simple;
+	bh=yVdLX32m1p8Om2pSpay/lNqkLjyFyeeTkEzDXmUOtg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nt/fYPQjHP5lLyRFmj+V8Wbx3itSq2ZV3Wj4pEWjBDUtBfHvr8DcbdZq+zEAqfJpjfmxrlKLXZePPQc1/wa8sqJsuE4KWPDJ13VtqO5xneyNyRSy1eq3tjqXbBpbfZ4AP6CknJ9Fb+ynSzBQOyx84btwl5ptDN3AQFAETeZ9oJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=StbrRQn+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bo6MIi5jJZEmm/nfxHzAu7/BsiWAA4WRTHDgM9FyweW4PJ/wQJpU3jEFCkiaXXQDzto8YgxA7eluP8ONpuoEeWtR8pkLr5WAWgqfbe6p7E5I+I2PPhgyTH9hxd2lQE3nA64v8VbMfpPcvkqoBN4WYBla0MYIfxy3FrbSBeo2yWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ondsRjIP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="StbrRQn+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48CADC4CECD;
-	Tue, 12 Nov 2024 10:41:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ondsRjIP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CFBC4CECD;
+	Tue, 12 Nov 2024 10:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408100;
-	bh=hYxR2kIA0+O76kmhsUBDvC3tX/fr5b4zFyKtlJnas6k=;
+	s=korg; t=1731408103;
+	bh=yVdLX32m1p8Om2pSpay/lNqkLjyFyeeTkEzDXmUOtg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=StbrRQn+k0GI/aQHR4ttoZE3ZJ+rJeZKkPE8HLZw2NAf5qaaVLSCa9yvfpxhKapQ2
-	 xYMg7x0YVe68qhXRHCYdadVOneMTU4N6EAV4zskrEPUdCdNNn7QLICUFh6VqYlM6cP
-	 xSPJUB8N4LIMrP+MNJpxushVT5YapKBNciiZrjWk=
+	b=ondsRjIP4m1E7KI9yxVNe35tKhcN4+n6KovaJDO4vITAiwkTwfaYSBOmAwZk+bt7W
+	 XmBpbP2HTZowwG4n1ULZ2GJMQAc3Whyl29OYc6KLnR59SwokY0DOMix/kr18H7mWrU
+	 gL59QGK0/yE4JB6MqlUjyVFR9at4b36AZpGWatTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philo Lu <lulie@linux.alibaba.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Caesar Wang <wxt@rock-chips.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 058/184] virtio_net: Update rss when set queue
-Date: Tue, 12 Nov 2024 11:20:16 +0100
-Message-ID: <20241112101903.089323040@linuxfoundation.org>
+Subject: [PATCH 6.11 029/184] ARM: dts: rockchip: Fix the spi controller on rk3036
+Date: Tue, 12 Nov 2024 11:19:47 +0100
+Message-ID: <20241112101901.985348046@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -53,138 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philo Lu <lulie@linux.alibaba.com>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 50bfcaedd78e53135ec0504302269b3b65bf1eff ]
+[ Upstream commit 8bade1ad1f0821aef31f6a8fb1027ae292566d85 ]
 
-RSS configuration should be updated with queue number. In particular, it
-should be updated when (1) rss enabled and (2) default rss configuration
-is used without user modification.
+Compatible and clock names did not match the existing binding.
+So set the correct values and re-order+rename the clocks.
 
-During rss command processing, device updates queue_pairs using
-rss.max_tx_vq. That is, the device updates queue_pairs together with
-rss, so we can skip the sperate queue_pairs update
-(VIRTIO_NET_CTRL_MQ_VQ_PAIRS_SET below) and return directly.
+It looks like no rk3036 board did use the spi controller so far,
+so this was never detected on a running device yet.
 
-Also remove the `vi->has_rss ?` check when setting vi->rss.max_tx_vq,
-because this is not used in the other hash_report case.
-
-Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
-Signed-off-by: Philo Lu <lulie@linux.alibaba.com>
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f629fcfab2cd ("ARM: dts: rockchip: support the spi for rk3036")
+Cc: Caesar Wang <wxt@rock-chips.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20241008203940.2573684-14-heiko@sntech.de
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 65 +++++++++++++++++++++++++++++++---------
- 1 file changed, 51 insertions(+), 14 deletions(-)
+ arch/arm/boot/dts/rockchip/rk3036.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index b3232b8baa256..53a038fcbe991 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3394,15 +3394,59 @@ static void virtnet_ack_link_announce(struct virtnet_info *vi)
- 		dev_warn(&vi->dev->dev, "Failed to ack link announce.\n");
- }
+diff --git a/arch/arm/boot/dts/rockchip/rk3036.dtsi b/arch/arm/boot/dts/rockchip/rk3036.dtsi
+index 09371f07d7b4b..63b9912be06a7 100644
+--- a/arch/arm/boot/dts/rockchip/rk3036.dtsi
++++ b/arch/arm/boot/dts/rockchip/rk3036.dtsi
+@@ -553,11 +553,11 @@
+ 	};
  
-+static bool virtnet_commit_rss_command(struct virtnet_info *vi);
-+
-+static void virtnet_rss_update_by_qpairs(struct virtnet_info *vi, u16 queue_pairs)
-+{
-+	u32 indir_val = 0;
-+	int i = 0;
-+
-+	for (; i < vi->rss_indir_table_size; ++i) {
-+		indir_val = ethtool_rxfh_indir_default(i, queue_pairs);
-+		vi->rss.indirection_table[i] = indir_val;
-+	}
-+	vi->rss.max_tx_vq = queue_pairs;
-+}
-+
- static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
- {
- 	struct virtio_net_ctrl_mq *mq __free(kfree) = NULL;
--	struct scatterlist sg;
-+	struct virtio_net_ctrl_rss old_rss;
- 	struct net_device *dev = vi->dev;
-+	struct scatterlist sg;
- 
- 	if (!vi->has_cvq || !virtio_has_feature(vi->vdev, VIRTIO_NET_F_MQ))
- 		return 0;
- 
-+	/* Firstly check if we need update rss. Do updating if both (1) rss enabled and
-+	 * (2) no user configuration.
-+	 *
-+	 * During rss command processing, device updates queue_pairs using rss.max_tx_vq. That is,
-+	 * the device updates queue_pairs together with rss, so we can skip the sperate queue_pairs
-+	 * update (VIRTIO_NET_CTRL_MQ_VQ_PAIRS_SET below) and return directly.
-+	 */
-+	if (vi->has_rss && !netif_is_rxfh_configured(dev)) {
-+		memcpy(&old_rss, &vi->rss, sizeof(old_rss));
-+		if (rss_indirection_table_alloc(&vi->rss, vi->rss_indir_table_size)) {
-+			vi->rss.indirection_table = old_rss.indirection_table;
-+			return -ENOMEM;
-+		}
-+
-+		virtnet_rss_update_by_qpairs(vi, queue_pairs);
-+
-+		if (!virtnet_commit_rss_command(vi)) {
-+			/* restore ctrl_rss if commit_rss_command failed */
-+			rss_indirection_table_free(&vi->rss);
-+			memcpy(&vi->rss, &old_rss, sizeof(old_rss));
-+
-+			dev_warn(&dev->dev, "Fail to set num of queue pairs to %d, because committing RSS failed\n",
-+				 queue_pairs);
-+			return -EINVAL;
-+		}
-+		rss_indirection_table_free(&old_rss);
-+		goto succ;
-+	}
-+
- 	mq = kzalloc(sizeof(*mq), GFP_KERNEL);
- 	if (!mq)
- 		return -ENOMEM;
-@@ -3415,12 +3459,12 @@ static int virtnet_set_queues(struct virtnet_info *vi, u16 queue_pairs)
- 		dev_warn(&dev->dev, "Fail to set num of queue pairs to %d\n",
- 			 queue_pairs);
- 		return -EINVAL;
--	} else {
--		vi->curr_queue_pairs = queue_pairs;
--		/* virtnet_open() will refill when device is going to up. */
--		if (dev->flags & IFF_UP)
--			schedule_delayed_work(&vi->refill, 0);
- 	}
-+succ:
-+	vi->curr_queue_pairs = queue_pairs;
-+	/* virtnet_open() will refill when device is going to up. */
-+	if (dev->flags & IFF_UP)
-+		schedule_delayed_work(&vi->refill, 0);
- 
- 	return 0;
- }
-@@ -3880,21 +3924,14 @@ static bool virtnet_commit_rss_command(struct virtnet_info *vi)
- 
- static void virtnet_init_default_rss(struct virtnet_info *vi)
- {
--	u32 indir_val = 0;
--	int i = 0;
--
- 	vi->rss.hash_types = vi->rss_hash_types_supported;
- 	vi->rss_hash_types_saved = vi->rss_hash_types_supported;
- 	vi->rss.indirection_table_mask = vi->rss_indir_table_size
- 						? vi->rss_indir_table_size - 1 : 0;
- 	vi->rss.unclassified_queue = 0;
- 
--	for (; i < vi->rss_indir_table_size; ++i) {
--		indir_val = ethtool_rxfh_indir_default(i, vi->curr_queue_pairs);
--		vi->rss.indirection_table[i] = indir_val;
--	}
-+	virtnet_rss_update_by_qpairs(vi, vi->curr_queue_pairs);
- 
--	vi->rss.max_tx_vq = vi->has_rss ? vi->curr_queue_pairs : 0;
- 	vi->rss.hash_key_length = vi->rss_key_size;
- 
- 	netdev_rss_key_fill(vi->rss.key, vi->rss_key_size);
+ 	spi: spi@20074000 {
+-		compatible = "rockchip,rockchip-spi";
++		compatible = "rockchip,rk3036-spi";
+ 		reg = <0x20074000 0x1000>;
+ 		interrupts = <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
+-		clocks = <&cru PCLK_SPI>, <&cru SCLK_SPI>;
+-		clock-names = "apb-pclk","spi_pclk";
++		clocks = <&cru SCLK_SPI>, <&cru PCLK_SPI>;
++		clock-names = "spiclk", "apb_pclk";
+ 		dmas = <&pdma 8>, <&pdma 9>;
+ 		dma-names = "tx", "rx";
+ 		pinctrl-names = "default";
 -- 
 2.43.0
 
