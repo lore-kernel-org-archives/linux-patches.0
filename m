@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056F220B801;
-	Tue, 12 Nov 2024 10:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21C81CBE8F;
+	Tue, 12 Nov 2024 10:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407726; cv=none; b=MlXWI5lQcErbjgblM/5hug/ZRrv3so4q4AWQd5R6R7V2miJuTktHgJv6HRQ9/tWSYxWW03wvsQ5glYOm5u0STT+gA1EDrJW+X4mZw0GIOlN/dJNoZIGiSfJiGhblw6sAJuiyTNjTT58M6wN/ian20gEBwrMYFqKIZIqFS1Z+/Tw=
+	t=1731407729; cv=none; b=T1ZTTfNso7eoJMQwgsa7hg5l/hmr+lNCZQa7vUCj2NACmLyhVOBTIwdD5rQIT8/rluG5KFAep80fu65PdH03BNSFZk8aD1rG23cnbzk8R0JuVO2pTP+cPRq3kZln+ZLTndJRZYGKrD8nQmkFHIrXaPMoJ1wr3+QbSgBPn/kW+Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407726; c=relaxed/simple;
-	bh=nVvERhfw67x+/ONEHN1RggHSp/cYnFPpLnNF//KsJI8=;
+	s=arc-20240116; t=1731407729; c=relaxed/simple;
+	bh=bwD5icwAZDgihN2Jxg8m0UwQp1Id+Kf3+8E6W3DhsoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPfgyAzPTQPUu/ZkSGtMvm6Is99xl60zIlGwxjqtmjO+UcLMoe63NJtDyIALCQKg6dGpHH9+M7O5/L8ENYpqZppdKhf3Aren2FQmL57pCEZo+xPKY8LKPK1xK6VZs4vUFlnMOfmiTaKFGBd2Ie9Wux4WBFmP5oTEKXtJdnX/U5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTadBBLt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LgLXZj55mcM5g6Y9Yk+1Eot9F39ERxvW08z3C8NyL54qYmgpOVSK489x1h/zCMnCJmJ/sIOt1DzILyXJF+p3udGBrOcoQC2ydrwHxJ3nGVhXhX0FL3hqsctLBJVpQ26hHib3yImI+F2Ug6M7Iotadjz37Q8JM5olZ9fq//ic4go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0KRGmy+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTadBBLt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF03C4CED4;
-	Tue, 12 Nov 2024 10:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0KRGmy+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E27C4CECD;
+	Tue, 12 Nov 2024 10:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407725;
-	bh=nVvERhfw67x+/ONEHN1RggHSp/cYnFPpLnNF//KsJI8=;
+	s=korg; t=1731407729;
+	bh=bwD5icwAZDgihN2Jxg8m0UwQp1Id+Kf3+8E6W3DhsoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bTadBBLtkNl85WbqoWjM7wk2Fd+vbjnzYg7xICykGEDHDfn2qNvxxNb2RavWOuxyr
-	 1z28/cHKCoRE7w5QWKqg9oEpMAzOUyeUZQYm+YCe9/NgsZkeC6MoGvUeHFUcboVIm2
-	 G07VEgk7ZlK8iZUsD6zbaXK8CPs3Xey7M3qXNyW4=
+	b=g0KRGmy+4WtGTAIe2gMcM+ykqdpUKYxZMy9wl6IxBtLow4JMvw4+F7l0dcXblvm9w
+	 gz6rsxVIiBSF8EAM2jaliPu7eUHn+mcvrq37TQdAHe+c/UKYFHecslu0HS/IGdw7Go
+	 jr5Dpfsa6QJMAYpPjfeCYNwMrkwd+zGQsV5ZMrgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
+	Suraj Gupta <suraj.gupta2@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/119] net: enetc: set MAC address to the VF net_device
-Date: Tue, 12 Nov 2024 11:20:39 +0100
-Message-ID: <20241112101849.903021473@linuxfoundation.org>
+Subject: [PATCH 6.6 032/119] dt-bindings: net: xlnx,axi-ethernet: Correct phy-mode property value
+Date: Tue, 12 Nov 2024 11:20:40 +0100
+Message-ID: <20241112101849.940775288@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -53,64 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Suraj Gupta <suraj.gupta2@amd.com>
 
-[ Upstream commit badccd49b93bb945bf4e5cc8707db67cdc5e27e5 ]
+[ Upstream commit b2183187c5fd30659b9caccb92f7e5e680301769 ]
 
-The MAC address of VF can be configured through the mailbox mechanism of
-ENETC, but the previous implementation forgot to set the MAC address in
-net_device, resulting in the SMAC of the sent frames still being the old
-MAC address. Since the MAC address in the hardware has been changed, Rx
-cannot receive frames with the DMAC address as the new MAC address. The
-most obvious phenomenon is that after changing the MAC address, we can
-see that the MAC address of eno0vf0 has not changed through the "ifconfig
-eno0vf0" command and the IP address cannot be obtained .
+Correct phy-mode property value to 1000base-x.
 
-root@ls1028ardb:~# ifconfig eno0vf0 down
-root@ls1028ardb:~# ifconfig eno0vf0 hw ether 00:04:9f:3a:4d:56 up
-root@ls1028ardb:~# ifconfig eno0vf0
-eno0vf0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        ether 66:36:2c:3b:87:76  txqueuelen 1000  (Ethernet)
-        RX packets 794  bytes 69239 (69.2 KB)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 11  bytes 2226 (2.2 KB)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-Fixes: beb74ac878c8 ("enetc: Add vf to pf messaging support")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
-Link: https://patch.msgid.link/20241029090406.841836-1-wei.fang@nxp.com
+Fixes: cbb1ca6d5f9a ("dt-bindings: net: xlnx,axi-ethernet: convert bindings document to yaml")
+Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://patch.msgid.link/20241028091214.2078726-1-suraj.gupta2@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_vf.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/net/xlnx,axi-ethernet.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_vf.c b/drivers/net/ethernet/freescale/enetc/enetc_vf.c
-index dfcaac302e245..b15db70769e5e 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_vf.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_vf.c
-@@ -78,11 +78,18 @@ static int enetc_vf_set_mac_addr(struct net_device *ndev, void *addr)
- {
- 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
- 	struct sockaddr *saddr = addr;
-+	int err;
+diff --git a/Documentation/devicetree/bindings/net/xlnx,axi-ethernet.yaml b/Documentation/devicetree/bindings/net/xlnx,axi-ethernet.yaml
+index 652d696bc9e90..f0d98c4705856 100644
+--- a/Documentation/devicetree/bindings/net/xlnx,axi-ethernet.yaml
++++ b/Documentation/devicetree/bindings/net/xlnx,axi-ethernet.yaml
+@@ -61,7 +61,7 @@ properties:
+       - gmii
+       - rgmii
+       - sgmii
+-      - 1000BaseX
++      - 1000base-x
  
- 	if (!is_valid_ether_addr(saddr->sa_data))
- 		return -EADDRNOTAVAIL;
- 
--	return enetc_msg_vsi_set_primary_mac_addr(priv, saddr);
-+	err = enetc_msg_vsi_set_primary_mac_addr(priv, saddr);
-+	if (err)
-+		return err;
-+
-+	eth_hw_addr_set(ndev, saddr->sa_data);
-+
-+	return 0;
- }
- 
- static int enetc_vf_set_features(struct net_device *ndev,
+   xlnx,phy-type:
+     description:
 -- 
 2.43.0
 
