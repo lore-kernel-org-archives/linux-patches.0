@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546E120ADFD;
-	Tue, 12 Nov 2024 10:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2811A76C7;
+	Tue, 12 Nov 2024 10:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407606; cv=none; b=mp9YJkXdKWA608YoqG9avc0J/aFzGZO5/dbi6REziXhcfBUie52SZrTLUDtNmlo46N37Yno+Kv8gKa17ZU0gNx8J9WJAbzFuEfF+D5Ud2Ib7JlluxwqFDVE7WDaGZUJu9gJOrv4DeosUz8/Vv0acCoTsRbeox7OgNkon6csZWFQ=
+	t=1731407609; cv=none; b=kdVm2fYJckiG0dfERa0fX/2PL/TI4rFoaD1IDAL1KM+mYN9WKCGDB3cKp3AMVyYAZIKBo3cnAFVr7GdtfkDUcRG/WlzlOGgDUNH5TgTFO73Sh8r37Y6/N5IgEUut8gGp1Uf6DhsOY7w7cshhctZmL5aWhZZrsijLTYXFQ7Dze/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407606; c=relaxed/simple;
-	bh=PRDqa0UV+UaF4LARxOZ9h+c7bUVJYSarfRMKE4m7XOM=;
+	s=arc-20240116; t=1731407609; c=relaxed/simple;
+	bh=k/tEiuPHV0h+Wdsei/jqlfBgbeh1c2v+OkxbDjS+l/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j81vGE7KfBGGnd6bNlly8vHFaN9P1oFIZFpqM8D6nusSD29LzwMqT9tqkrOYk96rdHS8Y3fwbgxC3Zz4Na+W1LWPWHRjBoZBZRwsbAjomfjDpDh4cZTVCpc7vi83kiYtzWr0jMyc6vWz2TR67xbmuQZ9avmaefa0TxZG+yMySZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEnn4ks/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qwov/lfkeUlrCMsR6FmY1RB/cQoexJid6ISkg5nQzaFa+qZR6fqj7SMidjdCk2AzqG/R/IOkVsFxzRv5lVoMvawd1Cmu5u4efOmXUKb/PUtV7mdvm3eWgAQGnt8Ey5tKUGOJ0R0Yh2s0nYi/wIdLXmri5Yk/YczYRrO8DhoA8R8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7j/zA+l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEnn4ks/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA332C4CECD;
-	Tue, 12 Nov 2024 10:33:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7j/zA+l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A268C4CECD;
+	Tue, 12 Nov 2024 10:33:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407606;
-	bh=PRDqa0UV+UaF4LARxOZ9h+c7bUVJYSarfRMKE4m7XOM=;
+	s=korg; t=1731407609;
+	bh=k/tEiuPHV0h+Wdsei/jqlfBgbeh1c2v+OkxbDjS+l/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vEnn4ks/cXfUoYlbCS2h4ALhOgxshyobOJBkMIhVIBg+indLVndJn4gyjSxnFsjiz
-	 tikJJ1w2cBp1sDykIJDLmRLspC9gBySc+o286dFEhFnQekrD4Sj+rVDp82nVsQJUsx
-	 e8QkKu+Gg8nZOOIXypxMW0tdyvOTmv2dx0kOBNws=
+	b=m7j/zA+l8ABILQf83P+aNYV7B4eFS0anjCpoMm9y+d9QwgMuYIYxjW7GMbBpMy5wE
+	 +seuu/TbEtB+Kz1RCONKF2Dfba73hsLssVmrCQnRRQYA9EJAQkZtF98sX9xypBY2nV
+	 WapfGtafd5LkqdjV/UtAEfx4cQ4pQv4V8PMm41Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Morgan <macromorgan@hotmail.com>,
+	Andy Yan <andyshrk@163.com>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 006/119] arm64: dts: rockchip: fix i2c2 pinctrl-names property on anbernic-rg353p/v
-Date: Tue, 12 Nov 2024 11:20:14 +0100
-Message-ID: <20241112101848.957891163@linuxfoundation.org>
+Subject: [PATCH 6.6 007/119] arm64: dts: rockchip: Fix bluetooth properties on rk3566 box demo
+Date: Tue, 12 Nov 2024 11:20:15 +0100
+Message-ID: <20241112101848.995014582@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -54,54 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit f94b934336e30cebae75d4fbe04a2109a3c8fdec ]
+[ Upstream commit 2fa98dcc8d3ea2ebbd9e6be778f8bb19231c28be ]
 
-We want to control pins, not beer mugs, so rename pintctrl-names to the
-expected pinctrl-names.
+The expected clock-name is different, and extclk also is deprecated
+in favor of txco for clocks that are not crystals.
 
-This was not affecting functionality, because the i2c2 controller
-already had a set of pinctrl properties.
+The wakeup gpio properties are named differently too, when changing
+from vendor-tree to mainline. So fix those to match the binding.
 
-Fixes: 523adb553573 ("arm64: dts: rockchip: add Anbernic RG353P and RG503")
-Fixes: 1e141cf12726 ("arm64: dts: rockchip: add Anbernic RG353V and RG353VS")
-Cc: Chris Morgan <macromorgan@hotmail.com>
-Acked-by: Chris Morgan <macromorgan@hotmail.com>
+Fixes: 2e0537b16b25 ("arm64: dts: rockchip: Add dts for rockchip rk3566 box demo board")
+Cc: Andy Yan <andyshrk@163.com>
 Reviewed-by: Dragan Simic <dsimic@manjaro.org>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20241008203940.2573684-2-heiko@sntech.de
+Link: https://lore.kernel.org/r/20241008203940.2573684-4-heiko@sntech.de
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-anbernic-rg353p.dts | 2 +-
- arch/arm64/boot/dts/rockchip/rk3566-anbernic-rg353v.dts | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3566-box-demo.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rg353p.dts b/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rg353p.dts
-index 8aa93c646becf..5f1b12166231f 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rg353p.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rg353p.dts
-@@ -92,7 +92,7 @@
- };
- 
- &i2c2 {
--	pintctrl-names = "default";
-+	pinctrl-names = "default";
- 	pinctrl-0 = <&i2c2m1_xfer>;
- 	status = "okay";
- 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rg353v.dts b/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rg353v.dts
-index f49ce29ba5977..2957529a27486 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rg353v.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-anbernic-rg353v.dts
-@@ -79,7 +79,7 @@
- };
- 
- &i2c2 {
--	pintctrl-names = "default";
-+	pinctrl-names = "default";
- 	pinctrl-0 = <&i2c2m1_xfer>;
- 	status = "okay";
- 
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-box-demo.dts b/arch/arm64/boot/dts/rockchip/rk3566-box-demo.dts
+index 0c18406e4c597..7d46809338239 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-box-demo.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-box-demo.dts
+@@ -449,9 +449,9 @@
+ 	bluetooth {
+ 		compatible = "brcm,bcm43438-bt";
+ 		clocks = <&pmucru CLK_RTC_32K>;
+-		clock-names = "ext_clock";
+-		device-wake-gpios = <&gpio2 RK_PC1 GPIO_ACTIVE_HIGH>;
+-		host-wake-gpios = <&gpio2 RK_PC0 GPIO_ACTIVE_HIGH>;
++		clock-names = "txco";
++		device-wakeup-gpios = <&gpio2 RK_PC1 GPIO_ACTIVE_HIGH>;
++		host-wakeup-gpios = <&gpio2 RK_PC0 GPIO_ACTIVE_HIGH>;
+ 		shutdown-gpios = <&gpio2 RK_PB7 GPIO_ACTIVE_HIGH>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&bt_host_wake_l &bt_wake_l &bt_enable_h>;
 -- 
 2.43.0
 
