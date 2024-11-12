@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DEB21314F;
-	Tue, 12 Nov 2024 10:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459A821A4A8;
+	Tue, 12 Nov 2024 10:46:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408406; cv=none; b=IBVKQfrFkSIfIrKZJrDHn7jZNSkASJ7XjLdAXFawfN0vaQVzUROLNYSSxyFBDB6vHDg6t+IgpxXSugYSdTPzyjwpdKpDZ2o9QLHRKCjuWnm909jepCgpCBJBLhqI/uJ+bSm2YNR67OHHErjNkCdKwX1AhBnLro6VQExNG/rDSCM=
+	t=1731408410; cv=none; b=hq2gKrncr4L+jFz7yzPhyTESuBL0NcXUfY8QQEzl29CLPnTkCNIr/TZ/vmf0n8KgutTU/wQ1bLhTTtuIemS2twp2tUDabVzMAXWTGZI1mc2jnkOzWqWRWVrmqw5wj71D87o0gaVqgVy8ogCkqkEn4IyPDgGKAg8orG4iDiWP3XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408406; c=relaxed/simple;
-	bh=KQU+xeVo2m4irx5Z0YlfjuoqAXYkz4JRgnBneQ4mKXY=;
+	s=arc-20240116; t=1731408410; c=relaxed/simple;
+	bh=vebtC8gsDeDkeTGyoVSJZEAGpJtibkID2S5awxko8fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GvuhWy8/13Pwfq9mQuBeAL9eFReneOJMzP+Aq8BcxjGT2dDfigmS+gfM6YaANXIibKesKYssZiR8P++Jsj5SCuYviOIvc5ikTETERvJzUMm0gn6fgh3tTZiZhehFVVhDPXy/IHmfTh5T74k4g/Xon9SlNGyEZ4FOWhGFvC+3lq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEWI4cUq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ct8O15TQ7LSBe60CW1D2pc94Aoe4ELskkIi151XufTBK7ZbNsuD320Nx0L7/4NyMDB/1hS5jGqM9WRjLChCLKnbkJV9GA5GN1XwEKjMo3i7hggnjTUQXEugYQjQ2pFZdUY0MoZFHDVV0vlvgLDl0DjL+SEIm00Du6+OETVjkIrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zo0BQyXV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEWI4cUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD12C4CECD;
-	Tue, 12 Nov 2024 10:46:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zo0BQyXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA5CC4CECD;
+	Tue, 12 Nov 2024 10:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408406;
-	bh=KQU+xeVo2m4irx5Z0YlfjuoqAXYkz4JRgnBneQ4mKXY=;
+	s=korg; t=1731408410;
+	bh=vebtC8gsDeDkeTGyoVSJZEAGpJtibkID2S5awxko8fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WEWI4cUqDr8UsiUINcsL4Ot4BNkJSgfIfoteECN7jJ0k2FCZ9XQ1clzGVwtYfnnPf
-	 xPYVxF3cfNveBqWYkxc2y3JGoghvAWHrK+m0xVmFrzwP0FEQLRE3LrsdQdEBgFDdUa
-	 f4MqmA4Z4kPUDtuavAVkQ1C6li9+fpfLmcRFmEvM=
+	b=Zo0BQyXVj8LPsRtQwFnSmzIko/6i2QgN06eOp+RbZR7gxh4N8v7gOVuYKMv9yU3lF
+	 urGwyWrL3aiH5/PBYjP2b+bREeWAPGA9Q/yaOuYl1Tt6+hOWddqRDX9/oT8UyqN6hU
+	 TbhwMGvuxsoXcVDSKF8seb7GVLTheaH15bFjh+xM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Jann Horn <jannh@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.11 152/184] mm/damon/core: handle zero schemes apply interval
-Date: Tue, 12 Nov 2024 11:21:50 +0100
-Message-ID: <20241112101906.704615700@linuxfoundation.org>
+Subject: [PATCH 6.11 153/184] mm/mlock: set the correct prev on failure
+Date: Tue, 12 Nov 2024 11:21:51 +0100
+Message-ID: <20241112101906.742717262@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -50,70 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-commit 8e7bde615f634a82a44b1f3d293c049fd3ef9ca9 upstream.
+commit faa242b1d2a97143150bdc50d5b61fd70fcd17cd upstream.
 
-DAMON's logics to determine if this is the time to apply damos schemes
-assumes next_apply_sis is always set larger than current
-passed_sample_intervals.  And therefore assume continuously incrementing
-passed_sample_intervals will make it reaches to the next_apply_sis in
-future.  The logic hence does apply the scheme and update next_apply_sis
-only if passed_sample_intervals is same to next_apply_sis.
+After commit 94d7d9233951 ("mm: abstract the vma_merge()/split_vma()
+pattern for mprotect() et al."), if vma_modify_flags() return error, the
+vma is set to an error code.  This will lead to an invalid prev be
+returned.
 
-If Schemes apply interval is set as zero, however, next_apply_sis is set
-same to current passed_sample_intervals, respectively.  And
-passed_sample_intervals is incremented before doing the next_apply_sis
-check.  Hence, next_apply_sis becomes larger than next_apply_sis, and the
-logic says it is not the time to apply schemes and update next_apply_sis.
-In other words, DAMON stops applying schemes until passed_sample_intervals
-overflows.
+Generally this shouldn't matter as the caller should treat an error as
+indicating state is now invalidated, however unfortunately
+apply_mlockall_flags() does not check for errors and assumes that
+mlock_fixup() correctly maintains prev even if an error were to occur.
 
-Based on the documents and the common sense, a reasonable behavior for
-such inputs would be applying the schemes for every sampling interval.
-Handle the case by removing the assumption.
+This patch fixes that assumption.
 
-Link: https://lkml.kernel.org/r/20241031183757.49610-3-sj@kernel.org
-Fixes: 42f994b71404 ("mm/damon/core: implement scheme-specific apply interval")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.7.x]
+[lorenzo.stoakes@oracle.com: provide a better fix and rephrase the log]
+Link: https://lkml.kernel.org/r/20241027123321.19511-1-richard.weiyang@gmail.com
+Fixes: 94d7d9233951 ("mm: abstract the vma_merge()/split_vma() pattern for mprotect() et al.")
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ mm/mlock.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1406,7 +1406,7 @@ static void damon_do_apply_schemes(struc
- 	damon_for_each_scheme(s, c) {
- 		struct damos_quota *quota = &s->quota;
- 
--		if (c->passed_sample_intervals != s->next_apply_sis)
-+		if (c->passed_sample_intervals < s->next_apply_sis)
- 			continue;
- 
- 		if (!s->wmarks.activated)
-@@ -1627,7 +1627,7 @@ static void kdamond_apply_schemes(struct
- 	bool has_schemes_to_apply = false;
- 
- 	damon_for_each_scheme(s, c) {
--		if (c->passed_sample_intervals != s->next_apply_sis)
-+		if (c->passed_sample_intervals < s->next_apply_sis)
- 			continue;
- 
- 		if (!s->wmarks.activated)
-@@ -1647,9 +1647,9 @@ static void kdamond_apply_schemes(struct
+diff --git a/mm/mlock.c b/mm/mlock.c
+index e3e3dc2b2956..cde076fa7d5e 100644
+--- a/mm/mlock.c
++++ b/mm/mlock.c
+@@ -725,14 +725,17 @@ static int apply_mlockall_flags(int flags)
  	}
  
- 	damon_for_each_scheme(s, c) {
--		if (c->passed_sample_intervals != s->next_apply_sis)
-+		if (c->passed_sample_intervals < s->next_apply_sis)
- 			continue;
--		s->next_apply_sis +=
-+		s->next_apply_sis = c->passed_sample_intervals +
- 			(s->apply_interval_us ? s->apply_interval_us :
- 			 c->attrs.aggr_interval) / sample_interval;
+ 	for_each_vma(vmi, vma) {
++		int error;
+ 		vm_flags_t newflags;
+ 
+ 		newflags = vma->vm_flags & ~VM_LOCKED_MASK;
+ 		newflags |= to_add;
+ 
+-		/* Ignore errors */
+-		mlock_fixup(&vmi, vma, &prev, vma->vm_start, vma->vm_end,
+-			    newflags);
++		error = mlock_fixup(&vmi, vma, &prev, vma->vm_start, vma->vm_end,
++				    newflags);
++		/* Ignore errors, but prev needs fixing up. */
++		if (error)
++			prev = vma;
+ 		cond_resched();
  	}
+ out:
+-- 
+2.47.0
+
 
 
