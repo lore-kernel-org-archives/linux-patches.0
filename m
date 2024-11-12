@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38A620F5B6;
-	Tue, 12 Nov 2024 10:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2518119E992;
+	Tue, 12 Nov 2024 10:32:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407530; cv=none; b=Mk/d7u5dStTWgEpNKwB2fMrqMlNgvl26wmhsIwU2dV6itvhxJuLO4trP/IazLWMuWwQvaUBLUNgIWjXAhc/WatJPuabfMpXWPPMEUD+H4wWygTwy3nZz3J+jrfoV4hXUIBEj+F4xET/rF5k8XgAJopgceUQnNKAWNNJiarhV+KA=
+	t=1731407533; cv=none; b=dM6gqV6F5BeX0S8M4rl3ZcHANcMWKZhN7+JEkqExF3sF9fgfRzURi9J5K4b5QYMK62u+POzVARn7eC9uGHjfokWAyaTxg5ieE7uVuV9y/WvvwdZ8W48YCCj6yC/IA9FNX4oZiOAQg2xmidAxl33s6KzrsBMxpK974N1zPYKkGEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407530; c=relaxed/simple;
-	bh=n/bgJBTjwrfEXY/9EGu3ZqtUWqHBVzcb/VJbA3Fv9iM=;
+	s=arc-20240116; t=1731407533; c=relaxed/simple;
+	bh=Q3zIB7a/7bDHvlaS4yfm4q75HLWYlllQfRnwyWr8jKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pDkWjGgblNgLemH6mHrJXzZXKL2GqKXrFpMQYhDEXRahOeSggCVW4B+5VwG3i4d4VslQH8N4DcDcTMHYCczfSQ3YrDpbIHG9sNd0mX5B9U8d8rXO/EPn2l3gI3+JvcJl2mAmRO29zllfMov7EOmivaM6H3mBebqWnZ2C03LkRbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xevHw5xx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IMZNrp58VjR+WvfalmM69YkIQPJbDrx/vKSII9ge0HjWYbm3wnrpj9IAj/Tw3zSfZLs5sQeLCteNFh2uQlCr5LHejOB11H1t7AhINIrNLSK6i7bBGiq+yLXkzvnOLRzYgQCtPbxhoY30wuDxUvWi6AVPb8ygnP1Y2q5/3RJf6BY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qimcLsFG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xevHw5xx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C4BBC4CED4;
-	Tue, 12 Nov 2024 10:32:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qimcLsFG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939D5C4CECD;
+	Tue, 12 Nov 2024 10:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407529;
-	bh=n/bgJBTjwrfEXY/9EGu3ZqtUWqHBVzcb/VJbA3Fv9iM=;
+	s=korg; t=1731407533;
+	bh=Q3zIB7a/7bDHvlaS4yfm4q75HLWYlllQfRnwyWr8jKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xevHw5xxVgFRyIIYYiyl89drkMOfPwzg33BkjPz/ukzy8dlbAV8UIOOxDDISFPN7i
-	 jfO6ekpRyhNP4SM9oWAgNoHiVUyVtZr/rgq7e8RkBJD4dVYuqVnb4SOvbgs9YSKpAA
-	 AY9zBWdYTkcN4sO/S1jX2csVT4CdgsR1b4N3Fi1Y=
+	b=qimcLsFGxWgu5XB0og0sSD0WFORGuPHHVnYEzIlEe/2jeaFw8RNyMUh9DQ03r/bmM
+	 bYOMHBI0VSiDWP+f63gP+i5ImLeGMeC5QVsmToUH8vC2RKHdlipmmvc+LBB68dBu3N
+	 umOdezcnyHwG9TbCFURUK5RWA+OvDFiaWu38lNt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benoit Sevens <bsevens@google.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Hans Verkuil <hverkuil@xs4all.nl>
-Subject: [PATCH 6.1 80/98] media: uvcvideo: Skip parsing frames of type UVC_VS_UNDEFINED in uvc_parse_format
-Date: Tue, 12 Nov 2024 11:21:35 +0100
-Message-ID: <20241112101847.299357309@linuxfoundation.org>
+	Mike Snitzer <snitzer@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 81/98] filemap: Fix bounds checking in filemap_read()
+Date: Tue, 12 Nov 2024 11:21:36 +0100
+Message-ID: <20241112101847.336751176@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -51,35 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benoit Sevens <bsevens@google.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit ecf2b43018da9579842c774b7f35dbe11b5c38dd upstream.
+commit ace149e0830c380ddfce7e466fe860ca502fe4ee upstream.
 
-This can lead to out of bounds writes since frames of this type were not
-taken into account when calculating the size of the frames buffer in
-uvc_parse_streaming.
+If the caller supplies an iocb->ki_pos value that is close to the
+filesystem upper limit, and an iterator with a count that causes us to
+overflow that limit, then filemap_read() enters an infinite loop.
 
-Fixes: c0efd232929c ("V4L/DVB (8145a): USB Video Class driver")
-Signed-off-by: Benoit Sevens <bsevens@google.com>
-Cc: stable@vger.kernel.org
-Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+This behaviour was discovered when testing xfstests generic/525 with the
+"localio" optimisation for loopback NFS mounts.
+
+Reported-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: c2a9737f45e2 ("vfs,mm: fix a dead loop in truncate_inode_pages_range()")
+Tested-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c |    2 +-
+ mm/filemap.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -368,7 +368,7 @@ static int uvc_parse_format(struct uvc_d
- 	 * Parse the frame descriptors. Only uncompressed, MJPEG and frame
- 	 * based formats have frame descriptors.
- 	 */
--	while (buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE &&
-+	while (ftype && buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE &&
- 	       buffer[2] == ftype) {
- 		frame = &format->frame[format->nframes];
- 		if (ftype != UVC_VS_FRAME_FRAME_BASED)
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -2738,7 +2738,7 @@ ssize_t filemap_read(struct kiocb *iocb,
+ 	if (unlikely(!iov_iter_count(iter)))
+ 		return 0;
+ 
+-	iov_iter_truncate(iter, inode->i_sb->s_maxbytes);
++	iov_iter_truncate(iter, inode->i_sb->s_maxbytes - iocb->ki_pos);
+ 	folio_batch_init(&fbatch);
+ 
+ 	do {
 
 
