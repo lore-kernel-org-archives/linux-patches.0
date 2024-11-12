@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B4A21A704;
-	Tue, 12 Nov 2024 10:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F68B20E307;
+	Tue, 12 Nov 2024 10:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408439; cv=none; b=BgIpYI76sKBHGh95OV/pIUfpn9BqL0Nvoo1S+hi+cCvth4fZUwt4FCRz5L6DBX3ryTOGxtkwux/aEMY+3EHOVzDY48W4ftNm8DL1/YO0w42a4jdf/TpqjRayYl20f9G5S34NY7ZDr3uTEyII6hvj5ReLYsngdNkBu/l+PGU7FN8=
+	t=1731408442; cv=none; b=dOZFGDX1jFdzLuqiiQBR0amCwwxXVB7gPwbje/EypSv+ovSyM+Lsq2cDWCtZUIyr+5eJCUkiXmfEIyUKE54Y1TPjdnK+NNq6giGlS9AfQtCOQW63oLqSFSAeTMFe7Gwx/GJOTJOLKJSg2QBVnghm9DOGhJOZri2AkHZVFiHWfYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408439; c=relaxed/simple;
-	bh=kNnGE5VZHjB0IKAFTvr3DDiGnJnXNUOQR/fdF0I/LSw=;
+	s=arc-20240116; t=1731408442; c=relaxed/simple;
+	bh=S0RXicJi/HoPDwsvlxX06mIilJHvnlJ0qW1O+eWDMBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4KM6sm+m32NSeVx3PgmFJ8pybJoDV8HQ2UPnr4KbOzAnJvfoYa4MAjWJhxntR+8iNwM6NSpAkyll/LdtHjXptnCC75J3gg2hWYnINGfQcmCb8AdyQrP70aVlWulrBNEjHxnJQAKiL66V7N16gMdmaE1bVN5DKFX8XL4v5I9Loc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZxRlVyUE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fEg7MRSZnaDhSVaPJcHYcvmnkp4B2xcIMNm9rmm6bnDVHniEc3HTlNRYCeZFk/CxSHVaahvNr+IG2qg5ZEQ+70AHPsdSWQuz5gTqDbvnz09e75XfOT2Ut8FeYaew99ymE+jm7YUpJrdEk00CILw5rFozEvJoCM5lSK3xy6GofBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zm/N7y+L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZxRlVyUE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACB7C4CECD;
-	Tue, 12 Nov 2024 10:47:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zm/N7y+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89104C4CECD;
+	Tue, 12 Nov 2024 10:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408438;
-	bh=kNnGE5VZHjB0IKAFTvr3DDiGnJnXNUOQR/fdF0I/LSw=;
+	s=korg; t=1731408441;
+	bh=S0RXicJi/HoPDwsvlxX06mIilJHvnlJ0qW1O+eWDMBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZxRlVyUEHSquQo2dJfglX12Ha8RjDC6BaENu3jh5cRUQyka6U2loU0eLUNO44x3kd
-	 hvblWysKQgHyG+vJOy6dcIUlsem8lrYP53+GZ95acDSWwqEEBrPxOOCZeXE+FwNT/V
-	 ojTfXNK4tDYFF4sezUGHXSXv/NEX1JxiwbeTpgz8=
+	b=Zm/N7y+L35QafO53Cc81LGv0cKfRYqKge4qIl0pNxi7vnsMok17qys+s2gGSzp8R0
+	 ShLory6ne4VBd0yO1K3h+9Qg0Ox3sFxzdp3TiIDVUyE53rbJLf3ZL2Jx0ZbOzPSCGa
+	 csp7vjDfIjFgrEcMTbB+knafcx9L8F3qKFfRHZlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Wu <wojackbb@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.11 161/184] USB: serial: qcserial: add support for Sierra Wireless EM86xx
-Date: Tue, 12 Nov 2024 11:21:59 +0100
-Message-ID: <20241112101907.048522927@linuxfoundation.org>
+	Koichiro Den <koichiro.den@gmail.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 6.11 132/184] mm/slab: fix warning caused by duplicate kmem_cache creation in kmem_buckets_create
+Date: Tue, 12 Nov 2024 11:21:30 +0100
+Message-ID: <20241112101905.933255618@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -50,70 +51,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Wu <wojackbb@gmail.com>
+From: Koichiro Den <koichiro.den@gmail.com>
 
-commit 25eb47eed52979c2f5eee3f37e6c67714e02c49c upstream.
+commit 9c9201afebea1efc7ea4b8f721ee18a05bb8aca1 upstream.
 
-Add support for Sierra Wireless EM86xx with USB-id 0x1199:0x90e5 and
-0x1199:0x90e4.
+Commit b035f5a6d852 ("mm: slab: reduce the kmalloc() minimum alignment
+if DMA bouncing possible") reduced ARCH_KMALLOC_MINALIGN to 8 on arm64.
+However, with KASAN_HW_TAGS enabled, arch_slab_minalign() becomes 16.
+This causes kmalloc_caches[*][8] to be aliased to kmalloc_caches[*][16],
+resulting in kmem_buckets_create() attempting to create a kmem_cache for
+size 16 twice. This duplication triggers warnings on boot:
 
-0x1199:0x90e5
-T:  Bus=03 Lev=01 Prnt=01 Port=05 Cnt=01 Dev#= 14 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1199 ProdID=90e5 Rev= 5.15
-S:  Manufacturer=Sierra Wireless, Incorporated
-S:  Product=Semtech EM8695 Mobile Broadband Adapter
-S:  SerialNumber=004403161882339
-C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-A:  FirstIf#=12 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=qcserial
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=qcserial
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:* If#=12 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=87(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#=13 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#=13 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+[    2.325108] ------------[ cut here ]------------
+[    2.325135] kmem_cache of name 'memdup_user-16' already exists
+[    2.325783] WARNING: CPU: 0 PID: 1 at mm/slab_common.c:107 __kmem_cache_create_args+0xb8/0x3b0
+[    2.327957] Modules linked in:
+[    2.328550] CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.0-rc5mm-unstable-arm64+ #12
+[    2.328683] Hardware name: QEMU QEMU Virtual Machine, BIOS 2024.02-2 03/11/2024
+[    2.328790] pstate: 61000009 (nZCv daif -PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[    2.328911] pc : __kmem_cache_create_args+0xb8/0x3b0
+[    2.328930] lr : __kmem_cache_create_args+0xb8/0x3b0
+[    2.328942] sp : ffff800083d6fc50
+[    2.328961] x29: ffff800083d6fc50 x28: f2ff0000c1674410 x27: ffff8000820b0598
+[    2.329061] x26: 000000007fffffff x25: 0000000000000010 x24: 0000000000002000
+[    2.329101] x23: ffff800083d6fce8 x22: ffff8000832222e8 x21: ffff800083222388
+[    2.329118] x20: f2ff0000c1674410 x19: f5ff0000c16364c0 x18: ffff800083d80030
+[    2.329135] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+[    2.329152] x14: 0000000000000000 x13: 0a73747369786520 x12: 79646165726c6120
+[    2.329169] x11: 656820747563205b x10: 2d2d2d2d2d2d2d2d x9 : 0000000000000000
+[    2.329194] x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
+[    2.329210] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000000
+[    2.329226] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+[    2.329291] Call trace:
+[    2.329407]  __kmem_cache_create_args+0xb8/0x3b0
+[    2.329499]  kmem_buckets_create+0xfc/0x320
+[    2.329526]  init_user_buckets+0x34/0x78
+[    2.329540]  do_one_initcall+0x64/0x3c8
+[    2.329550]  kernel_init_freeable+0x26c/0x578
+[    2.329562]  kernel_init+0x3c/0x258
+[    2.329574]  ret_from_fork+0x10/0x20
+[    2.329698] ---[ end trace 0000000000000000 ]---
 
-0x1199:0x90e4
-T:  Bus=03 Lev=01 Prnt=01 Port=05 Cnt=01 Dev#= 16 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1199 ProdID=90e4 Rev= 0.00
-S:  Manufacturer=Sierra Wireless, Incorporated
-S:  SerialNumber=004403161882339
-C:* #Ifs= 1 Cfg#= 1 Atr=a0 MxPwr=  2mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=10 Driver=qcserial
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+[    2.403704] ------------[ cut here ]------------
+[    2.404716] kmem_cache of name 'msg_msg-16' already exists
+[    2.404801] WARNING: CPU: 2 PID: 1 at mm/slab_common.c:107 __kmem_cache_create_args+0xb8/0x3b0
+[    2.404842] Modules linked in:
+[    2.404971] CPU: 2 UID: 0 PID: 1 Comm: swapper/0 Tainted: G        W          6.12.0-rc5mm-unstable-arm64+ #12
+[    2.405026] Tainted: [W]=WARN
+[    2.405043] Hardware name: QEMU QEMU Virtual Machine, BIOS 2024.02-2 03/11/2024
+[    2.405057] pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    2.405079] pc : __kmem_cache_create_args+0xb8/0x3b0
+[    2.405100] lr : __kmem_cache_create_args+0xb8/0x3b0
+[    2.405111] sp : ffff800083d6fc50
+[    2.405115] x29: ffff800083d6fc50 x28: fbff0000c1674410 x27: ffff8000820b0598
+[    2.405135] x26: 000000000000ffd0 x25: 0000000000000010 x24: 0000000000006000
+[    2.405153] x23: ffff800083d6fce8 x22: ffff8000832222e8 x21: ffff800083222388
+[    2.405169] x20: fbff0000c1674410 x19: fdff0000c163d6c0 x18: ffff800083d80030
+[    2.405185] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+[    2.405201] x14: 0000000000000000 x13: 0a73747369786520 x12: 79646165726c6120
+[    2.405217] x11: 656820747563205b x10: 2d2d2d2d2d2d2d2d x9 : 0000000000000000
+[    2.405233] x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
+[    2.405248] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000000
+[    2.405271] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 0000000000000000
+[    2.405287] Call trace:
+[    2.405293]  __kmem_cache_create_args+0xb8/0x3b0
+[    2.405305]  kmem_buckets_create+0xfc/0x320
+[    2.405315]  init_msg_buckets+0x34/0x78
+[    2.405326]  do_one_initcall+0x64/0x3c8
+[    2.405337]  kernel_init_freeable+0x26c/0x578
+[    2.405348]  kernel_init+0x3c/0x258
+[    2.405360]  ret_from_fork+0x10/0x20
+[    2.405370] ---[ end trace 0000000000000000 ]---
 
-Signed-off-by: Jack Wu <wojackbb@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+To address this, alias kmem_cache for sizes smaller than min alignment
+to the aligned sized kmem_cache, as done with the default system kmalloc
+bucket.
+
+Fixes: b32801d1255b ("mm/slab: Introduce kmem_buckets_create() and family")
+Cc: <stable@vger.kernel.org> # v6.11+
+Signed-off-by: Koichiro Den <koichiro.den@gmail.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Tested-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/qcserial.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/slab_common.c |   31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
---- a/drivers/usb/serial/qcserial.c
-+++ b/drivers/usb/serial/qcserial.c
-@@ -166,6 +166,8 @@ static const struct usb_device_id id_tab
- 	{DEVICE_SWI(0x1199, 0x9090)},	/* Sierra Wireless EM7565 QDL */
- 	{DEVICE_SWI(0x1199, 0x9091)},	/* Sierra Wireless EM7565 */
- 	{DEVICE_SWI(0x1199, 0x90d2)},	/* Sierra Wireless EM9191 QDL */
-+	{DEVICE_SWI(0x1199, 0x90e4)},	/* Sierra Wireless EM86xx QDL*/
-+	{DEVICE_SWI(0x1199, 0x90e5)},	/* Sierra Wireless EM86xx */
- 	{DEVICE_SWI(0x1199, 0xc080)},	/* Sierra Wireless EM7590 QDL */
- 	{DEVICE_SWI(0x1199, 0xc081)},	/* Sierra Wireless EM7590 */
- 	{DEVICE_SWI(0x413c, 0x81a2)},	/* Dell Wireless 5806 Gobi(TM) 4G LTE Mobile Broadband Card */
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -418,8 +418,11 @@ kmem_buckets *kmem_buckets_create(const
+ 				  unsigned int usersize,
+ 				  void (*ctor)(void *))
+ {
++	unsigned long mask = 0;
++	unsigned int idx;
+ 	kmem_buckets *b;
+-	int idx;
++
++	BUILD_BUG_ON(ARRAY_SIZE(kmalloc_caches[KMALLOC_NORMAL]) > BITS_PER_LONG);
+ 
+ 	/*
+ 	 * When the separate buckets API is not built in, just return
+@@ -441,7 +444,7 @@ kmem_buckets *kmem_buckets_create(const
+ 	for (idx = 0; idx < ARRAY_SIZE(kmalloc_caches[KMALLOC_NORMAL]); idx++) {
+ 		char *short_size, *cache_name;
+ 		unsigned int cache_useroffset, cache_usersize;
+-		unsigned int size;
++		unsigned int size, aligned_idx;
+ 
+ 		if (!kmalloc_caches[KMALLOC_NORMAL][idx])
+ 			continue;
+@@ -454,10 +457,6 @@ kmem_buckets *kmem_buckets_create(const
+ 		if (WARN_ON(!short_size))
+ 			goto fail;
+ 
+-		cache_name = kasprintf(GFP_KERNEL, "%s-%s", name, short_size + 1);
+-		if (WARN_ON(!cache_name))
+-			goto fail;
+-
+ 		if (useroffset >= size) {
+ 			cache_useroffset = 0;
+ 			cache_usersize = 0;
+@@ -465,18 +464,28 @@ kmem_buckets *kmem_buckets_create(const
+ 			cache_useroffset = useroffset;
+ 			cache_usersize = min(size - cache_useroffset, usersize);
+ 		}
+-		(*b)[idx] = kmem_cache_create_usercopy(cache_name, size,
++
++		aligned_idx = __kmalloc_index(size, false);
++		if (!(*b)[aligned_idx]) {
++			cache_name = kasprintf(GFP_KERNEL, "%s-%s", name, short_size + 1);
++			if (WARN_ON(!cache_name))
++				goto fail;
++			(*b)[aligned_idx] = kmem_cache_create_usercopy(cache_name, size,
+ 					0, flags, cache_useroffset,
+ 					cache_usersize, ctor);
+-		kfree(cache_name);
+-		if (WARN_ON(!(*b)[idx]))
+-			goto fail;
++			kfree(cache_name);
++			if (WARN_ON(!(*b)[aligned_idx]))
++				goto fail;
++			set_bit(aligned_idx, &mask);
++		}
++		if (idx != aligned_idx)
++			(*b)[idx] = (*b)[aligned_idx];
+ 	}
+ 
+ 	return b;
+ 
+ fail:
+-	for (idx = 0; idx < ARRAY_SIZE(kmalloc_caches[KMALLOC_NORMAL]); idx++)
++	for_each_set_bit(idx, &mask, ARRAY_SIZE(kmalloc_caches[KMALLOC_NORMAL]))
+ 		kmem_cache_destroy((*b)[idx]);
+ 	kfree(b);
+ 
 
 
