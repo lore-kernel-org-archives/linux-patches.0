@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B2B20EA35;
-	Tue, 12 Nov 2024 10:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9412123F5;
+	Tue, 12 Nov 2024 10:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407993; cv=none; b=DaTG0cIIaEILiKonrZX3C7cF6wivQ1uOzfWaJt9yuuXqUKnXrFdTcQ1t/Ifg/FCrhSEe2hodXjYQWbZTHc+ro7fg2T9z1Y6Tc7EhIobyR6zw7OhsdkZ/wAe9kWn6XLZJQYl+l0g8MFcNjz0X4pfGMI1u6R4Sg/JqOyVw5Q5H7a8=
+	t=1731407996; cv=none; b=BMLY0XnnUHXhCw+pQcj/MuRTUesnWt69SApF8/t7PQFvgxUSjocP10SQjVWn16NUOlsif+rm0XWy9xSyWEu/d1G38gY2SuJUHvd+hF8/iWI6wcWJ5+ehBQXi0Ob6e611KUsqq8RlHOS4OfHaZiRB07HNFe2nJ1f5slUiZ/B9RXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407993; c=relaxed/simple;
-	bh=n22ufafL3chpYc04NuqJb5WZZcRW+B5Y4JMral/SB98=;
+	s=arc-20240116; t=1731407996; c=relaxed/simple;
+	bh=LiGdhCOaunIWvxyzbIjkAHuUyGnK8Qem+2TNKRaqME4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BqIQzdaqhr3sGLYQgHcSmfhw5sd1jZC12gjfmZiubsNvM4ikR0A4LQtszyz5SPuD+6OIgqg1IiyZVLJeA4+z3mmEhssFX6I5p1wxoc3747JE94bMsbmE1FIgVE8DuWC5j/38A959X/wNpGhbjidzhcj3XoVm3U8FkjVIrUes49U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FS6qYHsL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IP5v3iOet+VGcVZEqLlkA7s+JBjLl2dkTl+jcUYzFVY0/58TunVM+q1bfVdl8m/USgpoQj/DfOhtdI+91GjtBWU52cL08c+yo25BuaO9zNDbzDJbWB9NXk1Bc+jpx8OkBn9XycilC6X9JJ71hhqLp1WofjkrJcM2QRppVcV22Jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9BjFjP2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FS6qYHsL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C206C4CECD;
-	Tue, 12 Nov 2024 10:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9BjFjP2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06C6C4CED4;
+	Tue, 12 Nov 2024 10:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407992;
-	bh=n22ufafL3chpYc04NuqJb5WZZcRW+B5Y4JMral/SB98=;
+	s=korg; t=1731407996;
+	bh=LiGdhCOaunIWvxyzbIjkAHuUyGnK8Qem+2TNKRaqME4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FS6qYHsLvnMW6U4ynIb1/WFuEVDKnoFFjhZw/NZoxL6mINesO61xtFnbqSWjMUJRB
-	 0NjAVHBLokquXGYb0BxwHFXSB8YNPOzGaRvbY78yCIJBavp0Uq1Yi7rodsuyYTabrh
-	 jWefTR7xXCegBFtfqjvQjAH8JLnMEXfpI8rTZ4jI=
+	b=U9BjFjP2lb+rR7h8bo371geaByD5Ggwr8WtqLwJ8CuImasGvV2UpS6cfeRAGEDXRU
+	 McdN/sdaTIQotQPCvxN+7r5l1yoICSdSC+e+MpDU/C2QQdBW6v0dMVOXWaUAno5Wj0
+	 cF1xlP+26J9YxGRfO+C0W5/qiSuSjXRqqQ58mG/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragan Simic <dsimic@manjaro.org>,
+	Sam Edwards <CFSworks@gmail.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 004/184] arm64: dts: rockchip: Start cooling maps numbering from zero on ROCK 5B
-Date: Tue, 12 Nov 2024 11:19:22 +0100
-Message-ID: <20241112101901.038982658@linuxfoundation.org>
+Subject: [PATCH 6.11 005/184] arm64: dts: rockchip: Designate Turing RK1s system power controller
+Date: Tue, 12 Nov 2024 11:19:23 +0100
+Message-ID: <20241112101901.076476595@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -51,43 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragan Simic <dsimic@manjaro.org>
+From: Sam Edwards <cfsworks@gmail.com>
 
-[ Upstream commit 6be82067254cba14f7b9ca00613bdb7caac9501f ]
+[ Upstream commit 875ea82c75f56697fa500f30fabaa49f82f9b229 ]
 
-The package cooling maps for the Radxa ROCK 5B were mistakenly named map1
-and map2.  Their numbering should start from zero instead, because there are
-no package cooling maps defined in the parent RK3588 SoC dtsi file, so let's
-rename these cooling maps to map0 and map1.
+Currently, the Turing RK1 board reboots when told to power off.
 
-Fixes: 4a152231b050 ("arm64: dts: rockchip: enable automatic fan control on Rock 5B")
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-Link: https://lore.kernel.org/r/335ecd5841ab55f333e17bb391d0e1264fac257b.1726954592.git.dsimic@manjaro.org
+Resolve this by designating the RK806 as the system power controller, so
+that the relevant driver can handle system shutdown requests.
+
+Fixes: 2806a69f3fef ("arm64: dts: rockchip: Add Turing RK1 SoM support")
+Signed-off-by: Sam Edwards <CFSworks@gmail.com>
+Link: https://lore.kernel.org/r/20240912180148.205957-1-CFSworks@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3588-turing-rk1.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts b/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts
-index 966bbc582d89b..6bd06e46a101d 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dts
-@@ -304,12 +304,12 @@
- 	};
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-turing-rk1.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-turing-rk1.dtsi
+index dbaa94ca69f47..432133251e318 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-turing-rk1.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588-turing-rk1.dtsi
+@@ -296,6 +296,7 @@
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pmic_pins>, <&rk806_dvs1_null>,
+ 			    <&rk806_dvs2_null>, <&rk806_dvs3_null>;
++		system-power-controller;
  
- 	cooling-maps {
--		map1 {
-+		map0 {
- 			trip = <&package_fan0>;
- 			cooling-device = <&fan THERMAL_NO_LIMIT 1>;
- 		};
- 
--		map2 {
-+		map1 {
- 			trip = <&package_fan1>;
- 			cooling-device = <&fan 2 THERMAL_NO_LIMIT>;
- 		};
+ 		vcc1-supply = <&vcc5v0_sys>;
+ 		vcc2-supply = <&vcc5v0_sys>;
 -- 
 2.43.0
 
