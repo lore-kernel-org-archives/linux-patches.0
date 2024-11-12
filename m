@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7131A76C7;
-	Tue, 12 Nov 2024 10:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D2E213129;
+	Tue, 12 Nov 2024 10:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407636; cv=none; b=cTeEwR4mLmJG0h5MMW5Hd2LmBzEQcYZbn0Q+Sbf3oiCZt2zBE6CT17+eE9ZYqe4RNDS5u2n8Tn8Fw6KbgaM491cP7scgJw6fsrc7E78r68XkYV6tnG4UTGuu7BwlP0is+dP+46dBPk2bbaTU+37hjoZTdrdNI4wVj+F+A7OG/0U=
+	t=1731407639; cv=none; b=T4NAf42PAoBYdNYRJYhjNhxzBLa8LiUWCPqOWM4A8H/p/sydoC0anSOOqCiW5ibUFPgnL0S77V0MMh+XixIyEvJllj6MnFlhmh0lrBPbuI/CZz+4ylBcEg47C7tIerObC8EGhaO/dATPujGwZTlzlLOuH+v/2aIrK9gGMgQjthA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407636; c=relaxed/simple;
-	bh=YoLhHvXoBz+qmV5Rc+yK5/4ohAJV7rcY829FLeE1Ka4=;
+	s=arc-20240116; t=1731407639; c=relaxed/simple;
+	bh=Bv+fuRDCuR2ZDJmTM7oeHyfDm/+7osdTSjMkJ8L7D+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NCMF1T5hQYl0yZRGHtS/76oVjnFCFRPiCfDclkqJKChFGLlou6VhtEsNONKCN2vqGm4sfOgifKE6nTvrQ41uLAm5S+rBsXRpyLUqLw9yeiq7adtLLixRGsoX0deq5TABqzFvpTN23GMoOiKp4uVWf5rau6KrDYeltNH486Lby9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXVjvHZM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sanuzthpuO2B+Z7ZZNFU7h0YtPlT0n6z4xfbH9DGqqUZEKFN2Mkd0Yg9FYw4ur1rG4is8n//b3xGFU6Awj3iYALzp2PW/zolLqB8K2NFCRWS3aXndBxhfejJpSMsx1INeEA/Er8cAP3CVeW3zSmnnTwvkB4cyBm3r0hHnQ62UZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5YkjMzu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXVjvHZM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508D9C4CECD;
-	Tue, 12 Nov 2024 10:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5YkjMzu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6783EC4CECD;
+	Tue, 12 Nov 2024 10:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407635;
-	bh=YoLhHvXoBz+qmV5Rc+yK5/4ohAJV7rcY829FLeE1Ka4=;
+	s=korg; t=1731407638;
+	bh=Bv+fuRDCuR2ZDJmTM7oeHyfDm/+7osdTSjMkJ8L7D+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PXVjvHZMTpRDO0ekDQ6TEV0/swHsYmV4YSTorQxlSGUrIxZb2QEBETg2Y1e4fnC4Z
-	 SIEoM8z9vPjtXTRmxrzjUANh0lQ7BQb+ZxL0P2/FyaY414XUgnzWUZinBLOEzOtvOE
-	 y8iAFigqYz6MKo6gollQaCRR6XvknI7ntU+889UM=
+	b=D5YkjMzuwxKrDspm7brwUlOiB+9/RExuP/kAwhL5E8JmECLhuIk2axM/Xv6NNLEWO
+	 ZGm+AkNb960k9GXPeWjmy3sP9Jcwi702cRRQnXNrSZFPwQfefHxgz/jOsRaHwJJWvz
+	 Ej10E9+RhR5wa3+BA66vUAAFhcj/W6+YUX5W/RQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Mateusz Polchlopek <mateusz.polchlopek@intel.com>,
-	Simon Horman <horms@kernel.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Michal Schmidt <mschmidt@redhat.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.6 036/119] ice: change q_index variable type to s16 to store -1 value
-Date: Tue, 12 Nov 2024 11:20:44 +0100
-Message-ID: <20241112101850.091960968@linuxfoundation.org>
+Subject: [PATCH 6.6 037/119] i40e: fix race condition by adding filters intermediate sync state
+Date: Tue, 12 Nov 2024 11:20:45 +0100
+Message-ID: <20241112101850.131012365@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -54,87 +53,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-[ Upstream commit 64502dac974a5d9951d16015fa2e16a14e5f2bb2 ]
+[ Upstream commit f30490e9695ef7da3d0899c6a0293cc7cd373567 ]
 
-Fix Flow Director not allowing to re-map traffic to 0th queue when action
-is configured to drop (and vice versa).
+Fix a race condition in the i40e driver that leads to MAC/VLAN filters
+becoming corrupted and leaking. Address the issue that occurs under
+heavy load when multiple threads are concurrently modifying MAC/VLAN
+filters by setting mac and port VLAN.
 
-The current implementation of ethtool callback in the ice driver forbids
-change Flow Director action from 0 to -1 and from -1 to 0 with an error,
-e.g:
+1. Thread T0 allocates a filter in i40e_add_filter() within
+        i40e_ndo_set_vf_port_vlan().
+2. Thread T1 concurrently frees the filter in __i40e_del_filter() within
+        i40e_ndo_set_vf_mac().
+3. Subsequently, i40e_service_task() calls i40e_sync_vsi_filters(), which
+        refers to the already freed filter memory, causing corruption.
 
- # ethtool -U eth2 flow-type tcp4 src-ip 1.1.1.1 loc 1 action 0
- # ethtool -U eth2 flow-type tcp4 src-ip 1.1.1.1 loc 1 action -1
- rmgr: Cannot insert RX class rule: Invalid argument
+Reproduction steps:
+1. Spawn multiple VFs.
+2. Apply a concurrent heavy load by running parallel operations to change
+        MAC addresses on the VFs and change port VLANs on the host.
+3. Observe errors in dmesg:
+"Error I40E_AQ_RC_ENOSPC adding RX filters on VF XX,
+	please set promiscuous on manually for VF XX".
 
-We set the value of `u16 q_index = 0` at the beginning of the function
-ice_set_fdir_input_set(). In case of "drop traffic" action (which is
-equal to -1 in ethtool) we store the 0 value. Later, when want to change
-traffic rule to redirect to queue with index 0 it returns an error
-caused by duplicate found.
+Exact code for stable reproduction Intel can't open-source now.
 
-Fix this behaviour by change of the type of field `q_index` from u16 to s16
-in `struct ice_fdir_fltr`. This allows to store -1 in the field in case
-of "drop traffic" action. What is more, change the variable type in the
-function ice_set_fdir_input_set() and assign at the beginning the new
-`#define ICE_FDIR_NO_QUEUE_IDX` which is -1. Later, if the action is set
-to another value (point specific queue index) the variable value is
-overwritten in the function.
+The fix involves implementing a new intermediate filter state,
+I40E_FILTER_NEW_SYNC, for the time when a filter is on a tmp_add_list.
+These filters cannot be deleted from the hash list directly but
+must be removed using the full process.
 
-Fixes: cac2a27cd9ab ("ice: Support IPv4 Flow Director filters")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Signed-off-by: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 278e7d0b9d68 ("i40e: store MAC/VLAN filters in a hash with the MAC Address as key")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Reviewed-by: Michal Schmidt <mschmidt@redhat.com>
+Tested-by: Michal Schmidt <mschmidt@redhat.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c | 3 ++-
- drivers/net/ethernet/intel/ice/ice_fdir.h         | 4 +++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e.h         |  1 +
+ drivers/net/ethernet/intel/i40e/i40e_debugfs.c |  1 +
+ drivers/net/ethernet/intel/i40e/i40e_main.c    | 12 ++++++++++--
+ 3 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c b/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
-index 1839a37139dc1..b6bbf2376ef5c 100644
---- a/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
-@@ -1694,11 +1694,12 @@ static int
- ice_set_fdir_input_set(struct ice_vsi *vsi, struct ethtool_rx_flow_spec *fsp,
- 		       struct ice_fdir_fltr *input)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e.h b/drivers/net/ethernet/intel/i40e/i40e.h
+index 3e6839ac1f0f1..68f403dd2f526 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e.h
++++ b/drivers/net/ethernet/intel/i40e/i40e.h
+@@ -763,6 +763,7 @@ enum i40e_filter_state {
+ 	I40E_FILTER_ACTIVE,		/* Added to switch by FW */
+ 	I40E_FILTER_FAILED,		/* Rejected by FW */
+ 	I40E_FILTER_REMOVE,		/* To be removed */
++	I40E_FILTER_NEW_SYNC,		/* New, not sent yet, is in i40e_sync_vsi_filters() */
+ /* There is no 'removed' state; the filter struct is freed */
+ };
+ struct i40e_mac_filter {
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
+index 999c9708def53..a2fca58a91c33 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_debugfs.c
+@@ -106,6 +106,7 @@ static char *i40e_filter_state_string[] = {
+ 	"ACTIVE",
+ 	"FAILED",
+ 	"REMOVE",
++	"NEW_SYNC",
+ };
+ 
+ /**
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index 80472aa1deba4..806cec458a072 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -1265,6 +1265,7 @@ int i40e_count_filters(struct i40e_vsi *vsi)
+ 
+ 	hash_for_each_safe(vsi->mac_filter_hash, bkt, h, f, hlist) {
+ 		if (f->state == I40E_FILTER_NEW ||
++		    f->state == I40E_FILTER_NEW_SYNC ||
+ 		    f->state == I40E_FILTER_ACTIVE)
+ 			++cnt;
+ 	}
+@@ -1451,6 +1452,8 @@ static int i40e_correct_mac_vlan_filters(struct i40e_vsi *vsi,
+ 
+ 			new->f = add_head;
+ 			new->state = add_head->state;
++			if (add_head->state == I40E_FILTER_NEW)
++				add_head->state = I40E_FILTER_NEW_SYNC;
+ 
+ 			/* Add the new filter to the tmp list */
+ 			hlist_add_head(&new->hlist, tmp_add_list);
+@@ -1560,6 +1563,8 @@ static int i40e_correct_vf_mac_vlan_filters(struct i40e_vsi *vsi,
+ 				return -ENOMEM;
+ 			new_mac->f = add_head;
+ 			new_mac->state = add_head->state;
++			if (add_head->state == I40E_FILTER_NEW)
++				add_head->state = I40E_FILTER_NEW_SYNC;
+ 
+ 			/* Add the new filter to the tmp list */
+ 			hlist_add_head(&new_mac->hlist, tmp_add_list);
+@@ -2445,7 +2450,8 @@ static int
+ i40e_aqc_broadcast_filter(struct i40e_vsi *vsi, const char *vsi_name,
+ 			  struct i40e_mac_filter *f)
  {
--	u16 dest_vsi, q_index = 0;
-+	s16 q_index = ICE_FDIR_NO_QUEUE_IDX;
- 	u16 orig_q_index = 0;
- 	struct ice_pf *pf;
- 	struct ice_hw *hw;
- 	int flow_type;
-+	u16 dest_vsi;
- 	u8 dest_ctl;
+-	bool enable = f->state == I40E_FILTER_NEW;
++	bool enable = f->state == I40E_FILTER_NEW ||
++		      f->state == I40E_FILTER_NEW_SYNC;
+ 	struct i40e_hw *hw = &vsi->back->hw;
+ 	int aq_ret;
  
- 	if (!vsi || !fsp || !input)
-diff --git a/drivers/net/ethernet/intel/ice/ice_fdir.h b/drivers/net/ethernet/intel/ice/ice_fdir.h
-index b384d2a4ab198..063ea3d516532 100644
---- a/drivers/net/ethernet/intel/ice/ice_fdir.h
-+++ b/drivers/net/ethernet/intel/ice/ice_fdir.h
-@@ -50,6 +50,8 @@
-  */
- #define ICE_FDIR_IPV4_PKT_FLAG_MF		0x20
+@@ -2619,6 +2625,7 @@ int i40e_sync_vsi_filters(struct i40e_vsi *vsi)
  
-+#define ICE_FDIR_NO_QUEUE_IDX			-1
-+
- enum ice_fltr_prgm_desc_dest {
- 	ICE_FLTR_PRGM_DESC_DEST_DROP_PKT,
- 	ICE_FLTR_PRGM_DESC_DEST_DIRECT_PKT_QINDEX,
-@@ -181,7 +183,7 @@ struct ice_fdir_fltr {
- 	u16 flex_fltr;
+ 				/* Add it to the hash list */
+ 				hlist_add_head(&new->hlist, &tmp_add_list);
++				f->state = I40E_FILTER_NEW_SYNC;
+ 			}
  
- 	/* filter control */
--	u16 q_index;
-+	s16 q_index;
- 	u16 orig_q_index;
- 	u16 dest_vsi;
- 	u8 dest_ctl;
+ 			/* Count the number of active (current and new) VLAN
+@@ -2770,7 +2777,8 @@ int i40e_sync_vsi_filters(struct i40e_vsi *vsi)
+ 		spin_lock_bh(&vsi->mac_filter_hash_lock);
+ 		hlist_for_each_entry_safe(new, h, &tmp_add_list, hlist) {
+ 			/* Only update the state if we're still NEW */
+-			if (new->f->state == I40E_FILTER_NEW)
++			if (new->f->state == I40E_FILTER_NEW ||
++			    new->f->state == I40E_FILTER_NEW_SYNC)
+ 				new->f->state = new->state;
+ 			hlist_del(&new->hlist);
+ 			netdev_hw_addr_refcnt(new->f, vsi->netdev, -1);
 -- 
 2.43.0
 
