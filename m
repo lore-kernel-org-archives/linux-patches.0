@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5718E213148;
-	Tue, 12 Nov 2024 10:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D808219C8A;
+	Tue, 12 Nov 2024 10:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408300; cv=none; b=GWVAaMqY9qsApfPuuj6wb7Lot00BzLKfO5weZsbclBkGZEn+9Ufy25vpgVuDnbFcXVV+cRJfmnPwroCWEEoXOqDTcYCo1672mEy9GgSWY1IWKDPKDzdxmJbiPpXYTvbRjNpTjFrcNGz1G8foYcPWgZdoJeirvYyHcjwcoCVfj6s=
+	t=1731408303; cv=none; b=sZfYMXgXqfT7VIT1YR6ZrYZY06b2dFEqGbrOJtEeOh560IUwbpwjnsuqR8Uy4TifGnCfNREL3HBRVk9TkrMnconBuzUrsfh9vpJ0/6KCc8rG7pZyYxLnvaGzeepBsoMi0/XX2yV22sDRTyKJPC3irHoIEjaRg/5FEws+dZbSJ3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408300; c=relaxed/simple;
-	bh=Ag8pZEq/SLocaaHbuJSPI9KREysLLTNpiQLptWyFU0w=;
+	s=arc-20240116; t=1731408303; c=relaxed/simple;
+	bh=noR7LvMedfxNBpyY9jgrxMarB6WqL9VFdQUsxKfPpYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W/FHK6g/PH7CS6NhBQblY/pE/dAjsZdSID36Z+VXqo4zKprOmawae+F46rSROBaEfiWDoG8nELAVVPYwejCiLmoqs1M/7m3WxVxajwjkm08y2ITrSmYh9umAjq3hoLuE589ig52PBZNFyDpE//Cx+di2z4T/mZ8oPPF8/wl4joA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWBtsnz+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q+OG0Ia6UMvu7uOE/MSdHuJvNo+Jm3jYL+i2UvobW8t4AkCXqqEWUKIbGDAbWjzyCJxnuj8UABy32ws3W/D0pNWs5DinPQtr0a6OijUh5MBKO/5aShHg2FLs7wLrVEbu2xG71hpbcNoGNVhDFwYhSiVhdX4B8NwzGXtxUms8h4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXHrU+l/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWBtsnz+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCCE2C4CECD;
-	Tue, 12 Nov 2024 10:44:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXHrU+l/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E968CC4CECD;
+	Tue, 12 Nov 2024 10:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408300;
-	bh=Ag8pZEq/SLocaaHbuJSPI9KREysLLTNpiQLptWyFU0w=;
+	s=korg; t=1731408303;
+	bh=noR7LvMedfxNBpyY9jgrxMarB6WqL9VFdQUsxKfPpYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWBtsnz+oSmHprZ4zgA94eLFEXTBcNkrgaaCLdmaSjUXOn6q0B2u5ckzzmQvlnMo8
-	 far+NyrlF2+6Qcqmgb0rkZo5Yj0md4ZcTKBP+T9pIE9mKMfpiQ2OYxszuS7tEIgzpq
-	 DO3ycw+ksFEP2O+klqUvIkJVAWMmJyQZKmjJ/uBw=
+	b=TXHrU+l/J8b5Izfr4bydtRJsMhfQTCeakF64ye4BvnltwLt92bt4uQdSgUgqKB9IY
+	 y92aq0QAu51mzBq5RC47Yxwf5n2MbAqKIXZ5e4Pa9YRtlRvZlWKzcEON5FzOnm/Jmd
+	 CToWGZILavFTglm23p9Gm8uM94CHEZeWJEKdT68s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Nitesh Shetty <nj.shetty@samsung.com>
-Subject: [PATCH 6.11 120/184] dm: fix a crash if blk_alloc_disk fails
-Date: Tue, 12 Nov 2024 11:21:18 +0100
-Message-ID: <20241112101905.473897989@linuxfoundation.org>
+	Davide Caratti <dcaratti@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.11 121/184] mptcp: no admin perm to list endpoints
+Date: Tue, 12 Nov 2024 11:21:19 +0100
+Message-ID: <20241112101905.511200237@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -51,38 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit fed13a5478680614ba97fc87e71f16e2e197912e upstream.
+commit cfbbd4859882a5469f6f4945937a074ee78c4b46 upstream.
 
-If blk_alloc_disk fails, the variable md->disk is set to an error value.
-cleanup_mapped_device will see that md->disk is non-NULL and it will
-attempt to access it, causing a crash on this statement
-"md->disk->private_data = NULL;".
+During the switch to YNL, the command to list all endpoints has been
+accidentally restricted to users with admin permissions.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Closes: https://marc.info/?l=dm-devel&m=172824125004329&w=2
+It looks like there are no reasons to have this restriction which makes
+it harder for a user to quickly check if the endpoint list has been
+correctly populated by an automated tool. Best to go back to the
+previous behaviour then.
+
+mptcp_pm_gen.c has been modified using ynl-gen-c.py:
+
+   $ ./tools/net/ynl/ynl-gen-c.py --mode kernel \
+     --spec Documentation/netlink/specs/mptcp_pm.yaml --source \
+     -o net/mptcp/mptcp_pm_gen.c
+
+The header file doesn't need to be regenerated.
+
+Fixes: 1d0507f46843 ("net: mptcp: convert netlink from small_ops to ops")
 Cc: stable@vger.kernel.org
-Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
+Reviewed-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20241104-net-mptcp-misc-6-12-v1-1-c13f2ff1656f@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Documentation/netlink/specs/mptcp_pm.yaml |    1 -
+ net/mptcp/mptcp_pm_gen.c                  |    1 -
+ 2 files changed, 2 deletions(-)
 
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -2290,8 +2290,10 @@ static struct mapped_device *alloc_dev(i
- 	 * override accordingly.
- 	 */
- 	md->disk = blk_alloc_disk(NULL, md->numa_node_id);
--	if (IS_ERR(md->disk))
-+	if (IS_ERR(md->disk)) {
-+		md->disk = NULL;
- 		goto bad;
-+	}
- 	md->queue = md->disk->queue;
- 
- 	init_waitqueue_head(&md->wait);
+--- a/Documentation/netlink/specs/mptcp_pm.yaml
++++ b/Documentation/netlink/specs/mptcp_pm.yaml
+@@ -293,7 +293,6 @@ operations:
+       doc: Get endpoint information
+       attribute-set: attr
+       dont-validate: [ strict ]
+-      flags: [ uns-admin-perm ]
+       do: &get-addr-attrs
+         request:
+           attributes:
+--- a/net/mptcp/mptcp_pm_gen.c
++++ b/net/mptcp/mptcp_pm_gen.c
+@@ -112,7 +112,6 @@ const struct genl_ops mptcp_pm_nl_ops[11
+ 		.dumpit		= mptcp_pm_nl_get_addr_dumpit,
+ 		.policy		= mptcp_pm_get_addr_nl_policy,
+ 		.maxattr	= MPTCP_PM_ATTR_TOKEN,
+-		.flags		= GENL_UNS_ADMIN_PERM,
+ 	},
+ 	{
+ 		.cmd		= MPTCP_PM_CMD_FLUSH_ADDRS,
 
 
