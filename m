@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76A221441B;
-	Tue, 12 Nov 2024 10:43:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C52213127;
+	Tue, 12 Nov 2024 10:44:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408239; cv=none; b=uKGJ0nQBms0GNoSTtVQJMDDgZ1JD2UjMGIuINipLZSFutkmoBhzqyRdT9FDGtOGYfruhxbWlS1jvaI5h0esEIBvgoWiVbDNuRn5oGdmV+B8Pmv6F/V0GCksQ2g3Mt86D9J116zTrqLfGemp29246ad8p97XAEfYKj22FovySXiw=
+	t=1731408243; cv=none; b=Vj3UN66ldbeyUkrUMBO+L+qZd4P+g1BzxAxYi3dnk2SpwReUb3bErYONJnbTuiHX64+g3ThXLZq4oHRSHzlN/ZDCEkyi1jCoUajcpcfjlQ66VcZiO+yFXSEfO4QbjC5VMFzsGJMQEQrMC0j8vapxFWkknOYtWaMLpleEpHmX3qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408239; c=relaxed/simple;
-	bh=1ZwTyRQ+QBLe8Q5kIBh57pnq8ZDJSfz7XAY2utMFv6w=;
+	s=arc-20240116; t=1731408243; c=relaxed/simple;
+	bh=32FkEhIbrlOzsPWIk8UMOG4a152fL+7yGAv9LdVmkWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wp/DUArUkaDL+ClG/oNixYEb+v+H4vmQmKj4eriPDBKR+Er6qntGpHStVb2KZc4MPF88xtMW+RhWUbO1GbDFwFr78HxxvUtdfT0NndnSHCGHWLRwh4FkbFXDPRvRjmwe//VE0P7BDuCXX4QHbMQGRrRPPto7/dFG6hcsDyxeA30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KU8IxZd2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QiCUwKQoJgYmd2an8hjL2gkPIG2meO4XQRnj00igmw+tlvT4dbqyV1DQxCEleywQYHWhYxpxpBwlSFKrGdGVAZPY6SvJYs6862GRruBz14JVHOA5EdujJxZeRrpoZSkAW5zvAbtrcbC8gH4TvMGrM/63GNptnkN4mSZtYEc6b5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpuKQQVE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KU8IxZd2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E9AC4CECD;
-	Tue, 12 Nov 2024 10:43:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpuKQQVE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6684EC4CED6;
+	Tue, 12 Nov 2024 10:44:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408239;
-	bh=1ZwTyRQ+QBLe8Q5kIBh57pnq8ZDJSfz7XAY2utMFv6w=;
+	s=korg; t=1731408242;
+	bh=32FkEhIbrlOzsPWIk8UMOG4a152fL+7yGAv9LdVmkWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KU8IxZd28IRFhzB8M+gLs+xgTgK9mG9L1haJYmnq3sqKEvMJ24UpmMWR92JqYgybp
-	 3ndzplFrCXGN9Xs8i/sHFl1IDB+zmwd0z1JPHJ11ykP1YoFu0ifH0nTzJyvwy08OLZ
-	 1bwALPth+OaCWGGYuLpWUMYr18G9i2u7vOp92D8U=
+	b=wpuKQQVETBqYtbcKakOaE3re9BvBaVQZhjjGFS6Rbj3m1nLowSGcdyDkoaZjpvxoS
+	 I+3a1/MgSafS/+9IsmSxwetvD/9hnRGtsSQZacF9P1ulVJg2ZMXgNlv84aKWun28iO
+	 WtsaeRO2uVb5JMhPY9sjwgFu+GQMItjs0taMpPOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.11 095/184] drm/xe: Set mask bits for CCS_MODE register
-Date: Tue, 12 Nov 2024 11:20:53 +0100
-Message-ID: <20241112101904.505016779@linuxfoundation.org>
+	Dillon Varone <dillon.varone@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.11 104/184] drm/amd/display: parse umc_info or vram_info based on ASIC
+Date: Tue, 12 Nov 2024 11:21:02 +0100
+Message-ID: <20241112101904.856095261@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -50,53 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-commit 7fd3fa006fa56c0ec299c61ecf5c572c723adad5 upstream.
+commit 694c79769cb384bca8b1ec1d1e84156e726bd106 upstream.
 
-CCS_MODE register requires setting mask bits from Xe2+ platforms. Set
-the mask bits unconditionally, as those bits are unused for older
-platforms.
+An upstream bug report suggests that there are production dGPUs that are
+older than DCN401 but still have a umc_info in VBIOS tables with the
+same version as expected for a DCN401 product. Hence, reading this
+tables should be guarded with a version check.
 
-Signed-off-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Cc: stable@vger.kernel.org # v6.11+
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241008073628.377433-2-balasubramani.vivekanandan@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 23ea2c7572d4735ef66beb1e4feb8ae510b78247)
-[ Fix conflict with mmio refactors ]
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3678
+Reviewed-by: Dillon Varone <dillon.varone@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2551b4a321a68134360b860113dd460133e856e5)
+Fixes: 00c391102abc ("drm/amd/display: Add misc DC changes for DCN401")
+Cc: stable@vger.kernel.org # 6.11.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/regs/xe_gt_regs.h |    2 +-
- drivers/gpu/drm/xe/xe_gt_ccs_mode.c  |    6 ++++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/regs/xe_gt_regs.h
-+++ b/drivers/gpu/drm/xe/regs/xe_gt_regs.h
-@@ -509,7 +509,7 @@
-  *   [4-6]     RSVD
-  *   [7]       Disabled
-  */
--#define CCS_MODE				XE_REG(0x14804)
-+#define CCS_MODE				XE_REG(0x14804, XE_REG_OPTION_MASKED)
- #define   CCS_MODE_CSLICE_0_3_MASK		REG_GENMASK(11, 0) /* 3 bits per cslice */
- #define   CCS_MODE_CSLICE_MASK			0x7 /* CCS0-3 + rsvd */
- #define   CCS_MODE_CSLICE_WIDTH			ilog2(CCS_MODE_CSLICE_MASK + 1)
---- a/drivers/gpu/drm/xe/xe_gt_ccs_mode.c
-+++ b/drivers/gpu/drm/xe/xe_gt_ccs_mode.c
-@@ -68,6 +68,12 @@ static void __xe_gt_apply_ccs_mode(struc
- 		}
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+index 0d8498ab9b23..be8fbb04ad98 100644
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -3127,7 +3127,9 @@ static enum bp_result bios_parser_get_vram_info(
+ 	struct atom_data_revision revision;
  
-+	/*
-+	 * Mask bits need to be set for the register. Though only Xe2+
-+	 * platforms require setting of mask bits, it won't harm for older
-+	 * platforms as these bits are unused there.
-+	 */
-+	mode |= CCS_MODE_CSLICE_0_3_MASK << 16;
- 	xe_mmio_write32(gt, CCS_MODE, mode);
+ 	// vram info moved to umc_info for DCN4x
+-	if (info && DATA_TABLES(umc_info)) {
++	if (dcb->ctx->dce_version >= DCN_VERSION_4_01 &&
++		dcb->ctx->dce_version < DCN_VERSION_MAX &&
++		info && DATA_TABLES(umc_info)) {
+ 		header = GET_IMAGE(struct atom_common_table_header,
+ 					DATA_TABLES(umc_info));
  
- 	xe_gt_dbg(gt, "CCS_MODE=%x config:%08x, num_engines:%d, num_slices:%d\n",
+-- 
+2.47.0
+
 
 
