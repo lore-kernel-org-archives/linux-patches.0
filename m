@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4D8216E0A;
-	Tue, 12 Nov 2024 10:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB191CBE8F;
+	Tue, 12 Nov 2024 10:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407706; cv=none; b=sCHKpAViLMuGlXFlWoHQrvuTefnokyxxml/OT5h7tw8P6+5E/tL3YcAK6QkjrHk9usRbn0nIMcwq0xoCYDMavPiLMELzFDAtrip3H0HFF8KFEfcimubzat5PpbMMdZlqHUl/DiA5+JGmwJNqs54OMLBE14zaCROWvy7FQcaCztQ=
+	t=1731407709; cv=none; b=T1dU6AowvzcegGx3FOVUPJTHjJyVLGU6cxiswztFOkl8raJBpBqq7WdfjIlBBPF7dpWFKkzWwPvyAXNR/jVLLEvsdUM5DUd8CfbHT4PbuyL5RY3GehW2fNj8jLOlAlejoHTVmMgh3XEjUb8qtrfQbjV2GeNaVbM1n/aiVoOsSRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407706; c=relaxed/simple;
-	bh=dTboJT77+WrOVsbETKIMcmmchE3jPBDcRu5U3fmBLeY=;
+	s=arc-20240116; t=1731407709; c=relaxed/simple;
+	bh=RGAdEPyZdLiEIHF7QVy0/4Xzv+Mhs5WZtg1eAmx8kJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EX0PUmeZagQnclMlTwpxT8RJCnZqVsW/suHAtA7bFvOyjI/TH42hqgOdUwPU71tE8/pLwRvDTfe5B/HBObMBxj+GrWVFxU6d1QlZhsz+Zb9Fqqy2pQ4st5jgBElImz5tSRuSGDb9yDWyekwpNLIySOx64fqF61DtBzAkgbH1gKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTxhf2AX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hxrwEKnDWX+P3v+HKF+o8uTR7rZE1LAz7GDe7wdTvjeUXgXFzhAy5apuZhjJNm8H05LEfA20KNJe7Q5QgRzpPuTIh7Sy+iF7/7mgjhK2xgX8QqfDv41+QhSL7GyeckcpshB/0I+A85C47xPeLXiRJ8K8GzOBAH6suQ7kv8UkmNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t7HthsBy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTxhf2AX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04C1C4CECD;
-	Tue, 12 Nov 2024 10:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t7HthsBy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B1C9C4CECD;
+	Tue, 12 Nov 2024 10:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407706;
-	bh=dTboJT77+WrOVsbETKIMcmmchE3jPBDcRu5U3fmBLeY=;
+	s=korg; t=1731407709;
+	bh=RGAdEPyZdLiEIHF7QVy0/4Xzv+Mhs5WZtg1eAmx8kJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qTxhf2AX8z2+i0jv6JyOLQMERB8iTZZNy7HwKYeeg7NAkmhHhf9kj89vVeQEBQVba
-	 yxXT2AtHpWnBeC4Ss4POi27NBMrEUnexqbfA4sAIr7TFiZbXI0kbKRlx+dRYrY9Hq1
-	 n+wFxTKOdDrA4H5bZ52Chj8T0amx4d+kth6UmQHE=
+	b=t7HthsBydf3JqZruPxo+4Tq5oWQ6x5I8z2ZmtbwQz5bJguTZJqkc1D5gLBAatxPoK
+	 23vUudF0kBXFIfCYSrWXpGhaQOZ9fhf0iyR9SXHEOgywxCR5/p36QvnwrJZBk7MzTD
+	 EvbBVza2iLZRKqV7wNogYErx22EpYe17V0QSq3VI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@maxima.ru>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>,
+	Emil Dahl Juhl <emdj@bang-olufsen.dk>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/119] ALSA: firewire-lib: fix return value on fail in amdtp_tscm_init()
-Date: Tue, 12 Nov 2024 11:21:04 +0100
-Message-ID: <20241112101850.857770720@linuxfoundation.org>
+Subject: [PATCH 6.6 057/119] tools/lib/thermal: Fix sampling handler context ptr
+Date: Tue, 12 Nov 2024 11:21:05 +0100
+Message-ID: <20241112101850.895806293@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -52,39 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@maxima.ru>
+From: Emil Dahl Juhl <emdj@bang-olufsen.dk>
 
-[ Upstream commit 8abbf1f01d6a2ef9f911f793e30f7382154b5a3a ]
+[ Upstream commit fcd54cf480c87b96313a97dbf898c644b7bb3a2e ]
 
-If amdtp_stream_init() fails in amdtp_tscm_init(), the latter returns zero,
-though it's supposed to return error code, which is checked inside
-init_stream() in file tascam-stream.c.
+The sampling handler, provided by the user alongside a void* context,
+was invoked with an internal structure instead of the user context.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Correct the invocation of the sampling handler to pass the user context
+pointer instead.
 
-Fixes: 47faeea25ef3 ("ALSA: firewire-tascam: add data block processing layer")
-Signed-off-by: Murad Masimov <m.masimov@maxima.ru>
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20241101185517.1819-1-m.masimov@maxima.ru
+Note that the approach taken is similar to that in events.c, and will
+reduce the chances of this mistake happening if additional sampling
+callbacks are added.
+
+Fixes: 47c4b0de080a ("tools/lib/thermal: Add a thermal library")
+Signed-off-by: Emil Dahl Juhl <emdj@bang-olufsen.dk>
+Link: https://lore.kernel.org/r/20241015171826.170154-1-emdj@bang-olufsen.dk
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/firewire/tascam/amdtp-tascam.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/lib/thermal/sampling.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/firewire/tascam/amdtp-tascam.c b/sound/firewire/tascam/amdtp-tascam.c
-index 0b42d65590081..079afa4bd3811 100644
---- a/sound/firewire/tascam/amdtp-tascam.c
-+++ b/sound/firewire/tascam/amdtp-tascam.c
-@@ -238,7 +238,7 @@ int amdtp_tscm_init(struct amdtp_stream *s, struct fw_unit *unit,
- 	err = amdtp_stream_init(s, unit, dir, flags, fmt,
- 			process_ctx_payloads, sizeof(struct amdtp_tscm));
- 	if (err < 0)
--		return 0;
-+		return err;
+diff --git a/tools/lib/thermal/sampling.c b/tools/lib/thermal/sampling.c
+index 70577423a9f0c..f67c1f9ea1d78 100644
+--- a/tools/lib/thermal/sampling.c
++++ b/tools/lib/thermal/sampling.c
+@@ -16,6 +16,8 @@ static int handle_thermal_sample(struct nl_msg *n, void *arg)
+ 	struct thermal_handler_param *thp = arg;
+ 	struct thermal_handler *th = thp->th;
  
- 	if (dir == AMDTP_OUT_STREAM) {
- 		// Use fixed value for FDF field.
++	arg = thp->arg;
++
+ 	genlmsg_parse(nlh, 0, attrs, THERMAL_GENL_ATTR_MAX, NULL);
+ 
+ 	switch (genlhdr->cmd) {
 -- 
 2.43.0
 
