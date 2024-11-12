@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC23213155;
-	Tue, 12 Nov 2024 10:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC13C21B451;
+	Tue, 12 Nov 2024 10:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408464; cv=none; b=ExCTTd1gcQFsHm7JBr5jLS4hbLc8/jSdLmooXF9bRRjEyAhcojCHFaMVqDE+xHq6bR6fENCTwJLyXugX3RgAMEBlBwL7f9o1tb7R2VM94WCiemXz3p2NQ7TRz6fWKM6kvmx1QQRYOwOr24UmoXiu2gNuSkaMOlR3u8If2FzCBLY=
+	t=1731408467; cv=none; b=L1XZhZkCPwVRYc6GVk4YS1R4ofN7fPFBSf2kq8GSyzq9qHGDJLwIOxdKheBzgYigACwbzoxEhFwjiMoRVWRC6o9+wbI4HkDOuBsxxGSFfq98g2kWS1qqTH950OR/p7JOEEnSafSqqCprOalSjtSyQse/TTLJHzCGnFuyeuyV5qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408464; c=relaxed/simple;
-	bh=LCsL8GHx/3aSgZk1X0Ysja87UEFQMBa681DqMZDqVAw=;
+	s=arc-20240116; t=1731408467; c=relaxed/simple;
+	bh=S39WOH8cc6W3hlYOuGbudMYwoVXjWuk/hcdqOnj6ims=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ux/Y7BJ5sUWtjbsGH0UZFTdZtT866rrcqLMpum117jORtOBPDnnLSKvO14NUD7U57Jjnbs3XVOgISTDSW0lJIlnVHzZWwCL4ya/hxicHpoy1gdToE7XFUDnN8lOpZ18BEGobK2DtOyXTmlDxuLyzelFihNiWzi9fx4Rt+lCN7bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OflSw7fo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dcFcKvWcs3AfX3Otm0JVHE4pA/08kSPgnhFf8hZZ5GIdrFwJMg1aLA5ptcUXyz8VTZtpnJ4ctoRuAEUrkNNjV+7LmkEGTYuJV+BaT5/IvuZCFcvnAvaFuFCvRw51R0IwqPxvBjZiBkALQ9oAXxdjCms4AC1clpINBa222hwfSSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXeO7Wol; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OflSw7fo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10639C4CECD;
-	Tue, 12 Nov 2024 10:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXeO7Wol"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27AF8C4CECD;
+	Tue, 12 Nov 2024 10:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408464;
-	bh=LCsL8GHx/3aSgZk1X0Ysja87UEFQMBa681DqMZDqVAw=;
+	s=korg; t=1731408467;
+	bh=S39WOH8cc6W3hlYOuGbudMYwoVXjWuk/hcdqOnj6ims=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OflSw7foNYNh8gsT0WHWauW0DXw09W3PqPVq+hy9t/h0qILQU8JDbxWEN6crdm4cK
-	 w7PYvGeP3ZyEYaTT3YXAvbn10LIyM0rRI5k6z3+LXkLM5MxDtcTKTgFUuEMe8sPcsJ
-	 cBu9YTUur7WT9rIlXi+7U906DKGIcLXmFIp0Xbq0=
+	b=YXeO7WolXQYy0bSqb0uAG1WTqJ5s8zsy7HjzPitKcIhuDiNA1uhZaWzT/e175VV+f
+	 idoSWEdsEzf3itB7JFq9iHNALFPgZdnzuwb6RcGQ1vV5QKHFeYf/qZUu7xTn0JYutR
+	 EwjAQLdNrZm4+rekSYxwk7Z1HNMy114hI4ZyDMGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.11 163/184] USB: serial: option: add Quectel RG650V
-Date: Tue, 12 Nov 2024 11:22:01 +0100
-Message-ID: <20241112101907.125134819@linuxfoundation.org>
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.11 172/184] selftests: hugetlb_dio: check for initial conditions to skip in the start
+Date: Tue, 12 Nov 2024 11:22:10 +0100
+Message-ID: <20241112101907.466930520@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -44,72 +46,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.11-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Monin <benoit.monin@gmx.fr>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-commit 3b05949ba39f305b585452d0e177470607842165 upstream.
+commit 0268d4579901821ff17259213c2d8c9679995d48 upstream.
 
-Add support for Quectel RG650V which is based on Qualcomm SDX65 chip.
-The composition is DIAG / NMEA / AT / AT / QMI.
+The test should be skipped if initial conditions aren't fulfilled in the
+start instead of failing and outputting non-compliant TAP logs.  This kind
+of failure pollutes the results.  The initial conditions are:
 
-T:  Bus=02 Lev=01 Prnt=01 Port=03 Cnt=01 Dev#=  4 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0122 Rev=05.15
-S:  Manufacturer=Quectel
-S:  Product=RG650V-EU
-S:  SerialNumber=xxxxxxx
-C:  #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=9ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=9ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=9ms
+- The test should only execute if /tmp file can be allocated.
+- The test should only execute if huge pages are free.
 
-Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Before:
+TAP version 13
+1..4
+Bail out! Error opening file
+: Read-only file system (30)
+ # Planned tests != run tests (4 != 0)
+ # Totals: pass:0 fail:0 xfail:0 xpass:0 skip:0 error:0
+
+After:
+TAP version 13
+1..0 # SKIP Unable to allocate file: Read-only file system
+
+Link: https://lkml.kernel.org/r/20241101141557.3159432-1-usama.anjum@collabora.com
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Fixes: 3a103b5315b7 ("selftest: mm: Test if hugepage does not get leaked during __bio_release_pages()")
+Cc: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Donet Tom <donettom@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/mm/hugetlb_dio.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -251,6 +251,7 @@ static void option_instat_callback(struc
- #define QUECTEL_VENDOR_ID			0x2c7c
- /* These Quectel products use Quectel's vendor ID */
- #define QUECTEL_PRODUCT_EC21			0x0121
-+#define QUECTEL_PRODUCT_RG650V			0x0122
- #define QUECTEL_PRODUCT_EM061K_LTA		0x0123
- #define QUECTEL_PRODUCT_EM061K_LMS		0x0124
- #define QUECTEL_PRODUCT_EC25			0x0125
-@@ -1273,6 +1274,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG912Y, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG916Q, 0xff, 0x00, 0x00) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0, 0) },
+diff --git a/tools/testing/selftests/mm/hugetlb_dio.c b/tools/testing/selftests/mm/hugetlb_dio.c
+index f9ac20c657ec..60001c142ce9 100644
+--- a/tools/testing/selftests/mm/hugetlb_dio.c
++++ b/tools/testing/selftests/mm/hugetlb_dio.c
+@@ -44,13 +44,6 @@ void run_dio_using_hugetlb(unsigned int start_off, unsigned int end_off)
+ 	if (fd < 0)
+ 		ksft_exit_fail_perror("Error opening file\n");
  
- 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
- 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_CMU_300) },
+-	/* Get the free huge pages before allocation */
+-	free_hpage_b = get_free_hugepages();
+-	if (free_hpage_b == 0) {
+-		close(fd);
+-		ksft_exit_skip("No free hugepage, exiting!\n");
+-	}
+-
+ 	/* Allocate a hugetlb page */
+ 	orig_buffer = mmap(NULL, h_pagesize, mmap_prot, mmap_flags, -1, 0);
+ 	if (orig_buffer == MAP_FAILED) {
+@@ -94,8 +87,20 @@ void run_dio_using_hugetlb(unsigned int start_off, unsigned int end_off)
+ int main(void)
+ {
+ 	size_t pagesize = 0;
++	int fd;
+ 
+ 	ksft_print_header();
++
++	/* Open the file to DIO */
++	fd = open("/tmp", O_TMPFILE | O_RDWR | O_DIRECT, 0664);
++	if (fd < 0)
++		ksft_exit_skip("Unable to allocate file: %s\n", strerror(errno));
++	close(fd);
++
++	/* Check if huge pages are free */
++	if (!get_free_hugepages())
++		ksft_exit_skip("No free hugepage, exiting\n");
++
+ 	ksft_set_plan(4);
+ 
+ 	/* Get base page size */
+-- 
+2.47.0
+
 
 
