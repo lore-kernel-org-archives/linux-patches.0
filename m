@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2822123F5;
-	Tue, 12 Nov 2024 10:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A1E216DE2;
+	Tue, 12 Nov 2024 10:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408002; cv=none; b=lOftForH18Vlb9XtFcFhNL6oNN12dwDdNzGSJkBjgXqXkjj95PImmpWjyz+tZ8Z4iIuWAesLOXtdtt6tyHI86CkXVw72kT2/zbTms7QnOqsaGqdqzCeH0V9dLW8RJFc8iKQO1aH61us2w9Hv/nPEmFet5w90R/JB8nZBPPDK6X8=
+	t=1731408006; cv=none; b=cr3/NWKHdMoWsyJ5Eam/TqwiKiSTTA0qwqa0VvOgBSHLwMt92dgeFLczt028BNhtlPJXFde0dltVcNGRiABEOjyM9e0ORX0BnSO4rggIzL2pZyOI8F3iw1uIDJN9309b2oxv8BCc2m1ONJ2XaH4WtZhLqR82svc4K73RV4vIlhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408002; c=relaxed/simple;
-	bh=dZlh7oRlt7+jWPX1LmPrE71hQ43b10NuARqoUHlcIZU=;
+	s=arc-20240116; t=1731408006; c=relaxed/simple;
+	bh=sgrJaZeZmuTMA/sGjBaFA74FGMGVEm5OcblGyxDKdbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hyoZaxnDsBVPoGkprqnh2vqO1cASm8lSmbuuUZlmSjyn9x2r+xEeeI7dE51L/BN0XTVmU2xYsPtuC7/8OcFgfX/RWj+W588Ppso9dLSSdZDdHIbPlCE2w53M8JtDd2gL3b/EzUgYC6RYKOiidt3rTN2H77G/5dqOMHVNT4HNqSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kaNQXn2g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C6HUBbn7XaDWf4Ojywkg8jIb4uzEtiSyeosA1KbC5SnhbrkeEcKIb197uDBcihN85iAqklCsHOJYQwA7MaYYs+M+mkNm7Z6lOjROFKyYEuu2K3X+YAsYkCj7b3+P5z6UGUtPLCW60McJVhg33b8WWYwwfjB7Xkp4yPe8KBE3yjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cb2VeBz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaNQXn2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A10C4CECD;
-	Tue, 12 Nov 2024 10:40:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cb2VeBz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC05C4CECD;
+	Tue, 12 Nov 2024 10:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408002;
-	bh=dZlh7oRlt7+jWPX1LmPrE71hQ43b10NuARqoUHlcIZU=;
+	s=korg; t=1731408005;
+	bh=sgrJaZeZmuTMA/sGjBaFA74FGMGVEm5OcblGyxDKdbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kaNQXn2gxn7QeuVfaFCJvsv5oNRPKmAs8KQVFjY8Wr4O5VwFGsGmUEuOXBuopYRO3
-	 bjAt/78GXDTauazQ+lCnkDRZ/i2DFE9U9mzC8mlROkd7kgGe1GHdkFAkT16S+q08jm
-	 b/eiHr/wA+OE7/mwUURyB9F5Qs0+B5HxKfjeNVfc=
+	b=1cb2VeBz0Ug8JSytvbEaWvOnShLLMrhtEqmwB91D4QMQU0+GdE7Rfw/vtKZfg5MaM
+	 u3nBfr7RWFCzkJBYvbWMFs7nEKc3Rfd+ZM8NVDwvQZQGk+QWOm7gCaEf8RPIIzD+yV
+	 MqDjIjspKX1PUqHekYBQiyZ6lE6HZRkMWooaHUs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Diederik de Haas <didi.debian@cknow.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 007/184] EDAC/qcom: Make irq configuration optional
-Date: Tue, 12 Nov 2024 11:19:25 +0100
-Message-ID: <20241112101901.154281809@linuxfoundation.org>
+Subject: [PATCH 6.11 008/184] arm64: dts: rockchip: Remove hdmis 2nd interrupt on rk3328
+Date: Tue, 12 Nov 2024 11:19:26 +0100
+Message-ID: <20241112101901.191788496@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -53,101 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rajendra Nayak <quic_rjendra@quicinc.com>
+From: Diederik de Haas <didi.debian@cknow.org>
 
-[ Upstream commit 0a97195d2181caced187acd7454464b8e37021d7 ]
+[ Upstream commit de50a7e3681771c6b990238af82bf1dea9b11b21 ]
 
-On most modern qualcomm SoCs, the configuration necessary to enable the
-Tag/Data RAM related irqs being propagated to the SoC irq controller is
-already done in firmware (in DSF or 'DDR System Firmware')
+The "synopsys,dw-hdmi.yaml" binding specifies that the interrupts
+property of the hdmi node has 'maxItems: 1', so the hdmi node in
+rk3328.dtsi having 2 is incorrect.
 
-On some like the x1e80100, these registers aren't even accesible to the
-kernel causing a crash when edac device is probed.
+Paragraph 1.3 ("System Interrupt connection") of the RK3328 TRM v1.1
+page 16 and 17 define the following hdmi related interrupts:
+-  67 hdmi_intr
+- 103 hdmi_intr_wakeup
 
-Hence, make the irq configuration optional in the driver and mark x1e80100
-as the SoC on which this should be avoided.
+The difference of 32 is due to a different base used in the TRM.
 
-Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
-Reported-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20240903101510.3452734-1-quic_rjendra@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The RK3399 (which uses the same binding) has '23: hdmi_irq' and
+'24: hdmi_wakeup_irq' according to its TRM (page 19).
+The RK3568 (also same binding) has '76: hdmi_wakeup' and '77: hdmi'
+according to page 17 of its TRM.
+In both cases the non-wakeup IRQ was used, so use that too for rk3328.
+
+Helped-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 725e351c265a ("arm64: dts: rockchip: add rk3328 display nodes")
+Signed-off-by: Diederik de Haas <didi.debian@cknow.org>
+Link: https://lore.kernel.org/r/20241008113344.23957-3-didi.debian@cknow.org
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/qcom_edac.c           | 8 +++++---
- drivers/soc/qcom/llcc-qcom.c       | 3 +++
- include/linux/soc/qcom/llcc-qcom.h | 2 ++
- 3 files changed, 10 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3328.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
-index d3cd4cc54ace9..a9a8ba067007a 100644
---- a/drivers/edac/qcom_edac.c
-+++ b/drivers/edac/qcom_edac.c
-@@ -342,9 +342,11 @@ static int qcom_llcc_edac_probe(struct platform_device *pdev)
- 	int ecc_irq;
- 	int rc;
- 
--	rc = qcom_llcc_core_setup(llcc_driv_data, llcc_driv_data->bcast_regmap);
--	if (rc)
--		return rc;
-+	if (!llcc_driv_data->ecc_irq_configured) {
-+		rc = qcom_llcc_core_setup(llcc_driv_data, llcc_driv_data->bcast_regmap);
-+		if (rc)
-+			return rc;
-+	}
- 
- 	/* Allocate edac control info */
- 	edev_ctl = edac_device_alloc_ctl_info(0, "qcom-llcc", 1, "bank",
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 37e11e5017285..9ff3b42cb1955 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -139,6 +139,7 @@ struct qcom_llcc_config {
- 	int size;
- 	bool need_llcc_cfg;
- 	bool no_edac;
-+	bool irq_configured;
- };
- 
- struct qcom_sct_config {
-@@ -720,6 +721,7 @@ static const struct qcom_llcc_config x1e80100_cfg[] = {
- 		.need_llcc_cfg	= true,
- 		.reg_offset	= llcc_v2_1_reg_offset,
- 		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
-+		.irq_configured = true,
- 	},
- };
- 
-@@ -1347,6 +1349,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 	drv_data->cfg = llcc_cfg;
- 	drv_data->cfg_size = sz;
- 	drv_data->edac_reg_offset = cfg->edac_reg_offset;
-+	drv_data->ecc_irq_configured = cfg->irq_configured;
- 	mutex_init(&drv_data->lock);
- 	platform_set_drvdata(pdev, drv_data);
- 
-diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-index 9e9f528b13701..2f20281d4ad43 100644
---- a/include/linux/soc/qcom/llcc-qcom.h
-+++ b/include/linux/soc/qcom/llcc-qcom.h
-@@ -125,6 +125,7 @@ struct llcc_edac_reg_offset {
-  * @num_banks: Number of llcc banks
-  * @bitmap: Bit map to track the active slice ids
-  * @ecc_irq: interrupt for llcc cache error detection and reporting
-+ * @ecc_irq_configured: 'True' if firmware has already configured the irq propagation
-  * @version: Indicates the LLCC version
-  */
- struct llcc_drv_data {
-@@ -139,6 +140,7 @@ struct llcc_drv_data {
- 	u32 num_banks;
- 	unsigned long *bitmap;
- 	int ecc_irq;
-+	bool ecc_irq_configured;
- 	u32 version;
- };
- 
+diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+index b01efd6d042c8..a60259ae8a532 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+@@ -754,8 +754,7 @@
+ 		compatible = "rockchip,rk3328-dw-hdmi";
+ 		reg = <0x0 0xff3c0000 0x0 0x20000>;
+ 		reg-io-width = <4>;
+-		interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
++		interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&cru PCLK_HDMI>,
+ 			 <&cru SCLK_HDMI_SFC>,
+ 			 <&cru SCLK_RTC32K>;
 -- 
 2.43.0
 
