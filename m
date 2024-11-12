@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CA2212F00;
-	Tue, 12 Nov 2024 10:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0AA212EEF;
+	Tue, 12 Nov 2024 10:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408145; cv=none; b=aZKNdZNGofFfTJJy7rqdZP4mnOuHn6DvyCIu0WVlGHK1fYnsCCnVGWAly0TuvIlUAqlNtvdtjAaiPdVEWD6IjoAk+OsC0J8OFVjpQsiLWdjNoTBjthUqYG3VT8ZC7CTrX2b825vrbWH76iBz9dsbUA9R3oaHXP8UQsvInEEYTCQ=
+	t=1731408148; cv=none; b=rDIbaovUPmq5bT5IiUF8mnOD++cVC5qvxWgbgRreq9MT/JyYkgtDC4xKwCs+fYSjKcuwcu2pvh0BvdNrzup0SoSsPyHhzHb4JJflKY09FEJvkIevMr0OWHjWD7oovA4M1w0sY8lQsnexJMOZY3+auvIJ1J9HXE7Hmn+YYSLrbpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408145; c=relaxed/simple;
-	bh=t2ZpYIBq91YuG34TtUslOheSHMjPAPfMdOutRYMhVdw=;
+	s=arc-20240116; t=1731408148; c=relaxed/simple;
+	bh=kIIhF42DtGOmLLSwCz+pcinGmVuYkAIFo8SZWbqNVJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dtKUt12GyMDspeSeDWUKTmJD7TCYB8uYmPgrjRsMTqzK3CfsZNPEphMMOt9RSt98kRZtLFnjkpdU81kecudNgKBcmefZ3m5iUBW8UVRNOYoZikD01NHhBklWfZCqjG58HKvpKjHzulV3FlIL6jgeIiphgUAznq77AExtEBcWXNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xSu/888R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qAZixM2zi3YLL293UC0QVRV1pE+ziYNa5VUmcv91l+hC3KkP+KlheCJjXGbfNRYgF4VDNjAhNzh/q5oON/sfucohWqnXACOPCEW96ACRMzwS2mVTW1wBNvJY79ZNYxqwmCdrJlk5pKsdKWqG0zwKCTlpAcrqq39oj7L99OOiHY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDwvECLU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSu/888R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A06EC4CECD;
-	Tue, 12 Nov 2024 10:42:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDwvECLU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA455C4CECD;
+	Tue, 12 Nov 2024 10:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408144;
-	bh=t2ZpYIBq91YuG34TtUslOheSHMjPAPfMdOutRYMhVdw=;
+	s=korg; t=1731408148;
+	bh=kIIhF42DtGOmLLSwCz+pcinGmVuYkAIFo8SZWbqNVJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xSu/888Rh2476cIrj7ecLteiGVacTszB51mF54ePXOYFlaYuTRjc4OBt3S+5+I9FM
-	 Ocg5u1JH4/C5QeoJmxzg4BNFhc3RULtUqs0JLrDCQNksQ+aUeSRB7NQNMbSZuRn+DW
-	 g/Iv5euwkVJTD/M2eQRI+hs//x279CfAvyixkXPw=
+	b=iDwvECLU0nz7ZyhwtCyF7xAsGfBvoxNHZTR+nojS6qX4grRYjY0qRzfIckaZbHoNQ
+	 ojjCcqRafAHLpZCGX8AB0IzS8vpffdKaGkEgbuGyTqiKzQyzVEzbBohqRq+1Q7laDa
+	 +wA4eleNHThskYmhVYei//tM8QHK5q9Ndho/n23M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jyri Sarha <jyri.sarha@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 074/184] ASoC: SOF: sof-client-probes-ipc4: Set param_size extension bits
-Date: Tue, 12 Nov 2024 11:20:32 +0100
-Message-ID: <20241112101903.702808908@linuxfoundation.org>
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH 6.11 075/184] media: dvb-core: add missing buffer index check
+Date: Tue, 12 Nov 2024 11:20:33 +0100
+Message-ID: <20241112101903.740370534@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -55,46 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jyri Sarha <jyri.sarha@linux.intel.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit 48b86532c10128cf50c854a90c2d5b1410f4012d ]
+commit fa88dc7db176c79b50adb132a56120a1d4d9d18b upstream.
 
-Write the size of the optional payload of SOF_IPC4_MOD_INIT_INSTANCE
-message to extension param_size-bits.
+dvb_vb2_expbuf() didn't check if the given buffer index was
+for a valid buffer. Add this check.
 
-The previous IPC4 version does not set these bits that should indicate
-the size of the optional payload (struct sof_ipc4_probe_cfg). The old
-firmware side component code works well without these bits, but when
-the probes are converted to use the generic module API, this does not
-work anymore.
-
-Fixes: f5623593060f ("ASoC: SOF: IPC4: probes: Implement IPC4 ops for probes client device")
-Signed-off-by: Jyri Sarha <jyri.sarha@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20241107132840.17386-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Closes: https://lore.kernel.org/linux-media/?q=WARNING+in+vb2_core_reqbufs
+Fixes: 7dc866df4012 ("media: dvb-core: Use vb2_get_buffer() instead of directly access to buffers array")
+Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/sof-client-probes-ipc4.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/dvb-core/dvb_vb2.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/sof-client-probes-ipc4.c b/sound/soc/sof/sof-client-probes-ipc4.c
-index 796eac0a2e74f..603aed222480f 100644
---- a/sound/soc/sof/sof-client-probes-ipc4.c
-+++ b/sound/soc/sof/sof-client-probes-ipc4.c
-@@ -125,6 +125,7 @@ static int ipc4_probes_init(struct sof_client_dev *cdev, u32 stream_tag,
- 	msg.primary |= SOF_IPC4_MSG_TARGET(SOF_IPC4_MODULE_MSG);
- 	msg.extension = SOF_IPC4_MOD_EXT_DST_MOD_INSTANCE(INVALID_PIPELINE_ID);
- 	msg.extension |= SOF_IPC4_MOD_EXT_CORE_ID(0);
-+	msg.extension |= SOF_IPC4_MOD_EXT_PARAM_SIZE(sizeof(cfg) / sizeof(uint32_t));
+--- a/drivers/media/dvb-core/dvb_vb2.c
++++ b/drivers/media/dvb-core/dvb_vb2.c
+@@ -366,9 +366,15 @@ int dvb_vb2_querybuf(struct dvb_vb2_ctx
+ int dvb_vb2_expbuf(struct dvb_vb2_ctx *ctx, struct dmx_exportbuffer *exp)
+ {
+ 	struct vb2_queue *q = &ctx->vb_q;
++	struct vb2_buffer *vb2 = vb2_get_buffer(q, exp->index);
+ 	int ret;
  
- 	msg.data_size = sizeof(cfg);
- 	msg.data_ptr = &cfg;
--- 
-2.43.0
-
+-	ret = vb2_core_expbuf(&ctx->vb_q, &exp->fd, q->type, q->bufs[exp->index],
++	if (!vb2) {
++		dprintk(1, "[%s] invalid buffer index\n", ctx->name);
++		return -EINVAL;
++	}
++
++	ret = vb2_core_expbuf(&ctx->vb_q, &exp->fd, q->type, vb2,
+ 			      0, exp->flags);
+ 	if (ret) {
+ 		dprintk(1, "[%s] index=%d errno=%d\n", ctx->name,
 
 
