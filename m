@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F29213138;
-	Tue, 12 Nov 2024 10:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A14214424;
+	Tue, 12 Nov 2024 10:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408259; cv=none; b=L44VszkGMcXoI1OkYtwLbo2UMS80P0zMrX2YYWHBJ3cWfBT/RE/nZMbRH2Iz1lpdNlQ/lBzZDV0m8jRdg0F81LVPAyKF4IpfOM0aBcUfaG0IAS/R3t/0v2yso28ghPFa0jr9ZoIbMWsmFS/hoA/wojcZei1qHCTV4QDk2b9UcBA=
+	t=1731408262; cv=none; b=g822PezDoS1mUfiRtvUajjfcOO2E33q5+sHz2CeMpLdg2WImOqCeacS6ABlZxRcHHUHd4TFZKbgMxnjtREr8T2XkGyxcHNljMfp7JqTkEaKlhsSv0N+1wwSwcjfjCiloAt3MXou+/oI/qmbKZQ9X+8CKbiewJmECU9On93+OTyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408259; c=relaxed/simple;
-	bh=hanRY4uUf6HxzW0geYcW9BqEwBJAhy59DZU0osxPYPE=;
+	s=arc-20240116; t=1731408262; c=relaxed/simple;
+	bh=wIgdmFVR1yIQw3WhjVQaaWYyplb2QLshwnk79iL0sOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQ/vaey0dxcCnTXy6/634SR5xFrZ4QwMgc2Ew0ONAniv8Uq8dRMWi6dqcW/NmWQAWUGYyba70PVOZmZMavLBRtoRHXoWPJzA1lsf8F/9augCbyDazCXScmBk3UxSjbUVD9uMPK+tR84hr74RVsYjp21RvmWDus94ic4SNNVCdpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLcJ3Htr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kq5k/PGA3/UONdERbkDQDT2sejKWrsyITKyeAwZ3BB9+X27rOfO/uMWqCiI8vRr7QejG1I+pblQEz4fMWLZzlIKTmZBnanV1WI7yMExQ3XuRMKZLnHzd7HEPvtuLj7n3iq9eZKJ3D6lVPUaLX3OAZevVqiiiLt5HrnnIgvcAL4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8WeS3Nu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLcJ3Htr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD46C4CECD;
-	Tue, 12 Nov 2024 10:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8WeS3Nu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10771C4CECD;
+	Tue, 12 Nov 2024 10:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408259;
-	bh=hanRY4uUf6HxzW0geYcW9BqEwBJAhy59DZU0osxPYPE=;
+	s=korg; t=1731408262;
+	bh=wIgdmFVR1yIQw3WhjVQaaWYyplb2QLshwnk79iL0sOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rLcJ3HtrpEuisOziTUy/hIRZIJ2haGyhCNbNlluf8GPYPUlj3xkDoMF9LZVXRLda+
-	 yLmVieB7RiATbaHG8+7uidAVDHBQKB3PhHswrNrS2CkSoZQ1xGIumiZbmSj81wA5ug
-	 ZYdIPUDeiouQJ9zHTIEm0ay0CByvJJKb9nQkDbhk=
+	b=U8WeS3NubcDr1G+YH+yHyYbjZ2YQxsl8zSqwj0rlCAjeWuMcB+LlcaFdJT5h06xtM
+	 3GS7AmOl2lGDDxWrk+saetFFe8QjkoGAWpY/asnrtoKNx/qm/H9GDjlWUpDIWBRq2w
+	 J3RHx90yzvQEqHUE5HuuOBAJHz6BzAKAzdA8gbac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.11 109/184] drm/amdgpu: Adjust debugfs register access permissions
-Date: Tue, 12 Nov 2024 11:21:07 +0100
-Message-ID: <20241112101905.049301466@linuxfoundation.org>
+Subject: [PATCH 6.11 110/184] drm/amdgpu: Fix DPX valid mode check on GC 9.4.3
+Date: Tue, 12 Nov 2024 11:21:08 +0100
+Message-ID: <20241112101905.086196976@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -50,31 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-commit b46dadf7e3cfe26d0b109c9c3d81b278d6c75361 upstream.
+commit 3ce3f85787352fa48fc02ef6cbd7a5e5aba93347 upstream.
 
-Regular users shouldn't have read access.
+For DPX mode, the number of memory partitions supported should be less
+than or equal to 2.
 
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Fixes: 1589c82a1085 ("drm/amdgpu: Check memory ranges for valid xcp mode")
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c0cfd2e652553d607b910be47d0cc5a7f3a78641)
+(cherry picked from commit 990c4f580742de7bb78fa57420ffd182fc3ab4cd)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    2 +-
+ drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -1648,7 +1648,7 @@ int amdgpu_debugfs_regs_init(struct amdg
- 
- 	for (i = 0; i < ARRAY_SIZE(debugfs_regs); i++) {
- 		ent = debugfs_create_file(debugfs_regs_names[i],
--					  S_IFREG | 0444, root,
-+					  S_IFREG | 0400, root,
- 					  adev, debugfs_regs[i]);
- 		if (!i && !IS_ERR_OR_NULL(ent))
- 			i_size_write(ent->d_inode, adev->rmmio_size);
+--- a/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
++++ b/drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c
+@@ -484,7 +484,7 @@ static bool __aqua_vanjaram_is_valid_mod
+ 	case AMDGPU_SPX_PARTITION_MODE:
+ 		return adev->gmc.num_mem_partitions == 1 && num_xcc > 0;
+ 	case AMDGPU_DPX_PARTITION_MODE:
+-		return adev->gmc.num_mem_partitions != 8 && (num_xcc % 4) == 0;
++		return adev->gmc.num_mem_partitions <= 2 && (num_xcc % 4) == 0;
+ 	case AMDGPU_TPX_PARTITION_MODE:
+ 		return (adev->gmc.num_mem_partitions == 1 ||
+ 			adev->gmc.num_mem_partitions == 3) &&
 
 
