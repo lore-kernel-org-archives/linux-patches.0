@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BA220DD62;
-	Tue, 12 Nov 2024 10:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC222214425;
+	Tue, 12 Nov 2024 10:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407675; cv=none; b=gfnM4ugnYYKEDTOhcU0U5y4XgZkYXVq8SR8iAgw/HAwpOy7zUHeMYYvqMsEwi81Va2S1TirInPx3lPCjjVRJhlVzkKGbnlR5bKhPNwlnIBKVoTZfHkKLpL3Ex+gvNbl9wyQnFs8oeL8xvbY8A/VxhgGd/l2UtEOx3bs22Xydjo8=
+	t=1731407678; cv=none; b=FVldJ8zEj125pp/lzXxt4TPLDHuSxWVkG8OOXArRQM5jdvumXHK0GT529POCV7yxeSiKSCE+SsUN0DGes+kfk9fRVJMue1Hr1WIkxT85ikIk5+Xgb7UbeHjaLrrFrChC+J6fgRDhl4qPPD3Q1hPhgCTly5ygmLO8/c2bMhFqj9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407675; c=relaxed/simple;
-	bh=ytp7kXlpAtqB9urT6gy4YaIy74UXy/ZM6dsuviAjRwY=;
+	s=arc-20240116; t=1731407678; c=relaxed/simple;
+	bh=K8lmpxVD64S82eXnru0wUaiBwpW47azgPEYczTJkRXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mxOBjxHh1aj/L/gketJ5ynjceVNU6Jc2OuFWvXioWk2Pi5EpF3lJVBgAJv8kQFZ6FQl/p5UeSZYg4Wtp2ol1UvuZvMafEWXr36JbSkI/+3vai1VEe2PcgEqz3phnq0J2HYIiadCcQ1U1hhGAg39JR7dYR6hiCnhIioSAuV6NSLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEfHcUz0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R8rbIf/6rAoKYFLP3vs83nfkas+yAsCmwL86I2Ao7iIlehcz5mV8y/QMoRMuf0B5RcWNOtZww7X+rgvQsWFOOArVCHYRHwNEuYrmfnhl4g+p2LaYM97dDltRGLm0VBAmISGKbq3maDKOjgdKY4yrAUx86cBpLEhzGGqxJ8rvRHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zoZRl93h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEfHcUz0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3EFC4CED4;
-	Tue, 12 Nov 2024 10:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zoZRl93h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42347C4CECD;
+	Tue, 12 Nov 2024 10:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407675;
-	bh=ytp7kXlpAtqB9urT6gy4YaIy74UXy/ZM6dsuviAjRwY=;
+	s=korg; t=1731407678;
+	bh=K8lmpxVD64S82eXnru0wUaiBwpW47azgPEYczTJkRXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QEfHcUz0CyimjX0QDYdz1jylXkSVOYdnKVvfJE0YEcC4kh8Yz68CF4aUOAKCjCy2B
-	 4kfly06LtXZHcTlfNuVJfFMh/feJBxsC3d1tyG6SlkU1S0qwTC2rlBQoeQ7ysyZ6mu
-	 co1OwsaAbaN/KtmtxA0i04SKaBJ7ietRpfeoZjA4=
+	b=zoZRl93hhUCBF+yJdMcHN/FDCYcWVrUJO4+jze2xXr2TNYU5q+/C7Xhq2+0h+tFqV
+	 RyTyCPEsOJfQOP/ygRDcWC+kSkeKIIsnWyjUJ4zqcSwrEQqJ72H7nfJhheMiDF8Kxt
+	 2MDCZceZT6Wy7EJlM1jtkTQ9KO9Jt1H2bNSZYSBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	linux-afs@lists.infradead.org,
-	Marc Dionne <marc.dionne@auristor.com>,
+	Wentao Liang <Wentao_liang_g@163.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/119] rxrpc: Fix missing locking causing hanging calls
-Date: Tue, 12 Nov 2024 11:20:56 +0100
-Message-ID: <20241112101850.552175902@linuxfoundation.org>
+Subject: [PATCH 6.6 049/119] drivers: net: ionic: add missed debugfs cleanup to ionic_probe() error path
+Date: Tue, 12 Nov 2024 11:20:57 +0100
+Message-ID: <20241112101850.589728219@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -53,67 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Wentao Liang <Wentao_liang_g@163.com>
 
-[ Upstream commit fc9de52de38f656399d2ce40f7349a6b5f86e787 ]
+[ Upstream commit 71712cf519faeed529549a79559c06c7fc250a15 ]
 
-If a call gets aborted (e.g. because kafs saw a signal) between it being
-queued for connection and the I/O thread picking up the call, the abort
-will be prioritised over the connection and it will be removed from
-local->new_client_calls by rxrpc_disconnect_client_call() without a lock
-being held.  This may cause other calls on the list to disappear if a race
-occurs.
+The ionic_setup_one() creates a debugfs entry for ionic upon
+successful execution. However, the ionic_probe() does not
+release the dentry before returning, resulting in a memory
+leak.
 
-Fix this by taking the client_call_lock when removing a call from whatever
-list its ->wait_link happens to be on.
+To fix this bug, we add the ionic_debugfs_del_dev() to release
+the resources in a timely manner before returning.
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: linux-afs@lists.infradead.org
-Reported-by: Marc Dionne <marc.dionne@auristor.com>
-Fixes: 9d35d880e0e4 ("rxrpc: Move client call connection to the I/O thread")
-Link: https://patch.msgid.link/726660.1730898202@warthog.procyon.org.uk
+Fixes: 0de38d9f1dba ("ionic: extract common bits from ionic_probe")
+Signed-off-by: Wentao Liang <Wentao_liang_g@163.com>
+Acked-by: Shannon Nelson <shannon.nelson@amd.com>
+Link: https://patch.msgid.link/20241107021756.1677-1-liangwentao@iscas.ac.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/rxrpc.h | 1 +
- net/rxrpc/conn_client.c      | 4 ++++
- 2 files changed, 5 insertions(+)
+ drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
-index 3322fb93a260b..ed36f5f577a9d 100644
---- a/include/trace/events/rxrpc.h
-+++ b/include/trace/events/rxrpc.h
-@@ -283,6 +283,7 @@
- 	EM(rxrpc_call_see_input,		"SEE input   ") \
- 	EM(rxrpc_call_see_release,		"SEE release ") \
- 	EM(rxrpc_call_see_userid_exists,	"SEE u-exists") \
-+	EM(rxrpc_call_see_waiting_call,		"SEE q-conn  ") \
- 	E_(rxrpc_call_see_zap,			"SEE zap     ")
- 
- #define rxrpc_txqueue_traces \
-diff --git a/net/rxrpc/conn_client.c b/net/rxrpc/conn_client.c
-index 1d95f8bc769fa..a0231b64fb6ef 100644
---- a/net/rxrpc/conn_client.c
-+++ b/net/rxrpc/conn_client.c
-@@ -507,6 +507,7 @@ void rxrpc_connect_client_calls(struct rxrpc_local *local)
- 
- 		spin_lock(&local->client_call_lock);
- 		list_move_tail(&call->wait_link, &bundle->waiting_calls);
-+		rxrpc_see_call(call, rxrpc_call_see_waiting_call);
- 		spin_unlock(&local->client_call_lock);
- 
- 		if (rxrpc_bundle_has_space(bundle))
-@@ -577,7 +578,10 @@ void rxrpc_disconnect_client_call(struct rxrpc_bundle *bundle, struct rxrpc_call
- 		_debug("call is waiting");
- 		ASSERTCMP(call->call_id, ==, 0);
- 		ASSERT(!test_bit(RXRPC_CALL_EXPOSED, &call->flags));
-+		/* May still be on ->new_client_calls. */
-+		spin_lock(&local->client_call_lock);
- 		list_del_init(&call->wait_link);
-+		spin_unlock(&local->client_call_lock);
- 		return;
- 	}
- 
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c b/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
+index 35099ad5eccc8..f49b697ab00f8 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_bus_pci.c
+@@ -385,6 +385,7 @@ static int ionic_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ err_out_pci:
+ 	ionic_dev_teardown(ionic);
+ 	ionic_clear_pci(ionic);
++	ionic_debugfs_del_dev(ionic);
+ err_out:
+ 	mutex_destroy(&ionic->dev_cmd_lock);
+ 	ionic_devlink_free(ionic);
 -- 
 2.43.0
 
