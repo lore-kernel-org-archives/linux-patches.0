@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3835620B20B;
-	Tue, 12 Nov 2024 10:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878852123F7;
+	Tue, 12 Nov 2024 10:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407158; cv=none; b=aQdN2/uIOZsgovaMhHfnuzoKH8RAIRzOlLp06mmrD4VhbTVSsBOdI3PKlkj9Mja4/aJwDDW8UEru4sWza18qbOAwZb9gmqgZu0UNgWbR5Tamo3H4faCZpoGnjNBh4T/7vDciFptNhbGRgip8c+WK9LkClc1QZLSQTfhbjzUfdhs=
+	t=1731407161; cv=none; b=s5IhkDRWtLc5Bq79gG+maA7xALGb8h87R+zGTusAPJloe5iFFLKf3h92qgUcffRxZW44kV0ek9p34NynBeqpxVlNsneV9SdXWhLBAB7qxKBY9QB6ybzWVlDAUdJAn+Vkf3gMa5+4DH/IrsilP/ShBgJLQiHltXW8VR/DWsJjwt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407158; c=relaxed/simple;
-	bh=6EjPaQ0n12JmNEfJNIQusFabeu4YZXnxusFRd57/rjo=;
+	s=arc-20240116; t=1731407161; c=relaxed/simple;
+	bh=gLW/QaNabNTT9br4e6bxdAkY6Rqx7OP/hbmtddJw4fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHO4siGp22xFkWLhhytjUD0Olhik/E7vr+dXXXQ1c4Wt7HifCzu4B3ng5Tj8gBVbCuKS3seK+Z7NaWLB0c6tSwKk2ZbqJEeodnb5Y5mL7gN0vG1iFnRqaibcntvyhZ9s30azj66xZ9Tm1c2XWj7UfsLoDwpAp6HRQFlR721p3gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFY12WJQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KHEE2ajLMCPS+cGLd/KO46kV6auxlHItU6ckQk7e7hgY5pSzg6xu2nS3yiE4r1ShQlxIBpGUMX1N2Ge0IKUQoQh/WhPosHOPXozsq5gcpV3Q+eNfue9kAsWEXlwu70BhyW39uCCvN7U/GfhRyTLvjcYM7TdCCRC466eXwNU44pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kUSIgWih; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFY12WJQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C235C4CECD;
-	Tue, 12 Nov 2024 10:25:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kUSIgWih"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEAB3C4CECD;
+	Tue, 12 Nov 2024 10:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407158;
-	bh=6EjPaQ0n12JmNEfJNIQusFabeu4YZXnxusFRd57/rjo=;
+	s=korg; t=1731407161;
+	bh=gLW/QaNabNTT9br4e6bxdAkY6Rqx7OP/hbmtddJw4fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jFY12WJQ6J9/h0ntl6JVvivZnRKEmKUwTca7XqMH7WXIPz7gZ9RqmOaLs0Hh127Zb
-	 wB9/mk/sJiNTgfJgsL7tGbxdDPB45NAb7aiGwFKD1zXkOXnVoQbw6iY4t83qJ93ziC
-	 weiYCGT+Rh6PdftdJYRZ9JDU+gV0+adWnnP9YnB0=
+	b=kUSIgWih65nQVW0OLhbxiY3V1oe/id9v+UdUPZPqrJedNxsZJUE52aLDtuDIl6Nih
+	 t5ckt6XC4eF8OxR9YgqWArLMMfSV+Plrv8thGPw8wusXF2K875vQt2PfMPNkEfEBUO
+	 xzwAVvxcVKI8vNFn6YXTMiBxuJmmHEqWOiGLxGs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoffer Dall <christoffer.dall@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.15 68/76] irqchip/gic-v3: Force propagation of the active state with a read-back
-Date: Tue, 12 Nov 2024 11:21:33 +0100
-Message-ID: <20241112101842.371419163@linuxfoundation.org>
+	Andrew Kanner <andrew.kanner@gmail.com>,
+	syzbot+386ce9e60fa1b18aac5b@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 69/76] ocfs2: remove entry once instead of null-ptr-dereference in ocfs2_xa_remove()
+Date: Tue, 12 Nov 2024 11:21:34 +0100
+Message-ID: <20241112101842.408212564@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
 References: <20241112101839.777512218@linuxfoundation.org>
@@ -51,57 +57,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Andrew Kanner <andrew.kanner@gmail.com>
 
-commit 464cb98f1c07298c4c10e714ae0c36338d18d316 upstream.
+commit 0b63c0e01fba40e3992bc627272ec7b618ccaef7 upstream.
 
-Christoffer reports that on some implementations, writing to
-GICR_ISACTIVER0 (and similar GICD registers) can race badly with a guest
-issuing a deactivation of that interrupt via the system register interface.
+Syzkaller is able to provoke null-ptr-dereference in ocfs2_xa_remove():
 
-There are multiple reasons to this:
+[   57.319872] (a.out,1161,7):ocfs2_xa_remove:2028 ERROR: status = -12
+[   57.320420] (a.out,1161,7):ocfs2_xa_cleanup_value_truncate:1999 ERROR: Partial truncate while removing xattr overlay.upper.  Leaking 1 clusters and removing the entry
+[   57.321727] BUG: kernel NULL pointer dereference, address: 0000000000000004
+[...]
+[   57.325727] RIP: 0010:ocfs2_xa_block_wipe_namevalue+0x2a/0xc0
+[...]
+[   57.331328] Call Trace:
+[   57.331477]  <TASK>
+[...]
+[   57.333511]  ? do_user_addr_fault+0x3e5/0x740
+[   57.333778]  ? exc_page_fault+0x70/0x170
+[   57.334016]  ? asm_exc_page_fault+0x2b/0x30
+[   57.334263]  ? __pfx_ocfs2_xa_block_wipe_namevalue+0x10/0x10
+[   57.334596]  ? ocfs2_xa_block_wipe_namevalue+0x2a/0xc0
+[   57.334913]  ocfs2_xa_remove_entry+0x23/0xc0
+[   57.335164]  ocfs2_xa_set+0x704/0xcf0
+[   57.335381]  ? _raw_spin_unlock+0x1a/0x40
+[   57.335620]  ? ocfs2_inode_cache_unlock+0x16/0x20
+[   57.335915]  ? trace_preempt_on+0x1e/0x70
+[   57.336153]  ? start_this_handle+0x16c/0x500
+[   57.336410]  ? preempt_count_sub+0x50/0x80
+[   57.336656]  ? _raw_read_unlock+0x20/0x40
+[   57.336906]  ? start_this_handle+0x16c/0x500
+[   57.337162]  ocfs2_xattr_block_set+0xa6/0x1e0
+[   57.337424]  __ocfs2_xattr_set_handle+0x1fd/0x5d0
+[   57.337706]  ? ocfs2_start_trans+0x13d/0x290
+[   57.337971]  ocfs2_xattr_set+0xb13/0xfb0
+[   57.338207]  ? dput+0x46/0x1c0
+[   57.338393]  ocfs2_xattr_trusted_set+0x28/0x30
+[   57.338665]  ? ocfs2_xattr_trusted_set+0x28/0x30
+[   57.338948]  __vfs_removexattr+0x92/0xc0
+[   57.339182]  __vfs_removexattr_locked+0xd5/0x190
+[   57.339456]  ? preempt_count_sub+0x50/0x80
+[   57.339705]  vfs_removexattr+0x5f/0x100
+[...]
 
- - this uses an early write-acknoledgement memory type (nGnRE), meaning
-   that the write may only have made it as far as some interconnect
-   by the time the store is considered "done"
+Reproducer uses faultinject facility to fail ocfs2_xa_remove() ->
+ocfs2_xa_value_truncate() with -ENOMEM.
 
- - the GIC itself is allowed to buffer the write until it decides to
-   take it into account (as long as it is in finite time)
+In this case the comment mentions that we can return 0 if
+ocfs2_xa_cleanup_value_truncate() is going to wipe the entry
+anyway. But the following 'rc' check is wrong and execution flow do
+'ocfs2_xa_remove_entry(loc);' twice:
+* 1st: in ocfs2_xa_cleanup_value_truncate();
+* 2nd: returning back to ocfs2_xa_remove() instead of going to 'out'.
 
-The effects are that the activation may not have taken effect by the time
-the kernel enters the guest, forcing an immediate exit, or that a guest
-deactivation occurs before the interrupt is active, doing nothing.
+Fix this by skipping the 2nd removal of the same entry and making
+syzkaller repro happy.
 
-In order to guarantee that the write to the ISACTIVER register has taken
-effect, read back from it, forcing the interconnect to propagate the write,
-and the GIC to process the write before returning the read.
-
-Reported-by: Christoffer Dall <christoffer.dall@arm.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Christoffer Dall <christoffer.dall@arm.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241106084418.3794612-1-maz@kernel.org
+Link: https://lkml.kernel.org/r/20241103193845.2940988-1-andrew.kanner@gmail.com
+Fixes: 399ff3a748cf ("ocfs2: Handle errors while setting external xattr values.")
+Signed-off-by: Andrew Kanner <andrew.kanner@gmail.com>
+Reported-by: syzbot+386ce9e60fa1b18aac5b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/671e13ab.050a0220.2b8c0f.01d0.GAE@google.com/T/
+Tested-by: syzbot+386ce9e60fa1b18aac5b@syzkaller.appspotmail.com
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ocfs2/xattr.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v3.c
-+++ b/drivers/irqchip/irq-gic-v3.c
-@@ -429,6 +429,13 @@ static int gic_irq_set_irqchip_state(str
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -2040,8 +2040,7 @@ static int ocfs2_xa_remove(struct ocfs2_
+ 				rc = 0;
+ 			ocfs2_xa_cleanup_value_truncate(loc, "removing",
+ 							orig_clusters);
+-			if (rc)
+-				goto out;
++			goto out;
+ 		}
  	}
- 
- 	gic_poke_irq(d, reg);
-+
-+	/*
-+	 * Force read-back to guarantee that the active state has taken
-+	 * effect, and won't race with a guest-driven deactivation.
-+	 */
-+	if (reg == GICD_ISACTIVER)
-+		gic_peek_irq(d, reg);
- 	return 0;
- }
  
 
 
