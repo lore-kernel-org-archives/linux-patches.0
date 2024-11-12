@@ -1,102 +1,188 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F3B21D214;
-	Tue, 12 Nov 2024 10:48:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42DE230996;
+	Tue, 12 Nov 2024 11:43:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408537; cv=none; b=FZKS5TshTEL3ms418rFEFZgumImTfn5Ev6Fh5RvlF2mUWR/IaYfgTTTE3lEDUPWinVKAe6zwkS/i+lsVWucWWw1Ksto4Sfy4cb3LPUB8Jy4W/9UfGTznFjT4120R1b9uTUZ9bwCVRpxP8YtB2LjpGoG0kTTZX56rPOmL+fHntKk=
+	t=1731411789; cv=none; b=B4eLhJ6JkE1ZO6m+lC4w7/9zJmGtejub9QmQ+BwLLSiUj+ikt6NKWdQrdRcAVoJ/FnlfephaMmiFamzHiAfO7zVn8gExbE+VPgkEdU2bC7XjDzGMJ2USLGsNWYyfHyMmyiSRoCkR132gqk86AZD033DrGcD9l3wtVKnICUpY9S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408537; c=relaxed/simple;
-	bh=DCZXHkiMqsZeXLYsBsk0XtMCLQ3xsTfjwVgg6VTMjcI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eC9JQhjk4wVcBBCuRRlc9MOhb7nmtPh6KUs6obqhfJf5zYMSYjWJbyZtUeXEmpJ1hck4m/spPS61DHV7EJ6uLwCdIEJgm2dKVOGch6mNb3LlLE6n+JnXBMCc5/w1HF7D7KNoEF7pPz4KINGuo0RvIF8BdEIy5unUyEbc5YC/8aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnjG8lIx; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1731411789; c=relaxed/simple;
+	bh=ywmrmwU61cquYWqHb3soWy5KtfML++9SbcjwKY7ZNaI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hzBMPidEcp5xrNAYUFZvCCZ6nuWkavyqpWDgXxlhOwoI/FZgFNxpEdHb9t2TdEkZYQIZGp7rG7tzDK+69p3+3yyMFVsjVkGRpj2Q0ESte5PqRaMQtba2pLih9O4u3j5IMxeyQG+xtV1HodvdQcEeWP34kg+E1PDLpx+Mwh4gGYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PDX0EjKm; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnjG8lIx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CDFC4CECD;
-	Tue, 12 Nov 2024 10:48:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408537;
-	bh=DCZXHkiMqsZeXLYsBsk0XtMCLQ3xsTfjwVgg6VTMjcI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OnjG8lIxKogHe/2Eadgj6aZH7+tACeoVArJOYyCLx3tHvf9eCkOjPeIOFDUe5aMm0
-	 X/khrGQF7gQphosET9+v01Zs0wsODiPJBkDvc6izV21GVJxT0lIohxAQdcpYRyZKCx
-	 arW7D0WHVxtio+3okb6fJ+thSBsc0DUH7TTzwxk0=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Reinhard Speyerer <rspmn@arcor.de>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.11 162/184] USB: serial: option: add Fibocom FG132 0x0112 composition
-Date: Tue, 12 Nov 2024 11:22:00 +0100
-Message-ID: <20241112101907.086600759@linuxfoundation.org>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
-References: <20241112101900.865487674@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PDX0EjKm"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2e9b23d189cso66965a91.1;
+        Tue, 12 Nov 2024 03:43:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731411787; x=1732016587; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=j0z23DhUHW7wNW00l4MV+YrP9iRE6XDYN76aiQ5G0Vc=;
+        b=PDX0EjKmlNcQErwO4bc/9TEjD5Ug6SCu2kXXeTp5F48B2GQPNSO4gR432fzcyOM8Tr
+         YzdzBaLHGm48UkM2TSo/JlnuCv4gQAyJTBMrENF1Fv+YRONydp4ptv86nGFL4Yw4WY0y
+         EM/rqlLUj3oo9g1x/ReJKaHEZZBojdjaBFOfTZu/Et4WFVyD2Owa6DHYDs/BDXPyZd/X
+         YPoyiCGivFucV8Glr6d5cocuglualz/V6rCfFK8+s7NohxzvrvVkVTgWIOFZQ/Nvaq+P
+         +VrDgZeC6CQeoF95+tWmqYZEjot24Fao2E+iHSOzVlqkBqKNpx0lEeLoOCwIQTNGRqPo
+         x/jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731411787; x=1732016587;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=j0z23DhUHW7wNW00l4MV+YrP9iRE6XDYN76aiQ5G0Vc=;
+        b=gngu8l2FqdnzG6tx/HhLtpm7dt41nIve/TI80uMfsm4O3R9PG5/Jb3QzmSbnfXpjGx
+         p6TSWHNqIA9BbNJwsw+ERR8y3fMPHWBwhFqC1+/CWLajibUE8pMeKwnbJiKSZ7Fe5okT
+         yD7F4+9WNx3xIN8xAVQx/DbpWqS56n/3TmlsnQZuM2awTkRWKvo6DOo66tT0nJRBo2CL
+         HNiDKl9qKmNU6An7m7qdRH1BFvnPLJ9gua1R4Dk42wQBpluax/6zrfYxWkq11JykI4du
+         LKjOyzVqIwYOl91t2V8MKq4KTxyaJ0+/LeQT3LzzrwcAnE7tXfEa2WUKo2YNUueHysil
+         3ucQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW65tYRHrD5sOT6xbJATxTV4W/lNk2CbW534OrNdNP0a3cIu+w7eT6fnHi6IOEKtC05yZTU@lists.linux.dev, AJvYcCX4fZZ/J9/lseP0O2EAU/S6g29LmHP58YrvejmIuM9eDmIUoOOaucroc7IAklSDGcsv3zj/PqPPyg==@lists.linux.dev
+X-Gm-Message-State: AOJu0YynwRKOEudAzoucNPSIELq1HrBJMj4DwZ2nBK6/I0UMI3LBqdzO
+	u3eFHOXJJGQEljTVGRKT/3G7RP9/ulOKaBOgGSgYpaKzO67airsoXw++J60D1kdGCmsUBf/xolP
+	1sg/xVG7oysxrWWhjuq3qNR1q7pg=
+X-Google-Smtp-Source: AGHT+IGggizb3kL12ZjnHA+9BEc8hjb63HpYjen5xTTmWs+MKPFBZ8CYn9vyQuK8cPPVTowrwyuTF+2y5HhglUBEUAA=
+X-Received: by 2002:a17:90b:3ec5:b0:2e2:ada8:2984 with SMTP id
+ 98e67ed59e1d1-2e9b174818dmr8920433a91.4.1731411787013; Tue, 12 Nov 2024
+ 03:43:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20241111201607.653149-1-ojeda@kernel.org>
+In-Reply-To: <20241111201607.653149-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 12 Nov 2024 12:42:55 +0100
+Message-ID: <CANiq72mUu9V0tAFRYju5=B9-EZ9hbPVMabKJvHm67n7BgSVQXw@mail.gmail.com>
+Subject: Re: [PATCH v2] rust: warn on bindgen < 0.69.5 and libclang >= 19.1
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, 
+	Justin Stitt <justinstitt@google.com>, llvm@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Ben Beasley <code@musicinmybrain.net>, 
+	NoisyCoil <noisycoil@tutanota.com>, Matthias Geiger <werdahias@riseup.net>, 
+	Masahiro Yamada <masahiroy@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
+	Linux Kbuild mailing list <linux-kbuild@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-6.11-stable review patch.  If anyone has any objections, please let me know.
+On Mon, Nov 11, 2024 at 9:16=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> When testing a `clang` upgrade with Rust Binder, Alice encountered [1] a
+> build failure caused by `bindgen` not translating some symbols related to
+> tracepoints. This was caused by commit 2e770edd8ce1 ("[libclang] Compute
+> the right spelling location") changing the behavior of a function exposed
+> by `libclang`. `bindgen` fixed the regression in commit 600f63895f73
+> ("Use clang_getFileLocation instead of clang_getSpellingLocation").
+>
+> However, the regression fix is only available in `bindgen` versions
+> 0.69.5 or later (it was backported for 0.69.x). This means that when
+> older bindgen versions are used with new versions of `libclang`, `bindgen=
+`
+> may do the wrong thing, which could lead to a build failure.
+>
+> Alice encountered the bug with some header files related to tracepoints,
+> but it could also cause build failures in other circumstances. Thus,
+> always emit a warning when using an old `bindgen` with a new `libclang`
+> so that other people do not have to spend time chasing down the same
+> bug.
+>
+> However, testing just the version is inconvenient, since distributions
+> do patch their packages without changing the version, so I reduced the
+> issue into the following piece of code that can trigger the issue:
+>
+>     #define F(x) int x##x
+>     F(foo);
+>
+> In particular, an unpatched `bindgen` will ignore the macro expansion
+> and thus not provide a declaration for the exported `int`.
+>
+> Thus add a build test to `rust_is_available.sh` using the code above
+> (that is only triggered if the versions appear to be affected), following
+> what we did for the 0.66.x issue.
+>
+> Moreover, I checked the status in the major distributions we have
+> instructions for:
+>
+>   - Fedora 41 was affected but is now OK, since it now ships `bindgen`
+>     0.69.5.
+>
+>     Thanks Ben for the quick reply on the updates that were ongoing.
+>
+>     Fedora 40 and earlier are OK (older `libclang`, and they also now
+>     carry `bindgen` 0.69.5).
+>
+>   - Debian Sid was affected but is now OK, since they now ship a patched
+>     `bindgen` binary (0.66.1-7+b3). The issue was reported to Debian by
+>     email and then as a bug report [2].
+>
+>     Thanks NoisyCoil and Matthias for the quick replies. NoisyCoil handle=
+d
+>     the needed updates. Debian may upgrade to `bindgen` 0.70.x, too.
+>
+>     Debian Testing is OK (older `libclang` so far).
+>
+>   - Ubuntu non-LTS (oracular) is affected. The issue was reported to Ubun=
+tu
+>     by email and then as a bug report [3].
+>
+>     Ubuntu LTS is not affected (older `libclang` so far).
+>
+>   - Arch Linux, Gentoo Linux and openSUSE should be OK (newer `bindgen` i=
+s
+>     provided). Nix as well (older `libclang` so far).
+>
+> This issue was also added to our "live list" that tracks issues around
+> distributions [4].
+>
+> Cc: Ben Beasley <code@musicinmybrain.net>
+> Cc: NoisyCoil <noisycoil@tutanota.com>
+> Cc: Matthias Geiger <werdahias@riseup.net>
+> Link: https://lore.kernel.org/rust-for-linux/20241030-bindgen-libclang-wa=
+rn-v1-1-3a7ba9fedcfe@google.com/ [1]
+> Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D1086510 [2]
+> Link: https://bugs.launchpad.net/ubuntu/+source/rust-bindgen-cli/+bug/208=
+6639 [3]
+> Link: https://github.com/Rust-for-Linux/linux/issues/1127 [4]
+> Co-developed-by: Alice Ryhl <aliceryhl@google.com>
+> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+> We would like to put this into the merge window, or ideally very soon aft=
+er as a
+> "fix" (it is not really a fix, but it is very convenient for people wonde=
+ring
+> why their toolchain may not work, especially if tracepoints land in the m=
+erge
+> window as expected).
+>
+> v2 (based on Alice's v1):
+>   - Fixed libclang version number (we use a different `get_canonical_vers=
+ion`
+>     that returns one more digit).
+>   - Added build test -- now we can detect binaries like Debian's that are
+>     patched but do not change the version number.
+>   - Added tests.
+>   - Explained the current status of the distributions in the commit messa=
+ge.
 
-------------------
+Cc'ing Kbuild too, so that they are aware, just in case -- sorry, I
+should have done that in the patch itself yesterday:
 
-From: Reinhard Speyerer <rspmn@arcor.de>
+    https://lore.kernel.org/rust-for-linux/20241111201607.653149-1-ojeda@ke=
+rnel.org/
 
-commit 393c74ccbd847bacf18865a01b422586fc7341cf upstream.
-
-Add Fibocom FG132 0x0112 composition:
-
-T:  Bus=03 Lev=02 Prnt=06 Port=01 Cnt=02 Dev#= 10 Spd=12   MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2cb7 ProdID=0112 Rev= 5.15
-S:  Manufacturer=Fibocom Wireless Inc.
-S:  Product=Fibocom Module
-S:  SerialNumber=xxxxxxxx
-C:* #Ifs= 4 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=86(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-
-Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
-
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2320,6 +2320,9 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0xff, 0x30) },	/* Fibocom FG150 Diag */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0, 0) },		/* Fibocom FG150 AT */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0111, 0xff) },			/* Fibocom FM160 (MBIM mode) */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0112, 0xff, 0xff, 0x30) },	/* Fibocom FG132 Diag */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0112, 0xff, 0xff, 0x40) },	/* Fibocom FG132 AT */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0112, 0xff, 0, 0) },		/* Fibocom FG132 NMEA */
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0115, 0xff),			/* Fibocom FM135 (laptop MBIM) */
- 	  .driver_info = RSVD(5) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a0, 0xff) },			/* Fibocom NL668-AM/NL652-EU (laptop MBIM) */
-
-
+Cheers,
+Miguel
