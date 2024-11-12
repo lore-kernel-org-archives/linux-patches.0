@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF201F26E3;
-	Tue, 12 Nov 2024 10:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1021F26E3;
+	Tue, 12 Nov 2024 10:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407543; cv=none; b=AGozodHh0zfLrUk4JhI6VE+EpxzttiWFpKW4H4Nm+SL5VsJ05d3ovtuAxwgJecX9uXESVZcXS6xy86gTNxbZO3BYiw2c2H8mnx1dvqOGphfFX+BOMJUN8fLcWClP7pLNEIvvrVdK1fBMkcVAPIw5DtZuqy4QWkqxqgGX0usTLpg=
+	t=1731407547; cv=none; b=hHdsQCAsOeJ4d/2Jr/fjOTw3e+XUA67OzivZTFtyMI2lNQwVmycPzbhAeep+IrPwtgrYvf+OWrO16ONLGDqug0nBuOCQ9heLaAb6liWGdjH3JRqF5fXQBqJk3t/diBTHUFdyVX06jApeb07asabZVRGqaJQ3cViEGH+h4j9m0fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407543; c=relaxed/simple;
-	bh=s98wRWalgw0vqmGiZu7C8w8NS0pF6HMN9zJgYjNVyV4=;
+	s=arc-20240116; t=1731407547; c=relaxed/simple;
+	bh=fAOoZVtrjCpM1ftfzAWAf7ahMLssDyH2hTzLZy2PuT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQHHyS5wc62dZ4gXyXlVqLopMlZzR9zwreOBvU6rODKkq9KPnmjvW3HdOTV8kOD5RkHvR6jZ4biRwcqSe5vFC0eIstXzr34StlPSrv/2pwO3B51le+WXcFk+F185IaRGbK0bmghVLbpKqE52RB7Fl/VwQOhD/k0Q8B2BMOytkGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kj3XQGUL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CByxVvuwH7AuPGpPx0tNHmpAOLomit7y02Z5HgG8ffQJp5Q8eBswZW8n3SLqkxhduo0CvD+dK+DlvsFTNbDkr5pROMYBHIfHepUPqAMuniTr3iIxSiFDPf740I+1NScCKHgl7sozdfhM6FoWemfOCNtYKFzQtH6ttOz2fdYLeIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0plkk4B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kj3XQGUL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16865C4CECD;
-	Tue, 12 Nov 2024 10:32:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0plkk4B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 731F0C4CECD;
+	Tue, 12 Nov 2024 10:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407543;
-	bh=s98wRWalgw0vqmGiZu7C8w8NS0pF6HMN9zJgYjNVyV4=;
+	s=korg; t=1731407546;
+	bh=fAOoZVtrjCpM1ftfzAWAf7ahMLssDyH2hTzLZy2PuT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kj3XQGULATCuHozqPgnv/MxnakZBGtvNUjaCAeXBLJomPTHpOrYjvyRMquVfQ0rOT
-	 fV8ZlIrK8T0LdSudUtmHLh0bPrw9SbR8zVEVhXqSuUrBC1iPbeUSdwJDtpUDjJ/h7x
-	 /Xr2+SYHwgxMMRvXyDdm20iH9I/KuojO92MSZzdQ=
+	b=W0plkk4BA7ViRLJ2rINZG/JHVTHhh7ZClgTA3HWLY8E1ZjLNN0SsIxbOWH9Q+3s6a
+	 G8WMU0fcpu9s1tja24m/7VT8E6/2ExRyDW/h6OKsL/WaOjnDLF2Ov6kWrRQRwui43J
+	 dfaQsRug1XmR3uvCAtUD08/ax9TRHjqmcr3VVoMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 74/98] btrfs: reinitialize delayed ref list after deleting it from the list
-Date: Tue, 12 Nov 2024 11:21:29 +0100
-Message-ID: <20241112101847.075617490@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 001/119] arm64: dts: rockchip: Fix rt5651 compatible value on rk3399-eaidk-610
+Date: Tue, 12 Nov 2024 11:20:09 +0100
+Message-ID: <20241112101848.767365478@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
-References: <20241112101844.263449965@linuxfoundation.org>
+In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
+References: <20241112101848.708153352@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +47,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit c9a75ec45f1111ef530ab186c2a7684d0a0c9245 upstream.
+[ Upstream commit 2f39bba3b4f037d6c3c9174eed5befcef1c79abb ]
 
-At insert_delayed_ref() if we need to update the action of an existing
-ref to BTRFS_DROP_DELAYED_REF, we delete the ref from its ref head's
-ref_add_list using list_del(), which leaves the ref's add_list member
-not reinitialized, as list_del() sets the next and prev members of the
-list to LIST_POISON1 and LIST_POISON2, respectively.
+There are no DT bindings and driver support for a "rockchip,rt5651"
+codec.  Replace "rockchip,rt5651" by "realtek,rt5651", which matches the
+"simple-audio-card,name" property in the "rt5651-sound" node.
 
-If later we end up calling drop_delayed_ref() against the ref, which can
-happen during merging or when destroying delayed refs due to a transaction
-abort, we can trigger a crash since at drop_delayed_ref() we call
-list_empty() against the ref's add_list, which returns false since
-the list was not reinitialized after the list_del() and as a consequence
-we call list_del() again at drop_delayed_ref(). This results in an
-invalid list access since the next and prev members are set to poison
-pointers, resulting in a splat if CONFIG_LIST_HARDENED and
-CONFIG_DEBUG_LIST are set or invalid poison pointer dereferences
-otherwise.
-
-So fix this by deleting from the list with list_del_init() instead.
-
-Fixes: 1d57ee941692 ("btrfs: improve delayed refs iterations")
-CC: stable@vger.kernel.org # 4.19+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 904f983256fdd24b ("arm64: dts: rockchip: Add dts for a rk3399 based board EAIDK-610")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/a9877b8b1bd0de279d2ec8294d5be14587203a82.1727358193.git.geert+renesas@glider.be
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/delayed-ref.c |    2 +-
+ arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/delayed-ref.c
-+++ b/fs/btrfs/delayed-ref.c
-@@ -622,7 +622,7 @@ static int insert_delayed_ref(struct btr
- 					      &href->ref_add_list);
- 			else if (ref->action == BTRFS_DROP_DELAYED_REF) {
- 				ASSERT(!list_empty(&exist->add_list));
--				list_del(&exist->add_list);
-+				list_del_init(&exist->add_list);
- 			} else {
- 				ASSERT(0);
- 			}
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts b/arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts
+index 6464ef4d113dd..6c1043d678dda 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-eaidk-610.dts
+@@ -541,7 +541,7 @@
+ 	status = "okay";
+ 
+ 	rt5651: audio-codec@1a {
+-		compatible = "rockchip,rt5651";
++		compatible = "realtek,rt5651";
+ 		reg = <0x1a>;
+ 		clocks = <&cru SCLK_I2S_8CH_OUT>;
+ 		clock-names = "mclk";
+-- 
+2.43.0
+
 
 
