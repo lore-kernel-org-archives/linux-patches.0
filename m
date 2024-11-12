@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE1920E307;
-	Tue, 12 Nov 2024 10:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F4C20E307;
+	Tue, 12 Nov 2024 10:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408448; cv=none; b=aHMEHnCfScbfEWHwlMLeNKaROxxHvfPNERD10z2rAz88eNmyBP82iNte3T/Okn0q7pG3dncLCVl1CMtxYfGvPTmZstwp6pUNd9dL+BF0dcHPKo0+mPiyct5AxmRSkUHPxg/NySO99tT4woWNcEF6SZ7yE/YiuelUJt4Q0ufXCU0=
+	t=1731408451; cv=none; b=nJ4HqV2E1TX3+EeoDBiSBfJEt/yFcOgZF9fHt77IV5H+ddYs+kV5HmgQVDjhdoKol2ROxl/rgfXOMOuV1IqpwlgdZ7ZcYG0B47FgbZaakxl1EpR4M8b/SgEce2E8rxEutz/T79k5f0ZZo0yFAXf5U+ca30ubJzk8hCHIQ+AyjPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408448; c=relaxed/simple;
-	bh=1fQq/uH/YurESwMJPYSH8tbDYSCl2DrFPhuZEbyb+7Q=;
+	s=arc-20240116; t=1731408451; c=relaxed/simple;
+	bh=ZMeLJp96ShZUUjyMFr5Je+/DjGabfM5lMB24KpCkthE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LvUz2LuPa/EyTjbvHmB8pJT4clD6swQ76F+z3x0rpYXpdXEKmn2Gut4jF/vxr9Y8boR+sHjKbzhW0AD2lFpQHOkHBR8BlrSlDT+axNNYwv9n+KLn6vQFqKIFHszeGBD9kh5PMksrmkKDbTBVAsIlctkMX2/bZHwSesBDtnZAlg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNjpPebp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AeryVekbdqQCpWWvvpwzOgvs1Cg6Vgk49n5QkJ+uQF0rkkBT6FFBcMdcK+a7X389//7Nk1oQ8+KYCCZE0YLwZ/3noliDecMUzSuTCK7LsAQjHWMYZNZOliYX+VFE8xtai73A3XR0PzopJZjnizthaK7mSctrNOCRan5WxIgzgh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKak6d7X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNjpPebp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D7DC4CECD;
-	Tue, 12 Nov 2024 10:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKak6d7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC23C4CECD;
+	Tue, 12 Nov 2024 10:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408448;
-	bh=1fQq/uH/YurESwMJPYSH8tbDYSCl2DrFPhuZEbyb+7Q=;
+	s=korg; t=1731408451;
+	bh=ZMeLJp96ShZUUjyMFr5Je+/DjGabfM5lMB24KpCkthE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNjpPebpzU1WPyKjusOEwYybZUXCNWuVJ+DJkQbtgp9uS/ya6YeMRZuSFndoikYzV
-	 Q09fRvF1xtcLAiTtfgXEv0FI4GeHqKAXFOPouxhO4asx50bjA6tBw5QbTEgrY59zRn
-	 rpYFRXmqdrfaxY+Ag8CYcWD6Uj6073j3otVYRqi0=
+	b=wKak6d7XsDthMpVhEkpZ0Xx6MD9230NFpAoN3MQPzlh/YP77S0uJLyPL4yBGJ7Eoa
+	 fYAPTRA7GM3ejeccclGq/7iadAU9bCjVBdeQ8YBJGOxcK7cfBfrBF/7NClIHiFcQtC
+	 sIM31K8DS/QdKoNHbaTdjHN5fZeWaRTOXhQJC9+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pavan Kumar Linga <pavan.kumar.linga@intel.com>,
 	Krishneil Singh <krishneil.k.singh@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.11 134/184] idpf: avoid vport access in idpf_get_link_ksettings
-Date: Tue, 12 Nov 2024 11:21:32 +0100
-Message-ID: <20241112101906.012383754@linuxfoundation.org>
+Subject: [PATCH 6.11 135/184] idpf: fix idpf_vc_core_init error path
+Date: Tue, 12 Nov 2024 11:21:33 +0100
+Message-ID: <20241112101906.050916564@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -54,130 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
 
-commit 81d2fb4c7c18a3b36ba3e00b9d5b753107472d75 upstream.
+commit 9b58031ff96b84a38d7b73b23c7ecfb2e0557f43 upstream.
 
-When the device control plane is removed or the platform
-running device control plane is rebooted, a reset is detected
-on the driver. On driver reset, it releases the resources and
-waits for the reset to complete. If the reset fails, it takes
-the error path and releases the vport lock. At this time if the
-monitoring tools tries to access link settings, it call traces
-for accessing released vport pointer.
+In an event where the platform running the device control plane
+is rebooted, reset is detected on the driver. It releases
+all the resources and waits for the reset to complete. Once the
+reset is done, it tries to build the resources back. At this
+time if the device control plane is not yet started, then
+the driver timeouts on the virtchnl message and retries to
+establish the mailbox again.
 
-To avoid it, move link_speed_mbps to netdev_priv structure
-which removes the dependency on vport pointer and the vport lock
-in idpf_get_link_ksettings. Also use netif_carrier_ok()
-to check the link status and adjust the offsetof to use link_up
-instead of link_speed_mbps.
+In the retry flow, mailbox is deinitialized but the mailbox
+workqueue is still alive and polling for the mailbox message.
+This results in accessing the released control queue leading to
+null-ptr-deref. Fix it by unrolling the work queue cancellation
+and mailbox deinitialization in the reverse order which they got
+initialized.
 
-Fixes: 02cbfba1add5 ("idpf: add ethtool callbacks")
-Cc: stable@vger.kernel.org # 6.7+
+Fixes: 4930fbf419a7 ("idpf: add core init and interrupt request")
+Fixes: 34c21fa894a1 ("idpf: implement virtchnl transaction manager")
+Cc: stable@vger.kernel.org # 6.9+
 Reviewed-by: Tarun K Singh <tarun.k.singh@intel.com>
 Signed-off-by: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
 Tested-by: Krishneil Singh <krishneil.k.singh@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf.h          |    4 ++--
- drivers/net/ethernet/intel/idpf/idpf_ethtool.c  |   11 +++--------
- drivers/net/ethernet/intel/idpf/idpf_lib.c      |    4 ++--
- drivers/net/ethernet/intel/idpf/idpf_virtchnl.c |    2 +-
- 4 files changed, 8 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_lib.c      |    1 +
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.c |    1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/idpf/idpf.h
-+++ b/drivers/net/ethernet/intel/idpf/idpf.h
-@@ -141,6 +141,7 @@ enum idpf_vport_state {
-  * @adapter: Adapter back pointer
-  * @vport: Vport back pointer
-  * @vport_id: Vport identifier
-+ * @link_speed_mbps: Link speed in mbps
-  * @vport_idx: Relative vport index
-  * @state: See enum idpf_vport_state
-  * @netstats: Packet and byte stats
-@@ -150,6 +151,7 @@ struct idpf_netdev_priv {
- 	struct idpf_adapter *adapter;
- 	struct idpf_vport *vport;
- 	u32 vport_id;
-+	u32 link_speed_mbps;
- 	u16 vport_idx;
- 	enum idpf_vport_state state;
- 	struct rtnl_link_stats64 netstats;
-@@ -287,7 +289,6 @@ struct idpf_port_stats {
-  * @tx_itr_profile: TX profiles for Dynamic Interrupt Moderation
-  * @port_stats: per port csum, header split, and other offload stats
-  * @link_up: True if link is up
-- * @link_speed_mbps: Link speed in mbps
-  * @sw_marker_wq: workqueue for marker packets
-  */
- struct idpf_vport {
-@@ -331,7 +332,6 @@ struct idpf_vport {
- 	struct idpf_port_stats port_stats;
- 
- 	bool link_up;
--	u32 link_speed_mbps;
- 
- 	wait_queue_head_t sw_marker_wq;
- };
---- a/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
-@@ -1296,24 +1296,19 @@ static void idpf_set_msglevel(struct net
- static int idpf_get_link_ksettings(struct net_device *netdev,
- 				   struct ethtool_link_ksettings *cmd)
- {
--	struct idpf_vport *vport;
--
--	idpf_vport_ctrl_lock(netdev);
--	vport = idpf_netdev_to_vport(netdev);
-+	struct idpf_netdev_priv *np = netdev_priv(netdev);
- 
- 	ethtool_link_ksettings_zero_link_mode(cmd, supported);
- 	cmd->base.autoneg = AUTONEG_DISABLE;
- 	cmd->base.port = PORT_NONE;
--	if (vport->link_up) {
-+	if (netif_carrier_ok(netdev)) {
- 		cmd->base.duplex = DUPLEX_FULL;
--		cmd->base.speed = vport->link_speed_mbps;
-+		cmd->base.speed = np->link_speed_mbps;
- 	} else {
- 		cmd->base.duplex = DUPLEX_UNKNOWN;
- 		cmd->base.speed = SPEED_UNKNOWN;
- 	}
- 
--	idpf_vport_ctrl_unlock(netdev);
--
- 	return 0;
- }
- 
 --- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
 +++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
-@@ -1873,7 +1873,7 @@ int idpf_initiate_soft_reset(struct idpf
- 	 * mess with. Nothing below should use those variables from new_vport
- 	 * and should instead always refer to them in vport if they need to.
+@@ -1799,6 +1799,7 @@ static int idpf_init_hard_reset(struct i
  	 */
--	memcpy(new_vport, vport, offsetof(struct idpf_vport, link_speed_mbps));
-+	memcpy(new_vport, vport, offsetof(struct idpf_vport, link_up));
- 
- 	/* Adjust resource parameters prior to reallocating resources */
- 	switch (reset_cause) {
-@@ -1919,7 +1919,7 @@ int idpf_initiate_soft_reset(struct idpf
- 	/* Same comment as above regarding avoiding copying the wait_queues and
- 	 * mutexes applies here. We do not want to mess with those if possible.
- 	 */
--	memcpy(vport, new_vport, offsetof(struct idpf_vport, link_speed_mbps));
-+	memcpy(vport, new_vport, offsetof(struct idpf_vport, link_up));
- 
- 	if (reset_cause == IDPF_SR_Q_CHANGE)
- 		idpf_vport_alloc_vec_indexes(vport);
+ 	err = idpf_vc_core_init(adapter);
+ 	if (err) {
++		cancel_delayed_work_sync(&adapter->mbx_task);
+ 		idpf_deinit_dflt_mbx(adapter);
+ 		goto unlock_mutex;
+ 	}
 --- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
 +++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
-@@ -141,7 +141,7 @@ static void idpf_handle_event_link(struc
- 	}
- 	np = netdev_priv(vport->netdev);
- 
--	vport->link_speed_mbps = le32_to_cpu(v2e->link_speed);
-+	np->link_speed_mbps = le32_to_cpu(v2e->link_speed);
- 
- 	if (vport->link_up == v2e->link_status)
- 		return;
+@@ -3063,7 +3063,6 @@ init_failed:
+ 	adapter->state = __IDPF_VER_CHECK;
+ 	if (adapter->vcxn_mngr)
+ 		idpf_vc_xn_shutdown(adapter->vcxn_mngr);
+-	idpf_deinit_dflt_mbx(adapter);
+ 	set_bit(IDPF_HR_DRV_LOAD, adapter->flags);
+ 	queue_delayed_work(adapter->vc_event_wq, &adapter->vc_event_task,
+ 			   msecs_to_jiffies(task_delay));
 
 
