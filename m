@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0754220D4E3;
-	Tue, 12 Nov 2024 10:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D8820D4E3;
+	Tue, 12 Nov 2024 10:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407550; cv=none; b=U+3GY2O1GrRqOl2WwIcNIwqL9ze+l1DZHoPJ70vC3kh/UdtqpailQ6j4OlVxlEwZUR8vxl2G/9Ir1EXZLsZxx9rJL+nG10A919KEgGfnyZPlDVkOUJn2W6Rx+NEE3Z//KrLFsuHu7Fl8wLyf0tsW6ssOGLM6iM31NBowmVkYKiU=
+	t=1731407553; cv=none; b=VI92+GDjZh6LMjE16bLJzRaeCDJDh8ToRVLDua5n5ebdIp5TIo7BPI1bpM5ig2Xfnb0GH4QEHW0XSul5BEhDnOfGRsbtT2IYygFwY5cBFzvugl6D2J2UePBLsHd9ElPCRVhCVJe5BHTM5NdFx22HxEzz4t/rjEqPKf7/GccAqHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407550; c=relaxed/simple;
-	bh=St6luTUqRiYreUqA8eq/DZLLP1BJCTzNXPkf8cKoiqw=;
+	s=arc-20240116; t=1731407553; c=relaxed/simple;
+	bh=2rxOIsOvfS94X+fwcltQ1YR1/UZKnYdpKJgsAvuTiH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UjBioHRGE/wAYTFvCmo555LINXChiwFxofFk6TfsKVLqBuy+k78+pA+/+u1wDx0msYeMhZKWxwLAbzX/Ny79/Eg60hMK+VcHctO4NNTKzk7iW+gW5h8TaDrZZ0WvNyIaWAOxmuCuLGWJErgXm7DFCqfQiMXDRqBIxD5qRUZ2+W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JzoRGsj7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lR7jPmWktzhzs9aw3qS/aelRH9stXbLTAXjKs/vhadTig3kQZK9V5VwsgO7UDwUTthZ8E2XtlGOBtAsE6gQmzhogsyuQhed0g0Ye4hTXX9GNmaVvfTq7IuCQBDqOABW3bsBKmgCRexf8208cQmBA1lVtibUB7DV1ex+doUGphTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nHH1bV8k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JzoRGsj7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84601C4CECD;
-	Tue, 12 Nov 2024 10:32:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nHH1bV8k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A553BC4CECD;
+	Tue, 12 Nov 2024 10:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407549;
-	bh=St6luTUqRiYreUqA8eq/DZLLP1BJCTzNXPkf8cKoiqw=;
+	s=korg; t=1731407553;
+	bh=2rxOIsOvfS94X+fwcltQ1YR1/UZKnYdpKJgsAvuTiH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JzoRGsj7zJcYoQX3MOHqMzmnIZ8l5dWhmcIpwD1au8h8gqxtAlaZa/9SJinaJ6VV5
-	 1HkZOHH660p441ac7yLMTA+42zvPs2rUt8VhaLHBkO3/F9+ymlNaDwXfzF5OARjSIQ
-	 g2IhGGX7hG/wMlNCp4Yvyk/vsb5qVSlwC+IuozQA=
+	b=nHH1bV8kMvX7H83gb186uWBSedF3+hxVMJGwAawQnX00kTxwN656zUbooHB/Kug33
+	 SGbxobJn8tXMagvpAGrPNNr3ysGjDdwySzkr/Q9YHsTxueRsfaEsG0QJxloI4P/sgf
+	 16KHcsAbHoPQnqSFluYqpco4gWWJ8JtFIHHjSQo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-	Sergey Bostandzhyan <jin@mediatomb.cc>,
-	Wenhao Cui <lasstp5011@gmail.com>,
-	Andy Yan <andyshrk@163.com>,
+	Klaus Goger <klaus.goger@theobroma-systems.com>,
+	Quentin Schulz <quentin.schulz@cherry.de>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 010/119] arm64: dts: rockchip: Remove undocumented supports-emmc property
-Date: Tue, 12 Nov 2024 11:20:18 +0100
-Message-ID: <20241112101849.109929145@linuxfoundation.org>
+Subject: [PATCH 6.6 011/119] arm64: dts: rockchip: Remove #cooling-cells from fan on Theobroma lion
+Date: Tue, 12 Nov 2024 11:20:19 +0100
+Message-ID: <20241112101849.146746175@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -49,7 +48,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -58,78 +56,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 1b670212ee3dd9d14c6d39a042dfe4ae79b49b4e ]
+[ Upstream commit 5ed96580568c4f79a0aff11a67f10b3e9229ba86 ]
 
-supports-emmc is an undocumented property that slipped into the mainline
-kernel devicetree for some boards. Drop it.
+All Theobroma boards use a ti,amc6821 as fan controller.
+It normally runs in an automatically controlled way and while it may be
+possible to use it as part of a dt-based thermal management, this is
+not yet specified in the binding, nor implemented in any kernel.
 
-Fixes: c484cf93f61b ("arm64: dts: rockchip: add PX30-µQ7 (Ringneck) SoM with Haikou baseboard")
+Newer boards already don't contain that #cooling-cells property, but
+older ones do. So remove them for now, they can be re-added if thermal
+integration gets implemented in the future.
+
+There are two further occurences in v6.12-rc in px30-ringneck and
+rk3399-puma, but those already get removed by the i2c-mux conversion
+scheduled for 6.13 . As the undocumented property is in the kernel so
+long, I opted for not causing extra merge conflicts between 6.12 and 6.13
+
+Fixes: d99a02bcfa81 ("arm64: dts: rockchip: add RK3368-uQ7 (Lion) SoM")
 Cc: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Fixes: b8c028782922 ("arm64: dts: rockchip: Add DTS for FriendlyARM NanoPi R2S Plus")
-Cc: Sergey Bostandzhyan <jin@mediatomb.cc>
-Fixes: 8d94da58de53 ("arm64: dts: rockchip: Add EmbedFire LubanCat 1")
-Cc: Wenhao Cui <lasstp5011@gmail.com>
-Fixes: cdf46cdbabfc ("arm64: dts: rockchip: Add dts for EmbedFire rk3568 LubanCat 2")
-Cc: Andy Yan <andyshrk@163.com>
+Cc: Klaus Goger <klaus.goger@theobroma-systems.com>
+Reviewed-by: Quentin Schulz <quentin.schulz@cherry.de>
 Reviewed-by: Dragan Simic <dsimic@manjaro.org>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20241008203940.2573684-6-heiko@sntech.de
+Link: https://lore.kernel.org/r/20241008203940.2573684-7-heiko@sntech.de
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/px30-ringneck.dtsi         | 1 -
- arch/arm64/boot/dts/rockchip/rk3328-nanopi-r2s-plus.dts | 1 -
- arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts      | 1 -
- arch/arm64/boot/dts/rockchip/rk3568-lubancat-2.dts      | 1 -
- 4 files changed, 4 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3368-lion.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/px30-ringneck.dtsi b/arch/arm64/boot/dts/rockchip/px30-ringneck.dtsi
-index 12397755830bd..5fcc5f32be2d7 100644
---- a/arch/arm64/boot/dts/rockchip/px30-ringneck.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/px30-ringneck.dtsi
-@@ -66,7 +66,6 @@
- 	bus-width = <8>;
- 	cap-mmc-highspeed;
- 	mmc-hs200-1_8v;
--	supports-emmc;
- 	mmc-pwrseq = <&emmc_pwrseq>;
- 	non-removable;
- 	vmmc-supply = <&vcc_3v3>;
-diff --git a/arch/arm64/boot/dts/rockchip/rk3328-nanopi-r2s-plus.dts b/arch/arm64/boot/dts/rockchip/rk3328-nanopi-r2s-plus.dts
-index cb81ba3f23ffd..3093f607f282e 100644
---- a/arch/arm64/boot/dts/rockchip/rk3328-nanopi-r2s-plus.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3328-nanopi-r2s-plus.dts
-@@ -27,6 +27,5 @@
- 	num-slots = <1>;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&emmc_clk &emmc_cmd &emmc_bus8>;
--	supports-emmc;
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts b/arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts
-index 6ecdf5d283390..c1e611c040a2c 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-lubancat-1.dts
-@@ -508,7 +508,6 @@
- 	non-removable;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&emmc_bus8 &emmc_clk &emmc_cmd>;
--	supports-emmc;
- 	status = "okay";
- };
+diff --git a/arch/arm64/boot/dts/rockchip/rk3368-lion.dtsi b/arch/arm64/boot/dts/rockchip/rk3368-lion.dtsi
+index 5753e57fd7161..e8859cfd2d39b 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3368-lion.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3368-lion.dtsi
+@@ -60,7 +60,6 @@
+ 			fan: fan@18 {
+ 				compatible = "ti,amc6821";
+ 				reg = <0x18>;
+-				#cooling-cells = <2>;
+ 			};
  
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-lubancat-2.dts b/arch/arm64/boot/dts/rockchip/rk3568-lubancat-2.dts
-index a8a4cc190eb32..abc33be2e74dc 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-lubancat-2.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-lubancat-2.dts
-@@ -590,7 +590,6 @@
- 	non-removable;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&emmc_bus8 &emmc_clk &emmc_cmd>;
--	supports-emmc;
- 	status = "okay";
- };
- 
+ 			rtc_twi: rtc@6f {
 -- 
 2.43.0
 
