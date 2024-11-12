@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1272259D8;
-	Tue, 12 Nov 2024 10:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0E5226B71;
+	Tue, 12 Nov 2024 10:37:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407852; cv=none; b=n3woB3Xgac5vcE0tmP9E6lnCxm/+D2f/VxZAFa6dzzwR2v2S7DP64wExO/UMVMJn/LvkhAQohrh0WDfdVnLbTt92EGbqiXk19mpewZs25VCxaAXBSE+Ff8r5qTjV4whXSabeg5oi6FZuC7bRuiv5T0F8G76Deebv732pv9t8VAM=
+	t=1731407855; cv=none; b=cfbNVgg/ToIS/IQMeZ1vjgDWo0ngpJYlnxRpiDJVWVcXqgjjNuVZvdfHnNNAbmbEWBHQV03NMi3Est9Dg4HBAjhY/QepUuyc4MEX76FYAK/ofWOZSZAOzL87dkWcVKYJ/YqTb8WzZBj3nxYtjEUjL5ccnRb6S00L4bTuuKe2h28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407852; c=relaxed/simple;
-	bh=czKzXDfdfYlX/3Q3+OSUa/ZS4JGYpnoyhoFyCAgwEEE=;
+	s=arc-20240116; t=1731407855; c=relaxed/simple;
+	bh=tStZbnHPZwSkJ85mI4uBQ79tWuc7FZFlsdhefyCj2PE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5BiWW7S0gqSmKgeYB7DDRUkioahnwymCBQplWkxvmfJHxOIRzTbICYY0wO/+bRelX+kJnKsDUj9jsMYAP1qWfAdjtmnaXnjNpgZWxaH7P7NPMtso/ztk2t4RNVucstBCR+cZqUspTJdgwtd8tcWDq9Nptnpv7h7IwNjEPd/eoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lh8OGkwL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pc0AnHQ2MOI7h21ey4Dd3JLKohzMM8z9ELgFZTmwJuW/CmKMqG2yhJdSQkXzNyg95MFsD9qfom9GgebeV9AzGuqgqlZELqkKzFZ7vbIkY6P+F85/k4bw9Rrsb5ksPvoHgNCb9a+XIjyn1yT+BdajM5RZelbNDrgnTl2WIj4UT2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iah1dfzb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lh8OGkwL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6097C4CED6;
-	Tue, 12 Nov 2024 10:37:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iah1dfzb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A42C4CECD;
+	Tue, 12 Nov 2024 10:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407852;
-	bh=czKzXDfdfYlX/3Q3+OSUa/ZS4JGYpnoyhoFyCAgwEEE=;
+	s=korg; t=1731407855;
+	bh=tStZbnHPZwSkJ85mI4uBQ79tWuc7FZFlsdhefyCj2PE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lh8OGkwLcA10WP3ViMSE1GctYPHc9/APV/0LtY61f4oIOhgl523ziMzqQfzzx6Szt
-	 khJfoTeAYuGfLj0X+Qfir5PIj6mfE8YrfBlsHS2SpdVHiNrwEKz2ljemZxtVZgdlj0
-	 WRa39lZ8DwEqGUncmjgG7WHynl+Ayvh+GxEE+K18=
+	b=iah1dfzb8+Dei8ismIs54eaTqaXVgfrTdzbMM3WCTcfzSEuzORJnkivLbxJEdY7ck
+	 BDhHzHrB6uIB1nPrlZ3w0NLL7XQm7Kc8ycf27s64BJznbwVNAufagNvm2Ruiih3Woq
+	 UqSA6Xz3BmKvHAsvwCLKF+PNt3RY/dsnaJB9JzW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaowu Ding <xiaowu.ding@jaguarmicro.com>,
-	Angus Chen <angus.chen@jaguarmicro.com>,
-	Liu Peibao <loven.liu@jaguarmicro.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.6 103/119] i2c: designware: do not hold SCL low when I2C_DYNAMIC_TAR_UPDATE is not set
-Date: Tue, 12 Nov 2024 11:21:51 +0100
-Message-ID: <20241112101852.660783954@linuxfoundation.org>
+	Qi Xi <xiqi2@huawei.com>,
+	kernel test robot <lkp@intel.com>,
+	Baoquan He <bhe@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Michael Holzheu <holzheu@linux.vnet.ibm.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 104/119] fs/proc: fix compile warning about variable vmcore_mmap_ops
+Date: Tue, 12 Nov 2024 11:21:52 +0100
+Message-ID: <20241112101852.698174551@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -53,66 +56,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Peibao <loven.liu@jaguarmicro.com>
+From: Qi Xi <xiqi2@huawei.com>
 
-commit 8de3e97f3d3d62cd9f3067f073e8ac93261597db upstream.
+commit b8ee299855f08539e04d6c1a6acb3dc9e5423c00 upstream.
 
-When the Tx FIFO is empty and the last command has no STOP bit
-set, the master holds SCL low. If I2C_DYNAMIC_TAR_UPDATE is not
-set, BIT(13) MST_ON_HOLD of IC_RAW_INTR_STAT is not enabled,
-causing the __i2c_dw_disable() timeout. This is quite similar to
-commit 2409205acd3c ("i2c: designware: fix __i2c_dw_disable() in
-case master is holding SCL low"). Also check BIT(7)
-MST_HOLD_TX_FIFO_EMPTY in IC_STATUS, which is available when
-IC_STAT_FOR_CLK_STRETCH is set.
+When build with !CONFIG_MMU, the variable 'vmcore_mmap_ops'
+is defined but not used:
 
-Fixes: 2409205acd3c ("i2c: designware: fix __i2c_dw_disable() in case master is holding SCL low")
-Co-developed-by: Xiaowu Ding <xiaowu.ding@jaguarmicro.com>
-Signed-off-by: Xiaowu Ding <xiaowu.ding@jaguarmicro.com>
-Co-developed-by: Angus Chen <angus.chen@jaguarmicro.com>
-Signed-off-by: Angus Chen <angus.chen@jaguarmicro.com>
-Signed-off-by: Liu Peibao <loven.liu@jaguarmicro.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+>> fs/proc/vmcore.c:458:42: warning: unused variable 'vmcore_mmap_ops'
+     458 | static const struct vm_operations_struct vmcore_mmap_ops = {
+
+Fix this by only defining it when CONFIG_MMU is enabled.
+
+Link: https://lkml.kernel.org/r/20241101034803.9298-1-xiqi2@huawei.com
+Fixes: 9cb218131de1 ("vmcore: introduce remap_oldmem_pfn_range()")
+Signed-off-by: Qi Xi <xiqi2@huawei.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/lkml/202410301936.GcE8yUos-lkp@intel.com/
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Michael Holzheu <holzheu@linux.vnet.ibm.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-designware-common.c |    6 ++++--
- drivers/i2c/busses/i2c-designware-core.h   |    1 +
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ fs/proc/vmcore.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/busses/i2c-designware-common.c
-+++ b/drivers/i2c/busses/i2c-designware-common.c
-@@ -442,7 +442,7 @@ err_release_lock:
- void __i2c_dw_disable(struct dw_i2c_dev *dev)
- {
- 	struct i2c_timings *t = &dev->timings;
--	unsigned int raw_intr_stats;
-+	unsigned int raw_intr_stats, ic_stats;
- 	unsigned int enable;
- 	int timeout = 100;
- 	bool abort_needed;
-@@ -450,9 +450,11 @@ void __i2c_dw_disable(struct dw_i2c_dev
- 	int ret;
+--- a/fs/proc/vmcore.c
++++ b/fs/proc/vmcore.c
+@@ -457,10 +457,6 @@ static vm_fault_t mmap_vmcore_fault(stru
+ #endif
+ }
  
- 	regmap_read(dev->map, DW_IC_RAW_INTR_STAT, &raw_intr_stats);
-+	regmap_read(dev->map, DW_IC_STATUS, &ic_stats);
- 	regmap_read(dev->map, DW_IC_ENABLE, &enable);
- 
--	abort_needed = raw_intr_stats & DW_IC_INTR_MST_ON_HOLD;
-+	abort_needed = (raw_intr_stats & DW_IC_INTR_MST_ON_HOLD) ||
-+			(ic_stats & DW_IC_STATUS_MASTER_HOLD_TX_FIFO_EMPTY);
- 	if (abort_needed) {
- 		if (!(enable & DW_IC_ENABLE_ENABLE)) {
- 			regmap_write(dev->map, DW_IC_ENABLE, DW_IC_ENABLE_ENABLE);
---- a/drivers/i2c/busses/i2c-designware-core.h
-+++ b/drivers/i2c/busses/i2c-designware-core.h
-@@ -117,6 +117,7 @@
- #define DW_IC_STATUS_RFNE			BIT(3)
- #define DW_IC_STATUS_MASTER_ACTIVITY		BIT(5)
- #define DW_IC_STATUS_SLAVE_ACTIVITY		BIT(6)
-+#define DW_IC_STATUS_MASTER_HOLD_TX_FIFO_EMPTY	BIT(7)
- 
- #define DW_IC_SDA_HOLD_RX_SHIFT			16
- #define DW_IC_SDA_HOLD_RX_MASK			GENMASK(23, 16)
+-static const struct vm_operations_struct vmcore_mmap_ops = {
+-	.fault = mmap_vmcore_fault,
+-};
+-
+ /**
+  * vmcore_alloc_buf - allocate buffer in vmalloc memory
+  * @size: size of buffer
+@@ -488,6 +484,11 @@ static inline char *vmcore_alloc_buf(siz
+  * virtually contiguous user-space in ELF layout.
+  */
+ #ifdef CONFIG_MMU
++
++static const struct vm_operations_struct vmcore_mmap_ops = {
++	.fault = mmap_vmcore_fault,
++};
++
+ /*
+  * remap_oldmem_pfn_checked - do remap_oldmem_pfn_range replacing all pages
+  * reported as not being ram with the zero page.
 
 
