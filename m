@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13009170A3A;
-	Tue, 12 Nov 2024 10:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACC7170A3A;
+	Tue, 12 Nov 2024 10:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407334; cv=none; b=UKSCiFPf2gKPHLNHu3UZGpPTIBiUuWoDo8ElzqJvciTRoPrD9Gn0jtoS4IoXeMffMwqPIlW+92KatM0nR22NWgCYnMMxZxnIqWlhuV9sII59apFds1QLUGWdiVvF/yqnQdHL0Je5td0mMu42Fr/TihalqWeEqnfkE9hi31s1YCI=
+	t=1731407337; cv=none; b=Tv/xm/p6LPjq2s2JWhMiXgdcZ0eRie7T2SULFBQSJ2XECnDTYpYrKLt3oKBIZvSqnkAAC8pcgr2hfb9/bTVQiPxDBjhXyt0pm7QOtQ15rm9U2SoOAXO+whtiH6gpGs5YC45wrb2YCU35y5jMrla3HPJMnyliE61qwkrd7QfHczc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407334; c=relaxed/simple;
-	bh=/18pJu6vInkdd3amG/6+/zl0R8VJa5z4FDTyqSMMzlU=;
+	s=arc-20240116; t=1731407337; c=relaxed/simple;
+	bh=9s5dLNSfCMjcNqFMUcmtDYM/eRbaX8DwJ8u7uYERXGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c2NUqPLI/lfax6riYzSXIGTRur3QGSiI5YobEVH39MBUBhZkmIqDXpC2IT0+2NBc0KRHJuBzyl+Eu1OfFEO0Jom2FElsaovWeCjgxm/LyO9E0K2hcFXdrEu0ykBzDzmiBeqvrZovbyuWmpvCITwcGITVE9ZCEqxAsdso/c4fZfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYL1tYXW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V/U3CTrpb8HIHV46FGAV52e9Jr2tPoQCqZaRZ8rO2KErEGSfOSsYg2bMSfrtX2xkX79tGeDSuQ476MR0ApShxd5JG+FHiUYAJJeCTvad99/RldROkJm9D6sXji4bLJrDVDOjDSFTe6TyxVV/I0pcEoxuBj95yBCHjgKEpVbIkE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOsxaz1E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYL1tYXW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7457AC4CECD;
-	Tue, 12 Nov 2024 10:28:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOsxaz1E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E84D6C4CED4;
+	Tue, 12 Nov 2024 10:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407333;
-	bh=/18pJu6vInkdd3amG/6+/zl0R8VJa5z4FDTyqSMMzlU=;
+	s=korg; t=1731407337;
+	bh=9s5dLNSfCMjcNqFMUcmtDYM/eRbaX8DwJ8u7uYERXGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYL1tYXWBf293raWppbwIJm9J3oCgqM/2XfLctBH7Dz5FnidOgltfKlkssMmlz5Z8
-	 fD+wrB0tKHkY0pYpEyF7xX3eMPsvQWEM0arL10yrP2ejARwdyVrLahGbCB37R9WNs7
-	 tfltTXsUbL+vlqhMQvBqEshl/e4nKzhtc1hmyic8=
+	b=IOsxaz1EmtfUobKO9Fym0ukG/klIj/r3OQu9c/znng6/4Ij9O+M+XOM1LEaQoPlMQ
+	 wcRckOONKllFf0CnsaJcawFDJJmtgZmq2V2YBljWmXt3Kd2776a7hhihxZ6lbL9+Qr
+	 d0f+szWYUI9CKjYM7om7lgGwe4lw9E9U6sxOXDWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dragan Simic <dsimic@manjaro.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 14/98] ARM: dts: rockchip: Fix the spi controller on rk3036
-Date: Tue, 12 Nov 2024 11:20:29 +0100
-Message-ID: <20241112101844.814456164@linuxfoundation.org>
+Subject: [PATCH 6.1 15/98] ARM: dts: rockchip: Fix the realtek audio codec on rk3036-kylin
+Date: Tue, 12 Nov 2024 11:20:30 +0100
+Message-ID: <20241112101844.851760561@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101844.263449965@linuxfoundation.org>
 References: <20241112101844.263449965@linuxfoundation.org>
@@ -54,44 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 8bade1ad1f0821aef31f6a8fb1027ae292566d85 ]
+[ Upstream commit 77a9a7f2d3b94d29d13d71b851114d593a2147cf ]
 
-Compatible and clock names did not match the existing binding.
-So set the correct values and re-order+rename the clocks.
+Both the node name as well as the compatible were not named
+according to the binding expectations, fix that.
 
-It looks like no rk3036 board did use the spi controller so far,
-so this was never detected on a running device yet.
-
-Fixes: f629fcfab2cd ("ARM: dts: rockchip: support the spi for rk3036")
+Fixes: 47bf3a5c9e2a ("ARM: dts: rockchip: add the sound setup for rk3036-kylin board")
 Cc: Caesar Wang <wxt@rock-chips.com>
 Reviewed-by: Dragan Simic <dsimic@manjaro.org>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20241008203940.2573684-14-heiko@sntech.de
+Link: https://lore.kernel.org/r/20241008203940.2573684-15-heiko@sntech.de
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rk3036.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/rk3036-kylin.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/rk3036.dtsi b/arch/arm/boot/dts/rk3036.dtsi
-index 4e208528eebf2..5bdbadd879fe8 100644
---- a/arch/arm/boot/dts/rk3036.dtsi
-+++ b/arch/arm/boot/dts/rk3036.dtsi
-@@ -550,11 +550,11 @@
- 	};
+diff --git a/arch/arm/boot/dts/rk3036-kylin.dts b/arch/arm/boot/dts/rk3036-kylin.dts
+index 67e1e04139e73..43926d0962bbd 100644
+--- a/arch/arm/boot/dts/rk3036-kylin.dts
++++ b/arch/arm/boot/dts/rk3036-kylin.dts
+@@ -304,8 +304,8 @@
+ &i2c2 {
+ 	status = "okay";
  
- 	spi: spi@20074000 {
--		compatible = "rockchip,rockchip-spi";
-+		compatible = "rockchip,rk3036-spi";
- 		reg = <0x20074000 0x1000>;
- 		interrupts = <GIC_SPI 23 IRQ_TYPE_LEVEL_HIGH>;
--		clocks = <&cru PCLK_SPI>, <&cru SCLK_SPI>;
--		clock-names = "apb-pclk","spi_pclk";
-+		clocks = <&cru SCLK_SPI>, <&cru PCLK_SPI>;
-+		clock-names = "spiclk", "apb_pclk";
- 		dmas = <&pdma 8>, <&pdma 9>;
- 		dma-names = "tx", "rx";
- 		pinctrl-names = "default";
+-	rt5616: rt5616@1b {
+-		compatible = "rt5616";
++	rt5616: audio-codec@1b {
++		compatible = "realtek,rt5616";
+ 		reg = <0x1b>;
+ 		clocks = <&cru SCLK_I2S_OUT>;
+ 		clock-names = "mclk";
 -- 
 2.43.0
 
