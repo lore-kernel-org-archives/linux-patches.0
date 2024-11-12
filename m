@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6995C2309AE;
-	Tue, 12 Nov 2024 10:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8492309AE;
+	Tue, 12 Nov 2024 10:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408049; cv=none; b=JxbtyrH4KmFiO5CxVeQvfj9J2V7ZBEGGcE2flXP24Uv5kFNLvdo9Z3/Tv7mLNxdWzh6CH2EYqkm0Fx7Mmftaj56IGFMWuOjih2Brn+DyWHoKNV7zpoQanu0e1oGb3qY4hyGcK2uXRiCCxjd62YjPQW/Zx5VqDfr2IKRvaLyEpmw=
+	t=1731408052; cv=none; b=BUfnvaXdJKYxc30Mow6q0ryk4oaYQ4NEQpzukpWWurnzXcQ1DYkbQN+TP0auJK1G2+le0gbH2nIDJFBpMlU7L5ECypPckfBgaCpZa/6bXpLA498u6hfl5MhILgdvCgiIa0+HA/fjwX7ZmZ1U8WboKPSnt7uxTryOEV0kEes1kdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408049; c=relaxed/simple;
-	bh=dgLVqrqtlcgWaj1E1OAHTeUHDMdd6vjcFdI0RtAKEv0=;
+	s=arc-20240116; t=1731408052; c=relaxed/simple;
+	bh=fgjZlizKwtBsnod+5vS72iVtx0SdivMqUxINbS9sHnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOoNNAzx186l9Jnmh87uw6Mgbc3pnZD2R9GAhNrRryFIZ2dcDOJ7cLtdRk/UVSVPKxzwIBtKj7GGoxpe5BtG0K04RPljSIblQRS9whp3zi3oyzbxvdXINmb89Xh630+jLQsMXcEQ2EiWz5eAq9OxpRa4jPJomL2HUW+Q3DTama4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxYYezt6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fam9f7KOD1XS4K5ZR1NaX3QbSuhbe6ySACV/GRcetYAdtmmbJouKl2ylxAGBn51Y3CFVwJMxln3F7cAQkmZOhBlBiD358iC76rrJhU669F0Asjewoa7cUMUcq5GKP5eoOgEP+rjGWH2dwHtKT78h9ZmULLjoMbN1nJYPX3DEe90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+QCpvKK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxYYezt6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC07C4CED4;
-	Tue, 12 Nov 2024 10:40:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+QCpvKK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65CAC4CECD;
+	Tue, 12 Nov 2024 10:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731408048;
-	bh=dgLVqrqtlcgWaj1E1OAHTeUHDMdd6vjcFdI0RtAKEv0=;
+	s=korg; t=1731408052;
+	bh=fgjZlizKwtBsnod+5vS72iVtx0SdivMqUxINbS9sHnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vxYYezt6lQVEXMqu6yE48FicMRqXO9O7Nw5uBTIKx73OeR5S6Ub10tcpjoB85KRht
-	 B0mXdgTujiQ1do8y03NUC8LrH5DIYlJHOZ1UUONCEntY7U4dtTrEuhJ3mlhiNz7muV
-	 ykDx8yoMz4ykR0UI5yM3eVIdoWD2SLa7oGufkR3A=
+	b=1+QCpvKKjFXKSCUMZINJvclkFHhEHj1oc5Iw26PgeFuyNc5/1Hfe7KAa+SCJTnLcQ
+	 ukJz8PvZ5UPo1QzycpUR6peG4MpGF/9eoBYO5Eu0n6jYDJYEo5ucgkd7hGwKZDTGYe
+	 lA+PNhwJyfTvhWt/2rHgCQyyLnqM3Jk/J+rEJeF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f0cbb34d39392f2746ca@syzkaller.appspotmail.com,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 044/184] sctp: properly validate chunk size in sctp_sf_ootb()
-Date: Tue, 12 Nov 2024 11:20:02 +0100
-Message-ID: <20241112101902.556313239@linuxfoundation.org>
+Subject: [PATCH 6.11 027/184] ARM: dts: rockchip: fix rk3036 acodec node
+Date: Tue, 12 Nov 2024 11:19:45 +0100
+Message-ID: <20241112101901.909975235@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101900.865487674@linuxfoundation.org>
 References: <20241112101900.865487674@linuxfoundation.org>
@@ -52,47 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Heiko Stuebner <heiko@sntech.de>
 
-[ Upstream commit 0ead60804b64f5bd6999eec88e503c6a1a242d41 ]
+[ Upstream commit c7206853cd7d31c52575fb1dc7616b4398f3bc8f ]
 
-A size validation fix similar to that in Commit 50619dbf8db7 ("sctp: add
-size validation when walking chunks") is also required in sctp_sf_ootb()
-to address a crash reported by syzbot:
+The acodec node is not conformant to the binding.
 
-  BUG: KMSAN: uninit-value in sctp_sf_ootb+0x7f5/0xce0 net/sctp/sm_statefuns.c:3712
-  sctp_sf_ootb+0x7f5/0xce0 net/sctp/sm_statefuns.c:3712
-  sctp_do_sm+0x181/0x93d0 net/sctp/sm_sideeffect.c:1166
-  sctp_endpoint_bh_rcv+0xc38/0xf90 net/sctp/endpointola.c:407
-  sctp_inq_push+0x2ef/0x380 net/sctp/inqueue.c:88
-  sctp_rcv+0x3831/0x3b20 net/sctp/input.c:243
-  sctp4_rcv+0x42/0x50 net/sctp/protocol.c:1159
-  ip_protocol_deliver_rcu+0xb51/0x13d0 net/ipv4/ip_input.c:205
-  ip_local_deliver_finish+0x336/0x500 net/ipv4/ip_input.c:233
+Set the correct nodename, use the correct compatible, add the needed
+#sound-dai-cells and sort the rockchip,grf below clocks properties
+as expected.
 
-Reported-by: syzbot+f0cbb34d39392f2746ca@syzkaller.appspotmail.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/a29ebb6d8b9f8affd0f9abb296faafafe10c17d8.1730223981.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: faea098e1808 ("ARM: dts: rockchip: add core rk3036 dtsi")
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20241008203940.2573684-12-heiko@sntech.de
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/rockchip/rk3036.dtsi | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 7d315a18612ba..a0524ba8d7878 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -3751,7 +3751,7 @@ enum sctp_disposition sctp_sf_ootb(struct net *net,
- 		}
+diff --git a/arch/arm/boot/dts/rockchip/rk3036.dtsi b/arch/arm/boot/dts/rockchip/rk3036.dtsi
+index 96279d1e02fec..37369538483f7 100644
+--- a/arch/arm/boot/dts/rockchip/rk3036.dtsi
++++ b/arch/arm/boot/dts/rockchip/rk3036.dtsi
+@@ -384,12 +384,13 @@
+ 		};
+ 	};
  
- 		ch = (struct sctp_chunkhdr *)ch_end;
--	} while (ch_end < skb_tail_pointer(skb));
-+	} while (ch_end + sizeof(*ch) < skb_tail_pointer(skb));
+-	acodec: acodec-ana@20030000 {
+-		compatible = "rk3036-codec";
++	acodec: audio-codec@20030000 {
++		compatible = "rockchip,rk3036-codec";
+ 		reg = <0x20030000 0x4000>;
+-		rockchip,grf = <&grf>;
+ 		clock-names = "acodec_pclk";
+ 		clocks = <&cru PCLK_ACODEC>;
++		rockchip,grf = <&grf>;
++		#sound-dai-cells = <0>;
+ 		status = "disabled";
+ 	};
  
- 	if (ootb_shut_ack)
- 		return sctp_sf_shut_8_4_5(net, ep, asoc, type, arg, commands);
 -- 
 2.43.0
 
