@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498FD213EE4;
-	Tue, 12 Nov 2024 10:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD32B1CBE8F;
+	Tue, 12 Nov 2024 10:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731407732; cv=none; b=UeprsdVxhlKL0yD1NmavxrcMmvXuwCKVDRcsS4HTgxat/96voL7AlbTIMTipNnYLQkSutq+CvDQuXfnBo+c6nLm1ezPIIBFf+AztEUhNGGh4piwNrkUwEqS9tA4M8ADIMCd9erSR0K8nGK+M3vs9NOpdbZ0Aqy6tAN01XspYg/8=
+	t=1731407735; cv=none; b=l9aiTPN7Rk2UHo8hupjhRbvV4j88f6zICWFfmAZ0hK3bYv0b1Zgz+TdCeo5a32GCvb17maswEUYAAoKDjyCnxqp3zMlacpcxr56gZiuALA1zVzcM244SJoL0xO9gHmlfbQh0QDDi9oy2iwHryNDDpCTQBrCdDcpfc6ObmeODm1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731407732; c=relaxed/simple;
-	bh=dphSEdx4h4661FOze0DOPF+zQFFCOkkLwjQlQWLYPbk=;
+	s=arc-20240116; t=1731407735; c=relaxed/simple;
+	bh=SM1gvg4niXJsid1yhhNhwha+9MHuUQyEU7PQnfLVp20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfnGoFdckcedwtNA3zDdp9WyLuAyAOG37Gn17b+5d8AdbAbgR2dIQc4vvKOYDUBOZfC0ZRNInkiEisPhjpYfALHpvB269Bq6MDbxsEfvv3fNAJ7JPRiHdjgHPnpNhakcqa1FImRqZdJRuTSfD4NuTprQAsxcl8kowvW5wdr41Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkpzkNBo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WZQ7GcTPl7JYgA923CKCqD5YM3j5pMnIU90dHuDGfnakMWiLOqkuKzf3I6E0qFsctXV6e2ftqQg8H4jTEGE9ACXFvthF/k640Mr3iA9C9VyVKsralHj2K0mDaWtJqrxb45SVtXsPv1U3oamXKqpPfzJOgNiEc13iB1trGamg5aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4MZfhaR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkpzkNBo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD9B1C4CED4;
-	Tue, 12 Nov 2024 10:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4MZfhaR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC584C4CECD;
+	Tue, 12 Nov 2024 10:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731407732;
-	bh=dphSEdx4h4661FOze0DOPF+zQFFCOkkLwjQlQWLYPbk=;
+	s=korg; t=1731407735;
+	bh=SM1gvg4niXJsid1yhhNhwha+9MHuUQyEU7PQnfLVp20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QkpzkNBolLmFWnZstowgTWZf6a7RxdjqSN1IWwPJ3MjvbZAMRx4CNyJuezv+odpU6
-	 LqWdgCyHqyn/9ID1bPciZHML2vfkY1bE6XtJWy49C/B0gc2YwB0MgiC+xN+RGo6NPN
-	 mgtiLHU+bE+mu7/OtqFzyPANbtKMPzPWOmN8bhus=
+	b=F4MZfhaRzUJritevTfWcmuC4TBNh2qNHtMLfAynp80E7h2Wakj1QZTnZQfd2dd+g+
+	 83RWVLGpKylfyvAOzTz7UxO8NEImZBaNlGnXLZO+BURl54j8Y3+/qhwp65s8HqPDUL
+	 JlcRauMO+4V6MzvBzwP+WsNgXQSODhaqdHwiEIN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diederik de Haas <didi.debian@cknow.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/119] arm64: dts: rockchip: Correct GPIO polarity on brcm BT nodes
-Date: Tue, 12 Nov 2024 11:20:31 +0100
-Message-ID: <20241112101849.598656367@linuxfoundation.org>
+Subject: [PATCH 6.6 059/119] ASoC: stm32: spdifrx: fix dma channel release in stm32_spdifrx_remove
+Date: Tue, 12 Nov 2024 11:21:07 +0100
+Message-ID: <20241112101850.971058345@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241112101848.708153352@linuxfoundation.org>
 References: <20241112101848.708153352@linuxfoundation.org>
@@ -51,63 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diederik de Haas <didi.debian@cknow.org>
+From: Amelie Delaunay <amelie.delaunay@foss.st.com>
 
-[ Upstream commit 08846522d9a7bccf18d4f97c3f39d03c7a193970 ]
+[ Upstream commit 9bb4af400c386374ab1047df44c508512c08c31f ]
 
-Paragraph "3.4 Power up Timing Sequence" of the AzureWave-CM256SM
-datasheet mentions the following about the BT_REG_ON pin, which is
-connected to GPIO0_C4_d:
+In case of error when requesting ctrl_chan DMA channel, ctrl_chan is not
+null. So the release of the dma channel leads to the following issue:
+[    4.879000] st,stm32-spdifrx 500d0000.audio-controller:
+dma_request_slave_channel error -19
+[    4.888975] Unable to handle kernel NULL pointer dereference
+at virtual address 000000000000003d
+[...]
+[    5.096577] Call trace:
+[    5.099099]  dma_release_channel+0x24/0x100
+[    5.103235]  stm32_spdifrx_remove+0x24/0x60 [snd_soc_stm32_spdifrx]
+[    5.109494]  stm32_spdifrx_probe+0x320/0x4c4 [snd_soc_stm32_spdifrx]
 
-  When this pin is low and WL_REG_ON is high,
-  the BT section is in reset.
+To avoid this issue, release channel only if the pointer is valid.
 
-Therefor set that pin to GPIO_ACTIVE_HIGH so that it can be pulled low
-for a reset.
-If set to GPIO_ACTIVE_LOW, the following errors are observed:
-
-  Bluetooth: hci0: command 0x0c03 tx timeout
-  Bluetooth: hci0: BCM: Reset failed (-110)
-
-So fix the GPIO polarity by setting it to ACTIVE_HIGH.
-This also matches what other devices with the same BT device have.
-
-Fixes: 2b6a3f857550 ("arm64: dts: rockchip: Fix reset-gpios property on brcm BT nodes")
-Signed-off-by: Diederik de Haas <didi.debian@cknow.org>
-Link: https://lore.kernel.org/r/20241018145053.11928-2-didi.debian@cknow.org
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 794df9448edb ("ASoC: stm32: spdifrx: manage rebind issue")
+Signed-off-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Link: https://patch.msgid.link/20241105140242.527279-1-olivier.moysan@foss.st.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi  | 2 +-
- arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3.dtsi | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/stm/stm32_spdifrx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
-index 27d89f48c42bd..9944c9d4ca9fe 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-pinenote.dtsi
-@@ -687,7 +687,7 @@
- 		host-wakeup-gpios = <&gpio0 RK_PC3 GPIO_ACTIVE_HIGH>;
- 		pinctrl-0 = <&bt_enable_h>, <&bt_host_wake_l>, <&bt_wake_h>;
- 		pinctrl-names = "default";
--		shutdown-gpios = <&gpio0 RK_PC4 GPIO_ACTIVE_LOW>;
-+		shutdown-gpios = <&gpio0 RK_PC4 GPIO_ACTIVE_HIGH>;
- 		vbat-supply = <&vcc_wl>;
- 		vddio-supply = <&vcca_1v8_pmu>;
- 	};
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3.dtsi
-index e9fa9bee995ae..1e36f73840dad 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-radxa-cm3.dtsi
-@@ -404,7 +404,7 @@
- 		host-wakeup-gpios = <&gpio2 RK_PB1 GPIO_ACTIVE_HIGH>;
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&bt_host_wake_h &bt_reg_on_h &bt_wake_host_h>;
--		shutdown-gpios = <&gpio2 RK_PC0 GPIO_ACTIVE_LOW>;
-+		shutdown-gpios = <&gpio2 RK_PC0 GPIO_ACTIVE_HIGH>;
- 		vbat-supply = <&vcc_3v3>;
- 		vddio-supply = <&vcc_1v8>;
- 	};
+diff --git a/sound/soc/stm/stm32_spdifrx.c b/sound/soc/stm/stm32_spdifrx.c
+index a359b528b26b7..4e17909d21267 100644
+--- a/sound/soc/stm/stm32_spdifrx.c
++++ b/sound/soc/stm/stm32_spdifrx.c
+@@ -943,7 +943,7 @@ static void stm32_spdifrx_remove(struct platform_device *pdev)
+ {
+ 	struct stm32_spdifrx_data *spdifrx = platform_get_drvdata(pdev);
+ 
+-	if (spdifrx->ctrl_chan)
++	if (!IS_ERR(spdifrx->ctrl_chan))
+ 		dma_release_channel(spdifrx->ctrl_chan);
+ 
+ 	if (spdifrx->dmab)
 -- 
 2.43.0
 
