@@ -1,136 +1,108 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B7DC2FB
-	for <patches@lists.linux.dev>; Wed, 13 Nov 2024 00:56:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D302AD0C
+	for <patches@lists.linux.dev>; Wed, 13 Nov 2024 01:01:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731459368; cv=none; b=aKevQALXIkwFL5oQUbpiFDnapR1WmlZVNJcQIDMyjG5MWeVeW+InvemY14i7fRwcmYrfDweLCKMKRYIWl91ouQHpy7MVqM+rcrALBp4ME282p1upFrCdkA8Sw/sWr1zPDov4AHISQa8913RF+bHwaIdFgLyxXfcharJxCsz6D38=
+	t=1731459716; cv=none; b=Mjc4VZEESX41QEmKMuuAH1RqtfnFRkKhfRa3H+gC9sZRnvRiR6at1i9j+WkHCmRMLBnZduUF/sTcA08kpJS0E6+FPXITc6DkpBBHicSljP6l1JdcLy/si1KalhXLT9+5bMLc9eCWNuuBiPGCEvjSsI9YhLYhWhtFamaf2Qm0DmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731459368; c=relaxed/simple;
-	bh=tu2QUsS93zZGCMD2+eL17Dai8uTRj7X5W1bf9i5ggnQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Rbj9KyKDgHB/CIprWyhIuBBMFU93BwkHRbz4aYN4Kn7vDmCtipx65Dj/VUyWYyieTmWk+4U+SNHzPS1TV+S/iMRkF/LIhj8Wxcxgs2dgVG1es+t1mZZ/N6xG85gxbpTHf+Lp3c501DAt6LRwwq/9vkVsGXbn4R02qjmygebGz/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g1X2lubE; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731459716; c=relaxed/simple;
+	bh=5v0Pumd1wdfkWfYkDyIym/XT5Jsmn2z22aIpke3ZD48=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uwcHocURC/4pMmgYLU9pFNDdjcFQIbX9alfc0GsV5zlAA0e5xe0N09Ca8nTechyueDGBtQcPUREM7UoRbMYYZrys3gw9jFHmo+4NI4v9zt8ZVBXsIxgDWVJD43liZpPM1dA3ICQi/XeSRiEMd9EbIpG60S3yPbaou5kc2bNgegc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WUAlv8Oe; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g1X2lubE"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2e3010478e6so5067493a91.1
-        for <patches@lists.linux.dev>; Tue, 12 Nov 2024 16:56:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WUAlv8Oe"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-53d9ff8f1e4so372436e87.2
+        for <patches@lists.linux.dev>; Tue, 12 Nov 2024 17:01:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731459366; x=1732064166; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=VSVWLrKSqwhFtPgf2tHeAvLe7Jm7DcjSOJdVi3kidJw=;
-        b=g1X2lubEUJa8jSMqYAi3U2I5zyAiCz6Fv9yT8v8Gcrs41iYRw5q3tHFKuXPOkt03gH
-         Ivc0uvpxnj55Q0i4aSWtKPsp38Fn6C43UXhFPXCDlFlM5lLeB7eXSziryDLzDmRYNbxN
-         75Cw2Q5mjk7Cjx743RYVqcev0i67ow+auebWjh2DzC052ncCN54z0yyTk+HxYksGBAOz
-         JORfZAqQJ//2TxdIsTB7oCB/D/gHsENuPigY1HKg6Wm8i99QIWC+t0gg7aQ9A/JtFT7w
-         YIeCZcWlajy+H1PX0lthd6tLDB/SwhnfhlcSX++7XPx5LlZrWSWCur3q1Esojtge+Usu
-         uJ+A==
+        d=linaro.org; s=google; t=1731459713; x=1732064513; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=X/yyOuGNVIzT+zYvh4v3hplD3RNbNSCQhrz/FBYBpRw=;
+        b=WUAlv8Oee8KJ+cX44lXGDjCwRCu/OVC5DjG6etP3FC+thz79YMprikjJJsgCueear9
+         QzpE1xqnsPhx7a6rb805QcHH3j1N6cXAGzDlTKv5+tf2RdjslT/NBKW6ai91o1map5wb
+         TRql401a1WZzcFtwoCqnzYINF8od3X33HitbgtWSZd22+VEsvx+QxrQP2qiRfEdSR9cH
+         i5T40LP9Xj1jUTfEuPIdyXgWODyVOtAdQAWmPvyPciq9lPgSKcnDWQIL8iEaCQtJraE9
+         ik/5FY5o8JEgGMAEGX5QpxqTXortJKvCiN7U5Q8PK1SjNIUDmv/fN+mkfDe0csE8iQoq
+         E6gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731459366; x=1732064166;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VSVWLrKSqwhFtPgf2tHeAvLe7Jm7DcjSOJdVi3kidJw=;
-        b=v7lt+NGJJQRMCs6/F4/g+YpTf/3h7OcwUOQRCBCp2/bXs9yn79BO8R9GnjV2Pfcph9
-         JM+mSEAXV6j1wjAO42ijblf8eNdkQ1EiXLPps1DkifcUt/Hia4n8aFRkEUYEbA/MRqAd
-         ag7a6dfHPKYAPc9itaEXO+n8aypwGG65abRzlRKeC2bzM5TKtIhEhDlH3qdIqMW3obkF
-         D78sD7KBtVxghUCJs0fljuioQCBM4FEv0PL7FrvIkW7hN5kCZzwtX0012fDKQna1pWAr
-         W76CSxSCSO6TvA9E0TQv2Te7fxoHetFEdPklVH/dbg+ETtNuoIgagzCnqypR4/W8/DlC
-         5Nhw==
-X-Gm-Message-State: AOJu0Yzk52Sf0Xpgt19f6Ym1bW9twD0YhxVH8CseMDpce49o9GqaoFis
-	rVH+AfUdt1+akinbD6Ws03ADb92b7lEopKKfdf0KzJI4E3HcBly6
-X-Google-Smtp-Source: AGHT+IE1zn8+diw1vdZ0V9SYrk5CPYYLAI2vo4HL7IazXgCK4BcVv7dDSWqAtJPdttrv7DXE4LB2nQ==
-X-Received: by 2002:a17:90b:2ece:b0:2e2:d33b:cc with SMTP id 98e67ed59e1d1-2e9b172e0bemr24217503a91.21.1731459366380;
-        Tue, 12 Nov 2024 16:56:06 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e9f3fb5e31sm193190a91.53.2024.11.12.16.56.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Nov 2024 16:56:05 -0800 (PST)
-Message-ID: <e2eda595-966b-498d-8694-c2694c0bf136@gmail.com>
-Date: Tue, 12 Nov 2024 16:56:04 -0800
+        d=1e100.net; s=20230601; t=1731459713; x=1732064513;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=X/yyOuGNVIzT+zYvh4v3hplD3RNbNSCQhrz/FBYBpRw=;
+        b=vnTA4EcMkaxUFk47Zn3PTpIDYm8jFq8lKZO90izHdxfInj4lhh7VSoTt8gQWyvB1vZ
+         feEgKOkzI2DWJElJMLy6PeDeO+ZCBjnjATo5kfc2vMSDw4x2c5V7E3wp/OGYwr6jWtz8
+         jSPZM4Z3YSY+kXKAiYNVPH/kWhuGCnQ+1KIxLL+7WtFTK1jVDY73/kxZHKx40X3Ykwpw
+         QE0JwL2qlj1Z6ijHHzXjXEmrFyBXYrNtzmnieoHOzEbclNheX88m9iqbVtNqz1SUL1ga
+         cHA/gg1sLWUBr7DNy/2l+C2SeRLx0lAHU7Nf67RAkCencr5LfB3Lh+WnA7n2VX4MFmU9
+         fw5w==
+X-Forwarded-Encrypted: i=1; AJvYcCWsBafONXTpZwEAETStVUBuTAx1L5s1+CiG3MQN2iAPVdw+nX7ABw7S5gZMS4ms3Q/Y3GhY8ctn@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzu11Wy8vyHBLmEhgkO3z2o6cVNZkqAkEMX5aKHhrYQwTXrtN1u
+	e0k+EXYe0A/XN89Xrh2+gLspEUb63pmYPpDdZqMgNKzoa49kLXPBkvmyKZuGtbJHhQXH7qQmW6v
+	T8XoNtk8GHEqOQIbg5hwfE+dPs16CtD4yi/yx3Q==
+X-Google-Smtp-Source: AGHT+IGrTpBP4XZN2inszS5LiWIDhaTOAjWYv1IN45jLudjPrpRKEn2OnUUglHnQBM+zZuWyWdAuDjaQVoneTf1/DNk=
+X-Received: by 2002:a05:6512:ba0:b0:539:e436:f1cd with SMTP id
+ 2adb3069b0e04-53d862d38c5mr9315032e87.16.1731459712927; Tue, 12 Nov 2024
+ 17:01:52 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 00/76] 5.15.172-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20241112101839.777512218@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-Autocrypt: addr=f.fainelli@gmail.com; keydata=
- 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
-In-Reply-To: <20241112101839.777512218@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <0-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com> <20241112182938.GA172989@nvidia.com>
+In-Reply-To: <20241112182938.GA172989@nvidia.com>
+From: Zhangfei Gao <zhangfei.gao@linaro.org>
+Date: Wed, 13 Nov 2024 09:01:41 +0800
+Message-ID: <CABQgh9HOHzeRF7JfrXrRAcGB53o29HkW9rnVTf4JefeVWDvzyQ@mail.gmail.com>
+Subject: Re: [PATCH v4 00/12] Initial support for SMMUv3 nested translation
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: acpica-devel@lists.linux.dev, iommu@lists.linux.dev, 
+	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org, 
+	Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Robert Moore <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>, 
+	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>, 
+	Alex Williamson <alex.williamson@redhat.com>, Donald Dutile <ddutile@redhat.com>, 
+	Eric Auger <eric.auger@redhat.com>, Hanjun Guo <guohanjun@huawei.com>, 
+	Jean-Philippe Brucker <jean-philippe@linaro.org>, Jerry Snitselaar <jsnitsel@redhat.com>, 
+	Moritz Fischer <mdf@kernel.org>, Michael Shavit <mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>, 
+	patches@lists.linux.dev, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, 
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>, Mostafa Saleh <smostafa@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/12/24 02:20, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.172 release.
-> There are 76 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 14 Nov 2024 10:18:19 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.172-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
- > greg k-h
+On Wed, 13 Nov 2024 at 02:29, Jason Gunthorpe <jgg@nvidia.com> wrote:
+>
+> On Wed, Oct 30, 2024 at 09:20:44PM -0300, Jason Gunthorpe wrote:
+> > Jason Gunthorpe (7):
+> >   iommu/arm-smmu-v3: Support IOMMU_DOMAIN_NESTED
+> >   iommu/arm-smmu-v3: Use S2FWB for NESTED domains
+> >   iommu/arm-smmu-v3: Allow ATS for IOMMU_DOMAIN_NESTED
+> >
+> > Nicolin Chen (5):
+> >   iommu/arm-smmu-v3: Support IOMMU_VIOMMU_ALLOC
+> >   iommu/arm-smmu-v3: Support IOMMU_HWPT_INVALIDATE using a VIOMMU object
+>
+> Applied to iommufd for-next along with all the dependencies and the
+> additional hunk Zhangfei pointed out.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Thanks Jason, I have verified on aarch64 based on your
+jason/smmuv3_nesting branch
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+https://github.com/Linaro/linux-kernel-uadk/tree/6.12-wip
+https://github.com/Linaro/qemu/tree/6.12-wip
+
+Still need this hack
+https://github.com/Linaro/linux-kernel-uadk/commit/eaa194d954112cad4da7852e29343e546baf8683
+
+One is adding iommu_dev_enable/disable_feature IOMMU_DEV_FEAT_SVA,
+which you have patchset before.
+The other is to temporarily ignore S2FWB or CANWBS.
+
+Thanks
