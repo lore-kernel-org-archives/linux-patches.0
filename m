@@ -1,135 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CE0161326;
-	Wed, 13 Nov 2024 03:12:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7A6178384
+	for <patches@lists.linux.dev>; Wed, 13 Nov 2024 06:29:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731467579; cv=none; b=HWmDwusf+S5BkAzGN2GEa2uuDKxBwN0gY57oOnwHflg5WwKijOPZYpEXvpLpbsWMA1wP8f4s0EZn0KUJOz2yXh2mkgNoLcqGCnZZJchxtvENRzA8GU08w9YVJzKhdQ1aT+3HSHmniFlteEP63263ffjCvTXv/sAdou+qeAnZ3fQ=
+	t=1731479351; cv=none; b=nuH1Pmb6dpBfmjnhOThwySIqgAlUXw5ohpjhMGlm26cAmufmYm4VNKdQsOCGeszlmwx/WiWkwh+FxgGejpQ/uopEh4a+UpgFpnf+PvbgudMZBeujbsqI655GgRvIcxKusZkmMW7QFiUIugE/MRyZiZzZyiRIlZKvRUT6qM0Aulw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731467579; c=relaxed/simple;
-	bh=aGDEPDsF+Q8EyDgP5RZSD4WuzW+6IkJfG/aIFBd5lFE=;
+	s=arc-20240116; t=1731479351; c=relaxed/simple;
+	bh=ryKZ3ZF7sN+kjlkdznbBZ1GozgBjmJSrP4P2jIodaXI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dUrJpWMSDvYJ3pEaKVvloCIVfBi+kefc4N3KAFZa8SlF8cnluYoaKp8ots+4cU3da3ktEKxBbOhvCTnOJ/BATCBvBgQnd29Tu/prQDd5JCsLCGWLmVrXHSBFzd4H59lR+yTBXWgGsK9FQzYejqv9rX3Hxwp9tpcziiEDemQOl8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BLiJyBYE; arc=none smtp.client-ip=10.30.226.201
+	 To:Cc:Content-Type; b=aDkefEfaSpnWcald83f+Au+uf3FGEQBbcKnNo/PgQ2IOydVMmzcB7uBXd0G4M45IjfFYvxFGevu1N0PODGTzuAJL0xbldwF0bMpDlmMrvJjlIUSS2eSuIUET1rX8fLAOgZ0CyyAz5iQ4BvBn2ObMKcD5eYJTRPe5aJuD5sxg1ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uRV1X4Gh; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BLiJyBYE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44274C4CED7;
-	Wed, 13 Nov 2024 03:12:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1731467579;
-	bh=aGDEPDsF+Q8EyDgP5RZSD4WuzW+6IkJfG/aIFBd5lFE=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=BLiJyBYEJRpTjkVtCCWSblUch2sTiexyWIOPgikJ23CEogS6ViDLuU7UCJOnnLLPu
-	 03MgqI7T2ZQWGIBxtvsFmQ114XG/QK+yTIfaHGmxmgkJONVcosclQQRgEcL/jx/r2h
-	 QY5QPQ08T85ssQf7/yI6iPnPTCYXya1V93A2uv4DmUrrSH87bK28CuSI/B5xCoBvXP
-	 OwMimYfurjumoBgOqEhZeRPqwqcwK7P6Q71FpiSkxSCvHABDrbKjDm4VCnT8jklZiq
-	 AYGr5E+PeVZ8Q0WvJOqSyeGLF/3aT/iy2+ueazppPsLdX3OZ8JT9lzFX+QRDBYgEkx
-	 dmeWjBn5s9R9w==
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a9a0ec0a94fso1018833766b.1;
-        Tue, 12 Nov 2024 19:12:59 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVnSLFP9+JkYgXKg9qldI8WgUSgDAYrtkwUvK2CSfKdmXoAmTE/o5QFMmF2UzLUhZTmFQF9pE9nfw==@lists.linux.dev, AJvYcCWC/wKZ2huFN3kdp0LsD5WYsCnPIGLhvQQTgaTFQ0gzJ1ttYrigE7V1LdLIPgSNlGemGAEb@lists.linux.dev, AJvYcCWTxD5LvZi0KZM42GqXzR6HURjdbwFTTpg4ss9KsR7nTzvazOV1kf5h051a4OGTNiRJ+SDARLlPJZ61@lists.linux.dev
-X-Gm-Message-State: AOJu0YwSN9koLI0c2uK50A+Vqij+7eXVanL5spHiZG7VwbQXHO5e1ymj
-	mszSjMjHnrGG7t0itpVP6kG16b1sIkRgcLiFxFbSz22CizpKIzOQGvWk6ZPdvb6cWvpJbcrQHCU
-	hund5D/+YKQTfg921/+UVB5tqvaM=
-X-Google-Smtp-Source: AGHT+IFBL4MFKWJ2gLMX0Nr5x8TFoj/k14rM6zCbF60i169syTOCZtRjYj9uG4d+KOypD4ObRoxyS5hP/fYn0kHCOTI=
-X-Received: by 2002:a17:907:7dab:b0:a99:f283:8147 with SMTP id
- a640c23a62f3a-a9eeff25cb5mr1714039466b.27.1731467577782; Tue, 12 Nov 2024
- 19:12:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uRV1X4Gh"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-539e63c8678so7532927e87.0
+        for <patches@lists.linux.dev>; Tue, 12 Nov 2024 22:29:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1731479348; x=1732084148; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9QCU/JLa948seWzRrNmkByaOgxKmnVBehQKimS55YRs=;
+        b=uRV1X4GhIhEIqxzTyMdZR6NCwyPfVdZA7MIEfENPEqKL28o/BSqG1bCf2xl+fTjBtx
+         NDxVpN04rfc6cVHw+/jiRIR2IeLkfpCTp7m0iebDDSmhY4InRVRMB2kmbBDLrSe2kyrN
+         lQaxvSshnejE0LEb/8F6i5n6Eb8afABDRAmeK49SGAhF6aal1I1P6j+TQ/y4Ijx1kyII
+         b3MaQMXgUEr5igC8V62uodrfzM66OZfm+K5MmfF0/El/nbWFLwKJEzx48apZMasaGjNm
+         pmAscqo1lpRVUzGe5IzO/qWx46Ow2DGw2DJ2rAgF7r7ddsDofElsbggrR0sdHpzVwhQ6
+         gXVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731479348; x=1732084148;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9QCU/JLa948seWzRrNmkByaOgxKmnVBehQKimS55YRs=;
+        b=BxRxwfqmwaCnpBSEzbwYUPaTdAZ1A3X+vnGGm1fcxz0njGgJbrY7clDmJGuKdfX+On
+         U0yQQSS3R7hrCTIF1JSFDbPwmr2L4oiDMUVyWme6SfOVKyEr4Vae0qbAz66Uw7oNRtSO
+         jiylGltcsre19jSpnGpd6kJgqlFQcF8i6pg3BJRhDLocn9aKlSNzOk7H4tgb1VmOY1tv
+         1se8CYEVRA3KvibmW3Bo9xiulV3fLsCoD66Ztrr3JOEJzsN58rkkln5p4997k/iUdcIl
+         v0czuwBvQjB0nuR+rs0lta4qSgyetc0Edv3qrbVHVk/smClwc2WfOGnThFiC0MtBNX68
+         r/2A==
+X-Forwarded-Encrypted: i=1; AJvYcCU1kQlxN0cpNqcbJfkCdwr7YBm4jKlhjJLkDAhAJWQA99wHAVOY3bF4BPXoR/ITQsXlS/s0+O7f@lists.linux.dev
+X-Gm-Message-State: AOJu0YxFykWDg44DTiKxklm/YtBUVjaGpt3wdihni8f9ohhcd2kjG3oY
+	RYUxhvzgPqgyhF0G80zt/Gti/6fTraMgkTM0EUTPCij6KhjqNnEnDh4fZ6ysodBVUsBYTA7zA4x
+	prgqZEehrGV+mT1SREHy3oGxnf+lMTfks0rhiXQ==
+X-Google-Smtp-Source: AGHT+IEEpcf7Vups7lw1NP9O1FTEPXG1XjljcLFymoWHBWMOkn9tB109/qtbls5Dq+XYyRVJ67vPr0ofrW4PZLq41wk=
+X-Received: by 2002:a05:6512:281b:b0:536:54fd:275b with SMTP id
+ 2adb3069b0e04-53d86303095mr9309340e87.54.1731479348058; Tue, 12 Nov 2024
+ 22:29:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241112-loongarch-kvm-eiointc-fix-sometimes-uninitialized-v1-1-7d881f728d67@kernel.org>
-In-Reply-To: <20241112-loongarch-kvm-eiointc-fix-sometimes-uninitialized-v1-1-7d881f728d67@kernel.org>
-From: Huacai Chen <chenhuacai@kernel.org>
-Date: Wed, 13 Nov 2024 11:12:47 +0800
-X-Gmail-Original-Message-ID: <CAAhV-H7dfLLD6wjpVFBvfH3ZZO2-jDRQt6sA6FUL3pXfj2JnZA@mail.gmail.com>
-Message-ID: <CAAhV-H7dfLLD6wjpVFBvfH3ZZO2-jDRQt6sA6FUL3pXfj2JnZA@mail.gmail.com>
-Subject: Re: [PATCH] LoongArch: KVM: Ensure ret is always initialized in kvm_eiointc_{read,write}()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Tianrui Zhao <zhaotianrui@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
-	WANG Xuerui <kernel@xen0n.name>, Xianglai Li <lixianglai@loongson.cn>, kvm@vger.kernel.org, 
-	loongarch@lists.linux.dev, llvm@lists.linux.dev, patches@lists.linux.dev
+References: <0-v4-9e99b76f3518+3a8-smmuv3_nesting_jgg@nvidia.com>
+ <20241112182938.GA172989@nvidia.com> <CABQgh9HOHzeRF7JfrXrRAcGB53o29HkW9rnVTf4JefeVWDvzyQ@mail.gmail.com>
+ <20241113012359.GB35230@nvidia.com> <9df3dd17-375a-4327-b2a8-e9f7690d81b1@linux.intel.com>
+In-Reply-To: <9df3dd17-375a-4327-b2a8-e9f7690d81b1@linux.intel.com>
+From: Zhangfei Gao <zhangfei.gao@linaro.org>
+Date: Wed, 13 Nov 2024 14:28:56 +0800
+Message-ID: <CABQgh9F+K67YDYeg4==0dhdjya1YuX6uUttQA8zadWEZyRhNKw@mail.gmail.com>
+Subject: Re: [PATCH v4 00/12] Initial support for SMMUv3 nested translation
+To: Baolu Lu <baolu.lu@linux.intel.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>, acpica-devel@lists.linux.dev, iommu@lists.linux.dev, 
+	Joerg Roedel <joro@8bytes.org>, Kevin Tian <kevin.tian@intel.com>, kvm@vger.kernel.org, 
+	Len Brown <lenb@kernel.org>, linux-acpi@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Robert Moore <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>, 
+	Sudeep Holla <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>, 
+	Alex Williamson <alex.williamson@redhat.com>, Donald Dutile <ddutile@redhat.com>, 
+	Eric Auger <eric.auger@redhat.com>, Hanjun Guo <guohanjun@huawei.com>, 
+	Jean-Philippe Brucker <jean-philippe@linaro.org>, Jerry Snitselaar <jsnitsel@redhat.com>, 
+	Moritz Fischer <mdf@kernel.org>, Michael Shavit <mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>, 
+	patches@lists.linux.dev, "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>, 
+	Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>, Mostafa Saleh <smostafa@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi, Nathan,
+Hi, Baolu
 
-Thank you for your patch, but I think it is better to initialize it at
-declaration, and I will squash the change to the original patch since
-it hasn't been upstream.
+On Wed, 13 Nov 2024 at 10:56, Baolu Lu <baolu.lu@linux.intel.com> wrote:
+>
+> On 11/13/24 09:23, Jason Gunthorpe wrote:
+> >> https://github.com/Linaro/linux-kernel-uadk/tree/6.12-wip
+> >> https://github.com/Linaro/qemu/tree/6.12-wip
+> >>
+> >> Still need this hack
+> >> https://github.com/Linaro/linux-kernel-uadk/commit/
+> >> eaa194d954112cad4da7852e29343e546baf8683
+> >>
+> >> One is adding iommu_dev_enable/disable_feature IOMMU_DEV_FEAT_SVA,
+> >> which you have patchset before.
+> > Yes, I have a more complete version of that here someplace. Need some
+> > help on vt-d but hope to get that done next cycle.
+>
+> Can you please elaborate this a bit more? Are you talking about below
+> change
+>
+> +       ret = iommu_dev_enable_feature(idev->dev, IOMMU_DEV_FEAT_SVA);
+> +       if (ret)
+> +               return ret;
+>
+> in iommufd_fault_iopf_enable()?
+>
+> I have no idea about why SVA is affected when enabling iopf.
 
-On Wed, Nov 13, 2024 at 1:02=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
->
-> Clang warns (or errors with CONFIG_WERROR=3Dy):
->
->   arch/loongarch/kvm/intc/eiointc.c:323:2: error: variable 'ret' is used =
-uninitialized whenever switch default is taken [-Werror,-Wsometimes-uniniti=
-alized]
->     323 |         default:
->         |         ^~~~~~~
->   arch/loongarch/kvm/intc/eiointc.c:697:2: error: variable 'ret' is used =
-uninitialized whenever switch default is taken [-Werror,-Wsometimes-uniniti=
-alized]
->     697 |         default:
->         |         ^~~~~~~
->
-> Set ret to -EINVAL in the default case to resolve the warning, as len
-> was not a valid value for the functions to handle.
->
-> Fixes: e24e9e0c1da4 ("LoongArch: KVM: Add EIOINTC read and write function=
-s")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
-> It appears that my previous version of this change did not get
-> incorporated in the new revision. I did not mark this as a v2 since it
-> has been some time.
->
-> https://lore.kernel.org/r/20240916-loongarch-kvm-eiointc-fix-sometimes-un=
-initialized-v1-1-85142dcb2274@kernel.org
-I'm very sorry that I have ignored this and didn't signal Xianglai.
+In drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c,
+iommu_dev_enable_feature(IOMMU_DEV_FEAT_SVA) will real call
+iopf_queue_add_device,
+while iommu_dev_enable_feature(IOPF)  only set flag.
 
-Huacai
+arm_smmu_dev_enable_feature
+case IOMMU_DEV_FEAT_SVA:
+arm_smmu_master_enable_sva(master)
+iopf_queue_add_device(master->smmu->evtq.iopf, dev);
 
-> ---
->  arch/loongarch/kvm/intc/eiointc.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/arch/loongarch/kvm/intc/eiointc.c b/arch/loongarch/kvm/intc/=
-eiointc.c
-> index 0084839f41506eb3b99c2c38f9721f3c0101e384..6af3ecbe29caaaef1582b1fbb=
-941c01638e721cf 100644
-> --- a/arch/loongarch/kvm/intc/eiointc.c
-> +++ b/arch/loongarch/kvm/intc/eiointc.c
-> @@ -323,6 +323,7 @@ static int kvm_eiointc_read(struct kvm_vcpu *vcpu,
->         default:
->                 WARN_ONCE(1, "%s: Abnormal address access: addr 0x%llx, s=
-ize %d\n",
->                                                 __func__, addr, len);
-> +               ret =3D -EINVAL;
->         }
->         spin_unlock_irqrestore(&eiointc->lock, flags);
->
-> @@ -697,6 +698,7 @@ static int kvm_eiointc_write(struct kvm_vcpu *vcpu,
->         default:
->                 WARN_ONCE(1, "%s: Abnormal address access: addr 0x%llx, s=
-ize %d\n",
->                                                 __func__, addr, len);
-> +               ret =3D -EINVAL;
->         }
->         spin_unlock_irqrestore(&eiointc->lock, flags);
->
->
-> ---
-> base-commit: f7cc7a98fb7124abc269ebf162fcb3a8893b660a
-> change-id: 20241112-loongarch-kvm-eiointc-fix-sometimes-uninitialized-1d9=
-f543db2d2
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
+Thanks
