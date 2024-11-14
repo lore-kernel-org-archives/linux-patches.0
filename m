@@ -1,192 +1,185 @@
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2075.outbound.protection.outlook.com [40.107.236.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529973FB1B;
-	Thu, 14 Nov 2024 03:19:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.75
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731554342; cv=fail; b=g4ZOLh4fVCMvyP8jE3ewDaEZRqLldXD30xyl/nHx3u4TxhlhTaLiJcq5VSz3rayRuGAQxjgvSGR5aPbs7Zl/Pj9L83n+X2kEs0EN0YYwqes8IZZGrVmZpkCTUHSh8FGiwf4UQPT2sZVcEvh7PPWzw71pE7iTV+6o5CNQm/EstDo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731554342; c=relaxed/simple;
-	bh=UBFtVb8iVvCcyDZOvF0T6qv4uBfbvSSmK3tE+xPPdvY=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gqqod87rQwV4+A/uXEppL7fFmH8cttgduUhnrbEhwvXO23w/6f5CdQWtToFBKf1quMy0yyDwRxcodP9vzit0+FhSolU5TUtWVIxOxI3tXW2CIzYFMXWwoZK2269EI1aSRtWrK1wpBQo0W2kXuJmHEaG/+EIdYvYNH9k2Qk1Fxas=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=gEwqBZQE; arc=fail smtp.client-ip=40.107.236.75
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F811F8929
+	for <patches@lists.linux.dev>; Thu, 14 Nov 2024 10:31:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1731580300; cv=none; b=rYjSLsMgxaec3otPnHKOocUhGDU2d/EudosExbh8bshPj9O5aPfqs/bdTv2mxxd2jK3NYBtTOTB+PTaJeClXoc8nn0YtY+lQBnA+ujByFecmBYjJpT8MUX69eRyYK7OwDwWVk58uaRCdkiVFI5nLkLs53RbvwpTtGNrp/tEohh0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1731580300; c=relaxed/simple;
+	bh=1HMteR7GeWi+aLLIBziHVSG/j/GJwhJ4tatT18md6O8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZH6DCc/4Hwe42wlKgOTyHZU9FVvdF9k3VACSYh/Eb/77O6lCpFJWJvN5nzoKJ9sN0VeUGgRR5qkJzXGcOSRLtolO4NpVzqAfCaQnnT/Goik9n+g9bxD7zv9sKJhKcwzVHbxLJLh1XCCW2+PTzwcAgQzztqNU8K3sosaonzxInnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=omIi9qip; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="gEwqBZQE"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ymi+dSeU/XfKEY2yljxNpxlmC/H+TkGMCUR53PS+LAtKt4JntZSX9Os2fyXMJMehsEsLGPAb3rEzFXVegGC64EtSF/5D3y3UlTr8P6KivdkZCfF+937jXI/jXIYyaV+sS+5VTx8jYM3JX7KYRpjwWeE/SdpbJjJRY2lFfap2ZvoYMZUF2K67MoUstKi4ekTT3aTx0qyzTkXRI0Md1Pl7GGI97RQTi2qh5HNMkgYdgCBpDs6j1+WfrdMrw2NEDt7cl+QdroT2UaHSqnro4jXAOWhxJC3bOutioBqnKo+MKepsr9gbmXFZ13dsTckL4F7EGVGt3EWV9PBPbifUflZTSg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ehT6rAB0If9vEJHeCDBiFy7b1R0jLpcIezct6z/0lLs=;
- b=LsJ/W0LA+KSG9V5WCIjfySSmVFgUOULX94H0xQvczXncXFkF2WrvODHQnego9fa7+yaTcaweoHY3qOmyuRGXL5JFbMNOV+0phB9oR54FiLismyL5IlwI3Pqb1l4FlPHcHMX16h4Moxwz+uKuuIgjwr48/yf9bxZ3ONkE0fSlzCkSi36aI4HWMuVqRN/lQW7U2smMZzJHXffrNPpEVqY6M6mguismhAWd6L2JKkTacEYM/NU4XdW7/m3Fc7oDSKMrUB4vXJD3pW+WaDdd16nGqZ1lYW8UyjU3Gnmb3y+nJ4rKcg3SNSQFxeE6day8tufVDE4rGNldlpUiZHDSDJLxFg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ehT6rAB0If9vEJHeCDBiFy7b1R0jLpcIezct6z/0lLs=;
- b=gEwqBZQED9TMJtKz9q0gSQ0XGrQyR4xF8tTMkdV8h1CUEfGC/SkvrnFA9clXgdM0RMyhwBNJhLemahmPDQg2VdWlg4Jm5FjVmCB4PfX0RKX1Dv2qaJneCOJGK3DgJgAW1KhCDr64zge83ib9u2CYwzb5EWtJrWwxO4RWqXC98pzJ02gk5wUhjJuDZ3IhLp+3sBkMYBx8vBau6vZTPpcOP5vJqI754xQq/FmlN0pa/rGM1+Sw+UmrwxNCTsjTrw+Q2C4pAOt5afWRtCk6nyUz9romZXVKUmhaJUCyE2nWj1cF8mpAv4UbssiV+y95Y5DOyVy5OVrdeCmdN+DurrosCg==
-Received: from MW4PR03CA0173.namprd03.prod.outlook.com (2603:10b6:303:8d::28)
- by PH8PR12MB6676.namprd12.prod.outlook.com (2603:10b6:510:1c3::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.29; Thu, 14 Nov
- 2024 03:18:52 +0000
-Received: from SJ1PEPF00002323.namprd03.prod.outlook.com
- (2603:10b6:303:8d:cafe::81) by MW4PR03CA0173.outlook.office365.com
- (2603:10b6:303:8d::28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.16 via Frontend
- Transport; Thu, 14 Nov 2024 03:18:52 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- SJ1PEPF00002323.mail.protection.outlook.com (10.167.242.85) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8158.14 via Frontend Transport; Thu, 14 Nov 2024 03:18:52 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 13 Nov
- 2024 19:18:45 -0800
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 13 Nov
- 2024 19:18:44 -0800
-Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Wed, 13 Nov 2024 19:18:43 -0800
-Date: Wed, 13 Nov 2024 19:18:42 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Yi Liu <yi.l.liu@intel.com>
-CC: <jgg@nvidia.com>, <kevin.tian@intel.com>, <corbet@lwn.net>,
-	<joro@8bytes.org>, <suravee.suthikulpanit@amd.com>, <will@kernel.org>,
-	<robin.murphy@arm.com>, <dwmw2@infradead.org>, <shuah@kernel.org>,
-	<iommu@lists.linux.dev>, <linux-doc@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-kselftest@vger.kernel.org>,
-	<baolu.lu@linux.intel.com>, <eric.auger@redhat.com>,
-	<jean-philippe@linaro.org>, <mdf@kernel.org>, <mshavit@google.com>,
-	<shameerali.kolothum.thodi@huawei.com>, <smostafa@google.com>, <aik@amd.com>,
-	<zhangfei.gao@linaro.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH v7 13/13] Documentation: userspace-api: iommufd: Update
- vIOMMU
-Message-ID: <ZzVsEmzc1UyDdi//@Asurada-Nvidia>
-References: <cover.1730836219.git.nicolinc@nvidia.com>
- <7e4302064e0d02137c1b1e139342affc0485ed3f.1730836219.git.nicolinc@nvidia.com>
- <f0c45d5b-b8cd-4f75-a9d7-21808f18583d@intel.com>
- <ZzVB7Fun48rGztuV@Asurada-Nvidia>
- <8f6cdd11-3bd3-4c4c-9424-c0d52eaa6f93@intel.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="omIi9qip"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5c9404c0d50so510936a12.3
+        for <patches@lists.linux.dev>; Thu, 14 Nov 2024 02:31:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1731580296; x=1732185096; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=330+bk+cS3icGrLIMivP9QZx02A0SNk2s2BiDL/dZNI=;
+        b=omIi9qipRa+r/2unssEHphq3uVyrldCf/x1Zbo9nT/UpMKZmo/dULlx3JN0+5hr8+G
+         4rw1HvlBfuaY0Xtuubq52A/WIczEcqYCLIhHjOj3NOvqT+h+QXAIZJKrzZWWe8h1oYaS
+         5ua9Uy8UofbK7+w6eiX2RVjVnna+kYzlqCfEynqvtnw2Tp2CQQRCfaBiHtjUuWAJGm5a
+         raKWuNrLTazyC5V3YlzQIa6WO4svELStd98bjXvHmL4tzxjDxoEPMkIQnrap56ftaTrI
+         BCc7WnraOP544qAiMMqsUR4mKr0xPD4MJMOf8u6jEmsWTJbpDEk7n8LsTcG32uCMiE3r
+         i+Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731580296; x=1732185096;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=330+bk+cS3icGrLIMivP9QZx02A0SNk2s2BiDL/dZNI=;
+        b=uMky+RbCKaORlFSQO5enQEpapSBX3vzP2tCMZSmm/5FdUB96zcqNFHirJsno8QnYIb
+         CJ9y98muwD9CbxBjl0ZkPe156V6w7Gomg0hCadHdill2Ht0uc3wc/3DMcAp58gYjAgD/
+         pEuCS7U4fJmCE/Xv++8w3WpH7Y4m11bRl2qwzwC9iVVTWgAeRYSSPk6YHUqZLyIQ+Gax
+         T6cT2Lf663ei7VU0rpKbOYPavjOWoOemJYrqNA/8OIA7w2rOqRYYbbhaSspC7Wq4FUXq
+         6d26+bXxrUlH0C65AaiCuZPYHSS0StSDwvlreXv32majvz41YNsfFnDGbPRJjPgXYXQp
+         bLVw==
+X-Forwarded-Encrypted: i=1; AJvYcCVOo4JLZA8xLCnkAU9dWajLusUwq3T+3KeYoG7PgejKMUJ3AVPEPQY3Ung9yw2Nvs0HTHLyEMkH@lists.linux.dev
+X-Gm-Message-State: AOJu0YxMudi8m/LJqrAhwi5fSELDlS4EOXiQ1T9C9TE/IoYD3NL/UK/H
+	OzYVgCyckUeYJmc/reJxPtboNhmvlcLynkkjOizGanYbkgv9NxRon8fIdc8vDFxb6ZeWuJJuM9Q
+	cEVMphyvfUVrExkBPjZ0XwoP4a+IkT2zabiRD
+X-Google-Smtp-Source: AGHT+IFqjZNothSKY3NQ7z6Ssb06hcvdumgEbAL12tHf57bGbqlxiboD7hH6ovHLn0T5dGBaodALGFZhMKIIJi3hdzo=
+X-Received: by 2002:a17:907:3e1d:b0:a99:4aa7:4d6f with SMTP id
+ a640c23a62f3a-a9eefebc409mr2436865566b.12.1731580295828; Thu, 14 Nov 2024
+ 02:31:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <8f6cdd11-3bd3-4c4c-9424-c0d52eaa6f93@intel.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00002323:EE_|PH8PR12MB6676:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0942ad90-4497-47ca-60e3-08dd045b1096
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|376014|82310400026|36860700013|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?+szqSGwdxFPA12BS/USgKpYT8WReEeLrHb6taCyGRR+ig657fdtncZGw+oBe?=
- =?us-ascii?Q?xX18tLtpbiPI9Py74ghvyjf2T/RnN4KpiPthEYJ1Sed4BqHpluqxnybAHbc4?=
- =?us-ascii?Q?lZN/IJ9wWvaRPInfQlwkwmJcQDR70D4wkIhO+Aj3/ej4PGyjbCD63Oc7I9mN?=
- =?us-ascii?Q?LdxRqjL1luab17SvW7Nn5szIfDm0cbg09/b1YZOJDm1a3z+2+O21xG48qzJA?=
- =?us-ascii?Q?BS3gc6UKNXlHHpAB3p1QoMnRpI/rOTIAu+klRwjIp+mEWnKSVuB27fIF+z9F?=
- =?us-ascii?Q?lhamT5J7xj4stLievHLrvj/0k0jLaUm37fOQJBKIr6P/lOFKTnBTRt74EjfZ?=
- =?us-ascii?Q?AkNvGPCrvlKSSbe4+RiNhcwv/LD/vxlEJHFPCwwzaNhqO5+CISM7bjPSXikC?=
- =?us-ascii?Q?c2B8108X7heMubo4FhmfIuTSxLNGB+iXIwH0qC6HkR3T/K4w++AEd5IHKsXs?=
- =?us-ascii?Q?I9cogB9u5Ci9kS9EwXHoLy1baw9ds9MAWLQyJBduak3VlPASVZm73gByyCs+?=
- =?us-ascii?Q?7PKcmaIDDo5Z68c9OYQ5TGTC8JBQWcn5R20dopPBdQFndnbdjIDKUC2CeySq?=
- =?us-ascii?Q?X0FCGrXbCsUfgne8LDCd2+L8uLfWZLWxY3bDU60heGn3y+tpeCRwI5/W4nm8?=
- =?us-ascii?Q?dcRstyQzlpSh7zSvvKlkbSB1nX459kgW+SRlurUxM3WYVyageGxEfKXDpIhK?=
- =?us-ascii?Q?JdkZfyFXsbEbIp/CQk16gXPfTJTabnE63HSWJbqLdMEg7ftqePZHyg59BPVs?=
- =?us-ascii?Q?6IqDRD4zAUVhvDPL2uD5Ux6ImNNr8uVovVcFRfbE3zKhjnWIkk+3b/pPPJ9o?=
- =?us-ascii?Q?zr0Yb+NBtOwJlpyYgbmoG6CgG3qHIyJAdNu6vhzZdFT3utNNKPQ1kXCbZQZY?=
- =?us-ascii?Q?Ug8r/HY3B/TWK8qJCZQhcEI5Wjhc11uSFBIip72tCp0qbaxP99hZRrDtSTrn?=
- =?us-ascii?Q?2/szipR2RTsjyUnu3ym/aJIlfP/zEXzCy2fCZvc3BvNFAwG3lloo89SEhswq?=
- =?us-ascii?Q?vo6hdA0vzp6TBuXX/DHod7fesRp53ZJJl8Fo4wa9BaE8rkZFzowugeX5Dxm8?=
- =?us-ascii?Q?2+ojssQLHn7MTO70xkMlJAnU/e3vrp3i2h4n6DmURHLkzedyWstSVVD98Sky?=
- =?us-ascii?Q?Hkg47bDBVa2vzBRO4XAQ4ZjFpFKUuUVrTiIib6D3CiCB2/GtQjVZrtnDRU8b?=
- =?us-ascii?Q?MR/oxZWlsT0wrGW9dUJdwoeq8kmLLqaa/cTj8MU/wCNU3/Ait8YXYSAqjALJ?=
- =?us-ascii?Q?ta0auA7S12eNMRPP2BzThnNYJsgmjKYMVllq+1J2NCkwK3CDjcb1LtPv59ss?=
- =?us-ascii?Q?rX95CeDEiQW2DuDXuZ4uUtwh6QSvHqOxfY0s207cxd4YnjsAJvuLl0hiJ+uc?=
- =?us-ascii?Q?E041mGFdvFi8zLewWECAoLp1oQW+PoNuyP8Z0lsl8BMedAv62w=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(376014)(82310400026)(36860700013)(1800799024);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Nov 2024 03:18:52.2991
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0942ad90-4497-47ca-60e3-08dd045b1096
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	SJ1PEPF00002323.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6676
+References: <20241029172832.93963-1-tony.luck@intel.com> <20241029172832.93963-4-tony.luck@intel.com>
+ <f4845fee-3f91-4e78-a186-a7bdc58f7873@intel.com> <ZzUvA2XE01U25A38@agluck-desk3>
+In-Reply-To: <ZzUvA2XE01U25A38@agluck-desk3>
+From: Peter Newman <peternewman@google.com>
+Date: Thu, 14 Nov 2024 11:31:25 +0100
+Message-ID: <CALPaoCi94amaO4ALGhLPn=zWEJ3STJWyYid4L+kMjXYf9wKqAQ@mail.gmail.com>
+Subject: Re: [PATCH v8 3/7] x86/resctrl: Refactor mbm_update()
+To: Tony Luck <tony.luck@intel.com>
+Cc: Reinette Chatre <reinette.chatre@intel.com>, Fenghua Yu <fenghua.yu@intel.com>, 
+	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, x86@kernel.org, 
+	James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, 
+	Babu Moger <babu.moger@amd.com>, Randy Dunlap <rdunlap@infradead.org>, 
+	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>, linux-kernel@vger.kernel.org, 
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 14, 2024 at 11:13:00AM +0800, Yi Liu wrote:
-> On 2024/11/14 08:18, Nicolin Chen wrote:
-> > On Tue, Nov 12, 2024 at 09:15:02PM +0800, Yi Liu wrote:
-> > > On 2024/11/6 04:04, Nicolin Chen wrote:
-> > > > +5. IOMMUFD_OBJ_VIOMMU can be only manually created via the IOMMU_VIOMMU_ALLOC
-> > > > +   uAPI, provided a dev_id (for the device's physical IOMMU to back the vIOMMU)
-> > > > +   and an hwpt_id (to associate the vIOMMU to a nesting parent HWPT_PAGING). The
-> > > > +   iommufd core will link the vIOMMU object to the struct iommu_device that the
-> > > > +   struct device is behind.
-> > > 
-> > > It looks to be reasonable to share the viommu_obj between devices behind
-> > > the same physical IOMMU. This design seems no enforcement for it. So it's
-> > > all up to userspace from what I got. :)
-> > 
-> > It enforces at the vDEVICE allocation:
-> > 	if (viommu->iommu_dev != __iommu_get_iommu_dev(idev->dev)) {
-> > 		return -EINVAL;
-> 
-> this matches the device and the viommu.
+Hi Tony,
 
-And viommu has a hard relationship with physical instance.
+On Wed, Nov 13, 2024 at 11:58=E2=80=AFPM Tony Luck <tony.luck@intel.com> wr=
+ote:
+>
+> On Wed, Nov 13, 2024 at 02:25:53PM -0800, Reinette Chatre wrote:
+> > Hi Tony,
+> >
+> > On 10/29/24 10:28 AM, Tony Luck wrote:
+> > > Computing memory bandwidth for all enabled events resulted in
+> > > identical code blocks for total and local bandwidth in mbm_update().
+> > >
+> > > Refactor with a helper function to eliminate code duplication.
+> > >
+> > > No functional change.
+> > >
+> > > Signed-off-by: Tony Luck <tony.luck@intel.com>
+> > > ---
+> > >  arch/x86/kernel/cpu/resctrl/monitor.c | 69 ++++++++++---------------=
+--
+> > >  1 file changed, 24 insertions(+), 45 deletions(-)
+> > >
+> > > diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/=
+cpu/resctrl/monitor.c
+> > > index 3ef339e405c2..1b6cb3bbc008 100644
+> > > --- a/arch/x86/kernel/cpu/resctrl/monitor.c
+> > > +++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+> > > @@ -829,62 +829,41 @@ static void update_mba_bw(struct rdtgroup *rgrp=
+, struct rdt_mon_domain *dom_mbm)
+> > >     resctrl_arch_update_one(r_mba, dom_mba, closid, CDP_NONE, new_msr=
+_val);
+> > >  }
+> > >
+> > > -static void mbm_update(struct rdt_resource *r, struct rdt_mon_domain=
+ *d,
+> > > -                  u32 closid, u32 rmid)
+> > > +static void mbm_update_one_event(struct rdt_resource *r, struct rdt_=
+mon_domain *d,
+> > > +                            u32 closid, u32 rmid, enum resctrl_event=
+_id evtid)
+> > >  {
+> > >     struct rmid_read rr =3D {0};
+> > >
+> > >     rr.r =3D r;
+> > >     rr.d =3D d;
+> > > +   rr.evtid =3D evtid;
+> > > +   rr.arch_mon_ctx =3D resctrl_arch_mon_ctx_alloc(rr.r, rr.evtid);
+> > > +   if (IS_ERR(rr.arch_mon_ctx)) {
+> > > +           pr_warn_ratelimited("Failed to allocate monitor context: =
+%ld",
+> > > +                               PTR_ERR(rr.arch_mon_ctx));
+> > > +           return;
+> > > +   }
+> > > +
+> > > +   __mon_event_count(closid, rmid, &rr);
+> > > +
+> > > +   if (is_mba_sc(NULL))
+> > > +           mbm_bw_count(closid, rmid, &rr);
+> > > +
+> >
+> > As I am staring at this more there seems to be an existing issue here .=
+.. note how
+> > __mon_event_count()'s return value is not checked before mbm_bw_count()=
+ is called.
+> > This means that mbm_bw_count() may run with rr.val of 0 that results in=
+ wraparound
+> > inside it resulting in some unexpected bandwidth numbers. Since a count=
+er read can fail
+> > with a "Unavailable"/"Error" from hardware it is not deterministic how =
+frequently this
+> > issue can be encountered.
+> >
+> > Skipping mbm_bw_count() if rr.val is 0 is one option ... that would kee=
+p the bandwidth
+> > measurement static at whatever was the last successful read and thus no=
+t cause dramatic
+> > changes by the software controller ... setting bandwidth to 0 if rr.val=
+ is 0 is another
+> > option to reflect that bandwidth data is unavailable, but then the soft=
+ware controller should
+> > perhaps get signal to not make adjustments? I expect there are better o=
+ptions? What do
+> > you think?
+>
+> Skipping mbm_bw_count() is also undesirable. If some later
+> __mon_event_count() does succeed the bandwidth will be computed
+> based on the last and current values as if they were one second
+> apart, when actually some longer interval elapsed.
+>
+> I don't think this is a big issue for current Intel CPU RDT
+> implementations because I don't think they will return the
+> bit 62 unavailable value in the IA32_QM_CTR MSR. I'll ask
+> around to check.
+>
+> But it does mean that implementing the "summary bandwidth"
+> file discussed in the other e-mail thread[1] may be more
+> complex on systems that can return that a counter is
+> unavailable. We'd have to keep track that two succesful
+> counter reads occured, with a measure of the interval
+> between them before reporting a value in the summary file.
 
-> > 
-> > Yet, assuming you are referring to creating two vIOMMUs per VM for
-> > two devices behind the same IOMMU (?), there is no enforcement..
-> 
-> right, but not limited to two vIOMMUs as the viommu_obj is not instanced
-> per vIOMMUs.
+At least for the purposes of reporting the mbps rate to userspace, my
+users will record from the files one per second, so it would be fine
+to just report Unavailable (or Unassigned when it's clear that the
+error is because counter wasn't unassigned) whenever either the
+current or previous reading was not successful. Then they can assume
+the value or error reported always refers to the most
+recently-completed one-second window.
 
-It doesn't make a lot of sense to create two. But it doesn't seem
-to be something that we can limit here. VMM can create the first
-vIOMMU using the first device and create the second vIOMMU using
-the second device, though both devices are behind the same IOMMU
-and passed to the same VM. Thing is that kernel doesn't know if
-they are passed to the same VM.
-
-> > The suggested way for VMM, just like two devices sharing the same
-> > s2 parent hwpt, is to share the vIOMMU object.
-> 
-> so the user would try to create vDevices with a given viommu_obj until
-> failure, then it would allocate another viommu_obj for the failed device.
-> is it? sounds reasonable.
-
-Yes. It is the same as previously dealing with a nesting parent:
-test and allocate if fails. The virtual IOMMU driver in VMM can
-keep a list of the vIOMMU objects for each device to test.
-
-Thanks
-Nic
+-Peter
