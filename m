@@ -1,106 +1,165 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2085.outbound.protection.outlook.com [40.107.223.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1549219EB
-	for <patches@lists.linux.dev>; Thu, 14 Nov 2024 00:17:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731543446; cv=none; b=gJqLxZNGC3OcTGtHNo8+pKFtwi18aY8P5/0sMVTlIPe0EkVfaAnKcE0NSHbwRi1dUA0K/kv582iXBv5whUffG8EMHZqVCrgcSH0kUWfGHDhh2IpjAttkqUV19plEqIm6W2c9s7IXoUAnkX7cDG6PvRtPpo9LJ7bcz1s0rUfvpoU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731543446; c=relaxed/simple;
-	bh=l+muwJjd4b/MMagbFBq0iDX4dVxLpcndlyRlD39vk0s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jIcdRjO4XYBUwN6sqVM/dAoEU7ujzzzK/TClofIE1heyqbZbCMiEDaYmzqvMzAhX/eqChJh+E3A0WYF/hz99MHRQQDKIH1UwChEEnJPYL/SQUjHX6eMB+7Fq2ToNxkat73+D19hOqZ5wTgsUH9TpCI9bgRqPBe3X/tWa+aEX7Bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Qa7E6fhQ; arc=none smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562F6A94A;
+	Thu, 14 Nov 2024 00:19:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.85
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1731543555; cv=fail; b=eMpWhs3Puq+vr0fMAh+/He1672j+SaljMYwbNPOaYj7Xzk9lD7olAffAyWW34mVjJHNTwc2Gshqc+ZGk0PLYjML4EDTiwD6Rdi/9rQ1Gi0wuR/f0qoM/datb5I+MfQArTpeZZm5MtFRokP5r0LjsCqU0wNiZ9P9zaLfgfVKfrK0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1731543555; c=relaxed/simple;
+	bh=lgwc3P7HtsYYLOmU8NGXUH4ItZ8R2/Pf7maJpIPjxiM=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pywcq7VdN4TPX+bg81aeNJC7MoGuy6RpG53H199PBtJ//fIHakYjdW/VRi182sUskjBoasBTQbo8LtSBSUdgLGR0N6dlnxVnrVjC0G1Yxf25o+1ZHphIBSrW/Q1MGb8ZRvj8kQUyVdKiS4gc+xB7sdEViNldb4cznhIGA6tpLm8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=tyIKgADQ; arc=fail smtp.client-ip=40.107.223.85
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Qa7E6fhQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1731543444; x=1763079444;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=l+muwJjd4b/MMagbFBq0iDX4dVxLpcndlyRlD39vk0s=;
-  b=Qa7E6fhQUxwsHXyoEnvqiHms9EBgOFzT5xApDoCmsxCuA9Vu4Jm/WIPk
-   J02jO5Llp/rjKeu5CF45JbtX5A6oo8W3dWdJZu4Ut3k6yDmsi+mzFaYFF
-   Lqt1ZkkYYucDoTiXG1EWYYFbM7orXHzgBJPXMseXiWil3mRMc/eUr7xkN
-   hYC/fuG9emwm7ozVu5q+4BmnHWXWWc4a1FByjCLStCXGEF+CWb1L2HgxR
-   J5lD4fxpeg5bnJarIsL6Lac9U/oM7dqFct2dC7Qeq9XsmQyIAf8LLKFIX
-   qezrvnv6phblP1+y1netjACl/QWwLhkpvZolzBPZWzXoebIJKjvUG7oxo
-   Q==;
-X-CSE-ConnectionGUID: jBzI7Z3DQk28U5jPIEAPGg==
-X-CSE-MsgGUID: VIwD2+4/SgOMCqBEjDRHMQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11255"; a="30869541"
-X-IronPort-AV: E=Sophos;i="6.12,152,1728975600"; 
-   d="scan'208";a="30869541"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2024 16:17:19 -0800
-X-CSE-ConnectionGUID: khuRkRx+Qm6mbRfwLv0nGg==
-X-CSE-MsgGUID: QVZiBJ/cRIWtxagvcsXg7A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,152,1728975600"; 
-   d="scan'208";a="92081175"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.70])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2024 16:17:19 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	x86@kernel.org
-Cc: James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Shaopeng Tan (Fujitsu)" <tan.shaopeng@fujitsu.com>,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v9 9/9] x86/resctrl: Document the new "mba_MBps_event" file
-Date: Wed, 13 Nov 2024 16:17:11 -0800
-Message-ID: <20241114001712.80315-10-tony.luck@intel.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241114001712.80315-1-tony.luck@intel.com>
-References: <20241114001712.80315-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="tyIKgADQ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=FQKVknVr3WrGIA+mlES2wD0XQI6bnJK0diqbd6areQvfS/qasudXdzvMSjVqS/nasTZEH/HLxzJsjzY0yq+BPDdhCSCKwJ7hsqn0FB655znk6am1r7oQGeNPW3+nDKK+EKbfOncl+iabc5J4MAp/+iYltYxE4m1iemmhEuE2fkSaejH95sUvcZXjhcDZhpHXwcsD5JsM/Pzhr7BF8ho7rEoY04ycweH94ObqK8HLqxzFUBnOGBROGNsvRSlDwwsSfirQGEbgeEoCCyJUTRIqBX6a7h+h5H/A3vguYE0ak2xwlcBaCXaZKBYhWz+yFYICI1ZVvm3/yxqMBgTt0pEPdw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dExGh8cOnMXtY8SKMGXZZfSo74w6NHsY15goafFjvB8=;
+ b=Es5nVLsA6A46GYMFXxujOFT0PQb0Uft0UHB5lj9yfHtQBJAF8IdNTAjS30Rph6hOoVmzzJiO0mYxwe+MA0RXLhvI3M496u62ii4WJc5sxrnnlj0RrgIvO7gkmQBPS1fqLbdS8sNBbzGKHzDUr4vzRzDvWYQq5H7cWbVDfW7LXwwzu8uZIGcRehDf631IqcNsWghROSipEhs2s4/uc4QCKhirRhIyENW7hCbSseQnFfXb/NIziq4WmiALFSs4geoqU7V+iAfitMU6xY0Da1iy3mve+mkLxgVyJo9YOVC9ACeRe1geumQKA2ZbzwsANBMYg0AthgVVS0W7O9HK/3kK1Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dExGh8cOnMXtY8SKMGXZZfSo74w6NHsY15goafFjvB8=;
+ b=tyIKgADQFRq0kw2Fj2DfpjV2hS9wghMRrizz1vFvcvJCeRq5fCzSQ1UcYShSc2HWlhNQFfHt3mq3XX3ybFy8QCoQv1m/L7eCTZwJDuleRDSwrWqNATSFVBiQCw+7Knw1ZZSnJINHFeF9iLaxsJZLmZTn768CmDfpKuHhiCVM7svr7qplbOkNbtGeXMUnoR3ej4Q3zoPYKM0niPPwVegyG5DyeAMx1uvGgnFI1rtPdim2LOREm9ShXVsucBJPLDhYOzlEjCwxtJPTlV58pM0sQ1kZnBEKAEpXnWeZ5kTpWCZkMMw6vEh6obdAcbOXCBBpX5eP0j9ID22ry8ioXZbbtw==
+Received: from SJ0PR13CA0106.namprd13.prod.outlook.com (2603:10b6:a03:2c5::21)
+ by CY5PR12MB6384.namprd12.prod.outlook.com (2603:10b6:930:3c::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.29; Thu, 14 Nov
+ 2024 00:19:08 +0000
+Received: from SJ5PEPF000001EF.namprd05.prod.outlook.com
+ (2603:10b6:a03:2c5:cafe::43) by SJ0PR13CA0106.outlook.office365.com
+ (2603:10b6:a03:2c5::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.15 via Frontend
+ Transport; Thu, 14 Nov 2024 00:19:07 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SJ5PEPF000001EF.mail.protection.outlook.com (10.167.242.203) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8158.14 via Frontend Transport; Thu, 14 Nov 2024 00:19:07 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 13 Nov
+ 2024 16:18:56 -0800
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 13 Nov
+ 2024 16:18:56 -0800
+Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Wed, 13 Nov 2024 16:18:54 -0800
+Date: Wed, 13 Nov 2024 16:18:52 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Yi Liu <yi.l.liu@intel.com>
+CC: <jgg@nvidia.com>, <kevin.tian@intel.com>, <corbet@lwn.net>,
+	<joro@8bytes.org>, <suravee.suthikulpanit@amd.com>, <will@kernel.org>,
+	<robin.murphy@arm.com>, <dwmw2@infradead.org>, <shuah@kernel.org>,
+	<iommu@lists.linux.dev>, <linux-doc@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-kselftest@vger.kernel.org>,
+	<baolu.lu@linux.intel.com>, <eric.auger@redhat.com>,
+	<jean-philippe@linaro.org>, <mdf@kernel.org>, <mshavit@google.com>,
+	<shameerali.kolothum.thodi@huawei.com>, <smostafa@google.com>, <aik@amd.com>,
+	<zhangfei.gao@linaro.org>, <patches@lists.linux.dev>
+Subject: Re: [PATCH v7 13/13] Documentation: userspace-api: iommufd: Update
+ vIOMMU
+Message-ID: <ZzVB7Fun48rGztuV@Asurada-Nvidia>
+References: <cover.1730836219.git.nicolinc@nvidia.com>
+ <7e4302064e0d02137c1b1e139342affc0485ed3f.1730836219.git.nicolinc@nvidia.com>
+ <f0c45d5b-b8cd-4f75-a9d7-21808f18583d@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <f0c45d5b-b8cd-4f75-a9d7-21808f18583d@intel.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001EF:EE_|CY5PR12MB6384:EE_
+X-MS-Office365-Filtering-Correlation-Id: 359a2546-aa95-4d21-9bad-08dd0441f480
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|1800799024|82310400026|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?7MvYgh4ek0g/Hn+//HNO8olkYKB6+BcNiMtwKHvVM9lep4RTX7qe8c+lZtAp?=
+ =?us-ascii?Q?LZWL1sXQQPW1GjXW8nBOm0hHmYVDniLPfihTMHFDwToFPYzkMxT/5ZlyXnjs?=
+ =?us-ascii?Q?cfLHI7OlE2j3gJAkPvyyA0mjMVMoEVpvGLmnQXTyhoMWasEeyArSta41zMLe?=
+ =?us-ascii?Q?e3r/uDUKM5l5uG05waGHixHLvOXexbXpDpkznQZomxGs4eq8cghXrgskOEO4?=
+ =?us-ascii?Q?GlFGuhLqKoiqpfh1o75HBgBfoWh4Rd2clRJ853uRsHhDzf4PlVugfB8TXuV6?=
+ =?us-ascii?Q?leHrTpikhFUfJXqyUSAqr+eaWKIGq+bMtqZjANywxlwPI2D8qOPy5hleI+Ct?=
+ =?us-ascii?Q?rNlWik/SDXNROU5I+qPbsZb+dOR50Xv34pnF7ZEzzfqn2iz8uMojR9lwThvu?=
+ =?us-ascii?Q?bHq/J1USrTiXCLMw+/Q+Q3uWagCHBQKQvWqhI7XkKLykNz9JbquZB1UQ9xHZ?=
+ =?us-ascii?Q?LCe/nzbAneGQYmeUv3Bv8VJV2rhYoh99ZAIx9GRLDBW+zgmJ8F1pl4RwaQSS?=
+ =?us-ascii?Q?DmzFv5/4nK2u1OrBdXOHqsk22126wlLqwQoB0Ri5yFL6IqSRk9g2ccpgGCIt?=
+ =?us-ascii?Q?jsQsP6uq9GczJXbjjg2cADwwz98+2Tzh3BYtOintXkIUlqzTJhQtz2zsQyrQ?=
+ =?us-ascii?Q?4WhMTbYWTYpvUaKq5xRfHYAvU6FYoKaJgW4UVJcZx6Xyh+2eGrdiQZcj9Ts9?=
+ =?us-ascii?Q?xSt0my3h0f0YfmvOfnDafcANGo9u7Xf2Kqk4uHwfJ4Xhx9OQ/foChURF1HAh?=
+ =?us-ascii?Q?6Rq0e5sPUyug9GxEgQuSjNJUFh7SxDLx0zWgGzUyNtkMJ2+G5PNag/bHd7PQ?=
+ =?us-ascii?Q?3wDylDvdOx2DFvMOzHdlAsdXZYPm07SdQCLPUzM5zsHh1q4RT8Ak/vyqH6Oj?=
+ =?us-ascii?Q?7K76oCHOrv4FXx0Atu0IOGvYblIOiGn8hXSOMs+T3U10sV4Ac/gB0XLWOB/l?=
+ =?us-ascii?Q?UEMxLHoLFaWi3zy9AdIMAmJ2vj1eAogW/dLU/rta6MHsvkLgFTg71OIJnq5I?=
+ =?us-ascii?Q?BMw4Kecc37/DoGmSooTRffl+AgoCptyJmEhXk2ZYRhW0zfgJ2RwpdkWQ4+Gc?=
+ =?us-ascii?Q?US16xey9cSQdC9MG0tUoSg3wzFL1P5nLrAObB4CvRvObmFMae689hWCKYiVk?=
+ =?us-ascii?Q?BoEuRBoNdG6RJc8VYThpSzIaKH/4eD5zgHnIG9pmQyTJrcjrhMzE8860dyIf?=
+ =?us-ascii?Q?NSh25wfRaI7fIfMxl4jQPJsynihg5AwSBSslN0OnCGZkKiAGsU9mFm/7shYc?=
+ =?us-ascii?Q?I/bEzq0qeHg0BPWvtq+EAIiO2Fuqzk3ZouCW66XqYINiB+grRcDugOUkhku/?=
+ =?us-ascii?Q?1bo5ypy8Llk25hty3e6j7JIJpx+9DBFLg/b83EvRazc6/8ymr8GlZCPhwQ9U?=
+ =?us-ascii?Q?usiLQqAwLSQSqxmElv22jaZicURfKxzYcEXbWb79RtU39Q/cuQ=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(82310400026)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Nov 2024 00:19:07.7620
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 359a2546-aa95-4d21-9bad-08dd0441f480
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ5PEPF000001EF.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6384
 
-Add a section to document a new read/write file that shows/sets the memory
-bandwidth event used to control bandwidth used by each ctrl_mon group.
+On Tue, Nov 12, 2024 at 09:15:02PM +0800, Yi Liu wrote:
+> On 2024/11/6 04:04, Nicolin Chen wrote:
+> > +5. IOMMUFD_OBJ_VIOMMU can be only manually created via the IOMMU_VIOMMU_ALLOC
+> > +   uAPI, provided a dev_id (for the device's physical IOMMU to back the vIOMMU)
+> > +   and an hwpt_id (to associate the vIOMMU to a nesting parent HWPT_PAGING). The
+> > +   iommufd core will link the vIOMMU object to the struct iommu_device that the
+> > +   struct device is behind.
+> 
+> It looks to be reasonable to share the viommu_obj between devices behind
+> the same physical IOMMU. This design seems no enforcement for it. So it's
+> all up to userspace from what I got. :)
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- Documentation/arch/x86/resctrl.rst | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+It enforces at the vDEVICE allocation:
+	if (viommu->iommu_dev != __iommu_get_iommu_dev(idev->dev)) {
+		return -EINVAL;
 
-diff --git a/Documentation/arch/x86/resctrl.rst b/Documentation/arch/x86/resctrl.rst
-index a824affd741d..6768fc1fad16 100644
---- a/Documentation/arch/x86/resctrl.rst
-+++ b/Documentation/arch/x86/resctrl.rst
-@@ -384,6 +384,16 @@ When monitoring is enabled all MON groups will also contain:
- 	Available only with debug option. The identifier used by hardware
- 	for the monitor group. On x86 this is the RMID.
- 
-+When the "mba_MBps" mount option is used all CTRL_MON groups will also contain:
-+
-+"mba_MBps_event":
-+	Reading this file shows which memory bandwidth event is used
-+	as input to the software feedback loop that keeps memory bandwidth
-+	below the value specified in the schemata file. Writing the
-+	name of one of the supported memory bandwidth events found in
-+	/sys/fs/resctrl/info/L3_MON/mon_features changes the input
-+	event.
-+
- Resource allocation rules
- -------------------------
- 
--- 
-2.47.0
+Yet, assuming you are referring to creating two vIOMMUs per VM for
+two devices behind the same IOMMU (?), there is no enforcement..
 
+The suggested way for VMM, just like two devices sharing the same
+s2 parent hwpt, is to share the vIOMMU object.
+
+Thanks
+Nic
