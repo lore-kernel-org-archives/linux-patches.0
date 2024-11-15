@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8853126C17;
-	Fri, 15 Nov 2024 06:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A723118734F;
+	Fri, 15 Nov 2024 06:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731652910; cv=none; b=l6oZWbS5mMQNQFnqyx0omEeKwIi6+kDA48J9r+kmgWCEyjrFga/1JIrmAsV35Uf1X35rPcGw8mCNLfPaRHlGbqXY4SZqFiMVRlmfwJgRVVxs8/tg3JvC68RoaUykh1Vo9cQ/kgI90dkrBqAe/kP8GekZ5p3q1SNf6c1QlWaDwbI=
+	t=1731652914; cv=none; b=CEGMyR8anSZ2byl3sxpdEtUD42dgnIi6+Um5aoHHKmr1rek9g8WeEZ+XWr8AwxriZRBTCtP0OU/2Ykumf0Zy0kG2H6l3DPm2C6eUkZgDl6JbeJhsgRcuwj2L4LonPbwx6bDpbdlQd7N38eapMuuf/XzoUnnWsF9LkGm5jslu30w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731652910; c=relaxed/simple;
-	bh=ku3irCk5P5o46Zzwz/XsR4dpXva/uzBiZXmbD1gjm5E=;
+	s=arc-20240116; t=1731652914; c=relaxed/simple;
+	bh=O76tXtpSTBjVzy6z54UwJZSdE16b6UORa0orm714Esk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EPwKLSohyiwRyTFi0amiFiqPKsTD0VaSIxhMYaFgqVUMEP5ds2QJazRFTsEAwKvNvt3XH0AovuH4NMa52cav4nGxqJDS8Pxb5kzC/pKyIn93HwD5aVKHbIvEdBDJGA1P1XSbD6vtKGdqu6i0ANU7AOsugXQtY0wA9ZNGBuVXi/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+Y1cji3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mbIAw1vITRtS2CklKnKf2gcMjr021vyt/8uC44dxV6BdZK+EfhNlYNV3+zznwHC3z2FyrORj4yA2XHo3vQ/Wz8O958yTRS5waEtYHPBWRVIsLzlwtd2kJjPtXGwbfL84pkIW/lTsn6oqY8FXZ+YeVztI4qfOaMS6Vvo9ygcCJg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gyOdsUdy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+Y1cji3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4429EC4CECF;
-	Fri, 15 Nov 2024 06:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyOdsUdy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A797C4CECF;
+	Fri, 15 Nov 2024 06:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731652910;
-	bh=ku3irCk5P5o46Zzwz/XsR4dpXva/uzBiZXmbD1gjm5E=;
+	s=korg; t=1731652914;
+	bh=O76tXtpSTBjVzy6z54UwJZSdE16b6UORa0orm714Esk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U+Y1cji3s63Cd/Vv1Ans3yATQQP/k2FLzq45mPQyz5oP/FaD5dnTU6fYEdO7PtUYh
-	 2sqPcgexJ6C7tYxW1DzrVpg816OeHWXGklTUkRXiqQ+gygyHhPGmHs4x072FgeP7E8
-	 N+/Vjf9vWfqcc+b8cVwOgridgr8nUOpbSU1srn74=
+	b=gyOdsUdycVU4rTU1kDAiHxXCzK/dzyAmzivclNdpIBX5VZ6Efkz22kyUHCLyjbFYo
+	 wU9xMvJ5vyCric/cslkcdguBd8hRGc9EuWUNffTStJvCTdj56iEef3+p28bimvEjnn
+	 kFM9Nq0MhF6KrRTMzltq6ZqXpJp+qdEPtxDBmBy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Reinhard Speyerer <rspmn@arcor.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 51/52] net: usb: qmi_wwan: add Fibocom FG132 0x0112 composition
-Date: Fri, 15 Nov 2024 07:38:04 +0100
-Message-ID: <20241115063724.694032328@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 4.19 34/52] USB: serial: option: add Fibocom FG132 0x0112 composition
+Date: Fri, 15 Nov 2024 07:37:47 +0100
+Message-ID: <20241115063724.089073902@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.845867306@linuxfoundation.org>
 References: <20241115063722.845867306@linuxfoundation.org>
@@ -53,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Reinhard Speyerer <rspmn@arcor.de>
 
-[ Upstream commit 64761c980cbf71fb7a532a8c7299907ea972a88c ]
+commit 393c74ccbd847bacf18865a01b422586fc7341cf upstream.
 
 Add Fibocom FG132 0x0112 composition:
 
@@ -80,28 +79,24 @@ E:  Ad=86(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
 E:  Ad=04(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
 
 Signed-off-by: Reinhard Speyerer <rspmn@arcor.de>
-
-Link: https://patch.msgid.link/ZxLKp5YZDy-OM0-e@arcor.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index bbd5183e5e635..57ccbc8a6c059 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1385,6 +1385,7 @@ static const struct usb_device_id products[] = {
- 	{QMI_FIXED_INTF(0x2c7c, 0x0296, 4)},	/* Quectel BG96 */
- 	{QMI_QUIRK_SET_DTR(0x2c7c, 0x030e, 4)},	/* Quectel EM05GV2 */
- 	{QMI_QUIRK_SET_DTR(0x2cb7, 0x0104, 4)},	/* Fibocom NL678 series */
-+	{QMI_QUIRK_SET_DTR(0x2cb7, 0x0112, 0)},	/* Fibocom FG132 */
- 	{QMI_FIXED_INTF(0x0489, 0xe0b4, 0)},	/* Foxconn T77W968 LTE */
- 	{QMI_FIXED_INTF(0x0489, 0xe0b5, 0)},	/* Foxconn T77W968 LTE with eSIM support*/
- 	{QMI_FIXED_INTF(0x2692, 0x9025, 4)},    /* Cellient MPL200 (rebranded Qualcomm 05c6:9025) */
--- 
-2.43.0
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2320,6 +2320,9 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0xff, 0x30) },	/* Fibocom FG150 Diag */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x010b, 0xff, 0, 0) },		/* Fibocom FG150 AT */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0111, 0xff) },			/* Fibocom FM160 (MBIM mode) */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0112, 0xff, 0xff, 0x30) },	/* Fibocom FG132 Diag */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0112, 0xff, 0xff, 0x40) },	/* Fibocom FG132 AT */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2cb7, 0x0112, 0xff, 0, 0) },		/* Fibocom FG132 NMEA */
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x0115, 0xff),			/* Fibocom FM135 (laptop MBIM) */
+ 	  .driver_info = RSVD(5) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x2cb7, 0x01a0, 0xff) },			/* Fibocom NL668-AM/NL652-EU (laptop MBIM) */
 
 
