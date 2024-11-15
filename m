@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CE015FD13;
-	Fri, 15 Nov 2024 06:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8701A15FD13;
+	Fri, 15 Nov 2024 06:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653847; cv=none; b=p5d3rDKwKmWBeCvL2BnlIBlX5MZszH/b4WVDtEep4oOEe+mKuplBijeplKvpRby8yc+ZnG2PznYNMmkgeooLrGZ8DAwBacnIMLN3toE9s/bHo0G5ksCBfVcq+XmcucFOaapjPclYkpwBJVP+fwx0dcc+2nkyuap4G3P34R3s7cU=
+	t=1731653850; cv=none; b=Xsld0+hehwk/OTOzVyNoIHA7+4RMhrvaTisSJVn3KKCaJgwCl4GpazJPpsRJ6k3ZhZVdEg4QsJLYVuqCm2xvT8GLE0eMW9X0cO+LDLz4Xpm354M7PsWNRNt0X3oOtChpIr+qFB0VHlxbx//HgByOm3hTdg+zy6dwPhMrj1o37rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653847; c=relaxed/simple;
-	bh=m2ef4UXVm2eUy+ko6wTqrot0ZiwUnvR73Q1o/PEKghE=;
+	s=arc-20240116; t=1731653850; c=relaxed/simple;
+	bh=RReTftOboVnllijtIXlU76jQJeInO9ZVPdkZ70sIMCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kMan3c5lcWToZzHl2XzbnTyjYhDqVFK63q+kjoXSfR4SVfH12DfA2SW72F8uRFZQ5dbdN9R+I0f01d11W6ybfCvlUl8aLekFj+F0Gd1h8uQx1biPoIPeEvYyTRD7/Zy7I2VxVaInejKVWhnpOjz3luPUFuiLkgbgSyP/QK2GEac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkhu0+bv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tbB+XBPROYWmvOKHLGqJ51jIikOqDHAuNtP9+O5kYBab/RP8YQzaAW7MZQmTBfQ/zMQPkWOVzLFr7hf94q2befQ41rwd/nUOmpsBLU5vy84ZCtunqDsK4i8mTV2Hu6dD4ndMqr8s8pGEiLwEACOeKH2AhaG76c+DOaweo2DEAaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWHCvxxN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkhu0+bv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38A8FC4CECF;
-	Fri, 15 Nov 2024 06:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWHCvxxN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F231EC4CED0;
+	Fri, 15 Nov 2024 06:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653846;
-	bh=m2ef4UXVm2eUy+ko6wTqrot0ZiwUnvR73Q1o/PEKghE=;
+	s=korg; t=1731653850;
+	bh=RReTftOboVnllijtIXlU76jQJeInO9ZVPdkZ70sIMCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkhu0+bv4f3MVE63sdI1HY1jCl7Q+i5AqwOtGqMApCfsadQIMhV2RiHSlVEtN6eNC
-	 9qIcM8uqM7oER2s9aJM3Y/UiE2Z8kx5D/NWpicFad0h9pKLUIjanbfxMRPm9J8tbOv
-	 9uIylIC8XwXpGcKFwEC2XqKphseqEr45VQrvAHPI=
+	b=HWHCvxxNgzZ0waRftEivJmiOTWIctdFxP4/qef7JO81TL/awmDq6W/yUvHzYpCvMH
+	 QiSsC/G+bo5IeVlUU2S1OxFJ/QVIXc0JqmWCji1u+koprQ2Ee9BgNLqIB0Dfkdpmco
+	 N6qFlNXzsOD4rRnzeNPZXsPf1vJjUpu25u/8c3Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Riccardo Mancini <rickyman7@gmail.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Leo Yan <leo.yan@linaro.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>
-Subject: [PATCH 5.10 52/82] perf session: Add missing evlist__delete when deleting a session
-Date: Fri, 15 Nov 2024 07:38:29 +0100
-Message-ID: <20241115063727.435598002@linuxfoundation.org>
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Abdelkareem Abdelsaamad <kareemem@amazon.com>
+Subject: [PATCH 5.10 53/82] net: do not delay dst_entries_add() in dst_release()
+Date: Fri, 15 Nov 2024 07:38:30 +0100
+Message-ID: <20241115063727.471930745@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -60,142 +55,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Riccardo Mancini <rickyman7@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit cf96b8e45a9bf74d2a6f1e1f88a41b10e9357c6b upstream.
+commit ac888d58869bb99753e7652be19a151df9ecb35d upstream.
 
-ASan reports a memory leak caused by evlist not being deleted on exit in
-perf-report, perf-script and perf-data.
-The problem is caused by evlist->session not being deleted, which is
-allocated in perf_session__read_header, called in perf_session__new if
-perf_data is in read mode.
-In case of write mode, the session->evlist is filled by the caller.
-This patch solves the problem by calling evlist__delete in
-perf_session__delete if perf_data is in read mode.
+dst_entries_add() uses per-cpu data that might be freed at netns
+dismantle from ip6_route_net_exit() calling dst_entries_destroy()
 
-Changes in v2:
- - call evlist__delete from within perf_session__delete
+Before ip6_route_net_exit() can be called, we release all
+the dsts associated with this netns, via calls to dst_release(),
+which waits an rcu grace period before calling dst_destroy()
 
-v1: https://lore.kernel.org/lkml/20210621234317.235545-1-rickyman7@gmail.com/
+dst_entries_add() use in dst_destroy() is racy, because
+dst_entries_destroy() could have been called already.
 
-ASan report follows:
+Decrementing the number of dsts must happen sooner.
 
-$ ./perf script report flamegraph
-=================================================================
-==227640==ERROR: LeakSanitizer: detected memory leaks
+Notes:
 
-<SNIP unrelated>
+1) in CONFIG_XFRM case, dst_destroy() can call
+   dst_release_immediate(child), this might also cause UAF
+   if the child does not have DST_NOCOUNT set.
+   IPSEC maintainers might take a look and see how to address this.
 
-Indirect leak of 2704 byte(s) in 1 object(s) allocated from:
-    #0 0x4f4137 in calloc (/home/user/linux/tools/perf/perf+0x4f4137)
-    #1 0xbe3d56 in zalloc /home/user/linux/tools/lib/perf/../../lib/zalloc.c:8:9
-    #2 0x7f999e in evlist__new /home/user/linux/tools/perf/util/evlist.c:77:26
-    #3 0x8ad938 in perf_session__read_header /home/user/linux/tools/perf/util/header.c:3797:20
-    #4 0x8ec714 in perf_session__open /home/user/linux/tools/perf/util/session.c:109:6
-    #5 0x8ebe83 in perf_session__new /home/user/linux/tools/perf/util/session.c:213:10
-    #6 0x60c6de in cmd_script /home/user/linux/tools/perf/builtin-script.c:3856:12
-    #7 0x7b2930 in run_builtin /home/user/linux/tools/perf/perf.c:313:11
-    #8 0x7b120f in handle_internal_command /home/user/linux/tools/perf/perf.c:365:8
-    #9 0x7b2493 in run_argv /home/user/linux/tools/perf/perf.c:409:2
-    #10 0x7b0c89 in main /home/user/linux/tools/perf/perf.c:539:3
-    #11 0x7f5260654b74  (/lib64/libc.so.6+0x27b74)
+2) There is also discussion about removing this count of dst,
+   which might happen in future kernels.
 
-Indirect leak of 568 byte(s) in 1 object(s) allocated from:
-    #0 0x4f4137 in calloc (/home/user/linux/tools/perf/perf+0x4f4137)
-    #1 0xbe3d56 in zalloc /home/user/linux/tools/lib/perf/../../lib/zalloc.c:8:9
-    #2 0x80ce88 in evsel__new_idx /home/user/linux/tools/perf/util/evsel.c:268:24
-    #3 0x8aed93 in evsel__new /home/user/linux/tools/perf/util/evsel.h:210:9
-    #4 0x8ae07e in perf_session__read_header /home/user/linux/tools/perf/util/header.c:3853:11
-    #5 0x8ec714 in perf_session__open /home/user/linux/tools/perf/util/session.c:109:6
-    #6 0x8ebe83 in perf_session__new /home/user/linux/tools/perf/util/session.c:213:10
-    #7 0x60c6de in cmd_script /home/user/linux/tools/perf/builtin-script.c:3856:12
-    #8 0x7b2930 in run_builtin /home/user/linux/tools/perf/perf.c:313:11
-    #9 0x7b120f in handle_internal_command /home/user/linux/tools/perf/perf.c:365:8
-    #10 0x7b2493 in run_argv /home/user/linux/tools/perf/perf.c:409:2
-    #11 0x7b0c89 in main /home/user/linux/tools/perf/perf.c:539:3
-    #12 0x7f5260654b74  (/lib64/libc.so.6+0x27b74)
-
-Indirect leak of 264 byte(s) in 1 object(s) allocated from:
-    #0 0x4f4137 in calloc (/home/user/linux/tools/perf/perf+0x4f4137)
-    #1 0xbe3d56 in zalloc /home/user/linux/tools/lib/perf/../../lib/zalloc.c:8:9
-    #2 0xbe3e70 in xyarray__new /home/user/linux/tools/lib/perf/xyarray.c:10:23
-    #3 0xbd7754 in perf_evsel__alloc_id /home/user/linux/tools/lib/perf/evsel.c:361:21
-    #4 0x8ae201 in perf_session__read_header /home/user/linux/tools/perf/util/header.c:3871:7
-    #5 0x8ec714 in perf_session__open /home/user/linux/tools/perf/util/session.c:109:6
-    #6 0x8ebe83 in perf_session__new /home/user/linux/tools/perf/util/session.c:213:10
-    #7 0x60c6de in cmd_script /home/user/linux/tools/perf/builtin-script.c:3856:12
-    #8 0x7b2930 in run_builtin /home/user/linux/tools/perf/perf.c:313:11
-    #9 0x7b120f in handle_internal_command /home/user/linux/tools/perf/perf.c:365:8
-    #10 0x7b2493 in run_argv /home/user/linux/tools/perf/perf.c:409:2
-    #11 0x7b0c89 in main /home/user/linux/tools/perf/perf.c:539:3
-    #12 0x7f5260654b74  (/lib64/libc.so.6+0x27b74)
-
-Indirect leak of 32 byte(s) in 1 object(s) allocated from:
-    #0 0x4f4137 in calloc (/home/user/linux/tools/perf/perf+0x4f4137)
-    #1 0xbe3d56 in zalloc /home/user/linux/tools/lib/perf/../../lib/zalloc.c:8:9
-    #2 0xbd77e0 in perf_evsel__alloc_id /home/user/linux/tools/lib/perf/evsel.c:365:14
-    #3 0x8ae201 in perf_session__read_header /home/user/linux/tools/perf/util/header.c:3871:7
-    #4 0x8ec714 in perf_session__open /home/user/linux/tools/perf/util/session.c:109:6
-    #5 0x8ebe83 in perf_session__new /home/user/linux/tools/perf/util/session.c:213:10
-    #6 0x60c6de in cmd_script /home/user/linux/tools/perf/builtin-script.c:3856:12
-    #7 0x7b2930 in run_builtin /home/user/linux/tools/perf/perf.c:313:11
-    #8 0x7b120f in handle_internal_command /home/user/linux/tools/perf/perf.c:365:8
-    #9 0x7b2493 in run_argv /home/user/linux/tools/perf/perf.c:409:2
-    #10 0x7b0c89 in main /home/user/linux/tools/perf/perf.c:539:3
-    #11 0x7f5260654b74  (/lib64/libc.so.6+0x27b74)
-
-Indirect leak of 7 byte(s) in 1 object(s) allocated from:
-    #0 0x4b8207 in strdup (/home/user/linux/tools/perf/perf+0x4b8207)
-    #1 0x8b4459 in evlist__set_event_name /home/user/linux/tools/perf/util/header.c:2292:16
-    #2 0x89d862 in process_event_desc /home/user/linux/tools/perf/util/header.c:2313:3
-    #3 0x8af319 in perf_file_section__process /home/user/linux/tools/perf/util/header.c:3651:9
-    #4 0x8aa6e9 in perf_header__process_sections /home/user/linux/tools/perf/util/header.c:3427:9
-    #5 0x8ae3e7 in perf_session__read_header /home/user/linux/tools/perf/util/header.c:3886:2
-    #6 0x8ec714 in perf_session__open /home/user/linux/tools/perf/util/session.c:109:6
-    #7 0x8ebe83 in perf_session__new /home/user/linux/tools/perf/util/session.c:213:10
-    #8 0x60c6de in cmd_script /home/user/linux/tools/perf/builtin-script.c:3856:12
-    #9 0x7b2930 in run_builtin /home/user/linux/tools/perf/perf.c:313:11
-    #10 0x7b120f in handle_internal_command /home/user/linux/tools/perf/perf.c:365:8
-    #11 0x7b2493 in run_argv /home/user/linux/tools/perf/perf.c:409:2
-    #12 0x7b0c89 in main /home/user/linux/tools/perf/perf.c:539:3
-    #13 0x7f5260654b74  (/lib64/libc.so.6+0x27b74)
-
-SUMMARY: AddressSanitizer: 3728 byte(s) leaked in 7 allocation(s).
-
-Signed-off-by: Riccardo Mancini <rickyman7@gmail.com>
-Acked-by: Ian Rogers <irogers@google.com>
-Acked-by: Jiri Olsa <jolsa@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: http://lore.kernel.org/lkml/20210624231926.212208-1-rickyman7@gmail.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: stable@vger.kernel.org # 5.10.228
-Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Fixes: f88649721268 ("ipv4: fix dst race in sk_dst_get()")
+Closes: https://lore.kernel.org/lkml/CANn89iLCCGsP7SFn9HKpvnKu96Td4KD08xf7aGtiYgZnkjaL=w@mail.gmail.com/T/
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Xin Long <lucien.xin@gmail.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Reviewed-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20241008143110.1064899-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ resolved conflict due to bc9d3a9f2afc ("net: dst: Switch to rcuref_t
+  reference counting") is not in the tree ]
+Signed-off-by: Abdelkareem Abdelsaamad <kareemem@amazon.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/session.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/core/dst.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/tools/perf/util/session.c
-+++ b/tools/perf/util/session.c
-@@ -299,8 +299,11 @@ void perf_session__delete(struct perf_se
- 	perf_session__release_decomp_events(session);
- 	perf_env__exit(&session->header.env);
- 	machines__exit(&session->machines);
--	if (session->data)
-+	if (session->data) {
-+		if (perf_data__is_read(session->data))
-+			evlist__delete(session->evlist);
- 		perf_data__close(session->data);
-+	}
- 	free(session);
+--- a/net/core/dst.c
++++ b/net/core/dst.c
+@@ -109,9 +109,6 @@ struct dst_entry *dst_destroy(struct dst
+ 		child = xdst->child;
+ 	}
+ #endif
+-	if (!(dst->flags & DST_NOCOUNT))
+-		dst_entries_add(dst->ops, -1);
+-
+ 	if (dst->ops->destroy)
+ 		dst->ops->destroy(dst);
+ 	if (dst->dev)
+@@ -162,6 +159,12 @@ void dst_dev_put(struct dst_entry *dst)
  }
+ EXPORT_SYMBOL(dst_dev_put);
  
++static void dst_count_dec(struct dst_entry *dst)
++{
++	if (!(dst->flags & DST_NOCOUNT))
++		dst_entries_add(dst->ops, -1);
++}
++
+ void dst_release(struct dst_entry *dst)
+ {
+ 	if (dst) {
+@@ -171,8 +174,10 @@ void dst_release(struct dst_entry *dst)
+ 		if (WARN_ONCE(newrefcnt < 0, "dst_release underflow"))
+ 			net_warn_ratelimited("%s: dst:%p refcnt:%d\n",
+ 					     __func__, dst, newrefcnt);
+-		if (!newrefcnt)
++		if (!newrefcnt){
++			dst_count_dec(dst);
+ 			call_rcu(&dst->rcu_head, dst_destroy_rcu);
++		}
+ 	}
+ }
+ EXPORT_SYMBOL(dst_release);
+@@ -186,8 +191,10 @@ void dst_release_immediate(struct dst_en
+ 		if (WARN_ONCE(newrefcnt < 0, "dst_release_immediate underflow"))
+ 			net_warn_ratelimited("%s: dst:%p refcnt:%d\n",
+ 					     __func__, dst, newrefcnt);
+-		if (!newrefcnt)
++		if (!newrefcnt){
++			dst_count_dec(dst);
+ 			dst_destroy(dst);
++		}
+ 	}
+ }
+ EXPORT_SYMBOL(dst_release_immediate);
 
 
