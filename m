@@ -1,117 +1,76 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BCB18B470
-	for <patches@lists.linux.dev>; Fri, 15 Nov 2024 09:07:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F7818CC08;
+	Fri, 15 Nov 2024 09:21:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731661661; cv=none; b=aCAH+ceFcD8fNQHPYC8WcPtHN0zYfwjqPGqXi75aUO/MIVKW/JU0TLTSPMMDBX2VAy1zf0H/GHH5O4i0ZO0D+VdXCkkroA10Bixz9S3rZ3lT3x+BPQE4+HDmfrw4TupsSDIGIW9qidBgjzucTzIXQd7yvcR5ufUNjcbilyqUzJ4=
+	t=1731662491; cv=none; b=R7re1ML6NF/kPQzDPyetxalLyRQSkW/i5vulRCbkZT88AuPx+Hw/HqLwudDUQYiceP8Yp5dDU+umiB/qPIZforaCWVLwwqN7vXJtCJUxZfywX3h04idJcB6dxsQEXDTT9tBfyYoFAh3ADbQU42Wm10jq9kgtmMDIa+CsPfXmoAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731661661; c=relaxed/simple;
-	bh=LX2q62WYby1zXSo+OspoR6SQ4JOEQtEGQY1uhwAGwsk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kSnDWfl3eMab/atWuv2TZZ7a3kKAmPigxRymGCFibTxE5eWOqPLprcDQD6z6FxNzLu24Z1EIzL4fyPPgj4tYzTkhlVqPIwEKWzmvt5HcC1yN6rhC+VE/9mjTSlDs0eAsRWbOBoLTZPu3SC31ujq20Zk/RuwqBw7V4U0/YFeVPk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=q9aMBp6c; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	s=arc-20240116; t=1731662491; c=relaxed/simple;
+	bh=fM8DCchYLsuUoA7lty4iGTtXrehOpHFvbvcxOtHI6vk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GSzhyyGJnClEpCCgiiEROZsvpYOyFixajcNU0sbisK6wOtSCNvdqLazLGkPqAyrVDrSQRQ0BemmjptXyYkkDnigXjtOhbVjdVVTlR6J1HnSahxJXdYAicvB9KwGce3K58Z8UczNWuZzKFquuE54LuHDs46XbkPEOmRkPb1YVGmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHTO5tZM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="q9aMBp6c"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-71e49ad46b1so1231474b3a.1
-        for <patches@lists.linux.dev>; Fri, 15 Nov 2024 01:07:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1731661658; x=1732266458; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=q/GGcDKwuNPpMFO6GIJo1U2NCmyHIGhmOInYHhaYUCk=;
-        b=q9aMBp6cye7nyVggFPg+uCYXE5I1KrIozzM1stM4BNJXjhUiCM20orczxCwyYlr3b3
-         QclZMOdAtYJfdIL4nkf4cyXYQqdt/QSOD3wJWhqjB/UxCi9mPEwfIGtxcmFpMbFKEuA4
-         XiddZAumPUAQhj7REdu/DD00wjnPjj0tkh5to1irhuC5OI9s7nxtwu/0xaCN3qLflkR8
-         QtGHxoHJnXvWnfljUKu2r70GOEI8pRB3u08nkMAkSDj38/RWjs+ojhpwcl3K22D4fdig
-         qOBZyCJfELBGQIWsYf9bY3aFDPHRmzjPKNoi7J4+kbWEULUjB5qfqI8KA2nYoWCaHZ9O
-         eojQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731661658; x=1732266458;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=q/GGcDKwuNPpMFO6GIJo1U2NCmyHIGhmOInYHhaYUCk=;
-        b=LszqzCNEH4RNj7WtQalMwudl1yeCM1buohHoADwxJq8J9070ZpNYgvkm0oZNRoqXSu
-         glvkMjFbc5Do7YDQghUoMw2jl9BYzZ2KWQHWDh1tPEZf3qB6BMU/p3ddq8kAfQxoms88
-         1dEJU+Q9No2xDMsdT2efGkuYGL/gSv/YcNc3abdRkUEkuK2ArQZjbY6Vehd0W9o5dR9Z
-         jSm4775LT/d0J6hEVHyFLD/xvLN9hnH4Urkm4W1zCX2PIGlP/xiDm2yrzxsEGHFWrU+r
-         lpO9chdPE/LJ2u98Gs40zNuYY2NV3GF0I4tb1UvZOsD5320mqpZ8prngWZCisjkOTGfr
-         ev3Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXbqvCT7I7ysRtXzy58AA1FXR0ePfijUJ/356SLtsJlwNdTtxRotXN+6OAGgJqqXtcrZssSMTXR@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy7CjPlQyEExqNr5/SMFtzhupLpoiKEYmq/jb3KF+dxJI6+Fbr0
-	UYwsWmuYy04W9d/q3cYdqDbCZzyoybQGfuu8MMETBHbi6IMLBcVgvqa2K+ldhSur4QKZr8GCHH5
-	X8ec2Y1WEpvntaQbeRLCvEVBLp1zvLJoUs0WVyg==
-X-Google-Smtp-Source: AGHT+IEipBAtaSO6qTco6CXlymxGLqUFgKpppjq1+DZHQLwOzlZTO2vDwCJPay9SltCtNZBs+tQmMU2jQDqrwF3BKco=
-X-Received: by 2002:a05:6a00:188e:b0:71d:eb7d:20d5 with SMTP id
- d2e1a72fcca58-72476b96ccbmr2943756b3a.8.1731661657842; Fri, 15 Nov 2024
- 01:07:37 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHTO5tZM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7350C4CECF;
+	Fri, 15 Nov 2024 09:21:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1731662491;
+	bh=fM8DCchYLsuUoA7lty4iGTtXrehOpHFvbvcxOtHI6vk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tHTO5tZMV9aTRFr3Tp8w3CASGzmLFJh2A5pAjWy+zsJSd4ngzvT+ukcYwH+Vz8jBK
+	 u06JpjoflXAl2/AoNFaW0N9APiPxReh8S7bc6E0E3hQ+YW08wMp1R0tdH+zuyAVT/U
+	 KI8hxlJ4BR3ELnSq1fcZlFmbWsysDhT1SkM0pUGI=
+Date: Fri, 15 Nov 2024 10:21:28 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	WANG Wenhu <wenhu.wang@vivo.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 5.4 62/66] mm: clarify a confusing comment for
+ remap_pfn_range()
+Message-ID: <2024111515-follow-falcon-ba9b@gregkh>
+References: <20241115063722.834793938@linuxfoundation.org>
+ <20241115063725.079065062@linuxfoundation.org>
+ <4537b145-3026-4203-8cc4-6a4a063f4d96@oracle.com>
+ <2024111556-exterior-catapult-9306@gregkh>
+ <003c7218-ba88-4457-9175-b6901318bc1c@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241115063722.962047137@linuxfoundation.org>
-In-Reply-To: <20241115063722.962047137@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Fri, 15 Nov 2024 18:07:27 +0900
-Message-ID: <CAKL4bV48qydBq=_LGWDHW=bYB5JPvKa=3Nwg1WZC_aU3Upf8Zw@mail.gmail.com>
-Subject: Re: [PATCH 6.6 00/48] 6.6.62-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <003c7218-ba88-4457-9175-b6901318bc1c@oracle.com>
 
-Hi Greg
+On Fri, Nov 15, 2024 at 02:03:36PM +0530, Harshvardhan Jha wrote:
+> 
+> On 15/11/24 1:58 PM, Greg Kroah-Hartman wrote:
+> > On Fri, Nov 15, 2024 at 12:30:47PM +0530, Harshvardhan Jha wrote:
+> >> Hi Greg,
+> >>
+> >> The patch series is fine but I missed one final patch of the patch
+> >> series. I'd like to send a v2 if it's possible. The series is missing
+> >> https://urldefense.com/v3/__https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=35770ca6180caa24a2b258c99a87bd437a1ee10f__;!!ACWV5N9M2RV99hQ!Jjv9Q-SraAFRWb-CchHiy6wbnrShMziEurtSW12w68rZFsd5FNRhQcNyXIoCxB3oCw2J7dFCD3VnmB-poyn9n9xKb-xjvg$ 
+> >> unfortunately which is the fix itself. These patches were required to
+> >> get a clean pick when backporting this patch but I forgot to send the
+> >> final patch itself. Sorry for the inconvenience caused.
+> > So can I just cherry-pick that one commit now?  Or just send it on and I
+> > can add it to the end of this series and do a -rc2 with it, which ever
+> > works.
+> 
+> Whatever you feel should be the easiest way forward. I have a v2 for the
+> entire series ready. I could send the entire series or simply just the
+> patch to you and you can add to the end of the series. Please let me
+> know whatever is fine by you.
 
-On Fri, Nov 15, 2024 at 3:51=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.6.62 release.
-> There are 48 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sun, 17 Nov 2024 06:37:07 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.6.62-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+I just grabbed it, no need to resend anything.
 
-6.6.62-rc1 tested.
+thanks,
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
-
-[    0.000000] Linux version 6.6.62-rc1rv
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.2.1 20240910, GNU ld (GNU
-Binutils) 2.43.0) #1 SMP PREEMPT_DYNAMIC Fri Nov 15 17:47:19 JST 2024
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+greg k-h
