@@ -1,245 +1,394 @@
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391E517555;
-	Fri, 15 Nov 2024 07:01:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731654065; cv=fail; b=ZgOED50KSShWIiEqlI1GBv/++jcbOT+q1Uq7jhYNU3zA6OaGxenwwnljLk+8P5maKyn1GctpehkQJvgatilyp5U9HGziTtkWW7pbSmtcvqxCKe72f2+NxGcreOs1uvdqy3BZfF37dJFqFVrCEJr4Iu6Xkq73XzqU5QSX7yZqv1o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731654065; c=relaxed/simple;
-	bh=0LaIV6KFxTKtkhlKL17nX5J3iH0I+vEv72kJeyjvGG4=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=G2mWOLD7h371xUw/mQg1RCG5ErJ0M0Ukyfdphr9NqxL2eJoo4jyG3AOv+Fx5dweSboqeSe793xsjljcKjpu7D8nmaILl3weWrf6GgpccRF9/N+Am7CJlcFhJc+nvdqlUlq5Xlg5Oxsst9xVMn8E1rOk64fhOdJUYzj56oA/P/qs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=I1Nx6pRx; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=Csnd/hZF; arc=fail smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCFF16EB4C
+	for <patches@lists.linux.dev>; Fri, 15 Nov 2024 08:16:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1731658607; cv=none; b=MKO0arHox6um9PILnuMTLCuo64X9EiybhTx6/Hkr4ksAls77L3cU/yohZCd/WrMagULQcMzSJrHwVm/HdrNwS6Ccb1n4O1KrVbH8mySbFQn8uiFJz0hWJyFqXAlUSPVSJ1ZMG91uXdnbC+9kjOBeuAQkt/QszblU+E4UBNj3Feg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1731658607; c=relaxed/simple;
+	bh=Y+Vqnb+ztVvpNqlKhZ8mJnKqScnAkM2qBF0AfcC8388=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZoAgfAPOORImUU5dct+e2w6QPuIf4kPEqzvZrsErY6j+WtjWoSghGQM8wOzebQx1PsbbVDQzEb6oddq0X/xsHlLh0QKN/zxOKXl6Ax7UjJf1016edNajg5tjSWGtBpuQrf2EqQRKN/dILgnmLZPr+VF5YNZVuxfpossqTrCHgXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ezACorgG; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="I1Nx6pRx";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="Csnd/hZF"
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4AF5XmUb012534;
-	Fri, 15 Nov 2024 07:00:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	corp-2023-11-20; bh=vVPonNpFxDmqJKjpRER0SkxauFgi4byZPa9CtV7VIjQ=; b=
-	I1Nx6pRx4ZAsHseZlDMJ9cX62SBgWpbtJ+ZDZ03NOqzsmssZZ4figMGWu2Q3c6zy
-	vuqCcnGqYHfADTnWhqKrSMlkP8goFxV3w4UDRZrWgJC5p5GBYp2KV4FCh3+RPTKo
-	t4G4wo701GVdIBCTjuGwwnCKcI6jcASEtCgAiXCQnB3YULpvmmaf+Je39vu6IxCm
-	MIHSo21AnesF+llrKSeddp/rnNTGX89Vl+k4oNdkKkOkBx86wRiarHgy4xkjzfak
-	xwRAJK3CdRYVTu31d2cVba4WXYTcrUzbg1jAg8wkYsp/Wj4Hqp2M4X4dD9VxS6tx
-	ZIFQN7e8GKXbRCPgOOcD2w==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 42vsp4mgwn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 15 Nov 2024 07:00:58 +0000 (GMT)
-Received: from pps.filterd (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 4AF5tYsu005652;
-	Fri, 15 Nov 2024 07:00:56 GMT
-Received: from nam02-bn1-obe.outbound.protection.outlook.com (mail-bn1nam02lp2045.outbound.protection.outlook.com [104.47.51.45])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 42sx6c9bdr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 15 Nov 2024 07:00:56 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MP8Kwj8LxsmgcDCE8PcsK/NkDE/2umBYsIAIC9l9Xu11PZCabGQ4Y8dGKyi1DuHtk7Wcwx8WAwXboFjByRzRAVFJ3H6WQ4bGcEOp0TeuZf4oLRhUUsllVy4b53hYXPl1gikiVsSVdjn9W3KhsLOjcaY5r+cC3W9NRmT2HtHsqsyTwToEqfNpUMeSQ/4iSEuAzq8Hp6fooxv7OUQOVHNGA4ziNDAOu3DzdQPCM34Yh8G45uZ9X7ow9h33kg8GZ2kJR9YtCihxd2q8yzDJovmQL4ZaRoHY+vucMxamTjcLfRxLMN0NV4R6WZKPs0HwmF9VvRZSuD/3xmL6ADAa+n5hXg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vVPonNpFxDmqJKjpRER0SkxauFgi4byZPa9CtV7VIjQ=;
- b=efWGMZCNtVn8i+ed7mwvIxVGkgFcXj+/hAm8uZXnSV1VgcNHGmVujlxY9k6tKGw8WDp5yFUOhO+3RNy9iVtZNYTk6vzxdWDeKF6hhVY9iUm+vvIVvXgrCjHl7Y9Dw8izVSigYXauB54rgq08Fz38rhUZ+3oLecbLT3rWzeg/4vD2I42b3vudSxX8Z02bN3p6tbXRlX16p9z2mQeyOgw/gL/eZHm9f6eR/FSWJIEQf1wuQeSuXhScl07yfljxvD1a9DBy57IGP8zMDMa/6ylXTIzCIWE6FP2oDSObGaJdcgszgGiT7BTGetZrPl0Xj0CkEu2rSO5cvDK3BnV4U+L5IQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ezACorgG"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-723db2798caso1355478b3a.0
+        for <patches@lists.linux.dev>; Fri, 15 Nov 2024 00:16:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vVPonNpFxDmqJKjpRER0SkxauFgi4byZPa9CtV7VIjQ=;
- b=Csnd/hZFmwAicHycFKU7Hmm/dLhsJcNBqImzkB4JnresbytCAS0qheFqTuD0Cye3/UDrn1ANQdCBGaCJAnpUQAXDv2ya55yIqq8yf3ItOvOpc7u/71Gwbk2FPr58mSELNLbhu7nLmrvHfmngfyvZ0yeDe7hk1tJIyfcOMs2em5I=
-Received: from PH7PR10MB6505.namprd10.prod.outlook.com (2603:10b6:510:200::11)
- by PH7PR10MB6354.namprd10.prod.outlook.com (2603:10b6:510:1b5::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8158.19; Fri, 15 Nov
- 2024 07:00:54 +0000
-Received: from PH7PR10MB6505.namprd10.prod.outlook.com
- ([fe80::83d9:1bf1:52cf:df54]) by PH7PR10MB6505.namprd10.prod.outlook.com
- ([fe80::83d9:1bf1:52cf:df54%3]) with mapi id 15.20.8137.027; Fri, 15 Nov 2024
- 07:00:54 +0000
-Message-ID: <4537b145-3026-4203-8cc4-6a4a063f4d96@oracle.com>
-Date: Fri, 15 Nov 2024 12:30:47 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 62/66] mm: clarify a confusing comment for
- remap_pfn_range()
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, WANG Wenhu <wenhu.wang@vivo.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-References: <20241115063722.834793938@linuxfoundation.org>
- <20241115063725.079065062@linuxfoundation.org>
-Content-Language: en-US
-From: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
-In-Reply-To: <20241115063725.079065062@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR01CA0049.apcprd01.prod.exchangelabs.com
- (2603:1096:4:193::13) To PH7PR10MB6505.namprd10.prod.outlook.com
- (2603:10b6:510:200::11)
+        d=gmail.com; s=20230601; t=1731658605; x=1732263405; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WGZF6N3/pmMpF8j/jWulN5WaeUPbK5MzBQJo41d0xWQ=;
+        b=ezACorgGvTl9N/wnTrZ4Vf+6uTyfVJm3sWDhSpm9oKqxoCc2FptIe7oLgYF9hAKEs8
+         mEl3/9c72X0m0dwyoGroG6dOF2BZb1ZMHbL1xgTyxhrTqq9h6lT0lrdjDrgkZSUupN3a
+         nAM0WxtdIZhMLasHylYadEYm6lhtBZ43Xd0FkN1jCsDbgINXiTvPXb+ZCgDeFyRJl+Oe
+         VKkUT8he9oXJeWWbj3XjooXJSiecSPGtWQrFU4Tv0uiW56Q9w1LGJXA6gITDszWjsfo0
+         63XPMQ1CjNJqmRhExZCmSq5Jd/zMQ71gw/IuSkwJc+vpb1fMEfABgSO5WyPS1c7hVBfu
+         O/Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731658605; x=1732263405;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WGZF6N3/pmMpF8j/jWulN5WaeUPbK5MzBQJo41d0xWQ=;
+        b=kqFLPttrCwU4ibJUfvnIhN/uMDskqdWOXctPCfBsfu0mH3iAZEqmNwXX/x+194tXyS
+         xgWadQCobY0cTom/INRckFu6OWz4X0DMZ6PETQfzxiknBcfXeGy6Ldt4gPytJoDFdmAp
+         zxRwStnDcCMpJZpK3UreQijYaVE+EFh0ADSi9IbvrUfkzLmHFDMFIA/Htg6yvAHtZASs
+         mWsm9YgmkqENhm/yG1voPU1Ec2RFw9wwK1ZyOLLelwNGu3UZlBYg36nYcNfFRiR8H+a+
+         WFsUzkOAaBl+ByuPOyqIcVkn+bYIigDp2MpJiY+rakYIL44tvrk8PYyHV9OEbIPuw6RA
+         RW8A==
+X-Forwarded-Encrypted: i=1; AJvYcCUS3VVGqMro79UZOyJHl0fYIBLniGS5eIk9mB85DCvqYYHjYaL2vgnIbHZJ3J3EaljxCVACSSw4@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx2Gx9I+dJo037pF0kVvC4SRDno/4tqpQ3KhFGnON3fm5+YKZQ5
+	Irm19uQ2ovDy2D0ys2x26G5TW8JMKvF1IB2c2BRxNM6ioxWGXMZm78+8YcD62DDRh8ACr5a9JVh
+	67U6aLC+G6O1gJY5fSU1gdl/vLis=
+X-Google-Smtp-Source: AGHT+IFfJc06IFrDBRy4tXJOWYNxG+uqUeX4nHUkEk2HDPIBbYg1BbxEFKblCFuZzokCR9PK0kZz1LhjYXA0wtfe1aQ=
+X-Received: by 2002:a05:6a00:1703:b0:71e:7674:4cf6 with SMTP id
+ d2e1a72fcca58-72476b96cfbmr2708472b3a.8.1731658604484; Fri, 15 Nov 2024
+ 00:16:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR10MB6505:EE_|PH7PR10MB6354:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4aae305f-5846-461d-6b89-08dd05433f75
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?QlpjT3ZyWEFUZ2lucDdQK2lVYVVCd0MrbTBhRjlwVHZ2TzdlUCtmYXF5NGJQ?=
- =?utf-8?B?Umh0MTBIT1BodHp3TXRqb04vZVdJRjVYUWJrTTBEWGhLTlcwelRFSHArZCth?=
- =?utf-8?B?SzJpdUMwVmRrYUM0S08xUXJtVFhUdDJsd2NWVDFRc2RUdXc3TlNEWEFlSU1u?=
- =?utf-8?B?Vng4eUNCN3VhL3VBZHF0QTNVWXlZVjg5emhSc0hLTG5yeEhrSUNvZVdYRWZG?=
- =?utf-8?B?M1NlK1pmOThLcVJJUjY3ZFA1U0w4TWJIN3pNTFZlUG5nbkhEakRDYkFPSnFj?=
- =?utf-8?B?TE4zZEdaeGJLc3VHNEpnMU1DVS85T05zMWlFVFBwVlFDQUMyK2JxSjFXVng5?=
- =?utf-8?B?TlVwcWwyU05oandoL1BOck5wdW9ua3laR3ZOVjZEemIvQkhyNllHdVg1K3Ez?=
- =?utf-8?B?RVBZbzBsZTh4SXNBMlh5QUMxYmpLdkd6QjRER1Arb3JYbXppT2FLRmRxS2FT?=
- =?utf-8?B?bG5SdnZHY0tlcmJqbU9RT3J3b01hUDdGRWoyUWlWNk5OQnVGNzBoUkJJN3Z6?=
- =?utf-8?B?TCs5MjZLdTRjcGtBQjdvZnlhN0pJbGUwWEpmc3pLZk5NMkNwdUpra3Q4TnlL?=
- =?utf-8?B?WVJQK2J4OG5RQU1tNDUvYTg0YTlYTy9KNVNNbGhEMGdMc3Q1d1FYVk1sL1hW?=
- =?utf-8?B?bVpsMWFpODMycjFHdVBiRklRSDZpTHVQWGhFRkV1QTh2L3BvUUZ3ZG5Lc2RE?=
- =?utf-8?B?RTA2RUxqTmd2cFUxb2hUV2VTalZPbXlPV1pLVnVFU2tSOXgzbGgrVkpENWUz?=
- =?utf-8?B?ZW9Ib1hjVkpzQWFTdC9vdnFDbVdCU0J6THhhUm41K2ttMHVQUE9UQi9uamR2?=
- =?utf-8?B?TEZDWm5lSENiTVZwM3lPWFVQdzhZVmoyaHA1dWNadTljTWV1SWFYM2dOa0JE?=
- =?utf-8?B?bVlIWkpYQWVGcFI4QkN6R2pjY2kwZGZyMUJOVlIrQWhYOHVnck1IK3pGeUor?=
- =?utf-8?B?VHBhYmdwdWZBZnA1WXVUNFM5eDZpTHNSV1BpMG1kNXZORkVtd3VIWlV1T0t2?=
- =?utf-8?B?ZzFmaDRGdUhDZDd5dUpCSGcvWmgvTnlqQ2xTUGRleVFxZUY0OVhLVHNwbVpE?=
- =?utf-8?B?Vko1djExVlF1RmViZjRYZTl2TEx6bE9yd05RTlpIeVlidFl3cURvZDFKMis4?=
- =?utf-8?B?RktzMlNSTU43M1VFZWlVNzZqM2FObDNsZ3VWWEVnbEVqbnhUdE01OHRubXpF?=
- =?utf-8?B?NkozT0FmckJUQ21RSnhGWW13YU54ZUFwNElwZEpONUFLVkFSM1VLSXJ2a2JW?=
- =?utf-8?B?V2NIb2hWRDc0VU1iQXBHcDgrcVpscDZ0ckNjOHk0ZUJsbVJqN3czb1cxNkU2?=
- =?utf-8?B?RnVvMU91bXMwWGlLbUpvM2k3d2JlTjd5ZmY3WHh5aXRHdVMwREJNdXdsbis4?=
- =?utf-8?B?ck1RWnM5RVl1QlZVa1lLUGcwUkxNTDRjOTY3RlIwUXVlYXBKdy9abzdNeWZP?=
- =?utf-8?B?N2lSYXQ1MVB5RWZ1S0FRVUtwaXFmMXV2T2FBMWsvWkgzbk1xVmdFZzBMYVpL?=
- =?utf-8?B?a3ZPbEQ3NnBqN0lOODJqdVVsWmhmSWdVV0FtaTVvZHYyOWF4U0VwcEZPUllB?=
- =?utf-8?B?U3VLQ1dES3BURVJucUVCNFNCUG94WkVxeUJ2UkZEa2t5UVc0a1NZYW56ZlVH?=
- =?utf-8?B?bUw2VnkydFYzamFMRXFseUhsR3oySWcwMTVPZTljbGpYWEU1MkdmWDJTYWhv?=
- =?utf-8?B?b2t3MXd3MENpNk85Q25sZTlkUVJOWlR2ZFNaYlJZTzh5cXRWNlFYUkc4KzFM?=
- =?utf-8?Q?9aZyJrH5IiT8eL4o9rhL9L/AEP/g42X2jlkjpIY?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR10MB6505.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NUl3bW43SWVPOEhhQ2dDWndSemtodnY0U1ZFK29YaXJDZUFheG9CZWpaMit3?=
- =?utf-8?B?S0pKZXMvbkdXQnZIUmw5azlMYnpYelBtdWs4Tzgycis2RFlSdEVlQkZsNHBu?=
- =?utf-8?B?MENON0FPS1BSUmJiT3ZlVnErWTRtWmV4cGo2WTlEbHZLMHdON0VjOUJQTmhZ?=
- =?utf-8?B?RW5pQUplbStaa0VVeVBDV3VmRGN6N1pXRnBrVmJaOE9EK2lNLzBMblMyWU52?=
- =?utf-8?B?OFYvajNvNDBGSzFPR3NDQU9oY2xob1hPMG53eGQrR1F5VjhWSW93dzA5WmVp?=
- =?utf-8?B?Y0RXRThaS2V5RGx1cTA5WGpPV0NhN2xiY1NVbi80OGluL1l5ejNlOHBuVjZ6?=
- =?utf-8?B?RVBzQkxDUjEwblJnSVJNMXczNWZxb1RMRkV3SlRTR2FTc1ZZQkU4NzQwTFlC?=
- =?utf-8?B?Z3hZUlZ0UThUb3lHZFI5eXFCQTEwUEc5Smo3L0dkeGpuQ1hPcmlHOTdYQU9D?=
- =?utf-8?B?UDJ5eE5WeFlVVWdNU0I5dFhaSXpZTnZHM1dzUC9WNmR5a0FhQW9DTHRiVnFa?=
- =?utf-8?B?QWgyNXg3OHFDMk90WXFiRW9FVE9NMmFKQk1CYkNmeWRITTd2VGkvdlBBMDV4?=
- =?utf-8?B?bVBzQllkRGxaSDhQNmdMVUdqdlBJT2lLZkFaKyt2RTFIbVNKOXQyaGc3WXpC?=
- =?utf-8?B?TjRXM2lnNlFxYVc4VVNVVTZqL1ptYXZFd0x0eURRT0JKNFZDd1I0R0pwU1Jw?=
- =?utf-8?B?OWVkbnpUa0tHNWQvelJYS2FjVXZ4OHYyWm8rV21Ub0MxWkRRN1hUWnloT0tn?=
- =?utf-8?B?NmlLbkp3ZHVzZ0EzdGxEYUE5bEtoU0h3L29DMWQrNWtIQ09yVFJSUGVBVVRv?=
- =?utf-8?B?eUoxUWlCclc2TlM0dXVzOGZRRFlQVXBBMkVVNUpleUVZNkh1MEQ1dkt5d2NE?=
- =?utf-8?B?YVJ1aEIyUy82TmRMSmFQbFVoTkc0TVRPMkRsTTJoZnNTSFlTK25xSmJMM2xM?=
- =?utf-8?B?RktLaGRwa0I1VUVyc1BJakkydUNwWGh2Ukxaa1RHN2twdEpKdGtURmpTVDAy?=
- =?utf-8?B?ZGs2NmU4Y2s4ZGdrdTRvMndGM0sycDlMcmxOUHdrekhSUE5BL0tZZ1dJK1ow?=
- =?utf-8?B?dEc5SmtFYU1uckhmWkRXTjFSTlVzSWJhcytlQTkxQXNGN1JwRThIaUNBTHdo?=
- =?utf-8?B?dm5tUldTeWJBTkJmTk53cWtnMytqUG9JaDlqN3ZuYmRtc08zV3VrUWxjZFJ5?=
- =?utf-8?B?NWJpKzZPQ2lOcTJZUHp1YnBCaytsV3RHTE9WOXRLanM4VWVKbzF5bUhhOVVE?=
- =?utf-8?B?c2xUWHcxUFJNRCtQS0Y5NUpqWXhHU2xCUXlFR2ZoUkFGVHFaYUt3N3RvaVM3?=
- =?utf-8?B?R1ZvQ25TN2ZkY3R4b1RrQ2NBUElMQ0dIYU83a1hibWt4UG0vYlR5Q1VMSlhB?=
- =?utf-8?B?MTJKaXlyS3FHNmRIK3ZUL3ZiNm1tNjZFZ0I2OG94S3o3RGlpNDRoNFJ4OE9M?=
- =?utf-8?B?NWZoTFVkclo3QzU4THRWNXpwVGRrbHlZeG8rUzQ2Qi9JWVR4elJXTnRyS2dH?=
- =?utf-8?B?QTArS3dOa083MFlzbVNkWXpvb2IxSzQvSklQNHBpMFVVNDhjS2draW5KZUoy?=
- =?utf-8?B?Y3BvRjVkVlZocmJTMkw3Tk0wVnAzQkRZUm1rS1BOTytBOFZnT05oV0lBU3Qw?=
- =?utf-8?B?Vk9xSjRqNTFkTlhuK1RwMHBkMFZZL3ZBeGo2aEZBZ2FHV1dOb1lvYVdlUGVy?=
- =?utf-8?B?dmJkbThzV0tzYWNRaVo1MlFWMHZpcFVHTHRWckNRL2lyR0ptOTdaWkNTZ3Bl?=
- =?utf-8?B?RWJ0ZGF0MU50WXgwQ2ZKckVJa1c2M3d2Mzh1SFg5MUJDd2lDSGVhNGN3YlRm?=
- =?utf-8?B?NjRMbnRYQ25YSlZEOU54YWlPbHJYZTFCQWxyaWFPb1crQUdlU2ErR01SRVhn?=
- =?utf-8?B?aWlDeWlBZGs2d0ZuWnVnMkNsV2o3WkRNTjdrZE4xTWRJeHppZjVIVmIyeGc1?=
- =?utf-8?B?MXplekY3a3lCdXcvbE96MHIrQjRHL0JNc0lHcG1ubDRWN05QeTRHWlFWZkk4?=
- =?utf-8?B?VmIraXVPOTRHcDI1TmhGNFk2Ylk5SGYyRjVQdmxHVndFak4zQVVlWlJyYTU1?=
- =?utf-8?B?MlpIbGQwdGJ6Q1hoOXhkTzFCbTJ5YWZ2M2lzQzhGYUZ5dkkwd1JEcCtaTlQz?=
- =?utf-8?B?TmJPSjQrMlowNlVISnYrTTEvS0RpSVhDeDJ0eU9ObFYybUs3M2U4SnJMb2tS?=
- =?utf-8?B?b1E9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	CelDgx+YPsa2jEv+yVHuZ8wcKEUwGL2Q7gUf35yHNwCpFpw5EoB/cbycIMTuuoU3wMnt8HcYwNJe/j3hBXwrpaEQd0BjppJ33koSX+gk3k7Oc1HNk3upF4R0e/dm9sB48KiAIRTxBG03g5qdwLjo/6B813IYZ1nsNGzFVXtV2Jp1mCHfROYfU9miNyiAbDzCsiMCgpOfNMhuVX+tI110LQlbSxLS9+d01Gf2D964VTHEYdgcuoYfmyrSgKCWNxXOEA6fY5XkYQc6F9eWRkkNFelpUHlA9Bl3JuLJMAhXG02v2wiobmWFCB7jPHHvHo4dP0XpHvyfWBMF2IMXPrDT4Awtcj3kf2Hmd7s4epbyZEigYyYpyRypDtCJ/A344ARAzhI0DpNk5uteERG1RbfnTRQSLWkkDwS8kwCvX0JnqS3eyErZjoAahDQqLCNx6xWypQUAcVnek1kx5PAXMdCAcR97OLXI+tAqTL7/k55qhv4G67qkAARZE4JMHfegbOzMAwPhIXLe1CWwCrt8UR30S7ku8uNFws5YVzIrTORB5pTn3AfebDoNDR2nprT/DM7P2Rg4bQto+0jjT9bZ9uV6+mbQjYWs/mQ4eQvOpaP/SAk=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4aae305f-5846-461d-6b89-08dd05433f75
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR10MB6505.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Nov 2024 07:00:54.5277
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: +Msy0T2N9Op3aae1gC4FBASWCj1d0wQ22hAKS8o7nGx9On7azYHPYe1f5NWZtiiAY1EONsqftfbhnzqw2bR4WimKrZX18cFzFd4NR98DTdI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB6354
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-11-14_05,2024-11-14_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- spamscore=0 adultscore=0 mlxlogscore=999 mlxscore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2409260000 definitions=main-2411150057
-X-Proofpoint-ORIG-GUID: XwMTJsd-Gp3-YNmu-htVfRD_icIV33nL
-X-Proofpoint-GUID: XwMTJsd-Gp3-YNmu-htVfRD_icIV33nL
+References: <20241115063725.892410236@linuxfoundation.org>
+In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
+From: Luna Jernberg <droidbittin@gmail.com>
+Date: Fri, 15 Nov 2024 09:16:31 +0100
+Message-ID: <CADo9pHhc_JALkYdOGS1ZG5H3nc=4tz9GcR752Mx07ycPFy3Weg@mail.gmail.com>
+Subject: Re: [PATCH 6.11 00/63] 6.11.9-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Greg,
+Tested-by: Luna Jernberg <droidbittin@gmail.com>
 
-The patch series is fine but I missed one final patch of the patch
-series. I'd like to send a v2 if it's possible. The series is missing
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=35770ca6180caa24a2b258c99a87bd437a1ee10f
-unfortunately which is the fix itself. These patches were required to
-get a clean pick when backporting this patch but I forgot to send the
-final patch itself. Sorry for the inconvenience caused.
+AMD Ryzen 5 5600 6-Core Processor:
+https://www.inet.se/produkt/5304697/amd-ryzen-5-5600-3-5-ghz-35mb on a
+https://www.gigabyte.com/Motherboard/B550-AORUS-ELITE-V2-rev-12
+https://www.inet.se/produkt/1903406/gigabyte-b550-aorus-elite-v2
+motherboard :)
 
-Thanks & Regards,
-Harshvardhan
+running Arch Linux with the testing repos enabled:
+https://archlinux.org/ https://archboot.com/
+https://wiki.archlinux.org/title/Arch_Testing_Team
 
-On 15/11/24 12:08 PM, Greg Kroah-Hartman wrote:
-> 5.4-stable review patch.  If anyone has any objections, please let me know.
+Den fre 15 nov. 2024 kl 07:47 skrev Greg Kroah-Hartman
+<gregkh@linuxfoundation.org>:
 >
-> ------------------
+> This is the start of the stable review cycle for the 6.11.9 release.
+> There are 63 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> From: WANG Wenhu <wenhu.wang@vivo.com>
+> Responses should be made by Sun, 17 Nov 2024 06:37:07 +0000.
+> Anything received after that time might be too late.
 >
-> commit 86a76331d94c4cfa72fe1831dbe4b492f66fdb81 upstream.
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.11.9-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.11.y
+> and the diffstat can be found below.
 >
-> It really made me scratch my head.  Replace the comment with an accurate
-> and consistent description.
+> thanks,
 >
-> The parameter pfn actually refers to the page frame number which is
-> right-shifted by PAGE_SHIFT from the physical address.
+> greg k-h
 >
-> Signed-off-by: WANG Wenhu <wenhu.wang@vivo.com>
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-> Link: https://urldefense.com/v3/__http://lkml.kernel.org/r/20200310073955.43415-1-wenhu.wang@vivo.com__;!!ACWV5N9M2RV99hQ!KIWd_kui8J754PtgbyIkIgs5FO5lVNz7kLCkgbvI2fyaF0L12Y-unOmAYPsYWyr-RMIYHLBN4M2PzFgU9jvCBTKGJyg15w$ 
-> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> Signed-off-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->  mm/memory.c |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> -------------
+> Pseudo-Shortlog of commits:
 >
-> --- a/mm/memory.c
-> +++ b/mm/memory.c
-> @@ -1921,7 +1921,7 @@ static inline int remap_p4d_range(struct
->   * remap_pfn_range - remap kernel memory to userspace
->   * @vma: user vma to map to
->   * @addr: target user address to start at
-> - * @pfn: physical address of kernel memory
-> + * @pfn: page frame number of kernel physical memory address
->   * @size: size of map area
->   * @prot: page protection flags for this mapping
->   *
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>     Linux 6.11.9-rc1
+>
+> Linus Torvalds <torvalds@linux-foundation.org>
+>     9p: fix slab cache name creation for real
+>
+> Qun-Wei Lin <qun-wei.lin@mediatek.com>
+>     mm: krealloc: Fix MTE false alarm in __do_krealloc
+>
+> Nirmoy Das <nirmoy.das@intel.com>
+>     drm/xe: Don't restart parallel queues multiple times on GT reset
+>
+> Nirmoy Das <nirmoy.das@intel.com>
+>     drm/xe/ufence: Prefetch ufence addr to catch bogus address
+>
+> Shuicheng Lin <shuicheng.lin@intel.com>
+>     drm/xe: Handle unreliable MMIO reads during forcewake
+>
+> Badal Nilawar <badal.nilawar@intel.com>
+>     drm/xe/guc/ct: Flush g2h worker in case of g2h response timeout
+>
+> Shuicheng Lin <shuicheng.lin@intel.com>
+>     drm/xe: Enlarge the invalidation timeout from 150 to 500
+>
+> Hou Tao <houtao1@huawei.com>
+>     bpf: Check validity of link->type in bpf_link_show_fdinfo()
+>
+> Reinhard Speyerer <rspmn@arcor.de>
+>     net: usb: qmi_wwan: add Fibocom FG132 0x0112 composition
+>
+> Huacai Chen <chenhuacai@kernel.org>
+>     LoongArch: KVM: Mark hrtimer to expire in hard interrupt context
+>
+> Shengjiu Wang <shengjiu.wang@nxp.com>
+>     ASoC: fsl_micfil: Add sample rate constraint
+>
+> Yanteng Si <siyanteng@cqsoftware.com.cn>
+>     LoongArch: Use "Exception return address" to comment ERA
+>
+> Jack Yu <jack.yu@realtek.com>
+>     ASoC: rt722-sdca: increase clk_stop_timeout to fix clock stop issue
+>
+> Cyan Yang <cyan.yang@sifive.com>
+>     RISCV: KVM: use raw_spinlock for critical section in imsic
+>
+> Alexey Klimov <alexey.klimov@linaro.org>
+>     ASoC: codecs: lpass-rx-macro: fix RXn(rx,n) macro for DSM_CTL and SEC=
+7 regs
+>
+> Hans de Goede <hdegoede@redhat.com>
+>     HID: lenovo: Add support for Thinkpad X1 Tablet Gen 3 keyboard
+>
+> Kenneth Albanowski <kenalba@chromium.org>
+>     HID: multitouch: Add quirk for Logitech Bolt receiver w/ Casa touchpa=
+d
+>
+> Bart=C5=82omiej Mary=C5=84czak <marynczakbartlomiej@gmail.com>
+>     HID: i2c-hid: Delayed i2c resume wakeup for 0x0d42 Goodix touchpad
+>
+> David Howells <dhowells@redhat.com>
+>     afs: Fix lock recursion
+>
+> Alessandro Zanni <alessandro.zanni87@gmail.com>
+>     fs: Fix uninitialized value issue in from_kuid and from_kgid
+>
+> David Howells <dhowells@redhat.com>
+>     netfs: Downgrade i_rwsem for a buffered write
+>
+> Derek Fang <derek.fang@realtek.com>
+>     ASoC: Intel: soc-acpi: lnl: Add match entry for TM2 laptops
+>
+> Ilya Dudikov <ilyadud@mail.ru>
+>     ASoC: amd: yc: Fix non-functional mic on ASUS E1404FA
+>
+> Christian Heusel <christian@heusel.eu>
+>     ASoC: amd: yc: Add quirk for ASUS Vivobook S15 M3502RA
+>
+> Zhu Jun <zhujun2@cmss.chinamobile.com>
+>     ASoC: codecs: Fix error handling in aw_dev_get_dsp_status function
+>
+> Amadeusz S=C5=82awi=C5=84ski <amadeuszx.slawinski@linux.intel.com>
+>     ASoC: Intel: avs: Update stream status in a separate thread
+>
+> Jiawei Ye <jiawei.ye@foxmail.com>
+>     bpf: Fix mismatched RCU unlock flavour in bpf_out_neigh_v6
+>
+> Zijian Zhang <zijianzhang@bytedance.com>
+>     bpf: Add sk_is_inet and IS_ICSK check in tls_sw_has_ctx_tx/rx
+>
+> Feng Liu <feliu@nvidia.com>
+>     virtio_pci: Fix admin vq cleanup by using correct info pointer
+>
+> Yuan Can <yuancan@huawei.com>
+>     vDPA/ifcvf: Fix pci_read_config_byte() return code handling
+>
+> Matthieu Buffet <matthieu@buffet.re>
+>     samples/landlock: Fix port parsing in sandboxer
+>
+> Nilay Shroff <nilay@linux.ibm.com>
+>     nvme: make keep-alive synchronous operation
+>
+> Nilay Shroff <nilay@linux.ibm.com>
+>     nvme-loop: flush off pending I/O while shutting down loop controller
+>
+> Lucas De Marchi <lucas.demarchi@intel.com>
+>     drm/xe/query: Increase timestamp width
+>
+> Linus Walleij <linus.walleij@linaro.org>
+>     net: phy: mdio-bcm-unimac: Add BCM6846 support
+>
+> Michael Ellerman <mpe@ellerman.id.au>
+>     powerpc/powernv: Free name on error in opal_event_init()
+>
+> Philip Yang <Philip.Yang@amd.com>
+>     drm/amdkfd: Accounting pdd vram_usage for svm
+>
+> Keith Busch <kbusch@kernel.org>
+>     nvme-multipath: defer partition scanning
+>
+> Will Deacon <will@kernel.org>
+>     kasan: Disable Software Tag-Based KASAN with GCC
+>
+> Baojun Xu <baojun.xu@ti.com>
+>     ALSA: hda/tas2781: Add new quirk for Lenovo, ASUS, Dell projects
+>
+> Showrya M N <showrya@chelsio.com>
+>     RDMA/siw: Add sendpage_ok() check to disable MSG_SPLICE_PAGES
+>
+> Tyrone Wu <wudevelops@gmail.com>
+>     selftests/bpf: Assert link info uprobe_multi count & path_size if uns=
+et
+>
+> Ian Forbes <ian.forbes@broadcom.com>
+>     drm/vmwgfx: Limit display layout ioctl array size to VMWGFX_NUM_DISPL=
+AY_UNITS
+>
+> Julian Vetter <jvetter@kalrayinc.com>
+>     sound: Make CONFIG_SND depend on INDIRECT_IOMEM instead of UML
+>
+> Harald Freudenberger <freude@linux.ibm.com>
+>     s390/ap: Fix CCA crypto card behavior within protected execution envi=
+ronment
+>
+> Herbert Xu <herbert@gondor.apana.org.au>
+>     crypto: marvell/cesa - Disable hash algorithms
+>
+> Herbert Xu <herbert@gondor.apana.org.au>
+>     crypto: api - Fix liveliness check in crypto_alg_tested
+>
+> Rik van Riel <riel@surriel.com>
+>     bpf: use kvzmalloc to allocate BPF verifier environment
+>
+> Greg Joyce <gjoyce@linux.ibm.com>
+>     nvme: disable CC.CRIME (NVME_CC_CRIME)
+>
+> Robin Murphy <robin.murphy@arm.com>
+>     iommu/arm-smmu: Clarify MMU-500 CPRE workaround
+>
+> WangYuli <wangyuli@uniontech.com>
+>     HID: multitouch: Add quirk for HONOR MagicBook Art 14 touchpad
+>
+> Stefan Blum <stefanblum2004@gmail.com>
+>     HID: multitouch: Add support for B2402FVA track point
+>
+> SurajSonawane2415 <surajsonawane0215@gmail.com>
+>     block: Fix elevator_get_default() checking for NULL q->tag_set
+>
+> Hannes Reinecke <hare@suse.de>
+>     nvme: tcp: avoid race between queue_lock lock and destroy
+>
+> Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+>     pinctrl: intel: platform: Add Panther Lake to the list of supported
+>
+> Rosen Penev <rosenp@gmail.com>
+>     pinctrl: aw9523: add missing mutex_destroy
+>
+> Sergey Matsievskiy <matsievskiysv@gmail.com>
+>     irqchip/ocelot: Fix trigger register address
+>
+> Nilay Shroff <nilay@linux.ibm.com>
+>     nvmet-passthru: clear EUID/NGUID/UUID while using loop target
+>
+> Eduard Zingerman <eddyz87@gmail.com>
+>     selftests/bpf: Verify that sync_linked_regs preserves subreg_def
+>
+> Pedro Falcato <pedro.falcato@gmail.com>
+>     9p: Avoid creating multiple slab caches with the same name
+>
+> Dominique Martinet <asmadeus@codewreck.org>
+>     9p: v9fs_fid_find: also lookup by inode if not found dentry
+>
+> Breno Leitao <leitao@debian.org>
+>     nvme/host: Fix RCU list traversal to use SRCU primitive
+>
+> Kuniyuki Iwashima <kuniyu@amazon.com>
+>     smb: client: Fix use-after-free of network namespace.
+>
+>
+> -------------
+>
+> Diffstat:
+>
+>  Makefile                                           |  4 +-
+>  arch/loongarch/include/asm/loongarch.h             |  2 +-
+>  arch/loongarch/kvm/timer.c                         |  7 +-
+>  arch/loongarch/kvm/vcpu.c                          |  2 +-
+>  arch/powerpc/platforms/powernv/opal-irqchip.c      |  1 +
+>  arch/riscv/kvm/aia_imsic.c                         |  8 +--
+>  block/elevator.c                                   |  4 +-
+>  crypto/algapi.c                                    |  2 +-
+>  drivers/crypto/marvell/cesa/hash.c                 | 12 ++--
+>  drivers/gpu/drm/amd/amdkfd/kfd_chardev.c           |  6 +-
+>  drivers/gpu/drm/amd/amdkfd/kfd_priv.h              |  2 +-
+>  drivers/gpu/drm/amd/amdkfd/kfd_process.c           |  4 +-
+>  drivers/gpu/drm/amd/amdkfd/kfd_svm.c               | 26 +++++++
+>  drivers/gpu/drm/vmwgfx/vmwgfx_drv.h                |  4 +-
+>  drivers/gpu/drm/vmwgfx/vmwgfx_kms.c                |  4 +-
+>  drivers/gpu/drm/vmwgfx/vmwgfx_kms.h                |  3 -
+>  drivers/gpu/drm/xe/xe_device.c                     |  2 +-
+>  drivers/gpu/drm/xe/xe_force_wake.c                 | 12 +++-
+>  drivers/gpu/drm/xe/xe_guc_ct.c                     | 18 +++++
+>  drivers/gpu/drm/xe/xe_guc_submit.c                 | 14 +++-
+>  drivers/gpu/drm/xe/xe_query.c                      |  6 +-
+>  drivers/gpu/drm/xe/xe_sync.c                       |  3 +-
+>  drivers/hid/hid-ids.h                              |  2 +
+>  drivers/hid/hid-lenovo.c                           |  8 +++
+>  drivers/hid/hid-multitouch.c                       | 13 ++++
+>  drivers/hid/i2c-hid/i2c-hid-core.c                 | 10 +++
+>  drivers/infiniband/sw/siw/siw_qp_tx.c              |  2 +
+>  drivers/iommu/arm/arm-smmu/arm-smmu-impl.c         |  4 +-
+>  drivers/irqchip/irq-mscc-ocelot.c                  |  4 +-
+>  drivers/net/mdio/mdio-bcm-unimac.c                 |  1 +
+>  drivers/net/usb/qmi_wwan.c                         |  1 +
+>  drivers/nvme/host/core.c                           | 52 ++++++++------
+>  drivers/nvme/host/multipath.c                      | 33 +++++++++
+>  drivers/nvme/host/nvme.h                           |  1 +
+>  drivers/nvme/host/tcp.c                            |  7 +-
+>  drivers/nvme/target/loop.c                         | 13 ++++
+>  drivers/nvme/target/passthru.c                     |  6 +-
+>  drivers/pinctrl/intel/Kconfig                      |  1 +
+>  drivers/pinctrl/pinctrl-aw9523.c                   |  6 +-
+>  drivers/s390/crypto/ap_bus.c                       |  3 +-
+>  drivers/s390/crypto/ap_bus.h                       |  2 +-
+>  drivers/s390/crypto/ap_queue.c                     | 28 +++++---
+>  drivers/vdpa/ifcvf/ifcvf_base.c                    |  2 +-
+>  drivers/virtio/virtio_pci_common.c                 | 24 +++++--
+>  drivers/virtio/virtio_pci_common.h                 |  1 +
+>  drivers/virtio/virtio_pci_modern.c                 | 12 +---
+>  fs/9p/fid.c                                        |  5 +-
+>  fs/afs/internal.h                                  |  2 +
+>  fs/afs/rxrpc.c                                     | 83 +++++++++++++++-=
+------
+>  fs/netfs/locking.c                                 |  3 +-
+>  fs/ocfs2/file.c                                    |  9 ++-
+>  fs/smb/client/connect.c                            | 14 +++-
+>  include/net/tls.h                                  | 12 +++-
+>  kernel/bpf/syscall.c                               | 14 ++--
+>  kernel/bpf/verifier.c                              |  4 +-
+>  lib/Kconfig.kasan                                  |  7 +-
+>  mm/slab_common.c                                   |  2 +-
+>  net/9p/client.c                                    | 12 +++-
+>  net/core/filter.c                                  |  2 +-
+>  samples/landlock/sandboxer.c                       | 32 ++++++++-
+>  sound/Kconfig                                      |  2 +-
+>  sound/pci/hda/patch_realtek.c                      | 29 ++++++++
+>  sound/soc/amd/yc/acp6x-mach.c                      | 14 ++++
+>  sound/soc/codecs/aw88399.c                         |  2 +-
+>  sound/soc/codecs/lpass-rx-macro.c                  | 15 ++--
+>  sound/soc/codecs/rt722-sdca-sdw.c                  |  2 +-
+>  sound/soc/fsl/fsl_micfil.c                         | 38 ++++++++++
+>  sound/soc/intel/avs/core.c                         |  3 +-
+>  sound/soc/intel/avs/pcm.c                          | 19 +++++
+>  sound/soc/intel/avs/pcm.h                          | 16 +++++
+>  sound/soc/intel/common/soc-acpi-intel-lnl-match.c  | 38 ++++++++++
+>  .../selftests/bpf/prog_tests/fill_link_info.c      |  9 +++
+>  .../selftests/bpf/progs/verifier_scalar_ids.c      | 67 ++++++++++++++++=
++
+>  73 files changed, 670 insertions(+), 167 deletions(-)
+>
 >
 >
