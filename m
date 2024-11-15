@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E511187848;
-	Fri, 15 Nov 2024 06:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9013C1885B3;
+	Fri, 15 Nov 2024 06:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653799; cv=none; b=G4tmOa+VjrjVXFWZr8MnhgWkJs8PQGnoFcmKN14Ep6Lpoqp0+ce2nRIvguVm9TG9fz1xiChvkZW7pn45cWLHMS0uvWie7n5MSCnjKZuT9GD3zDFK7biu3BPOKUn0TbmpjhjpXzxIMVcwPDhjn9mZoC893y/AAGndGENoDrEqV7c=
+	t=1731653802; cv=none; b=pYIqGNJQZ0w2Km9bVGyW6odRcD/ZK+FREQ+Fuabpk50oCAjf8J3arpkWnNG6YrO5hgVjr1nYzc7/hHVmxyrykVpNF1/GA6+XJU2v3jHpegwQDVrtc8XzxXClXFocyThl4EmutFCfGmBepIJy5kQHFkX5ChCE92n/DfzS6n0RSSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653799; c=relaxed/simple;
-	bh=4mIY4vrzvplSx0u41L2N6wA7XVvApybPk+vy6/LhkFw=;
+	s=arc-20240116; t=1731653802; c=relaxed/simple;
+	bh=wviWTF6oL+yq8ZZckWiA7IV7fs8ujjM1FXXHvcSbhvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPw/regAvAOwrIM18n7pyoKjT/AO5lIIqt8sU7IqhMra0bfVRxP9lDt0r9uG/kZssdEhaizn65VpIlvR7wZaeMp/VQXmVVNPQTH6nal0Xu+OfqJ27TA/O6F4gtv80Ot3as3fxIXd2/XMUn+H1bZrYM9pW4u/FWo5MkwvKtzJK1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrMcavnC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eaLK0ZIl0hSdWHIse6WCHccfKRjRR8GpNwEAGPWmrO/3+32gtWuJWlGZkb+/hxWmO/hys53DtZPtLEhOyEUySZlnQygXVKoUvdk4N7YBKPlgcEdZPiFRNU3nNbBj2qA6cq6to6bCDO+lghO1Wr4MXfEqyZy9nhW+hxt61yjJwk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCopJMmX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrMcavnC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496D8C4CECF;
-	Fri, 15 Nov 2024 06:56:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCopJMmX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C026EC4CECF;
+	Fri, 15 Nov 2024 06:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653798;
-	bh=4mIY4vrzvplSx0u41L2N6wA7XVvApybPk+vy6/LhkFw=;
+	s=korg; t=1731653802;
+	bh=wviWTF6oL+yq8ZZckWiA7IV7fs8ujjM1FXXHvcSbhvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IrMcavnCcPQ4IarKvNFh647VbBAOWEgSfrjAWyB6+O1lUB0vlzMAtVT7VHsxtSS2N
-	 s7JyS8fDlNLUtqOKi14pz2mqZM4Py6XAc16lQvqlJTgRv0KHYB9ZLOLkQ3BHTL55lI
-	 FUzai8vNBbNjYLEuchEebRgpZNiaV42E2VU/qmuY=
+	b=dCopJMmXvxjGlDGuJOByeEgwYekAjjdVRhTBTYwuC9kxZDQVVN+p2aUwgOmOwCngx
+	 01WA4jRbnjqJzI0lsMWPiuldn/oWqq187+mGWefJbyrrnvzJSTESZWxE/DyXS6YP4S
+	 ejeDinGGOr1kTIBv688bFJ+QScUwxlbQk/40As68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zichen Xie <zichenxie0106@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.10 40/82] dm-unstriped: cast an operand to sector_t to prevent potential uint32_t overflow
-Date: Fri, 15 Nov 2024 07:38:17 +0100
-Message-ID: <20241115063727.004769567@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Jens Axboe <axboe@kernel.dk>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 41/82] io_uring: rename kiocb_end_write() local helper
+Date: Fri, 15 Nov 2024 07:38:18 +0100
+Message-ID: <20241115063727.039990798@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -50,41 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zichen Xie <zichenxie0106@gmail.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 5a4510c762fc04c74cff264cd4d9e9f5bf364bae upstream.
+Commit a370167fe526123637965f60859a9f1f3e1a58b7 upstream.
 
-This was found by a static analyzer.
-There may be a potential integer overflow issue in
-unstripe_ctr(). uc->unstripe_offset and uc->unstripe_width are
-defined as "sector_t"(uint64_t), while uc->unstripe,
-uc->chunk_size and uc->stripes are all defined as "uint32_t".
-The result of the calculation will be limited to "uint32_t"
-without correct casting.
-So, we recommend adding an extra cast to prevent potential
-integer overflow.
+This helper does not take a kiocb as input and we want to create a
+common helper by that name that takes a kiocb as input.
 
-Fixes: 18a5bf270532 ("dm: add unstriped target")
-Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Message-Id: <20230817141337.1025891-2-amir73il@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-unstripe.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/md/dm-unstripe.c
-+++ b/drivers/md/dm-unstripe.c
-@@ -84,8 +84,8 @@ static int unstripe_ctr(struct dm_target
- 	}
- 	uc->physical_start = start;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index da07fba75827c..ec55f2788ac64 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2667,7 +2667,7 @@ static int io_iopoll_check(struct io_ring_ctx *ctx, long min)
+ 	return ret;
+ }
  
--	uc->unstripe_offset = uc->unstripe * uc->chunk_size;
--	uc->unstripe_width = (uc->stripes - 1) * uc->chunk_size;
-+	uc->unstripe_offset = (sector_t)uc->unstripe * uc->chunk_size;
-+	uc->unstripe_width = (sector_t)(uc->stripes - 1) * uc->chunk_size;
- 	uc->chunk_shift = is_power_of_2(uc->chunk_size) ? fls(uc->chunk_size) - 1 : 0;
+-static void kiocb_end_write(struct io_kiocb *req)
++static void io_req_end_write(struct io_kiocb *req)
+ {
+ 	/*
+ 	 * Tell lockdep we inherited freeze protection from submission
+@@ -2737,7 +2737,7 @@ static void io_req_io_end(struct io_kiocb *req)
+ 	struct io_rw *rw = &req->rw;
  
- 	tmp_len = ti->len;
+ 	if (rw->kiocb.ki_flags & IOCB_WRITE) {
+-		kiocb_end_write(req);
++		io_req_end_write(req);
+ 		fsnotify_modify(req->file);
+ 	} else {
+ 		fsnotify_access(req->file);
+@@ -2817,7 +2817,7 @@ static void io_complete_rw_iopoll(struct kiocb *kiocb, long res, long res2)
+ 	struct io_kiocb *req = container_of(kiocb, struct io_kiocb, rw.kiocb);
+ 
+ 	if (kiocb->ki_flags & IOCB_WRITE)
+-		kiocb_end_write(req);
++		io_req_end_write(req);
+ 	if (unlikely(res != req->result)) {
+ 		if (res == -EAGAIN && io_rw_should_reissue(req)) {
+ 			req->flags |= REQ_F_REISSUE;
+@@ -3817,7 +3817,7 @@ static int io_write(struct io_kiocb *req, unsigned int issue_flags)
+ 		ret = io_setup_async_rw(req, iovec, inline_vecs, iter, false);
+ 		if (!ret) {
+ 			if (kiocb->ki_flags & IOCB_WRITE)
+-				kiocb_end_write(req);
++				io_req_end_write(req);
+ 			return -EAGAIN;
+ 		}
+ 		return ret;
+-- 
+2.43.0
+
 
 
