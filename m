@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A9D185924;
-	Fri, 15 Nov 2024 06:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C5E185924;
+	Fri, 15 Nov 2024 06:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653537; cv=none; b=F+MdXYcDNyDErdTmnKvgDniCk1xTBu1gjcn9BkUPyt10J21/JWdbhEhDRttoG4kl6lT86ZDsbUmfRG1iTKmlJFPq26JfyA7MjZq7sR735R0NC63vO9XJqV33X6kUAlpxrr+B6Eq5NkIZ/kT+qaDgDtEOTmJ3GqV/6WZB2pgj9jg=
+	t=1731653540; cv=none; b=etlUKtr+kaGkd8cH5vemIwoU22VbtzURlbGtvjpOB9p7eZotbYD1/e5u0IIzZQu9T8LJ5kA4M6gFmJyAWXWFUeqn7tdcNe1W0SeyFOcvQBCyWOafCIQ7LTXWocn1AeDeMFqavGyXARS6L5VEDHQxKaIpXrz74A7HwSPksbmOnsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653537; c=relaxed/simple;
-	bh=G/9xzk4OpXgjNPEG5yqRBAZCK7EA5/ke6+uJaShUnkk=;
+	s=arc-20240116; t=1731653540; c=relaxed/simple;
+	bh=AVvwxVBEw9jdSnZMCZa3THBT+Dp/WBKlRG6bBWdxMWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ADXbcIFjNtxlFlKXFct57d1SaUl3wt0RTR8wb8G1Q6/LCt1IMsb2+Eq7/g44JxEhzm2tcvt35CeTiLLDxI29RHgd6pULu/bbopeuWH+Nuef4/C/aDIKsbp2dphk2RhyEIyRPP+qnzuIwL1UEIEYizOoEEK6KCT9YkDqVRHLd7QI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fELU3Upc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UpJrIvzV/uwu1iB/rna4/jPnLXQ3MId1N7wfi9a4eRY/q0Q2JFkvjlFPj59RkPF6kq0ZUixXC7KVn2o4QskmpvmrufBRRz11Z8egJp7+TIWezyPT7V3CIUN3SuYt7w9N1HOSCKLuEU5P3dysy9/pKKJ0+V+9b569aSxBUlgPPiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=es4/NkUl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fELU3Upc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F24C4CECF;
-	Fri, 15 Nov 2024 06:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="es4/NkUl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEF3C4CECF;
+	Fri, 15 Nov 2024 06:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653537;
-	bh=G/9xzk4OpXgjNPEG5yqRBAZCK7EA5/ke6+uJaShUnkk=;
+	s=korg; t=1731653540;
+	bh=AVvwxVBEw9jdSnZMCZa3THBT+Dp/WBKlRG6bBWdxMWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fELU3UpcmRmYFIeqxzVFDjtM5GFjJCKy0fZ6HAgxKQWIvyDMgfMShq8XFh849EkgW
-	 POu4UVbVGqlMc3fXnhQoItvt25mqjeMjAHX1s8Eh1hIhgi4CeThooWcG7KOyUyhh5T
-	 6bUaR2ZZsaoqt9HWwMOcoVJH6BCy801bbceejCec=
+	b=es4/NkUlQCK2PV75b1l/+9q1CktdTbIQV4kPOnxnP8jw3L8/yK4OPXmJ2Y5R9+zu2
+	 KREqGXhpxmIFGN6HfxfiUSt98MEwNd9IWYkY4Uy6lOk+9Mx3+BuVCpG3KkeqSUldaV
+	 xbswjq/ai6j8SvGtp48cqJxdnfWn/OOgPBZ1iv5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Yu <jack.yu@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yanteng Si <siyanteng@cqsoftware.com.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 35/48] ASoC: rt722-sdca: increase clk_stop_timeout to fix clock stop issue
-Date: Fri, 15 Nov 2024 07:38:24 +0100
-Message-ID: <20241115063724.232559854@linuxfoundation.org>
+Subject: [PATCH 6.6 36/48] LoongArch: Use "Exception return address" to comment ERA
+Date: Fri, 15 Nov 2024 07:38:25 +0100
+Message-ID: <20241115063724.268268381@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.962047137@linuxfoundation.org>
 References: <20241115063722.962047137@linuxfoundation.org>
@@ -51,33 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Yu <jack.yu@realtek.com>
+From: Yanteng Si <siyanteng@cqsoftware.com.cn>
 
-[ Upstream commit 038fa6ddf5d22694f61ff7a7a53c8887c6b08c45 ]
+[ Upstream commit b69269c870ece1bc7d2e3e39ca76f4602f2cb0dd ]
 
-clk_stop_timeout should be increased to 900ms to fix clock stop issue.
+The information contained in the comment for LOONGARCH_CSR_ERA is even
+less informative than the macro itself, which can cause confusion for
+junior developers. Let's use the full English term.
 
-Signed-off-by: Jack Yu <jack.yu@realtek.com>
-Link: https://patch.msgid.link/cd26275d9fc54374a18dc016755cb72d@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Yanteng Si <siyanteng@cqsoftware.com.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt722-sdca-sdw.c | 2 +-
+ arch/loongarch/include/asm/loongarch.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt722-sdca-sdw.c b/sound/soc/codecs/rt722-sdca-sdw.c
-index 32578a212642e..91314327d9eee 100644
---- a/sound/soc/codecs/rt722-sdca-sdw.c
-+++ b/sound/soc/codecs/rt722-sdca-sdw.c
-@@ -253,7 +253,7 @@ static int rt722_sdca_read_prop(struct sdw_slave *slave)
- 	}
+diff --git a/arch/loongarch/include/asm/loongarch.h b/arch/loongarch/include/asm/loongarch.h
+index 33531d432b492..23232c7bdb9ff 100644
+--- a/arch/loongarch/include/asm/loongarch.h
++++ b/arch/loongarch/include/asm/loongarch.h
+@@ -242,7 +242,7 @@
+ #define  CSR_ESTAT_IS_WIDTH		14
+ #define  CSR_ESTAT_IS			(_ULCAST_(0x3fff) << CSR_ESTAT_IS_SHIFT)
  
- 	/* set the timeout values */
--	prop->clk_stop_timeout = 200;
-+	prop->clk_stop_timeout = 900;
+-#define LOONGARCH_CSR_ERA		0x6	/* ERA */
++#define LOONGARCH_CSR_ERA		0x6	/* Exception return address */
  
- 	/* wake-up event */
- 	prop->wake_capable = 1;
+ #define LOONGARCH_CSR_BADV		0x7	/* Bad virtual address */
+ 
 -- 
 2.43.0
 
