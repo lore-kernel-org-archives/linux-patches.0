@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCC717555;
-	Fri, 15 Nov 2024 07:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229C017555;
+	Fri, 15 Nov 2024 07:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731654012; cv=none; b=USNpT0Y+E3fDJlU/i4+3thpuzW86S18eQs/5YFsvHqkbsUQE7LFUaXZEP2N16vGQHvmIEjAF4wInmk6RHqF3nulr96tOIfqYtiu2EFJyR6PeEgG/Kkr3V24XTUqJc1th2CgtWBeQeKdd/V2LP/3TZ17MuCC4Jqao5caG5OAkmkc=
+	t=1731654016; cv=none; b=rv2qtJoVx4CTenMR4ljP+kMoMoeeR2oQmi2KAM99IsM7NWoFPZot6625QVpxWb5suLeUrt7ht/ip2fjYvltw6AonWAbdTkxCo2GyUtZvOKj8hjZTVpeRGn6sTtcfLx9Mospt99rD4heyo1709b7EDVTEZsUy8BHVimrLESszHIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731654012; c=relaxed/simple;
-	bh=HntWg3GeWxqq9ZAL/g1sKPDbs39I8xTZ7xv+lPNMwQw=;
+	s=arc-20240116; t=1731654016; c=relaxed/simple;
+	bh=p/TFXp4SuN7bTklec4jHzEd1GLqi9XLnabz5k7d6Ews=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BH6x7OpxC3f0d+iuGZ1m5rLy/8L5OzITIWTlQFgSuU7IS89TrM85UzEe6uOGRgMcXj2q4LDDt7vYpnyjCGo/9NEFFxFsw1jmnH5puOeIU5ol4e9BHidISX0TZlkk0SqTewXHXmpdskv0ASy3/akd29BNawbyM3R9VIW6jmBHZ/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XISMvam4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PFf6fefvAiNWmVqoaiuoLLstkJWp6Wj/5n0Q0dIAt4X/YsB55z5LJM+Fixuhgg6/hKkkDX+56V5avdpZxh+NL94rcD2UH4PilNk7OwHPL3H9AZg9sDoDPbAPwc9KmRtZuBz5jhnhnnxitrM66h3GNhV+8LPNCq8xbtRVfcyVrQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OrcHF8Mr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XISMvam4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE204C4CECF;
-	Fri, 15 Nov 2024 07:00:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrcHF8Mr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F79C4CECF;
+	Fri, 15 Nov 2024 07:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731654012;
-	bh=HntWg3GeWxqq9ZAL/g1sKPDbs39I8xTZ7xv+lPNMwQw=;
+	s=korg; t=1731654015;
+	bh=p/TFXp4SuN7bTklec4jHzEd1GLqi9XLnabz5k7d6Ews=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XISMvam4YhFjI5E1dMara/IjxKoV/2nkbMSf2PC1rCd6l+zxdEdMHdbu33KvymP3f
-	 /HVKaZuXK9aPr/1zMIG7IyHsFFtOpcIQYYwf9+uaLp6LHuAIoBociYdzVO4pic+hpF
-	 oWrWEbgOaNd6lh946pQk8pgJIwdkhxN4A93KrgLs=
+	b=OrcHF8Mr7MmFRm8aOBFKfa8yJl92HywB0NlAQpK1zZQ5kjrGiossW2iC4N7hngkgb
+	 tSFnGuQxtVOsIbqjDxz35F0Xb0vwxvWg4pAMXTnCsXWQqmLAY8Qwi7nHy65mby/c/c
+	 GA9vNOyG5IY45KoOL8ZCo9BKmoqQSNc3nVhplAM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanzheng Song <songyuanzheng@huawei.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	David Hildenbrand <david@redhat.com>
-Subject: [PATCH 5.15 19/22] mm/memory: add non-anonymous page check in the copy_present_page()
-Date: Fri, 15 Nov 2024 07:39:05 +0100
-Message-ID: <20241115063721.869017519@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Jan Kara <jack@suse.cz>,
+	Hauke Mehrtens <hauke@hauke-m.de>
+Subject: [PATCH 5.15 20/22] udf: Allocate name buffer in directory iterator on heap
+Date: Fri, 15 Nov 2024 07:39:06 +0100
+Message-ID: <20241115063721.907012691@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063721.172791419@linuxfoundation.org>
 References: <20241115063721.172791419@linuxfoundation.org>
@@ -51,99 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanzheng Song <songyuanzheng@huawei.com>
+From: Jan Kara <jack@suse.cz>
 
-The vma->anon_vma of the child process may be NULL because
-the entire vma does not contain anonymous pages. In this
-case, a BUG will occur when the copy_present_page() passes
-a copy of a non-anonymous page of that vma to the
-page_add_new_anon_rmap() to set up new anonymous rmap.
+commit 0aba4860b0d0216a1a300484ff536171894d49d8 upstream.
 
-------------[ cut here ]------------
-kernel BUG at mm/rmap.c:1052!
-Internal error: Oops - BUG: 0 [#1] SMP
-Modules linked in:
-CPU: 4 PID: 4652 Comm: test Not tainted 5.15.75 #1
-Hardware name: linux,dummy-virt (DT)
-pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __page_set_anon_rmap+0xc0/0xe8
-lr : __page_set_anon_rmap+0xc0/0xe8
-sp : ffff80000e773860
-x29: ffff80000e773860 x28: fffffc13cf006ec0 x27: ffff04f3ccd68000
-x26: ffff04f3c5c33248 x25: 0000000010100073 x24: ffff04f3c53c0a80
-x23: 0000000020000000 x22: 0000000000000001 x21: 0000000020000000
-x20: fffffc13cf006ec0 x19: 0000000000000000 x18: 0000000000000000
-x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
-x11: 0000000000000000 x10: 0000000000000000 x9 : ffffdddc5581377c
-x8 : 0000000000000000 x7 : 0000000000000011 x6 : ffff2717a8433000
-x5 : ffff80000e773810 x4 : ffffdddc55400000 x3 : 0000000000000000
-x2 : ffffdddc56b20000 x1 : ffff04f3c9a48040 x0 : 0000000000000000
-Call trace:
- __page_set_anon_rmap+0xc0/0xe8
- page_add_new_anon_rmap+0x13c/0x200
- copy_pte_range+0x6b8/0x1018
- copy_page_range+0x3a8/0x5e0
- dup_mmap+0x3a0/0x6e8
- dup_mm+0x78/0x140
- copy_process+0x1528/0x1b08
- kernel_clone+0xac/0x610
- __do_sys_clone+0x78/0xb0
- __arm64_sys_clone+0x30/0x40
- invoke_syscall+0x68/0x170
- el0_svc_common.constprop.0+0x80/0x250
- do_el0_svc+0x48/0xb8
- el0_svc+0x48/0x1a8
- el0t_64_sync_handler+0xb0/0xb8
- el0t_64_sync+0x1a0/0x1a4
-Code: 97f899f4 f9400273 17ffffeb 97f899f1 (d4210000)
----[ end trace dc65e5edd0f362fa ]---
-Kernel panic - not syncing: Oops - BUG: Fatal exception
-SMP: stopping secondary CPUs
-Kernel Offset: 0x5ddc4d400000 from 0xffff800008000000
-PHYS_OFFSET: 0xfffffb0c80000000
-CPU features: 0x44000cf1,00000806
-Memory Limit: none
----[ end Kernel panic - not syncing: Oops - BUG: Fatal exception ]---
+Currently we allocate name buffer in directory iterators (struct
+udf_fileident_iter) on stack. These structures are relatively large
+(some 360 bytes on 64-bit architectures). For udf_rename() which needs
+to keep three of these structures in parallel the stack usage becomes
+rather heavy - 1536 bytes in total. Allocate the name buffer in the
+iterator from heap to avoid excessive stack usage.
 
-This problem has been fixed by the commit <fb3d824d1a46>
-("mm/rmap: split page_dup_rmap() into page_dup_file_rmap()
-and page_try_dup_anon_rmap()"), but still exists in the
-linux-5.15.y branch.
-
-This patch is not applicable to this version because
-of the large version differences. Therefore, fix it by
-adding non-anonymous page check in the copy_present_page().
-
-Cc: stable@vger.kernel.org
-Fixes: 70e806e4e645 ("mm: Do early cow for pinned pages during fork() for ptes")
-Signed-off-by: Yuanzheng Song <songyuanzheng@huawei.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/all/202212200558.lK9x1KW0-lkp@intel.com
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+[Add extra include linux/slab.h]
+Signed-off-by: Hauke Mehrtens <hauke@hauke-m.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/udf/directory.c |   24 ++++++++++++++++--------
+ fs/udf/udfdecl.h   |    2 +-
+ 2 files changed, 17 insertions(+), 9 deletions(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -903,6 +903,17 @@ copy_present_page(struct vm_area_struct
- 	if (likely(!page_needs_cow_for_dma(src_vma, page)))
- 		return 1;
+--- a/fs/udf/directory.c
++++ b/fs/udf/directory.c
+@@ -19,6 +19,7 @@
+ #include <linux/bio.h>
+ #include <linux/crc-itu-t.h>
+ #include <linux/iversion.h>
++#include <linux/slab.h>
  
-+	/*
-+	 * The vma->anon_vma of the child process may be NULL
-+	 * because the entire vma does not contain anonymous pages.
-+	 * A BUG will occur when the copy_present_page() passes
-+	 * a copy of a non-anonymous page of that vma to the
-+	 * page_add_new_anon_rmap() to set up new anonymous rmap.
-+	 * Return 1 if the page is not an anonymous page.
-+	 */
-+	if (!PageAnon(page))
-+		return 1;
-+
- 	new_page = *prealloc;
- 	if (!new_page)
- 		return -EAGAIN;
+ static int udf_verify_fi(struct udf_fileident_iter *iter)
+ {
+@@ -248,9 +249,14 @@ int udf_fiiter_init(struct udf_fileident
+ 	iter->elen = 0;
+ 	iter->epos.bh = NULL;
+ 	iter->name = NULL;
++	iter->namebuf = kmalloc(UDF_NAME_LEN_CS0, GFP_KERNEL);
++	if (!iter->namebuf)
++		return -ENOMEM;
+ 
+-	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB)
+-		return udf_copy_fi(iter);
++	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB) {
++		err = udf_copy_fi(iter);
++		goto out;
++	}
+ 
+ 	if (inode_bmap(dir, iter->pos >> dir->i_blkbits, &iter->epos,
+ 		       &iter->eloc, &iter->elen, &iter->loffset) !=
+@@ -260,17 +266,17 @@ int udf_fiiter_init(struct udf_fileident
+ 		udf_err(dir->i_sb,
+ 			"position %llu not allocated in directory (ino %lu)\n",
+ 			(unsigned long long)pos, dir->i_ino);
+-		return -EFSCORRUPTED;
++		err = -EFSCORRUPTED;
++		goto out;
+ 	}
+ 	err = udf_fiiter_load_bhs(iter);
+ 	if (err < 0)
+-		return err;
++		goto out;
+ 	err = udf_copy_fi(iter);
+-	if (err < 0) {
++out:
++	if (err < 0)
+ 		udf_fiiter_release(iter);
+-		return err;
+-	}
+-	return 0;
++	return err;
+ }
+ 
+ int udf_fiiter_advance(struct udf_fileident_iter *iter)
+@@ -307,6 +313,8 @@ void udf_fiiter_release(struct udf_filei
+ 	brelse(iter->bh[0]);
+ 	brelse(iter->bh[1]);
+ 	iter->bh[0] = iter->bh[1] = NULL;
++	kfree(iter->namebuf);
++	iter->namebuf = NULL;
+ }
+ 
+ static void udf_copy_to_bufs(void *buf1, int len1, void *buf2, int len2,
+--- a/fs/udf/udfdecl.h
++++ b/fs/udf/udfdecl.h
+@@ -99,7 +99,7 @@ struct udf_fileident_iter {
+ 	struct extent_position epos;	/* Position after the above extent */
+ 	struct fileIdentDesc fi;	/* Copied directory entry */
+ 	uint8_t *name;			/* Pointer to entry name */
+-	uint8_t namebuf[UDF_NAME_LEN_CS0]; /* Storage for entry name in case
++	uint8_t *namebuf;		/* Storage for entry name in case
+ 					 * the name is split between two blocks
+ 					 */
+ };
 
 
