@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7EE185924;
-	Fri, 15 Nov 2024 06:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE071885AA;
+	Fri, 15 Nov 2024 06:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731652852; cv=none; b=hbDCrx7HODqeMtXKac5uENfWgsIHAeka/z83w+NIkX0THMlddhfYRJ1VI9Bfa0kq2gYORFKpQxA7WnfCbgINXqnmnwLXY2687dbQb8EdLvw4Fn8WFlRB1dboawUTWw1/+PJud89YCZg+xBwJGsN5TxvTJy584wKD17QF/01IDTM=
+	t=1731652855; cv=none; b=Rgdo7wd0+/SHowo7TERcQuxq5LQLLcR9CJw3+TWG5Z+YRkixrMlbMoGp8rmI09yXILTVj+EPLff3HJc37Zbh5tF0SaTAM/CExz0XU0jLfAaW5vt3kXTnjjgQPA3SRtfl3Latd4AL8jnFBiBJkiLi0ZFFO32B/MCDdmfArqEeYbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731652852; c=relaxed/simple;
-	bh=Ct+/DZ6qgM3eMythkataEdhWQmLNMEIj8YDQbNN0VxY=;
+	s=arc-20240116; t=1731652855; c=relaxed/simple;
+	bh=NzRDInUm0G8BAxUcQiwgcB6TspyDB9Qj3oBQkveue4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yj0F5Wndl74LzGimiS2VpCCGVdqeqj2/qQdELd4ycYInRvnN7OtX6C8WQpnnmtPWCFH2rL5ILhBrSBe0YySGQFQ1gi0JChXM4GFDmCeB3xhR9zaIA5dMlHY/8OVGTT1Fd2bBLqX4y7+tmF62IN3Hr9AyAZFe9WVPO8uh3K7dLGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K/YnoOYQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nQbsxBroqg1zFBjUYYoYJepwUB/GLHjBmbLTYtdBzWXXgatjPrRaM/6Mx3Sj6L/Mvz0yMHguyai1jxzD9L4J7XHfioemmYOenOniBfpBaaHRTNaEwUDC6LnyR0GZ19i65gbMyUkYlq1TluzaiACpVW0WZ/sNaDUY237fdhjDJ4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9iTAwdZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K/YnoOYQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BFCC4CECF;
-	Fri, 15 Nov 2024 06:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9iTAwdZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F07C2C4CECF;
+	Fri, 15 Nov 2024 06:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731652852;
-	bh=Ct+/DZ6qgM3eMythkataEdhWQmLNMEIj8YDQbNN0VxY=;
+	s=korg; t=1731652855;
+	bh=NzRDInUm0G8BAxUcQiwgcB6TspyDB9Qj3oBQkveue4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K/YnoOYQIDXahZKRYpODXay+r9zgcAA/FQhhOZZo65Uuz4boctzwF0hm20WebwSPx
-	 PDkCZWvVsimMqhtTx6vhXWfXf5lm2aG9OvXq31DZES2gXmHwJAJdbdnwSKO83xeST3
-	 pe9AeqxOpTIzAQIWn+x2nUaYmDn2Zhhjxe+irSU8=
+	b=G9iTAwdZSbXCuE1iDCCyqLGFzm9USspGNITYU487ET30dAma3qwqZyxoGacjh97hH
+	 Kzs0J31YmXh499ZvZwKHnf+MljvzdL9Qh3PYKOi3bZvg2NAmDul71q0MrgUfPJO1Fb
+	 MwdNVp7ws9WV8Z0mSjshCsTlteN8WD+9weoDhGMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caesar Wang <wxt@rock-chips.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 04/52] ARM: dts: rockchip: Fix the realtek audio codec on rk3036-kylin
-Date: Fri, 15 Nov 2024 07:37:17 +0100
-Message-ID: <20241115063723.011324514@linuxfoundation.org>
+Subject: [PATCH 4.19 05/52] HID: core: zero-initialize the report buffer
+Date: Fri, 15 Nov 2024 07:37:18 +0100
+Message-ID: <20241115063723.047266329@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.845867306@linuxfoundation.org>
 References: <20241115063722.845867306@linuxfoundation.org>
@@ -46,45 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiko Stuebner <heiko@sntech.de>
+From: Jiri Kosina <jkosina@suse.com>
 
-[ Upstream commit 77a9a7f2d3b94d29d13d71b851114d593a2147cf ]
+[ Upstream commit 177f25d1292c7e16e1199b39c85480f7f8815552 ]
 
-Both the node name as well as the compatible were not named
-according to the binding expectations, fix that.
+Since the report buffer is used by all kinds of drivers in various ways, let's
+zero-initialize it during allocation to make sure that it can't be ever used
+to leak kernel memory via specially-crafted report.
 
-Fixes: 47bf3a5c9e2a ("ARM: dts: rockchip: add the sound setup for rk3036-kylin board")
-Cc: Caesar Wang <wxt@rock-chips.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20241008203940.2573684-15-heiko@sntech.de
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 27ce405039bf ("HID: fix data access in implement()")
+Reported-by: Benoît Sevens <bsevens@google.com>
+Acked-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/rk3036-kylin.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/hid-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/rk3036-kylin.dts b/arch/arm/boot/dts/rk3036-kylin.dts
-index cd109aebb7831..c7fda457e5a81 100644
---- a/arch/arm/boot/dts/rk3036-kylin.dts
-+++ b/arch/arm/boot/dts/rk3036-kylin.dts
-@@ -300,8 +300,8 @@
- &i2c2 {
- 	status = "okay";
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index 0757097d25507..3387e64d84412 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -1482,7 +1482,7 @@ u8 *hid_alloc_report_buf(struct hid_report *report, gfp_t flags)
  
--	rt5616: rt5616@1b {
--		compatible = "rt5616";
-+	rt5616: audio-codec@1b {
-+		compatible = "realtek,rt5616";
- 		reg = <0x1b>;
- 		clocks = <&cru SCLK_I2S_OUT>;
- 		clock-names = "mclk";
+ 	u32 len = hid_report_len(report) + 7;
+ 
+-	return kmalloc(len, flags);
++	return kzalloc(len, flags);
+ }
+ EXPORT_SYMBOL_GPL(hid_alloc_report_buf);
+ 
 -- 
 2.43.0
 
