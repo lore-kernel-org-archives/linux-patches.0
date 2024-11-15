@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E954EAD0;
-	Fri, 15 Nov 2024 06:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2924C2BB1B;
+	Fri, 15 Nov 2024 06:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653144; cv=none; b=H+3QLJZXBHa8k8yHth/SEZrDCXrHyZ7d2R02WrGd8TcUln2GWCqnYCZ28IC/0gBEB5DzeSgsaBfVcyDaueSTGXtvDNjPpU6j79NnP16sa/AYmOR/4Gw1UsjcJWpxEW8q0bVEDFU6NJSjkBgpqODwfVBNEl7GbwOxDZopcCzOvx0=
+	t=1731653148; cv=none; b=pSCTQjRH4HSmmANP8u4dOSB9m6oUdFOPOw5sQuzLMS1pEbE8q9nu4Ia1f7YbUD2OYoxSO/Qk1PcQjqVZhdWinBgQE94WtW2XZ8J346gH+493G+mtKDcjKdUqFsXbgCd8WfODleT5n6r9eGWUBIUkUh02yTTSHfPL5ZY9Dm4C2BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653144; c=relaxed/simple;
-	bh=tgG797msYoN74wgraK9s4WKonhCtafz/AzEE5KPcYVI=;
+	s=arc-20240116; t=1731653148; c=relaxed/simple;
+	bh=05JF2L+H7h1bWhDldl7ls6lOT+iUSmTvNLSEEnN51t8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rvvQ+05ziyVrpzEmF0scEQhc3XxmO1+f0FgpuvgFMGv+35WFhV4lEVVqj6aWZy3Kdsv4+OcNpRlbRoTqfZmKVGdCpKHAUZRYbydm04RfPrVHjSaQeIOkNmesHZGC4txptgY8fhUdF6o2CfcJojniDQY67XrTO6huXFymBOIEMYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUz53xTY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T8ZNDj+Kiot5UFmupBBWCLWZotHvomZCWjfP0x5hv3d/+fmE/6KoSBvkJt/eqLq/rccr7/SIclOckZjW6jxDCXpUffRFK7d2JZbTLezu8LW5IW+sSmg6LJMcLWxKX11QHnSKgf0CI4JxwupquxKmuK2aCED3DItWn85FEnvHW0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTEPHJox; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUz53xTY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E20C4CECF;
-	Fri, 15 Nov 2024 06:45:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTEPHJox"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84889C4CED0;
+	Fri, 15 Nov 2024 06:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653144;
-	bh=tgG797msYoN74wgraK9s4WKonhCtafz/AzEE5KPcYVI=;
+	s=korg; t=1731653148;
+	bh=05JF2L+H7h1bWhDldl7ls6lOT+iUSmTvNLSEEnN51t8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BUz53xTYhLnVGmb9pMkv1z3KRaGem+jzie4a1r8NCbx56ZA+hDbnL7YNrnmIoZeGk
-	 YsgYeYdURGeWI1IOeR+5Y4W8l4ymj+Oc5FpiIHXE3E+FOuBU1EYYogh3dyx620vFn9
-	 S2Eyo4Wem+ibr0xwXKwFxQHc4iEw9fSbYlH+dLyo=
+	b=mTEPHJoxN7vKy1caikBIFpxq0DjB7X9hPHHCuLDWmgK232Rxm5HHh6dm8ju5f6+CT
+	 kgoMifgBbP3u39MfTxIXndsfGSz4evocUuTedF0YeSrBDy/r8qtC4eyiKkQKOgEcBC
+	 pxioXqyD3xaJYPxtHpsDJURr8Mc3KOsd3bwZ8U6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Thorsten Leemhuis <regressions@leemhuis.info>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Omar Sandoval <osandov@fb.com>
-Subject: [PATCH 5.4 66/66] 9p: fix slab cache name creation for real
-Date: Fri, 15 Nov 2024 07:38:15 +0100
-Message-ID: <20241115063725.221391282@linuxfoundation.org>
+	Cedric Blancher <cedric.blancher@gmail.com>,
+	Dan Shelton <dan.f.shelton@gmail.com>,
+	Roland Mainz <roland.mainz@nrubsig.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.4 49/66] NFSD: Fix NFSv4s PUTPUBFH operation
+Date: Fri, 15 Nov 2024 07:37:58 +0100
+Message-ID: <20241115063724.611663186@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -53,49 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit a360f311f57a36e96d88fa8086b749159714dcd2 upstream.
+commit 202f39039a11402dcbcd5fece8d9fa6be83f49ae upstream.
 
-This was attempted by using the dev_name in the slab cache name, but as
-Omar Sandoval pointed out, that can be an arbitrary string, eg something
-like "/dev/root".  Which in turn trips verify_dirent_name(), which fails
-if a filename contains a slash.
+According to RFC 8881, all minor versions of NFSv4 support PUTPUBFH.
 
-So just make it use a sequence counter, and make it an atomic_t to avoid
-any possible races or locking issues.
+Replace the XDR decoder for PUTPUBFH with a "noop" since we no
+longer want the minorversion check, and PUTPUBFH has no arguments to
+decode. (Ideally nfsd4_decode_noop should really be called
+nfsd4_decode_void).
 
-Reported-and-tested-by: Omar Sandoval <osandov@fb.com>
-Link: https://lore.kernel.org/all/ZxafcO8KWMlXaeWE@telecaster.dhcp.thefacebook.com/
-Fixes: 79efebae4afc ("9p: Avoid creating multiple slab caches with the same name")
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Dominique Martinet <asmadeus@codewreck.org>
-Cc: Thorsten Leemhuis <regressions@leemhuis.info>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+PUTPUBFH should now behave just like PUTROOTFH.
+
+Reported-by: Cedric Blancher <cedric.blancher@gmail.com>
+Fixes: e1a90ebd8b23 ("NFSD: Combine decode operations for v4 and v4.1")
+Cc: Dan Shelton <dan.f.shelton@gmail.com>
+Cc: Roland Mainz <roland.mainz@nrubsig.org>
+Cc: stable@vger.kernel.org
+[ cel: adjusted to apply to origin/linux-5.4.y ]
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/client.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4xdr.c |   10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -1001,6 +1001,7 @@ error:
- struct p9_client *p9_client_create(const char *dev_name, char *options)
- {
- 	int err;
-+	static atomic_t seqno = ATOMIC_INIT(0);
- 	struct p9_client *clnt;
- 	char *client_id;
- 	char *cache_name;
-@@ -1056,7 +1057,8 @@ struct p9_client *p9_client_create(const
- 	if (err)
- 		goto close_trans;
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -1069,14 +1069,6 @@ nfsd4_decode_putfh(struct nfsd4_compound
+ }
  
--	cache_name = kasprintf(GFP_KERNEL, "9p-fcall-cache-%s", dev_name);
-+	cache_name = kasprintf(GFP_KERNEL,
-+		"9p-fcall-cache-%u", atomic_inc_return(&seqno));
- 	if (!cache_name) {
- 		err = -ENOMEM;
- 		goto close_trans;
+ static __be32
+-nfsd4_decode_putpubfh(struct nfsd4_compoundargs *argp, void *p)
+-{
+-	if (argp->minorversion == 0)
+-		return nfs_ok;
+-	return nfserr_notsupp;
+-}
+-
+-static __be32
+ nfsd4_decode_read(struct nfsd4_compoundargs *argp, struct nfsd4_read *read)
+ {
+ 	DECODE_HEAD;
+@@ -1825,7 +1817,7 @@ static const nfsd4_dec nfsd4_dec_ops[] =
+ 	[OP_OPEN_CONFIRM]	= (nfsd4_dec)nfsd4_decode_open_confirm,
+ 	[OP_OPEN_DOWNGRADE]	= (nfsd4_dec)nfsd4_decode_open_downgrade,
+ 	[OP_PUTFH]		= (nfsd4_dec)nfsd4_decode_putfh,
+-	[OP_PUTPUBFH]		= (nfsd4_dec)nfsd4_decode_putpubfh,
++	[OP_PUTPUBFH]		= (nfsd4_dec)nfsd4_decode_noop,
+ 	[OP_PUTROOTFH]		= (nfsd4_dec)nfsd4_decode_noop,
+ 	[OP_READ]		= (nfsd4_dec)nfsd4_decode_read,
+ 	[OP_READDIR]		= (nfsd4_dec)nfsd4_decode_readdir,
 
 
