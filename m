@@ -1,43 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1C6188015;
-	Fri, 15 Nov 2024 06:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32160185924;
+	Fri, 15 Nov 2024 06:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653860; cv=none; b=I/E1UQrcuS28ObI9UflJkiTpAtOA5OX0CVgLyxdoM6MRxmECeSqeVETZsKJAcx8T3uZCo/7ZwINn5FCOq9/YnLLoukcBg62ouqY7IFyNcJ2X/ma985+F5cNBaGEg3hXD6mUUgpDHMn6KtsEd7QE+CXj+72NwEopJX6XUGRWlZgA=
+	t=1731653863; cv=none; b=A4ol4CTJxoFmu1GPiKklT/yepjosuDhpS4ImeAki650FJES9tc75/7LOWzEApv9I5Aasf2ymDJfMTUMJpwQa/0YuHmUU6gVs/UXyPP/E/aeNRmdEXJrRSeeLIpwNGiwAQTZGhrqimM3TTezOHgNiKrxu8KOEBD82FGV6ZWDaHD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653860; c=relaxed/simple;
-	bh=DBWgE+uDeUiVbv4UmiPFCjLd9KHRCsO4pz4NEMd4g6U=;
+	s=arc-20240116; t=1731653863; c=relaxed/simple;
+	bh=c+0ftBtWslPt6+ogan5UW0cI12RrQnbt/qaXyH365XM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iqBo5i6W8karkpOV1aX6vk3/oZZqYlSjoSFi6TQRPViAIpIfkDGI9pFot98gWvodSwQ9XAGNupe/EmsV+l0tBvWga4/sjn9DWYWNUC5n9BqrnIyAP/trlkcnOzoyzwkkBtDI4JbKBHmuGxVeZjY9v823qdik8NRSsGaOD+SkvPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cLpFFbYz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qj5I58QRbgZk52FlohZgCFayb2e81VcG144Sx6+ATFPjy8qZpiB8DMdCyiTGY017DIE1JrOYFadC2wUf+osEHk22an3lO7CerkPhyPXgkeTqX2EGgvGiO8x3br0UDLf9bZcpLVB1crot/HF29OxRMbfCT6iLza1xAKAUaIbOF6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aexr92f4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cLpFFbYz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D94C4CECF;
-	Fri, 15 Nov 2024 06:57:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aexr92f4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08B9C4CECF;
+	Fri, 15 Nov 2024 06:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653860;
-	bh=DBWgE+uDeUiVbv4UmiPFCjLd9KHRCsO4pz4NEMd4g6U=;
+	s=korg; t=1731653863;
+	bh=c+0ftBtWslPt6+ogan5UW0cI12RrQnbt/qaXyH365XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cLpFFbYzQOobruf1FiGLXVQd4aZdhA4bXWcrt1+NglGo3YRdXwtHvgC+NPDkjNTt2
-	 RavO2Rm/Oj9sk8star16j8GDwTXjfRSmFGosaVvff8JNSMMwZgzIAtZr2VyNdqeNIb
-	 KZLB9rNUzDPD8+VVHk0ZCjHO15i68ofRj5lsEAUA=
+	b=Aexr92f4yn/VW9svHdKrh5gCngKsm/rDiAXb0JKGFy8SkzOpiMcCNLUTyzuH+L/UW
+	 Pp4pjHE9lQs6Ou/tDgI6XponGsjkOZ4UTXTUJmtoKHe2eCie1k7jj0Zw2P2GQN9NsB
+	 EXlJNcR+WEohBTo/kFe6d/CwIhJLrYxggOIz6Acs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Xi <xiqi2@huawei.com>,
-	kernel test robot <lkp@intel.com>,
-	Baoquan He <bhe@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	Michael Holzheu <holzheu@linux.vnet.ibm.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 55/82] fs/proc: fix compile warning about variable vmcore_mmap_ops
-Date: Fri, 15 Nov 2024 07:38:32 +0100
-Message-ID: <20241115063727.542202966@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>
+Subject: [PATCH 5.10 56/82] usb: musb: sunxi: Fix accessing an released usb phy
+Date: Fri, 15 Nov 2024 07:38:33 +0100
+Message-ID: <20241115063727.577971152@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -56,58 +49,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Xi <xiqi2@huawei.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit b8ee299855f08539e04d6c1a6acb3dc9e5423c00 upstream.
+commit 498dbd9aea205db9da674994b74c7bf8e18448bd upstream.
 
-When build with !CONFIG_MMU, the variable 'vmcore_mmap_ops'
-is defined but not used:
+Commit 6ed05c68cbca ("usb: musb: sunxi: Explicitly release USB PHY on
+exit") will cause that usb phy @glue->xceiv is accessed after released.
 
->> fs/proc/vmcore.c:458:42: warning: unused variable 'vmcore_mmap_ops'
-     458 | static const struct vm_operations_struct vmcore_mmap_ops = {
+1) register platform driver @sunxi_musb_driver
+// get the usb phy @glue->xceiv
+sunxi_musb_probe() -> devm_usb_get_phy().
 
-Fix this by only defining it when CONFIG_MMU is enabled.
+2) register and unregister platform driver @musb_driver
+musb_probe() -> sunxi_musb_init()
+use the phy here
+//the phy is released here
+musb_remove() -> sunxi_musb_exit() -> devm_usb_put_phy()
 
-Link: https://lkml.kernel.org/r/20241101034803.9298-1-xiqi2@huawei.com
-Fixes: 9cb218131de1 ("vmcore: introduce remap_oldmem_pfn_range()")
-Signed-off-by: Qi Xi <xiqi2@huawei.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/lkml/202410301936.GcE8yUos-lkp@intel.com/
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Michael Holzheu <holzheu@linux.vnet.ibm.com>
-Cc: Vivek Goyal <vgoyal@redhat.com>
-Cc: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+3) register @musb_driver again
+musb_probe() -> sunxi_musb_init()
+use the phy here but the phy has been released at 2).
+...
+
+Fixed by reverting the commit, namely, removing devm_usb_put_phy()
+from sunxi_musb_exit().
+
+Fixes: 6ed05c68cbca ("usb: musb: sunxi: Explicitly release USB PHY on exit")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20241029-sunxi_fix-v1-1-9431ed2ab826@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/vmcore.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/usb/musb/sunxi.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/fs/proc/vmcore.c
-+++ b/fs/proc/vmcore.c
-@@ -446,10 +446,6 @@ static vm_fault_t mmap_vmcore_fault(stru
- #endif
+--- a/drivers/usb/musb/sunxi.c
++++ b/drivers/usb/musb/sunxi.c
+@@ -286,8 +286,6 @@ static int sunxi_musb_exit(struct musb *
+ 	if (test_bit(SUNXI_MUSB_FL_HAS_SRAM, &glue->flags))
+ 		sunxi_sram_release(musb->controller->parent);
+ 
+-	devm_usb_put_phy(glue->dev, glue->xceiv);
+-
+ 	return 0;
  }
  
--static const struct vm_operations_struct vmcore_mmap_ops = {
--	.fault = mmap_vmcore_fault,
--};
--
- /**
-  * vmcore_alloc_buf - allocate buffer in vmalloc memory
-  * @sizez: size of buffer
-@@ -477,6 +473,11 @@ static inline char *vmcore_alloc_buf(siz
-  * virtually contiguous user-space in ELF layout.
-  */
- #ifdef CONFIG_MMU
-+
-+static const struct vm_operations_struct vmcore_mmap_ops = {
-+	.fault = mmap_vmcore_fault,
-+};
-+
- /*
-  * remap_oldmem_pfn_checked - do remap_oldmem_pfn_range replacing all pages
-  * reported as not being ram with the zero page.
 
 
