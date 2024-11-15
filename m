@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413A9183CC7;
-	Fri, 15 Nov 2024 07:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCC717555;
+	Fri, 15 Nov 2024 07:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731654009; cv=none; b=ahMOoR0ICLhA8navq61eXnZzZkha37OaM4Z/4g0L9CnbaBHkhMwbVij9hTspp6uvg875QOlql8mr8cLwN8D6vLRrWnSk+f4jwKmqmWRb4VHDxy2dEuFIFKybzoxHaaWUO313tbBq4EHFuKtakzhQVpVJKYQb1mDIKuNsz2iRLjY=
+	t=1731654012; cv=none; b=USNpT0Y+E3fDJlU/i4+3thpuzW86S18eQs/5YFsvHqkbsUQE7LFUaXZEP2N16vGQHvmIEjAF4wInmk6RHqF3nulr96tOIfqYtiu2EFJyR6PeEgG/Kkr3V24XTUqJc1th2CgtWBeQeKdd/V2LP/3TZ17MuCC4Jqao5caG5OAkmkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731654009; c=relaxed/simple;
-	bh=Ex1j5Mdetjsd4XeZhSN79IB9dAN1VsyqbTm5jnig4WM=;
+	s=arc-20240116; t=1731654012; c=relaxed/simple;
+	bh=HntWg3GeWxqq9ZAL/g1sKPDbs39I8xTZ7xv+lPNMwQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0Wf/bfWAnE3wHq3BTdAc0lAjtfRcDlKQ/EZZbtgYM+EQkFpFZFGdVf0a3aq4yQFp8b3SAtK7iD1ud65wbpAfCFQdNCvfuDShJyBzmqM2sPiU4RwSLizWQQ1JWBhBWXRWIrwFfGG8Onq9/pbRlPVdDG7fexLJk+88Ao4r3iRzd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vai4Wm9m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BH6x7OpxC3f0d+iuGZ1m5rLy/8L5OzITIWTlQFgSuU7IS89TrM85UzEe6uOGRgMcXj2q4LDDt7vYpnyjCGo/9NEFFxFsw1jmnH5puOeIU5ol4e9BHidISX0TZlkk0SqTewXHXmpdskv0ASy3/akd29BNawbyM3R9VIW6jmBHZ/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XISMvam4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vai4Wm9m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB1DC4CECF;
-	Fri, 15 Nov 2024 07:00:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XISMvam4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE204C4CECF;
+	Fri, 15 Nov 2024 07:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731654009;
-	bh=Ex1j5Mdetjsd4XeZhSN79IB9dAN1VsyqbTm5jnig4WM=;
+	s=korg; t=1731654012;
+	bh=HntWg3GeWxqq9ZAL/g1sKPDbs39I8xTZ7xv+lPNMwQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vai4Wm9mzl6PrjZEWvqsyoZA4/+yzZFvC7DtpJGoz9n/BjHao4qEZHUo6ZL1cLj61
-	 J/sx6qWAstwyMhDTTIY7LVyx8bRxG0tYESkNEHSsKAeCT8V+cRQnQ2WpZvsA+YGwW4
-	 HyhiI8/vWZaHG7jBvYqROFBrmb0/joMPgHwkA9L8=
+	b=XISMvam4YhFjI5E1dMara/IjxKoV/2nkbMSf2PC1rCd6l+zxdEdMHdbu33KvymP3f
+	 /HVKaZuXK9aPr/1zMIG7IyHsFFtOpcIQYYwf9+uaLp6LHuAIoBociYdzVO4pic+hpF
+	 oWrWEbgOaNd6lh946pQk8pgJIwdkhxN4A93KrgLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qun-Wei Lin <qun-wei.lin@mediatek.com>,
-	David Rientjes <rientjes@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 5.15 18/22] mm: krealloc: Fix MTE false alarm in __do_krealloc
-Date: Fri, 15 Nov 2024 07:39:04 +0100
-Message-ID: <20241115063721.833984688@linuxfoundation.org>
+	Yuanzheng Song <songyuanzheng@huawei.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	David Hildenbrand <david@redhat.com>
+Subject: [PATCH 5.15 19/22] mm/memory: add non-anonymous page check in the copy_present_page()
+Date: Fri, 15 Nov 2024 07:39:05 +0100
+Message-ID: <20241115063721.869017519@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063721.172791419@linuxfoundation.org>
 References: <20241115063721.172791419@linuxfoundation.org>
@@ -51,75 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qun-Wei Lin <qun-wei.lin@mediatek.com>
+From: Yuanzheng Song <songyuanzheng@huawei.com>
 
-commit 704573851b51808b45dae2d62059d1d8189138a2 upstream.
+The vma->anon_vma of the child process may be NULL because
+the entire vma does not contain anonymous pages. In this
+case, a BUG will occur when the copy_present_page() passes
+a copy of a non-anonymous page of that vma to the
+page_add_new_anon_rmap() to set up new anonymous rmap.
 
-This patch addresses an issue introduced by commit 1a83a716ec233 ("mm:
-krealloc: consider spare memory for __GFP_ZERO") which causes MTE
-(Memory Tagging Extension) to falsely report a slab-out-of-bounds error.
+------------[ cut here ]------------
+kernel BUG at mm/rmap.c:1052!
+Internal error: Oops - BUG: 0 [#1] SMP
+Modules linked in:
+CPU: 4 PID: 4652 Comm: test Not tainted 5.15.75 #1
+Hardware name: linux,dummy-virt (DT)
+pstate: 80000005 (Nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __page_set_anon_rmap+0xc0/0xe8
+lr : __page_set_anon_rmap+0xc0/0xe8
+sp : ffff80000e773860
+x29: ffff80000e773860 x28: fffffc13cf006ec0 x27: ffff04f3ccd68000
+x26: ffff04f3c5c33248 x25: 0000000010100073 x24: ffff04f3c53c0a80
+x23: 0000000020000000 x22: 0000000000000001 x21: 0000000020000000
+x20: fffffc13cf006ec0 x19: 0000000000000000 x18: 0000000000000000
+x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+x11: 0000000000000000 x10: 0000000000000000 x9 : ffffdddc5581377c
+x8 : 0000000000000000 x7 : 0000000000000011 x6 : ffff2717a8433000
+x5 : ffff80000e773810 x4 : ffffdddc55400000 x3 : 0000000000000000
+x2 : ffffdddc56b20000 x1 : ffff04f3c9a48040 x0 : 0000000000000000
+Call trace:
+ __page_set_anon_rmap+0xc0/0xe8
+ page_add_new_anon_rmap+0x13c/0x200
+ copy_pte_range+0x6b8/0x1018
+ copy_page_range+0x3a8/0x5e0
+ dup_mmap+0x3a0/0x6e8
+ dup_mm+0x78/0x140
+ copy_process+0x1528/0x1b08
+ kernel_clone+0xac/0x610
+ __do_sys_clone+0x78/0xb0
+ __arm64_sys_clone+0x30/0x40
+ invoke_syscall+0x68/0x170
+ el0_svc_common.constprop.0+0x80/0x250
+ do_el0_svc+0x48/0xb8
+ el0_svc+0x48/0x1a8
+ el0t_64_sync_handler+0xb0/0xb8
+ el0t_64_sync+0x1a0/0x1a4
+Code: 97f899f4 f9400273 17ffffeb 97f899f1 (d4210000)
+---[ end trace dc65e5edd0f362fa ]---
+Kernel panic - not syncing: Oops - BUG: Fatal exception
+SMP: stopping secondary CPUs
+Kernel Offset: 0x5ddc4d400000 from 0xffff800008000000
+PHYS_OFFSET: 0xfffffb0c80000000
+CPU features: 0x44000cf1,00000806
+Memory Limit: none
+---[ end Kernel panic - not syncing: Oops - BUG: Fatal exception ]---
 
-The problem occurs when zeroing out spare memory in __do_krealloc. The
-original code only considered software-based KASAN and did not account
-for MTE. It does not reset the KASAN tag before calling memset, leading
-to a mismatch between the pointer tag and the memory tag, resulting
-in a false positive.
+This problem has been fixed by the commit <fb3d824d1a46>
+("mm/rmap: split page_dup_rmap() into page_dup_file_rmap()
+and page_try_dup_anon_rmap()"), but still exists in the
+linux-5.15.y branch.
 
-Example of the error:
-==================================================================
-swapper/0: BUG: KASAN: slab-out-of-bounds in __memset+0x84/0x188
-swapper/0: Write at addr f4ffff8005f0fdf0 by task swapper/0/1
-swapper/0: Pointer tag: [f4], memory tag: [fe]
-swapper/0:
-swapper/0: CPU: 4 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.
-swapper/0: Hardware name: MT6991(ENG) (DT)
-swapper/0: Call trace:
-swapper/0:  dump_backtrace+0xfc/0x17c
-swapper/0:  show_stack+0x18/0x28
-swapper/0:  dump_stack_lvl+0x40/0xa0
-swapper/0:  print_report+0x1b8/0x71c
-swapper/0:  kasan_report+0xec/0x14c
-swapper/0:  __do_kernel_fault+0x60/0x29c
-swapper/0:  do_bad_area+0x30/0xdc
-swapper/0:  do_tag_check_fault+0x20/0x34
-swapper/0:  do_mem_abort+0x58/0x104
-swapper/0:  el1_abort+0x3c/0x5c
-swapper/0:  el1h_64_sync_handler+0x80/0xcc
-swapper/0:  el1h_64_sync+0x68/0x6c
-swapper/0:  __memset+0x84/0x188
-swapper/0:  btf_populate_kfunc_set+0x280/0x3d8
-swapper/0:  __register_btf_kfunc_id_set+0x43c/0x468
-swapper/0:  register_btf_kfunc_id_set+0x48/0x60
-swapper/0:  register_nf_nat_bpf+0x1c/0x40
-swapper/0:  nf_nat_init+0xc0/0x128
-swapper/0:  do_one_initcall+0x184/0x464
-swapper/0:  do_initcall_level+0xdc/0x1b0
-swapper/0:  do_initcalls+0x70/0xc0
-swapper/0:  do_basic_setup+0x1c/0x28
-swapper/0:  kernel_init_freeable+0x144/0x1b8
-swapper/0:  kernel_init+0x20/0x1a8
-swapper/0:  ret_from_fork+0x10/0x20
-==================================================================
+This patch is not applicable to this version because
+of the large version differences. Therefore, fix it by
+adding non-anonymous page check in the copy_present_page().
 
-Fixes: 1a83a716ec233 ("mm: krealloc: consider spare memory for __GFP_ZERO")
-Signed-off-by: Qun-Wei Lin <qun-wei.lin@mediatek.com>
-Acked-by: David Rientjes <rientjes@google.com>
+Cc: stable@vger.kernel.org
+Fixes: 70e806e4e645 ("mm: Do early cow for pinned pages during fork() for ptes")
+Signed-off-by: Yuanzheng Song <songyuanzheng@huawei.com>
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slab_common.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/memory.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -1213,7 +1213,7 @@ static __always_inline void *__do_kreall
- 		/* Zero out spare memory. */
- 		if (want_init_on_alloc(flags)) {
- 			kasan_disable_current();
--			memset((void *)p + new_size, 0, ks - new_size);
-+			memset(kasan_reset_tag(p) + new_size, 0, ks - new_size);
- 			kasan_enable_current();
- 		}
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -903,6 +903,17 @@ copy_present_page(struct vm_area_struct
+ 	if (likely(!page_needs_cow_for_dma(src_vma, page)))
+ 		return 1;
  
++	/*
++	 * The vma->anon_vma of the child process may be NULL
++	 * because the entire vma does not contain anonymous pages.
++	 * A BUG will occur when the copy_present_page() passes
++	 * a copy of a non-anonymous page of that vma to the
++	 * page_add_new_anon_rmap() to set up new anonymous rmap.
++	 * Return 1 if the page is not an anonymous page.
++	 */
++	if (!PageAnon(page))
++		return 1;
++
+ 	new_page = *prealloc;
+ 	if (!new_page)
+ 		return -EAGAIN;
 
 
