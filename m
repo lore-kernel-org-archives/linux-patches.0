@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E825126C17;
-	Fri, 15 Nov 2024 06:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7DC154C00;
+	Fri, 15 Nov 2024 06:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731652980; cv=none; b=afYq+AZbUwYQxrcHLWZtooVFoeM7dEqoD7a2Iy09hHGMqN7m829vCrVgq2jEjgEVYq/XWnnmhEa4UAlQtzZ8Wt89MpbfW+M8+3+6kUUXTJPq8CsoHru98CWG6Rft3v2a+AKnU1u/aWazwxS2wdHdgGTMufggPaGgTCNqbrz1vRo=
+	t=1731652983; cv=none; b=ZO1n8VZgiQN5bgpYzoLHo6U5yfjnx8Q6Ii1QvDMAz4z57nA6ni85rUDePWi1EpnHMz4fE37iMHxp6gNVittNpoiu4J2VND/0lMJZputDeMvB0h1GMyNPGJ3mGoceL39wbbYrQo5RMuGaKWvIZ5YYtH8eXEDY5CFBtgNz+wqEB98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731652980; c=relaxed/simple;
-	bh=iVhtID9v1oDO4HXznVIx4/k7JCPktUWibIkXvVFrNbI=;
+	s=arc-20240116; t=1731652983; c=relaxed/simple;
+	bh=5NOaELHiZYHxLYquIA7qfqKwGf+oizr99nrisx3GZ9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JswuvXNMN/Kv3tOJE7sYuYEgVCgjOAb4iF7uDL8pM5MXcUcsdgJGEIYv1/DX3+hvVwK2S+cfDnHvNjbGczIFZ7V5E7w6nfYGGlD7sii1GATvr4qGt8K6FcUoo+NkvY5SVJPzlffBRr6MDLxnaqPWM1cmcVF9A4xz28jtpvFHNe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/mN5sM/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M2HK7uGJIU1gSdEZ2aswMQgRdfEtUthTzs51ND8q1j7qvaJF7AqQdY1ak9C1XfaQwxXMIRhmQL2wReLNVN5iEPJpM6bv3fCXSFPDPTQnRD6Dp4vHtmNo9PskTSaQ6qLVG+wzbaYaiADKPppurUGIgYqV2oInDnXMasT2uEtxp54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feP9ol2C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/mN5sM/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93AA1C4CED2;
-	Fri, 15 Nov 2024 06:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feP9ol2C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDE5C4CECF;
+	Fri, 15 Nov 2024 06:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731652980;
-	bh=iVhtID9v1oDO4HXznVIx4/k7JCPktUWibIkXvVFrNbI=;
+	s=korg; t=1731652983;
+	bh=5NOaELHiZYHxLYquIA7qfqKwGf+oizr99nrisx3GZ9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q/mN5sM/r9mOsTVO9UKCVY1BdpC9yPJIVDrD+xKVKZOcwJjMb3RxDch+q9vV94I9U
-	 ndZgGVmWyuXzrVaVoou3gOjmtWTOcyQi8yYVajBewkDHtd5cXaMz0wUNNPlNRCLJSF
-	 o6O/5CpqypwCJlKseeRY7nI7EEuFdIk8q+4sTzM8=
+	b=feP9ol2CF7fdfZIyhV8pcatcy5xVOExrx+iMHeCeLRXApClM+kgSmwlTh958FhW+K
+	 86yb42H74ZcnHPISAfuIanHuVE2sIxnja+EhBwoUhhEnd8wl76itbIUu1axl345iS8
+	 +x2S0B9YF4AUuU7S9Cstr4JL3T4Dwz/5m1ZjOu8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qinglang Miao <miaoqinglang@huawei.com>,
-	Claudiu Manoil <claudiu.manoil@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Murad Masimov <m.masimov@maxima.ru>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 11/66] enetc: simplify the return expression of enetc_vf_set_mac_addr()
-Date: Fri, 15 Nov 2024 07:37:20 +0100
-Message-ID: <20241115063723.249949245@linuxfoundation.org>
+Subject: [PATCH 5.4 20/66] ALSA: firewire-lib: fix return value on fail in amdtp_tscm_init()
+Date: Fri, 15 Nov 2024 07:37:29 +0100
+Message-ID: <20241115063723.573484681@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -52,43 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qinglang Miao <miaoqinglang@huawei.com>
+From: Murad Masimov <m.masimov@maxima.ru>
 
-[ Upstream commit d4b717dd2009f9003a5b4844a0e0ae0370d4c506 ]
+[ Upstream commit 8abbf1f01d6a2ef9f911f793e30f7382154b5a3a ]
 
-Simplify the return expression.
+If amdtp_stream_init() fails in amdtp_tscm_init(), the latter returns zero,
+though it's supposed to return error code, which is checked inside
+init_stream() in file tascam-stream.c.
 
-Signed-off-by: Qinglang Miao <miaoqinglang@huawei.com>
-Reviewed-by: Claudiu Manoil <claudiu.manoil@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: badccd49b93b ("net: enetc: set MAC address to the VF net_device")
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 47faeea25ef3 ("ALSA: firewire-tascam: add data block processing layer")
+Signed-off-by: Murad Masimov <m.masimov@maxima.ru>
+Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20241101185517.1819-1-m.masimov@maxima.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_vf.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ sound/firewire/tascam/amdtp-tascam.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_vf.c b/drivers/net/ethernet/freescale/enetc/enetc_vf.c
-index 3a8c2049b417c..af287b6d5f3b7 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_vf.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_vf.c
-@@ -85,16 +85,11 @@ static int enetc_vf_set_mac_addr(struct net_device *ndev, void *addr)
- {
- 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
- 	struct sockaddr *saddr = addr;
--	int err;
+diff --git a/sound/firewire/tascam/amdtp-tascam.c b/sound/firewire/tascam/amdtp-tascam.c
+index f823a2ab3544b..8ffc065b77f95 100644
+--- a/sound/firewire/tascam/amdtp-tascam.c
++++ b/sound/firewire/tascam/amdtp-tascam.c
+@@ -244,7 +244,7 @@ int amdtp_tscm_init(struct amdtp_stream *s, struct fw_unit *unit,
+ 			CIP_NONBLOCKING | CIP_SKIP_DBC_ZERO_CHECK, fmt,
+ 			process_ctx_payloads, sizeof(struct amdtp_tscm));
+ 	if (err < 0)
+-		return 0;
++		return err;
  
- 	if (!is_valid_ether_addr(saddr->sa_data))
- 		return -EADDRNOTAVAIL;
- 
--	err = enetc_msg_vsi_set_primary_mac_addr(priv, saddr);
--	if (err)
--		return err;
--
--	return 0;
-+	return enetc_msg_vsi_set_primary_mac_addr(priv, saddr);
- }
- 
- static int enetc_vf_set_features(struct net_device *ndev,
+ 	if (dir == AMDTP_OUT_STREAM) {
+ 		// Use fixed value for FDF field.
 -- 
 2.43.0
 
