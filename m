@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4258929A9;
-	Fri, 15 Nov 2024 06:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98EDEAD0;
+	Fri, 15 Nov 2024 06:46:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653175; cv=none; b=c/VRWfNpaRAhiLLfcBjZUkWck68BqAW9aAXVUEzlGZUU4+zpcRx6Jk+7gIqFCs3Vc04udgdFL6qypsGhFxhaDGbzVtPI5HKUa/AsYen6C9BGgFENU/USrO/iHsM6P21K0zkZbwqvmGfu4OiSv4DnU2Of+OgAV6eaO90czWOxklc=
+	t=1731653178; cv=none; b=VOqUQ5CvCd6fFakce4YemDJ89T4tB3O3aFqkt+coWGzkgbnlC8JncviBR4evlmxXQ6VA++IOXIAUPjpb8YpWTwBiAvK7rIeZhrtipBqV7gmbNT+YA6T6mAZMK2G5C6Ef20AvDZ3jOwOmderEC3JQba738SbKuVU53+sqgCuxno8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653175; c=relaxed/simple;
-	bh=TRNOgf17AP4Lk7J4L7a3Va5Px7dBypUqx0hmkqTfrrI=;
+	s=arc-20240116; t=1731653178; c=relaxed/simple;
+	bh=6YIOWB8zJgxduRw2BVzjXWs2DYT/Pdy8Y/RECu2kQLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aKeo9WpiWFNwxwsg4hRhj3Mks1SmeaM17s3lHBHzEQrR111Sc/i0ZKUss3Htnonx8JSBab1VuHAL84sSaa3cCDcn0wf5h2E8oB9ErHErk9EUgRwLWMNXjmyS97Mfa14sRZZLXIMgaTsdwpG5iATD9hWw5tOAb5ahW6qS3tPCOTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SteJyYcq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ovw5apsiAhcrjop4pNxr54U8YKhdIEejz1tcGRb47WHUxBoVwNMoNhNI3EeEDpE4cpjfiIaNe6VWXJx73Szm8czVR47iDiwskWPCsYZ/AbeSH2pjDtUSUBZIUkb9teesXmA89vKwuZRey2XJ4x3ktHpNTme3FROx/MEfxzZNZPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QiIJ5J9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SteJyYcq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5F3DC4CECF;
-	Fri, 15 Nov 2024 06:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QiIJ5J9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D95C4CECF;
+	Fri, 15 Nov 2024 06:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653175;
-	bh=TRNOgf17AP4Lk7J4L7a3Va5Px7dBypUqx0hmkqTfrrI=;
+	s=korg; t=1731653178;
+	bh=6YIOWB8zJgxduRw2BVzjXWs2DYT/Pdy8Y/RECu2kQLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SteJyYcqqYi6NEjncu/3EtHwtCkWQ2pNfEvlyVgQ0PgvXLfGJOBP2WLhIj7Ce+/5t
-	 AVh3gtDKv99bcn9znAQq9jHjitHBjcIbtd5n46BDGEmWWqwpTphFs6PsyaFMepBjwG
-	 klaHWpYx8wXVDQMWtNmK2jAiiYi2jBRBxpjdzEGU=
+	b=1QiIJ5J9DBr4ZDljIxIv3jmwP6QCuq3KXgAddDcuopHG1JzKjZoX6YooFwBqQ79RU
+	 lzHhIKM+JfRbPgmKmyoJYxhurnNL4L2iUVSxlFDJkqOBoJh8tDrWw33gq5IYLwFy5S
+	 pw42h3PoPRp/r5up/1B/e4eoWp8ZdOFjQ48NoZyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Tom Talpey <tom@talpey.com>,
-	Steve French <stfrench@microsoft.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 01/63] smb: client: Fix use-after-free of network namespace.
-Date: Fri, 15 Nov 2024 07:37:24 +0100
-Message-ID: <20241115063725.948063273@linuxfoundation.org>
+Subject: [PATCH 6.11 10/63] nvme: tcp: avoid race between queue_lock lock and destroy
+Date: Fri, 15 Nov 2024 07:37:33 +0100
+Message-ID: <20241115063726.269633322@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
 References: <20241115063725.892410236@linuxfoundation.org>
@@ -52,203 +52,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Hannes Reinecke <hare@suse.de>
 
-[ Upstream commit ef7134c7fc48e1441b398e55a862232868a6f0a7 ]
+[ Upstream commit 782373ba27660ba7d330208cf5509ece6feb4545 ]
 
-Recently, we got a customer report that CIFS triggers oops while
-reconnecting to a server.  [0]
+Commit 76d54bf20cdc ("nvme-tcp: don't access released socket during
+error recovery") added a mutex_lock() call for the queue->queue_lock
+in nvme_tcp_get_address(). However, the mutex_lock() races with
+mutex_destroy() in nvme_tcp_free_queue(), and causes the WARN below.
 
-The workload runs on Kubernetes, and some pods mount CIFS servers
-in non-root network namespaces.  The problem rarely happened, but
-it was always while the pod was dying.
+DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+WARNING: CPU: 3 PID: 34077 at kernel/locking/mutex.c:587 __mutex_lock+0xcf0/0x1220
+Modules linked in: nvmet_tcp nvmet nvme_tcp nvme_fabrics iw_cm ib_cm ib_core pktcdvd nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 ip_set nf_tables qrtr sunrpc ppdev 9pnet_virtio 9pnet pcspkr netfs parport_pc parport e1000 i2c_piix4 i2c_smbus loop fuse nfnetlink zram bochs drm_vram_helper drm_ttm_helper ttm drm_kms_helper xfs drm sym53c8xx floppy nvme scsi_transport_spi nvme_core nvme_auth serio_raw ata_generic pata_acpi dm_multipath qemu_fw_cfg [last unloaded: ib_uverbs]
+CPU: 3 UID: 0 PID: 34077 Comm: udisksd Not tainted 6.11.0-rc7 #319
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-2.fc40 04/01/2014
+RIP: 0010:__mutex_lock+0xcf0/0x1220
+Code: 08 84 d2 0f 85 c8 04 00 00 8b 15 ef b6 c8 01 85 d2 0f 85 78 f4 ff ff 48 c7 c6 20 93 ee af 48 c7 c7 60 91 ee af e8 f0 a7 6d fd <0f> 0b e9 5e f4 ff ff 48 b8 00 00 00 00 00 fc ff df 4c 89 f2 48 c1
+RSP: 0018:ffff88811305f760 EFLAGS: 00010286
+RAX: 0000000000000000 RBX: ffff88812c652058 RCX: 0000000000000000
+RDX: 0000000000000000 RSI: 0000000000000004 RDI: 0000000000000001
+RBP: ffff88811305f8b0 R08: 0000000000000001 R09: ffffed1075c36341
+R10: ffff8883ae1b1a0b R11: 0000000000010498 R12: 0000000000000000
+R13: 0000000000000000 R14: dffffc0000000000 R15: ffff88812c652058
+FS:  00007f9713ae4980(0000) GS:ffff8883ae180000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fcd78483c7c CR3: 0000000122c38000 CR4: 00000000000006f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ? __warn.cold+0x5b/0x1af
+ ? __mutex_lock+0xcf0/0x1220
+ ? report_bug+0x1ec/0x390
+ ? handle_bug+0x3c/0x80
+ ? exc_invalid_op+0x13/0x40
+ ? asm_exc_invalid_op+0x16/0x20
+ ? __mutex_lock+0xcf0/0x1220
+ ? nvme_tcp_get_address+0xc2/0x1e0 [nvme_tcp]
+ ? __pfx___mutex_lock+0x10/0x10
+ ? __lock_acquire+0xd6a/0x59e0
+ ? nvme_tcp_get_address+0xc2/0x1e0 [nvme_tcp]
+ nvme_tcp_get_address+0xc2/0x1e0 [nvme_tcp]
+ ? __pfx_nvme_tcp_get_address+0x10/0x10 [nvme_tcp]
+ nvme_sysfs_show_address+0x81/0xc0 [nvme_core]
+ dev_attr_show+0x42/0x80
+ ? __asan_memset+0x1f/0x40
+ sysfs_kf_seq_show+0x1f0/0x370
+ seq_read_iter+0x2cb/0x1130
+ ? rw_verify_area+0x3b1/0x590
+ ? __mutex_lock+0x433/0x1220
+ vfs_read+0x6a6/0xa20
+ ? lockdep_hardirqs_on+0x78/0x100
+ ? __pfx_vfs_read+0x10/0x10
+ ksys_read+0xf7/0x1d0
+ ? __pfx_ksys_read+0x10/0x10
+ ? __x64_sys_openat+0x105/0x1d0
+ do_syscall_64+0x93/0x180
+ ? lockdep_hardirqs_on_prepare+0x16d/0x400
+ ? do_syscall_64+0x9f/0x180
+ ? lockdep_hardirqs_on+0x78/0x100
+ ? do_syscall_64+0x9f/0x180
+ ? __pfx_ksys_read+0x10/0x10
+ ? lockdep_hardirqs_on_prepare+0x16d/0x400
+ ? do_syscall_64+0x9f/0x180
+ ? lockdep_hardirqs_on+0x78/0x100
+ ? do_syscall_64+0x9f/0x180
+ ? lockdep_hardirqs_on_prepare+0x16d/0x400
+ ? do_syscall_64+0x9f/0x180
+ ? lockdep_hardirqs_on+0x78/0x100
+ ? do_syscall_64+0x9f/0x180
+ ? lockdep_hardirqs_on_prepare+0x16d/0x400
+ ? do_syscall_64+0x9f/0x180
+ ? lockdep_hardirqs_on+0x78/0x100
+ ? do_syscall_64+0x9f/0x180
+ ? lockdep_hardirqs_on_prepare+0x16d/0x400
+ ? do_syscall_64+0x9f/0x180
+ ? lockdep_hardirqs_on+0x78/0x100
+ ? do_syscall_64+0x9f/0x180
+ ? do_syscall_64+0x9f/0x180
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7f9713f55cfa
+Code: 55 48 89 e5 48 83 ec 20 48 89 55 e8 48 89 75 f0 89 7d f8 e8 e8 74 f8 ff 48 8b 55 e8 48 8b 75 f0 41 89 c0 8b 7d f8 31 c0 0f 05 <48> 3d 00 f0 ff ff 77 2e 44 89 c7 48 89 45 f8 e8 42 75 f8 ff 48 8b
+RSP: 002b:00007ffd7f512e70 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+RAX: ffffffffffffffda RBX: 000055c38f316859 RCX: 00007f9713f55cfa
+RDX: 0000000000000fff RSI: 00007ffd7f512eb0 RDI: 0000000000000011
+RBP: 00007ffd7f512e90 R08: 0000000000000000 R09: 00000000ffffffff
+R10: 0000000000000000 R11: 0000000000000246 R12: 000055c38f317148
+R13: 0000000000000000 R14: 00007f96f4004f30 R15: 000055c3b6b623c0
+ </TASK>
 
-The root cause is wrong reference counting for network namespace.
+The WARN is observed when the blktests test case nvme/014 is repeated
+with tcp transport. It is rare, and 200 times repeat is required to
+recreate in some test environments.
 
-CIFS uses kernel sockets, which do not hold refcnt of the netns that
-the socket belongs to.  That means CIFS must ensure the socket is
-always freed before its netns; otherwise, use-after-free happens.
+To avoid the WARN, check the NVME_TCP_Q_LIVE flag before locking
+queue->queue_lock. The flag is cleared long time before the lock gets
+destroyed.
 
-The repro steps are roughly:
-
-  1. mount CIFS in a non-root netns
-  2. drop packets from the netns
-  3. destroy the netns
-  4. unmount CIFS
-
-We can reproduce the issue quickly with the script [1] below and see
-the splat [2] if CONFIG_NET_NS_REFCNT_TRACKER is enabled.
-
-When the socket is TCP, it is hard to guarantee the netns lifetime
-without holding refcnt due to async timers.
-
-Let's hold netns refcnt for each socket as done for SMC in commit
-9744d2bf1976 ("smc: Fix use-after-free in tcp_write_timer_handler().").
-
-Note that we need to move put_net() from cifs_put_tcp_session() to
-clean_demultiplex_info(); otherwise, __sock_create() still could touch a
-freed netns while cifsd tries to reconnect from cifs_demultiplex_thread().
-
-Also, maybe_get_net() cannot be put just before __sock_create() because
-the code is not under RCU and there is a small chance that the same
-address happened to be reallocated to another netns.
-
-[0]:
-CIFS: VFS: \\XXXXXXXXXXX has not responded in 15 seconds. Reconnecting...
-CIFS: Serverclose failed 4 times, giving up
-Unable to handle kernel paging request at virtual address 14de99e461f84a07
-Mem abort info:
-  ESR = 0x0000000096000004
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x04: level 0 translation fault
-Data abort info:
-  ISV = 0, ISS = 0x00000004
-  CM = 0, WnR = 0
-[14de99e461f84a07] address between user and kernel address ranges
-Internal error: Oops: 0000000096000004 [#1] SMP
-Modules linked in: cls_bpf sch_ingress nls_utf8 cifs cifs_arc4 cifs_md4 dns_resolver tcp_diag inet_diag veth xt_state xt_connmark nf_conntrack_netlink xt_nat xt_statistic xt_MASQUERADE xt_mark xt_addrtype ipt_REJECT nf_reject_ipv4 nft_chain_nat nf_nat xt_conntrack nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 xt_comment nft_compat nf_tables nfnetlink overlay nls_ascii nls_cp437 sunrpc vfat fat aes_ce_blk aes_ce_cipher ghash_ce sm4_ce_cipher sm4 sm3_ce sm3 sha3_ce sha512_ce sha512_arm64 sha1_ce ena button sch_fq_codel loop fuse configfs dmi_sysfs sha2_ce sha256_arm64 dm_mirror dm_region_hash dm_log dm_mod dax efivarfs
-CPU: 5 PID: 2690970 Comm: cifsd Not tainted 6.1.103-109.184.amzn2023.aarch64 #1
-Hardware name: Amazon EC2 r7g.4xlarge/, BIOS 1.0 11/1/2018
-pstate: 00400005 (nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : fib_rules_lookup+0x44/0x238
-lr : __fib_lookup+0x64/0xbc
-sp : ffff8000265db790
-x29: ffff8000265db790 x28: 0000000000000000 x27: 000000000000bd01
-x26: 0000000000000000 x25: ffff000b4baf8000 x24: ffff00047b5e4580
-x23: ffff8000265db7e0 x22: 0000000000000000 x21: ffff00047b5e4500
-x20: ffff0010e3f694f8 x19: 14de99e461f849f7 x18: 0000000000000000
-x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-x14: 0000000000000000 x13: 0000000000000000 x12: 3f92800abd010002
-x11: 0000000000000001 x10: ffff0010e3f69420 x9 : ffff800008a6f294
-x8 : 0000000000000000 x7 : 0000000000000006 x6 : 0000000000000000
-x5 : 0000000000000001 x4 : ffff001924354280 x3 : ffff8000265db7e0
-x2 : 0000000000000000 x1 : ffff0010e3f694f8 x0 : ffff00047b5e4500
-Call trace:
- fib_rules_lookup+0x44/0x238
- __fib_lookup+0x64/0xbc
- ip_route_output_key_hash_rcu+0x2c4/0x398
- ip_route_output_key_hash+0x60/0x8c
- tcp_v4_connect+0x290/0x488
- __inet_stream_connect+0x108/0x3d0
- inet_stream_connect+0x50/0x78
- kernel_connect+0x6c/0xac
- generic_ip_connect+0x10c/0x6c8 [cifs]
- __reconnect_target_unlocked+0xa0/0x214 [cifs]
- reconnect_dfs_server+0x144/0x460 [cifs]
- cifs_reconnect+0x88/0x148 [cifs]
- cifs_readv_from_socket+0x230/0x430 [cifs]
- cifs_read_from_socket+0x74/0xa8 [cifs]
- cifs_demultiplex_thread+0xf8/0x704 [cifs]
- kthread+0xd0/0xd4
-Code: aa0003f8 f8480f13 eb18027f 540006c0 (b9401264)
-
-[1]:
-CIFS_CRED="/root/cred.cifs"
-CIFS_USER="Administrator"
-CIFS_PASS="Password"
-CIFS_IP="X.X.X.X"
-CIFS_PATH="//${CIFS_IP}/Users/Administrator/Desktop/CIFS_TEST"
-CIFS_MNT="/mnt/smb"
-DEV="enp0s3"
-
-cat <<EOF > ${CIFS_CRED}
-username=${CIFS_USER}
-password=${CIFS_PASS}
-domain=EXAMPLE.COM
-EOF
-
-unshare -n bash -c "
-mkdir -p ${CIFS_MNT}
-ip netns attach root 1
-ip link add eth0 type veth peer veth0 netns root
-ip link set eth0 up
-ip -n root link set veth0 up
-ip addr add 192.168.0.2/24 dev eth0
-ip -n root addr add 192.168.0.1/24 dev veth0
-ip route add default via 192.168.0.1 dev eth0
-ip netns exec root sysctl net.ipv4.ip_forward=1
-ip netns exec root iptables -t nat -A POSTROUTING -s 192.168.0.2 -o ${DEV} -j MASQUERADE
-mount -t cifs ${CIFS_PATH} ${CIFS_MNT} -o vers=3.0,sec=ntlmssp,credentials=${CIFS_CRED},rsize=65536,wsize=65536,cache=none,echo_interval=1
-touch ${CIFS_MNT}/a.txt
-ip netns exec root iptables -t nat -D POSTROUTING -s 192.168.0.2 -o ${DEV} -j MASQUERADE
-"
-
-umount ${CIFS_MNT}
-
-[2]:
-ref_tracker: net notrefcnt@000000004bbc008d has 1/1 users at
-     sk_alloc (./include/net/net_namespace.h:339 net/core/sock.c:2227)
-     inet_create (net/ipv4/af_inet.c:326 net/ipv4/af_inet.c:252)
-     __sock_create (net/socket.c:1576)
-     generic_ip_connect (fs/smb/client/connect.c:3075)
-     cifs_get_tcp_session.part.0 (fs/smb/client/connect.c:3160 fs/smb/client/connect.c:1798)
-     cifs_mount_get_session (fs/smb/client/trace.h:959 fs/smb/client/connect.c:3366)
-     dfs_mount_share (fs/smb/client/dfs.c:63 fs/smb/client/dfs.c:285)
-     cifs_mount (fs/smb/client/connect.c:3622)
-     cifs_smb3_do_mount (fs/smb/client/cifsfs.c:949)
-     smb3_get_tree (fs/smb/client/fs_context.c:784 fs/smb/client/fs_context.c:802 fs/smb/client/fs_context.c:794)
-     vfs_get_tree (fs/super.c:1800)
-     path_mount (fs/namespace.c:3508 fs/namespace.c:3834)
-     __x64_sys_mount (fs/namespace.c:3848 fs/namespace.c:4057 fs/namespace.c:4034 fs/namespace.c:4034)
-     do_syscall_64 (arch/x86/entry/common.c:52 arch/x86/entry/common.c:83)
-     entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-Fixes: 26abe14379f8 ("net: Modify sk_alloc to not reference count the netns of kernel sockets.")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Tom Talpey <tom@talpey.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/nvme/host/tcp.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index 5375b0c1dfb99..9af28ed4cca46 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1054,6 +1054,7 @@ clean_demultiplex_info(struct TCP_Server_Info *server)
- 		 */
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index e3d82e91151af..c4d776c0ec206 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -2644,10 +2644,11 @@ static int nvme_tcp_get_address(struct nvme_ctrl *ctrl, char *buf, int size)
+ 
+ 	len = nvmf_get_address(ctrl, buf, size);
+ 
++	if (!test_bit(NVME_TCP_Q_LIVE, &queue->flags))
++		return len;
++
+ 	mutex_lock(&queue->queue_lock);
+ 
+-	if (!test_bit(NVME_TCP_Q_LIVE, &queue->flags))
+-		goto done;
+ 	ret = kernel_getsockname(queue->sock, (struct sockaddr *)&src_addr);
+ 	if (ret > 0) {
+ 		if (len > 0)
+@@ -2655,7 +2656,7 @@ static int nvme_tcp_get_address(struct nvme_ctrl *ctrl, char *buf, int size)
+ 		len += scnprintf(buf + len, size - len, "%ssrc_addr=%pISc\n",
+ 				(len) ? "," : "", &src_addr);
  	}
- 
-+	put_net(cifs_net_ns(server));
- 	kfree(server->leaf_fullpath);
- 	kfree(server);
- 
-@@ -1649,8 +1650,6 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
- 	/* srv_count can never go negative */
- 	WARN_ON(server->srv_count < 0);
- 
--	put_net(cifs_net_ns(server));
--
- 	list_del_init(&server->tcp_ses_list);
- 	spin_unlock(&cifs_tcp_ses_lock);
- 
-@@ -3077,13 +3076,22 @@ generic_ip_connect(struct TCP_Server_Info *server)
- 	if (server->ssocket) {
- 		socket = server->ssocket;
- 	} else {
--		rc = __sock_create(cifs_net_ns(server), sfamily, SOCK_STREAM,
-+		struct net *net = cifs_net_ns(server);
-+		struct sock *sk;
+-done:
 +
-+		rc = __sock_create(net, sfamily, SOCK_STREAM,
- 				   IPPROTO_TCP, &server->ssocket, 1);
- 		if (rc < 0) {
- 			cifs_server_dbg(VFS, "Error %d creating socket\n", rc);
- 			return rc;
- 		}
+ 	mutex_unlock(&queue->queue_lock);
  
-+		sk = server->ssocket->sk;
-+		__netns_tracker_free(net, &sk->ns_tracker, false);
-+		sk->sk_net_refcnt = 1;
-+		get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
-+		sock_inuse_add(net, 1);
-+
- 		/* BB other socket options to set KEEPALIVE, NODELAY? */
- 		cifs_dbg(FYI, "Socket created\n");
- 		socket = server->ssocket;
+ 	return len;
 -- 
 2.43.0
 
