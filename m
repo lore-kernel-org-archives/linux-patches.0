@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8159188920;
-	Fri, 15 Nov 2024 06:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29059188015;
+	Fri, 15 Nov 2024 06:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731652940; cv=none; b=CH3fdbsKQgGIrYfToRX8spOif+OS1DI5C3HS8Nj/ZC6RojV3+eimTnmNgVIrYt6VyZhzyG8FEgx0LMsEhq109nmaoNjq8STIfPIalQQF2Kho+UhV3vbtrNINJvvuXmdPPaa9K5LCVRZsjSq0RJgyGZJHBMpT79gsxmRFyGVUWB0=
+	t=1731652943; cv=none; b=VhI8P1xiwUOzWXixxL4hSW3V/RZjE4P/MXCQ+C8C23NsAn9VqLopsj7MFLCCSXqy5OMQKKMMDAzuuw9iJG5ULW7kkSDTrfYPjEYbZKDF/lQZywJNfPXJzrRHEAknfnkF02WBu8NDIyv2HOaCPyx/HTWvIwpXhI/qTau3LVhAyZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731652940; c=relaxed/simple;
-	bh=rNDojzoC+u7v4WxWrohzTOSXhJrSL+kCtYipiyO4r/Y=;
+	s=arc-20240116; t=1731652943; c=relaxed/simple;
+	bh=iatkBtDm6nuzS5d0HkpuDKnakc+BKO3rUcQB20cngHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EdOmq62V9q/Qz0oQ5bpv5pTMFlWBwR9XpkWeR29hwtkZEU0V4qXfhZlKodGr682UUgF69kTTQNMF2sQ2gZs+Qpmxs6HQJOsuXPDmyibd/1TF2cWXy71SANqm7iPWDsfpzLyRboHxtulhpbaIWMhQXc+d/NFE+KV+jZ1sHTrtCVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNPAR3lz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gtO4VYVheZWF9LSjcFDsr1qTvFkkqFeh8l8NLK0IA+4n1/NX2eTjxYnbYtV2IQDZO0miYGG1oXgucjY1w1r3YyDiwkIyljY8E0gWsAwUTmBvvnfTRCEWBbdGhVkdmI+e/z2uLXt17DTWz+6Knj+plx/qWE6o5SoltTFRmYQiqZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zGjtUQZX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNPAR3lz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA5DC4CECF;
-	Fri, 15 Nov 2024 06:42:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGjtUQZX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B964C4CED0;
+	Fri, 15 Nov 2024 06:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731652939;
-	bh=rNDojzoC+u7v4WxWrohzTOSXhJrSL+kCtYipiyO4r/Y=;
+	s=korg; t=1731652943;
+	bh=iatkBtDm6nuzS5d0HkpuDKnakc+BKO3rUcQB20cngHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LNPAR3lzOeh5bcMNSaPX21M+h2Zx5rHSAxd3jc5gknHWN+sT+AOJjsrABE43AQUgI
-	 9tCCKs9hZ0bQF35/xUR0yxeLjYrE53mPx0d1uHcdNXovMFSIjTw+dfNdPFjRcWVu+v
-	 IlGRN1SeTkiINO+bz+MF/MESabrAoCLHKFlgQ0Lo=
+	b=zGjtUQZXXQ1akRe7MpR2197wSoXAF5qtPpbAnDAGE59DZnmMr3sa1Rd78DgRcnlNz
+	 2TMJA1zOhwknSpR7KnGpjL9isQI4x8dztcB8f5o2E6ZfuCsoGT4fhcn9z968dEnTeL
+	 3VhiJIy1L197bqNfsCIZllwicyF5qfZMvKyGC5m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20Sch=C3=A4r?= <jan@jschaer.ch>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 41/52] ALSA: usb-audio: Add quirks for Dell WD19 dock
-Date: Fri, 15 Nov 2024 07:37:54 +0100
-Message-ID: <20241115063724.338994338@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 4.19 32/52] USB: serial: io_edgeport: fix use after free in debug printk
+Date: Fri, 15 Nov 2024 07:37:45 +0100
+Message-ID: <20241115063724.018943719@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.845867306@linuxfoundation.org>
 References: <20241115063722.845867306@linuxfoundation.org>
@@ -45,51 +44,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Schär <jan@jschaer.ch>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 4413665dd6c528b31284119e3571c25f371e1c36 ]
+commit 37bb5628379295c1254c113a407cab03a0f4d0b4 upstream.
 
-The WD19 family of docks has the same audio chipset as the WD15. This
-change enables jack detection on the WD19.
+The "dev_dbg(&urb->dev->dev, ..." which happens after usb_free_urb(urb)
+is a use after free of the "urb" pointer.  Store the "dev" pointer at the
+start of the function to avoid this issue.
 
-We don't need the dell_dock_mixer_init quirk for the WD19. It is only
-needed because of the dell_alc4020_map quirk for the WD15 in
-mixer_maps.c, which disables the volume controls. Even for the WD15,
-this quirk was apparently only needed when the dock firmware was not
-updated.
-
-Signed-off-by: Jan Schär <jan@jschaer.ch>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241029221249.15661-1-jan@jschaer.ch
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 984f68683298 ("USB: serial: io_edgeport.c: remove dbg() usage")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_quirks.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/serial/io_edgeport.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index d5b93a1e7d33f..93b254b723f60 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -2452,6 +2452,9 @@ int snd_usb_mixer_apply_create_quirk(struct usb_mixer_interface *mixer)
- 			break;
- 		err = dell_dock_mixer_init(mixer);
- 		break;
-+	case USB_ID(0x0bda, 0x402e): /* Dell WD19 dock */
-+		err = dell_dock_mixer_create(mixer);
-+		break;
+--- a/drivers/usb/serial/io_edgeport.c
++++ b/drivers/usb/serial/io_edgeport.c
+@@ -846,11 +846,12 @@ static void edge_bulk_out_data_callback(
+ static void edge_bulk_out_cmd_callback(struct urb *urb)
+ {
+ 	struct edgeport_port *edge_port = urb->context;
++	struct device *dev = &urb->dev->dev;
+ 	int status = urb->status;
  
- 	case USB_ID(0x2a39, 0x3fd2): /* RME ADI-2 Pro */
- 	case USB_ID(0x2a39, 0x3fd3): /* RME ADI-2 DAC */
--- 
-2.43.0
-
+ 	atomic_dec(&CmdUrbs);
+-	dev_dbg(&urb->dev->dev, "%s - FREE URB %p (outstanding %d)\n",
+-		__func__, urb, atomic_read(&CmdUrbs));
++	dev_dbg(dev, "%s - FREE URB %p (outstanding %d)\n", __func__, urb,
++		atomic_read(&CmdUrbs));
+ 
+ 
+ 	/* clean up the transfer buffer */
+@@ -860,8 +861,7 @@ static void edge_bulk_out_cmd_callback(s
+ 	usb_free_urb(urb);
+ 
+ 	if (status) {
+-		dev_dbg(&urb->dev->dev,
+-			"%s - nonzero write bulk status received: %d\n",
++		dev_dbg(dev, "%s - nonzero write bulk status received: %d\n",
+ 			__func__, status);
+ 		return;
+ 	}
 
 
