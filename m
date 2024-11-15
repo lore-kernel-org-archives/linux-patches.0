@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF7E154C00;
-	Fri, 15 Nov 2024 06:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AF0188A0C;
+	Fri, 15 Nov 2024 06:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731652926; cv=none; b=nh6WyV5FN2TokabwWWBhvElW/kDL4cO3ZkH0A7cYKHoeukYgcZ8lZmxukP10W8tiz6h6GiXeD5XHHlXPFFmMTR37mfZDtFxzBGEkGbFO17raYOgsKjfxTrCy7AKNZGqx9hKisWbdravdmedV+26xzdQd2veti0HXU/4Uw3C6Y6k=
+	t=1731652930; cv=none; b=VXCJkJ8CtNjk/9lVeTGGgJOk8Czi9pVqlloK5HvwbyeWisEdEsf++1tZaJpTg5cyxbJDHa8N/2ySNR6uBDCXZT1SOyjI7uXU8wZqNcZ+wXEqPtiSCRGDUTfHjBQJBGPa40EWbsMyNwBppVewpDlL5D7qpfrPMXlf/12o1LCU9tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731652926; c=relaxed/simple;
-	bh=+RsfeFzNcAGnmTHKT4LYZVhpRwF+/jxI3Evr77RkZAo=;
+	s=arc-20240116; t=1731652930; c=relaxed/simple;
+	bh=xtvLaWnpE2XOaCWOHrIRKYSPR8L7vis9DV6sUSvEr4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kRAeGViAvMz95pj3RYt7j0TgRdd891F9Y0JjTEVuHaMefuEIuJO8npdax46TFuQSBLfqvQcOVMJSpuc+C1kSQBgRsPs+9Zd9VLnspfF6s3oicZvZXRmF9HVkBz9MO46GYfg567fczlkIvCQG8KJ5huvBaFt2YB2YENs3yOs19FU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DEZddyNo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rzDIytkOMn9sz4wituxbEzVHmLIICWgQBIFCM6TfScrbiMdPPsBbYsMu/vDkZdL2jlp/PmGkfH9fMenkeNLLHT12AOE3xLVM/7A7dZfO41A+KPEQrkTV59FOwsh2+yNNBBMHyIhKvyMlAl+3BCFmSPJc+Yk1ZCFlA+jl7eAbokA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cn4TM/+x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEZddyNo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D958C4CECF;
-	Fri, 15 Nov 2024 06:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cn4TM/+x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81276C4CECF;
+	Fri, 15 Nov 2024 06:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731652926;
-	bh=+RsfeFzNcAGnmTHKT4LYZVhpRwF+/jxI3Evr77RkZAo=;
+	s=korg; t=1731652930;
+	bh=xtvLaWnpE2XOaCWOHrIRKYSPR8L7vis9DV6sUSvEr4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DEZddyNoxfUV/I80wXMCwJ+VKhbhZg27mwNPw0UbsxfKNiSL9bWe+EYZr91jqI3wU
-	 lL0p0QvXFzpLnwCFzX7EwjTw/uBjMHTmwYR4SEAIG8d7ZXvpyvaZSYmGv5zG/W/ZPb
-	 RU5ZL4H37W/DfW5Va01zAXzAQ4iTOmDArIxXouCY=
+	b=Cn4TM/+x5Osw5Zs82wLrUfuJRofBM1z+jYfqbyLexJ6S6dFw5WmHZty08Jgz+i/OP
+	 lvs2xFdpCzzOICVI9+z+naVylsg+MBw+g88nyifv4JDXudkq6ja989r93SoP0QQc/w
+	 AZ9B/YiaB9UWiA6u3cdqtN1Ba/FnOfSu5rDMpnO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Kanner <andrew.kanner@gmail.com>,
-	syzbot+386ce9e60fa1b18aac5b@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 37/52] ocfs2: remove entry once instead of null-ptr-dereference in ocfs2_xa_remove()
-Date: Fri, 15 Nov 2024 07:37:50 +0100
-Message-ID: <20241115063724.197218355@linuxfoundation.org>
+	Ricardo Biehl Pasquali <pasqualirb@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 38/52] ALSA: pcm: Return 0 when size < start_threshold in capture
+Date: Fri, 15 Nov 2024 07:37:51 +0100
+Message-ID: <20241115063724.232898702@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.845867306@linuxfoundation.org>
 References: <20241115063722.845867306@linuxfoundation.org>
@@ -57,91 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Kanner <andrew.kanner@gmail.com>
+From: Ricardo Biehl Pasquali <pasqualirb@gmail.com>
 
-commit 0b63c0e01fba40e3992bc627272ec7b618ccaef7 upstream.
+[ Upstream commit 62ba568f7aef4beb0eda945a2b2a91b7a2b8f215 ]
 
-Syzkaller is able to provoke null-ptr-dereference in ocfs2_xa_remove():
+In __snd_pcm_lib_xfer(), when capture, if state is PREPARED
+and size is less than start_threshold nothing can be done.
+As there is no error, 0 is returned.
 
-[   57.319872] (a.out,1161,7):ocfs2_xa_remove:2028 ERROR: status = -12
-[   57.320420] (a.out,1161,7):ocfs2_xa_cleanup_value_truncate:1999 ERROR: Partial truncate while removing xattr overlay.upper.  Leaking 1 clusters and removing the entry
-[   57.321727] BUG: kernel NULL pointer dereference, address: 0000000000000004
-[...]
-[   57.325727] RIP: 0010:ocfs2_xa_block_wipe_namevalue+0x2a/0xc0
-[...]
-[   57.331328] Call Trace:
-[   57.331477]  <TASK>
-[...]
-[   57.333511]  ? do_user_addr_fault+0x3e5/0x740
-[   57.333778]  ? exc_page_fault+0x70/0x170
-[   57.334016]  ? asm_exc_page_fault+0x2b/0x30
-[   57.334263]  ? __pfx_ocfs2_xa_block_wipe_namevalue+0x10/0x10
-[   57.334596]  ? ocfs2_xa_block_wipe_namevalue+0x2a/0xc0
-[   57.334913]  ocfs2_xa_remove_entry+0x23/0xc0
-[   57.335164]  ocfs2_xa_set+0x704/0xcf0
-[   57.335381]  ? _raw_spin_unlock+0x1a/0x40
-[   57.335620]  ? ocfs2_inode_cache_unlock+0x16/0x20
-[   57.335915]  ? trace_preempt_on+0x1e/0x70
-[   57.336153]  ? start_this_handle+0x16c/0x500
-[   57.336410]  ? preempt_count_sub+0x50/0x80
-[   57.336656]  ? _raw_read_unlock+0x20/0x40
-[   57.336906]  ? start_this_handle+0x16c/0x500
-[   57.337162]  ocfs2_xattr_block_set+0xa6/0x1e0
-[   57.337424]  __ocfs2_xattr_set_handle+0x1fd/0x5d0
-[   57.337706]  ? ocfs2_start_trans+0x13d/0x290
-[   57.337971]  ocfs2_xattr_set+0xb13/0xfb0
-[   57.338207]  ? dput+0x46/0x1c0
-[   57.338393]  ocfs2_xattr_trusted_set+0x28/0x30
-[   57.338665]  ? ocfs2_xattr_trusted_set+0x28/0x30
-[   57.338948]  __vfs_removexattr+0x92/0xc0
-[   57.339182]  __vfs_removexattr_locked+0xd5/0x190
-[   57.339456]  ? preempt_count_sub+0x50/0x80
-[   57.339705]  vfs_removexattr+0x5f/0x100
-[...]
-
-Reproducer uses faultinject facility to fail ocfs2_xa_remove() ->
-ocfs2_xa_value_truncate() with -ENOMEM.
-
-In this case the comment mentions that we can return 0 if
-ocfs2_xa_cleanup_value_truncate() is going to wipe the entry
-anyway. But the following 'rc' check is wrong and execution flow do
-'ocfs2_xa_remove_entry(loc);' twice:
-* 1st: in ocfs2_xa_cleanup_value_truncate();
-* 2nd: returning back to ocfs2_xa_remove() instead of going to 'out'.
-
-Fix this by skipping the 2nd removal of the same entry and making
-syzkaller repro happy.
-
-Link: https://lkml.kernel.org/r/20241103193845.2940988-1-andrew.kanner@gmail.com
-Fixes: 399ff3a748cf ("ocfs2: Handle errors while setting external xattr values.")
-Signed-off-by: Andrew Kanner <andrew.kanner@gmail.com>
-Reported-by: syzbot+386ce9e60fa1b18aac5b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/671e13ab.050a0220.2b8c0f.01d0.GAE@google.com/T/
-Tested-by: syzbot+386ce9e60fa1b18aac5b@syzkaller.appspotmail.com
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ricardo Biehl Pasquali <pasqualirb@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 4413665dd6c5 ("ALSA: usb-audio: Add quirks for Dell WD19 dock")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/xattr.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/core/pcm_lib.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -2050,8 +2050,7 @@ static int ocfs2_xa_remove(struct ocfs2_
- 				rc = 0;
- 			ocfs2_xa_cleanup_value_truncate(loc, "removing",
- 							orig_clusters);
--			if (rc)
--				goto out;
-+			goto out;
- 		}
+diff --git a/sound/core/pcm_lib.c b/sound/core/pcm_lib.c
+index c376471cf760f..463c04e82558b 100644
+--- a/sound/core/pcm_lib.c
++++ b/sound/core/pcm_lib.c
+@@ -2178,11 +2178,16 @@ snd_pcm_sframes_t __snd_pcm_lib_xfer(struct snd_pcm_substream *substream,
+ 		goto _end_unlock;
+ 
+ 	if (!is_playback &&
+-	    runtime->status->state == SNDRV_PCM_STATE_PREPARED &&
+-	    size >= runtime->start_threshold) {
+-		err = snd_pcm_start(substream);
+-		if (err < 0)
++	    runtime->status->state == SNDRV_PCM_STATE_PREPARED) {
++		if (size >= runtime->start_threshold) {
++			err = snd_pcm_start(substream);
++			if (err < 0)
++				goto _end_unlock;
++		} else {
++			/* nothing to do */
++			err = 0;
+ 			goto _end_unlock;
++		}
  	}
  
+ 	runtime->twake = runtime->control->avail_min ? : 1;
+-- 
+2.43.0
+
 
 
