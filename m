@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AD62BB1B;
-	Fri, 15 Nov 2024 06:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42375EAD0;
+	Fri, 15 Nov 2024 06:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653276; cv=none; b=T0jQaKl2cgbcMEsE7f6wyF6h2YKr7aHNfPPVhuIgRvTf9YquJkPOUxCM4kpnWDXgWA5mVzw+YQ8WgOyIEUqt2rxzGDowLDTZtBUAuryndSNHTlkvJkbvBFLMqBRKokNnRby373C5lpSIbvWXQHUbrfKIo4hAB1iEpShAKKrIIa4=
+	t=1731653279; cv=none; b=DAqWb4bXGyabFWlnoMtZXyP9ggpo18V5KWnX+Gc2zl9a0R4x+RXDqZI9Wd2MesJfgb0oVQUktV/h+bXJzClhE/LqkE5k5n+BPK9Ms5C8VKfLRaNLqda3mVZaxXP5FXu0f9t7qp4YH+/SB02EzWyRWDjskMbZsDfd/G5PbdKOMNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653276; c=relaxed/simple;
-	bh=2isIp9lXkCibkXHz3ULOCrIXnwtQ5COGOaKBV6ot6Js=;
+	s=arc-20240116; t=1731653279; c=relaxed/simple;
+	bh=vx/mrWjKea1CSSWBjDEyg85wWSbAKOyyFbUeLLD9zlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HqNoXlwoO/zc33FirRunbSQ5GwNnK9vlXUs3UJpu6Hz1pQ8zyAYOPUQakwwz6jrz+MElvMoYqKK1sCaIRuFhMeUX28Ki1qpLmHUVwIhBy2bb98FNWrDmVoHXJ0f2B/l8zwuPc+s2+c/aZw7g3EkxSUwA5kYgQqqQ8dgGdoD4sCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TB4AfJGT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=anlQC6aulTgrKj6V81A46DfPXzA01buXpqY7r02wj2elxmYCjXx++Fkoil+o9Eqt5F5AbDrqIwZQhHXMKGMujUmM95m72Yke5ulATkowX0/YHYZ88sK3szgRu5sURW/K7R9JBDH2xlstidJhlCttlviI/L8oyu+9x/jVsszfU4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A2zGADxZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TB4AfJGT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84586C4CECF;
-	Fri, 15 Nov 2024 06:47:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A2zGADxZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAFBC4CECF;
+	Fri, 15 Nov 2024 06:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653275;
-	bh=2isIp9lXkCibkXHz3ULOCrIXnwtQ5COGOaKBV6ot6Js=;
+	s=korg; t=1731653279;
+	bh=vx/mrWjKea1CSSWBjDEyg85wWSbAKOyyFbUeLLD9zlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TB4AfJGTt33qicGGrO5VEKXM22Re1kFNI0DZiP4FKY61cKERQwdZAY/NdRv1vGR53
-	 mKMbwnXHwA01qyaayPDJMRQkt+AEFJEb6RyhxrIIGEXFffpYrq6W/TP8/WWl6rywOt
-	 IHEhUUIQlh6f8CV2s62oaoepv5IvIrw0+3qO6jlk=
+	b=A2zGADxZXeCcNDBWquUR7Vo2G04H9gBhShHFtJtZeFvkGyMrRHfCm0vGrcc2WfWmF
+	 LPZuIkcQwejEnmqRdc7Re2HfrpwPQ1kOxi/T1NsW62li5UNIp28mY4kkX5EsOZ83DL
+	 9YlLP8tDBNXS1S4L5hk95dMFdrzza9gZhP285KCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Jun <zhujun2@cmss.chinamobile.com>,
+	Christian Heusel <christian@heusel.eu>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 39/63] ASoC: codecs: Fix error handling in aw_dev_get_dsp_status function
-Date: Fri, 15 Nov 2024 07:38:02 +0100
-Message-ID: <20241115063727.327002762@linuxfoundation.org>
+Subject: [PATCH 6.11 40/63] ASoC: amd: yc: Add quirk for ASUS Vivobook S15 M3502RA
+Date: Fri, 15 Nov 2024 07:38:03 +0100
+Message-ID: <20241115063727.361934674@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
 References: <20241115063725.892410236@linuxfoundation.org>
@@ -51,34 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Jun <zhujun2@cmss.chinamobile.com>
+From: Christian Heusel <christian@heusel.eu>
 
-[ Upstream commit 251ce34a446ef0e1d6acd65cf5947abd5d10b8b6 ]
+[ Upstream commit 182fff3a2aafe4e7f3717a0be9df2fe2ed1a77de ]
 
-Added proper error handling for register value check that
-return -EPERM when register value does not meet expected condition
+As reported the builtin microphone doesn't work on the ASUS Vivobook
+model S15 OLED M3502RA. Therefore add a quirk for it to make it work.
 
-Signed-off-by: Zhu Jun <zhujun2@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20241009073938.7472-1-zhujun2@cmss.chinamobile.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219345
+Signed-off-by: Christian Heusel <christian@heusel.eu>
+Link: https://patch.msgid.link/20241010-bugzilla-219345-asus-vivobook-v1-1-3bb24834e2c3@heusel.eu
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/aw88399.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/codecs/aw88399.c b/sound/soc/codecs/aw88399.c
-index 8dc2b8aa6832d..bba59885242d0 100644
---- a/sound/soc/codecs/aw88399.c
-+++ b/sound/soc/codecs/aw88399.c
-@@ -656,7 +656,7 @@ static int aw_dev_get_dsp_status(struct aw_device *aw_dev)
- 	if (ret)
- 		return ret;
- 	if (!(reg_val & (~AW88399_WDT_CNT_MASK)))
--		ret = -EPERM;
-+		return -EPERM;
- 
- 	return 0;
- }
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 601785ee2f0b8..275faf25e5a76 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -339,6 +339,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "M7600RE"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "M3502RA"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.43.0
 
