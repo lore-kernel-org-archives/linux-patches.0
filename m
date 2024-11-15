@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC4E2BB1B;
-	Fri, 15 Nov 2024 06:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145E42BB1B;
+	Fri, 15 Nov 2024 06:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653981; cv=none; b=EIIr/MwIrIJd+DSMWlPfDrh5V8VDg7utrjdyxamC9YK1O8w7tqJbdlp+8aw/DXlDuXSJzINrazUVBDZAGKfXJ+VdiFBDcG3IRGzhpcXteXHChZ9idRE85g4CpPlMU/p+OdEa+6w5+kPw1vUUgDWAJX3pR/ysyDxXE+UILSp4QG8=
+	t=1731653985; cv=none; b=LYJxF8QFFgYMAGo81ACeOvaCEvDXOYUdLw8vd9s8raivqlyPEIkMXzqvzarQPdQkqya2onGbEDYHDeNm5gp0d/mb2t215ue0raFw9znVLj36/Ssvc+HBSuOKROsBSwBffD6o5dj9YxNAUawP0krQAAizlrnakJf6HsZzZuKWIew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653981; c=relaxed/simple;
-	bh=mUoEAQ6VNO5a7yxkYQhj9g9s6WesLu0WltGMsWLRg5s=;
+	s=arc-20240116; t=1731653985; c=relaxed/simple;
+	bh=7ExGWzR7BWZA+jGs1YMnm/XvyASV9PL/S58qgnxa2bU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rH6uRWv4nBWFCDNEJxlV+OAM/ovLeaaEYPTQHgs1CjPyAitz91QmuyRGEmGICTgEsYiKbV9mER2Wwx9VbitDIfKWVzWL5ZjSpzgOwL4Zsd+IySRkxzdq+NAeJ77qL/FrgeWz5q+oJ+l1emJLONCwoB2Wv/7NMCS9UQP/+0nYAA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVk60Mbs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rIgdLRDqMHaaxQnUImKyboNcga6w3wv04uqEMKEFmAYR+nrSFKGFOsVMu1gccassGraBweAPkBeccaAvY6fqQy9oxdePRa4XBvTrN9xF5vtOewjQNZRSndAjG46daSibHoqiypkx/m7LK1IAeUilzshpWU3lYcrbJZmHXbDieOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cq1DmxTP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVk60Mbs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0E6C4CED4;
-	Fri, 15 Nov 2024 06:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cq1DmxTP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 400FEC4CECF;
+	Fri, 15 Nov 2024 06:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653981;
-	bh=mUoEAQ6VNO5a7yxkYQhj9g9s6WesLu0WltGMsWLRg5s=;
+	s=korg; t=1731653984;
+	bh=7ExGWzR7BWZA+jGs1YMnm/XvyASV9PL/S58qgnxa2bU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mVk60MbsDueB9UNWyzS1EGOiCzwYASv5ezTzQcC6p2OOOB73rNI4GeDCYi0K64Pbw
-	 ZETly1QwdqvokRfbvRHZiWv66AuzIbApeEGMBRnCXz7vz5XK033YKUd7FSRyJS5nW7
-	 ILfTMq1X5gbEmhde/CA7x/uhd4hQpxR0uJyr1eNA=
+	b=cq1DmxTPBDjRpJDvS5GomC4BJ8/NLvPe6Yh8+7VQ7oTQ2zg7gHOsr5XKH+exXg+rO
+	 JjNM0OpQVsSKQ3uicOlfEVe/f9BBMNfGJ+KB3H1p4242lJTlQysKkZyALVCj3MTQ2Y
+	 1ig0vOAElr1ZNtc8TgCREKOT4guinhT11z182aFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Matsievskiy <matsievskiysv@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Yuan Can <yuancan@huawei.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Zhu Lingshan <lingshan.zhu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 02/22] irqchip/ocelot: Fix trigger register address
-Date: Fri, 15 Nov 2024 07:38:48 +0100
-Message-ID: <20241115063721.263282597@linuxfoundation.org>
+Subject: [PATCH 5.15 11/22] vDPA/ifcvf: Fix pci_read_config_byte() return code handling
+Date: Fri, 15 Nov 2024 07:38:57 +0100
+Message-ID: <20241115063721.582255183@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063721.172791419@linuxfoundation.org>
 References: <20241115063721.172791419@linuxfoundation.org>
@@ -51,54 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Matsievskiy <matsievskiysv@gmail.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 9e9c4666abb5bb444dac37e2d7eb5250c8d52a45 ]
+[ Upstream commit 7f8825b2a78ac392d3fbb3a2e65e56d9e39d75e9 ]
 
-Controllers, supported by this driver, have two sets of registers:
+ifcvf_init_hw() uses pci_read_config_byte() that returns
+PCIBIOS_* codes. The error handling, however, assumes the codes are
+normal errnos because it checks for < 0.
+Convert the error check to plain non-zero check.
 
- * (main) interrupt registers control peripheral interrupt sources.
-
- * device interrupt registers configure per-device (network interface)
-   interrupts and act as an extra stage before the main interrupt
-   registers.
-
-In the driver unmask code, device trigger registers are used in the mask
-calculation of the main interrupt sticky register, mixing two kinds of
-registers.
-
-Use the main interrupt trigger register instead.
-
-Signed-off-by: Sergey Matsievskiy <matsievskiysv@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20240925184416.54204-2-matsievskiysv@gmail.com
+Fixes: 5a2414bc454e ("virtio: Intel IFC VF driver for VDPA")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Message-Id: <20241017013812.129952-1-yuancan@huawei.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Zhu Lingshan <lingshan.zhu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mscc-ocelot.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/vdpa/ifcvf/ifcvf_base.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-mscc-ocelot.c b/drivers/irqchip/irq-mscc-ocelot.c
-index 4d0c3532dbe73..c19ab379e8c5e 100644
---- a/drivers/irqchip/irq-mscc-ocelot.c
-+++ b/drivers/irqchip/irq-mscc-ocelot.c
-@@ -37,7 +37,7 @@ static struct chip_props ocelot_props = {
- 	.reg_off_ena_clr	= 0x1c,
- 	.reg_off_ena_set	= 0x20,
- 	.reg_off_ident		= 0x38,
--	.reg_off_trigger	= 0x5c,
-+	.reg_off_trigger	= 0x4,
- 	.n_irq			= 24,
- };
+diff --git a/drivers/vdpa/ifcvf/ifcvf_base.c b/drivers/vdpa/ifcvf/ifcvf_base.c
+index 5091ff9d6c93f..bdadc5714e0e4 100644
+--- a/drivers/vdpa/ifcvf/ifcvf_base.c
++++ b/drivers/vdpa/ifcvf/ifcvf_base.c
+@@ -105,7 +105,7 @@ int ifcvf_init_hw(struct ifcvf_hw *hw, struct pci_dev *pdev)
+ 	u32 i;
  
-@@ -70,7 +70,7 @@ static struct chip_props jaguar2_props = {
- 	.reg_off_ena_clr	= 0x1c,
- 	.reg_off_ena_set	= 0x20,
- 	.reg_off_ident		= 0x38,
--	.reg_off_trigger	= 0x5c,
-+	.reg_off_trigger	= 0x4,
- 	.n_irq			= 29,
- };
- 
+ 	ret = pci_read_config_byte(pdev, PCI_CAPABILITY_LIST, &pos);
+-	if (ret < 0) {
++	if (ret) {
+ 		IFCVF_ERR(pdev, "Failed to read PCI capability list\n");
+ 		return -EIO;
+ 	}
 -- 
 2.43.0
 
