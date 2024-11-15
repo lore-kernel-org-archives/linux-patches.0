@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2667818871E;
-	Fri, 15 Nov 2024 06:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36FB32BB1B;
+	Fri, 15 Nov 2024 06:53:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653584; cv=none; b=kgMa5unRSMQxMm/XLNR66rH0ga2BOZJnyknDlEEDBdDQr2oR3+DYnhv+0KVqDekBIDitQbmEOV1OBixDlOVGazlRy5DRIrKgAEq3om9okVr1gkKn7qOXyl3Ip/8P6NRTZVbrWYMMYsgeHCCpmr6101F3N+PMo0ZdDji4oPOdYbk=
+	t=1731653587; cv=none; b=H+2yqPyUhjv7MGFf5k/tup8aA5Q1UvhQri+5AQJ5VUc/RFPOydeNKGsXox3kvDq/AvkN2RzlhTee9qDFb9Ngtg9BvCLkFOkDtGoXDVFIcsrGCYGPfPl1Zu/kpDihIctW1qRZJDHOfquAzuUSEQQ7IvZFm8NMcbyUCzWEuFLkl/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653584; c=relaxed/simple;
-	bh=gRPOsoPsOtb4lwNrqURhvEKqyFMub7Eis3B4Pa0yVDY=;
+	s=arc-20240116; t=1731653587; c=relaxed/simple;
+	bh=OIF9sR0hzMx7ZfPn+9PyJrEPW2dCQ+zk7/73CW9nuXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ExMVKhIo0odB4NukDs7OpZIgOLMiee2ybUCfw4WgB1LWjHwdDGZly62eSjYIZ152L/NqPNLTeLhZUDaGpj49r2Yft5OMlNVZgL+QS5BolkvXvZayrLY7DD+WdMCDzJkMgtl1s9zxIvuti1hnEw0ATLKpHK0lrKQ8TvtXSsCRjCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHoKHd5M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QH7V+NDY55ncD3xA/ftTL1uWNQ0HDuJQyGDDpOF5DgGKdWTCRRvuP41osk77V1PBI7Cg7OUT6A6t/JisjQO0Ib4qO3FtL8f5z96r7JTdPWaNpGVRtWK1kJOjYeBBExETrZGykn8K+2EmS9tCjcJlFkXxSsNfKQfdPbHZ1vz7Rzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RbE51Av5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHoKHd5M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89148C4CECF;
-	Fri, 15 Nov 2024 06:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RbE51Av5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8CEC4CECF;
+	Fri, 15 Nov 2024 06:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653584;
-	bh=gRPOsoPsOtb4lwNrqURhvEKqyFMub7Eis3B4Pa0yVDY=;
+	s=korg; t=1731653587;
+	bh=OIF9sR0hzMx7ZfPn+9PyJrEPW2dCQ+zk7/73CW9nuXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AHoKHd5MdzCrPjHoiibOhOahpPAQpT8o1rlpmsbyPlbbBgVMnGxKemzWOhfVTjGDq
-	 4/arzluEHczibKQ/e+14bT8u9JUdGSS0S5cbgC/nOeQnMHpGXBs3H0dHlIkabgJgfR
-	 YlA+2Mf1Lf9NgdbRU6z6uG9Fz9xPqoCcjeKvOT7k=
+	b=RbE51Av55x48MEsXFbKvQMz9EhNAZKQr6lxaCYQOaxGY8tymjvOhllcVDNRe2iyWu
+	 sJXTQh+xbhxDuLpng/Q2rVFRfaAL/S4I+jgUs55CdEL4W41sJOQIrKrAJJ863JpWuK
+	 EYfEASeFrnnbPjKT26lKosTjtxId+2Hebh+TsObc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Martin Krastev <martin.krastev@broadcom.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	syzbot+908886656a02769af987@syzkaller.appspotmail.com,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 17/39] drm/vmwgfx: Limit display layout ioctl array size to VMWGFX_NUM_DISPLAY_UNITS
-Date: Fri, 15 Nov 2024 07:38:27 +0100
-Message-ID: <20241115063723.231298896@linuxfoundation.org>
+Subject: [PATCH 6.1 18/39] kasan: Disable Software Tag-Based KASAN with GCC
+Date: Fri, 15 Nov 2024 07:38:28 +0100
+Message-ID: <20241115063723.266970553@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.599985562@linuxfoundation.org>
 References: <20241115063722.599985562@linuxfoundation.org>
@@ -52,84 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Will Deacon <will@kernel.org>
 
-[ Upstream commit 28a5dfd4f615539fb22fb6d5c219c199c14e6eb6 ]
+[ Upstream commit 7aed6a2c51ffc97a126e0ea0c270fab7af97ae18 ]
 
-Currently the array size is only limited by the largest kmalloc size which
-is incorrect. This change will also return a more specific error message
-than ENOMEM to userspace.
+Syzbot reports a KASAN failure early during boot on arm64 when building
+with GCC 12.2.0 and using the Software Tag-Based KASAN mode:
 
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
-Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240808200634.1074083-1-ian.forbes@broadcom.com
+  | BUG: KASAN: invalid-access in smp_build_mpidr_hash arch/arm64/kernel/setup.c:133 [inline]
+  | BUG: KASAN: invalid-access in setup_arch+0x984/0xd60 arch/arm64/kernel/setup.c:356
+  | Write of size 4 at addr 03ff800086867e00 by task swapper/0
+  | Pointer tag: [03], memory tag: [fe]
+
+Initial triage indicates that the report is a false positive and a
+thorough investigation of the crash by Mark Rutland revealed the root
+cause to be a bug in GCC:
+
+  > When GCC is passed `-fsanitize=hwaddress` or
+  > `-fsanitize=kernel-hwaddress` it ignores
+  > `__attribute__((no_sanitize_address))`, and instruments functions
+  > we require are not instrumented.
+  >
+  > [...]
+  >
+  > All versions [of GCC] I tried were broken, from 11.3.0 to 14.2.0
+  > inclusive.
+  >
+  > I think we have to disable KASAN_SW_TAGS with GCC until this is
+  > fixed
+
+Disable Software Tag-Based KASAN when building with GCC by making
+CC_HAS_KASAN_SW_TAGS depend on !CC_IS_GCC.
+
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Suggested-by: Mark Rutland <mark.rutland@arm.com>
+Reported-by: syzbot+908886656a02769af987@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/r/000000000000f362e80620e27859@google.com
+Link: https://lore.kernel.org/r/ZvFGwKfoC4yVjN_X@J2N7QTR9R3
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218854
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20241014161100.18034-1-will@kernel.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.h | 4 ++--
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 4 +++-
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.h | 3 ---
- 3 files changed, 5 insertions(+), 6 deletions(-)
+ lib/Kconfig.kasan | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-index bca10214e0bf1..abdca2346f1a0 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-@@ -59,7 +59,7 @@
- #define VMWGFX_DRIVER_MINOR 20
- #define VMWGFX_DRIVER_PATCHLEVEL 0
- #define VMWGFX_FIFO_STATIC_SIZE (1024*1024)
--#define VMWGFX_MAX_DISPLAYS 16
-+#define VMWGFX_NUM_DISPLAY_UNITS 8
- #define VMWGFX_CMD_BOUNCE_INIT_SIZE 32768
+diff --git a/lib/Kconfig.kasan b/lib/Kconfig.kasan
+index ca09b1cf8ee9d..34420eb1cbfe1 100644
+--- a/lib/Kconfig.kasan
++++ b/lib/Kconfig.kasan
+@@ -22,8 +22,11 @@ config ARCH_DISABLE_KASAN_INLINE
+ config CC_HAS_KASAN_GENERIC
+ 	def_bool $(cc-option, -fsanitize=kernel-address)
  
- #define VMWGFX_MIN_INITIAL_WIDTH 1280
-@@ -79,7 +79,7 @@
- #define VMWGFX_NUM_GB_CONTEXT 256
- #define VMWGFX_NUM_GB_SHADER 20000
- #define VMWGFX_NUM_GB_SURFACE 32768
--#define VMWGFX_NUM_GB_SCREEN_TARGET VMWGFX_MAX_DISPLAYS
-+#define VMWGFX_NUM_GB_SCREEN_TARGET VMWGFX_NUM_DISPLAY_UNITS
- #define VMWGFX_NUM_DXCONTEXT 256
- #define VMWGFX_NUM_DXQUERY 512
- #define VMWGFX_NUM_MOB (VMWGFX_NUM_GB_CONTEXT +\
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-index a8f349e748e56..5210b8084217c 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -2261,7 +2261,7 @@ int vmw_kms_update_layout_ioctl(struct drm_device *dev, void *data,
- 	struct drm_mode_config *mode_config = &dev->mode_config;
- 	struct drm_vmw_update_layout_arg *arg =
- 		(struct drm_vmw_update_layout_arg *)data;
--	void __user *user_rects;
-+	const void __user *user_rects;
- 	struct drm_vmw_rect *rects;
- 	struct drm_rect *drm_rects;
- 	unsigned rects_size;
-@@ -2273,6 +2273,8 @@ int vmw_kms_update_layout_ioctl(struct drm_device *dev, void *data,
- 					    VMWGFX_MIN_INITIAL_HEIGHT};
- 		vmw_du_update_layout(dev_priv, 1, &def_rect);
- 		return 0;
-+	} else if (arg->num_outputs > VMWGFX_NUM_DISPLAY_UNITS) {
-+		return -E2BIG;
- 	}
++# GCC appears to ignore no_sanitize_address when -fsanitize=kernel-hwaddress
++# is passed. See https://bugzilla.kernel.org/show_bug.cgi?id=218854 (and
++# the linked LKML thread) for more details.
+ config CC_HAS_KASAN_SW_TAGS
+-	def_bool $(cc-option, -fsanitize=kernel-hwaddress)
++	def_bool !CC_IS_GCC && $(cc-option, -fsanitize=kernel-hwaddress)
  
- 	rects_size = arg->num_outputs * sizeof(struct drm_vmw_rect);
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.h b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.h
-index 1099de1ece4b3..a2a294841df41 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.h
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.h
-@@ -199,9 +199,6 @@ struct vmw_kms_dirty {
- 	s32 unit_y2;
- };
+ # This option is only required for software KASAN modes.
+ # Old GCC versions do not have proper support for no_sanitize_address.
+@@ -91,7 +94,7 @@ config KASAN_SW_TAGS
+ 	help
+ 	  Enables Software Tag-Based KASAN.
  
--#define VMWGFX_NUM_DISPLAY_UNITS 8
--
--
- #define vmw_framebuffer_to_vfb(x) \
- 	container_of(x, struct vmw_framebuffer, base)
- #define vmw_framebuffer_to_vfbs(x) \
+-	  Requires GCC 11+ or Clang.
++	  Requires Clang.
+ 
+ 	  Supported only on arm64 CPUs and relies on Top Byte Ignore.
+ 
 -- 
 2.43.0
 
