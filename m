@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70336EAD0;
-	Fri, 15 Nov 2024 06:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AFF185924;
+	Fri, 15 Nov 2024 06:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653436; cv=none; b=FZKv9oIbPK4S/5T6P4WoCF+t4lao1TOqPH6o3I887vN4OqLzmbNz6HsCyo0TxaGpWLdnve3rP8wk1gHAvK2f4JhCsHha8uXbn3TXO9f9z7zjnh09NI2FpVnKeB42g0EymudiTYj57VEFeXk9TSnUBik+F6M1ZD3zUTOjiE8AgLc=
+	t=1731653439; cv=none; b=dtxl6AwBKFHqcmHB58Ovg3WVz5TcQrrJYBlbowxg2/78AzaYy/IWRVgrM0A9CH/bF05Jv9pEpOmXW9lE5IKplqqvHT36SSqlVv9eO5I6Ib5LGO7vAyaLIhHWz06EJJ0aysvIDFEXy2W+hxkAd/NHpz6m7kr2t7kh/j+o0kJZreo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653436; c=relaxed/simple;
-	bh=OMnijPmwxd/m0AG8oc/b61xVH3mmOgbw+8eDsFDD4pI=;
+	s=arc-20240116; t=1731653439; c=relaxed/simple;
+	bh=z+AvLwOFUoyXOJxpiY86p0Ujhp8/4HBoY09e3sg+Jr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=djuPN4dW35Ks31nL7r9wGJlxFsCNwY8RZvrrdpMTM7kGD+CHppSF4dxsoLIKBe7Zatb6OqWreidSKd9LLHW/VoPJY0e7lisCD8BDTNRcGGGfczSv1zF0BEHeuTYydXC+2oK3U/ixDzjNhKyc1l4syc3mw/Dyni/Z3YGjzVaJh4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LAdw2nEh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h/QpCt+nJTXI5V9yrNXsVbou5Kr4KK6lus6Nw6SLL+/mI9yFZztsFGqokloK+8wu8g75825M5DA4yxTK9OH2XV65NGtyDLX2MfbcRjj6+oJYThip+Df68aIB7knCMJUmvbKfeRlP+7bzKu5mMv68vDeMm4QKTqiRRTr4dhk9aWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTSiU72x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LAdw2nEh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB85C4CECF;
-	Fri, 15 Nov 2024 06:50:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTSiU72x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D16C4CECF;
+	Fri, 15 Nov 2024 06:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653436;
-	bh=OMnijPmwxd/m0AG8oc/b61xVH3mmOgbw+8eDsFDD4pI=;
+	s=korg; t=1731653439;
+	bh=z+AvLwOFUoyXOJxpiY86p0Ujhp8/4HBoY09e3sg+Jr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LAdw2nEhwrk1LR4aRiaekp9Bu+sCyXqPLi4BcmvIT0Wu4ZHxtlIrt44nr/x4/n7dG
-	 nK+OwM6CS4wJQgH3RFVtG7gG+Dji5/4vTc0En6+2jYEuTmNqJidsymGG2Rbn9lyeSz
-	 dBt6By6MxLt9mHQlYwxsWliv0io8M86zkAzaBI4g=
+	b=eTSiU72xJmb0e3rWa8knAUJ1ERVU5TzHVXQBOsGkFaKuxiYBGj7QmwwBRndcZ5DPo
+	 NIS/xckHJpJCbT3Hc7zyR3+hufon+pAKdfL/qxEEiUNACROaEW9CiIHrGxhFRTKvOZ
+	 LOh8cYFpqYJy5HoRvUWbSm/VgaGmygrNSPAP5F5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 21/48] net: phy: mdio-bcm-unimac: Add BCM6846 support
-Date: Fri, 15 Nov 2024 07:38:10 +0100
-Message-ID: <20241115063723.730206017@linuxfoundation.org>
+Subject: [PATCH 6.6 22/48] nvme-loop: flush off pending I/O while shutting down loop controller
+Date: Fri, 15 Nov 2024 07:38:11 +0100
+Message-ID: <20241115063723.766025173@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.962047137@linuxfoundation.org>
 References: <20241115063722.962047137@linuxfoundation.org>
@@ -52,38 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit 906b77ca91c7e9833b4e47bedb6bec76be71d497 ]
+[ Upstream commit c199fac88fe7c749f88a0653e9f621b9f5a71cf1 ]
 
-Add Unimac mdio compatible string for the special BCM6846
-variant.
+While shutting down loop controller, we first quiesce the admin/IO queue,
+delete the admin/IO tag-set and then at last destroy the admin/IO queue.
+However it's quite possible that during the window between quiescing and
+destroying of the admin/IO queue, some admin/IO request might sneak in
+and if that happens then we could potentially encounter a hung task
+because shutdown operation can't forward progress until any pending I/O
+is flushed off.
 
-This variant has a few extra registers compared to other
-versions.
+This commit helps ensure that before destroying the admin/IO queue, we
+unquiesce the admin/IO queue so that any outstanding requests, which are
+added after the admin/IO queue is quiesced, are now flushed to its
+completion.
 
-Suggested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/linux-devicetree/b542b2e8-115c-4234-a464-e73aa6bece5c@broadcom.com/
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://patch.msgid.link/20241012-bcm6846-mdio-v1-2-c703ca83e962@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/mdio-bcm-unimac.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/target/loop.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/net/mdio/mdio-bcm-unimac.c b/drivers/net/mdio/mdio-bcm-unimac.c
-index 6b26a0803696d..a29838be335c9 100644
---- a/drivers/net/mdio/mdio-bcm-unimac.c
-+++ b/drivers/net/mdio/mdio-bcm-unimac.c
-@@ -336,6 +336,7 @@ static SIMPLE_DEV_PM_OPS(unimac_mdio_pm_ops,
- static const struct of_device_id unimac_mdio_ids[] = {
- 	{ .compatible = "brcm,asp-v2.1-mdio", },
- 	{ .compatible = "brcm,asp-v2.0-mdio", },
-+	{ .compatible = "brcm,bcm6846-mdio", },
- 	{ .compatible = "brcm,genet-mdio-v5", },
- 	{ .compatible = "brcm,genet-mdio-v4", },
- 	{ .compatible = "brcm,genet-mdio-v3", },
+diff --git a/drivers/nvme/target/loop.c b/drivers/nvme/target/loop.c
+index 48d5df054cd02..bd61a1b82c4cd 100644
+--- a/drivers/nvme/target/loop.c
++++ b/drivers/nvme/target/loop.c
+@@ -265,6 +265,13 @@ static void nvme_loop_destroy_admin_queue(struct nvme_loop_ctrl *ctrl)
+ {
+ 	if (!test_and_clear_bit(NVME_LOOP_Q_LIVE, &ctrl->queues[0].flags))
+ 		return;
++	/*
++	 * It's possible that some requests might have been added
++	 * after admin queue is stopped/quiesced. So now start the
++	 * queue to flush these requests to the completion.
++	 */
++	nvme_unquiesce_admin_queue(&ctrl->ctrl);
++
+ 	nvmet_sq_destroy(&ctrl->queues[0].nvme_sq);
+ 	nvme_remove_admin_tag_set(&ctrl->ctrl);
+ }
+@@ -297,6 +304,12 @@ static void nvme_loop_destroy_io_queues(struct nvme_loop_ctrl *ctrl)
+ 		nvmet_sq_destroy(&ctrl->queues[i].nvme_sq);
+ 	}
+ 	ctrl->ctrl.queue_count = 1;
++	/*
++	 * It's possible that some requests might have been added
++	 * after io queue is stopped/quiesced. So now start the
++	 * queue to flush these requests to the completion.
++	 */
++	nvme_unquiesce_io_queues(&ctrl->ctrl);
+ }
+ 
+ static int nvme_loop_init_io_queues(struct nvme_loop_ctrl *ctrl)
 -- 
 2.43.0
 
