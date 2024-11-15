@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0CCF2BB1B;
-	Fri, 15 Nov 2024 06:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D5C2BB1B;
+	Fri, 15 Nov 2024 06:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653658; cv=none; b=gLBxVyk7USU2bwtey3oM4Y6YNHCS+CA74HuD0/Gs/TPto15ckppoIVHCkQmioXYOK6i97IntII6SgN02735TwwLht9s5q2kp7rJp41aCEsaqwnYsPIKgog+GEZrt+3nTEH+EI7tqZl72/a33Lqip496b06cDp16koOyom+5c7+E=
+	t=1731653661; cv=none; b=hqJxFAuDDAMHjh9Ne/k/9HtG1S2g+rEY1iJaMfvCBtu5Sl6e04vH9/Br00AaHIhzXNEV6gMrYyz5dOobjhXD4l5DKCRzr0Ll6ebvc6QXbu7lVwSZRjcAg4PsY8yLLQ0qpEcMqTBwKyQKbUjScNCRwjo2rrVY+9z2aF/a0143+EM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653658; c=relaxed/simple;
-	bh=Uxr+JFCWmfQJuP+9pIwQfQS/s+15YDdQnsWhRlUQXEg=;
+	s=arc-20240116; t=1731653661; c=relaxed/simple;
+	bh=OOLxeObIzpNSzzFSy587DmuGZ1yFgjzxOHT5lut/0og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FOy+aOFKGk0w2CfMSgRVDz6VJjv2Zsxf+IPxVISHA5V5Y+93tc4tjgNYsozQig7Id02SJfrsIlGpqIj7O2ameLfL4lZZIINnwhEKuhWj8CNE+ugpR+B0DbUufxSoHLulTb9v/XbrHHyN94mUmgAzDiYA7WbSe8V5XLKWjt4+07A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jw0coeDA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L+r5j6VUXUjbVAPZ606N5SF5T/A9rePlqNwu3ob1vm9zs/J3utvoZgdC8eMPjFOGR6f9yTLtSslBaPWXUIqBpe5HNftK9D+Ot3XR0lcKQ2M8O8i1GsCyKbzVpMVxRJ+4AT7tYCmYnkDl6+M3OqkmTgXGxZxI24gVn4fhbO8EOQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8oYzv+q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jw0coeDA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489FAC4CECF;
-	Fri, 15 Nov 2024 06:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8oYzv+q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4C0C4CECF;
+	Fri, 15 Nov 2024 06:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653657;
-	bh=Uxr+JFCWmfQJuP+9pIwQfQS/s+15YDdQnsWhRlUQXEg=;
+	s=korg; t=1731653661;
+	bh=OOLxeObIzpNSzzFSy587DmuGZ1yFgjzxOHT5lut/0og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jw0coeDAQ7uV/pCNaJABHluAfuwZHBOrkgAi0Fsx6LNxyPTybvzFNgU8GsAe3s9H5
-	 todgK5VSkE+47lYOXVzYgvRxyMKgwhNWRH23gi+cWNhrkCPVnhcw/DMoyNHh5NFGR2
-	 av0dCnmnmmimX+UX7wxZ+2Vw0RwF2cviYwla0HiE=
+	b=V8oYzv+qa3PfEqd2gR0/rI5uFWpK8mfReODJyP+d6g9gPq5SmVvh2e8qCyofU8FJv
+	 nm9tKke2Ex6FUJquz5v/4vP8y9t8qj082rBL16EGkm/yFLZqHv30XFr/DBm/YILW/4
+	 Yehp82vgJf7XkmpWKai0mOopcN7DqUx5yeUya9eY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Dominique Martinet <asmadeus@codewreck.org>,
-	Thorsten Leemhuis <regressions@leemhuis.info>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Omar Sandoval <osandov@fb.com>
-Subject: [PATCH 6.1 39/39] 9p: fix slab cache name creation for real
-Date: Fri, 15 Nov 2024 07:38:49 +0100
-Message-ID: <20241115063724.016298017@linuxfoundation.org>
+	Maximilian Heyne <mheyne@amazon.de>,
+	Hagar Hemdan <hagarhem@amazon.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 30/39] io_uring: fix possible deadlock in io_register_iowq_max_workers()
+Date: Fri, 15 Nov 2024 07:38:40 +0100
+Message-ID: <20241115063723.695032276@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.599985562@linuxfoundation.org>
 References: <20241115063722.599985562@linuxfoundation.org>
@@ -53,49 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Hagar Hemdan <hagarhem@amazon.com>
 
-commit a360f311f57a36e96d88fa8086b749159714dcd2 upstream.
+commit 73254a297c2dd094abec7c9efee32455ae875bdf upstream.
 
-This was attempted by using the dev_name in the slab cache name, but as
-Omar Sandoval pointed out, that can be an arbitrary string, eg something
-like "/dev/root".  Which in turn trips verify_dirent_name(), which fails
-if a filename contains a slash.
+The io_register_iowq_max_workers() function calls io_put_sq_data(),
+which acquires the sqd->lock without releasing the uring_lock.
+Similar to the commit 009ad9f0c6ee ("io_uring: drop ctx->uring_lock
+before acquiring sqd->lock"), this can lead to a potential deadlock
+situation.
 
-So just make it use a sequence counter, and make it an atomic_t to avoid
-any possible races or locking issues.
+To resolve this issue, the uring_lock is released before calling
+io_put_sq_data(), and then it is re-acquired after the function call.
 
-Reported-and-tested-by: Omar Sandoval <osandov@fb.com>
-Link: https://lore.kernel.org/all/ZxafcO8KWMlXaeWE@telecaster.dhcp.thefacebook.com/
-Fixes: 79efebae4afc ("9p: Avoid creating multiple slab caches with the same name")
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Dominique Martinet <asmadeus@codewreck.org>
-Cc: Thorsten Leemhuis <regressions@leemhuis.info>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+This change ensures that the locks are acquired in the correct
+order, preventing the possibility of a deadlock.
+
+Suggested-by: Maximilian Heyne <mheyne@amazon.de>
+Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
+Link: https://lore.kernel.org/r/20240604130527.3597-1-hagarhem@amazon.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/client.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ io_uring/io_uring.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -967,6 +967,7 @@ error:
- struct p9_client *p9_client_create(const char *dev_name, char *options)
- {
- 	int err;
-+	static atomic_t seqno = ATOMIC_INIT(0);
- 	struct p9_client *clnt;
- 	char *client_id;
- 	char *cache_name;
-@@ -1027,7 +1028,8 @@ struct p9_client *p9_client_create(const
- 	if (err)
- 		goto close_trans;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3921,8 +3921,10 @@ static __cold int io_register_iowq_max_w
+ 	}
  
--	cache_name = kasprintf(GFP_KERNEL, "9p-fcall-cache-%s", dev_name);
-+	cache_name = kasprintf(GFP_KERNEL,
-+		"9p-fcall-cache-%u", atomic_inc_return(&seqno));
- 	if (!cache_name) {
- 		err = -ENOMEM;
- 		goto close_trans;
+ 	if (sqd) {
++		mutex_unlock(&ctx->uring_lock);
+ 		mutex_unlock(&sqd->lock);
+ 		io_put_sq_data(sqd);
++		mutex_lock(&ctx->uring_lock);
+ 	}
+ 
+ 	if (copy_to_user(arg, new_count, sizeof(new_count)))
+@@ -3947,8 +3949,11 @@ static __cold int io_register_iowq_max_w
+ 	return 0;
+ err:
+ 	if (sqd) {
++		mutex_unlock(&ctx->uring_lock);
+ 		mutex_unlock(&sqd->lock);
+ 		io_put_sq_data(sqd);
++		mutex_lock(&ctx->uring_lock);
++
+ 	}
+ 	return ret;
+ }
 
 
