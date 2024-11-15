@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C7B153800;
-	Fri, 15 Nov 2024 06:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375DEEAD0;
+	Fri, 15 Nov 2024 06:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653315; cv=none; b=kozjZz0AJkBq1BxjgkVHLRDM5Trh7wLMg2/FAki4zk/+7xETbS9aq/5QB2lq9qdYiqtqsv9zlK0ozQPmdk/nFIgyRAajbndCrV0y+Kh4SxEmSsurP3tyY/+0htBfWdE5iMQ70hOsImya8IZwcwzeC/kVkR+25JLIW8sbrzuxV5g=
+	t=1731653320; cv=none; b=oGyZb6gVggm01pHl3V8bl0fN1ls6iyZ9MqL3R5kBKrveM5zwjbyo154Z0bMdogWClgGR9gJ8Yk04+4SWzY/p41MeHRvDRBTXRL53lxDQlG0W3MWlwO9wCDEk0Izyq3ljr6XMRn1H7lhZAiE4Gjal3W8g4u4kYcd5iNmu/lM74G4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653315; c=relaxed/simple;
-	bh=P+gYs0SVcDlR5PBAW7tXIDXCsH4Okj95AuqJuKBlbwo=;
+	s=arc-20240116; t=1731653320; c=relaxed/simple;
+	bh=QoJHdl3hx+vbDSXRR/9qkCt8IsrinXlLP/s6CmwWzfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nMGiTLfQbn0LgqMLV3fereJjSdDFBSdpjYiKLVxQ1OUtvjx4axCkaw+xIMbB4ytX9/YtjIGMk525Mg341RVZFgoy7piccV/9UjKQ4N0DVhZ1ptWXd4HQ+1Wp7R+z5TcppVMRVWhpf7pYvPk41azFhnMrlwUbnW03FUcEmW6jJew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JB2Ca4q5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l1EUSmC2/V4M/GI0h+XzcV092fM0ho7zUVyS8P+amSKA/m+spcZzIia/jF6zvWycfT1hJe1LkI3zK8KK5J4w8bsG00jYLJMxP/nAIf5Sa+maWD7WrJjEWfGMQDbN7wemBhOO+abSak0UvQeKg5ZJlSh6L34D61MtpXRoyU77TwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qr5oCvnB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JB2Ca4q5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE02C4CECF;
-	Fri, 15 Nov 2024 06:48:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qr5oCvnB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D55AC4CECF;
+	Fri, 15 Nov 2024 06:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653315;
-	bh=P+gYs0SVcDlR5PBAW7tXIDXCsH4Okj95AuqJuKBlbwo=;
+	s=korg; t=1731653318;
+	bh=QoJHdl3hx+vbDSXRR/9qkCt8IsrinXlLP/s6CmwWzfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JB2Ca4q5nnFf+ExCBNePfrjlDMulVCh+Ri0wkD4hoxsVqaJncYAtPDg8nb8Ts9XOP
-	 jDacUaNDj0dxPSwFZtvSErxwQosG/qvTUodXbm3nsKyjscDciJB5Yh7w8mZu+yV7lO
-	 M531NhMtW5a3vlZcYHmHq61gGQDqWcu6wcAZsoGU=
+	b=qr5oCvnByMMkwBjfXNJhfoi6KspiVDhgYLLXT0P6cXbef63nt0kbN4ceMO9YMiuWA
+	 rx5bVPg6vdY/ARtz4x6S2Azat8upX4Kaxm3pk8klOJoP1wvlFXpp7N4ixXfffh48it
+	 rawOcasmR+YhSmWLQyrHLSLF177zAYpolB6tFHbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cyan Yang <cyan.yang@sifive.com>,
-	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
-	Anup Patel <anup@brainfault.org>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Jack Yu <jack.yu@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 50/63] RISCV: KVM: use raw_spinlock for critical section in imsic
-Date: Fri, 15 Nov 2024 07:38:13 +0100
-Message-ID: <20241115063727.717640319@linuxfoundation.org>
+Subject: [PATCH 6.11 51/63] ASoC: rt722-sdca: increase clk_stop_timeout to fix clock stop issue
+Date: Fri, 15 Nov 2024 07:38:14 +0100
+Message-ID: <20241115063727.752754589@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
 References: <20241115063725.892410236@linuxfoundation.org>
@@ -53,65 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cyan Yang <cyan.yang@sifive.com>
+From: Jack Yu <jack.yu@realtek.com>
 
-[ Upstream commit 3ec4350d4efb5ccb6bd0e11d9cf7f2be4f47297d ]
+[ Upstream commit 038fa6ddf5d22694f61ff7a7a53c8887c6b08c45 ]
 
-For the external interrupt updating procedure in imsic, there was a
-spinlock to protect it already. But since it should not be preempted in
-any cases, we should turn to use raw_spinlock to prevent any preemption
-in case PREEMPT_RT was enabled.
+clk_stop_timeout should be increased to 900ms to fix clock stop issue.
 
-Signed-off-by: Cyan Yang <cyan.yang@sifive.com>
-Reviewed-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Message-ID: <20240919160126.44487-1-cyan.yang@sifive.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Jack Yu <jack.yu@realtek.com>
+Link: https://patch.msgid.link/cd26275d9fc54374a18dc016755cb72d@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/aia_imsic.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/codecs/rt722-sdca-sdw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kvm/aia_imsic.c b/arch/riscv/kvm/aia_imsic.c
-index 0a1e859323b45..a8085cd8215e3 100644
---- a/arch/riscv/kvm/aia_imsic.c
-+++ b/arch/riscv/kvm/aia_imsic.c
-@@ -55,7 +55,7 @@ struct imsic {
- 	/* IMSIC SW-file */
- 	struct imsic_mrif *swfile;
- 	phys_addr_t swfile_pa;
--	spinlock_t swfile_extirq_lock;
-+	raw_spinlock_t swfile_extirq_lock;
- };
- 
- #define imsic_vs_csr_read(__c)			\
-@@ -622,7 +622,7 @@ static void imsic_swfile_extirq_update(struct kvm_vcpu *vcpu)
- 	 * interruptions between reading topei and updating pending status.
- 	 */
- 
--	spin_lock_irqsave(&imsic->swfile_extirq_lock, flags);
-+	raw_spin_lock_irqsave(&imsic->swfile_extirq_lock, flags);
- 
- 	if (imsic_mrif_atomic_read(mrif, &mrif->eidelivery) &&
- 	    imsic_mrif_topei(mrif, imsic->nr_eix, imsic->nr_msis))
-@@ -630,7 +630,7 @@ static void imsic_swfile_extirq_update(struct kvm_vcpu *vcpu)
- 	else
- 		kvm_riscv_vcpu_unset_interrupt(vcpu, IRQ_VS_EXT);
- 
--	spin_unlock_irqrestore(&imsic->swfile_extirq_lock, flags);
-+	raw_spin_unlock_irqrestore(&imsic->swfile_extirq_lock, flags);
- }
- 
- static void imsic_swfile_read(struct kvm_vcpu *vcpu, bool clear,
-@@ -1051,7 +1051,7 @@ int kvm_riscv_vcpu_aia_imsic_init(struct kvm_vcpu *vcpu)
+diff --git a/sound/soc/codecs/rt722-sdca-sdw.c b/sound/soc/codecs/rt722-sdca-sdw.c
+index 87354bb1564e8..d5c985ff5ac55 100644
+--- a/sound/soc/codecs/rt722-sdca-sdw.c
++++ b/sound/soc/codecs/rt722-sdca-sdw.c
+@@ -253,7 +253,7 @@ static int rt722_sdca_read_prop(struct sdw_slave *slave)
  	}
- 	imsic->swfile = page_to_virt(swfile_page);
- 	imsic->swfile_pa = page_to_phys(swfile_page);
--	spin_lock_init(&imsic->swfile_extirq_lock);
-+	raw_spin_lock_init(&imsic->swfile_extirq_lock);
  
- 	/* Setup IO device */
- 	kvm_iodevice_init(&imsic->iodev, &imsic_iodoev_ops);
+ 	/* set the timeout values */
+-	prop->clk_stop_timeout = 200;
++	prop->clk_stop_timeout = 900;
+ 
+ 	/* wake-up event */
+ 	prop->wake_capable = 1;
 -- 
 2.43.0
 
