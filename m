@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E5518873F;
-	Fri, 15 Nov 2024 06:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D934E153800;
+	Fri, 15 Nov 2024 06:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653590; cv=none; b=jzw9o4MXZU8ECAFNIpugqwHds40NPa+kY0E5zBa6xRd4rvLbHvM1Er3hzZ0bV09A+cDD0FW/ky0jmiqNDqmOe19wuGOlZXWYjtw1lxS34oq7mpwLF1++0ABRecYqERel+USSB23u/xFFbtAMueUXgosGrNqg2PC0RGIzE66m33Y=
+	t=1731653593; cv=none; b=lHI2nfJ391ZeuGtdNLkGqpc2L3+NF4No1fTW09EDFavn+65IeNV4OvC9naBzcY4Xh/ucIgAjb+UPj+QjXf8oEJxy7HHcJcgc4FQSxBQSjVAOCIr+/w5YhDIBe9HfGbU55xvX0CSWR/9NtjV/PmXwhjY68vNK70GpdBnViQlf3g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653590; c=relaxed/simple;
-	bh=k8HJ7Pq/fRX384IR2cBDg2/oDWzfrHkaL8LjY4k3Wqg=;
+	s=arc-20240116; t=1731653593; c=relaxed/simple;
+	bh=q7pRiWCBPP2FdSSbR8+pCKpbb29af1rpLDFtPKzzE2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yz+Wqm5SJ8BmTfpLy7NHsaK/iz0X66hFiDaGleKsII56joRc5mzIZz9py42vUWYKyta6oGWTab+vNsWTPViNT6OGsNZsg5fT/7V84w81qLO3J6mKQ6ZhEuR9nfnAGOPP2B4psWeI1yabaKydgJvoWk1wtMzzicVnWvtr2HUnr2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JiHy3Y37; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sT0zJpuojlRy+edLv0lHsRfwaR4WQJkSFcfxrrktopGt5ntHf4effwewZO59F4XikS+Dn+HAH5/M431rItSeogWP92miFYrqOikfATollWJ2q8vJ4WDtWaZVHMklhrJytQSOWorwD/HmYKMhFTeO9Z4Wt8Yhv/5lbMxpBLp1S4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuUVh5Wc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JiHy3Y37"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F026C4CECF;
-	Fri, 15 Nov 2024 06:53:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuUVh5Wc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47EC2C4CECF;
+	Fri, 15 Nov 2024 06:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653590;
-	bh=k8HJ7Pq/fRX384IR2cBDg2/oDWzfrHkaL8LjY4k3Wqg=;
+	s=korg; t=1731653593;
+	bh=q7pRiWCBPP2FdSSbR8+pCKpbb29af1rpLDFtPKzzE2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JiHy3Y37f6HTVdhIyInbr6dWgqjQf8t5m+mHj6okHpN2IKKfT+F2cXYAc2uJ14vzs
-	 4reg/ru4bbcGy7iVgyhZPQvXRk9J6xTBRb6YUlwXT1GSbu1EbyfkhK89e3V+06r5B1
-	 GrAFCi4RhtiNsZT6BPxDZGXIdZnsL0SnvaFdHSJw=
+	b=WuUVh5Wc9cz0Oe55Y1RF11nt4zAh+Bld4JFaA9ro8P5tnOLCiDrmN0oeHK6EqJXrE
+	 Opw+U83oC78eLKUbpoxdFllIZgKVMhETNlCH5eMOpIEnPUVSuvSGEvWoGHA2E7q8Z6
+	 sbeqGqTZxXcifpxd4Hpv2M6Pekq1eWUOLTrGta50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	2639161967 <2639161967@qq.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 19/39] nvme-multipath: defer partition scanning
-Date: Fri, 15 Nov 2024 07:38:29 +0100
-Message-ID: <20241115063723.303446205@linuxfoundation.org>
+Subject: [PATCH 6.1 20/39] powerpc/powernv: Free name on error in opal_event_init()
+Date: Fri, 15 Nov 2024 07:38:30 +0100
+Message-ID: <20241115063723.339771348@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.599985562@linuxfoundation.org>
 References: <20241115063722.599985562@linuxfoundation.org>
@@ -52,116 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 1f021341eef41e77a633186e9be5223de2ce5d48 ]
+[ Upstream commit cf8989d20d64ad702a6210c11a0347ebf3852aa7 ]
 
-We need to suppress the partition scan from occuring within the
-controller's scan_work context. If a path error occurs here, the IO will
-wait until a path becomes available or all paths are torn down, but that
-action also occurs within scan_work, so it would deadlock. Defer the
-partion scan to a different context that does not block scan_work.
+In opal_event_init() if request_irq() fails name is not freed, leading
+to a memory leak. The code only runs at boot time, there's no way for a
+user to trigger it, so there's no security impact.
 
-Reported-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fix the leak by freeing name in the error path.
+
+Reported-by: 2639161967 <2639161967@qq.com>
+Closes: https://lore.kernel.org/linuxppc-dev/87wmjp3wig.fsf@mail.lhotse
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://patch.msgid.link/20240920093520.67997-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/multipath.c | 33 +++++++++++++++++++++++++++++++++
- drivers/nvme/host/nvme.h      |  1 +
- 2 files changed, 34 insertions(+)
+ arch/powerpc/platforms/powernv/opal-irqchip.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 93ada8941a4c5..43b89c7d585f0 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -463,6 +463,20 @@ static int nvme_add_ns_head_cdev(struct nvme_ns_head *head)
- 	return ret;
- }
- 
-+static void nvme_partition_scan_work(struct work_struct *work)
-+{
-+	struct nvme_ns_head *head =
-+		container_of(work, struct nvme_ns_head, partition_scan_work);
-+
-+	if (WARN_ON_ONCE(!test_and_clear_bit(GD_SUPPRESS_PART_SCAN,
-+					     &head->disk->state)))
-+		return;
-+
-+	mutex_lock(&head->disk->open_mutex);
-+	bdev_disk_changed(head->disk, false);
-+	mutex_unlock(&head->disk->open_mutex);
-+}
-+
- static void nvme_requeue_work(struct work_struct *work)
- {
- 	struct nvme_ns_head *head =
-@@ -489,6 +503,7 @@ int nvme_mpath_alloc_disk(struct nvme_ctrl *ctrl, struct nvme_ns_head *head)
- 	bio_list_init(&head->requeue_list);
- 	spin_lock_init(&head->requeue_lock);
- 	INIT_WORK(&head->requeue_work, nvme_requeue_work);
-+	INIT_WORK(&head->partition_scan_work, nvme_partition_scan_work);
- 
- 	/*
- 	 * Add a multipath node if the subsystems supports multiple controllers.
-@@ -504,6 +519,16 @@ int nvme_mpath_alloc_disk(struct nvme_ctrl *ctrl, struct nvme_ns_head *head)
- 		return -ENOMEM;
- 	head->disk->fops = &nvme_ns_head_ops;
- 	head->disk->private_data = head;
-+
-+	/*
-+	 * We need to suppress the partition scan from occuring within the
-+	 * controller's scan_work context. If a path error occurs here, the IO
-+	 * will wait until a path becomes available or all paths are torn down,
-+	 * but that action also occurs within scan_work, so it would deadlock.
-+	 * Defer the partion scan to a different context that does not block
-+	 * scan_work.
-+	 */
-+	set_bit(GD_SUPPRESS_PART_SCAN, &head->disk->state);
- 	sprintf(head->disk->disk_name, "nvme%dn%d",
- 			ctrl->subsys->instance, head->instance);
- 
-@@ -552,6 +577,7 @@ static void nvme_mpath_set_live(struct nvme_ns *ns)
- 			return;
+diff --git a/arch/powerpc/platforms/powernv/opal-irqchip.c b/arch/powerpc/platforms/powernv/opal-irqchip.c
+index 391f505352007..e9849d70aee4a 100644
+--- a/arch/powerpc/platforms/powernv/opal-irqchip.c
++++ b/arch/powerpc/platforms/powernv/opal-irqchip.c
+@@ -282,6 +282,7 @@ int __init opal_event_init(void)
+ 				 name, NULL);
+ 		if (rc) {
+ 			pr_warn("Error %d requesting OPAL irq %d\n", rc, (int)r->start);
++			kfree(name);
+ 			continue;
  		}
- 		nvme_add_ns_head_cdev(head);
-+		kblockd_schedule_work(&head->partition_scan_work);
  	}
- 
- 	mutex_lock(&head->lock);
-@@ -851,6 +877,12 @@ void nvme_mpath_shutdown_disk(struct nvme_ns_head *head)
- 	kblockd_schedule_work(&head->requeue_work);
- 	if (test_bit(NVME_NSHEAD_DISK_LIVE, &head->flags)) {
- 		nvme_cdev_del(&head->cdev, &head->cdev_device);
-+		/*
-+		 * requeue I/O after NVME_NSHEAD_DISK_LIVE has been cleared
-+		 * to allow multipath to fail all I/O.
-+		 */
-+		synchronize_srcu(&head->srcu);
-+		kblockd_schedule_work(&head->requeue_work);
- 		del_gendisk(head->disk);
- 	}
- }
-@@ -862,6 +894,7 @@ void nvme_mpath_remove_disk(struct nvme_ns_head *head)
- 	/* make sure all pending bios are cleaned up */
- 	kblockd_schedule_work(&head->requeue_work);
- 	flush_work(&head->requeue_work);
-+	flush_work(&head->partition_scan_work);
- 	put_disk(head->disk);
- }
- 
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index 5f8a146b70148..0f49b779dec65 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -460,6 +460,7 @@ struct nvme_ns_head {
- 	struct bio_list		requeue_list;
- 	spinlock_t		requeue_lock;
- 	struct work_struct	requeue_work;
-+	struct work_struct	partition_scan_work;
- 	struct mutex		lock;
- 	unsigned long		flags;
- #define NVME_NSHEAD_DISK_LIVE	0
 -- 
 2.43.0
 
