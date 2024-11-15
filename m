@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EF015FD13;
-	Fri, 15 Nov 2024 06:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEC118873F;
+	Fri, 15 Nov 2024 06:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653922; cv=none; b=DEkfa6heIQiTUqXjrkzZWvus1ju6FpeNirmX5ULyyAiQL5YWC6AzaByMZA5nK257pgoQVUnL2vJXATz3oLOYchBtca7Y/CkLVTp0ltZX0C1ZaWnu3iaVAcx4iafsJ1eBq7VqfO4AQ/Fgo0Xc587RxOgq70IZ/noBOdlh+Xk0v4I=
+	t=1731653925; cv=none; b=TPViBQ74e6gtMmJoBvxTsU70RsRwcN+j6hU4wCunqbHFDuKu2K1eVtF7YEsyQCnbW+x1+rD129ax4I/7/TOWZCzjpok3znPdwcJyqtygGQAMxPSOTPasBtwczq6v9FxT+BsNmZUSEbC1c+V2URqwmUvWh2YhSilmBlSr08butmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653922; c=relaxed/simple;
-	bh=+n5cwINiBcWMuzL2R5bexN6XzVFxKDneOO23i8zCWqk=;
+	s=arc-20240116; t=1731653925; c=relaxed/simple;
+	bh=vZaOxsu4SMqGncjxGWKNZOF1rwHRYutsM5OJbdzUBVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QxiaADl7q/XteA2VDQuT5vUPY4Gbpqsws36gpTHqkEGcBh2kESMvg08iT+6pwMaOjMWb1onlhzISOiOQG5venjGyOxoXT7S0tmi9Rsx7QeaiO42qtrIpikS147EFVB3VF5nGEUXmAeDa86DqRk/cg3qj8/c6C32UnIayk8wpyyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qph0gZw/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GQJeJPnBa+qxJWO777DUVl8yjdhykFTXIxwBx9psvzxa1YzRsYHMjPDOMTOIIPagNE7hcWWj0aUVMxQpe2p0xxBpIlChUEj7fdp0G3LI10JQCSUWkAyAtDa7OkWUH4UQ8xT31dtZ89Qad2DAPWoAE4m1QFJF/x5y33A4iCqN7yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLIf/pQk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qph0gZw/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BB7C4CED0;
-	Fri, 15 Nov 2024 06:58:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLIf/pQk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA1CC4CECF;
+	Fri, 15 Nov 2024 06:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653922;
-	bh=+n5cwINiBcWMuzL2R5bexN6XzVFxKDneOO23i8zCWqk=;
+	s=korg; t=1731653925;
+	bh=vZaOxsu4SMqGncjxGWKNZOF1rwHRYutsM5OJbdzUBVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qph0gZw/r4KBlBYHLxzeCBO0JDNXDKyaFcpopQ0esHN5G9Dg+lHtMzoX0ZxTE7E/S
-	 0JagOGAE5/oVSJIL2Ka1WeW1mvNrgp2xFtOxFVv/7NeBUmsH2tXEMVXWG3+bflmSls
-	 /9JGf7Eri39aVFwLH3AjSSLc+j+P6X38i97DDKU0=
+	b=bLIf/pQkLK7G4hJFt7KwAlVI+FFU2+SxzksiZxor4i60hQsb3PmmI9XXqHPMZ7ywe
+	 TfFb70ryd1dMf5fYYRU4Y+ADkRr1f07DXpAWMin8OcJWFgwLfbzzhyTu6HH5tod9iA
+	 dOmzCD1uTJNQzKZYGS3O2TKJ4rBQN7OC79ZrYyvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Zhu Lingshan <lingshan.zhu@kernel.org>,
+	syzbot+6c55f725d1bdc8c52058@syzkaller.appspotmail.com,
+	Alessandro Zanni <alessandro.zanni87@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 76/82] vDPA/ifcvf: Fix pci_read_config_byte() return code handling
-Date: Fri, 15 Nov 2024 07:38:53 +0100
-Message-ID: <20241115063728.287230487@linuxfoundation.org>
+Subject: [PATCH 5.10 77/82] fs: Fix uninitialized value issue in from_kuid and from_kgid
+Date: Fri, 15 Nov 2024 07:38:54 +0100
+Message-ID: <20241115063728.323145952@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -53,39 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Can <yuancan@huawei.com>
+From: Alessandro Zanni <alessandro.zanni87@gmail.com>
 
-[ Upstream commit 7f8825b2a78ac392d3fbb3a2e65e56d9e39d75e9 ]
+[ Upstream commit 15f34347481648a567db67fb473c23befb796af5 ]
 
-ifcvf_init_hw() uses pci_read_config_byte() that returns
-PCIBIOS_* codes. The error handling, however, assumes the codes are
-normal errnos because it checks for < 0.
-Convert the error check to plain non-zero check.
+ocfs2_setattr() uses attr->ia_mode, attr->ia_uid and attr->ia_gid in
+a trace point even though ATTR_MODE, ATTR_UID and ATTR_GID aren't set.
 
-Fixes: 5a2414bc454e ("virtio: Intel IFC VF driver for VDPA")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Message-Id: <20241017013812.129952-1-yuancan@huawei.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Zhu Lingshan <lingshan.zhu@kernel.org>
+Initialize all fields of newattrs to avoid uninitialized variables, by
+checking if ATTR_MODE, ATTR_UID, ATTR_GID are initialized, otherwise 0.
+
+Reported-by: syzbot+6c55f725d1bdc8c52058@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6c55f725d1bdc8c52058
+Signed-off-by: Alessandro Zanni <alessandro.zanni87@gmail.com>
+Link: https://lore.kernel.org/r/20241017120553.55331-1-alessandro.zanni87@gmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/ifcvf/ifcvf_base.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/file.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/vdpa/ifcvf/ifcvf_base.c b/drivers/vdpa/ifcvf/ifcvf_base.c
-index f2a128e56de5f..b5724b88d42bb 100644
---- a/drivers/vdpa/ifcvf/ifcvf_base.c
-+++ b/drivers/vdpa/ifcvf/ifcvf_base.c
-@@ -105,7 +105,7 @@ int ifcvf_init_hw(struct ifcvf_hw *hw, struct pci_dev *pdev)
- 	u32 i;
+diff --git a/fs/ocfs2/file.c b/fs/ocfs2/file.c
+index 09a62539ab74d..224ced997d64b 100644
+--- a/fs/ocfs2/file.c
++++ b/fs/ocfs2/file.c
+@@ -1133,9 +1133,12 @@ int ocfs2_setattr(struct dentry *dentry, struct iattr *attr)
+ 	trace_ocfs2_setattr(inode, dentry,
+ 			    (unsigned long long)OCFS2_I(inode)->ip_blkno,
+ 			    dentry->d_name.len, dentry->d_name.name,
+-			    attr->ia_valid, attr->ia_mode,
+-			    from_kuid(&init_user_ns, attr->ia_uid),
+-			    from_kgid(&init_user_ns, attr->ia_gid));
++			    attr->ia_valid,
++				attr->ia_valid & ATTR_MODE ? attr->ia_mode : 0,
++				attr->ia_valid & ATTR_UID ?
++					from_kuid(&init_user_ns, attr->ia_uid) : 0,
++				attr->ia_valid & ATTR_GID ?
++					from_kgid(&init_user_ns, attr->ia_gid) : 0);
  
- 	ret = pci_read_config_byte(pdev, PCI_CAPABILITY_LIST, &pos);
--	if (ret < 0) {
-+	if (ret) {
- 		IFCVF_ERR(pdev, "Failed to read PCI capability list\n");
- 		return -EIO;
- 	}
+ 	/* ensuring we don't even attempt to truncate a symlink */
+ 	if (S_ISLNK(inode->i_mode))
 -- 
 2.43.0
 
