@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24889645;
-	Fri, 15 Nov 2024 06:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806ED645;
+	Fri, 15 Nov 2024 06:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731652790; cv=none; b=kxYXh+k7DHSd5FLGE0PWz4MhA13v4Z+VJLyObmlP6QB/mbyBz165rbj1LXZzXPr/KUbQW1cL8Qg/zKlXXVR+Lnq9pUR5+XDgfz45bzHIkLBuxYnY8/QAjiTnRzxs5iYRVYyD7+usoJnWz3DU2/oARgNGzjRfZFnR8Cf0a8EPYrQ=
+	t=1731652793; cv=none; b=oQFrWggnA2lKN/VjJsHDI0aIAxlFCmDgSts/0GsJX7XcLMvlWRb0V2ZKzD8yIFNscKfPuqLaAx8ScyKRJzhjKpLC8keCVK/sSemAetYbPPxM37V74r3m4Y2xb6zyMDyqVcevBOFE3zlJJ3IIrsYlI5bBznjYqG6v3GQ7n3U65mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731652790; c=relaxed/simple;
-	bh=JOs6rovnBUfsTAT8fo/tqdat6uboVw9PTP2Dho+KFVw=;
+	s=arc-20240116; t=1731652793; c=relaxed/simple;
+	bh=v08OCQHNtn/z1y4ZFzDhtm/qBpUxGgNAv2y1MvBXozo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NK9FtzYpo123q9UjxD6x1D3RiTAEOBr06isxIm2KbLX9eYTomprDZQWSoYMC13vyz6S8gI9rGzPzaeodMC2XEyGyBaHrMXsHUJJvKFzbyVq62Ta5qjJVIlc1YNRwtDfDmmmHN8lQFd82G8acY9HIxnK6O0sWU3Ui2V3yuV63DKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrcryjoQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gML6M06HINAxNuvCAaQipScpZAy0CCujRxxEmkZAVzmqZF9WAoJj5fc0vMiPI++WPJmVu6nWgk+XLoPfkjoUzlfXdIYLyTTK0TsXYzVkJgSW9kA+j36lMKmfCZXRFXN5GiehHBWPryzBcOVzWIiYV2A4U9vfli0fuCGK1QfTERs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RnEfK6ps; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrcryjoQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87149C4CED0;
-	Fri, 15 Nov 2024 06:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RnEfK6ps"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2376C4CECF;
+	Fri, 15 Nov 2024 06:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731652790;
-	bh=JOs6rovnBUfsTAT8fo/tqdat6uboVw9PTP2Dho+KFVw=;
+	s=korg; t=1731652793;
+	bh=v08OCQHNtn/z1y4ZFzDhtm/qBpUxGgNAv2y1MvBXozo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qrcryjoQElcdvi5NLtxdhOg+AGsBgCw2oZ54Ym8q8EQ7TyurHtbrZMVYFdmi8Tjga
-	 F7Opc2ICVeTLjMwZaxihcDRnvS11AssYEQWcE7yHKXMRLcHXgxCH4/CNWDrajqLvB7
-	 dg2G25BB1pTuNr96OjisAx+klGo8Wgy+BYZK1x5I=
+	b=RnEfK6psgAYvwDmPWkli0ZOgmL44JHFZ7HCSIJg/NemgZWPgKJM23KDLf9/8PQT0T
+	 AfjViIrVJkZ7sw0D6HPPrX4kfkPWunJ2tlYyU5GBoiNqb4WUZHntgaNiJLNcwv9f6V
+	 R4DSDseRAwbdWyQZu/HoHE8v+iSiwXziS8hg2RH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 4.19 16/52] media: cx24116: prevent overflows on SNR calculus
-Date: Fri, 15 Nov 2024 07:37:29 +0100
-Message-ID: <20241115063723.442510487@linuxfoundation.org>
+Subject: [PATCH 4.19 17/52] media: v4l2-tpg: prevent the risk of a division by zero
+Date: Fri, 15 Nov 2024 07:37:30 +0100
+Message-ID: <20241115063723.477906715@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.845867306@linuxfoundation.org>
 References: <20241115063722.845867306@linuxfoundation.org>
@@ -51,44 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-commit 576a307a7650bd544fbb24df801b9b7863b85e2f upstream.
+commit e6a3ea83fbe15d4818d01804e904cbb0e64e543b upstream.
 
-as reported by Coverity, if reading SNR registers fail, a negative
-number will be returned, causing an underflow when reading SNR
-registers.
+As reported by Coverity, the logic at tpg_precalculate_line()
+blindly rescales the buffer even when scaled_witdh is equal to
+zero. If this ever happens, this will cause a division by zero.
 
-Prevent that.
+Instead, add a WARN_ON_ONCE() to trigger such cases and return
+without doing any precalculation.
 
-Fixes: 8953db793d5b ("V4L/DVB (9178): cx24116: Add module parameter to return SNR as ESNO.")
+Fixes: 63881df94d3e ("[media] vivid: add the Test Pattern Generator")
 Cc: stable@vger.kernel.org
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/cx24116.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/common/v4l2-tpg/v4l2-tpg-core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/dvb-frontends/cx24116.c
-+++ b/drivers/media/dvb-frontends/cx24116.c
-@@ -753,6 +753,7 @@ static int cx24116_read_snr_pct(struct d
- {
- 	struct cx24116_state *state = fe->demodulator_priv;
- 	u8 snr_reading;
-+	int ret;
- 	static const u32 snr_tab[] = { /* 10 x Table (rounded up) */
- 		0x00000, 0x0199A, 0x03333, 0x04ccD, 0x06667,
- 		0x08000, 0x0999A, 0x0b333, 0x0cccD, 0x0e667,
-@@ -761,7 +762,11 @@ static int cx24116_read_snr_pct(struct d
+--- a/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
++++ b/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
+@@ -1639,6 +1639,9 @@ static void tpg_precalculate_line(struct
+ 	unsigned p;
+ 	unsigned x;
  
- 	dprintk("%s()\n", __func__);
- 
--	snr_reading = cx24116_readreg(state, CX24116_REG_QUALITY0);
-+	ret = cx24116_readreg(state, CX24116_REG_QUALITY0);
-+	if (ret  < 0)
-+		return ret;
++	if (WARN_ON_ONCE(!tpg->src_width || !tpg->scaled_width))
++		return;
 +
-+	snr_reading = ret;
- 
- 	if (snr_reading >= 0xa0 /* 100% */)
- 		*snr = 0xffff;
+ 	switch (tpg->pattern) {
+ 	case TPG_PAT_GREEN:
+ 		contrast = TPG_COLOR_100_RED;
 
 
