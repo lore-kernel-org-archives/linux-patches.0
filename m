@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806ED645;
-	Fri, 15 Nov 2024 06:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EAC3BBEB;
+	Fri, 15 Nov 2024 06:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731652793; cv=none; b=oQFrWggnA2lKN/VjJsHDI0aIAxlFCmDgSts/0GsJX7XcLMvlWRb0V2ZKzD8yIFNscKfPuqLaAx8ScyKRJzhjKpLC8keCVK/sSemAetYbPPxM37V74r3m4Y2xb6zyMDyqVcevBOFE3zlJJ3IIrsYlI5bBznjYqG6v3GQ7n3U65mw=
+	t=1731652797; cv=none; b=NdKmO0UkLQcUJ7fOVfjRsnrUDMXzi3HmoZ3VLHHQ2NwaOasUbqGTV/xnV7fXEssVIRxRsynU9OfwKFDqciffDrb6lXYrOOyPCxNg1zudMP32DPs/tMibnzth9rhOYwqtAAAyBCcLcjAZu1dgOwbNRwigZU3sCfyKIuC8I5nHQm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731652793; c=relaxed/simple;
-	bh=v08OCQHNtn/z1y4ZFzDhtm/qBpUxGgNAv2y1MvBXozo=;
+	s=arc-20240116; t=1731652797; c=relaxed/simple;
+	bh=Ny2yRb5vs52NJHY+JtbD1FsF9ucqMWInu1s27G4jp5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gML6M06HINAxNuvCAaQipScpZAy0CCujRxxEmkZAVzmqZF9WAoJj5fc0vMiPI++WPJmVu6nWgk+XLoPfkjoUzlfXdIYLyTTK0TsXYzVkJgSW9kA+j36lMKmfCZXRFXN5GiehHBWPryzBcOVzWIiYV2A4U9vfli0fuCGK1QfTERs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RnEfK6ps; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DTNE7h9/ttGSQrAJ4R4Ygom4+Tj9f9OmnOZHwt0iYFSf5kzAo+5/sY+hIiYa/wmnOu0nFH+9NN30Ol/d2CFVgzXDD+5i33RfPMHllme5e1j9ynOb8aZxDlWn2rsKfuMYCIg7qYvRNDwKTrcDm1wS1IxPYrobsmevlXsUa/GJI8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mkx73o0g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RnEfK6ps"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2376C4CECF;
-	Fri, 15 Nov 2024 06:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mkx73o0g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C46C4CECF;
+	Fri, 15 Nov 2024 06:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731652793;
-	bh=v08OCQHNtn/z1y4ZFzDhtm/qBpUxGgNAv2y1MvBXozo=;
+	s=korg; t=1731652797;
+	bh=Ny2yRb5vs52NJHY+JtbD1FsF9ucqMWInu1s27G4jp5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RnEfK6psgAYvwDmPWkli0ZOgmL44JHFZ7HCSIJg/NemgZWPgKJM23KDLf9/8PQT0T
-	 AfjViIrVJkZ7sw0D6HPPrX4kfkPWunJ2tlYyU5GBoiNqb4WUZHntgaNiJLNcwv9f6V
-	 R4DSDseRAwbdWyQZu/HoHE8v+iSiwXziS8hg2RH4=
+	b=Mkx73o0gzkALE20DRtjMTpdfELFpWyz/h/NOD7jqNcWIK8KAIskqfVi0eM/ULXLpH
+	 oYxl0Jx61upHr4NfQZgok1NfEu4d5GLG+0vFonduEJMxMgxDq4dFyTkgCZFlamB0zl
+	 RJjeXZlp6HKB0TIue6Sf6expJHulk/eCkRyrD204=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH 4.19 17/52] media: v4l2-tpg: prevent the risk of a division by zero
-Date: Fri, 15 Nov 2024 07:37:30 +0100
-Message-ID: <20241115063723.477906715@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 4.19 18/52] drm/amdgpu: add missing size check in amdgpu_debugfs_gprwave_read()
+Date: Fri, 15 Nov 2024 07:37:31 +0100
+Message-ID: <20241115063723.513259824@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.845867306@linuxfoundation.org>
 References: <20241115063722.845867306@linuxfoundation.org>
@@ -49,36 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit e6a3ea83fbe15d4818d01804e904cbb0e64e543b upstream.
+commit 4d75b9468021c73108b4439794d69e892b1d24e3 upstream.
 
-As reported by Coverity, the logic at tpg_precalculate_line()
-blindly rescales the buffer even when scaled_witdh is equal to
-zero. If this ever happens, this will cause a division by zero.
+Avoid a possible buffer overflow if size is larger than 4K.
 
-Instead, add a WARN_ON_ONCE() to trigger such cases and return
-without doing any precalculation.
-
-Fixes: 63881df94d3e ("[media] vivid: add the Test Pattern Generator")
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f5d873f5825b40d886d03bd2aede91d4cf002434)
 Cc: stable@vger.kernel.org
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/common/v4l2-tpg/v4l2-tpg-core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
-+++ b/drivers/media/common/v4l2-tpg/v4l2-tpg-core.c
-@@ -1639,6 +1639,9 @@ static void tpg_precalculate_line(struct
- 	unsigned p;
- 	unsigned x;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -394,7 +394,7 @@ static ssize_t amdgpu_debugfs_regs_smc_r
+ 	if (!adev->smc_rreg)
+ 		return -EOPNOTSUPP;
  
-+	if (WARN_ON_ONCE(!tpg->src_width || !tpg->scaled_width))
-+		return;
-+
- 	switch (tpg->pattern) {
- 	case TPG_PAT_GREEN:
- 		contrast = TPG_COLOR_100_RED;
+-	if (size & 0x3 || *pos & 0x3)
++	if (size > 4096 || size & 0x3 || *pos & 0x3)
+ 		return -EINVAL;
+ 
+ 	while (size) {
 
 
