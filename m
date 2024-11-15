@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21312EAD0;
-	Fri, 15 Nov 2024 06:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C416EAD0;
+	Fri, 15 Nov 2024 06:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653419; cv=none; b=Wlss6w1YTwLmsr6Xkjo+FiSfrLiKs89hTbOdpt4+Lo2REi3N43/kOCFgw4LZqH7ESY/YmL/9RpB8QejBejKo9L4d7NCs9KPxsxfGyumDGehyVQldh/yMdHSV+rscsxBHhcPM4VD8yvC9BTangqIQRXb3tsC9HbDegGiz2neD5ak=
+	t=1731653422; cv=none; b=CQWNpK6UtTCF5z4yBgkdsk+r8aN+fe9u9LVt0P+h85varFL7vVAYoOvJ4tA2QaABEN1ozrIMtZGXLpetMvtxchAIMt/8nu7AGq4bhz4ppGkc8n8arRe1/DsDWtVJ4GMnXUf0OMv1VFyFyOoSrQ2OreBg8zuuthNBEDaTwelXQH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653419; c=relaxed/simple;
-	bh=JxRvL7DhvQPRKJAd4tU7RRorwiLmAZCEOKu5JRCfJiU=;
+	s=arc-20240116; t=1731653422; c=relaxed/simple;
+	bh=it5nsr6uh6OoXlvjZo4B1z4fHnt5yXyj6hO8LJvZyZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U+IMrM9y53tE0T5hoASI9574Bc5/OcRDzea9zc79CrCCEGTjuDHD0+ZCUMJDIALoQMY7nStxnlSVpp0SEGCaNjIa+5AGgmBXvBxLTFHD7yQQJqiVnjZwktQseJHumHm7uWSrGelKm2kI26ZwetzpzYqdMIm68G/eXZxCSuXTbqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbXC39fP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ikiKZiASxsi/rogBfP8laY6M/HVcUl4XMDy05hsMuQK0WprSNj2aWTZYiboN3mKR1jlRLZEanQvSqLArXg82y8frvM3gx/TsurPlRQ8/E3iHV8Dvxvif/Dkuf9wDbRXMbNLiJLN0on4/y4mJ6P748p9heFlCjd58BuxadOtEV3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOby+qNI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbXC39fP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB629C4CECF;
-	Fri, 15 Nov 2024 06:50:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOby+qNI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED72AC4CECF;
+	Fri, 15 Nov 2024 06:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653419;
-	bh=JxRvL7DhvQPRKJAd4tU7RRorwiLmAZCEOKu5JRCfJiU=;
+	s=korg; t=1731653422;
+	bh=it5nsr6uh6OoXlvjZo4B1z4fHnt5yXyj6hO8LJvZyZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AbXC39fPFfJrxrXgItUcE4xzeV3M3OcqHd4cfoJEyv2eqVRWBIpWrav9BAud9Ab+n
-	 e5zwBmP2mZ0gr61R9IMBiGvptvLtVDib0mEyKekuwkryfsZ1x1UfZaC3clnx94qLMh
-	 kRowZlmbSKiANt5vJiR/yHDy5MFgWaX4dnS3778c=
+	b=wOby+qNIoGEBKwBVjdpqrsNFDFm/y787BTon7xWHzIo+5K6q6vwNGNQU0iozzw2Yl
+	 WzY7nqfws05OimHQtIVIz9klYevVCvb23TpGhI5cDk6UdmCfpPfIWpHk1kEUZrYW2c
+	 YYiaHf1PPypiq3m1RTqR+GUE7Af1QK1VaJedkdq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	syzbot+908886656a02769af987@syzkaller.appspotmail.com,
-	Will Deacon <will@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 17/48] kasan: Disable Software Tag-Based KASAN with GCC
-Date: Fri, 15 Nov 2024 07:38:06 +0100
-Message-ID: <20241115063723.586046719@linuxfoundation.org>
+Subject: [PATCH 6.6 18/48] nvme-multipath: defer partition scanning
+Date: Fri, 15 Nov 2024 07:38:07 +0100
+Message-ID: <20241115063723.621886625@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.962047137@linuxfoundation.org>
 References: <20241115063722.962047137@linuxfoundation.org>
@@ -53,79 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Deacon <will@kernel.org>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 7aed6a2c51ffc97a126e0ea0c270fab7af97ae18 ]
+[ Upstream commit 1f021341eef41e77a633186e9be5223de2ce5d48 ]
 
-Syzbot reports a KASAN failure early during boot on arm64 when building
-with GCC 12.2.0 and using the Software Tag-Based KASAN mode:
+We need to suppress the partition scan from occuring within the
+controller's scan_work context. If a path error occurs here, the IO will
+wait until a path becomes available or all paths are torn down, but that
+action also occurs within scan_work, so it would deadlock. Defer the
+partion scan to a different context that does not block scan_work.
 
-  | BUG: KASAN: invalid-access in smp_build_mpidr_hash arch/arm64/kernel/setup.c:133 [inline]
-  | BUG: KASAN: invalid-access in setup_arch+0x984/0xd60 arch/arm64/kernel/setup.c:356
-  | Write of size 4 at addr 03ff800086867e00 by task swapper/0
-  | Pointer tag: [03], memory tag: [fe]
-
-Initial triage indicates that the report is a false positive and a
-thorough investigation of the crash by Mark Rutland revealed the root
-cause to be a bug in GCC:
-
-  > When GCC is passed `-fsanitize=hwaddress` or
-  > `-fsanitize=kernel-hwaddress` it ignores
-  > `__attribute__((no_sanitize_address))`, and instruments functions
-  > we require are not instrumented.
-  >
-  > [...]
-  >
-  > All versions [of GCC] I tried were broken, from 11.3.0 to 14.2.0
-  > inclusive.
-  >
-  > I think we have to disable KASAN_SW_TAGS with GCC until this is
-  > fixed
-
-Disable Software Tag-Based KASAN when building with GCC by making
-CC_HAS_KASAN_SW_TAGS depend on !CC_IS_GCC.
-
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
-Reported-by: syzbot+908886656a02769af987@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/r/000000000000f362e80620e27859@google.com
-Link: https://lore.kernel.org/r/ZvFGwKfoC4yVjN_X@J2N7QTR9R3
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218854
-Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Link: https://lore.kernel.org/r/20241014161100.18034-1-will@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Reported-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/Kconfig.kasan | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/nvme/host/multipath.c | 33 +++++++++++++++++++++++++++++++++
+ drivers/nvme/host/nvme.h      |  1 +
+ 2 files changed, 34 insertions(+)
 
-diff --git a/lib/Kconfig.kasan b/lib/Kconfig.kasan
-index fdca89c057452..275e6295fcd78 100644
---- a/lib/Kconfig.kasan
-+++ b/lib/Kconfig.kasan
-@@ -22,8 +22,11 @@ config ARCH_DISABLE_KASAN_INLINE
- config CC_HAS_KASAN_GENERIC
- 	def_bool $(cc-option, -fsanitize=kernel-address)
+diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
+index 37ea0fa421da8..ede2a14dad8be 100644
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -499,6 +499,20 @@ static int nvme_add_ns_head_cdev(struct nvme_ns_head *head)
+ 	return ret;
+ }
  
-+# GCC appears to ignore no_sanitize_address when -fsanitize=kernel-hwaddress
-+# is passed. See https://bugzilla.kernel.org/show_bug.cgi?id=218854 (and
-+# the linked LKML thread) for more details.
- config CC_HAS_KASAN_SW_TAGS
--	def_bool $(cc-option, -fsanitize=kernel-hwaddress)
-+	def_bool !CC_IS_GCC && $(cc-option, -fsanitize=kernel-hwaddress)
++static void nvme_partition_scan_work(struct work_struct *work)
++{
++	struct nvme_ns_head *head =
++		container_of(work, struct nvme_ns_head, partition_scan_work);
++
++	if (WARN_ON_ONCE(!test_and_clear_bit(GD_SUPPRESS_PART_SCAN,
++					     &head->disk->state)))
++		return;
++
++	mutex_lock(&head->disk->open_mutex);
++	bdev_disk_changed(head->disk, false);
++	mutex_unlock(&head->disk->open_mutex);
++}
++
+ static void nvme_requeue_work(struct work_struct *work)
+ {
+ 	struct nvme_ns_head *head =
+@@ -525,6 +539,7 @@ int nvme_mpath_alloc_disk(struct nvme_ctrl *ctrl, struct nvme_ns_head *head)
+ 	bio_list_init(&head->requeue_list);
+ 	spin_lock_init(&head->requeue_lock);
+ 	INIT_WORK(&head->requeue_work, nvme_requeue_work);
++	INIT_WORK(&head->partition_scan_work, nvme_partition_scan_work);
  
- # This option is only required for software KASAN modes.
- # Old GCC versions do not have proper support for no_sanitize_address.
-@@ -100,7 +103,7 @@ config KASAN_SW_TAGS
- 	help
- 	  Enables Software Tag-Based KASAN.
+ 	/*
+ 	 * Add a multipath node if the subsystems supports multiple controllers.
+@@ -540,6 +555,16 @@ int nvme_mpath_alloc_disk(struct nvme_ctrl *ctrl, struct nvme_ns_head *head)
+ 		return -ENOMEM;
+ 	head->disk->fops = &nvme_ns_head_ops;
+ 	head->disk->private_data = head;
++
++	/*
++	 * We need to suppress the partition scan from occuring within the
++	 * controller's scan_work context. If a path error occurs here, the IO
++	 * will wait until a path becomes available or all paths are torn down,
++	 * but that action also occurs within scan_work, so it would deadlock.
++	 * Defer the partion scan to a different context that does not block
++	 * scan_work.
++	 */
++	set_bit(GD_SUPPRESS_PART_SCAN, &head->disk->state);
+ 	sprintf(head->disk->disk_name, "nvme%dn%d",
+ 			ctrl->subsys->instance, head->instance);
  
--	  Requires GCC 11+ or Clang.
-+	  Requires Clang.
+@@ -589,6 +614,7 @@ static void nvme_mpath_set_live(struct nvme_ns *ns)
+ 			return;
+ 		}
+ 		nvme_add_ns_head_cdev(head);
++		kblockd_schedule_work(&head->partition_scan_work);
+ 	}
  
- 	  Supported only on arm64 CPUs and relies on Top Byte Ignore.
+ 	mutex_lock(&head->lock);
+@@ -889,6 +915,12 @@ void nvme_mpath_shutdown_disk(struct nvme_ns_head *head)
+ 	kblockd_schedule_work(&head->requeue_work);
+ 	if (test_bit(NVME_NSHEAD_DISK_LIVE, &head->flags)) {
+ 		nvme_cdev_del(&head->cdev, &head->cdev_device);
++		/*
++		 * requeue I/O after NVME_NSHEAD_DISK_LIVE has been cleared
++		 * to allow multipath to fail all I/O.
++		 */
++		synchronize_srcu(&head->srcu);
++		kblockd_schedule_work(&head->requeue_work);
+ 		del_gendisk(head->disk);
+ 	}
+ }
+@@ -900,6 +932,7 @@ void nvme_mpath_remove_disk(struct nvme_ns_head *head)
+ 	/* make sure all pending bios are cleaned up */
+ 	kblockd_schedule_work(&head->requeue_work);
+ 	flush_work(&head->requeue_work);
++	flush_work(&head->partition_scan_work);
+ 	put_disk(head->disk);
+ }
  
+diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
+index 799f8a2bb0b4f..14a867245c29f 100644
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -476,6 +476,7 @@ struct nvme_ns_head {
+ 	struct bio_list		requeue_list;
+ 	spinlock_t		requeue_lock;
+ 	struct work_struct	requeue_work;
++	struct work_struct	partition_scan_work;
+ 	struct mutex		lock;
+ 	unsigned long		flags;
+ #define NVME_NSHEAD_DISK_LIVE	0
 -- 
 2.43.0
 
