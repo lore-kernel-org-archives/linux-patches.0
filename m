@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984D53BBEB;
-	Fri, 15 Nov 2024 06:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BC3185B5B;
+	Fri, 15 Nov 2024 06:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731652900; cv=none; b=ZiGJjNj4dKb2W3EcGUhc8j69MH8NvpzKd5I8oic0fm0KH3vcunZGN/owyCQKtW9DKjaolZpG6YxPxg2GJbphLPUWrmzSPsK0n/sTFCoGERwSLy/Uv+iWjbERtbTCFKEIrp4rMTp3K4h+GLlUDtEH0gEMOiOCEebgIAutP2RC4QI=
+	t=1731652904; cv=none; b=HTF6MMiBKAyIKxkoO2jgR9+C3PqozdtaTvTJ41wm+TLIDiadbC827ZQYKiV92mmWixsJommt6NG+cC4PVitTvPih75pKKQV40tKbeeTurFCAUKfsjVyOXvLHYzED6XUIYl5/TudS2JejbjfGy2vJIjYu9m1T1KVDAVTZ1WjlBQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731652900; c=relaxed/simple;
-	bh=RZAl89LyPbS6FTe7+Mxqyp4OkaS9Z5zrbWDQQfxf+c8=;
+	s=arc-20240116; t=1731652904; c=relaxed/simple;
+	bh=VMfRkuPeDM2vQz+M7+LYTDXIJ71hSq12gWxVO5vq4vM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AteEHmG4Day+pjxXcX6p0Ls3y64x6RcvNHZhXgjTI+Vln476fndbmzHThsAaQh6vOznQ6iDD1aeBWG1CE2DeY7h8I/+0F7OLYxo0Js7okRqhE26IevcaWUNqAqvF81trd/oS97bvPDiiUYz70EIauo8oIVMiommCagHTvJdUf/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUi3rQX2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MIFKBw7yC+73ZqbI7+qo4iJrQMA+OeBK6Sdh1a765nAExBCGDLLHE6ZXNLuOQ6EPQJ3kotp6bpRzD7TaKErvF+35lN5So2qTRkP6LIAZNkMtqEZeQyrZDYn2ED/fmx7Ek24r0pEgTNYOPLiqG2Cb7hIBjgEHSfPLRqHznK04yGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtMpixJe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUi3rQX2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09765C4CECF;
-	Fri, 15 Nov 2024 06:41:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtMpixJe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC3EC4CECF;
+	Fri, 15 Nov 2024 06:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731652900;
-	bh=RZAl89LyPbS6FTe7+Mxqyp4OkaS9Z5zrbWDQQfxf+c8=;
+	s=korg; t=1731652904;
+	bh=VMfRkuPeDM2vQz+M7+LYTDXIJ71hSq12gWxVO5vq4vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IUi3rQX2dd5K0skLt90UV4hvLRECXY9hb6U8+tqvC4RXzOPBqKEeHojlLVaP8Xprn
-	 D73Qo+HQfoKO81O9GwdjVntWmpYZD33KrPzm+WlslBZSBgJM+AjlNv8Ci59mqPxVYj
-	 QOqbnYcvC6Dk/QQ8Ntn6hVpMlyGTWzZL5aguwY0A=
+	b=LtMpixJen8YYB2ROr2HBEA05GKm9E40yIVGuNAgihsCyLY5vltRZc9fWx2/Zo6jsY
+	 Tli+sd0+LoyaDVbheR7SjtN3sBg9s6Rzs0RHmP1/d2bsyR1Vp1NSRv5rMqZLkWJaOb
+	 C4aOfOEQM/OlgGbo6Yth55iD0EGeVUjliIdpO6ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yann Sionneau <ysionneau@kalrayinc.com>,
-	Julian Vetter <jvetter@kalrayinc.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	2639161967 <2639161967@qq.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 48/52] sound: Make CONFIG_SND depend on INDIRECT_IOMEM instead of UML
-Date: Fri, 15 Nov 2024 07:38:01 +0100
-Message-ID: <20241115063724.586434860@linuxfoundation.org>
+Subject: [PATCH 4.19 49/52] powerpc/powernv: Free name on error in opal_event_init()
+Date: Fri, 15 Nov 2024 07:38:02 +0100
+Message-ID: <20241115063724.622552205@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.845867306@linuxfoundation.org>
 References: <20241115063722.845867306@linuxfoundation.org>
@@ -52,37 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Vetter <jvetter@kalrayinc.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit ad6639f143a0b42d7fb110ad14f5949f7c218890 ]
+[ Upstream commit cf8989d20d64ad702a6210c11a0347ebf3852aa7 ]
 
-When building for the UM arch and neither INDIRECT_IOMEM=y, nor
-HAS_IOMEM=y is selected, it will fall back to the implementations from
-asm-generic/io.h for IO memcpy. But these fall-back functions just do a
-memcpy. So, instead of depending on UML, add dependency on 'HAS_IOMEM ||
-INDIRECT_IOMEM'.
+In opal_event_init() if request_irq() fails name is not freed, leading
+to a memory leak. The code only runs at boot time, there's no way for a
+user to trigger it, so there's no security impact.
 
-Reviewed-by: Yann Sionneau <ysionneau@kalrayinc.com>
-Signed-off-by: Julian Vetter <jvetter@kalrayinc.com>
-Link: https://patch.msgid.link/20241010124601.700528-1-jvetter@kalrayinc.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix the leak by freeing name in the error path.
+
+Reported-by: 2639161967 <2639161967@qq.com>
+Closes: https://lore.kernel.org/linuxppc-dev/87wmjp3wig.fsf@mail.lhotse
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://patch.msgid.link/20240920093520.67997-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/powernv/opal-irqchip.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/Kconfig b/sound/Kconfig
-index 76febc37862de..be30a24daaf1c 100644
---- a/sound/Kconfig
-+++ b/sound/Kconfig
-@@ -1,6 +1,6 @@
- menuconfig SOUND
- 	tristate "Sound card support"
--	depends on HAS_IOMEM || UML
-+	depends on HAS_IOMEM || INDIRECT_IOMEM
- 	help
- 	  If you have a sound card in your computer, i.e. if it can say more
- 	  than an occasional beep, say Y.
+diff --git a/arch/powerpc/platforms/powernv/opal-irqchip.c b/arch/powerpc/platforms/powernv/opal-irqchip.c
+index e71f2111c8c0b..676ec9fdd115d 100644
+--- a/arch/powerpc/platforms/powernv/opal-irqchip.c
++++ b/arch/powerpc/platforms/powernv/opal-irqchip.c
+@@ -289,6 +289,7 @@ int __init opal_event_init(void)
+ 				 name, NULL);
+ 		if (rc) {
+ 			pr_warn("Error %d requesting OPAL irq %d\n", rc, (int)r->start);
++			kfree(name);
+ 			continue;
+ 		}
+ 	}
 -- 
 2.43.0
 
