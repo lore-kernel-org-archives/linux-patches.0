@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A20188015;
-	Fri, 15 Nov 2024 06:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069A72BB1B;
+	Fri, 15 Nov 2024 06:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653733; cv=none; b=L+UOy6Ur6CZUv9e/sfiZ4CFvyWy447IJu/bc/Nec8RZukdn68xky/uG2ClokHEKXhqmEiEluGpt8jmjEky+LhbD6K3Hm08XDNJN3q+LZpzTcPfEiz2y67rVbNxdjvn3vYzgzbhma4AklPg1YmjZ+RrBQIkPxBBUIxUgHyJX22r8=
+	t=1731653737; cv=none; b=dfIWROBWEtprYr83kxv4acP3rdLS3rgODNbLLrvYaqq0QPUQi64lBFDnIj3pIBpTGs+GPN/ut/eD5nAKTClDihNC0ca4wbgCJ65Tmu8l5VPfO+bzBR3XQFEdPlXwz8QhdUZgYvIXJtmQTZLrH3/o7666MKhDxauNUC+gEGuD5DM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653733; c=relaxed/simple;
-	bh=U0HvFXFxfCO+2XMQahKAqRH7xiSjQw93w7CsCipbXRs=;
+	s=arc-20240116; t=1731653737; c=relaxed/simple;
+	bh=+u8+vwWh3zTal6U3C67+2hyCpyFbxOY44amFte/4iJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ECfBWly83Z1BwNPjJj1Vll/RBe6CVk6Mb7XzN4VY83aLpKGf4TmBk0MDUrk7DT0iSznKJoyKxMN8nGhi7+fxrsq0hFi/VKQ75rHFhH6dSiDUEY4/xCkVi/894RbhJUx9iOlRX1nqpGOcXlyearUVCvgehaBBcpT6cVQLzHMLkOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w38kHPrV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QHFQzN2bo6cZhsxW39hYg5HXNmjzR3Ib+ZusbQPw9HUeUmuM0yKFbw51J27x9lyJUnXGPMOCX3OvJvjl9N9Hnl7RyxJIb/ePyQf+LZq263oXp6M06pTMQCbPwi1vdqTlCfHDpPu6JXwqIyRH2KyWT+9e7ZScNJppe3wrEK2ufYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9/cSzZD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w38kHPrV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F12C4CECF;
-	Fri, 15 Nov 2024 06:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9/cSzZD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEFAC4CECF;
+	Fri, 15 Nov 2024 06:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653733;
-	bh=U0HvFXFxfCO+2XMQahKAqRH7xiSjQw93w7CsCipbXRs=;
+	s=korg; t=1731653736;
+	bh=+u8+vwWh3zTal6U3C67+2hyCpyFbxOY44amFte/4iJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w38kHPrVcRgwSadX9FDc2rgOSubvYWm/c0tlebDpDgykk4iskPdlb/JRhqcdlPxso
-	 LyKEwrjb6JzPp0zd8Ay/n0zUZPCubZs1LryCbKmWYcFtgc/lxphHnRLCLcvnR/cXUS
-	 3ElVDSPY/iTcF4cRBxXDU5KWr1wjqKP/hPMFZcNM=
+	b=q9/cSzZDwY6Z9qrCG4vYkXUwMA8LM3jeZPFg8JFYIafas84AcT1/Dm0b9j+Vax2qo
+	 A7uYFKU+pYcmnrDCcFXoA/iiwrBfTzZbnTTbhgkco46lCKfJoO2wuyvZaVfpa4qdn/
+	 +zgMHfYvlRhSbHSkHuLCsOY55PRcLJ039usmFOCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wu <david.wu@rock-chips.com>,
-	Johan Jonker <jbx6244@gmail.com>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 20/82] net: arc: fix the device for dma_map_single/dma_unmap_single
-Date: Fri, 15 Nov 2024 07:37:57 +0100
-Message-ID: <20241115063726.294901276@linuxfoundation.org>
+	=?UTF-8?q?Jaros=C5=82aw=20Janik?= <jaroslaw.janik@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 21/82] Revert "ALSA: hda/conexant: Mute speakers at suspend / shutdown"
+Date: Fri, 15 Nov 2024 07:37:58 +0100
+Message-ID: <20241115063726.329882268@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -47,160 +44,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: Jarosław Janik <jaroslaw.janik@gmail.com>
 
-[ Upstream commit 71803c1dfa29e0d13b99e48fda11107cc8caebc7 ]
+commit c9363bbb0f68dd1ddb8be7bbfe958cdfcd38d851 upstream.
 
-The ndev->dev and pdev->dev aren't the same device, use ndev->dev.parent
-which has dma_mask, ndev->dev.parent is just pdev->dev.
-Or it would cause the following issue:
+Commit 4f61c8fe3520 ("ALSA: hda/conexant: Mute speakers at suspend /
+shutdown") mutes speakers on system shutdown or whenever HDA controller
+is suspended by PM; this however interacts badly with Thinkpad's ACPI
+firmware behavior which uses beeps to signal various events (enter/leave
+suspend or hibernation, AC power connect/disconnect, low battery, etc.);
+now those beeps are either muted altogether (for suspend/hibernate/
+shutdown related events) or work more or less randomly (eg. AC
+plug/unplug is only audible when you are playing music at the moment,
+because HDA device is likely in suspend mode otherwise).
 
-[   39.933526] ------------[ cut here ]------------
-[   39.938414] WARNING: CPU: 1 PID: 501 at kernel/dma/mapping.c:149 dma_map_page_attrs+0x90/0x1f8
+Since the original bug report mentioned in 4f61c8fe3520 complained about
+Lenovo's Thinkpad laptop - revert this commit altogether.
 
-Fixes: f959dcd6ddfd ("dma-direct: Fix potential NULL pointer dereference")
-Signed-off-by: David Wu <david.wu@rock-chips.com>
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4f61c8fe3520 ("ALSA: hda/conexant: Mute speakers at suspend / shutdown")
+Signed-off-by: Jarosław Janik <jaroslaw.janik@gmail.com>
+Link: https://patch.msgid.link/20241030171813.18941-2-jaroslaw.janik@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/arc/emac_main.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ sound/pci/hda/patch_conexant.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/arc/emac_main.c b/drivers/net/ethernet/arc/emac_main.c
-index b56a9e2aecd93..61d076e09571c 100644
---- a/drivers/net/ethernet/arc/emac_main.c
-+++ b/drivers/net/ethernet/arc/emac_main.c
-@@ -111,6 +111,7 @@ static void arc_emac_tx_clean(struct net_device *ndev)
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -181,8 +181,6 @@ static void cx_auto_reboot_notify(struct
  {
- 	struct arc_emac_priv *priv = netdev_priv(ndev);
- 	struct net_device_stats *stats = &ndev->stats;
-+	struct device *dev = ndev->dev.parent;
- 	unsigned int i;
+ 	struct conexant_spec *spec = codec->spec;
  
- 	for (i = 0; i < TX_BD_NUM; i++) {
-@@ -140,7 +141,7 @@ static void arc_emac_tx_clean(struct net_device *ndev)
- 			stats->tx_bytes += skb->len;
- 		}
- 
--		dma_unmap_single(&ndev->dev, dma_unmap_addr(tx_buff, addr),
-+		dma_unmap_single(dev, dma_unmap_addr(tx_buff, addr),
- 				 dma_unmap_len(tx_buff, len), DMA_TO_DEVICE);
- 
- 		/* return the sk_buff to system */
-@@ -174,6 +175,7 @@ static void arc_emac_tx_clean(struct net_device *ndev)
- static int arc_emac_rx(struct net_device *ndev, int budget)
- {
- 	struct arc_emac_priv *priv = netdev_priv(ndev);
-+	struct device *dev = ndev->dev.parent;
- 	unsigned int work_done;
- 
- 	for (work_done = 0; work_done < budget; work_done++) {
-@@ -223,9 +225,9 @@ static int arc_emac_rx(struct net_device *ndev, int budget)
- 			continue;
- 		}
- 
--		addr = dma_map_single(&ndev->dev, (void *)skb->data,
-+		addr = dma_map_single(dev, (void *)skb->data,
- 				      EMAC_BUFFER_SIZE, DMA_FROM_DEVICE);
--		if (dma_mapping_error(&ndev->dev, addr)) {
-+		if (dma_mapping_error(dev, addr)) {
- 			if (net_ratelimit())
- 				netdev_err(ndev, "cannot map dma buffer\n");
- 			dev_kfree_skb(skb);
-@@ -237,7 +239,7 @@ static int arc_emac_rx(struct net_device *ndev, int budget)
- 		}
- 
- 		/* unmap previosly mapped skb */
--		dma_unmap_single(&ndev->dev, dma_unmap_addr(rx_buff, addr),
-+		dma_unmap_single(dev, dma_unmap_addr(rx_buff, addr),
- 				 dma_unmap_len(rx_buff, len), DMA_FROM_DEVICE);
- 
- 		pktlen = info & LEN_MASK;
-@@ -423,6 +425,7 @@ static int arc_emac_open(struct net_device *ndev)
- {
- 	struct arc_emac_priv *priv = netdev_priv(ndev);
- 	struct phy_device *phy_dev = ndev->phydev;
-+	struct device *dev = ndev->dev.parent;
- 	int i;
- 
- 	phy_dev->autoneg = AUTONEG_ENABLE;
-@@ -445,9 +448,9 @@ static int arc_emac_open(struct net_device *ndev)
- 		if (unlikely(!rx_buff->skb))
- 			return -ENOMEM;
- 
--		addr = dma_map_single(&ndev->dev, (void *)rx_buff->skb->data,
-+		addr = dma_map_single(dev, (void *)rx_buff->skb->data,
- 				      EMAC_BUFFER_SIZE, DMA_FROM_DEVICE);
--		if (dma_mapping_error(&ndev->dev, addr)) {
-+		if (dma_mapping_error(dev, addr)) {
- 			netdev_err(ndev, "cannot dma map\n");
- 			dev_kfree_skb(rx_buff->skb);
- 			return -ENOMEM;
-@@ -548,6 +551,7 @@ static void arc_emac_set_rx_mode(struct net_device *ndev)
- static void arc_free_tx_queue(struct net_device *ndev)
- {
- 	struct arc_emac_priv *priv = netdev_priv(ndev);
-+	struct device *dev = ndev->dev.parent;
- 	unsigned int i;
- 
- 	for (i = 0; i < TX_BD_NUM; i++) {
-@@ -555,7 +559,7 @@ static void arc_free_tx_queue(struct net_device *ndev)
- 		struct buffer_state *tx_buff = &priv->tx_buff[i];
- 
- 		if (tx_buff->skb) {
--			dma_unmap_single(&ndev->dev,
-+			dma_unmap_single(dev,
- 					 dma_unmap_addr(tx_buff, addr),
- 					 dma_unmap_len(tx_buff, len),
- 					 DMA_TO_DEVICE);
-@@ -579,6 +583,7 @@ static void arc_free_tx_queue(struct net_device *ndev)
- static void arc_free_rx_queue(struct net_device *ndev)
- {
- 	struct arc_emac_priv *priv = netdev_priv(ndev);
-+	struct device *dev = ndev->dev.parent;
- 	unsigned int i;
- 
- 	for (i = 0; i < RX_BD_NUM; i++) {
-@@ -586,7 +591,7 @@ static void arc_free_rx_queue(struct net_device *ndev)
- 		struct buffer_state *rx_buff = &priv->rx_buff[i];
- 
- 		if (rx_buff->skb) {
--			dma_unmap_single(&ndev->dev,
-+			dma_unmap_single(dev,
- 					 dma_unmap_addr(rx_buff, addr),
- 					 dma_unmap_len(rx_buff, len),
- 					 DMA_FROM_DEVICE);
-@@ -679,6 +684,7 @@ static netdev_tx_t arc_emac_tx(struct sk_buff *skb, struct net_device *ndev)
- 	unsigned int len, *txbd_curr = &priv->txbd_curr;
- 	struct net_device_stats *stats = &ndev->stats;
- 	__le32 *info = &priv->txbd[*txbd_curr].info;
-+	struct device *dev = ndev->dev.parent;
- 	dma_addr_t addr;
- 
- 	if (skb_padto(skb, ETH_ZLEN))
-@@ -692,10 +698,9 @@ static netdev_tx_t arc_emac_tx(struct sk_buff *skb, struct net_device *ndev)
- 		return NETDEV_TX_BUSY;
- 	}
- 
--	addr = dma_map_single(&ndev->dev, (void *)skb->data, len,
--			      DMA_TO_DEVICE);
-+	addr = dma_map_single(dev, (void *)skb->data, len, DMA_TO_DEVICE);
- 
--	if (unlikely(dma_mapping_error(&ndev->dev, addr))) {
-+	if (unlikely(dma_mapping_error(dev, addr))) {
- 		stats->tx_dropped++;
- 		stats->tx_errors++;
- 		dev_kfree_skb_any(skb);
--- 
-2.43.0
-
+-	snd_hda_gen_shutup_speakers(codec);
+-
+ 	/* Turn the problematic codec into D3 to avoid spurious noises
+ 	   from the internal speaker during (and after) reboot */
+ 	cx_auto_turn_eapd(codec, spec->num_eapds, spec->eapds, false);
 
 
