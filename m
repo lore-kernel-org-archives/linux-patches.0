@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A452BB1B;
-	Fri, 15 Nov 2024 06:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A1C18873F;
+	Fri, 15 Nov 2024 06:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653898; cv=none; b=nsUncTpiIvyP22XzvnvwAL9gKPQxWo+N5vI5EiuHklL0NfLfg4fV6xDFipYYB3/ZTuJPwcy9rdMe+Rutve93ts4A33bwNkiV9FWuTCW2UJio5erZs+Oj/PPbWzH55EfnVkYj2gjinBO6CQTDIjtc2fAGFAy4cwYvgKNneRRgrnA=
+	t=1731653902; cv=none; b=j/ZJYWJeH6nFE2TNAgOQwUPuLUQBhqecW+ZSLAKWeX4D5of/flCv9qAGlpTpcBfsiO5Cl10pETOLUrK9zzeB394S6i/KSO3NeKbfHV/FfWHrvjOdwXQ/bop+e7yTtr4v6Na2e/QLIgO51XFRlZcVVe2Cv8wFH6DOOydlDnCmUz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653898; c=relaxed/simple;
-	bh=4hnSSUgJI68EwVPAgQSuFuNQXWQ1THk4qflJjX9WZaU=;
+	s=arc-20240116; t=1731653902; c=relaxed/simple;
+	bh=5GIbT6hagRxlGPfvdCQ9RbsT32DM1qlmwTOlEWyi+FE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nTkU33HG0ZSAWBmnVP16WnUln0UyX0HhIWGfsbmmZds52PXBsAzgZehDboxEwNyD4YMy2qi3oqjwaheciHey85ODG9ZgyfhJn1q/7ghZej3CJS4ocpeif+FjcyruvJ8limNuPdBN0y/KavBuqnh/7L4fAZl35Kq+Scx7XYeMhgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjUb0dJ9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XddfS23hhgWejEbw625ZD1NcGGoQ22GMGtWHUFbOWYuS4ZMpEdNZfVDs3O6DG6grmrzEKAmrhgfZeb7OYlgCtULrfrZONLxF0XfuCmHHrPlimDzM6/+6wGmwt2cBhGKpI0JnnGtYle/8/5O0zLbNM653g/V8LuKUdTmWs95Dd/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q66ZLVrx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjUb0dJ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C7BC4CED2;
-	Fri, 15 Nov 2024 06:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q66ZLVrx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3EAC4CED0;
+	Fri, 15 Nov 2024 06:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653898;
-	bh=4hnSSUgJI68EwVPAgQSuFuNQXWQ1THk4qflJjX9WZaU=;
+	s=korg; t=1731653901;
+	bh=5GIbT6hagRxlGPfvdCQ9RbsT32DM1qlmwTOlEWyi+FE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qjUb0dJ9Zkxa79lVd02ZPJMmLGRj9vuh6vLOayuumFaAe9/z3tAvdSP57gmW3r4r4
-	 CzYtFRpgkG3hUFZb8Ppo8KK5unoH3WYuv2Ib9LE3sh8nvaXAjY9eISqMOIG+8Ls1Ks
-	 WWIxvjAKi1Mljla5kvuyJScYLRc3aDbqYZoRID24=
+	b=q66ZLVrxqXwK5Gs9fbSAUSauWsp0gmU6YVMWzNqtzE0mk+wAgKLHgacRi0GqRpupU
+	 BTaLlsUAEXHxcLRt4A2IvO2m9mJgLpEH9aSC8865CBsGWlzpStBaVcniOC/gpgNncU
+	 hoAdvpYAgso24VUgYr6B0YVR5su72AOmTqU0jfPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Beno=C3=AEt=20Monin?= <benoit.monin@gmx.fr>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 61/82] USB: serial: option: add Quectel RG650V
-Date: Fri, 15 Nov 2024 07:38:38 +0100
-Message-ID: <20241115063727.753616884@linuxfoundation.org>
+	Pedro Falcato <pedro.falcato@gmail.com>,
+	syzbot+3c5d43e97993e1fa612b@syzkaller.appspotmail.com,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 70/82] 9p: Avoid creating multiple slab caches with the same name
+Date: Fri, 15 Nov 2024 07:38:47 +0100
+Message-ID: <20241115063728.073397195@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
 References: <20241115063725.561151311@linuxfoundation.org>
@@ -44,72 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benoît Monin <benoit.monin@gmx.fr>
+From: Pedro Falcato <pedro.falcato@gmail.com>
 
-commit 3b05949ba39f305b585452d0e177470607842165 upstream.
+[ Upstream commit 79efebae4afc2221fa814c3cae001bede66ab259 ]
 
-Add support for Quectel RG650V which is based on Qualcomm SDX65 chip.
-The composition is DIAG / NMEA / AT / AT / QMI.
+In the spirit of [1], avoid creating multiple slab caches with the same
+name. Instead, add the dev_name into the mix.
 
-T:  Bus=02 Lev=01 Prnt=01 Port=03 Cnt=01 Dev#=  4 Spd=5000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0122 Rev=05.15
-S:  Manufacturer=Quectel
-S:  Product=RG650V-EU
-S:  SerialNumber=xxxxxxx
-C:  #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=9ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=9ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=qmi_wwan
-E:  Ad=05(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=   8 Ivl=9ms
+[1]: https://lore.kernel.org/all/20240807090746.2146479-1-pedro.falcato@gmail.com/
 
-Signed-off-by: Benoît Monin <benoit.monin@gmx.fr>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Pedro Falcato <pedro.falcato@gmail.com>
+Reported-by: syzbot+3c5d43e97993e1fa612b@syzkaller.appspotmail.com
+Message-ID: <20240807094725.2193423-1-pedro.falcato@gmail.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/9p/client.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -251,6 +251,7 @@ static void option_instat_callback(struc
- #define QUECTEL_VENDOR_ID			0x2c7c
- /* These Quectel products use Quectel's vendor ID */
- #define QUECTEL_PRODUCT_EC21			0x0121
-+#define QUECTEL_PRODUCT_RG650V			0x0122
- #define QUECTEL_PRODUCT_EM061K_LTA		0x0123
- #define QUECTEL_PRODUCT_EM061K_LMS		0x0124
- #define QUECTEL_PRODUCT_EC25			0x0125
-@@ -1273,6 +1274,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG912Y, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EG916Q, 0xff, 0x00, 0x00) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0xff, 0x30) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RG650V, 0xff, 0, 0) },
+diff --git a/net/9p/client.c b/net/9p/client.c
+index 0fa324e8b2451..2668a1a67c8a8 100644
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -1006,6 +1006,7 @@ struct p9_client *p9_client_create(const char *dev_name, char *options)
+ 	int err;
+ 	struct p9_client *clnt;
+ 	char *client_id;
++	char *cache_name;
  
- 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_6001) },
- 	{ USB_DEVICE(CMOTECH_VENDOR_ID, CMOTECH_PRODUCT_CMU_300) },
+ 	err = 0;
+ 	clnt = kmalloc(sizeof(struct p9_client), GFP_KERNEL);
+@@ -1058,15 +1059,22 @@ struct p9_client *p9_client_create(const char *dev_name, char *options)
+ 	if (err)
+ 		goto close_trans;
+ 
++	cache_name = kasprintf(GFP_KERNEL, "9p-fcall-cache-%s", dev_name);
++	if (!cache_name) {
++		err = -ENOMEM;
++		goto close_trans;
++	}
++
+ 	/* P9_HDRSZ + 4 is the smallest packet header we can have that is
+ 	 * followed by data accessed from userspace by read
+ 	 */
+ 	clnt->fcall_cache =
+-		kmem_cache_create_usercopy("9p-fcall-cache", clnt->msize,
++		kmem_cache_create_usercopy(cache_name, clnt->msize,
+ 					   0, 0, P9_HDRSZ + 4,
+ 					   clnt->msize - (P9_HDRSZ + 4),
+ 					   NULL);
+ 
++	kfree(cache_name);
+ 	return clnt;
+ 
+ close_trans:
+-- 
+2.43.0
+
 
 
