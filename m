@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C1E185924;
-	Fri, 15 Nov 2024 06:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988C03BBEB;
+	Fri, 15 Nov 2024 06:44:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653045; cv=none; b=C3QO/vJYacvNR4NFLjIzzRo3GqfzzWMkhYCeFIiaeUp7zSToaV9agN4ScxYxQespmUUWxZugqSjCvjkCvBvXKEvEq+g2DCv2YiwjW3TLnf8a+VRdTxV5TlpG06mI2SFWexn2v7NkVa3pvz9ks1yynLCRKzN/wOeBlcFZSDvi34g=
+	t=1731653048; cv=none; b=Bme/mLaGp0zt11wyPRJHpMIOv/tqYId3kMvrK03SCcwY1x5ugq02CVz88rgi3wzGzfDQvh++ah+UHSPyoSm+ffEUPSFicTVqhrLhz4dYuZxE6qp/61mmKRTorMysUbQzis/uFGDyVPDvdPZk5epS/24hNoJjEqPRaMJALXNjxmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653045; c=relaxed/simple;
-	bh=V3ThoFeNBSkZhRiqkbpC3NjpkB52yGG53WIKhAW7u4o=;
+	s=arc-20240116; t=1731653048; c=relaxed/simple;
+	bh=LsWgmVfnE8+hUxasReQuB6322CSlwWbIw1GduvKVL/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rucKME01N+GPD0AV5SnBP7/7ZFSBepN4GtnIcAToSjwjcSb1v0iV0ZuGdmbD9riwgPQKpHpxilYn/xflcmQslP+ldFCmIe9WELCl6TWHKmAy6OxD1a8niqeVbl38irVR6UFeGflu0KPF6JPndBZ8SxWny+/UClaJM4Y+q+tDbfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOdRT+kI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VyuecdZZ0h3WjFDetOtmRakvQCq54sr+QUcOausbqaNQhg6rFnysVN9NJcIK6WKxxxlIR5U+xqmxTYDTDkgo2NfleGlKy9XDeOK0w1LtlYJFrkRj/f4pvoUC3lNYM8cImIFjqSOtvqqYB016FGXjeIPbGEWXfgM9k1OQxmg+qHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taQGMDb0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOdRT+kI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99AF3C4CECF;
-	Fri, 15 Nov 2024 06:44:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taQGMDb0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01EB8C4CECF;
+	Fri, 15 Nov 2024 06:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653045;
-	bh=V3ThoFeNBSkZhRiqkbpC3NjpkB52yGG53WIKhAW7u4o=;
+	s=korg; t=1731653048;
+	bh=LsWgmVfnE8+hUxasReQuB6322CSlwWbIw1GduvKVL/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOdRT+kI6FGbE1Yc9AJWemSfrZXgZJ6AeYprPXDY/FYl2emSkieRcYQ60iiP1iFD8
-	 FylMhfBTpOgSGFLBI7YLN8XuE6Mcx7UedfKuvgUx38JsMCsvwTC49XXV6grcLOv3Lb
-	 NP751oUE4OypIvbeHdO/PE8STnG1ebwWxCPLuUD8=
+	b=taQGMDb0e7TgfBwJnqYDISmAlg5Ju4/P3d/Do2OoTrKBJ1rEGcu6QlGBaLcfGuQS4
+	 91zfKlY2xJLMbC8BtDk0nChNsMtGqHXXzq0UiKM/9hcct1wMP2+oymNJEp3DZf/Rqm
+	 sA4pLTD6trbRk1YgTeM6GeHJQjeb9svb9ZqLheeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a63a1f6a062033cf0f40@syzkaller.appspotmail.com,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Randy MacLeod <Randy.MacLeod@windriver.com>
-Subject: [PATCH 5.4 37/66] net: bridge: xmit: make sure we have at least eth header len bytes
-Date: Fri, 15 Nov 2024 07:37:46 +0100
-Message-ID: <20241115063724.186159647@linuxfoundation.org>
+	Benoit Sevens <bsevens@google.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>
+Subject: [PATCH 5.4 38/66] media: uvcvideo: Skip parsing frames of type UVC_VS_UNDEFINED in uvc_parse_format
+Date: Fri, 15 Nov 2024 07:37:47 +0100
+Message-ID: <20241115063724.221589096@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.834793938@linuxfoundation.org>
 References: <20241115063722.834793938@linuxfoundation.org>
@@ -52,78 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Benoit Sevens <bsevens@google.com>
 
-commit 8bd67ebb50c0145fd2ca8681ab65eb7e8cde1afc upstream.
+commit ecf2b43018da9579842c774b7f35dbe11b5c38dd upstream.
 
-syzbot triggered an uninit value[1] error in bridge device's xmit path
-by sending a short (less than ETH_HLEN bytes) skb. To fix it check if
-we can actually pull that amount instead of assuming.
+This can lead to out of bounds writes since frames of this type were not
+taken into account when calculating the size of the frames buffer in
+uvc_parse_streaming.
 
-Tested with dropwatch:
- drop at: br_dev_xmit+0xb93/0x12d0 [bridge] (0xffffffffc06739b3)
- origin: software
- timestamp: Mon May 13 11:31:53 2024 778214037 nsec
- protocol: 0x88a8
- length: 2
- original length: 2
- drop reason: PKT_TOO_SMALL
-
-[1]
-BUG: KMSAN: uninit-value in br_dev_xmit+0x61d/0x1cb0 net/bridge/br_device.c:65
- br_dev_xmit+0x61d/0x1cb0 net/bridge/br_device.c:65
- __netdev_start_xmit include/linux/netdevice.h:4903 [inline]
- netdev_start_xmit include/linux/netdevice.h:4917 [inline]
- xmit_one net/core/dev.c:3531 [inline]
- dev_hard_start_xmit+0x247/0xa20 net/core/dev.c:3547
- __dev_queue_xmit+0x34db/0x5350 net/core/dev.c:4341
- dev_queue_xmit include/linux/netdevice.h:3091 [inline]
- __bpf_tx_skb net/core/filter.c:2136 [inline]
- __bpf_redirect_common net/core/filter.c:2180 [inline]
- __bpf_redirect+0x14a6/0x1620 net/core/filter.c:2187
- ____bpf_clone_redirect net/core/filter.c:2460 [inline]
- bpf_clone_redirect+0x328/0x470 net/core/filter.c:2432
- ___bpf_prog_run+0x13fe/0xe0f0 kernel/bpf/core.c:1997
- __bpf_prog_run512+0xb5/0xe0 kernel/bpf/core.c:2238
- bpf_dispatcher_nop_func include/linux/bpf.h:1234 [inline]
- __bpf_prog_run include/linux/filter.h:657 [inline]
- bpf_prog_run include/linux/filter.h:664 [inline]
- bpf_test_run+0x499/0xc30 net/bpf/test_run.c:425
- bpf_prog_test_run_skb+0x14ea/0x1f20 net/bpf/test_run.c:1058
- bpf_prog_test_run+0x6b7/0xad0 kernel/bpf/syscall.c:4269
- __sys_bpf+0x6aa/0xd90 kernel/bpf/syscall.c:5678
- __do_sys_bpf kernel/bpf/syscall.c:5767 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:5765 [inline]
- __x64_sys_bpf+0xa0/0xe0 kernel/bpf/syscall.c:5765
- x64_sys_call+0x96b/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:322
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+a63a1f6a062033cf0f40@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a63a1f6a062033cf0f40
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Randy MacLeod <Randy.MacLeod@windriver.com>
+Fixes: c0efd232929c ("V4L/DVB (8145a): USB Video Class driver")
+Signed-off-by: Benoit Sevens <bsevens@google.com>
+Cc: stable@vger.kernel.org
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_device.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/usb/uvc/uvc_driver.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bridge/br_device.c
-+++ b/net/bridge/br_device.c
-@@ -35,6 +35,11 @@ netdev_tx_t br_dev_xmit(struct sk_buff *
- 	const unsigned char *dest;
- 	u16 vid = 0;
- 
-+	if (unlikely(!pskb_may_pull(skb, ETH_HLEN))) {
-+		kfree_skb(skb);
-+		return NETDEV_TX_OK;
-+	}
-+
- 	memset(skb->cb, 0, sizeof(struct br_input_skb_cb));
- 
- 	rcu_read_lock();
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -602,7 +602,7 @@ static int uvc_parse_format(struct uvc_d
+ 	/* Parse the frame descriptors. Only uncompressed, MJPEG and frame
+ 	 * based formats have frame descriptors.
+ 	 */
+-	while (buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE &&
++	while (ftype && buflen > 2 && buffer[1] == USB_DT_CS_INTERFACE &&
+ 	       buffer[2] == ftype) {
+ 		frame = &format->frame[format->nframes];
+ 		if (ftype != UVC_VS_FRAME_FRAME_BASED)
 
 
