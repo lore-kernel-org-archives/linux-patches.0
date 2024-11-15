@@ -1,262 +1,308 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AB1185949;
-	Fri, 15 Nov 2024 06:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD76188A18;
+	Fri, 15 Nov 2024 06:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653558; cv=none; b=m1q5SM+eY+K14CKt6gc5Gt+b5tbh8U7YvgiTJwOrbMJdeH4Dhvs/cpHUt4RrI8BT7AlPw26d2Bn2h5jkUUwe23ZTvYemqXMsS//31WD5WwzWBD0n2Lmk36OCwylvBbSba+/UAhBGdhg38Z5S4U9KicwTXcWIAEMiLkFhtO5wpDE=
+	t=1731653561; cv=none; b=u8nNJd18lerjcKaNAv9VGy5Ff/N2geSyTHwWptyfYw4cuAZK6RYJh74XePg6NILdkqG6B7L/H2S4/tYqyjDIA/HpGoOxqU8U8qItOWjw10cYfzk+DGZ7AbxA14YTwjxO19yDrCDtWzAD/XuYcGDObIm4lsl888X/6MtSLYtx6Y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653558; c=relaxed/simple;
-	bh=tPCZ1ZkUl+MQMg9jAZFGjJstm7Lnf2YW82dtfB4mTnM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VvqPQDs4d5VH7BEeqhuIPC4l5eVdkZ0D3U1vjgwKN0D5IHhZgJqzXGfM4+ELnXDPYxLmag8M2cHki44eTth3egKc4AlRknchQjwHXKUCz7SuuPPs9CaOHMIjY1Wn+eS74FUJbA+MZnMi9SJlLFaPhVg+pctdepZj/PjTl57UWqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o3Qti4FJ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1731653561; c=relaxed/simple;
+	bh=Ct6gU2CAhEBQ6Xn2e11mmTJ8vabXqFl66y2OKhxSoXg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KTMm83CA+X9Tzd6Z6VMMm+jTDas/CB+ZXUYLBA3vugQCUttm9RQTcjAg1dtT48o0whBdcsrp3UrzP6eq48s+EUVXleuyJ8vIgpW6owEcUbfIqBYh3pOKlCtiFkfwQd6/9ZhxDlyIpI3nUEI4l+F48ve8MzQd8q72YV1clJxCWp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YUQahcVr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o3Qti4FJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62122C4CECF;
-	Fri, 15 Nov 2024 06:52:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YUQahcVr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED89FC4CECF;
+	Fri, 15 Nov 2024 06:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653558;
-	bh=tPCZ1ZkUl+MQMg9jAZFGjJstm7Lnf2YW82dtfB4mTnM=;
-	h=From:To:Cc:Subject:Date:From;
-	b=o3Qti4FJRDpl3a1owhzMKR/Rr7Txnj1zNmUFDXV47p30oxdPfEGnK1HJtxfbnq5re
-	 yRZ2IVDjXeEc9p3wk7MhUeCps6Bgdny/CCYOvtKQ/hvyG3N35qo+ewqk0y4xI/e8YX
-	 BESinn1sLPwlrK9po1K3Y3HyChNoi7c4ftnZJ2Kw=
+	s=korg; t=1731653561;
+	bh=Ct6gU2CAhEBQ6Xn2e11mmTJ8vabXqFl66y2OKhxSoXg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=YUQahcVr43+AQWAIg6YDaa4v2YJH9N2eKkq+Zf3ogzVqPHQzE2xBh9UCgZs0RDq/z
+	 sgd9BOfrKzMSL1emhY26mzGrcMm40NOZ5pWvygA5Qyq2PlqbcnxOR+wMTIIGanyTJI
+	 p49805APiXHSdojJA5Ws6D+V9M22vJe8aVBK+ZLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org
-Subject: [PATCH 6.1 00/39] 6.1.118-rc1 review
-Date: Fri, 15 Nov 2024 07:38:10 +0100
-Message-ID: <20241115063722.599985562@linuxfoundation.org>
+	=?UTF-8?q?Jeremy=20Lain=C3=A9?= <jeremy.laine@m4x.org>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Mike <user.service2016@gmail.com>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 02/39] Revert "Bluetooth: hci_sync: Fix overwriting request callback"
+Date: Fri, 15 Nov 2024 07:38:12 +0100
+Message-ID: <20241115063722.693856729@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241115063722.599985562@linuxfoundation.org>
+References: <20241115063722.599985562@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.118-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.1.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.1.118-rc1
-X-KernelTest-Deadline: 2024-11-17T06:37+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.1.118 release.
-There are 39 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Sun, 17 Nov 2024 06:37:07 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.118-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-and the diffstat can be found below.
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-thanks,
+This reverts commit da77c1d39bc527b31890bfa0405763c82828defb which is
+commit 2615fd9a7c2507eb3be3fbe49dcec88a2f56454a upstream.
 
-greg k-h
+It is reported to cause regressions in the 6.1.y tree, so revert it for
+now.
 
--------------
-Pseudo-Shortlog of commits:
+Link: https://lore.kernel.org/all/CADRbXaDqx6S+7tzdDPPEpRu9eDLrHQkqoWTTGfKJSRxY=hT5MQ@mail.gmail.com/
+Reported-by: Jeremy Lainé <jeremy.laine@m4x.org>
+Cc: Salvatore Bonaccorso <carnil@debian.org>
+Cc: Mike <user.service2016@gmail.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>
+Cc: Johan Hedberg <johan.hedberg@gmail.com>
+Cc: Paul Menzel <pmenzel@molgen.mpg.de>
+Cc: Pauli Virtanen <pav@iki.fi>
+Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ include/net/bluetooth/hci_core.h |    1 
+ net/bluetooth/hci_conn.c         |    2 -
+ net/bluetooth/hci_core.c         |   46 +++++++++++----------------------------
+ net/bluetooth/hci_event.c        |   18 +++++++--------
+ net/bluetooth/hci_sync.c         |   21 ++---------------
+ 5 files changed, 27 insertions(+), 61 deletions(-)
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.1.118-rc1
-
-Linus Torvalds <torvalds@linux-foundation.org>
-    9p: fix slab cache name creation for real
-
-Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-    fs/ntfs3: Fix general protection fault in run_is_mapped_full
-
-Hans de Goede <hdegoede@redhat.com>
-    platform/x86: x86-android-tablets: Fix use after free on platform_device_register() errors
-
-Qun-Wei Lin <qun-wei.lin@mediatek.com>
-    mm: krealloc: Fix MTE false alarm in __do_krealloc
-
-Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-    Bluetooth: L2CAP: Fix uaf in l2cap_connect
-
-Xiaxi Shen <shenxiaxi26@gmail.com>
-    ext4: fix timer use-after-free on failed mount
-
-Philip Yang <Philip.Yang@amd.com>
-    drm/amdkfd: amdkfd_free_gtt_mem clear the correct pointer
-
-Qiao Ma <mqaio@linux.alibaba.com>
-    uprobe: avoid out-of-bounds memory access of fetching args
-
-Andrii Nakryiko <andrii@kernel.org>
-    uprobes: encapsulate preparation of uprobe args buffer
-
-Hagar Hemdan <hagarhem@amazon.com>
-    io_uring: fix possible deadlock in io_register_iowq_max_workers()
-
-Li Nan <linan122@huawei.com>
-    md/raid10: improve code of mrdev in raid10_sync_request
-
-Reinhard Speyerer <rspmn@arcor.de>
-    net: usb: qmi_wwan: add Fibocom FG132 0x0112 composition
-
-Yanteng Si <siyanteng@cqsoftware.com.cn>
-    LoongArch: Use "Exception return address" to comment ERA
-
-Hans de Goede <hdegoede@redhat.com>
-    HID: lenovo: Add support for Thinkpad X1 Tablet Gen 3 keyboard
-
-Kenneth Albanowski <kenalba@chromium.org>
-    HID: multitouch: Add quirk for Logitech Bolt receiver w/ Casa touchpad
-
-Alessandro Zanni <alessandro.zanni87@gmail.com>
-    fs: Fix uninitialized value issue in from_kuid and from_kgid
-
-Jiawei Ye <jiawei.ye@foxmail.com>
-    bpf: Fix mismatched RCU unlock flavour in bpf_out_neigh_v6
-
-Yuan Can <yuancan@huawei.com>
-    vDPA/ifcvf: Fix pci_read_config_byte() return code handling
-
-Nilay Shroff <nilay@linux.ibm.com>
-    nvme: make keep-alive synchronous operation
-
-Michael Ellerman <mpe@ellerman.id.au>
-    powerpc/powernv: Free name on error in opal_event_init()
-
-Keith Busch <kbusch@kernel.org>
-    nvme-multipath: defer partition scanning
-
-Will Deacon <will@kernel.org>
-    kasan: Disable Software Tag-Based KASAN with GCC
-
-Ian Forbes <ian.forbes@broadcom.com>
-    drm/vmwgfx: Limit display layout ioctl array size to VMWGFX_NUM_DISPLAY_UNITS
-
-Julian Vetter <jvetter@kalrayinc.com>
-    sound: Make CONFIG_SND depend on INDIRECT_IOMEM instead of UML
-
-Herbert Xu <herbert@gondor.apana.org.au>
-    crypto: marvell/cesa - Disable hash algorithms
-
-Herbert Xu <herbert@gondor.apana.org.au>
-    crypto: api - Fix liveliness check in crypto_alg_tested
-
-Rik van Riel <riel@surriel.com>
-    bpf: use kvzmalloc to allocate BPF verifier environment
-
-Greg Joyce <gjoyce@linux.ibm.com>
-    nvme: disable CC.CRIME (NVME_CC_CRIME)
-
-WangYuli <wangyuli@uniontech.com>
-    HID: multitouch: Add quirk for HONOR MagicBook Art 14 touchpad
-
-Stefan Blum <stefanblum2004@gmail.com>
-    HID: multitouch: Add support for B2402FVA track point
-
-SurajSonawane2415 <surajsonawane0215@gmail.com>
-    block: Fix elevator_get_default() checking for NULL q->tag_set
-
-Hannes Reinecke <hare@suse.de>
-    nvme: tcp: avoid race between queue_lock lock and destroy
-
-Sergey Matsievskiy <matsievskiysv@gmail.com>
-    irqchip/ocelot: Fix trigger register address
-
-Pedro Falcato <pedro.falcato@gmail.com>
-    9p: Avoid creating multiple slab caches with the same name
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "Bluetooth: hci_conn: Consolidate code for aborting connections"
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "Bluetooth: hci_core: Fix possible buffer overflow"
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "Bluetooth: af_bluetooth: Fix deadlock"
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "Bluetooth: hci_sync: Fix overwriting request callback"
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "Bluetooth: fix use-after-free in accessing skb after sending it"
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |   4 +-
- arch/loongarch/include/asm/loongarch.h             |   2 +-
- arch/powerpc/platforms/powernv/opal-irqchip.c      |   1 +
- block/elevator.c                                   |   4 +-
- crypto/algapi.c                                    |   2 +-
- drivers/crypto/marvell/cesa/hash.c                 |  12 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c         |  14 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.h         |   2 +-
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c           |   2 +-
- drivers/gpu/drm/amd/amdkfd/kfd_device.c            |   4 +-
- .../gpu/drm/amd/amdkfd/kfd_device_queue_manager.c  |   2 +-
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager.c       |   2 +-
- drivers/gpu/drm/amd/amdkfd/kfd_process.c           |   2 +-
- .../gpu/drm/amd/amdkfd/kfd_process_queue_manager.c |   4 +-
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.h                |   4 +-
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c                |   4 +-
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.h                |   3 -
- drivers/hid/hid-ids.h                              |   1 +
- drivers/hid/hid-lenovo.c                           |   8 ++
- drivers/hid/hid-multitouch.c                       |  13 ++
- drivers/irqchip/irq-mscc-ocelot.c                  |   4 +-
- drivers/md/raid10.c                                |  23 +--
- drivers/net/usb/qmi_wwan.c                         |   1 +
- drivers/nvme/host/core.c                           |  31 ++--
- drivers/nvme/host/multipath.c                      |  33 +++++
- drivers/nvme/host/nvme.h                           |   1 +
- drivers/nvme/host/tcp.c                            |   7 +-
- drivers/platform/x86/x86-android-tablets.c         |   3 +-
- drivers/vdpa/ifcvf/ifcvf_base.c                    |   2 +-
- fs/ext4/super.c                                    |   2 +-
- fs/ntfs3/inode.c                                   |   9 ++
- fs/ocfs2/file.c                                    |   9 +-
- include/net/bluetooth/hci_core.h                   |   3 +-
- io_uring/io_uring.c                                |   5 +
- kernel/bpf/verifier.c                              |   4 +-
- kernel/trace/trace_uprobe.c                        |  86 +++++------
- lib/Kconfig.kasan                                  |   7 +-
- mm/slab_common.c                                   |   2 +-
- net/9p/client.c                                    |  12 +-
- net/bluetooth/af_bluetooth.c                       |  10 +-
- net/bluetooth/hci_conn.c                           | 158 ++++++++++++++++-----
- net/bluetooth/hci_core.c                           |  50 +++----
- net/bluetooth/hci_event.c                          |  20 +--
- net/bluetooth/hci_sync.c                           |  44 ++----
- net/bluetooth/l2cap_core.c                         |   9 --
- net/bluetooth/mgmt.c                               |  15 +-
- net/core/filter.c                                  |   2 +-
- sound/Kconfig                                      |   2 +-
- 48 files changed, 401 insertions(+), 243 deletions(-)
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -544,7 +544,6 @@ struct hci_dev {
+ 	__u32			req_status;
+ 	__u32			req_result;
+ 	struct sk_buff		*req_skb;
+-	struct sk_buff		*req_rsp;
+ 
+ 	void			*smp_data;
+ 	void			*smp_bredr_data;
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -2816,7 +2816,7 @@ int hci_abort_conn(struct hci_conn *conn
+ 		case HCI_EV_LE_CONN_COMPLETE:
+ 		case HCI_EV_LE_ENHANCED_CONN_COMPLETE:
+ 		case HCI_EVT_LE_CIS_ESTABLISHED:
+-			hci_cmd_sync_cancel(hdev, ECANCELED);
++			hci_cmd_sync_cancel(hdev, -ECANCELED);
+ 			break;
+ 		}
+ 	}
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -1452,8 +1452,8 @@ static void hci_cmd_timeout(struct work_
+ 	struct hci_dev *hdev = container_of(work, struct hci_dev,
+ 					    cmd_timer.work);
+ 
+-	if (hdev->req_skb) {
+-		u16 opcode = hci_skb_opcode(hdev->req_skb);
++	if (hdev->sent_cmd) {
++		u16 opcode = hci_skb_opcode(hdev->sent_cmd);
+ 
+ 		bt_dev_err(hdev, "command 0x%4.4x tx timeout", opcode);
+ 
+@@ -2762,7 +2762,6 @@ void hci_release_dev(struct hci_dev *hde
+ 
+ 	ida_simple_remove(&hci_index_ida, hdev->id);
+ 	kfree_skb(hdev->sent_cmd);
+-	kfree_skb(hdev->req_skb);
+ 	kfree_skb(hdev->recv_event);
+ 	kfree(hdev);
+ }
+@@ -3092,33 +3091,21 @@ int __hci_cmd_send(struct hci_dev *hdev,
+ EXPORT_SYMBOL(__hci_cmd_send);
+ 
+ /* Get data from the previously sent command */
+-static void *hci_cmd_data(struct sk_buff *skb, __u16 opcode)
++void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode)
+ {
+ 	struct hci_command_hdr *hdr;
+ 
+-	if (!skb || skb->len < HCI_COMMAND_HDR_SIZE)
++	if (!hdev->sent_cmd)
+ 		return NULL;
+ 
+-	hdr = (void *)skb->data;
++	hdr = (void *) hdev->sent_cmd->data;
+ 
+ 	if (hdr->opcode != cpu_to_le16(opcode))
+ 		return NULL;
+ 
+-	return skb->data + HCI_COMMAND_HDR_SIZE;
+-}
++	BT_DBG("%s opcode 0x%4.4x", hdev->name, opcode);
+ 
+-/* Get data from the previously sent command */
+-void *hci_sent_cmd_data(struct hci_dev *hdev, __u16 opcode)
+-{
+-	void *data;
+-
+-	/* Check if opcode matches last sent command */
+-	data = hci_cmd_data(hdev->sent_cmd, opcode);
+-	if (!data)
+-		/* Check if opcode matches last request */
+-		data = hci_cmd_data(hdev->req_skb, opcode);
+-
+-	return data;
++	return hdev->sent_cmd->data + HCI_COMMAND_HDR_SIZE;
+ }
+ 
+ /* Get data from last received event */
+@@ -4014,19 +4001,17 @@ void hci_req_cmd_complete(struct hci_dev
+ 	if (!status && !hci_req_is_complete(hdev))
+ 		return;
+ 
+-	skb = hdev->req_skb;
+-
+ 	/* If this was the last command in a request the complete
+-	 * callback would be found in hdev->req_skb instead of the
++	 * callback would be found in hdev->sent_cmd instead of the
+ 	 * command queue (hdev->cmd_q).
+ 	 */
+-	if (skb && bt_cb(skb)->hci.req_flags & HCI_REQ_SKB) {
+-		*req_complete_skb = bt_cb(skb)->hci.req_complete_skb;
++	if (bt_cb(hdev->sent_cmd)->hci.req_flags & HCI_REQ_SKB) {
++		*req_complete_skb = bt_cb(hdev->sent_cmd)->hci.req_complete_skb;
+ 		return;
+ 	}
+ 
+-	if (skb && bt_cb(skb)->hci.req_complete) {
+-		*req_complete = bt_cb(skb)->hci.req_complete;
++	if (bt_cb(hdev->sent_cmd)->hci.req_complete) {
++		*req_complete = bt_cb(hdev->sent_cmd)->hci.req_complete;
+ 		return;
+ 	}
+ 
+@@ -4143,11 +4128,8 @@ static void hci_send_cmd_sync(struct hci
+ 		return;
+ 	}
+ 
+-	if (hci_req_status_pend(hdev) &&
+-	    !hci_dev_test_and_set_flag(hdev, HCI_CMD_PENDING)) {
+-		kfree_skb(hdev->req_skb);
+-		hdev->req_skb = skb_clone(skb, GFP_KERNEL);
+-	}
++	if (hci_req_status_pend(hdev))
++		hci_dev_set_flag(hdev, HCI_CMD_PENDING);
+ 
+ 	atomic_dec(&hdev->cmd_cnt);
+ }
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -4354,7 +4354,7 @@ static void hci_cmd_status_evt(struct hc
+ 	 * (since for this kind of commands there will not be a command
+ 	 * complete event).
+ 	 */
+-	if (ev->status || (hdev->req_skb && !hci_skb_event(hdev->req_skb))) {
++	if (ev->status || (hdev->sent_cmd && !hci_skb_event(hdev->sent_cmd))) {
+ 		hci_req_cmd_complete(hdev, *opcode, ev->status, req_complete,
+ 				     req_complete_skb);
+ 		if (hci_dev_test_flag(hdev, HCI_CMD_PENDING)) {
+@@ -7171,10 +7171,10 @@ static void hci_le_meta_evt(struct hci_d
+ 	bt_dev_dbg(hdev, "subevent 0x%2.2x", ev->subevent);
+ 
+ 	/* Only match event if command OGF is for LE */
+-	if (hdev->req_skb &&
+-	    hci_opcode_ogf(hci_skb_opcode(hdev->req_skb)) == 0x08 &&
+-	    hci_skb_event(hdev->req_skb) == ev->subevent) {
+-		*opcode = hci_skb_opcode(hdev->req_skb);
++	if (hdev->sent_cmd &&
++	    hci_opcode_ogf(hci_skb_opcode(hdev->sent_cmd)) == 0x08 &&
++	    hci_skb_event(hdev->sent_cmd) == ev->subevent) {
++		*opcode = hci_skb_opcode(hdev->sent_cmd);
+ 		hci_req_cmd_complete(hdev, *opcode, 0x00, req_complete,
+ 				     req_complete_skb);
+ 	}
+@@ -7561,10 +7561,10 @@ void hci_event_packet(struct hci_dev *hd
+ 	}
+ 
+ 	/* Only match event if command OGF is not for LE */
+-	if (hdev->req_skb &&
+-	    hci_opcode_ogf(hci_skb_opcode(hdev->req_skb)) != 0x08 &&
+-	    hci_skb_event(hdev->req_skb) == event) {
+-		hci_req_cmd_complete(hdev, hci_skb_opcode(hdev->req_skb),
++	if (hdev->sent_cmd &&
++	    hci_opcode_ogf(hci_skb_opcode(hdev->sent_cmd)) != 0x08 &&
++	    hci_skb_event(hdev->sent_cmd) == event) {
++		hci_req_cmd_complete(hdev, hci_skb_opcode(hdev->sent_cmd),
+ 				     status, &req_complete, &req_complete_skb);
+ 		req_evt = event;
+ 	}
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -31,10 +31,6 @@ static void hci_cmd_sync_complete(struct
+ 	hdev->req_result = result;
+ 	hdev->req_status = HCI_REQ_DONE;
+ 
+-	/* Free the request command so it is not used as response */
+-	kfree_skb(hdev->req_skb);
+-	hdev->req_skb = NULL;
+-
+ 	if (skb) {
+ 		struct sock *sk = hci_skb_sk(skb);
+ 
+@@ -42,7 +38,7 @@ static void hci_cmd_sync_complete(struct
+ 		if (sk)
+ 			sock_put(sk);
+ 
+-		hdev->req_rsp = skb_get(skb);
++		hdev->req_skb = skb_get(skb);
+ 	}
+ 
+ 	wake_up_interruptible(&hdev->req_wait_q);
+@@ -190,8 +186,8 @@ struct sk_buff *__hci_cmd_sync_sk(struct
+ 
+ 	hdev->req_status = 0;
+ 	hdev->req_result = 0;
+-	skb = hdev->req_rsp;
+-	hdev->req_rsp = NULL;
++	skb = hdev->req_skb;
++	hdev->req_skb = NULL;
+ 
+ 	bt_dev_dbg(hdev, "end: err %d", err);
+ 
+@@ -4941,11 +4937,6 @@ int hci_dev_open_sync(struct hci_dev *hd
+ 			hdev->sent_cmd = NULL;
+ 		}
+ 
+-		if (hdev->req_skb) {
+-			kfree_skb(hdev->req_skb);
+-			hdev->req_skb = NULL;
+-		}
+-
+ 		clear_bit(HCI_RUNNING, &hdev->flags);
+ 		hci_sock_dev_event(hdev, HCI_DEV_CLOSE);
+ 
+@@ -5107,12 +5098,6 @@ int hci_dev_close_sync(struct hci_dev *h
+ 		hdev->sent_cmd = NULL;
+ 	}
+ 
+-	/* Drop last request */
+-	if (hdev->req_skb) {
+-		kfree_skb(hdev->req_skb);
+-		hdev->req_skb = NULL;
+-	}
+-
+ 	clear_bit(HCI_RUNNING, &hdev->flags);
+ 	hci_sock_dev_event(hdev, HCI_DEV_CLOSE);
+ 
 
 
