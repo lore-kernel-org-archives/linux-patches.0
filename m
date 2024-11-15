@@ -1,38 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED0A185924;
-	Fri, 15 Nov 2024 06:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D2C18871E;
+	Fri, 15 Nov 2024 06:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653502; cv=none; b=me75CyFLKcIhiRboKH7GaAeBf5eyt6sF3nrv/fLlJ/m70GgINdWif1yK6la1UyLQ5YvYnvatxaLIk5ZEVQ7peTC9CqhV3zmnIcGTD1+Zzj3uTDsMjHzPcapK6SNeJbvonMVRMkH7Rgx7Nrk94GBiQRoiSV3OLHT4swkkOdzzejk=
+	t=1731653505; cv=none; b=Lp75W3x4XWFy9Pob+L3JYpOw5fiIry+toqh5AVkinjXLOOMFGVsODwKoevIXE/ykQG0+FPDrR8zy0vP6qdyEQQMqvdM2Ih8GVqE2C0M5EKqbH8tFYODc+lIvTQ0+bdcotCU9z5JrEpTERH+eyL9ifffPSsig/kdDYo+fKeXYa14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653502; c=relaxed/simple;
-	bh=kgYwg87ZauiUbAyDrxgDO4Uy3EkMvxU+7TlymGOYEyM=;
+	s=arc-20240116; t=1731653505; c=relaxed/simple;
+	bh=PjbOU4Gb+yzzbdTFGBPyvHMGUvgNC4Cm62srRpbK8Eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GFa0cUiOM69vCcNzwteHA75fY+Gafj1r1TtUtK1aJThgQh0dYsBiwueMzFVWawFCus9R0YTP2YBdDQuHmPiFXV27C3310DEMQIq8EaECBg1FfSJ15qwSJ83xBoU8imAXvXuBigQD53m9OCQ2d+++mqvgLqOz200l9zDCb08w6Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLL2MCHA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XYo7iFYt7K89FN0EkvmP4yP5YBm25wzGn28ujf+ZiiMTlAcn7sEIFqGRAxgL1aLwzwZ61IvM6Icv+/MN4BYKcrDIG6dKDjyRHPs3aGXvRMn7z7Ob9ylX4KBP2Nyf2Q4oKqLTOZZpaVqDv+tVitGEIG4bMD6lU72ayOTqe6jJP50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uU1+unNQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLL2MCHA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E28C4CECF;
-	Fri, 15 Nov 2024 06:51:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uU1+unNQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33321C4CECF;
+	Fri, 15 Nov 2024 06:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653501;
-	bh=kgYwg87ZauiUbAyDrxgDO4Uy3EkMvxU+7TlymGOYEyM=;
+	s=korg; t=1731653504;
+	bh=PjbOU4Gb+yzzbdTFGBPyvHMGUvgNC4Cm62srRpbK8Eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JLL2MCHAvjdggnwpCE+OLWCwA1OOXKS21xYW6vzDeA6LJgGXwleX1UqK+VtOiMeN+
-	 C6+eRA+J9YrKNL2j9FCcnYwAgOYVm6B/N7HVWZzcGptelZmafbvVXKe3gbbRguk1fd
-	 iyv71fNRTDAsZH/zPObv/fDr+5m4jOb7IXAemVTo=
+	b=uU1+unNQ+6bIO9naekgJOqoWwXCt8JozHbkbPydNAgbg30CL0ex0X4n+6eL5D3c7G
+	 IaKNerBkyfd61Ujtys1/rFY9rL9bdOxzrk5jW3uQRilT15E52Qo10L4H8evEiHQE6B
+	 upZF3sfKDHdbSoNqXKTKkQCOLI2Lrv/TiTTR2v5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qun-Wei Lin <qun-wei.lin@mediatek.com>,
-	David Rientjes <rientjes@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.6 41/48] mm: krealloc: Fix MTE false alarm in __do_krealloc
-Date: Fri, 15 Nov 2024 07:38:30 +0100
-Message-ID: <20241115063724.445520202@linuxfoundation.org>
+	Hugh Dickins <hughd@google.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Christoph Lameter <cl@linux.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Tejun heo <tj@kernel.org>,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Yosry Ahmed <yosryahmed@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 42/48] mm: add page_rmappable_folio() wrapper
+Date: Fri, 15 Nov 2024 07:38:31 +0100
+Message-ID: <20241115063724.480624722@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063722.962047137@linuxfoundation.org>
 References: <20241115063722.962047137@linuxfoundation.org>
@@ -51,75 +66,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qun-Wei Lin <qun-wei.lin@mediatek.com>
+From: Hugh Dickins <hughd@google.com>
 
-commit 704573851b51808b45dae2d62059d1d8189138a2 upstream.
+commit 23e4883248f0472d806c8b3422ba6257e67bf1a5 upstream.
 
-This patch addresses an issue introduced by commit 1a83a716ec233 ("mm:
-krealloc: consider spare memory for __GFP_ZERO") which causes MTE
-(Memory Tagging Extension) to falsely report a slab-out-of-bounds error.
+folio_prep_large_rmappable() is being used repeatedly along with a
+conversion from page to folio, a check non-NULL, a check order > 1: wrap
+it all up into struct folio *page_rmappable_folio(struct page *).
 
-The problem occurs when zeroing out spare memory in __do_krealloc. The
-original code only considered software-based KASAN and did not account
-for MTE. It does not reset the KASAN tag before calling memset, leading
-to a mismatch between the pointer tag and the memory tag, resulting
-in a false positive.
-
-Example of the error:
-==================================================================
-swapper/0: BUG: KASAN: slab-out-of-bounds in __memset+0x84/0x188
-swapper/0: Write at addr f4ffff8005f0fdf0 by task swapper/0/1
-swapper/0: Pointer tag: [f4], memory tag: [fe]
-swapper/0:
-swapper/0: CPU: 4 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.12.
-swapper/0: Hardware name: MT6991(ENG) (DT)
-swapper/0: Call trace:
-swapper/0:  dump_backtrace+0xfc/0x17c
-swapper/0:  show_stack+0x18/0x28
-swapper/0:  dump_stack_lvl+0x40/0xa0
-swapper/0:  print_report+0x1b8/0x71c
-swapper/0:  kasan_report+0xec/0x14c
-swapper/0:  __do_kernel_fault+0x60/0x29c
-swapper/0:  do_bad_area+0x30/0xdc
-swapper/0:  do_tag_check_fault+0x20/0x34
-swapper/0:  do_mem_abort+0x58/0x104
-swapper/0:  el1_abort+0x3c/0x5c
-swapper/0:  el1h_64_sync_handler+0x80/0xcc
-swapper/0:  el1h_64_sync+0x68/0x6c
-swapper/0:  __memset+0x84/0x188
-swapper/0:  btf_populate_kfunc_set+0x280/0x3d8
-swapper/0:  __register_btf_kfunc_id_set+0x43c/0x468
-swapper/0:  register_btf_kfunc_id_set+0x48/0x60
-swapper/0:  register_nf_nat_bpf+0x1c/0x40
-swapper/0:  nf_nat_init+0xc0/0x128
-swapper/0:  do_one_initcall+0x184/0x464
-swapper/0:  do_initcall_level+0xdc/0x1b0
-swapper/0:  do_initcalls+0x70/0xc0
-swapper/0:  do_basic_setup+0x1c/0x28
-swapper/0:  kernel_init_freeable+0x144/0x1b8
-swapper/0:  kernel_init+0x20/0x1a8
-swapper/0:  ret_from_fork+0x10/0x20
-==================================================================
-
-Fixes: 1a83a716ec233 ("mm: krealloc: consider spare memory for __GFP_ZERO")
-Signed-off-by: Qun-Wei Lin <qun-wei.lin@mediatek.com>
-Acked-by: David Rientjes <rientjes@google.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Link: https://lkml.kernel.org/r/8d92c6cf-eebe-748-e29c-c8ab224c741@google.com
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: "Huang, Ying" <ying.huang@intel.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Tejun heo <tj@kernel.org>
+Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: Yosry Ahmed <yosryahmed@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Hugh Dickins <hughd@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slab_common.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/internal.h   |    9 +++++++++
+ mm/mempolicy.c  |   17 +++--------------
+ mm/page_alloc.c |    8 ++------
+ 3 files changed, 14 insertions(+), 20 deletions(-)
 
---- a/mm/slab_common.c
-+++ b/mm/slab_common.c
-@@ -1391,7 +1391,7 @@ __do_krealloc(const void *p, size_t new_
- 		/* Zero out spare memory. */
- 		if (want_init_on_alloc(flags)) {
- 			kasan_disable_current();
--			memset((void *)p + new_size, 0, ks - new_size);
-+			memset(kasan_reset_tag(p) + new_size, 0, ks - new_size);
- 			kasan_enable_current();
- 		}
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -415,6 +415,15 @@ static inline void folio_set_order(struc
+ 
+ void folio_undo_large_rmappable(struct folio *folio);
+ 
++static inline struct folio *page_rmappable_folio(struct page *page)
++{
++	struct folio *folio = (struct folio *)page;
++
++	if (folio && folio_order(folio) > 1)
++		folio_prep_large_rmappable(folio);
++	return folio;
++}
++
+ static inline void prep_compound_head(struct page *page, unsigned int order)
+ {
+ 	struct folio *folio = (struct folio *)page;
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -2200,10 +2200,7 @@ struct folio *vma_alloc_folio(gfp_t gfp,
+ 		mpol_cond_put(pol);
+ 		gfp |= __GFP_COMP;
+ 		page = alloc_page_interleave(gfp, order, nid);
+-		folio = (struct folio *)page;
+-		if (folio && order > 1)
+-			folio_prep_large_rmappable(folio);
+-		goto out;
++		return page_rmappable_folio(page);
+ 	}
+ 
+ 	if (pol->mode == MPOL_PREFERRED_MANY) {
+@@ -2213,10 +2210,7 @@ struct folio *vma_alloc_folio(gfp_t gfp,
+ 		gfp |= __GFP_COMP;
+ 		page = alloc_pages_preferred_many(gfp, order, node, pol);
+ 		mpol_cond_put(pol);
+-		folio = (struct folio *)page;
+-		if (folio && order > 1)
+-			folio_prep_large_rmappable(folio);
+-		goto out;
++		return page_rmappable_folio(page);
+ 	}
+ 
+ 	if (unlikely(IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE) && hugepage)) {
+@@ -2310,12 +2304,7 @@ EXPORT_SYMBOL(alloc_pages);
+ 
+ struct folio *folio_alloc(gfp_t gfp, unsigned order)
+ {
+-	struct page *page = alloc_pages(gfp | __GFP_COMP, order);
+-	struct folio *folio = (struct folio *)page;
+-
+-	if (folio && order > 1)
+-		folio_prep_large_rmappable(folio);
+-	return folio;
++	return page_rmappable_folio(alloc_pages(gfp | __GFP_COMP, order));
+ }
+ EXPORT_SYMBOL(folio_alloc);
+ 
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -4464,12 +4464,8 @@ struct folio *__folio_alloc(gfp_t gfp, u
+ 		nodemask_t *nodemask)
+ {
+ 	struct page *page = __alloc_pages(gfp | __GFP_COMP, order,
+-			preferred_nid, nodemask);
+-	struct folio *folio = (struct folio *)page;
+-
+-	if (folio && order > 1)
+-		folio_prep_large_rmappable(folio);
+-	return folio;
++					preferred_nid, nodemask);
++	return page_rmappable_folio(page);
+ }
+ EXPORT_SYMBOL(__folio_alloc);
  
 
 
