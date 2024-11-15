@@ -1,169 +1,175 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C1017DFFD
-	for <patches@lists.linux.dev>; Fri, 15 Nov 2024 06:55:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B727818873F;
+	Fri, 15 Nov 2024 06:55:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653716; cv=none; b=iUiBKrqWKV6FeH0nRy3aYfLo+B4KChefv7ItEWI2FxBgsHTGo7O4g5fUwg5042kh9JTES1zWI05DQgVaLUpLhIiW7c6Q1rgXM1m94s4HFOs79pL43T/1JhTyUnK6y9woPYwQiNyZITJ1mdGJhOFegy/ZvdQqzVMSM/FFVvKdMYc=
+	t=1731653719; cv=none; b=eVQxXjKqHNyIjxkRq0H7nSxLXDQHdQYk+5S+hgMYaFE5O+ZJ8njZf4eZWT2yBW4Yy2QiTKkpcLBdT27oX+d01AQRQTvN2+JqkGDYZPOGU8AIWKGLmOt6o9MoRSIkG0DO6YUff8LRyu474HvFXYZ4/RQV7DjCoPslmXhWQnU3nkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653716; c=relaxed/simple;
-	bh=1CGr0TE3Wg5HzshzjEwit7oZPSSbwmr0PtGQ0w5NFAU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=STNOcYkCvgW48jxxMWTeG/tDWOLozuCY+qCcrCg2wortosCRwJyQK9wQOPdCBUS68nTXN162xO8SUXcRZsXAndu+9F79RcnjA/jF+7hTYg+QU28WOPdUq/CPl3lBAF0K7TougeK1kZNR4w+vr7OEp3hUUbheAoVyfBELA61gtzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=EDf4dWfb; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1731653719; c=relaxed/simple;
+	bh=wZvdsX5+m1ZcDBdhGUO3HYnWdveM/2AVsZKUu27+IvU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qYg/jgq26LSUqE+KFvKMulojX0ZavNCvEUabyLIjLwho9YDqewQZjFa5SAhl8X0tIZvyEYmYfeuhOYmcLKjg3kFk5Jz2Bdslhfe5gZZdhOT8IAy3RNwKiuJ/6NPZ/KtaFJaW69Jy9EsFWDhkED7+sI0FjLAUWvfN6GetNiiFvis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCmuTGmu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="EDf4dWfb"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a9ec267b879so69764266b.2
-        for <patches@lists.linux.dev>; Thu, 14 Nov 2024 22:55:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1731653713; x=1732258513; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OFl3zgdU+gV4a744BMJnAQAV9SIlx8LGcZai2Rux4bA=;
-        b=EDf4dWfbN1TbASMOFnrG8cBH4KKZLaTddqRWKjyShhiAEFLbeGrmeuUIGbSALx3kpj
-         T/A9yBAVK5gmho6NjYw8dTiHEHu+uF3fWsLi7irtZETxUvX4khlRLL/c3zNA6K29R8zW
-         mohzfQ336Fn+eOc8z61aLkTYdEaFHQwQ8FCLGBnemhb1g4rzax85HX4mu/F6PXn3bxa0
-         aEvZpedDnIQZ+liTCmPnQfEpNs4OAxhEkiD/3dxQcARf5MyllYfB1Mvb1QTnjI68XNKP
-         lb0RBV2Gu1lVVD43iMQkH35kfnP1/g79GUDnsU+ftgYerzr7pBm8H3kj86134w+as2Zn
-         n38A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731653713; x=1732258513;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OFl3zgdU+gV4a744BMJnAQAV9SIlx8LGcZai2Rux4bA=;
-        b=Av0wMdnY41pzeslkCmwUUaFRqB55gHDQKTV//dLf+cG4w+ynv6P8lnic8jIg4n/Lur
-         PC3sMFVKlwuL2mq7Y3/rlGbxHwcQWr81soEugEQwJ9NZBwTkKIw7BQRnXDYKw76UL3IN
-         ooLUHiiM0ww8qPIeZMVr1JZD20vStnSNcDFqkouvEFcmUt42jbcadFx28Sv8lwSKI4qR
-         5+Tnz01F9lWiZlXKSz8IhGRgCFHfd5hfg5uC3m2GCRusMHhp+BbntbypC5/nhzXxD5O8
-         J//tca4FETyrcaRq/qpod9IzqogE4N5J3koZSahjoS1Hh1LRP2mn2AKibHdGBgwm/O1Q
-         VrYg==
-X-Gm-Message-State: AOJu0Ywts/KlnWIHj0gekCFAyM1/5Rh15x2Y89ezO+X0S+tkeeUwTzr9
-	HdMNeWLNT9IdJy1UYOGrS43A+dwNX4PHzMFCuKpO7MgnIzoxGu7iNRmLFriqcsU=
-X-Google-Smtp-Source: AGHT+IHlujWuxxaiUuPJQSafn7dTcFby74LcLirC+yJyEdIFFzXahlURXC2FA5JkrzC9ma3wuNrbIQ==
-X-Received: by 2002:a17:906:d54b:b0:a9a:4f78:b8 with SMTP id a640c23a62f3a-aa4833ec1b5mr97225266b.2.1731653712857;
-        Thu, 14 Nov 2024 22:55:12 -0800 (PST)
-Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:69? ([2a0b:e7c0:0:107::aaaa:69])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cf79c1df6bsm1282524a12.83.2024.11.14.22.55.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Nov 2024 22:55:12 -0800 (PST)
-Message-ID: <a01c8667-1de5-4f3e-b15d-cd765238a538@suse.com>
-Date: Fri, 15 Nov 2024 07:55:11 +0100
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCmuTGmu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B431FC4CECF;
+	Fri, 15 Nov 2024 06:55:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1731653719;
+	bh=wZvdsX5+m1ZcDBdhGUO3HYnWdveM/2AVsZKUu27+IvU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=HCmuTGmutQ2l4LIM3EwCdUG6QZAq+d8LmbOoHWF1dpbP3h6AEjkTdSMRFSRokHCXP
+	 x4aG874oi39G2kgN2WazzmUXl57zAtqRhYnyNZ18b3F9ewj7CcN9U4CSUhYfpo/Shq
+	 qYBJAZ4fAMoPvPbaaDszO9ZPdh1UnJgZ5xKpw4ak=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Alexandru Ardelean <alexandru.ardelean@analog.com>,
+	Andre Edich <andre.edich@microchip.com>,
+	Antoine Tenart <atenart@kernel.org>,
+	Baruch Siach <baruch@tkos.co.il>,
+	Christophe Leroy <christophe.leroy@c-s.fr>,
+	Dan Murphy <dmurphy@ti.com>,
+	Divya Koppera <Divya.Koppera@microchip.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Hauke Mehrtens <hauke@hauke-m.de>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Kavya Sree Kotagiri <kavyasree.kotagiri@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Marek Vasut <marex@denx.de>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Mathias Kresin <dev@kresin.me>,
+	Maxim Kochetkov <fido_max@inbox.ru>,
+	Michael Walle <michael@walle.cc>,
+	Neil Armstrong <narmstrong@baylibre.com>,
+	Nisar Sayed <Nisar.Sayed@microchip.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Philippe Schenker <philippe.schenker@toradex.com>,
+	Willy Liu <willy.liu@realtek.com>,
+	Yuiko Oshino <yuiko.oshino@microchip.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 17/82] net: phy: export phy_error and phy_trigger_machine
+Date: Fri, 15 Nov 2024 07:37:54 +0100
+Message-ID: <20241115063726.184846596@linuxfoundation.org>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241115063725.561151311@linuxfoundation.org>
+References: <20241115063725.561151311@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.11 25/63] kasan: Disable Software Tag-Based KASAN with
- GCC
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Andrey Konovalov <andreyknvl@gmail.com>,
- Mark Rutland <mark.rutland@arm.com>,
- syzbot+908886656a02769af987@syzkaller.appspotmail.com,
- Will Deacon <will@kernel.org>, Sasha Levin <sashal@kernel.org>
-References: <20241115063725.892410236@linuxfoundation.org>
- <20241115063726.828422420@linuxfoundation.org>
-Content-Language: en-US
-From: Jiri Slaby <jslaby@suse.com>
-In-Reply-To: <20241115063726.828422420@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 15. 11. 24, 7:37, Greg Kroah-Hartman wrote:
-> 6.11-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Will Deacon <will@kernel.org>
-> 
-> [ Upstream commit 7aed6a2c51ffc97a126e0ea0c270fab7af97ae18 ]
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-But we have:
-   894b00a3350c kasan: Fix Software Tag-Based KASAN with GCC
-in 6.11.7.
+------------------
 
-This 7aed6a2c51f was reverted right after that 894b00a3350c by:
-   237ab03e301d Revert "kasan: Disable Software Tag-Based KASAN with GCC"
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-IMO, drop and blacklist this patch.
+[ Upstream commit 293e9a3d950dfebc76d9fa6931e6f91ef856b9ab ]
 
-> Syzbot reports a KASAN failure early during boot on arm64 when building
-> with GCC 12.2.0 and using the Software Tag-Based KASAN mode:
-> 
->    | BUG: KASAN: invalid-access in smp_build_mpidr_hash arch/arm64/kernel/setup.c:133 [inline]
->    | BUG: KASAN: invalid-access in setup_arch+0x984/0xd60 arch/arm64/kernel/setup.c:356
->    | Write of size 4 at addr 03ff800086867e00 by task swapper/0
->    | Pointer tag: [03], memory tag: [fe]
-> 
-> Initial triage indicates that the report is a false positive and a
-> thorough investigation of the crash by Mark Rutland revealed the root
-> cause to be a bug in GCC:
-> 
->    > When GCC is passed `-fsanitize=hwaddress` or
->    > `-fsanitize=kernel-hwaddress` it ignores
->    > `__attribute__((no_sanitize_address))`, and instruments functions
->    > we require are not instrumented.
->    >
->    > [...]
->    >
->    > All versions [of GCC] I tried were broken, from 11.3.0 to 14.2.0
->    > inclusive.
->    >
->    > I think we have to disable KASAN_SW_TAGS with GCC until this is
->    > fixed
-> 
-> Disable Software Tag-Based KASAN when building with GCC by making
-> CC_HAS_KASAN_SW_TAGS depend on !CC_IS_GCC.
-> 
-> Cc: Andrey Konovalov <andreyknvl@gmail.com>
-> Suggested-by: Mark Rutland <mark.rutland@arm.com>
-> Reported-by: syzbot+908886656a02769af987@syzkaller.appspotmail.com
-> Link: https://lore.kernel.org/r/000000000000f362e80620e27859@google.com
-> Link: https://lore.kernel.org/r/ZvFGwKfoC4yVjN_X@J2N7QTR9R3
-> Link: https://bugzilla.kernel.org/show_bug.cgi?id=218854
-> Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
-> Acked-by: Mark Rutland <mark.rutland@arm.com>
-> Link: https://lore.kernel.org/r/20241014161100.18034-1-will@kernel.org
-> Signed-off-by: Will Deacon <will@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->   lib/Kconfig.kasan | 7 +++++--
->   1 file changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/lib/Kconfig.kasan b/lib/Kconfig.kasan
-> index 98016e137b7f0..233ab20969242 100644
-> --- a/lib/Kconfig.kasan
-> +++ b/lib/Kconfig.kasan
-> @@ -22,8 +22,11 @@ config ARCH_DISABLE_KASAN_INLINE
->   config CC_HAS_KASAN_GENERIC
->   	def_bool $(cc-option, -fsanitize=kernel-address)
->   
-> +# GCC appears to ignore no_sanitize_address when -fsanitize=kernel-hwaddress
-> +# is passed. See https://bugzilla.kernel.org/show_bug.cgi?id=218854 (and
-> +# the linked LKML thread) for more details.
->   config CC_HAS_KASAN_SW_TAGS
-> -	def_bool $(cc-option, -fsanitize=kernel-hwaddress)
-> +	def_bool !CC_IS_GCC && $(cc-option, -fsanitize=kernel-hwaddress)
->   
->   # This option is only required for software KASAN modes.
->   # Old GCC versions do not have proper support for no_sanitize_address.
-> @@ -98,7 +101,7 @@ config KASAN_SW_TAGS
->   	help
->   	  Enables Software Tag-Based KASAN.
->   
-> -	  Requires GCC 11+ or Clang.
-> +	  Requires Clang.
->   
->   	  Supported only on arm64 CPUs and relies on Top Byte Ignore.
->   
+These functions are currently used by phy_interrupt() to either signal
+an error condition or to trigger the link state machine. In an attempt
+to actually support shared PHY IRQs, export these two functions so that
+the actual PHY drivers can use them.
 
+Cc: Alexandru Ardelean <alexandru.ardelean@analog.com>
+Cc: Andre Edich <andre.edich@microchip.com>
+Cc: Antoine Tenart <atenart@kernel.org>
+Cc: Baruch Siach <baruch@tkos.co.il>
+Cc: Christophe Leroy <christophe.leroy@c-s.fr>
+Cc: Dan Murphy <dmurphy@ti.com>
+Cc: Divya Koppera <Divya.Koppera@microchip.com>
+Cc: Florian Fainelli <f.fainelli@gmail.com>
+Cc: Hauke Mehrtens <hauke@hauke-m.de>
+Cc: Heiner Kallweit <hkallweit1@gmail.com>
+Cc: Jerome Brunet <jbrunet@baylibre.com>
+Cc: Kavya Sree Kotagiri <kavyasree.kotagiri@microchip.com>
+Cc: Linus Walleij <linus.walleij@linaro.org>
+Cc: Marco Felsch <m.felsch@pengutronix.de>
+Cc: Marek Vasut <marex@denx.de>
+Cc: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Cc: Mathias Kresin <dev@kresin.me>
+Cc: Maxim Kochetkov <fido_max@inbox.ru>
+Cc: Michael Walle <michael@walle.cc>
+Cc: Neil Armstrong <narmstrong@baylibre.com>
+Cc: Nisar Sayed <Nisar.Sayed@microchip.com>
+Cc: Oleksij Rempel <o.rempel@pengutronix.de>
+Cc: Philippe Schenker <philippe.schenker@toradex.com>
+Cc: Willy Liu <willy.liu@realtek.com>
+Cc: Yuiko Oshino <yuiko.oshino@microchip.com>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 256748d5480b ("net: phy: ti: add PHY_RST_AFTER_CLK_EN flag")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/net/phy/phy.c | 6 ++++--
+ include/linux/phy.h   | 2 ++
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
+index f3e606b6617e9..eb0f2e11cc216 100644
+--- a/drivers/net/phy/phy.c
++++ b/drivers/net/phy/phy.c
+@@ -461,10 +461,11 @@ EXPORT_SYMBOL(phy_queue_state_machine);
+  *
+  * @phydev: the phy_device struct
+  */
+-static void phy_trigger_machine(struct phy_device *phydev)
++void phy_trigger_machine(struct phy_device *phydev)
+ {
+ 	phy_queue_state_machine(phydev, 0);
+ }
++EXPORT_SYMBOL(phy_trigger_machine);
+ 
+ static void phy_abort_cable_test(struct phy_device *phydev)
+ {
+@@ -970,7 +971,7 @@ void phy_stop_machine(struct phy_device *phydev)
+  * Must not be called from interrupt context, or while the
+  * phydev->lock is held.
+  */
+-static void phy_error(struct phy_device *phydev)
++void phy_error(struct phy_device *phydev)
+ {
+ 	WARN_ON(1);
+ 
+@@ -980,6 +981,7 @@ static void phy_error(struct phy_device *phydev)
+ 
+ 	phy_trigger_machine(phydev);
+ }
++EXPORT_SYMBOL(phy_error);
+ 
+ /**
+  * phy_disable_interrupts - Disable the PHY interrupts from the PHY side
+diff --git a/include/linux/phy.h b/include/linux/phy.h
+index 08725a262f320..203d53ea19d1b 100644
+--- a/include/linux/phy.h
++++ b/include/linux/phy.h
+@@ -1542,8 +1542,10 @@ void phy_drivers_unregister(struct phy_driver *drv, int n);
+ int phy_driver_register(struct phy_driver *new_driver, struct module *owner);
+ int phy_drivers_register(struct phy_driver *new_driver, int n,
+ 			 struct module *owner);
++void phy_error(struct phy_device *phydev);
+ void phy_state_machine(struct work_struct *work);
+ void phy_queue_state_machine(struct phy_device *phydev, unsigned long jiffies);
++void phy_trigger_machine(struct phy_device *phydev);
+ void phy_mac_interrupt(struct phy_device *phydev);
+ void phy_start_machine(struct phy_device *phydev);
+ void phy_stop_machine(struct phy_device *phydev);
 -- 
-js
-suse labs
+2.43.0
+
+
+
