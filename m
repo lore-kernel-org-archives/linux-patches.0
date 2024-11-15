@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E09EAD0;
-	Fri, 15 Nov 2024 06:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7A7EAD0;
+	Fri, 15 Nov 2024 06:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653343; cv=none; b=M9wE8d1DWLMkjqJ9swwDaZmTiJ7aCqdUy4fNEamk8zLs0qSYkZx3QemJMYlBwBqyy3RsqUSVSKnhETXoKllR9JH8GoeyxWz87pYhD6NxA8zAu+IHNyazA850WuMS5lrNTMO8dsqTSbvJAS+4lVg+eUlvOL7NKYsiuW4wrDPLzfk=
+	t=1731653346; cv=none; b=S9jiSRq8UI8XvA3hiD+WpAErmdi5/ZzPSUSh42rhvCzOW/o/yo2X0UZvcSPd1IxZDNwuQGK9a2Eg09T7zwaL+IemamTSYuGqPFT0CbWIkTJV1Zx+2fZ5jVMjKwIwmEWMqYf/qTVM60jAfPOyiJ5m8Dre+spUhwXOfaI655aOCCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653343; c=relaxed/simple;
-	bh=Qjb5lbN5dAOcMqvO3ApEkvxJ15U4wNcEsofQvZq7kUw=;
+	s=arc-20240116; t=1731653346; c=relaxed/simple;
+	bh=oaQlrcgFsbIC8ndU/CRk+OURRxWY68ZusMt0/3q6WtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FsiMCssSoYvxdKU8bZPn20V163ErJI490QGNPky6STBWKWsCA2IVJfIhE/MN0O7ntuYKKgYgC89Tm+/GFTMjxaAGlOJS+OuGObFNWxe3/AFBCU6jvW5tZAS2ICLRlEjYxSJ3elCKK7Geitm8P0OYi5ce2SKDS757L84dFDafeQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRR37g/B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kc7++f8sdN7RGmVyOp/AO9c9Cw8pugAPOiaCfB24augJtCahVinbd4YQcQqTqWJfTXwQFUoZ2LCX/5FH3+NnACabwEfiY4KPpJBYH2ehLkasTItIIRLaS+pp670CG2f+w0DRszvRoeXLV/ScA6UhoAMju5lQRdCbRb8EGLCy2RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7PQD2Ha; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRR37g/B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963EAC4CECF;
-	Fri, 15 Nov 2024 06:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7PQD2Ha"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E74C4CECF;
+	Fri, 15 Nov 2024 06:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653343;
-	bh=Qjb5lbN5dAOcMqvO3ApEkvxJ15U4wNcEsofQvZq7kUw=;
+	s=korg; t=1731653346;
+	bh=oaQlrcgFsbIC8ndU/CRk+OURRxWY68ZusMt0/3q6WtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XRR37g/B5WUYTgUveOefk/IQlY2UuIvMQ8eleNrZ3agI5ovjyUk0r5HPyvxJ+Qbh/
-	 oidVdFIb99JBqIkpJmkZstYp+moQO+TZt5BoclEtZ150WLZdWbDSWBx86WbcI37s+/
-	 CJoO11TiGQ0yYVlKZoXIGLI4DMeJcxjrr+rxrZdg=
+	b=i7PQD2Ha0+edUuFOAz6V4pbic59kWGQ61PbsmoB5GNCx3Ct3nzZSPro9Nd8pkGeAC
+	 ivqu0/H5jnAoDljn8hS85f6gEF4mu8SS0LVufC+FnZhCxDfs1fn+KFIf9iKDEHrmTZ
+	 qdZ+vah9euecYaD+a5yVt7TzI5v9ZdotxUYsmgsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Yao <jia.yao@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Badal Nilawar <badal.nilawar@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
 	Matthew Auld <matthew.auld@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Zongyao Bai <zongyao.bai@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 57/63] drm/xe: Enlarge the invalidation timeout from 150 to 500
-Date: Fri, 15 Nov 2024 07:38:20 +0100
-Message-ID: <20241115063727.965591739@linuxfoundation.org>
+Subject: [PATCH 6.11 58/63] drm/xe/guc/ct: Flush g2h worker in case of g2h response timeout
+Date: Fri, 15 Nov 2024 07:38:21 +0100
+Message-ID: <20241115063728.001184216@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
 References: <20241115063725.892410236@linuxfoundation.org>
@@ -56,59 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Badal Nilawar <badal.nilawar@intel.com>
 
-[ Upstream commit c8fb95e7a54315460b45090f0968167a332e1657 ]
+[ Upstream commit 22ef43c78647dd37b0dafe2182b8650b99dbbe59 ]
 
-There are error messages like below that are occurring during stress
-testing: "[   31.004009] xe 0000:03:00.0: [drm] ERROR GT0: Global
-invalidation timeout". Previously it was hitting this 3 out of 1000
-executions of warm reboot.  After raising it to 500, 1000 warm reboot
-executions passed and it didn't fail.
+In case if g2h worker doesn't get opportunity to within specified
+timeout delay then flush the g2h worker explicitly.
 
-Due to the way xe_mmio_wait32() is implemented, the timeout is able to
-expire early when the register matches the expected value due to the
-wait increments starting small. So, the larger timeout value should have
-no effect during normal use cases.
+v2:
+  - Describe change in the comment and add TODO (Matt B/John H)
+  - Add xe_gt_warn on fence done after G2H flush (John H)
+v3:
+  - Updated the comment with root cause
+  - Clean up xe_gt_warn message (John H)
 
-v2 (Jonathan):
-  - rework the commit message
-v3 (Lucas):
-  - add conclusive message for the fail rate and test case
-v4:
-  - add suggested-by
-
-Suggested-by: Jia Yao <jia.yao@intel.com>
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/issues/1620
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/issues/2902
+Signed-off-by: Badal Nilawar <badal.nilawar@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
 Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Tested-by: Zongyao Bai <zongyao.bai@intel.com>
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241015161207.1373401-1-shuicheng.lin@intel.com
-(cherry picked from commit 2eb460ab9f4bc5b575f52568d17936da0af681d8)
-[ Fix conflict with gt->mmio ]
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Acked-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241017111410.2553784-2-badal.nilawar@intel.com
+(cherry picked from commit e5152723380404acb8175e0777b1cea57f319a01)
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_device.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_guc_ct.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
-index fb394189d9e23..13213f39e52f9 100644
---- a/drivers/gpu/drm/xe/xe_device.c
-+++ b/drivers/gpu/drm/xe/xe_device.c
-@@ -870,7 +870,7 @@ void xe_device_l2_flush(struct xe_device *xe)
- 	spin_lock(&gt->global_invl_lock);
- 	xe_mmio_write32(gt, XE2_GLOBAL_INVAL, 0x1);
+diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
+index 12e1fe6a8da28..1e8bb8b28a23e 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -897,6 +897,24 @@ static int guc_ct_send_recv(struct xe_guc_ct *ct, const u32 *action, u32 len,
+ 		}
+ 	}
  
--	if (xe_mmio_wait32(gt, XE2_GLOBAL_INVAL, 0x1, 0x0, 150, NULL, true))
-+	if (xe_mmio_wait32(gt, XE2_GLOBAL_INVAL, 0x1, 0x0, 500, NULL, true))
- 		xe_gt_err_once(gt, "Global invalidation timeout\n");
- 	spin_unlock(&gt->global_invl_lock);
- 
++	/*
++	 * Occasionally it is seen that the G2H worker starts running after a delay of more than
++	 * a second even after being queued and activated by the Linux workqueue subsystem. This
++	 * leads to G2H timeout error. The root cause of issue lies with scheduling latency of
++	 * Lunarlake Hybrid CPU. Issue dissappears if we disable Lunarlake atom cores from BIOS
++	 * and this is beyond xe kmd.
++	 *
++	 * TODO: Drop this change once workqueue scheduling delay issue is fixed on LNL Hybrid CPU.
++	 */
++	if (!ret) {
++		flush_work(&ct->g2h_worker);
++		if (g2h_fence.done) {
++			xe_gt_warn(gt, "G2H fence %u, action %04x, done\n",
++				   g2h_fence.seqno, action[0]);
++			ret = 1;
++		}
++	}
++
+ 	/*
+ 	 * Ensure we serialize with completion side to prevent UAF with fence going out of scope on
+ 	 * the stack, since we have no clue if it will fire after the timeout before we can erase
 -- 
 2.43.0
 
