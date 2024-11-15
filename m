@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A091417E015;
-	Fri, 15 Nov 2024 06:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF5929A9;
+	Fri, 15 Nov 2024 06:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653213; cv=none; b=RcRaKT1myIJRUnalMdtk7P3Z8KXkFrPQfN8VkXeZ87igMn6bRjMAeV/+6hikTYLW+5ZScop6beHAPx8WLVkjtRBqbN0O8N9LnluupVayoZvoiqQApk8fo85b1xRfMj0Q+Uwnf9KsbqRcj/wScec2hP4i4+tlIgrmTB1A+p17M1Y=
+	t=1731653217; cv=none; b=qNaWuAffO1K2zwVtkDjKr0DBVmN4FvBSKvbnIK0AW5m+WN6dmgc4OvBubfTDpB3qqLxq/AFehNTo6/F1tl3uWL92yvNE/GL04nLXBHwEeLCi7SHxZzSPRzRqSBAHTnqU9ItUEBCNZTExGsjvHz6dQcZmi4hbC8RYMDyfUIK96PI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653213; c=relaxed/simple;
-	bh=rEbqL+zwxDzhzNCaMAqPFIFyxa/lVENeVcEMqawWcy8=;
+	s=arc-20240116; t=1731653217; c=relaxed/simple;
+	bh=gQo0s5heO96qdNESvYtDBp32y031vl6W87i+PXHWT+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=euw948UM/NZjRPX89VPvqIpl6iazu1ICH4TdM9BCkLl87g8U7BkB1raJRlyruS3T5NTvdn7aOV9K3TlXpt3ZLX+oWYm6gsCSCd49/FzdD2+aT3wNcs3loKHsCyA0E45t4uexXYdBfwKfzZfDRr52z2/bIB9YUGiCpWjfdN3U0Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zEqEj2QS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ctndtfGN4Cq+TJ+Sk4H4WzgMpqPngUyIVHi9aqaACNHFvYzX7qdtuMilrbu1HbRDEx9Na7G71fXWvTFI9PaP7YM1hR+XWa0jt9FhiI9vl0fksjEwzxnyPgZO9W9zGzRgIpAxReHVoxi7lpH/PLAbyZz7tdzZmfpbG7YIyYLuCmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plMS51zp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zEqEj2QS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13422C4CECF;
-	Fri, 15 Nov 2024 06:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plMS51zp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70335C4CECF;
+	Fri, 15 Nov 2024 06:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1731653213;
-	bh=rEbqL+zwxDzhzNCaMAqPFIFyxa/lVENeVcEMqawWcy8=;
+	s=korg; t=1731653216;
+	bh=gQo0s5heO96qdNESvYtDBp32y031vl6W87i+PXHWT+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zEqEj2QSmrMN9n6sINN7nKA35jVpD5Fs8poiQ8a4XKQgd3u4nKJZaJMseQr54rr+7
-	 SUF0U7lGhsRBFdOhrtKypJY8UIdVR8qcjrgyKrqmzMAA0TxUPCkhSZGUP0Qt4CYG/I
-	 NX+5pSbULdRVKKcaYrKkYpIUZ76vJZvHGbvA21PE=
+	b=plMS51zptwa8/0ohWZQnqMLAX7sY5Lyg7BjPyV4OVuuLyD2W4/3yaLkfRMvnFMCbL
+	 XoElxBgZGzR9Nhj1iW8ub4oge/1wWU5/Vw4OjvuLl/rC9d1ZmPT4fO2RV+4gDZgh0Z
+	 vXYc0Pld8FHvXHwww4ih6i/8+8ZrQm7JVLBjPdbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Yann Sionneau <ysionneau@kalrayinc.com>,
+	Julian Vetter <jvetter@kalrayinc.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.11 02/63] nvme/host: Fix RCU list traversal to use SRCU primitive
-Date: Fri, 15 Nov 2024 07:37:25 +0100
-Message-ID: <20241115063725.984256786@linuxfoundation.org>
+Subject: [PATCH 6.11 20/63] sound: Make CONFIG_SND depend on INDIRECT_IOMEM instead of UML
+Date: Fri, 15 Nov 2024 07:37:43 +0100
+Message-ID: <20241115063726.649785587@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241115063725.892410236@linuxfoundation.org>
 References: <20241115063725.892410236@linuxfoundation.org>
@@ -52,104 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Julian Vetter <jvetter@kalrayinc.com>
 
-[ Upstream commit 6d1c69945ce63a9fba22a4abf646cf960d878782 ]
+[ Upstream commit ad6639f143a0b42d7fb110ad14f5949f7c218890 ]
 
-The code currently uses list_for_each_entry_rcu() while holding an SRCU
-lock, triggering false positive warnings with CONFIG_PROVE_RCU=y
-enabled:
+When building for the UM arch and neither INDIRECT_IOMEM=y, nor
+HAS_IOMEM=y is selected, it will fall back to the implementations from
+asm-generic/io.h for IO memcpy. But these fall-back functions just do a
+memcpy. So, instead of depending on UML, add dependency on 'HAS_IOMEM ||
+INDIRECT_IOMEM'.
 
-  drivers/nvme/host/core.c:3770 RCU-list traversed in non-reader section!!
-
-While the list is properly protected by SRCU lock, the code uses the wrong
-list traversal primitive. Replace list_for_each_entry_rcu() with
-list_for_each_entry_srcu() to correctly indicate SRCU-based protection
-and eliminate the false warning.
-
-Fixes: be647e2c76b2 ("nvme: use srcu for iterating namespace list")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Yann Sionneau <ysionneau@kalrayinc.com>
+Signed-off-by: Julian Vetter <jvetter@kalrayinc.com>
+Link: https://patch.msgid.link/20241010124601.700528-1-jvetter@kalrayinc.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ sound/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 89ad4217f8606..b954e77d3fc56 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3793,7 +3793,8 @@ struct nvme_ns *nvme_find_get_ns(struct nvme_ctrl *ctrl, unsigned nsid)
- 	int srcu_idx;
- 
- 	srcu_idx = srcu_read_lock(&ctrl->srcu);
--	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
-+	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
-+				 srcu_read_lock_held(&ctrl->srcu)) {
- 		if (ns->head->ns_id == nsid) {
- 			if (!nvme_get_ns(ns))
- 				continue;
-@@ -4840,7 +4841,8 @@ void nvme_mark_namespaces_dead(struct nvme_ctrl *ctrl)
- 	int srcu_idx;
- 
- 	srcu_idx = srcu_read_lock(&ctrl->srcu);
--	list_for_each_entry_rcu(ns, &ctrl->namespaces, list)
-+	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
-+				 srcu_read_lock_held(&ctrl->srcu))
- 		blk_mark_disk_dead(ns->disk);
- 	srcu_read_unlock(&ctrl->srcu, srcu_idx);
- }
-@@ -4852,7 +4854,8 @@ void nvme_unfreeze(struct nvme_ctrl *ctrl)
- 	int srcu_idx;
- 
- 	srcu_idx = srcu_read_lock(&ctrl->srcu);
--	list_for_each_entry_rcu(ns, &ctrl->namespaces, list)
-+	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
-+				 srcu_read_lock_held(&ctrl->srcu))
- 		blk_mq_unfreeze_queue(ns->queue);
- 	srcu_read_unlock(&ctrl->srcu, srcu_idx);
- 	clear_bit(NVME_CTRL_FROZEN, &ctrl->flags);
-@@ -4865,7 +4868,8 @@ int nvme_wait_freeze_timeout(struct nvme_ctrl *ctrl, long timeout)
- 	int srcu_idx;
- 
- 	srcu_idx = srcu_read_lock(&ctrl->srcu);
--	list_for_each_entry_rcu(ns, &ctrl->namespaces, list) {
-+	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
-+				 srcu_read_lock_held(&ctrl->srcu)) {
- 		timeout = blk_mq_freeze_queue_wait_timeout(ns->queue, timeout);
- 		if (timeout <= 0)
- 			break;
-@@ -4881,7 +4885,8 @@ void nvme_wait_freeze(struct nvme_ctrl *ctrl)
- 	int srcu_idx;
- 
- 	srcu_idx = srcu_read_lock(&ctrl->srcu);
--	list_for_each_entry_rcu(ns, &ctrl->namespaces, list)
-+	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
-+				 srcu_read_lock_held(&ctrl->srcu))
- 		blk_mq_freeze_queue_wait(ns->queue);
- 	srcu_read_unlock(&ctrl->srcu, srcu_idx);
- }
-@@ -4894,7 +4899,8 @@ void nvme_start_freeze(struct nvme_ctrl *ctrl)
- 
- 	set_bit(NVME_CTRL_FROZEN, &ctrl->flags);
- 	srcu_idx = srcu_read_lock(&ctrl->srcu);
--	list_for_each_entry_rcu(ns, &ctrl->namespaces, list)
-+	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
-+				 srcu_read_lock_held(&ctrl->srcu))
- 		blk_freeze_queue_start(ns->queue);
- 	srcu_read_unlock(&ctrl->srcu, srcu_idx);
- }
-@@ -4942,7 +4948,8 @@ void nvme_sync_io_queues(struct nvme_ctrl *ctrl)
- 	int srcu_idx;
- 
- 	srcu_idx = srcu_read_lock(&ctrl->srcu);
--	list_for_each_entry_rcu(ns, &ctrl->namespaces, list)
-+	list_for_each_entry_srcu(ns, &ctrl->namespaces, list,
-+				 srcu_read_lock_held(&ctrl->srcu))
- 		blk_sync_queue(ns->queue);
- 	srcu_read_unlock(&ctrl->srcu, srcu_idx);
- }
+diff --git a/sound/Kconfig b/sound/Kconfig
+index 4c036a9a420ab..8b40205394fe0 100644
+--- a/sound/Kconfig
++++ b/sound/Kconfig
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ menuconfig SOUND
+ 	tristate "Sound card support"
+-	depends on HAS_IOMEM || UML
++	depends on HAS_IOMEM || INDIRECT_IOMEM
+ 	help
+ 	  If you have a sound card in your computer, i.e. if it can say more
+ 	  than an occasional beep, say Y.
 -- 
 2.43.0
 
